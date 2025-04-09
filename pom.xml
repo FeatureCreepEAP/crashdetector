@@ -1,75 +1,84 @@
-<project
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.asbestosstar</groupId>
-	<artifactId>crashdetectormc</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<build>
-		<plugins>
-			<!-- other plugins omitted -->
-			<plugin>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.4</version>
-				<configuration>
-					<archive>
-						<manifestEntries>
-							<Main-Class>
-								com.asbestosstar.crashdetectormc.CrashDetectorFCMC</Main-Class>
-						</manifestEntries>
-					</archive>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-	<dependencies>
-		<dependency>
-			<groupId>net.fabricmc</groupId>
-			<artifactId>fabric-loader</artifactId>
-			<version>0.15.7</version>
-		</dependency>
-		<dependency>
-			<groupId>cpw.mods</groupId>
-			<artifactId>modlauncher</artifactId>
-			<version>10.0.8</version>
-		</dependency>
-		<dependency>
-			<groupId>net.minecraftforge</groupId>
-			<artifactId>forgespi</artifactId>
-			<version>6.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.spongepowered</groupId>
-			<artifactId>mixin</artifactId>
-			<version>0.8.5</version>
-		</dependency>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.asbestosstar</groupId>
+    <artifactId>crashdetectormc</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <build>
+        <plugins>
+            <!-- other plugins omitted -->
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.4.2</version>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Premain-Class>
+                                com.asbestosstar.crashdetectormc.CrashDetectorFCMC
+                            </Premain-Class>
+                            <Can-Redefine-Classes>true</Can-Redefine-Classes>
+                            <Can-Retransform-Classes>true</Can-Retransform-Classes>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencies>
+        <!-- Gson Dependency -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.10.1</version>
+        </dependency>
 
-		<dependency>
-			<groupId>curse.maven</groupId>
-			<artifactId>featurecreep-502654</artifactId>
-			<version>5757007</version>
-		</dependency>
+        <!-- Guava Dependency -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>31.1-jre</version>
+        </dependency>
 
-
-	</dependencies>
-	<repositories>
-		<repository>
-			<id>velocity</id>
-			<name>velocity</name>
-			<url>
-				https://nexus.velocitypowered.com/repository/maven-public/
-</url>
-		</repository>
-
-		<repository>
-			<id>cursemaven</id>
-			<name>cursemaven</name>
-			<url>
-				https://cursemaven.com
-</url>
-		</repository>
-	</repositories>
-	<properties>
-		<maven.compiler.target>1.8</maven.compiler.target>
-		<maven.compiler.source>1.8</maven.compiler.source>
-	</properties>
+        <!-- Existing Dependencies -->
+        <dependency>
+            <groupId>net.fabricmc</groupId>
+            <artifactId>fabric-loader</artifactId>
+            <version>0.15.7</version>
+        </dependency>
+        <dependency>
+            <groupId>cpw.mods</groupId>
+            <artifactId>modlauncher</artifactId>
+            <version>10.0.8</version>
+        </dependency>
+        <dependency>
+            <groupId>net.minecraftforge</groupId>
+            <artifactId>forgespi</artifactId>
+            <version>6.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.spongepowered</groupId>
+            <artifactId>mixin</artifactId>
+            <version>0.8.5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.asbestosstar</groupId>
+            <artifactId>featurecreep-loader</artifactId>
+            <version>4.0pre19</version>
+        </dependency>
+    </dependencies>
+    <repositories>
+        <repository>
+            <id>velocity</id>
+            <name>velocity</name>
+            <url>https://nexus.velocitypowered.com/repository/maven-public/</url>
+        </repository>
+        <repository>
+            <id>cursemaven</id>
+            <name>cursemaven</name>
+            <url>https://cursemaven.com</url>
+        </repository>
+    </repositories>
+    <properties>
+        <maven.compiler.target>1.9</maven.compiler.target>
+        <maven.compiler.source>1.9</maven.compiler.source>
+    </properties>
 </project>
