@@ -106,4 +106,14 @@ public interface Idioma {
     
     public String linea_de_dependencia(String linea);
 	
+    public String local_headless(String archivo);
+    
+    public String texto_de_gui();
+    public String texto_de_buton_local_enlance();
+    public String texto_debajo_de_buton_local_enlance();
+    public String texto_de_buton_compartir_enlance();
+    public String texto_debajo_de_buton_compartir_enlance();
+    
+    
+    
 }

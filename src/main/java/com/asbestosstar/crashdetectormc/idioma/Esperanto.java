@@ -62,4 +62,39 @@ public class Esperanto implements Idioma {
     public String linea_de_dependencia(String linea) {
         return linea.replace("Requested by", "Petita de").replace("Expected range", "Atendata intervalo");
     }
+    
+        @Override
+    public String local_headless(String archivo) {
+        return "Via CrashDetector-raporto estas ĉi tie: " + archivo;
+    }
+    
+        @Override
+    // Esperanto-teksto por GUI
+    public String texto_de_gui() {
+        return "Jen la grafika interfaco de CrashDetector. Se la ludo fermiĝas sen problemoj, ignoru ĝin.";
+    }
+    
+        @Override
+    // Esperanto-versio
+    public String texto_de_buton_local_enlance() {
+        return "Vidi Raporton";
+    }
+
+    @Override
+    // Subteksto por loka butono
+    public String texto_debajo_de_buton_local_enlance() {
+        return "Vidi lokan raporton en via retumilo";
+    }
+
+    @Override
+    // Teksto por kunhava butono
+    public String texto_de_buton_compartir_enlance() {
+        return "Kunhavigi Raporton";
+    }
+
+    @Override
+    // Subteksto por kunhava butono
+    public String texto_debajo_de_buton_compartir_enlance() {
+        return "Viaj registroj alŝutiĝos al securelogger.net kaj la raporto restos en alia retejo por 3 tagoj";
+    }
 }

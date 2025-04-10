@@ -1,8 +1,11 @@
 package com.asbestosstar.crashdetectormc;
 
+import java.awt.GraphicsEnvironment;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -10,15 +13,19 @@ import java.nio.file.Path;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CountDownLatch;
 
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 public class MonitorDePID {
 
 	public static String nl = System.lineSeparator();
 	public static Idioma idioma = Idioma.detectar();
-	
-	
+	public static String local;
+	public static String enlance;
+
 	public static void main(String[] args) {
 		if (args.length > 0 && args[0].equals("--monitor")) {
 			long pid = Long.parseLong(args[1]);
@@ -27,9 +34,28 @@ public class MonitorDePID {
 		}
 
 		Path carpeta = new File("crash_detector/").toPath();
+		File html = new File("crash_detector/pantilla.htm");
+		if (!html.exists()) {
+			carpeta.toFile().mkdirs();
+			try (InputStream inputStream = MonitorDePID.class.getResourceAsStream("/pantilla.htm");
+					FileOutputStream outputStream = new FileOutputStream(html)) {
+
+				if (inputStream == null) {
+					throw new RuntimeException("El archivo de CrashDetector no tiene pantilla.htm");
+				}
+				byte[] buffer = new byte[1024];
+				int bytesRead;
+				while ((bytesRead = inputStream.read(buffer)) != -1) {
+					outputStream.write(buffer, 0, bytesRead);
+				}
+
+			} catch (IOException e) {
+				System.err.println("No puede extractar HTML de CrashDetector: " + e.getMessage());
+			}
+		}
+
 		Path ultima_mods = carpeta.resolve("ultima_mods");
 		Path viajo_ultima_mods = carpeta.resolve("viajo_ultima_mods");
-		carpeta.toFile().mkdirs();
 		String mods = "";
 		if (ultima_mods.toFile().exists()) {
 			try {
@@ -111,36 +137,60 @@ public class MonitorDePID {
 	private static void monitor_proceso(long pid) {
 		System.out.println(idioma.buscando_para_pid(pid));
 		Instant utc = Instant.now();
+		CountDownLatch latch = new CountDownLatch(1); // Necesito por que sin esta preceso esta muerte
+
 		while (true) {
 			boolean viva = ProcessHandle.of(pid).map(ProcessHandle::isAlive).orElse(false);
 
 			if (!viva) {
 				System.out.println(idioma.pid_esta_muerto(pid));
 				StringBuilder constructor = new StringBuilder();
-				
 				List<Consola> consolas = Consola.obtainerConsolas(utc);
-				for(Consola consola:consolas) {
+				for (Consola consola : consolas) {
 					consola.analyzar(constructor);
 				}
-				
 				System.out.println(constructor.toString());
-				
-				showPopupMessage(constructor.toString());
+
+				if (GraphicsEnvironment.isHeadless()) {
+
+					local = GeneradorDeInformacion.generarLocal(constructor, utc).getAbsolutePath();
+					System.out.println(idioma.local_headless(enlance));
+					latch.countDown();
+				} else {
+					SwingUtilities.invokeLater(() -> new CrashDetectorGUI(constructor, utc).setVisible(true));
+					latch.countDown();
+				}
+//				try {
+//					latch.await(); // Muerte cunado el popup se cerrada
+//				} catch (InterruptedException e) {
+//					Thread.currentThread().interrupt();
+//				}
+
 				break;
+
 			}
 
-			try {
-				Thread.sleep(8000);
-			} catch (InterruptedException e) {
-				Thread.currentThread().interrupt();
-				break;
-			}
+//			try {
+//				Thread.sleep(4000);
+//			} catch (InterruptedException e) {
+//				Thread.currentThread().interrupt();
+//				break;
+//			}
 		}
 	}
 
-	private static void showPopupMessage(String message) {
-		javax.swing.SwingUtilities.invokeLater(() -> {
-			JOptionPane.showMessageDialog(null, message, "Proceso Crash Detector", JOptionPane.ERROR_MESSAGE);
+	private static void showPopupMessage(String message, CountDownLatch latch) {
+		SwingUtilities.invokeLater(() -> {
+			JOptionPane pane = new JOptionPane(message, JOptionPane.ERROR_MESSAGE);
+			JDialog dialog = pane.createDialog("Proceso Crash Detector");
+			dialog.setModal(true);
+			dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+				@Override
+				public void windowClosed(java.awt.event.WindowEvent e) {
+					latch.countDown(); // Release the latch when the dialog is closed
+				}
+			});
+			dialog.setVisible(true);
 		});
 	}
 

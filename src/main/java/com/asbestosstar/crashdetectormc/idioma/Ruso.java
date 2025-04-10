@@ -62,4 +62,47 @@ public String no_tienes_las_dependencias_necesitas() {
 public String linea_de_dependencia(String linea) {
     return linea.replace("Requested by", "Запрошено").replace("Expected range", "Ожидаемый диапазон");
 }
+
+
+    @Override
+    public String local_headless(String archivo) {
+        return "Ваш отчет CrashDetector сохранен здесь: " + archivo;
+    }
+
+
+ @Override
+    // Русский текст графического интерфейса
+    public String texto_de_gui() {
+        return "Это графический интерфейс CrashDetector. Если игра закрывается без проблем, игнорируйте это.";
+    }
+
+
+
+    @Override
+    // Русская версия
+    public String texto_de_buton_local_enlance() {
+        return "Просмотреть отчет";
+    }
+
+    @Override
+    // Подпись под кнопкой просмотра
+    public String texto_debajo_de_buton_local_enlance() {
+        return "Просмотреть локальный отчет в браузере";
+    }
+
+    @Override
+    // Текст кнопки отправки
+    public String texto_de_buton_compartir_enlance() {
+        return "Поделиться отчетом";
+    }
+
+    @Override
+    // Подпись под кнопкой отправки
+    public String texto_debajo_de_buton_compartir_enlance() {
+        return "Логи будут загружены на securelogger.net и сохранены на другом сайте на 3 дня";
+    }
+
+
+
+
 }

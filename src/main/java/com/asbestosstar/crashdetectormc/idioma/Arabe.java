@@ -62,4 +62,39 @@ public class Arabe implements Idioma {
     public String linea_de_dependencia(String linea) {
         return linea.replace("Requested by", "مطلوب بواسطة").replace("Expected range", "النطاق المتوقع");
     }
+    
+        @Override
+    public String local_headless(String archivo) {
+        return "تقرير أخطاء CrashDetector متاح هنا: " + archivo;
+    }
+    
+     @Override
+    // النص العربي لواجهة المستخدم
+    public String texto_de_gui() {
+        return "هذه واجهة CrashDetector الرسومية. إذا أغلق اللعبة بدون مشاكل، تجاهله.";
+    }
+    
+        @Override
+    // النصوص العربية
+    public String texto_de_buton_local_enlance() {
+        return "عرض التقرير";
+    }
+
+    @Override
+    // تفاصيل الزر الأول
+    public String texto_debajo_de_buton_local_enlance() {
+        return "عرض تقرير محلي في المتصفح";
+    }
+
+    @Override
+    // نص الزر الثاني
+    public String texto_de_buton_compartir_enlance() {
+        return "مشاركة التقرير";
+    }
+
+    @Override
+    // تفاصيل الزر الثاني
+    public String texto_debajo_de_buton_compartir_enlance() {
+        return "مشاركة التقرير، سيتم تحميل السجلات إلى securelogger.net وسيتم تخزين التقرير في موقع آخر لمدة 3 أيام";
+    }
 }

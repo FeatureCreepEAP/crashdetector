@@ -62,4 +62,41 @@ public class Ingles implements Idioma {
     public String linea_de_dependencia(String linea) {
     	return linea;//La linea es en ingles
     }
+    
+@Override
+    public String local_headless(String archivo) {
+        return "Your CrashDetector report is here: " + archivo;
+    }
+    
+     @Override
+    // English GUI text
+    public String texto_de_gui() {
+        return "This is the CrashDetector GUI. If the game closes without issues, ignore it.";
+    }
+    
+        @Override
+    // English version
+    public String texto_de_buton_local_enlance() {
+        return "View Report";
+    }
+
+    @Override
+    // Local button description
+    public String texto_debajo_de_buton_local_enlance() {
+        return "View a local report in your browser";
+    }
+
+    @Override
+    // Share button text
+    public String texto_de_buton_compartir_enlance() {
+        return "Share Report";
+    }
+
+    @Override
+    // Share button description
+    public String texto_debajo_de_buton_compartir_enlance() {
+        return "Share report, logs will be uploaded to securelogger.net and stored on another site for 3 days";
+    }
+    
+    
 }

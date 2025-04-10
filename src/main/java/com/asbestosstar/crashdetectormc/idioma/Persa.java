@@ -62,4 +62,45 @@ public String no_tienes_las_dependencias_necesitas() {
 public String linea_de_dependencia(String linea) {
     return linea.replace("Requested by", "درخواست شده توسط").replace("Expected range", "محدوده مورد انتظار");
 }
+
+
+    @Override
+    public String local_headless(String archivo) {
+        return "گزارش خرابی CrashDetector اینجا ذخیره شده است: " + archivo;
+    }
+
+
+    @Override
+    // متن فارسی رابط گرافیکی
+    public String texto_de_gui() {
+        return "این رابط گرافیکی CrashDetector است. اگر بازی بدون مشکل بسته شود، آن را نادیده بگیرید.";
+    }
+
+
+    @Override
+    // نسخه فارسی
+    public String texto_de_buton_local_enlance() {
+        return "مشاهده گزارش";
+    }
+
+    @Override
+    // توضیحات دکمه مشاهده
+    public String texto_debajo_de_buton_local_enlance() {
+        return "گزارش محلی را در مرورگر مشاهده کنید";
+    }
+
+    @Override
+    // متن دکمه اشتراک
+    public String texto_de_buton_compartir_enlance() {
+        return "اشتراک گزارش";
+    }
+
+    @Override
+    // توضیحات دکمه اشتراک
+    public String texto_debajo_de_buton_compartir_enlance() {
+        return "گزارش شما به securelogger.net آپلود شده و برای 3 روز در سایت دیگری ذخیره می‌شود";
+    }
+
+
+
 }

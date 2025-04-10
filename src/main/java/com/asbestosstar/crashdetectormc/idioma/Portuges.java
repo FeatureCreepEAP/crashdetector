@@ -62,4 +62,43 @@ public String no_tienes_las_dependencias_necesitas() {
 public String linea_de_dependencia(String linea) {
     return linea.replace("Requested by", "Solicitado por").replace("Expected range", "Intervalo esperado");
 }
+
+    @Override
+    public String local_headless(String archivo) {
+        return "Seu relatório do CrashDetector está aqui: " + archivo;
+    }
+
+
+    @Override
+    // Texto da interface gráfica em português
+    public String texto_de_gui() {
+        return "Esta é a interface gráfica do CrashDetector. Se o jogo fechar sem problemas, ignore-o.";
+    }
+
+    @Override
+    // Versão em português
+    public String texto_de_buton_local_enlance() {
+        return "Ver Relatório";
+    }
+
+    @Override
+    // Texto abaixo do botão local
+    public String texto_debajo_de_buton_local_enlance() {
+        return "Visualize um relatório local no navegador";
+    }
+
+    @Override
+    // Texto do botão de compartilhar
+    public String texto_de_buton_compartir_enlance() {
+        return "Compartilhar Relatório";
+    }
+
+    @Override
+    // Detalhes do botão de compartilhar
+    public String texto_debajo_de_buton_compartir_enlance() {
+        return "Compartilhar relatório, logs serão carregados para securelogger.net e armazenados em outro site por 3 dias";
+    }
+
+
+
 }

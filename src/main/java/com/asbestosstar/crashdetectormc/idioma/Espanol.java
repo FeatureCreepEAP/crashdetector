@@ -68,6 +68,42 @@ public class Espanol implements Idioma {
 	    public String linea_de_dependencia(String linea) {
 	    	return linea.replace("Requested by", "Solicitado por").replace("Expected range", "rango esperado");
 	    }
+
+		@Override
+		public String local_headless(String archivo) {
+			// TODO Auto-generated method stub
+			return "Tu Informe de CrashDetector esta aqui "+ archivo;
+		}
+
+		@Override
+		public String texto_de_gui() {
+			// TODO Auto-generated method stub
+			return "Esta es el GUI de CrashDetector. Si el juego cierra sin problemas, ignoralo.";
+		}
+
+		@Override
+		public String texto_de_buton_local_enlance() {
+			// TODO Auto-generated method stub
+			return "Ver Informe";
+		}
+
+		@Override
+		public String texto_debajo_de_buton_local_enlance() {
+			// TODO Auto-generated method stub
+			return "Ver Un Informe Local en tu navigator.";
+		}
+
+		@Override
+		public String texto_de_buton_compartir_enlance() {
+			// TODO Auto-generated method stub
+			return "Compartir Informe";
+		}
+
+		@Override
+		public String texto_debajo_de_buton_compartir_enlance() {
+			// TODO Auto-generated method stub
+			return "Compartir Informe,Sus registros se cargarán en securelogger.net y  tu informe se cargaran a un otro sito para 3 dias";
+		}
 	
 	
 	

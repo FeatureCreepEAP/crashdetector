@@ -63,4 +63,40 @@ public class Chino implements Idioma {
         return linea.replace("Requested by", "请求方").replace("Expected range", "预期范围");
     }
     
+        @Override
+    public String local_headless(String archivo) {
+        return "崩溃检测报告在此处生成：" + archivo;
+    }
+    
+     @Override
+    // 中文图形界面文本
+    public String texto_de_gui() {
+        return "这是CrashDetector的图形界面。如果游戏正常关闭，请忽略。";
+    }
+    
+        @Override
+    // 中文翻译
+    public String texto_de_buton_local_enlance() {
+        return "查看报告";
+    }
+
+    @Override
+    // 本地查看按钮下方文字
+    public String texto_debajo_de_buton_local_enlance() {
+        return "在浏览器中查看本地报告";
+    }
+
+    @Override
+    // 分享按钮文本
+    public String texto_de_buton_compartir_enlance() {
+        return "分享报告";
+    }
+
+    @Override
+    // 分享按钮下方说明
+    public String texto_debajo_de_buton_compartir_enlance() {
+        return "分享报告，您的日志将上传到 securelogger.net 并在其他站点保存 3 天";
+    }
+    
+    
 }

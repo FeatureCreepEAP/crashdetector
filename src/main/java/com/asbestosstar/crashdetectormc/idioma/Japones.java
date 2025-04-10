@@ -62,4 +62,40 @@ public String no_tienes_las_dependencias_necesitas() {
 public String linea_de_dependencia(String linea) {
     return linea.replace("Requested by", "リクエスト元").replace("Expected range", "予想範囲");
 }
+
+    @Override
+    public String local_headless(String archivo) {
+        return "クラッシュレポートはこちらに保存されました：" + archivo;
+    }
+    
+     @Override
+    // 日本語GUIテキスト
+    public String texto_de_gui() {
+        return "これはCrashDetectorのGUIです。ゲームが正常に終了した場合は無視してください。";
+    }
+    
+    
+        @Override
+    // 日本語版
+    public String texto_de_buton_local_enlance() {
+        return "レポートを表示";
+    }
+
+    @Override
+    // ローカルボタンの説明
+    public String texto_debajo_de_buton_local_enlance() {
+        return "ブラウザでローカルレポートを表示";
+    }
+
+    @Override
+    // 共有ボタンのテキスト
+    public String texto_de_buton_compartir_enlance() {
+        return "レポートを共有";
+    }
+
+    @Override
+    // 共有ボタンの詳細
+    public String texto_debajo_de_buton_compartir_enlance() {
+        return "ログはsecurelogger.netにアップロードされ、レポートは3日間他サイトに保存されます";
+    }
 }

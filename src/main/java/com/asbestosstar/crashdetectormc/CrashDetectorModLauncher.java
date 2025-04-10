@@ -45,6 +45,7 @@ if(!Statics.cargador)	{
 		return list;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public List<ITransformer> transformers() {
 		// TODO Auto-generated method stub

@@ -62,4 +62,41 @@ public class Coreano implements Idioma {
     public String linea_de_dependencia(String linea) {
         return linea.replace("Requested by", "요청자").replace("Expected range", "예상 범위");
     }
+    
+        @Override
+    public String local_headless(String archivo) {
+        return "크래시 리포트가 여기에 저장되었습니다: " + archivo;
+    }
+    
+        @Override
+    // 한국어 GUI 메시지
+    public String texto_de_gui() {
+        return "이는 CrashDetector의 GUI입니다. 게임이 문제 없이 종료되면 무시하세요.";
+    }
+    
+        @Override
+    // 한국어 버전
+    public String texto_de_buton_local_enlance() {
+        return "보고서 보기";
+    }
+
+    @Override
+    // 로컬 링크 버튼 설명
+    public String texto_debajo_de_buton_local_enlance() {
+        return "브라우저에서 로컬 보고서를 확인하세요";
+    }
+
+    @Override
+    // 공유 버튼 텍스트
+    public String texto_de_buton_compartir_enlance() {
+        return "보고서 공유";
+    }
+
+    @Override
+    // 공유 버튼 설명
+    public String texto_debajo_de_buton_compartir_enlance() {
+        return "로그가 securelogger.net에 업로드되며 보고서는 다른 사이트에 3일간 저장됩니다";
+    }
+    
+    
 }

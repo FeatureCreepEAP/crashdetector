@@ -79,10 +79,10 @@ public class Consola {
 			carpetaTLauncherStarter = new File(applicationSupport + "/tlauncher/logs/starter/");
 			carpetaTLauncher = new File(applicationSupport + "/tlauncher/logs/tlauncher/");
 		} else {
-			carpetaTLauncherStarter = new File(home + "/tlauncher/logs/starter/");
-			carpetaTLauncher = new File(home + "/tlauncher/logs/tlauncher/");
+			carpetaTLauncherStarter = new File(home + "/.tlauncher/logs/starter/");
+			carpetaTLauncher = new File(home + "/.tlauncher/logs/tlauncher/");
 		}
-
+		
 		if (carpetaTLauncher.exists()) {
 			for (File archivo : carpetaTLauncher.listFiles()) {
 				if (!archivo.getAbsolutePath().endsWith(".gz")) {
