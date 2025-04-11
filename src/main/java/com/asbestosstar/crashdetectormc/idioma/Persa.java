@@ -103,4 +103,61 @@ public String linea_de_dependencia(String linea) {
 
 
 
+@Override
+public String problematico_jar() {
+    return "<b>فایل‌های JAR مشکل‌دار یافت شد (اولویت: FATAL، سطح بالاتر، خط پایین‌تر):</b>";
+}
+
+@Override
+public String nivel() {
+    return "<b>lvl: </b>";
+}
+
+@Override
+public String possibladad_fatal() {
+    return "<b>احتمالاً فاتال:</b> ";
+}
+
+@Override
+public String modids_problematicos() {
+    return "<b>modidهای مشکل‌دار یافت شد (اولویت: FATAL، سطح پایین‌تر، خط پایین‌تر):</b>";
+}
+
+@Override
+public String packages_problematicos() {
+    return "<b>پکیج‌های مشکل‌دار یافت شد (اولویت: FATAL، سطح پایین‌تر، خط پایین‌تر):</b>";
+}
+
+@Override
+public String faltar_de_clases_fatales() {
+    return "<b>کلاس‌های فاتال گم‌شده یافت شد:</b>";
+}
+
+@Override
+public String corchetes_ondulados() {
+    return "<b>محتوای داخل {} (مهمترین در بالا، فقط 20 اول):</b>";
+}
+
+@Override
+public String config_spongemixin_problematico(String archivo) {
+    return "<b>پیکربندی مشکل‌دار SpongeMixin شناسایی شد: " + archivo + "</b>";
+}
+@Override
+public String module_resolution_exception(String modules, String paquete) {
+    return "شما ماژول‌هایی با بسته‌های تکراری دارید: " + modules + " بسته تکراری " + paquete.replace(".", "/") + ". شما می‌توانید این مشکل را با حذف بسته (پوشه) از فایل jar حل کنید. شما می‌توانید فایل jar را با استفاده از نرم‌افزارهای فشرده‌سازی مثل WinRAR,File-Roller, یا 7-Zip باز کنید، یا پسوند فایل را از .jar به .zip تغییر دهید، پوشه را حذف کنید و سپس آن را دوباره به فایل .jar تبدیل کنید.";
+}
+
+@Override
+public String modlauncher_mods_duplicado(String linea) {
+    return "<b>شما ماژول‌های تکراری دارید</b> " + linea.replace("from mod files", "از فایل‌های ماژول");
+}
+
+@Override
+public String mcforge_mod_suspechoso() {
+    return "<b>MinecraftForge مشکوک: این ماژول دارای مشکل است:</b> ";
+}
+
+
+
+
 }

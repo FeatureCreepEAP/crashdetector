@@ -102,6 +102,61 @@ public String linea_de_dependencia(String linea) {
         return "Логи будут загружены на securelogger.net и сохранены на другом сайте на 3 дня";
     }
 
+    @Override
+public String problematico_jar() {
+    return "<b>Обнаружены потенциально проблемные JAR-файлы (Приоритет: FATAL > выше уровень > ниже строка):</b>";
+}
+
+@Override
+public String nivel() {
+    return "<b>lvl: </b>";
+}
+
+@Override
+public String possibladad_fatal() {
+    return "<b>Возможно фатально:</b> ";
+}
+
+@Override
+public String modids_problematicos() {
+    return "<b>Обнаружены проблемные modid (Приоритет: FATAL > ниже уровень > ниже строка):</b>";
+}
+
+@Override
+public String packages_problematicos() {
+    return "<b>Обнаружены проблемные пакеты (Приоритет: FATAL > ниже уровень > ниже строка):</b>";
+}
+
+@Override
+public String faltar_de_clases_fatales() {
+    return "<b>Обнаружены отсутствующие фатальные классы:</b>";
+}
+
+@Override
+public String corchetes_ondulados() {
+    return "<b>Содержимое в {} (Важное сверху, только первые 20):</b>";
+}
+
+@Override
+public String config_spongemixin_problematico(String archivo) {
+    return "<b>Обнаружена проблемная конфигурация SpongeMixin: " + archivo + "</b>";
+}
+
+@Override
+public String module_resolution_exception(String modules, String paquete) {
+    return "У вас есть моды с дублирующимися пакетами: " + modules + " дублированный пакет " + paquete.replace(".", "/") + ". Вы можете исправить это, удалив пакет (папку) из файла jar. Вы можете открыть файл jar с помощью программ для работы с архивами, таких как file-roller,WinRAR или 7-Zip, или изменить расширение файла с .jar на .zip, удалить папку, а затем снова изменить его обратно на .jar.";
+}
+
+@Override
+public String modlauncher_mods_duplicado(String linea) {
+    return "<b>У вас есть дублирующиеся моды</b> " + linea.replace("from mod files", "из файлов модов");
+}
+
+@Override
+public String mcforge_mod_suspechoso() {
+    return "<b>MinecraftForge подозрительно: В этом моде есть проблема:</b> ";
+}
+
 
 
 

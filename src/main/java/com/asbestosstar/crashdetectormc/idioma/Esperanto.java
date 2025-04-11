@@ -97,4 +97,61 @@ public class Esperanto implements Idioma {
     public String texto_debajo_de_buton_compartir_enlance() {
         return "Viaj registroj alŝutiĝos al securelogger.net kaj la raporto restos en alia retejo por 3 tagoj";
     }
+
+    @Override
+public String problematico_jar() {
+    return "<b>Trovitaj potence problemaj JAR-dosieroj (Prioritato: FATAL > pli alta nivelo > pli malalta linio):</b>";
+}
+
+@Override
+public String nivel() {
+    return "<b>lvl: </b>";
+}
+
+@Override
+public String possibladad_fatal() {
+    return "<b>Eble fatale:</b> ";
+}
+
+@Override
+public String modids_problematicos() {
+    return "<b>Trovitaj problemaj modid (Prioritato: FATAL > pli malalta nivelo > pli malalta linio):</b>";
+}
+
+@Override
+public String packages_problematicos() {
+    return "<b>Trovitaj problemaj pakaĵoj (Prioritato: FATAL > pli malalta nivelo > pli malalta linio):</b>";
+}
+
+@Override
+public String faltar_de_clases_fatales() {
+    return "<b>Mankantaj fatalaj klasoj trovitaj:</b>";
+}
+
+@Override
+public String corchetes_ondulados() {
+    return "<b>Enhavo en {} (Plej grava supre, nur unuaj 20):</b>";
+}
+
+@Override
+public String config_spongemixin_problematico(String archivo) {
+    return "<b>Trovita problemata SpongeMixin agordo: " + archivo + "</b>";
+}
+
+@Override
+public String module_resolution_exception(String modules, String paquete) {
+    return "Vi havas Modojn kun duplikataj Pakoj: " + modules + " duplikata pako " + paquete.replace(".", "/") + ". Vi povas solvi tion forigante la pakon (dosierujon) el la jar-dosiero. Vi povas malfermi la jar-dosieron per arkiva programaro kiel File-Roller,WinRAR aŭ 7-Zip, aŭ ŝanĝi la dosiernomon de .jar al .zip, forigi la dosierujon, kaj poste reŝanĝi ĝin al .jar.";
+}
+
+@Override
+public String modlauncher_mods_duplicado(String linea) {
+    return "<b>Vi havas duplikatajn Modojn</b> " + linea.replace("from mod files", "el mod-dosieroj");
+}
+
+@Override
+public String mcforge_mod_suspechoso() {
+    return "<b>MinecraftForge suspektinda: Ĉi tiu mod enhavas problemon:</b> ";
+}
+
+
 }

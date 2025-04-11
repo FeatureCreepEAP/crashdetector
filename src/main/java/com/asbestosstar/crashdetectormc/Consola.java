@@ -127,7 +127,7 @@ public class Consola {
 	}
 
 	public void analyzar(StringBuilder constructor) {
-		constructor.append(archivo.getFileName());
+		constructor.append("<b>"+archivo.getFileName() +"</b><br>");
 		for(Verificaciones verificacion:Analyzador.verificaciones) {
 			verificacion.nueva().verificar(contento, constructor);
 		}	

@@ -99,4 +99,61 @@ public class Chino implements Idioma {
     }
     
     
+    
+      @Override
+public String problematico_jar() {
+    return "<b>发现潜在问题的JAR文件（优先级：FATAL > 较高级别 > 较低行号）：</b>";
+}
+
+@Override
+public String nivel() {
+    return "<b>lvl: </b>";
+}
+
+@Override
+public String possibladad_fatal() {
+    return "<b>可能致命：</b> ";
+}
+
+@Override
+public String modids_problematicos() {
+    return "<b>发现潜在问题的modid（优先级：FATAL > 较低级别 > 较低行号）：</b>";
+}
+
+@Override
+public String packages_problematicos() {
+    return "<b>发现潜在问题的包（优先级：FATAL > 较低级别 > 较低行号）：</b>";
+}
+
+@Override
+public String faltar_de_clases_fatales() {
+    return "<b>发现缺失的致命类：</b>";
+}
+
+@Override
+public String corchetes_ondulados() {
+    return "<b>{}中的内容（重要性从高到低，仅显示前20）：</b>";
+}
+
+@Override
+public String config_spongemixin_problematico(String archivo) {
+    return "<b>检测到有问题的SpongeMixin配置： " + archivo + "</b>";
+}
+
+@Override
+public String module_resolution_exception(String modules, String paquete) {
+    return "你有一些包含重复包的模组: " + modules + " 重复的包 " + paquete.replace(".", "/") + "。你可以通过从 jar 文件中删除该包（文件夹）来解决此问题。你可以使用压缩软件（如 File-Roller,WinRAR 或 7-Zip）打开 jar 文件，或者将文件扩展名从 .jar 改为 .zip，然后删除文件夹，最后再将扩展名改回 .jar。";
+}
+
+@Override
+public String modlauncher_mods_duplicado(String linea) {
+    return "<b>你有重复的模组</b> " + linea.replace("from mod files", "来自模组文件");
+}
+
+@Override
+public String mcforge_mod_suspechoso() {
+    return "<b>MinecraftForge 可疑: 此模组存在问题:</b> ";
+}
+
+    
 }

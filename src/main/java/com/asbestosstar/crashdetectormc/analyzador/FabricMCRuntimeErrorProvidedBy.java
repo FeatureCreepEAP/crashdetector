@@ -1,0 +1,28 @@
+package com.asbestosstar.crashdetectormc.analyzador;
+
+import com.asbestosstar.crashdetectormc.MonitorDePID;
+
+public class FabricMCRuntimeErrorProvidedBy implements Verificaciones {
+
+	@Override
+	public void verificar(String contento_de_consola, StringBuilder constructor) {
+		// TODO Auto-generated method stub
+		
+		
+		for (String linea:contento_de_consola.split(nl)) {
+			if(linea.contains("Could not execute entrypoint stage")) {
+				constructor.append(MonitorDePID.idioma.modids_problematicos()+linea.split("provided by")[1]+nl_html);
+			}
+		}
+		
+		
+		
+	}
+
+	@Override
+	public Verificaciones nueva() {
+		// TODO Auto-generated method stub
+		return new FabricMCRuntimeErrorProvidedBy();
+	}
+
+}

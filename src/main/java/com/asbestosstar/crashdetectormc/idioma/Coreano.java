@@ -99,4 +99,59 @@ public class Coreano implements Idioma {
     }
     
     
+     @Override
+public String problematico_jar() {
+    return "<b>Trovitaj potence problemaj JAR-dosieroj (Prioritato: FATAL > pli alta nivelo > pli malalta linio):</b>";
+}
+
+@Override
+public String nivel() {
+    return "<b>lvl: </b>";
+}
+
+@Override
+public String possibladad_fatal() {
+    return "<b>Eble fatale:</b> ";
+}
+
+@Override
+public String modids_problematicos() {
+    return "<b>Trovitaj problemaj modid (Prioritato: FATAL > pli malalta nivelo > pli malalta linio):</b>";
+}
+
+@Override
+public String packages_problematicos() {
+    return "<b>Trovitaj problemaj pakaĵoj (Prioritato: FATAL > pli malalta nivelo > pli malalta linio):</b>";
+}
+
+@Override
+public String faltar_de_clases_fatales() {
+    return "<b>Mankantaj fatalaj klasoj trovitaj:</b>";
+}
+
+@Override
+public String corchetes_ondulados() {
+    return "<b>Enhavo en {} (Plej grava supre, nur unuaj 20):</b>";
+}
+
+@Override
+public String config_spongemixin_problematico(String archivo) {
+    return "<b>Trovita problemata SpongeMixin agordo: " + archivo + "</b>";
+}
+
+@Override
+public String module_resolution_exception(String modules, String paquete) {
+    return "중복된 패키지를 가진 모드가 있습니다: " + modules + " 중복된 패키지 " + paquete.replace(".", "/") + ". 이 문제는 jar 파일에서 해당 패키지(폴더)를 삭제하여 해결할 수 있습니다. FileRoller,WinRAR, 7-Zip 같은 압축 소프트웨어로 jar 파일을 열거나, 파일 확장자를 .jar에서 .zip으로 변경한 후 폴더를 삭제하고 다시 .jar로 변경하면 됩니다.";
+}
+
+@Override
+public String modlauncher_mods_duplicado(String linea) {
+    return "<b>You have duplicate Mods</b> " + linea.replace("from mod files", "from mod files");
+}
+
+@Override
+public String mcforge_mod_suspechoso() {
+    return "<b>MinecraftForge 의심스러움: 이 모드에 문제가 있습니다:</b> ";
+}
+    
 }

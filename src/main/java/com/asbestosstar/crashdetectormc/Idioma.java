@@ -26,56 +26,59 @@ public interface Idioma {
 	public static Idioma japones = new Japones();
 	public static Idioma coreano = new Coreano();
 
+	public static Idioma detectar() {
+		String id = Locale.getDefault().getLanguage();
+		switch (id.toLowerCase()) {
+		case "es":
+			return espanol;
+		case "en":
+			return ingles;
+		case "ar":
+			return arabe;
+		case "pt":
+			return portuges;
+		case "fa":
+			return persa;
+		case "ru":
+			return ruso;
+		case "zh":
+			return chino;
+		case "eo":
+			return esperanto;
+		case "ja":
+			return japones;
+		case "ko":
+			return coreano;
+		default:
+			return espanol;
+		}
+	}
 
-	    public static Idioma detectar() {
-	        String id = Locale.getDefault().getLanguage();
-	        switch (id.toLowerCase()) {
-	            case "es":
-	                return espanol;
-	            case "en":
-	                return ingles;
-	            case "ar":
-	                return arabe;
-	            case "pt": 
-	                return portuges;
-	            case "fa":
-	                return persa;
-	            case "ru":
-	                return ruso;
-	            case "zh":
-	                return chino;
-	            case "eo":
-	                return esperanto;
-	            case "ja":
-	                return japones;
-	            case "ko":
-	                return coreano;
-	            default:
-	                return espanol;
-	        }
-	    }	    
-	    
-	    /**
-	     * no es una carpeta de mods valida
-	     * @return
-	     */
+	/**
+	 * no es una carpeta de mods valida
+	 * 
+	 * @return
+	 */
 	public String carpeta_de_mods_no_valido();
-	
+
 	/**
 	 * No se donde esta el archivo JAR de CrashDetector
+	 * 
 	 * @return
 	 */
 	public String no_se_donde_esta_jar();
-	
+
 	/**
 	 * "Buscando para PID: " + pid
+	 * 
 	 * @param pid
 	 * @return
 	 */
 	public String buscando_para_pid(long pid);
-	
+
 	/**
-	 * 	"(PID: " + pid + ") esta muerto!"
+	 * "(PID: " + pid + ") esta muerto!"
+	 * 
 	 * @param pid
 	 * @return
 	 */
@@ -83,37 +86,54 @@ public interface Idioma {
 
 	/**
 	 * No tenemos JVM
+	 * 
 	 * @return
 	 */
 	public String no_tenemos_jvm();
+
+	public String probelma_con_graficas_ati();
+
+	public String probelma_con_graficas_nouveau();
+
+	public String probelma_con_graficas_general();
+
+	public String fmlEarlyWindow();
+
+	public String no_tienes_las_dependencias_necesitas();
+
+	public String linea_de_dependencia(String linea);
+
+	public String local_headless(String archivo);
+
+	public String texto_de_gui();
+
+	public String texto_de_buton_local_enlance();
+
+	public String texto_debajo_de_buton_local_enlance();
+
+	public String texto_de_buton_compartir_enlance();
+
+	public String texto_debajo_de_buton_compartir_enlance();
+
+	public String problematico_jar();
+
+	public String nivel();
+
+	public String possibladad_fatal();
+
+	public String modids_problematicos();
+
+	public String packages_problematicos();
+
+	public String faltar_de_clases_fatales();
+
+	public String corchetes_ondulados();
+
+	public String config_spongemixin_problematico(String archivo_json);
+
+	public String module_resolution_exception(String modules, String paquete);
 	
+	public String modlauncher_mods_duplicado(String linea);
 	
-	
-    
-    public String probelma_con_graficas_ati();
-    
-    public String probelma_con_graficas_nouveau();
-    
-    
-    public String probelma_con_graficas_general();
-    
-    
-    public String fmlEarlyWindow();
-    
-    
-    public String no_tienes_las_dependencias_necesitas();
-    
-    
-    public String linea_de_dependencia(String linea);
-	
-    public String local_headless(String archivo);
-    
-    public String texto_de_gui();
-    public String texto_de_buton_local_enlance();
-    public String texto_debajo_de_buton_local_enlance();
-    public String texto_de_buton_compartir_enlance();
-    public String texto_debajo_de_buton_compartir_enlance();
-    
-    
-    
+	public String  mcforge_mod_suspechoso();
 }

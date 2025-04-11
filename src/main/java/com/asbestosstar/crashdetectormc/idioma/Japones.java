@@ -98,4 +98,62 @@ public String linea_de_dependencia(String linea) {
     public String texto_debajo_de_buton_compartir_enlance() {
         return "ログはsecurelogger.netにアップロードされ、レポートは3日間他サイトに保存されます";
     }
+    
+        @Override
+public String problematico_jar() {
+    return "<b>問題のある可能性のあるJARファイル（FATAL優先 > レベル高 > 行番号低）：</b>";
+}
+
+@Override
+public String nivel() {
+    return "<b>lvl: </b>";
+}
+
+@Override
+public String possibladad_fatal() {
+    return "<b>致命的問題の可能性:</b> ";
+}
+
+@Override
+public String modids_problematicos() {
+    return "<b>問題のある可能性のあるmodid（FATAL優先 > レベル低 > 行番号低）：</b>";
+}
+
+@Override
+public String packages_problematicos() {
+    return "<b>問題のある可能性のあるパッケージ（FATAL優先 > レベル低 > 行番号低）：</b>";
+}
+
+@Override
+public String faltar_de_clases_fatales() {
+    return "<b>致命的なクラスが不足しています：</b>";
+}
+
+@Override
+public String corchetes_ondulados() {
+    return "<b>{}内のコンテンツ（上位が重要、最初の20件のみ表示）：</b>";
+}
+
+@Override
+public String config_spongemixin_problematico(String archivo) {
+    return "<b>問題のあるSpongeMixin設定が検出されました： " + archivo + "</b>";
+}
+
+
+@Override
+public String module_resolution_exception(String modules, String paquete) {
+    return "重複したパッケージを持つModがあります: " + modules + " 重複したパッケージ " + paquete.replace(".", "/") + " この問題は、jarファイルからパッケージ（フォルダ）を削除することで解決できます。File-Roller,WinRARや7-Zipなどのアーカイブソフトウェアでjarファイルを開くか、ファイル拡張子を.jarから.zipに変更してフォルダを削除し、再度.jarファイルに戻すことができます。";
+}
+
+@Override
+public String modlauncher_mods_duplicado(String linea) {
+    return "<b>重複したModがあります</b> " + linea.replace("from mod files", "Modファイルから");
+}
+
+@Override
+public String mcforge_mod_suspechoso() {
+    return "<b>MinecraftForge が怪しい: このModに問題があります:</b> ";
+}
+
+
 }

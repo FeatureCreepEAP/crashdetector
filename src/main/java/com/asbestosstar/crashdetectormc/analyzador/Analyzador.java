@@ -11,7 +11,13 @@ public class Analyzador {
 	static {
 		verificaciones.add(new Drivers());
 		verificaciones.add(new EarlyWindow());
-		verificaciones.add(new NoTieneDependencias());
+		verificaciones.add(new FaltasDependenciasModLaunche());
+		verificaciones.add(new FaltasClases());
+		verificaciones.add(new FabricMCRuntimeErrorProvidedBy());
+		verificaciones.add(new ModulesDuplicadosJavaModulePlatform());
+		verificaciones.add(new ModsDuplicadosModLauncher());
+		verificaciones.add(new MCForgeModsSuspechoso());
+		verificaciones.add(new VerificacionDeStackTrace());
 	}
 	
 	

@@ -105,6 +105,60 @@ public class Espanol implements Idioma {
 			return "Compartir Informe,Sus registros se cargarán en securelogger.net y  tu informe se cargaran a un otro sito para 3 dias";
 		}
 	
-	
-	
+@Override
+public String problematico_jar() {
+    return "<b>Archivos JAR problemáticos detectados (Priorizar FATAL, luego nivel alto y línea baja):</b>";
+}
+
+@Override
+public String nivel() {
+    return "<b>nivel:</b> ";
+}
+
+@Override
+public String possibladad_fatal() {
+    return "<b>Posiblemente Fatal:</b> ";
+}
+
+@Override
+public String modids_problematicos() {
+    return "<b>ModIDs problemáticos detectados (Priorizar FATAL, luego nivel bajo y línea baja):</b>";
+}
+
+@Override
+public String packages_problematicos() {
+    return "<b>Paquetes problemáticos detectados (Priorizar FATAL, luego nivel bajo y línea baja):</b>";
+}
+
+@Override
+public String faltar_de_clases_fatales() {
+    return "<b>Clases fatales faltantes detectadas:</b>";
+}
+
+@Override
+public String corchetes_ondulados() {
+    return "<b>Contenido en {} (Lo más importante arriba, solo 20 primeros):</b>";
+}
+
+@Override
+public String config_spongemixin_problematico(String archivo) {
+    return "<b>Configuración problemática de SpongeMixin detectada: " + archivo + "</b>";
+}
+
+@Override
+public String module_resolution_exception(String modules, String paquete){
+return "Tienes Mods con Packages/Paquetes duplicados: " + modules + " package duplicado " + paquete.replace(".","/") + "puedes solucionarlo eliminando el paquete (carpeta) del jar, puedes abrir el jar en un software de archivo como filler-roller, winrar o 7z, también puedes cambiar la extensión del archivo de .jar a zip y luego eliminar la carpeta y luego cambiarla nuevamente a un archivo .jar.";
+}
+
+@Override
+public String modlauncher_mods_duplicado(String linea){
+	return "<b>Tienes Mods duplicado</b> " + linea.replace("from mod files","de mod archivos ");
+}
+
+@Override
+public String mcforge_mod_suspechoso(){
+	return "<b>MinecraftForge sospechosos esta mod tiene una ploblema:</b> ";
+}
+
+
 }

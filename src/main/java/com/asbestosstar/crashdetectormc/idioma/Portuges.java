@@ -98,7 +98,62 @@ public String linea_de_dependencia(String linea) {
     public String texto_debajo_de_buton_compartir_enlance() {
         return "Compartilhar relatório, logs serão carregados para securelogger.net e armazenados em outro site por 3 dias";
     }
+   @Override
+public String problematico_jar() {
+    return "<b>Arquivos JAR potencialmente problemáticos (Priorizar FATAL > Nível alto > Linha baixa):</b>";
+}
+
+@Override
+public String nivel() {
+    return "<b>lvl: </b>";
+}
+
+@Override
+public String possibladad_fatal() {
+    return "<b>Possivelmente Fatal:</b> ";
+}
+
+@Override
+public String modids_problematicos() {
+    return "<b>ModIDs problemáticos encontrados (Priorizar FATAL > Nível baixo > Linha baixa):</b>";
+}
+
+@Override
+public String packages_problematicos() {
+    return "<b>Pacotes problemáticos encontrados (Priorizar FATAL > Nível baixo > Linha baixa):</b>";
+}
+
+@Override
+public String faltar_de_clases_fatales() {
+    return "<b>Classes fatais ausentes encontradas:</b>";
+}
+
+@Override
+public String corchetes_ondulados() {
+    return "<b>Conteúdo em {} (Mais importante no topo, apenas 20 primeiros):</b>";
+}
+
+@Override
+public String config_spongemixin_problematico(String archivo) {
+    return "<b>Configuração problemática do SpongeMixin detectada: " + archivo + "</b>";
+}
 
 
+
+@Override
+public String module_resolution_exception(String modules, String paquete) {
+    return "Você tem Mods com pacotes duplicados: " + modules + " pacote duplicado " + paquete.replace(".", "/") + ". Você pode resolver isso removendo o pacote (pasta) do arquivo jar. Você pode abrir o arquivo jar usando um software de arquivamento como file-roller, WinRAR ou 7-Zip, ou alterar a extensão do arquivo de .jar para .zip, excluir a pasta e depois alterá-la novamente para um arquivo .jar.";
+}
+
+
+@Override
+public String modlauncher_mods_duplicado(String linea) {
+    return "<b>Você tem Mods duplicados</b> " + linea.replace("from mod files", "de arquivos de mods");
+}
+
+@Override
+public String mcforge_mod_suspechoso() {
+    return "<b>MinecraftForge suspeito: Este mod tem um problema:</b> ";
+}
 
 }

@@ -97,4 +97,62 @@ public class Arabe implements Idioma {
     public String texto_debajo_de_buton_compartir_enlance() {
         return "مشاركة التقرير، سيتم تحميل السجلات إلى securelogger.net وسيتم تخزين التقرير في موقع آخر لمدة 3 أيام";
     }
+    
+    
+    @Override
+    public String problematico_jar() {
+        return "<b>تم العثور على ملفات JAR محتملة المشكلات (FATAL أولًا ثم الأعلى lvl ثم الأقل ln): </b>";
+    }
+
+    @Override
+    public String nivel() {
+        return "<b>lvl: </b>";
+    }
+
+    @Override
+    public String possibladad_fatal() {
+        return "<b>مشكلة قاتلة محتملة: </b> ";
+    }
+
+    @Override
+    public String modids_problematicos() {
+        return "<b>تم العثور على ModIDs مشكلة (FATAL أولًا ثم الأقل lvl ثم الأقل ln): </b>";
+    }
+
+    @Override
+    public String packages_problematicos() {
+        return "<b>تم العثور على حزم مشكلة (FATAL أولًا ثم الأقل lvl ثم الأقل ln): </b>";
+    }
+
+    @Override
+    public String faltar_de_clases_fatales() {
+        return "<b>تم العثور على فئات قاتلة مفقودة: </b>";
+    }
+
+    @Override
+    public String corchetes_ondulados() {
+        return "<b>المحتوى داخل {} (الأهم في الأعلى، أول 20 فقط): </b>";
+    }
+
+    @Override
+    public String config_spongemixin_problematico(String archivo) {
+        return "<b>تم الكشف عن تكوين SpongeMixin مشكلة:</b> " + archivo;
+    }
+
+    @Override
+public String module_resolution_exception(String modules, String paquete){
+return "Tienes Mods con Packages/Paquetes duplicados: " + modules + " package duplicado " + paquete.replace(".","/") + "puedes solucionarlo eliminando el paquete (carpeta) del jar, puedes abrir el jar en un software de archivo como filler-roller, winrar o 7z, también puedes cambiar la extensión del archivo de .jar a zip y luego eliminar la carpeta y luego cambiarla nuevamente a un archivo .jar.";
+}
+
+@Override
+public String modlauncher_mods_duplicado(String linea) {
+    return "<b>لديك تعديلات مكررة</b> " + linea.replace("from mod files", "من ملفات التعديلات");
+}
+
+@Override
+public String mcforge_mod_suspechoso() {
+    return "<b>MinecraftForge مشبوه: هذا التعديل يحتوي على مشكلة:</b> ";
+}
+    
+    
 }

@@ -99,4 +99,63 @@ public class Ingles implements Idioma {
     }
     
     
+    @Override
+public String problematico_jar() {
+    return "<b>Found potentially problematic JAR files (Prioritise FATAL then Higher lvl then lower ln):</b>";
+}
+
+@Override
+public String nivel() {
+    return "<b>lvl: </b>";
+}
+
+@Override
+public String possibladad_fatal() {
+    return "<b>Possibly Fatal:</b> ";
+}
+
+@Override
+public String modids_problematicos() {
+    return "<b>Found potentially problematic modids (Prioritise FATAL then Lower lvl then lower ln):</b>";
+}
+
+@Override
+public String packages_problematicos() {
+    return "<b>Found potentially problematic packages (Prioritise FATAL then Lower lvl then lower ln):</b>";
+}
+
+@Override
+public String faltar_de_clases_fatales() {
+    return "<b>Found potentially fatal missing classes:</b>";
+}
+
+@Override
+public String corchetes_ondulados() {
+    return "<b>Found contents in {} (Top is most important, only top 20 shown):</b>";
+}
+
+@Override
+public String config_spongemixin_problematico(String archivo_json) {
+    return "<b>Potentially Problematic SpongeMixin Config:</b> " + archivo_json;
+}
+
+
+@Override
+public String module_resolution_exception(String modules, String paquete) {
+    return "You have Mods with duplicated Packages: " + modules + " duplicated package " + paquete.replace(".", "/") + ". You can fix this by removing the package (folder) from the jar file. You can open the jar file using archive software like file-roller, WinRAR or 7-Zip, or change the file extension from .jar to .zip, delete the folder, and then change it back to a .jar file.";
+}
+
+@Override
+public String modlauncher_mods_duplicado(String linea) {
+    return "<b>You have duplicate Mods</b> " + linea.replace("from mod files", "from mod files");
+}
+
+@Override
+public String mcforge_mod_suspechoso() {
+    return "<b>MinecraftForge suspicious: This mod has a problem:</b> ";
+}
+
+
+
+
 }
