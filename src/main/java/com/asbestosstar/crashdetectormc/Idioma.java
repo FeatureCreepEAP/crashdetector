@@ -136,4 +136,7 @@ public interface Idioma {
 	public String modlauncher_mods_duplicado(String linea);
 	
 	public String  mcforge_mod_suspechoso();
+
+	public String lithostichctov();
+
 }

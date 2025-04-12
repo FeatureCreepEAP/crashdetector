@@ -157,7 +157,10 @@ public String mcforge_mod_suspechoso() {
     return "<b>MinecraftForge مشکوک: این ماژول دارای مشکل است:</b> ";
 }
 
-
+@Override
+public String lithostichctov() {
+    return "<b>CTOV به lithostitched نیاز دارد، می‌توانید آن را از اینجا نصب کنید https://www.curseforge.com/minecraft/mc-mods/lithostitched</b>";
+}
 
 
 }

@@ -153,6 +153,12 @@ public String modlauncher_mods_duplicado(String linea) {
 public String mcforge_mod_suspechoso() {
     return "<b>MinecraftForge مشبوه: هذا التعديل يحتوي على مشكلة:</b> ";
 }
+
+
+@Override
+public String lithostichctov() {
+    return "<b>CTOV يحتاج إلى lithostitched، يمكنك تثبيته من هنا https://www.curseforge.com/minecraft/mc-mods/lithostitched</b>";
+}
     
     
 }

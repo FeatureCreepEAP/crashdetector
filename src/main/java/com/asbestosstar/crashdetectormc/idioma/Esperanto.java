@@ -153,5 +153,10 @@ public String mcforge_mod_suspechoso() {
     return "<b>MinecraftForge suspektinda: Ĉi tiu mod enhavas problemon:</b> ";
 }
 
+@Override
+public String lithostichctov() {
+    return "<b>CTOV bezonas lithostitched, vi povas instali ĝin de tie ĉi https://www.curseforge.com/minecraft/mc-mods/lithostitched</b>";
+}
+
 
 }

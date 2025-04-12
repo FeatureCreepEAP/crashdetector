@@ -155,6 +155,11 @@ public String mcforge_mod_suspechoso() {
     return "<b>MinecraftForge suspicious: This mod has a problem:</b> ";
 }
 
+@Override
+public String lithostichctov() {
+    return "<b>CTOV requires lithostitched, you can install it from here https://www.curseforge.com/minecraft/mc-mods/lithostitched</b>";
+}
+
 
 
 

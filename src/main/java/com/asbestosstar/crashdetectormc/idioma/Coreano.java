@@ -153,5 +153,10 @@ public String modlauncher_mods_duplicado(String linea) {
 public String mcforge_mod_suspechoso() {
     return "<b>MinecraftForge 의심스러움: 이 모드에 문제가 있습니다:</b> ";
 }
+
+@Override
+public String lithostichctov() {
+    return "<b>CTOV는 lithostitched가 필요합니다. 여기에서 설치할 수 있습니다: https://www.curseforge.com/minecraft/mc-mods/lithostitched</b>";
+}
     
 }

@@ -155,5 +155,10 @@ public String mcforge_mod_suspechoso() {
     return "<b>MinecraftForge 可疑: 此模组存在问题:</b> ";
 }
 
+@Override
+public String lithostichctov() {
+    return "<b>CTOV 需要 lithostitched，你可以从这里安装 https://www.curseforge.com/minecraft/mc-mods/lithostitched</b>";
+}
+
     
 }

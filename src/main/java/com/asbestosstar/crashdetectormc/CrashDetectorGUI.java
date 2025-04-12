@@ -2,13 +2,17 @@ package com.asbestosstar.crashdetectormc;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Instant;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -20,22 +24,25 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.HyperlinkEvent;
 
 public class CrashDetectorGUI extends JFrame {
 
     private final StringBuilder reportContent;
     private final Instant crashTime;
-
-    public CrashDetectorGUI(StringBuilder reportContent, Instant crashTime) {
+    List<Consola> consolas;
+    
+    public CrashDetectorGUI(List<Consola> consolas, StringBuilder reportContent, Instant crashTime) {
         this.reportContent = reportContent;
         this.crashTime = crashTime;
+        this.consolas=consolas;
         initializeUI();
     }
 
     private void initializeUI() {
         // Generate HTML report if needed
         if (MonitorDePID.local == null) {
-            MonitorDePID.local = GeneradorDeInformacion.generarLocal(reportContent, crashTime).getAbsolutePath();
+            MonitorDePID.local = GeneradorDeInformacion.generarLocal(consolas,reportContent, crashTime).getAbsolutePath();
         }
 
         setTitle("Crash Detector");
@@ -80,10 +87,21 @@ public class CrashDetectorGUI extends JFrame {
             htmlViewer.setText(new String(Files.readAllBytes(Paths.get(MonitorDePID.local))));
         } catch (IOException e) {
             htmlViewer.setText("<html><body style='color:#ff6b6b'>" 
-                + "Error loading report: " + e.getMessage() 
+                + "Problema con Informe: " + e.getMessage() 
                 + "</body></html>");
         }
 
+        
+        htmlViewer.addHyperlinkListener(e -> {
+            if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+                try {
+                    Desktop.getDesktop().browse(e.getURL().toURI());
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+        
         JScrollPane scrollPane = new JScrollPane(htmlViewer);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         scrollPane.getViewport().setBackground(new Color(30, 30, 30));
@@ -117,6 +135,17 @@ public class CrashDetectorGUI extends JFrame {
 //                JOptionPane.ERROR_MESSAGE
 //            );
 //        }
+    	
+        if (MonitorDePID.enlance == null) {
+            MonitorDePID.enlance = GeneradorDeInformacion.compartir(consolas,reportContent, crashTime);
+        }
+    	try {
+			Desktop.getDesktop().browse(new URL(MonitorDePID.enlance).toURI());
+		} catch (IOException | URISyntaxException e) {
+			// TODO Auto-generated catch block
+			CrashDetectorLogger.logException(e);
+		}
+    	
     }
 
     

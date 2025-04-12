@@ -153,11 +153,11 @@ public class MonitorDePID {
 
 				if (GraphicsEnvironment.isHeadless()) {
 
-					local = GeneradorDeInformacion.generarLocal(constructor, utc).getAbsolutePath();
+					local = GeneradorDeInformacion.generarLocal(consolas, constructor, utc).getAbsolutePath();
 					System.out.println(idioma.local_headless(enlance));
 					latch.countDown();
 				} else {
-					SwingUtilities.invokeLater(() -> new CrashDetectorGUI(constructor, utc).setVisible(true));
+					SwingUtilities.invokeLater(() -> new CrashDetectorGUI(consolas,constructor, utc).setVisible(true));
 					latch.countDown();
 				}
 //				try {
