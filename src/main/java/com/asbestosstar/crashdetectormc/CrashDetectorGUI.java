@@ -115,26 +115,6 @@ public class CrashDetectorGUI extends JFrame {
     }
 
     private void compartirInforme(ActionEvent evento) {
-//        try {
-//            if (MonitorDePID.local != null) {
-//                boolean success = SubidorDeInformes.subirInforme(MonitorDePID.local);
-//                if (success) {
-//                    JOptionPane.showMessageDialog(
-//                        this,
-//                        MonitorDePID.idioma.texto_compartir_exitoso(),
-//                        MonitorDePID.idioma.titulo_exito(),
-//                        JOptionPane.INFORMATION_MESSAGE
-//                    );
-//                }
-//            }
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(
-//                this,
-//                e.getMessage(),
-//                MonitorDePID.idioma.titulo_error(),
-//                JOptionPane.ERROR_MESSAGE
-//            );
-//        }
     	
         if (MonitorDePID.enlance == null) {
             MonitorDePID.enlance = GeneradorDeInformacion.compartir(consolas,reportContent, crashTime);

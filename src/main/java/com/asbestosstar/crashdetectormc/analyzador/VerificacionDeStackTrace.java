@@ -46,12 +46,12 @@ public class VerificacionDeStackTrace implements Verificaciones {
 	@Override
 	public void verificar(String log, StringBuilder build) {
 		int lvl = 0;
-		for (String trace : inverso(obtainerTracesFatal(log))) {// Las ultimas son las más importante
+		for (String trace : inverso(obtenerTracesFatal(log))) {// Las ultimas son las más importante
 			lvl++;
 			this.procesarTrace(build, trace, true, lvl);
 		}
 
-		for (String trace : inverso(obtainerTraces(log))) {// Las ultimas son las más importante
+		for (String trace : inverso(obtenerTraces(log))) {// Las ultimas son las más importante
 			lvl++;
 			this.procesarTrace(build, trace, false, lvl);
 		}
@@ -133,7 +133,7 @@ public class VerificacionDeStackTrace implements Verificaciones {
 
 	public void procesarTrace(StringBuilder build, String trace, boolean fatal, int lvl) {
 
-		List<String> archivos_json = obtainerArchivosJsonEnMixinExceptions(trace);
+		List<String> archivos_json = obtenerArchivosJsonEnMixinExceptions(trace);
 
 		if (!archivos_json.isEmpty()) {
 			for (String jsonFile : archivos_json) {
@@ -260,7 +260,7 @@ public class VerificacionDeStackTrace implements Verificaciones {
 		return ret;
 	}
 
-	private List<String> obtainerTracesFatal(String log) {
+	private List<String> obtenerTracesFatal(String log) {
 		// TODO Auto-generated method stub
 		List<String> ret = new ArrayList<String>();
 		String[] lineas = log.split(nl);
@@ -316,7 +316,7 @@ public class VerificacionDeStackTrace implements Verificaciones {
 		}
 	}
 
-	public static List<String> obtainerTraces(String log) {
+	public static List<String> obtenerTraces(String log) {
 		List<String> stackTraces = new ArrayList<>();
 		Matcher matcher = STACK_TRACE_PATTERN.matcher(log);
 		while (matcher.find()) {
@@ -325,7 +325,7 @@ public class VerificacionDeStackTrace implements Verificaciones {
 		return stackTraces;
 	}
 
-	public List<String> obtainerArchivosJsonEnMixinExceptions(String contento_de_logs) {
+	public List<String> obtenerArchivosJsonEnMixinExceptions(String contento_de_logs) {
 		List<String> archivos_json = new ArrayList<>();
 
 		String[] lineas = contento_de_logs.split("\r?\n");

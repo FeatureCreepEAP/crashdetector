@@ -15,12 +15,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 public class MonitorDePID {
 
+	
+	public static Path carpeta = new File("crash_detector/").toPath();
+	public static Path ultima_mods = carpeta.resolve("ultima_mods");
+	public static Path viajo_ultima_mods = carpeta.resolve("viajo_ultima_mods");
 	public static String nl = System.lineSeparator();
 	public static Idioma idioma = Idioma.detectar();
 	public static String local;
@@ -33,7 +35,6 @@ public class MonitorDePID {
 			return;
 		}
 
-		Path carpeta = new File("crash_detector/").toPath();
 		File html = new File("crash_detector/pantilla.htm");
 		if (!html.exists()) {
 			carpeta.toFile().mkdirs();
@@ -54,8 +55,7 @@ public class MonitorDePID {
 			}
 		}
 
-		Path ultima_mods = carpeta.resolve("ultima_mods");
-		Path viajo_ultima_mods = carpeta.resolve("viajo_ultima_mods");
+		
 		String mods = "";
 		if (ultima_mods.toFile().exists()) {
 			try {
@@ -127,7 +127,7 @@ public class MonitorDePID {
 
 		// Launch the child monitor process
 		try {
-			new ProcessBuilder(javaBinary.get(), "-cp", jar, "com.asbestosstar.crashdetectormc.MonitorDePID",
+			new ProcessBuilder(javaBinary.get(), "-cp", System.getProperty("java.class.path")+File.pathSeparator+jar, "com.asbestosstar.crashdetectormc.MonitorDePID",
 					"--monitor", String.valueOf(pid)).inheritIO().start();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -145,7 +145,7 @@ public class MonitorDePID {
 			if (!viva) {
 				System.out.println(idioma.pid_esta_muerto(pid));
 				StringBuilder constructor = new StringBuilder();
-				List<Consola> consolas = Consola.obtainerConsolas(utc);
+				List<Consola> consolas = Consola.obtenerConsolas(utc);
 				for (Consola consola : consolas) {
 					consola.analyzar(constructor);
 				}
@@ -160,6 +160,7 @@ public class MonitorDePID {
 					SwingUtilities.invokeLater(() -> new CrashDetectorGUI(consolas,constructor, utc).setVisible(true));
 					latch.countDown();
 				}
+				viajo_ultima_mods.toFile().delete();
 //				try {
 //					latch.await(); // Muerte cunado el popup se cerrada
 //				} catch (InterruptedException e) {
@@ -179,20 +180,20 @@ public class MonitorDePID {
 		}
 	}
 
-	private static void showPopupMessage(String message, CountDownLatch latch) {
-		SwingUtilities.invokeLater(() -> {
-			JOptionPane pane = new JOptionPane(message, JOptionPane.ERROR_MESSAGE);
-			JDialog dialog = pane.createDialog("Proceso Crash Detector");
-			dialog.setModal(true);
-			dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-				@Override
-				public void windowClosed(java.awt.event.WindowEvent e) {
-					latch.countDown(); // Release the latch when the dialog is closed
-				}
-			});
-			dialog.setVisible(true);
-		});
-	}
+//	private static void showPopupMessage(String message, CountDownLatch latch) {
+//		SwingUtilities.invokeLater(() -> {
+//			JOptionPane pane = new JOptionPane(message, JOptionPane.ERROR_MESSAGE);
+//			JDialog dialog = pane.createDialog("Proceso Crash Detector");
+//			dialog.setModal(true);
+//			dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+//				@Override
+//				public void windowClosed(java.awt.event.WindowEvent e) {
+//					latch.countDown(); // Release the latch when the dialog is closed
+//				}
+//			});
+//			dialog.setVisible(true);
+//		});
+//	}
 
 	// Compatible approach (Java 7+)
 	public static String leer_archivo(Path path) throws IOException {

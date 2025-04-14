@@ -55,7 +55,7 @@ public class GeneradorDeInformacion {
 	}
 
 	   public static String enviarInforme(String html) throws IOException {
-	        String servidor = "https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb";
+	        String servidor = Config.obtenerInstancia().obtenerSitoDeInformes();
 	        String parametros = "html_content=" + 
 	            java.net.URLEncoder.encode(html, StandardCharsets.UTF_8);
 

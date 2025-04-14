@@ -15,8 +15,6 @@ import java.nio.file.Path;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.zip.GZIPOutputStream;
 
@@ -35,10 +33,10 @@ public class Consola {
 		this.contento = MonitorDePID.leer_archivo(archivo);
 	}
 
-	public static List<Consola> obtainerConsolas(Instant tiempo) {
+	public static List<Consola> obtenerConsolas(Instant tiempo) {
 		List<Consola> resulto = new ArrayList<Consola>();
 
-		for (File archivo : obtainerArchivosDeConsolas()) {
+		for (File archivo : obtenerArchivosDeConsolas()) {
 			if (archivo.exists()) {
 
 				Instant epoc = Instant.ofEpochMilli(archivo.lastModified());
@@ -59,7 +57,7 @@ public class Consola {
 
 	}
 
-	public static List<File> obtainerArchivosDeConsolas() {
+	public static List<File> obtenerArchivosDeConsolas() {
 		List<File> resulto = new ArrayList<File>();
 
 		File carpetaLogs = new File("logs/");
@@ -143,21 +141,39 @@ public class Consola {
 	public void analyzar(StringBuilder constructor) {
 		// StringBuilder temporal para almacenar los resultados de las verificaciones
 		StringBuilder contenidoVerificaciones = new StringBuilder();
-
+		String contento_verificar = contento;
+		if(archivo.toString().contains("tlauncher")&&!archivo.toString().contains("starter")) {
+			if(contento.contains("[Launcher] Launching Minecraft...")) {//La consola en TLauncher es continua
+				String delimiter = "\\[Launcher\\] Launching Minecraft\\.\\.\\.";
+				String[] split= contento.split(delimiter);
+				int len = split.length;
+				contento_verificar=split[len-1];
+			}
+			
+			
+		}
+		
+		
+		
+		
+		
+		
 		// Iterar a través de todas las verificaciones y recopilar su salida
 		for (Verificaciones verificacion : Analyzador.verificaciones) {
-			verificacion.nueva().verificar(contento, contenidoVerificaciones);
+			verificacion.nueva().verificar(contento_verificar, contenidoVerificaciones);
 		}
 
 		// Verificar si hay algún contenido generado por las verificaciones
 		if (contenidoVerificaciones.length() > 0) {
 			// Crear un desplegable con el nombre del archivo como etiqueta
-			constructor.append("<details><summary>").append("<br>").append("<b>").append(archivo.getFileName()) // Nombre
-																												// del
-																												// archivo
-					.append("</b></summary>").append(contenidoVerificaciones.toString()) // Contenido de las
-																							// verificaciones
-					.append("</details><br>");
+			constructor.append("<details><summary>")
+	          .append("<span style='color: #"+Config.obtenerInstancia().obtenerColorDeTitulosDeConsolas()+"; font-weight: bold;'>") 
+	          .append(archivo.getFileName())
+	          .append("</span>") 
+	          .append("</b></summary>")
+	          .append("<br>")
+	          .append(contenidoVerificaciones.toString())
+	          .append("</details><br>");
 		}
 	}
 
