@@ -158,5 +158,10 @@ public String mcforge_mod_suspechoso() {
 public String lithostichctov() {
     return "<b>CTOV는 lithostitched가 필요합니다. 여기에서 설치할 수 있습니다: https://www.curseforge.com/minecraft/mc-mods/lithostitched</b>";
 }
+
+@Override
+public String necesitasSodiumParaIris() {
+    return "<b>Iris Shaders 또는 Oculus를 사용하려면 Sodium 또는 다른 로더용 복사본(Rubidium, Embedium, Bedium)이 필요합니다</b>";
+}
     
 }

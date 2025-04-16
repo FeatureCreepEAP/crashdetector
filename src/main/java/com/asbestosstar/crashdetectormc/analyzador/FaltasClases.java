@@ -11,6 +11,8 @@ public class FaltasClases implements Verificaciones {
 		for (String linea:contento_de_consola.split(nl)) {
 			if(linea.contains("Caused by: java.lang.ClassNotFoundException")) {
 				constructor.append(MonitorDePID.idioma.faltar_de_clases_fatales()+linea.split(":")[2]+nl_html);
+			}else if (linea.contains("Error loading class:")) {
+				constructor.append(MonitorDePID.idioma.faltar_de_clases_fatales()+linea.split("Error loading class: ")[1].split(" ")[0]+nl_html);
 			}
 		}
 		

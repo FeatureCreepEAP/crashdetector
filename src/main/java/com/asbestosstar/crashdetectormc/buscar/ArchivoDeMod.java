@@ -1,7 +1,5 @@
 package com.asbestosstar.crashdetectormc.buscar;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,27 +8,28 @@ public interface ArchivoDeMod {
 
 	public static ArchivoDeMod origin = new Origin();
 
-	public void establecerDesde();
-
 	public ArchivoDeMod obtenerDesde();
 
 	public List<ArchivoDeMod> mods_en_mods();
-	
-	public List<String> obtenerArchivos();
-	
-	public InputStream obtenerStream(String arcivo) throws FileNotFoundException;
-	
-	public String nombre();
+			
+	public List<String> nombre();
 	
 	public String ubicacion();
+	
+	public List<String> clases();
+	
+	public boolean tieneNombreRecursivo(String nombre);
+	
+	public String obtenerNombreRecursivo(String nombre);
+	
+	public boolean tieneArchivoRecursivo(String archivo);
+	
+	public String obtenerArchivoRecursivo(String archivo);
+	
+	public List<String> archivos();
+
 
 	class Origin implements ArchivoDeMod {
-
-		@Override
-		public void establecerDesde() {
-			// TODO Auto-generated method stub
-
-		}
 
 		@Override
 		public ArchivoDeMod obtenerDesde() {
@@ -45,27 +44,51 @@ public interface ArchivoDeMod {
 		}
 
 		@Override
-		public List<String> obtenerArchivos() {
+		public List<String> nombre() {
 			// TODO Auto-generated method stub
-			return new ArrayList<>();
-		}
-
-		@Override
-		public InputStream obtenerStream(String arcivo) throws FileNotFoundException {
-			// TODO Auto-generated method stub
-			throw new FileNotFoundException();
-		}
-
-		@Override
-		public String nombre() {
-			// TODO Auto-generated method stub
-			return "";
+			return new ArrayList<String>();
 		}
 
 		@Override
 		public String ubicacion() {
 			// TODO Auto-generated method stub
 			return "";
+		}
+
+		@Override
+		public List<String> clases() {
+			// TODO Auto-generated method stub
+			return new ArrayList<String>();
+		}
+
+		@Override
+		public boolean tieneNombreRecursivo(String nombre) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public String obtenerNombreRecursivo(String nombre) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public boolean tieneArchivoRecursivo(String paquete) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public String obtenerArchivoRecursivo(String paquete) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public List<String> archivos() {
+			// TODO Auto-generated method stub
+			return new ArrayList<String>();
 		}
 
 	}

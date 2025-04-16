@@ -11,6 +11,7 @@ public class Analyzador {
 	static {
 		verificaciones.add(new Drivers());
 		verificaciones.add(new EarlyWindow());
+		verificaciones.add(new NecesitasSodium());
 		verificaciones.add(new FaltasDependenciasModLaunche());
 		verificaciones.add(new FaltasClases());
 		verificaciones.add(new FabricMCRuntimeErrorProvidedBy());
@@ -18,6 +19,8 @@ public class Analyzador {
 		verificaciones.add(new ModsDuplicadosModLauncher());
 		verificaciones.add(new MCForgeModsSuspechoso());
 		verificaciones.add(new VerificacionDeStackTrace());
+
+		
 	}
 	
 	

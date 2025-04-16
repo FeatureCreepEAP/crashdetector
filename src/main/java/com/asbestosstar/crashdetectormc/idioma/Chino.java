@@ -160,5 +160,10 @@ public String lithostichctov() {
     return "<b>CTOV 需要 lithostitched，你可以从这里安装 https://www.curseforge.com/minecraft/mc-mods/lithostitched</b>";
 }
 
+@Override
+public String necesitasSodiumParaIris() {
+    return "<b>要使用 Iris Shaders 或 Oculus，你需要 Sodium 或其他加载器的副本（Rubidium、Embedium、Bedium）</b>";
+}
+
     
 }

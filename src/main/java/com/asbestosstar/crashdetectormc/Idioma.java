@@ -138,5 +138,7 @@ public interface Idioma {
 	public String  mcforge_mod_suspechoso();
 
 	public String lithostichctov();
+	
+	public String necesitasSodiumParaIris();
 
 }

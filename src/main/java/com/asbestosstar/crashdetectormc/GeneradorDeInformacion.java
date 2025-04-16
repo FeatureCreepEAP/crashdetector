@@ -18,7 +18,7 @@ public class GeneradorDeInformacion {
 			StringBuilder cons = new StringBuilder();
 			for (Consola co : consolas) {
 				cons.append("<a href='file://").append(co.archivo.toUri().toString()).append("'>")
-						.append(co.archivo.toString()).append("</a><br>");
+						.append(co.archivo.toString().strip()).append("</a><br>");
 			}
 
 			String pantilla = MonitorDePID.leer_archivo(new File("crash_detector/pantilla.htm").toPath());
@@ -38,7 +38,7 @@ public class GeneradorDeInformacion {
 		try {
 			StringBuilder cons = new StringBuilder();
 			for (Consola co : consolas) {
-				cons.append("<a href=" + co.obtainerEnlance() + ">" + co.archivo.toString() + "</a>").append("<br>");
+				cons.append("<a href=" + co.obtainerEnlance() + ">" + co.archivo.toString().strip() + "</a>").append("<br>");
 
 			}
 

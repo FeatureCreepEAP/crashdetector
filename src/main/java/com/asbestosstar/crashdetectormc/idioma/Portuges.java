@@ -161,5 +161,10 @@ public String lithostichctov() {
     return "<b>CTOV precisa de lithostitched, você pode instalá-lo aqui https://www.curseforge.com/minecraft/mc-mods/lithostitched</b>";
 }
 
+@Override
+public String necesitasSodiumParaIris() {
+    return "<b>Para usar Iris Shaders ou Oculus, você precisa de Sodium ou uma cópia para outro carregador (Rubidium, Embedium, Bedium)</b>";
+}
+
 
 }

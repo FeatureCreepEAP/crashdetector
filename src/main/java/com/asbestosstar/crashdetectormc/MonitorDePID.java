@@ -2,10 +2,12 @@ package com.asbestosstar.crashdetectormc;
 
 import java.awt.GraphicsEnvironment;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -14,8 +16,13 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
+import java.util.zip.ZipInputStream;
 
 import javax.swing.SwingUtilities;
+
+import com.asbestosstar.crashdetectormc.buscar.ArchivoDeMod;
+import com.asbestosstar.crashdetectormc.buscar.Buscardor;
+import com.asbestosstar.crashdetectormc.buscar.ModPKZip;
 
 public class MonitorDePID {
 
@@ -111,7 +118,9 @@ public class MonitorDePID {
 
 		String jar;
 		try {
-			jar = new File(MonitorDePID.class.getProtectionDomain().getCodeSource().getLocation().toURI())
+			URI uri_jar =MonitorDePID.class.getProtectionDomain().getCodeSource().getLocation().toURI();
+			String uri_de_jar_string = uri_jar.toString().replace("union:", "file://").split(".jar")[0]+".jar";//Porque la union sistema de archivos
+			jar = new File(uri_de_jar_string)
 					.getAbsolutePath();
 		} catch (URISyntaxException e) {
 			System.err.println(idioma.no_se_donde_esta_jar());
@@ -145,6 +154,21 @@ public class MonitorDePID {
 			if (!viva) {
 				System.out.println(idioma.pid_esta_muerto(pid));
 				StringBuilder constructor = new StringBuilder();
+//				try {
+//					for (String mod:leer_archivo(ultima_mods).split(nl)) {
+//						File arc = new File(mod);
+//						if(arc.isFile()) {
+//						Buscardor.mods.add(new ModPKZip(mod,ArchivoDeMod.origin,new ZipInputStream(new FileInputStream(arc))));
+//						}
+//						
+//					}
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				} manaña
+				
+				
+				
 				List<Consola> consolas = Consola.obtenerConsolas(utc);
 				for (Consola consola : consolas) {
 					consola.analyzar(constructor);

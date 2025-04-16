@@ -159,6 +159,11 @@ public String mcforge_mod_suspechoso() {
 public String lithostichctov() {
     return "<b>CTOV يحتاج إلى lithostitched، يمكنك تثبيته من هنا https://www.curseforge.com/minecraft/mc-mods/lithostitched</b>";
 }
+
+@Override
+public String necesitasSodiumParaIris() {
+    return "<b>للاستخدام Iris Shaders أو Oculus، تحتاج إلى Sodium أو نسخة لمحمل آخر (Rubidium، Embedium، Bedium)</b>";
+}
     
     
 }
