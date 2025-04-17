@@ -19,7 +19,9 @@ public class Analyzador {
 		verificaciones.add(new ModsDuplicadosModLauncher());
 		verificaciones.add(new MCForgeModsSuspechoso());
 		verificaciones.add(new VerificacionDeStackTrace());
+		verificaciones.add(new KubeJSResourcePack());
 
+		
 		
 	}
 	

@@ -140,5 +140,7 @@ public interface Idioma {
 	public String lithostichctov();
 	
 	public String necesitasSodiumParaIris();
+	
+	public String kubeJSResourcePack(String mod_nombre);
 
 }

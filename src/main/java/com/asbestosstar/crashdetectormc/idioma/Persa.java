@@ -1,171 +1,163 @@
 package com.asbestosstar.crashdetectormc.idioma;
-
+ 
+import com.asbestosstar.crashdetectormc.Config;
 import com.asbestosstar.crashdetectormc.Idioma;
-
+ 
 public class Persa implements Idioma {
-
+    private final Config config = Config.obtenerInstancia();
+ 
     @Override
     public String carpeta_de_mods_no_valido() {
-        return "این یک پوشه معتبر برای افزونه‌ها نیست";
+        return "<span style='color:#" + config.obtenerColorError() + "'>پوشه mods نامعتبر</span>";
     }
-
+ 
     @Override
     public String no_se_donde_esta_jar() {
-        return "من نمی‌دانم فایل JAR CrashDetector کجاست";
+        return "<span style='color:#" + config.obtenerColorError() + "'>فایل JAR CrashDetector پیدا نشد</span>";
     }
-
+ 
     @Override
     public String buscando_para_pid(long pid) {
-        return "در حال جستجوی PID: " + String.valueOf(pid);
+        return "<span style='color:#" + config.obtenerColorInfo() + "'>در حال جستجو برای PID: " + String.valueOf(pid) + "</span>";
     }
-
+ 
     @Override
     public String pid_esta_muerto(long pid) {
-        return "(PID: " + String.valueOf(pid) + ") مرده است!";
+        return "<span style='color:#" + config.obtenerColorAdvertencia() + "'>(PID: " + String.valueOf(pid) + ") متوقف شده است!</span>";
     }
-
+ 
     @Override
     public String no_tenemos_jvm() {
-        return "ما JVM نداریم";
+        return "<span style='color:#" + config.obtenerColorError() + "'>JVM وجود ندارد</span>";
     }
-    
+ 
     @Override
-public String probelma_con_graficas_ati() {
-    return "به‌روزرسانی درایورهای شما ممکن است کمک کند. لطفاً توجه داشته باشید که وقتی درایورها در وضعیت خراب هستند، جستجوی به‌روزرسانی به روش معمول هیچ نتیجه‌ای پیدا نخواهد کرد، بنابراین مهم است که از راهنمای پیوند داده شده پیروی کنید. مهم: اگر کارت گرافیک Nvidia دارید، مطمئن شوید که هر چیزی مرتبط با Minecraft (مانند Java و برنامه‌های راه‌انداز) را برای اولویت دادن به عملکرد بالا در تنظیمات Windows و پنل کنترل Nvidia تنظیم کرده‌اید. برای حل این مشکل، این راهنما را بخوانید: https://forums.minecraftforge.net/topic/125488-rules-and-frequently-asked-questions-faq/#:~:text=How%20do%20I%20update%20my%20drivers%3F";
-}
-
-@Override
-public String probelma_con_graficas_nouveau() {
-    return "برخی از نسخه‌های قدیمی گاهی مشکلاتی با گرافیک Nouveau در صفحه بارگذاری اولیه دارند.";
-}
-
-@Override
-public String probelma_con_graficas_general() {
-    return "شما مشکلی با درایورهای گرافیکی خود دارید. اگر GPU یا APU از نوع AMD/ATI دارید، درایورهای گرافیکی AMD خود را به‌روزرسانی کنید. اگر کارت گرافیک NVIDIA دارید، مطمئن شوید که بازی و تمام نمونه‌های javaw.exe را برای استفاده از کارت گرافیک اختصاصی تنظیم کرده‌اید. این راهنما را بخوانید: https://forums.minecraftforge.net/topic/125488-rules-and-frequently-asked-questions-faq/#:~:text=How%20do%20I%20update%20my%20drivers%3F";
-}
-
-@Override
-public String fmlEarlyWindow() {
-    return "پنجره FML Early شما دچار مشکل شده است. "
-            + "برای تغییر این موضوع، به (.)minecraft/config/fml.toml بروید "
-            + "و earlyWindowProvider را به earlyWindowProvider=\"none\" تغییر دهید. "
-            + "اگر از Mac M1 استفاده می‌کنید، مطمئن شوید که از نسخه ARM Java استفاده می‌کنید و نه نسخه Intel x64. "
-            + "این مشکل همچنین اگر درایورها قدیمی باشند، شایع است. اگر در ویندوز هستید و غیرفعال کردن این گزینه کار نکرد، این راهنما را بررسی کنید: https://forums.minecraftforge.net/topic/125488-rules-and-frequently-asked-questions-faq/#:~:text=How%20do%20I%20update%20my%20drivers%3F";
-}
-
-@Override
-public String no_tienes_las_dependencias_necesitas() {
-    return "همه وابستگی‌های لازم را ندارید:";
-}
-
-@Override
-public String linea_de_dependencia(String linea) {
-    return linea.replace("Requested by", "درخواست شده توسط").replace("Expected range", "محدوده مورد انتظار");
-}
-
-
+    public String probelma_con_graficas_ati() {
+        return "<span style='color:#" + config.obtenerColorError() + "'>به روز رسانی درایور ممکن است کمک کند. لطفا توجه داشته باشید که وقتی درایور خراب است، روش های معمولی به روز رسانی ممکن است به روز رسانی را پیدا نکنند، بنابراین لطفاً به راهنمای پیوند داده شده عمل کنید. نکته مهم: اگر از کارت گرافیک Nvidia استفاده می کنید، مطمئن شوید که تمام تنظیمات مربوط به Minecraft (مانند Java و لانچر) در تنظیمات Windows و پنل کنترل Nvidia به عنوان پرکاربرد تنظیم شده اند. این راهنما را بخوانید: <a href='https://forums.minecraftforge.net/topic/125488-rules-and-frequently-asked-questions-faq/#:~:text=How%20do%20I%20update%20my%20drivers%3F' style='color:#" + config.obtenerColorEnlace() + "'>راهنمای به روز رسانی درایور</a></span>";
+    }
+ 
+    @Override
+    public String probelma_con_graficas_nouveau() {
+        return "<span style='color:#" + config.obtenerColorAdvertencia() + "'>برخی از نسخه های قدیمی در رابط بارگذاری اولیه کارت گرافیک Nouveau گاهی اوقات دچار مشکل می شوند.</span>";
+    }
+ 
+    @Override
+    public String probelma_con_graficas_general() {
+        return "<span style='color:#" + config.obtenerColorError() + "'>شما مشکل درایور کارت گرافیک دارید. اگر از GPU یا APU AMD/ATI استفاده می کنید، لطفاً درایور کارت گرافیک AMD خود را به روز کنید. اگر از کارت گرافیک NVIDIA استفاده می کنید، مطمئن شوید که بازی و تمام نمونه های javaw.exe برای استفاده از کارت گرافیک مجزا تنظیم شده اند. این راهنما را بخوانید: <a href='https://forums.minecraftforge.net/topic/125488-rules-and-frequently-asked-questions-faq/#:~:text=How%20do%20I%20update%20my%20drivers%3F' style='color:#" + config.obtenerColorEnlace() + "'>راهنمای به روز رسانی درایور</a></span>";
+    }
+ 
+    @Override
+    public String fmlEarlyWindow() {
+        return "<span style='color:#" + config.obtenerColorError() + "'>بارگذاری پنجره اولیه FML شما شکست خورد. برای رفع این مشکل، به (.minecraft/config/fml.toml) بروید و earlyWindowProvider را به \"none\" تنظیم کنید. اگر از Mac M1 استفاده می کنید، مطمئن شوید که از نسخه ARM Java استفاده می کنید، نه نسخه Intel x64. این همچنین یک مشکل رایج درایور قدیمی است. اگر از ویندوز استفاده می کنید و غیرفعال کردن این تنظیمات بی فایده بود، این راهنما را مطالعه کنید: <a href='https://forums.minecraftforge.net/topic/125488-rules-and-frequently-asked-questions-faq/#:~:text=How%20do%20I%20update%20my%20drivers%3F' style='color:#" + config.obtenerColorEnlace() + "'>راهنمای به روز رسانی درایور</a></span>";
+    }
+ 
+    @Override
+    public String no_tienes_las_dependencias_necesitas() {
+        return "<span style='color:#" + config.obtenerColorError() + "'>وابستگی های لازم را ندارید:</span>";
+    }
+ 
+    @Override
+    public String linea_de_dependencia(String linea) {
+        return "<span style='color:#" + config.obtenerColorInfo() + "'>" + linea.replace("Requested by", "درخواست شده توسط").replace("Expected range", "محدوده انتظاری") + "</span>";
+    }
+ 
     @Override
     public String local_headless(String archivo) {
-        return "گزارش خرابی CrashDetector اینجا ذخیره شده است: " + archivo;
+        return "<span style='color:#" + config.obtenerColorInfo() + "'>گزارش CrashDetector شما در اینجا است <a href='" + archivo + "' style='color:#" + config.obtenerColorEnlace() + "'>مشاهده گزارش</a></span>";
     }
-
-
+ 
     @Override
-    // متن فارسی رابط گرافیکی
     public String texto_de_gui() {
-        return "این رابط گرافیکی CrashDetector است. اگر بازی بدون مشکل بسته شود، آن را نادیده بگیرید.";
+        return "<span style='color:#" + config.obtenerColorInfo() + "'>این رابط کاربری GUI CrashDetector است. اگر بازی به طور معمول بسته شد، لطفا این رابط را نادیده بگیرید.</span>";
     }
-
-
+ 
     @Override
-    // نسخه فارسی
     public String texto_de_buton_local_enlance() {
-        return "مشاهده گزارش";
+        return "<span style='color:#" + config.obtenerColorBoton() + "'>مشاهده گزارش</span>";
     }
-
+ 
     @Override
-    // توضیحات دکمه مشاهده
     public String texto_debajo_de_buton_local_enlance() {
-        return "گزارش محلی را در مرورگر مشاهده کنید";
+        return "<span style='color:#" + config.obtenerColorInfo() + "'>گزارش محلی را در مرورگر مشاهده کنید.</span>";
     }
-
+ 
     @Override
-    // متن دکمه اشتراک
     public String texto_de_buton_compartir_enlance() {
-        return "اشتراک گزارش";
+        return "به اشتراک گذاشتن گزارش";
     }
-
+ 
     @Override
-    // توضیحات دکمه اشتراک
     public String texto_debajo_de_buton_compartir_enlance() {
-        return "گزارش شما به securelogger.net آپلود شده و برای 3 روز در سایت دیگری ذخیره می‌شود";
+        return "گزارش را به اشتراک بگذارید. لاگ های شما به securelogger.net و گزارش به سایت های دیگر آپلود می شود.";
     }
-
-
-
-@Override
-public String problematico_jar() {
-    return "<b>فایل‌های JAR مشکل‌دار یافت شد (اولویت: FATAL، سطح بالاتر، خط پایین‌تر):</b>";
-}
-
-@Override
-public String nivel() {
-    return "<b>lvl: </b>";
-}
-
-@Override
-public String possibladad_fatal() {
-    return "<b>احتمالاً فاتال:</b> ";
-}
-
-@Override
-public String modids_problematicos() {
-    return "<b>modidهای مشکل‌دار یافت شد (اولویت: FATAL، سطح پایین‌تر، خط پایین‌تر):</b>";
-}
-
-@Override
-public String packages_problematicos() {
-    return "<b>پکیج‌های مشکل‌دار یافت شد (اولویت: FATAL، سطح پایین‌تر، خط پایین‌تر):</b>";
-}
-
-@Override
-public String faltar_de_clases_fatales() {
-    return "<b>کلاس‌های فاتال گم‌شده یافت شد:</b>";
-}
-
-@Override
-public String corchetes_ondulados() {
-    return "<b>محتوای داخل {} (مهمترین در بالا، فقط 20 اول):</b>";
-}
-
-@Override
-public String config_spongemixin_problematico(String archivo) {
-    return "<b>پیکربندی مشکل‌دار SpongeMixin شناسایی شد: " + archivo + "</b>";
-}
-@Override
-public String module_resolution_exception(String modules, String paquete) {
-    return "شما ماژول‌هایی با بسته‌های تکراری دارید: " + modules + " بسته تکراری " + paquete.replace(".", "/") + ". شما می‌توانید این مشکل را با حذف بسته (پوشه) از فایل jar حل کنید. شما می‌توانید فایل jar را با استفاده از نرم‌افزارهای فشرده‌سازی مثل WinRAR,File-Roller, یا 7-Zip باز کنید، یا پسوند فایل را از .jar به .zip تغییر دهید، پوشه را حذف کنید و سپس آن را دوباره به فایل .jar تبدیل کنید.";
-}
-
-@Override
-public String modlauncher_mods_duplicado(String linea) {
-    return "<b>شما ماژول‌های تکراری دارید</b> " + linea.replace("from mod files", "از فایل‌های ماژول");
-}
-
-@Override
-public String mcforge_mod_suspechoso() {
-    return "<b>MinecraftForge مشکوک: این ماژول دارای مشکل است:</b> ";
-}
-
-@Override
-public String lithostichctov() {
-    return "<b>CTOV به lithostitched نیاز دارد، می‌توانید آن را از اینجا نصب کنید https://www.curseforge.com/minecraft/mc-mods/lithostitched</b>";
-}
-
-@Override
-public String necesitasSodiumParaIris() {
-    return "<b>برای استفاده از Iris Shaders یا Oculus، به Sodium یا یک کپی برای بارگذار دیگر (Rubidium، Embedium، Bedium) نیاز دارید</b>";
-}
-
-
+ 
+    @Override
+    public String problematico_jar() {
+        return "<b style='color:#" + config.obtenerColorError() + "'>فایل JAR مشکوک شناسایی شد (اولویت با FATAL، سپس با اولویت بالا و کم):</b>";
+    }
+ 
+    @Override
+    public String nivel() {
+        return "<b style='color:#" + config.obtenerColorError() + "'> سطح:</b> ";
+    }
+ 
+    @Override
+    public String possibladad_fatal() {
+        return "<b style='color:#" + config.obtenerColorError() + "'>احتمالاً کشنده:</b> ";
+    }
+ 
+    @Override
+    public String modids_problematicos() {
+        return "<b style='color:#" + config.obtenerColorError() + "'>ModID های مشکوک شناسایی شدند (اولویت با FATAL، سپس با اولویت کم و کم):</b>";
+    }
+ 
+    @Override
+    public String packages_problematicos() {
+        return "<b style='color:#" + config.obtenerColorError() + "'>بسته های مشکوک شناسایی شدند (اولویت با FATAL، سپس با اولویت کم و کم):</b>";
+    }
+ 
+    @Override
+    public String faltar_de_clases_fatales() {
+        return "<b style='color:#" + config.obtenerColorError() + "'>کلاس های کلیدی گمشده شناسایی شدند:</b>";
+    }
+ 
+    @Override
+    public String corchetes_ondulados() {
+        return "<b style='color:#" + config.obtenerColorError() + "'>محتوای {} (مهم ترین در بالا، فقط 20 مورد اول نمایش داده می شود):</b>";
+    }
+ 
+    @Override
+    public String config_spongemixin_problematico(String archivo) {
+        return "<b style='color:#" + config.obtenerColorError() + "'>پیکربندی SpongeMixin مشکوک شناسایی شد: " + "</b>" + archivo;
+    }
+ 
+    @Override
+    public String module_resolution_exception(String modules, String paquete) {
+        return "<span style='color:#" + config.obtenerColorError() + "'>Mods شما بسته های تکراری دارند: " + modules + " بسته تکراری " + paquete.replace(".", "/") + " . شما می توانید با حذف پوشه (ها) از jar (با استفاده از نرم افزار هایی مانند WinRAR یا 7z برای باز کردن jar) یا تغییر پسوند فایل از .jar به zip، حذف پوشه و تغییر مجدد پسوند به .jar، این مشکل را حل کنید.</span>";
+    }
+ 
+    @Override
+    public String modlauncher_mods_duplicado(String linea) {
+        return "<b style='color:#" + config.obtenerColorError() + "'>Mods تکراری شناسایی شدند</b> " + linea.replace("from mod files", "از فایل های mod");
+    }
+ 
+    @Override
+    public String mcforge_mod_suspechoso() {
+        return "<b style='color:#" + config.obtenerColorError() + "'>MinecraftForge mod مشکوک شناسایی کرد:</b> ";
+    }
+ 
+    @Override
+    public String lithostichctov() {
+        return "<b style='color:#" + config.obtenerColorError() + "'>CTOV به lithostitched نیاز دارد، شما می توانید آن را از اینجا نصب کنید: <a href='https://www.curseforge.com/minecraft/mc-mods/lithostitched' style='color:#" + config.obtenerColorEnlace() + "'>Lithostitched</a></b>";
+    }
+ 
+    @Override
+    public String necesitasSodiumParaIris() {
+        return "<b style='color:#" + config.obtenerColorError() + "'>برای استفاده از Iris shaders یا Oculus، شما به نسخه سازگار SODIUM یا بارگذارهای دیگر (Rubidium, Embedium, Bedium) نیاز دارید</b>";
+    }
+ 
+    @Override
+    public String kubeJSResourcePack(String mod_nombre) {
+        return "<b style='color:#" + config.obtenerColorError() + "'>مشکل در افزونه KubeJS </b>" + mod_nombre;
+    }
 }

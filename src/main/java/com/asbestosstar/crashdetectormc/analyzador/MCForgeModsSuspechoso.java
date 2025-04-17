@@ -4,24 +4,45 @@ import com.asbestosstar.crashdetectormc.MonitorDePID;
 
 public class MCForgeModsSuspechoso implements Verificaciones {
 
-	@Override
-	public void verificar(String contento_de_consola, StringBuilder constructor) {
-		// TODO Auto-generated method stub
-		String[] lineas = contento_de_consola.split(nl);
-		int len = lineas.length;
-		for (int i = 0; i < len - 1; i++) {
-		    if (lineas[i].contains("Suspected Mod:")) {
-		        constructor.append(MonitorDePID.idioma.mcforge_mod_suspechoso() + " " + lineas[i + 1]);
-		    }
-		}
-	
-	
-	}
+    @Override
+    public void verificar(String contenido_de_consola, StringBuilder constructor) {
+        String[] líneas = contenido_de_consola.split(nl);
+        int longitud = líneas.length;
+        
+        for (int i = 0; i < longitud; i++) {
+            String línea = líneas[i];
+            
+            // Verificación original de mods sospechosos
+            if (línea.contains("Suspected Mod:")) {
+                if (i + 1 < longitud) {
+                    constructor.append(MonitorDePID.idioma.mcforge_mod_suspechoso())
+                               .append(" ")
+                               .append(líneas[i + 1].trim())
+                               .append(nl_html);
+                }
+            }
+            // Nueva verificación de errores de creación de mods
+            else if (línea.contains("Failed to create mod instance. ModID:")) {
+                int inicioIDMod = línea.indexOf("ModID: ") + "ModID: ".length();
+                int índiceComa = línea.indexOf(',', inicioIDMod);
+                
+                if (índiceComa > inicioIDMod) {
+                    String idMod = línea.substring(inicioIDMod, índiceComa).trim();
+                    String detallesError = línea.substring(índiceComa + 1).trim();
+                    
+                    constructor.append(MonitorDePID.idioma.mcforge_mod_suspechoso())
+                               .append(" ")
+                               .append(idMod)
+                               .append(": ")
+                               .append(detallesError)
+                               .append(nl_html);
+                }
+            }
+        }
+    }
 
-	@Override
-	public Verificaciones nueva() {
-		// TODO Auto-generated method stub
-		return new MCForgeModsSuspechoso();
-	}
-
+    @Override
+    public Verificaciones nueva() {
+        return new MCForgeModsSuspechoso();
+    }
 }

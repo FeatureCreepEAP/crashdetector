@@ -226,8 +226,8 @@ public class VerificacionDeStackTrace implements Verificaciones {
 		}
 
 		String[] ids = { "java", "minecraft", "minecraftforge", "eventbus", "cpw.", "coremods", "featurecreep", "mixin",
-				"accesstransformer", "authlib", "jdk.", "java.", "fmlloader", "fmlcore", "org.spongepowered.mixin",
-				"fmlearlydisplay" };
+				"accesstransformer","forge", "authlib", "jdk.", "java.", "fmlloader", "fmlcore", "org.spongepowered.mixin",
+				"fmlearlydisplay","com.sun.jna", "text2speech" };
 
 		for (String id : ids) {
 			if (modid.startsWith(id)) {
@@ -395,6 +395,21 @@ public class VerificacionDeStackTrace implements Verificaciones {
 			return true;
 		}
 		if (jarName.startsWith("loader-")) {
+			return true;
+		}
+		if (jarName.startsWith("authlib-")) {
+			return true;
+		}
+		if (jarName.startsWith("jna-")) {
+			return true;
+		}
+		if (jarName.startsWith("text2speech-")) {
+			return true;
+		}
+		if (jarName.startsWith("Forge%")) {
+			return true;
+		}
+		if (jarName.startsWith("language-")) {
 			return true;
 		}
 		if (jarName.startsWith("language-")) {
