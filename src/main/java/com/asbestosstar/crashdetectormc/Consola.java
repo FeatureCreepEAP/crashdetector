@@ -133,7 +133,16 @@ public class Consola {
 		resulto.add(new File("sklauncher/sklauncher_logs.txt"));
 
 		resulto.add(new File("../../../../main.log"));// GDLauncher
+		
+		resulto.add(new File("../../../../main.log"));// GDLauncher
 
+		
+		resulto.add(new File("hs_err_pid"+String.valueOf(MonitorDePID.pid)+".log" ));// GDLauncher
+
+		
+		
+		
+		
 		return resulto;
 
 	}

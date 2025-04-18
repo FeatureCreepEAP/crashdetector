@@ -31,10 +31,10 @@ public class Ruso implements Idioma {
         return "<span style='color:#" + config.obtenerColorError() + "'>JVM не обнаружена</span>";
     }
 
-    @Override
-    public String probelma_con_graficas_ati() {
-        return "<span style='color:#" + config.obtenerColorError() + "'>Обновление драйверов может помочь. Обратите внимание: при поврежденных драйверах обычный способ обновления может не работать, следуйте инструкции по ссылке. Важно: для NVIDIA установите высокую производительность для всех Java-процессов Minecraft в настройках Windows и панели управления NVIDIA. Инструкция: <a href='https://forums.minecraftforge.net/topic/125488-rules-and-frequently-asked-questions-faq/#:~:text=How%20do%20I%20update%20my%20drivers%3F' style='color:#" + config.obtenerColorEnlace() + "'>Руководство по обновлению драйверов</a></span>";
-    }
+@Override
+public String problema_con_graficas_ati() {
+    return "<span style='color:#" + config.obtenerColorError() + "'>Обновление драйверов ATI/AMD может помочь. Прочитайте это руководство для исправления: <a href='https://forums.minecraftforge.net/topic/125488-rules-and-frequently-asked-questions-faq/#:~:text=How%20do%20I%20update%20my%20drivers%3F' style='color:#" + config.obtenerColorEnlace() + "'>Руководство по обновлению драйверов</a> https://www.amd.com/es/support/download/drivers.html Скачать </span>";
+}
 
     @Override
     public String probelma_con_graficas_nouveau() {
@@ -160,4 +160,77 @@ public class Ruso implements Idioma {
     public String kubeJSResourcePack(String mod_nombre) {
         return "<b style='color:#" + config.obtenerColorError() + "'>Проблема с расширением KubeJS </b>" + mod_nombre;
     }
+    
+    
+    @Override
+public String problema_con_graficas_nvidia_windows_viejo() {
+    return "<span style='color:#" + config.obtenerColorError() + "'>"
+            + "Обнаружены проблемы с драйверами NVIDIA в версиях до Windows 11."
+            + "</span><br/><br/>"
+            + "Чтобы убедиться, что Minecraft (и текущая JVM) использует выделенную видеокарту NVIDIA, следуйте этим шагам:<br/><br/>"
+            + "1. <strong>Определите исполняемый файл Java:</strong><br/>"
+            + "   - Эта программа использует следующий исполняемый файл Java: "
+            + obtenerRutaJava() + "<br/>"
+            + "   - Если вы не видите конкретного пути, вы можете найти исполняемый файл Java, выполнив поиск по запросу 'java.exe' в системе.<br/><br/>"
+            + "2. <strong>Откройте панель управления NVIDIA:</strong><br/>"
+            + "   - Щелкните правой кнопкой мыши на рабочем столе и выберите 'Панель управления NVIDIA'.<br/><br/>"
+            + "3. <strong>Настройте предпочтительную GPU:</strong><br/>"
+            + "   - В панели управления NVIDIA перейдите к 'Управление параметрами 3D'.<br/>"
+            + "   - Выберите опцию 'Настройки программы'.<br/>"
+            + "   - Нажмите 'Добавить' и найдите ранее определенный исполняемый файл Java (например, 'java.exe').<br/>"
+            + "   - Убедитесь, что он настроен на использование 'Процессора высокой производительности (NVIDIA)'.<br/><br/>"
+            + "4. <strong>Сохраните изменения:</strong><br/>"
+            + "   - Примените изменения и закройте панель управления NVIDIA.<br/><br/>"
+            + "5. <strong>Перезапустите Minecraft:</strong><br/>"
+            + "   - Перезапустите Minecraft, чтобы изменения вступили в силу.<br/><br/>"
+            + "Если вы используете Windows Server 2022 или Windows 10, эти шаги действительны при условии, что установлены последние драйверы NVIDIA.<br/><br/>"
+            + "Примечание: Если вы не можете найти панель управления NVIDIA, убедитесь, что драйверы NVIDIA правильно установлены.";
+}
+
+
+
+@Override
+public String problema_con_graficas_nvidia_windows_nuevo() {
+    return "<span style='color:#" + config.obtenerColorError() + "'>"
+            + "Обнаружены проблемы с драйверами NVIDIA в Windows 11/Server 2025 или более поздних версиях."
+            + "</span><br/><br/>"
+            + "Чтобы убедиться, что Minecraft (и текущая JVM) использует выделенную видеокарту NVIDIA, следуйте этим шагам:<br/><br/>"
+            + "1. <strong>Определите исполняемый файл Java:</strong><br/>"
+            + "   - Эта программа использует следующий исполняемый файл Java: "
+            + obtenerRutaJava() + "<br/>"
+            + "   - Если вы не видите конкретного пути, вы можете найти исполняемый файл Java, выполнив поиск по запросу 'java.exe' в системе.<br/><br/>"
+            + "2. <strong>Откройте приложение Параметры:</strong><br/>"
+            + "   - Нажмите клавиши <code>Win + I</code>, чтобы открыть приложение Параметры.<br/>"
+            + "   - Перейдите к <strong>Система > Дисплей > Графика</strong>.<br/><br/>"
+            + "3. <strong>Настройте предпочтительную GPU:</strong><br/>"
+            + "   - В разделе 'Графика' нажмите 'Параметры графики по умолчанию'.<br/>"
+            + "   - Выберите 'Приложения рабочего стола', затем нажмите 'Обзор'.<br/>"
+            + "   - Найдите и выберите ранее определенный исполняемый файл Java (например, 'java.exe').<br/>"
+            + "   - После добавления выберите приложение Java в списке и настройте его для использования 'Высокой производительности (NVIDIA)'.<br/><br/>"
+            + "4. <strong>Сохраните изменения:</strong><br/>"
+            + "   - Примените изменения и закройте приложение Параметры.<br/><br/>"
+            + "5. <strong>Перезапустите Minecraft:</strong><br/>"
+            + "   - Перезапустите Minecraft, чтобы изменения вступили в силу.<br/><br/>"
+            + "Если вы используете Windows 11 или Windows Server 2025+, эти шаги действительны при условии, что установлены последние драйверы NVIDIA.<br/><br/>"
+            + "Примечание: Если вы не можете найти параметры графики, убедитесь, что драйверы NVIDIA правильно установлены.";
+}
+
+
+
+@Override
+public String segundo60Tick() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Ваш сервер или мир имеет тики дольше 60 секунд. Это может быть связано с модами, замедляющими сервер, или слишком слабым оборудованием.</b>";
+}
+
+
+
+@Override
+public String noTieneMemoria() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>У вас недостаточно RAM/памяти. Нужно выделить больше.</b>";
+}
+    
+    
+    
+    
+    
 }

@@ -31,10 +31,10 @@ public class Arabe implements Idioma {
         return "<span style='color:#" + config.obtenerColorError() + "'>لا يوجد JVM</span>";
     }
 
-    @Override
-    public String probelma_con_graficas_ati() {
-        return "<span style='color:#" + config.obtenerColorError() + "'>قد يساعد تحديث التعريفات. يرجى ملاحظة أنه عندما تكون التعريفات تالفة، قد لا يجد التحديث العادي التحديثات، لذا يرجى اتباع دليل الرابط. هام: إذا كنت تستخدم بطاقة Nvidia، تأكد من ضبط جميع إعدادات Minecraft ذات الصلة (مثل Java والمنشئ) على أولوية الأداء العالي في إعدادات Windows ولوحة تحكم Nvidia. اقرأ هذا الدليل: <a href='https://forums.minecraftforge.net/topic/125488-rules-and-frequently-asked-questions-faq/#:~:text=How%20do%20I%20update%20my%20drivers%3F' style='color:#" + config.obtenerColorEnlace() + "'>دليل تحديث التعريفات</a></span>";
-    }
+@Override
+public String problema_con_graficas_ati() {
+    return "<span style='color:#" + config.obtenerColorError() + "'>قد يساعدك تحديث برامج تشغيل ATI/AMD الخاصة بك. اقرأ هذا الدليل لحل المشكلة: <a href='https://forums.minecraftforge.net/topic/125488-rules-and-frequently-asked-questions-faq/#:~:text=How%20do%20I%20update%20my%20drivers%3F' style='color:#" + config.obtenerColorEnlace() + "'>دليل تحديث التعريفات</a> https://www.amd.com/es/support/download/drivers.html تنزيل </span>";
+}
 
     @Override
     public String probelma_con_graficas_nouveau() {
@@ -160,4 +160,80 @@ public class Arabe implements Idioma {
     public String kubeJSResourcePack(String mod_nombre) {
         return "<b style='color:#" + config.obtenerColorError() + "'>مشكلة في امتداد KubeJS </b>" + mod_nombre;
     }
+    
+    
+    @Override
+public String problema_con_graficas_nvidia_windows_viejo() {
+    return "<span style='color:#" + config.obtenerColorError() + "'>"
+            + "تم اكتشاف مشكلات مع برامج تشغيل NVIDIA في الإصدارات السابقة من Windows 11."
+            + "</span><br/><br/>"
+            + "لضمان أن Minecraft (والـ JVM الحالية) يستخدمان وحدة معالجة الرسوميات المخصصة NVIDIA، اتبع الخطوات التالية:<br/><br/>"
+            + "1. <strong>حدد ملف تنفيذي Java:</strong><br/>"
+            + "   - يستخدم هذا البرنامج الملف التنفيذي التالي لـ Java: "
+            + obtenerRutaJava() + "<br/>"
+            + "   - إذا لم ترَ مسارًا محددًا، يمكنك العثور على الملف التنفيذي لـ Java بالبحث عن 'java.exe' في نظامك.<br/><br/>"
+            + "2. <strong>افتح لوحة تحكم NVIDIA:</strong><br/>"
+            + "   - انقر بزر الماوس الأيمن على سطح المكتب وحدد 'لوحة تحكم NVIDIA'.<br/><br/>"
+            + "3. <strong>قم بتكوين وحدة معالجة الرسوميات المفضلة:</strong><br/>"
+            + "   - في لوحة تحكم NVIDIA، انتقل إلى 'إدارة إعدادات 3D'.<br/>"
+            + "   - حدد خيار 'إعدادات برنامج محدد'.<br/>"
+            + "   - انقر على 'إضافة' وابحث عن الملف التنفيذي لـ Java الذي تم تحديده سابقًا (مثل: 'java.exe').<br/>"
+            + "   - تأكد من أنه مُعد لاستخدام 'معالج عالي الأداء (NVIDIA)'.<br/><br/>"
+            + "4. <strong>احفظ التغييرات:</strong><br/>"
+            + "   - طبق التغييرات وأغلق لوحة تحكم NVIDIA.<br/><br/>"
+            + "5. <strong>أعد تشغيل Minecraft:</strong><br/>"
+            + "   - أعد تشغيل Minecraft لتصبح التغييرات نافذة.<br/><br/>"
+            + "إذا كنت تستخدم Windows Server 2022 أو Windows 10، فإن هذه الخطوات صالحة طالما لديك أحدث برامج تشغيل NVIDIA مثبتة.<br/><br/>"
+            + "ملاحظة: إذا لم تتمكن من العثور على لوحة تحكم NVIDIA، تأكد من أن برامج تشغيل NVIDIA مثبتة بشكل صحيح.";
+}
+
+@Override
+public String problema_con_graficas_nvidia_windows_nuevo() {
+    return "<span style='color:#" + config.obtenerColorError() + "'>"
+            + "تم اكتشاف مشكلات مع برامج تشغيل NVIDIA في Windows 11/Server 2025 أو أحدث."
+            + "</span><br/><br/>"
+            + "لضمان أن Minecraft (والـ JVM الحالية) يستخدمان وحدة معالجة الرسوميات المخصصة NVIDIA، اتبع الخطوات التالية:<br/><br/>"
+            + "1. <strong>حدد ملف تنفيذي Java:</strong><br/>"
+            + "   - يستخدم هذا البرنامج الملف التنفيذي التالي لـ Java: "
+            + obtenerRutaJava() + "<br/>"
+            + "   - إذا لم ترَ مسارًا محددًا، يمكنك العثور على الملف التنفيذي لـ Java بالبحث عن 'java.exe' في نظامك.<br/><br/>"
+            + "2. <strong>افتح تطبيق الإعدادات:</strong><br/>"
+            + "   - اضغط على المفاتيح <code>Win + I</code> لفتح تطبيق الإعدادات.<br/>"
+            + "   - انتقل إلى <strong>النظام > الشاشة > الرسوميات</strong>.<br/><br/>"
+            + "3. <strong>قم بتكوين وحدة معالجة الرسوميات المفضلة:</strong><br/>"
+            + "   - في قسم 'الرسوميات', انقر على 'إعدادات الرسوميات الافتراضية'.<br/>"
+            + "   - حدد 'تطبيقات سطح المكتب' ثم انقر على 'استعراض'.<br/>"
+            + "   - ابحث وحدد الملف التنفيذي لـ Java الذي تم تحديده سابقًا (مثل: 'java.exe').<br/>"
+            + "   - بمجرد الإضافة، حدد تطبيق Java في القائمة وقم بتكوينه لاستخدام 'الأداء العالي (NVIDIA)'.<br/><br/>"
+            + "4. <strong>احفظ التغييرات:</strong><br/>"
+            + "   - طبق التغييرات وأغلق تطبيق الإعدادات.<br/><br/>"
+            + "5. <strong>أعد تشغيل Minecraft:</strong><br/>"
+            + "   - أعد تشغيل Minecraft لتصبح التغييرات نافذة.<br/><br/>"
+            + "إذا كنت تستخدم Windows 11 أو Windows Server 2025+، فإن هذه الخطوات صالحة طالما لديك أحدث برامج تشغيل NVIDIA مثبتة.<br/><br/>"
+            + "ملاحظة: إذا لم تتمكن من العثور على خيار إعدادات الرسوميات، تأكد من أن برامج تشغيل NVIDIA مثبتة بشكل صحيح.";
+}
+
+
+
+
+
+
+
+
+
+@Override
+public String segundo60Tick() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>خادمك أو عالمك لديه تicks تتجاوز 60 ثانية. قد يكون ذلك بسبب التعديلات التي تبطئ الخادم أو أن الأجهزة ضعيفة جدًا.</b>";
+}
+
+
+@Override
+public String noTieneMemoria() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>لا تملك ذاكرة RAM/ذاكرة كافية. تحتاج إلى تخصيص المزيد.</b>";
+}
+
+
+
+
+
 }

@@ -31,10 +31,10 @@ public class Japones implements Idioma {
         return "<span style='color:#" + config.obtenerColorError() + "'>JVMがありません</span>";
     }
 
-    @Override
-    public String probelma_con_graficas_ati() {
-        return "<span style='color:#" + config.obtenerColorError() + "'>ドライバーの更新が役立つかもしれません。ドライバーが破損している場合、通常の更新方法では更新が見つからないことがあります。必ずリンクされたガイドに従ってください。重要: NVIDIAグラフィックスカードを使用している場合は、Windows設定とNVIDIAコントロールパネルで、Minecraft関連（Javaやランチャーなど）の設定をすべて高性能優先に設定してください。このガイドを参照してください: <a href='https://forums.minecraftforge.net/topic/125488-rules-and-frequently-asked-questions-faq/#:~:text=How%20do%20I%20update%20my%20drivers%3F' style='color:#" + config.obtenerColorEnlace() + "'>ドライバー更新ガイド</a></span>";
-    }
+@Override
+public String problema_con_graficas_ati() {
+    return "<span style='color:#" + config.obtenerColorError() + "'>ATI/AMDのドライバーを更新すると問題が解決するかもしれません。このガイドを読んで修正してください: <a href='https://forums.minecraftforge.net/topic/125488-rules-and-frequently-asked-questions-faq/#:~:text=How%20do%20I%20update%20my%20drivers%3F' style='color:#" + config.obtenerColorEnlace() + "'>ドライバー更新ガイド</a> https://www.amd.com/ja/support/download/drivers.html ダウンロード </span>";
+}
 
     @Override
     public String probelma_con_graficas_nouveau() {
@@ -160,4 +160,79 @@ public class Japones implements Idioma {
     public String kubeJSResourcePack(String mod_nombre) {
         return "<b style='color:#" + config.obtenerColorError() + "'>KubeJS拡張に問題があります </b>" + mod_nombre;
     }
+    
+    @Override
+public String problema_con_graficas_nvidia_windows_viejo() {
+    return "<span style='color:#" + config.obtenerColorError() + "'>"
+            + "Windows 11より前のバージョンでNVIDIAドライバーに関する問題が検出されました。"
+            + "</span><br/><br/>"
+            + "Minecraft（および現在のJVM）が専用のNVIDIA GPUを使用するようにするには、次の手順に従ってください：<br/><br/>"
+            + "1. <strong>Java実行可能ファイルを特定します：</strong><br/>"
+            + "   - このプログラムは次のJava実行可能ファイルを使用しています： "
+            + obtenerRutaJava() + "<br/>"
+            + "   - 特定のパスが表示されない場合、システム内で'java.exe'を検索してJava実行可能ファイルを見つけることができます。<br/><br/>"
+            + "2. <strong>NVIDIAコントロールパネルを開きます：</strong><br/>"
+            + "   - デスクトップを右クリックし、'NVIDIAコントロールパネル'を選択します。<br/><br/>"
+            + "3. <strong>優先GPUを設定します：</strong><br/>"
+            + "   - NVIDIAコントロールパネルで、'3D設定の管理'に移動します。<br/>"
+            + "   - 'プログラム設定'オプションを選択します。<br/>"
+            + "   - '追加'をクリックし、前述のJava実行可能ファイル（例：'java.exe'）を探します。<br/>"
+            + "   - '高性能NVIDIAプロセッサ'を使用するように設定されていることを確認します。<br/><br/>"
+            + "4. <strong>変更を保存します：</strong><br/>"
+            + "   - 変更を適用し、NVIDIAコントロールパネルを閉じます。<br/><br/>"
+            + "5. <strong>Minecraftを再起動します：</strong><br/>"
+            + "   - Minecraftを再起動して変更を有効にします。<br/><br/>"
+            + "Windows Server 2022またはWindows 10を使用している場合、最新のNVIDIAドライバーがインストールされている限り、これらの手順は有効です。<br/><br/>"
+            + "注：NVIDIAコントロールパネルが見つからない場合は、NVIDIAドライバーが正しくインストールされていることを確認してください。";
+}
+
+
+
+@Override
+public String problema_con_graficas_nvidia_windows_nuevo() {
+    return "<span style='color:#" + config.obtenerColorError() + "'>"
+            + "Windows 11/Server 2025以降でNVIDIAドライバーに関する問題が検出されました。"
+            + "</span><br/><br/>"
+            + "Minecraft（および現在のJVM）が専用のNVIDIA GPUを使用するようにするには、次の手順に従ってください：<br/><br/>"
+            + "1. <strong>Java実行可能ファイルを特定します：</strong><br/>"
+            + "   - このプログラムは次のJava実行可能ファイルを使用しています： "
+            + obtenerRutaJava() + "<br/>"
+            + "   - 特定のパスが表示されない場合、システム内で'java.exe'を検索してJava実行可能ファイルを見つけることができます。<br/><br/>"
+            + "2. <strong>設定アプリを開きます：</strong><br/>"
+            + "   - <code>Win + I</code>キーを押して設定アプリを開きます。<br/>"
+            + "   - <strong>システム > ディスプレイ > グラフィックス</strong>に移動します。<br/><br/>"
+            + "3. <strong>優先GPUを設定します：</strong><br/>"
+            + "   - 'グラフィックス'セクションで、'デフォルトのグラフィックス設定'をクリックします。<br/>"
+            + "   - 'デスクトップアプリ'を選択し、'参照'をクリックします。<br/>"
+            + "   - 前述のJava実行可能ファイル（例：'java.exe'）を探して選択します。<br/>"
+            + "   - 追加後、リストからJavaアプリケーションを選択し、'高性能（NVIDIA）'を使用するように設定します。<br/><br/>"
+            + "4. <strong>変更を保存します：</strong><br/>"
+            + "   - 変更を適用し、設定アプリを閉じます。<br/><br/>"
+            + "5. <strong>Minecraftを再起動します：</strong><br/>"
+            + "   - Minecraftを再起動して変更を有効にします。<br/><br/>"
+            + "Windows 11またはWindows Server 2025+を使用している場合、最新のNVIDIAドライバーがインストールされている限り、これらの手順は有効です。<br/><br/>"
+            + "注：グラフィックス設定オプションが見つからない場合、NVIDIAドライバーが正しくインストールされていることを確認してください。";
+}
+
+
+
+
+@Override
+public String segundo60Tick() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>あなたのサーバーまたはワールドで60秒を超えるティックが発生しています。これは、MODがサーバーを遅くしているか、ハードウェアが弱すぎる可能性があります。</b>";
+}
+
+
+@Override
+public String noTieneMemoria() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>十分なRAM/メモリがありません。より多くのメモリを割り当てる必要があります。</b>";
+}
+
+
+
+
+
+
+
+
 }

@@ -31,10 +31,10 @@ public class Ingles implements Idioma {
         return "<span style='color:#" + config.obtenerColorError() + "'>We don't have JVM</span>";
     }
 
-    @Override
-    public String probelma_con_graficas_ati() {
-        return "<span style='color:#" + config.obtenerColorError() + "'>Updating your drivers might help. Please bear in mind that checking for updates the usual ways won't find any updates when drivers are in a broken state, so it's important you follow the linked guide. Important: If you have Nvidia graphics, also make sure you've set anything Minecraft-related (such as Java and launchers) to prioritise high performance graphics in both the Windows settings and Nvidia control panel. Read this guide to fix them: <a href='https://forums.minecraftforge.net/topic/125488-rules-and-frequently-asked-questions-faq/#:~:text=How%20do%20I%20update%20my%20drivers%3F' style='color:#" + config.obtenerColorEnlace() + "'>Guide to update drivers</a></span>";
-    }
+@Override
+public String problema_con_graficas_ati() {
+    return "<span style='color:#" + config.obtenerColorError() + "'>Updating your ATI/AMD drivers might help. Read this guide to fix it: <a href='https://forums.minecraftforge.net/topic/125488-rules-and-frequently-asked-questions-faq/#:~:text=How%20do%20I%20update%20my%20drivers%3F' style='color:#" + config.obtenerColorEnlace() + "'>Driver Update Guide</a> https://www.amd.com/en/support/download/drivers.html Download </span>";
+}
 
     @Override
     public String probelma_con_graficas_nouveau() {
@@ -164,4 +164,74 @@ public class Ingles implements Idioma {
     public String kubeJSResourcePack(String mod_nombre) {
         return "<b style='color:#" + config.obtenerColorError() + "'>Problem with KubeJS extension </b>" + mod_nombre;
     }
+    
+    
+    @Override
+public String problema_con_graficas_nvidia_windows_viejo() {
+    return "<span style='color:#" + config.obtenerColorError() + "'>"
+            + "Issues detected with NVIDIA drivers on versions prior to Windows 11."
+            + "</span><br/><br/>"
+            + "To ensure that Minecraft (and the current JVM) uses the dedicated NVIDIA GPU, follow these steps:<br/><br/>"
+            + "1. <strong>Identify the Java executable:</strong><br/>"
+            + "   - This program is using the following Java executable: "
+            + obtenerRutaJava() + "<br/>"
+            + "   - If you don't see a specific path, you can find the Java executable by searching for 'java.exe' on your system.<br/><br/>"
+            + "2. <strong>Open the NVIDIA Control Panel:</strong><br/>"
+            + "   - Right-click on the desktop and select 'NVIDIA Control Panel'.<br/><br/>"
+            + "3. <strong>Configure the preferred GPU:</strong><br/>"
+            + "   - In the NVIDIA Control Panel, go to 'Manage 3D settings'.<br/>"
+            + "   - Select the 'Program Settings' option.<br/>"
+            + "   - Click 'Add' and locate the previously identified Java executable (e.g., 'java.exe').<br/>"
+            + "   - Ensure it is set to use the 'High-performance NVIDIA processor'.<br/><br/>"
+            + "4. <strong>Save the changes:</strong><br/>"
+            + "   - Apply the changes and close the NVIDIA Control Panel.<br/><br/>"
+            + "5. <strong>Restart Minecraft:</strong><br/>"
+            + "   - Restart Minecraft for the changes to take effect.<br/><br/>"
+            + "If you're using Windows Server 2022 or Windows 10, these steps are valid as long as you have the latest NVIDIA drivers installed.<br/><br/>"
+            + "Note: If you can't find the NVIDIA Control Panel, make sure the NVIDIA drivers are properly installed.";
+}
+
+@Override
+public String problema_con_graficas_nvidia_windows_nuevo() {
+    return "<span style='color:#" + config.obtenerColorError() + "'>"
+            + "Issues detected with NVIDIA drivers on Windows 11/Server 2025 or later."
+            + "</span><br/><br/>"
+            + "To ensure that Minecraft (and the current JVM) uses the dedicated NVIDIA GPU, follow these steps:<br/><br/>"
+            + "1. <strong>Identify the Java executable:</strong><br/>"
+            + "   - This program is using the following Java executable: "
+            + obtenerRutaJava() + "<br/>"
+            + "   - If you don't see a specific path, you can find the Java executable by searching for 'java.exe' on your system.<br/><br/>"
+            + "2. <strong>Open the Settings app:</strong><br/>"
+            + "   - Press <code>Win + I</code> to open the Settings app.<br/>"
+            + "   - Navigate to <strong>System > Display > Graphics</strong>.<br/><br/>"
+            + "3. <strong>Configure the preferred GPU:</strong><br/>"
+            + "   - In the 'Graphics' section, click on 'Default graphics settings'.<br/>"
+            + "   - Select 'Desktop apps' and then click 'Browse'.<br/>"
+            + "   - Locate and select the previously identified Java executable (e.g., 'java.exe').<br/>"
+            + "   - Once added, select the Java application in the list and configure it to use 'High performance (NVIDIA)'.<br/><br/>"
+            + "4. <strong>Save the changes:</strong><br/>"
+            + "   - Apply the changes and close the Settings app.<br/><br/>"
+            + "5. <strong>Restart Minecraft:</strong><br/>"
+            + "   - Restart Minecraft for the changes to take effect.<br/><br/>"
+            + "If you're using Windows 11 or Windows Server 2025+, these steps are valid as long as you have the latest NVIDIA drivers installed.<br/><br/>"
+            + "Note: If you can't find the graphics settings option, make sure the NVIDIA drivers are properly installed.";
+}
+
+
+@Override
+public String segundo60Tick() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Your Server or World has ticks longer than 60 seconds. This may be due to mods slowing down the server or hardware being too weak.</b>";
+}
+
+@Override
+public String noTieneMemoria() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>You don't have enough RAM/Memory. You need to allocate more.</b>";
+}
+
+
+
+
+
+
+
 }

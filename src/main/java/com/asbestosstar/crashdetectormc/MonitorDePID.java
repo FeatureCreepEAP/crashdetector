@@ -34,7 +34,8 @@ public class MonitorDePID {
 	public static Idioma idioma = Idioma.detectar();
 	public static String local;
 	public static String enlance;
-
+	public static long pid;
+	
 	public static void main(String[] args) {
 		if (args.length > 0 && args[0].equals("--monitor")) {
 			long pid = Long.parseLong(args[1]);
@@ -144,6 +145,7 @@ public class MonitorDePID {
 	}
 
 	private static void monitor_proceso(long pid) {
+		MonitorDePID.pid=pid;
 		System.out.println(idioma.buscando_para_pid(pid));
 		Instant utc = Instant.now();
 		CountDownLatch latch = new CountDownLatch(1); // Necesito por que sin esta preceso esta muerte

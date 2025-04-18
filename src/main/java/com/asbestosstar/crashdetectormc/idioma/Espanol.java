@@ -4,7 +4,7 @@ import com.asbestosstar.crashdetectormc.Config;
 import com.asbestosstar.crashdetectormc.Idioma;
 
 public class Espanol implements Idioma {
-    private final Config config = Config.obtenerInstancia();
+    Config config = Config.obtenerInstancia();
 
     @Override
     public String carpeta_de_mods_no_valido() {
@@ -32,10 +32,10 @@ public class Espanol implements Idioma {
     }
 
     @Override
-    public String probelma_con_graficas_ati() {
-        return "<span style='color:#" + config.obtenerColorError() + "'>Actualizar tus controladores podría ayudarte. Ten en cuenta que buscar actualizaciones de la manera habitual no encontrará ninguna cuando los controladores estén en un estado dañado, por lo que es importante que sigas la guía vinculada. Importante: Si tienes gráficos Nvidia, asegúrate de configurar cualquier cosa relacionada con Minecraft (como Java y lanzadores) para priorizar el rendimiento alto tanto en la configuración de Windows como en el panel de control de Nvidia. Lee esta guía para solucionarlo: <a href='https://forums.minecraftforge.net/topic/125488-rules-and-frequently-asked-questions-faq/#:~:text=How%20do%20I%20update%20my%20drivers%3F' style='color:#" + config.obtenerColorEnlace() + "'>Guía de actualización de controladores</a></span>";
+    public String problema_con_graficas_ati() {
+        return "<span style='color:#" + config.obtenerColorError() + "'>Actualizar tus controladores ATI/AMD podría ayudarte.Lee esta guía para solucionarlo: <a href='https://forums.minecraftforge.net/topic/125488-rules-and-frequently-asked-questions-faq/#:~:text=How%20do%20I%20update%20my%20drivers%3F' style='color:#" + config.obtenerColorEnlace() + "'>Guía de actualización de controladores</a> https://www.amd.com/es/support/download/drivers.html Descargar </span>";
     }
-
+    
     @Override
     public String probelma_con_graficas_nouveau() {
         return "<span style='color:#" + config.obtenerColorAdvertencia() + "'>Algunas versiones antiguas a veces tienen algunos problemas con algunos gráficos Nouveau en la pantalla de carga temprana.</span>";
@@ -160,4 +160,69 @@ public class Espanol implements Idioma {
     public String kubeJSResourcePack(String mod_nombre) {
         return "<b style='color:#" + config.obtenerColorError() + "'>Problema con KubeJS extension </b>" + mod_nombre;
     }
+@Override
+public String problema_con_graficas_nvidia_windows_viejo() {
+    return "<span style='color:#" + config.obtenerColorError() + "'>"
+            + "Problemas detectados con controladores NVIDIA en versiones anteriores a Windows 11."
+            + "</span><br/><br/>"
+            + "Para asegurarte de que Minecraft (y la JVM actual) utilice la tarjeta gráfica dedicada NVIDIA, sigue estos pasos:<br/><br/>"
+            + "1. <strong>Identifica el ejecutable de Java:</strong><br/>"
+            + "   - Este programa está utilizando el siguiente ejecutable de Java: "
+            + obtenerRutaJava() + "<br/>"
+            + "   - Si no ves una ruta específica, puedes encontrar el ejecutable de Java buscando 'java.exe' en tu sistema.<br/><br/>"
+            + "2. <strong>Abre el Panel de Control de NVIDIA:</strong><br/>"
+            + "   - Haz clic derecho en el escritorio y selecciona 'Panel de control de NVIDIA'.<br/><br/>"
+            + "3. <strong>Configura la GPU preferida:</strong><br/>"
+            + "   - En el Panel de Control de NVIDIA, ve a 'Administrar configuración 3D'.<br/>"
+            + "   - Selecciona la opción 'Programa específico'.<br/>"
+            + "   - Haz clic en 'Agregar' y busca el ejecutable de Java identificado anteriormente (ej.: 'java.exe').<br/>"
+            + "   - Asegúrate de que esté configurado para usar el 'Procesador de alto rendimiento (NVIDIA)'.<br/><br/>"
+            + "4. <strong>Guarda los cambios:</strong><br/>"
+            + "   - Aplica los cambios y cierra el Panel de Control de NVIDIA.<br/><br/>"
+            + "5. <strong>Reinicia Minecraft:</strong><br/>"
+            + "   - Reinicia Minecraft para que los cambios surtan efecto.<br/><br/>"
+            + "Si usas Windows Server 2022 o Windows 10, estos pasos son válidos siempre que tengas instalados los controladores NVIDIA más recientes.<br/><br/>"
+            + "Nota: Si no puedes encontrar el Panel de Control de NVIDIA, asegúrate de que los controladores NVIDIA estén correctamente instalados.";
+}
+
+@Override
+public String problema_con_graficas_nvidia_windows_nuevo() {
+    return "<span style='color:#" + config.obtenerColorError() + "'>"
+            + "Problemas detectados con controladores NVIDIA en Windows 11/Server 2025 o posterior."
+            + "</span><br/><br/>"
+            + "Para asegurarte de que Minecraft (y la JVM actual) utilice la tarjeta gráfica dedicada NVIDIA, sigue estos pasos:<br/><br/>"
+            + "1. <strong>Identifica el ejecutable de Java:</strong><br/>"
+            + "   - Este programa está utilizando el siguiente ejecutable de Java: "
+            + obtenerRutaJava() + "<br/>"
+            + "   - Si no ves una ruta específica, puedes encontrar el ejecutable de Java buscando 'java.exe' en tu sistema.<br/><br/>"
+            + "2. <strong>Abre la aplicación Configuración:</strong><br/>"
+            + "   - Presiona las teclas <code>Win + I</code> para abrir la aplicación Configuración.<br/>"
+            + "   - Navega a <strong>Sistema > Pantalla > Gráficos</strong>.<br/><br/>"
+            + "3. <strong>Configura la GPU preferida:</strong><br/>"
+            + "   - En la sección 'Gráficos', haz clic en 'Configuración de gráficos predeterminada'.<br/>"
+            + "   - Selecciona 'Aplicaciones de escritorio' y luego haz clic en 'Examinar'.<br/>"
+            + "   - Busca y selecciona el ejecutable de Java identificado anteriormente (ej.: 'java.exe').<br/>"
+            + "   - Una vez añadido, selecciona la aplicación Java en la lista y configúrala para usar el 'Rendimiento alto (NVIDIA)'.<br/><br/>"
+            + "4. <strong>Guarda los cambios:</strong><br/>"
+            + "   - Aplica los cambios y cierra la aplicación Configuración.<br/><br/>"
+            + "5. <strong>Reinicia Minecraft:</strong><br/>"
+            + "   - Reinicia Minecraft para que los cambios surtan efecto.<br/><br/>"
+            + "Si usas Windows 11 o Windows Server 2025+, estos pasos son válidos siempre que tengas instalados los controladores NVIDIA más recientes.<br/><br/>"
+            + "Nota: Si no encuentras la opción de configuración de gráficos, asegúrate de que los controladores NVIDIA estén correctamente instalados.";
+}
+
+@Override
+public String segundo60Tick() {
+	// TODO Auto-generated method stub
+	return "<b style='color:#" + config.obtenerColorError() + "'>Tu Serivdor o Mundo tiene tics mas de 60 segundos. Esto puede deberse a que los mods hacen que el servidor sea más lento o a que el hardware es demasiado débil.</b>";
+}
+    
+    
+@Override
+public String noTieneMemoria() {
+	// TODO Auto-generated method stub
+	return "<b style='color:#" + config.obtenerColorError() + "'>No tienes sufficiente RAM/Memoria. Necesitas asignar mas.</b>";
+}
+     
+    
 }

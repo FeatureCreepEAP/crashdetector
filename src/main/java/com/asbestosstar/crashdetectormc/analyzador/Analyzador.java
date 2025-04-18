@@ -20,6 +20,8 @@ public class Analyzador {
 		verificaciones.add(new MCForgeModsSuspechoso());
 		verificaciones.add(new VerificacionDeStackTrace());
 		verificaciones.add(new KubeJSResourcePack());
+		verificaciones.add(new Segundo60Tick());
+		verificaciones.add(new NoTieneMemoria());
 
 		
 		

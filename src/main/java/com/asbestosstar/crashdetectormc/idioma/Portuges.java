@@ -31,10 +31,10 @@ public class Portuges implements Idioma {
         return "<span style='color:#" + config.obtenerColorError() + "'>Sem JVM disponível</span>";
     }
 
-    @Override
-    public String probelma_con_graficas_ati() {
-        return "<span style='color:#" + config.obtenerColorError() + "'>Atualizar os drivers pode ajudar. Nota: quando os drivers estão corrompidos, a atualização normal pode não funcionar. Siga o guia abaixo. IMPORTANTE: Usuários de NVIDIA devem definir prioridade máxima para desempenho no painel de controle e nas configurações do Windows para todos os processos relacionados ao Minecraft (Java e launcher). Leia este guia: <a href='https://forums.minecraftforge.net/topic/125488-rules-and-frequently-asked-questions-faq/#:~:text=How%20do%20I%20update%20my%20drivers%3F' style='color:#" + config.obtenerColorEnlace() + "'>Guia de Atualização de Drivers</a></span>";
-    }
+@Override
+public String problema_con_graficas_ati() {
+    return "<span style='color:#" + config.obtenerColorError() + "'>Atualizar seus drivers ATI/AMD pode ajudar. Leia este guia para corrigir: <a href='https://forums.minecraftforge.net/topic/125488-rules-and-frequently-asked-questions-faq/#:~:text=How%20do%20I%20update%20my%20drivers%3F' style='color:#" + config.obtenerColorEnlace() + "'>Guia de atualização de drivers</a> https://www.amd.com/pt/support/download/drivers.html Baixar </span>";
+}
 
     @Override
     public String probelma_con_graficas_nouveau() {
@@ -160,4 +160,74 @@ public class Portuges implements Idioma {
     public String kubeJSResourcePack(String mod_nombre) {
         return "<b style='color:#" + config.obtenerColorError() + "'>Problema com expansão KubeJS </b>" + mod_nombre;
     }
+    
+    @Override
+public String problema_con_graficas_nvidia_windows_viejo() {
+    return "<span style='color:#" + config.obtenerColorError() + "'>"
+            + "Problemas detectados com drivers NVIDIA em versões anteriores ao Windows 11."
+            + "</span><br/><br/>"
+            + "Para garantir que o Minecraft (e a JVM atual) use a GPU dedicada NVIDIA, siga estes passos:<br/><br/>"
+            + "1. <strong>Identifique o executável do Java:</strong><br/>"
+            + "   - Este programa está usando o seguinte executável do Java: "
+            + obtenerRutaJava() + "<br/>"
+            + "   - Se você não vir um caminho específico, pode encontrar o executável do Java pesquisando por 'java.exe' no sistema.<br/><br/>"
+            + "2. <strong>Abra o Painel de Controle da NVIDIA:</strong><br/>"
+            + "   - Clique com o botão direito na área de trabalho e selecione 'Painel de Controle da NVIDIA'.<br/><br/>"
+            + "3. <strong>Configure a GPU preferida:</strong><br/>"
+            + "   - No Painel de Controle da NVIDIA, vá para 'Gerenciar configurações 3D'.<br/>"
+            + "   - Selecione a opção 'Programa específico'.<br/>"
+            + "   - Clique em 'Adicionar' e localize o executável do Java identificado anteriormente (ex.: 'java.exe').<br/>"
+            + "   - Certifique-se de que esteja configurado para usar o 'Processador de alto desempenho (NVIDIA)'.<br/><br/>"
+            + "4. <strong>Salve as alterações:</strong><br/>"
+            + "   - Aplique as alterações e feche o Painel de Controle da NVIDIA.<br/><br/>"
+            + "5. <strong>Reinicie o Minecraft:</strong><br/>"
+            + "   - Reinicie o Minecraft para que as alterações tenham efeito.<br/><br/>"
+            + "Se você usa Windows Server 2022 ou Windows 10, esses passos são válidos desde que tenha os drivers NVIDIA mais recentes instalados.<br/><br/>"
+            + "Nota: Se você não encontrar o Painel de Controle da NVIDIA, certifique-se de que os drivers NVIDIA estão corretamente instalados.";
+}
+
+
+@Override
+public String problema_con_graficas_nvidia_windows_nuevo() {
+    return "<span style='color:#" + config.obtenerColorError() + "'>"
+            + "Problemas detectados com drivers NVIDIA no Windows 11/Server 2025 ou posterior."
+            + "</span><br/><br/>"
+            + "Para garantir que o Minecraft (e a JVM atual) use a GPU dedicada NVIDIA, siga estes passos:<br/><br/>"
+            + "1. <strong>Identifique o executável do Java:</strong><br/>"
+            + "   - Este programa está usando o seguinte executável do Java: "
+            + obtenerRutaJava() + "<br/>"
+            + "   - Se você não vir um caminho específico, pode encontrar o executável do Java pesquisando por 'java.exe' no sistema.<br/><br/>"
+            + "2. <strong>Abra o aplicativo Configurações:</strong><br/>"
+            + "   - Pressione as teclas <code>Win + I</code> para abrir o aplicativo Configurações.<br/>"
+            + "   - Navegue até <strong>Sistema > Tela > Gráficos</strong>.<br/><br/>"
+            + "3. <strong>Configure a GPU preferida:</strong><br/>"
+            + "   - Na seção 'Gráficos', clique em 'Configurações de gráficos padrão'.<br/>"
+            + "   - Selecione 'Aplicativos de desktop' e depois clique em 'Procurar'.<br/>"
+            + "   - Localize e selecione o executável do Java identificado anteriormente (ex.: 'java.exe').<br/>"
+            + "   - Uma vez adicionado, selecione o aplicativo Java na lista e configure-o para usar 'Alto desempenho (NVIDIA)'.<br/><br/>"
+            + "4. <strong>Salve as alterações:</strong><br/>"
+            + "   - Aplique as alterações e feche o aplicativo Configurações.<br/><br/>"
+            + "5. <strong>Reinicie o Minecraft:</strong><br/>"
+            + "   - Reinicie o Minecraft para que as alterações tenham efeito.<br/><br/>"
+            + "Se você usa Windows 11 ou Windows Server 2025+, esses passos são válidos desde que tenha os drivers NVIDIA mais recentes instalados.<br/><br/>"
+            + "Nota: Se você não encontrar a opção de configuração de gráficos, certifique-se de que os drivers NVIDIA estão corretamente instalados.";
+}
+
+
+@Override
+public String segundo60Tick() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Seu Servidor ou Mundo tem ticks de mais de 60 segundos. Isso pode ser devido a mods tornando o servidor mais lento ou ao hardware ser muito fraco.</b>";
+}
+
+
+
+@Override
+public String noTieneMemoria() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Você não tem RAM/Memória suficiente. Você precisa alocar mais.</b>";
+}
+
+
+
+
+
 }

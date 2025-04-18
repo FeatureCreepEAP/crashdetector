@@ -31,10 +31,10 @@ public class Chino implements Idioma {
         return "<span style='color:#" + config.obtenerColorError() + "'>没有JVM</span>";
     }
 
-    @Override
-    public String probelma_con_graficas_ati() {
-        return "<span style='color:#" + config.obtenerColorError() + "'>更新驱动程序可能会有所帮助。请注意，当驱动程序损坏时，常规更新方式可能找不到更新，因此请务必按照链接的指南操作。重要提示：如果您使用Nvidia显卡，请确保在Windows设置和Nvidia控制面板中将所有与Minecraft相关（如Java和启动器）的设置设为优先高性能。阅读此指南解决： <a href='https://forums.minecraftforge.net/topic/125488-rules-and-frequently-asked-questions-faq/#:~:text=How%20do%20I%20update%20my%20drivers%3F' style='color:#" + config.obtenerColorEnlace() + "'>驱动程序更新指南</a></span>";
-    }
+@Override
+public String problema_con_graficas_ati() {
+    return "<span style='color:#" + config.obtenerColorError() + "'>更新您的 ATI/AMD 驱动程序可能会有所帮助。请阅读此指南以解决问题: <a href='https://forums.minecraftforge.net/topic/125488-rules-and-frequently-asked-questions-faq/#:~:text=How%20do%20I%20update%20my%20drivers%3F' style='color:#" + config.obtenerColorEnlace() + "'>驱动程序更新指南</a> https://www.amd.com/zh-cn/support/download/drivers.html 下载 </span>";
+}
 
     @Override
     public String probelma_con_graficas_nouveau() {
@@ -160,4 +160,83 @@ public class Chino implements Idioma {
     public String kubeJSResourcePack(String mod_nombre) {
         return "<b style='color:#" + config.obtenerColorError() + "'>KubeJS扩展存在问题 </b>" + mod_nombre;
     }
+    
+    
+    @Override
+public String problema_con_graficas_nvidia_windows_viejo() {
+    return "<span style='color:#" + config.obtenerColorError() + "'>"
+            + "检测到Windows 11之前版本的NVIDIA驱动程序存在问题。"
+            + "</span><br/><br/>"
+            + "为确保Minecraft（以及当前的JVM）使用专用的NVIDIA GPU，请按照以下步骤操作：<br/><br/>"
+            + "1. <strong>识别Java可执行文件：</strong><br/>"
+            + "   - 此程序正在使用以下Java可执行文件： "
+            + obtenerRutaJava() + "<br/>"
+            + "   - 如果没有看到具体路径，可以通过在系统中搜索'java.exe'找到Java可执行文件。<br/><br/>"
+            + "2. <strong>打开NVIDIA控制面板：</strong><br/>"
+            + "   - 右键单击桌面并选择'NVIDIA控制面板'。<br/><br/>"
+            + "3. <strong>配置首选GPU：</strong><br/>"
+            + "   - 在NVIDIA控制面板中，转到'管理3D设置'。<br/>"
+            + "   - 选择'程序设置'选项。<br/>"
+            + "   - 点击'添加'并找到之前识别的Java可执行文件（例如：'java.exe'）。<br/>"
+            + "   - 确保它已设置为使用'高性能NVIDIA处理器'。<br/><br/>"
+            + "4. <strong>保存更改：</strong><br/>"
+            + "   - 应用更改并关闭NVIDIA控制面板。<br/><br/>"
+            + "5. <strong>重新启动Minecraft：</strong><br/>"
+            + "   - 重新启动Minecraft以使更改生效。<br/><br/>"
+            + "如果您使用的是Windows Server 2022或Windows 10，只要安装了最新的NVIDIA驱动程序，这些步骤均有效。<br/><br/>"
+            + "注意：如果找不到NVIDIA控制面板，请确保NVIDIA驱动程序已正确安装。";
+}
+
+
+
+@Override
+public String problema_con_graficas_nvidia_windows_nuevo() {
+    return "<span style='color:#" + config.obtenerColorError() + "'>"
+            + "检测到Windows 11/Server 2025或更高版本的NVIDIA驱动程序存在问题。"
+            + "</span><br/><br/>"
+            + "为确保Minecraft（以及当前的JVM）使用专用的NVIDIA GPU，请按照以下步骤操作：<br/><br/>"
+            + "1. <strong>识别Java可执行文件：</strong><br/>"
+            + "   - 此程序正在使用以下Java可执行文件： "
+            + obtenerRutaJava() + "<br/>"
+            + "   - 如果没有看到具体路径，可以通过在系统中搜索'java.exe'找到Java可执行文件。<br/><br/>"
+            + "2. <strong>打开设置应用：</strong><br/>"
+            + "   - 按下<code>Win + I</code>键打开设置应用。<br/>"
+            + "   - 导航至<strong>系统 > 显示 > 图形</strong>。<br/><br/>"
+            + "3. <strong>配置首选GPU：</strong><br/>"
+            + "   - 在'图形'部分，点击'默认图形设置'。<br/>"
+            + "   - 选择'桌面应用'，然后点击'浏览'。<br/>"
+            + "   - 找到并选择之前识别的Java可执行文件（例如：'java.exe'）。<br/>"
+            + "   - 添加后，在列表中选择Java应用程序，并将其配置为使用'高性能（NVIDIA）'。<br/><br/>"
+            + "4. <strong>保存更改：</strong><br/>"
+            + "   - 应用更改并关闭设置应用。<br/><br/>"
+            + "5. <strong>重新启动Minecraft：</strong><br/>"
+            + "   - 重新启动Minecraft以使更改生效。<br/><br/>"
+            + "如果您使用的是Windows 11或Windows Server 2025+，只要安装了最新的NVIDIA驱动程序，这些步骤均有效。<br/><br/>"
+            + "注意：如果找不到图形设置选项，请确保NVIDIA驱动程序已正确安装。";
+}
+
+
+
+@Override
+public String segundo60Tick() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>您的服务器或世界有超过60秒的卡顿。这可能是由于模组导致服务器变慢，或者硬件性能不足。</b>";
+}
+
+
+
+@Override
+public String noTieneMemoria() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>您没有足够的RAM/内存。需要分配更多内存。</b>";
+}
+
+
+
+
+
+
+    
+    
+    
+    
+    
 }

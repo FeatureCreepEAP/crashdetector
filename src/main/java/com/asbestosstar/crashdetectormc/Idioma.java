@@ -1,6 +1,7 @@
 package com.asbestosstar.crashdetectormc;
 
 import java.util.Locale;
+import java.util.Optional;
 
 import com.asbestosstar.crashdetectormc.idioma.Arabe;
 import com.asbestosstar.crashdetectormc.idioma.Chino;
@@ -14,6 +15,9 @@ import com.asbestosstar.crashdetectormc.idioma.Portuges;
 import com.asbestosstar.crashdetectormc.idioma.Ruso;
 
 public interface Idioma {
+	
+    Config config = Config.obtenerInstancia();
+
 
 	public static Idioma espanol = new Espanol();
 	public static Idioma ingles = new Ingles();
@@ -91,7 +95,7 @@ public interface Idioma {
 	 */
 	public String no_tenemos_jvm();
 
-	public String probelma_con_graficas_ati();
+	public String problema_con_graficas_ati();
 
 	public String probelma_con_graficas_nouveau();
 
@@ -143,4 +147,20 @@ public interface Idioma {
 	
 	public String kubeJSResourcePack(String mod_nombre);
 
+	public default String obtenerRutaJava() {
+	    Optional<String> javaBinary = ProcessHandle.current().info().command();
+	    return javaBinary.orElse("No se pudo determinar la ubicación del ejecutable de Java.");
+	}
+	
+	
+	public String problema_con_graficas_nvidia_windows_viejo();
+	
+	public String problema_con_graficas_nvidia_windows_nuevo();
+
+	public String segundo60Tick();
+
+	public String noTieneMemoria();
+	
+	
+	
 }

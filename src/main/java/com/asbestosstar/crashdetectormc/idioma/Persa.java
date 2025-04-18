@@ -31,10 +31,10 @@ public class Persa implements Idioma {
         return "<span style='color:#" + config.obtenerColorError() + "'>JVM وجود ندارد</span>";
     }
  
-    @Override
-    public String probelma_con_graficas_ati() {
-        return "<span style='color:#" + config.obtenerColorError() + "'>به روز رسانی درایور ممکن است کمک کند. لطفا توجه داشته باشید که وقتی درایور خراب است، روش های معمولی به روز رسانی ممکن است به روز رسانی را پیدا نکنند، بنابراین لطفاً به راهنمای پیوند داده شده عمل کنید. نکته مهم: اگر از کارت گرافیک Nvidia استفاده می کنید، مطمئن شوید که تمام تنظیمات مربوط به Minecraft (مانند Java و لانچر) در تنظیمات Windows و پنل کنترل Nvidia به عنوان پرکاربرد تنظیم شده اند. این راهنما را بخوانید: <a href='https://forums.minecraftforge.net/topic/125488-rules-and-frequently-asked-questions-faq/#:~:text=How%20do%20I%20update%20my%20drivers%3F' style='color:#" + config.obtenerColorEnlace() + "'>راهنمای به روز رسانی درایور</a></span>";
-    }
+@Override
+public String problema_con_graficas_ati() {
+    return "<span style='color:#" + config.obtenerColorError() + "'>به‌روزرسانی درایورهای ATI/AMD شما ممکن است کمک کند. برای رفع مشکل این راهنما را بخوانید: <a href='https://forums.minecraftforge.net/topic/125488-rules-and-frequently-asked-questions-faq/#:~:text=How%20do%20I%20update%20my%20drivers%3F' style='color:#" + config.obtenerColorEnlace() + "'>راهنمای به‌روزرسانی درایورها</a> https://www.amd.com/es/support/download/drivers.html دانلود </span>";
+}
  
     @Override
     public String probelma_con_graficas_nouveau() {
@@ -160,4 +160,82 @@ public class Persa implements Idioma {
     public String kubeJSResourcePack(String mod_nombre) {
         return "<b style='color:#" + config.obtenerColorError() + "'>مشکل در افزونه KubeJS </b>" + mod_nombre;
     }
+    
+    
+    @Override
+public String problema_con_graficas_nvidia_windows_viejo() {
+    return "<span style='color:#" + config.obtenerColorError() + "'>"
+            + "مشکلاتی با درایورهای NVIDIA در نسخه‌های قبل از Windows 11 شناسایی شده است."
+            + "</span><br/><br/>"
+            + "برای اطمینان از اینکه Minecraft (و JVM فعلی) از کارت گرافیک اختصاصی NVIDIA استفاده کند، مراحل زیر را دنبال کنید:<br/><br/>"
+            + "1. <strong>فایل اجرایی Java را شناسایی کنید:</strong><br/>"
+            + "   - این برنامه از فایل اجرایی زیر برای Java استفاده می‌کند: "
+            + obtenerRutaJava() + "<br/>"
+            + "   - اگر مسیر خاصی مشاهده نمی‌کنید، می‌توانید فایل اجرایی Java را با جستجوی 'java.exe' در سیستم پیدا کنید.<br/><br/>"
+            + "2. <strong>پنل کنترل NVIDIA را باز کنید:</strong><br/>"
+            + "   - روی دسکتاپ راست کلیک کرده و گزینه 'پنل کنترل NVIDIA' را انتخاب کنید.<br/><br/>"
+            + "3. <strong>GPU مورد نظر را تنظیم کنید:</strong><br/>"
+            + "   - در پنل کنترل NVIDIA، به 'مدیریت تنظیمات 3D' بروید.<br/>"
+            + "   - گزینه 'تنظیمات برنامه خاص' را انتخاب کنید.<br/>"
+            + "   - روی 'افزودن' کلیک کنید و فایل اجرایی Java شناسایی شده قبلی (مثل: 'java.exe') را پیدا کنید.<br/>"
+            + "   - مطمئن شوید که تنظیم شده است تا از 'پردازنده با عملکرد بالا (NVIDIA)' استفاده کند.<br/><br/>"
+            + "4. <strong>تغییرات را ذخیره کنید:</strong><br/>"
+            + "   - تغییرات را اعمال کرده و پنل کنترل NVIDIA را ببندید.<br/><br/>"
+            + "5. <strong>Minecraft را مجدداً راه‌اندازی کنید:</strong><br/>"
+            + "   - Minecraft را مجدداً راه‌اندازی کنید تا تغییرات اعمال شوند.<br/><br/>"
+            + "اگر از Windows Server 2022 یا Windows 10 استفاده می‌کنید، این مراحل در صورتی معتبر هستند که آخرین درایورهای NVIDIA را نصب کرده باشید.<br/><br/>"
+            + "توجه: اگر نتوانستید پنل کنترل NVIDIA را پیدا کنید، مطمئن شوید که درایورهای NVIDIA به درستی نصب شده‌اند.";
+}
+
+
+
+@Override
+public String problema_con_graficas_nvidia_windows_nuevo() {
+    return "<span style='color:#" + config.obtenerColorError() + "'>"
+            + "مشکلاتی با درایورهای NVIDIA در Windows 11/Server 2025 یا جدیدتر شناسایی شده است."
+            + "</span><br/><br/>"
+            + "برای اطمینان از اینکه Minecraft (و JVM فعلی) از کارت گرافیک اختصاصی NVIDIA استفاده کند، مراحل زیر را دنبال کنید:<br/><br/>"
+            + "1. <strong>فایل اجرایی Java را شناسایی کنید:</strong><br/>"
+            + "   - این برنامه از فایل اجرایی زیر برای Java استفاده می‌کند: "
+            + obtenerRutaJava() + "<br/>"
+            + "   - اگر مسیر خاصی مشاهده نمی‌کنید، می‌توانید فایل اجرایی Java را با جستجوی 'java.exe' در سیستم پیدا کنید.<br/><br/>"
+            + "2. <strong>برنامه تنظیمات را باز کنید:</strong><br/>"
+            + "   - کلیدهای <code>Win + I</code> را فشار دهید تا برنامه تنظیمات باز شود.<br/>"
+            + "   - به <strong>سیستم > نمایش > گرافیک</strong> بروید.<br/><br/>"
+            + "3. <strong>GPU مورد نظر را تنظیم کنید:</strong><br/>"
+            + "   - در بخش 'گرافیک'، روی 'تنظیمات گرافیک پیش‌فرض' کلیک کنید.<br/>"
+            + "   - گزینه 'برنامه‌های دسکتاپ' را انتخاب کرده و سپس روی 'مرور' کلیک کنید.<br/>"
+            + "   - فایل اجرایی Java شناسایی شده قبلی (مثل: 'java.exe') را پیدا کرده و انتخاب کنید.<br/>"
+            + "   - پس از اضافه شدن، برنامه Java را در لیست انتخاب کرده و آن را برای استفاده از 'عملکرد بالا (NVIDIA)' تنظیم کنید.<br/><br/>"
+            + "4. <strong>تغییرات را ذخیره کنید:</strong><br/>"
+            + "   - تغییرات را اعمال کرده و برنامه تنظیمات را ببندید.<br/><br/>"
+            + "5. <strong>Minecraft را مجدداً راه‌اندازی کنید:</strong><br/>"
+            + "   - Minecraft را مجدداً راه‌اندازی کنید تا تغییرات اعمال شوند.<br/><br/>"
+            + "اگر از Windows 11 یا Windows Server 2025+ استفاده می‌کنید، این مراحل در صورتی معتبر هستند که آخرین درایورهای NVIDIA را نصب کرده باشید.<br/><br/>"
+            + "توجه: اگر نتوانستید گزینه تنظیمات گرافیک را پیدا کنید، مطمئن شوید که درایورهای NVIDIA به درستی نصب شده‌اند.";
+}
+
+
+
+
+
+@Override
+public String segundo60Tick() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>سرور یا دنیای شما تیک‌های بیش از 60 ثانیه دارد. این ممکن است به دلیل آن باشد که مودها سرور را کندتر می‌کنند یا سخت‌افزار خیلی ضعیف است.</b>";
+}
+
+
+
+@Override
+public String noTieneMemoria() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>RAM/حافظه کافی ندارید. باید حافظه بیشتری اختصاص دهید.</b>";
+}
+
+
+
+
+
+
+    
+    
 }

@@ -31,10 +31,10 @@ public class Esperanto implements Idioma {
         return "<span style='color:#" + config.obtenerColorError() + "'>Mankas JVM</span>";
     }
 
-    @Override
-    public String probelma_con_graficas_ati() {
-        return "<span style='color:#" + config.obtenerColorError() + "'>Ĝisdatigo de ŝoforprogramoj eble helpos. Notu: kiam ŝoforprogramoj difektiĝas, regula ĝisdatigo eble ne trovos ĝin. Bonvolu sekvi la gvidilon ĉe la ligilo. Grava: Se vi uzas Nvidia-karton, certigu ke ĉiuj Minecraft-rilataj agordoj (kiel Java kaj lanĉilo) estas agorditaj al 'preferi altan rendimenton' en Windows-agordoj kaj Nvidia-kontrolpanelo. Legu ĉi tiun gvidilon: <a href='https://forums.minecraftforge.net/topic/125488-rules-and-frequently-asked-questions-faq/#:~:text=How%20do%20I%20update%20my%20drivers%3F' style='color:#" + config.obtenerColorEnlace() + "'>Gvido por ĝisdatigi ŝoforprogramojn</a></span>";
-    }
+@Override
+public String problema_con_graficas_ati() {
+    return "<span style='color:#" + config.obtenerColorError() + "'>Ĝisdatigi viajn kontrolilojn ATI/AMD eble helpas vin. Legu ĉi tiun gvidilon por ripari ĝin: <a href='https://forums.minecraftforge.net/topic/125488-rules-and-frequently-asked-questions-faq/#:~:text=How%20do%20I%20update%20my%20drivers%3F' style='color:#" + config.obtenerColorEnlace() + "'>Gvidilo pri ĝisdatigo de kontroliloj</a> https://www.amd.com/es/support/download/drivers.html Elŝuti </span>";
+}
 
     @Override
     public String probelma_con_graficas_nouveau() {
@@ -160,4 +160,84 @@ public class Esperanto implements Idioma {
     public String kubeJSResourcePack(String mod_nombre) {
         return "<b style='color:#" + config.obtenerColorError() + "'>Problemo kun KubeJS-etendaĵo </b>" + mod_nombre;
     }
+    
+    
+    
+    
+    @Override
+public String problema_con_graficas_nvidia_windows_viejo() {
+    return "<span style='color:#" + config.obtenerColorError() + "'>"
+            + "Problemoj detektitaj kun NVIDIA-drajviloj en versioj antaŭ Windows 11."
+            + "</span><br/><br/>"
+            + "Por certigi, ke Minecraft (kaj la nuna JVM) uzas la dediĉitan grafikan karton NVIDIA, sekvi tiujn paŝojn:<br/><br/>"
+            + "1. <strong>Identigu la Java-ekzekuteblon:</strong><br/>"
+            + "   - Ĉi tiu programo uzas la jenan Java-ekzekuteblon: "
+            + obtenerRutaJava() + "<br/>"
+            + "   - Se vi ne vidas specifan vojon, vi povas trovi la Java-ekzekuteblon per serĉado de 'java.exe' en via sistemo.<br/><br/>"
+            + "2. <strong>Malfermu la NVIDIA-Kontrolpanelon:</strong><br/>"
+            + "   - Alklaku dekstre sur la labortablo kaj elektu 'NVIDIA-Kontrolpanelo'.<br/><br/>"
+            + "3. <strong>Agordu la preferatan GPU-on:</strong><br/>"
+            + "   - En la NVIDIA-Kontrolpanelo, iru al 'Administri 3D-agordojn'.<br/>"
+            + "   - Elektu la opcion 'Programa agordo'.<br/>"
+            + "   - Alklaku 'Aldoni' kaj serĉu la jam identigitan Java-ekzekuteblon (ekz.: 'java.exe').<br/>"
+            + "   - Certigu, ke ĝi estas agordita por uzi la 'Alta-rendimentan NVIDIA-procesoron'.<br/><br/>"
+            + "4. <strong>Konservu la ŝanĝojn:</strong><br/>"
+            + "   - Apliku la ŝanĝojn kaj fermu la NVIDIA-Kontrolpanelon.<br/><br/>"
+            + "5. <strong>Restartu Minecraft:</strong><br/>"
+            + "   - Restartu Minecraft por ke la ŝanĝoj efektiviĝu.<br/><br/>"
+            + "Se vi uzas Windows Server 2022 aŭ Windows 10, tiuj paŝoj validas se vi havas la plej novajn NVIDIA-drajvilojn instalitajn.<br/><br/>"
+            + "Notu: Se vi ne povas trovi la NVIDIA-Kontrolpanelon, certigu, ke la NVIDIA-drajviloj estas ĝuste instalitaj.";
+}
+
+
+
+
+@Override
+public String problema_con_graficas_nvidia_windows_nuevo() {
+    return "<span style='color:#" + config.obtenerColorError() + "'>"
+            + "Problemoj detektitaj kun NVIDIA-drajviloj en Windows 11/Server 2025 aŭ poste."
+            + "</span><br/><br/>"
+            + "Por certigi, ke Minecraft (kaj la nuna JVM) uzas la dediĉitan grafikan karton NVIDIA, sekvi tiujn paŝojn:<br/><br/>"
+            + "1. <strong>Identigu la Java-ekzekuteblon:</strong><br/>"
+            + "   - Ĉi tiu programo uzas la jenan Java-ekzekuteblon: "
+            + obtenerRutaJava() + "<br/>"
+            + "   - Se vi ne vidas specifan vojon, vi povas trovi la Java-ekzekuteblon per serĉado de 'java.exe' en via sistemo.<br/><br/>"
+            + "2. <strong>Malfermu la Agordan Aplikaĵon:</strong><br/>"
+            + "   - Premu la klavojn <code>Win + I</code> por malfermi la Agordan Aplikaĵon.<br/>"
+            + "   - Navigu al <strong>Sistemo > Ekrano > Grafiko</strong>.<br/><br/>"
+            + "3. <strong>Agordu la preferatan GPU-on:</strong><br/>"
+            + "   - En la sekcio 'Grafiko', alklaku 'Defaŭltaj grafikaj agordoj'.<br/>"
+            + "   - Elektu 'Labortablaj aplikaĵoj' kaj poste alklaku 'Foliumi'.<br/>"
+            + "   - Serĉu kaj elektu la jam identigitan Java-ekzekuteblon (ekz.: 'java.exe').<br/>"
+            + "   - Post aldono, elektu la Java-aplikaĵon en la listo kaj agordu ĝin por uzi 'Alta rendimento (NVIDIA)'.<br/><br/>"
+            + "4. <strong>Konservu la ŝanĝojn:</strong><br/>"
+            + "   - Apliku la ŝanĝojn kaj fermu la Agordan Aplikaĵon.<br/><br/>"
+            + "5. <strong>Restartu Minecraft:</strong><br/>"
+            + "   - Restartu Minecraft por ke la ŝanĝoj efektiviĝu.<br/><br/>"
+            + "Se vi uzas Windows 11 aŭ Windows Server 2025+, tiuj paŝoj validas se vi havas la plej novajn NVIDIA-drajvilojn instalitajn.<br/><br/>"
+            + "Notu: Se vi ne povas trovi la grafikagordan opcion, certigu, ke la NVIDIA-drajviloj estas ĝuste instalitaj.";
+}
+
+
+
+
+@Override
+public String segundo60Tick() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Via Servilo aŭ Mondo havas tiko pli longaj ol 60 sekundoj. Tio povas esti pro tio, ke aldonaĵoj malrapidigas la servilon aŭ la aparataro estas tro malforta.</b>";
+}
+
+
+
+@Override
+public String noTieneMemoria() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Vi ne havas sufiĉe da RAM/Memoro. Vi devas atribui pli.</b>";
+}
+
+
+
+
+
+
+
+
 }
