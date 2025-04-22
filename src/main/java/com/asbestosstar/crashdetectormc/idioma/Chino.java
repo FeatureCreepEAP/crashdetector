@@ -230,7 +230,10 @@ public String noTieneMemoria() {
 }
 
 
-
+@Override
+public String theseus() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>如果您正在使用Theseus/ModrinthApp，我们无法提供太多帮助，因为Theseus没有启动器控制台。Theseus还存在其他问题，包括过时的Mod加载器版本、间谍软件、错误日志等。Modrinth公司也不诚实，他们虚假指控Mod开发者使用机器人来增加下载量，并且多次更改了他们的盈利声明。</b>";
+}
 
 
 

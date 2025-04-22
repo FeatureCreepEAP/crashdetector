@@ -22,6 +22,7 @@ public class Analyzador {
 		verificaciones.add(new KubeJSResourcePack());
 		verificaciones.add(new Segundo60Tick());
 		verificaciones.add(new NoTieneMemoria());
+		verificaciones.add(new Theseus());
 
 		
 		

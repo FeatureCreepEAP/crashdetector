@@ -228,7 +228,10 @@ public String noTieneMemoria() {
     return "<b style='color:#" + config.obtenerColorError() + "'>十分なRAM/メモリがありません。より多くのメモリを割り当てる必要があります。</b>";
 }
 
-
+@Override
+public String theseus() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>Theseus/ModrinthAppを使用している場合、Theseusにはランチャーコンソールがないため、あまりお手伝いできません。Theseusには他にも問題があり、古いModローダーのバージョン、スパイウェア、不正なログなどがあります。また、Modrinth社も誠実ではありません。彼らはMod開発者がダウンロード数を増やすためにボットを使用していると虚偽の主張をし、収益化に関する声明を何度も変更しています。</b>";
+}
 
 
 

@@ -161,6 +161,6 @@ public interface Idioma {
 
 	public String noTieneMemoria();
 	
-	
+	public String theseus();
 	
 }

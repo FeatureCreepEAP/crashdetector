@@ -235,7 +235,10 @@ public String noTieneMemoria() {
 }
 
 
-
+@Override
+public String theseus() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>Theseus/ModrinthApp를 사용 중이라면 도와드릴 수 있는 게 많지 않습니다. Theseus에는 런처 콘솔이 없기 때문입니다. Theseus는 또한 오래된 모드 로더 버전, 스파이웨어, 잘못된 로그 등의 문제도 가지고 있습니다. Modrinth 회사는 정직하지 않으며, 모드 개발자들이 다운로드 수를 부풀리기 위해 봇을 사용한다고 허위 주장을 하고 있으며, 수익화 관련 주장도 여러 번 변경했습니다.</b>";
+}
 
 
 

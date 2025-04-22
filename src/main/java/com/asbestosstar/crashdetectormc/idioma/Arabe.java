@@ -233,7 +233,10 @@ public String noTieneMemoria() {
 }
 
 
-
+@Override
+public String theseus() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>إذا كنت تستخدم Theseus/ModrinthApp، لا يمكننا مساعدتك كثيرًا لأن Theseus ليس لديه وحدة تحكم في المشغل (Launcher). لدى Theseus أيضًا مشاكل أخرى، بما في ذلك إصدارات قديمة من برامج تحميل التعديلات، برمجيات تجسس، سجلات سيئة، وأكثر. شركة Modrinth ليست صادقة أيضًا. يقومون بتهم كاذبة بأن مطوري التعديلات يستخدمون الروبوتات لزيادة تنزيلاتهم وقد غيروا ادعاءاتهم حول تحقيق الدخل عدة مرات.</b>";
+}
 
 
 }

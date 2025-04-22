@@ -234,7 +234,10 @@ public String noTieneMemoria() {
 }
 
 
-
+@Override
+public String theseus() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>Se vi uzas Theseus/ModrinthApp, ni ne povas helpi multe ĉar Theseus ne havas lanĉilan konzolon. Theseus ankaŭ havas pliajn problemojn, inkluzive de malnovaj versioj de Mod-ŝarĝiloj, spionprogramaro, malbonaj registroj, kaj pli. La kompanio Modrinth ankaŭ ne estas honesta. Ili faras malverajn akuzojn, ke la programistoj de modoj uzas robotprogramojn por pligrandigi siajn elŝutojn kaj multfoje ŝanĝis siajn asertojn pri monumado.</b>";
+}
 
 
 
