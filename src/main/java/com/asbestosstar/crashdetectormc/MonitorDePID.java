@@ -116,17 +116,23 @@ public class MonitorDePID {
 
 		long pid = ProcessHandle.current().pid();
 		System.out.println("PID: " + pid);
+String jar;
+		
+        try {
+            URI uriJar = MonitorDePID.class.getProtectionDomain().getCodeSource().getLocation().toURI();
+            String uriJarString = uriJar.toString();
 
-		String jar;
-		try {
-			URI uri_jar =MonitorDePID.class.getProtectionDomain().getCodeSource().getLocation().toURI();
-			String uri_de_jar_string = uri_jar.toString().replace("union:", "file://").split(".jar")[0]+".jar";//Porque la union sistema de archivos
-			jar = new File(uri_de_jar_string)
-					.getAbsolutePath();
-		} catch (URISyntaxException e) {
-			System.err.println(idioma.no_se_donde_esta_jar());
-			return;
-		}
+            if (uriJarString.startsWith("union:")) {//Para Modlauncher
+                uriJarString = uriJarString.replace("union:", "file://");
+            }
+
+            jar = new File(new URI(uriJarString).getPath())
+                    .getAbsolutePath().split(".jar")[0]+".jar"; 
+        } catch (Exception e) {
+            System.err.println(idioma.no_se_donde_esta_jar()); 
+            return;
+        }
+
 
 		// Get the Java binary path
 		Optional<String> javaBinary = ProcessHandle.current().info().command();
@@ -137,7 +143,10 @@ public class MonitorDePID {
 
 		// Launch the child monitor process
 		try {
-			new ProcessBuilder(javaBinary.get(), "-cp", System.getProperty("java.class.path")+File.pathSeparator+jar, "com.asbestosstar.crashdetectormc.MonitorDePID",
+			String cp =System.getProperty("java.class.path")+File.pathSeparator+jar;
+					System.out.println("******************"+cp);
+			
+			new ProcessBuilder(javaBinary.get(), "-cp", cp, "com.asbestosstar.crashdetectormc.MonitorDePID",
 					"--monitor", String.valueOf(pid)).inheritIO().start();
 		} catch (Exception e) {
 			e.printStackTrace();
