@@ -1,134 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CrashDetector</title>
-    <style>
-        :root {
-            --background: #1a1a1a;
-            --purple-tint: #4a4a8f;
-            --text-color: #f0f0f0;
-            --hover-color: #6a6acf;
-        }
-
-        body {
-            min-height: 100vh;
-            background: var(--background);
-            color: var(--text-color);
-            font-family: 'Quicksand', sans-serif;
-            display: flex;
-            justify-content: center;
-            padding: 40px 20px;
-            margin: 0;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1400px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-
-        .header {
-            padding: 40px 60px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        h1 {
-            font-size: 3em;
-            margin-bottom: 15px;
-            text-shadow: 0 0 15px var(--purple-tint);
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 25px;
-            margin-top: 30px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .social-btn {
-            background: none;
-            border: 2px solid var(--purple-tint);
-            color: var(--text-color);
-            padding: 14px 40px;
-            border-radius: 30px;
-            font-size: 1.2em;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex: 1 1 250px;
-        }
-
-        .social-btn:hover {
-            background: var(--hover-color);
-            border-color: var(--hover-color);
-            transform: translateY(-3px);
-        }
-
-        .diagnostic-section {
-            padding: 40px 60px;
-        }
-
-        .report-placeholder {
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px dashed var(--purple-tint);
-            border-radius: 10px;
-            padding: 40px;
-            margin: 20px 0;
-            color: var(--text-color);
-            font-family: monospace;
-            font-size: 1.1em;
-            line-height: 1.6;
-            min-height: 200px;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
-    </style>
 </head>
-<body style="background-color: #1a1a1a; color: #f0f0f0;">
-    <main class="container" style="max-width: 1400px; background: #282828;">
-        <header class="header" style="padding: 40px; border-bottom: 1px solid #444;">
-            <h1 style="font-size: 3em; color: #f0f0f0;">
-                CrashDetector
-            </h1>
-            
-            <section class="report-placeholder" style="background: #333; border: 2px dashed #4a4a8f; padding: 20px; margin: 10px 0;">
-                {constructor}
-            </section>
-        </header>
+<body bgcolor="#1a1a1a" text="#f0f0f0">
+    <center>
+        <!-- Header -->
+        <h1>CrashDetector</h1>
 
-        <nav class="diagnostic-section" style="padding: 20px;">
-            <div class="social-links" style="display: flex; gap: 10px; flex-wrap: wrap;">
-                <a href="https://discord.gg/H76qe3zc3W" class="social-btn" style="background: #4a4a8f; color: white; padding: 10px 20px; text-decoration: none;">
-                    <svg class="discord-icon" viewBox="0 0 24 24" width="28" height="28" fill="white">
-                        <path d="M19.75 3.75C20.9926 3.75 22 4.75736 22 6.00001V18C22 19.2426 20.9926 20.25 19.75 20.25H4.25C3.00736 20.25 2 19.2426 2 18V6.00001C2 4.75736 3.00736 3.75 4.25 3.75H19.75ZM9.5 13.5C9.5 14.3284 8.82843 15 8 15C7.17157 15 6.5 14.3284 6.5 13.5C6.5 12.6716 7.17157 12 8 12C8.82843 12 9.5 12.6716 9.5 13.5ZM15.5 13.5C15.5 14.3284 14.8284 15 14 15C13.1716 15 12.5 14.3284 12.5 13.5C12.5 12.6716 13.1716 12 14 12C14.8284 12 15.5 12.6716 15.5 13.5ZM18 9H6V6H18V9Z"/>
-                    </svg>
-                    Discord
-                </a>
-                
-                <a href="https://pd.qq.com/s/7mnvnblp5" class="social-btn" style="background: #4a4a8f; color: white; padding: 10px 20px; text-decoration: none;">
-                    <svg class="qq-icon" viewBox="0 0 24 24" width="28" height="28" fill="white">
-                        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm4.8 14.4c-1.2 1.2-3.6 1.2-4.8 0-1.2-1.2-1.2-3.6 0-4.8 1.2-1.2 3.6-1.2 4.8 0 1.2 1.2 1.2 3.6 0 4.8zm-9.6 0c-1.2 1.2-3.6 1.2-4.8 0-1.2-1.2-1.2-3.6 0-4.8 1.2-1.2 3.6-1.2 4.8 0 1.2 1.2 1.2 3.6 0 4.8zM12 19.2c-3.314 0-6-2.686-6-6s2.686-6 6-6 6 2.686 6 6-2.686 6-6 6z"/>
-                    </svg>
-                    QQ
-                </a>
-            </div>
-        </nav>
-    </main>
+        <!-- Log Placeholder -->
+        <div>{constructor}</div>
+
+        <!-- Social Links -->
+        <p>
+            <a href="https://discord.gg/H76qe3zc3W" style="color: #f0f0f0; text-decoration: none;">[Discord]</a>
+            &nbsp;&nbsp;
+            <a href="https://pd.qq.com/s/7mnvnblp5" style="color: #f0f0f0; text-decoration: none;">[QQ]</a>
+        </p>
+    </center>
 </body>
 </html>
