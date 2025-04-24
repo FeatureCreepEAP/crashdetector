@@ -22,7 +22,7 @@ public class GeneradorDeInformacion {
 			}
 
 			String pantilla = MonitorDePID.leer_archivo(new File("crash_detector/pantilla.htm").toPath());
-			File ret = new File("crash_detector/" + instant.toString() + ".htm");
+			File ret = new File("crash_detector/" + instant.toString().replace(":", "") + ".htm");
 			FileWriter escribidor = new FileWriter(ret);
 			escribidor.write(pantilla.replace("{constructor}", cons.toString() + "<br>" + constructor.toString()));
 			escribidor.close();
