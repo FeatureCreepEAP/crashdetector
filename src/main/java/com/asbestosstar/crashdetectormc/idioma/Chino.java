@@ -236,7 +236,10 @@ public String theseus() {
 }
 
 
-
+@Override
+public String noTieneConsolaDeLauncherCursedForge() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>您没有launcher_log.txt文件。我们需要这个文件来查找错误。这是由于启用了“跳过启动器启动”选项。请禁用它。</b>";
+}
     
     
     

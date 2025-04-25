@@ -234,6 +234,9 @@ public String theseus() {
     return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>Если вы используете Theseus/ModrinthApp, мы не можем оказать большую помощь, так как у Theseus нет консоли запуска. У Theseus также есть другие проблемы, включая устаревшие версии загрузчиков модов, шпионское ПО, плохие логи и многое другое. Компания Modrinth также нечестна. Они делают ложные обвинения, что разработчики модов используют ботов для увеличения количества загрузок, и неоднократно меняли свои заявления о монетизации.</b>";
 }
     
-    
+@Override
+public String noTieneConsolaDeLauncherCursedForge() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>У вас нет файла launcher_log.txt. Нам нужен этот файл для поиска ошибок. Это связано с опцией \"Пропустить запуск лаунчера\". Отключите её.</b>";
+}
     
 }

@@ -23,31 +23,72 @@ import com.asbestosstar.crashdetectormc.analyzador.Verificaciones;
 
 public class Consola {
 
+	/**
+	 * NO USAS DESPUES DE finalizarContento
+	 */
 	public String contento;
+
 	public Path archivo;
 	public String enlance;
+	public int linea_original;
+	public boolean nueva;
 
 	public Consola(Path archivo) throws IOException {
 		super();
 		this.archivo = archivo;
-		this.contento = MonitorDePID.leer_archivo(archivo);
+		linea_original = 0;
+
+		if (archivo.toString().contains("tlauncher") && !archivo.toString().contains("starter")) {
+			String contento_existe = MonitorDePID.leer_archivo(archivo);
+			String[] lineas = contento_existe.split(File.pathSeparator);
+			for (int i = 0; i < lineas.length - 1; i++) {
+				String lin = lineas[i];
+				if (lin.contains("[Launcher] Launching Minecraft...")) {
+					linea_original = i;
+				}
+
+			}
+
+		} else if (archivo.toString().contains("launcher_log")) {
+			String contento_existe = MonitorDePID.leer_archivo(archivo);
+			String[] lineas = contento_existe.split(File.pathSeparator);
+			linea_original = lineas.length;
+			System.out.println("DEBUG Linea de launcher_log es " + String.valueOf(linea_original));
+		}
+
 	}
 
-	public static List<Consola> obtenerConsolas(Instant tiempo) {
+	public void finalizarContento(Instant tiempo) {
+		try {
+			
+			Instant epoc = Instant.ofEpochMilli(archivo.toFile().lastModified());
+
+			if (epoc.isAfter(tiempo)) {
+				nueva=true;
+				contento = MonitorDePID.leer_archivo(archivo);
+			}else {
+				nueva=false;
+				contento ="";
+			}
+			
+			
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public static List<Consola> obtenerConsolas() {
 		List<Consola> resulto = new ArrayList<Consola>();
 
 		for (File archivo : obtenerArchivosDeConsolas()) {
 			if (archivo.exists()) {
-
-				Instant epoc = Instant.ofEpochMilli(archivo.lastModified());
-
-				if (epoc.isAfter(tiempo)) {
-					try {
-						resulto.add(new Consola(archivo.toPath()));
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+				try {
+					resulto.add(new Consola(archivo.toPath()));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
 
@@ -59,7 +100,22 @@ public class Consola {
 
 	public static List<File> obtenerArchivosDeConsolas() {
 		List<File> resulto = new ArrayList<File>();
+		String home = System.getProperty("user.home");
+		String applicationSupport = home + "/Library/Application Support/";
+		String appdata = System.getenv("APPDATA");
+		
+		
+		resulto.add(new File("launcher_log.txt"));
+		resulto.add(new File("../../Install/launcher_log.txt"));// CurseForgeApp
+		resulto.add(new File(applicationSupport + "minecraft/launcher_log.txt"));// CurseForgeApp
 
+		if (appdata != null) {
+			resulto.add(new File(appdata + "/AtLauncher/logs/atlauncher.log"));// ATLauncher DOS
+			resulto.add(new File(appdata + "/.minecraft/launcher_log.txt"));// CurseForgeApp
+		}
+		
+		
+		
 		File carpetaLogs = new File("logs/");
 		File carpetaCrashReports = new File("crash-reports/");
 
@@ -78,9 +134,7 @@ public class Consola {
 				}
 			}
 		}
-		String home = System.getProperty("user.home");
-		String applicationSupport = home + "/Library/Application Support/";
-		String appdata = System.getenv("APPDATA");
+
 
 		File carpetaTLauncherStarter;
 		File carpetaTLauncher;
@@ -110,15 +164,9 @@ public class Consola {
 			}
 		}
 
-		if (appdata != null) {
-			resulto.add(new File(appdata + "/AtLauncher/logs/atlauncher.log"));// ATLauncher DOS
-			resulto.add(new File(appdata + "/.minecraft/launcher_log.txt"));// CurseForgeApp
-		}
 
-		resulto.add(new File("launcher_log.txt"));
-		resulto.add(new File("../../Install/launcher_log.txt"));// CurseForgeApp
-		resulto.add(new File(applicationSupport + "minecraft/launcher_log.txt"));// CurseForgeApp
-		resulto.add(new File(home + ".minecraft/launcher_log.txt"));// CurseForgeApp
+
+		resulto.add(new File(home + ".minecraft/launcher_log.txt"));// CurseForgeApp y TL segundo
 
 		resulto.add(new File("../../logs/ftb-app-electron.log"));// FTB
 		resulto.add(new File("../../logs/atlauncher.log"));// ATLauncher UNIX
@@ -133,57 +181,44 @@ public class Consola {
 		resulto.add(new File("sklauncher/sklauncher_logs.txt"));
 
 		resulto.add(new File("../../../../main.log"));// GDLauncher
-		
-		resulto.add(new File("../../../../main.log"));// GDLauncher
 
-		
-		resulto.add(new File("hs_err_pid"+String.valueOf(MonitorDePID.pid)+".log" ));// GDLauncher
 
-		
-		
-		
-		
+		resulto.add(new File("hs_err_pid" + String.valueOf(MonitorDePID.pid) + ".log"));// GDLauncher
+
 		return resulto;
 
 	}
 
 	public void analyzar(StringBuilder constructor) {
 		// StringBuilder temporal para almacenar los resultados de las verificaciones
-		StringBuilder contenidoVerificaciones = new StringBuilder();
-		String contento_verificar = contento;
-		if(archivo.toString().contains("tlauncher")&&!archivo.toString().contains("starter")) {
-			if(contento.contains("[Launcher] Launching Minecraft...")) {//La consola en TLauncher es continua
-				String delimiter = "\\[Launcher\\] Launching Minecraft\\.\\.\\.";
-				String[] split= contento.split(delimiter);
-				int len = split.length;
-				contento_verificar=split[len-1];
-			}
-			
-			
-		}
-		
-		
-		
-		
-		
-		
-		// Iterar a través de todas las verificaciones y recopilar su salida
-		for (Verificaciones verificacion : Analyzador.verificaciones) {
-			verificacion.nueva().verificar(contento_verificar, contenidoVerificaciones);
+		CDStringBuilder contenidoVerificaciones = new CDStringBuilder(constructor);
+
+		StringBuilder para_verificar = new StringBuilder();
+		String[] lineas = contento.split(File.pathSeparator);
+		for (int i = linea_original; i < lineas.length - 1; i++) {
+			para_verificar.append(lineas[i]).append(File.pathSeparator);
 		}
 
-		// Verificar si hay algún contenido generado por las verificaciones
-		if (contenidoVerificaciones.length() > 0) {
-			// Crear un desplegable con el nombre del archivo como etiqueta
-			constructor.append("<details><summary>")
-	          .append("<span style='color: #"+Config.obtenerInstancia().obtenerColorDeTitulosDeConsolas()+"; font-weight: bold;'>") 
-	          .append(archivo.getFileName())
-	          .append("</span>") 
-	          .append("</b></summary>")
-	          .append("<br>")
-	          .append(contenidoVerificaciones.toString())
-	          .append("</details><br>");
+		String contento_verificar = para_verificar.toString();
+
+		if (!contento_verificar.replace(" ", "").equals("")) {
+			// Iterar a través de todas las verificaciones y recopilar su salida
+			for (Verificaciones verificacion : Analyzador.verificaciones) {
+				verificacion.nueva().verificar(contento_verificar, contenidoVerificaciones);
+			}
+
+			// Verificar si hay algún contenido generado por las verificaciones
+			if (contenidoVerificaciones.length() > 0) {
+				// Crear un desplegable con el nombre del archivo como etiqueta
+				constructor.append("<details><summary>")
+						.append("<span style='color: #" + Config.obtenerInstancia().obtenerColorDeTitulosDeConsolas()
+								+ "; font-weight: bold;'>")
+						.append(archivo.getFileName()).append("</span>").append("</b></summary>").append("<br>")
+						.append(contenidoVerificaciones.toString()).append("</details><br>");
+			}
+
 		}
+
 	}
 
 	// Para todos el code aqui,escribir otra vez estar mas simplicado pero hacer la

@@ -1,11 +1,12 @@
 package com.asbestosstar.crashdetectormc.analyzador;
 
+import com.asbestosstar.crashdetectormc.CDStringBuilder;
 import com.asbestosstar.crashdetectormc.MonitorDePID;
 
 public class NoTieneMemoria implements Verificaciones {
 
 	@Override
-	public void verificar(String contento_de_consola, StringBuilder constructor) {
+	public void verificar(String contento_de_consola, CDStringBuilder constructor) {
 		// TODO Auto-generated method stub
 
 		if(contento_de_consola.contains("Server crashed because it ran out of memory. Try reducing the load to avoid crashes like this in the future")||

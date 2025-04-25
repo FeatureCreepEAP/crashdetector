@@ -239,4 +239,11 @@ public String theseus() {
 }
 
 
+
+@Override
+public String noTieneConsolaDeLauncherCursedForge() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>ليس لديك ملف launcher_log.txt. نحن بحاجة إلى هذا الملف للبحث عن الأخطاء. وهذا بسبب خيار \"تخطي بدء تشغيل المشغل\". قم بتعطيله.</b>";
+}
+
+
 }

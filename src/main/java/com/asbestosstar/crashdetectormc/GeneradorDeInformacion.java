@@ -17,8 +17,8 @@ public class GeneradorDeInformacion {
 		try {
 			StringBuilder cons = new StringBuilder();
 			for (Consola co : consolas) {
-				cons.append("<a href='file://").append(co.archivo.toUri().toString()).append("'>")
-						.append(co.archivo.toString().strip()).append("</a><br>");
+					cons.append("<a href='file://").append(co.archivo.toUri().toString()).append("'>")
+							.append(co.archivo.toString().strip()).append("</a><br>");
 			}
 
 			String pantilla = MonitorDePID.leer_archivo(new File("crash_detector/pantilla.htm").toPath());
@@ -38,8 +38,8 @@ public class GeneradorDeInformacion {
 		try {
 			StringBuilder cons = new StringBuilder();
 			for (Consola co : consolas) {
-				cons.append("<a href=" + co.obtainerEnlance() + ">" + co.archivo.toString().strip() + "</a>").append("<br>");
-
+					cons.append("<a href=" + co.obtainerEnlance() + ">" + co.archivo.toString().strip() + "</a>")
+							.append("<br>");
 			}
 
 			String pantilla = MonitorDePID.leer_archivo(new File("crash_detector/pantilla.htm").toPath());
@@ -54,35 +54,33 @@ public class GeneradorDeInformacion {
 		}
 	}
 
-	   public static String enviarInforme(String html) throws IOException {
-	        String servidor = Config.obtenerInstancia().obtenerSitoDeInformes();
-	        String parametros = "html_content=" + 
-	            java.net.URLEncoder.encode(html, StandardCharsets.UTF_8);
+	public static String enviarInforme(String html) throws IOException {
+		String servidor = Config.obtenerInstancia().obtenerSitoDeInformes();
+		String parametros = "html_content=" + java.net.URLEncoder.encode(html, StandardCharsets.UTF_8);
 
-	        HttpURLConnection conexion = (HttpURLConnection) new URL(servidor).openConnection();
-	        conexion.setRequestMethod("POST");
-	        conexion.setDoOutput(true);
-	        conexion.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+		HttpURLConnection conexion = (HttpURLConnection) new URL(servidor).openConnection();
+		conexion.setRequestMethod("POST");
+		conexion.setDoOutput(true);
+		conexion.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
-	        try (OutputStream os = conexion.getOutputStream()) {
-	            os.write(parametros.getBytes(StandardCharsets.UTF_8));
-	        }
+		try (OutputStream os = conexion.getOutputStream()) {
+			os.write(parametros.getBytes(StandardCharsets.UTF_8));
+		}
 
-	        int codigoRespuesta = conexion.getResponseCode();
-	        if (codigoRespuesta == HttpURLConnection.HTTP_OK) {
-	            try (Scanner scanner = new Scanner(conexion.getInputStream(), 
-	                                       StandardCharsets.UTF_8.name())) {
-	                return scanner.useDelimiter("\\A").next().trim();
-	            }
-	        } else {
-	            String mensajeError = "Error HTTP " + codigoRespuesta + ": ";
-	            try (Scanner scanner = new Scanner(conexion.getErrorStream())) {
-	                if (scanner.hasNext()) {
-	                    mensajeError += scanner.useDelimiter("\\A").next();
-	                }
-	            }
-	            throw new IOException(mensajeError);
-	        }
-	    }
+		int codigoRespuesta = conexion.getResponseCode();
+		if (codigoRespuesta == HttpURLConnection.HTTP_OK) {
+			try (Scanner scanner = new Scanner(conexion.getInputStream(), StandardCharsets.UTF_8.name())) {
+				return scanner.useDelimiter("\\A").next().trim();
+			}
+		} else {
+			String mensajeError = "Error HTTP " + codigoRespuesta + ": ";
+			try (Scanner scanner = new Scanner(conexion.getErrorStream())) {
+				if (scanner.hasNext()) {
+					mensajeError += scanner.useDelimiter("\\A").next();
+				}
+			}
+			throw new IOException(mensajeError);
+		}
+	}
 
 }

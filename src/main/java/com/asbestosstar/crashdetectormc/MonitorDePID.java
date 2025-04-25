@@ -2,27 +2,21 @@ package com.asbestosstar.crashdetectormc;
 
 import java.awt.GraphicsEnvironment;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
-import java.util.zip.ZipInputStream;
 
 import javax.swing.SwingUtilities;
-
-import com.asbestosstar.crashdetectormc.buscar.ArchivoDeMod;
-import com.asbestosstar.crashdetectormc.buscar.Buscardor;
-import com.asbestosstar.crashdetectormc.buscar.ModPKZip;
 
 public class MonitorDePID {
 
@@ -30,6 +24,8 @@ public class MonitorDePID {
 	public static Path carpeta = new File("crash_detector/").toPath();
 	public static Path ultima_mods = carpeta.resolve("ultima_mods");
 	public static Path viajo_ultima_mods = carpeta.resolve("viajo_ultima_mods");
+	public static List<Consola> consolas = new ArrayList<Consola>();
+
 	public static String nl = System.lineSeparator();
 	public static Idioma idioma = Idioma.detectar();
 	public static String local;
@@ -154,9 +150,10 @@ String jar;
 	}
 
 	private static void monitor_proceso(long pid) {
+		Instant utc = Instant.now();
+		List<Consola> consolas_sin_processando = Consola.obtenerConsolas();
 		MonitorDePID.pid=pid;
 		System.out.println(idioma.buscando_para_pid(pid));
-		Instant utc = Instant.now();
 		CountDownLatch latch = new CountDownLatch(1); // Necesito por que sin esta preceso esta muerte
 
 		while (true) {
@@ -179,11 +176,20 @@ String jar;
 //				} manaña
 				
 				
+				for (Consola consola : consolas_sin_processando) {
+					consola.finalizarContento(utc);
+					if(consola.nueva) {
+						consolas.add(consola);
+					}
+				}
 				
-				List<Consola> consolas = Consola.obtenerConsolas(utc);
 				for (Consola consola : consolas) {
 					consola.analyzar(constructor);
 				}
+				
+
+				
+				
 				System.out.println(constructor.toString());
 
 				if (GraphicsEnvironment.isHeadless()) {

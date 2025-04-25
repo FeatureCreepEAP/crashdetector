@@ -1,14 +1,16 @@
 package com.asbestosstar.crashdetectormc.analyzador;
 
-import com.asbestosstar.crashdetectormc.MonitorDePID;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import com.asbestosstar.crashdetectormc.CDStringBuilder;
+import com.asbestosstar.crashdetectormc.MonitorDePID;
+
 public class Drivers implements Verificaciones {
 
     @Override
-    public void verificar(String str, StringBuilder messanje) {
+    public void verificar(String str, CDStringBuilder messanje) {
         if (str.contains("EXCEPTION_ACCESS_VIOLATION") && str.contains("atio6axx.dll")) {
             procesarProblemaAMD(str, messanje);
         } else if (str.contains("EXCEPTION_ACCESS_VIOLATION") && str.contains("nouveau")) {
@@ -22,7 +24,7 @@ public class Drivers implements Verificaciones {
         }
     }
 
-    private void procesarProblemaGraficos(StringBuilder mensaje) {
+    private void procesarProblemaGraficos(CDStringBuilder mensaje) {
         boolean esWindows = esWindows();
         boolean tieneNvidia = esWindows ? tieneNvidiaGPU() : false;
         boolean esWindowsNuevo = esWindows && esWindows11OServer2025();
@@ -81,7 +83,7 @@ public class Drivers implements Verificaciones {
         }
     }
     
-    private void procesarProblemaAMD(String log, StringBuilder mensaje) {
+    private void procesarProblemaAMD(String log, CDStringBuilder mensaje) {
         mensaje.append(nl).append(MonitorDePID.idioma.problema_con_graficas_ati());
     }
     

@@ -240,6 +240,11 @@ public String theseus() {
 }
 
 
+@Override
+public String noTieneConsolaDeLauncherCursedForge() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>Vi ne havas la dosieron launcher_log.txt. Ni bezonas ĉi tiun dosieron por serĉi erarojn. Tio okazas pro la opcio \"Preterpasi lanĉilan startigon\". Malŝaltu ĝin.</b>";
+}
+
 
 
 

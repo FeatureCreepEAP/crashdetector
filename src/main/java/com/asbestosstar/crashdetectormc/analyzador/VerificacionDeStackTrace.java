@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.asbestosstar.crashdetectormc.CDStringBuilder;
 import com.asbestosstar.crashdetectormc.MonitorDePID;
 
 public class VerificacionDeStackTrace implements Verificaciones {
@@ -44,7 +45,7 @@ public class VerificacionDeStackTrace implements Verificaciones {
 	};
 
 	@Override
-	public void verificar(String log, StringBuilder build) {
+	public void verificar(String log, CDStringBuilder build) {
 		int lvl = 0;
 		for (String trace : inverso(obtenerTracesFatal(log))) {// Las ultimas son las más importante
 			lvl++;
@@ -131,7 +132,7 @@ public class VerificacionDeStackTrace implements Verificaciones {
 
 	}
 
-	public void procesarTrace(StringBuilder build, String trace, boolean fatal, int lvl) {
+	public void procesarTrace(CDStringBuilder build, String trace, boolean fatal, int lvl) {
 
 		List<String> archivos_json = obtenerArchivosJsonEnMixinExceptions(trace);
 

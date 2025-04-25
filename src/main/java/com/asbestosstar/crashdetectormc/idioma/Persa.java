@@ -238,7 +238,10 @@ public String theseus() {
     return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>اگر از Theseus/ModrinthApp استفاده می‌کنید، نمی‌توانیم کمک زیادی به شما کنیم زیرا Theseus فاقد کنسول لانچر است. Theseus همچنین مشکلات دیگری دارد، از جمله نسخه‌های قدیمی بارگذارهای مود، نرم‌افزار جاسوس، لاگ‌های بد و موارد دیگر. شرکت Modrinth هم صادقانه عمل نمی‌کند. آنها اتهامات کاذب می‌زنند که توسعه‌دهندگان مودها از ربات‌ها برای افزایش دانلودها استفاده می‌کنند و ادعاهای خود درباره درآمدزایی را چندین بار تغییر داده‌اند.</b>";
 }
 
-
+@Override
+public String noTieneConsolaDeLauncherCursedForge() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>شما فایل launcher_log.txt را ندارید. ما به این فایل برای جستجوی خطاها نیاز داریم. این به دلیل گزینه \"رد کردن شروع برنامه‌ریز\" است. آن را غیرفعال کنید.</b>";
+}
     
     
 }

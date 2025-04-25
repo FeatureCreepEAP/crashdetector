@@ -163,4 +163,7 @@ public interface Idioma {
 	
 	public String theseus();
 	
+	
+	public String noTieneConsolaDeLauncherCursedForge();
+	
 }

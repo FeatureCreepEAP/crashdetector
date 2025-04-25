@@ -235,6 +235,11 @@ public String theseus() {
     return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>If you're using Theseus/ModrinthApp, we can't help much because Theseus doesn't have a Launcher console. Theseus also has more issues, including outdated Mod Loader versions, spyware, bad logs, and more. The Modrinth company isn't honest either. They make false accusations that mod developers use bots to inflate their downloads and have changed their monetisation claims multiple times.</b>";
 }
 
+@Override
+public String noTieneConsolaDeLauncherCursedForge() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>You don't have launcher_log.txt. We need this file to search for errors. This is due to the \"Skip Launcher Startup\" option. Disable it.</b>";
+}
+
 
 
 }

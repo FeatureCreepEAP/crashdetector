@@ -1,12 +1,13 @@
 
 package com.asbestosstar.crashdetectormc.analyzador;
 
+import com.asbestosstar.crashdetectormc.CDStringBuilder;
 import com.asbestosstar.crashdetectormc.MonitorDePID;
 
 public class EarlyWindow  implements Verificaciones {
 
 	@Override
-	public void verificar(String str, StringBuilder messanje) {
+	public void verificar(String str, CDStringBuilder messanje) {
 		String[] lines = str.split(nl);
 		if (lines.length > 0) {
 			String ultima = lines[lines.length - 1];

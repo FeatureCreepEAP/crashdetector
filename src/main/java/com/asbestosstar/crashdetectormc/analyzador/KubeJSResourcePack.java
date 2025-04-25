@@ -1,11 +1,12 @@
 package com.asbestosstar.crashdetectormc.analyzador;
 
+import com.asbestosstar.crashdetectormc.CDStringBuilder;
 import com.asbestosstar.crashdetectormc.MonitorDePID;
 
 public class KubeJSResourcePack implements Verificaciones {
 
     @Override
-    public void verificar(String contenido_de_consola, StringBuilder constructor) {
+    public void verificar(String contenido_de_consola, CDStringBuilder constructor) {
         // Procesar cada línea del contenido de la consola
         for (String linea : contenido_de_consola.split("\n")) {
             // Verificar si la línea contiene el patrón esperado

@@ -234,6 +234,12 @@ public String theseus() {
 }
 
 
+@Override
+public String noTieneConsolaDeLauncherCursedForge() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>launcher_log.txtがありません。エラーを検索するためにこのファイルが必要です。これは「ランチャースタートを省略」オプションによるものです。無効にしてください。</b>";
+}
+
+
 
 
 

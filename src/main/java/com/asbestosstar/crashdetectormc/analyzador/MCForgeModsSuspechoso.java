@@ -1,11 +1,12 @@
 package com.asbestosstar.crashdetectormc.analyzador;
 
+import com.asbestosstar.crashdetectormc.CDStringBuilder;
 import com.asbestosstar.crashdetectormc.MonitorDePID;
 
 public class MCForgeModsSuspechoso implements Verificaciones {
 
     @Override
-    public void verificar(String contenido_de_consola, StringBuilder constructor) {
+    public void verificar(String contenido_de_consola, CDStringBuilder constructor) {
         String[] líneas = contenido_de_consola.split(nl);
         int longitud = líneas.length;
         

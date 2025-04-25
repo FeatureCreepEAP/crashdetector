@@ -9,20 +9,23 @@ public class Analyzador {
 
 	
 	static {
+		verificaciones.add(new ModulesDuplicadosJavaModulePlatform());
+		verificaciones.add(new ModsDuplicadosModLauncher());
+		verificaciones.add(new FabricMCRuntimeErrorProvidedBy());
+		verificaciones.add(new MCForgeModsSuspechoso());
+		verificaciones.add(new FaltasClases());
+
 		verificaciones.add(new Drivers());
 		verificaciones.add(new EarlyWindow());
 		verificaciones.add(new NecesitasSodium());
 		verificaciones.add(new FaltasDependenciasModLaunche());
-		verificaciones.add(new FaltasClases());
-		verificaciones.add(new FabricMCRuntimeErrorProvidedBy());
-		verificaciones.add(new ModulesDuplicadosJavaModulePlatform());
-		verificaciones.add(new ModsDuplicadosModLauncher());
-		verificaciones.add(new MCForgeModsSuspechoso());
-		verificaciones.add(new VerificacionDeStackTrace());
 		verificaciones.add(new KubeJSResourcePack());
 		verificaciones.add(new Segundo60Tick());
 		verificaciones.add(new NoTieneMemoria());
 		verificaciones.add(new Theseus());
+		verificaciones.add(new CursedConsola());
+		verificaciones.add(new VerificacionDeStackTrace());
+	
 
 		
 		
