@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.7",
+  "package": "com.asbestosstar.crashdetectormc.fabricmctransformaciones",
+  "compatibilityLevel": "JAVA_17",
+  "plugin": "com.asbestosstar.crashdetectormc.fabricmctransformaciones.CoreModFabricMC",
+  "mixins": [
+  ],
+    "injectors": {
+    "defaultRequire": 1
+  }
+}
+

@@ -33,6 +33,8 @@ public class Consola {
 	public int linea_original;
 	public boolean nueva;
 
+	public static ArrayList<File> archivos_en_lista = new ArrayList<File>();
+
 	public Consola(Path archivo) throws IOException {
 		super();
 		this.archivo = archivo;
@@ -60,19 +62,17 @@ public class Consola {
 
 	public void finalizarContento(Instant tiempo) {
 		try {
-			
+
 			Instant epoc = Instant.ofEpochMilli(archivo.toFile().lastModified());
 
 			if (epoc.isAfter(tiempo)) {
-				nueva=true;
+				nueva = true;
 				contento = MonitorDePID.leer_archivo(archivo);
-			}else {
-				nueva=false;
-				contento ="";
+			} else {
+				nueva = false;
+				contento = "";
 			}
-			
-			
-			
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -84,11 +84,14 @@ public class Consola {
 
 		for (File archivo : obtenerArchivosDeConsolas()) {
 			if (archivo.exists()) {
-				try {
-					resulto.add(new Consola(archivo.toPath()));
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				if (!archivos_en_lista.contains(archivo)) {
+					try {
+						resulto.add(new Consola(archivo.toPath()));
+						archivos_en_lista.add(archivo);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 
@@ -103,8 +106,7 @@ public class Consola {
 		String home = System.getProperty("user.home");
 		String applicationSupport = home + "/Library/Application Support/";
 		String appdata = System.getenv("APPDATA");
-		
-		
+
 		resulto.add(new File("launcher_log.txt"));
 		resulto.add(new File("../../Install/launcher_log.txt"));// CurseForgeApp
 		resulto.add(new File(applicationSupport + "minecraft/launcher_log.txt"));// CurseForgeApp
@@ -113,9 +115,7 @@ public class Consola {
 			resulto.add(new File(appdata + "/AtLauncher/logs/atlauncher.log"));// ATLauncher DOS
 			resulto.add(new File(appdata + "/.minecraft/launcher_log.txt"));// CurseForgeApp
 		}
-		
-		
-		
+
 		File carpetaLogs = new File("logs/");
 		File carpetaCrashReports = new File("crash-reports/");
 
@@ -134,7 +134,6 @@ public class Consola {
 				}
 			}
 		}
-
 
 		File carpetaTLauncherStarter;
 		File carpetaTLauncher;
@@ -164,8 +163,6 @@ public class Consola {
 			}
 		}
 
-
-
 		resulto.add(new File(home + ".minecraft/launcher_log.txt"));// CurseForgeApp y TL segundo
 
 		resulto.add(new File("../../logs/ftb-app-electron.log"));// FTB
@@ -181,7 +178,6 @@ public class Consola {
 		resulto.add(new File("sklauncher/sklauncher_logs.txt"));
 
 		resulto.add(new File("../../../../main.log"));// GDLauncher
-
 
 		resulto.add(new File("hs_err_pid" + String.valueOf(MonitorDePID.pid) + ".log"));// GDLauncher
 

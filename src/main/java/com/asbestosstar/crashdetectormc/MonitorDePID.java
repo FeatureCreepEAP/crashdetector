@@ -20,8 +20,8 @@ import javax.swing.SwingUtilities;
 
 public class MonitorDePID {
 
-	
 	public static Path carpeta = new File("crash_detector/").toPath();
+	public static File ArchivoDeCodioError0 = new File("crash_detector/ArchivoDeCodioError0");
 	public static Path ultima_mods = carpeta.resolve("ultima_mods");
 	public static Path viajo_ultima_mods = carpeta.resolve("viajo_ultima_mods");
 	public static List<Consola> consolas = new ArrayList<Consola>();
@@ -31,14 +31,14 @@ public class MonitorDePID {
 	public static String local;
 	public static String enlance;
 	public static long pid;
-	
+
 	public static void main(String[] args) {
 		if (args.length > 0 && args[0].equals("--monitor")) {
 			long pid = Long.parseLong(args[1]);
 			monitor_proceso(pid);
 			return;
 		}
-
+		ArchivoDeCodioError0.delete();
 		File html = new File("crash_detector/pantilla.htm");
 		if (!html.exists()) {
 			carpeta.toFile().mkdirs();
@@ -59,7 +59,6 @@ public class MonitorDePID {
 			}
 		}
 
-		
 		String mods = "";
 		if (ultima_mods.toFile().exists()) {
 			try {
@@ -112,23 +111,21 @@ public class MonitorDePID {
 
 		long pid = ProcessHandle.current().pid();
 		System.out.println("PID: " + pid);
-String jar;
-		
-        try {
-            URI uriJar = MonitorDePID.class.getProtectionDomain().getCodeSource().getLocation().toURI();
-            String uriJarString = uriJar.toString();
+		String jar;
 
-            if (uriJarString.startsWith("union:")) {//Para Modlauncher
-                uriJarString = uriJarString.replace("union:", "file://");
-            }
+		try {
+			URI uriJar = MonitorDePID.class.getProtectionDomain().getCodeSource().getLocation().toURI();
+			String uriJarString = uriJar.toString();
 
-            jar = new File(new URI(uriJarString).getPath())
-                    .getAbsolutePath().split(".jar")[0]+".jar"; 
-        } catch (Exception e) {
-            System.err.println(idioma.no_se_donde_esta_jar()); 
-            return;
-        }
+			if (uriJarString.startsWith("union:")) {// Para Modlauncher
+				uriJarString = uriJarString.replace("union:", "file://");
+			}
 
+			jar = new File(new URI(uriJarString).getPath()).getAbsolutePath().split(".jar")[0] + ".jar";
+		} catch (Exception e) {
+			System.err.println(idioma.no_se_donde_esta_jar());
+			return;
+		}
 
 		// Get the Java binary path
 		Optional<String> javaBinary = ProcessHandle.current().info().command();
@@ -139,9 +136,9 @@ String jar;
 
 		// Launch the child monitor process
 		try {
-			String cp =System.getProperty("java.class.path")+File.pathSeparator+jar;
-					System.out.println("******************"+cp);
-			
+			String cp = System.getProperty("java.class.path") + File.pathSeparator + jar;
+			System.out.println("******************" + cp);
+
 			new ProcessBuilder(javaBinary.get(), "-cp", cp, "com.asbestosstar.crashdetectormc.MonitorDePID",
 					"--monitor", String.valueOf(pid)).inheritIO().start();
 		} catch (Exception e) {
@@ -152,14 +149,18 @@ String jar;
 	private static void monitor_proceso(long pid) {
 		Instant utc = Instant.now();
 		List<Consola> consolas_sin_processando = Consola.obtenerConsolas();
-		MonitorDePID.pid=pid;
+		MonitorDePID.pid = pid;
 		System.out.println(idioma.buscando_para_pid(pid));
 		CountDownLatch latch = new CountDownLatch(1); // Necesito por que sin esta preceso esta muerte
 
 		while (true) {
-			boolean viva = ProcessHandle.of(pid).map(ProcessHandle::isAlive).orElse(false);
+			Optional<ProcessHandle> processo = ProcessHandle.of(pid);
+			boolean viva = processo.map(ProcessHandle::isAlive).orElse(false);
 
 			if (!viva) {
+
+				// System.out.println( escribes el codio de error aqui );
+
 				System.out.println(idioma.pid_esta_muerto(pid));
 				StringBuilder constructor = new StringBuilder();
 //				try {
@@ -174,33 +175,37 @@ String jar;
 //					// TODO Auto-generated catch block
 //					e.printStackTrace();
 //				} manaña
-				
-				
+
+				consolas_sin_processando.addAll(Consola.obtenerConsolas());
 				for (Consola consola : consolas_sin_processando) {
 					consola.finalizarContento(utc);
-					if(consola.nueva) {
+					if (consola.nueva) {
 						consolas.add(consola);
 					}
 				}
-				
+
 				for (Consola consola : consolas) {
 					consola.analyzar(constructor);
 				}
-				
 
-				
-				
 				System.out.println(constructor.toString());
 
-				if (GraphicsEnvironment.isHeadless()) {
-
-					local = GeneradorDeInformacion.generarLocal(consolas, constructor, utc).getAbsolutePath();
-					System.out.println(idioma.local_headless(enlance));
+				if (ArchivoDeCodioError0.exists()) {
 					latch.countDown();
 				} else {
-					SwingUtilities.invokeLater(() -> new CrashDetectorGUI(consolas,constructor, utc).setVisible(true));
-					latch.countDown();
+					if (GraphicsEnvironment.isHeadless()) {
+
+						local = GeneradorDeInformacion.generarLocal(consolas, constructor, utc).getAbsolutePath();
+						System.out.println(idioma.local_headless(enlance));
+						latch.countDown();
+					} else {
+						SwingUtilities
+								.invokeLater(() -> new CrashDetectorGUI(consolas, constructor, utc).setVisible(true));
+						latch.countDown();
+					}
+
 				}
+
 				viajo_ultima_mods.toFile().delete();
 //				try {
 //					latch.await(); // Muerte cunado el popup se cerrada
