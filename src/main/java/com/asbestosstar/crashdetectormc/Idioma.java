@@ -3,6 +3,8 @@ package com.asbestosstar.crashdetectormc;
 import java.util.Locale;
 import java.util.Optional;
 
+import javax.swing.Icon;
+
 import com.asbestosstar.crashdetectormc.idioma.Arabe;
 import com.asbestosstar.crashdetectormc.idioma.Chino;
 import com.asbestosstar.crashdetectormc.idioma.Coreano;
@@ -183,6 +185,24 @@ public interface Idioma {
 	public String jpms_modules_faltas(String mod_necesitas, String submod);
 
 	public String null_pointer_error(String metodo, String objeto);
+
+	public String analisisAvanzado();
+
+	public String seleccionarCarpeta();
+
+	public String cadenaBusqueda();
+
+	public String usarRegex();
+
+	public String ignorarMayusculas();
+
+	public String buscar();
+
+	public String busquedaEnProgreso();
+
+	public String noSeEncontraronResultados();
+
+	public String errorBusqueda();
 	
 	
 }

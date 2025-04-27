@@ -292,7 +292,52 @@ public String null_pointer_error(String metodo, String objeto) {
     return "<b style='color:#" + config.obtenerColorError() + "'>" + metodo + "을(를) 호출할 수 없습니다. 이유: " + objeto + "이(가) null입니다</b>";
 }
 
+@Override
+public String analisisAvanzado() {
+    return "고급 분석";
+}
 
+
+
+@Override
+public String seleccionarCarpeta() {
+    return "폴더 선택";
+}
+
+@Override
+public String cadenaBusqueda() {
+    return "검색 문자열";
+}
+
+@Override
+public String usarRegex() {
+    return "정규식 사용";
+}
+
+@Override
+public String ignorarMayusculas() {
+    return "대소문자 무시";
+}
+
+@Override
+public String buscar() {
+    return "검색";
+}
+
+@Override
+public String busquedaEnProgreso() {
+    return "검색 진행 중";
+}
+
+@Override
+public String noSeEncontraronResultados() {
+    return "결과를 찾을 수 없음";
+}
+
+@Override
+public String errorBusqueda() {
+    return "검색 오류";
+}
 
 
 }

@@ -284,5 +284,52 @@ public String null_pointer_error(String metodo, String objeto) {
     return "<b style='color:#" + config.obtenerColorError() + "'>Não é possível invocar " + metodo + " porque " + objeto + " é nulo</b>";
 }
 
+@Override
+public String analisisAvanzado() {
+    return "Análise Avançada";
+}
+
+@Override
+public String seleccionarCarpeta() {
+    return "Selecionar Pasta";
+}
+
+@Override
+public String cadenaBusqueda() {
+    return "String de Busca";
+}
+
+@Override
+public String usarRegex() {
+    return "Usar Regex";
+}
+
+@Override
+public String ignorarMayusculas() {
+    return "Ignorar Maiúsculas";
+}
+
+@Override
+public String buscar() {
+    return "Buscar";
+}
+
+@Override
+public String busquedaEnProgreso() {
+    return "Busca em Andamento";
+}
+
+@Override
+public String noSeEncontraronResultados() {
+    return "Nenhum Resultado Encontrado";
+}
+
+@Override
+public String errorBusqueda() {
+    return "Erro na Busca";
+}
+
+
+
 
 }

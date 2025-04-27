@@ -18,8 +18,8 @@ import java.util.concurrent.CountDownLatch;
 
 import javax.swing.SwingUtilities;
 
-import com.asbestosstar.crashdetectormc.analyzador.Analyzador;
 import com.asbestosstar.crashdetectormc.analyzador.Verificaciones;
+import com.asbestosstar.crashdetectormc.grepr.BusquedaArchivos;
 import com.asbestosstar.crashdetectormc.gui.CrashDetectorGUI;
 
 public class MonitorDePID {
@@ -43,6 +43,51 @@ public class MonitorDePID {
 			monitor_proceso(pid);
 			return;
 		}
+		
+	    if (args.length > 0 && (args[0].equals("grepr") || args[0].equals("fgrepr"))) {
+	        boolean useRegex = args[0].equals("grepr");
+	        boolean caseInsensitive = false;
+	        String searchString = "";
+	        String directory = System.getProperty("user.dir");
+
+	        int index = 1;
+	        while (index < args.length) {
+	            String arg = args[index];
+	            if (arg.equals("-i")) {
+	                caseInsensitive = true;
+	                index++;
+	            } else if (arg.equals("--help")) {
+	                mostrarAyudaCLI();
+	                return;
+	            } else {
+	                break;
+	            }
+	        }
+
+	        if (index >= args.length) {
+	            System.out.println("Error: Falta cadena de búsqueda");
+	            mostrarAyudaCLI();
+	            return;
+	        }
+
+	        searchString = args[index++];
+	        if (index < args.length) {
+	            directory = args[index];
+	        }
+
+	        List<String> resultados = BusquedaArchivos.buscar(directory, searchString, useRegex, caseInsensitive);
+	        for (String res : resultados) {
+	            System.out.println(res);
+	        }
+	        return;
+	    }
+		
+		
+		
+		
+		
+		
+		
 		ArchivoDeCodioError0.delete();
 		File html = new File("crash_detector/pantilla.htm");
 		if (!html.exists()) {
@@ -278,4 +323,15 @@ public class MonitorDePID {
 		return true;
 	}
 
+	
+	
+	
+
+private static void mostrarAyudaCLI() {
+    System.out.println("Uso: java -jar CrashDetectorMC.jar [grepr|fgrepr] [-i] <cadena> [directorio]");
+    System.out.println("  grepr: Busca usando regex (por defecto)");
+    System.out.println("  fgrepr: Busca sin regex");
+    System.out.println("  -i: Ignorar mayúsculas/minúsculas");
+}
+	
 }

@@ -287,5 +287,51 @@ public String null_pointer_error(String metodo, String objeto) {
     return "<b style='color:#" + config.obtenerColorError() + "'>Невозможно вызвать " + metodo + ", так как " + objeto + " равен null</b>";
 }
 
+@Override
+public String analisisAvanzado() {
+    return "Расширенный анализ";
+}
+
+
+@Override
+public String seleccionarCarpeta() {
+    return "Выбрать папку";
+}
+
+@Override
+public String cadenaBusqueda() {
+    return "Строка поиска";
+}
+
+@Override
+public String usarRegex() {
+    return "Использовать регулярные выражения";
+}
+
+@Override
+public String ignorarMayusculas() {
+    return "Игнорировать регистр";
+}
+
+@Override
+public String buscar() {
+    return "Поиск";
+}
+
+@Override
+public String busquedaEnProgreso() {
+    return "Поиск в процессе";
+}
+
+@Override
+public String noSeEncontraronResultados() {
+    return "Результаты не найдены";
+}
+
+@Override
+public String errorBusqueda() {
+    return "Ошибка поиска";
+}
+
 
 }

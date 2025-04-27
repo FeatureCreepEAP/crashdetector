@@ -285,4 +285,50 @@ public String null_pointer_error(String metodo, String objeto) {
     return "<b style='color:#" + config.obtenerColorError() + "'>" + metodo + " を呼び出せません。理由: " + objeto + " が null です</b>";
 }
 
+@Override
+public String analisisAvanzado() {
+    return "高度な分析";
+}
+
+
+@Override
+public String seleccionarCarpeta() {
+    return "フォルダを選択";
+}
+
+@Override
+public String cadenaBusqueda() {
+    return "検索文字列";
+}
+
+@Override
+public String usarRegex() {
+    return "正規表現を使用";
+}
+
+@Override
+public String ignorarMayusculas() {
+    return "大文字を無視";
+}
+
+@Override
+public String buscar() {
+    return "検索";
+}
+
+@Override
+public String busquedaEnProgreso() {
+    return "検索進行中";
+}
+
+@Override
+public String noSeEncontraronResultados() {
+    return "結果が見つかりませんでした";
+}
+
+@Override
+public String errorBusqueda() {
+    return "検索エラー";
+}
+
 }

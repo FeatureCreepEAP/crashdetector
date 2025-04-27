@@ -289,4 +289,53 @@ public String null_pointer_error(String metodo, String objeto) {
 	    return "<b style='color:#" + config.obtenerColorError() + "'>" +"Cannot invoke " + metodo + " because " + objeto + " is null"+"</b>";
 }
 
+@Override
+public String analisisAvanzado() {
+    return "Advanced Analysis";
+}
+
+
+@Override
+public String seleccionarCarpeta() {
+    return "Select Folder";
+}
+
+@Override
+public String cadenaBusqueda() {
+    return "Search String";
+}
+
+@Override
+public String usarRegex() {
+    return "Use Regex";
+}
+
+@Override
+public String ignorarMayusculas() {
+    return "Ignore Case";
+}
+
+@Override
+public String buscar() {
+    return "Search";
+}
+
+@Override
+public String busquedaEnProgreso() {
+    return "Search in Progress";
+}
+
+@Override
+public String noSeEncontraronResultados() {
+    return "No Results Found";
+}
+
+@Override
+public String errorBusqueda() {
+    return "Search Error";
+}
+
+
+
+
 }

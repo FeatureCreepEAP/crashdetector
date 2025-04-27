@@ -1,5 +1,7 @@
 package com.asbestosstar.crashdetectormc.idioma;
 
+import javax.swing.Icon;
+
 import com.asbestosstar.crashdetectormc.Config;
 import com.asbestosstar.crashdetectormc.Idioma;
 
@@ -283,6 +285,51 @@ public String jpms_modules_faltas(String mod_necesitas, String submod) {
 @Override
 public String null_pointer_error(String metodo, String objeto) {
     return "<b style='color:#" + config.obtenerColorError() + "'>No se puede invocar " + metodo + " porque " + objeto + " es nulo</b>";
+}
+
+@Override
+public String analisisAvanzado() {
+    return "Análisis Avanzado";
+}
+
+@Override
+public String seleccionarCarpeta() {
+    return "Seleccionar Carpeta";
+}
+
+@Override
+public String cadenaBusqueda() {
+    return "Cadena de Búsqueda";
+}
+
+@Override
+public String usarRegex() {
+    return "Usar Regex";
+}
+
+@Override
+public String ignorarMayusculas() {
+    return "Ignorar Mayúsculas";
+}
+
+@Override
+public String buscar() {
+    return "Buscar";
+}
+
+@Override
+public String busquedaEnProgreso() {
+    return "Búsqueda en Progreso";
+}
+
+@Override
+public String noSeEncontraronResultados() {
+    return "No Se Encontraron Resultados";
+}
+
+@Override
+public String errorBusqueda() {
+    return "Error en la Búsqueda";
 }
 
 

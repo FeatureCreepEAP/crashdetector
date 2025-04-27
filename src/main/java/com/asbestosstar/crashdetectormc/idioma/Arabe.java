@@ -293,7 +293,51 @@ public String null_pointer_error(String metodo, String objeto) {
 }
 
 
+@Override
+public String analisisAvanzado() {
+    return "التحليل المتقدم";
+}
 
+
+@Override
+public String seleccionarCarpeta() {
+    return "اختيار المجلد";
+}
+
+@Override
+public String cadenaBusqueda() {
+    return "سلسلة البحث";
+}
+
+@Override
+public String usarRegex() {
+    return "استخدام التعبيرات النمطية";
+}
+
+@Override
+public String ignorarMayusculas() {
+    return "تجاهل حالة الأحرف";
+}
+
+@Override
+public String buscar() {
+    return "بحث";
+}
+
+@Override
+public String busquedaEnProgreso() {
+    return "البحث قيد التنفيذ";
+}
+
+@Override
+public String noSeEncontraronResultados() {
+    return "لم يتم العثور على نتائج";
+}
+
+@Override
+public String errorBusqueda() {
+    return "خطأ في البحث";
+}
 
 
 }

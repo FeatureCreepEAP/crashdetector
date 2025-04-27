@@ -292,6 +292,52 @@ public String null_pointer_error(String metodo, String objeto) {
     return "<b style='color:#" + config.obtenerColorError() + "'>Ne eblas voki " + metodo + " ĉar " + objeto + " estas nula</b>";
 }
 
+@Override
+public String analisisAvanzado() {
+    return "Progresinta Analizo";
+}
+
+
+@Override
+public String seleccionarCarpeta() {
+    return "Elekti Dosierujon";
+}
+
+@Override
+public String cadenaBusqueda() {
+    return "Serĉa Ĉeno";
+}
+
+@Override
+public String usarRegex() {
+    return "Uzi Regulajn Esprimojn";
+}
+
+@Override
+public String ignorarMayusculas() {
+    return "Ignori Majusklojn";
+}
+
+@Override
+public String buscar() {
+    return "Serĉi";
+}
+
+@Override
+public String busquedaEnProgreso() {
+    return "Serĉo en Progreso";
+}
+
+@Override
+public String noSeEncontraronResultados() {
+    return "Neniuj Rezultoj Trovitaj";
+}
+
+@Override
+public String errorBusqueda() {
+    return "Eraro en Serĉo";
+}
+
 
 
 

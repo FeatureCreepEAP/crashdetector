@@ -27,11 +27,11 @@ public class CrashDetectorGUI extends JFrame {
     private final List<Consola> consolas;
 
     // Colores configurables
-    private final Color colorFondo = Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo());
-    private final Color colorTexto = Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto());
-    private final Color colorBoton = Config.convertirAColor(Config.obtenerInstancia().obtenerColorBoton());
-    private final Color colorCajaTexto = Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto());
-    private final Color colorEnlace = Config.convertirAColor(Config.obtenerInstancia().obtenerColorEnlace());
+    public static final Color colorFondo = Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo());
+    public static final Color colorTexto = Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto());
+    public static final Color colorBoton = Config.convertirAColor(Config.obtenerInstancia().obtenerColorBoton());
+    public static final Color colorCajaTexto = Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto());
+    public static final Color colorEnlace = Config.convertirAColor(Config.obtenerInstancia().obtenerColorEnlace());
 
     public CrashDetectorGUI(List<Consola> consolas, StringBuilder contenidoInforme, Instant tiempoFallo) {
         this.contenidoInforme = contenidoInforme;
@@ -91,17 +91,27 @@ public class CrashDetectorGUI extends JFrame {
         subPanelControles.setLayout(new BorderLayout());
         subPanelControles.setBackground(colorFondo);
 
-        // Espacio para la imagen
-        JLabel imagen = cargarImagenDesdeRecurso("/imagenes/gura.png");
-        imagen.setAlignmentX(Component.CENTER_ALIGNMENT);
-        subPanelControles.add(imagen, BorderLayout.NORTH); // Imagen arriba
+        // Cargar ambas imagenes
+        JLabel imagenGura = cargarImagenDesdeRecurso("/imagenes/gura.png");
+        JLabel imagenMumei = cargarImagenDesdeRecurso("/imagenes/nanashi_mumei.png");
 
-        // Panel para el botón de compartir y la descripción
+        // Agregar imagenes a los lados
+        subPanelControles.add(imagenGura, BorderLayout.WEST);
+        subPanelControles.add(imagenMumei, BorderLayout.EAST);
+
+        // Panel para botones y descripcion
         JPanel panelBotonYDescripcion = new JPanel();
         panelBotonYDescripcion.setLayout(new BoxLayout(panelBotonYDescripcion, BoxLayout.Y_AXIS));
         panelBotonYDescripcion.setBackground(colorFondo);
 
-        // Botón de compartir y descripción
+        // Boton de Analisis Avanzado
+        JButton botonAnalisis = new JButton(MonitorDePID.idioma.analisisAvanzado());
+        estilizarBoton(botonAnalisis);
+        botonAnalisis.addActionListener(e -> new AnalisisAvanzadoGUI().setVisible(true));
+        panelBotonYDescripcion.add(botonAnalisis);
+        panelBotonYDescripcion.add(Box.createVerticalStrut(10));
+
+        // Boton compartir y demas componentes existentes
         JButton botonCompartir = new JButton(MonitorDePID.idioma.texto_de_buton_compartir_enlance());
         estilizarBoton(botonCompartir);
         panelBotonYDescripcion.add(botonCompartir);
@@ -146,12 +156,7 @@ public class CrashDetectorGUI extends JFrame {
         add(panelInferior, BorderLayout.SOUTH);
     }
 
-    /**
-     * Cargar una imagen desde un recurso del classloader.
-     *
-     * @param ruta La ruta del recurso (ej.: "/imagenes/imagen.png").
-     * @return Un JLabel con la imagen cargada o un texto alternativo si falla.
-     */
+    // Metodo modificado para cargar imagenes con nombres especificos
     private JLabel cargarImagenDesdeRecurso(String ruta) {
         ImageIcon icono = null;
         try {
@@ -163,17 +168,13 @@ public class CrashDetectorGUI extends JFrame {
             CrashDetectorLogger.logException(e);
         }
 
-        // Si no se puede cargar la imagen, mostrar un texto alternativo
         if (icono == null) {
             return new JLabel("Imagen no encontrada");
         }
 
-        // Escalar la imagen mientras mantiene la proporción
-        int anchoOriginal = icono.getIconWidth();
-        int altoOriginal = icono.getIconHeight();
-        int nuevoAncho = 80; // Nuevo ancho deseado
-        int nuevoAlto = (int) ((double) nuevoAncho / anchoOriginal * altoOriginal); // Mantener la proporción
-
+        // Mantener el mismo tamaño que la original
+        int nuevoAncho = 80;
+        int nuevoAlto = (int) ((double) nuevoAncho / icono.getIconWidth() * icono.getIconHeight());
         Image imagenEscalada = icono.getImage().getScaledInstance(nuevoAncho, nuevoAlto, Image.SCALE_SMOOTH);
         return new JLabel(new ImageIcon(imagenEscalada));
     }

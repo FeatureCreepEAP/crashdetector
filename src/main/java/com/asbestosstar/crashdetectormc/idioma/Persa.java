@@ -290,6 +290,51 @@ public String null_pointer_error(String metodo, String objeto) {
     return "<b style='color:#" + config.obtenerColorError() + "'>نمی‌توان " + metodo + " را فراخوانی کرد زیرا " + objeto + " برابر با null است</b>";
 }
 
+@Override
+public String analisisAvanzado() {
+    return "تحلیل پیشرفته";
+}
+
+@Override
+public String seleccionarCarpeta() {
+    return "انتخاب پوشه";
+}
+
+@Override
+public String cadenaBusqueda() {
+    return "رشته جستجو";
+}
+
+@Override
+public String usarRegex() {
+    return "استفاده از عبارت منظم (Regex)";
+}
+
+@Override
+public String ignorarMayusculas() {
+    return "نادیده گرفتن حروف بزرگ";
+}
+
+@Override
+public String buscar() {
+    return "جستجو";
+}
+
+@Override
+public String busquedaEnProgreso() {
+    return "جستجو در حال انجام است";
+}
+
+@Override
+public String noSeEncontraronResultados() {
+    return "نتیجه‌ای یافت نشد";
+}
+
+@Override
+public String errorBusqueda() {
+    return "خطا در جستجو";
+}
+
 
 
 }

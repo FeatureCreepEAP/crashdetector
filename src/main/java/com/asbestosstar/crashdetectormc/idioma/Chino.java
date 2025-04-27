@@ -286,7 +286,51 @@ public String null_pointer_error(String metodo, String objeto) {
     return "<b style='color:#" + config.obtenerColorError() + "'>无法调用 " + metodo + "，因为 " + objeto + " 为 null</b>";
 }    
 
+@Override
+public String analisisAvanzado() {
+    return "高级分析";
+}
 
+
+@Override
+public String seleccionarCarpeta() {
+    return "选择文件夹";
+}
+
+@Override
+public String cadenaBusqueda() {
+    return "搜索字符串";
+}
+
+@Override
+public String usarRegex() {
+    return "使用正则表达式";
+}
+
+@Override
+public String ignorarMayusculas() {
+    return "忽略大小写";
+}
+
+@Override
+public String buscar() {
+    return "搜索";
+}
+
+@Override
+public String busquedaEnProgreso() {
+    return "搜索进行中";
+}
+
+@Override
+public String noSeEncontraronResultados() {
+    return "未找到结果";
+}
+
+@Override
+public String errorBusqueda() {
+    return "搜索错误";
+}
 
 
 
