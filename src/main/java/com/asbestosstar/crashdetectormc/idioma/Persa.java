@@ -243,5 +243,53 @@ public String noTieneConsolaDeLauncherCursedForge() {
     return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>شما فایل launcher_log.txt را ندارید. ما به این فایل برای جستجوی خطاها نیاز داریم. این به دلیل گزینه \"رد کردن شروع برنامه‌ریز\" است. آن را غیرفعال کنید.</b>";
 }
     
-    
+@Override
+public String faltar_de_clases_advertencia() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>هشدار: کلاس‌های گم‌شده شناسایی شدند:</b>";
+}
+
+
+@Override
+public String noResultos() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>نتیجه‌ای یافت نشد</b>";
+}
+
+@Override
+public String ubicacionesDeLogs() {
+    return "<b style='color:#" + config.obtenerColorInfo() + "'>مکان‌های لاگ‌ها:</b>";
+}
+
+@Override
+public String infoDeVerificaciones() {
+    return "<b style='color:#" + config.obtenerColorInfo() + "'>اینجا نتایج بررسی‌های شما هستند. تعمیر بخش‌های بالایی لاگ‌ها اولویت اول است. آن را به آرامی انجام دهید.</b>";
+}
+
+
+@Override
+public String versionDeJava() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>لطفاً برای نسخه‌های 1.17-1.20.4 از Java 17 و برای نسخه‌های جدیدتر از Java 21 استفاده کنید. برای نسخه‌های قدیمی‌تر از Java 8 استفاده کنید. [راهنما](https://mikumikudance.jp/index.php?title=Installing_Java_For_Minecraft). اگر همچنان مشکل دارید، ممکن است به دلیل این باشد که برخی از مودها فایل‌های خیلی قدیمی یا خیلی جدید دارند.</b>";
+}
+
+@Override
+public String java22() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Java 22 و بالاتر در نسخه‌های Minecraft زیر 1.20.5 برای بیشتر بارگذارهای مود کار نمی‌کند زیرا ASM منسوخ شده است.</b>" + versionDeJava();
+}
+
+@Override
+public String javaObsoleta() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Java منسوخ شده است </b>" + versionDeJava();
+}
+
+@Override
+public String jpms_modules_faltas(String mod_necesitas, String submod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>شما به ماژول JPMS " + mod_necesitas + " از " + submod + " نیاز دارید</b>";
+}
+
+@Override
+public String null_pointer_error(String metodo, String objeto) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>نمی‌توان " + metodo + " را فراخوانی کرد زیرا " + objeto + " برابر با null است</b>";
+}
+
+
+
 }

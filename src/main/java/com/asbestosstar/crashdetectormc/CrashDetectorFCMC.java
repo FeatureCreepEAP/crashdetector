@@ -54,7 +54,7 @@ boolean es_fc = true;
 			if(!es_fc) {
 				Statics.carpetas_de_mods.add(new File("mods/").toPath());//La carpeta de mods es de la superloader
 			}
-			//instrument.addTransformer(new Transformaciones());
+			instrument.addTransformer(new Transformaciones());
 			MonitorDePID.main(new String[] {});
 		}
 	}

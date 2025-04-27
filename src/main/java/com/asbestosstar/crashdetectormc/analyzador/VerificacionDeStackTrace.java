@@ -17,6 +17,9 @@ import com.asbestosstar.crashdetectormc.MonitorDePID;
 
 public class VerificacionDeStackTrace implements Verificaciones {
 
+	public boolean activado=false;
+public CDStringBuilder sb;
+	
 	// 正则表达式用于匹配Java异常堆栈跟踪
 	private static final Pattern STACK_TRACE_PATTERN = Pattern.compile("(?m)(^\\S.*(?:\\r?\\n[ \\t]+at\\s+.*)+)");
 	// 正则表达式用于匹配包含org.spongepowered.asm.mixin的异常并提取JSON文件名（不包括refmap）
@@ -46,6 +49,7 @@ public class VerificacionDeStackTrace implements Verificaciones {
 
 	@Override
 	public void verificar(String log, CDStringBuilder build) {
+		this.sb=build;
 		int lvl = 0;
 		for (String trace : inverso(obtenerTracesFatal(log))) {// Las ultimas son las más importante
 			lvl++;
@@ -55,79 +59,6 @@ public class VerificacionDeStackTrace implements Verificaciones {
 		for (String trace : inverso(obtenerTraces(log))) {// Las ultimas son las más importante
 			lvl++;
 			this.procesarTrace(build, trace, false, lvl);
-		}
-
-		List<String> jar_nombres = new ArrayList<String>();
-		if (!jars.isEmpty()) {
-			build.append(MonitorDePID.idioma.problematico_jar()).append(nl_html);
-			for (Map.Entry<String, Boolean> jar : jars.entrySet()) {
-				String[] lvl_info_arr = jar.getKey().split(Pattern.quote(" **lvl ** "));
-				String lvl_info = "";
-				if (lvl_info_arr.length > 1) {
-					lvl_info = MonitorDePID.idioma.nivel() + lvl_info_arr[1];
-				} else {
-					System.out.println(lvl_info_arr[0]);
-				}
-				String jar_nombre = jar.getKey().split(".jar")[0] + ".jar" + lvl_info;
-				if (!jar_nombres.contains(jar_nombre)) {
-					if (jar.getValue()) {
-						build.append(MonitorDePID.idioma.possibladad_fatal());
-					}
-					build.append(jar_nombre).append(nl_html);
-					jar_nombres.add(jar_nombre);
-				}
-			}
-		}
-
-		if (!modids.isEmpty()) {
-			build.append(MonitorDePID.idioma.modids_problematicos()).append(nl_html);
-			for (Map.Entry<String, Boolean> modid : modids.entrySet()) {
-				if (modid.getValue()) {
-					build.append(MonitorDePID.idioma.possibladad_fatal());
-				}
-				build.append(modid.getKey()).append(nl_html);
-			}
-		}
-
-		if (!packs.isEmpty()) {
-			build.append(MonitorDePID.idioma.packages_problematicos()).append(nl_html);
-			for (Map.Entry<String, Boolean> pack : packs.entrySet()) {
-				if (pack.getValue()) {
-					build.append(MonitorDePID.idioma.possibladad_fatal());
-				}
-				build.append(pack.getKey()).append(nl_html);
-			}
-		}
-
-		if (!packs.isEmpty()) {
-			build.append(MonitorDePID.idioma.faltar_de_clases_fatales()).append(nl_html);
-			for (String miss : fatal_clases_no_existe) {
-				build.append(miss).append(nl_html);
-			}
-		}
-
-		List<String> configs_inject = new LinkedList<String>();
-		for (String content : inverso(braceContentos)) {
-			for (String ind : eliminarDuplicados(content.split(","))) {
-				String limpiado = ind.replace("pl:runtimedistcleaner:A", "").replace("re:classloading", "")
-						.replace("pl:mixin:APP:", "").replace("re:computing_frames", "")
-						.replace("pl:accesstransformer:B", "").replace("pl:mixin:A", "").replace("xf:fml", "")
-						.replace("featurecreep", "").replace("re:mixin", "");
-				if (!configs_inject.contains(limpiado) && !limpiado.isEmpty()) {
-					configs_inject.add(limpiado);
-				}
-			}
-		}
-
-		if (!configs_inject.isEmpty()) {
-			build.append(MonitorDePID.idioma.corchetes_ondulados()).append(nl_html);
-			int tamano = 0;
-			for (String conf : configs_inject) {
-				if (tamano <= 20) {
-					build.append(conf.split(".json")[0].replace(".mixin", "").replace("mixin.", "")).append(nl_html);
-					tamano++;
-				}
-			}
 		}
 
 	}
@@ -140,6 +71,7 @@ public class VerificacionDeStackTrace implements Verificaciones {
 			for (String jsonFile : archivos_json) {
 				if (!sm_config.contains(jsonFile) && !jsonFile.endsWith(".refmap.json")) {
 					sm_config.add(jsonFile);
+					activado=true;
 					build.append(MonitorDePID.idioma.config_spongemixin_problematico(jsonFile)).append(nl_html);
 				}
 			}
@@ -226,9 +158,9 @@ public class VerificacionDeStackTrace implements Verificaciones {
 			return true;
 		}
 
-		String[] ids = { "java", "minecraft", "minecraftforge", "eventbus", "cpw.", "coremods", "featurecreep", "mixin",
-				"accesstransformer","forge", "authlib", "jdk.", "java.", "fmlloader", "fmlcore", "org.spongepowered.mixin",
-				"fmlearlydisplay","com.sun.jna", "text2speech" };
+		String[] ids = { "java", "minecraft", "minecraftforge","net.minecraftforge", "eventbus", "cpw.", "coremods", "featurecreep", "mixin",
+				"accesstransformer","forge", "authlib","sun.", "jdk.", "java.", "fmlloader", "fmlcore", "org.spongepowered.mixin",
+				"fmlearlydisplay","com.sun.jna", "text2speech","xf:crashdetector:default","crashdetector" };
 
 		for (String id : ids) {
 			if (modid.startsWith(id)) {
@@ -349,6 +281,15 @@ public class VerificacionDeStackTrace implements Verificaciones {
 		if (jarName.startsWith("fml")) {
 			return true;
 		}
+		if (jarName.startsWith("fabric-loader")) {
+			return true;
+		}
+		if (jarName.startsWith("crashdetectormc")) {
+			return true;
+		}
+		if (jarName.startsWith("sponge-mixin")) {
+			return true;
+		}
 		if (jarName.startsWith("forge-")) {
 			return true;
 		}
@@ -435,5 +376,13 @@ public class VerificacionDeStackTrace implements Verificaciones {
 		List<String> reversed = new ArrayList<>(original);
 		Collections.reverse(reversed);
 		return reversed;
+	}
+	
+	
+	
+	@Override
+	public boolean activado() {
+		// TODO Auto-generated method stub
+		return activado;
 	}
 }

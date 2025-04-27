@@ -8,6 +8,8 @@ import com.asbestosstar.crashdetectormc.MonitorDePID;
 
 public class CursedConsola implements Verificaciones {
 
+	public boolean activado=false;
+	
 	@Override
 	public void verificar(String contento_de_consola, CDStringBuilder constructor) {
 		// TODO Auto-generated method stub
@@ -23,7 +25,8 @@ public class CursedConsola implements Verificaciones {
 			}
 			
 			if(!tiene_consola_de_launcher) {
-				constructor.append(MonitorDePID.idioma.noTieneConsolaDeLauncherCursedForge());
+				constructor.append(MonitorDePID.idioma.noTieneConsolaDeLauncherCursedForge()).append(nl_html);
+				activado=true;
 			}
 			
 			
@@ -36,6 +39,12 @@ public class CursedConsola implements Verificaciones {
 	public Verificaciones nueva() {
 		// TODO Auto-generated method stub
 		return new CursedConsola();
+	}
+
+	@Override
+	public boolean activado() {
+		// TODO Auto-generated method stub
+		return activado;
 	}
 
 }

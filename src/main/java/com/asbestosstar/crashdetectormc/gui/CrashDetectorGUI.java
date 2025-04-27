@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetectormc;
+package com.asbestosstar.crashdetectormc.gui;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,6 +13,12 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.HyperlinkEvent;
+
+import com.asbestosstar.crashdetectormc.Config;
+import com.asbestosstar.crashdetectormc.Consola;
+import com.asbestosstar.crashdetectormc.CrashDetectorLogger;
+import com.asbestosstar.crashdetectormc.GeneradorDeInformacion;
+import com.asbestosstar.crashdetectormc.MonitorDePID;
 
 public class CrashDetectorGUI extends JFrame {
 

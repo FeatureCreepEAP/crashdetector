@@ -5,13 +5,17 @@ import com.asbestosstar.crashdetectormc.MonitorDePID;
 
 public class lithostictchctov implements Verificaciones{
 
+	public boolean activado=false;
+
+	
 	@Override
 	public void verificar(String contento_de_consola, CDStringBuilder constructor) {
 		// TODO Auto-generated method stub
 		
 		
 		if(contento_de_consola.contains("Caused by: java.lang.RuntimeException: Unknown registry key in ResourceKey[minecraft:root / minecraft:worldgen/structure_type]: lithostitched:jigsaw")&&contento_de_consola.contains("ctov")) {
-			constructor.append(MonitorDePID.idioma.lithostichctov()+nl_html);
+			constructor.append(MonitorDePID.idioma.lithostichctov()).append(nl_html);
+			activado=true;
 		}
 		
 		
@@ -23,4 +27,12 @@ public class lithostictchctov implements Verificaciones{
 		return new lithostictchctov();
 	}
 
+	@Override
+	public boolean activado() {
+		// TODO Auto-generated method stub
+		return activado;
+	}
+	
+	
+	
 }

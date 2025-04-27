@@ -17,7 +17,14 @@ public interface Verificaciones {
 	public Verificaciones nueva();
 	
 	
-
+	public boolean activado();
 	
+	/**
+	 * Si esta activado  abrimos crashdectector se cerrada normalmente
+	 * @return
+	 */
+	public default boolean anularNormal() {
+		return false;
+	}
 	
 }

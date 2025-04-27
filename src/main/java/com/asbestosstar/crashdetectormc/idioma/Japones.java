@@ -239,9 +239,50 @@ public String noTieneConsolaDeLauncherCursedForge() {
     return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>launcher_log.txtがありません。エラーを検索するためにこのファイルが必要です。これは「ランチャースタートを省略」オプションによるものです。無効にしてください。</b>";
 }
 
+@Override
+public String faltar_de_clases_advertencia() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>警告: 欠落しているクラスが検出されました:</b>";
+}
 
 
+@Override
+public String noResultos() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>結果なし</b>";
+}
 
+@Override
+public String ubicacionesDeLogs() {
+    return "<b style='color:#" + config.obtenerColorInfo() + "'>ログの場所:</b>";
+}
 
+@Override
+public String infoDeVerificaciones() {
+    return "<b style='color:#" + config.obtenerColorInfo() + "'>こちらが検証結果です。ログの上部を修正することが最優先事項です。ゆっくり行ってください。</b>";
+}
+
+@Override
+public String versionDeJava() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>1.17-1.20.4の場合はJava 17を使用し、それ以降のバージョンの場合はJava 21を使用してください。古いバージョンの場合はJava 8を使用してください。[ガイド](https://mikumikudance.jp/index.php?title=Installing_Java_For_Minecraft). 問題が解決しない場合、一部のModにファイルが新しすぎたり古すぎたりすることが原因かもしれません。</b>";//TODO incluir el enalce japones
+}
+
+@Override
+public String java22() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Java 22以降は、ASMが古いことにより、1.20.5未満のMinecraftバージョンではほとんどのModローダーで動作しません。</b>" + versionDeJava();
+}
+
+@Override
+public String javaObsoleta() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Javaは古いです </b>" + versionDeJava();
+}
+
+@Override
+public String jpms_modules_faltas(String mod_necesitas, String submod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>JPMSモジュール " + mod_necesitas + " を " + submod + " から取得する必要があります</b>";
+}
+
+@Override
+public String null_pointer_error(String metodo, String objeto) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>" + metodo + " を呼び出せません。理由: " + objeto + " が null です</b>";
+}
 
 }

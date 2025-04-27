@@ -50,7 +50,7 @@ if(!Statics.cargador)	{
 	public List<ITransformer> transformers() {
 		// TODO Auto-generated method stub
 		ArrayList<ITransformer> transformers = new ArrayList<ITransformer>();
-		//transformers.add(new Transformaciones());
+		transformers.add(new TransformacionesCPW());
 		return transformers;
 	}
 

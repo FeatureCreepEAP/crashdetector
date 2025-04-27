@@ -241,8 +241,54 @@ public String noTieneConsolaDeLauncherCursedForge() {
     return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>您没有launcher_log.txt文件。我们需要这个文件来查找错误。这是由于启用了“跳过启动器启动”选项。请禁用它。</b>";
 }
     
+@Override
+public String faltar_de_clases_advertencia() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>警告：检测到缺失的类：</b>";
+}
+@Override
+public String noResultos() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>无结果</b>";
+}
+
+@Override
+public String ubicacionesDeLogs() {
+    return "<b style='color:#" + config.obtenerColorInfo() + "'>日志位置:</b>";
+}
+
+@Override
+public String infoDeVerificaciones() {
+    return "<b style='color:#" + config.obtenerColorInfo() + "'>以下是您的检查结果。修复日志的上半部分是首要任务。请慢慢来。</b>";
+}
+
+
+@Override
+public String versionDeJava() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>请使用Java 17用于1.17-1.20.4版本，使用Java 21用于更新的版本。对于更旧的版本，请使用Java 8。[指南](https://mikumikudance.jp/index.php?title=Installing_Java_For_Minecraft). 如果仍然有问题，可能是因为某些模组文件太新或太旧。</b>";
+}
+
+@Override
+public String java22() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>由于ASM过时，Java 22及以上版本在1.20.5以下的Minecraft版本中无法与大多数模组加载器兼容。</b>" + versionDeJava();
+}
+
+@Override
+public String javaObsoleta() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Java已过时 </b>" + versionDeJava();
+}
+
+@Override
+public String jpms_modules_faltas(String mod_necesitas, String submod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>您需要从 " + submod + " 获取 JPMS 模块 " + mod_necesitas + "</b>";
+}
     
-    
-    
-    
+@Override
+public String null_pointer_error(String metodo, String objeto) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>无法调用 " + metodo + "，因为 " + objeto + " 为 null</b>";
+}    
+
+
+
+
+
+
 }

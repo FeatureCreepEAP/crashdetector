@@ -19,7 +19,7 @@ import cpw.mods.modlauncher.api.ITransformer;
 import cpw.mods.modlauncher.api.ITransformerVotingContext;
 import cpw.mods.modlauncher.api.TransformerVoteResult;
 
-public class Transformaciones implements ClassFileTransformer, ITransformer<ClassNode> {
+public class Transformaciones implements ClassFileTransformer {
 
 	// net.minecraft.server.MinecraftServer//todos pero no FCI
 	// game.Server//FCI Ingles
@@ -43,21 +43,21 @@ public class Transformaciones implements ClassFileTransformer, ITransformer<Clas
 	// stop SugarCane
 	// method_1592 FAIN
 	// m_91395_ //SRG
+	
 
 	public static boolean completa_servidor = false;
 	public static boolean completa_cliente = false;
 
 	public static boolean tiene_clase_cliente = false;
-
-	public static void transformar(String nombre_de_clase, ClassNode node) {
+//No funciona con Balm3
+	public static ClassNode transformar(String nombre_de_clase, ClassNode node) {
 
 		if (nombre_de_clase.equals("net.minecraft.server.MinecraftServer") || nombre_de_clase.equals("game.Server")) {
 
-			if (!completa_servidor) {
+			if (!completa_servidor&&!completa_cliente) {
 
 				// si es un nombre de una clase en la lista , modificar el method incluir
 				// hechoArchivoDeCodioError0 en la cima.
-
 				node.methods.forEach(method -> {
 					String methodName = method.name;
 					String methodDesc = method.desc;
@@ -66,13 +66,16 @@ public class Transformaciones implements ClassFileTransformer, ITransformer<Clas
 							|| methodName.equals("m_7041_") || methodName.equals("method_3782"))
 							&& methodDesc.equals("()V")) {
 
-						InsnList insnList = new InsnList();
-						insnList.add(new MethodInsnNode(Opcodes.INVOKESTATIC,
-								"com/asbestosstar/crashdetectormc/Transformaciones", "hechoArchivoDeCodioError0",
-								"(Z)V", false));
-						insnList.add(new InsnNode(Opcodes.ICONST_1)); // es_servidor = true
-
-						method.instructions.insert(insnList);
+		                InsnList insnList = new InsnList();
+		                insnList.add(new InsnNode(Opcodes.ICONST_1));//es_servidor=true
+		                insnList.add(new MethodInsnNode(
+		                    Opcodes.INVOKESTATIC,
+		                    "com/asbestosstar/crashdetectormc/Transformaciones",
+		                    "hechoArchivoDeCodioError0",
+		                    "(Z)V",
+		                    false
+		                ));
+		                method.instructions.insert(insnList);
 					}
 				});
 				completa_servidor = true;
@@ -82,20 +85,25 @@ public class Transformaciones implements ClassFileTransformer, ITransformer<Clas
 				|| nombre_de_clase.equals("net.minecraft.class_310") || nombre_de_clase.equals("game.Client")) {
 			tiene_clase_cliente = true;
 			if (!completa_cliente) {
+
 				node.methods.forEach(method -> {
 					String methodName = method.name;
 					String methodDesc = method.desc;
 
 					if ((methodName.equals("shutdown") || methodName.equals("stop") || methodName.equals("m_91395_")
 							|| methodName.equals("method_1592")) && methodDesc.equals("()V")) {
+						System.out.println ("CD Transformando CLIENT");
 
-						InsnList insnList = new InsnList();
-						insnList.add(new MethodInsnNode(Opcodes.INVOKESTATIC,
-								"com/asbestosstar/crashdetectormc/Transformaciones", "hechoArchivoDeCodioError0",
-								"(Z)V", false));
-						insnList.add(new InsnNode(Opcodes.ICONST_0)); // es_servidor = false
-
-						method.instructions.insert(insnList);
+		                InsnList insnList = new InsnList();
+		                insnList.add(new InsnNode(Opcodes.ICONST_0)); //es_servidor=false
+		                insnList.add(new MethodInsnNode(
+		                    Opcodes.INVOKESTATIC,
+		                    "com/asbestosstar/crashdetectormc/Transformaciones",
+		                    "hechoArchivoDeCodioError0",
+		                    "(Z)V",
+		                    false
+		                ));
+		                method.instructions.insert(insnList);
 					}
 				});
 
@@ -104,11 +112,11 @@ public class Transformaciones implements ClassFileTransformer, ITransformer<Clas
 			}
 
 		}
-
+		return node;
 	}
 
 	public static void hechoArchivoDeCodioError0(boolean es_servidor) {
-
+		System.out.println("hechoArchivoDeCodioError0 "+String.valueOf(es_servidor));
 		if (tiene_clase_cliente && es_servidor) {
 		} else {
 			try {
@@ -133,7 +141,7 @@ public class Transformaciones implements ClassFileTransformer, ITransformer<Clas
 			// 使用ClassNode来接收解析后的类
 			ClassNode classNode = new ClassNode();
 			classReader.accept(classNode, 0);
-
+			transformar(nombre,classNode);
 			ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
 
 			classNode.accept(cw);
@@ -144,28 +152,5 @@ public class Transformaciones implements ClassFileTransformer, ITransformer<Clas
 		return classfileBuffer;
 	}
 
-	// Para CPW Transformer
-	@Override
-	public ClassNode transform(ClassNode input, ITransformerVotingContext context) {
-		// TODO Auto-generated method stub
-		transformar(input.name.replace("/", "."), input);
-		return input;
-	}
-
-	@Override
-	public TransformerVoteResult castVote(ITransformerVotingContext context) {
-		// TODO Auto-generated method stub
-		return TransformerVoteResult.YES;
-	}
-
-	@Override
-	public Set<Target> targets() {
-		// TODO Auto-generated method stub
-		Set<Target> resulto = new HashSet<Target>();
-		resulto.add(Target.targetClass("net.minecraft.server.MinecraftServer"));
-		resulto.add(Target.targetClass("net.minecraft.client.Minecraft"));
-
-		return resulto;
-	}
-
+	
 }

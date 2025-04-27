@@ -5,12 +5,16 @@ import com.asbestosstar.crashdetectormc.MonitorDePID;
 
 public class Theseus implements Verificaciones {
 
+	public boolean activado=false;
+
+	
 	@Override
 	public void verificar(String contento_de_consola, CDStringBuilder constructor) {
 		// TODO Auto-generated method stub
 		
 		if(contento_de_consola.contains("com.modrinth.theseus")	|| contento_de_consola.contains("ModrinthApp")) {
-			constructor.append(MonitorDePID.idioma.theseus());
+			constructor.append(MonitorDePID.idioma.theseus()).append(nl_html);
+			activado=true;
 		}	
 		
 	}
@@ -21,4 +25,13 @@ public class Theseus implements Verificaciones {
 		return new Theseus();
 	}
 
+	
+	
+	@Override
+	public boolean activado() {
+		// TODO Auto-generated method stub
+		return activado;
+	}
+	
+	
 }

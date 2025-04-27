@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 import java.util.zip.GZIPOutputStream;
 
 import com.asbestosstar.crashdetectormc.analyzador.Analyzador;
+import com.asbestosstar.crashdetectormc.analyzador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetectormc.analyzador.Verificaciones;
 
 public class Consola {
@@ -32,6 +33,9 @@ public class Consola {
 	public String enlance;
 	public int linea_original;
 	public boolean nueva;
+	
+	public VerificacionDeStackTrace verificacion_de_stacktrace = new VerificacionDeStackTrace();
+	public Analyzador analyzador = new Analyzador(verificacion_de_stacktrace);
 
 	public static ArrayList<File> archivos_en_lista = new ArrayList<File>();
 
@@ -199,7 +203,8 @@ public class Consola {
 
 		if (!contento_verificar.replace(" ", "").equals("")) {
 			// Iterar a través de todas las verificaciones y recopilar su salida
-			for (Verificaciones verificacion : Analyzador.verificaciones) {
+			verificacion_de_stacktrace.verificar(contento_verificar, contenidoVerificaciones);
+			for (Verificaciones verificacion : analyzador.verificaciones) {
 				verificacion.nueva().verificar(contento_verificar, contenidoVerificaciones);
 			}
 

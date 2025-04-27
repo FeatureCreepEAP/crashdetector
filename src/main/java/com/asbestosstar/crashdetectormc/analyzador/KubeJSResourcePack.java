@@ -5,6 +5,9 @@ import com.asbestosstar.crashdetectormc.MonitorDePID;
 
 public class KubeJSResourcePack implements Verificaciones {
 
+	public boolean activado=false;
+
+	
     @Override
     public void verificar(String contenido_de_consola, CDStringBuilder constructor) {
         // Procesar cada línea del contenido de la consola
@@ -16,7 +19,8 @@ public class KubeJSResourcePack implements Verificaciones {
                     String[] partes = linea.split("Failed to parse ");
                     if (partes.length > 1) { // Asegurarse de que hay algo después de "Failed to parse"
                         String mod_nombre = partes[1].split(":")[0]; // Extraer el nombre del mod antes de los dos puntos
-                        constructor.append(MonitorDePID.idioma.kubeJSResourcePack(mod_nombre));
+                        constructor.append(MonitorDePID.idioma.kubeJSResourcePack(mod_nombre)).append(nl_html);
+                        activado=true;
                     }
                 } catch (Exception e) {
                     // Registrar errores en caso de problemas al procesar la línea
@@ -31,4 +35,11 @@ public class KubeJSResourcePack implements Verificaciones {
     public Verificaciones nueva() {
         return new KubeJSResourcePack();
     }
+    
+	@Override
+	public boolean activado() {
+		// TODO Auto-generated method stub
+		return activado;
+	}
+    
 }

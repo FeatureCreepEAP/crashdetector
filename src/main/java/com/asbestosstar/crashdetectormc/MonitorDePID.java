@@ -18,6 +18,10 @@ import java.util.concurrent.CountDownLatch;
 
 import javax.swing.SwingUtilities;
 
+import com.asbestosstar.crashdetectormc.analyzador.Analyzador;
+import com.asbestosstar.crashdetectormc.analyzador.Verificaciones;
+import com.asbestosstar.crashdetectormc.gui.CrashDetectorGUI;
+
 public class MonitorDePID {
 
 	public static Path carpeta = new File("crash_detector/").toPath();
@@ -31,6 +35,7 @@ public class MonitorDePID {
 	public static String local;
 	public static String enlance;
 	public static long pid;
+	public static boolean resultos=false;
 
 	public static void main(String[] args) {
 		if (args.length > 0 && args[0].equals("--monitor")) {
@@ -187,12 +192,17 @@ public class MonitorDePID {
 				for (Consola consola : consolas) {
 					consola.analyzar(constructor);
 				}
+				String res=constructor.toString();
+				if(res.replace(" ", "").equals("")) {
+					constructor.append(idioma.noResultos());
+				}else {
+					resultos=true;
+				}
 
-				System.out.println(constructor.toString());
+				System.out.println(res);
 
-				if (ArchivoDeCodioError0.exists()) {
-					latch.countDown();
-				} else {
+				if (activar()) {
+
 					if (GraphicsEnvironment.isHeadless()) {
 
 						local = GeneradorDeInformacion.generarLocal(consolas, constructor, utc).getAbsolutePath();
@@ -204,8 +214,10 @@ public class MonitorDePID {
 						latch.countDown();
 					}
 
+				} else {
+					latch.countDown();
 				}
-
+				ArchivoDeCodioError0.delete();
 				viajo_ultima_mods.toFile().delete();
 //				try {
 //					latch.await(); // Muerte cunado el popup se cerrada
@@ -244,6 +256,26 @@ public class MonitorDePID {
 	// Compatible approach (Java 7+)
 	public static String leer_archivo(Path path) throws IOException {
 		return new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
+	}
+
+	public static boolean activar() {
+		for (Consola cons : consolas) {
+			if (cons.archivo.toString().contains("crash-reports")) {
+				return true;
+			}
+			for (Verificaciones ver : cons.analyzador.verificaciones) {
+				if (ver.activado() && ver.anularNormal()) {
+					return true;
+				}
+
+			}
+			
+			
+		}
+		if (ArchivoDeCodioError0.exists()) {
+			return false;
+		}
+		return true;
 	}
 
 }

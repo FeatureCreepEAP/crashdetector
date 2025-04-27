@@ -5,6 +5,9 @@ import com.asbestosstar.crashdetectormc.MonitorDePID;
 
 public class MCForgeModsSuspechoso implements Verificaciones {
 
+	public boolean activado=false;
+
+	
     @Override
     public void verificar(String contenido_de_consola, CDStringBuilder constructor) {
         String[] líneas = contenido_de_consola.split(nl);
@@ -21,6 +24,7 @@ public class MCForgeModsSuspechoso implements Verificaciones {
                                .append(líneas[i + 1].trim())
                                .append(nl_html);
                 }
+                activado=true;
             }
             // Nueva verificación de errores de creación de mods
             else if (línea.contains("Failed to create mod instance. ModID:")) {
@@ -31,13 +35,9 @@ public class MCForgeModsSuspechoso implements Verificaciones {
                     String idMod = línea.substring(inicioIDMod, índiceComa).trim();
                     String detallesError = línea.substring(índiceComa + 1).trim();
                     
-                    constructor.append(MonitorDePID.idioma.mcforge_mod_suspechoso())
-                               .append(" ")
-                               .append(idMod)
-                               .append(": ")
-                               .append(detallesError)
-                               .append(nl_html);
+                    constructor.append(MonitorDePID.idioma.mcforge_mod_suspechoso()+" "+idMod+": "+detallesError).append(nl_html);
                 }
+                activado=true;
             }
         }
     }
@@ -46,4 +46,12 @@ public class MCForgeModsSuspechoso implements Verificaciones {
     public Verificaciones nueva() {
         return new MCForgeModsSuspechoso();
     }
+    
+	@Override
+	public boolean activado() {
+		// TODO Auto-generated method stub
+		return activado;
+	}
+    
+    
 }

@@ -246,4 +246,53 @@ public String noTieneConsolaDeLauncherCursedForge() {
 }
 
 
+@Override
+public String faltar_de_clases_advertencia() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>경고: 누락된 클래스가 감지되었습니다:</b>";
+}
+
+
+@Override
+public String noResultos() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>결과 없음</b>";
+}
+
+@Override
+public String ubicacionesDeLogs() {
+    return "<b style='color:#" + config.obtenerColorInfo() + "'>로그 위치:</b>";
+}
+
+@Override
+public String infoDeVerificaciones() {
+    return "<b style='color:#" + config.obtenerColorInfo() + "'>여기에 검증 결과가 있습니다. 로그의 상단 부분을 수정하는 것이 첫 번째 우선 순위입니다. 천천히 진행하세요.</b>";
+}
+
+@Override
+public String versionDeJava() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>1.17-1.20.4 버전은 Java 17을 사용하고, 그 이상의 버전은 Java 21을 사용하세요. 이전 버전은 Java 8을 사용하세요. [가이드](https://mikumikudance.jp/index.php?title=Installing_Java_For_Minecraft). 여전히 문제가 있다면 일부 모드 파일이 너무 오래되었거나 너무 최신일 수 있습니다.</b>";
+}
+
+@Override
+public String java22() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Java 22 이상은 ASM이 오래되어 1.20.5 미만의 Minecraft 버전에서는 대부분의 모드 로더에서 작동하지 않습니다.</b>" + versionDeJava();
+}
+
+@Override
+public String javaObsoleta() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Java는 오래되었습니다 </b>" + versionDeJava();
+}
+
+@Override
+public String jpms_modules_faltas(String mod_necesitas, String submod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>JPMS 모듈 " + mod_necesitas + " 을(를) " + submod + " 에서 가져와야 합니다</b>";
+}
+
+@Override
+public String null_pointer_error(String metodo, String objeto) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>" + metodo + "을(를) 호출할 수 없습니다. 이유: " + objeto + "이(가) null입니다</b>";
+}
+
+
+
+
 }

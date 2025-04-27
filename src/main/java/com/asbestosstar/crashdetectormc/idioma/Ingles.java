@@ -241,5 +241,52 @@ public String noTieneConsolaDeLauncherCursedForge() {
 }
 
 
+@Override
+public String faltar_de_clases_advertencia() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>Warning: Missing classes detected:</b>";
+}
+
+@Override
+public String noResultos() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>No Results</b>";
+}
+
+@Override
+public String ubicacionesDeLogs() {
+    return "<b style='color:#" + config.obtenerColorInfo() + "'>Log Locations:</b>";
+}
+
+@Override
+public String infoDeVerificaciones() {
+    return "<b style='color:#" + config.obtenerColorInfo() + "'>Here are the results of your checks. Fixing the upper parts of the logs is the first priority. Do it slowly.</b>";
+}
+
+
+@Override
+public String versionDeJava() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Please use Java 17 for 1.17-1.20.4 and Java 21 for Anything newer, Java 8 for anything older. [Guide](https://mikumikudance.jp/index.php?title=Installing_Java_For_Minecraft). If you still have issues it could be because some mod has too new or old of files.</b>";
+}
+
+
+@Override
+public String java22() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Java 22 and above do not work on Minecraft Versions bellow 1.20.5 for most modloaders due to ASM being outdated.</b>"+versionDeJava();
+}
+
+@Override
+public String javaObsoleta() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Java is Obsolete </b>"+versionDeJava();
+}
+
+@Override
+public String jpms_modules_faltas(String mod_necesitas, String submod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>You need JPMS Module " + mod_necesitas + " from " + submod + "</b>";
+}
+
+@Override
+public String null_pointer_error(String metodo, String objeto) {
+	// TODO Auto-generated method stub
+	    return "<b style='color:#" + config.obtenerColorError() + "'>" +"Cannot invoke " + metodo + " because " + objeto + " is null"+"</b>";
+}
 
 }

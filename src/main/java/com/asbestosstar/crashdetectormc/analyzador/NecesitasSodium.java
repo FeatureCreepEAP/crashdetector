@@ -5,11 +5,15 @@ import com.asbestosstar.crashdetectormc.MonitorDePID;
 
 public class NecesitasSodium implements Verificaciones{
 
+	public boolean activado=false;
+
+	
 	@Override
 	public void verificar(String contento_de_consola, CDStringBuilder constructor) {
 		// TODO Auto-generated method stub
 		if(contento_de_consola.contains("Error loading class: net/caffeinemc/mods/sodium/api/memory/MemoryIntrinsics")) {
-			constructor.append(MonitorDePID.idioma.necesitasSodiumParaIris()+nl_html);
+			constructor.append(MonitorDePID.idioma.necesitasSodiumParaIris()).append(nl_html);
+			activado=true;
 		}	
 
 	}
@@ -22,7 +26,11 @@ public class NecesitasSodium implements Verificaciones{
 
 	
 	
-	
+	@Override
+	public boolean activado() {
+		// TODO Auto-generated method stub
+		return activado;
+	}
 	
 	
 	

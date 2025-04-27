@@ -246,6 +246,53 @@ public String noTieneConsolaDeLauncherCursedForge() {
 }
 
 
+@Override
+public String faltar_de_clases_advertencia() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>Averto: Mankantaj klasoj trovitaj:</b>";
+}
+
+
+@Override
+public String noResultos() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Neniu rezulto</b>";
+}
+
+@Override
+public String ubicacionesDeLogs() {
+    return "<b style='color:#" + config.obtenerColorInfo() + "'>Lokoj de protokoloj:</b>";
+}
+
+@Override
+public String infoDeVerificaciones() {
+    return "<b style='color:#" + config.obtenerColorInfo() + "'>Jen la rezultoj de viaj kontroladoj. Ripari la suprajn partojn de la protokoloj estas la unua prioritato. Faru ĝin malrapide.</b>";
+}
+
+@Override
+public String versionDeJava() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Bonvolu uzi Java 17 por versioj 1.17-1.20.4 kaj Java 21 por iu ajn pli nova versio. Uzu Java 8 por pli malnovaj versioj. [Gvidilo](https://mikumikudance.jp/index.php?title=Installing_Java_For_Minecraft). Se vi ankoraŭ havas problemojn, eble pro tio ke iu mod havas tro novajn aŭ malnovajn dosierojn.</b>";
+}
+
+@Override
+public String java22() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Java 22 kaj super ne funkcias en Minecraft-versioj sub 1.20.5 por plej multaj modŝarĝiloj pro malaktuala ASM.</b>" + versionDeJava();
+}
+
+@Override
+public String javaObsoleta() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Java estas malmoderna </b>" + versionDeJava();
+}
+
+@Override
+public String jpms_modules_faltas(String mod_necesitas, String submod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Vi bezonas la JPMS-modulon " + mod_necesitas + " el " + submod + "</b>";
+}
+
+@Override
+public String null_pointer_error(String metodo, String objeto) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Ne eblas voki " + metodo + " ĉar " + objeto + " estas nula</b>";
+}
+
+
 
 
 }

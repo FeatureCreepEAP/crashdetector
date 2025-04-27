@@ -9,13 +9,20 @@ import com.asbestosstar.crashdetectormc.MonitorDePID;
 
 public class Drivers implements Verificaciones {
 
+	public boolean activado=false;
+
+	
     @Override
     public void verificar(String str, CDStringBuilder messanje) {
         if (str.contains("EXCEPTION_ACCESS_VIOLATION") && str.contains("atio6axx.dll")) {
             procesarProblemaAMD(str, messanje);
         } else if (str.contains("EXCEPTION_ACCESS_VIOLATION") && str.contains("nouveau")) {
-            messanje.append(nl).append(MonitorDePID.idioma.probelma_con_graficas_nouveau());
-        } else {
+            messanje.append(nl_html).append(MonitorDePID.idioma.probelma_con_graficas_nouveau());
+        } 
+        else if (str.contains("glfw.dll")) {
+        	procesarProblemaGraficos(messanje);
+        }
+        else {
             String ultimaLinea = obtenerUltimaLinea(str);
             
             if (ultimaLinea != null && contieneErrorGraficos(ultimaLinea)) {
@@ -23,6 +30,20 @@ public class Drivers implements Verificaciones {
             }
         }
     }
+    
+    
+    
+    /*
+     * 
+     * FATAL ERROR in native method: Thread[pool-2-thread-1,5,main]: No context is current or a function that is not available in the current context was called. The JVM will abort execution.
+	at org.lwjgl.opengl.GL11C.nglGetString(org.lwjgl.opengl@3.3.1+7/Native Method)
+	at org.lwjgl.opengl.GL11C.glGetString(org.lwjgl.opengl@3.3.1+7/GL11C.java:978)
+	at net.minecraftforge.fml.earlydisplay.DisplayWindow.initRender(fmlearlydisplay@1.20.1-47.2.32/DisplayWindow.java:212)
+	at net.minecraftforge.fml.earlydisplay.DisplayWindow.lambda$start$5(fmlearlydisplay@1.20.1-47.2.32/DisplayWindow.java:295)
+	at net.minecraftforge.fml.earlydisplay.DisplayWindow$$Lambda$434/0x00000294dc20f6a8.run(fmlearlydisplay@1.20.1-47.2.32/Unknown Source)
+     * 
+     * 
+     */
 
     private void procesarProblemaGraficos(CDStringBuilder mensaje) {
         boolean esWindows = esWindows();
@@ -31,12 +52,15 @@ public class Drivers implements Verificaciones {
 
         if (tieneNvidia) {
             if (esWindowsNuevo) {
-                mensaje.append(nl).append(MonitorDePID.idioma.problema_con_graficas_nvidia_windows_nuevo());
+                mensaje.append(nl_html).append(MonitorDePID.idioma.problema_con_graficas_nvidia_windows_nuevo());
+                activado=true;
             } else {
-                mensaje.append(nl).append(MonitorDePID.idioma.problema_con_graficas_nvidia_windows_viejo());
+                mensaje.append(nl_html).append(MonitorDePID.idioma.problema_con_graficas_nvidia_windows_viejo());
+                activado=true;
             }
         } else {
-            mensaje.append(nl).append(MonitorDePID.idioma.probelma_con_graficas_general());
+            mensaje.append(nl_html).append(MonitorDePID.idioma.probelma_con_graficas_general());
+            activado=true;
         }
         
     }
@@ -103,5 +127,11 @@ public class Drivers implements Verificaciones {
 	public Verificaciones nueva() {
 		// TODO Auto-generated method stub
 		return new Drivers();
+	}
+	
+	@Override
+	public boolean activado() {
+		// TODO Auto-generated method stub
+		return activado;
 	}
 }

@@ -166,4 +166,23 @@ public interface Idioma {
 	
 	public String noTieneConsolaDeLauncherCursedForge();
 	
+	public String faltar_de_clases_advertencia();
+
+	public String noResultos();
+
+	public String ubicacionesDeLogs();
+
+	public String infoDeVerificaciones();
+	
+	public String versionDeJava();
+
+	public String java22();
+
+	public String javaObsoleta();
+
+	public String jpms_modules_faltas(String mod_necesitas, String submod);
+
+	public String null_pointer_error(String metodo, String objeto);
+	
+	
 }

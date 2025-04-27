@@ -16,6 +16,7 @@ public class GeneradorDeInformacion {
 	public static File generarLocal(List<Consola> consolas, StringBuilder constructor, Instant instant) {
 		try {
 			StringBuilder cons = new StringBuilder();
+			cons.append(MonitorDePID.idioma.ubicacionesDeLogs()+"<br>");
 			for (Consola co : consolas) {
 					cons.append("<a href='file://").append(co.archivo.toUri().toString()).append("'>")
 							.append(co.archivo.toString().strip()).append("</a><br>");
@@ -24,7 +25,7 @@ public class GeneradorDeInformacion {
 			String pantilla = MonitorDePID.leer_archivo(new File("crash_detector/pantilla.htm").toPath());
 			File ret = new File("crash_detector/" + instant.toString().replace(":", "") + ".htm");
 			FileWriter escribidor = new FileWriter(ret);
-			escribidor.write(pantilla.replace("{constructor}", cons.toString() + "<br>" + constructor.toString()));
+			escribidor.write(pantilla.replace("{constructor}", cons.toString() + "<br>" +MonitorDePID.idioma.infoDeVerificaciones() + "<br>" + constructor.toString()));
 			escribidor.close();
 			return ret;
 		} catch (IOException e) {
@@ -37,6 +38,7 @@ public class GeneradorDeInformacion {
 	public static String compartir(List<Consola> consolas, StringBuilder constructor, Instant instant) {
 		try {
 			StringBuilder cons = new StringBuilder();
+			cons.append(MonitorDePID.idioma.ubicacionesDeLogs()+"<br>");
 			for (Consola co : consolas) {
 					cons.append("<a href=" + co.obtainerEnlance() + ">" + co.archivo.toString().strip() + "</a>")
 							.append("<br>");
@@ -44,7 +46,7 @@ public class GeneradorDeInformacion {
 
 			String pantilla = MonitorDePID.leer_archivo(new File("crash_detector/pantilla.htm").toPath());
 			String ret = enviarInforme(
-					pantilla.replace("{constructor}", cons.toString() + "<br>" + constructor.toString()));
+					pantilla.replace("{constructor}", cons.toString() + "<br>" + MonitorDePID.idioma.infoDeVerificaciones() + "<br>" + constructor.toString()));
 			CrashDetectorLogger.log(ret);
 			return ret;
 		} catch (IOException e) {

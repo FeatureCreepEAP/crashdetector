@@ -5,6 +5,25 @@
     <version>0.0.1-SNAPSHOT</version>
     <build>
         <plugins>
+			
+			           <!-- Add the Maven Compiler Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <compilerArgs>
+                        <!-- Disable annotation processing -->
+                        <arg>-proc:none</arg>
+                        <!-- Suppress the warning message -->
+                        <arg>-Xlint:-options</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+			
+			
             <!-- other plugins omitted -->
             <plugin>
                 <artifactId>maven-jar-plugin</artifactId>

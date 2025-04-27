@@ -5,6 +5,9 @@ import com.asbestosstar.crashdetectormc.MonitorDePID;
 
 public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 
+	public boolean activado=false;
+
+	
 	@Override
 	public void verificar(String contento_de_consola, CDStringBuilder constructor) {
 		// TODO Auto-generated method stub
@@ -13,7 +16,8 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 			if (linea.contains("java.lang.module.ResolutionException")) {
 				constructor.append(MonitorDePID.idioma.module_resolution_exception(
 						"<b>"+linea.split(":")[1].split(" exports ")[0].replace("and", "+")+"</b>",
-						"<b>"+linea.split("exports package ")[1].split("to module")[0]+"</b>") + nl_html);
+						"<b>"+linea.split("exports package ")[1].split("to module")[0]+"</b>")).append(nl_html);
+				activado=true;
 			}
 		}
 
@@ -23,6 +27,12 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 	public Verificaciones nueva() {
 		// TODO Auto-generated method stub
 		return new ModulesDuplicadosJavaModulePlatform();
+	}
+	
+	@Override
+	public boolean activado() {
+		// TODO Auto-generated method stub
+		return activado;
 	}
 
 }
