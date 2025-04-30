@@ -84,80 +84,62 @@ public class CrashDetectorGUI extends JFrame {
         JPanel panelInferior = new JPanel();
         panelInferior.setLayout(new BorderLayout());
         panelInferior.setBackground(colorFondo);
-        panelInferior.setBorder(new EmptyBorder(0, 40, 20, 40)); // Remove gap above the image
+        panelInferior.setBorder(new EmptyBorder(15, 40, 15, 40)); // Reduced padding
 
-        // Subpanel para la imagen y los botones
-        JPanel subPanelControles = new JPanel();
-        subPanelControles.setLayout(new BorderLayout());
-        subPanelControles.setBackground(colorFondo);
+        // Panel principal para botones e imágenes
+        JPanel panelControles = new JPanel();
+        panelControles.setLayout(new BoxLayout(panelControles, BoxLayout.Y_AXIS));
+        panelControles.setBackground(colorFondo);
 
-        // Cargar ambas imagenes
+        // Panel de botones
+        JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
+        panelBotones.setBackground(colorFondo);
+
+        // Botones
+        JButton botonAnalisis = new JButton(MonitorDePID.idioma.analisisAvanzado());
+        JButton botonCompartir = new JButton(MonitorDePID.idioma.texto_de_buton_compartir_enlance());
+        JButton botonQuickFix = new JButton("QuickFix");
+        
+        // Configuración de botones
+        estilizarBoton(botonAnalisis);
+        estilizarBoton(botonCompartir);
+        estilizarBoton(botonQuickFix);
+        botonQuickFix.setEnabled(false);
+
+        // Agregar botones al panel
+        panelBotones.add(botonAnalisis);
+        panelBotones.add(botonCompartir);
+        panelBotones.add(botonQuickFix);
+
+        // Panel de imágenes
+        JPanel panelImagenes = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        panelImagenes.setBackground(colorFondo);
+
+        // Cargar imágenes
         JLabel imagenGura = cargarImagenDesdeRecurso("/imagenes/gura.png");
         JLabel imagenMumei = cargarImagenDesdeRecurso("/imagenes/nanashi_mumei.png");
+        JLabel imagenShion = cargarImagenDesdeRecurso("/imagenes/shion.png");
 
-        // Agregar imagenes a los lados
-        subPanelControles.add(imagenGura, BorderLayout.WEST);
-        subPanelControles.add(imagenMumei, BorderLayout.EAST);
+        // Agregar imágenes al panel
+        panelImagenes.add(imagenGura);
+        panelImagenes.add(imagenMumei);
+        panelImagenes.add(imagenShion);
 
-        // Panel para botones y descripcion
-        JPanel panelBotonYDescripcion = new JPanel();
-        panelBotonYDescripcion.setLayout(new BoxLayout(panelBotonYDescripcion, BoxLayout.Y_AXIS));
-        panelBotonYDescripcion.setBackground(colorFondo);
+        // Agregar paneles al contenedor principal
+        panelControles.add(panelBotones);
+        panelControles.add(Box.createVerticalStrut(5)); // Reduced spacing
+        panelControles.add(panelImagenes);
 
-        // Boton de Analisis Avanzado
-        JButton botonAnalisis = new JButton(MonitorDePID.idioma.analisisAvanzado());
-        estilizarBoton(botonAnalisis);
+        // Agregar acciones
         botonAnalisis.addActionListener(e -> new AnalisisAvanzadoGUI().setVisible(true));
-        panelBotonYDescripcion.add(botonAnalisis);
-        panelBotonYDescripcion.add(Box.createVerticalStrut(10));
+        botonCompartir.addActionListener(e -> new DialogoCompartir(this, contenidoInforme, tiempoFallo).setVisible(true));
 
-        // Boton compartir y demas componentes existentes
-        JButton botonCompartir = new JButton(MonitorDePID.idioma.texto_de_buton_compartir_enlance());
-        estilizarBoton(botonCompartir);
-        panelBotonYDescripcion.add(botonCompartir);
-        panelBotonYDescripcion.add(Box.createVerticalStrut(8));
-
-        JLabel descripcionCompartir = new JLabel(MonitorDePID.idioma.texto_debajo_de_buton_compartir_enlance());
-        estilizarEtiqueta(descripcionCompartir);
-        panelBotonYDescripcion.add(descripcionCompartir);
-        panelBotonYDescripcion.add(Box.createVerticalStrut(10));
-
-        // Caja de texto para la URL
-        JTextField cajaUrl = new JTextField();
-        cajaUrl.setEditable(false);
-        cajaUrl.setBackground(colorCajaTexto);
-        cajaUrl.setForeground(colorEnlace);
-        cajaUrl.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        cajaUrl.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
-        cajaUrl.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-        panelBotonYDescripcion.add(cajaUrl);
-
-        // Acción al presionar el botón de compartir
-        botonCompartir.addActionListener(evento -> {
-//            if (MonitorDePID.enlance == null) {
-//                MonitorDePID.enlance = GeneradorDeInformacion.compartir(consolas, contenidoInforme, tiempoFallo);
-//            }
-//            cajaUrl.setText(MonitorDePID.enlance); // Mostrar la URL compartida en la caja de texto
-//            try {
-//                Desktop.getDesktop().browse(new URL(MonitorDePID.enlance).toURI());
-//            } catch (IOException | URISyntaxException e) {
-//                CrashDetectorLogger.logException(e);
-//            }
-        	new DialogoCompartir(this,contenidoInforme,tiempoFallo).setVisible(true);
-        });
-
-        // Agregar el panel de botón y descripción al subpanel
-        subPanelControles.add(panelBotonYDescripcion, BorderLayout.CENTER); // Botón y descripción abajo
-
-        // Agregar el subpanel al panel inferior
-        panelInferior.add(subPanelControles, BorderLayout.CENTER);
-
-        // Diseño del layout
+        // Agregar componentes a la ventana
         add(panelDesplazamiento, BorderLayout.CENTER);
         add(panelInferior, BorderLayout.SOUTH);
+        panelInferior.add(panelControles, BorderLayout.CENTER);
     }
 
-    // Metodo modificado para cargar imagenes con nombres especificos
     private JLabel cargarImagenDesdeRecurso(String ruta) {
         ImageIcon icono = null;
         try {
@@ -173,8 +155,7 @@ public class CrashDetectorGUI extends JFrame {
             return new JLabel("Imagen no encontrada");
         }
 
-        // Mantener el mismo tamaño que la original
-        int nuevoAncho = 80;
+        int nuevoAncho = 60; // Reduced image size
         int nuevoAlto = (int) ((double) nuevoAncho / icono.getIconWidth() * icono.getIconHeight());
         Image imagenEscalada = icono.getImage().getScaledInstance(nuevoAncho, nuevoAlto, Image.SCALE_SMOOTH);
         return new JLabel(new ImageIcon(imagenEscalada));
@@ -182,17 +163,16 @@ public class CrashDetectorGUI extends JFrame {
 
     private void estilizarBoton(JButton boton) {
         boton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        boton.setBackground(colorBoton);
+        if (!System.getProperty("os.name").toLowerCase().contains("mac")) {
+            boton.setBackground(colorBoton);
+            boton.setContentAreaFilled(true);
+        } else {
+            boton.setContentAreaFilled(false); //  native macOS
+        }
         boton.setForeground(colorTexto);
         boton.setFocusPainted(false);
         boton.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        boton.setMaximumSize(new Dimension(250, 40));
+        boton.setMaximumSize(new Dimension(200, 40));
         boton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
-    }
-
-    private void estilizarEtiqueta(JLabel etiqueta) {
-        etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
-        etiqueta.setForeground(colorTexto);
-        etiqueta.setFont(new Font("Segoe UI", Font.PLAIN, 12));
     }
 }
