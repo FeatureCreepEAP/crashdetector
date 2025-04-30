@@ -338,6 +338,89 @@ public String errorBusqueda() {
     return "Eraro en Serĉo";
 }
 
+@Override
+public String noRegistroDeLauncher() {
+    return "Neniu protokolo de la lanĉilo troviĝis! Tio povas kompliki la esploradon.\n"
+            + "                \n"
+            + "                Por akiri la ĝustajn protokolojn:\n"
+            + "                - MultiMC/PolyMC/PrismLauncher/PollyMC/UltimMC: NOTO: Aŭtomate detektitaj protokoloj NE estas ĝustaj.\n"
+            + "                  1. Malfermu la instancan interfaco\n"
+            + "                  2. Iru al la sekcio \"Minecraft Log\"\n"
+            + "                  3. Alklaku dekstre kaj kopiu la enhavon\n"
+            + "                - CurseForgeApp:\n"
+            + "                  1. Restartu la ludon SEN salti la lanĉilon\n"
+            + "                  \n";
+}
+
+@Override
+public String omitirYCerrar() {
+    return "Preterpasi kaj Feri";
+}
+
+@Override
+public String guardarYCerrar() {
+    return "Konservi kaj Feri";
+}
+
+@Override
+public String pegaLosRegistrosAqui() {
+    return "Algluu la protokolojn ĉi tie";
+}
+
+@Override
+public String archivo() {
+    return "Dosiero";
+}
+
+@Override
+public String incluir() {
+    return "Inkluzivi";
+}
+
+@Override
+public String abrir() {
+    return "Malfermi";
+}
+
+@Override
+public String endpointDeInforme() {
+    return "Fina Punkto de Raporto";
+}
+
+@Override
+public String sitoDeLogging() {
+    return "Protokola Retpaĝaro:";
+}
+
+@Override
+public String apiDeLogging() {
+    return "Protokola API:";
+}
+
+@Override
+public String anonimizarRegistros() {
+    return "Anonimigi protokolojn (Baldaŭ)";
+}
+
+@Override
+public String botonDeCompartirInforme() {
+    return "Kunhavigi Raporton kaj ĉiujn elektitajn protokolojn";
+}
+
+@Override
+public String arco() {
+    return "Ĉi tiu dialogo ebligas kunhavigi protokolojn uzante la API-on de SecureLogger "
+            + "ĉe securelogger.net. Kiam vi premas la kunhavigajn butonojn, dosieroj "
+            + "alŝutiĝas al la elektita retejo (defaŭlte asbestosstar.egoism.jp). Vi povas kunhavigi ĉiujn elektitajn protokolojn "
+            + "kune kun la raporto. Se vi ne volas alŝuti, ne uzu ĉi tiun dialogon! Ni ne prilaboras vian raporton ĉe la oficiala finpunkto (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb); ni nur forigas nepermesatajn ligilojn. "
+            + "Tio estas uzata nur por montri informon pri via paneo kaj la ligilon al la protokoloj. Tamen, eblas uzi propran finpunkton, kiu eble ne havas la samajn metodojn.";
+}
+
+@Override
+public String enlaceDelReporte() {
+    return "Ligilo de Raporto:";
+}
+
 
 
 

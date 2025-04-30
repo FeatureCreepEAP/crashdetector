@@ -27,6 +27,13 @@ public interface ArchivoDeMod {
 	public String obtenerArchivoRecursivo(String archivo);
 	
 	public List<String> archivos();
+	
+    /**
+     * Busca recursivamente mods que contengan el archivo, clase o paquete especificado.
+     * @param termino Nombre del archivo, clase o paquete a buscar
+     * @return Lista de mods que contienen el elemento buscado
+     */
+    public List<ArchivoDeMod> buscarModsCon(String termino);
 
 
 	class Origin implements ArchivoDeMod {
@@ -89,6 +96,12 @@ public interface ArchivoDeMod {
 		public List<String> archivos() {
 			// TODO Auto-generated method stub
 			return new ArrayList<String>();
+		}
+
+		@Override
+		public List<ArchivoDeMod> buscarModsCon(String termino) {
+			// TODO Auto-generated method stub
+			return new ArrayList<ArchivoDeMod>();
 		}
 
 	}

@@ -331,4 +331,88 @@ public String errorBusqueda() {
     return "検索エラー";
 }
 
+
+@Override
+public String noRegistroDeLauncher() {
+    return "ランチャーログが見つかりませんでした！これにより調査が複雑になる可能性があります。\n"
+            + "                \n"
+            + "                正しいログを取得するには：\n"
+            + "                - MultiMC/PolyMC/PrismLauncher/PollyMC/UltimMC: 注意: 自動検出されたログは正しくありません。\n"
+            + "                  1. インスタンスインターフェースを開く\n"
+            + "                  2. 「Minecraft Log」セクションに移動\n"
+            + "                  3. 右クリックして内容をコピー\n"
+            + "                - CurseForgeApp:\n"
+            + "                  1. ランチャーをスキップせずにゲームを再起動\n"
+            + "                  \n";
+}
+
+@Override
+public String omitirYCerrar() {
+    return "スキップして閉じる";
+}
+
+@Override
+public String guardarYCerrar() {
+    return "保存して閉じる";
+}
+
+@Override
+public String pegaLosRegistrosAqui() {
+    return "ログをここに貼り付け";
+}
+
+@Override
+public String archivo() {
+    return "ファイル";
+}
+
+@Override
+public String incluir() {
+    return "含める";
+}
+
+@Override
+public String abrir() {
+    return "開く";
+}
+
+@Override
+public String endpointDeInforme() {
+    return "レポートエンドポイント";
+}
+
+@Override
+public String sitoDeLogging() {
+    return "ログサイト：";
+}
+
+@Override
+public String apiDeLogging() {
+    return "ログAPI：";
+}
+
+@Override
+public String anonimizarRegistros() {
+    return "ログを匿名化（近日公開）";
+}
+
+@Override
+public String botonDeCompartirInforme() {
+    return "レポートと選択したすべてのログを共有";
+}
+
+@Override
+public String arco() {
+    return "このダイアログでは、securelogger.net の SecureLogger API を使用してログを共有できます。"
+            + "共有ボタンを押すと、ファイルが選択されたサイト（デフォルトは asbestosstar.egoism.jp）にアップロードされます。"
+            + "選択したすべてのログをレポートと一緒に共有できます。アップロードしたくない場合は、このダイアログを使用しないでください！"
+            + "公式エンドポイント（https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb）ではレポートを処理しません。許可されていないリンクのみ削除します。"
+            + "これはクラッシュ情報とログへのリンクを表示するためにのみ使用されます。ただし、同じメソッドを持たないカスタムエンドポイントを使用することも可能です。";
+}
+
+@Override
+public String enlaceDelReporte() {
+    return "レポートリンク：";
+}
+
 }

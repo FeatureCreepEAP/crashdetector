@@ -333,6 +333,89 @@ public String errorBusqueda() {
 }
 
 
+@Override
+public String noRegistroDeLauncher() {
+    return "未找到启动器日志！这可能会使调查变得复杂。\n"
+            + "                \n"
+            + "                获取正确日志的方法：\n"
+            + "                - MultiMC/PolyMC/PrismLauncher/PollyMC/UltimMC: 注意：自动检测到的日志不正确。\n"
+            + "                  1. 打开实例界面\n"
+            + "                  2. 转到“Minecraft Log”部分\n"
+            + "                  3. 右键单击并复制内容\n"
+            + "                - CurseForgeApp:\n"
+            + "                  1. 不跳过启动器，重新启动游戏\n"
+            + "                  \n";
+}
+
+@Override
+public String omitirYCerrar() {
+    return "跳过并关闭";
+}
+
+@Override
+public String guardarYCerrar() {
+    return "保存并关闭";
+}
+
+@Override
+public String pegaLosRegistrosAqui() {
+    return "将日志粘贴到这里";
+}
+
+@Override
+public String archivo() {
+    return "文件";
+}
+
+@Override
+public String incluir() {
+    return "包含";
+}
+
+@Override
+public String abrir() {
+    return "打开";
+}
+
+@Override
+public String endpointDeInforme() {
+    return "报告端点";
+}
+
+@Override
+public String sitoDeLogging() {
+    return "日志站点：";
+}
+
+@Override
+public String apiDeLogging() {
+    return "日志API：";
+}
+
+@Override
+public String anonimizarRegistros() {
+    return "匿名化日志（即将推出）";
+}
+
+@Override
+public String botonDeCompartirInforme() {
+    return "分享报告及所有选定日志";
+}
+
+@Override
+public String arco() {
+    return "此对话框允许使用 SecureLogger 的 API 在 securelogger.net 上共享日志。"
+            + "按下共享按钮时，文件将上传到所选站点（默认为 asbestosstar.egoism.jp）。您可以共享所有选定的日志以及报告。"
+            + "如果您不想上传，请不要使用此对话框！我们不会在官方端点（https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb）处理您的报告；我们只会删除不允许的链接。"
+            + "这仅用于显示有关崩溃的信息以及日志的链接。但是，可以使用可能不具备相同方法的自定义端点。";
+}
+
+@Override
+public String enlaceDelReporte() {
+    return "报告链接：";
+}
+
+
 
 
 }

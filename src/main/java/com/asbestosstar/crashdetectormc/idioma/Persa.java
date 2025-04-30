@@ -335,6 +335,89 @@ public String errorBusqueda() {
     return "خطا در جستجو";
 }
 
+@Override
+public String noRegistroDeLauncher() {
+    return "هیچ لاگی از لانچر پیدا نشد! این ممکن است بررسی را پیچیده‌تر کند.\n"
+            + "                \n"
+            + "                برای دریافت لاگ‌های صحیح:\n"
+            + "                - MultiMC/PolyMC/PrismLauncher/PollyMC/UltimMC: توجه: لاگ‌های شناسایی‌شده به‌صورت خودکار صحیح نیستند.\n"
+            + "                  1. رابط نمونه را باز کنید\n"
+            + "                  2. به بخش \"Minecraft Log\" بروید\n"
+            + "                  3. روی آن راست‌کلیک کنید و محتوای آن را کپی کنید\n"
+            + "                - CurseForgeApp:\n"
+            + "                  1. بدون رد کردن لانچر، بازی را دوباره راه‌اندازی کنید\n"
+            + "                  \n";
+}
+
+@Override
+public String omitirYCerrar() {
+    return "رد کردن و بستن";
+}
+
+@Override
+public String guardarYCerrar() {
+    return "ذخیره و بستن";
+}
+
+@Override
+public String pegaLosRegistrosAqui() {
+    return "لاگ‌ها را اینجا قرار دهید";
+}
+
+@Override
+public String archivo() {
+    return "فایل";
+}
+
+@Override
+public String incluir() {
+    return "شامل شدن";
+}
+
+@Override
+public String abrir() {
+    return "باز کردن";
+}
+
+@Override
+public String endpointDeInforme() {
+    return "نقاط پایانی گزارش";
+}
+
+@Override
+public String sitoDeLogging() {
+    return "وب‌سایت ثبت لاگ:";
+}
+
+@Override
+public String apiDeLogging() {
+    return "API ثبت لاگ:";
+}
+
+@Override
+public String anonimizarRegistros() {
+    return "(به زودی) بی‌هویت کردن لاگ‌ها";
+}
+
+@Override
+public String botonDeCompartirInforme() {
+    return "اشتراک‌گذاری گزارش و تمام لاگ‌های انتخاب‌شده";
+}
+
+@Override
+public String arco() {
+    return "این گفتگو به شما امکان می‌دهد لاگ‌ها را با استفاده از API SecureLogger در securelogger.net به اشتراک بگذارید. "
+            + "هنگام فشار دادن دکمه‌های اشتراک‌گذاری، فایل‌ها به سایت انتخاب‌شده (پیش‌فرض asbestosstar.egoism.jp) آپلود می‌شوند. "
+            + "شما می‌توانید تمام لاگ‌های انتخاب‌شده را همراه با گزارش به اشتراک بگذارید. اگر نمی‌خواهید آپلود کنید، از این گفتگو استفاده نکنید! "
+            + "ما گزارش شما را در نقاط پایانی رسمی (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb) پردازش نمی‌کنیم؛ فقط لینک‌های غیرمجاز حذف می‌شوند. "
+            + "این فقط برای نمایش اطلاعات درباره خرابی و لینک به لاگ‌ها استفاده می‌شود. با این حال، می‌توانید از یک نقطه پایانی سفارشی استفاده کنید که ممکن است شامل همان روش‌ها نباشد.";
+}
+
+@Override
+public String enlaceDelReporte() {
+    return "لینک گزارش:";
+}
+
 
 
 }

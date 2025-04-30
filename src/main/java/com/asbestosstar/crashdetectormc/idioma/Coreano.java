@@ -339,5 +339,88 @@ public String errorBusqueda() {
     return "검색 오류";
 }
 
+@Override
+public String noRegistroDeLauncher() {
+    return "런처 로그를 찾을 수 없습니다! 이로 인해 조사가 복잡해질 수 있습니다.\n"
+            + "                \n"
+            + "                올바른 로그를 얻으려면:\n"
+            + "                - MultiMC/PolyMC/PrismLauncher/PollyMC/UltimMC: 참고: 자동으로 감지된 로그는 올바르지 않습니다.\n"
+            + "                  1. 인스턴스 인터페이스 열기\n"
+            + "                  2. \"Minecraft Log\" 섹션으로 이동\n"
+            + "                  3. 마우스 오른쪽 버튼 클릭 후 내용 복사\n"
+            + "                - CurseForgeApp:\n"
+            + "                  1. 런처를 건너뛰지 않고 게임 재시작\n"
+            + "                  \n";
+}
+
+@Override
+public String omitirYCerrar() {
+    return "건너뛰고 닫기";
+}
+
+@Override
+public String guardarYCerrar() {
+    return "저장하고 닫기";
+}
+
+@Override
+public String pegaLosRegistrosAqui() {
+    return "로그를 여기에 붙여넣기";
+}
+
+@Override
+public String archivo() {
+    return "파일";
+}
+
+@Override
+public String incluir() {
+    return "포함";
+}
+
+@Override
+public String abrir() {
+    return "열기";
+}
+
+@Override
+public String endpointDeInforme() {
+    return "보고서 엔드포인트";
+}
+
+@Override
+public String sitoDeLogging() {
+    return "로그 기록 사이트:";
+}
+
+@Override
+public String apiDeLogging() {
+    return "로그 API:";
+}
+
+@Override
+public String anonimizarRegistros() {
+    return "로그 익명화 (곧 출시)";
+}
+
+@Override
+public String botonDeCompartirInforme() {
+    return "보고서 및 선택한 모든 로그 공유";
+}
+
+@Override
+public String arco() {
+    return "이 대화 상자는 securelogger.net에서 SecureLogger API를 사용하여 로그를 공유할 수 있도록 합니다. "
+            + "공유 버튼을 누르면 파일이 선택된 사이트(기본값 asbestosstar.egoism.jp)에 업로드됩니다. "
+            + "선택한 모든 로그를 보고서와 함께 공유할 수 있습니다. 업로드하지 않으려면 이 대화 상자를 사용하지 마십시오! "
+            + "우리는 공식 엔드포인트(https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb)에서 보고서를 처리하지 않습니다. 허용되지 않는 링크만 제거합니다. "
+            + "이는 오류 정보와 로그 링크를 표시하는 데만 사용됩니다. 그러나 같은 메서드를 가지고 있지 않을 수 있는 사용자 정의 엔드포인트를 사용할 수 있습니다.";
+}
+
+@Override
+public String enlaceDelReporte() {
+    return "보고서 링크:";
+}
+
 
 }

@@ -10,7 +10,7 @@ import java.util.Properties;
 public class Config {
 
 	// Valores predeterminados para los campos de configuración
-	private static final String VALOR_POR_DEFECTO_SITO_DE_INFORMES = "https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb";
+	public static final String VALOR_POR_DEFECTO_SITO_DE_INFORMES = "https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb";
 	private static final String VALOR_POR_DEFECTO_COLOR_FONDO = "282828"; // Gris oscuro
 	private static final String VALOR_POR_DEFECTO_COLOR_TEXTO = "FFFFFF"; // Blanco
 	private static final String VALOR_POR_DEFECTO_COLOR_BOTON = "46468C"; // Azul oscuro

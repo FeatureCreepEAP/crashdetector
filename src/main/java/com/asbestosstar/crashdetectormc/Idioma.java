@@ -203,6 +203,33 @@ public interface Idioma {
 	public String noSeEncontraronResultados();
 
 	public String errorBusqueda();
+
+	public String noRegistroDeLauncher();
 	
+	public String omitirYCerrar();
+	
+	public String guardarYCerrar();
+
+	public String pegaLosRegistrosAqui();
+
+	public String archivo();
+
+	public String incluir();
+
+	public String abrir();
+	
+	public String endpointDeInforme();
+	
+	public String sitoDeLogging();
+
+	public String apiDeLogging();
+
+	public String anonimizarRegistros();
+
+	public String botonDeCompartirInforme();
+	
+	public String arco();
+
+	public String enlaceDelReporte();
 	
 }

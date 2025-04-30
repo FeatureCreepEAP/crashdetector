@@ -27,8 +27,12 @@ public class Analyzador {
 		verificaciones.add(new NullPointer());
 		verificaciones.add(new ContentoDeTraces(verificacion_de_stacktrace));
 		verificaciones.add(new AdvertenciaFaltasClases());
+		//verificaciones.add(new ObjetoDeRegistroNoPresente());
 
 				
+		
+		
+		
 	}
 
 }

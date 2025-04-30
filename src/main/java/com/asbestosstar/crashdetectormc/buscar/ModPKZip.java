@@ -229,4 +229,40 @@ public class ModPKZip implements ArchivoDeMod {
 		// TODO Auto-generated method stub
 		return archivos = new ArrayList<String>();
 	}
+
+	// Implementación en ModPKZip
+	@Override
+	public List<ArchivoDeMod> buscarModsCon(String termino) {
+	    List<ArchivoDeMod> resultados = new ArrayList<>();
+	    
+	    // Verificar en este mod
+	    boolean tieneArchivo = archivos.contains(termino);
+	    boolean tieneClase = clases.contains(termino);
+	    String packagePath = termino.replace('.', '/');
+	    boolean tienePackage = clases.stream()
+	        .anyMatch(clase -> clase.startsWith(packagePath));
+	    
+	    if (tieneArchivo || tieneClase || tienePackage) {
+	        resultados.add(this);
+	    }
+	    
+	    // Buscar en mods anidados
+	    for (ArchivoDeMod mod : mods_en_mod) {
+	        resultados.addAll(mod.buscarModsCon(termino));
+	    }
+	    
+	    return resultados;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
 }

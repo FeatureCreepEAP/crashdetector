@@ -10,6 +10,7 @@ import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ import javax.swing.SwingUtilities;
 import com.asbestosstar.crashdetectormc.analyzador.Verificaciones;
 import com.asbestosstar.crashdetectormc.grepr.BusquedaArchivos;
 import com.asbestosstar.crashdetectormc.gui.CrashDetectorGUI;
+import com.asbestosstar.crashdetectormc.gui.NoRegistroDeLauncher;
 
 public class MonitorDePID {
 
@@ -131,21 +133,33 @@ public class MonitorDePID {
 
 		StringBuilder actuales = new StringBuilder();
 		boolean primera = true;
+
 		for (Path ub : Statics.carpetas_de_mods) {
-			File archivo_de_ub = ub.toFile();
-			if (archivo_de_ub.exists() && archivo_de_ub.isDirectory()) {
-				for (String mod_ubic : archivo_de_ub.list()) {
-					if (primera) {
-						primera = false;
-						actuales.append(nl);
-					}
-					actuales.append(mod_ubic);
-				}
+		    File dir = ub.toFile();
+		    
+		    if (!dir.exists() || !dir.isDirectory()) {
+		        CrashDetectorLogger.log(dir.getAbsolutePath() + idioma.carpeta_de_mods_no_valido());
+		        continue;
+		    }
 
-			} else {
-				System.out.println(archivo_de_ub.getAbsolutePath() + idioma.carpeta_de_mods_no_valido());
-			}
+		    File[] archivosMods = dir.listFiles();
+		    if (archivosMods == null) {
+		        CrashDetectorLogger.log(dir.getAbsolutePath() + idioma.carpeta_de_mods_no_valido());
+		        continue;
+		    }
 
+		    for (File archivoMod : archivosMods) {
+		        if (archivoMod.isFile()) {
+		            if (primera) {
+		                primera = false;
+		            } else {
+		                actuales.append(nl);
+		            }
+		            
+		            String pathCompleta = archivoMod.getAbsolutePath();
+		            actuales.append(pathCompleta);
+		        }
+		    }
 		}
 
 		new File(ultima_mods.toString()).delete();
@@ -212,28 +226,53 @@ public class MonitorDePID {
 				// System.out.println( escribes el codio de error aqui );
 
 				System.out.println(idioma.pid_esta_muerto(pid));
+				CrashDetectorLogger.log(idioma.pid_esta_muerto(pid));
 				StringBuilder constructor = new StringBuilder();
-//				try {
-//					for (String mod:leer_archivo(ultima_mods).split(nl)) {
-//						File arc = new File(mod);
-//						if(arc.isFile()) {
-//						Buscardor.mods.add(new ModPKZip(mod,ArchivoDeMod.origin,new ZipInputStream(new FileInputStream(arc))));
-//						}
-//						
-//					}
-//				} catch (IOException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				} manaña
+
+				
+				Instant lugeo = Instant.now();
+				Duration duration = Duration.between(utc, lugeo);
+
+				if (duration.getSeconds() >= 10) {//Para las consolas completa
+				} else {
+
+					try {
+						Thread.sleep(2000);
+					} catch (InterruptedException e) {
+						Thread.currentThread().interrupt();
+						break;
+					}
+				}
+				
+				
+				
+				
+				CrashDetectorLogger.log("Finalizando Contento de Consolas");
 
 				consolas_sin_processando.addAll(Consola.obtenerConsolas());
+				
+	
+				
+				
+				
 				for (Consola consola : consolas_sin_processando) {
 					consola.finalizarContento(utc);
 					if (consola.nueva) {
 						consolas.add(consola);
 					}
 				}
+				
+				
+//			if(!Consola.tiene_registro_de_launcher(consolas)) {
+//					
+//					NoRegistroDeLauncher noreg= new NoRegistroDeLauncher(utc);
+//					noreg.setVisible(true);
+//					
+//					
+//				}
 
+				CrashDetectorLogger.log("Analyzador Consolas");
+				
 				for (Consola consola : consolas) {
 					consola.analyzar(constructor);
 				}

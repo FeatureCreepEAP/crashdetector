@@ -21,6 +21,7 @@ import java.util.zip.GZIPOutputStream;
 import com.asbestosstar.crashdetectormc.analyzador.Analyzador;
 import com.asbestosstar.crashdetectormc.analyzador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetectormc.analyzador.Verificaciones;
+import com.asbestosstar.crashdetectormc.gui.NoRegistroDeLauncher;
 
 public class Consola {
 
@@ -34,15 +35,19 @@ public class Consola {
 	public int linea_original;
 	public boolean nueva;
 	
+	
+	
 	public VerificacionDeStackTrace verificacion_de_stacktrace = new VerificacionDeStackTrace();
 	public Analyzador analyzador = new Analyzador(verificacion_de_stacktrace);
 
 	public static ArrayList<File> archivos_en_lista = new ArrayList<File>();
+	public static String[] tipos_de_registros_de_launcher={"../../logs/ftb-app-electron.log","../../../../main.log"};//No para registros con "launcher en el nombre"
 
 	public Consola(Path archivo) throws IOException {
 		super();
 		this.archivo = archivo;
 		linea_original = 0;
+		archivos_en_lista.add(archivo.toFile());
 
 		if (archivo.toString().contains("tlauncher") && !archivo.toString().contains("starter")) {
 			String contento_existe = MonitorDePID.leer_archivo(archivo);
@@ -91,7 +96,6 @@ public class Consola {
 				if (!archivos_en_lista.contains(archivo)) {
 					try {
 						resulto.add(new Consola(archivo.toPath()));
-						archivos_en_lista.add(archivo);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -125,7 +129,7 @@ public class Consola {
 
 		if (carpetaLogs.exists()) {
 			for (File archivo : carpetaLogs.listFiles()) {
-				if (!archivo.getAbsolutePath().endsWith(".gz")) {
+				if (!archivo.getAbsolutePath().endsWith(".gz") &&archivo.isFile()) {//TODO recursiv
 					resulto.add(archivo);
 				}
 			}
@@ -133,7 +137,7 @@ public class Consola {
 
 		if (carpetaCrashReports.exists()) {
 			for (File archivo : carpetaCrashReports.listFiles()) {
-				if (!archivo.getAbsolutePath().endsWith(".gz")) {
+				if (!archivo.getAbsolutePath().endsWith(".gz")&&archivo.isFile()) {
 					resulto.add(archivo);
 				}
 			}
@@ -154,14 +158,14 @@ public class Consola {
 
 		if (carpetaTLauncher.exists()) {
 			for (File archivo : carpetaTLauncher.listFiles()) {
-				if (!archivo.getAbsolutePath().endsWith(".gz")) {
+				if (!archivo.getAbsolutePath().endsWith(".gz")&&archivo.isFile()) {
 					resulto.add(archivo);
 				}
 			}
 		}
 		if (carpetaTLauncherStarter.exists()) {
 			for (File archivo : carpetaTLauncherStarter.listFiles()) {
-				if (!archivo.getAbsolutePath().endsWith(".gz")) {
+				if (!archivo.getAbsolutePath().endsWith(".gz")&&archivo.isFile()) {
 					resulto.add(archivo);
 				}
 			}
@@ -183,8 +187,14 @@ public class Consola {
 
 		resulto.add(new File("../../../../main.log"));// GDLauncher
 
+		resulto.add(NoRegistroDeLauncher.cd_launcherlog);
+		
+		
 		resulto.add(new File("hs_err_pid" + String.valueOf(MonitorDePID.pid) + ".log"));// GDLauncher
 
+		
+		
+		
 		return resulto;
 
 	}
@@ -193,6 +203,10 @@ public class Consola {
 		// StringBuilder temporal para almacenar los resultados de las verificaciones
 		CDStringBuilder contenidoVerificaciones = new CDStringBuilder(constructor);
 
+		
+		CrashDetectorLogger.log("Analyzando " + archivo.toString());
+
+		
 		StringBuilder para_verificar = new StringBuilder();
 		String[] lineas = contento.split(File.pathSeparator);
 		for (int i = linea_original; i < lineas.length - 1; i++) {
@@ -205,6 +219,7 @@ public class Consola {
 			// Iterar a través de todas las verificaciones y recopilar su salida
 			verificacion_de_stacktrace.verificar(contento_verificar, contenidoVerificaciones);
 			for (Verificaciones verificacion : analyzador.verificaciones) {
+				CrashDetectorLogger.log("Verificacion " + verificacion.getClass().getName().toString());
 				verificacion.nueva().verificar(contento_verificar, contenidoVerificaciones);
 			}
 
@@ -326,6 +341,23 @@ public class Consola {
 			gzip.write(datos);
 		}
 		return buffer.toByteArray();
+	}
+	
+	public static boolean tiene_registro_de_launcher(List<Consola> cons) {
+		for(Consola con:cons) {
+			File arch = con.archivo.toFile();
+			String nombre = arch.getName();
+			if(nombre.toLowerCase().contains("launcher") && !nombre.contains("PrismLauncher-0")) {
+				return true;
+			}
+			for(String regdelauncher:Consola.tipos_de_registros_de_launcher) {
+				if(nombre.equals(regdelauncher)) {
+					return true;
+				}
+			}
+			
+		}
+		return false;
 	}
 
 }

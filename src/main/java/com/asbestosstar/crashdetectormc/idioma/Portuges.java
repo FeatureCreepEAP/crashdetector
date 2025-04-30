@@ -329,6 +329,88 @@ public String errorBusqueda() {
     return "Erro na Busca";
 }
 
+@Override
+public String noRegistroDeLauncher() {
+    return "Nenhum registro do launcher encontrado! Isso pode dificultar a investigação.\n"
+            + "                \n"
+            + "                Para obter os registros corretos:\n"
+            + "                - MultiMC/PolyMC/PrismLauncher/PollyMC/UltimMC: NOTA: Os registros detectados automaticamente NÃO estão corretos.\n"
+            + "                  1. Abra a interface da instância\n"
+            + "                  2. Vá para a seção \"Minecraft Log\"\n"
+            + "                  3. Clique com o botão direito e copie o conteúdo\n"
+            + "                - CurseForgeApp:\n"
+            + "                  1. Reinicie o jogo SEM pular o launcher\n"
+            + "                  \n";
+}
+
+@Override
+public String omitirYCerrar() {
+    return "Ignorar e Fechar";
+}
+
+@Override
+public String guardarYCerrar() {
+    return "Salvar e Fechar";
+}
+
+@Override
+public String pegaLosRegistrosAqui() {
+    return "Cole os registros aqui";
+}
+
+@Override
+public String archivo() {
+    return "Arquivo";
+}
+
+@Override
+public String incluir() {
+    return "Incluir";
+}
+
+@Override
+public String abrir() {
+    return "Abrir";
+}
+
+@Override
+public String endpointDeInforme() {
+    return "Ponto Final do Relatório";
+}
+
+@Override
+public String sitoDeLogging() {
+    return "Site de Registro:";
+}
+
+@Override
+public String apiDeLogging() {
+    return "API de Registro:";
+}
+
+@Override
+public String anonimizarRegistros() {
+    return "Anonimizar registros (Em breve)";
+}
+
+@Override
+public String botonDeCompartirInforme() {
+    return "Compartilhar Relatório e todos os registros selecionados";
+}
+
+@Override
+public String arco() {
+    return "Este diálogo permite compartilhar registros usando a API do SecureLogger "
+            + "em securelogger.net. Ao pressionar os botões de compartilhamento, os arquivos "
+            + "são enviados ao site selecionado (padrão asbestosstar.egoism.jp). Você pode compartilhar todos os registros selecionados "
+            + "junto com o relatório. Se você não deseja fazer o upload, não use este diálogo! Não processamos seu relatório no ponto final oficial (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb); apenas removemos links não permitidos. Isso é usado apenas para exibir informações sobre sua falha e o link para os registros. No entanto, é possível usar um ponto final personalizado que pode não ter os mesmos métodos.";
+}
+
+@Override
+public String enlaceDelReporte() {
+    return "Link do Relatório:";
+}
+
 
 
 

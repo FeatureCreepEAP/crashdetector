@@ -335,6 +335,88 @@ public String errorBusqueda() {
     return "Search Error";
 }
 
+@Override
+public String noRegistroDeLauncher() {
+    return "No launcher logs found! This may complicate the investigation.\n"
+            + "                \n"
+            + "                To obtain the correct logs:\n"
+            + "                - MultiMC/PolyMC/PrismLauncher/PollyMC/UltimMC: NOTE: Automatically detected logs are NOT correct.\n"
+            + "                  1. Open the instance interface\n"
+            + "                  2. Go to the \"Minecraft Log\" section\n"
+            + "                  3. Right-click and copy the content\n"
+            + "                - CurseForgeApp:\n"
+            + "                  1. Restart the game WITHOUT skipping the launcher\n"
+            + "                  \n";
+}
+
+@Override
+public String omitirYCerrar() {
+    return "Skip and Close";
+}
+
+@Override
+public String guardarYCerrar() {
+    return "Save and Close";
+}
+
+@Override
+public String pegaLosRegistrosAqui() {
+    return "Paste the logs here";
+}
+
+@Override
+public String archivo() {
+    return "File";
+}
+
+@Override
+public String incluir() {
+    return "Include";
+}
+
+@Override
+public String abrir() {
+    return "Open";
+}
+
+@Override
+public String endpointDeInforme() {
+    return "Report Endpoint";
+}
+
+@Override
+public String sitoDeLogging() {
+    return "Logging Site:";
+}
+
+@Override
+public String apiDeLogging() {
+    return "Logging API:";
+}
+
+@Override
+public String anonimizarRegistros() {
+    return "Anonymise logs (Coming Soon)";
+}
+
+@Override
+public String botonDeCompartirInforme() {
+    return "Share Report and all selected logs";
+}
+
+@Override
+public String arco() {
+    return "This dialog allows sharing logs using the SecureLogger API "
+            + "at securelogger.net. When pressing the share buttons, reports "
+            + "are uploaded to the selected site (default asbestosstar.egoism.jp). You can share all selected logs "
+            + "along with the report. If you don't want to upload, don't use this dialog! We do not process your report at the official endpoint (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb); we only remove disallowed links. This is solely used to display information about your crash and the link to the logs. However, it is possible to use a custom endpoint that might not have the same methods.";
+}
+
+@Override
+public String enlaceDelReporte() {
+    return "Report Link:";
+}
+
 
 
 

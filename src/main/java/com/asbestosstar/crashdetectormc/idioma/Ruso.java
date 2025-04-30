@@ -334,4 +334,91 @@ public String errorBusqueda() {
 }
 
 
+@Override
+public String noRegistroDeLauncher() {
+    return "Логи лаунчера не найдены! Это может осложнить расследование.\n"
+            + "                \n"
+            + "                Чтобы получить правильные логи:\n"
+            + "                - MultiMC/PolyMC/PrismLauncher/PollyMC/UltimMC: ПРИМЕЧАНИЕ: Автоматически обнаруженные логи НЕ являются правильными.\n"
+            + "                  1. Откройте интерфейс экземпляра\n"
+            + "                  2. Перейдите в раздел \"Minecraft Log\"\n"
+            + "                  3. Щелкните правой кнопкой мыши и скопируйте содержимое\n"
+            + "                - CurseForgeApp:\n"
+            + "                  1. Перезапустите игру, НЕ пропуская лаунчер\n"
+            + "                  \n";
+}
+
+@Override
+public String omitirYCerrar() {
+    return "Пропустить и Закрыть";
+}
+
+@Override
+public String guardarYCerrar() {
+    return "Сохранить и Закрыть";
+}
+
+@Override
+public String pegaLosRegistrosAqui() {
+    return "Вставьте логи сюда";
+}
+
+@Override
+public String archivo() {
+    return "Файл";
+}
+
+@Override
+public String incluir() {
+    return "Включить";
+}
+
+@Override
+public String abrir() {
+    return "Открыть";
+}
+
+@Override
+public String endpointDeInforme() {
+    return "Конечная точка отчета";
+}
+
+@Override
+public String sitoDeLogging() {
+    return "Сайт логирования:";
+}
+
+@Override
+public String apiDeLogging() {
+    return "API логирования:";
+}
+
+@Override
+public String anonimizarRegistros() {
+    return "Анонимизировать логи (скоро)";
+}
+
+@Override
+public String botonDeCompartirInforme() {
+    return "Поделиться отчетом и всеми выбранными логами";
+}
+
+@Override
+public String arco() {
+    return "Этот диалог позволяет делиться логами, используя API SecureLogger "
+            + "на securelogger.net. При нажатии кнопок для обмена файлы "
+            + "загружаются на выбранный сайт (по умолчанию asbestosstar.egoism.jp). Вы можете поделиться всеми выбранными логами "
+            + "вместе с отчетом. Если вы не хотите загружать данные, не используйте этот диалог! Мы не обрабатываем ваш отчет на официальной конечной точке (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb); мы только удаляем запрещенные ссылки. "
+            + "Это используется только для отображения информации о сбое и ссылки на логи. Однако можно использовать пользовательскую конечную точку, которая может не иметь тех же методов.";
+}
+
+@Override
+public String enlaceDelReporte() {
+    return "Ссылка на отчет:";
+}
+
+
+
+
+
 }

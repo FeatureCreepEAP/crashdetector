@@ -134,15 +134,16 @@ public class CrashDetectorGUI extends JFrame {
 
         // Acción al presionar el botón de compartir
         botonCompartir.addActionListener(evento -> {
-            if (MonitorDePID.enlance == null) {
-                MonitorDePID.enlance = GeneradorDeInformacion.compartir(consolas, contenidoInforme, tiempoFallo);
-            }
-            cajaUrl.setText(MonitorDePID.enlance); // Mostrar la URL compartida en la caja de texto
-            try {
-                Desktop.getDesktop().browse(new URL(MonitorDePID.enlance).toURI());
-            } catch (IOException | URISyntaxException e) {
-                CrashDetectorLogger.logException(e);
-            }
+//            if (MonitorDePID.enlance == null) {
+//                MonitorDePID.enlance = GeneradorDeInformacion.compartir(consolas, contenidoInforme, tiempoFallo);
+//            }
+//            cajaUrl.setText(MonitorDePID.enlance); // Mostrar la URL compartida en la caja de texto
+//            try {
+//                Desktop.getDesktop().browse(new URL(MonitorDePID.enlance).toURI());
+//            } catch (IOException | URISyntaxException e) {
+//                CrashDetectorLogger.logException(e);
+//            }
+        	new DialogoCompartir(this,contenidoInforme,tiempoFallo).setVisible(true);
         });
 
         // Agregar el panel de botón y descripción al subpanel

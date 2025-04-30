@@ -1,0 +1,370 @@
+package com.asbestosstar.crashdetectormc.gui;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Desktop;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Path;
+import java.time.Instant;
+import java.util.ArrayList;
+
+import javax.swing.BorderFactory;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+
+import com.asbestosstar.crashdetectormc.Config;
+import com.asbestosstar.crashdetectormc.Consola;
+import com.asbestosstar.crashdetectormc.CrashDetectorLogger;
+import com.asbestosstar.crashdetectormc.GeneradorDeInformacion;
+import com.asbestosstar.crashdetectormc.MonitorDePID;
+
+public class DialogoCompartir extends JDialog {
+    private final DefaultTableModel modeloTabla;
+    private final JTextField campoEndpoint;
+    private final JComboBox<String> comboAPI;
+    private final JComboBox<String> comboSitio;
+    private final JCheckBox checkAnonimizar;
+    public StringBuilder contenidoInforme;
+    public Instant instant;
+    private final JTextField campoEnlaceReporte;
+    private final JButton botonCompartirTodos;
+
+    public DialogoCompartir(JFrame padre, StringBuilder contenidoInforme, Instant instant) {
+        super(padre, "Compartir Registros", true);
+        setSize(900, 700);
+        setLocationRelativeTo(padre);
+        this.contenidoInforme = contenidoInforme;
+        this.instant = instant;
+
+        JPanel panelPrincipal = new JPanel(new BorderLayout(10, 10));
+
+        // Panel superior con explicación y controles
+        JPanel panelSuperior = new JPanel(new BorderLayout(0, 10));
+        panelSuperior.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        JTextArea textoExplicacion = new JTextArea(MonitorDePID.idioma.arco());
+        textoExplicacion.setEditable(false);
+        textoExplicacion.setLineWrap(true);
+        textoExplicacion.setWrapStyleWord(true);
+        textoExplicacion.setBackground(panelSuperior.getBackground());
+
+        // Contenedor para botón y enlace
+        JPanel panelControles = new JPanel(new BorderLayout(0, 5));
+        
+        botonCompartirTodos = new JButton(MonitorDePID.idioma.botonDeCompartirInforme());
+        botonCompartirTodos.addActionListener(this::compartirSeleccionados);
+        
+        campoEnlaceReporte = new JTextField();
+        campoEnlaceReporte.setEditable(false);
+        campoEnlaceReporte.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (SwingUtilities.isRightMouseButton(e)) {
+                    StringSelection selection = new StringSelection(campoEnlaceReporte.getText());
+                    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                    clipboard.setContents(selection, null);
+                }
+            }
+        });
+
+        panelControles.add(botonCompartirTodos, BorderLayout.NORTH);
+        panelControles.add(campoEnlaceReporte, BorderLayout.CENTER);
+
+        panelSuperior.add(new JScrollPane(textoExplicacion), BorderLayout.CENTER);
+        panelSuperior.add(panelControles, BorderLayout.SOUTH);
+
+        // Tabla de consolas
+        modeloTabla = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column == 0 || column == 2 || column == 3;
+            }
+
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                return columnIndex == 0 ? Boolean.class : String.class;
+            }
+        };
+
+        modeloTabla.addColumn(MonitorDePID.idioma.incluir());
+        modeloTabla.addColumn(MonitorDePID.idioma.archivo());
+        modeloTabla.addColumn(MonitorDePID.idioma.abrir());
+        modeloTabla.addColumn(MonitorDePID.idioma.texto_de_buton_compartir_enlance());
+        modeloTabla.addColumn("URL");
+
+        JTable tabla = new JTable(modeloTabla);
+        tabla.setRowHeight(30);
+        tabla.getColumnModel().getColumn(0).setCellRenderer(new CheckBoxRenderer());
+        tabla.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(new JCheckBox()));
+        tabla.getColumnModel().getColumn(2).setCellRenderer(new ButtonRenderer(MonitorDePID.idioma.abrir()));
+        tabla.getColumnModel().getColumn(2).setCellEditor(new ButtonEditor(MonitorDePID.idioma.abrir()));
+        tabla.getColumnModel().getColumn(3).setCellRenderer(new ButtonRenderer(MonitorDePID.idioma.texto_de_buton_compartir_enlance()));
+        tabla.getColumnModel().getColumn(3).setCellEditor(new ButtonEditor(MonitorDePID.idioma.texto_de_buton_compartir_enlance()));
+        tabla.getColumnModel().getColumn(4).setCellRenderer(new URLEditorRenderer());
+        tabla.getColumnModel().getColumn(4).setCellEditor(new URLEditor());
+
+        // Panel de configuración
+        JPanel panelConfig = new JPanel(new GridBagLayout());
+        panelConfig.setBorder(BorderFactory.createTitledBorder("Configuración"));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+
+        // Endpoint (Ahora más ancho)
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+        panelConfig.add(new JLabel(MonitorDePID.idioma.endpointDeInforme()), gbc);
+        gbc.gridx++;
+        gbc.weightx = 3.0; // Prioridad de expansión
+        campoEndpoint = new JTextField(Config.obtenerInstancia().obtenerSitoDeInformes(), 50);
+        campoEndpoint.setMinimumSize(new Dimension(400, 25));
+        panelConfig.add(campoEndpoint, gbc);
+
+        // API
+        gbc.gridx = 0;
+        gbc.gridy++;
+        gbc.weightx = 0;
+        panelConfig.add(new JLabel(MonitorDePID.idioma.apiDeLogging()), gbc);
+        gbc.gridx++;
+        comboAPI = new JComboBox<>(new String[]{"SecureLogger"});
+        comboAPI.setPreferredSize(new Dimension(300, 25));
+        panelConfig.add(comboAPI, gbc);
+
+        // Sitio
+        gbc.gridx = 0;
+        gbc.gridy++;
+        panelConfig.add(new JLabel(MonitorDePID.idioma.sitoDeLogging()), gbc);
+        gbc.gridx++;
+        comboSitio = new JComboBox<>(new String[]{"https://securelogger.net/save/log?"});
+        comboSitio.setPreferredSize(new Dimension(300, 25));
+        panelConfig.add(comboSitio, gbc);
+
+        // Anonimizar
+        gbc.gridx = 0;
+        gbc.gridy++;
+        gbc.gridwidth = 2;
+        checkAnonimizar = new JCheckBox(MonitorDePID.idioma.anonimizarRegistros());
+        checkAnonimizar.setEnabled(false);
+        panelConfig.add(checkAnonimizar, gbc);
+
+        // Estructura principal
+        panelPrincipal.add(panelSuperior, BorderLayout.NORTH);
+        panelPrincipal.add(new JScrollPane(tabla), BorderLayout.CENTER);
+        panelPrincipal.add(panelConfig, BorderLayout.SOUTH);
+
+        add(panelPrincipal);
+        cargarConsolas();
+    }
+
+    private void cargarConsolas() {
+        for (Consola consola : MonitorDePID.consolas) {
+            modeloTabla.addRow(new Object[]{
+                true,
+                consola.archivo.getFileName().toString(),
+                MonitorDePID.idioma.abrir(),
+                MonitorDePID.idioma.texto_de_buton_compartir_enlance(),
+                ""
+            });
+        }
+    }
+
+    private void compartirSeleccionados(ActionEvent e) {
+        ArrayList<Consola> seleccionados = new ArrayList<>();
+        for (int i = 0; i < modeloTabla.getRowCount(); i++) {
+            if ((Boolean) modeloTabla.getValueAt(i, 0)) {
+                seleccionados.add(MonitorDePID.consolas.get(i));
+            }
+        }
+
+        if (!seleccionados.isEmpty()) {
+            String enlace = GeneradorDeInformacion.compartir(seleccionados, contenidoInforme, instant);
+            campoEnlaceReporte.setText(enlace);
+            MonitorDePID.enlance = enlace;
+
+            // Actualizar URLs individuales
+            for (int i = 0; i < modeloTabla.getRowCount(); i++) {
+                if ((Boolean) modeloTabla.getValueAt(i, 0)) {
+                    Consola cons = MonitorDePID.consolas.get(i);
+                    String url = cons.obtainerEnlance();
+                    modeloTabla.setValueAt(url, i, 4);
+                }
+            }
+
+            try {
+                Desktop.getDesktop().browse(new URL(enlace).toURI());
+            } catch (Exception ex) {
+                CrashDetectorLogger.logException(ex);
+            }
+        }
+    }
+
+    // Renderer para checkboxes
+    private static class CheckBoxRenderer extends JCheckBox implements TableCellRenderer {
+        public CheckBoxRenderer() {
+            setHorizontalAlignment(SwingConstants.CENTER);
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                                                       boolean isSelected, boolean hasFocus, int row, int column) {
+            setSelected((value != null && (Boolean) value));
+            return this;
+        }
+    }
+
+    // Renderer para botones
+    private static class ButtonRenderer extends JButton implements TableCellRenderer {
+        public ButtonRenderer(String texto) {
+            setText(texto);
+            setMargin(new Insets(2, 5, 2, 5));
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                                                       boolean isSelected, boolean hasFocus, int row, int column) {
+            return this;
+        }
+    }
+
+    // Editor para botones
+    private class ButtonEditor extends DefaultCellEditor {
+        private final String accion;
+        private JButton button;
+        private int currentRow;
+
+        public ButtonEditor(String accion) {
+            super(new JCheckBox());
+            this.accion = accion;
+            button = new JButton(accion);
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (currentRow >= 0) {
+                        if (accion.equals(MonitorDePID.idioma.abrir())) {
+                            Path archivo = MonitorDePID.consolas.get(currentRow).archivo;
+                            File carpeta = archivo.getParent().toFile();
+                            try {
+                                Desktop.getDesktop().open(carpeta);
+                            } catch (IOException ex) {
+                                CrashDetectorLogger.logException(ex);
+                            }
+                        } else if (accion.equals(MonitorDePID.idioma.texto_de_buton_compartir_enlance())) {
+                            Consola cons = MonitorDePID.consolas.get(currentRow);
+                            String url = cons.obtainerEnlance();
+                            modeloTabla.setValueAt(url, currentRow, 4);
+                            try {
+                                Desktop.getDesktop().browse(new URL(url).toURI());
+                            } catch (Exception ex) {
+                                CrashDetectorLogger.logException(ex);
+                            }
+                        }
+                        fireEditingStopped();
+                    }
+                }
+            });
+        }
+
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value,
+                                                     boolean isSelected, int row, int column) {
+            this.currentRow = row;
+            return button;
+        }
+
+        @Override
+        public Object getCellEditorValue() {
+            return accion;
+        }
+    }
+
+    // Editor para URLs con copiado
+    private static class URLEditor extends DefaultCellEditor {
+        private JTextField textField;
+
+        public URLEditor() {
+            super(new JTextField());
+            textField = (JTextField)getComponent();
+            textField.setEditable(false);
+            textField.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if (SwingUtilities.isRightMouseButton(e)) {
+                        StringSelection selection = new StringSelection(textField.getText());
+                        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                        clipboard.setContents(selection, null);
+                    }
+                }
+            });
+        }
+
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value,
+                                                     boolean isSelected, int row, int column) {
+            textField.setText(value.toString());
+            return textField;
+        }
+
+        @Override
+        public Object getCellEditorValue() {
+            return textField.getText();
+        }
+    }
+
+    // Renderer para URLs con copiado
+    private static class URLEditorRenderer extends JLabel implements TableCellRenderer {
+        public URLEditorRenderer() {
+            setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
+            setForeground(Color.BLUE.darker());
+            addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if (SwingUtilities.isRightMouseButton(e)) {
+                        StringSelection selection = new StringSelection(getText());
+                        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                        clipboard.setContents(selection, null);
+                    }
+                }
+            });
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                                                       boolean isSelected, boolean hasFocus, int row, int column) {
+            setText(value.toString());
+            return this;
+        }
+    }
+}

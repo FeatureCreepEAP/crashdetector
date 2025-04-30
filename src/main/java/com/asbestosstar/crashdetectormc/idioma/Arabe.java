@@ -339,5 +339,87 @@ public String errorBusqueda() {
     return "خطأ في البحث";
 }
 
+@Override
+public String noRegistroDeLauncher() {
+    return "!لم يتم العثور على سجلات المشغل. قد يؤدي هذا إلى تعقيد التحقيق\n"
+            + "                \n"
+            + "                للحصول على السجلات الصحيحة:\n"
+            + "                - MultiMC/PolyMC/PrismLauncher/PollyMC/UltimMC: ملاحظة: السجلات المكتشفة تلقائيًا ليست صحيحة.\n"
+            + "                  1. افتح واجهة المثيل\n"
+            + "                  2. انتقل إلى قسم \"Minecraft Log\"\n"
+            + "                  3. انقر بزر الماوس الأيمن وانسخ المحتوى\n"
+            + "                - CurseForgeApp:\n"
+            + "                  1. أعد تشغيل اللعبة دون تخطي المشغل\n"
+            + "                  \n";
+}
+
+@Override
+public String omitirYCerrar() {
+    return "تخطي وإغلاق";
+}
+
+@Override
+public String guardarYCerrar() {
+    return "حفظ وإغلاق";
+}
+
+@Override
+public String pegaLosRegistrosAqui() {
+    return "الصق السجلات هنا";
+}
+
+@Override
+public String archivo() {
+    return "ملف";
+}
+
+@Override
+public String incluir() {
+    return "تضمين";
+}
+
+@Override
+public String abrir() {
+    return "فتح";
+}
+
+@Override
+public String endpointDeInforme() {
+    return "نقطة نهاية التقرير";
+}
+
+@Override
+public String sitoDeLogging() {
+    return "موقع تسجيل:";
+}
+
+@Override
+public String apiDeLogging() {
+    return "واجهة برمجة تطبيقات تسجيل:";
+}
+
+@Override
+public String anonimizarRegistros() {
+    return "(قريبًا) إخفاء هوية السجلات";
+}
+
+@Override
+public String botonDeCompartirInforme() {
+    return "مشاركة التقرير وجميع السجلات المحددة";
+}
+
+@Override
+public String arco() {
+    return "هذا الحوار يتيح مشاركة السجلات باستخدام واجهة برمجة تطبيقات SecureLogger "
+            + "في securelogger.net. عند الضغط على أزرار المشاركة، يتم رفع الملفات "
+            + "إلى الموقع المحدد (افتراضي asbestosstar.egoism.jp). يمكنك مشاركة جميع السجلات المحددة "
+            + "مع التقرير. إذا كنت لا تريد الرفع، فلا تستخدم هذا الحوار! نحن لا نعالج تقريرك في النقطة النهائية الرسمية (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb); نحن فقط نزيل الروابط غير المسموح بها. يتم استخدام هذا فقط لعرض معلومات عن تعطل النظام والرابط إلى السجلات. ومع ذلك، من الممكن استخدام نقطة نهاية مخصصة قد لا تحتوي على نفس الطرق.";
+}
+
+@Override
+public String enlaceDelReporte() {
+    return "رابط التقرير:";
+}
+
 
 }

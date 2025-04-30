@@ -1,7 +1,5 @@
 package com.asbestosstar.crashdetectormc.idioma;
 
-import javax.swing.Icon;
-
 import com.asbestosstar.crashdetectormc.Config;
 import com.asbestosstar.crashdetectormc.Idioma;
 
@@ -331,6 +329,126 @@ public String noSeEncontraronResultados() {
 public String errorBusqueda() {
     return "Error en la Búsqueda";
 }
+
+//@Override
+//public String noRegistroDeLauncher() {
+//	// TODO Auto-generated method stub
+//	return new String ("¡No se encontraron registros del launcher! Esto puede dificultar la investigación.\n"
+//			+ "                \n"
+//			+ "                Para obtener los registros correctos:\n"
+//			+ "                - MultiMC/PolyMC/PrismLauncher/PollyMC/UltimMC: NOTA: Los registros detectados automáticamente NO son los correctos.\n"
+//			+ "                  1. Abre la interfaz de la instancia\n"
+//			+ "                  2. Ve a la sección \"Minecraft Log\"\n"
+//			+ "                  3. Haz clic derecho y copia el contenido\n"
+//			+ "                \n"
+//			+ "                - LauncherFenix:\n"
+//			+ "                  1. Abre la \"Consola de Desarrollador\"\n"
+//			+ "                  2. Copia el contenido completo\n"
+//			+ "                \n"
+//			+ "                - CurseForgeApp:\n"
+//			+ "                  1. Reinicia el juego SIN saltar el launcher\n"
+//			+ "                  \n"
+//			+ "                ");
+//}
+
+
+
+@Override
+public String noRegistroDeLauncher() {
+	// TODO Auto-generated method stub
+	return new String ("¡No se encontraron registros del launcher! Esto puede dificultar la investigación.\n"
+			+ "                \n"
+			+ "                Para obtener los registros correctos:\n"
+			+ "                - MultiMC/PolyMC/PrismLauncher/PollyMC/UltimMC: NOTA: Los registros detectados automáticamente NO son los correctos.\n"
+			+ "                  1. Abre la interfaz de la instancia\n"
+			+ "                  2. Ve a la sección \"Minecraft Log\"\n"
+			+ "                  3. Haz clic derecho y copia el contenido\n"
+			+ "                - CurseForgeApp:\n"
+			+ "                  1. Reinicia el juego SIN saltar el launcher\n"
+			+ "                  \n"
+			+ "                ");
+}
+
+@Override
+public String omitirYCerrar() {
+	// TODO Auto-generated method stub
+	return 	"Omitir y Cerrar";
+}
+
+@Override
+public String guardarYCerrar() {
+	// TODO Auto-generated method stub
+	return "Guardar y Cerrar";
+}
+
+@Override
+public String pegaLosRegistrosAqui() {
+	// TODO Auto-generated method stub
+	return "Pega los registros aquí";
+}
+
+@Override
+public String archivo() {
+	return "Archivo";
+}
+
+@Override
+public String incluir() {
+	return "Incluir";
+}
+
+@Override
+public String abrir() {
+	return "Abrir";
+}
+
+@Override
+public String endpointDeInforme() {
+	// TODO Auto-generated method stub
+	return "Endpoint del Informe";
+}
+
+@Override
+public String sitoDeLogging() {
+	// TODO Auto-generated method stub
+	return "Sitio de Logging:";
+}
+
+@Override
+public String apiDeLogging() {
+	// TODO Auto-generated method stub
+	return "API de Logging:";
+}
+
+@Override
+public String anonimizarRegistros() {
+	// TODO Auto-generated method stub
+	return "Anonimizar registros (Próximamente)";
+}
+
+@Override
+public String botonDeCompartirInforme() {
+	// TODO Auto-generated method stub
+	return "Compartir Informe y todos los registros seleccionados";
+}
+
+@Override
+public String arco() {
+	// TODO Auto-generated method stub
+	return       "Este diálogo permite compartir registros usando la API de SecureLogger " +
+            "en securelogger.net. Al presionar los botones de compartir, los archivos " +
+            "se suben al sitio seleccionado (predeterminado asbestosstar.egoism.jp). Puede compartir todos los registros " +
+            "seleccionados junto con el reporte. ¡Si no quieres subir, no usas esta diálogo!No procesamos su informe en el punto final oficial (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb); simplemente eliminamos los enlaces no permitidos. Esto solo se utiliza para mostrar la información sobre su fallo y el enlace a los registros. Sin embargo, es posible usar un punto final personalizado que podría no tener los mismos métodos.";
+}
+
+@Override
+public String enlaceDelReporte() {
+	// TODO Auto-generated method stub
+	return "Enlance de Informe:";
+}
+
+
+
 
 
     
