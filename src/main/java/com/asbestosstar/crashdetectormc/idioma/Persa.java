@@ -407,10 +407,9 @@ public String botonDeCompartirInforme() {
 @Override
 public String arco() {
     return "این گفتگو به شما امکان می‌دهد لاگ‌ها را با استفاده از API SecureLogger در securelogger.net به اشتراک بگذارید. "
-            + "هنگام فشار دادن دکمه‌های اشتراک‌گذاری، فایل‌ها به سایت انتخاب‌شده (پیش‌فرض asbestosstar.egoism.jp) آپلود می‌شوند. "
-            + "شما می‌توانید تمام لاگ‌های انتخاب‌شده را همراه با گزارش به اشتراک بگذارید. اگر نمی‌خواهید آپلود کنید، از این گفتگو استفاده نکنید! "
-            + "ما گزارش شما را در نقاط پایانی رسمی (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb) پردازش نمی‌کنیم؛ فقط لینک‌های غیرمجاز حذف می‌شوند. "
-            + "این فقط برای نمایش اطلاعات درباره خرابی و لینک به لاگ‌ها استفاده می‌شود. با این حال، می‌توانید از یک نقطه پایانی سفارشی استفاده کنید که ممکن است شامل همان روش‌ها نباشد.";
+            + "هنگام فشار دادن دکمه‌های اشتراک‌گذاری، فایل‌ها به سایت انتخاب‌شده (پیش‌فرض asbestosstar.egoism.jp) آپلود می‌شوند. شما می‌توانید تمام لاگ‌های انتخاب‌شده را همراه با گزارش به اشتراک بگذارید. اگر نمی‌خواهید آپلود کنید، از این گفتگو استفاده نکنید! ما گزارش شما را در نقاط پایانی رسمی (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb) پردازش نمی‌کنیم؛ فقط لینک‌های غیرمجاز حذف می‌شوند. کد اینجا قرار دارد: https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb. این فقط برای نمایش اطلاعات درباره خرابی و لینک به لاگ‌ها استفاده می‌شود. با این حال، می‌توانید از یک نقطه پایانی سفارشی استفاده کنید که ممکن است شامل همان روش‌ها نباشد. شما از سایت گزارش‌ها " 
+            + Config.obtenerInstancia().obtenerSitoDeInformes() + " و سایت لاگ‌ها " 
+            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + " استفاده می‌کنید.";
 }
 
 @Override
@@ -423,6 +422,26 @@ public String enlaceDelReporte() {
 public String guardarConfigDeCompartir() {
     return "ذخیره تنظیمات اشتراک‌گذاری";
 }
+
+
+@Override
+public String registroDemasiadoGrande() {
+    return "لاگ بسیار بزرگ است برای این سایت ثبت لاگ. لطفاً سایت دیگری انتخاب کنید و دوباره تلاش کنید.";
+}
+
+@Override
+public String errorConPublicarRegistro(String error) {
+    return "خطا در انتشار لاگ " + error;
+}
+
+@Override
+public String apiDeRegistroNoExiste() {
+    return "API ثبت لاگ وجود ندارد. لطفاً API ثبت لاگ را در تنظیمات تغییر دهید.";
+}
+
+
+
+
 
 
 

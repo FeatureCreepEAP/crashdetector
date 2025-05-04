@@ -404,10 +404,13 @@ public String botonDeCompartirInforme() {
 
 @Override
 public String arco() {
-    return "此对话框允许使用 SecureLogger 的 API 在 securelogger.net 上共享日志。"
-            + "按下共享按钮时，文件将上传到所选站点（默认为 asbestosstar.egoism.jp）。您可以共享所有选定的日志以及报告。"
-            + "如果您不想上传，请不要使用此对话框！我们不会在官方端点（https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb）处理您的报告；我们只会删除不允许的链接。"
-            + "这仅用于显示有关崩溃的信息以及日志的链接。但是，可以使用可能不具备相同方法的自定义端点。";
+    return "此对话框允许使用 SecureLogger API 在 securelogger.net 上共享日志。"
+            + "按下共享按钮时，文件将上传到选定的站点（默认为 asbestosstar.egoism.jp）。您可以共享所有选定的日志以及报告。"
+            + "如果您不想上传，请不要使用此对话框！我们不会在官方端点（https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb）处理您的报告；我们只会删除不允许的链接。代码在此处：https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb。"
+            + "这仅用于显示有关崩溃的信息和日志链接。但是，可以使用可能不具备相同方法的自定义端点。"
+            + "您当前正在使用报告站点 " 
+            + Config.obtenerInstancia().obtenerSitoDeInformes() + " 和日志站点 " 
+            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + "。";
 }
 
 @Override
@@ -420,6 +423,29 @@ public String enlaceDelReporte() {
 public String guardarConfigDeCompartir() {
     return "保存分享配置";
 }
+
+@Override
+public String registroDemasiadoGrande() {
+    return "日志对于此日志站点来说太大了。请选择另一个并重试。";
+}
+
+@Override
+public String errorConPublicarRegistro(String error) {
+    return "发布日志时出错 " + error;
+}
+
+@Override
+public String apiDeRegistroNoExiste() {
+    return "日志API不存在。请在设置中更改日志API。";
+}
+
+
+
+
+
+
+
+
 
 
 

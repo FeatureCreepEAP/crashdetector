@@ -402,8 +402,10 @@ public String botonDeCompartirInforme() {
 public String arco() {
     return "Este diálogo permite compartilhar registros usando a API do SecureLogger "
             + "em securelogger.net. Ao pressionar os botões de compartilhamento, os arquivos "
-            + "são enviados ao site selecionado (padrão asbestosstar.egoism.jp). Você pode compartilhar todos os registros selecionados "
-            + "junto com o relatório. Se você não deseja fazer o upload, não use este diálogo! Não processamos seu relatório no ponto final oficial (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb); apenas removemos links não permitidos. Isso é usado apenas para exibir informações sobre sua falha e o link para os registros. No entanto, é possível usar um ponto final personalizado que pode não ter os mesmos métodos.";
+            + "são enviados para o site selecionado (padrão asbestosstar.egoism.jp). Você pode compartilhar todos os registros selecionados "
+            + "junto com o relatório. Se você não deseja fazer o upload, não use este diálogo! Não processamos seu relatório no ponto final oficial (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb); apenas removemos links não permitidos. O código está aqui: https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb. Isso é usado apenas para exibir informações sobre sua falha e o link para os registros. No entanto, é possível usar um ponto final personalizado que pode não ter os mesmos métodos. Você está usando o site de relatórios " 
+            + Config.obtenerInstancia().obtenerSitoDeInformes() + " e o site de registros " 
+            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado();
 }
 
 @Override
@@ -417,6 +419,21 @@ public String guardarConfigDeCompartir() {
     return "Salvar Configuração de Compartilhamento";
 }
 
+
+@Override
+public String registroDemasiadoGrande() {
+    return "O registro é muito grande para este site de registro. Escolha outro e tente novamente.";
+}
+
+@Override
+public String errorConPublicarRegistro(String error) {
+    return "Erro ao publicar registro " + error;
+}
+
+@Override
+public String apiDeRegistroNoExiste() {
+    return "A API de Registro não existe. Por favor, altere a API de registro nas configurações.";
+}
 
 
 

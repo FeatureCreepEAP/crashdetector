@@ -412,8 +412,9 @@ public String arco() {
     return "Ĉi tiu dialogo ebligas kunhavigi protokolojn uzante la API-on de SecureLogger "
             + "ĉe securelogger.net. Kiam vi premas la kunhavigajn butonojn, dosieroj "
             + "alŝutiĝas al la elektita retejo (defaŭlte asbestosstar.egoism.jp). Vi povas kunhavigi ĉiujn elektitajn protokolojn "
-            + "kune kun la raporto. Se vi ne volas alŝuti, ne uzu ĉi tiun dialogon! Ni ne prilaboras vian raporton ĉe la oficiala finpunkto (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb); ni nur forigas nepermesatajn ligilojn. "
-            + "Tio estas uzata nur por montri informon pri via paneo kaj la ligilon al la protokoloj. Tamen, eblas uzi propran finpunkton, kiu eble ne havas la samajn metodojn.";
+            + "kune kun la raporto. Se vi ne volas alŝuti, ne uzu ĉi tiun dialogon! Ni ne prilaboras vian raporton ĉe la oficiala finpunkto (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb); ni nur forigas nepermesatajn ligilojn. La kodo estas ĉi tie: https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb. Tio estas uzata nur por montri informon pri via paneo kaj la ligilon al la protokoloj. Tamen, eblas uzi propran finpunkton, kiu eble ne havas la samajn metodojn. Vi uzas la raportan retejon " 
+            + Config.obtenerInstancia().obtenerSitoDeInformes() + " kaj la protokolan retejon " 
+            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado();
 }
 
 @Override
@@ -425,6 +426,24 @@ public String enlaceDelReporte() {
 public String guardarConfigDeCompartir() {
     return "Konservi Kunhavigan Agordon";
 }
+
+
+@Override
+public String registroDemasiadoGrande() {
+    return "La protokolo estas tro granda por ĉi tiu protokola retejo. Bonvolu elekti alian kaj provu denove.";
+}
+
+@Override
+public String errorConPublicarRegistro(String error) {
+    return "Eraro dum publikigo de protokolo " + error;
+}
+
+@Override
+public String apiDeRegistroNoExiste() {
+    return "Protokola API ne ekzistas. Bonvolu ŝanĝi la protokolan API-on en la agordoj.";
+}
+
+
 
 
 

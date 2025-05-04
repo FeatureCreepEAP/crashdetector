@@ -13,8 +13,10 @@ import com.asbestosstar.crashdetectormc.analyzador.Verificaciones;
 import com.asbestosstar.crashdetectormc.api_sito_registro.APIdeSitioDeRegistro;
 import com.asbestosstar.crashdetectormc.api_sito_registro.DemasiadoGrande;
 import com.asbestosstar.crashdetectormc.api_sito_registro.ErrorConPublicar;
+import com.asbestosstar.crashdetectormc.api_sito_registro.MCLogsAPI;
 import com.asbestosstar.crashdetectormc.api_sito_registro.NoAPIdeRegistro;
 import com.asbestosstar.crashdetectormc.api_sito_registro.SecureLoggerAPI;
+import com.asbestosstar.crashdetectormc.api_sito_registro.StikkedAPI;
 import com.asbestosstar.crashdetectormc.gui.NoRegistroDeLauncher;
 
 public class Consola {
@@ -38,8 +40,13 @@ public class Consola {
 	public static String[] tipos_de_registros_de_launcher={"../../logs/ftb-app-electron.log","../../../../main.log"};//No para registros con "launcher en el nombre"
 
 	
+	
+	public static SecureLoggerAPI secure_logger_api = new SecureLoggerAPI();
+	
 	static { //APIS Por Defecto
-		APIdeSitioDeRegistro.APIS.add(new SecureLoggerAPI());
+		APIdeSitioDeRegistro.APIS.add(secure_logger_api);
+		APIdeSitioDeRegistro.APIS.add(new StikkedAPI());
+		APIdeSitioDeRegistro.APIS.add(new MCLogsAPI());		
 	}
 	
 	

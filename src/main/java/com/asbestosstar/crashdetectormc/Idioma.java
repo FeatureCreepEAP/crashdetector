@@ -1,9 +1,14 @@
 package com.asbestosstar.crashdetectormc;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Optional;
-
-import javax.swing.Icon;
+import java.util.Set;
 
 import com.asbestosstar.crashdetectormc.idioma.Arabe;
 import com.asbestosstar.crashdetectormc.idioma.Chino;
@@ -32,33 +37,47 @@ public interface Idioma {
 	public static Idioma japones = new Japones();
 	public static Idioma coreano = new Coreano();
 
-	public static Idioma detectar() {
-		String id = Locale.getDefault().getLanguage();
-		switch (id.toLowerCase()) {
-		case "es":
-			return espanol;
-		case "en":
-			return ingles;
-		case "ar":
-			return arabe;
-		case "pt":
-			return portuges;
-		case "fa":
-			return persa;
-		case "ru":
-			return ruso;
-		case "zh":
-			return chino;
-		case "eo":
-			return esperanto;
-		case "ja":
-			return japones;
-		case "ko":
-			return coreano;
-		default:
-			return espanol;
-		}
-	}
+    public static Idioma detectar() {
+        String id = leerIdiomaDesdeArchivo(); // Primero intenta leer del archivo
+        
+        if (id == null) {
+            id = Locale.getDefault().getLanguage().toLowerCase();
+        }
+        
+        switch (id) {
+            case "es": return espanol;
+            case "en": return ingles;
+            case "ar": return arabe;
+            case "pt": return portuges;
+            case "fa": return persa;
+            case "ru": return ruso;
+            case "zh": return chino;
+            case "eo": return esperanto;
+            case "ja": return japones;
+            case "ko": return coreano;
+            case "uk": return ruso; // Ucraniano usa configuración rusa
+            default: return espanol;
+        }
+    }
+
+    private static String leerIdiomaDesdeArchivo() {
+        File archivo = new File(System.getProperty("user.home"), "crash_detector/idioma");
+        if (!archivo.exists() || !archivo.canRead()) {
+            return null;
+        }
+        
+        try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
+            String codigo = reader.readLine().trim().toLowerCase();
+            Set<String> soportados = new HashSet<>(Arrays.asList(
+                "es", "en", "ar", "pt", "fa", "ru", "zh", "eo", "ja", "ko"
+            ));
+            
+            return soportados.contains(codigo) ? codigo : null;
+        } catch (IOException e) {
+            System.err.println("Error al leer archivo de idioma: " + e.getMessage());
+            return null;
+        }
+    }
 
 	/**
 	 * no es una carpeta de mods valida
@@ -233,5 +252,11 @@ public interface Idioma {
 	public String enlaceDelReporte();
 
 	public String guardarConfigDeCompartir();
+
+	public String registroDemasiadoGrande();
+
+	public String errorConPublicarRegistro(String error);
+
+	public String apiDeRegistroNoExiste();
 	
 }

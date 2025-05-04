@@ -413,8 +413,11 @@ public String arco() {
     return "이 대화 상자는 securelogger.net에서 SecureLogger API를 사용하여 로그를 공유할 수 있도록 합니다. "
             + "공유 버튼을 누르면 파일이 선택된 사이트(기본값 asbestosstar.egoism.jp)에 업로드됩니다. "
             + "선택한 모든 로그를 보고서와 함께 공유할 수 있습니다. 업로드하지 않으려면 이 대화 상자를 사용하지 마십시오! "
-            + "우리는 공식 엔드포인트(https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb)에서 보고서를 처리하지 않습니다. 허용되지 않는 링크만 제거합니다. "
-            + "이는 오류 정보와 로그 링크를 표시하는 데만 사용됩니다. 그러나 같은 메서드를 가지고 있지 않을 수 있는 사용자 정의 엔드포인트를 사용할 수 있습니다.";
+            + "우리는 공식 엔드포인트(https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb)에서 보고서를 처리하지 않습니다. 허용되지 않는 링크만 제거합니다. 코드는 여기에 있습니다: https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb. "
+            + "이는 오류 정보와 로그 링크를 표시하는 데만 사용됩니다. 그러나 같은 메소드를 가지고 있지 않을 수 있는 사용자 정의 엔드포인트를 사용할 수 있습니다. "
+            + "현재 보고서 사이트로 " 
+            + Config.obtenerInstancia().obtenerSitoDeInformes() + "를, 로그 사이트로 " 
+            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + "를 사용하고 있습니다.";
 }
 
 @Override
@@ -427,6 +430,27 @@ public String enlaceDelReporte() {
 public String guardarConfigDeCompartir() {
     return "공유 설정 저장";
 }
+
+
+@Override
+public String registroDemasiadoGrande() {
+    return "로그가 이 로그 사이트에 너무 큽니다. 다른 사이트를 선택하고 다시 시도하십시오.";
+}
+
+@Override
+public String errorConPublicarRegistro(String error) {
+    return "로그 게시 중 오류 발생 " + error;
+}
+
+@Override
+public String apiDeRegistroNoExiste() {
+    return "로그 API가 존재하지 않습니다. 설정에서 로그 API를 변경하십시오.";
+}
+
+
+
+
+
 
 
 }

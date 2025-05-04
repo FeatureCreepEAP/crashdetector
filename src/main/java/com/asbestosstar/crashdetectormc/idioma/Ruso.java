@@ -405,11 +405,14 @@ public String botonDeCompartirInforme() {
 
 @Override
 public String arco() {
-    return "Этот диалог позволяет делиться логами, используя API SecureLogger "
+    return "Этот диалог позволяет делиться логами с использованием API SecureLogger "
             + "на securelogger.net. При нажатии кнопок для обмена файлы "
             + "загружаются на выбранный сайт (по умолчанию asbestosstar.egoism.jp). Вы можете поделиться всеми выбранными логами "
-            + "вместе с отчетом. Если вы не хотите загружать данные, не используйте этот диалог! Мы не обрабатываем ваш отчет на официальной конечной точке (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb); мы только удаляем запрещенные ссылки. "
-            + "Это используется только для отображения информации о сбое и ссылки на логи. Однако можно использовать пользовательскую конечную точку, которая может не иметь тех же методов.";
+            + "вместе с отчетом. Если вы не хотите загружать данные, не используйте этот диалог! Мы не обрабатываем ваш отчет на официальной конечной точке (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb); мы только удаляем запрещенные ссылки. Код находится здесь: https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb. "
+            + "Это используется только для отображения информации о сбое и ссылки на логи. Однако можно использовать пользовательскую конечную точку, которая может не иметь тех же методов. "
+            + "Вы используете сайт отчетов " 
+            + Config.obtenerInstancia().obtenerSitoDeInformes() + " и сайт логов " 
+            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + ".";
 }
 
 @Override
@@ -422,6 +425,24 @@ public String enlaceDelReporte() {
 public String guardarConfigDeCompartir() {
     return "Сохранить настройки обмена";
 }
+
+@Override
+public String registroDemasiadoGrande() {
+    return "Лог слишком большой для этого сайта логов. Выберите другой и повторите попытку.";
+}
+
+@Override
+public String errorConPublicarRegistro(String error) {
+    return "Ошибка при публикации лога " + error;
+}
+
+@Override
+public String apiDeRegistroNoExiste() {
+    return "API логов не существует. Пожалуйста, измените API логов в настройках.";
+}
+
+
+
 
 
 

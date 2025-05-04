@@ -434,11 +434,12 @@ public String botonDeCompartirInforme() {
 
 @Override
 public String arco() {
-	// TODO Auto-generated method stub
-	return       "Este diálogo permite compartir registros usando la API de SecureLogger " +
-            "en securelogger.net. Al presionar los botones de compartir, los archivos " +
-            "se suben al sitio seleccionado (predeterminado asbestosstar.egoism.jp). Puede compartir todos los registros " +
-            "seleccionados junto con el reporte. ¡Si no quieres subir, no usas esta diálogo!No procesamos su informe en el punto final oficial (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb); simplemente eliminamos los enlaces no permitidos. Esto solo se utiliza para mostrar la información sobre su fallo y el enlace a los registros. Sin embargo, es posible usar un punto final personalizado que podría no tener los mismos métodos.";
+    return "Este diálogo permite compartir registros usando la API de SecureLogger "
+            + "en securelogger.net. Al presionar los botones de compartir, los archivos "
+            + "se suben al sitio seleccionado (predeterminado asbestosstar.egoism.jp). Puede compartir todos los registros "
+            + "seleccionados junto con el reporte. ¡Si no quieres subir, no usas este diálogo! No procesamos su informe en el punto final oficial (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb); simplemente eliminamos los enlaces no permitidos, el código está aquí https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb. Esto solo se utiliza para mostrar la información sobre su fallo y el enlace a los registros. Sin embargo, es posible usar un punto final personalizado que podría no tener los mismos métodos. Estás usando el sitio de informes " 
+            + Config.obtenerInstancia().obtenerSitoDeInformes() + " y el sitio de registros " 
+            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado();
 }
 
 @Override
@@ -450,6 +451,21 @@ public String enlaceDelReporte() {
 @Override
 public String guardarConfigDeCompartir() {
     return "Guardar Config de Compartir";
+}
+
+@Override
+public String registroDemasiadoGrande() {
+    return "El registro es demasiado grande para este sitio de registro. Elija otro e inténtelo nuevamente.";
+}
+
+@Override
+public String errorConPublicarRegistro(String error) {
+    return "Error publicando registro " + error;
+}
+
+@Override
+public String apiDeRegistroNoExiste() {
+    return "API de Registro no existe. Por favor cambiar API de registro en la configuración.";
 }
 
 

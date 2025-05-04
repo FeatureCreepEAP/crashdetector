@@ -406,10 +406,12 @@ public String botonDeCompartirInforme() {
 
 @Override
 public String arco() {
-    return "This dialog allows sharing logs using the SecureLogger API "
-            + "at securelogger.net. When pressing the share buttons, reports "
+    return "This dialog allows you to share logs using the SecureLogger API "
+            + "at securelogger.net. When pressing the share buttons, files "
             + "are uploaded to the selected site (default asbestosstar.egoism.jp). You can share all selected logs "
-            + "along with the report. If you don't want to upload, don't use this dialog! We do not process your report at the official endpoint (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb); we only remove disallowed links. This is solely used to display information about your crash and the link to the logs. However, it is possible to use a custom endpoint that might not have the same methods.";
+            + "along with the report. If you don't want to upload, don't use this dialog! We do not process your report at the official endpoint (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb); we only remove disallowed links. The code is here: https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb. This is solely used to display information about your crash and the link to the logs. However, it is possible to use a custom endpoint that might not have the same methods. You are using the report site " 
+            + Config.obtenerInstancia().obtenerSitoDeInformes() + " and the log site " 
+            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado();
 }
 
 @Override
@@ -422,6 +424,24 @@ public String enlaceDelReporte() {
 public String guardarConfigDeCompartir() {
     return "Save Sharing Config";
 }
+
+
+@Override
+public String registroDemasiadoGrande() {
+    return "The log is too large for this logging site. Please choose another one and try again.";
+}
+
+@Override
+public String errorConPublicarRegistro(String error) {
+    return "Error publishing log " + error;
+}
+
+@Override
+public String apiDeRegistroNoExiste() {
+    return "Logging API does not exist. Please change the logging API in the settings.";
+}
+
+
 
 
 

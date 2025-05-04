@@ -406,8 +406,11 @@ public String arco() {
     return "このダイアログでは、securelogger.net の SecureLogger API を使用してログを共有できます。"
             + "共有ボタンを押すと、ファイルが選択されたサイト（デフォルトは asbestosstar.egoism.jp）にアップロードされます。"
             + "選択したすべてのログをレポートと一緒に共有できます。アップロードしたくない場合は、このダイアログを使用しないでください！"
-            + "公式エンドポイント（https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb）ではレポートを処理しません。許可されていないリンクのみ削除します。"
-            + "これはクラッシュ情報とログへのリンクを表示するためにのみ使用されます。ただし、同じメソッドを持たないカスタムエンドポイントを使用することも可能です。";
+            + "公式エンドポイント（https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb）ではレポートを処理しません。許可されていないリンクのみ削除します。コードはこちらにあります: https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb。"
+            + "これはクラッシュ情報とログへのリンクを表示するためにのみ使用されます。ただし、同じメソッドを持たないカスタムエンドポイントを使用することも可能です。"
+            + "現在、レポートサイトとして " 
+            + Config.obtenerInstancia().obtenerSitoDeInformes() + "、ログサイトとして " 
+            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + " を使用しています。";
 }
 
 @Override
@@ -419,5 +422,28 @@ public String enlaceDelReporte() {
 public String guardarConfigDeCompartir() {
     return "共有設定を保存";
 }
+
+
+
+@Override
+public String registroDemasiadoGrande() {
+    return "ログがこのログサイトでは大きすぎます。別のサイトを選んで再度お試しください。";
+}
+
+@Override
+public String errorConPublicarRegistro(String error) {
+    return "ログの公開中にエラーが発生しました " + error;
+}
+
+@Override
+public String apiDeRegistroNoExiste() {
+    return "ログAPIが存在しません。設定でログAPIを変更してください。";
+}
+
+
+
+
+
+
 
 }

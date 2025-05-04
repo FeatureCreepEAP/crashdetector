@@ -410,10 +410,12 @@ public String botonDeCompartirInforme() {
 
 @Override
 public String arco() {
-    return "هذا الحوار يتيح مشاركة السجلات باستخدام واجهة برمجة تطبيقات SecureLogger "
-            + "في securelogger.net. عند الضغط على أزرار المشاركة، يتم رفع الملفات "
+    return "هذا الحوار يتيح لك مشاركة السجلات باستخدام واجهة برمجة تطبيقات SecureLogger "
+            + "على securelogger.net. عند الضغط على أزرار المشاركة، يتم رفع الملفات "
             + "إلى الموقع المحدد (افتراضي asbestosstar.egoism.jp). يمكنك مشاركة جميع السجلات المحددة "
-            + "مع التقرير. إذا كنت لا تريد الرفع، فلا تستخدم هذا الحوار! نحن لا نعالج تقريرك في النقطة النهائية الرسمية (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb); نحن فقط نزيل الروابط غير المسموح بها. يتم استخدام هذا فقط لعرض معلومات عن تعطل النظام والرابط إلى السجلات. ومع ذلك، من الممكن استخدام نقطة نهاية مخصصة قد لا تحتوي على نفس الطرق.";
+            + "مع التقرير. إذا كنت لا تريد الرفع، فلا تستخدم هذا الحوار! نحن لا نعالج تقريرك في النقطة النهائية الرسمية (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb)؛ نحن فقط نزيل الروابط غير المسموح بها. الكود موجود هنا: https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb. يتم استخدام هذا فقط لعرض معلومات عن تعطل النظام والرابط إلى السجلات. ومع ذلك، من الممكن استخدام نقطة نهاية مخصصة قد لا تحتوي على نفس الطرق. أنت تستخدم موقع التقارير " 
+            + Config.obtenerInstancia().obtenerSitoDeInformes() + " وموقع السجلات " 
+            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado();
 }
 
 @Override
@@ -425,6 +427,30 @@ public String enlaceDelReporte() {
 public String guardarConfigDeCompartir() {
     return "حفظ إعدادات المشاركة";
 }
+
+@Override
+public String registroDemasiadoGrande() {
+    return "السجل كبير جدًا لهذا الموقع. يرجى اختيار موقع آخر والمحاولة مرة أخرى.";
+}
+
+@Override
+public String errorConPublicarRegistro(String error) {
+    return "خطأ في نشر السجل " + error;
+}
+
+@Override
+public String apiDeRegistroNoExiste() {
+    return "واجهة برمجة تطبيقات السجل غير موجودة. يرجى تغيير واجهة برمجة التطبيقات في الإعدادات.";
+}
+
+
+
+
+
+
+
+
+
 
 
 }
