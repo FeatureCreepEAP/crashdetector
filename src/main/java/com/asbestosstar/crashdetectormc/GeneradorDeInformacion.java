@@ -11,6 +11,10 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Scanner;
 
+import com.asbestosstar.crashdetectormc.api_sito_registro.DemasiadoGrande;
+import com.asbestosstar.crashdetectormc.api_sito_registro.ErrorConPublicar;
+import com.asbestosstar.crashdetectormc.api_sito_registro.NoAPIdeRegistro;
+
 public class GeneradorDeInformacion {
 
 	public static File generarLocal(List<Consola> consolas, StringBuilder constructor, Instant instant) {
@@ -35,7 +39,7 @@ public class GeneradorDeInformacion {
 		return null;
 	}
 
-	public static String compartir(List<Consola> consolas, StringBuilder constructor, Instant instant) {
+	public static String compartir(List<Consola> consolas, StringBuilder constructor, Instant instant) throws DemasiadoGrande, ErrorConPublicar, NoAPIdeRegistro {
 		try {
 			StringBuilder cons = new StringBuilder();
 			cons.append(MonitorDePID.idioma.ubicacionesDeLogs()+"<br>");

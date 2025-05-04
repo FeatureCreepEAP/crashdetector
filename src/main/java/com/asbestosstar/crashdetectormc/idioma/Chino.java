@@ -416,6 +416,12 @@ public String enlaceDelReporte() {
 }
 
 
+@Override
+public String guardarConfigDeCompartir() {
+    return "保存分享配置";
+}
+
+
 
 
 }

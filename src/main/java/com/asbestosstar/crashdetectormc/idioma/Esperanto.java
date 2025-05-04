@@ -421,6 +421,11 @@ public String enlaceDelReporte() {
     return "Ligilo de Raporto:";
 }
 
+@Override
+public String guardarConfigDeCompartir() {
+    return "Konservi Kunhavigan Agordon";
+}
+
 
 
 

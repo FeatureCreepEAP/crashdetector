@@ -419,5 +419,11 @@ public String enlaceDelReporte() {
 }
 
 
+@Override
+public String guardarConfigDeCompartir() {
+    return "ذخیره تنظیمات اشتراک‌گذاری";
+}
+
+
 
 }

@@ -423,4 +423,10 @@ public String enlaceDelReporte() {
 }
 
 
+@Override
+public String guardarConfigDeCompartir() {
+    return "공유 설정 저장";
+}
+
+
 }

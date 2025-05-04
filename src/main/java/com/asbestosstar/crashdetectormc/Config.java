@@ -23,9 +23,17 @@ public class Config {
 	private static final String VALOR_POR_DEFECTO_COLOR_TITULO = "4287F5"; // azul
 	private static final String VALOR_POR_DEFECTO_COLOR_ENLACE_TEXTO = "96C8FF"; // azul mas contrast
 
+	// Valores predeterminados para las nuevas propiedades
+	public static final String VALOR_POR_DEFECTO_API_DE_REGISTROS_SELECCIONADA = "SecureLogger";
+	public static final String VALOR_POR_DEFECTO_SITIO_DE_REGISTROS_SELECCIONADO = "https://securelogger.net/save/log?";
+	private static final boolean VALOR_POR_DEFECTO_ANONIMIZAR_REGISTROS = true;
+	
+	
 	// Ruta al archivo de configuración
-	private static final String RUTA_ARCHIVO_CONFIG = "crashdetector_config.properties";
+	private static final String RUTA_ARCHIVO_CONFIG = "crash_detector/crashdetector_config.properties";
+	public static File archivoConfig = new File(RUTA_ARCHIVO_CONFIG);
 
+	
 	// Propiedades de configuración
 	private Properties propiedadesConfig;
 
@@ -40,7 +48,6 @@ public class Config {
 
 		// Cargar el archivo de configuración si existe, de lo contrario crearlo con
 		// valores predeterminados
-		File archivoConfig = new File(RUTA_ARCHIVO_CONFIG);
 		if (archivoConfig.exists()) {
 			try (FileReader lector = new FileReader(archivoConfig)) {
 				propiedadesConfig.load(lector);
@@ -63,12 +70,12 @@ public class Config {
 			propiedadesConfig.setProperty("color_titulo", VALOR_POR_DEFECTO_COLOR_TITULO);
 			propiedadesConfig.setProperty("color_enlace_texto", VALOR_POR_DEFECTO_COLOR_ENLACE_TEXTO);
 
-			// Guardar la configuración predeterminada en un archivo
-			try (FileWriter escritor = new FileWriter(archivoConfig)) {
-				propiedadesConfig.store(escritor, "Configuración de CrashDetectorMC");
-			} catch (IOException e) {
-				System.err.println("Error al crear el archivo de configuración: " + e.getMessage());
-			}
+			// Añadimos las nuevas propiedades predeterminadas
+			propiedadesConfig.setProperty("api_de_registros_seleccionada", VALOR_POR_DEFECTO_API_DE_REGISTROS_SELECCIONADA);
+			propiedadesConfig.setProperty("sitio_de_registros_seleccionado", VALOR_POR_DEFECTO_SITIO_DE_REGISTROS_SELECCIONADO);
+			propiedadesConfig.setProperty("anonimizar_registros", String.valueOf(VALOR_POR_DEFECTO_ANONIMIZAR_REGISTROS));		
+			
+			guardar();
 		}
 	}
 
@@ -84,6 +91,16 @@ public class Config {
 		return instancia;
 	}
 
+	public void guardar() {
+		// Guardar la configuración predeterminada en un archivo
+		try (FileWriter escritor = new FileWriter(archivoConfig)) {
+			propiedadesConfig.store(escritor, "Configuración de CrashDetectorMC");
+		} catch (IOException e) {
+			System.err.println("Error al crear el archivo de configuración: " + e.getMessage());
+		}
+	}
+	
+	
 	/**
 	 * Obtener el valor de sito_de_informes.
 	 *
@@ -179,6 +196,84 @@ public class Config {
 	public String obtenerColorTitulo() {
 		return propiedadesConfig.getProperty("color_titulo", VALOR_POR_DEFECTO_COLOR_TITULO);
 	}
+	
+	/**
+	 * Obtener el valor de api_seleccionada.
+	 *
+	 * @return El valor de api_seleccionada.
+	 */
+	public String obtenerApiSeleccionada() {
+	    return propiedadesConfig.getProperty("api_de_registros_seleccionada", VALOR_POR_DEFECTO_API_DE_REGISTROS_SELECCIONADA);
+	}
+
+	/**
+	 * Obtener el valor de sitio_seleccionado.
+	 *
+	 * @return El valor de sitio_seleccionado.
+	 */
+	public String obtenerSitioDeRegistrosSeleccionado() {
+	    return propiedadesConfig.getProperty("sitio_de_registros_seleccionado", VALOR_POR_DEFECTO_SITIO_DE_REGISTROS_SELECCIONADO);
+	}
+
+	/**
+	 * Verifica si los registros deben anonimizarse.
+	 *
+	 * @return true si se debe anonimizar, false en caso contrario.
+	 */
+	public boolean esAnonimizarRegistros() {
+	    return Boolean.parseBoolean(propiedadesConfig.getProperty("anonimizar_registros",
+	            String.valueOf(VALOR_POR_DEFECTO_ANONIMIZAR_REGISTROS)));
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Guarda el valor de api_seleccionada en la configuración.
+	 *
+	 * @param valor El nuevo valor para api_seleccionada.
+	 */
+	public void guardarApiSeleccionada(String valor) {
+	    propiedadesConfig.setProperty("api_de_registros_seleccionada", valor);
+	    this.guardar();
+	}
+
+	/**
+	 * Guarda el valor de sitio_seleccionado en la configuración.
+	 *
+	 * @param valor El nuevo valor para sitio_seleccionado.
+	 */
+	public void guardarSitioRegistrosSeleccionado(String valor) {
+	    propiedadesConfig.setProperty("sitio_de_registros_seleccionado", valor);
+	    this.guardar();
+	}
+
+	/**
+	 * Guarda el estado de anonimizar_registros en la configuración.
+	 *
+	 * @param valor true para activar la anonimización, false para desactivarla.
+	 */
+	public void guardarAnonimizarRegistros(boolean valor) {
+	    propiedadesConfig.setProperty("anonimizar_registros", String.valueOf(valor));
+	    this.guardar();
+	}
+	
+	
+	
+	/**
+	 * Guarda el valor de sitio_seleccionado en la configuración.
+	 *
+	 * @param valor El nuevo valor para sitio_seleccionado.
+	 */
+	public void guardarSitioDeInformes(String valor) {
+	    propiedadesConfig.setProperty("sito_de_informes", valor);
+	    this.guardar();
+	}
+	
+	
+	
+	
 
 	/**
 	 * Convierte un código de color HTML (#RRGGBB) en un objeto Color.
@@ -196,6 +291,9 @@ public class Config {
 		int b = Integer.parseInt(hexColor.substring(5, 7), 16);
 		return new Color(r, g, b);
 	}
+	
+	
+	
 
 
 }

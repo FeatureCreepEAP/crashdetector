@@ -18,6 +18,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.time.Instant;
@@ -46,12 +48,15 @@ import com.asbestosstar.crashdetectormc.Consola;
 import com.asbestosstar.crashdetectormc.CrashDetectorLogger;
 import com.asbestosstar.crashdetectormc.GeneradorDeInformacion;
 import com.asbestosstar.crashdetectormc.MonitorDePID;
+import com.asbestosstar.crashdetectormc.api_sito_registro.DemasiadoGrande;
+import com.asbestosstar.crashdetectormc.api_sito_registro.ErrorConPublicar;
+import com.asbestosstar.crashdetectormc.api_sito_registro.NoAPIdeRegistro;
 
 public class DialogoCompartir extends JDialog {
     private final DefaultTableModel modeloTabla;
     private final JTextField campoEndpoint;
     private final JComboBox<String> comboAPI;
-    private final JComboBox<String> comboSitio;
+    private final JComboBox<String> comboSitioRegistro;
     private final JCheckBox checkAnonimizar;
     public StringBuilder contenidoInforme;
     public Instant instant;
@@ -81,7 +86,20 @@ public class DialogoCompartir extends JDialog {
         JPanel panelControles = new JPanel(new BorderLayout(0, 5));
         
         botonCompartirTodos = new JButton(MonitorDePID.idioma.botonDeCompartirInforme());
-        botonCompartirTodos.addActionListener(this::compartirSeleccionados);
+        botonCompartirTodos.addActionListener(e -> {
+			try {
+				compartirSeleccionados(e);
+			} catch (DemasiadoGrande e0) {
+				// TODO Auto-generated catch block
+				e0.printStackTrace();
+			} catch (ErrorConPublicar e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (NoAPIdeRegistro e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+		});
         
         campoEnlaceReporte = new JTextField();
         campoEnlaceReporte.setEditable(false);
@@ -168,9 +186,9 @@ public class DialogoCompartir extends JDialog {
         gbc.gridy++;
         panelConfig.add(new JLabel(MonitorDePID.idioma.sitoDeLogging()), gbc);
         gbc.gridx++;
-        comboSitio = new JComboBox<>(new String[]{"https://securelogger.net/save/log?"});
-        comboSitio.setPreferredSize(new Dimension(300, 25));
-        panelConfig.add(comboSitio, gbc);
+        comboSitioRegistro = new JComboBox<>(new String[]{"https://securelogger.net/save/log?"});
+        comboSitioRegistro.setPreferredSize(new Dimension(300, 25));
+        panelConfig.add(comboSitioRegistro, gbc);
 
         // Anonimizar
         gbc.gridx = 0;
@@ -179,6 +197,28 @@ public class DialogoCompartir extends JDialog {
         checkAnonimizar = new JCheckBox(MonitorDePID.idioma.anonimizarRegistros());
         checkAnonimizar.setEnabled(false);
         panelConfig.add(checkAnonimizar, gbc);
+        
+        
+        
+        
+        
+     // Save Button
+        gbc.gridy++;
+        gbc.gridx = 0;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.WEST;
+
+        JButton boton_guardar_de_config = new JButton(MonitorDePID.idioma.guardarConfigDeCompartir());
+        boton_guardar_de_config.addActionListener(e -> {
+
+        	guardarConfig();
+        	
+        	
+        });
+
+        panelConfig.add(boton_guardar_de_config, gbc);
+        
+        
 
         // Estructura principal
         panelPrincipal.add(panelSuperior, BorderLayout.NORTH);
@@ -201,7 +241,7 @@ public class DialogoCompartir extends JDialog {
         }
     }
 
-    private void compartirSeleccionados(ActionEvent e) {
+    private void compartirSeleccionados(ActionEvent e) throws DemasiadoGrande, ErrorConPublicar, NoAPIdeRegistro {
         ArrayList<Consola> seleccionados = new ArrayList<>();
         for (int i = 0; i < modeloTabla.getRowCount(); i++) {
             if ((Boolean) modeloTabla.getValueAt(i, 0)) {
@@ -282,14 +322,32 @@ public class DialogoCompartir extends JDialog {
                                 CrashDetectorLogger.logException(ex);
                             }
                         } else if (accion.equals(MonitorDePID.idioma.texto_de_buton_compartir_enlance())) {
-                            Consola cons = MonitorDePID.consolas.get(currentRow);
-                            String url = cons.obtainerEnlance();
-                            modeloTabla.setValueAt(url, currentRow, 4);
+                            CrashDetectorLogger.log("compartir boton");
+                        	Consola cons = MonitorDePID.consolas.get(currentRow);
                             try {
-                                Desktop.getDesktop().browse(new URL(url).toURI());
-                            } catch (Exception ex) {
-                                CrashDetectorLogger.logException(ex);
-                            }
+								String url = cons.obtainerEnlance();
+								modeloTabla.setValueAt(url, currentRow, 4);
+								Desktop.getDesktop().browse(new URL(url).toURI());
+							} catch (MalformedURLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (DemasiadoGrande e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (ErrorConPublicar e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (NoAPIdeRegistro e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (URISyntaxException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+
                         }
                         fireEditingStopped();
                     }
@@ -366,5 +424,22 @@ public class DialogoCompartir extends JDialog {
             setText(value.toString());
             return this;
         }
+    }
+    
+    
+    public void guardarConfig() {
+        Config.obtenerInstancia().guardarSitioDeInformes(campoEndpoint.getText());
+
+        String api = (String) comboAPI.getSelectedItem();
+        Config.obtenerInstancia().guardarApiSeleccionada(api);
+
+        String sitio_registro = (String) comboSitioRegistro.getSelectedItem();
+        Config.obtenerInstancia().guardarSitioRegistrosSeleccionado(sitio_registro);
+
+        boolean anonimizar = checkAnonimizar.isSelected();
+        Config.obtenerInstancia().guardarAnonimizarRegistros(anonimizar);
+
+        // Optional: Show confirmation or log
+        CrashDetectorLogger.log("Configuration saved.");
     }
 }

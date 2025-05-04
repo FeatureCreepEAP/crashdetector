@@ -412,6 +412,12 @@ public String enlaceDelReporte() {
 }
 
 
+@Override
+public String guardarConfigDeCompartir() {
+    return "Salvar Configuração de Compartilhamento";
+}
+
+
 
 
 }

@@ -421,5 +421,10 @@ public String enlaceDelReporte() {
     return "رابط التقرير:";
 }
 
+@Override
+public String guardarConfigDeCompartir() {
+    return "حفظ إعدادات المشاركة";
+}
+
 
 }

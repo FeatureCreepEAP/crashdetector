@@ -415,4 +415,9 @@ public String enlaceDelReporte() {
     return "レポートリンク：";
 }
 
+@Override
+public String guardarConfigDeCompartir() {
+    return "共有設定を保存";
+}
+
 }

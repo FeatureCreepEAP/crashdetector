@@ -231,5 +231,7 @@ public interface Idioma {
 	public String arco();
 
 	public String enlaceDelReporte();
+
+	public String guardarConfigDeCompartir();
 	
 }

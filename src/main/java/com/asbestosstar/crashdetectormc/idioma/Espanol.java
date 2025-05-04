@@ -447,6 +447,11 @@ public String enlaceDelReporte() {
 	return "Enlance de Informe:";
 }
 
+@Override
+public String guardarConfigDeCompartir() {
+    return "Guardar Config de Compartir";
+}
+
 
 
 

@@ -418,6 +418,14 @@ public String enlaceDelReporte() {
 }
 
 
+@Override
+public String guardarConfigDeCompartir() {
+    return "Save Sharing Config";
+}
+
+
+
+
 
 
 }

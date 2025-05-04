@@ -79,22 +79,22 @@ public class CrashDetectorGUI extends JFrame {
         JScrollPane panelDesplazamiento = new JScrollPane(visorHtml);
         panelDesplazamiento.setBorder(BorderFactory.createEmptyBorder());
         panelDesplazamiento.getViewport().setBackground(colorCajaTexto);
-
+        
         // Panel inferior para controles
         JPanel panelInferior = new JPanel();
         panelInferior.setLayout(new BorderLayout());
         panelInferior.setBackground(colorFondo);
-        panelInferior.setBorder(new EmptyBorder(15, 40, 15, 40)); // Reduced padding
+        panelInferior.setBorder(new EmptyBorder(15, 40, 15, 40)); 
 
         // Panel principal para botones e imágenes
         JPanel panelControles = new JPanel();
         panelControles.setLayout(new BoxLayout(panelControles, BoxLayout.Y_AXIS));
         panelControles.setBackground(colorFondo);
-
+     
         // Panel de botones
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
         panelBotones.setBackground(colorFondo);
-
+        
         // Botones
         JButton botonAnalisis = new JButton(MonitorDePID.idioma.analisisAvanzado());
         JButton botonCompartir = new JButton(MonitorDePID.idioma.texto_de_buton_compartir_enlance());
@@ -112,7 +112,7 @@ public class CrashDetectorGUI extends JFrame {
         panelBotones.add(botonQuickFix);
 
         // Panel de imágenes
-        JPanel panelImagenes = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        JPanel panelImagenes = new JPanel(new GridLayout(1, 3, 5, 0)); // 1 row, 3 columns, 10px horizontal gap, 0 vertical gap
         panelImagenes.setBackground(colorFondo);
 
         // Cargar imágenes
@@ -127,7 +127,7 @@ public class CrashDetectorGUI extends JFrame {
 
         // Agregar paneles al contenedor principal
         panelControles.add(panelBotones);
-        panelControles.add(Box.createVerticalStrut(5)); // Reduced spacing
+        panelControles.add(Box.createVerticalStrut(5)); 
         panelControles.add(panelImagenes);
 
         // Agregar acciones
@@ -155,24 +155,31 @@ public class CrashDetectorGUI extends JFrame {
             return new JLabel("Imagen no encontrada");
         }
 
-        int nuevoAncho = 60; // Reduced image size
-        int nuevoAlto = (int) ((double) nuevoAncho / icono.getIconWidth() * icono.getIconHeight());
+        int nuevoAlto = 65;
+        int nuevoAncho = (int) ((double) nuevoAlto / icono.getIconHeight() * icono.getIconWidth());
         Image imagenEscalada = icono.getImage().getScaledInstance(nuevoAncho, nuevoAlto, Image.SCALE_SMOOTH);
         return new JLabel(new ImageIcon(imagenEscalada));
     }
 
     private void estilizarBoton(JButton boton) {
-        boton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        if (!System.getProperty("os.name").toLowerCase().contains("mac")) {
+        if (!esMac()) {
+            boton.setAlignmentX(Component.CENTER_ALIGNMENT);
             boton.setBackground(colorBoton);
             boton.setContentAreaFilled(true);
+            boton.setForeground(colorTexto);
+            boton.setFocusPainted(false);
+            boton.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+            boton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+
         } else {
-            boton.setContentAreaFilled(false); //  native macOS
+            boton.setContentAreaFilled(false);
         }
-        boton.setForeground(colorTexto);
-        boton.setFocusPainted(false);
-        boton.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         boton.setMaximumSize(new Dimension(200, 40));
-        boton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
     }
+    
+    
+    public static boolean esMac(){
+    	return System.getProperty("os.name").toLowerCase().contains("mac");
+    }
+    
 }

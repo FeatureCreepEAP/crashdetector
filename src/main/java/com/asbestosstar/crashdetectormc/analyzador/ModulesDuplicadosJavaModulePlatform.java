@@ -39,7 +39,6 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 	                String paquete = "";
 	                
 	                if (mensaje.contains("contains package")) {
-	                	constructor.append("containing");
 	                    String[] partes = mensaje.split("contains package");
 	                    String moduloContenedor = partes[0].replace("Module", "").trim();
 	                    String resto = partes[1].trim();
