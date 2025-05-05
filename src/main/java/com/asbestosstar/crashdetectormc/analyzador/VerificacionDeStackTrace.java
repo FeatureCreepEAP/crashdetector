@@ -12,8 +12,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.asbestosstar.crashdetectormc.CDStringBuilder;
-import com.asbestosstar.crashdetectormc.MonitorDePID;
+import com.asbestosstar.crashdetector.CDStringBuilder;
+import com.asbestosstar.crashdetector.MonitorDePID;
 
 public class VerificacionDeStackTrace implements Verificaciones {
 
@@ -154,7 +154,7 @@ public CDStringBuilder sb;
 
 	private boolean esModNoPermite(String modid) {
 		// TODO Auto-generated method stub
-		if (modid.isBlank()) {
+		if (modid.replace(" ", "").equals("")) {
 			return true;
 		}
 

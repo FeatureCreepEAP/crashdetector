@@ -1,7 +1,7 @@
 package com.asbestosstar.crashdetectormc.analyzador;
 
-import com.asbestosstar.crashdetectormc.CDStringBuilder;
-import com.asbestosstar.crashdetectormc.MonitorDePID;
+import com.asbestosstar.crashdetector.CDStringBuilder;
+import com.asbestosstar.crashdetector.MonitorDePID;
 
 public class KubeJSResourcePack implements Verificaciones {
 

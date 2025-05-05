@@ -49,11 +49,11 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
-import com.asbestosstar.crashdetectormc.Config;
-import com.asbestosstar.crashdetectormc.Consola;
-import com.asbestosstar.crashdetectormc.CrashDetectorLogger;
-import com.asbestosstar.crashdetectormc.GeneradorDeInformacion;
-import com.asbestosstar.crashdetectormc.MonitorDePID;
+import com.asbestosstar.crashdetector.Config;
+import com.asbestosstar.crashdetector.Consola;
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
+import com.asbestosstar.crashdetector.GeneradorDeInformacion;
+import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetectormc.api_sito_registro.APIdeSitioDeRegistro;
 import com.asbestosstar.crashdetectormc.api_sito_registro.DemasiadoGrande;
 import com.asbestosstar.crashdetectormc.api_sito_registro.ErrorConPublicar;

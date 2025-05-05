@@ -1,9 +1,9 @@
 {
   "required": false,
   "minVersion": "0.7",
-  "package": "com.asbestosstar.crashdetectormc.fabricmctransformaciones",
+  "package": "com.asbestosstar.crashdetector.fabricmctransformaciones",
   "compatibilityLevel": "JAVA_8",
-  "plugin": "com.asbestosstar.crashdetectormc.fabricmctransformaciones.CoreModFabricMC",
+  "plugin": "com.asbestosstar.crashdetector.fabricmctransformaciones.CoreModFabricMC",
   "mixins": [
  	 "ClasesParaTransformacionFabricMC"
   ],

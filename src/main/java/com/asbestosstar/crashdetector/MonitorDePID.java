@@ -1,11 +1,14 @@
-package com.asbestosstar.crashdetectormc;
+package com.asbestosstar.crashdetector;
 
 import java.awt.GraphicsEnvironment;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.management.ManagementFactory;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -14,7 +17,6 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 
 import javax.swing.JFrame;
@@ -168,7 +170,7 @@ public class MonitorDePID {
 			e.printStackTrace();
 		}
 
-		long pid = ProcessHandle.current().pid();
+		long pid = obtenerPID();
 		System.out.println("PID: " + pid);
 		String jar;
 
@@ -187,9 +189,9 @@ public class MonitorDePID {
 		}
 
 		// Get the Java binary path
-		Optional<String> javaBinary = ProcessHandle.current().info().command();
+		String javaBinary = jvm();
 		if (javaBinary.isEmpty()) {
-			System.err.println("");
+			System.err.println("CD NO PUEDE OBTENER JVM");
 			return;
 		}
 
@@ -198,7 +200,7 @@ public class MonitorDePID {
 			String cp = System.getProperty("java.class.path") + File.pathSeparator + jar;
 			System.out.println("******************" + cp);
 
-			new ProcessBuilder(javaBinary.get(), "-cp", cp, "com.asbestosstar.crashdetectormc.MonitorDePID",
+			new ProcessBuilder(javaBinary, "-cp", cp, "com.asbestosstar.crashdetector.MonitorDePID",
 					"--monitor", String.valueOf(pid)).inheritIO().start();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -213,10 +215,8 @@ public class MonitorDePID {
 		CountDownLatch latch = new CountDownLatch(1); // Necesito por que sin esta preceso esta muerte
 
 		while (true) {
-			Optional<ProcessHandle> processo = ProcessHandle.of(pid);
-			boolean viva = processo.map(ProcessHandle::isAlive).orElse(false);
 
-			if (!viva) {
+			if (!viva(pid)) {
 
 				// System.out.println( escribes el codio de error aqui );
 
@@ -385,5 +385,144 @@ public class MonitorDePID {
 		System.out.println("  fgrepr: Busca sin regex");
 		System.out.println("  -i: Ignorar mayúsculas/minúsculas");
 	}
+	
+	
+	
+    /**
+     * Obtiene el PID actual usando RuntimeMXBean (Java 8 compatible)
+     */
+    public static long obtenerPID() {
+        String nombre = ManagementFactory.getRuntimeMXBean().getName();
+        return Long.parseLong(nombre.split("@")[0]);
+    }
+    
+    
+    public static String jvm() {
+        // Step 1: Try using ProcessHandle via reflection (Java 9+)
+        try {
+            Class<?> processHandleClass = Class.forName("java.lang.ProcessHandle");
+            java.lang.reflect.Method ofMethod = processHandleClass.getMethod("of", long.class);
+            Object optionalHandle = ofMethod.invoke(null, obtenerPID());
+
+            if (optionalHandle != null) {
+                java.lang.reflect.Method isPresentMethod = optionalHandle.getClass().getMethod("isPresent");
+                boolean isPresent = (boolean) isPresentMethod.invoke(optionalHandle);
+
+                if (isPresent) {
+                    java.lang.reflect.Method getMethod = optionalHandle.getClass().getMethod("get");
+                    Object processHandle = getMethod.invoke(optionalHandle);
+
+                    java.lang.reflect.Method infoMethod = processHandleClass.getMethod("info");
+                    Object processInfo = infoMethod.invoke(processHandle);
+
+                    Class<?> infoClass = Class.forName("java.lang.ProcessHandle$Info");
+                    java.lang.reflect.Method commandMethod = infoClass.getMethod("command");
+                    Object commandOpt = commandMethod.invoke(processInfo);
+
+                    if (commandOpt != null) {
+                        java.lang.reflect.Method isPresentOpt = commandOpt.getClass().getMethod("isPresent");
+                        boolean commandPresent = (boolean) isPresentOpt.invoke(commandOpt);
+
+                        if (commandPresent) {
+                            java.lang.reflect.Method getOpt = commandOpt.getClass().getMethod("get");
+                            return (String) getOpt.invoke(commandOpt);
+                        }
+                    }
+                }
+            }
+        } catch (Exception ignored) {
+        	//Java viaja
+        }
+
+        // Step 2: Fallback to OS-specific command-line tools (Java 8)
+        try {
+            String os = System.getProperty("os.name").toLowerCase();
+            ProcessBuilder pb;
+            if (os.contains("win")) {
+                // Windows: Use tasklist to get image name
+                pb = new ProcessBuilder("tasklist", "/FI", "PID eq " + obtenerPID(), "/FO", "CSV", "/NH");
+            } else {
+                // Unix/Linux/macOS: Use ps to get command
+                pb = new ProcessBuilder("ps", "-p", String.valueOf(obtenerPID()), "-o", "comm=");
+            }
+
+            Process process = pb.start();
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    if (!line.trim().isEmpty()) {
+                        if (os.contains("win")) {
+                            // Tasklist returns: "image name",pid,...
+                            int firstQuote = line.indexOf('"');
+                            int secondQuote = line.indexOf('"', firstQuote + 1);
+                            if (firstQuote >= 0 && secondQuote > firstQuote) {
+                                return line.substring(firstQuote + 1, secondQuote);
+                            }
+                        } else {
+                            // ps returns just the command path
+                            return line.trim();
+                        }
+                    }
+                }
+            }
+
+            // No output means process not found
+            return null;
+
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
+    
+    public static boolean viva(long pid) {
+        try {
+            // Intentar usar ProcessHandle (Java 9+)
+            Class<?> processHandleClase = Class.forName("java.lang.ProcessHandle");
+            java.lang.reflect.Method meth = processHandleClase.getMethod("of", long.class);
+            Object optionalHandle = meth.invoke(null, pid);
+
+            if (optionalHandle != null) {
+                java.lang.reflect.Method isPresentMethod = optionalHandle.getClass().getMethod("isPresent");
+                boolean existe = (boolean) isPresentMethod.invoke(optionalHandle);
+
+                if (existe) {
+                    java.lang.reflect.Method getMethod = optionalHandle.getClass().getMethod("get");
+                    Object processHandle = getMethod.invoke(optionalHandle);
+
+                    java.lang.reflect.Method estaViviaMeth = processHandle.getClass().getMethod("isAlive");
+                    return (boolean) estaViviaMeth.invoke(processHandle);
+                }
+            }
+            return false;
+        } catch (Exception e) {
+            // Si falla (Java 8 o ProcessHandle no disponible), usa el método de comandos del sistema
+            return viva8(pid);
+        }
+    }
+
+    public static boolean viva8(long pid) {
+        try {
+            String os = System.getProperty("os.name").toLowerCase();
+            ProcessBuilder processBuilder;
+
+            if (os.contains("win")) {
+                processBuilder = new ProcessBuilder("tasklist", "/FI", "PID eq " + pid, "/FO", "CSV", "/NH");
+            } else {
+                processBuilder = new ProcessBuilder("ps", "-p", String.valueOf(pid));
+            }
+
+            Process process = processBuilder.start();
+            int exitCode = process.waitFor();
+            return exitCode == 0;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    
+    
+    
+    
 
 }

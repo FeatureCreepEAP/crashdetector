@@ -4,8 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import com.asbestosstar.crashdetectormc.CDStringBuilder;
-import com.asbestosstar.crashdetectormc.MonitorDePID;
+import com.asbestosstar.crashdetector.CDStringBuilder;
+import com.asbestosstar.crashdetector.MonitorDePID;
 
 public class Drivers implements Verificaciones {
 

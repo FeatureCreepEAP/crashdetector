@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipInputStream;
 
-import com.asbestosstar.crashdetectormc.MonitorDePID;
+import com.asbestosstar.crashdetector.MonitorDePID;
 
 public class Buscardor {
 

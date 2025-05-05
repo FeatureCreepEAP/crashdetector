@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetectormc;
+package com.asbestosstar.crashdetector;
 
 import java.awt.Color;
 import java.io.File;

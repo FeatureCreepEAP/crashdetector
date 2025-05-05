@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetectormc;
+package com.asbestosstar.crashdetector;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -60,7 +60,7 @@ public interface Idioma {
         }
     }
 
-    private static String leerIdiomaDesdeArchivo() {
+    public static String leerIdiomaDesdeArchivo() {
         File archivo = new File(System.getProperty("user.home"), "crash_detector/idioma");
         if (!archivo.exists() || !archivo.canRead()) {
             return null;
@@ -169,8 +169,9 @@ public interface Idioma {
 	public String kubeJSResourcePack(String mod_nombre);
 
 	public default String obtenerRutaJava() {
-	    Optional<String> javaBinary = ProcessHandle.current().info().command();
-	    return javaBinary.orElse("No se pudo determinar la ubicación del ejecutable de Java.");
+	    String javaBinary = MonitorDePID.jvm();
+	   // return javaBinary.orElse("No se pudo determinar la ubicación del ejecutable de Java.");
+	    return javaBinary;
 	}
 	
 	

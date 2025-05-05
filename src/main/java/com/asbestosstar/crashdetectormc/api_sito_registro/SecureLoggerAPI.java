@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.zip.GZIPOutputStream;
 
-import com.asbestosstar.crashdetectormc.Consola;
-import com.asbestosstar.crashdetectormc.CrashDetectorLogger;
+import com.asbestosstar.crashdetector.Consola;
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
 
 public class SecureLoggerAPI implements APIdeSitioDeRegistro {
 

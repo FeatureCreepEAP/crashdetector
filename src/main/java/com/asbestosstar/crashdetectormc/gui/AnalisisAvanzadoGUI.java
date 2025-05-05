@@ -7,7 +7,8 @@ import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import com.asbestosstar.crashdetectormc.MonitorDePID;
+
+import com.asbestosstar.crashdetector.MonitorDePID;
 
 public class AnalisisAvanzadoGUI extends JFrame {
 

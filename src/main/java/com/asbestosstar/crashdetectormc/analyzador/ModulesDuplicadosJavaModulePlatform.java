@@ -3,9 +3,9 @@ package com.asbestosstar.crashdetectormc.analyzador;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.asbestosstar.crashdetectormc.CDStringBuilder;
-import com.asbestosstar.crashdetectormc.CrashDetectorLogger;
-import com.asbestosstar.crashdetectormc.MonitorDePID;
+import com.asbestosstar.crashdetector.CDStringBuilder;
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
+import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetectormc.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetectormc.buscar.Buscardor;
 

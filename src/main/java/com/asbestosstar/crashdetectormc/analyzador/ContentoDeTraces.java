@@ -9,8 +9,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import com.asbestosstar.crashdetectormc.CDStringBuilder;
-import com.asbestosstar.crashdetectormc.MonitorDePID;
+import com.asbestosstar.crashdetector.CDStringBuilder;
+import com.asbestosstar.crashdetector.MonitorDePID;
 
 /**
  * Para el contento en "at" en Traces

@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetectormc;
+package com.asbestosstar.crashdetector;
 
 import com.asbestosstar.crashdetectormc.analyzador.Verificaciones;
 

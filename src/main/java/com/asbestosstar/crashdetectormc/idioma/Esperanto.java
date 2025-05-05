@@ -1,7 +1,7 @@
 package com.asbestosstar.crashdetectormc.idioma;
 
-import com.asbestosstar.crashdetectormc.Config;
-import com.asbestosstar.crashdetectormc.Idioma;
+import com.asbestosstar.crashdetector.Config;
+import com.asbestosstar.crashdetector.Idioma;
 
 public class Esperanto implements Idioma {
     private final Config config = Config.obtenerInstancia();

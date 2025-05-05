@@ -1,6 +1,6 @@
 package com.asbestosstar.crashdetectormc.analyzador;
 
-import com.asbestosstar.crashdetectormc.CDStringBuilder;
+import com.asbestosstar.crashdetector.CDStringBuilder;
 
 public interface Verificaciones {
 

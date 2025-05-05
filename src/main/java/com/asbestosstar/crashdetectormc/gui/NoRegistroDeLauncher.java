@@ -27,9 +27,9 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
-import com.asbestosstar.crashdetectormc.Consola;
-import com.asbestosstar.crashdetectormc.CrashDetectorLogger;
-import com.asbestosstar.crashdetectormc.MonitorDePID;
+import com.asbestosstar.crashdetector.Consola;
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
+import com.asbestosstar.crashdetector.MonitorDePID;
 
 public class NoRegistroDeLauncher extends JDialog {
     private final JTextArea area_de_texto;

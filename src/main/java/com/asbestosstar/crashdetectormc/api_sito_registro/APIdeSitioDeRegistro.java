@@ -3,8 +3,8 @@ package com.asbestosstar.crashdetectormc.api_sito_registro;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.asbestosstar.crashdetectormc.Config;
-import com.asbestosstar.crashdetectormc.Consola;
+import com.asbestosstar.crashdetector.Config;
+import com.asbestosstar.crashdetector.Consola;
 
 public interface APIdeSitioDeRegistro {
 	

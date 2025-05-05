@@ -17,7 +17,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
-import com.asbestosstar.crashdetectormc.MonitorDePID;
+import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetectormc.grepr.BusquedaArchivos;
 
 public class BusquedaGUI extends JFrame {

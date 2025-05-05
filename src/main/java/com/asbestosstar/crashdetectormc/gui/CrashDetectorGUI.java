@@ -14,11 +14,11 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.HyperlinkEvent;
 
-import com.asbestosstar.crashdetectormc.Config;
-import com.asbestosstar.crashdetectormc.Consola;
-import com.asbestosstar.crashdetectormc.CrashDetectorLogger;
-import com.asbestosstar.crashdetectormc.GeneradorDeInformacion;
-import com.asbestosstar.crashdetectormc.MonitorDePID;
+import com.asbestosstar.crashdetector.Config;
+import com.asbestosstar.crashdetector.Consola;
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
+import com.asbestosstar.crashdetector.GeneradorDeInformacion;
+import com.asbestosstar.crashdetector.MonitorDePID;
 
 public class CrashDetectorGUI extends JFrame {
 

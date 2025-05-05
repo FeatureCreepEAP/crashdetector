@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetectormc;
+package com.asbestosstar.crashdetector;
 
 import java.util.HashSet;
 import java.util.Set;

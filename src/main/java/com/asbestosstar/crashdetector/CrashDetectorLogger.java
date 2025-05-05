@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetectormc;
+package com.asbestosstar.crashdetector;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

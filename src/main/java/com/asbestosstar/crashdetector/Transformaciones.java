@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetectormc;
+package com.asbestosstar.crashdetector;
 
 import java.io.IOException;
 import java.lang.instrument.ClassFileTransformer;
@@ -70,7 +70,7 @@ public class Transformaciones implements ClassFileTransformer {
 		                insnList.add(new InsnNode(Opcodes.ICONST_1));//es_servidor=true
 		                insnList.add(new MethodInsnNode(
 		                    Opcodes.INVOKESTATIC,
-		                    "com/asbestosstar/crashdetectormc/Transformaciones",
+		                    "com/asbestosstar/crashdetector/Transformaciones",
 		                    "hechoArchivoDeCodioError0",
 		                    "(Z)V",
 		                    false
@@ -98,7 +98,7 @@ public class Transformaciones implements ClassFileTransformer {
 		                insnList.add(new InsnNode(Opcodes.ICONST_0)); //es_servidor=false
 		                insnList.add(new MethodInsnNode(
 		                    Opcodes.INVOKESTATIC,
-		                    "com/asbestosstar/crashdetectormc/Transformaciones",
+		                    "com/asbestosstar/crashdetector/Transformaciones",
 		                    "hechoArchivoDeCodioError0",
 		                    "(Z)V",
 		                    false

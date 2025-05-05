@@ -19,7 +19,7 @@
   "environment": "*",
   "entrypoints": {
     "preLaunch": [
-      "com.asbestosstar.crashdetectormc.CrashDetectorFabricMC"
+      "com.asbestosstar.crashdetector.CrashDetectorFabricMC"
     ]
   },
 	

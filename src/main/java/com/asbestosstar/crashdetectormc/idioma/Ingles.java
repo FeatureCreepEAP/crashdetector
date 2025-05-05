@@ -1,7 +1,7 @@
 package com.asbestosstar.crashdetectormc.idioma;
 
-import com.asbestosstar.crashdetectormc.Config;
-import com.asbestosstar.crashdetectormc.Idioma;
+import com.asbestosstar.crashdetector.Config;
+import com.asbestosstar.crashdetector.Idioma;
 
 public class Ingles implements Idioma {
     private final Config config = Config.obtenerInstancia(); // Assuming this is how you get the Config instance, like in Espanol

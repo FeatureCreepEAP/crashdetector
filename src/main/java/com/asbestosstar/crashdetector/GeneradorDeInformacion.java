@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetectormc;
+package com.asbestosstar.crashdetector;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -23,7 +23,7 @@ public class GeneradorDeInformacion {
 			cons.append(MonitorDePID.idioma.ubicacionesDeLogs()+"<br>");
 			for (Consola co : consolas) {
 					cons.append("<a href='file://").append(co.archivo.toUri().toString()).append("'>")
-							.append(co.archivo.toString().strip()).append("</a><br>");
+							.append(co.archivo.toString().trim()).append("</a><br>");
 			}
 
 			String pantilla = MonitorDePID.leer_archivo(new File("crash_detector/pantilla.htm").toPath());
@@ -44,7 +44,7 @@ public class GeneradorDeInformacion {
 			StringBuilder cons = new StringBuilder();
 			cons.append(MonitorDePID.idioma.ubicacionesDeLogs()+"<br>");
 			for (Consola co : consolas) {
-					cons.append("<a href=" + co.obtainerEnlance() + ">" + co.archivo.toString().strip() + "</a>")
+					cons.append("<a href=" + co.obtainerEnlance() + ">" + co.archivo.toString().trim() + "</a>")
 							.append("<br>");
 			}
 
@@ -62,7 +62,7 @@ public class GeneradorDeInformacion {
 
 	public static String enviarInforme(String html) throws IOException {
 		String servidor = Config.obtenerInstancia().obtenerSitoDeInformes();
-		String parametros = "html_content=" + java.net.URLEncoder.encode(html, StandardCharsets.UTF_8);
+		String parametros = "html_content=" + java.net.URLEncoder.encode(html, "UTF-8");
 
 		HttpURLConnection conexion = (HttpURLConnection) new URL(servidor).openConnection();
 		conexion.setRequestMethod("POST");

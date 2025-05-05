@@ -2,9 +2,9 @@ package com.asbestosstar.crashdetectormc.analyzador;
 
 import java.io.File;
 
-import com.asbestosstar.crashdetectormc.CDStringBuilder;
-import com.asbestosstar.crashdetectormc.Consola;
-import com.asbestosstar.crashdetectormc.MonitorDePID;
+import com.asbestosstar.crashdetector.CDStringBuilder;
+import com.asbestosstar.crashdetector.Consola;
+import com.asbestosstar.crashdetector.MonitorDePID;
 
 public class CursedConsola implements Verificaciones {
 

@@ -8,7 +8,7 @@ import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 
-import com.asbestosstar.crashdetectormc.Transformaciones;
+import com.asbestosstar.crashdetector.Transformaciones;
 
 public class CoreModFabricMC implements IMixinConfigPlugin{
 

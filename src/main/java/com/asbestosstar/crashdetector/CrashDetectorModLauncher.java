@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetectormc;
+package com.asbestosstar.crashdetector;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -6,13 +6,12 @@ import java.util.List;
 import java.util.Set;
 
 import cpw.mods.modlauncher.api.IEnvironment;
-import cpw.mods.modlauncher.api.IModuleLayerManager;
 import cpw.mods.modlauncher.api.ITransformationService;
 import cpw.mods.modlauncher.api.ITransformer;
 import cpw.mods.modlauncher.api.IncompatibleEnvironmentException;
 
 
-public class CrashDetectorModLauncher implements ITransformationService  {
+public class CrashDetectorModLauncher implements ITransformationService {
 
 static {
 if(!Statics.cargador)	{
@@ -38,12 +37,6 @@ if(!Statics.cargador)	{
 		// TODO Auto-generated method stub
 	}
 
-	
-	@Override
-	public List<Resource> completeScan(IModuleLayerManager layerManager) {
-		List<Resource> list = new ArrayList<Resource>();
-		return list;
-	}
 
 	@SuppressWarnings("rawtypes")
 	@Override
@@ -52,6 +45,12 @@ if(!Statics.cargador)	{
 		ArrayList<ITransformer> transformers = new ArrayList<ITransformer>();
 		transformers.add(new TransformacionesCPW());
 		return transformers;
+	}
+
+	@Override
+	public void beginScanning(IEnvironment environment) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
