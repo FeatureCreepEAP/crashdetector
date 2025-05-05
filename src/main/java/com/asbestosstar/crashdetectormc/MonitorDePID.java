@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 
+import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import com.asbestosstar.crashdetectormc.analyzador.Verificaciones;
@@ -37,7 +38,7 @@ public class MonitorDePID {
 	public static String local;
 	public static String enlance;
 	public static long pid;
-	public static boolean resultos=false;
+	public static boolean resultos = false;
 
 	public static void main(String[] args) {
 		if (args.length > 0 && args[0].equals("--monitor")) {
@@ -45,51 +46,45 @@ public class MonitorDePID {
 			monitor_proceso(pid);
 			return;
 		}
-		
-	    if (args.length > 0 && (args[0].equals("grepr") || args[0].equals("fgrepr"))) {
-	        boolean useRegex = args[0].equals("grepr");
-	        boolean caseInsensitive = false;
-	        String searchString = "";
-	        String directory = System.getProperty("user.dir");
 
-	        int index = 1;
-	        while (index < args.length) {
-	            String arg = args[index];
-	            if (arg.equals("-i")) {
-	                caseInsensitive = true;
-	                index++;
-	            } else if (arg.equals("--help")) {
-	                mostrarAyudaCLI();
-	                return;
-	            } else {
-	                break;
-	            }
-	        }
+		if (args.length > 0 && (args[0].equals("grepr") || args[0].equals("fgrepr"))) {
+			boolean useRegex = args[0].equals("grepr");
+			boolean caseInsensitive = false;
+			String searchString = "";
+			String directory = System.getProperty("user.dir");
 
-	        if (index >= args.length) {
-	            System.out.println("Error: Falta cadena de búsqueda");
-	            mostrarAyudaCLI();
-	            return;
-	        }
+			int index = 1;
+			while (index < args.length) {
+				String arg = args[index];
+				if (arg.equals("-i")) {
+					caseInsensitive = true;
+					index++;
+				} else if (arg.equals("--help")) {
+					mostrarAyudaCLI();
+					return;
+				} else {
+					break;
+				}
+			}
 
-	        searchString = args[index++];
-	        if (index < args.length) {
-	            directory = args[index];
-	        }
+			if (index >= args.length) {
+				System.out.println("Error: Falta cadena de búsqueda");
+				mostrarAyudaCLI();
+				return;
+			}
 
-	        List<String> resultados = BusquedaArchivos.buscar(directory, searchString, useRegex, caseInsensitive);
-	        for (String res : resultados) {
-	            System.out.println(res);
-	        }
-	        return;
-	    }
-		
-		
-		
-		
-		
-		
-		
+			searchString = args[index++];
+			if (index < args.length) {
+				directory = args[index];
+			}
+
+			List<String> resultados = BusquedaArchivos.buscar(directory, searchString, useRegex, caseInsensitive);
+			for (String res : resultados) {
+				System.out.println(res);
+			}
+			return;
+		}
+
 		ArchivoDeCodioError0.delete();
 		File html = new File("crash_detector/pantilla.htm");
 		if (!html.exists()) {
@@ -135,31 +130,31 @@ public class MonitorDePID {
 		boolean primera = true;
 
 		for (Path ub : Statics.carpetas_de_mods) {
-		    File dir = ub.toFile();
-		    
-		    if (!dir.exists() || !dir.isDirectory()) {
-		        CrashDetectorLogger.log(dir.getAbsolutePath() + idioma.carpeta_de_mods_no_valido());
-		        continue;
-		    }
+			File dir = ub.toFile();
 
-		    File[] archivosMods = dir.listFiles();
-		    if (archivosMods == null) {
-		        CrashDetectorLogger.log(dir.getAbsolutePath() + idioma.carpeta_de_mods_no_valido());
-		        continue;
-		    }
+			if (!dir.exists() || !dir.isDirectory()) {
+				CrashDetectorLogger.log(dir.getAbsolutePath() + idioma.carpeta_de_mods_no_valido());
+				continue;
+			}
 
-		    for (File archivoMod : archivosMods) {
-		        if (archivoMod.isFile()) {
-		            if (primera) {
-		                primera = false;
-		            } else {
-		                actuales.append(nl);
-		            }
-		            
-		            String pathCompleta = archivoMod.getAbsolutePath();
-		            actuales.append(pathCompleta);
-		        }
-		    }
+			File[] archivosMods = dir.listFiles();
+			if (archivosMods == null) {
+				CrashDetectorLogger.log(dir.getAbsolutePath() + idioma.carpeta_de_mods_no_valido());
+				continue;
+			}
+
+			for (File archivoMod : archivosMods) {
+				if (archivoMod.isFile()) {
+					if (primera) {
+						primera = false;
+					} else {
+						actuales.append(nl);
+					}
+
+					String pathCompleta = archivoMod.getAbsolutePath();
+					actuales.append(pathCompleta);
+				}
+			}
 		}
 
 		new File(ultima_mods.toString()).delete();
@@ -229,11 +224,10 @@ public class MonitorDePID {
 				CrashDetectorLogger.log(idioma.pid_esta_muerto(pid));
 				StringBuilder constructor = new StringBuilder();
 
-				
 				Instant lugeo = Instant.now();
 				Duration duration = Duration.between(utc, lugeo);
 
-				if (duration.getSeconds() >= 10) {//Para las consolas completa
+				if (duration.getSeconds() >= 10) {// Para las consolas completa
 				} else {
 
 					try {
@@ -243,44 +237,32 @@ public class MonitorDePID {
 						break;
 					}
 				}
-				
-				
-				
-				
+
 				CrashDetectorLogger.log("Finalizando Contento de Consolas");
 
 				consolas_sin_processando.addAll(Consola.obtenerConsolas());
-				
-	
-				
-				
-				
+
 				for (Consola consola : consolas_sin_processando) {
 					consola.finalizarContento(utc);
 					if (consola.nueva) {
 						consolas.add(consola);
 					}
 				}
-				
-				
-//			if(!Consola.tiene_registro_de_launcher(consolas)) {
-//					
-//					NoRegistroDeLauncher noreg= new NoRegistroDeLauncher(utc);
-//					noreg.setVisible(true);
-//					
-//					
-//				}
+
+				if (!Consola.tiene_registro_de_launcher(consolas)) {
+					obtenerCosolaDeLauncher(utc);
+				}
 
 				CrashDetectorLogger.log("Analyzador Consolas");
-				
+
 				for (Consola consola : consolas) {
 					consola.analyzar(constructor);
 				}
-				String res=constructor.toString();
-				if(res.replace(" ", "").equals("")) {
+				String res = constructor.toString();
+				if (res.replace(" ", "").equals("")) {
 					constructor.append(idioma.noResultos());
-				}else {
-					resultos=true;
+				} else {
+					resultos = true;
 				}
 
 				System.out.println(res);
@@ -353,8 +335,7 @@ public class MonitorDePID {
 				}
 
 			}
-			
-			
+
 		}
 		if (ArchivoDeCodioError0.exists()) {
 			return false;
@@ -362,15 +343,47 @@ public class MonitorDePID {
 		return true;
 	}
 
-	
-	
-	
+	public static void obtenerCosolaDeLauncher(Instant utc) {
+		// para detener el programa
+		JFrame frame_blanco = new JFrame();
+		frame_blanco.setUndecorated(true);
+		frame_blanco.setSize(0, 0);
+		frame_blanco.setLocationRelativeTo(null);
+		frame_blanco.setVisible(true);
 
-private static void mostrarAyudaCLI() {
-    System.out.println("Uso: java -jar CrashDetectorMC.jar [grepr|fgrepr] [-i] <cadena> [directorio]");
-    System.out.println("  grepr: Busca usando regex (por defecto)");
-    System.out.println("  fgrepr: Busca sin regex");
-    System.out.println("  -i: Ignorar mayúsculas/minúsculas");
-}
-	
+		CountDownLatch templach = new CountDownLatch(1);
+
+		SwingUtilities.invokeLater(() -> {
+			NoRegistroDeLauncher noreg = new NoRegistroDeLauncher(frame_blanco, utc);
+			noreg.addWindowListener(new java.awt.event.WindowAdapter() {
+				@Override
+				public void windowClosed(java.awt.event.WindowEvent e) {
+					templach.countDown();
+				}
+			});
+			
+			
+			
+			
+			
+			
+			
+		});
+
+		try {
+			templach.await();
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
+
+		frame_blanco.dispose();
+	}
+
+	private static void mostrarAyudaCLI() {
+		System.out.println("Uso: java -jar CrashDetectorMC.jar [grepr|fgrepr] [-i] <cadena> [directorio]");
+		System.out.println("  grepr: Busca usando regex (por defecto)");
+		System.out.println("  fgrepr: Busca sin regex");
+		System.out.println("  -i: Ignorar mayúsculas/minúsculas");
+	}
+
 }

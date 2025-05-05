@@ -224,7 +224,9 @@ public class Consola {
 		
 		CrashDetectorLogger.log("Analyzando " + archivo.toString());
 
-		
+		if(archivo.toString().contains("cd")) {
+			CrashDetectorLogger.log(contento_verificar);
+		}
 
 
 		if (!contento_verificar.replace(" ", "").equals("")) {
