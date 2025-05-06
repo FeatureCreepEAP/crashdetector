@@ -396,7 +396,7 @@ public String apiDeLogging() {
 
 @Override
 public String anonimizarRegistros() {
-    return "Anonymise logs (Coming Soon)";
+    return "Anonymize logs (Beta)";
 }
 
 @Override
@@ -406,12 +406,12 @@ public String botonDeCompartirInforme() {
 
 @Override
 public String arco() {
-    return "This dialog allows you to share logs using the SecureLogger API "
+    return "This dialogue allows you to share logs using the SecureLogger API "
             + "at securelogger.net. When pressing the share buttons, files "
             + "are uploaded to the selected site (default asbestosstar.egoism.jp). You can share all selected logs "
-            + "along with the report. If you don't want to upload, don't use this dialog! We do not process your report at the official endpoint (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb); we only remove disallowed links. The code is here: https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb. This is solely used to display information about your crash and the link to the logs. However, it is possible to use a custom endpoint that might not have the same methods. You are using the report site " 
+            + "along with the report. If you don't want to upload, don't use this dialogue! We do not process your report at the official endpoint (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb); we only remove disallowed links. The code is here: https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb. This is solely used to display information about your crash and the link to the logs. However, it is possible to use a custom endpoint that might not have the same methods. You are using the report site " 
             + Config.obtenerInstancia().obtenerSitoDeInformes() + " and the log site " 
-            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado();
+            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + ". CrashDetector has default log anonymisation, which attempts to remove usernames, UUIDs, access tokens, session IDs, IP addresses, and other data. However, it is not perfect. Nevertheless, the modpack author can disable it. It can be enabled or disabled with the checkbox at the bottom of this screen.";
 }
 
 @Override
@@ -441,7 +441,45 @@ public String apiDeRegistroNoExiste() {
     return "Logging API does not exist. Please change the logging API in the settings.";
 }
 
+@Override
+public String errorSSL() {
+    return "You have an SSL Error. This is common with older versions of Java, "
+            + "including Java 8 versions in the default Minecraft Launcher "
+            + "and versions from sun.com and java.com. This affects many aspects, "
+            + "such as the MinecraftForge installer JAR files, the function to share "
+            + "CrashDetector reports when using the default endpoint, some mods that require internet, "
+            + "and some logging sites. If this happens to you while trying to share a report, "
+            + "simply attach a screenshot and select a logging site compatible "
+            + "with older Java 8 versions.";
+}
 
+@Override
+public String errorJavaFMLVersion(String requerido, String encontrado) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Incompatible JavaFML: Requires version " + requerido 
+         + ", detected " + encontrado + "</b>";
+}
+
+@Override
+public String errorJavaFML_MCForge() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+         + "Attention! JavaFML requires a specific version of Minecraft Forge</b>";
+}
+
+@Override
+public String errorProveedorVersion(String proveedor, String requerido, String encontrado) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Incompatible provider " + proveedor + ": "
+         + "Requires " + requerido + ", found " + encontrado + "</b>";
+}
+
+@Override
+public String advertenciaMalwareFalso() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "ALERT! Crash Assistant is a fake malware detector. It intentionally blocks the game and disregards your freedom to keep playing with the mods it targets. "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/02caebaaac98e3e226337e27b226ead568363815/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java'>View MalwareMod.java code</a>   "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>View JarInJarHelper.java code</a></b>";
+}
 
 
 

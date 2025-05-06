@@ -400,7 +400,7 @@ public String apiDeLogging() {
 
 @Override
 public String anonimizarRegistros() {
-    return "(قريبًا) إخفاء هوية السجلات";
+    return "إخفاء هوية السجلات (بيتا)";
 }
 
 @Override
@@ -415,7 +415,7 @@ public String arco() {
             + "إلى الموقع المحدد (افتراضي asbestosstar.egoism.jp). يمكنك مشاركة جميع السجلات المحددة "
             + "مع التقرير. إذا كنت لا تريد الرفع، فلا تستخدم هذا الحوار! نحن لا نعالج تقريرك في النقطة النهائية الرسمية (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb)؛ نحن فقط نزيل الروابط غير المسموح بها. الكود موجود هنا: https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb. يتم استخدام هذا فقط لعرض معلومات عن تعطل النظام والرابط إلى السجلات. ومع ذلك، من الممكن استخدام نقطة نهاية مخصصة قد لا تحتوي على نفس الطرق. أنت تستخدم موقع التقارير " 
             + Config.obtenerInstancia().obtenerSitoDeInformes() + " وموقع السجلات " 
-            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado();
+            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + ". لدى CrashDetector إخفاء هوية السجلات بشكل افتراضي، والذي يحاول إزالة أسماء المستخدمين، UUIDs، رموز الوصول، معرفات الجلسة، عناوين IP، وبعض البيانات الأخرى. ومع ذلك، فإنه ليس مثاليًا. مع ذلك، يمكن للمؤلف المشرف على الحزمة تعطيله. يمكن تفعيله أو تعطيله باستخدام خانة الاختيار أسفل هذه الشاشة.";
 }
 
 @Override
@@ -443,6 +443,45 @@ public String apiDeRegistroNoExiste() {
     return "واجهة برمجة تطبيقات السجل غير موجودة. يرجى تغيير واجهة برمجة التطبيقات في الإعدادات.";
 }
 
+
+@Override
+public String errorSSL() {
+    return "لديك خطأ في بروتوكول طبقة المقابس الآمنة (SSL). هذا شائع مع إصدارات قديمة من Java، "
+            + "بما في ذلك إصدارات Java 8 في مشغل Minecraft الافتراضي والإصدارات الموجودة على sun.com و java.com. "
+            + "يؤثر هذا على العديد من الجوانب، مثل ملفات JAR الخاصة بمثبت MinecraftForge، "
+            + "وظيفة مشاركة تقارير CrashDetector عند استخدام نقطة النهاية الافتراضية، وبعض الإضافات التي تتطلب الإنترنت "
+            + "وبعض مواقع التسجيل. إذا حدث هذا لك أثناء محاولة مشاركة تقرير، "
+            + "ما عليك سوى إرفاق لقطة شاشة واختيار موقع تسجيل متوافق مع إصدارات Java 8 القديمة.";
+}
+
+
+@Override
+public String errorJavaFMLVersion(String requerido, String encontrado) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "إصدار JavaFML غير متوافق: مطلوب الإصدار " + requerido 
+         + "، تم اكتشاف " + encontrado + "</b>";
+}
+
+@Override
+public String errorJavaFML_MCForge() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+         + "انتباه! JavaFML يتطلب إصدارًا محددًا من Minecraft Forge</b>";
+}
+
+@Override
+public String errorProveedorVersion(String proveedor, String requerido, String encontrado) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "مزود " + proveedor + " غير متوافق: "
+         + "مطلوب " + requerido + "، تم العثور على " + encontrado + "</b>";
+}
+
+@Override
+public String advertenciaMalwareFalso() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "تنبيه! Crash Assistant هو كاشف برامج ضارة مزيف. يقوم بحظر اللعبة بشكل متعمد ولا يأخذ في الاعتبار حريتك في متابعة اللعب مع التعديلات المستهدفة. "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/02caebaaac98e3e226337e27b226ead568363815/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java'>عرض كود MalwareMod.java</a>   "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>عرض كود JarInJarHelper.java</a></b>";
+}
 
 
 

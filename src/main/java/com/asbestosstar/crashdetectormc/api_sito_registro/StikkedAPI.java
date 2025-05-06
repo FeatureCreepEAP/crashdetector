@@ -24,7 +24,7 @@ public class StikkedAPI implements APIdeSitioDeRegistro {
 
     @Override
     public String publicarRegistro(Consola registro) throws DemasiadoGrande, ErrorConPublicar {
-        String texto = registro.contento_verificar.trim();
+        String texto = registro.obtainerContentoParaPublicar().trim();
         
         if (texto.equals("")) {
             throw new ErrorConPublicar("Registro no tiene texto " + registro.archivo.toString());

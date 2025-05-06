@@ -100,7 +100,7 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 			return "()";
 		}
 
-		String contenido = mods.stream().map(mod -> "<b>" + mod.ubicacion() + "</b>").collect(Collectors.joining(", "));
+		String contenido = mods.stream().map(mod -> "<b>" + Buscardor.rutaParaPublicar(mod.ubicacion()) + "</b>").collect(Collectors.joining(", "));
 
 		return "(" + contenido + ")";
 	}

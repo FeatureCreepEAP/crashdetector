@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipInputStream;
 
+import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.anon.AnonimizadorDeRuta;
 
 public class Buscardor {
 
@@ -33,17 +35,20 @@ public class Buscardor {
 		}
 	}
 	
-	
-	
-	
-	
+	public static String rutaParaPublicar(String ruta) {
+		boolean anon = Config.obtenerInstancia().esAnonimizarRegistros();
+		if (anon) {
+			return AnonimizadorDeRuta.anonimizarNombreDeUsuario(ruta.toString());
+		}
+		return ruta.toString();
+	}
 	
 	
 	public static List<String> obternerModsConNombre(String nombre){
 		List<String> modsConNombre = new ArrayList<String>();
 		for(ArchivoDeMod mod:mods) {
 			if(mod.tieneNombreRecursivo(nombre)) {
-				modsConNombre.add(mod.obtenerNombreRecursivo(nombre));
+				modsConNombre.add(rutaParaPublicar(mod.obtenerNombreRecursivo(nombre)));
 			}
 		}
 		return modsConNombre;

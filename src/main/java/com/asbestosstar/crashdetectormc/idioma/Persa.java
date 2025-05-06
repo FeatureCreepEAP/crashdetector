@@ -396,7 +396,7 @@ public String apiDeLogging() {
 
 @Override
 public String anonimizarRegistros() {
-    return "(به زودی) بی‌هویت کردن لاگ‌ها";
+    return "بی‌هویت کردن لاگ‌ها (بتا)";
 }
 
 @Override
@@ -409,7 +409,7 @@ public String arco() {
     return "این گفتگو به شما امکان می‌دهد لاگ‌ها را با استفاده از API SecureLogger در securelogger.net به اشتراک بگذارید. "
             + "هنگام فشار دادن دکمه‌های اشتراک‌گذاری، فایل‌ها به سایت انتخاب‌شده (پیش‌فرض asbestosstar.egoism.jp) آپلود می‌شوند. شما می‌توانید تمام لاگ‌های انتخاب‌شده را همراه با گزارش به اشتراک بگذارید. اگر نمی‌خواهید آپلود کنید، از این گفتگو استفاده نکنید! ما گزارش شما را در نقاط پایانی رسمی (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb) پردازش نمی‌کنیم؛ فقط لینک‌های غیرمجاز حذف می‌شوند. کد اینجا قرار دارد: https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb. این فقط برای نمایش اطلاعات درباره خرابی و لینک به لاگ‌ها استفاده می‌شود. با این حال، می‌توانید از یک نقطه پایانی سفارشی استفاده کنید که ممکن است شامل همان روش‌ها نباشد. شما از سایت گزارش‌ها " 
             + Config.obtenerInstancia().obtenerSitoDeInformes() + " و سایت لاگ‌ها " 
-            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + " استفاده می‌کنید.";
+            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + " استفاده می‌کنید. CrashDetector به طور پیش‌فرض دارای بی‌هویت‌سازی لاگ‌هاست، که سعی می‌کند نام‌های کاربری، UUIDها، توکن‌های دسترسی، شناسه‌های جلسه، آدرس‌های IP و داده‌های دیگر را حذف کند. با این حال، این فرآیند کامل نیست. با این حال، نویسنده مجموعه افزونه‌ها می‌تواند آن را غیرفعال کند. می‌توان آن را با جعبه تیک در پایین این صفحه فعال یا غیرفعال کرد.";
 }
 
 @Override
@@ -439,7 +439,46 @@ public String apiDeRegistroNoExiste() {
     return "API ثبت لاگ وجود ندارد. لطفاً API ثبت لاگ را در تنظیمات تغییر دهید.";
 }
 
+@Override
+public String errorSSL() {
+    return "خطای SSL دارید. این موضوع در نسخه‌های قدیمی Java رایج است، "
+            + "از جمله نسخه‌های Java 8 در لانچر پیش‌فرض Minecraft و نسخه‌های موجود در sun.com و java.com. "
+            + "این مشکل بر بسیاری از جنبه‌ها تأثیر می‌گذارد، از جمله فایل‌های JAR نصب‌کننده MinecraftForge، "
+            + "عملکرد اشتراک‌گذاری گزارش‌های CrashDetector هنگام استفاده از نقطه پایانی پیش‌فرض، "
+            + "برخی افزونه‌هایی که به اینترنت نیاز دارند و برخی سایت‌های ثبت لاگ. "
+            + "اگر این مشکل را هنگام تلاش برای اشتراک‌گذاری گزارش داشتید، "
+            + "کافی است یک عکس از صفحه ضمیمه کنید و سایت ثبت لاگ سازگار با نسخه‌های قدیمی Java 8 را انتخاب کنید.";
+}
 
+
+
+@Override
+public String errorJavaFMLVersion(String requerido, String encontrado) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "نسخه ناسازگار JavaFML: نیاز به نسخه " + requerido 
+         + "، پیدا شده " + encontrado + "</b>";
+}
+
+@Override
+public String errorJavaFML_MCForge() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+         + "توجه! JavaFML به نسخه خاصی از Minecraft Forge نیاز دارد</b>";
+}
+
+@Override
+public String errorProveedorVersion(String proveedor, String requerido, String encontrado) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "ارائه‌دهنده " + proveedor + " ناسازگار: "
+         + "نیاز به " + requerido + "، پیدا شده " + encontrado + "</b>";
+}
+
+@Override
+public String advertenciaMalwareFalso() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "هشدار! Crash Assistant یک تشخیص‌دهنده بدافزار جعلی است. این برنامه به‌طور عمدی بازی را مسدود می‌کند و آزادی شما را برای ادامه بازی با افزونه‌های هدف‌گیری‌شده در نظر نمی‌گیرد. "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/02caebaaac98e3e226337e27b226ead568363815/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java'>مشاهده کد MalwareMod.java</a>   "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>مشاهده کد JarInJarHelper.java</a></b>";
+}
 
 
 

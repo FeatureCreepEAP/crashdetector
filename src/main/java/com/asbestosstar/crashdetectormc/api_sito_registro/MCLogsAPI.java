@@ -22,7 +22,7 @@ public class MCLogsAPI implements APIdeSitioDeRegistro {
 
     @Override
     public String publicarRegistro(Consola registro) throws DemasiadoGrande, ErrorConPublicar {
-        String contenido = registro.contento_verificar.trim();
+        String contenido = registro.obtainerContentoParaPublicar().trim();
         
         // Verificar contenido vacío
         if (contenido.isEmpty()) {

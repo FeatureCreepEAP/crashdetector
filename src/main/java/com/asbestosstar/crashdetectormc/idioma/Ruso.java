@@ -395,7 +395,7 @@ public String apiDeLogging() {
 
 @Override
 public String anonimizarRegistros() {
-    return "Анонимизировать логи (скоро)";
+    return "Анонимизация логов (Бета)";
 }
 
 @Override
@@ -412,7 +412,7 @@ public String arco() {
             + "Это используется только для отображения информации о сбое и ссылки на логи. Однако можно использовать пользовательскую конечную точку, которая может не иметь тех же методов. "
             + "Вы используете сайт отчетов " 
             + Config.obtenerInstancia().obtenerSitoDeInformes() + " и сайт логов " 
-            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + ".";
+            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + ". CrashDetector имеет функцию анонимизации логов по умолчанию, которая пытается удалить имена пользователей, UUID, токены доступа, идентификаторы сессий, IP-адреса и другие данные. Однако она не является совершенной. Тем не менее, автор модпака может отключить её. Она может быть включена или отключена с помощью флажка в нижней части этого экрана.";
 }
 
 @Override
@@ -441,7 +441,44 @@ public String apiDeRegistroNoExiste() {
     return "API логов не существует. Пожалуйста, измените API логов в настройках.";
 }
 
+@Override
+public String errorSSL() {
+    return "У вас ошибка SSL. Это часто встречается в старых версиях Java, "
+            + "включая версии Java 8 в стандартном лаунчере Minecraft и версии с sun.com и java.com. "
+            + "Это влияет на многие аспекты, такие как JAR-файлы установщика MinecraftForge, "
+            + "функция для отправки отчетов CrashDetector при использовании стандартного конечного пункта, "
+            + "некоторые моды, требующие интернета, и некоторые сайты для записи логов. "
+            + "Если это произошло при попытке поделиться отчетом, просто прикрепите скриншот "
+            + "и выберите сайт для записи логов, совместимый со старыми версиями Java 8.";
+}
 
+@Override
+public String errorJavaFMLVersion(String requerido, String encontrado) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Несовместимая версия JavaFML: требуется " + requerido 
+         + ", но найдена " + encontrado + "</b>";
+}
+
+@Override
+public String errorJavaFML_MCForge() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+         + "Внимание! JavaFML требует определённой версии Minecraft Forge</b>";
+}
+
+@Override
+public String errorProveedorVersion(String proveedor, String requerido, String encontrado) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Несовместимая версия поставщика " + proveedor + ": "
+         + "требуется " + requerido + ", но найдена " + encontrado + "</b>";
+}
+
+@Override
+public String advertenciaMalwareFalso() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "ВНИМАНИЕ! Crash Assistant — это поддельный детектор вредоносного ПО. Он намеренно блокирует игру и игнорирует вашу свободу продолжать играть с целевыми модификациями. "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/02caebaaac98e3e226337e27b226ead568363815/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java'>Посмотреть код MalwareMod.java</a>   "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>Посмотреть код JarInJarHelper.java</a></b>";
+}
 
 
 

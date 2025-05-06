@@ -393,7 +393,7 @@ public String apiDeLogging() {
 
 @Override
 public String anonimizarRegistros() {
-    return "ログを匿名化（近日公開）";
+    return "ログを匿名化 (ベータ)";
 }
 
 @Override
@@ -410,7 +410,7 @@ public String arco() {
             + "これはクラッシュ情報とログへのリンクを表示するためにのみ使用されます。ただし、同じメソッドを持たないカスタムエンドポイントを使用することも可能です。"
             + "現在、レポートサイトとして " 
             + Config.obtenerInstancia().obtenerSitoDeInformes() + "、ログサイトとして " 
-            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + " を使用しています。";
+            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + " を使用しています。CrashDetector には、デフォルトでログの匿名化機能があります。これは、ユーザー名、UUID、アクセストークン、セッションID、IPアドレス、その他のデータを削除しようとします。ただし、完全ではありません。なお、Modpackの作者がこれを無効にすることも可能です。この画面の下部にあるチェックボックスで有効または無効にできます。";
 }
 
 @Override
@@ -439,6 +439,46 @@ public String errorConPublicarRegistro(String error) {
 public String apiDeRegistroNoExiste() {
     return "ログAPIが存在しません。設定でログAPIを変更してください。";
 }
+
+@Override
+public String errorSSL() {
+    return "SSLエラーが発生しています。これは古いバージョンのJavaで一般的であり、"
+            + "デフォルトのMinecraftランチャー内のJava 8バージョンやsun.com、java.comのバージョンに含まれます。"
+            + "このエラーは、MinecraftForgeインストーラーのJARファイル、デフォルトエンドポイントを使用した"
+            + "CrashDetectorレポートの共有機能、インターネットを必要とする一部のMOD、およびいくつかのログサイトに影響を与えます。"
+            + "これをレポートの共有中に遭遇した場合、スクリーンショットを添付し、"
+            + "古いJava 8バージョンと互換性のあるログサイトを選択してください。";
+}
+
+@Override
+public String errorJavaFMLVersion(String requerido, String encontrado) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "互換性のない JavaFML のバージョン: 必要なのは " + requerido 
+         + " ですが、見つかったのは " + encontrado + "</b>";
+}
+
+@Override
+public String errorJavaFML_MCForge() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+         + "注意！ JavaFML は特定のバージョンの Minecraft Forge を必要とします</b>";
+}
+
+@Override
+public String errorProveedorVersion(String proveedor, String requerido, String encontrado) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "プロバイダー " + proveedor + " の互換性のないバージョン: "
+         + "必要なのは " + requerido + " ですが、見つかったのは " + encontrado + "</b>";
+}
+
+@Override
+public String advertenciaMalwareFalso() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "警告！ Crash Assistant は偽のマルウェア検出ツールです。意図的にゲームをブロックし、ターゲットとなる MOD で引き続きプレイする自由を無視します。 "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/02caebaaac98e3e226337e27b226ead568363815/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java'>MalwareMod.java のコードを見る</a>   "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>JarInJarHelper.java のコードを見る</a></b>";
+}
+
+
 
 
 

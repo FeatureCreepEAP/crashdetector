@@ -10,6 +10,10 @@ public class Analyzador {
 		verificaciones.add(new ModulesDuplicadosJavaModulePlatform());
 		verificaciones.add(new FaltaModuleJPMS());
 		verificaciones.add(new ModsDuplicadosModLauncher());
+		verificaciones.add(new LenguajeProveedorCheck());
+
+		
+		
 		//verificaciones.add(verificacion_de_stacktrace); No necesitemos aqui, es en la clase Consola antes de esta contructor // Para Configs de SpongeMixin problematicos
 		verificaciones.add(new FabricMCRuntimeErrorProvidedBy());
 		verificaciones.add(new MCForgeModsSuspechoso());
@@ -27,6 +31,8 @@ public class Analyzador {
 		verificaciones.add(new NullPointer());
 		verificaciones.add(new ContentoDeTraces(verificacion_de_stacktrace));
 		verificaciones.add(new AdvertenciaFaltasClases());
+		verificaciones.add(new MalwareFalsoCrashAssistant());
+
 		//verificaciones.add(new ObjetoDeRegistroNoPresente());
 
 				

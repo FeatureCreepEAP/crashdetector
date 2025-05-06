@@ -97,7 +97,7 @@ public class SecureLoggerAPI implements APIdeSitioDeRegistro {
 			String urlCompleta = "https://securelogger.net/save/log?" + parametros;
 
 			// Leer contenido del archivo de log
-			String contenidoLog = consola.contento_verificar; // para ahora solo los registros para verificar
+			String contenidoLog = consola.obtainerContentoParaPublicar(); // para ahora solo los registros para verificar
 
 			// Realizar solicitud POST comprimida
 			return enviarPost(new URL(urlCompleta), contenidoLog.getBytes("cp1251"));

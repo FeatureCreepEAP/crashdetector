@@ -394,7 +394,7 @@ public String apiDeLogging() {
 
 @Override
 public String anonimizarRegistros() {
-    return "匿名化日志（即将推出）";
+    return "匿名化日志 (测试版)";
 }
 
 @Override
@@ -410,7 +410,7 @@ public String arco() {
             + "这仅用于显示有关崩溃的信息和日志链接。但是，可以使用可能不具备相同方法的自定义端点。"
             + "您当前正在使用报告站点 " 
             + Config.obtenerInstancia().obtenerSitoDeInformes() + " 和日志站点 " 
-            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + "。";
+            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + "。CrashDetector 默认提供日志匿名化功能，该功能会尝试移除用户名、UUID、访问令牌、会话 ID、IP 地址和其他数据。不过，它并非完美无缺。此外，模组包作者可以禁用此功能。可以通过此屏幕底部的复选框启用或禁用它。";
 }
 
 @Override
@@ -439,7 +439,44 @@ public String apiDeRegistroNoExiste() {
     return "日志API不存在。请在设置中更改日志API。";
 }
 
+@Override
+public String errorSSL() {
+    return "您遇到了SSL错误。这在旧版本的Java中很常见，"
+            + "包括默认Minecraft启动器中的Java 8版本以及sun.com和java.com上的版本。"
+            + "这会影响许多方面，例如MinecraftForge安装程序的JAR文件，"
+            + "使用默认端点时分享CrashDetector报告的功能，需要互联网连接的一些模组，"
+            + "以及一些日志站点。如果在尝试分享报告时遇到此问题，"
+            + "请附上屏幕截图并选择与旧版Java 8兼容的日志站点。";
+}
 
+
+@Override
+public String errorJavaFMLVersion(String requerido, String encontrado) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "不兼容的 JavaFML 版本：需要 " + requerido 
+         + "，但找到的是 " + encontrado + "</b>";
+}
+
+@Override
+public String errorJavaFML_MCForge() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+         + "注意！JavaFML 需要特定版本的 Minecraft Forge</b>";
+}
+
+@Override
+public String errorProveedorVersion(String proveedor, String requerido, String encontrado) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "供应商 " + proveedor + " 的不兼容版本："
+         + "需要 " + requerido + "，但找到的是 " + encontrado + "</b>";
+}
+
+@Override
+public String advertenciaMalwareFalso() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "警告！Crash Assistant 是一个伪造的恶意软件检测器。它故意阻止游戏，并无视您继续使用目标模组进行游戏的自由。 "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/02caebaaac98e3e226337e27b226ead568363815/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java'>查看 MalwareMod.java 代码</a>   "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>查看 JarInJarHelper.java 代码</a></b>";
+}
 
 
 

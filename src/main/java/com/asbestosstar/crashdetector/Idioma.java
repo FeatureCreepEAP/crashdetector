@@ -259,5 +259,15 @@ public interface Idioma {
 	public String errorConPublicarRegistro(String error);
 
 	public String apiDeRegistroNoExiste();
+
+	public String errorSSL();
+
+	public String errorJavaFMLVersion(String requerido, String encontrado);
+
+	public String errorProveedorVersion(String string, String req, String encontrado);
+
+	public String errorJavaFML_MCForge();
+
+	public String advertenciaMalwareFalso();
 	
 }

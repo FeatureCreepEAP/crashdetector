@@ -11,6 +11,10 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.net.ssl.SSLException;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+
 import com.asbestosstar.crashdetectormc.api_sito_registro.DemasiadoGrande;
 import com.asbestosstar.crashdetectormc.api_sito_registro.ErrorConPublicar;
 import com.asbestosstar.crashdetectormc.api_sito_registro.NoAPIdeRegistro;
@@ -44,7 +48,7 @@ public class GeneradorDeInformacion {
 			StringBuilder cons = new StringBuilder();
 			cons.append(MonitorDePID.idioma.ubicacionesDeLogs()+"<br>");
 			for (Consola co : consolas) {
-					cons.append("<a href=" + co.obtainerEnlance() + ">" + co.archivo.toString().trim() + "</a>")
+					cons.append("<a href=" + co.obtainerEnlance() + ">" + co.obtainerRutaParaPublicar().trim() + "</a>")
 							.append("<br>");
 			}
 
@@ -61,32 +65,43 @@ public class GeneradorDeInformacion {
 	}
 
 	public static String enviarInforme(String html) throws IOException {
-		String servidor = Config.obtenerInstancia().obtenerSitoDeInformes();
-		String parametros = "html_content=" + java.net.URLEncoder.encode(html, "UTF-8");
+	    try {
+	        String servidor = Config.obtenerInstancia().obtenerSitoDeInformes();
+	        String parametros = "html_content=" + java.net.URLEncoder.encode(html, "UTF-8");
 
-		HttpURLConnection conexion = (HttpURLConnection) new URL(servidor).openConnection();
-		conexion.setRequestMethod("POST");
-		conexion.setDoOutput(true);
-		conexion.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+	        HttpURLConnection conexion = (HttpURLConnection) new URL(servidor).openConnection();
+	        conexion.setRequestMethod("POST");
+	        conexion.setDoOutput(true);
+	        conexion.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
-		try (OutputStream os = conexion.getOutputStream()) {
-			os.write(parametros.getBytes(StandardCharsets.UTF_8));
-		}
+	        try (OutputStream os = conexion.getOutputStream()) {
+	            os.write(parametros.getBytes(StandardCharsets.UTF_8));
+	        }
 
-		int codigoRespuesta = conexion.getResponseCode();
-		if (codigoRespuesta == HttpURLConnection.HTTP_OK) {
-			try (Scanner scanner = new Scanner(conexion.getInputStream(), StandardCharsets.UTF_8.name())) {
-				return scanner.useDelimiter("\\A").next().trim();
-			}
-		} else {
-			String mensajeError = "Error HTTP " + codigoRespuesta + ": ";
-			try (Scanner scanner = new Scanner(conexion.getErrorStream())) {
-				if (scanner.hasNext()) {
-					mensajeError += scanner.useDelimiter("\\A").next();
-				}
-			}
-			throw new IOException(mensajeError);
-		}
+	        int codigoRespuesta = conexion.getResponseCode();
+	        if (codigoRespuesta == HttpURLConnection.HTTP_OK) {
+	            try (Scanner scanner = new Scanner(conexion.getInputStream(), StandardCharsets.UTF_8.name())) {
+	                return scanner.useDelimiter("\\A").next().trim();
+	            }
+	        } else {
+	            String mensajeError = "Error HTTP " + codigoRespuesta + ": ";
+	            try (Scanner scanner = new Scanner(conexion.getErrorStream())) {
+	                if (scanner.hasNext()) {
+	                    mensajeError += scanner.useDelimiter("\\A").next();
+	                }
+	            }
+	            throw new IOException(mensajeError);
+	        }
+	    } catch (SSLException e) {
+	        // Mostrar diálogo de error SSL en el EDT
+	        SwingUtilities.invokeLater(() -> {
+	            JOptionPane.showMessageDialog(null, 
+	                MonitorDePID.idioma.errorSSL());
+	        });
+	        // Registrar el error completo
+	        CrashDetectorLogger.logException(e);
+	        throw new IOException("Error SSL: " + e.getMessage(), e);
+	    }
 	}
 
 }

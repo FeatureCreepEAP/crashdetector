@@ -399,7 +399,7 @@ public String apiDeLogging() {
 
 @Override
 public String anonimizarRegistros() {
-    return "Anonimigi protokolojn (Baldaŭ)";
+    return "Anonimigi protokolojn (Beta)";
 }
 
 @Override
@@ -414,7 +414,7 @@ public String arco() {
             + "alŝutiĝas al la elektita retejo (defaŭlte asbestosstar.egoism.jp). Vi povas kunhavigi ĉiujn elektitajn protokolojn "
             + "kune kun la raporto. Se vi ne volas alŝuti, ne uzu ĉi tiun dialogon! Ni ne prilaboras vian raporton ĉe la oficiala finpunkto (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb); ni nur forigas nepermesatajn ligilojn. La kodo estas ĉi tie: https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb. Tio estas uzata nur por montri informon pri via paneo kaj la ligilon al la protokoloj. Tamen, eblas uzi propran finpunkton, kiu eble ne havas la samajn metodojn. Vi uzas la raportan retejon " 
             + Config.obtenerInstancia().obtenerSitoDeInformes() + " kaj la protokolan retejon " 
-            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado();
+            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + ". CrashDetector havas defaŭltan anonimigon de protokoloj, kiu provas forigi uzantonomojn, UUID-ojn, alirajn ŝlosilojn, sesiajn identigilojn, IP-adresojn kaj aliajn datumojn. Tamen, ĝi ne estas perfekta. Tamen, la aŭtoro de la modpako povas malebligi ĝin. Ĝi povas esti aktivigita aŭ malebligita per la markobutono ĉe la malsupra parto de ĉi tiu ekrano.";
 }
 
 @Override
@@ -441,6 +441,45 @@ public String errorConPublicarRegistro(String error) {
 @Override
 public String apiDeRegistroNoExiste() {
     return "Protokola API ne ekzistas. Bonvolu ŝanĝi la protokolan API-on en la agordoj.";
+}
+
+@Override
+public String errorSSL() {
+    return "Vi havas eraron de SSL. Tio estas ofta kun malnovaj versioj de Java, "
+            + "inkluzive de Java 8 versioj en la defaŭlta Minecraft-Lanĉilo kaj versioj ĉe sun.com kaj java.com. "
+            + "Tio influas multajn aspektojn, kiel ekzemple la JAR-dosieroj de la instalilo de MinecraftForge, "
+            + "la funkcio por kunhavigi raportojn de CrashDetector dum vi uzas la defaŭltan finpunkton, "
+            + "iu modifoj kiuj bezonas interretan konekton kaj iujn protokolajn retejojn. "
+            + "Se tio okazas al vi dum provo kunhavigi raporton, simple aldonu ekranbildon "
+            + "kaj elektu protokolan retejon kiu kongruas kun malnovaj versioj de Java 8.";
+}
+
+@Override
+public String errorJavaFMLVersion(String requerido, String encontrado) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Ne kongrua versio de JavaFML: necesas " + requerido 
+         + ", troviĝis " + encontrado + "</b>";
+}
+
+@Override
+public String errorJavaFML_MCForge() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+         + "Atentu! JavaFML bezonas specifan version de Minecraft Forge</b>";
+}
+
+@Override
+public String errorProveedorVersion(String proveedor, String requerido, String encontrado) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Provizanto " + proveedor + " ne kongruas: "
+         + "Necesas " + requerido + ", troviĝis " + encontrado + "</b>";
+}
+
+@Override
+public String advertenciaMalwareFalso() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "ATENTU! Crash Assistant estas falsa malprogram-detektilo. Ĝi intence blokas la ludon kaj ignoras vian liberecon daŭrigi ludi kun la celitaj kromprogramoj. "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/02caebaaac98e3e226337e27b226ead568363815/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java'>Vidi kodon de MalwareMod.java</a>   "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>Vidi kodon de JarInJarHelper.java</a></b>";
 }
 
 

@@ -390,7 +390,7 @@ public String apiDeLogging() {
 
 @Override
 public String anonimizarRegistros() {
-    return "Anonimizar registros (Em breve)";
+    return "Anonimizar registros (Beta)";
 }
 
 @Override
@@ -405,7 +405,7 @@ public String arco() {
             + "são enviados para o site selecionado (padrão asbestosstar.egoism.jp). Você pode compartilhar todos os registros selecionados "
             + "junto com o relatório. Se você não deseja fazer o upload, não use este diálogo! Não processamos seu relatório no ponto final oficial (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb); apenas removemos links não permitidos. O código está aqui: https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb. Isso é usado apenas para exibir informações sobre sua falha e o link para os registros. No entanto, é possível usar um ponto final personalizado que pode não ter os mesmos métodos. Você está usando o site de relatórios " 
             + Config.obtenerInstancia().obtenerSitoDeInformes() + " e o site de registros " 
-            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado();
+            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + ". O CrashDetector tem anonimização de registros por padrão, que tenta remover nomes de usuário, UUIDs, tokens de acesso, IDs de sessão, endereços IP e outros dados. No entanto, não é perfeito. No entanto, o autor do modpack pode desativá-la. Ela pode ser ativada ou desativada com a caixa de seleção na parte inferior desta tela.";
 }
 
 @Override
@@ -434,6 +434,48 @@ public String errorConPublicarRegistro(String error) {
 public String apiDeRegistroNoExiste() {
     return "A API de Registro não existe. Por favor, altere a API de registro nas configurações.";
 }
+
+@Override
+public String errorSSL() {
+    return "Você está com um Erro SSL. Isso é comum em versões antigas do Java, "
+            + "incluindo as versões do Java 8 no Launcher Minecraft padrão "
+            + "e as versões em sun.com e java.com. Isso afeta vários aspectos, "
+            + "como os arquivos JAR do instalador do MinecraftForge, a função de compartilhar relatórios "
+            + "do CrashDetector ao usar o endpoint padrão, alguns mods que exigem internet "
+            + "e alguns sites de registro. Se isso acontecer enquanto você tenta compartilhar um relatório, "
+            + "basta anexar uma captura de tela e selecionar um site de registro compatível "
+            + "com versões mais antigas do Java 8.";
+}
+
+
+@Override
+public String errorJavaFMLVersion(String requerido, String encontrado) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "JavaFML Incompatível: Requer versão " + requerido 
+         + ", detectado " + encontrado + "</b>";
+}
+
+@Override
+public String errorJavaFML_MCForge() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+         + "Atenção! JavaFML requer uma versão específica do Minecraft Forge</b>";
+}
+
+@Override
+public String errorProveedorVersion(String proveedor, String requerido, String encontrado) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Provedor " + proveedor + " incompatível: "
+         + "Requer " + requerido + ", encontrado " + encontrado + "</b>";
+}
+
+@Override
+public String advertenciaMalwareFalso() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "ALERTA! O Crash Assistant é um detector de malware falso. Ele bloqueia o jogo intencionalmente e ignora sua liberdade de continuar jogando com os mods aos quais se refere. "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/02caebaaac98e3e226337e27b226ead568363815/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java'>Ver código MalwareMod.java</a>   "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>Ver código JarInJarHelper.java</a></b>";
+}
+
 
 
 

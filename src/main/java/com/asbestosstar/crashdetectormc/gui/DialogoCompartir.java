@@ -278,7 +278,8 @@ public class DialogoCompartir extends JDialog {
 		gbc.gridy++;
 		gbc.gridwidth = 2;
 		checkAnonimizar = new JCheckBox(MonitorDePID.idioma.anonimizarRegistros());
-		checkAnonimizar.setEnabled(false);
+		//checkAnonimizar.setEnabled(false);
+		checkAnonimizar.setSelected(Config.obtenerInstancia().esAnonimizarRegistros());
 		panelConfig.add(checkAnonimizar, gbc);
 
 		// Save Button

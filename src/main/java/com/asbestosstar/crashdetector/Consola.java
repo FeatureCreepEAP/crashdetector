@@ -7,6 +7,8 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.asbestosstar.crashdetector.anon.AnonimizadorDeRuta;
+import com.asbestosstar.crashdetector.anon.AnonimizadordeRegistros;
 import com.asbestosstar.crashdetectormc.analyzador.Analyzador;
 import com.asbestosstar.crashdetectormc.analyzador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetectormc.analyzador.Verificaciones;
@@ -31,25 +33,22 @@ public class Consola {
 	public int linea_original;
 	public boolean nueva;
 	public String contento_verificar;
-	
-	
+
 	public VerificacionDeStackTrace verificacion_de_stacktrace = new VerificacionDeStackTrace();
 	public Analyzador analyzador = new Analyzador(verificacion_de_stacktrace);
 
 	public static ArrayList<File> archivos_en_lista = new ArrayList<File>();
-	public static String[] tipos_de_registros_de_launcher={"../../logs/ftb-app-electron.log","../../../../main.log"};//No para registros con "launcher en el nombre"
+	public static String[] tipos_de_registros_de_launcher = { "../../logs/ftb-app-electron.log",
+			"../../../../main.log" };// No para registros con "launcher en el nombre"
 
-	
-	
 	public static SecureLoggerAPI secure_logger_api = new SecureLoggerAPI();
-	
-	static { //APIS Por Defecto
+
+	static { // APIS Por Defecto
 		APIdeSitioDeRegistro.APIS.add(secure_logger_api);
 		APIdeSitioDeRegistro.APIS.add(new StikkedAPI());
-		APIdeSitioDeRegistro.APIS.add(new MCLogsAPI());		
+		APIdeSitioDeRegistro.APIS.add(new MCLogsAPI());
 	}
-	
-	
+
 	public Consola(Path archivo) throws IOException {
 		super();
 		this.archivo = archivo;
@@ -84,7 +83,7 @@ public class Consola {
 			if (epoc.isAfter(tiempo)) {
 				nueva = true;
 				contento = MonitorDePID.leer_archivo(archivo);
-				
+
 				StringBuilder para_verificar = new StringBuilder();
 				String[] lineas = contento.split(File.pathSeparator);
 				for (int i = linea_original; i < lineas.length - 1; i++) {
@@ -92,9 +91,7 @@ public class Consola {
 				}
 
 				contento_verificar = para_verificar.toString();
-				
-				
-				
+
 			} else {
 				nueva = false;
 				contento = "";
@@ -147,7 +144,7 @@ public class Consola {
 
 		if (carpetaLogs.exists()) {
 			for (File archivo : carpetaLogs.listFiles()) {
-				if (!archivo.getAbsolutePath().endsWith(".gz") &&archivo.isFile()) {//TODO recursiv
+				if (!archivo.getAbsolutePath().endsWith(".gz") && archivo.isFile()) {// TODO recursiv
 					resulto.add(archivo);
 				}
 			}
@@ -155,7 +152,7 @@ public class Consola {
 
 		if (carpetaCrashReports.exists()) {
 			for (File archivo : carpetaCrashReports.listFiles()) {
-				if (!archivo.getAbsolutePath().endsWith(".gz")&&archivo.isFile()) {
+				if (!archivo.getAbsolutePath().endsWith(".gz") && archivo.isFile()) {
 					resulto.add(archivo);
 				}
 			}
@@ -176,14 +173,14 @@ public class Consola {
 
 		if (carpetaTLauncher.exists()) {
 			for (File archivo : carpetaTLauncher.listFiles()) {
-				if (!archivo.getAbsolutePath().endsWith(".gz")&&archivo.isFile()) {
+				if (!archivo.getAbsolutePath().endsWith(".gz") && archivo.isFile()) {
 					resulto.add(archivo);
 				}
 			}
 		}
 		if (carpetaTLauncherStarter.exists()) {
 			for (File archivo : carpetaTLauncherStarter.listFiles()) {
-				if (!archivo.getAbsolutePath().endsWith(".gz")&&archivo.isFile()) {
+				if (!archivo.getAbsolutePath().endsWith(".gz") && archivo.isFile()) {
 					resulto.add(archivo);
 				}
 			}
@@ -206,13 +203,9 @@ public class Consola {
 		resulto.add(new File("../../../../main.log"));// GDLauncher
 
 		resulto.add(NoRegistroDeLauncher.cd_launcherlog);
-		
-		
+
 		resulto.add(new File("hs_err_pid" + String.valueOf(MonitorDePID.pid) + ".log"));// GDLauncher
 
-		
-		
-		
 		return resulto;
 
 	}
@@ -221,13 +214,11 @@ public class Consola {
 		// StringBuilder temporal para almacenar los resultados de las verificaciones
 		CDStringBuilder contenidoVerificaciones = new CDStringBuilder(constructor);
 
-		
 		CrashDetectorLogger.log("Analyzando " + archivo.toString());
 
-		if(archivo.toString().contains("cd")) {
+		if (archivo.toString().contains("cd")) {
 			CrashDetectorLogger.log(contento_verificar);
 		}
-
 
 		if (!contento_verificar.replace(" ", "").equals("")) {
 			// Iterar a través de todas las verificaciones y recopilar su salida
@@ -259,29 +250,43 @@ public class Consola {
 
 			return enlance;
 		} else {
-			
+
 			this.enlance = APIdeSitioDeRegistro.obtainerAPIdeConfig().publicarRegistro(this);
 			return enlance;
 		}
 	}
 
-	
-	
 	public static boolean tiene_registro_de_launcher(List<Consola> cons) {
-		for(Consola con:cons) {
+		for (Consola con : cons) {
 			File arch = con.archivo.toFile();
 			String nombre = arch.getName();
-			if(nombre.toLowerCase().contains("launcher") && !nombre.contains("PrismLauncher-0")) {
+			if (nombre.toLowerCase().contains("launcher") && !nombre.contains("PrismLauncher-0")) {
 				return true;
 			}
-			for(String regdelauncher:Consola.tipos_de_registros_de_launcher) {
-				if(nombre.equals(regdelauncher)) {
+			for (String regdelauncher : Consola.tipos_de_registros_de_launcher) {
+				if (nombre.equals(regdelauncher)) {
 					return true;
 				}
 			}
-			
+
 		}
 		return false;
+	}
+
+	public String obtainerRutaParaPublicar() {
+		boolean anon = Config.obtenerInstancia().esAnonimizarRegistros();
+		if (anon) {
+			return AnonimizadorDeRuta.anonimizarNombreDeUsuario(archivo.toString());
+		}
+		return archivo.toString();
+	}
+
+	public String obtainerContentoParaPublicar() {
+		boolean anon = Config.obtenerInstancia().esAnonimizarRegistros();
+		if (anon) {
+			return AnonimizadordeRegistros.anonimizar(this.contento_verificar);
+		}
+		return contento_verificar;
 	}
 
 }

@@ -400,7 +400,7 @@ public String apiDeLogging() {
 
 @Override
 public String anonimizarRegistros() {
-    return "로그 익명화 (곧 출시)";
+    return "로그 익명화 (베타)";
 }
 
 @Override
@@ -417,7 +417,7 @@ public String arco() {
             + "이는 오류 정보와 로그 링크를 표시하는 데만 사용됩니다. 그러나 같은 메소드를 가지고 있지 않을 수 있는 사용자 정의 엔드포인트를 사용할 수 있습니다. "
             + "현재 보고서 사이트로 " 
             + Config.obtenerInstancia().obtenerSitoDeInformes() + "를, 로그 사이트로 " 
-            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + "를 사용하고 있습니다.";
+            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + "를 사용하고 있습니다. CrashDetector는 기본적으로 로그 익명화 기능을 제공하며, 이는 사용자 이름, UUID, 액세스 토큰, 세션 ID, IP 주소 및 기타 데이터를 제거하려고 시도합니다. 하지만 완벽하지 않을 수 있습니다. Modpack 작성자는 이를 비활성화할 수 있으며, 이 화면 하단의 체크박스로 활성화 또는 비활성화할 수 있습니다.";
 }
 
 @Override
@@ -447,7 +447,44 @@ public String apiDeRegistroNoExiste() {
     return "로그 API가 존재하지 않습니다. 설정에서 로그 API를 변경하십시오.";
 }
 
+@Override
+public String errorSSL() {
+    return "SSL 오류가 발생했습니다. 이는 구형 Java 버전에서 흔히 발생하며, "
+            + "기본 Minecraft 런처의 Java 8 버전 및 sun.com과 java.com의 버전에도 포함됩니다. "
+            + "이 문제는 MinecraftForge 설치 프로그램의 JAR 파일, 기본 엔드포인트를 사용한 "
+            + "CrashDetector 보고서 공유 기능, 인터넷이 필요한 일부 모드 및 일부 로그 사이트에 영향을 미칩니다. "
+            + "보고서를 공유하려 할 때 이 문제가 발생하면 스크린샷을 첨부하고 "
+            + "Java 8 이전 버전과 호환되는 로그 사이트를 선택하세요.";
+}
 
+
+@Override
+public String errorJavaFMLVersion(String requerido, String encontrado) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "호환되지 않는 JavaFML 버전: 필요한 버전은 " + requerido 
+         + "이지만 발견된 버전은 " + encontrado + "</b>";
+}
+
+@Override
+public String errorJavaFML_MCForge() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+         + "주의! JavaFML은 특정 버전의 Minecraft Forge를 필요로 합니다</b>";
+}
+
+@Override
+public String errorProveedorVersion(String proveedor, String requerido, String encontrado) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "공급자 " + proveedor + "의 호환되지 않는 버전: "
+         + "필요한 버전은 " + requerido + "이지만 발견된 버전은 " + encontrado + "</b>";
+}
+
+@Override
+public String advertenciaMalwareFalso() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "경고! Crash Assistant는 가짜 악성코드 감지기입니다. 이 프로그램은 의도적으로 게임을 차단하며, 타겟팅된 모드로 계속 플레이할 자유를 무시합니다. "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/02caebaaac98e3e226337e27b226ead568363815/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java'>MalwareMod.java 코드 보기</a>   "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>JarInJarHelper.java 코드 보기</a></b>";
+}
 
 
 
