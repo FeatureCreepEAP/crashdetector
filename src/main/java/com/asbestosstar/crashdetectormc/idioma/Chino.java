@@ -338,7 +338,7 @@ public String noRegistroDeLauncher() {
     return "未找到启动器日志！这可能会使调查变得复杂。\n"
             + "                \n"
             + "                获取正确日志的方法：\n"
-            + "                - MultiMC/PolyMC/PrismLauncher/PollyMC/UltimMC: 注意：自动检测到的日志不正确。\n"
+            + "                - MultiMC/PolyMC/PrismLauncher/: 注意：自动检测到的日志不正确。\n"
             + "                  1. 打开实例界面\n"
             + "                  2. 转到“Minecraft Log”部分\n"
             + "                  3. 右键单击并复制内容\n"
@@ -404,13 +404,11 @@ public String botonDeCompartirInforme() {
 
 @Override
 public String arco() {
-    return "此对话框允许使用 SecureLogger API 在 securelogger.net 上共享日志。"
-            + "按下共享按钮时，文件将上传到选定的站点（默认为 asbestosstar.egoism.jp）。您可以共享所有选定的日志以及报告。"
-            + "如果您不想上传，请不要使用此对话框！我们不会在官方端点（https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb）处理您的报告；我们只会删除不允许的链接。代码在此处：https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb。"
-            + "这仅用于显示有关崩溃的信息和日志链接。但是，可以使用可能不具备相同方法的自定义端点。"
-            + "您当前正在使用报告站点 " 
-            + Config.obtenerInstancia().obtenerSitoDeInformes() + " 和日志站点 " 
-            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + "。CrashDetector 默认提供日志匿名化功能，该功能会尝试移除用户名、UUID、访问令牌、会话 ID、IP 地址和其他数据。不过，它并非完美无缺。此外，模组包作者可以禁用此功能。可以通过此屏幕底部的复选框启用或禁用它。";
+    return "此对话框允许您使用 SecureLogger API 在 securelogger.net 上共享日志。"
+            + "按下共享报告按钮时，您的报告将被发送到选定的端点（默认为 asbestosstar.egoism.jp）（可在底部更改）。您可以共享所有选定的日志以及报告。"
+            + "如果您不想上传，请不要使用此对话框！我们不会在官方端点（https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb）处理您的报告；我们只会删除不允许的链接。代码在这里：https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb。这仅用于显示有关崩溃的信息和日志链接。然而，可以使用可能没有相同方法的自定义端点。您当前正在使用的报告站点是 " 
+            + Config.obtenerInstancia().obtenerSitoDeInformes() + "，日志站点是 " 
+            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + "。您还可以通过单击单个日志名称旁边的共享按钮来共享单个日志而无需报告；日志将发送到选定的日志站点。CrashDetector 具有默认的日志匿名化功能，该功能会尝试删除用户名、UUID、访问令牌、会话 ID、IP 地址和其他数据。然而，它并不完美。此外，模组包作者可以禁用它。可以通过屏幕底部的复选框启用或禁用它。您是自己的数据控制者；您决定将数据上传到哪里。日志站点由第三方拥有，其所有权通常因隐私原因而隐藏。您需要对管理您的数据及相关的风险负全责。CrashDetector 共享对话框只是一个允许您管理这些内容的界面。了解 GDPR 和 ARCO 非常重要。";
 }
 
 @Override
@@ -473,9 +471,10 @@ public String errorProveedorVersion(String proveedor, String requerido, String e
 @Override
 public String advertenciaMalwareFalso() {
     return "<b style='color:#" + config.obtenerColorError() + "'>"
-         + "警告！Crash Assistant 是一个伪造的恶意软件检测器。它故意阻止游戏，并无视您继续使用目标模组进行游戏的自由。 "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/02caebaaac98e3e226337e27b226ead568363815/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java'>查看 MalwareMod.java 代码</a>   "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>查看 JarInJarHelper.java 代码</a></b>";
+         + "警告！Crash Assistant 是一个伪造的恶意软件检测器。它故意阻止游戏启动，无视您继续使用目标模组进行游戏的自由。 "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>查看 MalwareMod.java 代码</a>   "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>查看 JarInJarHelper.java 代码</a>. "
+         + "目前只有这个模组在他们的列表中，并且他们实际上只针对默认的日志站点，而该站点可以由用户更改，只有在明确选择使用内置日志共享功能时才会生效。CrashAssistant 不会检查当前使用的是哪个日志站点，也不会解释如何更改它（共享对话框底部有一个下拉菜单），无论配置了哪个站点，CrashAssistant 都会阻止游戏启动。在他们的消息中，他们说要自己做研究，那就去做吧，查看 CrashDetector 和 Crash Assistant 的代码，了解它们的作用，不要依赖权威的呼吁。</b>";
 }
 
 

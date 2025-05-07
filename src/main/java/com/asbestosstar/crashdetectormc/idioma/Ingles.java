@@ -340,7 +340,7 @@ public String noRegistroDeLauncher() {
     return "No launcher logs found! This may complicate the investigation.\n"
             + "                \n"
             + "                To obtain the correct logs:\n"
-            + "                - MultiMC/PolyMC/PrismLauncher/PollyMC/UltimMC: NOTE: Automatically detected logs are NOT correct.\n"
+            + "                - MultiMC/PolyMC/PrismLauncher/: NOTE: Automatically detected logs are NOT correct.\n"
             + "                  1. Open the instance interface\n"
             + "                  2. Go to the \"Minecraft Log\" section\n"
             + "                  3. Right-click and copy the content\n"
@@ -396,7 +396,7 @@ public String apiDeLogging() {
 
 @Override
 public String anonimizarRegistros() {
-    return "Anonymize logs (Beta)";
+    return "Anonymise logs (Beta)";
 }
 
 @Override
@@ -407,11 +407,11 @@ public String botonDeCompartirInforme() {
 @Override
 public String arco() {
     return "This dialogue allows you to share logs using the SecureLogger API "
-            + "at securelogger.net. When pressing the share buttons, files "
-            + "are uploaded to the selected site (default asbestosstar.egoism.jp). You can share all selected logs "
+            + "at securelogger.net. When pressing the share report button your report is sent to the "
+            + "are uploaded to the selected report endpoint (default asbestosstar.egoism.jp) (Can be changed at the bottom). You can share all selected logs "
             + "along with the report. If you don't want to upload, don't use this dialogue! We do not process your report at the official endpoint (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb); we only remove disallowed links. The code is here: https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb. This is solely used to display information about your crash and the link to the logs. However, it is possible to use a custom endpoint that might not have the same methods. You are using the report site " 
             + Config.obtenerInstancia().obtenerSitoDeInformes() + " and the log site " 
-            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + ". CrashDetector has default log anonymisation, which attempts to remove usernames, UUIDs, access tokens, session IDs, IP addresses, and other data. However, it is not perfect. Nevertheless, the modpack author can disable it. It can be enabled or disabled with the checkbox at the bottom of this screen.";
+            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + ". You can also share individual logs without a report by pressing the share buttons next to the individual log names, the logs will go to the selected log site. CrashDetector has default log anonymisation, which attempts to remove usernames, UUIDs, access tokens, session IDs, IP addresses, and other data. However, it is not perfect. Nevertheless, the modpack author can disable it. It can be enabled or disabled with the checkbox at the bottom of this screen. You are your own data controller, you make the decision of where you upload your data, logging sites are owned by third parties whos ownership is often hidden for privacy, you take full responsibility for managing your data and the risks involved with it, the CrashDetector Share Dialogue is merly an interface allowing you to manage that, it is important that you are aware of GDPR and ARCO.";
 }
 
 @Override
@@ -476,9 +476,9 @@ public String errorProveedorVersion(String proveedor, String requerido, String e
 @Override
 public String advertenciaMalwareFalso() {
     return "<b style='color:#" + config.obtenerColorError() + "'>"
-         + "ALERT! Crash Assistant is a fake malware detector. It intentionally blocks the game and disregards your freedom to keep playing with the mods it targets. "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/02caebaaac98e3e226337e27b226ead568363815/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java'>View MalwareMod.java code</a>   "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>View JarInJarHelper.java code</a></b>";
+         + "ALERT! Crash Assistant is a fake malware detector. It intentionally blocks the game from launching disregarding your freedom to keep playing with the mods it targets. "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>View MalwareMod.java code  </a>   "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>View JarInJarHelper.java code  </a>. Only this mod is on their list at this time and they are only really going after the default logging site which can be changed by the user and that only ever does anything if you explicitly choose to use the built in log sharing feature. CrashAssistant does NOT do any checks to even check which logging site is the one being set and do not explain how to change it (there is a dropdown on the bottom of the share dialogue) and no matter what site you have CrashAssistant will block the game from launching. In their message they say to do your own research, DO IT, look into the code of CrashDetector and Crash Assistant and understand what they do, do NOT rely on appeal to authority.</b>";
 }
 
 

@@ -339,7 +339,7 @@ public String noRegistroDeLauncher() {
     return "Логи лаунчера не найдены! Это может осложнить расследование.\n"
             + "                \n"
             + "                Чтобы получить правильные логи:\n"
-            + "                - MultiMC/PolyMC/PrismLauncher/PollyMC/UltimMC: ПРИМЕЧАНИЕ: Автоматически обнаруженные логи НЕ являются правильными.\n"
+            + "                - MultiMC/PolyMC/PrismLauncher: ПРИМЕЧАНИЕ: Автоматически обнаруженные логи НЕ являются правильными.\n"
             + "                  1. Откройте интерфейс экземпляра\n"
             + "                  2. Перейдите в раздел \"Minecraft Log\"\n"
             + "                  3. Щелкните правой кнопкой мыши и скопируйте содержимое\n"
@@ -405,14 +405,12 @@ public String botonDeCompartirInforme() {
 
 @Override
 public String arco() {
-    return "Этот диалог позволяет делиться логами с использованием API SecureLogger "
-            + "на securelogger.net. При нажатии кнопок для обмена файлы "
-            + "загружаются на выбранный сайт (по умолчанию asbestosstar.egoism.jp). Вы можете поделиться всеми выбранными логами "
-            + "вместе с отчетом. Если вы не хотите загружать данные, не используйте этот диалог! Мы не обрабатываем ваш отчет на официальной конечной точке (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb); мы только удаляем запрещенные ссылки. Код находится здесь: https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb. "
-            + "Это используется только для отображения информации о сбое и ссылки на логи. Однако можно использовать пользовательскую конечную точку, которая может не иметь тех же методов. "
-            + "Вы используете сайт отчетов " 
+    return "Этот диалог позволяет вам делиться логами с использованием API SecureLogger "
+            + "на securelogger.net. При нажатии на кнопку отправки отчета ваш отчет отправляется на "
+            + "выбранный конечный пункт (по умолчанию asbestosstar.egoism.jp) (можно изменить внизу). Вы можете поделиться всеми выбранными логами "
+            + "вместе с отчетом. Если вы не хотите загружать данные, не используйте этот диалог! Мы не обрабатываем ваш отчет на официальном конечном пункте (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb); мы только удаляем запрещенные ссылки. Код находится здесь: https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb. Это используется исключительно для отображения информации о вашем сбое и ссылки на логи. Однако можно использовать пользовательский конечный пункт, который может не иметь тех же методов. Вы используете сайт отчетов " 
             + Config.obtenerInstancia().obtenerSitoDeInformes() + " и сайт логов " 
-            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + ". CrashDetector имеет функцию анонимизации логов по умолчанию, которая пытается удалить имена пользователей, UUID, токены доступа, идентификаторы сессий, IP-адреса и другие данные. Однако она не является совершенной. Тем не менее, автор модпака может отключить её. Она может быть включена или отключена с помощью флажка в нижней части этого экрана.";
+            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + ". Вы также можете делиться отдельными логами без отчета, нажимая кнопки «Поделиться» рядом с названиями логов; логи будут отправлены на выбранный сайт логов. CrashDetector имеет функцию анонимизации логов по умолчанию, которая пытается удалить имена пользователей, UUID, токены доступа, идентификаторы сессий, IP-адреса и другие данные. Однако она не идеальна. Тем не менее, автор модпака может её отключить. Её можно включить или отключить с помощью флажка в нижней части этого экрана. Вы являетесь контроллером своих данных; вы решаете, куда загружать свои данные. Сайты логов принадлежат третьим сторонам, чье владение часто скрыто из соображений конфиденциальности. Вы полностью отвечаете за управление своими данными и связанными с этим рисками. Диалог обмена CrashDetector — это просто интерфейс, позволяющий вам управлять этим. Важно, чтобы вы были осведомлены о GDPR и ARCO.";
 }
 
 @Override
@@ -475,9 +473,10 @@ public String errorProveedorVersion(String proveedor, String requerido, String e
 @Override
 public String advertenciaMalwareFalso() {
     return "<b style='color:#" + config.obtenerColorError() + "'>"
-         + "ВНИМАНИЕ! Crash Assistant — это поддельный детектор вредоносного ПО. Он намеренно блокирует игру и игнорирует вашу свободу продолжать играть с целевыми модификациями. "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/02caebaaac98e3e226337e27b226ead568363815/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java'>Посмотреть код MalwareMod.java</a>   "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>Посмотреть код JarInJarHelper.java</a></b>";
+         + "ВНИМАНИЕ! Crash Assistant — это поддельный детектор вредоносного ПО. Он намеренно блокирует запуск игры, игнорируя вашу свободу продолжать играть с целевыми модификациями. "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>Посмотреть код MalwareMod.java</a>   "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>Посмотреть код JarInJarHelper.java</a>. "
+         + "На данный момент в их списке только этот мод, и они фактически нацелены только на сайт записи по умолчанию, который может быть изменён пользователем, и это происходит только если вы явно выбираете использовать встроенную функцию обмена логами. CrashAssistant НЕ проводит никаких проверок, чтобы определить, какой сайт записи используется, и не объясняет, как его изменить (есть выпадающее меню внизу диалогового окна обмена), и независимо от настроенного сайта, CrashAssistant заблокирует запуск игры. В их сообщении говорится, чтобы вы провели своё собственное исследование, СДЕЛАЙТЕ ЭТО, изучите код CrashDetector и Crash Assistant и поймите, что они делают, НЕ полагайтесь на обращение к авторитету.</b>";
 }
 
 

@@ -344,7 +344,7 @@ public String noRegistroDeLauncher() {
     return "!لم يتم العثور على سجلات المشغل. قد يؤدي هذا إلى تعقيد التحقيق\n"
             + "                \n"
             + "                للحصول على السجلات الصحيحة:\n"
-            + "                - MultiMC/PolyMC/PrismLauncher/PollyMC/UltimMC: ملاحظة: السجلات المكتشفة تلقائيًا ليست صحيحة.\n"
+            + "                - MultiMC/PolyMC/PrismLauncher/: ملاحظة: السجلات المكتشفة تلقائيًا ليست صحيحة.\n"
             + "                  1. افتح واجهة المثيل\n"
             + "                  2. انتقل إلى قسم \"Minecraft Log\"\n"
             + "                  3. انقر بزر الماوس الأيمن وانسخ المحتوى\n"
@@ -410,12 +410,12 @@ public String botonDeCompartirInforme() {
 
 @Override
 public String arco() {
-    return "هذا الحوار يتيح لك مشاركة السجلات باستخدام واجهة برمجة تطبيقات SecureLogger "
-            + "على securelogger.net. عند الضغط على أزرار المشاركة، يتم رفع الملفات "
-            + "إلى الموقع المحدد (افتراضي asbestosstar.egoism.jp). يمكنك مشاركة جميع السجلات المحددة "
-            + "مع التقرير. إذا كنت لا تريد الرفع، فلا تستخدم هذا الحوار! نحن لا نعالج تقريرك في النقطة النهائية الرسمية (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb)؛ نحن فقط نزيل الروابط غير المسموح بها. الكود موجود هنا: https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb. يتم استخدام هذا فقط لعرض معلومات عن تعطل النظام والرابط إلى السجلات. ومع ذلك، من الممكن استخدام نقطة نهاية مخصصة قد لا تحتوي على نفس الطرق. أنت تستخدم موقع التقارير " 
+    return "يتيح لك هذا الحوار مشاركة السجلات باستخدام واجهة برمجة تطبيقات SecureLogger "
+            + "على securelogger.net. عند الضغط على زر مشاركة التقرير، يتم إرسال تقريرك إلى "
+            + "نقطة النهاية المحددة (افتراضيًا asbestosstar.egoism.jp) (يمكن تغييرها في الأسفل). يمكنك مشاركة جميع السجلات المحددة "
+            + "مع التقرير. إذا كنت لا ترغب في الرفع، فلا تستخدم هذا الحوار! لا نقوم بمعالجة تقريرك في نقطة النهاية الرسمية (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb)؛ نحن فقط نزيل الروابط غير المصرح بها. الكود موجود هنا: https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb. يُستخدم هذا فقط لعرض معلومات حول تعطل نظامك والرابط إلى السجلات. ومع ذلك، من الممكن استخدام نقطة نهاية مخصصة قد لا تحتوي على نفس الطرق. أنت تستخدم موقع التقارير " 
             + Config.obtenerInstancia().obtenerSitoDeInformes() + " وموقع السجلات " 
-            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + ". لدى CrashDetector إخفاء هوية السجلات بشكل افتراضي، والذي يحاول إزالة أسماء المستخدمين، UUIDs، رموز الوصول، معرفات الجلسة، عناوين IP، وبعض البيانات الأخرى. ومع ذلك، فإنه ليس مثاليًا. مع ذلك، يمكن للمؤلف المشرف على الحزمة تعطيله. يمكن تفعيله أو تعطيله باستخدام خانة الاختيار أسفل هذه الشاشة.";
+            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + ". يمكنك أيضًا مشاركة السجلات الفردية بدون تقرير عن طريق الضغط على أزرار المشاركة بجانب أسماء السجلات الفردية؛ سيتم إرسال السجلات إلى موقع السجلات المحدد. يحتوي CrashDetector على تجهيل افتراضي للسجلات، والذي يحاول إزالة أسماء المستخدمين، UUIDs، رموز الوصول، معرّفات الجلسة، عناوين IP، وغيرها من البيانات. ومع ذلك، فهو ليس مثاليًا. ومع ذلك، يمكن للمؤلف الحزمة تعطيله. يمكن تمكينه أو تعطيله باستخدام خانة الاختيار في الجزء السفلي من هذه الشاشة. أنت المتحكم في بياناتك الخاصة؛ أنت تقرر أين تقوم بتحميل بياناتك. مواقع السجلات مملوكة لأطراف ثالثة غالبًا ما تكون ملكيتها مخفية لأسباب تتعلق بالخصوصية. أنت تتحمل المسؤولية الكاملة لإدارة بياناتك والمخاطر المتعلقة بها. حوار مشاركة CrashDetector هو مجرد واجهة تتيح لك إدارة ذلك. من المهم أن تكون على دراية بـ GDPR وARCO.";
 }
 
 @Override
@@ -478,9 +478,10 @@ public String errorProveedorVersion(String proveedor, String requerido, String e
 @Override
 public String advertenciaMalwareFalso() {
     return "<b style='color:#" + config.obtenerColorError() + "'>"
-         + "تنبيه! Crash Assistant هو كاشف برامج ضارة مزيف. يقوم بحظر اللعبة بشكل متعمد ولا يأخذ في الاعتبار حريتك في متابعة اللعب مع التعديلات المستهدفة. "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/02caebaaac98e3e226337e27b226ead568363815/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java'>عرض كود MalwareMod.java</a>   "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>عرض كود JarInJarHelper.java</a></b>";
+         + "تنبيه! Crash Assistant هو كاشف برامج ضارة مزيف. يقوم بحظر اللعبة عن التشغيل بشكل متعمد، مع تجاهل حريتك في متابعة اللعب باستخدام التعديلات التي يستهدفها. "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>عرض كود MalwareMod.java</a>   "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>عرض كود JarInJarHelper.java</a>. "
+         + "هذا التعديل فقط هو الموجود في قائمتهم حالياً، وهم يستهدفون فقط موقع تسجيل السجلات الافتراضي، والذي يمكن للمستخدم تغييره، وهذا يحدث فقط إذا اخترت صراحة استخدام ميزة مشاركة السجلات المدمجة. CrashAssistant لا يقوم بأي فحوصات لتحديد موقع التسجيل المستخدم ولا يشرح كيفية تغييره (هناك قائمة منسدلة في أسفل مربع الحوار الخاص بالمشاركة)، وبغض النظر عن الموقع الذي قمت بتكوينه، فإن CrashAssistant سيمنع تشغيل اللعبة. في رسالتهم يقولون أن تقوم بإجراء بحثك الخاص، افعل ذلك، انظر إلى كود CrashDetector وCrash Assistant وافهم ما يقومون به، لا تعتمد على استدعاء السلطة.</b>";
 }
 
 

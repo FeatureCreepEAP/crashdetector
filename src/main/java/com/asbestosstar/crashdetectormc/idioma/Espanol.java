@@ -359,7 +359,7 @@ public String noRegistroDeLauncher() {
 	return new String ("¡No se encontraron registros del launcher! Esto puede dificultar la investigación.\n"
 			+ "                \n"
 			+ "                Para obtener los registros correctos:\n"
-			+ "                - MultiMC/PolyMC/PrismLauncher/PollyMC/UltimMC: NOTA: Los registros detectados automáticamente NO son los correctos.\n"
+			+ "                - MultiMC/PolyMC/PrismLauncher: NOTA: Los registros detectados automáticamente NO son los correctos.\n"
 			+ "                  1. Abre la interfaz de la instancia\n"
 			+ "                  2. Ve a la sección \"Minecraft Log\"\n"
 			+ "                  3. Haz clic derecho y copia el contenido\n"
@@ -434,12 +434,12 @@ public String botonDeCompartirInforme() {
 
 @Override
 public String arco() {
-    return "Este diálogo permite compartir registros usando la API de SecureLogger "
-            + "en securelogger.net. Al presionar los botones de compartir, los archivos "
-            + "se suben al sitio seleccionado (predeterminado asbestosstar.egoism.jp). Puede compartir todos los registros "
-            + "seleccionados junto con el reporte. ¡Si no quieres subir, no usas este diálogo! No procesamos su informe en el punto final oficial (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb); simplemente eliminamos los enlaces no permitidos, el código está aquí https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb. Esto solo se utiliza para mostrar la información sobre su fallo y el enlace a los registros. Sin embargo, es posible usar un punto final personalizado que podría no tener los mismos métodos. Estás usando el sitio de informes " 
+    return "Este diálogo te permite compartir registros utilizando la API de SecureLogger "
+            + "en securelogger.net. Al presionar el botón para compartir el informe, tu informe se envía al "
+            + "punto final seleccionado (por defecto asbestosstar.egoism.jp) (Se puede cambiar en la parte inferior). Puedes compartir todos los registros seleccionados "
+            + "junto con el informe. Si no deseas subir, ¡no uses este diálogo! No procesamos tu informe en el punto final oficial (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb); solo eliminamos enlaces no permitidos. El código está aquí: https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb. Esto se utiliza únicamente para mostrar información sobre tu fallo y el enlace a los registros. Sin embargo, es posible usar un punto final personalizado que podría no tener los mismos métodos. Estás usando el sitio de informes " 
             + Config.obtenerInstancia().obtenerSitoDeInformes() + " y el sitio de registros " 
-            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + ". CrashDetector tiene anonimización de registros por defecto, que intenta eliminar nombres de usuario, UUID, tokens de acceso, ID de sesión, direcciones IP y otros datos. Sin embargo, no es perfecto. No obstante, el autor del modpack puede desactivarla. Se puede activar o desactivar con la casilla de verificación en la parte inferior de esta pantalla.";
+            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + ". También puedes compartir registros individuales sin un informe presionando los botones de compartir junto a los nombres de los registros individuales; los registros irán al sitio de registros seleccionado. CrashDetector tiene una anonimización de registros predeterminada, que intenta eliminar nombres de usuario, UUID, tokens de acceso, IDs de sesión, direcciones IP y otros datos. Sin embargo, no es perfecta. Aún así, el autor del modpack puede desactivarla. Se puede activar o desactivar con la casilla de verificación en la parte inferior de esta pantalla. Eres el controlador de tus propios datos; tú decides dónde subes tus datos. Los sitios de registro son propiedad de terceros cuya propiedad a menudo está oculta por privacidad. Asumes toda la responsabilidad de gestionar tus datos y los riesgos involucrados. El Diálogo de Compartir de CrashDetector es simplemente una interfaz que te permite gestionar eso. Es importante que estés al tanto del RGPD y ARCO.";
 }
 
 @Override
@@ -504,9 +504,10 @@ public String errorProveedorVersion(String proveedor, String requerido, String e
 @Override
 public String advertenciaMalwareFalso() {
     return "<b style='color:#" + config.obtenerColorError() + "'>"
-         + "¡ALERTA! Crash Assistant es un detector de malware falso. Bloquea el juego intencionalmente y no tiene en cuenta tu libertad de seguir jugando con los mods a los que apunta. "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/02caebaaac98e3e226337e27b226ead568363815/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java'>Ver código MalwareMod.java</a>   "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>Ver código JarInJarHelper.java</a></b>";
+         + "¡ALERTA! Crash Assistant es un detector de malware falso. Bloquea intencionalmente el lanzamiento del juego, ignorando tu libertad de seguir jugando con los mods que apunta. "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>Ver código MalwareMod.java</a>   "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>Ver código JarInJarHelper.java</a>. "
+         + "Solo este mod está en su lista en este momento y solo están yendo realmente tras el sitio de registro predeterminado, que puede ser cambiado por el usuario, y eso solo ocurre si eliges explícitamente usar la función integrada de compartir registros. CrashAssistant NO realiza ninguna verificación para determinar qué sitio de registro se está utilizando ni explica cómo cambiarlo (hay un menú desplegable en la parte inferior del cuadro de diálogo de compartir), y sin importar qué sitio tengas configurado, CrashAssistant bloqueará el lanzamiento del juego. En su mensaje dicen que hagas tu propia investigación, HAZLO, investiga el código de CrashDetector y Crash Assistant y entiende lo que hacen, NO te bases en una apelación a la autoridad.</b>";
 }
 
 

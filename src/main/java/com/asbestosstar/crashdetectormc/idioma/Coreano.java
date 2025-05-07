@@ -344,7 +344,7 @@ public String noRegistroDeLauncher() {
     return "런처 로그를 찾을 수 없습니다! 이로 인해 조사가 복잡해질 수 있습니다.\n"
             + "                \n"
             + "                올바른 로그를 얻으려면:\n"
-            + "                - MultiMC/PolyMC/PrismLauncher/PollyMC/UltimMC: 참고: 자동으로 감지된 로그는 올바르지 않습니다.\n"
+            + "                - MultiMC/PolyMC/PrismLauncher: 참고: 자동으로 감지된 로그는 올바르지 않습니다.\n"
             + "                  1. 인스턴스 인터페이스 열기\n"
             + "                  2. \"Minecraft Log\" 섹션으로 이동\n"
             + "                  3. 마우스 오른쪽 버튼 클릭 후 내용 복사\n"
@@ -410,14 +410,11 @@ public String botonDeCompartirInforme() {
 
 @Override
 public String arco() {
-    return "이 대화 상자는 securelogger.net에서 SecureLogger API를 사용하여 로그를 공유할 수 있도록 합니다. "
-            + "공유 버튼을 누르면 파일이 선택된 사이트(기본값 asbestosstar.egoism.jp)에 업로드됩니다. "
-            + "선택한 모든 로그를 보고서와 함께 공유할 수 있습니다. 업로드하지 않으려면 이 대화 상자를 사용하지 마십시오! "
-            + "우리는 공식 엔드포인트(https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb)에서 보고서를 처리하지 않습니다. 허용되지 않는 링크만 제거합니다. 코드는 여기에 있습니다: https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb. "
-            + "이는 오류 정보와 로그 링크를 표시하는 데만 사용됩니다. 그러나 같은 메소드를 가지고 있지 않을 수 있는 사용자 정의 엔드포인트를 사용할 수 있습니다. "
-            + "현재 보고서 사이트로 " 
-            + Config.obtenerInstancia().obtenerSitoDeInformes() + "를, 로그 사이트로 " 
-            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + "를 사용하고 있습니다. CrashDetector는 기본적으로 로그 익명화 기능을 제공하며, 이는 사용자 이름, UUID, 액세스 토큰, 세션 ID, IP 주소 및 기타 데이터를 제거하려고 시도합니다. 하지만 완벽하지 않을 수 있습니다. Modpack 작성자는 이를 비활성화할 수 있으며, 이 화면 하단의 체크박스로 활성화 또는 비활성화할 수 있습니다.";
+    return "이 대화상자는 SecureLogger API를 사용하여 securelogger.net에 로그를 공유할 수 있게 해줍니다. "
+            + "보고서 공유 버튼을 누르면 보고서는 선택된 엔드포인트(기본값 asbestosstar.egoism.jp)(하단에서 변경 가능)로 전송됩니다. 선택한 모든 로그를 보고서와 함께 공유할 수 있습니다. "
+            + "업로드하고 싶지 않다면 이 대화상자를 사용하지 마세요! 우리는 공식 엔드포인트(https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb)에서 보고서를 처리하지 않습니다. 허용되지 않은 링크만 제거합니다. 코드는 여기에 있습니다: https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb. 이것은 크래시 정보와 로그 링크를 표시하는 데만 사용됩니다. 그러나 동일한 메서드를 가지고 있지 않을 수 있는 사용자 정의 엔드포인트를 사용할 수도 있습니다. 현재 신고 사이트 " 
+            + Config.obtenerInstancia().obtenerSitoDeInformes() + "와 로그 사이트 " 
+            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + "를 사용하고 있습니다. 개별 로그 이름 옆에 있는 공유 버튼을 눌러 보고서 없이 개별 로그를 공유할 수도 있습니다. 로그는 선택한 로그 사이트로 전송됩니다. CrashDetector에는 기본적으로 사용자 이름, UUID, 액세스 토큰, 세션 ID, IP 주소 및 기타 데이터를 제거하려고 시도하는 로그 익명화 기능이 있지만 완벽하지는 않습니다. 또한 모드팩 작성자가 이를 비활성화할 수 있습니다. 하단의 체크박스를 통해 활성화 또는 비활성화할 수 있습니다. 당신은 자신의 데이터 관리자입니다. 어디에 데이터를 업로드할지 결정하는 것은 당신입니다. 로그 사이트는 소유권이 종종 개인 정보 보호를 위해 숨겨져 있는 제3자 소유입니다. 데이터 관리 및 관련된 위험에 대한 모든 책임은 귀하에게 있습니다. CrashDetector 공유 대화상자는 단순히 이를 관리하기 위한 인터페이스입니다. GDPR 및 ARCO에 대해 잘 알고 있어야 합니다.";
 }
 
 @Override
@@ -481,9 +478,10 @@ public String errorProveedorVersion(String proveedor, String requerido, String e
 @Override
 public String advertenciaMalwareFalso() {
     return "<b style='color:#" + config.obtenerColorError() + "'>"
-         + "경고! Crash Assistant는 가짜 악성코드 감지기입니다. 이 프로그램은 의도적으로 게임을 차단하며, 타겟팅된 모드로 계속 플레이할 자유를 무시합니다. "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/02caebaaac98e3e226337e27b226ead568363815/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java'>MalwareMod.java 코드 보기</a>   "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>JarInJarHelper.java 코드 보기</a></b>";
+         + "경고! Crash Assistant는 가짜 악성코드 감지기입니다. 이 프로그램은 의도적으로 게임 실행을 차단하며, 타겟팅된 모드로 계속 플레이할 자유를 무시합니다. "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>MalwareMod.java 코드 보기</a>   "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>JarInJarHelper.java 코드 보기</a>. "
+         + "현재 리스트에는 이 모드만 있으며, 실제로는 사용자가 변경할 수 있는 기본 로그 사이트만을 대상으로 합니다. 이 기능은 내장된 로그 공유 기능을 명시적으로 선택한 경우에만 작동합니다. CrashAssistant는 어떤 로그 사이트가 설정되었는지 확인하지 않으며, 변경 방법(공유 대화 상자의 하단에 드롭다운 메뉴 있음)도 설명하지 않습니다. 설정된 사이트와 관계없이 CrashAssistant는 게임 실행을 차단합니다. 그들의 메시지에서는 직접 조사하라고 하지만, 실제로 그렇게 하십시오. CrashDetector와 Crash Assistant의 코드를 살펴보고 무엇을 하는지 이해하십시오. 권위에 호소하는 것에 의존하지 마십시오.</b>";
 }
 
 

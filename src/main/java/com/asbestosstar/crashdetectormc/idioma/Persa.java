@@ -340,7 +340,7 @@ public String noRegistroDeLauncher() {
     return "هیچ لاگی از لانچر پیدا نشد! این ممکن است بررسی را پیچیده‌تر کند.\n"
             + "                \n"
             + "                برای دریافت لاگ‌های صحیح:\n"
-            + "                - MultiMC/PolyMC/PrismLauncher/PollyMC/UltimMC: توجه: لاگ‌های شناسایی‌شده به‌صورت خودکار صحیح نیستند.\n"
+            + "                - MultiMC/PolyMC/PrismLauncher: توجه: لاگ‌های شناسایی‌شده به‌صورت خودکار صحیح نیستند.\n"
             + "                  1. رابط نمونه را باز کنید\n"
             + "                  2. به بخش \"Minecraft Log\" بروید\n"
             + "                  3. روی آن راست‌کلیک کنید و محتوای آن را کپی کنید\n"
@@ -406,10 +406,12 @@ public String botonDeCompartirInforme() {
 
 @Override
 public String arco() {
-    return "این گفتگو به شما امکان می‌دهد لاگ‌ها را با استفاده از API SecureLogger در securelogger.net به اشتراک بگذارید. "
-            + "هنگام فشار دادن دکمه‌های اشتراک‌گذاری، فایل‌ها به سایت انتخاب‌شده (پیش‌فرض asbestosstar.egoism.jp) آپلود می‌شوند. شما می‌توانید تمام لاگ‌های انتخاب‌شده را همراه با گزارش به اشتراک بگذارید. اگر نمی‌خواهید آپلود کنید، از این گفتگو استفاده نکنید! ما گزارش شما را در نقاط پایانی رسمی (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb) پردازش نمی‌کنیم؛ فقط لینک‌های غیرمجاز حذف می‌شوند. کد اینجا قرار دارد: https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb. این فقط برای نمایش اطلاعات درباره خرابی و لینک به لاگ‌ها استفاده می‌شود. با این حال، می‌توانید از یک نقطه پایانی سفارشی استفاده کنید که ممکن است شامل همان روش‌ها نباشد. شما از سایت گزارش‌ها " 
-            + Config.obtenerInstancia().obtenerSitoDeInformes() + " و سایت لاگ‌ها " 
-            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + " استفاده می‌کنید. CrashDetector به طور پیش‌فرض دارای بی‌هویت‌سازی لاگ‌هاست، که سعی می‌کند نام‌های کاربری، UUIDها، توکن‌های دسترسی، شناسه‌های جلسه، آدرس‌های IP و داده‌های دیگر را حذف کند. با این حال، این فرآیند کامل نیست. با این حال، نویسنده مجموعه افزونه‌ها می‌تواند آن را غیرفعال کند. می‌توان آن را با جعبه تیک در پایین این صفحه فعال یا غیرفعال کرد.";
+    return "این گفتگو به شما امکان می‌دهد که با استفاده از API SecureLogger "
+            + "در securelogger.net لاگ‌ها را به اشتراک بگذارید. هنگام فشار دادن دکمه اشتراک‌گذاری گزارش، گزارش شما به "
+            + "اپتاین پایانی انتخاب‌شده (پیش‌فرض asbestosstar.egoism.jp) (قابل تغییر در پایین) ارسال می‌شود. می‌توانید تمام لاگ‌های انتخاب‌شده را "
+            + "همراه با گزارش به اشتراک بگذارید. اگر نمی‌خواهید آپلود کنید، از این گفتگو استفاده نکنید! ما گزارش شما را در اپتاین پایانی رسمی (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb) پردازش نمی‌کنیم؛ فقط لینک‌های غیرمجاز را حذف می‌کنیم. کد اینجا قرار دارد: https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb. این تنها برای نمایش اطلاعات درباره خرابی شما و لینک به لاگ‌ها استفاده می‌شود. با این حال، ممکن است از اپتاین پایانی سفارشی استفاده کنید که ممکن است روش‌های مشابهی نداشته باشد. شما از وبسایت گزارش‌دهی " 
+            + Config.obtenerInstancia().obtenerSitoDeInformes() + " و وبسایت لاگ‌ها " 
+            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + " استفاده می‌کنید. همچنین می‌توانید لاگ‌های انفرادی را بدون گزارش با فشار دادن دکمه‌های اشتراک‌گذاری کنار نام‌های لاگ‌ها به اشتراک بگذارید؛ لاگ‌ها به وبسایت لاگ‌های انتخاب‌شده ارسال می‌شوند. CrashDetector دارای ناشناس‌سازی پیش‌فرض لاگ‌ها است که سعی می‌کند نام‌های کاربری، UUIDها، توکن‌های دسترسی، شناسه‌های جلسه، آدرس‌های IP و دیگر داده‌ها را حذف کند. با این حال، این عملکرد کامل نیست. با این حال، نویسنده مجموعه مودها می‌تواند آن را غیرفعال کند. می‌توان آن را با جعبه‌ای در پایین این صفحه فعال یا غیرفعال کرد. شما کنترل‌کننده داده‌های خود هستید؛ شما تصمیم می‌گیرید که داده‌هایتان را کجا آپلود کنید. وبسایت‌های لاگ‌ها متعلق به طرف‌های ثالث هستند که مالکیت آن‌ها اغلب به دلایل حریم خصوصی مخفی است. شما مسئولیت کامل مدیریت داده‌های خود و ریسک‌های مرتبط با آن را بر عهده دارید. گفتگوی اشتراک‌گذاری CrashDetector تنها یک رابط است که به شما اجازه می‌دهد آن را مدیریت کنید. مهم است که از GDPR و ARCO آگاه باشید.";
 }
 
 @Override
@@ -475,9 +477,10 @@ public String errorProveedorVersion(String proveedor, String requerido, String e
 @Override
 public String advertenciaMalwareFalso() {
     return "<b style='color:#" + config.obtenerColorError() + "'>"
-         + "هشدار! Crash Assistant یک تشخیص‌دهنده بدافزار جعلی است. این برنامه به‌طور عمدی بازی را مسدود می‌کند و آزادی شما را برای ادامه بازی با افزونه‌های هدف‌گیری‌شده در نظر نمی‌گیرد. "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/02caebaaac98e3e226337e27b226ead568363815/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java'>مشاهده کد MalwareMod.java</a>   "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>مشاهده کد JarInJarHelper.java</a></b>";
+         + "هشدار! Crash Assistant یک تشخیص‌دهنده بدافزار جعلی است. این برنامه به‌طور عمدی بازی را از اجرای شروع مسدود می‌کند و آزادی شما برای ادامه بازی با افزونه‌های هدف‌گیری‌شده را نادیده می‌گیرد. "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>مشاهده کد MalwareMod.java</a>   "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>مشاهده کد JarInJarHelper.java</a>. "
+         + "در حال حاضر فقط این افزونه در لیست آنها قرار دارد و در واقع فقط به سایت ثبت لاگ پیش‌فرض حمله می‌کنند که می‌تواند توسط کاربر تغییر کند و این فقط زمانی اتفاق می‌افتد که به‌صورت صریح از ویژگی مشارکت لاگ داخلی استفاده کنید. CrashAssistant هیچ بررسی‌ای برای حتی تعیین اینکه کدام سایت ثبت لاگ استفاده می‌شود انجام نمی‌دهد و نحوه تغییر آن را توضیح نمی‌دهد (یک منوی کشویی در پایین جعبه محاوره‌ای اشتراک وجود دارد) و صرف‌نظر از اینکه چه سایتی تنظیم کرده‌اید، CrashAssistant اجرای بازی را مسدود خواهد کرد. در پیام آنها اشاره شده که تحقیقات خود را انجام دهید، این کار را انجام دهید، به کد CrashDetector و Crash Assistant نگاه کنید و درک کنید که چه کاری انجام می‌دهند، به استدلال اقتباس به مقام اعتماد نکنید.</b>";
 }
 
 

@@ -343,7 +343,7 @@ public String noRegistroDeLauncher() {
     return "Neniu protokolo de la lanĉilo troviĝis! Tio povas kompliki la esploradon.\n"
             + "                \n"
             + "                Por akiri la ĝustajn protokolojn:\n"
-            + "                - MultiMC/PolyMC/PrismLauncher/PollyMC/UltimMC: NOTO: Aŭtomate detektitaj protokoloj NE estas ĝustaj.\n"
+            + "                - MultiMC/PolyMC/PrismLauncher: NOTO: Aŭtomate detektitaj protokoloj NE estas ĝustaj.\n"
             + "                  1. Malfermu la instancan interfaco\n"
             + "                  2. Iru al la sekcio \"Minecraft Log\"\n"
             + "                  3. Alklaku dekstre kaj kopiu la enhavon\n"
@@ -409,12 +409,12 @@ public String botonDeCompartirInforme() {
 
 @Override
 public String arco() {
-    return "Ĉi tiu dialogo ebligas kunhavigi protokolojn uzante la API-on de SecureLogger "
-            + "ĉe securelogger.net. Kiam vi premas la kunhavigajn butonojn, dosieroj "
-            + "alŝutiĝas al la elektita retejo (defaŭlte asbestosstar.egoism.jp). Vi povas kunhavigi ĉiujn elektitajn protokolojn "
-            + "kune kun la raporto. Se vi ne volas alŝuti, ne uzu ĉi tiun dialogon! Ni ne prilaboras vian raporton ĉe la oficiala finpunkto (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb); ni nur forigas nepermesatajn ligilojn. La kodo estas ĉi tie: https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb. Tio estas uzata nur por montri informon pri via paneo kaj la ligilon al la protokoloj. Tamen, eblas uzi propran finpunkton, kiu eble ne havas la samajn metodojn. Vi uzas la raportan retejon " 
+    return "Ĉi tiu dialogo ebligas vin kunhavigi protokolojn uzante la API-on de SecureLogger "
+            + "ĉe securelogger.net. Kiam vi premas la butonon por kunhavigi raporton, via raporto estas sendata al "
+            + "la elektita raporto-punkto (defaŭlte asbestosstar.egoism.jp) (Povas esti ŝanĝita malsupre). Vi povas kunhavigi ĉiujn elektitajn protokolojn "
+            + "kune kun la raporto. Se vi ne volas alŝuti, ne uzu ĉi tiun dialogon! Ni ne prilaboras vian raporton ĉe la oficiala finpunkto (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb); ni nur forigas malpermesitajn ligilojn. La kodo troviĝas ĉi tie: https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb. Ĉi tio estas uzata nur por montri informojn pri via kraŝo kaj la ligilon al la protokoloj. Tamen, eblas uzi propran finpunkton, kiu eble ne havas la samajn metodojn. Vi uzas la raportan retejon " 
             + Config.obtenerInstancia().obtenerSitoDeInformes() + " kaj la protokolan retejon " 
-            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + ". CrashDetector havas defaŭltan anonimigon de protokoloj, kiu provas forigi uzantonomojn, UUID-ojn, alirajn ŝlosilojn, sesiajn identigilojn, IP-adresojn kaj aliajn datumojn. Tamen, ĝi ne estas perfekta. Tamen, la aŭtoro de la modpako povas malebligi ĝin. Ĝi povas esti aktivigita aŭ malebligita per la markobutono ĉe la malsupra parto de ĉi tiu ekrano.";
+            + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + ". Vi ankaŭ povas kunhavigi individuajn protokolojn sen raporto per premo de la kunhavigaj butonoj apud la nomoj de la protokoloj; la protokoloj iras al la elektita protokola retejo. CrashDetector havas defaŭltan protokolan anonimigon, kiu provas forigi uzantnomojn, UUIDjn, alirajn ĵetonojn, sesiajn identigilojn, IP-adresojn kaj aliajn datumojn. Tamen, ĝi ne estas perfekta. Tamen, la aŭtoro de la modpakaĵo povas malaktivigi ĝin. Ĝi povas esti aktivigita aŭ malaktivigita per la markobutono ĉe la malsupra parto de ĉi tiu ekrano. Vi estas la posedanto de viaj datumoj; vi decidas kie alŝuti viajn datumojn. Protokolaj retejoj estas posedataj de triaj partioj, kies posedeco ofte estas kaŝita pro privateco. Vi plene respondas pri la mastrumado de viaj datumoj kaj la riskoj ligitaj al ili. La Kunhaviga Dialogo de CrashDetector estas nur interfaco, kiu ebligas vin administri tion. Gravas, ke vi estu konscia pri GDPR kaj ARCO.";
 }
 
 @Override
@@ -477,9 +477,10 @@ public String errorProveedorVersion(String proveedor, String requerido, String e
 @Override
 public String advertenciaMalwareFalso() {
     return "<b style='color:#" + config.obtenerColorError() + "'>"
-         + "ATENTU! Crash Assistant estas falsa malprogram-detektilo. Ĝi intence blokas la ludon kaj ignoras vian liberecon daŭrigi ludi kun la celitaj kromprogramoj. "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/02caebaaac98e3e226337e27b226ead568363815/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java'>Vidi kodon de MalwareMod.java</a>   "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>Vidi kodon de JarInJarHelper.java</a></b>";
+         + "ATENTU! Crash Assistant estas falsa malprogram-detektilo. Ĝi intence blokas la lanĉon de la ludo, ignorante vian liberecon daŭrigi ludi kun la celitaj kromprogramoj. "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>Vidi kodon de MalwareMod.java</a>   "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>Vidi kodon de JarInJarHelper.java</a>. "
+         + "Nur ĉi tiu kromprogramo estas nuntempe sur ilia listo, kaj ili fakte nur celas la defaŭltan protokolregistran retejon, kiun la uzanto povas ŝanĝi, kaj tio nur okazas se vi elekte uzas la enigitan protokolan kunhavigan funkcion. CrashAssistant NE faras iujn ajn kontroladojn por eĉ determini kiu protokolregistra retejo estas uzata kaj ne klarigas kiel ŝanĝi ĝin (estas falmenuo ĉe la malsupra parto de la kunhaviga dialogo), kaj sendepende de la agordita retejo, CrashAssistant blokos la lanĉon de la ludo. En sia mesaĝo, ili diras fari vian propran esploradon, FARU ĜIN, rigardu la kodon de CrashDetector kaj Crash Assistant kaj komprenu kion ili faras, NE fidas al aŭtoritato.</b>";
 }
 
 
