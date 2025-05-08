@@ -462,23 +462,47 @@ public String errorJavaFML_MCForge() {
 }
 
 @Override
-public String errorProveedorVersion(String proveedor, String requerido, String encontrado) {
+public String errorProveedorVersion(String archivoJar, String proveedor, String requerido, String encontrado) {
     return "<b style='color:#" + config.obtenerColorError() + "'>"
-         + "供应商 " + proveedor + " 的不兼容版本："
-         + "需要 " + requerido + "，但找到的是 " + encontrado + "</b>";
+         + "JAR 文件 '" + archivoJar + "' 需要语言提供程序 '" + proveedor + "' 的版本 '"
+         + requerido + "' 或更高版本，但仅找到版本 '" + encontrado + "'。</b>";
+}
+
+//@Override
+//public String advertenciaMalwareFalso() {
+//    return "<b style='color:#" + config.obtenerColorError() + "'>"
+//         + "警告！Crash Assistant 是一个伪造的恶意软件检测器。它故意阻止游戏启动，无视您继续使用目标模组进行游戏的自由。 "
+//         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>查看 MalwareMod.java 代码</a>   "
+//         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>查看 JarInJarHelper.java 代码</a>. "
+//         + "目前只有这个模组在他们的列表中，并且他们实际上只针对默认的日志站点，而该站点可以由用户更改，只有在明确选择使用内置日志共享功能时才会生效。CrashAssistant 不会检查当前使用的是哪个日志站点，也不会解释如何更改它（共享对话框底部有一个下拉菜单），无论配置了哪个站点，CrashAssistant 都会阻止游戏启动。在他们的消息中，他们说要自己做研究，那就去做吧，查看 CrashDetector 和 Crash Assistant 的代码，了解它们的作用，不要依赖权威的呼吁。</b>";
+//}
+
+
+@Override
+public String error_clase_no_encontrada_mcforge_mod_suspechoso(String idMod, String claseNoEncontrada) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "模组 '" + idMod + "' 因未找到所需类而失败: '"
+         + claseNoEncontrada + "'. 请确保所有依赖项已正确安装。</b>";
+}
+
+
+@Override
+public String waterMediaTL() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Watermedia 已阻止使用 TLauncher 进行游戏。</b>";
 }
 
 @Override
-public String advertenciaMalwareFalso() {
+public String optifineObsoleta() {
     return "<b style='color:#" + config.obtenerColorError() + "'>"
-         + "警告！Crash Assistant 是一个伪造的恶意软件检测器。它故意阻止游戏启动，无视您继续使用目标模组进行游戏的自由。 "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>查看 MalwareMod.java 代码</a>   "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>查看 JarInJarHelper.java 代码</a>. "
-         + "目前只有这个模组在他们的列表中，并且他们实际上只针对默认的日志站点，而该站点可以由用户更改，只有在明确选择使用内置日志共享功能时才会生效。CrashAssistant 不会检查当前使用的是哪个日志站点，也不会解释如何更改它（共享对话框底部有一个下拉菜单），无论配置了哪个站点，CrashAssistant 都会阻止游戏启动。在他们的消息中，他们说要自己做研究，那就去做吧，查看 CrashDetector 和 Crash Assistant 的代码，了解它们的作用，不要依赖权威的呼吁。</b>";
+         + "您正在使用适用于过时版本的Minecraft的Optifine版本。您需要使用与您当前使用的Minecraft版本对应的Optifine版本。</b>";
 }
 
-
-
+@Override
+public String servicioMLNoPudoCargar(String servicio) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "无法加载 ModLauncher 服务: </b>" + servicio + "。";
+}
 
 
 

@@ -495,25 +495,47 @@ public String errorJavaFML_MCForge() {
 }
 
 @Override
-public String errorProveedorVersion(String proveedor, String requerido, String encontrado) {
+public String errorProveedorVersion(String archivoJar, String proveedor, String requerido, String encontrado) {
     return "<b style='color:#" + config.obtenerColorError() + "'>"
-         + "Proveedor " + proveedor + " incompatible: "
-         + "Requiere " + requerido + ", encontrado " + encontrado + "</b>";
+         + "El archivo JAR '" + archivoJar + "' requiere el proveedor de lenguaje '" + proveedor + "' versión '"
+         + requerido + "' o superior, pero solo se encontró la versión '" + encontrado + "'.</b>";
+}
+
+//@Override
+//public String advertenciaMalwareFalso() {
+//    return "<b style='color:#" + config.obtenerColorError() + "'>"
+//         + "¡ALERTA! Crash Assistant es un detector de malware falso. Bloquea intencionalmente el lanzamiento del juego, ignorando tu libertad de seguir jugando con los mods que apunta. "
+//         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>Ver código MalwareMod.java</a>   "
+//         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>Ver código JarInJarHelper.java</a>. "
+//         + "Solo este mod está en su lista en este momento y solo están yendo realmente tras el sitio de registro predeterminado, que puede ser cambiado por el usuario, y eso solo ocurre si eliges explícitamente usar la función integrada de compartir registros. CrashAssistant NO realiza ninguna verificación para determinar qué sitio de registro se está utilizando ni explica cómo cambiarlo (hay un menú desplegable en la parte inferior del cuadro de diálogo de compartir), y sin importar qué sitio tengas configurado, CrashAssistant bloqueará el lanzamiento del juego. En su mensaje dicen que hagas tu propia investigación, HAZLO, investiga el código de CrashDetector y Crash Assistant y entiende lo que hacen, NO te bases en una apelación a la autoridad.</b>";
+//}
+
+
+@Override
+public String error_clase_no_encontrada_mcforge_mod_suspechoso(String idMod, String claseNoEncontrada) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "El mod '" + idMod + "' ha fallado porque no se encontró la clase requerida: '"
+         + claseNoEncontrada + "'. Asegúrate de que todas las dependencias estén instaladas correctamente.</b>";
+}
+
+
+
+@Override
+public String waterMediaTL() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Watermedia ha bloqeuado jugar con TLauncher.</b>";
 }
 
 @Override
-public String advertenciaMalwareFalso() {
+public String optifineObsoleta() {
     return "<b style='color:#" + config.obtenerColorError() + "'>"
-         + "¡ALERTA! Crash Assistant es un detector de malware falso. Bloquea intencionalmente el lanzamiento del juego, ignorando tu libertad de seguir jugando con los mods que apunta. "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>Ver código MalwareMod.java</a>   "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>Ver código JarInJarHelper.java</a>. "
-         + "Solo este mod está en su lista en este momento y solo están yendo realmente tras el sitio de registro predeterminado, que puede ser cambiado por el usuario, y eso solo ocurre si eliges explícitamente usar la función integrada de compartir registros. CrashAssistant NO realiza ninguna verificación para determinar qué sitio de registro se está utilizando ni explica cómo cambiarlo (hay un menú desplegable en la parte inferior del cuadro de diálogo de compartir), y sin importar qué sitio tengas configurado, CrashAssistant bloqueará el lanzamiento del juego. En su mensaje dicen que hagas tu propia investigación, HAZLO, investiga el código de CrashDetector y Crash Assistant y entiende lo que hacen, NO te bases en una apelación a la autoridad.</b>";
+         + "Estás usando una versión de Optifine para una versión de Minecraft obsoleta. Necesitas usar la versión de Optifine para la versión de Minecraft que estás usando.</b>";
 }
 
-
-
-
-
-
+@Override
+public String servicioMLNoPudoCargar(String servicio) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "No se pudo cargar el Servicio de ModLauncher: </b>" + servicio + ".";
+}
     
 }

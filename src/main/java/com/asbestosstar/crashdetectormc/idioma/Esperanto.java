@@ -468,22 +468,47 @@ public String errorJavaFML_MCForge() {
 }
 
 @Override
-public String errorProveedorVersion(String proveedor, String requerido, String encontrado) {
+public String errorProveedorVersion(String archivoJar, String proveedor, String requerido, String encontrado) {
     return "<b style='color:#" + config.obtenerColorError() + "'>"
-         + "Provizanto " + proveedor + " ne kongruas: "
-         + "Necesas " + requerido + ", troviĝis " + encontrado + "</b>";
+         + "La JAR-dosiero '" + archivoJar + "' bezonas la lingvo-provizanton '" + proveedor + "' version '"
+         + requerido + "' aŭ pli novan, sed nur la versio '" + encontrado + "' estis trovita.</b>";
+}
+
+//@Override
+//public String advertenciaMalwareFalso() {
+//    return "<b style='color:#" + config.obtenerColorError() + "'>"
+//         + "ATENTU! Crash Assistant estas falsa malprogram-detektilo. Ĝi intence blokas la lanĉon de la ludo, ignorante vian liberecon daŭrigi ludi kun la celitaj kromprogramoj. "
+//         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>Vidi kodon de MalwareMod.java</a>   "
+//         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>Vidi kodon de JarInJarHelper.java</a>. "
+//         + "Nur ĉi tiu kromprogramo estas nuntempe sur ilia listo, kaj ili fakte nur celas la defaŭltan protokolregistran retejon, kiun la uzanto povas ŝanĝi, kaj tio nur okazas se vi elekte uzas la enigitan protokolan kunhavigan funkcion. CrashAssistant NE faras iujn ajn kontroladojn por eĉ determini kiu protokolregistra retejo estas uzata kaj ne klarigas kiel ŝanĝi ĝin (estas falmenuo ĉe la malsupra parto de la kunhaviga dialogo), kaj sendepende de la agordita retejo, CrashAssistant blokos la lanĉon de la ludo. En sia mesaĝo, ili diras fari vian propran esploradon, FARU ĜIN, rigardu la kodon de CrashDetector kaj Crash Assistant kaj komprenu kion ili faras, NE fidas al aŭtoritato.</b>";
+//}
+
+@Override
+public String error_clase_no_encontrada_mcforge_mod_suspechoso(String idMod, String claseNoEncontrada) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "La modulo '" + idMod + "' malsukcesis ĉar la bezonata klaso ne estis trovita: '"
+         + claseNoEncontrada + "'. Certigu, ke ĉiuj dependecoj estas instalitaj ĝuste.</b>";
+}
+
+
+@Override
+public String waterMediaTL() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Watermedia blokis ludi per TLauncher.</b>";
+}
+
+
+@Override
+public String optifineObsoleta() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Vi uzas version de Optifine por malaktuala versio de Minecraft. Vi devas uzi la version de Optifine por la versio de Minecraft kiun vi uzas.</b>";
 }
 
 @Override
-public String advertenciaMalwareFalso() {
+public String servicioMLNoPudoCargar(String servicio) {
     return "<b style='color:#" + config.obtenerColorError() + "'>"
-         + "ATENTU! Crash Assistant estas falsa malprogram-detektilo. Ĝi intence blokas la lanĉon de la ludo, ignorante vian liberecon daŭrigi ludi kun la celitaj kromprogramoj. "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>Vidi kodon de MalwareMod.java</a>   "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>Vidi kodon de JarInJarHelper.java</a>. "
-         + "Nur ĉi tiu kromprogramo estas nuntempe sur ilia listo, kaj ili fakte nur celas la defaŭltan protokolregistran retejon, kiun la uzanto povas ŝanĝi, kaj tio nur okazas se vi elekte uzas la enigitan protokolan kunhavigan funkcion. CrashAssistant NE faras iujn ajn kontroladojn por eĉ determini kiu protokolregistra retejo estas uzata kaj ne klarigas kiel ŝanĝi ĝin (estas falmenuo ĉe la malsupra parto de la kunhaviga dialogo), kaj sendepende de la agordita retejo, CrashAssistant blokos la lanĉon de la ludo. En sia mesaĝo, ili diras fari vian propran esploradon, FARU ĜIN, rigardu la kodon de CrashDetector kaj Crash Assistant kaj komprenu kion ili faras, NE fidas al aŭtoritato.</b>";
+         + "Ne eblis ŝargi la servon de ModLauncher: </b>" + servicio + ".";
 }
-
-
 
 
 

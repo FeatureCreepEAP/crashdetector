@@ -264,10 +264,18 @@ public interface Idioma {
 
 	public String errorJavaFMLVersion(String requerido, String encontrado);
 
-	public String errorProveedorVersion(String string, String req, String encontrado);
+	public String errorProveedorVersion(String jar, String prov, String req, String encontrado2);
 
 	public String errorJavaFML_MCForge();
 
-	public String advertenciaMalwareFalso();
+	public String error_clase_no_encontrada_mcforge_mod_suspechoso(String idMod, String claseNoEncontrada);
+
+	public String waterMediaTL();
+
+	public String optifineObsoleta();
+
+	public String servicioMLNoPudoCargar(String servicio);
+
+	//public String advertenciaMalwareFalso();
 	
 }

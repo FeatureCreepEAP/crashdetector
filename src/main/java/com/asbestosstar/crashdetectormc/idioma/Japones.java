@@ -461,22 +461,47 @@ public String errorJavaFML_MCForge() {
 }
 
 @Override
-public String errorProveedorVersion(String proveedor, String requerido, String encontrado) {
+public String errorProveedorVersion(String archivoJar, String proveedor, String requerido, String encontrado) {
     return "<b style='color:#" + config.obtenerColorError() + "'>"
-         + "プロバイダー " + proveedor + " の互換性のないバージョン: "
-         + "必要なのは " + requerido + " ですが、見つかったのは " + encontrado + "</b>";
+         + "JARファイル '" + archivoJar + "' は、言語プロバイダー '" + proveedor + "' のバージョン '"
+         + requerido + "' 以上を必要としますが、見つかったのはバージョン '" + encontrado + "' です。</b>";
+}
+
+//@Override
+//public String advertenciaMalwareFalso() {
+//    return "<b style='color:#" + config.obtenerColorError() + "'>"
+//         + "警告！ Crash Assistant は偽のマルウェア検出ツールです。意図的にゲームの起動をブロックし、ターゲットとなる MOD を使用してプレイする自由を無視します。 "
+//         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>MalwareMod.java のコードを見る</a>   "
+//         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>JarInJarHelper.java のコードを見る</a>. "
+//         + "現時点ではこの MOD だけがリストに載っており、彼らは実際にはデフォルトのログサイトのみを対象としています。このサイトはユーザーが変更可能で、組み込みのログ共有機能を明示的に選択した場合にのみ動作します。CrashAssistant はどのログサイトが設定されているかチェックせず、また変更方法（共有ダイアログの下部にあるドロップダウン）を説明しません。設定されているサイトに関係なく、CrashAssistant はゲームの起動をブロックします。メッセージの中で彼らは独自の調査をするように言っていますが、その通りにしてください。CrashDetector と Crash Assistant のコードを調べ、何をしているのか理解してください。権威への信頼に頼らないでください。</b>";
+//}
+
+@Override
+public String error_clase_no_encontrada_mcforge_mod_suspechoso(String idMod, String claseNoEncontrada) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Mod '" + idMod + "' は、必要なクラスが見つからないため失敗しました: '"
+         + claseNoEncontrada + "'. すべての依存関係が正しくインストールされていることを確認してください。</b>";
+}
+
+
+@Override
+public String waterMediaTL() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Watermedia は TLauncher を使用したプレイをブロックしました。</b>";
 }
 
 @Override
-public String advertenciaMalwareFalso() {
+public String optifineObsoleta() {
     return "<b style='color:#" + config.obtenerColorError() + "'>"
-         + "警告！ Crash Assistant は偽のマルウェア検出ツールです。意図的にゲームの起動をブロックし、ターゲットとなる MOD を使用してプレイする自由を無視します。 "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>MalwareMod.java のコードを見る</a>   "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>JarInJarHelper.java のコードを見る</a>. "
-         + "現時点ではこの MOD だけがリストに載っており、彼らは実際にはデフォルトのログサイトのみを対象としています。このサイトはユーザーが変更可能で、組み込みのログ共有機能を明示的に選択した場合にのみ動作します。CrashAssistant はどのログサイトが設定されているかチェックせず、また変更方法（共有ダイアログの下部にあるドロップダウン）を説明しません。設定されているサイトに関係なく、CrashAssistant はゲームの起動をブロックします。メッセージの中で彼らは独自の調査をするように言っていますが、その通りにしてください。CrashDetector と Crash Assistant のコードを調べ、何をしているのか理解してください。権威への信頼に頼らないでください。</b>";
+         + "あなたは古いバージョンのMinecraft用のOptifineを使用しています。使用しているMinecraftのバージョンに対応するOptifineを使用する必要があります。</b>";
 }
 
 
+@Override
+public String servicioMLNoPudoCargar(String servicio) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "ModLauncher サービスを読み込めませんでした: </b>" + servicio + "。";
+}
 
 
 

@@ -467,21 +467,45 @@ public String errorJavaFML_MCForge() {
 }
 
 @Override
-public String errorProveedorVersion(String proveedor, String requerido, String encontrado) {
+public String errorProveedorVersion(String archivoJar, String proveedor, String requerido, String encontrado) {
     return "<b style='color:#" + config.obtenerColorError() + "'>"
-         + "Incompatible provider " + proveedor + ": "
-         + "Requires " + requerido + ", found " + encontrado + "</b>";
+         + "The JAR file '" + archivoJar + "' requires the language provider '" + proveedor + "' version '"
+         + requerido + "' or higher, but only version '" + encontrado + "' was found.</b>";
+}
+
+//@Override
+//public String advertenciaMalwareFalso() {
+//    return "<b style='color:#" + config.obtenerColorError() + "'>"
+//         + "ALERT! Crash Assistant is a fake malware detector. It intentionally blocks the game from launching disregarding your freedom to keep playing with the mods it targets. "
+//         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>View MalwareMod.java code  </a>   "
+//         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>View JarInJarHelper.java code  </a>. Only this mod is on their list at this time and they are only really going after the default logging site which can be changed by the user and that only ever does anything if you explicitly choose to use the built in log sharing feature. CrashAssistant does NOT do any checks to even check which logging site is the one being set and do not explain how to change it (there is a dropdown on the bottom of the share dialogue) and no matter what site you have CrashAssistant will block the game from launching. In their message they say to do your own research, DO IT, look into the code of CrashDetector and Crash Assistant and understand what they do, do NOT rely on appeal to authority.</b>";
+//}
+
+@Override
+public String error_clase_no_encontrada_mcforge_mod_suspechoso(String idMod, String claseNoEncontrada) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "The mod '" + idMod + "' has failed because the required class was not found: '"
+         + claseNoEncontrada + "'. Make sure all dependencies are installed correctly.</b>";
 }
 
 @Override
-public String advertenciaMalwareFalso() {
+public String waterMediaTL() {
     return "<b style='color:#" + config.obtenerColorError() + "'>"
-         + "ALERT! Crash Assistant is a fake malware detector. It intentionally blocks the game from launching disregarding your freedom to keep playing with the mods it targets. "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>View MalwareMod.java code  </a>   "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>View JarInJarHelper.java code  </a>. Only this mod is on their list at this time and they are only really going after the default logging site which can be changed by the user and that only ever does anything if you explicitly choose to use the built in log sharing feature. CrashAssistant does NOT do any checks to even check which logging site is the one being set and do not explain how to change it (there is a dropdown on the bottom of the share dialogue) and no matter what site you have CrashAssistant will block the game from launching. In their message they say to do your own research, DO IT, look into the code of CrashDetector and Crash Assistant and understand what they do, do NOT rely on appeal to authority.</b>";
+         + "Watermedia has blocked playing with TLauncher.</b>";
 }
 
 
+@Override
+public String optifineObsoleta() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "You are using a version of Optifine for an obsolete version of Minecraft. You need to use the version of Optifine for the version of Minecraft you are using.</b>";
+}
+
+@Override
+public String servicioMLNoPudoCargar(String servicio) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Failed to load ModLauncher Service: </b>" + servicio + ".";
+}
 
 
 

@@ -468,19 +468,46 @@ public String errorJavaFML_MCForge() {
 }
 
 @Override
-public String errorProveedorVersion(String proveedor, String requerido, String encontrado) {
+public String errorProveedorVersion(String archivoJar, String proveedor, String requerido, String encontrado) {
     return "<b style='color:#" + config.obtenerColorError() + "'>"
-         + "ارائه‌دهنده " + proveedor + " ناسازگار: "
-         + "نیاز به " + requerido + "، پیدا شده " + encontrado + "</b>";
+         + "فایل JAR '" + archivoJar + "' به ارائه‌دهنده زبان '" + proveedor + "' نسخه '"
+         + requerido + "' یا بالاتر نیاز دارد، اما فقط نسخه '" + encontrado + "' پیدا شد.</b>";
+}
+
+//@Override
+//public String advertenciaMalwareFalso() {
+//    return "<b style='color:#" + config.obtenerColorError() + "'>"
+//         + "هشدار! Crash Assistant یک تشخیص‌دهنده بدافزار جعلی است. این برنامه به‌طور عمدی بازی را از اجرای شروع مسدود می‌کند و آزادی شما برای ادامه بازی با افزونه‌های هدف‌گیری‌شده را نادیده می‌گیرد. "
+//         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>مشاهده کد MalwareMod.java</a>   "
+//         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>مشاهده کد JarInJarHelper.java</a>. "
+//         + "در حال حاضر فقط این افزونه در لیست آنها قرار دارد و در واقع فقط به سایت ثبت لاگ پیش‌فرض حمله می‌کنند که می‌تواند توسط کاربر تغییر کند و این فقط زمانی اتفاق می‌افتد که به‌صورت صریح از ویژگی مشارکت لاگ داخلی استفاده کنید. CrashAssistant هیچ بررسی‌ای برای حتی تعیین اینکه کدام سایت ثبت لاگ استفاده می‌شود انجام نمی‌دهد و نحوه تغییر آن را توضیح نمی‌دهد (یک منوی کشویی در پایین جعبه محاوره‌ای اشتراک وجود دارد) و صرف‌نظر از اینکه چه سایتی تنظیم کرده‌اید، CrashAssistant اجرای بازی را مسدود خواهد کرد. در پیام آنها اشاره شده که تحقیقات خود را انجام دهید، این کار را انجام دهید، به کد CrashDetector و Crash Assistant نگاه کنید و درک کنید که چه کاری انجام می‌دهند، به استدلال اقتباس به مقام اعتماد نکنید.</b>";
+//}
+
+
+@Override
+public String error_clase_no_encontrada_mcforge_mod_suspechoso(String idMod, String claseNoEncontrada) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "مود '" + idMod + "' به دلیل عدم یافتن کلاس مورد نیاز شکست خورده است: '"
+         + claseNoEncontrada + "'. مطمئن شوید که تمام وابستگی‌ها به درستی نصب شده‌اند.</b>";
+}
+
+
+@Override
+public String waterMediaTL() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Watermedia بازی با TLauncher را مسدود کرده است.</b>";
 }
 
 @Override
-public String advertenciaMalwareFalso() {
+public String optifineObsoleta() {
     return "<b style='color:#" + config.obtenerColorError() + "'>"
-         + "هشدار! Crash Assistant یک تشخیص‌دهنده بدافزار جعلی است. این برنامه به‌طور عمدی بازی را از اجرای شروع مسدود می‌کند و آزادی شما برای ادامه بازی با افزونه‌های هدف‌گیری‌شده را نادیده می‌گیرد. "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>مشاهده کد MalwareMod.java</a>   "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>مشاهده کد JarInJarHelper.java</a>. "
-         + "در حال حاضر فقط این افزونه در لیست آنها قرار دارد و در واقع فقط به سایت ثبت لاگ پیش‌فرض حمله می‌کنند که می‌تواند توسط کاربر تغییر کند و این فقط زمانی اتفاق می‌افتد که به‌صورت صریح از ویژگی مشارکت لاگ داخلی استفاده کنید. CrashAssistant هیچ بررسی‌ای برای حتی تعیین اینکه کدام سایت ثبت لاگ استفاده می‌شود انجام نمی‌دهد و نحوه تغییر آن را توضیح نمی‌دهد (یک منوی کشویی در پایین جعبه محاوره‌ای اشتراک وجود دارد) و صرف‌نظر از اینکه چه سایتی تنظیم کرده‌اید، CrashAssistant اجرای بازی را مسدود خواهد کرد. در پیام آنها اشاره شده که تحقیقات خود را انجام دهید، این کار را انجام دهید، به کد CrashDetector و Crash Assistant نگاه کنید و درک کنید که چه کاری انجام می‌دهند، به استدلال اقتباس به مقام اعتماد نکنید.</b>";
+         + "شما از نسخه‌ای از Optifine برای یک نسخه منسوخ شده از Minecraft استفاده می‌کنید. باید از نسخه Optifine متناسب با نسخه Minecraft که استفاده می‌کنید، استفاده کنید.</b>";
+}
+
+@Override
+public String servicioMLNoPudoCargar(String servicio) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "سرویس ModLauncher بارگذاری نشد: </b>" + servicio + ".";
 }
 
 
