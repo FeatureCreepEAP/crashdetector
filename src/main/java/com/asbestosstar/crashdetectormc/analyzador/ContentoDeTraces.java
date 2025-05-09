@@ -40,7 +40,7 @@ public class ContentoDeTraces implements Verificaciones {
 			for (Map.Entry<String, Boolean> jar : vdst.jars.entrySet()) {
 
 				// TODO mejor a FATAL
-				String[] lvl_info_arr = jar.getKey().split(Pattern.quote(" **lvl ** "));
+				String[] lvl_info_arr = jar.getKey().split(Pattern.quote(MonitorDePID.idioma.nivel()));
 				String lvl_info = "";
 				if (lvl_info_arr.length > 1) {
 					lvl_info = MonitorDePID.idioma.nivel() + lvl_info_arr[1];
@@ -150,7 +150,7 @@ public class ContentoDeTraces implements Verificaciones {
 		if (!sm_configs_filt.isEmpty()) {
 			constructor.appendDupe(MonitorDePID.idioma.corchetes_ondulados()).append(nl_html);
 			for (String conf : sm_configs_filt) {
-				constructor.append(conf.split(".json")[0].replace(".mixin", "").replace("mixin.", "")).append(nl_html);
+				constructor.append(conf.split(".json")[0].replace(".mixins", "").replace(".mixin", "").replace("mixins.", "").replace("mixin.", "")).append(nl_html);
 
 			}
 

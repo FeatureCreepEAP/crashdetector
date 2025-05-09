@@ -504,6 +504,14 @@ public String servicioMLNoPudoCargar(String servicio) {
 }
 
 
+@Override
+public String errorConJSONDeRegistro(String archivoJar, String recurso) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "JARファイル '" + archivoJar + "' からのJSONファイル '" + recurso + "' の解析中にエラーが発生しました。"
+         + "登録に問題があります。</b>";
+}
+
+
 
 
 

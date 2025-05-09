@@ -13,7 +13,8 @@ public class Analyzador {
 		verificaciones.add(new LenguajeProveedorCheck());
 		verificaciones.add(new WaterMediaTL());
 
-		
+		verificaciones.add(new NoPuedeAnalizarJSONDeRegistro());
+
 		
 		//verificaciones.add(verificacion_de_stacktrace); No necesitemos aqui, es en la clase Consola antes de esta contructor // Para Configs de SpongeMixin problematicos
 		verificaciones.add(new OptifineObsoleta());

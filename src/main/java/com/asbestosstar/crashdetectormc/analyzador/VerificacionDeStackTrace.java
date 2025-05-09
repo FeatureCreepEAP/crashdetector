@@ -13,6 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.asbestosstar.crashdetector.CDStringBuilder;
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 
 public class VerificacionDeStackTrace implements Verificaciones {
@@ -95,7 +96,7 @@ public CDStringBuilder sb;
 								&& !esModNoPermite(modid) && line.startsWith("at")) {
 							modid_malo.add(modid);
 							modids.put(
-									modid + MonitorDePID.idioma.nivel() + String.valueOf(lvl) + "** ln** " + String.valueOf(linea_num),
+									modid + MonitorDePID.idioma.nivel() + String.valueOf(lvl) + "," + String.valueOf(linea_num),
 									fatal);
 
 						}
@@ -103,9 +104,10 @@ public CDStringBuilder sb;
 
 				} 
 				else if (line.startsWith("at")) { // a veces necesitemos usar packages
-				    String pack = line.substring(3);  if (!package_malo.contains(pack) && !packNoEsPermite(pack)) {
+					String dec=Integer.toString(lvl) + "," + Integer.toString(linea_num);
+				    String pack = line.substring(3);  if (!package_malo.contains(pack) && !packNoEsPermite(pack,dec,fatal)) {
 				        packs.put(
-				            pack + MonitorDePID.idioma.nivel() + Integer.toString(lvl) + "** ln** " + Integer.toString(linea_num),
+				            pack + " "+ MonitorDePID.idioma.nivel() + dec,
 				            fatal
 				        );
 				        package_malo.add(pack); 
@@ -171,9 +173,15 @@ public CDStringBuilder sb;
 		return false;
 	}
 
-	private boolean packNoEsPermite(String pack) {
+	private boolean packNoEsPermite(String pack, String dec, boolean fatal) {
 		// TODO Auto-generated method stub
 
+		if(pack.contains("handler$")) {
+			processarSMHandler(pack,dec,fatal);
+		}
+		
+		
+		
 		for (String prefix : package_no_permite) {
 			if (pack.startsWith(prefix)) {
 				return true;
@@ -181,6 +189,31 @@ public CDStringBuilder sb;
 		}
 
 		return false;
+	}
+
+	private void processarSMHandler(String pack, String dec, boolean fatal) {
+	    // Split the input string by '$' to identify potential mod IDs
+	    String[] parts = pack.split("\\$");
+
+	    // Check if the string has at least 4 parts (indicating the presence of a mod ID)
+	    if (parts.length >= 4) {
+	        // Extract the mod ID (located after the third '$')
+	        String modid = parts[3];
+
+	        // Log the extracted mod ID for debugging purposes
+	        CrashDetectorLogger.log("Mod ID encontrado: " + modid);
+		if(!modid_malo.contains(modid)) {
+	        modid_malo.add(modid);
+
+	        // Add the mod ID to the modids map with the appropriate key and value
+	        modids.put(modid + " " + MonitorDePID.idioma.nivel()+dec, fatal);
+		}
+	    
+	    
+	    } else {
+	        // Log that the line does not contain a valid mod ID and will be ignored
+	        CrashDetectorLogger.log("Línea ignorada: No contiene un mod ID válido.");
+	    }
 	}
 
 	public static String[] eliminarDuplicados(String[] inputArray) {
@@ -239,7 +272,7 @@ public CDStringBuilder sb;
 				if (!jar_malo.contains(candidito)) {
 					jar_malo.add(candidito);
 					jars.put(
-							candidito + MonitorDePID.idioma.nivel() + Integer.toString(lvl) + "** ln** " + Integer.toString(linea_num),
+							candidito + MonitorDePID.idioma.nivel() + Integer.toString(lvl) + "," + Integer.toString(linea_num),
 							fatal);
 				}
 			}
@@ -264,6 +297,7 @@ public CDStringBuilder sb;
 		String[] lineas = contento_de_logs.split("\r?\n");
 		for (String linea : lineas) {
 			if (linea.contains("org.spongepowered.asm.mixin")) {
+				//CrashDetectorLogger.log(linea);
 				Matcher matcher = JSON_PATTERN.matcher(linea.trim());
 				while (matcher.find()) {
 					// Group 1 captures the mixin JSON file name

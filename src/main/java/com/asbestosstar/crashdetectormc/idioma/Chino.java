@@ -504,6 +504,13 @@ public String servicioMLNoPudoCargar(String servicio) {
          + "无法加载 ModLauncher 服务: </b>" + servicio + "。";
 }
 
+@Override
+public String errorConJSONDeRegistro(String archivoJar, String recurso) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "解析 JAR 文件 '" + archivoJar + "' 中的 JSON 文件 '" + recurso + "' 时出错。"
+         + "注册存在问题。</b>";
+}
+
 
 
 

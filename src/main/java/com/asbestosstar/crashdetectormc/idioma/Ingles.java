@@ -507,6 +507,13 @@ public String servicioMLNoPudoCargar(String servicio) {
          + "Failed to load ModLauncher Service: </b>" + servicio + ".";
 }
 
+@Override
+public String errorConJSONDeRegistro(String archivoJar, String recurso) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Error parsing the JSON file '" + recurso + "' from the JAR file '" + archivoJar
+         + "'. There are issues with the registration.</b>";
+}
+
 
 
 

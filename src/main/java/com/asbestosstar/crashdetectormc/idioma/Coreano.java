@@ -510,6 +510,13 @@ public String servicioMLNoPudoCargar(String servicio) {
          + "ModLauncher 서비스를 로드하지 못했습니다: </b>" + servicio + ".";
 }
 
+@Override
+public String errorConJSONDeRegistro(String archivoJar, String recurso) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "JAR 파일 '" + archivoJar + "'의 JSON 파일 '" + recurso + "'을(를) 분석하는 중 오류가 발생했습니다. "
+         + "등록에 문제가 있습니다.</b>";
+}
+
 
 
 

@@ -276,6 +276,20 @@ public interface Idioma {
 
 	public String servicioMLNoPudoCargar(String servicio);
 
+	
+	
+	/**
+	 * Genera un mensaje de error para problemas de análisis de archivos JSON de registros.
+	 *
+	 * @param archivoJar El nombre del archivo JAR que contiene el recurso problemático.
+	 * @param recurso     El recurso problemático que no se pudo analizar correctamente.
+	 * @return Un mensaje de error formateado en HTML con detalles sobre el problema.
+	 */
+	public String errorConJSONDeRegistro(String archivoJar, String recurso);
+
+	
+	
+	
 	//public String advertenciaMalwareFalso();
 	
 }
