@@ -512,6 +512,14 @@ public String errorConJSONDeRegistro(String archivoJar, String recurso) {
          + "'. Проблемы с регистрацией.</b>";
 }
 
+@Override
+public String errorVersionDependencia(String modId, String dependencia, String requerido, String actual) {
+    return "<span style='color:#" + config.obtenerColorError() + "'>" 
+        + "Ошибка: Мод '" + modId + "' требует версию '" + requerido 
+        + "' или выше для '" + dependencia + "', но найдена версия '" + actual + "'."
+        + "</span>";
+}
+
 
 
 }

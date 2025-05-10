@@ -511,6 +511,14 @@ public String errorConJSONDeRegistro(String archivoJar, String recurso) {
          + "登録に問題があります。</b>";
 }
 
+@Override
+public String errorVersionDependencia(String modId, String dependencia, String requerido, String actual) {
+    return "<span style='color:#" + config.obtenerColorError() + "'>" 
+        + "エラー: モッド '" + modId + "' は '" + dependencia + "' のバージョン '" + requerido 
+        + "' 以上を必要としますが、'" + actual + "' が見つかりました。"
+        + "</span>";
+}
+
 
 
 

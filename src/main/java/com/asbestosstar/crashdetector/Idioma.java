@@ -287,6 +287,8 @@ public interface Idioma {
 	 */
 	public String errorConJSONDeRegistro(String archivoJar, String recurso);
 
+	public String errorVersionDependencia(String modId, String dependencia, String requerido, String actual);
+
 	
 	
 	

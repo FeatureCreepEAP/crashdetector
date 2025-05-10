@@ -519,6 +519,15 @@ public String errorConJSONDeRegistro(String archivoJar, String recurso) {
 }
 
 
+@Override
+public String errorVersionDependencia(String modId, String dependencia, String requerido, String actual) {
+    return "<span style='color:#" + config.obtenerColorError() + "'>" 
+        + "خطأ: المود '" + modId + "' يتطلب الإصدار '" + requerido 
+        + "' أو أحدث من '" + dependencia + "'، لكن تم العثور على '" + actual + "'."
+        + "</span>";
+}
+
+
 
 
 

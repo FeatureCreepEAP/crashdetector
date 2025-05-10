@@ -545,5 +545,16 @@ public String errorConJSONDeRegistro(String archivoJar, String recurso) {
     + "Error al analizar el archivo JSON '" + recurso + "' del archivo JAR '" + archivoJar
     + "'. Tiene problemas con el registro.</b>";
 }
+
+
+@Override
+public String errorVersionDependencia(String modId, String dependencia, String requerido, String actual) {
+    return "<span style='color:#" + config.obtenerColorError() + "'>" 
+        + "Error: El mod '" + modId + "' requiere la versión '" + requerido 
+        + "' o superior de '" + dependencia + "', pero se encontró '" + actual + "'."
+        + "</span>";
+}
+
+
     
 }

@@ -517,6 +517,14 @@ public String errorConJSONDeRegistro(String archivoJar, String recurso) {
          + "등록에 문제가 있습니다.</b>";
 }
 
+@Override
+public String errorVersionDependencia(String modId, String dependencia, String requerido, String actual) {
+    return "<span style='color:#" + config.obtenerColorError() + "'>" 
+        + "오류: 모드 '" + modId + "'는 '" + dependencia + "'의 버전 '" + requerido 
+        + "' 이상이 필요하지만 '" + actual + "'이(가) 발견되었습니다."
+        + "</span>";
+}
+
 
 
 

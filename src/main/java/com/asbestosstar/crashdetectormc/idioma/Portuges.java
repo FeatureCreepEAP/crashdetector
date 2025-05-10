@@ -513,5 +513,16 @@ public String errorConJSONDeRegistro(String arquivoJar, String recurso) {
 }
 
 
+@Override
+public String errorVersionDependencia(String modId, String dependencia, String requerido, String atual) {
+    return "<span style='color:#" + config.obtenerColorError()+ "'>" 
+        + "Erro: O mod '" + modId + "' requer a versão '" + requerido 
+        + "' ou superior de '" + dependencia + "', mas foi encontrada '" + atual + "'."
+        + "</span>";
+}
+
+
+
+
 
 }

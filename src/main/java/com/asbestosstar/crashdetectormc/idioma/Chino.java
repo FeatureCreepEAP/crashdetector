@@ -511,6 +511,14 @@ public String errorConJSONDeRegistro(String archivoJar, String recurso) {
          + "注册存在问题。</b>";
 }
 
+@Override
+public String errorVersionDependencia(String modId, String dependencia, String requerido, String actual) {
+    return "<span style='color:#" + config.obtenerColorError() + "'>" 
+        + "错误：模组 '" + modId + "' 需要 '" + dependencia + "' 的版本 '" + requerido 
+        + "' 或更高版本，但找到的是 '" + actual + "'。"
+        + "</span>";
+}
+
 
 
 
