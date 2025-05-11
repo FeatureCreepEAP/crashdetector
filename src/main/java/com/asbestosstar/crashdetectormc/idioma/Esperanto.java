@@ -526,6 +526,95 @@ public String errorVersionDependencia(String modId, String dependencia, String r
 }
 
 
+@Override
+public String gpu_no_compatible() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Via grafika procezilo (GPU) ne subtenas la bezonatan version de OpenGL por ĉi tiu ludo-versio. Ĝisdatigu viajn pelilojn aŭ ŝanĝu vian grafikan karton.</b>";
+}
+
+
+@Override
+public String recomendacionMemoria() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+         + "Pligrandigu la memoron asignitan al la ludo aŭ malpliigu la uzadon de kromprogramoj/kromaĵoj</b>";
+}
+
+@Override
+public String error32BitMemoria() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+         + "32-bita JVM detektita: Ne povas uzi pli ol 4GB da RAM. "
+         + "Instalu 64-bitan JVM por profiti ĉiun vian disponeblan memoron</b>";
+}
+
+@Override
+public String permGenError() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Kritika eraro de PermGen-memoro. Pligrandigu la konstantan memorospacon aŭ malpliigu la ŝarĝon de klasoj</b>";
+}
+
+
+
+public String errorCompatibilidadJava8() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Kongrua eraro inter Java 8 kaj modernaj versioj</b>";
+}
+
+public String errorJava9NoSoportado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Java 9+ ne subtenata - Uzu Java 8 por malnovaj versioj de Forge</b>";
+}
+
+public String errorJava8Requerido() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Java 8 bezonata (versio 52.0). Ĝisdatigu aŭ agordu ĝuste</b>";
+}
+
+
+@Override
+public String errorDeBloqueTeselado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Kritika eraro de kongrueco: Blokoj ne subtenataj en ĉi tiu versio. "
+         + "Kontrolu, ke la versioj de modoj kaj servilo estas kongruaj</b>";
+}
+
+@Override
+public String errorMonitorLWJGL() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Eraro de agordado de monitoroj: "
+         + "Ne eblis difini ekranan modon. "
+         + "Kontrolu:</b>"
+         + "<br>- Agordo de multaj monitoroj"
+         + "<br>- Ĝisdatigitaj grafikaj peliloj"
+         + "<br>- Sistem-subebla rezolucio";
+}
+
+@Override
+public String errorOpcionesGCJava() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Eraro en opcioj de Java: "
+         + "Konfliktantaj rubkolektaj opcioj. "
+         + "Kontrolu, ke vi ne kombinas plurajn GC-algoritmojn en JVM-parametroj</b>";
+}
+
+@Override
+public String errorConfigMCForge() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Kritika eraro de agordo de Forge: "
+         + "Difektita aŭ nekompleta agorda dosiero. "
+         + "Forigu la dosierujon 'config' kaj restartigu la ludon</b>";
+}
+
+@Override
+public String problema_con_graficas_intel() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Intel HD Graphics-pelila eraro detektita. Solvoj:</b>"
+         + "<br>1. Ĝisdatigu Intel-pelilojn el <a href='https://www.intel.com/content/www/us/en/download-center/home.html'>intel.com</a> (minimuma versio 15.xx.xx.xx)"
+         + "<br>2. En Minecraft: Opcioj → Video → Aktivigu 'Enable VBOs' kaj 'VSync'"
+         + "<br>3. Atribuu 1GB-2GB da RAM al la ludo en la lanĉilo"
+         + "<br>4. Ĉarmpere malaktivigu antivirusan programon/tufekranon dum ĝisdatigo";
+}
+
+
 
 
 }

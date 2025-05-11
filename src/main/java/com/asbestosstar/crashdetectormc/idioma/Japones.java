@@ -520,6 +520,93 @@ public String errorVersionDependencia(String modId, String dependencia, String r
 }
 
 
+@Override
+public String gpu_no_compatible() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "お使いのGPUは、このゲームバージョンで必要なOpenGLのバージョンをサポートしていません。ドライバーを更新するか、グラフィックカードを変更してください。</b>";
+}
+
+@Override
+public String recomendacionMemoria() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+         + "ゲームに割り当てるメモリを増やしたり、MODやプラグインの使用を減らしてください。</b>";
+}
+
+@Override
+public String error32BitMemoria() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+         + "32ビットJVMが検出されました: 4GB以上のRAMを使用できません。 "
+         + "利用可能なすべてのメモリを利用するには、64ビットJVMをインストールしてください。</b>";
+}
+
+@Override
+public String permGenError() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "PermGenメモリの重大なエラーです。永続メモリ領域を増やしたり、クラスのロードを減らしてください。</b>";
+}
+
+
+public String errorCompatibilidadJava8() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Java 8と最新バージョンの間での互換性エラー</b>";
+}
+
+public String errorJava9NoSoportado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Java 9+はサポートされていません - 古いForgeバージョンにはJava 8を使用してください</b>";
+}
+
+public String errorJava8Requerido() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Java 8が必要です（バージョン52.0）。更新するか、正しく設定してください</b>";
+}
+
+
+@Override
+public String errorDeBloqueTeselado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "重大な互換性エラー: このバージョンではブロックがサポートされていません。 "
+         + "MODとサーバーのバージョンが互換性があるか確認してください</b>";
+}
+
+@Override
+public String errorMonitorLWJGL() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "モニター設定エラー: "
+         + "画面モードを設定できませんでした。 "
+         + "確認してください:</b>"
+         + "<br>- マルチモニター設定"
+         + "<br>- グラフィックカードドライバーが最新かどうか"
+         + "<br>- システムでサポートされている解像度";
+}
+
+@Override
+public String errorOpcionesGCJava() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Javaオプションエラー: "
+         + "ガベージコレクターオプションが競合しています。 "
+         + "複数のGCアルゴリズムをJVMパラメータに組み合わせていないか確認してください</b>";
+}
+
+@Override
+public String errorConfigMCForge() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Forge設定の重大なエラー: "
+         + "設定ファイルが破損または不完全です。 "
+         + "'config'フォルダを削除してゲームを再起動してください</b>";
+}
+
+@Override
+public String problema_con_graficas_intel() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Intel HD Graphicsドライバーエラーが検出されました。解決策:</b>"
+         + "<br>1. <a href='https://www.intel.com/content/www/us/en/download-center/home.html'>intel.com</a>からIntelドライバーを更新してください（最小バージョン15.xx.xx.xx）"
+         + "<br>2. Minecraftで: オプション → 動画 → 'Enable VBOs'と'VSync'を有効化"
+         + "<br>3. ランチャーでゲームに1GB-2GBのRAMを割り当て"
+         + "<br>4. 更新中に一時的にアンチウイルス/ファイアウォールを無効化";
+}
+
+
 
 
 

@@ -527,6 +527,91 @@ public String errorVersionDependencia(String modId, String dependencia, String r
         + "</span>";
 }
 
+@Override
+public String gpu_no_compatible() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "بطاقة الرسومات الخاصة بك لا تدعم إصدار OpenGL المطلوب لهذه نسخة اللعبة. قم بتحديث برامج التشغيل الخاص بك أو استبدل بطاقة الرسومات الخاصة بك.</b>";
+}
+
+@Override
+public String recomendacionMemoria() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+         + "قم بزيادة الذاكرة المخصصة للعبة أو قلل من استخدام التعديلات/الإضافات</b>";
+}
+
+@Override
+public String error32BitMemoria() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+         + "تم اكتشاف JVM بـ 32 بت: لا يمكن استخدام أكثر من 4 جيجابايت من ذاكرة الوصول العشوائي. "
+         + "قم بتثبيت JVM بـ 64 بت للاستفادة من كل ذاكرتك المتاحة</b>";
+}
+
+@Override
+public String permGenError() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "خطأ حرج في ذاكرة PermGen. قم بزيادة مساحة الذاكرة الدائمة أو قلل من تحميل الفئات</b>";
+}
+
+
+public String errorCompatibilidadJava8() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "خطأ في التوافق بين Java 8 والإصدارات الحديثة</b>";
+}
+
+public String errorJava9NoSoportado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Java 9+ غير مدعوم - استخدم Java 8 لنسخ Forge القديمة</b>";
+}
+
+public String errorJava8Requerido() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Java 8 مطلوب (الإصدار 52.0). قم بالتحديث أو التهيئة بشكل صحيح</b>";
+}
+
+@Override
+public String errorDeBloqueTeselado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "خطأ حرج في التوافق: الكتل غير مدعومة في هذه النسخة. "
+         + "تأكد من أن إصدارات التعديلات والخادم متوافقة</b>";
+}
+
+@Override
+public String errorMonitorLWJGL() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "خطأ في تكوين الشاشات: "
+         + "تعذر تعيين وضع الشاشة. "
+         + "تحقق من:</b>"
+         + "<br>- تكوين شاشات متعددة"
+         + "<br>- برامج تشغيل بطاقة الرسوميات المحدثة"
+         + "<br>- الدقة المدعومة من النظام";
+}
+
+@Override
+public String errorOpcionesGCJava() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "خطأ في خيارات Java: "
+         + "خيارات جامع القمامة متعارضة. "
+         + "تأكد من عدم دمج عدة خوارزميات GC في معلمات JVM</b>";
+}
+
+@Override
+public String errorConfigMCForge() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "خطأ حرج في تكوين Forge: "
+         + "ملف التكوين تالف أو غير مكتمل. "
+         + "احذف مجلد 'config' وأعد تشغيل اللعبة</b>";
+}
+
+@Override
+public String problema_con_graficas_intel() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "تم اكتشاف خطأ في برنامج تشغيل Intel HD Graphics. الحلول:</b>"
+         + "<br>1. قم بتحديث برامج تشغيل Intel من <a href='https://www.intel.com/content/www/us/en/download-center/home.html'>intel.com</a> (الإصدار الأدنى 15.xx.xx.xx)"
+         + "<br>2. في Minecraft: الخيارات → الفيديو → قم بتفعيل 'Enable VBOs' و 'VSync'"
+         + "<br>3. خصص 1GB-2GB من ذاكرة الوصول العشوائي للعبة في المشغل"
+         + "<br>4. قم بإيقاف تشغيل مضاد الفيروسات/جدار الحماية مؤقتًا أثناء التحديث";
+}
+
 
 
 

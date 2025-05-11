@@ -525,6 +525,91 @@ public String errorVersionDependencia(String modId, String dependencia, String r
         + "</span>";
 }
 
+@Override
+public String gpu_no_compatible() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "당신의 GPU는 이 게임 버전에서 요구하는 OpenGL 버전을 지원하지 않습니다. 드라이버를 업데이트하거나 그래픽 카드를 변경하세요.</b>";
+}
+
+@Override
+public String recomendacionMemoria() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+         + "게임에 할당된 메모리를 늘리거나 모드/플러그인 사용량을 줄이세요.</b>";
+}
+
+@Override
+public String error32BitMemoria() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+         + "32비트 JVM이 감지되었습니다: 4GB 이상의 RAM을 사용할 수 없습니다. "
+         + "사용 가능한 모든 메모리를 활용하려면 64비트 JVM을 설치하세요.</b>";
+}
+
+@Override
+public String permGenError() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "PermGen 메모리에 심각한 오류가 발생했습니다. 영구 메모리 공간을 늘리거나 클래스 로드를 줄이세요.</b>";
+}
+
+
+public String errorCompatibilidadJava8() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Java 8과 최신 버전 간의 호환성 오류</b>";
+}
+
+public String errorJava9NoSoportado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Java 9+는 지원되지 않음 - 이전 Forge 버전에는 Java 8을 사용하세요</b>";
+}
+
+public String errorJava8Requerido() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Java 8이 필요합니다 (버전 52.0). 업데이트하거나 올바르게 설정하세요</b>";
+}
+
+
+@Override
+public String errorDeBloqueTeselado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "치명적인 호환성 오류: 이 버전에서는 블록이 지원되지 않습니다. "
+         + "모드 및 서버 버전이 호환되는지 확인하세요</b>";
+}
+
+@Override
+public String errorMonitorLWJGL() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "모니터 설정 오류: "
+         + "화면 모드를 설정할 수 없습니다. "
+         + "확인하세요:</b>"
+         + "<br>- 다중 모니터 설정"
+         + "<br>- 최신 그래픽 카드 드라이버"
+         + "<br>- 시스템에서 지원하는 해상도";
+}
+
+@Override
+public String errorOpcionesGCJava() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Java 옵션 오류: "
+         + "충돌하는 가비지 컬렉터 옵션입니다. "
+         + "JVM 매개변수에서 여러 GC 알고리즘을 결합하지 않았는지 확인하세요</b>";
+}
+
+@Override
+public String errorConfigMCForge() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Forge 설정의 치명적인 오류: "
+         + "설정 파일이 손상되거나 불완전합니다. "
+         + "'config' 폴더를 삭제하고 게임을 재시작하세요</b>";
+}
+
+@Override
+public String problema_con_graficas_intel() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Intel HD Graphics 드라이버 오류가 감지되었습니다. 해결책:</b>"
+         + "<br>1. <a href='https://www.intel.com/content/www/us/en/download-center/home.html'>intel.com</a>에서 Intel 드라이버를 업데이트하세요 (최소 버전 15.xx.xx.xx)"
+         + "<br>2. Minecraft에서: 옵션 → 비디오 → 'Enable VBOs' 및 'VSync' 활성화"
+         + "<br>3. 런처에서 게임에 1GB-2GB의 RAM 할당"
+         + "<br>4. 업데이트 중 방화벽/안티바이러스를 일시적으로 비활성화";
+}
 
 
 

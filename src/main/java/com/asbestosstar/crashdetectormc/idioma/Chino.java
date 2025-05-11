@@ -519,6 +519,93 @@ public String errorVersionDependencia(String modId, String dependencia, String r
         + "</span>";
 }
 
+@Override
+public String gpu_no_compatible() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "您的GPU不支持此游戏版本所需的OpenGL版本。请更新驱动程序或更换显卡。</b>";
+}
+
+
+@Override
+public String recomendacionMemoria() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+         + "增加分配给游戏的内存或减少模组/插件的使用。</b>";
+}
+
+@Override
+public String error32BitMemoria() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+         + "检测到32位JVM：无法使用超过4GB的RAM。 "
+         + "安装64位JVM以充分利用您的可用内存。</b>";
+}
+
+@Override
+public String permGenError() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "PermGen内存严重错误。增加永久内存空间或减少类加载。</b>";
+}
+
+
+public String errorCompatibilidadJava8() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Java 8与现代版本之间的兼容性错误</b>";
+}
+
+public String errorJava9NoSoportado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "不支持Java 9+ - 使用Java 8以适配旧版Forge</b>";
+}
+
+public String errorJava8Requerido() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "需要Java 8（版本52.0）。请更新或正确配置</b>";
+}
+
+
+@Override
+public String errorDeBloqueTeselado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "严重兼容性错误：此版本不支持方块。 "
+         + "请确保模组和服务器版本兼容</b>";
+}
+
+@Override
+public String errorMonitorLWJGL() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "显示器配置错误: "
+         + "无法设置屏幕模式。 "
+         + "请检查：</b>"
+         + "<br>- 多显示器配置"
+         + "<br>- 图形卡驱动程序是否已更新"
+         + "<br>- 系统支持的分辨率";
+}
+
+@Override
+public String errorOpcionesGCJava() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Java选项错误: "
+         + "垃圾回收器选项冲突。 "
+         + "请确保未在JVM参数中组合多个GC算法</b>";
+}
+
+@Override
+public String errorConfigMCForge() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Forge配置严重错误: "
+         + "配置文件损坏或不完整。 "
+         + "删除'config'文件夹并重新启动游戏</b>";
+}
+
+@Override
+public String problema_con_graficas_intel() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "检测到Intel HD Graphics驱动程序错误。解决方案：</b>"
+         + "<br>1. 从<a href='https://www.intel.com/content/www/us/en/download-center/home.html'>intel.com</a>更新Intel驱动程序（最低版本15.xx.xx.xx）"
+         + "<br>2. 在Minecraft中：选项 → 视频 → 启用'Enable VBOs'和'VSync'"
+         + "<br>3. 在启动器中为游戏分配1GB-2GB的RAM"
+         + "<br>4. 更新期间临时禁用杀毒软件/防火墙";
+}
+
 
 
 

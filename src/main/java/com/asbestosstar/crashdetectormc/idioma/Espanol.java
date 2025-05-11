@@ -555,6 +555,108 @@ public String errorVersionDependencia(String modId, String dependencia, String r
         + "</span>";
 }
 
+@Override
+public String gpu_no_compatible() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Tu GPU no soporta la versión de OpenGL requerida por esta Version del Juego. Actualiza tus drivers o cambia de tarjeta gráfica</b>";
+}
 
-    
+@Override
+public String recomendacionMemoria() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+         + "Aumenta la memoria asignada al juego o reduce el consumo de mods/plugins</b>";
+}
+
+@Override
+public String error32BitMemoria() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+         + "JVM de 32 bits detectada: No puede utilizar más de 4GB de RAM. "
+         + "Instala una JVM de 64 bits para aprovechar toda tu memoria disponible</b>";
+}
+
+@Override
+public String permGenError() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Error crítico de memoria PermGen. Aumenta el espacio de memoria permanente o reduce la carga de clases</b>";
+}
+
+ 
+public String errorCompatibilidadJava8() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Error de compatibilidad entre Java 8 y versiones modernas</b>";
+}
+
+public String errorJava9NoSoportado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Java 9+ no compatible - Usa Java 8 para Forge antiguo</b>";
+}
+
+public String errorJava8Requerido() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Java 8 requerido (versión 52.0). Actualiza o configura correctamente</b>";
+}
+
+
+
+
+
+@Override
+public String errorDeBloqueTeselado() {
+	// TODO Auto-generated method stub
+	return "<b style='color:#" + config.obtenerColorError() + "'>"
+    + "Error crítico de compatibilidad: Bloques no soportados en esta versión. "
+    + "Verifica que las versiones de mods y servidor sean compatibles</b>";
+	}
+
+@Override
+public String errorMonitorLWJGL() {
+	// TODO Auto-generated method stub
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	         + "Error de configuración de monitores: "
+	         + "No se pudo establecer el modo de pantalla. "
+	         + "Verifica:</b>"
+	         + "<br>- Configuración de múltiples monitores"
+	         + "<br>- Controladores de tarjeta gráfica actualizados"
+	         + "<br>- Resolución soportada por el sistema";
+}
+
+@Override
+public String errorOpcionesGCJava() {
+	// TODO Auto-generated method stub
+
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+    + "Error en opciones de Java: "
+    + "Opciones de recolector de basura conflictivas. "
+    + "Verifica que no combines múltiples algoritmos GC en los parámetros JVM</b>";
+
+
+}
+
+@Override
+public String errorConfigMCForge() {
+	// TODO Auto-generated method stub
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+    + "Error crítico de configuración Forge: "
+    + "Archivo de configuración corrupto o incompleto. "
+    + "Elimina la carpeta 'config' y reinicia el juego</b>";
+    }
+
+
+@Override
+public String problema_con_graficas_intel() {
+ return "<b style='color:#" + config.obtenerColorError() + "'>"
+      + "Error de controlador Intel HD Graphics detectado. Soluciones:</b>"
+      + "<br>1. Actualiza los controladores Intel desde <a href='https://www.intel.com/content/www/us/en/download-center/home.html'>intel.com</a> (versión mínima 15.xx.xx.xx)"
+      + "<br>2. En Minecraft: Opciones → Video → Activa 'Enable VBOs' y 'VSync'"
+      + "<br>3. Asigna 1GB-2GB de RAM al juego en el launcher"
+      + "<br>4. Desactiva temporalmente antivirus/firewall durante la actualización";
+}
+
+
+
+
+
+
+
+
 }

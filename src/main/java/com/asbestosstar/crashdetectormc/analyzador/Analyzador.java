@@ -14,6 +14,7 @@ public class Analyzador {
 		verificaciones.add(new WaterMediaTL());
 
 		verificaciones.add(new NoPuedeAnalizarJSONDeRegistro());
+		verificaciones.add(new BloqueTeselado());
 
 		
 		//verificaciones.add(verificacion_de_stacktrace); No necesitemos aqui, es en la clase Consola antes de esta contructor // Para Configs de SpongeMixin problematicos
@@ -24,6 +25,11 @@ public class Analyzador {
 		verificaciones.add(new JavaVersiones());
 		verificaciones.add(new FaltasClases(verificacion_de_stacktrace));
 		verificaciones.add(new Drivers());
+		verificaciones.add(new ErrorDeMonitorLWJGL());
+		verificaciones.add(new OpcionesJavaGCInvalidas());
+		verificaciones.add(new ErrorConfiguracionMCForge());
+
+		
 		verificaciones.add(new EarlyWindow());
 		verificaciones.add(new NecesitasSodium());
 		verificaciones.add(new FaltasDependenciasModLaunche());

@@ -289,6 +289,31 @@ public interface Idioma {
 
 	public String errorVersionDependencia(String modId, String dependencia, String requerido, String actual);
 
+	public String gpu_no_compatible();
+
+	public String recomendacionMemoria();
+
+	public String error32BitMemoria();
+
+	public String permGenError();
+
+	public String errorCompatibilidadJava8();
+
+	public String errorJava9NoSoportado();
+
+	public String errorJava8Requerido();
+
+	public String errorDeBloqueTeselado();
+
+	public String errorMonitorLWJGL();
+
+	public String errorOpcionesGCJava();
+
+	public String errorConfigMCForge();
+
+	public String problema_con_graficas_intel();
+
+
 	
 	
 	

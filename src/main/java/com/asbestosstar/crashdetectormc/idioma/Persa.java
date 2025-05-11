@@ -526,6 +526,96 @@ public String errorVersionDependencia(String modId, String dependencia, String r
 }
 
 
+@Override
+public String gpu_no_compatible() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "گرافیک شما از نسخه مورد نیاز OpenGL برای این نسخه بازی پشتیبانی نمی‌کند. درایورهای خود را به‌روز کنید یا کارت گرافیک خود را عوض کنید.</b>";
+}
+
+@Override
+public String recomendacionMemoria() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+         + "حافظه اختصاص داده شده به بازی را افزایش دهید یا مصرف مودها/پلاگین‌ها را کاهش دهید</b>";
+}
+
+@Override
+public String error32BitMemoria() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+         + "JVM 32 بیتی شناسایی شد: نمی‌تواند بیش از 4 گیگابایت رم استفاده کند. "
+         + "برای استفاده از تمام حافظه موجود، JVM 64 بیتی نصب کنید</b>";
+}
+
+@Override
+public String permGenError() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "خطای بحرانی در حافظه PermGen. فضای حافظه دائمی را افزایش دهید یا بارگذاری کلاس‌ها را کاهش دهید</b>";
+}
+
+
+public String errorCompatibilidadJava8() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "خطای سازگاری بین Java 8 و نسخه‌های مدرن</b>";
+}
+
+public String errorJava9NoSoportado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Java 9+ پشتیبانی نمی‌شود - برای نسخه‌های قدیمی Forge از Java 8 استفاده کنید</b>";
+}
+
+public String errorJava8Requerido() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Java 8 مورد نیاز است (نسخه 52.0). به‌روزرسانی کنید یا به درستی پیکربندی کنید</b>";
+}
+
+
+
+
+@Override
+public String errorDeBloqueTeselado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "خطای بحرانی سازگاری: بلوک‌ها در این نسخه پشتیبانی نمی‌شوند. "
+         + "اطمینان حاصل کنید که نسخه‌های مودها و سرور سازگار هستند</b>";
+}
+
+@Override
+public String errorMonitorLWJGL() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "خطا در تنظیمات مانیتور: "
+         + "تنظیم حالت صفحه نمایش امکان‌پذیر نبود. "
+         + "بررسی کنید:</b>"
+         + "<br>- تنظیمات چند مانیتوری"
+         + "<br>- درایورهای کارت گرافیک به‌روز شده"
+         + "<br>- رزولوشن پشتیبانی‌شده توسط سیستم";
+}
+
+@Override
+public String errorOpcionesGCJava() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "خطا در گزینه‌های جاوا: "
+         + "گزینه‌های زباله‌جمع‌کن در تضاد هستند. "
+         + "اطمینان حاصل کنید که چندین الگوریتم GC را در پارامترهای JVM ترکیب نکنید</b>";
+}
+
+@Override
+public String errorConfigMCForge() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "خطای بحرانی تنظیمات Forge: "
+         + "فایل تنظیمات خراب یا ناقص است. "
+         + "پوشه 'config' را حذف کرده و بازی را دوباره راه‌اندازی کنید</b>";
+}
+
+@Override
+public String problema_con_graficas_intel() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "خطای درایور Intel HD Graphics شناسایی شد. راه‌حل‌ها:</b>"
+         + "<br>1. درایورهای Intel را از <a href='https://www.intel.com/content/www/us/en/download-center/home.html'>intel.com</a> به‌روز کنید (حداقل نسخه 15.xx.xx.xx)"
+         + "<br>2. در Minecraft: گزینه‌ها → ویدئو → 'Enable VBOs' و 'VSync' را فعال کنید"
+         + "<br>3. 1GB-2GB حافظه RAM را به بازی در لانچر اختصاص دهید"
+         + "<br>4. در طول به‌روزرسانی، موقتاً آنتی‌ویروس/دیوارآتش را غیرفعال کنید";
+}
+
+
+
 
 
 
