@@ -22,9 +22,9 @@ import com.asbestosstar.crashdetectormc.idioma.Portuges;
 import com.asbestosstar.crashdetectormc.idioma.Ruso;
 
 public interface Idioma {
-	
-    Config config = Config.obtenerInstancia();
 
+	Config config = Config.obtenerInstancia();
+	public static File archivo = new File(System.getProperty("user.home"), "crash_detector/idioma");
 
 	public static Idioma espanol = new Espanol();
 	public static Idioma ingles = new Ingles();
@@ -37,47 +37,61 @@ public interface Idioma {
 	public static Idioma japones = new Japones();
 	public static Idioma coreano = new Coreano();
 
-    public static Idioma detectar() {
-        String id = leerIdiomaDesdeArchivo(); // Primero intenta leer del archivo
-        
-        if (id == null) {
-            id = Locale.getDefault().getLanguage().toLowerCase();
-        }
-        
-        switch (id) {
-            case "es": return espanol;
-            case "en": return ingles;
-            case "ar": return arabe;
-            case "pt": return portuges;
-            case "fa": return persa;
-            case "ru": return ruso;
-            case "zh": return chino;
-            case "eo": return esperanto;
-            case "ja": return japones;
-            case "ko": return coreano;
-            case "uk": return ruso; // Ucraniano usa configuración rusa
-            default: return espanol;
-        }
-    }
+	public static Idioma detectar() {
+		String id = leerIdiomaDesdeArchivo(); // Primero intenta leer del archivo
 
-    public static String leerIdiomaDesdeArchivo() {
-        File archivo = new File(System.getProperty("user.home"), "crash_detector/idioma");
-        if (!archivo.exists() || !archivo.canRead()) {
-            return null;
-        }
-        
-        try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
-            String codigo = reader.readLine().trim().toLowerCase();
-            Set<String> soportados = new HashSet<>(Arrays.asList(
-                "es", "en", "ar", "pt", "fa", "ru", "zh", "eo", "ja", "ko"
-            ));
-            
-            return soportados.contains(codigo) ? codigo : null;
-        } catch (IOException e) {
-            System.err.println("Error al leer archivo de idioma: " + e.getMessage());
-            return null;
-        }
-    }
+		if (id == null) {
+			id = Locale.getDefault().getLanguage().toLowerCase();
+		}
+
+		switch (id) {
+		case "es":
+			return espanol;
+		case "en":
+			return ingles;
+		case "ar":
+			return arabe;
+		case "pt":
+			return portuges;
+		case "fa":
+			return persa;
+		case "ru":
+			return ruso;
+		case "zh":
+			return chino;
+		case "eo":
+			return esperanto;
+		case "ja":
+			return japones;
+		case "ko":
+			return coreano;
+		case "uk":
+			return ruso; // Ucraniano usa configuración rusa
+		default:
+			return espanol;
+		}
+	}
+
+	public static String leerIdiomaDesdeArchivo() {
+		if (!archivo.exists() || !archivo.canRead()) {
+			return null;
+		}
+		try {
+			String texto = MonitorDePID.leer_archivo(archivo.toPath());
+
+			String codigo = texto.trim().toLowerCase();
+			Set<String> soportados = new HashSet<>(
+					Arrays.asList("es", "en", "ar", "pt", "fa", "ru", "zh", "eo", "ja", "ko"));
+
+			return soportados.contains(codigo) ? codigo : null;
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			CrashDetectorLogger.logException(e);
+			return null;
+		}
+
+	}
 
 	/**
 	 * no es una carpeta de mods valida
@@ -157,37 +171,36 @@ public interface Idioma {
 	public String config_spongemixin_problematico(String archivo_json);
 
 	public String module_resolution_exception(String modules, String paquete);
-	
+
 	public String modlauncher_mods_duplicado(String linea);
-	
-	public String  mcforge_mod_suspechoso();
+
+	public String mcforge_mod_suspechoso();
 
 	public String lithostichctov();
-	
+
 	public String necesitasSodiumParaIris();
-	
+
 	public String kubeJSResourcePack(String mod_nombre);
 
 	public default String obtenerRutaJava() {
-	    String javaBinary = MonitorDePID.jvm();
-	   // return javaBinary.orElse("No se pudo determinar la ubicación del ejecutable de Java.");
-	    return javaBinary;
+		String javaBinary = MonitorDePID.jvm();
+		// return javaBinary.orElse("No se pudo determinar la ubicación del ejecutable
+		// de Java.");
+		return javaBinary;
 	}
-	
-	
+
 	public String problema_con_graficas_nvidia_windows_viejo();
-	
+
 	public String problema_con_graficas_nvidia_windows_nuevo();
 
 	public String segundo60Tick();
 
 	public String noTieneMemoria();
-	
+
 	public String theseus();
-	
-	
+
 	public String noTieneConsolaDeLauncherCursedForge();
-	
+
 	public String faltar_de_clases_advertencia();
 
 	public String noResultos();
@@ -195,7 +208,7 @@ public interface Idioma {
 	public String ubicacionesDeLogs();
 
 	public String infoDeVerificaciones();
-	
+
 	public String versionDeJava();
 
 	public String java22();
@@ -225,9 +238,9 @@ public interface Idioma {
 	public String errorBusqueda();
 
 	public String noRegistroDeLauncher();
-	
+
 	public String omitirYCerrar();
-	
+
 	public String guardarYCerrar();
 
 	public String pegaLosRegistrosAqui();
@@ -237,9 +250,9 @@ public interface Idioma {
 	public String incluir();
 
 	public String abrir();
-	
+
 	public String endpointDeInforme();
-	
+
 	public String sitoDeLogging();
 
 	public String apiDeLogging();
@@ -247,7 +260,7 @@ public interface Idioma {
 	public String anonimizarRegistros();
 
 	public String botonDeCompartirInforme();
-	
+
 	public String arco();
 
 	public String enlaceDelReporte();
@@ -276,14 +289,16 @@ public interface Idioma {
 
 	public String servicioMLNoPudoCargar(String servicio);
 
-	
-	
 	/**
-	 * Genera un mensaje de error para problemas de análisis de archivos JSON de registros.
+	 * Genera un mensaje de error para problemas de análisis de archivos JSON de
+	 * registros.
 	 *
-	 * @param archivoJar El nombre del archivo JAR que contiene el recurso problemático.
-	 * @param recurso     El recurso problemático que no se pudo analizar correctamente.
-	 * @return Un mensaje de error formateado en HTML con detalles sobre el problema.
+	 * @param archivoJar El nombre del archivo JAR que contiene el recurso
+	 *                   problemático.
+	 * @param recurso    El recurso problemático que no se pudo analizar
+	 *                   correctamente.
+	 * @return Un mensaje de error formateado en HTML con detalles sobre el
+	 *         problema.
 	 */
 	public String errorConJSONDeRegistro(String archivoJar, String recurso);
 
@@ -313,10 +328,6 @@ public interface Idioma {
 
 	public String problema_con_graficas_intel();
 
+	// public String advertenciaMalwareFalso();
 
-	
-	
-	
-	//public String advertenciaMalwareFalso();
-	
 }

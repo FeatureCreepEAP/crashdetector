@@ -26,6 +26,7 @@ import com.asbestosstar.crashdetectormc.analyzador.Verificaciones;
 import com.asbestosstar.crashdetectormc.grepr.BusquedaArchivos;
 import com.asbestosstar.crashdetectormc.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetectormc.gui.NoRegistroDeLauncher;
+import com.asbestosstar.crashdetectormc.gui.SelectorIdiomaGUI;
 
 public class MonitorDePID {
 
@@ -200,8 +201,8 @@ public class MonitorDePID {
 			String cp = System.getProperty("java.class.path") + File.pathSeparator + jar;
 			System.out.println("******************" + cp);
 
-			new ProcessBuilder(javaBinary, "-cp", cp, "com.asbestosstar.crashdetector.MonitorDePID",
-					"--monitor", String.valueOf(pid)).inheritIO().start();
+			new ProcessBuilder(javaBinary, "-cp", cp, "com.asbestosstar.crashdetector.MonitorDePID", "--monitor",
+					String.valueOf(pid)).inheritIO().start();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -224,21 +225,32 @@ public class MonitorDePID {
 				CrashDetectorLogger.log(idioma.pid_esta_muerto(pid));
 				StringBuilder constructor = new StringBuilder();
 
-				Instant lugeo = Instant.now();
-				Duration duration = Duration.between(utc, lugeo);
+//				Instant lugeo = Instant.now();
+//				Duration duration = Duration.between(utc, lugeo);
 
-				if (duration.getSeconds() >= 10) {// Para las consolas completa
+				CrashDetectorLogger.log("Finalizando Contento de Consolas");
+
+				// if (duration.getSeconds() >= 25) {// Para las consolas completa
+				// } else {
+
+				if (ArchivoDeCodioError0.exists()) {
+					try {// Cuando tiene una informe de crash esta codio 0 y tiene tiempo para esperar
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						Thread.currentThread().interrupt();
+						break;
+					}
 				} else {
-
+					obtainerIdioma();
 					try {
-						Thread.sleep(2000);
+						Thread.sleep(5500);
 					} catch (InterruptedException e) {
 						Thread.currentThread().interrupt();
 						break;
 					}
 				}
 
-				CrashDetectorLogger.log("Finalizando Contento de Consolas");
+				// }
 
 				consolas_sin_processando.addAll(Consola.obtenerConsolas());
 
@@ -249,8 +261,13 @@ public class MonitorDePID {
 					}
 				}
 
-				if (!Consola.tiene_registro_de_launcher(consolas)) {
-					obtenerCosolaDeLauncher(utc);
+				if (activar() && !GraphicsEnvironment.isHeadless()) {
+					if (!Idioma.archivo.exists()) {
+						obtainerIdioma();
+					}
+					if (!Consola.tiene_registro_de_launcher(consolas)) {
+						obtenerCosolaDeLauncher(utc);
+					}
 				}
 
 				CrashDetectorLogger.log("Analyzador Consolas");
@@ -319,6 +336,15 @@ public class MonitorDePID {
 //		});
 //	}
 
+	private static void obtainerIdioma() {
+		// TODO Auto-generated method stub
+		if (!Idioma.archivo.exists() && !GraphicsEnvironment.isHeadless()) {
+			SelectorIdiomaGUI.obtenerConsolaDeLauncher();
+			idioma = Idioma.detectar();
+		}
+
+	}
+
 	// Compatible approach (Java 7+)
 	public static String leer_archivo(Path path) throws IOException {
 		return new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
@@ -361,13 +387,7 @@ public class MonitorDePID {
 					templach.countDown();
 				}
 			});
-			
-			
-			
-			
-			
-			
-			
+
 		});
 
 		try {
@@ -385,144 +405,136 @@ public class MonitorDePID {
 		System.out.println("  fgrepr: Busca sin regex");
 		System.out.println("  -i: Ignorar mayúsculas/minúsculas");
 	}
-	
-	
-	
-    /**
-     * Obtiene el PID actual usando RuntimeMXBean (Java 8 compatible)
-     */
-    public static long obtenerPID() {
-        String nombre = ManagementFactory.getRuntimeMXBean().getName();
-        return Long.parseLong(nombre.split("@")[0]);
-    }
-    
-    
-    public static String jvm() {
-        // Step 1: Try using ProcessHandle via reflection (Java 9+)
-        try {
-            Class<?> processHandleClass = Class.forName("java.lang.ProcessHandle");
-            java.lang.reflect.Method ofMethod = processHandleClass.getMethod("of", long.class);
-            Object optionalHandle = ofMethod.invoke(null, obtenerPID());
 
-            if (optionalHandle != null) {
-                java.lang.reflect.Method isPresentMethod = optionalHandle.getClass().getMethod("isPresent");
-                boolean isPresent = (boolean) isPresentMethod.invoke(optionalHandle);
+	/**
+	 * Obtiene el PID actual usando RuntimeMXBean (Java 8 compatible)
+	 */
+	public static long obtenerPID() {
+		String nombre = ManagementFactory.getRuntimeMXBean().getName();
+		return Long.parseLong(nombre.split("@")[0]);
+	}
 
-                if (isPresent) {
-                    java.lang.reflect.Method getMethod = optionalHandle.getClass().getMethod("get");
-                    Object processHandle = getMethod.invoke(optionalHandle);
+	public static String jvm() {
+		// Step 1: Try using ProcessHandle via reflection (Java 9+)
+		try {
+			Class<?> processHandleClass = Class.forName("java.lang.ProcessHandle");
+			java.lang.reflect.Method ofMethod = processHandleClass.getMethod("of", long.class);
+			Object optionalHandle = ofMethod.invoke(null, obtenerPID());
 
-                    java.lang.reflect.Method infoMethod = processHandleClass.getMethod("info");
-                    Object processInfo = infoMethod.invoke(processHandle);
+			if (optionalHandle != null) {
+				java.lang.reflect.Method isPresentMethod = optionalHandle.getClass().getMethod("isPresent");
+				boolean isPresent = (boolean) isPresentMethod.invoke(optionalHandle);
 
-                    Class<?> infoClass = Class.forName("java.lang.ProcessHandle$Info");
-                    java.lang.reflect.Method commandMethod = infoClass.getMethod("command");
-                    Object commandOpt = commandMethod.invoke(processInfo);
+				if (isPresent) {
+					java.lang.reflect.Method getMethod = optionalHandle.getClass().getMethod("get");
+					Object processHandle = getMethod.invoke(optionalHandle);
 
-                    if (commandOpt != null) {
-                        java.lang.reflect.Method isPresentOpt = commandOpt.getClass().getMethod("isPresent");
-                        boolean commandPresent = (boolean) isPresentOpt.invoke(commandOpt);
+					java.lang.reflect.Method infoMethod = processHandleClass.getMethod("info");
+					Object processInfo = infoMethod.invoke(processHandle);
 
-                        if (commandPresent) {
-                            java.lang.reflect.Method getOpt = commandOpt.getClass().getMethod("get");
-                            return (String) getOpt.invoke(commandOpt);
-                        }
-                    }
-                }
-            }
-        } catch (Exception ignored) {
-        	//Java viaja
-        }
+					Class<?> infoClass = Class.forName("java.lang.ProcessHandle$Info");
+					java.lang.reflect.Method commandMethod = infoClass.getMethod("command");
+					Object commandOpt = commandMethod.invoke(processInfo);
 
-        // Step 2: Fallback to OS-specific command-line tools (Java 8)
-        try {
-            String os = System.getProperty("os.name").toLowerCase();
-            ProcessBuilder pb;
-            if (os.contains("win")) {
-                // Windows: Use tasklist to get image name
-                pb = new ProcessBuilder("tasklist", "/FI", "PID eq " + obtenerPID(), "/FO", "CSV", "/NH");
-            } else {
-                // Unix/Linux/macOS: Use ps to get command
-                pb = new ProcessBuilder("ps", "-p", String.valueOf(obtenerPID()), "-o", "comm=");
-            }
+					if (commandOpt != null) {
+						java.lang.reflect.Method isPresentOpt = commandOpt.getClass().getMethod("isPresent");
+						boolean commandPresent = (boolean) isPresentOpt.invoke(commandOpt);
 
-            Process process = pb.start();
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    if (!line.trim().isEmpty()) {
-                        if (os.contains("win")) {
-                            // Tasklist returns: "image name",pid,...
-                            int firstQuote = line.indexOf('"');
-                            int secondQuote = line.indexOf('"', firstQuote + 1);
-                            if (firstQuote >= 0 && secondQuote > firstQuote) {
-                                return line.substring(firstQuote + 1, secondQuote);
-                            }
-                        } else {
-                            // ps returns just the command path
-                            return line.trim();
-                        }
-                    }
-                }
-            }
+						if (commandPresent) {
+							java.lang.reflect.Method getOpt = commandOpt.getClass().getMethod("get");
+							return (String) getOpt.invoke(commandOpt);
+						}
+					}
+				}
+			}
+		} catch (Exception ignored) {
+			// Java viaja
+		}
 
-            // No output means process not found
-            return null;
+		// Step 2: Fallback to OS-specific command-line tools (Java 8)
+		try {
+			String os = System.getProperty("os.name").toLowerCase();
+			ProcessBuilder pb;
+			if (os.contains("win")) {
+				// Windows: Use tasklist to get image name
+				pb = new ProcessBuilder("tasklist", "/FI", "PID eq " + obtenerPID(), "/FO", "CSV", "/NH");
+			} else {
+				// Unix/Linux/macOS: Use ps to get command
+				pb = new ProcessBuilder("ps", "-p", String.valueOf(obtenerPID()), "-o", "comm=");
+			}
 
-        } catch (Exception e) {
-            return null;
-        }
-    }
-    
-    
-    public static boolean viva(long pid) {
-        try {
-            // Intentar usar ProcessHandle (Java 9+)
-            Class<?> processHandleClase = Class.forName("java.lang.ProcessHandle");
-            java.lang.reflect.Method meth = processHandleClase.getMethod("of", long.class);
-            Object optionalHandle = meth.invoke(null, pid);
+			Process process = pb.start();
+			try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+				String line;
+				while ((line = reader.readLine()) != null) {
+					if (!line.trim().isEmpty()) {
+						if (os.contains("win")) {
+							// Tasklist returns: "image name",pid,...
+							int firstQuote = line.indexOf('"');
+							int secondQuote = line.indexOf('"', firstQuote + 1);
+							if (firstQuote >= 0 && secondQuote > firstQuote) {
+								return line.substring(firstQuote + 1, secondQuote);
+							}
+						} else {
+							// ps returns just the command path
+							return line.trim();
+						}
+					}
+				}
+			}
 
-            if (optionalHandle != null) {
-                java.lang.reflect.Method isPresentMethod = optionalHandle.getClass().getMethod("isPresent");
-                boolean existe = (boolean) isPresentMethod.invoke(optionalHandle);
+			// No output means process not found
+			return null;
 
-                if (existe) {
-                    java.lang.reflect.Method getMethod = optionalHandle.getClass().getMethod("get");
-                    Object processHandle = getMethod.invoke(optionalHandle);
+		} catch (Exception e) {
+			return null;
+		}
+	}
 
-                    java.lang.reflect.Method estaViviaMeth = processHandle.getClass().getMethod("isAlive");
-                    return (boolean) estaViviaMeth.invoke(processHandle);
-                }
-            }
-            return false;
-        } catch (Exception e) {
-            // Si falla (Java 8 o ProcessHandle no disponible), usa el método de comandos del sistema
-            return viva8(pid);
-        }
-    }
+	public static boolean viva(long pid) {
+		try {
+			// Intentar usar ProcessHandle (Java 9+)
+			Class<?> processHandleClase = Class.forName("java.lang.ProcessHandle");
+			java.lang.reflect.Method meth = processHandleClase.getMethod("of", long.class);
+			Object optionalHandle = meth.invoke(null, pid);
 
-    public static boolean viva8(long pid) {
-        try {
-            String os = System.getProperty("os.name").toLowerCase();
-            ProcessBuilder processBuilder;
+			if (optionalHandle != null) {
+				java.lang.reflect.Method isPresentMethod = optionalHandle.getClass().getMethod("isPresent");
+				boolean existe = (boolean) isPresentMethod.invoke(optionalHandle);
 
-            if (os.contains("win")) {
-                processBuilder = new ProcessBuilder("tasklist", "/FI", "PID eq " + pid, "/FO", "CSV", "/NH");
-            } else {
-                processBuilder = new ProcessBuilder("ps", "-p", String.valueOf(pid));
-            }
+				if (existe) {
+					java.lang.reflect.Method getMethod = optionalHandle.getClass().getMethod("get");
+					Object processHandle = getMethod.invoke(optionalHandle);
 
-            Process process = processBuilder.start();
-            int exitCode = process.waitFor();
-            return exitCode == 0;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-    
-    
-    
-    
-    
+					java.lang.reflect.Method estaViviaMeth = processHandle.getClass().getMethod("isAlive");
+					return (boolean) estaViviaMeth.invoke(processHandle);
+				}
+			}
+			return false;
+		} catch (Exception e) {
+			// Si falla (Java 8 o ProcessHandle no disponible), usa el método de comandos
+			// del sistema
+			return viva8(pid);
+		}
+	}
+
+	public static boolean viva8(long pid) {
+		try {
+			String os = System.getProperty("os.name").toLowerCase();
+			ProcessBuilder processBuilder;
+
+			if (os.contains("win")) {
+				processBuilder = new ProcessBuilder("tasklist", "/FI", "PID eq " + pid, "/FO", "CSV", "/NH");
+			} else {
+				processBuilder = new ProcessBuilder("ps", "-p", String.valueOf(pid));
+			}
+
+			Process process = processBuilder.start();
+			int exitCode = process.waitFor();
+			return exitCode == 0;
+		} catch (Exception e) {
+			return false;
+		}
+	}
 
 }

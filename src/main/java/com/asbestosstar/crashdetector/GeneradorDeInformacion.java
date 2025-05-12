@@ -26,7 +26,7 @@ public class GeneradorDeInformacion {
 			StringBuilder cons = new StringBuilder();
 			cons.append(MonitorDePID.idioma.ubicacionesDeLogs()+"<br>");
 			for (Consola co : consolas) {
-					cons.append("<a href='file://").append(co.archivo.toUri().toString()).append("'>")
+					cons.append("<a href='file://").append(co.archivo.toAbsolutePath().toUri().toString()).append("'>")
 							.append(co.archivo.toString().trim()).append("</a><br>");
 			}
 
