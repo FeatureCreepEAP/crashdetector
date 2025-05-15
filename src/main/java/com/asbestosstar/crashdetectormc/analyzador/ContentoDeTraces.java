@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 
@@ -184,7 +185,12 @@ public class ContentoDeTraces implements Verificaciones {
 		// TODO Auto-generated method stub
 		StringBuilder constructor = new StringBuilder();
 		for (Map.Entry<String, StringBuilder> entry : contento.entrySet()) {
-			constructor.append(entry.getKey()).append(nl_html);
+			
+			String titilo = "<span style='color: #" + Config.obtenerInstancia().obtenerColorDeTitulosDeConsolas()
+					+ "; font-weight: bold;'>";
+			constructor.append(titilo).append(entry.getKey()).append("").append("</span>")
+					.append(Verificaciones.nl_html);
+			
 			constructor.append(entry.getValue().toString()).append(nl_html);
 
 		}

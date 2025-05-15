@@ -51,9 +51,9 @@ public class AdvertenciaFaltasClases implements Verificaciones {
     public String mensaje() {
         if (clases.isEmpty()) return "";
         
-        StringBuilder html = new StringBuilder("<ul>").append(Verificaciones.nl_html);
+        StringBuilder html = new StringBuilder("<ul>");
         for (String clase : clases) {
-            html.append("<li>").append(clase).append("</li>").append(Verificaciones.nl_html);
+            html.append("<li>").append(clase).append("</li>");
         }
         html.append("</ul>");
         return MonitorDePID.idioma.faltar_de_clases_advertencia() + html.toString();

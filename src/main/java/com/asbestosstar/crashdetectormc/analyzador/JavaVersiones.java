@@ -69,9 +69,9 @@ public class JavaVersiones implements Verificaciones {
     public String mensaje() {
         if (mensajes.isEmpty()) return "";
         
-        StringBuilder html = new StringBuilder("<ul>").append(Verificaciones.nl_html);
+        StringBuilder html = new StringBuilder("<ul>");
         for (String msg : mensajes) {
-            html.append("<li>").append(msg).append("</li>").append(Verificaciones.nl_html);
+            html.append("<li>").append(msg).append("</li>");
         }
         html.append("</ul>");
         return html.toString();

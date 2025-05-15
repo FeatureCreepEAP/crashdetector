@@ -320,7 +320,7 @@ public class VerificacionDeStackTrace {
 		String[] lineas = contento_de_logs.split("\r?\n");
 		for (String linea : lineas) {
 			if (linea.contains("org.spongepowered.asm.mixin")) {
-				//CrashDetectorLogger.log(linea);
+				CrashDetectorLogger.log(linea);
 				Matcher matcher = JSON_PATTERN.matcher(linea.trim());
 				while (matcher.find()) {
 					// Group 1 captures the mixin JSON file name

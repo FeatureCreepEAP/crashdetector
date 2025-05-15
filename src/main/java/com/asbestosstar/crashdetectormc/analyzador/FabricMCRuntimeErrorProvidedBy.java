@@ -48,7 +48,7 @@ public class FabricMCRuntimeErrorProvidedBy implements Verificaciones {
     public String mensaje() {
         if (modIdsProblematicos.isEmpty()) return "";
         
-        StringBuilder html = new StringBuilder("<ul>").append(Verificaciones.nl_html);
+        StringBuilder html = new StringBuilder("<ul>");
         for (String modId : modIdsProblematicos) {
             html.append("<li>")
                 .append(MonitorDePID.idioma.modids_problematicos())

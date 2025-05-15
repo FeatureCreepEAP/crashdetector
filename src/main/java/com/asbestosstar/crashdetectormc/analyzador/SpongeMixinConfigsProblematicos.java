@@ -38,7 +38,7 @@ public class SpongeMixinConfigsProblematicos implements Verificaciones {
     public String mensaje() {
         if (sm_config.isEmpty()) return "";
         
-        StringBuilder html = new StringBuilder("<ul>").append(Verificaciones.nl_html);
+        StringBuilder html = new StringBuilder("<ul>");
         for (String sm : sm_config) {
             html.append("<li>")
                 .append(MonitorDePID.idioma.config_spongemixin_problematico(sm))

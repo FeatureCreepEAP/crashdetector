@@ -50,10 +50,10 @@ public class ServicioDeModLauncherNoFunciona implements Verificaciones {
         if (serviciosFallidos.isEmpty()) return "";
         
         CDStringBuilder html = new CDStringBuilder();
-        html.append("<ul>").append(Verificaciones.nl_html);
+        html.append("<ul>");
         
         for (String servicio : serviciosFallidos) {
-            html.append("<li>"+servicio+"</li>").append(Verificaciones.nl_html);
+            html.append("<li>"+servicio+"</li>");
         }
         
         html.append("</ul>");

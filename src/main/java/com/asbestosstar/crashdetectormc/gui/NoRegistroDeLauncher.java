@@ -122,7 +122,7 @@ public class NoRegistroDeLauncher extends JDialog {
                 Consola cons = new Consola(cd_launcherlog.toPath());
                 cons.finalizarContento(instant);
                 MonitorDePID.consolas.add(cons);
-                
+                MonitorDePID.consola_de_launcher_inyectado=true;
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(null, 
                     "Error al guardar: " + ex.getMessage(),

@@ -46,6 +46,7 @@ public class MonitorDePID {
 	public static long pid;
 	public static boolean resultos = false;
 	public static boolean tiene_mensaje_de_registro_launcher_completa = false;
+	public static boolean consola_de_launcher_inyectado = false;
 
 	public static void main(String[] args) {
 		if (args.length > 0 && args[0].equals("--monitor")) {
@@ -334,16 +335,22 @@ public class MonitorDePID {
 
 	private static void finalizarConsolasLentas(Instant utc, Instant luego) {
 		// TODO Auto-generated method stub
+		
+	if(Consola.tiene_registro_de_launcher(consolas)&&!consola_de_launcher_inyectado ) {	
 		Duration duration = Duration.between(luego, Instant.now());
 
-		while (!tiene_mensaje_de_registro_launcher_completa && duration.getSeconds() < 25) {// TODO Config para tiempo
-			CrashDetectorLogger.log("reincinar finalizacion");
+		
+		while (!tiene_mensaje_de_registro_launcher_completa && duration.getSeconds() < 20) {// TODO Config para tiempo
+			CrashDetectorLogger.log("reincinar finalizacion " + duration.getSeconds());
+			duration = Duration.between(luego, Instant.now());
 			for (Consola consola : consolas) {
 				consola.finalizarContento(utc);
 			}
 
 		}
 		CrashDetectorLogger.log("tiene_mensaje_de_registro_launcher_completa es valor " + String.valueOf(tiene_mensaje_de_registro_launcher_completa));
+	}
+	
 	}
 
 	public static String analizar(List<Consola> consolas) {

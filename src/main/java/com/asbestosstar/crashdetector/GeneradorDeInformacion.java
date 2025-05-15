@@ -33,7 +33,7 @@ public class GeneradorDeInformacion {
 			String pantilla = MonitorDePID.leer_archivo(new File("crash_detector/pantilla.htm").toPath());
 			File ret = new File("crash_detector/" + instant.toString().replace(":", "") + ".htm");
 			FileWriter escribidor = new FileWriter(ret);
-			escribidor.write(pantilla.replace("{constructor}", cons.toString() + "<br>" +MonitorDePID.idioma.infoDeVerificaciones() + "<br>" + constructor.toString()));
+			escribidor.write(pantilla.replace("{constructor}", cons.toString() + "<br>" +MonitorDePID.idioma.infoDeVerificaciones() + "<br><br>" + constructor.toString()));
 			escribidor.close();
 			return ret;
 		} catch (IOException e) {
@@ -54,7 +54,7 @@ public class GeneradorDeInformacion {
 
 			String pantilla = MonitorDePID.leer_archivo(new File("crash_detector/pantilla.htm").toPath());
 			String ret = enviarInforme(
-					pantilla.replace("{constructor}", cons.toString() + "<br>" + MonitorDePID.idioma.infoDeVerificaciones() + "<br>" + constructor.toString()));
+					pantilla.replace("{constructor}", cons.toString() + "<br>" + MonitorDePID.idioma.infoDeVerificaciones() + "<br><br>" + constructor.toString()));
 			CrashDetectorLogger.log(ret);
 			return ret;
 		} catch (IOException e) {

@@ -85,9 +85,9 @@ public class NoPuedeAnalizarJSONDeRegistro implements Verificaciones {
     public String mensaje() {
         if (erroresJSON.isEmpty()) return "";
         
-        StringBuilder html = new StringBuilder("<ul>").append(Verificaciones.nl_html);
+        StringBuilder html = new StringBuilder("<ul>");
         for (String error : erroresJSON) {
-            html.append("<li>").append(error).append("</li>").append(Verificaciones.nl_html);
+            html.append("<li>").append(error).append("</li>");
         }
         html.append("</ul>");
         return html.toString();

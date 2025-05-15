@@ -72,6 +72,7 @@ public class Analizador {
 	public void analizar(List<Consola> consolas) {
 		// TODO Auto-generated method stub
 		for (Consola consola : consolas) {
+			consola.verificacion_de_stacktrace.reincinar();
 			for (Verificaciones ver : verificaciones_activados) {
 				ver.verificar(consola);
 			}
@@ -85,19 +86,28 @@ public class Analizador {
 	}
 
 	public String toString() {
-		StringBuilder constructor = new StringBuilder();
-		for (Verificaciones ver : organizar(this.verificaciones_activados)) {
+	    StringBuilder constructor = new StringBuilder();
+	    constructor.append("<ol>");
 
-			if (ver.activado()) {
-				String titilo = "<span style='color: #" + Config.obtenerInstancia().obtenerColorDeTitulosDeConsolas()
-						+ "; font-weight: bold;'>";
-				constructor.append(titilo).append(ver.nombre()).append("").append("</span>")
-						.append(Verificaciones.nl_html);
-				constructor.append(ver.mensaje()).append(Verificaciones.nl_html);
-			}
+	    for (Verificaciones ver : organizar(this.verificaciones_activados)) {
+	        if (ver.activado()) {
+	            constructor.append("<li>");
+	            
+	            String tituloColor = Config.obtenerInstancia().obtenerColorDeTitulosDeConsolas();
+	            constructor.append("<span style='color: #")
+	                      .append(tituloColor)
+	                      .append("; font-weight: bold;'>")
+	                      .append(ver.nombre())
+	                      .append("</span>");
+	            
+	            constructor.append("<br>")
+	                      .append(ver.mensaje())
+	                      .append("</li>");
+	        }
+	    }
 
-		}
-		return constructor.toString();
+	    constructor.append("</ol>");
+	    return constructor.toString();
 	}
 
 }
