@@ -1,26 +1,27 @@
 package com.asbestosstar.crashdetectormc.analyzador;
 
-import com.asbestosstar.crashdetector.CDStringBuilder;
+import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 
 public class OpcionesJavaGCInvalidas implements Verificaciones {
 
-
-    public boolean activado = false;
+    private boolean activado = false;
+    private String mensaje = "";
 
     @Override
-    public void verificar(String contenido_de_consola, CDStringBuilder constructor) {
-        // Detectar conflictos de opciones de recolección de basura
-        if (contenido_de_consola.matches("(?sm).*Conflicting collector combinations in option list.*")) {
-            constructor.append(MonitorDePID.idioma.errorOpcionesGCJava())
-                      .append(nl_html);
+    public void verificar(Consola consola) {
+    	String contenidoConsola=consola.contento_verificar;
+
+        String patron = "Conflicting collector combinations in option list";
+        if (contenidoConsola.matches("(?sm).*" + patron + ".*")) { // Usa regex multilinea [[8]]
+            this.mensaje = MonitorDePID.idioma.errorOpcionesGCJava() + Verificaciones.nl_html;
             activado = true;
         }
     }
 
     @Override
     public Verificaciones nueva() {
-        return new OpcionesJavaGCInvalidas();
+        return new OpcionesJavaGCInvalidas(); 
     }
 
     @Override
@@ -28,4 +29,23 @@ public class OpcionesJavaGCInvalidas implements Verificaciones {
         return activado;
     }
 
+    @Override
+    public float prioridad() {
+        return 500f; 
+    }
+
+    @Override
+    public String mensaje() {
+        return mensaje;
+    }
+    
+    
+	@Override
+	public String nombre() {
+		// TODO Auto-generated method stub
+		return MonitorDePID.idioma.nombre_de_opciones_java_gc_invalidas();
+	}
+    
+    
+    
 }

@@ -12,14 +12,16 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.asbestosstar.crashdetector.CDStringBuilder;
+import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 
-public class VerificacionDeStackTrace implements Verificaciones {
+public class VerificacionDeStackTrace {
 
-	public boolean activado=false;
-public CDStringBuilder sb;
+
+
+	Consola consola;
+	String nl = System.lineSeparator();
 	
 	// 正则表达式用于匹配Java异常堆栈跟踪
 	private static final Pattern STACK_TRACE_PATTERN = Pattern.compile("(?m)(^\\S.*(?:\\r?\\n[ \\t]+at\\s+.*)+)");
@@ -47,24 +49,46 @@ public CDStringBuilder sb;
 			"io.netty", "org.prismlauncher", "io.github.zekerzhayard", "org.multimc", "org.polymc", "org.tlauncher", "net.fabricmc","com.asbestosstar","asbestosstar."
 
 	};
-
-	@Override
-	public void verificar(String log, CDStringBuilder build) {
-		this.sb=build;
-		int lvl = 0;
-		for (String trace : inverso(obtenerTracesFatal(log))) {// Las ultimas son las más importante
-			lvl++;
-			this.procesarTrace(build, trace, true, lvl);
-		}
-
-		for (String trace : inverso(obtenerTraces(log))) {// Las ultimas son las más importante
-			lvl++;
-			this.procesarTrace(build, trace, false, lvl);
-		}
-
+	
+	public VerificacionDeStackTrace(Consola cons) {
+		this.consola=cons;
 	}
+	
 
-	public void procesarTrace(CDStringBuilder build, String trace, boolean fatal, int lvl) {
+	
+	public void reincinar() {
+		
+		sm_config.clear();
+		jars.clear();
+		modids.clear();
+		packs.clear();
+
+		braceContentos.clear();
+
+		fatal_clases_no_existe.clear();
+
+		jar_malo.clear();
+		modid_malo.clear();
+		package_malo.clear();
+		
+		
+		
+		int lvl = 0;
+		String contento = consola.contento_verificar;
+		for (String trace : inverso(obtenerTracesFatal(contento))) {// Las ultimas son las más importante
+			lvl++;
+			this.procesarTrace(trace, true, lvl);
+		}
+
+		for (String trace : inverso(obtenerTraces(contento))) {// Las ultimas son las más importante
+			lvl++;
+			this.procesarTrace(trace, false, lvl);
+		}
+	}
+	
+	
+
+	public void procesarTrace(String trace, boolean fatal, int lvl) {
 
 		List<String> archivos_json = obtenerArchivosJsonEnMixinExceptions(trace);
 
@@ -72,8 +96,7 @@ public CDStringBuilder sb;
 			for (String jsonFile : archivos_json) {
 				if (!sm_config.contains(jsonFile) && !jsonFile.endsWith(".refmap.json")) {
 					sm_config.add(jsonFile);
-					activado=true;
-					build.append(MonitorDePID.idioma.config_spongemixin_problematico(jsonFile)).append(nl_html);
+					//build.append(MonitorDePID.idioma.config_spongemixin_problematico(jsonFile)).append(nl_html);
 				}
 			}
 		} else {
@@ -400,23 +423,11 @@ public CDStringBuilder sb;
 		return false;
 	}
 
-	@Override
-	public Verificaciones nueva() {
-		// TODO Auto-generated method stub
-		return new VerificacionDeStackTrace();
-	}
 
 	public static List<String> inverso(List<String> original) {
 		List<String> reversed = new ArrayList<>(original);
 		Collections.reverse(reversed);
 		return reversed;
 	}
-	
-	
-	
-	@Override
-	public boolean activado() {
-		// TODO Auto-generated method stub
-		return activado;
-	}
+
 }

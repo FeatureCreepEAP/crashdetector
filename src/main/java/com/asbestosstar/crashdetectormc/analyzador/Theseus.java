@@ -1,37 +1,47 @@
 package com.asbestosstar.crashdetectormc.analyzador;
 
-import com.asbestosstar.crashdetector.CDStringBuilder;
+import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 
 public class Theseus implements Verificaciones {
 
-	public boolean activado=false;
+    private boolean activado = false;
+    private String mensaje = ""; 
 
-	
-	@Override
-	public void verificar(String contento_de_consola, CDStringBuilder constructor) {
-		// TODO Auto-generated method stub
-		
-		if(contento_de_consola.contains("com.modrinth.theseus")	|| contento_de_consola.contains("ModrinthApp")) {
-			constructor.append(MonitorDePID.idioma.theseus()).append(nl_html);
-			activado=true;
-		}	
-		
-	}
+    @Override
+    public void verificar(Consola consola) {
+    	String contenidoDeConsola=consola.contento_verificar;
+        if (contenidoDeConsola.contains("com.modrinth.theseus") || contenidoDeConsola.contains("ModrinthApp")) {
+            this.mensaje = MonitorDePID.idioma.theseus() + Verificaciones.nl_html;
+            activado = true;
+        }
+    }
 
-	@Override
-	public Verificaciones nueva() {
-		// TODO Auto-generated method stub
-		return new Theseus();
-	}
+    @Override
+    public Verificaciones nueva() {
+        return new Theseus(); 
+    }
 
-	
-	
+    @Override
+    public boolean activado() {
+        return activado; 
+    }
+
+    @Override
+    public float prioridad() {
+        return 1000.0f;
+    }
+
+    @Override
+    public String mensaje() {
+        return mensaje; // Devuelve el mensaje almacenado
+    }
+    
 	@Override
-	public boolean activado() {
+	public String nombre() {
 		// TODO Auto-generated method stub
-		return activado;
+		return MonitorDePID.idioma.nombre_de_theseus();
 	}
-	
-	
+    
+    
 }

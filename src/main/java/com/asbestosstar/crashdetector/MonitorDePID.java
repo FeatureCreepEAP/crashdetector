@@ -22,6 +22,7 @@ import java.util.concurrent.CountDownLatch;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import com.asbestosstar.crashdetectormc.analyzador.Analizador;
 import com.asbestosstar.crashdetectormc.analyzador.Verificaciones;
 import com.asbestosstar.crashdetectormc.grepr.BusquedaArchivos;
 import com.asbestosstar.crashdetectormc.gui.CrashDetectorGUI;
@@ -30,11 +31,13 @@ import com.asbestosstar.crashdetectormc.gui.SelectorIdiomaGUI;
 
 public class MonitorDePID {
 
+	public static final String mensaje_de_registro_launcher_completa = "Puedes ignorar esta linea, solo es para CrashDetector, esta mensaje es siempre en espanol";
 	public static Path carpeta = new File("crash_detector/").toPath();
 	public static File ArchivoDeCodioError0 = new File("crash_detector/ArchivoDeCodioError0");
 	public static Path ultima_mods = carpeta.resolve("ultima_mods");
 	public static Path viajo_ultima_mods = carpeta.resolve("viajo_ultima_mods");
 	public static List<Consola> consolas = new ArrayList<Consola>();
+	public static Analizador analizador = new Analizador();
 
 	public static String nl = System.lineSeparator();
 	public static Idioma idioma = Idioma.detectar();
@@ -42,6 +45,7 @@ public class MonitorDePID {
 	public static String enlance;
 	public static long pid;
 	public static boolean resultos = false;
+	public static boolean tiene_mensaje_de_registro_launcher_completa = false;
 
 	public static void main(String[] args) {
 		if (args.length > 0 && args[0].equals("--monitor")) {
@@ -222,28 +226,29 @@ public class MonitorDePID {
 				// System.out.println( escribes el codio de error aqui );
 
 				System.out.println(idioma.pid_esta_muerto(pid));
+				System.out.println(mensaje_de_registro_launcher_completa);
 				CrashDetectorLogger.log(idioma.pid_esta_muerto(pid));
 				StringBuilder constructor = new StringBuilder();
-
-//				Instant lugeo = Instant.now();
-//				Duration duration = Duration.between(utc, lugeo);
 
 				CrashDetectorLogger.log("Finalizando Contento de Consolas");
 
 				// if (duration.getSeconds() >= 25) {// Para las consolas completa
 				// } else {
 
-				if (ArchivoDeCodioError0.exists()) {
+				consolas_sin_processando.addAll(Consola.obtenerConsolas());
+
+				if (activar() && !GraphicsEnvironment.isHeadless()) {
+					if (!Idioma.archivo.exists()) {
+						obtainerIdioma();
+					}
+					if (!Consola.tiene_registro_de_launcher(consolas_sin_processando)) {
+						obtenerCosolaDeLauncher(utc);
+					}
+				}
+
+				if (!ArchivoDeCodioError0.exists() && !Consola.tiene_registro_de_launcher(consolas_sin_processando)) {
 					try {// Cuando tiene una informe de crash esta codio 0 y tiene tiempo para esperar
 						Thread.sleep(500);
-					} catch (InterruptedException e) {
-						Thread.currentThread().interrupt();
-						break;
-					}
-				} else {
-					obtainerIdioma();
-					try {
-						Thread.sleep(5500);
 					} catch (InterruptedException e) {
 						Thread.currentThread().interrupt();
 						break;
@@ -252,8 +257,6 @@ public class MonitorDePID {
 
 				// }
 
-				consolas_sin_processando.addAll(Consola.obtenerConsolas());
-
 				for (Consola consola : consolas_sin_processando) {
 					consola.finalizarContento(utc);
 					if (consola.nueva) {
@@ -261,24 +264,17 @@ public class MonitorDePID {
 					}
 				}
 
-				if (activar() && !GraphicsEnvironment.isHeadless()) {
-					if (!Idioma.archivo.exists()) {
-						obtainerIdioma();
-					}
-					if (!Consola.tiene_registro_de_launcher(consolas)) {
-						obtenerCosolaDeLauncher(utc);
-					}
-				}
+				Instant luego = Instant.now();
+				finalizarConsolasLentas(utc, luego);
 
 				CrashDetectorLogger.log("Analyzador Consolas");
 
-				for (Consola consola : consolas) {
-					consola.analyzar(constructor);
-				}
-				String res = constructor.toString();
+				String res = analizar(consolas);
+
 				if (res.replace(" ", "").equals("")) {
 					constructor.append(idioma.noResultos());
 				} else {
+					constructor.append(res);
 					resultos = true;
 				}
 
@@ -336,6 +332,26 @@ public class MonitorDePID {
 //		});
 //	}
 
+	private static void finalizarConsolasLentas(Instant utc, Instant luego) {
+		// TODO Auto-generated method stub
+		Duration duration = Duration.between(luego, Instant.now());
+
+		while (!tiene_mensaje_de_registro_launcher_completa && duration.getSeconds() < 25) {// TODO Config para tiempo
+			CrashDetectorLogger.log("reincinar finalizacion");
+			for (Consola consola : consolas) {
+				consola.finalizarContento(utc);
+			}
+
+		}
+		CrashDetectorLogger.log("tiene_mensaje_de_registro_launcher_completa es valor " + String.valueOf(tiene_mensaje_de_registro_launcher_completa));
+	}
+
+	public static String analizar(List<Consola> consolas) {
+		analizador = new Analizador();
+		analizador.analizar(consolas);
+		return analizador.toString();
+	}
+
 	private static void obtainerIdioma() {
 		// TODO Auto-generated method stub
 		if (!Idioma.archivo.exists() && !GraphicsEnvironment.isHeadless()) {
@@ -355,7 +371,7 @@ public class MonitorDePID {
 			if (cons.archivo.toString().contains("crash-reports")) {
 				return true;
 			}
-			for (Verificaciones ver : cons.analyzador.verificaciones) {
+			for (Verificaciones ver : analizador.verificaciones) {
 				if (ver.activado() && ver.anularNormal()) {
 					return true;
 				}

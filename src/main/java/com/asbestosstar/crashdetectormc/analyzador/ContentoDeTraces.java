@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import com.asbestosstar.crashdetector.CDStringBuilder;
+import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 
 /**
@@ -19,21 +19,19 @@ public class ContentoDeTraces implements Verificaciones {
 
 	public boolean activado = false;
 
-	public static Set<String> todos_jars = new HashSet<String>();
-	public static Set<String> todos_modids = new HashSet<String>();
-	public static Set<String> todos_packs = new HashSet<String>();
-	public static Set<String> todos_sm_configs = new HashSet<String>();
+	public Set<String> todos_jars = new HashSet<String>();
+	public Set<String> todos_modids = new HashSet<String>();
+	public Set<String> todos_packs = new HashSet<String>();
+	public Set<String> todos_sm_configs = new HashSet<String>();
 
-	VerificacionDeStackTrace vdst;
-
-	public ContentoDeTraces(VerificacionDeStackTrace vdst) {
-		this.vdst = vdst;
-	}
+	public Map<String, StringBuilder> contento = new HashMap<String, StringBuilder>();
 
 	@Override
-	public void verificar(String contento_de_consola, CDStringBuilder constructor) {
+	public void verificar(Consola consola) {
 		// TODO Auto-generated method stub
 
+		VerificacionDeStackTrace vdst = consola.verificacion_de_stacktrace;
+		StringBuilder constructor = new StringBuilder();
 		HashMap<String, Boolean> jar_nombres = new HashMap<String, Boolean>();
 		if (!vdst.jars.isEmpty()) {
 			activado = true;
@@ -47,7 +45,7 @@ public class ContentoDeTraces implements Verificaciones {
 				} else {
 					System.out.println(lvl_info_arr[0]);
 				}
-				String jar_nombre = jar.getKey().split(".jar")[0] + ".jar" + lvl_info;
+				String jar_nombre = jar.getKey().split(".jar")[0] + ".jar " + lvl_info;
 				if (!todos_jars.contains(jar_nombre)) {
 					todos_jars.add(jar_nombre);
 					jar_nombres.put(jar_nombre, jar.getValue());
@@ -57,10 +55,10 @@ public class ContentoDeTraces implements Verificaciones {
 		}
 
 		if (!jar_nombres.isEmpty()) {
-			constructor.appendDupe(MonitorDePID.idioma.problematico_jar()).append(nl_html);
+			constructor.append(MonitorDePID.idioma.problematico_jar()).append(nl_html);
 			for (Map.Entry<String, Boolean> jar : jar_nombres.entrySet()) {
 				if (jar.getValue()) {
-					constructor.appendDupe(MonitorDePID.idioma.possibladad_fatal());
+					constructor.append(MonitorDePID.idioma.possibladad_fatal());
 				}
 				constructor.append(jar.getKey()).append(nl_html);
 			}
@@ -81,10 +79,10 @@ public class ContentoDeTraces implements Verificaciones {
 		}
 
 		if (!modids_filt.isEmpty()) {
-			constructor.appendDupe(MonitorDePID.idioma.modids_problematicos()).append(nl_html);
+			constructor.append(MonitorDePID.idioma.modids_problematicos()).append(nl_html);
 			for (Map.Entry<String, Boolean> modid : modids_filt.entrySet()) {
 				if (modid.getValue()) {
-					constructor.appendDupe(MonitorDePID.idioma.possibladad_fatal());
+					constructor.append(MonitorDePID.idioma.possibladad_fatal());
 				}
 				constructor.append(modid.getKey()).append(nl_html);
 
@@ -107,10 +105,10 @@ public class ContentoDeTraces implements Verificaciones {
 		}
 
 		if (!packs_filt.isEmpty()) {
-			constructor.appendDupe(MonitorDePID.idioma.packages_problematicos()).append(nl_html);
+			constructor.append(MonitorDePID.idioma.packages_problematicos()).append(nl_html);
 			for (Map.Entry<String, Boolean> pack : packs_filt.entrySet()) {
 				if (pack.getValue()) {
-					constructor.appendDupe(MonitorDePID.idioma.possibladad_fatal());
+					constructor.append(MonitorDePID.idioma.possibladad_fatal());
 				}
 				constructor.append(pack.getKey()).append(nl_html);
 
@@ -148,12 +146,17 @@ public class ContentoDeTraces implements Verificaciones {
 		}
 
 		if (!sm_configs_filt.isEmpty()) {
-			constructor.appendDupe(MonitorDePID.idioma.corchetes_ondulados()).append(nl_html);
+			constructor.append(MonitorDePID.idioma.corchetes_ondulados()).append(nl_html);
 			for (String conf : sm_configs_filt) {
-				constructor.append(conf.split(".json")[0].replace(".mixins", "").replace(".mixin", "").replace("mixins.", "").replace("mixin.", "")).append(nl_html);
+				constructor.append(conf.split(".json")[0].replace(".mixins", "").replace(".mixin", "")
+						.replace("mixins.", "").replace("mixin.", "")).append(nl_html);
 
 			}
 
+		}
+
+		if (!constructor.toString().isEmpty()) {
+			contento.put(consola.archivo.getFileName().toString(), constructor);
 		}
 
 	}
@@ -161,13 +164,38 @@ public class ContentoDeTraces implements Verificaciones {
 	@Override
 	public Verificaciones nueva() {
 		// TODO Auto-generated method stub
-		return new ContentoDeTraces(vdst);
+		return new ContentoDeTraces();
 	}
 
 	@Override
 	public boolean activado() {
 		// TODO Auto-generated method stub
 		return activado;
+	}
+
+	@Override
+	public float prioridad() {
+		// TODO Auto-generated method stub
+		return 10;
+	}
+
+	@Override
+	public String mensaje() {
+		// TODO Auto-generated method stub
+		StringBuilder constructor = new StringBuilder();
+		for (Map.Entry<String, StringBuilder> entry : contento.entrySet()) {
+			constructor.append(entry.getKey()).append(nl_html);
+			constructor.append(entry.getValue().toString()).append(nl_html);
+
+		}
+
+		return constructor.toString();
+	}
+	
+	@Override
+	public String nombre() {
+		// TODO Auto-generated method stub
+		return MonitorDePID.idioma.nombre_de_contento_de_stacktrace();
 	}
 
 }

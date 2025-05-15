@@ -608,6 +608,134 @@ public String problema_con_graficas_intel() {
 }
 
 
+public String nombre_de_faltar_de_clases_advertencia() {
+    return "Aviso: Classes ausentes detectadas";
+}
+
+public String nombre_de_bloque_teselado() {
+    return "Erro de renderização de blocos";
+}
+
+public String nombre_de_contento_de_stacktrace() {
+    return "Análise de stack trace";
+}
+
+public String nombre_de_cursed_consola() {
+    return "Console CurseForge incompleta";
+}
+
+public String nombre_de_early_window() {
+    return "Erro de janela inicial (FMLEarlyWindow)";
+}
+
+public String nombre_de_drivers() {
+    return "Problemas com drivers de vídeo";
+}
+
+public String nombre_de_error_de_config_mcforge() {
+    return "Configuração corrompida do MCForge";
+}
+
+public String nombre_de_error_de_monitor_lwjgl() {
+    return "Falha no modo de exibição (LWJGL)";
+}
+
+public String nombre_de_fabricmc_runtime_error_provided_by() {
+    return "Erro de inicialização do FabricMC";
+}
+
+public String nombre_de_falta_module_jmps() {
+    return "Módulos JPMS ausentes";
+}
+
+public String nombre_de_faltar_de_clases() {
+    return "Classes críticas ausentes";
+}
+
+public String nombre_de_faltas_dependencias_de_modlauncher() {
+    return "Dependências ausentes do ModLauncher";
+}
+
+public String nombre_de_java_versiones() {
+    return "Versões incompatíveis do Java";
+}
+
+public String nombre_de_faltar_de_kubejs_resourcepack() {
+    return "Erro de recursos do KubeJS";
+}
+
+public String nombre_de_lenguaje_proveedor_check() {
+    return "Provedor de linguagem incompatível";
+}
+
+public String nombre_de_faltar_de_liyhostictchctov() {
+    return "Erro Litchhost";
+}
+
+public String nombre_de_malware_falso_crash_assistant() {
+    return "Falso positivo de malware detectado";
+}
+
+public String nombre_de_mcforge_mod_sespechoso() {
+    return "Mod suspeito detectado";
+}
+
+public String nombre_de_mods_duplicados_modlauncher() {
+    return "Mods duplicados no ModLauncher";
+}
+
+public String nombre_de_modules_duplicados_jmps() {
+    return "Conflitos de módulos JPMS";
+}
+
+public String nombre_de_necesitas_sodium() {
+    return "Sodium necessário para Iris";
+}
+
+public String nombre_de_no_puede_analizar_json_de_registro() {
+    return "Erro ao analisar JSON de registro";
+}
+
+public String nombre_de_no_tiene_memoria() {
+    return "Memória insuficiente";
+}
+
+public String nombre_de_null_pointer() {
+    return "Erro de ponteiro nulo (NullPointerException)";
+}
+
+public String nombre_de_opciones_java_gc_invalidas() {
+    return "Opções inválidas de GC do Java";
+}
+
+public String nombre_de_optifine_obsoleta() {
+    return "OptiFine obsoleta/incompatível";
+}
+
+public String nombre_de_60_segundo_trick() {
+    return "Tick crítico do servidor (60s)";
+}
+
+public String nombre_de_servicio_de_modlauncher_no_funciona() {
+    return "Serviços do ModLauncher falharam";
+}
+
+public String nombre_de_spongemixin_configs_problematicos() {
+    return "Configurações problemáticas do SpongeMixing";
+}
+
+public String nombre_de_theseus() {
+    return "Theseus incompatível";
+}
+
+public String nombre_de_watermedia_tl() {
+    return "Launcher TLauncher não suportado pelo WATERMeDIA";
+}
+
+
+
+
+
 
 
 

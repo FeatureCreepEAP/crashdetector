@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import com.asbestosstar.crashdetector.CDStringBuilder;
+import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 
 /**
@@ -17,6 +18,8 @@ public class Drivers implements Verificaciones {
 
     /** Indica si este verificador identificó un problema. */
     private boolean activado = false;
+    private final CDStringBuilder mensajes = new CDStringBuilder();
+
 
     /** Patrones genéricos de fallos de driver/ OpenGL. Desde signatures.json de TLauncher*/
     private static final String[] DRIVER_PATTERNS = {
@@ -50,83 +53,70 @@ public class Drivers implements Verificaciones {
     };
 
     @Override
-    public void verificar(String log, CDStringBuilder mensaje) {
+    public void verificar(Consola consola) {
+    	String log=consola.contento_verificar;
+
+
         if (log.contains("EXCEPTION_ACCESS_VIOLATION") && log.contains("atio6axx.dll")) {
-            procesarProblemaAMD(mensaje);
+            procesarProblemaAMD();
             return;
         }
         if (log.contains("EXCEPTION_ACCESS_VIOLATION") && log.contains("nouveau")) {
-            mensaje.append(nl_html)
-                   .append(MonitorDePID.idioma.probelma_con_graficas_nouveau());
+            mensajes.append(MonitorDePID.idioma.probelma_con_graficas_nouveau());
             activado = true;
             return;
         }
-        if (log.contains("EXCEPTION_ACCESS_VIOLATION") && log.contains("PhysX_64.dll")) {
-        	procesarProblemaGraficos(mensaje);
+        if (contienePatron(log, new String[]{"PhysX_64.dll", "glfw.dll"})) {
+            procesarProblemaGraficos();
             return;
         }
-        
-        
-        if (log.contains("EXCEPTION_ACCESS_VIOLATION") && log.contains("glfw.dll")) {
-            procesarProblemaGraficos(mensaje);
-            return;
-        }
-        
-        
-        verificarProblemasIntel(log, mensaje);
+
+        verificarProblemasIntel(log);
         if (activado) return;
 
-
-        // Nueva detección específica de GPU no compatible --------
         if (contienePatron(log, UNSUPPORTED_GPU_PATTERNS)) {
-            procesarGpuNoCompatible(mensaje);
+            procesarGpuNoCompatible();
             return;
         }
 
-        // Detección general de driver ----------------------------
         if (contienePatron(log, DRIVER_PATTERNS)) {
-            procesarProblemaGraficos(mensaje);
+            procesarProblemaGraficos();
             return;
         }
 
-        // Heurística de la última línea (respaldo) ---------------
         String ultimaLinea = obtenerUltimaLinea(log);
-        if (ultimaLinea != null && contienePatron(ultimaLinea, DRIVER_PATTERNS)) {
-            procesarProblemaGraficos(mensaje);
-        } else if (ultimaLinea != null && contienePatron(ultimaLinea, UNSUPPORTED_GPU_PATTERNS)) {
-            procesarGpuNoCompatible(mensaje);
+        if (ultimaLinea != null) {
+            if (contienePatron(ultimaLinea, DRIVER_PATTERNS)) {
+                procesarProblemaGraficos();
+            } else if (contienePatron(ultimaLinea, UNSUPPORTED_GPU_PATTERNS)) {
+                procesarGpuNoCompatible();
+            }
         }
     }
 
-    private void procesarProblemaGraficos(CDStringBuilder mensaje) {
+    private void procesarProblemaGraficos() {
         boolean esWindows = esWindows();
         boolean tieneNvidia = esWindows && tieneNvidiaGPU();
         boolean esWindowsNuevo = esWindows && esWindows11OServer2025();
 
         if (tieneNvidia) {
-            if (esWindowsNuevo) {
-                mensaje.append(nl_html)
-                       .append(MonitorDePID.idioma.problema_con_graficas_nvidia_windows_nuevo());
-            } else {
-                mensaje.append(nl_html)
-                       .append(MonitorDePID.idioma.problema_con_graficas_nvidia_windows_viejo());
-            }
+            mensajes.append(esWindowsNuevo 
+                ? MonitorDePID.idioma.problema_con_graficas_nvidia_windows_nuevo()
+                : MonitorDePID.idioma.problema_con_graficas_nvidia_windows_viejo());
         } else {
-            mensaje.append(nl_html)
-                   .append(MonitorDePID.idioma.probelma_con_graficas_general());
+            mensajes.append(MonitorDePID.idioma.probelma_con_graficas_general());
         }
         activado = true;
     }
 
-    private void procesarGpuNoCompatible(CDStringBuilder mensaje) {
-        mensaje.append(nl_html)
-               .append(MonitorDePID.idioma.gpu_no_compatible()); // Debe existir en el bundle de idioma
+
+    private void procesarGpuNoCompatible() {
+        mensajes.append(MonitorDePID.idioma.gpu_no_compatible());
         activado = true;
     }
 
-    private void procesarProblemaAMD(CDStringBuilder mensaje) {
-        mensaje.append(nl_html)
-               .append(MonitorDePID.idioma.problema_con_graficas_ati());
+    private void procesarProblemaAMD() {
+        mensajes.append(MonitorDePID.idioma.problema_con_graficas_ati());
         activado = true;
     }
 
@@ -177,7 +167,7 @@ public class Drivers implements Verificaciones {
     
     
  // En la clase Drivers (analizador)
-    private void verificarProblemasIntel(String log, CDStringBuilder mensaje) {
+    private void verificarProblemasIntel(String log) {
         String[] dllsIntel = {
             "ig7icd32.dll", "ig7icd64.dll",
             "ig75icd32.dll", "ig75icd64.dll",
@@ -187,19 +177,17 @@ public class Drivers implements Verificaciones {
 
 
         for (String dll : dllsIntel) {
-            if (log.contains(dll)&&log.contains("EXCEPTION_ACCESS_VIOLATION")) {
-                procesarProblemaIntel(mensaje);
-                return;
+            if (log.contains(dll) && log.contains("EXCEPTION_ACCESS_VIOLATION")) {
+                procesarProblemaIntel();
+            	return;
             }
         }
     }
 
-    private void procesarProblemaIntel(CDStringBuilder mensaje) {
-        mensaje.append(nl_html)
-               .append(MonitorDePID.idioma.problema_con_graficas_intel());
+    private void procesarProblemaIntel() {
+        mensajes.append(MonitorDePID.idioma.problema_con_graficas_intel());
         activado = true;
     }
-    
     
     
     
@@ -256,4 +244,20 @@ public class Drivers implements Verificaciones {
     public boolean activado() {
         return activado;
     }
+    
+    @Override
+    public float prioridad() {
+        return 800.0f; // Prioridad crítica para errores de drivers [[8]]
+    }
+
+    @Override
+    public String mensaje() {
+        return mensajes.toString().replaceAll("\n", Verificaciones.nl_html);
+    }
+
+	@Override
+	public String nombre() {
+		// TODO Auto-generated method stub
+		return MonitorDePID.idioma.nombre_de_drivers();
+	}
 }

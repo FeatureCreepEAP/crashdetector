@@ -607,6 +607,131 @@ public String problema_con_graficas_intel() {
 }
 
 
+public String nombre_de_faltar_de_clases_advertencia() {
+    return "警告: 欠落しているクラスが検出されました";
+}
+
+public String nombre_de_bloque_teselado() {
+    return "ブロックのレンダリングエラー";
+}
+
+public String nombre_de_contento_de_stacktrace() {
+    return "スタックトレース解析";
+}
+
+public String nombre_de_cursed_consola() {
+    return "不完全なCurseForgeコンソール";
+}
+
+public String nombre_de_early_window() {
+    return "早期ウィンドウエラー (FMLEarlyWindow)";
+}
+
+public String nombre_de_drivers() {
+    return "ビデオドライバの問題";
+}
+
+public String nombre_de_error_de_config_mcforge() {
+    return "MCForge設定が破損しています";
+}
+
+public String nombre_de_error_de_monitor_lwjgl() {
+    return "ディスプレイモードの失敗 (LWJGL)";
+}
+
+public String nombre_de_fabricmc_runtime_error_provided_by() {
+    return "FabricMC初期化エラー";
+}
+
+public String nombre_de_falta_module_jmps() {
+    return "欠落しているJPMSモジュール";
+}
+
+public String nombre_de_faltar_de_clases() {
+    return "重大な欠落クラス";
+}
+
+public String nombre_de_faltas_dependencias_de_modlauncher() {
+    return "ModLauncher依存関係が欠落しています";
+}
+
+public String nombre_de_java_versiones() {
+    return "互換性のないJavaバージョン";
+}
+
+public String nombre_de_faltar_de_kubejs_resourcepack() {
+    return "KubeJSリソースエラー";
+}
+
+public String nombre_de_lenguaje_proveedor_check() {
+    return "互換性のない言語プロバイダ";
+}
+
+public String nombre_de_faltar_de_liyhostictchctov() {
+    return "Litchhostエラー";
+}
+
+public String nombre_de_malware_falso_crash_assistant() {
+    return "誤ったマルウェア検出";
+}
+
+public String nombre_de_mcforge_mod_sespechoso() {
+    return "疑わしいMODが検出されました";
+}
+
+public String nombre_de_mods_duplicados_modlauncher() {
+    return "ModLauncher内の重複したMOD";
+}
+
+public String nombre_de_modules_duplicados_jmps() {
+    return "JPMSモジュールの競合";
+}
+
+public String nombre_de_necesitas_sodium() {
+    return "IrisにはSodiumが必要です";
+}
+
+public String nombre_de_no_puede_analizar_json_de_registro() {
+    return "JSONレジストリを解析できません";
+}
+
+public String nombre_de_no_tiene_memoria() {
+    return "メモリ不足";
+}
+
+public String nombre_de_null_pointer() {
+    return "ヌルポインターエラー (NullPointerException)";
+}
+
+public String nombre_de_opciones_java_gc_invalidas() {
+    return "無効なJava GCオプション";
+}
+
+public String nombre_de_optifine_obsoleta() {
+    return "古い/互換性のないOptiFine";
+}
+
+public String nombre_de_60_segundo_trick() {
+    return "クリティカルサーバーティック (60秒)";
+}
+
+public String nombre_de_servicio_de_modlauncher_no_funciona() {
+    return "ModLauncherサービスが失敗しました";
+}
+
+public String nombre_de_spongemixin_configs_problematicos() {
+    return "問題のあるSpongeMixing設定";
+}
+
+public String nombre_de_theseus() {
+    return "Theseusは互換性がありません";
+}
+
+public String nombre_de_watermedia_tl() {
+    return "TLauncherはWATERMeDIAでサポートされていません";
+}
+
+
 
 
 

@@ -9,7 +9,7 @@ import java.util.List;
 
 import com.asbestosstar.crashdetector.anon.AnonimizadorDeRuta;
 import com.asbestosstar.crashdetector.anon.AnonimizadordeRegistros;
-import com.asbestosstar.crashdetectormc.analyzador.Analyzador;
+import com.asbestosstar.crashdetectormc.analyzador.Analizador;
 import com.asbestosstar.crashdetectormc.analyzador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetectormc.analyzador.Verificaciones;
 import com.asbestosstar.crashdetectormc.api_sito_registro.APIdeSitioDeRegistro;
@@ -34,8 +34,7 @@ public class Consola {
 	public boolean nueva;
 	public String contento_verificar;
 
-	public VerificacionDeStackTrace verificacion_de_stacktrace = new VerificacionDeStackTrace();
-	public Analyzador analyzador = new Analyzador(verificacion_de_stacktrace);
+	public VerificacionDeStackTrace verificacion_de_stacktrace = new VerificacionDeStackTrace(this);
 
 	public static ArrayList<File> archivos_en_lista = new ArrayList<File>();
 	public static String[] tipos_de_registros_de_launcher = { "../../logs/ftb-app-electron.log",
@@ -91,7 +90,11 @@ public class Consola {
 				}
 
 				contento_verificar = para_verificar.toString();
-
+			if(contento_verificar.contains(MonitorDePID.mensaje_de_registro_launcher_completa)) {
+				MonitorDePID.tiene_mensaje_de_registro_launcher_completa=true;
+			}	
+				
+			
 			} else {
 				nueva = false;
 				contento = "";
@@ -210,36 +213,22 @@ public class Consola {
 
 	}
 
-	public void analyzar(StringBuilder constructor) {
-		// StringBuilder temporal para almacenar los resultados de las verificaciones
-		CDStringBuilder contenidoVerificaciones = new CDStringBuilder(constructor);
-
-		CrashDetectorLogger.log("Analyzando " + archivo.toString());
-
-		if (archivo.toString().contains("cd")) {
-			CrashDetectorLogger.log(contento_verificar);
-		}
-
-		if (!contento_verificar.replace(" ", "").equals("")) {
-			// Iterar a través de todas las verificaciones y recopilar su salida
-			verificacion_de_stacktrace.verificar(contento_verificar, contenidoVerificaciones);
-			for (Verificaciones verificacion : analyzador.verificaciones) {
-				CrashDetectorLogger.log("Verificacion " + verificacion.getClass().getName().toString());
-				verificacion.nueva().verificar(contento_verificar, contenidoVerificaciones);
-			}
-
-			// Verificar si hay algún contenido generado por las verificaciones
-			if (contenidoVerificaciones.length() > 0) {
-				// Crear un desplegable con el nombre del archivo como etiqueta
-				constructor.append("<details><summary>")
-						.append("<span style='color: #" + Config.obtenerInstancia().obtenerColorDeTitulosDeConsolas()
-								+ "; font-weight: bold;'>")
-						.append(archivo.getFileName()).append("</span>").append("</b></summary>").append("<br>")
-						.append(contenidoVerificaciones.toString()).append("</details><br>");
-			}
-
-		}
-
+	public static List<Consola> reorganizar(List<Consola> consolas) {
+	    List<Consola> priorizadas = new ArrayList<>();
+	    List<Consola> normales = new ArrayList<>();
+	    
+	    for (Consola consola : consolas) {
+	        String nombreArchivo = consola.archivo.toString().toLowerCase();
+	        if (nombreArchivo.contains("crash-report")) {
+	            priorizadas.add(consola); // Archivos de crash van primero [[3]]
+	        } else {
+	            normales.add(consola); // El resto mantiene orden original
+	        }
+	    }
+	    
+	    // Combina listas: primero crash reports, luego normales [[1]]
+	    priorizadas.addAll(normales);
+	    return priorizadas;
 	}
 
 	// Para todos el code aqui,escribir otra vez estar mas simplicado pero hacer la

@@ -1,18 +1,20 @@
 package com.asbestosstar.crashdetectormc.analyzador;
 
-import com.asbestosstar.crashdetector.CDStringBuilder;
+import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 
 public class BloqueTeselado implements Verificaciones {
 
-    public boolean activado = false;
+    private boolean activado = false;
+    private String mensaje = ""; // Almacena el mensaje HTML
 
     @Override
-    public void verificar(String contenido_de_consola, CDStringBuilder constructor) {
-        // Expresión regular para detectar el error específico
-        if (contenido_de_consola.matches("(?sm).*Tesselating block in world$.*")) {
-            constructor.append(MonitorDePID.idioma.errorDeBloqueTeselado())
-                      .append(nl_html);
+    public void verificar(Consola consola) {
+    	String contenidoConsola=consola.contento_verificar;
+
+        String patron = "(?sm).*Tesselating block in world$.*";
+        if (contenidoConsola.matches(patron)) {
+            mensaje = MonitorDePID.idioma.errorDeBloqueTeselado() + Verificaciones.nl_html;
             activado = true;
         }
     }
@@ -26,4 +28,19 @@ public class BloqueTeselado implements Verificaciones {
     public boolean activado() {
         return activado;
     }
+
+    @Override
+    public float prioridad() {
+        return 500.0f;
+ }
+
+    @Override
+    public String mensaje() {
+        return mensaje; 
+    }
+	@Override
+	public String nombre() {
+		// TODO Auto-generated method stub
+		return MonitorDePID.idioma.nombre_de_bloque_teselado();
+	}
 }

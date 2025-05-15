@@ -1,69 +1,75 @@
 package com.asbestosstar.crashdetectormc.analyzador;
 
-import com.asbestosstar.crashdetector.CDStringBuilder;
+import java.util.HashSet;
+import java.util.Set;
+
+import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 
 public class FaltasDependenciasModLaunche implements Verificaciones {
 
-    public boolean activado = false;
+    private boolean activado = false;
+    private final Set<String> errores = new HashSet<>();
 
     @Override
-    public void verificar(String str, CDStringBuilder messanje) {
-        String[] lineas = str.split("\r?\n");
+    public void verificar(Consola consola) {
+    	String contenidoConsola=consola.contento_verificar;
+        String[] lineas = contenidoConsola.split(Verificaciones.nl);
         
         for (int i = 0; i < lineas.length; i++) {
             String linea = lineas[i].trim();
             
-            // Check for new error format (Mod X only supports Y version Z or above)
             if (linea.contains("only supports") && linea.contains("or above")) {
-                // Extract mod ID and dependency
-                String modId = extraerModId(linea);
-                String dependencia = extraerDependencia(linea);
-                String versionRequerida = extraerVersionRequerida(linea);
-                
-                // Check next line for current version
-                if (i+1 < lineas.length) {
-                    String lineaSiguiente = lineas[i+1].trim();
-                    if (lineaSiguiente.startsWith("Currently,") && lineaSiguiente.contains("is")) {
-                        String versionActual = extraerVersionActual(lineaSiguiente, dependencia);
-                        
-                        // Add error message
-                        messanje.append(
-                            MonitorDePID.idioma.errorVersionDependencia(
-                                modId, dependencia, versionRequerida, versionActual
-                            )
-                        ).append(nl_html);
-                        
-                        activado = true;
+                try {
+                    String modId = extraerModId(linea);
+                    String dependencia = extraerDependencia(linea);
+                    String versionRequerida = extraerVersionRequerida(linea);
+                    
+                    if (i+1 < lineas.length) {
+                        String lineaSiguiente = lineas[i+1].trim();
+                        if (lineaSiguiente.startsWith("Currently,")) {
+                            String versionActual = extraerVersionActual(lineaSiguiente, dependencia);
+                            errores.add(
+                                MonitorDePID.idioma.errorVersionDependencia(
+                                    modId, dependencia, versionRequerida, versionActual
+                                )
+                            );
+                            activado = true;
+                        }
                     }
+                } catch (Exception e) {
+                    // Ignora errores de parseo
                 }
             }
             
+            // Formato antiguo de dependencias faltantes
             else if (linea.contains("Missing or unsupported mandatory dependencies:")) {
-                StringBuilder out = new StringBuilder(
+                StringBuilder mensaje = new StringBuilder(
                     MonitorDePID.idioma.no_tienes_las_dependencias_necesitas()
-                ).append(nl_html);
+                ).append(Verificaciones.nl_html);
                 
-                for (String line : lineas) {
-                    if (line.contains("Mod ID") && line.contains("Requested by") && line.contains("Expected range")) {
-                        out.append(MonitorDePID.idioma.linea_de_dependencia(line)).append(nl_html);
+                for (String lineaDep : lineas) {
+                    if (lineaDep.contains("Mod ID") && lineaDep.contains("Requested by")) {
+                        mensaje.append(
+                            MonitorDePID.idioma.linea_de_dependencia(lineaDep)
+                        ).append(Verificaciones.nl_html);
                     }
                 }
-                messanje.append(nl_html).append(out.toString());
+                errores.add(mensaje.toString());
                 activado = true;
             }
         }
     }
 
-    // Helper methods for string parsing
+    // Métodos auxiliares de parseo (mantenidos igual)
     private String extraerModId(String linea) {
-        int inicio = linea.indexOf("Mod ") + 4; // "Mod ".length()
+        int inicio = linea.indexOf("Mod ") + 4;
         int fin = linea.indexOf(" only supports");
         return limpiarFormato(linea.substring(inicio, fin));
     }
 
     private String extraerDependencia(String linea) {
-        int inicio = linea.indexOf("supports ") + 9; // "supports ".length()
+        int inicio = linea.indexOf("supports ") + 9;
         int fin = linea.indexOf(" ", inicio);
         return limpiarFormato(linea.substring(inicio, fin));
     }
@@ -75,7 +81,7 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
     }
 
     private String extraerVersionActual(String linea, String dependencia) {
-        int inicio = linea.indexOf("is ") + 3; // "is ".length()
+        int inicio = linea.indexOf("is ") + 3;
         return limpiarFormato(linea.substring(inicio));
     }
 
@@ -92,4 +98,30 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
     public boolean activado() {
         return activado;
     }
+
+    @Override
+    public float prioridad() {
+        return 900f;
+    }
+
+    @Override
+    public String mensaje() {
+        if (errores.isEmpty()) return "";
+        
+        StringBuilder html = new StringBuilder("<ul>").append(Verificaciones.nl_html);
+        for (String error : errores) {
+            html.append("<li>").append(error).append("</li>").append(Verificaciones.nl_html);
+        }
+        html.append("</ul>");
+        return html.toString();
+    }
+    
+	@Override
+	public String nombre() {
+		// TODO Auto-generated method stub
+		return MonitorDePID.idioma.nombre_de_faltas_dependencias_de_modlauncher();
+	}
+    
+    
+    
 }

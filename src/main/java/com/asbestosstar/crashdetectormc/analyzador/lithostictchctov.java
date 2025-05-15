@@ -1,38 +1,52 @@
 package com.asbestosstar.crashdetectormc.analyzador;
 
-import com.asbestosstar.crashdetector.CDStringBuilder;
+import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 
-public class lithostictchctov implements Verificaciones{
+public class lithostictchctov implements Verificaciones {
 
-	public boolean activado=false;
+    private boolean activado = false;
+    private String mensaje = "";
 
-	
+    @Override
+    public void verificar(Consola consola) {
+    	String contenidoConsola=consola.contento_verificar;
+
+        String patron = "Caused by: java.lang.RuntimeException: " +
+                       "Unknown registry key in ResourceKey[minecraft:root / minecraft:worldgen/structure_type]: lithostitched:jigsaw";
+        String firmaCTOV = "ctov";
+        
+        if (contenidoConsola.contains(patron) && contenidoConsola.contains(firmaCTOV)) {
+            this.mensaje = MonitorDePID.idioma.lithostichctov() + Verificaciones.nl_html;
+            activado = true;
+        }
+    }
+
+    @Override
+    public Verificaciones nueva() {
+        return new lithostictchctov();
+    }
+
+    @Override
+    public boolean activado() {
+        return activado;
+    }
+
+    @Override
+    public float prioridad() {
+        return 3.0f; 
+    }
+
+    @Override
+    public String mensaje() {
+        return mensaje;
+    }
+    
+    
 	@Override
-	public void verificar(String contento_de_consola, CDStringBuilder constructor) {
+	public String nombre() {
 		// TODO Auto-generated method stub
-		
-		
-		if(contento_de_consola.contains("Caused by: java.lang.RuntimeException: Unknown registry key in ResourceKey[minecraft:root / minecraft:worldgen/structure_type]: lithostitched:jigsaw")&&contento_de_consola.contains("ctov")) {
-			constructor.append(MonitorDePID.idioma.lithostichctov()).append(nl_html);
-			activado=true;
-		}
-		
-		
+		return MonitorDePID.idioma.nombre_de_faltar_de_liyhostictchctov();
 	}
-
-	@Override
-	public Verificaciones nueva() {
-		// TODO Auto-generated method stub
-		return new lithostictchctov();
-	}
-
-	@Override
-	public boolean activado() {
-		// TODO Auto-generated method stub
-		return activado;
-	}
-	
-	
-	
+    
 }

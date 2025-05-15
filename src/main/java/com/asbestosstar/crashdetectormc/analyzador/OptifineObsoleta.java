@@ -1,36 +1,53 @@
 package com.asbestosstar.crashdetectormc.analyzador;
 
-import com.asbestosstar.crashdetector.CDStringBuilder;
+import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 
 public class OptifineObsoleta implements Verificaciones {
 
-	boolean activado=false;
+    private boolean activado = false;
+    private String mensaje = "";
 
+    @Override
+    public void verificar(Consola consola) {
+    	String contento_de_consola=consola.contento_verificar;
+
+        boolean errorOptifine = contento_de_consola.contains("Error loading OptiFine ZIP file");
+        boolean uriInvalida = contento_de_consola.contains("URI is not hierarchical");
+        boolean incompatibilidad = contento_de_consola.contains("cpw.mods.modlauncher.api.IncompatibleEnvironmentException");
+        boolean servicioFallido = contento_de_consola.contains("Service failed to load OptiFine");
+
+        if (errorOptifine && uriInvalida && incompatibilidad && servicioFallido) {
+            this.mensaje = MonitorDePID.idioma.optifineObsoleta() + Verificaciones.nl_html;
+            activado = true;
+        }
+    }
+
+    @Override
+    public Verificaciones nueva() {
+        return new OptifineObsoleta();
+    }
+
+    @Override
+    public boolean activado() {
+        return activado;
+    }
+
+    @Override
+    public float prioridad() {
+        return 1000f;
+    }
+
+    @Override
+    public String mensaje() {
+        return mensaje;
+    }
+    
+    
 	@Override
-	public void verificar(String contento_de_consola, CDStringBuilder constructor) {
+	public String nombre() {
 		// TODO Auto-generated method stub
-		if (contento_de_consola.contains("Error loading OptiFine ZIP file")
-				&& contento_de_consola.contains("URI is not hierarchical")
-				&& contento_de_consola.contains("cpw.mods.modlauncher.api.IncompatibleEnvironmentException")
-				&& contento_de_consola.contains("Service failed to load OptiFine")
-
-		) {
-			constructor.append(MonitorDePID.idioma.optifineObsoleta()).append(nl_html);
-			activado=true;
-		}
+		return MonitorDePID.idioma.nombre_de_optifine_obsoleta();
 	}
-
-	@Override
-	public Verificaciones nueva() {
-		// TODO Auto-generated method stub
-		return new OptifineObsoleta();
-	}
-
-	@Override
-	public boolean activado() {
-		// TODO Auto-generated method stub
-		return activado;
-	}
-
+    
 }

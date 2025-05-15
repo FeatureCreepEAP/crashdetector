@@ -5,13 +5,7 @@ import com.asbestosstar.crashdetectormc.analyzador.Verificaciones;
 public class CDStringBuilder {
 
 	StringBuilder esta = new StringBuilder();
-	StringBuilder super_strbld;
-	
-	
-	public CDStringBuilder(StringBuilder super_strbld) {
-		this.super_strbld=super_strbld;
-	}
-	
+
 	
 	public CDStringBuilder append(String str) {
 		if(str.equals(Verificaciones.nl)&&!esta.toString().endsWith(Verificaciones.nl)&&!esta.toString().replace(" ", "").equals("")) {
@@ -19,7 +13,7 @@ public class CDStringBuilder {
 		}else if (str.equals(Verificaciones.nl_html) && !esta.toString().endsWith(Verificaciones.nl_html)&&!esta.toString().replace(" ", "").equals("")) {
 			esta.append(str);
 		}
-		else if(!esta.toString().contains(str)&&!super_strbld.toString().contains(str)) {
+		else if(!esta.toString().contains(str)) {
 			esta.append(str);
 		}
 		return this;

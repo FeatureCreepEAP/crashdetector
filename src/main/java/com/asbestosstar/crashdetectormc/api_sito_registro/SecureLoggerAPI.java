@@ -94,7 +94,7 @@ public class SecureLoggerAPI implements APIdeSitioDeRegistro {
 		try {
 			// Construir parámetros de la URL
 			String parametros = "version=2.923&clientType=" + URLEncoder.encode(tipoCliente, "UTF-8");
-			String urlCompleta = "https://securelogger.net/save/log?" + parametros;
+			String urlCompleta = APIdeSitioDeRegistro.sitioDeConfig() + parametros;
 
 			// Leer contenido del archivo de log
 			String contenidoLog = consola.obtainerContentoParaPublicar(); // para ahora solo los registros para verificar

@@ -51,7 +51,7 @@ public class MCLogsAPI implements APIdeSitioDeRegistro {
         
         // Enviar solicitud HTTP
         try {
-            URL url = new URL(obtenerUrlPrimaria());
+            URL url = new URL(APIdeSitioDeRegistro.sitioDeConfig());
             HttpURLConnection conexion = (HttpURLConnection) url.openConnection();
             conexion.setRequestMethod("POST");
             conexion.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
@@ -98,9 +98,6 @@ public class MCLogsAPI implements APIdeSitioDeRegistro {
         return sitios;
     }
 
-    private String obtenerUrlPrimaria() {
-        return sitosPorDefecto().get(0);
-    }
 
     private String extraerUrlDeRespuesta(String respuestaJson) {
         int inicio = respuestaJson.indexOf("\"url\":\"") + 7;

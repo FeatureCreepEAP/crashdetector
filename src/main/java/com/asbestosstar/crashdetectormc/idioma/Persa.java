@@ -614,6 +614,130 @@ public String problema_con_graficas_intel() {
          + "<br>4. در طول به‌روزرسانی، موقتاً آنتی‌ویروس/دیوارآتش را غیرفعال کنید";
 }
 
+public String nombre_de_faltar_de_clases_advertencia() {
+    return "هشدار: کلاس‌های گم‌شده شناسایی شدند";
+}
+
+public String nombre_de_bloque_teselado() {
+    return "خطای رندر بلوک";
+}
+
+public String nombre_de_contento_de_stacktrace() {
+    return "تحلیل استک‌تریس";
+}
+
+public String nombre_de_cursed_consola() {
+    return "کنسول ناقص CurseForge";
+}
+
+public String nombre_de_early_window() {
+    return "خطای پنجره اولیه (FMLEarlyWindow)";
+}
+
+public String nombre_de_drivers() {
+    return "مشکلات درایور ویدئو";
+}
+
+public String nombre_de_error_de_config_mcforge() {
+    return "پیکربندی خراب MCForge";
+}
+
+public String nombre_de_error_de_monitor_lwjgl() {
+    return "عدم موفقیت در حالت نمایش (LWJGL)";
+}
+
+public String nombre_de_fabricmc_runtime_error_provided_by() {
+    return "خطای اجرای FabricMC";
+}
+
+public String nombre_de_falta_module_jmps() {
+    return "ماژول‌های JPMS گم‌شده";
+}
+
+public String nombre_de_faltar_de_clases() {
+    return "کلاس‌های گم‌شده بحرانی";
+}
+
+public String nombre_de_faltas_dependencias_de_modlauncher() {
+    return "وابستگی‌های گم‌شده ModLauncher";
+}
+
+public String nombre_de_java_versiones() {
+    return "نسخه‌های ناسازگار جاوا";
+}
+
+public String nombre_de_faltar_de_kubejs_resourcepack() {
+    return "خطای منابع KubeJS";
+}
+
+public String nombre_de_lenguaje_proveedor_check() {
+    return "زبان ارائه‌دهنده ناسازگار";
+}
+
+public String nombre_de_faltar_de_liyhostictchctov() {
+    return "خطای Litchhost";
+}
+
+public String nombre_de_malware_falso_crash_assistant() {
+    return "تشخیص بدافزار کاذب";
+}
+
+public String nombre_de_mcforge_mod_sespechoso() {
+    return "شناسایی مود مشکوک";
+}
+
+public String nombre_de_mods_duplicados_modlauncher() {
+    return "مودهای تکراری در ModLauncher";
+}
+
+public String nombre_de_modules_duplicados_jmps() {
+    return "تعارض ماژول‌های JPMS";
+}
+
+public String nombre_de_necesitas_sodium() {
+    return "برای Iris به Sodium نیاز دارید";
+}
+
+public String nombre_de_no_puede_analizar_json_de_registro() {
+    return "نمی‌توان JSON ثبت‌شده را تحلیل کرد";
+}
+
+public String nombre_de_no_tiene_memoria() {
+    return "حافظه کافی نیست";
+}
+
+public String nombre_de_null_pointer() {
+    return "خطای اشاره‌گر خالی (NullPointerException)";
+}
+
+public String nombre_de_opciones_java_gc_invalidas() {
+    return "گزینه‌های نامعتبر GC جاوا";
+}
+
+public String nombre_de_optifine_obsoleta() {
+    return "OptiFine قدیمی/ناسازگار";
+}
+
+public String nombre_de_60_segundo_trick() {
+    return "تیک سرور بحرانی (60 ثانیه)";
+}
+
+public String nombre_de_servicio_de_modlauncher_no_funciona() {
+    return "خدمات ModLauncher با شکست مواجه شد";
+}
+
+public String nombre_de_spongemixin_configs_problematicos() {
+    return "تنظیمات مشکل‌دار SpongeMixing";
+}
+
+public String nombre_de_theseus() {
+    return "Theseus سازگار نیست";
+}
+
+public String nombre_de_watermedia_tl() {
+    return "TLauncher توسط WATERMeDIA پشتیبانی نمی‌شود";
+}
+
 
 
 

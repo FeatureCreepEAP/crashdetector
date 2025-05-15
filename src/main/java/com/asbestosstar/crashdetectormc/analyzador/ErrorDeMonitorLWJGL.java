@@ -1,20 +1,24 @@
 package com.asbestosstar.crashdetectormc.analyzador;
 
-import com.asbestosstar.crashdetector.CDStringBuilder;
+import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 
 public class ErrorDeMonitorLWJGL implements Verificaciones {
 
-
-    public boolean activado = false;
+    private boolean activado = false;
+    private String mensaje = "";
 
     @Override
-    public void verificar(String contenido_de_consola, CDStringBuilder constructor) {
-        // Expresión regular para detectar el error de display mode
-        if (contenido_de_consola.matches("(?sm).*org\\.lwjgl\\.LWJGLException:\\s*Failed to set display mode \\(.*")) {
-            constructor.append(MonitorDePID.idioma.errorMonitorLWJGL())
-                      .append(nl_html);
-            activado = true;
+    public void verificar(Consola consola) {
+    	String contenidoConsola=consola.contento_verificar;
+
+        // Verifica cada línea buscando el error específico
+        for (String linea : contenidoConsola.split(Verificaciones.nl)) {
+            if (linea.contains("org.lwjgl.LWJGLException: Failed to set display mode")) {
+                mensaje = MonitorDePID.idioma.errorMonitorLWJGL() + Verificaciones.nl_html;
+                activado = true;
+                break; 
+            }
         }
     }
 
@@ -25,7 +29,24 @@ public class ErrorDeMonitorLWJGL implements Verificaciones {
 
     @Override
     public boolean activado() {
-        return activado;
+        return activado; 
     }
 
+    @Override
+    public float prioridad() {
+        return 800.0f; // Prioridad crítica para errores de renderizado
+    }
+
+    @Override
+    public String mensaje() {
+        return mensaje; 
+    }
+    
+    
+	@Override
+	public String nombre() {
+		// TODO Auto-generated method stub
+		return MonitorDePID.idioma.nombre_de_error_de_monitor_lwjgl();
+	}
+    
 }

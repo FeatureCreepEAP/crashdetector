@@ -1,42 +1,70 @@
 package com.asbestosstar.crashdetectormc.analyzador;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.asbestosstar.crashdetector.CDStringBuilder;
+import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 
 public class ServicioDeModLauncherNoFunciona implements Verificaciones {
 
-	boolean activado = false;
-	
-	
-	
+    private boolean activado = false;
+    private final Set<String> serviciosFallidos = new HashSet<>();
+
+    @Override
+    public void verificar(Consola consola) {
+    	String contenidoConsola=consola.contento_verificar;
+        String[] lineas = contenidoConsola.split(Verificaciones.nl);
+        String carga = "Service failed to load";
+        
+        for (String linea : lineas) {
+            if (linea.contains("[cpw.mods.modlauncher.TransformationServiceDecorator/MODLAUNCHER]") 
+                && linea.contains(carga)) {
+                
+                String servicio = linea.split(carga)[1].trim();
+                String mensaje = MonitorDePID.idioma.servicioMLNoPudoCargar(servicio);
+                serviciosFallidos.add(mensaje);
+                activado = true;
+            }
+        }
+    }
+
+    @Override
+    public Verificaciones nueva() {
+        return new ServicioDeModLauncherNoFunciona();
+    }
+
+    @Override
+    public boolean activado() {
+        return activado;
+    }
+
+    @Override
+    public float prioridad() {
+        return 1000.0f; // Prioridad media
+    }
+
+    @Override
+    public String mensaje() {
+        if (serviciosFallidos.isEmpty()) return "";
+        
+        CDStringBuilder html = new CDStringBuilder();
+        html.append("<ul>").append(Verificaciones.nl_html);
+        
+        for (String servicio : serviciosFallidos) {
+            html.append("<li>"+servicio+"</li>").append(Verificaciones.nl_html);
+        }
+        
+        html.append("</ul>");
+        return html.toString();
+    }
+    
 	@Override
-	public void verificar(String contento_de_consola, CDStringBuilder constructor) {
+	public String nombre() {
 		// TODO Auto-generated method stub
-
-		for(String linea:contento_de_consola.split(nl)) {
-			String carga="Service failed to load";
-			if(linea.contains("[cpw.mods.modlauncher.TransformationServiceDecorator/MODLAUNCHER]")&&linea.contains(carga)) {
-				String servicio = linea.split(carga)[1].trim();
-				constructor.append(MonitorDePID.idioma.servicioMLNoPudoCargar(servicio)).append(nl_html);
-				
-			}
-			
-			
-			
-		}
-		
+		return MonitorDePID.idioma.nombre_de_servicio_de_modlauncher_no_funciona();
 	}
-
-	@Override
-	public Verificaciones nueva() {
-		// TODO Auto-generated method stub
-		return new ServicioDeModLauncherNoFunciona();
-	}
-
-	@Override
-	public boolean activado() {
-		// TODO Auto-generated method stub
-		return activado;
-	}
-
+    
+    
 }

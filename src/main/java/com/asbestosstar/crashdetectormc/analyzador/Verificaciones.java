@@ -1,6 +1,6 @@
 package com.asbestosstar.crashdetectormc.analyzador;
 
-import com.asbestosstar.crashdetector.CDStringBuilder;
+import com.asbestosstar.crashdetector.Consola;
 
 public interface Verificaciones {
 
@@ -8,7 +8,7 @@ public interface Verificaciones {
 	public static String nl_html = "<br>";
 	
 	
-	public void verificar(String contento_de_consola,CDStringBuilder constructor);
+	public void verificar(Consola consola);
 	
 	/**
 	 * Una nueva instancia
@@ -26,5 +26,16 @@ public interface Verificaciones {
 	public default boolean anularNormal() {
 		return false;
 	}
+	
+	public float prioridad();
+	
+	/**
+	 * Solo activar cuando activado()
+	 * @return
+	 */
+	public String mensaje();
+	
+	
+	public String nombre();
 	
 }

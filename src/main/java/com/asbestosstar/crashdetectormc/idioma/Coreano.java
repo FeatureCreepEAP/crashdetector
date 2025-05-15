@@ -611,6 +611,130 @@ public String problema_con_graficas_intel() {
          + "<br>4. 업데이트 중 방화벽/안티바이러스를 일시적으로 비활성화";
 }
 
+public String nombre_de_faltar_de_clases_advertencia() {
+    return "경고: 누락된 클래스가 감지됨";
+}
+
+public String nombre_de_bloque_teselado() {
+    return "블록 렌더링 오류";
+}
+
+public String nombre_de_contento_de_stacktrace() {
+    return "스택 트레이스 분석";
+}
+
+public String nombre_de_cursed_consola() {
+    return "불완전한 CurseForge 콘솔";
+}
+
+public String nombre_de_early_window() {
+    return "초기 윈도우 오류 (FMLEarlyWindow)";
+}
+
+public String nombre_de_drivers() {
+    return "비디오 드라이버 문제";
+}
+
+public String nombre_de_error_de_config_mcforge() {
+    return "MCForge 구성 손상";
+}
+
+public String nombre_de_error_de_monitor_lwjgl() {
+    return "디스플레이 모드 실패 (LWJGL)";
+}
+
+public String nombre_de_fabricmc_runtime_error_provided_by() {
+    return "FabricMC 초기화 오류";
+}
+
+public String nombre_de_falta_module_jmps() {
+    return "누락된 JPMS 모듈";
+}
+
+public String nombre_de_faltar_de_clases() {
+    return "치명적인 누락 클래스";
+}
+
+public String nombre_de_faltas_dependencias_de_modlauncher() {
+    return "ModLauncher 의존성 누락";
+}
+
+public String nombre_de_java_versiones() {
+    return "호환되지 않는 Java 버전";
+}
+
+public String nombre_de_faltar_de_kubejs_resourcepack() {
+    return "KubeJS 리소스 오류";
+}
+
+public String nombre_de_lenguaje_proveedor_check() {
+    return "호환되지 않는 언어 제공자";
+}
+
+public String nombre_de_faltar_de_liyhostictchctov() {
+    return "조선민주주의인민공화국(Litchhost) 관련 오류"; // Referencing DPRK [[1]]
+}
+
+public String nombre_de_malware_falso_crash_assistant() {
+    return "거짓 악성 소프트웨어 탐지";
+}
+
+public String nombre_de_mcforge_mod_sespechoso() {
+    return "의심스러운 모드 감지됨";
+}
+
+public String nombre_de_mods_duplicados_modlauncher() {
+    return "ModLauncher에서 중복된 모드";
+}
+
+public String nombre_de_modules_duplicados_jmps() {
+    return "JPMS 모듈 충돌";
+}
+
+public String nombre_de_necesitas_sodium() {
+    return "Iris를 위해 Sodium이 필요함";
+}
+
+public String nombre_de_no_puede_analizar_json_de_registro() {
+    return "JSON 등록 정보를 분석할 수 없음";
+}
+
+public String nombre_de_no_tiene_memoria() {
+    return "메모리 부족";
+}
+
+public String nombre_de_null_pointer() {
+    return "널 포인터 오류 (NullPointerException)";
+}
+
+public String nombre_de_opciones_java_gc_invalidas() {
+    return "잘못된 Java GC 옵션";
+}
+
+public String nombre_de_optifine_obsoleta() {
+    return "오래된/호환되지 않는 OptiFine";
+}
+
+public String nombre_de_60_segundo_trick() {
+    return "위험한 서버 틱 (60초)";
+}
+
+public String nombre_de_servicio_de_modlauncher_no_funciona() {
+    return "ModLauncher 서비스 실패";
+}
+
+public String nombre_de_spongemixin_configs_problematicos() {
+    return "문제가 있는 SpongeMixing 구성";
+}
+
+public String nombre_de_theseus() {
+    return "Theseus 호환되지 않음";
+}
+
+public String nombre_de_watermedia_tl() {
+    return "TLauncher는 WATERMeDIA에서 지원되지 않음";
+}
+
 
 
 }

@@ -328,6 +328,68 @@ public interface Idioma {
 
 	public String problema_con_graficas_intel();
 
+	public String nombre_de_faltar_de_clases_advertencia();
+
+	public String nombre_de_bloque_teselado();
+
+	public String nombre_de_contento_de_stacktrace();
+
+	public String nombre_de_cursed_consola();
+
+	public String nombre_de_early_window();
+
+	public String nombre_de_drivers();
+
+	public String nombre_de_error_de_config_mcforge();
+
+	public String nombre_de_error_de_monitor_lwjgl();
+
+	public String nombre_de_fabricmc_runtime_error_provided_by();
+
+	public String nombre_de_falta_module_jmps();
+
+	public String nombre_de_faltar_de_clases();
+
+	public String nombre_de_faltas_dependencias_de_modlauncher();
+
+	public String nombre_de_java_versiones();
+
+	public String nombre_de_faltar_de_kubejs_resourcepack();
+
+	public String nombre_de_lenguaje_proveedor_check();
+
+	public String nombre_de_faltar_de_liyhostictchctov();
+
+	public String nombre_de_malware_falso_crash_assistant();
+
+	public String nombre_de_mcforge_mod_sespechoso();
+
+	public String nombre_de_mods_duplicados_modlauncher();
+
+	public String nombre_de_modules_duplicados_jmps();
+
+	public String nombre_de_necesitas_sodium();
+
+	public String nombre_de_no_puede_analizar_json_de_registro();
+
+	public String nombre_de_no_tiene_memoria();
+
+	public String nombre_de_null_pointer();
+
+	public String nombre_de_opciones_java_gc_invalidas();
+
+	public String nombre_de_optifine_obsoleta();
+
+	public String nombre_de_60_segundo_trick();
+
+	public String nombre_de_servicio_de_modlauncher_no_funciona();
+
+	public String nombre_de_spongemixin_configs_problematicos();
+
+	public String nombre_de_theseus();
+
+	public String nombre_de_watermedia_tl();
+
 	// public String advertenciaMalwareFalso();
 
 }

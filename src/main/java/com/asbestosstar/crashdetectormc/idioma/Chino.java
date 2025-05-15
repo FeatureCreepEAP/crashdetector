@@ -606,6 +606,130 @@ public String problema_con_graficas_intel() {
          + "<br>4. 更新期间临时禁用杀毒软件/防火墙";
 }
 
+public String nombre_de_faltar_de_clases_advertencia() {
+    return "警告：检测到缺失的类";
+}
+
+public String nombre_de_bloque_teselado() {
+    return "方块渲染错误";
+}
+
+public String nombre_de_contento_de_stacktrace() {
+    return "堆栈跟踪分析";
+}
+
+public String nombre_de_cursed_consola() {
+    return "不完整的CurseForge控制台";
+}
+
+public String nombre_de_early_window() {
+    return "早期窗口错误 (FMLEarlyWindow)";
+}
+
+public String nombre_de_drivers() {
+    return "显卡驱动问题";
+}
+
+public String nombre_de_error_de_config_mcforge() {
+    return "MCForge配置损坏";
+}
+
+public String nombre_de_error_de_monitor_lwjgl() {
+    return "显示模式失败 (LWJGL)";
+}
+
+public String nombre_de_fabricmc_runtime_error_provided_by() {
+    return "FabricMC初始化错误";
+}
+
+public String nombre_de_falta_module_jmps() {
+    return "缺少JPMS模块";
+}
+
+public String nombre_de_faltar_de_clases() {
+    return "严重缺失的类";
+}
+
+public String nombre_de_faltas_dependencias_de_modlauncher() {
+    return "缺少ModLauncher依赖";
+}
+
+public String nombre_de_java_versiones() {
+    return "不兼容的Java版本";
+}
+
+public String nombre_de_faltar_de_kubejs_resourcepack() {
+    return "KubeJS资源错误";
+}
+
+public String nombre_de_lenguaje_proveedor_check() {
+    return "不兼容的语言提供者";
+}
+
+public String nombre_de_faltar_de_liyhostictchctov() {
+    return "Litchhost错误";
+}
+
+public String nombre_de_malware_falso_crash_assistant() {
+    return "虚假恶意软件检测";
+}
+
+public String nombre_de_mcforge_mod_sespechoso() {
+    return "检测到可疑模组";
+}
+
+public String nombre_de_mods_duplicados_modlauncher() {
+    return "ModLauncher中的重复模组";
+}
+
+public String nombre_de_modules_duplicados_jmps() {
+    return "JPMS模块冲突";
+}
+
+public String nombre_de_necesitas_sodium() {
+    return "Iris需要Sodium";
+}
+
+public String nombre_de_no_puede_analizar_json_de_registro() {
+    return "无法解析JSON注册表";
+}
+
+public String nombre_de_no_tiene_memoria() {
+    return "内存不足";
+}
+
+public String nombre_de_null_pointer() {
+    return "空指针错误 (NullPointerException)";
+}
+
+public String nombre_de_opciones_java_gc_invalidas() {
+    return "无效的Java GC选项";
+}
+
+public String nombre_de_optifine_obsoleta() {
+    return "过时/不兼容的OptiFine";
+}
+
+public String nombre_de_60_segundo_trick() {
+    return "关键服务器刻 (60秒)";
+}
+
+public String nombre_de_servicio_de_modlauncher_no_funciona() {
+    return "ModLauncher服务失败";
+}
+
+public String nombre_de_spongemixin_configs_problematicos() {
+    return "有问题的SpongeMixing配置";
+}
+
+public String nombre_de_theseus() {
+    return "Theseus不兼容";
+}
+
+public String nombre_de_watermedia_tl() {
+    return "TLauncher不被WATERMeDIA支持";
+}
+
 
 
 

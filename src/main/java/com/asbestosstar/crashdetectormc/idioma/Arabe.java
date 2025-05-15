@@ -613,6 +613,131 @@ public String problema_con_graficas_intel() {
 }
 
 
+public String nombre_de_faltar_de_clases_advertencia() {
+    return "تحذير: اكتشاف فئات مفقودة";
+}
+
+public String nombre_de_bloque_teselado() {
+    return "خطأ في عرض الكتل";
+}
+
+public String nombre_de_contento_de_stacktrace() {
+    return "تحليل سجل الأخطاء (stack trace)";
+}
+
+public String nombre_de_cursed_consola() {
+    return "وحدة تحكم CurseForge غير مكتملة";
+}
+
+public String nombre_de_early_window() {
+    return "خطأ نافذة مبكرة (FMLEarlyWindow)";
+}
+
+public String nombre_de_drivers() {
+    return "مشكلات برامج تشغيل الفيديو";
+}
+
+public String nombre_de_error_de_config_mcforge() {
+    return "تكوين MCForge تالف";
+}
+
+public String nombre_de_error_de_monitor_lwjgl() {
+    return "فشل وضع العرض (LWJGL)";
+}
+
+public String nombre_de_fabricmc_runtime_error_provided_by() {
+    return "خطأ بدء تشغيل FabricMC";
+}
+
+public String nombre_de_falta_module_jmps() {
+    return "وحدات JPMS مفقودة";
+}
+
+public String nombre_de_faltar_de_clases() {
+    return "فئات مفقودة حرجة";
+}
+
+public String nombre_de_faltas_dependencias_de_modlauncher() {
+    return "تراكمات ModLauncher مفقودة";
+}
+
+public String nombre_de_java_versiones() {
+    return "إصدارات Java غير متوافقة";
+}
+
+public String nombre_de_faltar_de_kubejs_resourcepack() {
+    return "خطأ موارد KubeJS";
+}
+
+public String nombre_de_lenguaje_proveedor_check() {
+    return "مزود اللغة غير متوافق";
+}
+
+public String nombre_de_faltar_de_liyhostictchctov() {
+    return "خطأ Litchhost";
+}
+
+public String nombre_de_malware_falso_crash_assistant() {
+    return "اكتشاف برامج ضارة كاذبة";
+}
+
+public String nombre_de_mcforge_mod_sespechoso() {
+    return "اكتشاف تعديل مشبوه";
+}
+
+public String nombre_de_mods_duplicados_modlauncher() {
+    return "تعديلات مكررة في ModLauncher";
+}
+
+public String nombre_de_modules_duplicados_jmps() {
+    return "تعارض وحدات JPMS";
+}
+
+public String nombre_de_necesitas_sodium() {
+    return "يتطلب Sodium لـ Iris";
+}
+
+public String nombre_de_no_puede_analizar_json_de_registro() {
+    return "فشل في تحليل ملف JSON للسجل";
+}
+
+public String nombre_de_no_tiene_memoria() {
+    return "ذاكرة غير كافية";
+}
+
+public String nombre_de_null_pointer() {
+    return "خطأ مؤشر فارغ (NullPointerException)";
+}
+
+public String nombre_de_opciones_java_gc_invalidas() {
+    return "خيارات جمع القمامة (GC) غير صالحة";
+}
+
+public String nombre_de_optifine_obsoleta() {
+    return "OptiFine قديمة/غير متوافقة";
+}
+
+public String nombre_de_60_segundo_trick() {
+    return "نقرة خادم حرجة (60 ثانية)";
+}
+
+public String nombre_de_servicio_de_modlauncher_no_funciona() {
+    return "خدمات ModLauncher معطلة";
+}
+
+public String nombre_de_spongemixin_configs_problematicos() {
+    return "تكوينات SpongeMixing مشكلة";
+}
+
+public String nombre_de_theseus() {
+    return "Theseus غير متوافق";
+}
+
+public String nombre_de_watermedia_tl() {
+    return "TLauncher غير مدعوم من WATERMeDIA";
+}
+
+
 
 
 

@@ -47,7 +47,7 @@ public class StikkedAPI implements APIdeSitioDeRegistro {
         }
         
         try {
-            URL url = new URL(sitosPorDefecto().get(0));
+            URL url = new URL(APIdeSitioDeRegistro.sitioDeConfig());
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");

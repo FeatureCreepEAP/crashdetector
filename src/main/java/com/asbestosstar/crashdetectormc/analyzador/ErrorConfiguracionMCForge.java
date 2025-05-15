@@ -1,29 +1,49 @@
 package com.asbestosstar.crashdetectormc.analyzador;
 
-import com.asbestosstar.crashdetector.CDStringBuilder;
+import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 
 public class ErrorConfiguracionMCForge implements Verificaciones {
 
- public boolean activado = false;
+    private boolean activado = false;
+    private String mensaje = ""; 
 
- @Override
- public void verificar(String contenido_de_consola, CDStringBuilder constructor) {
-     // Detectar error específico de configuración corrupta
-     if (contenido_de_consola.matches("(?si).*ParsingException:\\s*Not enough data available.*")) {
-         constructor.append(MonitorDePID.idioma.errorConfigMCForge())
-                   .append(nl_html);
-         activado = true;
-     }
- }
+    @Override
+    public void verificar(Consola consola) {
+    	String contenidoConsola=consola.contento_verificar;
 
- @Override
- public Verificaciones nueva() {
-     return new ErrorConfiguracionMCForge();
- }
+        for (String linea : contenidoConsola.split(Verificaciones.nl)) {
+            if (linea.contains("ParsingException: Not enough data available")) {
+                mensaje = MonitorDePID.idioma.errorConfigMCForge() + Verificaciones.nl_html;
+                activado = true;
+                break;
+            }
+        }
+    }
 
- @Override
- public boolean activado() {
-     return activado;
- }
+    @Override
+    public Verificaciones nueva() {
+        return new ErrorConfiguracionMCForge(); 
+    }
+
+    @Override
+    public boolean activado() {
+        return activado;
+    }
+
+    @Override
+    public float prioridad() {
+        return 500.0f; // Prioridad alta para errores de configuración críticos
+    }
+
+    @Override
+    public String mensaje() {
+        return mensaje;
+    }
+    
+	@Override
+	public String nombre() {
+		// TODO Auto-generated method stub
+		return MonitorDePID.idioma.nombre_de_error_de_config_mcforge();
+	}
 }

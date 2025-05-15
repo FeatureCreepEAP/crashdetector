@@ -1,39 +1,51 @@
-
 package com.asbestosstar.crashdetectormc.analyzador;
 
-import com.asbestosstar.crashdetector.CDStringBuilder;
+import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 
-public class EarlyWindow  implements Verificaciones {
+public class EarlyWindow implements Verificaciones {
 
-	public boolean activado=false;
+    private boolean activado = false;
+    private String mensaje = ""; 
 
-	
+    @Override
+    public void verificar(Consola consola) {
+    	String contenidoConsola=consola.contento_verificar;
+
+        
+        String[] lineas = contenidoConsola.split(Verificaciones.nl);
+        if (lineas.length == 0) return;
+
+        String ultimaLinea = lineas[lineas.length - 1].trim();
+        if (ultimaLinea.contains("Loading ImmediateWindowProvider fmlearlywindow")) {
+            mensaje = MonitorDePID.idioma.fmlEarlyWindow() + Verificaciones.nl_html;
+            activado = true;
+        }
+    }
+
+    @Override
+    public Verificaciones nueva() {
+        return new EarlyWindow();
+    }
+
+    @Override
+    public boolean activado() {
+        return activado; 
+    }
+
+    @Override
+    public float prioridad() {
+        return 800.0f; // Prioridad media para advertencias de inicialización
+    }
+
+    @Override
+    public String mensaje() {
+        return mensaje;
+    }
+    
 	@Override
-	public void verificar(String str, CDStringBuilder messanje) {
-		String[] lines = str.split(nl);
-		if (lines.length > 0) {
-			String ultima = lines[lines.length - 1];
-			if (ultima.contains("Loading ImmediateWindowProvider fmlearlywindow")) {
-				messanje.append(nl_html).append(
-						MonitorDePID.idioma.fmlEarlyWindow()
-				);
-				activado=true;
-			}
-		}
-	}
-
-
-	@Override
-	public Verificaciones nueva() {
+	public String nombre() {
 		// TODO Auto-generated method stub
-		return new EarlyWindow();
+		return MonitorDePID.idioma.nombre_de_early_window();
 	}
-
-	@Override
-	public boolean activado() {
-		// TODO Auto-generated method stub
-		return activado;
-	}
-	
 }

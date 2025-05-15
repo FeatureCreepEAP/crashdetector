@@ -1,31 +1,32 @@
 package com.asbestosstar.crashdetectormc.analyzador;
 
-import com.asbestosstar.crashdetector.CDStringBuilder;
+import java.util.HashSet;
+import java.util.Set;
+
+import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 
 public class KubeJSResourcePack implements Verificaciones {
 
-	public boolean activado=false;
+    private boolean activado = false;
+    private final Set<String> errores = new HashSet<>();
 
-	
     @Override
-    public void verificar(String contenido_de_consola, CDStringBuilder constructor) {
-        // Procesar cada línea del contenido de la consola
-        for (String linea : contenido_de_consola.split("\n")) {
-            // Verificar si la línea contiene el patrón esperado
-            if (linea.contains("from pack KubeJS Resource Pack [data]") && linea.contains("Failed to parse ")) {
+    public void verificar(Consola consola) {
+    	String contenidoConsola=consola.contento_verificar;
+        String[] lineas = contenidoConsola.split(Verificaciones.nl);
+        
+        for (String linea : lineas) {
+            if (linea.contains("from pack KubeJS Resource Pack [data]") && 
+                linea.contains("Failed to parse ")) {
+                
                 try {
-                    // Extraer el nombre del mod
-                    String[] partes = linea.split("Failed to parse ");
-                    if (partes.length > 1) { // Asegurarse de que hay algo después de "Failed to parse"
-                        String mod_nombre = partes[1].split(":")[0]; // Extraer el nombre del mod antes de los dos puntos
-                        constructor.append(MonitorDePID.idioma.kubeJSResourcePack(mod_nombre)).append(nl_html);
-                        activado=true;
-                    }
+                    String modNombre = linea.split("Failed to parse ")[1].split(":")[0];
+                    String mensaje = MonitorDePID.idioma.kubeJSResourcePack(modNombre);
+                    errores.add(mensaje);
+                    activado = true;
                 } catch (Exception e) {
-                    // Registrar errores en caso de problemas al procesar la línea
-                    System.err.println("Error al procesar la línea: " + linea);
-                    e.printStackTrace();
+                    // Ignora errores de parseo para evitar fallos críticos
                 }
             }
         }
@@ -35,11 +36,34 @@ public class KubeJSResourcePack implements Verificaciones {
     public Verificaciones nueva() {
         return new KubeJSResourcePack();
     }
+
+    @Override
+    public boolean activado() {
+        return activado;
+    }
+
+    @Override
+    public float prioridad() {
+        return 300.0f; // Prioridad media-alta para errores de recursos críticos [[3]]
+    }
+
+    @Override
+    public String mensaje() {
+        if (errores.isEmpty()) return "";
+        
+        StringBuilder html = new StringBuilder("<ul>").append(Verificaciones.nl_html);
+        for (String error : errores) {
+            html.append("<li>").append(error).append("</li>").append(Verificaciones.nl_html);
+        }
+        html.append("</ul>");
+        return html.toString();
+    }
+    
     
 	@Override
-	public boolean activado() {
+	public String nombre() {
 		// TODO Auto-generated method stub
-		return activado;
+		return MonitorDePID.idioma.nombre_de_faltar_de_kubejs_resourcepack();
 	}
     
 }

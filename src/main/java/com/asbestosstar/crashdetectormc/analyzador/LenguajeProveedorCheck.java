@@ -1,11 +1,15 @@
 package com.asbestosstar.crashdetectormc.analyzador;
 
-import com.asbestosstar.crashdetector.CDStringBuilder;
+import java.util.HashSet;
+import java.util.Set;
+
+import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 
 public class LenguajeProveedorCheck implements Verificaciones {
 
+    private final Set<String> errores = new HashSet<>();
 	public boolean activado = false;
 
 	/**
@@ -18,65 +22,84 @@ public class LenguajeProveedorCheck implements Verificaciones {
 	 * @param contenido_de_consola La salida cruda de la consola que puede contener mensajes de error.
 	 * @param constructor           Una instancia de {@code CDStringBuilder} usada para construir el mensaje final de error.
 	 */
-	@Override
-	public void verificar(String contenido_de_consola, CDStringBuilder constructor) {
-	    // Dividir el contenido de la consola en líneas individuales para procesarlas
-	    String[] lineas = contenido_de_consola.split("\n");
+    @Override
+    public void verificar(Consola consola) {
+    	String contenidoConsola=consola.contento_verificar;
+        String[] lineas = contenidoConsola.split(Verificaciones.nl);
+        
+        for (int i = 0; i < lineas.length; i++) {
+            String linea = lineas[i];
+            
+            if (linea.contains("Mod File") && linea.contains("needs language provider")) {
+                try {
+                    // Extraer detalles del error
+                    String archivoJar = linea.split("Mod File ")[1].split(" needs")[0].trim();
+                    String proveedor = linea.split("language provider ")[1].split(" ")[0].trim();
+                    String req = proveedor.split(":")[1];
+                    String encontrado = "";
+                    
+                    // Buscar versión disponible en líneas posteriores
+                    for (int j = i; j < lineas.length; j++) {
+                        if (lineas[j].contains("We have found ")) {
+                            encontrado = lineas[j].split("We have found ")[1].split("§")[0].trim();
+                            break;
+                        }
+                    }
+                    
+                    // Construir mensaje base
+                    String mensaje = MonitorDePID.idioma.errorProveedorVersion(
+                        archivoJar, 
+                        proveedor.split(":")[0], 
+                        req, 
+                        encontrado
+                    );
+                    
+                    // Agregar mensaje especial para JavaFML/MCForge
+                    if (proveedor.toLowerCase().contains("javafml")) {
+                        mensaje += Verificaciones.nl_html + MonitorDePID.idioma.errorJavaFML_MCForge();
+                    }
+                    
+                    errores.add(mensaje);
+                    activado = true;
 
-	    for (String linea : lineas) {
-	        // Verificar si la línea contiene el patrón que indica un problema de proveedor de lenguaje
-	        if (linea.contains("Mod File") && linea.contains("needs language provider")) {
-	            CrashDetectorLogger.log("Se detectó un error de proveedor de lenguaje.");
-
-	            try {
-	                // Extraer el nombre del archivo JAR
-	                String archivoJar = linea.split("Mod File ")[1].split(" needs")[0].trim();
-	                CrashDetectorLogger.log("Archivo JAR: " + archivoJar);
-
-	                // Extraer el proveedor de lenguaje requerido y su versión
-	                String proveedor = linea.split("language provider ")[1].split(" ")[0].trim();
-	                CrashDetectorLogger.log("Proveedor: " + proveedor);
-
-	                String req = proveedor.split(":")[1];
-	                CrashDetectorLogger.log("Versión Requerida: " + req);
-
-	                // Buscar la versión encontrada en las líneas siguientes
-	                String encontrado = "";
-	                for (String siguienteLinea : lineas) {
-	                    if (siguienteLinea.contains("We have found ")) {
-	                        encontrado = siguienteLinea.split("We have found ")[1].split("§")[0].trim();
-	                        CrashDetectorLogger.log("Versión Encontrada: " + encontrado);
-	                        break;
-	                    }
-	                }
-
-	                // Construir el mensaje de error incluyendo el nombre del archivo JAR
-	                constructor.append(MonitorDePID.idioma.errorProveedorVersion(
-	                        archivoJar, proveedor.split(":")[0], req, encontrado))
-	                        .append(nl_html);
-
-	                // Caso especial para JavaFML/MCForge
-	                if (proveedor.toLowerCase().contains("javafml")) {
-	                    constructor.append(MonitorDePID.idioma.errorJavaFML_MCForge())
-	                            .append(nl_html);
-	                }
-
-	                activado = true;
-
-	            } catch (Exception e) {
-	                CrashDetectorLogger.logException(e);
-	            }
-	        }
-	    }
-	}
+                } catch (Exception e) {
+                    CrashDetectorLogger.logException(e);
+                }
+            }
+        }
+    }
 	
-	@Override
-	public Verificaciones nueva() {
-		return new LenguajeProveedorCheck();
-	}
+    @Override
+    public Verificaciones nueva() {
+        return new LenguajeProveedorCheck();
+    }
 
+    @Override
+    public boolean activado() {
+        return activado;
+    }
+
+    @Override
+    public float prioridad() {
+        return 1000.0f; 
+ }
+
+    @Override
+    public String mensaje() {
+        if (errores.isEmpty()) return "";
+        
+        StringBuilder html = new StringBuilder("<ul>").append(Verificaciones.nl_html);
+        for (String error : errores) {
+            html.append("<li>").append(error).append("</li>").append(Verificaciones.nl_html);
+        }
+        html.append("</ul>");
+        return html.toString();
+    }
+    
 	@Override
-	public boolean activado() {
-		return activado;
+	public String nombre() {
+		// TODO Auto-generated method stub
+		return MonitorDePID.idioma.nombre_de_lenguaje_proveedor_check();
 	}
+    
 }
