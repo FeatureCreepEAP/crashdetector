@@ -95,25 +95,17 @@ public class MonitorDePID {
 
 		ArchivoDeCodioError0.delete();
 		File html = new File("crash_detector/pantilla.htm");
-		if (!html.exists()) {
-			carpeta.toFile().mkdirs();
-			try (InputStream inputStream = MonitorDePID.class.getResourceAsStream("/pantilla.htm");
-					FileOutputStream outputStream = new FileOutputStream(html)) {
 
-				if (inputStream == null) {
-					throw new RuntimeException("El archivo de CrashDetector no tiene pantilla.htm");
-				}
-				byte[] buffer = new byte[1024];
-				int bytesRead;
-				while ((bytesRead = inputStream.read(buffer)) != -1) {
-					outputStream.write(buffer, 0, bytesRead);
-				}
+		
+		copiarACarpetaDesdeJar("/pantilla.htm",html);
+		
+		copiarACarpetaDesdeJar("/imagenes/gura.png",new File("crash_detector/gura.png"));
+		copiarACarpetaDesdeJar("/imagenes/nanashi_mumei.png",new File("crash_detector/nanashi_mumei.png"));
+		copiarACarpetaDesdeJar("/imagenes/shion.png",new File("crash_detector/shion.png"));
 
-			} catch (IOException e) {
-				System.err.println("No puede extractar HTML de CrashDetector: " + e.getMessage());
-			}
-		}
-
+		
+		
+		
 		String mods = "";
 		if (ultima_mods.toFile().exists()) {
 			try {
@@ -540,6 +532,7 @@ public class MonitorDePID {
 			return viva8(pid);
 		}
 	}
+	
 
 	public static boolean viva8(long pid) {
 		try {
@@ -559,5 +552,27 @@ public class MonitorDePID {
 			return false;
 		}
 	}
+	
+	public static void copiarACarpetaDesdeJar(String ubicacion_en_jar,File resultdo) {
+		if (!resultdo.exists()) {
+			resultdo.getParentFile().mkdirs();
+			try (InputStream inputStream = MonitorDePID.class.getResourceAsStream(ubicacion_en_jar);
+					FileOutputStream outputStream = new FileOutputStream(resultdo)) {
+
+				if (inputStream == null) {
+					throw new RuntimeException("El archivo de CrashDetector no tiene pantilla.htm");
+				}
+				byte[] buffer = new byte[1024];
+				int bytesRead;
+				while ((bytesRead = inputStream.read(buffer)) != -1) {
+					outputStream.write(buffer, 0, bytesRead);
+				}
+
+			} catch (IOException e) {
+				System.err.println("No puede extractar HTML de CrashDetector: " + e.getMessage());
+			}
+		}
+	}
+	
 
 }

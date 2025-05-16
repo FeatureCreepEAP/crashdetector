@@ -15,13 +15,13 @@ public class Config {
 	private static final String VALOR_POR_DEFECTO_COLOR_TEXTO = "FFFFFF"; // Blanco
 	private static final String VALOR_POR_DEFECTO_COLOR_BOTON = "46468C"; // Azul oscuro
 	private static final String VALOR_POR_DEFECTO_COLOR_CAJA_TEXTO = "3C3C3C"; // Gris medio
-	private static final String VALOR_POR_DEFECTO_COLOR_ENLACE = "96C8FF"; // Azul claro
-	private static final String VALOR_POR_DEFECTO_COLOR_DE_TITULOS_DE_CONSOLAS = "4287F5"; // Azul brillante
-	private static final String VALOR_POR_DEFECTO_COLOR_ERROR = "FF0000"; // rojo
-	private static final String VALOR_POR_DEFECTO_COLOR_ADVERTENCIA = "FFA500"; // narajnja
+	private static final String VALOR_POR_DEFECTO_COLOR_ENLACE = "56CCF2"; // Azul claro
+	private static final String VALOR_POR_DEFECTO_COLOR_DE_TITULOS_DE_CONSOLAS = "56CCF2"; // Azul brillante
+	private static final String VALOR_POR_DEFECTO_COLOR_ERROR = "FF6347"; // rojo
+	private static final String VALOR_POR_DEFECTO_COLOR_ADVERTENCIA = "FFD700"; // narajnja
 	private static final String VALOR_POR_DEFECTO_COLOR_INFO = "FFFFFF"; // blanco
-	private static final String VALOR_POR_DEFECTO_COLOR_TITULO = "4287F5"; // azul
-	private static final String VALOR_POR_DEFECTO_COLOR_ENLACE_TEXTO = "96C8FF"; // azul mas contrast
+	private static final String VALOR_POR_DEFECTO_COLOR_TITULO = "56CCF2"; // azul
+	private static final String VALOR_POR_DEFECTO_COLOR_ENLACE_TEXTO = "56CCF2"; // azul mas contrast
 
 	// Valores predeterminados para las nuevas propiedades
 	public static final String VALOR_POR_DEFECTO_API_DE_REGISTROS_SELECCIONADA = "SecureLogger";

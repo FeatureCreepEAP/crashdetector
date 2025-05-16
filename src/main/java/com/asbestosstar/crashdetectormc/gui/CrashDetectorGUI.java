@@ -1,16 +1,27 @@
 package com.asbestosstar.crashdetectormc.gui;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Desktop;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Point;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Instant;
 import java.util.List;
-import javax.swing.*;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JEditorPane;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.HyperlinkEvent;
 
@@ -76,9 +87,11 @@ public class CrashDetectorGUI extends JFrame {
             }
         });
 
+
         JScrollPane panelDesplazamiento = new JScrollPane(visorHtml);
         panelDesplazamiento.setBorder(BorderFactory.createEmptyBorder());
         panelDesplazamiento.getViewport().setBackground(colorCajaTexto);
+        panelDesplazamiento.getViewport().setViewPosition(new Point(0, 0));
         
         // Panel inferior para controles
         JPanel panelInferior = new JPanel();
@@ -86,7 +99,7 @@ public class CrashDetectorGUI extends JFrame {
         panelInferior.setBackground(colorFondo);
         panelInferior.setBorder(new EmptyBorder(15, 40, 15, 40)); 
 
-        // Panel principal para botones e imágenes
+        // Panel principal para botones
         JPanel panelControles = new JPanel();
         panelControles.setLayout(new BoxLayout(panelControles, BoxLayout.Y_AXIS));
         panelControles.setBackground(colorFondo);
@@ -111,24 +124,9 @@ public class CrashDetectorGUI extends JFrame {
         panelBotones.add(botonCompartir);
         panelBotones.add(botonQuickFix);
 
-        // Panel de imágenes
-        JPanel panelImagenes = new JPanel(new GridLayout(1, 3, 5, 0)); // 1 row, 3 columns, 10px horizontal gap, 0 vertical gap
-        panelImagenes.setBackground(colorFondo);
-
-        // Cargar imágenes
-        JLabel imagenGura = cargarImagenDesdeRecurso("/imagenes/gura.png");
-        JLabel imagenMumei = cargarImagenDesdeRecurso("/imagenes/nanashi_mumei.png");
-        JLabel imagenShion = cargarImagenDesdeRecurso("/imagenes/shion.png");
-
-        // Agregar imágenes al panel
-        panelImagenes.add(imagenGura);
-        panelImagenes.add(imagenMumei);
-        panelImagenes.add(imagenShion);
-
         // Agregar paneles al contenedor principal
         panelControles.add(panelBotones);
         panelControles.add(Box.createVerticalStrut(5)); 
-        panelControles.add(panelImagenes);
 
         // Agregar acciones
         botonAnalisis.addActionListener(e -> new AnalisisAvanzadoGUI().setVisible(true));
@@ -138,27 +136,6 @@ public class CrashDetectorGUI extends JFrame {
         add(panelDesplazamiento, BorderLayout.CENTER);
         add(panelInferior, BorderLayout.SOUTH);
         panelInferior.add(panelControles, BorderLayout.CENTER);
-    }
-
-    private JLabel cargarImagenDesdeRecurso(String ruta) {
-        ImageIcon icono = null;
-        try {
-            InputStream flujoEntrada = getClass().getResourceAsStream(ruta);
-            if (flujoEntrada != null) {
-                icono = new ImageIcon(javax.imageio.ImageIO.read(flujoEntrada));
-            }
-        } catch (IOException e) {
-            CrashDetectorLogger.logException(e);
-        }
-
-        if (icono == null) {
-            return new JLabel("Imagen no encontrada");
-        }
-
-        int nuevoAlto = 65;
-        int nuevoAncho = (int) ((double) nuevoAlto / icono.getIconHeight() * icono.getIconWidth());
-        Image imagenEscalada = icono.getImage().getScaledInstance(nuevoAncho, nuevoAlto, Image.SCALE_SMOOTH);
-        return new JLabel(new ImageIcon(imagenEscalada));
     }
 
     private void estilizarBoton(JButton boton) {
@@ -179,7 +156,7 @@ public class CrashDetectorGUI extends JFrame {
     
     
     public static boolean esMac(){
-    	return System.getProperty("os.name").toLowerCase().contains("mac");
+        return System.getProperty("os.name").toLowerCase().contains("mac");
     }
     
 }

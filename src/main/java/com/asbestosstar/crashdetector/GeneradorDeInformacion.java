@@ -23,17 +23,26 @@ public class GeneradorDeInformacion {
 
 	public static File generarLocal(List<Consola> consolas, StringBuilder constructor, Instant instant) {
 		try {
-			StringBuilder cons = new StringBuilder();
-			cons.append(MonitorDePID.idioma.ubicacionesDeLogs()+"<br>");
-			for (Consola co : consolas) {
-					cons.append("<a href='file://").append(co.archivo.toAbsolutePath().toUri().toString()).append("'>")
-							.append(co.archivo.toString().trim()).append("</a><br>");
-			}
+            StringBuilder cons = new StringBuilder();
+            cons.append("<center>") // Center-align all content
+                .append(MonitorDePID.idioma.ubicacionesDeLogs()).append("<br>");
+            for (Consola co : consolas) {
+                cons.append("<a href='file://")
+                    .append(co.archivo.toAbsolutePath().toUri().toString())
+                    .append("'><font color='").append(Config.obtenerInstancia().obtenerColorEnlace()).append("'>") // Link color
+                    .append(co.archivo.toString().trim())
+                    .append("</font></a><br>");
+            }
+            cons.append("</center>");
 
+            
+
+            
+            
 			String pantilla = MonitorDePID.leer_archivo(new File("crash_detector/pantilla.htm").toPath());
 			File ret = new File("crash_detector/" + instant.toString().replace(":", "") + ".htm");
 			FileWriter escribidor = new FileWriter(ret);
-			escribidor.write(pantilla.replace("{constructor}", cons.toString() + "<br>" +MonitorDePID.idioma.infoDeVerificaciones() + "<br><br>" + constructor.toString()));
+			escribidor.write(pantilla.replace("{constructor}", cons.toString() + "<br>" +MonitorDePID.idioma.infoDeVerificaciones() + "<br>" + constructor.toString()+imagenesLocales()));
 			escribidor.close();
 			return ret;
 		} catch (IOException e) {
@@ -42,19 +51,38 @@ public class GeneradorDeInformacion {
 		}
 		return null;
 	}
+	
+	
+	   public static String imagenesLocales() {
+	        StringBuilder cons = new StringBuilder();
+//            String imagePathPrefix = new File("crash_detector/").getAbsolutePath().replace("\\", "/") + "/";
+//	        cons.append("<center>")
+//	            .append("<img src='file://").append(imagePathPrefix).append("gura.png' width='200' height='112'>") // Local Gura image
+//	            .append("&nbsp;&nbsp;&nbsp;") // Spacing between images
+//	            .append("<img src='file://").append(imagePathPrefix).append("nanashi_mumei.png' width='200' height='112'>") // Local Nanashi Mumei image
+//	            .append("&nbsp;&nbsp;&nbsp;")
+//	            .append("<img src='file://").append(imagePathPrefix).append("shion.png' width='200' height='112'>") // Local Shion image
+//	            .append("</center>");
+	        return cons.toString();
+	    }
 
 	public static String compartir(List<Consola> consolas, StringBuilder constructor, Instant instant) throws DemasiadoGrande, ErrorConPublicar, NoAPIdeRegistro {
 		try {
-			StringBuilder cons = new StringBuilder();
-			cons.append(MonitorDePID.idioma.ubicacionesDeLogs()+"<br>");
-			for (Consola co : consolas) {
-					cons.append("<a href=" + co.obtainerEnlance() + ">" + co.obtainerRutaParaPublicar().trim() + "</a>")
-							.append("<br>");
-			}
+		       StringBuilder cons = new StringBuilder();
+	            cons.append("<center>")
+	                .append(MonitorDePID.idioma.ubicacionesDeLogs()).append("<br>");
+
+	            for (Consola co : consolas) {
+	                cons.append("<a href='").append(co.obtainerEnlance())
+	                    .append("'><font color='").append(Config.obtenerInstancia().obtenerColorEnlace()).append("'>") // Link color
+	                    .append(co.obtainerRutaParaPublicar().trim())
+	                    .append("</font></a><br>");
+	            }
+	            cons.append("</center>");
 
 			String pantilla = MonitorDePID.leer_archivo(new File("crash_detector/pantilla.htm").toPath());
 			String ret = enviarInforme(
-					pantilla.replace("{constructor}", cons.toString() + "<br>" + MonitorDePID.idioma.infoDeVerificaciones() + "<br><br>" + constructor.toString()));
+					pantilla.replace("{constructor}", cons.toString() + "<br>" + MonitorDePID.idioma.infoDeVerificaciones() + "<br>" + constructor.toString()+imagenesLocales()));
 			CrashDetectorLogger.log(ret);
 			return ret;
 		} catch (IOException e) {
@@ -62,6 +90,19 @@ public class GeneradorDeInformacion {
 			CrashDetectorLogger.logException(e);
 			return null;
 		}
+	}
+	
+	
+	public static String imagenesParaCompartir() {
+        StringBuilder cons = new StringBuilder();
+		cons.append("<center>")
+        .append("<img src='/../gura.png' width='200' height='112'>") // Imagen Gura
+        .append("&nbsp;&nbsp;&nbsp;") // Espaciado entre imágenes
+        .append("<img src='/../nanashi_mumei.png' width='200' height='112'>") // Imagen Nanashi Mumei
+        .append("&nbsp;&nbsp;&nbsp;")
+        .append("<img src='/../shion.png' width='200' height='112'>") // Imagen Shion
+        .append("</center>");
+		return cons.toString();
 	}
 
 	public static String enviarInforme(String html) throws IOException {

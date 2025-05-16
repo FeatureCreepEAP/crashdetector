@@ -102,6 +102,7 @@ public class Analizador {
 	            
 	            constructor.append("<br>")
 	                      .append(ver.mensaje())
+	                      .append("<center><b>---------------------------------------------------------------------------------------------------</b></center>")	         
 	                      .append("</li>");
 	        }
 	    }
