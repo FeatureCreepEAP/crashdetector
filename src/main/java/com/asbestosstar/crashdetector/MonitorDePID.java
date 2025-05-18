@@ -179,9 +179,19 @@ public class MonitorDePID {
 			if (uriJarString.startsWith("union:")) {// Para Modlauncher
 				uriJarString = uriJarString.replace("union:", "file://");
 			}
-
-			jar = new File(new URI(uriJarString).getPath()).getAbsolutePath().split(".jar")[0] + ".jar";
+			
+		    if (uriJarString.startsWith("jar:")) {
+		        uriJarString = uriJarString.substring(4); // elimnar "jar:"
+		    }
+			
+			
+			CrashDetectorLogger.log(uriJarString);
+			URI cd_uri = new URI(uriJarString);
+			String cd_uri_path = cd_uri.getPath();
+			CrashDetectorLogger.log(cd_uri_path);
+			jar = new File(cd_uri_path).getAbsolutePath().split(".jar")[0] + ".jar";
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.err.println(idioma.no_se_donde_esta_jar());
 			return;
 		}

@@ -102,7 +102,9 @@ public class Analizador {
 	            
 	            constructor.append("<br>")
 	                      .append(ver.mensaje())
-	                      .append("<center><b>---------------------------------------------------------------------------------------------------</b></center>")	         
+	                      .append("<hr style='border: 0; border-top: 1px solid #")
+	                      .append(tituloColor)
+	                      .append("; margin: 8px 0;' />")
 	                      .append("</li>");
 	        }
 	    }

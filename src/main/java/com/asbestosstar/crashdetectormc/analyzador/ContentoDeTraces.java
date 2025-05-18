@@ -191,7 +191,7 @@ public class ContentoDeTraces implements Verificaciones {
 			constructor.append(titilo).append(entry.getKey()).append("").append("</span>")
 					.append(Verificaciones.nl_html);
 			
-			constructor.append(entry.getValue().toString()).append(nl_html);
+			constructor.append(entry.getValue().toString());
 
 		}
 

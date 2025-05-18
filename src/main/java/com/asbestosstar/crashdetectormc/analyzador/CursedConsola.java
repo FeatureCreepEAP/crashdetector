@@ -23,8 +23,7 @@ public class CursedConsola implements Verificaciones {
             }
             
             if (!tieneConsolaLauncher) {
-                mensaje = MonitorDePID.idioma.noTieneConsolaDeLauncherCursedForge() 
-                        + Verificaciones.nl_html;
+                mensaje = MonitorDePID.idioma.noTieneConsolaDeLauncherCursedForge();
                 activado = true;
             }
         }

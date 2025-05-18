@@ -42,6 +42,7 @@ public class SelectorIdiomaGUI extends JDialog {
 	private JButton createButton(String banderaUnicode, String nombreNativo, String codigo) {
 	    JButton boton = new JButton(banderaUnicode + " " + nombreNativo);
 	    boton.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 16));
+	    Idioma.archivo.getParentFile().mkdirs();
 	    boton.addActionListener(e -> {
 	        try (BufferedWriter writer = Files.newBufferedWriter(Idioma.archivo.toPath(), 
 	                StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {

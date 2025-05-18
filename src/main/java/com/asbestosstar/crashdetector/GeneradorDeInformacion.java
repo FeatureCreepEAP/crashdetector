@@ -55,14 +55,14 @@ public class GeneradorDeInformacion {
 	
 	   public static String imagenesLocales() {
 	        StringBuilder cons = new StringBuilder();
-//            String imagePathPrefix = new File("crash_detector/").getAbsolutePath().replace("\\", "/") + "/";
-//	        cons.append("<center>")
-//	            .append("<img src='file://").append(imagePathPrefix).append("gura.png' width='200' height='112'>") // Local Gura image
-//	            .append("&nbsp;&nbsp;&nbsp;") // Spacing between images
-//	            .append("<img src='file://").append(imagePathPrefix).append("nanashi_mumei.png' width='200' height='112'>") // Local Nanashi Mumei image
-//	            .append("&nbsp;&nbsp;&nbsp;")
-//	            .append("<img src='file://").append(imagePathPrefix).append("shion.png' width='200' height='112'>") // Local Shion image
-//	            .append("</center>");
+            String imagePathPrefix = new File("crash_detector/").getAbsolutePath().replace("\\", "/") + "/";
+	        cons.append("<center>")
+	            .append("<img src='file://").append(imagePathPrefix).append("gura.png' width='200' height='112'>") // Local Gura image
+	            .append("&nbsp;&nbsp;&nbsp;") // Spacing between images
+	            .append("<img src='file://").append(imagePathPrefix).append("nanashi_mumei.png' width='200' height='112'>") // Local Nanashi Mumei image
+	            .append("&nbsp;&nbsp;&nbsp;")
+	            .append("<img src='file://").append(imagePathPrefix).append("shion.png' width='200' height='112'>") // Local Shion image
+	            .append("</center>");
 	        return cons.toString();
 	    }
 
@@ -82,7 +82,7 @@ public class GeneradorDeInformacion {
 
 			String pantilla = MonitorDePID.leer_archivo(new File("crash_detector/pantilla.htm").toPath());
 			String ret = enviarInforme(
-					pantilla.replace("{constructor}", cons.toString() + "<br>" + MonitorDePID.idioma.infoDeVerificaciones() + "<br>" + constructor.toString()+imagenesLocales()));
+					pantilla.replace("{constructor}", cons.toString() + "<br>" + MonitorDePID.idioma.infoDeVerificaciones() + "<br>" + constructor.toString()+imagenesParaCompartir()));
 			CrashDetectorLogger.log(ret);
 			return ret;
 		} catch (IOException e) {
@@ -95,13 +95,13 @@ public class GeneradorDeInformacion {
 	
 	public static String imagenesParaCompartir() {
         StringBuilder cons = new StringBuilder();
-		cons.append("<center>")
-        .append("<img src='/../gura.png' width='200' height='112'>") // Imagen Gura
-        .append("&nbsp;&nbsp;&nbsp;") // Espaciado entre imágenes
-        .append("<img src='/../nanashi_mumei.png' width='200' height='112'>") // Imagen Nanashi Mumei
-        .append("&nbsp;&nbsp;&nbsp;")
-        .append("<img src='/../shion.png' width='200' height='112'>") // Imagen Shion
-        .append("</center>");
+//		cons.append("<center>")
+//        .append("<img src='/../gura.png' width='200' height='112'>") // Imagen Gura
+//        .append("&nbsp;&nbsp;&nbsp;") // Espaciado entre imágenes
+//        .append("<img src='/../nanashi_mumei.png' width='200' height='112'>") // Imagen Nanashi Mumei
+//        .append("&nbsp;&nbsp;&nbsp;")
+//        .append("<img src='/../shion.png' width='200' height='112'>") // Imagen Shion
+//        .append("</center>");
 		return cons.toString();
 	}
 

@@ -46,7 +46,7 @@ public class VerificacionDeStackTrace {
 
 	public String[] package_no_permite = { "java.", "net.minecraft", "net.minecraftforge", "org.spongepowered",
 			"it.unimi", "com.mojang.", "cpw.", "featurecreep.", "jdk.", "sun.", "com.sun.", "org.lwjgl.", "org.apache.",
-			"io.netty", "org.prismlauncher", "io.github.zekerzhayard", "org.multimc", "org.polymc", "org.tlauncher", "net.fabricmc","com.asbestosstar","asbestosstar."
+			"io.netty", "org.prismlauncher", "io.github.zekerzhayard", "org.multimc", "org.polymc", "org.tlauncher", "net.fabricmc","org.objectweb.asm","datafixerupper","org.slf4j","com.asbestosstar","srg","asbestosstar."
 
 	};
 	
@@ -185,7 +185,7 @@ public class VerificacionDeStackTrace {
 
 		String[] ids = { "java", "minecraft", "minecraftforge","net.minecraftforge", "eventbus", "cpw.", "coremods", "featurecreep", "mixin",
 				"accesstransformer","forge", "authlib","sun.", "jdk.", "java.", "fmlloader", "fmlcore", "org.spongepowered.mixin",
-				"fmlearlydisplay","com.sun.jna", "text2speech","xf:crashdetector:default","crashdetector" };
+				"fmlearlydisplay","com.sun.jna", "text2speech","xf:crashdetector:default","crashdetector","srg","org.objectweb.asm","it.unimi","datafixerupper" };
 
 		for (String id : ids) {
 			if (modid.startsWith(id)) {
@@ -385,6 +385,9 @@ public class VerificacionDeStackTrace {
 			return true;
 		}
 		if (jarName.startsWith("bootstraplauncher")) {
+			return true;
+		}
+		if (jarName.startsWith("bootstrap-")) {
 			return true;
 		}
 		if (jarName.startsWith("securejarhandler")) {
