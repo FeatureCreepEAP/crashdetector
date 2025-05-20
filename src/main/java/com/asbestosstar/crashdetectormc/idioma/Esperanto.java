@@ -740,6 +740,17 @@ public String nombre_de_watermedia_tl() {
 }
 
 
+@Override
+public String auditorias_transformer() {
+    return "Transformaj Kontroloj";
+}
+
+@Override
+public String auditorias_transformer_detectadas() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Jen estas la rezultoj de la enhavo de la Transformaj Kontroloj en la Vanilla-Lanĉilo. Ĝenerale, ĝi estas malpli preciza ol la StackTrace-analizilo, sed la Vanilla-Lanĉilo ne ĉiam havas enhavon por {}</b>";
+}
+
 
 
 }

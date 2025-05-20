@@ -89,7 +89,12 @@ public class Consola {
 					para_verificar.append(lineas[i]).append(File.pathSeparator);
 				}
 
+				if(archivo.toString().endsWith("launcher_log.txt")) {
+					contento_verificar = LimpiadorRegistroDeLauncherVainilla.limpiarConsola(para_verificar.toString());
+				}else {
 				contento_verificar = para_verificar.toString();
+				}
+				
 			if(contento_verificar.contains(MonitorDePID.mensaje_de_registro_launcher_completa)) {
 				MonitorDePID.tiene_mensaje_de_registro_launcher_completa=true;
 			}	

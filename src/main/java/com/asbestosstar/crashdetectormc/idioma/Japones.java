@@ -731,7 +731,16 @@ public String nombre_de_watermedia_tl() {
     return "TLauncherはWATERMeDIAでサポートされていません";
 }
 
+@Override
+public String auditorias_transformer() {
+    return "トランスフォーマーオーディット";
+}
 
+@Override
+public String auditorias_transformer_detectadas() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "これらはVanillaランチャーでのトランスフォーマーオーディットの内容結果です。一般的にStackTraceアナライザーほど正確ではありませんが、Vanillaランチャーには常に{}の内容があるとは限りません</b>";
+}
 
 
 

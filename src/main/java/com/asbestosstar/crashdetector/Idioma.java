@@ -390,6 +390,10 @@ public interface Idioma {
 
 	public String nombre_de_watermedia_tl();
 
+	public String auditorias_transformer();
+
+	public String auditorias_transformer_detectadas();
+
 	// public String advertenciaMalwareFalso();
 
 }

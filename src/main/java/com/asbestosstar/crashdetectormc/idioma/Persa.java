@@ -738,7 +738,16 @@ public String nombre_de_watermedia_tl() {
     return "TLauncher توسط WATERMeDIA پشتیبانی نمی‌شود";
 }
 
+@Override
+public String auditorias_transformer() {
+    return "بازرسی‌های ترانسفورمر";
+}
 
+@Override
+public String auditorias_transformer_detectadas() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "این‌ها نتایج محتوای بازرسی‌های ترانسفورمر در لانچر وانیلا هستند. معمولاً کمتر دقیق‌تر از تحلیل‌گر StackTrace است، اما لانچر وانیلا همیشه محتوای {} را ندارد</b>";
+}
 
 
 

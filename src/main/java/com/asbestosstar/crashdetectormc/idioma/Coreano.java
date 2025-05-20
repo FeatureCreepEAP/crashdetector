@@ -736,5 +736,17 @@ public String nombre_de_watermedia_tl() {
 }
 
 
+@Override
+public String auditorias_transformer() {
+    return "트랜스포머 감사";
+}
+
+@Override
+public String auditorias_transformer_detectadas() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "이것은 바닐라 런처에서 트랜스포머 감사 내용의 결과입니다. 일반적으로 StackTrace 분석기보다 덜 정확하지만, 바닐라 런처에는 항상 {}의 내용이 있는 것은 아닙니다</b>";
+}
+
+
 
 }

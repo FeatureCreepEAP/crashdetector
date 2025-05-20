@@ -281,26 +281,29 @@ public class MonitorDePID {
 					resultos = true;
 				}
 
-				System.out.println(res);
+				CrashDetectorLogger.log("resultdos "+res);
 
 				if (activar()) {
+					CrashDetectorLogger.log("activar ");
 
 					if (GraphicsEnvironment.isHeadless()) {
+						CrashDetectorLogger.log("headless ");
 
 						local = GeneradorDeInformacion.generarLocal(consolas, constructor, utc).getAbsolutePath();
 						System.out.println(idioma.local_headless(enlance));
-						latch.countDown();
+						fin(latch);
+						
 					} else {
+						CrashDetectorLogger.log("no headless ");
+
 						SwingUtilities
-								.invokeLater(() -> new CrashDetectorGUI(consolas, constructor, utc).setVisible(true));
-						latch.countDown();
+								.invokeLater(() -> new CrashDetectorGUI(consolas, constructor, utc,latch).setVisible(true));
 					}
 
 				} else {
-					latch.countDown();
+					fin(latch);
 				}
-				ArchivoDeCodioError0.delete();
-				viajo_ultima_mods.toFile().delete();
+
 //				try {
 //					latch.await(); // Muerte cunado el popup se cerrada
 //				} catch (InterruptedException e) {
@@ -334,6 +337,15 @@ public class MonitorDePID {
 //			dialog.setVisible(true);
 //		});
 //	}
+
+	public static void fin(CountDownLatch latch) {
+		// TODO Auto-generated method stub
+		
+		ArchivoDeCodioError0.delete();
+		viajo_ultima_mods.toFile().delete();
+		latch.countDown();
+		System.exit(0);
+	}
 
 	private static void finalizarConsolasLentas(Instant utc, Instant luego) {
 		// TODO Auto-generated method stub

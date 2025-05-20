@@ -738,7 +738,16 @@ public String nombre_de_servicio_de_modlauncher_no_funciona() {
     return "Сервис ModLauncher не работает";
 }
 
+@Override
+public String auditorias_transformer() {
+    return "Аудиты Transformer";
+}
 
+@Override
+public String auditorias_transformer_detectadas() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Это результаты содержимого аудитов Transformer в Vanilla-запускалке. Обычно это менее точно, чем анализатор StackTrace, но в Vanilla-запускалке не всегда есть содержимое для {}</b>";
+}
 
 
 

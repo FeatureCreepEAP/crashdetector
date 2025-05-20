@@ -732,7 +732,16 @@ public String nombre_de_watermedia_tl() {
     return "Launcher TLauncher não suportado pelo WATERMeDIA";
 }
 
+@Override
+public String auditorias_transformer() {
+    return "Auditorias Transformer";
+}
 
+@Override
+public String auditorias_transformer_detectadas() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Estes são os resultados dos conteúdos das Auditorias Transformer no Launcher Vanilla. Geralmente, é menos preciso que o analisador de StackTrace, mas o Launcher Vanilla nem sempre tem conteúdo para {}</b>";
+}
 
 
 

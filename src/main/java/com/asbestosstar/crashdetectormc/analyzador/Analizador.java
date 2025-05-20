@@ -8,6 +8,7 @@ import java.util.Set;
 
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Consola;
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
 
 public class Analizador {
 
@@ -56,6 +57,10 @@ public class Analizador {
 		verificaciones.add(new CursedConsola());
 		verificaciones.add(new NullPointer());
 		verificaciones.add(new ContentoDeTraces());
+		
+		//verificaciones.add(new AuditorTransformer());
+
+		
 		verificaciones.add(new AdvertenciaFaltasClases());
 		// verificaciones.add(new MalwareFalsoCrashAssistant());
 
@@ -74,9 +79,16 @@ public class Analizador {
 		for (Consola consola : consolas) {
 			consola.verificacion_de_stacktrace.reincinar();
 			for (Verificaciones ver : verificaciones_activados) {
-				ver.verificar(consola);
+				CrashDetectorLogger.log(consola.archivo +" "+ ver.nombre());
+				try {
+					ver.verificar(consola);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					CrashDetectorLogger.logException(e);
+				}
 			}
 		}
+		CrashDetectorLogger.log("Analizando Completa");
 	}
 
 	public Set<Verificaciones> organizar(Set<Verificaciones> vers) {

@@ -13,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Instant;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -44,10 +45,14 @@ public class CrashDetectorGUI extends JFrame {
     public static final Color colorCajaTexto = Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto());
     public static final Color colorEnlace = Config.convertirAColor(Config.obtenerInstancia().obtenerColorEnlace());
 
-    public CrashDetectorGUI(List<Consola> consolas, StringBuilder contenidoInforme, Instant tiempoFallo) {
+    CountDownLatch latch;
+    
+    
+    public CrashDetectorGUI(List<Consola> consolas, StringBuilder contenidoInforme, Instant tiempoFallo,CountDownLatch latch) {
         this.contenidoInforme = contenidoInforme;
         this.tiempoFallo = tiempoFallo;
         this.consolas = consolas;
+        this.latch=latch;
         inicializarInterfaz();
     }
 
@@ -138,6 +143,13 @@ public class CrashDetectorGUI extends JFrame {
         panelInferior.add(panelControles, BorderLayout.CENTER);
     }
 
+    @Override
+    public void dispose() {
+    	super.dispose();
+		MonitorDePID.fin(latch);
+    }
+    
+    
     private void estilizarBoton(JButton boton) {
         if (!esMac()) {
             boton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -158,5 +170,7 @@ public class CrashDetectorGUI extends JFrame {
     public static boolean esMac(){
         return System.getProperty("os.name").toLowerCase().contains("mac");
     }
+    
+    
     
 }

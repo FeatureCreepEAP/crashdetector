@@ -730,7 +730,16 @@ public String nombre_de_watermedia_tl() {
     return "TLauncher不被WATERMeDIA支持";
 }
 
+@Override
+public String auditorias_transformer() {
+    return "Transformer 审计";
+}
 
+@Override
+public String auditorias_transformer_detectadas() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "这些是Vanilla启动器中Transformer审计内容的结果。通常它不如StackTrace分析器精确，但Vanilla启动器并不总是有{}的内容</b>";
+}
 
 
 

@@ -738,7 +738,16 @@ public String nombre_de_watermedia_tl() {
 }
 
 
+@Override
+public String auditorias_transformer() {
+    return "تدقيقات التحويل";
+}
 
+@Override
+public String auditorias_transformer_detectadas() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "هذه هي نتائج محتويات تدقيقات التحويل في مشغل الفانيليا. عادةً ما تكون أقل دقة من محلل StackTrace، لكن مشغل الفانيليا لا يحتوي دائمًا على محتوى لـ {}</b>";
+}
 
 
 
