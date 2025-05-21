@@ -19,8 +19,7 @@ public class ServicioDeModLauncherNoFunciona implements Verificaciones {
         String carga = "Service failed to load";
         
         for (String linea : lineas) {
-            if (linea.contains("[cpw.mods.modlauncher.TransformationServiceDecorator/MODLAUNCHER]") 
-                && linea.contains(carga)) {
+            if (linea.contains(carga)) {
                 
                 String servicio = linea.split(carga)[1].trim();
                 String mensaje = MonitorDePID.idioma.servicioMLNoPudoCargar(servicio);

@@ -31,7 +31,7 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 						if (lineaSiguiente.startsWith("Currently,")) {
 							String versionActual = extraerVersionActual(lineaSiguiente, dependencia);
 							errores.add(MonitorDePID.idioma.errorVersionDependencia(modId, dependencia,
-									versionRequerida, versionActual).trim());
+									versionRequerida, versionActual));
 
 							activado = true;
 						}
@@ -46,7 +46,7 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 
 				for (String lineaDep : lineas) {
 					if (lineaDep.contains("Mod ID") && lineaDep.contains("Requested by")) {
-						errores.add(MonitorDePID.idioma.linea_de_dependencia(lineaDep).trim());
+						errores.add(MonitorDePID.idioma.linea_de_dependencia(lineaDep));
 
 					}
 				}
@@ -107,8 +107,9 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 		html.append(MonitorDePID.idioma.no_tienes_las_dependencias_necesitas());
 		html.append("<ul>");
 		for (String error : errores) {
-		if(!html.toString().contains(error)) {	
-			html.append("<li>"+error+"</li>");
+			String trim =error.trim().replace("\t", "");
+		if(!html.toString().contains(trim)) {	
+			html.append("<li>"+trim+"</li>");
 		}
 		}
 		html.append("</ul>");

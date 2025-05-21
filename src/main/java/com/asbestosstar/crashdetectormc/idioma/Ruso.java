@@ -749,6 +749,21 @@ public String auditorias_transformer_detectadas() {
          + "Это результаты содержимого аудитов Transformer в Vanilla-запускалке. Обычно это менее точно, чем анализатор StackTrace, но в Vanilla-запускалке не всегда есть содержимое для {}</b>";
 }
 
+@Override
+public String descripcionEscanerMCreator() {
+    return "Это просматривает ваши моды в поисках модов, созданных с помощью MCreator. Хотя большинство модов MCreator вполне работоспособны и есть много отличных модов, созданных с помощью MCreator, иногда у них возникают проблемы, и они имеют плохую репутацию. Это помогает их идентифицировать. Обратите внимание, что даже высоко оцененные моды могут на самом деле не быть созданы MCreator; например, у них может быть интеграция с MCreator.";
+}
+
+@Override
+public String escanear() {
+    return "Сканировать";
+}
+
+@Override
+public String cargando() {
+    return "Загрузка";
+}
+
 
 
 

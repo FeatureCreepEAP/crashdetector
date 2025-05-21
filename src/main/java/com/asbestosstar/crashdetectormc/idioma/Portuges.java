@@ -743,7 +743,20 @@ public String auditorias_transformer_detectadas() {
          + "Estes são os resultados dos conteúdos das Auditorias Transformer no Launcher Vanilla. Geralmente, é menos preciso que o analisador de StackTrace, mas o Launcher Vanilla nem sempre tem conteúdo para {}</b>";
 }
 
+@Override
+public String descripcionEscanerMCreator() {
+    return "Isso verifica seus mods em busca de mods criados com o MCreator. Embora a maioria dos mods do MCreator seja boa e existam muitos mods incríveis feitos com o MCreator, às vezes eles têm problemas e uma má reputação. Isso ajuda a identificá-los. Observe que até os mais bem avaliados podem não ser realmente do MCreator; por exemplo, podem ter integração com o MCreator.";
+}
 
+@Override
+public String escanear() {
+    return "Escanear";
+}
+
+@Override
+public String cargando() {
+    return "Carregando";
+}
 
 
 

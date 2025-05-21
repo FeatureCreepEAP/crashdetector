@@ -742,5 +742,23 @@ public String auditorias_transformer_detectadas() {
          + "These are the results of the Transformer Audit contents in the Vanilla Launcher. It is generally less precise than the StackTrace analyser, but the Vanilla Launcher does not always have content for {}</b>";
 }
 
+@Override
+public String descripcionEscanerMCreator() {
+	// TODO Auto-generated method stub
+	return "This looks through your mods for MCreator mods. While most MCreator mods are just fine and there are many great MCreator mods, sometimes they have issues and they have a bad reputation. This helps identify them. Note that even the very high rated ones may not actually be mcreator, for example they may have integration with MCreator.";
+}
+
+@Override
+public String escanear() {
+	// TODO Auto-generated method stub
+	return "Scan";
+}
+
+@Override
+public String cargando() {
+	// TODO Auto-generated method stub
+	return "Loading";
+}
+
 
 }

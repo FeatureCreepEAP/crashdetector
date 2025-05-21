@@ -741,6 +741,21 @@ public String auditorias_transformer_detectadas() {
          + "这些是Vanilla启动器中Transformer审计内容的结果。通常它不如StackTrace分析器精确，但Vanilla启动器并不总是有{}的内容</b>";
 }
 
+@Override
+public String descripcionEscanerMCreator() {
+    return "这会扫描你的模组，查找由MCreator创建的模组。尽管大多数MCreator模组都没有问题，并且有许多优秀的MCreator模组，但有时它们会出现问题并带来不良声誉。这有助于识别它们。请注意，即使是评分很高的模组也可能并非真正由MCreator制作；例如，它们可能与MCreator有集成关系。";
+}
+
+@Override
+public String escanear() {
+    return "扫描";
+}
+
+@Override
+public String cargando() {
+    return "加载中";
+}
+
 
 
 

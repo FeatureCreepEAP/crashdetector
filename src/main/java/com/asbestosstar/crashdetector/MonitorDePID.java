@@ -269,7 +269,8 @@ public class MonitorDePID {
 
 				Instant luego = Instant.now();
 				finalizarConsolasLentas(utc, luego);
-
+				System.gc();
+				
 				CrashDetectorLogger.log("Analyzador Consolas");
 
 				String res = analizar(consolas);

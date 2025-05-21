@@ -751,6 +751,21 @@ public String auditorias_transformer_detectadas() {
          + "Jen estas la rezultoj de la enhavo de la Transformaj Kontroloj en la Vanilla-Lanĉilo. Ĝenerale, ĝi estas malpli preciza ol la StackTrace-analizilo, sed la Vanilla-Lanĉilo ne ĉiam havas enhavon por {}</b>";
 }
 
+@Override
+public String descripcionEscanerMCreator() {
+    return "Ĉi tio kontrolas viajn modifojn por trovi tiujn kreitajn per MCreator. Kvankam la plejparto de la modifoj faritaj per MCreator estas bonaj kaj ekzistas multaj grandaj modifoj kreitaj per MCreator, foje ili havas problemojn kaj malbonan reputacion. Ĉi tio helpas ilin identigi. Rimarku, ke eĉ la tre alte valorigitaj povas fakte ne esti de MCreator; ekzemple, ili povas havi integriĝon kun MCreator.";
+}
+
+@Override
+public String escanear() {
+    return "Skani";
+}
+
+@Override
+public String cargando() {
+    return "Ŝarĝante";
+}
+
 
 
 }

@@ -3,14 +3,20 @@ package com.asbestosstar.crashdetectormc.analyzador;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.asbestosstar.crashdetector.CDStringBuilder;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 
 public class AuditorTransformer implements Verificaciones {
 
     private boolean activado = false;
-    private final List<Audit> audits = new ArrayList<>();
+    private final List<EntradaAudit> entradas = new ArrayList<>();
+    private static final String[] LISTA_DE_DENEGADOS = {
+        "PLUGIN: runtimedistcleaner",
+        "PLUGIN: accesstransformer",
+        "PLUGIN: crashdetector",
+        "REASON: classloading",
+        "TRANSFORMER: crashdetector"
+    };
 
     @Override
     public void verificar(Consola consola) {
@@ -19,45 +25,28 @@ public class AuditorTransformer implements Verificaciones {
         String[] lineas = consola.contento_verificar.split(Verificaciones.nl);
         if (lineas.length == 0) return;
 
-        // Procesar secciones de auditoría
         int auditIndex = 0;
-        Audit currentAudit = null;
 
-        for (int i = 0; i < lineas.length; i++) {
+        for (int i = lineas.length - 1; i >= 0; i--) {
             String linea = lineas[i].trim();
             if (linea.isEmpty()) continue;
 
             try {
                 if (linea.startsWith("Transformer Audit:")) {
-                    // Reiniciar auditoría al encontrar nueva sección
-                    currentAudit = null;
+                    auditIndex++;
                     continue;
                 }
 
-                if (currentAudit == null && esClasePrincipal(linea)) {
-                    currentAudit = new Audit(auditIndex++, linea);
-                } else if (currentAudit != null && esEntradaValida(linea)) {
-                    currentAudit.entradas.add(new Entrada(linea));
+                if (esEntradaValida(linea) && !estaEnDenylist(linea)) {
+                    float score = auditIndex + (entradas.size() % 100) / 100f;
+                    entradas.add(new EntradaAudit(linea, score));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
-        if (currentAudit != null && !currentAudit.entradas.isEmpty()) {
-            audits.add(currentAudit);
-        }
-
-        // Ordenar por posición inversa para asignar puntuaciones
-        audits.sort((a, b) -> Integer.compare(b.index, a.index));
-
-        activado = !audits.isEmpty();
-    }
-
-    private boolean esClasePrincipal(String linea) {
-        return !linea.startsWith("REASON") 
-               && !linea.startsWith("TRANSFORMER") 
-               && !linea.startsWith("PLUGIN");
+        activado = !entradas.isEmpty();
     }
 
     private boolean esEntradaValida(String linea) {
@@ -66,49 +55,42 @@ public class AuditorTransformer implements Verificaciones {
                || linea.startsWith("PLUGIN");
     }
 
+    private boolean estaEnDenylist(String linea) {
+        for (String bloque : LISTA_DE_DENEGADOS) {
+            if (linea.startsWith(bloque)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public String mensaje() {
-        if (!activado || audits.isEmpty()) return "";
+        if (!activado || entradas.isEmpty()) return "";
 
-        CDStringBuilder html = new CDStringBuilder();
+        StringBuilder html = new StringBuilder();
         html.append(MonitorDePID.idioma.auditorias_transformer_detectadas());
         html.append("<ul>");
 
-        for (Audit audit : audits) {
-            html.append("<li><strong>").append(audit.clase)
-                .append("</strong> (Score: ").append(String.valueOf(audit.score)).append(")<ul>");
-
-            for (int i = 0; i < audit.entradas.size(); i++) {
-                Entrada entrada = audit.entradas.get(i);
-                html.append("<li>").append(entrada.texto)
-                    .append(" <small>(").append(String.valueOf(audit.score)).append(", ")
-                    .append(String.valueOf(i)).append(")</small></li>");
-            }
-            html.append("</ul></li>");
+        for (EntradaAudit entrada : entradas) {
+            html.append("<li>")
+                .append(entrada.texto)
+                .append(" (")
+                .append(String.format("%.2f", entrada.score))
+                .append(")</li>");
         }
 
         html.append("</ul>");
         return html.toString();
     }
 
-    private static class Audit {
-        int index;
-        String clase;
-        List<Entrada> entradas = new ArrayList<>();
+    private static class EntradaAudit {
+        String texto;
         float score;
 
-        Audit(int index, String clase) {
-            this.index = index;
-            this.clase = clase;
-            this.score = (float) index + 0.1f * entradas.size();
-        }
-    }
-
-    private static class Entrada {
-        String texto;
-
-        Entrada(String texto) {
+        EntradaAudit(String texto, float score) {
             this.texto = texto;
+            this.score = score;
         }
     }
 

@@ -749,6 +749,21 @@ public String auditorias_transformer_detectadas() {
          + "این‌ها نتایج محتوای بازرسی‌های ترانسفورمر در لانچر وانیلا هستند. معمولاً کمتر دقیق‌تر از تحلیل‌گر StackTrace است، اما لانچر وانیلا همیشه محتوای {} را ندارد</b>";
 }
 
+@Override
+public String descripcionEscanerMCreator() {
+    return "این ابزار می‌تواند بین مودهای شما به دنبال مودهای ساخته‌شده با MCreator بگردد. اگرچه بیشتر مودهای MCreator خوب هستند و مودهای عالی زیادی با MCreator ساخته شده‌اند، گاهی مشکلاتی دارند و شهرت بدی دارند. این ابزار به شناسایی آنها کمک می‌کند. توجه داشته باشید که حتی مودهای با امتیاز بالا ممکن است واقعاً با MCreator ساخته نشده باشند؛ به عنوان مثال، ممکن است از ادغام با MCreator استفاده کنند.";
+}
+
+@Override
+public String escanear() {
+    return "اسکن";
+}
+
+@Override
+public String cargando() {
+    return "در حال بارگذاری";
+}
+
 
 
 

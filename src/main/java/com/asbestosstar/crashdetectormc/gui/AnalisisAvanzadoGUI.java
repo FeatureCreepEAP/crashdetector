@@ -20,19 +20,25 @@ public class AnalisisAvanzadoGUI extends JFrame {
         getContentPane().setBackground(CrashDetectorGUI.colorFondo);
         setLayout(new GridLayout(4, 2, 10, 10));
 
-        // Crear botones de ejemplo
-        String[] botones = {"grepr/fgrepr"};
+        // Crear botones con sus acciones
+        String[] botones = {"grepr/fgrepr", "MCreator"};
         
         for (String texto : botones) {
             JButton btn = new JButton(texto);
             estilizarBoton(btn);
             
-            // Nuevo comportamiento del botón
-            btn.addActionListener(e -> {
-                // Crear y mostrar la interfaz de búsqueda
-                BusquedaGUI busquedaGUI = new BusquedaGUI();
-                busquedaGUI.setVisible(true);
-            });
+            // Asignar acciones según el botón
+            if ("grepr/fgrepr".equals(texto)) {
+                btn.addActionListener(e -> {
+                    BusquedaGUI busquedaGUI = new BusquedaGUI();
+                    busquedaGUI.setVisible(true);
+                });
+            } else if ("MCreator".equals(texto)) {
+                btn.addActionListener(e -> {
+                    EscanerMCreatorGUI escaner = new EscanerMCreatorGUI();
+                    escaner.setVisible(true);
+                });
+            }
             
             add(btn);
         }

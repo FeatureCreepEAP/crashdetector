@@ -58,7 +58,7 @@ public class Analizador {
 		verificaciones.add(new NullPointer());
 		verificaciones.add(new ContentoDeTraces());
 		
-		//verificaciones.add(new AuditorTransformer());
+		verificaciones.add(new AuditorTransformer());
 
 		
 		verificaciones.add(new AdvertenciaFaltasClases());

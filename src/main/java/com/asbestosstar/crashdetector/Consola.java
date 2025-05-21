@@ -5,13 +5,13 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.asbestosstar.crashdetector.anon.AnonimizadorDeRuta;
 import com.asbestosstar.crashdetector.anon.AnonimizadordeRegistros;
-import com.asbestosstar.crashdetectormc.analyzador.Analizador;
 import com.asbestosstar.crashdetectormc.analyzador.VerificacionDeStackTrace;
-import com.asbestosstar.crashdetectormc.analyzador.Verificaciones;
 import com.asbestosstar.crashdetectormc.api_sito_registro.APIdeSitioDeRegistro;
 import com.asbestosstar.crashdetectormc.api_sito_registro.DemasiadoGrande;
 import com.asbestosstar.crashdetectormc.api_sito_registro.ErrorConPublicar;
@@ -132,91 +132,101 @@ public class Consola {
 
 	}
 
-	public static List<File> obtenerArchivosDeConsolas() {
-		List<File> resulto = new ArrayList<File>();
-		String home = System.getProperty("user.home");
-		String applicationSupport = home + "/Library/Application Support/";
-		String appdata = System.getenv("APPDATA");
+	    public static List<File> obtenerArchivosDeConsolas() {
+	        List<File> resultado = new ArrayList<>();
+	        Set<String> rutasLauncherLog = new HashSet<>(); // Solo para launcher_log.txt
+	        String home = System.getProperty("user.home");
+	        String soporteAplicaciones = home + "/Library/Application Support/";
+	        String appdata = System.getenv("APPDATA");
 
-		resulto.add(new File("launcher_log.txt"));
-		resulto.add(new File("../../Install/launcher_log.txt"));// CurseForgeApp
-		resulto.add(new File(applicationSupport + "minecraft/launcher_log.txt"));// CurseForgeApp
+	        // Agregar logs principales con control de duplicados
+	        agregarLauncherLog(new File("launcher_log.txt"), resultado, rutasLauncherLog);
+	        agregarLauncherLog(new File("../../Install/launcher_log.txt"), resultado, rutasLauncherLog); // CurseForgeApp
+	        agregarLauncherLog(new File(soporteAplicaciones + "minecraft/launcher_log.txt"), resultado, rutasLauncherLog); // CurseForgeApp
 
-		if (appdata != null) {
-			resulto.add(new File(appdata + "/AtLauncher/logs/atlauncher.log"));// ATLauncher DOS
-			resulto.add(new File(appdata + "/.minecraft/launcher_log.txt"));// CurseForgeApp
-		}
+	        if (appdata != null) {
+	            agregarLauncherLog(new File(appdata + "/.minecraft/launcher_log.txt"), resultado, rutasLauncherLog); // CurseForgeApp
+	            resultado.add(new File(appdata + "/AtLauncher/logs/atlauncher.log")); // ATLauncher DOS
+	        }
 
-		File carpetaLogs = new File("logs/");
-		File carpetaCrashReports = new File("crash-reports/");
+	        // Agregar otros logs sin control de duplicados
+	        agregarDirectorio(resultado, new File("logs/"));
+	        agregarDirectorio(resultado, new File("crash-reports/"));
 
-		if (carpetaLogs.exists()) {
-			for (File archivo : carpetaLogs.listFiles()) {
-				if (!archivo.getAbsolutePath().endsWith(".gz") && archivo.isFile()) {// TODO recursiv
-					resulto.add(archivo);
-				}
-			}
-		}
+	        // Configuración de TLauncher
+	        File carpetaTLauncherStarter;
+	        File carpetaTLauncher;
+	        if (appdata != null) { 
+	            carpetaTLauncherStarter = new File(appdata + "/.tlauncher/logs/starter/");
+	            carpetaTLauncher = new File(appdata + "/.tlauncher/logs/tlauncher/");
+	        } else if (new File(soporteAplicaciones + "/tlauncher/").exists()) {
+	            carpetaTLauncherStarter = new File(soporteAplicaciones + "/tlauncher/logs/starter/");
+	            carpetaTLauncher = new File(soporteAplicaciones + "/tlauncher/logs/tlauncher/");
+	        } else {
+	            carpetaTLauncherStarter = new File(home + "/.tlauncher/logs/starter/");
+	            carpetaTLauncher = new File(home + "/.tlauncher/logs/tlauncher/");
+	        }
 
-		if (carpetaCrashReports.exists()) {
-			for (File archivo : carpetaCrashReports.listFiles()) {
-				if (!archivo.getAbsolutePath().endsWith(".gz") && archivo.isFile()) {
-					resulto.add(archivo);
-				}
-			}
-		}
+	        agregarDirectorio(resultado, carpetaTLauncher);
+	        agregarDirectorio(resultado, carpetaTLauncherStarter);
 
-		File carpetaTLauncherStarter;
-		File carpetaTLauncher;
-		if (appdata != null) {// Windows
-			carpetaTLauncherStarter = new File(appdata + "/.tlauncher/logs/starter/");
-			carpetaTLauncher = new File(appdata + "/.tlauncher/logs/tlauncher/");
-		} else if (new File(applicationSupport + "/tlauncher/").exists()) {
-			carpetaTLauncherStarter = new File(applicationSupport + "/tlauncher/logs/starter/");
-			carpetaTLauncher = new File(applicationSupport + "/tlauncher/logs/tlauncher/");
-		} else {
-			carpetaTLauncherStarter = new File(home + "/.tlauncher/logs/starter/");
-			carpetaTLauncher = new File(home + "/.tlauncher/logs/tlauncher/");
-		}
+	        // Agregar otros archivos directamente
+	        agregarLauncherLog(new File(home + ".minecraft/launcher_log.txt"), resultado, rutasLauncherLog); // CurseForgeApp y TL segundo
+	        resultado.add(new File("../../logs/ftb-app-electron.log")); // FTB
+	        resultado.add(new File("../../logs/atlauncher.log")); // ATLauncher UNIX
+	        resultado.add(new File("../../../logs/PrismLauncher-0.log"));
+	        resultado.add(new File("../../../logs/PollyMC-0.log"));
+	        resultado.add(new File("../../../PolyMC-0.log"));
+	        resultado.add(new File("../../../UltimMC-0.log"));
+	        resultado.add(new File("../../../MultiMC-0.log"));
+	        resultado.add(new File("sklauncher/sklauncher_logs.txt"));
+	        resultado.add(new File("../../../../main.log")); // GDLauncher
+	        resultado.add(NoRegistroDeLauncher.cd_launcherlog);
+	        resultado.add(new File("hs_err_pid" + String.valueOf(MonitorDePID.pid) + ".log")); // GDLauncher
 
-		if (carpetaTLauncher.exists()) {
-			for (File archivo : carpetaTLauncher.listFiles()) {
-				if (!archivo.getAbsolutePath().endsWith(".gz") && archivo.isFile()) {
-					resulto.add(archivo);
-				}
-			}
-		}
-		if (carpetaTLauncherStarter.exists()) {
-			for (File archivo : carpetaTLauncherStarter.listFiles()) {
-				if (!archivo.getAbsolutePath().endsWith(".gz") && archivo.isFile()) {
-					resulto.add(archivo);
-				}
-			}
-		}
+	        return resultado;
+	    }
 
-		resulto.add(new File(home + ".minecraft/launcher_log.txt"));// CurseForgeApp y TL segundo
+	    /**
+	     * Agrega archivos de logs evitando duplicados solo para launcher_log.txt
+	     */
+	    private static void agregarLauncherLog(File archivo, List<File> resultado, Set<String> rutas) {
+	        if (archivo.getName().equals("launcher_log.txt")) {
+	            try {
+	                String rutaCanonica = archivo.getCanonicalPath();
+	                if (!rutas.contains(rutaCanonica)) {
+	                    resultado.add(archivo);
+	                    rutas.add(rutaCanonica);
+	                }
+	            } catch (IOException e) {
+	                resultado.add(archivo);
+	            }
+	        } else {
+	            resultado.add(archivo);
+	        }
+	    }
 
-		resulto.add(new File("../../logs/ftb-app-electron.log"));// FTB
-		resulto.add(new File("../../logs/atlauncher.log"));// ATLauncher UNIX
+	    /**
+	     * Agrega recursivamente todos los archivos de un directorio y sus subdirectorios
+	     * sin control de duplicados, excluyendo archivos .gz
+	     */
+	    public static void agregarDirectorio(List<File> resultado, File directorio) {
+	        if (!directorio.exists() || !directorio.isDirectory()) {
+	            return;
+	        }
 
-		resulto.add(new File("../../../logs/PrismLauncher-0.log"));
-		resulto.add(new File("../../../logs/PollyMC-0.log"));
-		resulto.add(new File("../../../PolyMC-0.log"));
-		resulto.add(new File("../../../UltimMC-0.log"));
-		resulto.add(new File("../../../MultiMC-0.log"));
-//TODO LauncherFenix
+	        File[] archivos = directorio.listFiles();
+	        if (archivos == null) return;
 
-		resulto.add(new File("sklauncher/sklauncher_logs.txt"));
-
-		resulto.add(new File("../../../../main.log"));// GDLauncher
-
-		resulto.add(NoRegistroDeLauncher.cd_launcherlog);
-
-		resulto.add(new File("hs_err_pid" + String.valueOf(MonitorDePID.pid) + ".log"));// GDLauncher
-
-		return resulto;
-
-	}
+	        for (File archivo : archivos) {
+	            if (archivo.isDirectory()) {
+	                agregarDirectorio(resultado, archivo); // Llamada recursiva
+	            } else if (!archivo.getName().endsWith(".gz") && archivo.isFile()) {
+	                resultado.add(archivo);
+	            }
+	        }
+	    }
+	
 
 	public static List<Consola> reorganizar(List<Consola> consolas) {
 	    List<Consola> priorizadas = new ArrayList<>();

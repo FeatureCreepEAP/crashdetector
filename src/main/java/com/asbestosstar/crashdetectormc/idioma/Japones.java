@@ -742,6 +742,21 @@ public String auditorias_transformer_detectadas() {
          + "これらはVanillaランチャーでのトランスフォーマーオーディットの内容結果です。一般的にStackTraceアナライザーほど正確ではありませんが、Vanillaランチャーには常に{}の内容があるとは限りません</b>";
 }
 
+@Override
+public String descripcionEscanerMCreator() {
+    return "これは、あなたのMODの中でMCreatorで作成されたものを検索します。ほとんどのMCreator製のMODは問題なく、優れたMODも多いですが、時々問題が発生し、悪い評判を持つことがあります。これにより、それらを特定するのに役立ちます。評価が高いものでも必ずしもMCreator製とは限らないことに注意してください。例えば、MCreatorとの統合が含まれている場合があります。";
+}
+
+@Override
+public String escanear() {
+    return "スキャン";
+}
+
+@Override
+public String cargando() {
+    return "読み込み中";
+}
+
 
 
 

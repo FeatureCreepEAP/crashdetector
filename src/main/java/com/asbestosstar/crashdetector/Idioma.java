@@ -10,6 +10,8 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.swing.Icon;
+
 import com.asbestosstar.crashdetectormc.idioma.Arabe;
 import com.asbestosstar.crashdetectormc.idioma.Chino;
 import com.asbestosstar.crashdetectormc.idioma.Coreano;
@@ -393,6 +395,12 @@ public interface Idioma {
 	public String auditorias_transformer();
 
 	public String auditorias_transformer_detectadas();
+
+	public String descripcionEscanerMCreator();
+
+	public String escanear();
+
+	public String cargando();
 
 	// public String advertenciaMalwareFalso();
 

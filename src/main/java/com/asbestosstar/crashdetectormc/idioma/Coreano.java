@@ -747,6 +747,21 @@ public String auditorias_transformer_detectadas() {
          + "이것은 바닐라 런처에서 트랜스포머 감사 내용의 결과입니다. 일반적으로 StackTrace 분석기보다 덜 정확하지만, 바닐라 런처에는 항상 {}의 내용이 있는 것은 아닙니다</b>";
 }
 
+@Override
+public String descripcionEscanerMCreator() {
+    return "이 기능은 MCreator로 만든 모드를 검색합니다. 대부분의 MCreator 모드는 괜찮고 훌륭한 모드도 많지만, 때로는 문제가 발생하고 나쁜 평판을 가질 수 있습니다. 이를 통해 해당 모드를 식별할 수 있습니다. 참고로 매우 높은 평가를 받은 모드라도 반드시 MCreator로 제작된 것은 아닐 수 있습니다. 예를 들어 MCreator와의 통합을 포함할 수 있습니다.";
+}
+
+@Override
+public String escanear() {
+    return "검사";
+}
+
+@Override
+public String cargando() {
+    return "로딩 중";
+}
+
 
 
 }
