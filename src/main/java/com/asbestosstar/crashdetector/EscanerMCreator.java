@@ -3,8 +3,8 @@ package com.asbestosstar.crashdetector;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.asbestosstar.crashdetectormc.buscar.ArchivoDeMod;
-import com.asbestosstar.crashdetectormc.buscar.Buscardor;
+import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
+import com.asbestosstar.crashdetector.buscar.Buscardor;
 
 public class EscanerMCreator {
 

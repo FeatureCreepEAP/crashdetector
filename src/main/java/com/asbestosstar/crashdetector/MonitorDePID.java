@@ -22,12 +22,12 @@ import java.util.concurrent.CountDownLatch;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import com.asbestosstar.crashdetectormc.analyzador.Analizador;
-import com.asbestosstar.crashdetectormc.analyzador.Verificaciones;
-import com.asbestosstar.crashdetectormc.grepr.BusquedaArchivos;
-import com.asbestosstar.crashdetectormc.gui.CrashDetectorGUI;
-import com.asbestosstar.crashdetectormc.gui.NoRegistroDeLauncher;
-import com.asbestosstar.crashdetectormc.gui.SelectorIdiomaGUI;
+import com.asbestosstar.crashdetector.analyzador.Analizador;
+import com.asbestosstar.crashdetector.analyzador.Verificaciones;
+import com.asbestosstar.crashdetector.grepr.BusquedaArchivos;
+import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
+import com.asbestosstar.crashdetector.gui.NoRegistroDeLauncher;
+import com.asbestosstar.crashdetector.gui.SelectorIdiomaGUI;
 
 public class MonitorDePID {
 

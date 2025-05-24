@@ -9,17 +9,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.asbestosstar.crashdetector.analyzador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.anon.AnonimizadorDeRuta;
 import com.asbestosstar.crashdetector.anon.AnonimizadordeRegistros;
-import com.asbestosstar.crashdetectormc.analyzador.VerificacionDeStackTrace;
-import com.asbestosstar.crashdetectormc.api_sito_registro.APIdeSitioDeRegistro;
-import com.asbestosstar.crashdetectormc.api_sito_registro.DemasiadoGrande;
-import com.asbestosstar.crashdetectormc.api_sito_registro.ErrorConPublicar;
-import com.asbestosstar.crashdetectormc.api_sito_registro.MCLogsAPI;
-import com.asbestosstar.crashdetectormc.api_sito_registro.NoAPIdeRegistro;
-import com.asbestosstar.crashdetectormc.api_sito_registro.SecureLoggerAPI;
-import com.asbestosstar.crashdetectormc.api_sito_registro.StikkedAPI;
-import com.asbestosstar.crashdetectormc.gui.NoRegistroDeLauncher;
+import com.asbestosstar.crashdetector.api_sito_registro.APIdeSitioDeRegistro;
+import com.asbestosstar.crashdetector.api_sito_registro.DemasiadoGrande;
+import com.asbestosstar.crashdetector.api_sito_registro.ErrorConPublicar;
+import com.asbestosstar.crashdetector.api_sito_registro.MCLogsAPI;
+import com.asbestosstar.crashdetector.api_sito_registro.NoAPIdeRegistro;
+import com.asbestosstar.crashdetector.api_sito_registro.SecureLoggerAPI;
+import com.asbestosstar.crashdetector.api_sito_registro.StikkedAPI;
+import com.asbestosstar.crashdetector.gui.NoRegistroDeLauncher;
 
 public class Consola {
 

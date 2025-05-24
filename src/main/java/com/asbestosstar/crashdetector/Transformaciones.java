@@ -58,27 +58,27 @@ public class Transformaciones implements ClassFileTransformer {
 
 				// si es un nombre de una clase en la lista , modificar el method incluir
 				// hechoArchivoDeCodioError0 en la cima.
-				node.methods.forEach(method -> {
-					String methodName = method.name;
-					String methodDesc = method.desc;
-
-					if ((methodName.equals("shutdown") || methodName.equals("stopServer")
-							|| methodName.equals("m_7041_") || methodName.equals("method_3782"))
-							&& methodDesc.equals("()V")) {
-
-		                InsnList insnList = new InsnList();
-		                insnList.add(new InsnNode(Opcodes.ICONST_1));//es_servidor=true
-		                insnList.add(new MethodInsnNode(
-		                    Opcodes.INVOKESTATIC,
-		                    "com/asbestosstar/crashdetector/Transformaciones",
-		                    "hechoArchivoDeCodioError0",
-		                    "(Z)V",
-		                    false
-		                ));
-		                method.instructions.insert(insnList);
-					}
-				});
-				completa_servidor = true;
+//				node.methods.forEach(method -> {
+//					String methodName = method.name;
+//					String methodDesc = method.desc;
+//
+//					if ((methodName.equals("shutdown") || methodName.equals("stopServer")
+//							|| methodName.equals("m_7041_") || methodName.equals("method_3782"))
+//							&& methodDesc.equals("()V")) {
+//
+//		                InsnList insnList = new InsnList();
+//		                insnList.add(new InsnNode(Opcodes.ICONST_1));//es_servidor=true
+//		                insnList.add(new MethodInsnNode(
+//		                    Opcodes.INVOKESTATIC,
+//		                    "com/asbestosstar/crashdetector/Transformaciones",
+//		                    "hechoArchivoDeCodioError0",
+//		                    "(Z)V",
+//		                    false
+//		                ));
+//		                method.instructions.insert(insnList);
+//					}
+//				});
+				//completa_servidor = true;
 			}
 
 		} else if (nombre_de_clase.equals("net.minecraft.client.Minecraft")
@@ -107,7 +107,7 @@ public class Transformaciones implements ClassFileTransformer {
 					}
 				});
 
-				completa_cliente = true;
+				//completa_cliente = true;
 
 			}
 

@@ -12,16 +12,16 @@ import java.util.Set;
 
 import javax.swing.Icon;
 
-import com.asbestosstar.crashdetectormc.idioma.Arabe;
-import com.asbestosstar.crashdetectormc.idioma.Chino;
-import com.asbestosstar.crashdetectormc.idioma.Coreano;
-import com.asbestosstar.crashdetectormc.idioma.Espanol;
-import com.asbestosstar.crashdetectormc.idioma.Esperanto;
-import com.asbestosstar.crashdetectormc.idioma.Ingles;
-import com.asbestosstar.crashdetectormc.idioma.Japones;
-import com.asbestosstar.crashdetectormc.idioma.Persa;
-import com.asbestosstar.crashdetectormc.idioma.Portuges;
-import com.asbestosstar.crashdetectormc.idioma.Ruso;
+import com.asbestosstar.crashdetector.idioma.Arabe;
+import com.asbestosstar.crashdetector.idioma.Chino;
+import com.asbestosstar.crashdetector.idioma.Coreano;
+import com.asbestosstar.crashdetector.idioma.Espanol;
+import com.asbestosstar.crashdetector.idioma.Esperanto;
+import com.asbestosstar.crashdetector.idioma.Ingles;
+import com.asbestosstar.crashdetector.idioma.Japones;
+import com.asbestosstar.crashdetector.idioma.Persa;
+import com.asbestosstar.crashdetector.idioma.Portuges;
+import com.asbestosstar.crashdetector.idioma.Ruso;
 
 public interface Idioma {
 

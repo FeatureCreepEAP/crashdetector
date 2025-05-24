@@ -15,9 +15,9 @@ import javax.net.ssl.SSLException;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
-import com.asbestosstar.crashdetectormc.api_sito_registro.DemasiadoGrande;
-import com.asbestosstar.crashdetectormc.api_sito_registro.ErrorConPublicar;
-import com.asbestosstar.crashdetectormc.api_sito_registro.NoAPIdeRegistro;
+import com.asbestosstar.crashdetector.api_sito_registro.DemasiadoGrande;
+import com.asbestosstar.crashdetector.api_sito_registro.ErrorConPublicar;
+import com.asbestosstar.crashdetector.api_sito_registro.NoAPIdeRegistro;
 
 public class GeneradorDeInformacion {
 
