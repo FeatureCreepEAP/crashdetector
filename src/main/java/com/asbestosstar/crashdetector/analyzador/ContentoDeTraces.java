@@ -6,12 +6,16 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import com.asbestosstar.crashdetector.BiMap;
+import com.asbestosstar.crashdetector.BiMap.DoubleKey;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.buscar.Buscardor;
 
 /**
  * Para el contento en "at" en Traces
@@ -37,7 +41,7 @@ public class ContentoDeTraces implements Verificaciones {
 		if (!vdst.jars.isEmpty()) {
 			activado = true;
 			for (Map.Entry<String, Boolean> jar : vdst.jars.entrySet()) {
-
+				
 				// TODO mejor a FATAL
 				String[] lvl_info_arr = jar.getKey().split(Pattern.quote(MonitorDePID.idioma.nivel()));
 				String lvl_info = "";
@@ -66,52 +70,67 @@ public class ContentoDeTraces implements Verificaciones {
 
 		}
 
-		HashMap<String, Boolean> modids_filt = new HashMap<String, Boolean>();
+		BiMap<String, String,Boolean> modids_filt = new BiMap<>();
 
 		if (!vdst.modids.isEmpty()) {
 			activado = true;
-			for (Map.Entry<String, Boolean> modid : vdst.modids.entrySet()) {
+			for (Entry<BiMap.DoubleKey<String, String>, Boolean> modid : vdst.modids.entrySet()) {
 
 				if (!todos_modids.contains(modid.getKey())) {
-					todos_modids.add(modid.getKey());
-					modids_filt.put(modid.getKey(), modid.getValue());
+					todos_modids.add(modid.getKey().key0);
+					modids_filt.put(modid.getKey().key0,modid.getKey().key1, modid.getValue());
 				}
 			}
 		}
 
 		if (!modids_filt.isEmpty()) {
+			Buscardor.cargar();
 			constructor.append(MonitorDePID.idioma.modids_problematicos()).append(nl_html);
-			for (Map.Entry<String, Boolean> modid : modids_filt.entrySet()) {
+			for (Entry<DoubleKey<String, String>, Boolean> modid : modids_filt.entrySet()) {
 				if (modid.getValue()) {
 					constructor.append(MonitorDePID.idioma.possibladad_fatal());
 				}
-				constructor.append(modid.getKey()).append(nl_html);
+				String llev = modid.getKey().key0;
+				String jars_de_modid_string = "";
+				List<String> jars_de_modids=Buscardor.obternerModsConNombre(llev);
+				if(!jars_de_modids.isEmpty()) {
+					jars_de_modid_string=" ("+String.join(",", jars_de_modids)+")";
+				}
+				constructor.append(llev+jars_de_modid_string+" ").append(modid.getKey().key1).append(nl_html);
 
 			}
 
 		}
 
-		HashMap<String, Boolean> packs_filt = new HashMap<String, Boolean>();
+		BiMap<String, String,Boolean> packs_filt = new BiMap<>();
 
 		if (!vdst.packs.isEmpty()) {
 			activado = true;
-			for (Map.Entry<String, Boolean> pack : vdst.packs.entrySet()) {
+			for (Entry<DoubleKey<String, String>, Boolean> pack : vdst.packs.entrySet()) {
 
 				if (!todos_packs.contains(pack.getKey())) {
-					todos_packs.add(pack.getKey());
-					packs_filt.put(pack.getKey(), pack.getValue());
+					todos_packs.add(pack.getKey().key0);
+					packs_filt.put(pack.getKey().key0,pack.getKey().key1, pack.getValue());
 				}
 
 			}
 		}
 
 		if (!packs_filt.isEmpty()) {
+			Buscardor.cargar();
 			constructor.append(MonitorDePID.idioma.packages_problematicos()).append(nl_html);
-			for (Map.Entry<String, Boolean> pack : packs_filt.entrySet()) {
+			for (Entry<DoubleKey<String, String>, Boolean> pack : packs_filt.entrySet()) {
 				if (pack.getValue()) {
 					constructor.append(MonitorDePID.idioma.possibladad_fatal());
 				}
-				constructor.append(pack.getKey()).append(nl_html);
+				String llev = pack.getKey().key0;
+				String jars_de_pack_string="";
+				String pack_de_llev = obtenerRutaDePaquete(llev);
+				List<String> jars_de_packs=Buscardor.obternerUbicaciones(Buscardor.buscarModsConTermino(pack_de_llev));
+				if(!jars_de_packs.isEmpty()) {
+					jars_de_pack_string=" ("+String.join(",", jars_de_packs)+")";
+				}
+				constructor.append(llev+jars_de_pack_string+" ").append(pack.getKey().key1).append(nl_html);
 
 			}
 
@@ -203,5 +222,56 @@ public class ContentoDeTraces implements Verificaciones {
 		// TODO Auto-generated method stub
 		return MonitorDePID.idioma.nombre_de_contento_de_stacktrace();
 	}
+	
+	/**
+	 * Obtiene la ruta del paquete desde una referencia completa de método en un stack trace.
+	 * Ejemplo: "com.example.MyClass.myMethod()" → "com/example"
+	 *         "java.util.HashMap.hash()" → "java/util"
+	 *         "MyClass.myMethod()" → ""
+	 *
+	 * @param input Referencia completa del método desde un stack trace
+	 * @return Ruta del paquete en notación con barras (ej. "com/example")
+	 */
+	private static String obtenerRutaDePaquete(String input) {
+	    if (input == null || input.trim().isEmpty()) {
+	        return "";
+	    }
+
+	    // Elimina todo después de '(' (parámetros del método)
+	    String antesDelParentesis = input.split("\\(", 2)[0].trim();
+
+	    // Elimina sufijos de clases internas como "$1", "$lambda$2"
+	    antesDelParentesis = antesDelParentesis.replaceAll("\\$[^\\.]*", "");
+
+	    // Busca el último '.' para separar el FQCN del nombre del método
+	    int ultimoIndicePunto = antesDelParentesis.lastIndexOf('.');
+	    if (ultimoIndicePunto <= 0) {
+	        return ""; // Sin paquete
+	    }
+
+	    // Obtiene el FQCN (todo antes del último '.')
+	    String nombreCompletoClase = antesDelParentesis.substring(0, ultimoIndicePunto);
+
+	    // Divide el FQCN en partes del paquete
+	    String[] partesDelPaquete = nombreCompletoClase.split("\\.");
+	    if (partesDelPaquete.length == 0) {
+	        return "";
+	    }
+
+	    // Reconstruye la ruta del paquete usando barras
+	    StringBuilder rutaDelPaquete = new StringBuilder();
+
+	    for (int i = 0; i < partesDelPaquete.length; i++) {
+	        if (i > 0) {
+	            rutaDelPaquete.append("/");
+	        }
+	        rutaDelPaquete.append(partesDelPaquete[i]);
+	    }
+
+	    return rutaDelPaquete.toString();
+	}
+	
+	
+	
 
 }

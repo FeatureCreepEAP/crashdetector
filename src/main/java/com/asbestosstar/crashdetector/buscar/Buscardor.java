@@ -69,6 +69,18 @@ public class Buscardor {
         return resultados;
     }
 	
+    /**
+     * Si tienes una lista de ArchivoDeMods pero quieres las ubicaciones
+     * @param mods
+     * @return
+     */
+	public static List<String> obternerUbicaciones(List<ArchivoDeMod> mods){
+		List<String> ret = new ArrayList<String>();
+		for(ArchivoDeMod mod:mods) {
+			ret.add(mod.ubicacion());
+		}
+		return ret;
+	}
 	
 	
 }

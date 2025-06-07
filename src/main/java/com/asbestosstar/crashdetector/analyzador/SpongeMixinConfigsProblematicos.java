@@ -1,10 +1,14 @@
 package com.asbestosstar.crashdetector.analyzador;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.buscar.Buscardor;
 
 public class SpongeMixinConfigsProblematicos implements Verificaciones {
 
@@ -37,15 +41,37 @@ public class SpongeMixinConfigsProblematicos implements Verificaciones {
     @Override
     public String mensaje() {
         if (sm_config.isEmpty()) return "";
-        
-        StringBuilder html = new StringBuilder("<ul>");
+        Buscardor.cargar();
+
+        StringBuilder html = new StringBuilder();
+        html.append("<span style='color: #")
+            .append(Config.obtenerInstancia().obtenerColorDeTitulosDeConsolas())
+            .append("; font-weight: bold;'>")
+            .append(MonitorDePID.idioma.config_spongemixin_problematico())
+            .append("</span>")
+            .append(Verificaciones.nl_html)
+            .append("<ul>");
+
+        List<String> listItems = new ArrayList<>();
         for (String sm : sm_config) {
-            html.append("<li>")
-                .append(MonitorDePID.idioma.config_spongemixin_problematico(sm))
-                .append("</li>")
-                .append(Verificaciones.nl_html);
+            String jars_de_sm_string = "";
+            List<String> jars_de_sm = Buscardor.obternerUbicaciones(Buscardor.buscarModsConTermino(sm));
+
+            if (!jars_de_sm.isEmpty()) {
+                List<String> boldJars = new ArrayList<>();
+                for (String jar : jars_de_sm) {
+                    boldJars.add("<strong>" + jar + "</strong>");
+                }
+
+                jars_de_sm_string = " (" + String.join(", ", boldJars) + ")";
+            }
+
+            listItems.add("<li>" + sm + jars_de_sm_string + "</li>");
         }
-        html.append("</ul>");
+
+        html.append(String.join(Verificaciones.nl_html, listItems))
+            .append("</ul>");
+
         return html.toString();
     }
     

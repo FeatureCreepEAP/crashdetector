@@ -127,8 +127,8 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String config_spongemixin_problematico(String archivo) {
-        return "<b style='color:#" + config.obtenerColorError() + "'>Configuração problemática do SpongeMixin detectada: </b>" + archivo;
+    public String config_spongemixin_problematico() {
+        return "<b style='color:#" + config.obtenerColorError() + "'>Configuração problemática do SpongeMixin detectada: </b>";
     }
 
     @Override

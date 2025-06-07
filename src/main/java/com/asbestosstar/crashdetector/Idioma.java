@@ -170,7 +170,7 @@ public interface Idioma {
 
 	public String corchetes_ondulados();
 
-	public String config_spongemixin_problematico(String archivo_json);
+	public String config_spongemixin_problematico();
 
 	public String module_resolution_exception(String modules, String paquete);
 

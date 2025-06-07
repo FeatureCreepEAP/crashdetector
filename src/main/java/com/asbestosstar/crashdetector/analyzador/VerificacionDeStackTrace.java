@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.asbestosstar.crashdetector.BiMap;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
@@ -32,8 +33,8 @@ public class VerificacionDeStackTrace {
 	
 	List<String> sm_config = new ArrayList<>();
 	Map<String, Boolean> jars = new LinkedHashMap<>();// FATAL
-	Map<String, Boolean> modids = new LinkedHashMap<>();// FATAL
-	Map<String, Boolean> packs = new LinkedHashMap<>();// FATAL
+	BiMap<String, String,Boolean> modids = new BiMap<>();// FATAL
+	BiMap<String, String,Boolean> packs = new BiMap<>();// FATAL
 
 	List<String> braceContentos = new LinkedList<>();
 
@@ -119,7 +120,7 @@ public class VerificacionDeStackTrace {
 								&& !esModNoPermite(modid) && line.startsWith("at")) {
 							modid_malo.add(modid);
 							modids.put(
-									modid + MonitorDePID.idioma.nivel() + String.valueOf(lvl) + "," + String.valueOf(linea_num),
+									modid,MonitorDePID.idioma.nivel() + String.valueOf(lvl) + "," + String.valueOf(linea_num),
 									fatal);
 
 						}
@@ -130,7 +131,8 @@ public class VerificacionDeStackTrace {
 					String dec=Integer.toString(lvl) + "," + Integer.toString(linea_num);
 				    String pack = line.substring(3);  if (!package_malo.contains(pack) && !packNoEsPermite(pack,dec,fatal)) {
 				        packs.put(
-				            pack + " "+ MonitorDePID.idioma.nivel() + dec,
+				            pack, 
+				            MonitorDePID.idioma.nivel() + dec,
 				            fatal
 				        );
 				        package_malo.add(pack); 
@@ -229,7 +231,7 @@ public class VerificacionDeStackTrace {
 	        modid_malo.add(modid);
 
 	        // Add the mod ID to the modids map with the appropriate key and value
-	        modids.put(modid + " " + MonitorDePID.idioma.nivel()+dec, fatal);
+	        modids.put(modid,MonitorDePID.idioma.nivel()+dec, fatal);
 		}
 	    
 	    
@@ -391,6 +393,9 @@ public class VerificacionDeStackTrace {
 			return true;
 		}
 		if (jarName.startsWith("securejarhandler")) {
+			return true;
+		}
+		if (jarName.startsWith("securemodules-")) {
 			return true;
 		}
 		if (jarName.startsWith("core-")) {

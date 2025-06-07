@@ -127,8 +127,8 @@ public class Espanol implements Idioma {
     }
 
     @Override
-    public String config_spongemixin_problematico(String archivo) {
-        return "<b style='color:#" + config.obtenerColorError() + "'>Configuración problemática de SpongeMixin detectada: " + "</b>" + archivo;
+    public String config_spongemixin_problematico() {
+        return "<b style='color:#" + config.obtenerColorError() + "'>Configuración problemática de SpongeMixin detectada: " + "</b>";
     }
 
     @Override
