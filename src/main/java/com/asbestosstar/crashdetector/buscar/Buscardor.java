@@ -5,9 +5,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.ZipInputStream;
 
 import com.asbestosstar.crashdetector.Config;
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.anon.AnonimizadorDeRuta;
 
@@ -19,20 +19,24 @@ public class Buscardor {
 	public static boolean cargado = false;
 	
 	public static void cargar() {
-		if(!cargado) {
-			try {
-				for (String mod:MonitorDePID.leer_archivo(MonitorDePID.ultima_mods).split(MonitorDePID.nl)) {
-					File arc = new File(mod);
-					if(arc.isFile()) {
-					Buscardor.mods.add(new ModPKZip(mod,ArchivoDeMod.origin,new ZipInputStream(new FileInputStream(arc))));
-					}
-					cargado=true;
-				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+	    if (!cargado) {
+	        try {
+	            String[] modPaths = MonitorDePID.leer_archivo(MonitorDePID.ultima_mods).split(MonitorDePID.nl);
+	            for (String mod : modPaths) {
+	                File arc = new File(mod);
+	                if (arc.isFile()) {
+	                    try (FileInputStream fis = new FileInputStream(arc)) {
+	                        Buscardor.mods.add(new ModPKZip(mod, ArchivoDeMod.origin, fis));
+	                    } catch (IOException e) {
+	                        CrashDetectorLogger.logException(e);
+	                    }
+	                }
+	            }
+	            cargado = true;
+	        } catch (IOException e) {
+	        	CrashDetectorLogger.logException(e);
+	        }
+	    }
 	}
 	
 	public static String rutaParaPublicar(String ruta) {

@@ -1,29 +1,158 @@
 package com.asbestosstar.crashdetector.buscar;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
+import java.io.*;
+import java.util.*;
+import java.util.regex.*;
+import java.util.zip.*;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 
+/**
+ * Clase que procesa archivos ZIP/JAR para buscar mods y clases dentro de ellos.
+ * Evita errores de cierre de flujo leyendo todas las entradas al inicio.
+ */
 public class ModPKZip implements ArchivoDeMod {
 
     public ArchivoDeMod desde;
     public String ubicacion;
     public List<ArchivoDeMod> mods_en_mod = new ArrayList<>();
-    public List<String> nombres = new ArrayList<>();;
-    public List<String> clases = new ArrayList<String>();
-	public List<String> archivos = new ArrayList<String>();
+    public List<String> nombres = new ArrayList<>();
+    public List<String> clases = new ArrayList<>();
+    public List<String> archivos = new ArrayList<>();
 
-    public ModPKZip(String ubicacion, ArchivoDeMod desde, ZipInputStream zip) {
+    /**
+     * Constructor principal que procesa un archivo ZIP/JAR.
+     * Lee todas las entradas del flujo de entrada al inicio para evitar cierre prematuro.
+     */
+    public ModPKZip(String ubicacion, ArchivoDeMod desde, InputStream inputStream) {
         this.ubicacion = ubicacion;
         this.desde = desde;
-        procesarZip(zip);
+
+        try {
+            // Leer todas las entradas al inicio
+            Map<String, byte[]> todasLasEntradas = leerTodasLasEntradas(inputStream);
+
+            // Procesar cada entrada de forma independiente
+            for (Map.Entry<String, byte[]> entrada : todasLasEntradas.entrySet()) {
+                String nombreArchivo = entrada.getKey();
+                byte[] contenido = entrada.getValue();
+
+                // Añadir nombre del archivo a lista interna
+                this.archivos.add(nombreArchivo);
+
+                // Manejar archivos anidados
+                if (esArchivoAnidado(nombreArchivo)) {
+                    String nuevaUbicacion = ubicacion + "!/" + nombreArchivo;
+                    InputStream entryStream = new ByteArrayInputStream(contenido);
+                    mods_en_mod.add(new ModPKZip(nuevaUbicacion, this, entryStream));
+                } else {
+                    // Procesar metadatos
+                    if (nombreArchivo.endsWith("modules.xml")) {
+                        nombres.add(parsearNombreModuloJBoss(contenido));
+                    } else if (nombreArchivo.endsWith(".mod")) {
+                        nombres.add(parsearNombreModHOI4(contenido));
+                    } else if (nombreArchivo.equals("fabric.mod.json")) {
+                        nombres.add(parsearIdModFabric(contenido));
+                    } else if (nombreArchivo.endsWith("mods.toml")) {
+                        nombres.add(parsearIdModMCForge(contenido));
+                    } else if (nombreArchivo.endsWith(".class")) {
+                        String className = nombreArchivo.replace("/", ".").replace(".class", "");
+                        clases.add(className);
+                    }
+                }
+            }
+
+        } catch (IOException e) {
+            CrashDetectorLogger.logException(e);
+        }
     }
+
+    /**
+     * Lee todas las entradas del ZIP en memoria como pares (nombre, contenido).
+     */
+    private Map<String, byte[]> leerTodasLasEntradas(InputStream inputStream) throws IOException {
+        Map<String, byte[]> entradas = new HashMap<>();
+
+        try (ZipInputStream zip = new ZipInputStream(inputStream)) {
+            ZipEntry entrada;
+            while ((entrada = zip.getNextEntry()) != null) {
+                String nombre = entrada.getName();
+                entradas.put(nombre, leer(zip));
+                zip.closeEntry();
+            }
+        }
+
+        return entradas;
+    }
+
+    /**
+     * Lee el contenido de un flujo de entrada en un arreglo de bytes.
+     */
+    private byte[] leer(InputStream input) throws IOException {
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        byte[] data = new byte[1024];
+        int bytesRead;
+
+        while ((bytesRead = input.read(data)) != -1) {
+            buffer.write(data, 0, bytesRead);
+        }
+
+        return buffer.toByteArray();
+    }
+
+    /**
+     * Devuelve true si el archivo es un contenedor anidado (como .jar, .zip, etc.)
+     */
+    private boolean esArchivoAnidado(String nombreArchivo) {
+        return nombreArchivo.endsWith(".jar") ||
+               nombreArchivo.endsWith(".zip") ||
+               nombreArchivo.endsWith(".fpm") ||
+               nombreArchivo.endsWith(".litemod") ||
+               nombreArchivo.endsWith(".war") ||
+               nombreArchivo.endsWith(".rar");
+    }
+
+    /**
+     * Extrae el nombre del módulo de un archivo modules.xml (JBoss).
+     */
+    private String parsearNombreModuloJBoss(byte[] contenido) throws IOException {
+        String xml = new String(contenido);
+        int inicio = xml.indexOf("name=\"") + "name=\"".length();
+        int fin = xml.indexOf("\"", inicio);
+        return (inicio != -1 && fin != -1) ? xml.substring(inicio, fin) : "Módulo JBoss desconocido";
+    }
+
+    /**
+     * Extrae el nombre del mod de un archivo HOI4 (.mod).
+     */
+    private String parsearNombreModHOI4(byte[] contenido) throws IOException {
+        String txt = new String(contenido);
+        int inicio = txt.indexOf("name=\"") + "name=\"".length();
+        int fin = txt.indexOf("\"", inicio);
+        return (inicio != -1 && fin != -1) ? txt.substring(inicio, fin) : "Mod HOI4 desconocido";
+    }
+
+    /**
+     * Extrae el id del mod de un archivo fabric.mod.json.
+     */
+    private String parsearIdModFabric(byte[] contenido) throws IOException {
+        String json = new String(contenido);
+        int inicio = json.indexOf("\"id\": \"") + "\"id\": \"".length();
+        int fin = json.indexOf("\"", inicio);
+        return (inicio != -1 && fin != -1) ? json.substring(inicio, fin) : "Mod Fabric desconocido";
+    }
+
+    /**
+     * Extrae el modId de un archivo mods.toml (Forge).
+     */
+    private String parsearIdModMCForge(byte[] contenido) throws IOException {
+        String toml = new String(contenido);
+        Pattern pattern = Pattern.compile("modId\\s*=\\s*\"([^\"]+)\"");
+        Matcher matcher = pattern.matcher(toml);
+        return matcher.find() ? matcher.group(1) : "Mod Forge desconocido";
+    }
+
+    // Métodos de búsqueda recursiva
 
     @Override
     public ArchivoDeMod obtenerDesde() {
@@ -45,224 +174,75 @@ public class ModPKZip implements ArchivoDeMod {
         return ubicacion;
     }
 
-    /**
-     * Processes the ZIP file to extract mod names and handle nested JARs.
-     */
-    private void procesarZip(ZipInputStream zip) {
-        try {
-            ZipEntry entrada;
-            while ((entrada = zip.getNextEntry()) != null) {
-                String nombreArchivo = entrada.getName();
-                this.archivos.add(nombreArchivo);
-//TODO mas y buscar si rar es ResourceArchive
-                if (nombreArchivo.endsWith(".jar")||nombreArchivo.endsWith(".zip")||nombreArchivo.endsWith(".fpm")||nombreArchivo.endsWith(".litemod")||nombreArchivo.endsWith(".war")||nombreArchivo.endsWith(".rar")) {
-                    String nuevaUbicacion = ubicacion + "!/" + nombreArchivo;
-                    mods_en_mod.add(new ModPKZip(nuevaUbicacion, this, new ZipInputStream(zip)));
-                } else {
-                    if (nombreArchivo.equals("modules.xml")) { //TODO Otros archivos JBoss Modules y RPM Spec
-                        nombres.add(parsearNombreModuloJBoss(zip));
-                    } else if (nombreArchivo.endsWith(".mod")) {
-                        nombres.add(parsearNombreModHOI4(zip));
-                    } else if (nombreArchivo.equals("fabric.mod.json")) {
-                        nombres.add(parsearIdModFabric(zip));
-                    } else if (nombreArchivo.equals("mods.toml")) {//TODO ModLauncherServices
-                        nombres.add(parsearIdModMCForge(zip));
-                    }else if (nombreArchivo.endsWith(".class")) {
-                    	clases.add(nombreArchivo.substring(0, nombreArchivo.replace("/", ".").length()-5));
-                    }
-                }
-
-                zip.closeEntry();
-            }
-        } catch (IOException e) {
-            CrashDetectorLogger.logException(e);
-        }
+    @Override
+    public List<String> clases() {
+        return clases;
     }
 
-
-    private String parsearNombreModuloJBoss(ZipInputStream zip) throws IOException {
-        StringBuilder contenido = new StringBuilder();
-        try (BufferedReader lector = new BufferedReader(new InputStreamReader(zip))) {
-            String linea;
-            while ((linea = lector.readLine()) != null) {
-                contenido.append(linea).append("\n");
-            }
+    @Override
+    public boolean tieneNombreRecursivo(String nombre) {
+        if (this.nombres.contains(nombre)) return true;
+        for (ArchivoDeMod mod : mods_en_mods()) {
+            if (mod.tieneNombreRecursivo(nombre)) return true;
         }
-        String contenidoXml = contenido.toString();
-        int indiceInicio = contenidoXml.indexOf("name=\"") + "name=\"".length();
-        int indiceFin = contenidoXml.indexOf("\"", indiceInicio);
-        return (indiceInicio != -1 && indiceFin != -1)
-                ? contenidoXml.substring(indiceInicio, indiceFin)
-                : "Módulo JBoss desconocido";
+        return false;
     }
 
-    /**
-     * Parses the name of a HOI4 mod from a .mod file.
-     */
-    private String parsearNombreModHOI4(ZipInputStream zip) throws IOException {
-        StringBuilder contenido = new StringBuilder();
-        try (BufferedReader lector = new BufferedReader(new InputStreamReader(zip))) {
-            String linea;
-            while ((linea = lector.readLine()) != null) {
-                contenido.append(linea).append("\n");
+    @Override
+    public String obtenerNombreRecursivo(String nombre) {
+        if (tieneNombreRecursivo(nombre)) {
+            if (this.nombres.contains(nombre)) return this.ubicacion();
+            for (ArchivoDeMod mod : mods_en_mods()) {
+                String resultado = mod.obtenerNombreRecursivo(nombre);
+                if (resultado != null) return resultado;
             }
         }
-        String contenidoMod = contenido.toString();
-        int indiceInicio = contenidoMod.indexOf("name=\"") + "name=\"".length();
-        int indiceFin = contenidoMod.indexOf("\"", indiceInicio);
-        return (indiceInicio != -1 && indiceFin != -1)
-                ? contenidoMod.substring(indiceInicio, indiceFin)
-                : "Mod HOI4 desconocido";
+        return null;
     }
 
-  
-    private String parsearIdModFabric(ZipInputStream zip) throws IOException {
-        StringBuilder contenido = new StringBuilder();
-        try (BufferedReader lector = new BufferedReader(new InputStreamReader(zip))) {
-            String linea;
-            while ((linea = lector.readLine()) != null) {
-                contenido.append(linea).append("\n");
+    @Override
+    public boolean tieneArchivoRecursivo(String archivo) {
+        if (this.archivos().contains(archivo)) return true;
+        for (ArchivoDeMod mod : mods_en_mods()) {
+            if (mod.tieneArchivoRecursivo(archivo)) return true;
+        }
+        return false;
+    }
+
+    @Override
+    public String obtenerArchivoRecursivo(String archivo) {
+        if (tieneArchivoRecursivo(archivo)) {
+            if (this.archivos().contains(archivo)) return this.ubicacion() + "!/" + archivo;
+            for (ArchivoDeMod mod : mods_en_mods()) {
+                String resultado = mod.obtenerArchivoRecursivo(archivo);
+                if (resultado != null) return resultado;
             }
         }
-        String contenidoJson = contenido.toString();
-        int indiceInicio = contenidoJson.indexOf("\"id\": \"") + "\"id\": \"".length();
-        int indiceFin = contenidoJson.indexOf("\"", indiceInicio);
-        return (indiceInicio != -1 && indiceFin != -1)
-                ? contenidoJson.substring(indiceInicio, indiceFin)
-                : "Mod Fabric desconocido";
+        return null;
     }
 
- 
-    private String parsearIdModMCForge(ZipInputStream zip) throws IOException {
-        StringBuilder contenido = new StringBuilder();
-        try (BufferedReader lector = new BufferedReader(new InputStreamReader(zip))) {
-            String linea;
-            while ((linea = lector.readLine()) != null) {
-                contenido.append(linea).append("\n");
-            }
+    @Override
+    public List<String> archivos() {
+        return archivos;
+    }
+
+    @Override
+    public List<ArchivoDeMod> buscarModsCon(String termino) {
+        List<ArchivoDeMod> resultados = new ArrayList<>();
+
+        boolean tieneArchivo = archivos.contains(termino);
+        boolean tieneClase = clases.contains(termino);
+        String packagePath = termino.replace('.', '/');
+        boolean tienePackage = clases.stream().anyMatch(clase -> clase.startsWith(packagePath));
+
+        if (tieneArchivo || tieneClase || tienePackage) {
+            resultados.add(this);
         }
-        String contenidoToml = contenido.toString();
-        int indiceInicio = contenidoToml.indexOf("modId=\"") + "modId=\"".length();
-        int indiceFin = contenidoToml.indexOf("\"", indiceInicio);
-        return (indiceInicio != -1 && indiceFin != -1)
-                ? contenidoToml.substring(indiceInicio, indiceFin)
-                : "Mod Forge desconocido";
+
+        for (ArchivoDeMod mod : mods_en_mod) {
+            resultados.addAll(mod.buscarModsCon(termino));
+        }
+
+        return resultados;
     }
-
-	@Override
-	public List<String> clases() {
-		// TODO Auto-generated method stub
-		return clases;
-	}
-
-	@Override
-	public boolean tieneNombreRecursivo(String nombre) {
-		// TODO Auto-generated method stub
-		if(this.nombre().contains(nombre)) {
-			return true;
-		}
-		for(ArchivoDeMod mod:this.mods_en_mods()) {
-		if(mod.tieneNombreRecursivo(nombre))
-			return true;
-		}
-		
-		return false;
-	}
-
-	@Override
-	public String obtenerNombreRecursivo(String nombre) {
-		// TODO Auto-generated method stub
-
-		if (tieneNombreRecursivo(nombre)) {
-			if(this.nombre().contains(nombre)) {
-				return this.ubicacion();
-			}
-			for(ArchivoDeMod mod:this.mods_en_mods()) {
-				if(mod.tieneNombreRecursivo(nombre)) {
-					return mod.obtenerNombreRecursivo(nombre);
-				}
-			}
-			
-		}
-		
-		return null;
-	}
-
-
-	@Override
-	public boolean tieneArchivoRecursivo(String archivo) {
-		// TODO Auto-generated method stub
-		if(this.archivos().contains(archivo)) {
-			return true;
-		}
-		for(ArchivoDeMod mod:this.mods_en_mods()) {
-		if(mod.tieneArchivoRecursivo(archivo))
-			return true;
-		}
-		
-		return false;
-
-	
-	
-	}
-
-	@Override
-	public String obtenerArchivoRecursivo(String archivo) {
-		// TODO Auto-generated method stub
-
-		if (tieneArchivoRecursivo(archivo)) {
-			if(this.archivos().contains(archivo)) {
-				return this.ubicacion()+"!/"+archivo;
-			}
-			for(ArchivoDeMod mod:this.mods_en_mods()) {
-				if(mod.tieneArchivoRecursivo(archivo)) {
-					return mod.obtenerArchivoRecursivo(archivo);
-				}
-			}
-			
-		}
-	return null;
-	}
-
-	@Override
-	public List<String> archivos() {
-		// TODO Auto-generated method stub
-		return archivos = new ArrayList<String>();
-	}
-
-	// Implementación en ModPKZip
-	@Override
-	public List<ArchivoDeMod> buscarModsCon(String termino) {
-	    List<ArchivoDeMod> resultados = new ArrayList<>();
-	    
-	    // Verificar en este mod
-	    boolean tieneArchivo = archivos.contains(termino);
-	    boolean tieneClase = clases.contains(termino);
-	    String packagePath = termino.replace('.', '/');
-	    boolean tienePackage = clases.stream()
-	        .anyMatch(clase -> clase.startsWith(packagePath));
-	    
-	    if (tieneArchivo || tieneClase || tienePackage) {
-	        resultados.add(this);
-	    }
-	    
-	    // Buscar en mods anidados
-	    for (ArchivoDeMod mod : mods_en_mod) {
-	        resultados.addAll(mod.buscarModsCon(termino));
-	    }
-	    
-	    return resultados;
-	}
-
-
-
-
-
-
-
-
-
-
-
-
 }

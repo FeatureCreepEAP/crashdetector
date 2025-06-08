@@ -187,7 +187,7 @@ public class VerificacionDeStackTrace {
 
 		String[] ids = { "java", "minecraft", "minecraftforge","net.minecraftforge", "eventbus", "cpw.", "coremods", "featurecreep", "mixin",
 				"accesstransformer","forge", "authlib","sun.", "jdk.", "java.", "fmlloader", "fmlcore", "org.spongepowered.mixin",
-				"fmlearlydisplay","com.sun.jna", "text2speech","xf:crashdetector:default","crashdetector","srg","org.objectweb.asm","it.unimi","datafixerupper" };
+				"fmlearlydisplay","com.sun.jna", "text2speech","xf:crashdetector:default","crashdetector","srg","org.objectweb.asm","it.unimi","datafixerupper","com.google.gson" };
 
 		for (String id : ids) {
 			if (modid.startsWith(id)) {
@@ -316,24 +316,29 @@ public class VerificacionDeStackTrace {
 		return stackTraces;
 	}
 
-	public List<String> obtenerArchivosJsonEnMixinExceptions(String contento_de_logs) {
-		List<String> archivos_json = new ArrayList<>();
+	public List<String> obtenerArchivosJsonEnMixinExceptions(String contenido_de_logs) {
+	    List<String> archivos_json = new ArrayList<>();
 
-		String[] lineas = contento_de_logs.split("\r?\n");
-		for (String linea : lineas) {
-			if (linea.contains("org.spongepowered.asm.mixin")) {
-				CrashDetectorLogger.log(linea);
-				Matcher matcher = JSON_PATTERN.matcher(linea.trim());
-				while (matcher.find()) {
-					// Group 1 captures the mixin JSON file name
-					if (matcher.group(1) != null) {
-						archivos_json.add(matcher.group(1));
-					}
-				}
-			}
-		}
+	    String[] lineas = contenido_de_logs.split("\r?\n");
+	    for (String linea : lineas) {
+	        if (linea.contains("org.spongepowered.asm.mixin")) {
+	            Matcher matcher = JSON_PATTERN.matcher(linea.trim());
+	            while (matcher.find()) {
+	                if (matcher.group(1) != null) {
+	                    String nombreJson = matcher.group(1).trim();
 
-		return archivos_json;
+	                    // a veces tiene [
+	                    if (nombreJson.startsWith("[")) {
+	                        nombreJson = nombreJson.substring(1); 
+	                    }
+
+	                    archivos_json.add(nombreJson);
+	                }
+	            }
+	        }
+	    }
+
+	    return archivos_json;
 	}
 
 	private boolean isJarNoPermite(String jarName) {

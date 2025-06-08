@@ -69,7 +69,7 @@ public class SpongeMixinConfigsProblematicos implements Verificaciones {
             listItems.add("<li>" + sm + jars_de_sm_string + "</li>");
         }
 
-        html.append(String.join(Verificaciones.nl_html, listItems))
+        html.append(String.join("", listItems))
             .append("</ul>");
 
         return html.toString();
