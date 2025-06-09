@@ -73,6 +73,7 @@ public class CrashDetectorGUI extends JFrame {
         pantalla.setFont(new Font("Consolas", Font.PLAIN, 14));
         try {
             pantalla.setText(new String(Files.readAllBytes(Paths.get(MonitorDePID.local))));
+            pantalla.setCaretPosition(0);//Mas alto
         } catch (IOException e) {
             pantalla.setText("<html><body style='color:#ff6b6b'>Problema con el Informe: " + e.getMessage() + "</body></html>");
         }
@@ -90,6 +91,11 @@ public class CrashDetectorGUI extends JFrame {
         JScrollPane scrollPane = new JScrollPane(pantalla);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         scrollPane.getViewport().setBackground(colorCajaTexto);
+
+        //Mas alto
+        if (scrollPane.getVerticalScrollBar() != null) {
+            scrollPane.getVerticalScrollBar().setValue(0);
+        }
 
         JPanel panelInferior = new JPanel(new BorderLayout(5, 5));
         panelInferior.setBackground(colorFondo);
