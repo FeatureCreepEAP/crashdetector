@@ -10,6 +10,9 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.Instant;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -58,12 +61,23 @@ public class CrashDetectorGUI extends JFrame {
     }
 
     private void inicializarInterfaz() {
-        JEditorPane visorHtml = new JEditorPane();
         if (MonitorDePID.local == null) {
             MonitorDePID.local = GeneradorDeInformacion.generarLocal(consolas, contenidoInforme, tiempoFallo).getAbsolutePath();
         }
+        
+        JEditorPane pantalla = new JEditorPane();
+        pantalla.setContentType("text/html");
+        pantalla.setEditable(false);
+        pantalla.setBackground(colorCajaTexto);
+        pantalla.setForeground(colorEnlace);
+        pantalla.setFont(new Font("Consolas", Font.PLAIN, 14));
+        try {
+            pantalla.setText(new String(Files.readAllBytes(Paths.get(MonitorDePID.local))));
+        } catch (IOException e) {
+            pantalla.setText("<html><body style='color:#ff6b6b'>Problema con el Informe: " + e.getMessage() + "</body></html>");
+        }
 
-        visorHtml.addHyperlinkListener(e -> {
+        pantalla.addHyperlinkListener(e -> {
             if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
                 try {
                     Desktop.getDesktop().browse(e.getURL().toURI());
@@ -73,7 +87,7 @@ public class CrashDetectorGUI extends JFrame {
             }
         });
 
-        JScrollPane scrollPane = new JScrollPane(visorHtml);
+        JScrollPane scrollPane = new JScrollPane(pantalla);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         scrollPane.getViewport().setBackground(colorCajaTexto);
 
