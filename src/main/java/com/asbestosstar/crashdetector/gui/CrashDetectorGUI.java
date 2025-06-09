@@ -53,6 +53,8 @@ public class CrashDetectorGUI extends JFrame {
 	public static final Color colorEnlace = Config.convertirAColor(Config.obtenerInstancia().obtenerColorEnlace());
 
 	private CountDownLatch cerrojo;
+	JEditorPane pantalla = new JEditorPane();
+
 
 	public CrashDetectorGUI(Instant tiempoFallo, CountDownLatch cerrojo) {
 		this.tiempoFallo = tiempoFallo;
@@ -61,7 +63,6 @@ public class CrashDetectorGUI extends JFrame {
 	}
 
 	private void inicializarInterfaz() {
-		JEditorPane pantalla = new JEditorPane();
 		pantalla.setContentType("text/html");
 		pantalla.setEditable(false);
 		pantalla.setBackground(colorCajaTexto);
@@ -166,7 +167,7 @@ public class CrashDetectorGUI extends JFrame {
 		botonCompartir.addActionListener(e -> new DialogoCompartir(this, tiempoFallo).setVisible(true));
 		botonActualizar.addActionListener(e -> recargar());
 		botonAgregar.addActionListener(e -> anadirRegistro());
-		botonAgregar.addActionListener(e -> abrirDirectorioEnExplorador());
+		botonArchivos.addActionListener(e -> abrirDirectorioEnExplorador());;
 		
 
 		panelInferior.add(seccionIdioma, BorderLayout.WEST);
@@ -314,7 +315,14 @@ public class CrashDetectorGUI extends JFrame {
 
 	public void recargar() {
 		MonitorDePID.recargar(false, null);
-		this.inicializarInterfaz();
+		//this.inicializarInterfaz();
+		try {
+			pantalla.setText(new String(Files.readAllBytes(Paths.get(MonitorDePID.local))));
+			pantalla.setCaretPosition(0);// Mas alto
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
     public static void abrirDirectorioEnExplorador() {
