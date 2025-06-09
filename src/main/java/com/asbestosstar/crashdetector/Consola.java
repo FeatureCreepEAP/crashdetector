@@ -31,10 +31,10 @@ public class Consola {
 	public Path archivo;
 	public String enlance;
 	public int linea_original;
-	public boolean nueva;
+	public boolean nueva = false;
 	public String contento_verificar;
 
-	public VerificacionDeStackTrace verificacion_de_stacktrace = new VerificacionDeStackTrace(this);
+	public VerificacionDeStackTrace verificacion_de_stacktrace;
 
 	public static ArrayList<File> archivos_en_lista = new ArrayList<File>();
 	public static String[] tipos_de_registros_de_launcher = { "../../logs/ftb-app-electron.log",
@@ -74,12 +74,12 @@ public class Consola {
 
 	}
 
-	public void finalizarContento(Instant tiempo) {
+	public void finalizarContento(Instant tiempo, boolean ignorar_necesita_estar_despues_de_tiempo) {
 		try {
 
 			Instant epoc = Instant.ofEpochMilli(archivo.toFile().lastModified());
 
-			if (epoc.isAfter(tiempo)) {
+			if (epoc.isAfter(tiempo) || ignorar_necesita_estar_despues_de_tiempo || nueva) {
 				nueva = true;
 				contento = MonitorDePID.leer_archivo(archivo);
 

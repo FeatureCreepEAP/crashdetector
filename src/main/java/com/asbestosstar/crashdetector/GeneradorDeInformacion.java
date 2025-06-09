@@ -21,7 +21,7 @@ import com.asbestosstar.crashdetector.api_sito_registro.NoAPIdeRegistro;
 
 public class GeneradorDeInformacion {
 
-	public static File generarLocal(List<Consola> consolas, StringBuilder constructor, Instant instant) {
+	public static File generarLocal(List<Consola> consolas, Instant instant) {
 		try {
             StringBuilder cons = new StringBuilder();
             cons.append("<center>") // Center-align all content
@@ -42,7 +42,7 @@ public class GeneradorDeInformacion {
 			String pantilla = MonitorDePID.leer_archivo(new File("crash_detector/pantilla.htm").toPath());
 			File ret = new File("crash_detector/" + instant.toString().replace(":", "") + ".htm");
 			FileWriter escribidor = new FileWriter(ret);
-			escribidor.write(pantilla.replace("{constructor}", cons.toString() + "<br>" +MonitorDePID.idioma.infoDeVerificaciones() + "<br>" + constructor.toString()+imagenesLocales()));
+			escribidor.write(pantilla.replace("{constructor}", cons.toString() + "<br>" +MonitorDePID.idioma.infoDeVerificaciones() + "<br>" + MonitorDePID.contenidoInforme.toString()+imagenesLocales()));
 			escribidor.close();
 			return ret;
 		} catch (IOException e) {
@@ -66,7 +66,7 @@ public class GeneradorDeInformacion {
 	        return cons.toString();
 	    }
 
-	public static String compartir(List<Consola> consolas, StringBuilder constructor, Instant instant) throws DemasiadoGrande, ErrorConPublicar, NoAPIdeRegistro {
+	public static String compartir(List<Consola> consolas, Instant instant) throws DemasiadoGrande, ErrorConPublicar, NoAPIdeRegistro {
 		try {
 		       StringBuilder cons = new StringBuilder();
 	            cons.append("<center>")
@@ -82,7 +82,7 @@ public class GeneradorDeInformacion {
 
 			String pantilla = MonitorDePID.leer_archivo(new File("crash_detector/pantilla.htm").toPath());
 			String ret = enviarInforme(
-					pantilla.replace("{constructor}", cons.toString() + "<br>" + MonitorDePID.idioma.infoDeVerificaciones() + "<br>" + constructor.toString()+imagenesParaCompartir()));
+					pantilla.replace("{constructor}", cons.toString() + "<br>" + MonitorDePID.idioma.infoDeVerificaciones() + "<br>" + MonitorDePID.idioma.infoDeVerificaciones() + "<br>" + MonitorDePID.contenidoInforme.toString()+imagenesParaCompartir()));
 			CrashDetectorLogger.log(ret);
 			return ret;
 		} catch (IOException e) {

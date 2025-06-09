@@ -23,6 +23,7 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import com.asbestosstar.crashdetector.analyzador.Analizador;
+import com.asbestosstar.crashdetector.analyzador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analyzador.Verificaciones;
 import com.asbestosstar.crashdetector.grepr.BusquedaArchivos;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
@@ -47,6 +48,13 @@ public class MonitorDePID {
 	public static boolean resultos = false;
 	public static boolean tiene_mensaje_de_registro_launcher_completa = false;
 	public static boolean consola_de_launcher_inyectado = false;
+    public static StringBuilder contenidoInforme;
+
+	
+	/**
+	 * Es diferente en el process diferente
+	 */
+	public static Instant utc=Instant.now();
 
 	public static void main(String[] args) {
 		if (args.length > 0 && args[0].equals("--monitor")) {
@@ -216,7 +224,6 @@ public class MonitorDePID {
 	}
 
 	private static void monitor_proceso(long pid) {
-		Instant utc = Instant.now();
 		List<Consola> consolas_sin_processando = Consola.obtenerConsolas();
 		MonitorDePID.pid = pid;
 		System.out.println(idioma.buscando_para_pid(pid));
@@ -231,7 +238,6 @@ public class MonitorDePID {
 				System.out.println(idioma.pid_esta_muerto(pid));
 				System.out.println(mensaje_de_registro_launcher_completa);
 				CrashDetectorLogger.log(idioma.pid_esta_muerto(pid));
-				StringBuilder constructor = new StringBuilder();
 
 				CrashDetectorLogger.log("Finalizando Contento de Consolas");
 
@@ -261,28 +267,15 @@ public class MonitorDePID {
 				// }
 
 				for (Consola consola : consolas_sin_processando) {
-					consola.finalizarContento(utc);
+					consola.finalizarContento(utc,false);
 					if (consola.nueva) {
 						consolas.add(consola);
 					}
 				}
 
 				Instant luego = Instant.now();
-				finalizarConsolasLentas(utc, luego);
+				recargar(true,luego);
 				System.gc();
-				
-				CrashDetectorLogger.log("Analyzador Consolas");
-
-				String res = analizar(consolas);
-
-				if (res.replace(" ", "").equals("")) {
-					constructor.append(idioma.noResultos());
-				} else {
-					constructor.append(res);
-					resultos = true;
-				}
-
-				CrashDetectorLogger.log("resultdos "+res);
 
 				if (activar()) {
 					CrashDetectorLogger.log("activar ");
@@ -290,7 +283,7 @@ public class MonitorDePID {
 					if (GraphicsEnvironment.isHeadless()) {
 						CrashDetectorLogger.log("headless ");
 
-						local = GeneradorDeInformacion.generarLocal(consolas, constructor, utc).getAbsolutePath();
+						
 						System.out.println(idioma.local_headless(enlance));
 						fin(latch);
 						
@@ -298,7 +291,7 @@ public class MonitorDePID {
 						CrashDetectorLogger.log("no headless ");
 
 						SwingUtilities
-								.invokeLater(() -> new CrashDetectorGUI(consolas, constructor, utc,latch).setVisible(true));
+								.invokeLater(() -> new CrashDetectorGUI(utc,latch).setVisible(true));
 					}
 
 				} else {
@@ -348,7 +341,11 @@ public class MonitorDePID {
 		System.exit(0);
 	}
 
-	private static void finalizarConsolasLentas(Instant utc, Instant luego) {
+	/**
+	 * asegura los registros son completa para 20 segundos
+	 * @param luego el tiempo ACTUAL AHORA
+	 */
+	private static void finalizarConsolasLentas(Instant luego) {
 		// TODO Auto-generated method stub
 		
 	if(Consola.tiene_registro_de_launcher(consolas)&&!consola_de_launcher_inyectado ) {	
@@ -359,7 +356,7 @@ public class MonitorDePID {
 			CrashDetectorLogger.log("reincinar finalizacion " + duration.getSeconds());
 			duration = Duration.between(luego, Instant.now());
 			for (Consola consola : consolas) {
-				consola.finalizarContento(utc);
+				consola.finalizarContento(utc,false);
 			}
 
 		}
@@ -597,5 +594,35 @@ public class MonitorDePID {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param finalizar_contento si quires finalizar_contento
+	 * @param luego el tiempo ACTUAL AHORA, Solo necesitas si quieres finalizar_contento
+	 */
+	public static void recargar(boolean finalizar_contento, Instant luego) {
+		StringBuilder constructor = new StringBuilder();
+		if(finalizar_contento) {
+			finalizarConsolasLentas(luego);
+		}
+		for(Consola consola:consolas) {
+			consola.verificacion_de_stacktrace = new VerificacionDeStackTrace(consola);
+			consola.enlance=null;
+		}
+		CrashDetectorLogger.log("Analyzador Consolas");
+
+		String res = analizar(consolas);
+
+		if (res.replace(" ", "").equals("")) {
+			constructor.append(idioma.noResultos());
+		} else {
+			constructor.append(res);
+			resultos = true;
+		}
+
+		CrashDetectorLogger.log("resultdos "+res);
+		contenidoInforme=constructor;
+		local = GeneradorDeInformacion.generarLocal(consolas, utc).getAbsolutePath();
+	}
+		
 
 }

@@ -120,7 +120,7 @@ public class NoRegistroDeLauncher extends JDialog {
                 CrashDetectorLogger.log("Archivo cd_launcherlog.txt guardado y forzado al disco");
                 
                 Consola cons = new Consola(cd_launcherlog.toPath());
-                cons.finalizarContento(instant);
+                cons.finalizarContento(instant,true);
                 MonitorDePID.consolas.add(cons);
                 MonitorDePID.consola_de_launcher_inyectado=true;
             } catch (IOException ex) {

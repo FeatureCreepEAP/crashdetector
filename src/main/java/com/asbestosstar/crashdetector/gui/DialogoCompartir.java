@@ -65,16 +65,14 @@ public class DialogoCompartir extends JDialog {
 	private final JComboBox<String> comboAPI;
 	private final JComboBox<String> comboSitioRegistro;
 	private final JCheckBox checkAnonimizar;
-	public StringBuilder contenidoInforme;
 	public Instant instant;
 	private final JTextField campoEnlaceReporte;
 	private final JButton botonCompartirTodos;
 
-	public DialogoCompartir(JFrame padre, StringBuilder contenidoInforme, Instant instant) {
+	public DialogoCompartir(JFrame padre, Instant instant) {
 		super(padre, "Compartir Registros", true);
 		setSize(900, 700);
 		setLocationRelativeTo(padre);
-		this.contenidoInforme = contenidoInforme;
 		this.instant = instant;
 
 		JPanel panelPrincipal = new JPanel(new BorderLayout(10, 10));
@@ -322,7 +320,7 @@ public class DialogoCompartir extends JDialog {
 		}
 
 		if (!seleccionados.isEmpty()) {
-			String enlace = GeneradorDeInformacion.compartir(seleccionados, contenidoInforme, instant);
+			String enlace = GeneradorDeInformacion.compartir(seleccionados, instant);
 			campoEnlaceReporte.setText(enlace);
 			MonitorDePID.enlance = enlace;
 
