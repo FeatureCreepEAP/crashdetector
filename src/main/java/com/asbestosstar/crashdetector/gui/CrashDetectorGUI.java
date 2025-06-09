@@ -107,9 +107,11 @@ public class CrashDetectorGUI extends JFrame {
 
         JComboBox<String> comboBoxIdioma = new JComboBox<>(new String[] { "Español", "English", "Français" });
         comboBoxIdioma.setMaximumSize(new Dimension(200, 30));
+       if(!esMac()) {
         comboBoxIdioma.setBackground(colorBoton);
         comboBoxIdioma.setForeground(colorTexto);
-
+       }
+       
         panelDesplegableIdioma.add(iconoIdioma);
         panelDesplegableIdioma.add(comboBoxIdioma);
 
@@ -130,15 +132,24 @@ public class CrashDetectorGUI extends JFrame {
         seccionIdioma.add(panelCasilla);
 
         JButton botonQuickFix = new JButton("QuickFix");
-        botonQuickFix.disable();
-        botonQuickFix.setBackground(colorBoton);
-        botonQuickFix.setForeground(colorTexto);
-        botonQuickFix.setFont(botonQuickFix.getFont().deriveFont(Font.BOLD, 16f));
+        botonQuickFix.setEnabled(false);
         botonQuickFix.setAlignmentX(JComponent.CENTER_ALIGNMENT);
         botonQuickFix.setMinimumSize(new Dimension(150, 40));
         botonQuickFix.setMaximumSize(new Dimension(300, 40));
         botonQuickFix.setPreferredSize(new Dimension(200, 40));
-        botonQuickFix.setContentAreaFilled(true);
+        botonQuickFix.setFocusPainted(false);
+
+        if (esMac()) {
+            botonQuickFix.setContentAreaFilled(false); // Estilo nativo de macOS
+        } else {
+            botonQuickFix.setFont(botonQuickFix.getFont().deriveFont(Font.BOLD, 16f));
+            botonQuickFix.setBackground(colorBoton);
+            botonQuickFix.setForeground(colorTexto); // Color original en otros sistemas
+            botonQuickFix.setContentAreaFilled(true);
+            botonQuickFix.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        }
+
+        panelInferior.add(botonQuickFix, BorderLayout.CENTER);
 
         JPanel botonesDerecha = new JPanel(new GridLayout(1, 5, 10, 10));
         botonesDerecha.setBackground(colorFondo);
