@@ -2,15 +2,14 @@ package com.asbestosstar.crashdetector.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Point;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.time.Instant;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -19,10 +18,15 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.HyperlinkEvent;
 
@@ -33,143 +37,181 @@ import com.asbestosstar.crashdetector.GeneradorDeInformacion;
 import com.asbestosstar.crashdetector.MonitorDePID;
 
 public class CrashDetectorGUI extends JFrame {
+    private final StringBuilder contenidoInforme;
+    private final Instant tiempoFallo;
+    private final List<Consola> consolas;
 
-	private final StringBuilder contenidoInforme;
-	private final Instant tiempoFallo;
-	private final List<Consola> consolas;
+    public static final Color colorFondo = Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo());
+    public static final Color colorTexto = Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto());
+    public static final Color colorBoton = Config.convertirAColor(Config.obtenerInstancia().obtenerColorBoton());
+    public static final Color colorCajaTexto = Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto());
+    public static final Color colorEnlace = Config.convertirAColor(Config.obtenerInstancia().obtenerColorEnlace());
 
-	// Colores configurables
-	public static final Color colorFondo = Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo());
-	public static final Color colorTexto = Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto());
-	public static final Color colorBoton = Config.convertirAColor(Config.obtenerInstancia().obtenerColorBoton());
-	public static final Color colorCajaTexto = Config
-			.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto());
-	public static final Color colorEnlace = Config.convertirAColor(Config.obtenerInstancia().obtenerColorEnlace());
+    private CountDownLatch cerrojo;
 
-	CountDownLatch latch;
+    public CrashDetectorGUI(List<Consola> consolas, StringBuilder contenidoInforme, Instant tiempoFallo, CountDownLatch cerrojo) {
+        this.contenidoInforme = contenidoInforme;
+        this.tiempoFallo = tiempoFallo;
+        this.consolas = consolas;
+        this.cerrojo = cerrojo;
+        inicializarInterfaz();
+    }
 
-	public CrashDetectorGUI(List<Consola> consolas, StringBuilder contenidoInforme, Instant tiempoFallo,
-			CountDownLatch latch) {
-		this.contenidoInforme = contenidoInforme;
-		this.tiempoFallo = tiempoFallo;
-		this.consolas = consolas;
-		this.latch = latch;
-		inicializarInterfaz();
-	}
+    private void inicializarInterfaz() {
+        JEditorPane visorHtml = new JEditorPane();
+        if (MonitorDePID.local == null) {
+            MonitorDePID.local = GeneradorDeInformacion.generarLocal(consolas, contenidoInforme, tiempoFallo).getAbsolutePath();
+        }
 
-	private void inicializarInterfaz() {
-		// Generar informe HTML si es necesario
-		if (MonitorDePID.local == null) {
-			MonitorDePID.local = GeneradorDeInformacion.generarLocal(consolas, contenidoInforme, tiempoFallo)
-					.getAbsolutePath();
-		}
+        visorHtml.addHyperlinkListener(e -> {
+            if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+                try {
+                    Desktop.getDesktop().browse(e.getURL().toURI());
+                } catch (Exception ex) {
+                    CrashDetectorLogger.logException(ex);
+                }
+            }
+        });
 
-		setTitle("CrashDetector");
-		setSize(800, 600);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setLocationRelativeTo(null);
-		setLayout(new BorderLayout());
+        JScrollPane scrollPane = new JScrollPane(visorHtml);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
+        scrollPane.getViewport().setBackground(colorCajaTexto);
 
-		// Visor de contenido HTML
-		JEditorPane visorHtml = new JEditorPane();
-		visorHtml.setContentType("text/html");
-		visorHtml.setEditable(false);
-		visorHtml.setBackground(colorCajaTexto);
-		visorHtml.setForeground(colorEnlace);
-		visorHtml.setFont(new Font("Consolas", Font.PLAIN, 14));
+        JPanel panelInferior = new JPanel(new BorderLayout(5, 5));
+        panelInferior.setBackground(colorFondo);
+        panelInferior.setBorder(new EmptyBorder(10, 20, 10, 20));
 
-		try {
-			visorHtml.setText(new String(Files.readAllBytes(Paths.get(MonitorDePID.local))));
-		} catch (IOException e) {
-			visorHtml.setText(
-					"<html><body style='color:#ff6b6b'>Problema con el Informe: " + e.getMessage() + "</body></html>");
-		}
+        JPanel seccionIdioma = new JPanel();
+        seccionIdioma.setLayout(new BoxLayout(seccionIdioma, BoxLayout.Y_AXIS));
+        seccionIdioma.setBackground(colorFondo);
 
-		visorHtml.addHyperlinkListener(e -> {
-			if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-				try {
-					Desktop.getDesktop().browse(e.getURL().toURI());
-				} catch (Exception ex) {
-					CrashDetectorLogger.logException(ex);
-				}
-			}
-		});
+        JPanel panelDesplegableIdioma = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
+        panelDesplegableIdioma.setBackground(colorFondo);
 
-		JScrollPane panelDesplazamiento = new JScrollPane(visorHtml);
-		panelDesplazamiento.setBorder(BorderFactory.createEmptyBorder());
-		panelDesplazamiento.getViewport().setBackground(colorCajaTexto);
-		panelDesplazamiento.getViewport().setViewPosition(new Point(0, 0));
+        JLabel iconoIdioma = new JLabel("🌐");
+        iconoIdioma.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 20));
 
-		// Panel inferior para controles
-		JPanel panelInferior = new JPanel();
-		panelInferior.setLayout(new BorderLayout());
-		panelInferior.setBackground(colorFondo);
-		panelInferior.setBorder(new EmptyBorder(15, 40, 15, 40));
+        JComboBox<String> comboBoxIdioma = new JComboBox<>(new String[] { "Español", "English", "Français" });
+        comboBoxIdioma.setMaximumSize(new Dimension(200, 30));
+        comboBoxIdioma.setBackground(colorBoton);
+        comboBoxIdioma.setForeground(colorTexto);
 
-		// Panel principal para botones
-		JPanel panelControles = new JPanel();
-		panelControles.setLayout(new BoxLayout(panelControles, BoxLayout.Y_AXIS));
-		panelControles.setBackground(colorFondo);
+        panelDesplegableIdioma.add(iconoIdioma);
+        panelDesplegableIdioma.add(comboBoxIdioma);
 
-		// Panel de botones
-		JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
-		panelBotones.setBackground(colorFondo);
+        JCheckBox casillaVerificacionSistema = new JCheckBox("Usar idioma del sistema");
+        casillaVerificacionSistema.setForeground(colorTexto);
+        casillaVerificacionSistema.setBackground(colorFondo);
+        casillaVerificacionSistema.setOpaque(false);
+        casillaVerificacionSistema.setHorizontalAlignment(SwingConstants.LEFT);
+        casillaVerificacionSistema.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        casillaVerificacionSistema.setMaximumSize(new Dimension(200, 30));
 
-		// Botones
-		JButton botonAnalisis = new JButton(MonitorDePID.idioma.analisisAvanzado());
-		JButton botonCompartir = new JButton(MonitorDePID.idioma.texto_de_buton_compartir_enlance());
-		JButton botonQuickFix = new JButton("QuickFix");
+        JPanel panelCasilla = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
+        panelCasilla.setBackground(colorFondo);
+        panelCasilla.add(casillaVerificacionSistema);
 
-		// Configuración de botones
-		estilizarBoton(botonAnalisis);
-		estilizarBoton(botonCompartir);
-		estilizarBoton(botonQuickFix);
-		botonQuickFix.setEnabled(false);
+        seccionIdioma.add(panelDesplegableIdioma);
+        seccionIdioma.add(Box.createVerticalStrut(5));
+        seccionIdioma.add(panelCasilla);
 
-		// Agregar botones al panel
-		panelBotones.add(botonAnalisis);
-		panelBotones.add(botonCompartir);
-		panelBotones.add(botonQuickFix);
+        JButton botonQuickFix = new JButton("QuickFix");
+        botonQuickFix.disable();
+        botonQuickFix.setBackground(colorBoton);
+        botonQuickFix.setForeground(colorTexto);
+        botonQuickFix.setFont(botonQuickFix.getFont().deriveFont(Font.BOLD, 16f));
+        botonQuickFix.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+        botonQuickFix.setMinimumSize(new Dimension(150, 40));
+        botonQuickFix.setMaximumSize(new Dimension(300, 40));
+        botonQuickFix.setPreferredSize(new Dimension(200, 40));
+        botonQuickFix.setContentAreaFilled(true);
 
-		// Agregar paneles al contenedor principal
-		panelControles.add(panelBotones);
-		panelControles.add(Box.createVerticalStrut(5));
+        JPanel botonesDerecha = new JPanel(new GridLayout(1, 5, 10, 10));
+        botonesDerecha.setBackground(colorFondo);
 
-		// Agregar acciones
-		botonAnalisis.addActionListener(e -> new AnalisisAvanzadoGUI().setVisible(true));
-		botonCompartir
-				.addActionListener(e -> new DialogoCompartir(this, contenidoInforme, tiempoFallo).setVisible(true));
+        JButton botonConfiguracion = añadirBotonEmoji(botonesDerecha, "⚙️", "Configuración");
+        JButton botonArchivos = añadirBotonEmoji(botonesDerecha, "📁", "Archivos");
+        JButton botonActualizar = añadirBotonEmoji(botonesDerecha, "🔄", "Actualizar");
+        JButton botonCompartir = añadirBotonEmoji(botonesDerecha, "📤", "Compartir");
+        JButton botonAgregar = añadirBotonEmoji(botonesDerecha, "➕", "Agregar");
 
-		// Agregar componentes a la ventana
-		add(panelDesplazamiento, BorderLayout.CENTER);
-		add(panelInferior, BorderLayout.SOUTH);
-		panelInferior.add(panelControles, BorderLayout.CENTER);
-	}
+        botonCompartir.addActionListener(e -> new DialogoCompartir(this, contenidoInforme, tiempoFallo).setVisible(true));
 
-	@Override
-	public void dispose() {
-		super.dispose();
-		MonitorDePID.fin(latch);
-	}
+        panelInferior.add(seccionIdioma, BorderLayout.WEST);
+        panelInferior.add(botonQuickFix, BorderLayout.CENTER);
+        panelInferior.add(botonesDerecha, BorderLayout.EAST);
 
-	private void estilizarBoton(JButton boton) {
-		if (!esMac()) {
-			boton.setAlignmentX(Component.CENTER_ALIGNMENT);
-			boton.setBackground(colorBoton);
-			boton.setContentAreaFilled(true);
-			boton.setForeground(colorTexto);
-			boton.setFocusPainted(false);
-			boton.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-			boton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        JPanel barraLateralDerecha = new JPanel();
+        barraLateralDerecha.setLayout(new BoxLayout(barraLateralDerecha, BoxLayout.Y_AXIS));
+        barraLateralDerecha.setBackground(colorBoton.darker());
+        barraLateralDerecha.setPreferredSize(new Dimension(150, 0));
 
-		} else {
-			boton.setContentAreaFilled(false);
-		}
-		boton.setMaximumSize(new Dimension(200, 40));
-	}
+        añadirBotonBarraLateral(barraLateralDerecha, "Cómo Jugar?");
+        añadirBotonBarraLateral(barraLateralDerecha, "Ayuda TLauncher");
+        añadirBotonBarraLateral(barraLateralDerecha, "Instalar Piel");
+        añadirBotonBarraLateral(barraLateralDerecha, "Animación de Capa");
 
-	public static boolean esMac() {
-		return System.getProperty("os.name").toLowerCase().contains("mac");
-	}
+        setLayout(new BorderLayout(5, 5));
+        add(scrollPane, BorderLayout.CENTER);
+        add(panelInferior, BorderLayout.SOUTH);
+        add(barraLateralDerecha, BorderLayout.EAST);
 
+        setTitle("CrashDetector");
+        setSize(1000, 650);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
+    }
+
+    private JButton añadirBotonEmoji(JPanel panel, String emoji, String tooltip) {
+        JButton boton = new JButton(emoji);
+        boton.setToolTipText(tooltip);
+        boton.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 20));
+        boton.setRolloverEnabled(true);
+        boton.setContentAreaFilled(false);
+        boton.setBorderPainted(false);
+        boton.setFocusPainted(false);
+        boton.setPreferredSize(new Dimension(40, 40));
+        boton.setMaximumSize(new Dimension(40, 40));
+        boton.setMinimumSize(new Dimension(40, 40));
+
+        boton.setForeground(colorTexto);
+        boton.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent evt) {
+                boton.setBackground(colorBoton.brighter());
+                boton.setForeground(Color.BLACK);
+            }
+            public void mouseExited(MouseEvent evt) {
+                boton.setBackground(colorFondo);
+                boton.setForeground(colorTexto);
+            }
+        });
+
+        panel.add(boton);
+        return boton;
+    }
+
+    private void añadirBotonBarraLateral(JPanel panel, String texto) {
+        JButton boton = new JButton(texto);
+        boton.setBackground(colorBoton.darker());
+        boton.setForeground(colorTexto);
+        boton.setFont(boton.getFont().deriveFont(Font.BOLD, 14f));
+        boton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+        boton.setMargin(new Insets(10, 20, 10, 20));
+        boton.setMaximumSize(new Dimension(130, 40));
+        boton.setMinimumSize(new Dimension(130, 40));
+        boton.setPreferredSize(new Dimension(130, 40));
+        boton.setContentAreaFilled(true);
+        boton.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        panel.add(boton);
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        MonitorDePID.fin(cerrojo);
+    }
+
+    private boolean esMac() {
+        return System.getProperty("os.name").toLowerCase().contains("mac");
+    }
 }
