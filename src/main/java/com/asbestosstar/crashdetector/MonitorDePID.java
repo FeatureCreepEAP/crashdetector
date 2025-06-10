@@ -29,7 +29,6 @@ import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.grepr.BusquedaArchivos;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.NoRegistroDeLauncher;
-import com.asbestosstar.crashdetector.gui.SelectorIdiomaGUI;
 
 public class MonitorDePID {
 
@@ -111,6 +110,12 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/gura.png",new File("crash_detector/gura.png"));
 		copiarACarpetaDesdeJar("/imagenes/nanashi_mumei.png",new File("crash_detector/nanashi_mumei.png"));
 		copiarACarpetaDesdeJar("/imagenes/shion.png",new File("crash_detector/shion.png"));
+
+		copiarACarpetaDesdeJar("/imagenes/boton_agregar.png",new File("crash_detector/boton_agregar.png"));
+		copiarACarpetaDesdeJar("/imagenes/boton_compartir.png",new File("crash_detector/boton_compartir.png"));
+		copiarACarpetaDesdeJar("/imagenes/boton_actualizar.png",new File("crash_detector/boton_actualizar.png"));
+		copiarACarpetaDesdeJar("/imagenes/boton_archivos.png",new File("crash_detector/boton_archivos.png"));
+		copiarACarpetaDesdeJar("/imagenes/boton_config.png",new File("crash_detector/boton_config.png"));
 
 		
 		
@@ -583,6 +588,11 @@ public class MonitorDePID {
 			}
 		}
 	}
+	
+	
+	
+	
+	
 	
 	/**
 	 * 

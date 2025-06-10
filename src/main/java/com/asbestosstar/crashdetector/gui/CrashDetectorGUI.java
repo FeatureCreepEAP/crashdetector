@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -23,6 +24,7 @@ import java.util.concurrent.CountDownLatch;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -222,11 +224,11 @@ public class CrashDetectorGUI extends JFrame {
 		JPanel botonesDerecha = new JPanel(new GridLayout(1, 5, 10, 10));
 		botonesDerecha.setBackground(colorFondo);
 
-		JButton botonAgregar = añadirBotonEmoji(botonesDerecha, "➕", "Agregar");
-		JButton botonCompartir = añadirBotonEmoji(botonesDerecha, "📤", "Compartir");
-		JButton botonActualizar = añadirBotonEmoji(botonesDerecha, "🔄", "Actualizar");
-		JButton botonArchivos = añadirBotonEmoji(botonesDerecha, "📁", "Archivos");
-		JButton botonConfiguracion = añadirBotonEmoji(botonesDerecha, "⚙️", "Configuración");
+        JButton botonAgregar = añadirBotonImagen(botonesDerecha, "crash_detector/boton_agregar.png", "Agregar");
+        JButton botonCompartir = añadirBotonImagen(botonesDerecha, "crash_detector/boton_compartir.png", "Compartir");
+        JButton botonActualizar = añadirBotonImagen(botonesDerecha, "crash_detector/boton_actualizar.png", "Actualizar");
+        JButton botonArchivos = añadirBotonImagen(botonesDerecha, "crash_detector/boton_archivos.png", "Archivos");
+        JButton botonConfiguracion = añadirBotonImagen(botonesDerecha, "crash_detector/boton_config.png", "Configuración");
 
 		botonCompartir.addActionListener(e -> new DialogoCompartir(this, tiempoFallo).setVisible(true));
 		botonActualizar.addActionListener(e -> recargar());
@@ -417,6 +419,50 @@ public class CrashDetectorGUI extends JFrame {
         } 
     }
 
+    
+
+    // 替换 emoji 按钮为图像按钮
+    private JButton añadirBotonImagen(JPanel panel, String imagePath, String tooltip) {
+        JButton boton = new JButton();
+        boton.setToolTipText(tooltip);
+        
+        // 加载图像
+        ImageIcon originalIcon = new ImageIcon(imagePath);
+        Image image = originalIcon.getImage();
+        
+        // 调整图像大小（64x64）
+        int BUTTON_SIZE = 64;  // 设置按钮大小
+        Image scaledImage = image.getScaledInstance(BUTTON_SIZE - 10, BUTTON_SIZE - 10, Image.SCALE_SMOOTH);
+        ImageIcon icon = new ImageIcon(scaledImage);
+        
+        // 设置按钮样式
+        boton.setIcon(icon);
+        boton.setText("");  // 隐藏文本
+        boton.setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
+        boton.setBackground(colorBoton);
+        boton.setBorder(BorderFactory.createLineBorder(colorFondo, 1));
+        boton.setFocusPainted(false);
+        boton.setMargin(new Insets(0, 0, 0, 0));  // 减少内边距
+        
+        // 悬停效果
+        boton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                boton.setBackground(colorBoton.brighter());
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                boton.setBackground(colorFondo);
+            }
+        });
+
+        panel.add(boton);
+        return boton;
+    }
+    
+    
+    
 	@Override
 	public void dispose() {
 		super.dispose();
