@@ -245,6 +245,21 @@ public class CrashDetectorGUI extends JFrame {
 		barraLateralDerecha.setBackground(colorBoton.darker());
 		barraLateralDerecha.setPreferredSize(new Dimension(150, 0));
 
+		
+		JLabel logoLabel = new JLabel();
+	    logoLabel.setBackground(colorBoton.darker());
+	    logoLabel.setOpaque(true);
+
+	    // 加载 logo 图片
+	    ImageIcon logoIcon = new ImageIcon("crash_detector/cd_logo.png");
+	    Image logoImagen = logoIcon.getImage();
+	    Image escalarLogo = logoImagen.getScaledInstance(120, -1, Image.SCALE_SMOOTH); // -1 保持宽高比
+	    logoLabel.setIcon(new ImageIcon(escalarLogo));
+	    logoLabel.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+	    logoLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // 周围留白
+
+		
+		
 		// Botón Volver (top)
 		JButton botonVolver = new JButton("Volver");
 		estilizarBoton(botonVolver);
@@ -254,6 +269,7 @@ public class CrashDetectorGUI extends JFrame {
 //TODO
 			botonVolver.setEnabled(false);
 		});
+	    barraLateralDerecha.add(logoLabel);
 		barraLateralDerecha.add(botonVolver);
 		barraLateralDerecha.add(Box.createVerticalStrut(10)); // Espaciado entre botones
 

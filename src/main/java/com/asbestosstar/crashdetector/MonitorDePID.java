@@ -116,6 +116,7 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/boton_actualizar.png",new File("crash_detector/boton_actualizar.png"));
 		copiarACarpetaDesdeJar("/imagenes/boton_archivos.png",new File("crash_detector/boton_archivos.png"));
 		copiarACarpetaDesdeJar("/imagenes/boton_config.png",new File("crash_detector/boton_config.png"));
+		copiarACarpetaDesdeJar("/imagenes/cd_logo.png",new File("crash_detector/cd_logo.png"));
 
 		
 		
