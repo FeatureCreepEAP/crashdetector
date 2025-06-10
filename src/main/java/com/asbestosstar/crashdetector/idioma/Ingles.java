@@ -760,5 +760,10 @@ public String cargando() {
 	return "Loading";
 }
 
+@Override
+public String codigo() {
+	// TODO Auto-generated method stub
+	return "en";
+}
 
 }

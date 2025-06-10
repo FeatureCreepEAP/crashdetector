@@ -762,6 +762,12 @@ public String cargando() {
     return "로딩 중";
 }
 
+@Override
+public String codigo() {
+	// TODO Auto-generated method stub
+	return "ko";
+}
+
 
 
 }

@@ -757,7 +757,11 @@ public String cargando() {
     return "読み込み中";
 }
 
-
+@Override
+public String codigo() {
+	// TODO Auto-generated method stub
+	return "ja";
+}
 
 
 

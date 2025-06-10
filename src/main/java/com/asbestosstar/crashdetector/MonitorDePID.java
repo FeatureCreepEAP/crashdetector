@@ -248,9 +248,6 @@ public class MonitorDePID {
 				consolas_sin_processando.addAll(Consola.obtenerConsolas());
 
 				if (activar() && !GraphicsEnvironment.isHeadless()) {
-					if (!Idioma.archivo.exists()) {
-						obtainerIdioma();
-					}
 					if (!Consola.tiene_registro_de_launcher(consolas_sin_processando)) {
 						obtenerCosolaDeLauncher(utc);
 					}
@@ -372,14 +369,6 @@ public class MonitorDePID {
 		return analizador.toString();
 	}
 
-	private static void obtainerIdioma() {
-		// TODO Auto-generated method stub
-		if (!Idioma.archivo.exists() && !GraphicsEnvironment.isHeadless()) {
-			SelectorIdiomaGUI.obtenerConsolaDeLauncher();
-			idioma = Idioma.detectar();
-		}
-
-	}
 
 	// Compatible approach (Java 7+)
 	public static String leer_archivo(Path path) throws IOException {
@@ -602,6 +591,7 @@ public class MonitorDePID {
 	 */
 	public static void recargar(boolean finalizar_contento, Instant luego) {
 		StringBuilder constructor = new StringBuilder();
+		Buscardor.mods.clear();
 		Buscardor.cargado=false;
 		if(finalizar_contento) {
 			finalizarConsolasLentas(luego);

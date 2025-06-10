@@ -763,7 +763,11 @@ public String escanear() {
 public String cargando() {
     return "Загрузка";
 }
-
+@Override
+public String codigo() {
+	// TODO Auto-generated method stub
+	return "ru";
+}
 
 
 

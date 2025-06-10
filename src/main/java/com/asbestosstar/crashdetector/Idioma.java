@@ -1,16 +1,11 @@
 package com.asbestosstar.crashdetector;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.Set;
-
-import javax.swing.Icon;
 
 import com.asbestosstar.crashdetector.idioma.Arabe;
 import com.asbestosstar.crashdetector.idioma.Chino;
@@ -401,6 +396,8 @@ public interface Idioma {
 	public String escanear();
 
 	public String cargando();
+
+	public String codigo();
 
 	// public String advertenciaMalwareFalso();
 

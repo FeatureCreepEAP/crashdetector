@@ -803,6 +803,12 @@ public String cargando() {
     return "Cargando";
 }
 
+@Override
+public String codigo() {
+	// TODO Auto-generated method stub
+	return "es";
+}
+
 
 
 }

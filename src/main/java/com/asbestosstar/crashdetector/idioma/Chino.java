@@ -756,7 +756,11 @@ public String cargando() {
     return "加载中";
 }
 
-
+@Override
+public String codigo() {
+	// TODO Auto-generated method stub
+	return "zh";
+}
 
 
 

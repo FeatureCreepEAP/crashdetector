@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
@@ -14,7 +16,7 @@ import com.asbestosstar.crashdetector.anon.AnonimizadorDeRuta;
 public class Buscardor {
 
 	
-	public static List<ArchivoDeMod> mods = new ArrayList<ArchivoDeMod>();
+	public static Set<ArchivoDeMod> mods = new HashSet<ArchivoDeMod>();
 
 	public static boolean cargado = false;
 	

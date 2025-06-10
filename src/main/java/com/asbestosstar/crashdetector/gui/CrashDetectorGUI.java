@@ -11,12 +11,13 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.time.Instant;
-import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 import javax.swing.BorderFactory;
@@ -40,6 +41,7 @@ import javax.swing.event.HyperlinkEvent;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
+import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
 
 public class CrashDetectorGUI extends JFrame {
@@ -109,12 +111,54 @@ public class CrashDetectorGUI extends JFrame {
 		JLabel iconoIdioma = new JLabel("🌐");
 		iconoIdioma.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 20));
 
-		JComboBox<String> comboBoxIdioma = new JComboBox<>(new String[] { "Español", "English", "Français" });
+		String[] idiomas = {
+		        "Español", "English", "العربية", "Português", 
+		        "فارسی", "Русский", "简体中文", "Esperanto", 
+		        "日本語", "한국어"
+		    };
+		
+		
+		JComboBox<String> comboBoxIdioma = new JComboBox<>(idiomas);
 		comboBoxIdioma.setMaximumSize(new Dimension(200, 30));
 		if (!esMac()) {
 			comboBoxIdioma.setBackground(colorBoton);
 			comboBoxIdioma.setForeground(colorTexto);
 		}
+		
+	    String currentLangCode = MonitorDePID.idioma.codigo();
+	    switch (currentLangCode) {
+	        case "es": comboBoxIdioma.setSelectedItem("Español"); break;
+	        case "en": comboBoxIdioma.setSelectedItem("English"); break;
+	        case "ar": comboBoxIdioma.setSelectedItem("العربية"); break;
+	        case "pt": comboBoxIdioma.setSelectedItem("Português"); break;
+	        case "fa": comboBoxIdioma.setSelectedItem("فارسی"); break;
+	        case "ru": comboBoxIdioma.setSelectedItem("Русский"); break;
+	        case "zh": comboBoxIdioma.setSelectedItem("简体中文"); break;
+	        case "eo": comboBoxIdioma.setSelectedItem("Esperanto"); break;
+	        case "ja": comboBoxIdioma.setSelectedItem("日本語"); break;
+	        case "ko": comboBoxIdioma.setSelectedItem("한국어"); break;
+	        default: comboBoxIdioma.setSelectedItem("Español");
+	    }
+	    
+	    comboBoxIdioma.addActionListener(e -> {
+	        String seleccion = (String) comboBoxIdioma.getSelectedItem();
+	        String codigoIdioma = obtenerCodigoIdioma(seleccion);
+	        
+	        if (codigoIdioma != null) {
+	            try (BufferedWriter writer = Files.newBufferedWriter(
+	                Idioma.archivo.toPath(), 
+	                StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
+	            	Idioma.archivo.getParentFile().mkdirs();
+	                writer.write(codigoIdioma);
+	            } catch (IOException ex) {
+	                CrashDetectorLogger.logException(ex);
+	            }
+	        }
+            MonitorDePID.idioma = Idioma.detectar();
+            recargar();
+	    });
+	    
+	    
 
 		panelDesplegableIdioma.add(iconoIdioma);
 		panelDesplegableIdioma.add(comboBoxIdioma);
@@ -127,6 +171,26 @@ public class CrashDetectorGUI extends JFrame {
 		casillaVerificacionSistema.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		casillaVerificacionSistema.setMaximumSize(new Dimension(200, 30));
 
+		
+	    casillaVerificacionSistema.addActionListener(e -> {
+	        if (casillaVerificacionSistema.isSelected()) {
+	            boolean usarSistema = casillaVerificacionSistema.isSelected();
+	            
+	            comboBoxIdioma.setEnabled(!usarSistema);
+	            
+	            if (usarSistema) {
+	                try {
+	                    Files.deleteIfExists(Idioma.archivo.toPath());
+		                MonitorDePID.idioma = Idioma.detectar();
+	                    recargar();
+	                } catch (IOException ex) {
+	                    CrashDetectorLogger.logException(ex);
+	                }
+	            }
+	        }
+	    });
+		
+		
 		JPanel panelCasilla = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
 		panelCasilla.setBackground(colorFondo);
 		panelCasilla.add(casillaVerificacionSistema);
@@ -158,11 +222,11 @@ public class CrashDetectorGUI extends JFrame {
 		JPanel botonesDerecha = new JPanel(new GridLayout(1, 5, 10, 10));
 		botonesDerecha.setBackground(colorFondo);
 
-		JButton botonConfiguracion = añadirBotonEmoji(botonesDerecha, "⚙️", "Configuración");
-		JButton botonArchivos = añadirBotonEmoji(botonesDerecha, "📁", "Archivos");
-		JButton botonActualizar = añadirBotonEmoji(botonesDerecha, "🔄", "Actualizar");
-		JButton botonCompartir = añadirBotonEmoji(botonesDerecha, "📤", "Compartir");
 		JButton botonAgregar = añadirBotonEmoji(botonesDerecha, "➕", "Agregar");
+		JButton botonCompartir = añadirBotonEmoji(botonesDerecha, "📤", "Compartir");
+		JButton botonActualizar = añadirBotonEmoji(botonesDerecha, "🔄", "Actualizar");
+		JButton botonArchivos = añadirBotonEmoji(botonesDerecha, "📁", "Archivos");
+		JButton botonConfiguracion = añadirBotonEmoji(botonesDerecha, "⚙️", "Configuración");
 
 		botonCompartir.addActionListener(e -> new DialogoCompartir(this, tiempoFallo).setVisible(true));
 		botonActualizar.addActionListener(e -> recargar());
@@ -223,6 +287,22 @@ public class CrashDetectorGUI extends JFrame {
 		setSize(1000, 650);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
+	}
+	
+	private String obtenerCodigoIdioma(String nombreIdioma) {
+	    switch (nombreIdioma) {
+	        case "Español": return "es";
+	        case "English": return "en";
+	        case "العربية": return "ar";
+	        case "Português": return "pt";
+	        case "فارسی": return "fa";
+	        case "Русский": return "ru";
+	        case "简体中文": return "zh";
+	        case "Esperanto": return "eo";
+	        case "日本語": return "ja";
+	        case "한국어": return "ko";
+	        default: return "es";
+	    }
 	}
 
 	private void anadirRegistro() {

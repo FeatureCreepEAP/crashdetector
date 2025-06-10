@@ -764,7 +764,11 @@ public String cargando() {
     return "در حال بارگذاری";
 }
 
-
+@Override
+public String codigo() {
+	// TODO Auto-generated method stub
+	return "fa";
+}
 
 
 }

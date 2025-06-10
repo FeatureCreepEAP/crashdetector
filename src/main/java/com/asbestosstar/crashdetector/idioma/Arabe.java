@@ -764,6 +764,12 @@ public String cargando() {
     return "جارٍ التحميل";
 }
 
+@Override
+public String codigo() {
+	// TODO Auto-generated method stub
+	return "ar";
+}
+
 
 
 
