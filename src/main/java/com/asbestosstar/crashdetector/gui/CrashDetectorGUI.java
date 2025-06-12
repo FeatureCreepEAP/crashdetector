@@ -58,7 +58,11 @@ public class CrashDetectorGUI extends JFrame {
 
 	private CountDownLatch cerrojo;
 	JEditorPane pantalla = new JEditorPane();
-
+	JScrollPane scrollPane = new JScrollPane(pantalla);
+	ConfigPanel panelConfiguracion = new ConfigPanel(this);
+	JButton botonVolver = new JButton("Volver");
+	JButton botonConfiguracion;
+	JPanel contenidoPrincipal = new JPanel(new BorderLayout());
 
 	public CrashDetectorGUI(Instant tiempoFallo, CountDownLatch cerrojo) {
 		this.tiempoFallo = tiempoFallo;
@@ -90,7 +94,6 @@ public class CrashDetectorGUI extends JFrame {
 			}
 		});
 
-		JScrollPane scrollPane = new JScrollPane(pantalla);
 		scrollPane.setBorder(BorderFactory.createEmptyBorder());
 		scrollPane.getViewport().setBackground(colorCajaTexto);
 
@@ -225,16 +228,25 @@ public class CrashDetectorGUI extends JFrame {
 		botonesDerecha.setBackground(colorFondo);
 
         JButton botonAgregar = añadirBotonImagen(botonesDerecha, "crash_detector/boton_agregar.png", "Agregar");
-        JButton botonCompartir = añadirBotonImagen(botonesDerecha, "crash_detector/boton_compartir.png", "Compartir");
+        JButton botonCompartir = añadirBotonImagen(botonesDerecha, "crash_detector/boton_compartir.png", MonitorDePID.idioma.botonDeCompartirInforme());
         JButton botonActualizar = añadirBotonImagen(botonesDerecha, "crash_detector/boton_actualizar.png", "Actualizar");
         JButton botonArchivos = añadirBotonImagen(botonesDerecha, "crash_detector/boton_archivos.png", "Archivos");
-        JButton botonConfiguracion = añadirBotonImagen(botonesDerecha, "crash_detector/boton_config.png", "Configuración");
+        botonConfiguracion = añadirBotonImagen(botonesDerecha, "crash_detector/boton_config.png", "Configuración");
 
+        
+        
+        
 		botonCompartir.addActionListener(e -> new DialogoCompartir(this, tiempoFallo).setVisible(true));
 		botonActualizar.addActionListener(e -> recargar());
 		botonAgregar.addActionListener(e -> anadirRegistro());
 		botonArchivos.addActionListener(e -> abrirDirectorioEnExplorador());;
-		
+        botonConfiguracion.addActionListener(e -> {
+            contenidoPrincipal.removeAll();
+            contenidoPrincipal.add(panelConfiguracion, BorderLayout.CENTER);
+            contenidoPrincipal.revalidate();
+            contenidoPrincipal.repaint();
+            botonVolver.setEnabled(true);
+        });
 
 		panelInferior.add(seccionIdioma, BorderLayout.WEST);
 		panelInferior.add(botonQuickFix, BorderLayout.CENTER);
@@ -261,14 +273,16 @@ public class CrashDetectorGUI extends JFrame {
 		
 		
 		// Botón Volver (top)
-		JButton botonVolver = new JButton("Volver");
 		estilizarBoton(botonVolver);
 		botonVolver.setEnabled(false);
 		botonVolver.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-		botonVolver.addActionListener(e -> {
-//TODO
-			botonVolver.setEnabled(false);
-		});
+        botonVolver.addActionListener(e -> {
+            contenidoPrincipal.removeAll();
+            contenidoPrincipal.add(scrollPane, BorderLayout.CENTER);
+            contenidoPrincipal.revalidate();
+            contenidoPrincipal.repaint();
+            botonVolver.setEnabled(false);
+        });
 	    barraLateralDerecha.add(logoLabel);
 		barraLateralDerecha.add(botonVolver);
 		barraLateralDerecha.add(Box.createVerticalStrut(10)); // Espaciado entre botones
@@ -297,7 +311,9 @@ public class CrashDetectorGUI extends JFrame {
 		}
 
 		setLayout(new BorderLayout(5, 5));
-		add(scrollPane, BorderLayout.CENTER);
+		//add(scrollPane, BorderLayout.CENTER);
+		contenidoPrincipal.add(scrollPane, BorderLayout.CENTER);
+        add(contenidoPrincipal, BorderLayout.CENTER);
 		add(panelInferior, BorderLayout.SOUTH);
 		add(barraLateralDerecha, BorderLayout.EAST);
 

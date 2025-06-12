@@ -3,6 +3,8 @@ package com.asbestosstar.crashdetector.buscar;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.asbestosstar.crashdetector.anon.AnonimizadorDeRuta;
+
 //TODO Mods de Carpetas
 public interface ArchivoDeMod {
 
@@ -15,6 +17,10 @@ public interface ArchivoDeMod {
 	public List<String> nombre();
 	
 	public String ubicacion();
+	
+	public default String ubicacion_para_publicar() {
+		return AnonimizadorDeRuta.anonimizarNombreDeUsuario(this.ubicacion());
+	}
 	
 	public List<String> clases();
 	

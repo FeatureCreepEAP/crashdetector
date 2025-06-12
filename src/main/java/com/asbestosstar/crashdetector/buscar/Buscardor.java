@@ -83,7 +83,7 @@ public class Buscardor {
 	public static List<String> obternerUbicaciones(List<ArchivoDeMod> mods){
 		List<String> ret = new ArrayList<String>();
 		for(ArchivoDeMod mod:mods) {
-			ret.add(mod.ubicacion());
+			ret.add(mod.ubicacion_para_publicar());
 		}
 		return ret;
 	}

@@ -319,6 +319,10 @@ public class VerificacionDeStackTrace {
 	public List<String> obtenerArchivosJsonEnMixinExceptions(String contenido_de_logs) {
 	    List<String> archivos_json = new ArrayList<>();
 
+	  // TODO [20:12:32] [main/ERROR]: fpsreducer.mixins.json:VideoSettingScreenMixin: Super class 'net.minecraft.client.gui.screens.options.OptionsSubScreen' of VideoSettingScreenMixin was not found in the hierarchy of target class 'net/minecraft/client/gui/screens/options/VideoSettingsScreen'
+	    //org.spongepowered.asm.mixin.transformer.throwables.InvalidMixinException: Super class 'net.minecraft.client.gui.screens.options.OptionsSubScreen' of VideoSettingScreenMixin was not found in the hierarchy of target class 'net/minecraft/client/gui/screens/options/VideoSettingsScreen'
+	    
+	    
 	    String[] lineas = contenido_de_logs.split("\r?\n");
 	    for (String linea : lineas) {
 	        if (linea.contains("org.spongepowered.asm.mixin")) {

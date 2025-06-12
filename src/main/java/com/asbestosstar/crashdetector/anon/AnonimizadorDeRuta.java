@@ -16,6 +16,14 @@ public class AnonimizadorDeRuta {
      * @param rutaOriginal La ruta original del archivo o directorio.
      * @return La ruta con el nombre de usuario reemplazado por "anon" si aplica.
      */
+    /**
+     * Anónimiza la ruta reemplazando el directorio actual con "." y el directorio home del usuario actual con "~".
+     * - Si la ruta está dentro del directorio actual, se reemplaza el prefijo con ".".
+     * - Si la ruta está dentro del directorio home del usuario actual, se reemplaza el prefijo con "~".
+     * 
+     * @param rutaOriginal La ruta original del archivo o directorio.
+     * @return La ruta con los reemplazos correspondientes.
+     */
     public static String anonimizarNombreDeUsuario(String rutaOriginal) {
         String directorioHome = System.getProperty("user.home");
         if (directorioHome == null || directorioHome.isEmpty()) {
@@ -29,12 +37,25 @@ public class AnonimizadorDeRuta {
         }
 
         try {
-            File homeFile = new File(directorioHome);
-            String homeCanonical = homeFile.getCanonicalPath();
-            String archivoCanonical = archivo.getCanonicalPath();
+            String directorioActual = System.getProperty("user.dir");
+            File directorioActualFile = new File(directorioActual);
+            String directorioActualCanonico = directorioActualFile.getCanonicalPath();
 
-            if (archivoCanonical.startsWith(homeCanonical)) {
-                return "~" + archivoCanonical.substring(homeCanonical.length());
+            File directorioHomeFile = new File(directorioHome);
+            String directorioHomeCanonico = directorioHomeFile.getCanonicalPath();
+
+            String archivoCanonico = archivo.getCanonicalPath();
+
+            // Verificar si la ruta pertenece al directorio actual (prioridad alta)
+            if (archivoCanonico.startsWith(directorioActualCanonico)) {
+                // Reemplazar el directorio actual con "."
+                return "." + archivoCanonico.substring(directorioActualCanonico.length());
+            }
+
+            // Verificar si pertenece al directorio home del usuario actual
+            if (archivoCanonico.startsWith(directorioHomeCanonico)) {
+                // Reemplazar el directorio home con "~"
+                return "~" + archivoCanonico.substring(directorioHomeCanonico.length());
             }
         } catch (Exception e) {
             e.printStackTrace(); 
