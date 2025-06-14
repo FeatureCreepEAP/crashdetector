@@ -772,5 +772,113 @@ public String codigo() {
 	return "eo";
 }
 
+@Override
+public String inicioApp() {
+    return "Komenco de Ludo/Aplikaĵo";
+}
+
+@Override
+public String adjustesCrashDetector() {
+    return "Agordoj de CrashDetector";
+}
+
+@Override
+public String confidencialidad() {
+    return "Privateco";
+}
+
+@Override
+public String tooltip() {
+    return "Ilustro";
+}
+
+@Override
+public String config() {
+    return "Agordo";
+}
+
+@Override
+public String abrirCarpeta() {
+    return "Malfermi Dosierujon";
+}
+
+@Override
+public String actualizar() {
+    return "Ĝisdatigi";
+}
+
+@Override
+public String anadirRegistro() {
+    return "Aldoni Registradon";
+}
+
+@Override
+public String usarIdiomaDelSistema() {
+    return "Uzi sistem-lingvon";
+}
+
+@Override
+public String volver() {
+    return "Reiri";
+}
+
+@Override
+public String colorFondo() {
+    return "Fona koloro (#RRGGBB):";
+}
+
+@Override
+public String colorTexto() {
+    return "Teksta koloro (#RRGGBB):";
+}
+
+@Override
+public String colorBoton() {
+    return "Butona koloro (#RRGGBB):";
+}
+
+@Override
+public String colorCajaTexto() {
+    return "Tekstokesta koloro (#RRGGBB):";
+}
+
+@Override
+public String colorEnlace() {
+    return "Ligila koloro (#RRGGBB):";
+}
+
+@Override
+public String colorTitulosConsolas() {
+    return "Konsoltitola koloro (#RRGGBB):";
+}
+
+@Override
+public String colorError() {
+    return "Erara koloro (#RRGGBB):";
+}
+
+@Override
+public String colorAdvertencia() {
+    return "Averto-koloro (#RRGGBB):";
+}
+
+@Override
+public String colorInfo() {
+    return "Informa koloro (#RRGGBB):";
+}
+
+@Override
+public String colorTitulo() {
+    return "Titola koloro (#RRGGBB):";
+}
+
+@Override
+public String colorEnlaceTexto() {
+    return "Ligila teksta koloro (#RRGGBB):";
+}
+
+
+
+
 
 }

@@ -768,6 +768,116 @@ public String codigo() {
 	return "ko";
 }
 
+@Override
+public String inicioApp() {
+    return "게임/앱 시작";
+}
+
+@Override
+public String adjustesCrashDetector() {
+    return "크래시 감지기 설정";
+}
+
+@Override
+public String confidencialidad() {
+    return "개인정보 보호";
+}
+
+@Override
+public String tooltip() {
+    return "툴팁";
+}
+
+@Override
+public String config() {
+    return "설정";
+}
+
+@Override
+public String abrirCarpeta() {
+    return "폴더 열기";
+}
+
+@Override
+public String actualizar() {
+    return "업데이트";
+}
+
+@Override
+public String anadirRegistro() {
+    return "로그 추가";
+}
+
+@Override
+public String usarIdiomaDelSistema() {
+    return "시스템 언어 사용";
+}
+
+@Override
+public String volver() {
+    return "뒤로";
+}
+
+@Override
+public String colorFondo() {
+    return "배경색 (#RRGGBB):";
+}
+
+@Override
+public String colorTexto() {
+    return "텍스트 색상 (#RRGGBB):";
+}
+
+@Override
+public String colorBoton() {
+    return "버튼 색상 (#RRGGBB):";
+}
+
+@Override
+public String colorCajaTexto() {
+    return "텍스트 상자 색상 (#RRGGBB):";
+}
+
+@Override
+public String colorEnlace() {
+    return "링크 색상 (#RRGGBB):";
+}
+
+@Override
+public String colorTitulosConsolas() {
+    return "콘솔 제목 색상 (#RRGGBB):";
+}
+
+@Override
+public String colorError() {
+    return "오류 색상 (#RRGGBB):";
+}
+
+@Override
+public String colorAdvertencia() {
+    return "경고 색상 (#RRGGBB):";
+}
+
+@Override
+public String colorInfo() {
+    return "정보 색상 (#RRGGBB):";
+}
+
+@Override
+public String colorTitulo() {
+    return "제목 색상 (#RRGGBB):";
+}
+
+@Override
+public String colorEnlaceTexto() {
+    return "링크 텍스트 색상 (#RRGGBB):";
+}
+
+
+
+
+
+
 
 
 }

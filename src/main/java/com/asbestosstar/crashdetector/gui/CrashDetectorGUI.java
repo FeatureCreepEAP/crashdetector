@@ -29,6 +29,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -45,6 +46,7 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.analyzador.QuickFix;
 
 public class CrashDetectorGUI extends JFrame {
 	private final Instant tiempoFallo;
@@ -60,7 +62,7 @@ public class CrashDetectorGUI extends JFrame {
 	JEditorPane pantalla = new JEditorPane();
 	JScrollPane scrollPane = new JScrollPane(pantalla);
 	ConfigPanel panelConfiguracion = new ConfigPanel(this);
-	JButton botonVolver = new JButton("Volver");
+	JButton botonVolver = new JButton(MonitorDePID.idioma.volver());
 	JButton botonConfiguracion;
 	JPanel contenidoPrincipal = new JPanel(new BorderLayout());
 
@@ -168,7 +170,7 @@ public class CrashDetectorGUI extends JFrame {
 		panelDesplegableIdioma.add(iconoIdioma);
 		panelDesplegableIdioma.add(comboBoxIdioma);
 
-		JCheckBox casillaVerificacionSistema = new JCheckBox("Usar idioma del sistema");
+		JCheckBox casillaVerificacionSistema = new JCheckBox(MonitorDePID.idioma.usarIdiomaDelSistema());
 		casillaVerificacionSistema.setForeground(colorTexto);
 		casillaVerificacionSistema.setBackground(colorFondo);
 		casillaVerificacionSistema.setOpaque(false);
@@ -205,7 +207,6 @@ public class CrashDetectorGUI extends JFrame {
 		seccionIdioma.add(panelCasilla);
 
 		JButton botonQuickFix = new JButton("QuickFix");
-		botonQuickFix.setEnabled(false);
 		botonQuickFix.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		botonQuickFix.setMinimumSize(new Dimension(150, 40));
 		botonQuickFix.setMaximumSize(new Dimension(300, 40));
@@ -222,16 +223,28 @@ public class CrashDetectorGUI extends JFrame {
 			botonQuickFix.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 		}
 
+		botonQuickFix.addActionListener(e -> mostrarVentanaQuickFix());
+//		botonQuickFix.addActionListener(e -> {
+//		    contenidoPrincipal.removeAll();
+//		    contenidoPrincipal.add(crearPanelQuickFix(), BorderLayout.CENTER);
+//		    contenidoPrincipal.revalidate();
+//		    contenidoPrincipal.repaint();
+//		    botonVolver.setEnabled(true);
+//		});
+			
+		
+		
+		
 		panelInferior.add(botonQuickFix, BorderLayout.CENTER);
 
 		JPanel botonesDerecha = new JPanel(new GridLayout(1, 5, 10, 10));
 		botonesDerecha.setBackground(colorFondo);
 
-        JButton botonAgregar = añadirBotonImagen(botonesDerecha, "crash_detector/boton_agregar.png", "Agregar");
-        JButton botonCompartir = añadirBotonImagen(botonesDerecha, "crash_detector/boton_compartir.png", MonitorDePID.idioma.botonDeCompartirInforme());
-        JButton botonActualizar = añadirBotonImagen(botonesDerecha, "crash_detector/boton_actualizar.png", "Actualizar");
-        JButton botonArchivos = añadirBotonImagen(botonesDerecha, "crash_detector/boton_archivos.png", "Archivos");
-        botonConfiguracion = añadirBotonImagen(botonesDerecha, "crash_detector/boton_config.png", "Configuración");
+        JButton botonAgregar = añadirBotonImagen(botonesDerecha, "crash_detector/imagenes/boton_agregar.png", MonitorDePID.idioma.anadirRegistro());
+        JButton botonCompartir = añadirBotonImagen(botonesDerecha, "crash_detector/imagenes/boton_compartir.png", MonitorDePID.idioma.botonDeCompartirInforme());
+        JButton botonActualizar = añadirBotonImagen(botonesDerecha, "crash_detector/imagenes/boton_actualizar.png", MonitorDePID.idioma.actualizar());
+        JButton botonArchivos = añadirBotonImagen(botonesDerecha, "crash_detector/imagenes/boton_archivos.png", MonitorDePID.idioma.abrirCarpeta());
+        botonConfiguracion = añadirBotonImagen(botonesDerecha, "crash_detector/imagenes/boton_config.png", MonitorDePID.idioma.config());
 
         
         
@@ -263,7 +276,7 @@ public class CrashDetectorGUI extends JFrame {
 	    logoLabel.setOpaque(true);
 
 	    // 加载 logo 图片
-	    ImageIcon logoIcon = new ImageIcon("crash_detector/cd_logo.png");
+	    ImageIcon logoIcon = new ImageIcon("crash_detector/imagenes/cd_logo.png");
 	    Image logoImagen = logoIcon.getImage();
 	    Image escalarLogo = logoImagen.getScaledInstance(120, -1, Image.SCALE_SMOOTH); // -1 保持宽高比
 	    logoLabel.setIcon(new ImageIcon(escalarLogo));
@@ -277,11 +290,7 @@ public class CrashDetectorGUI extends JFrame {
 		botonVolver.setEnabled(false);
 		botonVolver.setAlignmentX(JComponent.CENTER_ALIGNMENT);
         botonVolver.addActionListener(e -> {
-            contenidoPrincipal.removeAll();
-            contenidoPrincipal.add(scrollPane, BorderLayout.CENTER);
-            contenidoPrincipal.revalidate();
-            contenidoPrincipal.repaint();
-            botonVolver.setEnabled(false);
+           volver();
         });
 	    barraLateralDerecha.add(logoLabel);
 		barraLateralDerecha.add(botonVolver);
@@ -323,6 +332,15 @@ public class CrashDetectorGUI extends JFrame {
 		setLocationRelativeTo(null);
 	}
 	
+	public void volver() {
+		// TODO Auto-generated method stub
+		 contenidoPrincipal.removeAll();
+         contenidoPrincipal.add(scrollPane, BorderLayout.CENTER);
+         contenidoPrincipal.revalidate();
+         contenidoPrincipal.repaint();
+         botonVolver.setEnabled(false);
+	}
+
 	private String obtenerCodigoIdioma(String nombreIdioma) {
 	    switch (nombreIdioma) {
 	        case "Español": return "es";
@@ -494,6 +512,108 @@ public class CrashDetectorGUI extends JFrame {
     }
     
     
+//    private JPanel crearPanelQuickFix() {
+//        JPanel panel = new JPanel(new BorderLayout());
+//        panel.setBackground(colorFondo);
+//        
+//        // Create the scrollable QuickFix panel
+//        PanelQuickFix panelQuickFix = new PanelQuickFix();
+//        
+//        // Example 1: With checkbox
+//        QuickFix fixConRetener = new QuickFix.Builder("Limpiar caché temporal")
+//            .conRetener()
+//            .agregarBoton("Limpiar", retener -> {
+//                System.out.println("Limpiando caché. Retener: " + retener);
+//                JOptionPane.showMessageDialog(this, 
+//                    "Limpiando caché\nRetener: " + retener, 
+//                    "Acción de QuickFix", 
+//                    JOptionPane.INFORMATION_MESSAGE);
+//            })
+//            .agregarEtiqueta("Este proceso eliminará archivos temporales")
+//            .construir();
+//        
+//        // Example 2: Without checkbox
+//        QuickFix fixSinRetener = new QuickFix.Builder("Optimizar base de datos")
+//            .agregarBoton("Optimizar", retener -> {
+//                System.out.println("Optimizando base de datos. Retener: " + retener);
+//                JOptionPane.showMessageDialog(this, 
+//                    "Optimizando base de datos\nRetener: " + retener, 
+//                    "Acción de QuickFix", 
+//                    JOptionPane.INFORMATION_MESSAGE);
+//            })
+//            .agregarEtiqueta("Este proceso optimizará el rendimiento de la base de datos")
+//            .construir();
+//        
+//        // Add both QuickFix entries to the panel
+//        panelQuickFix.agregarQuickFix(fixConRetener);
+//        panelQuickFix.agregarQuickFix(fixSinRetener);
+//        
+//        // Add to main panel with scroll support
+//        panel.add(panelQuickFix, BorderLayout.CENTER);
+//        
+//        return panel;
+//    }
+    
+    private void mostrarVentanaQuickFix() {
+        // Crear el diálogo emergente
+        JDialog dialogo = new JDialog(this, "QuickFix", true);
+        dialogo.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialogo.setSize(600, 400);
+        dialogo.setLocationRelativeTo(this);
+        
+        // Crear el panel QuickFix
+        JPanel panelQuickFix = new JPanel(new BorderLayout());
+        panelQuickFix.setBackground(colorFondo);
+        
+        // Crear el scrollable QuickFix panel
+        PanelQuickFix panelContenido = new PanelQuickFix();
+        
+        // Ejemplo 1: Con checkbox
+        QuickFix fixConRetener = new QuickFix.Builder("Limpiar caché temporal")
+            .conRetener()
+            .agregarBoton("Limpiar", retener -> {
+                System.out.println("Limpiando caché. Retener: " + retener);
+                JOptionPane.showMessageDialog(dialogo, 
+                    "Limpiando caché\nRetener: " + retener, 
+                    "Acción de QuickFix", 
+                    JOptionPane.INFORMATION_MESSAGE);
+            })
+            .agregarEtiqueta("Este proceso eliminará archivos temporales")
+            .construir();
+        
+        // Ejemplo 2: Sin checkbox
+        QuickFix fixSinRetener = new QuickFix.Builder("Optimizar base de datos")
+            .agregarBoton("Optimizar", retener -> {
+                System.out.println("Optimizando base de datos. Retener: " + retener);
+                JOptionPane.showMessageDialog(dialogo, 
+                    "Optimizando base de datos\nRetener: " + retener, 
+                    "Acción de QuickFix", 
+                    JOptionPane.INFORMATION_MESSAGE);
+            })
+            .agregarEtiqueta("Este proceso optimizará el rendimiento de la base de datos")
+            .construir();
+        
+        panelContenido.agregarQuickFix(fixConRetener);
+        panelContenido.agregarQuickFix(fixSinRetener);
+        
+        JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        panelInferior.setBackground(colorFondo);
+        
+        JButton botonCerrar = new JButton(MonitorDePID.idioma.volver());
+        estilizarBoton(botonCerrar);
+        botonCerrar.addActionListener(e -> dialogo.dispose());
+        
+        panelInferior.add(botonCerrar);
+        
+        panelQuickFix.add(panelContenido, BorderLayout.CENTER);
+        panelQuickFix.add(panelInferior, BorderLayout.SOUTH);
+        
+        dialogo.getContentPane().add(panelQuickFix);
+        dialogo.setVisible(true);
+    }
+    
+    
+    
     
 	@Override
 	public void dispose() {
@@ -501,7 +621,7 @@ public class CrashDetectorGUI extends JFrame {
 		MonitorDePID.fin(cerrojo);
 	}
 
-	private boolean esMac() {
+	public static boolean esMac() {
 		return System.getProperty("os.name").toLowerCase().contains("mac");
 	}
 }

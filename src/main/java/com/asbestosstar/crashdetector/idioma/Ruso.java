@@ -771,6 +771,113 @@ public String codigo() {
 
 
 
+@Override
+public String inicioApp() {
+    return "Запуск игры/приложения";
+}
+
+@Override
+public String adjustesCrashDetector() {
+    return "Настройки детектора сбоев";
+}
+
+@Override
+public String confidencialidad() {
+    return "Конфиденциальность";
+}
+
+@Override
+public String tooltip() {
+    return "Подсказка";
+}
+
+@Override
+public String config() {
+    return "Настройка";
+}
+
+@Override
+public String abrirCarpeta() {
+    return "Открыть папку";
+}
+
+@Override
+public String actualizar() {
+    return "Обновить";
+}
+
+@Override
+public String anadirRegistro() {
+    return "Добавить лог";
+}
+
+@Override
+public String usarIdiomaDelSistema() {
+    return "Использовать системный язык";
+}
+
+@Override
+public String volver() {
+    return "Назад";
+}
+
+@Override
+public String colorFondo() {
+    return "Цвет фона (#RRGGBB):";
+}
+
+@Override
+public String colorTexto() {
+    return "Цвет текста (#RRGGBB):";
+}
+
+@Override
+public String colorBoton() {
+    return "Цвет кнопки (#RRGGBB):";
+}
+
+@Override
+public String colorCajaTexto() {
+    return "Цвет текстового поля (#RRGGBB):";
+}
+
+@Override
+public String colorEnlace() {
+    return "Цвет ссылки (#RRGGBB):";
+}
+
+@Override
+public String colorTitulosConsolas() {
+    return "Цвет заголовков консолей (#RRGGBB):";
+}
+
+@Override
+public String colorError() {
+    return "Цвет ошибки (#RRGGBB):";
+}
+
+@Override
+public String colorAdvertencia() {
+    return "Цвет предупреждения (#RRGGBB):";
+}
+
+@Override
+public String colorInfo() {
+    return "Цвет информации (#RRGGBB):";
+}
+
+@Override
+public String colorTitulo() {
+    return "Цвет заголовка (#RRGGBB):";
+}
+
+@Override
+public String colorEnlaceTexto() {
+    return "Цвет текста ссылки (#RRGGBB):";
+}
+
+
+
 
 
 

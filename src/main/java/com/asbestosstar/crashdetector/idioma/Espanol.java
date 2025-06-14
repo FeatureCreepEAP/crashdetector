@@ -809,6 +809,121 @@ public String codigo() {
 	return "es";
 }
 
+@Override
+public String inicioApp() {
+	// TODO Auto-generated method stub
+	return "Inicio de Juego/App";
+}
+
+@Override
+public String adjustesCrashDetector() {
+	// TODO Auto-generated method stub
+	return "Ajustes CrashDetector";
+}
+
+@Override
+public String confidencialidad() {
+	// TODO Auto-generated method stub
+	return "Confidencialidad";
+}
+
+@Override
+public String tooltip() {
+	// TODO Auto-generated method stub
+	return "Tooltip";
+}
+
+@Override
+public String config() {
+	// TODO Auto-generated method stub
+	return "Configuración";
+}
+
+@Override
+public String abrirCarpeta() {
+	// TODO Auto-generated method stub
+	return "Abrir Carpeta";
+}
+
+@Override
+public String actualizar() {
+	// TODO Auto-generated method stub
+	return "Actualizar";
+}
+
+@Override
+public String anadirRegistro() {
+	// TODO Auto-generated method stub
+	return "Añadir Registro";
+}
+
+@Override
+public String usarIdiomaDelSistema() {
+	// TODO Auto-generated method stub
+	return "Usar idioma del sistema";
+}
+
+@Override
+public String volver() {
+	// TODO Auto-generated method stub
+	return "Volver";
+}
+
+@Override
+public String colorFondo() {
+    return "Color de fondo (#RRGGBB):";
+}
+
+@Override
+public String colorTexto() {
+    return "Color de texto (#RRGGBB):";
+}
+
+@Override
+public String colorBoton() {
+    return "Color de botón (#RRGGBB):";
+}
+
+@Override
+public String colorCajaTexto() {
+    return "Color de caja de texto (#RRGGBB):";
+}
+
+@Override
+public String colorEnlace() {
+    return "Color de enlace (#RRGGBB):";
+}
+
+@Override
+public String colorTitulosConsolas() {
+    return "Color de títulos de consolas (#RRGGBB):";
+}
+
+@Override
+public String colorError() {
+    return "Color de error (#RRGGBB):";
+}
+
+@Override
+public String colorAdvertencia() {
+    return "Color de advertencia (#RRGGBB):";
+}
+
+@Override
+public String colorInfo() {
+    return "Color de información (#RRGGBB):";
+}
+
+@Override
+public String colorTitulo() {
+    return "Color de título (#RRGGBB):";
+}
+
+@Override
+public String colorEnlaceTexto() {
+    return "Color de enlace texto (#RRGGBB):";
+}
+
 
 
 }

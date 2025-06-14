@@ -764,4 +764,116 @@ public String codigo() {
 
 
 
+@Override
+public String inicioApp() {
+    return "游戏/应用启动";
+}
+
+@Override
+public String adjustesCrashDetector() {
+    return "崩溃检测器设置";
+}
+
+@Override
+public String confidencialidad() {
+    return "隐私";
+}
+
+@Override
+public String tooltip() {
+    return "工具提示";
+}
+
+@Override
+public String config() {
+    return "配置";
+}
+
+@Override
+public String abrirCarpeta() {
+    return "打开文件夹";
+}
+
+@Override
+public String actualizar() {
+    return "更新";
+}
+
+@Override
+public String anadirRegistro() {
+    return "添加日志";
+}
+
+@Override
+public String usarIdiomaDelSistema() {
+    return "使用系统语言";
+}
+
+@Override
+public String volver() {
+    return "返回";
+}
+
+@Override
+public String colorFondo() {
+    return "背景颜色 (#RRGGBB):";
+}
+
+@Override
+public String colorTexto() {
+    return "文字颜色 (#RRGGBB):";
+}
+
+@Override
+public String colorBoton() {
+    return "按钮颜色 (#RRGGBB):";
+}
+
+@Override
+public String colorCajaTexto() {
+    return "文本框颜色 (#RRGGBB):";
+}
+
+@Override
+public String colorEnlace() {
+    return "链接颜色 (#RRGGBB):";
+}
+
+@Override
+public String colorTitulosConsolas() {
+    return "控制台标题颜色 (#RRGGBB):";
+}
+
+@Override
+public String colorError() {
+    return "错误颜色 (#RRGGBB):";
+}
+
+@Override
+public String colorAdvertencia() {
+    return "警告颜色 (#RRGGBB):";
+}
+
+@Override
+public String colorInfo() {
+    return "信息颜色 (#RRGGBB):";
+}
+
+@Override
+public String colorTitulo() {
+    return "标题颜色 (#RRGGBB):";
+}
+
+@Override
+public String colorEnlaceTexto() {
+    return "链接文字颜色 (#RRGGBB):";
+}
+
+
+
+
+
+
+
+
 }

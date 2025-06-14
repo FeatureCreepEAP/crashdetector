@@ -40,7 +40,10 @@ public class GeneradorDeInformacion {
             
             
 			String pantilla = MonitorDePID.leer_archivo(new File("crash_detector/pantilla.htm").toPath());
-			File ret = new File("crash_detector/" + instant.toString().replace(":", "") + ".htm");
+			String carp="crash_detector/.informes/";
+			File carp_file=new File(carp);
+			carp_file.mkdirs();
+			File ret = new File(carp + instant.toString().replace(":", "") + ".htm");
 			FileWriter escribidor = new FileWriter(ret);
 			escribidor.write(pantilla.replace("{constructor}", cons.toString() + "<br>" +MonitorDePID.idioma.infoDeVerificaciones() + "<br>" + MonitorDePID.contenidoInforme.toString()+imagenesLocales()));
 			escribidor.close();
@@ -55,7 +58,7 @@ public class GeneradorDeInformacion {
 	
 	   public static String imagenesLocales() {
 	        StringBuilder cons = new StringBuilder();
-            String imagePathPrefix = new File("crash_detector/").getAbsolutePath().replace("\\", "/") + "/";
+            String imagePathPrefix = new File("crash_detector/imagenes/").getAbsolutePath().replace("\\", "/") + "/";
 	        cons.append("<center>")
 	            .append("<img src='file://").append(imagePathPrefix).append("gura.png' width='200' height='112'>") // Local Gura image
 	            .append("&nbsp;&nbsp;&nbsp;") // Spacing between images

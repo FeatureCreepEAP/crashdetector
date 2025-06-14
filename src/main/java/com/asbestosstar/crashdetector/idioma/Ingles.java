@@ -766,4 +766,116 @@ public String codigo() {
 	return "en";
 }
 
+@Override
+public String inicioApp() {
+    return "Game/App Start";
+}
+
+@Override
+public String adjustesCrashDetector() {
+    return "CrashDetector Settings";
+}
+
+@Override
+public String confidencialidad() {
+    return "Privacy";
+}
+
+@Override
+public String tooltip() {
+    return "Tooltip";
+}
+
+@Override
+public String config() {
+    return "Configuration";
+}
+
+@Override
+public String abrirCarpeta() {
+    return "Open Folder";
+}
+
+@Override
+public String actualizar() {
+    return "Update";
+}
+
+@Override
+public String anadirRegistro() {
+    return "Add Log";
+}
+
+@Override
+public String usarIdiomaDelSistema() {
+    return "Use system language";
+}
+
+@Override
+public String volver() {
+    return "Back";
+}
+
+@Override
+public String colorFondo() {
+    return "Background colour (#RRGGBB):";
+}
+
+@Override
+public String colorTexto() {
+    return "Text colour (#RRGGBB):";
+}
+
+@Override
+public String colorBoton() {
+    return "Button colour (#RRGGBB):";
+}
+
+@Override
+public String colorCajaTexto() {
+    return "Text box colour (#RRGGBB):";
+}
+
+@Override
+public String colorEnlace() {
+    return "Link colour (#RRGGBB):";
+}
+
+@Override
+public String colorTitulosConsolas() {
+    return "Console title colour (#RRGGBB):";
+}
+
+@Override
+public String colorError() {
+    return "Error colour (#RRGGBB):";
+}
+
+@Override
+public String colorAdvertencia() {
+    return "Warning colour (#RRGGBB):";
+}
+
+@Override
+public String colorInfo() {
+    return "Info colour (#RRGGBB):";
+}
+
+@Override
+public String colorTitulo() {
+    return "Title colour (#RRGGBB):";
+}
+
+@Override
+public String colorEnlaceTexto() {
+    return "Link text colour (#RRGGBB):";
+}
+
+
+
+
+
+
+
+
 }

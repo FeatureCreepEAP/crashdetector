@@ -771,4 +771,113 @@ public String codigo() {
 }
 
 
+@Override
+public String inicioApp() {
+    return "شروع بازی/برنامه";
+}
+
+@Override
+public String adjustesCrashDetector() {
+    return "تنظیمات تشخیص خرابی";
+}
+
+@Override
+public String confidencialidad() {
+    return "حریم خصوصی";
+}
+
+@Override
+public String tooltip() {
+    return "راهنمای ابزار";
+}
+
+@Override
+public String config() {
+    return "پیکربندی";
+}
+
+@Override
+public String abrirCarpeta() {
+    return "باز کردن پوشه";
+}
+
+@Override
+public String actualizar() {
+    return "به‌روزرسانی";
+}
+
+@Override
+public String anadirRegistro() {
+    return "افزودن ثبت";
+}
+
+@Override
+public String usarIdiomaDelSistema() {
+    return "استفاده از زبان سیستم";
+}
+
+@Override
+public String volver() {
+    return "بازگشت";
+}
+
+@Override
+public String colorFondo() {
+    return "رنگ پس‌زمینه (#RRGGBB):";
+}
+
+@Override
+public String colorTexto() {
+    return "رنگ متن (#RRGGBB):";
+}
+
+@Override
+public String colorBoton() {
+    return "رنگ دکمه (#RRGGBB):";
+}
+
+@Override
+public String colorCajaTexto() {
+    return "رنگ جعبه متن (#RRGGBB):";
+}
+
+@Override
+public String colorEnlace() {
+    return "رنگ لینک (#RRGGBB):";
+}
+
+@Override
+public String colorTitulosConsolas() {
+    return "رنگ عنوان کنسول (#RRGGBB):";
+}
+
+@Override
+public String colorError() {
+    return "رنگ خطا (#RRGGBB):";
+}
+
+@Override
+public String colorAdvertencia() {
+    return "رنگ هشدار (#RRGGBB):";
+}
+
+@Override
+public String colorInfo() {
+    return "رنگ اطلاعات (#RRGGBB):";
+}
+
+@Override
+public String colorTitulo() {
+    return "رنگ عنوان (#RRGGBB):";
+}
+
+@Override
+public String colorEnlaceTexto() {
+    return "رنگ متن لینک (#RRGGBB):";
+}
+
+
+
+
+
 }

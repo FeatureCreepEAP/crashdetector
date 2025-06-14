@@ -770,7 +770,110 @@ public String codigo() {
 	return "ar";
 }
 
+@Override
+public String inicioApp() {
+    return "بدء اللعبة/التطبيق";
+}
 
+@Override
+public String adjustesCrashDetector() {
+    return "إعدادات كاشف الأعطال";
+}
+
+@Override
+public String confidencialidad() {
+    return "الخصوصية";
+}
+
+@Override
+public String tooltip() {
+    return "تلميح الأدوات";
+}
+
+@Override
+public String config() {
+    return "الإعدادات";
+}
+
+@Override
+public String abrirCarpeta() {
+    return "فتح المجلد";
+}
+
+@Override
+public String actualizar() {
+    return "تحديث";
+}
+
+@Override
+public String anadirRegistro() {
+    return "إضافة سجل";
+}
+
+@Override
+public String usarIdiomaDelSistema() {
+    return "استخدام لغة النظام";
+}
+
+@Override
+public String volver() {
+    return "رجوع";
+}
+
+@Override
+public String colorFondo() {
+    return "لون الخلفية (#RRGGBB):";
+}
+
+@Override
+public String colorTexto() {
+    return "لون النص (#RRGGBB):";
+}
+
+@Override
+public String colorBoton() {
+    return "لون الزر (#RRGGBB):";
+}
+
+@Override
+public String colorCajaTexto() {
+    return "لون مربع النص (#RRGGBB):";
+}
+
+@Override
+public String colorEnlace() {
+    return "لون الرابط (#RRGGBB):";
+}
+
+@Override
+public String colorTitulosConsolas() {
+    return "لون عناوين الكونسول (#RRGGBB):";
+}
+
+@Override
+public String colorError() {
+    return "لون الخطأ (#RRGGBB):";
+}
+
+@Override
+public String colorAdvertencia() {
+    return "لون التحذير (#RRGGBB):";
+}
+
+@Override
+public String colorInfo() {
+    return "لون المعلومات (#RRGGBB):";
+}
+
+@Override
+public String colorTitulo() {
+    return "لون العنوان (#RRGGBB):";
+}
+
+@Override
+public String colorEnlaceTexto() {
+    return "لون نص الرابط (#RRGGBB):";
+}
 
 
 }

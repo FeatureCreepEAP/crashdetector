@@ -214,6 +214,63 @@ public class Config {
 	public String obtenerSitioDeRegistrosSeleccionado() {
 	    return propiedadesConfig.getProperty("sitio_de_registros_seleccionado", VALOR_POR_DEFECTO_SITIO_DE_REGISTROS_SELECCIONADO);
 	}
+	
+	public void guardarColorFondo(String valor) {
+	    propiedadesConfig.setProperty("color_fondo", valor);
+	    this.guardar();
+	}
+
+	public void guardarColorTexto(String valor) {
+	    propiedadesConfig.setProperty("color_texto", valor);
+	    this.guardar();
+	}
+
+	public void guardarColorBoton(String valor) {
+	    propiedadesConfig.setProperty("color_boton", valor);
+	    this.guardar();
+	}
+
+	public void guardarColorCajaTexto(String valor) {
+	    propiedadesConfig.setProperty("color_caja_texto", valor);
+	    this.guardar();
+	}
+
+	public void guardarColorEnlace(String valor) {
+	    propiedadesConfig.setProperty("color_enlace", valor);
+	    this.guardar();
+	}
+
+	public void guardarColorDeTitulosDeConsolas(String valor) {
+	    propiedadesConfig.setProperty("color_de_titulos_de_consolas", valor);
+	    this.guardar();
+	}
+
+	public void guardarColorError(String valor) {
+	    propiedadesConfig.setProperty("color_error", valor);
+	    this.guardar();
+	}
+
+	public void guardarColorAdvertencia(String valor) {
+	    propiedadesConfig.setProperty("color_advertencia", valor);
+	    this.guardar();
+	}
+
+	public void guardarColorInfo(String valor) {
+	    propiedadesConfig.setProperty("color_info", valor);
+	    this.guardar();
+	}
+
+	public void guardarColorTitulo(String valor) {
+	    propiedadesConfig.setProperty("color_titulo", valor);
+	    this.guardar();
+	}
+
+	public void guardarColorEnlaceTexto(String valor) {
+	    propiedadesConfig.setProperty("color_enlace_texto", valor);
+	    this.guardar();
+	}
+	
+	
 
 	/**
 	 * Verifica si los registros deben anonimizarse.

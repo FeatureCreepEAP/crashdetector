@@ -107,16 +107,17 @@ public class MonitorDePID {
 		
 		copiarACarpetaDesdeJar("/pantilla.htm",html);
 		
-		copiarACarpetaDesdeJar("/imagenes/gura.png",new File("crash_detector/gura.png"));
-		copiarACarpetaDesdeJar("/imagenes/nanashi_mumei.png",new File("crash_detector/nanashi_mumei.png"));
-		copiarACarpetaDesdeJar("/imagenes/shion.png",new File("crash_detector/shion.png"));
+		copiarACarpetaDesdeJar("/imagenes/gura.png",new File("crash_detector/imagenes/gura.png"));
+		copiarACarpetaDesdeJar("/imagenes/nanashi_mumei.png",new File("crash_detector/imagenes/nanashi_mumei.png"));
+		copiarACarpetaDesdeJar("/imagenes/shion.png",new File("crash_detector/imagenes/shion.png"));
 
-		copiarACarpetaDesdeJar("/imagenes/boton_agregar.png",new File("crash_detector/boton_agregar.png"));
-		copiarACarpetaDesdeJar("/imagenes/boton_compartir.png",new File("crash_detector/boton_compartir.png"));
-		copiarACarpetaDesdeJar("/imagenes/boton_actualizar.png",new File("crash_detector/boton_actualizar.png"));
-		copiarACarpetaDesdeJar("/imagenes/boton_archivos.png",new File("crash_detector/boton_archivos.png"));
-		copiarACarpetaDesdeJar("/imagenes/boton_config.png",new File("crash_detector/boton_config.png"));
-		copiarACarpetaDesdeJar("/imagenes/cd_logo.png",new File("crash_detector/cd_logo.png"));
+		copiarACarpetaDesdeJar("/imagenes/boton_agregar.png",new File("crash_detector/imagenes/boton_agregar.png"));
+		copiarACarpetaDesdeJar("/imagenes/boton_compartir.png",new File("crash_detector/imagenes/boton_compartir.png"));
+		copiarACarpetaDesdeJar("/imagenes/boton_actualizar.png",new File("crash_detector/imagenes/boton_actualizar.png"));
+		copiarACarpetaDesdeJar("/imagenes/boton_archivos.png",new File("crash_detector/imagenes/boton_archivos.png"));
+		copiarACarpetaDesdeJar("/imagenes/boton_config.png",new File("crash_detector/imagenes/boton_config.png"));
+		copiarACarpetaDesdeJar("/imagenes/cd_logo.png",new File("crash_detector/imagenes/cd_logo.png"));
+		copiarACarpetaDesdeJar("/imagenes/profeco.jpg",new File("crash_detector/imagenes/profeco.jpg"));
 
 		
 		

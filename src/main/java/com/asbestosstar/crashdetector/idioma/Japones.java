@@ -763,6 +763,115 @@ public String codigo() {
 	return "ja";
 }
 
+@Override
+public String inicioApp() {
+    return "ゲーム/アプリの開始";
+}
+
+@Override
+public String adjustesCrashDetector() {
+    return "クラッシュ検出設定";
+}
+
+@Override
+public String confidencialidad() {
+    return "プライバシー";
+}
+
+@Override
+public String tooltip() {
+    return "ツールチップ";
+}
+
+@Override
+public String config() {
+    return "設定";
+}
+
+@Override
+public String abrirCarpeta() {
+    return "フォルダを開く";
+}
+
+@Override
+public String actualizar() {
+    return "更新";
+}
+
+@Override
+public String anadirRegistro() {
+    return "ログを追加";
+}
+
+@Override
+public String usarIdiomaDelSistema() {
+    return "システム言語を使用";
+}
+
+@Override
+public String volver() {
+    return "戻る";
+}
+
+@Override
+public String colorFondo() {
+    return "背景色 (#RRGGBB):";
+}
+
+@Override
+public String colorTexto() {
+    return "テキストの色 (#RRGGBB):";
+}
+
+@Override
+public String colorBoton() {
+    return "ボタンの色 (#RRGGBB):";
+}
+
+@Override
+public String colorCajaTexto() {
+    return "テキストボックスの色 (#RRGGBB):";
+}
+
+@Override
+public String colorEnlace() {
+    return "リンクの色 (#RRGGBB):";
+}
+
+@Override
+public String colorTitulosConsolas() {
+    return "コンソールタイトルの色 (#RRGGBB):";
+}
+
+@Override
+public String colorError() {
+    return "エラーの色 (#RRGGBB):";
+}
+
+@Override
+public String colorAdvertencia() {
+    return "警告の色 (#RRGGBB):";
+}
+
+@Override
+public String colorInfo() {
+    return "情報の色 (#RRGGBB):";
+}
+
+@Override
+public String colorTitulo() {
+    return "タイトルの色 (#RRGGBB):";
+}
+
+@Override
+public String colorEnlaceTexto() {
+    return "リンクテキストの色 (#RRGGBB):";
+}
+
+
+
+
+
 
 
 }

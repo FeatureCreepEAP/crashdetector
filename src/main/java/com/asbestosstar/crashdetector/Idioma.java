@@ -399,6 +399,39 @@ public interface Idioma {
 
 	public String codigo();
 
+	public String inicioApp();
+
+	public String adjustesCrashDetector();
+
+	public String confidencialidad();
+
+	public String tooltip();
+
+	public String config();
+
+	public String abrirCarpeta();
+
+	public String actualizar();
+
+	public String anadirRegistro();
+
+	public String usarIdiomaDelSistema();
+
+	public String volver();
+
+	public String colorFondo();
+	public String colorTexto();
+	public String colorBoton();
+	public String colorCajaTexto();
+	public String colorEnlace();
+	public String colorTitulosConsolas();
+	public String colorError();
+	public String colorAdvertencia();
+	public String colorInfo();
+	public String colorTitulo();
+	public String colorEnlaceTexto();
+	
+	
 	// public String advertenciaMalwareFalso();
 
 }
