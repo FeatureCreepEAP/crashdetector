@@ -3,7 +3,7 @@ package com.asbestosstar.crashdetector.gui;
 import java.awt.*;
 import javax.swing.*;
 
-import com.asbestosstar.crashdetector.analyzador.QuickFix;
+import com.asbestosstar.crashdetector.analizador.QuickFix;
 
 /**
  * Representación visual de un QuickFix individual con alineación correcta

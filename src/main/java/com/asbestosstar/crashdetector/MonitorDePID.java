@@ -22,9 +22,9 @@ import java.util.concurrent.CountDownLatch;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import com.asbestosstar.crashdetector.analyzador.Analizador;
-import com.asbestosstar.crashdetector.analyzador.VerificacionDeStackTrace;
-import com.asbestosstar.crashdetector.analyzador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.Analizador;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.grepr.BusquedaArchivos;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;

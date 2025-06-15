@@ -50,7 +50,7 @@ public class Transformaciones implements ClassFileTransformer {
 
 	public static boolean tiene_clase_cliente = false;
 //No funciona con Balm3
-	public static ClassNode transformar(String nombre_de_clase, ClassNode node) {
+	public static ClassNode transformarASM(String nombre_de_clase, ClassNode node) {
 
 		if (nombre_de_clase.equals("net.minecraft.server.MinecraftServer") || nombre_de_clase.equals("game.Server")) {
 
@@ -141,7 +141,7 @@ public class Transformaciones implements ClassFileTransformer {
 			// 使用ClassNode来接收解析后的类
 			ClassNode classNode = new ClassNode();
 			classReader.accept(classNode, 0);
-			transformar(nombre,classNode);
+			transformarASM(nombre,classNode);
 			ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
 
 			classNode.accept(cw);

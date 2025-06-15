@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 
-import com.asbestosstar.crashdetector.analyzador.QuickFix;
+import com.asbestosstar.crashdetector.analizador.QuickFix;
 
 /**
  * Panel principal que contiene múltiples QuickFix con scroll

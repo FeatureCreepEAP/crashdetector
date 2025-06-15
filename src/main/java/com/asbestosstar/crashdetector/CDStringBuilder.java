@@ -1,6 +1,6 @@
 package com.asbestosstar.crashdetector;
 
-import com.asbestosstar.crashdetector.analyzador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class CDStringBuilder {
 

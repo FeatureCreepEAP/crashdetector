@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.asbestosstar.crashdetector.analyzador.VerificacionDeStackTrace;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.anon.AnonimizadorDeRuta;
 import com.asbestosstar.crashdetector.anon.AnonimizadordeRegistros;
 import com.asbestosstar.crashdetector.api_sito_registro.APIdeSitioDeRegistro;

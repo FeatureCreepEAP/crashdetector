@@ -46,7 +46,7 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
-import com.asbestosstar.crashdetector.analyzador.QuickFix;
+import com.asbestosstar.crashdetector.analizador.QuickFix;
 
 public class CrashDetectorGUI extends JFrame {
 	private final Instant tiempoFallo;
@@ -73,14 +73,17 @@ public class CrashDetectorGUI extends JFrame {
 	}
 
 	private void inicializarInterfaz() {
+		CrashDetectorLogger.log("inicializar interfaz");
 		pantalla.setContentType("text/html");
 		pantalla.setEditable(false);
 		pantalla.setBackground(colorCajaTexto);
 		pantalla.setForeground(colorEnlace);
 		pantalla.setFont(new Font("Consolas", Font.PLAIN, 14));
 		try {
+			CrashDetectorLogger.log("estabalar texto");
 			pantalla.setText(new String(Files.readAllBytes(Paths.get(MonitorDePID.local))));
 			pantalla.setCaretPosition(0);// Mas alto
+			CrashDetectorLogger.log("estabalar texto completa");
 		} catch (IOException e) {
 			pantalla.setText(
 					"<html><body style='color:#ff6b6b'>Problema con el Informe: " + e.getMessage() + "</body></html>");
@@ -95,7 +98,7 @@ public class CrashDetectorGUI extends JFrame {
 				}
 			}
 		});
-
+		CrashDetectorLogger.log("estabalar frontera");
 		scrollPane.setBorder(BorderFactory.createEmptyBorder());
 		scrollPane.getViewport().setBackground(colorCajaTexto);
 
@@ -124,14 +127,14 @@ public class CrashDetectorGUI extends JFrame {
 		        "日本語", "한국어"
 		    };
 		
-		
+		CrashDetectorLogger.log("combobox");
 		JComboBox<String> comboBoxIdioma = new JComboBox<>(idiomas);
 		comboBoxIdioma.setMaximumSize(new Dimension(200, 30));
 		if (!esMac()) {
 			comboBoxIdioma.setBackground(colorBoton);
 			comboBoxIdioma.setForeground(colorTexto);
 		}
-		
+		CrashDetectorLogger.log("idioma");
 	    String currentLangCode = MonitorDePID.idioma.codigo();
 	    switch (currentLangCode) {
 	        case "es": comboBoxIdioma.setSelectedItem("Español"); break;
@@ -197,7 +200,7 @@ public class CrashDetectorGUI extends JFrame {
 	        }
 	    });
 		
-		
+	    CrashDetectorLogger.log("estabalar casilla");
 		JPanel panelCasilla = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
 		panelCasilla.setBackground(colorFondo);
 		panelCasilla.add(casillaVerificacionSistema);
@@ -206,7 +209,9 @@ public class CrashDetectorGUI extends JFrame {
 		seccionIdioma.add(Box.createVerticalStrut(5));
 		seccionIdioma.add(panelCasilla);
 
+		CrashDetectorLogger.log("estabalar quickfix");
 		JButton botonQuickFix = new JButton("QuickFix");
+		botonQuickFix.setEnabled(false);
 		botonQuickFix.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		botonQuickFix.setMinimumSize(new Dimension(150, 40));
 		botonQuickFix.setMaximumSize(new Dimension(300, 40));
@@ -234,12 +239,12 @@ public class CrashDetectorGUI extends JFrame {
 			
 		
 		
-		
+		CrashDetectorLogger.log("panelInferior");
 		panelInferior.add(botonQuickFix, BorderLayout.CENTER);
-
+		CrashDetectorLogger.log("estabalar derecha");
 		JPanel botonesDerecha = new JPanel(new GridLayout(1, 5, 10, 10));
 		botonesDerecha.setBackground(colorFondo);
-
+		CrashDetectorLogger.log("botones principales");
         JButton botonAgregar = añadirBotonImagen(botonesDerecha, "crash_detector/imagenes/boton_agregar.png", MonitorDePID.idioma.anadirRegistro());
         JButton botonCompartir = añadirBotonImagen(botonesDerecha, "crash_detector/imagenes/boton_compartir.png", MonitorDePID.idioma.botonDeCompartirInforme());
         JButton botonActualizar = añadirBotonImagen(botonesDerecha, "crash_detector/imagenes/boton_actualizar.png", MonitorDePID.idioma.actualizar());
@@ -265,12 +270,13 @@ public class CrashDetectorGUI extends JFrame {
 		panelInferior.add(botonQuickFix, BorderLayout.CENTER);
 		panelInferior.add(botonesDerecha, BorderLayout.EAST);
 
+		
 		JPanel barraLateralDerecha = new JPanel();
 		barraLateralDerecha.setLayout(new BoxLayout(barraLateralDerecha, BoxLayout.Y_AXIS));
 		barraLateralDerecha.setBackground(colorBoton.darker());
 		barraLateralDerecha.setPreferredSize(new Dimension(150, 0));
 
-		
+		CrashDetectorLogger.log("estabalar logo");
 		JLabel logoLabel = new JLabel();
 	    logoLabel.setBackground(colorBoton.darker());
 	    logoLabel.setOpaque(true);
@@ -295,7 +301,7 @@ public class CrashDetectorGUI extends JFrame {
 	    barraLateralDerecha.add(logoLabel);
 		barraLateralDerecha.add(botonVolver);
 		barraLateralDerecha.add(Box.createVerticalStrut(10)); // Espaciado entre botones
-
+		CrashDetectorLogger.log("estabalar lateral derecha");
 		// Botones dinámicos (grepr/fgrepr y MCreator)
 		String[] botones = { "grepr/fgrepr", "MCreator" };
 		for (String texto : botones) {
@@ -318,14 +324,14 @@ public class CrashDetectorGUI extends JFrame {
 
 			barraLateralDerecha.add(btn);
 		}
-
+		CrashDetectorLogger.log("estabalar layout");
 		setLayout(new BorderLayout(5, 5));
 		//add(scrollPane, BorderLayout.CENTER);
 		contenidoPrincipal.add(scrollPane, BorderLayout.CENTER);
         add(contenidoPrincipal, BorderLayout.CENTER);
 		add(panelInferior, BorderLayout.SOUTH);
 		add(barraLateralDerecha, BorderLayout.EAST);
-
+		CrashDetectorLogger.log("estabalar titilo");
 		setTitle("CrashDetector");
 		setSize(1000, 650);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

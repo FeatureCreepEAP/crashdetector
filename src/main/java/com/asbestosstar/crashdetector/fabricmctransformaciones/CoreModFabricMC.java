@@ -51,7 +51,7 @@ public class CoreModFabricMC implements IMixinConfigPlugin{
 	@Override
 	public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
 		// TODO Auto-generated method stub
-		Transformaciones.transformar(targetClassName.replace("/", "."), targetClass);
+		Transformaciones.transformarASM(targetClassName.replace("/", "."), targetClass);
 	}
 
 }

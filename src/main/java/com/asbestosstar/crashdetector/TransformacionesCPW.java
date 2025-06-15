@@ -15,7 +15,7 @@ public class TransformacionesCPW implements  ITransformer<ClassNode> {
 	@Override
 	public ClassNode transform(ClassNode input, ITransformerVotingContext context) {
 		// TODO Auto-generated method stub
-		return Transformaciones.transformar(input.name.replace("/", "."), input);
+		return Transformaciones.transformarASM(input.name.replace("/", "."), input);
 	}
 
 	@Override
