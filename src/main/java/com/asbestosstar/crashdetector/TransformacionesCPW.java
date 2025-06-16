@@ -5,17 +5,25 @@ import java.util.Set;
 
 import org.objectweb.asm.tree.ClassNode;
 
+import com.asbestosstar.crashdetector.parches.Parche;
+
 import cpw.mods.modlauncher.api.ITransformer;
 import cpw.mods.modlauncher.api.ITransformerVotingContext;
 import cpw.mods.modlauncher.api.TransformerVoteResult;
 
 public class TransformacionesCPW implements  ITransformer<ClassNode> {
 
+	static{
+		Transformaciones.init();
+	}
+	
+	
 	// Para CPW Transformer
 	@Override
 	public ClassNode transform(ClassNode input, ITransformerVotingContext context) {
 		// TODO Auto-generated method stub
-		return Transformaciones.transformarASM(input.name.replace("/", "."), input);
+		Parche.applicarParches(input, input.name);
+		return input;
 	}
 
 	@Override
@@ -27,11 +35,19 @@ public class TransformacionesCPW implements  ITransformer<ClassNode> {
 	@Override
 	public Set<Target> targets() {
 		// TODO Auto-generated method stub
-		Set<Target> resulto = new HashSet<Target>();
-		resulto.add(Target.targetClass("net.minecraft.server.MinecraftServer"));
-		resulto.add(Target.targetClass("net.minecraft.client.Minecraft"));
-
-		return resulto;
+		Set<Target> resultdo = new HashSet<Target>();
+		//resulto.add(Target.targetClass("net.minecraft.server.MinecraftServer"));
+		//resulto.add(Target.targetClass("net.minecraft.client.Minecraft"));
+		for(Parche<?> parche:Parche.parches) {
+			for(String clase:parche.clases()) {
+				resultdo.add(Target.targetClass(clase));
+			}
+			
+			
+		}
+		
+		
+		return resultdo;
 	}
 
 }

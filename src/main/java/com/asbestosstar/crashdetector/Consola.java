@@ -292,5 +292,28 @@ public class Consola {
 		}
 		return contento_verificar;
 	}
+	
+	public String obtainerMensajeUltimaTrace() {
+		List<String> traces = VerificacionDeStackTrace.obtenerTraces(contento_verificar);
+		int len=traces.size();
+		if(len>0) {
+		String ult=traces.get(len-1);
+		String[] arr=ult.split(VerificacionDeStackTrace.nl);
+		return arr[arr.length-1];
+		}
+		return "";
+	}
+	
+	public String obtainerMensajeFatalUltimaTrace() {
+		List<String> traces = VerificacionDeStackTrace.obtenerTracesFatal(contento_verificar);
+		int len=traces.size();
+		if(len>0) {
+		String ult=traces.get(len-1);
+		String[] arr=ult.split(VerificacionDeStackTrace.nl);
+		return arr[arr.length-1];
+		}
+		return "";
+	}
+	
 
 }

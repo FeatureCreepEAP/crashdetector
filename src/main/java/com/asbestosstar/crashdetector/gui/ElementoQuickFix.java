@@ -50,13 +50,20 @@ public class ElementoQuickFix extends JPanel {
         for (QuickFix.ComponenteGUI componente : quickFix.componentes) {
             JComponent comp = componente.crearComponente(() -> quickFix.tieneRetener);
             
-            // Forzar tamaño máximo igual al preferido para evitar centrado
+            // Forzar alineación izquierda y control de tamaño
             Dimension prefSize = comp.getPreferredSize();
-            comp.setMaximumSize(prefSize);
+            comp.setAlignmentX(JComponent.LEFT_ALIGNMENT);
             
-            comp.setAlignmentX(JComponent.LEFT_ALIGNMENT); // Asegurar alineación izquierda
+            if (comp instanceof JButton) {
+                JButton button = (JButton) comp;
+                button.setHorizontalAlignment(SwingConstants.LEFT);
+                button.setMaximumSize(new Dimension(Integer.MAX_VALUE, prefSize.height));
+            } else {
+                comp.setMaximumSize(new Dimension(Integer.MAX_VALUE, prefSize.height));
+            }
+            
             panelComponentes.add(comp);
-            panelComponentes.add(Box.createVerticalStrut(5)); // Espaciado entre elementos
+            panelComponentes.add(Box.createVerticalStrut(5)); // Espaciado uniforme
         }
 
         panelPrincipal.add(panelComponentes);

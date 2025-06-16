@@ -868,6 +868,152 @@ public String colorEnlaceTexto() {
     return "リンクテキストの色 (#RRGGBB):";
 }
 
+@Override
+public String transformacionDeMinecraftCodigo0() {
+    return "失敗時にのみCrashDetectorを開く";
+}
+
+@Override
+public String activar_parche() {
+    return "パッチを有効化";
+}
+
+@Override
+public String noHaySolucionDisponible() {
+    return "利用可能な解決策はありません";
+}
+
+@Override
+public String error() {
+    return "エラー";
+}
+
+@Override
+public String error_al_eliminar_jar() {
+    return "Jarの削除中にエラーが発生しました";
+}
+
+@Override
+public String jar_eliminado_exitosamente() {
+    return "Jarが正常に削除されました";
+}
+
+@Override
+public String exito() {
+    return "成功";
+}
+
+@Override
+public String eliminar() {
+    return "削除";
+}
+
+@Override
+public String error_al_eliminar_paquete() {
+    return "パッケージの削除中にエラーが発生しました";
+}
+
+@Override
+public String paquete_eliminado_exitosamente() {
+    return "パッケージが正常に削除されました";
+}
+
+@Override
+public String eliminar_paquete() {
+    return "パッケージを削除";
+}
+
+@Override
+public String no_se_encontraron_mods_con_paquete() {
+    return "パッケージ付きのMODが見つかりませんでした";
+}
+
+@Override
+public String no_se_puede_eliminar_paquete() {
+    return "パッケージを削除できません";
+}
+
+@Override
+public String eliminar_jar() {
+    return "Jarを削除";
+}
+
+@Override
+public String no_se_encontraron_mods_duplicados() {
+    return "重複したMODは見つかりませんでした";
+}
+
+
+@Override
+public String archivo_no_encontrado() {
+    return "ファイルが見つかりません";
+}
+
+@Override
+public String directorio_eliminado() {
+    return "ディレクトリが削除されました";
+}
+
+@Override
+public String error_al_eliminar_jar_anidado() {
+    return "ネストされたJarの削除中にエラーが発生しました";
+}
+
+@Override
+public String archivo_interno_no_encontrado() {
+    return "内部ファイルが見つかりません";
+}
+
+@Override
+public String archivo_eliminado() {
+    return "ファイルが削除されました";
+}
+
+@Override
+public String error_al_eliminar_archivo() {
+    return "ファイルの削除中にエラーが発生しました";
+}
+
+@Override
+public String archivo_externo_no_valido() {
+    return "無効な外部ファイルです";
+}
+
+@Override
+public String elemento_mod_eliminado() {
+    return "Mod要素が削除されました";
+}
+
+@Override
+public String error_al_reemplazar_jar_externo() {
+    return "外部Jarの置き換え中にエラーが発生しました";
+}
+
+@Override
+public String error_al_eliminar_elemento_mod() {
+    return "Mod要素の削除中にエラーが発生しました";
+}
+
+@Override
+public String error_al_eliminar_directorio() {
+    return "ディレクトリの削除中にエラーが発生しました";
+}
+
+@Override
+public String formato_invalido_para_jar_anidado() {
+    return "ネストされたJarに無効な形式です";
+}
+
+@Override
+public String jar_anidado_eliminado() {
+    return "ネストされたJarが削除されました";
+}
+
+@Override
+public String error_al_limpiar_temporales() {
+    return "一時ファイルのクリア中にエラーが発生しました";
+}
+
 
 
 

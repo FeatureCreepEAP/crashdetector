@@ -46,6 +46,13 @@ public class Segundo60Tick implements Verificaciones {
 		// TODO Auto-generated method stub
 		return MonitorDePID.idioma.nombre_de_60_segundo_trick();
 	}
+	
+    @Override
+    public QuickFix solucion() {
+        return new QuickFix.Builder(nombre())
+            .agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
+            .construir();
+    }
     
     
 }

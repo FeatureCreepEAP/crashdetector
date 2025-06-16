@@ -78,4 +78,13 @@ public class CursedConsola implements Verificaciones {
     public String nombre() {
         return MonitorDePID.idioma.nombre_de_cursed_consola();
     }
+    
+    @Override
+    public QuickFix solucion() {
+        return new QuickFix.Builder(nombre())
+            .agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
+            .construir();
+    }
+    
+    
 }

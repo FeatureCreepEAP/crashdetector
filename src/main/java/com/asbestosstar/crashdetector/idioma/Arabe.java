@@ -875,5 +875,155 @@ public String colorEnlaceTexto() {
     return "لون نص الرابط (#RRGGBB):";
 }
 
+@Override
+public String transformacionDeMinecraftCodigo0() {
+    return "فتح CrashDetector فقط عند الفشل";
+}
+
+
+@Override
+public String activar_parche() {
+    return "تفعيل التصحيح";
+}
+
+@Override
+public String noHaySolucionDisponible() {
+    return "لا توجد حلول متاحة";
+}
+
+@Override
+public String error() {
+    return "خطأ";
+}
+
+@Override
+public String error_al_eliminar_jar() {
+    return "خطأ أثناء حذف Jar";
+}
+
+@Override
+public String jar_eliminado_exitosamente() {
+    return "تم حذف Jar بنجاح";
+}
+
+@Override
+public String exito() {
+    return "نجاح";
+}
+
+@Override
+public String eliminar() {
+    return "حذف";
+}
+
+@Override
+public String error_al_eliminar_paquete() {
+    return "خطأ أثناء حذف الحزمة";
+}
+
+@Override
+public String paquete_eliminado_exitosamente() {
+    return "تم حذف الحزمة بنجاح";
+}
+
+@Override
+public String eliminar_paquete() {
+    return "حذف الحزمة";
+}
+
+@Override
+public String no_se_encontraron_mods_con_paquete() {
+    return "لم يتم العثور على تعديلات مع الحزمة";
+}
+
+@Override
+public String no_se_puede_eliminar_paquete() {
+    return "لا يمكن حذف الحزمة";
+}
+
+@Override
+public String eliminar_jar() {
+    return "حذف Jar";
+}
+
+@Override
+public String no_se_encontraron_mods_duplicados() {
+    return "لم يتم العثور على تعديلات مكررة";
+}
+
+
+@Override
+public String archivo_no_encontrado() {
+    return "الملف غير موجود";
+}
+
+@Override
+public String directorio_eliminado() {
+    return "المجلد محذوف";
+}
+
+@Override
+public String error_al_eliminar_jar_anidado() {
+    return "خطأ في حذف ملف Jar المتداخل";
+}
+
+@Override
+public String archivo_interno_no_encontrado() {
+    return "لم يتم العثور على الملف الداخلي";
+}
+
+@Override
+public String archivo_eliminado() {
+    return "تم حذف الملف";
+}
+
+@Override
+public String error_al_eliminar_archivo() {
+    return "خطأ في حذف الملف";
+}
+
+@Override
+public String archivo_externo_no_valido() {
+    return "الملف الخارجي غير صالح";
+}
+
+@Override
+public String elemento_mod_eliminado() {
+    return "تم حذف عنصر التعديل";
+}
+
+@Override
+public String error_al_reemplazar_jar_externo() {
+    return "خطأ في استبدال ملف Jar الخارجي";
+}
+
+@Override
+public String error_al_eliminar_elemento_mod() {
+    return "خطأ في حذف عنصر التعديل";
+}
+
+@Override
+public String error_al_eliminar_directorio() {
+    return "خطأ في حذف المجلد";
+}
+
+@Override
+public String formato_invalido_para_jar_anidado() {
+    return "صيغة غير صالحة لملف Jar المتداخل";
+}
+
+@Override
+public String jar_anidado_eliminado() {
+    return "تم حذف ملف Jar المتداخل";
+}
+
+@Override
+public String error_al_limpiar_temporales() {
+    return "خطأ في تنظيف الملفات المؤقتة";
+}
+
+
+
+
 
 }

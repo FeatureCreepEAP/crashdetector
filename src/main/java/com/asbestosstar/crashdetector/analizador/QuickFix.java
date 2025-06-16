@@ -31,7 +31,7 @@ public class QuickFix {
     public static class Builder {
         private final String etiqueta;
         private boolean tieneCheckbox = false;
-        private final java.util.List<ComponenteGUI> componentes = new java.util.ArrayList<>();
+        public final java.util.List<ComponenteGUI> componentes = new java.util.ArrayList<>();
 
         public Builder(String etiqueta) {
             this.etiqueta = etiqueta;
@@ -45,12 +45,16 @@ public class QuickFix {
             return this;
         }
 
+        public Builder agregarBoton(String texto, AccionBoton accion, boolean desactivarOtros) {
+            componentes.add(new BotonGUI(texto, accion, desactivarOtros));
+            return this;
+        }
+
         /**
-         * Añade un botón con acción
+         * Añade un botón con comportamiento predeterminado (no desactiva otros)
          */
         public Builder agregarBoton(String texto, AccionBoton accion) {
-            componentes.add(new BotonGUI(texto, accion));
-            return this;
+            return agregarBoton(texto, accion, false);
         }
 
         /**
@@ -69,26 +73,36 @@ public class QuickFix {
     // Interfaz para componentes GUI
     public interface ComponenteGUI {
         JComponent crearComponente(Supplier<Boolean> estadoRetener);
+        default boolean debeDesactivarOtros() {
+            return false; // Por defecto, no desactiva otros botones
+        }
     }
 
     // Clase para botones
     static class BotonGUI implements ComponenteGUI {
         private final String texto;
         private final AccionBoton accion;
+        private final boolean desactivarOtros;
 
-        public BotonGUI(String texto, AccionBoton accion) {
+        public BotonGUI(String texto, AccionBoton accion, boolean desactivarOtros) {
             this.texto = texto;
             this.accion = accion;
+            this.desactivarOtros = desactivarOtros;
         }
 
         @Override
         public JComponent crearComponente(Supplier<Boolean> estadoRetener) {
             JButton boton = new JButton(texto);
-            estilizarBoton(boton);  
+            estilizarBoton(boton);
             boton.addActionListener(e -> 
-                accion.ejecutar(estadoRetener != null ? estadoRetener.get() : false)
+                accion.ejecutar(estadoRetener.get())
             );
             return boton;
+        }
+
+        @Override
+        public boolean debeDesactivarOtros() {
+            return desactivarOtros;
         }
 
         private void estilizarBoton(JButton boton) {
@@ -100,7 +114,6 @@ public class QuickFix {
             }
         }
     }
-
     // Clase para etiquetas
     static class EtiquetaGUI implements ComponenteGUI {
         private final String texto;

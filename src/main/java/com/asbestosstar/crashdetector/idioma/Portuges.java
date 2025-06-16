@@ -870,6 +870,155 @@ public String colorEnlaceTexto() {
     return "Cor do texto do link (#RRGGBB):";
 }
 
+@Override
+public String transformacionDeMinecraftCodigo0() {
+    return "Abrir CrashDetector apenas em caso de falha";
+}
+
+
+@Override
+public String activar_parche() {
+    return "Ativar Patch";
+}
+
+@Override
+public String noHaySolucionDisponible() {
+    return "Nenhuma solução disponível";
+}
+
+@Override
+public String error() {
+    return "erro";
+}
+
+@Override
+public String error_al_eliminar_jar() {
+    return "Erro ao excluir Jar";
+}
+
+@Override
+public String jar_eliminado_exitosamente() {
+    return "Jar excluído com sucesso";
+}
+
+@Override
+public String exito() {
+    return "sucesso";
+}
+
+@Override
+public String eliminar() {
+    return "excluir";
+}
+
+@Override
+public String error_al_eliminar_paquete() {
+    return "Erro ao excluir pacote";
+}
+
+@Override
+public String paquete_eliminado_exitosamente() {
+    return "Pacote excluído com sucesso";
+}
+
+@Override
+public String eliminar_paquete() {
+    return "Excluir pacote";
+}
+
+@Override
+public String no_se_encontraron_mods_con_paquete() {
+    return "Nenhum mod com pacote encontrado";
+}
+
+@Override
+public String no_se_puede_eliminar_paquete() {
+    return "Não é possível excluir o pacote";
+}
+
+@Override
+public String eliminar_jar() {
+    return "Excluir jar";
+}
+
+@Override
+public String no_se_encontraron_mods_duplicados() {
+    return "Nenhum mod duplicado encontrado";
+}
+
+@Override
+public String archivo_no_encontrado() {
+    return "Arquivo Não Encontrado";
+}
+
+@Override
+public String directorio_eliminado() {
+    return "Diretório Excluído";
+}
+
+@Override
+public String error_al_eliminar_jar_anidado() {
+    return "Erro ao excluir Jar aninhado";
+}
+
+@Override
+public String archivo_interno_no_encontrado() {
+    return "Arquivo interno não encontrado";
+}
+
+@Override
+public String archivo_eliminado() {
+    return "arquivo excluído";
+}
+
+@Override
+public String error_al_eliminar_archivo() {
+    return "erro ao excluir arquivo";
+}
+
+@Override
+public String archivo_externo_no_valido() {
+    return "arquivo externo inválido";
+}
+
+@Override
+public String elemento_mod_eliminado() {
+    return "Elemento mod excluído";
+}
+
+@Override
+public String error_al_reemplazar_jar_externo() {
+    return "Erro ao substituir Jar externo";
+}
+
+@Override
+public String error_al_eliminar_elemento_mod() {
+    return "erro ao excluir elemento mod";
+}
+
+@Override
+public String error_al_eliminar_directorio() {
+    return "erro ao excluir diretório";
+}
+
+@Override
+public String formato_invalido_para_jar_anidado() {
+    return "formato inválido para Jar aninhado";
+}
+
+@Override
+public String jar_anidado_eliminado() {
+    return "Jar aninhado excluído";
+}
+
+@Override
+public String error_al_limpiar_temporales() {
+    return "erro ao limpar arquivos temporários";
+}
+
+
+
+
 
 
 

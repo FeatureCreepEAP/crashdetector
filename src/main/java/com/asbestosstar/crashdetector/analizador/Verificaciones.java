@@ -38,4 +38,6 @@ public interface Verificaciones {
 	
 	public String nombre();
 	
+	public QuickFix solucion();
+	
 }

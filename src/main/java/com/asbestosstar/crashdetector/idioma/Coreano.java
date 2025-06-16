@@ -873,6 +873,150 @@ public String colorEnlaceTexto() {
     return "링크 텍스트 색상 (#RRGGBB):";
 }
 
+@Override
+public String transformacionDeMinecraftCodigo0() {
+    return "오류 발생 시에만 CrashDetector 열기";
+}
+
+@Override
+public String activar_parche() {
+    return "패치 활성화";
+}
+
+@Override
+public String noHaySolucionDisponible() {
+    return "사용 가능한 솔루션이 없습니다";
+}
+
+@Override
+public String error() {
+    return "오류";
+}
+
+@Override
+public String error_al_eliminar_jar() {
+    return "Jar 삭제 중 오류 발생";
+}
+
+@Override
+public String jar_eliminado_exitosamente() {
+    return "Jar이 성공적으로 삭제되었습니다";
+}
+
+@Override
+public String exito() {
+    return "성공";
+}
+
+@Override
+public String eliminar() {
+    return "삭제";
+}
+
+@Override
+public String error_al_eliminar_paquete() {
+    return "패키지 삭제 중 오류 발생";
+}
+
+@Override
+public String paquete_eliminado_exitosamente() {
+    return "패키지가 성공적으로 삭제되었습니다";
+}
+
+@Override
+public String eliminar_paquete() {
+    return "패키지 삭제";
+}
+
+@Override
+public String no_se_encontraron_mods_con_paquete() {
+    return "패키지가 포함된 모드를 찾을 수 없습니다";
+}
+
+@Override
+public String no_se_puede_eliminar_paquete() {
+    return "패키지를 삭제할 수 없습니다";
+}
+
+@Override
+public String eliminar_jar() {
+    return "Jar 삭제";
+}
+
+@Override
+public String no_se_encontraron_mods_duplicados() {
+    return "중복된 모드를 찾을 수 없습니다";
+}
+
+@Override
+public String archivo_no_encontrado() {
+    return "파일을 찾을 수 없음";
+}
+
+@Override
+public String directorio_eliminado() {
+    return "디렉토리 삭제됨";
+}
+
+@Override
+public String error_al_eliminar_jar_anidado() {
+    return "중첩된 Jar 삭제 중 오류 발생";
+}
+
+@Override
+public String archivo_interno_no_encontrado() {
+    return "내부 파일을 찾을 수 없음";
+}
+
+@Override
+public String archivo_eliminado() {
+    return "파일 삭제됨";
+}
+
+@Override
+public String error_al_eliminar_archivo() {
+    return "파일 삭제 중 오류 발생";
+}
+
+@Override
+public String archivo_externo_no_valido() {
+    return "유효하지 않은 외부 파일";
+}
+
+@Override
+public String elemento_mod_eliminado() {
+    return "모드 요소 삭제됨";
+}
+
+@Override
+public String error_al_reemplazar_jar_externo() {
+    return "외부 Jar 교체 중 오류 발생";
+}
+
+@Override
+public String error_al_eliminar_elemento_mod() {
+    return "모드 요소 삭제 중 오류 발생";
+}
+
+@Override
+public String error_al_eliminar_directorio() {
+    return "디렉토리 삭제 중 오류 발생";
+}
+
+@Override
+public String formato_invalido_para_jar_anidado() {
+    return "중첩된 Jar에 유효하지 않은 형식";
+}
+
+@Override
+public String jar_anidado_eliminado() {
+    return "중첩된 Jar 삭제됨";
+}
+
+@Override
+public String error_al_limpiar_temporales() {
+    return "임시 파일 정리 중 오류 발생";
+}
 
 
 

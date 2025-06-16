@@ -46,6 +46,12 @@ public class OpcionesJavaGCInvalidas implements Verificaciones {
 		return MonitorDePID.idioma.nombre_de_opciones_java_gc_invalidas();
 	}
     
+    @Override
+    public QuickFix solucion() {
+        return new QuickFix.Builder(nombre())
+            .agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
+            .construir();
+    }
     
     
 }

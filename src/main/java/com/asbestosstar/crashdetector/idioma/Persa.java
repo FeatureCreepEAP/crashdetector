@@ -876,6 +876,153 @@ public String colorEnlaceTexto() {
     return "رنگ متن لینک (#RRGGBB):";
 }
 
+@Override
+public String transformacionDeMinecraftCodigo0() {
+    return "فقط در صورت خرابی CrashDetector را باز کنید";
+}
+
+@Override
+public String activar_parche() {
+    return "فعال‌سازی پچ";
+}
+
+@Override
+public String noHaySolucionDisponible() {
+    return "هیچ راه‌حلی موجود نیست";
+}
+
+@Override
+public String error() {
+    return "خطا";
+}
+
+@Override
+public String error_al_eliminar_jar() {
+    return "خطا در حذف Jar";
+}
+
+@Override
+public String jar_eliminado_exitosamente() {
+    return "Jar با موفقیت حذف شد";
+}
+
+@Override
+public String exito() {
+    return "موفقیت";
+}
+
+@Override
+public String eliminar() {
+    return "حذف";
+}
+
+@Override
+public String error_al_eliminar_paquete() {
+    return "خطا در حذف بسته";
+}
+
+@Override
+public String paquete_eliminado_exitosamente() {
+    return "بسته با موفقیت حذف شد";
+}
+
+@Override
+public String eliminar_paquete() {
+    return "حذف بسته";
+}
+
+@Override
+public String no_se_encontraron_mods_con_paquete() {
+    return "هیچ مودی با بسته پیدا نشد";
+}
+
+@Override
+public String no_se_puede_eliminar_paquete() {
+    return "امکان حذف بسته وجود ندارد";
+}
+
+@Override
+public String eliminar_jar() {
+    return "حذف Jar";
+}
+
+@Override
+public String no_se_encontraron_mods_duplicados() {
+    return "هیچ مود تکراری پیدا نشد";
+}
+
+@Override
+public String archivo_no_encontrado() {
+    return "فایل پیدا نشد";
+}
+
+@Override
+public String directorio_eliminado() {
+    return "پوشه حذف شد";
+}
+
+@Override
+public String error_al_eliminar_jar_anidado() {
+    return "خطا در حذف فایل Jar تو در تو";
+}
+
+@Override
+public String archivo_interno_no_encontrado() {
+    return "فایل داخلی یافت نشد";
+}
+
+@Override
+public String archivo_eliminado() {
+    return "فایل حذف شد";
+}
+
+@Override
+public String error_al_eliminar_archivo() {
+    return "خطا در حذف فایل";
+}
+
+@Override
+public String archivo_externo_no_valido() {
+    return "فایل خارجی معتبر نیست";
+}
+
+@Override
+public String elemento_mod_eliminado() {
+    return "عنصر مود حذف شد";
+}
+
+@Override
+public String error_al_reemplazar_jar_externo() {
+    return "خطا در جایگزینی فایل Jar خارجی";
+}
+
+@Override
+public String error_al_eliminar_elemento_mod() {
+    return "خطا در حذف عنصر مود";
+}
+
+@Override
+public String error_al_eliminar_directorio() {
+    return "خطا در حذف پوشه";
+}
+
+@Override
+public String formato_invalido_para_jar_anidado() {
+    return "فرمت نامعتبر برای فایل Jar تو در تو";
+}
+
+@Override
+public String jar_anidado_eliminado() {
+    return "فایل Jar تو در تو حذف شد";
+}
+
+@Override
+public String error_al_limpiar_temporales() {
+    return "خطا در پاک کردن فایل‌های موقت";
+}
+
+
+
 
 
 

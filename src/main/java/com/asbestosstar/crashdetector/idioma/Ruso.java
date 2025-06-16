@@ -877,6 +877,151 @@ public String colorEnlaceTexto() {
 }
 
 
+@Override
+public String transformacionDeMinecraftCodigo0() {
+    return "Открывать CrashDetector только при сбое";
+}
+
+
+@Override
+public String activar_parche() {
+    return "Активировать патч";
+}
+
+@Override
+public String noHaySolucionDisponible() {
+    return "Нет доступных решений";
+}
+
+@Override
+public String error() {
+    return "ошибка";
+}
+
+@Override
+public String error_al_eliminar_jar() {
+    return "Ошибка при удалении Jar";
+}
+
+@Override
+public String jar_eliminado_exitosamente() {
+    return "Jar успешно удален";
+}
+
+@Override
+public String exito() {
+    return "успех";
+}
+
+@Override
+public String eliminar() {
+    return "удалить";
+}
+
+@Override
+public String error_al_eliminar_paquete() {
+    return "Ошибка при удалении пакета";
+}
+
+@Override
+public String paquete_eliminado_exitosamente() {
+    return "Пакет успешно удален";
+}
+
+@Override
+public String eliminar_paquete() {
+    return "Удалить пакет";
+}
+
+@Override
+public String no_se_encontraron_mods_con_paquete() {
+    return "Моды с пакетом не найдены";
+}
+
+@Override
+public String no_se_puede_eliminar_paquete() {
+    return "Невозможно удалить пакет";
+}
+
+@Override
+public String eliminar_jar() {
+    return "Удалить Jar";
+}
+
+@Override
+public String no_se_encontraron_mods_duplicados() {
+    return "Дублирующиеся моды не найдены";
+}
+
+@Override
+public String archivo_no_encontrado() {
+    return "Файл не найден";
+}
+
+@Override
+public String directorio_eliminado() {
+    return "Каталог удален";
+}
+
+@Override
+public String error_al_eliminar_jar_anidado() {
+    return "Ошибка при удалении вложенного Jar";
+}
+
+@Override
+public String archivo_interno_no_encontrado() {
+    return "Внутренний файл не найден";
+}
+
+@Override
+public String archivo_eliminado() {
+    return "файл удален";
+}
+
+@Override
+public String error_al_eliminar_archivo() {
+    return "ошибка при удалении файла";
+}
+
+@Override
+public String archivo_externo_no_valido() {
+    return "недопустимый внешний файл";
+}
+
+@Override
+public String elemento_mod_eliminado() {
+    return "Элемент мода удален";
+}
+
+@Override
+public String error_al_reemplazar_jar_externo() {
+    return "Ошибка при замене внешнего Jar";
+}
+
+@Override
+public String error_al_eliminar_elemento_mod() {
+    return "ошибка при удалении элемента мода";
+}
+
+@Override
+public String error_al_eliminar_directorio() {
+    return "ошибка при удалении каталога";
+}
+
+@Override
+public String formato_invalido_para_jar_anidado() {
+    return "неверный формат для вложенного Jar";
+}
+
+@Override
+public String jar_anidado_eliminado() {
+    return "вложенный Jar удален";
+}
+
+@Override
+public String error_al_limpiar_temporales() {
+    return "ошибка при очистке временных файлов";
+}
 
 
 

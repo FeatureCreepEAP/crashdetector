@@ -869,6 +869,153 @@ public String colorEnlaceTexto() {
     return "链接文字颜色 (#RRGGBB):";
 }
 
+@Override
+public String transformacionDeMinecraftCodigo0() {
+    return "仅在失败时打开CrashDetector";
+}
+
+
+@Override
+public String activar_parche() {
+    return "激活补丁";
+}
+
+@Override
+public String noHaySolucionDisponible() {
+    return "没有可用的解决方案";
+}
+
+@Override
+public String error() {
+    return "错误";
+}
+
+@Override
+public String error_al_eliminar_jar() {
+    return "删除Jar时出错";
+}
+
+@Override
+public String jar_eliminado_exitosamente() {
+    return "Jar删除成功";
+}
+
+@Override
+public String exito() {
+    return "成功";
+}
+
+@Override
+public String eliminar() {
+    return "删除";
+}
+
+@Override
+public String error_al_eliminar_paquete() {
+    return "删除包时出错";
+}
+
+@Override
+public String paquete_eliminado_exitosamente() {
+    return "包删除成功";
+}
+
+@Override
+public String eliminar_paquete() {
+    return "删除包";
+}
+
+@Override
+public String no_se_encontraron_mods_con_paquete() {
+    return "未找到带有包的模组";
+}
+
+@Override
+public String no_se_puede_eliminar_paquete() {
+    return "无法删除包";
+}
+
+@Override
+public String eliminar_jar() {
+    return "删除Jar";
+}
+
+@Override
+public String no_se_encontraron_mods_duplicados() {
+    return "未找到重复的模组";
+}
+
+
+@Override
+public String archivo_no_encontrado() {
+    return "文件未找到";
+}
+
+@Override
+public String directorio_eliminado() {
+    return "目录已删除";
+}
+
+@Override
+public String error_al_eliminar_jar_anidado() {
+    return "删除嵌套Jar时出错";
+}
+
+@Override
+public String archivo_interno_no_encontrado() {
+    return "未找到内部文件";
+}
+
+@Override
+public String archivo_eliminado() {
+    return "文件已删除";
+}
+
+@Override
+public String error_al_eliminar_archivo() {
+    return "删除文件时出错";
+}
+
+@Override
+public String archivo_externo_no_valido() {
+    return "无效的外部文件";
+}
+
+@Override
+public String elemento_mod_eliminado() {
+    return "模组元素已删除";
+}
+
+@Override
+public String error_al_reemplazar_jar_externo() {
+    return "替换外部Jar时出错";
+}
+
+@Override
+public String error_al_eliminar_elemento_mod() {
+    return "删除模组元素时出错";
+}
+
+@Override
+public String error_al_eliminar_directorio() {
+    return "删除目录时出错";
+}
+
+@Override
+public String formato_invalido_para_jar_anidado() {
+    return "嵌套Jar格式无效";
+}
+
+@Override
+public String jar_anidado_eliminado() {
+    return "嵌套Jar已删除";
+}
+
+@Override
+public String error_al_limpiar_temporales() {
+    return "清理临时文件时出错";
+}
+
 
 
 

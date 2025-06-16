@@ -22,7 +22,7 @@ public class VerificacionDeStackTrace {
 
 
 	Consola consola;
-	String nl = System.lineSeparator();
+	public static String nl = System.lineSeparator();
 	
 	// 正则表达式用于匹配Java异常堆栈跟踪
 	private static final Pattern STACK_TRACE_PATTERN = Pattern.compile("(?m)(^\\S.*(?:\\r?\\n[ \\t]+at\\s+.*)+)");
@@ -251,7 +251,7 @@ public class VerificacionDeStackTrace {
 		return ret;
 	}
 
-	private List<String> obtenerTracesFatal(String log) {
+	public static List<String> obtenerTracesFatal(String log) {
 		// TODO Auto-generated method stub
 		List<String> ret = new ArrayList<String>();
 		String[] lineas = log.split(nl);
@@ -271,7 +271,7 @@ public class VerificacionDeStackTrace {
 		return ret;
 	}
 
-	private void anadirTracesFata(StringBuilder trace, String[] lineas, int index) {
+	private static void anadirTracesFata(StringBuilder trace, String[] lineas, int index) {
 		// TODO Auto-generated method stub
 		int len = lineas.length;
 		for (int i = index; i < len; i++) {

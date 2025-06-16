@@ -48,5 +48,13 @@ public class ErrorDeMonitorLWJGL implements Verificaciones {
 		// TODO Auto-generated method stub
 		return MonitorDePID.idioma.nombre_de_error_de_monitor_lwjgl();
 	}
+	
+	
+    @Override
+    public QuickFix solucion() {
+        return new QuickFix.Builder(nombre())
+            .agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
+            .construir();
+    }
     
 }

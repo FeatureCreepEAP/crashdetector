@@ -9,9 +9,15 @@ import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 
 import com.asbestosstar.crashdetector.Transformaciones;
+import com.asbestosstar.crashdetector.parches.Parche;
 
 public class CoreModFabricMC implements IMixinConfigPlugin{
 
+	static{
+		Transformaciones.init();
+	}
+	
+	
 	@Override
 	public void onLoad(String mixinPackage) {
 		// TODO Auto-generated method stub
@@ -51,7 +57,7 @@ public class CoreModFabricMC implements IMixinConfigPlugin{
 	@Override
 	public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
 		// TODO Auto-generated method stub
-		Transformaciones.transformarASM(targetClassName.replace("/", "."), targetClass);
+		Parche.applicarParches(targetClass, mixinClassName);
 	}
 
 }

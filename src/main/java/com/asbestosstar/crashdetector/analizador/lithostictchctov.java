@@ -48,5 +48,13 @@ public class lithostictchctov implements Verificaciones {
 		// TODO Auto-generated method stub
 		return MonitorDePID.idioma.nombre_de_faltar_de_liyhostictchctov();
 	}
+	
+	
+    @Override
+    public QuickFix solucion() {
+        return new QuickFix.Builder(nombre())
+            .agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
+            .construir();
+    }
     
 }

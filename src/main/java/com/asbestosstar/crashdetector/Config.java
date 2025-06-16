@@ -93,6 +93,7 @@ public class Config {
 
 	public void guardar() {
 		// Guardar la configuración predeterminada en un archivo
+		archivoConfig.getParentFile().mkdirs();
 		try (FileWriter escritor = new FileWriter(archivoConfig)) {
 			propiedadesConfig.store(escritor, "Configuración de CrashDetectorMC");
 		} catch (IOException e) {

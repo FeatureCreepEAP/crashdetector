@@ -48,4 +48,13 @@ public class EarlyWindow implements Verificaciones {
 		// TODO Auto-generated method stub
 		return MonitorDePID.idioma.nombre_de_early_window();
 	}
+	
+	
+    @Override
+    public QuickFix solucion() {
+        return new QuickFix.Builder(nombre())
+            .agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
+            .construir();
+    }
+	
 }

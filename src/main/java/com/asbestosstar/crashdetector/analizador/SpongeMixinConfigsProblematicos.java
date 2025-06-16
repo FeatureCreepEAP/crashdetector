@@ -5,8 +5,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.swing.JOptionPane;
+
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Consola;
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
+import com.asbestosstar.crashdetector.EliminadorDeMod;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
 
@@ -81,6 +85,49 @@ public class SpongeMixinConfigsProblematicos implements Verificaciones {
 		// TODO Auto-generated method stub
 		return MonitorDePID.idioma.nombre_de_spongemixin_configs_problematicos();
 	}
+
+    @Override
+    public QuickFix solucion() {
+        QuickFix.Builder builder = new QuickFix.Builder(MonitorDePID.idioma.nombre_de_spongemixin_configs_problematicos());
+
+        // Agregar botón para cada JAR encontrado
+        for (String sm : sm_config) {
+            List<String> jars = Buscardor.obternerUbicaciones(Buscardor.buscarModsConTermino(sm));
+            
+            for (String jar : jars) {
+                String buttonText = MonitorDePID.idioma.eliminar() + ": " + jar;
+                
+                builder.agregarBoton(buttonText, retener -> {
+                    try {
+                        // Eliminar el JAR completo
+                        EliminadorDeMod.eliminarMod(jar);
+                        
+                        // Mostrar mensaje solo si no es modo headless
+                        if (!EliminadorDeMod.esModoHeadless()) {
+                            JOptionPane.showMessageDialog(null,
+                                MonitorDePID.idioma.jar_eliminado_exitosamente() + ": " + jar,
+                                MonitorDePID.idioma.exito(),
+                                JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    } catch (Exception e) {
+                        // Log de error
+                        CrashDetectorLogger.logException(e);
+                        
+                        // Mensaje de error solo en modo GUI
+                        if (!EliminadorDeMod.esModoHeadless()) {
+                            JOptionPane.showMessageDialog(null,
+                                MonitorDePID.idioma.error_al_eliminar_jar() + ": " + jar,
+                                MonitorDePID.idioma.error(),
+                                JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                });
+            }
+        }
+
+
+        return builder.construir();
+    }
     
     
     

@@ -64,4 +64,15 @@ public class AdvertenciaFaltasClases implements Verificaciones {
 		// TODO Auto-generated method stub
 		return MonitorDePID.idioma.nombre_de_faltar_de_clases_advertencia();
 	}
+	
+	
+    @Override
+    public QuickFix solucion() {
+        return new QuickFix.Builder(nombre())
+            .agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
+            .construir();
+    }
+	
+	
+	
 }

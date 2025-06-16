@@ -430,6 +430,64 @@ public interface Idioma {
 	public String colorInfo();
 	public String colorTitulo();
 	public String colorEnlaceTexto();
+
+	public String transformacionDeMinecraftCodigo0();
+
+	public String activar_parche();
+
+	public String noHaySolucionDisponible();
+
+	public String error();
+
+	public String error_al_eliminar_jar();
+
+	public String jar_eliminado_exitosamente();
+
+	public String exito();
+
+	public String eliminar();
+
+	public String error_al_eliminar_paquete();
+
+	public String paquete_eliminado_exitosamente();
+
+	public String eliminar_paquete();
+
+	public String no_se_encontraron_mods_con_paquete();
+
+	public String no_se_puede_eliminar_paquete();
+
+	public String eliminar_jar();
+
+	public String no_se_encontraron_mods_duplicados();
+
+	public String archivo_no_encontrado();
+
+	public String directorio_eliminado();
+
+	public String error_al_eliminar_jar_anidado();
+
+	public String archivo_interno_no_encontrado();
+
+	public String archivo_eliminado();
+
+	public String error_al_eliminar_archivo();
+
+	public String archivo_externo_no_valido();
+
+	public String elemento_mod_eliminado();
+
+	public String error_al_reemplazar_jar_externo();
+
+	public String error_al_eliminar_elemento_mod();
+
+	public String error_al_eliminar_directorio();
+
+	public String formato_invalido_para_jar_anidado();
+
+	public String jar_anidado_eliminado();
+
+	public String error_al_limpiar_temporales();
 	
 	
 	// public String advertenciaMalwareFalso();

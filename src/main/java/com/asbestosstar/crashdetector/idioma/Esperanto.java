@@ -877,6 +877,154 @@ public String colorEnlaceTexto() {
     return "Ligila teksta koloro (#RRGGBB):";
 }
 
+@Override
+public String transformacionDeMinecraftCodigo0() {
+    return "Malfermu nur CrashDetector dum malsukceso";
+}
+
+@Override
+public String activar_parche() {
+    return "Aktivigi flikon";
+}
+
+@Override
+public String noHaySolucionDisponible() {
+    return "Neniu solvo disponeblas";
+}
+
+@Override
+public String error() {
+    return "eraro";
+}
+
+@Override
+public String error_al_eliminar_jar() {
+    return "Eraro dum forigo de Jar";
+}
+
+@Override
+public String jar_eliminado_exitosamente() {
+    return "Jar sukcese forigita";
+}
+
+@Override
+public String exito() {
+    return "sukceso";
+}
+
+@Override
+public String eliminar() {
+    return "forigi";
+}
+
+@Override
+public String error_al_eliminar_paquete() {
+    return "Eraro dum forigo de pakaĵo";
+}
+
+@Override
+public String paquete_eliminado_exitosamente() {
+    return "Pakaĵo sukcese forigita";
+}
+
+@Override
+public String eliminar_paquete() {
+    return "Forigi pakaĵon";
+}
+
+@Override
+public String no_se_encontraron_mods_con_paquete() {
+    return "Neniu mod kun pakaĵo trovita";
+}
+
+@Override
+public String no_se_puede_eliminar_paquete() {
+    return "Ne eblas forigi la pakaĵon";
+}
+
+@Override
+public String eliminar_jar() {
+    return "Forigi Jar";
+}
+
+@Override
+public String no_se_encontraron_mods_duplicados() {
+    return "Neniu duobligita mod trovita";
+}
+
+@Override
+public String archivo_no_encontrado() {
+    return "Dosiero ne trovita";
+}
+
+@Override
+public String directorio_eliminado() {
+    return "Dosierujo forigita";
+}
+
+@Override
+public String error_al_eliminar_jar_anidado() {
+    return "Eraro dum forigo de enigita Jar";
+}
+
+@Override
+public String archivo_interno_no_encontrado() {
+    return "Interna dosiero ne trovita";
+}
+
+@Override
+public String archivo_eliminado() {
+    return "dosiero forigita";
+}
+
+@Override
+public String error_al_eliminar_archivo() {
+    return "eraro dum forigo de dosiero";
+}
+
+@Override
+public String archivo_externo_no_valido() {
+    return "nevalida ekstera dosiero";
+}
+
+@Override
+public String elemento_mod_eliminado() {
+    return "Mod-elemento forigita";
+}
+
+@Override
+public String error_al_reemplazar_jar_externo() {
+    return "Eraro dum anstataŭigo de ekstera Jar";
+}
+
+@Override
+public String error_al_eliminar_elemento_mod() {
+    return "eraro dum forigo de mod-elemento";
+}
+
+@Override
+public String error_al_eliminar_directorio() {
+    return "eraro dum forigo de dosierujo";
+}
+
+@Override
+public String formato_invalido_para_jar_anidado() {
+    return "nevalida formato por enigita Jar";
+}
+
+@Override
+public String jar_anidado_eliminado() {
+    return "enigita Jar forigita";
+}
+
+@Override
+public String error_al_limpiar_temporales() {
+    return "eraro dum purigo de provizoraj dosieroj";
+}
+
+
+
+
 
 
 

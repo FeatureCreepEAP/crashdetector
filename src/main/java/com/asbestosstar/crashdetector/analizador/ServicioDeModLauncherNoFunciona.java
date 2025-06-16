@@ -65,5 +65,11 @@ public class ServicioDeModLauncherNoFunciona implements Verificaciones {
 		return MonitorDePID.idioma.nombre_de_servicio_de_modlauncher_no_funciona();
 	}
     
+    @Override
+    public QuickFix solucion() {
+        return new QuickFix.Builder(nombre())
+            .agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
+            .construir();
+    }
     
 }

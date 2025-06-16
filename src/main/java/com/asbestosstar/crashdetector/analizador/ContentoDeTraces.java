@@ -281,4 +281,11 @@ public class ContentoDeTraces implements Verificaciones {
 		return rutaDelPaquete.toString();
 	}
 
+    @Override
+    public QuickFix solucion() {
+        return new QuickFix.Builder(nombre())
+            .agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
+            .construir();
+    }
+
 }

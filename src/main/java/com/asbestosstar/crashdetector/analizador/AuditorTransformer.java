@@ -195,4 +195,13 @@ public class AuditorTransformer implements Verificaciones {
     public String nombre() {
         return MonitorDePID.idioma.auditorias_transformer();
     }
+    
+    
+    @Override
+    public QuickFix solucion() {
+        return new QuickFix.Builder(nombre())
+            .agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
+            .construir();
+    }
+    
 }

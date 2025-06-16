@@ -923,7 +923,149 @@ public String colorTitulo() {
 public String colorEnlaceTexto() {
     return "Color de enlace texto (#RRGGBB):";
 }
+@Override
+public String transformacionDeMinecraftCodigo0() {
+    return "Solo abrir CrashDetector en falla";
+}
 
+@Override
+public String activar_parche() {
+    return "Activar Parche";
+}
+
+@Override
+public String noHaySolucionDisponible() {
+    return "No Hay Solución Disponible";
+}
+
+@Override
+public String error() {
+    return "error";
+}
+
+@Override
+public String error_al_eliminar_jar() {
+    return "Error al eliminar Jar";
+}
+
+@Override
+public String jar_eliminado_exitosamente() {
+    return "Jar eliminado exitosamente";
+}
+
+@Override
+public String exito() {
+    return "éxito";
+}
+
+@Override
+public String eliminar() {
+    return "eliminar";
+}
+
+@Override
+public String error_al_eliminar_paquete() {
+    return "Error al eliminar paquete";
+}
+
+@Override
+public String paquete_eliminado_exitosamente() {
+    return "Paquete eliminado exitosamente";
+}
+
+@Override
+public String eliminar_paquete() {
+    return "Eliminar paquete";
+}
+
+@Override
+public String no_se_encontraron_mods_con_paquete() {
+    return "No se encontraron mods con paquete";
+}
+
+@Override
+public String no_se_puede_eliminar_paquete() {
+    return "No se puede eliminar paquete";
+}
+
+@Override
+public String eliminar_jar() {
+    return "Eliminar jar";
+}
+
+@Override
+public String no_se_encontraron_mods_duplicados() {
+    return "No se encontraron mods duplicados";
+}
+@Override
+public String archivo_no_encontrado() {
+    return "Archivo No Encontrado";
+}
+
+@Override
+public String directorio_eliminado() {
+    return "Directorio Eliminado";
+}
+
+@Override
+public String error_al_eliminar_jar_anidado() {
+    return "Error al eliminar jar anidado";
+}
+
+@Override
+public String archivo_interno_no_encontrado() {
+    return "Archivo interno no encontrado";
+}
+
+@Override
+public String archivo_eliminado() {
+    return "archivo eliminado";
+}
+
+@Override
+public String error_al_eliminar_archivo() {
+    return "error al eliminar archivo";
+}
+
+@Override
+public String archivo_externo_no_valido() {
+    return "archivo externo no valido";
+}
+
+@Override
+public String elemento_mod_eliminado() {
+    return "Elemento mod eliminado";
+}
+
+@Override
+public String error_al_reemplazar_jar_externo() {
+    return "Error al reemplazar jar externo";
+}
+
+@Override
+public String error_al_eliminar_elemento_mod() {
+    return "error al eliminar elemento mod";
+}
+
+@Override
+public String error_al_eliminar_directorio() {
+    return "error al eliminar directorio";
+}
+
+@Override
+public String formato_invalido_para_jar_anidado() {
+    return "formato invalido para jar anidado";
+}
+
+@Override
+public String jar_anidado_eliminado() {
+    return "jar anidado eliminado";
+}
+
+@Override
+public String error_al_limpiar_temporales() {
+    return "error al limpiar temporales";
+}
 
 
 }
