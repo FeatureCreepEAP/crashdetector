@@ -211,7 +211,7 @@ public class CrashDetectorGUI extends JFrame {
 
 		CrashDetectorLogger.log("estabalar quickfix");
 		JButton botonQuickFix = new JButton("QuickFix");
-		botonQuickFix.setEnabled(false);
+		botonQuickFix.setEnabled(MonitorDePID.analizador.obtenerSoluciones().size()>0);
 		botonQuickFix.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		botonQuickFix.setMinimumSize(new Dimension(150, 40));
 		botonQuickFix.setMaximumSize(new Dimension(300, 40));
@@ -574,33 +574,39 @@ public class CrashDetectorGUI extends JFrame {
         // Crear el scrollable QuickFix panel
         PanelQuickFix panelContenido = new PanelQuickFix();
         
-        // Ejemplo 1: Con checkbox
-        QuickFix fixConRetener = new QuickFix.Builder("Limpiar caché temporal")
-            .conRetener()
-            .agregarBoton("Limpiar", retener -> {
-                System.out.println("Limpiando caché. Retener: " + retener);
-                JOptionPane.showMessageDialog(dialogo, 
-                    "Limpiando caché\nRetener: " + retener, 
-                    "Acción de QuickFix", 
-                    JOptionPane.INFORMATION_MESSAGE);
-            })
-            .agregarEtiqueta("Este proceso eliminará archivos temporales")
-            .construir();
+//        // Ejemplo 1: Con checkbox
+//        QuickFix fixConRetener = new QuickFix.Builder("Limpiar caché temporal")
+//            .conRetener()
+//            .agregarBoton("Limpiar", retener -> {
+//                System.out.println("Limpiando caché. Retener: " + retener);
+//                JOptionPane.showMessageDialog(dialogo, 
+//                    "Limpiando caché\nRetener: " + retener, 
+//                    "Acción de QuickFix", 
+//                    JOptionPane.INFORMATION_MESSAGE);
+//            })
+//            .agregarEtiqueta("Este proceso eliminará archivos temporales")
+//            .construir();
+//        
+//        // Ejemplo 2: Sin checkbox
+//        QuickFix fixSinRetener = new QuickFix.Builder("Optimizar base de datos")
+//            .agregarBoton("Optimizar", retener -> {
+//                System.out.println("Optimizando base de datos. Retener: " + retener);
+//                JOptionPane.showMessageDialog(dialogo, 
+//                    "Optimizando base de datos\nRetener: " + retener, 
+//                    "Acción de QuickFix", 
+//                    JOptionPane.INFORMATION_MESSAGE);
+//            })
+//            .agregarEtiqueta("Este proceso optimizará el rendimiento de la base de datos")
+//            .construir();
+//        
+//        panelContenido.agregarQuickFix(fixConRetener);
+//        panelContenido.agregarQuickFix(fixSinRetener);
+        for(QuickFix solucion:MonitorDePID.analizador.obtenerSoluciones()) {
+        	panelContenido.agregarQuickFix(solucion);
+        }
         
-        // Ejemplo 2: Sin checkbox
-        QuickFix fixSinRetener = new QuickFix.Builder("Optimizar base de datos")
-            .agregarBoton("Optimizar", retener -> {
-                System.out.println("Optimizando base de datos. Retener: " + retener);
-                JOptionPane.showMessageDialog(dialogo, 
-                    "Optimizando base de datos\nRetener: " + retener, 
-                    "Acción de QuickFix", 
-                    JOptionPane.INFORMATION_MESSAGE);
-            })
-            .agregarEtiqueta("Este proceso optimizará el rendimiento de la base de datos")
-            .construir();
         
-        panelContenido.agregarQuickFix(fixConRetener);
-        panelContenido.agregarQuickFix(fixSinRetener);
+        
         
         JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         panelInferior.setBackground(colorFondo);

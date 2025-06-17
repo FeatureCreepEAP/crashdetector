@@ -1023,6 +1023,32 @@ public String error_al_limpiar_temporales() {
 }
 
 
+@Override
+public String mensaje_de_trace_fatal_ultima_no_traductado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Fina fatale spurmesaĝo (Ne tradukita):</b> ";
+}
+
+@Override
+public String mensaje_de_trace_ultima_no_traductado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Fina spurmesaĝo (Ne tradukita):</b> ";
+}
+
+@Override
+public String solucionParaAdvertenciaFaltasClases() {
+    return "Vi havas mankantajn klasojn (Averto), ĝenerale tio estas bone sed ne ĉiam. Malbonaj krommoduloj aŭ mankantaj dependecoj estas oftaj kialoj por ĉi tiu problemo.";
+}
+
+@Override
+public String solucionFaltasClases() {
+    return "Vi havas mankantajn klasojn (FATALA), tio estas tre grava. Malbonaj krommoduloj aŭ mankantaj dependecoj estas oftaj kialoj por ĉi tiu problemo.";
+}
+
+@Override
+public String solucionParaJavaInstallar() {
+    return "Ambaŭ lanĉiloj havas la ĝustajn versiojn de Java, sed ne ĉiujn; vi povas instali la ĝustan version de Java per la pakaĵadministrilo en via sistemo aŭ per la butonoj.";
+}
+
+
 
 
 

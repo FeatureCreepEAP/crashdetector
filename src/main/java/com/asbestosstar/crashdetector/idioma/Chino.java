@@ -1016,6 +1016,32 @@ public String error_al_limpiar_temporales() {
     return "清理临时文件时出错";
 }
 
+@Override
+public String mensaje_de_trace_fatal_ultima_no_traductado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>致命跟踪消息最后 (未翻译):</b> ";
+}
+
+@Override
+public String mensaje_de_trace_ultima_no_traductado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>跟踪消息最后 (未翻译):</b> ";
+}
+
+
+@Override
+public String solucionParaAdvertenciaFaltasClases() {
+    return "您有缺失的类（警告），通常情况下没有问题，但并非总是如此。错误的核心模组或缺失的依赖是这个问题的常见原因。";
+}
+
+@Override
+public String solucionFaltasClases() {
+    return "您有缺失的类（严重），这非常重要。错误的核心模组或缺失的依赖是这个问题的常见原因。";
+}
+
+@Override
+public String solucionParaJavaInstallar() {
+    return "两个启动器都有正确的Java版本，但并非所有版本都正确；您可以从系统中的包管理器或通过按钮安装正确的Java版本。";
+}
+
 
 
 

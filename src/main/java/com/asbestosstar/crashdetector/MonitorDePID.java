@@ -214,15 +214,17 @@ public class MonitorDePID {
 
 		// Get the Java binary path
 		String javaBinary = jvm();
-		if (javaBinary.isEmpty()) {
+		if (javaBinary==null||javaBinary.isEmpty()) {
 			System.err.println("CD NO PUEDE OBTENER JVM");
 			return;
+		}else {
+			System.out.println("JVM "+javaBinary);
 		}
 
 		// Launch the child monitor process
 		try {
 			String cp = System.getProperty("java.class.path") + File.pathSeparator + jar;
-			System.out.println("******************" + cp);
+			//System.out.println("******************" + cp);
 
 			new ProcessBuilder(javaBinary, "-cp", cp, "com.asbestosstar.crashdetector.MonitorDePID", "--monitor",
 					String.valueOf(pid)).inheritIO().start();
@@ -254,11 +256,7 @@ public class MonitorDePID {
 
 				consolas_sin_processando.addAll(Consola.obtenerConsolas());
 
-				if (activar() && !GraphicsEnvironment.isHeadless()) {
-					if (!Consola.tiene_registro_de_launcher(consolas_sin_processando)) {
-						obtenerCosolaDeLauncher(utc);
-					}
-				}
+
 
 				if (!ArchivoDeCodioError0.exists() && !Consola.tiene_registro_de_launcher(consolas_sin_processando)) {
 					try {// Cuando tiene una informe de crash esta codio 0 y tiene tiempo para esperar
@@ -277,6 +275,13 @@ public class MonitorDePID {
 						consolas.add(consola);
 					}
 				}
+				
+				if (activar() && !GraphicsEnvironment.isHeadless()) {
+					if (!Consola.tiene_registro_de_launcher(consolas)) {
+						obtenerCosolaDeLauncher(utc);
+					}
+				}
+				
 
 				Instant luego = Instant.now();
 				recargar(true,luego);
@@ -483,45 +488,89 @@ public class MonitorDePID {
 			// Java viaja
 		}
 
-		// Step 2: Fallback to OS-specific command-line tools (Java 8)
-		try {
-			String os = System.getProperty("os.name").toLowerCase();
-			ProcessBuilder pb;
-			if (os.contains("win")) {
-				// Windows: Use tasklist to get image name
-				pb = new ProcessBuilder("tasklist", "/FI", "PID eq " + obtenerPID(), "/FO", "CSV", "/NH");
-			} else {
-				// Unix/Linux/macOS: Use ps to get command
-				pb = new ProcessBuilder("ps", "-p", String.valueOf(obtenerPID()), "-o", "comm=");
-			}
 
-			Process process = pb.start();
-			try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
-				String line;
-				while ((line = reader.readLine()) != null) {
-					if (!line.trim().isEmpty()) {
-						if (os.contains("win")) {
-							// Tasklist returns: "image name",pid,...
-							int firstQuote = line.indexOf('"');
-							int secondQuote = line.indexOf('"', firstQuote + 1);
-							if (firstQuote >= 0 && secondQuote > firstQuote) {
-								return line.substring(firstQuote + 1, secondQuote);
-							}
-						} else {
-							// ps returns just the command path
-							return line.trim();
-						}
-					}
-				}
-			}
-
-			// No output means process not found
-			return null;
-
-		} catch (Exception e) {
-			return null;
-		}
+		
+		return obtenerRutaEjecutable8();
+		
 	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Obtiene la ruta completa del ejecutable del proceso actual
+	 * @return Ruta completa del ejecutable o null si no se encuentra
+	 */
+	private static String obtenerRutaEjecutable8() {
+	    try {
+	        String sistemaOperativo = System.getProperty("os.name").toLowerCase();
+	        
+	        if (sistemaOperativo.contains("win")) {
+	            // Usar PowerShell primero (más confiable que wmic)
+	            ProcessBuilder pb = new ProcessBuilder("powershell", 
+	                "Get-WmiObject -Class Win32_Process -Filter \"ProcessId = " + obtenerPID() + "\" | Select-Object -ExpandProperty ExecutablePath");
+	            
+	            Process proceso = pb.start();
+	            try (BufferedReader lector = new BufferedReader(
+	                    new InputStreamReader(proceso.getInputStream()))) {
+	                
+	                String linea;
+	                while ((linea = lector.readLine()) != null) {
+	                    String limpiado = linea.trim();
+	                    if (!limpiado.isEmpty()) {
+	                        // Devolver la ruta completa del ejecutable
+	                        return limpiado;
+	                    }
+	                }
+	            }
+
+	            // Si PowerShell falla, usar tasklist como último recurso
+	            pb = new ProcessBuilder("tasklist", "/FI", "PID eq " + obtenerPID(), 
+	                "/FO", "CSV", "/NH");
+	            proceso = pb.start();
+	            try (BufferedReader lector = new BufferedReader(
+	                    new InputStreamReader(proceso.getInputStream()))) {
+	                String linea;
+	                while ((linea = lector.readLine()) != null) {
+	                    if (!linea.trim().isEmpty()) {
+	                        String[] valores = new CSVParser().parsear(linea);
+	                        if (valores.length > 0 && !valores[0].trim().isEmpty()) {
+	                            return valores[0].trim(); // Nombre del ejecutable
+	                        }
+	                    }
+	                }
+	            }
+	        } else {
+	            // Unix/Linux/macOS: Usar ps para obtener el comando
+	            ProcessBuilder pb = new ProcessBuilder("ps", "-p", 
+	                String.valueOf(obtenerPID()), "-o", "comm=");
+	            Process proceso = pb.start();
+	            try (BufferedReader lector = new BufferedReader(
+	                    new InputStreamReader(proceso.getInputStream()))) {
+	                String linea;
+	                while ((linea = lector.readLine()) != null) {
+	                    String limpiado = linea.trim();
+	                    if (!limpiado.isEmpty()) {
+	                        return limpiado;
+	                    }
+	                }
+	            }
+	        }
+
+	        // No se encontró información del proceso
+	        return null;
+
+	    } catch (Exception e) {
+	        // Registrar errores para diagnóstico
+	        System.err.println("Error al obtener ruta ejecutable: " + e.getMessage());
+	        return null;
+	    }
+	}
+	
+	
+	
 
 	public static boolean viva(long pid) {
 		try {
@@ -552,23 +601,64 @@ public class MonitorDePID {
 	
 
 	public static boolean viva8(long pid) {
-		try {
-			String os = System.getProperty("os.name").toLowerCase();
-			ProcessBuilder processBuilder;
+	    try {
+	        String os = System.getProperty("os.name").toLowerCase();
+	        
+	        if (os.contains("win")) {
+	            // Intentar con PowerShell primero
+	            ProcessBuilder pb = new ProcessBuilder("powershell", 
+	                "try { Get-Process -Id " + pid + " -ErrorAction Stop; exit 0 } catch { exit 1 }");
+	            
+	            Process proceso = pb.start();
+	            int codigoSalida = proceso.waitFor();
+	            
+	            if (codigoSalida == 0) {
+	                return true; // El proceso existe
+	            }
+	            
+	            // Si PowerShell falla, usar tasklist como respaldo
+	           // return verificarConTasklist(pid);
+	        } else {
+	            // En Unix/Linux/macOS, usar ps
+	            ProcessBuilder pb = new ProcessBuilder("ps", "-p", String.valueOf(pid));
+	            Process proceso = pb.start();
+	            int codigoSalida = proceso.waitFor();
+	            return codigoSalida == 0;
+	        }
+	    } catch (Exception e) {
+	        // Error al ejecutar el comando, asumir que el proceso no existe
+	        return false;
+	    }
+        return false;
 
-			if (os.contains("win")) {
-				processBuilder = new ProcessBuilder("tasklist", "/FI", "PID eq " + pid, "/FO", "CSV", "/NH");
-			} else {
-				processBuilder = new ProcessBuilder("ps", "-p", String.valueOf(pid));
-			}
-
-			Process process = processBuilder.start();
-			int exitCode = process.waitFor();
-			return exitCode == 0;
-		} catch (Exception e) {
-			return false;
-		}
 	}
+	
+	
+	/**
+	 * Verifica si un proceso está activo usando tasklist en Windows
+	 * @param pid El ID del proceso a verificar
+	 * @return true si el proceso existe y está activo
+	 * @throws IOException Si hay un error al ejecutar el comando
+	 */
+//	private static boolean verificarConTasklist(long pid) throws IOException, InterruptedException {
+//	    ProcessBuilder pb = new ProcessBuilder("tasklist", "/FI", "PID eq " + pid, "/FO", "CSV", "/NH");
+//	    Process proceso = pb.start();
+//	    try (BufferedReader reader = new BufferedReader(
+//	            new InputStreamReader(proceso.getInputStream()))) {
+//	        
+//	        String linea;
+//	        while ((linea = reader.readLine()) != null) {
+//	            String limpiado = linea.trim();
+//	            // Si la salida contiene información del proceso, está activo
+//	            if (!limpiado.isEmpty() && !limpiado.startsWith("INFO:") && !limpiado.contains("No tasks")) {
+//	                return true;
+//	            }
+//	        }
+//	    }
+//	    
+//	    // Si no se encontró el proceso
+//	    return false;
+//	}
 	
 	public static void copiarACarpetaDesdeJar(String ubicacion_en_jar,File resultdo) {
 		if (!resultdo.exists()) {

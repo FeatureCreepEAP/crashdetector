@@ -1,0 +1,391 @@
+2025-06-15 22:33:23 - file:/Users/macbook/git/CrashDetectorMC/target/classes/
+2025-06-15 22:33:23 - /Users/macbook/git/CrashDetectorMC/target/classes/
+2025-06-15 22:33:24 - file:/Users/macbook/git/CrashDetectorMC/target/classes/
+2025-06-15 22:33:24 - /Users/macbook/git/CrashDetectorMC/target/classes/
+2025-06-15 22:33:30 - <span style='color:#FFD700'>(PID: 96579) is dead!</span>
+2025-06-15 22:33:30 - Finalizando Contento de Consolas
+2025-06-15 22:33:30 - <span style='color:#FFD700'>(PID: 96580) is dead!</span>
+2025-06-15 22:33:30 - Finalizando Contento de Consolas
+2025-06-15 22:33:30 - Analyzador Consolas
+2025-06-15 22:33:30 - Analizando Completa
+2025-06-15 22:33:30 - Analyzador Consolas
+2025-06-15 22:33:30 - Analizando Completa
+2025-06-15 22:33:30 - resultdos <ol></ol>
+2025-06-15 22:33:30 - resultdos <ol></ol>
+2025-06-15 22:33:30 - activar 
+2025-06-15 22:33:30 - activar 
+2025-06-15 22:33:30 - no headless 
+2025-06-15 22:33:30 - no headless 
+2025-06-15 22:33:33 - inicializar interfaz
+2025-06-15 22:33:33 - inicializar interfaz
+2025-06-15 22:33:33 - estabalar texto
+2025-06-15 22:33:33 - estabalar texto
+2025-06-15 22:33:33 - estabalar texto completa
+2025-06-15 22:33:33 - estabalar frontera
+2025-06-15 22:33:33 - estabalar texto completa
+2025-06-15 22:33:33 - estabalar frontera
+2025-06-15 22:33:33 - combobox
+2025-06-15 22:33:33 - combobox
+2025-06-15 22:33:33 - idioma
+2025-06-15 22:33:33 - idioma
+2025-06-15 22:33:33 - estabalar casilla
+2025-06-15 22:33:33 - estabalar casilla
+2025-06-15 22:33:33 - estabalar quickfix
+2025-06-15 22:33:33 - estabalar quickfix
+2025-06-15 22:33:33 - panelInferior
+2025-06-15 22:33:33 - panelInferior
+2025-06-15 22:33:33 - estabalar derecha
+2025-06-15 22:33:33 - estabalar derecha
+2025-06-15 22:33:33 - botones principales
+2025-06-15 22:33:33 - botones principales
+2025-06-15 22:33:33 - estabalar logo
+2025-06-15 22:33:33 - estabalar logo
+2025-06-15 22:33:33 - estabalar lateral derecha
+2025-06-15 22:33:33 - estabalar lateral derecha
+2025-06-15 22:33:33 - estabalar layout
+2025-06-15 22:33:33 - estabalar layout
+2025-06-15 22:33:33 - estabalar titilo
+2025-06-15 22:33:33 - estabalar titilo
+2025-06-15 22:34:00 - file:/Users/macbook/git/CrashDetectorMC/target/classes/
+2025-06-15 22:34:00 - /Users/macbook/git/CrashDetectorMC/target/classes/
+2025-06-15 22:34:02 - <span style='color:#FFD700'>(PID: 96611) is dead!</span>
+2025-06-15 22:34:02 - Finalizando Contento de Consolas
+2025-06-15 22:34:02 - Analyzador Consolas
+2025-06-15 22:34:03 - Analizando Completa
+2025-06-15 22:34:03 - resultdos <ol></ol>
+2025-06-15 22:34:03 - activar 
+2025-06-15 22:34:03 - no headless 
+2025-06-15 22:34:05 - inicializar interfaz
+2025-06-15 22:34:05 - estabalar texto
+2025-06-15 22:34:05 - estabalar texto completa
+2025-06-15 22:34:05 - estabalar frontera
+2025-06-15 22:34:05 - combobox
+2025-06-15 22:34:06 - idioma
+2025-06-15 22:34:06 - estabalar casilla
+2025-06-15 22:34:06 - estabalar quickfix
+2025-06-15 22:34:06 - panelInferior
+2025-06-15 22:34:06 - estabalar derecha
+2025-06-15 22:34:06 - botones principales
+2025-06-15 22:34:06 - estabalar logo
+2025-06-15 22:34:06 - estabalar lateral derecha
+2025-06-15 22:34:06 - estabalar layout
+2025-06-15 22:34:06 - estabalar titilo
+2025-06-15 23:11:44 - file:/Users/macbook/git/CrashDetectorMC/target/classes/
+2025-06-15 23:11:44 - /Users/macbook/git/CrashDetectorMC/target/classes/
+2025-06-15 23:11:50 - <span style='color:#FFD700'>(PID: 96991) is dead!</span>
+2025-06-15 23:11:50 - Finalizando Contento de Consolas
+2025-06-15 23:11:50 - Analyzador Consolas
+2025-06-15 23:11:50 - Analizando Completa
+2025-06-15 23:11:50 - resultdos <ol></ol>
+2025-06-15 23:11:50 - activar 
+2025-06-15 23:11:50 - no headless 
+2025-06-15 23:11:53 - inicializar interfaz
+2025-06-15 23:11:53 - estabalar texto
+2025-06-15 23:11:53 - estabalar texto completa
+2025-06-15 23:11:53 - estabalar frontera
+2025-06-15 23:11:53 - combobox
+2025-06-15 23:11:53 - idioma
+2025-06-15 23:11:53 - estabalar casilla
+2025-06-15 23:11:53 - estabalar quickfix
+2025-06-15 23:11:53 - panelInferior
+2025-06-15 23:11:53 - estabalar derecha
+2025-06-15 23:11:53 - botones principales
+2025-06-15 23:11:53 - estabalar logo
+2025-06-15 23:11:53 - estabalar lateral derecha
+2025-06-15 23:11:53 - estabalar layout
+2025-06-15 23:11:53 - estabalar titilo
+2025-06-15 23:12:02 - file:/Users/macbook/git/CrashDetectorMC/target/classes/
+2025-06-15 23:12:02 - /Users/macbook/git/CrashDetectorMC/target/classes/
+2025-06-15 23:12:05 - <span style='color:#FFD700'>(PID: 97003) is dead!</span>
+2025-06-15 23:12:05 - Finalizando Contento de Consolas
+2025-06-15 23:12:05 - Analyzador Consolas
+2025-06-15 23:12:05 - Analizando Completa
+2025-06-15 23:12:05 - resultdos <ol></ol>
+2025-06-15 23:12:05 - activar 
+2025-06-15 23:12:05 - no headless 
+2025-06-15 23:12:05 - file:/Users/macbook/git/CrashDetectorMC/target/classes/
+2025-06-15 23:12:05 - /Users/macbook/git/CrashDetectorMC/target/classes/
+2025-06-15 23:12:08 - <span style='color:#FFD700'>(PID: 97006) is dead!</span>
+2025-06-15 23:12:08 - Finalizando Contento de Consolas
+2025-06-15 23:12:08 - Analyzador Consolas
+2025-06-15 23:12:08 - Analizando Completa
+2025-06-15 23:12:08 - resultdos <ol></ol>
+2025-06-15 23:12:08 - activar 
+2025-06-15 23:12:08 - no headless 
+2025-06-15 23:12:10 - inicializar interfaz
+2025-06-15 23:12:10 - estabalar texto
+2025-06-15 23:12:10 - estabalar texto completa
+2025-06-15 23:12:10 - estabalar frontera
+2025-06-15 23:12:10 - combobox
+2025-06-15 23:12:10 - idioma
+2025-06-15 23:12:10 - estabalar casilla
+2025-06-15 23:12:10 - estabalar quickfix
+2025-06-15 23:12:10 - panelInferior
+2025-06-15 23:12:10 - estabalar derecha
+2025-06-15 23:12:10 - botones principales
+2025-06-15 23:12:10 - estabalar logo
+2025-06-15 23:12:10 - estabalar lateral derecha
+2025-06-15 23:12:10 - estabalar layout
+2025-06-15 23:12:10 - estabalar titilo
+2025-06-15 23:12:11 - inicializar interfaz
+2025-06-15 23:12:11 - estabalar texto
+2025-06-15 23:12:11 - estabalar texto completa
+2025-06-15 23:12:11 - estabalar frontera
+2025-06-15 23:12:12 - combobox
+2025-06-15 23:12:12 - idioma
+2025-06-15 23:12:12 - estabalar casilla
+2025-06-15 23:12:12 - estabalar quickfix
+2025-06-15 23:12:12 - panelInferior
+2025-06-15 23:12:12 - estabalar derecha
+2025-06-15 23:12:12 - botones principales
+2025-06-15 23:12:12 - estabalar logo
+2025-06-15 23:12:12 - estabalar lateral derecha
+2025-06-15 23:12:12 - estabalar layout
+2025-06-15 23:12:12 - estabalar titilo
+2025-06-16 20:59:02 - file:/Users/macbook/git/CrashDetectorMC/target/classes/
+2025-06-16 20:59:02 - /Users/macbook/git/CrashDetectorMC/target/classes/
+2025-06-16 20:59:10 - <span style='color:#FFD700'>(PID: 8876) is dead!</span>
+2025-06-16 20:59:10 - Finalizando Contento de Consolas
+2025-06-16 20:59:10 - Analyzador Consolas
+2025-06-16 20:59:10 - Analizando Completa
+2025-06-16 20:59:10 - resultdos <ol></ol>
+2025-06-16 20:59:10 - activar 
+2025-06-16 20:59:10 - no headless 
+2025-06-16 20:59:13 - inicializar interfaz
+2025-06-16 20:59:14 - estabalar texto
+2025-06-16 20:59:14 - estabalar texto completa
+2025-06-16 20:59:14 - estabalar frontera
+2025-06-16 20:59:14 - combobox
+2025-06-16 20:59:14 - idioma
+2025-06-16 20:59:14 - estabalar casilla
+2025-06-16 20:59:14 - estabalar quickfix
+2025-06-16 20:59:14 - panelInferior
+2025-06-16 20:59:14 - estabalar derecha
+2025-06-16 20:59:14 - botones principales
+2025-06-16 20:59:14 - estabalar logo
+2025-06-16 20:59:14 - estabalar lateral derecha
+2025-06-16 20:59:14 - estabalar layout
+2025-06-16 20:59:14 - estabalar titilo
+2025-06-16 21:31:34 - file:/Users/macbook/git/CrashDetectorMC/target/classes/
+2025-06-16 21:31:34 - /Users/macbook/git/CrashDetectorMC/target/classes/
+2025-06-16 21:31:40 - <span style='color:#FFD700'>(PID: 9285) is dead!</span>
+2025-06-16 21:31:40 - Finalizando Contento de Consolas
+2025-06-16 21:31:40 - Analyzador Consolas
+2025-06-16 21:31:40 - Analizando Completa
+2025-06-16 21:31:40 - resultdos <ol></ol>
+2025-06-16 21:31:40 - activar 
+2025-06-16 21:31:40 - no headless 
+2025-06-16 21:31:44 - inicializar interfaz
+2025-06-16 21:31:44 - estabalar texto
+2025-06-16 21:31:44 - estabalar texto completa
+2025-06-16 21:31:44 - estabalar frontera
+2025-06-16 21:31:44 - combobox
+2025-06-16 21:31:44 - idioma
+2025-06-16 21:31:44 - estabalar casilla
+2025-06-16 21:31:44 - estabalar quickfix
+2025-06-16 21:31:44 - panelInferior
+2025-06-16 21:31:44 - estabalar derecha
+2025-06-16 21:31:44 - botones principales
+2025-06-16 21:31:44 - estabalar logo
+2025-06-16 21:31:44 - estabalar lateral derecha
+2025-06-16 21:31:44 - estabalar layout
+2025-06-16 21:31:44 - estabalar titilo
+2025-06-16 22:05:17 - file:/Users/macbook/git/CrashDetectorMC/target/classes/
+2025-06-16 22:05:17 - /Users/macbook/git/CrashDetectorMC/target/classes/
+2025-06-16 22:05:22 - <span style='color:#FFD700'>(PID: 9683) is dead!</span>
+2025-06-16 22:05:22 - Finalizando Contento de Consolas
+2025-06-16 22:05:22 - Analyzador Consolas
+2025-06-16 22:05:22 - Analizando Completa
+2025-06-16 22:05:22 - resultdos <ol></ol>
+2025-06-16 22:05:22 - activar 
+2025-06-16 22:05:22 - no headless 
+2025-06-16 22:05:24 - inicializar interfaz
+2025-06-16 22:05:24 - estabalar texto
+2025-06-16 22:05:24 - estabalar texto completa
+2025-06-16 22:05:24 - estabalar frontera
+2025-06-16 22:05:24 - combobox
+2025-06-16 22:05:24 - idioma
+2025-06-16 22:05:24 - estabalar casilla
+2025-06-16 22:05:24 - estabalar quickfix
+2025-06-16 22:05:24 - panelInferior
+2025-06-16 22:05:24 - estabalar derecha
+2025-06-16 22:05:24 - botones principales
+2025-06-16 22:05:24 - estabalar logo
+2025-06-16 22:05:24 - estabalar lateral derecha
+2025-06-16 22:05:24 - estabalar layout
+2025-06-16 22:05:24 - estabalar titilo
+2025-06-16 23:43:25 - file:/Users/macbook/git/CrashDetectorMC/target/classes/
+2025-06-16 23:43:25 - /Users/macbook/git/CrashDetectorMC/target/classes/
+2025-06-16 23:43:28 - <span style='color:#FFD700'>(PID: 13683) is dead!</span>
+2025-06-16 23:43:28 - Finalizando Contento de Consolas
+2025-06-16 23:43:28 - Analyzador Consolas
+2025-06-16 23:43:28 - Analizando Completa
+2025-06-16 23:43:28 - resultdos <ol></ol>
+2025-06-16 23:43:28 - activar 
+2025-06-16 23:43:28 - no headless 
+2025-06-16 23:43:30 - inicializar interfaz
+2025-06-16 23:43:30 - estabalar texto
+2025-06-16 23:43:30 - estabalar texto completa
+2025-06-16 23:43:30 - estabalar frontera
+2025-06-16 23:43:30 - combobox
+2025-06-16 23:43:30 - idioma
+2025-06-16 23:43:30 - estabalar casilla
+2025-06-16 23:43:30 - estabalar quickfix
+2025-06-16 23:43:30 - panelInferior
+2025-06-16 23:43:30 - estabalar derecha
+2025-06-16 23:43:30 - botones principales
+2025-06-16 23:43:30 - estabalar logo
+2025-06-16 23:43:30 - estabalar lateral derecha
+2025-06-16 23:43:30 - estabalar layout
+2025-06-16 23:43:30 - estabalar titilo
+2025-06-16 23:54:06 - file:/Users/macbook/git/CrashDetectorMC/target/classes/
+2025-06-16 23:54:06 - /Users/macbook/git/CrashDetectorMC/target/classes/
+2025-06-16 23:54:08 - <span style='color:#FFD700'>(PID: 13776) is dead!</span>
+2025-06-16 23:54:08 - Finalizando Contento de Consolas
+2025-06-16 23:54:14 - Archivo cd_launcherlog.txt guardado y forzado al disco
+2025-06-16 23:54:14 - Analyzador Consolas
+2025-06-16 23:54:14 - cd_launcherlog Block rendering error
+2025-06-16 23:54:14 - cd_launcherlog TLauncher unsupported by WATERMeDIA
+2025-06-16 23:54:14 - cd_launcherlog Critical missing classes
+2025-06-16 23:54:14 - cd_launcherlog KubeJS resource error
+2025-06-16 23:54:14 - cd_launcherlog Problematic SpongeMixing configurations
+2025-06-16 23:54:14 - cd_launcherlog Theseus incompatible
+2025-06-16 23:54:14 - cd_launcherlog Null pointer error (NullPointerException)
+2025-06-16 23:54:14 - cd_launcherlog Transformer Audits
+2025-06-16 23:54:14 - cd_launcherlog Incompatible Java versions
+2025-06-16 23:54:14 - cd_launcherlog Video driver issues
+2025-06-16 23:54:14 - cd_launcherlog JPMS module conflicts
+2025-06-16 23:54:14 - cd_launcherlog Missing JPMS modules
+2025-06-16 23:54:14 - cd_launcherlog Missing ModLauncher dependencies
+2025-06-16 23:54:14 - cd_launcherlog Failed to parse JSON registry
+2025-06-16 23:54:14 - cd_launcherlog Sodium required for Iris
+2025-06-16 23:54:14 - cd_launcherlog Display mode failure (LWJGL)
+2025-06-16 23:54:14 - cd_launcherlog Failed ModLauncher services
+2025-06-16 23:54:14 - cd_launcherlog Early window error (FMLEarlyWindow)
+2025-06-16 23:54:14 - cd_launcherlog Invalid Java GC options
+2025-06-16 23:54:14 - cd_launcherlog Incompatible language provider
+2025-06-16 23:54:14 - cd_launcherlog Suspicious mod detected
+2025-06-16 23:54:14 - cd_launcherlog Warning: Missing classes detected
+2025-06-16 23:54:14 - cd_launcherlog Corrupted MCForge configuration
+2025-06-16 23:54:14 - cd_launcherlog Insufficient memory
+2025-06-16 23:54:14 - cd_launcherlog Critical server tick (60s)
+2025-06-16 23:54:14 - cd_launcherlog Duplicated mods in ModLauncher
+2025-06-16 23:54:14 - cd_launcherlog FabricMC initialisation error
+2025-06-16 23:54:14 - cd_launcherlog Outdated/Incompatible OptiFine
+2025-06-16 23:54:14 - cd_launcherlog Incomplete CurseForge console
+2025-06-16 23:54:14 - cd_launcherlog Stack trace analysis
+2025-06-16 23:54:14 - Analizando Completa
+2025-06-16 23:54:14 - resultdos <ol></ol>
+2025-06-16 23:54:14 - activar 
+2025-06-16 23:54:14 - no headless 
+2025-06-16 23:54:14 - inicializar interfaz
+2025-06-16 23:54:14 - estabalar texto
+2025-06-16 23:54:14 - estabalar texto completa
+2025-06-16 23:54:14 - estabalar frontera
+2025-06-16 23:54:14 - combobox
+2025-06-16 23:54:14 - idioma
+2025-06-16 23:54:14 - estabalar casilla
+2025-06-16 23:54:14 - estabalar quickfix
+2025-06-16 23:54:14 - panelInferior
+2025-06-16 23:54:14 - estabalar derecha
+2025-06-16 23:54:14 - botones principales
+2025-06-16 23:54:15 - estabalar logo
+2025-06-16 23:54:15 - estabalar lateral derecha
+2025-06-16 23:54:15 - estabalar layout
+2025-06-16 23:54:15 - estabalar titilo
+2025-06-16 23:54:24 - file:/Users/macbook/git/CrashDetectorMC/target/classes/
+2025-06-16 23:54:24 - /Users/macbook/git/CrashDetectorMC/target/classes/
+2025-06-16 23:54:27 - <span style='color:#FFD700'>(PID: 13785) is dead!</span>
+2025-06-16 23:54:27 - Finalizando Contento de Consolas
+2025-06-16 23:54:31 - Analyzador Consolas
+2025-06-16 23:54:31 - Analizando Completa
+2025-06-16 23:54:31 - resultdos <ol></ol>
+2025-06-16 23:54:32 - activar 
+2025-06-16 23:54:32 - no headless 
+2025-06-16 23:54:32 - inicializar interfaz
+2025-06-16 23:54:32 - estabalar texto
+2025-06-16 23:54:32 - estabalar texto completa
+2025-06-16 23:54:32 - estabalar frontera
+2025-06-16 23:54:32 - combobox
+2025-06-16 23:54:32 - idioma
+2025-06-16 23:54:32 - estabalar casilla
+2025-06-16 23:54:32 - estabalar quickfix
+2025-06-16 23:54:32 - panelInferior
+2025-06-16 23:54:32 - estabalar derecha
+2025-06-16 23:54:32 - botones principales
+2025-06-16 23:54:32 - estabalar logo
+2025-06-16 23:54:32 - estabalar lateral derecha
+2025-06-16 23:54:32 - estabalar layout
+2025-06-16 23:54:32 - estabalar titilo
+2025-06-17 00:05:44 - file:/Users/macbook/git/CrashDetectorMC/target/classes/
+2025-06-17 00:05:44 - /Users/macbook/git/CrashDetectorMC/target/classes/
+2025-06-17 00:05:46 - <span style='color:#FFD700'>(PID: 13932) is dead!</span>
+2025-06-17 00:05:46 - Finalizando Contento de Consolas
+2025-06-17 00:05:50 - Analyzador Consolas
+2025-06-17 00:05:50 - Analizando Completa
+2025-06-17 00:05:50 - resultdos <ol></ol>
+2025-06-17 00:05:51 - activar 
+2025-06-17 00:05:51 - no headless 
+2025-06-17 00:05:51 - inicializar interfaz
+2025-06-17 00:05:51 - estabalar texto
+2025-06-17 00:05:51 - estabalar texto completa
+2025-06-17 00:05:51 - estabalar frontera
+2025-06-17 00:05:51 - combobox
+2025-06-17 00:05:51 - idioma
+2025-06-17 00:05:51 - estabalar casilla
+2025-06-17 00:05:51 - estabalar quickfix
+2025-06-17 00:05:51 - panelInferior
+2025-06-17 00:05:51 - estabalar derecha
+2025-06-17 00:05:51 - botones principales
+2025-06-17 00:05:51 - estabalar logo
+2025-06-17 00:05:51 - estabalar lateral derecha
+2025-06-17 00:05:51 - estabalar layout
+2025-06-17 00:05:51 - estabalar titilo
+2025-06-17 00:06:01 - file:/Users/macbook/git/CrashDetectorMC/target/classes/
+2025-06-17 00:06:01 - /Users/macbook/git/CrashDetectorMC/target/classes/
+2025-06-17 00:06:04 - <span style='color:#FFD700'>(PID: 13937) is dead!</span>
+2025-06-17 00:06:04 - Finalizando Contento de Consolas
+2025-06-17 00:06:06 - Analyzador Consolas
+2025-06-17 00:06:06 - Analizando Completa
+2025-06-17 00:06:06 - resultdos <ol></ol>
+2025-06-17 00:06:06 - activar 
+2025-06-17 00:06:06 - no headless 
+2025-06-17 00:06:06 - inicializar interfaz
+2025-06-17 00:06:06 - estabalar texto
+2025-06-17 00:06:06 - estabalar texto completa
+2025-06-17 00:06:06 - estabalar frontera
+2025-06-17 00:06:06 - combobox
+2025-06-17 00:06:06 - idioma
+2025-06-17 00:06:06 - estabalar casilla
+2025-06-17 00:06:06 - estabalar quickfix
+2025-06-17 00:06:06 - panelInferior
+2025-06-17 00:06:06 - estabalar derecha
+2025-06-17 00:06:06 - botones principales
+2025-06-17 00:06:06 - estabalar logo
+2025-06-17 00:06:06 - estabalar lateral derecha
+2025-06-17 00:06:06 - estabalar layout
+2025-06-17 00:06:06 - estabalar titilo
+2025-06-17 00:09:18 - file:/Users/macbook/git/CrashDetectorMC/target/classes/
+2025-06-17 00:09:18 - /Users/macbook/git/CrashDetectorMC/target/classes/
+2025-06-17 00:09:20 - <span style='color:#FFD700'>(PID: 13970) is dead!</span>
+2025-06-17 00:09:20 - Finalizando Contento de Consolas
+2025-06-17 00:09:23 - Analyzador Consolas
+2025-06-17 00:09:23 - Analizando Completa
+2025-06-17 00:09:23 - resultdos <ol></ol>
+2025-06-17 00:09:23 - activar 
+2025-06-17 00:09:23 - no headless 
+2025-06-17 00:09:23 - inicializar interfaz
+2025-06-17 00:09:23 - estabalar texto
+2025-06-17 00:09:23 - estabalar texto completa
+2025-06-17 00:09:23 - estabalar frontera
+2025-06-17 00:09:23 - combobox
+2025-06-17 00:09:23 - idioma
+2025-06-17 00:09:23 - estabalar casilla
+2025-06-17 00:09:23 - estabalar quickfix
+2025-06-17 00:09:23 - panelInferior
+2025-06-17 00:09:23 - estabalar derecha
+2025-06-17 00:09:23 - botones principales
+2025-06-17 00:09:23 - estabalar logo
+2025-06-17 00:09:23 - estabalar lateral derecha
+2025-06-17 00:09:23 - estabalar layout
+2025-06-17 00:09:23 - estabalar titilo

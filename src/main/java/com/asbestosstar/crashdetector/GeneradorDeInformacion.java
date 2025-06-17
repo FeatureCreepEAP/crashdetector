@@ -56,18 +56,23 @@ public class GeneradorDeInformacion {
 	}
 	
 	
-	   public static String imagenesLocales() {
-	        StringBuilder cons = new StringBuilder();
-            String imagePathPrefix = new File("crash_detector/imagenes/").getAbsolutePath().replace("\\", "/") + "/";
-	        cons.append("<center>")
-	            .append("<img src='file://").append(imagePathPrefix).append("gura.png' width='200' height='112'>") // Local Gura image
-	            .append("&nbsp;&nbsp;&nbsp;") // Spacing between images
-	            .append("<img src='file://").append(imagePathPrefix).append("nanashi_mumei.png' width='200' height='112'>") // Local Nanashi Mumei image
-	            .append("&nbsp;&nbsp;&nbsp;")
-	            .append("<img src='file://").append(imagePathPrefix).append("shion.png' width='200' height='112'>") // Local Shion image
-	            .append("</center>");
-	        return cons.toString();
-	    }
+	public static String imagenesLocales() {
+	    StringBuilder cons = new StringBuilder();
+	    File imagenDir = new File("crash_detector/imagenes/");
+	    
+	    String guraUrl = new File(imagenDir, "gura.png").toURI().toString();
+	    String mumeiUrl = new File(imagenDir, "nanashi_mumei.png").toURI().toString();
+	    String shionUrl = new File(imagenDir, "shion.png").toURI().toString();
+
+	    cons.append("<center>")
+	        .append("<img src='").append(guraUrl).append("' width='200' height='112'>")
+	        .append("&nbsp;&nbsp;&nbsp;")
+	        .append("<img src='").append(mumeiUrl).append("' width='200' height='112'>")
+	        .append("&nbsp;&nbsp;&nbsp;")
+	        .append("<img src='").append(shionUrl).append("' width='200' height='112'>")
+	        .append("</center>");
+	    return cons.toString();
+	}
 
 	public static String compartir(List<Consola> consolas, Instant instant) throws DemasiadoGrande, ErrorConPublicar, NoAPIdeRegistro {
 		try {

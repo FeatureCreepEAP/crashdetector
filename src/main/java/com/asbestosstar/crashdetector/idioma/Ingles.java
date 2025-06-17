@@ -1018,6 +1018,31 @@ public String error_al_limpiar_temporales() {
     return "error clearing temporary files";
 }
 
+@Override
+public String mensaje_de_trace_fatal_ultima_no_traductado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Fatal Trace Message Last (Not translated):</b> ";
+}
+
+@Override
+public String mensaje_de_trace_ultima_no_traductado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Trace Message Last (Not translated):</b> ";
+}
+
+@Override
+public String solucionParaAdvertenciaFaltasClases() {
+    return "You have missing classes (Warning), generally it's fine but not always. Bad coremods or missing dependencies are common reasons for this issue.";
+}
+
+@Override
+public String solucionFaltasClases() {
+    return "You have missing classes (FATAL), it's very important. Bad coremods or missing dependencies are common reasons for this issue.";
+}
+
+@Override
+public String solucionParaJavaInstallar() {
+    return "Both launchers have the correct Java versions but not all of them; you can install the correct Java version from the package manager on your system or using the buttons.";
+}
+
 
 
 

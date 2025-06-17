@@ -1015,6 +1015,32 @@ public String error_al_limpiar_temporales() {
 }
 
 
+@Override
+public String mensaje_de_trace_fatal_ultima_no_traductado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>致命的なトレースメッセージ最後 (未翻訳):</b> ";
+}
+
+@Override
+public String mensaje_de_trace_ultima_no_traductado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>トレースメッセージ最後 (未翻訳):</b> ";
+}
+
+@Override
+public String solucionParaAdvertenciaFaltasClases() {
+    return "クラスが不足しています（警告）。一般的には問題ありませんが、常にそうとは限りません。不良なコアモッドや不足している依存関係がこの問題の一般的な原因です。";
+}
+
+@Override
+public String solucionFaltasClases() {
+    return "クラスが不足しています（致命的）。これは非常に重要です。不良なコアモッドや不足している依存関係がこの問題の一般的な原因です。";
+}
+
+@Override
+public String solucionParaJavaInstallar() {
+    return "両方のランチャーには正しいJavaバージョンがありますが、すべてではありません。システムのパッケージマネージャーまたはボタンを使用して、正しいJavaバージョンをインストールできます。";
+}
+
+
 
 
 

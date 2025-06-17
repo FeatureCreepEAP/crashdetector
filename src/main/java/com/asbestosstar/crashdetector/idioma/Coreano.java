@@ -1018,6 +1018,31 @@ public String error_al_limpiar_temporales() {
     return "임시 파일 정리 중 오류 발생";
 }
 
+@Override
+public String mensaje_de_trace_fatal_ultima_no_traductado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>치명적 트레이스 메시지 마지막 (번역되지 않음):</b> ";
+}
+
+@Override
+public String mensaje_de_trace_ultima_no_traductado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>트레이스 메시지 마지막 (번역되지 않음):</b> ";
+}
+
+@Override
+public String solucionParaAdvertenciaFaltasClases() {
+    return "누락된 클래스가 있습니다 (경고). 일반적으로는 괜찮지만 항상 그런 것은 아닙니다. 잘못된 코어 모드 또는 누락된 종속성은 이 문제의 일반적인 원인입니다.";
+}
+
+@Override
+public String solucionFaltasClases() {
+    return "누락된 클래스가 있습니다 (치명적). 매우 중요합니다. 잘못된 코어 모드 또는 누락된 종속성은 이 문제의 일반적인 원인입니다.";
+}
+
+@Override
+public String solucionParaJavaInstallar() {
+    return "두 런처 모두 올바른 Java 버전을 가지고 있지만 모든 버전이 있는 것은 아닙니다. 시스템의 패키지 관리자나 버튼을 사용하여 올바른 Java 버전을 설치할 수 있습니다.";
+}
+
 
 
 

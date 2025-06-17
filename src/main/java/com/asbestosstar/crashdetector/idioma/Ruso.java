@@ -1025,5 +1025,32 @@ public String error_al_limpiar_temporales() {
 
 
 
+@Override
+public String mensaje_de_trace_fatal_ultima_no_traductado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Фатальное сообщение трассировки последнее (Не переведено):</b> ";
+}
+
+@Override
+public String mensaje_de_trace_ultima_no_traductado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Сообщение трассировки последнее (Не переведено):</b> ";
+}
+
+
+@Override
+public String solucionParaAdvertenciaFaltasClases() {
+    return "У вас отсутствуют классы (Предупреждение), обычно это нормально, но не всегда. Плохие коремоды или отсутствующие зависимости — распространенные причины этой проблемы.";
+}
+
+@Override
+public String solucionFaltasClases() {
+    return "У вас отсутствуют классы (ФАТАЛЬНО), это очень важно. Плохие коремоды или отсутствующие зависимости — распространенные причины этой проблемы.";
+}
+
+@Override
+public String solucionParaJavaInstallar() {
+    return "Оба лаунчера имеют правильные версии Java, но не все из них; вы можете установить правильную версию Java через менеджер пакетов в вашей системе или с помощью кнопок.";
+}
+
+
 
 }

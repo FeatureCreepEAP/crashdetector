@@ -1021,6 +1021,31 @@ public String error_al_limpiar_temporales() {
     return "خطا در پاک کردن فایل‌های موقت";
 }
 
+@Override
+public String mensaje_de_trace_fatal_ultima_no_traductado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>پیام ردیابی فتال آخرین (ترجمه نشده):</b> ";
+}
+
+@Override
+public String mensaje_de_trace_ultima_no_traductado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>پیام ردیابی آخرین (ترجمه نشده):</b> ";
+}
+
+@Override
+public String solucionParaAdvertenciaFaltasClases() {
+    return "کلاس‌هایی از دست رفته دارید (هشدار)، معمولاً مشکلی نیست اما همیشه اینطور نیست. Coremods بد یا وابستگی‌های گم‌شده دلایل رایج این مشکل هستند.";
+}
+
+@Override
+public String solucionFaltasClases() {
+    return "کلاس‌هایی از دست رفته دارید (بحرانی)، بسیار مهم است. Coremods بد یا وابستگی‌های گم‌شده دلایل رایج این مشکل هستند.";
+}
+
+@Override
+public String solucionParaJavaInstallar() {
+    return "هر دو لانچر نسخه‌های درست جاوا را دارند اما نه همه آنها؛ شما می‌توانید نسخه صحیح جاوا را از مدیر بسته‌ها در سیستم خود یا با استفاده از دکمه‌ها نصب کنید.";
+}
+
 
 
 

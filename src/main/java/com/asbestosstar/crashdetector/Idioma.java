@@ -488,6 +488,18 @@ public interface Idioma {
 	public String jar_anidado_eliminado();
 
 	public String error_al_limpiar_temporales();
+
+	public String mensaje_de_trace_fatal_ultima_no_traductado();
+
+	public String mensaje_de_trace_ultima_no_traductado();
+
+	public String solucionParaAdvertenciaFaltasClases();
+
+	public String solucionFaltasClases();
+
+	
+	public String solucionParaJavaInstallar();
+
 	
 	
 	// public String advertenciaMalwareFalso();

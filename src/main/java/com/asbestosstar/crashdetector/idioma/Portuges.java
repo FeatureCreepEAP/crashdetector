@@ -1017,6 +1017,30 @@ public String error_al_limpiar_temporales() {
 }
 
 
+@Override
+public String mensaje_de_trace_fatal_ultima_no_traductado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Mensagem de Trace Fatal Última (Não traduzida):</b> ";
+}
+
+@Override
+public String mensaje_de_trace_ultima_no_traductado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Mensagem de Trace Última (Não traduzida):</b> ";
+}
+
+@Override
+public String solucionParaAdvertenciaFaltasClases() {
+    return "Você tem classes ausentes (Aviso), geralmente está tudo bem, mas nem sempre. Coremods ruins ou dependências ausentes são razões comuns para esse problema.";
+}
+
+@Override
+public String solucionFaltasClases() {
+    return "Você tem classes ausentes (FATAL), é muito importante. Coremods ruins ou dependências ausentes são razões comuns para esse problema.";
+}
+
+@Override
+public String solucionParaJavaInstallar() {
+    return "Ambos os lançadores têm as versões corretas do Java, mas nem todas; você pode instalar a versão correta do Java a partir do gerenciador de pacotes no seu sistema ou usando os botões.";
+}
 
 
 

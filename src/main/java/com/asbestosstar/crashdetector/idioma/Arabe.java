@@ -1022,6 +1022,31 @@ public String error_al_limpiar_temporales() {
     return "خطأ في تنظيف الملفات المؤقتة";
 }
 
+@Override
+public String mensaje_de_trace_fatal_ultima_no_traductado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>رسالة تتبع قاتلة أخيرة (غير مترجمة):</b> ";
+}
+
+@Override
+public String mensaje_de_trace_ultima_no_traductado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>رسالة تتبع أخيرة (غير مترجمة):</b> ";
+}
+
+@Override
+public String solucionParaAdvertenciaFaltasClases() {
+    return "توجد لديك فصول مفقودة (تحذير)، عادةً يكون هذا جيدًا ولكن ليس دائمًا. التعديلات الأساسية السيئة أو الاعتمادات المفقودة هي أسباب شائعة لهذه المشكلة.";
+}
+
+@Override
+public String solucionFaltasClases() {
+    return "توجد لديك فصول مفقودة (قاتل)، هذا أمر مهم جدًا. التعديلات الأساسية السيئة أو الاعتمادات المفقودة هي أسباب شائعة لهذه المشكلة.";
+}
+
+@Override
+public String solucionParaJavaInstallar() {
+    return "يحتوي كل من مشغّلي الألعاب على إصدارات صحيحة من جافا ولكن ليس جميعها؛ يمكنك تثبيت الإصدار الصحيح من جافا من مدير الحزم في نظامك أو باستخدام الأزرار.";
+}
+
 
 
 

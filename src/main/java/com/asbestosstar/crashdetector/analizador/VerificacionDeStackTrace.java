@@ -31,19 +31,19 @@ public class VerificacionDeStackTrace {
 	// 正则表达式用于匹配{}内的内容
 	private static final Pattern BRACE_PATTERN = Pattern.compile("\\{([^}]+)\\}");
 	
-	List<String> sm_config = new ArrayList<>();
-	Map<String, Boolean> jars = new LinkedHashMap<>();// FATAL
-	BiMap<String, String,Boolean> modids = new BiMap<>();// FATAL
-	BiMap<String, String,Boolean> packs = new BiMap<>();// FATAL
+	public List<String> sm_config = new ArrayList<>();
+	public Map<String, Boolean> jars = new LinkedHashMap<>();// FATAL
+	public BiMap<String, String,Boolean> modids = new BiMap<>();// FATAL
+	public BiMap<String, String,Boolean> packs = new BiMap<>();// FATAL
 
-	List<String> braceContentos = new LinkedList<>();
+	public List<String> braceContentos = new LinkedList<>();
 
-	List<String> fatal_clases_no_existe = new ArrayList<String>();
+	public List<String> fatal_clases_no_existe = new ArrayList<String>();
 
 	// These only contain the content but not lvl
-	List<String> jar_malo = new ArrayList<String>();
-	List<String> modid_malo = new ArrayList<String>();
-	List<String> package_malo = new ArrayList<String>();
+	public List<String> jar_malo = new ArrayList<String>();
+	public List<String> modid_malo = new ArrayList<String>();
+	public List<String> package_malo = new ArrayList<String>();
 
 	public String[] package_no_permite = { "java.", "net.minecraft", "net.minecraftforge", "org.spongepowered",
 			"it.unimi", "com.mojang.", "cpw.", "featurecreep.", "jdk.", "sun.", "com.sun.", "org.lwjgl.", "org.apache.",

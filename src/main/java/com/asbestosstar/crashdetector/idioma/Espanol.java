@@ -1067,5 +1067,32 @@ public String error_al_limpiar_temporales() {
     return "error al limpiar temporales";
 }
 
+@Override
+public String mensaje_de_trace_fatal_ultima_no_traductado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Mensaje de Trace Fatal Última (No traducido):</b> ";
+}
+
+@Override
+public String mensaje_de_trace_ultima_no_traductado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Mensaje de Trace Última (No traducido):</b> ";
+}
+
+@Override
+public String solucionParaAdvertenciaFaltasClases() {
+    return "Tienes faltas clases (Advertencia), generalmente está bien pero no siempre. Coremods malos o faltas dependencias son razones comunes para este problema.";
+}
+
+@Override
+public String solucionFaltasClases() {
+    return "Tienes faltas clases (FATAL), es muy importante. Coremods malos o faltas dependencias son razones comunes para este problema.";
+}
+
+@Override
+public String solucionParaJavaInstallar() {
+    return "Ambos lanzadores tienen las versiones de Java correctas pero no todas, puedes instalar la versión de Java correcta desde el Administrador de paquetes en tu sistema o con los botones.";
+}
+
+
+
 
 }
