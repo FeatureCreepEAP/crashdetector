@@ -7,7 +7,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 

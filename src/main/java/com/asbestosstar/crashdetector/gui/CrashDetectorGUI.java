@@ -569,8 +569,9 @@ public class CrashDetectorGUI extends JFrame {
         
         // Crear el panel QuickFix
         JPanel panelQuickFix = new JPanel(new BorderLayout());
+        if(!esMac()) {
         panelQuickFix.setBackground(colorFondo);
-        
+        }
         // Crear el scrollable QuickFix panel
         PanelQuickFix panelContenido = new PanelQuickFix();
         

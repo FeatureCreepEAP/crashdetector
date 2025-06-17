@@ -294,25 +294,23 @@ public class Consola {
 	}
 	
 	public String obtainerMensajeUltimaTrace() {
-		List<String> traces = VerificacionDeStackTrace.obtenerTraces(contento_verificar);
-		int len=traces.size();
-		if(len>0) {
-		String ult=traces.get(len-1);
-		String[] arr=ult.split(VerificacionDeStackTrace.nl);
-		return arr[arr.length-1];
-		}
-		return "";
+	    List<String> traces = VerificacionDeStackTrace.obtenerTraces(contento_verificar);
+	    if (!traces.isEmpty()) {
+	        String ult = traces.get(traces.size() - 1);
+	        String[] arr = ult.split(VerificacionDeStackTrace.nl);
+	        return arr.length > 0 ? arr[0] : "";
+	    }
+	    return "";
 	}
-	
+
 	public String obtainerMensajeFatalUltimaTrace() {
-		List<String> traces = VerificacionDeStackTrace.obtenerTracesFatal(contento_verificar);
-		int len=traces.size();
-		if(len>0) {
-		String ult=traces.get(len-1);
-		String[] arr=ult.split(VerificacionDeStackTrace.nl);
-		return arr[arr.length-1];
-		}
-		return "";
+	    List<String> traces = VerificacionDeStackTrace.obtenerTracesFatal(contento_verificar);
+	    if (!traces.isEmpty()) {
+	        String ult = traces.get(traces.size() - 1);
+	        String[] arr = ult.split(VerificacionDeStackTrace.nl);
+	        return arr.length > 0 ? arr[0] : "";
+	    }
+	    return "";
 	}
 	
 
