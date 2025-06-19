@@ -5,12 +5,9 @@ These are the locations of many of the LauncherLogs/Dev Consoles for various Min
 
 ### **Official Minecraft Launcher (Java Edition)**  
 - **Log Locations**:  
-  - **Windows**:  
-    - `%APPDATA%\.minecraft\launcher_log.txt`  
-  - **macOS**:  
-    - `~/Library/Application Support/minecraft/launcher_log.txt`  
-  - **Linux**:  
-    - `~/.minecraft/launcher_log.txt`  
+  - **Windows**:`%APPDATA%\.minecraft\launcher_log.txt`  
+  - **macOS**:`~/Library/Application Support/minecraft/launcher_log.txt`  
+  - **Linux**:`~/.minecraft/launcher_log.txt`  
 
 **Key Notes**:  
 - Logs grow indefinitely unless manually cleared
@@ -21,12 +18,9 @@ These are the locations of many of the LauncherLogs/Dev Consoles for various Min
 
 ### **CurseForge App**  
 - **Log Locations**:  
-  - **Windows**:  
-    - `C:\Users\<Username>\Documents\CurseForge\Install\launcher_log.txt` (`../../Install/launcher_log.txt`)  
-  - **macOS**:  
-    - `~/Library/Application Support/minecraft/launcher_log.txt`  
-  - **Linux**:  
-    - `~/.minecraft/launcher_log.txt`  
+  - **Windows**:`C:\Users\<Username>\Documents\CurseForge\Install\launcher_log.txt` (`../../Install/launcher_log.txt`)  
+  - **macOS**:`~/Library/Application Support/minecraft/launcher_log.txt`  
+  - **Linux**:`~/.minecraft/launcher_log.txt`  
 
 **Key Notes**:  
 - This is based on the vanilla launcher.
@@ -60,17 +54,13 @@ These are the locations of many of the LauncherLogs/Dev Consoles for various Min
 ---
 
 ### **SKLauncher**  
-- **Log Location**:  
- `sklauncher/sklauncher_logs.txt`  
+- **Log Location**:`sklauncher/sklauncher_logs.txt`  
 
 ### **TLauncher**  
 - **Log Locations**:  
-  - **Windows**:  
-    - `%APPDATA%\.tlauncher\logs\tlauncher/`  
-  - **macOS**:  
-    - `~/Library/Application Support/tlauncher/logs/tlauncher/`  
-  - **Linux**:  
-    - `~/.tlauncher/logs/tlauncher/`  
+  - **Windows**:`%APPDATA%\.tlauncher\logs\tlauncher/`  
+  - **macOS**:`~/Library/Application Support/tlauncher/logs/tlauncher/`  
+  - **Linux**:`~/.tlauncher/logs/tlauncher/`  
 
 **Key Notes**:  
 - Logs accumulate continuously until the launcher is restarted, each time a new file is made in the folder. 
