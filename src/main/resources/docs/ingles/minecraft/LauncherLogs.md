@@ -4,7 +4,6 @@ These are the locations of many of the LauncherLogs/Dev Consoles for various Min
 ---
 
 ### **Official Minecraft Launcher (Java Edition)**  
-- **Log Locations**:  
   - **Windows**:`%APPDATA%\.minecraft\launcher_log.txt`  
   - **macOS**:`~/Library/Application Support/minecraft/launcher_log.txt`  
   - **Linux**:`~/.minecraft/launcher_log.txt`  
@@ -20,7 +19,6 @@ These are the locations of many of the LauncherLogs/Dev Consoles for various Min
 ---
 
 ### **CurseForge App**  
-- **Log Locations**:  
   - **Windows**:`C:\Users\<Username>\Documents\CurseForge\Install\launcher_log.txt` (`../../Install/launcher_log.txt`)  
   - **macOS**:`~/Library/Application Support/minecraft/launcher_log.txt`  
   - **Linux**:`~/.minecraft/launcher_log.txt`  
@@ -36,13 +34,11 @@ These are the locations of many of the LauncherLogs/Dev Consoles for various Min
 ---
 
 ### **FTB Launcher**  
-- **Log Location**:  
   - Universal: `../../logs/ftb-app-electron.log` (each `../` moves up one directory level).  
 
 ---
 
 ### **GDLauncher**  
-- **Log Location**:  
   - Right click the instance and press **Settings** and then **Logs**
   
 ![GD Settings](https://pagure.io/CrashDetectorMC/raw/main/f/src/main/resources/imagenes/gdconfig.png  "GD Settings")
@@ -51,8 +47,7 @@ These are the locations of many of the LauncherLogs/Dev Consoles for various Min
 ---
 
 ### **MultiMC & Derivatives (such as PrismLauncher)**  
-- **Log Access**:  
-  - Called **"Minecraft Logs"** in the UI.  
+  - Right Click an instance, press **Edit Instance**. Called **"Minecraft Logs"** in the UI.  
   
   - It is possible to upload to Paste.ee (MultiMC) or MCLo.gs (Prism) but these sites have low limits for log size
   
@@ -65,8 +60,10 @@ These are the locations of many of the LauncherLogs/Dev Consoles for various Min
 ### **SKLauncher**  
 - **Log Location**:`sklauncher/sklauncher_logs.txt`  
 
+---
+
+
 ### **TLauncher**  
-- **Log Locations**:  
   - **Windows**:`%APPDATA%\.tlauncher\logs\tlauncher/`  
   - **macOS**:`~/Library/Application Support/tlauncher/logs/tlauncher/`  
   - **Linux**:`~/.tlauncher/logs/tlauncher/`  
@@ -82,7 +79,6 @@ These are the locations of many of the LauncherLogs/Dev Consoles for various Min
 ---
 
 ### **ATLauncher**  
-- **Log Locations**:  
 There is a popup with the logs. There is a copy logs button and an upload logs button.   
 
 **Key Notes**:  
