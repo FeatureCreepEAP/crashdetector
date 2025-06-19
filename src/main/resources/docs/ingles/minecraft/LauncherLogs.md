@@ -16,6 +16,8 @@ These are the locations of many of the LauncherLogs/Dev Consoles for various Min
 
 - You can go to settings to to enable a Console in the GUI which has less verbos but also leaves out information.
 
+![Enable Console](https://pagure.io/CrashDetectorMC/raw/main/f/src/main/resources/imagenes/vainillalanzer.png  "Enable Console")
+
 ---
 
 ### **CurseForge App**  
@@ -61,7 +63,6 @@ These are the locations of many of the LauncherLogs/Dev Consoles for various Min
 - **Log Location**:`sklauncher/sklauncher_logs.txt`  
 
 ---
-
 
 ### **TLauncher**  
   - **Windows**:`%APPDATA%\.tlauncher\logs\tlauncher/`  
