@@ -44,6 +44,7 @@ These are the locations of many of the LauncherLogs/Dev Consoles for various Min
 ### **GDLauncher**  
 - **Log Location**:  
   - Right click the instance and press **Settings** and then **Logs**
+  
 ![GD Settings](https://pagure.io/CrashDetectorMC/raw/main/f/src/main/resources/imagenes/gdconfig.png  "GD Settings")
 ![GD Logs](https://pagure.io/CrashDetectorMC/raw/main/f/src/main/resources/imagenes/gdconsola.png  "GD Logs")
 
