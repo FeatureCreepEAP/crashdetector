@@ -53,8 +53,10 @@ These are the locations of many of the LauncherLogs/Dev Consoles for various Min
 ### **MultiMC & Derivatives (such as PrismLauncher)**  
 - **Log Access**:  
   - Called **"Minecraft Logs"** in the UI.  
+  - It is possible to upload to Paste.ee (MultiMC) or MCLo.gs (Prism) but these sites have low limits for log size
   - Only accessible via **Edit Instance > Minecraft Log** screen.  
 ![Launcher Logs in PrismLauncher](https://pagure.io/CrashDetectorMC/raw/main/f/src/main/resources/imagenes/registros_de_launcher_prism.png  "Launcher Logs Interface")
+
 ---
 
 ### **SKLauncher**  
@@ -73,5 +75,14 @@ These are the locations of many of the LauncherLogs/Dev Consoles for various Min
 **Key Notes**:  
 - Logs accumulate continuously until the launcher is restarted, each time a new file is made in the folder. 
 - You can enable the Dev Console in the Settings to send them. 
+- A popup often comes up allowing you to automatically upload the log on crash. The limit is 11MB GZipped.
 ---
+### **ATLauncher**  
+- **Log Locations**:  
+There is a popup with the logs. There is a copy logs button and an upload logs button.   
+
+**Key Notes**:  
+- You can upload your logs to paste.atlauncher.com however the max size is unknown. It appears to be based on Stikked, to view raw logs add raw/ after view/
+---
+
 The locations of the LauncherLogs often change. You should take a look at [our code](https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/Consola.java) to find out all the locations.
