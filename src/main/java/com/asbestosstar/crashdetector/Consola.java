@@ -38,8 +38,7 @@ public class Consola {
 	public VerificacionDeStackTrace verificacion_de_stacktrace;
 
 	public static ArrayList<File> archivos_en_lista = new ArrayList<File>();
-	public static String[] tipos_de_registros_de_launcher = { "../../logs/ftb-app-electron.log",
-			"../../../../main.log" };// No para registros con "launcher en el nombre"
+	public static String[] tipos_de_registros_de_launcher = { "../../logs/ftb-app-electron.log" };// No para registros con "launcher en el nombre"
 
 	public static SecureLoggerAPI secure_logger_api = new SecureLoggerAPI();
 
@@ -157,7 +156,6 @@ public class Consola {
 
 	        if (appdata != null) {
 	            agregarLauncherLog(new File(appdata + "/.minecraft/launcher_log.txt"), resultado, rutasLauncherLog); // CurseForgeApp
-	            //resultado.add(new File(appdata + "/AtLauncher/logs/atlauncher.log")); // ATLauncher DOS
 	        }
 
 	        // Agregar otros logs sin control de duplicados
@@ -184,14 +182,7 @@ public class Consola {
 	        // Agregar otros archivos directamente
 	        agregarLauncherLog(new File(home + ".minecraft/launcher_log.txt"), resultado, rutasLauncherLog); // CurseForgeApp y TL segundo
 	        resultado.add(new File("../../logs/ftb-app-electron.log")); // FTB
-	        //resultado.add(new File("../../logs/atlauncher.log")); // ATLauncher UNIX
-	        //resultado.add(new File("../../../logs/PrismLauncher-0.log"));
-	        //resultado.add(new File("../../../logs/PollyMC-0.log"));
-	        //resultado.add(new File("../../../PolyMC-0.log"));
-	        //resultado.add(new File("../../../UltimMC-0.log"));
-	        //resultado.add(new File("../../../MultiMC-0.log"));
 	        resultado.add(new File("sklauncher/sklauncher_logs.txt"));
-	        //resultado.add(new File("../../../../main.log")); // GDLauncher
 	        resultado.add(NoRegistroDeLauncher.cd_launcherlog);
 	        resultado.add(new File("hs_err_pid" + String.valueOf(MonitorDePID.pid) + ".log")); // GDLauncher
 
