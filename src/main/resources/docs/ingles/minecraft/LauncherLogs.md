@@ -79,6 +79,7 @@ These are the locations of many of the LauncherLogs/Dev Consoles for various Min
 
 - A popup often comes up allowing you to automatically upload the log on crash. The limit is 11MB GZipped.
 ---
+
 ### **ATLauncher**  
 - **Log Locations**:  
 There is a popup with the logs. There is a copy logs button and an upload logs button.   
