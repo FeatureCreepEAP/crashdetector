@@ -31,6 +31,7 @@ These are the locations of many of the LauncherLogs/Dev Consoles for various Min
 **Key Notes**:  
 - This is based on the vanilla launcher.
 - No log is generated if the **"Skip Launcher"** option is enabled, please disable Skip Launcher (`Settings > Minecraft`).  
+![CurseForge Skip Launcher](https://pagure.io/CrashDetectorMC/raw/main/f/src/main/resources/imagenes/cfskiplauncher.png  "CurseForge Skip Launcher")
 
 ---
 
@@ -43,6 +44,8 @@ These are the locations of many of the LauncherLogs/Dev Consoles for various Min
 ### **GDLauncher**  
 - **Log Location**:  
   - Right click the instance and press **Settings** and then **Logs**
+![GD Settings](https://pagure.io/CrashDetectorMC/raw/main/f/src/main/resources/imagenes/gdconfig.png  "GD Settings")
+![GD Logs](https://pagure.io/CrashDetectorMC/raw/main/f/src/main/resources/imagenes/gdlogs.png  "GD Logs")
 
 ---
 
