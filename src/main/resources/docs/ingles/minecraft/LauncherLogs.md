@@ -11,7 +11,9 @@ These are the locations of many of the LauncherLogs/Dev Consoles for various Min
 
 **Key Notes**:  
 - Logs grow indefinitely unless manually cleared
+
 - These have a lot of verbos compared to other logs.
+
 - You can go to settings to to enable a Console in the GUI which has less verbos but also leaves out information.
 
 ---
@@ -24,7 +26,9 @@ These are the locations of many of the LauncherLogs/Dev Consoles for various Min
 
 **Key Notes**:  
 - This is based on the vanilla launcher.
+
 - No log is generated if the **"Skip Launcher"** option is enabled, please disable Skip Launcher (`Settings > Minecraft`).  
+
 ![CurseForge Skip Launcher](https://pagure.io/CrashDetectorMC/raw/main/f/src/main/resources/imagenes/cfskiplauncher.png  "CurseForge Skip Launcher")
 
 ---
@@ -47,8 +51,11 @@ These are the locations of many of the LauncherLogs/Dev Consoles for various Min
 ### **MultiMC & Derivatives (such as PrismLauncher)**  
 - **Log Access**:  
   - Called **"Minecraft Logs"** in the UI.  
+  
   - It is possible to upload to Paste.ee (MultiMC) or MCLo.gs (Prism) but these sites have low limits for log size
+  
   - Only accessible via **Edit Instance > Minecraft Log** screen.  
+  
 ![Launcher Logs in PrismLauncher](https://pagure.io/CrashDetectorMC/raw/main/f/src/main/resources/imagenes/registros_de_launcher_prism.png  "Launcher Logs Interface")
 
 ---
@@ -64,7 +71,9 @@ These are the locations of many of the LauncherLogs/Dev Consoles for various Min
 
 **Key Notes**:  
 - Logs accumulate continuously until the launcher is restarted, each time a new file is made in the folder. 
+
 - You can enable the Dev Console in the Settings to send them. 
+
 - A popup often comes up allowing you to automatically upload the log on crash. The limit is 11MB GZipped.
 ---
 ### **ATLauncher**  
