@@ -10,6 +10,7 @@ These are the locations of many of the LauncherLogs/Dev Consoles for various Min
   - **Linux**:`~/.minecraft/launcher_log.txt`  
 
 **Key Notes**:  
+
 - Logs grow indefinitely unless manually cleared
 
 - These have a lot of verbos compared to other logs.
@@ -25,6 +26,7 @@ These are the locations of many of the LauncherLogs/Dev Consoles for various Min
   - **Linux**:`~/.minecraft/launcher_log.txt`  
 
 **Key Notes**:  
+
 - This is based on the vanilla launcher.
 
 - No log is generated if the **"Skip Launcher"** option is enabled, please disable Skip Launcher (`Settings > Minecraft`).  
@@ -70,6 +72,7 @@ These are the locations of many of the LauncherLogs/Dev Consoles for various Min
   - **Linux**:`~/.tlauncher/logs/tlauncher/`  
 
 **Key Notes**:  
+
 - Logs accumulate continuously until the launcher is restarted, each time a new file is made in the folder. 
 
 - You can enable the Dev Console in the Settings to send them. 
