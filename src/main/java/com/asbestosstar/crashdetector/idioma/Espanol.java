@@ -132,8 +132,8 @@ public class Espanol implements Idioma {
     }
 
     @Override
-    public String module_resolution_exception(String modules, String paquete) {
-        return "<span style='color:#" + config.obtenerColorError() + "'>Tienes Mods con Packages/Paquetes duplicados: " + modules + " package duplicado " + paquete.replace(".", "/") + ". Puedes solucionarlo eliminando el paquete (carpeta) del jar, puedes abrir el jar en un software de archivo como WinRAR o 7z, también puedes cambiar la extensión del archivo de .jar a zip y luego eliminar la carpeta y luego cambiarla nuevamente a un archivo .jar.</span>";
+    public String module_resolution_exception() {
+        return "<span style='color:#" + config.obtenerColorError() + "'>Tienes Mods con Packages/Paquetes duplicados. Puedes solucionarlo eliminando el paquete (carpeta) del jar, puedes abrir el jar en un software de archivo como WinRAR o 7z, también puedes cambiar la extensión del archivo de .jar a zip y luego eliminar la carpeta y luego cambiarla nuevamente a un archivo .jar.</span>";
     }
 
     @Override
@@ -1091,6 +1091,72 @@ public String solucionFaltasClases() {
 public String solucionParaJavaInstallar() {
     return "Ambos lanzadores tienen las versiones de Java correctas pero no todas, puedes instalar la versión de Java correcta desde el Administrador de paquetes en tu sistema o con los botones.";
 }
+
+@Override
+public String error_animacion_no_encontrada() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Mod con Animación Falta: " + "</b>";
+}
+
+@Override
+public String nombre_de_error_animacion_minecraft() {
+    return "NoSuchElementException (Excepción No Elemento) Falta Animación";
+}
+
+@Override
+public String no_se_encontraron_mods_para_eliminar() {
+    return "No se encontraron mods para eliminar";
+}
+
+@Override
+public String opcionesGCInvalidas() {
+    return "Reemplazar opciones de GC conflictivas con -XX:+UseG1GC";
+}
+
+@Override
+public String aumentarMemoriaHeap() {
+    return "Aumentar el tamaño de la memoria del heap utilizando la opción -Xmx.";
+}
+
+@Override
+public String aumentarMemoriaPermgen() {
+    return "Aumentar el tamaño de la memoria permgen utilizando la opción -XX:MaxPermSize.";
+}
+
+@Override
+public String utilizarJVM64Bits() {
+    return "Utilizar una JVM de 64 bits para aumentar la memoria disponible.";
+}
+
+@Override
+public String optimizarCodigo() {
+    return "Optimizar el código para reducir el uso de memoria y mejorar el rendimiento.";
+}
+
+@Override
+public String utilizarRecolectorBasuraEficiente() {
+    return "Utilizar un recolector de basura eficiente para reducir la pausa de la aplicación.";
+}
+
+@Override
+public String modulos() {
+    return "Módulos";
+}
+
+@Override
+public String paquete() {
+    return "Paquete";
+}
+
+@Override
+public String solucionRegistrosMalMapeados() {
+    return "Hay faltas IDs. Causas comunes son mods faltantes o datos de artículos faltantes. Carpetas comunes de datos son datafiedcontents/ y kubejs/ u otras carpetas de mods.";
+}
+
+@Override
+public String nombre_de_registros_mal_mapeados() {
+    return "registros mal mapeados";
+}
+
 
 
 

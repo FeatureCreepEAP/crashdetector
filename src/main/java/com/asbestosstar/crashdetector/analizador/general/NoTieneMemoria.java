@@ -90,11 +90,25 @@ public class NoTieneMemoria implements Verificaciones {
 		return MonitorDePID.idioma.nombre_de_no_tiene_memoria();
 	}
 	
-    @Override
-    public QuickFix solucion() {
-        return new QuickFix.Builder(nombre())
-            .agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
-            .construir();
-    }
+	@Override
+	public QuickFix solucion() {
+	    CDStringBuilder solucion = new CDStringBuilder();
+	    solucion.append(MonitorDePID.idioma.recomendacionMemoria())
+	            .append(Verificaciones.nl_html)
+	            .append(MonitorDePID.idioma.aumentarMemoriaHeap())
+	            .append(Verificaciones.nl_html)
+	            .append(MonitorDePID.idioma.aumentarMemoriaPermgen())
+	            .append(Verificaciones.nl_html)
+	            .append(MonitorDePID.idioma.utilizarJVM64Bits())
+	            .append(Verificaciones.nl_html)
+	            .append(MonitorDePID.idioma.optimizarCodigo())
+	            .append(Verificaciones.nl_html)
+	            .append(MonitorDePID.idioma.utilizarRecolectorBasuraEficiente());
+
+	    return new QuickFix.Builder(nombre())
+	        .agregarEtiqueta(solucion.toString())
+	        .construir();
+	}
+
     
 }

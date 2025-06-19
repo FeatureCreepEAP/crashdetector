@@ -132,8 +132,8 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String module_resolution_exception(String modules, String paquete) {
-        return "<span style='color:#" + config.obtenerColorError() + "'>Дублирующиеся пакеты в модах: " + modules + " дублируют " + paquete.replace(".", "/") + ". Удалите папки из JAR через WinRAR/7z или переименовав JAR в ZIP.</span>";
+    public String module_resolution_exception() {
+        return "<span style='color:#" + config.obtenerColorError() + "'>У вас есть моды с дублирующимися пакетами. Это можно исправить, удалив дублирующийся пакет (папку) из JAR-файла. Вы можете открыть JAR в архиваторе, таком как WinRAR или 7z, также можно изменить расширение файла с .jar на .zip, удалить папку, а затем снова переименовать его обратно в .jar файл.</span>";
     }
 
     @Override
@@ -1050,6 +1050,73 @@ public String solucionFaltasClases() {
 public String solucionParaJavaInstallar() {
     return "Оба лаунчера имеют правильные версии Java, но не все из них; вы можете установить правильную версию Java через менеджер пакетов в вашей системе или с помощью кнопок.";
 }
+
+
+@Override
+public String error_animacion_no_encontrada() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Мод без анимации: " + "</b>";
+}
+
+@Override
+public String nombre_de_error_animacion_minecraft() {
+    return "NoSuchElementException (Ошибка отсутствия элемента) Отсутствует анимация";
+}
+
+@Override
+public String no_se_encontraron_mods_para_eliminar() {
+    return "Не найдено модов для удаления";
+}
+
+@Override
+public String opcionesGCInvalidas() {
+    return "Заменить конфликтующие параметры GC на -XX:+UseG1GC";
+}
+
+@Override
+public String aumentarMemoriaHeap() {
+    return "Увеличьте размер кучи с помощью опции -Xmx.";
+}
+
+@Override
+public String aumentarMemoriaPermgen() {
+    return "Увеличьте размер permgen с помощью опции -XX:MaxPermSize.";
+}
+
+@Override
+public String utilizarJVM64Bits() {
+    return "Используйте 64-битную JVM для увеличения доступной памяти.";
+}
+
+@Override
+public String optimizarCodigo() {
+    return "Оптимизируйте код, чтобы уменьшить использование памяти и повысить производительность.";
+}
+
+@Override
+public String utilizarRecolectorBasuraEficiente() {
+    return "Используйте эффективный сборщик мусора, чтобы уменьшить паузы в работе приложения.";
+}
+
+@Override
+public String modulos() {
+    return "Модули";
+}
+
+@Override
+public String paquete() {
+    return "Пакет";
+}
+
+@Override
+public String solucionRegistrosMalMapeados() {
+    return "Некоторые ID отсутствуют. Обычные причины — отсутствие модов или данных об элементах. Распространённые папки с данными: datafiedcontents/ и kubejs/, а также другие папки модов.";
+}
+
+@Override
+public String nombre_de_registros_mal_mapeados() {
+    return "неправильно сопоставлённые записи";
+}
+
 
 
 

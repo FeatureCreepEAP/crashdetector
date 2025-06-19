@@ -132,8 +132,8 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String module_resolution_exception(String modules, String paquete) {
-        return "<span style='color:#" + config.obtenerColorError() + "'>Viaj Modoj havas duoblajn pakojn: " + modules + " duobla pako " + paquete.replace(".", "/") + ". Vi povas ripari ĉi tion forigante la pakon (dosierujon) el la JAR-dosiero uzante arkivilon kiel WinRAR aŭ 7z, aŭ ŝanĝante la dosierfinaĵon de .jar al .zip, forigante la dosierujon, kaj reŝanĝante ĝin al .jar.</span>";
+    public String module_resolution_exception() {
+        return "<span style='color:#" + config.obtenerColorError() + "'>Vi havas modojn kun duplikitaj pakaĵoj. Vi povas solvi tion forigante la duplikitan pakaĵon (dosierujon) el la JAR-dosiero. Vi povas malfermi la JAR-on en arkivilo kiel WinRAR aŭ 7z, aŭ vi povas ŝanĝi la dosiernomon de .jar al zip kaj poste forigi la dosierujon kaj tiam reŝanĝi ĝin al .jar dosiero.</span>";
     }
 
     @Override
@@ -1048,8 +1048,70 @@ public String solucionParaJavaInstallar() {
     return "Ambaŭ lanĉiloj havas la ĝustajn versiojn de Java, sed ne ĉiujn; vi povas instali la ĝustan version de Java per la pakaĵadministrilo en via sistemo aŭ per la butonoj.";
 }
 
+@Override
+public String error_animacion_no_encontrada() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Modo kun Mankanta Animo: " + "</b>";
+}
 
+@Override
+public String nombre_de_error_animacion_minecraft() {
+    return "NoSuchElementException (Eraro pri Mankanta Elemento) Mankas Animo";
+}
 
+@Override
+public String no_se_encontraron_mods_para_eliminar() {
+    return "Ne trovis modojn por forigi";
+}
+
+@Override
+public String opcionesGCInvalidas() {
+    return "Anstataŭi konfliktantajn GC-opciojn per -XX:+UseG1GC";
+}
+
+@Override
+public String aumentarMemoriaHeap() {
+    return "Pligrandigu la grandon de la heap-memoro uzante la opcio -Xmx.";
+}
+
+@Override
+public String aumentarMemoriaPermgen() {
+    return "Pligrandigu la grandon de la permgen-memoro uzante la opcio -XX:MaxPermSize.";
+}
+
+@Override
+public String utilizarJVM64Bits() {
+    return "Uzu 64-bitan JVM por pliigi la haveblan memoron.";
+}
+
+@Override
+public String optimizarCodigo() {
+    return "Optimizu la kodon por malpliigi la memoruzadon kaj plibonigi la efikecon.";
+}
+
+@Override
+public String utilizarRecolectorBasuraEficiente() {
+    return "Uzu efikan rubobruligon por malpliigi la paŭzojn en la aplikaĵo.";
+}
+
+@Override
+public String modulos() {
+    return "Moduloj";
+}
+
+@Override
+public String paquete() {
+    return "Pakaĵo";
+}
+
+@Override
+public String solucionRegistrosMalMapeados() {
+    return "Manqas kelkaj ID-oj. Komunaj kialoj estas mankantaj modoj aŭ datumoj pri objektoj. Komunaj datumbibliotekoj estas datafiedcontents/ kaj kubejs/ aŭ aliaj mod-bibliotekoj.";
+}
+
+@Override
+public String nombre_de_registros_mal_mapeados() {
+    return "malbone mapitaj registriĝoj";
+}
 
 
 

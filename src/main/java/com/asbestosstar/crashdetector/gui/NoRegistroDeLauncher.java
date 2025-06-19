@@ -110,17 +110,19 @@ public class NoRegistroDeLauncher extends JDialog {
             try (FileOutputStream fos = new FileOutputStream(cd_launcherlog);
                  FileChannel channel = fos.getChannel()) {
                 
+            	String contento = area_de_texto.getText();
+            	
                 // Escribir el contenido del JTextArea al archivo
-                byte[] bytes = area_de_texto.getText().getBytes(StandardCharsets.UTF_8);
+                byte[] bytes = contento.getBytes(StandardCharsets.UTF_8);
                 fos.write(bytes);
                 
                 // Forzar escritura física al disco
-                channel.force(true);
+                //channel.force(true);
                 
                 CrashDetectorLogger.log("Archivo cd_launcherlog.txt guardado y forzado al disco");
                 
                 Consola cons = new Consola(cd_launcherlog.toPath());
-                cons.finalizarContento(instant,true);
+                cons.finalizarContentoInyectado(contento);
                 MonitorDePID.consolas.add(cons);
                 MonitorDePID.consola_de_launcher_inyectado=true;
             } catch (IOException ex) {

@@ -15,36 +15,78 @@ public class FaltasClases implements Verificaciones {
 
     private boolean activado = false;
     private final Set<String> clases = new HashSet<>();
-    public final Set<String> todos = new LinkedHashSet<>(); 
+    public final Set<String> todos = new LinkedHashSet<>();
 
     @Override
     public void verificar(Consola consola) {
-    	String contenidoConsola=consola.contento_verificar;
-    	VerificacionDeStackTrace vdst = consola.verificacion_de_stacktrace;
+        String contenidoConsola = consola.contento_verificar;
+        VerificacionDeStackTrace vdst = consola.verificacion_de_stacktrace;
 
-        // Check from VerificacionDeStackTrace
+        // Agregar clases faltantes desde stacktraces fatales
         for (String clase : vdst.fatal_clases_no_existe) {
-            if (todos.add(clase)) { // Atomic check-and-add [[3]]
+            if (todos.add(clase)) {
                 clases.add(clase);
             }
         }
 
-        // Check from console content
+        // Procesar línea por línea la consola
         for (String linea : contenidoConsola.split(Verificaciones.nl)) {
-            String clase = null;
-            
-            if (linea.contains("Caused by: java.lang.ClassNotFoundException")) {
-                clase = linea.split(":")[2].trim();
-            } else if (linea.contains("Error loading class:") && !linea.contains("WARN")) {
-                clase = linea.split("Error loading class: ")[1].split(" ")[0].trim();
+            // Eliminar prefijo de log
+            int indiceDosPuntos = linea.indexOf(':');
+            if (indiceDosPuntos != -1 && linea.charAt(0) == '[') {
+                linea = linea.substring(indiceDosPuntos + 1).trim();
             }
 
-            if (clase != null && todos.add(clase)) {
+            // Saltar líneas con WARN (sin excepciones)
+            if (linea.contains("/WARN]")||linea.contains("Warn")) {
+                continue;
+            }
+
+            String clase = null;
+
+            // Procesar errores de clase faltante
+            if (linea.contains("java.lang.ClassNotFoundException:") || 
+                linea.contains("java.lang.NoClassDefFoundError:")) {
+
+                String[] llevas = {
+                    "java.lang.ClassNotFoundException:",
+                    "java.lang.NoClassDefFoundError:"
+                };
+
+                for (String lleva : llevas) {
+                    int index = linea.indexOf(lleva);
+                    if (index != -1) {
+                        String candidate = linea.substring(index + lleva.length()).trim();
+                        if (!candidate.isEmpty()) {
+                            clase = candidate.split("[\\s\\)]")[0].replace('/', '.').trim();
+                            break;
+                        }
+                    }
+                }
+
+            } else if (linea.contains("Error loading class:")) {
+                // Este caso ya no debería ocurrir por el filtro anterior
+                int index = linea.indexOf("Error loading class:");
+                if (index != -1) {
+                    String candidate = linea.substring(index + "Error loading class:".length()).trim();
+                    if (!candidate.isEmpty()) {
+                        clase = candidate.split("[\\s\\)]")[0].replace('/', '.').trim();
+                    }
+                }
+            }
+
+            // Validar formato de clase antes de agregarla
+            if (clase != null && esNombreClaseValido(clase) && todos.add(clase)) {
                 clases.add(clase);
             }
         }
 
         activado = !clases.isEmpty();
+    }
+
+    // Validar que el nombre siga el patrón de una clase Java
+    private boolean esNombreClaseValido(String clase) {
+        return clase.matches("[a-zA-Z_][a-zA-Z0-9_]*(\\.[a-zA-Z_][a-zA-Z0-9_]*)+");
     }
 
     @Override
@@ -59,7 +101,7 @@ public class FaltasClases implements Verificaciones {
 
     @Override
     public float prioridad() {
-        return 600.0f; // Highest priority for missing class errors [[10]]
+        return 600.0f; // Máxima prioridad para errores de clases faltantes
     }
 
     @Override
@@ -73,20 +115,16 @@ public class FaltasClases implements Verificaciones {
         html.append("</ul>");
         return MonitorDePID.idioma.faltar_de_clases_fatales() + html;
     }
-    
-    
-	@Override
-	public String nombre() {
-		// TODO Auto-generated method stub
-		return MonitorDePID.idioma.nombre_de_faltar_de_clases();
-	}
-	
+
+    @Override
+    public String nombre() {
+        return MonitorDePID.idioma.nombre_de_faltar_de_clases();
+    }
+
     @Override
     public QuickFix solucion() {
         return new QuickFix.Builder(nombre())
             .agregarEtiqueta(MonitorDePID.idioma.solucionFaltasClases())
             .construir();
     }
-	
-	
 }

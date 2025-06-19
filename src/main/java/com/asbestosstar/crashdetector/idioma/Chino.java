@@ -132,8 +132,8 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String module_resolution_exception(String modules, String paquete) {
-        return "<span style='color:#" + config.obtenerColorError() + "'>您的Mods存在重复的包： " + modules + " 重复包 " + paquete.replace(".", "/") + "。您可以通过删除jar中的包（文件夹）来解决此问题，可以使用WinRAR或7z等文件软件打开jar，也可以将文件扩展名从.jar改为zip后删除文件夹，再改回.jar。</span>";
+    public String module_resolution_exception() {
+        return "<span style='color:#" + config.obtenerColorError() + "'>你有包含重复包的模组。你可以通过从 JAR 文件中删除重复的包（文件夹）来解决此问题。你可以使用 WinRAR 或 7z 等压缩软件打开 JAR 文件，也可以将文件扩展名从 .jar 改为 .zip，然后删除文件夹，再将其改回 .jar 扩展名。</span>";
     }
 
     @Override
@@ -1042,9 +1042,70 @@ public String solucionParaJavaInstallar() {
     return "两个启动器都有正确的Java版本，但并非所有版本都正确；您可以从系统中的包管理器或通过按钮安装正确的Java版本。";
 }
 
+@Override
+public String error_animacion_no_encontrada() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>缺少动画的模组: " + "</b>";
+}
 
+@Override
+public String nombre_de_error_animacion_minecraft() {
+    return "NoSuchElementException（无元素异常）动画缺失";
+}
 
+@Override
+public String no_se_encontraron_mods_para_eliminar() {
+    return "未找到可删除的模组";
+}
 
+@Override
+public String opcionesGCInvalidas() {
+    return "将冲突的垃圾回收选项替换为 -XX:+UseG1GC";
+}
+
+@Override
+public String aumentarMemoriaHeap() {
+    return "使用 -Xmx 选项增加堆内存大小。";
+}
+
+@Override
+public String aumentarMemoriaPermgen() {
+    return "使用 -XX:MaxPermSize 选项增加永久代内存大小。";
+}
+
+@Override
+public String utilizarJVM64Bits() {
+    return "使用 64 位 JVM 来增加可用内存。";
+}
+
+@Override
+public String optimizarCodigo() {
+    return "优化代码以减少内存使用并提高性能。";
+}
+
+@Override
+public String utilizarRecolectorBasuraEficiente() {
+    return "使用高效的垃圾收集器来减少应用程序暂停。";
+}
+
+@Override
+public String modulos() {
+    return "模块";
+}
+
+@Override
+public String paquete() {
+    return "包";
+}
+
+@Override
+public String solucionRegistrosMalMapeados() {
+    return "存在缺失的ID。常见原因包括缺少模组或物品数据缺失。常见的数据文件夹有 datafiedcontents/ 和 kubejs/ 或其他模组文件夹。";
+}
+
+@Override
+public String nombre_de_registros_mal_mapeados() {
+    return "映射错误的记录";
+}
 
 
 

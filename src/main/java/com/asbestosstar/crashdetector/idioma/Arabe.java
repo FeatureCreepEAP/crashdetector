@@ -132,8 +132,8 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String module_resolution_exception(String modules, String paquete) {
-        return "<span style='color:#" + config.obtenerColorError() + "'>يوجد حزم مكررة في Mods الخاصة بك: " + modules + " حزمة مكررة " + paquete.replace(".", "/") + ". يمكنك حل هذا عن طريق حذف الحزمة (المجلد) من jar، يمكنك فتح jar باستخدام WinRAR أو 7z أو تغيير الامتداد من .jar إلى zip ثم حذف المجلد وإعادة تغيير الامتداد إلى .jar.</span>";
+    public String module_resolution_exception() {
+        return "<span style='color:#" + config.obtenerColorError() + "'>لديك تعديلات تحتوي على حزم مكررة. يمكنك إصلاح هذا عن طريق حذف الحزمة (المجلد) من ملف الـ JAR، يمكنك فتح ملف الـ JAR باستخدام برنامج أرشيف مثل WinRAR أو 7z، كما يمكنك أيضًا تغيير امتداد الملف من .jar إلى zip ثم حذف المجلد ومن ثم إعادة تسميته مرة أخرى إلى ملف .jar.</span>";
     }
 
     @Override
@@ -1046,6 +1046,74 @@ public String solucionFaltasClases() {
 public String solucionParaJavaInstallar() {
     return "يحتوي كل من مشغّلي الألعاب على إصدارات صحيحة من جافا ولكن ليس جميعها؛ يمكنك تثبيت الإصدار الصحيح من جافا من مدير الحزم في نظامك أو باستخدام الأزرار.";
 }
+
+@Override
+public String error_animacion_no_encontrada() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>التعديل الذي يفتقر إلى الرسوم المتحركة: " + "</b>";
+}
+
+@Override
+public String nombre_de_error_animacion_minecraft() {
+    return "NoSuchElementException (استثناء عدم وجود عنصر) الرسوم المتحركة مفقودة";
+}
+
+@Override
+public String no_se_encontraron_mods_para_eliminar() {
+    return "لم يتم العثور على تعديلات لحذفها";
+}
+
+@Override
+public String opcionesGCInvalidas() {
+    return "استبدال خيارات جمع القمامة المتعارضة بـ -XX:+UseG1GC";
+}
+
+@Override
+public String aumentarMemoriaHeap() {
+    return "زيادة حجم ذاكرة الكومة باستخدام الخيار -Xmx.";
+}
+
+@Override
+public String aumentarMemoriaPermgen() {
+    return "زيادة حجم ذاكرة permgen باستخدام الخيار -XX:MaxPermSize.";
+}
+
+@Override
+public String utilizarJVM64Bits() {
+    return "استخدام ماchine الظاهرية جافا 64 بت لزيادة الذاكرة المتاحة.";
+}
+
+@Override
+public String optimizarCodigo() {
+    return "تحسين الكود لتقليل استخدام الذاكرة وتحسين الأداء.";
+}
+
+@Override
+public String utilizarRecolectorBasuraEficiente() {
+    return "استخدام جامع قمامة فعال لتقليل توقف التطبيق.";
+}
+
+@Override
+public String modulos() {
+    return "وحدات";
+}
+
+@Override
+public String paquete() {
+    return "حزمة";
+}
+
+@Override
+public String solucionRegistrosMalMapeados() {
+    return "هناك بعض المعرفات الناقصة. الأسباب الشائعة هي تعديلات مفقودة أو بيانات عناصر مفقودة. المجلدات الشائعة للبيانات هي datafiedcontents/ و kubejs/ أو مجلدات أخرى خاصة بالتعديلات.";
+}
+
+@Override
+public String nombre_de_registros_mal_mapeados() {
+    return "سجلات تم ربطها بشكل خاطئ";
+}
+
+
+
 
 
 

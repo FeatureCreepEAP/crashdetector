@@ -136,8 +136,8 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String module_resolution_exception(String modules, String paquete) {
-        return "<span style='color:#" + config.obtenerColorError() + "'>You have Mods with duplicated Packages: " + modules + " duplicated package " + paquete.replace(".", "/") + ". You can fix this by removing the package (folder) from the jar file. You can open the jar file using archive software like file-roller, WinRAR or 7-Zip, or change the file extension from .jar to .zip, delete the folder, and then change it back to a .jar file.</span>";
+    public String module_resolution_exception() {
+        return "<span style='color:#" + config.obtenerColorError() + "'>You have mods with duplicated packages. You can fix this by removing the duplicate package (folder) from the JAR file. You can open the JAR using an archive program like WinRAR or 7-Zip, or you can change the file extension from .jar to .zip, delete the folder, and then rename it back to a .jar file.</span>";
     }
 
     @Override
@@ -1043,8 +1043,70 @@ public String solucionParaJavaInstallar() {
     return "Both launchers have the correct Java versions but not all of them; you can install the correct Java version from the package manager on your system or using the buttons.";
 }
 
+@Override
+public String error_animacion_no_encontrada() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Mod with Missing Animation: " + "</b>";
+}
 
+@Override
+public String nombre_de_error_animacion_minecraft() {
+    return "NoSuchElementException (No Element Exception) Missing Animation";
+}
 
+@Override
+public String no_se_encontraron_mods_para_eliminar() {
+    return "No mods were found to delete";
+}
+
+@Override
+public String opcionesGCInvalidas() {
+    return "Replace conflicting GC options with -XX:+UseG1GC";
+}
+
+@Override
+public String aumentarMemoriaHeap() {
+    return "Increase heap memory size using the -Xmx option.";
+}
+
+@Override
+public String aumentarMemoriaPermgen() {
+    return "Increase permgen memory size using the -XX:MaxPermSize option.";
+}
+
+@Override
+public String utilizarJVM64Bits() {
+    return "Use a 64-bit JVM to increase available memory.";
+}
+
+@Override
+public String optimizarCodigo() {
+    return "Optimize code to reduce memory usage and improve performance.";
+}
+
+@Override
+public String utilizarRecolectorBasuraEficiente() {
+    return "Use an efficient garbage collector to reduce application pauses.";
+}
+
+@Override
+public String modulos() {
+    return "Modules";
+}
+
+@Override
+public String paquete() {
+    return "Package";
+}
+
+@Override
+public String solucionRegistrosMalMapeados() {
+    return "There are missing IDs. Common causes are missing mods or missing item data. Common data folders are datafiedcontents/ and kubejs/ or other mod folders.";
+}
+
+@Override
+public String nombre_de_registros_mal_mapeados() {
+    return "mismatched records";
+}
 
 
 }

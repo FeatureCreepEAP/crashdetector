@@ -43,6 +43,9 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 
 					String mensaje = mensajeBuilder.toString().replace("ResolutionException:", "").trim();
 
+					// Eliminar texto antes de "Modules" o "Module"
+					mensaje = mensaje.replaceFirst(".*?(?=Modules|Module)", "").trim();
+
 					String modulosCombinados = "";
 					String paquete = "";
 
@@ -67,14 +70,35 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 
 					if (activado) {
 						paquete = paquete.replaceAll("^\"|\"$", "").trim();
-						paqueteProblematico=paquete;
+						paqueteProblematico = paquete;
 						Buscardor.cargar();
 						List<ArchivoDeMod> mods = Buscardor.buscarModsConTermino(paquete);
 						String resultado = formatearResultadoBusqueda(mods);
 
-						mensajes.append(MonitorDePID.idioma.module_resolution_exception(
-								"<b>" + modulosCombinados + "</b>", "<b>" + paquete + "</b>")).append(resultado)
-								.append(Verificaciones.nl_html);
+						// Construir mensaje manualmente ya que module_resolution_exception ya no acepta
+						// parámetros
+						StringBuilder mensajeFinal = new StringBuilder();
+						mensajeFinal.append(MonitorDePID.idioma.module_resolution_exception());
+
+						// Añadir sección de módulos
+						if (!modulosCombinados.isEmpty()&&!paquete.isEmpty()) {
+							mensajeFinal.append("<br><br><b>"+MonitorDePID.idioma.modulos()+":</b><br>").append("<ul>");
+
+							// Convertir módulos combinados en lista
+							for (String modulo : modulosCombinados.split("\\+")) {
+								mensajeFinal.append("<li>").append(modulo.trim()).append("</li>");
+							}
+
+							mensajeFinal.append("</ul>");
+							
+							mensajeFinal.append("<b>"+MonitorDePID.idioma.paquete()+":</b><br>").append("<code>")
+							.append(paquete.replace(".", "/")).append("</code> ");
+							mensajeFinal.append(resultado).append(Verificaciones.nl_html);
+
+						}
+
+						// Añadir mensaje final
+						mensajes.append(mensajeFinal.toString());
 					}
 				} catch (Exception e) {
 					CrashDetectorLogger.logException(e);

@@ -107,17 +107,17 @@ public class VerificacionDeStackTrace {
 
 			for (String untrimmed : arr) {
 				linea_num++;
-				String line = untrimmed.trim();
-				if (line.contains("[")) {// There is not always a Jar
-					extractarJarNombresEnBrackets(line, fatal, lvl, linea_num);
-				} else if (line.contains("/")) {// Some dev enviornments like ForgeGradle or dev orientated launchers
+				String linea = untrimmed.trim();
+				if (linea.contains("[")) {// There is not always a Jar
+					extractarJarNombresEnBrackets(linea, fatal, lvl, linea_num);
+				} else if (linea.contains("/")) {// Some dev enviornments like ForgeGradle or dev orientated launchers
 												// like TLauncher display the modID and layer, this is helpful
 												// especially when the Jar cannot be found
-					String[] arr_modid = line.split("/");
+					String[] arr_modid = linea.split("/");
 					if (arr_modid.length > 1) {
 						String modid = arr_modid[1].split("@")[0];
-						if (!modid_malo.contains(modid) && !line.split("/")[0].startsWith("java.")
-								&& !esModNoPermite(modid) && line.startsWith("at")) {
+						if (!modid_malo.contains(modid) && !linea.split("/")[0].startsWith("java.")
+								&& !esModNoPermite(modid) && linea.startsWith("at")) {
 							modid_malo.add(modid);
 							modids.put(
 									modid,MonitorDePID.idioma.nivel() + String.valueOf(lvl) + "," + String.valueOf(linea_num),
@@ -127,9 +127,9 @@ public class VerificacionDeStackTrace {
 					}
 
 				} 
-				else if (line.startsWith("at")) { // a veces necesitemos usar packages
+				else if (linea.startsWith("at")) { // a veces necesitemos usar packages
 					String dec=Integer.toString(lvl) + "," + Integer.toString(linea_num);
-				    String pack = line.substring(3);  if (!package_malo.contains(pack) && !packNoEsPermite(pack,dec,fatal)) {
+				    String pack = linea.substring(3);  if (!package_malo.contains(pack) && !packNoEsPermite(pack,dec,fatal)) {
 				        packs.put(
 				            pack, 
 				            MonitorDePID.idioma.nivel() + dec,
@@ -140,11 +140,21 @@ public class VerificacionDeStackTrace {
 				}
 				
 				//else if (line.contains("ClassNotFoundException") && fatal) {
-				else if (line.contains("ClassNotFoundException")) {//No Necesitemos fatal en FabricMC o FeatureCreep
-					fatal_clases_no_existe.add(MonitorDePID.idioma.faltar_de_clases_fatales() + line);
+				else if (linea.contains("ClassNotFoundException")) {//No Necesitemos fatal en FabricMC o FeatureCreep
+					String claseNombre = linea;
+					    // Eliminar la parte antes del nombre de la clase
+					    int index = claseNombre.indexOf("java.lang.ClassNotFoundException:") + "java.lang.ClassNotFoundException:".length();
+					    if (index < claseNombre.length()) {
+					        claseNombre = claseNombre.substring(index).trim();
+					    }
+					    String[] parts = claseNombre.split("[\\s\\(]");
+					    if (parts.length > 0) {
+					        claseNombre = parts[0].trim();
+					    }
+					    fatal_clases_no_existe.add(claseNombre);
 				}
 
-				Matcher braceMatcher = BRACE_PATTERN.matcher(line);
+				Matcher braceMatcher = BRACE_PATTERN.matcher(linea);
 				while (braceMatcher.find()) {
 					String content = braceMatcher.group(1).trim();
 					if (!braceContentos.contains(content)) {// TODO, readd levels
@@ -325,7 +335,8 @@ public class VerificacionDeStackTrace {
 	    
 	    String[] lineas = contenido_de_logs.split("\r?\n");
 	    for (String linea : lineas) {
-	        if (linea.contains("org.spongepowered.asm.mixin")) {
+System.out.println(linea);
+	    	if (linea.contains("org.spongepowered.asm.mixin")) {
 	            Matcher matcher = JSON_PATTERN.matcher(linea.trim());
 	            while (matcher.find()) {
 	                if (matcher.group(1) != null) {
@@ -437,6 +448,14 @@ public class VerificacionDeStackTrace {
 		if (jarName.startsWith("minecraft-") && jarName.contains("client")) {
 			return true;
 		}
+		if (jarName.startsWith("coremods-")) {
+			return true;
+		}
+		if (jarName.startsWith("nashorn-core-")) {
+			return true;
+		}
+		
+		
 		return false;
 	}
 

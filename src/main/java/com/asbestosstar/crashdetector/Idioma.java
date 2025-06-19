@@ -167,7 +167,7 @@ public interface Idioma {
 
 	public String config_spongemixin_problematico();
 
-	public String module_resolution_exception(String modules, String paquete);
+	public String module_resolution_exception();
 
 	public String modlauncher_mods_duplicado(String linea);
 
@@ -500,7 +500,31 @@ public interface Idioma {
 	
 	public String solucionParaJavaInstallar();
 
+	public String error_animacion_no_encontrada();
+
+	public String nombre_de_error_animacion_minecraft();
 	
+	public String no_se_encontraron_mods_para_eliminar();
+
+	public String opcionesGCInvalidas();
+
+	public String aumentarMemoriaHeap();
+
+	public String aumentarMemoriaPermgen();
+
+	public String utilizarJVM64Bits();
+
+	public String optimizarCodigo();
+
+	public String utilizarRecolectorBasuraEficiente();
+
+	public String modulos();
+
+	public String paquete();
+
+	public String solucionRegistrosMalMapeados();
+
+	public String nombre_de_registros_mal_mapeados();
 	
 	// public String advertenciaMalwareFalso();
 

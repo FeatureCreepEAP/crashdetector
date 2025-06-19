@@ -75,7 +75,7 @@ public class FaltaModuleJPMS implements Verificaciones {
     @Override
     public QuickFix solucion() {
         return new QuickFix.Builder(nombre())
-            .agregarEtiqueta(MonitorDePID.idioma.solucionParaAdvertenciaFaltasClases())
+            .agregarEtiqueta(MonitorDePID.idioma.solucionFaltasClases())
             .construir();
     }
 	

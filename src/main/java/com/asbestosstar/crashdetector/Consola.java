@@ -20,6 +20,7 @@ import com.asbestosstar.crashdetector.api_sito_registro.NoAPIdeRegistro;
 import com.asbestosstar.crashdetector.api_sito_registro.SecureLoggerAPI;
 import com.asbestosstar.crashdetector.api_sito_registro.StikkedAPI;
 import com.asbestosstar.crashdetector.gui.NoRegistroDeLauncher;
+import com.asbestosstar.crashdetector.limpiador.LimpiadorRegistroDeLauncherVainilla;
 
 public class Consola {
 
@@ -91,7 +92,10 @@ public class Consola {
 
 				if(archivo.toString().endsWith("launcher_log.txt")) {
 					contento_verificar = LimpiadorRegistroDeLauncherVainilla.limpiarConsola(para_verificar.toString());
-				}else {
+				}else if(archivo.toString().endsWith("latest.log")) {
+					contento_verificar = LimpiadorRegistroLatestLog.limpiarConsola(para_verificar.toString());
+				}
+				else {
 				contento_verificar = para_verificar.toString();
 				}
 				
@@ -109,6 +113,13 @@ public class Consola {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	
+	public void finalizarContentoInyectado(String contento) {
+				nueva = true;
+				this.contento=contento;
+				contento_verificar = contento;
 	}
 
 	public static List<Consola> obtenerConsolas() {
@@ -146,7 +157,7 @@ public class Consola {
 
 	        if (appdata != null) {
 	            agregarLauncherLog(new File(appdata + "/.minecraft/launcher_log.txt"), resultado, rutasLauncherLog); // CurseForgeApp
-	            resultado.add(new File(appdata + "/AtLauncher/logs/atlauncher.log")); // ATLauncher DOS
+	            //resultado.add(new File(appdata + "/AtLauncher/logs/atlauncher.log")); // ATLauncher DOS
 	        }
 
 	        // Agregar otros logs sin control de duplicados
@@ -173,14 +184,14 @@ public class Consola {
 	        // Agregar otros archivos directamente
 	        agregarLauncherLog(new File(home + ".minecraft/launcher_log.txt"), resultado, rutasLauncherLog); // CurseForgeApp y TL segundo
 	        resultado.add(new File("../../logs/ftb-app-electron.log")); // FTB
-	        resultado.add(new File("../../logs/atlauncher.log")); // ATLauncher UNIX
-	        resultado.add(new File("../../../logs/PrismLauncher-0.log"));
-	        resultado.add(new File("../../../logs/PollyMC-0.log"));
-	        resultado.add(new File("../../../PolyMC-0.log"));
-	        resultado.add(new File("../../../UltimMC-0.log"));
-	        resultado.add(new File("../../../MultiMC-0.log"));
+	        //resultado.add(new File("../../logs/atlauncher.log")); // ATLauncher UNIX
+	        //resultado.add(new File("../../../logs/PrismLauncher-0.log"));
+	        //resultado.add(new File("../../../logs/PollyMC-0.log"));
+	        //resultado.add(new File("../../../PolyMC-0.log"));
+	        //resultado.add(new File("../../../UltimMC-0.log"));
+	        //resultado.add(new File("../../../MultiMC-0.log"));
 	        resultado.add(new File("sklauncher/sklauncher_logs.txt"));
-	        resultado.add(new File("../../../../main.log")); // GDLauncher
+	        //resultado.add(new File("../../../../main.log")); // GDLauncher
 	        resultado.add(NoRegistroDeLauncher.cd_launcherlog);
 	        resultado.add(new File("hs_err_pid" + String.valueOf(MonitorDePID.pid) + ".log")); // GDLauncher
 

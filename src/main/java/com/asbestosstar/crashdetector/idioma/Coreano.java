@@ -132,8 +132,8 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String module_resolution_exception(String modules, String paquete) {
-        return "<span style='color:#" + config.obtenerColorError() + "'>Mods에 중복 패키지가 있습니다: " + modules + " 중복 패키지 " + paquete.replace(".", "/") + ". jar의 패키지(폴더)를 삭제하여 해결할 수 있습니다. WinRAR 또는 7z와 같은 파일 소프트웨어로 jar를 열거나 파일 확장명을 .jar에서 zip으로 변경한 후 폴더를 삭제하고 다시 .jar로 변경할 수 있습니다.</span>";
+    public String module_resolution_exception() {
+        return "<span style='color:#" + config.obtenerColorError() + "'>중복된 패키지를 가진 모드가 있습니다. JAR 파일에서 중복된 패키지(폴더)를 삭제하여 해결할 수 있습니다. WinRAR나 7z 같은 압축 프로그램으로 JAR 파일을 열 수도 있고, 파일 확장자를 .jar에서 .zip으로 바꾼 후 폴더를 삭제하고 다시 .jar 확장자로 변경할 수도 있습니다.</span>";
     }
 
     @Override
@@ -1042,6 +1042,71 @@ public String solucionFaltasClases() {
 public String solucionParaJavaInstallar() {
     return "두 런처 모두 올바른 Java 버전을 가지고 있지만 모든 버전이 있는 것은 아닙니다. 시스템의 패키지 관리자나 버튼을 사용하여 올바른 Java 버전을 설치할 수 있습니다.";
 }
+@Override
+public String error_animacion_no_encontrada() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>애니메이션이 없는 모드: " + "</b>";
+}
+
+@Override
+public String nombre_de_error_animacion_minecraft() {
+    return "NoSuchElementException(요소 없음 예외) 애니메이션 부재";
+}
+
+@Override
+public String no_se_encontraron_mods_para_eliminar() {
+    return "삭제할 모드를 찾을 수 없음";
+}
+
+@Override
+public String opcionesGCInvalidas() {
+    return "상충되는 GC 옵션을 -XX:+UseG1GC로 교체하기";
+}
+
+@Override
+public String aumentarMemoriaHeap() {
+    return "-Xmx 옵션을 사용하여 힙 메모리 크기 증가시키기.";
+}
+
+@Override
+public String aumentarMemoriaPermgen() {
+    return "-XX:MaxPermSize 옵션을 사용하여 영구 생성 영역 메모리 크기 증가시키기.";
+}
+
+@Override
+public String utilizarJVM64Bits() {
+    return "사용 가능한 메모리를 늘리기 위해 64비트 JVM 사용하기.";
+}
+
+@Override
+public String optimizarCodigo() {
+    return "메모리 사용량을 줄이고 성능을 개선하기 위해 코드 최적화하기.";
+}
+
+@Override
+public String utilizarRecolectorBasuraEficiente() {
+    return "애플리케이션의 일시 중지를 줄이기 위해 효율적인 가비지 컬렉터 사용하기.";
+}
+
+@Override
+public String modulos() {
+    return "모듈들";
+}
+
+@Override
+public String paquete() {
+    return "패키지";
+}
+
+@Override
+public String solucionRegistrosMalMapeados() {
+    return "ID가 누락되었습니다. 흔한 원인으로는 누락된 모드나 아이템 데이터 부족이 있습니다. 일반적인 데이터 폴더는 datafiedcontents/와 kubejs/ 또는 다른 모드 폴더입니다.";
+}
+
+@Override
+public String nombre_de_registros_mal_mapeados() {
+    return "잘못 매핑된 기록들";
+}
+
 
 
 

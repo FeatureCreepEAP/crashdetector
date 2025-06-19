@@ -132,8 +132,8 @@ public String problema_con_graficas_ati() {
     }
  
     @Override
-    public String module_resolution_exception(String modules, String paquete) {
-        return "<span style='color:#" + config.obtenerColorError() + "'>Mods شما بسته های تکراری دارند: " + modules + " بسته تکراری " + paquete.replace(".", "/") + " . شما می توانید با حذف پوشه (ها) از jar (با استفاده از نرم افزار هایی مانند WinRAR یا 7z برای باز کردن jar) یا تغییر پسوند فایل از .jar به zip، حذف پوشه و تغییر مجدد پسوند به .jar، این مشکل را حل کنید.</span>";
+    public String module_resolution_exception() {
+        return "<span style='color:#" + config.obtenerColorError() + "'>شما مد هایی با پکیج‌های تکراری دارید. می‌توانید این مشکل را با حذف کردن پوشه‌ی تکراری (پکیج) از فایل جار حل کنید. می‌توانید فایل جار را در یک نرم‌افزار فشرده‌سازی مثل وین‌رار یا 7ز باز کنید، همچنین می‌توانید پسوند فایل را از .جار به زیپ تغییر دهید، سپس پوشه را حذف کنید و دوباره آن را به فایل .جار تغییر نام دهید.</span>";
     }
  
     @Override
@@ -1046,7 +1046,73 @@ public String solucionParaJavaInstallar() {
     return "هر دو لانچر نسخه‌های درست جاوا را دارند اما نه همه آنها؛ شما می‌توانید نسخه صحیح جاوا را از مدیر بسته‌ها در سیستم خود یا با استفاده از دکمه‌ها نصب کنید.";
 }
 
+@Override
+public String error_animacion_no_encontrada() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>مد با انیمیشن گمشده: " + "</b>";
+}
 
+@Override
+public String nombre_de_error_animacion_minecraft() {
+    return "NoSuchElementException (خطای عناصر ناپدید شده) انیمیشن گمشده است";
+}
+
+@Override
+public String no_se_encontraron_mods_para_eliminar() {
+    return "هیچ مدی برای حذف پیدا نشد";
+}
+
+@Override
+public String opcionesGCInvalidas() {
+    return "جایگزینی گزینه‌های GC متناقض با -XX:+UseG1GC";
+}
+
+
+
+
+@Override
+public String aumentarMemoriaHeap() {
+    return "افزایش اندازه حافظه Heap با استفاده از گزینه -Xmx.";
+}
+
+@Override
+public String aumentarMemoriaPermgen() {
+    return "افزایش اندازه حافظه PermGen با استفاده از گزینه -XX:MaxPermSize.";
+}
+
+@Override
+public String utilizarJVM64Bits() {
+    return "استفاده از JVM 64 بیتی برای افزایش حافظه در دسترس.";
+}
+
+@Override
+public String optimizarCodigo() {
+    return "بهینه‌سازی کد برای کاهش مصرف حافظه و بهبود عملکرد.";
+}
+
+@Override
+public String utilizarRecolectorBasuraEficiente() {
+    return "استفاده از یک جمع‌آورنده زباله کارآمد برای کاهش توقف برنامه.";
+}
+
+@Override
+public String modulos() {
+    return "ماژول‌ها";
+}
+
+@Override
+public String paquete() {
+    return "بسته";
+}
+
+@Override
+public String solucionRegistrosMalMapeados() {
+    return "شناسه‌هایی گم شده‌اند. دلایل متداول شامل مد های گمشده یا داده‌های آیتم‌های گم‌شده است. پوشه‌های داده متداول عبارتند از datafiedcontents/ و kubejs/ یا سایر پوشه‌های مد.";
+}
+
+@Override
+public String nombre_de_registros_mal_mapeados() {
+    return "ثبت‌های نامناسب";
+}
 
 
 

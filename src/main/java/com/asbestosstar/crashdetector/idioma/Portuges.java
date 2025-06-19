@@ -132,8 +132,8 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String module_resolution_exception(String modules, String paquete) {
-        return "<span style='color:#" + config.obtenerColorError() + "'>Pacotes duplicados detectados nos mods: " + modules + " duplicando " + paquete.replace(".", "/") + ". Para resolver, remova a pasta do jar usando programas como WinRAR/7z ou renomeie o .jar para .zip, remova a pasta e renomeie novamente.</span>";
+    public String module_resolution_exception() {
+        return "<span style='color:#" + config.obtenerColorError() + "'>Você tem mods com pacotes duplicados. Você pode resolver isso removendo o pacote (pasta) duplicado do arquivo JAR. Você pode abrir o JAR em um programa de arquivamento como WinRAR ou 7z, ou também pode alterar a extensão do arquivo de .jar para .zip, excluir a pasta e depois renomeá-lo novamente para um arquivo .jar.</span>";
     }
 
     @Override
@@ -1041,6 +1041,72 @@ public String solucionFaltasClases() {
 public String solucionParaJavaInstallar() {
     return "Ambos os lançadores têm as versões corretas do Java, mas nem todas; você pode instalar a versão correta do Java a partir do gerenciador de pacotes no seu sistema ou usando os botões.";
 }
+
+@Override
+public String error_animacion_no_encontrada() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Mod com Animação Ausente: " + "</b>";
+}
+
+@Override
+public String nombre_de_error_animacion_minecraft() {
+    return "NoSuchElementException (Exceção Sem Elemento) Animação Ausente";
+}
+
+@Override
+public String no_se_encontraron_mods_para_eliminar() {
+    return "Nenhum mod foi encontrado para excluir";
+}
+
+@Override
+public String opcionesGCInvalidas() {
+    return "Substituir opções de GC conflitantes por -XX:+UseG1GC";
+}
+
+@Override
+public String aumentarMemoriaHeap() {
+    return "Aumentar o tamanho da memória heap usando a opção -Xmx.";
+}
+
+@Override
+public String aumentarMemoriaPermgen() {
+    return "Aumentar o tamanho da memória permgen usando a opção -XX:MaxPermSize.";
+}
+
+@Override
+public String utilizarJVM64Bits() {
+    return "Usar uma JVM de 64 bits para aumentar a memória disponível.";
+}
+
+@Override
+public String optimizarCodigo() {
+    return "Otimizar o código para reduzir o uso de memória e melhorar o desempenho.";
+}
+
+@Override
+public String utilizarRecolectorBasuraEficiente() {
+    return "Usar um coletor de lixo eficiente para reduzir as pausas na aplicação.";
+}
+
+@Override
+public String modulos() {
+    return "Módulos";
+}
+
+@Override
+public String paquete() {
+    return "Pacote";
+}
+
+@Override
+public String solucionRegistrosMalMapeados() {
+    return "Há IDs faltando. Causas comuns são mods faltando ou dados de itens faltando. Pastas de dados comuns são datafiedcontents/ e kubejs/ ou outras pastas de mods.";
+}
+
+@Override
+public String nombre_de_registros_mal_mapeados() {
+    return "registros incorretamente mapeados";
+}
+
 
 
 

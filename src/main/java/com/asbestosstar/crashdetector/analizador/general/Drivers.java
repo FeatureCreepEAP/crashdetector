@@ -6,10 +6,10 @@ import java.io.InputStreamReader;
 
 import com.asbestosstar.crashdetector.CDStringBuilder;
 import com.asbestosstar.crashdetector.Consola;
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 
 /**
  * Analizador dedicado a detectar problemas relacionados con controladores (drivers)
@@ -39,6 +39,17 @@ public class Drivers implements Verificaciones {
         "atio6axx.dll", "atioglxx.dll"
         // Otros
     };
+    
+    private static final String[] PATERNS_LINEA_ULTIMA = {
+            // Mensajes LWJGL / GLFW
+    		"If this message is the only thing at the bottom of your log before a crash, you probably have a driver issue.",
+    	    "You can safely ignore this message if the game starts up successfully.",
+    	    "Trying GL version"
+ 
+            // Otros
+        };
+    
+    
 
     /**
      * Patrones que indican explícitamente que la GPU es demasiado antigua o no
@@ -87,9 +98,11 @@ public class Drivers implements Verificaciones {
             return;
         }
 
+CrashDetectorLogger.log(log);
         String ultimaLinea = obtenerUltimaLinea(log);
         if (ultimaLinea != null) {
-            if (contienePatron(ultimaLinea, DRIVER_PATTERNS)) {
+        	CrashDetectorLogger.log(ultimaLinea);
+            if (contienePatron(ultimaLinea, PATERNS_LINEA_ULTIMA)) {
                 procesarProblemaGraficos();
             } else if (contienePatron(ultimaLinea, UNSUPPORTED_GPU_PATTERNS)) {
                 procesarGpuNoCompatible();

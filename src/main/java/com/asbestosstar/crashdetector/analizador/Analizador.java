@@ -22,7 +22,9 @@ import com.asbestosstar.crashdetector.analizador.apps.minecraft.MCForgeModsSuspe
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ModsDuplicadosModLauncher;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.NecesitasSodium;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.NoPuedeAnalizarJSONDeRegistro;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.NoSuchElementAnimacionMinecraft;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.OptifineObsoleta;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.RegistrosMalMapeados;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.Segundo60Tick;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ServicioDeModLauncherNoFunciona;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.Theseus;
@@ -54,6 +56,8 @@ public class Analizador {
 
 	static {
 		verificaciones.add(new SpongeMixinConfigsProblematicos());
+		verificaciones.add(new NoSuchElementAnimacionMinecraft());
+		verificaciones.add(new RegistrosMalMapeados());
 		verificaciones.add(new ModulesDuplicadosJavaModulePlatform());
 		verificaciones.add(new FaltaModuleJPMS());
 		verificaciones.add(new ModsDuplicadosModLauncher());

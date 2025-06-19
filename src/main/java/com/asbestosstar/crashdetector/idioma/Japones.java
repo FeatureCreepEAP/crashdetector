@@ -132,8 +132,8 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String module_resolution_exception(String modules, String paquete) {
-        return "<span style='color:#" + config.obtenerColorError() + "'>Modsに重複するパッケージがあります: " + modules + " 重複パッケージ " + paquete.replace(".", "/") + "。WinRARや7zなどのファイルソフトウェアを使用してjar内のパッケージ（フォルダー）を削除するか、ファイル拡張子を.jarからzipに変更してフォルダーを削除し、再び.jarに戻すことで解決できます。</span>";
+    public String module_resolution_exception() {
+        return "<span style='color:#" + config.obtenerColorError() + "'>重複したパッケージを含むMODがあります。JARファイルから重複したパッケージ（フォルダ）を削除することで解決できます。WinRARや7zなどのアーカイブソフトでJARファイルを開くか、拡張子を.jarから.zipに変更してフォルダを削除し、再度.jarに戻すことも可能です。</span>";
     }
 
     @Override
@@ -1040,7 +1040,70 @@ public String solucionParaJavaInstallar() {
     return "両方のランチャーには正しいJavaバージョンがありますが、すべてではありません。システムのパッケージマネージャーまたはボタンを使用して、正しいJavaバージョンをインストールできます。";
 }
 
+@Override
+public String error_animacion_no_encontrada() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>アニメーションが不足しているMOD: " + "</b>";
+}
 
+@Override
+public String nombre_de_error_animacion_minecraft() {
+    return "NoSuchElementException（要素なし例外）アニメーション不足";
+}
+
+@Override
+public String no_se_encontraron_mods_para_eliminar() {
+    return "削除するMODが見つかりませんでした";
+}
+
+@Override
+public String opcionesGCInvalidas() {
+    return "競合するGCオプションを-XX:+UseG1GCに置き換える";
+}
+
+@Override
+public String aumentarMemoriaHeap() {
+    return "-Xmxオプションを使用してヒープメモリのサイズを増加させます。";
+}
+
+@Override
+public String aumentarMemoriaPermgen() {
+    return "-XX:MaxPermSizeオプションを使用してパーマネント領域メモリのサイズを増加させます。";
+}
+
+@Override
+public String utilizarJVM64Bits() {
+    return "利用可能なメモリを増やすために64ビットJVMを使用します。";
+}
+
+@Override
+public String optimizarCodigo() {
+    return "コードを最適化し、メモリ使用量を減らしてパフォーマンスを向上させます。";
+}
+
+@Override
+public String utilizarRecolectorBasuraEficiente() {
+    return "アプリケーションの一時停止を減らすため、効率的なガベージコレクターを使用します。";
+}
+
+@Override
+public String modulos() {
+    return "モジュール";
+}
+
+@Override
+public String paquete() {
+    return "パッケージ";
+}
+
+@Override
+public String solucionRegistrosMalMapeados() {
+    return "IDが不足しています。よくある原因はMODの欠落やアイテムデータの欠損です。一般的なデータフォルダは datafiedcontents/ や kubejs/、または他のMODフォルダです。";
+}
+
+@Override
+public String nombre_de_registros_mal_mapeados() {
+    return "不一致なレコード";
+}
 
 
 
