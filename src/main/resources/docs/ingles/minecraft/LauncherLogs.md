@@ -84,7 +84,10 @@ These are the locations of many of the LauncherLogs/Dev Consoles for various Min
 There is a popup with the logs. There is a copy logs button and an upload logs button.   
 
 **Key Notes**:  
+
 - You can upload your logs to paste.atlauncher.com however the max size is unknown. It appears to be based on Stikked, to view raw logs add raw/ after view/
+
+![At Logs](https://pagure.io/CrashDetectorMC/raw/main/f/src/main/resources/imagenes/atlogs.png  "At Logs")
 ---
 
 The locations of the LauncherLogs often change. You should take a look at [our code](https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/Consola.java) to find out all the locations.
