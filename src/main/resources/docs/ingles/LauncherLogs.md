@@ -30,7 +30,7 @@ These are the locations of many of the LauncherLogs/Dev Consoles for various Min
 
 **Key Notes**:  
 - This is based on the vanilla launcher.
-- No log is generated if the **"Skip Launcher"** option is enabled, please disable Skip Launcher (`Settings > Game`).  
+- No log is generated if the **"Skip Launcher"** option is enabled, please disable Skip Launcher (`Settings > Minecraft`).  
 
 ---
 
@@ -50,7 +50,7 @@ These are the locations of many of the LauncherLogs/Dev Consoles for various Min
 - **Log Access**:  
   - Called **"Minecraft Logs"** in the UI.  
   - Only accessible via **Edit Instance > Minecraft Log** screen.  
-
+![Launcher Logs in PrismLauncher](https://pagure.io/CrashDetectorMC/raw/main/f/src/main/resources/imagenes/registros_de_launcher_prism.png  "Launcher Logs Interface")
 ---
 
 ### **SKLauncher**  
