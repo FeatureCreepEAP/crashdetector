@@ -78,6 +78,7 @@ These are the locations of many of the LauncherLogs/Dev Consoles for various Min
 - You can enable the Dev Console in the Settings to send them. 
 
 - A popup often comes up allowing you to automatically upload the log on crash. The limit is 11MB GZipped.
+
 ---
 
 ### **ATLauncher**  
