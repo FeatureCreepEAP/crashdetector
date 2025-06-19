@@ -335,7 +335,6 @@ public class VerificacionDeStackTrace {
 	    
 	    String[] lineas = contenido_de_logs.split("\r?\n");
 	    for (String linea : lineas) {
-System.out.println(linea);
 	    	if (linea.contains("org.spongepowered.asm.mixin")) {
 	            Matcher matcher = JSON_PATTERN.matcher(linea.trim());
 	            while (matcher.find()) {
