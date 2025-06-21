@@ -1,5 +1,7 @@
 package com.asbestosstar.crashdetector.idioma;
 
+import java.util.List;
+
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
 
@@ -1106,6 +1108,603 @@ public String solucionRegistrosMalMapeados() {
 public String nombre_de_registros_mal_mapeados() {
     return "映射错误的记录";
 }
+
+public String mensajeCierreAuthMe() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>插件 'AuthMe' 加载失败并导致服务器关闭。</b> ";
+}
+
+public String nombreProblemaCierreAuthMe() {
+    return "由 AuthMe 引起的关闭问题";
+}
+
+public String solucionCierreAuthMe() {
+    return "'stopServer' 规则已更改为 'true'。";
+}
+
+public String solucionConfigurarPluginAuthMe() {
+    return "配置插件 AuthMe (plugins/AuthMe/config.yml)";
+}
+
+public String solucionInstalarVersionDiferenteAuthMe() {
+    return "安装不同版本的 'AuthMe' 插件";
+}
+
+public String solucionEliminarPluginAuthMe() {
+    return "移除插件 'AuthMe'";
+}
+
+@Override
+public String mensajeProblemaCargaMultiverso(String nombreMundo) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>世界 '" + nombreMundo + "' 无法加载，因为它包含错误且可能已损坏。</b> ";
+}
+
+@Override
+public String nombreProblemaCargaMultiverso() {
+    return "Multiverse 世界加载问题";
+}
+
+@Override
+public String solucionRepararMundo(String nombreMundo) {
+    return "修复世界 '" + nombreMundo + "'，例如使用 Minecraft Region Fixer 或 MCEdit。";
+}
+
+@Override
+public String solucionEliminarCarpetaMundo(String nombreMundo) {
+    return "删除世界文件夹 '" + nombreMundo + "'。";
+}
+
+@Override
+public String mensajeConfiguracionPermissionsEx() {
+    return "<b style='color:#" + config.obtenerColorError() + ">'PermissionsEx' 插件的配置无效。</b>";
+}
+
+@Override
+public String nombreProblemaConfiguracionPermissionsEx() {
+    return "PermissionsEx 配置问题";
+}
+
+@Override
+public String solucionConfigurarPermissionsEx() {
+    return "配置插件 PermissionsEx (plugins/PermissionsEx/permissions.yml)";
+}
+
+@Override
+public String solucionEliminarPluginPermissionsEx() {
+    return "删除插件 'PermissionsEx'";
+}
+
+@Override
+public String mensajeNombrePluginAmbiguo(String nombrePlugin, String primerPath, String segundoPath) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>发现多个同名插件 '" + nombrePlugin + "': '" + primerPath + "' 和 '" + segundoPath + "'。</b> ";
+}
+
+@Override
+public String nombreProblemaNombrePluginAmbiguo() {
+    return "插件名称冲突问题";
+}
+
+@Override
+public String solucionEliminarPlugin(String nombrePlugin) {
+    return "删除插件 '" + nombrePlugin + "'";
+}
+
+@Override
+public String mensajeCargaChunk() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>加载世界区块时发生异常。</b> ";
+}
+
+@Override
+public String nombreProblemaCargaChunk() {
+    return "区块加载异常";
+}
+
+@Override
+public String solucionEliminarChunk() {
+    return "使用 MCEdit 或删除区域文件来移除有问题的区块。";
+}
+
+
+@Override
+public String mensajeExcepcionComandoPlugin(String nombrePlugin, String comando) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>插件 '" + nombrePlugin + "' 无法执行命令 '/" + comando + "'。</b>";
+}
+
+@Override
+public String nombreProblemaExcepcionComandoPlugin() {
+    return "执行插件命令时发生异常";
+}
+
+@Override
+public String solucionInstalarVersionDiferentePlugin(String nombrePlugin) {
+    return "安装插件 '" + nombrePlugin + "' 的其他版本";
+}
+
+@Override
+public String mensajeDependenciaPluginUnica(String nombrePlugin, String dependencia) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>插件 '" + nombrePlugin + 
+           "' 需要依赖 '" + dependencia + "'。</b>";
+}
+
+@Override
+public String mensajeDependenciaPluginMultiples(String nombrePlugin, List<String> dependencias) {
+    StringBuilder deps = new StringBuilder();
+    for (int i = 0; i < dependencias.size(); i++) {
+        if (i > 0) deps.append(", ");
+        deps.append("'").append(dependencias.get(i)).append("'");
+    }
+    return "<b style='color:#" + config.obtenerColorError() + "'>插件 '" + nombrePlugin + 
+           "' 缺少以下必需依赖: " + deps.toString() + "。</b>";
+}
+
+@Override
+public String nombreProblemaDependenciaPlugin() {
+    return "缺失插件依赖";
+}
+
+@Override
+public String solucionInstalarPlugin(String nombrePlugin) {
+    return "安装插件 '" + nombrePlugin + "'";
+}
+
+@Override
+public String mensajeVersionAPIIncompatible(String nombrePlugin, String versionAPI) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>插件 '" + nombrePlugin + 
+           "' 需要版本为 '" + versionAPI + "' 的 API，与当前服务器不兼容。</b>";
+}
+
+@Override
+public String nombreProblemaVersionAPIIncompatible() {
+    return "API 版本不兼容";
+}
+
+@Override
+public String solucionInstalarVersionServidor(String version) {
+    return "安装服务器软件的 '" + version + "' 版本。";
+}
+
+@Override
+public String mensajeMundoDuplicado(String nombreMundo) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>世界 '" + nombreMundo + 
+           "' 是另一个世界的副本，无法加载。</b> ";
+}
+
+@Override
+public String nombreProblemaMundoDuplicado() {
+    return "重复的世界";
+}
+
+@Override
+public String solucionEliminarUID(String nombreMundo) {
+    return "删除世界 '" + nombreMundo + "' 中的 'uid.dat' 文件";
+}
+
+@Override
+public String solucionEliminarMundo(String nombreMundo) {
+    return "删除世界文件夹 '" + nombreMundo + "'";
+}
+
+
+@Override
+public String mensajeTickingEntidadBloque(String nombre, String tipo, int[] coordenadas) {
+    String coords = "(" + coordenadas[0] + ", " + coordenadas[1] + ", " + coordenadas[2] + ")";
+    return "<b style='color:#" + config.obtenerColorError() + "'>位于 " + coords + " 的区块实体 '" + nombre + 
+           "'（类型为 '" + tipo + "'）在tick时发生错误。</b> ";
+}
+
+@Override
+public String nombreProblemaTickingEntidadBloque() {
+    return "问题区块实体";
+}
+
+@Override
+public String solucionEliminarEntidadBloque(String nombre, int[] coordenadas) {
+    String coords = "(" + coordenadas[0] + ", " + coordenadas[1] + ", " + coordenadas[2] + ")";
+    return "使用 MCEdit 或直接编辑世界文件，删除位于 " + coords + " 的 '" + nombre + "' 实体。";
+}
+
+@Override
+public String mensajeModDuplicadoFabric(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>模组 '" + nombreMod + "' 安装了多个版本。</b> ";
+}
+
+@Override
+public String nombreProblemaModDuplicadoFabric() {
+    return "Fabric 中的重复模组";
+}
+
+@Override
+public String solucionEliminarModDuplicado(String rutaMod) {
+    return "删除重复的模组文件：" + rutaMod;
+}
+
+@Override
+public String mensajeModIncompatible(String primerMod, String segundoMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>模组 '" + primerMod + 
+           "' 和 '" + segundoMod + "' 彼此不兼容。</b> ";
+}
+
+@Override
+public String nombreProblemaModIncompatibleFabric() {
+    return "Fabric 中的不兼容模组";
+}
+
+@Override
+public String solucionEliminarMod(String nombreMod) {
+    return "删除模组 '" + nombreMod + "'";
+}
+
+@Override
+public String mensajeModFatal(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>模组 '" + nombreMod + "' 出现严重错误，无法运行。</b>";
+}
+
+@Override
+public String nombreProblemaModFatal() {
+    return "模组出现致命错误";
+}
+@Override
+public String mensajeModDependenciaPlural(List<String> dependencias) {
+    StringBuilder deps = new StringBuilder();
+    for (int i = 0; i < dependencias.size(); i++) {
+        if (i > 0) {
+            deps.append(", ");
+        }
+        deps.append("'").append(dependencias.get(i)).append("'");
+    }
+    return "<b style='color:#" + config.obtenerColorError() + "'>以下模组是必需的但未安装：" + deps.toString() + "。</b>";
+}
+
+@Override
+public String mensajeDependenciaModFaltante(String nombreMod, String dependencia, String version) {
+    if (version == null || version.isEmpty()) {
+        return "<b style='color:#" + config.obtenerColorError() + "'>模组 '" + nombreMod + 
+               "' 需要依赖模组 '" + dependencia + "'。</b>";
+    } else {
+        return "<b style='color:#" + config.obtenerColorError() + "'>模组 '" + nombreMod + 
+               "' 需要依赖模组 '" + dependencia + "' 的版本 " + version + "。</b>";
+    }
+}
+
+@Override
+public String nombreProblemaDependenciaMod() {
+    return "缺少模组依赖";
+}
+
+@Override
+public String solucionInstalarMod(String nombreMod) {
+    return "安装模组 '" + nombreMod + "'";
+}
+
+@Override
+public String solucionInstalarModConVersion(String nombreMod, String version) {
+    return "安装模组 '" + nombreMod + "' 的版本 " + version;
+}
+
+@Override
+public String mensajePluginTickingRegionalSingular(String nombrePlugin) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>插件 '" + nombrePlugin + 
+           "' 不兼容 Folia 的区域性 Tick。</b> ";
+}
+
+@Override
+public String mensajePluginTickingRegionalPlural(List<String> plugins) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("以下插件不兼容 Folia 的区域性 Tick：");
+    
+    for (int i = 0; i < plugins.size(); i++) {
+        if (i > 0) {
+            sb.append(", ");
+        }
+        sb.append("'").append(plugins.get(i)).append("'");
+    }
+    
+    sb.append("。</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaPluginTickingRegional() {
+    return "插件与区域性 Tick 不兼容";
+}
+
+@Override
+public String solucionInstalarSoftwareSinTickingRegional(String software) {
+    return "安装一个没有区域性 Tick 的版本，例如 " + software;
+}
+
+@Override
+public String mensajeModFaltanteEnDatapackSingular(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>模组 '" + nombreMod + 
+           "' 在数据包中缺失。</b>";
+}
+
+@Override
+public String mensajeModFaltanteEnDatapackPlural(List<String> mods) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("以下模组在数据包中缺失：");
+    
+    for (int i = 0; i < mods.size(); i++) {
+        if (i > 0) {
+            if (i == mods.size() - 1) {
+                sb.append(" 和 ");
+            } else {
+                sb.append(", ");
+            }
+        }
+        sb.append("'").append(mods.get(i)).append("'");
+    }
+    
+    sb.append("。</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaModFaltanteEnDatapack() {
+    return "数据包中缺少模组";
+}
+
+@Override
+public String mensajeModExcepcionSingular(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>模组 '" + nombreMod + "' 引发了错误。</b>";
+}
+
+@Override
+public String mensajeModExcepcionPlural(List<String> mods) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("以下模组引发了错误：");
+    
+    for (int i = 0; i < mods.size(); i++) {
+        if (i > 0) {
+            if (i == mods.size() - 1) {
+                sb.append(" 和 ");
+            } else {
+                sb.append(", ");
+            }
+        }
+        sb.append("'").append(mods.get(i)).append("'");
+    }
+    
+    sb.append("。</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaModExcepcion() {
+    return "Forge 模组引发异常";
+}
+
+@Override
+public String solucionInstalarVersionDiferenteMod(String nombreMod) {
+    return "安装模组 '" + nombreMod + "' 的其他版本";
+}
+
+@Override
+public String mensajeModIncompatibleConMinecraftSingular(String nombreMod, String versionMC) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>模组 '" + nombreMod + 
+           "' 不兼容 Minecraft 版本 " + versionMC + "。</b>";
+}
+
+@Override
+public String mensajeModIncompatibleConMinecraftPlural(List<String> mods, List<String> versionesMC) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("以下模组不兼容对应的 Minecraft 版本：");
+    
+    for (int i = 0; i < mods.size(); i++) {
+        if (i > 0) {
+            sb.append(", ");
+        }
+        sb.append("'").append(mods.get(i)).append("'");
+        sb.append("（Minecraft ").append(versionesMC.get(i)).append("）");
+    }
+    
+    sb.append("。</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaModIncompatibleConMinecraft() {
+    return "模组与 Minecraft 不兼容";
+}
+
+@Override
+public String solucionInstalarVersionForge(String versionMC) {
+    return "安装适用于 Minecraft " + versionMC + " 的 Forge 版本";
+}
+
+@Override
+public String mensajeDependenciaModFaltante(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>" + nombreMod + " 模组缺失，无法加载世界或插件。</b>";
+}
+
+@Override
+public String nombreProblemaDependenciaModFaltante() {
+    return "缺失模组";
+}
+
+@Override
+public String mensajeWorldModFaltanteSingular(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>该世界保存时包含模组 '" + nombreMod + 
+           "'，但现在找不到该模组。</b>";
+}
+
+@Override
+public String mensajeWorldModFaltantePlural(List<String> mods) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("该世界保存时包含以下模组，但现在这些模组都找不到了：");
+    
+    for (int i = 0; i < mods.size(); i++) {
+        if (i > 0) {
+            if (i == mods.size() - 1) {
+                sb.append(" 和 ");
+            } else {
+                sb.append("、");
+            }
+        }
+        sb.append("'").append(mods.get(i)).append("'");
+    }
+    
+    sb.append("。</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaWorldModFaltante() {
+    return "世界中缺少模组";
+}
+
+@Override
+public String mensajeVersionModMundoSingular(String nombreMod, String versionEsperada, String versionActual) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>世界保存时使用的是模组 '" + nombreMod + 
+           "' 的版本 " + versionEsperada + "，但现在运行的是版本 " + versionActual + "。</b>";
+}
+
+@Override
+public String mensajeVersionModMundoPlural(List<String> mods, List<String> versionesEsperadas, List<String> versionesActuales) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("以下模组在保存的世界中存在版本差异：");
+    
+    for (int i = 0; i < mods.size(); i++) {
+        if (i > 0) {
+            if (i == mods.size() - 1) {
+                sb.append(" 和 ");
+            } else {
+                sb.append(", ");
+            }
+        }
+        sb.append("'").append(mods.get(i)).append("'");
+        sb.append("（保存版本：").append(versionesEsperadas.get(i)).append("，当前版本：").append(versionesActuales.get(i)).append("）");
+    }
+    
+    sb.append("。</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaVersionModMundo() {
+    return "保存的世界中的模组版本不一致";
+}
+
+@Override
+public String mensajeVersionDowngrade() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>你尝试加载了一个由更新版 Minecraft 创建的世界。</b>";
+}
+
+@Override
+public String nombreProblemaVersionDowngrade() {
+    return "尝试从较新版本加载世界";
+}
+
+@Override
+public String solucionVersionDowngrade() {
+    return "安装更新的 Minecraft 版本。";
+}
+
+@Override
+public String solucionGenerarNuevoMundo() {
+    return "生成一个新世界。";
+}
+
+@Override
+public String mensajeDependenciaPluginFaltanteSingular(String nombrePlugin, String dependencia) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>插件 '" + nombrePlugin + 
+           "' 需要依赖插件 '" + dependencia + "'。</b>";
+}
+
+@Override
+public String mensajeDependenciaPluginFaltantePlural(List<String> plugins, List<String> dependencias) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("以下插件需要未安装的依赖项：");
+    
+    for (int i = 0; i < plugins.size(); i++) {
+        if (i > 0) {
+            sb.append(", ");
+        }
+        sb.append("'").append(plugins.get(i)).append("'（").append(dependencias.get(i)).append("）");
+    }
+    
+    sb.append("。</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaDependenciaPluginFaltante() {
+    return "插件缺少依赖";
+}
+
+@Override
+public String mensajePluginIncompatibleSingular(String nombrePlugin) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>插件 '" + nombrePlugin + 
+           "' 与当前服务器版本不兼容。</b>";
+}
+
+@Override
+public String mensajePluginIncompatiblePlural(List<String> plugins) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("以下插件与当前服务器版本不兼容：");
+    
+    for (int i = 0; i < plugins.size(); i++) {
+        if (i > 0) {
+            if (i == plugins.size() - 1) {
+                sb.append(" 和 ");
+            } else {
+                sb.append("、");
+            }
+        }
+        sb.append("'").append(plugins.get(i)).append("'");
+    }
+    
+    sb.append("。</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaPluginIncompatible() {
+    return "插件与 PocketMine-MP 不兼容";
+}
+
+@Override
+public String mensajePluginEjecucionSingular(String nombrePlugin) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>插件 '" + nombrePlugin + "' 在运行期间引发错误。</b>";
+}
+
+@Override
+public String mensajePluginEjecucionPlural(List<String> plugins) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("以下插件在运行期间引发错误：");
+    
+    for (int i = 0; i < plugins.size(); i++) {
+        if (i > 0) {
+            if (i == plugins.size() - 1) {
+                sb.append(" 和 ");
+            } else {
+                sb.append("、");
+            }
+        }
+        sb.append("'").append(plugins.get(i)).append("'");
+    }
+    
+    sb.append("。</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaPluginEjecucion() {
+    return "运行期间出错的插件";
+}
+
+@Override
+public String nombreLegacyRandomSourceMultiHilos() {
+    return "LegacyRandomSource 多线程";
+}
+
+@Override
+public String mensajeLegacyRandomSourceMultiHilos() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>检测到多个线程访问 LegacyRandomSource 类。你可以通过安装 'Unsafe World Random Access Detector' 或 'C2ME' 模组获取更多信息。</b>";
+}
+
+
+
+
 
 
 

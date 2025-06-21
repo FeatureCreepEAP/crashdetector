@@ -1,5 +1,7 @@
 package com.asbestosstar.crashdetector.idioma;
 
+import java.util.List;
+
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
 
@@ -1105,6 +1107,561 @@ public String solucionRegistrosMalMapeados() {
 @Override
 public String nombre_de_registros_mal_mapeados() {
     return "잘못 매핑된 기록들";
+}
+
+
+public String mensajeCierreAuthMe() { return "<b style='color:#" + config.obtenerColorError() + "'>플러그인 'AuthMe'의 로드 실패로 인해 서버가 종료되었습니다.</b> "; } public String nombreProblemaCierreAuthMe() { return "AuthMe로 인한 종료 문제"; } public String solucionCierreAuthMe() { return "'stopServer' 규칙이 'true'로 변경됨."; } public String solucionConfigurarPluginAuthMe() { return "플러그인 AuthMe 설정 (plugins/AuthMe/config.yml)"; } public String solucionInstalarVersionDiferenteAuthMe() { return "'AuthMe' 플러그인의 다른 버전 설치"; } public String solucionEliminarPluginAuthMe() { return "플러그인 'AuthMe' 제거"; } @Override public String mensajeProblemaCargaMultiverso(String nombreMundo) { return "<b style='color:#" + config.obtenerColorError() + "'>세계 '" + nombreMundo + "'은(는) 오류가 포함되어 있고 손상되었을 가능성이 있어 로드할 수 없습니다.</b> "; } @Override public String nombreProblemaCargaMultiverso() { return "Multiverse 세계 로드 문제"; } @Override public String solucionRepararMundo(String nombreMundo) { return "'" + nombreMundo + "' 세계를 복구하세요. 예: Minecraft Region Fixer 또는 MCEdit 사용."; } @Override public String solucionEliminarCarpetaMundo(String nombreMundo) { return "'" + nombreMundo + "' 세계 폴더 삭제."; }
+
+
+@Override
+public String mensajeConfiguracionPermissionsEx() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>확장기능 'PermissionsEx'의 설정이 잘못되었습니다.</b> ";
+}
+
+@Override
+public String nombreProblemaConfiguracionPermissionsEx() {
+    return "PermissionsEx 설정 문제";
+}
+
+@Override
+public String solucionConfigurarPermissionsEx() {
+    return "PermissionsEx 플러그인 설정 (plugins/PermissionsEx/permissions.yml)";
+}
+
+@Override
+public String solucionEliminarPluginPermissionsEx() {
+    return "플러그인 'PermissionsEx' 삭제";
+}
+
+@Override
+public String mensajeNombrePluginAmbiguo(String nombrePlugin, String primerPath, String segundoPath) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>동일한 이름 '" + nombrePlugin + "'을 가진 플러그인 파일이 여러 개 있습니다: '" + primerPath + "' 및 '" + segundoPath + "'.</b> ";
+}
+
+@Override
+public String nombreProblemaNombrePluginAmbiguo() {
+    return "모호한 플러그인 이름 문제";
+}
+
+@Override
+public String solucionEliminarPlugin(String nombrePlugin) {
+    return "'" + nombrePlugin + "' 플러그인 제거";
+}
+
+@Override
+public String mensajeCargaChunk() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>세계 청크를 로드하는 중 오류가 발생했습니다.</b> ";
+}
+
+@Override
+public String nombreProblemaCargaChunk() {
+    return "청크 로딩 오류";
+}
+
+@Override
+public String solucionEliminarChunk() {
+    return "MCEdit 사용 또는 지역 파일 삭제를 통해 문제가 있는 청크를 제거하십시오.";
+}
+
+@Override
+public String mensajeExcepcionComandoPlugin(String nombrePlugin, String comando) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>/" + comando + "' 명령을 실행할 수 없습니다. 플러그인: '" + nombrePlugin + "'</b>";
+}
+
+@Override
+public String nombreProblemaExcepcionComandoPlugin() {
+    return "플러그인 명령 실행 오류";
+}
+
+@Override
+public String solucionInstalarVersionDiferentePlugin(String nombrePlugin) {
+    return "'" + nombrePlugin + "' 플러그인의 다른 버전 설치";
+}
+
+@Override
+public String mensajeDependenciaPluginUnica(String nombrePlugin, String dependencia) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>" + nombrePlugin + 
+           "' 플러그인은 '" + dependencia + "' 의존성을 필요로 합니다.</b> ";
+}
+
+@Override
+public String mensajeDependenciaPluginMultiples(String nombrePlugin, List<String> dependencias) {
+    StringBuilder deps = new StringBuilder();
+    for (int i = 0; i < dependencias.size(); i++) {
+        if (i > 0) deps.append(", ");
+        deps.append("'").append(dependencias.get(i)).append("'");
+    }
+    return "<b style='color:#" + config.obtenerColorError() + "'>" + nombrePlugin + 
+           "' 플러그인은 다음 의존성이 부족합니다: " + deps.toString() + ".</b> ";
+}
+
+@Override
+public String nombreProblemaDependenciaPlugin() {
+    return "부족한 플러그인 의존성";
+}
+
+@Override
+public String solucionInstalarPlugin(String nombrePlugin) {
+    return "'" + nombrePlugin + "' 플러그인 설치";
+}
+
+@Override
+public String mensajeVersionAPIIncompatible(String nombrePlugin, String versionAPI) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>" + nombrePlugin + 
+           "' 플러그인은 서버와 호환되지 않는 API 버전 '" + versionAPI + "'을(를) 필요로 합니다.</b> ";
+}
+
+@Override
+public String nombreProblemaVersionAPIIncompatible() {
+    return "호환되지 않는 API 버전";
+}
+
+@Override
+public String solucionInstalarVersionServidor(String version) {
+    return "서버 소프트웨어의 '" + version + "' 버전을 설치하세요.";
+}
+
+@Override
+public String mensajeMundoDuplicado(String nombreMundo) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>" + nombreMundo + 
+           "' 세계는 다른 세계와 중복되어 불러올 수 없습니다.</b> ";
+}
+
+@Override
+public String nombreProblemaMundoDuplicado() {
+    return "중복된 세계";
+}
+
+@Override
+public String solucionEliminarUID(String nombreMundo) {
+    return "'" + nombreMundo + "' 세계에서 'uid.dat' 파일 삭제";
+}
+
+@Override
+public String solucionEliminarMundo(String nombreMundo) {
+    return "'" + nombreMundo + "' 세계 폴더 삭제";
+}
+
+
+@Override
+public String mensajeTickingEntidadBloque(String nombre, String tipo, int[] coordenadas) {
+    String coords = "(" + coordenadas[0] + ", " + coordenadas[1] + ", " + coordenadas[2] + ")";
+    return "<b style='color:#" + config.obtenerColorError() + "'>" + coords + " 위치의 블록 엔티티 '" + nombre + 
+           "'(유형: '" + tipo + "')가 틱 중에 오류를 일으키고 있습니다.</b> ";
+}
+
+@Override
+public String nombreProblemaTickingEntidadBloque() {
+    return "문제 있는 블록 엔티티";
+}
+
+@Override
+public String solucionEliminarEntidadBloque(String nombre, int[] coordenadas) {
+    String coords = "(" + coordenadas[0] + ", " + coordenadas[1] + ", " + coordenadas[2] + ")";
+    return "'" + coords + " 위치의 '" + nombre + "' 엔티티를 MCEdit 또는 직접 편집하여 삭제하십시오.";
+}
+
+@Override
+public String mensajeModDuplicadoFabric(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>모드 '" + nombreMod + 
+           "'이(가) 여러 버전 설치되어 있습니다.</b>";
+}
+
+@Override
+public String nombreProblemaModDuplicadoFabric() {
+    return "Fabric에서 중복된 모드";
+}
+
+@Override
+public String solucionEliminarModDuplicado(String rutaMod) {
+    return "중복된 모드 파일 삭제: " + rutaMod;
+}
+
+@Override
+public String mensajeModIncompatible(String primerMod, String segundoMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>모드 '" + primerMod + 
+           "'과(와) '" + segundoMod + "'은(는) 서로 호환되지 않습니다.</b>";
+}
+
+@Override
+public String nombreProblemaModIncompatibleFabric() {
+    return "Fabric에서 호환되지 않는 모드";
+}
+
+@Override
+public String solucionEliminarMod(String nombreMod) {
+    return "'" + nombreMod + "' 모드 삭제";
+}
+
+@Override
+public String mensajeModFatal(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>모드 '" + nombreMod + 
+           "'에 치명적인 오류가 있어 실행할 수 없습니다.</b>";
+}
+
+@Override
+public String nombreProblemaModFatal() {
+    return "치명적 오류를 가진 모드";
+}
+
+@Override
+public String mensajeModDependenciaPlural(List<String> dependencias) {
+    StringBuilder deps = new StringBuilder();
+    for (int i = 0; i < dependencias.size(); i++) {
+        if (i > 0) {
+            deps.append(", ");
+        }
+        deps.append("'").append(dependencias.get(i)).append("'");
+    }
+    return "<b style='color:#" + config.obtenerColorError() + "'>다음 모드들이 필요하지만 설치되지 않았습니다: " + deps.toString() + ".</b>";
+}
+
+@Override
+public String mensajeDependenciaModFaltante(String nombreMod, String dependencia, String version) {
+    if (version == null || version.isEmpty()) {
+        return "<b style='color:#" + config.obtenerColorError() + "'>" + nombreMod + 
+               "' 모드는 '" + dependencia + "' 모드 의존성이 필요합니다.</b>";
+    } else {
+        return "<b style='color:#" + config.obtenerColorError() + "'>" + nombreMod + 
+               "' 모드는 '" + dependencia + "' 모드의 버전 " + version + "이(가) 필요합니다.</b>";
+    }
+}
+
+@Override
+public String nombreProblemaDependenciaMod() {
+    return "부족한 모드 의존성";
+}
+
+@Override
+public String solucionInstalarMod(String nombreMod) {
+    return "'" + nombreMod + "' 모드를 설치하세요";
+}
+
+@Override
+public String solucionInstalarModConVersion(String nombreMod, String version) {
+    return "'" + nombreMod + "' 모드의 버전 " + version + "을(를) 설치하세요";
+}
+
+@Override
+public String mensajePluginTickingRegionalSingular(String nombrePlugin) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>" + nombrePlugin + 
+           "' 플러그인은 Folia의 지역 틱킹과 호환되지 않습니다.</b> ";
+}
+
+@Override
+public String mensajePluginTickingRegionalPlural(List<String> plugins) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("다음 플러그인들은 Folia의 지역 틱킹과 호환되지 않습니다: ");
+    
+    for (int i = 0; i < plugins.size(); i++) {
+        if (i > 0) {
+            sb.append(", ");
+        }
+        sb.append("'").append(plugins.get(i)).append("'");
+    }
+    
+    sb.append(".</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaPluginTickingRegional() {
+    return "지역 틱킹과 호환되지 않는 플러그인";
+}
+
+@Override
+public String solucionInstalarSoftwareSinTickingRegional(String software) {
+    return "지역 틱킹이 없는 버전을 설치하세요. 예: " + software;
+}
+
+@Override
+public String mensajeModFaltanteEnDatapackSingular(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>/" + nombreMod + 
+           "' 모드가 데이터팩에 없습니다.</b>";
+}
+
+@Override
+public String mensajeModFaltanteEnDatapackPlural(List<String> mods) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("데이터팩에서 다음 모드를 찾을 수 없습니다: ");
+    
+    for (int i = 0; i < mods.size(); i++) {
+        if (i > 0) {
+            if (i == mods.size() - 1) {
+                sb.append(" 및 ");
+            } else {
+                sb.append(", ");
+            }
+        }
+        sb.append("'").append(mods.get(i)).append("'");
+    }
+    
+    sb.append(".</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaModFaltanteEnDatapack() {
+    return "데이터팩에 모드가 없음";
+}
+
+
+@Override
+public String mensajeModExcepcionSingular(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>" + nombreMod + " 모드에서 오류 발생</b>";
+}
+
+@Override
+public String mensajeModExcepcionPlural(List<String> mods) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("다음 모드에서 오류가 발생했습니다: ");
+    
+    for (int i = 0; i < mods.size(); i++) {
+        if (i > 0) {
+            if (i == mods.size() - 1) {
+                sb.append(" 및 ");
+            } else {
+                sb.append(", ");
+            }
+        }
+        sb.append("'").append(mods.get(i)).append("'");
+    }
+    
+    sb.append(".</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaModExcepcion() {
+    return "Forge 모드에 예외 발생";
+}
+
+@Override
+public String solucionInstalarVersionDiferenteMod(String nombreMod) {
+    return "'" + nombreMod + "' 모드의 다른 버전 설치";
+}
+
+@Override
+public String mensajeModIncompatibleConMinecraftSingular(String nombreMod, String versionMC) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>" + nombreMod + 
+           "' 모드는 마인크래프트 " + versionMC + "과(와) 호환되지 않습니다.</b>";
+}
+
+@Override
+public String mensajeModIncompatibleConMinecraftPlural(List<String> mods, List<String> versionesMC) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("다음 모드는 해당 마인크래프트 버전과 호환되지 않음: ");
+    
+    for (int i = 0; i < mods.size(); i++) {
+        if (i > 0) {
+            sb.append(", ");
+        }
+        sb.append("'").append(mods.get(i)).append("'");
+        sb.append(" (마인크래프트 ").append(versionesMC.get(i)).append(")");
+    }
+    
+    sb.append(".</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaModIncompatibleConMinecraft() {
+    return "마인크래프트와 호환되지 않는 모드";
+}
+
+@Override
+public String solucionInstalarVersionForge(String versionMC) {
+    return "Minecraft " + versionMC + "과(와) 호환되는 Forge 버전을 설치하십시오.";
+}
+
+@Override
+public String mensajeDependenciaModFaltante(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>" + nombreMod + " 모드가 없습니다. 세계 또는 플러그인 로드에 필요합니다.</b>";
+}
+
+@Override
+public String nombreProblemaDependenciaModFaltante() {
+    return "부족한 모드";
+}
+
+@Override
+public String mensajeWorldModFaltanteSingular(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>세계를 저장할 때 '" + nombreMod + 
+           "' 모드가 사용되었으나, 지금은 찾을 수 없습니다.</b>";
+}
+
+@Override
+public String mensajeWorldModFaltantePlural(List<String> mods) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("세계를 저장할 때 다음 모드들이 사용되었으나, 지금은 찾을 수 없습니다: ");
+    
+    for (int i = 0; i < mods.size(); i++) {
+        if (i > 0) {
+            if (i == mods.size() - 1) {
+                sb.append(" 및 ");
+            } else {
+                sb.append(", ");
+            }
+        }
+        sb.append("'").append(mods.get(i)).append("'");
+    }
+    
+    sb.append(".</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaWorldModFaltante() {
+    return "세계에서 부족한 모드";
+}
+
+@Override
+public String mensajeVersionModMundoSingular(String nombreMod, String versionEsperada, String versionActual) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>" + nombreMod + 
+           "' 모드가 버전 " + versionEsperada + "으로 저장되었으나 현재 실행 중인 버전은 " + versionActual + "입니다.</b>";
+}
+
+@Override
+public String mensajeVersionModMundoPlural(List<String> mods, List<String> versionesEsperadas, List<String> versionesActuales) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("다음 모드들은 저장된 세계와 버전이 맞지 않습니다: ");
+    
+    for (int i = 0; i < mods.size(); i++) {
+        if (i > 0) {
+            if (i == mods.size() - 1) {
+                sb.append(" 및 ");
+            } else {
+                sb.append(", ");
+            }
+        }
+        sb.append("'").append(mods.get(i)).append("'");
+        sb.append(" (저장됨: ").append(versionesEsperadas.get(i)).append(", 현재: ").append(versionesActuales.get(i)).append(")");
+    }
+    
+    sb.append(".</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaVersionModMundo() {
+    return "저장된 세계의 모드 버전 불일치";
+}
+
+@Override
+public String mensajeVersionDowngrade() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>더 최신 버전의 마인크래프트로 생성된 세계를 로드하려고 했습니다.</b>";
+}
+
+@Override
+public String nombreProblemaVersionDowngrade() {
+    return "더 최신 버전의 세계를 로드하려는 시도";
+}
+
+@Override
+public String solucionVersionDowngrade() {
+    return "더 최신 버전의 마인크래프트를 설치하세요.";
+}
+
+@Override
+public String solucionGenerarNuevoMundo() {
+    return "새로운 세계를 생성하세요.";
+}
+
+@Override
+public String mensajeDependenciaPluginFaltanteSingular(String nombrePlugin, String dependencia) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>" + nombrePlugin + 
+           "' 플러그인은 '" + dependencia + "' 플러그인 의존성이 필요합니다.</b>";
+}
+
+@Override
+public String mensajeDependenciaPluginFaltantePlural(List<String> plugins, List<String> dependencias) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("다음 플러그인들은 설치되지 않은 의존성들이 있습니다: ");
+    
+    for (int i = 0; i < plugins.size(); i++) {
+        if (i > 0) {
+            sb.append(", ");
+        }
+        sb.append("'").append(plugins.get(i)).append("' (").append(dependencias.get(i)).append(")");
+    }
+    
+    sb.append(".</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaDependenciaPluginFaltante() {
+    return "부족한 플러그인 의존성";
+}
+
+@Override
+public String mensajePluginIncompatibleSingular(String nombrePlugin) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>" + nombrePlugin + "' 플러그인은 서버의 현재 버전과 호환되지 않습니다.</b>";
+}
+
+@Override
+public String mensajePluginIncompatiblePlural(List<String> plugins) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("다음 플러그인들은 서버의 현재 버전과 호환되지 않습니다: ");
+    
+    for (int i = 0; i < plugins.size(); i++) {
+        if (i > 0) {
+            if (i == plugins.size() - 1) {
+                sb.append(" 및 ");
+            } else {
+                sb.append(", ");
+            }
+        }
+        sb.append("'").append(plugins.get(i)).append("'");
+    }
+    
+    sb.append(".</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaPluginIncompatible() {
+    return "플러그인이 PocketMine-MP와 호환되지 않음";
+}
+
+@Override
+public String mensajePluginEjecucionSingular(String nombrePlugin) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>" + nombrePlugin + " 플러그인 실행 도중 오류 발생</b>";
+}
+
+@Override
+public String mensajePluginEjecucionPlural(List<String> plugins) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("다음 플러그인들이 실행 중에 오류를 발생시켰습니다: ");
+    
+    for (int i = 0; i < plugins.size(); i++) {
+        if (i > 0) {
+            if (i == plugins.size() - 1) {
+                sb.append(" 및 ");
+            } else {
+                sb.append(", ");
+            }
+        }
+        sb.append("'").append(plugins.get(i)).append("'");
+    }
+    
+    sb.append(".</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaPluginEjecucion() {
+    return "실행 오류가 있는 플러그인";
+}
+
+@Override
+public String nombreLegacyRandomSourceMultiHilos() {
+    return "여러 스레드 사용하는 LegacyRandomSource";
+}
+
+@Override
+public String mensajeLegacyRandomSourceMultiHilos() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>여러 스레드가 LegacyRandomSource 클래스에 접근하고 있습니다. 'Unsafe World Random Access Detector' 또는 'C2ME' 모드로 자세한 정보를 확인할 수 있습니다.</b>";
 }
 
 

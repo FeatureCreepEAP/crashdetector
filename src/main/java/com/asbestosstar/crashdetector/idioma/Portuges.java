@@ -1,5 +1,7 @@
 package com.asbestosstar.crashdetector.idioma;
 
+import java.util.List;
+
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
 
@@ -1106,6 +1108,564 @@ public String solucionRegistrosMalMapeados() {
 public String nombre_de_registros_mal_mapeados() {
     return "registros incorretamente mapeados";
 }
+
+
+public String mensajeCierreAuthMe() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>O plugin 'AuthMe' falhou ao carregar e desligou o servidor.</b> ";
+}
+
+public String nombreProblemaCierreAuthMe() {
+    return "Problema de desligamento causado pelo AuthMe";
+}
+
+public String solucionCierreAuthMe() {
+    return "A regra 'stopServer' mudou para 'true'.";
+}
+
+public String solucionConfigurarPluginAuthMe() {
+    return "Configure o plugin AuthMe (plugins/AuthMe/config.yml)";
+}
+
+public String solucionInstalarVersionDiferenteAuthMe() {
+    return "Instale uma versão diferente do plugin 'AuthMe'";
+}
+
+public String solucionEliminarPluginAuthMe() {
+    return "Remover o plugin 'AuthMe'";
+}
+
+@Override
+public String mensajeProblemaCargaMultiverso(String nombreMundo) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>O mundo '" + nombreMundo + "' não pôde ser carregado pois contém erros e provavelmente está corrompido.</b> ";
+}
+
+@Override
+public String nombreProblemaCargaMultiverso() {
+    return "Problema ao carregar mundo do Multiverse";
+}
+
+@Override
+public String solucionRepararMundo(String nombreMundo) {
+    return "Repare o mundo '" + nombreMundo + "', por exemplo usando Minecraft Region Fixer ou MCEdit.";
+}
+
+@Override
+public String solucionEliminarCarpetaMundo(String nombreMundo) {
+    return "Exclua a pasta do mundo '" + nombreMundo + "'.";
+}
+
+
+@Override
+public String mensajeConfiguracionPermissionsEx() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>A configuração da extensão 'PermissionsEx' é inválida.</b> ";
+}
+
+@Override
+public String nombreProblemaConfiguracionPermissionsEx() {
+    return "Problema na configuração do PermissionsEx";
+}
+
+@Override
+public String solucionConfigurarPermissionsEx() {
+    return "Configure o plugin PermissionsEx (plugins/PermissionsEx/permissions.yml)";
+}
+
+@Override
+public String solucionEliminarPluginPermissionsEx() {
+    return "Remover o plugin 'PermissionsEx'";
+}
+
+@Override
+public String mensajeNombrePluginAmbiguo(String nombrePlugin, String primerPath, String segundoPath) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Há múltiplos arquivos de plugins com o nome '" + nombrePlugin + "': '" + primerPath + "' e '" + segundoPath + "'.</b> ";
+}
+
+@Override
+public String nombreProblemaNombrePluginAmbiguo() {
+    return "Problema com nome ambíguo de plugin";
+}
+
+@Override
+public String solucionEliminarPlugin(String nombrePlugin) {
+    return "Remover o plugin '" + nombrePlugin + "'";
+}
+
+@Override
+public String mensajeCargaChunk() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Ocorreu uma exceção ao carregar os chunks do mundo.</b> ";
+}
+
+@Override
+public String nombreProblemaCargaChunk() {
+    return "Exceção ao carregar chunks";
+}
+
+@Override
+public String solucionEliminarChunk() {
+    return "Remova o chunk problemático do mundo, por exemplo usando MCEdit ou excluindo o arquivo de região.";
+}
+
+@Override
+public String mensajeExcepcionComandoPlugin(String nombrePlugin, String comando) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>O plugin '" + nombrePlugin + "' não pode executar o comando '/" + comando + "'.</b> ";
+}
+
+@Override
+public String nombreProblemaExcepcionComandoPlugin() {
+    return "Exceção ao executar comando do plugin";
+}
+
+@Override
+public String solucionInstalarVersionDiferentePlugin(String nombrePlugin) {
+    return "Instale uma versão diferente do plugin '" + nombrePlugin + "'";
+}
+
+@Override
+public String mensajeDependenciaPluginUnica(String nombrePlugin, String dependencia) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>O plugin '" + nombrePlugin + 
+           "' requer a seguinte dependência: '" + dependencia + "'.</b> ";
+}
+
+@Override
+public String mensajeDependenciaPluginMultiples(String nombrePlugin, List<String> dependencias) {
+    StringBuilder deps = new StringBuilder();
+    for (int i = 0; i < dependencias.size(); i++) {
+        if (i > 0) deps.append(", ");
+        deps.append("'").append(dependencias.get(i)).append("'");
+    }
+    return "<b style='color:#" + config.obtenerColorError() + "'>O plugin '" + nombrePlugin + 
+           "' está faltando as seguintes dependências: " + deps.toString() + ".</b> ";
+}
+
+@Override
+public String nombreProblemaDependenciaPlugin() {
+    return "Dependência de plugin ausente";
+}
+
+@Override
+public String solucionInstalarPlugin(String nombrePlugin) {
+    return "Instale o plugin '" + nombrePlugin + "'";
+}
+
+@Override
+public String mensajeVersionAPIIncompatible(String nombrePlugin, String versionAPI) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>O plugin '" + nombrePlugin + 
+           "' requer a versão da API '" + versionAPI + "' que não é compatível com o servidor atual.</b> ";
+}
+
+@Override
+public String nombreProblemaVersionAPIIncompatible() {
+    return "Versão de API incompatível";
+}
+
+@Override
+public String solucionInstalarVersionServidor(String version) {
+    return "Instale a versão '" + version + "' do software do seu servidor.";
+}
+
+@Override
+public String mensajeMundoDuplicado(String nombreMundo) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>O mundo '" + nombreMundo + 
+           "' é uma duplicata de outro mundo e não pode ser carregado.</b> ";
+}
+
+@Override
+public String nombreProblemaMundoDuplicado() {
+    return "Mundo Duplicado";
+}
+
+@Override
+public String solucionEliminarUID(String nombreMundo) {
+    return "Exclua o arquivo 'uid.dat' do mundo '" + nombreMundo + "'";
+}
+
+@Override
+public String solucionEliminarMundo(String nombreMundo) {
+    return "Exclua a pasta do mundo '" + nombreMundo + "'";
+}
+
+@Override
+public String mensajeTickingEntidadBloque(String nombre, String tipo, int[] coordenadas) {
+    String coords = "(" + coordenadas[0] + ", " + coordenadas[1] + ", " + coordenadas[2] + ")";
+    return "<b style='color:#" + config.obtenerColorError() + "'>A entidade de bloco '" + nombre + 
+           "' do tipo '" + tipo + "' na localização " + coords + " está causando erros no ticking.</b> ";
+}
+
+@Override
+public String nombreProblemaTickingEntidadBloque() {
+    return "Entidade de Bloco Problemática";
+}
+
+@Override
+public String solucionEliminarEntidadBloque(String nombre, int[] coordenadas) {
+    String coords = "(" + coordenadas[0] + ", " + coordenadas[1] + ", " + coordenadas[2] + ")";
+    return "Remova a entidade '" + nombre + "' na localização " + coords + " usando MCEdit ou editando o mundo diretamente.";
+}
+
+@Override
+public String mensajeModDuplicadoFabric(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>O mod '" + nombreMod + "' tem múltiplas versões instaladas.</b> ";
+}
+
+@Override
+public String nombreProblemaModDuplicadoFabric() {
+    return "Mod Duplicado no Fabric";
+}
+
+@Override
+public String solucionEliminarModDuplicado(String rutaMod) {
+    return "Exclua o arquivo duplicado do mod: " + rutaMod;
+}
+
+@Override
+public String mensajeModIncompatible(String primerMod, String segundoMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Os mods '" + primerMod + 
+           "' e '" + segundoMod + "' são incompatíveis entre si.</b> ";
+}
+
+@Override
+public String nombreProblemaModIncompatibleFabric() {
+    return "Mod Incompatível no Fabric";
+}
+
+@Override
+public String solucionEliminarMod(String nombreMod) {
+    return "Remova o mod '" + nombreMod + "'";
+}
+
+@Override
+public String mensajeModFatal(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>O mod '" + nombreMod + "' tem um erro crítico e não pode ser executado.</b> ";
+}
+
+@Override
+public String nombreProblemaModFatal() {
+    return "Mod com Erro Crítico";
+}
+
+@Override
+public String mensajeModDependenciaPlural(List<String> dependencias) {
+    StringBuilder deps = new StringBuilder();
+    for (int i = 0; i < dependencias.size(); i++) {
+        if (i > 0) {
+            deps.append(", ");
+        }
+        deps.append("'").append(dependencias.get(i)).append("'");
+    }
+    return "<b style='color:#" + config.obtenerColorError() + "'>Os seguintes mods são necessários mas não estão instalados: " + deps.toString() + ".</b>";
+}
+
+@Override
+public String mensajeDependenciaModFaltante(String nombreMod, String dependencia, String version) {
+    if (version == null || version.isEmpty()) {
+        return "<b style='color:#" + config.obtenerColorError() + "'>O mod '" + nombreMod + 
+               "' requer o mod '" + dependencia + "' como dependência.</b>";
+    } else {
+        return "<b style='color:#" + config.obtenerColorError() + "'>O mod '" + nombreMod + 
+               "' requer o mod '" + dependencia + "' na versão " + version + ".</b>";
+    }
+}
+
+@Override
+public String nombreProblemaDependenciaMod() {
+    return "Dependência de mod ausente";
+}
+
+@Override
+public String solucionInstalarMod(String nombreMod) {
+    return "Instale o mod '" + nombreMod + "'";
+}
+
+@Override
+public String solucionInstalarModConVersion(String nombreMod, String version) {
+    return "Instale o mod '" + nombreMod + "' com a versão " + version;
+}
+
+@Override
+public String mensajePluginTickingRegionalSingular(String nombrePlugin) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>O plugin '" + nombrePlugin + 
+           "' não é compatível com o ticking regional do Folia.</b> ";
+}
+
+@Override
+public String mensajePluginTickingRegionalPlural(List<String> plugins) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("Os seguintes plugins não são compatíveis com o ticking regional do Folia: ");
+    
+    for (int i = 0; i < plugins.size(); i++) {
+        if (i > 0) {
+            sb.append(", ");
+        }
+        sb.append("'").append(plugins.get(i)).append("'");
+    }
+    
+    sb.append(".</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaPluginTickingRegional() {
+    return "Plugin incompatível com Ticking Regional";
+}
+
+@Override
+public String solucionInstalarSoftwareSinTickingRegional(String software) {
+    return "Instale uma versão sem ticking regional, como " + software;
+}
+
+@Override
+public String mensajeModFaltanteEnDatapackSingular(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>O mod '" + nombreMod + 
+           "' está faltando no datapack.</b>";
+}
+
+@Override
+public String mensajeModFaltanteEnDatapackPlural(List<String> mods) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("Os seguintes mods estão faltando no datapack: ");
+    
+    for (int i = 0; i < mods.size(); i++) {
+        if (i > 0) {
+            if (i == mods.size() - 1) {
+                sb.append(" e ");
+            } else {
+                sb.append(", ");
+            }
+        }
+        sb.append("'").append(mods.get(i)).append("'");
+    }
+    
+    sb.append(".</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaModFaltanteEnDatapack() {
+    return "Mod ausente no datapack";
+}
+
+@Override
+public String mensajeModExcepcionSingular(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>O mod '" + nombreMod + "' causou um erro.</b>";
+}
+
+@Override
+public String mensajeModExcepcionPlural(List<String> mods) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("Os seguintes mods causaram erros: ");
+    
+    for (int i = 0; i < mods.size(); i++) {
+        if (i > 0) {
+            if (i == mods.size() - 1) {
+                sb.append(" e ");
+            } else {
+                sb.append(", ");
+            }
+        }
+        sb.append("'").append(mods.get(i)).append("'");
+    }
+    
+    sb.append(".</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaModExcepcion() {
+    return "Mod do Forge com Exceção";
+}
+
+@Override
+public String solucionInstalarVersionDiferenteMod(String nombreMod) {
+    return "Instale uma versão diferente do mod '" + nombreMod + "'";
+}
+
+@Override
+public String mensajeModIncompatibleConMinecraftSingular(String nombreMod, String versionMC) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>O mod '" + nombreMod + 
+           "' não é compatível com a versão do Minecraft " + versionMC + ".</b>";
+}
+
+@Override
+public String mensajeModIncompatibleConMinecraftPlural(List<String> mods, List<String> versionesMC) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("Os seguintes mods não são compatíveis com as respectivas versões do Minecraft: ");
+    
+    for (int i = 0; i < mods.size(); i++) {
+        if (i > 0) {
+            sb.append(", ");
+        }
+        sb.append("'").append(mods.get(i)).append("'");
+        sb.append(" (Minecraft ").append(versionesMC.get(i)).append(")");
+    }
+    
+    sb.append(".</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaModIncompatibleConMinecraft() {
+    return "Mod incompatível com o Minecraft";
+}
+
+@Override
+public String solucionInstalarVersionForge(String versionMC) {
+    return "Instale uma versão do Forge compatível com o Minecraft " + versionMC;
+}
+
+@Override
+public String mensajeDependenciaModFaltante(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>O mod '" + nombreMod + "' está faltando e é necessário para carregar o mundo ou plugin.</b>";
+}
+
+@Override
+public String nombreProblemaDependenciaModFaltante() {
+    return "Mod ausente";
+}
+
+@Override
+public String mensajeWorldModFaltanteSingular(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>O mundo foi salvo com o mod '" + nombreMod + 
+           "' que parece estar ausente.</b>";
+}
+
+@Override
+public String mensajeWorldModFaltantePlural(List<String> mods) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("O mundo foi salvo com os seguintes mods que parecem estar ausentes: ");
+    
+    for (int i = 0; i < mods.size(); i++) {
+        if (i > 0) {
+            if (i == mods.size() - 1) {
+                sb.append(" e ");
+            } else {
+                sb.append(", ");
+            }
+        }
+        sb.append("'").append(mods.get(i)).append("'");
+    }
+    
+    sb.append(".</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaWorldModFaltante() {
+    return "Mod ausente no mundo";
+}
+
+@Override
+public String mensajeVersionModMundoSingular(String nombreMod, String versionEsperada, String versionActual) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>O mundo foi salvo com o mod '" + nombreMod + 
+           "' na versão " + versionEsperada + ", e agora está na versão " + versionActual + ".</b>";
+}
+
+@Override
+public String mensajeVersionModMundoPlural(List<String> mods, List<String> versionesEsperadas, List<String> versionesActuales) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("Os seguintes mods têm versões diferentes no mundo salvo: ");
+    
+    for (int i = 0; i < mods.size(); i++) {
+        if (i > 0) {
+            if (i == mods.size() - 1) {
+                sb.append(" e ");
+            } else {
+                sb.append(", ");
+            }
+        }
+        sb.append("'").append(mods.get(i)).append("'");
+        sb.append(" (Salvo: ").append(versionesEsperadas.get(i)).append(", Atual: ").append(versionesActuales.get(i)).append(")");
+    }
+    
+    sb.append(".</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaVersionModMundo() {
+    return "Incompatibilidade de versão do mod no mundo salvo";
+}
+
+@Override
+public String mensajeVersionDowngrade() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Você tentou carregar um mundo criado com uma versão mais nova do Minecraft.</b>";
+}
+
+@Override
+public String nombreProblemaVersionDowngrade() {
+    return "Tentativa de carregar mundo de versão superior";
+}
+
+@Override
+public String solucionVersionDowngrade() {
+    return "Instale uma versão mais recente do Minecraft.";
+}
+
+@Override
+public String solucionGenerarNuevoMundo() {
+    return "Gere um novo mundo.";
+}
+
+@Override
+public String mensajeDependenciaPluginFaltanteSingular(String nombrePlugin, String dependencia) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>O plugin '" + nombrePlugin + 
+           "' precisa do seguinte plugin como dependência: '" + dependencia + "'.</b>";
+}
+
+@Override
+public String mensajeDependenciaPluginFaltantePlural(List<String> plugins, List<String> dependencias) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("Os seguintes plugins precisam de dependências que não estão instaladas: ");
+    
+    for (int i = 0; i < plugins.size(); i++) {
+        if (i > 0) {
+            sb.append(", ");
+        }
+        sb.append("'").append(plugins.get(i)).append("' (").append(dependencias.get(i)).append(")");
+    }
+    
+    sb.append(".</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaDependenciaPluginFaltante() {
+    return "Plugin com dependência ausente";
+}
+
+@Override
+public String mensajePluginIncompatibleSingular(String nombrePlugin) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>O plugin '" + nombrePlugin + "' é incompatível com a versão atual do servidor.</b>";
+}
+
+@Override
+public String mensajePluginIncompatiblePlural(List<String> plugins) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("Os seguintes plugins são incompatíveis com a versão atual do servidor: ");
+    
+    for (int i = 0; i < plugins.size(); i++) {
+        if (i > 0) {
+            if (i == plugins.size() - 1) {
+                sb.append(" e ");
+            } else {
+                sb.append(", ");
+            }
+        }
+        sb.append("'").append(plugins.get(i)).append("'");
+    }
+    
+    sb.append(".</b>");
+    return sb.toString();
+}
+
+@Override public String nombreProblemaPluginIncompatible() { return "Plugin incompatível com PocketMine-MP"; } @Override public String mensajePluginEjecucionSingular(String nombrePlugin) { return "<b style='color:#" + config.obtenerColorError() + "'>O plugin '" + nombrePlugin + "' causou um erro durante a execução.</b>"; } @Override public String mensajePluginEjecucionPlural(List<String> plugins) { StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>"); sb.append("Os seguintes plugins causaram erros durante a execução: "); for (int i = 0; i < plugins.size(); i++) { if (i > 0) { if (i == plugins.size() - 1) { sb.append(" e "); } else { sb.append(", "); } } sb.append("'").append(plugins.get(i)).append("'"); } sb.append(".</b>"); return sb.toString(); } @Override public String nombreProblemaPluginEjecucion() { return "Plugin com erro de execução"; } @Override public String nombreLegacyRandomSourceMultiHilos() { return "LegacyRandomSource Multi Threads"; } @Override public String mensajeLegacyRandomSourceMultiHilos() { return "<b style='color:#" + config.obtenerColorError() + "'>Você tem problemas com múltiplas threads acessando a classe LegacyRandomSource. Obtenha mais informações usando o mod 'Unsafe World Random Access Detector' ou 'C2ME'.</b>"; }
+
+
+
+
+
+
+
+
 
 
 

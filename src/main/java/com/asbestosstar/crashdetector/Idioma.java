@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -525,6 +526,183 @@ public interface Idioma {
 	public String solucionRegistrosMalMapeados();
 
 	public String nombre_de_registros_mal_mapeados();
+
+	public String mensajeCierreAuthMe();
+
+	public String nombreProblemaCierreAuthMe();
+
+	public String solucionCierreAuthMe();
+
+	public String solucionConfigurarPluginAuthMe();
+
+	public String solucionInstalarVersionDiferenteAuthMe();
+
+	public String solucionEliminarPluginAuthMe();
+
+	public String mensajeProblemaCargaMultiverso(String nombreMundo);
+
+	public String nombreProblemaCargaMultiverso();
+
+	public String solucionRepararMundo(String nombreMundo);
+
+	public String solucionEliminarCarpetaMundo(String nombreMundo);
+
+	public String mensajeConfiguracionPermissionsEx();
+
+	public String nombreProblemaConfiguracionPermissionsEx();
+
+	public String solucionConfigurarPermissionsEx();
+
+	public String solucionEliminarPluginPermissionsEx();
+
+	public String mensajeNombrePluginAmbiguo(String nombrePlugin, String primerPath, String segundoPath);
+
+	public String nombreProblemaNombrePluginAmbiguo();
+
+	public String solucionEliminarPlugin(String segundoPath);
+
+	public String mensajeCargaChunk();
+
+	public String nombreProblemaCargaChunk();
+
+	public String solucionEliminarChunk();
+
+	public String mensajeExcepcionComandoPlugin(String nombrePlugin, String comando);
+
+	public String nombreProblemaExcepcionComandoPlugin();
+
+	public String solucionInstalarVersionDiferentePlugin(String nombrePlugin);
+
+	public String mensajeDependenciaPluginMultiples(String nombrePlugin, List<String> dependencias);
+
+	public String mensajeDependenciaPluginUnica(String nombrePlugin, String string);
+
+	public String nombreProblemaDependenciaPlugin();
+
+	public String solucionInstalarPlugin(String dependencia);
+
+	public String mensajeVersionAPIIncompatible(String nombrePlugin, String versionAPI);
+
+	public String nombreProblemaVersionAPIIncompatible();
+
+	public String solucionInstalarVersionServidor(String versionAPI);
+
+	public String mensajeMundoDuplicado(String nombreMundo);
+
+	public String nombreProblemaMundoDuplicado();
+
+	public String solucionEliminarUID(String nombreMundo);
+
+	public String solucionEliminarMundo(String nombreMundo);
+
+	public String mensajeTickingEntidadBloque(String nombreEntidad, String tipoEntidad, int[] coordenadas);
+
+	public String nombreProblemaTickingEntidadBloque();
+
+	public String solucionEliminarEntidadBloque(String nombreEntidad, int[] coordenadas);
+
+	public String mensajeModDuplicadoFabric(String nombreMod);
+
+	public String nombreProblemaModDuplicadoFabric();
+
+	public String solucionEliminarModDuplicado(String rutaMod);
+
+	public String mensajeModIncompatible(String primerMod, String segundoMod);
+
+	public String nombreProblemaModIncompatibleFabric();
+
+	public String solucionEliminarMod(String primerMod);
+
+	public String nombreProblemaModFatal();
+
+	public String mensajeModFatal(String nombreMod);
+
+	public String nombreProblemaDependenciaMod();
+
+	public String solucionInstalarModConVersion(String dep, String ver);
+
+	public String solucionInstalarMod(String dep);
+
+	public String mensajeModDependenciaPlural(List<String> dependencias);
+
+	public String mensajeDependenciaModFaltante(String string, String string2, String string3);
+
+	public String mensajePluginTickingRegionalPlural(List<String> nombresPlugins);
+
+	public String mensajePluginTickingRegionalSingular(String string);
+
+	public String nombreProblemaPluginTickingRegional();
+
+	public String solucionInstalarSoftwareSinTickingRegional(String string);
+
+	public String mensajeModFaltanteEnDatapackPlural(List<String> nombresMods);
+
+	public String mensajeModFaltanteEnDatapackSingular(String string);
+
+	public String nombreProblemaModFaltanteEnDatapack();
+
+	public String mensajeModExcepcionPlural(List<String> nombresMods);
+
+	public String mensajeModExcepcionSingular(String string);
+
+	public String nombreProblemaModExcepcion();
+
+	public String solucionInstalarVersionDiferenteMod(String mod);
+
+	public String mensajeModIncompatibleConMinecraftPlural(List<String> nombresMods, List<String> versionesMinecraft);
+
+	public String mensajeModIncompatibleConMinecraftSingular(String string, String string2);
+
+	public String nombreProblemaModIncompatibleConMinecraft();
+
+	public String solucionInstalarVersionForge(String versionMC);
+
+	public String mensajeDependenciaModFaltante(String nombreMod);
+
+	public String nombreProblemaDependenciaModFaltante();
+
+	public String mensajeWorldModFaltantePlural(List<String> nombresMods);
+
+	public String mensajeWorldModFaltanteSingular(String string);
+
+	public String nombreProblemaWorldModFaltante();
+
+	public String nombreProblemaVersionModMundo();
+
+	public String mensajeVersionModMundoPlural(List<String> nombresMods, List<String> versionesEsperadas,
+			List<String> versionesActuales);
+
+	public String mensajeVersionModMundoSingular(String string, String string2, String string3);
+
+	public String mensajeVersionDowngrade();
+
+	public String nombreProblemaVersionDowngrade();
+
+	public String solucionVersionDowngrade();
+
+	public String solucionGenerarNuevoMundo();
+
+	public String nombreProblemaDependenciaPluginFaltante();
+
+	public String mensajeDependenciaPluginFaltanteSingular(String string, String string2);
+
+	public String mensajeDependenciaPluginFaltantePlural(List<String> nombresPlugins, List<String> dependencias);
+
+	public String mensajePluginIncompatiblePlural(List<String> nombresPlugins);
+
+	public String mensajePluginIncompatibleSingular(String string);
+
+	public String nombreProblemaPluginIncompatible();
+
+	public String mensajePluginEjecucionPlural(List<String> nombresPlugins);
+
+	public String mensajePluginEjecucionSingular(String string);
+
+	public String nombreProblemaPluginEjecucion();
+
+	public String nombreLegacyRandomSourceMultiHilos();
+
+	public String mensajeLegacyRandomSourceMultiHilos();
 	
 	// public String advertenciaMalwareFalso();
 

@@ -1,5 +1,7 @@
 package com.asbestosstar.crashdetector.idioma;
 
+import java.util.List;
+
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
 
@@ -1104,6 +1106,615 @@ public String solucionRegistrosMalMapeados() {
 public String nombre_de_registros_mal_mapeados() {
     return "不一致なレコード";
 }
+
+public String mensajeCierreAuthMe() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>プラグイン 'AuthMe' のロードに失敗し、サーバーが終了しました。</b> ";
+}
+
+public String nombreProblemaCierreAuthMe() {
+    return "AuthMeによるシャットダウン問題";
+}
+
+public String solucionCierreAuthMe() {
+    return "'stopServer'ルールが'true'に変更されました。";
+}
+
+public String solucionConfigurarPluginAuthMe() {
+    return "プラグイン AuthMe を設定する (plugins/AuthMe/config.yml)";
+}
+
+public String solucionInstalarVersionDiferenteAuthMe() {
+    return "'AuthMe' プラグインの別のバージョンをインストールする";
+}
+
+public String solucionEliminarPluginAuthMe() {
+    return "プラグイン 'AuthMe' を削除する";
+}
+
+@Override
+public String mensajeProblemaCargaMultiverso(String nombreMundo) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>ワールド '" + nombreMundo + "' はエラーを含み、破損している可能性があるためロードできませんでした。</b> ";
+}
+
+@Override
+public String nombreProblemaCargaMultiverso() {
+    return "Multiverseワールド読み込みエラー";
+}
+
+@Override
+public String solucionRepararMundo(String nombreMundo) {
+    return "'" + nombreMundo + "' ワールドを修復してください。例として Minecraft Region Fixer や MCEdit を使用できます。";
+}
+
+@Override
+public String solucionEliminarCarpetaMundo(String nombreMundo) {
+    return "'" + nombreMundo + "' ワールドフォルダを削除してください。";
+}
+
+@Override
+public String mensajeConfiguracionPermissionsEx() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>拡張機能 'PermissionsEx' の設定が無効です。</b> ";
+}
+
+@Override
+public String nombreProblemaConfiguracionPermissionsEx() {
+    return "PermissionsEx 設定の問題";
+}
+
+@Override
+public String solucionConfigurarPermissionsEx() {
+    return "プラグイン PermissionsEx を設定する (plugins/PermissionsEx/permissions.yml)";
+}
+
+@Override
+public String solucionEliminarPluginPermissionsEx() {
+    return "プラグイン 'PermissionsEx' を削除する";
+}
+
+@Override
+public String mensajeNombrePluginAmbiguo(String nombrePlugin, String primerPath, String segundoPath) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>プラグイン名 '" + nombrePlugin + "' に該当するファイルが複数あります: '" + primerPath + "' と '" + segundoPath + "'。</b> ";
+}
+
+@Override
+public String nombreProblemaNombrePluginAmbiguo() {
+    return "プラグイン名の競合問題";
+}
+
+@Override
+public String solucionEliminarPlugin(String nombrePlugin) {
+    return "プラグイン '" + nombrePlugin + "' を削除してください。";
+}
+
+@Override
+public String mensajeCargaChunk() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>ワールドのチャンク読み込み中に例外が発生しました。</b> ";
+}
+
+@Override
+public String nombreProblemaCargaChunk() {
+    return "チャンク読み込みエラー";
+}
+
+@Override
+public String solucionEliminarChunk() {
+    return "問題のあるチャンクを削除してください。例として MCEdit を使うか、リージョンファイルを削除します。";
+}
+
+@Override
+public String mensajeExcepcionComandoPlugin(String nombrePlugin, String comando) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>プラグイン '" + nombrePlugin + "' はコマンド '/" + comando + "' を実行できません。</b> ";
+}
+
+@Override
+public String nombreProblemaExcepcionComandoPlugin() {
+    return "プラグインコマンド実行時の例外";
+}
+
+@Override
+public String solucionInstalarVersionDiferentePlugin(String nombrePlugin) {
+    return "'" + nombrePlugin + "' プラグインの別バージョンをインストールする";
+}
+
+@Override
+public String mensajeDependenciaPluginUnica(String nombrePlugin, String dependencia) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>プラグイン '" + nombrePlugin + 
+           "' は依存性 '" + dependencia + "' を必要とします。</b> ";
+}
+
+@Override
+public String mensajeDependenciaPluginMultiples(String nombrePlugin, List<String> dependencias) {
+    StringBuilder deps = new StringBuilder();
+    for (int i = 0; i < dependencias.size(); i++) {
+        if (i > 0) deps.append(", ");
+        deps.append("'").append(dependencias.get(i)).append("'");
+    }
+    return "<b style='color:#" + config.obtenerColorError() + "'>プラグイン '" + nombrePlugin + 
+           "' は次の依存性が不足しています: " + deps.toString() + "。</b> ";
+}
+
+@Override
+public String nombreProblemaDependenciaPlugin() {
+    return "不足しているプラグイン依存性";
+}
+
+@Override
+public String solucionInstalarPlugin(String nombrePlugin) {
+    return "'" + nombrePlugin + "' プラグインをインストールしてください。";
+}
+
+@Override
+public String mensajeVersionAPIIncompatible(String nombrePlugin, String versionAPI) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>プラグイン '" + nombrePlugin + 
+           "' は現在のサーバーと互換性のない API バージョン '" + versionAPI + "' を必要とします。</b> ";
+}
+
+@Override
+public String nombreProblemaVersionAPIIncompatible() {
+    return "API バージョンが互換性なし";
+}
+
+@Override
+public String solucionInstalarVersionServidor(String version) {
+    return "サーバーソフトウェアのバージョン '" + version + "' をインストールしてください。";
+}
+
+@Override
+public String mensajeMundoDuplicado(String nombreMundo) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>ワールド '" + nombreMundo + 
+           "' は他のワールドと重複しており、読み込めません。</b> ";
+}
+
+@Override
+public String nombreProblemaMundoDuplicado() {
+    return "重複するワールド";
+}
+
+@Override
+public String solucionEliminarUID(String nombreMundo) {
+    return "'" + nombreMundo + "' ワールド内の 'uid.dat' ファイルを削除してください。";
+}
+
+@Override
+public String solucionEliminarMundo(String nombreMundo) {
+    return "'" + nombreMundo + "' ワールドフォルダを削除してください。";
+}
+
+@Override
+public String mensajeTickingEntidadBloque(String nombre, String tipo, int[] coordenadas) {
+    String coords = "(" + coordenadas[0] + ", " + coordenadas[1] + ", " + coordenadas[2] + ")";
+    return "<b style='color:#" + config.obtenerColorError() + "'>座標 " + coords + " のブロックエンティティ '" + nombre + 
+           "'（タイプ: '" + tipo + "'）がティッキング中にエラーを引き起こしています。</b> ";
+}
+
+@Override
+public String nombreProblemaTickingEntidadBloque() {
+    return "問題のあるブロックエンティティ";
+}
+
+@Override
+public String solucionEliminarEntidadBloque(String nombre, int[] coordenadas) {
+    String coords = "(" + coordenadas[0] + ", " + coordenadas[1] + ", " + coordenadas[2] + ")";
+    return "MCEdit または直接編集で、座標 " + coords + " の '" + nombre + "' エンティティを削除してください。";
+}
+
+@Override
+public String mensajeModDuplicadoFabric(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>モッド '" + nombreMod + 
+           "' に複数のバージョンがインストールされています。</b>";
+}
+
+@Override
+public String nombreProblemaModDuplicadoFabric() {
+    return "Fabric 内の重複するモッド";
+}
+
+@Override
+public String solucionEliminarModDuplicado(String rutaMod) {
+    return "重複したモッドファイルを削除してください: " + rutaMod;
+}
+
+@Override
+public String mensajeModIncompatible(String primerMod, String segundoMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>モッド '" + primerMod + 
+           "' と '" + segundoMod + "' は互いに非互換です。</b>";
+}
+
+@Override
+public String nombreProblemaModIncompatibleFabric() {
+    return "Fabric 内の非互換モッド";
+}
+
+@Override
+public String solucionEliminarMod(String nombreMod) {
+    return "'" + nombreMod + "' モッドを削除してください";
+}
+
+@Override
+public String mensajeModFatal(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>モッド '" + nombreMod + "' に重大なエラーが発生し、実行できません。</b> ";
+}
+
+@Override
+public String nombreProblemaModFatal() {
+    return "重大なエラーを含むモッド";
+}
+
+@Override
+public String mensajeModDependenciaPlural(List<String> dependencias) {
+    StringBuilder deps = new StringBuilder();
+    for (int i = 0; i < dependencias.size(); i++) {
+        if (i > 0) {
+            deps.append(", ");
+        }
+        deps.append("'").append(dependencias.get(i)).append("'");
+    }
+    return "<b style='color:#" + config.obtenerColorError() + "'>次のモッドが必要ですがインストールされていません: " + deps.toString() + "。</b>";
+}
+
+@Override
+public String mensajeDependenciaModFaltante(String nombreMod, String dependencia, String version) {
+    if (version == null || version.isEmpty()) {
+        return "<b style='color:#" + config.obtenerColorError() + "'>モッド '" + nombreMod + 
+               "' は '" + dependencia + "' モッドの依存があります。</b>";
+    } else {
+        return "<b style='color:#" + config.obtenerColorError() + "'>モッド '" + nombreMod + 
+               "' は '" + dependencia + "' モッドのバージョン " + version + " を必要とします。</b>";
+    }
+}
+
+@Override
+public String nombreProblemaDependenciaMod() {
+    return "不足しているモッドの依存関係";
+}
+
+@Override
+public String solucionInstalarMod(String nombreMod) {
+    return "'" + nombreMod + "' モッドをインストールしてください";
+}
+
+@Override
+public String solucionInstalarModConVersion(String nombreMod, String version) {
+    return "'" + nombreMod + "' モッドのバージョン " + version + " をインストールしてください";
+}
+
+
+@Override
+public String mensajePluginTickingRegionalSingular(String nombrePlugin) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>プラグイン '" + nombrePlugin + 
+           "' は Folia のリージョナルティッキングと非互換です。</b> ";
+}
+
+@Override
+public String mensajePluginTickingRegionalPlural(List<String> plugins) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("以下のプラグインは Folia のリージョナルティッキングと非互換です: ");
+    
+    for (int i = 0; i < plugins.size(); i++) {
+        if (i > 0) {
+            sb.append(", ");
+        }
+        sb.append("'").append(plugins.get(i)).append("'");
+    }
+    
+    sb.append("。</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaPluginTickingRegional() {
+    return "リージョナルティッキング非対応プラグイン";
+}
+
+@Override
+public String solucionInstalarSoftwareSinTickingRegional(String software) {
+    return "リージョナルティッキングなしのソフトウェアをインストールしてください。例: " + software;
+}
+
+@Override
+public String mensajeModFaltanteEnDatapackSingular(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>'" + nombreMod + 
+           "' モッドがデータパックにありません。</b>";
+}
+
+@Override
+public String mensajeModFaltanteEnDatapackPlural(List<String> mods) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("次のモッドがデータパックにありません: ");
+    
+    for (int i = 0; i < mods.size(); i++) {
+        if (i > 0) {
+            if (i == mods.size() - 1) {
+                sb.append(" および ");
+            } else {
+                sb.append(", ");
+            }
+        }
+        sb.append("'").append(mods.get(i)).append("'");
+    }
+    
+    sb.append("。</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaModFaltanteEnDatapack() {
+    return "データパック内の不足しているモッド";
+}
+
+
+@Override
+public String mensajeModExcepcionSingular(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>" + nombreMod + " モッドがエラーを発生させました。</b>";
+}
+
+@Override
+public String mensajeModExcepcionPlural(List<String> mods) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("以下のモッドがエラーを発生させました：");
+    
+    for (int i = 0; i < mods.size(); i++) {
+        if (i > 0) {
+            if (i == mods.size() - 1) {
+                sb.append(" および ");
+            } else {
+                sb.append(", ");
+            }
+        }
+        sb.append("'").append(mods.get(i)).append("'");
+    }
+    
+    sb.append("。</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaModExcepcion() {
+    return "Forge モッドの例外";
+}
+
+@Override
+public String solucionInstalarVersionDiferenteMod(String nombreMod) {
+    return "'" + nombreMod + "' モッドの別のバージョンをインストールしてください";
+}
+
+@Override
+public String mensajeModIncompatibleConMinecraftSingular(String nombreMod, String versionMC) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>" + nombreMod + 
+           "' モッドは Minecraft " + versionMC + " と非互換です。</b>";
+}
+
+@Override
+public String mensajeModIncompatibleConMinecraftPlural(List<String> mods, List<String> versionesMC) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("以下のモッドは対応する Minecraft バージョンと非互換です：");
+    
+    for (int i = 0; i < mods.size(); i++) {
+        if (i > 0) {
+            sb.append(", ");
+        }
+        sb.append("'").append(mods.get(i)).append("'");
+        sb.append("（Minecraft ").append(versionesMC.get(i)).append("）");
+    }
+    
+    sb.append("。</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaModIncompatibleConMinecraft() {
+    return "Minecraft と非互換なモッド";
+}
+
+@Override
+public String solucionInstalarVersionForge(String versionMC) {
+    return "Minecraft " + versionMC + " 対応の Forge をインストールしてください";
+}
+
+@Override
+public String mensajeDependenciaModFaltante(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>モッド '" + nombreMod + "' が見つかりません。世界やプラグインのロードに必要です。</b>";
+}
+
+@Override
+public String nombreProblemaDependenciaModFaltante() {
+    return "不足しているモッド";
+}
+
+@Override
+public String mensajeWorldModFaltanteSingular(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>この世界は '" + nombreMod + 
+           "' モッドを使用して保存されていますが、現在見つかりません。</b>";
+}
+
+@Override
+public String mensajeWorldModFaltantePlural(List<String> mods) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("この世界は以下のモッドで保存されていますが、それらが見つかりません: ");
+    
+    for (int i = 0; i < mods.size(); i++) {
+        if (i > 0) {
+            if (i == mods.size() - 1) {
+                sb.append(" および ");
+            } else {
+                sb.append(", ");
+            }
+        }
+        sb.append("'").append(mods.get(i)).append("'");
+    }
+    
+    sb.append("。</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaWorldModFaltante() {
+    return "世界内の不足モッド";
+}
+
+@Override
+public String mensajeVersionModMundoSingular(String nombreMod, String versionEsperada, String versionActual) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>この世界は '" + nombreMod + 
+           "' モッドのバージョン " + versionEsperada + " で保存されていますが、現在使われているのはバージョン " + versionActual + " です。</b>";
+}
+
+@Override
+public String mensajeVersionModMundoPlural(List<String> mods, List<String> versionesEsperadas, List<String> versionesActuales) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("保存された世界に含まれるモッドのバージョンが一致しません: ");
+    
+    for (int i = 0; i < mods.size(); i++) {
+        if (i > 0) {
+            if (i == mods.size() - 1) {
+                sb.append(" および ");
+            } else {
+                sb.append(", ");
+            }
+        }
+        sb.append("'").append(mods.get(i)).append("'");
+        sb.append("（保存時: ").append(versionesEsperadas.get(i)).append(", 現行: ").append(versionesActuales.get(i)).append("）");
+    }
+    
+    sb.append("。</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaVersionModMundo() {
+    return "保存された世界のモッドバージョン不一致";
+}
+
+@Override
+public String mensajeVersionDowngrade() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>あなたはより新しいバージョンの Minecraft で作成された世界を読み込もうとしています。</b>";
+}
+
+@Override
+public String nombreProblemaVersionDowngrade() {
+    return "新しいバージョンの世界をロードしようとした";
+}
+
+@Override
+public String solucionVersionDowngrade() {
+    return "最新バージョンの Minecraft をインストールしてください。";
+}
+
+@Override
+public String solucionGenerarNuevoMundo() {
+    return "新しい世界を生成してください。";
+}
+
+@Override
+public String mensajeDependenciaPluginFaltanteSingular(String nombrePlugin, String dependencia) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>プラグイン '" + nombrePlugin + 
+           "' は以下の依存があります：'" + dependencia + "'。</b>";
+}
+
+@Override
+public String mensajeDependenciaPluginFaltantePlural(List<String> plugins, List<String> dependencias) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("以下のプラグインは未インストールの依存があります：");
+    
+    for (int i = 0; i < plugins.size(); i++) {
+        if (i > 0) {
+            sb.append(", ");
+        }
+        sb.append("'").append(plugins.get(i)).append("'（").append(dependencias.get(i)).append("）");
+    }
+    
+    sb.append("。</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaDependenciaPluginFaltante() {
+    return "不足しているプラグイン依存性";
+}
+
+@Override
+public String mensajePluginIncompatibleSingular(String nombrePlugin) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>プラグイン '" + nombrePlugin + "' はサーバーの現在のバージョンと非互換です。</b>";
+}
+
+@Override
+public String mensajePluginIncompatiblePlural(List<String> plugins) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("以下のプラグインはサーバーの現在のバージョンと非互換です：");
+    
+    for (int i = 0; i < plugins.size(); i++) {
+        if (i > 0) {
+            if (i == plugins.size() - 1) {
+                sb.append(" および ");
+            } else {
+                sb.append("、");
+            }
+        }
+        sb.append("'").append(plugins.get(i)).append("'");
+    }
+    
+    sb.append("。</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaPluginIncompatible() {
+    return "PocketMine-MP と非互換なプラグイン";
+}
+
+@Override
+public String mensajePluginEjecucionSingular(String nombrePlugin) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>プラグイン '" + nombrePlugin + "' が実行中にエラーを発生させました。</b>";
+}
+
+@Override
+public String mensajePluginEjecucionPlural(List<String> plugins) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("以下のプラグインが実行中にエラーを発生させました: ");
+    
+    for (int i = 0; i < plugins.size(); i++) {
+        if (i > 0) {
+            if (i == plugins.size() - 1) {
+                sb.append(" および ");
+            } else {
+                sb.append(", ");
+            }
+        }
+        sb.append("'").append(plugins.get(i)).append("'");
+    }
+    
+    sb.append("。</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaPluginEjecucion() {
+    return "実行エラーのあるプラグイン";
+}
+
+@Override
+public String nombreLegacyRandomSourceMultiHilos() {
+    return "マルチスレッド LegacyRandomSource";
+}
+
+@Override
+public String mensajeLegacyRandomSourceMultiHilos() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>複数のスレッドが LegacyRandomSource クラスにアクセスしています。詳細は 'Unsafe World Random Access Detector' または 'C2ME' モッドで確認できます。</b>";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

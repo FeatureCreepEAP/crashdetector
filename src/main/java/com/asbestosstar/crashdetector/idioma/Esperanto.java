@@ -1,5 +1,7 @@
 package com.asbestosstar.crashdetector.idioma;
 
+import java.util.List;
+
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
 
@@ -1112,6 +1114,609 @@ public String solucionRegistrosMalMapeados() {
 public String nombre_de_registros_mal_mapeados() {
     return "malbone mapitaj registriĝoj";
 }
+
+
+public String mensajeCierreAuthMe() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>La kromprogramo 'AuthMe' ne sukcesis ŝargi kaj haltigis la servilon.</b> ";
+}
+
+public String nombreProblemaCierreAuthMe() {
+    return "Problemo pri haltigo pro AuthMe";
+}
+
+public String solucionCierreAuthMe() {
+    return "La regulo 'stopServer' ŝanĝis al 'true'.";
+}
+
+public String solucionConfigurarPluginAuthMe() {
+    return "Agordu la kromprogramon AuthMe (plugins/AuthMe/config.yml)";
+}
+
+public String solucionInstalarVersionDiferenteAuthMe() {
+    return "Instalu alian version de la kromprogramo 'AuthMe'";
+}
+
+public String solucionEliminarPluginAuthMe() {
+    return "Forigu la kromprogramon 'AuthMe'";
+}
+
+@Override
+public String mensajeProblemaCargaMultiverso(String nombreMundo) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>La mondo '" + nombreMundo + "' ne povis ŝargi ĉar ĝi enhavas erarojn kaj verŝajne estas difektita.</b> ";
+}
+
+@Override
+public String nombreProblemaCargaMultiverso() {
+    return "Problemeco pri ŝarĝo de Multiverse-mondo";
+}
+
+@Override
+public String solucionRepararMundo(String nombreMundo) {
+    return "Riparu la mondo '" + nombreMundo + "', ekzemple per Minecraft Region Fixer aŭ MCEdit.";
+}
+
+@Override
+public String solucionEliminarCarpetaMundo(String nombreMundo) {
+    return "Forigu la dosierujon de la mondo '" + nombreMundo + "'.";
+}
+
+@Override
+public String mensajeConfiguracionPermissionsEx() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>La agordo de la kromprogramo 'PermissionsEx' estas nesprava.</b> ";
+}
+
+@Override
+public String nombreProblemaConfiguracionPermissionsEx() {
+    return "Agordoproblemo de PermissionsEx";
+}
+
+@Override
+public String solucionConfigurarPermissionsEx() {
+    return "Agordu la kromprogramon PermissionsEx (plugins/PermissionsEx/permissions.yml)";
+}
+
+@Override
+public String solucionEliminarPluginPermissionsEx() {
+    return "Forigu la kromprogramon 'PermissionsEx'";
+}
+
+@Override
+public String mensajeNombrePluginAmbiguo(String nombrePlugin, String primerPath, String segundoPath) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Estas pluraj kromprogramdosieroj kun la nomo '" + nombrePlugin + "': '" + primerPath + "' kaj '" + segundoPath + "'.</b> ";
+}
+
+@Override
+public String nombreProblemaNombrePluginAmbiguo() {
+    return "Nepreciza kromprogramnomo";
+}
+
+@Override
+public String solucionEliminarPlugin(String nombrePlugin) {
+    return "Forigu la kromprogramon '" + nombrePlugin + "'";
+}
+
+@Override
+public String mensajeCargaChunk() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Okazis eraro dum la mondo ŝargis la chunk-ojn.</b> ";
+}
+
+@Override
+public String nombreProblemaCargaChunk() {
+    return "Eraro dum ŝarĝado de chunk-oj";
+}
+
+@Override
+public String solucionEliminarChunk() {
+    return "Forigu la probleman chunk-on de la mondo, ekzemple per MCEdit aŭ forigante la regionan dosieron.";
+}
+
+
+@Override
+public String mensajeExcepcionComandoPlugin(String nombrePlugin, String comando) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>La kromprogramo '" + nombrePlugin + "' ne povas plenumi la komandon '/" + comando + "'.</b> ";
+}
+
+@Override
+public String nombreProblemaExcepcionComandoPlugin() {
+    return "Eraro dum plenumo de kromprogramkomando";
+}
+
+@Override
+public String solucionInstalarVersionDiferentePlugin(String nombrePlugin) {
+    return "Instalu diferenan version de la kromprogramo '" + nombrePlugin + "'";
+}
+
+@Override
+public String mensajeDependenciaPluginUnica(String nombrePlugin, String dependencia) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>La kromprogramo '" + nombrePlugin + 
+           "' bezonas la dependecon '" + dependencia + "'.</b> ";
+}
+
+@Override
+public String mensajeDependenciaPluginMultiples(String nombrePlugin, List<String> dependencias) {
+    StringBuilder deps = new StringBuilder();
+    for (int i = 0; i < dependencias.size(); i++) {
+        if (i > 0) deps.append(", ");
+        deps.append("'").append(dependencias.get(i)).append("'");
+    }
+    return "<b style='color:#" + config.obtenerColorError() + "'>La kromprogramo '" + nombrePlugin + 
+           "' mankas jenajn dependecojn: " + deps.toString() + ".</b> ";
+}
+
+@Override
+public String nombreProblemaDependenciaPlugin() {
+    return "Mankanta kromprogramdependeco";
+}
+
+@Override
+public String solucionInstalarPlugin(String nombrePlugin) {
+    return "Instalu la kromprogramon '" + nombrePlugin + "'";
+}
+
+@Override
+public String mensajeVersionAPIIncompatible(String nombrePlugin, String versionAPI) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>La kromprogramo '" + nombrePlugin + 
+           "' postulas API-version '" + versionAPI + "' kiu ne estas kongrua kun la nuna servilo.</b> ";
+}
+
+@Override
+public String nombreProblemaVersionAPIIncompatible() {
+    return "Nekongrua API-versio";
+}
+
+@Override
+public String solucionInstalarVersionServidor(String version) {
+    return "Instalu version '" + version + "' de via servila programaro.";
+}
+
+@Override
+public String mensajeMundoDuplicado(String nombreMundo) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>La mondo '" + nombreMundo + 
+           "' estas duplikato de alia mondo kaj ne povas esti ŝargita.</b> ";
+}
+
+@Override
+public String nombreProblemaMundoDuplicado() {
+    return "Duplikata mondo";
+}
+
+@Override
+public String solucionEliminarUID(String nombreMundo) {
+    return "Forigu la dosieron 'uid.dat' en la mondo '" + nombreMundo + "'";
+}
+
+@Override
+public String solucionEliminarMundo(String nombreMundo) {
+    return "Forigu la mondodossieron '" + nombreMundo + "'";
+}
+
+@Override
+public String mensajeTickingEntidadBloque(String nombre, String tipo, int[] coordenadas) {
+    String coords = "(" + coordenadas[0] + ", " + coordenadas[1] + ", " + coordenadas[2] + ")";
+    return "<b style='color:#" + config.obtenerColorError() + "'>La bloka ento '" + nombre + 
+           "' de tipo '" + tipo + "' je la koordinatoj " + coords + " kaŭzas erarojn dum takto.</b> ";
+}
+
+@Override
+public String nombreProblemaTickingEntidadBloque() {
+    return "Erara bloka ento";
+}
+
+@Override
+public String solucionEliminarEntidadBloque(String nombre, int[] coordenadas) {
+    String coords = "(" + coordenadas[0] + ", " + coordenadas[1] + ", " + coordenadas[2] + ")";
+    return "Forigu la enton '" + nombre + "' je la koordinatoj " + coords + " per MCEdit aŭ rekte en la mondo.";
+}
+
+@Override
+public String mensajeModDuplicadoFabric(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>La kromprogramo '" + nombreMod + "' havas plurajn versiojn instalitajn.</b> ";
+}
+
+@Override
+public String nombreProblemaModDuplicadoFabric() {
+    return "Duplikita kromprogramo en Fabric";
+}
+
+@Override
+public String solucionEliminarModDuplicado(String rutaMod) {
+    return "Forigu la duplikitan kromprogramdosieron: " + rutaMod;
+}
+
+@Override
+public String mensajeModIncompatible(String primerMod, String segundoMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>La kromprogramoj '" + primerMod + 
+           "' kaj '" + segundoMod + "' ne estas reciproke kongruaj.</b> ";
+}
+
+@Override
+public String nombreProblemaModIncompatibleFabric() {
+    return "Nekongrua kromprogramo en Fabric";
+}
+
+@Override
+public String solucionEliminarMod(String nombreMod) {
+    return "Forigu la kromprogramon '" + nombreMod + "'";
+}
+
+@Override
+public String mensajeModFatal(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>La kromprogramo '" + nombreMod + "' havas gravan eraron kaj ne povas ruli.</b> ";
+}
+
+@Override
+public String nombreProblemaModFatal() {
+    return "Kromprogramo kun grava eraro";
+}
+
+@Override
+public String mensajeModDependenciaPlural(List<String> dependencias) {
+    StringBuilder deps = new StringBuilder();
+    for (int i = 0; i < dependencias.size(); i++) {
+        if (i > 0) {
+            deps.append(", ");
+        }
+        deps.append("'").append(dependencias.get(i)).append("'");
+    }
+    return "<b style='color:#" + config.obtenerColorError() + "'>Jenaj kromprogramoj estas bezonataj sed mankas: " + deps.toString() + ".</b>";
+}
+
+@Override
+public String mensajeDependenciaModFaltante(String nombreMod, String dependencia, String version) {
+    if (version == null || version.isEmpty()) {
+        return "<b style='color:#" + config.obtenerColorError() + "'>La kromprogramo '" + nombreMod + 
+               "' postulas la kromprogramon '" + dependencia + "' kiel dependecon.</b>";
+    } else {
+        return "<b style='color:#" + config.obtenerColorError() + "'>La kromprogramo '" + nombreMod + 
+               "' postulas la kromprogramon '" + dependencia + "' en versio " + version + ".</b>";
+    }
+}
+
+@Override
+public String nombreProblemaDependenciaMod() {
+    return "Mankanta kromprogramdependeco";
+}
+
+@Override
+public String solucionInstalarMod(String nombreMod) {
+    return "Instalu la kromprogramon '" + nombreMod + "'";
+}
+
+@Override
+public String solucionInstalarModConVersion(String nombreMod, String version) {
+    return "Instalu la kromprogramon '" + nombreMod + "' kun versio " + version;
+}
+
+
+@Override
+public String mensajePluginTickingRegionalSingular(String nombrePlugin) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>La kromprogramo '" + nombrePlugin + 
+           "' ne kongruas kun la regiona takto de Folia.</b> ";
+}
+
+@Override
+public String mensajePluginTickingRegionalPlural(List<String> plugins) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("Jenaj kromprogramoj ne kongruas kun la regiona takto de Folia: ");
+    
+    for (int i = 0; i < plugins.size(); i++) {
+        if (i > 0) {
+            sb.append(", ");
+        }
+        sb.append("'").append(plugins.get(i)).append("'");
+    }
+    
+    sb.append(".</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaPluginTickingRegional() {
+    return "Kromprogramo nekongrua kun regiona takto";
+}
+
+@Override
+public String solucionInstalarSoftwareSinTickingRegional(String software) {
+    return "Instalu version sen regiona takto, ekzemple " + software;
+}
+
+@Override
+public String mensajeModFaltanteEnDatapackSingular(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Manko de mod '" + nombreMod + 
+           "' en la datumasko.</b>";
+}
+
+@Override
+public String mensajeModFaltanteEnDatapackPlural(List<String> mods) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("Jenaj modoj mankas en la datumasko: ");
+    
+    for (int i = 0; i < mods.size(); i++) {
+        if (i > 0) {
+            if (i == mods.size() - 1) {
+                sb.append(" kaj ");
+            } else {
+                sb.append(", ");
+            }
+        }
+        sb.append("'").append(mods.get(i)).append("'");
+    }
+    
+    sb.append(".</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaModFaltanteEnDatapack() {
+    return "Modo mankanta en datumasko";
+}
+
+@Override
+public String mensajeModExcepcionSingular(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>La kromprogramo '" + nombreMod + "' kaŭzis eraron.</b>";
+}
+
+@Override
+public String mensajeModExcepcionPlural(List<String> mods) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("Jenaj kromprogramoj kaŭzis erarojn: ");
+    
+    for (int i = 0; i < mods.size(); i++) {
+        if (i > 0) {
+            if (i == mods.size() - 1) {
+                sb.append(" kaj ");
+            } else {
+                sb.append(", ");
+            }
+        }
+        sb.append("'").append(mods.get(i)).append("'");
+    }
+    
+    sb.append(".</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaModExcepcion() {
+    return "Forge-kromprogramo kun Eraro";
+}
+
+@Override
+public String solucionInstalarVersionDiferenteMod(String nombreMod) {
+    return "Instalu alian version de la kromprogramo '" + nombreMod + "'";
+}
+
+@Override
+public String mensajeModIncompatibleConMinecraftSingular(String nombreMod, String versionMC) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>La kromprogramo '" + nombreMod + 
+           "' ne estas kongrua kun Minecraft versio " + versionMC + ".</b>";
+}
+
+@Override
+public String mensajeModIncompatibleConMinecraftPlural(List<String> mods, List<String> versionesMC) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("Jenaj kromprogramoj ne estas kongruaj kun iliaj Minecraft-versioj: ");
+    
+    for (int i = 0; i < mods.size(); i++) {
+        if (i > 0) {
+            sb.append(", ");
+        }
+        sb.append("'").append(mods.get(i)).append("'");
+        sb.append(" (Minecraft ").append(versionesMC.get(i)).append(")");
+    }
+    
+    sb.append(".</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaModIncompatibleConMinecraft() {
+    return "Ne kongrua kromprogramo kun Minecraft";
+}
+
+@Override
+public String solucionInstalarVersionForge(String versionMC) {
+    return "Instalu Forge-version kongruan kun Minecraft " + versionMC;
+}
+
+@Override
+public String mensajeDependenciaModFaltante(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>La kromprogramo '" + nombreMod + "' mankas kaj necesas por ŝargi la mondon aŭ kromprogramon.</b>";
+}
+
+@Override
+public String nombreProblemaDependenciaModFaltante() {
+    return "Mankanta kromprogramo";
+}
+
+@Override
+public String mensajeWorldModFaltanteSingular(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>La mondo estis konservita kun kromprogramo '" + nombreMod + 
+           "', kiu nun mankas.</b>";
+}
+
+@Override
+public String mensajeWorldModFaltantePlural(List<String> mods) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("La mondo estis konservita kun jenaj kromprogramoj, kiuj nun mankas: ");
+    
+    for (int i = 0; i < mods.size(); i++) {
+        if (i > 0) {
+            if (i == mods.size() - 1) {
+                sb.append(" kaj ");
+            } else {
+                sb.append(", ");
+            }
+        }
+        sb.append("'").append(mods.get(i)).append("'");
+    }
+    
+    sb.append(".</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaWorldModFaltante() {
+    return "Mankanta kromprogramo en la mondo";
+}
+
+@Override
+public String mensajeVersionModMundoSingular(String nombreMod, String versionEsperada, String versionActual) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>La mondo estis konservita kun kromprogramo '" + nombreMod + 
+           "' versio " + versionEsperada + ", sed nun estas uzata versio " + versionActual + ".</b>";
+}
+
+@Override
+public String mensajeVersionModMundoPlural(List<String> mods, List<String> versionesEsperadas, List<String> versionesActuales) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("Jenaj kromprogramoj havas versiodiferencojn en la konservita mondo: ");
+    
+    for (int i = 0; i < mods.size(); i++) {
+        if (i > 0) {
+            if (i == mods.size() - 1) {
+                sb.append(" kaj ");
+            } else {
+                sb.append(", ");
+            }
+        }
+        sb.append("'").append(mods.get(i)).append("'");
+        sb.append(" (Konservita: ").append(versionesEsperadas.get(i)).append(", Nuntempa: ").append(versionesActuales.get(i)).append(")");
+    }
+    
+    sb.append(".</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaVersionModMundo() {
+    return "Versia nekongruo de kromprogramo en konservita mondo";
+}
+
+@Override
+public String mensajeVersionDowngrade() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Vi provis ŝargi mondon kreitan per pli nova versio de Minecraft.</b>";
+}
+
+@Override
+public String nombreProblemaVersionDowngrade() {
+    return "Klopodo ŝargi mondon el pli nova versio";
+}
+
+@Override
+public String solucionVersionDowngrade() {
+    return "Instalu pli novan version de Minecraft.";
+}
+
+@Override
+public String solucionGenerarNuevoMundo() {
+    return "Kreu novan mondon.";
+}
+
+@Override
+public String mensajeDependenciaPluginFaltanteSingular(String nombrePlugin, String dependencia) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>La kromprogramo '" + nombrePlugin + 
+           "' postulas jenan dependecon: '" + dependencia + "'.</b>";
+}
+
+@Override
+public String mensajeDependenciaPluginFaltantePlural(List<String> plugins, List<String> dependencias) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("Jenaj kromprogramoj postulas neinstalitajn dependecojn: ");
+    
+    for (int i = 0; i < plugins.size(); i++) {
+        if (i > 0) {
+            sb.append(", ");
+        }
+        sb.append("'").append(plugins.get(i)).append("' (").append(dependencias.get(i)).append(")");
+    }
+    
+    sb.append(".</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaDependenciaPluginFaltante() {
+    return "Kromprogramo kun mankanta dependeco";
+}
+
+@Override
+public String mensajePluginIncompatibleSingular(String nombrePlugin) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>La kromprogramo '" + nombrePlugin + "' ne estas kongrua kun la nuna servila versio.</b>";
+}
+
+@Override
+public String mensajePluginIncompatiblePlural(List<String> plugins) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("Jenaj kromprogramoj ne estas kongruaj kun la nuna servila versio: ");
+    
+    for (int i = 0; i < plugins.size(); i++) {
+        if (i > 0) {
+            if (i == plugins.size() - 1) {
+                sb.append(" kaj ");
+            } else {
+                sb.append(", ");
+            }
+        }
+        sb.append("'").append(plugins.get(i)).append("'");
+    }
+    
+    sb.append(".</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaPluginIncompatible() {
+    return "Nekongrua kromprogramo kun PocketMine-MP";
+}
+
+@Override
+public String mensajePluginEjecucionSingular(String nombrePlugin) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>La kromprogramo '" + nombrePlugin + "' kaŭzis eraron dum plenumo.</b>";
+}
+
+@Override
+public String mensajePluginEjecucionPlural(List<String> plugins) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("Jenaj kromprogramoj kaŭzis erarojn dum plenumo: ");
+    
+    for (int i = 0; i < plugins.size(); i++) {
+        if (i > 0) {
+            if (i == plugins.size() - 1) {
+                sb.append(" kaj ");
+            } else {
+                sb.append(", ");
+            }
+        }
+        sb.append("'").append(plugins.get(i)).append("'");
+    }
+    
+    sb.append(".</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaPluginEjecucion() {
+    return "Kromprogramo kun rultempa eraro";
+}
+
+@Override
+public String nombreLegacyRandomSourceMultiHilos() {
+    return "Multobla hilo en LegacyRandomSource";
+}
+
+@Override
+public String mensajeLegacyRandomSourceMultiHilos() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Kelkaj hiloj aliras la klason LegacyRandomSource samtempe. Por pluaj informoj, uzu la modon 'Unsafe World Random Access Detector' aŭ 'C2ME'.</b>";
+}
+
+
+
+
+
+
+
+
+
 
 
 

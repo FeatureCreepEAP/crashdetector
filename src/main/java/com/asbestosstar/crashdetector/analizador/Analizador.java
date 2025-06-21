@@ -17,6 +17,7 @@ import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorConfiguraci
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.FabricMCRuntimeErrorProvidedBy;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.FaltasDependenciasModLaunche;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.KubeJSResourcePack;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.LegacyRandomSourceMultiHilos;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.LenguajeProveedorCheck;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.MCForgeModsSuspechoso;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ModsDuplicadosModLauncher;
@@ -24,6 +25,29 @@ import com.asbestosstar.crashdetector.analizador.apps.minecraft.NecesitasSodium;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.NoPuedeAnalizarJSONDeRegistro;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.NoSuchElementAnimacionMinecraft;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.OptifineObsoleta;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaCargaChunk;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaCargaMultiverso;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaCierreAuthMe;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaConfiguracionPermissionsEx;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaDependenciaPTRLib;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaDependenciaPlugin;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaDependenciaPluginPocketMine;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaEjecucionPlugin;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaExcepcionComandoPlugin;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaExcepcionMod;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaSpongeMixinFabric;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaModDuplicadoFabric;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaModFaltanteEnDatapack;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaModFaltanteEnMundo;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaModIncompatibleConMinecraft;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaModIncompatibleFabric;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaMundoDuplicado;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaNombrePluginAmbiguo;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaTickingEntidadBloque;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaTickingRegionalPlugin;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaVersionAPIIncompatible;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaVersionDowngrade;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaVersionModMundo;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.RegistrosMalMapeados;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.Segundo60Tick;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ServicioDeModLauncherNoFunciona;
@@ -98,6 +122,33 @@ public class Analizador {
 		// verificaciones.add(new MalwareFalsoCrashAssistant());
 
 		// verificaciones.add(new ObjetoDeRegistroNoPresente());
+		verificaciones.add(new LegacyRandomSourceMultiHilos());
+
+		// De Codex Aternos
+		verificaciones.add(new ProblemaCargaChunk());
+		verificaciones.add(new ProblemaCierreAuthMe());
+		verificaciones.add(new ProblemaCargaMultiverso());
+		verificaciones.add(new ProblemaConfiguracionPermissionsEx());
+		verificaciones.add(new ProblemaDependenciaPlugin());
+		verificaciones.add(new ProblemaDependenciaPluginPocketMine());
+		verificaciones.add(new ProblemaDependenciaPTRLib());
+		verificaciones.add(new ProblemaEjecucionPlugin());
+		verificaciones.add(new ProblemaExcepcionComandoPlugin());
+		verificaciones.add(new ProblemaExcepcionMod());
+		verificaciones.add(new ProblemaSpongeMixinFabric());
+		verificaciones.add(new ProblemaModDuplicadoFabric());
+		verificaciones.add(new ProblemaModFaltanteEnDatapack());
+		verificaciones.add(new ProblemaModFaltanteEnMundo());
+		verificaciones.add(new ProblemaModIncompatibleConMinecraft());
+		verificaciones.add(new ProblemaModIncompatibleFabric());
+		verificaciones.add(new ProblemaMundoDuplicado());
+		verificaciones.add(new ProblemaNombrePluginAmbiguo());
+		verificaciones.add(new ProblemaTickingEntidadBloque());
+		verificaciones.add(new ProblemaTickingRegionalPlugin());
+		verificaciones.add(new ProblemaVersionAPIIncompatible());
+		verificaciones.add(new ProblemaVersionDowngrade());
+		verificaciones.add(new ProblemaVersionModMundo());
+		// Fin de Codex Aternos
 
 	}
 

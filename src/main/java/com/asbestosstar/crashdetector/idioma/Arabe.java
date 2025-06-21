@@ -1,5 +1,7 @@
 package com.asbestosstar.crashdetector.idioma;
 
+import java.util.List;
+
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
 
@@ -1110,6 +1112,601 @@ public String solucionRegistrosMalMapeados() {
 @Override
 public String nombre_de_registros_mal_mapeados() {
     return "سجلات تم ربطها بشكل خاطئ";
+}
+
+
+public String mensajeCierreAuthMe() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>فشل تحميل الإضافة 'AuthMe' وأدت إلى إيقاف الخادم.</b> ";
+}
+
+public String nombreProblemaCierreAuthMe() {
+    return "مشكلة إيقاف الخادم بسبب AuthMe";
+}
+
+public String solucionCierreAuthMe() {
+    return "تغيرت القاعدة 'stopServer' إلى 'true'.";
+}
+
+public String solucionConfigurarPluginAuthMe() {
+    return "قم بتكوين الإضافة AuthMe (plugins/AuthMe/config.yml)";
+}
+
+public String solucionInstalarVersionDiferenteAuthMe() {
+    return "ثبت نسخة مختلفة من الإضافة 'AuthMe'";
+}
+
+public String solucionEliminarPluginAuthMe() {
+    return "احذف الإضافة 'AuthMe'";
+}
+
+@Override
+public String mensajeProblemaCargaMultiverso(String nombreMundo) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>لم يمكن تحميل العالم '" + nombreMundo + "' لأنه يحتوي على أخطاء وربما يكون مُهترئًا.</b> ";
+}
+
+@Override
+public String nombreProblemaCargaMultiverso() {
+    return "مشكلة في تحميل عوالم Multiverse";
+}
+
+@Override
+public String solucionRepararMundo(String nombreMundo) {
+    return "قم بإصلاح العالم '" + nombreMundo + "', على سبيل المثال باستخدام Minecraft Region Fixer أو MCEdit.";
+}
+
+@Override
+public String solucionEliminarCarpetaMundo(String nombreMundo) {
+    return "احذف مجلد العالم '" + nombreMundo + "'.";
+}
+
+@Override
+public String mensajeConfiguracionPermissionsEx() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>إعدادات الإضافة 'PermissionsEx' غير صالحة.</b> ";
+}
+
+@Override
+public String nombreProblemaConfiguracionPermissionsEx() {
+    return "مشكلة في إعدادات PermissionsEx";
+}
+
+@Override
+public String solucionConfigurarPermissionsEx() {
+    return "قم بتكوين الإضافة PermissionsEx (plugins/PermissionsEx/permissions.yml)";
+}
+
+@Override
+public String solucionEliminarPluginPermissionsEx() {
+    return "احذف الإضافة 'PermissionsEx'";
+}
+
+@Override
+public String mensajeNombrePluginAmbiguo(String nombrePlugin, String primerPath, String segundoPath) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>هناك عدة ملفات إضافات تحمل نفس الاسم '" + nombrePlugin + "': '" + primerPath + "' و'" + segundoPath + "'.</b> ";
+}
+
+@Override
+public String nombreProblemaNombrePluginAmbiguo() {
+    return "مشكلة اسم إضافة مُبهم";
+}
+
+@Override
+public String solucionEliminarPlugin(String nombrePlugin) {
+    return "احذف الإضافة '" + nombrePlugin + "'";
+}
+
+@Override
+public String mensajeCargaChunk() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>حدث خطأ أثناء تحميل الكتل (chunks) في العالم.</b> ";
+}
+
+@Override
+public String nombreProblemaCargaChunk() {
+    return "خطأ عند تحميل الكتل";
+}
+
+@Override
+public String solucionEliminarChunk() {
+    return "قم بإزالة الكتلة المشكلة من العالم، على سبيل المثال باستخدام MCEdit أو عن طريق حذف ملف المنطقة.";
+}
+
+@Override
+public String mensajeExcepcionComandoPlugin(String nombrePlugin, String comando) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>لا يمكن للإضافة '" + nombrePlugin + "' تنفيذ الأمر '/" + comando + "'.</b> ";
+}
+
+@Override
+public String nombreProblemaExcepcionComandoPlugin() {
+    return "استثناء أثناء تنفيذ أمر الإضافة";
+}
+
+@Override
+public String solucionInstalarVersionDiferentePlugin(String nombrePlugin) {
+    return "ثبت نسخة مختلفة من الإضافة '" + nombrePlugin + "'";
+}
+
+@Override
+public String mensajeDependenciaPluginUnica(String nombrePlugin, String dependencia) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>تتطلب الإضافة '" + nombrePlugin + 
+           "' الاعتماد على الإضافة '" + dependencia + "'.</b> ";
+}
+
+@Override
+public String mensajeDependenciaPluginMultiples(String nombrePlugin, List<String> dependencias) {
+    StringBuilder deps = new StringBuilder();
+    for (int i = 0; i < dependencias.size(); i++) {
+        if (i > 0) deps.append(", ");
+        deps.append("'").append(dependencias.get(i)).append("'");
+    }
+    return "<b style='color:#" + config.obtenerColorError() + "'>تتطلب الإضافة '" + nombrePlugin + 
+           "' الاعتماد على الإضافات التالية: " + deps.toString() + ".</b> ";
+}
+
+@Override
+public String nombreProblemaDependenciaPlugin() {
+    return "الاعتماد على إضافة مفقودة";
+}
+
+@Override
+public String solucionInstalarPlugin(String nombrePlugin) {
+    return "ثبت الإضافة '" + nombrePlugin + "'";
+}
+
+
+@Override
+public String mensajeVersionAPIIncompatible(String nombrePlugin, String versionAPI) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>الإضافة '" + nombrePlugin + 
+           "' تحتاج إلى إصدار واجهة برمجية '" + versionAPI + "' غير متوافق مع الخادم الحالي.</b> ";
+}
+
+@Override
+public String nombreProblemaVersionAPIIncompatible() {
+    return "إصدار واجهة برمجية غير متوافق";
+}
+
+@Override
+public String solucionInstalarVersionServidor(String version) {
+    return "ثبت الإصدار '" + version + "' من برنامج خادمك.";
+}
+
+@Override
+public String mensajeMundoDuplicado(String nombreMundo) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>المعالم '" + nombreMundo + 
+           "' هو نسخة مكررة من عالم آخر ولا يمكن تحميله.</b> ";
+}
+
+@Override
+public String nombreProblemaMundoDuplicado() {
+    return "عالم مكرر";
+}
+
+@Override
+public String solucionEliminarUID(String nombreMundo) {
+    return "احذف ملف 'uid.dat' من العالم '" + nombreMundo + "'";
+}
+
+@Override
+public String solucionEliminarMundo(String nombreMundo) {
+    return "احذف مجلد العالم '" + nombreMundo + "'";
+}
+
+@Override
+public String mensajeTickingEntidadBloque(String nombre, String tipo, int[] coordenadas) {
+    String coords = "(" + coordenadas[0] + ", " + coordenadas[1] + ", " + coordenadas[2] + ")";
+    return "<b style='color:#" + config.obtenerColorError() + "'>الكيان الكتلي '" + nombre + 
+           "' من النوع '" + tipo + "' في الموقع " + coords + " يسبب أخطاء أثناء التحديثات.</b> ";
+}
+
+@Override
+public String nombreProblemaTickingEntidadBloque() {
+    return "كيان كتلي مشكل";
+}
+
+@Override
+public String solucionEliminarEntidadBloque(String nombre, int[] coordenadas) {
+    String coords = "(" + coordenadas[0] + ", " + coordenadas[1] + ", " + coordenadas[2] + ")";
+    return "قم بإزالة الكيان '" + nombre + "' الموجود في الموقع " + coords + " باستخدام MCEdit أو عن طريق تحرير العالم مباشرة.";
+}
+
+@Override
+public String mensajeModDuplicadoFabric(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>يحتوي المود '" + nombreMod + "' على عدة إصدارات مثبتة.</b> ";
+}
+
+@Override
+public String nombreProblemaModDuplicadoFabric() {
+    return "مود مكرر في Fabric";
+}
+
+@Override
+public String solucionEliminarModDuplicado(String rutaMod) {
+    return "احذف ملف المود المكرر: " + rutaMod;
+}
+
+@Override
+public String mensajeModIncompatible(String primerMod, String segundoMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>المودان '" + primerMod + 
+           "' و'" + segundoMod + "' غير متوافقين مع بعضهما البعض.</b> ";
+}
+
+@Override
+public String nombreProblemaModIncompatibleFabric() {
+    return "مود غير متوافق في Fabric";
+}
+
+@Override
+public String solucionEliminarMod(String nombreMod) {
+    return "احذف المود '" + nombreMod + "'";
+}
+
+
+@Override
+public String mensajeModFatal(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>يحتوي المود '" + nombreMod + "' على خطأ حرج ولا يمكن تنفيذه.</b> ";
+}
+
+@Override
+public String nombreProblemaModFatal() {
+    return "مود يحتوي على خطأ جسيم";
+}
+
+@Override
+public String mensajeModDependenciaPlural(List<String> dependencias) {
+    StringBuilder deps = new StringBuilder();
+    for (int i = 0; i < dependencias.size(); i++) {
+        if (i > 0) {
+            deps.append(", ");
+        }
+        deps.append("'").append(dependencias.get(i)).append("'");
+    }
+    return "<b style='color:#" + config.obtenerColorError() + "'>المودات التالية مطلوبة ولكن لم يتم تثبيتها: " + deps.toString() + ".</b>";
+}
+
+@Override
+public String mensajeDependenciaModFaltante(String nombreMod, String dependencia, String version) {
+    if (version == null || version.isEmpty()) {
+        return "<b style='color:#" + config.obtenerColorError() + "'>يحتاج المود '" + nombreMod + 
+               "' إلى المود '" + dependencia + "' كاعتمادية.</b>";
+    } else {
+        return "<b style='color:#" + config.obtenerColorError() + "'>يحتاج المود '" + nombreMod + 
+               "' إلى المود '" + dependencia + "' بالإصدار " + version + ".</b>";
+    }
+}
+
+@Override
+public String nombreProblemaDependenciaMod() {
+    return "الاعتماد على مود غير مثبت";
+}
+
+@Override
+public String solucionInstalarMod(String nombreMod) {
+    return "ثبت المود '" + nombreMod + "'";
+}
+
+@Override
+public String solucionInstalarModConVersion(String nombreMod, String version) {
+    return "ثبت المود '" + nombreMod + "' مع الإصدار " + version;
+}
+
+@Override
+public String mensajePluginTickingRegionalSingular(String nombrePlugin) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>الإضافة '" + nombrePlugin + 
+           "' غير متوافقة مع التحديث الإقليمي في Folia.</b> ";
+}
+
+@Override
+public String mensajePluginTickingRegionalPlural(List<String> plugins) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("الإضافات التالية غير متوافقة مع التحديث الإقليمي في Folia: ");
+    
+    for (int i = 0; i < plugins.size(); i++) {
+        if (i > 0) {
+            sb.append(", ");
+        }
+        sb.append("'").append(plugins.get(i)).append("'");
+    }
+    
+    sb.append(".</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaPluginTickingRegional() {
+    return "إضافة غير متوافقة مع التحديث الإقليمي";
+}
+
+@Override
+public String solucionInstalarSoftwareSinTickingRegional(String software) {
+    return "ثبت إصدارًا بدون تحديث إقليمي، مثل " + software;
+}
+
+@Override
+public String mensajeModFaltanteEnDatapackSingular(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>المود '" + nombreMod + 
+           "' مفقود من الحزمة.</b>";
+}
+
+@Override
+public String mensajeModFaltanteEnDatapackPlural(List<String> mods) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("المودات التالية مفقودة من الحزمة: ");
+    
+    for (int i = 0; i < mods.size(); i++) {
+        if (i > 0) {
+            if (i == mods.size() - 1) {
+                sb.append(" و");
+            } else {
+                sb.append(", ");
+            }
+        }
+        sb.append("'").append(mods.get(i)).append("'");
+    }
+    
+    sb.append(".</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaModFaltanteEnDatapack() {
+    return "مود مفقود من الحزمة";
+}
+
+
+@Override
+public String mensajeModExcepcionSingular(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>المود '" + nombreMod + "' تسبب في خطأ.</b>";
+}
+
+@Override
+public String mensajeModExcepcionPlural(List<String> mods) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("المودات التالية تسببت في أخطاء: ");
+    
+    for (int i = 0; i < mods.size(); i++) {
+        if (i > 0) {
+            if (i == mods.size() - 1) {
+                sb.append(" و");
+            } else {
+                sb.append(", ");
+            }
+        }
+        sb.append("'").append(mods.get(i)).append("'");
+    }
+    
+    sb.append(".</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaModExcepcion() {
+    return "مود Forge مع استثناء";
+}
+
+@Override
+public String solucionInstalarVersionDiferenteMod(String nombreMod) {
+    return "ثبت نسخة مختلفة من المود '" + nombreMod + "'";
+}
+
+@Override
+public String mensajeModIncompatibleConMinecraftSingular(String nombreMod, String versionMC) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>المود '" + nombreMod + 
+           "' غير متوافق مع إصدار ماينكرافت " + versionMC + ".</b>";
+}
+
+@Override
+public String mensajeModIncompatibleConMinecraftPlural(List<String> mods, List<String> versionesMC) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("المودات التالية غير متوافقة مع إصدارات ماينكرافت: ");
+    
+    for (int i = 0; i < mods.size(); i++) {
+        if (i > 0) {
+            sb.append(", ");
+        }
+        sb.append("'").append(mods.get(i)).append("'");
+        sb.append(" (ماينكرافت ").append(versionesMC.get(i)).append(")");
+    }
+    
+    sb.append(".</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaModIncompatibleConMinecraft() {
+    return "مود غير متوافق مع ماينكرافت";
+}
+
+@Override
+public String solucionInstalarVersionForge(String versionMC) {
+    return "ثبت إصدارًا متوافقًا من Forge مع ماينكرافت " + versionMC;
+}
+
+@Override
+public String mensajeDependenciaModFaltante(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>المود '" + nombreMod + "' مفقود وهو مطلوب لتحميل العالم أو الإضافة.</b>";
+}
+
+@Override
+public String nombreProblemaDependenciaModFaltante() {
+    return "مود مفقود";
+}
+
+@Override
+public String mensajeWorldModFaltanteSingular(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>تم حفظ العالم مع المود '" + nombreMod + 
+           "' الذي يبدو أنه مفقود.</b>";
+}
+
+@Override
+public String mensajeWorldModFaltantePlural(List<String> mods) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("تم حفظ العالم مع المودات التالية التي تبدو مفقودة: ");
+    
+    for (int i = 0; i < mods.size(); i++) {
+        if (i > 0) {
+            if (i == mods.size() - 1) {
+                sb.append(" و");
+            } else {
+                sb.append(", ");
+            }
+        }
+        sb.append("'").append(mods.get(i)).append("'");
+    }
+    
+    sb.append(".</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaWorldModFaltante() {
+    return "مود مفقود في العالم";
+}
+
+@Override
+public String mensajeVersionModMundoSingular(String nombreMod, String versionEsperada, String versionActual) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>تم حفظ العالم باستخدام المود '" + nombreMod + 
+           "' بالإصدار " + versionEsperada + "، وهو الآن يعمل بالإصدار " + versionActual + ".</b>";
+}
+
+@Override
+public String mensajeVersionModMundoPlural(List<String> mods, List<String> versionesEsperadas, List<String> versionesActuales) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("المودات التالية لديها تناقض في الإصدار في العالم المحفوظ: ");
+    
+    for (int i = 0; i < mods.size(); i++) {
+        if (i > 0) {
+            if (i == mods.size() - 1) {
+                sb.append(" و");
+            } else {
+                sb.append(", ");
+            }
+        }
+        sb.append("'").append(mods.get(i)).append("'");
+        sb.append(" (محفوظ: ").append(versionesEsperadas.get(i)).append(", حاليًا: ").append(versionesActuales.get(i)).append(")");
+    }
+    
+    sb.append(".</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaVersionModMundo() {
+    return "مود غير متوافق مع إصدار العالم";
+}
+
+@Override
+public String mensajeVersionDowngrade() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>لقد حاولت تحميل عالم تم إنشاؤه بإصدار أحدث من ماينكرافت.</b>";
+}
+
+@Override
+public String nombreProblemaVersionDowngrade() {
+    return "محاولة تحميل عالم من إصدار أحدث";
+}
+
+@Override
+public String solucionVersionDowngrade() {
+    return "ثبت إصدارًا أحدث من ماينكرافت.";
+}
+
+@Override
+public String solucionGenerarNuevoMundo() {
+    return "أنشئ عالمًا جديدًا.";
+}
+
+@Override
+public String mensajeDependenciaPluginFaltanteSingular(String nombrePlugin, String dependencia) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>الإضافة '" + nombrePlugin + 
+           "' تحتاج إلى الإضافة التالية كاعتماد: '" + dependencia + "'.</b>";
+}
+
+@Override
+public String mensajeDependenciaPluginFaltantePlural(List<String> plugins, List<String> dependencias) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("الإضافات التالية تحتاج إلى اعتمادات غير مثبتة: ");
+    
+    for (int i = 0; i < plugins.size(); i++) {
+        if (i > 0) {
+            sb.append(", ");
+        }
+        sb.append("'").append(plugins.get(i)).append("' (").append(dependencias.get(i)).append(")");
+    }
+    
+    sb.append(".</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaDependenciaPluginFaltante() {
+    return "إضافة تحتوي على اعتماد مفقود";
+}
+
+@Override
+public String mensajePluginIncompatibleSingular(String nombrePlugin) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>الإضافة '" + nombrePlugin + "' غير متوافقة مع إصدار الخادم الحالي.</b>";
+}
+
+@Override
+public String mensajePluginIncompatiblePlural(List<String> plugins) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("الإضافات التالية غير متوافقة مع إصدار الخادم الحالي: ");
+    
+    for (int i = 0; i < plugins.size(); i++) {
+        if (i > 0) {
+            if (i == plugins.size() - 1) {
+                sb.append(" و");
+            } else {
+                sb.append(", ");
+            }
+        }
+        sb.append("'").append(plugins.get(i)).append("'");
+    }
+    
+    sb.append(".</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaPluginIncompatible() {
+    return "الإضافة غير متوافقة مع PocketMine-MP";
+}
+
+@Override
+public String mensajePluginEjecucionSingular(String nombrePlugin) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>الإضافة '" + nombrePlugin + "' تسببت في خطأ أثناء التشغيل.</b>";
+}
+
+@Override
+public String mensajePluginEjecucionPlural(List<String> plugins) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("الإضافات التالية تسببت في أخطاء أثناء التشغيل: ");
+    
+    for (int i = 0; i < plugins.size(); i++) {
+        if (i > 0) {
+            if (i == plugins.size() - 1) {
+                sb.append(" و");
+            } else {
+                sb.append(", ");
+            }
+        }
+        sb.append("'").append(plugins.get(i)).append("'");
+    }
+    
+    sb.append(".</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreProblemaPluginEjecucion() {
+    return "إضافة تحتوي على خطأ في التنفيذ";
+}
+
+@Override
+public String nombreLegacyRandomSourceMultiHilos() {
+    return "LegacyRandomSource متعدد الخيوط";
+}
+
+@Override
+public String mensajeLegacyRandomSourceMultiHilos() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>لديك مشكلة مع عدة خيوط تصل إلى فئة LegacyRandomSource. يمكنك الحصول على المزيد من المعلومات باستخدام تعديل 'Unsafe World Random Access Detector' أو التعديل 'C2ME'.</b>";
 }
 
 
