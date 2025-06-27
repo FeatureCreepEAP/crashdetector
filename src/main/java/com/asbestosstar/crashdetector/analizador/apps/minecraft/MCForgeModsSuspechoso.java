@@ -1,6 +1,8 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
 import java.util.HashSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.Set;
 
 import com.asbestosstar.crashdetector.Consola;
@@ -12,16 +14,22 @@ import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 public class MCForgeModsSuspechoso implements Verificaciones {
 
     private boolean activado = false;
-    private final Set<String> errores = new HashSet<>(); 
+    private final Set<String> errores = new HashSet<>();
 
     @Override
     public void verificar(Consola consola) {
         String contenidoConsola = consola.contento_verificar;
         String[] lineas = contenidoConsola.split(Verificaciones.nl);
 
+        // Patrón para errores durante la fase de registro
+        Pattern patronFaseRegistro = Pattern.compile(
+            "(?i)encountered an error during the .*? dispatch for modid ([a-z0-9_\\-.]+)"
+        );
+
         for (int i = 0; i < lineas.length; i++) {
             String linea = lineas[i];
 
+            // 1. Detectar mods sospechosos (existente)
             if (linea.contains("Suspected Mod:")) {
                 if (i + 1 < lineas.length) {
                     String modLinea = lineas[i + 1].trim();
@@ -39,6 +47,7 @@ public class MCForgeModsSuspechoso implements Verificaciones {
                 }
             }
 
+            // 2. ModID fallido al crear instancia (existente)
             else if (linea.contains("Failed to create mod instance. ModID:")) {
                 try {
                     String modID = linea.split("ModID: ")[1].split(",")[0].trim();
@@ -52,9 +61,11 @@ public class MCForgeModsSuspechoso implements Verificaciones {
                     );
                     activado = true;
                 } catch (Exception e) {
+                    // Ignorar errores de formato
                 }
             }
 
+            // 3. Mensaje de fallo con ModID (existente)
             else if (linea.contains("Failure message:")) {
                 int inicio = linea.indexOf('(');
                 if (inicio != -1) {
@@ -65,6 +76,16 @@ public class MCForgeModsSuspechoso implements Verificaciones {
                         activado = true;
                     }
                 }
+            }
+
+            // 4. Nueva detección: errores durante la fase de registro
+            Matcher matcherFaseRegistro = patronFaseRegistro.matcher(linea);
+            while (matcherFaseRegistro.find()) {
+                String modID = matcherFaseRegistro.group(1).trim();
+                errores.add(
+                    MonitorDePID.idioma.mcforge_mod_suspechoso() + ": " + modID
+                );
+                activado = true;
             }
         }
     }
@@ -81,7 +102,7 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 
     @Override
     public float prioridad() {
-        return 900.0f; // Prioridad alta para mods sospechosos [[4]]
+        return 900.0f; // Prioridad alta para errores durante la carga
     }
 
     @Override
@@ -95,20 +116,16 @@ public class MCForgeModsSuspechoso implements Verificaciones {
         html.append("</ul>");
         return html.toString();
     }
-    
-	@Override
-	public String nombre() {
-		// TODO Auto-generated method stub
-		return MonitorDePID.idioma.nombre_de_mcforge_mod_sespechoso();
-	}
-	
-	
+
+    @Override
+    public String nombre() {
+        return MonitorDePID.idioma.nombre_de_mcforge_mod_sespechoso();
+    }
+
     @Override
     public QuickFix solucion() {
-        return new QuickFix.Builder(nombre())
+        return new Builder(nombre())
             .agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
             .construir();
     }
-    
-    
 }

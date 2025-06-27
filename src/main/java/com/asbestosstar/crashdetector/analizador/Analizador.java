@@ -29,13 +29,13 @@ import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaCargaChu
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaCargaMultiverso;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaCierreAuthMe;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaConfiguracionPermissionsEx;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaDependenciaModFabric;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaDependenciaPTRLib;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaDependenciaPlugin;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaDependenciaPluginPocketMine;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaEjecucionPlugin;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaExcepcionComandoPlugin;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaExcepcionMod;
-import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaSpongeMixinFabric;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaModDuplicadoFabric;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaModFaltanteEnDatapack;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaModFaltanteEnMundo;
@@ -43,6 +43,7 @@ import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaModIncom
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaModIncompatibleFabric;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaMundoDuplicado;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaNombrePluginAmbiguo;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaSpongeMixinFabric;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaTickingEntidadBloque;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaTickingRegionalPlugin;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaVersionAPIIncompatible;
@@ -148,6 +149,9 @@ public class Analizador {
 		verificaciones.add(new ProblemaVersionAPIIncompatible());
 		verificaciones.add(new ProblemaVersionDowngrade());
 		verificaciones.add(new ProblemaVersionModMundo());
+		verificaciones.add(new ProblemaDependenciaModFabric());
+
+		
 		// Fin de Codex Aternos
 
 	}

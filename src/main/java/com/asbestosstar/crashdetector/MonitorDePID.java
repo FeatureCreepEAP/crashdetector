@@ -48,13 +48,12 @@ public class MonitorDePID {
 	public static boolean resultos = false;
 	public static boolean tiene_mensaje_de_registro_launcher_completa = false;
 	public static boolean consola_de_launcher_inyectado = false;
-    public static StringBuilder contenidoInforme;
+	public static StringBuilder contenidoInforme;
 
-	
 	/**
 	 * Es diferente en el process diferente
 	 */
-	public static Instant utc=Instant.now();
+	public static Instant utc = Instant.now();
 
 	public static void main(String[] args) {
 		if (args.length > 0 && args[0].equals("--monitor")) {
@@ -104,24 +103,22 @@ public class MonitorDePID {
 		ArchivoDeCodioError0.delete();
 		File html = new File("crash_detector/pantilla.htm");
 
-		
-		copiarACarpetaDesdeJar("/pantilla.htm",html);
-		
-		copiarACarpetaDesdeJar("/imagenes/gura.png",new File("crash_detector/imagenes/gura.png"));
-		copiarACarpetaDesdeJar("/imagenes/nanashi_mumei.png",new File("crash_detector/imagenes/nanashi_mumei.png"));
-		copiarACarpetaDesdeJar("/imagenes/shion.png",new File("crash_detector/imagenes/shion.png"));
+		copiarACarpetaDesdeJar("/pantilla.htm", html);
 
-		copiarACarpetaDesdeJar("/imagenes/boton_agregar.png",new File("crash_detector/imagenes/boton_agregar.png"));
-		copiarACarpetaDesdeJar("/imagenes/boton_compartir.png",new File("crash_detector/imagenes/boton_compartir.png"));
-		copiarACarpetaDesdeJar("/imagenes/boton_actualizar.png",new File("crash_detector/imagenes/boton_actualizar.png"));
-		copiarACarpetaDesdeJar("/imagenes/boton_archivos.png",new File("crash_detector/imagenes/boton_archivos.png"));
-		copiarACarpetaDesdeJar("/imagenes/boton_config.png",new File("crash_detector/imagenes/boton_config.png"));
-		copiarACarpetaDesdeJar("/imagenes/cd_logo.png",new File("crash_detector/imagenes/cd_logo.png"));
-		copiarACarpetaDesdeJar("/imagenes/profeco.jpg",new File("crash_detector/imagenes/profeco.jpg"));
+		copiarACarpetaDesdeJar("/imagenes/gura.png", new File("crash_detector/imagenes/gura.png"));
+		copiarACarpetaDesdeJar("/imagenes/nanashi_mumei.png", new File("crash_detector/imagenes/nanashi_mumei.png"));
+		copiarACarpetaDesdeJar("/imagenes/shion.png", new File("crash_detector/imagenes/shion.png"));
 
-		
-		
-		
+		copiarACarpetaDesdeJar("/imagenes/boton_agregar.png", new File("crash_detector/imagenes/boton_agregar.png"));
+		copiarACarpetaDesdeJar("/imagenes/boton_compartir.png",
+				new File("crash_detector/imagenes/boton_compartir.png"));
+		copiarACarpetaDesdeJar("/imagenes/boton_actualizar.png",
+				new File("crash_detector/imagenes/boton_actualizar.png"));
+		copiarACarpetaDesdeJar("/imagenes/boton_archivos.png", new File("crash_detector/imagenes/boton_archivos.png"));
+		copiarACarpetaDesdeJar("/imagenes/boton_config.png", new File("crash_detector/imagenes/boton_config.png"));
+		copiarACarpetaDesdeJar("/imagenes/cd_logo.png", new File("crash_detector/imagenes/cd_logo.png"));
+		copiarACarpetaDesdeJar("/imagenes/profeco.jpg", new File("crash_detector/imagenes/profeco.jpg"));
+
 		String mods = "";
 		if (ultima_mods.toFile().exists()) {
 			try {
@@ -195,12 +192,11 @@ public class MonitorDePID {
 			if (uriJarString.startsWith("union:")) {// Para Modlauncher
 				uriJarString = uriJarString.replace("union:", "file://");
 			}
-			
-		    if (uriJarString.startsWith("jar:")) {
-		        uriJarString = uriJarString.substring(4); // elimnar "jar:"
-		    }
-			
-			
+
+			if (uriJarString.startsWith("jar:")) {
+				uriJarString = uriJarString.substring(4); // elimnar "jar:"
+			}
+
 			CrashDetectorLogger.log(uriJarString);
 			URI cd_uri = new URI(uriJarString);
 			String cd_uri_path = cd_uri.getPath();
@@ -214,17 +210,17 @@ public class MonitorDePID {
 
 		// Get the Java binary path
 		String javaBinary = jvm();
-		if (javaBinary==null||javaBinary.isEmpty()) {
+		if (javaBinary == null || javaBinary.isEmpty()) {
 			System.err.println("CD NO PUEDE OBTENER JVM");
 			return;
-		}else {
-			System.out.println("JVM "+javaBinary);
+		} else {
+			System.out.println("JVM " + javaBinary);
 		}
 
 		// Launch the child monitor process
 		try {
 			String cp = System.getProperty("java.class.path") + File.pathSeparator + jar;
-			//System.out.println("******************" + cp);
+			// System.out.println("******************" + cp);
 
 			new ProcessBuilder(javaBinary, "-cp", cp, "com.asbestosstar.crashdetector.MonitorDePID", "--monitor",
 					String.valueOf(pid)).inheritIO().start();
@@ -256,8 +252,6 @@ public class MonitorDePID {
 
 				consolas_sin_processando.addAll(Consola.obtenerConsolas());
 
-
-
 				if (!ArchivoDeCodioError0.exists() && !Consola.tiene_registro_de_launcher(consolas_sin_processando)) {
 					try {// Cuando tiene una informe de crash esta codio 0 y tiene tiempo para esperar
 						Thread.sleep(500);
@@ -270,21 +264,20 @@ public class MonitorDePID {
 				// }
 
 				for (Consola consola : consolas_sin_processando) {
-					consola.finalizarContento(utc,false);
+					consola.finalizarContento(utc, false);
 					if (consola.nueva) {
 						consolas.add(consola);
 					}
 				}
-				
+
 				if (activar() && !GraphicsEnvironment.isHeadless()) {
 					if (!Consola.tiene_registro_de_launcher(consolas)) {
 						obtenerCosolaDeLauncher(utc);
 					}
 				}
-				
 
 				Instant luego = Instant.now();
-				recargar(true,luego);
+				recargar(true, luego);
 				System.gc();
 
 				if (activar()) {
@@ -293,15 +286,13 @@ public class MonitorDePID {
 					if (GraphicsEnvironment.isHeadless()) {
 						CrashDetectorLogger.log("headless ");
 
-						
 						System.out.println(idioma.local_headless(enlance));
 						fin(latch);
-						
+
 					} else {
 						CrashDetectorLogger.log("no headless ");
 
-						SwingUtilities
-								.invokeLater(() -> new CrashDetectorGUI(utc,latch).setVisible(true));
+						SwingUtilities.invokeLater(() -> new CrashDetectorGUI(utc, latch).setVisible(true));
 					}
 
 				} else {
@@ -344,7 +335,7 @@ public class MonitorDePID {
 
 	public static void fin(CountDownLatch latch) {
 		// TODO Auto-generated method stub
-		
+
 		ArchivoDeCodioError0.delete();
 		viajo_ultima_mods.toFile().delete();
 		latch.countDown();
@@ -353,26 +344,28 @@ public class MonitorDePID {
 
 	/**
 	 * asegura los registros son completa para 20 segundos
+	 * 
 	 * @param luego el tiempo ACTUAL AHORA
 	 */
 	private static void finalizarConsolasLentas(Instant luego) {
 		// TODO Auto-generated method stub
-		
-	if(Consola.tiene_registro_de_launcher(consolas)&&!consola_de_launcher_inyectado ) {	
-		Duration duration = Duration.between(luego, Instant.now());
 
-		
-		while (!tiene_mensaje_de_registro_launcher_completa && duration.getSeconds() < 20) {// TODO Config para tiempo
-			CrashDetectorLogger.log("reincinar finalizacion " + duration.getSeconds());
-			duration = Duration.between(luego, Instant.now());
-			for (Consola consola : consolas) {
-				consola.finalizarContento(utc,false);
+		if (Consola.tiene_registro_de_launcher(consolas) && !consola_de_launcher_inyectado) {
+			Duration duration = Duration.between(luego, Instant.now());
+
+			while (!tiene_mensaje_de_registro_launcher_completa && duration.getSeconds() < 20) {// TODO Config para
+																								// tiempo
+				CrashDetectorLogger.log("reincinar finalizacion " + duration.getSeconds());
+				duration = Duration.between(luego, Instant.now());
+				for (Consola consola : consolas) {
+					consola.finalizarContento(utc, false);
+				}
+
 			}
-
+			CrashDetectorLogger.log("tiene_mensaje_de_registro_launcher_completa es valor "
+					+ String.valueOf(tiene_mensaje_de_registro_launcher_completa));
 		}
-		CrashDetectorLogger.log("tiene_mensaje_de_registro_launcher_completa es valor " + String.valueOf(tiene_mensaje_de_registro_launcher_completa));
-	}
-	
+
 	}
 
 	public static String analizar(List<Consola> consolas) {
@@ -380,7 +373,6 @@ public class MonitorDePID {
 		analizador.analizar(consolas);
 		return analizador.toString();
 	}
-
 
 	// Compatible approach (Java 7+)
 	public static String leer_archivo(Path path) throws IOException {
@@ -488,89 +480,76 @@ public class MonitorDePID {
 			// Java viaja
 		}
 
-
-		
 		return obtenerRutaEjecutable8();
-		
+
 	}
-	
-	
-	
-	
-	
-	
+
 	/**
 	 * Obtiene la ruta completa del ejecutable del proceso actual
+	 * 
 	 * @return Ruta completa del ejecutable o null si no se encuentra
 	 */
 	private static String obtenerRutaEjecutable8() {
-	    try {
-	        String sistemaOperativo = System.getProperty("os.name").toLowerCase();
-	        
-	        if (sistemaOperativo.contains("win")) {
-	            // Usar PowerShell primero (más confiable que wmic)
-	            ProcessBuilder pb = new ProcessBuilder("powershell", 
-	                "Get-WmiObject -Class Win32_Process -Filter \"ProcessId = " + obtenerPID() + "\" | Select-Object -ExpandProperty ExecutablePath");
-	            
-	            Process proceso = pb.start();
-	            try (BufferedReader lector = new BufferedReader(
-	                    new InputStreamReader(proceso.getInputStream()))) {
-	                
-	                String linea;
-	                while ((linea = lector.readLine()) != null) {
-	                    String limpiado = linea.trim();
-	                    if (!limpiado.isEmpty()) {
-	                        // Devolver la ruta completa del ejecutable
-	                        return limpiado;
-	                    }
-	                }
-	            }
+		try {
+			String sistemaOperativo = System.getProperty("os.name").toLowerCase();
 
-	            // Si PowerShell falla, usar tasklist como último recurso
-	            pb = new ProcessBuilder("tasklist", "/FI", "PID eq " + obtenerPID(), 
-	                "/FO", "CSV", "/NH");
-	            proceso = pb.start();
-	            try (BufferedReader lector = new BufferedReader(
-	                    new InputStreamReader(proceso.getInputStream()))) {
-	                String linea;
-	                while ((linea = lector.readLine()) != null) {
-	                    if (!linea.trim().isEmpty()) {
-	                        String[] valores = new CSVParser().parsear(linea);
-	                        if (valores.length > 0 && !valores[0].trim().isEmpty()) {
-	                            return valores[0].trim(); // Nombre del ejecutable
-	                        }
-	                    }
-	                }
-	            }
-	        } else {
-	            // Unix/Linux/macOS: Usar ps para obtener el comando
-	            ProcessBuilder pb = new ProcessBuilder("ps", "-p", 
-	                String.valueOf(obtenerPID()), "-o", "comm=");
-	            Process proceso = pb.start();
-	            try (BufferedReader lector = new BufferedReader(
-	                    new InputStreamReader(proceso.getInputStream()))) {
-	                String linea;
-	                while ((linea = lector.readLine()) != null) {
-	                    String limpiado = linea.trim();
-	                    if (!limpiado.isEmpty()) {
-	                        return limpiado;
-	                    }
-	                }
-	            }
-	        }
+			if (sistemaOperativo.contains("win")) {
+				// Usar PowerShell primero (más confiable que wmic)
+				ProcessBuilder pb = new ProcessBuilder("powershell",
+						"Get-WmiObject -Class Win32_Process -Filter \"ProcessId = " + obtenerPID()
+								+ "\" | Select-Object -ExpandProperty ExecutablePath");
 
-	        // No se encontró información del proceso
-	        return null;
+				Process proceso = pb.start();
+				try (BufferedReader lector = new BufferedReader(new InputStreamReader(proceso.getInputStream()))) {
 
-	    } catch (Exception e) {
-	        // Registrar errores para diagnóstico
-	        System.err.println("Error al obtener ruta ejecutable: " + e.getMessage());
-	        return null;
-	    }
+					String linea;
+					while ((linea = lector.readLine()) != null) {
+						String limpiado = linea.trim();
+						if (!limpiado.isEmpty()) {
+							// Devolver la ruta completa del ejecutable
+							return limpiado;
+						}
+					}
+				}
+
+				// Si PowerShell falla, usar tasklist como último recurso
+				pb = new ProcessBuilder("tasklist", "/FI", "PID eq " + obtenerPID(), "/FO", "CSV", "/NH");
+				proceso = pb.start();
+				try (BufferedReader lector = new BufferedReader(new InputStreamReader(proceso.getInputStream()))) {
+					String linea;
+					while ((linea = lector.readLine()) != null) {
+						if (!linea.trim().isEmpty()) {
+							String[] valores = new CSVParser().parsear(linea);
+							if (valores.length > 0 && !valores[0].trim().isEmpty()) {
+								return valores[0].trim(); // Nombre del ejecutable
+							}
+						}
+					}
+				}
+			} else {
+				// Unix/Linux/macOS: Usar ps para obtener el comando
+				ProcessBuilder pb = new ProcessBuilder("ps", "-p", String.valueOf(obtenerPID()), "-o", "comm=");
+				Process proceso = pb.start();
+				try (BufferedReader lector = new BufferedReader(new InputStreamReader(proceso.getInputStream()))) {
+					String linea;
+					while ((linea = lector.readLine()) != null) {
+						String limpiado = linea.trim();
+						if (!limpiado.isEmpty()) {
+							return limpiado;
+						}
+					}
+				}
+			}
+
+			// No se encontró información del proceso
+			return null;
+
+		} catch (Exception e) {
+			// Registrar errores para diagnóstico
+			System.err.println("Error al obtener ruta ejecutable: " + e.getMessage());
+			return null;
+		}
 	}
-	
-	
-	
 
 	public static boolean viva(long pid) {
 		try {
@@ -598,44 +577,43 @@ public class MonitorDePID {
 			return viva8(pid);
 		}
 	}
-	
 
 	public static boolean viva8(long pid) {
-	    try {
-	        String os = System.getProperty("os.name").toLowerCase();
-	        
-	        if (os.contains("win")) {
-	            // Intentar con PowerShell primero
-	            ProcessBuilder pb = new ProcessBuilder("powershell", 
-	                "try { Get-Process -Id " + pid + " -ErrorAction Stop; exit 0 } catch { exit 1 }");
-	            
-	            Process proceso = pb.start();
-	            int codigoSalida = proceso.waitFor();
-	            
-	            if (codigoSalida == 0) {
-	                return true; // El proceso existe
-	            }
-	            
-	            // Si PowerShell falla, usar tasklist como respaldo
-	           // return verificarConTasklist(pid);
-	        } else {
-	            // En Unix/Linux/macOS, usar ps
-	            ProcessBuilder pb = new ProcessBuilder("ps", "-p", String.valueOf(pid));
-	            Process proceso = pb.start();
-	            int codigoSalida = proceso.waitFor();
-	            return codigoSalida == 0;
-	        }
-	    } catch (Exception e) {
-	        // Error al ejecutar el comando, asumir que el proceso no existe
-	        return false;
-	    }
-        return false;
+		try {
+			String os = System.getProperty("os.name").toLowerCase();
+
+			if (os.contains("win")) {
+				// Intentar con PowerShell primero
+				ProcessBuilder pb = new ProcessBuilder("powershell",
+						"try { Get-Process -Id " + pid + " -ErrorAction Stop; exit 0 } catch { exit 1 }");
+
+				Process proceso = pb.start();
+				int codigoSalida = proceso.waitFor();
+
+				if (codigoSalida == 0) {
+					return true; // El proceso existe
+				}
+
+				// Si PowerShell falla, usar tasklist como respaldo
+				// return verificarConTasklist(pid);
+			} else {
+				// En Unix/Linux/macOS, usar ps
+				ProcessBuilder pb = new ProcessBuilder("ps", "-p", String.valueOf(pid));
+				Process proceso = pb.start();
+				int codigoSalida = proceso.waitFor();
+				return codigoSalida == 0;
+			}
+		} catch (Exception e) {
+			// Error al ejecutar el comando, asumir que el proceso no existe
+			return false;
+		}
+		return false;
 
 	}
-	
-	
+
 	/**
 	 * Verifica si un proceso está activo usando tasklist en Windows
+	 * 
 	 * @param pid El ID del proceso a verificar
 	 * @return true si el proceso existe y está activo
 	 * @throws IOException Si hay un error al ejecutar el comando
@@ -659,8 +637,8 @@ public class MonitorDePID {
 //	    // Si no se encontró el proceso
 //	    return false;
 //	}
-	
-	public static void copiarACarpetaDesdeJar(String ubicacion_en_jar,File resultdo) {
+
+	public static void copiarACarpetaDesdeJar(String ubicacion_en_jar, File resultdo) {
 		if (!resultdo.exists()) {
 			resultdo.getParentFile().mkdirs();
 			try (InputStream inputStream = MonitorDePID.class.getResourceAsStream(ubicacion_en_jar);
@@ -680,27 +658,23 @@ public class MonitorDePID {
 			}
 		}
 	}
-	
-	
-	
-	
-	
-	
+
 	/**
 	 * 
 	 * @param finalizar_contento si quires finalizar_contento
-	 * @param luego el tiempo ACTUAL AHORA, Solo necesitas si quieres finalizar_contento
+	 * @param luego              el tiempo ACTUAL AHORA, Solo necesitas si quieres
+	 *                           finalizar_contento
 	 */
 	public static void recargar(boolean finalizar_contento, Instant luego) {
 		StringBuilder constructor = new StringBuilder();
 		Buscardor.mods.clear();
-		Buscardor.cargado=false;
-		if(finalizar_contento) {
+		Buscardor.cargado = false;
+		if (finalizar_contento) {
 			finalizarConsolasLentas(luego);
 		}
-		for(Consola consola:consolas) {
+		for (Consola consola : consolas) {
 			consola.verificacion_de_stacktrace = new VerificacionDeStackTrace(consola);
-			consola.enlance=null;
+			consola.enlance = null;
 		}
 		CrashDetectorLogger.log("Analyzador Consolas");
 
@@ -713,10 +687,9 @@ public class MonitorDePID {
 			resultos = true;
 		}
 
-		CrashDetectorLogger.log("resultdos "+res);
-		contenidoInforme=constructor;
+		CrashDetectorLogger.log("resultdos " + res);
+		contenidoInforme = constructor;
 		local = GeneradorDeInformacion.generarLocal(consolas, utc).getAbsolutePath();
 	}
-		
 
 }

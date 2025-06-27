@@ -8,175 +8,199 @@ import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
- * Clase que detecta dependencias faltantes en mods de Fabric.Gracias a Aternos por que esta es una implementacion de su codex https://github.com/aternosorg/codex-minecraft
+ * Clase que detecta dependencias faltantes o versiones incorrectas en mods de Fabric.
  */
 public class ProblemaDependenciaModFabric implements Verificaciones {
 
-	private boolean activado = false;
-	private String mensaje = "";
-	private final List<String> nombresMods = new ArrayList<>();
-	private final List<String> dependencias = new ArrayList<>();
-	private final List<String> versiones = new ArrayList<>();
+    private boolean activado = false;
+    private String mensaje = "";
+    private final List<String> nombresMods = new ArrayList<>();
+    private final List<String> dependencias = new ArrayList<>();
+    private final List<String> versiones = new ArrayList<>();
 
-	/**
-	 * Verifica si el log contiene dependencias faltantes en mods de Fabric.
-	 */
-	@Override
-	public void verificar(Consola consola) {
-		String contenido = consola.contento_verificar;
+    /**
+     * Verifica si el log contiene dependencias faltantes o versiones incorrectas en mods de Fabric.
+     */
+    @Override
+    public void verificar(Consola consola) {
+        String contenido = consola.contento_verificar;
+        String[] lineas = contenido.split("\n");
 
-		// Definición de patrones
-		Pattern[] patrones = {
-				// Ejemplo: "Could not find required mod: examplemod requires {anothermod @
-				// [1.0.0]}"
-				Pattern.compile("net\\.fabricmc\\.loader\\.discovery\\.ModResolutionException: "
-						+ "Could not find required mod: ([\\w\\-\\._]+) "
-						+ "requires \\{([\\w\\-\\._]+) @ \\$\\$([^\\$]+)\\$\\$\\}", Pattern.DOTALL),
-				// Ejemplo: "requires any version of mod anothermod"
-				Pattern.compile(
-						"\\s*- Mod ([\\w\\-\\._]+)(?: [^ ]+)? requires any version of (?:mod )?([\\w\\-\\._]+),",
-						Pattern.DOTALL),
-				// Ejemplo: "requires version 1.2.3 or later of mod anothermod"
-				Pattern.compile(
-						"\\s*- Mod ([\\w\\-\\._]+)(?: [^ ]+)? requires version ([^ ]+) or later of (?:mod )?([\\w\\-\\._]+),",
-						Pattern.DOTALL),
-				// Ejemplo: "requires any version after 1.1 of mod brokenmod"
-				Pattern.compile(
-						"\\s*- Mod ([\\w\\-\\._]+)(?: [^ ]+)? requires any version after ([^ ]+) of (?:mod )?([\\w\\-\\._]+),",
-						Pattern.DOTALL),
-				// Ejemplo: "requires any version before 1.1 of mod brokenmod"
-				Pattern.compile(
-						"\\s*- Mod ([\\w\\-\\._]+)(?: [^ ]+)? requires any version before ([^ ]+) of (?:mod )?([\\w\\-\\._]+),",
-						Pattern.DOTALL),
-				// Ejemplo: "requires version 1.2.3 of mod anothermod"
-				Pattern.compile(
-						"\\s*- Mod ([\\w\\-\\._]+)(?: [^ ]+)? requires version ([^ ]+) of (?:mod )?([\\w\\-\\._]+),",
-						Pattern.DOTALL),
-				// Ejemplo: "requires any version between 1.1 (inclusive) and 1.3 (exclusive) of
-				// mod brokenmod"
-				Pattern.compile(
-						"\\s*- Mod ([\\w\\-\\._]+)" + "(?: [^ ]+)? requires any version between " + "([^ ]+) "
-								+ "\\$\\$(inclusive|exclusive)\\$\\$ " + "and ([^ ]+) "
-								+ "\\$\\$(inclusive|exclusive)\\$\\$ " + "of (?:mod )?([\\w\\-\\._]+),",
-						Pattern.DOTALL) };
+        boolean enDetalles = false;
 
-		String[] tipos = { "short-error", "any", "minimum", "any-after", "any-before", "specific", "between" };
+        for (String linea : lineas) {
+            // Buscar el inicio de la seccion de detalles
+            if (linea.trim().equals("More details:")) {
+                enDetalles = true;
+                continue;
+            }
 
-		for (int i = 0; i < patrones.length; i++) {
-			Matcher coincidencia = patrones[i].matcher(contenido);
-			while (coincidencia.find()) {
-				String tipo = tipos[i];
-				switch (tipo) {
-				case "short-error":
-					nombresMods.add(coincidencia.group(1));
-					dependencias.add(coincidencia.group(2));
-					versiones.add(coincidencia.group(3));
-					break;
-				case "any":
-					nombresMods.add(coincidencia.group(1));
-					dependencias.add(coincidencia.group(2));
-					versiones.add("");
-					break;
-				case "minimum":
-				case "any-after":
-				case "any-before":
-				case "specific":
-					nombresMods.add(coincidencia.group(1));
-					dependencias.add(coincidencia.group(3));
-					versiones.add(coincidencia.group(2));
-					break;
-				case "between":
-					String modName = coincidencia.group(1);
-					String depMod = coincidencia.group(5);
-					String minVersion = coincidencia.group(2);
-					String minType = coincidencia.group(3);
-					String maxVersion = coincidencia.group(4);
-					String maxType = coincidencia.group(5);
+            if (!enDetalles) continue;
+            
+            // Salir del bucle si ya no estamos en la seccion de detalles
+            if (linea.trim().startsWith("at ") || linea.trim().startsWith("Caused by:")) {
+                break;
+            }
 
-					String rango = String.format("%s%s - %s%s", minType.equals("inclusive") ? "≥ " : "> ", minVersion,
-							maxType.equals("inclusive") ? "≤ " : "< ", maxVersion);
+            // Procesar solo lineas que contienen errores de dependencia
+            if (linea.contains("- Mod ")) {
+                procesarLineaError(linea.trim());
+            }
+        }
 
-					nombresMods.add(modName);
-					dependencias.add(depMod);
-					versiones.add(rango);
-					break;
-				}
-			}
-		}
+        // Generar mensaje si se encontraron problemas
+        if (!nombresMods.isEmpty()) {
+            StringBuilder mensajeBuilder = new StringBuilder();
+            
+            for (int i = 0; i < nombresMods.size(); i++) {
+                mensajeBuilder.append(MonitorDePID.idioma.mensajeDependenciaModFaltante(
+                    nombresMods.get(i), 
+                    dependencias.get(i),
+                    versiones.get(i)
+                )).append("<br><br>");
+            }
 
-		if (!nombresMods.isEmpty()) {
-			if (dependencias.size() > 1) {
-				this.mensaje = MonitorDePID.idioma.mensajeModDependenciaPlural(dependencias);
-			} else {
-				this.mensaje = MonitorDePID.idioma.mensajeDependenciaModFaltante(nombresMods.get(0),
-						dependencias.get(0), versiones.get(0));
-			}
-			activado = true;
-		}
-	}
+            this.mensaje = mensajeBuilder.toString().replaceAll("<br><br>$", "");
+            activado = true;
+        }
+    }
 
-	/**
-	 * Crea una nueva instancia del verificador.
-	 */
-	@Override
-	public Verificaciones nueva() {
-		return new ProblemaDependenciaModFabric();
-	}
+    /**
+     * Procesa una linea de error y extrae informacion relevante.
+     */
+    private void procesarLineaError(String linea) {
+        // Ejemplo: - Mod 'Indium' (indium) 1.0.27+mc1.20.1 requires version 0.5.3 of mod 'Sodium' (sodium), but only the wrong version is present: 0.4.10+build.27!
+        // Ejemplo: - Mod 'Indium' (indium) 1.0.27+mc1.20.1 requires version 3.2.0 or later of fabric-renderer-api-v1, which is missing!
 
-	/**
-	 * Indica si el problema fue detectado.
-	 */
-	@Override
-	public boolean activado() {
-		return activado;
-	}
+        // Extraer nombre del mod (ID interno)
+        int inicioModID = linea.indexOf("(");
+        int finModID = linea.indexOf(")");
+        String nombreMod = "";
+        if (inicioModID > 0 && finModID > inicioModID) {
+            nombreMod = linea.substring(inicioModID + 1, finModID);
+        }
 
-	/**
-	 * Prioridad del problema (alta).
-	 */
-	@Override
-	public float prioridad() {
-		return 800.0f;
-	}
+        // Procesar solo si hay un mod identificado
+        if (!nombreMod.isEmpty()) {
+            if (linea.contains("requires version")) {
+                String dependencia = "";
+                String version = "";
+                
+                // Caso: version especifica requerida
+                if (linea.contains("mod '")) {
+                    int inicioDep = linea.indexOf("mod '") + 5;
+                    int finDep = linea.indexOf("'", inicioDep);
+                    if (inicioDep > 0 && finDep > inicioDep) {
+                        dependencia = linea.substring(inicioDep, finDep);
+                    }
+                    
+                    int inicioVer = linea.indexOf("version ") + 8;
+                    int finVer = linea.indexOf(" of", inicioVer);
+                    if (inicioVer > 0 && finVer > inicioVer) {
+                        version = linea.substring(inicioVer, finVer);
+                    }
+                    
+                    // Detectar version actual si existe
+                    if (!version.isEmpty() && linea.contains("present:")) {
+                        int inicioActual = linea.indexOf("present:") + 9;
+                        int finActual = linea.indexOf("!", inicioActual);
+                        if (inicioActual > 0) {
+                            String versionActual = linea.substring(inicioActual, 
+                                (finActual > 0) ? finActual : linea.length()).trim();
+                            versiones.add("requiere " + version + ", encontrada " + versionActual);
+                        } else {
+                            versiones.add("requiere version " + version);
+                        }
+                    } 
+                    // Detectar version minima requerida
+                    else if (!version.isEmpty() && linea.contains("or later")) {
+                        versiones.add("version minima " + version + " requerida");
+                    } 
+                    // Solo dependencia sin version especifica
+                    else if (!dependencia.isEmpty() && linea.contains("which is missing")) {
+                        versiones.add("no encontrada");
+                    }
+                    
+                    // Extraer nombre de la dependencia si se encuentra
+                    if (!dependencia.isEmpty()) {
+                        dependencias.add(dependencia);
+                        nombresMods.add(nombreMod);
+                    }
+                }
+            }
+        }
+    }
 
-	/**
-	 * Devuelve el mensaje de error almacenado.
-	 */
-	@Override
-	public String mensaje() {
-		return mensaje;
-	}
+    /**
+     * Crea una nueva instancia del verificador.
+     */
+    @Override
+    public Verificaciones nueva() {
+        return new ProblemaDependenciaModFabric();
+    }
 
-	/**
-	 * Devuelve el nombre del problema para mostrar en la interfaz.
-	 */
-	@Override
-	public String nombre() {
-		return MonitorDePID.idioma.nombreProblemaDependenciaMod();
-	}
+    /**
+     * Indica si el problema fue detectado.
+     */
+    @Override
+    public boolean activado() {
+        return activado;
+    }
 
-	/**
-	 * Devuelve las soluciones posibles para este problema.
-	 */
-	@Override
-	public QuickFix solucion() {
-		Builder builder = new Builder(nombre());
+    /**
+     * Prioridad del problema (alta).
+     */
+    @Override
+    public float prioridad() {
+        return 800.0f;
+    }
 
-		for (int i = 0; i < dependencias.size(); i++) {
-			String dep = dependencias.get(i);
-			String ver = versiones.get(i);
+    /**
+     * Devuelve el mensaje de error almacenado.
+     */
+    @Override
+    public String mensaje() {
+        return mensaje;
+    }
 
-			if (ver != null && !ver.isEmpty()) {
-				builder.agregarEtiqueta(MonitorDePID.idioma.solucionInstalarModConVersion(dep, ver));
-			} else {
-				builder.agregarEtiqueta(MonitorDePID.idioma.solucionInstalarMod(dep));
-			}
-		}
+    /**
+     * Devuelve el nombre del problema para mostrar en la interfaz.
+     */
+    @Override
+    public String nombre() {
+        return MonitorDePID.idioma.nombreProblemaDependenciaMod();
+    }
 
-		return builder.construir();
-	}
+    /**
+     * Devuelve las soluciones posibles para este problema.
+     */
+    @Override
+    public QuickFix solucion() {
+        Builder builder = new Builder(nombre());
+        
+        for (int i = 0; i < dependencias.size(); i++) {
+            String dep = dependencias.get(i);
+            String ver = versiones.get(i);
+            
+            if (ver.contains("requiere")) {
+                // Caso: version incorrecta
+                String versionRequerida = ver.split(",")[0].replace("requiere ", "").trim();
+                builder.agregarEtiqueta(MonitorDePID.idioma.solucionInstalarModConVersion(dep, versionRequerida));
+            } else if (ver.contains("minima")) {
+                // Caso: version minima requerida
+                String versionMinima = ver.replace("version minima ", "").replace(" requerida", "").trim();
+                builder.agregarEtiqueta(MonitorDePID.idioma.solucionInstalarModConVersion(dep, versionMinima));
+            } else if (ver.contains("no encontrada")) {
+                // Caso: dependencia completamente faltante
+                builder.agregarEtiqueta(MonitorDePID.idioma.solucionInstalarMod(dep));
+            } else {
+                // Caso general
+                builder.agregarEtiqueta(MonitorDePID.idioma.solucionInstalarMod(dep));
+            }
+        }
+        
+        return builder.construir();
+    }
 }

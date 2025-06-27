@@ -8,35 +8,53 @@ import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Clase que detecta plugins con nombres ambiguos en la carpeta 'plugins'. Gracias a Aternos por que esta es una implementacion de su codex https://github.com/aternosorg/codex-minecraft
+ * Clase que detecta plugins con nombres ambiguos en la carpeta 'plugins'.Gracias a Aternos por que esta es una implementacion de su codex https://github.com/aternosorg/codex-minecraft
  */
 public class ProblemaNombrePluginAmbiguo implements Verificaciones {
 
     private boolean activado = false;
     private String mensaje = "";
-    private String nombrePlugin = "";
-    private String primerPath = "";
-    private String segundoPath = "";
+    private List<String> nombresPlugins = new ArrayList<>();
+    private List<String> primerosArchivos = new ArrayList<>();
+    private List<String> segundosArchivos = new ArrayList<>();
 
     /**
-     * Verifica si el log contiene el error de nombre ambiguo de plugin.
+     * Verifica si el log contiene errores de nombre ambiguo de plugins.
      */
     @Override
     public void verificar(Consola consola) {
         String contenido = consola.contento_verificar;
+        String[] lineas = contenido.split("\n");
 
-        // Patrón de error: "Ambiguous plugin name 'Nombre' for files 'plugins/...' and 'plugins/...'"
-        Pattern patron = Pattern.compile("Ambiguous plugin name '([^']+)'.*?files '(plugins/[^']+)'.*?'(plugins/[^']+)'.*?plugins");
-        Matcher coincidencia = patron.matcher(contenido);
+        // Patrón mejorado para manejar cualquier combinación de comillas
+        Pattern patron = Pattern.compile("Ambiguous plugin name [`']([^`']*)[`'].*?files [`']plugins/([^`']*)[`'].*?and [`']plugins/([^`']*)[`']");
 
-        if (coincidencia.find()) {
-            this.nombrePlugin = coincidencia.group(1);
-            this.primerPath = extraerNombrePlugin(coincidencia.group(2));
-            this.segundoPath = extraerNombrePlugin(coincidencia.group(3));
+        for (String linea : lineas) {
+            Matcher coincidencia = patron.matcher(linea.trim());
+
+            if (coincidencia.find()) {
+                nombresPlugins.add(coincidencia.group(1));
+                primerosArchivos.add(extraerNombrePlugin(coincidencia.group(2)));
+                segundosArchivos.add(extraerNombrePlugin(coincidencia.group(3)));
+            }
+        }
+
+        if (!nombresPlugins.isEmpty()) {
+            StringBuilder mensajeBuilder = new StringBuilder();
             
-            this.mensaje = MonitorDePID.idioma.mensajeNombrePluginAmbiguo(nombrePlugin, primerPath, segundoPath) + Verificaciones.nl_html;
+            for (int i = 0; i < nombresPlugins.size(); i++) {
+                mensajeBuilder.append(MonitorDePID.idioma.mensajeNombrePluginAmbiguo(
+                    nombresPlugins.get(i),
+                    primerosArchivos.get(i),
+                    segundosArchivos.get(i)
+                )).append("<br>");
+            }
+
+            this.mensaje = mensajeBuilder.toString();
             activado = true;
         }
     }
@@ -94,9 +112,13 @@ public class ProblemaNombrePluginAmbiguo implements Verificaciones {
      */
     @Override
     public QuickFix solucion() {
-        return new Builder(nombre())
-            .agregarEtiqueta(MonitorDePID.idioma.solucionEliminarPlugin(primerPath))
-            .agregarEtiqueta(MonitorDePID.idioma.solucionEliminarPlugin(segundoPath))
-            .construir();
+        Builder builder = new Builder(nombre());
+        
+        for (int i = 0; i < primerosArchivos.size(); i++) {
+            builder.agregarEtiqueta(MonitorDePID.idioma.solucionEliminarPlugin(primerosArchivos.get(i)));
+            builder.agregarEtiqueta(MonitorDePID.idioma.solucionEliminarPlugin(segundosArchivos.get(i)));
+        }
+        
+        return builder.construir();
     }
 }
