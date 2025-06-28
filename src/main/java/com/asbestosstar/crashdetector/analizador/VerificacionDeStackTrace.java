@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -33,8 +32,7 @@ public class VerificacionDeStackTrace {
 	public Map<String, Boolean> jars = new LinkedHashMap<>();// FATAL
 	public BiMap<String, String, Boolean> modids = new BiMap<>();// FATAL
 	public BiMap<String, String, Boolean> packs = new BiMap<>();// FATAL
-
-	public List<String> braceContentos = new LinkedList<>();
+	public BiMap<String, String, Boolean> braces = new BiMap<>();// FATAL
 
 	public List<String> fatal_clases_no_existe = new ArrayList<String>();
 
@@ -42,6 +40,7 @@ public class VerificacionDeStackTrace {
 	public List<String> jar_malo = new ArrayList<String>();
 	public List<String> modid_malo = new ArrayList<String>();
 	public List<String> package_malo = new ArrayList<String>();
+	public List<String> brace_malo = new ArrayList<String>();
 
 	public String[] package_no_permite = { "java.", "net.minecraft", "net.minecraftforge", "org.spongepowered",
 			"it.unimi", "com.mojang.", "cpw.", "featurecreep.", "jdk.", "sun.", "com.sun.", "org.lwjgl.", "org.apache.",
@@ -61,8 +60,6 @@ public class VerificacionDeStackTrace {
 		jars.clear();
 		modids.clear();
 		packs.clear();
-
-		braceContentos.clear();
 
 		fatal_clases_no_existe.clear();
 
@@ -102,6 +99,7 @@ public class VerificacionDeStackTrace {
 			for (String untrimmed : arr) {
 				linea_num++;
 				String linea = untrimmed.trim();
+				String dec = Integer.toString(lvl) + "," + Integer.toString(linea_num);
 				if (linea.contains("[")) {// There is not always a Jar
 					extractarJarNombresEnBrackets(linea, fatal, lvl, linea_num);
 				} else if (linea.contains("/")) {// Some dev enviornments like ForgeGradle or dev orientated launchers
@@ -113,15 +111,12 @@ public class VerificacionDeStackTrace {
 						if (!modid_malo.contains(modid) && !linea.split("/")[0].startsWith("java.")
 								&& !esModNoPermite(modid) && linea.startsWith("at")) {
 							modid_malo.add(modid);
-							modids.put(modid,
-									MonitorDePID.idioma.nivel() + String.valueOf(lvl) + "," + String.valueOf(linea_num),
-									fatal);
+							modids.put(modid, MonitorDePID.idioma.nivel() + dec, fatal);
 
 						}
 					}
 
 				} else if (linea.startsWith("at")) { // a veces necesitemos usar packages
-					String dec = Integer.toString(lvl) + "," + Integer.toString(linea_num);
 					String pack = linea.substring(3);
 					if (!package_malo.contains(pack) && !packNoEsPermite(pack, dec, fatal)) {
 						packs.put(pack, MonitorDePID.idioma.nivel() + dec, fatal);
@@ -131,7 +126,7 @@ public class VerificacionDeStackTrace {
 
 				// else if (line.contains("ClassNotFoundException") && fatal) {
 				else if (linea.contains("ClassNotFoundException")
-						&& !linea.contains("The specified mixin")/* Todo */ ) {// No Necesitemos fatal en FabricMC o
+						&& !linea.contains("The specified mixin")/* TODO */ ) {// No Necesitemos fatal en FabricMC o
 																				// FeatureCreep
 					String claseNombre = linea;
 					// Eliminar la parte antes del nombre de la clase
@@ -150,19 +145,20 @@ public class VerificacionDeStackTrace {
 				Matcher braceMatcher = BRACE_PATTERN.matcher(linea);
 				while (braceMatcher.find()) {
 					String content = braceMatcher.group(1).trim();
-					if (!braceContentos.contains(content)) {// TODO, readd levels
-						braceContentos.add(content);
+					if (!brace_malo.contains(content)) {
+						braces.put(content, MonitorDePID.idioma.nivel() + dec, fatal);
+						brace_malo.add(content);
 					}
 				}
 
 			}
 
-//			if (trace_contain(arr, "[")) {
-//				for (String untrimmed : arr) {
-//					String line = untrimmed.trim();
-//					extractJarNamesSquareBracket(line, jars, false);
-//				}
-//			}
+			// if (trace_contain(arr, "[")) {
+			// for (String untrimmed : arr) {
+			// String line = untrimmed.trim();
+			// extractJarNamesSquareBracket(line, jars, false);
+			// }
+			// }
 
 		}
 	}

@@ -39,25 +39,21 @@ public class ContentoDeTraces implements Verificaciones {
 	public void verificar(Consola consola) {
 		VerificacionDeStackTrace vdst = consola.verificacion_de_stacktrace;
 		StringBuilder constructor = new StringBuilder();
-		
-		 // Añadir mensajes de la consola si existen
-		 String mensajeFatal = consola.obtainerMensajeFatalUltimaTrace();
-		 if (mensajeFatal != null && !mensajeFatal.trim().isEmpty()) {
-		     constructor.append(nl_html)
-		                .append("<strong>")
-		                .append(MonitorDePID.idioma.mensaje_de_trace_fatal_ultima_no_traductado())
-		                .append("</strong> ")
-		                .append(mensajeFatal).append(nl_html);
-		 }
 
-		 String mensajeNormal = consola.obtainerMensajeUltimaTrace();
-		 if (mensajeNormal != null && !mensajeNormal.trim().isEmpty() && !mensajeNormal.equals(mensajeFatal)) {
-		     constructor.append(nl_html)
-		                .append("<strong>")
-		                .append(MonitorDePID.idioma.mensaje_de_trace_ultima_no_traductado())
-		                .append("</strong> ")
-		                .append(mensajeNormal).append(nl_html);
-		 }
+		// Añadir mensajes de la consola si existen
+		String mensajeFatal = consola.obtainerMensajeFatalUltimaTrace();
+		if (mensajeFatal != null && !mensajeFatal.trim().isEmpty()) {
+			constructor.append(nl_html).append("<strong>")
+					.append(MonitorDePID.idioma.mensaje_de_trace_fatal_ultima_no_traductado()).append("</strong> ")
+					.append(mensajeFatal).append(nl_html);
+		}
+
+		String mensajeNormal = consola.obtainerMensajeUltimaTrace();
+		if (mensajeNormal != null && !mensajeNormal.trim().isEmpty() && !mensajeNormal.equals(mensajeFatal)) {
+			constructor.append(nl_html).append("<strong>")
+					.append(MonitorDePID.idioma.mensaje_de_trace_ultima_no_traductado()).append("</strong> ")
+					.append(mensajeNormal).append(nl_html);
+		}
 
 		HashMap<String, Boolean> jar_nombres = new HashMap<>();
 		if (!vdst.jars.isEmpty()) {
@@ -216,8 +212,6 @@ public class ContentoDeTraces implements Verificaciones {
 
 			constructor.append(String.join("", configItems)).append("</ul>");
 		}
-		
-		
 
 		if (!constructor.toString().isEmpty()) {
 			contento.put(consola.archivo.getFileName().toString(), new StringBuilder(constructor.toString().trim()));
@@ -306,11 +300,10 @@ public class ContentoDeTraces implements Verificaciones {
 		return rutaDelPaquete.toString();
 	}
 
-    @Override
-    public QuickFix solucion() {
-        return new QuickFix.Builder(nombre())
-            .agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
-            .construir();
-    }
+	@Override
+	public QuickFix solucion() {
+		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
+				.construir();
+	}
 
 }
