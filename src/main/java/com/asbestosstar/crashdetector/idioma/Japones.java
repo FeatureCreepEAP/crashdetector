@@ -1700,6 +1700,139 @@ public String nombreLegacyRandomSourceMultiHilos() {
 public String mensajeLegacyRandomSourceMultiHilos() {
     return "<b style='color:#" + config.obtenerColorError() + "'>複数のスレッドが LegacyRandomSource クラスにアクセスしています。詳細は 'Unsafe World Random Access Detector' または 'C2ME' モッドで確認できます。</b>";
 }
+@Override
+public String desdeUltimoExito() {
+    return "前回の成功以降";
+}
+
+@Override
+public String noHayCambios() {
+    return "変更なし";
+}
+
+@Override
+public String desdeUltimoIntento() {
+    return "前回の試行以降";
+}
+
+@Override
+public String fallo() {
+    return "失敗";
+}
+
+@Override
+public String diferentesDeLasMods() {
+    return "MODと異なる";
+}
+
+@Override
+public String historialDeMods() {
+    return "MOD履歴";
+}
+
+@Override
+public String archivo0() {
+    return "ファイル0";
+}
+
+@Override
+public String archivo1() {
+    return "ファイル1";
+}
+
+@Override
+public String comparar() {
+    return "比較";
+}
+
+@Override
+public String seleccionarDosArchivos() {
+    return "2つのファイルを選択してください";
+}
+
+@Override
+public String archivoExito() {
+    return "成功したファイル";
+}
+
+@Override
+public String archivoFalla() {
+    return "失敗したファイル";
+}
+
+@Override
+public String errorComparandoArchivos() {
+    return "ファイルの比較中にエラーが発生しました";
+}
+
+@Override
+public String comparando() {
+    return "比較中";
+}
+
+@Override
+public String con() {
+    return "と";
+}
+
+@Override
+public String descripcionPanelHistoriaMods() {
+    return "<html><body style='font-family: sans-serif; font-size: 12px;'>"
+        + "<p><b>MOD履歴比較パネル</b></p>"
+        + "<p>このパネルでは、異なるセッションのMODリストを比較できます。左側からファイル、右側からもう一つのファイルを選択し、変更点を確認してください。</p>"
+        
+        + "<h3>使い方:</h3>"
+        + "<ol>"
+        + "<li><b>ファイル選択:</b> ファイル横のラジオボタンをクリックします。"
+        + " <span style='color: #4CAF50; font-weight: bold;'>.suceso</span> で終わるファイルは成功したセッション、"
+        + " <span style='color: #F44336; font-weight: bold;'>.falla</span> は失敗したセッションです。</li>"
+        
+        + "<li><b>自動比較:</b>「Compare」ボタンを押すと、システムが両方のリストを解析して追加(+)または削除(-)されたMODを表示します。</li>"
+        
+        + "<li><b>結果の表示:</b> 結果は色分けされたHTML形式で表示されます: "
+        + "<ul>"
+        + "<li><span style='color: green;'>+ 追加されたMOD</span></li>"
+        + "<li><span style='color: red;'>- 削除されたMOD</span></li>"
+        + "</ul></li>"
+        + "</ol>"
+        
+        + "<h3>主な機能:</h3>"
+        + "<ul>"
+        + "<li>成功/失敗ファイルの任意の組み合わせに対応</li>"
+        + "<li>正確な追跡のための双方向差分表示</li>"
+        + "<li>長いMODリスト用にスクロール機能付き</li>"
+        + "<li>視覚的理解を促進する説明画像付き</li>"
+        + "</ul>"
+        
+        + "<p>設定内の変更を追跡できるよう <3️ を込めて開発しました。</p>"
+        + "</body></html>";
+}
+@Override
+public String tieneErrorIPV6() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+           + "IPv6 に関連する問題が発生している可能性があります。"
+           + "解決策は以下の2つです："
+           + "1) ランチャーに JVM 引数 <code>-Djava.net.preferIPv4Stack=true</code> を追加するか、"
+           + "2) CrashDetector の 'QuickFix' ボタンをクリックして自動的にこの設定を有効にするパッチを適用してください。"
+           + "</b>";
+}
+
+@Override
+public String parcheIPv4() {
+    return "IPv4/6 パッチ";
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

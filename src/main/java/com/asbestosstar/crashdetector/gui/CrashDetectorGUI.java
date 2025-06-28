@@ -303,7 +303,7 @@ public class CrashDetectorGUI extends JFrame {
 		barraLateralDerecha.add(Box.createVerticalStrut(10)); // Espaciado entre botones
 		CrashDetectorLogger.log("estabalar lateral derecha");
 		// Botones dinámicos (grepr/fgrepr y MCreator)
-		String[] botones = { "grepr/fgrepr", "MCreator" };
+		String[] botones = { "grepr/fgrepr", "MCreator", "Mods" };
 		for (String texto : botones) {
 			JButton btn = new JButton(texto);
 			estilizarBoton(btn);
@@ -318,6 +318,11 @@ public class CrashDetectorGUI extends JFrame {
 			} else if ("MCreator".equals(texto)) {
 				btn.addActionListener(e -> {
 					EscanerMCreatorGUI escaner = new EscanerMCreatorGUI();
+					escaner.setVisible(true);
+				});
+			} else if ("Mods".equals(texto)) {
+				btn.addActionListener(e -> {
+					HistoriaModsGUI escaner = new HistoriaModsGUI();
 					escaner.setVisible(true);
 				});
 			}

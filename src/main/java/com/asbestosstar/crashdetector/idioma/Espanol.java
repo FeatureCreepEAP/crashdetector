@@ -2127,7 +2127,146 @@ public String mensajeLegacyRandomSourceMultiHilos() {
 
 }
 
+@Override
+public String desdeUltimoExito() {
+	// TODO Auto-generated method stub
+	return "Desde Ultima Exito";
+}
 
+@Override
+public String noHayCambios() {
+	// TODO Auto-generated method stub
+	return "No Hay Cambios";
+}
+
+@Override
+public String desdeUltimoIntento() {
+	// TODO Auto-generated method stub
+	return "Desde Ultimo Intento";
+}
+
+@Override
+public String fallo() {
+	// TODO Auto-generated method stub
+	return "Fallo";
+}
+
+@Override
+public String diferentesDeLasMods() {
+	// TODO Auto-generated method stub
+	return "Diferentes De Las Mods";
+}
+
+@Override
+public String historialDeMods() {
+	// TODO Auto-generated method stub
+	return "HistorialDeMods";
+}
+
+@Override
+public String archivo0() {
+	// TODO Auto-generated method stub
+	return "Archivo0";
+}
+
+@Override
+public String archivo1() {
+	// TODO Auto-generated method stub
+	return "Archivo1";
+}
+
+@Override
+public String comparar() {
+	// TODO Auto-generated method stub
+	return "Comparar";
+}
+
+@Override
+public String seleccionarDosArchivos() {
+	// TODO Auto-generated method stub
+	return "Seleccionar Dos Archivos";
+}
+
+@Override
+public String archivoExito() {
+	// TODO Auto-generated method stub
+	return "Archivo Exito";
+}
+
+@Override
+public String archivoFalla() {
+	// TODO Auto-generated method stub
+	return "Archivo Falla";
+}
+
+@Override
+public String errorComparandoArchivos() {
+	// TODO Auto-generated method stub
+	return "Error Comparando Archivos";
+}
+
+@Override
+public String comparando() {
+	// TODO Auto-generated method stub
+	return "Comparando";
+}
+
+@Override
+public String con() {
+	// TODO Auto-generated method stub
+	return "Con";
+}
+
+@Override
+public String descripcionPanelHistoriaMods() {
+    return "<html><body style='font-family: sans-serif; font-size: 12px;'>"
+        + "<p><b>Panel de Comparación de Historial de Mods</b></p>"
+        + "<p>Este panel le permite comparar dos listas de mods (módulos) de diferentes sesiones de ejecución. "
+        + "Seleccione un archivo de la columna izquierda y otro de la derecha para ver los cambios realizados entre ambas versiones.</p>"
+        
+        + "<h3>Cómo usarlo:</h3>"
+        + "<ol>"
+        + "<li><b>Selección de archivos:</b> Haga clic en los botones de radio junto a los nombres de los archivos. "
+        + "Los archivos terminados en <span style='color: #4CAF50; font-weight: bold;'>.exito</span> indican sesiones exitosas, "
+        + "mientras que los de <span style='color: #F44336; font-weight: bold;'>.falla</span> corresponden a fallos.</li>"
+        
+        + "<li><b>Comparación automática:</b> Al presionar el botón 'Compare', el sistema analizará las dos listas seleccionadas "
+        + "y mostrará los mods añadidos (+) o eliminados (-) en cada dirección.</li>"
+        
+        + "<li><b>Visualización de resultados:</b> Los resultados se presentan en formato HTML con colores codificados: "
+        + "<ul>"
+        + "<li><span style='color: green;'>+ Mod añadido</span></li>"
+        + "<li><span style='color: red;'>- Mod eliminado</span></li>"
+        + "</ul></li>"
+        + "</ol>"
+        
+        + "<h3>Características clave:</h3>"
+        + "<ul>"
+        + "<li>Soporta selección de cualquier combinación de archivos (éxito/fallo).</li>"
+        + "<li>Muestra diferencias bidireccionales para identificar cambios precisos.</li>"
+        + "<li>Incluye scroll para navegar por listas largas de mods.</li>"
+        + "<li>Integración con imágenes explicativas para mejorar la comprensión visual.</li>"
+        + "</ul>"
+        
+        + "<p>Desarrollado con <3️ para ayudarle a rastrear modificaciones en sus configuraciones.</p>"
+        + "</body></html>";
+}
+
+@Override
+public String tieneErrorIPV6() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+           + "Es posible que tengas un problema relacionado con IPv6. "
+           + "Existen dos soluciones: "
+           + "1) Agregar el argumento JVM <code>-Djava.net.preferIPv4Stack=true</code> en tu lanzador, o "
+           + "2) Usar el botón 'QuickFix' en CrashDetector para aplicar un parche que active esta configuración automáticamente."
+           + "</b>";
+}
+
+@Override
+public String parcheIPv4() {
+	// TODO Auto-generated method stub
+	return "Parche IPV4/6";
+}
 
 
 

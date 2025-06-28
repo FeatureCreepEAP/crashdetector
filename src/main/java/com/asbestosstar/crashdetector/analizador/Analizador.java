@@ -56,6 +56,7 @@ import com.asbestosstar.crashdetector.analizador.apps.minecraft.Theseus;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.WaterMediaTL;
 import com.asbestosstar.crashdetector.analizador.general.AdvertenciaFaltasClases;
 import com.asbestosstar.crashdetector.analizador.general.ContentoDeTraces;
+import com.asbestosstar.crashdetector.analizador.general.DifDeMods;
 import com.asbestosstar.crashdetector.analizador.general.Drivers;
 import com.asbestosstar.crashdetector.analizador.general.ErrorDeMonitorLWJGL;
 import com.asbestosstar.crashdetector.analizador.general.FaltaModuleJPMS;
@@ -65,6 +66,7 @@ import com.asbestosstar.crashdetector.analizador.general.ModulesDuplicadosJavaMo
 import com.asbestosstar.crashdetector.analizador.general.NoTieneMemoria;
 import com.asbestosstar.crashdetector.analizador.general.NullPointer;
 import com.asbestosstar.crashdetector.analizador.general.OpcionesJavaGCInvalidas;
+import com.asbestosstar.crashdetector.analizador.general.PreferIPV4Trace;
 import com.asbestosstar.crashdetector.analizador.general.SpongeMixinConfigsProblematicos;
 
 public class Analizador {
@@ -82,6 +84,7 @@ public class Analizador {
 	static {
 		verificaciones.add(new SpongeMixinConfigsProblematicos());
 		verificaciones.add(new NoSuchElementAnimacionMinecraft());
+		verificaciones.add(new PreferIPV4Trace());
 		verificaciones.add(new RegistrosMalMapeados());
 		verificaciones.add(new ModulesDuplicadosJavaModulePlatform());
 		verificaciones.add(new FaltaModuleJPMS());
@@ -154,6 +157,13 @@ public class Analizador {
 		
 		// Fin de Codex Aternos
 
+		
+		
+		verificaciones.add(new DifDeMods());
+
+		
+		
+		
 	}
 
 	public Analizador() {

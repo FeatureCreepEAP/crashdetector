@@ -1709,6 +1709,130 @@ public String mensajeLegacyRandomSourceMultiHilos() {
     return "<b style='color:#" + config.obtenerColorError() + "'>Kelkaj hiloj aliras la klason LegacyRandomSource samtempe. Por pluaj informoj, uzu la modon 'Unsafe World Random Access Detector' aŭ 'C2ME'.</b>";
 }
 
+@Override
+public String desdeUltimoExito() {
+    return "Ekde lasta sukceso";
+}
+
+@Override
+public String noHayCambios() {
+    return "Neniu ŝanĝo";
+}
+
+@Override
+public String desdeUltimoIntento() {
+    return "Ekde lasta provo";
+}
+
+@Override
+public String fallo() {
+    return "Malsukcesis";
+}
+
+@Override
+public String diferentesDeLasMods() {
+    return "Malsama de la kromprogramoj";
+}
+
+@Override
+public String historialDeMods() {
+    return "Mod-historio";
+}
+
+@Override
+public String archivo0() {
+    return "Dosiero0";
+}
+
+@Override
+public String archivo1() {
+    return "Dosiero1";
+}
+
+@Override
+public String comparar() {
+    return "Kompari";
+}
+
+@Override
+public String seleccionarDosArchivos() {
+    return "Elektu du dosierojn";
+}
+
+@Override
+public String archivoExito() {
+    return "Sukcesa dosiero";
+}
+
+@Override
+public String archivoFalla() {
+    return "Fiaska dosiero";
+}
+
+@Override
+public String errorComparandoArchivos() {
+    return "Eraro dum komparo de dosieroj";
+}
+
+@Override
+public String comparando() {
+    return "Komparante";
+}
+
+@Override
+public String con() {
+    return "kun";
+}
+
+@Override
+public String descripcionPanelHistoriaMods() {
+    return "<html><body style='font-family: sans-serif; font-size: 12px;'>"
+        + "<p><b>Panelo por MOD-historia komparo</b></p>"
+        + "<p>Tiu ĉi panelo ebligas al vi kompari du listojn de MOD-oj el diversaj sesioj. Elektu unu dosieron el la maldekstra kolumno kaj alian el la dekstra por vidi ŝanĝojn inter ambaŭ versioj.</p>"
+        
+        + "<h3>Kiel uzi:</h3>"
+        + "<ol>"
+        + "<li><b>Dosierselektado:</b> Klaku la radiobutonojn apud la dosiernomoj. Dosieroj finitaj per <span style='color: #4CAF50; font-weight: bold;'>.exito</span> indikas sukcesajn sesiojn, dum tiuj kun <span style='color: #F44336; font-weight: bold;'>.falla</span> montras fiaskojn.</li>"
+        
+        + "<li><b>Aŭtomata komparo:</b> Premante butonon 'Kompari', la sistemo analizos la du listojn kaj montramos kiujn MOD-ojn oni aldonis (+) aŭ forigis (-).</li>"
+        
+        + "<li><b>Rezultmontrado:</b> La rezultoj estas prezentitaj en HTML-kolora formato: "
+        + "<ul>"
+        + "<li><span style='color: green;'>+ Aldonita MOD</span></li>"
+        + "<li><span style='color: red;'>- Forigita MOD</span></li>"
+        + "</ul></li>"
+        + "</ol>"
+        
+        + "<h3>Ĉefaj funkcioj:</h3>"
+        + "<ul>"
+        + "<li>Subtenas ajnan kombinaĵon de sukcesaj/malsukcesaj dosieroj.</li>"
+        + "<li>Bidirektaj diferencoj por preciza sekvo de ŝanĝoj.</li>"
+        + "<li>Rulumilo inkluzive por longaj MOD-listoj.</li>"
+        + "<li>Integriĝas kun klarigaj bildoj por plibonigi vidan komprenon.</li>"
+        + "</ul>"
+        
+        + "<p>Evoluinta kun <3️ por helpi vin sekvi ŝanĝojn en via agordo.</p>"
+        + "</body></html>";
+}
+
+@Override
+public String tieneErrorIPV6() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+           + "Eblas, ke vi havas problemon rilatantan al IPv6. "
+           + "Estas du solvoj: "
+           + "1) Aldonu la JVM-argumenton <code>-Djava.net.preferIPv4Stack=true</code> al via lanĉilo, aŭ "
+           + "2) Uzu la butonon 'QuickFix' en CrashDetector por apliki korekton, kiu aŭtomate ŝaltas tiun agordon."
+           + "</b>";
+}
+
+@Override
+public String parcheIPv4() {
+    return "IPv4/6 Korekto";
+}
+
+
+
+
 
 
 

@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import javax.swing.Icon;
+
 import com.asbestosstar.crashdetector.idioma.Arabe;
 import com.asbestosstar.crashdetector.idioma.Chino;
 import com.asbestosstar.crashdetector.idioma.Coreano;
@@ -703,6 +705,42 @@ public interface Idioma {
 	public String nombreLegacyRandomSourceMultiHilos();
 
 	public String mensajeLegacyRandomSourceMultiHilos();
+
+	public String desdeUltimoExito();
+
+	public String noHayCambios();
+
+	public String desdeUltimoIntento();
+
+	public String fallo();
+
+	public String diferentesDeLasMods();
+
+	public String historialDeMods();
+
+	public String archivo0();
+
+	public String archivo1();
+
+	public String comparar();
+
+	public String seleccionarDosArchivos();
+
+	public String archivoExito();
+
+	public String archivoFalla();
+
+	public String errorComparandoArchivos();
+
+	public String comparando();
+
+	public String con();
+
+	public String descripcionPanelHistoriaMods();
+
+	public String tieneErrorIPV6();
+
+	public String parcheIPv4();
 	
 	// public String advertenciaMalwareFalso();
 

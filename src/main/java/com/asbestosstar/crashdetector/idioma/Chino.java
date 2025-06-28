@@ -1702,7 +1702,130 @@ public String mensajeLegacyRandomSourceMultiHilos() {
     return "<b style='color:#" + config.obtenerColorError() + "'>检测到多个线程访问 LegacyRandomSource 类。你可以通过安装 'Unsafe World Random Access Detector' 或 'C2ME' 模组获取更多信息。</b>";
 }
 
+@Override
+public String desdeUltimoExito() {
+    return "自上次成功以来";
+}
 
+@Override
+public String noHayCambios() {
+    return "无更改";
+}
+
+@Override
+public String desdeUltimoIntento() {
+    return "自上次尝试以来";
+}
+
+@Override
+public String fallo() {
+    return "失败";
+}
+
+@Override
+public String diferentesDeLasMods() {
+    return "与模组不同";
+}
+
+@Override
+public String historialDeMods() {
+    return "模组历史记录";
+}
+
+@Override
+public String archivo0() {
+    return "文件0";
+}
+
+@Override
+public String archivo1() {
+    return "文件1";
+}
+
+@Override
+public String comparar() {
+    return "比较";
+}
+
+@Override
+public String seleccionarDosArchivos() {
+    return "选择两个文件";
+}
+
+@Override
+public String archivoExito() {
+    return "成功文件";
+}
+
+@Override
+public String archivoFalla() {
+    return "失败文件";
+}
+
+@Override
+public String errorComparandoArchivos() {
+    return "比较文件时出错";
+}
+
+@Override
+public String comparando() {
+    return "正在比较";
+}
+
+@Override
+public String con() {
+    return "与";
+}
+
+
+@Override
+public String descripcionPanelHistoriaMods() {
+    return "<html><body style='font-family: sans-serif; font-size: 12px;'>"
+        + "<p><b>模组历史比较面板</b></p>"
+        + "<p>此面板允许您对比不同运行会话的两个模组列表。从左侧选择一个文件，右侧选择另一个，以查看它们之间的变化。</p>"
+        
+        + "<h3>使用方法：</h3>"
+        + "<ol>"
+        + "<li><b>选择文件：</b>点击文件名旁边的单选按钮。"
+        + "以<span style='color: #4CAF50; font-weight: bold;'>.exito</span>结尾的文件表示成功会话，"
+        + "而以<span style='color: #F44336; font-weight: bold;'>.falla</span>结尾的文件则代表失败。</li>"
+        
+        + "<li><b>自动对比：</b>按下'Compare'按钮后系统将分析所选列表，并显示添加(+)或删除(-)的模组。</li>"
+        
+        + "<li><b>结果展示：</b>结果以颜色编码的HTML格式呈现："
+        + "<ul>"
+        + "<li><span style='color: green;'>+ 添加的模组</span></li>"
+        + "<li><span style='color: red;'>- 删除的模组</span></li>"
+        + "</ul></li>"
+        + "</ol>"
+        
+        + "<h3>主要功能：</h3>"
+        + "<ul>"
+        + "<li>支持任意组合的成功/失败文件对比。</li>"
+        + "<li>双向差异展示以便精准跟踪变更。</li>"
+        + "<li>支持长模组列表滚动浏览。</li>"
+        + "<li>集成示意图提升视觉理解。</li>"
+        + "</ul>"
+        
+        + "<p>用心开发，助您追踪配置中的更改 <3</p>"
+        + "</body></html>";
+}
+
+
+@Override
+public String tieneErrorIPV6() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+           + "您可能遇到了与 IPv6 相关的问题。"
+           + "有两种解决方案："
+           + "1) 在启动器中添加 JVM 参数 <code>-Djava.net.preferIPv4Stack=true</code>，或者"
+           + "2) 在 CrashDetector 中使用 'QuickFix' 按钮自动启用此设置的补丁。"
+           + "</b>";
+}
+
+@Override
+public String parcheIPv4() {
+    return "IPv4/6 补丁";
+}
 
 
 

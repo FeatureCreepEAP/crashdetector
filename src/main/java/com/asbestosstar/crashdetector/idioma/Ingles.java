@@ -1734,12 +1734,130 @@ public String mensajeLegacyRandomSourceMultiHilos() {
 }
 
 
+@Override
+public String desdeUltimoExito() {
+    return "Since Last Success";
+}
+
+@Override
+public String noHayCambios() {
+    return "No Changes";
+}
+
+@Override
+public String desdeUltimoIntento() {
+    return "Since Last Attempt";
+}
+
+@Override
+public String fallo() {
+    return "Failed";
+}
+
+@Override
+public String diferentesDeLasMods() {
+    return "Different From Mods";
+}
+
+@Override
+public String historialDeMods() {
+    return "Mod History";
+}
+
+@Override
+public String archivo0() {
+    return "File0";
+}
+
+@Override
+public String archivo1() {
+    return "File1";
+}
+
+@Override
+public String comparar() {
+    return "Compare";
+}
+
+@Override
+public String seleccionarDosArchivos() {
+    return "Select Two Files";
+}
+
+@Override
+public String archivoExito() {
+    return "Success File";
+}
+
+@Override
+public String archivoFalla() {
+    return "Failure File";
+}
+
+@Override
+public String errorComparandoArchivos() {
+    return "Error Comparing Files";
+}
+
+@Override
+public String comparando() {
+    return "Comparing";
+}
+
+@Override
+public String con() {
+    return "With";
+}
 
 
+@Override
+public String descripcionPanelHistoriaMods() {
+    return "<html><body style='font-family: sans-serif; font-size: 12px;'>"
+        + "<p><b>Mod History Comparison Panel</b></p>"
+        + "<p>This panel lets you compare two mod lists from different sessions. "
+        + "Select one file from the left column and another from the right to see what changed between them.</p>"
+        
+        + "<h3>How to use it:</h3>"
+        + "<ol>"
+        + "<li><b>Select files:</b> Click the radio buttons next to the file names. "
+        + "Files ending in <span style='color: #4CAF50; font-weight: bold;'>.success</span> mean successful sessions, "
+        + "while those ending in <span style='color: #F44336; font-weight: bold;'>.failure</span> indicate crashes or errors.</li>"
+        
+        + "<li><b>Automatic comparison:</b> Press the 'Compare' button to analyse both lists and show added (+) or removed (-) mods.</li>"
+        
+        + "<li><b>View results:</b> The results are shown in colour-coded HTML format: "
+        + "<ul>"
+        + "<li><span style='color: green;'>+ Added mod</span></li>"
+        + "<li><span style='color: red;'>- Removed mod</span></li>"
+        + "</ul></li>"
+        + "</ol>"
+        
+        + "<h3>Key Features:</h3>"
+        + "<ul>"
+        + "<li>Supports any combination of success/failure files.</li>"
+        + "<li>Shows two-way differences for precise change tracking.</li>"
+        + "<li>Includes scrolling for long mod lists.</li>"
+        + "<li>Integrated explanatory images for better visual understanding.</li>"
+        + "</ul>"
+        
+        + "<p>Made with <3️ to help track changes in your configurations.</p>"
+        + "</body></html>";
+}
 
+@Override
+public String tieneErrorIPV6() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+           + "You may be experiencing an issue related to IPv6. "
+           + "There are two solutions: "
+           + "1) Add the JVM argument <code>-Djava.net.preferIPv4Stack=true</code> to your launcher, or "
+           + "2) Use the 'QuickFix' button in CrashDetector to apply a patch that enables this setting automatically."
+           + "</b>";
+}
 
-
-
+@Override
+public String parcheIPv4() {
+    return "IPv4/6 Patch";
+}
 
 
 

@@ -80,7 +80,7 @@ public class Drivers implements Verificaciones {
             activado = true;
             return;
         }
-        if (contienePatron(log, new String[]{"PhysX_64.dll", "glfw.dll"})) {
+        if (contienePatron(log, new String[]{"PhysX_64.dll", "glfw.dll"}) && log.contains("EXCEPTION_ACCESS_VIOLATION")) {
             procesarProblemaGraficos();
             return;
         }
@@ -98,7 +98,6 @@ public class Drivers implements Verificaciones {
             return;
         }
 
-CrashDetectorLogger.log(log);
         String ultimaLinea = obtenerUltimaLinea(log);
         if (ultimaLinea != null) {
         	CrashDetectorLogger.log(ultimaLinea);
@@ -138,7 +137,10 @@ CrashDetectorLogger.log(log);
 
     private boolean contienePatron(String texto, String[] patrones) {
         for (String p : patrones) {
-            if (texto.contains(p)) return true;
+            if (texto.contains(p)) { 
+            	CrashDetectorLogger.log("Hay patron de Drivers " + p);
+            	return true;
+            }
         }
         return false;
     }

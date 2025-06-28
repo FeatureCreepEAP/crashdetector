@@ -1661,10 +1661,131 @@ public String mensajePluginIncompatiblePlural(List<String> plugins) {
 
 
 
+@Override
+public String desdeUltimoExito() {
+    return "Desde o Último Sucesso";
+}
+
+@Override
+public String noHayCambios() {
+    return "Sem Alterações";
+}
+
+@Override
+public String desdeUltimoIntento() {
+    return "Desde a Última Tentativa";
+}
+
+@Override
+public String fallo() {
+    return "Falhou";
+}
+
+@Override
+public String diferentesDeLasMods() {
+    return "Diferente das Mods";
+}
+
+@Override
+public String historialDeMods() {
+    return "Histórico de Mods";
+}
+
+@Override
+public String archivo0() {
+    return "Arquivo0";
+}
+
+@Override
+public String archivo1() {
+    return "Arquivo1";
+}
+
+@Override
+public String comparar() {
+    return "Comparar";
+}
+
+@Override
+public String seleccionarDosArchivos() {
+    return "Selecionar Dois Arquivos";
+}
+
+@Override
+public String archivoExito() {
+    return "Arquivo de Sucesso";
+}
+
+@Override
+public String archivoFalla() {
+    return "Arquivo com Falha";
+}
+
+@Override
+public String errorComparandoArchivos() {
+    return "Erro ao Comparar Arquivos";
+}
+
+@Override
+public String comparando() {
+    return "Comparando";
+}
+
+@Override
+public String con() {
+    return "Com";
+}
+
+@Override
+public String descripcionPanelHistoriaMods() {
+    return "<html><body style='font-family: sans-serif; font-size: 12px;'>"
+        + "<p><b>Painel de Comparação do Histórico de Mods</b></p>"
+        + "<p>Este painel permite comparar duas listas de mods de sessões distintas. "
+        + "Selecione um arquivo na coluna esquerda e outro na direita para visualizar as alterações entre as versões.</p>"
+        
+        + "<h3>Como usá-lo:</h3>"
+        + "<ol>"
+        + "<li><b>Seleção de arquivos:</b> Clique nos botões de rádio ao lado dos nomes dos arquivos. "
+        + "Arquivos terminados em <span style='color: #4CAF50; font-weight: bold;'>.sucesso</span> indicam sessões bem-sucedidas, "
+        + "enquanto os com <span style='color: #F44336; font-weight: bold;'>.falha</span> representam erros ou falhas.</li>"
+        
+        + "<li><b>Comparação automática:</b> Ao pressionar o botão 'Comparar', o sistema analisará as duas listas selecionadas "
+        + "e exibirá quais mods foram adicionados (+) ou removidos (-).</li>"
+        
+        + "<li><b>Visualização dos resultados:</b> Os resultados são mostrados em formato HTML com cores codificadas: "
+        + "<ul>"
+        + "<li><span style='color: green;'>+ Mod adicionado</span></li>"
+        + "<li><span style='color: red;'>- Mod removido</span></li>"
+        + "</ul></li>"
+        + "</ol>"
+        
+        + "<h3>Principais características:</h3>"
+        + "<ul>"
+        + "<li>Suporta qualquer combinação de arquivos (sucesso/falha).</li>"
+        + "<li>Mostra diferenças bidirecionais para identificar mudanças exatas.</li>"
+        + "<li>Inclui rolagem para listas longas de mods.</li>"
+        + "<li>Contém imagens explicativas para melhor compreensão visual.</li>"
+        + "</ul>"
+        
+        + "<p>Desenvolvido com <3️ para ajudar no rastreamento de alterações nas suas configurações.</p>"
+        + "</body></html>";
+}
 
 
+@Override
+public String tieneErrorIPV6() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+           + "Você pode estar enfrentando um problema relacionado ao IPv6. "
+           + "Há duas soluções: "
+           + "1) Adicionar o argumento JVM <code>-Djava.net.preferIPv4Stack=true</code> no seu lançador, ou "
+           + "2) Usar o botão 'QuickFix' no CrashDetector para aplicar um patch que ative automaticamente essa configuração."
+           + "</b>";
+}
 
-
+@Override
+public String parcheIPv4() {
+    return "Correção IPv4/6";
+}
 
 
 

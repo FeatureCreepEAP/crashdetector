@@ -36,7 +36,7 @@ public class MonitorDePID {
 	public static Path carpeta = new File("crash_detector/").toPath();
 	public static File ArchivoDeCodioError0 = new File("crash_detector/ArchivoDeCodioError0");
 	public static Path ultima_mods = carpeta.resolve("ultima_mods");
-	public static Path viajo_ultima_mods = carpeta.resolve("viajo_ultima_mods");
+	//public static Path viajo_ultima_mods = carpeta.resolve("viajo_ultima_mods");
 	public static List<Consola> consolas = new ArrayList<Consola>();
 	public static Analizador analizador = new Analizador();
 
@@ -106,6 +106,7 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/pantilla.htm", html);
 
 		copiarACarpetaDesdeJar("/imagenes/gura.png", new File("crash_detector/imagenes/gura.png"));
+		copiarACarpetaDesdeJar("/imagenes/clio.png", new File("crash_detector/imagenes/clio.png"));
 		copiarACarpetaDesdeJar("/imagenes/nanashi_mumei.png", new File("crash_detector/imagenes/nanashi_mumei.png"));
 		copiarACarpetaDesdeJar("/imagenes/shion.png", new File("crash_detector/imagenes/shion.png"));
 
@@ -128,16 +129,16 @@ public class MonitorDePID {
 				e.printStackTrace();
 			}
 		}
-		new File(viajo_ultima_mods.toString()).delete();
-		try {
-			new File(viajo_ultima_mods.toString()).createNewFile();
-			FileWriter escribidor = new FileWriter(viajo_ultima_mods.toFile());
-			escribidor.write(mods);
-			escribidor.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		new File(viajo_ultima_mods.toString()).delete();
+//		try {
+//			new File(viajo_ultima_mods.toString()).createNewFile();
+//			FileWriter escribidor = new FileWriter(viajo_ultima_mods.toFile());
+//			escribidor.write(mods);
+//			escribidor.close();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 		StringBuilder actuales = new StringBuilder();
 		boolean primera = true;
@@ -275,6 +276,9 @@ public class MonitorDePID {
 						obtenerCosolaDeLauncher(utc);
 					}
 				}
+				
+				historia_mods();
+				
 
 				Instant luego = Instant.now();
 				recargar(true, luego);
@@ -337,10 +341,53 @@ public class MonitorDePID {
 		// TODO Auto-generated method stub
 
 		ArchivoDeCodioError0.delete();
-		viajo_ultima_mods.toFile().delete();
+		//viajo_ultima_mods.toFile().delete();
 		latch.countDown();
 		System.exit(0);
 	}
+	
+	
+	
+	
+	
+	
+	public static void historia_mods() {
+
+	    try {
+	        Path directorioHistorial = carpeta.resolve("historia_mods");
+	        Files.createDirectories(directorioHistorial);
+
+	        File[] archivosHistorial = directorioHistorial.toFile().listFiles();
+	        int siguienteNumero = 0;
+	        if (archivosHistorial != null) {
+	            for (File archivo : archivosHistorial) {
+	                String nombre = archivo.getName();
+	                if (nombre.matches("\\d{6}\\.falla") || nombre.matches("\\d{6}\\.exito")) {
+	                    int num = Integer.parseInt(nombre.substring(0, 6));
+	                    if (num >= siguienteNumero) siguienteNumero = num + 1;
+	                }
+	            }
+	        }
+
+	        String extension = activar() ? "falla" : "exito";
+	        String nombreArchivo = String.format("%06d.%s", siguienteNumero, extension);
+	        Path archivoHistorial = directorioHistorial.resolve(nombreArchivo);
+
+	        if (ultima_mods.toFile().exists()) {
+	            String contenido = new String(Files.readAllBytes(ultima_mods), StandardCharsets.UTF_8);
+	            Files.write(archivoHistorial, contenido.getBytes(StandardCharsets.UTF_8));
+	        }
+	    } catch (IOException e) {
+	        CrashDetectorLogger.log("Error al crear historial de modlist: " + e.getMessage());
+	    }
+	}
+	
+	
+	
+	
+	
+	
+	
 
 	/**
 	 * asegura los registros son completa para 20 segundos

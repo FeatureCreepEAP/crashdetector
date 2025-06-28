@@ -1714,6 +1714,132 @@ public String mensajeLegacyRandomSourceMultiHilos() {
     return "<b style='color:#" + config.obtenerColorError() + "'>Обнаружено многопоточное обращение к классу LegacyRandomSource. Для получения дополнительной информации используйте моды 'Unsafe World Random Access Detector' или 'C2ME'.</b>";
 }
 
+@Override
+public String desdeUltimoExito() {
+    return "С момента последнего успеха";
+}
+
+@Override
+public String noHayCambios() {
+    return "Нет изменений";
+}
+
+@Override
+public String desdeUltimoIntento() {
+    return "С момента последней попытки";
+}
+
+@Override
+public String fallo() {
+    return "Ошибка";
+}
+
+@Override
+public String diferentesDeLasMods() {
+    return "Отличается от модов";
+}
+
+@Override
+public String historialDeMods() {
+    return "История модов";
+}
+
+@Override
+public String archivo0() {
+    return "Файл0";
+}
+
+@Override
+public String archivo1() {
+    return "Файл1";
+}
+
+@Override
+public String comparar() {
+    return "Сравнить";
+}
+
+@Override
+public String seleccionarDosArchivos() {
+    return "Выберите два файла";
+}
+
+@Override
+public String archivoExito() {
+    return "Файл успешного запуска";
+}
+
+@Override
+public String archivoFalla() {
+    return "Файл сбоя";
+}
+
+@Override
+public String errorComparandoArchivos() {
+    return "Ошибка сравнения файлов";
+}
+
+@Override
+public String comparando() {
+    return "Сравнивается";
+}
+
+@Override
+public String con() {
+    return "с";
+}
+
+@Override
+public String descripcionPanelHistoriaMods() {
+    return "<html><body style='font-family: sans-serif; font-size: 12px;'>"
+        + "<p><b>Панель сравнения истории модов</b></p>"
+        + "<p>Эта панель позволяет сравнивать списки модов из разных сеансов запуска. "
+        + "Выберите один файл слева и другой справа, чтобы увидеть изменения между ними.</p>"
+        
+        + "<h3>Как использовать:</h3>"
+        + "<ol>"
+        + "<li><b>Выбор файлов:</b> Нажмите на радиокнопки рядом с именами файлов. "
+        + "Файлы с окончанием <span style='color: #4CAF50; font-weight: bold;'>.успех</span> — успешные сеансы, "
+        + "файлы <span style='color: #F44336; font-weight: bold;'>.провал</span> — сеансы с ошибками.</li>"
+        
+        + "<li><b>Автоматическое сравнение:</b> После нажатия 'Сравнить' система проанализирует оба списка и покажет добавленные (+) или удалённые (-) моды.</li>"
+        
+        + "<li><b>Просмотр результатов:</b> Результат отображается в формате HTML с цветовым кодированием: "
+        + "<ul>"
+        + "<li><span style='color: green;'>+ Добавленный мод</span></li>"
+        + "<li><span style='color: red;'>- Удалённый мод</span></li>"
+        + "</ul></li>"
+        + "</ol>"
+        
+        + "<h3>Основные возможности:</h3>"
+        + "<ul>"
+        + "<li>Поддерживает любую комбинацию файлов (успех/провал).</li>"
+        + "<li>Двустороннее сравнение для точного отслеживания изменений.</li>"
+        + "<li>Прокрутка для длинных списков модов.</li>"
+        + "<li>Интеграция с поясняющими изображениями для лучшего понимания.</li>"
+        + "</ul>"
+        
+        + "<p>Разработано с <3️ для отслеживания изменений в ваших настройках.</p>"
+        + "</body></html>";
+}
+
+@Override
+public String tieneErrorIPV6() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+           + "Возможно, у вас есть проблемы, связанные с IPv6. "
+           + "Есть два решения: "
+           + "1) Добавьте аргумент JVM <code>-Djava.net.preferIPv4Stack=true</code> в свой лаунчер, или "
+           + "2) Используйте кнопку 'QuickFix' в программе CrashDetector для автоматического применения патча с этой настройкой."
+           + "</b>";
+}
+
+@Override
+public String parcheIPv4() {
+    return "Патч IPv4/6";
+}
+
+
+
 
 
 

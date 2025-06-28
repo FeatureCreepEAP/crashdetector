@@ -1663,6 +1663,131 @@ public String nombreLegacyRandomSourceMultiHilos() {
 public String mensajeLegacyRandomSourceMultiHilos() {
     return "<b style='color:#" + config.obtenerColorError() + "'>여러 스레드가 LegacyRandomSource 클래스에 접근하고 있습니다. 'Unsafe World Random Access Detector' 또는 'C2ME' 모드로 자세한 정보를 확인할 수 있습니다.</b>";
 }
+@Override
+public String desdeUltimoExito() {
+    return "마지막 성공 이후";
+}
+
+@Override
+public String noHayCambios() {
+    return "변경 사항 없음";
+}
+
+@Override
+public String desdeUltimoIntento() {
+    return "마지막 시도 이후";
+}
+
+@Override
+public String fallo() {
+    return "실패";
+}
+
+@Override
+public String diferentesDeLasMods() {
+    return "모드와 다름";
+}
+
+@Override
+public String historialDeMods() {
+    return "모드 기록";
+}
+
+@Override
+public String archivo0() {
+    return "파일0";
+}
+
+@Override
+public String archivo1() {
+    return "파일1";
+}
+
+@Override
+public String comparar() {
+    return "비교하기";
+}
+
+@Override
+public String seleccionarDosArchivos() {
+    return "두 파일 선택";
+}
+
+@Override
+public String archivoExito() {
+    return "성공한 파일";
+}
+
+@Override
+public String archivoFalla() {
+    return "실패한 파일";
+}
+
+@Override
+public String errorComparandoArchivos() {
+    return "파일 비교 중 오류";
+}
+
+@Override
+public String comparando() {
+    return "비교 중";
+}
+
+@Override
+public String con() {
+    return "와(과)";
+}
+
+@Override
+public String descripcionPanelHistoriaMods() {
+    return "<html><body style='font-family: sans-serif; font-size: 12px;'>"
+        + "<p><b>모드 이력 비교 패널</b></p>"
+        + "<p>이 패널을 사용하면 서로 다른 실행 세션의 두 모드 목록을 비교할 수 있습니다. 좌측에서 하나, 우측에서 다른 파일을 선택해 변경된 내용을 확인하세요.</p>"
+        
+        + "<h3>사용 방법:</h3>"
+        + "<ol>"
+        + "<li><b>파일 선택:</b> 파일 이름 옆의 라디오 버튼을 클릭하세요. "
+        + "<span style='color: #4CAF50; font-weight: bold;'>.성공</span>으로 끝나는 파일은 성공한 세션입니다. "
+        + "<span style='color: #F44336; font-weight: bold;'>.실패</span>는 오류가 발생한 세션입니다.</li>"
+        
+        + "<li><b>자동 비교:</b> '비교' 버튼을 누르면 시스템이 두 목록을 분석하여 추가(+) 또는 제거(-)된 모드를 보여줍니다.</li>"
+        
+        + "<li><b>결과 보기:</b> 결과는 색상 코드로 구분된 HTML 형식으로 표시됩니다: "
+        + "<ul>"
+        + "<li><span style='color: green;'>+ 추가된 모드</span></li>"
+        + "<li><span style='color: red;'>- 제거된 모드</span></li>"
+        + "</ul></li>"
+        + "</ol>"
+        
+        + "<h3>주요 기능:</h3>"
+        + "<ul>"
+        + "<li>성공/실패 파일 조합 지원</li>"
+        + "<li>정확한 추적을 위한 양방향 차이점 표시</li>"
+        + "<li>긴 모드 목록을 위한 스크롤 지원</li>"
+        + "<li>시각적 이해를 돕는 설명 이미지 통합</li>"
+        + "</ul>"
+        
+        + "<p>설정 변경 사항을 추적할 수 있도록 <3️와 함께 개발되었습니다.</p>"
+        + "</body></html>";
+}
+
+@Override
+public String tieneErrorIPV6() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+           + "IPv6 관련 문제가 있을 수 있습니다. "
+           + "해결 방법은 두 가지입니다: "
+           + "1) 런처에 JVM 인수 <code>-Djava.net.preferIPv4Stack=true</code>를 추가하거나, "
+           + "2) CrashDetector에서 'QuickFix' 버튼을 눌러 자동으로 설정을 활성화하는 패치를 적용하세요."
+           + "</b>";
+}
+
+@Override
+public String parcheIPv4() {
+    return "IPv4/6 패치";
+}
+
+
+
 
 
 

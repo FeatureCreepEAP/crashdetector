@@ -1707,6 +1707,135 @@ public String nombreLegacyRandomSourceMultiHilos() {
 public String mensajeLegacyRandomSourceMultiHilos() {
     return "<b style='color:#" + config.obtenerColorError() + "'>چندین رشته به کلاس LegacyRandomSource دسترسی دارند. برای کسب اطلاعات بیشتر از افزونه 'Unsafe World Random Access Detector' یا 'C2ME' استفاده کنید.</b>";
 }
+@Override
+public String desdeUltimoExito() {
+    return "از آخرین موفقیت";
+}
+
+@Override
+public String noHayCambios() {
+    return "بدون تغییر";
+}
+
+@Override
+public String desdeUltimoIntento() {
+    return "از آخرین تلاش";
+}
+
+@Override
+public String fallo() {
+    return "ناموفق";
+}
+
+@Override
+public String diferentesDeLasMods() {
+    return "متفاوت با مودها";
+}
+
+
+@Override
+public String historialDeMods() {
+    return "تاریخچه مودها";
+}
+
+@Override
+public String archivo0() {
+    return "پرونده0";
+}
+
+@Override
+public String archivo1() {
+    return "پرونده1";
+}
+
+@Override
+public String comparar() {
+    return "مقایسه کردن";
+}
+
+@Override
+public String seleccionarDosArchivos() {
+    return "انتخاب دو پرونده";
+}
+
+@Override
+public String archivoExito() {
+    return "پرونده موفقیت";
+}
+
+@Override
+public String archivoFalla() {
+    return "پرونده شکست";
+}
+
+@Override
+public String errorComparandoArchivos() {
+    return "خطا در مقایسه پرونده‌ها";
+}
+
+@Override
+public String comparando() {
+    return "در حال مقایسه";
+}
+
+@Override
+public String con() {
+    return "با";
+}
+
+@Override
+public String descripcionPanelHistoriaMods() {
+    return "<html><body style='font-family: sans-serif; font-size: 12px;' dir='rtl'>"
+        + "<p><b>پنل مقایسه تاریخچه مودها</b></p>"
+        + "<p>این پنل به شما اجازه می‌دهد دو لیست مود را از جلسات مختلف با هم مقایسه کنید. "
+        + "یک فایل از ستون چپ و یکی از ستون راست انتخاب کنید تا تغییرات مشخص شوند.</p>"
+        
+        + "<h3>چگونه استفاده کنیم:</h3>"
+        + "<ol>"
+        + "<li><b>انتخاب فایل:</b> روی دکمه‌های رادیویی کنار نام فایل‌ها کلیک کنید. "
+        + "فایل‌های با پسوند <span style='color: #4CAF50; font-weight: bold;'>.suceso</span> جلسات موفق هستند، "
+        + "در حالی که فایل‌های <span style='color: #F44336; font-weight: bold;'>.falla</span> مربوط به خطاها هستند.</li>"
+        
+        + "<li><b>مقایسه خودکار:</b> با فشار دادن دکمه 'Compare' سیستم دو لیست انتخابی را بررسی کرده و مودهای اضافه شده (+) یا حذف شده (-) را نشان می‌دهد.</li>"
+        
+        + "<li><b>مشاهده نتایج:</b> نتایج در قالب HTML با رنگ‌های مشخص شده نمایش داده می‌شوند: "
+        + "<ul>"
+        + "<li><span style='color: green;'>+ مود اضافه شده</span></li>"
+        + "<li><span style='color: red;'>- مود حذف شده</span></li>"
+        + "</ul></li>"
+        + "</ol>"
+        
+        + "<h3>ویژگی‌های مهم:</h3>"
+        + "<ul>"
+        + "<li>از هر ترکیبی از فایل‌ها (موفق/ناموفق) پشتیبانی می‌کند.</li>"
+        + "<li>تفاوت‌های دو طرفه را نمایش می‌دهد.</li>"
+        + "<li>امکان اسکرول برای لیست‌های بلند وجود دارد.</li>"
+        + "<li>تصاویر توضیحی برای درک بهتر دارد.</li>"
+        + "</ul>"
+        
+        + "<p>توسعه یافته با 3>️ برای ردیابی تغییرات در تنظیمات شما.</p>"
+        + "</body></html>";
+}
+
+@Override
+public String tieneErrorIPV6() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+           + "احتمالاً شما با یک مشکل مربوط به IPv6 روبرو هستید. "
+           + "دو راه‌حل وجود دارد: "
+           + "1) آرگومان JVM <code>-Djava.net.preferIPv4Stack=true</code> را به لانچر خود اضافه کنید، یا "
+           + "2) دکمه 'QuickFix' در نرم‌افزار CrashDetector را فشار دهید تا پچی اعمال شود که این تنظیم را به صورت خودکار فعال کند."
+           + "</b>";
+}
+
+@Override
+public String parcheIPv4() {
+    return "پچ IPv4/6";
+}
+
+
+
+
+
 
 
 

@@ -19,22 +19,20 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 
 public class VerificacionDeStackTrace {
 
-
-
 	Consola consola;
 	public static String nl = System.lineSeparator();
-	
+
 	// 正则表达式用于匹配Java异常堆栈跟踪
 	private static final Pattern STACK_TRACE_PATTERN = Pattern.compile("(?m)(^\\S.*(?:\\r?\\n[ \\t]+at\\s+.*)+)");
 	// 正则表达式用于匹配包含org.spongepowered.asm.mixin的异常并提取JSON文件名（不包括refmap）
 	private static final Pattern JSON_PATTERN = Pattern.compile("(\\S+\\.json)(?=[: ])");
 	// 正则表达式用于匹配{}内的内容
 	private static final Pattern BRACE_PATTERN = Pattern.compile("\\{([^}]+)\\}");
-	
+
 	public List<String> sm_config = new ArrayList<>();
 	public Map<String, Boolean> jars = new LinkedHashMap<>();// FATAL
-	public BiMap<String, String,Boolean> modids = new BiMap<>();// FATAL
-	public BiMap<String, String,Boolean> packs = new BiMap<>();// FATAL
+	public BiMap<String, String, Boolean> modids = new BiMap<>();// FATAL
+	public BiMap<String, String, Boolean> packs = new BiMap<>();// FATAL
 
 	public List<String> braceContentos = new LinkedList<>();
 
@@ -47,18 +45,18 @@ public class VerificacionDeStackTrace {
 
 	public String[] package_no_permite = { "java.", "net.minecraft", "net.minecraftforge", "org.spongepowered",
 			"it.unimi", "com.mojang.", "cpw.", "featurecreep.", "jdk.", "sun.", "com.sun.", "org.lwjgl.", "org.apache.",
-			"io.netty", "org.prismlauncher", "io.github.zekerzhayard", "org.multimc", "org.polymc", "org.tlauncher", "net.fabricmc","org.objectweb.asm","datafixerupper","org.slf4j","com.asbestosstar","srg","asbestosstar."
+			"io.netty", "org.prismlauncher", "io.github.zekerzhayard", "org.multimc", "org.polymc", "org.tlauncher",
+			"net.fabricmc", "org.objectweb.asm", "datafixerupper", "org.slf4j", "com.asbestosstar", "srg",
+			"asbestosstar."
 
 	};
-	
-	public VerificacionDeStackTrace(Consola cons) {
-		this.consola=cons;
-	}
-	
 
-	
+	public VerificacionDeStackTrace(Consola cons) {
+		this.consola = cons;
+	}
+
 	public void reincinar() {
-		
+
 		sm_config.clear();
 		jars.clear();
 		modids.clear();
@@ -71,9 +69,7 @@ public class VerificacionDeStackTrace {
 		jar_malo.clear();
 		modid_malo.clear();
 		package_malo.clear();
-		
-		
-		
+
 		int lvl = 0;
 		String contento = consola.contento_verificar;
 		for (String trace : inverso(obtenerTracesFatal(contento))) {// Las ultimas son las más importante
@@ -86,8 +82,6 @@ public class VerificacionDeStackTrace {
 			this.procesarTrace(trace, false, lvl);
 		}
 	}
-	
-	
 
 	public void procesarTrace(String trace, boolean fatal, int lvl) {
 
@@ -97,7 +91,7 @@ public class VerificacionDeStackTrace {
 			for (String jsonFile : archivos_json) {
 				if (!sm_config.contains(jsonFile) && !jsonFile.endsWith(".refmap.json")) {
 					sm_config.add(jsonFile);
-					//build.append(MonitorDePID.idioma.config_spongemixin_problematico(jsonFile)).append(nl_html);
+					// build.append(MonitorDePID.idioma.config_spongemixin_problematico(jsonFile)).append(nl_html);
 				}
 			}
 		} else {
@@ -111,47 +105,46 @@ public class VerificacionDeStackTrace {
 				if (linea.contains("[")) {// There is not always a Jar
 					extractarJarNombresEnBrackets(linea, fatal, lvl, linea_num);
 				} else if (linea.contains("/")) {// Some dev enviornments like ForgeGradle or dev orientated launchers
-												// like TLauncher display the modID and layer, this is helpful
-												// especially when the Jar cannot be found
+													// like TLauncher display the modID and layer, this is helpful
+													// especially when the Jar cannot be found
 					String[] arr_modid = linea.split("/");
 					if (arr_modid.length > 1) {
 						String modid = arr_modid[1].split("@")[0];
 						if (!modid_malo.contains(modid) && !linea.split("/")[0].startsWith("java.")
 								&& !esModNoPermite(modid) && linea.startsWith("at")) {
 							modid_malo.add(modid);
-							modids.put(
-									modid,MonitorDePID.idioma.nivel() + String.valueOf(lvl) + "," + String.valueOf(linea_num),
+							modids.put(modid,
+									MonitorDePID.idioma.nivel() + String.valueOf(lvl) + "," + String.valueOf(linea_num),
 									fatal);
 
 						}
 					}
 
-				} 
-				else if (linea.startsWith("at")) { // a veces necesitemos usar packages
-					String dec=Integer.toString(lvl) + "," + Integer.toString(linea_num);
-				    String pack = linea.substring(3);  if (!package_malo.contains(pack) && !packNoEsPermite(pack,dec,fatal)) {
-				        packs.put(
-				            pack, 
-				            MonitorDePID.idioma.nivel() + dec,
-				            fatal
-				        );
-				        package_malo.add(pack); 
-				    }
+				} else if (linea.startsWith("at")) { // a veces necesitemos usar packages
+					String dec = Integer.toString(lvl) + "," + Integer.toString(linea_num);
+					String pack = linea.substring(3);
+					if (!package_malo.contains(pack) && !packNoEsPermite(pack, dec, fatal)) {
+						packs.put(pack, MonitorDePID.idioma.nivel() + dec, fatal);
+						package_malo.add(pack);
+					}
 				}
-				
-				//else if (line.contains("ClassNotFoundException") && fatal) {
-				else if (linea.contains("ClassNotFoundException")) {//No Necesitemos fatal en FabricMC o FeatureCreep
+
+				// else if (line.contains("ClassNotFoundException") && fatal) {
+				else if (linea.contains("ClassNotFoundException")
+						&& !linea.contains("The specified mixin")/* Todo */ ) {// No Necesitemos fatal en FabricMC o
+																				// FeatureCreep
 					String claseNombre = linea;
-					    // Eliminar la parte antes del nombre de la clase
-					    int index = claseNombre.indexOf("java.lang.ClassNotFoundException:") + "java.lang.ClassNotFoundException:".length();
-					    if (index < claseNombre.length()) {
-					        claseNombre = claseNombre.substring(index).trim();
-					    }
-					    String[] parts = claseNombre.split("[\\s\\(]");
-					    if (parts.length > 0) {
-					        claseNombre = parts[0].trim();
-					    }
-					    fatal_clases_no_existe.add(claseNombre);
+					// Eliminar la parte antes del nombre de la clase
+					int index = claseNombre.indexOf("java.lang.ClassNotFoundException:")
+							+ "java.lang.ClassNotFoundException:".length();
+					if (index < claseNombre.length()) {
+						claseNombre = claseNombre.substring(index).trim();
+					}
+					String[] parts = claseNombre.split("[\\s\\(]");
+					if (parts.length > 0) {
+						claseNombre = parts[0].trim();
+					}
+					fatal_clases_no_existe.add(claseNombre);
 				}
 
 				Matcher braceMatcher = BRACE_PATTERN.matcher(linea);
@@ -195,9 +188,11 @@ public class VerificacionDeStackTrace {
 			return true;
 		}
 
-		String[] ids = { "java", "minecraft", "minecraftforge","net.minecraftforge", "eventbus", "cpw.", "coremods", "featurecreep", "mixin",
-				"accesstransformer","forge", "authlib","sun.", "jdk.", "java.", "fmlloader", "fmlcore", "org.spongepowered.mixin",
-				"fmlearlydisplay","com.sun.jna", "text2speech","xf:crashdetector:default","crashdetector","srg","org.objectweb.asm","it.unimi","datafixerupper","com.google.gson" };
+		String[] ids = { "java", "minecraft", "minecraftforge", "net.minecraftforge", "eventbus", "cpw.", "coremods",
+				"featurecreep", "mixin", "accesstransformer", "forge", "authlib", "sun.", "jdk.", "java.", "fmlloader",
+				"fmlcore", "org.spongepowered.mixin", "fmlearlydisplay", "com.sun.jna", "text2speech",
+				"xf:crashdetector:default", "crashdetector", "srg", "org.objectweb.asm", "it.unimi", "datafixerupper",
+				"com.google.gson" };
 
 		for (String id : ids) {
 			if (modid.startsWith(id)) {
@@ -211,12 +206,10 @@ public class VerificacionDeStackTrace {
 	private boolean packNoEsPermite(String pack, String dec, boolean fatal) {
 		// TODO Auto-generated method stub
 
-		if(pack.contains("handler$")) {
-			processarSMHandler(pack,dec,fatal);
+		if (pack.contains("handler$")) {
+			processarSMHandler(pack, dec, fatal);
 		}
-		
-		
-		
+
 		for (String prefix : package_no_permite) {
 			if (pack.startsWith(prefix)) {
 				return true;
@@ -227,28 +220,28 @@ public class VerificacionDeStackTrace {
 	}
 
 	private void processarSMHandler(String pack, String dec, boolean fatal) {
-	    // Split the input string by '$' to identify potential mod IDs
-	    String[] parts = pack.split("\\$");
+		// Split the input string by '$' to identify potential mod IDs
+		String[] parts = pack.split("\\$");
 
-	    // Check if the string has at least 4 parts (indicating the presence of a mod ID)
-	    if (parts.length >= 4) {
-	        // Extract the mod ID (located after the third '$')
-	        String modid = parts[3];
+		// Check if the string has at least 4 parts (indicating the presence of a mod
+		// ID)
+		if (parts.length >= 4) {
+			// Extract the mod ID (located after the third '$')
+			String modid = parts[3];
 
-	        // Log the extracted mod ID for debugging purposes
-	        CrashDetectorLogger.log("Mod ID encontrado: " + modid);
-		if(!modid_malo.contains(modid)) {
-	        modid_malo.add(modid);
+			// Log the extracted mod ID for debugging purposes
+			CrashDetectorLogger.log("Mod ID encontrado: " + modid);
+			if (!modid_malo.contains(modid)) {
+				modid_malo.add(modid);
 
-	        // Add the mod ID to the modids map with the appropriate key and value
-	        modids.put(modid,MonitorDePID.idioma.nivel()+dec, fatal);
+				// Add the mod ID to the modids map with the appropriate key and value
+				modids.put(modid, MonitorDePID.idioma.nivel() + dec, fatal);
+			}
+
+		} else {
+			// Log that the line does not contain a valid mod ID and will be ignored
+			CrashDetectorLogger.log("Línea ignorada: No contiene un mod ID válido.");
 		}
-	    
-	    
-	    } else {
-	        // Log that the line does not contain a valid mod ID and will be ignored
-	        CrashDetectorLogger.log("Línea ignorada: No contiene un mod ID válido.");
-	    }
 	}
 
 	public static String[] eliminarDuplicados(String[] inputArray) {
@@ -262,39 +255,51 @@ public class VerificacionDeStackTrace {
 	}
 
 	public static List<String> obtenerTracesFatal(String log) {
-		// TODO Auto-generated method stub
-		List<String> ret = new ArrayList<String>();
+		List<String> ret = new ArrayList<>();
 		String[] lineas = log.split(nl);
 		int len = lineas.length;
+
 		for (int i = 0; i < len; i++) {
-			String line = lineas[i];
-			if (line.contains("/FATAL]")) {
-				if (i + 2 > len) {
-				} else {
-					StringBuilder trace = new StringBuilder();
-					trace.append(lineas[i + 1]);
-					anadirTracesFata(trace, lineas, i + 2);
-					ret.add(trace.toString());
+			String linea = lineas[i];
+			if (linea.contains("/FATAL]")) {
+
+				StringBuilder trace = new StringBuilder();
+				trace.append(linea);
+				int j = i + 1;
+
+				while (j < len && esParteDeStack(lineas[j])) {
+					trace.append(nl).append(lineas[j]);
+					j++;
 				}
+				ret.add(trace.toString());
 			}
 		}
 		return ret;
 	}
 
-	private static void anadirTracesFata(StringBuilder trace, String[] lineas, int index) {
-		// TODO Auto-generated method stub
-		int len = lineas.length;
-		for (int i = index; i < len; i++) {
-			String linea = lineas[i];
-			if (linea.trim().startsWith("at ")) {
-				trace.append(linea);
-			} else {
-				return;
-			}
-
-		}
-
+	private static boolean esParteDeStack(String l) {
+		String t = l.trim();
+		return t.startsWith("at ") || t.startsWith("Caused by:") || t.startsWith("Suppressed:") || t.startsWith("...")
+		// secure-bootstrap class-loader etc.
+				|| t.startsWith("SECURE-BOOTSTRAP")
+				// excepcion mensajes (“org.spongepowered…InvalidMixinException …”)
+				|| t.matches("^[a-zA-Z0-9_.]+\\.[A-Z][a-zA-Z0-9]+Exception.*");
 	}
+
+//	private static void anadirTracesFata(StringBuilder trace, String[] lineas, int index) {
+//		// TODO Auto-generated method stub
+//		int len = lineas.length;
+//		for (int i = index; i < len; i++) {
+//			String linea = lineas[i];
+//			if (linea.trim().startsWith("at ")) {
+//				trace.append(linea);
+//			} else {
+//				return;
+//			}
+//
+//		}
+//
+//	}
 
 	private void extractarJarNombresEnBrackets(String linea, boolean fatal, int lvl, int linea_num) {
 		int startIdx = linea.indexOf('[');
@@ -306,9 +311,8 @@ public class VerificacionDeStackTrace {
 			if (candidito.contains(".jar") && !isJarNoPermite(candidito)) {
 				if (!jar_malo.contains(candidito)) {
 					jar_malo.add(candidito);
-					jars.put(
-							candidito + MonitorDePID.idioma.nivel() + Integer.toString(lvl) + "," + Integer.toString(linea_num),
-							fatal);
+					jars.put(candidito + MonitorDePID.idioma.nivel() + Integer.toString(lvl) + ","
+							+ Integer.toString(linea_num), fatal);
 				}
 			}
 			// Look for the next '[' and ']'
@@ -327,32 +331,38 @@ public class VerificacionDeStackTrace {
 	}
 
 	public List<String> obtenerArchivosJsonEnMixinExceptions(String contenido_de_logs) {
-	    List<String> archivos_json = new ArrayList<>();
+		List<String> archivos_json = new ArrayList<>();
 
-	  // TODO [20:12:32] [main/ERROR]: fpsreducer.mixins.json:VideoSettingScreenMixin: Super class 'net.minecraft.client.gui.screens.options.OptionsSubScreen' of VideoSettingScreenMixin was not found in the hierarchy of target class 'net/minecraft/client/gui/screens/options/VideoSettingsScreen'
-	    //org.spongepowered.asm.mixin.transformer.throwables.InvalidMixinException: Super class 'net.minecraft.client.gui.screens.options.OptionsSubScreen' of VideoSettingScreenMixin was not found in the hierarchy of target class 'net/minecraft/client/gui/screens/options/VideoSettingsScreen'
-	    
-	    
-	    String[] lineas = contenido_de_logs.split("\r?\n");
-	    for (String linea : lineas) {
-	    	if (linea.contains("org.spongepowered.asm.mixin")) {
-	            Matcher matcher = JSON_PATTERN.matcher(linea.trim());
-	            while (matcher.find()) {
-	                if (matcher.group(1) != null) {
-	                    String nombreJson = matcher.group(1).trim();
+		// TODO [20:12:32] [main/ERROR]: fpsreducer.mixins.json:VideoSettingScreenMixin:
+		// Super class 'net.minecraft.client.gui.screens.options.OptionsSubScreen' of
+		// VideoSettingScreenMixin was not found in the hierarchy of target class
+		// 'net/minecraft/client/gui/screens/options/VideoSettingsScreen'
+		// org.spongepowered.asm.mixin.transformer.throwables.InvalidMixinException:
+		// Super class 'net.minecraft.client.gui.screens.options.OptionsSubScreen' of
+		// VideoSettingScreenMixin was not found in the hierarchy of target class
+		// 'net/minecraft/client/gui/screens/options/VideoSettingsScreen'
 
-	                    // a veces tiene [
-	                    if (nombreJson.startsWith("[")) {
-	                        nombreJson = nombreJson.substring(1); 
-	                    }
+		String[] lineas = contenido_de_logs.split("\r?\n");
+		for (String linea : lineas) {
+			if (linea.contains("org.spongepowered.asm.mixin")) {
+				CrashDetectorLogger.log("Linea SM " + linea);
+				Matcher matcher = JSON_PATTERN.matcher(linea.trim());
+				while (matcher.find()) {
+					if (matcher.group(1) != null) {
+						String nombreJson = matcher.group(1).trim();
 
-	                    archivos_json.add(nombreJson);
-	                }
-	            }
-	        }
-	    }
+						// a veces tiene [
+						if (nombreJson.startsWith("[")) {
+							nombreJson = nombreJson.substring(1);
+						}
 
-	    return archivos_json;
+						archivos_json.add(nombreJson);
+					}
+				}
+			}
+		}
+
+		return archivos_json;
 	}
 
 	private boolean isJarNoPermite(String jarName) {
@@ -453,11 +463,9 @@ public class VerificacionDeStackTrace {
 		if (jarName.startsWith("nashorn-core-")) {
 			return true;
 		}
-		
-		
+
 		return false;
 	}
-
 
 	public static List<String> inverso(List<String> original) {
 		List<String> reversed = new ArrayList<>(original);
