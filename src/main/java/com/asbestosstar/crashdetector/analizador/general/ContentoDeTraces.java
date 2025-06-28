@@ -3,7 +3,6 @@ package com.asbestosstar.crashdetector.analizador.general;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -12,13 +11,12 @@ import java.util.regex.Pattern;
 
 import com.asbestosstar.crashdetector.BiMap;
 import com.asbestosstar.crashdetector.BiMap.DoubleKey;
-import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.analizador.QuickFix;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
 
 /**
@@ -169,48 +167,60 @@ public class ContentoDeTraces implements Verificaciones {
 			constructor.append(String.join("", packItems)).append("</ul>");
 		}
 
-		List<String> configs_inject = new LinkedList<>();
-		for (String content : VerificacionDeStackTrace.inverso(vdst.braceContentos)) {
-			for (String ind : VerificacionDeStackTrace.eliminarDuplicados(content.split(","))) {
+		BiMap<String, String, Boolean> configs_inject = new BiMap<>();
+// Ahora preserva nivel y fatalidad al procesar braces
+		for (Entry<DoubleKey<String, String>, Boolean> brace : vdst.braces.entrySet()) {
+			for (String ind : VerificacionDeStackTrace.eliminarDuplicados(brace.getKey().key0.split(","))) {
 				String limpiado = ind.replace("pl:runtimedistcleaner:A", "").replace("re:classloading", "")
 						.replace("pl:mixin:APP:", "").replace("re:computing_frames", "")
 						.replace("pl:accesstransformer:B", "").replace("pl:mixin:A", "").replace("xf:fml", "")
 						.replace("featurecreep", "").replace("re:mixin", "").replace("xf:crashdetector:default", "");
-				if (!configs_inject.contains(limpiado) && !limpiado.isEmpty()) {
-					configs_inject.add(limpiado);
+
+				if (!limpiado.isEmpty()) {
+					// Preservamos tanto el nivel (brace.getKey().key1) como la fatalidad
+					// (brace.getValue())
+					configs_inject.put(limpiado, brace.getKey().key1, brace.getValue());
 				}
 			}
 		}
 
-		List<String> sm_configs_filt = new ArrayList<>();
+		BiMap<String, String, Boolean> sm_configs_filt = new BiMap<>();
 		if (!configs_inject.isEmpty()) {
 			activado = true;
-			int tamano = 0;
-			for (String conf : configs_inject) {
-				if (!todos_sm_configs.contains(conf)) {
-					todos_sm_configs.add(conf);
-					if (tamano <= 20) {
-						sm_configs_filt.add(conf);
-						tamano++;
+			int count = 0;
+			for (Entry<DoubleKey<String, String>, Boolean> cfg : configs_inject.entrySet()) {
+				String nombre = cfg.getKey().key0; // nombre limpio
+				if (!todos_sm_configs.contains(nombre)) {
+					todos_sm_configs.add(nombre);
+					if (count < 20) { // máximo 20 entradas
+						sm_configs_filt.put(nombre, cfg.getKey().key1, cfg.getValue());
+						count++;
 					}
 				}
 			}
 		}
 
 		if (!sm_configs_filt.isEmpty()) {
-			List<String> configItems = new ArrayList<>();
-
 			constructor.append(nl_html).append(MonitorDePID.idioma.corchetes_ondulados()).append(nl_html)
 					.append("<ul>");
 
-			for (String conf : sm_configs_filt) {
-				String cleanConf = conf.split("\\.json")[0].replace(".mixins", "").replace(".mixin", "")
-						.replace("mixins\\.", "").replace("mixin\\.", "");
+			for (Entry<DoubleKey<String, String>, Boolean> cfg : sm_configs_filt.entrySet()) {
+				String cleanConf = cfg.getKey().key0.split("\\.json")[0].replace(".mixins", "").replace(".mixin", "")
+						.replace("mixins.", "").replace("mixin.", "");
 
-				configItems.add("<li>" + cleanConf + "</li>");
+				// Construir elemento de lista con indicadores
+				StringBuilder item = new StringBuilder("<li>");
+				if (cfg.getValue()) { // Si es fatal
+					item.append(MonitorDePID.idioma.possibladad_fatal());
+				}
+				item.append(cleanConf).append(" ") // espacio entre nombre y nivel
+						.append(cfg.getKey().key1) // información de nivel
+						.append("</li>");
+
+				constructor.append(item.toString());
 			}
 
-			constructor.append(String.join("", configItems)).append("</ul>");
+			constructor.append("</ul>");
 		}
 
 		if (!constructor.toString().isEmpty()) {
