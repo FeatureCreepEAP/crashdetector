@@ -33,10 +33,13 @@ public class GeneradorDeInformacion {
                     .append(co.archivo.toString().trim())
                     .append("</font></a><br>");
             }
+            
+            cons.append(generarTextoArcoiris("Feliz mes del orgullo"));
+            
+            
             cons.append("</center>");
 
             
-
             
             
 			String pantilla = MonitorDePID.leer_archivo(new File("crash_detector/pantilla.htm").toPath());
@@ -86,6 +89,7 @@ public class GeneradorDeInformacion {
 	                    .append(co.obtainerRutaParaPublicar().trim())
 	                    .append("</font></a><br>");
 	            }
+	            cons.append(generarTextoArcoiris("Feliz mes del orgullo"));
 	            cons.append("</center>");
 
 			String pantilla = MonitorDePID.leer_archivo(new File("crash_detector/pantilla.htm").toPath());
@@ -152,5 +156,53 @@ public class GeneradorDeInformacion {
 	        throw new IOException("Error SSL: " + e.getMessage(), e);
 	    }
 	}
+	
+	
+	
+	
+	
+	
+
+    /**
+     * Genera una cadena HTML con cada letra coloreada en arcoíris.
+     *
+     * @param texto El texto de entrada a colorear
+     * @return Cadena HTML con letras de colores
+     */
+    private static String generarTextoArcoiris(String texto) {
+        // Colores del arcoíris (formato hexadecimal)
+        String[] coloresArcoiris = {
+            "#FF0000", // Rojo
+            "#FFA500", // Naranja
+            "#FFFF00", // Amarillo
+            "#00FF00", // Verde
+            "#0000FF", // Azul
+            "#4B0082", // Índigo
+            "#EE82EE"  // Violeta
+        };
+
+        StringBuilder html = new StringBuilder();
+        int indiceColor = 0;
+
+        // Iterar por cada carácter del mensaje
+        for (char c : texto.toCharArray()) {
+            if (c == ' ') {
+                html.append(' '); // Mantener espacios sin color
+            } else {
+                // Añadir span con color correspondiente
+                html.append("<span style='color:")
+                    .append(coloresArcoiris[indiceColor % coloresArcoiris.length])
+                    .append("'>")
+                    .append(c)
+                    .append("</span>");
+                indiceColor++; // Siguiente color
+            }
+        }
+
+        return html.toString();
+    }
+	
+	
+	
 
 }

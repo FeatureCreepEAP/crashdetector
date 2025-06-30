@@ -89,6 +89,7 @@ public class StikkedAPI implements APIdeSitioDeRegistro {
         List<String> sitios = new ArrayList<>();
         sitios.add("https://paste.mikumikudance.jp/api/create");
         sitios.add("https://paste.mikumikudance.jp/en/api/create");
+        //sitios.add("https://paste.atlauncher.com/api/create");
         return sitios;
     }
 }
