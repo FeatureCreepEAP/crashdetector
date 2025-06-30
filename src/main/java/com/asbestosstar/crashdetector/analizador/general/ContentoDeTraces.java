@@ -1,12 +1,14 @@
 package com.asbestosstar.crashdetector.analizador.general;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.asbestosstar.crashdetector.BiMap;
@@ -33,6 +35,72 @@ public class ContentoDeTraces implements Verificaciones {
 
 	public Map<String, StringBuilder> contento = new HashMap<String, StringBuilder>();
 
+	private static List<Double> parseNivelNumerico(String texto) {
+	    List<Double> numeros = new ArrayList<>();
+	    if (texto == null) return numeros;
+
+	    Pattern pattern = Pattern.compile("\\b(\\d+[\\.,]?\\d*)\\b");
+	    Matcher matcher = pattern.matcher(texto);
+
+	    while (matcher.find()) {
+	        String grupo = matcher.group(1).replace(',', '.');
+	        try {
+	            numeros.add(Double.parseDouble(grupo));
+	        } catch (NumberFormatException ignored) {}
+	    }
+
+	    return numeros;
+	}
+	
+	
+
+    /**
+     * Extrae los números [nivel, línea, …] a partir de la sub‑cadena posterior al
+     * último espacio (donde se encuentra «nivelX,Y»). No interpreta comas como
+     * decimales, sino como separador.
+     */
+    private static List<Integer> extraerNumerosNivel(String texto) {
+        List<Integer> nums = new ArrayList<>();
+        if (texto == null) return nums;
+
+        int idx = texto.lastIndexOf(' ');
+        String segmento = idx == -1 ? texto : texto.substring(idx + 1);
+
+        Matcher m = Pattern.compile("\\d+").matcher(segmento);
+        while (m.find()) {
+            try {
+                nums.add(Integer.parseInt(m.group()));
+            } catch (NumberFormatException ignored) {}
+        }
+        return nums;
+    }
+
+    /** Comparator numérico por nivel → línea → resto. */
+    private static <T> Comparator<T> compNumerico(java.util.function.Function<T, String> extractor) {
+        return Comparator
+                .comparingInt((T e) -> {
+                    List<Integer> n = extraerNumerosNivel(extractor.apply(e));
+                    return n.isEmpty() ? Integer.MAX_VALUE : n.get(0);
+                })
+                .thenComparingInt(e -> {
+                    List<Integer> n = extraerNumerosNivel(extractor.apply(e));
+                    return n.size() > 1 ? n.get(1) : Integer.MAX_VALUE;
+                })
+                .thenComparingInt(e -> {
+                    List<Integer> n = extraerNumerosNivel(extractor.apply(e));
+                    return n.size() > 2 ? n.get(2) : Integer.MAX_VALUE;
+                });
+    }
+
+    /** Ordena una BiMap por el campo key1 («nivelX,Y»). */
+    private static <K> List<Entry<DoubleKey<K, String>, Boolean>> ordenarPorNivel(BiMap<K, String, Boolean> mapa) {
+        List<Entry<DoubleKey<K, String>, Boolean>> lista = new ArrayList<>(mapa.entrySet());
+        lista.sort(compNumerico(e -> e.getKey().key1));
+        return lista;
+    }
+	
+	
+	
 	@Override
 	public void verificar(Consola consola) {
 		VerificacionDeStackTrace vdst = consola.verificacion_de_stacktrace;
@@ -53,7 +121,7 @@ public class ContentoDeTraces implements Verificaciones {
 					.append(mensajeNormal).append(nl_html);
 		}
 
-		HashMap<String, Boolean> jar_nombres = new HashMap<>();
+		Map<String, Boolean> jar_nombres = new HashMap<>();
 		if (!vdst.jars.isEmpty()) {
 			activado = true;
 			for (Map.Entry<String, Boolean> jar : vdst.jars.entrySet()) {
@@ -61,8 +129,6 @@ public class ContentoDeTraces implements Verificaciones {
 				String lvl_info = "";
 				if (lvl_info_arr.length > 1) {
 					lvl_info = MonitorDePID.idioma.nivel() + lvl_info_arr[1];
-				} else {
-					System.out.println(lvl_info_arr[0]);
 				}
 				String jar_nombre = jar.getKey().split(".jar")[0] + ".jar " + lvl_info;
 				if (!todos_jars.contains(jar_nombre)) {
@@ -72,22 +138,16 @@ public class ContentoDeTraces implements Verificaciones {
 			}
 		}
 
-		if (!jar_nombres.isEmpty()) {
-			List<String> jarItems = new ArrayList<>();
-
-			constructor.append(MonitorDePID.idioma.problematico_jar()).append(nl_html).append("<ul>");
-
-			for (Map.Entry<String, Boolean> jar : jar_nombres.entrySet()) {
-				StringBuilder item = new StringBuilder("<li>");
-				if (jar.getValue()) {
-					item.append(MonitorDePID.idioma.possibladad_fatal());
-				}
-				item.append(jar.getKey()).append("</li>");
-				jarItems.add(item.toString());
-			}
-
-			constructor.append(String.join("", jarItems)).append("</ul>");
-		}
+        if (!jar_nombres.isEmpty()) {
+            activado = true;
+            constructor.append(MonitorDePID.idioma.problematico_jar()).append(nl_html).append("<ul>");
+            jar_nombres.entrySet().stream().sorted(compNumerico(Map.Entry::getKey)).forEach(e -> {
+            	constructor.append("<li>");
+                if (e.getValue()) constructor.append(MonitorDePID.idioma.possibladad_fatal());
+                constructor.append(e.getKey()).append("</li>");
+            });
+            constructor.append("</ul>");
+        }
 
 		BiMap<String, String, Boolean> modids_filt = new BiMap<>();
 
@@ -103,28 +163,24 @@ public class ContentoDeTraces implements Verificaciones {
 
 		if (!modids_filt.isEmpty()) {
 			Buscardor.cargar();
-			List<String> modidItems = new ArrayList<>();
-
 			constructor.append(nl_html).append(MonitorDePID.idioma.modids_problematicos()).append(nl_html)
 					.append("<ul>");
 
-			for (Entry<DoubleKey<String, String>, Boolean> modid : modids_filt.entrySet()) {
+			for (Entry<DoubleKey<String, String>, Boolean> modid : ordenarPorNivel(modids_filt)) {
 				String llev = modid.getKey().key0;
 				String jars_de_modid_string = "";
 				List<String> jars_de_modids = Buscardor.obternerModsConNombre(llev);
 				if (!jars_de_modids.isEmpty()) {
 					jars_de_modid_string = " (" + String.join(", ", jars_de_modids) + ")";
 				}
-
 				StringBuilder item = new StringBuilder("<li>");
 				if (modid.getValue()) {
 					item.append(MonitorDePID.idioma.possibladad_fatal());
 				}
 				item.append(llev).append(jars_de_modid_string).append(" ").append(modid.getKey().key1).append("</li>");
-				modidItems.add(item.toString());
+				constructor.append(item.toString());
 			}
-
-			constructor.append(String.join("", modidItems)).append("</ul>");
+			constructor.append("</ul>");
 		}
 
 		BiMap<String, String, Boolean> packs_filt = new BiMap<>();
@@ -141,12 +197,10 @@ public class ContentoDeTraces implements Verificaciones {
 
 		if (!packs_filt.isEmpty()) {
 			Buscardor.cargar();
-			List<String> packItems = new ArrayList<>();
-
 			constructor.append(nl_html).append(MonitorDePID.idioma.packages_problematicos()).append(nl_html)
 					.append("<ul>");
 
-			for (Entry<DoubleKey<String, String>, Boolean> pack : packs_filt.entrySet()) {
+			for (Entry<DoubleKey<String, String>, Boolean> pack : ordenarPorNivel(packs_filt)) {
 				String llev = pack.getKey().key0;
 				String jars_de_pack_string = "";
 				String pack_de_llev = obtenerRutaDePaquete(llev);
@@ -161,14 +215,12 @@ public class ContentoDeTraces implements Verificaciones {
 					item.append(MonitorDePID.idioma.possibladad_fatal());
 				}
 				item.append(llev).append(jars_de_pack_string).append(" ").append(pack.getKey().key1).append("</li>");
-				packItems.add(item.toString());
+				constructor.append(item.toString());
 			}
-
-			constructor.append(String.join("", packItems)).append("</ul>");
+			constructor.append("</ul>");
 		}
 
 		BiMap<String, String, Boolean> configs_inject = new BiMap<>();
-// Ahora preserva nivel y fatalidad al procesar braces
 		for (Entry<DoubleKey<String, String>, Boolean> brace : vdst.braces.entrySet()) {
 			for (String ind : VerificacionDeStackTrace.eliminarDuplicados(brace.getKey().key0.split(","))) {
 				String limpiado = ind.replace("pl:runtimedistcleaner:A", "").replace("re:classloading", "")
@@ -177,8 +229,6 @@ public class ContentoDeTraces implements Verificaciones {
 						.replace("featurecreep", "").replace("re:mixin", "").replace("xf:crashdetector:default", "");
 
 				if (!limpiado.isEmpty()) {
-					// Preservamos tanto el nivel (brace.getKey().key1) como la fatalidad
-					// (brace.getValue())
 					configs_inject.put(limpiado, brace.getKey().key1, brace.getValue());
 				}
 			}
@@ -189,10 +239,10 @@ public class ContentoDeTraces implements Verificaciones {
 			activado = true;
 			int count = 0;
 			for (Entry<DoubleKey<String, String>, Boolean> cfg : configs_inject.entrySet()) {
-				String nombre = cfg.getKey().key0; // nombre limpio
+				String nombre = cfg.getKey().key0;
 				if (!todos_sm_configs.contains(nombre)) {
 					todos_sm_configs.add(nombre);
-					if (count < 20) { // máximo 20 entradas
+					if (count < 20) {
 						sm_configs_filt.put(nombre, cfg.getKey().key1, cfg.getValue());
 						count++;
 					}
@@ -204,22 +254,17 @@ public class ContentoDeTraces implements Verificaciones {
 			constructor.append(nl_html).append(MonitorDePID.idioma.corchetes_ondulados()).append(nl_html)
 					.append("<ul>");
 
-			for (Entry<DoubleKey<String, String>, Boolean> cfg : sm_configs_filt.entrySet()) {
+			for (Entry<DoubleKey<String, String>, Boolean> cfg : ordenarPorNivel(sm_configs_filt)) {
 				String cleanConf = cfg.getKey().key0.split("\\.json")[0].replace(".mixins", "").replace(".mixin", "")
 						.replace("mixins.", "").replace("mixin.", "");
 
-				// Construir elemento de lista con indicadores
 				StringBuilder item = new StringBuilder("<li>");
-				if (cfg.getValue()) { // Si es fatal
+				if (cfg.getValue()) {
 					item.append(MonitorDePID.idioma.possibladad_fatal());
 				}
-				item.append(cleanConf).append(" ") // espacio entre nombre y nivel
-						.append(cfg.getKey().key1) // información de nivel
-						.append("</li>");
-
+				item.append(cleanConf).append(" ").append(cfg.getKey().key1).append("</li>");
 				constructor.append(item.toString());
 			}
-
 			constructor.append("</ul>");
 		}
 
@@ -230,83 +275,58 @@ public class ContentoDeTraces implements Verificaciones {
 
 	@Override
 	public Verificaciones nueva() {
-		// TODO Auto-generated method stub
 		return new ContentoDeTraces();
 	}
 
 	@Override
 	public boolean activado() {
-		// TODO Auto-generated method stub
 		return activado;
 	}
 
 	@Override
 	public float prioridad() {
-		// TODO Auto-generated method stub
 		return 10;
 	}
 
 	@Override
 	public String mensaje() {
-		// TODO Auto-generated method stub
 		StringBuilder constructor = new StringBuilder();
 		for (Map.Entry<String, StringBuilder> entry : contento.entrySet()) {
-
 			String titilo = "<span style='color: #" + Config.obtenerInstancia().obtenerColorDeTitulosDeConsolas()
 					+ "; font-weight: bold;'>";
 			constructor.append(titilo).append(entry.getKey()).append("").append("</span>");
-
 			constructor.append(entry.getValue().toString());
-
 		}
-
 		return constructor.toString();
 	}
 
 	@Override
 	public String nombre() {
-		// TODO Auto-generated method stub
 		return MonitorDePID.idioma.nombre_de_contento_de_stacktrace();
 	}
 
 	/**
-	 * Obtiene la ruta del paquete desde una referencia completa de método en un
-	 * stack trace. Ejemplo: "com.example.MyClass.myMethod()" → "com/example"
-	 * "java.util.HashMap.hash()" → "java/util" "MyClass.myMethod()" → ""
-	 *
-	 * @param input Referencia completa del método desde un stack trace
-	 * @return Ruta del paquete en notación con barras (ej. "com/example")
+	 * Convierte una referencia completa de método a la ruta del paquete.
 	 */
 	private static String obtenerRutaDePaquete(String input) {
 		if (input == null || input.trim().isEmpty()) {
 			return "";
 		}
-
 		String antesDelParentesis = input.split("\\(", 2)[0].trim();
-
 		antesDelParentesis = antesDelParentesis.replaceAll("\\$[^\\.]*", "");
-
 		int ultimoIndicePunto = antesDelParentesis.lastIndexOf('.');
 		if (ultimoIndicePunto <= 0) {
-			return ""; // Sin paquete
-		}
-
-		String nombreCompletoClase = antesDelParentesis.substring(0, ultimoIndicePunto);
-
-		String[] partesDelPaquete = nombreCompletoClase.split("\\.");
-		if (partesDelPaquete.length == 0) {
 			return "";
 		}
-
+		String nombreCompletoClase = antesDelParentesis.substring(0, ultimoIndicePunto);
+		String[] partesDelPaquete = nombreCompletoClase.split("\\.");
 		StringBuilder rutaDelPaquete = new StringBuilder();
-
 		for (int i = 0; i < partesDelPaquete.length; i++) {
 			if (i > 0) {
 				rutaDelPaquete.append("/");
 			}
 			rutaDelPaquete.append(partesDelPaquete[i]);
 		}
-
 		return rutaDelPaquete.toString();
 	}
 
@@ -315,5 +335,4 @@ public class ContentoDeTraces implements Verificaciones {
 		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
 				.construir();
 	}
-
 }

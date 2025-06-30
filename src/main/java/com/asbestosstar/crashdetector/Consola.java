@@ -345,125 +345,56 @@ public class Consola {
 	        String ultimaTrace = traces.get(traces.size() - 1);
 	        String[] lineas = ultimaTrace.split(VerificacionDeStackTrace.nl);
 	        
-	        // Buscar líneas con mensajes de error reales (ej: "Exception: Mensaje")
+	        // Buscar la primera línea con un mensaje real de error
 	        for (String linea : lineas) {
 	            String trimLinea = linea.trim();
 	            if (trimLinea.isEmpty()) continue;
 	            
-	            // Priorizar líneas con excepciones y mensajes descriptivos
-	            if (trimLinea.matches(".*\\b(?:java\\.lang\\.|net\\.minecraft|org\\.apache).*Exception: .+")) {
-	                return trimLinea;
-	            }
-	        }
-	        
-	        // Buscar líneas con "Caused by" (causa raíz del error)
-	        for (String linea : lineas) {
-	            String trimLinea = linea.trim();
-	            if (trimLinea.isEmpty()) continue;
+	            // Saltar líneas de pila ("at ...")
+	            if (trimLinea.startsWith("at ")) continue;
 	            
-	            if (trimLinea.contains("Caused by")) {
-	                return limpiarMetadatos(trimLinea);
-	            }
-	        }
-	        
-	        // Buscar la primera línea "at" que tenga un mensaje después del ":"
-	        for (String linea : lineas) {
-	            String trimLinea = linea.trim();
-	            if (trimLinea.isEmpty()) continue;
+	            // Saltar "Caused by" (se procesa en otro método)
+	            if (trimLinea.contains("Caused by")) continue;
 	            
-	            if (trimLinea.contains("at ")) {
-	                // Extraer solo la parte útil de la línea
-	                int index = trimLinea.indexOf("at ");
-	                if (index > 0) {
-	                    return trimLinea.substring(0, index).trim(); // Devuelve el mensaje antes de "at "
-	                }
-	                return limpiarMetadatos(trimLinea);
-	            }
-	        }
-	        
-	        // Devolver la primera línea no vacía como respaldo
-	        for (String linea : lineas) {
-	            String trimLinea = linea.trim();
-	            if (!trimLinea.isEmpty()) {
-	                return trimLinea;
-	            }
+	            // Devolver el mensaje limpio
+	            return trimLinea;
 	        }
 	    }
 	    return "";
 	}
-
+	
+	
+	
 	public String obtainerMensajeFatalUltimaTrace() {
 	    List<String> traces = VerificacionDeStackTrace.obtenerTracesFatal(contento_verificar);
 	    if (!traces.isEmpty()) {
 	        String ultimaTrace = traces.get(traces.size() - 1);
 	        String[] lineas = ultimaTrace.split(VerificacionDeStackTrace.nl);
 	        
-	        // Buscar líneas "FATAL" o "Error" específicos
+	        // Buscar el mensaje fatal en las líneas
 	        for (String linea : lineas) {
 	            String trimLinea = linea.trim();
 	            if (trimLinea.isEmpty()) continue;
 	            
-	            if (trimLinea.contains("FATAL") || 
-	                trimLinea.contains("java.lang.Error") || 
-	                trimLinea.contains("java.lang.OutOfMemoryError")) {
-	                return trimLinea;
-	            }
-	        }
-	        
-	        // Buscar líneas con "Caused by" (causa raíz)
-	        for (String linea : lineas) {
-	            String trimLinea = linea.trim();
-	            if (trimLinea.isEmpty()) continue;
+	            // Saltar líneas de pila
+	            if (trimLinea.startsWith("at ")) continue;
 	            
-	            if (trimLinea.contains("Caused by")) {
-	                return limpiarMetadatos(trimLinea);
-	            }
-	        }
-	        
-	        // Buscar la primera línea "at" que tenga un mensaje descriptivo
-	        for (String linea : lineas) {
-	            String trimLinea = linea.trim();
-	            if (trimLinea.isEmpty()) continue;
+	            // Saltar "Caused by"
+	            if (trimLinea.contains("Caused by")) continue;
 	            
-	            if (trimLinea.contains("at ")) {
-	                // Extraer mensaje antes de "at " si existe
-	                int index = trimLinea.indexOf("at ");
-	                if (index > 0) {
-	                    String mensajePrecedente = trimLinea.substring(0, index).trim();
-	                    if (!mensajePrecedente.isEmpty()) {
-	                        return mensajePrecedente;
-	                    }
-	                }
-	                return limpiarMetadatos(trimLinea);
-	            }
-	        }
-	        
-	        // Devolver la primera línea no vacía como respaldo
-	        for (String linea : lineas) {
-	            String trimLinea = linea.trim();
-	            if (!trimLinea.isEmpty()) {
-	                return trimLinea;
-	            }
+	            // Devolver el mensaje limpio
+	            return trimLinea;
 	        }
 	    }
 	    return "";
 	}
 	
-	private String limpiarMetadatos(String linea) {
-	    // Eliminar metadatos después de "~["
-	    int inicioMetadatos = linea.indexOf("~[");
-	    if (inicioMetadatos != -1) {
-	        return linea.substring(0, inicioMetadatos).trim();
-	    }
-	    
-	    // Eliminar metadatos después de "{"
-	    int inicioLlave = linea.indexOf("{");
-	    if (inicioLlave != -1) {
-	        return linea.substring(0, inicioLlave).trim();
-	    }
-	    
-	    return linea.trim();
-	}
+	
+	
+	
+	
+	
+
 	
 	
 	

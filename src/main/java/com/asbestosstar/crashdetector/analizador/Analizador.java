@@ -115,7 +115,7 @@ public class Analizador {
 		verificaciones.add(new KubeJSResourcePack());
 		verificaciones.add(new Segundo60Tick());
 		verificaciones.add(new NoTieneMemoria());
-		verificaciones.add(new Theseus());
+		//verificaciones.add(new Theseus());
 		verificaciones.add(new CursedConsola());
 		verificaciones.add(new NullPointer());
 		verificaciones.add(new ContentoDeTraces());
