@@ -342,20 +342,6 @@ public String errorBusqueda() {
 }
 
 @Override
-public String noRegistroDeLauncher() {
-    return "런처 로그를 찾을 수 없습니다! 이로 인해 조사가 복잡해질 수 있습니다.\n"
-            + "                \n"
-            + "                올바른 로그를 얻으려면:\n"
-            + "                - MultiMC/PolyMC/PrismLauncher: 참고: 자동으로 감지된 로그는 올바르지 않습니다.\n"
-            + "                  1. 인스턴스 인터페이스 열기\n"
-            + "                  2. \"Minecraft Log\" 섹션으로 이동\n"
-            + "                  3. 마우스 오른쪽 버튼 클릭 후 내용 복사\n"
-            + "                - CurseForgeApp:\n"
-            + "                  1. 런처를 건너뛰지 않고 게임 재시작\n"
-            + "                  \n";
-}
-
-@Override
 public String omitirYCerrar() {
     return "건너뛰고 닫기";
 }
@@ -1786,9 +1772,62 @@ public String parcheIPv4() {
     return "IPv4/6 패치";
 }
 
+@Override
+public String carpetaHMCL() {
+    return "HMCL 폴더 (HelloMineCraftLauncher 전용)";
+}
 
+@Override
+public String descripcionCurseforge() {
+    return "주의: 설정 > 마인크래프트에서 '런처 건너뛰기'가 활성화되면 로그 파일이 생성되지 않습니다.";
+}
 
+@Override
+public String descripcionPrism() {
+    return "Prism/MultiMC/PolyMC/PollyMC/UltimMC/파생된 런처: 인스턴스를 우클릭하고 '인스턴스 편집'을 선택합니다. 열린 창에서 '마인크래프트 로그' 또는 유사한 항목을 찾으세요.<br>" +
+           "이러한 로그는 오류 진단에 필수적인 표준 출력(STDOUT)을 포함합니다.";
+}
 
+@Override
+public String descripcionHMCL() {
+    return "HMCL (HelloMinecraftLauncher): HMCL이 설치된 폴더를 선택하고 '.hmcl' 폴더를 지정해야 합니다. HMCL 로그는 이 위치에 저장되며 중요한 오류 정보를 담고 있습니다.<br>";
+}
+
+@Override
+public String descripcionFenix() {
+    return "LauncherFenix: 런처에는 상세한 로그를 보여주는 개발 탭이 있습니다. 런처 설정 메뉴에서 이 탭을 찾을 수 있습니다.";
+}
+
+@Override
+public String descripcionATLauncher() {
+    return "ATLauncher: 팝업 창에 로그가 표시됩니다. 복사 및 업로드 버튼이 있으며, 게임 시작 시 자동으로 생성되고 중요한 진단 정보를 담고 있습니다.";
+}
+
+@Override
+public String descripcionGDLauncher() {
+    return "GDLauncher: 인스턴스를 우클릭하여 '설정'을 클릭한 다음 로그 섹션에서 표준 출력(STDOUT)의 중요한 정보를 확인하세요.";
+}
+
+@Override
+public String descripcionLinksMarkdown() {
+    return "Markdown 링크: Markdown 형식의 로그를 포함하는 모든 링크를 여기에 붙여넣으세요. 시스템은 로그 링크(latest.log, launcher_log.txt, debug.log 등)를 자동으로 추출하고 분석할 것입니다.";
+}
+
+@Override
+public String noRegistroLauncherTitulo() {
+    return "런처 로그를 찾을 수 없음";
+}
+
+@Override
+public String imagenNoEncontrada() {
+    return "이미지를 찾을 수 없음";
+}
+
+@Override
+public String noRegistroDeLauncher() {
+    return "일반: 사용 중인 런처 종류를 선택하세요. 런처 로그(launcher_log.txt, stdout 등)는 latest.log에 없는 중요한 오류 정보를 포함합니다. CrashDetector가 런처 로그를 읽지 못할 수도 있는데, 로그 파일이 생성되지 않았을 수 있으므로 수동으로 로그를 붙여넣어야 할 수도 있습니다.<br>" +
+           "자세한 내용은 <a href=\"https://github.com/HMCL-dev/HMCL/issues/2663 \">이 문제를 참조하세요</a>. 이러한 로그는 표준 출력(STDOUT)을 포함하며, 많은 오류를 진단하는 데 필요합니다.";
+}
 
 
 

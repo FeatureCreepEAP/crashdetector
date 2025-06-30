@@ -5,7 +5,6 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 
 public class NoTieneMemoria implements Verificaciones {
 
@@ -22,8 +21,8 @@ public class NoTieneMemoria implements Verificaciones {
             contenidoConsola.contains("Could not reserve enough space for") ||
             contenidoConsola.contains("Native memory allocation failed") ||
             contenidoConsola.contains("swap file increase") ||
+            contenidoConsola.contains("Out of Memory Error") ||
             contenidoConsola.contains("Problem with RAM")) {
-            
             mensajes.append(MonitorDePID.idioma.noTieneMemoria())
                     .append(Verificaciones.nl_html)
                     .append(MonitorDePID.idioma.recomendacionMemoria());

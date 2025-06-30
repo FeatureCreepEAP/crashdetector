@@ -334,19 +334,6 @@ public String errorBusqueda() {
 }
 
 
-@Override
-public String noRegistroDeLauncher() {
-    return "ランチャーログが見つかりませんでした！これにより調査が複雑になる可能性があります。\n"
-            + "                \n"
-            + "                正しいログを取得するには：\n"
-            + "                - MultiMC/PolyMC/PrismLauncher: 注意: 自動検出されたログは正しくありません。\n"
-            + "                  1. インスタンスインターフェースを開く\n"
-            + "                  2. 「Minecraft Log」セクションに移動\n"
-            + "                  3. 右クリックして内容をコピー\n"
-            + "                - CurseForgeApp:\n"
-            + "                  1. ランチャーをスキップせずにゲームを再起動\n"
-            + "                  \n";
-}
 
 @Override
 public String omitirYCerrar() {
@@ -1822,7 +1809,62 @@ public String parcheIPv4() {
     return "IPv4/6 パッチ";
 }
 
+@Override
+public String carpetaHMCL() {
+    return "HMCL フォルダ (HelloMineCraftLauncher 専用)";
+}
 
+@Override
+public String descripcionCurseforge() {
+    return "注意: 設定 > Minecraft で「ランチャーをスキップ」が有効になっているとログは生成されません。";
+}
+
+@Override
+public String descripcionPrism() {
+    return "Prism/MultiMC/PolyMC/PollyMC/UltimMC/派生ソフト: インスタンスを右クリックし、「インスタンスの編集」を選択します。開いたウィンドウ内で「Minecraft ログ」や類似するセクションを探してください。<br>" +
+           "これらのログにはエラー診断に不可欠な標準出力 (STDOUT) が含まれています。";
+}
+
+@Override
+public String descripcionHMCL() {
+    return "HMCL (HelloMinecraftLauncher): HMCL のインストール先フォルダを選択し、その中の 「.hmcl」 フォルダを選んでください。HMCL のログはここに保存されており、重要なエラー情報を含みます。<br>";
+}
+
+@Override
+public String descripcionFenix() {
+    return "LauncherFenix：ランチャーには詳細ログを表示する開発者タブがあります。ランチャー設定メニュー内にあります。";
+}
+
+@Override
+public String descripcionATLauncher() {
+    return "ATLauncher：ログはポップアップウィンドウに表示されます。コピーおよびアップロードボタンがあり、ゲーム起動時に自動生成される重要な診断情報が含まれています。";
+}
+
+@Override
+public String descripcionGDLauncher() {
+    return "GDLauncher：インスタンスを右クリックし、「設定」を選択します。その後、ログセクションから標準出力 (STDOUT) の重要な情報を確認できます。";
+}
+
+@Override
+public String descripcionLinksMarkdown() {
+    return "Markdown形式のリンク：Markdown形式のログが含まれるリンクを貼り付けてください。システムがログファイルへのリンク(latest.log, launcher_log.txt, debug.logなど)を自動抽出して解析します。";
+}
+
+@Override
+public String noRegistroLauncherTitulo() {
+    return "ランチャーログが見つかりません";
+}
+
+@Override
+public String imagenNoEncontrada() {
+    return "画像が見つからない";
+}
+
+@Override
+public String noRegistroDeLauncher() {
+    return "汎用：使用しているランチャーの種類を選択してください。ランチャーログ(launcher_log.txt, stdoutなど)は latest.log に現れない重大なエラー情報を含みます。CrashDetectorがあなたのランチャーログを読み込めない可能性があります — ログファイルが生成されていない場合、手動でログを貼り付けなくてはいけません。<br>" +
+           "詳細については <a href=\"https://github.com/HMCL-dev/HMCL/issues/2663 \">この問題</a> を参照してください。これらのログには多くのエラー診断に必要な標準出力 (STDOUT) が含まれます。";
+}
 
 
 

@@ -3,6 +3,7 @@ package com.asbestosstar.crashdetector;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -21,6 +22,7 @@ import com.asbestosstar.crashdetector.api_sito_registro.SecureLoggerAPI;
 import com.asbestosstar.crashdetector.api_sito_registro.StikkedAPI;
 import com.asbestosstar.crashdetector.gui.NoRegistroDeLauncher;
 import com.asbestosstar.crashdetector.limpiador.LimpiadorRegistroDeLauncherVainilla;
+import com.asbestosstar.crashdetector.limpiador.LimpiadorRegistroLatestLog;
 
 public class Consola {
 
@@ -38,7 +40,9 @@ public class Consola {
 	public VerificacionDeStackTrace verificacion_de_stacktrace;
 
 	public static ArrayList<File> archivos_en_lista = new ArrayList<File>();
-	public static String[] tipos_de_registros_de_launcher = { "../../logs/ftb-app-electron.log" };// No para registros con "launcher en el nombre"
+	public static String[] tipos_de_registros_de_launcher = { "../../logs/ftb-app-electron.log" };// No para registros
+																									// con "launcher en
+																									// el nombre"
 
 	public static SecureLoggerAPI secure_logger_api = new SecureLoggerAPI();
 
@@ -65,7 +69,7 @@ public class Consola {
 
 			}
 
-		} else if (archivo.toString().contains("launcher_log")) {
+		} else if (archivo.toString().contains("launcher_log") || archivo.toString().contains(".hmcl")) {
 			String contento_existe = MonitorDePID.leer_archivo(archivo);
 			String[] lineas = contento_existe.split(File.pathSeparator);
 			linea_original = lineas.length;
@@ -89,20 +93,18 @@ public class Consola {
 					para_verificar.append(lineas[i]).append(File.pathSeparator);
 				}
 
-				if(archivo.toString().endsWith("launcher_log.txt")) {
+				if (archivo.toString().endsWith("launcher_log.txt")) {
 					contento_verificar = LimpiadorRegistroDeLauncherVainilla.limpiarConsola(para_verificar.toString());
-				}else if(archivo.toString().endsWith("latest.log")) {
+				} else if (archivo.toString().endsWith("latest.log")) {
 					contento_verificar = LimpiadorRegistroLatestLog.limpiarConsola(para_verificar.toString());
+				} else {
+					contento_verificar = para_verificar.toString();
 				}
-				else {
-				contento_verificar = para_verificar.toString();
+
+				if (contento_verificar.contains(MonitorDePID.mensaje_de_registro_launcher_completa)) {
+					MonitorDePID.tiene_mensaje_de_registro_launcher_completa = true;
 				}
-				
-			if(contento_verificar.contains(MonitorDePID.mensaje_de_registro_launcher_completa)) {
-				MonitorDePID.tiene_mensaje_de_registro_launcher_completa=true;
-			}	
-				
-			
+
 			} else {
 				nueva = false;
 				contento = "";
@@ -113,12 +115,11 @@ public class Consola {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	public void finalizarContentoInyectado(String contento) {
-				nueva = true;
-				this.contento=contento;
-				contento_verificar = contento;
+		nueva = true;
+		this.contento = contento;
+		contento_verificar = contento;
 	}
 
 	public static List<Consola> obtenerConsolas() {
@@ -142,110 +143,149 @@ public class Consola {
 
 	}
 
-	    public static List<File> obtenerArchivosDeConsolas() {
-	        List<File> resultado = new ArrayList<>();
-	        Set<String> rutasLauncherLog = new HashSet<>(); // Solo para launcher_log.txt
-	        String home = System.getProperty("user.home");
-	        String soporteAplicaciones = home + "/Library/Application Support/";
-	        String appdata = System.getenv("APPDATA");
+	public static List<File> obtenerArchivosDeConsolas() {
+		List<File> resultado = new ArrayList<>();
+		Set<String> rutasLauncherLog = new HashSet<>(); // Solo para launcher_log.txt
+		String home = System.getProperty("user.home");
+		String soporteAplicaciones = home + "/Library/Application Support/";
+		String appdata = System.getenv("APPDATA");
 
-	        // Agregar logs principales con control de duplicados
-	        agregarLauncherLog(new File("launcher_log.txt"), resultado, rutasLauncherLog);
-	        agregarLauncherLog(new File("../../Install/launcher_log.txt"), resultado, rutasLauncherLog); // CurseForgeApp
-	        agregarLauncherLog(new File(soporteAplicaciones + "minecraft/launcher_log.txt"), resultado, rutasLauncherLog); // CurseForgeApp
+		// Agregar logs principales con control de duplicados
+		agregarLauncherLog(new File("launcher_log.txt"), resultado, rutasLauncherLog);
+		agregarLauncherLog(new File("../../Install/launcher_log.txt"), resultado, rutasLauncherLog); // CurseForgeApp
+		agregarLauncherLog(new File(soporteAplicaciones + "minecraft/launcher_log.txt"), resultado, rutasLauncherLog); // CurseForgeApp
 
-	        if (appdata != null) {
-	            agregarLauncherLog(new File(appdata + "/.minecraft/launcher_log.txt"), resultado, rutasLauncherLog); // CurseForgeApp
-	        }
+		if (appdata != null) {
+			agregarLauncherLog(new File(appdata + "/.minecraft/launcher_log.txt"), resultado, rutasLauncherLog); // CurseForgeApp
+		}
 
-	        // Agregar otros logs sin control de duplicados
-	        agregarDirectorio(resultado, new File("logs/"));
-	        agregarDirectorio(resultado, new File("crash-reports/"));
+		agregarDirectorio(resultado, new File("../.hmcl/logs/"));
+		agregarDirectorio(resultado, new File(home + "/.hmcl/logs/"));
+		if (appdata != null) {
+			agregarDirectorio(resultado, new File(appdata + "/.hmcl/logs/"));
+		}
+		agregarDirectorio(resultado, obtanerHMCLDirMunidial().toFile());
+//https://github.com/HMCL-dev/HMCL/issues/2663
 
-	        // Configuración de TLauncher
-	        File carpetaTLauncherStarter;
-	        File carpetaTLauncher;
-	        if (appdata != null) { 
-	            carpetaTLauncherStarter = new File(appdata + "/.tlauncher/logs/starter/");
-	            carpetaTLauncher = new File(appdata + "/.tlauncher/logs/tlauncher/");
-	        } else if (new File(soporteAplicaciones + "/tlauncher/").exists()) {
-	            carpetaTLauncherStarter = new File(soporteAplicaciones + "/tlauncher/logs/starter/");
-	            carpetaTLauncher = new File(soporteAplicaciones + "/tlauncher/logs/tlauncher/");
-	        } else {
-	            carpetaTLauncherStarter = new File(home + "/.tlauncher/logs/starter/");
-	            carpetaTLauncher = new File(home + "/.tlauncher/logs/tlauncher/");
-	        }
+		// Agregar otros logs sin control de duplicados
+		agregarDirectorio(resultado, new File("logs/"));
+		agregarDirectorio(resultado, new File("crash-reports/"));
 
-	        agregarDirectorio(resultado, carpetaTLauncher);
-	        agregarDirectorio(resultado, carpetaTLauncherStarter);
+		// Configuración de TLauncher
+		File carpetaTLauncherStarter;
+		File carpetaTLauncher;
+		if (appdata != null) {
+			carpetaTLauncherStarter = new File(appdata + "/.tlauncher/logs/starter/");
+			carpetaTLauncher = new File(appdata + "/.tlauncher/logs/tlauncher/");
+		} else if (new File(soporteAplicaciones + "/tlauncher/").exists()) {
+			carpetaTLauncherStarter = new File(soporteAplicaciones + "/tlauncher/logs/starter/");
+			carpetaTLauncher = new File(soporteAplicaciones + "/tlauncher/logs/tlauncher/");
+		} else {
+			carpetaTLauncherStarter = new File(home + "/.tlauncher/logs/starter/");
+			carpetaTLauncher = new File(home + "/.tlauncher/logs/tlauncher/");
+		}
 
-	        // Agregar otros archivos directamente
-	        agregarLauncherLog(new File(home + ".minecraft/launcher_log.txt"), resultado, rutasLauncherLog); // CurseForgeApp y TL segundo
-	        resultado.add(new File("../../logs/ftb-app-electron.log")); // FTB
-	        resultado.add(new File("sklauncher/sklauncher_logs.txt"));
-	        resultado.add(NoRegistroDeLauncher.cd_launcherlog);
-	        resultado.add(new File("hs_err_pid" + String.valueOf(MonitorDePID.pid) + ".log")); // GDLauncher
+		agregarDirectorio(resultado, carpetaTLauncher);
+		agregarDirectorio(resultado, carpetaTLauncherStarter);
 
-	        return resultado;
-	    }
+		// Agregar otros archivos directamente
+		agregarLauncherLog(new File(home + ".minecraft/launcher_log.txt"), resultado, rutasLauncherLog); // CurseForgeApp
+																											// y TL
+																											// segundo
+		resultado.add(new File("../../logs/ftb-app-electron.log")); // FTB
+		resultado.add(new File("sklauncher/sklauncher_logs.txt"));
+		resultado.add(NoRegistroDeLauncher.cd_launcherlog);
+		resultado.add(new File("hs_err_pid" + String.valueOf(MonitorDePID.pid) + ".log")); // GDLauncher
 
-	    /**
-	     * Agrega archivos de logs evitando duplicados solo para launcher_log.txt
-	     */
-	    private static void agregarLauncherLog(File archivo, List<File> resultado, Set<String> rutas) {
-	        if (archivo.getName().equals("launcher_log.txt")) {
-	            try {
-	                String rutaCanonica = archivo.getCanonicalPath();
-	                if (!rutas.contains(rutaCanonica)) {
-	                    resultado.add(archivo);
-	                    rutas.add(rutaCanonica);
-	                }
-	            } catch (IOException e) {
-	                resultado.add(archivo);
-	            }
-	        } else {
-	            resultado.add(archivo);
-	        }
-	    }
+		return resultado;
+	}
 
-	    /**
-	     * Agrega recursivamente todos los archivos de un directorio y sus subdirectorios
-	     * sin control de duplicados, excluyendo archivos .gz
-	     */
-	    public static void agregarDirectorio(List<File> resultado, File directorio) {
-	        if (!directorio.exists() || !directorio.isDirectory()) {
-	            return;
-	        }
+	// Verifica si el sistema operativo es Linux o BSD
+	private static final boolean ES_LINUX_O_BSD = System.getProperty("os.name").toLowerCase().contains("linux")
+			|| System.getProperty("os.name").toLowerCase().contains("bsd");
 
-	        File[] archivos = directorio.listFiles();
-	        if (archivos == null) return;
+	/**
+	 * Obtiene el directorio principal de HMCL siguiendo sus convenciones
+	 * 
+	 * @return Ruta al directorio principal de HMCL
+	 */
+	private static Path obtanerHMCLDirMunidial() {
+		// Primero verificar propiedad del sistema
+		String hmclHomeProp = System.getProperty("hmcl.home");
+		if (hmclHomeProp != null) {
+			return Paths.get(hmclHomeProp).toAbsolutePath().normalize();
+		}
 
-	        for (File archivo : archivos) {
-	            if (archivo.isDirectory()) {
-	                agregarDirectorio(resultado, archivo); // Llamada recursiva
-	            } else if (!archivo.getName().endsWith(".gz") && archivo.isFile()) {
-	                resultado.add(archivo);
-	            }
-	        }
-	    }
-	
+		// Lógica específica para Linux/BSD
+		if (ES_LINUX_O_BSD) {
+			String xdgData = System.getenv("XDG_DATA_HOME");
+			if (xdgData != null && !xdgData.isEmpty()) {
+				return Paths.get(xdgData, "hmcl").toAbsolutePath().normalize();
+			}
+			return Paths.get(System.getProperty("user.home"), ".local", "share", "hmcl").toAbsolutePath().normalize();
+		}
+
+		// Para Windows y macOS
+		return Paths.get(System.getProperty("user.home"), ".hmcl").toAbsolutePath().normalize();
+	}
+
+	/**
+	 * Agrega archivos de logs evitando duplicados solo para launcher_log.txt
+	 */
+	private static void agregarLauncherLog(File archivo, List<File> resultado, Set<String> rutas) {
+		if (archivo.getName().equals("launcher_log.txt")) {
+			try {
+				String rutaCanonica = archivo.getCanonicalPath();
+				if (!rutas.contains(rutaCanonica)) {
+					resultado.add(archivo);
+					rutas.add(rutaCanonica);
+				}
+			} catch (IOException e) {
+				resultado.add(archivo);
+			}
+		} else {
+			resultado.add(archivo);
+		}
+	}
+
+	/**
+	 * Agrega recursivamente todos los archivos de un directorio y sus
+	 * subdirectorios sin control de duplicados, excluyendo archivos .gz
+	 */
+	public static void agregarDirectorio(List<File> resultado, File directorio) {
+		if (!directorio.exists() || !directorio.isDirectory()) {
+			return;
+		}
+
+		File[] archivos = directorio.listFiles();
+		if (archivos == null)
+			return;
+
+		for (File archivo : archivos) {
+			if (archivo.isDirectory()) {
+				agregarDirectorio(resultado, archivo); // Llamada recursiva
+			} else if (!archivo.getName().endsWith(".gz") && !archivo.getName().endsWith(".xz") && archivo.isFile()) {
+				resultado.add(archivo);
+			}
+		}
+	}
 
 	public static List<Consola> reorganizar(List<Consola> consolas) {
-	    List<Consola> priorizadas = new ArrayList<>();
-	    List<Consola> normales = new ArrayList<>();
-	    
-	    for (Consola consola : consolas) {
-	        String nombreArchivo = consola.archivo.toString().toLowerCase();
-	        if (nombreArchivo.contains("crash-report")) {
-	            priorizadas.add(consola); // Archivos de crash van primero [[3]]
-	        } else {
-	            normales.add(consola); // El resto mantiene orden original
-	        }
-	    }
-	    
-	    // Combina listas: primero crash reports, luego normales [[1]]
-	    priorizadas.addAll(normales);
-	    return priorizadas;
+		List<Consola> priorizadas = new ArrayList<>();
+		List<Consola> normales = new ArrayList<>();
+
+		for (Consola consola : consolas) {
+			String nombreArchivo = consola.archivo.toString().toLowerCase();
+			if (nombreArchivo.contains("crash-report")) {
+				priorizadas.add(consola); // Archivos de crash van primero [[3]]
+			} else {
+				normales.add(consola); // El resto mantiene orden original
+			}
+		}
+
+		// Combina listas: primero crash reports, luego normales [[1]]
+		priorizadas.addAll(normales);
+		return priorizadas;
 	}
 
 	// Para todos el code aqui,escribir otra vez estar mas simplicado pero hacer la
@@ -269,6 +309,10 @@ public class Consola {
 			if (nombre.toLowerCase().contains("launcher") && !nombre.contains("PrismLauncher-0")) {
 				return true;
 			}
+			if (nombre.toLowerCase().contains(".hmcl") && nombre.toLowerCase().contains("logs")) {
+				return true;
+			}
+
 			for (String regdelauncher : Consola.tipos_de_registros_de_launcher) {
 				if (nombre.equals(regdelauncher)) {
 					return true;
@@ -294,13 +338,56 @@ public class Consola {
 		}
 		return contento_verificar;
 	}
-	
+
 	public String obtainerMensajeUltimaTrace() {
 	    List<String> traces = VerificacionDeStackTrace.obtenerTraces(contento_verificar);
 	    if (!traces.isEmpty()) {
-	        String ult = traces.get(traces.size() - 1);
-	        String[] arr = ult.split(VerificacionDeStackTrace.nl);
-	        return arr.length > 0 ? arr[0] : "";
+	        String ultimaTrace = traces.get(traces.size() - 1);
+	        String[] lineas = ultimaTrace.split(VerificacionDeStackTrace.nl);
+	        
+	        // Buscar líneas con mensajes de error reales (ej: "Exception: Mensaje")
+	        for (String linea : lineas) {
+	            String trimLinea = linea.trim();
+	            if (trimLinea.isEmpty()) continue;
+	            
+	            // Priorizar líneas con excepciones y mensajes descriptivos
+	            if (trimLinea.matches(".*\\b(?:java\\.lang\\.|net\\.minecraft|org\\.apache).*Exception: .+")) {
+	                return trimLinea;
+	            }
+	        }
+	        
+	        // Buscar líneas con "Caused by" (causa raíz del error)
+	        for (String linea : lineas) {
+	            String trimLinea = linea.trim();
+	            if (trimLinea.isEmpty()) continue;
+	            
+	            if (trimLinea.contains("Caused by")) {
+	                return limpiarMetadatos(trimLinea);
+	            }
+	        }
+	        
+	        // Buscar la primera línea "at" que tenga un mensaje después del ":"
+	        for (String linea : lineas) {
+	            String trimLinea = linea.trim();
+	            if (trimLinea.isEmpty()) continue;
+	            
+	            if (trimLinea.contains("at ")) {
+	                // Extraer solo la parte útil de la línea
+	                int index = trimLinea.indexOf("at ");
+	                if (index > 0) {
+	                    return trimLinea.substring(0, index).trim(); // Devuelve el mensaje antes de "at "
+	                }
+	                return limpiarMetadatos(trimLinea);
+	            }
+	        }
+	        
+	        // Devolver la primera línea no vacía como respaldo
+	        for (String linea : lineas) {
+	            String trimLinea = linea.trim();
+	            if (!trimLinea.isEmpty()) {
+	                return trimLinea;
+	            }
+	        }
 	    }
 	    return "";
 	}
@@ -308,12 +395,78 @@ public class Consola {
 	public String obtainerMensajeFatalUltimaTrace() {
 	    List<String> traces = VerificacionDeStackTrace.obtenerTracesFatal(contento_verificar);
 	    if (!traces.isEmpty()) {
-	        String ult = traces.get(traces.size() - 1);
-	        String[] arr = ult.split(VerificacionDeStackTrace.nl);
-	        return arr.length > 0 ? arr[0] : "";
+	        String ultimaTrace = traces.get(traces.size() - 1);
+	        String[] lineas = ultimaTrace.split(VerificacionDeStackTrace.nl);
+	        
+	        // Buscar líneas "FATAL" o "Error" específicos
+	        for (String linea : lineas) {
+	            String trimLinea = linea.trim();
+	            if (trimLinea.isEmpty()) continue;
+	            
+	            if (trimLinea.contains("FATAL") || 
+	                trimLinea.contains("java.lang.Error") || 
+	                trimLinea.contains("java.lang.OutOfMemoryError")) {
+	                return trimLinea;
+	            }
+	        }
+	        
+	        // Buscar líneas con "Caused by" (causa raíz)
+	        for (String linea : lineas) {
+	            String trimLinea = linea.trim();
+	            if (trimLinea.isEmpty()) continue;
+	            
+	            if (trimLinea.contains("Caused by")) {
+	                return limpiarMetadatos(trimLinea);
+	            }
+	        }
+	        
+	        // Buscar la primera línea "at" que tenga un mensaje descriptivo
+	        for (String linea : lineas) {
+	            String trimLinea = linea.trim();
+	            if (trimLinea.isEmpty()) continue;
+	            
+	            if (trimLinea.contains("at ")) {
+	                // Extraer mensaje antes de "at " si existe
+	                int index = trimLinea.indexOf("at ");
+	                if (index > 0) {
+	                    String mensajePrecedente = trimLinea.substring(0, index).trim();
+	                    if (!mensajePrecedente.isEmpty()) {
+	                        return mensajePrecedente;
+	                    }
+	                }
+	                return limpiarMetadatos(trimLinea);
+	            }
+	        }
+	        
+	        // Devolver la primera línea no vacía como respaldo
+	        for (String linea : lineas) {
+	            String trimLinea = linea.trim();
+	            if (!trimLinea.isEmpty()) {
+	                return trimLinea;
+	            }
+	        }
 	    }
 	    return "";
 	}
+	
+	private String limpiarMetadatos(String linea) {
+	    // Eliminar metadatos después de "~["
+	    int inicioMetadatos = linea.indexOf("~[");
+	    if (inicioMetadatos != -1) {
+	        return linea.substring(0, inicioMetadatos).trim();
+	    }
+	    
+	    // Eliminar metadatos después de "{"
+	    int inicioLlave = linea.indexOf("{");
+	    if (inicioLlave != -1) {
+	        return linea.substring(0, inicioLlave).trim();
+	    }
+	    
+	    return linea.trim();
+	}
+	
+	
+	
 	
 
 }

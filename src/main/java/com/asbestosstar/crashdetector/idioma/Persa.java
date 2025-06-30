@@ -338,20 +338,6 @@ public String errorBusqueda() {
 }
 
 @Override
-public String noRegistroDeLauncher() {
-    return "هیچ لاگی از لانچر پیدا نشد! این ممکن است بررسی را پیچیده‌تر کند.\n"
-            + "                \n"
-            + "                برای دریافت لاگ‌های صحیح:\n"
-            + "                - MultiMC/PolyMC/PrismLauncher: توجه: لاگ‌های شناسایی‌شده به‌صورت خودکار صحیح نیستند.\n"
-            + "                  1. رابط نمونه را باز کنید\n"
-            + "                  2. به بخش \"Minecraft Log\" بروید\n"
-            + "                  3. روی آن راست‌کلیک کنید و محتوای آن را کپی کنید\n"
-            + "                - CurseForgeApp:\n"
-            + "                  1. بدون رد کردن لانچر، بازی را دوباره راه‌اندازی کنید\n"
-            + "                  \n";
-}
-
-@Override
 public String omitirYCerrar() {
     return "رد کردن و بستن";
 }
@@ -1832,9 +1818,62 @@ public String parcheIPv4() {
     return "پچ IPv4/6";
 }
 
+@Override
+public String carpetaHMCL() {
+    return "پوشه HMCL (فقط برای HelloMineCraftLauncher)";
+}
 
+@Override
+public String descripcionCurseforge() {
+    return "نکته: اگر گزینه «پرش از لانچر» در تنظیمات > ماين كرافت فعال باشد هیچ سجلی ایجاد نمی‌شود.";
+}
 
+@Override
+public String descripcionPrism() {
+    return "Prism/MultiMC/PolyMC/PollyMC/UltimMC/مشتقات: روی نسخه کلیک راست کنید و «ویرایش نسخه» را انتخاب کنید. در پنجره‌ای که باز می‌شود، به دنبال بخش «ثبت‌های ماين كرافت» یا چیزی شبیه آن باشید.<br>" +
+           "این ثبت‌ها شامل خروجی استاندارد (STDOUT) هستند که برای تشخیص خطاهای مختلف ضروری‌اند.";
+}
 
+@Override
+public String descripcionHMCL() {
+    return "HMCL (HelloMinecraftLauncher): باید پوشه‌ای که HMCL در آن نصب شده است را انتخاب کنید و پوشه «.hmcl» را انتخاب کنید. سجل‌های HMCL در اینجا ذخیره می‌شوند و حاوی اطلاعات مهم درباره خطاهای هستند.<br>";
+}
+
+@Override
+public String descripcionFenix() {
+    return "LauncherFenix: لانچر یک زبانه توسعه دارد که سجل‌های جزئی را نمایش می‌دهد. می‌توانید این زبانه را در منوی تنظیمات لانچر پیدا کنید.";
+}
+
+@Override
+public String descripcionATLauncher() {
+    return "ATLauncher: نمایش سجل‌ها در یک پنجره منبسط شونده وجود دارد. دکمه‌هایی برای کپی و آپلود سجل‌ها وجود دارد. سجل‌ها به صورت خودکار هنگام اجرای بازی ایجاد می‌شوند و شامل اطلاعات ضروری برای تشخیص مشکلات هستند.";
+}
+
+@Override
+public String descripcionGDLauncher() {
+    return "GDLauncher: روی نسخه کلیک راست کرده و «تنظیمات» را انتخاب کنید. سپس به بخش سجل‌ها بروید تا اطلاعات مهم خروجی استاندارد (STDOUT) را ببینید.";
+}
+
+@Override
+public String descripcionLinksMarkdown() {
+    return "لینک‌های Markdown: هر لینکی که حاوی سجل‌ها در قالب Markdown باشد را اینجا بچسبانید. سیستم سعی خواهد کرد لینک‌های سجل (latest.log, launcher_log.txt, debug.log و غیره) را استخراج و تحلیل کند.";
+}
+
+@Override
+public String noRegistroLauncherTitulo() {
+    return "لاگ لانچر پیدا نشد";
+}
+
+@Override
+public String imagenNoEncontrada() {
+    return "تصویر یافت نشد";
+}
+
+@Override
+public String noRegistroDeLauncher() {
+    return "عمومی: نوع لانچری که از آن استفاده می‌کنید را انتخاب کنید. سجل‌های لانچر (launcher_log.txt, stdout و غیره) شامل اطلاعات ضروری درباره خطاهایی هستند که در latest.log دیده نمی‌شوند. CrashDetector قادر به خواندن سجل‌های لانچر شما نیست — ممکن است لانچر شما فایل سجلی ایجاد نکند، بنابراین باید سجل‌ها را دستی کپی کنید.<br>" +
+           "برای کسب اطلاعات بیشتر، <a href=\"https://github.com/HMCL-dev/HMCL/issues/2663 \">این موضوع را ببینید</a>. این سجل‌ها شامل خروجی استاندارد (STDOUT) هستند که برای تشخیص بسیاری از انواع خطاها ضروری‌اند.";
+}
 
 
 

@@ -34,9 +34,8 @@ public class Drivers implements Verificaciones {
         "No context is current or a function that is not available in the current context",
         "The driver does not appear to support framebuffer objects",
         // Excepciones típicas
-        "org.lwjgl.LWJGLException",
+        "org.lwjgl.LWJGLException"
         // DLLs Intel / AMD / Mesa que suelen fallar
-        "atio6axx.dll", "atioglxx.dll"
         // Otros
     };
     
@@ -72,6 +71,10 @@ public class Drivers implements Verificaciones {
 
 
         if (log.contains("EXCEPTION_ACCESS_VIOLATION") && log.contains("atio6axx.dll")) {
+            procesarProblemaAMD();
+            return;
+        }
+        if (log.contains("EXCEPTION_ACCESS_VIOLATION") && log.contains("atioglxx.dll")) {
             procesarProblemaAMD();
             return;
         }
@@ -286,4 +289,30 @@ public class Drivers implements Verificaciones {
             .agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
             .construir();
     }
+    
+    
+    //TODO
+/**
+ * 
+ * 
+ * [08:33:15] [Render thread/ERROR]: The game failed to start because the currently installed NVIDIA Graphics Driver is not compatible.
+
+Installed version: 528.92
+Required version: 536.23 (or newer)
+
+Please click the 'Help' button to read more about how to fix this problem.
+
+For more information, please see: https://link.caffeinemc.net/help/sodium/graphics-driver/windows/nvidia/gh-1486
+[08:33:46] [ForkJoinPool.commonPool-worker-1/WARN]: [Iris Update Check] This version doesn't have an update index, skipping.
+
+ * 
+ * 
+ * 
+ * 
+ */
+    
+    
+    
+    
+    
 }

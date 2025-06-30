@@ -355,21 +355,7 @@ public String errorBusqueda() {
 
 
 
-@Override
-public String noRegistroDeLauncher() {
-	// TODO Auto-generated method stub
-	return new String ("¡No se encontraron registros del launcher! Esto puede dificultar la investigación.\n"
-			+ "                \n"
-			+ "                Para obtener los registros correctos:\n"
-			+ "                - MultiMC/PolyMC/PrismLauncher: NOTA: Los registros detectados automáticamente NO son los correctos.\n"
-			+ "                  1. Abre la interfaz de la instancia\n"
-			+ "                  2. Ve a la sección \"Minecraft Log\"\n"
-			+ "                  3. Haz clic derecho y copia el contenido\n"
-			+ "                - CurseForgeApp:\n"
-			+ "                  1. Reinicia el juego SIN saltar el launcher\n"
-			+ "                  \n"
-			+ "                ");
-}
+
 
 @Override
 public String omitirYCerrar() {
@@ -2267,6 +2253,71 @@ public String parcheIPv4() {
 	// TODO Auto-generated method stub
 	return "Parche IPV4/6";
 }
+
+@Override
+public String carpetaHMCL() {
+	// TODO Auto-generated method stub
+	return "Carpeta HMCL (Solo para HelloMineCraftLauncher)";
+}
+
+
+
+@Override
+public String descripcionCurseforge() {
+    return "Nota: No se genera registro si está activada la opción \"Saltar Launcher\" en Ajustes > Minecraft";
+}
+
+@Override
+public String descripcionPrism() {
+    return "Prism/MultiMC/PolyMC/PollyMC/UltimMC/Derivados: Haga clic derecho sobre la instancia y seleccione \"Editar Instancia\". En la ventana que se abre, busque la sección \"Registros de Minecraft\" o similar.<br>" +
+           "Estos registros contienen la salida estándar (STDOUT) que es fundamental para diagnosticar errores.";
+}
+
+@Override
+public String descripcionHMCL() {
+    return "HMCL (HelloMinecraftLauncher): Debe seleccionar la carpeta donde HMCL está instalado y elegir la carpeta \".hcml\". Los registros de HMCL se guardan en esta ubicación y contienen información importante sobre errores.<br>";
+}
+
+@Override
+public String descripcionFenix() {
+    return "LauncherFenix: El lanzador tiene una pestaña de desarrollo que muestra registros detallados. Puede encontrar esta pestaña en el menú de opciones del lanzador.";
+}
+
+@Override
+public String descripcionATLauncher() {
+    return "ATLauncher: Hay un diálogo emergente con los registros. Tiene botones para copiar y subir los registros. Los registros se generan automáticamente al iniciar el juego y contienen información crítica para diagnóstico.";
+}
+
+@Override
+public String descripcionGDLauncher() {
+    return "GDLauncher: Haga clic derecho sobre la instancia y seleccione \"Configuración\". Luego vaya a la sección de Registros para ver la información importante que contiene la salida estándar (STDOUT).";
+}
+
+@Override
+public String descripcionLinksMarkdown() {
+    return "Enlaces con Markdown: Pegue aquí cualquier enlace que contenga registros en formato Markdown. El sistema intentará extraer automáticamente los enlaces a registros (latest.log, launcher_log.txt, debug.log, etc.) y analizarlos.";
+}
+
+@Override
+public String noRegistroLauncherTitulo() {
+    return "Registro de Launcher No Encontrado";
+}
+
+@Override
+public String imagenNoEncontrada() {
+    return "Imagen no encontrada";
+}
+
+@Override
+public String noRegistroDeLauncher() {
+    return "GENÉRICO: Seleccione el tipo de launcher que está utilizando. Los registros del launcher (launcher_log.txt, stdout, etc.) contienen información crucial sobre errores que no aparecen en latest.log. CrashDetector no puede leer los registros de tu Launcher, es posible que no tenga un archivo de registro y deba pegar los registros manualmente.<br>" +
+           "Para más información, consulte <a href=\"https://github.com/HMCL-dev/HMCL/issues/2663 \">este problema</a>. Estos registros contienen la salida estándar (STDOUT), necesaria para diagnosticar muchos tipos de errores.";
+}
+
+
+
+
+
 
 
 

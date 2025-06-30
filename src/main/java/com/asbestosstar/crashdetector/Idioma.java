@@ -741,6 +741,26 @@ public interface Idioma {
 	public String tieneErrorIPV6();
 
 	public String parcheIPv4();
+
+	public String carpetaHMCL();
+
+	public String noRegistroLauncherTitulo();
+
+	public String descripcionCurseforge();
+
+	public String descripcionPrism();
+
+	public String descripcionHMCL();
+
+	public String descripcionFenix();
+
+	public String descripcionATLauncher();
+
+	public String descripcionGDLauncher();
+
+	public String descripcionLinksMarkdown();
+
+	public String imagenNoEncontrada();
 	
 	// public String advertenciaMalwareFalso();
 

@@ -8,6 +8,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 
 public class NullPointer implements Verificaciones {
 
@@ -16,6 +17,7 @@ public class NullPointer implements Verificaciones {
 
     @Override
     public void verificar(Consola consola) {
+    	VerificacionDeStackTrace verificacion_de_stacktrace = consola.verificacion_de_stacktrace;
     	String contenidoConsola=consola.contento_verificar;
 
         String[] lineas = contenidoConsola.split(Verificaciones.nl);

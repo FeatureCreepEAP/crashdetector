@@ -7,7 +7,6 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 
 public class AdvertenciaFaltasClases implements Verificaciones {
 
@@ -23,7 +22,7 @@ public class AdvertenciaFaltasClases implements Verificaciones {
                 try {
                     String clase = linea.split("Error loading class: ")[1].split(" ")[0].trim();
                    // if (!FaltasClases.todos.contains(clase)) { // Verifica globalmente
-                        clases.add(clase);
+                        clases.add(clase.replace(".", "/"));
                   //      FaltasClases.todos.add(clase); // Actualiza registro global
                    // }
                 } catch (Exception ignored) {

@@ -338,20 +338,6 @@ public String errorBusqueda() {
 }
 
 @Override
-public String noRegistroDeLauncher() {
-    return "No launcher logs found! This may complicate the investigation.\n"
-            + "                \n"
-            + "                To obtain the correct logs:\n"
-            + "                - MultiMC/PolyMC/PrismLauncher/: NOTE: Automatically detected logs are NOT correct.\n"
-            + "                  1. Open the instance interface\n"
-            + "                  2. Go to the \"Minecraft Log\" section\n"
-            + "                  3. Right-click and copy the content\n"
-            + "                - CurseForgeApp:\n"
-            + "                  1. Restart the game WITHOUT skipping the launcher\n"
-            + "                  \n";
-}
-
-@Override
 public String omitirYCerrar() {
     return "Skip and Close";
 }
@@ -1859,7 +1845,62 @@ public String parcheIPv4() {
     return "IPv4/6 Patch";
 }
 
+@Override
+public String carpetaHMCL() {
+    return "HMCL Folder (For HelloMineCraftLauncher only)";
+}
 
+@Override
+public String descripcionCurseforge() {
+    return "Note: No log is generated if \"Skip Launcher\" is enabled under Settings > Minecraft";
+}
+
+@Override
+public String descripcionPrism() {
+    return "Prism/MultiMC/PolyMC/PollyMC/UltimMC/Derived: Right-click on the instance and select \"Edit Instance\". In the window that opens, look for the \"Minecraft Logs\" section or similar.<br>" +
+           "These logs contain standard output (STDOUT), which is essential for diagnosing errors.";
+}
+
+@Override
+public String descripcionHMCL() {
+    return "HMCL (HelloMinecraftLauncher): You must select the folder where HMCL is installed and choose the \".hmcl\" folder. HMCL logs are saved here and contain important error information.<br>";
+}
+
+@Override
+public String descripcionFenix() {
+    return "LauncherFenix: The launcher has a development tab showing detailed logs. You can find this tab in the launcher options menu.";
+}
+
+@Override
+public String descripcionATLauncher() {
+    return "ATLauncher: There is a pop-up window displaying logs. It has buttons to copy and upload them. Logs are automatically generated when launching the game and contain critical diagnostic information.";
+}
+
+@Override
+public String descripcionGDLauncher() {
+    return "GDLauncher: Right-click the instance and select \"Settings\". Then go to the Logs section to view important data from standard output (STDOUT).";
+}
+
+@Override
+public String descripcionLinksMarkdown() {
+    return "Markdown Links: Paste any Markdown-formatted log links here. The system will attempt to extract log links (latest.log, launcher_log.txt, debug.log, etc.) and analyse them.";
+}
+
+@Override
+public String noRegistroLauncherTitulo() {
+    return "Launcher Log Not Found";
+}
+
+@Override
+public String imagenNoEncontrada() {
+    return "Image not found";
+}
+
+@Override
+public String noRegistroDeLauncher() {
+    return "GENERIC: Select the type of launcher you're using. Launcher logs (launcher_log.txt, stdout, etc.) contain vital error details not present in latest.log. CrashDetector cannot read your launcher's logs — it might not generate one, so you'll need to paste the logs manually.<br>" +
+           "For more info, see <a href=\"https://github.com/HMCL-dev/HMCL/issues/2663 \">this issue</a>. These logs include standard output (STDOUT), which is essential for diagnosing many types of errors.";
+}
 
 
 

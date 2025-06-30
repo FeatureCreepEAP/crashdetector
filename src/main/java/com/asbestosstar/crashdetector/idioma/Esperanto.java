@@ -341,20 +341,6 @@ public String errorBusqueda() {
 }
 
 @Override
-public String noRegistroDeLauncher() {
-    return "Neniu protokolo de la lanĉilo troviĝis! Tio povas kompliki la esploradon.\n"
-            + "                \n"
-            + "                Por akiri la ĝustajn protokolojn:\n"
-            + "                - MultiMC/PolyMC/PrismLauncher: NOTO: Aŭtomate detektitaj protokoloj NE estas ĝustaj.\n"
-            + "                  1. Malfermu la instancan interfaco\n"
-            + "                  2. Iru al la sekcio \"Minecraft Log\"\n"
-            + "                  3. Alklaku dekstre kaj kopiu la enhavon\n"
-            + "                - CurseForgeApp:\n"
-            + "                  1. Restartu la ludon SEN salti la lanĉilon\n"
-            + "                  \n";
-}
-
-@Override
 public String omitirYCerrar() {
     return "Preterpasi kaj Feri";
 }
@@ -1830,9 +1816,62 @@ public String parcheIPv4() {
     return "IPv4/6 Korekto";
 }
 
+@Override
+public String carpetaHMCL() {
+    return "HMCL Dosierujo (Nur por HelloMineCraftLauncher)";
+}
 
+@Override
+public String descripcionCurseforge() {
+    return "Noto: Ne estas kreita loko se aktivigas \"Preterlasi Lanĉilon\" en Agordoj > Minecraft";
+}
 
+@Override
+public String descripcionPrism() {
+    return "Prism/MultiMC/PolyMC/PollyMC/UltimMC/Derivaĵoj: Alklaku per dekstra butono sur la instanco kaj elektu \"Redakti Instancon\". En la malfermita fenestro serĉu sekcion \"Minecraft-a loko\" aŭ similan.<br>" +
+           "Ĉi tiuj lokoj enhavas norman eliron (STDOUT), kiu gravas por diagnozi erarojn.";
+}
 
+@Override
+public String descripcionHMCL() {
+    return "HMCL (HelloMinecraftLauncher): Devus elekti la dosierujon kie HMCL estas instalita kaj trovi la dosierujon \".hmcl\". La HMCL-lokoj estas konservata tie kaj enhavas gravajn informojn pri eraroj.<br>";
+}
+
+@Override
+public String descripcionFenix() {
+    return "LauncherFenix: La lanĉilo havas fakon por evoluo montranta detalan lokon. Ĝin trovu en la agorda menuo de la lanĉilo.";
+}
+
+@Override
+public String descripcionATLauncher() {
+    return "ATLauncher: Ekzistas elireta fenestro kun lokoj. Ĝi havas butonojn por kopii kaj alŝuti ilin. Lokoj estas generitaj aŭtomate dum ludo kaj enhavas gravajn diagnozajn informojn.";
+}
+
+@Override
+public String descripcionGDLauncher() {
+    return "GDLauncher: Dekstre klaku sur la instanco kaj elektu \"Agordoj\". Poste iru al la loko-sekcio por vidi gravan informon el la norma eliro (STDOUT).";
+}
+
+@Override
+public String descripcionLinksMarkdown() {
+    return "Markdown-ligiloj: Algluu ajnan Markdown-formatan ligilon al loko-tiedoj. La sistemo provos aŭtomate ekstrakti lokajn ligilojn (latest.log, launcher_log.txt, debug.log ktp.) kaj analizi ilin.";
+}
+
+@Override
+public String noRegistroLauncherTitulo() {
+    return "Loko de Lanĉilo ne trovita";
+}
+
+@Override
+public String imagenNoEncontrada() {
+    return "Bildo ne trovita";
+}
+
+@Override
+public String noRegistroDeLauncher() {
+    return "ĜENERALA: Elektu la tipon de lanĉilo kiun vi uzas. La loko-dosieroj de lanĉilo (launcher_log.txt, stdout, ktp.) enhavas gravajn erarinformojn, kiujn latest.log ne montras. CrashDetector ne povas legi viajn loko-dosierojn — eble mankas loko-dosiero kaj vi devas alglui la lokon.<br>" +
+           "Por pli da informo, vidu <a href=\"https://github.com/HMCL-dev/HMCL/issues/2663 \">tiun problemon</a>. Ĉi tiuj lokoj enhavas la norman eliron (STDOUT) necesa por diagnozi multajn erartipojn.";
+}
 
 
 

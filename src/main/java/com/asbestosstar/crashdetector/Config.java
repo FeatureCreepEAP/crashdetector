@@ -23,6 +23,12 @@ public class Config {
 	private static final String VALOR_POR_DEFECTO_COLOR_TITULO = "56CCF2"; // azul
 	private static final String VALOR_POR_DEFECTO_COLOR_ENLACE_TEXTO = "56CCF2"; // azul mas contrast
 
+	
+	
+	
+	public static final String HMCL_CARPETA = "";// ES SOLO PARA HMCL
+
+	
 	// Valores predeterminados para las nuevas propiedades
 	public static final String VALOR_POR_DEFECTO_API_DE_REGISTROS_SELECCIONADA = "SecureLogger";
 	public static final String VALOR_POR_DEFECTO_SITIO_DE_REGISTROS_SELECCIONADO = "https://securelogger.net/save/log?";
@@ -70,6 +76,10 @@ public class Config {
 			propiedadesConfig.setProperty("color_titulo", VALOR_POR_DEFECTO_COLOR_TITULO);
 			propiedadesConfig.setProperty("color_enlace_texto", VALOR_POR_DEFECTO_COLOR_ENLACE_TEXTO);
 
+			propiedadesConfig.setProperty("hmcl_carpeta", HMCL_CARPETA);
+
+			
+			
 			// Añadimos las nuevas propiedades predeterminadas
 			propiedadesConfig.setProperty("api_de_registros_seleccionada", VALOR_POR_DEFECTO_API_DE_REGISTROS_SELECCIONADA);
 			propiedadesConfig.setProperty("sitio_de_registros_seleccionado", VALOR_POR_DEFECTO_SITIO_DE_REGISTROS_SELECCIONADO);
@@ -349,8 +359,16 @@ public class Config {
 		int b = Integer.parseInt(hexColor.substring(5, 7), 16);
 		return new Color(r, g, b);
 	}
+
+	public String obtenerCarpetaHMCL() {
+		// TODO Auto-generated method stub
+		return propiedadesConfig.getProperty("hmcl_carpeta", HMCL_CARPETA);
+	}
 	
-	
+	public String guardarCarpetaHMCL(String string) {
+		// TODO Auto-generated method stub
+		return propiedadesConfig.getProperty("hmcl_carpeta", string);
+	}
 	
 
 

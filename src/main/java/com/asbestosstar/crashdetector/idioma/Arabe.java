@@ -1833,7 +1833,56 @@ public String parcheIPv4() {
     return "تصحيح IPv4/6";
 }
 
+@Override
+public String carpetaHMCL() {
+    return "مجلد HMCL (لـ HelloMineCraftLauncher فقط)";
+}
 
+@Override
+public String descripcionCurseforge() {
+    return "ملاحظة: لا يتم إنشاء سجل إذا كانت خاصية 'تخطي اللانشر' مفعلة في الإعدادات > ماينكرافت";
+}
+
+@Override
+public String descripcionPrism() {
+    return "Prism/MultiMC/PolyMC/PollyMC/UltimMC/أو نسخ مشتقة منها: انقر بزر الماوس الأيمن على النسخة واختر \"تحرير النسخة\". في النافذة التي تفتح، ابحث عن قسم \"سجلات ماينكرافت\" أو ما شابه.<br>" +
+           "تحتوي هذه السجلات على الإخراج القياسي (STDOUT)، وهو ضروري لتشخيص الأخطاء.";
+}
+
+@Override
+public String descripcionHMCL() {
+    return "HMCL (HelloMinecraftLauncher): يجب أن تختار المجلد الذي تم تثبيت HMCL فيه واختر المجلد \".hmcl\". تحتفظ HMCL بالسجلات هنا وتحتوي على معلومات مهمة عن الأخطاء.<br>";
+}
+
+@Override
+public String descripcionFenix() {
+    return "LauncherFenix: يحتوي اللانشر على علامة تبويب للتطوير تعرض سجلات مفصلة. يمكنك العثور على هذه العلامة في قائمة إعدادات اللانشر.";
+}
+
+@Override
+public String descripcionATLauncher() {
+    return "ATLauncher: يوجد نافذة منبثقة تحتوي على السجلات. بها أزرار لنسخ وتحميل السجلات. يتم إنشاء السجلات تلقائيًا عند بدء اللعبة وتتضمن معلومات حيوية للتشخيص.";
+}
+
+@Override
+public String descripcionGDLauncher() {
+    return "GDLauncher: انقر بزر الماوس الأيمن على النسخة واختر \"إعدادات\". ثم انتقل إلى قسم السجلات لعرض المعلومات المهمة من الإخراج القياسي (STDOUT).";
+}
+
+@Override
+public String descripcionLinksMarkdown() {
+    return "روابط Markdown: الصق أي روابط تحتوي على سجلات بصيغة Markdown هنا. سيحاول النظام استخراج الروابط الخاصة بالسجلات (latest.log, launcher_log.txt, debug.log، إلخ) وتحليلها.";
+}
+
+@Override
+public String noRegistroLauncherTitulo() {
+    return "لم يتم العثور على سجل اللانشر";
+}
+
+@Override
+public String imagenNoEncontrada() {
+    return "الصورة غير موجودة";
+}
 
 
 

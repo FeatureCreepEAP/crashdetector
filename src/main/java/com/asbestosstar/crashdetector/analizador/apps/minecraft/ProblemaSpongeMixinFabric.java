@@ -60,7 +60,7 @@ public class ProblemaSpongeMixinFabric implements Verificaciones {
      */
     @Override
     public float prioridad() {
-        return 1000.0f;
+        return 800.0f;
     }
 
     /**

@@ -60,7 +60,8 @@ public class LimpiadorRegistroDeLauncherVainilla {
         List<String> resultado = new ArrayList<>();
         for (String linea : lineas) {
             String lineaProcesada = limpiarLinea(linea);
-            if (!lineaProcesada.trim().isEmpty()) {
+            String trim = lineaProcesada.trim();
+            if (!trim.isEmpty()) {
                 resultado.add(lineaProcesada);
             }
         }

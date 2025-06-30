@@ -25,7 +25,7 @@ public class FaltasClases implements Verificaciones {
         // Agregar clases faltantes desde stacktraces fatales
         for (String clase : vdst.fatal_clases_no_existe) {
             if (todos.add(clase)) {
-                clases.add(clase);
+                clases.add(clase.replace(".", "/"));
             }
         }
 
@@ -58,7 +58,7 @@ public class FaltasClases implements Verificaciones {
                     if (index != -1) {
                         String candidate = linea.substring(index + lleva.length()).trim();
                         if (!candidate.isEmpty()) {
-                            clase = candidate.split("[\\s\\)]")[0].replace('/', '.').trim();
+                            clase = candidate.split("[\\s\\)]")[0].trim();
                             break;
                         }
                     }
@@ -70,7 +70,7 @@ public class FaltasClases implements Verificaciones {
                 if (index != -1) {
                     String candidate = linea.substring(index + "Error loading class:".length()).trim();
                     if (!candidate.isEmpty()) {
-                        clase = candidate.split("[\\s\\)]")[0].replace('/', '.').trim();
+                        clase = candidate.split("[\\s\\)]")[0].trim();
                     }
                 }
             }
@@ -80,6 +80,18 @@ public class FaltasClases implements Verificaciones {
                 clases.add(clase);
             }
         }
+        
+        
+        //TODO mejor
+        for(String clase:clases) {
+        	if(clase.startsWith("gg/essential/")||clase.startsWith("kotlin/")||clase.startsWith("kotlinx/")) {
+        		clases.remove(clase);
+        	}
+        	
+        	
+        }
+        
+        
 
         activado = !clases.isEmpty();
     }
@@ -101,7 +113,7 @@ public class FaltasClases implements Verificaciones {
 
     @Override
     public float prioridad() {
-        return 600.0f; // Máxima prioridad para errores de clases faltantes
+        return 925.0f; // Máxima prioridad para errores de clases faltantes
     }
 
     @Override

@@ -335,21 +335,6 @@ public String errorBusqueda() {
     return "Ошибка поиска";
 }
 
-
-@Override
-public String noRegistroDeLauncher() {
-    return "Логи лаунчера не найдены! Это может осложнить расследование.\n"
-            + "                \n"
-            + "                Чтобы получить правильные логи:\n"
-            + "                - MultiMC/PolyMC/PrismLauncher: ПРИМЕЧАНИЕ: Автоматически обнаруженные логи НЕ являются правильными.\n"
-            + "                  1. Откройте интерфейс экземпляра\n"
-            + "                  2. Перейдите в раздел \"Minecraft Log\"\n"
-            + "                  3. Щелкните правой кнопкой мыши и скопируйте содержимое\n"
-            + "                - CurseForgeApp:\n"
-            + "                  1. Перезапустите игру, НЕ пропуская лаунчер\n"
-            + "                  \n";
-}
-
 @Override
 public String omitirYCerrar() {
     return "Пропустить и Закрыть";
@@ -1838,9 +1823,62 @@ public String parcheIPv4() {
     return "Патч IPv4/6";
 }
 
+@Override
+public String carpetaHMCL() {
+    return "Папка HMCL (только для HelloMineCraftLauncher)";
+}
 
+@Override
+public String descripcionCurseforge() {
+    return "Примечание: Лог не создаётся, если в настройках > Minecraft включён параметр \"Пропустить лаунчер\"";
+}
 
+@Override
+public String descripcionPrism() {
+    return "Prism/MultiMC/PolyMC/PollyMC/UltimMC/Производные: Щелкните правой кнопкой мыши по инстансу и выберите \"Изменить инстанс\". В открывшемся окне найдите раздел \"Логи Minecraft\" или подобный ему.<br>" +
+           "Эти логи содержат стандартный вывод (STDOUT), критически важный для диагностики ошибок.";
+}
 
+@Override
+public String descripcionHMCL() {
+    return "HMCL (HelloMinecraftLauncher): Выберите папку, где установлен HMCL, и укажите папку \".hmcl\". Логи HMCL сохраняются здесь и содержат важную информацию об ошибках.<br>";
+}
+
+@Override
+public String descripcionFenix() {
+    return "LauncherFenix: Лаунчер имеет вкладку разработчика с детализированными логами. Эта вкладка находится в меню настроек лаунчера.";
+}
+
+@Override
+public String descripcionATLauncher() {
+    return "ATLauncher: Существует всплывающее окно с логами. Оно содержит кнопки копирования и загрузки. Логи генерируются автоматически при запуске игры и содержат критичную диагностическую информацию.";
+}
+
+@Override
+public String descripcionGDLauncher() {
+    return "GDLauncher: Щелкните правой кнопкой мыши по инстансу и выберите \"Настройки\". Затем перейдите в раздел логов, чтобы просмотреть важную информацию из стандартного вывода (STDOUT).";
+}
+
+@Override
+public String descripcionLinksMarkdown() {
+    return "Ссылки в формате Markdown: Вставьте любую ссылку, содержащую логи в формате Markdown. Система попытается автоматически извлечь ссылки на логи (latest.log, launcher_log.txt, debug.log и т. д.) и проанализировать их.";
+}
+
+@Override
+public String noRegistroLauncherTitulo() {
+    return "Журнал лаунчера не найден";
+}
+
+@Override
+public String imagenNoEncontrada() {
+    return "Изображение не найдено";
+}
+
+@Override
+public String noRegistroDeLauncher() {
+    return "ОБЩИЙ: Выберите тип используемого лаунчера. Журналы лаунчера (launcher_log.txt, stdout и т. д.) содержат критическую информацию об ошибках, которых нет в latest.log. CrashDetector не может прочитать журналы вашего лаунчера — возможно, он не создаёт файл журнала, и вам нужно вставить журналы вручную.<br>" +
+           "Для получения дополнительной информации см. <a href=\"https://github.com/HMCL-dev/HMCL/issues/2663 \">этот вопрос</a>. Эти журналы содержат стандартный вывод (STDOUT), необходимый для диагностики многих типов ошибок.";
+}
 
 
 

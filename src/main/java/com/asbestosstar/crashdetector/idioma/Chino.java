@@ -334,21 +334,6 @@ public String errorBusqueda() {
     return "搜索错误";
 }
 
-
-@Override
-public String noRegistroDeLauncher() {
-    return "未找到启动器日志！这可能会使调查变得复杂。\n"
-            + "                \n"
-            + "                获取正确日志的方法：\n"
-            + "                - MultiMC/PolyMC/PrismLauncher/: 注意：自动检测到的日志不正确。\n"
-            + "                  1. 打开实例界面\n"
-            + "                  2. 转到“Minecraft Log”部分\n"
-            + "                  3. 右键单击并复制内容\n"
-            + "                - CurseForgeApp:\n"
-            + "                  1. 不跳过启动器，重新启动游戏\n"
-            + "                  \n";
-}
-
 @Override
 public String omitirYCerrar() {
     return "跳过并关闭";
@@ -1825,6 +1810,63 @@ public String tieneErrorIPV6() {
 @Override
 public String parcheIPv4() {
     return "IPv4/6 补丁";
+}
+
+@Override
+public String carpetaHMCL() {
+    return "HMCL 文件夹（仅限 HelloMineCraftLauncher）";
+}
+
+@Override
+public String descripcionCurseforge() {
+    return "注意：如果在 设置 > Minecraft 中启用了“跳过启动器”，将不会生成日志";
+}
+
+@Override
+public String descripcionPrism() {
+    return "Prism/MultiMC/PolyMC/PollyMC/UltimMC/衍生版本：右键实例，选择“编辑实例”。在打开的窗口中查找“Minecraft 日志”或类似部分。<br>" +
+           "这些日志包含标准输出（STDOUT），对于诊断错误至关重要。";
+}
+
+@Override
+public String descripcionHMCL() {
+    return "HMCL（HelloMinecraftLauncher）：请选择 HMCL 的安装目录，并选择其中的「.hmcl」文件夹。HMCL 的日志保存在这里，包含重要的错误信息。<br>";
+}
+
+@Override
+public String descripcionFenix() {
+    return "LauncherFenix：启动器有一个开发标签页显示详细日志。您可以在启动器设置菜单中找到该标签页。";
+}
+
+@Override
+public String descripcionATLauncher() {
+    return "ATLauncher：日志显示在一个弹出窗口中，有复制和上传按钮。游戏启动时会自动生成日志，包含关键的诊断信息。";
+}
+
+@Override
+public String descripcionGDLauncher() {
+    return "GDLauncher：右键点击实例并选择「设置」。然后进入日志选项卡查看标准输出（STDOUT）中的重要信息。";
+}
+
+@Override
+public String descripcionLinksMarkdown() {
+    return "Markdown 链接：在此粘贴任何包含 Markdown 格式日志的链接。系统将尝试自动提取日志链接（如 latest.log、launcher_log.txt、debug.log 等）并进行分析。";
+}
+
+@Override
+public String noRegistroLauncherTitulo() {
+    return "未找到启动器日志";
+}
+
+@Override
+public String imagenNoEncontrada() {
+    return "图片未找到";
+}
+
+@Override
+public String noRegistroDeLauncher() {
+    return "通用：请选择你正在使用的启动器类型。启动器日志（launcher_log.txt、stdout 等）包含了 latest.log 中没有的关键错误信息。CrashDetector 无法读取你的启动器日志 —— 可能是没有生成日志文件，你需要手动粘贴日志内容。<br>" +
+           "更多信息请参考 <a href=\"https://github.com/HMCL-dev/HMCL/issues/2663 \">此问题</a>。这些日志包含标准输出（STDOUT），是诊断许多错误所必需的。";
 }
 
 
