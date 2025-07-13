@@ -267,34 +267,33 @@ public class VerificacionDeStackTrace {
 					trace.append(nl).append(lineas[j]);
 					j++;
 				}
-			String str=trace.toString();
-				if(tracePermite(str)) {
-				ret.add(str);
+				String str = trace.toString();
+				if (tracePermite(str)) {
+					ret.add(str);
 				}
 			}
 		}
 		return ret;
 	}
+
 	public static boolean tracePermite(String str) {
-	    // Excluir líneas que contienen "Preparing crash report with UUID"
-	    if (str.contains("Preparing crash report with UUID")
-	    		|| str.contains("Could not determine mod trust worthiness, Assuming Jar was downloaded from trusted source!")//FUCK STOPMODREPOSTS
-	    		
-	    		) {
-	        return false;
-	    }
-	    
-	    
-	    
-	    
-	    
-	    // Incluir líneas que sean exactamente "Stacktrace:" o contengan "Stacktrace:" como inicio
-	    if (str.trim().equals("Stacktrace:") || str.trim().startsWith("Stacktrace:"+nl)) {
-	        return false;
-	    }
-	    
-	    // Incluir otras líneas que no coincidan con los criterios de exclusión
-	    return true;
+		// Excluir líneas que contienen "Preparing crash report with UUID"
+		if (str.contains("Preparing crash report with UUID") || str
+				.contains("Could not determine mod trust worthiness, Assuming Jar was downloaded from trusted source!")// FUCK
+																														// STOPMODREPOSTS
+
+		) {
+			return false;
+		}
+
+		// Incluir líneas que sean exactamente "Stacktrace:" o contengan "Stacktrace:"
+		// como inicio
+		if (str.trim().equals("Stacktrace:") || str.trim().startsWith("Stacktrace:" + nl)) {
+			return false;
+		}
+
+		// Incluir otras líneas que no coincidan con los criterios de exclusión
+		return true;
 	}
 
 	private static boolean esParteDeStack(String l) {
@@ -345,10 +344,10 @@ public class VerificacionDeStackTrace {
 		List<String> stackTraces = new ArrayList<>();
 		Matcher matcher = STACK_TRACE_PATTERN.matcher(log);
 		while (matcher.find()) {
-			
-			String str=matcher.group();
-			if(tracePermite(str)) {
-			stackTraces.add(str);
+
+			String str = matcher.group();
+			if (tracePermite(str)) {
+				stackTraces.add(str);
 			}
 		}
 		return stackTraces;
@@ -493,8 +492,6 @@ public class VerificacionDeStackTrace {
 		if (jarName.startsWith("guava-")) {
 			return true;
 		}
-		
-		
 
 		return false;
 	}
