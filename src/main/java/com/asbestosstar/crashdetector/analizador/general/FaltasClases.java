@@ -128,7 +128,7 @@ public class FaltasClases implements Verificaciones {
         	String valor = "";
         	if(!clase.getValue().isEmpty()) {valor=" ("+clase.getValue()+")";}
             html.append("<li>").append(clase.getKey()).append(valor).append("</li>");
-            WaifuAPI.obtanerModDesdeClase(clase.getKey());
+            WaifuAPI.obtanerModDesdeClase(clase.getKey(),WaifuAPI.obtainerVersion("Forge", "1.20.1"));
 
         }
         html.append("</ul>");
