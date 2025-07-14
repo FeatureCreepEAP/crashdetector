@@ -6,6 +6,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.waifu.RespuestaWaifu.Arista;
@@ -17,7 +20,7 @@ import com.google.gson.Gson;
  */
 public class WaifuAPI {
 	// URL del endpoint GraphQL
-	private static final String GRAPHQL_URL = "https://api.waifu.neoforged.net/";
+	private static final String GRAPHQL_URL = "https://api.waifu.neoforged.net/graphql";
 	private static final Gson gson = new Gson();
 
 	public static void obtanerModDesdeClase(String clase) {
@@ -27,6 +30,8 @@ public class WaifuAPI {
 			// Enviar la solicitud y obtener la respuesta JSON
 			String jsonResponse = enviarSolicitudGraphQL(graphqlQuery);
 
+			CrashDetectorLogger.log(jsonResponse);
+			
 			// Mapear la respuesta JSON a las clases GSON
 			RespuestaWaifu respuesta = gson.fromJson(jsonResponse, RespuestaWaifu.class);
 
@@ -58,8 +63,10 @@ public class WaifuAPI {
 			}
 
 		} catch (Exception e) {
-			CrashDetectorLogger.log("Error al realizar la solicitud: " + e.getMessage());
+			//CrashDetectorLogger.log("Error al realizar la solicitud: " + e.getMessage());
+			CrashDetectorLogger.logException(e);
 			e.printStackTrace();
+			
 		}
 	}
 
@@ -72,18 +79,25 @@ public class WaifuAPI {
 	 * @return Cadena con la consulta GraphQL formateada
 	 */
 	public static String generarConsultaGraphQL(String nombreClase) {
-		// Plantilla de consulta GraphQL con marcador de posición para el nombre de la
-		// clase
-		return String.format("{\n" + "  gameVersion(loader: NeoForge, version: \"1.21.1\") {\n"
-				+ "    classes(where: {name: {equals: \"%s\"}}, first: 1) {\n" + "      edges {\n" + "        node {\n"
-				+ "          definitions {\n" + "            mod {\n" + "              name\n"
-				+ "              curseforgeProjectId\n" + "              modrinthProjectId\n" + "            }\n"
-				+ "          }\n" + "        }\n" + "      }\n" + "    }\n" + "  }\n" + "}", nombreClase // Inserta el
-																											// nombre de
-																											// la clase
-																											// en la
-																											// consulta
-		);
+	    return String.format(
+	        "query ModsWithClass {\n" +
+	        "  gameVersion(loader: NeoForge, version: \"1.21.1\") {\n" +
+	        "    classes(where: {name: {equals: \"%s\"}}, first: 1) {\n" +
+	        "      edges {\n" +
+	        "        node {\n" +
+	        "          definitions {\n" +
+	        "            mod {\n" +
+	        "              name\n" +
+	        "              curseforgeProjectId\n" +
+	        "              modrinthProjectId\n" +
+	        "            }\n" +
+	        "          }\n" +
+	        "        }\n" +
+	        "      }\n" +
+	        "    }\n" +
+	        "  }\n" +
+	        "}", nombreClase
+	    );
 	}
 
 	/**
@@ -93,37 +107,52 @@ public class WaifuAPI {
 	 * @return Respuesta del servidor en formato JSON
 	 * @throws IOException Si hay un error de red o E/S
 	 */
+	/**
+	 * Envía una solicitud GraphQL al servidor especificado
+	 * 
+	 * @param query Consulta GraphQL a enviar
+	 * @return Respuesta del servidor en formato JSON
+	 * @throws IOException Si hay un error de red o E/S
+	 */
 	public static String enviarSolicitudGraphQL(String query) throws IOException {
-		URL url = new URL(GRAPHQL_URL);
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	    URL url = new URL(GRAPHQL_URL);
+	    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-		conn.setRequestMethod("POST");
-		conn.setRequestProperty("Content-Type", "application/json");
-		conn.setDoOutput(true);
+	    conn.setRequestMethod("POST");
+	    conn.setRequestProperty("Content-Type", "application/json; charset=utf-8");
+	    conn.setRequestProperty("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:128.0) Gecko/20100101 Firefox/128.0");
+	    conn.setRequestProperty("Accept", "application/json, multipart/mixed");
+	    conn.setRequestProperty("Accept-Language", "es-MX,es;q=0.8,en-US;q=0.5,en;q=0.3");
+	    conn.setRequestProperty("Accept-Encoding", "gzip, deflate, br");
+	    conn.setRequestProperty("Referer", "https://api.waifu.neoforged.net/graphql.html");
+	    conn.setRequestProperty("Origin", "https://api.waifu.neoforged.net");
+	    conn.setRequestProperty("Connection", "keep-alive");
+	    conn.setDoOutput(true);
 
-		// Preparar cuerpo de la solicitud
-		String cuerpoJSON = String.format("{\"query\":\"%s\"}", query.replace("\"", "\\\""));
+	    // Construye el JSON de forma segura con Gson para que escape correctamente newlines y comillas
+	    Map<String, Object> payload = new HashMap<>();
+	    payload.put("query", query);
+	    payload.put("operationName", "ModsWithClass");
+	    String cuerpoJSON = gson.toJson(payload);
 
-		// Enviar solicitud
-		try (OutputStream os = conn.getOutputStream()) {
-			byte[] input = cuerpoJSON.getBytes("utf-8");
-			os.write(input, 0, input.length);
-		}
+	    try (OutputStream os = conn.getOutputStream()) {
+	        byte[] input = cuerpoJSON.getBytes(StandardCharsets.UTF_8);
+	        os.write(input, 0, input.length);
+	    }
 
-		int codigoRespuesta = conn.getResponseCode();
-		if (codigoRespuesta != HttpURLConnection.HTTP_OK) {
-			throw new IOException("Error HTTP: " + codigoRespuesta);
-		}
+	    int codigoRespuesta = conn.getResponseCode();
+	    if (codigoRespuesta != HttpURLConnection.HTTP_OK) {
+	        throw new IOException("Error HTTP: " + codigoRespuesta);
+	    }
 
-		// Leer respuesta
-		StringBuilder respuesta = new StringBuilder();
-		try (BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"))) {
-			String linea;
-			while ((linea = br.readLine()) != null) {
-				respuesta.append(linea.trim());
-			}
-		}
-
-		return respuesta.toString();
+	    try (BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8))) {
+	        StringBuilder respuesta = new StringBuilder();
+	        String linea;
+	        while ((linea = br.readLine()) != null) {
+	            respuesta.append(linea);
+	        }
+	        return respuesta.toString();
+	    }
 	}
+
 }
