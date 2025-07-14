@@ -3,6 +3,7 @@ package com.asbestosstar.crashdetector.analizador;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -34,7 +35,7 @@ public class VerificacionDeStackTrace {
 	public BiMap<String, String, Boolean> packs = new BiMap<>();// FATAL
 	public BiMap<String, String, Boolean> braces = new BiMap<>();// FATAL
 
-	public List<String> fatal_clases_no_existe = new ArrayList<String>();
+	public Map<String, String> fatal_clases_no_existe = new HashMap<String, String>();
 
 	// These only contain the content but not lvl
 	public List<String> jar_malo = new ArrayList<String>();
@@ -95,16 +96,17 @@ public class VerificacionDeStackTrace {
 
 			String[] arr = trace.split(nl);
 			int linea_num = 0;
-
 			for (String untrimmed : arr) {
 				linea_num++;
 				String linea = untrimmed.trim();
 				String dec = Integer.toString(lvl) + "," + Integer.toString(linea_num);
 				if (linea.contains("[")) {// There is not always a Jar
 					extractarJarNombresEnBrackets(linea, fatal, lvl, linea_num);
-				} else if (linea.contains("/")) {// Some dev enviornments like ForgeGradle or dev orientated launchers
-													// like TLauncher display the modID and layer, this is helpful
-													// especially when the Jar cannot be found
+				} else if (linea.contains("/") && !linea.contains("NoClassDefFoundError")) {// Some dev enviornments
+																							// like ForgeGradle or dev
+																							// orientated launchers
+					// like TLauncher display the modID and layer, this is helpful
+					// especially when the Jar cannot be found
 					String[] arr_modid = linea.split("/");
 					if (arr_modid.length > 1) {
 						String modid = arr_modid[1].split("@")[0];
@@ -124,22 +126,83 @@ public class VerificacionDeStackTrace {
 					}
 				}
 
-				// else if (line.contains("ClassNotFoundException") && fatal) {
-				else if (linea.contains("ClassNotFoundException")
-						&& !linea.contains("The specified mixin")/* TODO */ ) {// No Necesitemos fatal en FabricMC o
-																				// FeatureCreep
-					String claseNombre = linea;
-					// Eliminar la parte antes del nombre de la clase
-					int index = claseNombre.indexOf("java.lang.ClassNotFoundException:")
-							+ "java.lang.ClassNotFoundException:".length();
-					if (index < claseNombre.length()) {
-						claseNombre = claseNombre.substring(index).trim();
+				// else if (line.contains("ClassNotFoundException") && fatal) { no necesitemos
+				// fatal para FabricMC o FeatureCreep y en cacos en ModLauncher en launcher_log
+				// Procesar línea que contiene ClassNotFoundException
+				else if ((linea.contains("ClassNotFoundException") || linea.contains("NoClassDefFoundError"))
+						&& !linea.contains("The specified mixin") && !linea.contains("WARN/]")) {
+
+					String claseFaltante;
+					if (linea.contains("ClassNotFoundException")) {
+						claseFaltante = linea.replace(".", "/")
+								.substring(
+										linea.indexOf("ClassNotFoundException:") + "ClassNotFoundException:".length())
+								.trim();
+					} else {
+						claseFaltante = linea.replace(".", "/")
+								.substring(linea.indexOf("NoClassDefFoundError:") + "NoClassDefFoundError:".length())
+								.trim();
 					}
-					String[] parts = claseNombre.split("[\\s\\(]");
-					if (parts.length > 0) {
-						claseNombre = parts[0].trim();
+					claseFaltante = claseFaltante.replace(".", "/");
+					int idx = claseFaltante.indexOf(' ');
+					if (idx != -1)
+						claseFaltante = claseFaltante.substring(0, idx);
+					idx = claseFaltante.indexOf('(');
+					if (idx != -1)
+						claseFaltante = claseFaltante.substring(0, idx);
+
+					String sospechoso = "";
+					String[] arr_nuevo = new String[arr.length - 1];
+
+					System.arraycopy(arr, 1, arr_nuevo, 0, arr.length - 1);
+
+					for (String notrim : arr_nuevo) {
+						String t = notrim.trim();
+
+//jar
+						int a = t.indexOf('['), b = t.indexOf(']');
+						if (a != -1 && b != -1 && a < b) {
+							String jar = t.substring(a + 1, b);
+							if (jar.endsWith(".jar") && !isJarNoPermite(jar)) {
+								sospechoso = jar;
+								if (!fatal_clases_no_existe.containsKey(claseFaltante)
+										|| fatal_clases_no_existe.get(claseFaltante).isEmpty()) {
+									fatal_clases_no_existe.put(claseFaltante, sospechoso);
+								}
+								break;
+							}
+						}
+
+//modids
+						int slash1 = t.indexOf('/');
+						int slash2 = (slash1 != -1) ? t.indexOf('/', slash1 + 1) : -1;
+						if (slash1 != -1 && slash2 != -1) {
+							String cand = t.substring(slash1 + 1, slash2);
+							if (!esModNoPermite(cand) && !cand.isEmpty()) {
+								sospechoso = cand;
+								if (!fatal_clases_no_existe.containsKey(claseFaltante)
+										|| fatal_clases_no_existe.get(claseFaltante).isEmpty()) {
+									fatal_clases_no_existe.put(claseFaltante, sospechoso);
+								}
+
+								break;
+							}
+						}
+
+						// Packages
+						if (t.startsWith("at ")) {
+							String pack = t.substring(3);
+							if (!packNoEsPermite(pack, dec, false)) {
+								sospechoso = pack;
+								if (!fatal_clases_no_existe.containsKey(claseFaltante)
+										|| fatal_clases_no_existe.get(claseFaltante).isEmpty()) {
+									fatal_clases_no_existe.put(claseFaltante, sospechoso);
+								}
+								break;
+							}
+						}
 					}
-					fatal_clases_no_existe.add(claseNombre);
+
 				}
 
 				Matcher braceMatcher = BRACE_PATTERN.matcher(linea);
@@ -159,7 +222,7 @@ public class VerificacionDeStackTrace {
 			// extractJarNamesSquareBracket(line, jars, false);
 			// }
 			// }
-
+			// CrashDetectorLogger.log(String.valueOf(fatal_clases_no_existe.size()));
 		}
 	}
 
@@ -368,7 +431,6 @@ public class VerificacionDeStackTrace {
 		String[] lineas = contenido_de_logs.split("\r?\n");
 		for (String linea : lineas) {
 			if (linea.contains("org.spongepowered.asm.mixin")) {
-				CrashDetectorLogger.log("Linea SM " + linea);
 				Matcher matcher = JSON_PATTERN.matcher(linea.trim());
 				while (matcher.find()) {
 					if (matcher.group(1) != null) {

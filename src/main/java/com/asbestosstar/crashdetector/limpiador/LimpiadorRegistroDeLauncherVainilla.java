@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
+
 public class LimpiadorRegistroDeLauncherVainilla {
 
     /**
@@ -13,6 +15,7 @@ public class LimpiadorRegistroDeLauncherVainilla {
      * @return Contenido procesado sin corchetes ni etiquetas innecesarias
      */
     public static String limpiarConsola(String contento_de_consola) {
+    	CrashDetectorLogger.log("limpiar vainilla");
         // Dividir el contenido en líneas usando el separador del sistema
         String[] lineas_viejas = contento_de_consola.split(System.lineSeparator());
         
@@ -31,7 +34,147 @@ public class LimpiadorRegistroDeLauncherVainilla {
      */
     public static String limpiarLinea(String linea) {
         // Eliminar corchetes iniciales y su contenido
-        if (linea.startsWith("[")) {
+        if(linea.contains("LauncherAppRenderer.cpp")) {
+        	linea="";
+        }
+        if(linea.contains("ControllerInterface.cpp")) {
+        	linea="";
+        }
+        if(linea.contains("LauncherController.cpp")) {
+        	linea="";
+        } 
+        if(linea.contains("NetQueue.cpp")) {
+        	linea="";
+        } 
+        if(linea.contains("KeyMaker.cpp")) {
+        	linea="";
+        } 
+        if(linea.contains("GamecoreClientApi_win32.cpp")) {
+        	linea="";
+        } 
+        if(linea.contains("Sha1Cacher.cpp")) {
+        	linea="";
+        } 
+        
+        
+        
+        if(linea.contains("Common.cpp")) {
+        	linea="";
+        } 
+        if(linea.contains("mainWindows.cpp")) {
+        	linea="";
+        } 
+        if(linea.contains("AzureUpdateTools.cpp")) {
+        	linea="";
+        } 
+        if(linea.contains("CoreUpdateSystemCheck.cpp")) {
+        	linea="";
+        } 
+        if(linea.contains("CurlNetQueue.cpp")) {
+        	linea="";
+        } 
+        if(linea.contains("PersistentReflectedStruct.h")) {
+        	linea="";
+        } 
+        if(linea.contains("GameVersionManager.cpp")) {
+        	linea="";
+        } 
+        if(linea.contains("Xal.lib")) {
+        	linea="";
+        } 
+        if(linea.contains("UserIdentity.cpp")) {
+        	linea="";
+        } 
+        if(linea.contains("MSIPatchInstaller.cpp")) {
+        	linea="";
+        } 
+        if(linea.contains("KeyMakerCache.cpp")) {
+        	linea="";
+        } 
+        if(linea.contains("UpdateChecking.cpp")) {
+        	linea="";
+        } 
+        if(linea.contains("LauncherMain.cpp")) {
+        	linea="";
+        } 
+        if(linea.contains("SettingsManager.cpp")) {
+        	linea="";
+        } 
+        
+        
+        
+
+    	
+    	
+        if(linea.contains("Common_p.h")) {
+        	linea="";
+        } 
+        
+        
+        if(linea.contains("XalStorage.cpp")) {
+        	linea="";
+        } 
+        if(linea.contains("XalApi.cpp")) {
+        	linea="";
+        } 
+        if(linea.contains("XalContext.cpp")) {
+        	linea="";
+        } 
+        if(linea.contains("SentryAPI.cpp")) {
+        	linea="";
+        } 
+        if(linea.contains("CoreFileUtils.cpp")) {
+        	linea="";
+        } 
+        if(linea.contains("ProductInstance.cpp")) {
+        	linea="";
+        } 
+        if(linea.contains("UnifiedMSAAccounts.cpp")) {
+        	linea="";
+        } 
+        if(linea.contains("TelemetryEventSink_1DS.cpp")) {
+        	linea="";
+        } 
+        if(linea.contains("EntitlementsManager.cpp")) {
+        	linea="";
+        } 
+        if(linea.contains("TelemetryEventSink.cpp")) {
+        	linea="";
+        } 
+        if(linea.contains("PistonInstaller.cpp")) {
+        	linea="";
+        } 
+        
+        if(linea.contains("CefUI.cpp")) {
+        	linea="";
+        } 
+        if(linea.contains("LauncherAppBrowser.cpp")) {
+        	linea="";
+        } 
+        if(linea.contains("MinecraftServicesApi.cpp")) {
+        	linea="";
+        } 
+        if(linea.contains("Auth.cpp")) {
+        	linea="";
+        } 
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	if (linea.startsWith("[")) {
             int finCorchete = linea.indexOf(']');
             if (finCorchete != -1) {
                 linea = linea.substring(finCorchete + 1);
@@ -46,6 +189,30 @@ public class LimpiadorRegistroDeLauncherVainilla {
         if (linea.startsWith("at ")) {  // Verificar si es línea de stacktrace
             linea = " " + linea;        // Agregar espacio solo para "at"
         }
+        
+        if(linea.startsWith("Authorization:Bearer")) {
+        	linea="";
+        } 
+        if(linea.startsWith("Method:")) {
+        	linea="";
+        } 
+        if(linea.startsWith("Headers:")) {
+        	linea="";
+        } 
+        
+        if(linea.startsWith("Content-Type:")) {
+        	linea="";
+        } 
+        
+        if(linea.startsWith("Body:")) {
+        	linea="";
+        } 
+        if(linea.startsWith("Response")) {
+        	linea="";
+        } 
+
+        
+        
 
         return linea;
     }

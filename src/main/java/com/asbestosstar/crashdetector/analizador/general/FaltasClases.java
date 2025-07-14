@@ -1,20 +1,23 @@
 package com.asbestosstar.crashdetector.analizador.general;
 
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import com.asbestosstar.crashdetector.Consola;
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
+import com.asbestosstar.crashdetector.waifu.WaifuAPI;
 
 public class FaltasClases implements Verificaciones {
 
     private boolean activado = false;
-    private final Set<String> clases = new HashSet<>();
+    private final Map<String,String> clases = new HashMap<>();
     public final Set<String> todos = new LinkedHashSet<>();
 
     @Override
@@ -23,9 +26,9 @@ public class FaltasClases implements Verificaciones {
         VerificacionDeStackTrace vdst = consola.verificacion_de_stacktrace;
 
         // Agregar clases faltantes desde stacktraces fatales
-        for (String clase : vdst.fatal_clases_no_existe) {
-            if (todos.add(clase)) {
-                clases.add(clase.replace(".", "/"));
+        for (Entry<String, String> clase : vdst.fatal_clases_no_existe.entrySet()) {
+            if (todos.add(clase.getKey())) {
+                clases.put(clase.getKey().replace(".", "/"),clase.getValue());
             }
         }
 
@@ -77,13 +80,13 @@ public class FaltasClases implements Verificaciones {
 
             // Validar formato de clase antes de agregarla
             if (clase != null && esNombreClaseValido(clase) && todos.add(clase)) {
-                clases.add(clase);
+                clases.putIfAbsent(clase.replace(".", "/"),"");
             }
         }
         
         
         //TODO mejor
-        for(String clase:clases) {
+        for(String clase:clases.keySet()) {
         	if(clase.startsWith("gg/essential/")||clase.startsWith("kotlin/")||clase.startsWith("kotlinx/")) {
         		clases.remove(clase);
         	}
@@ -121,8 +124,12 @@ public class FaltasClases implements Verificaciones {
         if (clases.isEmpty()) return "";
 
         StringBuilder html = new StringBuilder("<ul>");
-        for (String clase : clases) {
-            html.append("<li>").append(clase).append("</li>");
+        for (Entry<String, String> clase : clases.entrySet()) {
+        	String valor = "";
+        	if(!clase.getValue().isEmpty()) {valor=" ("+clase.getValue()+")";}
+            html.append("<li>").append(clase.getKey()).append(valor).append("</li>");
+            WaifuAPI.obtanerModDesdeClase(clase.getKey());
+
         }
         html.append("</ul>");
         return MonitorDePID.idioma.faltar_de_clases_fatales() + html;

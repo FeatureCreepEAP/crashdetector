@@ -63,7 +63,6 @@ public class EnlanceMD {
                     Consola consola = new Consola(archivoDestino.toPath());
                     consola.finalizarContentoInyectado(MonitorDePID.leer_archivo(archivoDestino.toPath()));
                     nuevosRegistros.add(consola);
-                    
                 } catch (Exception e) {
                     CrashDetectorLogger.log("Error procesando enlace de log: " + url + " - " + e.getMessage());
                 }

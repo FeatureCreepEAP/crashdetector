@@ -63,7 +63,7 @@ public class Consola {
 			String[] lineas = contento_existe.split(File.pathSeparator);
 			for (int i = 0; i < lineas.length - 1; i++) {
 				String lin = lineas[i];
-				if (lin.contains("[Launcher] Launching Minecraft...")) {
+				if (lin.contains("[Launcher] Launching Minecraft...")||lin.contains("[MinecraftLauncher] Starting")) {
 					linea_original = i;
 				}
 
@@ -93,6 +93,7 @@ public class Consola {
 					para_verificar.append(lineas[i]).append(File.pathSeparator);
 				}
 
+				CrashDetectorLogger.log("archivo nombre: "+archivo.toString());
 				if (archivo.toString().endsWith("launcher_log.txt")) {
 					contento_verificar = LimpiadorRegistroDeLauncherVainilla.limpiarConsola(para_verificar.toString());
 				} else if (archivo.toString().endsWith("latest.log")) {
@@ -119,7 +120,17 @@ public class Consola {
 	public void finalizarContentoInyectado(String contento) {
 		nueva = true;
 		this.contento = contento;
-		contento_verificar = contento;
+
+		CrashDetectorLogger.log("archivo nombre inyecto: "+archivo.toString());
+		if (archivo.toString().endsWith("launcher_log.txt")) {
+			contento_verificar = LimpiadorRegistroDeLauncherVainilla.limpiarConsola(contento.toString());
+		} else if (archivo.toString().endsWith("latest.log")) {
+			contento_verificar = LimpiadorRegistroLatestLog.limpiarConsola(contento.toString());
+		} else {
+			contento_verificar = contento.toString();
+		}
+
+	
 	}
 
 	public static List<Consola> obtenerConsolas() {
@@ -174,15 +185,19 @@ public class Consola {
 		// Configuración de TLauncher
 		File carpetaTLauncherStarter;
 		File carpetaTLauncher;
+		File archivoTLLegacy;
 		if (appdata != null) {
 			carpetaTLauncherStarter = new File(appdata + "/.tlauncher/logs/starter/");
 			carpetaTLauncher = new File(appdata + "/.tlauncher/logs/tlauncher/");
+			archivoTLLegacy = new File(appdata + "/.tlauncher/logs/launcher.log");
 		} else if (new File(soporteAplicaciones + "/tlauncher/").exists()) {
 			carpetaTLauncherStarter = new File(soporteAplicaciones + "/tlauncher/logs/starter/");
 			carpetaTLauncher = new File(soporteAplicaciones + "/tlauncher/logs/tlauncher/");
+			archivoTLLegacy = new File(soporteAplicaciones + "/tlauncher/logs/launcher.log");
 		} else {
 			carpetaTLauncherStarter = new File(home + "/.tlauncher/logs/starter/");
 			carpetaTLauncher = new File(home + "/.tlauncher/logs/tlauncher/");
+			archivoTLLegacy = new File(home + "/.tlauncher/logs/launcher.log");
 		}
 
 		agregarDirectorio(resultado, carpetaTLauncher);
@@ -191,7 +206,16 @@ public class Consola {
 		// Agregar otros archivos directamente
 		agregarLauncherLog(new File(home + ".minecraft/launcher_log.txt"), resultado, rutasLauncherLog); // CurseForgeApp
 																											// y TL
-																											// segundo
+		String str_carpHMCL=Config.obtenerInstancia().obtenerCarpetaHMCL();
+		if(!str_carpHMCL.isEmpty()) {
+			File carpHMCL = new File(str_carpHMCL);
+			agregarDirectorio(resultado, carpHMCL);
+		}
+		
+		resultado.add(archivoTLLegacy);
+
+		
+		// segundo
 		resultado.add(new File("../../logs/ftb-app-electron.log")); // FTB
 		resultado.add(new File("sklauncher/sklauncher_logs.txt"));
 		resultado.add(NoRegistroDeLauncher.cd_launcherlog);

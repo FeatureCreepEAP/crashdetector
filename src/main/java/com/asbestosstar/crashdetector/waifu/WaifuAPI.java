@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.waifu.RespuestaWaifu.Arista;
 import com.asbestosstar.crashdetector.waifu.RespuestaWaifu.Definicion;
 import com.google.gson.Gson;
@@ -39,25 +40,25 @@ public class WaifuAPI {
 					if (arista.node != null && arista.node.definitions != null) {
 						for (Definicion def : arista.node.definitions) {
 							if (def.mod != null) {
-								System.out.println("Nombre del mod: " + def.mod.name);
+								CrashDetectorLogger.log("Nombre del mod: " + def.mod.name);
 								if (def.mod.curseforgeProjectId != null) {
-									System.out.println("ID de CurseForge: " + def.mod.curseforgeProjectId);
+									CrashDetectorLogger.log("ID de CurseForge: " + def.mod.curseforgeProjectId);
 								} else {
-									System.out.println("ID de CurseForge: No disponible");
+									CrashDetectorLogger.log("ID de CurseForge: No disponible");
 								}
-								System.out.println("ID de Modrinth: " + def.mod.modrinthProjectId);
-								System.out.println("---------------------------");
+								CrashDetectorLogger.log("ID de Modrinth: " + def.mod.modrinthProjectId);
+								CrashDetectorLogger.log("---------------------------");
 							}
 						}
 					}
 				}
 
 			} else {
-				System.out.println("No se encontraron datos válidos en la respuesta.");
+				CrashDetectorLogger.log("No se encontraron datos válidos en la respuesta.");
 			}
 
 		} catch (Exception e) {
-			System.err.println("Error al realizar la solicitud: " + e.getMessage());
+			CrashDetectorLogger.log("Error al realizar la solicitud: " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
