@@ -20,7 +20,7 @@ import com.google.gson.Gson;
 
 //curl 'https://api.waifu.neoforged.net/graphql' -X POST -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:128.0) Gecko/20100101 Firefox/128.0' -H 'Accept: application/json, multipart/mixed' -H 'Accept-Language: es-MX,es;q=0.8,en-US;q=0.5,en;q=0.3' -H 'Accept-Encoding: gzip, deflate, br, zstd' -H 'Referer: https://api.waifu.neoforged.net/graphql.html' -H 'content-type: application/json' -H 'Origin: https://api.waifu.neoforged.net' -H 'DNT: 1' -H 'Sec-GPC: 1' -H 'Connection: keep-alive' -H 'Sec-Fetch-Dest: empty' -H 'Sec-Fetch-Mode: cors' -H 'Sec-Fetch-Site: same-origin' -H 'Priority: u=0' --data-raw '{"query":"query ModsWithClass {\n  gameVersion(loader: NeoForge, version: \"1.21.1\") {\n    classes(where: {name: {equals: \"com/simibubi/create/foundation/utility/Lang\"}}, first: 1) {\n      edges {\n        node {\n          definitions {\n            mod {\n              name\n              curseforgeProjectId\n              modrinthProjectId\n            }\n          }\n        }\n      }\n    }\n  }\n}","operationName":"ModsWithClass"}'
 
-
+//https://api.waifu.neoforged.net/mod_url/987863
 /**
  * No ESTA COMPLETA WIP
  */

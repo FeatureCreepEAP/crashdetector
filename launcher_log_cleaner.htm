@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Limpiador launcher_log.txt Cleaner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+            margin: 0;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        textarea {
+            width: 100%;
+            font-family: monospace;
+            border: 1px solid #ccc;
+            padding: 10px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+            background-color: white;
+            min-height: 200px;
+            resize: vertical;
+        }
+
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        #salidaLog {
+            font-family: monospace;
+            white-space: pre-wrap;
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 10px;
+            min-height: 200px;
+            overflow: auto;
+            word-wrap: break-word;
+        }
+
+        .stacktrace {
+            color: #000080; /* Azul oscuro */
+        }
+
+        .advertencia {
+            color: #cc7700; /* Naranja */
+        }
+
+        .error {
+            color: #cc0000; /* Rojo */
+        }
+
+        .fatal {
+            color: #800000; /* Rojo oscuro */
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Limpiador launcher_log.txt Cleaner</h1>
+        <textarea id="registroEntrada" placeholder="Pega tu registro aqui... Paste Log Here...."></textarea>
+        <button onclick="procesarRegistro()">Clean/Limpiar</button>
+        <div id="salidaLog"></div>
+    </div>
+
+    <script>
+        function limpiarLinea(linea) {
+            const archivosProhibidos = [
+                "LauncherAppRenderer.cpp", "ControllerInterface.cpp", "LauncherController.cpp", "NetQueue.cpp",
+                "KeyMaker.cpp", "GamecoreClientApi_win32.cpp", "Sha1Cacher.cpp", "Common.cpp", "mainWindows.cpp",
+                "AzureUpdateTools.cpp", "CoreUpdateSystemCheck.cpp", "CurlNetQueue.cpp", "PersistentReflectedStruct.h",
+                "GameVersionManager.cpp", "Xal.lib", "UserIdentity.cpp", "MSIPatchInstaller.cpp", "KeyMakerCache.cpp",
+                "UpdateChecking.cpp", "LauncherMain.cpp", "SettingsManager.cpp", "Common_p.h", "XalStorage.cpp",
+                "XalApi.cpp", "XalContext.cpp", "Updating.cpp", "SentryAPI.cpp", "CoreFileUtils.cpp", "ProductInstance.cpp",
+                "UnifiedMSAAccounts.cpp", "TelemetryEventSink_1DS.cpp", "EntitlementsManager.cpp", "TelemetryEventSink.cpp",
+                "PistonInstaller.cpp", "CefUI.cpp", "LauncherAppBrowser.cpp", "MinecraftServicesApi.cpp", "Auth.cpp",
+                "TreatmentTagFetcher.cpp", "main.cpp", "StartLibrary.cpp", "SkinManager.cpp", "main_context.cpp",
+                "PreferencesManager.cpp", "root_window_manager.cpp", "client_handler.cpp", "JreManifestManager.cpp"
+            ];
+
+
+            if (archivosProhibidos.some(archivo => linea.includes(archivo))) {
+                return '';
+            }
+
+
+            if (linea.startsWith('[')) {
+                const finCorchete = linea.indexOf(']');
+                if (finCorchete !== -1) {
+                    linea = linea.substring(finCorchete + 1);
+                }
+            }
+
+
+            linea = linea.replace(/^\s*Game\/game $$ Info/, '');
+
+
+            linea = linea.trim();
+
+
+            if (linea.startsWith('at ')) {
+                linea = ' ' + linea;
+            }
+
+            // Eliminar encabezados HTTP innecesarios
+            if (
+                linea.startsWith('Authorization:Bearer') ||
+                linea.startsWith('Method:') ||
+                linea.startsWith('Headers:') ||
+                linea.startsWith('Content-Type:') ||
+                linea.startsWith('Body:') ||
+                linea.startsWith('Response')
+            ) {
+                return '';
+            }
+
+            return linea;
+        }
+
+        function clasificarLinea(linea) {
+            if (linea.startsWith(' at ')) {
+                return 'stacktrace';
+            } else if (/warn/i.test(linea) || /warning/i.test(linea)) {
+                return 'advertencia';
+            } else if (/error/i.test(linea) || /severe/i.test(linea)) {
+                return 'error';
+            } else if (/fatal/i.test(linea) || /critical/i.test(linea)) {
+                return 'fatal';
+            } else {
+                return '';
+            }
+        }
+
+        function procesarRegistro() {
+            const entrada = document.getElementById('registroEntrada').value;
+            const lineas = entrada.split(/\r?\n/);
+            const lineasLimpias = lineas
+                .map(linea => limpiarLinea(linea))
+                .filter(linea => linea.trim() !== '');
+
+            const salida = document.getElementById('salidaLog');
+            salida.innerHTML = '';
+
+            lineasLimpias.forEach(linea => {
+                const tipo = clasificarLinea(linea);
+                const divLinea = document.createElement('div');
+                if (tipo) {
+                    divLinea.className = tipo;
+                }
+                divLinea.textContent = linea;
+                salida.appendChild(divLinea);
+            });
+        }
+    </script>
+</body>
+</html>

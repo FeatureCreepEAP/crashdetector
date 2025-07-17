@@ -56,7 +56,9 @@ public class LimpiadorRegistroDeLauncherVainilla {
         	linea="";
         } 
         
-        
+        if(linea.contains("Updating.cpp")) {
+        	linea="";
+        } 
         
         if(linea.contains("Common.cpp")) {
         	linea="";
@@ -73,6 +75,54 @@ public class LimpiadorRegistroDeLauncherVainilla {
         if(linea.contains("CurlNetQueue.cpp")) {
         	linea="";
         } 
+        
+        if(linea.contains("TreatmentTagFetcher.cpp")) {
+        	linea="";
+        } 
+        
+        
+        if(linea.contains("main.cpp")) {
+        	linea="";
+        } 
+        
+        if(linea.contains("StartLibrary.cpp")) {
+        	linea="";
+        } 
+        
+        
+        if(linea.contains("PreferencesManager.cpp")) {
+        	linea="";
+        } 
+        
+        
+        if(linea.contains("SkinManager.cpp")) {
+        	linea="";
+        } 
+        
+        if(linea.contains("CefUI.cpp")) {
+        	linea="";
+        } 
+        if(linea.contains("main_context.cpp")) {
+        	linea="";
+        } 
+        
+        
+        
+        if(linea.contains("root_window_manager.cpp")) {
+        	linea="";
+        } 
+        
+        if(linea.contains("client_handler.cpp")) {
+        	linea="";
+        } 
+        if(linea.contains("JreManifestManager.cpp")) {
+        	linea="";
+        } 
+        
+        
+        
+        
+        
         if(linea.contains("PersistentReflectedStruct.h")) {
         	linea="";
         } 

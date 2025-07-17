@@ -132,25 +132,49 @@ public class VerificacionDeStackTrace {
 				else if ((linea.contains("ClassNotFoundException") || linea.contains("NoClassDefFoundError"))
 						&& !linea.contains("The specified mixin") && !linea.contains("WARN/]")) {
 
-					String claseFaltante;
-					if (linea.contains("ClassNotFoundException")) {
-						claseFaltante = linea.replace(".", "/")
-								.substring(
-										linea.indexOf("ClassNotFoundException:") + "ClassNotFoundException:".length())
-								.trim();
-					} else {
-						claseFaltante = linea.replace(".", "/")
-								.substring(linea.indexOf("NoClassDefFoundError:") + "NoClassDefFoundError:".length())
-								.trim();
-					}
-					claseFaltante = claseFaltante.replace(".", "/");
-					int idx = claseFaltante.indexOf(' ');
-					if (idx != -1)
-						claseFaltante = claseFaltante.substring(0, idx);
-					idx = claseFaltante.indexOf('(');
-					if (idx != -1)
-						claseFaltante = claseFaltante.substring(0, idx);
+				
 
+				    String claseFaltante = null;
+				    CrashDetectorLogger.log(linea);
+
+				    if (linea.contains("ClassNotFoundException")) {
+				        int startIdx = linea.indexOf("ClassNotFoundException:") + "ClassNotFoundException:".length();
+				        claseFaltante = linea.substring(startIdx).trim();
+				    } else {
+				        int startIdx = linea.indexOf("NoClassDefFoundError:") + "NoClassDefFoundError:".length();
+				        claseFaltante = linea.substring(startIdx).trim();
+				    }
+CrashDetectorLogger.log(claseFaltante);
+				    // Now extract just the class name (remove trailing messages like "Could not initialize class")
+				   
+	if(claseFaltante.contains(" ")) {
+	    CrashDetectorLogger.log("espacio");
+
+					int spaceIdx = claseFaltante.indexOf(' ');
+					CrashDetectorLogger.log("spaceidx");
+				    if (spaceIdx != -1) {
+				    	CrashDetectorLogger.log("-1");
+				        if (claseFaltante.startsWith("Could not initialize class ")) {
+				        	claseFaltante = claseFaltante.replace("Could not initialize class ", "");
+				            spaceIdx = claseFaltante.indexOf(' ');
+				            CrashDetectorLogger.log(claseFaltante);
+				        }
+				        //claseFaltante = claseFaltante.substring(0, spaceIdx);
+				    }
+					}
+					
+					if(claseFaltante.contains("(")) {
+					    CrashDetectorLogger.log("(");
+				    int parenIdx = claseFaltante.indexOf('(');
+				    if (parenIdx != -1) {
+				        claseFaltante = claseFaltante.substring(0, parenIdx);
+				    }
+					}
+				    claseFaltante = claseFaltante.replace(".", "/");
+					
+					
+					
+					
 					String sospechoso = "";
 					String[] arr_nuevo = new String[arr.length - 1];
 
