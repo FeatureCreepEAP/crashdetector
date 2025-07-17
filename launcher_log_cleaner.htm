@@ -10,23 +10,39 @@
             background-color: #f5f5f5;
             margin: 0;
         }
-
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
         h1 {
             color: #333;
+            margin: 0;
         }
-
-        textarea {
+        .language-selector {
+            padding: 5px 10px;
+            font-size: 14px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        .input-group {
+            margin-bottom: 10px;
+        }
+        input[type="text"], textarea {
             width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        textarea {
             font-family: monospace;
             border: 1px solid #ccc;
-            padding: 10px;
-            box-sizing: border-box;
-            margin-bottom: 10px;
             background-color: white;
-            min-height: 200px;
+            min-height: 150px;
             resize: vertical;
         }
-
         button {
             padding: 10px 15px;
             font-size: 16px;
@@ -35,12 +51,11 @@
             border: none;
             color: white;
             border-radius: 4px;
+            margin-right: 10px;
         }
-
         button:hover {
             background-color: #0056b3;
         }
-
         .container {
             width: 100%;
             margin: 0 auto;
@@ -49,7 +64,6 @@
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-
         #salidaLog {
             font-family: monospace;
             white-space: pre-wrap;
@@ -61,34 +75,109 @@
             overflow: auto;
             word-wrap: break-word;
         }
-
         .stacktrace {
             color: #000080; /* Azul oscuro */
         }
-
         .advertencia {
             color: #cc7700; /* Naranja */
         }
-
         .error {
             color: #cc0000; /* Rojo */
         }
-
         .fatal {
             color: #800000; /* Rojo oscuro */
             font-weight: bold;
+        }
+        .note {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Limpiador launcher_log.txt Cleaner</h1>
-        <textarea id="registroEntrada" placeholder="Pega tu registro aqui... Paste Log Here...."></textarea>
-        <button onclick="procesarRegistro()">Clean/Limpiar</button>
+        <div class="header">
+            <h1 id="titulo">Limpiador launcher_log.txt Cleaner</h1>
+            <select id="selectorDeIdioma" class="language-selector">
+                <option value="es">Espanol</option>
+                <option value="en">English</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="entradaUrl" id="etiquetaUrl">Introduce el enlace al log:</label>
+            <input type="text" id="entradaUrl" placeholder="" id="marcadorUrl">
+            <button onclick="cargarLogDesdeUrl()" id="botonCargar">Cargar Log desde URL</button>
+            <div class="note" id="notaUrl">* El enlace debe apuntar a un archivo de texto sin formato con acceso publico</div>
+        </div>
+        <div class="input-group">
+            <label for="registroEntrada" id="etiquetaManual">O pega tu registro manualmente:</label>
+            <textarea id="registroEntrada" placeholder=""></textarea>
+            <button onclick="procesarRegistro()" id="botonLimpiar">Clean/Limpiar</button>
+        </div>
         <div id="salidaLog"></div>
     </div>
-
     <script>
+        // Textos en ambos idiomas sin tildes
+        const textos = {
+            en: {
+                titulo: "Launcher_log.txt Cleaner",
+                etiquetaUrl: "Enter log URL:",
+                marcadorUrl: "Paste Log URL here... (Supports gnomebot.dev and mclo.gs formats)",
+                botonCargar: "Load Log from URL",
+                notaUrl: "* Link must point to a plain text file with public access",
+                etiquetaManual: "Or paste your log manually:",
+                botonLimpiar: "Clean",
+                noUrl: "Please enter a valid URL.",
+                urlInvalida: "The URL must start with http:// or https://",
+                cargando: "Loading log from URL...",
+                errorCarga: "Error loading log. Make sure the link is valid and the file is publicly accessible."
+            },
+            es: {
+                titulo: "Limpiador launcher_log.txt Cleaner",
+                etiquetaUrl: "Introduce el enlace al log:",
+                marcadorUrl: "Pega tu registro aqui... (Soporta formatos gnomebot.dev y mclo.gs)",
+                botonCargar: "Cargar Log desde URL",
+                notaUrl: "* El enlace debe apuntar a un archivo de texto sin formato con acceso publico",
+                etiquetaManual: "O pega tu registro manualmente:",
+                botonLimpiar: "Limpiar",
+                noUrl: "Por favor, introduce una URL valida.",
+                urlInvalida: "La URL debe comenzar con http:// o https://",
+                cargando: "Cargando log desde la URL...",
+                errorCarga: "Error al cargar el log. Asegurate de que el enlace sea valido y el archivo este accesible publicamente."
+            }
+        };
+
+        // Detectar idioma del navegador
+        function obtenerIdioma() {
+            const lang = navigator.language || navigator.languages[0];
+            return lang.split('-')[0]; // Devuelve solo el codigo principal (ej. 'en' o 'es')
+        }
+
+        // Aplicar idioma
+        function aplicarIdioma(lang) {
+            document.getElementById('titulo').textContent = textos[lang].titulo;
+            document.querySelector('label[for="entradaUrl"]').textContent = textos[lang].etiquetaUrl;
+            document.getElementById('entradaUrl').placeholder = textos[lang].marcadorUrl;
+            document.querySelector('button[onclick="cargarLogDesdeUrl()"]').textContent = textos[lang].botonCargar;
+            document.getElementById('notaUrl').textContent = textos[lang].notaUrl;
+            document.querySelector('label[for="registroEntrada"]').textContent = textos[lang].etiquetaManual;
+            document.getElementById('registroEntrada').placeholder = textos[lang].etiquetaManual;
+            document.querySelector('button[onclick="procesarRegistro()"]').textContent = textos[lang].botonLimpiar;
+        }
+
+        const idiomaNavegador = obtenerIdioma();
+        const selectorIdioma = document.getElementById('selectorDeIdioma');
+        const idiomaActual = idiomaNavegador.startsWith('en') ? 'en' : 'es';
+        selectorIdioma.value = idiomaActual;
+        aplicarIdioma(idiomaActual);
+
+        // Evento para cambiar idioma
+        selectorIdioma.addEventListener('change', function() {
+            const selectedLang = this.value;
+            aplicarIdioma(selectedLang);
+        });
+
         function limpiarLinea(linea) {
             const archivosProhibidos = [
                 "LauncherAppRenderer.cpp", "ControllerInterface.cpp", "LauncherController.cpp", "NetQueue.cpp",
@@ -103,11 +192,9 @@
                 "PreferencesManager.cpp", "root_window_manager.cpp", "client_handler.cpp", "JreManifestManager.cpp"
             ];
 
-
             if (archivosProhibidos.some(archivo => linea.includes(archivo))) {
                 return '';
             }
-
 
             if (linea.startsWith('[')) {
                 const finCorchete = linea.indexOf(']');
@@ -116,18 +203,13 @@
                 }
             }
 
-
             linea = linea.replace(/^\s*Game\/game $$ Info/, '');
-
-
             linea = linea.trim();
-
 
             if (linea.startsWith('at ')) {
                 linea = ' ' + linea;
             }
 
-            // Eliminar encabezados HTTP innecesarios
             if (
                 linea.startsWith('Authorization:Bearer') ||
                 linea.startsWith('Method:') ||
@@ -151,6 +233,12 @@
                 return 'error';
             } else if (/fatal/i.test(linea) || /critical/i.test(linea)) {
                 return 'fatal';
+            } else if (linea.includes('crash')) {
+                return 'fatal';
+            } else if (/caused by/i.test(linea) || /exception/i.test(linea)) {
+                if (!/warn/i.test(linea)) {
+                    return 'error';
+                }
             } else {
                 return '';
             }
@@ -175,6 +263,56 @@
                 divLinea.textContent = linea;
                 salida.appendChild(divLinea);
             });
+        }
+
+        function convertirUrl(url) {
+            const patronGnomebot = /^https?:\/\/gnomebot\.dev\/paste\/mclogs\/([a-zA-Z0-9_-]+)/;
+            const coincidencia = url.match(patronGnomebot);
+            if (coincidencia && coincidencia[1]) {
+                return `https://api.mclo.gs/1/raw/ ${coincidencia[1]}`;
+            }
+            return url;
+        }
+
+        function cargarLogDesdeUrl() {
+            const campoUrl = document.getElementById('entradaUrl');
+            let url = campoUrl.value.trim();
+            
+            if (!url) {
+                alert(textos[selectorDeIdioma.value].noUrl);
+                return;
+            }
+
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                alert(textos[selectorDeIdioma.value].urlInvalida);
+                return;
+            }
+
+            const urlConvertida = convertirUrl(url);
+            if (urlConvertida !== url) {
+                campoUrl.value = urlConvertida;
+                url = urlConvertida;
+            }
+
+            const salida = document.getElementById('salidaLog');
+            salida.innerHTML = `<div style="color: #007bff;">${textos[selectorDeIdioma.value].cargando}</div>`;
+
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Error HTTP: ${response.status}`);
+                    }
+                    return response.text();
+                })
+                .then(texto => {
+                    document.getElementById('registroEntrada').value = texto;
+                    procesarRegistro();
+                })
+                .catch(error => {
+                    alert(`Error al cargar el log desde la URL:\n${error.message}`);
+                    salida.innerHTML = `<div style="color: #cc0000;">${textos[selectorDeIdioma.value].errorCarga}</div>`;
+                    console.error('Error al obtener el log:', error);
+                });
         }
     </script>
 </body>
