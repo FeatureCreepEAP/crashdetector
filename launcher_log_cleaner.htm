@@ -269,7 +269,7 @@
             const patronGnomebot = /^https?:\/\/gnomebot\.dev\/paste\/mclogs\/([a-zA-Z0-9_-]+)/;
             const coincidencia = url.match(patronGnomebot);
             if (coincidencia && coincidencia[1]) {
-                return `https://api.mclo.gs/1/raw/ ${coincidencia[1]}`;
+                return `https://api.mclo.gs/1/raw/${coincidencia[1]}`;
             }
             return url;
         }
