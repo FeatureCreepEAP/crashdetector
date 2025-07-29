@@ -13,7 +13,7 @@ public class lithostictchctov implements Verificaciones {
 
     @Override
     public void verificar(Consola consola) {
-    	String contenidoConsola=consola.contento_verificar;
+    	String contenidoConsola=consola.contenido_verificar;
 
         String patron = "Caused by: java.lang.RuntimeException: " +
                        "Unknown registry key in ResourceKey[minecraft:root / minecraft:worldgen/structure_type]: lithostitched:jigsaw";

@@ -23,7 +23,7 @@ public class ProblemaMundoDuplicado implements Verificaciones {
      */
     @Override
     public void verificar(Consola consola) {
-        String contenido = consola.contento_verificar;
+        String contenido = consola.contenido_verificar;
 
         // Patrón de error: "World nombre_mundo is a duplicate..."
         Pattern patron = Pattern.compile("World ([\\w_\\-]+) is a duplicate of another world and has been prevented from loading.*?uid\\.dat", Pattern.DOTALL);

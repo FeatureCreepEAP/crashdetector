@@ -19,7 +19,7 @@ public class ProblemaCierreAuthMe implements Verificaciones {
      */
     @Override
     public void verificar(Consola consola) {
-        String contenidoDeConsola = consola.contento_verificar;
+        String contenidoDeConsola = consola.contenido_verificar;
 
         // Mensaje específico que indica que AuthMe está cerrando el servidor
         String mensajeAuthMe = "[AuthMe] THE SERVER IS GOING TO SHUT DOWN AS DEFINED IN THE CONFIGURATION!";

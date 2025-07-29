@@ -67,7 +67,7 @@ public class Drivers implements Verificaciones {
 
     @Override
     public void verificar(Consola consola) {
-    	String log=consola.contento_verificar;
+    	String log=consola.contenido_verificar;
 
 
         if (log.contains("EXCEPTION_ACCESS_VIOLATION") && log.contains("atio6axx.dll")) {
@@ -79,7 +79,7 @@ public class Drivers implements Verificaciones {
             return;
         }
         if (log.contains("EXCEPTION_ACCESS_VIOLATION") && log.contains("nouveau")) {
-            mensajes.append(MonitorDePID.idioma.probelma_con_graficas_nouveau());
+            mensajes.append(MonitorDePID.idioma.problema_con_graficas_nouveau());
             activado = true;
             return;
         }
@@ -122,7 +122,7 @@ public class Drivers implements Verificaciones {
                 ? MonitorDePID.idioma.problema_con_graficas_nvidia_windows_nuevo()
                 : MonitorDePID.idioma.problema_con_graficas_nvidia_windows_viejo());
         } else {
-            mensajes.append(MonitorDePID.idioma.probelma_con_graficas_general());
+            mensajes.append(MonitorDePID.idioma.problema_con_graficas_general());
         }
         activado = true;
     }

@@ -27,7 +27,7 @@ public class ProblemaNombrePluginAmbiguo implements Verificaciones {
      */
     @Override
     public void verificar(Consola consola) {
-        String contenido = consola.contento_verificar;
+        String contenido = consola.contenido_verificar;
         String[] lineas = contenido.split("\n");
 
         // Patrón mejorado para manejar cualquier combinación de comillas

@@ -52,7 +52,6 @@ import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaVersionM
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.RegistrosMalMapeados;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.Segundo60Tick;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ServicioDeModLauncherNoFunciona;
-import com.asbestosstar.crashdetector.analizador.apps.minecraft.Theseus;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.WaterMediaTL;
 import com.asbestosstar.crashdetector.analizador.general.AdvertenciaFaltasClases;
 import com.asbestosstar.crashdetector.analizador.general.ContentoDeTraces;

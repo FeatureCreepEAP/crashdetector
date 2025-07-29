@@ -39,12 +39,12 @@ public class Espanol implements Idioma {
     }
     
     @Override
-    public String probelma_con_graficas_nouveau() {
+    public String problema_con_graficas_nouveau() {
         return "<span style='color:#" + config.obtenerColorAdvertencia() + "'>Algunas versiones antiguas a veces tienen algunos problemas con algunos gráficos Nouveau en la pantalla de carga temprana.</span>";
     }
 
     @Override
-    public String probelma_con_graficas_general() {
+    public String problema_con_graficas_general() {
         return "<span style='color:#" + config.obtenerColorError() + "'>Tienes un problema con tus controladores gráficos. Si tienes una GPU o APU AMD/ATI, actualiza tus controladores gráficos AMD. Si tienes una tarjeta gráfica NVIDIA, asegúrate de marcar el juego y todas las instancias de javaw.exe para usar la tarjeta gráfica dedicada. Lee esta guía: <a href='https://forums.minecraftforge.net/topic/125488-rules-and-frequently-asked-questions-faq/#:~:text=How%20do%20I%20update%20my%20drivers%3F' style='color:#" + config.obtenerColorEnlace() + "'>Guía de actualización de controladores</a></span>";
     }
 
@@ -54,7 +54,7 @@ public class Espanol implements Idioma {
     }
 
     @Override
-    public String no_tienes_las_dependencias_necesitas() {
+    public String no_tienes_las_dependencias_necesarias() {
         return "<span style='color:#" + config.obtenerColorError() + "'>No tienes todas las dependencias necesarias:</span>";
     }
 
@@ -74,22 +74,22 @@ public class Espanol implements Idioma {
     }
 
     @Override
-    public String texto_de_buton_local_enlance() {
+    public String texto_de_boton_local_enlace() {
         return "<span style='color:#" + config.obtenerColorBoton() + "'>Ver Informe</span>";
     }
 
     @Override
-    public String texto_debajo_de_buton_local_enlance() {
+    public String texto_debajo_de_buton_local_enlace() {
         return "<span style='color:#" + config.obtenerColorInfo() + "'>Ver Un Informe Local en tu navegador.</span>";
     }
 
     @Override
-    public String texto_de_buton_compartir_enlance() {
+    public String texto_de_buton_compartir_enlace() {
         return "Compartir Informe";
     }
 
     @Override
-    public String texto_debajo_de_buton_compartir_enlance() {
+    public String texto_debajo_de_buton_compartir_enlace() {
         return "Compartir Informe. Sus registros se cargarán en securelogger.net y tu informe se cargará a otro sitio.";
     }
 
@@ -104,7 +104,7 @@ public class Espanol implements Idioma {
     }
 
     @Override
-    public String possibladad_fatal() {
+    public String posibilidad_fatal() {
         return "<b style='color:#" + config.obtenerColorError() + "'>Posiblemente Fatal:</b> ";
     }
 
@@ -119,8 +119,8 @@ public class Espanol implements Idioma {
     }
 
     @Override
-    public String faltar_de_clases_fatales() {
-        return "<b style='color:#" + config.obtenerColorError() + "'>Clases fatales faltantes detectadas:</b>";
+    public String falta_de_clases_fatales() {
+        return "<b style='color:#" + config.obtenerColorError() + "'>Tienes Clases fatales (FATAL), es muy importante, causas comunes son Coremods Malos o Fatals Dependencias. Puedes Usar QuickFix para buscar para mods con las clases fatales. Clases fatales faltantes detectadas:</b>";
     }
 
     @Override
@@ -144,7 +144,7 @@ public class Espanol implements Idioma {
     }
 
     @Override
-    public String mcforge_mod_suspechoso() {
+    public String mcforge_mod_sospechoso() {
         return "<b style='color:#" + config.obtenerColorError() + "'>MinecraftForge sospechosos esta mod tiene una ploblema:</b> ";
     }
 
@@ -242,11 +242,11 @@ public String noTieneConsolaDeLauncherCursedForge() {
 
 @Override
 public String faltar_de_clases_advertencia() {
-    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>Advertencia: Clases faltantes detectadas:</b>";
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>Advertencia: Tienes faltas clases (Advertencia), generalmente está bien pero no siempre, es diferente de faltas clases fatalas. Coremods malos o faltas dependencias son razones comunes para este problema. Puedes usar QuickFix para buscar para mods con los clases. Clases faltantes detectadas:</b>";
 }
 
 @Override
-public String noResultos() {
+public String noResultados() {
     return "<b style='color:#" + config.obtenerColorError() + "'>No Resultos</b>";
 }
 
@@ -649,7 +649,7 @@ public String nombre_de_bloque_teselado() {
     return "Error de renderizado de bloques";
 }
 
-public String nombre_de_contento_de_stacktrace() {
+public String nombre_de_contenido_de_stacktrace() {
     return "Análisis de stack trace";
 }
 
@@ -804,7 +804,7 @@ public String inicioApp() {
 }
 
 @Override
-public String adjustesCrashDetector() {
+public String ajustesCrashDetector() {
 	// TODO Auto-generated method stub
 	return "Ajustes CrashDetector";
 }
@@ -1067,12 +1067,12 @@ public String mensaje_de_trace_ultima_no_traductado() {
 
 @Override
 public String solucionParaAdvertenciaFaltasClases() {
-    return "Tienes faltas clases (Advertencia), generalmente está bien pero no siempre. Coremods malos o faltas dependencias son razones comunes para este problema.";
+    return "Puedes buscar en la base de datos WaifuNeoForge para encontrar mods. Selecciona la versión del juego, el cargador de mods y la clase. Usa la combinación más similar. Puedes buscar una vez por minuto.";
 }
 
 @Override
 public String solucionFaltasClases() {
-    return "Tienes faltas clases (FATAL), es muy importante. Coremods malos o faltas dependencias son razones comunes para este problema.";
+    return "Puedes buscar en la base de datos WaifuNeoForge para encontrar mods. Selecciona la versión del juego, el cargador de mods y la clase. Usa la combinación más similar. Puedes buscar una vez por minuto.";
 }
 
 @Override
@@ -2312,6 +2312,16 @@ public String imagenNoEncontrada() {
 public String noRegistroDeLauncher() {
     return "GENÉRICO: Seleccione el tipo de launcher que está utilizando. Los registros del launcher (launcher_log.txt, stdout, etc.) contienen información crucial sobre errores que no aparecen en latest.log. CrashDetector no puede leer los registros de tu Launcher, es posible que no tenga un archivo de registro y deba pegar los registros manualmente.<br>" +
            "Para más información, consulte <a href=\"https://github.com/HMCL-dev/HMCL/issues/2663 \">este problema</a>. Estos registros contienen la salida estándar (STDOUT), necesaria para diagnosticar muchos tipos de errores.";
+}
+
+@Override
+public String faltar_de_clases_create() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Tienes clases faltantes de Create. Create cambió mucho: muchas clases fueron eliminadas. Especialmente desde Create 6 (febrero 2025), los addons para versiones antiguas de Create no funcionan. QuickFix no tiene una solución para este problema. Necesitas actualizar los addons de Create, eliminar los obsoletos, o usar la versión correcta de Create para los addons que deseas usar.</b>";
+}
+
+@Override
+public String faltar_de_clases_epicfight() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Tienes clases faltantes de EpicFight. EpicFight cambió mucho: muchas clases fueron eliminadas. QuickFix no tiene una solución para este problema. Necesitas actualizar los addons de EpicFight, eliminar los obsoletos, o usar la versión correcta de EpicFight para los addons que deseas usar.</b>";
 }
 
 

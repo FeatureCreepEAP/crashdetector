@@ -39,12 +39,12 @@ public String problema_con_graficas_ati() {
 }
 
     @Override
-    public String probelma_con_graficas_nouveau() {
+    public String problema_con_graficas_nouveau() {
         return "<span style='color:#" + config.obtenerColorAdvertencia() + "'>一部の旧バージョンでは、Nouveauグラフィックスカードの初期ロード画面で問題が発生することがあります。</span>";
     }
 
     @Override
-    public String probelma_con_graficas_general() {
+    public String problema_con_graficas_general() {
         return "<span style='color:#" + config.obtenerColorError() + "'>グラフィックスドライバーに問題があります。AMD/ATIのGPUまたはAPUを使用している場合は、AMDグラフィックスドライバーを更新してください。NVIDIAグラフィックスカードを使用している場合は、ゲームとすべてのjavaw.exeインスタンスが独立グラフィックスカードを使用するように設定されていることを確認してください。このガイドを参照してください: <a href='https://forums.minecraftforge.net/topic/125488-rules-and-frequently-asked-questions-faq/#:~:text=How%20do%20I%20update%20my%20drivers%3F' style='color:#" + config.obtenerColorEnlace() + "'>ドライバー更新ガイド</a></span>";
     }
 
@@ -54,7 +54,7 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String no_tienes_las_dependencias_necesitas() {
+    public String no_tienes_las_dependencias_necesarias() {
         return "<span style='color:#" + config.obtenerColorError() + "'>必要な依存関係が不足しています:</span>";
     }
 
@@ -74,22 +74,22 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String texto_de_buton_local_enlance() {
+    public String texto_de_boton_local_enlace() {
         return "<span style='color:#" + config.obtenerColorBoton() + "'>レポートを見る</span>";
     }
 
     @Override
-    public String texto_debajo_de_buton_local_enlance() {
+    public String texto_debajo_de_buton_local_enlace() {
         return "<span style='color:#" + config.obtenerColorInfo() + "'>ブラウザでローカルレポートを表示します。</span>";
     }
 
     @Override
-    public String texto_de_buton_compartir_enlance() {
+    public String texto_de_buton_compartir_enlace() {
         return "レポートを共有";
     }
 
     @Override
-    public String texto_debajo_de_buton_compartir_enlance() {
+    public String texto_debajo_de_buton_compartir_enlace() {
         return "レポートを共有します。ログはsecurelogger.netにアップロードされ、レポートは他のサイトにアップロードされます。";
     }
 
@@ -104,7 +104,7 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String possibladad_fatal() {
+    public String posibilidad_fatal() {
         return "<b style='color:#" + config.obtenerColorError() + "'>致命的な可能性:</b> ";
     }
 
@@ -119,8 +119,8 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String faltar_de_clases_fatales() {
-        return "<b style='color:#" + config.obtenerColorError() + "'>重要なクラスが不足していることが検出されました:</b>";
+    public String falta_de_clases_fatales() {
+        return "<b style='color:#" + config.obtenerColorError() + "'>致命的なクラス (FATAL) が存在します。非常に深刻な問題です。原因は不正な CoreMod や致命的な依存関係などです。QuickFix を使って致命的クラスを持つ MOD を検索できます。検出された欠落している致命的クラス：</b>";
     }
 
     @Override
@@ -144,7 +144,7 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String mcforge_mod_suspechoso() {
+    public String mcforge_mod_sospechoso() {
         return "<b style='color:#" + config.obtenerColorError() + "'>MinecraftForgeが疑わしいmodに問題があることを検出しました:</b> ";
     }
 
@@ -243,12 +243,12 @@ public String noTieneConsolaDeLauncherCursedForge() {
 
 @Override
 public String faltar_de_clases_advertencia() {
-    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>警告: 欠落しているクラスが検出されました:</b>";
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>警告：クラスが見つかりません（警告レベル）。致命的なエラーとは異なり、通常は問題ありませんが、場合によっては影響が出ることもあります。原因として不正な CoreMod や不足した依存関係が考えられます。QuickFix を使用して、不足しているクラスを持つ MOD を検索できます。検出された不足クラス：</b>";
 }
 
 
 @Override
-public String noResultos() {
+public String noResultados() {
     return "<b style='color:#" + config.obtenerColorError() + "'>結果なし</b>";
 }
 
@@ -604,7 +604,7 @@ public String nombre_de_bloque_teselado() {
     return "ブロックのレンダリングエラー";
 }
 
-public String nombre_de_contento_de_stacktrace() {
+public String nombre_de_contenido_de_stacktrace() {
     return "スタックトレース解析";
 }
 
@@ -758,7 +758,7 @@ public String inicioApp() {
 }
 
 @Override
-public String adjustesCrashDetector() {
+public String ajustesCrashDetector() {
     return "クラッシュ検出設定";
 }
 
@@ -1016,12 +1016,12 @@ public String mensaje_de_trace_ultima_no_traductado() {
 
 @Override
 public String solucionParaAdvertenciaFaltasClases() {
-    return "クラスが不足しています（警告）。一般的には問題ありませんが、常にそうとは限りません。不良なコアモッドや不足している依存関係がこの問題の一般的な原因です。";
+    return "WaifuNeoForgeデータベースを検索してMODを見つけることができます。ゲームのバージョン、MODローダー、クラスを選択してください。最も近い組み合わせを使用してください。1分間に1回検索できます。";
 }
 
 @Override
 public String solucionFaltasClases() {
-    return "クラスが不足しています（致命的）。これは非常に重要です。不良なコアモッドや不足している依存関係がこの問題の一般的な原因です。";
+    return "WaifuNeoForgeデータベースを検索してMODを見つけることができます。ゲームのバージョン、MODローダー、クラスを選択してください。最も近い組み合わせを使用してください。1分間に1回検索できます。";
 }
 
 @Override
@@ -1866,7 +1866,15 @@ public String noRegistroDeLauncher() {
            "詳細については <a href=\"https://github.com/HMCL-dev/HMCL/issues/2663 \">この問題</a> を参照してください。これらのログには多くのエラー診断に必要な標準出力 (STDOUT) が含まれます。";
 }
 
+@Override
+public String faltar_de_clases_create() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Create からクラスが見つかりません。Create は大幅に変更され、多くのクラスが削除されました。特に Create 6（2025年2月）以降、古いバージョンの Create 用アドオンは動作しません。QuickFix ではこの問題に対処できません。Create のアドオンを更新するか、不要なアドオンを削除するか、使用したいアドオンに合った正しい Create バージョンを使用する必要があります。</b>";
+}
 
+@Override
+public String faltar_de_clases_epicfight() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>EpicFight からクラスが見つかりません。EpicFight は大幅に変更され、多くのクラスが削除されました。QuickFix ではこの問題に対処できません。EpicFight のアドオンを更新するか、不要なアドオンを削除するか、使用したいアドオンに合った正しい EpicFight バージョンを使用する必要があります。</b>";
+}
 
 
 

@@ -16,7 +16,7 @@ public class FabricMCRuntimeErrorProvidedBy implements Verificaciones {
 
     @Override
     public void verificar(Consola consola) {
-    	String contenidoConsola=consola.contento_verificar;
+    	String contenidoConsola=consola.contenido_verificar;
 
         
         for (String linea : contenidoConsola.split(Verificaciones.nl)) {

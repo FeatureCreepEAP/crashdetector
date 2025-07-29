@@ -24,7 +24,7 @@ public class ProblemaModDuplicadoFabric implements Verificaciones {
      */
     @Override
     public void verificar(Consola consola) {
-        String contenido = consola.contento_verificar;
+        String contenido = consola.contenido_verificar;
 
         // Patrón de error: "Duplicate versions for mod ID 'nombre' [...] at 'ruta'"
         Pattern patron = Pattern.compile(

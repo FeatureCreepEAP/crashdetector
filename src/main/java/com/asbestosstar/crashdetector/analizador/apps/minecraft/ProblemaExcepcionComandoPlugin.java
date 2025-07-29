@@ -24,7 +24,7 @@ public class ProblemaExcepcionComandoPlugin implements Verificaciones {
      */
     @Override
     public void verificar(Consola consola) {
-        String contenido = consola.contento_verificar;
+        String contenido = consola.contenido_verificar;
 
         // Patrón de error: "org.bukkit.command.CommandException: Cannot execute command 'nombre' in plugin Plugin"
         Pattern patron = Pattern.compile("org\\.bukkit\\.command\\.CommandException: Cannot execute command '([^']+)' in plugin (\\w+)");

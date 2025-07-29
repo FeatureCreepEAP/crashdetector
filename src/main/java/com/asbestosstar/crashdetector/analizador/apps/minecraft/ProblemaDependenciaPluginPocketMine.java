@@ -26,7 +26,7 @@ public class ProblemaDependenciaPluginPocketMine implements Verificaciones {
      */
     @Override
     public void verificar(Consola consola) {
-        String contenido = consola.contento_verificar;
+        String contenido = consola.contenido_verificar;
 
         // Patrón para detectar plugins con dependencias faltantes
         Pattern patron = Pattern.compile("Could not load plugin '(.*?)': Unknown dependency: (.*?)\\.");

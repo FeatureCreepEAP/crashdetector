@@ -18,11 +18,11 @@ public class ModsDuplicadosModLauncher implements Verificaciones {
 
     @Override
     public void verificar(Consola consola) {
-    	String contenidoConsola=consola.contento_verificar;
+    	String contenidoConsola=consola.contenido_verificar;
 
 
         if (contenidoConsola.contains("Found duplicate mods")) {
-            mensaje.append(MonitorDePID.idioma.no_tienes_las_dependencias_necesitas())
+            mensaje.append(MonitorDePID.idioma.no_tienes_las_dependencias_necesarias())
                    .append(Verificaciones.nl_html);
 
             for (String linea : contenidoConsola.split(Verificaciones.nl)) {

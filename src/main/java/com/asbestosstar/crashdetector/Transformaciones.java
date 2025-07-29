@@ -28,7 +28,7 @@ public class Transformaciones implements ClassFileTransformer {
 	public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined,
 			ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
 
-		byte[] bytes = Parche.applicarParches(classfileBuffer, className);
+		byte[] bytes = Parche.aplicarParches(classfileBuffer, className);
 
 		try {
 			Class.forName("org.objectweb.asm.tree.ClassNode", false, Transformaciones.class.getClassLoader());

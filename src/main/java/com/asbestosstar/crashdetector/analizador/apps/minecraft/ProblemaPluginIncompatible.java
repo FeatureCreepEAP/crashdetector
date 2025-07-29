@@ -25,7 +25,7 @@ public class ProblemaPluginIncompatible implements Verificaciones {
      */
     @Override
     public void verificar(Consola consola) {
-        String contenido = consola.contento_verificar;
+        String contenido = consola.contenido_verificar;
 
         // Patrones para detectar plugins con API o protocolo incompatible
         Pattern[] patrones = {

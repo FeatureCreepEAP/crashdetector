@@ -27,7 +27,7 @@ public class ProblemaVersionModMundo implements Verificaciones {
      */
     @Override
     public void verificar(Consola consola) {
-        String contenido = consola.contento_verificar;
+        String contenido = consola.contenido_verificar;
 
         // Patrón para detectar discrepancias de versión de mod en el mundo
         Pattern patron = Pattern.compile(

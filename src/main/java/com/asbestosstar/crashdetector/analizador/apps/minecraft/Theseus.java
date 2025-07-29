@@ -13,7 +13,7 @@ public class Theseus implements Verificaciones {
 
     @Override
     public void verificar(Consola consola) {
-    	String contenidoDeConsola=consola.contento_verificar;
+    	String contenidoDeConsola=consola.contenido_verificar;
         if (contenidoDeConsola.contains("com.modrinth.theseus") || contenidoDeConsola.contains("ModrinthApp")) {
             this.mensaje = MonitorDePID.idioma.theseus() + Verificaciones.nl_html;
             activado = true;

@@ -27,7 +27,7 @@ public class LenguajeProveedorCheck implements Verificaciones {
 	 */
     @Override
     public void verificar(Consola consola) {
-    	String contenidoConsola=consola.contento_verificar;
+    	String contenidoConsola=consola.contenido_verificar;
         String[] lineas = contenidoConsola.split(Verificaciones.nl);
         
         for (int i = 0; i < lineas.length; i++) {

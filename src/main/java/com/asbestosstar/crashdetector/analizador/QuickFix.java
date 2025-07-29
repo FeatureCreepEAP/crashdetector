@@ -1,10 +1,12 @@
 package com.asbestosstar.crashdetector.analizador;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.util.function.Supplier;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 
@@ -15,7 +17,7 @@ import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
  */
 public class QuickFix {
     // Campo para almacenar el estado del checkbox
-    public boolean tieneRetener = false;
+    public boolean tieneMantener = false;
     
     public final String etiqueta;
     public boolean tieneCheckbox = false;
@@ -64,6 +66,12 @@ public class QuickFix {
             return this;
         }
 
+        
+        public Builder agregarComponente(ComponenteGUI componente) {
+            componentes.add(componente);
+            return this;
+        }
+        
         public QuickFix construir() {
             return new QuickFix(this);
         }
@@ -123,13 +131,46 @@ public class QuickFix {
 
         @Override
         public JComponent crearComponente(Supplier<Boolean> estadoRetener) {
-            return new JLabel(texto);
+           JLabel label = new JLabel(texto);
+           if (!CrashDetectorGUI.esMac()) {
+           label.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+           label.setBackground(CrashDetectorGUI.colorBoton);
+           label.setForeground(CrashDetectorGUI.colorTexto);
+           label.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+           }
+        	return label;
         }
     }
 
+    
+  //En la clase QuickFix se debe agregar esta nueva clase anidada
+    public static class SelectorGUI implements ComponenteGUI {
+     private final JComboBox<String> comboBox;
+
+     public SelectorGUI(JComboBox<String> comboBox) {
+         this.comboBox = comboBox;
+         if (!CrashDetectorGUI.esMac()) {
+         comboBox.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+         comboBox.setBackground(Color.WHITE);
+         comboBox.setForeground(Color.DARK_GRAY);
+         comboBox.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+         }
+     }
+
+     @Override
+     public JComponent crearComponente(Supplier<Boolean> estadoRetener) {
+         return comboBox;
+     }
+    }
+    
+    
+    
+    
     // Interfaz para acciones de botón
     @FunctionalInterface
     public interface AccionBoton {
         void ejecutar(boolean retenerSeleccionado);
     }
 }
+
+

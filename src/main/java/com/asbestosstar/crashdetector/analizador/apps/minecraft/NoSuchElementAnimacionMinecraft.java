@@ -22,7 +22,7 @@ public class NoSuchElementAnimacionMinecraft implements Verificaciones {
 
     @Override
     public void verificar(Consola consola) {
-        String contenido = consola.contento_verificar;
+        String contenido = consola.contenido_verificar;
         String[] lineas = contenido.split(nl);
 
         // Patrón para detectar el error con cualquier namespace
@@ -59,7 +59,7 @@ public class NoSuchElementAnimacionMinecraft implements Verificaciones {
         
         Buscardor.cargar();
         String terminoBusqueda = "assets/" + namespaceEncontrado + "/";
-        List<String> ubicaciones = Buscardor.obternerUbicaciones(
+        List<String> ubicaciones = Buscardor.obtenerUbicaciones(
             Buscardor.buscarModsConTermino(terminoBusqueda)
         );
         
@@ -91,7 +91,7 @@ public class NoSuchElementAnimacionMinecraft implements Verificaciones {
         
         Buscardor.cargar();
         String terminoBusqueda = "assets/" + namespaceEncontrado + "/";
-        List<String> ubicaciones = Buscardor.obternerUbicaciones(
+        List<String> ubicaciones = Buscardor.obtenerUbicaciones(
             Buscardor.buscarModsConTermino(terminoBusqueda)
         );
         

@@ -244,7 +244,7 @@ public class NoRegistroDeLauncher extends JDialog {
             CrashDetectorLogger.log("Archivo cd_launcherlog guardado");
 
             Consola cons = new Consola(cd_launcherlog.toPath());
-            cons.finalizarContentoInyectado(areaTexto.getText());
+            cons.finalizarContenidoInyectado(areaTexto.getText());
             MonitorDePID.consolas.add(cons);
             MonitorDePID.consola_de_launcher_inyectado = true;
         } catch (IOException ex) {

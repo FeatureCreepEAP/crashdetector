@@ -18,7 +18,7 @@ public interface Parche<T> {
 		return false;
 	}
 
-	public T parch(T contento, String nombre);
+	public T parche(T contento, String nombre);
 
 	public Class<T> tipo();
 	
@@ -32,10 +32,10 @@ public interface Parche<T> {
 	 * de contenido (T) 2. Tienen activar() == true 3. Su lista de clases() contiene
 	 * el nombre proporcionado
 	 */
-	public static <T> T applicarParches(T contento, String nombre) {
-	    if (contento == null || nombre == null) return contento;
+	public static <T> T aplicarParches(T contenido, String nombre) {
+	    if (contenido == null || nombre == null) return contenido;
 	    String nombre_codigo=nombre.replace("/", ".");
-	    T resultado = contento;
+	    T resultado = contenido;
 
 	    for (Parche<?> parche : parches) {
 	        if (!parche.tipo().isAssignableFrom(resultado.getClass())) continue;
@@ -46,7 +46,7 @@ public interface Parche<T> {
 	        if (!tipo.activar()) continue;
 	        if (!tipo.clases().contains(nombre_codigo)) continue;
 
-	        resultado = tipo.nuevo().parch(resultado, nombre_codigo);
+	        resultado = tipo.nuevo().parche(resultado, nombre_codigo);
 	    }
 
 	    return resultado;
@@ -63,7 +63,7 @@ public interface Parche<T> {
 			if (parche instanceof ParcheClassNode) {
 				if (parche.activar() && parche.clases().contains(nombre_codigo)) {
 					ParcheClassNode node = (ParcheClassNode) parche;
-					node.nuevo().parch(contento, nombre_codigo);
+					node.nuevo().parche(contento, nombre_codigo);
 				}
 			}
 

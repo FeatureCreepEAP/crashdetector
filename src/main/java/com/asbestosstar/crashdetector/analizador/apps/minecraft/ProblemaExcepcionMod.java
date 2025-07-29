@@ -25,7 +25,7 @@ public class ProblemaExcepcionMod implements Verificaciones {
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		String contenido = consola.contento_verificar;
+		String contenido = consola.contenido_verificar;
 
 		// Patrón para detectar excepciones de mods
 		Pattern[] patrones = { Pattern.compile("Caught exception from ([^\\(\\n]+)", Pattern.DOTALL), Pattern.compile(

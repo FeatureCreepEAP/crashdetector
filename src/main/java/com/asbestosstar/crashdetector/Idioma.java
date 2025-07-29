@@ -132,13 +132,13 @@ public interface Idioma {
 
 	public String problema_con_graficas_ati();
 
-	public String probelma_con_graficas_nouveau();
+	public String problema_con_graficas_nouveau();
 
-	public String probelma_con_graficas_general();
+	public String problema_con_graficas_general();
 
 	public String fmlEarlyWindow();
 
-	public String no_tienes_las_dependencias_necesitas();
+	public String no_tienes_las_dependencias_necesarias();
 
 	public String linea_de_dependencia(String linea);
 
@@ -146,25 +146,25 @@ public interface Idioma {
 
 	public String texto_de_gui();
 
-	public String texto_de_buton_local_enlance();
+	public String texto_de_boton_local_enlace();
 
-	public String texto_debajo_de_buton_local_enlance();
+	public String texto_debajo_de_buton_local_enlace();
 
-	public String texto_de_buton_compartir_enlance();
+	public String texto_de_buton_compartir_enlace();
 
-	public String texto_debajo_de_buton_compartir_enlance();
+	public String texto_debajo_de_buton_compartir_enlace();
 
 	public String problematico_jar();
 
 	public String nivel();
 
-	public String possibladad_fatal();
+	public String posibilidad_fatal();
 
 	public String modids_problematicos();
 
 	public String packages_problematicos();
 
-	public String faltar_de_clases_fatales();
+	public String falta_de_clases_fatales();
 
 	public String corchetes_ondulados();
 
@@ -174,7 +174,7 @@ public interface Idioma {
 
 	public String modlauncher_mods_duplicado(String linea);
 
-	public String mcforge_mod_suspechoso();
+	public String mcforge_mod_sospechoso();
 
 	public String lithostichctov();
 
@@ -203,7 +203,7 @@ public interface Idioma {
 
 	public String faltar_de_clases_advertencia();
 
-	public String noResultos();
+	public String noResultados();
 
 	public String ubicacionesDeLogs();
 
@@ -332,7 +332,7 @@ public interface Idioma {
 
 	public String nombre_de_bloque_teselado();
 
-	public String nombre_de_contento_de_stacktrace();
+	public String nombre_de_contenido_de_stacktrace();
 
 	public String nombre_de_cursed_consola();
 
@@ -404,7 +404,7 @@ public interface Idioma {
 
 	public String inicioApp();
 
-	public String adjustesCrashDetector();
+	public String ajustesCrashDetector();
 
 	public String confidencialidad();
 
@@ -761,6 +761,10 @@ public interface Idioma {
 	public String descripcionLinksMarkdown();
 
 	public String imagenNoEncontrada();
+
+	public String faltar_de_clases_create();
+
+	public String faltar_de_clases_epicfight();
 	
 	// public String advertenciaMalwareFalso();
 

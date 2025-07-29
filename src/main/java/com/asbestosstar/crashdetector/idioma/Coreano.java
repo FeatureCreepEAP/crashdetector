@@ -39,12 +39,12 @@ public String problema_con_graficas_ati() {
 }
 
     @Override
-    public String probelma_con_graficas_nouveau() {
+    public String problema_con_graficas_nouveau() {
         return "<span style='color:#" + config.obtenerColorAdvertencia() + "'>일부旧버전에서 Nouveau 그래픽 카드의 초기 로드 화면에서때때로문제가 발생합니다.</span>";
     }
 
     @Override
-    public String probelma_con_graficas_general() {
+    public String problema_con_graficas_general() {
         return "<span style='color:#" + config.obtenerColorError() + "'>그래픽 카드 드라이버에 문제가 있습니다. AMD/ATI GPU 또는 APU를 사용하는 경우 AMD 그래픽 드라이버를 업데이트하십시오. NVIDIA 그래픽 카드를 사용하는 경우 게임 및 모든 javaw.exe 인스턴스를獨立显卡로 설정하십시오. 이 가이드를 읽으십시오: <a href='https://forums.minecraftforge.net/topic/125488-rules-and-frequently-asked-questions-faq/#:~:text=How%20do%20I%20update%20my%20drivers%3F' style='color:#" + config.obtenerColorEnlace() + "'>드라이버 업데이트 가이드</a></span>";
     }
 
@@ -54,7 +54,7 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String no_tienes_las_dependencias_necesitas() {
+    public String no_tienes_las_dependencias_necesarias() {
         return "<span style='color:#" + config.obtenerColorError() + "'>필요한 의존성이 없습니다:</span>";
     }
 
@@ -74,22 +74,22 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String texto_de_buton_local_enlance() {
+    public String texto_de_boton_local_enlace() {
         return "<span style='color:#" + config.obtenerColorBoton() + "'>보고서 보기</span>";
     }
 
     @Override
-    public String texto_debajo_de_buton_local_enlance() {
+    public String texto_debajo_de_buton_local_enlace() {
         return "<span style='color:#" + config.obtenerColorInfo() + "'>브라우저에서 로컬 보고서를 확인합니다.</span>";
     }
 
     @Override
-    public String texto_de_buton_compartir_enlance() {
+    public String texto_de_buton_compartir_enlace() {
         return "보고서 공유";
     }
 
     @Override
-    public String texto_debajo_de_buton_compartir_enlance() {
+    public String texto_debajo_de_buton_compartir_enlace() {
         return "보고서 공유. 로그가 securelogger.net에 업로드되고 보고서가 다른 사이트에 업로드됩니다.";
     }
 
@@ -104,7 +104,7 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String possibladad_fatal() {
+    public String posibilidad_fatal() {
         return "<b style='color:#" + config.obtenerColorError() + "'>치명적일 수 있음:</b> ";
     }
 
@@ -119,8 +119,8 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String faltar_de_clases_fatales() {
-        return "<b style='color:#" + config.obtenerColorError() + "'>누락된 중요 클래스 감지:</b>";
+    public String falta_de_clases_fatales() {
+        return "<b style='color:#" + config.obtenerColorError() + "'>치명적인 클래스(FATAL) 오류가 있습니다. 매우 심각한 문제이며, 주로 잘못된 CoreMod 또는 치명적인 의존성 문제에서 발생합니다. QuickFix를 사용하여 치명적 클래스를 가진 모드를 탐지할 수 있습니다. 감지된 누락된 치명적 클래스:</b>";
     }
 
     @Override
@@ -144,7 +144,7 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String mcforge_mod_suspechoso() {
+    public String mcforge_mod_sospechoso() {
         return "<b style='color:#" + config.obtenerColorError() + "'>MinecraftForge에서 의심스러운 mod 문제 감지:</b> ";
     }
 
@@ -250,12 +250,12 @@ public String noTieneConsolaDeLauncherCursedForge() {
 
 @Override
 public String faltar_de_clases_advertencia() {
-    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>경고: 누락된 클래스가 감지되었습니다:</b>";
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>경고: 누락된 클래스가 감지되었습니다(경고 수준). 일반적으로 괜찮지만 항상 안전한 것은 아닙니다. 치명적인 클래스 오류와는 다릅니다. 주요 원인으로는 잘못된 CoreMod 또는 누락된 의존성 등이 있습니다. QuickFix를 사용하여 누락된 클래스가 있는 모드를 탐지할 수 있습니다. 감지된 누락된 클래스:</b>";
 }
 
 
 @Override
-public String noResultos() {
+public String noResultados() {
     return "<b style='color:#" + config.obtenerColorError() + "'>결과 없음</b>";
 }
 
@@ -607,7 +607,7 @@ public String nombre_de_bloque_teselado() {
     return "블록 렌더링 오류";
 }
 
-public String nombre_de_contento_de_stacktrace() {
+public String nombre_de_contenido_de_stacktrace() {
     return "스택 트레이스 분석";
 }
 
@@ -762,7 +762,7 @@ public String inicioApp() {
 }
 
 @Override
-public String adjustesCrashDetector() {
+public String ajustesCrashDetector() {
     return "크래시 감지기 설정";
 }
 
@@ -1018,12 +1018,12 @@ public String mensaje_de_trace_ultima_no_traductado() {
 
 @Override
 public String solucionParaAdvertenciaFaltasClases() {
-    return "누락된 클래스가 있습니다 (경고). 일반적으로는 괜찮지만 항상 그런 것은 아닙니다. 잘못된 코어 모드 또는 누락된 종속성은 이 문제의 일반적인 원인입니다.";
+    return "WaifuNeoForge 데이터베이스에서 모드를 검색할 수 있습니다. 게임 버전, 모드 로더 및 클래스를 선택하세요. 가장 유사한 조합을 사용하세요. 1분에 한 번만 검색할 수 있습니다.";
 }
 
 @Override
 public String solucionFaltasClases() {
-    return "누락된 클래스가 있습니다 (치명적). 매우 중요합니다. 잘못된 코어 모드 또는 누락된 종속성은 이 문제의 일반적인 원인입니다.";
+    return "WaifuNeoForge 데이터베이스에서 모드를 검색할 수 있습니다. 게임 버전, 모드 로더 및 클래스를 선택하세요. 가장 유사한 조합을 사용하세요. 1분에 한 번만 검색할 수 있습니다.";
 }
 
 @Override
@@ -1828,7 +1828,15 @@ public String noRegistroDeLauncher() {
     return "일반: 사용 중인 런처 종류를 선택하세요. 런처 로그(launcher_log.txt, stdout 등)는 latest.log에 없는 중요한 오류 정보를 포함합니다. CrashDetector가 런처 로그를 읽지 못할 수도 있는데, 로그 파일이 생성되지 않았을 수 있으므로 수동으로 로그를 붙여넣어야 할 수도 있습니다.<br>" +
            "자세한 내용은 <a href=\"https://github.com/HMCL-dev/HMCL/issues/2663 \">이 문제를 참조하세요</a>. 이러한 로그는 표준 출력(STDOUT)을 포함하며, 많은 오류를 진단하는 데 필요합니다.";
 }
+@Override
+public String faltar_de_clases_create() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Create에서 누락된 클래스가 감지되었습니다. Create는 많은 변경이 있었으며, 많은 클래스가 제거되었습니다. 특히 Create 6(2025년 2월) 이후로 오래된 Create 버전의 애드온은 더 이상 작동하지 않습니다. QuickFix는 이 문제에 대한 해결책을 제공하지 않습니다. Create 애드온을 업데이트하거나, 더 이상 사용하지 않는 애드온을 제거하거나, 사용하려는 애드온에 맞는 올바른 Create 버전을 사용해야 합니다.</b>";
+}
 
+@Override
+public String faltar_de_clases_epicfight() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>EpicFight에서 누락된 클래스가 감지되었습니다. EpicFight는 많은 변경이 있었으며, 많은 클래스가 제거되었습니다. QuickFix는 이 문제에 대한 해결책을 제공하지 않습니다. EpicFight 애드온을 업데이트하거나, 더 이상 사용하지 않는 애드온을 제거하거나, 사용하려는 애드온에 맞는 올바른 EpicFight 버전을 사용해야 합니다.</b>";
+}
 
 
 

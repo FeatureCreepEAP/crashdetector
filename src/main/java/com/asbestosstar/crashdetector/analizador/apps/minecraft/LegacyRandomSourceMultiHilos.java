@@ -13,7 +13,7 @@ public class LegacyRandomSourceMultiHilos implements Verificaciones{
 	@Override
 	public void verificar(Consola consola) {
 		// TODO Auto-generated method stub
-		if(consola.contento_verificar.contains("net.minecraft.ReportedException: Accessing LegacyRandomSource from multiple threads")) {
+		if(consola.contenido_verificar.contains("net.minecraft.ReportedException: Accessing LegacyRandomSource from multiple threads")) {
 			activado=true;
 		}
 	}

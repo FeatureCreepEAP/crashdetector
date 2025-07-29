@@ -145,7 +145,7 @@ public class TransformacionDeMinecraftCodigo0 implements ParcheClassNode{
 		if (tiene_clase_cliente && es_servidor) {
 		} else {
 			try {
-				MonitorDePID.ArchivoDeCodioError0.createNewFile();
+				MonitorDePID.ArchivoDeCodigoError0.createNewFile();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

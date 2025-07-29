@@ -27,7 +27,7 @@ public class SecureLoggerAPI implements APIdeSitioDeRegistro {
 	}
 
 	@Override
-	public List<String> sitosPorDefecto() {
+	public List<String> sitiosPorDefecto() {
 		// TODO Auto-generated method stub
 		List<String> sitios = new ArrayList<String>();
 		sitios.add("https://securelogger.net/save/log?");
@@ -98,7 +98,7 @@ public class SecureLoggerAPI implements APIdeSitioDeRegistro {
 			String urlCompleta = APIdeSitioDeRegistro.sitioDeConfig() + parametros;
 
 			// Leer contenido del archivo de log
-			String contenidoLog = consola.obtainerContentoParaPublicar(); // para ahora solo los registros para verificar
+			String contenidoLog = consola.obtainerContenidoParaPublicar(); // para ahora solo los registros para verificar
 
 			// Realizar solicitud POST comprimida
 			return enviarPost(new URL(urlCompleta), contenidoLog.getBytes("cp1251"));

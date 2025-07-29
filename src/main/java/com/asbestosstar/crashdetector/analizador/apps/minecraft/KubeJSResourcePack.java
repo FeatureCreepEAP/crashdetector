@@ -16,7 +16,7 @@ public class KubeJSResourcePack implements Verificaciones {
 
     @Override
     public void verificar(Consola consola) {
-    	String contenidoConsola=consola.contento_verificar;
+    	String contenidoConsola=consola.contenido_verificar;
         String[] lineas = contenidoConsola.split(Verificaciones.nl);
         
         for (String linea : lineas) {

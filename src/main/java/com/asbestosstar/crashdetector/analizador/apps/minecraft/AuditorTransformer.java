@@ -12,7 +12,6 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
 
 public class AuditorTransformer implements Verificaciones {
@@ -29,12 +28,12 @@ public class AuditorTransformer implements Verificaciones {
 
     @Override
     public void verificar(Consola consola) {
-        if (consola == null || consola.contento_verificar == null) return;
+        if (consola == null || consola.contenido_verificar == null) return;
 
         entradas.clear();
         Set<String> procesados = new HashSet<>();
 
-        String[] lineas = consola.contento_verificar.split(Verificaciones.nl);
+        String[] lineas = consola.contenido_verificar.split(Verificaciones.nl);
         if (lineas.length == 0) return;
 
         int auditIndex = 0;
@@ -75,14 +74,14 @@ public class AuditorTransformer implements Verificaciones {
                         Matcher jsonMatcher = Pattern.compile("mixin:APP:([^:\\s]+)").matcher(línea);
                         if (jsonMatcher.find()) {
                             String jsonFile = jsonMatcher.group(1); // e.g., dynamic_fps-common.mixins.json
-                            jars = Buscardor.obternerUbicaciones(Buscardor.buscarModsConTermino(jsonFile));
+                            jars = Buscardor.obtenerUbicaciones(Buscardor.buscarModsConTermino(jsonFile));
                         }
                     } else if (línea.startsWith("TRANSFORMER: fml:")) {
                         Matcher modidMatcher = Pattern.compile("TRANSFORMER: fml:([^:\\s]+)").matcher(línea);
                         if (modidMatcher.find()) {
                             String modid = modidMatcher.group(1); // e.g., xaeroworldmap
                             CrashDetectorLogger.log(modid);
-                            jars = Buscardor.obternerModsConNombre(modid);
+                            jars = Buscardor.obtenerModsConNombre(modid);
                         }
                     }
 

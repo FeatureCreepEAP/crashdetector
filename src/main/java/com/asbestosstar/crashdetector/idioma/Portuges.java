@@ -39,12 +39,12 @@ public String problema_con_graficas_ati() {
 }
 
     @Override
-    public String probelma_con_graficas_nouveau() {
+    public String problema_con_graficas_nouveau() {
         return "<span style='color:#" + config.obtenerColorAdvertencia() + "'>Algumas versões antigas apresentam problemas com a interface de inicialização do Nouveau.</span>";
     }
 
     @Override
-    public String probelma_con_graficas_general() {
+    public String problema_con_graficas_general() {
         return "<span style='color:#" + config.obtenerColorError() + "'>Problema detectado com seus drivers de vídeo. Usuários de AMD/ATI devem atualizar os drivers. Usuários de NVIDIA devem garantir que todos os processos javaw.exe estejam usando a GPU dedicada. Leia este guia: <a href='https://forums.minecraftforge.net/topic/125488-rules-and-frequently-asked-questions-faq/#:~:text=How%20do%20I%20update%20my%20drivers%3F' style='color:#" + config.obtenerColorEnlace() + "'>Guia de Atualização de Drivers</a></span>";
     }
 
@@ -54,7 +54,7 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String no_tienes_las_dependencias_necesitas() {
+    public String no_tienes_las_dependencias_necesarias() {
         return "<span style='color:#" + config.obtenerColorError() + "'>Dependências faltando:</span>";
     }
 
@@ -74,22 +74,22 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String texto_de_buton_local_enlance() {
+    public String texto_de_boton_local_enlace() {
         return "<span style='color:#" + config.obtenerColorBoton() + "'>Visualizar Relatório</span>";
     }
 
     @Override
-    public String texto_debajo_de_buton_local_enlance() {
+    public String texto_debajo_de_buton_local_enlace() {
         return "<span style='color:#" + config.obtenerColorInfo() + "'>Visualizar relatório local no navegador.</span>";
     }
 
     @Override
-    public String texto_de_buton_compartir_enlance() {
+    public String texto_de_buton_compartir_enlace() {
         return "Compartilhar Relatório";
     }
 
     @Override
-    public String texto_debajo_de_buton_compartir_enlance() {
+    public String texto_debajo_de_buton_compartir_enlace() {
         return "Compartilhar relatório. Seus logs serão enviados para securelogger.net e o relatório para outros sites.";
     }
 
@@ -104,7 +104,7 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String possibladad_fatal() {
+    public String posibilidad_fatal() {
         return "<b style='color:#" + config.obtenerColorError() + "'>Potencialmente fatal:</b> ";
     }
 
@@ -119,8 +119,8 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String faltar_de_clases_fatales() {
-        return "<b style='color:#" + config.obtenerColorError() + "'>Classes críticas faltando:</b>";
+    public String falta_de_clases_fatales() {
+        return "<b style='color:#" + config.obtenerColorError() + "'>Você tem classes fatais (FATAL), isso é muito grave. Causas comuns são CoreMods defeituosos ou dependências fatais. Use o QuickFix para procurar mods com classes fatais. Classes fatais ausentes detectadas:</b>";
     }
 
     @Override
@@ -144,7 +144,7 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String mcforge_mod_suspechoso() {
+    public String mcforge_mod_sospechoso() {
         return "<b style='color:#" + config.obtenerColorError() + "'>MinecraftForge detectou mod suspeito:</b> ";
     }
 
@@ -242,12 +242,12 @@ public String noTieneConsolaDeLauncherCursedForge() {
 
 @Override
 public String faltar_de_clases_advertencia() {
-    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>Aviso: Classes ausentes detectadas:</b>";
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>Aviso: Classes ausentes detectadas (nível de aviso). Geralmente não é grave, mas pode causar problemas — diferente de erros fatais. Causas comuns incluem CoreMods defeituosos ou dependências ausentes. Use o QuickFix para verificar mods com classes faltantes. Classes ausentes detectadas:</b>";
 }
 
 
 @Override
-public String noResultos() {
+public String noResultados() {
     return "<b style='color:#" + config.obtenerColorError() + "'>Sem Resultados</b>";
 }
 
@@ -604,7 +604,7 @@ public String nombre_de_bloque_teselado() {
     return "Erro de renderização de blocos";
 }
 
-public String nombre_de_contento_de_stacktrace() {
+public String nombre_de_contenido_de_stacktrace() {
     return "Análise de stack trace";
 }
 
@@ -759,7 +759,7 @@ public String inicioApp() {
 }
 
 @Override
-public String adjustesCrashDetector() {
+public String ajustesCrashDetector() {
     return "Configurações do CrashDetector";
 }
 
@@ -1017,12 +1017,12 @@ public String mensaje_de_trace_ultima_no_traductado() {
 
 @Override
 public String solucionParaAdvertenciaFaltasClases() {
-    return "Você tem classes ausentes (Aviso), geralmente está tudo bem, mas nem sempre. Coremods ruins ou dependências ausentes são razões comuns para esse problema.";
+    return "Você pode pesquisar no banco de dados WaifuNeoForge para encontrar mods. Selecione a versão do jogo, o carregador de mods e a classe. Use a combinação mais próxima. Você pode pesquisar uma vez por minuto.";
 }
 
 @Override
 public String solucionFaltasClases() {
-    return "Você tem classes ausentes (FATAL), é muito importante. Coremods ruins ou dependências ausentes são razões comuns para esse problema.";
+    return "Você pode pesquisar no banco de dados WaifuNeoForge para encontrar mods. Selecione a versão do jogo, o carregador de mods e a classe. Use a combinação mais próxima. Você pode pesquisar uma vez por minuto.";
 }
 
 @Override
@@ -1830,7 +1830,15 @@ public String noRegistroDeLauncher() {
            "Para mais informações, veja <a href=\"https://github.com/HMCL-dev/HMCL/issues/2663 \">esta questão</a>. Esses registros contêm a saída padrão (STDOUT), essencial para diagnosticar muitos tipos de erro.";
 }
 
+@Override
+public String faltar_de_clases_create() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Classes ausentes do Create detectadas. O Create mudou muito — muitas classes foram removidas. Especialmente desde o Create 6 (fevereiro de 2025), addons para versões antigas do Create não funcionam mais. O QuickFix não tem solução para isso. Atualize seus addons do Create, remova os obsoletos ou use a versão correta do Create para os addons desejados.</b>";
+}
 
+@Override
+public String faltar_de_clases_epicfight() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Classes ausentes do EpicFight detectadas. O EpicFight mudou muito — muitas classes foram removidas. O QuickFix não tem solução para isso. Atualize seus addons do EpicFight, remova os obsoletos ou use a versão correta do EpicFight para os addons desejados.</b>";
+}
 
 
 

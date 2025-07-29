@@ -13,7 +13,7 @@ public class OptifineObsoleta implements Verificaciones {
 
     @Override
     public void verificar(Consola consola) {
-    	String contento_de_consola=consola.contento_verificar;
+    	String contento_de_consola=consola.contenido_verificar;
 
         boolean errorOptifine = contento_de_consola.contains("Error loading OptiFine ZIP file");
         boolean uriInvalida = contento_de_consola.contains("URI is not hierarchical");

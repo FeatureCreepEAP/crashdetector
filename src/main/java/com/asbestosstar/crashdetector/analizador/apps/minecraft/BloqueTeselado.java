@@ -13,7 +13,7 @@ public class BloqueTeselado implements Verificaciones {
 
     @Override
     public void verificar(Consola consola) {
-    	String contenidoConsola=consola.contento_verificar;
+    	String contenidoConsola=consola.contenido_verificar;
 
         String patron = "(?sm).*Tesselating block in world$.*";
         if (contenidoConsola.matches(patron)) {

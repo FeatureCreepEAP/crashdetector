@@ -61,7 +61,7 @@ public class EnlanceMD {
                     
                     // Crear objeto Consola y añadir a la lista
                     Consola consola = new Consola(archivoDestino.toPath());
-                    consola.finalizarContentoInyectado(MonitorDePID.leer_archivo(archivoDestino.toPath()));
+                    consola.finalizarContenidoInyectado(MonitorDePID.leer_archivo(archivoDestino.toPath()));
                     nuevosRegistros.add(consola);
                 } catch (Exception e) {
                     CrashDetectorLogger.log("Error procesando enlace de log: " + url + " - " + e.getMessage());

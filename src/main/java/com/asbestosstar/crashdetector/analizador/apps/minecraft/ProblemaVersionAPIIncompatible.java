@@ -51,7 +51,7 @@ public class ProblemaVersionAPIIncompatible implements Verificaciones {
      */
     @Override
     public void verificar(Consola consola) {
-        String contenido = consola.contento_verificar;
+        String contenido = consola.contenido_verificar;
         
         // 1. Usar regex para formatos antiguos
         procesarCoincidenciasRegex(PATRON_VIEJO.matcher(contenido));
@@ -94,7 +94,7 @@ public class ProblemaVersionAPIIncompatible implements Verificaciones {
      * Procesa el nuevo formato de Paper 1.20.6+ sin usar regex específicos.
      */
     private void procesarFormatoPaperNuevo(Consola consola) {
-        String[] lineas = consola.contento_verificar.split("\n");
+        String[] lineas = consola.contenido_verificar.split("\n");
         
         for (int i = 0; i < lineas.length; i++) {
             String linea = lineas[i].trim();

@@ -149,7 +149,7 @@ public class DialogoCompartir extends JDialog {
 		modeloTabla.addColumn(MonitorDePID.idioma.incluir());
 		modeloTabla.addColumn(MonitorDePID.idioma.archivo());
 		modeloTabla.addColumn(MonitorDePID.idioma.abrir());
-		modeloTabla.addColumn(MonitorDePID.idioma.texto_de_buton_compartir_enlance());
+		modeloTabla.addColumn(MonitorDePID.idioma.texto_de_buton_compartir_enlace());
 		modeloTabla.addColumn("URL");
 
 		JTable tabla = new JTable(modeloTabla);
@@ -159,9 +159,9 @@ public class DialogoCompartir extends JDialog {
 		tabla.getColumnModel().getColumn(2).setCellRenderer(new ButtonRenderer(MonitorDePID.idioma.abrir()));
 		tabla.getColumnModel().getColumn(2).setCellEditor(new ButtonEditor(MonitorDePID.idioma.abrir()));
 		tabla.getColumnModel().getColumn(3)
-				.setCellRenderer(new ButtonRenderer(MonitorDePID.idioma.texto_de_buton_compartir_enlance()));
+				.setCellRenderer(new ButtonRenderer(MonitorDePID.idioma.texto_de_buton_compartir_enlace()));
 		tabla.getColumnModel().getColumn(3)
-				.setCellEditor(new ButtonEditor(MonitorDePID.idioma.texto_de_buton_compartir_enlance()));
+				.setCellEditor(new ButtonEditor(MonitorDePID.idioma.texto_de_buton_compartir_enlace()));
 		tabla.getColumnModel().getColumn(4).setCellRenderer(new URLEditorRenderer());
 		tabla.getColumnModel().getColumn(4).setCellEditor(new URLEditor());
 
@@ -200,7 +200,7 @@ public class DialogoCompartir extends JDialog {
 		CrashDetectorLogger.log("Obtainer API");
 		try {
 			CrashDetectorLogger.log("En Try");
-			api_def = APIdeSitioDeRegistro.obtainerAPIdeConfig();
+			api_def = APIdeSitioDeRegistro.obtenerAPIdeConfig();
 			CrashDetectorLogger.log("no Error");
 			error_de_api=false;
 		} catch (NoAPIdeRegistro e1) {
@@ -227,7 +227,7 @@ public class DialogoCompartir extends JDialog {
 				CrashDetectorLogger.log("Anadir sito");
 				sits.add(sito_actual);
 			}
-			sits.addAll(api.sitosPorDefecto());
+			sits.addAll(api.sitiosPorDefecto());
 		
 			apis.put(api.nombre(), sits);
 		}
@@ -307,7 +307,7 @@ public class DialogoCompartir extends JDialog {
 	private void cargarConsolas() {
 		for (Consola consola : MonitorDePID.consolas) {
 			modeloTabla.addRow(new Object[] { true, consola.archivo.getFileName().toString(),
-					MonitorDePID.idioma.abrir(), MonitorDePID.idioma.texto_de_buton_compartir_enlance(), "" });
+					MonitorDePID.idioma.abrir(), MonitorDePID.idioma.texto_de_buton_compartir_enlace(), "" });
 		}
 	}
 
@@ -322,7 +322,7 @@ public class DialogoCompartir extends JDialog {
 		if (!seleccionados.isEmpty()) {
 			String enlace = GeneradorDeInformacion.compartir(seleccionados, instant);
 			campoEnlaceReporte.setText(enlace);
-			MonitorDePID.enlance = enlace;
+			MonitorDePID.enlace = enlace;
 
 			// Actualizar URLs individuales
 			for (int i = 0; i < modeloTabla.getRowCount(); i++) {
@@ -391,7 +391,7 @@ public class DialogoCompartir extends JDialog {
 							} catch (IOException ex) {
 								CrashDetectorLogger.logException(ex);
 							}
-						} else if (accion.equals(MonitorDePID.idioma.texto_de_buton_compartir_enlance())) {
+						} else if (accion.equals(MonitorDePID.idioma.texto_de_buton_compartir_enlace())) {
 							CrashDetectorLogger.log("compartir boton");
 							Consola cons = MonitorDePID.consolas.get(currentRow);
 							try {

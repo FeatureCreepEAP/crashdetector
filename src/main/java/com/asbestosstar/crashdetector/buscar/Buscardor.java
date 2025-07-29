@@ -23,7 +23,7 @@ public class Buscardor {
 	public static void cargar() {
 	    if (!cargado) {
 	        try {
-	            String[] modPaths = MonitorDePID.leer_archivo(MonitorDePID.ultima_mods).split(MonitorDePID.nl);
+	            String[] modPaths = MonitorDePID.leer_archivo(MonitorDePID.ultimo_mods).split(MonitorDePID.nl);
 	            for (String mod : modPaths) {
 	                File arc = new File(mod);
 	                if (arc.isFile()) {
@@ -50,7 +50,7 @@ public class Buscardor {
 	}
 	
 	
-	public static List<String> obternerModsConNombre(String nombre){
+	public static List<String> obtenerModsConNombre(String nombre){
 		List<String> modsConNombre = new ArrayList<String>();
 		for(ArchivoDeMod mod:mods) {
 			if(mod.tieneNombreRecursivo(nombre)) {
@@ -80,7 +80,7 @@ public class Buscardor {
      * @param mods
      * @return
      */
-	public static List<String> obternerUbicaciones(List<ArchivoDeMod> mods){
+	public static List<String> obtenerUbicaciones(List<ArchivoDeMod> mods){
 		List<String> ret = new ArrayList<String>();
 		for(ArchivoDeMod mod:mods) {
 			ret.add(mod.ubicacion_para_publicar());

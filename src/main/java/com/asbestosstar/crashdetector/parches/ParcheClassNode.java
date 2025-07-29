@@ -8,7 +8,7 @@ public interface ParcheClassNode extends Parche<ClassNode> {
 	 * Usa void porque fabric-loader/SpongeMixinConfig usan void. ¡¡¡No Override!!!
 	 */
 	@Override
-	default ClassNode parch(ClassNode contento, String nombre) {
+	default ClassNode parche(ClassNode contento, String nombre) {
 		parchClassNode(contento,nombre);
 		return contento;
 	}

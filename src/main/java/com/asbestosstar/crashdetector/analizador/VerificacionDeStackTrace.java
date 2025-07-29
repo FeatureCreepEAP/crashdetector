@@ -69,7 +69,7 @@ public class VerificacionDeStackTrace {
 		package_malo.clear();
 
 		int lvl = 0;
-		String contento = consola.contento_verificar;
+		String contento = consola.contenido_verificar;
 		for (String trace : inverso(obtenerTracesFatal(contento))) {// Las ultimas son las más importante
 			lvl++;
 			this.procesarTrace(trace, true, lvl);
@@ -365,10 +365,10 @@ CrashDetectorLogger.log(claseFaltante);
 
 	public static boolean tracePermite(String str) {
 		// Excluir líneas que contienen "Preparing crash report with UUID"
-		if (str.contains("Preparing crash report with UUID") || str
+		if (str.contains("Preparing crash report with UUID") || str.contains("Failed to complete lifecycle event") || str.contains("Crash report saved to")|| str.contains("Mod Loading has failed") || str
 				.contains("Could not determine mod trust worthiness, Assuming Jar was downloaded from trusted source!")// FUCK
 																														// STOPMODREPOSTS
-
+				
 		) {
 			return false;
 		}

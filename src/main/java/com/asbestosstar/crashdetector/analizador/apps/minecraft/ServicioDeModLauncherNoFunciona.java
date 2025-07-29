@@ -17,7 +17,7 @@ public class ServicioDeModLauncherNoFunciona implements Verificaciones {
 
     @Override
     public void verificar(Consola consola) {
-    	String contenidoConsola=consola.contento_verificar;
+    	String contenidoConsola=consola.contenido_verificar;
         String[] lineas = contenidoConsola.split(Verificaciones.nl);
         String carga = "Service failed to load";
         

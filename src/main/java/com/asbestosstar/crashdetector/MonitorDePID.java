@@ -32,10 +32,10 @@ import com.asbestosstar.crashdetector.gui.NoRegistroDeLauncher;
 
 public class MonitorDePID {
 
-	public static final String mensaje_de_registro_launcher_completa = "Puedes ignorar esta linea, solo es para CrashDetector, esta mensaje es siempre en espanol";
+	public static final String mensaje_de_registro_lanzer_completo = "Puedes ignorar esta linea, solo es para CrashDetector, este mensaje es siempre en espanol";
 	public static Path carpeta = new File("crash_detector/").toPath();
-	public static File ArchivoDeCodioError0 = new File("crash_detector/ArchivoDeCodioError0");
-	public static Path ultima_mods = carpeta.resolve("ultima_mods");
+	public static File ArchivoDeCodigoError0 = new File("crash_detector/ArchivoDeCodigoError0");
+	public static Path ultimo_mods = carpeta.resolve("ultima_mods");
 	//public static Path viajo_ultima_mods = carpeta.resolve("viajo_ultima_mods");
 	public static List<Consola> consolas = new ArrayList<Consola>();
 	public static Analizador analizador = new Analizador();
@@ -43,9 +43,9 @@ public class MonitorDePID {
 	public static String nl = System.lineSeparator();
 	public static Idioma idioma = Idioma.detectar();
 	public static String local;
-	public static String enlance;
+	public static String enlace;
 	public static long pid;
-	public static boolean resultos = false;
+	public static boolean resultados = false;
 	public static boolean tiene_mensaje_de_registro_launcher_completa = false;
 	public static boolean consola_de_launcher_inyectado = false;
 	public static StringBuilder contenidoInforme;
@@ -100,7 +100,7 @@ public class MonitorDePID {
 			return;
 		}
 
-		ArchivoDeCodioError0.delete();
+		ArchivoDeCodigoError0.delete();
 		File html = new File("crash_detector/pantilla.htm");
 
 		copiarACarpetaDesdeJar("/pantilla.htm", html);
@@ -121,9 +121,9 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/profeco.jpg", new File("crash_detector/imagenes/profeco.jpg"));
 
 		String mods = "";
-		if (ultima_mods.toFile().exists()) {
+		if (ultimo_mods.toFile().exists()) {
 			try {
-				mods = leer_archivo(ultima_mods);
+				mods = leer_archivo(ultimo_mods);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -171,10 +171,10 @@ public class MonitorDePID {
 			}
 		}
 
-		new File(ultima_mods.toString()).delete();
+		new File(ultimo_mods.toString()).delete();
 		try {
-			new File(ultima_mods.toString()).createNewFile();
-			FileWriter escribidor = new FileWriter(ultima_mods.toFile());
+			new File(ultimo_mods.toString()).createNewFile();
+			FileWriter escribidor = new FileWriter(ultimo_mods.toFile());
 			escribidor.write(actuales.toString());
 			escribidor.close();
 		} catch (IOException e) {
@@ -243,7 +243,7 @@ public class MonitorDePID {
 				// System.out.println( escribes el codio de error aqui );
 
 				System.out.println(idioma.pid_esta_muerto(pid));
-				System.out.println(mensaje_de_registro_launcher_completa);
+				System.out.println(mensaje_de_registro_lanzer_completo);
 				CrashDetectorLogger.log(idioma.pid_esta_muerto(pid));
 
 				CrashDetectorLogger.log("Finalizando Contento de Consolas");
@@ -253,7 +253,7 @@ public class MonitorDePID {
 
 				consolas_sin_processando.addAll(Consola.obtenerConsolas());
 
-				if (!ArchivoDeCodioError0.exists() && !Consola.tiene_registro_de_launcher(consolas_sin_processando)) {
+				if (!ArchivoDeCodigoError0.exists() && !Consola.tiene_registro_de_launcher(consolas_sin_processando)) {
 					try {// Cuando tiene una informe de crash esta codio 0 y tiene tiempo para esperar
 						Thread.sleep(500);
 					} catch (InterruptedException e) {
@@ -265,7 +265,7 @@ public class MonitorDePID {
 				// }
 
 				for (Consola consola : consolas_sin_processando) {
-					consola.finalizarContento(utc, false);
+					consola.finalizarContenido(utc, false);
 					if (consola.nueva) {
 						consolas.add(consola);
 					}
@@ -273,7 +273,7 @@ public class MonitorDePID {
 
 				if (activar() && !GraphicsEnvironment.isHeadless()) {
 					if (!Consola.tiene_registro_de_launcher(consolas)) {
-						obtenerCosolaDeLauncher(utc);
+						obtenerConsolaDeLauncher(utc);
 					}
 				}
 				
@@ -290,7 +290,7 @@ public class MonitorDePID {
 					if (GraphicsEnvironment.isHeadless()) {
 						CrashDetectorLogger.log("headless ");
 
-						System.out.println(idioma.local_headless(enlance));
+						System.out.println(idioma.local_headless(enlace));
 						fin(latch);
 
 					} else {
@@ -340,7 +340,7 @@ public class MonitorDePID {
 	public static void fin(CountDownLatch latch) {
 		// TODO Auto-generated method stub
 
-		ArchivoDeCodioError0.delete();
+		ArchivoDeCodigoError0.delete();
 		//viajo_ultima_mods.toFile().delete();
 		latch.countDown();
 		System.exit(0);
@@ -373,8 +373,8 @@ public class MonitorDePID {
 	        String nombreArchivo = String.format("%06d.%s", siguienteNumero, extension);
 	        Path archivoHistorial = directorioHistorial.resolve(nombreArchivo);
 
-	        if (ultima_mods.toFile().exists()) {
-	            String contenido = new String(Files.readAllBytes(ultima_mods), StandardCharsets.UTF_8);
+	        if (ultimo_mods.toFile().exists()) {
+	            String contenido = new String(Files.readAllBytes(ultimo_mods), StandardCharsets.UTF_8);
 	            Files.write(archivoHistorial, contenido.getBytes(StandardCharsets.UTF_8));
 	        }
 	    } catch (IOException e) {
@@ -405,7 +405,7 @@ public class MonitorDePID {
 				CrashDetectorLogger.log("reincinar finalizacion " + duration.getSeconds());
 				duration = Duration.between(luego, Instant.now());
 				for (Consola consola : consolas) {
-					consola.finalizarContento(utc, false);
+					consola.finalizarContenido(utc, false);
 				}
 
 			}
@@ -439,13 +439,13 @@ public class MonitorDePID {
 			}
 
 		}
-		if (ArchivoDeCodioError0.exists()) {
+		if (ArchivoDeCodigoError0.exists()) {
 			return false;
 		}
 		return true;
 	}
 
-	public static void obtenerCosolaDeLauncher(Instant utc) {
+	public static void obtenerConsolaDeLauncher(Instant utc) {
 		// para detener el programa
 		JFrame frame_blanco = new JFrame();
 		frame_blanco.setUndecorated(true);
@@ -728,10 +728,10 @@ public class MonitorDePID {
 		String res = analizar(consolas);
 
 		if (res.replace(" ", "").equals("")) {
-			constructor.append(idioma.noResultos());
+			constructor.append(idioma.noResultados());
 		} else {
 			constructor.append(res);
-			resultos = true;
+			resultados = true;
 		}
 
 		CrashDetectorLogger.log("resultdos " + res);

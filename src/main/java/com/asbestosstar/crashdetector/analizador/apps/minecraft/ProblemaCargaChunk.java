@@ -21,7 +21,7 @@ public class ProblemaCargaChunk implements Verificaciones {
      */
     @Override
     public void verificar(Consola consola) {
-        String contenido = consola.contento_verificar;
+        String contenido = consola.contenido_verificar;
 
         // Patrones de error comunes al cargar chunks
         Pattern patron1 = Pattern.compile("Encountered an unexpected exception.*?at.*ChunkRegionLoader\\.loadChunk", Pattern.DOTALL);

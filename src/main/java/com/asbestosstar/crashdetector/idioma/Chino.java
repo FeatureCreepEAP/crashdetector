@@ -39,12 +39,12 @@ public String problema_con_graficas_ati() {
 }
 
     @Override
-    public String probelma_con_graficas_nouveau() {
+    public String problema_con_graficas_nouveau() {
         return "<span style='color:#" + config.obtenerColorAdvertencia() + "'>某些旧版本在Nouveau显卡的早期加载界面有时会出现问题。</span>";
     }
 
     @Override
-    public String probelma_con_graficas_general() {
+    public String problema_con_graficas_general() {
         return "<span style='color:#" + config.obtenerColorError() + "'>您的显卡驱动存在问题。如果您使用AMD/ATI的GPU或APU，请更新AMD显卡驱动。如果您使用NVIDIA显卡，请确保将游戏和所有javaw.exe实例设置为使用独立显卡。阅读此指南： <a href='https://forums.minecraftforge.net/topic/125488-rules-and-frequently-asked-questions-faq/#:~:text=How%20do%20I%20update%20my%20drivers%3F' style='color:#" + config.obtenerColorEnlace() + "'>驱动程序更新指南</a></span>";
     }
 
@@ -54,7 +54,7 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String no_tienes_las_dependencias_necesitas() {
+    public String no_tienes_las_dependencias_necesarias() {
         return "<span style='color:#" + config.obtenerColorError() + "'>缺少必要的依赖项：</span>";
     }
 
@@ -74,22 +74,22 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String texto_de_buton_local_enlance() {
+    public String texto_de_boton_local_enlace() {
         return "<span style='color:#" + config.obtenerColorBoton() + "'>查看报告</span>";
     }
 
     @Override
-    public String texto_debajo_de_buton_local_enlance() {
+    public String texto_debajo_de_buton_local_enlace() {
         return "<span style='color:#" + config.obtenerColorInfo() + "'>在浏览器中查看本地报告。</span>";
     }
 
     @Override
-    public String texto_de_buton_compartir_enlance() {
+    public String texto_de_buton_compartir_enlace() {
         return "分享报告";
     }
 
     @Override
-    public String texto_debajo_de_buton_compartir_enlance() {
+    public String texto_debajo_de_buton_compartir_enlace() {
         return "分享报告。您的日志将上传至securelogger.net，报告将上传至其他站点。";
     }
 
@@ -104,7 +104,7 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String possibladad_fatal() {
+    public String posibilidad_fatal() {
         return "<b style='color:#" + config.obtenerColorError() + "'>可能致命：</b> ";
     }
 
@@ -119,8 +119,8 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String faltar_de_clases_fatales() {
-        return "<b style='color:#" + config.obtenerColorError() + "'>检测到缺失的关键类：</b>";
+    public String falta_de_clases_fatales() {
+        return "<b style='color:#" + config.obtenerColorError() + "'>检测到致命类错误（FATAL），问题非常严重。常见原因包括错误的 CoreMod 或致命的依赖项。您可以使用 QuickFix 扫描包含致命类的模组。检测到缺失的致命类：</b>";
     }
 
     @Override
@@ -144,7 +144,7 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String mcforge_mod_suspechoso() {
+    public String mcforge_mod_sospechoso() {
         return "<b style='color:#" + config.obtenerColorError() + "'>MinecraftForge检测到可疑mod存在问题：</b> ";
     }
 
@@ -245,10 +245,10 @@ public String noTieneConsolaDeLauncherCursedForge() {
     
 @Override
 public String faltar_de_clases_advertencia() {
-    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>警告：检测到缺失的类：</b>";
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>警告：检测到缺失的类（警告级别）。通常问题不大，但并非总是安全，与“致命类缺失”不同。常见原因包括错误的 CoreMod 或缺失依赖项。您可以使用 QuickFix 扫描包含缺失类的模组。检测到的缺失类：</b>";
 }
 @Override
-public String noResultos() {
+public String noResultados() {
     return "<b style='color:#" + config.obtenerColorError() + "'>无结果</b>";
 }
 
@@ -601,7 +601,7 @@ public String nombre_de_bloque_teselado() {
     return "方块渲染错误";
 }
 
-public String nombre_de_contento_de_stacktrace() {
+public String nombre_de_contenido_de_stacktrace() {
     return "堆栈跟踪分析";
 }
 
@@ -757,7 +757,7 @@ public String inicioApp() {
 }
 
 @Override
-public String adjustesCrashDetector() {
+public String ajustesCrashDetector() {
     return "崩溃检测器设置";
 }
 
@@ -1016,12 +1016,12 @@ public String mensaje_de_trace_ultima_no_traductado() {
 
 @Override
 public String solucionParaAdvertenciaFaltasClases() {
-    return "您有缺失的类（警告），通常情况下没有问题，但并非总是如此。错误的核心模组或缺失的依赖是这个问题的常见原因。";
+    return "您可以在 WaifuNeoForge 数据库中搜索以查找模组。请选择游戏版本、模组加载器和类名。使用最接近的匹配组合。每分钟只能搜索一次。";
 }
 
 @Override
 public String solucionFaltasClases() {
-    return "您有缺失的类（严重），这非常重要。错误的核心模组或缺失的依赖是这个问题的常见原因。";
+    return "您可以在 WaifuNeoForge 数据库中搜索以查找模组。请选择游戏版本、模组加载器和类名。使用最接近的匹配组合。每分钟只能搜索一次。";
 }
 
 @Override
@@ -1868,6 +1868,19 @@ public String noRegistroDeLauncher() {
     return "通用：请选择你正在使用的启动器类型。启动器日志（launcher_log.txt、stdout 等）包含了 latest.log 中没有的关键错误信息。CrashDetector 无法读取你的启动器日志 —— 可能是没有生成日志文件，你需要手动粘贴日志内容。<br>" +
            "更多信息请参考 <a href=\"https://github.com/HMCL-dev/HMCL/issues/2663 \">此问题</a>。这些日志包含标准输出（STDOUT），是诊断许多错误所必需的。";
 }
+
+@Override
+public String faltar_de_clases_create() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>检测到来自 Create 的缺失类。Create 已发生重大变更，许多类已被移除。特别是从 Create 6（2025年2月）开始，旧版本的 Create 附加模组将无法正常工作。QuickFix 无法解决此问题。您需要更新 Create 附加模组、删除过时的模组，或使用与附加模组兼容的正确 Create 版本。</b>";
+}
+
+@Override
+public String faltar_de_clases_epicfight() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>检测到来自 EpicFight 的缺失类。EpicFight 已发生重大变更，许多类已被移除。QuickFix 无法解决此问题。您需要更新 EpicFight 附加模组、删除过时的模组，或使用与附加模组兼容的正确 EpicFight 版本。</b>";
+}
+
+
+
 
 
 

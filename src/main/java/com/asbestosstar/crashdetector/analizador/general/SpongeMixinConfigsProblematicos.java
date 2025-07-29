@@ -62,7 +62,7 @@ public class SpongeMixinConfigsProblematicos implements Verificaciones {
         List<String> listItems = new ArrayList<>();
         for (String sm : sm_config) {
             String jars_de_sm_string = "";
-            List<String> jars_de_sm = Buscardor.obternerUbicaciones(Buscardor.buscarModsConTermino(sm));
+            List<String> jars_de_sm = Buscardor.obtenerUbicaciones(Buscardor.buscarModsConTermino(sm));
 
             if (!jars_de_sm.isEmpty()) {
                 List<String> boldJars = new ArrayList<>();
@@ -95,7 +95,7 @@ public class SpongeMixinConfigsProblematicos implements Verificaciones {
 
         // Agregar botón para cada JAR encontrado
         for (String sm : sm_config) {
-            List<String> jars = Buscardor.obternerUbicaciones(Buscardor.buscarModsConTermino(sm));
+            List<String> jars = Buscardor.obtenerUbicaciones(Buscardor.buscarModsConTermino(sm));
             
             for (String jar : jars) {
                 String buttonText = MonitorDePID.idioma.eliminar() + ": " + jar;

@@ -23,7 +23,7 @@ public class ProblemaSpongeMixinFabric implements Verificaciones {
      */
     @Override
     public void verificar(Consola consola) {
-        String contenido = consola.contento_verificar;
+        String contenido = consola.contenido_verificar;
 
         // Patrón para detectar errores de Mixin relacionados con un mod
         Pattern patron = Pattern.compile(

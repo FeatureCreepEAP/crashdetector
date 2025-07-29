@@ -39,12 +39,12 @@ public String problema_con_graficas_ati() {
 }
  
     @Override
-    public String probelma_con_graficas_nouveau() {
+    public String problema_con_graficas_nouveau() {
         return "<span style='color:#" + config.obtenerColorAdvertencia() + "'>برخی از نسخه های قدیمی در رابط بارگذاری اولیه کارت گرافیک Nouveau گاهی اوقات دچار مشکل می شوند.</span>";
     }
  
     @Override
-    public String probelma_con_graficas_general() {
+    public String problema_con_graficas_general() {
         return "<span style='color:#" + config.obtenerColorError() + "'>شما مشکل درایور کارت گرافیک دارید. اگر از GPU یا APU AMD/ATI استفاده می کنید، لطفاً درایور کارت گرافیک AMD خود را به روز کنید. اگر از کارت گرافیک NVIDIA استفاده می کنید، مطمئن شوید که بازی و تمام نمونه های javaw.exe برای استفاده از کارت گرافیک مجزا تنظیم شده اند. این راهنما را بخوانید: <a href='https://forums.minecraftforge.net/topic/125488-rules-and-frequently-asked-questions-faq/#:~:text=How%20do%20I%20update%20my%20drivers%3F' style='color:#" + config.obtenerColorEnlace() + "'>راهنمای به روز رسانی درایور</a></span>";
     }
  
@@ -54,7 +54,7 @@ public String problema_con_graficas_ati() {
     }
  
     @Override
-    public String no_tienes_las_dependencias_necesitas() {
+    public String no_tienes_las_dependencias_necesarias() {
         return "<span style='color:#" + config.obtenerColorError() + "'>وابستگی های لازم را ندارید:</span>";
     }
  
@@ -74,22 +74,22 @@ public String problema_con_graficas_ati() {
     }
  
     @Override
-    public String texto_de_buton_local_enlance() {
+    public String texto_de_boton_local_enlace() {
         return "<span style='color:#" + config.obtenerColorBoton() + "'>مشاهده گزارش</span>";
     }
  
     @Override
-    public String texto_debajo_de_buton_local_enlance() {
+    public String texto_debajo_de_buton_local_enlace() {
         return "<span style='color:#" + config.obtenerColorInfo() + "'>گزارش محلی را در مرورگر مشاهده کنید.</span>";
     }
  
     @Override
-    public String texto_de_buton_compartir_enlance() {
+    public String texto_de_buton_compartir_enlace() {
         return "به اشتراک گذاشتن گزارش";
     }
  
     @Override
-    public String texto_debajo_de_buton_compartir_enlance() {
+    public String texto_debajo_de_buton_compartir_enlace() {
         return "گزارش را به اشتراک بگذارید. لاگ های شما به securelogger.net و گزارش به سایت های دیگر آپلود می شود.";
     }
  
@@ -104,7 +104,7 @@ public String problema_con_graficas_ati() {
     }
  
     @Override
-    public String possibladad_fatal() {
+    public String posibilidad_fatal() {
         return "<b style='color:#" + config.obtenerColorError() + "'>احتمالاً کشنده:</b> ";
     }
  
@@ -119,8 +119,8 @@ public String problema_con_graficas_ati() {
     }
  
     @Override
-    public String faltar_de_clases_fatales() {
-        return "<b style='color:#" + config.obtenerColorError() + "'>کلاس های کلیدی گمشده شناسایی شدند:</b>";
+    public String falta_de_clases_fatales() {
+        return "<b style='color:#" + config.obtenerColorError() + "'>کلاس‌های مرگبار (FATAL) دارید، این موضوع بسیار جدی است. دلایل رایج شامل کورمدهای بد یا وابستگی‌های مرگبار است. می‌توانید از QuickFix برای یافتن مودهای دارای کلاس‌های مرگبار استفاده کنید. کلاس‌های مرگبار گمشده شناسایی شده:</b>";
     }
  
     @Override
@@ -144,7 +144,7 @@ public String problema_con_graficas_ati() {
     }
  
     @Override
-    public String mcforge_mod_suspechoso() {
+    public String mcforge_mod_sospechoso() {
         return "<b style='color:#" + config.obtenerColorError() + "'>MinecraftForge mod مشکوک شناسایی کرد:</b> ";
     }
  
@@ -247,12 +247,12 @@ public String noTieneConsolaDeLauncherCursedForge() {
     
 @Override
 public String faltar_de_clases_advertencia() {
-    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>هشدار: کلاس‌های گم‌شده شناسایی شدند:</b>";
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>هشدار: کلاس‌های گمشده شناسایی شدند (سطح هشدار). معمولاً مشکلی نیست، اما همیشه اینطور نیست — با خطاهای فاتال فرق دارد. دلایل رایج شامل کورمدهای بد یا وابستگی‌های گمشده است. می‌توانید از QuickFix برای جستجوی مودهای دارای کلاس‌های گمشده استفاده کنید. کلاس‌های گمشده شناسایی شده:</b>";
 }
 
 
 @Override
-public String noResultos() {
+public String noResultados() {
     return "<b style='color:#" + config.obtenerColorError() + "'>نتیجه‌ای یافت نشد</b>";
 }
 
@@ -610,7 +610,7 @@ public String nombre_de_bloque_teselado() {
     return "خطای رندر بلوک";
 }
 
-public String nombre_de_contento_de_stacktrace() {
+public String nombre_de_contenido_de_stacktrace() {
     return "تحلیل استک‌تریس";
 }
 
@@ -765,7 +765,7 @@ public String inicioApp() {
 }
 
 @Override
-public String adjustesCrashDetector() {
+public String ajustesCrashDetector() {
     return "تنظیمات تشخیص خرابی";
 }
 
@@ -1021,12 +1021,12 @@ public String mensaje_de_trace_ultima_no_traductado() {
 
 @Override
 public String solucionParaAdvertenciaFaltasClases() {
-    return "کلاس‌هایی از دست رفته دارید (هشدار)، معمولاً مشکلی نیست اما همیشه اینطور نیست. Coremods بد یا وابستگی‌های گم‌شده دلایل رایج این مشکل هستند.";
+    return "می‌توانید در پایگاه داده WaifuNeoForge جستجو کنید تا مود مناسب را پیدا کنید. نسخه بازی، بارگیر مود و کلاس را انتخاب کنید. از ترکیبی شبیه به آن استفاده کنید. فقط یک بار در دقیقه می‌توانید جستجو کنید.";
 }
 
 @Override
 public String solucionFaltasClases() {
-    return "کلاس‌هایی از دست رفته دارید (بحرانی)، بسیار مهم است. Coremods بد یا وابستگی‌های گم‌شده دلایل رایج این مشکل هستند.";
+    return "می‌توانید در پایگاه داده WaifuNeoForge جستجو کنید تا مود مناسب را پیدا کنید. نسخه بازی، بارگیر مود و کلاس را انتخاب کنید. از ترکیبی شبیه به آن استفاده کنید. فقط یک بار در دقیقه می‌توانید جستجو کنید.";
 }
 
 @Override
@@ -1875,7 +1875,15 @@ public String noRegistroDeLauncher() {
            "برای کسب اطلاعات بیشتر، <a href=\"https://github.com/HMCL-dev/HMCL/issues/2663 \">این موضوع را ببینید</a>. این سجل‌ها شامل خروجی استاندارد (STDOUT) هستند که برای تشخیص بسیاری از انواع خطاها ضروری‌اند.";
 }
 
+@Override
+public String faltar_de_clases_create() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>کلاس‌های گمشده از Create شناسایی شد. Create تغییرات زیادی داشته — بسیاری از کلاس‌ها حذف شده‌اند. به ویژه از Create 6 (فوریه ۲۰۲۵) به بعد، افزونه‌های مربوط به نسخه‌های قدیمی‌تر Create دیگر کار نمی‌کنند. QuickFix راه‌حلی برای این مشکل ندارد. باید افزونه‌های Create خود را به‌روز کنید، افزونه‌های منسوخ را حذف کنید یا از نسخه صحیح Create برای افزونه‌های مورد نظرتان استفاده کنید.</b>";
+}
 
+@Override
+public String faltar_de_clases_epicfight() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>کلاس‌های گمشده از EpicFight شناسایی شد. EpicFight تغییرات عمده‌ای داشته — بسیاری از کلاس‌ها حذف شده‌اند. QuickFix راه‌حلی برای این مشکل ندارد. باید افزونه‌های EpicFight خود را به‌روز کنید، افزونه‌های منسوخ را حذف کنید یا از نسخه صحیح EpicFight برای افزونه‌های مورد نظرتان استفاده کنید.</b>";
+}
 
 
 

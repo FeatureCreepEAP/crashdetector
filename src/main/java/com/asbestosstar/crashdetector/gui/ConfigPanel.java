@@ -45,7 +45,7 @@ public class ConfigPanel extends JPanel {
 		tabbedPane.setTabComponentAt(0, incicio_del_juego);
 
 		// Pestaña "Ajustes CrashDetector"
-		JLabel cdajustes = new JLabel(MonitorDePID.idioma.adjustesCrashDetector());
+		JLabel cdajustes = new JLabel(MonitorDePID.idioma.ajustesCrashDetector());
 		if (tabLabelColor != null) {
 			cdajustes.setForeground(tabLabelColor);
 		}

@@ -3,6 +3,7 @@ package com.asbestosstar.crashdetector.gui;
 import java.awt.*;
 import javax.swing.*;
 
+import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 
 /**
@@ -24,6 +25,14 @@ public class ElementoQuickFix extends JPanel {
         JLabel etiquetaPrincipal = new JLabel(quickFix.etiqueta);
         etiquetaPrincipal.setFont(etiquetaPrincipal.getFont().deriveFont(Font.BOLD, 14));
         etiquetaPrincipal.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+        if (!CrashDetectorGUI.esMac()) {
+        	etiquetaPrincipal.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTitulo()));
+        	etiquetaPrincipal.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        	etiquetaPrincipal.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        }
+        
+        
+        
         panelPrincipal.add(etiquetaPrincipal);
 
         // Panel para componentes verticales
@@ -42,13 +51,13 @@ public class ElementoQuickFix extends JPanel {
 
             // Listener para actualizar el estado
             checkBoxRetener.addItemListener(e -> 
-                quickFix.tieneRetener = checkBoxRetener.isSelected()
+                quickFix.tieneMantener = checkBoxRetener.isSelected()
             );
         }
 
         // Botones y etiquetas adicionales
         for (QuickFix.ComponenteGUI componente : quickFix.componentes) {
-            JComponent comp = componente.crearComponente(() -> quickFix.tieneRetener);
+            JComponent comp = componente.crearComponente(() -> quickFix.tieneMantener);
             
             // Forzar alineación izquierda y control de tamaño
             Dimension prefSize = comp.getPreferredSize();

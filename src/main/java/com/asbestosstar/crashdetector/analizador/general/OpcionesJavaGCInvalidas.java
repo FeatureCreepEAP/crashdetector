@@ -13,7 +13,7 @@ public class OpcionesJavaGCInvalidas implements Verificaciones {
 
     @Override
     public void verificar(Consola consola) {
-    	String contenidoConsola=consola.contento_verificar;
+    	String contenidoConsola=consola.contenido_verificar;
 
         String patron = "Conflicting collector combinations in option list";
         if (contenidoConsola.matches("(?sm).*" + patron + ".*")) { // Usa regex multilinea [[8]]

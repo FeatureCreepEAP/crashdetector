@@ -20,7 +20,7 @@ public class JavaVersiones implements Verificaciones {
 
     @Override
     public void verificar(Consola consola) {
-    	String contenidoConsola=consola.contento_verificar;
+    	String contenidoConsola=consola.contenido_verificar;
 
         // Verificación de versión Java 22 no soportada
         if (contenidoConsola.contains("java.lang.IllegalArgumentException: Unsupported class file major version")) {

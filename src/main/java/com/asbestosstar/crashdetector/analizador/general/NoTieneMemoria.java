@@ -13,7 +13,7 @@ public class NoTieneMemoria implements Verificaciones {
 
     @Override
     public void verificar(Consola consola) {
-    	String contenidoConsola=consola.contento_verificar;
+    	String contenidoConsola=consola.contenido_verificar;
 
         
         // Verificación principal de memoria

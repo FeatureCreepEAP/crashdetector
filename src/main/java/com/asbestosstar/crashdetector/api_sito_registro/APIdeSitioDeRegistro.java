@@ -13,7 +13,7 @@ public interface APIdeSitioDeRegistro {
 	
 
 	
-	public static APIdeSitioDeRegistro obtainerAPIdeConfig() throws NoAPIdeRegistro {
+	public static APIdeSitioDeRegistro obtenerAPIdeConfig() throws NoAPIdeRegistro {
 		
 	String nom =	Config.obtenerInstancia().obtenerApiSeleccionada();
 		for(APIdeSitioDeRegistro reg:APIS) {
@@ -34,7 +34,7 @@ public interface APIdeSitioDeRegistro {
 	 */
 	public String publicarRegistro(Consola registro) throws DemasiadoGrande, ErrorConPublicar;
 	
-	public List<String> sitosPorDefecto();
+	public List<String> sitiosPorDefecto();
 	
 	public static String sitioDeConfig() {
 		return Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado();

@@ -26,7 +26,7 @@ public class ProblemaEjecucionPlugin implements Verificaciones {
      */
     @Override
     public void verificar(Consola consola) {
-        String contenido = consola.contento_verificar;
+        String contenido = consola.contenido_verificar;
 
         // Patrón para detectar errores de ejecución en plugins de PocketMine
         Pattern patron = Pattern.compile(

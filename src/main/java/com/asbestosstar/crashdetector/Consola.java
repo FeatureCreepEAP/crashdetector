@@ -29,13 +29,13 @@ public class Consola {
 	/**
 	 * NO USAS DESPUES DE finalizarContento
 	 */
-	public String contento;
+	public String contenido;
 
 	public Path archivo;
 	public String enlance;
 	public int linea_original;
 	public boolean nueva = false;
-	public String contento_verificar;
+	public String contenido_verificar;
 
 	public VerificacionDeStackTrace verificacion_de_stacktrace;
 
@@ -78,37 +78,37 @@ public class Consola {
 
 	}
 
-	public void finalizarContento(Instant tiempo, boolean ignorar_necesita_estar_despues_de_tiempo) {
+	public void finalizarContenido(Instant tiempo, boolean ignorar_necesita_estar_despues_de_tiempo) {
 		try {
 
 			Instant epoc = Instant.ofEpochMilli(archivo.toFile().lastModified());
 
 			if (epoc.isAfter(tiempo) || ignorar_necesita_estar_despues_de_tiempo || nueva) {
 				nueva = true;
-				contento = MonitorDePID.leer_archivo(archivo);
+				contenido = MonitorDePID.leer_archivo(archivo);
 
 				StringBuilder para_verificar = new StringBuilder();
-				String[] lineas = contento.split(File.pathSeparator);
+				String[] lineas = contenido.split(File.pathSeparator);
 				for (int i = linea_original; i < lineas.length - 1; i++) {
 					para_verificar.append(lineas[i]).append(File.pathSeparator);
 				}
 
 				CrashDetectorLogger.log("archivo nombre: "+archivo.toString());
 				if (archivo.toString().endsWith("launcher_log.txt")) {
-					contento_verificar = LimpiadorRegistroDeLauncherVainilla.limpiarConsola(para_verificar.toString());
+					contenido_verificar = LimpiadorRegistroDeLauncherVainilla.limpiarConsola(para_verificar.toString());
 				} else if (archivo.toString().endsWith("latest.log")) {
-					contento_verificar = LimpiadorRegistroLatestLog.limpiarConsola(para_verificar.toString());
+					contenido_verificar = LimpiadorRegistroLatestLog.limpiarConsola(para_verificar.toString());
 				} else {
-					contento_verificar = para_verificar.toString();
+					contenido_verificar = para_verificar.toString();
 				}
 
-				if (contento_verificar.contains(MonitorDePID.mensaje_de_registro_launcher_completa)) {
+				if (contenido_verificar.contains(MonitorDePID.mensaje_de_registro_lanzer_completo)) {
 					MonitorDePID.tiene_mensaje_de_registro_launcher_completa = true;
 				}
 
 			} else {
 				nueva = false;
-				contento = "";
+				contenido = "";
 			}
 
 		} catch (IOException e) {
@@ -117,17 +117,17 @@ public class Consola {
 		}
 	}
 
-	public void finalizarContentoInyectado(String contento) {
+	public void finalizarContenidoInyectado(String contento) {
 		nueva = true;
-		this.contento = contento;
+		this.contenido = contento;
 
-		CrashDetectorLogger.log("archivo nombre inyecto: "+archivo.toString());
+		CrashDetectorLogger.log("archivo nombre inyectado: "+archivo.toString());
 		if (archivo.toString().endsWith("launcher_log.txt")) {
-			contento_verificar = LimpiadorRegistroDeLauncherVainilla.limpiarConsola(contento.toString());
+			contenido_verificar = LimpiadorRegistroDeLauncherVainilla.limpiarConsola(contento.toString());
 		} else if (archivo.toString().endsWith("latest.log")) {
-			contento_verificar = LimpiadorRegistroLatestLog.limpiarConsola(contento.toString());
+			contenido_verificar = LimpiadorRegistroLatestLog.limpiarConsola(contento.toString());
 		} else {
-			contento_verificar = contento.toString();
+			contenido_verificar = contento.toString();
 		}
 
 	
@@ -321,7 +321,7 @@ public class Consola {
 			return enlance;
 		} else {
 
-			this.enlance = APIdeSitioDeRegistro.obtainerAPIdeConfig().publicarRegistro(this);
+			this.enlance = APIdeSitioDeRegistro.obtenerAPIdeConfig().publicarRegistro(this);
 			return enlance;
 		}
 	}
@@ -347,7 +347,7 @@ public class Consola {
 		return false;
 	}
 
-	public String obtainerRutaParaPublicar() {
+	public String obtenerRutaParaPublicar() {
 		boolean anon = Config.obtenerInstancia().esAnonimizarRegistros();
 		if (anon) {
 			return AnonimizadorDeRuta.anonimizarNombreDeUsuario(archivo.toString());
@@ -355,16 +355,16 @@ public class Consola {
 		return archivo.toString();
 	}
 
-	public String obtainerContentoParaPublicar() {
+	public String obtainerContenidoParaPublicar() {
 		boolean anon = Config.obtenerInstancia().esAnonimizarRegistros();
 		if (anon) {
-			return AnonimizadordeRegistros.anonimizar(this.contento_verificar);
+			return AnonimizadordeRegistros.anonimizar(this.contenido_verificar);
 		}
-		return contento_verificar;
+		return contenido_verificar;
 	}
 
-	public String obtainerMensajeUltimaTrace() {
-	    List<String> traces = VerificacionDeStackTrace.obtenerTraces(contento_verificar);
+	public String obtenerMensajeUltimaTrace() {
+	    List<String> traces = VerificacionDeStackTrace.obtenerTraces(contenido_verificar);
 	    if (!traces.isEmpty()) {
 	        String ultimaTrace = traces.get(traces.size() - 1);
 	        String[] lineas = ultimaTrace.split(VerificacionDeStackTrace.nl);
@@ -390,7 +390,7 @@ public class Consola {
 	
 	
 	public String obtainerMensajeFatalUltimaTrace() {
-	    List<String> traces = VerificacionDeStackTrace.obtenerTracesFatal(contento_verificar);
+	    List<String> traces = VerificacionDeStackTrace.obtenerTracesFatal(contenido_verificar);
 	    if (!traces.isEmpty()) {
 	        String ultimaTrace = traces.get(traces.size() - 1);
 	        String[] lineas = ultimaTrace.split(VerificacionDeStackTrace.nl);

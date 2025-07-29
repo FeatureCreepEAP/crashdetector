@@ -25,7 +25,7 @@ public class ProblemaTickingEntidadBloque implements Verificaciones {
      */
     @Override
     public void verificar(Consola consola) {
-        String contenido = consola.contento_verificar;
+        String contenido = consola.contenido_verificar;
         String[] lineas = contenido.split("\n");
 
         boolean encontrado = false;

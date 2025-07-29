@@ -23,7 +23,7 @@ public class ProblemaCargaMultiverso implements Verificaciones {
      */
     @Override
     public void verificar(Consola consola) {
-        String contenido = consola.contento_verificar;
+        String contenido = consola.contenido_verificar;
 
         // Patrón de error: "The world 'nombre' could NOT be loaded..."
         Pattern patron = Pattern.compile("The world '([^']+)' could NOT be loaded because it contains errors and is probably corrupt!");

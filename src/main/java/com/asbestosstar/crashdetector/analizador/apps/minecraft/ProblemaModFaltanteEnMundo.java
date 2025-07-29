@@ -25,7 +25,7 @@ public class ProblemaModFaltanteEnMundo implements Verificaciones {
      */
     @Override
     public void verificar(Consola consola) {
-        String contenido = consola.contento_verificar;
+        String contenido = consola.contenido_verificar;
 
         // Patrón para detectar mods faltantes en mundos guardados
         Pattern patron = Pattern.compile(

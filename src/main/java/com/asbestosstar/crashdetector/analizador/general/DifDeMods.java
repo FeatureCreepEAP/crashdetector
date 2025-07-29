@@ -24,7 +24,7 @@ public class DifDeMods implements Verificaciones {
     public void verificar(Consola consola) {
         try {
             // Obtener lista actual de mods
-            Set<String> modsActual = obtenerMods(MonitorDePID.ultima_mods);
+            Set<String> modsActual = obtenerMods(MonitorDePID.ultimo_mods);
             
             // Buscar últimos archivos históricos
             Path exitoFile = obtenerUltimoArchivo("exito");

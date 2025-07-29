@@ -22,7 +22,7 @@ public class MCLogsAPI implements APIdeSitioDeRegistro {
 
     @Override
     public String publicarRegistro(Consola registro) throws DemasiadoGrande, ErrorConPublicar {
-        String contenido = registro.obtainerContentoParaPublicar().trim();
+        String contenido = registro.obtainerContenidoParaPublicar().trim();
         
         // Verificar contenido vacío
         if (contenido.isEmpty()) {
@@ -92,7 +92,7 @@ public class MCLogsAPI implements APIdeSitioDeRegistro {
     }
 
     @Override
-    public List<String> sitosPorDefecto() {
+    public List<String> sitiosPorDefecto() {
         List<String> sitios = new ArrayList<>();
         sitios.add("https://api.mclo.gs/1/log");
         return sitios;

@@ -13,7 +13,7 @@ public class NecesitasSodium implements Verificaciones {
 
     @Override
     public void verificar(Consola consola) {
-    	String contento_de_consola=consola.contento_verificar;
+    	String contento_de_consola=consola.contenido_verificar;
         String patron = "Error loading class: net/caffeinemc/mods/sodium/api/memory/MemoryIntrinsics";
         if (contento_de_consola.contains(patron)) {
             this.mensaje = MonitorDePID.idioma.necesitasSodiumParaIris() + Verificaciones.nl_html;

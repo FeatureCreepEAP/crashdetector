@@ -381,7 +381,7 @@ public class CrashDetectorGUI extends JFrame {
 
 	        try {
 	            Consola cons = new Consola(archivoSeleccionado.toPath());
-	            cons.finalizarContento(tiempoFallo, true);
+	            cons.finalizarContenido(tiempoFallo, true);
 	            MonitorDePID.consolas.add(cons);
 	            recargar();
 	        } catch (IOException e) {
@@ -500,7 +500,8 @@ public class CrashDetectorGUI extends JFrame {
         boton.setIcon(icon);
         boton.setText("");  // 隐藏文本
         boton.setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
-        boton.setBackground(colorBoton);
+        //boton.setBackground(colorBoton);
+        boton.setBackground(colorFondo);
         boton.setBorder(BorderFactory.createLineBorder(colorFondo, 1));
         boton.setFocusPainted(false);
         boton.setMargin(new Insets(0, 0, 0, 0));  // 减少内边距

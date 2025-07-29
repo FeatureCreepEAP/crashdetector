@@ -58,51 +58,28 @@ public class WaifuAPI {
 	
 	
 	
-	public static void obtanerModDesdeClase(String clase,VersionWaifu version) {
-		try {
-			String graphqlQuery = generarConsultaGraphQL(clase,version);
-
-			// Enviar la solicitud y obtener la respuesta JSON
-			String jsonResponse = enviarSolicitudGraphQL(graphqlQuery);
-
-			CrashDetectorLogger.log(jsonResponse);
-			
-			// Mapear la respuesta JSON a las clases GSON
-			RespuestaWaifu respuesta = gson.fromJson(jsonResponse, RespuestaWaifu.class);
-
-			// Verificar si existen datos válidos
-			if (respuesta != null && respuesta.data != null && respuesta.data.gameVersion != null
-					&& respuesta.data.gameVersion.classes != null
-					&& !respuesta.data.gameVersion.classes.edges.isEmpty()) {
-
-				// Recorrer los resultados y mostrar los datos del mod
-				for (Arista arista : respuesta.data.gameVersion.classes.edges) {
-					if (arista.node != null && arista.node.definitions != null) {
-						for (Definicion def : arista.node.definitions) {
-							if (def.mod != null) {
-								CrashDetectorLogger.log("Nombre del mod: " + def.mod.name);
-								if (def.mod.curseforgeProjectId != null) {
-									CrashDetectorLogger.log("ID de CurseForge: " + def.mod.curseforgeProjectId);
-								} else {
-									CrashDetectorLogger.log("ID de CurseForge: No disponible");
-								}
-								CrashDetectorLogger.log("ID de Modrinth: " + def.mod.modrinthProjectId);
-								CrashDetectorLogger.log("---------------------------");
-							}
-						}
-					}
-				}
-
-			} else {
-				CrashDetectorLogger.log("No se encontraron datos válidos en la respuesta.");
-			}
-
-		} catch (Exception e) {
-			//CrashDetectorLogger.log("Error al realizar la solicitud: " + e.getMessage());
-			CrashDetectorLogger.logException(e);
-			e.printStackTrace();
-			
-		}
+	public static List<RespuestaWaifu.Mod> obtanerModDesdeClase(String clase, VersionWaifu version) {
+	    List<RespuestaWaifu.Mod> modsEncontrados = new ArrayList<>();
+	    try {
+	        String graphqlQuery = generarConsultaGraphQL(clase, version);
+	        String jsonResponse = enviarSolicitudGraphQL(graphqlQuery);
+	        
+	        RespuestaWaifu respuesta = gson.fromJson(jsonResponse, RespuestaWaifu.class);
+	        if (respuesta != null && respuesta.data != null && respuesta.data.gameVersion != null) {
+	            for (Arista arista : respuesta.data.gameVersion.classes.edges) {
+	                if (arista.node != null && arista.node.definitions != null) {
+	                    for (Definicion def : arista.node.definitions) {
+	                        if (def.mod != null) {
+	                            modsEncontrados.add(def.mod);
+	                        }
+	                    }
+	                }
+	            }
+	        }
+	    } catch (Exception e) {
+	        CrashDetectorLogger.logException(e);
+	    }
+	    return modsEncontrados;
 	}
 
 	/**

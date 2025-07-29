@@ -13,7 +13,7 @@ public class ErrorDeMonitorLWJGL implements Verificaciones {
 
     @Override
     public void verificar(Consola consola) {
-    	String contenidoConsola=consola.contento_verificar;
+    	String contenidoConsola=consola.contenido_verificar;
 
         // Verifica cada línea buscando el error específico
         for (String linea : contenidoConsola.split(Verificaciones.nl)) {

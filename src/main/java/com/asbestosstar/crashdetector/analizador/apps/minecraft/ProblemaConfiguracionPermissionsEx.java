@@ -19,7 +19,7 @@ public class ProblemaConfiguracionPermissionsEx implements Verificaciones {
      */
     @Override
     public void verificar(Consola consola) {
-        String contenido = consola.contento_verificar;
+        String contenido = consola.contenido_verificar;
 
         // Mensaje específico que indica que PEX tiene un problema de configuración
         String mensajeError = "Your configuration must be fixed before PEX will enable";

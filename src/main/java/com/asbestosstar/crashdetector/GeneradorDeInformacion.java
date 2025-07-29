@@ -86,7 +86,7 @@ public class GeneradorDeInformacion {
 	            for (Consola co : consolas) {
 	                cons.append("<a href='").append(co.obtainerEnlance())
 	                    .append("'><font color='").append(Config.obtenerInstancia().obtenerColorEnlace()).append("'>") // Link color
-	                    .append(co.obtainerRutaParaPublicar().trim())
+	                    .append(co.obtenerRutaParaPublicar().trim())
 	                    .append("</font></a><br>");
 	            }
 	            cons.append(generarTextoArcoiris("Feliz mes del orgullo"));

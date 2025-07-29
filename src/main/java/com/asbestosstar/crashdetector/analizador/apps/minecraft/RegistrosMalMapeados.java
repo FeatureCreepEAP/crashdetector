@@ -18,7 +18,7 @@ public class RegistrosMalMapeados implements Verificaciones {
 
     @Override
     public void verificar(Consola consola) {
-        String contenidoConsola = consola.contento_verificar;
+        String contenidoConsola = consola.contenido_verificar;
 
         // Patrón 1: "Found a missing id from the world kubejs:note_1"
         Pattern patternFaltanIDs = Pattern.compile("Found a missing id from the world ([\\w\\d_:-]+:[\\w\\d_:-]+)");

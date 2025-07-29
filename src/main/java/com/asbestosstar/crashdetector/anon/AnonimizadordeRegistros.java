@@ -74,25 +74,25 @@ public class AnonimizadordeRegistros {
 	private static final Pattern PATRON_XUID = Pattern.compile("--xuid,\\s*([^,]+)");
 	
 
-	public static String anonimizar(String contento) {
-		Set<String> nombres_de_usario = obtainerNombresUsarios(contento);
+	public static String anonimizar(String contenido) {
+		Set<String> nombres_de_usario = obtenerNombresUsarios(contenido);
 
-		contento = anonimizarIP(contento);
-		contento = anonimizarNombreDeUsuarioEnRutas(contento);
-		contento = anonimizarUsuariosGenericos(contento);
-		contento = anonimizarTokens(contento);
-		contento = anonimizarUUID(contento);
-		contento = anonimizarIPServidor(contento);
+		contenido = anonimizarIP(contenido);
+		contenido = anonimizarNombreDeUsuarioEnRutas(contenido);
+		contenido = anonimizarUsuariosGenericos(contenido);
+		contenido = anonimizarTokens(contenido);
+		contenido = anonimizarUUID(contenido);
+		contenido = anonimizarIPServidor(contenido);
 
 		for (String usario : nombres_de_usario) {
-			contento = contento.replaceAll("(?i)" + Pattern.quote(usario), "anon");
+			contenido = contenido.replaceAll("(?i)" + Pattern.quote(usario), "anon");
 		}
 
-		return contento;
+		return contenido;
 	}
 
 
-	  private static Set<String> obtainerNombresUsarios(String contenido) {
+	  private static Set<String> obtenerNombresUsarios(String contenido) {
 	        Set<String> usuarios = new HashSet<>();
 
 	        for (Pattern p : PATRONES_USUARIO_WINDOWS) {

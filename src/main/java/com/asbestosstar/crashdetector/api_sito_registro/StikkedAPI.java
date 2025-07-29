@@ -24,7 +24,7 @@ public class StikkedAPI implements APIdeSitioDeRegistro {
 
     @Override
     public String publicarRegistro(Consola registro) throws DemasiadoGrande, ErrorConPublicar {
-        String texto = registro.obtainerContentoParaPublicar().trim();
+        String texto = registro.obtainerContenidoParaPublicar().trim();
         
         if (texto.equals("")) {
             throw new ErrorConPublicar("Registro no tiene texto " + registro.archivo.toString());
@@ -85,7 +85,7 @@ public class StikkedAPI implements APIdeSitioDeRegistro {
     }
 
     @Override
-    public List<String> sitosPorDefecto() {
+    public List<String> sitiosPorDefecto() {
         List<String> sitios = new ArrayList<>();
         sitios.add("https://paste.mikumikudance.jp/api/create");
         sitios.add("https://paste.mikumikudance.jp/en/api/create");

@@ -13,7 +13,7 @@ public class Segundo60Tick implements Verificaciones {
 
     @Override
     public void verificar(Consola consola) {
-    	String contento_de_consola=consola.contento_verificar;
+    	String contento_de_consola=consola.contenido_verificar;
         // Verifica la presencia del error de tick crítico
         String patron = "[Server Watchdog/FATAL] [net.minecraft.server.dedicated.ServerHangWatchdog]: " +
                        "A single server tick took 60.00 seconds (should be max 0.05)";

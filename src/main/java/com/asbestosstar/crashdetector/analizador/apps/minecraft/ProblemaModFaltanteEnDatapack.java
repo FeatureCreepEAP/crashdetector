@@ -25,7 +25,7 @@ public class ProblemaModFaltanteEnDatapack implements Verificaciones {
      */
     @Override
     public void verificar(Consola consola) {
-        String contenido = consola.contento_verificar;
+        String contenido = consola.contenido_verificar;
 
         // Patrón para detectar mods faltantes en datapacks
         Pattern patron = Pattern.compile("Missing data pack mod:([\\w\\d\\-]+)");

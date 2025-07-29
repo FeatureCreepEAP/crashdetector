@@ -113,7 +113,7 @@ public class ContentoDeTraces implements Verificaciones {
                     .append("</strong> ").append(mensajeFatal).append(nl_html);
         }
 
-        String mensajeNormal = consola.obtainerMensajeUltimaTrace();
+        String mensajeNormal = consola.obtenerMensajeUltimaTrace();
         if (mensajeNormal != null && !mensajeNormal.trim().isEmpty() && !mensajeNormal.equals(mensajeFatal)) {
             constructor.append(nl_html).append("<strong>")
                     .append(MonitorDePID.idioma.mensaje_de_trace_ultima_no_traductado())
@@ -144,7 +144,7 @@ public class ContentoDeTraces implements Verificaciones {
                 String identificador = modid.getKey().key0;      // modid original
                 String nivel = modid.getKey().key1;              
 
-                List<String> jarsMod = Buscardor.obternerModsConNombre(identificador);
+                List<String> jarsMod = Buscardor.obtenerModsConNombre(identificador);
                 String nombreMostrar = jarsMod.isEmpty() ? identificador : String.join(", ", jarsMod);
 
                 if (nombresVistos.add(nombreMostrar)) {
@@ -160,7 +160,7 @@ public class ContentoDeTraces implements Verificaciones {
                 String nivel = pack.getKey().key1;                
 
                 String rutaPack = obtenerRutaDePaquete(identificador);
-                List<String> jarsPack = Buscardor.obternerUbicaciones(Buscardor.buscarModsConTermino(rutaPack));
+                List<String> jarsPack = Buscardor.obtenerUbicaciones(Buscardor.buscarModsConTermino(rutaPack));
                 String nombreMostrar = jarsPack.isEmpty() ? identificador : String.join(", ", jarsPack);
 
                 if (nombresVistos.add(nombreMostrar)) {
@@ -181,7 +181,7 @@ public class ContentoDeTraces implements Verificaciones {
 
             for (Problema p : problemas) {
                 constructor.append("<li>");
-                if (p.fatal) constructor.append(MonitorDePID.idioma.possibladad_fatal());
+                if (p.fatal) constructor.append(MonitorDePID.idioma.posibilidad_fatal());
                 constructor.append(p.nombre).append(" ").append(p.nivel).append("</li>");
             }
             constructor.append("</ul>");
@@ -239,7 +239,7 @@ public class ContentoDeTraces implements Verificaciones {
 
                 constructor.append("<li>");
                 if (cfg.getValue()) {
-                    constructor.append(MonitorDePID.idioma.possibladad_fatal());
+                    constructor.append(MonitorDePID.idioma.posibilidad_fatal());
                 }
                 constructor.append(cleanConf).append(" ").append(cfg.getKey().key1).append("</li>");
             }
@@ -281,7 +281,7 @@ public class ContentoDeTraces implements Verificaciones {
 
     @Override
     public String nombre() {
-        return MonitorDePID.idioma.nombre_de_contento_de_stacktrace();
+        return MonitorDePID.idioma.nombre_de_contenido_de_stacktrace();
     }
 
     /**

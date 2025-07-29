@@ -39,12 +39,12 @@ public String problema_con_graficas_ati() {
 }
 
     @Override
-    public String probelma_con_graficas_nouveau() {
+    public String problema_con_graficas_nouveau() {
         return "<span style='color:#" + config.obtenerColorAdvertencia() + "'>بعض الإصدارات القديمة تواجه أحيانًا مشكلات مع واجهة تحميل Nouveau المبكرة.</span>";
     }
 
     @Override
-    public String probelma_con_graficas_general() {
+    public String problema_con_graficas_general() {
         return "<span style='color:#" + config.obtenerColorError() + "'>هناك مشكلة في تعريفات بطاقة الرسوميات الخاصة بك. إذا كنت تستخدم GPU/APU AMD/ATI، يرجى تحديث تعريفات AMD. إذا كنت تستخدم NVIDIA، تأكد من ضبط جميع حالات javaw.exe واللعبة لاستخدام البطاقة المستقلة. اقرأ هذا الدليل: <a href='https://forums.minecraftforge.net/topic/125488-rules-and-frequently-asked-questions-faq/#:~:text=How%20do%20I%20update%20my%20drivers%3F' style='color:#" + config.obtenerColorEnlace() + "'>دليل تحديث التعريفات</a></span>";
     }
 
@@ -54,7 +54,7 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String no_tienes_las_dependencias_necesitas() {
+    public String no_tienes_las_dependencias_necesarias() {
         return "<span style='color:#" + config.obtenerColorError() + "'>التبعيات المطلوبة مفقودة:</span>";
     }
 
@@ -74,22 +74,22 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String texto_de_buton_local_enlance() {
+    public String texto_de_boton_local_enlace() {
         return "<span style='color:#" + config.obtenerColorBoton() + "'>عرض التقرير</span>";
     }
 
     @Override
-    public String texto_debajo_de_buton_local_enlance() {
+    public String texto_debajo_de_buton_local_enlace() {
         return "<span style='color:#" + config.obtenerColorInfo() + "'>عرض التقرير المحلي في المتصفح.</span>";
     }
 
     @Override
-    public String texto_de_buton_compartir_enlance() {
+    public String texto_de_buton_compartir_enlace() {
         return "مشاركة التقرير";
     }
 
     @Override
-    public String texto_debajo_de_buton_compartir_enlance() {
+    public String texto_debajo_de_buton_compartir_enlace() {
         return "مشاركة التقرير. سيتم تحميل سجلاتك إلى securelogger.net والتقرير إلى مواقع أخرى.";
     }
 
@@ -104,7 +104,7 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String possibladad_fatal() {
+    public String posibilidad_fatal() {
         return "<b style='color:#" + config.obtenerColorError() + "'>إمكانية أن يكون قاتلاً:</b> ";
     }
 
@@ -119,8 +119,8 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String faltar_de_clases_fatales() {
-        return "<b style='color:#" + config.obtenerColorError() + "'>تم اكتشاف فئات رئيسية مفقودة:</b>";
+    public String falta_de_clases_fatales() {
+        return "<b style='color:#" + config.obtenerColorError() + "'>لديك فئات قاتلة (FATAL)، وهي مشكلة خطيرة. الأسباب الشائعة تشمل CoreMods تالفة أو تبعيات قاتلة. يمكنك استخدام QuickFix للبحث عن المودات التي تحتوي على فئات قاتلة. الفئات القاتلة المفقودة التي تم اكتشافها:</b>";
     }
 
     @Override
@@ -144,7 +144,7 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String mcforge_mod_suspechoso() {
+    public String mcforge_mod_sospechoso() {
         return "<b style='color:#" + config.obtenerColorError() + "'>MinecraftForge اكتشف mod مشكوك فيه:</b> ";
     }
 
@@ -249,12 +249,12 @@ public String noTieneConsolaDeLauncherCursedForge() {
 
 @Override
 public String faltar_de_clases_advertencia() {
-    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>تحذير: تم اكتشاف فئات مفقودة:</b>";
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>تحذير: تم اكتشاف فئات مفقودة (تحذير). عادةً ليست خطيرة، ولكنها قد تسبب مشاكل — تختلف عن الأخطاء القاتلة. الأسباب الشائعة تشمل CoreMods تالفة أو تبعيات مفقودة. يمكنك استخدام QuickFix للبحث عن المودات التي تحتوي على فئات ناقصة. الفئات المفقودة المكتشفة:</b>";
 }
 
 
 @Override
-public String noResultos() {
+public String noResultados() {
     return "<b style='color:#" + config.obtenerColorError() + "'>لا نتائج</b>";
 }
 
@@ -623,7 +623,7 @@ public String nombre_de_bloque_teselado() {
     return "خطأ في عرض الكتل";
 }
 
-public String nombre_de_contento_de_stacktrace() {
+public String nombre_de_contenido_de_stacktrace() {
     return "تحليل سجل الأخطاء (stack trace)";
 }
 
@@ -778,7 +778,7 @@ public String inicioApp() {
 }
 
 @Override
-public String adjustesCrashDetector() {
+public String ajustesCrashDetector() {
     return "إعدادات كاشف الأعطال";
 }
 
@@ -1036,12 +1036,12 @@ public String mensaje_de_trace_ultima_no_traductado() {
 
 @Override
 public String solucionParaAdvertenciaFaltasClases() {
-    return "توجد لديك فصول مفقودة (تحذير)، عادةً يكون هذا جيدًا ولكن ليس دائمًا. التعديلات الأساسية السيئة أو الاعتمادات المفقودة هي أسباب شائعة لهذه المشكلة.";
+    return "يمكنك البحث في قاعدة بيانات WaifuNeoForge للعثور على المودات. اختر إصدار اللعبة، ومحمل المودات، واسم الفئة. استخدم أقرب تطابق ممكن. يمكنك البحث مرة واحدة كل دقيقة.";
 }
 
 @Override
 public String solucionFaltasClases() {
-    return "توجد لديك فصول مفقودة (قاتل)، هذا أمر مهم جدًا. التعديلات الأساسية السيئة أو الاعتمادات المفقودة هي أسباب شائعة لهذه المشكلة.";
+    return "يمكنك البحث في قاعدة بيانات WaifuNeoForge للعثور على المودات. اختر إصدار اللعبة، ومحمل المودات، واسم الفئة. استخدم أقرب تطابق ممكن. يمكنك البحث مرة واحدة كل دقيقة.";
 }
 
 @Override
@@ -1883,6 +1883,18 @@ public String noRegistroLauncherTitulo() {
 public String imagenNoEncontrada() {
     return "الصورة غير موجودة";
 }
+
+@Override
+public String faltar_de_clases_create() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>تم اكتشاف فئات مفقودة من Create. لقد تغير Create كثيرًا — تم إزالة العديد من الفئات. خاصةً منذ Create 6 (فبراير 2025)، الإضافات الخاصة بالإصدارات القديمة من Create لم تعد تعمل. لا يمكن لـ QuickFix حل هذه المشكلة. يجب تحديث إضافات Create، أو إزالة القديمة منها، أو استخدام الإصدار الصحيح من Create للإضافات التي ترغب في استخدامها.</b>";
+}
+
+@Override
+public String faltar_de_clases_epicfight() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>تم اكتشاف فئات مفقودة من EpicFight. لقد تغير EpicFight كثيرًا — تم إزالة العديد من الفئات. لا يمكن لـ QuickFix حل هذه المشكلة. يجب تحديث إضافات EpicFight، أو إزالة القديمة منها، أو استخدام الإصدار الصحيح من EpicFight للإضافات التي ترغب في استخدامها.</b>";
+}
+
+
 
 
 

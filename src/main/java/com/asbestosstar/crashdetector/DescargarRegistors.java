@@ -349,7 +349,7 @@ public class DescargarRegistors {
             try {
                 String contenido = MonitorDePID.leer_archivo(archivo.toPath());
                 Consola consola = new Consola(archivo.toPath());
-                consola.finalizarContentoInyectado(contenido);
+                consola.finalizarContenidoInyectado(contenido);
                 consolas.add(consola);
             } catch (IOException e) {
                 System.err.println("Error procesando " + archivo.getName() + ": " + e.getMessage());

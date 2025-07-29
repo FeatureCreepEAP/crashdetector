@@ -39,12 +39,12 @@ public String problema_con_graficas_ati() {
 }
 
     @Override
-    public String probelma_con_graficas_nouveau() {
+    public String problema_con_graficas_nouveau() {
         return "<span style='color:#" + config.obtenerColorAdvertencia() + "'>Kelkaj malnovaj versioj foje havas problemojn kun fruaj ŝarĝoj de Nouveau-kartoj.</span>";
     }
 
     @Override
-    public String probelma_con_graficas_general() {
+    public String problema_con_graficas_general() {
         return "<span style='color:#" + config.obtenerColorError() + "'>Estas problemo kun via grafik-ŝoforprogramo. Se vi uzas AMD/ATI GPU aŭ APU, ĝisdatigu viajn AMD-ŝoforprogramojn. Se vi uzas NVIDIA-karton, certigu ke la ludo kaj ĉiuj javaw.exe-ekzempleroj uzas apartan grafikkarton. Legu ĉi tiun gvidilon: <a href='https://forums.minecraftforge.net/topic/125488-rules-and-frequently-asked-questions-faq/#:~:text=How%20do%20I%20update%20my%20drivers%3F' style='color:#" + config.obtenerColorEnlace() + "'>Gvido por ĝisdatigi ŝoforprogramojn</a></span>";
     }
 
@@ -54,7 +54,7 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String no_tienes_las_dependencias_necesitas() {
+    public String no_tienes_las_dependencias_necesarias() {
         return "<span style='color:#" + config.obtenerColorError() + "'>Mankas necesaj dependaĵoj:</span>";
     }
 
@@ -74,22 +74,22 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String texto_de_buton_local_enlance() {
+    public String texto_de_boton_local_enlace() {
         return "<span style='color:#" + config.obtenerColorBoton() + "'>Vidi raporton</span>";
     }
 
     @Override
-    public String texto_debajo_de_buton_local_enlance() {
+    public String texto_debajo_de_buton_local_enlace() {
         return "<span style='color:#" + config.obtenerColorInfo() + "'>Vidi lokan raporton en retumilo.</span>";
     }
 
     @Override
-    public String texto_de_buton_compartir_enlance() {
+    public String texto_de_buton_compartir_enlace() {
         return "Kunhavigi raporton";
     }
 
     @Override
-    public String texto_debajo_de_buton_compartir_enlance() {
+    public String texto_debajo_de_buton_compartir_enlace() {
         return "Kunhavigi raporton. Viaj protokoloj estos alŝutitaj al securelogger.net, kaj la raporto al aliaj ejoj.";
     }
 
@@ -104,7 +104,7 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String possibladad_fatal() {
+    public String posibilidad_fatal() {
         return "<b style='color:#" + config.obtenerColorError() + "'>Eble fatala:</b> ";
     }
 
@@ -119,8 +119,8 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String faltar_de_clases_fatales() {
-        return "<b style='color:#" + config.obtenerColorError() + "'>Detektitaj mankantaj kritikaj klasoj:</b>";
+    public String falta_de_clases_fatales() {
+        return "<b style='color:#" + config.obtenerColorError() + "'>Vi havas fatalajn klasojn (FATAL), tio estas tre gravega. Oftaj kaŭzoj estas malbonaj CoreMods aŭ fatalaj dependecoj. Vi povas uzi QuickFix por serĉi modojn kun fatalaj klasoj. Mankantaj fatalaj klasoj trovitaj:</b>";
     }
 
     @Override
@@ -144,7 +144,7 @@ public String problema_con_graficas_ati() {
     }
 
     @Override
-    public String mcforge_mod_suspechoso() {
+    public String mcforge_mod_sospechoso() {
         return "<b style='color:#" + config.obtenerColorError() + "'>MinecraftForge detektis problemojn kun suspektinda mod:</b> ";
     }
 
@@ -250,12 +250,12 @@ public String noTieneConsolaDeLauncherCursedForge() {
 
 @Override
 public String faltar_de_clases_advertencia() {
-    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>Averto: Mankantaj klasoj trovitaj:</b>";
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>Averto: Mankas klasoj (averta nivelo). Kutime ne grave, sed povas okazi problemoj — malsamas de fatalaj klasaj eraroj. Oftaj kaŭzoj estas malbonaj CoreMods aŭ mankantaj dependecoj. Vi povas uzi QuickFix por serĉi modojn kun mankantaj klasoj. Mankantaj klasoj trovitaj:</b>";
 }
 
 
 @Override
-public String noResultos() {
+public String noResultados() {
     return "<b style='color:#" + config.obtenerColorError() + "'>Neniu rezulto</b>";
 }
 
@@ -611,7 +611,7 @@ public String nombre_de_bloque_teselado() {
     return "Eraro de blok-rendado";
 }
 
-public String nombre_de_contento_de_stacktrace() {
+public String nombre_de_contenido_de_stacktrace() {
     return "Analizo de stapleraroj (stack trace)";
 }
 
@@ -766,7 +766,7 @@ public String inicioApp() {
 }
 
 @Override
-public String adjustesCrashDetector() {
+public String ajustesCrashDetector() {
     return "Agordoj de CrashDetector";
 }
 
@@ -1023,12 +1023,12 @@ public String mensaje_de_trace_ultima_no_traductado() {
 
 @Override
 public String solucionParaAdvertenciaFaltasClases() {
-    return "Vi havas mankantajn klasojn (Averto), ĝenerale tio estas bone sed ne ĉiam. Malbonaj krommoduloj aŭ mankantaj dependecoj estas oftaj kialoj por ĉi tiu problemo.";
+    return "Vi povas serĉi en la datumbazo WaifuNeoForge por trovi kromprogramojn. Elektu la ludversion, modŝarĝilon kaj klason. Uzu la plej similan kombinaĵon. Vi povas serĉi nur unufoje en unu minuto.";
 }
 
 @Override
 public String solucionFaltasClases() {
-    return "Vi havas mankantajn klasojn (FATALA), tio estas tre grava. Malbonaj krommoduloj aŭ mankantaj dependecoj estas oftaj kialoj por ĉi tiu problemo.";
+    return "Vi povas serĉi en la datumbazo WaifuNeoForge por trovi kromprogramojn. Elektu la ludversion, modŝarĝilon kaj klason. Uzu la plej similan kombinaĵon. Vi povas serĉi nur unufoje en unu minuto.";
 }
 
 @Override
@@ -1873,7 +1873,15 @@ public String noRegistroDeLauncher() {
            "Por pli da informo, vidu <a href=\"https://github.com/HMCL-dev/HMCL/issues/2663 \">tiun problemon</a>. Ĉi tiuj lokoj enhavas la norman eliron (STDOUT) necesa por diagnozi multajn erartipojn.";
 }
 
+@Override
+public String faltar_de_clases_create() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Mankas klaso(j) el Create. Create multe ŝanĝis — multaj klasoj estas forigitaj. Ĉefe ekde Create 6 (februaro 2025), aldonaĵoj por pli fruaj versioj ne plu funkcias. QuickFix ne havas solvon por ĉi tiu problemo. Vi devas ĝisdatigi viajn Create-aldonaĵojn, forigi malnovajn aŭ uzi la ĝustan Create-version por viaj dezirataj aldonaĵoj.</b>";
+}
 
+@Override
+public String faltar_de_clases_epicfight() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Mankas klaso(j) el EpicFight. EpicFight multe ŝanĝis — multaj klasoj estas forigitaj. QuickFix ne havas solvon por ĉi tiu problemo. Vi devas ĝisdatigi viajn EpicFight-aldonaĵojn, forigi malnovajn aŭ uzi la ĝustan EpicFight-version por viaj dezirataj aldonaĵoj.</b>";
+}
 
 
 

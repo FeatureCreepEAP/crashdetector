@@ -22,7 +22,7 @@ public class ProblemaVersionDowngrade implements Verificaciones {
      */
     @Override
     public void verificar(Consola consola) {
-        String contenido = consola.contento_verificar;
+        String contenido = consola.contenido_verificar;
 
         // Patrón para detectar intentos de cargar un mundo de una versión más nueva
         Pattern patron = Pattern.compile(

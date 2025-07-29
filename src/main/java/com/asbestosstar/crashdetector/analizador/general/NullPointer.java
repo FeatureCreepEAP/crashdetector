@@ -53,12 +53,12 @@ public class NullPointer implements Verificaciones {
 		/* 1) Reunir todas las líneas que puedan contener una NPE */
 		List<String> lineasAInspeccionar = new ArrayList<>();
 		// Texto completo de consola
-		for (String l : consola.contento_verificar.split(NL))
+		for (String l : consola.contenido_verificar.split(NL))
 			lineasAInspeccionar.add(l);
 		// Trazos detectados (no fatales y fatales)
-		VerificacionDeStackTrace.obtenerTraces(consola.contento_verificar)
+		VerificacionDeStackTrace.obtenerTraces(consola.contenido_verificar)
 				.forEach(t -> añadirLineas(t, lineasAInspeccionar));
-		VerificacionDeStackTrace.obtenerTracesFatal(consola.contento_verificar)
+		VerificacionDeStackTrace.obtenerTracesFatal(consola.contenido_verificar)
 				.forEach(t -> añadirLineas(t, lineasAInspeccionar));
 
 		/* 2) Analizar cada línea */
