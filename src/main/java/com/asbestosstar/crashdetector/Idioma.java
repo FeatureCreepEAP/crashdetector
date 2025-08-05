@@ -769,6 +769,12 @@ public interface Idioma {
 	public String openJ9NoSoportado();
 
 	public String necesitasJDK11();
+
+	public String memoriaExcesiva();
+
+	public String recomendacionMemoriaExcesiva();
+
+	public String disminuirMemoriaHeap();
 	
 	// public String advertenciaMalwareFalso();
 

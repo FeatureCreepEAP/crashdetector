@@ -2325,7 +2325,30 @@ public String faltar_de_clases_epicfight() {
 }
 
 
+@Override
+public String openJ9NoSoportado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Estás utilizando OpenJ9, que no es compatible con Esta Aplicacion. Muchos apps, incluido éste, no soportan OpenJ9 debido a diferencias en la implementación de la JVM. QuickFix no puede resolver este problema automáticamente. Necesitas instalar un JDK compatible como Oracle JDK, OpenJDK Hotspot u otros alternativos recomendados.</b>";
+}
 
+@Override
+public String necesitasJDK11() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Esta versión de la applicacion requiere Java 11 (JDK 11) para funcionar correctamente. Estás utilizando una versión anterior de Java que no es compatible. QuickFix no puede actualizar tu Java automáticamente. Necesitas descargar e instalar JDK 11 o una versión superior compatible desde los enlaces proporcionados en la solución.</b>";
+}
+
+@Override
+public String memoriaExcesiva() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Has asignado demasiada memoria, lo que está causando que el sistema no tenga suficientes recursos para funcionar correctamente. Esto suele ocurrir cuando se especifica una cantidad de RAM mayor a la disponible en tu sistema o cuando se usa una JVM de 32 bits que no puede manejar grandes cantidades de memoria.</b>";
+}
+
+@Override
+public String recomendacionMemoriaExcesiva() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>Para resolver este problema, debes reducir la cantidad de memoria asignada a la app. La cantidad máxima recomendada depende de tu sistema, pero generalmente no debe exceder el 70-80% de tu memoria RAM total. Si usas una JVM de 32 bits, el límite máximo es de aproximadamente 2-3 GB, independientemente de la cantidad de RAM física que tengas.</b>";
+}
+
+@Override
+public String disminuirMemoriaHeap() {
+    return "<b style='color:#" + config.obtenerColorTexto() + "'>Para disminuir la memoria heap asignada a la app, abre la configuración de tu lanzador y busca la opción de memoria RAM. Reduce el valor máximo (Xmx) a una cantidad más adecuada. Por ejemplo, si tienes 8 GB de RAM, asigna entre 3-4 GB a la app. Si tienes 16 GB de RAM, puedes asignar entre 6-8 GB. Recuerda dejar suficiente memoria para el sistema operativo y otros programas.</b>";
+}
 
 
 

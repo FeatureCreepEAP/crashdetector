@@ -1840,6 +1840,37 @@ public String faltar_de_clases_epicfight() {
     return "<b style='color:#" + config.obtenerColorError() + "'>Classes ausentes do EpicFight detectadas. O EpicFight mudou muito — muitas classes foram removidas. O QuickFix não tem solução para isso. Atualize seus addons do EpicFight, remova os obsoletos ou use a versão correta do EpicFight para os addons desejados.</b>";
 }
 
+@Override
+public String openJ9NoSoportado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Você está usando o OpenJ9, que não é suportado por este aplicativo. Muitos programas, incluindo este, não suportam o OpenJ9 devido a diferenças na implementação da JVM. O QuickFix não pode resolver esse problema automaticamente. Você precisa instalar um JDK compatível, como Oracle JDK, OpenJDK Hotspot ou outras alternativas recomendadas.</b>";
+}
+
+@Override
+public String necesitasJDK11() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Esta versão do aplicativo requer Java 11 (JDK 11) para funcionar corretamente. Você está usando uma versão antiga do Java que não é compatível. O QuickFix não pode atualizar seu Java automaticamente. Você precisa baixar e instalar o JDK 11 ou uma versão superior compatível pelos links fornecidos na solução.</b>";
+}
+
+@Override
+public String memoriaExcesiva() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Você alocou memória em excesso, fazendo com que o sistema não tenha recursos suficientes. Isso ocorre quando a quantidade de RAM definida é maior que a disponível ou ao usar uma JVM de 32 bits, que não lida bem com grandes alocações.</b>";
+}
+
+@Override
+public String recomendacionMemoriaExcesiva() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>Para resolver, reduza a memória alocada ao app. O máximo recomendado depende do seu sistema, mas geralmente não deve ultrapassar 70-80% da RAM total. Em JVMs de 32 bits, o limite é de cerca de 2-3 GB, independentemente da RAM física.</b>";
+}
+
+@Override
+public String disminuirMemoriaHeap() {
+    return "<b style='color:#" + config.obtenerColorTexto() + "'>Para reduzir a memória heap, abra as configurações do seu launcher e encontre a opção de memória RAM. Reduza o valor máximo (Xmx) para um valor adequado. Exemplo: com 8 GB de RAM, use 3-4 GB; com 16 GB, use 6-8 GB. Deixe memória suficiente para o sistema operacional e outros programas.</b>";
+}
+
+
+
+
+
+
+
 
 
 }

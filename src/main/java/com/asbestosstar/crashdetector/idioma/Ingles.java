@@ -1913,7 +1913,30 @@ public String faltar_de_clases_epicfight() {
 }
 
 
+@Override
+public String openJ9NoSoportado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>You are using OpenJ9, which is not supported by this application. Many apps, including this one, do not support OpenJ9 due to differences in JVM implementation. QuickFix cannot resolve this issue automatically. You need to install a compatible JDK such as Oracle JDK, OpenJDK Hotspot, or other recommended alternatives.</b>";
+}
 
+@Override
+public String necesitasJDK11() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>This version of the application requires Java 11 (JDK 11) to run properly. You are using an older, incompatible version of Java. QuickFix cannot upgrade your Java automatically. You must download and install JDK 11 or a newer compatible version from the links provided in the solution.</b>";
+}
+
+@Override
+public String memoriaExcesiva() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>You have allocated too much memory, causing the system to lack sufficient resources. This usually happens when you set RAM higher than what your system has available, or when using a 32-bit JVM that cannot handle large memory allocations.</b>";
+}
+
+@Override
+public String recomendacionMemoriaExcesiva() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>To fix this, reduce the amount of memory allocated to the app. The recommended maximum depends on your system, but should generally not exceed 70–80% of your total RAM. If using a 32-bit JVM, the limit is around 2–3 GB regardless of your physical RAM.</b>";
+}
+
+@Override
+public String disminuirMemoriaHeap() {
+    return "<b style='color:#" + config.obtenerColorTexto() + "'>To reduce the heap memory allocated to the app, open your launcher settings and find the RAM option. Lower the maximum value (Xmx) to a more suitable amount. For example, if you have 8 GB of RAM, assign 3–4 GB to the app. With 16 GB, you can assign 6–8 GB. Remember to leave enough memory for your OS and other programs.</b>";
+}
 
 
 

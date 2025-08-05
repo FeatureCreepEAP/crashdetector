@@ -1838,6 +1838,33 @@ public String faltar_de_clases_epicfight() {
     return "<b style='color:#" + config.obtenerColorError() + "'>EpicFight에서 누락된 클래스가 감지되었습니다. EpicFight는 많은 변경이 있었으며, 많은 클래스가 제거되었습니다. QuickFix는 이 문제에 대한 해결책을 제공하지 않습니다. EpicFight 애드온을 업데이트하거나, 더 이상 사용하지 않는 애드온을 제거하거나, 사용하려는 애드온에 맞는 올바른 EpicFight 버전을 사용해야 합니다.</b>";
 }
 
+@Override
+public String openJ9NoSoportado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>OpenJ9를 사용하고 계신데, 이 애플리케이션은 OpenJ9를 지원하지 않습니다. 이 앱을 포함한 많은 앱들이 JVM 구현 방식의 차이로 인해 OpenJ9를 지원하지 않습니다. QuickFix로는 이 문제를 자동으로 해결할 수 없습니다. Oracle JDK, OpenJDK Hotspot 또는 기타 권장되는 호환 가능한 JDK를 설치해야 합니다.</b>";
+}
+
+@Override
+public String necesitasJDK11() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>이 앱의 버전은 정상 작동을 위해 Java 11(JDK 11)이 필요합니다. 현재 사용 중인 Java 버전이 오래되어 호환되지 않습니다. QuickFix는 Java를 자동으로 업데이트할 수 없습니다. 해결 방법에 제공된 링크에서 JDK 11 이상의 호환 가능한 버전을 다운로드하여 설치해야 합니다.</b>";
+}
+
+@Override
+public String memoriaExcesiva() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>너무 많은 메모리를 할당하여 시스템 리소스가 부족해졌습니다. 일반적으로 시스템에 있는 RAM보다 더 많은 메모리를 지정했거나, 대용량 메모리를 처리할 수 없는 32비트 JVM을 사용할 때 발생합니다.</b>";
+}
+
+@Override
+public String recomendacionMemoriaExcesiva() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>이 문제를 해결하려면 앱에 할당된 메모리 양을 줄여야 합니다. 추천 최대치는 시스템에 따라 다릅니다만, 일반적으로 전체 RAM의 70~80%를 초과하지 않아야 합니다. 32비트 JVM을 사용하는 경우 물리적 RAM 양과 관계없이 약 2~3GB가 최대치입니다.</b>";
+}
+
+@Override
+public String disminuirMemoriaHeap() {
+    return "<b style='color:#" + config.obtenerColorTexto() + "'>앱의 힙(heap) 메모리를 줄이려면, 런처 설정을 열고 RAM 옵션을 찾으세요. 최대값(Xmx)을 더 적절한 수치로 줄이세요. 예를 들어, 8GB RAM을 가진 경우 3~4GB를, 16GB를 가진 경우 6~8GB를 할당할 수 있습니다. 운영체제와 다른 프로그램을 위해 충분한 메모리를 남겨두는 것을 잊지 마세요.</b>";
+}
+
+
+
 
 
 
