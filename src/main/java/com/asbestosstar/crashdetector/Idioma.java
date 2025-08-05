@@ -765,6 +765,10 @@ public interface Idioma {
 	public String faltar_de_clases_create();
 
 	public String faltar_de_clases_epicfight();
+
+	public String openJ9NoSoportado();
+
+	public String necesitasJDK11();
 	
 	// public String advertenciaMalwareFalso();
 

@@ -82,6 +82,7 @@ public class Drivers implements Verificaciones {
             mensajes.append(MonitorDePID.idioma.problema_con_graficas_nouveau());
             activado = true;
             return;
+            //libgallium-24.2.8.so posible?
         }
         if (contienePatron(log, new String[]{"PhysX_64.dll", "glfw.dll"}) && log.contains("EXCEPTION_ACCESS_VIOLATION")) {
             procesarProblemaGraficos();

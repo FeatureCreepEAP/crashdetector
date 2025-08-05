@@ -9,7 +9,21 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
-
+/**
+ * Verificador que detecta la ausencia del archivo launcher_log.txt en entornos de CurseForge.
+ * <p>
+ * Esta clase comprueba si el programa se está ejecutando dentro de una instancia de CurseForge
+ * (mediante la ruta del directorio) y si existe el archivo de registro del launcher. Si no se
+ * encuentra el archivo, se muestra una advertencia, ya que es necesario para analizar errores
+ * durante el inicio del juego.
+ * </p>
+ * <p>
+ * La ausencia del log suele deberse a la opción \"Omitir inicio del launcher\" activada
+ * en el cliente de CurseForge. Esta opción debe desactivarse para permitir la creación del log.
+ * </p>
+ * 
+ * @author asbestosstar
+ */
 public class CursedConsola implements Verificaciones {
 
     private boolean activado = false;

@@ -22,8 +22,11 @@ public class JavaVersiones implements Verificaciones {
     public void verificar(Consola consola) {
     	String contenidoConsola=consola.contenido_verificar;
 
+
+
+
         // Verificación de versión Java 22 no soportada
-        if (contenidoConsola.contains("java.lang.IllegalArgumentException: Unsupported class file major version")) {
+        if (contenidoConsola.contains("Unsupported class file major version")) {
             if (contenidoConsola.contains("--fml.forgeVersion, 4") || contenidoConsola.contains("--fml.forgeVersion, 3")) {
                 if (contenidoConsola.contains("java version 2") && !contenidoConsola.contains("java version 20") && !contenidoConsola.contains("java version 21")) {
                     mensajes.add(MonitorDePID.idioma.java22());
@@ -55,6 +58,20 @@ public class JavaVersiones implements Verificaciones {
             mensajes.add(MonitorDePID.idioma.errorJava8Requerido());
             activado = true;
         }
+        
+        //https://github.com/HMCL-dev/HMCL/blob/main/HMCLCore/src/main/java/org/jackhuang/hmcl/game/CrashReportAnalyzer.java
+        if (contenidoConsola.contains("Open J9 is not supported")||contenidoConsola.contains("OpenJ9 is incompatible")||contenidoConsola.contains(".J9VMInternals")) {
+            mensajes.add(MonitorDePID.idioma.openJ9NoSoportado());
+            activado = true;
+        }
+        
+        // Verificación de necesidad de JDK 11
+        if (contenidoConsola.contains("no such method: sun.misc.Unsafe.defineAnonymousClass(Class,byte[],Object[])Class/invokeVirtual") ||
+            contenidoConsola.contains("java.lang.IllegalArgumentException: The requested compatibility level JAVA_11 could not be set. Level is not supported by the active JRE or ASM version")) {
+            mensajes.add(MonitorDePID.idioma.necesitasJDK11());
+            activado = true;
+        }
+        
     }
 
     @Override

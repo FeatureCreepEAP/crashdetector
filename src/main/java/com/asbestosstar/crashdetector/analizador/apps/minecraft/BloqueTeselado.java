@@ -6,6 +6,17 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 
+/**
+ * Verificador que detecta errores relacionados con el teselado de bloques en Minecraft.
+ * <p>
+ * Esta clase analiza la salida de la consola en busca de mensajes que indiquen un fallo 
+ * durante el proceso de "Tesselating block in world", un error común en entornos de Minecraft 
+ * cuando se intenta renderizar un bloque incompatible o corrupto, generalmente causado por 
+ * mods mal compatibles, versiones incorrectas o problemas de renderizado.
+ * </p>
+ * 
+ * @author asbestosstar
+ */
 public class BloqueTeselado implements Verificaciones {
 
     private boolean activado = false;
