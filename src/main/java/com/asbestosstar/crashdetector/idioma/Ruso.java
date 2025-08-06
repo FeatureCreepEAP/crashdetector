@@ -1915,6 +1915,99 @@ public String disminuirMemoriaHeap() {
     return "<b style='color:#" + config.obtenerColorTexto() + "'>Чтобы уменьшить выделенную кучу (heap), откройте настройки лаунчера и найдите параметр памяти. Уменьшите максимальное значение (Xmx) до подходящего. Например, при 8 ГБ ОЗУ выделите 3–4 ГБ; при 16 ГБ — 6–8 ГБ. Оставьте достаточно памяти для ОС и других программ.</b>";
 }
 
+@Override
+public String forgeArchivosFaltantes(String archivo) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Отсутствуют важные файлы Forge. Файл '" + archivo + "' не найден в вашей установке. Это происходит, если установка Forge была прервана или важные файлы были удалены. QuickFix не может восстановить эти файлы автоматически. Вам нужно переустановить Forge с помощью официального установщика.</b>";
+}
+
+@Override
+public String forgeVersionNoEncontrada(String version, String archivo) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Forge не может найти требуемую версию Minecraft. Требуется версия " + version + ", но она не найдена в файле '" + archivo + "'. Это происходит при несоответствии версии Minecraft и версии Forge. Убедитесь, что вы скачали правильную версию Forge, совместимую с вашей версией Minecraft.</b>";
+}
+
+@Override
+public String forgeTargetFmlclientNoEncontrado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Не удалось найти целевой объект 'fmlclient', необходимый для запуска Forge. Это указывает на неполную или повреждённую установку Forge. Ключевые файлы Forge, возможно, не были установлены корректно. Вам нужно переустановить Forge с помощью официального установщика.</b>";
+}
+
+@Override
+public String forgeClaseMinecraftFaltante() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Основной класс Minecraft не найден в загрузчике классов. Это обычно означает неполную установку Forge или конфликт с другими модами. Файлы Minecraft могли повредиться при установке Forge. Вам нужно правильно переустановить Forge.</b>";
+}
+
+@Override
+public String forgeInstallacionNoCompleta() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Установка Forge неполная. Это может быть вызвано прерванной установкой, удалёнными файлами или несовместимостью с вашей версией Minecraft. Forge требует определённых файлов для работы, и некоторые из них отсутствуют в текущей установке.</b>";
+}
+
+@Override
+public String nombre_de_forge_instalacion_no_completa() {
+    return "Неполная установка Forge";
+}
+
+@Override
+public String solucion_para_forge_instalacion_no_completa() {
+    return "<b style='color:#" + config.obtenerColorTexto() + "'>Чтобы решить проблему, переустановите Forge. Убедитесь, что вы скачали версию, совместимую с вашей версией Minecraft, и завершите установку без перерывов.</b>";
+}
+
+@Override
+public String descargar_forge_oficial() {
+    return "Скачать Forge официально";
+}
+
+@Override
+public String reinstalar_forge_correctamente() {
+    return "Как правильно переустановить Forge";
+}
+
+@Override
+public String instrucciones_reinstalar_forge() {
+    return "<html><body style='width: 500px;'>" +
+           "<h3 style='color:#" + config.obtenerColorTitulo() + "'>Инструкции по переустановке Forge:</h3>" +
+           "<ol>" +
+           "<li>Скачайте правильный установщик Forge с официального сайта (рекомендуемая версия для вашего Minecraft)</li>" +
+           "<li>Полностью закройте лаунчер Minecraft</li>" +
+           "<li>Запустите установщик Forge от имени администратора</li>" +
+           "<li>Выберите опцию 'Installer' (не 'Installer (run client)')</li>" +
+           "<li>Укажите папку профиля Minecraft в лаунчере</li>" +
+           "<li>Нажмите 'OK' и дождитесь завершения установки</li>" +
+           "<li>Перезапустите лаунчер и проверьте, появился ли Forge в списке профилей</li>" +
+           "</ol>" +
+           "<p><b>Важно:</b> При использовании кастомного лаунчера убедитесь, что выбрана правильная папка профиля.</p>" +
+           "</body></html>";
+}
+
+@Override
+public String titulo_instrucciones_reinstaler_mcforge() {
+    return "Инструкции по переустановке Forge";
+}
+
+@Override
+public String error_enlace_insatisfecho(String nombreBiblioteca) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Ошибка неудовлетворённой ссылки: не удалось загрузить библиотеку " + nombreBiblioteca + ". Возможные решения:<br/><br/>" +
+           "a) Добавьте каталог с общей библиотекой в -Djava.library.path или -Dorg.lwjgl.librarypath.<br/>" +
+           "b) Добавьте JAR-файл с общей библиотекой в classpath.<br/><br/>" +
+           "Эта ошибка возникает, когда Minecraft не может найти необходимые файлы для работы. " +
+           "Обычно вызвана неполной установкой Minecraft или проблемами с правами доступа в системе.</b>";
+}
+
+@Override
+public String nombre_de_error_enlace_insatisfecho() {
+    return "Ошибка неудовлетворённой ссылки";
+}
+
+@Override
+public String solucion_para_error_enlace_insatisfecho() {
+    return "<b style='color:#" + config.obtenerColorTexto() + "'>Не удалось загрузить библиотеку. Возможные решения:<br/><br/>" +
+           "a) Добавьте каталог с общей библиотекой в -Djava.library.path или -Dorg.lwjgl.librarypath.<br/>" +
+           "b) Добавьте JAR-файл с общей библиотекой в classpath.<br/><br/>" +
+           "Эти технические решения предназначены для опытных пользователей. Большинству пользователей следует попробовать " +
+           "переустановить Minecraft перед изменением этих параметров.</b>";
+}
+
+@Override public String conflicto_id_colision_especifico(String id, String modOrigen, String modDestino) { return "<b style='color:#" + config.obtenerColorError() + "'>Конфликт ID: ID <strong>" + id + "</strong> уже занят модом <strong>" + modOrigen + "</strong>, при попытке добавить <strong>" + modDestino + "</strong>. Происходит, когда два мода пытаются использовать один и тот же ID для разных элементов.</b>"; } @Override public String conflicto_id_maximo() { return "<b style='color:#" + config.obtenerColorError() + "'>Превышен максимальный допустимый диапазон ID. Происходит, когда моды пытаются зарегистрировать блоки или предметы с ID за пределами диапазона, поддерживаемого вашей версией Minecraft.</b>"; } @Override public String nombre_de_conflicto_ids() { return "Конфликт ID"; } @Override public String solucion_maximo_rango() { return "<b style='color:#" + config.obtenerColorTexto() + "'>Чтобы решить это в Minecraft 1.12.2, установите <a href='https://www.curseforge.com/minecraft/mc-mods/justenoughids'>JustEnoughIDs</a>. Для 1.7.10 используйте <a href='https://www.curseforge.com/minecraft/mc-mods/endless-ids'>EndlessIDs</a>.</b>"; } @Override public String solucion_colision_id() { return "<b style='color:#" + config.obtenerColorTexto() + "'>Используйте такие инструменты, как <a href='https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/1291014-idfix-and-idfix-minus-mods-for-resolving-id'>IdFix Minus</a> или <a href='https://github.com/SS111/Minecraft-ID-Resolver'>Minecraft-ID-Resolver</a>, чтобы устранить конфликты ID.</b>"; } @Override public String instalar_justenoughids() { return "Установить JustEnoughIDs"; } @Override public String instalar_endlessids() { return "Установить EndlessIDs"; } @Override public String usar_idfix_minus() { return "Использовать IdFix Minus или IdFix"; } @Override public String usar_minecraft_id_resolver() { return "Использовать Minecraft-ID-Resolver"; } @Override public String ver_documentacion_jp() { return "Просмотреть японскую документацию"; }
+
+
 
 
 }

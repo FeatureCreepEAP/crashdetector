@@ -11,6 +11,7 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.AuditorTransformer;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.BloqueTeselado;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ConflictoDeIDsMinecraft;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.CursedConsola;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.EarlyWindow;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorConfiguracionMCForge;
@@ -19,6 +20,7 @@ import com.asbestosstar.crashdetector.analizador.apps.minecraft.FaltasDependenci
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.KubeJSResourcePack;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.LegacyRandomSourceMultiHilos;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.LenguajeProveedorCheck;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.MCForgeInstallacionNoEstaCompleta;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.MCForgeModsSuspechoso;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ModsDuplicadosModLauncher;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.NecesitasSodium;
@@ -57,6 +59,7 @@ import com.asbestosstar.crashdetector.analizador.general.AdvertenciaFaltasClases
 import com.asbestosstar.crashdetector.analizador.general.ContentoDeTraces;
 import com.asbestosstar.crashdetector.analizador.general.DifDeMods;
 import com.asbestosstar.crashdetector.analizador.general.Drivers;
+import com.asbestosstar.crashdetector.analizador.general.ErrorDeEnlaceInsatisfecho;
 import com.asbestosstar.crashdetector.analizador.general.ErrorDeMonitorLWJGL;
 import com.asbestosstar.crashdetector.analizador.general.FaltaModuleJPMS;
 import com.asbestosstar.crashdetector.analizador.general.FaltasClases;
@@ -153,9 +156,23 @@ public class Analizador {
 		verificaciones.add(new ProblemaVersionModMundo());
 		verificaciones.add(new ProblemaDependenciaModFabric());
 
+
+		
+		
+		
 		
 		// Fin de Codex Aternos
 
+		
+		
+		
+		verificaciones.add(new MCForgeInstallacionNoEstaCompleta());
+		verificaciones.add(new ErrorDeEnlaceInsatisfecho());
+		verificaciones.add(new ConflictoDeIDsMinecraft());
+
+		
+		
+		
 		
 		
 		verificaciones.add(new DifDeMods());

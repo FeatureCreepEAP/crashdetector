@@ -40,4 +40,19 @@ public interface Verificaciones {
 	
 	public QuickFix solucion();
 	
+	
+	
+    
+    public static void abrirEnNavegador(String url) {
+        try {
+            if (java.awt.Desktop.isDesktopSupported()) {
+                java.awt.Desktop.getDesktop().browse(new java.net.URI(url));
+            }
+        } catch (Exception e) {
+            // Manejo de excepción silencioso
+        }
+    }
+	
+	
+	
 }

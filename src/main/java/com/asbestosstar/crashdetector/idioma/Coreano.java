@@ -1863,9 +1863,145 @@ public String disminuirMemoriaHeap() {
     return "<b style='color:#" + config.obtenerColorTexto() + "'>앱의 힙(heap) 메모리를 줄이려면, 런처 설정을 열고 RAM 옵션을 찾으세요. 최대값(Xmx)을 더 적절한 수치로 줄이세요. 예를 들어, 8GB RAM을 가진 경우 3~4GB를, 16GB를 가진 경우 6~8GB를 할당할 수 있습니다. 운영체제와 다른 프로그램을 위해 충분한 메모리를 남겨두는 것을 잊지 마세요.</b>";
 }
 
+@Override
+public String forgeArchivosFaltantes(String archivo) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Forge의 필수 파일이 없습니다. '" + archivo + "' 파일이 설치 폴더에 존재하지 않습니다. 일반적으로 Forge 설치가 중단되거나 중요한 파일이 삭제되었을 때 발생합니다. QuickFix는 이 파일들을 자동으로 복구할 수 없습니다. 공식 설치 프로그램을 사용하여 Forge를 다시 설치해야 합니다.</b>";
+}
 
+@Override
+public String forgeVersionNoEncontrada(String version, String archivo) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Forge가 필요한 마인크래프트 버전을 찾을 수 없습니다. 버전 " + version + "이 필요하지만 '" + archivo + "' 파일에서 찾을 수 없습니다. 마인크래프트 버전과 사용 중인 Forge 버전이 맞지 않을 때 발생합니다. 마인크래프트 버전에 맞는 올바른 Forge 버전을 다운로드했는지 확인하세요.</b>";
+}
 
+@Override
+public String forgeTargetFmlclientNoEncontrado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Forge를 시작하는 데 필요한 'fmlclient' 타겟을 찾을 수 없습니다. 이는 Forge 설치가 불완전하거나 손상되었음을 의미합니다. Forge의 핵심 파일이 제대로 설치되지 않았을 수 있습니다. 공식 설치 프로그램을 사용하여 Forge를 다시 설치해야 합니다.</b>";
+}
 
+@Override
+public String forgeClaseMinecraftFaltante() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>클래스 로더에서 마인크래프트 메인 클래스를 찾을 수 없습니다. 이는 Forge 설치가 불완전하거나 다른 모드와 충돌했음을 나타냅니다. Forge 설치 중 마인크래프트 파일이 손상되었을 수 있습니다. Forge를 다시 올바르게 설치해야 합니다.</b>";
+}
+
+@Override
+public String forgeInstallacionNoCompleta() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Forge 설치가 완료되지 않았습니다. 설치 도중 중단되었거나 파일이 삭제되었거나 마인크래프트 버전과 호환되지 않을 수 있습니다. Forge는 정상 작동을 위해 특정 파일이 필요하며, 일부 파일이 현재 설치에 누락되어 있습니다.</b>";
+}
+
+@Override
+public String nombre_de_forge_instalacion_no_completa() {
+    return "Forge 설치 미완료";
+}
+
+@Override
+public String solucion_para_forge_instalacion_no_completa() {
+    return "<b style='color:#" + config.obtenerColorTexto() + "'>이 문제를 해결하려면 Forge를 다시 올바르게 설치하세요. 마인크래프트 버전에 맞는 올바른 버전을 다운로드하고 설치 과정을 중단하지 말고 완료하세요.</b>";
+}
+
+@Override
+public String descargar_forge_oficial() {
+    return "공식 사이트에서 Forge 다운로드";
+}
+
+@Override
+public String reinstalar_forge_correctamente() {
+    return "Forge를 올바르게 다시 설치하는 방법";
+}
+
+@Override
+public String instrucciones_reinstalar_forge() {
+    return "<html><body style='width: 500px;'>" +
+           "<h3 style='color:#" + config.obtenerColorTitulo() + "'>Forge 다시 설치 방법:</h3>" +
+           "<ol>" +
+           "<li>공식 사이트에서 마인크래프트 버전에 맞는 Forge 설치 프로그램을 다운로드하세요</li>" +
+           "<li>마인크래프트 런처를 완전히 종료하세요</li>" +
+           "<li>관리자 권한으로 Forge 설치 프로그램을 실행하세요</li>" +
+           "<li>'Installer' 옵션을 선택하세요 ('Installer (run client)' 아님)</li>" +
+           "<li>런처에서 마인크래프트 프로필 폴더를 선택하세요</li>" +
+           "<li>'OK'를 누르고 설치가 완료될 때까지 기다리세요</li>" +
+           "<li>런처를 재시작하고 Forge가 프로필 목록에 나타나는지 확인하세요</li>" +
+           "</ol>" +
+           "<p><b>중요:</b> 사용자 정의 런처를 사용하는 경우 올바른 프로필 폴더를 선택했는지 확인하세요.</p>" +
+           "</body></html>";
+}
+
+@Override
+public String titulo_instrucciones_reinstaler_mcforge() {
+    return "Forge 다시 설치 방법";
+}
+
+@Override
+public String error_enlace_insatisfecho(String nombreBiblioteca) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>링크 오류: 라이브러리 " + nombreBiblioteca + "을(를) 로드하지 못했습니다. 가능한 해결 방법:<br/><br/>" +
+           "a) 공유 라이브러리가 있는 디렉터리를 -Djava.library.path 또는 -Dorg.lwjgl.librarypath에 추가하세요.<br/>" +
+           "b) 공유 라이브러리를 포함하는 JAR 파일을 classpath에 추가하세요.<br/><br/>" +
+           "이 오류는 마인크래프트가 실행에 필요한 핵심 파일을 찾을 수 없을 때 발생합니다. " +
+           "대부분 마인크래프트 설치가 불완전하거나 시스템 권한 문제로 인해 발생합니다.</b>";
+}
+
+@Override
+public String nombre_de_error_enlace_insatisfecho() {
+    return "링크 오류";
+}
+
+@Override
+public String solucion_para_error_enlace_insatisfecho() {
+    return "<b style='color:#" + config.obtenerColorTexto() + "'>라이브러리 로드 실패. 가능한 해결 방법:<br/><br/>" +
+           "a) 공유 라이브러리가 있는 디렉터리를 -Djava.library.path 또는 -Dorg.lwjgl.librarypath에 추가하세요.<br/>" +
+           "b) 공유 라이브러리를 포함하는 JAR 파일을 classpath에 추가하세요.<br/><br/>" +
+           "이러한 기술적 해결책은 고급 사용자를 위한 것입니다. 대부분의 사용자는 이러한 매개변수를 수정하기 전에 " +
+           "마인크래프트를 재설치하는 것이 좋습니다.</b>";
+}
+
+@Override
+public String conflicto_id_colision_especifico(String id, String modOrigen, String modDestino) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>ID 충돌: <strong>" + id + "</strong> 번 ID가 <strong>" + modOrigen + "</strong>에 의해 이미 사용 중이며, <strong>" + modDestino + "</strong>을(를) 추가하려고 할 때 발생합니다. 두 개의 모드가 서로 다른 요소에 동일한 ID를 사용하려 할 때 이 문제가 발생합니다.</b>";
+}
+
+@Override
+public String conflicto_id_maximo() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>허용된 최대 ID 범위를 초과했습니다. 모드가 마인크래프트 버전에서 허용하는 범위를 벗어난 ID로 블록이나 아이템을 등록하려 할 때 발생합니다.</b>";
+}
+
+@Override
+public String nombre_de_conflicto_ids() {
+    return "ID 충돌";
+}
+
+@Override
+public String solucion_maximo_rango() {
+    return "<b style='color:#" + config.obtenerColorTexto() + "'>이 문제를 해결하려면 마인크래프트 1.12.2에 <a href='https://www.curseforge.com/minecraft/mc-mods/justenoughids'>JustEnoughIDs</a>를 설치하세요. 1.7.10의 경우 <a href='https://www.curseforge.com/minecraft/mc-mods/endless-ids'>EndlessIDs</a>를 사용하세요.</b>";
+}
+
+@Override
+public String solucion_colision_id() {
+    return "<b style='color:#" + config.obtenerColorTexto() + "'>ID 충돌을 해결하려면 <a href='https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/1291014-idfix-and-idfix-minus-mods-for-resolving-id'>IdFix Minus</a> 또는 <a href='https://github.com/SS111/Minecraft-ID-Resolver'>Minecraft-ID-Resolver</a>와 같은 도구를 사용하세요.</b>";
+}
+
+@Override
+public String instalar_justenoughids() {
+    return "JustEnoughIDs 설치";
+}
+
+@Override
+public String instalar_endlessids() {
+    return "EndlessIDs 설치";
+}
+
+@Override
+public String usar_idfix_minus() {
+    return "IdFix Minus 또는 IdFix 사용";
+}
+
+@Override
+public String usar_minecraft_id_resolver() {
+    return "Minecraft-ID-Resolver 사용";
+}
+
+@Override
+public String ver_documentacion_jp() {
+    return "일본어 문서 보기";
+}
 
 
 

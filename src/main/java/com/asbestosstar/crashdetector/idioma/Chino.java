@@ -1878,39 +1878,147 @@ public String faltar_de_clases_create() {
 public String faltar_de_clases_epicfight() {
     return "<b style='color:#" + config.obtenerColorError() + "'>检测到来自 EpicFight 的缺失类。EpicFight 已发生重大变更，许多类已被移除。QuickFix 无法解决此问题。您需要更新 EpicFight 附加模组、删除过时的模组，或使用与附加模组兼容的正确 EpicFight 版本。</b>";
 }
+@Override public String openJ9NoSoportado() { return "<b style='color:#" + config.obtenerColorError() + "'>您正在使用 OpenJ9，而本应用不支持该 JVM。许多应用（包括此应用）由于 JVM 实现差异而不支持 OpenJ9。QuickFix 无法自动解决此问题。您需要安装兼容的 JDK，例如 Oracle JDK、OpenJDK Hotspot 或其他推荐的替代方案。</b>"; } @Override public String necesitasJDK11() { return "<b style='color:#" + config.obtenerColorError() + "'>此版本的应用需要 Java 11 (JDK 11) 才能正常运行。您正在使用不兼容的旧版 Java。QuickFix 无法自动升级您的 Java。您需要从解决方案中提供的链接下载并安装 JDK 11 或更高兼容版本。</b>"; } @Override public String memoriaExcesiva() { return "<b style='color:#" + config.obtenerColorError() + "'>您分配了过多内存，导致系统资源不足。通常发生在设置的 RAM 超出系统可用容量，或使用无法处理大内存分配的 32 位 JVM 时。</b>"; } @Override public String recomendacionMemoriaExcesiva() { return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>请减少分配给应用的内存。推荐最大值取决于您的系统，通常不应超过总内存的 70-80%。若使用 32 位 JVM，最大限制约为 2-3 GB，与物理内存大小无关。</b>"; } @Override public String disminuirMemoriaHeap() { return "<b style='color:#" + config.obtenerColorTexto() + "'>要减少应用的堆内存，请打开启动器设置并找到内存选项。将最大值 (Xmx) 调整为更合适的数值。例如，8 GB 内存可分配 3-4 GB，16 GB 可分配 6-8 GB。请为操作系统和其他程序保留足够内存。</b>"; }
+
 
 @Override
-public String openJ9NoSoportado() {
-    return "<b style='color:#" + config.obtenerColorError() + "'>أنت تستخدم OpenJ9، وهو غير مدعوم من قبل هذا التطبيق. العديد من التطبيقات، بما في ذلك هذا، لا تدعم OpenJ9 بسبب اختلافات في تنفيذ JVM. لا يمكن لـ QuickFix حل هذه المشكلة تلقائيًا. يجب عليك تثبيت JDK متوافق مثل Oracle JDK أو OpenJDK Hotspot أو بدائل موصى بها أخرى.</b>";
+public String forgeArchivosFaltantes(String archivo) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Forge 缺少必要文件。文件 '" + archivo + "' 在您的安装中未找到。这通常发生在 Forge 安装中断或重要文件被删除时。QuickFix 无法自动恢复这些文件。您需要使用官方安装程序重新正确安装 Forge。</b>";
 }
 
 @Override
-public String necesitasJDK11() {
-    return "<b style='color:#" + config.obtenerColorError() + "'>تتطلب هذه النسخة من التطبيق Java 11 (JDK 11) للعمل بشكل صحيح. أنت تستخدم إصدارًا قديمًا وغير متوافق من Java. لا يمكن لـ QuickFix تحديث Java تلقائيًا. يجب تنزيل وتثبيت JDK 11 أو إصدار متوافق أحدث من الروابط المقدمة في الحل.</b>";
+public String forgeVersionNoEncontrada(String version, String archivo) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Forge 无法找到所需的 Minecraft 版本。需要版本 " + version + "，但在文件 '" + archivo + "' 中未找到。这通常是因为您使用的 Minecraft 版本与 Forge 版本不兼容。请确保下载与您的 Minecraft 版本匹配的正确 Forge 版本。</b>";
 }
 
 @Override
-public String memoriaExcesiva() {
-    return "<b style='color:#" + config.obtenerColorError() + "'>لقد خصصت ذاكرة زائدة، مما يؤدي إلى نقص الموارد في النظام. يحدث هذا غالبًا عند تحديد كمية ذاكرة أكبر من المتوفرة، أو عند استخدام JVM من نوع 32 بت لا يمكنه التعامل مع كميات كبيرة من الذاكرة.</b>";
+public String forgeTargetFmlclientNoEncontrado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>无法找到启动 Forge 所需的 'fmlclient' 目标。这表明 Forge 安装不完整或已损坏。Forge 的关键文件可能未正确安装。您需要使用官方安装程序重新安装 Forge。</b>";
 }
 
 @Override
-public String recomendacionMemoriaExcesiva() {
-    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>لحل هذه المشكلة، قم بتقليل كمية الذاكرة المخصصة للتطبيق. الحد الأقصى الموصى به يعتمد على نظامك، لكنه عادةً لا يجب أن يتجاوز 70-80٪ من إجمالي ذاكرة RAM. إذا كنت تستخدم JVM 32 بت، فإن الحد الأقصى هو حوالي 2-3 جيجابايت بغض النظر عن كمية الذاكرة الفعلية.</b>";
+public String forgeClaseMinecraftFaltante() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>类加载器中找不到 Minecraft 主类。这通常表示 Forge 安装不完整，或与其他模组存在冲突。在安装 Forge 时，Minecraft 文件可能已损坏。您需要重新正确安装 Forge。</b>";
 }
 
 @Override
-public String disminuirMemoriaHeap() {
-    return "<b style='color:#" + config.obtenerColorTexto() + "'>لتقليل ذاكرة heap المخصصة للتطبيق، افتح إعدادات اللانشر وابحث عن خيار الذاكرة. قلل القيمة القصوى (Xmx) إلى كمية مناسبة. على سبيل المثال، إذا كانت لديك 8 جيجابايت من RAM، خصص 3-4 جيجابايت للتطبيق. إذا كانت لديك 16 جيجابايت، يمكنك تخصيص 6-8 جيجابايت. تأكد من ترك ذاكرة كافية للنظام والبرامج الأخرى.</b>";
+public String forgeInstallacionNoCompleta() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Forge 安装不完整。可能由于安装中断、文件被删除，或与您的 Minecraft 版本不兼容。Forge 需要特定文件才能正常运行，而您的当前安装缺少其中一些文件。</b>";
 }
 
+@Override
+public String nombre_de_forge_instalacion_no_completa() {
+    return "Forge 安装不完整";
+}
 
+@Override
+public String solucion_para_forge_instalacion_no_completa() {
+    return "<b style='color:#" + config.obtenerColorTexto() + "'>要解决此问题，请重新正确安装 Forge。确保下载与您 Minecraft 版本匹配的版本，并完整执行安装过程，不要中断。</b>";
+}
 
+@Override
+public String descargar_forge_oficial() {
+    return "从官方渠道下载 Forge";
+}
 
+@Override
+public String reinstalar_forge_correctamente() {
+    return "如何正确重新安装 Forge";
+}
 
+@Override
+public String instrucciones_reinstalar_forge() {
+    return "<html><body style='width: 500px;'>" +
+           "<h3 style='color:#" + config.obtenerColorTitulo() + "'>重新安装 Forge 的说明：</h3>" +
+           "<ol>" +
+           "<li>从官方网站下载正确的 Forge 安装程序（推荐与您 Minecraft 版本匹配的版本）</li>" +
+           "<li>完全关闭您的 Minecraft 启动器</li>" +
+           "<li>以管理员身份运行 Forge 安装程序</li>" +
+           "<li>选择 'Installer' 选项（不要选 'Installer (run client)'）</li>" +
+           "<li>在启动器中选择您的 Minecraft 配置文件文件夹</li>" +
+           "<li>点击 'OK' 并等待安装完成</li>" +
+           "<li>重启启动器，并确认 Forge 出现在配置文件列表中</li>" +
+           "</ol>" +
+           "<p><b>重要提示：</b> 如果您使用的是自定义启动器，请确保选择正确的配置文件目录。</p>" +
+           "</body></html>";
+}
 
+@Override
+public String titulo_instrucciones_reinstaler_mcforge() {
+    return "重新安装 Forge 的说明";
+}
 
+@Override
+public String error_enlace_insatisfecho(String nombreBiblioteca) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>链接错误：无法加载库 " + nombreBiblioteca + "。可能的解决方案：<br/><br/>" +
+           "a) 将包含共享库的目录添加到 -Djava.library.path 或 -Dorg.lwjgl.librarypath。<br/>" +
+           "b) 将包含共享库的 JAR 文件添加到 classpath。<br/><br/>" +
+           "此错误发生在 Minecraft 无法找到运行所需的关键文件时。" +
+           "通常由 Minecraft 安装不完整或系统权限问题引起。</b>";
+}
 
+@Override
+public String nombre_de_error_enlace_insatisfecho() {
+    return "链接错误";
+}
+
+@Override
+public String solucion_para_error_enlace_insatisfecho() {
+    return "<b style='color:#" + config.obtenerColorTexto() + "'>无法加载库。可能的解决方案：<br/><br/>" +
+           "a) 将包含共享库的目录添加到 -Djava.library.path 或 -Dorg.lwjgl.librarypath。<br/>" +
+           "b) 将包含共享库的 JAR 文件添加到 classpath。<br/><br/>" +
+           "这些技术方案适用于高级用户。大多数用户应在修改这些参数前尝试重新安装 Minecraft。</b>";
+}
+
+@Override
+public String conflicto_id_colision_especifico(String id, String modOrigen, String modDestino) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>ID 冲突：ID <strong>" + id + "</strong> 已被 <strong>" + modOrigen + "</strong> 占用，无法为 <strong>" + modDestino + "</strong> 分配。当两个模组试图为不同元素使用相同 ID 时会发生此问题。</b>";
+}
+
+@Override
+public String conflicto_id_maximo() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>已超出允许的最大 ID 范围。当模组尝试注册超出 Minecraft 版本支持范围的区块或物品 ID 时会发生此问题。</b>";
+}
+
+@Override
+public String nombre_de_conflicto_ids() {
+    return "ID 冲突";
+}
+
+@Override
+public String solucion_maximo_rango() {
+    return "<b style='color:#" + config.obtenerColorTexto() + "'>解决方法：在 Minecraft 1.12.2 中安装 <a href='https://www.curseforge.com/minecraft/mc-mods/justenoughids'>JustEnoughIDs</a>，1.7.10 版本请使用 <a href='https://www.curseforge.com/minecraft/mc-mods/endless-ids'>EndlessIDs</a>。</b>";
+}
+
+@Override
+public String solucion_colision_id() {
+    return "<b style='color:#" + config.obtenerColorTexto() + "'>使用 <a href='https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/1291014-idfix-and-idfix-minus-mods-for-resolving-id'>IdFix Minus</a> 或 <a href='https://github.com/SS111/Minecraft-ID-Resolver'>Minecraft-ID-Resolver</a> 等工具解决 ID 冲突。</b>";
+}
+
+@Override
+public String instalar_justenoughids() {
+    return "安装 JustEnoughIDs";
+}
+
+@Override
+public String instalar_endlessids() {
+    return "安装 EndlessIDs";
+}
+
+@Override
+public String usar_idfix_minus() {
+    return "使用 IdFix Minus 或 IdFix";
+}
+
+@Override
+public String usar_minecraft_id_resolver() {
+    return "使用 Minecraft-ID-Resolver";
+}
+
+@Override
+public String ver_documentacion_jp() {
+    return "查看日文文档";
+}
 
 
 

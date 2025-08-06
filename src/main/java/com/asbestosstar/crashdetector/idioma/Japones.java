@@ -1901,12 +1901,127 @@ public String disminuirMemoriaHeap() {
     return "<b style='color:#" + config.obtenerColorTexto() + "'>アプリに割り当てられたヒープメモリを減らすには、ランチャーの設定を開き、RAM オプションを探します。最大値 (Xmx) を適切な量に下げてください。例：8GB の RAM がある場合、3～4GB を割り当てます。16GB の場合、6～8GB が適切です。OS や他のプログラムのために十分なメモリを残すことを忘れないでください。</b>";
 }
 
+@Override
+public String forgeArchivosFaltantes(String archivo) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Forgeの必須ファイルが不足しています。ファイル '" + archivo + "' がインストール内に見つかりません。これは通常、Forgeのインストールが中断されたか、重要なファイルが削除された場合に発生します。QuickFixではこれらのファイルを自動復元できません。公式インストーラーを使用してForgeを再インストールする必要があります。</b>";
+}
+
+@Override
+public String forgeVersionNoEncontrada(String version, String archivo) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Forgeが必要なMinecraftバージョンを見つけられません。バージョン " + version + " が必要ですが、ファイル '" + archivo + "' にありません。これはMinecraftバージョンと使用中のForgeバージョンが一致しない場合に発生します。Minecraftバージョンに合った正しいForgeバージョンをダウンロードしてください。</b>";
+}
+
+@Override
+public String forgeTargetFmlclientNoEncontrado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Forge起動に必要な 'fmlclient' ターゲットが見つかりません。これはForgeのインストールが不完全または破損していることを示しています。Forgeの重要なファイルが正しくインストールされていない可能性があります。公式インストーラーを使用してForgeを再インストールする必要があります。</b>";
+}
+
+@Override
+public String forgeClaseMinecraftFaltante() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>クラスローダーにMinecraftのメインクラスが見つかりません。これは通常、Forgeのインストールが不完全か、他のMODと競合していることを示します。Forgeのインストール中にMinecraftのファイルが破損した可能性があります。Forgeを正しく再インストールする必要があります。</b>";
+}
+
+@Override
+public String forgeInstallacionNoCompleta() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Forgeのインストールが完了していません。インストールが中断された、ファイルが削除された、またはMinecraftのバージョンと互換性がない場合に発生します。Forgeは正常に動作するために特定のファイルが必要ですが、現在のインストールから一部が欠けています。</b>";
+}
+
+@Override
+public String nombre_de_forge_instalacion_no_completa() {
+    return "Forgeのインストールが不完全";
+}
+
+@Override
+public String solucion_para_forge_instalacion_no_completa() {
+    return "<b style='color:#" + config.obtenerColorTexto() + "'>この問題を解決するには、Forgeを正しく再インストールしてください。Minecraftのバージョンに合った正しいバージョンをダウンロードし、中断せずにインストール手順を完了してください。</b>";
+}
+
+@Override
+public String descargar_forge_oficial() {
+    return "公式サイトからForgeをダウンロード";
+}
+
+@Override
+public String reinstalar_forge_correctamente() {
+    return "Forgeを正しく再インストールする方法";
+}
+
+@Override
+public String instrucciones_reinstalar_forge() {
+    return "<html><body style='width: 500px;'>" +
+           "<h3 style='color:#" + config.obtenerColorTitulo() + "'>Forge再インストール手順：</h3>" +
+           "<ol>" +
+           "<li>公式サイトから正しいForgeインストーラーをダウンロード（Minecraftバージョンに合った推奨バージョン）</li>" +
+           "<li>Minecraftランチャーを完全に終了</li>" +
+           "<li>管理者権限でForgeインストーラーを実行</li>" +
+           "<li>'Installer'を選択（'Installer (run client)' ではない）</li>" +
+           "<li>ランチャー内のMinecraftプロファイルフォルダを選択</li>" +
+           "<li>'OK'をクリックし、インストール完了まで待機</li>" +
+           "<li>ランチャーを再起動し、Forgeがプロファイル一覧に表示されることを確認</li>" +
+           "</ol>" +
+           "<p><b>重要：</b>カスタムランチャーを使用する場合、正しいプロファイルフォルダを選択してください。</p>" +
+           "</body></html>";
+}
+
+@Override
+public String titulo_instrucciones_reinstaler_mcforge() {
+    return "Forge再インストール手順";
+}
+
+@Override public String error_enlace_insatisfecho(String nombreBiblioteca) { return "<b style='color:#" + config.obtenerColorError() + "'>リンクエラー：ライブラリ " + nombreBiblioteca + " の読み込みに失敗しました。考えられる解決策：<br/><br/>" + "a) 共有ライブラリを含むディレクトリを -Djava.library.path または -Dorg.lwjgl.librarypath に追加します。<br/>" + "b) 共有ライブラリを含む JAR ファイルを classpath に追加します。<br/><br/>" + "このエラーは、Minecraft が実行に必要な重要なファイルを見つけられない場合に発生します。" + "インストールが不完全であるか、システムの権限に問題があることが原因です。</b>"; } @Override public String nombre_de_error_enlace_insatisfecho() { return "リンクエラー"; } @Override public String solucion_para_error_enlace_insatisfecho() { return "<b style='color:#" + config.obtenerColorTexto() + "'>ライブラリの読み込みに失敗しました。考えられる解決策：<br/><br/>" + "a) 共有ライブラリを含むディレクトリを -Djava.library.path または -Dorg.lwjgl.librarypath に追加します。<br/>" + "b) 共有ライブラリを含む JAR ファイルを classpath に追加します。<br/><br/>" + "これらの技術的解決策は上級者向けです。ほとんどのユーザーは、これらのパラメータを変更する前に " + "Minecraft を再インストールすることをお勧めします。</b>"; }
 
 
 
 
+@Override
+public String conflicto_id_colision_especifico(String id, String modOrigen, String modDestino) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>IDの衝突: ID <strong>" + id + "</strong> は、<strong>" + modOrigen + "</strong> によって既に使用されており、<strong>" + modDestino + "</strong> を追加しようとしたときに発生します。これは、2つのMODが異なる要素に同じIDを使用しようとした場合に起こります。</b>";
+}
 
+@Override
+public String conflicto_id_maximo() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>許可されたIDの最大範囲を超えました。MODがMinecraftのバージョンで許可されていない範囲のIDでブロックやアイテムを登録しようとしたときに発生します。</b>";
+}
 
+@Override
+public String nombre_de_conflicto_ids() {
+    return "IDの衝突";
+}
+
+@Override
+public String solucion_maximo_rango() {
+    return "<b style='color:#" + config.obtenerColorTexto() + "'>この問題を解決するには、Minecraft 1.12.2に <a href='https://www.curseforge.com/minecraft/mc-mods/justenoughids'>JustEnoughIDs</a> をインストールしてください。1.7.10の場合は <a href='https://www.curseforge.com/minecraft/mc-mods/endless-ids'>EndlessIDs</a> を使用してください。</b>";
+}
+
+@Override
+public String solucion_colision_id() {
+    return "<b style='color:#" + config.obtenerColorTexto() + "'>IDの衝突を解決するには、<a href='https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/1291014-idfix-and-idfix-minus-mods-for-resolving-id'>IdFix Minus</a> や <a href='https://github.com/SS111/Minecraft-ID-Resolver'>Minecraft-ID-Resolver</a> などのツールを使用してください。</b>";
+}
+
+@Override
+public String instalar_justenoughids() {
+    return "JustEnoughIDsをインストール";
+}
+
+@Override
+public String instalar_endlessids() {
+    return "EndlessIDsをインストール";
+}
+
+@Override
+public String usar_idfix_minus() {
+    return "IdFix MinusまたはIdFixを使用";
+}
+
+@Override
+public String usar_minecraft_id_resolver() {
+    return "Minecraft-ID-Resolverを使用";
+}
+
+@Override
+public String ver_documentacion_jp() {
+    return "日本語ドキュメントを表示";
+}
 
 
 

@@ -775,6 +775,54 @@ public interface Idioma {
 	public String recomendacionMemoriaExcesiva();
 
 	public String disminuirMemoriaHeap();
+
+	public String forgeArchivosFaltantes(String archivo2);
+
+	public String forgeVersionNoEncontrada(String version, String archivo2);
+
+	public String forgeTargetFmlclientNoEncontrado();
+
+	public String forgeClaseMinecraftFaltante();
+
+	public String forgeInstallacionNoCompleta();
+	
+	public String nombre_de_forge_instalacion_no_completa();
+
+	public String solucion_para_forge_instalacion_no_completa();
+
+	public String descargar_forge_oficial();
+
+	public String reinstalar_forge_correctamente();
+	
+	public String instrucciones_reinstalar_forge();
+
+	public String titulo_instrucciones_reinstaler_mcforge();
+
+	public String error_enlace_insatisfecho(String nombreBiblioteca);
+
+	public String nombre_de_error_enlace_insatisfecho();
+
+	public String solucion_para_error_enlace_insatisfecho();
+
+	public String conflicto_id_colision_especifico(String idConflictivo, String modOrigen, String modDestino);
+
+	public String conflicto_id_maximo();
+
+	public String nombre_de_conflicto_ids();
+
+	public String instalar_justenoughids();
+
+	public String instalar_endlessids();
+
+	public String usar_idfix_minus();
+
+	public String usar_minecraft_id_resolver();
+
+	public String ver_documentacion_jp();
+
+	public String solucion_maximo_rango();
+
+	public String solucion_colision_id();
 	
 	// public String advertenciaMalwareFalso();
 

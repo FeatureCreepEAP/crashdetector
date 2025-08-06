@@ -2350,8 +2350,144 @@ public String disminuirMemoriaHeap() {
     return "<b style='color:#" + config.obtenerColorTexto() + "'>Para disminuir la memoria heap asignada a la app, abre la configuración de tu lanzador y busca la opción de memoria RAM. Reduce el valor máximo (Xmx) a una cantidad más adecuada. Por ejemplo, si tienes 8 GB de RAM, asigna entre 3-4 GB a la app. Si tienes 16 GB de RAM, puedes asignar entre 6-8 GB. Recuerda dejar suficiente memoria para el sistema operativo y otros programas.</b>";
 }
 
+@Override
+public String forgeArchivosFaltantes(String archivo) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Faltan archivos esenciales de Forge. El archivo '" + archivo + "' no se encuentra en tu instalación. Esto suele ocurrir cuando la instalación de Forge se interrumpió o se eliminaron archivos importantes. QuickFix no puede recuperar estos archivos automáticamente. Necesitas reinstalar Forge correctamente desde el instalador oficial.</b>";
+}
 
+@Override
+public String forgeVersionNoEncontrada(String version, String archivo) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Forge no puede encontrar la versión de Minecraft requerida. Se necesita la versión " + version + " pero no se encuentra en el archivo '" + archivo + "'. Esto ocurre cuando hay una incompatibilidad entre la versión de Minecraft y la versión de Forge que estás utilizando. Asegúrate de descargar la versión correcta de Forge que coincida con tu versión de Minecraft.</b>";
+}
 
+@Override
+public String forgeTargetFmlclientNoEncontrado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>No se puede encontrar el target 'fmlclient' necesario para iniciar Forge. Esto indica que la instalación de Forge está incompleta o dañada. Es probable que los archivos esenciales de Forge no se hayan instalado correctamente. Necesitas reinstalar Forge usando el instalador oficial.</b>";
+}
 
+@Override
+public String forgeClaseMinecraftFaltante() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>No se puede encontrar la clase principal de Minecraft en el cargador de clases. Esto suele indicar que la instalación de Forge está incompleta o que hay un conflicto con otros mods. Es posible que los archivos de Minecraft se hayan dañado durante la instalación de Forge. Necesitas reinstalar Forge correctamente.</b>";
+}
+
+@Override
+public String forgeInstallacionNoCompleta() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>La instalación de Forge no está completa. Esto puede deberse a una instalación interrumpida, archivos eliminados o una incompatibilidad con tu versión de Minecraft. Forge necesita archivos específicos para funcionar correctamente, y algunos de ellos están faltando en tu instalación actual.</b>";
+}
+
+@Override
+public String nombre_de_forge_instalacion_no_completa() {
+    return "Instalación incompleta de Forge";
+}
+
+@Override
+public String solucion_para_forge_instalacion_no_completa() {
+    return "<b style='color:#" + config.obtenerColorTexto() + "'>Para resolver este problema, necesitas reinstalar Forge correctamente. Asegúrate de descargar la versión adecuada para tu versión de Minecraft y seguir el proceso de instalación completo sin interrumpirlo.</b>";
+}
+
+@Override
+public String descargar_forge_oficial() {
+    return "Descargar Forge oficialmente";
+}
+
+@Override
+public String reinstalar_forge_correctamente() {
+    return "Cómo reinstalar Forge correctamente";
+}
+
+@Override
+public String instrucciones_reinstalar_forge() {
+    return "<html><body style='width: 500px;'>" +
+           "<h3 style='color:#" + config.obtenerColorTitulo() + "'>Instrucciones para reinstalar Forge:</h3>" +
+           "<ol>" +
+           "<li>Descarga el instalador correcto de Forge desde el sitio oficial (versión recomendada para tu versión de Minecraft)</li>" +
+           "<li>Cierra completamente tu launcher de Minecraft</li>" +
+           "<li>Ejecuta el instalador de Forge como administrador</li>" +
+           "<li>Selecciona la opción 'Installer' (no 'Installer (run client)')</li>" +
+           "<li>Elige la carpeta de tu perfil de Minecraft en el launcher</li>" +
+           "<li>Presiona 'OK' y espera a que termine la instalación</li>" +
+           "<li>Reinicia tu launcher y verifica que Forge aparezca en la lista de perfiles</li>" +
+           "</ol>" +
+           "<p><b>Nota importante:</b> Si usas un launcher personalizado, asegúrate de seleccionar la carpeta correcta del perfil.</p>" +
+           "</body></html>";
+}
+
+@Override
+public String titulo_instrucciones_reinstaler_mcforge() {
+    return "Instrucciones para reinstalar Forge";
+}
+
+@Override
+public String error_enlace_insatisfecho(String nombreBiblioteca) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Error de enlace insatisfecho: No se pudo cargar la biblioteca " + nombreBiblioteca + ". Posibles soluciones:<br/><br/>" +
+           "a) Añade el directorio que contiene la biblioteca compartida a -Djava.library.path o -Dorg.lwjgl.librarypath.<br/>" +
+           "b) Añade el archivo JAR que contiene la biblioteca compartida al classpath.<br/><br/>" +
+           "Este error ocurre cuando Minecraft no puede encontrar archivos esenciales para su funcionamiento. " +
+           "Esto suele deberse a una instalación incompleta de Minecraft o a problemas con los permisos del sistema.</b>";
+}
+
+@Override
+public String nombre_de_error_enlace_insatisfecho() {
+    return "Error de enlace insatisfecho";
+}
+
+@Override
+public String solucion_para_error_enlace_insatisfecho() {
+    return "<b style='color:#" + config.obtenerColorTexto() + "'>No se pudo cargar una biblioteca. Posibles soluciones:<br/><br/>" +
+           "a) Añade el directorio que contiene la biblioteca compartida a -Djava.library.path o -Dorg.lwjgl.librarypath.<br/>" +
+           "b) Añade el archivo JAR que contiene la biblioteca compartida al classpath.<br/><br/>" +
+           "Estas soluciones técnicas son para usuarios avanzados. La mayoría de los usuarios deberían intentar " +
+           "reinstalar Minecraft antes de modificar estos parámetros.</b>";
+}
+
+@Override
+public String conflicto_id_colision_especifico(String id, String modOrigen, String modDestino) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Colisión de IDs: El ID <strong>" + id + "</strong> ya está ocupado por <strong>" + modOrigen + "</strong> al intentar agregar <strong>" + modDestino + "</strong>. Esto sucede cuando dos mods intentan usar el mismo ID para diferentes elementos.</b>";
+}
+
+@Override
+public String conflicto_id_maximo() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Se ha excedido el rango máximo de IDs permitidos. Esto ocurre cuando los mods intentan registrar bloques o ítems con IDs fuera del rango permitido por tu versión de Minecraft.</b>";
+}
+
+@Override
+public String nombre_de_conflicto_ids() {
+    return "Conflicto de IDs";
+}
+
+@Override
+public String solucion_maximo_rango() {
+    return "<b style='color:#" + config.obtenerColorTexto() + "'>Para resolver esto en Minecraft 1.12.2, instala <a href='https://www.curseforge.com/minecraft/mc-mods/justenoughids'>JustEnoughIDs</a>. Para 1.7.10, usa <a href='https://www.curseforge.com/minecraft/mc-mods/endless-ids'>EndlessIDs</a>.</b>";
+}
+
+@Override
+public String solucion_colision_id() {
+    return "<b style='color:#" + config.obtenerColorTexto() + "'>Usa herramientas como <a href='https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/1291014-idfix-and-idfix-minus-mods-for-resolving-id'>IdFix Minus</a> o <a href='https://github.com/SS111/Minecraft-ID-Resolver'>Minecraft-ID-Resolver</a> para resolver colisiones de IDs.</b>";
+}
+
+@Override
+public String instalar_justenoughids() {
+    return "Instalar JustEnoughIDs";
+}
+
+@Override
+public String instalar_endlessids() {
+    return "Instalar EndlessIDs";
+}
+
+@Override
+public String usar_idfix_minus() {
+    return "Usar IdFix Minus o IdFix";
+}
+
+@Override
+public String usar_minecraft_id_resolver() {
+    return "Usar Minecraft-ID-Resolver";
+}
+
+@Override
+public String ver_documentacion_jp() {
+    return "Ver documentación japonesa";
+}
 
 }

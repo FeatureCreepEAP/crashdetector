@@ -1919,6 +1919,98 @@ public String disminuirMemoriaHeap() {
     return "<b style='color:#" + config.obtenerColorTexto() + "'>لتقليل ذاكرة heap المخصصة للتطبيق، افتح إعدادات اللانشر وابحث عن خيار الذاكرة. قلل القيمة القصوى (Xmx) إلى كمية مناسبة. على سبيل المثال، إذا كانت لديك 8 جيجابايت من RAM، خصص 3-4 جيجابايت للتطبيق. إذا كانت لديك 16 جيجابايت، يمكنك تخصيص 6-8 جيجابايت. تأكد من ترك ذاكرة كافية للنظام والبرامج الأخرى.</b>";
 }
 
+@Override
+public String forgeArchivosFaltantes(String archivo) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>مفقودة ملفات أساسية من Forge. الملف '" + archivo + "' غير موجود في تثبيتك. يحدث هذا عادةً عند توقف تثبيت Forge أو حذف ملفات مهمة. لا يمكن لـ QuickFix استعادة هذه الملفات تلقائيًا. يجب عليك إعادة تثبيت Forge بشكل صحيح باستخدام المثبت الرسمي.</b>";
+}
+
+@Override
+public String forgeVersionNoEncontrada(String version, String archivo) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>لا يمكن لـ Forge العثور على إصدار ماينكرافت المطلوب. الإصدار " + version + " مطلوب لكنه غير موجود في الملف '" + archivo + "'. يحدث هذا عند عدم التوافق بين إصدار ماينكرافت وإصدار Forge. تأكد من تحميل الإصدار الصحيح من Forge المطابق لإصدار ماينكرافت لديك.</b>";
+}
+
+@Override
+public String forgeTargetFmlclientNoEncontrado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>تعذر العثور على الهدف 'fmlclient' اللازم لتشغيل Forge. هذا يشير إلى تثبيت غير مكتمل أو تالف. ربما لم تُثبت ملفات Forge الأساسية بشكل صحيح. يجب عليك إعادة تثبيت Forge باستخدام المثبت الرسمي.</b>";
+}
+
+@Override
+public String forgeClaseMinecraftFaltante() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>تعذر العثور على الفئة الرئيسية لماينكرافت في محمل الفئات. هذا يشير عادةً إلى تثبيت Forge غير مكتمل أو تعارض مع مودات أخرى. قد تكون ملفات ماينكرافت تالفة بسبب تثبيت Forge. يجب إعادة تثبيت Forge بشكل صحيح.</b>";
+}
+
+@Override
+public String forgeInstallacionNoCompleta() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>تثبيت Forge غير مكتمل. قد يكون بسبب تثبيت متوقف، أو ملفات محذوفة، أو عدم توافق مع إصدار ماينكرافت لديك. يحتاج Forge إلى ملفات محددة للعمل، وبعضها مفقود من التثبيت الحالي.</b>";
+}
+
+@Override
+public String nombre_de_forge_instalacion_no_completa() {
+    return "تثبيت Forge غير مكتمل";
+}
+
+@Override
+public String solucion_para_forge_instalacion_no_completa() {
+    return "<b style='color:#" + config.obtenerColorTexto() + "'>لحل هذه المشكلة، أعد تثبيت Forge بشكل صحيح. تأكد من تنزيل الإصدار المناسب لإصدار ماينكرافت الخاص بك، واتبع عملية التثبيت بالكامل دون مقاطعة.</b>";
+}
+
+@Override
+public String descargar_forge_oficial() {
+    return "تنزيل Forge رسميًا";
+}
+
+@Override
+public String reinstalar_forge_correctamente() {
+    return "كيفية إعادة تثبيت Forge بشكل صحيح";
+}
+
+@Override
+public String instrucciones_reinstalar_forge() {
+    return "<html><body style='width: 500px;'>" +
+           "<h3 style='color:#" + config.obtenerColorTitulo() + "'>تعليمات لإعادة تثبيت Forge:</h3>" +
+           "<ol>" +
+           "<li>قم بتنزيل مثبت Forge الصحيح من الموقع الرسمي (الإصدار الموصى به لإصدار ماينكرافت الخاص بك)</li>" +
+           "<li>أغلق بالكامل برنامج تشغيل ماينكرافت</li>" +
+           "<li>شغّل مثبت Forge كمسؤول</li>" +
+           "<li>اختر خيار 'Installer' (وليس 'Installer (run client)')</li>" +
+           "<li>اختر مجلد ملف تعريف ماينكرافت في البرنامج</li>" +
+           "<li>اضغط 'موافق' وانتظر اكتمال التثبيت</li>" +
+           "<li>أعد تشغيل البرنامج وتأكد من ظهور Forge في قائمة الملفات الشخصية</li>" +
+           "</ol>" +
+           "<p><b>ملاحظة مهمة:</b> إذا كنت تستخدم برنامج تشغيل مخصصًا، تأكد من اختيار المجلد الصحيح للملف الشخصي.</p>" +
+           "</body></html>";
+}
+
+@Override
+public String titulo_instrucciones_reinstaler_mcforge() {
+    return "تعليمات لإعادة تثبيت Forge";
+}
+
+@Override
+public String error_enlace_insatisfecho(String nombreBiblioteca) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>خطأ في الربط: فشل في تحميل المكتبة " + nombreBiblioteca + ". الحلول الممكنة:<br/><br/>" +
+           "أ) أضف الدليل الذي يحتوي على المكتبة المشتركة إلى -Djava.library.path أو -Dorg.lwjgl.librarypath.<br/>" +
+           "ب) أضف ملف JAR الذي يحتوي على المكتبة المشتركة إلى classpath.<br/><br/>" +
+           "يحدث هذا الخطأ عندما لا يستطيع ماينكرافت العثور على الملفات الأساسية للتشغيل. " +
+           "وهو ناتج عادةً عن تثبيت ماينكرافت غير مكتمل أو مشاكل في أذونات النظام.</b>";
+}
+
+@Override
+public String nombre_de_error_enlace_insatisfecho() {
+    return "خطأ في الربط";
+}
+
+@Override
+public String solucion_para_error_enlace_insatisfecho() {
+    return "<b style='color:#" + config.obtenerColorTexto() + "'>فشل في تحميل مكتبة. الحلول الممكنة:<br/><br/>" +
+           "أ) أضف الدليل الذي يحتوي على المكتبة المشتركة إلى -Djava.library.path أو -Dorg.lwjgl.librarypath.<br/>" +
+           "ب) أضف ملف JAR الذي يحتوي على المكتبة المشتركة إلى classpath.<br/><br/>" +
+           "هذه الحلول التقنية مخصصة للمستخدمين المتقدمين. معظم المستخدمين يجب أن يحاولوا " +
+           "إعادة تثبيت ماينكرافت قبل تعديل هذه المعلمات.</b>";
+}
+
+@Override public String conflicto_id_colision_especifico(String id, String modOrigen, String modDestino) { return "<b style='color:#" + config.obtenerColorError() + "'>تضارب في المعرفات (IDs): المعرف <strong>" + id + "</strong> مستخدم بالفعل بواسطة <strong>" + modOrigen + "</strong> عند محاولة إضافة <strong>" + modDestino + "</strong>. يحدث هذا عندما يحاول مودان استخدام نفس المعرف لعناصر مختلفة.</b>"; } @Override public String conflicto_id_maximo() { return "<b style='color:#" + config.obtenerColorError() + "'>تم تجاوز الحد الأقصى المسموح به للمعرفات. يحدث هذا عندما يحاول المودات تسجيل كتل أو عناصر باستخدام معرفات خارج النطاق المدعوم من إصدار ماينكرافت الخاص بك.</b>"; } @Override public String nombre_de_conflicto_ids() { return "تضارب في المعرفات"; } @Override public String solucion_maximo_rango() { return "<b style='color:#" + config.obtenerColorTexto() + "'>لحل هذه المشكلة في ماينكرافت 1.12.2، قم بتثبيت <a href='https://www.curseforge.com/minecraft/mc-mods/justenoughids'>JustEnoughIDs</a>. أما في 1.7.10، استخدم <a href='https://www.curseforge.com/minecraft/mc-mods/endless-ids'>EndlessIDs</a>.</b>"; } @Override public String solucion_colision_id() { return "<b style='color:#" + config.obtenerColorTexto() + "'>استخدم أدوات مثل <a href='https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/1291014-idfix-and-idfix-minus-mods-for-resolving-id'>IdFix Minus</a> أو <a href='https://github.com/SS111/Minecraft-ID-Resolver'>Minecraft-ID-Resolver</a> لحل تضارب المعرفات.</b>"; } @Override public String instalar_justenoughids() { return "تثبيت JustEnoughIDs"; } @Override public String instalar_endlessids() { return "تثبيت EndlessIDs"; } @Override public String usar_idfix_minus() { return "استخدام IdFix Minus أو IdFix"; } @Override public String usar_minecraft_id_resolver() { return "استخدام Minecraft-ID-Resolver"; } @Override public String ver_documentacion_jp() { return "عرض الوثائق اليابانية"; }
+
 
 
 

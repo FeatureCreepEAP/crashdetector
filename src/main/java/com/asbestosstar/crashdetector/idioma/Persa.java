@@ -1912,11 +1912,102 @@ public String disminuirMemoriaHeap() {
 
 
 
+@Override
+public String forgeArchivosFaltantes(String archivo) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>فایل‌های ضروری Forge گم شده‌اند. فایل '" + archivo + "' در نصب شما یافت نشد. این معمولاً وقتی اتفاق می‌افتد که نصب Forge قطع شده یا فایل‌های مهمی حذف شده باشند. QuickFix نمی‌تواند این فایل‌ها را خودکار بازیابی کند. باید Forge را با استفاده از نصب‌کننده رسمی دوباره نصب کنید.</b>";
+}
+
+@Override
+public String forgeVersionNoEncontrada(String version, String archivo) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Forge نمی‌تواند نسخه مورد نیاز ماين كرافت را پیدا کند. نسخه " + version + " نیاز است اما در فایل '" + archivo + "' یافت نشد. این زمانی رخ می‌دهد که بین نسخه ماين كرافت و نسخه Forge تونا سازگاری وجود داشته باشد. مطمئن شوید نسخه صحیح Forge را که با نسخه ماين كرافت شما سازگار است دانلود کرده‌اید.</b>";
+}
+
+@Override
+public String forgeTargetFmlclientNoEncontrado() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>هدف 'fmlclient' مورد نیاز برای راه‌اندازی Forge یافت نشد. این نشان‌دهنده نصب ناقص یا خراب شده Forge است. احتمالاً فایل‌های ضروری Forge به درستی نصب نشده‌اند. باید Forge را با استفاده از نصب‌کننده رسمی دوباره نصب کنید.</b>";
+}
+
+@Override
+public String forgeClaseMinecraftFaltante() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>کلاس اصلی ماين كرافت در بارگیر کلاس‌ها یافت نشد. این معمولاً نشان‌دهنده نصب ناقص Forge یا تعارض با مودهای دیگر است. ممکن است فایل‌های ماين كرافت در حین نصب Forge خراب شده باشند. باید Forge را به درستی دوباره نصب کنید.</b>";
+}
+
+@Override
+public String forgeInstallacionNoCompleta() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>نصب Forge کامل نیست. این ممکن است به دلیل قطع شدن نصب، حذف فایل‌ها یا عدم سازگاری با نسخه ماين كرافت شما باشد. Forge برای کارکرد به فایل‌های خاصی نیاز دارد و برخی از آن‌ها در نصب فعلی شما گم شده‌اند.</b>";
+}
+
+@Override
+public String nombre_de_forge_instalacion_no_completa() {
+    return "نصب ناقص Forge";
+}
+
+@Override
+public String solucion_para_forge_instalacion_no_completa() {
+    return "<b style='color:#" + config.obtenerColorTexto() + "'>برای حل این مشکل، Forge را به درستی دوباره نصب کنید. مطمئن شوید نسخه مناسب را برای نسخه ماين كرافت خود دانلود کرده و فرآیند نصب را بدون قطع کردن انجام دهید.</b>";
+}
+
+@Override
+public String descargar_forge_oficial() {
+    return "دانلود رسمی Forge";
+}
+
+@Override
+public String reinstalar_forge_correctamente() {
+    return "چگونه Forge را به درستی دوباره نصب کنیم";
+}
+
+@Override
+public String instrucciones_reinstalar_forge() {
+    return "<html><body style='width: 500px;'>" +
+           "<h3 style='color:#" + config.obtenerColorTitulo() + "'>دستورالعمل دوباره نصب Forge:</h3>" +
+           "<ol>" +
+           "<li>نصب‌کننده صحیح Forge را از سایت رسمی دانلود کنید (نسخه توصیه‌شده برای نسخه ماين كرافت شما)</li>" +
+           "<li>کاملاً برنامه اجرایی ماين كرافت خود را ببندید</li>" +
+           "<li>نصب‌کننده Forge را با دسترسی مدیر اجرا کنید</li>" +
+           "<li>گزینه 'Installer' را انتخاب کنید (نه 'Installer (run client)')</li>" +
+           "<li>پوشه پروفایل ماين كرافت خود را در لانچر انتخاب کنید</li>" +
+           "<li>دکمه 'OK' را بزنید و صبر کنید تا نصب کامل شود</li>" +
+           "<li>لانچر را دوباره راه‌اندازی کنید و مطمئن شوید Forge در لیست پروفایل‌ها ظاهر شده است</li>" +
+           "</ol>" +
+           "<p><b>نکته مهم:</b> اگر از لانچر سفارشی استفاده می‌کنید، مطمئن شوید پوشه صحیح پروفایل را انتخاب کرده‌اید.</p>" +
+           "</body></html>";
+}
+
+@Override
+public String titulo_instrucciones_reinstaler_mcforge() {
+    return "دستورالعمل دوباره نصب Forge";
+}
 
 
 
 
+@Override
+public String error_enlace_insatisfecho(String nombreBiblioteca) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>خطأ في الربط: فشل في تحميل المكتبة " + nombreBiblioteca + ". الحلول الممكنة:<br/><br/>" +
+           "أ) أضف الدليل الذي يحتوي على المكتبة المشتركة إلى -Djava.library.path أو -Dorg.lwjgl.librarypath.<br/>" +
+           "ب) أضف ملف JAR الذي يحتوي على المكتبة المشتركة إلى classpath.<br/><br/>" +
+           "يحدث هذا الخطأ عندما لا يستطيع ماينكرافت العثور على الملفات الأساسية للتشغيل. " +
+           "وهو ناتج عادةً عن تثبيت ماينكرافت غير مكتمل أو مشاكل في أذونات النظام.</b>";
+}
 
+@Override
+public String nombre_de_error_enlace_insatisfecho() {
+    return "خطأ في الربط";
+}
+
+@Override
+public String solucion_para_error_enlace_insatisfecho() {
+    return "<b style='color:#" + config.obtenerColorTexto() + "'>فشل في تحميل مكتبة. الحلول الممكنة:<br/><br/>" +
+           "أ) أضف الدليل الذي يحتوي على المكتبة المشتركة إلى -Djava.library.path أو -Dorg.lwjgl.librarypath.<br/>" +
+           "ب) أضف ملف JAR الذي يحتوي على المكتبة المشتركة إلى classpath.<br/><br/>" +
+           "هذه الحلول التقنية مخصصة للمستخدمين المتقدمين. معظم المستخدمين يجب أن يحاولوا " +
+           "إعادة تثبيت ماينكرافت قبل تعديل هذه المعلمات.</b>";
+}
+
+
+
+@Override public String conflicto_id_colision_especifico(String id, String modOrigen, String modDestino) { return "<b style='color:#" + config.obtenerColorError() + "'>تداخل شناسه‌ها (ID): شناسه <strong>" + id + "</strong> قبلاً توسط <strong>" + modOrigen + "</strong> اشغال شده و هنگام اضافه کردن <strong>" + modDestino + "</strong> با مشکل مواجه می‌شود. این زمانی رخ می‌دهد که دو مود سعی کنند از یک شناسه برای عناصر مختلف استفاده کنند.</b>"; } @Override public String conflicto_id_maximo() { return "<b style='color:#" + config.obtenerColorError() + "'>بیش از حد مجاز شناسه‌ها فراتر رفته است. این زمانی اتفاق می‌افتد که مودها سعی کنند بلوک‌ها یا آیتم‌ها را با شناسه‌هایی ثبت کنند که خارج از محدوده مجاز نسخه ماين كرافت شما باشند.</b>"; } @Override public String nombre_de_conflicto_ids() { return "تداخل شناسه‌ها"; } @Override public String solucion_maximo_rango() { return "<b style='color:#" + config.obtenerColorTexto() + "'>برای حل این مشکل در ماين كرافت 1.12.2، <a href='https://www.curseforge.com/minecraft/mc-mods/justenoughids'>JustEnoughIDs</a> را نصب کنید. برای 1.7.10، از <a href='https://www.curseforge.com/minecraft/mc-mods/endless-ids'>EndlessIDs</a> استفاده کنید.</b>"; } @Override public String solucion_colision_id() { return "<b style='color:#" + config.obtenerColorTexto() + "'>از ابزارهایی مانند <a href='https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/1291014-idfix-and-idfix-minus-mods-for-resolving-id'>IdFix Minus</a> یا <a href='https://github.com/SS111/Minecraft-ID-Resolver'>Minecraft-ID-Resolver</a> برای حل تداخل شناسه‌ها استفاده کنید.</b>"; } @Override public String instalar_justenoughids() { return "نصب JustEnoughIDs"; } @Override public String instalar_endlessids() { return "نصب EndlessIDs"; } @Override public String usar_idfix_minus() { return "استفاده از IdFix Minus یا IdFix"; } @Override public String usar_minecraft_id_resolver() { return "استفاده از Minecraft-ID-Resolver"; } @Override public String ver_documentacion_jp() { return "مشاهده مستندات ژاپنی"; }
 
 
 

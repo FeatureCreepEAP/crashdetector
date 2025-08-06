@@ -31,6 +31,7 @@ public class Drivers implements Verificaciones {
         "The driver does not appear to support OpenGL",
         "GLFW error 65542",   // WGL: driver sin soporte
         "GLFW error 65543",   // "OpenGL profile requested but …"
+        "GLFW error 1282",   // ResourcePack problema, TODO mas mejor
         "No context is current or a function that is not available in the current context",
         "The driver does not appear to support framebuffer objects",
         // Excepciones típicas
@@ -62,7 +63,8 @@ public class Drivers implements Verificaciones {
         "need to purchase a newer video card",
         "videocard is too old",
         "does not support OpenGL 3",
-        "OpenGL unsupported by videocard"
+        "OpenGL unsupported by videocard",
+        "The game failed to start because the currently installed"//para sodium
     };
 
     @Override
@@ -78,11 +80,13 @@ public class Drivers implements Verificaciones {
             procesarProblemaAMD();
             return;
         }
-        if (log.contains("EXCEPTION_ACCESS_VIOLATION") && log.contains("nouveau")) {
+        if (log.contains("EXCEPTION_ACCESS_VIOLATION") && log.contains("nouveau") || 
+        		log.contains("EXCEPTION_ACCESS_VIOLATION") && log.contains("libgallium-24.2.8.so"))// posible?
+        {
             mensajes.append(MonitorDePID.idioma.problema_con_graficas_nouveau());
             activado = true;
             return;
-            //libgallium-24.2.8.so posible?
+            
         }
         if (contienePatron(log, new String[]{"PhysX_64.dll", "glfw.dll"}) && log.contains("EXCEPTION_ACCESS_VIOLATION")) {
             procesarProblemaGraficos();
@@ -101,6 +105,9 @@ public class Drivers implements Verificaciones {
             procesarProblemaGraficos();
             return;
         }
+        
+        //todo"Cocoa: Failed to find service port for display"
+        
 
         String ultimaLinea = obtenerUltimaLinea(log);
         if (ultimaLinea != null) {
