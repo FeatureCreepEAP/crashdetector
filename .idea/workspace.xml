@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8e9b90e8-bcc1-424e-b484-ee61019b07ac" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/asbestosstar/crashdetector/analizador/general/Drivers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/asbestosstar/crashdetector/analizador/general/Drivers.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/asbestosstar/crashdetector/analizador/general/JavaVersiones.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/asbestosstar/crashdetector/analizador/general/JavaVersiones.java" afterDir="false" />
-    </list>
+    <list default="true" id="8e9b90e8-bcc1-424e-b484-ee61019b07ac" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,7 +27,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/rhel/git/CrashDetectorMC",
+    "last_opened_file_path": "/home/rhel/Descargas",
     "settings.editor.selected.configurable": "com.baidu.comate.intellij.config.id"
   }
 }]]></component>
