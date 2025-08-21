@@ -2024,7 +2024,205 @@ public String ver_documentacion_jp() {
 }
 
 
+@Override
+public String escanearDeMCreator() {
+    return "MCreatorをスキャン";
+}
 
+@Override
+public String tituloArbolDeMods() {
+    return "モジュールとクラスのツリー";
+}
+
+@Override
+public String tipoBusqueda() {
+    return "タイプ";
+}
+
+@Override
+public String filtroTodos() {
+    return "すべて";
+}
+
+@Override
+public String filtroPaquetes() {
+    return "パッケージ";
+}
+
+@Override
+public String filtroClases() {
+    return "クラス";
+}
+
+@Override
+public String filtroMetodos() {
+    return "メソッド";
+}
+
+@Override
+public String filtroCampos() {
+    return "フィールド";
+}
+
+@Override
+public String filtroReferenciasCampo() {
+    return "フィールド参照";
+}
+
+@Override
+public String filtroReferenciasMetodo() {
+    return "メソッド参照";
+}
+
+@Override
+public String filtroReferenciasClase() {
+    return "クラス参照";
+}
+
+@Override
+public String tipBuscar() {
+    return "ここに文字を入力してモッドツリーを検索";
+}
+
+@Override
+public String botonBuscar() {
+    return "検索";
+}
+
+@Override
+public String botonResetearArbol() {
+    return "ツリーをリセット";
+}
+
+@Override
+public String modsCargados() {
+    return "ロード済みのモッド";
+}
+
+@Override
+public String clases() {
+    return "クラス";
+}
+
+@Override
+public String metodos() {
+    return "メソッド";
+}
+
+@Override
+public String campos() {
+    return "フィールド";
+}
+
+@Override
+public String referencias() {
+    return "参照";
+}
+
+@Override
+public String resultadosBusqueda() {
+    return "検索結果";
+}
+
+@Override
+public String buscarReferencias() {
+    return "参照を検索";
+}
+
+@Override
+public String referenciasMod() {
+    return "モッドの参照";
+}
+
+@Override
+public String referenciasClase() {
+    return "クラスの参照";
+}
+
+@Override
+public String referenciasMetodo() {
+    return "メソッドの参照";
+}
+
+@Override
+public String referenciasCampo() {
+    return "フィールドの参照";
+}
+
+@Override
+public String noSeEncontraronReferencias() {
+    return "参照が見つかりません";
+}
+
+@Override
+public String detalleMod() {
+    return "モッドの詳細:";
+}
+
+@Override
+public String ubicacion() {
+    return "場所";
+}
+
+@Override
+public String nombres() {
+    return "名前";
+}
+
+@Override
+public String modulo() {
+    return "モジュール";
+}
+
+@Override
+public String detalleClase() {
+    return "クラスの詳細:";
+}
+
+@Override
+public String detalleMetodo() {
+    return "メソッドの詳細:";
+}
+
+@Override
+public String detalleCampo() {
+    return "フィールドの詳細:";
+}
+
+@Override
+public String clase() {
+    return "クラス";
+}
+
+@Override
+public String tipo() {
+    return "タイプ";
+}
+
+@Override
+public String referenciasAMetodos() {
+    return "メソッドへの参照:";
+}
+
+@Override
+public String referenciasACampos() {
+    return "フィールドへの参照:";
+}
+
+@Override
+public String arbolDeMods() {
+    return "モッドツリー";
+}
+
+@Override
+public String metodo() {
+    return "メソッド";
+}
+
+@Override
+public String campo() {
+    return "フィールド";
+}
 
 
 

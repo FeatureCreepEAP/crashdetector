@@ -2003,7 +2003,205 @@ public String ver_documentacion_jp() {
     return "일본어 문서 보기";
 }
 
+@Override
+public String escanearDeMCreator() {
+    return "MCreator 스캔";
+}
 
+@Override
+public String tituloArbolDeMods() {
+    return "모듈 및 클래스 트리";
+}
+
+@Override
+public String tipoBusqueda() {
+    return "유형";
+}
+
+@Override
+public String filtroTodos() {
+    return "전체";
+}
+
+@Override
+public String filtroPaquetes() {
+    return "패키지";
+}
+
+@Override
+public String filtroClases() {
+    return "클래스";
+}
+
+@Override
+public String filtroMetodos() {
+    return "메서드";
+}
+
+@Override
+public String filtroCampos() {
+    return "필드";
+}
+
+@Override
+public String filtroReferenciasCampo() {
+    return "필드 참조";
+}
+
+@Override
+public String filtroReferenciasMetodo() {
+    return "메서드 참조";
+}
+
+@Override
+public String filtroReferenciasClase() {
+    return "클래스 참조";
+}
+
+@Override
+public String tipBuscar() {
+    return "모드 트리에서 검색하려면 여기에 입력하세요";
+}
+
+@Override
+public String botonBuscar() {
+    return "검색";
+}
+
+@Override
+public String botonResetearArbol() {
+    return "트리 초기화";
+}
+
+@Override
+public String modsCargados() {
+    return "로드된 모드";
+}
+
+@Override
+public String clases() {
+    return "클래스";
+}
+
+@Override
+public String metodos() {
+    return "메서드";
+}
+
+@Override
+public String campos() {
+    return "필드";
+}
+
+@Override
+public String referencias() {
+    return "참조";
+}
+
+@Override
+public String resultadosBusqueda() {
+    return "검색 결과";
+}
+
+@Override
+public String buscarReferencias() {
+    return "참조 찾기";
+}
+
+@Override
+public String referenciasMod() {
+    return "모드 참조";
+}
+
+@Override
+public String referenciasClase() {
+    return "클래스 참조";
+}
+
+@Override
+public String referenciasMetodo() {
+    return "메서드 참조";
+}
+
+@Override
+public String referenciasCampo() {
+    return "필드 참조";
+}
+
+@Override
+public String noSeEncontraronReferencias() {
+    return "참조를 찾을 수 없습니다";
+}
+
+@Override
+public String detalleMod() {
+    return "모드 정보:";
+}
+
+@Override
+public String ubicacion() {
+    return "위치";
+}
+
+@Override
+public String nombres() {
+    return "이름";
+}
+
+@Override
+public String modulo() {
+    return "모듈";
+}
+
+@Override
+public String detalleClase() {
+    return "클래스 정보:";
+}
+
+@Override
+public String detalleMetodo() {
+    return "메서드 정보:";
+}
+
+@Override
+public String detalleCampo() {
+    return "필드 정보:";
+}
+
+@Override
+public String clase() {
+    return "클래스";
+}
+
+@Override
+public String tipo() {
+    return "유형";
+}
+
+@Override
+public String referenciasAMetodos() {
+    return "메서드 참조:";
+}
+
+@Override
+public String referenciasACampos() {
+    return "필드 참조:";
+}
+
+@Override
+public String arbolDeMods() {
+    return "모드 트리";
+}
+
+@Override
+public String metodo() {
+    return "메서드";
+}
+
+@Override
+public String campo() {
+    return "필드";
+}
 
 
 }

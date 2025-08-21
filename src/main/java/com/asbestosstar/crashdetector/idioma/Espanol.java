@@ -2490,4 +2490,364 @@ public String ver_documentacion_jp() {
     return "Ver documentación japonesa";
 }
 
+@Override
+public String escanearDeMCreator() {
+	// TODO Auto-generated method stub
+	return "Escanear MCreator";
+}
+
+
+
+/**
+ * Obtiene el título de la ventana del árbol de mods.
+ * @return Título de la ventana
+ */
+@Override
+public String tituloArbolDeMods() {
+    return "Árbol de Módulos y Clases";
+}
+
+/**
+ * Obtiene el texto para la etiqueta de tipo de búsqueda.
+ * @return Texto de la etiqueta
+ */
+ @Override
+public String tipoBusqueda() {
+    return "Tipo";
+}
+
+/**
+ * Obtiene el texto para el filtro "Todos".
+ * @return Texto del filtro
+ */
+ @Override
+public String filtroTodos() {
+    return "Todos";
+}
+
+/**
+ * Obtiene el texto para el filtro "Paquetes".
+ * @return Texto del filtro
+ */
+ @Override
+public String filtroPaquetes() {
+    return "Paquetes";
+}
+
+/**
+ * Obtiene el texto para el filtro "Clases".
+ * @return Texto del filtro
+ */
+ @Override
+public String filtroClases() {
+    return "Clases";
+}
+
+/**
+ * Obtiene el texto para el filtro "Métodos".
+ * @return Texto del filtro
+ */
+ @Override
+public String filtroMetodos() {
+    return "Métodos";
+}
+
+/**
+ * Obtiene el texto para el filtro "Campos".
+ * @return Texto del filtro
+ */
+ @Override
+public String filtroCampos() {
+    return "Campos";
+}
+
+/**
+ * Obtiene el texto para el filtro "Referencias de Campo".
+ * @return Texto del filtro
+ */
+ @Override
+public String filtroReferenciasCampo() {
+    return "Referencias de Campo";
+}
+
+/**
+ * Obtiene el texto para el filtro "Referencias de Método".
+ * @return Texto del filtro
+ */
+ @Override
+public String filtroReferenciasMetodo() {
+    return "Referencias de Método";
+}
+
+/**
+ * Obtiene el texto para el filtro "Referencias de Clase".
+ * @return Texto del filtro
+ */
+ @Override
+public String filtroReferenciasClase() {
+    return "Referencias de Clase";
+}
+
+/**
+ * Obtiene el texto para el tooltip del campo de búsqueda.
+ * @return Texto del tooltip
+ */
+ @Override
+public String tipBuscar() {
+    return "Escriba aquí para buscar en el árbol de mods";
+}
+
+/**
+ * Obtiene el texto para el botón de búsqueda.
+ * @return Texto del botón
+ */
+ @Override
+public String botonBuscar() {
+    return "Buscar";
+}
+
+/**
+ * Obtiene el texto para el botón de resetear árbol.
+ * @return Texto del botón
+ */
+ @Override
+public String botonResetearArbol() {
+    return "Resetear Árbol";
+}
+
+/**
+ * Obtiene el texto para indicar los mods cargados.
+ * @return Texto descriptivo
+ */
+ @Override
+public String modsCargados() {
+    return "Mods Cargados";
+}
+
+/**
+ * Obtiene el texto para la categoría de clases.
+ * @return Texto de la categoría
+ */
+ @Override
+public String clases() {
+    return "Clases";
+}
+
+/**
+ * Obtiene el texto para la categoría de métodos.
+ * @return Texto de la categoría
+ */
+ @Override
+public String metodos() {
+    return "Métodos";
+}
+
+/**
+ * Obtiene el texto para la categoría de campos.
+ * @return Texto de la categoría
+ */
+ @Override
+public String campos() {
+    return "Campos";
+}
+
+/**
+ * Obtiene el texto para la categoría de referencias.
+ * @return Texto de la categoría
+ */
+ @Override
+public String referencias() {
+    return "Referencias";
+}
+
+/**
+ * Obtiene el texto para los resultados de búsqueda.
+ * @return Texto de resultados
+ */
+ @Override
+public String resultadosBusqueda() {
+    return "Resultados de Búsqueda";
+}
+
+/**
+ * Obtiene el texto para la opción de buscar referencias.
+ * @return Texto de la opción
+ */
+ @Override
+public String buscarReferencias() {
+    return "Buscar Referencias";
+}
+
+/**
+ * Obtiene el texto para las referencias de mod.
+ * @return Texto descriptivo
+ */
+ @Override
+public String referenciasMod() {
+    return "Referencias del Mod";
+}
+
+/**
+ * Obtiene el texto para las referencias de clase.
+ * @return Texto descriptivo
+ */
+ @Override
+public String referenciasClase() {
+    return "Referencias de la Clase";
+}
+
+/**
+ * Obtiene el texto para las referencias de método.
+ * @return Texto descriptivo
+ */
+ @Override
+public String referenciasMetodo() {
+    return "Referencias del Método";
+}
+
+/**
+ * Obtiene el texto para las referencias de campo.
+ * @return Texto descriptivo
+ */
+ @Override
+public String referenciasCampo() {
+    return "Referencias del Campo";
+}
+
+/**
+ * Obtiene el texto cuando no se encuentran referencias.
+ * @return Mensaje de error
+ */
+ @Override
+public String noSeEncontraronReferencias() {
+    return "No se encontraron referencias";
+}
+
+/**
+ * Obtiene el texto para el detalle de mod.
+ * @return Título de detalle
+ */
+ @Override
+public String detalleMod() {
+    return "Detalles del Mod:";
+}
+
+/**
+ * Obtiene el texto para la ubicación.
+ * @return Etiqueta de ubicación
+ */
+ @Override
+public String ubicacion() {
+    return "Ubicación";
+}
+
+/**
+ * Obtiene el texto para los nombres.
+ * @return Etiqueta de nombres
+ */
+ @Override
+public String nombres() {
+    return "Nombres";
+}
+
+/**
+ * Obtiene el texto para el módulo.
+ * @return Etiqueta de módulo
+ */
+ @Override
+public String modulo() {
+    return "Módulo";
+}
+
+/**
+ * Obtiene el texto para el detalle de clase.
+ * @return Título de detalle
+ */
+ @Override
+public String detalleClase() {
+    return "Detalles de la Clase:";
+}
+
+/**
+ * Obtiene el texto para el detalle de método.
+ * @return Título de detalle
+ */
+ @Override
+public String detalleMetodo() {
+    return "Detalles del Método:";
+}
+
+/**
+ * Obtiene el texto para el detalle de campo.
+ * @return Título de detalle
+ */
+ @Override
+public String detalleCampo() {
+    return "Detalles del Campo:";
+}
+
+/**
+ * Obtiene el texto para la clase.
+ * @return Etiqueta de clase
+ */
+ @Override
+public String clase() {
+    return "Clase";
+}
+
+/**
+ * Obtiene el texto para el tipo.
+ * @return Etiqueta de tipo
+ */
+ @Override
+public String tipo() {
+    return "Tipo";
+}
+
+/**
+ * Obtiene el texto para las referencias a métodos.
+ * @return Etiqueta de referencias
+ */
+ @Override
+public String referenciasAMetodos() {
+    return "Referencias a Métodos:";
+}
+
+/**
+ * Obtiene el texto para las referencias a campos.
+ * @return Etiqueta de referencias
+ */
+ @Override
+public String referenciasACampos() {
+    return "Referencias a Campos:";
+}
+
+/**
+ * Obtiene el texto para el botón de árbol de mods.
+ * @return Texto del botón
+ */
+ @Override
+public String arbolDeMods() {
+    return "Árbol de Mods";
+}
+
+/**
+ * Obtiene el texto para método.
+ * @return Palabra "Método"
+ */
+ @Override
+public String metodo() {
+    return "Método";
+}
+
+/**
+ * Obtiene el texto para campo.
+ * @return Palabra "Campo"
+ */
+ @Override
+public String campo() {
+    return "Campo";
+}
+
+
 }

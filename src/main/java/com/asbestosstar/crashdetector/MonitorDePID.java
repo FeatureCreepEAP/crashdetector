@@ -107,6 +107,7 @@ public class MonitorDePID {
 
 		copiarACarpetaDesdeJar("/imagenes/gura.png", new File("crash_detector/imagenes/gura.png"));
 		copiarACarpetaDesdeJar("/imagenes/clio.png", new File("crash_detector/imagenes/clio.png"));
+		copiarACarpetaDesdeJar("/imagenes/hamu.png", new File("crash_detector/imagenes/hamu.png"));
 		copiarACarpetaDesdeJar("/imagenes/nanashi_mumei.png", new File("crash_detector/imagenes/nanashi_mumei.png"));
 		copiarACarpetaDesdeJar("/imagenes/shion.png", new File("crash_detector/imagenes/shion.png"));
 
@@ -692,7 +693,7 @@ public class MonitorDePID {
 					FileOutputStream outputStream = new FileOutputStream(resultdo)) {
 
 				if (inputStream == null) {
-					throw new RuntimeException("El archivo de CrashDetector no tiene pantilla.htm");
+					throw new RuntimeException("El archivo de CrashDetector no tiene "+ubicacion_en_jar);
 				}
 				byte[] buffer = new byte[1024];
 				int bytesRead;

@@ -2008,6 +2008,204 @@ public String solucion_para_error_enlace_insatisfecho() {
 @Override public String conflicto_id_colision_especifico(String id, String modOrigen, String modDestino) { return "<b style='color:#" + config.obtenerColorError() + "'>Конфликт ID: ID <strong>" + id + "</strong> уже занят модом <strong>" + modOrigen + "</strong>, при попытке добавить <strong>" + modDestino + "</strong>. Происходит, когда два мода пытаются использовать один и тот же ID для разных элементов.</b>"; } @Override public String conflicto_id_maximo() { return "<b style='color:#" + config.obtenerColorError() + "'>Превышен максимальный допустимый диапазон ID. Происходит, когда моды пытаются зарегистрировать блоки или предметы с ID за пределами диапазона, поддерживаемого вашей версией Minecraft.</b>"; } @Override public String nombre_de_conflicto_ids() { return "Конфликт ID"; } @Override public String solucion_maximo_rango() { return "<b style='color:#" + config.obtenerColorTexto() + "'>Чтобы решить это в Minecraft 1.12.2, установите <a href='https://www.curseforge.com/minecraft/mc-mods/justenoughids'>JustEnoughIDs</a>. Для 1.7.10 используйте <a href='https://www.curseforge.com/minecraft/mc-mods/endless-ids'>EndlessIDs</a>.</b>"; } @Override public String solucion_colision_id() { return "<b style='color:#" + config.obtenerColorTexto() + "'>Используйте такие инструменты, как <a href='https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/1291014-idfix-and-idfix-minus-mods-for-resolving-id'>IdFix Minus</a> или <a href='https://github.com/SS111/Minecraft-ID-Resolver'>Minecraft-ID-Resolver</a>, чтобы устранить конфликты ID.</b>"; } @Override public String instalar_justenoughids() { return "Установить JustEnoughIDs"; } @Override public String instalar_endlessids() { return "Установить EndlessIDs"; } @Override public String usar_idfix_minus() { return "Использовать IdFix Minus или IdFix"; } @Override public String usar_minecraft_id_resolver() { return "Использовать Minecraft-ID-Resolver"; } @Override public String ver_documentacion_jp() { return "Просмотреть японскую документацию"; }
 
 
+@Override
+public String escanearDeMCreator() {
+    return "Сканировать MCreator";
+}
 
+@Override
+public String tituloArbolDeMods() {
+    return "Дерево модулей и классов";
+}
+
+@Override
+public String tipoBusqueda() {
+    return "Тип";
+}
+
+@Override
+public String filtroTodos() {
+    return "Все";
+}
+
+@Override
+public String filtroPaquetes() {
+    return "Пакеты";
+}
+
+@Override
+public String filtroClases() {
+    return "Классы";
+}
+
+@Override
+public String filtroMetodos() {
+    return "Методы";
+}
+
+@Override
+public String filtroCampos() {
+    return "Поля";
+}
+
+@Override
+public String filtroReferenciasCampo() {
+    return "Ссылки на поля";
+}
+
+@Override
+public String filtroReferenciasMetodo() {
+    return "Ссылки на методы";
+}
+
+@Override
+public String filtroReferenciasClase() {
+    return "Ссылки на классы";
+}
+
+@Override
+public String tipBuscar() {
+    return "Введите для поиска в дереве модов";
+}
+
+@Override
+public String botonBuscar() {
+    return "Поиск";
+}
+
+@Override
+public String botonResetearArbol() {
+    return "Сбросить дерево";
+}
+
+@Override
+public String modsCargados() {
+    return "Загруженные моды";
+}
+
+@Override
+public String clases() {
+    return "Классы";
+}
+
+@Override
+public String metodos() {
+    return "Методы";
+}
+
+@Override
+public String campos() {
+    return "Поля";
+}
+
+@Override
+public String referencias() {
+    return "Ссылки";
+}
+
+@Override
+public String resultadosBusqueda() {
+    return "Результаты поиска";
+}
+
+@Override
+public String buscarReferencias() {
+    return "Найти ссылки";
+}
+
+@Override
+public String referenciasMod() {
+    return "Ссылки мода";
+}
+
+@Override
+public String referenciasClase() {
+    return "Ссылки класса";
+}
+
+@Override
+public String referenciasMetodo() {
+    return "Ссылки метода";
+}
+
+@Override
+public String referenciasCampo() {
+    return "Ссылки поля";
+}
+
+@Override
+public String noSeEncontraronReferencias() {
+    return "Ссылки не найдены";
+}
+
+@Override
+public String detalleMod() {
+    return "Детали мода:";
+}
+
+@Override
+public String ubicacion() {
+    return "Расположение";
+}
+
+@Override
+public String nombres() {
+    return "Имена";
+}
+
+@Override
+public String modulo() {
+    return "Модуль";
+}
+
+@Override
+public String detalleClase() {
+    return "Детали класса:";
+}
+
+@Override
+public String detalleMetodo() {
+    return "Детали метода:";
+}
+
+@Override
+public String detalleCampo() {
+    return "Детали поля:";
+}
+
+@Override
+public String clase() {
+    return "Класс";
+}
+
+@Override
+public String tipo() {
+    return "Тип";
+}
+
+@Override
+public String referenciasAMetodos() {
+    return "Ссылки на методы:";
+}
+
+@Override
+public String referenciasACampos() {
+    return "Ссылки на поля:";
+}
+
+@Override
+public String arbolDeMods() {
+    return "Дерево модов";
+}
+
+@Override
+public String metodo() {
+    return "Метод";
+}
+
+@Override
+public String campo() {
+    return "Поле";
+}
 
 }

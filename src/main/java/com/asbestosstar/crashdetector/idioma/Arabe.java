@@ -2011,7 +2011,205 @@ public String solucion_para_error_enlace_insatisfecho() {
 
 @Override public String conflicto_id_colision_especifico(String id, String modOrigen, String modDestino) { return "<b style='color:#" + config.obtenerColorError() + "'>تضارب في المعرفات (IDs): المعرف <strong>" + id + "</strong> مستخدم بالفعل بواسطة <strong>" + modOrigen + "</strong> عند محاولة إضافة <strong>" + modDestino + "</strong>. يحدث هذا عندما يحاول مودان استخدام نفس المعرف لعناصر مختلفة.</b>"; } @Override public String conflicto_id_maximo() { return "<b style='color:#" + config.obtenerColorError() + "'>تم تجاوز الحد الأقصى المسموح به للمعرفات. يحدث هذا عندما يحاول المودات تسجيل كتل أو عناصر باستخدام معرفات خارج النطاق المدعوم من إصدار ماينكرافت الخاص بك.</b>"; } @Override public String nombre_de_conflicto_ids() { return "تضارب في المعرفات"; } @Override public String solucion_maximo_rango() { return "<b style='color:#" + config.obtenerColorTexto() + "'>لحل هذه المشكلة في ماينكرافت 1.12.2، قم بتثبيت <a href='https://www.curseforge.com/minecraft/mc-mods/justenoughids'>JustEnoughIDs</a>. أما في 1.7.10، استخدم <a href='https://www.curseforge.com/minecraft/mc-mods/endless-ids'>EndlessIDs</a>.</b>"; } @Override public String solucion_colision_id() { return "<b style='color:#" + config.obtenerColorTexto() + "'>استخدم أدوات مثل <a href='https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/1291014-idfix-and-idfix-minus-mods-for-resolving-id'>IdFix Minus</a> أو <a href='https://github.com/SS111/Minecraft-ID-Resolver'>Minecraft-ID-Resolver</a> لحل تضارب المعرفات.</b>"; } @Override public String instalar_justenoughids() { return "تثبيت JustEnoughIDs"; } @Override public String instalar_endlessids() { return "تثبيت EndlessIDs"; } @Override public String usar_idfix_minus() { return "استخدام IdFix Minus أو IdFix"; } @Override public String usar_minecraft_id_resolver() { return "استخدام Minecraft-ID-Resolver"; } @Override public String ver_documentacion_jp() { return "عرض الوثائق اليابانية"; }
 
+@Override
+public String escanearDeMCreator() {
+    return "مسح MCreator";
+}
 
+@Override
+public String tituloArbolDeMods() {
+    return "شجرة الوحدات والطبقات";
+}
+
+@Override
+public String tipoBusqueda() {
+    return "النوع";
+}
+
+@Override
+public String filtroTodos() {
+    return "الكل";
+}
+
+@Override
+public String filtroPaquetes() {
+    return "الحزم";
+}
+
+@Override
+public String filtroClases() {
+    return "الطبقات";
+}
+
+@Override
+public String filtroMetodos() {
+    return "الطرق";
+}
+
+@Override
+public String filtroCampos() {
+    return "الحقول";
+}
+
+@Override
+public String filtroReferenciasCampo() {
+    return "مراجع الحقول";
+}
+
+@Override
+public String filtroReferenciasMetodo() {
+    return "مراجع الطرق";
+}
+
+@Override
+public String filtroReferenciasClase() {
+    return "مراجع الطبقات";
+}
+
+@Override
+public String tipBuscar() {
+    return "اكتب هنا للبحث في شجرة المودات";
+}
+
+@Override
+public String botonBuscar() {
+    return "بحث";
+}
+
+@Override
+public String botonResetearArbol() {
+    return "إعادة تعيين الشجرة";
+}
+
+@Override
+public String modsCargados() {
+    return "المودات المحملة";
+}
+
+@Override
+public String clases() {
+    return "الطبقات";
+}
+
+@Override
+public String metodos() {
+    return "الطرق";
+}
+
+@Override
+public String campos() {
+    return "الحقول";
+}
+
+@Override
+public String referencias() {
+    return "المراجع";
+}
+
+@Override
+public String resultadosBusqueda() {
+    return "نتائج البحث";
+}
+
+@Override
+public String buscarReferencias() {
+    return "ابحث عن المراجع";
+}
+
+@Override
+public String referenciasMod() {
+    return "مراجع المود";
+}
+
+@Override
+public String referenciasClase() {
+    return "مراجع الطبقة";
+}
+
+@Override
+public String referenciasMetodo() {
+    return "مراجع الطريقة";
+}
+
+@Override
+public String referenciasCampo() {
+    return "مراجع الحقل";
+}
+
+@Override
+public String noSeEncontraronReferencias() {
+    return "لم يتم العثور على مراجع";
+}
+
+@Override
+public String detalleMod() {
+    return "تفاصيل المود:";
+}
+
+@Override
+public String ubicacion() {
+    return "الموقع";
+}
+
+@Override
+public String nombres() {
+    return "الأسماء";
+}
+
+@Override
+public String modulo() {
+    return "الوحدة";
+}
+
+@Override
+public String detalleClase() {
+    return "تفاصيل الطبقة:";
+}
+
+@Override
+public String detalleMetodo() {
+    return "تفاصيل الطريقة:";
+}
+
+@Override
+public String detalleCampo() {
+    return "تفاصيل الحقل:";
+}
+
+@Override
+public String clase() {
+    return "الطبقة";
+}
+
+@Override
+public String tipo() {
+    return "النوع";
+}
+
+@Override
+public String referenciasAMetodos() {
+    return "مراجع إلى الطرق:";
+}
+
+@Override
+public String referenciasACampos() {
+    return "مراجع إلى الحقول:";
+}
+
+@Override
+public String arbolDeMods() {
+    return "شجرة المودات";
+}
+
+@Override
+public String metodo() {
+    return "الطريقة";
+}
+
+@Override
+public String campo() {
+    return "الحقل";
+}
 
 
 

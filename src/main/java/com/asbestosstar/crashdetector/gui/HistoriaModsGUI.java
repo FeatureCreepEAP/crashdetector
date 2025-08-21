@@ -40,7 +40,7 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
 
-public class HistoriaModsGUI extends JFrame {
+public class HistoriaModsGUI extends JFrame implements BotonDeBarraLateralDerecha{
     private static final long serialVersionUID = 1L;
     
     // Componentes de la interfaz
@@ -402,4 +402,16 @@ public class HistoriaModsGUI extends JFrame {
             gui.setVisible(true);
         });
     }
+
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+		this.setVisible(true);	
+	}
+
+	@Override
+	public String etiquetaDelBoton() {
+		// TODO Auto-generated method stub
+		return MonitorDePID.idioma.historialDeMods();
+	}
 }

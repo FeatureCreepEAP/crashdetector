@@ -2010,6 +2010,204 @@ public String solucion_para_error_enlace_insatisfecho() {
 @Override public String conflicto_id_colision_especifico(String id, String modOrigen, String modDestino) { return "<b style='color:#" + config.obtenerColorError() + "'>تداخل شناسه‌ها (ID): شناسه <strong>" + id + "</strong> قبلاً توسط <strong>" + modOrigen + "</strong> اشغال شده و هنگام اضافه کردن <strong>" + modDestino + "</strong> با مشکل مواجه می‌شود. این زمانی رخ می‌دهد که دو مود سعی کنند از یک شناسه برای عناصر مختلف استفاده کنند.</b>"; } @Override public String conflicto_id_maximo() { return "<b style='color:#" + config.obtenerColorError() + "'>بیش از حد مجاز شناسه‌ها فراتر رفته است. این زمانی اتفاق می‌افتد که مودها سعی کنند بلوک‌ها یا آیتم‌ها را با شناسه‌هایی ثبت کنند که خارج از محدوده مجاز نسخه ماين كرافت شما باشند.</b>"; } @Override public String nombre_de_conflicto_ids() { return "تداخل شناسه‌ها"; } @Override public String solucion_maximo_rango() { return "<b style='color:#" + config.obtenerColorTexto() + "'>برای حل این مشکل در ماين كرافت 1.12.2، <a href='https://www.curseforge.com/minecraft/mc-mods/justenoughids'>JustEnoughIDs</a> را نصب کنید. برای 1.7.10، از <a href='https://www.curseforge.com/minecraft/mc-mods/endless-ids'>EndlessIDs</a> استفاده کنید.</b>"; } @Override public String solucion_colision_id() { return "<b style='color:#" + config.obtenerColorTexto() + "'>از ابزارهایی مانند <a href='https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/1291014-idfix-and-idfix-minus-mods-for-resolving-id'>IdFix Minus</a> یا <a href='https://github.com/SS111/Minecraft-ID-Resolver'>Minecraft-ID-Resolver</a> برای حل تداخل شناسه‌ها استفاده کنید.</b>"; } @Override public String instalar_justenoughids() { return "نصب JustEnoughIDs"; } @Override public String instalar_endlessids() { return "نصب EndlessIDs"; } @Override public String usar_idfix_minus() { return "استفاده از IdFix Minus یا IdFix"; } @Override public String usar_minecraft_id_resolver() { return "استفاده از Minecraft-ID-Resolver"; } @Override public String ver_documentacion_jp() { return "مشاهده مستندات ژاپنی"; }
 
 
+@Override
+public String escanearDeMCreator() {
+    return "اسکن با MCreator";
+}
 
+@Override
+public String tituloArbolDeMods() {
+    return "درخت ماژول‌ها و کلاس‌ها";
+}
+
+@Override
+public String tipoBusqueda() {
+    return "نوع";
+}
+
+@Override
+public String filtroTodos() {
+    return "همه";
+}
+
+@Override
+public String filtroPaquetes() {
+    return "بسته‌ها";
+}
+
+@Override
+public String filtroClases() {
+    return "کلاس‌ها";
+}
+
+@Override
+public String filtroMetodos() {
+    return "روش‌ها";
+}
+
+@Override
+public String filtroCampos() {
+    return "فیلدها";
+}
+
+@Override
+public String filtroReferenciasCampo() {
+    return "ارجاعات فیلد";
+}
+
+@Override
+public String filtroReferenciasMetodo() {
+    return "ارجاعات روش";
+}
+
+@Override
+public String filtroReferenciasClase() {
+    return "ارجاعات کلاس";
+}
+
+@Override
+public String tipBuscar() {
+    return "اینجا بنویسید تا در درخت مودها جستجو کنید";
+}
+
+@Override
+public String botonBuscar() {
+    return "جستجو";
+}
+
+@Override
+public String botonResetearArbol() {
+    return "بازنشانی درخت";
+}
+
+@Override
+public String modsCargados() {
+    return "مودهای بارگذاری‌شده";
+}
+
+@Override
+public String clases() {
+    return "کلاس‌ها";
+}
+
+@Override
+public String metodos() {
+    return "روش‌ها";
+}
+
+@Override
+public String campos() {
+    return "فیلدها";
+}
+
+@Override
+public String referencias() {
+    return "ارجاعات";
+}
+
+@Override
+public String resultadosBusqueda() {
+    return "نتایج جستجو";
+}
+
+@Override
+public String buscarReferencias() {
+    return "یافتن ارجاعات";
+}
+
+@Override
+public String referenciasMod() {
+    return "ارجاعات مود";
+}
+
+@Override
+public String referenciasClase() {
+    return "ارجاعات کلاس";
+}
+
+@Override
+public String referenciasMetodo() {
+    return "ارجاعات روش";
+}
+
+@Override
+public String referenciasCampo() {
+    return "ارجاعات فیلد";
+}
+
+@Override
+public String noSeEncontraronReferencias() {
+    return "ارجاعی یافت نشد";
+}
+
+@Override
+public String detalleMod() {
+    return "جزئیات مود:";
+}
+
+@Override
+public String ubicacion() {
+    return "مکان";
+}
+
+@Override
+public String nombres() {
+    return "نام‌ها";
+}
+
+@Override
+public String modulo() {
+    return "ماژول";
+}
+
+@Override
+public String detalleClase() {
+    return "جزئیات کلاس:";
+}
+
+@Override
+public String detalleMetodo() {
+    return "جزئیات روش:";
+}
+
+@Override
+public String detalleCampo() {
+    return "جزئیات فیلد:";
+}
+
+@Override
+public String clase() {
+    return "کلاس";
+}
+
+@Override
+public String tipo() {
+    return "نوع";
+}
+
+@Override
+public String referenciasAMetodos() {
+    return "ارجاعات به روش‌ها:";
+}
+
+@Override
+public String referenciasACampos() {
+    return "ارجاعات به فیلدها:";
+}
+
+@Override
+public String arbolDeMods() {
+    return "درخت مودها";
+}
+
+@Override
+public String metodo() {
+    return "روش";
+}
+
+@Override
+public String campo() {
+    return "فیلد";
+}
 
 }

@@ -20,7 +20,7 @@ import javax.swing.SwingWorker;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.grepr.BusquedaArchivos;
 
-public class BusquedaGUI extends JFrame {
+public class BusquedaGUI extends JFrame  implements BotonDeBarraLateralDerecha{
     private JTextField dirField;
     private JTextField searchField;
     private JCheckBox regexCheck;
@@ -112,4 +112,16 @@ public class BusquedaGUI extends JFrame {
             }
         }.execute();
     }
+
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+		this.setVisible(true);
+	}
+
+	@Override
+	public String etiquetaDelBoton() {
+		// TODO Auto-generated method stub
+		return "grepr/fgrepr";
+	}
 }

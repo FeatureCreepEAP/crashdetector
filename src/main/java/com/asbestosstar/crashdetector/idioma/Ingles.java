@@ -2078,7 +2078,205 @@ public String ver_documentacion_jp() {
     return "View Japanese documentation";
 }
 
+@Override
+public String escanearDeMCreator() {
+    return "Scan MCreator";
+}
 
+@Override
+public String tituloArbolDeMods() {
+    return "Module and Class Tree";
+}
+
+@Override
+public String tipoBusqueda() {
+    return "Type";
+}
+
+@Override
+public String filtroTodos() {
+    return "All";
+}
+
+@Override
+public String filtroPaquetes() {
+    return "Packages";
+}
+
+@Override
+public String filtroClases() {
+    return "Classes";
+}
+
+@Override
+public String filtroMetodos() {
+    return "Methods";
+}
+
+@Override
+public String filtroCampos() {
+    return "Fields";
+}
+
+@Override
+public String filtroReferenciasCampo() {
+    return "Field References";
+}
+
+@Override
+public String filtroReferenciasMetodo() {
+    return "Method References";
+}
+
+@Override
+public String filtroReferenciasClase() {
+    return "Class References";
+}
+
+@Override
+public String tipBuscar() {
+    return "Type here to search in the mod tree";
+}
+
+@Override
+public String botonBuscar() {
+    return "Search";
+}
+
+@Override
+public String botonResetearArbol() {
+    return "Reset Tree";
+}
+
+@Override
+public String modsCargados() {
+    return "Loaded Mods";
+}
+
+@Override
+public String clases() {
+    return "Classes";
+}
+
+@Override
+public String metodos() {
+    return "Methods";
+}
+
+@Override
+public String campos() {
+    return "Fields";
+}
+
+@Override
+public String referencias() {
+    return "References";
+}
+
+@Override
+public String resultadosBusqueda() {
+    return "Search Results";
+}
+
+@Override
+public String buscarReferencias() {
+    return "Find References";
+}
+
+@Override
+public String referenciasMod() {
+    return "Mod References";
+}
+
+@Override
+public String referenciasClase() {
+    return "Class References";
+}
+
+@Override
+public String referenciasMetodo() {
+    return "Method References";
+}
+
+@Override
+public String referenciasCampo() {
+    return "Field References";
+}
+
+@Override
+public String noSeEncontraronReferencias() {
+    return "No references found";
+}
+
+@Override
+public String detalleMod() {
+    return "Mod Details:";
+}
+
+@Override
+public String ubicacion() {
+    return "Location";
+}
+
+@Override
+public String nombres() {
+    return "Names";
+}
+
+@Override
+public String modulo() {
+    return "Module";
+}
+
+@Override
+public String detalleClase() {
+    return "Class Details:";
+}
+
+@Override
+public String detalleMetodo() {
+    return "Method Details:";
+}
+
+@Override
+public String detalleCampo() {
+    return "Field Details:";
+}
+
+@Override
+public String clase() {
+    return "Class";
+}
+
+@Override
+public String tipo() {
+    return "Type";
+}
+
+@Override
+public String referenciasAMetodos() {
+    return "References to Methods:";
+}
+
+@Override
+public String referenciasACampos() {
+    return "References to Fields:";
+}
+
+@Override
+public String arbolDeMods() {
+    return "Mod Tree";
+}
+
+@Override
+public String metodo() {
+    return "Method";
+}
+
+@Override
+public String campo() {
+    return "Field";
+}
 
 
 }

@@ -2050,5 +2050,210 @@ public String ver_documentacion_jp() {
     return "Vidi la japanan dokumenton";
 }
 
+@Override
+public String escanearDeMCreator() {
+    return "Skani MCreator";
+}
+
+@Override
+public String tituloArbolDeMods() {
+    return "Modula kaj Klasa Arbo";
+}
+
+@Override
+public String tipoBusqueda() {
+    return "Tipo";
+}
+
+@Override
+public String filtroTodos() {
+    return "Ĉiuj";
+}
+
+@Override
+public String filtroPaquetes() {
+    return "Pakaĵoj";
+}
+
+@Override
+public String filtroClases() {
+    return "Klasoj";
+}
+
+@Override
+public String filtroMetodos() {
+    return "Metodoj";
+}
+
+@Override
+public String filtroCampos() {
+    return "Kampoj";
+}
+
+@Override
+public String filtroReferenciasCampo() {
+    return "Referencoj de kampo";
+}
+
+@Override
+public String filtroReferenciasMetodo() {
+    return "Referencoj de metodo";
+}
+
+@Override
+public String filtroReferenciasClase() {
+    return "Referencoj de klaso";
+}
+
+@Override
+public String tipBuscar() {
+    return "Tajpu ĉi tie por serĉi en la modarbo";
+}
+
+@Override
+public String botonBuscar() {
+    return "Serĉi";
+}
+
+@Override
+public String botonResetearArbol() {
+    return "Reŝargi arbon";
+}
+
+@Override
+public String modsCargados() {
+    return "Ŝarĝitaj modoj";
+}
+
+@Override
+public String clases() {
+    return "Klasoj";
+}
+
+@Override
+public String metodos() {
+    return "Metodoj";
+}
+
+@Override
+public String campos() {
+    return "Kampoj";
+}
+
+@Override
+public String referencias() {
+    return "Referencoj";
+}
+
+@Override
+public String resultadosBusqueda() {
+    return "Serĉrezultoj";
+}
+
+@Override
+public String buscarReferencias() {
+    return "Serĉi referencojn";
+}
+
+@Override
+public String referenciasMod() {
+    return "Referencoj de mod";
+}
+
+@Override
+public String referenciasClase() {
+    return "Referencoj de klaso";
+}
+
+@Override
+public String referenciasMetodo() {
+    return "Referencoj de metodo";
+}
+
+@Override
+public String referenciasCampo() {
+    return "Referencoj de kampo";
+}
+
+@Override
+public String noSeEncontraronReferencias() {
+    return "Neniu referenco trovita";
+}
+
+@Override
+public String detalleMod() {
+    return "Detaloj de mod:";
+}
+
+@Override
+public String ubicacion() {
+    return "Loko";
+}
+
+@Override
+public String nombres() {
+    return "Nomoj";
+}
+
+@Override
+public String modulo() {
+    return "Modulo";
+}
+
+@Override
+public String detalleClase() {
+    return "Detaloj de klaso:";
+}
+
+@Override
+public String detalleMetodo() {
+    return "Detaloj de metodo:";
+}
+
+@Override
+public String detalleCampo() {
+    return "Detaloj de kampo:";
+}
+
+@Override
+public String clase() {
+    return "Klaso";
+}
+
+@Override
+public String tipo() {
+    return "Tipo";
+}
+
+@Override
+public String referenciasAMetodos() {
+    return "Referencoj al metodoj:";
+}
+
+@Override
+public String referenciasACampos() {
+    return "Referencoj al kampoj:";
+}
+
+@Override
+public String arbolDeMods() {
+    return "Modarbo";
+}
+
+@Override
+public String metodo() {
+    return "Metodo";
+}
+
+@Override
+public String campo() {
+    return "Kampo";
+}
+
+
+
+
+
+
 
 }

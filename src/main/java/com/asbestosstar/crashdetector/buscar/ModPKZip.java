@@ -19,6 +19,7 @@ public class ModPKZip implements ArchivoDeMod {
     public List<String> nombres = new ArrayList<>();
     public List<String> clases = new ArrayList<>();
     public List<String> archivos = new ArrayList<>();
+    private final Map<String, byte[]> bytesClaseMap = new HashMap<>();
 
     /**
      * Constructor principal que procesa un archivo ZIP/JAR.
@@ -56,8 +57,11 @@ public class ModPKZip implements ArchivoDeMod {
                     } else if (nombreArchivo.endsWith("mods.toml")) {
                         nombres.add(parsearIdModMCForge(contenido));
                     } else if (nombreArchivo.endsWith(".class")) {
-                        String className = nombreArchivo.replace("/", ".").replace(".class", "");
-                        clases.add(className);
+                        String nombreClase = nombreArchivo.replace("/", ".").replace(".class", "");
+                        clases.add(nombreClase);
+                        // Guardar bytes de clase para análisis posterior con ASM
+                        String nombreInterno = nombreArchivo.substring(0, nombreArchivo.length() - 6);
+                        bytesClaseMap.put(nombreInterno, contenido);
                     }
                 }
             }
@@ -232,10 +236,10 @@ public class ModPKZip implements ArchivoDeMod {
 
         boolean tieneArchivo = archivos.contains(termino);
         boolean tieneClase = clases.contains(termino);
-        String packagePath = termino.replace('.', '/');
-        boolean tienePackage = clases.stream().anyMatch(clase -> clase.startsWith(packagePath));
+        String rutaPaquete = termino.replace('.', '/');
+        boolean tienePaquete = clases.stream().anyMatch(clase -> clase.startsWith(rutaPaquete));
 
-        if (tieneArchivo || tieneClase || tienePackage) {
+        if (tieneArchivo || tieneClase || tienePaquete) {
             resultados.add(this);
         }
 
@@ -244,5 +248,22 @@ public class ModPKZip implements ArchivoDeMod {
         }
 
         return resultados;
+    }
+    
+    @Override
+    public boolean existeClase(String nombreClase) {
+        // Convertir nombre de clase de formato interno (ej: "java/lang/Object") a formato Java (ej: "java.lang.Object")
+        String formatoJava = nombreClase.replace('/', '.');
+        return clases.contains(formatoJava);
+    }
+    
+    @Override
+    public byte[] obtenerBytesClase(String nombreClase) {
+        return bytesClaseMap.get(nombreClase);
+    }
+    
+    @Override
+    public List<String> obtenerTodosLosNombresDeClases() {
+        return new ArrayList<>(bytesClaseMap.keySet());
     }
 }

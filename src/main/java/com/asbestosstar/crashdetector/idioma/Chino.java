@@ -2020,7 +2020,205 @@ public String ver_documentacion_jp() {
     return "查看日文文档";
 }
 
+@Override
+public String escanearDeMCreator() {
+    return "扫描 MCreator";
+}
 
+@Override
+public String tituloArbolDeMods() {
+    return "模块与类树";
+}
+
+@Override
+public String tipoBusqueda() {
+    return "类型";
+}
+
+@Override
+public String filtroTodos() {
+    return "全部";
+}
+
+@Override
+public String filtroPaquetes() {
+    return "包";
+}
+
+@Override
+public String filtroClases() {
+    return "类";
+}
+
+@Override
+public String filtroMetodos() {
+    return "方法";
+}
+
+@Override
+public String filtroCampos() {
+    return "字段";
+}
+
+@Override
+public String filtroReferenciasCampo() {
+    return "字段引用";
+}
+
+@Override
+public String filtroReferenciasMetodo() {
+    return "方法引用";
+}
+
+@Override
+public String filtroReferenciasClase() {
+    return "类引用";
+}
+
+@Override
+public String tipBuscar() {
+    return "在此输入以在模组树中搜索";
+}
+
+@Override
+public String botonBuscar() {
+    return "搜索";
+}
+
+@Override
+public String botonResetearArbol() {
+    return "重置树";
+}
+
+@Override
+public String modsCargados() {
+    return "已加载的模组";
+}
+
+@Override
+public String clases() {
+    return "类";
+}
+
+@Override
+public String metodos() {
+    return "方法";
+}
+
+@Override
+public String campos() {
+    return "字段";
+}
+
+@Override
+public String referencias() {
+    return "引用";
+}
+
+@Override
+public String resultadosBusqueda() {
+    return "搜索结果";
+}
+
+@Override
+public String buscarReferencias() {
+    return "查找引用";
+}
+
+@Override
+public String referenciasMod() {
+    return "模组引用";
+}
+
+@Override
+public String referenciasClase() {
+    return "类引用";
+}
+
+@Override
+public String referenciasMetodo() {
+    return "方法引用";
+}
+
+@Override
+public String referenciasCampo() {
+    return "字段引用";
+}
+
+@Override
+public String noSeEncontraronReferencias() {
+    return "未找到引用";
+}
+
+@Override
+public String detalleMod() {
+    return "模组详情:";
+}
+
+@Override
+public String ubicacion() {
+    return "位置";
+}
+
+@Override
+public String nombres() {
+    return "名称";
+}
+
+@Override
+public String modulo() {
+    return "模块";
+}
+
+@Override
+public String detalleClase() {
+    return "类详情:";
+}
+
+@Override
+public String detalleMetodo() {
+    return "方法详情:";
+}
+
+@Override
+public String detalleCampo() {
+    return "字段详情:";
+}
+
+@Override
+public String clase() {
+    return "类";
+}
+
+@Override
+public String tipo() {
+    return "类型";
+}
+
+@Override
+public String referenciasAMetodos() {
+    return "方法引用:";
+}
+
+@Override
+public String referenciasACampos() {
+    return "字段引用:";
+}
+
+@Override
+public String arbolDeMods() {
+    return "模组树";
+}
+
+@Override
+public String metodo() {
+    return "方法";
+}
+
+@Override
+public String campo() {
+    return "字段";
+}
 
 
 

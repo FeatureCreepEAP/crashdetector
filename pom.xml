@@ -2,8 +2,61 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.asbestosstar</groupId>
-	<artifactId>crashdetectormc</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>crashdetector</artifactId>
+	<version>0.0.99R2</version>
+	
+	
+	<!-- Add necessary metadata for Maven Central -->
+	<name>CrashDetector</name>
+	<description>Detects Crashes in JVM Apps.</description>
+	<url>https://pagure.io/CrashDetectorMC</url>
+
+	<licenses>
+		<license>
+			<name>Public Domain Except for KostromDan</name>
+			<url>https://pagure.io/CrashDetectorMC/blob/main/f/LICENSE</url>
+		</license>
+	</licenses>
+	
+	
+	
+	
+	<developers>
+		<developer>
+			<name>Asbestosstar</name>
+			<email>asbestosstar@asbestosstar.com</email>
+			<organization>Asbestosstar</organization>
+			<organizationUrl>https://asbestosstar.com</organizationUrl>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>scm:git:https://pagure.io/CrashDetectorMC.git</connection>
+		<developerConnection>scm:git:ssh://git@pagure.io/CrashDetectorMC.git</developerConnection>
+		<url>https://pagure.io/CrashDetectorMC</url>
+	</scm>
+	
+	
+	
+	
+		<!-- Distribution Management -->
+	<distributionManagement>
+		<snapshotRepository>
+			<id>central</id>
+			<url>https://central.sonatype.org/</url>
+		</snapshotRepository>
+		<repository>
+			<id>central</id>
+			<url>
+				https://central.sonatype.org/</url>
+		</repository>
+	</distributionManagement>
+	
+	
+	
+	
+	
+	
 	<build>
 		<plugins>
 

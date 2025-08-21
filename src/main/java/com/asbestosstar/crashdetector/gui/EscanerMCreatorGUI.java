@@ -18,7 +18,7 @@ import javax.swing.SwingWorker;
 import com.asbestosstar.crashdetector.EscanerMCreator;
 import com.asbestosstar.crashdetector.MonitorDePID;
 
-public class EscanerMCreatorGUI extends JFrame {
+public class EscanerMCreatorGUI extends JFrame  implements BotonDeBarraLateralDerecha{
     private JTextArea resultadosArea;
     private JLabel estadoLabel;
     private JButton escanearBtn;
@@ -109,4 +109,16 @@ public class EscanerMCreatorGUI extends JFrame {
             }
         }.execute();
     }
+
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+		this.setVisible(true);
+	}
+
+	@Override
+	public String etiquetaDelBoton() {
+		// TODO Auto-generated method stub
+		return MonitorDePID.idioma.escanearDeMCreator();
+	}
 }
