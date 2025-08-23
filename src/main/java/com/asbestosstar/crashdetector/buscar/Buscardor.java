@@ -480,6 +480,53 @@ public class Buscardor {
         return resultados;
     }
     
+    /**
+     * Convierte un nombre de clase del formato de puntos (java.lang.Object) 
+     * al formato interno de ASM (java/lang/Object)
+     */
+    public static String convertirFormatoClase(String nombreClase) {
+        // Si ya tiene '/', asumimos que está en formato interno
+        if (nombreClase.contains("/")) {
+            return nombreClase;
+        }
+        // Si tiene '.', convertimos los puntos a barras
+        else if (nombreClase.contains(".")) {
+            return nombreClase.replace('.', '/');
+        }
+        // Si no tiene ni '.' ni '/', es una clase en el paquete por defecto
+        else {
+            return nombreClase;
+        }
+    }
+
+    /**
+     * Convierte un nombre de clase del formato interno de ASM (java/lang/Object)
+     * al formato de puntos (java.lang.Object)
+     */
+    public static String convertirFormatoClasePuntos(String nombreClase) {
+        // Si ya tiene '.', asumimos que está en formato de puntos
+        if (nombreClase.contains(".")) {
+            return nombreClase;
+        }
+        // Si tiene '/', convertimos las barras a puntos
+        else if (nombreClase.contains("/")) {
+            return nombreClase.replace('/', '.');
+        }
+        // Si no tiene ni '.' ni '/', es una clase en el paquete por defecto
+        else {
+            return nombreClase;
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     // CLASES AUXILIARES PARA RESULTADOS
     
     /**
