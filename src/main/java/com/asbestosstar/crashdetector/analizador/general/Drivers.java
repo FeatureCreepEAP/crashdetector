@@ -81,7 +81,10 @@ public class Drivers implements Verificaciones {
             return;
         }
         if (log.contains("EXCEPTION_ACCESS_VIOLATION") && log.contains("nouveau") || 
-        		log.contains("EXCEPTION_ACCESS_VIOLATION") && log.contains("libgallium-24.2.8.so"))// posible?
+        		log.contains("EXCEPTION_ACCESS_VIOLATION") && log.contains("libgallium-24.2.8.so")// posible?
+        		|| 
+        		log.contains("A fatal error has been detected by the Java Runtime Environment") && log.contains("libopenal.so")
+        		)// posible?
         {
             mensajes.append(MonitorDePID.idioma.problema_con_graficas_nouveau());
             activado = true;
