@@ -2203,5 +2203,55 @@ public String campo() {
     return "필드";
 }
 
+@Override
+public String descompilar() {
+    return "디컴파일";
+}
+
+@Override
+public String exportar() {
+    return "내보내기";
+}
+
+@Override
+public String importar() {
+    return "가져오기";
+}
+
+@Override
+public String errorImportar() {
+    return "Ошибка импорта";
+}
+
+@Override
+public String estructuraImportada() {
+    return "Структура импортирована";
+}
+
+@Override
+public String estructuraExportada() {
+    return "Структура экспортирована";
+}
+
+@Override
+public String errorExportar() {
+    return "Ошибка экспорта";
+}
+
+@Override
+public String exportando() {
+    return "내보내는 중";
+}
+
+@Override
+public String exportacionTardara() {
+    return "내보내기에 시간이 걸릴 수 있음";
+}
+
+@Override
+public String porFavorEspere() {
+    return "잠시 기다려 주세요";
+}
+
 
 }

@@ -151,38 +151,21 @@ public class Buscardor {
     
     // Clases internas para análisis de bytecode con ASM
     // Solo se utilizan cuando ASM está disponible
+ // Clase RecolectorInfoMetodos corregida en Buscardor.java
     private static class RecolectorInfoMetodos extends ClassVisitor {
         private final List<ArchivoDeMod.InfoMetodo> resultados = new ArrayList<>();
-        private String metodoActual;
-        private String descriptorActual;
-        private final List<ArchivoDeMod.Referencia> referenciasMetodos = new ArrayList<>();
-        private final List<ArchivoDeMod.Referencia> referenciasCampos = new ArrayList<>();
 
         public RecolectorInfoMetodos() {
-            super(Opcodes.ASM6);
+            super(obtenerVersionMaximaASM());
         }
 
         @Override
         public MethodVisitor visitMethod(int acceso, String nombre, String descriptor, String firma, String[] excepciones) {
-            if (metodoActual != null) {
-                resultados.add(new ArchivoDeMod.InfoMetodo(
-                    metodoActual, descriptorActual, referenciasMetodos, referenciasCampos
-                ));
-                referenciasMetodos.clear();
-                referenciasCampos.clear();
-            }
-            metodoActual = nombre;
-            descriptorActual = descriptor;
-            return new RecolectorReferenciasMetodoInterno();
-        }
-
-        @Override
-        public void visitEnd() {
-            if (metodoActual != null) {
-                resultados.add(new ArchivoDeMod.InfoMetodo(
-                    metodoActual, descriptorActual, referenciasMetodos, referenciasCampos
-                ));
-            }
+            // Crear nuevas colecciones para cada método para evitar compartir referencias
+            List<ArchivoDeMod.Referencia> referenciasMetodos = new ArrayList<>();
+            List<ArchivoDeMod.Referencia> referenciasCampos = new ArrayList<>();
+            
+            return new RecolectorReferenciasMetodoInterno(nombre, descriptor, referenciasMetodos, referenciasCampos);
         }
 
         public List<ArchivoDeMod.InfoMetodo> obtenerResultados() {
@@ -190,8 +173,19 @@ public class Buscardor {
         }
 
         private class RecolectorReferenciasMetodoInterno extends MethodVisitor {
-            public RecolectorReferenciasMetodoInterno() {
-                super(Opcodes.ASM6);
+            private final String nombre;
+            private final String descriptor;
+            private final List<ArchivoDeMod.Referencia> referenciasMetodos;
+            private final List<ArchivoDeMod.Referencia> referenciasCampos;
+            
+            public RecolectorReferenciasMetodoInterno(String nombre, String descriptor,
+                    List<ArchivoDeMod.Referencia> referenciasMetodos,
+                    List<ArchivoDeMod.Referencia> referenciasCampos) {
+                super(obtenerVersionMaximaASM());
+                this.nombre = nombre;
+                this.descriptor = descriptor;
+                this.referenciasMetodos = referenciasMetodos;
+                this.referenciasCampos = referenciasCampos;
             }
 
             @Override
@@ -203,14 +197,156 @@ public class Buscardor {
             public void visitFieldInsn(int opcode, String propietario, String nombre, String descriptor) {
                 referenciasCampos.add(new ArchivoDeMod.Referencia(propietario, nombre, descriptor, false));
             }
+            
+            @Override
+            public void visitEnd() {
+                // Agregar la información del método cuando terminemos de visitarlo
+                resultados.add(new ArchivoDeMod.InfoMetodo(nombre, descriptor, referenciasMetodos, referenciasCampos));
+            }
         }
     }
+
+    // Nuevo método para encontrar todas las referencias A un método específico en todos los mods
+    public static List<ReferenciaMod> buscarReferenciasHaciaMetodo(String claseObjetivo, String metodoObjetivo, String descriptorObjetivo) {
+        if (!esASMDisponible()) {
+            return new ArrayList<>();
+        }
+        
+        List<ReferenciaMod> resultados = new ArrayList<>();
+        for (ArchivoDeMod mod : mods) {
+            // Buscar en todas las clases del mod
+            for (String nombreClase : mod.obtenerTodosLosNombresDeClases()) {
+                byte[] bytesClase = mod.obtenerBytesClase(nombreClase);
+                if (bytesClase != null) {
+                    try {
+                        ClassReader lector = new ClassReader(bytesClase);
+                        BuscadorLlamadasAMetodo buscador = new BuscadorLlamadasAMetodo(
+                                claseObjetivo, metodoObjetivo, descriptorObjetivo, nombreClase);
+                        lector.accept(buscador, ClassReader.SKIP_DEBUG);
+                        
+                        // Agregar todas las referencias encontradas con información del mod y clase origen
+                        for (InfoLlamadaMetodo llamada : buscador.obtenerLlamadas()) {
+                            resultados.add(new ReferenciaMod(mod, nombreClase, llamada));
+                        }
+                    } catch (Throwable t) {
+                        CrashDetectorLogger.logException(t);
+                    }
+                }
+            }
+        }
+        return resultados;
+    }
+    
+    private static class BuscadorLlamadasAMetodo extends ClassVisitor {
+        private final String claseObjetivo;
+        private final String metodoObjetivo;
+        private final String descriptorObjetivo;
+        private final String claseActual;
+        private final List<InfoLlamadaMetodo> llamadas = new ArrayList<>();
+
+        public BuscadorLlamadasAMetodo(String claseObjetivo, String metodoObjetivo, String descriptorObjetivo, String claseActual) {
+            super(obtenerVersionMaximaASM());//ASM7
+            this.claseObjetivo = claseObjetivo;
+            this.metodoObjetivo = metodoObjetivo;
+            this.descriptorObjetivo = descriptorObjetivo;
+            this.claseActual = claseActual;
+        }
+
+        @Override
+        public MethodVisitor visitMethod(int acceso, String nombre, String descriptor, String firma, String[] excepciones) {
+            return new BuscadorLlamadasEnMetodo(nombre, descriptor);
+        }
+
+        public List<InfoLlamadaMetodo> obtenerLlamadas() {
+            return new ArrayList<>(llamadas);
+        }
+
+        private class BuscadorLlamadasEnMetodo extends MethodVisitor {
+            private final String metodoOrigen;
+            private final String descriptorOrigen;
+
+            public BuscadorLlamadasEnMetodo(String metodoOrigen, String descriptorOrigen) {
+                super(obtenerVersionMaximaASM());//ASM7
+                this.metodoOrigen = metodoOrigen;
+                this.descriptorOrigen = descriptorOrigen;
+            }
+
+            @Override
+            public void visitMethodInsn(int opcode, String propietario, String nombre, String descriptor, boolean esInterfaz) {
+                if (propietario.equals(claseObjetivo) && nombre.equals(metodoObjetivo) && descriptor.equals(descriptorObjetivo)) {
+                    llamadas.add(new InfoLlamadaMetodo(claseActual, metodoOrigen, descriptorOrigen, propietario, nombre, descriptor));
+                }
+            }
+        }
+    }
+    
+    
+    
+    public static class InfoLlamadaMetodo {
+        private final String claseOrigen;
+        private final String metodoOrigen;
+        private final String descriptorMetodoOrigen;
+        private final String claseDestino;
+        private final String metodoDestino;
+        private final String descriptorMetodoDestino;
+        
+        public InfoLlamadaMetodo(String claseOrigen, String metodoOrigen, String descriptorMetodoOrigen,
+                                String claseDestino, String metodoDestino, String descriptorMetodoDestino) {
+            this.claseOrigen = claseOrigen;
+            this.metodoOrigen = metodoOrigen;
+            this.descriptorMetodoOrigen = descriptorMetodoOrigen;
+            this.claseDestino = claseDestino;
+            this.metodoDestino = metodoDestino;
+            this.descriptorMetodoDestino = descriptorMetodoDestino;
+        }
+        
+        public String obtenerClaseOrigen() { return claseOrigen; }
+        public String obtenerMetodoOrigen() { return metodoOrigen; }
+        public String obtenerDescriptorMetodoOrigen() { return descriptorMetodoOrigen; }
+        public String obtenerClaseDestino() { return claseDestino; }
+        public String obtenerMetodoDestino() { return metodoDestino; }
+        public String obtenerDescriptorMetodoDestino() { return descriptorMetodoDestino; }
+    }
+
+    // Clase ReferenciaMod actualizada para incluir información de clase origen
+    public static class ReferenciaMod {
+        private final ArchivoDeMod mod;
+        private final String claseOrigen;
+        private final InfoLlamadaMetodo infoLlamada;
+        private ArchivoDeMod.Referencia referencia; // Para compatibilidad con código existente
+        
+        public ReferenciaMod(ArchivoDeMod mod, ArchivoDeMod.Referencia referencia) {
+            this.mod = mod;
+            this.referencia = referencia;
+            this.claseOrigen = null;
+            this.infoLlamada = null;
+        }
+        
+        public ReferenciaMod(ArchivoDeMod mod, String claseOrigen, InfoLlamadaMetodo infoLlamada) {
+            this.mod = mod;
+            this.claseOrigen = claseOrigen;
+            this.infoLlamada = infoLlamada;
+            this.referencia = null;
+        }
+        
+        public ArchivoDeMod obtenerMod() { return mod; }
+        public ArchivoDeMod.Referencia obtenerReferencia() { return referencia; }
+        public String obtenerClaseOrigen() { return claseOrigen; }
+        public InfoLlamadaMetodo obtenerInfoLlamada() { return infoLlamada; }
+    }
+    
+    
+    
+    
+    
+    
+    
 
     private static class RecolectorInfoCampos extends ClassVisitor {
         private final List<ArchivoDeMod.InfoCampo> resultados = new ArrayList<>();
 
         public RecolectorInfoCampos() {
-            super(Opcodes.ASM6);
+            super(obtenerVersionMaximaASM());//ASM7
         }
 
         @Override
@@ -230,7 +366,7 @@ public class Buscardor {
         private final List<ArchivoDeMod.Referencia> resultados = new ArrayList<>();
 
         public RecolectorReferenciasMetodo(String metodo, String descriptor) {
-            super(Opcodes.ASM6);
+            super(obtenerVersionMaximaASM());//ASM7
             this.metodoObjetivo = metodo;
             this.descriptorObjetivo = descriptor;
         }
@@ -249,7 +385,7 @@ public class Buscardor {
 
         private class RecolectorReferencias extends MethodVisitor {
             public RecolectorReferencias() {
-                super(Opcodes.ASM6);
+                super(obtenerVersionMaximaASM());//ASM7
             }
 
             @Override
@@ -271,7 +407,7 @@ public class Buscardor {
         private final List<ArchivoDeMod.Referencia> resultados = new ArrayList<>();
 
         public RecolectorLlamadasMetodo(String clase, String metodo, String descriptor) {
-            super(Opcodes.ASM6);
+            super(obtenerVersionMaximaASM());
             this.claseObjetivo = clase;
             this.metodoObjetivo = metodo;
             this.descriptorObjetivo = descriptor;
@@ -288,7 +424,7 @@ public class Buscardor {
 
         private class RecolectorLlamadas extends MethodVisitor {
             public RecolectorLlamadas() {
-                super(Opcodes.ASM6);
+                super(obtenerVersionMaximaASM());
             }
 
             @Override
@@ -560,20 +696,37 @@ public class Buscardor {
         public ArchivoDeMod obtenerMod() { return mod; }
         public ArchivoDeMod.InfoCampo obtenerInfoCampo() { return infoCampo; }
     }
-    
-    /**
-     * Combina una referencia con su mod de origen.
-     */
-    public static class ReferenciaMod {
-        private final ArchivoDeMod mod;
-        private final ArchivoDeMod.Referencia referencia;
-        
-        public ReferenciaMod(ArchivoDeMod mod, ArchivoDeMod.Referencia referencia) {
-            this.mod = mod;
-            this.referencia = referencia;
+  
+ /**
+ * Verifica desde ASM10 hacia ASM4.
+ * Retorna la primera constante encontrada (la más alta posible).
+ * Si ninguna existe, retorna ASM4 por defecto.
+ */
+public static int obtenerVersionMaximaASM() {
+    try {
+        Class<?> clase = org.objectweb.asm.Opcodes.class;
+
+        // Recorremos de mayor a menor (10 → 4)
+        for (int i = 10; i >= 4; i--) {
+            String nombreCampo = "ASM" + i;
+            try {
+                java.lang.reflect.Field campo = clase.getField(nombreCampo);
+                return campo.getInt(null); // devolvemos el primero válido encontrado
+            } catch (NoSuchFieldException e) {
+                // no existe, seguimos al siguiente menor
+            }
         }
-        
-        public ArchivoDeMod obtenerMod() { return mod; }
-        public ArchivoDeMod.Referencia obtenerReferencia() { return referencia; }
+
+        // Si no se encontró ninguno, devolvemos ASM4 por defecto
+        return (4 << 16) | (0 << 8);
+
+    } catch (Exception e) {
+        throw new RuntimeException("Error al obtener la versión ASM", e);
     }
+}
+
+
+    
+    
+    
 }

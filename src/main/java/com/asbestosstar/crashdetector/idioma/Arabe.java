@@ -2211,6 +2211,56 @@ public String campo() {
     return "الحقل";
 }
 
+@Override
+public String descompilar() {
+    return "فك التجميع";
+}
+
+@Override
+public String exportar() {
+    return "تصدير";
+}
+
+@Override
+public String importar() {
+    return "استيراد";
+}
+
+@Override
+public String errorImportar() {
+    return "خطأ في الاستيراد";
+}
+
+@Override
+public String estructuraImportada() {
+    return "الهيكلة المستوردة";
+}
+
+@Override
+public String estructuraExportada() {
+    return "الهيكلة المصدرة";
+}
+
+@Override
+public String errorExportar() {
+    return "خطأ في التصدير";
+}
+
+@Override
+public String exportando() {
+    return "جاري التصدير";
+}
+
+@Override
+public String exportacionTardara() {
+    return "قد يستغرق التصدير وقتًا";
+}
+
+@Override
+public String porFavorEspere() {
+    return "الرجاء الانتظار";
+}
+
 
 
 

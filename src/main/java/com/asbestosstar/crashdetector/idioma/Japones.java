@@ -2224,6 +2224,56 @@ public String campo() {
     return "フィールド";
 }
 
+@Override
+public String descompilar() {
+    return "デコンパイル";
+}
+
+@Override
+public String exportar() {
+    return "エクスポート";
+}
+
+@Override
+public String importar() {
+    return "インポート";
+}
+
+@Override
+public String errorImportar() {
+    return "インポートエラー";
+}
+
+@Override
+public String estructuraImportada() {
+    return "構造をインポートしました";
+}
+
+@Override
+public String estructuraExportada() {
+    return "構造をエクスポートしました";
+}
+
+@Override
+public String errorExportar() {
+    return "エクスポートエラー";
+}
+
+@Override
+public String exportando() {
+    return "エクスポート中";
+}
+
+@Override
+public String exportacionTardara() {
+    return "エクスポートに時間がかかる場合があります";
+}
+
+@Override
+public String porFavorEspere() {
+    return "お待ちください";
+}
+
 
 
 

@@ -2279,4 +2279,63 @@ public String campo() {
 }
 
 
+@Override
+public String descompilar() {
+    return "Decompile";
+}
+
+@Override
+public String exportar() {
+    return "Export";
+}
+
+@Override
+public String importar() {
+    return "Import";
+}
+
+@Override
+public String errorImportar() {
+	// TODO Auto-generated method stub
+	return "Error Importar";
+}
+
+@Override
+public String estructuraImportada() {
+	// TODO Auto-generated method stub
+	return "Estructura Importada";
+}
+
+@Override
+public String estructuraExportada() {
+	// TODO Auto-generated method stub
+	return "Estructura Exportada";
+}
+
+@Override
+public String errorExportar() {
+	// TODO Auto-generated method stub
+	return "Error Exportar";
+}
+
+@Override
+public String exportando() {
+    return "Exporting";
+}
+
+@Override
+public String exportacionTardara() {
+    return "Export may take time";
+}
+
+@Override
+public String porFavorEspere() {
+    return "Please wait";
+}
+
+
+
+
+
+
 }

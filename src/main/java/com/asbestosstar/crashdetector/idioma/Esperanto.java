@@ -2250,9 +2250,55 @@ public String campo() {
     return "Kampo";
 }
 
+@Override
+public String descompilar() {
+    return "Malkomposti";
+}
 
+@Override
+public String exportar() {
+    return "Eksporti";
+}
 
+@Override
+public String importar() {
+    return "Importi";
+}
 
+@Override
+public String errorImportar() {
+    return "Importa Eraro";
+}
+
+@Override
+public String estructuraImportada() {
+    return "Strukturo Importita";
+}
+
+@Override
+public String estructuraExportada() {
+    return "Strukturo Eksporita";
+}
+
+@Override
+public String errorExportar() {
+    return "Eksporta Eraro";
+}
+
+@Override
+public String exportando() {
+    return "Eksporatas";
+}
+
+@Override
+public String exportacionTardara() {
+    return "Eksporo povas daŭri iom da tempo";
+}
+
+@Override
+public String porFavorEspere() {
+    return "Bonvolu atendi";
+}
 
 
 

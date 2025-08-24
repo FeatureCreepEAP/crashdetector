@@ -121,6 +121,19 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/cd_logo.png", new File("crash_detector/imagenes/cd_logo.png"));
 		copiarACarpetaDesdeJar("/imagenes/profeco.jpg", new File("crash_detector/imagenes/profeco.jpg"));
 
+		
+		
+		copiarACarpetaDesdeJar("/imagenes/mod.png", new File("crash_detector/imagenes/mod.png"));
+		copiarACarpetaDesdeJar("/imagenes/clase.png", new File("crash_detector/imagenes/clase.png"));
+		copiarACarpetaDesdeJar("/imagenes/metodo.png", new File("crash_detector/imagenes/metodo.png"));
+		copiarACarpetaDesdeJar("/imagenes/campo.png", new File("crash_detector/imagenes/campo.png"));
+		copiarACarpetaDesdeJar("/imagenes/paquete.png", new File("crash_detector/imagenes/paquete.png"));
+		copiarACarpetaDesdeJar("/imagenes/referencia_metodo.png", new File("crash_detector/imagenes/referencia_metodo.png"));
+		copiarACarpetaDesdeJar("/imagenes/referencia_campo.png", new File("crash_detector/imagenes/referencia_campo.png"));
+
+		
+		
+		
 		String mods = "";
 		if (ultimo_mods.toFile().exists()) {
 			try {

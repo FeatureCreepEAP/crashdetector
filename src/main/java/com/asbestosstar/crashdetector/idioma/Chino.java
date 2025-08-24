@@ -2220,6 +2220,56 @@ public String campo() {
     return "字段";
 }
 
+@Override
+public String descompilar() {
+    return "反编译";
+}
+
+@Override
+public String exportar() {
+    return "导出";
+}
+
+@Override
+public String importar() {
+    return "导入";
+}
+
+@Override
+public String errorImportar() {
+    return "导入错误";
+}
+
+@Override
+public String estructuraImportada() {
+    return "结构已导入";
+}
+
+@Override
+public String estructuraExportada() {
+    return "结构已导出";
+}
+
+@Override
+public String errorExportar() {
+    return "导出错误";
+}
+
+@Override
+public String exportando() {
+    return "正在导出";
+}
+
+@Override
+public String exportacionTardara() {
+    return "导出可能需要一些时间";
+}
+
+@Override
+public String porFavorEspere() {
+    return "请稍候";
+}
+
 
 
 }

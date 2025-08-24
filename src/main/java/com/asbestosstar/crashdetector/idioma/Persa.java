@@ -2210,4 +2210,57 @@ public String campo() {
     return "فیلد";
 }
 
+@Override
+public String descompilar() {
+    return "دی‌کامپایل";
+}
+
+@Override
+public String exportar() {
+    return "صدور";
+}
+
+@Override
+public String importar() {
+    return "واردات";
+}
+
+@Override
+public String errorImportar() {
+    return "خطأ في الاستيراد";
+}
+
+@Override
+public String estructuraImportada() {
+    return "الهيكلة المستوردة";
+}
+
+@Override
+public String estructuraExportada() {
+    return "الهيكلة المصدرة";
+}
+
+@Override
+public String errorExportar() {
+    return "خطأ في التصدير";
+}
+
+@Override
+public String exportando() {
+    return "در حال خروجی‌گیری";
+}
+
+@Override
+public String exportacionTardara() {
+    return "خروجی‌گیری ممکن است طول بکشد";
+}
+
+@Override
+public String porFavorEspere() {
+    return "لطفاً صبر کنید";
+}
+
+
+
+
 }

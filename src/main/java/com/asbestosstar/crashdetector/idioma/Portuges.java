@@ -2205,5 +2205,55 @@ public String campo() {
     return "Campo";
 }
 
+@Override
+public String descompilar() {
+    return "Descompilar";
+}
+
+@Override
+public String exportar() {
+    return "Exportar";
+}
+
+@Override
+public String importar() {
+    return "Importar";
+}
+
+@Override
+public String errorImportar() {
+    return "Erro ao Importar";
+}
+
+@Override
+public String estructuraImportada() {
+    return "Estrutura Importada";
+}
+
+@Override
+public String estructuraExportada() {
+    return "Estrutura Exportada";
+}
+
+@Override
+public String errorExportar() {
+    return "Erro ao Exportar";
+}
+
+@Override
+public String exportando() {
+    return "Exportando";
+}
+
+@Override
+public String exportacionTardara() {
+    return "A exportação pode demorar";
+}
+
+@Override
+public String porFavorEspere() {
+    return "Aguarde";
+}
+
 
 }

@@ -1055,6 +1055,26 @@ public interface Idioma {
 	String metodo();
 
 	String campo();
+
+	public String descompilar();
+
+	public String exportar();
+
+	public String importar();
+
+	public String errorImportar();
+
+	public String estructuraImportada();
+
+	public String estructuraExportada();
+
+	public String errorExportar();
+
+	public String exportando();
+
+	public String exportacionTardara();
+
+	public String porFavorEspere();
 	
 	// public String advertenciaMalwareFalso();
 

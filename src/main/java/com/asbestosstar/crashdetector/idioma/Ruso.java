@@ -2208,4 +2208,58 @@ public String campo() {
     return "Поле";
 }
 
+@Override
+public String descompilar() {
+    return "Декомпилировать";
+}
+
+@Override
+public String exportar() {
+    return "Экспорт";
+}
+
+@Override
+public String importar() {
+    return "Импорт";
+}
+
+@Override
+public String errorImportar() {
+    return "Ошибка импорта";
+}
+
+@Override
+public String estructuraImportada() {
+    return "Структура импортирована";
+}
+
+@Override
+public String estructuraExportada() {
+    return "Структура экспортирована";
+}
+
+@Override
+public String errorExportar() {
+    return "Ошибка экспорта";
+}
+
+@Override
+public String exportando() {
+    return "Экспорт";
+}
+
+@Override
+public String exportacionTardara() {
+    return "Экспорт может занять время";
+}
+
+@Override
+public String porFavorEspere() {
+    return "Пожалуйста, подождите";
+}
+
+
+
+
+
 }
