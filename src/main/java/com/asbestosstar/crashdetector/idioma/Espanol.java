@@ -2909,5 +2909,15 @@ public String porFavorEspere() {
 	return "Por Favor Espere";
 }
 
+@Override
+public String noTienesVLCBin() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>No tienes las binarias de VLC. Necesitas las binarias de VLC para WaterMedia. Necesitas instalar manualmente desde https://www.videolan.org/vlc/.  </b>";
+}
+
+@Override
+public String descargar_vlc() {
+    return "Descargar VLC";
+}
+
 
 }

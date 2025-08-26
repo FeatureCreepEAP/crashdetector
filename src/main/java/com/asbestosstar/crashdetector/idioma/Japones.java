@@ -2274,7 +2274,15 @@ public String porFavorEspere() {
     return "お待ちください";
 }
 
+@Override
+public String noTienesVLCBin() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>VLCのバイナリがありません。WaterMediaはVLCのバイナリを必要とします。https://www.videolan.org/vlc/ から手動でインストールする必要があります。  </b>";
+}
 
+@Override
+public String descargar_vlc() {
+    return "VLCをダウンロード";
+}
 
 
 

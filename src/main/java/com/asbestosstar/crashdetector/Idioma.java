@@ -1075,6 +1075,10 @@ public interface Idioma {
 	public String exportacionTardara();
 
 	public String porFavorEspere();
+
+	public String noTienesVLCBin();
+
+	public String descargar_vlc();
 	
 	// public String advertenciaMalwareFalso();
 

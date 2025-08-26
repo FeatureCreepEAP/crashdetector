@@ -18,6 +18,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import com.asbestosstar.crashdetector.Config;
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.parches.ConfigDeParches;
 import com.asbestosstar.crashdetector.parches.Parche;
@@ -119,8 +120,11 @@ public class ConfigPanel extends JPanel {
 	    panel.setBackground(CrashDetectorGUI.colorFondo);
 	    panel.setLayout(new GridLayout(0, 1, 5, 5));
 	    
+    	CrashDetectorLogger.log("Tab Del Juego ");
+
 	    // Agregar todos los parches de la aplicación
 	    for (Parche<?> parche : Parche.parches) {
+	    	CrashDetectorLogger.log("Parche " + parche.nombre_de_gui());
 	        JPanel parchePanel = new JPanel(new BorderLayout());
 	        parchePanel.setBackground(CrashDetectorGUI.colorFondo);
 	        

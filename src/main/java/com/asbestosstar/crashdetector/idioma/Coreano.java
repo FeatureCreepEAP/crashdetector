@@ -2253,5 +2253,15 @@ public String porFavorEspere() {
     return "잠시 기다려 주세요";
 }
 
+@Override
+public String noTienesVLCBin() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>VLC 바이너리가 없습니다. WaterMedia는 VLC 바이너리가 필요합니다. https://www.videolan.org/vlc/ 에서 수동으로 설치해야 합니다.  </b>";
+}
+
+@Override
+public String descargar_vlc() {
+    return "VLC 다운로드";
+}
+
 
 }

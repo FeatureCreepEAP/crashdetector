@@ -368,7 +368,10 @@ CrashDetectorLogger.log(claseFaltante);
 		if (str.contains("Preparing crash report with UUID") || str.contains("Failed to complete lifecycle event") || str.contains("Crash report saved to")|| str.contains("Mod Loading has failed") || str
 				.contains("Could not determine mod trust worthiness, Assuming Jar was downloaded from trusted source!")// FUCK
 																														// STOPMODREPOSTS
-				
+			||	str.contains("org.watermedia.videolan4j.discovery.providers")
+			||	str.contains("libflite.so")//TTS no fatal y es comun en TL linux y mac. TODO agregar una verificacion para este
+			
+			
 		) {
 			return false;
 		}
@@ -552,6 +555,9 @@ CrashDetectorLogger.log(claseFaltante);
 			return true;
 		}
 		if (jarName.startsWith("text2speech-")) {
+			return true;
+		}
+		if (jarName.startsWith("Fabric%")) {
 			return true;
 		}
 		if (jarName.startsWith("Forge%")) {

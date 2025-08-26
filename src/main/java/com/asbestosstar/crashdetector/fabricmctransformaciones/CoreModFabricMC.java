@@ -1,9 +1,13 @@
 package com.asbestosstar.crashdetector.fabricmctransformaciones;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -51,13 +55,14 @@ public class CoreModFabricMC implements IMixinConfigPlugin{
 	@Override
 	public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
 		// TODO Auto-generated method stub
-		Parche.applicarParches(targetClass, mixinClassName);
+		Parche.applicarParches(targetClass, targetClassName);
+		  
 	}
 
 }

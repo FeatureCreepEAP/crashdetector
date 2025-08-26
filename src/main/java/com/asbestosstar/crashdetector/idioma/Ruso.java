@@ -2258,6 +2258,16 @@ public String porFavorEspere() {
     return "Пожалуйста, подождите";
 }
 
+@Override
+public String noTienesVLCBin() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>У вас отсутствуют бинарные файлы VLC. WaterMedia требует бинарные файлы VLC. Установите их вручную с сайта https://www.videolan.org/vlc/.  </b>";
+}
+
+@Override
+public String descargar_vlc() {
+    return "Скачать VLC";
+}
+
 
 
 

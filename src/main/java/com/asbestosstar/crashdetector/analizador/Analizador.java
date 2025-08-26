@@ -55,6 +55,7 @@ import com.asbestosstar.crashdetector.analizador.apps.minecraft.RegistrosMalMape
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.Segundo60Tick;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ServicioDeModLauncherNoFunciona;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.WaterMediaTL;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.WaterMediaVLC;
 import com.asbestosstar.crashdetector.analizador.general.AdvertenciaFaltasClases;
 import com.asbestosstar.crashdetector.analizador.general.ContentoDeTraces;
 import com.asbestosstar.crashdetector.analizador.general.DifDeMods;
@@ -93,6 +94,8 @@ public class Analizador {
 		verificaciones.add(new ModsDuplicadosModLauncher());
 		verificaciones.add(new LenguajeProveedorCheck());
 		verificaciones.add(new WaterMediaTL());
+		verificaciones.add(new WaterMediaVLC());
+
 
 		verificaciones.add(new NoPuedeAnalizarJSONDeRegistro());
 		verificaciones.add(new BloqueTeselado());

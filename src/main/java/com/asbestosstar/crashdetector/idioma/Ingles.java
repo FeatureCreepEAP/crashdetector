@@ -2333,6 +2333,16 @@ public String porFavorEspere() {
     return "Please wait";
 }
 
+@Override
+public String noTienesVLCBin() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>You don't have VLC binaries. WaterMedia requires VLC binaries. You need to install them manually from https://www.videolan.org/vlc/.  </b>";
+}
+
+@Override
+public String descargar_vlc() {
+    return "Download VLC";
+}
+
 
 
 

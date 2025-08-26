@@ -2261,6 +2261,17 @@ public String porFavorEspere() {
 }
 
 
+@Override
+public String noTienesVLCBin() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>فایل‌های اجرایی VLC را ندارید. WaterMedia به فایل‌های اجرایی VLC نیاز دارد. باید آن‌ها را به صورت دستی از https://www.videolan.org/vlc/ نصب کنید.  </b>";
+}
+
+@Override
+public String descargar_vlc() {
+    return "دریافت VLC";
+}
+
+
 
 
 }

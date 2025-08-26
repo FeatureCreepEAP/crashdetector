@@ -2300,6 +2300,18 @@ public String porFavorEspere() {
     return "Bonvolu atendi";
 }
 
+@Override
+public String noTienesVLCBin() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>Vi ne havas la VLC-binarojn. WaterMedia bezonas la VLC-binarojn. Vi devas instali ilin mane el https://www.videolan.org/vlc/.  </b>";
+}
+
+@Override
+public String descargar_vlc() {
+    return "Elŝuti VLC";
+}
+
+
+
 
 
 }

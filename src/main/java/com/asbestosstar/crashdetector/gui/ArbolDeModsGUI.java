@@ -70,7 +70,7 @@ public class ArbolDeModsGUI extends JFrame implements BotonDeBarraLateralDerecha
 	public ArbolDeModsGUI() {
     setTitle(MonitorDePID.idioma.tituloArbolDeMods());
     setSize(1200, 800);
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     setLayout(new BorderLayout());
     
     // Establecer el color de fondo del JFrame a #90cbef
@@ -176,6 +176,8 @@ public class ArbolDeModsGUI extends JFrame implements BotonDeBarraLateralDerecha
     JButton botonDescompilar = new JButton(MonitorDePID.idioma.descompilar());
     JButton botonExportar = new JButton(MonitorDePID.idioma.exportar());
     JButton botonImportar = new JButton(MonitorDePID.idioma.importar());
+    
+    botonDescompilar.disable();
     
     // Añadir tooltips descriptivos
 //    botonDescompilar.setToolTipText(MonitorDePID.idioma.tipDescompilar());

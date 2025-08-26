@@ -187,9 +187,9 @@ public class CrashDetectorGUI extends JFrame {
 			String codigoIdioma = obtenerCodigoIdioma(seleccion);
 
 			if (codigoIdioma != null) {
+				Idioma.archivo.getParentFile().mkdirs();
 				try (BufferedWriter writer = Files.newBufferedWriter(Idioma.archivo.toPath(), StandardOpenOption.CREATE,
 						StandardOpenOption.TRUNCATE_EXISTING)) {
-					Idioma.archivo.getParentFile().mkdirs();
 					writer.write(codigoIdioma);
 				} catch (IOException ex) {
 					CrashDetectorLogger.logException(ex);
@@ -302,7 +302,7 @@ public class CrashDetectorGUI extends JFrame {
 		JPanel barraLateralDerecha = new JPanel();
 		barraLateralDerecha.setLayout(new BoxLayout(barraLateralDerecha, BoxLayout.Y_AXIS));
 		barraLateralDerecha.setBackground(colorBoton.darker());
-		barraLateralDerecha.setPreferredSize(new Dimension(150, 0));
+		barraLateralDerecha.setPreferredSize(new Dimension(175, 0));
 
 		CrashDetectorLogger.log("estabalar logo");
 		JLabel logoLabel = new JLabel();
@@ -481,9 +481,9 @@ public class CrashDetectorGUI extends JFrame {
 		} else {
 			boton.setContentAreaFilled(false);
 		}
-		boton.setMaximumSize(new Dimension(130, 40));
-		boton.setMinimumSize(new Dimension(130, 40));
-		boton.setPreferredSize(new Dimension(130, 40));
+		boton.setMaximumSize(new Dimension(250, 40));
+		boton.setMinimumSize(new Dimension(250, 40));
+		boton.setPreferredSize(new Dimension(250, 40));
 	}
 
 	public void recargar() {

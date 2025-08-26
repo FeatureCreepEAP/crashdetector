@@ -62,7 +62,7 @@ public class NoRegistroDeLauncher extends JDialog {
         this.instant = instant;
 
         setTitle("CrashDetector – " + MonitorDePID.idioma.noRegistroLauncherTitulo());
-
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(600, 650);
         setLocationRelativeTo(blanco);
         setLayout(new BorderLayout(10, 10));

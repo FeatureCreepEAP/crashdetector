@@ -101,6 +101,21 @@ public class MonitorDePID {
 		}
 
 		ArchivoDeCodigoError0.delete();
+		
+		
+		String mods = "";
+		if (ultimo_mods.toFile().exists()) {
+			try {
+				mods = leer_archivo(ultimo_mods);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
+		
+		
 		File html = new File("crash_detector/pantilla.htm");
 
 		copiarACarpetaDesdeJar("/pantilla.htm", html);
@@ -110,6 +125,7 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/hamu.png", new File("crash_detector/imagenes/hamu.png"));
 		copiarACarpetaDesdeJar("/imagenes/nanashi_mumei.png", new File("crash_detector/imagenes/nanashi_mumei.png"));
 		copiarACarpetaDesdeJar("/imagenes/shion.png", new File("crash_detector/imagenes/shion.png"));
+		copiarACarpetaDesdeJar("/imagenes/rosemi.png", new File("crash_detector/imagenes/rosemi.png"));
 
 		copiarACarpetaDesdeJar("/imagenes/boton_agregar.png", new File("crash_detector/imagenes/boton_agregar.png"));
 		copiarACarpetaDesdeJar("/imagenes/boton_compartir.png",
@@ -134,15 +150,7 @@ public class MonitorDePID {
 		
 		
 		
-		String mods = "";
-		if (ultimo_mods.toFile().exists()) {
-			try {
-				mods = leer_archivo(ultimo_mods);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+
 //		new File(viajo_ultima_mods.toString()).delete();
 //		try {
 //			new File(viajo_ultima_mods.toString()).createNewFile();
@@ -185,9 +193,10 @@ public class MonitorDePID {
 			}
 		}
 
-		new File(ultimo_mods.toString()).delete();
+		File um_archivo = new File(ultimo_mods.toString());
+				um_archivo.delete();
 		try {
-			new File(ultimo_mods.toString()).createNewFile();
+			um_archivo.createNewFile();
 			FileWriter escribidor = new FileWriter(ultimo_mods.toFile());
 			escribidor.write(actuales.toString());
 			escribidor.close();
@@ -195,6 +204,13 @@ public class MonitorDePID {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
+		
+		//cargardor de extenciones aqui
+		CargadorExtensiones.cargarExtensionesProcesoApp(um_archivo);
+		
+		
 
 		long pid = obtenerPID();
 		System.out.println("PID: " + pid);
@@ -247,6 +263,12 @@ public class MonitorDePID {
 	private static void monitor_proceso(long pid) {
 		List<Consola> consolas_sin_processando = Consola.obtenerConsolas();
 		MonitorDePID.pid = pid;
+		Transformaciones.init();
+		if(ultimo_mods.toFile().exists()) {
+			CargadorExtensiones.cargarExtensionesProcesoMonitor(ultimo_mods.toFile());
+		}
+		
+		
 		System.out.println(idioma.buscando_para_pid(pid));
 		CountDownLatch latch = new CountDownLatch(1); // Necesito por que sin esta preceso esta muerte
 
@@ -265,6 +287,10 @@ public class MonitorDePID {
 				// if (duration.getSeconds() >= 25) {// Para las consolas completa
 				// } else {
 
+				
+				
+				
+				
 				consolas_sin_processando.addAll(Consola.obtenerConsolas());
 
 				if (!ArchivoDeCodigoError0.exists() && !Consola.tiene_registro_de_launcher(consolas_sin_processando)) {

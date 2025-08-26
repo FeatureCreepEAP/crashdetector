@@ -2262,6 +2262,17 @@ public String porFavorEspere() {
 }
 
 
+@Override
+public String noTienesVLCBin() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>ليس لديك ملفات VLC الثنائية. WaterMedia يحتاج إلى ملفات VLC الثنائية. يجب تثبيتها يدويًا من https://www.videolan.org/vlc/.  </b>";
+}
+
+@Override
+public String descargar_vlc() {
+    return "تنزيل VLC";
+}
+
+
 
 
 }

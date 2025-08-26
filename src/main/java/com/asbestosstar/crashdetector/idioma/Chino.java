@@ -2270,6 +2270,16 @@ public String porFavorEspere() {
     return "请稍候";
 }
 
+@Override
+public String noTienesVLCBin() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>您缺少 VLC 二进制文件。WaterMedia 需要 VLC 二进制文件。请从 https://www.videolan.org/vlc/ 手动安装。  </b>";
+}
+
+@Override
+public String descargar_vlc() {
+    return "下载 VLC";
+}
+
 
 
 }
