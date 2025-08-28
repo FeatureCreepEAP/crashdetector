@@ -219,7 +219,7 @@ public class Consola {
 		resultado.add(new File("../../logs/ftb-app-electron.log")); // FTB
 		resultado.add(new File("sklauncher/sklauncher_logs.txt"));
 		resultado.add(NoRegistroDeLauncher.cd_launcherlog);
-		resultado.add(new File("hs_err_pid" + String.valueOf(MonitorDePID.pid) + ".log")); // GDLauncher
+		resultado.add(new File("hs_err_pid" + String.valueOf(MonitorDePID.pid) + ".log")); // hs
 
 		return resultado;
 	}
