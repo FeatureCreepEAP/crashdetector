@@ -7,6 +7,12 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
@@ -20,28 +26,131 @@ public class Buscardor {
     public static boolean cargado = false;
     
     /**
-     * Carga los mods desde el archivo de monitoreo.
+     * Carga los mods desde el archivo de monitoreo utilizando múltiples hilos sin usar Futures.
+     * Calcula dinámicamente el número de hilos basado en:
+     * - El número de mods a cargar
+     * - El número de procesadores disponibles
      */
     public static void cargar() {
         if (!cargado) {
             try {
                 String[] rutasMods = MonitorDePID.leer_archivo(MonitorDePID.ultimo_mods).split(MonitorDePID.nl);
-                for (String mod : rutasMods) {
-                    File archivo = new File(mod);
-                    if (archivo.isFile()) {
-                        try (FileInputStream fis = new FileInputStream(archivo)) {
-                            Buscardor.mods.add(new ModPKZip(mod, ArchivoDeMod.origin, fis));
-                        } catch (IOException e) {
-                            CrashDetectorLogger.logException(e);
-                        }
-                    }
+                
+                // Si no hay mods para cargar, marcamos como cargado y salimos
+                if (rutasMods.length == 0) {
+                    cargado = true;
+                    return;
                 }
+                
+                // Calcular el número óptimo de hilos
+                int numHilos = calcularHilosOptimos(rutasMods.length);
+                
+                // Crear un pool de hilos con el número determinado
+                ExecutorService executor = Executors.newFixedThreadPool(numHilos);
+                
+                // Procesar cada mod en un hilo separado
+                procesarModsEnParalelo(rutasMods, executor);
+                
+                // Cerrar el pool de hilos de manera ordenada
+                cerrarExecutorService(executor);
+                
                 cargado = true;
             } catch (IOException e) {
                 CrashDetectorLogger.logException(e);
             }
         }
     }
+    
+    
+    
+    
+    /**
+     * Calcula el número óptimo de hilos para operaciones I/O bound.
+     */
+    private static int calcularHilosOptimos(int numMods) {
+
+    	int cpus=4;
+    	String prop = System.getProperty("os.availableProcessors");
+    	if (prop != null) {
+    	   cpus = Integer.parseInt(prop);
+    	}
+
+    	
+    	
+        // Para operaciones de disco, usamos un factor de 2
+        int hilosOptimos = Math.min(numMods, cpus * 2);
+        
+        // Asegurar mínimo 1 y máximo razonable
+        return Math.max(1, Math.min(hilosOptimos, 8));
+    }
+    
+    
+    
+    /**
+     * Procesa los mods en paralelo utilizando el executor.
+     */
+    private static void procesarModsEnParalelo(String[] rutasMods, ExecutorService executor) {
+        for (String mod : rutasMods) {
+            File archivo = new File(mod);
+            if (archivo.isFile()) {//TODO carpeta
+                // Usamos una lambda Runnable en lugar de Callable
+                executor.submit(() -> {
+                    try (FileInputStream fis = new FileInputStream(archivo)) {
+                        ArchivoDeMod modObj = new ModPKZip(mod, ArchivoDeMod.origin, fis);
+                        mods.add(modObj);
+                    } catch (IOException e) {
+                        CrashDetectorLogger.logException(e);
+                    }
+                });
+            }
+        }
+        
+        // Esperar a que todos los hilos terminen
+        executor.shutdown();
+        try {
+            // Esperar un tiempo razonable para que terminen todas las tareas
+            if (!executor.awaitTermination(30, TimeUnit.SECONDS)) {
+                // Si no terminan, forzar el cierre
+                executor.shutdownNow();
+            }
+        } catch (InterruptedException e) {
+            executor.shutdownNow();
+            Thread.currentThread().interrupt();
+        }
+    }
+    
+    /**
+     * Cierra el servicio de ejecución de manera ordenada.
+     * @param executor Servicio de ejecución a cerrar
+     */
+    private static void cerrarExecutorService(ExecutorService executor) {
+        // Intentar cerrar de manera ordenada
+        executor.shutdown();
+        try {
+            // Esperar un tiempo razonable para que terminen todas las tareas
+            if (!executor.awaitTermination(30, TimeUnit.SECONDS)) {
+                // Si no terminan, forzar el cierre
+                executor.shutdownNow();
+                // Esperar un poco más para que se detengan
+                executor.awaitTermination(5, TimeUnit.SECONDS);
+            }
+        } catch (InterruptedException e) {
+            // Si se interrumpe, forzar el cierre
+            executor.shutdownNow();
+            Thread.currentThread().interrupt();
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     /**
      * Prepara una ruta para publicación, anonimizando si es necesario.
