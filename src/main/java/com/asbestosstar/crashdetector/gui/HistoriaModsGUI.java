@@ -19,9 +19,11 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -40,7 +42,7 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
 
-public class HistoriaModsGUI extends JFrame implements BotonDeBarraLateralDerecha{
+public class HistoriaModsGUI extends JFrame implements BotonDeBarraLateralDerecha {
     private static final long serialVersionUID = 1L;
     
     // Componentes de la interfaz
@@ -126,8 +128,6 @@ public class HistoriaModsGUI extends JFrame implements BotonDeBarraLateralDerech
         
         JButton botonComparar = new JButton(idioma.comparar());
         botonComparar.setFont(botonComparar.getFont().deriveFont(Font.BOLD));
-        //botonComparar.setBackground(new Color(0x4CAF50)); // Verde
-        //botonComparar.setForeground(Color.WHITE);
         panelSuperior.add(botonComparar, gbc);
         
         // Panel de resultados
@@ -148,13 +148,6 @@ public class HistoriaModsGUI extends JFrame implements BotonDeBarraLateralDerech
         panelPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         panelPrincipal.add(panelSuperior, BorderLayout.NORTH);
         panelPrincipal.add(panelDesplazamiento, BorderLayout.CENTER);
-        
-        
-        
-        
-        
-
-        
         
         add(panelPrincipal, BorderLayout.CENTER);
     }
@@ -241,10 +234,6 @@ public class HistoriaModsGUI extends JFrame implements BotonDeBarraLateralDerech
       return linea;
     }
 
-
-    
-    
-    
     // Realiza la comparación entre los archivos seleccionados
     private void compararArchivosSeleccionados() {
         String archivoIzquierdo = grupoIzquierdo.getSelection() == null ? null : grupoIzquierdo.getSelection().getActionCommand();
@@ -265,53 +254,77 @@ public class HistoriaModsGUI extends JFrame implements BotonDeBarraLateralDerech
             Path rutaIzquierda = directorio.resolve(archivoIzquierdo);
             Path rutaDerecha = directorio.resolve(archivoDerecho);
             
-            Set<String> modsIzquierda = leerMods(rutaIzquierda);
-            Set<String> modsDerecha = leerMods(rutaDerecha);
+            // Usamos un mapa para asociar el nombre normalizado con la ruta completa
+            Map<String, String> modsIzquierda = leerModsNormalizados(rutaIzquierda);
+            Map<String, String> modsDerecha = leerModsNormalizados(rutaDerecha);
             
-            List<String> diferenciasIzquierdo = compararMods(modsIzquierda, modsDerecha);
-            List<String> diferenciasDerecho = compararMods(modsDerecha, modsIzquierda);
+            // Comparar de izquierda a derecha (archivo izquierdo -> archivo derecho)
+            List<String> diferencias = compararModsNormalizados(modsIzquierda, modsDerecha);
             
-            generarHTMLResultado(archivoIzquierdo, archivoDerecho, diferenciasIzquierdo, diferenciasDerecho);
+            generarHTMLResultado(archivoIzquierdo, archivoDerecho, diferencias);
         } catch (Exception e) {
             CrashDetectorLogger.log("Error comparando archivos: " + e.getMessage());
             resultadoPanel.setText("<html><body><font color='red'>" + idioma.errorComparandoArchivos() + "</font></body></html>");
         }
     }
 
-    // Lee los mods de un archivo
-    private Set<String> leerMods(Path rutaArchivo) throws IOException {
-        Set<String> mods = new HashSet<>();
+    // Lee los mods de un archivo y normaliza los nombres
+    private Map<String, String> leerModsNormalizados(Path rutaArchivo) throws IOException {
+        Map<String, String> mods = new HashMap<>();
         try (BufferedReader lector = new BufferedReader(
                 new InputStreamReader(Files.newInputStream(rutaArchivo), StandardCharsets.UTF_8))) {
             String linea;
             while ((linea = lector.readLine()) != null) {
                 if (!linea.trim().isEmpty()) {
-                    mods.add(linea.trim());
+                    // Normalizar el nombre del mod para comparación
+                    String nombreNormalizado = normalizarNombreMod(linea.trim());
+                    mods.put(nombreNormalizado, linea.trim());
                 }
             }
         }
         return mods;
     }
 
-    // Compara dos conjuntos de mods y devuelve las diferencias
-    private List<String> compararMods(Set<String> viejos, Set<String> nuevos) {
+    // Normaliza el nombre del mod para comparación
+    private String normalizarNombreMod(String ruta) {
+        // Convertir a minúsculas
+        String nombre = new File(ruta).getName().toLowerCase();
+        
+        // Eliminar extensión si existe
+        int indicePunto = nombre.lastIndexOf('.');
+        if (indicePunto > 0) {
+            nombre = nombre.substring(0, indicePunto);
+        }
+        
+        return nombre;
+    }
+
+    // Compara dos conjuntos de mods normalizados
+    private List<String> compararModsNormalizados(Map<String, String> modsAnteriores, Map<String, String> modsNuevos) {
         List<String> diferencias = new ArrayList<>();
         
-        // Mods añadidos
-        nuevos.stream()
-              .filter(mod -> !viejos.contains(mod))
-              .forEach(mod -> diferencias.add("+ " + mod));
+        // Encontrar mods eliminados (estaban en anteriores pero no en nuevos)
+        Set<String> eliminados = new TreeSet<>(modsAnteriores.keySet());
+        eliminados.removeAll(modsNuevos.keySet());
         
-        // Mods eliminados
-        viejos.stream()
-              .filter(mod -> !nuevos.contains(mod))
-              .forEach(mod -> diferencias.add("- " + mod));
+        // Encontrar mods añadidos (están en nuevos pero no en anteriores)
+        Set<String> añadidos = new TreeSet<>(modsNuevos.keySet());
+        añadidos.removeAll(modsAnteriores.keySet());
+        
+        // Agregar resultados ordenados
+        for (String mod : eliminados) {
+            diferencias.add("- " + modsAnteriores.get(mod));
+        }
+        
+        for (String mod : añadidos) {
+            diferencias.add("+ " + modsNuevos.get(mod));
+        }
         
         return diferencias;
     }
 
     // Genera el resultado en formato HTML
-    private void generarHTMLResultado(String archivo1, String archivo2, List<String> diferencias1, List<String> diferencias2) {
+    private void generarHTMLResultado(String archivo1, String archivo2, List<String> diferencias) {
         StringBuilder html = new StringBuilder();
         html.append("<html><body>");
         
@@ -322,15 +335,10 @@ public class HistoriaModsGUI extends JFrame implements BotonDeBarraLateralDerech
             .append(archivo2).append(":</h3>")
             .append("<ul>");
         
-        if (diferencias1.isEmpty() && diferencias2.isEmpty()) {
+        if (diferencias.isEmpty()) {
             html.append("<p style='color:green'>").append(idioma.noHayCambios()).append("</p>");
         } else {
-            for (String linea : diferencias1) {
-                String color = linea.startsWith("+") ? "green" : "red";
-                html.append("<li style='color:").append(color).append("'>").append(linea).append("</li>");
-            }
-            
-            for (String linea : diferencias2) {
+            for (String linea : diferencias) {
                 String color = linea.startsWith("+") ? "green" : "red";
                 html.append("<li style='color:").append(color).append("'>").append(linea).append("</li>");
             }
@@ -393,8 +401,6 @@ public class HistoriaModsGUI extends JFrame implements BotonDeBarraLateralDerech
         add(panelInferior, BorderLayout.PAGE_END);
     }
 
-
-
     // Método para mostrar la GUI
     public static void mostrarGUIHistorialMods() {
         SwingUtilities.invokeLater(() -> {
@@ -403,15 +409,13 @@ public class HistoriaModsGUI extends JFrame implements BotonDeBarraLateralDerech
         });
     }
 
-	@Override
-	public void init() {
-		// TODO Auto-generated method stub
-		this.setVisible(true);	
-	}
+    @Override
+    public void init() {
+        this.setVisible(true);    
+    }
 
-	@Override
-	public String etiquetaDelBoton() {
-		// TODO Auto-generated method stub
-		return MonitorDePID.idioma.historialDeMods();
-	}
+    @Override
+    public String etiquetaDelBoton() {
+        return MonitorDePID.idioma.historialDeMods();
+    }
 }
