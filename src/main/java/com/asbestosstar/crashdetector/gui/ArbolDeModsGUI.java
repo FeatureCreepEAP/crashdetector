@@ -552,7 +552,7 @@ private DefaultMutableTreeNode convertirSerializableAArbol(NodoArbolExportable n
 					DefaultMutableTreeNode nodoClase = new DefaultMutableTreeNode(
 							new NodoConTexto(nombreClase, new Object[] { mod, clasePuntos }));
 
-					if (Buscardor.esASMDisponible() && mod.existeClase(claseInterna)) {
+					if (Buscardor.puedeAnalizarElContentidoDeClase() && mod.existeClase(claseInterna)) {
 						// Usar formato interno para análisis ASM
 						List<ArchivoDeMod.InfoMetodo> metodos = mod.obtenerMetodosConReferencias(claseInterna);
 						if (!metodos.isEmpty()) {
@@ -685,7 +685,7 @@ private DefaultMutableTreeNode convertirSerializableAArbol(NodoArbolExportable n
 			}
 		}
 
-		if (Buscardor.esASMDisponible()
+		if (Buscardor.puedeAnalizarElContentidoDeClase()
 				&& ("*".equals(tipoFiltro) || MonitorDePID.idioma.filtroMetodos().equals(tipoFiltro))) {
 			for (String clase : mod.clases()) {
 				String claseInterna = Buscardor.convertirFormatoClase(clase);
@@ -703,7 +703,7 @@ private DefaultMutableTreeNode convertirSerializableAArbol(NodoArbolExportable n
 			}
 		}
 
-		if (Buscardor.esASMDisponible()
+		if (Buscardor.puedeAnalizarElContentidoDeClase()
 				&& ("*".equals(tipoFiltro) || MonitorDePID.idioma.filtroCampos().equals(tipoFiltro))) {
 			for (String clase : mod.clases()) {
 				String claseInterna = Buscardor.convertirFormatoClase(clase);
@@ -921,7 +921,7 @@ private DefaultMutableTreeNode convertirSerializableAArbol(NodoArbolExportable n
 
 	// Método auxiliar para buscar referencias a una clase específica
 	private void buscarReferenciasAClase(String nombreClase) {
-	    if (!Buscardor.esASMDisponible()) {
+	    if (!Buscardor.puedeAnalizarElContentidoDeClase()) {
 	        DefaultMutableTreeNode raiz = new DefaultMutableTreeNode(
 	            MonitorDePID.idioma.referenciasClase() + " " + nombreClase);
 	        raiz.add(new DefaultMutableTreeNode("ASM no disponible"));
@@ -988,7 +988,7 @@ private DefaultMutableTreeNode convertirSerializableAArbol(NodoArbolExportable n
 
 	// Método auxiliar para buscar referencias a un campo específico
 	private void buscarReferenciasACampo(String claseObjetivo, String nombreCampo, String descriptorCampo) {
-	    if (!Buscardor.esASMDisponible()) {
+	    if (!Buscardor.puedeAnalizarElContentidoDeClase()) {
 	        DefaultMutableTreeNode raiz = new DefaultMutableTreeNode(
 	            MonitorDePID.idioma.referenciasCampo() + " " + 
 	            Buscardor.convertirFormatoClasePuntos(claseObjetivo) + "." + nombreCampo);
@@ -1061,14 +1061,7 @@ private DefaultMutableTreeNode convertirSerializableAArbol(NodoArbolExportable n
 			for (Buscardor.ReferenciaMod refMod : referencias) {
 				String textoReferencia = "";
 
-				if (refMod.obtenerInfoLlamada() != null) {
-					// Nueva información detallada de llamada
-					Buscardor.InfoLlamadaMetodo llamada = refMod.obtenerInfoLlamada();
-					String claseOrigenMostrar = Buscardor.convertirFormatoClasePuntos(llamada.obtenerClaseOrigen());
-					textoReferencia = MonitorDePID.idioma.metodo() + ": " + claseOrigenMostrar + "."
-							+ llamada.obtenerMetodoOrigen() + llamada.obtenerDescriptorMetodoOrigen() + " ("
-							+ refMod.obtenerMod().ubicacion_para_publicar() + ")";
-				} else if (refMod.obtenerReferencia() != null) {
+			if (refMod.obtenerReferencia() != null) {
 					// Referencia antigua (para compatibilidad)
 					ArchivoDeMod.Referencia ref = refMod.obtenerReferencia();
 					String nombreClaseMostrar = Buscardor.convertirFormatoClasePuntos(ref.obtenerClase());
@@ -1257,7 +1250,7 @@ private DefaultMutableTreeNode convertirSerializableAArbol(NodoArbolExportable n
 								.append("\n\n");
 
 						// Mostrar métodos si ASM está disponible y la clase existe
-						if (Buscardor.esASMDisponible() && claseExiste) {
+						if (Buscardor.puedeAnalizarElContentidoDeClase() && claseExiste) {
 							List<ArchivoDeMod.InfoMetodo> metodos = mod.obtenerMetodosConReferencias(claseInterna);
 							detalles.append(MonitorDePID.idioma.metodos()).append(" (").append(metodos.size())
 									.append("):\n");

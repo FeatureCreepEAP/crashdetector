@@ -3,6 +3,13 @@ package com.asbestosstar.crashdetector.buscar;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.ClassVisitor;
+import org.objectweb.asm.FieldVisitor;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
+
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.anon.AnonimizadorDeRuta;
 
 //TODO Mods de Carpetas
@@ -36,12 +43,33 @@ public interface ArchivoDeMod {
     
     /**
      * Busca recursivamente mods que contengan el archivo, clase o paquete especificado.
-     * @param termino Nombre del archivo, clase o paquete a buscar
+     * @param termino Término a buscar (archivo, clase o paquete)
      * @return Lista de mods que contienen el elemento buscado
      */
     public List<ArchivoDeMod> buscarModsCon(String termino);
     
-    // NUEVOS MÉTODOS PARA ANÁLISIS DE BYTECODE (ASM)
+    // VERIFICACIÓN DE BIBLIOTECAS DE BYTECODE
+    static final boolean ASM_DISPONIBLE= verificarClaseEnClasspath("org.objectweb.asm.ClassReader");;
+    static final boolean JAVASSIST_DISPONIBLE= verificarClaseEnClasspath("javassist.bytecode.ClassFile");;
+
+    static boolean verificarClaseEnClasspath(String nombreClase) {
+        try {
+            Class.forName(nombreClase);
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Verifica si alguna biblioteca de análisis de bytecode está disponible.
+     * @return true si ASM o Javassist están disponibles, false en caso contrario
+     */
+    public static boolean esAnalisisDeBytecodeDisponible() {
+        return ASM_DISPONIBLE || JAVASSIST_DISPONIBLE;
+    }
+    
+    // MÉTODOS DE ANÁLISIS DE BYTECODE
     
     /**
      * Verifica si una clase existe en el mod.
@@ -52,58 +80,170 @@ public interface ArchivoDeMod {
     
     /**
      * Obtiene información de métodos de una clase incluyendo referencias internas.
-     * NOTA: Devuelve lista vacía si ASM no está disponible.
      * @param nombreClase Nombre completo de la clase
      * @return Lista con información de métodos y sus referencias
      */
     default List<InfoMetodo> obtenerMetodosConReferencias(String nombreClase) {
-        if (!Buscardor.esASMDisponible()) {
+        if (ASM_DISPONIBLE) {
+            return analizarMetodosConASM(nombreClase);
+        } else if (JAVASSIST_DISPONIBLE) {
+            return analizarMetodosConJavassist(nombreClase);
+        } else {
             return new ArrayList<>();
         }
-        return Buscardor.analizarMetodosConReferencias(this, nombreClase);
+    }
+    
+    default List<InfoMetodo> analizarMetodosConASM(String nombreClase) {
+        byte[] bytesClase = obtenerBytesClase(nombreClase);
+        if (bytesClase == null) {
+            return new ArrayList<>();
+        }
+        
+        try {
+            ClassReader lector = new ClassReader(bytesClase);
+            RecolectorInformacionMetodos recolector = new RecolectorInformacionMetodos();
+            lector.accept(recolector, ClassReader.SKIP_DEBUG);
+            return recolector.obtenerResultados();
+        } catch (Throwable t) {
+            CrashDetectorLogger.logException(t);
+            return new ArrayList<>();
+        }
+    }
+    
+    default List<InfoMetodo> analizarMetodosConJavassist(String nombreClase) {
+        // Implementación con Javassist (ejemplo básico)
+        try {
+            byte[] bytesClase = obtenerBytesClase(nombreClase);
+            if (bytesClase == null) {
+                return new ArrayList<>();
+            }
+            
+            // Este es un esqueleto; la implementación real requeriría usar Javassist
+            // ClassFile classFile = new ClassFile(new ByteArrayInputStream(bytesClase));
+            // ... análisis con Javassist ...
+            
+            return new ArrayList<>(); // Implementación real requerida
+        } catch (Throwable t) {
+            CrashDetectorLogger.logException(t);
+            return new ArrayList<>();
+        }
     }
     
     /**
      * Obtiene campos declarados en una clase.
-     * NOTA: Devuelve lista vacía si ASM no está disponible.
      * @param nombreClase Nombre completo de la clase
      * @return Lista con información de campos
      */
     default List<InfoCampo> obtenerCampos(String nombreClase) {
-        if (!Buscardor.esASMDisponible()) {
+        if (ASM_DISPONIBLE) {
+            return analizarCamposConASM(nombreClase);
+        } else if (JAVASSIST_DISPONIBLE) {
+            return analizarCamposConJavassist(nombreClase);
+        } else {
             return new ArrayList<>();
         }
-        return Buscardor.analizarCampos(this, nombreClase);
+    }
+    
+    default List<InfoCampo> analizarCamposConASM(String nombreClase) {
+        byte[] bytesClase = obtenerBytesClase(nombreClase);
+        if (bytesClase == null) {
+            return new ArrayList<>();
+        }
+        
+        try {
+            ClassReader lector = new ClassReader(bytesClase);
+            RecolectorInformacionCampos recolector = new RecolectorInformacionCampos();
+            lector.accept(recolector, ClassReader.SKIP_DEBUG);
+            return recolector.obtenerResultados();
+        } catch (Throwable t) {
+            CrashDetectorLogger.logException(t);
+            return new ArrayList<>();
+        }
+    }
+    
+    default List<InfoCampo> analizarCamposConJavassist(String nombreClase) {
+        // Implementación con Javassist
+        return new ArrayList<>(); // Implementación real requerida
     }
     
     /**
      * Busca todas las referencias dentro de un método específico.
-     * NOTA: Devuelve lista vacía si ASM no está disponible.
      * @param nombreClase Nombre completo de la clase
      * @param nombreMetodo Nombre del método
      * @param descriptor Descriptor del método (ej: "(Ljava/lang/String;)V")
      * @return Lista de referencias encontradas en el método
      */
     default List<Referencia> buscarReferenciasEnMetodo(String nombreClase, String nombreMetodo, String descriptor) {
-        if (!Buscardor.esASMDisponible()) {
+        if (ASM_DISPONIBLE) {
+            return analizarReferenciasEnMetodoConASM(nombreClase, nombreMetodo, descriptor);
+        } else if (JAVASSIST_DISPONIBLE) {
+            return analizarReferenciasEnMetodoConJavassist(nombreClase, nombreMetodo, descriptor);
+        } else {
             return new ArrayList<>();
         }
-        return Buscardor.analizarReferenciasEnMetodo(this, nombreClase, nombreMetodo, descriptor);
+    }
+    
+    default List<Referencia> analizarReferenciasEnMetodoConASM(String nombreClase, String nombreMetodo, String descriptor) {
+        byte[] bytesClase = obtenerBytesClase(nombreClase);
+        if (bytesClase == null) {
+            return new ArrayList<>();
+        }
+        
+        try {
+            ClassReader lector = new ClassReader(bytesClase);
+            RecolectorReferenciasMetodo recolector = new RecolectorReferenciasMetodo(nombreMetodo, descriptor);
+            lector.accept(recolector, ClassReader.SKIP_DEBUG);
+            return recolector.obtenerResultados();
+        } catch (Throwable t) {
+            CrashDetectorLogger.logException(t);
+            return new ArrayList<>();
+        }
+    }
+    
+    default List<Referencia> analizarReferenciasEnMetodoConJavassist(String nombreClase, String nombreMetodo, String descriptor) {
+        // Implementación con Javassist
+        return new ArrayList<>(); // Implementación real requerida
     }
     
     /**
      * Busca todas las referencias a un método específico (llamadas externas).
-     * NOTA: Devuelve lista vacía si ASM no está disponible.
      * @param claseObjetivo Clase objetivo del método (ej: "java/lang/String")
      * @param metodoObjetivo Nombre del método objetivo
      * @param descriptorObjetivo Descriptor del método objetivo
      * @return Lista de referencias que llaman al método objetivo
      */
     default List<Referencia> buscarReferenciasAMetodo(String claseObjetivo, String metodoObjetivo, String descriptorObjetivo) {
-        if (!Buscardor.esASMDisponible()) {
+        if (ASM_DISPONIBLE) {
+            return analizarReferenciasAMetodoConASM(claseObjetivo, metodoObjetivo, descriptorObjetivo);
+        } else if (JAVASSIST_DISPONIBLE) {
+            return analizarReferenciasAMetodoConJavassist(claseObjetivo, metodoObjetivo, descriptorObjetivo);
+        } else {
             return new ArrayList<>();
         }
-        return Buscardor.analizarReferenciasAMetodo(this, claseObjetivo, metodoObjetivo, descriptorObjetivo);
+    }
+    
+    default List<Referencia> analizarReferenciasAMetodoConASM(String claseObjetivo, String metodoObjetivo, String descriptorObjetivo) {
+        List<Referencia> resultados = new ArrayList<>();
+        for (String nombreClase : obtenerTodosLosNombresDeClases()) {
+            byte[] bytesClase = obtenerBytesClase(nombreClase);
+            if (bytesClase != null) {
+                try {
+                    ClassReader lector = new ClassReader(bytesClase);
+                    RecolectorLlamadasAMetodo recolector = new RecolectorLlamadasAMetodo(
+                            claseObjetivo, metodoObjetivo, descriptorObjetivo);
+                    lector.accept(recolector, ClassReader.SKIP_DEBUG);
+                    resultados.addAll(recolector.obtenerResultados());
+                } catch (Throwable t) {
+                    CrashDetectorLogger.logException(t);
+                }
+            }
+        }
+        return resultados;
+    }
+    
+    default List<Referencia> analizarReferenciasAMetodoConJavassist(String claseObjetivo, String metodoObjetivo, String descriptorObjetivo) {
+        // Implementación con Javassist
+        return new ArrayList<>(); // Implementación real requerida
     }
     
     /**
@@ -119,7 +259,7 @@ public interface ArchivoDeMod {
      */
     List<String> obtenerTodosLosNombresDeClases();
     
-    // ESTRUCTURAS DE DATOS PARA ANÁLISIS DE BYTECODE
+    // CLASES AUXILIARES PARA ANÁLISIS DE BYTECODE
     
     /**
      * Información detallada de un método incluyendo sus referencias internas.
@@ -184,7 +324,155 @@ public interface ArchivoDeMod {
         public boolean esCampo() { return !esMetodo; }
     }
 
-    class Origin implements ArchivoDeMod {
+    // VISITORES DE ASM (ahora en la interfaz)
+    
+    static class RecolectorInformacionMetodos extends ClassVisitor {
+        private final List<InfoMetodo> resultados = new ArrayList<>();
+
+        public RecolectorInformacionMetodos() {
+            super(obtenerVersionMaximaASM());
+        }
+
+        @Override
+        public MethodVisitor visitMethod(int acceso, String nombre, String descriptor, String firma, String[] excepciones) {
+            List<Referencia> referenciasMetodos = new ArrayList<>();
+            List<Referencia> referenciasCampos = new ArrayList<>();
+            
+            return new RecolectorReferenciasMetodoInterno(nombre, descriptor, referenciasMetodos, referenciasCampos);
+        }
+
+        public List<InfoMetodo> obtenerResultados() {
+            return new ArrayList<>(resultados);
+        }
+
+        private class RecolectorReferenciasMetodoInterno extends MethodVisitor {
+            private final String nombre;
+            private final String descriptor;
+            private final List<Referencia> referenciasMetodos;
+            private final List<Referencia> referenciasCampos;
+            
+            public RecolectorReferenciasMetodoInterno(String nombre, String descriptor,
+                    List<Referencia> referenciasMetodos,
+                    List<Referencia> referenciasCampos) {
+                super(obtenerVersionMaximaASM());
+                this.nombre = nombre;
+                this.descriptor = descriptor;
+                this.referenciasMetodos = referenciasMetodos;
+                this.referenciasCampos = referenciasCampos;
+            }
+
+            @Override
+            public void visitMethodInsn(int opcode, String propietario, String nombre, String descriptor, boolean esInterfaz) {
+                referenciasMetodos.add(new Referencia(propietario, nombre, descriptor, true));
+            }
+
+            @Override
+            public void visitFieldInsn(int opcode, String propietario, String nombre, String descriptor) {
+                referenciasCampos.add(new Referencia(propietario, nombre, descriptor, false));
+            }
+            
+            @Override
+            public void visitEnd() {
+                resultados.add(new InfoMetodo(nombre, descriptor, referenciasMetodos, referenciasCampos));
+            }
+        }
+    }
+
+    static class RecolectorInformacionCampos extends ClassVisitor {
+        private final List<InfoCampo> resultados = new ArrayList<>();
+
+        public RecolectorInformacionCampos() {
+            super(obtenerVersionMaximaASM());
+        }
+
+        @Override
+        public FieldVisitor visitField(int acceso, String nombre, String descriptor, String firma, Object valor) {
+            resultados.add(new InfoCampo(nombre, descriptor));
+            return null;
+        }
+
+        public List<InfoCampo> obtenerResultados() {
+            return new ArrayList<>(resultados);
+        }
+    }
+
+    static class RecolectorReferenciasMetodo extends ClassVisitor {
+        private final String metodoObjetivo;
+        private final String descriptorObjetivo;
+        private final List<Referencia> resultados = new ArrayList<>();
+
+        public RecolectorReferenciasMetodo(String metodo, String descriptor) {
+            super(obtenerVersionMaximaASM());
+            this.metodoObjetivo = metodo;
+            this.descriptorObjetivo = descriptor;
+        }
+
+        @Override
+        public MethodVisitor visitMethod(int acceso, String nombre, String descriptor, String firma, String[] excepciones) {
+            if (nombre.equals(metodoObjetivo) && descriptor.equals(descriptorObjetivo)) {
+                return new RecolectorReferencias();
+            }
+            return null;
+        }
+
+        public List<Referencia> obtenerResultados() {
+            return new ArrayList<>(resultados);
+        }
+
+        private class RecolectorReferencias extends MethodVisitor {
+            public RecolectorReferencias() {
+                super(obtenerVersionMaximaASM());
+            }
+
+            @Override
+            public void visitMethodInsn(int opcode, String propietario, String nombre, String descriptor, boolean esInterfaz) {
+                resultados.add(new Referencia(propietario, nombre, descriptor, true));
+            }
+
+            @Override
+            public void visitFieldInsn(int opcode, String propietario, String nombre, String descriptor) {
+                resultados.add(new Referencia(propietario, nombre, descriptor, false));
+            }
+        }
+    }
+
+    static class RecolectorLlamadasAMetodo extends ClassVisitor {
+        private final String claseObjetivo;
+        private final String metodoObjetivo;
+        private final String descriptorObjetivo;
+        private final List<Referencia> resultados = new ArrayList<>();
+
+        public RecolectorLlamadasAMetodo(String clase, String metodo, String descriptor) {
+            super(obtenerVersionMaximaASM());
+            this.claseObjetivo = clase;
+            this.metodoObjetivo = metodo;
+            this.descriptorObjetivo = descriptor;
+        }
+
+        @Override
+        public MethodVisitor visitMethod(int acceso, String nombre, String descriptor, String firma, String[] excepciones) {
+            return new RecolectorLlamadas();
+        }
+
+        public List<Referencia> obtenerResultados() {
+            return new ArrayList<>(resultados);
+        }
+
+        private class RecolectorLlamadas extends MethodVisitor {
+            public RecolectorLlamadas() {
+                super(obtenerVersionMaximaASM());
+            }
+
+            @Override
+            public void visitMethodInsn(int opcode, String propietario, String nombre, String descriptor, boolean esInterfaz) {
+                if (propietario.equals(claseObjetivo) && nombre.equals(metodoObjetivo) && descriptor.equals(descriptorObjetivo)) {
+                    resultados.add(new Referencia(propietario, nombre, descriptor, true));
+                }
+            }
+        }
+    }
+    
+    static class Origin implements ArchivoDeMod {
 
         @Override
         public ArchivoDeMod obtenerDesde() {
@@ -241,7 +529,7 @@ public interface ArchivoDeMod {
             return new ArrayList<ArchivoDeMod>();
         }
 
-        // Implementación para nuevos métodos
+        // Implementación para métodos de análisis
         @Override
         public boolean existeClase(String nombreClase) {
             return false;
@@ -257,5 +545,31 @@ public interface ArchivoDeMod {
             return new ArrayList<>();
         }
     }
+    
+    /**
+     * Obtiene la versión máxima de ASM compatible con el entorno.
+     * Verifica desde ASM10 hacia ASM4 y devuelve la primera disponible.
+     */
+    static int obtenerVersionMaximaASM() {
+        try {
+            Class<?> clase = Opcodes.class;
 
+            // Recorremos de mayor a menor (10 → 4)
+            for (int i = 10; i >= 4; i--) {
+                String nombreCampo = "ASM" + i;
+                try {
+                    java.lang.reflect.Field campo = clase.getField(nombreCampo);
+                    return campo.getInt(null);
+                } catch (NoSuchFieldException e) {
+                    // no existe, seguimos al siguiente menor
+                }
+            }
+
+            // Si no se encontró ninguno, devolvemos ASM4 por defecto
+            return (4 << 16) | (0 << 8);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error al obtener la versión ASM", e);
+        }
+    }
 }
