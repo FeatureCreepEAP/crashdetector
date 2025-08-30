@@ -3,13 +3,18 @@ package com.asbestosstar.crashdetector.buscar;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.RejectedExecutionHandler;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
@@ -22,12 +27,8 @@ public class Buscardor {
 
     public static boolean cargado = false;
     
-    /**
-     * Carga los mods desde el archivo de monitoreo utilizando múltiples hilos sin usar Futures.
-     * Calcula dinámicamente el número de hilos basado en:
-     * - El número de mods a cargar
-     * - El número de procesadores disponibles
-     */
+
+    
     public static void cargar() {
         if (!cargado) {
             try {
@@ -40,16 +41,16 @@ public class Buscardor {
                 }
                 
                 // Calcular el número óptimo de hilos
-                int numHilos = calcularHilosOptimos(rutasMods.length);
+                int numeroHilos = calcularHilosOptimos(rutasMods.length);
                 
-                // Crear un pool de hilos con el número determinado
-                ExecutorService executor = Executors.newFixedThreadPool(numHilos);
+                // Crear un ThreadPoolExecutor configurado específicamente
+                ThreadPoolExecutor ejecutor = crearThreadPoolExecutor(numeroHilos);
                 
                 // Procesar cada mod en un hilo separado
-                procesarModsEnParalelo(rutasMods, executor);
+                procesarModsEnParalelo(rutasMods, ejecutor);
                 
                 // Cerrar el pool de hilos de manera ordenada
-                cerrarExecutorService(executor);
+                cerrarThreadPoolExecutor(ejecutor);
                 
                 cargado = true;
             } catch (IOException e) {
@@ -61,37 +62,85 @@ public class Buscardor {
     
     
     
+    
     /**
-     * Calcula el número óptimo de hilos para operaciones I/O bound.
+     * Crea un ThreadPoolExecutor configurado específicamente para operaciones I/O bound.
+     * 
+     * @param numeroHilos Número óptimo de hilos para la operación
+     * @return ThreadPoolExecutor configurado
      */
-    private static int calcularHilosOptimos(int numMods) {
-
-    	int cpus=4;
-    	String prop = System.getProperty("os.availableProcessors");
-    	if (prop != null) {
-    	   cpus = Integer.parseInt(prop);
-    	}
-
-    	
-    	
-        // Para operaciones de disco, usamos un factor de 2
-        int hilosOptimos = Math.min(numMods, cpus * 2);
+    private static ThreadPoolExecutor crearThreadPoolExecutor(int numeroHilos) {
+        // Tamaño mínimo de hilos (núcleo del pool) - la mitad del óptimo, mínimo 1
+        int tamanoPoolNucleo = Math.max(1, numeroHilos / 2);
         
-        // Asegurar mínimo 1 y máximo razonable
-        return Math.max(1, Math.min(hilosOptimos, 8));
+        // Tamaño máximo de hilos (tamaño máximo del pool) - el número óptimo calculado
+        int tamanoPoolMaximo = numeroHilos;
+        
+        // Tiempo que un hilo inactivo permanece antes de ser terminado (en segundos)
+        long tiempoVidaHilos = 30;
+        
+        // Cola para tareas pendientes - usamos una LinkedBlockingQueue sin límite
+        // Esto es apropiado para operaciones I/O bound donde las tareas pueden tardar
+        BlockingQueue<Runnable> colaTrabajo = new LinkedBlockingQueue<>();
+        
+        // Factoría de hilos con nombres descriptivos para facilitar el debugging
+        ThreadFactory fabricaHilos = new ThreadFactory() {
+            private final AtomicInteger contador = new AtomicInteger(1);
+            
+            @Override
+            public Thread newThread(Runnable r) {
+                Thread t = new Thread(r);
+                t.setName("CargadorMods-" + contador.getAndIncrement());
+                t.setDaemon(true);
+                return t;
+            }
+        };
+        
+        // Política de rechazo - usamos CallerRunsPolicy para evitar perder tareas
+        RejectedExecutionHandler manejadorRechazo = new ThreadPoolExecutor.CallerRunsPolicy();
+        
+        return new ThreadPoolExecutor(
+            tamanoPoolNucleo, 
+            tamanoPoolMaximo, 
+            tiempoVidaHilos, 
+            TimeUnit.SECONDS, 
+            colaTrabajo, 
+            fabricaHilos, 
+            manejadorRechazo
+        );
     }
     
     
     
     /**
-     * Procesa los mods en paralelo utilizando el executor.
+     * Calcula el número óptimo de hilos para operaciones I/O bound.
+     * 
+     * @param numeroMods Número de mods a cargar
+     * @return Número óptimo de hilos
      */
-    private static void procesarModsEnParalelo(String[] rutasMods, ExecutorService executor) {
+    private static int calcularHilosOptimos(int numeroMods) {
+        int cpus = ManagementFactory.getThreadMXBean().getThreadCount();//https://stackoverflow.com/questions/1922290/how-to-get-the-number-of-threads-in-a-java-process
+        
+        // Para operaciones de disco, usamos un factor de 2
+        int hilosOptimos = Math.min(numeroMods, cpus * 2);
+        
+        // Asegurar mínimo 1 y máximo razonable
+        return Math.max(1, Math.min(hilosOptimos, 8));
+    }
+
+    
+    /**
+     * Procesa los mods en paralelo utilizando el ThreadPoolExecutor.
+     * 
+     * @param rutasMods Array de rutas de mods a cargar
+     * @param ejecutor ThreadPoolExecutor para ejecutar las tareas
+     */
+    private static void procesarModsEnParalelo(String[] rutasMods, ThreadPoolExecutor ejecutor) {
         for (String mod : rutasMods) {
             File archivo = new File(mod);
-            if (archivo.isFile()) {//TODO carpeta
+            if (archivo.isFile()) {
                 // Usamos una lambda Runnable en lugar de Callable
-                executor.submit(() -> {
+                ejecutor.submit(() -> {
                     try (FileInputStream fis = new FileInputStream(archivo)) {
                         ArchivoDeMod modObj = new ModPKZip(mod, ArchivoDeMod.origin, fis);
                         mods.add(modObj);
@@ -102,38 +151,34 @@ public class Buscardor {
             }
         }
         
-        // Esperar a que todos los hilos terminen
-        executor.shutdown();
-        try {
-            // Esperar un tiempo razonable para que terminen todas las tareas
-            if (!executor.awaitTermination(30, TimeUnit.SECONDS)) {
-                // Si no terminan, forzar el cierre
-                executor.shutdownNow();
-            }
-        } catch (InterruptedException e) {
-            executor.shutdownNow();
-            Thread.currentThread().interrupt();
-        }
+        // No cerramos el executor aquí - lo hacemos en cerrarThreadPoolExecutor
     }
     
     /**
-     * Cierra el servicio de ejecución de manera ordenada.
-     * @param executor Servicio de ejecución a cerrar
+     * Cierra el ThreadPoolExecutor de manera ordenada.
+     * 
+     * @param ejecutor ThreadPoolExecutor a cerrar
      */
-    private static void cerrarExecutorService(ExecutorService executor) {
-        // Intentar cerrar de manera ordenada
-        executor.shutdown();
+    private static void cerrarThreadPoolExecutor(ThreadPoolExecutor ejecutor) {
+        // Indicar que no se aceptarán más tareas
+        ejecutor.shutdown();
+        
         try {
             // Esperar un tiempo razonable para que terminen todas las tareas
-            if (!executor.awaitTermination(30, TimeUnit.SECONDS)) {
+            if (!ejecutor.awaitTermination(30, TimeUnit.SECONDS)) {
                 // Si no terminan, forzar el cierre
-                executor.shutdownNow();
+                List<Runnable> tareasPendientes = ejecutor.shutdownNow();
+                // Registrar las tareas pendientes si es necesario
+                if (!tareasPendientes.isEmpty()) {
+                    CrashDetectorLogger.log("Se cancelaron " + tareasPendientes.size() + " tareas pendientes de carga de mods");
+                }
+                
                 // Esperar un poco más para que se detengan
-                executor.awaitTermination(5, TimeUnit.SECONDS);
+                ejecutor.awaitTermination(5, TimeUnit.SECONDS);
             }
         } catch (InterruptedException e) {
             // Si se interrumpe, forzar el cierre
-            executor.shutdownNow();
+            ejecutor.shutdownNow();
             Thread.currentThread().interrupt();
         }
     }
