@@ -16,9 +16,15 @@ import com.asbestosstar.crashdetector.BiMap;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.StackTracesDenegadosDeMinecraftPorDefecto;
 
 public class VerificacionDeStackTrace {
 
+	/**
+	 * Stacktraces para ignorar
+	 */
+	public static List<ListaDenegadosTrace> denegados = new ArrayList<ListaDenegadosTrace>();
+	
 	Consola consola;
 	public static String nl = System.lineSeparator();
 
@@ -51,6 +57,12 @@ public class VerificacionDeStackTrace {
 
 	};
 
+static {
+	StackTracesDenegadosDeMinecraftPorDefecto.init();
+}
+	
+	
+	
 	public VerificacionDeStackTrace(Consola cons) {
 		this.consola = cons;
 	}
@@ -363,25 +375,10 @@ CrashDetectorLogger.log(claseFaltante);
 		return ret;
 	}
 
-	public static boolean tracePermite(String str) {
-		// Excluir líneas que contienen "Preparing crash report with UUID"
-		if (str.contains("Preparing crash report with UUID") || str.contains("Failed to complete lifecycle event") || str.contains("Crash report saved to")|| str.contains("Mod Loading has failed") || str
-				.contains("Could not determine mod trust worthiness, Assuming Jar was downloaded from trusted source!")// FUCK
-																														// STOPMODREPOSTS
-			||	str.contains("org.watermedia.videolan4j.discovery.providers")
-			||	str.contains("libflite.so")//TTS no fatal y es comun en TL linux y mac. TODO agregar una verificacion para este
-			
-			
-		) {
-			return false;
+	public static boolean tracePermite(String str) {		
+		for(ListaDenegadosTrace pred:denegados) {
+			if(pred.predicado(str)) {return false;}
 		}
-
-		// Incluir líneas que sean exactamente "Stacktrace:" o contengan "Stacktrace:"
-		// como inicio
-		if (str.trim().equals("Stacktrace:") || str.trim().startsWith("Stacktrace:" + nl)) {
-			return false;
-		}
-
 		// Incluir otras líneas que no coincidan con los criterios de exclusión
 		return true;
 	}
