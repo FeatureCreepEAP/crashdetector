@@ -25,6 +25,7 @@ import javax.swing.SwingUtilities;
 import com.asbestosstar.crashdetector.analizador.Analizador;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.grepr.BusquedaArchivos;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
@@ -101,6 +102,7 @@ public class MonitorDePID {
 		}
 		
 		ProxySysOutSysErr.init();
+
 
 		ArchivoDeCodigoError0.delete();
 		
@@ -250,6 +252,7 @@ public class MonitorDePID {
 			System.out.println("JVM " + javaBinary);
 		}
 
+
 		// Launch the child monitor process
 		try {
 			String cp = System.getProperty("java.class.path") + File.pathSeparator + jar;
@@ -260,6 +263,8 @@ public class MonitorDePID {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+
 	}
 
 	private static void monitor_proceso(long pid) {

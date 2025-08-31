@@ -29,6 +29,7 @@ public class Buscardor {
     public static boolean cargado = false;
     
 
+   
     
     public static void cargar() {
         if (!cargado) {
@@ -60,10 +61,6 @@ public class Buscardor {
         }
     }
     
-    
-    
-    
-    
     /**
      * Crea un ThreadPoolExecutor configurado específicamente para operaciones I/O bound.
      * 
@@ -81,7 +78,6 @@ public class Buscardor {
         long tiempoVidaHilos = 30;
         
         // Cola para tareas pendientes - usamos una LinkedBlockingQueue sin límite
-        // Esto es apropiado para operaciones I/O bound donde las tareas pueden tardar
         BlockingQueue<Runnable> colaTrabajo = new LinkedBlockingQueue<>();
         
         // Factoría de hilos con nombres descriptivos para facilitar el debugging
@@ -120,7 +116,8 @@ public class Buscardor {
      * @return Número óptimo de hilos
      */
     private static int calcularHilosOptimos(int numeroMods) {
-        int cpus = ManagementFactory.getThreadMXBean().getThreadCount();//https://stackoverflow.com/questions/1922290/how-to-get-the-number-of-threads-in-a-java-process
+        // Usamos ManagementFactory para obtener el número de hilos
+        int cpus = ManagementFactory.getThreadMXBean().getThreadCount();
         
         // Para operaciones de disco, usamos un factor de 2
         int hilosOptimos = Math.min(numeroMods, cpus * 2);
@@ -129,7 +126,6 @@ public class Buscardor {
         return Math.max(1, Math.min(hilosOptimos, 8));
     }
 
-    
     /**
      * Procesa los mods en paralelo utilizando el ThreadPoolExecutor.
      * 
@@ -137,28 +133,41 @@ public class Buscardor {
      * @param ejecutor ThreadPoolExecutor para ejecutar las tareas
      */
     private static void procesarModsEnParalelo(String[] rutasMods, ThreadPoolExecutor ejecutor) {
-        for (String mod : rutasMods) {
-            File archivo = new File(mod);
+        for (String modPath : rutasMods) {
+            // Creamos variables efectivamente finales para la lambda
+            final String rutaActual = modPath;
+            final File archivoActual = new File(modPath);
             
-                // Usamos una lambda Runnable en lugar de Callable
-                ejecutor.submit(() -> {
-                	if (archivo.isFile()) {
-                    try (FileInputStream fis = new FileInputStream(archivo)) {
-                        ArchivoDeMod modObj = new ModPKZip(mod, ArchivoDeMod.origin, fis);
+            CrashDetectorLogger.log("buscardor mod " + rutaActual);
+
+            ejecutor.submit(() -> {
+                try {
+                    if (archivoActual.isFile()) {
+                        CrashDetectorLogger.log("prearchivo mod " + archivoActual.getName());
+                        try (FileInputStream fis = new FileInputStream(archivoActual)) {
+                            CrashDetectorLogger.log("En Stream " + archivoActual.getName() + " cargado correctamente");
+                        	ArchivoDeMod modObj = new ModPKZip(rutaActual, ArchivoDeMod.origin, fis);
+                            CrashDetectorLogger.log("crear " + archivoActual.getName() + " cargado correctamente");
+                        	mods.add(modObj);
+                            CrashDetectorLogger.log("archivo mod " + archivoActual.getName() + " cargado correctamente");
+                        } catch (IOException e) {
+                            CrashDetectorLogger.log("Error al cargar mod ZIP " + archivoActual.getName() + ": " + e.getMessage());
+                            CrashDetectorLogger.logException(e);
+                        }
+                    } 
+                    else {
+                        CrashDetectorLogger.log("precarpeta mod " + archivoActual.getName());
+                        Path rutaRaiz = archivoActual.toPath();
+                        ArchivoDeMod modObj = new ModCarpeta(rutaActual, ArchivoDeMod.origin, rutaRaiz);
                         mods.add(modObj);
-                    } catch (IOException e) {
-                        CrashDetectorLogger.logException(e);
+                        CrashDetectorLogger.log("carpeta mod " + archivoActual.getName() + " cargada correctamente");
                     }
-                	}else {
-                		  Path rutaRaiz = archivo.toPath();
-                          ArchivoDeMod modObj = new ModCarpeta(mod, ArchivoDeMod.origin, rutaRaiz);
-                          mods.add(modObj);
-                	}
-                });
-            
+                } catch (Exception e) {
+                    CrashDetectorLogger.log("Error inesperado al procesar mod " + rutaActual + ": " + e.getMessage());
+                    CrashDetectorLogger.logException(e);
+                }
+            });
         }
-        
-        // No cerramos el executor aquí - lo hacemos en cerrarThreadPoolExecutor
     }
     
     /**
@@ -185,6 +194,7 @@ public class Buscardor {
             }
         } catch (InterruptedException e) {
             // Si se interrumpe, forzar el cierre
+        	CrashDetectorLogger.logException(e);
             ejecutor.shutdownNow();
             Thread.currentThread().interrupt();
         }

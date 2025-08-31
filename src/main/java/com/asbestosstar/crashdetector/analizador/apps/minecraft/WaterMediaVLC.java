@@ -33,7 +33,7 @@ public class WaterMediaVLC implements Verificaciones {
 
     @Override
     public float prioridad() {
-        return 950.0f; // Prioridad ligeramente menor que el original
+        return 700.0f; // Prioridad ligeramente menor que el original
     }
 
     @Override

@@ -3,6 +3,8 @@ package com.asbestosstar.crashdetector.divisor;
 import java.io.File;
 import java.nio.file.Path;
 
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
+
 public class TLauncherConsolaDivisor implements DivisorDeArchivos {
 
 	@Override
@@ -10,15 +12,16 @@ public class TLauncherConsolaDivisor implements DivisorDeArchivos {
 		// TODO Auto-generated method stub
 		
 		String[] lineas = contentido_existente.split(File.pathSeparator);
+		int ultima = 0;
 		for (int i = 0; i < lineas.length - 1; i++) {
 			String lin = lineas[i];
 			if (lin.contains("[Launcher] Launching Minecraft...")||lin.contains("[MinecraftLauncher] Starting")) {
-				return i;
+				ultima=i;
 			}
 
 		}
 		
-		return 0;
+		return ultima;
 	}
 
 	@Override

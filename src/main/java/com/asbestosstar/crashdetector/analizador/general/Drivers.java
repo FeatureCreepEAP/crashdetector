@@ -279,7 +279,7 @@ public class Drivers implements Verificaciones {
     
     @Override
     public float prioridad() {
-        return 800.0f; // Prioridad crítica para errores de drivers [[8]]
+        return 900.0f; // Prioridad crítica para errores de drivers [[8]]
     }
 
     @Override

@@ -26,9 +26,10 @@ public class ModPKZip implements ArchivoDeMod {
      * Lee todas las entradas del flujo de entrada al inicio para evitar cierre prematuro.
      */
     public ModPKZip(String ubicacion, ArchivoDeMod desde, InputStream inputStream) {
-        this.ubicacion = ubicacion;
+        CrashDetectorLogger.log("en mod pkzip " + ubicacion);
+    	this.ubicacion = ubicacion;
         this.desde = desde;
-
+        CrashDetectorLogger.log("Buscando en ubicacion");
         try {
             // Leer todas las entradas al inicio
             Map<String, byte[]> todasLasEntradas = leerTodasLasEntradas(inputStream);
