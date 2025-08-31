@@ -581,7 +581,16 @@ CrashDetectorLogger.log(claseFaltante);
 		if (jarName.startsWith("guava-")) {
 			return true;
 		}
+		
+		if (jarName.startsWith("sun")) {
+			return true;
+		}
 
+		if (jarName.startsWith("com.sun")) {
+			return true;
+		}
+		
+		
 		return false;
 	}
 
