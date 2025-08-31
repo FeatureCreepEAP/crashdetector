@@ -1,8 +1,11 @@
 package com.asbestosstar.crashdetector.limpiador;
 
-public class LimpiadorRegistroLatestLog {
+import java.nio.file.Path;
 
-    public static String limpiarConsola(String contenido) {
+public class LimpiadorRegistroLatestLog  implements LimipiadorDeRegistro{
+
+	@Override
+    public String limpiarConsola(String contenido) {
         if (contenido == null || contenido.isEmpty()) {
             return contenido;
         }
@@ -60,4 +63,10 @@ public class LimpiadorRegistroLatestLog {
 
         return resultado.toString();
     }
+
+	@Override
+	public boolean predicado(Path archivo) {
+		// TODO Auto-generated method stub
+		return archivo.toString().endsWith("latest.log");
+	}
 }

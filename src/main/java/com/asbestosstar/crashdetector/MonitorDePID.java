@@ -99,6 +99,8 @@ public class MonitorDePID {
 			}
 			return;
 		}
+		
+		ProxySysOutSysErr.init();
 
 		ArchivoDeCodigoError0.delete();
 		

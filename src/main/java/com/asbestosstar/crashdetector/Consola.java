@@ -20,7 +20,11 @@ import com.asbestosstar.crashdetector.api_sito_registro.MCLogsAPI;
 import com.asbestosstar.crashdetector.api_sito_registro.NoAPIdeRegistro;
 import com.asbestosstar.crashdetector.api_sito_registro.SecureLoggerAPI;
 import com.asbestosstar.crashdetector.api_sito_registro.StikkedAPI;
+import com.asbestosstar.crashdetector.divisor.DivisorDeArchivos;
+import com.asbestosstar.crashdetector.divisor.TLauncherConsolaDivisor;
+import com.asbestosstar.crashdetector.divisor.VainillaConsolaDivisor;
 import com.asbestosstar.crashdetector.gui.NoRegistroDeLauncher;
+import com.asbestosstar.crashdetector.limpiador.LimipiadorDeRegistro;
 import com.asbestosstar.crashdetector.limpiador.LimpiadorRegistroDeLauncherVainilla;
 import com.asbestosstar.crashdetector.limpiador.LimpiadorRegistroLatestLog;
 
@@ -40,16 +44,27 @@ public class Consola {
 	public VerificacionDeStackTrace verificacion_de_stacktrace;
 
 	public static ArrayList<File> archivos_en_lista = new ArrayList<File>();
-	public static String[] tipos_de_registros_de_launcher = { "../../logs/ftb-app-electron.log" };// No para registros
+	public static List<String> tipos_de_registros_de_launcher = new ArrayList<String>();// No para registros
 																									// con "launcher en
 																									// el nombre"
 
 	public static SecureLoggerAPI secure_logger_api = new SecureLoggerAPI();
 
+	public static List<DivisorDeArchivos> divisores = new ArrayList<DivisorDeArchivos>();
+	public static List<LimipiadorDeRegistro> limpiadores = new ArrayList<LimipiadorDeRegistro>();
+
+	
+	
+	
 	static { // APIS Por Defecto
 		APIdeSitioDeRegistro.APIS.add(secure_logger_api);
 		APIdeSitioDeRegistro.APIS.add(new StikkedAPI());
 		APIdeSitioDeRegistro.APIS.add(new MCLogsAPI());
+		divisores.add(new TLauncherConsolaDivisor());
+		divisores.add(new VainillaConsolaDivisor());
+		tipos_de_registros_de_launcher.add("../../logs/ftb-app-electron.log");
+		limpiadores.add(new LimpiadorRegistroDeLauncherVainilla());
+		limpiadores.add(new LimpiadorRegistroLatestLog());
 	}
 
 	public Consola(Path archivo) throws IOException {
@@ -58,22 +73,13 @@ public class Consola {
 		linea_original = 0;
 		archivos_en_lista.add(archivo.toFile());
 
-		if (archivo.toString().contains("tlauncher") && !archivo.toString().contains("starter")) {
-			String contento_existe = MonitorDePID.leer_archivo(archivo);
-			String[] lineas = contento_existe.split(File.pathSeparator);
-			for (int i = 0; i < lineas.length - 1; i++) {
-				String lin = lineas[i];
-				if (lin.contains("[Launcher] Launching Minecraft...")||lin.contains("[MinecraftLauncher] Starting")) {
-					linea_original = i;
-				}
-
+		
+		
+		for(DivisorDeArchivos div:divisores) {
+			if(div.predicado(archivo)) {
+				String contento_existe = MonitorDePID.leer_archivo(archivo);
+				linea_original=div.obtenerLineaOriginal(contento_existe);
 			}
-
-		} else if (archivo.toString().contains("launcher_log") || archivo.toString().contains(".hmcl")) {
-			String contento_existe = MonitorDePID.leer_archivo(archivo);
-			String[] lineas = contento_existe.split(File.pathSeparator);
-			linea_original = lineas.length;
-			System.out.println("DEBUG Linea de launcher_log es " + String.valueOf(linea_original));
 		}
 
 	}
@@ -94,11 +100,13 @@ public class Consola {
 				}
 
 				CrashDetectorLogger.log("archivo nombre: "+archivo.toString());
-				if (archivo.toString().endsWith("launcher_log.txt")) {
-					contenido_verificar = LimpiadorRegistroDeLauncherVainilla.limpiarConsola(para_verificar.toString());
-				} else if (archivo.toString().endsWith("latest.log")) {
-					contenido_verificar = LimpiadorRegistroLatestLog.limpiarConsola(para_verificar.toString());
-				} else {
+				boolean limpiado=false;
+				for(LimipiadorDeRegistro limp:limpiadores) {
+					if(limp.predicado(archivo)) {
+						contenido_verificar=limp.limpiarConsola(para_verificar.toString());
+					}
+				}
+				if (!limpiado)  {
 					contenido_verificar = para_verificar.toString();
 				}
 
@@ -122,11 +130,14 @@ public class Consola {
 		this.contenido = contento;
 
 		CrashDetectorLogger.log("archivo nombre inyectado: "+archivo.toString());
-		if (archivo.toString().endsWith("launcher_log.txt")) {
-			contenido_verificar = LimpiadorRegistroDeLauncherVainilla.limpiarConsola(contento.toString());
-		} else if (archivo.toString().endsWith("latest.log")) {
-			contenido_verificar = LimpiadorRegistroLatestLog.limpiarConsola(contento.toString());
-		} else {
+		
+		boolean limpiado=false;
+		for(LimipiadorDeRegistro limp:limpiadores) {
+			if(limp.predicado(archivo)) {
+				contenido_verificar=limp.limpiarConsola(contento);
+			}
+		}
+		if (!limpiado)  {
 			contenido_verificar = contento.toString();
 		}
 
@@ -337,6 +348,10 @@ public class Consola {
 				return true;
 			}
 
+			if (nombre.toLowerCase().contains("klauncher") && nombre.toLowerCase().contains("logs")) {
+				return true;
+			}
+			
 			for (String regdelauncher : Consola.tipos_de_registros_de_launcher) {
 				if (nombre.equals(regdelauncher)) {
 					return true;

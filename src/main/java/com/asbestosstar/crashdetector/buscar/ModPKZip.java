@@ -113,6 +113,7 @@ public class ModPKZip implements ArchivoDeMod {
                nombreArchivo.endsWith(".fpm") ||
                nombreArchivo.endsWith(".litemod") ||
                nombreArchivo.endsWith(".war") ||
+               nombreArchivo.endsWith(".ear") ||
                nombreArchivo.endsWith(".rar");
     }
 

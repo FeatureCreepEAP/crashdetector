@@ -33,6 +33,8 @@ public class Config {
 	public static final String VALOR_POR_DEFECTO_API_DE_REGISTROS_SELECCIONADA = "SecureLogger";
 	public static final String VALOR_POR_DEFECTO_SITIO_DE_REGISTROS_SELECCIONADO = "https://securelogger.net/save/log?";
 	private static final boolean VALOR_POR_DEFECTO_ANONIMIZAR_REGISTROS = true;
+	private static final boolean PROXY_SYSOUT_SYSERR = false;
+
 	
 	
 	// Ruta al archivo de configuración
@@ -369,7 +371,15 @@ public class Config {
 		// TODO Auto-generated method stub
 		return propiedadesConfig.getProperty("hmcl_carpeta", string);
 	}
-	
 
+	public boolean obtenerProxySysOutSysErr() {
+		// TODO Auto-generated method stub
+		return Boolean.parseBoolean(propiedadesConfig.getProperty("proxy_sysout_syserr", String.valueOf(PROXY_SYSOUT_SYSERR)));
+	}
+	
+	public void guardarProxySysOutSysErr(boolean valor) {
+		// TODO Auto-generated method stub
+		propiedadesConfig.setProperty("proxy_sysout_syserr", String.valueOf(valor));
+	}
 
 }

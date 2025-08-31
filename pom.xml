@@ -172,6 +172,15 @@
 		</dependency>
 
 
+
+<!-- https://mvnrepository.com/artifact/org.javassist/javassist -->
+<dependency>
+    <groupId>org.javassist</groupId>
+    <artifactId>javassist</artifactId>
+    <version>3.27.0-GA</version>
+</dependency>
+
+
 		<!-- existe porque una limitacion de nivel src para servicio modlauncher
 		. TODO publicar en Central
 		<dependency>

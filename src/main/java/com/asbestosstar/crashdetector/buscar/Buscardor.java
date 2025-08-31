@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -138,17 +139,23 @@ public class Buscardor {
     private static void procesarModsEnParalelo(String[] rutasMods, ThreadPoolExecutor ejecutor) {
         for (String mod : rutasMods) {
             File archivo = new File(mod);
-            if (archivo.isFile()) {
+            
                 // Usamos una lambda Runnable en lugar de Callable
                 ejecutor.submit(() -> {
+                	if (archivo.isFile()) {
                     try (FileInputStream fis = new FileInputStream(archivo)) {
                         ArchivoDeMod modObj = new ModPKZip(mod, ArchivoDeMod.origin, fis);
                         mods.add(modObj);
                     } catch (IOException e) {
                         CrashDetectorLogger.logException(e);
                     }
+                	}else {
+                		  Path rutaRaiz = archivo.toPath();
+                          ArchivoDeMod modObj = new ModCarpeta(mod, ArchivoDeMod.origin, rutaRaiz);
+                          mods.add(modObj);
+                	}
                 });
-            }
+            
         }
         
         // No cerramos el executor aquí - lo hacemos en cerrarThreadPoolExecutor

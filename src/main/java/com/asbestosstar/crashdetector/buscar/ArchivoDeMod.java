@@ -1,7 +1,11 @@
 package com.asbestosstar.crashdetector.buscar;
 
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.management.Descriptor;
 
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
@@ -11,6 +15,16 @@ import org.objectweb.asm.Opcodes;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.anon.AnonimizadorDeRuta;
+
+import javassist.ClassPool;
+import javassist.CtClass;
+import javassist.CtMethod;
+import javassist.bytecode.AccessFlag;
+import javassist.bytecode.ClassFile;
+import javassist.bytecode.Opcode;
+import javassist.expr.ExprEditor;
+import javassist.expr.FieldAccess;
+import javassist.expr.MethodCall;
 
 //TODO Mods de Carpetas
 public interface ArchivoDeMod {
@@ -111,18 +125,56 @@ public interface ArchivoDeMod {
     }
     
     default List<InfoMetodo> analizarMetodosConJavassist(String nombreClase) {
-        // Implementación con Javassist (ejemplo básico)
+        byte[] bytesClase = obtenerBytesClase(nombreClase);
+        if (bytesClase == null) {
+            return new ArrayList<>();
+        }
+        
         try {
-            byte[] bytesClase = obtenerBytesClase(nombreClase);
-            if (bytesClase == null) {
-                return new ArrayList<>();
+            // Configurar ClassPool sin crear instancias innecesarias de CtClass
+            ClassPool pool = new ClassPool();
+            pool.appendSystemPath(); // Añadir classpath del sistema para resolver tipos básicos
+            
+            // Análisis directo con ClassFile para evitar conversiones innecesarias a CtClass
+            ClassFile classFile = new ClassFile(new DataInputStream(new ByteArrayInputStream(bytesClase)));
+            
+            List<InfoMetodo> resultados = new ArrayList<>();
+            // Recorrer métodos usando ClassFile directamente (más eficiente que CtClass)
+            for (javassist.bytecode.MethodInfo methodInfo : classFile.getMethods()) {
+                String methodName = methodInfo.getName();
+                String descriptor = methodInfo.getDescriptor();
+                
+                // Saltar métodos abstractos/nativos (no tienen bytecode para analizar)
+                if ((methodInfo.getAccessFlags() & (AccessFlag.ABSTRACT | AccessFlag.NATIVE)) != 0) {
+                    resultados.add(new InfoMetodo(methodName, descriptor, new ArrayList<>(), new ArrayList<>()));
+                    continue;
+                }
+                
+                // Coleccionar referencias usando instrumentación dirigida
+                List<Referencia> referenciasMetodos = new ArrayList<>();
+                List<Referencia> referenciasCampos = new ArrayList<>();
+                
+                // Crear CtClass SOLO cuando sea necesario para la instrumentación
+                CtClass ctClass = pool.makeClass(classFile, false);
+                // Obtener método específico sin resolver tipos completos
+                CtMethod ctMethod = ctClass.getMethod(methodName, descriptor);//TODO Declared
+                
+                // Instrumentar SOLO el método objetivo para minimizar overhead
+                ctMethod.instrument(new ExprEditor() {
+                    @Override
+                    public void edit(MethodCall m) {
+                        referenciasMetodos.add(convertirAMiReferencia(m));
+                    }
+                    
+                    @Override
+                    public void edit(FieldAccess f) {
+                        referenciasCampos.add(convertirAMiReferencia(f));
+                    }
+                });
+                
+                resultados.add(new InfoMetodo(methodName, descriptor, referenciasMetodos, referenciasCampos));
             }
-            
-            // Este es un esqueleto; la implementación real requeriría usar Javassist
-            // ClassFile classFile = new ClassFile(new ByteArrayInputStream(bytesClase));
-            // ... análisis con Javassist ...
-            
-            return new ArrayList<>(); // Implementación real requerida
+            return resultados;
         } catch (Throwable t) {
             CrashDetectorLogger.logException(t);
             return new ArrayList<>();
@@ -160,10 +212,26 @@ public interface ArchivoDeMod {
             return new ArrayList<>();
         }
     }
-    
     default List<InfoCampo> analizarCamposConJavassist(String nombreClase) {
-        // Implementación con Javassist
-        return new ArrayList<>(); // Implementación real requerida
+        byte[] bytesClase = obtenerBytesClase(nombreClase);
+        if (bytesClase == null) {
+            return new ArrayList<>();
+        }
+        
+        try {
+            // Análisis DIRECTO con ClassFile - NO requiere CtClass para metadatos de campos
+            ClassFile classFile = new ClassFile(new DataInputStream(new ByteArrayInputStream(bytesClase)));
+            List<InfoCampo> resultados = new ArrayList<>();
+            
+            // Obtener campos directamente desde ClassFile (más rápido y ligero)
+            for (javassist.bytecode.FieldInfo fieldInfo : classFile.getFields()) {
+                resultados.add(new InfoCampo(fieldInfo.getName(), fieldInfo.getDescriptor()));
+            }
+            return resultados;
+        } catch (Throwable t) {
+            CrashDetectorLogger.logException(t);
+            return new ArrayList<>();
+        }
     }
     
     /**
@@ -201,8 +269,52 @@ public interface ArchivoDeMod {
     }
     
     default List<Referencia> analizarReferenciasEnMetodoConJavassist(String nombreClase, String nombreMetodo, String descriptor) {
-        // Implementación con Javassist
-        return new ArrayList<>(); // Implementación real requerida
+        byte[] bytesClase = obtenerBytesClase(nombreClase);
+        if (bytesClase == null) {
+            return new ArrayList<>();
+        }
+        
+        try {
+            ClassPool pool = new ClassPool();
+            pool.appendSystemPath();
+            ClassFile classFile = new ClassFile(new DataInputStream(new ByteArrayInputStream(bytesClase)));
+            
+            // Buscar método específico usando ClassFile (evita crear CtClass innecesario)
+            javassist.bytecode.MethodInfo methodInfo = null;
+            for (javassist.bytecode.MethodInfo mi : classFile.getMethods()) {
+                if (mi.getName().equals(nombreMetodo) && mi.getDescriptor().equals(descriptor)) {
+                    methodInfo = mi;
+                    break;
+                }
+            }
+            
+            // Validar si el método existe y tiene bytecode analizable
+            if (methodInfo == null || (methodInfo.getAccessFlags() & (AccessFlag.ABSTRACT | AccessFlag.NATIVE)) != 0) {
+                return new ArrayList<>();
+            }
+            
+            // Coleccionar referencias del método específico
+            List<Referencia> resultados = new ArrayList<>();
+            CtClass ctClass = pool.makeClass(classFile, false);
+            CtMethod ctMethod = ctClass.getMethod(nombreMetodo, descriptor);//TODO Declared            
+            // Instrumentar SOLO el método objetivo
+            ctMethod.instrument(new ExprEditor() {
+                @Override
+                public void edit(MethodCall m) {
+                    resultados.add(convertirAMiReferencia(m));
+                }
+                
+                @Override
+                public void edit(FieldAccess f) {
+                    resultados.add(convertirAMiReferencia(f));
+                }
+            });
+            
+            return resultados;
+        } catch (Throwable t) {
+            CrashDetectorLogger.logException(t);
+            return new ArrayList<>();
+        }
     }
     
     /**
@@ -242,9 +354,83 @@ public interface ArchivoDeMod {
     }
     
     default List<Referencia> analizarReferenciasAMetodoConJavassist(String claseObjetivo, String metodoObjetivo, String descriptorObjetivo) {
-        // Implementación con Javassist
-        return new ArrayList<>(); // Implementación real requerida
+        List<Referencia> resultados = new ArrayList<>();
+        List<String> todosNombresClases = obtenerTodosLosNombresDeClases();
+        
+        // Reutilizar ClassPool para todas las clases (mejor rendimiento)
+        ClassPool pool = new ClassPool();
+        pool.appendSystemPath();
+        
+        for (String className : todosNombresClases) {
+            byte[] bytes = obtenerBytesClase(className);
+            if (bytes == null) continue;
+            
+            try {
+                ClassFile classFile = new ClassFile(new DataInputStream(new ByteArrayInputStream(bytes)));
+                CtClass ctClass = pool.makeClass(classFile, false);
+                
+                // Recorrer SOLO métodos declarados en esta clase
+                for (CtMethod method : ctClass.getDeclaredMethods()) {
+                    // Saltar métodos sin bytecode (abstractos/nativos)
+                    if ((method.getMethodInfo().getAccessFlags() & 
+                        (AccessFlag.ABSTRACT | AccessFlag.NATIVE)) != 0) {
+                        continue;
+                    }
+                    
+                    // Instrumentar SOLO para buscar llamadas específicas
+                    method.instrument(new ExprEditor() {
+                        @Override
+                        public void edit(MethodCall m) {
+                            // Convertir a formato interno de nombres (barra invertida → punto)
+                            String owner = m.getClassName().replace('.', '/');
+                            if (owner.equals(claseObjetivo) && 
+                                m.getMethodName().equals(metodoObjetivo) && 
+                                m.getSignature().equals(descriptorObjetivo)) {
+                                resultados.add(new Referencia(
+                                    owner, 
+                                    metodoObjetivo, 
+                                    descriptorObjetivo, 
+                                    true
+                                ));
+                            }
+                        }
+                    });
+                }
+            } catch (Throwable t) {
+                CrashDetectorLogger.logException(t);
+            }
+        }
+        return resultados;
     }
+    
+    
+    /**
+     * Convierte una referencia de Javassist (llamada a método) a nuestro formato estándar
+     * Maneja la conversión de nombres de clase (punto → barra invertida)
+     */
+    public static Referencia convertirAMiReferencia(MethodCall m) {
+        return new Referencia(
+            m.getClassName().replace('.', '/'), // Formato interno de ASM
+            m.getMethodName(),
+            m.getSignature(),
+            true
+        );
+    }
+
+    /**
+     * Convierte una referencia de Javassist (acceso a campo) a nuestro formato estándar
+     * Maneja la conversión de nombres de clase (punto → barra invertida)
+     */
+    public static Referencia convertirAMiReferencia(FieldAccess f) {
+        return new Referencia(
+            f.getClassName().replace('.', '/'), // Formato interno de ASM
+            f.getFieldName(),
+            f.getSignature(),
+            false
+        );
+    }
+    
+    
     
     /**
      * Obtiene los bytes de una clase.

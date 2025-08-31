@@ -1,12 +1,13 @@
 package com.asbestosstar.crashdetector.limpiador;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 
-public class LimpiadorRegistroDeLauncherVainilla {
+public class LimpiadorRegistroDeLauncherVainilla implements LimipiadorDeRegistro{
 
     /**
      * Limpia el contenido completo de la consola.
@@ -14,7 +15,8 @@ public class LimpiadorRegistroDeLauncherVainilla {
      * @param contento_de_consola Contenido completo de la consola
      * @return Contenido procesado sin corchetes ni etiquetas innecesarias
      */
-    public static String limpiarConsola(String contento_de_consola) {
+	@Override
+    public String limpiarConsola(String contento_de_consola) {
     	CrashDetectorLogger.log("limpiar vainilla");
         // Dividir el contenido en líneas usando el separador del sistema
         String[] lineas_viejas = contento_de_consola.split(System.lineSeparator());
@@ -284,4 +286,10 @@ public class LimpiadorRegistroDeLauncherVainilla {
         }
         return resultado;
     }
+
+	@Override
+	public boolean predicado(Path archivo) {
+		// TODO Auto-generated method stub
+		return archivo.toString().endsWith("launcher_log.txt");
+	}
 }

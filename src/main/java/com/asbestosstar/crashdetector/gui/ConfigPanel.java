@@ -93,7 +93,7 @@ public class ConfigPanel extends JPanel {
 			config.guardarColorInfo(colorInfoField.getText());
 			config.guardarColorTitulo(colorTituloField.getText());
 			config.guardarColorEnlaceTexto(colorEnlaceTextoField.getText());
-
+			config.guardarProxySysOutSysErr(proxySysOutSysErrCheckBox.isSelected());
 			// Guardar la nueva configuración
 			config.guardar();
 
@@ -169,6 +169,7 @@ public class ConfigPanel extends JPanel {
 	private JTextField colorInfoField;
 	private JTextField colorTituloField;
 	private JTextField colorEnlaceTextoField;
+	private JCheckBox proxySysOutSysErrCheckBox;
 
 	private JPanel tabCrashDetector() {
 		JPanel panel = new JPanel();
@@ -323,6 +324,19 @@ public class ConfigPanel extends JPanel {
 			colorEnlaceTextoField.setForeground(CrashDetectorGUI.colorTexto);
 		}
 		panel.add(colorEnlaceTextoField);
+		
+		
+		// Campo: ¿Usar proxy para System.out y System.err?
+		JLabel labelProxy = new JLabel("proxySysOutSysErr");
+		labelProxy.setForeground(color_de_texto_de_gui);
+		panel.add(labelProxy);
+		proxySysOutSysErrCheckBox = new JCheckBox();
+		proxySysOutSysErrCheckBox.setBackground(CrashDetectorGUI.colorFondo);
+		proxySysOutSysErrCheckBox.setForeground(CrashDetectorGUI.colorTexto);
+		proxySysOutSysErrCheckBox.setSelected(config.obtenerProxySysOutSysErr());
+		panel.add(proxySysOutSysErrCheckBox);
+		
+		
 
 		return panel;
 	}
