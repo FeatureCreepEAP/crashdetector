@@ -1,13 +1,13 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 /**
  * Clase que detecta mods incompatibles en Fabric.Gracias a Aternos por que esta es una implementacion de su codex https://github.com/aternosorg/codex-minecraft

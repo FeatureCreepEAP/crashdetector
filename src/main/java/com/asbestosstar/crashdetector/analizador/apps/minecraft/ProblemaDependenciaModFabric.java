@@ -1,13 +1,13 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 /**
  * Clase que detecta dependencias faltantes o versiones incorrectas en mods de Fabric.

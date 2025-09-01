@@ -3,8 +3,8 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class LegacyRandomSourceMultiHilos implements Verificaciones{
 

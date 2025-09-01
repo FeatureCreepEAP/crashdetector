@@ -1,15 +1,15 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
 import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.Set;
 
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class MCForgeModsSuspechoso implements Verificaciones {
 

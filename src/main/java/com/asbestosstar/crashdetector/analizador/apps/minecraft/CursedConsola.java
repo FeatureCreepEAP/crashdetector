@@ -8,7 +8,6 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 /**
  * Verificador que detecta la ausencia del archivo launcher_log.txt en entornos de CurseForge.
  * <p>

@@ -4,7 +4,6 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 
 public class NecesitasSodium implements Verificaciones {
 

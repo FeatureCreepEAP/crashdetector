@@ -44,16 +44,31 @@ public class Consola {
 	public VerificacionDeStackTrace verificacion_de_stacktrace;
 
 	public static ArrayList<File> archivos_en_lista = new ArrayList<File>();
+	
+	/**
+	 * Si el registro es un registro de lanzer o consola registar aqui en procesoDeLaMonitorizacionDePID. 
+	 */
 	public static List<String> tipos_de_registros_de_launcher = new ArrayList<String>();// No para registros
 																									// con "launcher en
 																									// el nombre"
 
 	public static SecureLoggerAPI secure_logger_api = new SecureLoggerAPI();
 
+	/**
+	 * Divisores de archivos de registro. Importante cuando tienes archivos de registro que contienen contenido de la aplicación o el juego que se ejecuta varias veces.. Registrar en procesoDelApp
+	 */
 	public static List<DivisorDeArchivos> divisores = new ArrayList<DivisorDeArchivos>();
+	
+	/**
+	 * Limpiadores de los registros. Registrar en procesoDeLaMonitorizacionDePID
+	 */
 	public static List<LimipiadorDeRegistro> limpiadores = new ArrayList<LimipiadorDeRegistro>();
 
-	
+	/**
+	 * La ubicacion para añadir mas registro archivos. Para los longs que se necesiten dividir se deben declarar aquí tanto en procesoDelApp como en procesoDeLaMonitorizacionDePID
+	 */
+	public static ArrayList<File> archivos_para_mapa = new ArrayList<File>();
+
 	
 	
 	static { // APIS Por Defecto
@@ -63,8 +78,10 @@ public class Consola {
 		divisores.add(new TLauncherConsolaDivisor());
 		divisores.add(new VainillaConsolaDivisor());
 		tipos_de_registros_de_launcher.add("../../logs/ftb-app-electron.log");
+		tipos_de_registros_de_launcher.add(NoRegistroDeLauncher.cd_launcherlog.getName());
 		limpiadores.add(new LimpiadorRegistroDeLauncherVainilla());
 		limpiadores.add(new LimpiadorRegistroLatestLog());
+		archivos_para_mapa.addAll(obtenerArchivosDeConsolas());//TODO crearar una mapa antes del processo de CD
 	}
 
 	public Consola(Path archivo) throws IOException {

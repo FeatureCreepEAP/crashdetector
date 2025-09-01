@@ -4,7 +4,6 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 
 /**
  * Verificador que detecta errores relacionados con el teselado de bloques en Minecraft.

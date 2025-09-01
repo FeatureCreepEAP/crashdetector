@@ -2285,11 +2285,359 @@ public String descargar_vlc() {
 }
 
 
+@Override
+public String errorCaracteresInvalidosEnNombre(String nombreModulo, String parteInvalida) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>重大エラー：モジュール名 '" + nombreModulo + 
+           "' に無効な文字が含まれています。'" + parteInvalida + 
+           "' は有効なJava識別子ではありません。Javaの予約語（例：'true', 'class'）や名前に使用できない文字をモッドが使用している場合に発生します。</b>";
+}
+
+@Override
+public String nombre_de_error_caracteres_invalidos() {
+    return "モッド名に無効な文字が含まれています";
+}
+
+@Override
+public String paso1_caracteres_invalidos(String nombreModulo, String parteInvalida) {
+    return "モッド名 '" + nombreModulo + "' は '" + parteInvalida + 
+           "' を含むため無効です。これはJavaの予約語または無効な文字です。 " +
+           "ログを確認して、この名前に対応するモッドを特定してください（通常はJARファイル名）";
+}
+
+@Override
+public String paso2_caracteres_invalidos(String nombreModulo) {
+    return "モッドのフォルダを開き、<b>/META-INF/</b> フォルダ内の <b>mods.toml</b> ファイルを編集してください。 " +
+           "<b>modId</b> の値を、Javaの予約語を使わず、英数字とアンダースコアのみで構成されるように変更してください";
+}
+
+@Override
+public String paso3_caracteres_invalidos() {
+    return "有効な名前の例：'true.shot.enchantment' の代わりに 'truemod_shot_enchantment' を使用。 " +
+           "モッド名にはドット、ハイフン、Javaの予約語（'true'、'false'、'class'など）は使用できません";
+}
+
+@Override
+public String errorDependenciaModFaltante(String nombreJar) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>モッド '" + nombreJar + "' に重大エラー：依存関係に必須フィールド 'mandatory' がありません。mods.toml ファイルが依存関係が必須かどうかを指定していない場合に発生します。</b>";
+}
+
+@Override
+public String nombre_de_error_dependencia_mod_faltante() {
+    return "モッド依存関係に必須フィールドが不足";
+}
+
+@Override
+public String paso1_dependencia_mod_faltante(String nombreJar) {
+    return "問題のあるモッドは：<b>" + nombreJar + "</b> です。このファイルの依存設定にエラーがあります";
+}
+
+@Override
+public String paso2_dependencia_mod_faltante(String nombreJar) {
+    return "<b>" + nombreJar + "</b> モッドの <b>/META-INF/</b> フォルダ内にある <b>mods.toml</b> ファイルを開いてください";
+}
+
+@Override
+public String paso3_dependencia_mod_faltante() {
+    return "依存関係セクションで、各エントリに <b>mandatory=true</b> または <b>mandatory=false</b> が含まれていることを確認してください（例：modId=\"forge\", mandatory=true, versionRange=\"[1.21.8,)\" ）";
+}
 
 
 
+@Override
+public String errorAccessTransformerInvalido(String nombreJar) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>重大エラー：モッド '" + nombreJar + "' のaccess transformer設定が無効です。設定ファイルの構文が誤っているか、存在しないクラス/メソッドを参照している場合に発生します。</b>";
+}
+
+@Override
+public String nombre_de_error_access_transformer_invalido() {
+    return "無効な Access Transformer";
+}
+
+@Override
+public String paso1_access_transformer_invalido(String nombreJar) {
+    return "問題のあるモッドは：<b>" + nombreJar + "</b> です。このモッドには無効なaccess transformer設定が含まれています";
+}
+
+@Override
+public String paso2_access_transformer_invalido(String nombreJar) {
+    return "モッド <b>" + nombreJar + "</b> 内の <b>accessTransformer.cfg</b> ファイルを開いてください（通常はJARファイルのルートフォルダにあります）";
+}
+
+@Override
+public String paso3_access_transformer_invalido() {
+    return "access transformerの構文を修正してください。各行は <b>access class.method</b> の形式に従う必要があります（例：public net.minecraft.world.entity.Entity.func_200560_a）。現在のMinecraftバージョンに存在しないクラスやメソッドを参照している行は削除してください";
+}
+
+@Override
+public String errorDiscrepanciaModID(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>重大エラー：@ModアノテーションのモッドIDとmods.tomlファイルのIDが一致していません。'" + nombreMod + "' モッドはIDの不一致により読み込めません。</b>";
+}
+
+@Override
+public String nombre_de_error_discrepancia_mod_id() {
+    return "@Modとmods.tomlのID不一致";
+}
+
+@Override
+public String paso1_discrepancia_mod_id(String nombreMod) {
+    return "開発中のモッド '" + nombreMod + "' は、<b>@Mod</b> アノテーションと <b>mods.toml</b> のIDが一致していません";
+}
+
+@Override
+public String paso2_discrepancia_mod_id() {
+    return "メインクラスのIDが <b>/META-INF/mods.toml</b> ファイルの <b>modId</b> 値と一致しているか確認してください。例： <b>@Mod(\"mymod\")</b> は <b>modId=\"mymod\"</b> と一致する必要があります";
+}
+
+@Override
+public String paso3_discrepancia_mod_id() {
+    return "Gradleを使用している場合は、変更後に <b>clean</b> を実行してリソースが正しく更新されるようにしてください。古いファイルがbuildフォルダに残っていることがあります";
+}
 
 
+
+@Override
+public String errorModEnPlataformaIncorrecta(String nombreClase, String entornoInvalido) {
+    String plataforma = entornoInvalido.equals("CLIENT") ? "クライアント" : "サーバー";
+    String plataformaOpuesta = entornoInvalido.equals("CLIENT") ? "サーバー" : "クライアント";
+    
+    return "<b style='color:#" + config.obtenerColorError() + "'>重大エラー: クラス '" + nombreClase + 
+           "' を " + plataforma + " 環境で読み込もうとしていますが、これは " + plataformaOpuesta + 
+           " 向けに設計されています。<b>サイドバーの「Modツリー」機能を使って、このクラスを読み込もうとしているModを特定してください</b>。" +
+           "Modは特定のプラットフォーム専用であり、他では動作しません。</b>";
+}
+
+@Override
+public String nombre_de_error_mod_plataforma_incorrecta() {
+    return "誤ったプラットフォームのMod";
+}
+
+@Override
+public String paso1_mod_plataforma_incorrecta(String nombreClase, String entornoInvalido) {
+    return "右側の <b>Modツリー</b> タブで、<b>" + nombreClase + 
+           "</b> クラスへの参照を検索し、問題を引き起こしているModを特定してください";
+}
+
+@Override
+public String paso2_mod_plataforma_incorrecta(String entornoInvalido) {
+    String plataforma = entornoInvalido.equals("CLIENT") ? "クライアント" : "サーバー";
+    String plataformaOpuesta = entornoInvalido.equals("CLIENT") ? "サーバー" : "クライアント";
+    
+    return "特定されたModは <b>" + plataformaOpuesta + "</b> 向けであり、" + plataforma + " 環境では使用すべきではありません。";
+}
+
+@Override
+public String paso3_mod_plataforma_incorrecta() {
+    return "問題のあるModを <b>mods</b> フォルダから削除してください。このプラットフォームで同様の機能が必要な場合は、" +
+           "<b>クライアント</b> または <b>サーバー</b> 専用に設計された代替Modを検索してください";
+}
+
+@Override
+public String errorMetadataModsTomlFaltante(String modIdFaltante, List<String> modsPotenciales) {
+    StringBuilder mensaje = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    mensaje.append("重大エラー: modid '").append(modIdFaltante).append("'.のメタデータがありません。 ");
+    
+    if (modsPotenciales != null && !modsPotenciales.isEmpty()) {
+        mensaje.append("以下のModが原因である可能性があります: <b>");
+        for (int i = 0; i < Math.min(modsPotenciales.size(), 3); i++) {
+            mensaje.append(modsPotenciales.get(i));
+            if (i < modsPotenciales.size() - 1 && i < 2) mensaje.append(", ");
+        }
+        if (modsPotenciales.size() > 3) mensaje.append(", その他...");
+        mensaje.append("</b>. ");
+    }
+    
+    mensaje.append("Modが未インストールまたはmods.tomlファイルが正しくない場合に発生します。");
+    mensaje.append("</b>");
+    
+    return mensaje.toString();
+}
+
+@Override
+public String nombre_de_error_metadata_mods_toml_faltante() {
+    return "mods.toml メタデータの欠落";
+}
+
+@Override
+public String paso1_metadata_mods_toml_faltante(String modIdFaltante, List<String> modsPotenciales) {
+    if (modsPotenciales != null && !modsPotenciales.isEmpty()) {
+        StringBuilder paso = new StringBuilder("以下のModが '").append(modIdFaltante).append("'.に依存しています: <b>");
+        for (int i = 0; i < Math.min(modsPotenciales.size(), 3); i++) {
+            paso.append(modsPotenciales.get(i));
+            if (i < modsPotenciales.size() - 1 && i < 2) paso.append(", ");
+        }
+        if (modsPotenciales.size() > 3) paso.append(", その他...");
+        paso.append("</b>. <b>Modツリー</b> 機能で問題のModを確認してください");
+        return paso.toString();
+    }
+    return "Modが '".concat(modIdFaltante).concat("' に依存しようとしていますが、このModはインストールされていません。<b>Modツリー</b> 機能で問題のModを特定してください");
+}
+
+@Override
+public String paso2_metadata_mods_toml_faltante(String modIdFaltante) {
+    return "以下の2つの選択肢があります:<br/>" +
+           "1. <b>不足しているModをインストール</b>: IDが '".concat(modIdFaltante).concat("' のModを検索・インストールしてください<br/>") +
+           ("2. <b>依存Modを削除</b>: 機能が不要な場合、'").concat(modIdFaltante).concat("' に依存するModを削除してください");
+}
+
+@Override
+public String paso3_metadata_mods_toml_faltante(String modIdFaltante) {
+    return "'".concat(modIdFaltante).concat("' がライブラリ（例: 'forge', 'minecraft', 'curios'）の場合、") +
+           "正しいバージョンのMinecraftとForgeがインストールされているか確認してください。" +
+           "通常のModの場合は、ダウンロードページで必要な前提条件を確認してください";
+}
+
+@Override
+public String errorSistemaSonido() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>警告：サウンドシステムの初期化に失敗しました。サウンドと音楽は無効になっています。このエラーは一般的にSoundPhysicsModに関連しており、他のサウンドライブラリとの競合が原因である可能性があります。</b>";
+}
+
+@Override
+public String nombre_de_error_sistema_sonido() {
+    return "サウンドシステムエラー";
+}
+
+@Override
+public String paso1_sistema_sonido() {
+    return "このエラーは通常<b>SoundPhysicsMod</b>に関連しています。使用しているMinecraftバージョンと互換性のある最新バージョンをインストールしているか確認してください";
+}
+
+@Override
+public String paso2_sistema_sonido() {
+    return "他のサウンドMOD（Sound Filters、Dynamic Surroundingsなど）を使用している場合、一時的にSoundPhysicsModを削除して競合が解消されるか確認してください";
+}
+
+@Override
+public String paso3_sistema_sonido() {
+    return "<b>logs</b>フォルダを確認し、LWJGLやOpenALに関する追加メッセージを調べてください。これらは基盤となるサウンドライブラリに問題がある可能性を示しています";
+}
+
+@Override
+public String errorSinListenersEnClase(String nombreClase, List<String> modsUbicacion) {
+    StringBuilder mensaje = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    mensaje.append("重大エラー：クラス'").append(nombreClase).append("'はイベントリスナーとして登録されていますが、有効なメソッドがありません。 ");
+    
+    if (!modsUbicacion.isEmpty()) {
+        mensaje.append("このクラスは以下のMODにあります：<b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            mensaje.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) mensaje.append(", ");
+        }
+        if (modsUbicacion.size() > 3) mensaje.append(", その他...");
+        mensaje.append("</b>. ");
+    }
+    
+    mensaje.append("@SubscribeEventアノテーションのついたメソッドを持たずに、イベントリスナーとしてクラスを登録した場合に発生します。");
+    mensaje.append("</b>");
+    
+    return mensaje.toString();
+}
+
+@Override
+public String nombre_de_error_sin_listeners_en_clase() {
+    return "イベントリスナーなしで登録されたクラス";
+}
+
+@Override
+public String paso1_sin_listeners_en_clase(String nombreClase, List<String> modsUbicacion) {
+    if (!modsUbicacion.isEmpty()) {
+        StringBuilder paso = new StringBuilder("問題のあるクラスは以下のMODにあります：<b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            paso.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) paso.append(", ");
+        }
+        if (modsUbicacion.size() > 3) paso.append(", その他...");
+        paso.append("</b>。これらのMODは有効なメソッドなしにイベントを登録しようとしています");
+        return paso.toString();
+    }
+    return "クラス<b>" + nombreClase + "</b>はイベントをリッスンするように登録されましたが、<b>@SubscribeEvent</b>アノテーションのついたメソッドがありません。<b>MODツリー</b>機能を使用して、このクラスを含むMODを特定してください";
+}
+
+@Override
+public String paso2_sin_listeners_en_clase(String nombreClase) {
+    return "ソースコード内で、クラス<b>" + nombreClase + "</b>が以下の形式のメソッドを少なくとも1つ持っていることを確認してください：" +
+           "<b>@SubscribeEvent public void メソッド名(特定のイベント イベント) { ... }</b>。 " +
+           "内部クラスの場合、staticでないことを確認してください";
+}
+
+@Override
+public String paso3_sin_listeners_en_clase(String nombreClase, List<String> modsUbicacion) {
+    StringBuilder paso = new StringBuilder();
+    
+    if (!modsUbicacion.isEmpty()) {
+        paso.append("識別されたMODについて(<b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 2); i++) {
+            paso.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 1) paso.append(", ");
+        }
+        if (modsUbicacion.size() > 2) paso.append(", など");
+        paso.append("</b>): ");
+        
+        if (modsUbicacion.size() == 1) {
+            paso.append("このMODの開発者に連絡して問題を修正してもらってください。 ");
+        } else {
+            paso.append("これらのMODの開発者に連絡して問題を修正してもらってください。 ");
+        }
+    }
+    
+    paso.append("あなたが開発者の場合、EventBusからのこのクラスの登録を削除するか、有効な@SubscribeEventメソッドを追加してください");
+    
+    return paso.toString();
+}
+
+@Override
+public String errorUnionFileSystemCorrupto(String nombreArchivo) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>重大エラー: ファイル '" + nombreArchivo + "' を処理中に 'cpw.mods.niofs.union.UnionFileSystem$UncheckedIOException' 例外が発生しました。このエラーは、ランチャーがモッドパックのファイルを正しくダウンロードまたは展開できなかったことを示しています。 " +
+           "'zip END header not found' というメッセージは、JARファイルが不完全または破損していることを示しており、大容量ファイルのダウンロードを適切に処理できないランチャーで非常に一般的です。 " +
+           "この問題は主にTwitch/CurseForge、Technic Launcher、特にLuna Pixelのユーザーに影響を与えます。これらのランチャーは、ダウンロードされたファイルの完全な整合性を検証できないことがよくあります。 " +
+           "Luna Pixelユーザーは、ファイルの整合性をより適切に処理し、この特定のエラーを回避できるATLauncherへの移行を検討すべきです。 " +
+           "ZIP形式が破損しているため、システムはモッドを読み込めず、Forgeがゲーム起動に必要なリソースを読み取るのを妨げます。</b>";
+}
+
+@Override
+public String nombre_de_error_union_filesystem_corrupto() {
+    return "UnionFileSystemエラー - ファイルが破損";
+}
+
+@Override
+public String paso1_union_filesystem_corrupto(String nombreArchivo) {
+    return "モッドパックを最初から完全に再インストールしてください";
+}
+
+@Override
+public String paso2_union_filesystem_corrupto() {
+    return "Luna Pixelを使用している場合は、ATLauncherに切り替えてください";
+}
+
+@Override
+public String paso3_union_filesystem_corrupto() {
+    return "再インストール前にインターネット接続とディスク空き容量を確認してください";
+}
+
+
+@Override
+public String habilitarProxySysOutSysErrMensaje() {
+    return "ProxySysOutSysErrを有効にしますか？\n\n" +
+           "このオプションにより、ランチャーがログを提供しない場合でもCrashDetectorがSystem.outとSystem.errにアクセスできるようになります。\n\n" +
+           "手動でログを貼り付けられない場合にのみ有効にしてください。\n\n" +
+           "警告：一部のMODやランチャーと干渉する可能性があります。\n\n" +
+           "変更を適用するには、ゲーム／アプリの再起動が必要です。";
+}
+
+@Override
+public String confirmacionTitulo() {
+    return "確認";
+}
+
+@Override
+public String proxyHabilitadoMensaje() {
+    return "ProxySysOutSysErrが正常に有効化されました。\n\n" +
+           "変更を適用するには、CrashDetectorを再起動する必要があります。";
+}
+
+@Override
+public String informacionTitulo() {
+    return "情報";
+}
 
 
 

@@ -1,11 +1,12 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 
 /**
  * https://github.com/HMCL-dev/HMCL/blob/77dc5dbe06ef1ca1cc08cd6c47525999d92a992a/HMCLCore/src/main/java/org/jackhuang/hmcl/game/CrashReportAnalyzer.java#L109C55-L109C80

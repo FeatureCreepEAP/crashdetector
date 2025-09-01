@@ -2920,4 +2920,399 @@ public String descargar_vlc() {
 }
 
 
+@Override
+public String errorCaracteresInvalidosEnNombre(String nombreModulo, String parteInvalida) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Error crítico: El nombre del módulo '" + nombreModulo + 
+           "' contiene caracteres inválidos. La parte '" + parteInvalida + 
+           "' no es un identificador Java válido. Esto ocurre cuando un mod usa palabras reservadas de Java (como 'true', 'class') o caracteres no permitidos en su nombre.</b>";
+}
+
+@Override
+public String nombre_de_error_caracteres_invalidos() {
+    return "Caracteres Inválidos en Nombre de Mod";
+}
+
+@Override
+public String paso1_caracteres_invalidos(String nombreModulo, String parteInvalida) {
+    return "El nombre del mod '" + nombreModulo + "' es inválido porque contiene '" + parteInvalida + 
+           "', que es una palabra reservada de Java o un carácter no permitido. " +
+           "Busca en los logs qué mod corresponde a este nombre (normalmente el nombre del archivo JAR)";
+}
+
+@Override
+public String paso2_caracteres_invalidos(String nombreModulo) {
+    return "Accede a la carpeta del mod y edita el archivo <b>mods.toml</b> dentro de la carpeta <b>/META-INF/</b>. " +
+           "Cambia el valor de <b>modId</b> para que use solo letras, números y guiones bajos, sin palabras reservadas de Java";
+}
+
+@Override
+public String paso3_caracteres_invalidos() {
+    return "Ejemplo de nombre válido: 'truemod_shot_enchantment' en lugar de 'true.shot.enchantment'. " +
+           "Recuerda que los nombres de mod no pueden contener puntos, guiones, ni palabras reservadas de Java como 'true', 'false' o 'class'";
+}
+
+@Override
+public String errorDependenciaModFaltante(String nombreJar) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Error crítico con el mod: '" + nombreJar + "'. Falta el campo obligatorio 'mandatory' en sus dependencias. Esto ocurre cuando el archivo mods.toml no especifica si la dependencia es obligatoria.</b>";
+}
+
+@Override
+public String nombre_de_error_dependencia_mod_faltante() {
+    return "Dependencia de Mod con Campo Obligatorio Faltante";
+}
+
+@Override
+public String paso1_dependencia_mod_faltante(String nombreJar) {
+    return "El mod problemático es: <b>" + nombreJar + "</b>. Este archivo tiene un error en su configuración de dependencias";
+}
+
+@Override
+public String paso2_dependencia_mod_faltante(String nombreJar) {
+    return "Abre el archivo <b>mods.toml</b> dentro de la carpeta <b>/META-INF/</b> del mod <b>" + nombreJar + "</b>";
+}
+
+@Override
+public String paso3_dependencia_mod_faltante() {
+    return "En la sección de dependencias, asegúrate que cada entrada incluya <b>mandatory=true</b> o <b>mandatory=false</b> (ej: modId=\"forge\", mandatory=true, versionRange=\"[1.21.8,)\" )";
+}
+
+@Override
+public String errorAccessTransformerInvalido(String nombreJar) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Error crítico con el mod: '" + nombreJar + "'. Configuración inválida de access transformer. Esto ocurre cuando el archivo de configuración tiene sintaxis incorrecta o referencias a clases/métodos que no existen.</b>";
+}
+
+@Override
+public String nombre_de_error_access_transformer_invalido() {
+    return "Access Transformer Inválido";
+}
+
+@Override
+public String paso1_access_transformer_invalido(String nombreJar) {
+    return "El mod problemático es: <b>" + nombreJar + "</b>. Este mod contiene una configuración inválida de access transformer";
+}
+
+@Override
+public String paso2_access_transformer_invalido(String nombreJar) {
+    return "Abre el archivo <b>accessTransformer.cfg</b> dentro del mod <b>" + nombreJar + "</b> (normalmente en la carpeta raíz del archivo JAR)";
+}
+
+@Override
+public String paso3_access_transformer_invalido() {
+    return "Corrige la sintaxis del access transformer. Las líneas deben seguir el formato: <b>access class.method</b> (ej: public net.minecraft.world.entity.Entity.func_200560_a). Elimina líneas con referencias a clases o métodos que no existan en tu versión de Minecraft";
+}
+
+@Override
+public String errorDiscrepanciaModID(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Error crítico: Discrepancia entre el ID del mod en la anotación @Mod y el archivo mods.toml. El mod '" + nombreMod + "' no puede cargarse porque los IDs no coinciden.</b>";
+}
+
+@Override
+public String nombre_de_error_discrepancia_mod_id() {
+    return "Discrepancia entre @Mod y mods.toml";
+}
+
+@Override
+public String paso1_discrepancia_mod_id(String nombreMod) {
+    return "El mod en desarrollo '" + nombreMod + "' tiene una discrepancia entre el ID en la anotación <b>@Mod</b> y el valor en <b>mods.toml</b>";
+}
+
+@Override
+public String paso2_discrepancia_mod_id() {
+    return "Verifica que el ID en tu clase principal coincida con el valor <b>modId</b> en el archivo <b>/META-INF/mods.toml</b>. Ejemplo: <b>@Mod(\"mimod\")</b> debe coincidir con <b>modId=\"mimod\"</b>";
+}
+
+@Override
+public String paso3_discrepancia_mod_id() {
+    return "Si estás usando Gradle, ejecuta <b>clean</b> después de hacer cambios para asegurar que los recursos se actualicen correctamente. A veces los archivos antiguos permanecen en la carpeta build";
+}
+
+@Override
+public String errorModEnPlataformaIncorrecta(String nombreClase, String entornoInvalido) {
+    String plataforma = entornoInvalido.equals("CLIENT") ? "cliente" : "servidor";
+    String plataformaOpuesta = entornoInvalido.equals("CLIENT") ? "servidor" : "cliente";
+    
+    return "<b style='color:#" + config.obtenerColorError() + "'>Error crítico: Se está intentando cargar la clase '" + nombreClase + 
+           "' en el entorno de " + plataforma + ", pero está diseñada para " + plataformaOpuesta + 
+           ". <b>Usa la función 'Arbol de Mods' en la barra lateral para buscar qué mod está intentando cargar esta clase</b>. " +
+           "Los mods están construidos específicamente para una plataforma y no funcionan en la otra.</b>";
+}
+
+@Override
+public String nombre_de_error_mod_plataforma_incorrecta() {
+    return "Mod en Plataforma Incorrecta";
+}
+
+@Override
+public String paso1_mod_plataforma_incorrecta(String nombreClase, String entornoInvalido) {
+    return "En la pestaña <b>Arbol de Mods</b> (a la derecha), busca referencias a la clase <b>" + nombreClase + 
+           "</b> para identificar qué mod está causando el problema";
+}
+
+@Override
+public String paso2_mod_plataforma_incorrecta(String entornoInvalido) {
+    String plataforma = entornoInvalido.equals("CLIENT") ? "cliente" : "servidor";
+    String plataformaOpuesta = entornoInvalido.equals("CLIENT") ? "servidor" : "cliente";
+    
+    return "El mod identificado es un mod de <b>" + plataformaOpuesta + "</b> y no debe usarse en tu entorno de " + plataforma + 
+           ".";
+}
+
+@Override
+public String paso3_mod_plataforma_incorrecta() {
+    return "Elimina el mod problemático de tu carpeta <b>mods</b>. Si necesitas funcionalidad similar para esta plataforma, " +
+           "busca un mod alternativo específicamente diseñado para <b>cliente</b> o <b>servidor</b> según corresponda";
+}
+
+
+@Override
+public String errorMetadataModsTomlFaltante(String modIdFaltante, List<String> modsPotenciales) {
+    StringBuilder mensaje = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    mensaje.append("Error crítico: Falta metadata para el modid '").append(modIdFaltante).append("'. ");
+    
+    if (modsPotenciales != null && !modsPotenciales.isEmpty()) {
+        mensaje.append("Los siguientes mods podrían estar causando el problema: <b>");
+        for (int i = 0; i < Math.min(modsPotenciales.size(), 3); i++) {
+            mensaje.append(modsPotenciales.get(i));
+            if (i < modsPotenciales.size() - 1 && i < 2) mensaje.append(", ");
+        }
+        if (modsPotenciales.size() > 3) mensaje.append(", y otros...");
+        mensaje.append("</b>. ");
+    }
+    
+    mensaje.append("Esto ocurre cuando un mod depende de otro mod que no está instalado o tiene un archivo mods.toml incorrecto.");
+    mensaje.append("</b>");
+    
+    return mensaje.toString();
+}
+
+@Override
+public String nombre_de_error_metadata_mods_toml_faltante() {
+    return "Metadata de mods.toml Faltante";
+}
+
+@Override
+public String paso1_metadata_mods_toml_faltante(String modIdFaltante, List<String> modsPotenciales) {
+    if (modsPotenciales != null && !modsPotenciales.isEmpty()) {
+        StringBuilder paso = new StringBuilder("Los siguientes mods dependen de '").append(modIdFaltante).append("': <b>");
+        for (int i = 0; i < Math.min(modsPotenciales.size(), 3); i++) {
+            paso.append(modsPotenciales.get(i));
+            if (i < modsPotenciales.size() - 1 && i < 2) paso.append(", ");
+        }
+        if (modsPotenciales.size() > 3) paso.append(", y otros...");
+        paso.append("</b>. Usa la función <b>Arbol de Mods</b> para confirmar qué mod está causando el problema");
+        return paso.toString();
+    }
+    return "Un mod está intentando depender de '" + modIdFaltante + "', pero este mod no está instalado. Usa la función <b>Arbol de Mods</b> para identificar qué mod está causando el problema";
+}
+
+@Override
+public String paso2_metadata_mods_toml_faltante(String modIdFaltante) {
+    return "Tienes dos opciones:<br/>" +
+           "1. <b>Instala el mod faltante</b>: Busca e instala el mod con ID '" + modIdFaltante + "'<br/>" +
+           "2. <b>Elimina el mod dependiente</b>: Si no necesitas la funcionalidad, elimina el mod que depende de '" + modIdFaltante + "'";
+}
+
+@Override
+public String paso3_metadata_mods_toml_faltante(String modIdFaltante) {
+    return "Si el mod '" + modIdFaltante + "' es una biblioteca (como 'forge', 'minecraft', 'curios'), " +
+           "asegúrate de tener instalada la versión correcta de Minecraft y Forge. " +
+           "Si es un mod regular, busca en su página de descarga los requisitos previos necesarios";
+}
+
+
+@Override
+public String errorSistemaSonido() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>Advertencia: Error al iniciar el sistema de sonido. Se han desactivado los sonidos y la música. Este error está comúnmente asociado con el mod SoundPhysicsMod y puede deberse a conflictos con otras librerías de sonido.</b>";
+}
+
+@Override
+public String nombre_de_error_sistema_sonido() {
+    return "Error en el Sistema de Sonido";
+}
+
+@Override
+public String paso1_sistema_sonido() {
+    return "El error está comúnmente relacionado con <b>SoundPhysicsMod</b>. Verifica si tienes instalada la versión más reciente compatible con tu versión de Minecraft";
+}
+
+@Override
+public String paso2_sistema_sonido() {
+    return "Si usas otros mods de sonido (como Sound Filters, Dynamic Surroundings, etc.), prueba eliminando temporalmente SoundPhysicsMod para ver si resuelve el conflicto";
+}
+
+@Override
+public String paso3_sistema_sonido() {
+    return "Revisa la carpeta <b>logs</b> para encontrar mensajes adicionales relacionados con LWJGL o OpenAL, que pueden indicar problemas con las librerías de sonido subyacentes";
+}
+
+@Override
+public String errorSinListenersEnClase(String nombreClase, List<String> modsUbicacion) {
+    StringBuilder mensaje = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    mensaje.append("Error crítico: La clase '").append(nombreClase).append("' está registrada como listener de eventos pero no contiene métodos válidos. ");
+    
+    if (!modsUbicacion.isEmpty()) {
+        mensaje.append("Esta clase se encuentra en los siguientes mods: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            mensaje.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) mensaje.append(", ");
+        }
+        if (modsUbicacion.size() > 3) mensaje.append(", y otros...");
+        mensaje.append("</b>. ");
+    }
+    
+    mensaje.append("Esto ocurre cuando se registra una clase para escuchar eventos sin tener métodos anotados con @SubscribeEvent.");
+    mensaje.append("</b>");
+    
+    return mensaje.toString();
+}
+
+@Override
+public String nombre_de_error_sin_listeners_en_clase() {
+    return "Clase Registrada sin Listeners de Eventos";
+}
+
+@Override
+public String paso1_sin_listeners_en_clase(String nombreClase, List<String> modsUbicacion) {
+    if (!modsUbicacion.isEmpty()) {
+        StringBuilder paso = new StringBuilder("La clase problemática se encuentra en estos mods: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            paso.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) paso.append(", ");
+        }
+        if (modsUbicacion.size() > 3) paso.append(", y otros...");
+        paso.append("</b>. Estos mods están intentando registrar eventos sin métodos válidos");
+        return paso.toString();
+    }
+    return "La clase <b>" + nombreClase + "</b> fue registrada para escuchar eventos pero no contiene métodos con la anotación <b>@SubscribeEvent</b>. Usa la función <b>Arbol de Mods</b> para identificar qué mod contiene esta clase";
+}
+
+@Override
+public String paso2_sin_listeners_en_clase(String nombreClase) {
+    return "En el código fuente, verifica que la clase <b>" + nombreClase + "</b> contenga al menos un método con: " +
+           "<b>@SubscribeEvent public void nombreMetodo(EventoEspecifico evento) { ... }</b>. " +
+           "Si es una clase interna, asegúrate que no esté marcada como estática";
+}
+
+@Override
+public String paso3_sin_listeners_en_clase(String nombreClase, List<String> modsUbicacion) {
+    StringBuilder paso = new StringBuilder();
+    
+    if (!modsUbicacion.isEmpty()) {
+        paso.append("Para los mods identificados (<b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 2); i++) {
+            paso.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 1) paso.append(", ");
+        }
+        if (modsUbicacion.size() > 2) paso.append(", etc.");
+        paso.append("</b>): ");
+        
+        if (modsUbicacion.size() == 1) {
+            paso.append("contacta al desarrollador de este mod para que corrija el problema. ");
+        } else {
+            paso.append("contacta a los desarrolladores de estos mods para que corrijan el problema. ");
+        }
+    }
+    
+    paso.append("Si eres el desarrollador, elimina el registro de esta clase en el EventBus o añade métodos @SubscribeEvent válidos");
+    
+    return paso.toString();
+}
+
+
+@Override
+public String errorUnionFileSystemCorrupto(String nombreArchivo) {
+    String mensaje = "<b style='color:#" + config.obtenerColorError() + "'>Error crítico: Error en UnionFileSystem al procesar '" + nombreArchivo + 
+           "'. ";
+    
+        mensaje += "Este error es muy común en modpacks preconfigurados y está directamente relacionado con problemas del lanzador. ";
+    
+    
+    mensaje += "El sistema no puede leer correctamente los archivos del mod debido a que están corruptos o incompletos.</b>";
+    
+    return mensaje;
+}
+
+@Override
+public String nombre_de_error_union_filesystem_corrupto() {
+    return "Error UnionFileSystem - Archivo Corrupto";
+}
+
+@Override
+public String paso1_union_filesystem_corrupto(String nombreArchivo) {
+    String paso = "Se detectó el error específico <b>cpw.mods.niofs.union.UnionFileSystem$UncheckedIOException</b> con el archivo <b>" + 
+                 nombreArchivo + "</b>.";
+    
+        paso += " Este es un error conocido en lanzadores de modpacks cuando los archivos no se descargan completamente.";
+    
+    
+    return paso;
+}
+
+@Override
+public String paso2_union_filesystem_corrupto() {
+        return "Reinstala completamente el modpack. Este error ocurre principalmente cuando el lanzador no completa la descarga de todos los archivos. " +
+               "Si estás usando <b>Luna Pixel</b>, te recomendamos encarecidamente usar <b>ATLauncher</b> en su lugar, " +
+               "ya que este lanzador maneja mejor los archivos de mods y evita este error específico.";
+    
+    
+}
+
+@Override
+public String paso3_union_filesystem_corrupto() {
+        return "Si el problema persiste después de reinstalar: <br/>" +
+               "1. <b>Cambia a otro lanzador</b> <br/>" +
+               "2. Si usas <b>Luna Pixel</b>, <b>usa ATLauncher</b> que es más confiable para evitar este error específico<br/>" +
+               "3. Verifica tu conexión a internet y espacio en disco antes de reinstalar el modpack";
+    
+    
+}
+
+
+/**
+ * Obtiene el mensaje de confirmación para habilitar el proxy de System.out/System.err
+ * @return Mensaje explicativo con advertencias y requisitos
+ */
+@Override
+public String habilitarProxySysOutSysErrMensaje() {
+    return "¿Habilitar ProxySysOutSysErr?\n\n" +
+           "Esta opción da a CrashDetector acceso a System.out y System.err cuando el launcher no proporciona registros.\n\n" +
+           "Solo debe habilitarse cuando no puedas pegar un registro manualmente.\n\n" +
+           "Advertencia: Esto puede interferir con algunos mods o launchers.\n\n" +
+           "Se requiere reiniciar el juego/app para que los cambios surtan efecto.";
+}
+
+/**
+ * Obtiene el título para diálogos de confirmación
+ * @return Título en español para ventanas de confirmación
+ */
+@Override
+public String confirmacionTitulo() {
+    return "Confirmación";
+}
+
+/**
+ * Obtiene el mensaje de éxito tras habilitar el proxy
+ * @return Mensaje informativo sobre el estado del proxy
+ */
+@Override
+public String proxyHabilitadoMensaje() {
+    return "ProxySysOutSysErr habilitado correctamente.\n\n" +
+           "Se requiere reiniciar CrashDetector para que los cambios surtan efecto.";
+}
+
+/**
+ * Obtiene el título para diálogos informativos
+ * @return Título en español para ventanas de información
+ */
+@Override
+public String informacionTitulo() {
+    return "Información";
+}
+
+
+
+
+
+
+
 }

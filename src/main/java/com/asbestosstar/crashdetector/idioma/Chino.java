@@ -2280,6 +2280,371 @@ public String descargar_vlc() {
     return "下载 VLC";
 }
 
+@Override
+public String errorCaracteresInvalidosEnNombre(String nombreModulo, String parteInvalida) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>严重错误：模块名称 '" + nombreModulo + 
+           "' 包含无效字符。其中 '" + parteInvalida + 
+           "' 不是有效的 Java 标识符。当模组在其名称中使用 Java 保留字（如 'true'、'class'）或不允许的字符时会发生此问题。</b>";
+}
+
+@Override
+public String nombre_de_error_caracteres_invalidos() {
+    return "模组名称包含无效字符";
+}
+
+@Override
+public String paso1_caracteres_invalidos(String nombreModulo, String parteInvalida) {
+    return "模组名称 '" + nombreModulo + "' 无效，因为它包含 '" + parteInvalida + 
+           "'，这是 Java 保留字或不允许的字符。" +
+           "在日志中查找对应此名称的模组（通常是 JAR 文件名）";
+}
+
+@Override
+public String paso2_caracteres_invalidos(String nombreModulo) {
+    return "进入模组文件夹，编辑 <b>/META-INF/</b> 文件夹内的 <b>mods.toml</b> 文件。" +
+           "将 <b>modId</b> 的值改为仅使用字母、数字和下划线，避免使用 Java 保留字";
+}
+
+@Override
+public String paso3_caracteres_invalidos() {
+    return "有效名称示例：'truemod_shot_enchantment' 代替 'true.shot.enchantment'。" +
+           "请记住，模组名称不能包含点号、连字符或 Java 保留字如 'true'、'false' 或 'class'";
+}
+
+@Override
+public String errorDependenciaModFaltante(String nombreJar) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>模组 '" + nombreJar + "' 存在严重错误：其依赖项缺少必需的 'mandatory' 字段。当 mods.toml 文件未指明依赖是否为必需时会发生此问题。</b>";
+}
+
+@Override
+public String nombre_de_error_dependencia_mod_faltante() {
+    return "模组依赖项缺少必需字段";
+}
+
+@Override
+public String paso1_dependencia_mod_faltante(String nombreJar) {
+    return "问题模组为：<b>" + nombreJar + "</b>。此文件的依赖配置有误";
+}
+
+@Override
+public String paso2_dependencia_mod_faltante(String nombreJar) {
+    return "打开模组 <b>" + nombreJar + "</b> 的 <b>/META-INF/</b> 文件夹中的 <b>mods.toml</b> 文件";
+}
+
+@Override
+public String paso3_dependencia_mod_faltante() {
+    return "在依赖项部分，确保每个条目都包含 <b>mandatory=true</b> 或 <b>mandatory=false</b>（例如：modId=\"forge\", mandatory=true, versionRange=\"[1.21.8,)\" ）";
+}
+
+
+@Override
+public String errorAccessTransformerInvalido(String nombreJar) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>严重错误：模组 '" + nombreJar + "' 的访问转换器（access transformer）配置无效。当配置文件语法错误或引用了不存在的类/方法时会发生此问题。</b>";
+}
+
+@Override
+public String nombre_de_error_access_transformer_invalido() {
+    return "无效的访问转换器";
+}
+
+@Override
+public String paso1_access_transformer_invalido(String nombreJar) {
+    return "问题模组为：<b>" + nombreJar + "</b>。此模组包含无效的 access transformer 配置";
+}
+
+@Override
+public String paso2_access_transformer_invalido(String nombreJar) {
+    return "打开模组 <b>" + nombreJar + "</b> 内的 <b>accessTransformer.cfg</b> 文件（通常位于 JAR 文件根目录）";
+}
+
+@Override
+public String paso3_access_transformer_invalido() {
+    return "修复 access transformer 的语法。每行应遵循格式：<b>access class.method</b>（例如：public net.minecraft.world.entity.Entity.func_200560_a）。删除引用了当前 Minecraft 版本中不存在的类或方法的行";
+}
+
+@Override
+public String errorDiscrepanciaModID(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>严重错误：@Mod 注解中的模组 ID 与 mods.toml 文件中的 ID 不匹配。模组 '" + nombreMod + "' 无法加载，因为 ID 不一致。</b>";
+}
+
+@Override
+public String nombre_de_error_discrepancia_mod_id() {
+    return "@Mod 与 mods.toml 中的 ID 不匹配";
+}
+
+@Override
+public String paso1_discrepancia_mod_id(String nombreMod) {
+    return "正在开发的模组 '" + nombreMod + "' 在 <b>@Mod</b> 注解和 <b>mods.toml</b> 文件中的 ID 存在不一致";
+}
+
+@Override
+public String paso2_discrepancia_mod_id() {
+    return "检查主类中的 ID 是否与 <b>/META-INF/mods.toml</b> 文件中的 <b>modId</b> 值一致。例如：<b>@Mod(\"mymod\")</b> 必须与 <b>modId=\"mymod\"</b> 匹配";
+}
+
+@Override
+public String paso3_discrepancia_mod_id() {
+    return "如果使用 Gradle，在修改后运行 <b>clean</b> 以确保资源正确更新。有时旧文件会残留在 build 文件夹中";
+}
+
+
+@Override
+public String errorModEnPlataformaIncorrecta(String nombreClase, String entornoInvalido) {
+    String plataforma = entornoInvalido.equals("CLIENT") ? "客户端" : "服务端";
+    String plataformaOpuesta = entornoInvalido.equals("CLIENT") ? "服务端" : "客户端";
+    
+    return "<b style='color:#" + config.obtenerColorError() + "'>严重错误：正在尝试在" + plataforma + "环境中加载类 '" + nombreClase + 
+           "'，但该类是为" + plataformaOpuesta + "设计的。" +
+           "<b>使用侧边栏中的“模组树”功能查找是哪个模组尝试加载此类</b>。" +
+           "模组是为特定平台构建的，不能在另一平台运行。</b>";
+}
+
+@Override
+public String nombre_de_error_mod_plataforma_incorrecta() {
+    return "模组平台错误";
+}
+
+@Override
+public String paso1_mod_plataforma_incorrecta(String nombreClase, String entornoInvalido) {
+    return "在右侧的 <b>模组树</b> 选项卡中，搜索对类 <b>" + nombreClase + 
+           "</b> 的引用，以识别导致问题的模组";
+}
+
+@Override
+public String paso2_mod_plataforma_incorrecta(String entornoInvalido) {
+    String plataforma = entornoInvalido.equals("CLIENT") ? "客户端" : "服务端";
+    String plataformaOpuesta = entornoInvalido.equals("CLIENT") ? "服务端" : "客户端";
+    
+    return "识别出的模组是用于 <b>" + plataformaOpuesta + "</b> 的，不应在您的" + plataforma + "环境中使用。";
+}
+
+@Override
+public String paso3_mod_plataforma_incorrecta() {
+    return "从您的 <b>mods</b> 文件夹中删除问题模组。如果需要此平台的类似功能，" +
+           "请寻找专为 <b>客户端</b> 或 <b>服务端</b> 设计的替代模组";
+}
+
+@Override
+public String errorMetadataModsTomlFaltante(String modIdFaltante, List<String> modsPotenciales) {
+    StringBuilder mensaje = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    mensaje.append("严重错误：缺少 modid '").append(modIdFaltante).append("' 的元数据。 ");
+    
+    if (modsPotenciales != null && !modsPotenciales.isEmpty()) {
+        mensaje.append("以下模组可能导致此问题：<b>");
+        for (int i = 0; i < Math.min(modsPotenciales.size(), 3); i++) {
+            mensaje.append(modsPotenciales.get(i));
+            if (i < modsPotenciales.size() - 1 && i < 2) mensaje.append(", ");
+        }
+        if (modsPotenciales.size() > 3) mensaje.append(", 等等...");
+        mensaje.append("</b>。 ");
+    }
+    
+    mensaje.append("当某个模组依赖于未安装的模组或 mods.toml 文件错误时会发生此问题。");
+    mensaje.append("</b>");
+    
+    return mensaje.toString();
+}
+
+@Override
+public String nombre_de_error_metadata_mods_toml_faltante() {
+    return "缺少 mods.toml 元数据";
+}
+
+@Override
+public String paso1_metadata_mods_toml_faltante(String modIdFaltante, List<String> modsPotenciales) {
+    if (modsPotenciales != null && !modsPotenciales.isEmpty()) {
+        StringBuilder paso = new StringBuilder("以下模组依赖 '").append(modIdFaltante).append("': <b>");
+        for (int i = 0; i < Math.min(modsPotenciales.size(), 3); i++) {
+            paso.append(modsPotenciales.get(i));
+            if (i < modsPotenciales.size() - 1 && i < 2) paso.append(", ");
+        }
+        if (modsPotenciales.size() > 3) paso.append(", 等等...");
+        paso.append("</b>。使用 <b>模组树</b> 功能确认哪个模组导致问题");
+        return paso.toString();
+    }
+    return "某个模组试图依赖 '" + modIdFaltante + "'，但该模组未安装。使用 <b>模组树</b> 功能识别问题模组";
+}
+
+@Override
+public String paso2_metadata_mods_toml_faltante(String modIdFaltante) {
+    return "您有两个选择：<br/>" +
+           "1. <b>安装缺失的模组</b>：查找并安装 ID 为 '" + modIdFaltante + "' 的模组<br/>" +
+           "2. <b>删除依赖模组</b>：如果不需要该功能，请删除依赖 '" + modIdFaltante + "' 的模组";
+}
+
+@Override
+public String paso3_metadata_mods_toml_faltante(String modIdFaltante) {
+    return "如果 '" + modIdFaltante + "' 是库文件（如 'forge', 'minecraft', 'curios'），" +
+           "请确保已安装正确版本的 Minecraft 和 Forge。" +
+           "如果是普通模组，请查看其下载页面以确认前置依赖";
+}
+
+@Override
+public String errorSistemaSonido() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>警告：声音系统初始化失败。声音和音乐已被禁用。此错误通常与 SoundPhysicsMod 模组相关，可能由与其他声音库的冲突引起。</b>";
+}
+
+@Override
+public String nombre_de_error_sistema_sonido() {
+    return "声音系统错误";
+}
+
+@Override
+public String paso1_sistema_sonido() {
+    return "该错误通常与 <b>SoundPhysicsMod</b> 相关。请检查是否安装了与您的 Minecraft 版本兼容的最新版本";
+}
+
+@Override
+public String paso2_sistema_sonido() {
+    return "如果您使用其他声音模组（如 Sound Filters、Dynamic Surroundings 等），请尝试暂时移除 SoundPhysicsMod 以查看是否解决冲突";
+}
+
+@Override
+public String paso3_sistema_sonido() {
+    return "检查 <b>logs</b> 文件夹，查找与 LWJGL 或 OpenAL 相关的额外信息，这些可能表明底层声音库存在问题";
+}
+
+@Override
+public String errorSinListenersEnClase(String nombreClase, List<String> modsUbicacion) {
+    StringBuilder mensaje = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    mensaje.append("严重错误：类 '").append(nombreClase).append("' 已注册为事件监听器，但不包含有效方法。 ");
+    
+    if (!modsUbicacion.isEmpty()) {
+        mensaje.append("此类位于以下模组中： <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            mensaje.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) mensaje.append(", ");
+        }
+        if (modsUbicacion.size() > 3) mensaje.append(", 等等...");
+        mensaje.append("</b>. ");
+    }
+    
+    mensaje.append("当一个类被注册用于监听事件，但没有包含 @SubscribeEvent 注解的方法时，会发生此问题。");
+    mensaje.append("</b>");
+    
+    return mensaje.toString();
+}
+
+@Override
+public String nombre_de_error_sin_listeners_en_clase() {
+    return "类已注册但无事件监听器";
+}
+
+@Override
+public String paso1_sin_listeners_en_clase(String nombreClase, List<String> modsUbicacion) {
+    if (!modsUbicacion.isEmpty()) {
+        StringBuilder paso = new StringBuilder("问题类位于这些模组中：<b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            paso.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) paso.append(", ");
+        }
+        if (modsUbicacion.size() > 3) paso.append(", 等等...");
+        paso.append("</b>。这些模组试图注册事件但没有有效方法");
+        return paso.toString();
+    }
+    return "类 <b>" + nombreClase + "</b> 已被注册用于监听事件，但未包含 <b>@SubscribeEvent</b> 注解的方法。请使用 <b>模组树</b> 功能识别包含此类的模组";
+}
+
+@Override
+public String paso2_sin_listeners_en_clase(String nombreClase) {
+    return "在源代码中，确保类 <b>" + nombreClase + "</b> 至少包含一个如下格式的方法： " +
+           "<b>@SubscribeEvent public void 方法名(特定事件 事件) { ... }</b>。 " +
+           "如果是内部类，请确保其未标记为 static";
+}
+
+@Override
+public String paso3_sin_listeners_en_clase(String nombreClase, List<String> modsUbicacion) {
+    StringBuilder paso = new StringBuilder();
+    
+    if (!modsUbicacion.isEmpty()) {
+        paso.append("对于已识别的模组 (<b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 2); i++) {
+            paso.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 1) paso.append(", ");
+        }
+        if (modsUbicacion.size() > 2) paso.append(", 等等");
+        paso.append("</b>): ");
+        
+        if (modsUbicacion.size() == 1) {
+            paso.append("请联系该模组开发者修复问题。 ");
+        } else {
+            paso.append("请联系这些模组的开发者修复问题。 ");
+        }
+    }
+    
+    paso.append("如果您是开发者，请从 EventBus 中移除此类的注册，或添加有效的 @SubscribeEvent 方法");
+    
+    return paso.toString();
+}
+
+@Override
+public String errorUnionFileSystemCorrupto(String nombreArchivo) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>严重错误：处理文件 '" + nombreArchivo + "' 时发生 'cpw.mods.niofs.union.UnionFileSystem$UncheckedIOException' 异常。此错误表明启动器未能正确下载或解压整合包文件。" +
+           "错误信息 'zip END header not found' 表明 JAR 文件不完整或已损坏，这在无法妥善处理大文件下载的启动器中极为常见。" +
+           "此问题主要影响 Twitch/CurseForge、Technic Launcher 用户，尤其是 Luna Pixel 用户，因为这些启动器通常无法完整验证已下载文件的完整性。" +
+           "Luna Pixel 用户应考虑改用 ATLauncher 作为更稳定的替代方案，它能更好地处理文件完整性并避免此特定错误。" +
+           "系统无法加载模组，因为 ZIP 格式已损坏，导致 Forge 无法读取启动游戏所需的资源。</b>";
+}
+
+@Override
+public String nombre_de_error_union_filesystem_corrupto() {
+    return "UnionFileSystem 错误 - 文件损坏";
+}
+
+@Override
+public String paso1_union_filesystem_corrupto(String nombreArchivo) {
+    return "从头开始完全重新安装整合包";
+}
+
+@Override
+public String paso2_union_filesystem_corrupto() {
+    return "如果你使用 Luna Pixel，请切换到 ATLauncher";
+}
+
+@Override
+public String paso3_union_filesystem_corrupto() {
+    return "重新安装前请检查网络连接和磁盘空间";
+}
+
+
+
+
+@Override
+public String habilitarProxySysOutSysErrMensaje() {
+    return "是否启用 ProxySysOutSysErr？\n\n" +
+           "此选项允许 CrashDetector 在启动器未提供日志时访问 System.out 和 System.err。\n\n" +
+           "仅在无法手动粘贴日志时启用。\n\n" +
+           "警告：可能与某些模组或启动器冲突。\n\n" +
+           "需要重启游戏/应用以使更改生效。";
+}
+
+@Override
+public String confirmacionTitulo() {
+    return "确认";
+}
+
+@Override
+public String proxyHabilitadoMensaje() {
+    return "ProxySysOutSysErr 已成功启用。\n\n" +
+           "需要重启 CrashDetector 以使更改生效。";
+}
+
+@Override
+public String informacionTitulo() {
+    return "信息";
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

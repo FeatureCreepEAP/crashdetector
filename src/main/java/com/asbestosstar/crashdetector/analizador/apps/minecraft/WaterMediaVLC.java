@@ -1,12 +1,12 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
+import java.awt.Desktop;
+import java.net.URI;
+
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-
-import java.awt.Desktop;
-import java.net.URI;
 
 public class WaterMediaVLC implements Verificaciones {
     private boolean activado = false;

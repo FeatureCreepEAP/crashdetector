@@ -2264,4 +2264,361 @@ public String descargar_vlc() {
 }
 
 
+@Override
+public String errorCaracteresInvalidosEnNombre(String nombreModulo, String parteInvalida) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>치명적 오류: 모듈 이름 '" + nombreModulo + 
+           "'에 잘못된 문자가 포함되어 있습니다. '" + parteInvalida + 
+           "' 부분은 유효한 Java 식별자가 아닙니다. 자바 예약어('true', 'class' 등)나 이름에 사용할 수 없는 문자를 모드가 사용할 경우 발생합니다.</b>";
+}
+
+@Override
+public String nombre_de_error_caracteres_invalidos() {
+    return "모드 이름에 유효하지 않은 문자 포함";
+}
+
+@Override
+public String paso1_caracteres_invalidos(String nombreModulo, String parteInvalida) {
+    return "모드 이름 '" + nombreModulo + "'은(는) '" + parteInvalida + 
+           "'을(를) 포함하고 있어 유효하지 않습니다. 이는 자바 예약어이거나 허용되지 않는 문자입니다. " +
+           "로그에서 이 이름과 일치하는 모드를 찾으세요 (일반적으로 JAR 파일 이름)";
+}
+
+@Override
+public String paso2_caracteres_invalidos(String nombreModulo) {
+    return "모드 폴더로 이동하여 <b>/META-INF/</b> 폴더 내 <b>mods.toml</b> 파일을 편집하세요. " +
+           "<b>modId</b> 값을 자바 예약어 없이 문자, 숫자, 밑줄만 사용하도록 변경하세요";
+}
+
+@Override
+public String paso3_caracteres_invalidos() {
+    return "유효한 이름 예시: 'true.shot.enchantment' 대신 'truemod_shot_enchantment' 사용. " +
+           "모드 이름에는 점, 하이픈, 자바 예약어('true', 'false', 'class')를 포함할 수 없습니다";
+}
+
+@Override
+public String errorDependenciaModFaltante(String nombreJar) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>모드 '" + nombreJar + "'에서 치명적 오류 발생: 의존성에 필수 필드 'mandatory'가 없습니다. mods.toml 파일이 의존성이 필수인지 명시하지 않을 때 발생합니다.</b>";
+}
+
+@Override
+public String nombre_de_error_dependencia_mod_faltante() {
+    return "의존성 모드에 필수 필드 누락";
+}
+
+@Override
+public String paso1_dependencia_mod_faltante(String nombreJar) {
+    return "문제 있는 모드는 <b>" + nombreJar + "</b>입니다. 이 파일의 의존성 설정에 오류가 있습니다";
+}
+
+@Override
+public String paso2_dependencia_mod_faltante(String nombreJar) {
+    return "<b>" + nombreJar + "</b> 모드의 <b>/META-INF/</b> 폴더 내 <b>mods.toml</b> 파일을 열기";
+}
+
+@Override
+public String paso3_dependencia_mod_faltante() {
+    return "의존성 섹션에서 각 항목이 <b>mandatory=true</b> 또는 <b>mandatory=false</b>를 포함하는지 확인하세요 (예: modId=\"forge\", mandatory=true, versionRange=\"[1.21.8,)\" )";
+}
+
+
+@Override
+public String errorAccessTransformerInvalido(String nombreJar) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>심각한 오류: '" + nombreJar + "' 모드의 access transformer 설정이 잘못되었습니다. 설정 파일의 구문이 잘못되었거나 존재하지 않는 클래스/메서드를 참조할 때 발생합니다.</b>";
+}
+
+@Override
+public String nombre_de_error_access_transformer_invalido() {
+    return "잘못된 Access Transformer";
+}
+
+@Override
+public String paso1_access_transformer_invalido(String nombreJar) {
+    return "문제 있는 모드는 <b>" + nombreJar + "</b>입니다. 이 모드는 잘못된 access transformer 설정을 포함하고 있습니다";
+}
+
+@Override
+public String paso2_access_transformer_invalido(String nombreJar) {
+    return "<b>" + nombreJar + "</b> 모드 내부의 <b>accessTransformer.cfg</b> 파일을 엽니다 (일반적으로 JAR 파일의 루트 폴더에 있음)";
+}
+
+@Override
+public String paso3_access_transformer_invalido() {
+    return "access transformer 구문을 수정하세요. 각 줄은 <b>access class.method</b> 형식을 따라야 합니다 (예: public net.minecraft.world.entity.Entity.func_200560_a). 현재 마인크래프트 버전에 존재하지 않는 클래스나 메서드를 참조하는 줄은 삭제하세요";
+}
+
+@Override
+public String errorDiscrepanciaModID(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>심각한 오류: @Mod 주석의 모드 ID와 mods.toml 파일의 ID가 일치하지 않습니다. '" + nombreMod + "' 모드는 ID 불일치로 인해 로드할 수 없습니다.</b>";
+}
+
+@Override
+public String nombre_de_error_discrepancia_mod_id() {
+    return "@Mod와 mods.toml 간 ID 불일치";
+}
+
+@Override
+public String paso1_discrepancia_mod_id(String nombreMod) {
+    return "개발 중인 모드 '" + nombreMod + "'에서 <b>@Mod</b> 주석과 <b>mods.toml</b>의 ID가 일치하지 않습니다";
+}
+
+@Override
+public String paso2_discrepancia_mod_id() {
+    return "기본 클래스의 ID가 <b>/META-INF/mods.toml</b> 파일의 <b>modId</b> 값과 일치하는지 확인하세요. 예: <b>@Mod(\"mymod\")</b>는 <b>modId=\"mymod\"</b>과 일치해야 합니다";
+}
+
+@Override
+public String paso3_discrepancia_mod_id() {
+    return "Gradle을 사용 중이라면 변경 후 <b>clean</b>을 실행하여 리소스가 올바르게 업데이트되도록 하세요. 때때로 이전 파일이 build 폴더에 남아 있을 수 있습니다";
+}
+
+
+
+@Override
+public String errorModEnPlataformaIncorrecta(String nombreClase, String entornoInvalido) {
+    String plataforma = entornoInvalido.equals("CLIENT") ? "클라이언트" : "서버";
+    String plataformaOpuesta = entornoInvalido.equals("CLIENT") ? "서버" : "클라이언트";
+    
+    return "<b style='color:#" + config.obtenerColorError() + "'>심각한 오류: '" + nombreClase + 
+           "' 클래스를 " + plataforma + " 환경에서 로드하려 하지만, 이 클래스는 " + plataformaOpuesta + 
+           "용으로 설계되었습니다. <b>사이드바의 '모드 트리' 기능을 사용해 이 클래스를 로드하려는 모드를 찾으세요</b>. " +
+           "모드는 특정 플랫폼 전용으로 제작되며 다른 플랫폼에서는 작동하지 않습니다.</b>";
+}
+
+@Override
+public String nombre_de_error_mod_plataforma_incorrecta() {
+    return "잘못된 플랫폼의 모드";
+}
+
+@Override
+public String paso1_mod_plataforma_incorrecta(String nombreClase, String entornoInvalido) {
+    return "<b>모드 트리</b> 탭(오른쪽)에서 <b>" + nombreClase + 
+           "</b> 클래스에 대한 참조를 검색해 문제를 일으키는 모드를 식별하세요";
+}
+
+@Override
+public String paso2_mod_plataforma_incorrecta(String entornoInvalido) {
+    String plataforma = entornoInvalido.equals("CLIENT") ? "클라이언트" : "서버";
+    String plataformaOpuesta = entornoInvalido.equals("CLIENT") ? "서버" : "클라이언트";
+    
+    return "식별된 모드는 <b>" + plataformaOpuesta + "</b> 전용 모드이며, " + plataforma + " 환경에서 사용하면 안 됩니다.";
+}
+
+@Override
+public String paso3_mod_plataforma_incorrecta() {
+    return "문제 있는 모드를 <b>mods</b> 폴더에서 제거하세요. 이 플랫폼에서 유사한 기능이 필요하다면, " +
+           "<b>클라이언트</b> 또는 <b>서버</b> 전용으로 설계된 대체 모드를 찾아보세요";
+}
+
+@Override
+public String errorMetadataModsTomlFaltante(String modIdFaltante, List<String> modsPotenciales) {
+    StringBuilder mensaje = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    mensaje.append("심각한 오류: modid '").append(modIdFaltante).append("'.에 대한 메타데이터가 없습니다. ");
+    
+    if (modsPotenciales != null && !modsPotenciales.isEmpty()) {
+        mensaje.append("다음 모드가 문제를 일으킬 수 있습니다: <b>");
+        for (int i = 0; i < Math.min(modsPotenciales.size(), 3); i++) {
+            mensaje.append(modsPotenciales.get(i));
+            if (i < modsPotenciales.size() - 1 && i < 2) mensaje.append(", ");
+        }
+        if (modsPotenciales.size() > 3) mensaje.append(", 기타...");
+        mensaje.append("</b>. ");
+    }
+    
+    mensaje.append("모드가 설치되지 않았거나 mods.toml 파일이 잘못된 경우 발생합니다.");
+    mensaje.append("</b>");
+    
+    return mensaje.toString();
+}
+
+@Override
+public String nombre_de_error_metadata_mods_toml_faltante() {
+    return "누락된 mods.toml 메타데이터";
+}
+
+@Override
+public String paso1_metadata_mods_toml_faltante(String modIdFaltante, List<String> modsPotenciales) {
+    if (modsPotenciales != null && !modsPotenciales.isEmpty()) {
+        StringBuilder paso = new StringBuilder("다음 모드가 '").append(modIdFaltante).append("'.에 의존합니다: <b>");
+        for (int i = 0; i < Math.min(modsPotenciales.size(), 3); i++) {
+            paso.append(modsPotenciales.get(i));
+            if (i < modsPotenciales.size() - 1 && i < 2) paso.append(", ");
+        }
+        if (modsPotenciales.size() > 3) paso.append(", 기타...");
+        paso.append("</b>. <b>모드 트리</b> 기능을 사용해 문제 모드를 확인하세요");
+        return paso.toString();
+    }
+    return "'".concat(modIdFaltante).concat("'에 의존하려는 모드가 있지만, 해당 모드가 설치되지 않았습니다. <b>모드 트리</b> 기능을 사용해 문제 모드를 식별하세요");
+}
+
+@Override
+public String paso2_metadata_mods_toml_faltante(String modIdFaltante) {
+    return "두 가지 선택지가 있습니다:<br/>" +
+           "1. <b>누락된 모드 설치</b>: ID가 '".concat(modIdFaltante).concat("'인 모드를 찾아 설치하세요<br/>") +
+           "2. <b>의존 모드 제거</b>: 기능이 필요하지 않다면, '".concat(modIdFaltante).concat("'에 의존하는 모드를 제거하세요");
+}
+
+@Override
+public String paso3_metadata_mods_toml_faltante(String modIdFaltante) {
+    return "'".concat(modIdFaltante).concat("'가 라이브러리(예: 'forge', 'minecraft', 'curios')라면, ") +
+           "올바른 버전의 마인크래프트와 포지가 설치되어 있는지 확인하세요. " +
+           "일반 모드라면 다운로드 페이지에서 필수 전제 조건을 확인하세요";
+}
+
+
+
+@Override
+public String errorSistemaSonido() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>경고: 사운드 시스템 초기화 실패. 소리와 음악이 비활성화되었습니다. 이 오류는 일반적으로 SoundPhysicsMod과 관련이 있으며 다른 사운드 라이브러리와의 충돌로 인해 발생할 수 있습니다.</b>";
+}
+
+@Override
+public String nombre_de_error_sistema_sonido() {
+    return "사운드 시스템 오류";
+}
+
+@Override
+public String paso1_sistema_sonido() {
+    return "이 오류는 일반적으로 <b>SoundPhysicsMod</b>과 관련이 있습니다. 사용 중인 마인크래프트 버전과 호환되는 최신 버전을 설치했는지 확인하세요";
+}
+
+@Override
+public String paso2_sistema_sonido() {
+    return "다른 사운드 모드(예: Sound Filters, Dynamic Surroundings 등)를 사용 중이라면, SoundPhysicsMod을 임시로 제거하여 충돌이 해결되는지 확인해 보세요";
+}
+
+@Override
+public String paso3_sistema_sonido() {
+    return "<b>logs</b> 폴더를 확인하여 LWJGL 또는 OpenAL 관련 추가 메시지를 찾아보세요. 이는 기본 사운드 라이브러리에 문제가 있음을 나타낼 수 있습니다";
+}
+
+@Override
+public String errorSinListenersEnClase(String nombreClase, List<String> modsUbicacion) {
+    StringBuilder mensaje = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    mensaje.append("치명적 오류: '").append(nombreClase).append("' 클래스가 이벤트 리스너로 등록되었지만 유효한 메서드가 없습니다. ");
+    
+    if (!modsUbicacion.isEmpty()) {
+        mensaje.append("이 클래스는 다음 모드에 있습니다: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            mensaje.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) mensaje.append(", ");
+        }
+        if (modsUbicacion.size() > 3) mensaje.append(", 기타...");
+        mensaje.append("</b>. ");
+    }
+    
+    mensaje.append("이벤트를 수신하도록 클래스를 등록했지만 @SubscribeEvent로 주석 처리된 메서드가 없을 때 발생합니다.");
+    mensaje.append("</b>");
+    
+    return mensaje.toString();
+}
+
+@Override
+public String nombre_de_error_sin_listeners_en_clase() {
+    return "이벤트 리스너 없이 등록된 클래스";
+}
+
+@Override
+public String paso1_sin_listeners_en_clase(String nombreClase, List<String> modsUbicacion) {
+    if (!modsUbicacion.isEmpty()) {
+        StringBuilder paso = new StringBuilder("문제 있는 클래스는 다음 모드에 있습니다: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            paso.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) paso.append(", ");
+        }
+        if (modsUbicacion.size() > 3) paso.append(", 기타...");
+        paso.append("</b>. 이 모드들은 유효한 메서드 없이 이벤트를 등록하려고 시도하고 있습니다");
+        return paso.toString();
+    }
+    return "클래스 <b>" + nombreClase + "</b>가 이벤트 수신을 위해 등록되었지만 <b>@SubscribeEvent</b> 주석이 붙은 메서드가 없습니다. <b>모드 트리</b> 기능을 사용하여 이 클래스를 포함한 모드를 식별하세요";
+}
+
+@Override
+public String paso2_sin_listeners_en_clase(String nombreClase) {
+    return "소스 코드에서 클래스 <b>" + nombreClase + "</b>가 다음 형식의 메서드를 최소한 하나 포함하는지 확인하세요: " +
+           "<b>@SubscribeEvent public void 메서드이름(특정이벤트 이벤트) { ... }</b>. " +
+           "내부 클래스라면 static으로 표시되지 않았는지 확인하세요";
+}
+
+@Override
+public String paso3_sin_listeners_en_clase(String nombreClase, List<String> modsUbicacion) {
+    StringBuilder paso = new StringBuilder();
+    
+    if (!modsUbicacion.isEmpty()) {
+        paso.append("식별된 모드들에 대해 (<b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 2); i++) {
+            paso.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 1) paso.append(", ");
+        }
+        if (modsUbicacion.size() > 2) paso.append(", 등");
+        paso.append("</b>): ");
+        
+        if (modsUbicacion.size() == 1) {
+            paso.append("해당 모드 개발자에게 연락하여 문제를 해결하도록 하세요. ");
+        } else {
+            paso.append("이 모드들의 개발자들에게 연락하여 문제를 해결하도록 하세요. ");
+        }
+    }
+    
+    paso.append("개발자라면 EventBus에서 이 클래스의 등록을 제거하거나 유효한 @SubscribeEvent 메서드를 추가하세요");
+    
+    return paso.toString();
+}
+@Override
+public String errorUnionFileSystemCorrupto(String nombreArchivo) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>치명적 오류: '" + nombreArchivo + "' 파일 처리 중 'cpw.mods.niofs.union.UnionFileSystem$UncheckedIOException' 예외가 발생했습니다. 이 오류는 런처가 모드팩 파일을 제대로 다운로드하거나 추출하지 못했음을 의미합니다. " +
+           "'zip END header not found' 메시지는 JAR 파일이 불완전하거나 손상되었음을 나타내며, 대용량 파일 다운로드를 제대로 처리하지 못하는 런처에서 매우 흔히 발생합니다. " +
+           "이 문제는 주로 Twitch/CurseForge, Technic Launcher 사용자에게 영향을 미치며, 특히 Luna Pixel 사용자에게 심각합니다. 이러한 런처는 종종 다운로드된 파일의 전체 무결성을 확인하지 못합니다. " +
+           "Luna Pixel 사용자는 ATLauncher로 전환하는 것이 좋습니다. ATLauncher는 파일 무결성을 더 잘 관리하며 이 특정 오류를 방지할 수 있는 더 안정적인 대안입니다. " +
+           "ZIP 형식이 손상되어 시스템이 모드를 로드할 수 없으며, Forge가 게임 시작에 필요한 리소스를 읽는 것을 방해합니다.</b>";
+}
+
+@Override
+public String nombre_de_error_union_filesystem_corrupto() {
+    return "UnionFileSystem 오류 - 손상된 파일";
+}
+
+@Override
+public String paso1_union_filesystem_corrupto(String nombreArchivo) {
+    return "모드팩을 처음부터 완전히 재설치하세요";
+}
+
+@Override
+public String paso2_union_filesystem_corrupto() {
+    return "Luna Pixel을 사용 중이라면 ATLauncher로 전환하세요";
+}
+
+@Override
+public String paso3_union_filesystem_corrupto() {
+    return "재설치 전에 인터넷 연결 상태와 디스크 여유 공간을 확인하세요";
+}
+
+
+@Override
+public String habilitarProxySysOutSysErrMensaje() {
+    return "ProxySysOutSysErr를 활성화하시겠습니까?\n\n" +
+           "이 옵션은 런처가 로그를 제공하지 않을 때 CrashDetector가 System.out과 System.err에 접근할 수 있게 해줍니다.\n\n" +
+           "수동으로 로그를 붙여넣을 수 없을 경우에만 활성화해야 합니다.\n\n" +
+           "경고: 일부 모드나 런처와 충돌할 수 있습니다.\n\n" +
+           "변경 사항을 적용하려면 게임/앱을 다시 시작해야 합니다.";
+}
+
+@Override
+public String confirmacionTitulo() {
+    return "확인";
+}
+
+@Override
+public String proxyHabilitadoMensaje() {
+    return "ProxySysOutSysErr가 성공적으로 활성화되었습니다.\n\n" +
+           "변경 사항을 적용하려면 CrashDetector를 다시 시작해야 합니다.";
+}
+
+@Override
+public String informacionTitulo() {
+    return "정보";
+}
+
+
+
+
 }

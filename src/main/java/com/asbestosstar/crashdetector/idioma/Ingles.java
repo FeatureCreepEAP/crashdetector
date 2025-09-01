@@ -2343,6 +2343,396 @@ public String descargar_vlc() {
     return "Download VLC";
 }
 
+@Override
+public String errorCaracteresInvalidosEnNombre(String nombreModulo, String parteInvalida) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Critical error: The module name '" + nombreModulo + 
+           "' contains invalid characters. The part '" + parteInvalida + 
+           "' is not a valid Java identifier. This occurs when a mod uses Java reserved keywords (like 'true', 'class') or disallowed characters in its name.</b>";
+}
+
+@Override
+public String nombre_de_error_caracteres_invalidos() {
+    return "Invalid Characters in Mod Name";
+}
+
+@Override
+public String paso1_caracteres_invalidos(String nombreModulo, String parteInvalida) {
+    return "The mod name '" + nombreModulo + "' is invalid because it contains '" + parteInvalida + 
+           "', which is a Java reserved word or an invalid character. " +
+           "Check the logs to find which mod corresponds to this name (usually the JAR file name)";
+}
+
+@Override
+public String paso2_caracteres_invalidos(String nombreModulo) {
+    return "Go to the mod's folder and edit the <b>mods.toml</b> file inside the <b>/META-INF/</b> folder. " +
+           "Change the <b>modId</b> value to use only letters, numbers, and underscores, avoiding Java reserved keywords";
+}
+
+@Override
+public String paso3_caracteres_invalidos() {
+    return "Example of a valid name: 'truemod_shot_enchantment' instead of 'true.shot.enchantment'. " +
+           "Remember that mod names cannot contain dots, hyphens, or Java reserved words like 'true', 'false', or 'class'";
+}
+
+@Override
+public String errorDependenciaModFaltante(String nombreJar) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Critical error with mod: '" + nombreJar + "'. The required 'mandatory' field is missing from its dependencies. This occurs when the mods.toml file does not specify whether a dependency is required.</b>";
+}
+
+@Override
+public String nombre_de_error_dependencia_mod_faltante() {
+    return "Mod Dependency Missing Mandatory Field";
+}
+
+@Override
+public String paso1_dependencia_mod_faltante(String nombreJar) {
+    return "The problematic mod is: <b>" + nombreJar + "</b>. This file has an error in its dependency configuration";
+}
+
+@Override
+public String paso2_dependencia_mod_faltante(String nombreJar) {
+    return "Open the <b>mods.toml</b> file inside the <b>/META-INF/</b> folder of the mod <b>" + nombreJar + "</b>";
+}
+
+@Override
+public String paso3_dependencia_mod_faltante() {
+    return "In the dependencies section, ensure each entry includes <b>mandatory=true</b> or <b>mandatory=false</b> (e.g., modId=\"forge\", mandatory=true, versionRange=\"[1.21.8,)\" )";
+}
+
+@Override
+public String errorAccessTransformerInvalido(String nombreJar) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Critical error with mod: '" + nombreJar + "'. Invalid access transformer configuration. This occurs when the config file has incorrect syntax or references to non-existent classes/methods.</b>";
+}
+
+@Override
+public String nombre_de_error_access_transformer_invalido() {
+    return "Invalid Access Transformer";
+}
+
+@Override
+public String paso1_access_transformer_invalido(String nombreJar) {
+    return "The problematic mod is: <b>" + nombreJar + "</b>. This mod contains an invalid access transformer configuration";
+}
+
+@Override
+public String paso2_access_transformer_invalido(String nombreJar) {
+    return "Open the <b>accessTransformer.cfg</b> file inside the mod <b>" + nombreJar + "</b> (usually in the root folder of the JAR file)";
+}
+
+@Override
+public String paso3_access_transformer_invalido() {
+    return "Fix the access transformer syntax. Lines must follow the format: <b>access class.method</b> (e.g., public net.minecraft.world.entity.Entity.func_200560_a). Remove lines referencing classes or methods that don't exist in your Minecraft version";
+}
+
+@Override
+public String errorDiscrepanciaModID(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Critical error: Mismatch between the mod ID in the @Mod annotation and the mods.toml file. The mod '" + nombreMod + "' cannot load because the IDs do not match.</b>";
+}
+
+@Override
+public String nombre_de_error_discrepancia_mod_id() {
+    return "Mismatch between @Mod and mods.toml";
+}
+
+@Override
+public String paso1_discrepancia_mod_id(String nombreMod) {
+    return "The mod '" + nombreMod + "' has a mismatch between the ID in the <b>@Mod</b> annotation and the value in <b>mods.toml</b>";
+}
+
+@Override
+public String paso2_discrepancia_mod_id() {
+    return "Ensure the ID in your main class matches the <b>modId</b> value in <b>/META-INF/mods.toml</b>. Example: <b>@Mod(\"mymod\")</b> must match <b>modId=\"mymod\"</b>";
+}
+
+@Override
+public String paso3_discrepancia_mod_id() {
+    return "If using Gradle, run <b>clean</b> after changes to ensure resources are properly updated. Sometimes old files remain in the build folder";
+}
+
+@Override
+public String errorModEnPlataformaIncorrecta(String nombreClase, String entornoInvalido) {
+    String plataforma = entornoInvalido.equals("CLIENT") ? "client" : "server";
+    String plataformaOpuesta = entornoInvalido.equals("CLIENT") ? "server" : "client";
+    
+    return "<b style='color:#" + config.obtenerColorError() + "'>Critical error: Attempting to load class '" + nombreClase + 
+           "' in the " + plataforma + " environment, but it is designed for " + plataformaOpuesta + 
+           ". <b>Use the 'Mod Tree' feature in the sidebar to find which mod is trying to load this class</b>. " +
+           "Mods are built specifically for one platform and do not work on the other.</b>";
+}
+
+@Override
+public String nombre_de_error_mod_plataforma_incorrecta() {
+    return "Mod on Wrong Platform";
+}
+
+@Override
+public String paso1_mod_plataforma_incorrecta(String nombreClase, String entornoInvalido) {
+    return "In the <b>Mod Tree</b> tab (on the right), search for references to the class <b>" + nombreClase + 
+           "</b> to identify which mod is causing the issue";
+}
+
+@Override
+public String paso2_mod_plataforma_incorrecta(String entornoInvalido) {
+    String plataforma = entornoInvalido.equals("CLIENT") ? "client" : "server";
+    String plataformaOpuesta = entornoInvalido.equals("CLIENT") ? "server" : "client";
+    
+    return "The identified mod is a <b>" + plataformaOpuesta + "</b> mod and should not be used in your " + plataforma + " environment.";
+}
+
+@Override
+public String paso3_mod_plataforma_incorrecta() {
+    return "Remove the problematic mod from your <b>mods</b> folder. If you need similar functionality for this platform, " +
+           "look for an alternative mod specifically designed for <b>client</b> or <b>server</b> as appropriate";
+}
+
+@Override
+public String errorMetadataModsTomlFaltante(String modIdFaltante, List<String> modsPotenciales) {
+    StringBuilder mensaje = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    mensaje.append("Critical error: Missing metadata for modid '").append(modIdFaltante).append("'. ");
+    
+    if (modsPotenciales != null && !modsPotenciales.isEmpty()) {
+        mensaje.append("The following mods might be causing the issue: <b>");
+        for (int i = 0; i < Math.min(modsPotenciales.size(), 3); i++) {
+            mensaje.append(modsPotenciales.get(i));
+            if (i < modsPotenciales.size() - 1 && i < 2) mensaje.append(", ");
+        }
+        if (modsPotenciales.size() > 3) mensaje.append(", and others...");
+        mensaje.append("</b>. ");
+    }
+    
+    mensaje.append("This happens when a mod depends on another mod that is not installed or has an incorrect mods.toml file.");
+    mensaje.append("</b>");
+    
+    return mensaje.toString();
+}
+
+@Override
+public String nombre_de_error_metadata_mods_toml_faltante() {
+    return "Missing mods.toml Metadata";
+}
+
+@Override
+public String paso1_metadata_mods_toml_faltante(String modIdFaltante, List<String> modsPotenciales) {
+    if (modsPotenciales != null && !modsPotenciales.isEmpty()) {
+        StringBuilder paso = new StringBuilder("The following mods depend on '").append(modIdFaltante).append("': <b>");
+        for (int i = 0; i < Math.min(modsPotenciales.size(), 3); i++) {
+            paso.append(modsPotenciales.get(i));
+            if (i < modsPotenciales.size() - 1 && i < 2) paso.append(", ");
+        }
+        if (modsPotenciales.size() > 3) paso.append(", and others...");
+        paso.append("</b>. Use the <b>Mod Tree</b> feature to confirm which mod is causing the issue");
+        return paso.toString();
+    }
+    return "A mod is trying to depend on '" + modIdFaltante + "', but this mod is not installed. Use the <b>Mod Tree</b> feature to identify the problematic mod";
+}
+
+@Override
+public String paso2_metadata_mods_toml_faltante(String modIdFaltante) {
+    return "You have two options:<br/>" +
+           "1. <b>Install the missing mod</b>: Find and install the mod with ID '" + modIdFaltante + "'<br/>" +
+           "2. <b>Remove the dependent mod</b>: If you don't need the functionality, remove the mod that depends on '" + modIdFaltante + "'";
+}
+
+@Override
+public String paso3_metadata_mods_toml_faltante(String modIdFaltante) {
+    return "If '" + modIdFaltante + "' is a library (like 'forge', 'minecraft', 'curios'), " +
+           "ensure you have the correct versions of Minecraft and Forge installed. " +
+           "If it's a regular mod, check its download page for required dependencies";
+}
+
+@Override
+public String errorSistemaSonido() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>Warning: Failed to initialize sound system. Sounds and music have been disabled. This error is commonly associated with SoundPhysicsMod and may be caused by conflicts with other sound libraries.</b>";
+}
+
+@Override
+public String nombre_de_error_sistema_sonido() {
+    return "Sound System Initialization Error";
+}
+
+@Override
+public String paso1_sistema_sonido() {
+    return "The error is commonly related to <b>SoundPhysicsMod</b>. Check if you have the latest version compatible with your Minecraft version";
+}
+
+@Override
+public String paso2_sistema_sonido() {
+    return "If you use other sound mods (like Sound Filters, Dynamic Surroundings, etc.), try temporarily removing SoundPhysicsMod to see if it resolves the conflict";
+}
+
+@Override
+public String paso3_sistema_sonido() {
+    return "Check the <b>logs</b> folder for additional messages related to LWJGL or OpenAL, which may indicate issues with underlying sound libraries";
+}
+
+@Override
+public String errorSinListenersEnClase(String nombreClase, List<String> modsUbicacion) {
+    StringBuilder mensaje = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    mensaje.append("Critical error: Class '").append(nombreClase).append("' is registered as an event listener but contains no valid methods. ");
+    
+    if (!modsUbicacion.isEmpty()) {
+        mensaje.append("This class is located in the following mods: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            mensaje.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) mensaje.append(", ");
+        }
+        if (modsUbicacion.size() > 3) mensaje.append(", and others...");
+        mensaje.append("</b>. ");
+    }
+    
+    mensaje.append("This happens when a class is registered to listen to events but has no methods annotated with @SubscribeEvent.");
+    mensaje.append("</b>");
+    
+    return mensaje.toString();
+}
+
+@Override
+public String nombre_de_error_sin_listeners_en_clase() {
+    return "Class Registered Without Event Listeners";
+}
+
+@Override
+public String paso1_sin_listeners_en_clase(String nombreClase, List<String> modsUbicacion) {
+    if (!modsUbicacion.isEmpty()) {
+        StringBuilder paso = new StringBuilder("The problematic class is in these mods: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            paso.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) paso.append(", ");
+        }
+        if (modsUbicacion.size() > 3) paso.append(", and others...");
+        paso.append("</b>. These mods are attempting to register events without valid methods");
+        return paso.toString();
+    }
+    return "The class <b>" + nombreClase + "</b> was registered to listen to events but has no methods with <b>@SubscribeEvent</b> annotation. Use the <b>Mod Tree</b> feature to identify which mod contains this class";
+}
+
+@Override
+public String paso2_sin_listeners_en_clase(String nombreClase) {
+    return "In the source code, ensure that class <b>" + nombreClase + "</b> contains at least one method with: " +
+           "<b>@SubscribeEvent public void methodName(SpecificEvent event) { ... }</b>. " +
+           "If it's an inner class, make sure it is not marked as static";
+}
+
+@Override
+public String paso3_sin_listeners_en_clase(String nombreClase, List<String> modsUbicacion) {
+    StringBuilder paso = new StringBuilder();
+    
+    if (!modsUbicacion.isEmpty()) {
+        paso.append("For the identified mods (<b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 2); i++) {
+            paso.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 1) paso.append(", ");
+        }
+        if (modsUbicacion.size() > 2) paso.append(", etc.");
+        paso.append("</b>): ");
+        
+        if (modsUbicacion.size() == 1) {
+            paso.append("contact the mod developer to fix the issue. ");
+        } else {
+            paso.append("contact the developers of these mods to fix the issue. ");
+        }
+    }
+    
+    paso.append("If you are the developer, remove this class from the EventBus or add valid @SubscribeEvent methods");
+    
+    return paso.toString();
+}
+
+@Override
+public String errorUnionFileSystemCorrupto(String nombreArchivo) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Critical error: An exception 'cpw.mods.niofs.union.UnionFileSystem$UncheckedIOException' occurred while processing the file '" + 
+           nombreArchivo + "'. This specific error indicates the launcher failed to properly download or extract the modpack files. " +
+           "The message 'zip END header not found' reveals the JAR file is incomplete or corrupted, which is extremely common in launchers that poorly handle large file downloads. " +
+           "This issue primarily affects users of Twitch/CurseForge, Technic Launcher, and especially Luna Pixel users, as these launchers often fail to verify the full integrity of downloaded files. " +
+           "Luna Pixel users should consider switching to ATLauncher as a more stable alternative, which better handles file integrity and avoids this specific error. " +
+           "The system cannot load mods because the ZIP format is damaged, preventing Forge from reading the necessary resources to start the game.</b>";
+}
+
+@Override
+public String nombre_de_error_union_filesystem_corrupto() {
+    return "UnionFileSystem Error - Corrupted File";
+}
+
+@Override
+public String paso1_union_filesystem_corrupto(String nombreArchivo) {
+    return "Completely reinstall the modpack from scratch";
+}
+
+@Override
+public String paso2_union_filesystem_corrupto() {
+    return "If you use Luna Pixel, switch to ATLauncher";
+}
+
+@Override
+public String paso3_union_filesystem_corrupto() {
+    return "Check your internet connection and available disk space before reinstalling";
+}
+
+
+
+
+@Override
+public String habilitarProxySysOutSysErrMensaje() {
+    return "Enable ProxySysOutSysErr?\n\n" +
+           "This option allows CrashDetector to access System.out and System.err when the launcher does not provide logs.\n\n" +
+           "Should only be enabled if you cannot manually paste a log.\n\n" +
+           "Warning: This may interfere with some mods or launchers.\n\n" +
+           "Restarting the game/app is required for changes to take effect.";
+}
+
+@Override
+public String confirmacionTitulo() {
+    return "Confirmation";
+}
+
+@Override
+public String proxyHabilitadoMensaje() {
+    return "ProxySysOutSysErr enabled successfully.\n\n" +
+           "CrashDetector must be restarted for changes to take effect.";
+}
+
+@Override
+public String informacionTitulo() {
+    return "Information";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

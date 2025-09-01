@@ -3,11 +3,8 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 /**
  * Clase que detecta errores causados por entidades de bloques al ser actualizadas. Gracias a Aternos por que esta es una implementacion de su codex https://github.com/aternosorg/codex-minecraft

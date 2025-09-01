@@ -14,7 +14,15 @@ import com.asbestosstar.crashdetector.analizador.apps.minecraft.BloqueTeselado;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ConflictoDeIDsMinecraft;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.CursedConsola;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.EarlyWindow;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorAccessTransformerInvalido;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorCargaClaseEntornoInvalido;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorConfiguracionMCForge;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorDependenciaModFaltante;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorDiscrepanciaModID;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorMetadataModsTomlFaltante;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorSinListenersEnClase;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorSistemaSonido;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorUnionFileSystemCorrupto;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.FabricMCRuntimeErrorProvidedBy;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.FaltasDependenciasModLaunche;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.KubeJSResourcePack;
@@ -60,6 +68,7 @@ import com.asbestosstar.crashdetector.analizador.general.AdvertenciaFaltasClases
 import com.asbestosstar.crashdetector.analizador.general.ContentoDeTraces;
 import com.asbestosstar.crashdetector.analizador.general.DifDeMods;
 import com.asbestosstar.crashdetector.analizador.general.Drivers;
+import com.asbestosstar.crashdetector.analizador.general.ErrorCaracteresInvalidosEnNombre;
 import com.asbestosstar.crashdetector.analizador.general.ErrorDeEnlaceInsatisfecho;
 import com.asbestosstar.crashdetector.analizador.general.ErrorDeMonitorLWJGL;
 import com.asbestosstar.crashdetector.analizador.general.FaltaModuleJPMS;
@@ -172,6 +181,15 @@ public class Analizador {
 		verificaciones.add(new MCForgeInstallacionNoEstaCompleta());
 		verificaciones.add(new ErrorDeEnlaceInsatisfecho());
 		verificaciones.add(new ConflictoDeIDsMinecraft());
+		verificaciones.add(new ErrorCaracteresInvalidosEnNombre());
+		verificaciones.add(new ErrorDependenciaModFaltante());
+		verificaciones.add(new ErrorAccessTransformerInvalido());
+		verificaciones.add(new ErrorDiscrepanciaModID());
+		verificaciones.add(new ErrorCargaClaseEntornoInvalido());
+		verificaciones.add(new ErrorMetadataModsTomlFaltante());
+		verificaciones.add(new ErrorSistemaSonido());
+		verificaciones.add(new ErrorSinListenersEnClase());
+		verificaciones.add(new ErrorUnionFileSystemCorrupto());
 
 		
 		

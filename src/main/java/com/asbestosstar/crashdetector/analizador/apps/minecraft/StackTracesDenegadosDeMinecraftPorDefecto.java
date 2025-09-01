@@ -1,6 +1,7 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class StackTracesDenegadosDeMinecraftPorDefecto {
 
@@ -35,6 +36,16 @@ public class StackTracesDenegadosDeMinecraftPorDefecto {
 
         
         VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains("See https://github.com/google/gson/blob/main/Troubleshooting.md#malformed-json"));//TODO verificar si esta siempre bien
+
+        
+        VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains("Unable to create Lookup for") && contentido.contains("optifine."));//Comun problema, pero no creo es fatal
+        VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains("Unable to create custom") && contentido.contains("optifine."));//Comun problema, pero no creo es fatal
+       
+        
+        
+        VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains("https://vazkiimods.github.io/Patchouli/docs/upgrading/upgrade-guide-120"));//Creo no es fatal
+
+        VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains("com.google.gson.JsonObject")&&contentido.split(Verificaciones.nl).length==1);///Creo no es fatal pero puedo ser incorrecto
 
         
         

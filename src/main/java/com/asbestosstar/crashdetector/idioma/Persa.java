@@ -2273,5 +2273,378 @@ public String descargar_vlc() {
 
 
 
+@Override
+public String errorCaracteresInvalidosEnNombre(String nombreModulo, String parteInvalida) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>خطای بحرانی: نام ماژول '" + nombreModulo + 
+           "' شامل کاراکترهای نامعتبر است. بخش '" + parteInvalida + 
+           "' یک شناسهٔ معتبر جاوا نیست. این زمانی اتفاق می‌افتد که یک مود از کلمات رزرو شده جاوا (مثل 'true', 'class') یا کاراکترهای غیرمجاز در نام خود استفاده کند.</b>";
+}
+
+@Override
+public String nombre_de_error_caracteres_invalidos() {
+    return "کاراکترهای نامعتبر در نام مود";
+}
+
+@Override
+public String paso1_caracteres_invalidos(String nombreModulo, String parteInvalida) {
+    return "نام مود '" + nombreModulo + "' نامعتبر است زیرا شامل '" + parteInvalida + 
+           "' است که یک کلمهٔ رزرو شده جاوا یا کاراکتر غیرمجاز است. " +
+           "در لاگ‌ها جستجو کنید تا ببینید کدام مود با این نام مطابقت دارد (معمولاً نام فایل JAR)";
+}
+
+@Override
+public String paso2_caracteres_invalidos(String nombreModulo) {
+    return "به پوشه مود بروید و فایل <b>mods.toml</b> را در پوشه <b>/META-INF/</b> ویرایش کنید. " +
+           "مقدار <b>modId</b> را تغییر دهید تا فقط از حروف، اعداد و زیرخط استفاده کند و از کلمات رزرو شده جاوا دوری کند";
+}
+
+@Override
+public String paso3_caracteres_invalidos() {
+    return "مثالی از نام معتبر: 'truemod_shot_enchantment' به جای 'true.shot.enchantment'. " +
+           "به یاد داشته باشید که نام‌های مود نمی‌توانند شامل نقطه، خط تیره یا کلمات رزرو شده جاوا مثل 'true', 'false' یا 'class' باشند";
+}
+
+@Override
+public String errorDependenciaModFaltante(String nombreJar) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>خطای بحرانی در مود: '" + nombreJar + "'. فیلد اجباری 'mandatory' در وابستگی‌های آن وجود ندارد. این زمانی اتفاق می‌افتد که فایل mods.toml تعیین نکند که وابستگی اجباری است یا نه.</b>";
+}
+
+@Override
+public String nombre_de_error_dependencia_mod_faltante() {
+    return "وابستگی مود با فیلد اجباری گمشده";
+}
+
+@Override
+public String paso1_dependencia_mod_faltante(String nombreJar) {
+    return "مود مشکل‌دار این است: <b>" + nombreJar + "</b>. این فایل در تنظیمات وابستگی‌ها مشکل دارد";
+}
+
+@Override
+public String paso2_dependencia_mod_faltante(String nombreJar) {
+    return "فایل <b>mods.toml</b> را در پوشه <b>/META-INF/</b> مود <b>" + nombreJar + "</b> باز کنید";
+}
+
+@Override
+public String paso3_dependencia_mod_faltante() {
+    return "در بخش وابستگی‌ها، مطمئن شوید هر ورودی شامل <b>mandatory=true</b> یا <b>mandatory=false</b> باشد (مثال: modId=\"forge\", mandatory=true, versionRange=\"[1.21.8,)\" )";
+}
+
+
+@Override
+public String errorAccessTransformerInvalido(String nombreJar) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>خطای بحرانی در مود: '" + nombreJar + "'. پیکربندی نامعتبر access transformer. این زمانی اتفاق می‌افتد که فایل پیکربندی دارای نحو نادرست یا ارجاع به کلاس‌ها/روش‌های غیرموجود باشد.</b>";
+}
+
+@Override
+public String nombre_de_error_access_transformer_invalido() {
+    return "access transformer نامعتبر";
+}
+
+@Override
+public String paso1_access_transformer_invalido(String nombreJar) {
+    return "مود مشکل‌دار: <b>" + nombreJar + "</b>. این مود حاوی پیکربندی نامعتبر access transformer است";
+}
+
+@Override
+public String paso2_access_transformer_invalido(String nombreJar) {
+    return "فایل <b>accessTransformer.cfg</b> را درون مود <b>" + nombreJar + "</b> باز کنید (معمولاً در پوشه اصلی فایل JAR)";
+}
+
+@Override
+public String paso3_access_transformer_invalido() {
+    return "نحو access transformer را اصلاح کنید. خطوط باید از فرمت زیر پیروی کنند: <b>access class.method</b> (مثال: public net.minecraft.world.entity.Entity.func_200560_a). خطوطی را که به کلاس‌ها یا روش‌هایی ارجاع می‌دهند که در نسخه ماين كرافت شما وجود ندارند، حذف کنید";
+}
+
+@Override
+public String errorDiscrepanciaModID(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>خطای بحرانی: عدم تطابق بین شناسه مود در توضیح @Mod و فایل mods.toml. مود '" + nombreMod + "' نمی‌تواند بارگذاری شود زیرا شناسه‌ها مطابقت ندارند.</b>";
+}
+
+@Override
+public String nombre_de_error_discrepancia_mod_id() {
+    return "عدم تطابق بین @Mod و mods.toml";
+}
+
+@Override
+public String paso1_discrepancia_mod_id(String nombreMod) {
+    return "مود در حال توسعه '" + nombreMod + "' دارای عدم تطابق بین شناسه در توضیح <b>@Mod</b> و مقدار در <b>mods.toml</b> است";
+}
+
+@Override
+public String paso2_discrepancia_mod_id() {
+    return "مطمئن شوید شناسه در کلاس اصلی شما با مقدار <b>modId</b> در فایل <b>/META-INF/mods.toml</b> مطابقت داشته باشد. مثال: <b>@Mod(\"mymod\")</b> باید با <b>modId=\"mymod\"</b> مطابقت داشته باشد";
+}
+
+@Override
+public String paso3_discrepancia_mod_id() {
+    return "اگر از Gradle استفاده می‌کنید، پس از تغییرات دستور <b>clean</b> را اجرا کنید تا اطمینان حاصل کنید منابع به درستی به‌روز شده‌اند. گاهی اوقات فایل‌های قدیمی در پوشه build باقی می‌مانند";
+}
+
+
+@Override
+public String errorModEnPlataformaIncorrecta(String nombreClase, String entornoInvalido) {
+    String plataforma = entornoInvalido.equals("CLIENT") ? "کلاینت" : "سرور";
+    String plataformaOpuesta = entornoInvalido.equals("CLIENT") ? "سرور" : "کلاینت";
+    
+    return "<b style='color:#" + config.obtenerColorError() + "'>خطای بحرانی: در حال حاضر تلاش برای بارگیری کلاس '" + nombreClase + 
+           "' در محیط " + plataforma + " است، اما برای " + plataformaOpuesta + " طراحی شده است. " +
+           "<b>از ویژگی 'درخت مودها' در نوار کناری برای یافتن مودی که سعی در بارگیری این کلاس دارد استفاده کنید</b>. " +
+           "مودها به طور خاص برای یک پلتفرم ساخته شده‌اند و در دیگری کار نمی‌کنند.</b>";
+}
+
+@Override
+public String nombre_de_error_mod_plataforma_incorrecta() {
+    return "مود در پلتفرم نادرست";
+}
+
+@Override
+public String paso1_mod_plataforma_incorrecta(String nombreClase, String entornoInvalido) {
+    return "در تب <b>درخت مودها</b> (سمت راست)، به دنبال مراجع به کلاس <b>" + nombreClase + 
+           "</b> بگردید تا مود مسبب مشکل را شناسایی کنید";
+}
+
+@Override
+public String paso2_mod_plataforma_incorrecta(String entornoInvalido) {
+    String plataforma = entornoInvalido.equals("CLIENT") ? "کلاینت" : "سرور";
+    String plataformaOpuesta = entornoInvalido.equals("CLIENT") ? "سرور" : "کلاینت";
+    
+    return "مود شناسایی‌شده یک مود <b>" + plataformaOpuesta + "</b> است و نباید در محیط " + plataforma + " استفاده شود.";
+}
+
+@Override
+public String paso3_mod_plataforma_incorrecta() {
+    return "مود مشکل‌دار را از پوشه <b>مودها</b> حذف کنید. اگر به عملکرد مشابهی در این پلتفرم نیاز دارید، " +
+           "مود جایگزینی را جستجو کنید که به طور خاص برای <b>کلاینت</b> یا <b>سرور</b> طراحی شده باشد";
+}
+
+@Override
+public String errorMetadataModsTomlFaltante(String modIdFaltante, List<String> modsPotenciales) {
+    StringBuilder mensaje = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    mensaje.append("خطای بحرانی: متادیتا برای modid '").append(modIdFaltante).append("' یافت نشد. ");
+    
+    if (modsPotenciales != null && !modsPotenciales.isEmpty()) {
+        mensaje.append("ممکن است مودهای زیر مشکل را ایجاد کنند: <b>");
+        for (int i = 0; i < Math.min(modsPotenciales.size(), 3); i++) {
+            mensaje.append(modsPotenciales.get(i));
+            if (i < modsPotenciales.size() - 1 && i < 2) mensaje.append(", ");
+        }
+        if (modsPotenciales.size() > 3) mensaje.append(", و دیگران...");
+        mensaje.append("</b>. ");
+    }
+    
+    mensaje.append("این زمانی اتفاق می‌افتد که مودی به مود دیگری که نصب نشده یا فایل mods.toml آن اشتباه است، وابسته باشد.");
+    mensaje.append("</b>");
+    
+    return mensaje.toString();
+}
+
+@Override
+public String nombre_de_error_metadata_mods_toml_faltante() {
+    return "متادیتای mods.toml گمشده";
+}
+
+@Override
+public String paso1_metadata_mods_toml_faltante(String modIdFaltante, List<String> modsPotenciales) {
+    if (modsPotenciales != null && !modsPotenciales.isEmpty()) {
+        StringBuilder paso = new StringBuilder("مودهای زیر به '").append(modIdFaltante).append("' وابسته‌اند: <b>");
+        for (int i = 0; i < Math.min(modsPotenciales.size(), 3); i++) {
+            paso.append(modsPotenciales.get(i));
+            if (i < modsPotenciales.size() - 1 && i < 2) paso.append(", ");
+        }
+        if (modsPotenciales.size() > 3) paso.append(", و دیگران...");
+        paso.append("</b>. از ویژگی <b>درخت مودها</b> برای تأیید مود مسبب مشکل استفاده کنید");
+        return paso.toString();
+    }
+    return "مودی در حال تلاش برای وابستگی به '" + modIdFaltante + "' است، اما این مود نصب نشده است. از ویژگی <b>درخت مودها</b> برای شناسایی مود مسبب استفاده کنید";
+}
+
+@Override
+public String paso2_metadata_mods_toml_faltante(String modIdFaltante) {
+    return "دو گزینه دارید:<br/>" +
+           "1. <b>نصب مود گمشده</b>: مود با شناسه '" + modIdFaltante + "' را پیدا و نصب کنید<br/>" +
+           "2. <b>حذف مود وابسته</b>: اگر به این ویژگی نیاز ندارید، مود وابسته به '" + modIdFaltante + "' را حذف کنید";
+}
+
+@Override
+public String paso3_metadata_mods_toml_faltante(String modIdFaltante) {
+    return "اگر مود '" + modIdFaltante + "' یک کتابخانه باشد (مثل 'forge', 'minecraft', 'curios')، " +
+           "مطمئن شوید نسخه‌های صحیح ماين كرافت و Forge را دارید. " +
+           "اگر مود معمولی است، در صفحه دانلود آن، پیش‌نیازهای لازم را بررسی کنید";
+}
+
+
+@Override
+public String errorSistemaSonido() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>هشدار: خطای راه‌اندازی سیستم صدا. صداها و موسیقی غیرفعال شده‌اند. این خطا معمولاً با مود SoundPhysicsMod مرتبط است و ممکن است به دلیل تداخل با کتابخانه‌های صوتی دیگر رخ داده باشد.</b>";
+}
+
+@Override
+public String nombre_de_error_sistema_sonido() {
+    return "خطای سیستم صدا";
+}
+
+@Override
+public String paso1_sistema_sonido() {
+    return "این خطا معمولاً به <b>SoundPhysicsMod</b> مربوط می‌شود. بررسی کنید که آخرین نسخه سازگار با نسخه ماين كرافت خود را نصب کرده باشید";
+}
+
+@Override
+public String paso2_sistema_sonido() {
+    return "اگر از مودهای صوتی دیگری (مثل Sound Filters، Dynamic Surroundings و غیره) استفاده می‌کنید، موقتاً SoundPhysicsMod را حذف کنید تا ببینید آیا تعارض رفع می‌شود یا نه";
+}
+
+@Override
+public String paso3_sistema_sonido() {
+    return "پوشه <b>logs</b> را بررسی کنید تا پیام‌های بیشتری درباره LWJGL یا OpenAL پیدا کنید که ممکن است نشان‌دهنده مشکل در کتابخانه‌های صوتی پایه باشند";
+}
+
+@Override
+public String errorSinListenersEnClase(String nombreClase, List<String> modsUbicacion) {
+    StringBuilder mensaje = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    mensaje.append("خطای بحرانی: کلاس '").append(nombreClase).append("' به عنوان گیرنده رویداد ثبت شده اما شامل روش معتبری نیست. ");
+    
+    if (!modsUbicacion.isEmpty()) {
+        mensaje.append("این کلاس در مودهای زیر وجود دارد: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            mensaje.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) mensaje.append(", ");
+        }
+        if (modsUbicacion.size() > 3) mensaje.append(", و دیگران...");
+        mensaje.append("</b>. ");
+    }
+    
+    mensaje.append("این زمانی اتفاق می‌افتد که یک کلاس برای دریافت رویدادها ثبت شود اما روشی با برچسب @SubscribeEvent نداشته باشد.");
+    mensaje.append("</b>");
+    
+    return mensaje.toString();
+}
+
+@Override
+public String nombre_de_error_sin_listeners_en_clase() {
+    return "کلاس ثبت‌شده بدون گیرنده رویداد";
+}
+
+@Override
+public String paso1_sin_listeners_en_clase(String nombreClase, List<String> modsUbicacion) {
+    if (!modsUbicacion.isEmpty()) {
+        StringBuilder paso = new StringBuilder("کلاس مشکل‌دار در این مودها وجود دارد: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            paso.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) paso.append(", ");
+        }
+        if (modsUbicacion.size() > 3) paso.append(", و دیگران...");
+        paso.append("</b>. این مودها در حال تلاش برای ثبت رویداد بدون روش معتبر هستند");
+        return paso.toString();
+    }
+    return "کلاس <b>" + nombreClase + "</b> برای دریافت رویداد ثبت شده اما شامل روشی با برچسب <b>@SubscribeEvent</b> نیست. از ویژگی <b>درخت مودها</b> برای شناسایی مود حاوی این کلاس استفاده کنید";
+}
+
+@Override
+public String paso2_sin_listeners_en_clase(String nombreClase) {
+    return "در کد منبع، مطمئن شوید کلاس <b>" + nombreClase + "</b> حداقل یک روش با فرمت زیر داشته باشد: " +
+           "<b>@SubscribeEvent public void نام_روش(رویداد_خاص رویداد) { ... }</b>. " +
+           "اگر کلاس داخلی است، مطمئن شوید استاتیک نباشد";
+}
+
+@Override
+public String paso3_sin_listeners_en_clase(String nombreClase, List<String> modsUbicacion) {
+    StringBuilder paso = new StringBuilder();
+    
+    if (!modsUbicacion.isEmpty()) {
+        paso.append("برای مودهای شناسایی‌شده (<b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 2); i++) {
+            paso.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 1) paso.append(", ");
+        }
+        if (modsUbicacion.size() > 2) paso.append(", و غیره.");
+        paso.append("</b>): ");
+        
+        if (modsUbicacion.size() == 1) {
+            paso.append("با توسعه‌دهنده این مود تماس بگیرید تا مشکل را رفع کند. ");
+        } else {
+            paso.append("با توسعه‌دهندگان این مودها تماس بگیرید تا مشکل را رفع کنند. ");
+        }
+    }
+    
+    paso.append("اگر خود شما توسعه‌دهنده هستید، ثبت این کلاس در EventBus را حذف کنید یا روش‌های معتبر @SubscribeEvent اضافه کنید");
+    
+    return paso.toString();
+}
+
+@Override
+public String errorUnionFileSystemCorrupto(String nombreArchivo) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>خطای بحرانی: خطایی از نوع 'cpw.mods.niofs.union.UnionFileSystem$UncheckedIOException' هنگام پردازش فایل '" + 
+           nombreArchivo + "' رخ داده است. این خطا به این معنی است که برنامهٔ راه‌انداز به درستی فایل‌های مودپک را دانلود یا استخراج نکرده است. " +
+           "پیام 'zip END header not found' نشان می‌دهد فایل JAR ناقص یا خراب است که در راه‌اندازهایی که دانلود فایل‌های بزرگ را به خوبی مدیریت نمی‌کنند بسیار رایج است. " +
+           "این مشکل عمدتاً کاربران Twitch/CurseForge، Technic Launcher و به ویژه کاربران Luna Pixel را تحت تأثیر قرار می‌دهد، زیرا این راه‌اندازها اغلب در تأیید کامل صحت فایل‌های دانلود شده شکست می‌خورند. " +
+           "کاربران Luna Pixel باید ATLauncher را به عنوان گزینه‌ای پایدارتر در نظر بگیرند، زیرا این برنامه بهتر با صحت فایل‌ها کار می‌کند و از این خطا جلوگیری می‌کند. " +
+           "سیستم نمی‌تواند مودها را بارگذاری کند زیرا فرمت ZIP آسیب دیده است و از خواندن منابع لازم توسط Forge برای شروع بازی جلوگیری می‌کند.</b>";
+}
+
+@Override
+public String nombre_de_error_union_filesystem_corrupto() {
+    return "خطای UnionFileSystem - فایل خراب";
+}
+
+@Override
+public String paso1_union_filesystem_corrupto(String nombreArchivo) {
+    return "کاملاً مودپک را از ابتدا نصب مجدد کنید";
+}
+
+@Override
+public String paso2_union_filesystem_corrupto() {
+    return "اگر از Luna Pixel استفاده می‌کنید، به ATLauncher تغییر دهید";
+}
+
+@Override
+public String paso3_union_filesystem_corrupto() {
+    return "قبل از نصب مجدد، اتصال اینترنت و فضای دیسک خود را بررسی کنید";
+}
+
+
+
+@Override
+public String habilitarProxySysOutSysErrMensaje() {
+    return "آیا ProxySysOutSysErr فعال شود؟\n\n" +
+           "این گزینه به CrashDetector اجازه دسترسی به System.out و System.err را می‌دهد زمانی که راه‌انداز لاگی ارائه نمی‌دهد.\n\n" +
+           "فقط در صورتی باید فعال شود که نتوانید به‌صورت دستی یک لاگ را جایگذاری کنید.\n\n" +
+           "هشدار: این ممکن است با برخی مودها یا راه‌اندازها تداخل داشته باشد.\n\n" +
+           "برای اعمال تغییرات، بازآغاز مجدد بازی/برنامه ضروری است.";
+}
+
+@Override
+public String confirmacionTitulo() {
+    return "تایید";
+}
+
+@Override
+public String proxyHabilitadoMensaje() {
+    return "ProxySysOutSysErr با موفقیت فعال شد.\n\n" +
+           "برای اعمال تغییرات، CrashDetector باید مجدداً راه‌اندازی شود.";
+}
+
+@Override
+public String informacionTitulo() {
+    return "اطلاعات";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

@@ -1,15 +1,10 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
-import javax.swing.JOptionPane;
-
 import com.asbestosstar.crashdetector.CDStringBuilder;
 import com.asbestosstar.crashdetector.Consola;
-import com.asbestosstar.crashdetector.CrashDetectorLogger;
-import com.asbestosstar.crashdetector.EliminadorDeMod;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 
 public class ModsDuplicadosModLauncher implements Verificaciones {
 

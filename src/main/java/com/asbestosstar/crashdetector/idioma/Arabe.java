@@ -2275,4 +2275,366 @@ public String descargar_vlc() {
 
 
 
+@Override
+public String errorCaracteresInvalidosEnNombre(String nombreModulo, String parteInvalida) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>خطأ حرج: اسم الوحدة '" + nombreModulo + 
+           "' يحتوي على أحرف غير صالحة. الجزء '" + parteInvalida + 
+           "' ليس معرفًا صالحًا في جافا. يحدث هذا عندما يستخدم مود كلمات محجوزة في جافا (مثل 'true', 'class') أو أحرف غير مسموح بها في الاسم.</b>";
+}
+
+@Override
+public String nombre_de_error_caracteres_invalidos() {
+    return "أحرف غير صالحة في اسم المود";
+}
+
+@Override
+public String paso1_caracteres_invalidos(String nombreModulo, String parteInvalida) {
+    return "اسم المود '" + nombreModulo + "' غير صالح لأنه يحتوي على '" + parteInvalida + 
+           "', وهي كلمة محجوزة في جافا أو حرف غير مسموح به. " +
+           "ابحث في السجلات عن المود الذي يطابق هذا الاسم (عادةً اسم ملف JAR)";
+}
+
+@Override
+public String paso2_caracteres_invalidos(String nombreModulo) {
+    return "اذهب إلى مجلد المود وقم بتحرير ملف <b>mods.toml</b> الموجود داخل مجلد <b>/META-INF/</b>. " +
+           "غيّر قيمة <b>modId</b> لاستخدام الحروف والأرقام والشرطات السفلية فقط، دون كلمات محجوزة في جافا";
+}
+
+@Override
+public String paso3_caracteres_invalidos() {
+    return "مثال على اسم صالح: 'truemod_shot_enchantment' بدلاً من 'true.shot.enchantment'. " +
+           "تذكر أن أسماء المودات لا يمكن أن تحتوي على نقاط، شرطات، أو كلمات محجوزة في جافا مثل 'true'، 'false'، أو 'class'";
+}
+
+@Override
+public String errorDependenciaModFaltante(String nombreJar) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>خطأ حرج في المود: '" + nombreJar + "'. يفتقد إلى الحقل الإلزامي 'mandatory' في تبعياته. يحدث هذا عندما لا يحدد ملف mods.toml ما إذا كانت التبعية إلزامية أم لا.</b>";
+}
+
+@Override
+public String nombre_de_error_dependencia_mod_faltante() {
+    return "تبعية مود بدون حقل إلزامي";
+}
+
+@Override
+public String paso1_dependencia_mod_faltante(String nombreJar) {
+    return "المود المسبب للمشكلة هو: <b>" + nombreJar + "</b>. هذا الملف يحتوي على خطأ في تهيئة التبعيات";
+}
+
+@Override
+public String paso2_dependencia_mod_faltante(String nombreJar) {
+    return "افتح ملف <b>mods.toml</b> الموجود داخل مجلد <b>/META-INF/</b> الخاص بالمود <b>" + nombreJar + "</b>";
+}
+
+@Override
+public String paso3_dependencia_mod_faltante() {
+    return "في قسم التبعيات، تأكد من أن كل إدخال يحتوي على <b>mandatory=true</b> أو <b>mandatory=false</b> (مثال: modId=\"forge\", mandatory=true, versionRange=\"[1.21.8,)\" )";
+}
+
+
+@Override
+public String errorAccessTransformerInvalido(String nombreJar) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>خطأ حرج في المود: '" + nombreJar + "'. تهيئة غير صالحة لـ access transformer. يحدث هذا عندما يكون ملف التهيئة به بنية غير صحيحة أو يشير إلى فئات/طرق غير موجودة.</b>";
+}
+
+@Override
+public String nombre_de_error_access_transformer_invalido() {
+    return "Access Transformer غير صالح";
+}
+
+@Override
+public String paso1_access_transformer_invalido(String nombreJar) {
+    return "المود المسبب للمشكلة هو: <b>" + nombreJar + "</b>. هذا المود يحتوي على تهيئة غير صالحة لـ access transformer";
+}
+
+@Override
+public String paso2_access_transformer_invalido(String nombreJar) {
+    return "افتح ملف <b>accessTransformer.cfg</b> داخل المود <b>" + nombreJar + "</b> (عادةً في المجلد الجذري لملف JAR)";
+}
+
+@Override
+public String paso3_access_transformer_invalido() {
+    return "عدّل بنية access transformer. يجب أن تتبع الأسطر التنسيق التالي: <b>access class.method</b> (مثال: public net.minecraft.world.entity.Entity.func_200560_a). احذف الأسطر التي تشير إلى فئات أو طرق غير موجودة في إصدار ماينكرافت الخاص بك";
+}
+
+@Override
+public String errorDiscrepanciaModID(String nombreMod) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>خطأ حرج: تناقض بين معرف المود في التعليق @Mod وملف mods.toml. لا يمكن تحميل المود '" + nombreMod + "' لأن المعرفات غير متطابقة.</b>";
+}
+
+@Override
+public String nombre_de_error_discrepancia_mod_id() {
+    return "تناقض بين @Mod و mods.toml";
+}
+
+@Override
+public String paso1_discrepancia_mod_id(String nombreMod) {
+    return "المود قيد التطوير '" + nombreMod + "' يحتوي على تناقض بين المعرف في التعليق <b>@Mod</b> والقيمة في <b>mods.toml</b>";
+}
+
+@Override
+public String paso2_discrepancia_mod_id() {
+    return "تحقق من أن المعرف في فصلك الرئيسي مطابق لقيمة <b>modId</b> في ملف <b>/META-INF/mods.toml</b>. مثال: <b>@Mod(\"mymod\")</b> يجب أن يطابق <b>modId=\"mymod\"</b>";
+}
+
+@Override
+public String paso3_discrepancia_mod_id() {
+    return "إذا كنت تستخدم Gradle، قم بتشغيل <b>clean</b> بعد التعديلات لضمان تحديث الموارد بشكل صحيح. أحيانًا تبقى الملفات القديمة في مجلد build";
+}
+
+
+@Override
+public String errorModEnPlataformaIncorrecta(String nombreClase, String entornoInvalido) {
+    String plataforma = entornoInvalido.equals("CLIENT") ? "العميل" : "الخادم";
+    String plataformaOpuesta = entornoInvalido.equals("CLIENT") ? "الخادم" : "العميل";
+    
+    return "<b style='color:#" + config.obtenerColorError() + "'>خطأ حرج: يتم محاولة تحميل الصنف '" + nombreClase + 
+           "' في بيئة " + plataforma + "، لكنه مصمم لـ " + plataformaOpuesta + 
+           ". <b>استخدم وظيفة 'شجرة المودات' في الشريط الجانبي للعثور على المود الذي يحاول تحميل هذا الصنف</b>. " +
+           "المودات مبنية خصيصًا لمنصة معينة ولا تعمل على الأخرى.</b>";
+}
+
+@Override
+public String nombre_de_error_mod_plataforma_incorrecta() {
+    return "مود على منصة خاطئة";
+}
+
+@Override
+public String paso1_mod_plataforma_incorrecta(String nombreClase, String entornoInvalido) {
+    return "في علامة تبويب <b>شجرة المودات</b> (على اليمين)، ابحث عن مراجع للصنف <b>" + nombreClase + 
+           "</b> لتحديد المود المسبب للمشكلة";
+}
+
+@Override
+public String paso2_mod_plataforma_incorrecta(String entornoInvalido) {
+    String plataforma = entornoInvalido.equals("CLIENT") ? "العميل" : "الخادم";
+    String plataformaOpuesta = entornoInvalido.equals("CLIENT") ? "الخادم" : "العميل";
+    
+    return "المود المحدد هو مود لـ <b>" + plataformaOpuesta + "</b> ولا ينبغي استخدامه في بيئة " + plataforma + ".";
+}
+
+@Override
+public String paso3_mod_plataforma_incorrecta() {
+    return "أزل المود المسبب للمشكلة من مجلد <b>المودات</b>. إذا كنت بحاجة لوظيفة مشابهة لهذه المنصة، " +
+           "ابحث عن مود بديل مصمم خصيصًا لـ <b>العميل</b> أو <b>الخادم</b> حسب الحاجة";
+}
+
+@Override
+public String errorMetadataModsTomlFaltante(String modIdFaltante, List<String> modsPotenciales) {
+    StringBuilder mensaje = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    mensaje.append("خطأ حرج: الميتاداتا مفقودة للـ modid '").append(modIdFaltante).append("'. ");
+    
+    if (modsPotenciales != null && !modsPotenciales.isEmpty()) {
+        mensaje.append("قد تكون المودات التالية هي المسببة للمشكلة: <b>");
+        for (int i = 0; i < Math.min(modsPotenciales.size(), 3); i++) {
+            mensaje.append(modsPotenciales.get(i));
+            if (i < modsPotenciales.size() - 1 && i < 2) mensaje.append(", ");
+        }
+        if (modsPotenciales.size() > 3) mensaje.append(", وآخرين...");
+        mensaje.append("</b>. ");
+    }
+    
+    mensaje.append("يحدث هذا عندما يعتمد مود على مود آخر غير مثبت أو لديه ملف mods.toml غير صحيح.");
+    mensaje.append("</b>");
+    
+    return mensaje.toString();
+}
+
+@Override
+public String nombre_de_error_metadata_mods_toml_faltante() {
+    return "ميتاداتا mods.toml مفقودة";
+}
+
+@Override
+public String paso1_metadata_mods_toml_faltante(String modIdFaltante, List<String> modsPotenciales) {
+    if (modsPotenciales != null && !modsPotenciales.isEmpty()) {
+        StringBuilder paso = new StringBuilder("تعتمد المودات التالية على '").append(modIdFaltante).append("': <b>");
+        for (int i = 0; i < Math.min(modsPotenciales.size(), 3); i++) {
+            paso.append(modsPotenciales.get(i));
+            if (i < modsPotenciales.size() - 1 && i < 2) paso.append(", ");
+        }
+        if (modsPotenciales.size() > 3) paso.append(", وآخرين...");
+        paso.append("</b>. استخدم وظيفة <b>شجرة المودات</b> للتحقق من المود المسبب للمشكلة");
+        return paso.toString();
+    }
+    return "مود يحاول الاعتماد على '" + modIdFaltante + "'، لكن هذا المود غير مثبت. استخدم وظيفة <b>شجرة المودات</b> لتحديد المود المسبب للمشكلة";
+}
+
+@Override
+public String paso2_metadata_mods_toml_faltante(String modIdFaltante) {
+    return "لديك خياران:<br/>" +
+           "1. <b>ثبت المود المفقود</b>: ابحث وثبت المود ذا المعرف '" + modIdFaltante + "'<br/>" +
+           "2. <b>أزل المود المعتمد</b>: إذا لم تكن بحاجة للوظيفة، أزل المود الذي يعتمد على '" + modIdFaltante + "'";
+}
+
+@Override
+public String paso3_metadata_mods_toml_faltante(String modIdFaltante) {
+    return "إذا كان المود '" + modIdFaltante + "' مكتبة (مثل 'forge', 'minecraft', 'curios')، " +
+           "تأكد من أن إصدارات ماينكرافت و Forge صحيحة. " +
+           "إذا كان مودًا عاديًا، تحقق من صفحة التنزيل الخاصة به لمعرفة المتطلبات المسبقة";
+}
+
+@Override
+public String errorSistemaSonido() {
+    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>تحذير: فشل في تهيئة نظام الصوت. تم تعطيل الأصوات والموسيقى. يرتبط هذا الخطأ عادةً بتعديل SoundPhysicsMod وقد يكون ناتجًا عن تعارضات مع مكتبات صوتية أخرى.</b>";
+}
+
+@Override
+public String nombre_de_error_sistema_sonido() {
+    return "خطأ في نظام الصوت";
+}
+
+@Override
+public String paso1_sistema_sonido() {
+    return "الخطأ مرتبط عادةً بـ <b>SoundPhysicsMod</b>. تحقق مما إذا كنت تستخدم أحدث إصدار متوافق مع إصدار ماينكرافت الخاص بك";
+}
+
+@Override
+public String paso2_sistema_sonido() {
+    return "إذا كنت تستخدم تعديلات صوت أخرى (مثل Sound Filters، Dynamic Surroundings، إلخ)، جرب إزالة SoundPhysicsMod مؤقتًا لمعرفة ما إذا كان ذلك يحل التعارض";
+}
+
+@Override
+public String paso3_sistema_sonido() {
+    return "تحقق من مجلد <b>logs</b> للعثور على رسائل إضافية تتعلق بـ LWJGL أو OpenAL، والتي قد تشير إلى مشاكل في مكتبات الصوت الأساسية";
+}
+
+@Override
+public String errorSinListenersEnClase(String nombreClase, List<String> modsUbicacion) {
+    StringBuilder mensaje = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    mensaje.append("خطأ حرج: الصنف '").append(nombreClase).append("' مسجل كـ listener للأحداث لكنه لا يحتوي على أساليب صالحة. ");
+    
+    if (!modsUbicacion.isEmpty()) {
+        mensaje.append("يوجد هذا الصنف في التعديلات التالية: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            mensaje.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) mensaje.append(", ");
+        }
+        if (modsUbicacion.size() > 3) mensaje.append(", وآخرين...");
+        mensaje.append("</b>. ");
+    }
+    
+    mensaje.append("يحدث هذا عندما يتم تسجيل صنف للاستماع إلى الأحداث دون وجود أساليب معلمة بـ @SubscribeEvent.");
+    mensaje.append("</b>");
+    
+    return mensaje.toString();
+}
+
+@Override
+public String nombre_de_error_sin_listeners_en_clase() {
+    return "صنف مسجل بدون مستمعي أحداث";
+}
+
+@Override
+public String paso1_sin_listeners_en_clase(String nombreClase, List<String> modsUbicacion) {
+    if (!modsUbicacion.isEmpty()) {
+        StringBuilder paso = new StringBuilder("الصنف المشكل موجود في هذه التعديلات: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            paso.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) paso.append(", ");
+        }
+        if (modsUbicacion.size() > 3) paso.append(", وآخرين...");
+        paso.append("</b>. هذه التعديلات تحاول تسجيل أحداث دون أساليب صالحة");
+        return paso.toString();
+    }
+    return "تم تسجيل الصنف <b>" + nombreClase + "</b> للاستماع إلى الأحداث لكنه لا يحتوي على أساليب معلمة بـ <b>@SubscribeEvent</b>. استخدم وظيفة <b>شجرة المودات</b> لتحديد التعديل الذي يحتوي على هذا الصنف";
+}
+
+@Override
+public String paso2_sin_listeners_en_clase(String nombreClase) {
+    return "في الكود المصدري، تأكد من أن الصنف <b>" + nombreClase + "</b> يحتوي على أسلوب واحد على الأقل بـ: " +
+           "<b>@SubscribeEvent public void اسم_الأسلوب(حدث_محدد حدث) { ... }</b>. " +
+           "إذا كان صنفًا داخليًا، تأكد أنه ليس ثابتًا (static)";
+}
+
+@Override
+public String paso3_sin_listeners_en_clase(String nombreClase, List<String> modsUbicacion) {
+    StringBuilder paso = new StringBuilder();
+    
+    if (!modsUbicacion.isEmpty()) {
+        paso.append("بالنسبة للتعديلات المعروفة (<b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 2); i++) {
+            paso.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 1) paso.append(", ");
+        }
+        if (modsUbicacion.size() > 2) paso.append(", إلخ.");
+        paso.append("</b>): ");
+        
+        if (modsUbicacion.size() == 1) {
+            paso.append("اتصل بمطوّر هذا التعديل لإصلاح المشكلة. ");
+        } else {
+            paso.append("اتصل بمطوري هذه التعديلات لإصلاح المشكلة. ");
+        }
+    }
+    
+    paso.append("إذا كنت المطور، احذف تسجيل هذا الصنف في EventBus أو أضف أساليب @SubscribeEvent صالحة");
+    
+    return paso.toString();
+}
+
+@Override
+public String errorUnionFileSystemCorrupto(String nombreArchivo) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>خطأ حرج: حدث استثناء 'cpw.mods.niofs.union.UnionFileSystem$UncheckedIOException' أثناء معالجة الملف '" + 
+           nombreArchivo + "'. يشير هذا الخطأ إلى أن البرنامج المُشغل فشل في تنزيل أو استخراج ملفات الحزمة بشكل صحيح. " +
+           "الرسالة 'zip END header not found' تُظهر أن ملف JAR ناقص أو تالف، وهو أمر شائع جدًا في البرامج التي لا تُدار جيدًا عند تنزيل ملفات كبيرة. " +
+           "يؤثر هذا المشكلة بشكل رئيسي على مستخدمي Twitch/CurseForge، Technic Launcher، وخصوصًا مستخدمي Luna Pixel، لأن هذه البرامج غالبًا ما تفشل في التحقق من سلامة الملفات المحملة. " +
+           "ينبغي على مستخدمي Luna Pixel التفكير في استخدام ATLauncher كبديل أكثر استقرارًا، حيث يتعامل بشكل أفضل مع سلامة الملفات ويتجنب هذا الخطأ تحديدًا. " +
+           "لا يمكن للنظام تحميل التعديلات لأن تنسيق ZIP تالف، مما يمنع Forge من قراءة الموارد اللازمة لبدء اللعبة.</b>";
+}
+
+@Override
+public String nombre_de_error_union_filesystem_corrupto() {
+    return "خطأ UnionFileSystem - ملف تالف";
+}
+
+@Override
+public String paso1_union_filesystem_corrupto(String nombreArchivo) {
+    return "أعد تثبيت الحزمة بالكامل من البداية";
+}
+
+@Override
+public String paso2_union_filesystem_corrupto() {
+    return "إذا كنت تستخدم Luna Pixel، فانتقل إلى ATLauncher";
+}
+
+@Override
+public String paso3_union_filesystem_corrupto() {
+    return "تحقق من اتصال الإنترنت ومساحة القرص قبل إعادة التثبيت";
+}
+
+
+
+@Override
+public String habilitarProxySysOutSysErrMensaje() {
+    return "هل ترغب في تمكين ProxySysOutSysErr؟\n\n" +
+           "يمنح هذا الخيار برنامج CrashDetector وصولاً إلى System.out و System.err عندما لا يوفر المشغل سجلات.\n\n" +
+           "يجب تمكينه فقط عندما لا تتمكن من لصق السجل يدويًا.\n\n" +
+           "تحذير: قد يتسبب هذا في تداخل مع بعض التعديلات أو المشغلات.\n\n" +
+           "يجب إعادة تشغيل اللعبة/التطبيق لتصبح التغييرات سارية.";
+}
+
+@Override
+public String confirmacionTitulo() {
+    return "تأكيد";
+}
+
+@Override
+public String proxyHabilitadoMensaje() {
+    return "تم تمكين ProxySysOutSysErr بنجاح.\n\n" +
+           "يجب إعادة تشغيل CrashDetector لتصبح التغييرات سارية.";
+}
+
+@Override
+public String informacionTitulo() {
+    return "معلومات";
+}
+
+
+
+
+
+
+
+
+
 }

@@ -1,9 +1,18 @@
 package com.asbestosstar.crashdetector.buscar;
 
-import java.io.*;
-import java.util.*;
-import java.util.regex.*;
-import java.util.zip.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 
@@ -152,10 +161,39 @@ public class ModPKZip implements ArchivoDeMod {
      * Extrae el modId de un archivo mods.toml (Forge).
      */
     private String parsearIdModMCForge(byte[] contenido) throws IOException {
-        String toml = new String(contenido);
-        Pattern pattern = Pattern.compile("modId\\s*=\\s*\"([^\"]+)\"");
-        Matcher matcher = pattern.matcher(toml);
-        return matcher.find() ? matcher.group(1) : "Mod Forge desconocido";
+        String toml = new String(contenido, StandardCharsets.UTF_8);
+        
+        // Limpiar la lista de nombres previos
+        this.nombres.clear();
+
+        // Patrón para encontrar el modId principal en el bloque [[mods]]
+        Pattern modPattern = Pattern.compile("\\[\\[mods\\]\\][^\\[]*modId\\s*=\\s*\"([^\"]+)\"", Pattern.DOTALL);
+        Matcher modMatcher = modPattern.matcher(toml);
+
+        // Valor por defecto si no se encuentra el modId
+        String modIdPrincipal = "Mod Forge desconocido";
+
+        if (modMatcher.find()) {
+            modIdPrincipal = modMatcher.group(1);
+        }
+
+        // Añadir el modId principal a la lista de nombres
+        this.nombres.add(modIdPrincipal);
+
+        // Patrón para encontrar nombres en bloques de dependencias: [[dependencies.nombre]] por que es la causa de una problema grande
+        Pattern depPattern = Pattern.compile("\\[\\[dependencies\\.([a-zA-Z0-9_]+)\\]\\]");
+        Matcher depMatcher = depPattern.matcher(toml);
+
+        // Añadir cada nombre encontrado en dependencies a la lista de nombres
+        while (depMatcher.find()) {
+            String nombreDependencia = depMatcher.group(1);
+            // Evitar duplicados
+            if (!this.nombres.contains(nombreDependencia)) {
+                this.nombres.add(nombreDependencia);
+            }
+        }
+
+        return modIdPrincipal;
     }
 
     // Métodos de búsqueda recursiva

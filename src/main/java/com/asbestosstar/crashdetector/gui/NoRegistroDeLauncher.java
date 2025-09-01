@@ -67,12 +67,9 @@ public class NoRegistroDeLauncher extends JDialog {
         setLocationRelativeTo(blanco);
         setLayout(new BorderLayout(10, 10));
 
-        
-
         JPanel principal = new JPanel();
         principal.setLayout(new BoxLayout(principal, BoxLayout.Y_AXIS));
         add(principal, BorderLayout.CENTER);
-
 
         // Selector de launcher
         selector = new JComboBox<>(new String[]{GEN, CURSE, PRISM, HMCL, FENIX, ATL, GD, ENLANCE_MD});
@@ -80,13 +77,6 @@ public class NoRegistroDeLauncher extends JDialog {
         principal.add(selector);
 
         // Descripción
-
-//        JTextArea descripcion = new JTextArea();
-//        descripcion.setEditable(false);
-//        descripcion.setLineWrap(true);
-//        descripcion.setWrapStyleWord(true);
-//        descripcion.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-//        principal.add(descripcion);
         descripcionTextArea = new JTextArea();
         descripcionTextArea.setEditable(false);
         descripcionTextArea.setLineWrap(true);
@@ -95,7 +85,6 @@ public class NoRegistroDeLauncher extends JDialog {
         principal.add(descripcionTextArea);
 
         // Panel de imagen
-
         imagenLbl.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         JPanel imagePanel = new JPanel(new BorderLayout());
         imagePanel.add(imagenLbl, BorderLayout.CENTER);
@@ -103,7 +92,6 @@ public class NoRegistroDeLauncher extends JDialog {
         principal.add(imagePanel);
 
         // Área de texto con scroll
-
         JScrollPane scrollPane = new JScrollPane(areaTexto);
         TitledBorder border = BorderFactory.createTitledBorder(
             BorderFactory.createEtchedBorder(), 
@@ -113,24 +101,48 @@ public class NoRegistroDeLauncher extends JDialog {
         scrollPane.setBorder(border);
         principal.add(scrollPane);
 
-
         // Botón de carpeta (solo HMCL)
         seleccionarCarpetaBtn.addActionListener(ev -> abrirSelectorCarpeta());
         seleccionarCarpetaBtn.setAlignmentX(LEFT_ALIGNMENT);
         principal.add(seleccionarCarpetaBtn);
 
-
         // Botones de guardar/omitir
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
+        
+        // Botón para habilitar el proxy de System.out y System.err
+        JButton proxyBtn = new JButton("ProxySysOutSysErr");
+        proxyBtn.addActionListener(ev -> {
+            // Utiliza el método de localización para obtener el mensaje completo
+            String mensajeConfirmacion = MonitorDePID.idioma.habilitarProxySysOutSysErrMensaje();
+            
+            int respuesta = JOptionPane.showConfirmDialog(
+                NoRegistroDeLauncher.this,
+                mensajeConfirmacion,
+                MonitorDePID.idioma.confirmacionTitulo(),
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+            );
+            
+            if (respuesta == JOptionPane.YES_OPTION) {
+                Config.obtenerInstancia().guardarProxySysOutSysErr(true);
+                JOptionPane.showMessageDialog(
+                    NoRegistroDeLauncher.this, 
+                    MonitorDePID.idioma.proxyHabilitadoMensaje(),
+                    MonitorDePID.idioma.informacionTitulo(), 
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+            }
+        });
+        
         JButton guardarBtn = new JButton(MonitorDePID.idioma.guardarYCerrar());
         JButton omitirBtn = new JButton(MonitorDePID.idioma.omitirYCerrar());
         guardarBtn.addActionListener(e -> guardarRegistros());
         omitirBtn.addActionListener(e -> dispose());
+        
         panelBotones.add(guardarBtn);
         panelBotones.add(omitirBtn);
+        panelBotones.add(proxyBtn);
         principal.add(panelBotones);
-
-        
 
         // Estado inicial
         refrescarUI();
@@ -234,13 +246,10 @@ public class NoRegistroDeLauncher extends JDialog {
         	return;
         }
         
-        
-
         try (FileOutputStream fos = new FileOutputStream(cd_launcherlog);
              FileChannel ch = fos.getChannel()) {
             byte[] data = areaTexto.getText().getBytes(StandardCharsets.UTF_8);
             fos.write(data);
-            // ch.force(true); // opcional
             CrashDetectorLogger.log("Archivo cd_launcherlog guardado");
 
             Consola cons = new Consola(cd_launcherlog.toPath());

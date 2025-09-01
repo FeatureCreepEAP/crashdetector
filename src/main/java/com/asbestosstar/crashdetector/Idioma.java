@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import javax.swing.Icon;
-
 import com.asbestosstar.crashdetector.idioma.Arabe;
 import com.asbestosstar.crashdetector.idioma.Chino;
 import com.asbestosstar.crashdetector.idioma.Coreano;
@@ -1079,6 +1077,104 @@ public interface Idioma {
 	public String noTienesVLCBin();
 
 	public String descargar_vlc();
+
+	public String errorCaracteresInvalidosEnNombre(String nombreModulo, String parteInvalida);
+
+	public String nombre_de_error_caracteres_invalidos();
+
+	public String paso1_caracteres_invalidos(String nombreModulo, String parteInvalida);
+
+	public String paso2_caracteres_invalidos(String nombreModulo);
+
+	public String paso3_caracteres_invalidos();
+
+	public String errorDependenciaModFaltante(String nombreJar);
+
+	public String nombre_de_error_dependencia_mod_faltante();
+
+	public String paso1_dependencia_mod_faltante(String nombreJar);
+
+	public String paso2_dependencia_mod_faltante(String nombreJar);
+
+	public String paso3_dependencia_mod_faltante();
+
+	public String errorAccessTransformerInvalido(String nombreJar);
+
+	public String nombre_de_error_access_transformer_invalido();
+
+	public String paso1_access_transformer_invalido(String nombreJar);
+
+	public String paso2_access_transformer_invalido(String nombreJar);
+
+	public String paso3_access_transformer_invalido();
+
+	public String errorDiscrepanciaModID(String nombreMod);
+
+	public String nombre_de_error_discrepancia_mod_id();
+
+	public String paso1_discrepancia_mod_id(String nombreMod);
+
+	public String paso2_discrepancia_mod_id();
+
+	public String paso3_discrepancia_mod_id();
+
+	public String errorModEnPlataformaIncorrecta(String nombreClase, String entornoInvalido);
+
+	public String nombre_de_error_mod_plataforma_incorrecta();
+
+	public String paso1_mod_plataforma_incorrecta(String nombreClase, String entornoInvalido);
+
+	public String paso2_mod_plataforma_incorrecta(String entornoInvalido);
+
+	public String paso3_mod_plataforma_incorrecta();
+
+	public String errorMetadataModsTomlFaltante(String modIdFaltante, List<String> modsPotenciales);
+
+	public String nombre_de_error_metadata_mods_toml_faltante();
+
+	public String paso1_metadata_mods_toml_faltante(String modIdFaltante, List<String> modsPotenciales);
+
+	public String paso2_metadata_mods_toml_faltante(String modIdFaltante);
+
+	public String paso3_metadata_mods_toml_faltante(String modIdFaltante);
+
+	public String errorSistemaSonido();
+
+	public String nombre_de_error_sistema_sonido();
+
+	public String paso1_sistema_sonido();
+
+	public String paso2_sistema_sonido();
+
+	public String paso3_sistema_sonido();
+
+	public String errorSinListenersEnClase(String nombreClase, List<String> modsUbicacion);
+
+	public String nombre_de_error_sin_listeners_en_clase();
+
+	public String paso1_sin_listeners_en_clase(String nombreClase, List<String> modsUbicacion);
+
+	public String paso2_sin_listeners_en_clase(String nombreClase);
+
+	public String paso3_sin_listeners_en_clase(String nombreClase, List<String> modsUbicacion);
+
+	public String errorUnionFileSystemCorrupto(String nombreArchivo);
+
+	public String nombre_de_error_union_filesystem_corrupto();
+
+	public String paso1_union_filesystem_corrupto(String nombreArchivo);
+
+	public String paso2_union_filesystem_corrupto();
+
+	public String paso3_union_filesystem_corrupto();
+
+	public String habilitarProxySysOutSysErrMensaje();
+
+	public String confirmacionTitulo();
+
+	public String proxyHabilitadoMensaje();
+
+	public String informacionTitulo();
 	
 	// public String advertenciaMalwareFalso();
 
