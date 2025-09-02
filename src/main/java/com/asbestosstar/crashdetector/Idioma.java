@@ -1175,6 +1175,43 @@ public interface Idioma {
 	public String proxyHabilitadoMensaje();
 
 	public String informacionTitulo();
+
+	public String errorAzureGeckoLibInicializoPronto(boolean azureLibError, boolean geckoLibError,
+			boolean connectorPresente);
+
+	public String nombre_de_error_azure_geckolib_inicializo_pronto();
+
+	public String paso1_azure_geckolib_inicializo_pronto();
+
+	public String paso2_azure_geckolib_inicializo_pronto();
+
+	public String errorCompatibilidadC2ME();
+
+	public String nombre_de_error_compatibilidad_c2me();
+
+	public String paso1_compatibilidad_c2me();
+
+	public String paso2_compatibilidad_c2me();
+
+	public String paso3_compatibilidad_c2me();
+
+	public String errorJEIPluginFallido(String nombreClase, String modId, String pluginId);
+
+	public String nombre_de_error_jei_plugin_fallido();
+
+	public String paso1_jei_plugin_fallido(String modId);
+
+	public String paso2_jei_plugin_fallido(String modId);
+
+	public String paso3_jei_plugin_fallido(String modId);
+
+	
+	
+	
+	
+	
+	
+	
 	
 	// public String advertenciaMalwareFalso();
 

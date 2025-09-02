@@ -64,6 +64,7 @@ public class NoTieneMemoria implements Verificaciones {
                (contenidoConsola.contains("The system is out of physical RAM or swap space") ||
                 contenidoConsola.contains("Out of Memory Error") ||
                 contenidoConsola.contains("Too small maximum heap") ||
+                contenidoConsola.contains("Insufficient memory") ||//DH TODO escribies descripcion
                 contenidoConsola.contains("Problem with RAM"));
     }
 

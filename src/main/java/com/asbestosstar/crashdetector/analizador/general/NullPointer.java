@@ -1,8 +1,10 @@
 package com.asbestosstar.crashdetector.analizador.general;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -23,6 +25,7 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
  * - Para cada NPE, identifica (si es posible) el método y el objeto nulo implicado.
  * - Añade un posible origen (JAR, modid o clase) usando solo información del trazo actual,
  *   evitando falsos positivos al no usar datos globales de otros errores.
+ * - Agrupa errores idénticos mostrando todos los JARs relacionados en un solo mensaje.
  * - La salida es un bloque HTML con lista de errores, pensado para mostrarse en la UI.
  */
 public class NullPointer implements Verificaciones {
@@ -55,9 +58,9 @@ public class NullPointer implements Verificaciones {
 
 
     /**
-     * Almacena los mensajes de error únicos detectados
+     * Almacena los mensajes de error únicos detectados, agrupados por tipo de error
      */
-    private final Set<String> errores = new HashSet<>();
+    private final Map<String, Set<String>> errores = new HashMap<>();
 
     /**
      * Indica si se encontró al menos una NPE
@@ -116,13 +119,15 @@ public class NullPointer implements Verificaciones {
             // Buscar origen SOLO en este trazo (evita falsos positivos)
             origen = detectarOrigenEnTraza(trazo, vdst);
 
-            // Construir mensaje
-            String mensaje = MonitorDePID.idioma.null_pointer_error(metodo, objeto);
+            // Construir mensaje base (sin el origen)
+            String mensajeBase = MonitorDePID.idioma.null_pointer_error(metodo, objeto);
+            
+            // Agregar el error al mapa, agrupando por mensaje base
+            errores.computeIfAbsent(mensajeBase, k -> new HashSet<>());
             if (!origen.isEmpty()) {
-                mensaje += " (" + origen + ")";
+                errores.get(mensajeBase).add(origen);
             }
-
-            errores.add(mensaje);
+            
             activado = true;
         }
 
@@ -154,11 +159,16 @@ public class NullPointer implements Verificaciones {
             return; // No es relevante
         }
 
-        String origen = detectarOrigen(vdst); // Usa origen global como último recurso
-        String mensaje = MonitorDePID.idioma.null_pointer_error(metodo, objeto);
-        if (!origen.isEmpty()) mensaje += " (" + origen + ")";
-
-        errores.add(mensaje);
+        // Buscar origen SOLO en esta línea
+        String origen = detectarOrigenEnLinea(linea, vdst);
+        String mensajeBase = MonitorDePID.idioma.null_pointer_error(metodo, objeto);
+        
+        // Agregar el error al mapa, agrupando por mensaje base
+        errores.computeIfAbsent(mensajeBase, k -> new HashSet<>());
+        if (!origen.isEmpty()) {
+            errores.get(mensajeBase).add(origen);
+        }
+        
         activado = true;
     }
 
@@ -168,28 +178,80 @@ public class NullPointer implements Verificaciones {
      * Esto evita asociar errores con mods que solo aparecen en otros trazos.
      */
     private String detectarOrigenEnTraza(String trazo, VerificacionDeStackTrace vdst) {
-        // 1. Buscar JAR en las líneas del trazo
-        for (String linea : trazo.split(NL)) {
-            for (String jar : vdst.jars.keySet()) {
-                if (linea.contains(jar)) {
-                    int idx = jar.indexOf(MonitorDePID.idioma.nivel());
-                    return idx == -1 ? jar : jar.substring(0, idx);
-                }
-            }
-            // 2. Buscar modid
-            for (DoubleKey<String, String> entry : vdst.modids.keySet()) {
-                if (linea.contains(entry.key0)) {
-                    return entry.key0;
-                }
-            }
-            // 3. Buscar paquete/clase
-            for (DoubleKey<String, String> entry : vdst.packs.keySet()) {
-                if (linea.contains(entry.key0)) {
-                    return entry.key0;
-                }
+        String[] lines = trazo.split(NL);
+        
+        // Primero, buscar en las primeras líneas del stack trace (donde ocurre el error)
+        for (int i = 0; i < Math.min(lines.length, 5); i++) {
+            String linea = lines[i];
+            String origen = detectarOrigenEnLinea(linea, vdst);
+            if (!origen.isEmpty()) {
+                return origen;
             }
         }
+        
+        // Si no encontramos nada en las primeras líneas, buscar en el resto del trazo
+        for (int i = 5; i < lines.length; i++) {
+            String linea = lines[i];
+            String origen = detectarOrigenEnLinea(linea, vdst);
+            if (!origen.isEmpty()) {
+                return origen;
+            }
+        }
+        
         return ""; // No se encontró origen en este trazo
+    }
+    
+    /**
+     * Busca un origen (JAR, modid o clase) DIRECTAMENTE en una línea específica.
+     * Normaliza los nombres para evitar problemas con codificación y sufijos.
+     */
+    private String detectarOrigenEnLinea(String linea, VerificacionDeStackTrace vdst) {
+        // 1. Buscar JAR en la línea
+        for (String jar : vdst.jars.keySet()) {
+            if (linea.contains(jar)) {
+                return limpiarNombreJar(jar);
+            }
+        }
+        
+        // 2. Buscar modid
+        for (DoubleKey<String, String> entry : vdst.modids.keySet()) {
+            if (linea.contains(entry.key0)) {
+                return entry.key0;
+            }
+        }
+        
+        // 3. Buscar paquete/clase
+        for (DoubleKey<String, String> entry : vdst.packs.keySet()) {
+            if (linea.contains(entry.key0)) {
+                return entry.key0;
+            }
+        }
+        
+        return ""; // No se encontró origen en esta línea
+    }
+    
+    /**
+     * Limpia el nombre del JAR para mostrarlo de forma legible
+     */
+    private String limpiarNombreJar(String nombre) {
+        // Eliminar información después de .jar
+        int jarPos = nombre.indexOf(".jar");
+        if (jarPos != -1) {
+            nombre = nombre.substring(0, jarPos + 4);
+        }
+        
+        // Eliminar IDs internos
+        int hashPos = nombre.indexOf("%23");
+        if (hashPos != -1) {
+            nombre = nombre.substring(0, hashPos);
+        }
+        
+        hashPos = nombre.indexOf('#');
+        if (hashPos != -1) {
+            nombre = nombre.substring(0, hashPos);
+        }
+        
+        return nombre;
     }
 
     /**
@@ -230,8 +292,29 @@ public class NullPointer implements Verificaciones {
     @Override
     public String mensaje() {
         if (errores.isEmpty()) return "";
+        
         StringBuilder sb = new StringBuilder("<ul>");
-        errores.forEach(e -> sb.append("<li>").append(e).append("</li>"));
+        
+        // Para cada tipo de error
+        for (Map.Entry<String, Set<String>> entry : errores.entrySet()) {
+            String mensajeBase = entry.getKey();
+            Set<String> origenes = entry.getValue();
+            
+            // Si hay origenes, añadirlos al mensaje
+            if (!origenes.isEmpty()) {
+                StringBuilder origenesStr = new StringBuilder();
+                for (String origen : origenes) {
+                    if (origenesStr.length() > 0) {
+                        origenesStr.append(", ");
+                    }
+                    origenesStr.append(origen);
+                }
+                mensajeBase += " (" + origenesStr.toString() + ")";
+            }
+            
+            sb.append("<li>").append(mensajeBase).append("</li>");
+        }
+        
         sb.append("</ul>");
         return sb.toString();
     }

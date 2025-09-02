@@ -2629,6 +2629,110 @@ public String informacionTitulo() {
     return "معلومات";
 }
 
+@Override
+public String errorAzureGeckoLibInicializoPronto(boolean azureLibError, boolean geckoLibError, boolean connectorPresente) {
+    StringBuilder mensaje = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    
+    if (azureLibError && geckoLibError) {
+        mensaje.append("خطأ حرج: تم تهيئة AzureLib وGeckoLib مبكرًا جدًا! ");
+    } else if (azureLibError) {
+        mensaje.append("خطأ حرج: تم تهيئة AzureLib مبكرًا جدًا! ");
+    } else if (geckoLibError) {
+        mensaje.append("خطأ حرج: تم تهيئة GeckoLib مبكرًا جدًا! ");
+    }
+    
+    mensaje.append("يحدث هذا الخطأ عند محاولة استخدام تعديلات Fabric مع إصدارات غير Fabric من هذه المكتبات. ");
+    
+    if (connectorPresente) {
+        mensaje.append("تم اكتشاف تعديل توافق (Sinytra Connector أو specialcompatibilityoperation)، مما يشير إلى أنك تحاول تشغيل تعديلات Fabric في بيئة Forge أو FeatureCreep. ");
+        mensaje.append("تحقق من خطأ 'فشل تهيئة FabricMC' في السجلات لتحديد التعديل المسبب للمشكلة. ");
+    }
+    
+    mensaje.append("AzureLib وGeckoLib مكتبات أساسية لتعديلات الرسوم المتحركة، لكن يجب أن تتطابق مع النظام الأساسي الصحيح (Fabric أو Forge). ");
+    mensaje.append("لا يمكن للعبة تحميل تعديلات الرسوم المتحركة بشكل صحيح بسبب هذا التعارض في التهيئة.");
+    
+    mensaje.append("</b>");
+    return mensaje.toString();
+}
+
+@Override
+public String nombre_de_error_azure_geckolib_inicializo_pronto() {
+    return "تهيئة المكتبة مبكرًا جدًا";
+}
+
+@Override
+public String paso1_azure_geckolib_inicializo_pronto() {
+    return "تحقق من خطأ 'فشل تهيئة FabricMC' في السجلات لتحديد التعديل المسبب للمشكلة";
+}
+
+@Override
+public String paso2_azure_geckolib_inicializo_pronto() {
+    return "تأكد من استخدامك للإصدار الصحيح من AzureLib/GeckoLib لنظامك (Forge أو Fabric)";
+}
+
+@Override
+public String errorCompatibilidadC2ME() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>خطأ حرج: عدم التوافق بين C2ME وتعديلات الاتصال. " +
+           "يحدث هذا الخطأ لأن C2ME يحاول الوصول إلى مكونات داخلية في جافا مقيدة في البيئات التي تحتوي على " +
+           "Sinytra Connector أو specialcompatibilityoperation أو تعديلات توافق Fabric/Forge أخرى. " +
+           "<b>C2ME غير متوافق مع هذه البيئات، ولكن <a href='https://www.curseforge.com/minecraft/mc-mods/c3me'>C3ME</a> هو البديل الموصى به</b> الذي يعمل بشكل صحيح " +
+           "مع تعديلات الاتصال. لا يمكن للعبة البدء بسبب تعارض أذونات الأمان في جافا.</b>";
+}
+
+@Override
+public String nombre_de_error_compatibilidad_c2me() {
+    return "عدم توافق C2ME مع تعديلات الاتصال";
+}
+
+@Override
+public String paso1_compatibilidad_c2me() {
+    return "أزل C2ME من مجلد التعديلات";
+}
+
+@Override
+public String paso2_compatibilidad_c2me() {
+    return "قم بتنزيل وتثبيت <a href='https://www.mcmod.cn/class/15818.html'>C3ME</a> بدلاً منه (متوافق مع Sinytra Connector)";
+}
+
+@Override
+public String paso3_compatibilidad_c2me() {
+    return "تأكد من تحديث جميع تعديلات الاتصال (مثل Sinytra Connector) إلى أحدث إصدار";
+}
+
+@Override
+public String errorJEIPluginFallido(String nombreClase, String modId, String pluginId) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>خطأ حرج: فشل تحميل إضافة JEI للتعديل '" + modId + 
+           "'. الفئة '" + nombreClase + "' (معرّف الإضافة: '" + pluginId + 
+           "') تسببت في خطأ يؤدي إلى تعطل اللعبة أثناء البدء. " +
+           "تحدث هذه المشكلة عندما يكون لدى تعديل ما تكامل JEI غير متوافق أو معطوب يعطل عملية تهيئة اللعبة.</b>";
+}
+
+@Override
+public String nombre_de_error_jei_plugin_fallido() {
+    return "إضافة JEI فاشلة - تسبب تعطّل";
+}
+
+@Override
+public String paso1_jei_plugin_fallido(String modId) {
+    return "التعديل <b>" + modId + "</b> يحتوي على إضافة JEI معطوبة تسبب التعطّل. استخدم وظيفة <b>شجرة التعديلات</b> لتأكيد التعديل المسبب للمشكلة";
+}
+
+@Override
+public String paso2_jei_plugin_fallido(String modId) {
+    return "أزل مؤقتًا التعديل <b>" + modId + "</b> من مجلد التعديلات للتحقق مما إذا كان سيحل مشكلة التعطّل";
+}
+
+@Override
+public String paso3_jei_plugin_fallido(String modId) {
+    return "ابحث عن تحديثات للتعديل <b>" + modId + "</b> أو اتصل بمطوّره لتقديم تقرير عن المشكلة المتعلقة بإضافة JEI. " +
+           "في الوقت الحالي، يجب إزالة التعديل لتمكين بدء تشغيل اللعبة";
+}
+
+
+
+
+
+
 
 
 

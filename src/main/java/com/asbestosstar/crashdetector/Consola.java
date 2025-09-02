@@ -121,6 +121,7 @@ public class Consola {
 				for(LimipiadorDeRegistro limp:limpiadores) {
 					if(limp.predicado(archivo)) {
 						contenido_verificar=limp.limpiarConsola(para_verificar.toString());
+						limpiado=true;
 					}
 				}
 				if (!limpiado)  {
@@ -152,6 +153,7 @@ public class Consola {
 		for(LimipiadorDeRegistro limp:limpiadores) {
 			if(limp.predicado(archivo)) {
 				contenido_verificar=limp.limpiarConsola(contento);
+				limpiado=true;
 			}
 		}
 		if (!limpiado)  {

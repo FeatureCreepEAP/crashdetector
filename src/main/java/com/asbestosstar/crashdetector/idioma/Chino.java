@@ -2634,6 +2634,113 @@ public String informacionTitulo() {
     return "信息";
 }
 
+@Override
+public String errorAzureGeckoLibInicializoPronto(boolean azureLibError, boolean geckoLibError, boolean connectorPresente) {
+    StringBuilder mensaje = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    
+    if (azureLibError && geckoLibError) {
+        mensaje.append("严重错误：AzureLib 和 GeckoLib 初始化过早！ ");
+    } else if (azureLibError) {
+        mensaje.append("严重错误：AzureLib 初始化过早！ ");
+    } else if (geckoLibError) {
+        mensaje.append("严重错误：GeckoLib 初始化过早！ ");
+    }
+    
+    mensaje.append("当尝试在非 Fabric 环境下使用 Fabric 版本的这些库时，会发生此错误。 ");
+    
+    if (connectorPresente) {
+        mensaje.append("检测到兼容性模组（Sinytra Connector 或 specialcompatibilityoperation），表明你正在 Forge 或 FeatureCreep 环境中运行 Fabric 模组。 ");
+        mensaje.append("请在日志中检查 'FabricMC 初始化错误'，以确定具体是哪个模组导致问题。 ");
+    }
+    
+    mensaje.append("AzureLib 和 GeckoLib 是动画模组的关键库，但必须与正确的平台（Fabric 或 Forge）匹配。 ");
+    mensaje.append("由于初始化冲突，游戏无法正确加载动画模组。");
+    
+    mensaje.append("</b>");
+    return mensaje.toString();
+}
+
+@Override
+public String nombre_de_error_azure_geckolib_inicializo_pronto() {
+    return "库初始化过早";
+}
+
+@Override
+public String paso1_azure_geckolib_inicializo_pronto() {
+    return "检查日志中的 'FabricMC 初始化错误' 以确定问题模组";
+}
+
+@Override
+public String paso2_azure_geckolib_inicializo_pronto() {
+    return "确保你使用的是适用于你平台（Forge 或 Fabric）的正确版本的 AzureLib/GeckoLib";
+}
+
+@Override
+public String errorCompatibilidadC2ME() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>严重错误：C2ME 与连接模组不兼容。 " +
+           "此错误发生的原因是 C2ME 尝试访问 Java 内部组件，而这些组件在 Sinytra Connector 或 specialcompatibilityoperation 等 Fabric/Forge 兼容性模组环境中受到限制。 " +
+           "<b>C2ME 不兼容这些环境，但 <a href='https://www.curseforge.com/minecraft/mc-mods/c3me'>C3ME</a> 是推荐的替代方案</b>，可与连接模组正常协作。 " +
+           "由于 Java 安全权限冲突，游戏无法启动。</b>";
+}
+
+@Override
+public String nombre_de_error_compatibilidad_c2me() {
+    return "C2ME 与连接模组不兼容";
+}
+
+@Override
+public String paso1_compatibilidad_c2me() {
+    return "从 mods 文件夹中删除 C2ME";
+}
+
+@Override
+public String paso2_compatibilidad_c2me() {
+    return "下载并安装 <a href='https://www.mcmod.cn/class/15818.html'>C3ME</a> 作为替代（兼容 Sinytra Connector）";
+}
+
+@Override
+public String paso3_compatibilidad_c2me() {
+    return "确保所有连接模组（如 Sinytra Connector）均已更新至最新版本";
+}
+
+@Override
+public String errorJEIPluginFallido(String nombreClase, String modId, String pluginId) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>严重错误：加载模组 '" + modId + 
+           "' 的 JEI 插件失败。类 '" + nombreClase + "' (插件ID: '" + pluginId + 
+           "') 抛出错误，导致游戏在启动时崩溃。" +
+           "当某个模组的 JEI 集成不兼容或损坏，干扰游戏初始化时，就会出现此问题。</b>";
+}
+
+@Override
+public String nombre_de_error_jei_plugin_fallido() {
+    return "JEI 插件失败 - 导致崩溃";
+}
+
+@Override
+public String paso1_jei_plugin_fallido(String modId) {
+    return "模组 <b>" + modId + "</b> 包含一个损坏的 JEI 插件，导致崩溃。使用 <b>模组树</b> 功能确认是哪个模组引发问题";
+}
+
+@Override
+public String paso2_jei_plugin_fallido(String modId) {
+    return "暂时从 mods 文件夹中移除模组 <b>" + modId + "</b>，检查是否能解决崩溃问题";
+}
+
+@Override
+public String paso3_jei_plugin_fallido(String modId) {
+    return "查找模组 <b>" + modId + "</b> 的更新，或联系其开发者报告 JEI 插件问题。" +
+           "同时，必须移除该模组才能正常启动游戏";
+}
+
+
+
+
+
+
+
+
+
+
 
 
 

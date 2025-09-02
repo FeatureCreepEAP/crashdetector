@@ -53,7 +53,7 @@ public class VerificacionDeStackTrace {
 			"it.unimi", "com.mojang.", "cpw.", "featurecreep.", "jdk.", "sun.", "com.sun.", "org.lwjgl.", "org.apache.",
 			"io.netty", "org.prismlauncher", "io.github.zekerzhayard", "org.multimc", "org.polymc", "org.tlauncher",
 			"net.fabricmc", "org.objectweb.asm", "datafixerupper", "org.slf4j", "com.asbestosstar", "srg",
-			"asbestosstar."
+			"asbestosstar.","org.openjdk","com.google"
 
 	};
 
@@ -287,7 +287,7 @@ CrashDetectorLogger.log(claseFaltante);
 				"featurecreep", "mixin", "accesstransformer", "forge", "authlib", "sun.", "jdk.", "java.", "fmlloader",
 				"fmlcore", "org.spongepowered.mixin", "fmlearlydisplay", "com.sun.jna", "text2speech",
 				"xf:crashdetector:default", "crashdetector", "srg", "org.objectweb.asm", "it.unimi", "datafixerupper",
-				"com.google.gson" };
+				"com.google.gson","org.openjdk","launchwrapper" };
 
 		for (String id : ids) {
 			if (modid.startsWith(id)) {
@@ -512,6 +512,12 @@ CrashDetectorLogger.log(claseFaltante);
 		if (jarName.startsWith("modlauncher")) {
 			return true;
 		}
+		if (jarName.startsWith("launchwrapper")) {
+			return true;
+		}
+		if (jarName.startsWith("com.google")) {
+			return true;
+		}
 		if (jarName.startsWith("javafmllanguage")) {
 			return true;
 		}
@@ -587,6 +593,9 @@ CrashDetectorLogger.log(claseFaltante);
 		}
 
 		if (jarName.startsWith("com.sun")) {
+			return true;
+		}
+		if (jarName.startsWith("datafixerupper")) {
 			return true;
 		}
 		

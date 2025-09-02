@@ -15,15 +15,24 @@ public class FabricMCRuntimeErrorProvidedBy implements Verificaciones {
 
     @Override
     public void verificar(Consola consola) {
-    	String contenidoConsola=consola.contenido_verificar;
+        String contenidoConsola = consola.contenido_verificar;
 
-        
         for (String linea : contenidoConsola.split(Verificaciones.nl)) {
             if (linea.contains("Could not execute entrypoint stage") && linea.contains("provided by")) {
                 try {
-                    String modId = linea.split("provided by")[1].trim();
-                    modIdsProblematicos.add(modId);
-                    activado = true;
+                    // Buscamos el mod ID que está entre comillas simples después de "provided by"
+                    int startIndex = linea.indexOf("provided by '");
+                    if (startIndex >= 0) {
+                        // Ajustamos el índice para saltar "provided by '"
+                        startIndex += "provided by '".length();
+                        int endIndex = linea.indexOf('\'', startIndex);
+                        if (endIndex > startIndex) {
+                            // Extraemos solo el texto entre las comillas simples (el mod ID)
+                            String modId = linea.substring(startIndex, endIndex);
+                            modIdsProblematicos.add(modId);
+                            activado = true;
+                        }
+                    }
                 } catch (Exception e) {
                     // Ignora líneas mal formateadas
                 }

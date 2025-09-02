@@ -2697,10 +2697,105 @@ public String informacionTitulo() {
 }
 
 
+@Override
+public String errorAzureGeckoLibInicializoPronto(boolean azureLibError, boolean geckoLibError, boolean connectorPresente) {
+    StringBuilder mensaje = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    
+    if (azureLibError && geckoLibError) {
+        mensaje.append("Critical error: AzureLib and GeckoLib initialized too early! ");
+    } else if (azureLibError) {
+        mensaje.append("Critical error: AzureLib initialized too early! ");
+    } else if (geckoLibError) {
+        mensaje.append("Critical error: GeckoLib initialized too early! ");
+    }
+    
+    mensaje.append("This error occurs when trying to use Fabric mods with non-Fabric versions of these libraries. ");
+    
+    if (connectorPresente) {
+        mensaje.append("A compatibility mod (Sinytra Connector or specialcompatibilityoperation) was detected, indicating you're trying to run Fabric mods in a Forge or FeatureCreep environment. ");
+        mensaje.append("Check the 'FabricMC initialization error' in the logs to identify the specific mod causing the issue. ");
+    }
+    
+    mensaje.append("AzureLib and GeckoLib are essential for animation mods, but must match the correct platform (Fabric or Forge). ");
+    mensaje.append("The game cannot properly load animation mods due to this initialization conflict.");
+    
+    mensaje.append("</b>");
+    return mensaje.toString();
+}
+
+@Override
+public String nombre_de_error_azure_geckolib_inicializo_pronto() {
+    return "Library Initialized Too Early";
+}
+
+@Override
+public String paso1_azure_geckolib_inicializo_pronto() {
+    return "Check the 'FabricMC initialization error' in the logs to identify the problematic mod";
+}
+
+@Override
+public String paso2_azure_geckolib_inicializo_pronto() {
+    return "Ensure you're using the correct version of AzureLib/GeckoLib for your platform (Forge or Fabric)";
+}
+
+@Override
+public String errorCompatibilidadC2ME() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Critical error: Incompatibility between C2ME and compatibility mods. " +
+           "This error occurs because C2ME attempts to access internal Java components restricted in environments with " +
+           "Sinytra Connector or specialcompatibilityoperation, or other Fabric/Forge compatibility mods. " +
+           "<b>C2ME is not compatible with these setups, but <a href='https://www.curseforge.com/minecraft/mc-mods/c3me'>C3ME</a> is the recommended alternative</b> that works correctly " +
+           "with connection mods. The game cannot start due to Java security permission conflicts.</b>";
+}
+
+@Override
+public String nombre_de_error_compatibilidad_c2me() {
+    return "C2ME Incompatibility with Compatibility Mods";
+}
+
+@Override
+public String paso1_compatibilidad_c2me() {
+    return "Remove C2ME from your mods folder";
+}
+
+@Override
+public String paso2_compatibilidad_c2me() {
+    return "Download and install <a href='https://www.mcmod.cn/class/15818.html'>C3ME</a> instead (compatible with Sinytra Connector)";
+}
+
+@Override
+public String paso3_compatibilidad_c2me() {
+    return "Ensure all compatibility mods (like Sinytra Connector) are updated to their latest versions";
+}
 
 
+@Override
+public String errorJEIPluginFallido(String nombreClase, String modId, String pluginId) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Critical Error: Failed to load JEI plugin for mod '" + modId + 
+           "'. The class '" + nombreClase + "' (plugin ID: '" + pluginId + 
+           "') threw an error causing the game to crash during startup. " +
+           "This issue occurs when a mod has an incompatible or broken JEI integration that interrupts game initialization.</b>";
+}
 
+@Override
+public String nombre_de_error_jei_plugin_fallido() {
+    return "JEI Plugin Failed - Causes Crash";
+}
 
+@Override
+public String paso1_jei_plugin_fallido(String modId) {
+    return "The mod <b>" + modId + "</b> contains a broken JEI plugin causing the crash. Use the <b>Mod Tree</b> feature to confirm which mod is causing the issue";
+}
+
+@Override
+public String paso2_jei_plugin_fallido(String modId) {
+    return "Temporarily remove the mod <b>" + modId + "</b> from your mods folder to check if it resolves the crash";
+}
+
+@Override
+public String paso3_jei_plugin_fallido(String modId) {
+    return "Look for updates for the mod <b>" + modId + "</b> or contact its developer reporting the JEI plugin issue. " +
+           "In the meantime, the mod must be removed to be able to start the game";
+}
 
 
 

@@ -2666,6 +2666,106 @@ public String informacionTitulo() {
     return "Informo";
 }
 
+@Override
+public String errorAzureGeckoLibInicializoPronto(boolean azureLibError, boolean geckoLibError, boolean connectorPresente) {
+    StringBuilder mensaje = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    
+    if (azureLibError && geckoLibError) {
+        mensaje.append("Grava eraro: AzureLib kaj GeckoLib frue ĉifis! ");
+    } else if (azureLibError) {
+        mensaje.append("Grava eraro: AzureLib frue ĉifis! ");
+    } else if (geckoLibError) {
+        mensaje.append("Grava eraro: GeckoLib frue ĉifis! ");
+    }
+    
+    mensaje.append("Tiu eraro okazas kiam oni provas uzi Fabric aldonaĵojn per ne-Fabric versioj de tiuj bibliotekoj. ");
+    
+    if (connectorPresente) {
+        mensaje.append("Kompateca aldonaĵo (Sinytra Connector aŭ specialcompatibilityoperation) estis detektita, kio indikas ke vi provas ruli Fabric aldonaĵojn en Forge aŭ FeatureCreep medion. ");
+        mensaje.append("Rigardu la 'FabricMC komenca eraro' en la protokoloj por trovi kiun precizan aldonaĵon kaŭzas la problemon. ");
+    }
+    
+    mensaje.append("AzureLib kaj GeckoLib estas esencaj por animaciaj aldonaĵoj, sed ili devas kongrui kun la ĝusta platformo (Fabric aŭ Forge). ");
+    mensaje.append("La ludo ne povas bone ŝargi animaciajn aldonaĵojn pro tiu komenca konflikto.");
+    
+    mensaje.append("</b>");
+    return mensaje.toString();
+}
+
+@Override
+public String nombre_de_error_azure_geckolib_inicializo_pronto() {
+    return "Biblioteko Komencis Tro Frue";
+}
+
+@Override
+public String paso1_azure_geckolib_inicializo_pronto() {
+    return "Rigardu la eraron 'FabricMC komenca eraro' en la protokoloj por trovi la probleman aldonaĵon";
+}
+
+@Override
+public String paso2_azure_geckolib_inicializo_pronto() {
+    return "Certigu ke vi uzas la ĝustan version de AzureLib/GeckoLib por via platformo (Forge aŭ Fabric)";
+}
+
+@Override
+public String errorCompatibilidadC2ME() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Grava eraro: Malkongrueco inter C2ME kaj konektecaj aldonaĵoj. " +
+           "Tiu eraro okazas ĉar C2ME provas aliri internajn Java komponantojn kiuj estas limigitaj en medioj kun " +
+           "Sinytra Connector aŭ specialcompatibilityoperation aŭ aliaj Fabric/Forge kompatiblaj aldonaĵoj. " +
+           "<b>C2ME ne estas kompatibla kun tiuj medioj, sed <a href='https://www.curseforge.com/minecraft/mc-mods/c3me'>C3ME</a> estas la rekomendita anstataŭaĵo</b> kiu bone funkcias " +
+           "kun konektecaj aldonaĵoj. La ludo ne povas lanĉiĝi pro Java sekurecaj permesaj konfliktoj.</b>";
+}
+
+@Override
+public String nombre_de_error_compatibilidad_c2me() {
+    return "C2ME Malkongrueco kun Konektecaj Aldonaĵoj";
+}
+
+@Override
+public String paso1_compatibilidad_c2me() {
+    return "Forigu C2ME el via dosierujo de aldonaĵoj";
+}
+
+@Override
+public String paso2_compatibilidad_c2me() {
+    return "Elŝutu kai instalu <a href='https://www.mcmod.cn/class/15818.html'>C3ME</a> anstataŭe (kompatibla kun Sinytra Connector)";
+}
+
+@Override
+public String paso3_compatibilidad_c2me() {
+    return "Certigu ke ĉiuj konektecaj aldonaĵoj (kiel Sinytra Connector) estas ĝisdatigitaj al sia plej nova versio";
+}
+
+@Override
+public String errorJEIPluginFallido(String nombreClase, String modId, String pluginId) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Grava eraro: Malsukcesis ŝargi JEI-pluginon por la aldonaĵo '" + modId + 
+           "'. La klaso '" + nombreClase + "' (plugin-ID: '" + pluginId + 
+           "') ĉifaris eraron kaŭzan de ĵetasĝo dum lanĉo. " +
+           "Tiu problemo okazas kiam aldonaĵo havas nekompatiblan aŭ difektitan JEI-integron kiun ĉesigas la komencan inicialigon.</b>";
+}
+
+@Override
+public String nombre_de_error_jei_plugin_fallido() {
+    return "Malsukcesa JEI-plugin - Kaŭzas ĵetasĝon";
+}
+
+@Override
+public String paso1_jei_plugin_fallido(String modId) {
+    return "La aldonaĵo <b>" + modId + "</b> enhavas difektitan JEI-pluginon kaŭzan de la ĵetasĝo. Uzu la funkcion <b>Mod-Arbo</b> por konfirmi kiun aldonaĵon kaŭzas la problemon";
+}
+
+@Override
+public String paso2_jei_plugin_fallido(String modId) {
+    return "Tempe forigu la aldonaĵon <b>" + modId + "</b> el via aldonaĵdosierujo por kontroli ĉu tio solvas la ĵetasĝon";
+}
+
+@Override
+public String paso3_jei_plugin_fallido(String modId) {
+    return "Serĉu ĝisdatigojn por la aldonaĵo <b>" + modId + "</b> aŭ kontaktu ĝian programiston pri la JEI-plugin problemo. " +
+           "Dume, la aldonaĵo devas esti forigita por povi lanĉi la ludon";
+}
+
+
 
 
 

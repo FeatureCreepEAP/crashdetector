@@ -2619,6 +2619,106 @@ public String informacionTitulo() {
     return "Informação";
 }
 
+@Override
+public String errorAzureGeckoLibInicializoPronto(boolean azureLibError, boolean geckoLibError, boolean connectorPresente) {
+    StringBuilder mensaje = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    
+    if (azureLibError && geckoLibError) {
+        mensaje.append("Erro crítico: AzureLib e GeckoLib foram inicializados muito cedo! ");
+    } else if (azureLibError) {
+        mensaje.append("Erro crítico: AzureLib foi inicializado muito cedo! ");
+    } else if (geckoLibError) {
+        mensaje.append("Erro crítico: GeckoLib foi inicializado muito cedo! ");
+    }
+    
+    mensaje.append("Esse erro ocorre ao tentar usar mods Fabric com versões não-Fabric dessas bibliotecas. ");
+    
+    if (connectorPresente) {
+        mensaje.append("Um mod de compatibilidade (Sinytra Connector ou specialcompatibilityoperation) foi detectado, indicando que você está tentando usar mods Fabric em um ambiente Forge ou FeatureCreep. ");
+        mensaje.append("Verifique o erro 'Erro de inicialização do FabricMC' nos logs para identificar qual mod específico está causando o problema. ");
+    }
+    
+    mensaje.append("AzureLib e GeckoLib são bibliotecas essenciais para mods de animação, mas devem corresponder à plataforma correta (Fabric ou Forge). ");
+    mensaje.append("O jogo não pode carregar corretamente os mods de animação devido a esse conflito de inicialização.");
+    
+    mensaje.append("</b>");
+    return mensaje.toString();
+}
+
+@Override
+public String nombre_de_error_azure_geckolib_inicializo_pronto() {
+    return "Biblioteca Inicializada Muito Cedo";
+}
+
+@Override
+public String paso1_azure_geckolib_inicializo_pronto() {
+    return "Verifique o erro 'Erro de inicialização do FabricMC' nos logs para identificar o mod problemático";
+}
+
+@Override
+public String paso2_azure_geckolib_inicializo_pronto() {
+    return "Verifique se está usando a versão correta do AzureLib/GeckoLib para sua plataforma (Forge ou Fabric)";
+}
+
+@Override
+public String errorCompatibilidadC2ME() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Erro crítico: Incompatibilidade entre C2ME e mods de conexão. " +
+           "Este erro ocorre porque o C2ME tenta acessar componentes internos do Java que são restritos em ambientes com " +
+           "Sinytra Connector ou specialcompatibilityoperation ou outros mods de compatibilidade Fabric/Forge. " +
+           "<b>O C2ME não é compatível com esses ambientes, mas <a href='https://www.curseforge.com/minecraft/mc-mods/c3me'>C3ME</a> é a alternativa recomendada</b> que funciona corretamente " +
+           "com mods de conexão. O jogo não pode iniciar devido a conflitos de permissão de segurança do Java.</b>";
+}
+
+@Override
+public String nombre_de_error_compatibilidad_c2me() {
+    return "Incompatibilidade do C2ME com Mods de Conexão";
+}
+
+@Override
+public String paso1_compatibilidad_c2me() {
+    return "Remova o C2ME da pasta de mods";
+}
+
+@Override
+public String paso2_compatibilidad_c2me() {
+    return "Baixe e instale <a href='https://www.mcmod.cn/class/15818.html'>C3ME</a> no lugar (compatível com Sinytra Connector)";
+}
+
+@Override
+public String paso3_compatibilidad_c2me() {
+    return "Verifique se todos os mods de conexão (como Sinytra Connector) estão atualizados para a versão mais recente";
+}
+
+@Override
+public String errorJEIPluginFallido(String nombreClase, String modId, String pluginId) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>Erro crítico: Falha ao carregar o plugin JEI para o mod '" + modId + 
+           "'. A classe '" + nombreClase + "' (ID do plugin: '" + pluginId + 
+           "') gerou um erro que está fazendo o jogo crashar durante a inicialização. " +
+           "Esse problema ocorre quando um mod possui uma integração JEI incompatível ou corrompida que interrompe a inicialização do jogo.</b>";
+}
+
+@Override
+public String nombre_de_error_jei_plugin_fallido() {
+    return "Plugin JEI Falhou - Causa Crash";
+}
+
+@Override
+public String paso1_jei_plugin_fallido(String modId) {
+    return "O mod <b>" + modId + "</b> contém um plugin JEI corrompido que está causando o crash. Use a função <b>Árvore de Mods</b> para confirmar qual mod está gerando o problema";
+}
+
+@Override
+public String paso2_jei_plugin_fallido(String modId) {
+    return "Remova temporariamente o mod <b>" + modId + "</b> da pasta de mods para verificar se isso resolve o crash";
+}
+
+@Override
+public String paso3_jei_plugin_fallido(String modId) {
+    return "Procure por atualizações do mod <b>" + modId + "</b> ou entre em contato com seu desenvolvedor relatando o problema com o plugin JEI. " +
+           "Enquanto isso, o mod deve ser removido para conseguir iniciar o jogo";
+}
+
+
 
 
 

@@ -2618,6 +2618,107 @@ public String informacionTitulo() {
     return "정보";
 }
 
+@Override
+public String errorAzureGeckoLibInicializoPronto(boolean azureLibError, boolean geckoLibError, boolean connectorPresente) {
+    StringBuilder mensaje = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    
+    if (azureLibError && geckoLibError) {
+        mensaje.append("치명적 오류: AzureLib 및 GeckoLib이(가) 너무 일찍 초기화되었습니다! ");
+    } else if (azureLibError) {
+        mensaje.append("치명적 오류: AzureLib이(가) 너무 일찍 초기화되었습니다! ");
+    } else if (geckoLibError) {
+        mensaje.append("치명적 오류: GeckoLib이(가) 너무 일찍 초기화되었습니다! ");
+    }
+    
+    mensaje.append("이 오류는 Fabric 모드를 Fabric이 아닌 버전의 라이브러리로 사용하려 할 때 발생합니다. ");
+    
+    if (connectorPresente) {
+        mensaje.append("호환성 모드(Sinytra Connector 또는 specialcompatibilityoperation)가 감지되어 Forge 또는 FeatureCreep 환경에서 Fabric 모드를 실행하려 한다는 것을 의미합니다. ");
+        mensaje.append("문제를 일으키는 특정 모드를 식별하려면 로그에서 'FabricMC 초기화 오류'를 확인하세요. ");
+    }
+    
+    mensaje.append("AzureLib과 GeckoLib은 애니메이션 모드에 필수적이지만 올바른 플랫폼(Fabric 또는 Forge)과 일치해야 합니다. ");
+    mensaje.append("이 초기화 충돌로 인해 게임이 애니메이션 모드를 제대로 로드할 수 없습니다.");
+    
+    mensaje.append("</b>");
+    return mensaje.toString();
+}
+
+@Override
+public String nombre_de_error_azure_geckolib_inicializo_pronto() {
+    return "라이브러리가 너무 일찍 초기화됨";
+}
+
+@Override
+public String paso1_azure_geckolib_inicializo_pronto() {
+    return "로그에서 'FabricMC 초기화 오류'를 확인하여 문제 있는 모드를 식별하세요";
+}
+
+@Override
+public String paso2_azure_geckolib_inicializo_pronto() {
+    return "플랫폼(Forge 또는 Fabric)에 맞는 올바른 버전의 AzureLib/GeckoLib을 사용하고 있는지 확인하세요";
+}
+
+@Override
+public String errorCompatibilidadC2ME() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>치명적 오류: C2ME와 연결 모드 간의 호환성 문제. " +
+           "이 오류는 C2ME가 Sinytra Connector 또는 specialcompatibilityoperation과 같은 연결 모드 환경에서 제한된 Java 내부 구성 요소에 액세스하려 할 때 발생합니다. " +
+           "<b>C2ME는 이러한 환경과 호환되지 않지만, <a href='https://www.curseforge.com/minecraft/mc-mods/c3me'>C3ME</a>는 추천 대체 옵션</b>으로, 연결 모드와 정상적으로 작동합니다. " +
+           "Java 보안 권한 충돌로 인해 게임을 시작할 수 없습니다.</b>";
+}
+
+@Override
+public String nombre_de_error_compatibilidad_c2me() {
+    return "C2ME와 연결 모드의 호환성 문제";
+}
+
+@Override
+public String paso1_compatibilidad_c2me() {
+    return "mods 폴더에서 C2ME를 제거하세요";
+}
+
+@Override
+public String paso2_compatibilidad_c2me() {
+    return "대신 <a href='https://www.mcmod.cn/class/15818.html'>C3ME</a>를 다운로드하여 설치하세요 (Sinytra Connector와 호환됨)";
+}
+
+@Override
+public String paso3_compatibilidad_c2me() {
+    return "모든 연결 모드(Sinytra Connector 등)가 최신 버전으로 업데이트되었는지 확인하세요";
+}
+
+@Override
+public String errorJEIPluginFallido(String nombreClase, String modId, String pluginId) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>치명적 오류: '" + modId + 
+           "' 모드의 JEI 플러그인 로딩 실패. 클래스 '" + nombreClase + "' (플러그인 ID: '" + pluginId + 
+           "') 가 오류를 발생시켜 게임 시작 중 충돌이 발생하고 있습니다. " +
+           "게임 초기화를 방해하는 호환되지 않거나 손상된 JEI 통합을 모드가 가지고 있을 때 이 문제가 발생합니다.</b>";
+}
+
+@Override
+public String nombre_de_error_jei_plugin_fallido() {
+    return "JEI 플러그인 실패 - 충돌 유발";
+}
+
+@Override
+public String paso1_jei_plugin_fallido(String modId) {
+    return "모드 <b>" + modId + "</b> 에 문제가 있는 JEI 플러그인이 포함되어 충돌을 일으키고 있습니다. <b>모드 트리</b> 기능을 사용하여 문제를 일으키는 모드를 확인하세요";
+}
+
+@Override
+public String paso2_jei_plugin_fallido(String modId) {
+    return "충돌이 해결되는지 확인하기 위해 모드 폴더에서 일시적으로 모드 <b>" + modId + "</b> 를 제거하세요";
+}
+
+@Override
+public String paso3_jei_plugin_fallido(String modId) {
+    return "모드 <b>" + modId + "</b> 의 업데이트를 찾거나 JEI 플러그인 문제를 개발자에게 보고하세요. " +
+           "그동안 게임을 시작하려면 모드를 제거해야 합니다";
+}
+
+
+
+
 
 
 

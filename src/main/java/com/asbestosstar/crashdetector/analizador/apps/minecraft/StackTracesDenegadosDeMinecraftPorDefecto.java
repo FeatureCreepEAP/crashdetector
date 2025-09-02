@@ -48,6 +48,20 @@ public class StackTracesDenegadosDeMinecraftPorDefecto {
         VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains("com.google.gson.JsonObject")&&contentido.split(Verificaciones.nl).length==1);///Creo no es fatal pero puedo ser incorrecto
 
         
+        VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains("Not a JSON Object"));
+        VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains("Server is unreachable (ICE failed)"));//essential
+
+        VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains("patreon"));//Si hay una problema puedo eliminar
+
+        VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains("java.io.FileNotFoundException") && contentido.contains("minecraft"));//Comun problema, pero no creo es fatal
+
+        
+        VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains("net.minecraftforge.fml.VersionChecker"));//Si hay una problema puedo eliminar
+
+        VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains("No bonuses were provided"));//apotheosis Si hay una problema puedo eliminar
+
+        
+        
         
         
     }

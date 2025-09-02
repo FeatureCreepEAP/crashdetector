@@ -2638,6 +2638,107 @@ public String proxyHabilitadoMensaje() {
 public String informacionTitulo() {
     return "情報";
 }
+@Override
+public String errorAzureGeckoLibInicializoPronto(boolean azureLibError, boolean geckoLibError, boolean connectorPresente) {
+    StringBuilder mensaje = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    
+    if (azureLibError && geckoLibError) {
+        mensaje.append("重大エラー: AzureLib と GeckoLib が早すぎるタイミングで初期化されました！ ");
+    } else if (azureLibError) {
+        mensaje.append("重大エラー: AzureLib が早すぎるタイミングで初期化されました！ ");
+    } else if (geckoLibError) {
+        mensaje.append("重大エラー: GeckoLib が早すぎるタイミングで初期化されました！ ");
+    }
+    
+    mensaje.append("このエラーは、Fabric モッドを非Fabric版のライブラリで使用しようとしたときに発生します。 ");
+    
+    if (connectorPresente) {
+        mensaje.append("互換性モッド（Sinytra Connector または specialcompatibilityoperation）が検出され、Forge や FeatureCreep 環境で Fabric モッドを実行しようとしていることが示されています。 ");
+        mensaje.append("ログの 'FabricMC 初期化エラー' を確認して、問題を引き起こしている特定のモッドを特定してください。 ");
+    }
+    
+    mensaje.append("AzureLib と GeckoLib はアニメーションモッドに不可欠ですが、正しいプラットフォーム（Fabric または Forge）と一致している必要があります。 ");
+    mensaje.append("この初期化の競合により、ゲームはアニメーションモッドを正しく読み込めません。");
+    
+    mensaje.append("</b>");
+    return mensaje.toString();
+}
+
+@Override
+public String nombre_de_error_azure_geckolib_inicializo_pronto() {
+    return "ライブラリの初期化が早すぎます";
+}
+
+@Override
+public String paso1_azure_geckolib_inicializo_pronto() {
+    return "ログで 'FabricMC 初期化エラー' を確認し、問題のあるモッドを特定してください";
+}
+
+@Override
+public String paso2_azure_geckolib_inicializo_pronto() {
+    return "プラットフォーム（Forge または Fabric）に合った正しいバージョンの AzureLib/GeckoLib を使用しているか確認してください";
+}
+
+@Override
+public String errorCompatibilidadC2ME() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>重大エラー: C2ME と接続モッドの非互換性。 " +
+           "このエラーは、C2ME が Sinytra Connector や specialcompatibilityoperation などの接続モッド環境で制限されている Java の内部コンポーネントにアクセスしようとしたために発生します。 " +
+           "<b>C2ME はこれらの環境と互換性がありませんが、<a href='https://www.curseforge.com/minecraft/mc-mods/c3me'>C3ME</a> が推奨される代替手段</b>であり、接続モッドと正常に動作します。 " +
+           "Java のセキュリティ権限の競合により、ゲームを起動できません。</b>";
+}
+
+@Override
+public String nombre_de_error_compatibilidad_c2me() {
+    return "C2ME と接続モッドの非互換性";
+}
+
+@Override
+public String paso1_compatibilidad_c2me() {
+    return "mods フォルダから C2ME を削除してください";
+}
+
+@Override
+public String paso2_compatibilidad_c2me() {
+    return "代わりに <a href='https://www.mcmod.cn/class/15818.html'>C3ME</a> をダウンロードしてインストールしてください（Sinytra Connector に対応）";
+}
+
+@Override
+public String paso3_compatibilidad_c2me() {
+    return "すべての接続モッド（Sinytra Connector など）が最新バージョンに更新されていることを確認してください";
+}
+
+@Override
+public String errorJEIPluginFallido(String nombreClase, String modId, String pluginId) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>重大なエラー: モッド '" + modId + 
+           "' のJEIプラグインの読み込みに失敗しました。クラス '" + nombreClase + "' (プラグインID: '" + pluginId + 
+           "') がエラーを発生させ、ゲーム起動中にクラッシュしています。 " +
+           "この問題は、ゲームの初期化を妨げる互換性のないまたは破損したJEI統合を持つモッドがある場合に発生します。</b>";
+}
+
+@Override
+public String nombre_de_error_jei_plugin_fallido() {
+    return "JEIプラグイン失敗 - クラッシュを引き起こす";
+}
+
+@Override
+public String paso1_jei_plugin_fallido(String modId) {
+    return "モッド <b>" + modId + "</b> にクラッシュを引き起こす破損したJEIプラグインが含まれています。<b>Modツリー</b> 機能を使用して、問題を引き起こしているモッドを確認してください";
+}
+
+@Override
+public String paso2_jei_plugin_fallido(String modId) {
+    return "クラッシュが解決するか確認するために、一時的に mods フォルダからモッド <b>" + modId + "</b> を削除してください";
+}
+
+@Override
+public String paso3_jei_plugin_fallido(String modId) {
+    return "モッド <b>" + modId + "</b> の更新を確認するか、開発者にJEIプラグインの問題を報告してください。 " +
+           "その間は、ゲームを起動するためにはモッドを削除する必要があります";
+}
+
+
+
+
 
 
 

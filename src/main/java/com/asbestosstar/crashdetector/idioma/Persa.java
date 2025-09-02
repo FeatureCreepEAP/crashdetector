@@ -2628,11 +2628,106 @@ public String informacionTitulo() {
     return "اطلاعات";
 }
 
+@Override
+public String errorAzureGeckoLibInicializoPronto(boolean azureLibError, boolean geckoLibError, boolean connectorPresente) {
+    StringBuilder mensaje = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    
+    if (azureLibError && geckoLibError) {
+        mensaje.append("خطای بحرانی: AzureLib و GeckoLib خیلی زود راه‌اندازی شدند! ");
+    } else if (azureLibError) {
+        mensaje.append("خطای بحرانی: AzureLib خیلی زود راه‌اندازی شد! ");
+    } else if (geckoLibError) {
+        mensaje.append("خطای بحرانی: GeckoLib خیلی زود راه‌اندازی شد! ");
+    }
+    
+    mensaje.append("این خطا زمانی اتفاق می‌افتد که سعی کنید از مودهای Fabric با نسخه‌های غیر-Fabric این کتابخانه‌ها استفاده کنید. ");
+    
+    if (connectorPresente) {
+        mensaje.append("یک مود سازگاری (Sinytra Connector یا specialcompatibilityoperation) شناسایی شد که نشان می‌دهد در حال استفاده از مودهای Fabric در محیط Forge یا FeatureCreep هستید. ");
+        mensaje.append("خطای 'خطای راه‌اندازی FabricMC' را در لاگ‌ها بررسی کنید تا مود مشکل‌دار را پیدا کنید. ");
+    }
+    
+    mensaje.append("AzureLib و GeckoLib کتابخانه‌های ضروری برای مودهای انیمیشن هستند، اما باید با پلتفرم صحیح (Fabric یا Forge) مطابقت داشته باشند. ");
+    mensaje.append("بازی نمی‌تواند به درستی مودهای انیمیشن را بارگذاری کند به دلیل این تعارض در راه‌اندازی.");
+    
+    mensaje.append("</b>");
+    return mensaje.toString();
+}
+
+@Override
+public String nombre_de_error_azure_geckolib_inicializo_pronto() {
+    return "کتابخانه خیلی زود راه‌اندازی شد";
+}
+
+@Override
+public String paso1_azure_geckolib_inicializo_pronto() {
+    return "خطای 'خطای راه‌اندازی FabricMC' را در لاگ‌ها بررسی کنید تا مود مشکل‌دار را پیدا کنید";
+}
+
+@Override
+public String paso2_azure_geckolib_inicializo_pronto() {
+    return "مطمئن شوید از نسخه صحیح AzureLib/GeckoLib برای پلتفرم خود (Forge یا Fabric) استفاده می‌کنید";
+}
+
+@Override
+public String errorCompatibilidadC2ME() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>خطای بحرانی: عدم سازگاری بین C2ME و مودهای اتصال. " +
+           "این خطا زمانی اتفاق می‌افتد که C2ME سعی کند به مؤلفه‌های داخلی جاوا دسترسی پیدا کند که در محیط‌های دارای " +
+           "Sinytra Connector یا specialcompatibilityoperation یا سایر مودهای سازگاری Fabric/Forge محدود شده‌اند. " +
+           "<b>C2ME با این محیط‌ها سازگار نیست، اما <a href='https://www.curseforge.com/minecraft/mc-mods/c3me'>C3ME</a> جایگزین پیشنهادی است</b> که به درستی " +
+           "با مودهای اتصال کار می‌کند. بازی به دلیل تعارض مجوزهای امنیتی جاوا نمی‌تواند شروع شود.</b>";
+}
+
+@Override
+public String nombre_de_error_compatibilidad_c2me() {
+    return "عدم سازگاری C2ME با مودهای اتصال";
+}
+
+@Override
+public String paso1_compatibilidad_c2me() {
+    return "C2ME را از پوشه مودها حذف کنید";
+}
+
+@Override
+public String paso2_compatibilidad_c2me() {
+    return "به جای آن، <a href='https://www.mcmod.cn/class/15818.html'>C3ME</a> را دانلود و نصب کنید (سازگار با Sinytra Connector)";
+}
+
+@Override
+public String paso3_compatibilidad_c2me() {
+    return "مطمئن شوید تمام مودهای اتصال (مثل Sinytra Connector) به آخرین نسخه به‌روزرسانی شده‌اند";
+}
 
 
 
+@Override
+public String errorJEIPluginFallido(String nombreClase, String modId, String pluginId) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>خطای بحرانی: بارگذاری افزونه JEI برای مود '" + modId + 
+           "' ناموفق بود. کلاس '" + nombreClase + "' (شناسه افزونه: '" + pluginId + 
+           "') باعث خطایی شد که منجر به کرش شدن بازی در هنگام راه‌اندازی می‌شود. " +
+           "این مشکل زمانی رخ می‌دهد که یک مود ادغام JEI ناسازگار یا خراب داشته باشد که مانع از راه‌اندازی بازی شود.</b>";
+}
 
+@Override
+public String nombre_de_error_jei_plugin_fallido() {
+    return "افزونه JEI شکست خورد - باعث کرش می‌شود";
+}
 
+@Override
+public String paso1_jei_plugin_fallido(String modId) {
+    return "مود <b>" + modId + "</b> حاوی یک افزونه JEI معیوب است که باعث کرش شدن شده است. از قابلیت <b>درخت مودها</b> برای تشخیص مود عامل مشکل استفاده کنید";
+}
+
+@Override
+public String paso2_jei_plugin_fallido(String modId) {
+    return "مود <b>" + modId + "</b> را به‌طور موقت از پوشه مودها حذف کنید تا بررسی کنید آیا مشکل کرش حل می‌شود";
+}
+
+@Override
+public String paso3_jei_plugin_fallido(String modId) {
+    return "برای مود <b>" + modId + "</b> به دنبال به‌روزرسانی باشید یا مشکل افزونه JEI را به توسعه‌دهنده گزارش دهید. " +
+           "در همین حال، برای اجرای بازی باید این مود حذف شود";
+}
 
 
 
