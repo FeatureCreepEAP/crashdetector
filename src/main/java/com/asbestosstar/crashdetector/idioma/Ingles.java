@@ -2798,6 +2798,72 @@ public String paso3_jei_plugin_fallido(String modId) {
 }
 
 
+@Override
+public String tituloLectador() {
+    return "Log Reader - Crash Detector";
+}
+
+@Override
+public String obtenerTituloLeyenda() {
+    return "COLOUR LEGEND";
+}
+
+@Override
+public String obtenerErrorEnLeyenda() {
+    return "Critical errors";
+}
+
+@Override
+public String obtenerStacktraceEnLeyenda() {
+    return "Stack traces";
+}
+
+@Override
+public String obtenerTituloError() {
+    return "Error";
+}
+
+@Override
+public String obtenerErrorAlProcesarLinea() {
+    return "An error occurred while processing the selected line";
+}
+
+@Override
+public String obtenerNombreError() {
+    return "ERROR NAME";
+}
+
+@Override
+public String obtenerDescripcionError() {
+    return "DETAILED DESCRIPTION";
+}
+
+@Override
+public String obtenerSeleccionarConsola() {
+    return "SELECT LOG";
+}
+
+@Override
+public String obtenerNombreErrorPorDefecto() {
+    return "Unidentified error";
+}
+
+@Override
+public String obtenerDescripcionErrorPorDefecto() {
+    return "A critical error was detected in the logs. " +
+           "Check the stack trace to identify the root cause.";
+}
+
+@Override
+public String obtenerErrorLecturaArchivo() {
+    return "Could not read the log file. " +
+           "Please verify the file exists and has read permissions.";
+}
+
+@Override
+public String obtenerEtiquetaBotonLectador() {
+    return "Log Analyzer";
+}
 
 
 

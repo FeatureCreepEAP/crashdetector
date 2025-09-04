@@ -2718,6 +2718,73 @@ public String paso3_jei_plugin_fallido(String modId) {
            "Enquanto isso, o mod deve ser removido para conseguir iniciar o jogo";
 }
 
+@Override
+public String tituloLectador() {
+    return "Leitor de Logs - Crash Detector";
+}
+
+@Override
+public String obtenerTituloLeyenda() {
+    return "LEGENDA DE CORES";
+}
+
+@Override
+public String obtenerErrorEnLeyenda() {
+    return "Erros críticos";
+}
+
+@Override
+public String obtenerStacktraceEnLeyenda() {
+    return "Rastros de pilha";
+}
+
+@Override
+public String obtenerTituloError() {
+    return "Erro";
+}
+
+@Override
+public String obtenerErrorAlProcesarLinea() {
+    return "Ocorreu um erro ao processar a linha selecionada";
+}
+
+@Override
+public String obtenerNombreError() {
+    return "NOME DO ERRO";
+}
+
+@Override
+public String obtenerDescripcionError() {
+    return "DESCRIÇÃO DETALHADA";
+}
+
+@Override
+public String obtenerSeleccionarConsola() {
+    return "SELECIONAR LOG";
+}
+
+@Override
+public String obtenerNombreErrorPorDefecto() {
+    return "Erro não identificado";
+}
+
+@Override
+public String obtenerDescripcionErrorPorDefecto() {
+    return "Um erro crítico foi detectado nos logs. " +
+           "Verifique o rastro de pilha para identificar a causa raiz.";
+}
+
+@Override
+public String obtenerErrorLecturaArchivo() {
+    return "Não foi possível ler o arquivo de log. " +
+           "Verifique se o arquivo existe e tem permissões de leitura.";
+}
+
+@Override
+public String obtenerEtiquetaBotonLectador() {
+    return "Analisador de Logs";
+}
+
 
 
 

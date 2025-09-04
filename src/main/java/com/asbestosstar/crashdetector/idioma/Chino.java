@@ -2732,6 +2732,73 @@ public String paso3_jei_plugin_fallido(String modId) {
            "同时，必须移除该模组才能正常启动游戏";
 }
 
+@Override
+public String tituloLectador() {
+    return "日志阅读器 - 崩溃检测";
+}
+
+@Override
+public String obtenerTituloLeyenda() {
+    return "颜色图例";
+}
+
+@Override
+public String obtenerErrorEnLeyenda() {
+    return "严重错误";
+}
+
+@Override
+public String obtenerStacktraceEnLeyenda() {
+    return "堆栈跟踪";
+}
+
+@Override
+public String obtenerTituloError() {
+    return "错误";
+}
+
+@Override
+public String obtenerErrorAlProcesarLinea() {
+    return "处理所选行时发生错误";
+}
+
+@Override
+public String obtenerNombreError() {
+    return "错误名称";
+}
+
+@Override
+public String obtenerDescripcionError() {
+    return "详细描述";
+}
+
+@Override
+public String obtenerSeleccionarConsola() {
+    return "选择日志";
+}
+
+@Override
+public String obtenerNombreErrorPorDefecto() {
+    return "未识别的错误";
+}
+
+@Override
+public String obtenerDescripcionErrorPorDefecto() {
+    return "在日志中检测到严重错误。 " +
+           "请检查堆栈跟踪以确定根本原因。";
+}
+
+@Override
+public String obtenerErrorLecturaArchivo() {
+    return "无法读取日志文件。 " +
+           "请确认文件存在且具有读取权限。";
+}
+
+@Override
+public String obtenerEtiquetaBotonLectador() {
+    return "日志分析器";
+}
+
 
 
 

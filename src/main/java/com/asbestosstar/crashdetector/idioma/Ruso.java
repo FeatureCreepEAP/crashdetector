@@ -2723,6 +2723,73 @@ public String paso3_jei_plugin_fallido(String modId) {
 }
 
 
+@Override
+public String tituloLectador() {
+    return "Читатель логов - Обнаружение сбоев";
+}
+
+@Override
+public String obtenerTituloLeyenda() {
+    return "ЦВЕТОВАЯ ЛЕГЕНДА";
+}
+
+@Override
+public String obtenerErrorEnLeyenda() {
+    return "Критические ошибки";
+}
+
+@Override
+public String obtenerStacktraceEnLeyenda() {
+    return "Стектрейсы";
+}
+
+@Override
+public String obtenerTituloError() {
+    return "Ошибка";
+}
+
+@Override
+public String obtenerErrorAlProcesarLinea() {
+    return "Произошла ошибка при обработке выбранной строки";
+}
+
+@Override
+public String obtenerNombreError() {
+    return "НАЗВАНИЕ ОШИБКИ";
+}
+
+@Override
+public String obtenerDescripcionError() {
+    return "ПОДРОБНОЕ ОПИСАНИЕ";
+}
+
+@Override
+public String obtenerSeleccionarConsola() {
+    return "ВЫБЕРИТЕ ЛОГ";
+}
+
+@Override
+public String obtenerNombreErrorPorDefecto() {
+    return "Ошибка не определена";
+}
+
+@Override
+public String obtenerDescripcionErrorPorDefecto() {
+    return "В логах обнаружена критическая ошибка. " +
+           "Проверьте стектрейс, чтобы определить первопричину.";
+}
+
+@Override
+public String obtenerErrorLecturaArchivo() {
+    return "Не удалось прочитать файл лога. " +
+           "Убедитесь, что файл существует и доступен для чтения.";
+}
+
+@Override
+public String obtenerEtiquetaBotonLectador() {
+    return "Анализатор логов";
+}
+
 
 
 

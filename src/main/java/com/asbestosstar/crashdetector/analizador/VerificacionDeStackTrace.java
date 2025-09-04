@@ -518,6 +518,9 @@ CrashDetectorLogger.log(claseFaltante);
 		if (jarName.startsWith("com.google")) {
 			return true;
 		}
+		if (jarName.startsWith("toml-")) {
+			return true;
+		}
 		if (jarName.startsWith("javafmllanguage")) {
 			return true;
 		}

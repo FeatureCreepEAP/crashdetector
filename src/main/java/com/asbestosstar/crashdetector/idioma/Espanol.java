@@ -3407,6 +3407,125 @@ public String paso3_jei_plugin_fallido(String modId) {
     return "Busca actualizaciones del mod <b>" + modId + "</b> o contacta a su desarrollador reportando el problema con el plugin JEI. " +
            "Mientras tanto, el mod debe ser eliminado para poder iniciar el juego";
 }
+/**
+ * Obtiene el título de la aplicación
+ * @return Título de la ventana principal
+ */
+@Override
+public String tituloLectador() {
+    return "Lector de Consolas - Crash Detector";
+}
+
+/**
+ * Obtiene el título para la leyenda de colores
+ * @return Título de la sección de leyenda
+ */
+@Override
+public String obtenerTituloLeyenda() {
+    return "LEYENDA DE COLORES";
+}
+
+/**
+ * Obtiene el texto para identificar errores en la leyenda
+ * @return Texto descriptivo para errores
+ */
+@Override
+public String obtenerErrorEnLeyenda() {
+    return "Errores críticos";
+}
+
+/**
+ * Obtiene el texto para identificar stacktraces en la leyenda
+ * @return Texto descriptivo para stacktraces
+ */
+@Override
+public String obtenerStacktraceEnLeyenda() {
+    return "Trazas de pila";
+}
+
+/**
+ * Obtiene el título para ventanas de error
+ * @return Título estándar para mensajes de error
+ */
+@Override
+public String obtenerTituloError() {
+    return "Error";
+}
+
+/**
+ * Obtiene el mensaje para errores al procesar líneas de log
+ * @return Mensaje de error específico
+ */
+@Override
+public String obtenerErrorAlProcesarLinea() {
+    return "Ocurrió un error al procesar la línea seleccionada";
+}
+
+/**
+ * Obtiene el título para el área de nombre de error
+ * @return Título del panel de nombre de error
+ */
+@Override
+public String obtenerNombreError() {
+    return "NOMBRE DEL ERROR";
+}
+
+/**
+ * Obtiene el título para el área de descripción de error
+ * @return Título del panel de descripción de error
+ */
+@Override
+public String obtenerDescripcionError() {
+    return "DESCRIPCIÓN DETALLADA";
+}
+
+/**
+ * Obtiene el título para el selector de consolas
+ * @return Título del combobox de selección
+ */
+@Override
+public String obtenerSeleccionarConsola() {
+    return "SELECCIONAR CONSOLA";
+}
+
+/**
+ * Obtiene el nombre predeterminado para errores
+ * @return Nombre genérico para errores
+ */
+@Override
+public String obtenerNombreErrorPorDefecto() {
+    return "Error no identificado";
+}
+
+/**
+ * Obtiene la descripción predeterminada para errores
+ * @return Descripción genérica para errores
+ */
+@Override
+public String obtenerDescripcionErrorPorDefecto() {
+    return "Se detectó un error crítico en los registros. " +
+           "Revise la traza de pila para identificar la causa raíz.";
+}
+
+/**
+ * Obtiene el mensaje para errores de lectura de archivos
+ * @return Mensaje específico para fallos en lectura
+ */
+@Override
+public String obtenerErrorLecturaArchivo() {
+    return "No se pudo leer el archivo de registros. " +
+           "Verifique que el archivo existe y tiene permisos de lectura.";
+}
+
+/**
+ * Obtiene la etiqueta para el botón en la barra lateral
+ * @return Texto que aparecerá en el botón lateral
+ */
+@Override
+public String obtenerEtiquetaBotonLectador() {
+    return "Analizador de Logs";
+}
+
 
 
 

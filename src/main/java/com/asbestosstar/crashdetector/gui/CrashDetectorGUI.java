@@ -78,6 +78,8 @@ public class CrashDetectorGUI extends JFrame {
 		botons_de_barra_lateral_derecha.add(new EscanerMCreatorGUI());
 		botons_de_barra_lateral_derecha.add(new HistoriaModsGUI());
 		botons_de_barra_lateral_derecha.add(new ArbolDeModsGUI());
+		botons_de_barra_lateral_derecha.add(new LectadorDeConsolas());
+		
 	}
 
 	public CrashDetectorGUI(Instant tiempoFallo, CountDownLatch cerrojo) {

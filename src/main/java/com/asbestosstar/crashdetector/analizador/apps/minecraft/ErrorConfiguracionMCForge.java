@@ -35,7 +35,7 @@ public class ErrorConfiguracionMCForge implements Verificaciones {
 
     @Override
     public float prioridad() {
-        return 500.0f; // Prioridad alta para errores de configuración críticos
+        return 900.0f; // Prioridad alta para errores de configuración críticos
     }
 
     @Override

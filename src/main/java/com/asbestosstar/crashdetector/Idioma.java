@@ -1,5 +1,6 @@
 package com.asbestosstar.crashdetector;
 
+import java.awt.GraphicsConfiguration;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -1204,6 +1205,32 @@ public interface Idioma {
 	public String paso2_jei_plugin_fallido(String modId);
 
 	public String paso3_jei_plugin_fallido(String modId);
+
+	public String tituloLectador();
+
+	public String obtenerTituloLeyenda();
+
+	public String obtenerErrorEnLeyenda();
+
+	public String obtenerStacktraceEnLeyenda();
+
+	public String obtenerErrorAlProcesarLinea();
+
+	public String obtenerTituloError();
+
+	public String obtenerNombreError();
+
+	public String obtenerDescripcionError();
+
+	public String obtenerSeleccionarConsola();
+
+	public String obtenerErrorLecturaArchivo();
+
+	public String obtenerNombreErrorPorDefecto();
+
+	public String obtenerDescripcionErrorPorDefecto();
+
+	public String obtenerEtiquetaBotonLectador();
 
 	
 	

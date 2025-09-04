@@ -2765,6 +2765,73 @@ public String paso3_jei_plugin_fallido(String modId) {
            "Dume, la aldonaĵo devas esti forigita por povi lanĉi la ludon";
 }
 
+@Override
+public String tituloLectador() {
+    return "Legilo de Ĵurnaloj - Detektilo de Ĵetasĝoj";
+}
+
+@Override
+public String obtenerTituloLeyenda() {
+    return "KOLORKLAVO";
+}
+
+@Override
+public String obtenerErrorEnLeyenda() {
+    return "Gravaj eraroj";
+}
+
+@Override
+public String obtenerStacktraceEnLeyenda() {
+    return "Stakspuroj";
+}
+
+@Override
+public String obtenerTituloError() {
+    return "Eraro";
+}
+
+@Override
+public String obtenerErrorAlProcesarLinea() {
+    return "Okazis eraro dum prilaborado de la elektita linio";
+}
+
+@Override
+public String obtenerNombreError() {
+    return "NOMO DE ERARO";
+}
+
+@Override
+public String obtenerDescripcionError() {
+    return "DETALA PRISKRIBO";
+}
+
+@Override
+public String obtenerSeleccionarConsola() {
+    return "ELEKTU ĴURNAOLON";
+}
+
+@Override
+public String obtenerNombreErrorPorDefecto() {
+    return "Nerilata eraro";
+}
+
+@Override
+public String obtenerDescripcionErrorPorDefecto() {
+    return "Grava eraro detektita en la ĵurnaloj. " +
+           "Bonvolu ekzameni la stakspuron por trovi la ĉefan kaŭzon.";
+}
+
+@Override
+public String obtenerErrorLecturaArchivo() {
+    return "Ne povis legi la ĵurnalan dosieron. " +
+           "Bonvolu kontroli, ĉu la dosiero ekzistas kaj havas legrajtojn.";
+}
+
+@Override
+public String obtenerEtiquetaBotonLectador() {
+    return "Ĵurnala Analizilo";
+}
+
 
 
 

@@ -2736,6 +2736,72 @@ public String paso3_jei_plugin_fallido(String modId) {
            "その間は、ゲームを起動するためにはモッドを削除する必要があります";
 }
 
+@Override
+public String tituloLectador() {
+    return "ログリーダー - クラッシュ検出器";
+}
+
+@Override
+public String obtenerTituloLeyenda() {
+    return "色の凡例";
+}
+
+@Override
+public String obtenerErrorEnLeyenda() {
+    return "重大なエラー";
+}
+
+@Override
+public String obtenerStacktraceEnLeyenda() {
+    return "スタックトレース";
+}
+
+@Override
+public String obtenerTituloError() {
+    return "エラー";
+}
+
+@Override
+public String obtenerErrorAlProcesarLinea() {
+    return "選択した行の処理中にエラーが発生しました";
+}
+
+@Override
+public String obtenerNombreError() {
+    return "エラー名";
+}
+
+@Override
+public String obtenerDescripcionError() {
+    return "詳細な説明";
+}
+
+@Override
+public String obtenerSeleccionarConsola() {
+    return "ログを選択";
+}
+
+@Override
+public String obtenerNombreErrorPorDefecto() {
+    return "未確認のエラー";
+}
+
+@Override
+public String obtenerDescripcionErrorPorDefecto() {
+    return "ログに重大なエラーが検出されました。 " +
+           "根本原因を特定するには、スタックトレースを確認してください。";
+}
+
+@Override
+public String obtenerErrorLecturaArchivo() {
+    return "ログファイルを読み取れませんでした。 " +
+           "ファイルが存在し、読み取り権限があるか確認してください。";
+}
+
+@Override
+public String obtenerEtiquetaBotonLectador() {
+    return "ログ分析ツール";
+}
 
 
 

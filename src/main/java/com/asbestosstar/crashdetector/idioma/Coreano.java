@@ -2716,6 +2716,78 @@ public String paso3_jei_plugin_fallido(String modId) {
            "그동안 게임을 시작하려면 모드를 제거해야 합니다";
 }
 
+@Override
+public String tituloLectador() {
+    return "로그 리더 - 충돌 탐지기";
+}
+
+@Override
+public String obtenerTituloLeyenda() {
+    return "색상 범례";
+}
+
+@Override
+public String obtenerErrorEnLeyenda() {
+    return "치명적 오류";
+}
+
+@Override
+public String obtenerStacktraceEnLeyenda() {
+    return "스택 트레이스";
+}
+
+@Override
+public String obtenerTituloError() {
+    return "오류";
+}
+
+@Override
+public String obtenerErrorAlProcesarLinea() {
+    return "선택한 줄을 처리하는 도중 오류 발생";
+}
+
+@Override
+public String obtenerNombreError() {
+    return "오류 이름";
+}
+
+@Override
+public String obtenerDescripcionError() {
+    return "자세한 설명";
+}
+
+@Override
+public String obtenerSeleccionarConsola() {
+    return "로그 선택";
+}
+
+@Override
+public String obtenerNombreErrorPorDefecto() {
+    return "미확인 오류";
+}
+
+@Override
+public String obtenerDescripcionErrorPorDefecto() {
+    return "기록에서 치명적인 오류가 감지되었습니다. " +
+           "근본 원인을 파악하려면 스택 트레이스를 확인하세요.";
+}
+
+@Override
+public String obtenerErrorLecturaArchivo() {
+    return "기록 파일을 읽을 수 없습니다. " +
+           "파일이 존재하고 읽기 권한이 있는지 확인하세요.";
+}
+
+@Override
+public String obtenerEtiquetaBotonLectador() {
+    return "로그 분석기";
+}
+
+
+
+
+
+
 
 
 

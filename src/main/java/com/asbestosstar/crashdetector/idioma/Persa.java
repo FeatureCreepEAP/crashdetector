@@ -2729,6 +2729,77 @@ public String paso3_jei_plugin_fallido(String modId) {
            "در همین حال، برای اجرای بازی باید این مود حذف شود";
 }
 
+@Override
+public String tituloLectador() {
+    return "خواننده لاگ‌ها - تشخیص‌دهنده کرش";
+}
+
+@Override
+public String obtenerTituloLeyenda() {
+    return "راهنمای رنگ‌ها";
+}
+
+@Override
+public String obtenerErrorEnLeyenda() {
+    return "خطاهای بحرانی";
+}
+
+@Override
+public String obtenerStacktraceEnLeyenda() {
+    return "ردپای پشته";
+}
+
+@Override
+public String obtenerTituloError() {
+    return "خطا";
+}
+
+@Override
+public String obtenerErrorAlProcesarLinea() {
+    return "هنگام پردازش خط انتخاب‌شده خطایی رخ داد";
+}
+
+@Override
+public String obtenerNombreError() {
+    return "نام خطا";
+}
+
+@Override
+public String obtenerDescripcionError() {
+    return "شرح دقیق";
+}
+
+@Override
+public String obtenerSeleccionarConsola() {
+    return "انتخاب لاگ";
+}
+
+@Override
+public String obtenerNombreErrorPorDefecto() {
+    return "خطای ناشناس";
+}
+
+@Override
+public String obtenerDescripcionErrorPorDefecto() {
+    return "خطای بحرانی در لاگ‌ها شناسایی شد. " +
+           "برای یافتن علت اصلی، ردپای پشته را بررسی کنید.";
+}
+
+@Override
+public String obtenerErrorLecturaArchivo() {
+    return "نمی‌توان فایل لاگ را خواند. " +
+           "مطمئن شوید فایل وجود دارد و دسترسی خواندن دارد.";
+}
+
+@Override
+public String obtenerEtiquetaBotonLectador() {
+    return "تحلیل‌گر لاگ";
+}
+
+
+
+
+
 
 
 

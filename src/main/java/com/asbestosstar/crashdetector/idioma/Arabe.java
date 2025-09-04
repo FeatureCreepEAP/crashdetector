@@ -2731,6 +2731,72 @@ public String paso3_jei_plugin_fallido(String modId) {
 
 
 
+@Override
+public String tituloLectador() {
+    return "قارئ السجلات - كاشف التوقف";
+}
+
+@Override
+public String obtenerTituloLeyenda() {
+    return "أساطير الألوان";
+}
+
+@Override
+public String obtenerErrorEnLeyenda() {
+    return "أخطاء حرجة";
+}
+
+@Override
+public String obtenerStacktraceEnLeyenda() {
+    return "تتبعات المكدس";
+}
+
+@Override
+public String obtenerTituloError() {
+    return "خطأ";
+}
+
+@Override
+public String obtenerErrorAlProcesarLinea() {
+    return "حدث خطأ أثناء معالجة السطر المحدد";
+}
+
+@Override
+public String obtenerNombreError() {
+    return "اسم الخطأ";
+}
+
+@Override
+public String obtenerDescripcionError() {
+    return "وصف تفصيلي";
+}
+
+@Override
+public String obtenerSeleccionarConsola() {
+    return "اختر السجل";
+}
+
+@Override
+public String obtenerNombreErrorPorDefecto() {
+    return "خطأ غير معروف";
+}
+
+@Override
+public String obtenerDescripcionErrorPorDefecto() {
+    return "تم اكتشاف خطأ حرج في السجلات. " +
+           "تحقق من تتبع المكدس لتحديد السبب الجذري.";
+}
+
+@Override
+public String obtenerErrorLecturaArchivo() {
+    return "تعذر قراءة ملف السجل. " +
+           "تأكد من وجود الملف وامتلاك أذونات القراءة.";
+}
+
+@Override
+public String obtenerEtiquetaBotonLectador() {
+    return "محلل السجلات";
+}
 
 
 
