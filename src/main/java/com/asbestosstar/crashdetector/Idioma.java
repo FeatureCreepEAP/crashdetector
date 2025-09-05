@@ -1232,6 +1232,18 @@ public interface Idioma {
 
 	public String obtenerEtiquetaBotonLectador();
 
+	public String errorRegistroSuscriptoresAutomaticos(String modId, String nombreClase, List<String> modsUbicacion);
+
+	public String nombre_de_error_registro_suscriptores_automaticos();
+
+	public String paso1_registro_suscriptores_automaticos(String modId, String nombreClase);
+
+	public String paso2_registro_suscriptores_automaticos(String modId, String nombreClase, List<String> modsUbicacion);
+
+	public String paso3_registro_suscriptores_automaticos(String modId);
+
+	public String paso4_registro_suscriptores_automaticos();
+
 	
 	
 	

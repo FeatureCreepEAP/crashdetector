@@ -13,14 +13,15 @@ import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
 
 /**
- * Analiza errores cuando una clase registrada como listener de eventos no contiene métodos válidos.
- * Detecta específicamente el error "No listeners found in class [nombre de clase]".
- * Utiliza Buscardor para identificar mods que contienen la clase problemática.
+ * Analiza errores cuando falla el registro de suscriptores automáticos.
+ * Detecta específicamente el error "Failed to register automatic subscribers. ModID: [modid], class [classname]".
+ * Incluye tanto el modid como la clase en el mensaje y usa Buscardor para encontrar los JARs relacionados.
  */
-public class ErrorSinListenersEnClase implements Verificaciones {
+public class ErrorRegistroSuscriptoresAutomaticos implements Verificaciones {
 
     private boolean activado = false;
     private String mensaje = "";
+    private String modId = "";
     private String nombreClase = "";
     private List<String> modsUbicacion = new ArrayList<>();
 
@@ -30,27 +31,29 @@ public class ErrorSinListenersEnClase implements Verificaciones {
 
         // Analiza cada línea del registro buscando el patrón específico de error
         for (String linea : contenidoConsola.split(Verificaciones.nl)) {
-            // Detecta el error específico de clase sin listeners
-            if (linea.contains("No listeners found in class")) {
+            // Detecta el error específico de registro de suscriptores automáticos
+            if (linea.contains("Failed to register automatic subscribers. ModID:")) {
                 
-                // Extrae el nombre de la clase usando expresión regular
-                Pattern pattern = Pattern.compile("No listeners found in class ([^\\s]+)");
+                // Extrae el modid y el nombre de la clase usando expresión regular
+                Pattern pattern = Pattern.compile("Failed to register automatic subscribers\\. ModID: ([^,]+), class ([^\\s]+)");
                 Matcher matcher = pattern.matcher(linea);
+                
                 if (matcher.find()) {
-                    nombreClase = matcher.group(1);
+                    modId = matcher.group(1).trim();
+                    nombreClase = matcher.group(2).trim();
                     
-                    // Convierte el nombre de clase de notación con puntos a notación con barras
-                    String classPath = nombreClase.replace('.', '/');
+                    // Convierte el nombre de clase a formato de ruta para buscar en JARs
+                    String classPath = nombreClase.replace('.', '/') + ".class";
                     
                     // Busca mods que contienen esta clase
-                    List<ArchivoDeMod> modsPotenciales = Buscardor.buscarModsConTermino(classPath+".class");
+                    List<ArchivoDeMod> modsPotenciales = Buscardor.buscarModsConTermino(classPath);
                     
                     // Extrae las ubicaciones para publicar de cada mod encontrado
                     for (ArchivoDeMod mod : modsPotenciales) {
                         modsUbicacion.add(mod.ubicacion_para_publicar());
                     }
                     
-                    mensaje = MonitorDePID.idioma.errorSinListenersEnClase(nombreClase, modsUbicacion) + Verificaciones.nl_html;
+                    mensaje = MonitorDePID.idioma.errorRegistroSuscriptoresAutomaticos(modId, nombreClase, modsUbicacion) + Verificaciones.nl_html;
                     activado = true;
                     break; // Detiene al encontrar el primer error
                 }
@@ -60,7 +63,7 @@ public class ErrorSinListenersEnClase implements Verificaciones {
 
     @Override
     public Verificaciones nueva() {
-        return new ErrorSinListenersEnClase();
+        return new ErrorRegistroSuscriptoresAutomaticos();
     }
 
     @Override
@@ -70,7 +73,7 @@ public class ErrorSinListenersEnClase implements Verificaciones {
 
     @Override
     public float prioridad() {
-        return 880.0f; // Prioridad alta - error que impide registrar eventos del mod
+        return 900.0f; // Prioridad media-alta - error que impide funcionalidad específica del mod
     }
 
     @Override
@@ -80,15 +83,16 @@ public class ErrorSinListenersEnClase implements Verificaciones {
     
     @Override
     public String nombre() {
-        return MonitorDePID.idioma.nombre_de_error_sin_listeners_en_clase();
+        return MonitorDePID.idioma.nombre_de_error_registro_suscriptores_automaticos();
     }
     
     @Override
     public QuickFix solucion() {
         return new QuickFix.Builder(nombre())
-            .agregarEtiqueta(MonitorDePID.idioma.paso1_sin_listeners_en_clase(nombreClase, modsUbicacion))
-            .agregarEtiqueta(MonitorDePID.idioma.paso2_sin_listeners_en_clase(nombreClase))
-            .agregarEtiqueta(MonitorDePID.idioma.paso3_sin_listeners_en_clase(nombreClase, modsUbicacion))
+            .agregarEtiqueta(MonitorDePID.idioma.paso1_registro_suscriptores_automaticos(modId, nombreClase))
+            .agregarEtiqueta(MonitorDePID.idioma.paso2_registro_suscriptores_automaticos(modId, nombreClase, modsUbicacion))
+            .agregarEtiqueta(MonitorDePID.idioma.paso3_registro_suscriptores_automaticos(modId))
+            .agregarEtiqueta(MonitorDePID.idioma.paso4_registro_suscriptores_automaticos()) // Nuevo paso añadido
             .construir();
     }
 }

@@ -2798,7 +2798,69 @@ public String obtenerEtiquetaBotonLectador() {
     return "محلل السجلات";
 }
 
+@Override
+public String errorRegistroSuscriptoresAutomaticos(String modId, String nombreClase, List<String> modsUbicacion) {
+    StringBuilder mensaje = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    mensaje.append("خطأ حرج: فشل في تسجيل المشتركين التلقائيين للتعديل '").append(modId).append("'. ");
+    
+    mensaje.append("الصنف المشكل: <b>").append(nombreClase).append("</b>. ");
+    
+    if (!modsUbicacion.isEmpty()) {
+        mensaje.append("يوجد هذا الصنف في: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            mensaje.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) mensaje.append(", ");
+        }
+        if (modsUbicacion.size() > 3) mensaje.append(", وآخرين...");
+        mensaje.append("</b>. ");
+    }
+    
+    mensaje.append("يحدث هذا الخطأ عندما يحاول تعديل تسجيل صنف كمشترك في الأحداث تلقائيًا، لكن لا يمكن تحميل الصنف. ");
+    mensaje.append("<b>تحقق من أخطاء أخرى في السجل، فقد يكون السبب الحقيقي في تحميل سابق فاشل</b>.");
+    mensaje.append("</b>");
+    
+    return mensaje.toString();
+}
 
+@Override
+public String nombre_de_error_registro_suscriptores_automaticos() {
+    return "فشل في تسجيل المشتركين التلقائيين";
+}
+
+@Override
+public String paso1_registro_suscriptores_automaticos(String modId, String nombreClase) {
+    return "التعديل <b>" + modId + "</b> يحاول تسجيل الصنف <b>" + nombreClase + 
+           "</b> كمشترك تلقائي، لكن العملية فشلت. تحقق من وجود هذا الصنف ووصوله";
+}
+
+@Override
+public String paso2_registro_suscriptores_automaticos(String modId, String nombreClase, List<String> modsUbicacion) {
+    if (!modsUbicacion.isEmpty()) {
+        StringBuilder paso = new StringBuilder("الصنف المشكل <b>" + nombreClase + "</b> موجود في هذه الملفات: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            paso.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) paso.append(", ");
+        }
+        if (modsUbicacion.size() > 3) paso.append(", وآخرين...");
+        paso.append("</b>. ");
+        paso.append("استخدم وظيفة <b>شجرة المودات</b> لتحديد الملف الدقيق الذي يحتوي الصنف المشكل");
+        return paso.toString();
+    }
+    return "الصنف <b>" + nombreClase + "</b> غير موجود في أي ملف تعديل. تحقق من تثبيت التعديل <b>" + modId + 
+           "</b> بشكل صحيح. استخدم وظيفة <b>شجرة المودات</b> للمساعدة في تحديد المشكلة";
+}
+
+@Override
+public String paso3_registro_suscriptores_automaticos(String modId) {
+    return "حدث التعديل <b>" + modId + "</b> إلى أحدث إصدار متوافق مع إصدار ماينكرافت و Forge لديك. " +
+           "إذا استمرت المشكلة، اتصل بمطوّر التعديل وبلغه بالخطأ مع ذكر الصنف المشكل";
+}
+
+@Override
+public String paso4_registro_suscriptores_automaticos() {
+    return "راجع <b>أخطاء أخرى في السجل</b> قبل هذه الرسالة، فقد يكون السبب الحقيقي في تحميل سابق فاشل. " +
+           "أحيانًا يمنع خطأ سابق تحميل الصنوف اللازمة لتسجيل الأحداث";
+}
 
 
 

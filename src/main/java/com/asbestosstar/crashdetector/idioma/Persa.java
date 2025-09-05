@@ -2796,7 +2796,69 @@ public String obtenerEtiquetaBotonLectador() {
     return "تحلیل‌گر لاگ";
 }
 
+@Override
+public String errorRegistroSuscriptoresAutomaticos(String modId, String nombreClase, List<String> modsUbicacion) {
+    StringBuilder mensaje = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    mensaje.append("خطای بحرانی: ثبت مشترکان خودکار برای مود '").append(modId).append("' ناموفق بود. ");
+    
+    mensaje.append("کلاس مشکل‌دار: <b>").append(nombreClase).append("</b>. ");
+    
+    if (!modsUbicacion.isEmpty()) {
+        mensaje.append("این کلاس در این فایل‌ها قرار دارد: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            mensaje.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) mensaje.append(", ");
+        }
+        if (modsUbicacion.size() > 3) mensaje.append(", و دیگران...");
+        mensaje.append("</b>. ");
+    }
+    
+    mensaje.append("این خطا زمانی رخ می‌دهد که مودی سعی کند کلاسی را به‌عنوان گیرنده رویداد به‌صورت خودکار ثبت کند، اما کلاس بارگذاری نشود. ");
+    mensaje.append("<b>خطاهای دیگر در لاگ را بررسی کنید، زیرا علت اصلی ممکن است بارگیری ناموفق قبلی باشد</b>.");
+    mensaje.append("</b>");
+    
+    return mensaje.toString();
+}
 
+@Override
+public String nombre_de_error_registro_suscriptores_automaticos() {
+    return "ثبت مشترکان خودکار ناموفق";
+}
+
+@Override
+public String paso1_registro_suscriptores_automaticos(String modId, String nombreClase) {
+    return "مود <b>" + modId + "</b> در حال ثبت کلاس <b>" + nombreClase + 
+           "</b> به‌عنوان گیرنده خودکار است، اما شکست خورده است. مطمئن شوید این کلاس وجود دارد و قابل دسترسی است";
+}
+
+@Override
+public String paso2_registro_suscriptores_automaticos(String modId, String nombreClase, List<String> modsUbicacion) {
+    if (!modsUbicacion.isEmpty()) {
+        StringBuilder paso = new StringBuilder("کلاس مشکل‌دار <b>" + nombreClase + "</b> در این فایل‌ها است: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            paso.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) paso.append(", ");
+        }
+        if (modsUbicacion.size() > 3) paso.append(", و دیگران...");
+        paso.append("</b>. ");
+        paso.append("از ویژگی <b>درخت مودها</b> برای تشخیص فایل دقیق استفاده کنید");
+        return paso.toString();
+    }
+    return "کلاس <b>" + nombreClase + "</b> در هیچ فایل مودی پیدا نشد. مطمئن شوید مود <b>" + modId + 
+           "</b> به‌درستی نصب شده است. از ویژگی <b>درخت مودها</b> برای شناسایی مشکل استفاده کنید";
+}
+
+@Override
+public String paso3_registro_suscriptores_automaticos(String modId) {
+    return "مود <b>" + modId + "</b> را به آخرین نسخه سازگار با نسخه ماين كرافت و Forge خود به‌روزرسانی کنید. " +
+           "اگر مشکل باقی ماند، با توسعه‌دهنده مود تماس بگیرید و خطا را همراه با کلاس مشکل‌دار گزارش دهید";
+}
+
+@Override
+public String paso4_registro_suscriptores_automaticos() {
+    return "خطاهای <b>دیگر در لاگ</b> قبل از این پیام را بررسی کنید، زیرا مشکل واقعی ممکن است در بارگیری قبلی باشد. " +
+           "گاهی اوقات یک خطا قبلی بارگیری کلاس‌های لازم برای ثبت رویداد را مسدود می‌کند";
+}
 
 
 

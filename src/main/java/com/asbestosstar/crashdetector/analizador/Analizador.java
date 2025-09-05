@@ -22,6 +22,7 @@ import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorDependencia
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorDiscrepanciaModID;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorJEIPluginFallido;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorMetadataModsTomlFaltante;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorRegistroSuscriptoresAutomaticos;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorSinListenersEnClase;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorSistemaSonido;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorUnionFileSystemCorrupto;
@@ -193,7 +194,7 @@ public class Analizador {
 		verificaciones.add(new ErrorSistemaSonido());
 		verificaciones.add(new ErrorSinListenersEnClase());
 		verificaciones.add(new ErrorUnionFileSystemCorrupto());
-		verificaciones.add(new ErrorUnionFileSystemCorrupto());
+		verificaciones.add(new ErrorRegistroSuscriptoresAutomaticos());
 
 		verificaciones.add(new AzureGeckoLibInicializoPronto());
 		verificaciones.add(new SCOErrorCompatibilidadC2ME());

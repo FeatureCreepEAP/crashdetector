@@ -2785,7 +2785,69 @@ public String obtenerEtiquetaBotonLectador() {
     return "Analisador de Logs";
 }
 
+@Override
+public String errorRegistroSuscriptoresAutomaticos(String modId, String nombreClase, List<String> modsUbicacion) {
+    StringBuilder mensaje = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    mensaje.append("Erro crítico: Falha ao registrar assinantes automáticos para o mod '").append(modId).append("'. ");
+    
+    mensaje.append("Classe problemática: <b>").append(nombreClase).append("</b>. ");
+    
+    if (!modsUbicacion.isEmpty()) {
+        mensaje.append("Esta classe está localizada em: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            mensaje.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) mensaje.append(", ");
+        }
+        if (modsUbicacion.size() > 3) mensaje.append(", e outros...");
+        mensaje.append("</b>. ");
+    }
+    
+    mensaje.append("Este erro ocorre quando um mod tenta registrar uma classe como assinante de eventos automaticamente, mas a classe não pode ser carregada. ");
+    mensaje.append("<b>Verifique outros erros no log, pois a causa real pode estar em um carregamento anterior falho</b>.");
+    mensaje.append("</b>");
+    
+    return mensaje.toString();
+}
 
+@Override
+public String nombre_de_error_registro_suscriptores_automaticos() {
+    return "Falha no Registro de Assinantes Automáticos";
+}
+
+@Override
+public String paso1_registro_suscriptores_automaticos(String modId, String nombreClase) {
+    return "O mod <b>" + modId + "</b> está tentando registrar a classe <b>" + nombreClase + 
+           "</b> como assinante automático, mas falhou. Verifique se esta classe existe e é acessível";
+}
+
+@Override
+public String paso2_registro_suscriptores_automaticos(String modId, String nombreClase, List<String> modsUbicacion) {
+    if (!modsUbicacion.isEmpty()) {
+        StringBuilder paso = new StringBuilder("A classe problemática <b>" + nombreClase + "</b> está nestes arquivos: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            paso.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) paso.append(", ");
+        }
+        if (modsUbicacion.size() > 3) paso.append(", e outros...");
+        paso.append("</b>. ");
+        paso.append("Use a função <b>Árvore de Mods</b> para confirmar qual arquivo contém a classe problemática");
+        return paso.toString();
+    }
+    return "A classe <b>" + nombreClase + "</b> não foi encontrada em nenhum arquivo de mod. Verifique se o mod <b>" + modId + 
+           "</b> está instalado corretamente. Use a função <b>Árvore de Mods</b> para ajudar a identificar o problema";
+}
+
+@Override
+public String paso3_registro_suscriptores_automaticos(String modId) {
+    return "Atualize o mod <b>" + modId + "</b> para a última versão compatível com sua versão do Minecraft e Forge. " +
+           "Se o problema persistir, contate o desenvolvedor do mod relatando o erro com a classe problemática";
+}
+
+@Override
+public String paso4_registro_suscriptores_automaticos() {
+    return "Verifique <b>outros erros no log</b> antes desta mensagem, pois o problema real pode estar em um carregamento anterior falhado. " +
+           "Às vezes um erro anterior impede o carregamento das classes necessárias para o registro de eventos";
+}
 
 
 

@@ -2783,7 +2783,69 @@ public String obtenerEtiquetaBotonLectador() {
     return "로그 분석기";
 }
 
+@Override
+public String errorRegistroSuscriptoresAutomaticos(String modId, String nombreClase, List<String> modsUbicacion) {
+    StringBuilder mensaje = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    mensaje.append("치명적 오류: '").append(modId).append("' 모드의 자동 이벤트 구독자 등록에 실패했습니다. ");
+    
+    mensaje.append("문제 있는 클래스: <b>").append(nombreClase).append("</b>. ");
+    
+    if (!modsUbicacion.isEmpty()) {
+        mensaje.append("이 클래스는 다음 위치에 있습니다: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            mensaje.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) mensaje.append(", ");
+        }
+        if (modsUbicacion.size() > 3) mensaje.append(", 기타...");
+        mensaje.append("</b>. ");
+    }
+    
+    mensaje.append("모드가 이벤트 구독자로 클래스를 자동 등록하려 하지만 클래스를 로드할 수 없을 때 이 오류가 발생합니다. ");
+    mensaje.append("<b>로그에서 이 메시지 이전의 다른 오류를 확인하세요. 실제 원인은 이전 로드 실패일 수 있습니다</b>.");
+    mensaje.append("</b>");
+    
+    return mensaje.toString();
+}
 
+@Override
+public String nombre_de_error_registro_suscriptores_automaticos() {
+    return "자동 구독자 등록 실패";
+}
+
+@Override
+public String paso1_registro_suscriptores_automaticos(String modId, String nombreClase) {
+    return "모드 <b>" + modId + "</b>가 클래스 <b>" + nombreClase + 
+           "</b>를 자동 구독자로 등록하려 하지만 실패했습니다. 이 클래스가 존재하고 접근 가능한지 확인하세요";
+}
+
+@Override
+public String paso2_registro_suscriptores_automaticos(String modId, String nombreClase, List<String> modsUbicacion) {
+    if (!modsUbicacion.isEmpty()) {
+        StringBuilder paso = new StringBuilder("문제 있는 클래스 <b>" + nombreClase + "</b>는 다음 파일에 있습니다: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            paso.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) paso.append(", ");
+        }
+        if (modsUbicacion.size() > 3) paso.append(", 기타...");
+        paso.append("</b>. ");
+        paso.append("<b>모드 트리</b> 기능을 사용해 문제 있는 클래스를 포함한 정확한 파일을 확인하세요");
+        return paso.toString();
+    }
+    return "클래스 <b>" + nombreClase + "</b>가 어떤 모드 파일에도 없습니다. 모드 <b>" + modId + 
+           "</b>가 올바르게 설치되었는지 확인하세요. <b>모드 트리</b> 기능을 사용해 문제를 찾으세요";
+}
+
+@Override
+public String paso3_registro_suscriptores_automaticos(String modId) {
+    return "모드 <b>" + modId + "</b>를 사용 중인 마인크래프트 및 포지 버전과 호환되는 최신 버전으로 업데이트하세요. " +
+           "문제가 지속되면 개발자에게 문제 클래스와 함께 오류를 보고하세요";
+}
+
+@Override
+public String paso4_registro_suscriptores_automaticos() {
+    return "<b>로그의 이 메시지 이전 오류들</b>을 확인하세요. 실제 문제는 이전 로드 실패일 수 있습니다. " +
+           "때때로 이전 오류가 이벤트 등록에 필요한 클래스 로드를 방해할 수 있습니다";
+}
 
 
 

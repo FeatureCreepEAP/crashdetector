@@ -2862,10 +2862,72 @@ public String obtenerErrorLecturaArchivo() {
 
 @Override
 public String obtenerEtiquetaBotonLectador() {
-    return "Log Analyzer";
+    return "Log Reader";
 }
 
+@Override
+public String errorRegistroSuscriptoresAutomaticos(String modId, String nombreClase, List<String> modsUbicacion) {
+    StringBuilder mensaje = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    mensaje.append("Critical error: Failed to register automatic event subscribers for mod '").append(modId).append("'. ");
+    
+    mensaje.append("Problematic class: <b>").append(nombreClase).append("</b>. ");
+    
+    if (!modsUbicacion.isEmpty()) {
+        mensaje.append("This class is located in: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            mensaje.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) mensaje.append(", ");
+        }
+        if (modsUbicacion.size() > 3) mensaje.append(", and others...");
+        mensaje.append("</b>. ");
+    }
+    
+    mensaje.append("This error occurs when a mod tries to automatically register a class as an event subscriber, but the class cannot be loaded. ");
+    mensaje.append("<b>Check other errors in the log, as the root cause may be a previous failed load</b>.");
+    mensaje.append("</b>");
+    
+    return mensaje.toString();
+}
 
+@Override
+public String nombre_de_error_registro_suscriptores_automaticos() {
+    return "Failure in Automatic Subscriber Registration";
+}
+
+@Override
+public String paso1_registro_suscriptores_automaticos(String modId, String nombreClase) {
+    return "The mod <b>" + modId + "</b> is trying to register the class <b>" + nombreClase + 
+           "</b> as an automatic subscriber, but failed. Verify this class exists and is accessible";
+}
+
+@Override
+public String paso2_registro_suscriptores_automaticos(String modId, String nombreClase, List<String> modsUbicacion) {
+    if (!modsUbicacion.isEmpty()) {
+        StringBuilder paso = new StringBuilder("The problematic class <b>" + nombreClase + "</b> is in these files: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            paso.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) paso.append(", ");
+        }
+        if (modsUbicacion.size() > 3) paso.append(", and others...");
+        paso.append("</b>. ");
+        paso.append("Use the <b>Mod Tree</b> feature to confirm which specific file contains the problematic class");
+        return paso.toString();
+    }
+    return "The class <b>" + nombreClase + "</b> is not found in any mod file. Verify that mod <b>" + modId + 
+           "</b> is installed correctly. Use the <b>Mod Tree</b> feature to help identify the issue";
+}
+
+@Override
+public String paso3_registro_suscriptores_automaticos(String modId) {
+    return "Update mod <b>" + modId + "</b> to the latest version compatible with your Minecraft and Forge versions. " +
+           "If the issue persists, contact the mod developer and report the error with the problematic class";
+}
+
+@Override
+public String paso4_registro_suscriptores_automaticos() {
+    return "Review <b>other errors in the log</b> before this message, as the real issue may be an earlier load failure. " +
+           "Sometimes a prior error prevents necessary classes from loading for event registration";
+}
 
 
 

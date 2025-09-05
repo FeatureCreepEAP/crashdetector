@@ -2790,7 +2790,69 @@ public String obtenerEtiquetaBotonLectador() {
     return "Анализатор логов";
 }
 
+@Override
+public String errorRegistroSuscriptoresAutomaticos(String modId, String nombreClase, List<String> modsUbicacion) {
+    StringBuilder mensaje = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    mensaje.append("Критическая ошибка: Не удалось зарегистрировать автоматических подписчиков для мода '").append(modId).append("'. ");
+    
+    mensaje.append("Проблемный класс: <b>").append(nombreClase).append("</b>. ");
+    
+    if (!modsUbicacion.isEmpty()) {
+        mensaje.append("Этот класс находится в: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            mensaje.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) mensaje.append(", ");
+        }
+        if (modsUbicacion.size() > 3) mensaje.append(", и других...");
+        mensaje.append("</b>. ");
+    }
+    
+    mensaje.append("Эта ошибка возникает, когда мод пытается автоматически зарегистрировать класс как подписчика событий, но класс не может быть загружен. ");
+    mensaje.append("<b>Проверьте другие ошибки в логе — реальная причина может быть в предыдущей неудачной загрузке</b>.");
+    mensaje.append("</b>");
+    
+    return mensaje.toString();
+}
 
+@Override
+public String nombre_de_error_registro_suscriptores_automaticos() {
+    return "Ошибка регистрации автоматических подписчиков";
+}
+
+@Override
+public String paso1_registro_suscriptores_automaticos(String modId, String nombreClase) {
+    return "Мод <b>" + modId + "</b> пытается зарегистрировать класс <b>" + nombreClase + 
+           "</b> как автоматического подписчика, но это не удалось. Убедитесь, что класс существует и доступен";
+}
+
+@Override
+public String paso2_registro_suscriptores_automaticos(String modId, String nombreClase, List<String> modsUbicacion) {
+    if (!modsUbicacion.isEmpty()) {
+        StringBuilder paso = new StringBuilder("Проблемный класс <b>" + nombreClase + "</b> находится в этих файлах: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            paso.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) paso.append(", ");
+        }
+        if (modsUbicacion.size() > 3) paso.append(", и других...");
+        paso.append("</b>. ");
+        paso.append("Используйте функцию <b>Дерево модов</b>, чтобы определить, в каком файле находится проблемный класс");
+        return paso.toString();
+    }
+    return "Класс <b>" + nombreClase + "</b> не найден ни в одном файле мода. Убедитесь, что мод <b>" + modId + 
+           "</b> установлен правильно. Используйте функцию <b>Дерево модов</b> для поиска проблемы";
+}
+
+@Override
+public String paso3_registro_suscriptores_automaticos(String modId) {
+    return "Обновите мод <b>" + modId + "</b> до последней версии, совместимой с вашей версией Minecraft и Forge. " +
+           "Если проблема останется, свяжитесь с разработчиком мода и сообщите об ошибке с указанием проблемного класса";
+}
+
+@Override
+public String paso4_registro_suscriptores_automaticos() {
+    return "Проверьте <b>другие ошибки в логе</b> перед этим сообщением — реальная причина может быть в предыдущем сбое загрузки. " +
+           "Иногда предыдущая ошибка мешает загрузке необходимых классов для регистрации событий";
+}
 
 
 

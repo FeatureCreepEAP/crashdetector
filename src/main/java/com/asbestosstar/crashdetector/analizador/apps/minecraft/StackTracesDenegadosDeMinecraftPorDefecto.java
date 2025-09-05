@@ -60,9 +60,7 @@ public class StackTracesDenegadosDeMinecraftPorDefecto {
 
         VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains("No bonuses were provided"));//apotheosis Si hay una problema puedo eliminar
 
-        
-        
-        
+        VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains("rg.betterx.bclib.client.models.CustomModelBakery.addItemModel"));//Puedo cambiar si necisario, pero BCLib es un comun positiva falsa
         
     }
 }

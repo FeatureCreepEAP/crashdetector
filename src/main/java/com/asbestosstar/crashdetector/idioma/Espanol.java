@@ -3526,7 +3526,69 @@ public String obtenerEtiquetaBotonLectador() {
     return "Analizador de Logs";
 }
 
+@Override
+public String errorRegistroSuscriptoresAutomaticos(String modId, String nombreClase, List<String> modsUbicacion) {
+    StringBuilder mensaje = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    mensaje.append("Error crítico: Fallo al registrar suscriptores automáticos para el mod '").append(modId).append("'. ");
+    
+    mensaje.append("Clase problemática: <b>").append(nombreClase).append("</b>. ");
+    
+    if (!modsUbicacion.isEmpty()) {
+        mensaje.append("Esta clase se encuentra en: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            mensaje.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) mensaje.append(", ");
+        }
+        if (modsUbicacion.size() > 3) mensaje.append(", y otros...");
+        mensaje.append("</b>. ");
+    }
+    
+    mensaje.append("Este error ocurre cuando un mod intenta registrar una clase como suscriptor automático pero la clase no se puede cargar correctamente. ");
+    mensaje.append("<b>Revisa otros errores en el log, ya que el problema real podría estar en otra parte del registro</b>.");
+    mensaje.append("</b>");
+    
+    return mensaje.toString();
+}
 
+@Override
+public String nombre_de_error_registro_suscriptores_automaticos() {
+    return "Fallo en Registro de Suscriptores Automáticos";
+}
+
+@Override
+public String paso1_registro_suscriptores_automaticos(String modId, String nombreClase) {
+    return "El mod <b>" + modId + "</b> está intentando registrar la clase <b>" + nombreClase + 
+           "</b> como suscriptor automático, pero ha fallado. Verifica que esta clase exista y sea accesible";
+}
+
+@Override
+public String paso2_registro_suscriptores_automaticos(String modId, String nombreClase, List<String> modsUbicacion) {
+    if (!modsUbicacion.isEmpty()) {
+        StringBuilder paso = new StringBuilder("La clase problemática <b>" + nombreClase + "</b> se encuentra en estos archivos: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            paso.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) paso.append(", ");
+        }
+        if (modsUbicacion.size() > 3) paso.append(", y otros...");
+        paso.append("</b>. ");
+        paso.append("Usa la función <b>Arbol de Mods</b> para confirmar qué archivo específico contiene la clase problemática");
+        return paso.toString();
+    }
+    return "La clase <b>" + nombreClase + "</b> no se encuentra en ningún archivo de mod. Verifica que el mod <b>" + modId + 
+           "</b> esté correctamente instalado. Usa la función <b>Arbol de Mods</b> para ayudar a identificar el problema";
+}
+
+@Override
+public String paso3_registro_suscriptores_automaticos(String modId) {
+    return "Actualiza el mod <b>" + modId + "</b> a la última versión compatible con tu versión de Minecraft y Forge. " +
+           "Si el problema persiste, contacta al desarrollador del mod reportando el error con la clase problemática";
+}
+
+@Override
+public String paso4_registro_suscriptores_automaticos() {
+    return "Revisa <b>otros errores en el log</b> antes de este mensaje, ya que el problema real podría estar en otra parte del registro. " +
+           "A veces un error previo impide que se carguen correctamente las clases necesarias para el registro de suscriptores";
+}
 
 
 }

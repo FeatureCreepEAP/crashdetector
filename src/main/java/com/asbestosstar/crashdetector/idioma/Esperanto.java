@@ -2832,7 +2832,69 @@ public String obtenerEtiquetaBotonLectador() {
     return "Ĵurnala Analizilo";
 }
 
+@Override
+public String errorRegistroSuscriptoresAutomaticos(String modId, String nombreClase, List<String> modsUbicacion) {
+    StringBuilder mensaje = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    mensaje.append("Grava eraro: Malsukcesis registri aŭtomatajn eventajn abonantojn por la aldonaĵo '").append(modId).append("'. ");
+    
+    mensaje.append("Problemeca klaso: <b>").append(nombreClase).append("</b>. ");
+    
+    if (!modsUbicacion.isEmpty()) {
+        mensaje.append("Ĉi tiu klaso troviĝas en: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            mensaje.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) mensaje.append(", ");
+        }
+        if (modsUbicacion.size() > 3) mensaje.append(", kaj aliaj...");
+        mensaje.append("</b>. ");
+    }
+    
+    mensaje.append("Tiu eraro okazas kiam aldonaĵo provas aŭtomate registri klason kiel eventan abonanton, sed la klaso ne povas esti ŝargita. ");
+    mensaje.append("<b>Ekzamenu aliajn erarojn en la protokolo, ĉar la vera kaŭzo povas esti antaŭa malsukcesa ŝargo</b>.");
+    mensaje.append("</b>");
+    
+    return mensaje.toString();
+}
 
+@Override
+public String nombre_de_error_registro_suscriptores_automaticos() {
+    return "Malsukceso ĉe Registro de Aŭtomataj Abonantoj";
+}
+
+@Override
+public String paso1_registro_suscriptores_automaticos(String modId, String nombreClase) {
+    return "La aldonaĵo <b>" + modId + "</b> provas registri la klason <b>" + nombreClase + 
+           "</b> kiel aŭtomatan abonanton, sed malsukcesis. Kontrolu ĉu ĉi tiu klaso ekzistas kaj alireblas";
+}
+
+@Override
+public String paso2_registro_suscriptores_automaticos(String modId, String nombreClase, List<String> modsUbicacion) {
+    if (!modsUbicacion.isEmpty()) {
+        StringBuilder paso = new StringBuilder("La problemeca klaso <b>" + nombreClase + "</b> troviĝas en ĉi tiuj dosieroj: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            paso.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) paso.append(", ");
+        }
+        if (modsUbicacion.size() > 3) paso.append(", kaj aliaj...");
+        paso.append("</b>. ");
+        paso.append("Uzu la funkcion <b>Modarbo</b> por konfirmi en kiun dosieron estas la problemeca klaso");
+        return paso.toString();
+    }
+    return "La klaso <b>" + nombreClase + "</b> ne troviĝas en iu ajn aldonaĵa dosiero. Kontrolu ĉu la aldonaĵo <b>" + modId + 
+           "</b> estas ĉeeste instalita. Uzu la funkcion <b>Modarbo</b> por helpi trovi la problemon";
+}
+
+@Override
+public String paso3_registro_suscriptores_automaticos(String modId) {
+    return "Ĝisdatigu la aldonaĵon <b>" + modId + "</b> al la plej nova versio kompatibla kun viaj versioj de Minecraft kaj Forge. " +
+           "Se la problemo daŭras, kontaktu la ellaboranton de la aldonaĵo kiu raportas la eraron per la problemeca klaso";
+}
+
+@Override
+public String paso4_registro_suscriptores_automaticos() {
+    return "Ekzamenu <b>aliajn erarojn en la protokolo</b> antaŭ ol ĉi tiu mesaĝo, ĉar la vera problemo povas esti antaŭa malsukcesa ŝargo. " +
+           "Iomatempe antaŭa eraro malebligas ŝargi necesajn klasojn por eventa registro";
+}
 
 
 

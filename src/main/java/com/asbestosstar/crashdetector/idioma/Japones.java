@@ -2802,7 +2802,69 @@ public String obtenerErrorLecturaArchivo() {
 public String obtenerEtiquetaBotonLectador() {
     return "ログ分析ツール";
 }
+@Override
+public String errorRegistroSuscriptoresAutomaticos(String modId, String nombreClase, List<String> modsUbicacion) {
+    StringBuilder mensaje = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    mensaje.append("重大エラー: モッド '").append(modId).append("' の自動イベントサブスクライバーの登録に失敗しました。 ");
+    
+    mensaje.append("問題のあるクラス: <b>").append(nombreClase).append("</b>。 ");
+    
+    if (!modsUbicacion.isEmpty()) {
+        mensaje.append("このクラスは以下の場所にあります: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            mensaje.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) mensaje.append(", ");
+        }
+        if (modsUbicacion.size() > 3) mensaje.append(", その他...");
+        mensaje.append("</b>。 ");
+    }
+    
+    mensaje.append("モッドがクラスを自動的にイベント購読者として登録しようとしたが、クラスを読み込めなかった場合にこのエラーが発生します。 ");
+    mensaje.append("<b>ログ内のこのメッセージより前の他のエラーを確認してください。根本原因は以前の読み込み失敗である可能性があります</b>。");
+    mensaje.append("</b>");
+    
+    return mensaje.toString();
+}
 
+@Override
+public String nombre_de_error_registro_suscriptores_automaticos() {
+    return "自動サブスクライバー登録失敗";
+}
+
+@Override
+public String paso1_registro_suscriptores_automaticos(String modId, String nombreClase) {
+    return "モッド <b>" + modId + "</b> がクラス <b>" + nombreClase + 
+           "</b> を自動サブスクライバーとして登録しようとしていますが、失敗しています。このクラスが存在し、アクセス可能か確認してください";
+}
+
+@Override
+public String paso2_registro_suscriptores_automaticos(String modId, String nombreClase, List<String> modsUbicacion) {
+    if (!modsUbicacion.isEmpty()) {
+        StringBuilder paso = new StringBuilder("問題のあるクラス <b>" + nombreClase + "</b> はこれらのファイルにあります: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            paso.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) paso.append(", ");
+        }
+        if (modsUbicacion.size() > 3) paso.append(", その他...");
+        paso.append("</b>。 ");
+        paso.append("<b>Modツリー</b> 機能を使って、問題のあるクラスを含む正確なファイルを確認してください");
+        return paso.toString();
+    }
+    return "クラス <b>" + nombreClase + "</b> がどのモッドファイルにも見つかりません。モッド <b>" + modId + 
+           "</b> が正しくインストールされているか確認してください。<b>Modツリー</b> 機能を使って問題を特定してください";
+}
+
+@Override
+public String paso3_registro_suscriptores_automaticos(String modId) {
+    return "モッド <b>" + modId + "</b> をお使いのMinecraftおよびForgeバージョンと互換性のある最新バージョンに更新してください。 " +
+           "問題が続く場合は、開発者に問題のクラスを含めてエラーを報告してください";
+}
+
+@Override
+public String paso4_registro_suscriptores_automaticos() {
+    return "<b>ログ内のこのメッセージより前の他のエラー</b>を確認してください。実際の問題は以前の読み込み失敗にある可能性があります。 " +
+           "場合によっては、以前のエラーがイベント登録に必要なクラスの読み込みを妨げることがあります";
+}
 
 
 

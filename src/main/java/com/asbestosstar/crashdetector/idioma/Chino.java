@@ -2799,7 +2799,69 @@ public String obtenerEtiquetaBotonLectador() {
     return "日志分析器";
 }
 
+@Override
+public String errorRegistroSuscriptoresAutomaticos(String modId, String nombreClase, List<String> modsUbicacion) {
+    StringBuilder mensaje = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    mensaje.append("严重错误：无法为模组 '").append(modId).append("' 注册自动事件订阅者。 ");
+    
+    mensaje.append("问题类： <b>").append(nombreClase).append("</b>。 ");
+    
+    if (!modsUbicacion.isEmpty()) {
+        mensaje.append("此类位于：<b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            mensaje.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) mensaje.append(", ");
+        }
+        if (modsUbicacion.size() > 3) mensaje.append(", 等等...");
+        mensaje.append("</b>。 ");
+    }
+    
+    mensaje.append("当模组尝试自动注册一个类为事件订阅者，但该类无法加载时，会发生此错误。 ");
+    mensaje.append("<b>请检查日志中此消息之前的其他错误，真正原因可能是之前的加载失败</b>。");
+    mensaje.append("</b>");
+    
+    return mensaje.toString();
+}
 
+@Override
+public String nombre_de_error_registro_suscriptores_automaticos() {
+    return "自动订阅者注册失败";
+}
+
+@Override
+public String paso1_registro_suscriptores_automaticos(String modId, String nombreClase) {
+    return "模组 <b>" + modId + "</b> 正在尝试将类 <b>" + nombreClase + 
+           "</b> 注册为自动订阅者，但失败了。请检查此类是否存在且可访问";
+}
+
+@Override
+public String paso2_registro_suscriptores_automaticos(String modId, String nombreClase, List<String> modsUbicacion) {
+    if (!modsUbicacion.isEmpty()) {
+        StringBuilder paso = new StringBuilder("问题类 <b>" + nombreClase + "</b> 位于这些文件中：<b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            paso.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) paso.append(", ");
+        }
+        if (modsUbicacion.size() > 3) paso.append(", 等等...");
+        paso.append("</b>。 ");
+        paso.append("使用 <b>模组树</b> 功能确认哪个文件包含问题类");
+        return paso.toString();
+    }
+    return "类 <b>" + nombreClase + "</b> 在任何模组文件中都未找到。请检查模组 <b>" + modId + 
+           "</b> 是否正确安装。使用 <b>模组树</b> 功能帮助定位问题";
+}
+
+@Override
+public String paso3_registro_suscriptores_automaticos(String modId) {
+    return "将模组 <b>" + modId + "</b> 更新至与你的 Minecraft 和 Forge 版本兼容的最新版本。 " +
+           "如果问题仍然存在，请联系模组开发者并报告包含问题类的错误";
+}
+
+@Override
+public String paso4_registro_suscriptores_automaticos() {
+    return "请检查此消息之前的 <b>日志中的其他错误</b>，因为真正的问题可能出现在之前的加载失败中。 " +
+           "有时先前的错误会阻止必要类的加载，导致事件注册失败";
+}
 
 
 
