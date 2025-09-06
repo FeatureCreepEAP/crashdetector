@@ -32,6 +32,8 @@ public class SecureLoggerAPI implements APIdeSitioDeRegistro {
 		List<String> sitios = new ArrayList<String>();
 		sitios.add("https://securelogger.net/save/log?");
 		sitios.add("https://securelogger.top/save/log?");
+
+		
 		return sitios;
 	}
 
