@@ -401,15 +401,17 @@ opacity: 0.15;                /* from 0.05 → 0.15 */
             
             // Minecraft error highlighting
 // Highlighting priority
-if (preg_match('/fatal\//i', $line)) {
+if (preg_match('/(\[FATAL\]|\/FATAL\]| fatal )/i', $line)) {
     $highlight = 'fatal';
-} elseif (preg_match('/warn\/| warn /i', $line)) {
+} elseif (preg_match('/(\[WARN\]|\/WARN\]| warn )/i', $line) || preg_match('/warn\//i', $line)) {
     $highlight = 'warn';
 } elseif (stripos($line, 'at ') !== false) {
     $highlight = 'trace';
 } elseif (stripos($line, 'error') !== false || stripos($line, 'exception') !== false) {
     $highlight = 'error';
 }
+
+
 
 
             
