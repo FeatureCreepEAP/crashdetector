@@ -2862,7 +2862,17 @@ public String paso4_registro_suscriptores_automaticos() {
            "أحيانًا يمنع خطأ سابق تحميل الصنوف اللازمة لتسجيل الأحداث";
 }
 
+@Override
+public String limpiado() {
+	// TODO Auto-generated method stub
+	return "تم التنظيف";
+}
 
+@Override
+public String original() {
+	// TODO Auto-generated method stub
+	return "أصلي";
+}
 
 
 

@@ -2847,7 +2847,17 @@ public String paso4_registro_suscriptores_automaticos() {
            "때때로 이전 오류가 이벤트 등록에 필요한 클래스 로드를 방해할 수 있습니다";
 }
 
+@Override
+public String limpiado() {
+	// TODO Auto-generated method stub
+	return "정리됨";
+}
 
+@Override
+public String original() {
+	// TODO Auto-generated method stub
+	return "원본";
+}
 
 
 

@@ -2860,7 +2860,17 @@ public String paso4_registro_suscriptores_automaticos() {
            "گاهی اوقات یک خطا قبلی بارگیری کلاس‌های لازم برای ثبت رویداد را مسدود می‌کند";
 }
 
+@Override
+public String limpiado() {
+	// TODO Auto-generated method stub
+	return "پاک‌شده";
+}
 
+@Override
+public String original() {
+	// TODO Auto-generated method stub
+	return "اصلی";
+}
 
 
 

@@ -2853,7 +2853,17 @@ public String paso4_registro_suscriptores_automaticos() {
     return "Проверьте <b>другие ошибки в логе</b> перед этим сообщением — реальная причина может быть в предыдущем сбое загрузки. " +
            "Иногда предыдущая ошибка мешает загрузке необходимых классов для регистрации событий";
 }
+@Override
+public String limpiado() {
+	// TODO Auto-generated method stub
+	return "Очищено";
+}
 
+@Override
+public String original() {
+	// TODO Auto-generated method stub
+	return "Оригинал";
+}
 
 
 

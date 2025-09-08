@@ -2849,6 +2849,18 @@ public String paso4_registro_suscriptores_automaticos() {
            "Às vezes um erro anterior impede o carregamento das classes necessárias para o registro de eventos";
 }
 
+@Override
+public String limpiado() {
+	// TODO Auto-generated method stub
+	return "Limpo";
+}
+
+@Override
+public String original() {
+	// TODO Auto-generated method stub
+	return "Original";
+}
+
 
 
 

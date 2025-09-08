@@ -2866,7 +2866,17 @@ public String paso4_registro_suscriptores_automaticos() {
            "場合によっては、以前のエラーがイベント登録に必要なクラスの読み込みを妨げることがあります";
 }
 
+@Override
+public String limpiado() {
+	// TODO Auto-generated method stub
+	return "クリア済";
+}
 
+@Override
+public String original() {
+	// TODO Auto-generated method stub
+	return "オリジナル";
+}
 
 
 

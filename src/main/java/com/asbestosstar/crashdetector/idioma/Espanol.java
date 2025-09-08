@@ -3590,5 +3590,17 @@ public String paso4_registro_suscriptores_automaticos() {
            "A veces un error previo impide que se carguen correctamente las clases necesarias para el registro de suscriptores";
 }
 
+@Override
+public String limpiado() {
+	// TODO Auto-generated method stub
+	return "Limpiado";
+}
+
+@Override
+public String original() {
+	// TODO Auto-generated method stub
+	return "Original";
+}
+
 
 }

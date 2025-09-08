@@ -2863,7 +2863,17 @@ public String paso4_registro_suscriptores_automaticos() {
            "有时先前的错误会阻止必要类的加载，导致事件注册失败";
 }
 
+@Override
+public String limpiado() {
+	// TODO Auto-generated method stub
+	return "已清理";
+}
 
+@Override
+public String original() {
+	// TODO Auto-generated method stub
+	return "原始";
+}
 
 
 

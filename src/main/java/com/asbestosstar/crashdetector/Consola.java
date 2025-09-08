@@ -1,5 +1,6 @@
 package com.asbestosstar.crashdetector;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.anon.AnonimizadorDeRuta;
 import com.asbestosstar.crashdetector.anon.AnonimizadordeRegistros;
 import com.asbestosstar.crashdetector.api_sito_registro.APIdeSitioDeRegistro;
@@ -23,6 +25,7 @@ import com.asbestosstar.crashdetector.api_sito_registro.StikkedAPI;
 import com.asbestosstar.crashdetector.divisor.DivisorDeArchivos;
 import com.asbestosstar.crashdetector.divisor.TLauncherConsolaDivisor;
 import com.asbestosstar.crashdetector.divisor.VainillaConsolaDivisor;
+import com.asbestosstar.crashdetector.gui.LectadorDeConsolas.ErrorDeLectador;
 import com.asbestosstar.crashdetector.gui.NoRegistroDeLauncher;
 import com.asbestosstar.crashdetector.limpiador.LimipiadorDeRegistro;
 import com.asbestosstar.crashdetector.limpiador.LimpiadorRegistroDeLauncherVainilla;
@@ -42,6 +45,8 @@ public class Consola {
 	public String contenido_verificar;
 
 	public VerificacionDeStackTrace verificacion_de_stacktrace;
+
+	public List<ErrorDeLectador> errores_de_lectadores=new ArrayList<ErrorDeLectador>();
 
 	public static ArrayList<File> archivos_en_lista = new ArrayList<File>();
 	
@@ -447,7 +452,18 @@ public class Consola {
 	    return "";
 	}
 	
-	
+	/**
+	 * Agregar un error a Lectador De Consolas
+	 * @param numero_de_linea el numero de linea del error. puedes usar esta metedo mas de una vez si el error es de mas 1 linea
+	 * @param verificacion la verificaion
+	 * @param color Color en la clase LectadorDeConsolas
+	 * @return la enlace del error
+	 */
+	public String agregarErrorALectador(int numero_de_linea,Verificaciones verificacion,Color color) {
+		ErrorDeLectador letc=	new ErrorDeLectador(this,numero_de_linea,verificacion,color);
+		errores_de_lectadores.add(letc);
+		return letc.toString();
+	}
 	
 	
 	

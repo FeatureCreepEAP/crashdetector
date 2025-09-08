@@ -1,12 +1,11 @@
 package com.asbestosstar.crashdetector.gui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
@@ -16,6 +15,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JComboBox;
@@ -29,10 +29,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.KeyStroke;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultHighlighter;
 import javax.swing.text.Document;
 import javax.swing.text.Element;
+import javax.swing.text.Highlighter;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
@@ -41,6 +45,7 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 /**
  * Componente para la lectura y análisis de logs de consolas con soporte de
@@ -62,7 +67,11 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 	private JPanel pnlInferior;
 	private JPanel pnlLeyenda;
 	private JComponent pnlSelector;
-
+	private JTextField txtBuscar = new JTextField();
+	private java.util.List<Integer> posicionesCoincidencias = new java.util.ArrayList<>();
+	private int indiceBusquedaActual = -1;
+	private JComboBox<String> cmbModo = new JComboBox<>(new String[] { MonitorDePID.idioma.limpiado(), MonitorDePID.idioma.original() });
+	
 	/**
 	 * Constructor que inicializa la interfaz sin mostrarla inmediatamente
 	 */
@@ -74,7 +83,6 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 	}
 
 	private void configurarVentana() {
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(1280, 720);
 		setLocationRelativeTo(null);
 
@@ -130,6 +138,7 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 
 		configurarAreaRegistros();
 		scrollLogs = new JScrollPane(txtRegistros);
+		scrollLogs.setRowHeaderView(new NumeradorDeLineas(txtRegistros));
 		capa.add(scrollLogs, JLayeredPane.PALETTE_LAYER);
 
 		pnlInferior = crearPanelInformacionErrores();
@@ -144,6 +153,9 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 		pnlSelector.setOpaque(false);
 		capa.add(pnlSelector, JLayeredPane.PALETTE_LAYER);
 
+		inicializarBuscador(capa);
+
+		
 		recolocarComponentes();
 		addComponentListener(new java.awt.event.ComponentAdapter() {
 			@Override
@@ -177,14 +189,15 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 
 		if (pnlSelector != null) {
 			pnlSelector.setBounds((int) ((anchoBase - 225) * escX), (int) (30 * escY), (int) (220 * escX),
-					(int) (40 * escY));
+					(int) (80 * escY));
 		}
 
 		if (scrollLogs != null) {
 			scrollLogs.revalidate();
 			scrollLogs.repaint();
 		}
-
+		
+		recolocarBuscador();
 		revalidate();
 		repaint();
 	}
@@ -298,40 +311,117 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 	 * Crea el panel de selección de consolas
 	 */
 	private JPanel crearPanelSelector() {
-		JPanel pnl = new JPanel(new BorderLayout());
-		pnl.setBackground(colorFondo);
-		pnl.setBorder(BorderFactory.createTitledBorder(idioma.obtenerSeleccionarConsola()));
+	    JPanel pnl = new JPanel();
+	    pnl.setLayout(new GridLayout(2, 1, 0, 5)); // 2 filas, con espacio vertical
+	    pnl.setBackground(colorFondo);
+	    pnl.setBorder(BorderFactory.createTitledBorder(idioma.obtenerSeleccionarConsola()));
 
-		// Configuración del combobox
-		cmbConsolas.setBackground(colorFondo);
-		cmbConsolas.setForeground(colorTexto);
-		cmbConsolas.setFont(cmbConsolas.getFont().deriveFont(12f));
-		cmbConsolas.setRenderer(new ListCellRendererPersonalizado());
+	    // Configuración del combobox de consolas (solo nombre de archivo)
+	    cmbConsolas.setBackground(colorFondo);
+	    cmbConsolas.setForeground(colorTexto);
+	    cmbConsolas.setFont(cmbConsolas.getFont().deriveFont(12f));
+	    cmbConsolas.setRenderer(new ListCellRendererPersonalizado());
 
-		cmbConsolas.addActionListener(e -> {
-			String archivo = (String) cmbConsolas.getSelectedItem();
-			if (archivo != null) {
-				mostrarConsola(archivo);
-			}
-		});
+	    cmbConsolas.addActionListener(e -> actualizarConsola());
 
-		pnl.add(cmbConsolas, BorderLayout.CENTER);
-		return pnl;
+	    // Configuración del combobox de modo (Original / limpiado)
+	    cmbModo.setBackground(colorFondo);
+	    cmbModo.setForeground(colorTexto);
+	    cmbModo.setFont(cmbModo.getFont().deriveFont(12f));
+	    cmbModo.addActionListener(e -> actualizarConsola());
+
+	    pnl.add(cmbConsolas);
+	    pnl.add(cmbModo);
+
+	    return pnl;
 	}
 
 	/**
 	 * Cargador de consolas disponibles en el sistema
 	 */
 	private void cargarConsolas() {
-		for (Consola consola : consolas) {
-			cmbConsolas.addItem(consola.archivo.toString());
-		}
+	    for (Consola consola : consolas) {
+	        String nombreArchivo = new File(consola.archivo.toString()).getName(); 
+	        cmbConsolas.addItem(nombreArchivo);
+	    }
 
-		if (cmbConsolas.getItemCount() > 0) {
-			cmbConsolas.setSelectedIndex(0);
-			mostrarConsola((String) cmbConsolas.getSelectedItem());
-		}
+	    if (cmbConsolas.getItemCount() > 0) {
+	        cmbConsolas.setSelectedIndex(0);
+	        actualizarConsola();
+	    }
 	}
+	
+	// 🔹 Mostrar consola según el modo seleccionado
+	private void actualizarConsola() {
+	    String nombreArchivo = (String) cmbConsolas.getSelectedItem();
+	    if (nombreArchivo == null) return;
+
+	    Consola consolaSeleccionada = consolas.stream()
+	        .filter(c -> new File(c.archivo.toString()).getName().equals(nombreArchivo))
+	        .findFirst()
+	        .orElse(null);
+
+	    if (consolaSeleccionada == null) return;
+
+	    String modo = (String) cmbModo.getSelectedItem();
+	    if (MonitorDePID.idioma.limpiado().equals(modo)) {
+	        mostrarConsolaLimpiado(consolaSeleccionada);
+	    } else {
+	        mostrarConsolaOriginal(consolaSeleccionada.archivo.toString());
+	    }
+	}
+	
+	
+	private void mostrarConsolaLimpiado(Consola consola) {
+	    txtRegistros.setText("");
+	    StyledDocument doc = txtRegistros.getStyledDocument();
+
+	    Style estiloNormal = crearEstilo("normal", colorTexto);
+	    Style estiloError = crearEstilo("error", colorError);
+	    Style estiloPila = crearEstilo("pila", colorPila);
+
+	    try {
+	        for (String linea : consola.contenido_verificar.split(Verificaciones.nl)) {
+	            Style estiloAplicar = estiloNormal;
+	            if (linea.contains("ERROR") || linea.contains("EXCEPTION")) {
+	                estiloAplicar = estiloError;
+	            } else if (linea.contains("STACKTRACE") || linea.contains("at ")) {
+	                estiloAplicar = estiloPila;
+	            }
+	            doc.insertString(doc.getLength(), linea + "\n", estiloAplicar);
+	        }
+	    } catch (BadLocationException ex) {
+	        JOptionPane.showMessageDialog(this, idioma.obtenerErrorLecturaArchivo(), idioma.obtenerTituloError(),
+	                JOptionPane.ERROR_MESSAGE);
+	    }
+	}
+
+	// 🔹 Mostrar contenido "original"
+	private void mostrarConsolaOriginal(String rutaArchivo) {
+	    txtRegistros.setText("");
+	    StyledDocument doc = txtRegistros.getStyledDocument();
+
+	    Style estiloNormal = crearEstilo("normal", colorTexto);
+	    Style estiloError = crearEstilo("error", colorError);
+	    Style estiloPila = crearEstilo("pila", colorPila);
+
+	    try (BufferedReader reader = new BufferedReader(new FileReader(rutaArchivo))) {
+	        String linea;
+	        while ((linea = reader.readLine()) != null) {
+	            Style estiloAplicar = estiloNormal;
+	            if (linea.contains("ERROR") || linea.contains("EXCEPTION")) {
+	                estiloAplicar = estiloError;
+	            } else if (linea.contains("STACKTRACE") || linea.contains("at ")) {
+	                estiloAplicar = estiloPila;
+	            }
+	            doc.insertString(doc.getLength(), linea + "\n", estiloAplicar);
+	        }
+	    } catch (IOException | BadLocationException ex) {
+	        JOptionPane.showMessageDialog(this, idioma.obtenerErrorLecturaArchivo(), idioma.obtenerTituloError(),
+	                JOptionPane.ERROR_MESSAGE);
+	    }
+	}
+	
 
 	/**
 	 * Muestra el contenido de una consola específica
@@ -464,4 +554,153 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 			}
 		}
 	}
+	
+	
+
+/**
+ * Inicializa el buscador (Ctrl+F / Command+F)
+ */
+private void inicializarBuscador(JLayeredPane capa) {
+    txtBuscar.setVisible(false);
+    txtBuscar.setBackground(new Color(40, 40, 40));
+    txtBuscar.setForeground(Color.WHITE);
+    txtBuscar.setBorder(BorderFactory.createTitledBorder("Buscar"));
+    capa.add(txtBuscar, JLayeredPane.DRAG_LAYER);
+
+    // Acción al presionar Enter → saltar a la siguiente coincidencia
+    txtBuscar.addActionListener(e -> saltarSiguienteCoincidencia());
+
+    // Atajos Ctrl+F y Command+F
+    KeyStroke keyStroke = KeyStroke.getKeyStroke("control F");
+    KeyStroke keyStrokeMac = KeyStroke.getKeyStroke("meta F"); // ⌘ en Mac
+    getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(keyStroke, "abrirBuscador");
+    getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(keyStrokeMac, "abrirBuscador");
+
+    getRootPane().getActionMap().put("abrirBuscador", new AbstractAction() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            txtBuscar.setVisible(true);
+            txtBuscar.requestFocus();
+            recolocarBuscador();
+        }
+    });
 }
+
+/**
+ * Coloca el buscador en la parte superior derecha, anclado
+ */
+private void recolocarBuscador() {
+    int ancho = 200;
+    int alto = 50;
+    txtBuscar.setBounds(getWidth() - ancho - 30, 30, ancho, alto);
+    txtBuscar.revalidate();
+    txtBuscar.repaint();
+}
+
+	
+	
+
+/**
+ * Busca todas las coincidencias del texto y resalta
+ */
+private void buscarTexto(String texto) {
+    Highlighter highlighter = txtRegistros.getHighlighter();
+    highlighter.removeAllHighlights();
+    posicionesCoincidencias.clear();
+    indiceBusquedaActual = -1;
+
+    if (texto == null || texto.isEmpty()) return;
+
+    String contenido = txtRegistros.getText().toLowerCase();
+    texto = texto.toLowerCase();
+
+    int index = contenido.indexOf(texto);
+    while (index >= 0) {
+        try {
+            highlighter.addHighlight(index, index + texto.length(),
+                    new DefaultHighlighter.DefaultHighlightPainter(Color.YELLOW));
+            posicionesCoincidencias.add(index);
+            index = contenido.indexOf(texto, index + texto.length());
+        } catch (BadLocationException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    // posicionarse en la primera coincidencia
+    if (!posicionesCoincidencias.isEmpty()) {
+        indiceBusquedaActual = 0;
+        resaltarCoincidenciaActual(texto.length());
+    }
+}
+
+/**
+ * Salta a la siguiente coincidencia con wrap-around
+ */
+private void saltarSiguienteCoincidencia() {
+    String texto = txtBuscar.getText();
+    if (texto == null || texto.isEmpty()) return;
+
+    if (posicionesCoincidencias.isEmpty()) {
+        buscarTexto(texto);
+        return;
+    }
+
+    indiceBusquedaActual = (indiceBusquedaActual + 1) % posicionesCoincidencias.size();
+    resaltarCoincidenciaActual(texto.length());
+}
+
+/**
+ * Mueve el caret a la coincidencia actual y hace scroll
+ */
+private void resaltarCoincidenciaActual(int longitud) {
+    if (indiceBusquedaActual < 0 || indiceBusquedaActual >= posicionesCoincidencias.size()) return;
+
+    int pos = posicionesCoincidencias.get(indiceBusquedaActual);
+    txtRegistros.setCaretPosition(pos);
+    txtRegistros.moveCaretPosition(pos + longitud);
+    txtRegistros.requestFocus();
+}
+
+
+
+
+
+
+
+
+
+	
+	
+	
+	
+public static class ErrorDeLectador{
+	
+	public Consola consola;
+	public int numero_de_linea;
+	public Verificaciones verificacion;
+	public Color color;
+	
+	/**
+	 * Agregar un error a Lectador De Consolas
+	 * @param numero_de_linea el numero de linea del error. puedes usar esta metedo mas de una vez si el error es de mas 1 linea
+	 * @param verificacion la verificaion
+	 * @param color Color en la clase LectadorDeConsolas
+	 * @return
+	 */
+	public ErrorDeLectador(Consola consola, int numero_de_linea,Verificaciones verificacion,Color color) {
+		this.consola=consola;
+		this.numero_de_linea=numero_de_linea;
+		this.verificacion=verificacion;
+		this.color=color;
+	}
+	
+	@Override
+	public String toString() {
+		return "lectador://"+consola.archivo.toString()+":"+String.valueOf(numero_de_linea);
+	}
+	
+}
+	
+	
+}
+

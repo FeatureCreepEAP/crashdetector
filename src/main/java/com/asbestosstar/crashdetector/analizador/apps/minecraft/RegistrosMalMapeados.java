@@ -90,11 +90,15 @@ public class RegistrosMalMapeados implements Verificaciones {
     public String mensaje() {
         if (entradas.isEmpty()) return "";
 
-        StringBuilder html = new StringBuilder("<ul>");
+        StringBuilder html = new StringBuilder();
         html.append(
-        		 "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + MonitorDePID.idioma.solucionRegistrosMalMapeados()+"</b> "
+
+
+        		"<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + MonitorDePID.idioma.solucionRegistrosMalMapeados() + "</b> "
+        		
         		
         		);
+        html.append("<ul>");
         for (String entrada : entradas) {
             html.append("<li>").append(entrada).append("</li>");
         }

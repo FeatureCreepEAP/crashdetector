@@ -1244,6 +1244,10 @@ public interface Idioma {
 
 	public String paso4_registro_suscriptores_automaticos();
 
+	public String limpiado();
+
+	public String original();
+
 	
 	
 	

@@ -2929,7 +2929,17 @@ public String paso4_registro_suscriptores_automaticos() {
            "Sometimes a prior error prevents necessary classes from loading for event registration";
 }
 
+@Override
+public String limpiado() {
+	// TODO Auto-generated method stub
+	return "Cleaned";
+}
 
+@Override
+public String original() {
+	// TODO Auto-generated method stub
+	return "Original";
+}
 
 
 

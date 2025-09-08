@@ -2896,7 +2896,17 @@ public String paso4_registro_suscriptores_automaticos() {
            "Iomatempe antaŭa eraro malebligas ŝargi necesajn klasojn por eventa registro";
 }
 
+@Override
+public String limpiado() {
+	// TODO Auto-generated method stub
+	return "Purigite";
+}
 
+@Override
+public String original() {
+	// TODO Auto-generated method stub
+	return "Originala";
+}
 
 
 

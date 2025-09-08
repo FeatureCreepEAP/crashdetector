@@ -85,7 +85,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' &&
     
     $id = bin2hex(random_bytes(8));
     $file = LOGS_DIR . $id . '.gz';
-    
+    if ($size === 0) {
+    http_response_code(400);
+    header('Content-Type: application/json');
+    echo json_encode(['error' => 'No data received']);
+    exit;
+}
+
     file_put_contents($file, $data);
     
     // Generate proper links with .gz extension for raw logs
@@ -316,15 +322,26 @@ opacity: 0.15;                /* from 0.05 → 0.15 */
 
 
         
-        .error {
-            color: var(--error-color);
-            font-weight: bold;
-        }
-        
-        .trace {
-            color: var(--trace-color);
-            padding-left: 15px;
-        }
+.fatal {
+    color: #b30000; /* dark red */
+    font-weight: bold;
+}
+
+.warn {
+    color: #ffcc00; /* yellow */
+    font-weight: bold;
+}
+
+.trace {
+    color: #66ccff; /* light blue */
+    padding-left: 15px;
+}
+
+.error {
+    color: #ff4d4d; /* bright red */
+    font-weight: bold;
+}
+
         
         .highlight {
             background-color: var(--highlight-bg);
@@ -383,11 +400,18 @@ opacity: 0.15;                /* from 0.05 → 0.15 */
             $highlight = '';
             
             // Minecraft error highlighting
-            if (preg_match('/\[ERROR\]|java\.lang\.\w+Exception|Caused by:/', $line)) {
-                $highlight = 'error';
-            } elseif (preg_match('/\[WARN\]|at \w+\.\w+/', $line)) {
-                $highlight = 'trace';
-            }
+// Highlighting priority
+if (preg_match('/fatal\//i', $line)) {
+    $highlight = 'fatal';
+} elseif (preg_match('/warn\/| warn /i', $line)) {
+    $highlight = 'warn';
+} elseif (stripos($line, 'at ') !== false) {
+    $highlight = 'trace';
+} elseif (stripos($line, 'error') !== false || stripos($line, 'exception') !== false) {
+    $highlight = 'error';
+}
+
+
             
             // Escape HTML but preserve line breaks
             $safeLine = htmlspecialchars($line);
