@@ -61,8 +61,10 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 	private JTextArea txtDescripcionError = new JTextArea();
 	private Color colorFondo = new Color(17, 17, 17);
 	private Color colorTexto = Color.WHITE;
-	private Color colorError = Color.RED;
-	private Color colorPila = new Color(255, 165, 0); // Naranja para stacktraces
+	private Color colorFatal = Color.RED;
+	private Color colorError = new Color(255, 165, 0);//naranja
+	private Color colorAdvatencia =Color.YELLOW;
+	private Color colorPila =Color.BLUE; // azul para stacktraces
 	private JScrollPane scrollLogs;
 	private JPanel pnlInferior;
 	private JPanel pnlLeyenda;
@@ -678,7 +680,6 @@ public static class ErrorDeLectador{
 	public Consola consola;
 	public int numero_de_linea;
 	public Verificaciones verificacion;
-	public Color color;
 	
 	/**
 	 * Agregar un error a Lectador De Consolas
@@ -687,16 +688,19 @@ public static class ErrorDeLectador{
 	 * @param color Color en la clase LectadorDeConsolas
 	 * @return
 	 */
-	public ErrorDeLectador(Consola consola, int numero_de_linea,Verificaciones verificacion,Color color) {
+	public ErrorDeLectador(Consola consola, int numero_de_linea,Verificaciones verificacion) {
 		this.consola=consola;
 		this.numero_de_linea=numero_de_linea;
 		this.verificacion=verificacion;
-		this.color=color;
 	}
 	
 	@Override
 	public String toString() {
 		return "lectador://"+consola.archivo.toString()+":"+String.valueOf(numero_de_linea);
+	}
+	
+	public Color obtenerColor() {
+		return verificacion.nivel_de_criticalidad().color;
 	}
 	
 }

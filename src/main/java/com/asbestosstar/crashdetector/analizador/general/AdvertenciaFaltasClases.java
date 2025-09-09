@@ -17,6 +17,7 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.Verificaciones.Criticalidad;
 import com.asbestosstar.crashdetector.waifu.RespuestaWaifu;
 import com.asbestosstar.crashdetector.waifu.VersionWaifu;
 import com.asbestosstar.crashdetector.waifu.WaifuAPI;
@@ -179,6 +180,14 @@ public class AdvertenciaFaltasClases implements Verificaciones {
                 }, true)
                 .construir();
 	}
+	
+	
+    @Override
+    public Criticalidad nivel_de_criticalidad() {
+    	return Criticalidad.ADVERTENCIA;
+    }
+	
+	
 	
 	
 }

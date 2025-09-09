@@ -1,5 +1,8 @@
 package com.asbestosstar.crashdetector.analizador;
 
+import java.awt.Color;
+
+import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Consola;
 
 public interface Verificaciones {
@@ -53,6 +56,37 @@ public interface Verificaciones {
         }
     }
 	
-	
+    
+    public default Criticalidad nivel_de_criticalidad() {
+    	return Criticalidad.ERROR;
+    }
+
+    
+    
+    public static class Criticalidad{
+    	
+    	public static Criticalidad FATAL = new Criticalidad(Color.RED);
+    	public static Criticalidad ERROR = new Criticalidad(Config.convertirAColor(Config.obtenerInstancia().obtenerColorError()));
+    	public static Criticalidad ADVERTENCIA = new Criticalidad(Config.convertirAColor(Config.obtenerInstancia().obtenerColorAdvertencia()));
+    	
+    	/**
+    	 * Color en lectador
+    	 */
+    	public Color color;
+    	
+    	/**
+    	 * Criticalidad en Lectador
+    	 * @param color
+    	 */
+    	public Criticalidad(Color color) {
+    		this.color=color;
+    	}
+    	
+    }
+    
+    
+    
 	
 }
+
+

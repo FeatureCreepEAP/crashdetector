@@ -4,6 +4,7 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.Verificaciones.Criticalidad;
 
 public class Theseus implements Verificaciones {
 
@@ -52,5 +53,9 @@ public class Theseus implements Verificaciones {
             .construir();
     }
     
+    @Override
+    public Criticalidad nivel_de_criticalidad() {
+    	return Criticalidad.ADVERTENCIA;
+    }
     
 }

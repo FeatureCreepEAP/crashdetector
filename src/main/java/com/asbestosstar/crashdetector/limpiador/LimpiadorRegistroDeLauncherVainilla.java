@@ -7,7 +7,12 @@ import java.util.List;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 
-public class LimpiadorRegistroDeLauncherVainilla implements LimipiadorDeRegistro{
+public class LimpiadorRegistroDeLauncherVainilla implements LimpiadorDeRegistro{
+	
+	// Mapeo que almacena para cada línea nueva (índice 0-based) el índice de la línea original (0-based)
+	private List<Integer> mapeoLineasOriginales;
+	// Indica si el mapeo actual es válido (después de limpiar un registro)
+	private boolean mapeoValido;
 
     /**
      * Limpia el contenido completo de la consola.
@@ -21,8 +26,21 @@ public class LimpiadorRegistroDeLauncherVainilla implements LimipiadorDeRegistro
         // Dividir el contenido en líneas usando el separador del sistema
         String[] lineas_viejas = contento_de_consola.split(System.lineSeparator());
         
-        // Limpiar cada línea individualmente
-        List<String> lineas_limpias = limpiarLineas(Arrays.asList(lineas_viejas));
+        // Limpiar cada línea individualmente y construir el mapeo de líneas
+        List<String> lineas_limpias = new ArrayList<>();
+        mapeoLineasOriginales = new ArrayList<>(); // Reiniciar el mapeo
+        
+        for (int indice_original = 0; indice_original < lineas_viejas.length; indice_original++) {
+            String linea = lineas_viejas[indice_original];
+            String lineaProcesada = limpiarLinea(linea);
+            String trim = lineaProcesada.trim();
+            if (!trim.isEmpty()) {
+                lineas_limpias.add(lineaProcesada);
+                mapeoLineasOriginales.add(indice_original); // Almacenar índice original de la línea válida
+            }
+        }
+        
+        mapeoValido = true; // Marcar el mapeo como válido después de limpiar
         
         // Unir las líneas limpias con el separador del sistema
         return String.join(System.lineSeparator(), lineas_limpias);
@@ -291,5 +309,26 @@ public class LimpiadorRegistroDeLauncherVainilla implements LimipiadorDeRegistro
 	public boolean predicado(Path archivo) {
 		// TODO Auto-generated method stub
 		return archivo.toString().endsWith("launcher_log.txt");
+	}
+
+	/**
+	 * Obtiene el número de línea original correspondiente a una línea nueva procesada.
+	 * 
+	 * @param linea_nueva Número de línea en el registro limpio (1-based)
+	 * @return Número de línea original (1-based) o -1 si no es válido
+	 */
+	@Override
+	public int obtenerLineaOriginalDesdeLineaOriginal(int linea_de_comenzar, int linea_nueva) {
+		// Verificar si el mapeo está disponible
+		if (!mapeoValido || linea_nueva < 1 || linea_nueva > mapeoLineasOriginales.size()) {
+			return -1;
+		}
+		
+		// Convertir a índice 0-based para el mapeo
+		int indice_nuevo = linea_nueva - 1;
+		int indice_original = mapeoLineasOriginales.get(indice_nuevo);
+		
+		// Convertir índice original 0-based a 1-based
+		return indice_original + 1+linea_de_comenzar;
 	}
 }

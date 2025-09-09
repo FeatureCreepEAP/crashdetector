@@ -8,6 +8,7 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.Verificaciones.Criticalidad;
 /**
  * Verificador que detecta la ausencia del archivo launcher_log.txt en entornos de CurseForge.
  * <p>
@@ -102,5 +103,9 @@ public class CursedConsola implements Verificaciones {
             .construir();
     }
     
+    @Override
+    public Criticalidad nivel_de_criticalidad() {
+    	return Criticalidad.ADVERTENCIA;
+    }
     
 }

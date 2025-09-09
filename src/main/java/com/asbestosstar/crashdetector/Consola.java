@@ -27,7 +27,8 @@ import com.asbestosstar.crashdetector.divisor.TLauncherConsolaDivisor;
 import com.asbestosstar.crashdetector.divisor.VainillaConsolaDivisor;
 import com.asbestosstar.crashdetector.gui.LectadorDeConsolas.ErrorDeLectador;
 import com.asbestosstar.crashdetector.gui.NoRegistroDeLauncher;
-import com.asbestosstar.crashdetector.limpiador.LimipiadorDeRegistro;
+import com.asbestosstar.crashdetector.limpiador.LimpiadorDeRegistro;
+import com.asbestosstar.crashdetector.limpiador.LimpiadorNingun;
 import com.asbestosstar.crashdetector.limpiador.LimpiadorRegistroDeLauncherVainilla;
 import com.asbestosstar.crashdetector.limpiador.LimpiadorRegistroLatestLog;
 
@@ -48,6 +49,8 @@ public class Consola {
 
 	public List<ErrorDeLectador> errores_de_lectadores=new ArrayList<ErrorDeLectador>();
 
+	public LimpiadorDeRegistro limpiador;
+
 	public static ArrayList<File> archivos_en_lista = new ArrayList<File>();
 	
 	/**
@@ -67,7 +70,7 @@ public class Consola {
 	/**
 	 * Limpiadores de los registros. Registrar en procesoDeLaMonitorizacionDePID
 	 */
-	public static List<LimipiadorDeRegistro> limpiadores = new ArrayList<LimipiadorDeRegistro>();
+	public static List<LimpiadorDeRegistro> limpiadores = new ArrayList<LimpiadorDeRegistro>();
 
 	/**
 	 * La ubicacion para añadir mas registro archivos. Para los longs que se necesiten dividir se deben declarar aquí tanto en procesoDelApp como en procesoDeLaMonitorizacionDePID
@@ -123,13 +126,15 @@ public class Consola {
 
 				CrashDetectorLogger.log("archivo nombre: "+archivo.toString());
 				boolean limpiado=false;
-				for(LimipiadorDeRegistro limp:limpiadores) {
+				for(LimpiadorDeRegistro limp:limpiadores) {
 					if(limp.predicado(archivo)) {
 						contenido_verificar=limp.limpiarConsola(para_verificar.toString());
+						this.limpiador=limp;
 						limpiado=true;
 					}
 				}
 				if (!limpiado)  {
+					this.limpiador=new LimpiadorNingun();
 					contenido_verificar = para_verificar.toString();
 				}
 
@@ -155,13 +160,15 @@ public class Consola {
 		CrashDetectorLogger.log("archivo nombre inyectado: "+archivo.toString());
 		
 		boolean limpiado=false;
-		for(LimipiadorDeRegistro limp:limpiadores) {
+		for(LimpiadorDeRegistro limp:limpiadores) {
 			if(limp.predicado(archivo)) {
 				contenido_verificar=limp.limpiarConsola(contento);
 				limpiado=true;
+				this.limpiador=limp;
 			}
 		}
 		if (!limpiado)  {
+			this.limpiador=new LimpiadorNingun();
 			contenido_verificar = contento.toString();
 		}
 
@@ -459,13 +466,15 @@ public class Consola {
 	 * @param color Color en la clase LectadorDeConsolas
 	 * @return la enlace del error
 	 */
-	public String agregarErrorALectador(int numero_de_linea,Verificaciones verificacion,Color color) {
-		ErrorDeLectador letc=	new ErrorDeLectador(this,numero_de_linea,verificacion,color);
+	public String agregarErrorALectador(int numero_de_linea,Verificaciones verificacion) {
+		ErrorDeLectador letc=	new ErrorDeLectador(this,numero_de_linea,verificacion);
 		errores_de_lectadores.add(letc);
 		return letc.toString();
 	}
 	
-	
+	public LimpiadorDeRegistro obtenerLimpiador() {
+		return limpiador;
+	}
 	
 	
 
