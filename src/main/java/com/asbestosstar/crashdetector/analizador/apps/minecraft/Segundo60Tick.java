@@ -7,54 +7,52 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class Segundo60Tick implements Verificaciones {
 
-    private boolean activado = false;
-    private String mensaje = "";
+	private boolean activado = false;
+	private String mensaje = "";
 
-    @Override
-    public void verificar(Consola consola) {
-    	String contento_de_consola=consola.contenido_verificar;
-        // Verifica la presencia del error de tick crítico
-        String patron = "[Server Watchdog/FATAL] [net.minecraft.server.dedicated.ServerHangWatchdog]: " +
-                       "A single server tick took 60.00 seconds (should be max 0.05)";
-        
-        if (contento_de_consola.contains(patron)) {
-            this.mensaje = MonitorDePID.idioma.segundo60Tick() + Verificaciones.nl_html;
-            activado = true;
-        }
-    }
+	@Override
+	public void verificar(Consola consola) {
+		String contento_de_consola = consola.contenido_verificar;
+		// Verifica la presencia del error de tick crítico
+		String patron = "[Server Watchdog/FATAL] [net.minecraft.server.dedicated.ServerHangWatchdog]: "
+				+ "A single server tick took 60.00 seconds (should be max 0.05)";
 
-    @Override
-    public Verificaciones nueva() {
-        return new Segundo60Tick();
-    }
+		if (contento_de_consola.contains(patron)) {
+			this.mensaje = MonitorDePID.idioma.segundo60Tick() + Verificaciones.nl_html;
+			activado = true;
+		}
+	}
 
-    @Override
-    public boolean activado() {
-        return activado;
-    }
+	@Override
+	public Verificaciones nueva() {
+		return new Segundo60Tick();
+	}
 
-    @Override
-    public float prioridad() {
-        return 100.0f;
-    }
+	@Override
+	public boolean activado() {
+		return activado;
+	}
 
-    @Override
-    public String mensaje() {
-        return mensaje;
-    }
-    
+	@Override
+	public float prioridad() {
+		return 100.0f;
+	}
+
+	@Override
+	public String mensaje() {
+		return mensaje;
+	}
+
 	@Override
 	public String nombre() {
 		// TODO Auto-generated method stub
 		return MonitorDePID.idioma.nombre_de_60_segundo_trick();
 	}
-	
-    @Override
-    public QuickFix solucion() {
-        return new QuickFix.Builder(nombre())
-            .agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
-            .construir();
-    }
-    
-    
+
+	@Override
+	public QuickFix solucion() {
+		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
+				.construir();
+	}
+
 }

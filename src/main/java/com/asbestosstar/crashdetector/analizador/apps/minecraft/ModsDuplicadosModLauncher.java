@@ -8,47 +8,46 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class ModsDuplicadosModLauncher implements Verificaciones {
 
-    private boolean activado = false;
-    private final CDStringBuilder mensaje = new CDStringBuilder();
+	private boolean activado = false;
+	private final CDStringBuilder mensaje = new CDStringBuilder();
 
-    @Override
-    public void verificar(Consola consola) {
-    	String contenidoConsola=consola.contenido_verificar;
+	@Override
+	public void verificar(Consola consola) {
+		String contenidoConsola = consola.contenido_verificar;
 
+		if (contenidoConsola.contains("Found duplicate mods")) {
+			mensaje.append(MonitorDePID.idioma.no_tienes_las_dependencias_necesarias()).append(Verificaciones.nl_html);
 
-        if (contenidoConsola.contains("Found duplicate mods")) {
-            mensaje.append(MonitorDePID.idioma.no_tienes_las_dependencias_necesarias())
-                   .append(Verificaciones.nl_html);
+			for (String linea : contenidoConsola.split(Verificaciones.nl)) {
+				if (linea.contains("Mod ID") && linea.contains("from mod files")) {
+					mensaje.append(MonitorDePID.idioma.modlauncher_mods_duplicado(linea))
+							.append(Verificaciones.nl_html);
+				}
+			}
+			activado = true;
+		}
+	}
 
-            for (String linea : contenidoConsola.split(Verificaciones.nl)) {
-                if (linea.contains("Mod ID") && linea.contains("from mod files")) {
-                    mensaje.append(MonitorDePID.idioma.modlauncher_mods_duplicado(linea))
-                           .append(Verificaciones.nl_html);
-                }
-            }
-            activado = true;
-        }
-    }
+	@Override
+	public Verificaciones nueva() {
+		return new ModsDuplicadosModLauncher();
+	}
 
-    @Override
-    public Verificaciones nueva() {
-        return new ModsDuplicadosModLauncher();
-    }
+	@Override
+	public boolean activado() {
+		return activado;
+	}
 
-    @Override
-    public boolean activado() {
-        return activado;
-    }
+	@Override
+	public float prioridad() {
+		return 1000.0f;
+	}
 
-    @Override
-    public float prioridad() {
-        return 1000.0f;
-    }
+	@Override
+	public String mensaje() {
+		return mensaje.toString();
+	}
 
-    @Override
-    public String mensaje() {
-        return mensaje.toString();
-    }
 	@Override
 	public String nombre() {
 		// TODO Auto-generated method stub
@@ -95,14 +94,11 @@ public class ModsDuplicadosModLauncher implements Verificaciones {
 //
 //        return builder.construir();
 //    }
-	
-	
-	 @Override
-	    public QuickFix solucion() {
-	        return new QuickFix.Builder(nombre())
-	            .agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
-	            .construir();
-	    }
 
+	@Override
+	public QuickFix solucion() {
+		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
+				.construir();
+	}
 
 }

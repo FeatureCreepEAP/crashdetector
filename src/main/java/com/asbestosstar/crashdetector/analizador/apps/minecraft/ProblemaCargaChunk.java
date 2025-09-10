@@ -9,85 +9,85 @@ import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 /**
- * Clase que detecta excepciones al cargar chunks en el mundo.Gracias a Aternos por que esta es una implementacion de su codex https://github.com/aternosorg/codex-minecraft
+ * Clase que detecta excepciones al cargar chunks en el mundo.Gracias a Aternos
+ * por que esta es una implementacion de su codex
+ * https://github.com/aternosorg/codex-minecraft
  */
 public class ProblemaCargaChunk implements Verificaciones {
 
-    private boolean activado = false;
-    private String mensaje = ""; 
+	private boolean activado = false;
+	private String mensaje = "";
 
-    /**
-     * Verifica si el log contiene excepciones al cargar chunks.
-     */
-    @Override
-    public void verificar(Consola consola) {
-        String contenido = consola.contenido_verificar;
+	/**
+	 * Verifica si el log contiene excepciones al cargar chunks.
+	 */
+	@Override
+	public void verificar(Consola consola) {
+		String contenido = consola.contenido_verificar;
 
-        // Patrones de error comunes al cargar chunks
-        Pattern patron1 = Pattern.compile("Encountered an unexpected exception.*?at.*ChunkRegionLoader\\.loadChunk", Pattern.DOTALL);
-        Pattern patron2 = Pattern.compile("Encountered an unexpected exception.*?at.*ChunkRegionLoader\\.loadEntities", Pattern.DOTALL);
-        Pattern patron3 = Pattern.compile("Exception generating new chunk", Pattern.DOTALL);
-        Pattern patron4 = Pattern.compile("Couldn't load chunk", Pattern.DOTALL);
+		// Patrones de error comunes al cargar chunks
+		Pattern patron1 = Pattern.compile("Encountered an unexpected exception.*?at.*ChunkRegionLoader\\.loadChunk",
+				Pattern.DOTALL);
+		Pattern patron2 = Pattern.compile("Encountered an unexpected exception.*?at.*ChunkRegionLoader\\.loadEntities",
+				Pattern.DOTALL);
+		Pattern patron3 = Pattern.compile("Exception generating new chunk", Pattern.DOTALL);
+		Pattern patron4 = Pattern.compile("Couldn't load chunk", Pattern.DOTALL);
 
-        if (patron1.matcher(contenido).find() || 
-            patron2.matcher(contenido).find() || 
-            patron3.matcher(contenido).find() || 
-            patron4.matcher(contenido).find()) {
-            
-            this.mensaje = MonitorDePID.idioma.mensajeCargaChunk() + Verificaciones.nl_html;
-            activado = true;
-        }
-    }
+		if (patron1.matcher(contenido).find() || patron2.matcher(contenido).find() || patron3.matcher(contenido).find()
+				|| patron4.matcher(contenido).find()) {
 
-    /**
-     * Crea una nueva instancia del verificador.
-     */
-    @Override
-    public Verificaciones nueva() {
-        return new ProblemaCargaChunk();
-    }
+			this.mensaje = MonitorDePID.idioma.mensajeCargaChunk() + Verificaciones.nl_html;
+			activado = true;
+		}
+	}
 
-    /**
-     * Indica si el problema fue detectado.
-     */
-    @Override
-    public boolean activado() {
-        return activado;
-    }
+	/**
+	 * Crea una nueva instancia del verificador.
+	 */
+	@Override
+	public Verificaciones nueva() {
+		return new ProblemaCargaChunk();
+	}
 
-    /**
-     * Prioridad del problema (alta).
-     */
-    @Override
-    public float prioridad() {
-        return 1000.0f;
-    }
+	/**
+	 * Indica si el problema fue detectado.
+	 */
+	@Override
+	public boolean activado() {
+		return activado;
+	}
 
-    /**
-     * Devuelve el mensaje de error almacenado.
-     */
-    @Override
-    public String mensaje() {
-        return mensaje;
-    }
+	/**
+	 * Prioridad del problema (alta).
+	 */
+	@Override
+	public float prioridad() {
+		return 1000.0f;
+	}
 
-    /**
-     * Devuelve el nombre del problema para mostrar en la interfaz.
-     */
-    @Override
-    public String nombre() {
-        return MonitorDePID.idioma.nombreProblemaCargaChunk();
-    }
+	/**
+	 * Devuelve el mensaje de error almacenado.
+	 */
+	@Override
+	public String mensaje() {
+		return mensaje;
+	}
 
-    /**
-     * Devuelve las soluciones posibles para este problema.
-     */
-    @Override
-    public QuickFix solucion() {
-        return new Builder(nombre())
-            .agregarEtiqueta(MonitorDePID.idioma.solucionRepararMundo("world"))
-            .agregarEtiqueta(MonitorDePID.idioma.solucionEliminarCarpetaMundo("world"))
-            .agregarEtiqueta(MonitorDePID.idioma.solucionEliminarChunk())
-            .construir();
-    }
+	/**
+	 * Devuelve el nombre del problema para mostrar en la interfaz.
+	 */
+	@Override
+	public String nombre() {
+		return MonitorDePID.idioma.nombreProblemaCargaChunk();
+	}
+
+	/**
+	 * Devuelve las soluciones posibles para este problema.
+	 */
+	@Override
+	public QuickFix solucion() {
+		return new Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.solucionRepararMundo("world"))
+				.agregarEtiqueta(MonitorDePID.idioma.solucionEliminarCarpetaMundo("world"))
+				.agregarEtiqueta(MonitorDePID.idioma.solucionEliminarChunk()).construir();
+	}
 }

@@ -12,7 +12,9 @@ import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 /**
- * Clase que detecta excepciones causadas por mods en Forge. Gracias a Aternos por que esta es una implementacion de su codex https://github.com/aternosorg/codex-minecraft
+ * Clase que detecta excepciones causadas por mods en Forge. Gracias a Aternos
+ * por que esta es una implementacion de su codex
+ * https://github.com/aternosorg/codex-minecraft
  */
 public class ProblemaExcepcionMod implements Verificaciones {
 

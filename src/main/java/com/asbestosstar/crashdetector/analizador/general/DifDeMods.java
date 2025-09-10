@@ -17,205 +17,183 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class DifDeMods implements Verificaciones {
-    private boolean activado = false;
-    private String mensajeHTML = "";
-    
-    @Override
-    public void verificar(Consola consola) {
-        try {
-            // Obtener lista actual de mods
-            Set<String> modsActual = obtenerMods(MonitorDePID.ultimo_mods);
-            
-            // Buscar últimos archivos históricos
-            Path exitoFile = obtenerUltimoArchivo("exito");
-            Path fallaFile = obtenerUltimoArchivo("falla");
-            
-            // Determinar archivo más reciente globalmente
-            Path archivoUltimo = null;
-            if (exitoFile != null && fallaFile != null) {
-                int numExito = obtenerNumeroArchivo(exitoFile);
-                int numFalla = obtenerNumeroArchivo(fallaFile);
-                
-                if (numExito > numFalla) {
-                    archivoUltimo = exitoFile;
-                } else {
-                    archivoUltimo = fallaFile;
-                }
-            } else {
-                if (exitoFile != null) {
-                    archivoUltimo = exitoFile;
-                } else {
-                    archivoUltimo = fallaFile;
-                }
-            }
+	private boolean activado = false;
+	private String mensajeHTML = "";
 
-            
-            // Ajustar archivos a comparar según el último estado
-            if (archivoUltimo != null && archivoUltimo.toString().endsWith(".exito")) {
-                fallaFile = null; // Solo comparar con éxito si es el último
-            }
-            
-            // Comparar con último éxito
-            List<String> diffExito = new ArrayList<>();
-            if (exitoFile != null) {
-                Set<String> modsExito = obtenerMods(exitoFile);
-                diffExito = compararMods(modsExito, modsActual);
-            }
-            
-            // Comparar con última falla (si no es el último estado)
-            List<String> diffFalla = new ArrayList<>();
-            if (fallaFile != null) {
-                Set<String> modsFalla = obtenerMods(fallaFile);
-                diffFalla = compararMods(modsFalla, modsActual);
-            }
-            
-            // Generar HTML si hay diferencias
-            if (!diffExito.isEmpty() || !diffFalla.isEmpty()) {
-                activado = true;
-                mensajeHTML = generarHTML(diffExito, diffFalla, exitoFile != null, fallaFile != null);
-            }
-            
-        } catch (IOException e) {
-            CrashDetectorLogger.log("Error comparando mods: " + e.getMessage());
-        }
-    }
+	@Override
+	public void verificar(Consola consola) {
+		try {
+			// Obtener lista actual de mods
+			Set<String> modsActual = obtenerMods(MonitorDePID.ultimo_mods);
 
-    private Set<String> obtenerMods(Path archivo) throws IOException {
-        return Files.readAllLines(archivo).stream()
-                .filter(line -> !line.trim().isEmpty())
-                .collect(Collectors.toSet());
-    }
+			// Buscar últimos archivos históricos
+			Path exitoFile = obtenerUltimoArchivo("exito");
+			Path fallaFile = obtenerUltimoArchivo("falla");
 
-    private List<String> compararMods(Set<String> viejos, Set<String> nuevos) {
-        List<String> diff = new ArrayList<>();
-        nuevos.stream()
-              .filter(mod -> !viejos.contains(mod))
-              .forEach(mod -> diff.add("+ " + mod));
-        viejos.stream()
-              .filter(mod -> !nuevos.contains(mod))
-              .forEach(mod -> diff.add("- " + mod));
-        return diff;
-    }
+			// Determinar archivo más reciente globalmente
+			Path archivoUltimo = null;
+			if (exitoFile != null && fallaFile != null) {
+				int numExito = obtenerNumeroArchivo(exitoFile);
+				int numFalla = obtenerNumeroArchivo(fallaFile);
 
-    private Path obtenerUltimoArchivo(String extension) {
-        Path dir = MonitorDePID.carpeta.resolve("historia_mods");
-        if (!Files.exists(dir)) return null;
+				if (numExito > numFalla) {
+					archivoUltimo = exitoFile;
+				} else {
+					archivoUltimo = fallaFile;
+				}
+			} else {
+				if (exitoFile != null) {
+					archivoUltimo = exitoFile;
+				} else {
+					archivoUltimo = fallaFile;
+				}
+			}
 
-        File[] files = dir.toFile().listFiles((d, name) -> 
-            name.matches("\\d{6}\\.\\Q" + extension + "\\E"));
+			// Ajustar archivos a comparar según el último estado
+			if (archivoUltimo != null && archivoUltimo.toString().endsWith(".exito")) {
+				fallaFile = null; // Solo comparar con éxito si es el último
+			}
 
-        if (files == null || files.length == 0) return null;
+			// Comparar con último éxito
+			List<String> diffExito = new ArrayList<>();
+			if (exitoFile != null) {
+				Set<String> modsExito = obtenerMods(exitoFile);
+				diffExito = compararMods(modsExito, modsActual);
+			}
 
-        List<File> sortedFiles = Arrays.stream(files)
-            .sorted((f1, f2) -> {
-                int num1 = obtenerNumeroArchivo(f1.toPath());
-                int num2 = obtenerNumeroArchivo(f2.toPath());
-                return Integer.compare(num2, num1);
-            })
-            .collect(Collectors.toList());
+			// Comparar con última falla (si no es el último estado)
+			List<String> diffFalla = new ArrayList<>();
+			if (fallaFile != null) {
+				Set<String> modsFalla = obtenerMods(fallaFile);
+				diffFalla = compararMods(modsFalla, modsActual);
+			}
 
-        if (sortedFiles.size() > 1) {
-            return sortedFiles.get(1).toPath();
-        } else if (sortedFiles.size() == 1) {
-            return sortedFiles.get(0).toPath();
-        }
+			// Generar HTML si hay diferencias
+			if (!diffExito.isEmpty() || !diffFalla.isEmpty()) {
+				activado = true;
+				mensajeHTML = generarHTML(diffExito, diffFalla, exitoFile != null, fallaFile != null);
+			}
 
-        return null;
-    }
+		} catch (IOException e) {
+			CrashDetectorLogger.log("Error comparando mods: " + e.getMessage());
+		}
+	}
 
-    private int obtenerNumeroArchivo(Path archivo) {
-        String nombre = archivo.getFileName().toString();
-        return Integer.parseInt(nombre.substring(0, 6));
-    }
+	private Set<String> obtenerMods(Path archivo) throws IOException {
+		return Files.readAllLines(archivo).stream().filter(line -> !line.trim().isEmpty()).collect(Collectors.toSet());
+	}
 
-    private String generarHTML(List<String> diffExito, List<String> diffFalla, 
-                              boolean tieneExito, boolean tieneFalla) {
-        StringBuilder html = new StringBuilder();
-        
-        if (tieneExito) {
-            html.append("<div style='margin:10px 0;padding:10px;border:1px solid #ccc'>")
-                .append("<h3>")
-                .append(MonitorDePID.idioma.desdeUltimoExito())
-                .append(" (")
-                .append(extensionToNombre("exito"))
-                .append("):</h3>");
-                
-            if (diffExito.isEmpty()) {
-                html.append("<p style='color:green'>")
-                    .append(MonitorDePID.idioma.noHayCambios())
-                    .append("</p>");
-            } else {
-                html.append("<ul>");
-                for (String linea : diffExito) {
-                    String color = linea.startsWith("+") ? "green" : "red";
-                    html.append("<li style='color:" + color + "'>").append(linea).append("</li>");
-                }
-                html.append("</ul>");
-            }
-            html.append("</div>");
-        }
+	private List<String> compararMods(Set<String> viejos, Set<String> nuevos) {
+		List<String> diff = new ArrayList<>();
+		nuevos.stream().filter(mod -> !viejos.contains(mod)).forEach(mod -> diff.add("+ " + mod));
+		viejos.stream().filter(mod -> !nuevos.contains(mod)).forEach(mod -> diff.add("- " + mod));
+		return diff;
+	}
 
-        if (tieneFalla) {
-            html.append("<div style='margin:10px 0;padding:10px;border:1px solid #ccc'>")
-                .append("<h3>")
-                .append(MonitorDePID.idioma.desdeUltimoIntento())
-                .append(" (")
-                .append(extensionToNombre("falla"))
-                .append("):</h3>");
-                
-            if (diffFalla.isEmpty()) {
-                html.append("<p style='color:green'>")
-                    .append(MonitorDePID.idioma.noHayCambios())
-                    .append("</p>");
-            } else {
-                html.append("<ul>");
-                for (String linea : diffFalla) {
-                    String color = linea.startsWith("+") ? "green" : "red";
-                    html.append("<li style='color:" + color + "'>").append(linea).append("</li>");
-                }
-                html.append("</ul>");
-            }
-            html.append("</div>");
-        }
+	private Path obtenerUltimoArchivo(String extension) {
+		Path dir = MonitorDePID.carpeta.resolve("historia_mods");
+		if (!Files.exists(dir))
+			return null;
 
-        return html.toString();
-    }
+		File[] files = dir.toFile().listFiles((d, name) -> name.matches("\\d{6}\\.\\Q" + extension + "\\E"));
 
-    private String extensionToNombre(String extension) {
-        return extension.equals("exito") ? 
-            MonitorDePID.idioma.exito() : 
-            MonitorDePID.idioma.fallo();
-    }
+		if (files == null || files.length == 0)
+			return null;
 
-    @Override
-    public String mensaje() {
-        return mensajeHTML;
-    }
+		List<File> sortedFiles = Arrays.stream(files).sorted((f1, f2) -> {
+			int num1 = obtenerNumeroArchivo(f1.toPath());
+			int num2 = obtenerNumeroArchivo(f2.toPath());
+			return Integer.compare(num2, num1);
+		}).collect(Collectors.toList());
 
-    @Override
-    public Verificaciones nueva() {
-        return new DifDeMods();
-    }
+		if (sortedFiles.size() > 1) {
+			return sortedFiles.get(1).toPath();
+		} else if (sortedFiles.size() == 1) {
+			return sortedFiles.get(0).toPath();
+		}
 
-    @Override
-    public boolean activado() {
-        return activado;
-    }
+		return null;
+	}
 
-    @Override
-    public float prioridad() {
-        return -1000;
-    }
+	private int obtenerNumeroArchivo(Path archivo) {
+		String nombre = archivo.getFileName().toString();
+		return Integer.parseInt(nombre.substring(0, 6));
+	}
 
-    @Override
-    public String nombre() {
-        return MonitorDePID.idioma.diferentesDeLasMods();
-    }
+	private String generarHTML(List<String> diffExito, List<String> diffFalla, boolean tieneExito, boolean tieneFalla) {
+		StringBuilder html = new StringBuilder();
 
-    @Override
-    public QuickFix solucion() {
-        return new QuickFix.Builder(nombre())
-            .agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
-            .construir();
-    }
+		if (tieneExito) {
+			html.append("<div style='margin:10px 0;padding:10px;border:1px solid #ccc'>").append("<h3>")
+					.append(MonitorDePID.idioma.desdeUltimoExito()).append(" (").append(extensionToNombre("exito"))
+					.append("):</h3>");
+
+			if (diffExito.isEmpty()) {
+				html.append("<p style='color:green'>").append(MonitorDePID.idioma.noHayCambios()).append("</p>");
+			} else {
+				html.append("<ul>");
+				for (String linea : diffExito) {
+					String color = linea.startsWith("+") ? "green" : "red";
+					html.append("<li style='color:" + color + "'>").append(linea).append("</li>");
+				}
+				html.append("</ul>");
+			}
+			html.append("</div>");
+		}
+
+		if (tieneFalla) {
+			html.append("<div style='margin:10px 0;padding:10px;border:1px solid #ccc'>").append("<h3>")
+					.append(MonitorDePID.idioma.desdeUltimoIntento()).append(" (").append(extensionToNombre("falla"))
+					.append("):</h3>");
+
+			if (diffFalla.isEmpty()) {
+				html.append("<p style='color:green'>").append(MonitorDePID.idioma.noHayCambios()).append("</p>");
+			} else {
+				html.append("<ul>");
+				for (String linea : diffFalla) {
+					String color = linea.startsWith("+") ? "green" : "red";
+					html.append("<li style='color:" + color + "'>").append(linea).append("</li>");
+				}
+				html.append("</ul>");
+			}
+			html.append("</div>");
+		}
+
+		return html.toString();
+	}
+
+	private String extensionToNombre(String extension) {
+		return extension.equals("exito") ? MonitorDePID.idioma.exito() : MonitorDePID.idioma.fallo();
+	}
+
+	@Override
+	public String mensaje() {
+		return mensajeHTML;
+	}
+
+	@Override
+	public Verificaciones nueva() {
+		return new DifDeMods();
+	}
+
+	@Override
+	public boolean activado() {
+		return activado;
+	}
+
+	@Override
+	public float prioridad() {
+		return -1000;
+	}
+
+	@Override
+	public String nombre() {
+		return MonitorDePID.idioma.diferentesDeLasMods();
+	}
+
+	@Override
+	public QuickFix solucion() {
+		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
+				.construir();
+	}
 }

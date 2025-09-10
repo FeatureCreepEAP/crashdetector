@@ -81,8 +81,9 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 						mensajeFinal.append(MonitorDePID.idioma.module_resolution_exception());
 
 						// Añadir sección de módulos
-						if (!modulosCombinados.isEmpty()&&!paquete.isEmpty()) {
-							mensajeFinal.append("<br><br><b>"+MonitorDePID.idioma.modulos()+":</b><br>").append("<ul>");
+						if (!modulosCombinados.isEmpty() && !paquete.isEmpty()) {
+							mensajeFinal.append("<br><br><b>" + MonitorDePID.idioma.modulos() + ":</b><br>")
+									.append("<ul>");
 
 							// Convertir módulos combinados en lista
 							for (String modulo : modulosCombinados.split("\\+")) {
@@ -90,9 +91,9 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 							}
 
 							mensajeFinal.append("</ul>");
-							
-							mensajeFinal.append("<b>"+MonitorDePID.idioma.paquete()+":</b><br>").append("<code>")
-							.append(paquete.replace(".", "/")).append("</code> ");
+
+							mensajeFinal.append("<b>" + MonitorDePID.idioma.paquete() + ":</b><br>").append("<code>")
+									.append(paquete.replace(".", "/")).append("</code> ");
 							mensajeFinal.append(resultado).append(Verificaciones.nl_html);
 
 						}

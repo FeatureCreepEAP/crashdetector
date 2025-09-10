@@ -6,15 +6,16 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
-public class LegacyRandomSourceMultiHilos implements Verificaciones{
+public class LegacyRandomSourceMultiHilos implements Verificaciones {
 
-	boolean activado=false;
-	
+	boolean activado = false;
+
 	@Override
 	public void verificar(Consola consola) {
 		// TODO Auto-generated method stub
-		if(consola.contenido_verificar.contains("net.minecraft.ReportedException: Accessing LegacyRandomSource from multiple threads")) {
-			activado=true;
+		if (consola.contenido_verificar
+				.contains("net.minecraft.ReportedException: Accessing LegacyRandomSource from multiple threads")) {
+			activado = true;
 		}
 	}
 
@@ -51,11 +52,10 @@ public class LegacyRandomSourceMultiHilos implements Verificaciones{
 	@Override
 	public QuickFix solucion() {
 		// TODO Auto-generated method stub
-        return new Builder(nombre())
-                .agregarEtiqueta(MonitorDePID.idioma.solucionInstalarMod("Unsafe World Random Access Detector"))
-                .construir();
+		return new Builder(nombre())
+				.agregarEtiqueta(MonitorDePID.idioma.solucionInstalarMod("Unsafe World Random Access Detector"))
+				.construir();
 
-	
 	}
 
 }

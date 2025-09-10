@@ -7,82 +7,82 @@ import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 /**
- * Clase que detecta errores de configuración en PermissionsEx (PEX).Gracias a Aternos por que esta es una implementacion de su codex https://github.com/aternosorg/codex-minecraft
+ * Clase que detecta errores de configuración en PermissionsEx (PEX).Gracias a
+ * Aternos por que esta es una implementacion de su codex
+ * https://github.com/aternosorg/codex-minecraft
  */
 public class ProblemaConfiguracionPermissionsEx implements Verificaciones {
 
-    private boolean activado = false;
-    private String mensaje = ""; 
+	private boolean activado = false;
+	private String mensaje = "";
 
-    /**
-     * Verifica si el log contiene el error de configuración de PermissionsEx.
-     */
-    @Override
-    public void verificar(Consola consola) {
-        String contenido = consola.contenido_verificar;
+	/**
+	 * Verifica si el log contiene el error de configuración de PermissionsEx.
+	 */
+	@Override
+	public void verificar(Consola consola) {
+		String contenido = consola.contenido_verificar;
 
-        // Mensaje específico que indica que PEX tiene un problema de configuración
-        String mensajeError = "Your configuration must be fixed before PEX will enable";
+		// Mensaje específico que indica que PEX tiene un problema de configuración
+		String mensajeError = "Your configuration must be fixed before PEX will enable";
 
-        if (contenido.contains(mensajeError)) {
-            this.mensaje = MonitorDePID.idioma.mensajeConfiguracionPermissionsEx() + Verificaciones.nl_html;
-            activado = true;
-        }
-    }
+		if (contenido.contains(mensajeError)) {
+			this.mensaje = MonitorDePID.idioma.mensajeConfiguracionPermissionsEx() + Verificaciones.nl_html;
+			activado = true;
+		}
+	}
 
-    /**
-     * Crea una nueva instancia del verificador.
-     */
-    @Override
-    public Verificaciones nueva() {
-        return new ProblemaConfiguracionPermissionsEx(); 
-    }
+	/**
+	 * Crea una nueva instancia del verificador.
+	 */
+	@Override
+	public Verificaciones nueva() {
+		return new ProblemaConfiguracionPermissionsEx();
+	}
 
-    /**
-     * Indica si el problema fue detectado.
-     */
-    @Override
-    public boolean activado() {
-        return activado; 
-    }
+	/**
+	 * Indica si el problema fue detectado.
+	 */
+	@Override
+	public boolean activado() {
+		return activado;
+	}
 
-    /**
-     * Prioridad del problema (baja).
-     */
-    @Override
-    public float prioridad() {
-        return 300.0f;
-    }
+	/**
+	 * Prioridad del problema (baja).
+	 */
+	@Override
+	public float prioridad() {
+		return 300.0f;
+	}
 
-    /**
-     * Devuelve el mensaje de error almacenado.
-     */
-    @Override
-    public String mensaje() {
-        return mensaje; 
-    }
+	/**
+	 * Devuelve el mensaje de error almacenado.
+	 */
+	@Override
+	public String mensaje() {
+		return mensaje;
+	}
 
-    /**
-     * Devuelve el nombre del problema para mostrar en la interfaz.
-     */
-    @Override
-    public String nombre() {
-        return MonitorDePID.idioma.nombreProblemaConfiguracionPermissionsEx();
-    }
+	/**
+	 * Devuelve el nombre del problema para mostrar en la interfaz.
+	 */
+	@Override
+	public String nombre() {
+		return MonitorDePID.idioma.nombreProblemaConfiguracionPermissionsEx();
+	}
 
-    /**
-     * Devuelve las soluciones posibles para este problema.
-     */
-    @Override
-    public QuickFix solucion() {
-        return new Builder(nombre())
-            .agregarEtiqueta(MonitorDePID.idioma.solucionConfigurarPermissionsEx())
-            .agregarEtiqueta(MonitorDePID.idioma.solucionEliminarPluginPermissionsEx())
-            .construir();
-    }
-    
-    @Override
-    public boolean anularNormal() {
-    	return true;
-    }
+	/**
+	 * Devuelve las soluciones posibles para este problema.
+	 */
+	@Override
+	public QuickFix solucion() {
+		return new Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.solucionConfigurarPermissionsEx())
+				.agregarEtiqueta(MonitorDePID.idioma.solucionEliminarPluginPermissionsEx()).construir();
+	}
+
+	@Override
+	public boolean anularNormal() {
+		return true;
+	}
 }

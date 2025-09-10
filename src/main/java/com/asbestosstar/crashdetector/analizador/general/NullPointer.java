@@ -21,313 +21,311 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
  * {@code NullPointerException} (NPE) que aparecen en la consola.
  * <p>
  * - Analiza tanto el texto crudo de la consola como los trazos ya extraídos por
- *   {@link VerificacionDeStackTrace} para asegurar que no se escape ningún caso.
- * - Para cada NPE, identifica (si es posible) el método y el objeto nulo implicado.
- * - Añade un posible origen (JAR, modid o clase) usando solo información del trazo actual,
- *   evitando falsos positivos al no usar datos globales de otros errores.
- * - Agrupa errores idénticos mostrando todos los JARs relacionados en un solo mensaje.
- * - La salida es un bloque HTML con lista de errores, pensado para mostrarse en la UI.
+ * {@link VerificacionDeStackTrace} para asegurar que no se escape ningún caso.
+ * - Para cada NPE, identifica (si es posible) el método y el objeto nulo
+ * implicado. - Añade un posible origen (JAR, modid o clase) usando solo
+ * información del trazo actual, evitando falsos positivos al no usar datos
+ * globales de otros errores. - Agrupa errores idénticos mostrando todos los
+ * JARs relacionados en un solo mensaje. - La salida es un bloque HTML con lista
+ * de errores, pensado para mostrarse en la UI.
  */
 public class NullPointer implements Verificaciones {
 
+	/**
+	 * Detecta el encabezado de una NPE: java.lang.NullPointerException: <mensaje
+	 * opcional>
+	 */
+	private static final Pattern CABECERA_NPE = Pattern.compile("java\\.lang\\.NullPointerException(?::\\s*)?(.*)",
+			Pattern.CASE_INSENSITIVE);
 
-    /**
-     * Detecta el encabezado de una NPE:
-     * java.lang.NullPointerException: <mensaje opcional>
-     */
-    private static final Pattern CABECERA_NPE = Pattern.compile("java\\.lang\\.NullPointerException(?::\\s*)?(.*)",
-            Pattern.CASE_INSENSITIVE);
+	/**
+	 * Detecta mensajes modernos de Java como: "Cannot invoke 'X' because the return
+	 * value of 'Y' is null"
+	 */
+	private static final Pattern FORMATO_CANNOT = Pattern
+			.compile("Cannot\\s+(invoke|read|assign)[^\"]*\"([^\"]+)\"[^\"]*\"([^\"]+)\"");
 
-    /**
-     * Detecta mensajes modernos de Java como:
-     * "Cannot invoke 'X' because the return value of 'Y' is null"
-     */
-    private static final Pattern FORMATO_CANNOT = Pattern
-            .compile("Cannot\\s+(invoke|read|assign)[^\"]*\"([^\"]+)\"[^\"]*\"([^\"]+)\"");
+	/**
+	 * Patrón común en errores de Gson: intentar usar un JsonObject que es null Ej:
+	 * "Cannot invoke \"JsonObject.entrySet()\" because \"jsonobject\" is null"
+	 */
+	private static final Pattern ERROR_JSON = Pattern.compile("JsonObject\\.[a-zA-Z]+\\(\\).*\"([^\"]+)\" is null");
 
-    /**
-     * Patrón común en errores de Gson: intentar usar un JsonObject que es null
-     * Ej: "Cannot invoke \"JsonObject.entrySet()\" because \"jsonobject\" is null"
-     */
-    private static final Pattern ERROR_JSON = Pattern.compile("JsonObject\\.[a-zA-Z]+\\(\\).*\"([^\"]+)\" is null");
+	/**
+	 * Separador de líneas, definido en la interfaz base
+	 */
+	private static final String NL = Verificaciones.nl;
 
-    /**
-     * Separador de líneas, definido en la interfaz base
-     */
-    private static final String NL = Verificaciones.nl;
+	/**
+	 * Almacena los mensajes de error únicos detectados, agrupados por tipo de error
+	 */
+	private final Map<String, Set<String>> errores = new HashMap<>();
 
+	/**
+	 * Indica si se encontró al menos una NPE
+	 */
+	private boolean activado = false;
 
-    /**
-     * Almacena los mensajes de error únicos detectados, agrupados por tipo de error
-     */
-    private final Map<String, Set<String>> errores = new HashMap<>();
+	@Override
+	public void verificar(Consola consola) {
+		// Limpiar resultados anteriores
+		errores.clear();
+		activado = false;
 
-    /**
-     * Indica si se encontró al menos una NPE
-     */
-    private boolean activado = false;
+		VerificacionDeStackTrace vdst = consola.verificacion_de_stacktrace;
 
+		// Colección de trazos (fatales y no fatales)
+		List<String> trazos = new ArrayList<>();
+		trazos.addAll(VerificacionDeStackTrace.obtenerTraces(consola.contenido_verificar));
+		trazos.addAll(VerificacionDeStackTrace.obtenerTracesFatal(consola.contenido_verificar));
 
-    @Override
-    public void verificar(Consola consola) {
-        // Limpiar resultados anteriores
-        errores.clear();
-        activado = false;
+		// Analizar cada trazo
+		for (String trazo : trazos) {
+			if (!trazo.contains("NullPointerException")) {
+				continue;
+			}
 
-        VerificacionDeStackTrace vdst = consola.verificacion_de_stacktrace;
+			String metodo = "método desconocido";
+			String objeto = "objeto";
+			String origen = "";
 
-        // Colección de trazos (fatales y no fatales)
-        List<String> trazos = new ArrayList<>();
-        trazos.addAll(VerificacionDeStackTrace.obtenerTraces(consola.contenido_verificar));
-        trazos.addAll(VerificacionDeStackTrace.obtenerTracesFatal(consola.contenido_verificar));
+			Matcher mCannot = FORMATO_CANNOT.matcher(trazo);
+			Matcher mCabecera = CABECERA_NPE.matcher(trazo);
+			Matcher mJson = ERROR_JSON.matcher(trazo);
 
-        // Analizar cada trazo
-        for (String trazo : trazos) {
-            if (!trazo.contains("NullPointerException")) {
-                continue;
-            }
+			// Caso 1: Mensaje moderno "Cannot invoke X because Y is null"
+			if (mCannot.find()) {
+				metodo = mCannot.group(2);
+				objeto = mCannot.group(3);
+			}
+			// Caso 2: Gson específico: "JsonObject.entrySet() because 'jsonobject' is null"
+			else if (mJson.find()) {
+				metodo = "JsonObject.*()";
+				objeto = mJson.group(1);
+			}
+			// Caso 3: Encabezado con descripción adicional
+			else if (mCabecera.find()) {
+				String detalle = mCabecera.group(1).trim();
+				if (!detalle.isEmpty()) {
+					metodo = detalle;
+				}
+			} else {
+				// No se pudo extraer información útil
+				continue;
+			}
 
-            String metodo = "método desconocido";
-            String objeto = "objeto";
-            String origen = "";
+			// Buscar origen SOLO en este trazo (evita falsos positivos)
+			origen = detectarOrigenEnTraza(trazo, vdst);
 
-            Matcher mCannot = FORMATO_CANNOT.matcher(trazo);
-            Matcher mCabecera = CABECERA_NPE.matcher(trazo);
-            Matcher mJson = ERROR_JSON.matcher(trazo);
+			// Construir mensaje base (sin el origen)
+			String mensajeBase = MonitorDePID.idioma.null_pointer_error(metodo, objeto);
 
-            // Caso 1: Mensaje moderno "Cannot invoke X because Y is null"
-            if (mCannot.find()) {
-                metodo = mCannot.group(2);
-                objeto = mCannot.group(3);
-            }
-            // Caso 2: Gson específico: "JsonObject.entrySet() because 'jsonobject' is null"
-            else if (mJson.find()) {
-                metodo = "JsonObject.*()";
-                objeto = mJson.group(1);
-            }
-            // Caso 3: Encabezado con descripción adicional
-            else if (mCabecera.find()) {
-                String detalle = mCabecera.group(1).trim();
-                if (!detalle.isEmpty()) {
-                    metodo = detalle;
-                }
-            } else {
-                // No se pudo extraer información útil
-                continue;
-            }
+			// Agregar el error al mapa, agrupando por mensaje base
+			errores.computeIfAbsent(mensajeBase, k -> new HashSet<>());
+			if (!origen.isEmpty()) {
+				errores.get(mensajeBase).add(origen);
+			}
 
-            // Buscar origen SOLO en este trazo (evita falsos positivos)
-            origen = detectarOrigenEnTraza(trazo, vdst);
+			activado = true;
+		}
 
-            // Construir mensaje base (sin el origen)
-            String mensajeBase = MonitorDePID.idioma.null_pointer_error(metodo, objeto);
-            
-            // Agregar el error al mapa, agrupando por mensaje base
-            errores.computeIfAbsent(mensajeBase, k -> new HashSet<>());
-            if (!origen.isEmpty()) {
-                errores.get(mensajeBase).add(origen);
-            }
-            
-            activado = true;
-        }
+		// Analizar líneas sueltas sin trazo completo (ej: errores sin "at ...")
+		for (String linea : consola.contenido_verificar.split(NL)) {
+			if (linea.contains("NullPointerException") && !linea.contains("at ")
+					&& VerificacionDeStackTrace.tracePermite(linea)) {
+				procesarLineaSinTraza(linea, vdst);
+			}
+		}
+	}
 
-        // Analizar líneas sueltas sin trazo completo (ej: errores sin "at ...")
-        for (String linea : consola.contenido_verificar.split(NL)) {
-            if (linea.contains("NullPointerException") && !linea.contains("at ") && VerificacionDeStackTrace.tracePermite(linea)) {
-                procesarLineaSinTraza(linea, vdst);
-            }
-        }
-    }
+	/**
+	 * Procesa una línea con NPE que no tiene stack trace completo
+	 */
+	private void procesarLineaSinTraza(String linea, VerificacionDeStackTrace vdst) {
+		String metodo = "desconocido";
+		String objeto = "desconocido";
 
-    /**
-     * Procesa una línea con NPE que no tiene stack trace completo
-     */
-    private void procesarLineaSinTraza(String linea, VerificacionDeStackTrace vdst) {
-        String metodo = "desconocido";
-        String objeto = "desconocido";
+		Matcher mCannot = FORMATO_CANNOT.matcher(linea);
+		Matcher mJson = ERROR_JSON.matcher(linea);
 
-        Matcher mCannot = FORMATO_CANNOT.matcher(linea);
-        Matcher mJson = ERROR_JSON.matcher(linea);
+		if (mCannot.find()) {
+			metodo = mCannot.group(2);
+			objeto = mCannot.group(3);
+		} else if (mJson.find()) {
+			metodo = "JsonObject.*()";
+			objeto = mJson.group(1);
+		} else {
+			return; // No es relevante
+		}
 
-        if (mCannot.find()) {
-            metodo = mCannot.group(2);
-            objeto = mCannot.group(3);
-        } else if (mJson.find()) {
-            metodo = "JsonObject.*()";
-            objeto = mJson.group(1);
-        } else {
-            return; // No es relevante
-        }
+		// Buscar origen SOLO en esta línea
+		String origen = detectarOrigenEnLinea(linea, vdst);
+		String mensajeBase = MonitorDePID.idioma.null_pointer_error(metodo, objeto);
 
-        // Buscar origen SOLO en esta línea
-        String origen = detectarOrigenEnLinea(linea, vdst);
-        String mensajeBase = MonitorDePID.idioma.null_pointer_error(metodo, objeto);
-        
-        // Agregar el error al mapa, agrupando por mensaje base
-        errores.computeIfAbsent(mensajeBase, k -> new HashSet<>());
-        if (!origen.isEmpty()) {
-            errores.get(mensajeBase).add(origen);
-        }
-        
-        activado = true;
-    }
+		// Agregar el error al mapa, agrupando por mensaje base
+		errores.computeIfAbsent(mensajeBase, k -> new HashSet<>());
+		if (!origen.isEmpty()) {
+			errores.get(mensajeBase).add(origen);
+		}
 
+		activado = true;
+	}
 
-    /**
-     * Busca un origen (mod, JAR o clase) DIRECTAMENTE en el trazo del error.
-     * Esto evita asociar errores con mods que solo aparecen en otros trazos.
-     */
-    private String detectarOrigenEnTraza(String trazo, VerificacionDeStackTrace vdst) {
-        String[] lines = trazo.split(NL);
-        
-        // Primero, buscar en las primeras líneas del stack trace (donde ocurre el error)
-        for (int i = 0; i < Math.min(lines.length, 5); i++) {
-            String linea = lines[i];
-            String origen = detectarOrigenEnLinea(linea, vdst);
-            if (!origen.isEmpty()) {
-                return origen;
-            }
-        }
-        
-        // Si no encontramos nada en las primeras líneas, buscar en el resto del trazo
-        for (int i = 5; i < lines.length; i++) {
-            String linea = lines[i];
-            String origen = detectarOrigenEnLinea(linea, vdst);
-            if (!origen.isEmpty()) {
-                return origen;
-            }
-        }
-        
-        return ""; // No se encontró origen en este trazo
-    }
-    
-    /**
-     * Busca un origen (JAR, modid o clase) DIRECTAMENTE en una línea específica.
-     * Normaliza los nombres para evitar problemas con codificación y sufijos.
-     */
-    private String detectarOrigenEnLinea(String linea, VerificacionDeStackTrace vdst) {
-        // 1. Buscar JAR en la línea
-        for (String jar : vdst.jars.keySet()) {
-            if (linea.contains(jar)) {
-                return limpiarNombreJar(jar);
-            }
-        }
-        
-        // 2. Buscar modid
-        for (DoubleKey<String, String> entry : vdst.modids.keySet()) {
-            if (linea.contains(entry.key0)) {
-                return entry.key0;
-            }
-        }
-        
-        // 3. Buscar paquete/clase
-        for (DoubleKey<String, String> entry : vdst.packs.keySet()) {
-            if (linea.contains(entry.key0)) {
-                return entry.key0;
-            }
-        }
-        
-        return ""; // No se encontró origen en esta línea
-    }
-    
-    /**
-     * Limpia el nombre del JAR para mostrarlo de forma legible
-     */
-    private String limpiarNombreJar(String nombre) {
-        // Eliminar información después de .jar
-        int jarPos = nombre.indexOf(".jar");
-        if (jarPos != -1) {
-            nombre = nombre.substring(0, jarPos + 4);
-        }
-        
-        // Eliminar IDs internos
-        int hashPos = nombre.indexOf("%23");
-        if (hashPos != -1) {
-            nombre = nombre.substring(0, hashPos);
-        }
-        
-        hashPos = nombre.indexOf('#');
-        if (hashPos != -1) {
-            nombre = nombre.substring(0, hashPos);
-        }
-        
-        return nombre;
-    }
+	/**
+	 * Busca un origen (mod, JAR o clase) DIRECTAMENTE en el trazo del error. Esto
+	 * evita asociar errores con mods que solo aparecen en otros trazos.
+	 */
+	private String detectarOrigenEnTraza(String trazo, VerificacionDeStackTrace vdst) {
+		String[] lines = trazo.split(NL);
 
-    /**
-     * Determina un posible origen usando datos globales (último recurso).
-     * Solo usado si el error no tiene trazo.
-     */
-    private static String detectarOrigen(VerificacionDeStackTrace vdst) {
-        if (!vdst.jars.isEmpty()) {
-            String clave = vdst.jars.keySet().iterator().next();
-            int idx = clave.indexOf(MonitorDePID.idioma.nivel());
-            return idx == -1 ? clave : clave.substring(0, idx);
-        }
-        if (!vdst.modids.isEmpty()) {
-            return vdst.modids.entrySet().iterator().next().getKey().key0;
-        }
-        if (!vdst.packs.isEmpty()) {
-            return vdst.packs.entrySet().iterator().next().getKey().key0;
-        }
-        return "";
-    }
+		// Primero, buscar en las primeras líneas del stack trace (donde ocurre el
+		// error)
+		for (int i = 0; i < Math.min(lines.length, 5); i++) {
+			String linea = lines[i];
+			String origen = detectarOrigenEnLinea(linea, vdst);
+			if (!origen.isEmpty()) {
+				return origen;
+			}
+		}
 
+		// Si no encontramos nada en las primeras líneas, buscar en el resto del trazo
+		for (int i = 5; i < lines.length; i++) {
+			String linea = lines[i];
+			String origen = detectarOrigenEnLinea(linea, vdst);
+			if (!origen.isEmpty()) {
+				return origen;
+			}
+		}
 
-    @Override
-    public Verificaciones nueva() {
-        return new NullPointer();
-    }
+		return ""; // No se encontró origen en este trazo
+	}
 
-    @Override
-    public boolean activado() {
-        return activado;
-    }
+	/**
+	 * Busca un origen (JAR, modid o clase) DIRECTAMENTE en una línea específica.
+	 * Normaliza los nombres para evitar problemas con codificación y sufijos.
+	 */
+	private String detectarOrigenEnLinea(String linea, VerificacionDeStackTrace vdst) {
+		// 1. Buscar JAR en la línea
+		for (String jar : vdst.jars.keySet()) {
+			if (linea.contains(jar)) {
+				return limpiarNombreJar(jar);
+			}
+		}
 
-    @Override
-    public float prioridad() {
-        return 50f; // Alta prioridad: NPE suele ser crítico
-    }
+		// 2. Buscar modid
+		for (DoubleKey<String, String> entry : vdst.modids.keySet()) {
+			if (linea.contains(entry.key0)) {
+				return entry.key0;
+			}
+		}
 
-    @Override
-    public String mensaje() {
-        if (errores.isEmpty()) return "";
-        
-        StringBuilder sb = new StringBuilder("<ul>");
-        
-        // Para cada tipo de error
-        for (Map.Entry<String, Set<String>> entry : errores.entrySet()) {
-            String mensajeBase = entry.getKey();
-            Set<String> origenes = entry.getValue();
-            
-            // Si hay origenes, añadirlos al mensaje
-            if (!origenes.isEmpty()) {
-                StringBuilder origenesStr = new StringBuilder();
-                for (String origen : origenes) {
-                    if (origenesStr.length() > 0) {
-                        origenesStr.append(", ");
-                    }
-                    origenesStr.append(origen);
-                }
-                mensajeBase += " (" + origenesStr.toString() + ")";
-            }
-            
-            sb.append("<li>").append(mensajeBase).append("</li>");
-        }
-        
-        sb.append("</ul>");
-        return sb.toString();
-    }
+		// 3. Buscar paquete/clase
+		for (DoubleKey<String, String> entry : vdst.packs.keySet()) {
+			if (linea.contains(entry.key0)) {
+				return entry.key0;
+			}
+		}
 
-    @Override
-    public String nombre() {
-        return MonitorDePID.idioma.nombre_de_null_pointer();
-    }
+		return ""; // No se encontró origen en esta línea
+	}
 
-    @Override
-    public QuickFix solucion() {
-        return new QuickFix.Builder(nombre())
-                .agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
-                .construir();
-    }
+	/**
+	 * Limpia el nombre del JAR para mostrarlo de forma legible
+	 */
+	private String limpiarNombreJar(String nombre) {
+		// Eliminar información después de .jar
+		int jarPos = nombre.indexOf(".jar");
+		if (jarPos != -1) {
+			nombre = nombre.substring(0, jarPos + 4);
+		}
+
+		// Eliminar IDs internos
+		int hashPos = nombre.indexOf("%23");
+		if (hashPos != -1) {
+			nombre = nombre.substring(0, hashPos);
+		}
+
+		hashPos = nombre.indexOf('#');
+		if (hashPos != -1) {
+			nombre = nombre.substring(0, hashPos);
+		}
+
+		return nombre;
+	}
+
+	/**
+	 * Determina un posible origen usando datos globales (último recurso). Solo
+	 * usado si el error no tiene trazo.
+	 */
+	private static String detectarOrigen(VerificacionDeStackTrace vdst) {
+		if (!vdst.jars.isEmpty()) {
+			String clave = vdst.jars.keySet().iterator().next();
+			int idx = clave.indexOf(MonitorDePID.idioma.nivel());
+			return idx == -1 ? clave : clave.substring(0, idx);
+		}
+		if (!vdst.modids.isEmpty()) {
+			return vdst.modids.entrySet().iterator().next().getKey().key0;
+		}
+		if (!vdst.packs.isEmpty()) {
+			return vdst.packs.entrySet().iterator().next().getKey().key0;
+		}
+		return "";
+	}
+
+	@Override
+	public Verificaciones nueva() {
+		return new NullPointer();
+	}
+
+	@Override
+	public boolean activado() {
+		return activado;
+	}
+
+	@Override
+	public float prioridad() {
+		return 50f; // Alta prioridad: NPE suele ser crítico
+	}
+
+	@Override
+	public String mensaje() {
+		if (errores.isEmpty())
+			return "";
+
+		StringBuilder sb = new StringBuilder("<ul>");
+
+		// Para cada tipo de error
+		for (Map.Entry<String, Set<String>> entry : errores.entrySet()) {
+			String mensajeBase = entry.getKey();
+			Set<String> origenes = entry.getValue();
+
+			// Si hay origenes, añadirlos al mensaje
+			if (!origenes.isEmpty()) {
+				StringBuilder origenesStr = new StringBuilder();
+				for (String origen : origenes) {
+					if (origenesStr.length() > 0) {
+						origenesStr.append(", ");
+					}
+					origenesStr.append(origen);
+				}
+				mensajeBase += " (" + origenesStr.toString() + ")";
+			}
+
+			sb.append("<li>").append(mensajeBase).append("</li>");
+		}
+
+		sb.append("</ul>");
+		return sb.toString();
+	}
+
+	@Override
+	public String nombre() {
+		return MonitorDePID.idioma.nombre_de_null_pointer();
+	}
+
+	@Override
+	public QuickFix solucion() {
+		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
+				.construir();
+	}
 }

@@ -49,6 +49,6 @@ public class WaterMediaTL implements Verificaciones {
 		return new QuickFix.Builder(MonitorDePID.idioma.nombre_de_watermedia_tl())
 				.agregarBoton(MonitorDePID.idioma.activar_parche(), retener -> {
 					ConfigDeParches.obtenerInstancia().establecerActivo("watermedia_tl", true);
-				},true).construir();
+				}, true).construir();
 	}
 }

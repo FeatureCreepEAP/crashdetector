@@ -12,104 +12,105 @@ import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 /**
- * Clase que detecta errores de ejecución en plugins de PocketMine-MP. Gracias a Aternos por que esta es una implementacion de su codex https://github.com/aternosorg/codex-minecraft
+ * Clase que detecta errores de ejecución en plugins de PocketMine-MP. Gracias a
+ * Aternos por que esta es una implementacion de su codex
+ * https://github.com/aternosorg/codex-minecraft
  */
 public class ProblemaEjecucionPlugin implements Verificaciones {
 
-    private boolean activado = false;
-    private String mensaje = "";
-    private final List<String> nombresPlugins = new ArrayList<>();
-    private final List<String> rutasPlugins = new ArrayList<>();
+	private boolean activado = false;
+	private String mensaje = "";
+	private final List<String> nombresPlugins = new ArrayList<>();
+	private final List<String> rutasPlugins = new ArrayList<>();
 
-    /**
-     * Verifica si el log contiene errores de ejecución en plugins de PocketMine-MP.
-     */
-    @Override
-    public void verificar(Consola consola) {
-        String contenido = consola.contenido_verificar;
+	/**
+	 * Verifica si el log contiene errores de ejecución en plugins de PocketMine-MP.
+	 */
+	@Override
+	public void verificar(Consola consola) {
+		String contenido = consola.contenido_verificar;
 
-        // Patrón para detectar errores de ejecución en plugins de PocketMine
-        Pattern patron = Pattern.compile(
-        	    "Error: \".*?\" \\$EXCEPTION\\$ in \"(plugins/[^\\.]+\\.phar)(?:/[^/\\\"]+)*\" at line \\d+",
-        	    Pattern.DOTALL
-        	);
+		// Patrón para detectar errores de ejecución en plugins de PocketMine
+		Pattern patron = Pattern.compile(
+				"Error: \".*?\" \\$EXCEPTION\\$ in \"(plugins/[^\\.]+\\.phar)(?:/[^/\\\"]+)*\" at line \\d+",
+				Pattern.DOTALL);
 
-        Matcher coincidencia = patron.matcher(contenido);
+		Matcher coincidencia = patron.matcher(contenido);
 
-        while (coincidencia.find()) {
-            String rutaPlugin = coincidencia.group(1); // plugins/NombrePlugin.phar
-            String nombrePlugin = coincidencia.group(2); // NombrePlugin
-            
-            if (!nombrePlugin.isEmpty() && !nombresPlugins.contains(nombrePlugin)) {
-                nombresPlugins.add(nombrePlugin);
-                rutasPlugins.add(rutaPlugin);
-            }
-        }
+		while (coincidencia.find()) {
+			String rutaPlugin = coincidencia.group(1); // plugins/NombrePlugin.phar
+			String nombrePlugin = coincidencia.group(2); // NombrePlugin
 
-        if (!nombresPlugins.isEmpty()) {
-            if (nombresPlugins.size() > 1) {
-                this.mensaje = MonitorDePID.idioma.mensajePluginEjecucionPlural(nombresPlugins);
-            } else {
-                this.mensaje = MonitorDePID.idioma.mensajePluginEjecucionSingular(nombresPlugins.get(0));
-            }
-            activado = true;
-        }
-    }
+			if (!nombrePlugin.isEmpty() && !nombresPlugins.contains(nombrePlugin)) {
+				nombresPlugins.add(nombrePlugin);
+				rutasPlugins.add(rutaPlugin);
+			}
+		}
 
-    /**
-     * Crea una nueva instancia del verificador.
-     */
-    @Override
-    public Verificaciones nueva() {
-        return new ProblemaEjecucionPlugin();
-    }
+		if (!nombresPlugins.isEmpty()) {
+			if (nombresPlugins.size() > 1) {
+				this.mensaje = MonitorDePID.idioma.mensajePluginEjecucionPlural(nombresPlugins);
+			} else {
+				this.mensaje = MonitorDePID.idioma.mensajePluginEjecucionSingular(nombresPlugins.get(0));
+			}
+			activado = true;
+		}
+	}
 
-    /**
-     * Indica si el problema fue detectado.
-     */
-    @Override
-    public boolean activado() {
-        return activado;
-    }
+	/**
+	 * Crea una nueva instancia del verificador.
+	 */
+	@Override
+	public Verificaciones nueva() {
+		return new ProblemaEjecucionPlugin();
+	}
 
-    /**
-     * Prioridad del problema (alta).
-     */
-    @Override
-    public float prioridad() {
-        return 700.0f;
-    }
+	/**
+	 * Indica si el problema fue detectado.
+	 */
+	@Override
+	public boolean activado() {
+		return activado;
+	}
 
-    /**
-     * Devuelve el mensaje de error almacenado.
-     */
-    @Override
-    public String mensaje() {
-        return mensaje;
-    }
+	/**
+	 * Prioridad del problema (alta).
+	 */
+	@Override
+	public float prioridad() {
+		return 700.0f;
+	}
 
-    /**
-     * Devuelve el nombre del problema para mostrar en la interfaz.
-     */
-    @Override
-    public String nombre() {
-        return MonitorDePID.idioma.nombreProblemaPluginEjecucion();
-    }
+	/**
+	 * Devuelve el mensaje de error almacenado.
+	 */
+	@Override
+	public String mensaje() {
+		return mensaje;
+	}
 
-    /**
-     * Devuelve las soluciones posibles para este problema.
-     */
-    @Override
-    public QuickFix solucion() {
-        Builder builder = new Builder(nombre());
+	/**
+	 * Devuelve el nombre del problema para mostrar en la interfaz.
+	 */
+	@Override
+	public String nombre() {
+		return MonitorDePID.idioma.nombreProblemaPluginEjecucion();
+	}
 
-        for (int i = 0; i < nombresPlugins.size(); i++) {
-            String nombre = nombresPlugins.get(i);
-            String ruta = rutasPlugins.get(i);
-            builder.agregarEtiqueta(MonitorDePID.idioma.solucionEliminarPlugin(ruta));
-            builder.agregarEtiqueta(MonitorDePID.idioma.solucionInstalarVersionDiferentePlugin(nombre));
-        }
+	/**
+	 * Devuelve las soluciones posibles para este problema.
+	 */
+	@Override
+	public QuickFix solucion() {
+		Builder builder = new Builder(nombre());
 
-        return builder.construir();
-    }
+		for (int i = 0; i < nombresPlugins.size(); i++) {
+			String nombre = nombresPlugins.get(i);
+			String ruta = rutasPlugins.get(i);
+			builder.agregarEtiqueta(MonitorDePID.idioma.solucionEliminarPlugin(ruta));
+			builder.agregarEtiqueta(MonitorDePID.idioma.solucionInstalarVersionDiferentePlugin(nombre));
+		}
+
+		return builder.construir();
+	}
 }

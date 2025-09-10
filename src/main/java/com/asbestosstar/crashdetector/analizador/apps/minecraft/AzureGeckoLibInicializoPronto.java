@@ -9,78 +9,75 @@ import java.util.regex.Matcher;
 
 /**
  * Analiza errores cuando AzureLib o GeckoLib se inicializan demasiado pronto.
- * Detecta específicamente los errores "AzureLib was initialized too early!" y "GeckoLib was initialized too early!".
- * Identifica la presencia de mods de conexión como Sinytra Connector o specialcompatibilityoperation.
+ * Detecta específicamente los errores "AzureLib was initialized too early!" y
+ * "GeckoLib was initialized too early!". Identifica la presencia de mods de
+ * conexión como Sinytra Connector o specialcompatibilityoperation.
  */
 public class AzureGeckoLibInicializoPronto implements Verificaciones {
 
-    private boolean activado = false;
-    private String mensaje = "";
-    private boolean azureLibError = false;
-    private boolean geckoLibError = false;
-    private boolean connectorPresente = false;
+	private boolean activado = false;
+	private String mensaje = "";
+	private boolean azureLibError = false;
+	private boolean geckoLibError = false;
+	private boolean connectorPresente = false;
 
-    @Override
-    public void verificar(Consola consola) {
-        String contenidoConsola = consola.contenido_verificar;
-        String[] lineas = contenidoConsola.split(Verificaciones.nl);
+	@Override
+	public void verificar(Consola consola) {
+		String contenidoConsola = consola.contenido_verificar;
+		String[] lineas = contenidoConsola.split(Verificaciones.nl);
 
-        // Analiza cada línea del registro para detectar los errores específicos
-        for (String linea : lineas) {
-            if (linea.contains("AzureLib was initialized too early!")) {
-                azureLibError = true;
-                activado = true;
-            }
-            if (linea.contains("GeckoLib was initialized too early!")) {
-                geckoLibError = true;
-                activado = true;
-            }
-            // Detecta tanto Sinytra Connector como specialcompatibilityoperation como indicadores del mismo problema
-            if (linea.contains("SINYTRA CONNECTOR IS PRESENT!") || 
-                linea.contains("specialcompatibilityoperation")) {
-                connectorPresente = true;
-            }
-        }
+		// Analiza cada línea del registro para detectar los errores específicos
+		for (String linea : lineas) {
+			if (linea.contains("AzureLib was initialized too early!")) {
+				azureLibError = true;
+				activado = true;
+			}
+			if (linea.contains("GeckoLib was initialized too early!")) {
+				geckoLibError = true;
+				activado = true;
+			}
+			// Detecta tanto Sinytra Connector como specialcompatibilityoperation como
+			// indicadores del mismo problema
+			if (linea.contains("SINYTRA CONNECTOR IS PRESENT!") || linea.contains("specialcompatibilityoperation")) {
+				connectorPresente = true;
+			}
+		}
 
-        if (activado) {
-            mensaje = MonitorDePID.idioma.errorAzureGeckoLibInicializoPronto(
-                azureLibError, 
-                geckoLibError, 
-                connectorPresente
-            ) + Verificaciones.nl_html;
-        }
-    }
+		if (activado) {
+			mensaje = MonitorDePID.idioma.errorAzureGeckoLibInicializoPronto(azureLibError, geckoLibError,
+					connectorPresente) + Verificaciones.nl_html;
+		}
+	}
 
-    @Override
-    public Verificaciones nueva() {
-        return new AzureGeckoLibInicializoPronto();
-    }
+	@Override
+	public Verificaciones nueva() {
+		return new AzureGeckoLibInicializoPronto();
+	}
 
-    @Override
-    public boolean activado() {
-        return activado; 
-    }
+	@Override
+	public boolean activado() {
+		return activado;
+	}
 
-    @Override
-    public float prioridad() {
-        return 950.0f; // Alta prioridad - error que impide la carga correcta de mods
-    }
+	@Override
+	public float prioridad() {
+		return 950.0f; // Alta prioridad - error que impide la carga correcta de mods
+	}
 
-    @Override
-    public String mensaje() {
-        return mensaje; 
-    }
-    
-    @Override
-    public String nombre() {
-        return MonitorDePID.idioma.nombre_de_error_azure_geckolib_inicializo_pronto();
-    }
-    
-    @Override
-    public QuickFix solucion() {
-        return new QuickFix.Builder(nombre())
-            .agregarEtiqueta(MonitorDePID.idioma.paso1_azure_geckolib_inicializo_pronto())
-            .agregarEtiqueta(MonitorDePID.idioma.paso2_azure_geckolib_inicializo_pronto())
-            .construir();
-    }
+	@Override
+	public String mensaje() {
+		return mensaje;
+	}
+
+	@Override
+	public String nombre() {
+		return MonitorDePID.idioma.nombre_de_error_azure_geckolib_inicializo_pronto();
+	}
+
+	@Override
+	public QuickFix solucion() {
+		return new QuickFix.Builder(nombre())
+				.agregarEtiqueta(MonitorDePID.idioma.paso1_azure_geckolib_inicializo_pronto())
+				.agregarEtiqueta(MonitorDePID.idioma.paso2_azure_geckolib_inicializo_pronto()).construir();
+	}
 }

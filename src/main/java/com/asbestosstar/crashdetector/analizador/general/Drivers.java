@@ -12,220 +12,202 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 /**
- * Analizador dedicado a detectar problemas relacionados con controladores (drivers)
- * de vídeo/OpenGL.  La clase reconoce firmas de «Bad video drivers» y, ahora,
- * mantiene un conjunto separado de patrones que indican explícitamente una GPU
- * no compatible (unsupported/old videocard).
+ * Analizador dedicado a detectar problemas relacionados con controladores
+ * (drivers) de vídeo/OpenGL. La clase reconoce firmas de «Bad video drivers» y,
+ * ahora, mantiene un conjunto separado de patrones que indican explícitamente
+ * una GPU no compatible (unsupported/old videocard).
  */
 public class Drivers implements Verificaciones {
 
-    /** Indica si este verificador identificó un problema. */
-    private boolean activado = false;
-    private final CDStringBuilder mensajes = new CDStringBuilder();
+	/** Indica si este verificador identificó un problema. */
+	private boolean activado = false;
+	private final CDStringBuilder mensajes = new CDStringBuilder();
 
+	/**
+	 * Patrones genéricos de fallos de driver/ OpenGL. Desde signatures.json de
+	 * TLauncher
+	 */
+	private static final String[] DRIVER_PATTERNS = {
+			// Mensajes LWJGL / GLFW
+			"Pixel format not accelerated", "The driver does not appear to support OpenGL", "GLFW error 65542", // WGL:
+																												// driver
+																												// sin
+																												// soporte
+			"GLFW error 65543", // "OpenGL profile requested but …"
+			"GLFW error 1282", // ResourcePack problema, TODO mas mejor
+			"No context is current or a function that is not available in the current context",
+			"The driver does not appear to support framebuffer objects",
+			// Excepciones típicas
+			"org.lwjgl.LWJGLException"
+			// DLLs Intel / AMD / Mesa que suelen fallar
+			// Otros
+	};
 
-    /** Patrones genéricos de fallos de driver/ OpenGL. Desde signatures.json de TLauncher*/
-    private static final String[] DRIVER_PATTERNS = {
-        // Mensajes LWJGL / GLFW
-        "Pixel format not accelerated",
-        "The driver does not appear to support OpenGL",
-        "GLFW error 65542",   // WGL: driver sin soporte
-        "GLFW error 65543",   // "OpenGL profile requested but …"
-        "GLFW error 1282",   // ResourcePack problema, TODO mas mejor
-        "No context is current or a function that is not available in the current context",
-        "The driver does not appear to support framebuffer objects",
-        // Excepciones típicas
-        "org.lwjgl.LWJGLException"
-        // DLLs Intel / AMD / Mesa que suelen fallar
-        // Otros
-    };
-    
-    private static final String[] PATERNS_LINEA_ULTIMA = {
-            // Mensajes LWJGL / GLFW
-    		"If this message is the only thing at the bottom of your log before a crash, you probably have a driver issue.",
-    	    "You can safely ignore this message if the game starts up successfully.",
-    	    "Trying GL version"
- 
-            // Otros
-        };
-    
-    
+	private static final String[] PATERNS_LINEA_ULTIMA = {
+			// Mensajes LWJGL / GLFW
+			"If this message is the only thing at the bottom of your log before a crash, you probably have a driver issue.",
+			"You can safely ignore this message if the game starts up successfully.", "Trying GL version"
 
-    /**
-     * Patrones que indican explícitamente que la GPU es demasiado antigua o no
-     * soporta las características requeridas.  Se maneja por separado para
-     * ofrecer un mensaje más claro al usuario.
-     */
-    private static final String[] UNSUPPORTED_GPU_PATTERNS = {
-        "old-videocard",
-        "unsupported by videocard",
-        "Your video card does not meet the requirements",
-        "need to purchase a newer video card",
-        "videocard is too old",
-        "does not support OpenGL 3",
-        "OpenGL unsupported by videocard",
-        "The game failed to start because the currently installed"//para sodium
-    };
+			// Otros
+	};
 
-    @Override
-    public void verificar(Consola consola) {
-    	String log=consola.contenido_verificar;
+	/**
+	 * Patrones que indican explícitamente que la GPU es demasiado antigua o no
+	 * soporta las características requeridas. Se maneja por separado para ofrecer
+	 * un mensaje más claro al usuario.
+	 */
+	private static final String[] UNSUPPORTED_GPU_PATTERNS = { "old-videocard", "unsupported by videocard",
+			"Your video card does not meet the requirements", "need to purchase a newer video card",
+			"videocard is too old", "does not support OpenGL 3", "OpenGL unsupported by videocard",
+			"The game failed to start because the currently installed"// para sodium
+	};
 
+	@Override
+	public void verificar(Consola consola) {
+		String log = consola.contenido_verificar;
 
-        if (log.contains("EXCEPTION_ACCESS_VIOLATION") && log.contains("atio6axx.dll")) {
-            procesarProblemaAMD();
-            return;
-        }
-        if (log.contains("EXCEPTION_ACCESS_VIOLATION") && log.contains("atioglxx.dll")) {
-            procesarProblemaAMD();
-            return;
-        }
-        if (log.contains("EXCEPTION_ACCESS_VIOLATION") && log.contains("nouveau") || 
-        		log.contains("EXCEPTION_ACCESS_VIOLATION") && log.contains("libgallium-24.2.8.so")// posible?
-        		|| 
-        		log.contains("A fatal error has been detected by the Java Runtime Environment") && log.contains("libopenal.so")
-        		)// posible?
-        {
-            mensajes.append(MonitorDePID.idioma.problema_con_graficas_nouveau());
-            activado = true;
-            return;
-            
-        }
-        if (contienePatron(log, new String[]{"PhysX_64.dll", "glfw.dll"}) && log.contains("EXCEPTION_ACCESS_VIOLATION")) {
-            procesarProblemaGraficos();
-            return;
-        }
+		if (log.contains("EXCEPTION_ACCESS_VIOLATION") && log.contains("atio6axx.dll")) {
+			procesarProblemaAMD();
+			return;
+		}
+		if (log.contains("EXCEPTION_ACCESS_VIOLATION") && log.contains("atioglxx.dll")) {
+			procesarProblemaAMD();
+			return;
+		}
+		if (log.contains("EXCEPTION_ACCESS_VIOLATION") && log.contains("nouveau")
+				|| log.contains("EXCEPTION_ACCESS_VIOLATION") && log.contains("libgallium-24.2.8.so")// posible?
+				|| log.contains("A fatal error has been detected by the Java Runtime Environment")
+						&& log.contains("libopenal.so"))// posible?
+		{
+			mensajes.append(MonitorDePID.idioma.problema_con_graficas_nouveau());
+			activado = true;
+			return;
 
-        verificarProblemasIntel(log);
-        if (activado) return;
+		}
+		if (contienePatron(log, new String[] { "PhysX_64.dll", "glfw.dll" })
+				&& log.contains("EXCEPTION_ACCESS_VIOLATION")) {
+			procesarProblemaGraficos();
+			return;
+		}
 
-        if (contienePatron(log, UNSUPPORTED_GPU_PATTERNS)) {
-            procesarGpuNoCompatible();
-            return;
-        }
+		verificarProblemasIntel(log);
+		if (activado)
+			return;
 
-        if (contienePatron(log, DRIVER_PATTERNS)) {
-            procesarProblemaGraficos();
-            return;
-        }
-        
-        //todo"Cocoa: Failed to find service port for display"
-        
+		if (contienePatron(log, UNSUPPORTED_GPU_PATTERNS)) {
+			procesarGpuNoCompatible();
+			return;
+		}
 
-        String ultimaLinea = obtenerUltimaLinea(log);
-        if (ultimaLinea != null) {
-        	CrashDetectorLogger.log(ultimaLinea);
-            if (contienePatron(ultimaLinea, PATERNS_LINEA_ULTIMA)) {
-                procesarProblemaGraficos();
-            } else if (contienePatron(ultimaLinea, UNSUPPORTED_GPU_PATTERNS)) {
-                procesarGpuNoCompatible();
-            }
-        }
-    }
+		if (contienePatron(log, DRIVER_PATTERNS)) {
+			procesarProblemaGraficos();
+			return;
+		}
 
-    private void procesarProblemaGraficos() {
-        boolean esWindows = esWindows();
-        boolean tieneNvidia = esWindows && tieneNvidiaGPU();
-        boolean esWindowsNuevo = esWindows && esWindows11OServer2025();
+		// todo"Cocoa: Failed to find service port for display"
 
-        if (tieneNvidia) {
-            mensajes.append(esWindowsNuevo 
-                ? MonitorDePID.idioma.problema_con_graficas_nvidia_windows_nuevo()
-                : MonitorDePID.idioma.problema_con_graficas_nvidia_windows_viejo());
-        } else {
-            mensajes.append(MonitorDePID.idioma.problema_con_graficas_general());
-        }
-        activado = true;
-    }
+		String ultimaLinea = obtenerUltimaLinea(log);
+		if (ultimaLinea != null) {
+			CrashDetectorLogger.log(ultimaLinea);
+			if (contienePatron(ultimaLinea, PATERNS_LINEA_ULTIMA)) {
+				procesarProblemaGraficos();
+			} else if (contienePatron(ultimaLinea, UNSUPPORTED_GPU_PATTERNS)) {
+				procesarGpuNoCompatible();
+			}
+		}
+	}
 
+	private void procesarProblemaGraficos() {
+		boolean esWindows = esWindows();
+		boolean tieneNvidia = esWindows && tieneNvidiaGPU();
+		boolean esWindowsNuevo = esWindows && esWindows11OServer2025();
 
-    private void procesarGpuNoCompatible() {
-        mensajes.append(MonitorDePID.idioma.gpu_no_compatible());
-        activado = true;
-    }
+		if (tieneNvidia) {
+			mensajes.append(esWindowsNuevo ? MonitorDePID.idioma.problema_con_graficas_nvidia_windows_nuevo()
+					: MonitorDePID.idioma.problema_con_graficas_nvidia_windows_viejo());
+		} else {
+			mensajes.append(MonitorDePID.idioma.problema_con_graficas_general());
+		}
+		activado = true;
+	}
 
-    private void procesarProblemaAMD() {
-        mensajes.append(MonitorDePID.idioma.problema_con_graficas_ati());
-        activado = true;
-    }
+	private void procesarGpuNoCompatible() {
+		mensajes.append(MonitorDePID.idioma.gpu_no_compatible());
+		activado = true;
+	}
 
-    private boolean contienePatron(String texto, String[] patrones) {
-        for (String p : patrones) {
-            if (texto.contains(p)) { 
-            	CrashDetectorLogger.log("Hay patron de Drivers " + p);
-            	return true;
-            }
-        }
-        return false;
-    }
+	private void procesarProblemaAMD() {
+		mensajes.append(MonitorDePID.idioma.problema_con_graficas_ati());
+		activado = true;
+	}
 
-    private String obtenerUltimaLinea(String log) {
-        String[] lineas = log.split(nl);
-        return lineas.length > 0 ? lineas[lineas.length - 1] : null;
-    }
+	private boolean contienePatron(String texto, String[] patrones) {
+		for (String p : patrones) {
+			if (texto.contains(p)) {
+				CrashDetectorLogger.log("Hay patron de Drivers " + p);
+				return true;
+			}
+		}
+		return false;
+	}
 
-    private boolean esWindows() {
-        return System.getProperty("os.name").toLowerCase().contains("windows");
-    }
+	private String obtenerUltimaLinea(String log) {
+		String[] lineas = log.split(nl);
+		return lineas.length > 0 ? lineas[lineas.length - 1] : null;
+	}
 
-    private boolean tieneNvidiaGPU() {
-        if (!esWindows()) return false;
-        try {
-            Process p = Runtime.getRuntime().exec("wmic path win32_VideoController get name");
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()))) {
-                String l;
-                while ((l = br.readLine()) != null) {
-                    if (l.toLowerCase().contains("nvidia")) return true;
-                }
-            }
-        } catch (IOException e) {
-            // Silenciar: simplemente devolvemos false.
-        }
-        return false;
-    }
+	private boolean esWindows() {
+		return System.getProperty("os.name").toLowerCase().contains("windows");
+	}
 
-    private boolean esWindows11OServer2025() {
-        if (!esWindows()) return false;
-        String[] v = System.getProperty("os.version").split("\\.");
-        try {
-            int build = v.length > 2 ? Integer.parseInt(v[2]) : 0;
-            return "10".equals(v[0]) && "0".equals(v[1]) && build >= 22000;
-        } catch (NumberFormatException ex) {
-            return false;
-        }
-    }
-    
-    
-    
-    
- // En la clase Drivers (analizador)
-    private void verificarProblemasIntel(String log) {
-        String[] dllsIntel = {
-            "ig7icd32.dll", "ig7icd64.dll",
-            "ig75icd32.dll", "ig75icd64.dll",
-            "ig8icd64.dll",
-            "ig9icd32.dll", "ig9icd64.dll"
-        };//https://tlauncher.org/en/ig9icd32-dll-error.html TODO para intel
+	private boolean tieneNvidiaGPU() {
+		if (!esWindows())
+			return false;
+		try {
+			Process p = Runtime.getRuntime().exec("wmic path win32_VideoController get name");
+			try (BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()))) {
+				String l;
+				while ((l = br.readLine()) != null) {
+					if (l.toLowerCase().contains("nvidia"))
+						return true;
+				}
+			}
+		} catch (IOException e) {
+			// Silenciar: simplemente devolvemos false.
+		}
+		return false;
+	}
 
+	private boolean esWindows11OServer2025() {
+		if (!esWindows())
+			return false;
+		String[] v = System.getProperty("os.version").split("\\.");
+		try {
+			int build = v.length > 2 ? Integer.parseInt(v[2]) : 0;
+			return "10".equals(v[0]) && "0".equals(v[1]) && build >= 22000;
+		} catch (NumberFormatException ex) {
+			return false;
+		}
+	}
 
-        for (String dll : dllsIntel) {
-            if (log.contains(dll) && log.contains("EXCEPTION_ACCESS_VIOLATION")) {
-                procesarProblemaIntel();
-            	return;
-            }
-        }
-    }
+	// En la clase Drivers (analizador)
+	private void verificarProblemasIntel(String log) {
+		String[] dllsIntel = { "ig7icd32.dll", "ig7icd64.dll", "ig75icd32.dll", "ig75icd64.dll", "ig8icd64.dll",
+				"ig9icd32.dll", "ig9icd64.dll" };// https://tlauncher.org/en/ig9icd32-dll-error.html TODO para intel
 
-    private void procesarProblemaIntel() {
-        mensajes.append(MonitorDePID.idioma.problema_con_graficas_intel());
-        activado = true;
-    }
-    
-    
-    
-    
-    
-    
+		for (String dll : dllsIntel) {
+			if (log.contains(dll) && log.contains("EXCEPTION_ACCESS_VIOLATION")) {
+				procesarProblemaIntel();
+				return;
+			}
+		}
+	}
+
+	private void procesarProblemaIntel() {
+		mensajes.append(MonitorDePID.idioma.problema_con_graficas_intel());
+		activado = true;
+	}
+
 //    private String obtenerVersionControladorIntel() {
 //        if (!esWindows()) return null;
 //        
@@ -263,67 +245,59 @@ public class Drivers implements Verificaciones {
 //            return true;
 //        }
 //    }
-    
-    
-    
 
-    @Override
-    public Verificaciones nueva() {
-        return new Drivers();
-    }
+	@Override
+	public Verificaciones nueva() {
+		return new Drivers();
+	}
 
-    @Override
-    public boolean activado() {
-        return activado;
-    }
-    
-    @Override
-    public float prioridad() {
-        return 900.0f; // Prioridad crítica para errores de drivers [[8]]
-    }
+	@Override
+	public boolean activado() {
+		return activado;
+	}
 
-    @Override
-    public String mensaje() {
-        return mensajes.toString().replaceAll("\n", Verificaciones.nl_html);
-    }
+	@Override
+	public float prioridad() {
+		return 900.0f; // Prioridad crítica para errores de drivers [[8]]
+	}
+
+	@Override
+	public String mensaje() {
+		return mensajes.toString().replaceAll("\n", Verificaciones.nl_html);
+	}
 
 	@Override
 	public String nombre() {
 		// TODO Auto-generated method stub
 		return MonitorDePID.idioma.nombre_de_drivers();
 	}
-	
-	
-    @Override
-    public QuickFix solucion() {
-        return new QuickFix.Builder(nombre())
-            .agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
-            .construir();
-    }
-    
-    
-    //TODO
-/**
- * 
- * 
- * [08:33:15] [Render thread/ERROR]: The game failed to start because the currently installed NVIDIA Graphics Driver is not compatible.
 
-Installed version: 528.92
-Required version: 536.23 (or newer)
+	@Override
+	public QuickFix solucion() {
+		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
+				.construir();
+	}
 
-Please click the 'Help' button to read more about how to fix this problem.
+	// TODO
+	/**
+	 * 
+	 * 
+	 * [08:33:15] [Render thread/ERROR]: The game failed to start because the
+	 * currently installed NVIDIA Graphics Driver is not compatible.
+	 * 
+	 * Installed version: 528.92 Required version: 536.23 (or newer)
+	 * 
+	 * Please click the 'Help' button to read more about how to fix this problem.
+	 * 
+	 * For more information, please see:
+	 * https://link.caffeinemc.net/help/sodium/graphics-driver/windows/nvidia/gh-1486
+	 * [08:33:46] [ForkJoinPool.commonPool-worker-1/WARN]: [Iris Update Check] This
+	 * version doesn't have an update index, skipping.
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
 
-For more information, please see: https://link.caffeinemc.net/help/sodium/graphics-driver/windows/nvidia/gh-1486
-[08:33:46] [ForkJoinPool.commonPool-worker-1/WARN]: [Iris Update Check] This version doesn't have an update index, skipping.
-
- * 
- * 
- * 
- * 
- */
-    
-    
-    
-    
-    
 }

@@ -10,83 +10,87 @@ import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 /**
- * Clase que detecta excepciones al ejecutar comandos de plugins. Gracias a Aternos por que esta es una implementacion de su codex https://github.com/aternosorg/codex-minecraft
+ * Clase que detecta excepciones al ejecutar comandos de plugins. Gracias a
+ * Aternos por que esta es una implementacion de su codex
+ * https://github.com/aternosorg/codex-minecraft
  */
 public class ProblemaExcepcionComandoPlugin implements Verificaciones {
 
-    private boolean activado = false;
-    private String mensaje = "";
-    private String nombrePlugin = "";
-    private String comando = "";
+	private boolean activado = false;
+	private String mensaje = "";
+	private String nombrePlugin = "";
+	private String comando = "";
 
-    /**
-     * Verifica si el log contiene una excepción al ejecutar un comando de plugin.
-     */
-    @Override
-    public void verificar(Consola consola) {
-        String contenido = consola.contenido_verificar;
+	/**
+	 * Verifica si el log contiene una excepción al ejecutar un comando de plugin.
+	 */
+	@Override
+	public void verificar(Consola consola) {
+		String contenido = consola.contenido_verificar;
 
-        // Patrón de error: "org.bukkit.command.CommandException: Cannot execute command 'nombre' in plugin Plugin"
-        Pattern patron = Pattern.compile("org\\.bukkit\\.command\\.CommandException: Cannot execute command '([^']+)' in plugin (\\w+)");
-        Matcher coincidencia = patron.matcher(contenido);
+		// Patrón de error: "org.bukkit.command.CommandException: Cannot execute command
+		// 'nombre' in plugin Plugin"
+		Pattern patron = Pattern.compile(
+				"org\\.bukkit\\.command\\.CommandException: Cannot execute command '([^']+)' in plugin (\\w+)");
+		Matcher coincidencia = patron.matcher(contenido);
 
-        if (coincidencia.find()) {
-            this.nombrePlugin = coincidencia.group(2);
-            this.comando = coincidencia.group(1);
-            
-            this.mensaje = MonitorDePID.idioma.mensajeExcepcionComandoPlugin(nombrePlugin, comando) + Verificaciones.nl_html;
-            activado = true;
-        }
-    }
+		if (coincidencia.find()) {
+			this.nombrePlugin = coincidencia.group(2);
+			this.comando = coincidencia.group(1);
 
-    /**
-     * Crea una nueva instancia del verificador.
-     */
-    @Override
-    public Verificaciones nueva() {
-        return new ProblemaExcepcionComandoPlugin();
-    }
+			this.mensaje = MonitorDePID.idioma.mensajeExcepcionComandoPlugin(nombrePlugin, comando)
+					+ Verificaciones.nl_html;
+			activado = true;
+		}
+	}
 
-    /**
-     * Indica si el problema fue detectado.
-     */
-    @Override
-    public boolean activado() {
-        return activado;
-    }
+	/**
+	 * Crea una nueva instancia del verificador.
+	 */
+	@Override
+	public Verificaciones nueva() {
+		return new ProblemaExcepcionComandoPlugin();
+	}
 
-    /**
-     * Prioridad del problema (alta).
-     */
-    @Override
-    public float prioridad() {
-        return 500.0f;
-    }
+	/**
+	 * Indica si el problema fue detectado.
+	 */
+	@Override
+	public boolean activado() {
+		return activado;
+	}
 
-    /**
-     * Devuelve el mensaje de error almacenado.
-     */
-    @Override
-    public String mensaje() {
-        return mensaje;
-    }
+	/**
+	 * Prioridad del problema (alta).
+	 */
+	@Override
+	public float prioridad() {
+		return 500.0f;
+	}
 
-    /**
-     * Devuelve el nombre del problema para mostrar en la interfaz.
-     */
-    @Override
-    public String nombre() {
-        return MonitorDePID.idioma.nombreProblemaExcepcionComandoPlugin();
-    }
+	/**
+	 * Devuelve el mensaje de error almacenado.
+	 */
+	@Override
+	public String mensaje() {
+		return mensaje;
+	}
 
-    /**
-     * Devuelve las soluciones posibles para este problema.
-     */
-    @Override
-    public QuickFix solucion() {
-        return new Builder(nombre())
-            .agregarEtiqueta(MonitorDePID.idioma.solucionInstalarVersionDiferentePlugin(nombrePlugin))
-            .agregarEtiqueta(MonitorDePID.idioma.solucionEliminarPlugin(nombrePlugin))
-            .construir();
-    }
+	/**
+	 * Devuelve el nombre del problema para mostrar en la interfaz.
+	 */
+	@Override
+	public String nombre() {
+		return MonitorDePID.idioma.nombreProblemaExcepcionComandoPlugin();
+	}
+
+	/**
+	 * Devuelve las soluciones posibles para este problema.
+	 */
+	@Override
+	public QuickFix solucion() {
+		return new Builder(nombre())
+				.agregarEtiqueta(MonitorDePID.idioma.solucionInstalarVersionDiferentePlugin(nombrePlugin))
+				.agregarEtiqueta(MonitorDePID.idioma.solucionEliminarPlugin(nombrePlugin)).construir();
+	}
 }

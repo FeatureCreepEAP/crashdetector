@@ -12,191 +12,196 @@ import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 /**
- * Clase que detecta múltiples plugins con dependencias faltantes.
- * Gracias a Aternos por que esta es una implementacion de su codex https://github.com/aternosorg/codex-minecraft   
+ * Clase que detecta múltiples plugins con dependencias faltantes. Gracias a
+ * Aternos por que esta es una implementacion de su codex
+ * https://github.com/aternosorg/codex-minecraft
  */
 public class ProblemaDependenciaPlugin implements Verificaciones {
 
-    private boolean activado = false;
-    private String mensaje = "";
-    private final Map<String, List<String>> plugins = new HashMap<>();
-    private String nombrePluginActual = "";
+	private boolean activado = false;
+	private String mensaje = "";
+	private final Map<String, List<String>> plugins = new HashMap<>();
+	private String nombrePluginActual = "";
 
-    /**
-     * Verifica si el log contiene errores de dependencias faltantes.
-     */
-    @Override
-    public void verificar(Consola consola) {
-        String contenido = consola.contenido_verificar;
-        String[] lineas = contenido.split("\n");
+	/**
+	 * Verifica si el log contiene errores de dependencias faltantes.
+	 */
+	@Override
+	public void verificar(Consola consola) {
+		String contenido = consola.contenido_verificar;
+		String[] lineas = contenido.split("\n");
 
-        for (String linea : lineas) {
-            // 1. Detecta carga fallida de plugin
-            if (linea.contains("Could not load 'plugins/")) {
-                extraerNombrePluginDesdeRuta(linea);
-            }
-            // 2. Detecta dependencias múltiples
-            else if (linea.contains("Unknown/missing dependency plugins:")) {
-                procesarLineaDependenciaMultiple(linea);
-            }
-            // 3. Detecta dependencia única
-            else if (linea.contains("Unknown dependency")) {
-                procesarLineaDependenciaUnica(linea);
-            }
-        }
+		for (String linea : lineas) {
+			// 1. Detecta carga fallida de plugin
+			if (linea.contains("Could not load 'plugins/")) {
+				extraerNombrePluginDesdeRuta(linea);
+			}
+			// 2. Detecta dependencias múltiples
+			else if (linea.contains("Unknown/missing dependency plugins:")) {
+				procesarLineaDependenciaMultiple(linea);
+			}
+			// 3. Detecta dependencia única
+			else if (linea.contains("Unknown dependency")) {
+				procesarLineaDependenciaUnica(linea);
+			}
+		}
 
-        // 4. Si hay plugins con dependencias faltantes
-        if (!plugins.isEmpty()) {
-            StringBuilder mensajeBuilder = new StringBuilder();
-            boolean primerPlugin = true;
-            
-            for (Map.Entry<String, List<String>> entry : plugins.entrySet()) {
-                String nombrePlugin = entry.getKey();
-                List<String> dependencias = entry.getValue();
-                
-                if (!primerPlugin) {
-                    mensajeBuilder.append("<br>");
-                }
-                
-                if (dependencias.size() == 1) {
-                    mensajeBuilder.append(MonitorDePID.idioma.mensajeDependenciaPluginUnica(nombrePlugin, dependencias.get(0)));
-                } else {
-                    mensajeBuilder.append(MonitorDePID.idioma.mensajeDependenciaPluginMultiples(nombrePlugin, dependencias));
-                }
-                
-                primerPlugin = false;
-            }
+		// 4. Si hay plugins con dependencias faltantes
+		if (!plugins.isEmpty()) {
+			StringBuilder mensajeBuilder = new StringBuilder();
+			boolean primerPlugin = true;
 
-            this.mensaje = mensajeBuilder.toString();
-            activado = true;
-        }
-    }
+			for (Map.Entry<String, List<String>> entry : plugins.entrySet()) {
+				String nombrePlugin = entry.getKey();
+				List<String> dependencias = entry.getValue();
 
-    /**
-     * Procesa líneas con múltiples dependencias faltantes.
-     */
-    private void procesarLineaDependenciaMultiple(String linea) {
-        if (nombrePluginActual.isEmpty()) return;
+				if (!primerPlugin) {
+					mensajeBuilder.append("<br>");
+				}
 
-        int inicio = linea.indexOf('[') + 1;
-        int fin = linea.indexOf(']');
-        
-        if (inicio > 0 && fin > inicio) {
-            String depsTexto = linea.substring(inicio, fin);
-            String[] deps = depsTexto.split(", ");
-            
-            plugins.computeIfAbsent(nombrePluginActual, k -> new ArrayList<>());
-            
-            for (String dep : deps) {
-                plugins.get(nombrePluginActual).add(dep.trim());
-            }
-            
-            nombrePluginActual = ""; // Reinicia para evitar duplicados
-        }
-    }
+				if (dependencias.size() == 1) {
+					mensajeBuilder.append(
+							MonitorDePID.idioma.mensajeDependenciaPluginUnica(nombrePlugin, dependencias.get(0)));
+				} else {
+					mensajeBuilder
+							.append(MonitorDePID.idioma.mensajeDependenciaPluginMultiples(nombrePlugin, dependencias));
+				}
 
-    /**
-     * Procesa líneas con una sola dependencia faltante.
-     */
-    private void procesarLineaDependenciaUnica(String linea) {
-        if (nombrePluginActual.isEmpty()) return;
+				primerPlugin = false;
+			}
 
-        int inicioDep = linea.indexOf("Unknown dependency ") + "Unknown dependency ".length();
-        int finDep = linea.indexOf(".", inicioDep);
+			this.mensaje = mensajeBuilder.toString();
+			activado = true;
+		}
+	}
 
-        if (inicioDep > 0 && finDep > inicioDep) {
-            String dependencia = linea.substring(inicioDep, finDep).trim();
-            
-            plugins.computeIfAbsent(nombrePluginActual, k -> new ArrayList<>());
-            plugins.get(nombrePluginActual).add(dependencia);
-            
-            nombrePluginActual = ""; // Reinicia para evitar duplicados
-        }
-    }
+	/**
+	 * Procesa líneas con múltiples dependencias faltantes.
+	 */
+	private void procesarLineaDependenciaMultiple(String linea) {
+		if (nombrePluginActual.isEmpty())
+			return;
 
-    /**
-     * Extrae el nombre del plugin desde la ruta en la línea de error.
-     */
-    private void extraerNombrePluginDesdeRuta(String linea) {
-        int primerApostrofe = linea.indexOf('\'');
-        int segundoApostrofe = linea.indexOf('\'', primerApostrofe + 1);
-        
-        if (primerApostrofe >= 0 && segundoApostrofe > primerApostrofe) {
-            String ruta = linea.substring(primerApostrofe + 1, segundoApostrofe);
-            this.nombrePluginActual = extraerNombrePlugin(ruta);
-        }
-    }
+		int inicio = linea.indexOf('[') + 1;
+		int fin = linea.indexOf(']');
 
-    /**
-     * Extrae solo el nombre del archivo del path completo.
-     */
-    private String extraerNombrePlugin(String path) {
-        int indiceUltimaBarra = path.lastIndexOf("/");
-        return (indiceUltimaBarra != -1) ? path.substring(indiceUltimaBarra + 1) : path;
-    }
+		if (inicio > 0 && fin > inicio) {
+			String depsTexto = linea.substring(inicio, fin);
+			String[] deps = depsTexto.split(", ");
 
-    /**
-     * Crea una nueva instancia del verificador.
-     */
-    @Override
-    public Verificaciones nueva() {
-        return new ProblemaDependenciaPlugin();
-    }
+			plugins.computeIfAbsent(nombrePluginActual, k -> new ArrayList<>());
 
-    /**
-     * Indica si el problema fue detectado.
-     */
-    @Override
-    public boolean activado() {
-        return activado;
-    }
+			for (String dep : deps) {
+				plugins.get(nombrePluginActual).add(dep.trim());
+			}
 
-    /**
-     * Prioridad del problema (alta).
-     */
-    @Override
-    public float prioridad() {
-        return 800.0f;
-    }
+			nombrePluginActual = ""; // Reinicia para evitar duplicados
+		}
+	}
 
-    /**
-     * Devuelve el mensaje de error almacenado.
-     */
-    @Override
-    public String mensaje() {
-        return mensaje;
-    }
+	/**
+	 * Procesa líneas con una sola dependencia faltante.
+	 */
+	private void procesarLineaDependenciaUnica(String linea) {
+		if (nombrePluginActual.isEmpty())
+			return;
 
-    /**
-     * Devuelve el nombre del problema para mostrar en la interfaz.
-     */
-    @Override
-    public String nombre() {
-        return MonitorDePID.idioma.nombreProblemaDependenciaPlugin();
-    }
+		int inicioDep = linea.indexOf("Unknown dependency ") + "Unknown dependency ".length();
+		int finDep = linea.indexOf(".", inicioDep);
 
-    /**
-     * Devuelve las soluciones posibles para este problema.
-     */
-    @Override
-    public QuickFix solucion() {
-        Builder builder = new Builder(nombre());
+		if (inicioDep > 0 && finDep > inicioDep) {
+			String dependencia = linea.substring(inicioDep, finDep).trim();
 
-        for (Map.Entry<String, List<String>> entry : plugins.entrySet()) {
-            String nombrePlugin = entry.getKey();
-            List<String> dependencias = entry.getValue();
-            
-            // Solución para eliminar el plugin
-            if (!nombrePlugin.isEmpty()) {
-                builder.agregarEtiqueta(MonitorDePID.idioma.solucionEliminarPlugin(nombrePlugin));
-            }
+			plugins.computeIfAbsent(nombrePluginActual, k -> new ArrayList<>());
+			plugins.get(nombrePluginActual).add(dependencia);
 
-            // Soluciones para instalar cada dependencia faltante
-            for (String dependencia : dependencias) {
-                builder.agregarEtiqueta(MonitorDePID.idioma.solucionInstalarPlugin(dependencia));
-            }
-        }
+			nombrePluginActual = ""; // Reinicia para evitar duplicados
+		}
+	}
 
-        return builder.construir();
-    }
+	/**
+	 * Extrae el nombre del plugin desde la ruta en la línea de error.
+	 */
+	private void extraerNombrePluginDesdeRuta(String linea) {
+		int primerApostrofe = linea.indexOf('\'');
+		int segundoApostrofe = linea.indexOf('\'', primerApostrofe + 1);
+
+		if (primerApostrofe >= 0 && segundoApostrofe > primerApostrofe) {
+			String ruta = linea.substring(primerApostrofe + 1, segundoApostrofe);
+			this.nombrePluginActual = extraerNombrePlugin(ruta);
+		}
+	}
+
+	/**
+	 * Extrae solo el nombre del archivo del path completo.
+	 */
+	private String extraerNombrePlugin(String path) {
+		int indiceUltimaBarra = path.lastIndexOf("/");
+		return (indiceUltimaBarra != -1) ? path.substring(indiceUltimaBarra + 1) : path;
+	}
+
+	/**
+	 * Crea una nueva instancia del verificador.
+	 */
+	@Override
+	public Verificaciones nueva() {
+		return new ProblemaDependenciaPlugin();
+	}
+
+	/**
+	 * Indica si el problema fue detectado.
+	 */
+	@Override
+	public boolean activado() {
+		return activado;
+	}
+
+	/**
+	 * Prioridad del problema (alta).
+	 */
+	@Override
+	public float prioridad() {
+		return 800.0f;
+	}
+
+	/**
+	 * Devuelve el mensaje de error almacenado.
+	 */
+	@Override
+	public String mensaje() {
+		return mensaje;
+	}
+
+	/**
+	 * Devuelve el nombre del problema para mostrar en la interfaz.
+	 */
+	@Override
+	public String nombre() {
+		return MonitorDePID.idioma.nombreProblemaDependenciaPlugin();
+	}
+
+	/**
+	 * Devuelve las soluciones posibles para este problema.
+	 */
+	@Override
+	public QuickFix solucion() {
+		Builder builder = new Builder(nombre());
+
+		for (Map.Entry<String, List<String>> entry : plugins.entrySet()) {
+			String nombrePlugin = entry.getKey();
+			List<String> dependencias = entry.getValue();
+
+			// Solución para eliminar el plugin
+			if (!nombrePlugin.isEmpty()) {
+				builder.agregarEtiqueta(MonitorDePID.idioma.solucionEliminarPlugin(nombrePlugin));
+			}
+
+			// Soluciones para instalar cada dependencia faltante
+			for (String dependencia : dependencias) {
+				builder.agregarEtiqueta(MonitorDePID.idioma.solucionInstalarPlugin(dependencia));
+			}
+		}
+
+		return builder.construir();
+	}
 }

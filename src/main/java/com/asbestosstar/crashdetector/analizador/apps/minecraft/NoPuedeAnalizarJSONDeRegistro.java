@@ -12,7 +12,7 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 public class NoPuedeAnalizarJSONDeRegistro implements Verificaciones {
 
 	boolean activado = false;
-    private final List<String> erroresJSON = new ArrayList<>(); // Almacena múltiples errores
+	private final List<String> erroresJSON = new ArrayList<>(); // Almacena múltiples errores
 
 	/**
 	 * Verifica el contenido de la consola para detectar errores de análisis en
@@ -40,30 +40,30 @@ public class NoPuedeAnalizarJSONDeRegistro implements Verificaciones {
 	 * java.lang.IllegalStateException: Failed to parse souls_like_bosses:worldgen/structure/lothric_castle.json from pack souls_like_bosses_1.1_Forge+Fabric-1.20.1.jar
 	 *                             </pre>
 	 */
-	 @Override
-	    public void verificar(Consola consola) {
-	    	String contenidoConsola=consola.contenido_verificar;
+	@Override
+	public void verificar(Consola consola) {
+		String contenidoConsola = consola.contenido_verificar;
 
-	        String[] lineas = contenidoConsola.split(Verificaciones.nl);
-	        
-	        for (String linea : lineas) {
-	            if (linea.contains("Failed to parse") && linea.contains(".json from pack")) {
-	                CrashDetectorLogger.log("Se detectó error de análisis JSON en registro");
-	                
-	                try {
-	                    String archivoJar = linea.split("from pack ")[1].split("\\.jar")[0].trim() + ".jar";
-	                    String recurso = linea.split("Failed to parse ")[1].split(" from pack")[0].trim();
-	                    
-	                    String mensaje = MonitorDePID.idioma.errorConJSONDeRegistro(archivoJar, recurso);
-	                    erroresJSON.add(mensaje);
-	                    activado = true;
-	                    
-	                } catch (Exception e) {
-	                    CrashDetectorLogger.logException(e);
-	                }
-	            }
-	        }
-	    }
+		String[] lineas = contenidoConsola.split(Verificaciones.nl);
+
+		for (String linea : lineas) {
+			if (linea.contains("Failed to parse") && linea.contains(".json from pack")) {
+				CrashDetectorLogger.log("Se detectó error de análisis JSON en registro");
+
+				try {
+					String archivoJar = linea.split("from pack ")[1].split("\\.jar")[0].trim() + ".jar";
+					String recurso = linea.split("Failed to parse ")[1].split(" from pack")[0].trim();
+
+					String mensaje = MonitorDePID.idioma.errorConJSONDeRegistro(archivoJar, recurso);
+					erroresJSON.add(mensaje);
+					activado = true;
+
+				} catch (Exception e) {
+					CrashDetectorLogger.logException(e);
+				}
+			}
+		}
+	}
 
 	@Override
 	public Verificaciones nueva() {
@@ -77,38 +77,34 @@ public class NoPuedeAnalizarJSONDeRegistro implements Verificaciones {
 		return activado;
 	}
 
-	
-    @Override
-    public float prioridad() {
-        return 500.0f; // Prioridad alta para errores de configuración crítica [[4]]
-    }
+	@Override
+	public float prioridad() {
+		return 500.0f; // Prioridad alta para errores de configuración crítica [[4]]
+	}
 
-    @Override
-    public String mensaje() {
-        if (erroresJSON.isEmpty()) return "";
-        
-        StringBuilder html = new StringBuilder("<ul>");
-        for (String error : erroresJSON) {
-            html.append("<li>").append(error).append("</li>");
-        }
-        html.append("</ul>");
-        return html.toString();
-    }
+	@Override
+	public String mensaje() {
+		if (erroresJSON.isEmpty())
+			return "";
+
+		StringBuilder html = new StringBuilder("<ul>");
+		for (String error : erroresJSON) {
+			html.append("<li>").append(error).append("</li>");
+		}
+		html.append("</ul>");
+		return html.toString();
+	}
 
 	@Override
 	public String nombre() {
 		// TODO Auto-generated method stub
 		return MonitorDePID.idioma.nombre_de_no_puede_analizar_json_de_registro();
 	}
-	
-	
-    @Override
-    public QuickFix solucion() {
-        return new QuickFix.Builder(nombre())
-            .agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
-            .construir();
-    }
-	
-	
-	
+
+	@Override
+	public QuickFix solucion() {
+		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
+				.construir();
+	}
+
 }

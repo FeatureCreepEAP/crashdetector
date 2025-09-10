@@ -10,82 +10,75 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class FabricMCRuntimeErrorProvidedBy implements Verificaciones {
 
-    private boolean activado = false;
-    private final Set<String> modIdsProblematicos = new HashSet<>();
+	private boolean activado = false;
+	private final Set<String> modIdsProblematicos = new HashSet<>();
 
-    @Override
-    public void verificar(Consola consola) {
-        String contenidoConsola = consola.contenido_verificar;
+	@Override
+	public void verificar(Consola consola) {
+		String contenidoConsola = consola.contenido_verificar;
 
-        for (String linea : contenidoConsola.split(Verificaciones.nl)) {
-            if (linea.contains("Could not execute entrypoint stage") && linea.contains("provided by")) {
-                try {
-                    // Buscamos el mod ID que está entre comillas simples después de "provided by"
-                    int startIndex = linea.indexOf("provided by '");
-                    if (startIndex >= 0) {
-                        // Ajustamos el índice para saltar "provided by '"
-                        startIndex += "provided by '".length();
-                        int endIndex = linea.indexOf('\'', startIndex);
-                        if (endIndex > startIndex) {
-                            // Extraemos solo el texto entre las comillas simples (el mod ID)
-                            String modId = linea.substring(startIndex, endIndex);
-                            modIdsProblematicos.add(modId);
-                            activado = true;
-                        }
-                    }
-                } catch (Exception e) {
-                    // Ignora líneas mal formateadas
-                }
-            }
-        }
-    }
+		for (String linea : contenidoConsola.split(Verificaciones.nl)) {
+			if (linea.contains("Could not execute entrypoint stage") && linea.contains("provided by")) {
+				try {
+					// Buscamos el mod ID que está entre comillas simples después de "provided by"
+					int startIndex = linea.indexOf("provided by '");
+					if (startIndex >= 0) {
+						// Ajustamos el índice para saltar "provided by '"
+						startIndex += "provided by '".length();
+						int endIndex = linea.indexOf('\'', startIndex);
+						if (endIndex > startIndex) {
+							// Extraemos solo el texto entre las comillas simples (el mod ID)
+							String modId = linea.substring(startIndex, endIndex);
+							modIdsProblematicos.add(modId);
+							activado = true;
+						}
+					}
+				} catch (Exception e) {
+					// Ignora líneas mal formateadas
+				}
+			}
+		}
+	}
 
-    @Override
-    public Verificaciones nueva() {
-        return new FabricMCRuntimeErrorProvidedBy();
-    }
+	@Override
+	public Verificaciones nueva() {
+		return new FabricMCRuntimeErrorProvidedBy();
+	}
 
-    @Override
-    public boolean activado() {
-        return activado;
-    }
+	@Override
+	public boolean activado() {
+		return activado;
+	}
 
-    @Override
-    public float prioridad() {
-        return 900.0f; // Prioridad media-alta para errores de inicialización
-    }
+	@Override
+	public float prioridad() {
+		return 900.0f; // Prioridad media-alta para errores de inicialización
+	}
 
-    @Override
-    public String mensaje() {
-        if (modIdsProblematicos.isEmpty()) return "";
-        
-        StringBuilder html = new StringBuilder("<ul>");
-        for (String modId : modIdsProblematicos) {
-            html.append("<li>")
-                .append(MonitorDePID.idioma.modids_problematicos())
-                .append(" <b>")
-                .append(modId)
-                .append("</b></li>")
-                .append(Verificaciones.nl_html);
-        }
-        html.append("</ul>");
-        return html.toString();
-    }
-    
-    
-    
+	@Override
+	public String mensaje() {
+		if (modIdsProblematicos.isEmpty())
+			return "";
+
+		StringBuilder html = new StringBuilder("<ul>");
+		for (String modId : modIdsProblematicos) {
+			html.append("<li>").append(MonitorDePID.idioma.modids_problematicos()).append(" <b>").append(modId)
+					.append("</b></li>").append(Verificaciones.nl_html);
+		}
+		html.append("</ul>");
+		return html.toString();
+	}
+
 	@Override
 	public String nombre() {
 		// TODO Auto-generated method stub
 		return MonitorDePID.idioma.nombre_de_fabricmc_runtime_error_provided_by();
 	}
-	
-    @Override
-    public QuickFix solucion() {
-        return new QuickFix.Builder(nombre())
-            .agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
-            .construir();
-    }
-    
-    
+
+	@Override
+	public QuickFix solucion() {
+		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
+				.construir();
+	}
+
 }

@@ -109,10 +109,10 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 		html.append(MonitorDePID.idioma.no_tienes_las_dependencias_necesarias());
 		html.append("<ul>");
 		for (String error : errores) {
-			String trim =error.trim().replace("\t", "");
-		if(!html.toString().contains(trim)) {	
-			html.append("<li>"+trim+"</li>");
-		}
+			String trim = error.trim().replace("\t", "");
+			if (!html.toString().contains(trim)) {
+				html.append("<li>" + trim + "</li>");
+			}
 		}
 		html.append("</ul>");
 		return html.toString();
@@ -123,12 +123,11 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 		// TODO Auto-generated method stub
 		return MonitorDePID.idioma.nombre_de_faltas_dependencias_de_modlauncher();
 	}
-	
-    @Override
-    public QuickFix solucion() {
-        return new QuickFix.Builder(nombre())
-            .agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
-            .construir();
-    }
+
+	@Override
+	public QuickFix solucion() {
+		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
+				.construir();
+	}
 
 }

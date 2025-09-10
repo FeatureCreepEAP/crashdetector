@@ -11,67 +11,67 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class ServicioDeModLauncherNoFunciona implements Verificaciones {
 
-    private boolean activado = false;
-    private final Set<String> serviciosFallidos = new HashSet<>();
+	private boolean activado = false;
+	private final Set<String> serviciosFallidos = new HashSet<>();
 
-    @Override
-    public void verificar(Consola consola) {
-    	String contenidoConsola=consola.contenido_verificar;
-        String[] lineas = contenidoConsola.split(Verificaciones.nl);
-        String carga = "Service failed to load";
-        
-        for (String linea : lineas) {
-            if (linea.contains(carga)) {
-                
-                String servicio = linea.split(carga)[1].trim();
-                String mensaje = MonitorDePID.idioma.servicioMLNoPudoCargar(servicio);
-                serviciosFallidos.add(mensaje);
-                activado = true;
-            }
-        }
-    }
+	@Override
+	public void verificar(Consola consola) {
+		String contenidoConsola = consola.contenido_verificar;
+		String[] lineas = contenidoConsola.split(Verificaciones.nl);
+		String carga = "Service failed to load";
 
-    @Override
-    public Verificaciones nueva() {
-        return new ServicioDeModLauncherNoFunciona();
-    }
+		for (String linea : lineas) {
+			if (linea.contains(carga)) {
 
-    @Override
-    public boolean activado() {
-        return activado;
-    }
+				String servicio = linea.split(carga)[1].trim();
+				String mensaje = MonitorDePID.idioma.servicioMLNoPudoCargar(servicio);
+				serviciosFallidos.add(mensaje);
+				activado = true;
+			}
+		}
+	}
 
-    @Override
-    public float prioridad() {
-        return 1000.0f; // Prioridad media
-    }
+	@Override
+	public Verificaciones nueva() {
+		return new ServicioDeModLauncherNoFunciona();
+	}
 
-    @Override
-    public String mensaje() {
-        if (serviciosFallidos.isEmpty()) return "";
-        
-        CDStringBuilder html = new CDStringBuilder();
-        html.append("<ul>");
-        
-        for (String servicio : serviciosFallidos) {
-            html.append("<li>"+servicio+"</li>");
-        }
-        
-        html.append("</ul>");
-        return html.toString();
-    }
-    
+	@Override
+	public boolean activado() {
+		return activado;
+	}
+
+	@Override
+	public float prioridad() {
+		return 1000.0f; // Prioridad media
+	}
+
+	@Override
+	public String mensaje() {
+		if (serviciosFallidos.isEmpty())
+			return "";
+
+		CDStringBuilder html = new CDStringBuilder();
+		html.append("<ul>");
+
+		for (String servicio : serviciosFallidos) {
+			html.append("<li>" + servicio + "</li>");
+		}
+
+		html.append("</ul>");
+		return html.toString();
+	}
+
 	@Override
 	public String nombre() {
 		// TODO Auto-generated method stub
 		return MonitorDePID.idioma.nombre_de_servicio_de_modlauncher_no_funciona();
 	}
-    
-    @Override
-    public QuickFix solucion() {
-        return new QuickFix.Builder(nombre())
-            .agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
-            .construir();
-    }
-    
+
+	@Override
+	public QuickFix solucion() {
+		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
+				.construir();
+	}
+
 }
