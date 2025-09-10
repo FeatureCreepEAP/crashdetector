@@ -19,14 +19,17 @@ public class ErrorCaracteresInvalidosEnNombre implements Verificaciones {
 	private String mensaje = "";
 	private String nombreModulo = "";
 	private String parteInvalida = "";
+	private String enlaceHtml = "";
 
 	@Override
 	public void verificar(Consola consola) {
 		String contenidoConsola = consola.contenido_verificar;
+		String[] lineas = contenidoConsola.split(Verificaciones.nl);
 
 		// Analiza cada línea del registro buscando el patrón específico de error de
 		// nombre inválido
-		for (String linea : contenidoConsola.split(Verificaciones.nl)) {
+		for (int i = 0; i < lineas.length; i++) {
+			String linea = lineas[i];
 			// Detecta cualquier caso de "Invalid module name: 'X' is not a Java identifier"
 			if (linea.contains("Invalid module name: '") && linea.contains("' is not a Java identifier")) {
 
@@ -38,6 +41,9 @@ public class ErrorCaracteresInvalidosEnNombre implements Verificaciones {
 				if (matcher.find()) {
 					nombreModulo = matcher.group(1);
 					parteInvalida = matcher.group(2);
+
+					// Registrar el error en el sistema de lectura con el número de línea
+					enlaceHtml = consola.agregarErrorALectador(i, this);
 
 					mensaje = MonitorDePID.idioma.errorCaracteresInvalidosEnNombre(nombreModulo, parteInvalida)
 							+ Verificaciones.nl_html;
@@ -65,7 +71,10 @@ public class ErrorCaracteresInvalidosEnNombre implements Verificaciones {
 
 	@Override
 	public String mensaje() {
-		return mensaje;
+		if (!activado)
+			return "";
+		// Incluir solo el mensaje original y el enlace HTML (que ya tiene su formato)
+		return mensaje + enlaceHtml;
 	}
 
 	@Override

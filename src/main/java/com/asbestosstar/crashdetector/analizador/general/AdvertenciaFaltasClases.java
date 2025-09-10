@@ -26,21 +26,27 @@ public class AdvertenciaFaltasClases implements Verificaciones {
 
 	private boolean activado = false;
 	private final Set<String> clases = new LinkedHashSet<>();
+	private final Map<String, String> enlacesPorClase = new HashMap<>(); // Clase -> enlace HTML
 
 	@Override
 	public void verificar(Consola consola) {
 		String contenidoConsola = consola.contenido_verificar;
 
-		for (String linea : contenidoConsola.split(Verificaciones.nl)) {
+		for (int i = 0; i < contenidoConsola.split(Verificaciones.nl).length; i++) {
+			String linea = contenidoConsola.split(Verificaciones.nl)[i];
 			if (linea.contains("Error loading class:") && linea.contains("WARN")) {
 				try {
 					String clase = linea.split("Error loading class: ")[1].split(" ")[0].trim();
-					// if (!FaltasClases.todos.contains(clase)) { // Verifica globalmente
-					clases.add(clase.replace(".", "/"));
-					// FaltasClases.todos.add(clase); // Actualiza registro global
-					// }
+					String claseFormateada = clase.replace(".", "/");
+
+					// Solo registrar el enlace la primera vez que aparece la clase
+					if (clases.add(claseFormateada)) {
+						String enlace = consola.agregarErrorALectador(i, this);
+						enlacesPorClase.put(claseFormateada, enlace);
+					}
 				} catch (Exception ignored) {
-					// Ignora líneas mal formateadas
+					// Para líneas mal formateadas, no se puede extraer clase, pero igual registrar
+					consola.agregarErrorALectador(i, this);
 				}
 			}
 		}
@@ -70,7 +76,8 @@ public class AdvertenciaFaltasClases implements Verificaciones {
 
 		StringBuilder html = new StringBuilder("<ul>");
 		for (String clase : clases) {
-			html.append("<li>").append(clase).append("</li>");
+			String enlace = enlacesPorClase.get(clase);
+			html.append("<li>").append(clase).append(" - ").append(enlace).append("</li>");
 		}
 		html.append("</ul>");
 

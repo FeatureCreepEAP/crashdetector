@@ -66,6 +66,11 @@ public class NullPointer implements Verificaciones {
 	 */
 	private boolean activado = false;
 
+	/**
+	 * Almacena el enlace HTML por mensaje base (solo para líneas sueltas)
+	 */
+	private final Map<String, String> enlacesPorLinea = new HashMap<>();
+
 	@Override
 	public void verificar(Consola consola) {
 		// Limpiar resultados anteriores
@@ -130,10 +135,12 @@ public class NullPointer implements Verificaciones {
 		}
 
 		// Analizar líneas sueltas sin trazo completo (ej: errores sin "at ...")
-		for (String linea : consola.contenido_verificar.split(NL)) {
+		String[] lineas = consola.contenido_verificar.split(NL);
+		for (int i = 0; i < lineas.length; i++) {
+			String linea = lineas[i];
 			if (linea.contains("NullPointerException") && !linea.contains("at ")
 					&& VerificacionDeStackTrace.tracePermite(linea)) {
-				procesarLineaSinTraza(linea, vdst);
+				procesarLineaSinTraza(linea, vdst, i, consola);
 			}
 		}
 	}
@@ -141,7 +148,7 @@ public class NullPointer implements Verificaciones {
 	/**
 	 * Procesa una línea con NPE que no tiene stack trace completo
 	 */
-	private void procesarLineaSinTraza(String linea, VerificacionDeStackTrace vdst) {
+	private void procesarLineaSinTraza(String linea, VerificacionDeStackTrace vdst, int numeroLinea, Consola consola) {
 		String metodo = "desconocido";
 		String objeto = "desconocido";
 
@@ -161,6 +168,10 @@ public class NullPointer implements Verificaciones {
 		// Buscar origen SOLO en esta línea
 		String origen = detectarOrigenEnLinea(linea, vdst);
 		String mensajeBase = MonitorDePID.idioma.null_pointer_error(metodo, objeto);
+
+		// Registrar el error en el sistema de lectura
+		String enlace = consola.agregarErrorALectador(numeroLinea, this);
+		enlacesPorLinea.put(mensajeBase, enlace);
 
 		// Agregar el error al mapa, agrupando por mensaje base
 		errores.computeIfAbsent(mensajeBase, k -> new HashSet<>());
@@ -309,6 +320,12 @@ public class NullPointer implements Verificaciones {
 					origenesStr.append(origen);
 				}
 				mensajeBase += " (" + origenesStr.toString() + ")";
+			}
+
+			// Añadir enlace solo si es de línea suelta
+			String enlace = enlacesPorLinea.getOrDefault(mensajeBase, "");
+			if (!enlace.isEmpty()) {
+				mensajeBase += " " + enlace;
 			}
 
 			sb.append("<li>").append(mensajeBase).append("</li>");

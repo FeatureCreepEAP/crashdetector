@@ -30,6 +30,7 @@ public class FaltasClases implements Verificaciones {
 	public boolean epicfight = false;
 	private final Map<String, String> clases = new HashMap<>();
 	public final Set<String> todos = new LinkedHashSet<>();
+	private final Map<String, String> enlacesPorClase = new HashMap<>(); // Clase en formato ruta -> enlace HTML
 
 	@Override
 	public void verificar(Consola consola) {
@@ -44,7 +45,10 @@ public class FaltasClases implements Verificaciones {
 		}
 
 		// Procesar línea por línea la consola
-		for (String linea : contenidoConsola.split(Verificaciones.nl)) {
+		String[] lineas = contenidoConsola.split(Verificaciones.nl);
+		for (int i = 0; i < lineas.length; i++) {
+			String linea = lineas[i];
+
 			// Eliminar prefijo de log
 			int indiceDosPuntos = linea.indexOf(':');
 			if (indiceDosPuntos != -1 && linea.charAt(0) == '[') {
@@ -88,7 +92,10 @@ public class FaltasClases implements Verificaciones {
 
 			// Validar formato de clase antes de agregarla
 			if (clase != null && esNombreClaseValido(clase) && todos.add(clase)) {
-				clases.putIfAbsent(clase.replace(".", "/"), "");
+				String claseFormateada = clase.replace(".", "/");
+				clases.putIfAbsent(claseFormateada, "");
+				String enlace = consola.agregarErrorALectador(i, this);
+				enlacesPorClase.put(claseFormateada, enlace);
 			}
 		}
 
@@ -97,7 +104,6 @@ public class FaltasClases implements Verificaciones {
 			if (clase.startsWith("gg/essential/") || clase.startsWith("kotlin/") || clase.startsWith("kotlinx/")) {
 				clases.remove(clase);
 			}
-
 		}
 
 		activado = !clases.isEmpty();
@@ -129,19 +135,19 @@ public class FaltasClases implements Verificaciones {
 			return "";
 
 		StringBuilder html = new StringBuilder("<ul>");
-		for (Entry<String, String> clase : clases.entrySet()) {
-			String valor = "";
-			if (!clase.getValue().isEmpty()) {
-				valor = " (" + clase.getValue() + ")";
-			}
-			if (clase.getKey().trim().startsWith("com/simibubi/create")) {
+		for (Entry<String, String> entry : clases.entrySet()) {
+			String claseFormateada = entry.getKey();
+			String valor = !entry.getValue().isEmpty() ? " (" + entry.getValue() + ")" : "";
+			String enlace = enlacesPorClase.getOrDefault(claseFormateada, "");
+
+			if (claseFormateada.trim().startsWith("com/simibubi/create")) {
 				create = true;
 			}
-			if (clase.getKey().trim().startsWith("yesman/epicfight")) {
+			if (claseFormateada.trim().startsWith("yesman/epicfight")) {
 				epicfight = true;
 			}
-			html.append("<li>").append(clase.getKey()).append(valor).append("</li>");
 
+			html.append("<li>").append(claseFormateada).append(valor).append(" ").append(enlace).append("</li>");
 		}
 		html.append("</ul>");
 

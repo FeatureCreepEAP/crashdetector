@@ -1,6 +1,8 @@
 package com.asbestosstar.crashdetector.analizador.general;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.swing.JOptionPane;
@@ -12,7 +14,6 @@ import com.asbestosstar.crashdetector.EliminadorDeMod;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
 
@@ -21,6 +22,7 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 	private boolean activado = false;
 	private final CDStringBuilder mensajes = new CDStringBuilder();
 	private String paqueteProblematico;
+	private final Map<String, String> enlacesPorPaquete = new HashMap<>();
 
 	@Override
 	public void verificar(Consola consola) {
@@ -75,6 +77,10 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 						List<ArchivoDeMod> mods = Buscardor.buscarModsConTermino(paquete);
 						String resultado = formatearResultadoBusqueda(mods);
 
+						// Registrar el error en el sistema de lectura
+						String enlace = consola.agregarErrorALectador(i, this);
+						enlacesPorPaquete.put(paquete, enlace);
+
 						// Construir mensaje manualmente ya que module_resolution_exception ya no acepta
 						// parámetros
 						StringBuilder mensajeFinal = new StringBuilder();
@@ -95,7 +101,7 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 							mensajeFinal.append("<b>" + MonitorDePID.idioma.paquete() + ":</b><br>").append("<code>")
 									.append(paquete.replace(".", "/")).append("</code> ");
 							mensajeFinal.append(resultado).append(Verificaciones.nl_html);
-
+							mensajeFinal.append(" ").append(enlace); // Incluir el enlace aquí
 						}
 
 						// Añadir mensaje final

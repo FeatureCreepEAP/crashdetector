@@ -12,10 +12,12 @@ import com.asbestosstar.crashdetector.parches.minecraft.PreferIPv4StackParch;
 
 public class PreferIPV4Trace implements Verificaciones {
 	private boolean activado = false;
+	private String enlaceHtml = "";
 
 	@Override
 	public void verificar(Consola consola) {
 		String contenido = consola.contenido_verificar;
+		String[] lineas = contenido.split("\n");
 
 		// Verificar errores de conexión relacionados con IPv6
 		boolean errorIpv6 = contenido.contains("java.net.ConnectException")
@@ -27,7 +29,6 @@ public class PreferIPV4Trace implements Verificaciones {
 			boolean argIpv4Encontrado = false;
 
 			// Buscar argumento JVM en el contenido del reporte
-			String[] lineas = contenido.split("\n");
 			for (String linea : lineas) {
 				if (linea.trim().startsWith("JVM Flags:")) {
 					argIpv4Encontrado = linea.contains("-Djava.net.preferIPv4Stack=true");
@@ -41,7 +42,19 @@ public class PreferIPV4Trace implements Verificaciones {
 				argIpv4Encontrado = "true".equalsIgnoreCase(propiedadIpv4);
 			}
 
+			// Activar solo si falta el argumento
 			activado = !argIpv4Encontrado;
+
+			// Si está activado, registrar el error con la primera línea relevante
+			if (activado) {
+				for (int i = 0; i < lineas.length; i++) {
+					String linea = lineas[i];
+					if (linea.contains("java.net.ConnectException") && linea.contains("ClosedChannelException")) {
+						enlaceHtml = consola.agregarErrorALectador(i, this);
+						break;
+					}
+				}
+			}
 		}
 	}
 
@@ -62,7 +75,9 @@ public class PreferIPV4Trace implements Verificaciones {
 
 	@Override
 	public String mensaje() {
-		return MonitorDePID.idioma.tieneErrorIPV6();
+		if (!activado)
+			return "";
+		return MonitorDePID.idioma.tieneErrorIPV6() + " " + enlaceHtml;
 	}
 
 	@Override
