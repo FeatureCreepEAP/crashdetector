@@ -24,13 +24,16 @@ public class ErrorSinListenersEnClase implements Verificaciones {
 	private String mensaje = "";
 	private String nombreClase = "";
 	private List<String> modsUbicacion = new ArrayList<>();
+	private String enlaceHtml = "";
 
 	@Override
 	public void verificar(Consola consola) {
 		String contenidoConsola = consola.contenido_verificar;
+		String[] lineas = contenidoConsola.split(Verificaciones.nl);
 
 		// Analiza cada línea del registro buscando el patrón específico de error
-		for (String linea : contenidoConsola.split(Verificaciones.nl)) {
+		for (int i = 0; i < lineas.length; i++) {
+			String linea = lineas[i];
 			// Detecta el error específico de clase sin listeners
 			if (linea.contains("No listeners found in class")) {
 
@@ -53,6 +56,7 @@ public class ErrorSinListenersEnClase implements Verificaciones {
 
 					mensaje = MonitorDePID.idioma.errorSinListenersEnClase(nombreClase, modsUbicacion)
 							+ Verificaciones.nl_html;
+					enlaceHtml = consola.agregarErrorALectador(i, this);
 					activado = true;
 					break; // Detiene al encontrar el primer error
 				}
@@ -77,7 +81,9 @@ public class ErrorSinListenersEnClase implements Verificaciones {
 
 	@Override
 	public String mensaje() {
-		return mensaje;
+		if (!activado)
+			return "";
+		return mensaje + enlaceHtml;
 	}
 
 	@Override

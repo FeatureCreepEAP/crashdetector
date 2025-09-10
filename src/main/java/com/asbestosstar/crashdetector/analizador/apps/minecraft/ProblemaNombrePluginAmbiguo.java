@@ -23,6 +23,7 @@ public class ProblemaNombrePluginAmbiguo implements Verificaciones {
 	private List<String> nombresPlugins = new ArrayList<>();
 	private List<String> primerosArchivos = new ArrayList<>();
 	private List<String> segundosArchivos = new ArrayList<>();
+	private final List<String> enlaces = new ArrayList<>();
 
 	/**
 	 * Verifica si el log contiene errores de nombre ambiguo de plugins.
@@ -36,13 +37,16 @@ public class ProblemaNombrePluginAmbiguo implements Verificaciones {
 		Pattern patron = Pattern.compile(
 				"Ambiguous plugin name [`']([^`']*)[`'].*?files [`']plugins/([^`']*)[`'].*?and [`']plugins/([^`']*)[`']");
 
-		for (String linea : lineas) {
+		for (int i = 0; i < lineas.length; i++) {
+			String linea = lineas[i];
 			Matcher coincidencia = patron.matcher(linea.trim());
 
 			if (coincidencia.find()) {
 				nombresPlugins.add(coincidencia.group(1));
 				primerosArchivos.add(extraerNombrePlugin(coincidencia.group(2)));
 				segundosArchivos.add(extraerNombrePlugin(coincidencia.group(3)));
+				String enlace = consola.agregarErrorALectador(i, this);
+				enlaces.add(enlace);
 			}
 		}
 
@@ -50,8 +54,11 @@ public class ProblemaNombrePluginAmbiguo implements Verificaciones {
 			StringBuilder mensajeBuilder = new StringBuilder();
 
 			for (int i = 0; i < nombresPlugins.size(); i++) {
-				mensajeBuilder.append(MonitorDePID.idioma.mensajeNombrePluginAmbiguo(nombresPlugins.get(i),
-						primerosArchivos.get(i), segundosArchivos.get(i))).append("<br>");
+				String enlace = i < enlaces.size() ? enlaces.get(i) : "";
+				mensajeBuilder
+						.append(MonitorDePID.idioma.mensajeNombrePluginAmbiguo(nombresPlugins.get(i),
+								primerosArchivos.get(i), segundosArchivos.get(i)))
+						.append(" ").append(enlace).append("<br>");
 			}
 
 			this.mensaje = mensajeBuilder.toString();

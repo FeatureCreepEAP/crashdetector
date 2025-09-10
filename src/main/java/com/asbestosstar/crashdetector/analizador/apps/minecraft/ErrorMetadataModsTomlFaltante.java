@@ -22,13 +22,16 @@ public class ErrorMetadataModsTomlFaltante implements Verificaciones {
 	private String mensaje = "";
 	private String modIdFaltante = "";
 	private List<String> modsPotenciales = null;
+	private String enlaceHtml = "";
 
 	@Override
 	public void verificar(Consola consola) {
 		String contenidoConsola = consola.contenido_verificar;
+		String[] lineas = contenidoConsola.split(Verificaciones.nl);
 
 		// Analiza cada línea del registro buscando el patrón específico de error
-		for (String linea : contenidoConsola.split(Verificaciones.nl)) {
+		for (int i = 0; i < lineas.length; i++) {
+			String linea = lineas[i];
 			// Detecta el error específico de metadata faltante
 			if (linea.contains("mods.toml missing metadata for modid")) {
 
@@ -43,6 +46,7 @@ public class ErrorMetadataModsTomlFaltante implements Verificaciones {
 
 					mensaje = MonitorDePID.idioma.errorMetadataModsTomlFaltante(modIdFaltante, modsPotenciales)
 							+ Verificaciones.nl_html;
+					enlaceHtml = consola.agregarErrorALectador(i, this);
 					activado = true;
 					break;
 				}
@@ -67,7 +71,9 @@ public class ErrorMetadataModsTomlFaltante implements Verificaciones {
 
 	@Override
 	public String mensaje() {
-		return mensaje;
+		if (!activado)
+			return "";
+		return mensaje + enlaceHtml;
 	}
 
 	@Override
@@ -82,5 +88,4 @@ public class ErrorMetadataModsTomlFaltante implements Verificaciones {
 				.agregarEtiqueta(MonitorDePID.idioma.paso2_metadata_mods_toml_faltante(modIdFaltante))
 				.agregarEtiqueta(MonitorDePID.idioma.paso3_metadata_mods_toml_faltante(modIdFaltante)).construir();
 	}
-
 }

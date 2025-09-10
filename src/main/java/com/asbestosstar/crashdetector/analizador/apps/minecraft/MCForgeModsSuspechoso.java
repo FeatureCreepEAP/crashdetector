@@ -1,6 +1,8 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,6 +17,7 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 
 	private boolean activado = false;
 	private final Set<String> errores = new HashSet<>();
+	private final Map<String, String> enlacesPorError = new HashMap<>();
 
 	@Override
 	public void verificar(Consola consola) {
@@ -41,8 +44,12 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 						modID = modLinea.substring(inicio + 1, fin).trim();
 					}
 
-					// CORRECCIÓN: No agregar dos puntos adicionales
-					errores.add(MonitorDePID.idioma.mcforge_mod_sospechoso() + modID.trim());
+					String mensaje = MonitorDePID.idioma.mcforge_mod_sospechoso() + modID.trim();
+
+					if (errores.add(mensaje)) {
+						String enlace = consola.agregarErrorALectador(i + 1, this);
+						enlacesPorError.put(mensaje, enlace);
+					}
 					activado = true;
 				}
 			}
@@ -56,7 +63,6 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 						indiceInicio += prefijo.length();
 						String parteDespuesDelPrefijo = linea.substring(indiceInicio).trim();
 
-						// Lógica mejorada de extracción del ModID
 						String modID = "";
 						int j = 0;
 						while (j < parteDespuesDelPrefijo.length()) {
@@ -65,21 +71,23 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 								modID += c;
 								j++;
 							} else {
-								// Detenerse en el primer carácter que no es de ModID
 								break;
 							}
 						}
 						modID = modID.trim();
 
-						// Solo agregar el error si se extrajo correctamente un ModID
 						if (!modID.isEmpty()) {
-							// CORRECCIÓN: No agregar dos puntos adicionales ni detalles de la clase
-							errores.add(MonitorDePID.idioma.mcforge_mod_sospechoso() + modID);
+							String mensaje = MonitorDePID.idioma.mcforge_mod_sospechoso() + modID;
+							if (errores.add(mensaje)) {
+								String enlace = consola.agregarErrorALectador(i, this);
+								enlacesPorError.put(mensaje, enlace);
+							}
 							activado = true;
 						}
 					}
 				} catch (Exception e) {
 					// Ignorar errores de formato
+					consola.agregarErrorALectador(i, this);
 				}
 			}
 
@@ -90,8 +98,11 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 					int fin = linea.indexOf(')', inicio + 1);
 					if (fin != -1) {
 						String modID = linea.substring(inicio + 1, fin).trim();
-						// CORRECCIÓN: No agregar dos puntos adicionales
-						errores.add(MonitorDePID.idioma.mcforge_mod_sospechoso() + modID);
+						String mensaje = MonitorDePID.idioma.mcforge_mod_sospechoso() + modID;
+						if (errores.add(mensaje)) {
+							String enlace = consola.agregarErrorALectador(i, this);
+							enlacesPorError.put(mensaje, enlace);
+						}
 						activado = true;
 					}
 				}
@@ -101,8 +112,11 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 			Matcher matcherFaseRegistro = patronFaseRegistro.matcher(linea);
 			while (matcherFaseRegistro.find()) {
 				String modID = matcherFaseRegistro.group(1).trim();
-				// CORRECCIÓN: No agregar dos puntos adicionales
-				errores.add(MonitorDePID.idioma.mcforge_mod_sospechoso() + modID);
+				String mensaje = MonitorDePID.idioma.mcforge_mod_sospechoso() + modID;
+				if (errores.add(mensaje)) {
+					String enlace = consola.agregarErrorALectador(i, this);
+					enlacesPorError.put(mensaje, enlace);
+				}
 				activado = true;
 			}
 		}
@@ -130,7 +144,8 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 
 		StringBuilder html = new StringBuilder("<ul>");
 		for (String error : errores) {
-			html.append("<li>").append(error).append("</li>");
+			String enlace = enlacesPorError.getOrDefault(error, "");
+			html.append("<li>").append(error).append(" ").append(enlace).append("</li>");
 		}
 		html.append("</ul>");
 		return html.toString();

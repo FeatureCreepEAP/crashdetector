@@ -1,8 +1,10 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,6 +20,7 @@ public class AuditorTransformer implements Verificaciones {
 
 	private boolean activado = false;
 	private final List<EntradaAudit> entradas = new ArrayList<>();
+	private final Map<String, String> enlacesPorEntrada = new HashMap<>();
 	private static final String[] LISTA_DE_DENEGADOS = { "PLUGIN: runtimedistcleaner", "PLUGIN: accesstransformer",
 			"PLUGIN: crashdetector", "REASON: classloading", "TRANSFORMER: crashdetector" };
 
@@ -27,6 +30,7 @@ public class AuditorTransformer implements Verificaciones {
 			return;
 
 		entradas.clear();
+		enlacesPorEntrada.clear();
 		Set<String> procesados = new HashSet<>();
 
 		String[] lineas = consola.contenido_verificar.split(Verificaciones.nl);
@@ -73,13 +77,13 @@ public class AuditorTransformer implements Verificaciones {
 					if (línea.contains("mixin:APP:")) {
 						Matcher jsonMatcher = Pattern.compile("mixin:APP:([^:\\s]+)").matcher(línea);
 						if (jsonMatcher.find()) {
-							String jsonFile = jsonMatcher.group(1); // e.g., dynamic_fps-common.mixins.json
+							String jsonFile = jsonMatcher.group(1);
 							jars = Buscardor.obtenerUbicaciones(Buscardor.buscarModsConTermino(jsonFile));
 						}
 					} else if (línea.startsWith("TRANSFORMER: fml:")) {
 						Matcher modidMatcher = Pattern.compile("TRANSFORMER: fml:([^:\\s]+)").matcher(línea);
 						if (modidMatcher.find()) {
-							String modid = modidMatcher.group(1); // e.g., xaeroworldmap
+							String modid = modidMatcher.group(1);
 							CrashDetectorLogger.log(modid);
 							jars = Buscardor.obtenerModsConNombre(modid);
 						}
@@ -92,6 +96,10 @@ public class AuditorTransformer implements Verificaciones {
 
 					// Reconstruir texto final con JARs antes de la puntuación
 					String textoParaMostrar = textoBase + jarsStr + puntuaciónStr;
+
+					// Registrar el error en el sistema de lectura
+					String enlace = consola.agregarErrorALectador(i, this);
+					enlacesPorEntrada.put(textoParaMostrar, enlace);
 
 					entradas.add(new EntradaAudit(textoParaMostrar, puntuación));
 				}
@@ -156,7 +164,8 @@ public class AuditorTransformer implements Verificaciones {
 		html.append("<ul>");
 
 		for (EntradaAudit entrada : entradas) {
-			html.append("<li>").append(entrada.texto).append("</li>");
+			String enlace = enlacesPorEntrada.getOrDefault(entrada.texto, "");
+			html.append("<li>").append(entrada.texto).append(" ").append(enlace).append("</li>");
 		}
 
 		html.append("</ul>");

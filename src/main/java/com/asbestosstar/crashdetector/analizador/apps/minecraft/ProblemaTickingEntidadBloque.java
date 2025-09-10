@@ -18,6 +18,7 @@ public class ProblemaTickingEntidadBloque implements Verificaciones {
 	private String nombreEntidad = "";
 	private String tipoEntidad = "";
 	private int[] coordenadas = new int[3]; // [x, y, z]
+	private String enlaceHtml = "";
 
 	/**
 	 * Verifica si el log contiene un problema de ticking en una entidad de bloque.
@@ -35,6 +36,7 @@ public class ProblemaTickingEntidadBloque implements Verificaciones {
 			// Busca la línea que indica un problema de ticking en una entidad de bloque
 			if (linea.equals("Description: Ticking block entity")) {
 				encontrado = true;
+				enlaceHtml = consola.agregarErrorALectador(i, this); // Registrar la línea del error
 
 				// Busca el nombre de la entidad en las siguientes líneas
 				for (int j = i + 1; j < Math.min(i + 20, lineas.length); j++) {
@@ -78,9 +80,10 @@ public class ProblemaTickingEntidadBloque implements Verificaciones {
 					}
 				}
 
-				if (!nombreEntidad.isEmpty() || !tipoEntidad.isEmpty() || coordenadas[0] != 0) {
+				if (!nombreEntidad.isEmpty() || !tipoEntidad.isEmpty() || coordenadas[0] != 0 || coordenadas[1] != 0
+						|| coordenadas[2] != 0) {
 					this.mensaje = MonitorDePID.idioma.mensajeTickingEntidadBloque(nombreEntidad, tipoEntidad,
-							coordenadas);
+							coordenadas) + " " + enlaceHtml;
 					activado = true;
 				}
 				break;

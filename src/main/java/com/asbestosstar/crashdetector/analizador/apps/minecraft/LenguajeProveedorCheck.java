@@ -1,6 +1,8 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import com.asbestosstar.crashdetector.Consola;
@@ -13,6 +15,7 @@ public class LenguajeProveedorCheck implements Verificaciones {
 
 	private final Set<String> errores = new HashSet<>();
 	public boolean activado = false;
+	private final Map<String, String> enlacesPorError = new HashMap<>();
 
 	/**
 	 * Verifica el contenido de la consola para detectar errores relacionados con
@@ -60,11 +63,17 @@ public class LenguajeProveedorCheck implements Verificaciones {
 						mensaje += Verificaciones.nl_html + MonitorDePID.idioma.errorJavaFML_MCForge();
 					}
 
-					errores.add(mensaje);
+					// Solo registrar si es un error nuevo
+					if (errores.add(mensaje)) {
+						String enlace = consola.agregarErrorALectador(i, this);
+						enlacesPorError.put(mensaje, enlace);
+					}
 					activado = true;
 
 				} catch (Exception e) {
 					CrashDetectorLogger.logException(e);
+					// Registrar la línea incluso si falla el parseo
+					consola.agregarErrorALectador(i, this);
 				}
 			}
 		}
@@ -92,7 +101,8 @@ public class LenguajeProveedorCheck implements Verificaciones {
 
 		StringBuilder html = new StringBuilder("<ul>");
 		for (String error : errores) {
-			html.append("<li>").append(error).append("</li>");
+			String enlace = enlacesPorError.getOrDefault(error, "");
+			html.append("<li>").append(error).append(" ").append(enlace).append("</li>");
 		}
 		html.append("</ul>");
 		return html.toString();
@@ -109,5 +119,4 @@ public class LenguajeProveedorCheck implements Verificaciones {
 		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
 				.construir();
 	}
-
 }

@@ -14,14 +14,18 @@ public class ModsDuplicadosModLauncher implements Verificaciones {
 	@Override
 	public void verificar(Consola consola) {
 		String contenidoConsola = consola.contenido_verificar;
+		String[] lineas = contenidoConsola.split(Verificaciones.nl);
 
 		if (contenidoConsola.contains("Found duplicate mods")) {
 			mensaje.append(MonitorDePID.idioma.no_tienes_las_dependencias_necesarias()).append(Verificaciones.nl_html);
 
-			for (String linea : contenidoConsola.split(Verificaciones.nl)) {
+			for (int i = 0; i < lineas.length; i++) {
+				String linea = lineas[i];
 				if (linea.contains("Mod ID") && linea.contains("from mod files")) {
-					mensaje.append(MonitorDePID.idioma.modlauncher_mods_duplicado(linea))
-							.append(Verificaciones.nl_html);
+					String mensajeMod = MonitorDePID.idioma.modlauncher_mods_duplicado(linea);
+					String enlace = consola.agregarErrorALectador(i, this);
+					// Añadir mensaje + enlace en la misma línea
+					mensaje.append(mensajeMod).append(" ").append(enlace).append(Verificaciones.nl_html);
 				}
 			}
 			activado = true;
@@ -54,51 +58,50 @@ public class ModsDuplicadosModLauncher implements Verificaciones {
 		return MonitorDePID.idioma.nombre_de_mods_duplicados_modlauncher();
 	}
 
-//    @Override
-//    public QuickFix solucion() {
-//        QuickFix.Builder builder = new QuickFix.Builder(MonitorDePID.idioma.nombre_de_mods_duplicados_modlauncher());
-//        
-//        if (!activado || rutasDeMods.isEmpty()) {
-//            builder.agregarEtiqueta(MonitorDePID.idioma.no_se_encontraron_mods_duplicados());
-//            return builder.construir();
-//        }
+//  @Override
+//  public QuickFix solucion() {
+//      QuickFix.Builder builder = new QuickFix.Builder(MonitorDePID.idioma.nombre_de_mods_duplicados_modlauncher());
+//      
+//      if (!activado || rutasDeMods.isEmpty()) {
+//          builder.agregarEtiqueta(MonitorDePID.idioma.no_se_encontraron_mods_duplicados());
+//          return builder.construir();
+//      }
 //
-//        // Crear botones para eliminar cada mod duplicado
-//        for (String rutaJar : rutasDeMods) {
-//            String textoBoton = MonitorDePID.idioma.eliminar_jar() + ": " + rutaJar;
-//            
-//            builder.agregarBoton(textoBoton, retener -> {
-//                try {
-//                    EliminadorDeMod.eliminarMod(rutaJar);
-//                    
-//                    // Mostrar mensaje solo si hay GUI
-//                    if (!EliminadorDeMod.esModoHeadless()) {
-//                        JOptionPane.showMessageDialog(null,
-//                            MonitorDePID.idioma.jar_eliminado_exitosamente() + ": " + rutaJar,
-//                            MonitorDePID.idioma.exito(),
-//                            JOptionPane.INFORMATION_MESSAGE);
-//                    }
-//                } catch (Exception e) {
-//                    // Log y mostrar mensaje de error
-//                    CrashDetectorLogger.logException(e);
-//                    
-//                    if (!EliminadorDeMod.esModoHeadless()) {
-//                        JOptionPane.showMessageDialog(null,
-//                            MonitorDePID.idioma.error_al_eliminar_jar() + ": " + rutaJar,
-//                            MonitorDePID.idioma.error(),
-//                            JOptionPane.ERROR_MESSAGE);
-//                    }
-//                }
-//            });
-//        }
+//      // Crear botones para eliminar cada mod duplicado
+//      for (String rutaJar : rutasDeMods) {
+//          String textoBoton = MonitorDePID.idioma.eliminar_jar() + ": " + rutaJar;
+//          
+//          builder.agregarBoton(textoBoton, retener -> {
+//              try {
+//                  EliminadorDeMod.eliminarMod(rutaJar);
+//                  
+//                  // Mostrar mensaje solo si hay GUI
+//                  if (!EliminadorDeMod.esModoHeadless()) {
+//                      JOptionPane.showMessageDialog(null,
+//                          MonitorDePID.idioma.jar_eliminado_exitosamente() + ": " + rutaJar,
+//                          MonitorDePID.idioma.exito(),
+//                          JOptionPane.INFORMATION_MESSAGE);
+//                  }
+//              } catch (Exception e) {
+//                  // Log y mostrar mensaje de error
+//                  CrashDetectorLogger.logException(e);
+//                  
+//                  if (!EliminadorDeMod.esModoHeadless()) {
+//                      JOptionPane.showMessageDialog(null,
+//                          MonitorDePID.idioma.error_al_eliminar_jar() + ": " + rutaJar,
+//                          MonitorDePID.idioma.error(),
+//                          JOptionPane.ERROR_MESSAGE);
+//                  }
+//              }
+//          });
+//      }
 //
-//        return builder.construir();
-//    }
+//      return builder.construir();
+//  }
 
 	@Override
 	public QuickFix solucion() {
 		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
 				.construir();
 	}
-
 }

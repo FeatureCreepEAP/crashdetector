@@ -1,7 +1,9 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
@@ -13,6 +15,7 @@ public class NoPuedeAnalizarJSONDeRegistro implements Verificaciones {
 
 	boolean activado = false;
 	private final List<String> erroresJSON = new ArrayList<>(); // Almacena múltiples errores
+	private final Map<String, String> enlacesPorError = new HashMap<>();
 
 	/**
 	 * Verifica el contenido de la consola para detectar errores de análisis en
@@ -43,10 +46,10 @@ public class NoPuedeAnalizarJSONDeRegistro implements Verificaciones {
 	@Override
 	public void verificar(Consola consola) {
 		String contenidoConsola = consola.contenido_verificar;
-
 		String[] lineas = contenidoConsola.split(Verificaciones.nl);
 
-		for (String linea : lineas) {
+		for (int i = 0; i < lineas.length; i++) {
+			String linea = lineas[i];
 			if (linea.contains("Failed to parse") && linea.contains(".json from pack")) {
 				CrashDetectorLogger.log("Se detectó error de análisis JSON en registro");
 
@@ -55,11 +58,18 @@ public class NoPuedeAnalizarJSONDeRegistro implements Verificaciones {
 					String recurso = linea.split("Failed to parse ")[1].split(" from pack")[0].trim();
 
 					String mensaje = MonitorDePID.idioma.errorConJSONDeRegistro(archivoJar, recurso);
-					erroresJSON.add(mensaje);
+
+					// Solo registrar si es un error nuevo
+					if (erroresJSON.add(mensaje)) {
+						String enlace = consola.agregarErrorALectador(i, this);
+						enlacesPorError.put(mensaje, enlace);
+					}
 					activado = true;
 
 				} catch (Exception e) {
 					CrashDetectorLogger.logException(e);
+					// Aún así registrar la línea como problema
+					consola.agregarErrorALectador(i, this);
 				}
 			}
 		}
@@ -89,7 +99,8 @@ public class NoPuedeAnalizarJSONDeRegistro implements Verificaciones {
 
 		StringBuilder html = new StringBuilder("<ul>");
 		for (String error : erroresJSON) {
-			html.append("<li>").append(error).append("</li>");
+			String enlace = enlacesPorError.getOrDefault(error, "");
+			html.append("<li>").append(error).append(" ").append(enlace).append("</li>");
 		}
 		html.append("</ul>");
 		return html.toString();
@@ -106,5 +117,4 @@ public class NoPuedeAnalizarJSONDeRegistro implements Verificaciones {
 		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
 				.construir();
 	}
-
 }

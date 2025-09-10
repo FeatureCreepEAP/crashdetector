@@ -19,20 +19,23 @@ public class NoSuchElementAnimacionMinecraft implements Verificaciones {
 
 	private boolean activado = false;
 	private String namespaceEncontrado = null;
+	private String enlaceHtml = "";
 
 	@Override
 	public void verificar(Consola consola) {
 		String contenido = consola.contenido_verificar;
-		String[] lineas = contenido.split(nl);
+		String[] lineas = contenido.split(Verificaciones.nl);
 
 		// Patrón para detectar el error con cualquier namespace
 		Pattern pattern = Pattern
 				.compile("java\\.util\\.NoSuchElementException: No animation with registry name ([a-zA-Z0-9_]+):");
 
-		for (String linea : lineas) {
+		for (int i = 0; i < lineas.length; i++) {
+			String linea = lineas[i];
 			Matcher matcher = pattern.matcher(linea);
 			if (matcher.find()) {
 				namespaceEncontrado = matcher.group(1);
+				enlaceHtml = consola.agregarErrorALectador(i, this);
 				activado = true;
 				break;
 			}
@@ -68,8 +71,8 @@ public class NoSuchElementAnimacionMinecraft implements Verificaciones {
 				.append("; font-weight: bold;'>").append(MonitorDePID.idioma.error_animacion_no_encontrada())
 				.append("</span>").append(Verificaciones.nl_html).append("<ul>");
 
-		html.append("<li>").append(": <strong>").append(namespaceEncontrado)
-				.append("</strong> (" + String.join(",", ubicaciones) + ")</li>");
+		html.append("<li>").append(": <strong>").append(namespaceEncontrado).append("</strong> (")
+				.append(String.join(",", ubicaciones)).append(") ").append(enlaceHtml).append("</li>");
 
 		html.append("</ul>");
 		return html.toString();

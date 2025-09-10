@@ -9,14 +9,18 @@ public class ErrorConfiguracionMCForge implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
+	private String enlaceHtml = "";
 
 	@Override
 	public void verificar(Consola consola) {
 		String contenidoConsola = consola.contenido_verificar;
+		String[] lineas = contenidoConsola.split(Verificaciones.nl);
 
-		for (String linea : contenidoConsola.split(Verificaciones.nl)) {
+		for (int i = 0; i < lineas.length; i++) {
+			String linea = lineas[i];
 			if (linea.contains("ParsingException: Not enough data available")) {
 				mensaje = MonitorDePID.idioma.errorConfigMCForge() + Verificaciones.nl_html;
+				enlaceHtml = consola.agregarErrorALectador(i, this);
 				activado = true;
 				break;
 			}
@@ -40,7 +44,9 @@ public class ErrorConfiguracionMCForge implements Verificaciones {
 
 	@Override
 	public String mensaje() {
-		return mensaje;
+		if (!activado)
+			return "";
+		return mensaje + enlaceHtml;
 	}
 
 	@Override

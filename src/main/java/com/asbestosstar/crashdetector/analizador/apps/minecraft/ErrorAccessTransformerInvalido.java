@@ -17,6 +17,7 @@ public class ErrorAccessTransformerInvalido implements Verificaciones {
 	private boolean activado = false;
 	private String mensaje = "";
 	private String nombreJar = "";
+	private String enlaceHtml = "";
 
 	@Override
 	public void verificar(Consola consola) {
@@ -24,7 +25,9 @@ public class ErrorAccessTransformerInvalido implements Verificaciones {
 
 		// Analiza cada línea del registro buscando el patrón específico de error de
 		// access transformer
-		for (String linea : contenidoConsola.split(Verificaciones.nl)) {
+		String[] lineas = contenidoConsola.split(Verificaciones.nl);
+		for (int i = 0; i < lineas.length; i++) {
+			String linea = lineas[i];
 			// Detecta el error específico de access transformer inválido
 			if (linea.contains("Invalid access transformer line in")) {
 				// Extrae el nombre del JAR problemático usando expresión regular
@@ -33,6 +36,7 @@ public class ErrorAccessTransformerInvalido implements Verificaciones {
 				if (matcher.find()) {
 					nombreJar = matcher.group(1);
 					mensaje = MonitorDePID.idioma.errorAccessTransformerInvalido(nombreJar) + Verificaciones.nl_html;
+					enlaceHtml = consola.agregarErrorALectador(i, this);
 					activado = true;
 					break; // Detiene al encontrar el primer error
 				}
@@ -57,7 +61,9 @@ public class ErrorAccessTransformerInvalido implements Verificaciones {
 
 	@Override
 	public String mensaje() {
-		return mensaje;
+		if (!activado)
+			return "";
+		return mensaje + enlaceHtml;
 	}
 
 	@Override

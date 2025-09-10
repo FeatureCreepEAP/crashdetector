@@ -14,16 +14,20 @@ public class ErrorSistemaSonido implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
+	private String enlaceHtml = "";
 
 	@Override
 	public void verificar(Consola consola) {
 		String contenidoConsola = consola.contenido_verificar;
+		String[] lineas = contenidoConsola.split(Verificaciones.nl);
 
 		// Analiza cada línea del registro buscando el mensaje específico de error de
 		// sonido
-		for (String linea : contenidoConsola.split(Verificaciones.nl)) {
+		for (int i = 0; i < lineas.length; i++) {
+			String linea = lineas[i];
 			if (linea.contains("Error starting SoundSystem. Turning off sounds & music")) {
 				mensaje = MonitorDePID.idioma.errorSistemaSonido() + Verificaciones.nl_html;
+				enlaceHtml = consola.agregarErrorALectador(i, this);
 				activado = true;
 				break; // Detiene al encontrar el primer error
 			}
@@ -47,7 +51,9 @@ public class ErrorSistemaSonido implements Verificaciones {
 
 	@Override
 	public String mensaje() {
-		return mensaje;
+		if (!activado)
+			return "";
+		return mensaje + enlaceHtml;
 	}
 
 	@Override

@@ -17,14 +17,17 @@ public class ErrorDependenciaModFaltante implements Verificaciones {
 	private boolean activado = false;
 	private String mensaje = "";
 	private String nombreJar = "";
+	private String enlaceHtml = "";
 
 	@Override
 	public void verificar(Consola consola) {
 		String contenidoConsola = consola.contenido_verificar;
+		String[] lineas = contenidoConsola.split(Verificaciones.nl);
 
 		// Analiza cada línea del registro buscando el patrón específico de error de
 		// dependencia
-		for (String linea : contenidoConsola.split(Verificaciones.nl)) {
+		for (int i = 0; i < lineas.length; i++) {
+			String linea = lineas[i];
 			// Detecta el error específico de campo obligatorio faltante en dependencias
 			if (linea.contains("Missing required field mandatory in dependency")) {
 				// Extrae el nombre del JAR problemático usando expresión regular
@@ -33,6 +36,7 @@ public class ErrorDependenciaModFaltante implements Verificaciones {
 				if (matcher.find()) {
 					nombreJar = matcher.group(1);
 					mensaje = MonitorDePID.idioma.errorDependenciaModFaltante(nombreJar) + Verificaciones.nl_html;
+					enlaceHtml = consola.agregarErrorALectador(i, this);
 					activado = true;
 					break; // Detiene al encontrar el primer error (es crítico y ocurre una vez)
 				}
@@ -57,7 +61,9 @@ public class ErrorDependenciaModFaltante implements Verificaciones {
 
 	@Override
 	public String mensaje() {
-		return mensaje;
+		if (!activado)
+			return "";
+		return mensaje + enlaceHtml;
 	}
 
 	@Override

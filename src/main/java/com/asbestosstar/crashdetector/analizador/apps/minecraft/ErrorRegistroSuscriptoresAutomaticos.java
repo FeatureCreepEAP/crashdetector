@@ -25,13 +25,16 @@ public class ErrorRegistroSuscriptoresAutomaticos implements Verificaciones {
 	private String modId = "";
 	private String nombreClase = "";
 	private List<String> modsUbicacion = new ArrayList<>();
+	private String enlaceHtml = "";
 
 	@Override
 	public void verificar(Consola consola) {
 		String contenidoConsola = consola.contenido_verificar;
+		String[] lineas = contenidoConsola.split(Verificaciones.nl);
 
 		// Analiza cada línea del registro buscando el patrón específico de error
-		for (String linea : contenidoConsola.split(Verificaciones.nl)) {
+		for (int i = 0; i < lineas.length; i++) {
+			String linea = lineas[i];
 			// Detecta el error específico de registro de suscriptores automáticos
 			if (linea.contains("Failed to register automatic subscribers. ModID:")) {
 
@@ -57,6 +60,7 @@ public class ErrorRegistroSuscriptoresAutomaticos implements Verificaciones {
 
 					mensaje = MonitorDePID.idioma.errorRegistroSuscriptoresAutomaticos(modId, nombreClase,
 							modsUbicacion) + Verificaciones.nl_html;
+					enlaceHtml = consola.agregarErrorALectador(i, this);
 					activado = true;
 					break; // Detiene al encontrar el primer error
 				}
@@ -81,7 +85,9 @@ public class ErrorRegistroSuscriptoresAutomaticos implements Verificaciones {
 
 	@Override
 	public String mensaje() {
-		return mensaje;
+		if (!activado)
+			return "";
+		return mensaje + enlaceHtml;
 	}
 
 	@Override

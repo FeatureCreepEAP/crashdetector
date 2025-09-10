@@ -17,6 +17,7 @@ public class SCOErrorCompatibilidadC2ME implements Verificaciones {
 	private String mensaje = "";
 	private boolean c2mePresente = false;
 	private boolean connectorPresente = false;
+	private String enlaceHtml = "";
 
 	@Override
 	public void verificar(Consola consola) {
@@ -35,18 +36,18 @@ public class SCOErrorCompatibilidadC2ME implements Verificaciones {
 		}
 
 		// Analiza cada línea del registro para detectar los errores específicos
-		for (String linea : lineas) {
+		for (int i = 0; i < lineas.length; i++) {
+			String linea = lineas[i];
 			// Detecta el error específico de acceso ilegal entre módulos de Java
 			if (linea.contains("java.lang.IllegalAccessException")
 					&& linea.contains("cannot access class jdk.internal.misc.Unsafe")
 					&& linea.contains("because module java.base does not export") && c2mePresente
 					&& connectorPresente) {
 				mensaje = MonitorDePID.idioma.errorCompatibilidadC2ME() + Verificaciones.nl_html;
+				enlaceHtml = consola.agregarErrorALectador(i, this);
 				activado = true;
 			}
-
 		}
-
 	}
 
 	@Override
@@ -66,7 +67,9 @@ public class SCOErrorCompatibilidadC2ME implements Verificaciones {
 
 	@Override
 	public String mensaje() {
-		return mensaje;
+		if (!activado)
+			return "";
+		return mensaje + enlaceHtml;
 	}
 
 	@Override

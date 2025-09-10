@@ -1,6 +1,8 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import com.asbestosstar.crashdetector.CDStringBuilder;
@@ -13,6 +15,7 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 
 	private boolean activado = false;
 	private final Set<String> errores = new HashSet<>();
+	private final Map<String, String> enlacesPorError = new HashMap<>();
 
 	@Override
 	public void verificar(Consola consola) {
@@ -32,27 +35,40 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 						String lineaSiguiente = lineas[i + 1].trim();
 						if (lineaSiguiente.startsWith("Currently,")) {
 							String versionActual = extraerVersionActual(lineaSiguiente, dependencia);
-							errores.add(MonitorDePID.idioma.errorVersionDependencia(modId, dependencia,
-									versionRequerida, versionActual));
+							String mensaje = MonitorDePID.idioma.errorVersionDependencia(modId, dependencia,
+									versionRequerida, versionActual);
+
+							// Solo registrar si es un error nuevo
+							if (errores.add(mensaje)) {
+								String enlace = consola.agregarErrorALectador(i, this);
+								enlacesPorError.put(mensaje, enlace);
+							}
 
 							activado = true;
 						}
 					}
 				} catch (Exception e) {
 					// Ignora errores de parseo
+					consola.agregarErrorALectador(i, this); // Registrar línea como problema
 				}
 			}
 
 			// Formato antiguo de dependencias faltantes
 			else if (linea.contains("Missing or unsupported mandatory dependencies:")) {
 
-				for (String lineaDep : lineas) {
+				for (int j = i + 1; j < lineas.length; j++) {
+					String lineaDep = lineas[j].trim();
+					if (lineaDep.startsWith("Currently,") || lineaDep.isEmpty())
+						break;
 					if (lineaDep.contains("Mod ID") && lineaDep.contains("Requested by")) {
-						errores.add(MonitorDePID.idioma.linea_de_dependencia(lineaDep));
-
+						String mensaje = MonitorDePID.idioma.linea_de_dependencia(lineaDep);
+						if (errores.add(mensaje)) {
+							String enlace = consola.agregarErrorALectador(j, this);
+							enlacesPorError.put(mensaje, enlace);
+						}
+						activado = true;
 					}
 				}
-				activado = true;
 			}
 		}
 	}
@@ -111,7 +127,8 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 		for (String error : errores) {
 			String trim = error.trim().replace("\t", "");
 			if (!html.toString().contains(trim)) {
-				html.append("<li>" + trim + "</li>");
+				String enlace = enlacesPorError.getOrDefault(trim, "");
+				html.append("<li>").append(trim).append(" ").append(enlace).append("</li>");
 			}
 		}
 		html.append("</ul>");
@@ -129,5 +146,4 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
 				.construir();
 	}
-
 }

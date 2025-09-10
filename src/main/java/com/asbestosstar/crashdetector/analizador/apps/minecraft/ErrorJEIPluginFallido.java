@@ -20,14 +20,17 @@ public class ErrorJEIPluginFallido implements Verificaciones {
 	private String nombreClase = "";
 	private String modId = "";
 	private String pluginId = "";
+	private String enlaceHtml = "";
 
 	@Override
 	public void verificar(Consola consola) {
 		String contenidoConsola = consola.contenido_verificar;
+		String[] lineas = contenidoConsola.split(Verificaciones.nl);
 
 		// Analiza cada línea del registro buscando el patrón específico de error de
 		// plugin JEI
-		for (String linea : contenidoConsola.split(Verificaciones.nl)) {
+		for (int i = 0; i < lineas.length; i++) {
+			String linea = lineas[i];
 			// Detecta el error específico de plugin JEI fallido
 			if (linea.contains("Caught an error from mod plugin: class")) {
 
@@ -41,6 +44,7 @@ public class ErrorJEIPluginFallido implements Verificaciones {
 
 					mensaje = MonitorDePID.idioma.errorJEIPluginFallido(nombreClase, modId, pluginId)
 							+ Verificaciones.nl_html;
+					enlaceHtml = consola.agregarErrorALectador(i, this);
 					activado = true;
 					break; // Detiene al encontrar el primer error
 				}
@@ -65,7 +69,9 @@ public class ErrorJEIPluginFallido implements Verificaciones {
 
 	@Override
 	public String mensaje() {
-		return mensaje;
+		if (!activado)
+			return "";
+		return mensaje + enlaceHtml;
 	}
 
 	@Override

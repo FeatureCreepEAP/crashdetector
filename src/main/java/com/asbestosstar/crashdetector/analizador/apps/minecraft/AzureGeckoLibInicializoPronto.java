@@ -4,8 +4,6 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 
 /**
  * Analiza errores cuando AzureLib o GeckoLib se inicializan demasiado pronto.
@@ -20,6 +18,7 @@ public class AzureGeckoLibInicializoPronto implements Verificaciones {
 	private boolean azureLibError = false;
 	private boolean geckoLibError = false;
 	private boolean connectorPresente = false;
+	private String enlaceHtml = "";
 
 	@Override
 	public void verificar(Consola consola) {
@@ -27,14 +26,21 @@ public class AzureGeckoLibInicializoPronto implements Verificaciones {
 		String[] lineas = contenidoConsola.split(Verificaciones.nl);
 
 		// Analiza cada línea del registro para detectar los errores específicos
-		for (String linea : lineas) {
+		for (int i = 0; i < lineas.length; i++) {
+			String linea = lineas[i];
 			if (linea.contains("AzureLib was initialized too early!")) {
 				azureLibError = true;
 				activado = true;
+				enlaceHtml = consola.agregarErrorALectador(i, this);
 			}
 			if (linea.contains("GeckoLib was initialized too early!")) {
 				geckoLibError = true;
 				activado = true;
+				// Solo sobrescribir el enlace si aún no se ha registrado (para mantener el
+				// primero)
+				if (enlaceHtml.isEmpty()) {
+					enlaceHtml = consola.agregarErrorALectador(i, this);
+				}
 			}
 			// Detecta tanto Sinytra Connector como specialcompatibilityoperation como
 			// indicadores del mismo problema
@@ -45,7 +51,7 @@ public class AzureGeckoLibInicializoPronto implements Verificaciones {
 
 		if (activado) {
 			mensaje = MonitorDePID.idioma.errorAzureGeckoLibInicializoPronto(azureLibError, geckoLibError,
-					connectorPresente) + Verificaciones.nl_html;
+					connectorPresente) + Verificaciones.nl_html + enlaceHtml;
 		}
 	}
 

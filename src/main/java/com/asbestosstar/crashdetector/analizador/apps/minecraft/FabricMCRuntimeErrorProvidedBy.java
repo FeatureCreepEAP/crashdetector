@@ -1,6 +1,8 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import com.asbestosstar.crashdetector.Consola;
@@ -12,12 +14,15 @@ public class FabricMCRuntimeErrorProvidedBy implements Verificaciones {
 
 	private boolean activado = false;
 	private final Set<String> modIdsProblematicos = new HashSet<>();
+	private final Map<String, String> enlacesPorModId = new HashMap<>();
 
 	@Override
 	public void verificar(Consola consola) {
 		String contenidoConsola = consola.contenido_verificar;
+		String[] lineas = contenidoConsola.split(Verificaciones.nl);
 
-		for (String linea : contenidoConsola.split(Verificaciones.nl)) {
+		for (int i = 0; i < lineas.length; i++) {
+			String linea = lineas[i];
 			if (linea.contains("Could not execute entrypoint stage") && linea.contains("provided by")) {
 				try {
 					// Buscamos el mod ID que está entre comillas simples después de "provided by"
@@ -29,12 +34,17 @@ public class FabricMCRuntimeErrorProvidedBy implements Verificaciones {
 						if (endIndex > startIndex) {
 							// Extraemos solo el texto entre las comillas simples (el mod ID)
 							String modId = linea.substring(startIndex, endIndex);
-							modIdsProblematicos.add(modId);
+							// Solo registrar si es nuevo
+							if (modIdsProblematicos.add(modId)) {
+								String enlace = consola.agregarErrorALectador(i, this);
+								enlacesPorModId.put(modId, enlace);
+							}
 							activado = true;
 						}
 					}
 				} catch (Exception e) {
 					// Ignora líneas mal formateadas
+					consola.agregarErrorALectador(i, this); // Aún así registra la línea como problema
 				}
 			}
 		}
@@ -62,8 +72,9 @@ public class FabricMCRuntimeErrorProvidedBy implements Verificaciones {
 
 		StringBuilder html = new StringBuilder("<ul>");
 		for (String modId : modIdsProblematicos) {
+			String enlace = enlacesPorModId.getOrDefault(modId, "");
 			html.append("<li>").append(MonitorDePID.idioma.modids_problematicos()).append(" <b>").append(modId)
-					.append("</b></li>").append(Verificaciones.nl_html);
+					.append("</b>").append(" ").append(enlace).append("</li>").append(Verificaciones.nl_html);
 		}
 		html.append("</ul>");
 		return html.toString();
@@ -80,5 +91,4 @@ public class FabricMCRuntimeErrorProvidedBy implements Verificaciones {
 		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
 				.construir();
 	}
-
 }

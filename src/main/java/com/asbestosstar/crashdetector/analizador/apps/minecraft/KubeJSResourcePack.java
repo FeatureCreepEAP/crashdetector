@@ -1,6 +1,8 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import com.asbestosstar.crashdetector.Consola;
@@ -12,22 +14,30 @@ public class KubeJSResourcePack implements Verificaciones {
 
 	private boolean activado = false;
 	private final Set<String> errores = new HashSet<>();
+	private final Map<String, String> enlacesPorError = new HashMap<>();
 
 	@Override
 	public void verificar(Consola consola) {
 		String contenidoConsola = consola.contenido_verificar;
 		String[] lineas = contenidoConsola.split(Verificaciones.nl);
 
-		for (String linea : lineas) {
+		for (int i = 0; i < lineas.length; i++) {
+			String linea = lineas[i];
 			if (linea.contains("from pack KubeJS Resource Pack [data]") && linea.contains("Failed to parse ")) {
 
 				try {
 					String modNombre = linea.split("Failed to parse ")[1].split(":")[0];
 					String mensaje = MonitorDePID.idioma.kubeJSResourcePack(modNombre);
-					errores.add(mensaje);
+
+					// Solo registrar si es un error nuevo
+					if (errores.add(mensaje)) {
+						String enlace = consola.agregarErrorALectador(i, this);
+						enlacesPorError.put(mensaje, enlace);
+					}
 					activado = true;
 				} catch (Exception e) {
 					// Ignora errores de parseo para evitar fallos críticos
+					consola.agregarErrorALectador(i, this); // Registrar línea como problema
 				}
 			}
 		}
@@ -55,7 +65,8 @@ public class KubeJSResourcePack implements Verificaciones {
 
 		StringBuilder html = new StringBuilder("<ul>");
 		for (String error : errores) {
-			html.append("<li>").append(error).append("</li>");
+			String enlace = enlacesPorError.getOrDefault(error, "");
+			html.append("<li>").append(error).append(" ").append(enlace).append("</li>");
 		}
 		html.append("</ul>");
 		return html.toString();
@@ -72,5 +83,4 @@ public class KubeJSResourcePack implements Verificaciones {
 		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
 				.construir();
 	}
-
 }

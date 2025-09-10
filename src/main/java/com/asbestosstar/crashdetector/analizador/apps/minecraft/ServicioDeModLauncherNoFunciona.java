@@ -1,6 +1,8 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import com.asbestosstar.crashdetector.CDStringBuilder;
@@ -13,6 +15,7 @@ public class ServicioDeModLauncherNoFunciona implements Verificaciones {
 
 	private boolean activado = false;
 	private final Set<String> serviciosFallidos = new HashSet<>();
+	private final Map<String, String> enlacesPorServicio = new HashMap<>();
 
 	@Override
 	public void verificar(Consola consola) {
@@ -20,12 +23,17 @@ public class ServicioDeModLauncherNoFunciona implements Verificaciones {
 		String[] lineas = contenidoConsola.split(Verificaciones.nl);
 		String carga = "Service failed to load";
 
-		for (String linea : lineas) {
+		for (int i = 0; i < lineas.length; i++) {
+			String linea = lineas[i];
 			if (linea.contains(carga)) {
-
 				String servicio = linea.split(carga)[1].trim();
 				String mensaje = MonitorDePID.idioma.servicioMLNoPudoCargar(servicio);
-				serviciosFallidos.add(mensaje);
+
+				// Solo registrar si es nuevo
+				if (serviciosFallidos.add(mensaje)) {
+					String enlace = consola.agregarErrorALectador(i, this);
+					enlacesPorServicio.put(mensaje, enlace);
+				}
 				activado = true;
 			}
 		}
@@ -55,7 +63,8 @@ public class ServicioDeModLauncherNoFunciona implements Verificaciones {
 		html.append("<ul>");
 
 		for (String servicio : serviciosFallidos) {
-			html.append("<li>" + servicio + "</li>");
+			String enlace = enlacesPorServicio.getOrDefault(servicio, "");
+			html.append("<li>").append(servicio).append(" ").append(enlace).append("</li>");
 		}
 
 		html.append("</ul>");
@@ -73,5 +82,4 @@ public class ServicioDeModLauncherNoFunciona implements Verificaciones {
 		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
 				.construir();
 	}
-
 }

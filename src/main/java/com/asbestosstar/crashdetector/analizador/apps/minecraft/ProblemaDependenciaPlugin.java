@@ -21,6 +21,7 @@ public class ProblemaDependenciaPlugin implements Verificaciones {
 	private boolean activado = false;
 	private String mensaje = "";
 	private final Map<String, List<String>> plugins = new HashMap<>();
+	private final Map<String, String> enlacesPorPlugin = new HashMap<>();
 	private String nombrePluginActual = "";
 
 	/**
@@ -31,10 +32,11 @@ public class ProblemaDependenciaPlugin implements Verificaciones {
 		String contenido = consola.contenido_verificar;
 		String[] lineas = contenido.split("\n");
 
-		for (String linea : lineas) {
+		for (int i = 0; i < lineas.length; i++) {
+			String linea = lineas[i];
 			// 1. Detecta carga fallida de plugin
 			if (linea.contains("Could not load 'plugins/")) {
-				extraerNombrePluginDesdeRuta(linea);
+				extraerNombrePluginDesdeRuta(linea, i, consola);
 			}
 			// 2. Detecta dependencias múltiples
 			else if (linea.contains("Unknown/missing dependency plugins:")) {
@@ -54,6 +56,7 @@ public class ProblemaDependenciaPlugin implements Verificaciones {
 			for (Map.Entry<String, List<String>> entry : plugins.entrySet()) {
 				String nombrePlugin = entry.getKey();
 				List<String> dependencias = entry.getValue();
+				String enlace = enlacesPorPlugin.getOrDefault(nombrePlugin, "");
 
 				if (!primerPlugin) {
 					mensajeBuilder.append("<br>");
@@ -67,11 +70,31 @@ public class ProblemaDependenciaPlugin implements Verificaciones {
 							.append(MonitorDePID.idioma.mensajeDependenciaPluginMultiples(nombrePlugin, dependencias));
 				}
 
+				mensajeBuilder.append(" ").append(enlace);
 				primerPlugin = false;
 			}
 
 			this.mensaje = mensajeBuilder.toString();
 			activado = true;
+		}
+	}
+
+	/**
+	 * Extrae el nombre del plugin desde la ruta en la línea de error.
+	 */
+	private void extraerNombrePluginDesdeRuta(String linea, int numeroLinea, Consola consola) {
+		int primerApostrofe = linea.indexOf('\'');
+		int segundoApostrofe = linea.indexOf('\'', primerApostrofe + 1);
+
+		if (primerApostrofe >= 0 && segundoApostrofe > primerApostrofe) {
+			String ruta = linea.substring(primerApostrofe + 1, segundoApostrofe);
+			this.nombrePluginActual = extraerNombrePlugin(ruta);
+
+			// Registrar el error con el enlace
+			if (!nombrePluginActual.isEmpty()) {
+				String enlace = consola.agregarErrorALectador(numeroLinea, this);
+				enlacesPorPlugin.put(nombrePluginActual, enlace);
+			}
 		}
 	}
 
@@ -116,19 +139,6 @@ public class ProblemaDependenciaPlugin implements Verificaciones {
 			plugins.get(nombrePluginActual).add(dependencia);
 
 			nombrePluginActual = ""; // Reinicia para evitar duplicados
-		}
-	}
-
-	/**
-	 * Extrae el nombre del plugin desde la ruta en la línea de error.
-	 */
-	private void extraerNombrePluginDesdeRuta(String linea) {
-		int primerApostrofe = linea.indexOf('\'');
-		int segundoApostrofe = linea.indexOf('\'', primerApostrofe + 1);
-
-		if (primerApostrofe >= 0 && segundoApostrofe > primerApostrofe) {
-			String ruta = linea.substring(primerApostrofe + 1, segundoApostrofe);
-			this.nombrePluginActual = extraerNombrePlugin(ruta);
 		}
 	}
 

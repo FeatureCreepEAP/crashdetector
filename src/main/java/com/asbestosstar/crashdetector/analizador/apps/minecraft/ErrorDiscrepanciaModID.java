@@ -19,14 +19,17 @@ public class ErrorDiscrepanciaModID implements Verificaciones {
 	private String mensaje = "";
 	private String rutaMod = "";
 	private String nombreMod = "";
+	private String enlaceHtml = "";
 
 	@Override
 	public void verificar(Consola consola) {
 		String contenidoConsola = consola.contenido_verificar;
+		String[] lineas = contenidoConsola.split(Verificaciones.nl);
 
 		// Analiza cada línea del registro buscando el patrón específico de error de
 		// discrepancia de IDs
-		for (String linea : contenidoConsola.split(Verificaciones.nl)) {
+		for (int i = 0; i < lineas.length; i++) {
+			String linea = lineas[i];
 			// Detecta el error específico de mods no encontrados
 			if (linea.contains("has mods that were not found")) {
 				// Extrae la ruta del mod problemático usando expresión regular
@@ -40,6 +43,7 @@ public class ErrorDiscrepanciaModID implements Verificaciones {
 							: rutaMod.contains("/") ? rutaMod.substring(rutaMod.lastIndexOf("/") + 1) : rutaMod;
 
 					mensaje = MonitorDePID.idioma.errorDiscrepanciaModID(nombreMod) + Verificaciones.nl_html;
+					enlaceHtml = consola.agregarErrorALectador(i, this);
 					activado = true;
 					break; // Detiene al encontrar el primer error
 				}
@@ -64,7 +68,9 @@ public class ErrorDiscrepanciaModID implements Verificaciones {
 
 	@Override
 	public String mensaje() {
-		return mensaje;
+		if (!activado)
+			return "";
+		return mensaje + enlaceHtml;
 	}
 
 	@Override

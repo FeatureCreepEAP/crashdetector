@@ -20,6 +20,7 @@ public class ProblemaDependenciaModFabric implements Verificaciones {
 	private final List<String> nombresMods = new ArrayList<>();
 	private final List<String> dependencias = new ArrayList<>();
 	private final List<String> versiones = new ArrayList<>();
+	private final List<String> enlaces = new ArrayList<>();
 
 	/**
 	 * Verifica si el log contiene dependencias faltantes o versiones incorrectas en
@@ -32,7 +33,8 @@ public class ProblemaDependenciaModFabric implements Verificaciones {
 
 		boolean enDetalles = false;
 
-		for (String linea : lineas) {
+		for (int i = 0; i < lineas.length; i++) {
+			String linea = lineas[i];
 			// Buscar el inicio de la seccion de detalles
 			if (linea.trim().equals("More details:")) {
 				enDetalles = true;
@@ -49,6 +51,8 @@ public class ProblemaDependenciaModFabric implements Verificaciones {
 
 			// Procesar solo lineas que contienen errores de dependencia
 			if (linea.contains("- Mod ")) {
+				String enlace = consola.agregarErrorALectador(i, this);
+				enlaces.add(enlace);
 				procesarLineaError(linea.trim());
 			}
 		}
@@ -58,8 +62,9 @@ public class ProblemaDependenciaModFabric implements Verificaciones {
 			StringBuilder mensajeBuilder = new StringBuilder();
 
 			for (int i = 0; i < nombresMods.size(); i++) {
+				String enlace = i < enlaces.size() ? enlaces.get(i) : "";
 				mensajeBuilder.append(MonitorDePID.idioma.mensajeDependenciaModFaltante(nombresMods.get(i),
-						dependencias.get(i), versiones.get(i))).append("<br><br>");
+						dependencias.get(i), versiones.get(i))).append(" ").append(enlace).append("<br><br>");
 			}
 
 			this.mensaje = mensajeBuilder.toString().replaceAll("<br><br>$", "");

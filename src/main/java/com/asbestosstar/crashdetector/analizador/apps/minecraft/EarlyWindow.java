@@ -16,6 +16,7 @@ public class EarlyWindow implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
+	private String enlaceHtml = "";
 
 	@Override
 	public void verificar(Consola consola) {
@@ -25,10 +26,15 @@ public class EarlyWindow implements Verificaciones {
 		if (lineas.length == 0)
 			return;
 
-		String ultimaLinea = lineas[lineas.length - 1].trim();
-		if (ultimaLinea.contains("Loading ImmediateWindowProvider fmlearlywindow")) {
-			mensaje = MonitorDePID.idioma.fmlEarlyWindow() + Verificaciones.nl_html;
-			activado = true;
+		// Buscar la línea que contiene el mensaje, no solo la última
+		for (int i = 0; i < lineas.length; i++) {
+			String linea = lineas[i].trim();
+			if (linea.contains("Loading ImmediateWindowProvider fmlearlywindow")) {
+				mensaje = MonitorDePID.idioma.fmlEarlyWindow() + Verificaciones.nl_html;
+				enlaceHtml = consola.agregarErrorALectador(i, this);
+				activado = true;
+				break; // Basta con encontrar una
+			}
 		}
 	}
 
@@ -49,7 +55,9 @@ public class EarlyWindow implements Verificaciones {
 
 	@Override
 	public String mensaje() {
-		return mensaje;
+		if (!activado)
+			return "";
+		return mensaje + enlaceHtml;
 	}
 
 	@Override

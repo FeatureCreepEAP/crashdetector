@@ -19,13 +19,16 @@ public class ErrorCargaClaseEntornoInvalido implements Verificaciones {
 	private String mensaje = "";
 	private String nombreClase = "";
 	private String entornoInvalido = "";
+	private String enlaceHtml = "";
 
 	@Override
 	public void verificar(Consola consola) {
 		String contenidoConsola = consola.contenido_verificar;
 
 		// Analiza cada línea del registro buscando el patrón específico de error
-		for (String linea : contenidoConsola.split(Verificaciones.nl)) {
+		String[] lineas = contenidoConsola.split(Verificaciones.nl);
+		for (int i = 0; i < lineas.length; i++) {
+			String linea = lineas[i];
 			// Detecta el error específico de carga en entorno incorrecto
 			if (linea.contains("Attempted to load class") && linea.contains("for invalid dist")) {
 
@@ -38,6 +41,7 @@ public class ErrorCargaClaseEntornoInvalido implements Verificaciones {
 
 					mensaje = MonitorDePID.idioma.errorModEnPlataformaIncorrecta(nombreClase, entornoInvalido)
 							+ Verificaciones.nl_html;
+					enlaceHtml = consola.agregarErrorALectador(i, this);
 					activado = true;
 					break;
 				}
@@ -62,7 +66,9 @@ public class ErrorCargaClaseEntornoInvalido implements Verificaciones {
 
 	@Override
 	public String mensaje() {
-		return mensaje;
+		if (!activado)
+			return "";
+		return mensaje + enlaceHtml;
 	}
 
 	@Override
