@@ -2867,7 +2867,11 @@ public String original() {
 
 
 
-
+@Override
+public String verEnConsola() {
+	// TODO Auto-generated method stub
+	return "Просмотреть в логе";
+}
 
 
 

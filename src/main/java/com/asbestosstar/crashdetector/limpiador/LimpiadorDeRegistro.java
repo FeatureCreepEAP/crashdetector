@@ -13,7 +13,7 @@ public interface LimpiadorDeRegistro {
 	 * @param linea_nueva linea de registro limpiado
 	 * @return linea del registro original
 	 */
-	public default int obtenerLineaOriginalDesdeLineaOriginal(int linea_de_comenzar, int linea_nueva) {
+	public default int obtenerLineaOriginalDesdeLineaLimpiada(int linea_de_comenzar, int linea_nueva) {
 		// TODO Auto-generated method stub
 		return linea_de_comenzar+linea_nueva;
 	}	

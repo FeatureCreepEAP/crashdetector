@@ -2874,6 +2874,12 @@ public String original() {
 	return "أصلي";
 }
 
+@Override
+public String verEnConsola() {
+	// TODO Auto-generated method stub
+	return "عرض في السجل";
+}
+
 
 
 

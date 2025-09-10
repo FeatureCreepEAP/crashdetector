@@ -1248,6 +1248,8 @@ public interface Idioma {
 
 	public String original();
 
+	public String verEnConsola();
+
 	
 	
 	

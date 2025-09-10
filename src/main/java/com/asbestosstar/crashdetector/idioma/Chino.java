@@ -2875,7 +2875,11 @@ public String original() {
 	return "原始";
 }
 
-
+@Override
+public String verEnConsola() {
+	// TODO Auto-generated method stub
+	return "在日志中查看";
+}
 
 
 

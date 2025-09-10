@@ -466,11 +466,22 @@ public class Consola {
 	 * @param color Color en la clase LectadorDeConsolas
 	 * @return la enlace del error
 	 */
-	public String agregarErrorALectador(int numero_de_linea,Verificaciones verificacion) {
-		ErrorDeLectador letc=	new ErrorDeLectador(this,numero_de_linea,verificacion);
-		errores_de_lectadores.add(letc);
-		return letc.toString();
+	public String agregarErrorALectador(int numero_de_linea, Verificaciones verificacion) {
+	    ErrorDeLectador letc = new ErrorDeLectador(this, numero_de_linea, verificacion);
+	    errores_de_lectadores.add(letc);
+
+	    String url = letc.toString();
+	    String texto = MonitorDePID.idioma.verEnConsola();
+	    String color = Config.obtenerInstancia().obtenerColorEnlace();
+
+	    String enlaceHtml = "<a href=\"" + url + "\" style=\"color:" + color + ";\">"
+	                      + texto
+	                      + "</a>";
+
+	    return enlaceHtml;
 	}
+
+
 	
 	public LimpiadorDeRegistro obtenerLimpiador() {
 		return limpiador;

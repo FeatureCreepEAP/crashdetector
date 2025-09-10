@@ -318,7 +318,7 @@ public class LimpiadorRegistroDeLauncherVainilla implements LimpiadorDeRegistro{
 	 * @return Número de línea original (1-based) o -1 si no es válido
 	 */
 	@Override
-	public int obtenerLineaOriginalDesdeLineaOriginal(int linea_de_comenzar, int linea_nueva) {
+	public int obtenerLineaOriginalDesdeLineaLimpiada(int linea_de_comenzar, int linea_nueva) {
 		// Verificar si el mapeo está disponible
 		if (!mapeoValido || linea_nueva < 1 || linea_nueva > mapeoLineasOriginales.size()) {
 			return -1;

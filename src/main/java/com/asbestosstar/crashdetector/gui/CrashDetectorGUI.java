@@ -105,15 +105,27 @@ public class CrashDetectorGUI extends JFrame {
 					"<html><body style='color:#ff6b6b'>Problema con el Informe: " + e.getMessage() + "</body></html>");
 		}
 
+
 		pantalla.addHyperlinkListener(e -> {
-			if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-				try {
-					Desktop.getDesktop().browse(e.getURL().toURI());
-				} catch (Exception ex) {
-					CrashDetectorLogger.logException(ex);
-				}
-			}
+		    if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+		        try {
+		            String url = e.getURL().toString();
+
+		            if (url.startsWith("lectador://")) {
+		                LectadorDeConsolas.procesarHipervinculo(url);
+		            } else {
+		                Desktop.getDesktop().browse(e.getURL().toURI());
+		            }
+		        } catch (Exception ex) {
+		            CrashDetectorLogger.logException(ex);
+		        }
+		    }
 		});
+
+		
+		
+		
+		
 		CrashDetectorLogger.log("estabalar frontera");
 		scrollPane.setBorder(BorderFactory.createEmptyBorder());
 		scrollPane.getViewport().setBackground(colorCajaTexto);

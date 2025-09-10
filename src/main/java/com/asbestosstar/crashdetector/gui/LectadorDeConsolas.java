@@ -373,56 +373,107 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 	    }
 	}
 	
-	
-	private void mostrarConsolaLimpiado(Consola consola) {
-	    txtRegistros.setText("");
-	    StyledDocument doc = txtRegistros.getStyledDocument();
 
-	    Style estiloNormal = crearEstilo("normal", colorTexto);
-	    Style estiloError = crearEstilo("error", colorError);
-	    Style estiloPila = crearEstilo("pila", colorPila);
 
-	    try {
-	        for (String linea : consola.contenido_verificar.split(Verificaciones.nl)) {
-	            Style estiloAplicar = estiloNormal;
-	            if (linea.contains("ERROR") || linea.contains("EXCEPTION")) {
-	                estiloAplicar = estiloError;
-	            } else if (linea.contains("STACKTRACE") || linea.contains("at ")) {
-	                estiloAplicar = estiloPila;
-	            }
-	            doc.insertString(doc.getLength(), linea + "\n", estiloAplicar);
-	        }
-	    } catch (BadLocationException ex) {
-	        JOptionPane.showMessageDialog(this, idioma.obtenerErrorLecturaArchivo(), idioma.obtenerTituloError(),
-	                JOptionPane.ERROR_MESSAGE);
-	    }
-	}
+private void mostrarConsolaLimpiado(Consola consola) {
+    txtRegistros.setText("");
+    StyledDocument doc = txtRegistros.getStyledDocument();
 
-	// 🔹 Mostrar contenido "original"
-	private void mostrarConsolaOriginal(String rutaArchivo) {
-	    txtRegistros.setText("");
-	    StyledDocument doc = txtRegistros.getStyledDocument();
+    // Estilos base
+    Style estiloNormal = crearEstilo("normal", colorTexto);
+    Style estiloError = crearEstilo("error", colorError);
+    Style estiloPila = crearEstilo("pila", colorPila);
 
-	    Style estiloNormal = crearEstilo("normal", colorTexto);
-	    Style estiloError = crearEstilo("error", colorError);
-	    Style estiloPila = crearEstilo("pila", colorPila);
+    try {
+        int lineaActual = 0;
+        for (String linea : consola.contenido_verificar.split(Verificaciones.nl)) {
+            Style estiloAplicar = estiloNormal;
+            ErrorDeLectador errorDetectado = null;
 
-	    try (BufferedReader reader = new BufferedReader(new FileReader(rutaArchivo))) {
-	        String linea;
-	        while ((linea = reader.readLine()) != null) {
-	            Style estiloAplicar = estiloNormal;
-	            if (linea.contains("ERROR") || linea.contains("EXCEPTION")) {
-	                estiloAplicar = estiloError;
-	            } else if (linea.contains("STACKTRACE") || linea.contains("at ")) {
-	                estiloAplicar = estiloPila;
-	            }
-	            doc.insertString(doc.getLength(), linea + "\n", estiloAplicar);
-	        }
-	    } catch (IOException | BadLocationException ex) {
-	        JOptionPane.showMessageDialog(this, idioma.obtenerErrorLecturaArchivo(), idioma.obtenerTituloError(),
-	                JOptionPane.ERROR_MESSAGE);
-	    }
-	}
+            // 🔎 Buscar si hay un error en esta línea
+            for (ErrorDeLectador err : consola.errores_de_lectadores) {
+                if (err.obtenerLinea() == lineaActual) {
+                    errorDetectado = err;
+                    break;
+                }
+            }
+
+            if (errorDetectado != null) {
+                // Color basado en la verificación detectada
+                estiloAplicar = crearEstilo("error_" + lineaActual, errorDetectado.obtenerColor());
+
+                // Mostrar info en los paneles
+                txtNombreError.setText(errorDetectado.verificacion.nombre());
+                txtDescripcionError.setText(errorDetectado.verificacion.mensaje());
+
+            } else if (linea.contains("ERROR") || linea.contains("EXCEPTION")) {
+                estiloAplicar = estiloError;
+            } else if (linea.contains("STACKTRACE") || linea.contains("at ")) {
+                estiloAplicar = estiloPila;
+            }
+
+            doc.insertString(doc.getLength(), linea + "\n", estiloAplicar);
+            lineaActual++;
+        }
+    } catch (BadLocationException ex) {
+        JOptionPane.showMessageDialog(this,
+                idioma.obtenerErrorLecturaArchivo(),
+                idioma.obtenerTituloError(),
+                JOptionPane.ERROR_MESSAGE);
+    }
+}
+
+private void mostrarConsolaOriginal(String rutaArchivo) {
+    txtRegistros.setText("");
+    StyledDocument doc = txtRegistros.getStyledDocument();
+
+    // Estilos base
+    Style estiloNormal = crearEstilo("normal", colorTexto);
+    Style estiloError = crearEstilo("error", colorError);
+    Style estiloPila = crearEstilo("pila", colorPila);
+
+    try (BufferedReader reader = new BufferedReader(new FileReader(rutaArchivo))) {
+        String linea;
+        int lineaActual = 0;
+
+        while ((linea = reader.readLine()) != null) {
+            Style estiloAplicar = estiloNormal;
+            ErrorDeLectador errorDetectado = null;
+
+            // 🔎 Buscar si hay un error en esta línea original
+            for (Consola c : consolas) {
+                for (ErrorDeLectador err : c.errores_de_lectadores) {
+                    if (err.obtenerLineaOriginal() == lineaActual) {
+                        errorDetectado = err;
+                        break;
+                    }
+                }
+                if (errorDetectado != null) break;
+            }
+
+            if (errorDetectado != null) {
+                estiloAplicar = crearEstilo("error_original_" + lineaActual, errorDetectado.obtenerColor());
+                txtNombreError.setText(errorDetectado.verificacion.nombre());
+                txtDescripcionError.setText(errorDetectado.verificacion.mensaje());
+
+            } else if (linea.contains("ERROR") || linea.contains("EXCEPTION")) {
+                estiloAplicar = estiloError;
+            } else if (linea.contains("STACKTRACE") || linea.contains("at ")) {
+                estiloAplicar = estiloPila;
+            }
+
+            doc.insertString(doc.getLength(), linea + "\n", estiloAplicar);
+            lineaActual++;
+        }
+    } catch (IOException | BadLocationException ex) {
+        JOptionPane.showMessageDialog(this,
+                idioma.obtenerErrorLecturaArchivo(),
+                idioma.obtenerTituloError(),
+                JOptionPane.ERROR_MESSAGE);
+    }
+}
+
+
 	
 
 	/**
@@ -666,6 +717,56 @@ private void resaltarCoincidenciaActual(int longitud) {
 
 
 
+public static void procesarHipervinculo(String url) {
+    try {
+        String sinPrefijo = url.substring("lectador://".length());
+
+        int idx = sinPrefijo.lastIndexOf(":");
+        if (idx == -1) {
+            throw new IllegalArgumentException("URL de lectador inválida: " + url);
+        }
+
+        String rutaArchivo = sinPrefijo.substring(0, idx);
+        int numeroLinea = Integer.parseInt(sinPrefijo.substring(idx + 1));
+
+        Consola consolaSeleccionada = MonitorDePID.consolas.stream()
+            .filter(c -> c.archivo.toString().equals(rutaArchivo))
+            .findFirst()
+            .orElse(null);
+
+        if (consolaSeleccionada == null) {
+            JOptionPane.showMessageDialog(null,
+                "No se encontró la consola para el archivo: " + rutaArchivo,
+                "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        LectadorDeConsolas lector = new LectadorDeConsolas();
+        lector.setVisible(true);
+
+        String nombreArchivo = new File(consolaSeleccionada.archivo.toString()).getName();
+        lector.cmbConsolas.setSelectedItem(nombreArchivo);
+
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            try {
+                Document doc = lector.txtRegistros.getDocument();
+                Element root = doc.getDefaultRootElement();
+
+                if (numeroLinea >= 0 && numeroLinea < root.getElementCount()) {
+                    Element elem = root.getElement(numeroLinea);
+                    int inicio = elem.getStartOffset();
+                    lector.txtRegistros.setCaretPosition(inicio);
+                    lector.txtRegistros.requestFocus();
+                }
+            } catch (Exception ex) {
+                CrashDetectorLogger.logException(ex);
+            }
+        });
+
+    } catch (Exception ex) {
+        CrashDetectorLogger.logException(ex);
+    }
+}
 
 
 
@@ -701,6 +802,19 @@ public static class ErrorDeLectador{
 	
 	public Color obtenerColor() {
 		return verificacion.nivel_de_criticalidad().color;
+	}
+	
+	public int obtenerLinea() {
+	return numero_de_linea;	
+	}
+
+	
+	/**
+	 * La linea del registro original. 
+	 * @return
+	 */
+	public int obtenerLineaOriginal() {
+		return consola.obtenerLimpiador().obtenerLineaOriginalDesdeLineaLimpiada(consola.linea_original, numero_de_linea);
 	}
 	
 }

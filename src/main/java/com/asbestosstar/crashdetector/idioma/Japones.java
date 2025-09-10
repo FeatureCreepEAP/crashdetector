@@ -2878,6 +2878,12 @@ public String original() {
 	return "オリジナル";
 }
 
+@Override
+public String verEnConsola() {
+	// TODO Auto-generated method stub
+	return "ログで表示";
+}
+
 
 
 

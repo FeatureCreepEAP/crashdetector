@@ -2861,7 +2861,11 @@ public String original() {
 	return "Original";
 }
 
-
+@Override
+public String verEnConsola() {
+	// TODO Auto-generated method stub
+	return "Ver no Log";
+}
 
 
 

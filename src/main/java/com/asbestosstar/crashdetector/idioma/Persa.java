@@ -2872,6 +2872,12 @@ public String original() {
 	return "اصلی";
 }
 
+@Override
+public String verEnConsola() {
+	// TODO Auto-generated method stub
+	return "مشاهده در لاگ";
+}
+
 
 
 

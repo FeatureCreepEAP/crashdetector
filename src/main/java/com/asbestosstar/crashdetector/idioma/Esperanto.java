@@ -2908,6 +2908,16 @@ public String original() {
 	return "Originala";
 }
 
+@Override
+public String verEnConsola() {
+	// TODO Auto-generated method stub
+	return "Vidi en ĵurnalo";
+}
+
+
+
+
+
 
 
 

@@ -2859,6 +2859,12 @@ public String original() {
 	return "원본";
 }
 
+@Override
+public String verEnConsola() {
+	// TODO Auto-generated method stub
+	return "로그에서 보기";
+}
+
 
 
 
