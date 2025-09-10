@@ -109,18 +109,22 @@ public class CrashDetectorGUI extends JFrame {
 		pantalla.addHyperlinkListener(e -> {
 		    if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
 		        try {
-		            String url = e.getURL().toString();
+		            // Usar getDescription() porque getURL() puede ser null en protocolos custom
+		            String url = e.getDescription();
 
 		            if (url.startsWith("lectador://")) {
+		                CrashDetectorLogger.log(url + " (lectador url)");
 		                LectadorDeConsolas.procesarHipervinculo(url);
 		            } else {
-		                Desktop.getDesktop().browse(e.getURL().toURI());
+		                // Para URLs estándar (http/https/file/etc.)
+		                Desktop.getDesktop().browse(new java.net.URI(url));
 		            }
 		        } catch (Exception ex) {
 		            CrashDetectorLogger.logException(ex);
 		        }
 		    }
 		});
+
 
 		
 		

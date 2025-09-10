@@ -720,20 +720,22 @@ private void resaltarCoincidenciaActual(int longitud) {
 public static void procesarHipervinculo(String url) {
     try {
         String sinPrefijo = url.substring("lectador://".length());
-
+CrashDetectorLogger.log("sin prefijo "+sinPrefijo);
         int idx = sinPrefijo.lastIndexOf(":");
         if (idx == -1) {
-            throw new IllegalArgumentException("URL de lectador inválida: " + url);
+            CrashDetectorLogger.logException(new IllegalArgumentException("URL de lectador inválida: " + url));
         }
 
         String rutaArchivo = sinPrefijo.substring(0, idx);
         int numeroLinea = Integer.parseInt(sinPrefijo.substring(idx + 1));
-
+CrashDetectorLogger.log("ruta "+rutaArchivo);
         Consola consolaSeleccionada = MonitorDePID.consolas.stream()
             .filter(c -> c.archivo.toString().equals(rutaArchivo))
             .findFirst()
             .orElse(null);
 
+        
+        
         if (consolaSeleccionada == null) {
             JOptionPane.showMessageDialog(null,
                 "No se encontró la consola para el archivo: " + rutaArchivo,
@@ -741,14 +743,25 @@ public static void procesarHipervinculo(String url) {
             return;
         }
 
+        CrashDetectorLogger.log("seleccionada "+ consolaSeleccionada.archivo.toString());
+
+        
         LectadorDeConsolas lector = new LectadorDeConsolas();
         lector.setVisible(true);
 
         String nombreArchivo = new File(consolaSeleccionada.archivo.toString()).getName();
+       
+        CrashDetectorLogger.log("nombre archivo "+ nombreArchivo);
+
         lector.cmbConsolas.setSelectedItem(nombreArchivo);
 
+        
+        CrashDetectorLogger.log("seleccion");
+
+        
         javax.swing.SwingUtilities.invokeLater(() -> {
             try {
+                CrashDetectorLogger.log("en try ");
                 Document doc = lector.txtRegistros.getDocument();
                 Element root = doc.getDefaultRootElement();
 

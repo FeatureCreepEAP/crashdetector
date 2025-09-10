@@ -21,20 +21,29 @@ public class EarlyWindow implements Verificaciones {
 	@Override
 	public void verificar(Consola consola) {
 		String contenidoConsola = consola.contenido_verificar;
-
 		String[] lineas = contenidoConsola.split(Verificaciones.nl);
+
 		if (lineas.length == 0)
 			return;
 
-		// Buscar la línea que contiene el mensaje, no solo la última
-		for (int i = 0; i < lineas.length; i++) {
+		// Buscar la última línea no vacía
+		String ultimaLinea = null;
+		int indiceUltimaLinea = -1;
+
+		for (int i = lineas.length - 1; i >= 0; i--) {
 			String linea = lineas[i].trim();
-			if (linea.contains("Loading ImmediateWindowProvider fmlearlywindow")) {
-				mensaje = MonitorDePID.idioma.fmlEarlyWindow() + Verificaciones.nl_html;
-				enlaceHtml = consola.agregarErrorALectador(i, this);
-				activado = true;
-				break; // Basta con encontrar una
+			if (!linea.isEmpty()) {
+				ultimaLinea = linea;
+				indiceUltimaLinea = i;
+				break;
 			}
+		}
+
+		// Solo activar si la última línea no vacía contiene el mensaje
+		if (ultimaLinea != null && ultimaLinea.contains("Loading ImmediateWindowProvider fmlearlywindow")) {
+			mensaje = MonitorDePID.idioma.fmlEarlyWindow() + Verificaciones.nl_html;
+			enlaceHtml = consola.agregarErrorALectador(indiceUltimaLinea, this);
+			activado = true;
 		}
 	}
 
@@ -71,5 +80,4 @@ public class EarlyWindow implements Verificaciones {
 		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
 				.construir();
 	}
-
 }
