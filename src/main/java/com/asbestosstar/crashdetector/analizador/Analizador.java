@@ -219,21 +219,67 @@ public class Analizador {
 	}
 
 	public void analizar(List<Consola> consolas) {
-		// TODO Auto-generated method stub
-		for (Consola consola : consolas) {
-			consola.verificacion_de_stacktrace.reincinar();
-			for (Verificaciones ver : verificaciones_activados) {
-				CrashDetectorLogger.log(consola.archivo + " " + ver.nombre());
-				try {
-					ver.verificar(consola);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					CrashDetectorLogger.logException(e);
-				}
-			}
-		}
-		CrashDetectorLogger.log("Analizando Completa");
+	    long totalStartTime = System.nanoTime();
+	    CrashDetectorLogger.log("Iniciando análisis de " + consolas.size() + " registros");
+	    
+	    for (Consola consola : consolas) {
+	        consola.verificacion_de_stacktrace.reincinar();
+	        
+	        // Iniciar temporizador para esta consola
+	        long consolaStartTime = System.nanoTime();
+	        CrashDetectorLogger.log("Analizando registro: " + consola.archivo.getFileName());
+	        
+	        for (Verificaciones ver : verificaciones_activados) {
+	            long verificacionStartTime = System.nanoTime();
+	            
+	            try {
+	                CrashDetectorLogger.log(consola.archivo + " " + ver.nombre());
+	                ver.verificar(consola);
+	                
+	                // Calcular tiempo de esta verificación
+	                long verificacionEndTime = System.nanoTime();
+	                double tiempoVerificacion = (verificacionEndTime - verificacionStartTime) / 1_000_000.0; // Convertir a milisegundos
+	                
+	                CrashDetectorLogger.log(String.format(
+	                    "Verificación completada: %s - Tiempo: %.2f ms", 
+	                    ver.nombre(), 
+	                    tiempoVerificacion
+	                ));
+	            } catch (Exception e) {
+	                CrashDetectorLogger.logException(e);
+	                
+	                // Registrar error pero continuar con otras verificaciones
+	                long verificacionEndTime = System.nanoTime();
+	                double tiempoVerificacion = (verificacionEndTime - verificacionStartTime) / 1_000_000.0;
+	                
+	                CrashDetectorLogger.log(String.format(
+	                    "Error en verificación %s - Tiempo transcurrido: %.2f ms", 
+	                    ver.nombre(), 
+	                    tiempoVerificacion
+	                ));
+	            }
+	        }
+	        
+	        // Calcular tiempo total para esta consola
+	        long consolaEndTime = System.nanoTime();
+	        double tiempoConsola = (consolaEndTime - consolaStartTime) / 1_000_000.0;
+	        CrashDetectorLogger.log(String.format(
+	            "Análisis del registro %s completado en: %.2f ms", 
+	            consola.archivo.getFileName(), 
+	            tiempoConsola
+	        ));
+	    }
+	    
+	    // Calcular tiempo total de análisis
+	    long totalEndTime = System.nanoTime();
+	    double tiempoTotal = (totalEndTime - totalStartTime) / 1_000_000.0;
+	    CrashDetectorLogger.log(String.format(
+	        "Análisis completado para %d registros en: %.2f ms", 
+	        consolas.size(), 
+	        tiempoTotal
+	    ));
 	}
+
 
 	public Set<Verificaciones> organizar(Set<Verificaciones> vers) {
 		List<Verificaciones> ret = new ArrayList<>(vers);

@@ -30,28 +30,31 @@ public class AdvertenciaFaltasClases implements Verificaciones {
 
 	@Override
 	public void verificar(Consola consola) {
-		String contenidoConsola = consola.contenido_verificar;
-
-		for (int i = 0; i < contenidoConsola.split(Verificaciones.nl).length; i++) {
-			String linea = contenidoConsola.split(Verificaciones.nl)[i];
-			if (linea.contains("Error loading class:") && linea.contains("WARN")) {
-				try {
-					String clase = linea.split("Error loading class: ")[1].split(" ")[0].trim();
-					String claseFormateada = clase.replace(".", "/");
-
-					// Solo registrar el enlace la primera vez que aparece la clase
-					if (clases.add(claseFormateada)) {
-						String enlace = consola.agregarErrorALectador(i, this);
-						enlacesPorClase.put(claseFormateada, enlace);
-					}
-				} catch (Exception ignored) {
-					// Para líneas mal formateadas, no se puede extraer clase, pero igual registrar
-					consola.agregarErrorALectador(i, this);
-				}
-			}
-		}
-
-		activado = !clases.isEmpty();
+	    String contenidoConsola = consola.contenido_verificar;
+	    
+	    // Dividir el contenido UNA SOLA VEZ (no en cada iteración)
+	    String[] lineas = contenidoConsola.split(Verificaciones.nl);
+	    
+	    for (int i = 0; i < lineas.length; i++) {
+	        String linea = lineas[i];
+	        if (linea.contains("Error loading class:") && linea.contains("WARN")) {
+	            try {
+	                String clase = linea.split("Error loading class: ")[1].split(" ")[0].trim();
+	                String claseFormateada = clase.replace(".", "/");
+	                
+	                // Solo registrar el enlace si es una clase nueva
+	                if (clases.add(claseFormateada)) {
+	                    String enlace = consola.agregarErrorALectador(i, this);
+	                    enlacesPorClase.put(claseFormateada, enlace);
+	                }
+	            } catch (Exception ignored) {
+	                // Registrar sin procesamiento de clase
+	                consola.agregarErrorALectador(i, this);
+	            }
+	        }
+	    }
+	    
+	    activado = !clases.isEmpty();
 	}
 
 	@Override
