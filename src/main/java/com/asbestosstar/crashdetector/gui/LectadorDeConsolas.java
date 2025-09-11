@@ -401,8 +401,8 @@ private void mostrarConsolaLimpiado(Consola consola) {
             if (errorDetectado != null) {
                 // Color basado en la verificación detectada
                 estiloAplicar = crearEstilo("error_" + lineaActual, errorDetectado.obtenerColor());
-
-                // Mostrar info en los paneles
+CrashDetectorLogger.log("errorDetectado " +errorDetectado.verificacion.nombre() +" "+String.valueOf(lineaActual));
+// Mostrar info en los paneles
                 txtNombreError.setText(errorDetectado.verificacion.nombre());
                 txtDescripcionError.setText(errorDetectado.verificacion.mensaje());
 
