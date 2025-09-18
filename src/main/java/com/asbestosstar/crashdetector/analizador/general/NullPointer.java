@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.AbstractMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -217,51 +218,26 @@ public class NullPointer implements Verificaciones {
 	 */
 	private String detectarOrigenEnLinea(String linea, VerificacionDeStackTrace vdst) {
 		// 1. Buscar JAR en la línea
-		for (String jar : vdst.jars.keySet()) {
-			if (linea.contains(jar)) {
-				return limpiarNombreJar(jar);
+		List<String> jarsEncontrados = VerificacionDeStackTrace.extraerJarsDeLinea(linea);
+		for (String jar : jarsEncontrados) {
+			if (jar.contains(".jar") && !VerificacionDeStackTrace.isJarNoPermite(jar)) {
+				return jar;
 			}
 		}
 
 		// 2. Buscar modid
-		for (DoubleKey<String, String> entry : vdst.modids.keySet()) {
-			if (linea.contains(entry.key0)) {
-				return entry.key0;
-			}
+		String modid = VerificacionDeStackTrace.extraerModidDeLinea(linea);
+		if (modid != null && !VerificacionDeStackTrace.esModNoPermite(modid)) {
+			return modid;
 		}
 
 		// 3. Buscar paquete/clase
-		for (DoubleKey<String, String> entry : vdst.packs.keySet()) {
-			if (linea.contains(entry.key0)) {
-				return entry.key0;
-			}
+		String pack = VerificacionDeStackTrace.extraerPaqueteDeLinea(linea);
+		if (pack != null && !vdst.packNoEsPermite(pack, "", false)) {
+			return pack;
 		}
 
 		return ""; // No se encontró origen en esta línea
-	}
-
-	/**
-	 * Limpia el nombre del JAR para mostrarlo de forma legible
-	 */
-	private String limpiarNombreJar(String nombre) {
-		// Eliminar información después de .jar
-		int jarPos = nombre.indexOf(".jar");
-		if (jarPos != -1) {
-			nombre = nombre.substring(0, jarPos + 4);
-		}
-
-		// Eliminar IDs internos
-		int hashPos = nombre.indexOf("%23");
-		if (hashPos != -1) {
-			nombre = nombre.substring(0, hashPos);
-		}
-
-		hashPos = nombre.indexOf('#');
-		if (hashPos != -1) {
-			nombre = nombre.substring(0, hashPos);
-		}
-
-		return nombre;
 	}
 
 	/**
