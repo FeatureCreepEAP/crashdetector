@@ -24,7 +24,7 @@ public class VerificacionDeStackTrace {
 	 * Stacktraces para ignorar
 	 */
 	public static List<ListaDenegadosTrace> denegados = new ArrayList<ListaDenegadosTrace>();
-	
+
 	Consola consola;
 	public static String nl = System.lineSeparator();
 
@@ -53,16 +53,14 @@ public class VerificacionDeStackTrace {
 			"it.unimi", "com.mojang.", "cpw.", "featurecreep.", "jdk.", "sun.", "com.sun.", "org.lwjgl.", "org.apache.",
 			"io.netty", "org.prismlauncher", "io.github.zekerzhayard", "org.multimc", "org.polymc", "org.tlauncher",
 			"net.fabricmc", "org.objectweb.asm", "datafixerupper", "org.slf4j", "com.asbestosstar", "srg",
-			"asbestosstar.","org.openjdk","com.google"
+			"asbestosstar.", "org.openjdk", "com.google"
 
 	};
 
-static {
-	StackTracesDenegadosDeMinecraftPorDefecto.init();
-}
-	
-	
-	
+	static {
+		StackTracesDenegadosDeMinecraftPorDefecto.init();
+	}
+
 	public VerificacionDeStackTrace(Consola cons) {
 		this.consola = cons;
 	}
@@ -144,49 +142,45 @@ static {
 				else if ((linea.contains("ClassNotFoundException") || linea.contains("NoClassDefFoundError"))
 						&& !linea.contains("The specified mixin") && !linea.contains("WARN/]")) {
 
-				
+					String claseFaltante = null;
+					CrashDetectorLogger.log(linea);
 
-				    String claseFaltante = null;
-				    CrashDetectorLogger.log(linea);
-
-				    if (linea.contains("ClassNotFoundException")) {
-				        int startIdx = linea.indexOf("ClassNotFoundException:") + "ClassNotFoundException:".length();
-				        claseFaltante = linea.substring(startIdx).trim();
-				    } else {
-				        int startIdx = linea.indexOf("NoClassDefFoundError:") + "NoClassDefFoundError:".length();
-				        claseFaltante = linea.substring(startIdx).trim();
-				    }
-CrashDetectorLogger.log(claseFaltante);
-				    // Now extract just the class name (remove trailing messages like "Could not initialize class")
-				   
-	if(claseFaltante.contains(" ")) {
-	    CrashDetectorLogger.log("espacio");
-
-					int spaceIdx = claseFaltante.indexOf(' ');
-					CrashDetectorLogger.log("spaceidx");
-				    if (spaceIdx != -1) {
-				    	CrashDetectorLogger.log("-1");
-				        if (claseFaltante.startsWith("Could not initialize class ")) {
-				        	claseFaltante = claseFaltante.replace("Could not initialize class ", "");
-				            spaceIdx = claseFaltante.indexOf(' ');
-				            CrashDetectorLogger.log(claseFaltante);
-				        }
-				        //claseFaltante = claseFaltante.substring(0, spaceIdx);
-				    }
+					if (linea.contains("ClassNotFoundException")) {
+						int startIdx = linea.indexOf("ClassNotFoundException:") + "ClassNotFoundException:".length();
+						claseFaltante = linea.substring(startIdx).trim();
+					} else {
+						int startIdx = linea.indexOf("NoClassDefFoundError:") + "NoClassDefFoundError:".length();
+						claseFaltante = linea.substring(startIdx).trim();
 					}
-					
-					if(claseFaltante.contains("(")) {
-					    CrashDetectorLogger.log("(");
-				    int parenIdx = claseFaltante.indexOf('(');
-				    if (parenIdx != -1) {
-				        claseFaltante = claseFaltante.substring(0, parenIdx);
-				    }
+					CrashDetectorLogger.log(claseFaltante);
+					// Now extract just the class name (remove trailing messages like "Could not
+					// initialize class")
+
+					if (claseFaltante.contains(" ")) {
+						CrashDetectorLogger.log("espacio");
+
+						int spaceIdx = claseFaltante.indexOf(' ');
+						CrashDetectorLogger.log("spaceidx");
+						if (spaceIdx != -1) {
+							CrashDetectorLogger.log("-1");
+							if (claseFaltante.startsWith("Could not initialize class ")) {
+								claseFaltante = claseFaltante.replace("Could not initialize class ", "");
+								spaceIdx = claseFaltante.indexOf(' ');
+								CrashDetectorLogger.log(claseFaltante);
+							}
+							// claseFaltante = claseFaltante.substring(0, spaceIdx);
+						}
 					}
-				    claseFaltante = claseFaltante.replace(".", "/");
-					
-					
-					
-					
+
+					if (claseFaltante.contains("(")) {
+						CrashDetectorLogger.log("(");
+						int parenIdx = claseFaltante.indexOf('(');
+						if (parenIdx != -1) {
+							claseFaltante = claseFaltante.substring(0, parenIdx);
+						}
+					}
+					claseFaltante = claseFaltante.replace(".", "/");
+
 					String sospechoso = "";
 					String[] arr_nuevo = new String[arr.length - 1];
 
@@ -287,7 +281,7 @@ CrashDetectorLogger.log(claseFaltante);
 				"featurecreep", "mixin", "accesstransformer", "forge", "authlib", "sun.", "jdk.", "java.", "fmlloader",
 				"fmlcore", "org.spongepowered.mixin", "fmlearlydisplay", "com.sun.jna", "text2speech",
 				"xf:crashdetector:default", "crashdetector", "srg", "org.objectweb.asm", "it.unimi", "datafixerupper",
-				"com.google.gson","org.openjdk","launchwrapper" };
+				"com.google.gson", "org.openjdk", "launchwrapper" };
 
 		for (String id : ids) {
 			if (modid.startsWith(id)) {
@@ -375,9 +369,11 @@ CrashDetectorLogger.log(claseFaltante);
 		return ret;
 	}
 
-	public static boolean tracePermite(String str) {		
-		for(ListaDenegadosTrace pred:denegados) {
-			if(pred.predicado(str)) {return false;}
+	public static boolean tracePermite(String str) {
+		for (ListaDenegadosTrace pred : denegados) {
+			if (pred.predicado(str)) {
+				return false;
+			}
 		}
 		// Incluir otras líneas que no coincidan con los criterios de exclusión
 		return true;
@@ -590,7 +586,7 @@ CrashDetectorLogger.log(claseFaltante);
 		if (jarName.startsWith("guava-")) {
 			return true;
 		}
-		
+
 		if (jarName.startsWith("sun")) {
 			return true;
 		}
@@ -601,8 +597,7 @@ CrashDetectorLogger.log(claseFaltante);
 		if (jarName.startsWith("datafixerupper")) {
 			return true;
 		}
-		
-		
+
 		return false;
 	}
 
