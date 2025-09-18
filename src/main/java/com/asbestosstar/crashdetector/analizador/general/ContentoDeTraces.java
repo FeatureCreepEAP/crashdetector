@@ -11,11 +11,10 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.asbestosstar.crashdetector.BiMap;
-import com.asbestosstar.crashdetector.BiMap.DoubleKey;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.TriMap;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
@@ -41,11 +40,13 @@ public class ContentoDeTraces implements Verificaciones {
 		String nombre;
 		String nivel;
 		boolean fatal;
+		String enlace; // Nuevo campo para el enlace HTML
 
-		Problema(String nombre, String nivel, boolean fatal) {
+		Problema(String nombre, String nivel, boolean fatal, String enlace) {
 			this.nombre = nombre;
 			this.nivel = nivel;
 			this.fatal = fatal;
+			this.enlace = enlace;
 		}
 	}
 
@@ -107,7 +108,6 @@ public class ContentoDeTraces implements Verificaciones {
 	public void verificar(Consola consola) {
 		VerificacionDeStackTrace vdst = consola.verificacion_de_stacktrace;
 		StringBuilder constructor = new StringBuilder();
-
 		String mensajeFatal = consola.obtainerMensajeFatalUltimaTrace();
 		if (mensajeFatal != null && !mensajeFatal.trim().isEmpty()) {
 			constructor.append(nl_html).append("<strong>")
@@ -125,48 +125,74 @@ public class ContentoDeTraces implements Verificaciones {
 		List<Problema> problemas = new ArrayList<>();
 		Set<String> nombresVistos = new HashSet<>();
 
+		// Procesar jars
 		if (!vdst.jars.isEmpty()) {
 			for (Entry<String, Boolean> jar : vdst.jars.entrySet()) {
 				String[] lvlInfoArr = jar.getKey().split(Pattern.quote(MonitorDePID.idioma.nivel()));
 				String nivel = "";
-				if (lvlInfoArr.length > 1)
+				String enlace = "";
+				int numeroLineaConsola = -1;
+
+				if (lvlInfoArr.length > 1) {
 					nivel = MonitorDePID.idioma.nivel() + lvlInfoArr[1];
+					// Extraer el número de línea de la consola (segundo número después de la coma)
+					String[] partesNivel = lvlInfoArr[1].split(",");
+					if (partesNivel.length > 1) {
+						try {
+							numeroLineaConsola = Integer.parseInt(partesNivel[1]);
+							enlace = consola.agregarErrorALectador(numeroLineaConsola, this);
+						} catch (NumberFormatException ignored) {
+						}
+					}
+				}
 
 				String jarNombre = jar.getKey().split("\\.jar")[0] + ".jar";
 
 				if (nombresVistos.add(jarNombre)) {
-					problemas.add(new Problema(jarNombre, nivel, jar.getValue()));
+					problemas.add(new Problema(jarNombre, nivel, jar.getValue(), enlace));
 				}
 			}
 		}
 
+		// Procesar modids
 		if (!vdst.modids.isEmpty()) {
 			Buscardor.cargar();
-			for (Entry<DoubleKey<String, String>, Boolean> modid : vdst.modids.entrySet()) {
-				String identificador = modid.getKey().key0; // modid original
-				String nivel = modid.getKey().key1;
+			for (TriMap.TripleKey<String, Integer, Integer> key : vdst.modids.keySet()) {
+				String identificador = key.key1; // modid
+				int nivel = key.key2; // nivel
+				int linea = key.key3; // número de línea en consola
+				boolean fatal = vdst.modids.get(identificador, nivel, linea);
+
+				String nivelStr = MonitorDePID.idioma.nivel() + nivel + "," + linea;
+				String enlace = consola.agregarErrorALectador(linea, this);
 
 				List<String> jarsMod = Buscardor.obtenerModsConNombre(identificador);
 				String nombreMostrar = jarsMod.isEmpty() ? identificador : String.join(", ", jarsMod);
 
 				if (nombresVistos.add(nombreMostrar)) {
-					problemas.add(new Problema(nombreMostrar, nivel, modid.getValue()));
+					problemas.add(new Problema(nombreMostrar, nivelStr, fatal, enlace));
 				}
 			}
 		}
 
+		// Procesar paquetes
 		if (!vdst.packs.isEmpty()) {
 			Buscardor.cargar();
-			for (Entry<DoubleKey<String, String>, Boolean> pack : vdst.packs.entrySet()) {
-				String identificador = pack.getKey().key0;
-				String nivel = pack.getKey().key1;
+			for (TriMap.TripleKey<String, Integer, Integer> key : vdst.packs.keySet()) {
+				String identificador = key.key1; // paquete
+				int nivel = key.key2; // nivel
+				int linea = key.key3; // número de línea en consola
+				boolean fatal = vdst.packs.get(identificador, nivel, linea);
+
+				String nivelStr = MonitorDePID.idioma.nivel() + nivel + "," + linea;
+				String enlace = consola.agregarErrorALectador(linea, this);
 
 				String rutaPack = obtenerRutaDePaquete(identificador);
 				List<String> jarsPack = Buscardor.obtenerUbicaciones(Buscardor.buscarModsConTermino(rutaPack));
 				String nombreMostrar = jarsPack.isEmpty() ? identificador : String.join(", ", jarsPack);
 
 				if (nombresVistos.add(nombreMostrar)) {
-					problemas.add(new Problema(nombreMostrar, nivel, pack.getValue()));
+					problemas.add(new Problema(nombreMostrar, nivelStr, fatal, enlace));
 				}
 			}
 		}
@@ -183,35 +209,51 @@ public class ContentoDeTraces implements Verificaciones {
 				constructor.append("<li>");
 				if (p.fatal)
 					constructor.append(MonitorDePID.idioma.posibilidad_fatal());
-				constructor.append(p.nombre).append(" ").append(p.nivel).append("</li>");
+				constructor.append(p.nombre).append(" ").append(p.nivel);
+				// Agregar el enlace si existe
+				if (p.enlace != null && !p.enlace.isEmpty()) {
+					constructor.append(" ").append(p.enlace);
+				}
+				constructor.append("</li>");
 			}
 			constructor.append("</ul>");
 		}
 
-		BiMap<String, String, Boolean> configsInject = new BiMap<>();
-		for (Entry<DoubleKey<String, String>, Boolean> brace : vdst.braces.entrySet()) {
-			for (String ind : VerificacionDeStackTrace.eliminarDuplicados(brace.getKey().key0.split(","))) {
+		// Para los braces, ahora usamos TriMap
+		TriMap<String, Integer, Integer, Boolean> configsInject = new TriMap<>();
+		for (TriMap.TripleKey<String, Integer, Integer> key : vdst.braces.keySet()) {
+			String content = key.key1;
+			int nivel = key.key2;
+			int linea = key.key3;
+			boolean fatal = vdst.braces.get(content, nivel, linea);
+
+			// Procesar cada contenido de llaves
+			for (String ind : VerificacionDeStackTrace.eliminarDuplicados(content.split(","))) {
 				String limpiado = ind.replace("pl:runtimedistcleaner:A", "").replace("re:classloading", "")
 						.replace("pl:mixin:APP:", "").replace("re:computing_frames", "")
 						.replace("pl:accesstransformer:B", "").replace("pl:mixin:A", "").replace("xf:fml", "")
 						.replace("featurecreep", "").replace("re:mixin", "").replace("xf:crashdetector:default", "");
 
 				if (!limpiado.isEmpty()) {
-					configsInject.put(limpiado, brace.getKey().key1, brace.getValue());
+					configsInject.put(limpiado, nivel, linea, fatal);
 				}
 			}
 		}
 
-		BiMap<String, String, Boolean> smConfigsFilt = new BiMap<>();
+		TriMap<String, Integer, Integer, Boolean> smConfigsFilt = new TriMap<>();
 		if (!configsInject.isEmpty()) {
 			activado = true;
 			int count = 0;
-			for (Entry<DoubleKey<String, String>, Boolean> cfg : configsInject.entrySet()) {
-				String nombre = cfg.getKey().key0;
+			for (TriMap.TripleKey<String, Integer, Integer> key : configsInject.keySet()) {
+				String nombre = key.key1;
+				int nivel = key.key2;
+				int linea = key.key3;
+				boolean fatal = configsInject.get(nombre, nivel, linea);
+
 				if (!todos_sm_configs.contains(nombre)) {
 					todos_sm_configs.add(nombre);
 					if (count < 20) {
-						smConfigsFilt.put(nombre, cfg.getKey().key1, cfg.getValue());
+						smConfigsFilt.put(nombre, nivel, linea, fatal);
 						count++;
 					}
 				}
@@ -222,15 +264,32 @@ public class ContentoDeTraces implements Verificaciones {
 			constructor.append(nl_html).append(MonitorDePID.idioma.corchetes_ondulados()).append(nl_html)
 					.append("<ul>");
 
-			for (Entry<DoubleKey<String, String>, Boolean> cfg : ordenarPorNivel(smConfigsFilt)) {
-				String cleanConf = cfg.getKey().key0.split("\\.json")[0].replace(".mixins", "").replace(".mixin", "")
+			// Ordenar por nivel y línea
+			List<TriMap.TripleKey<String, Integer, Integer>> sortedKeys = new ArrayList<>(smConfigsFilt.keySet());
+			sortedKeys.sort(Comparator.comparingInt((TriMap.TripleKey<String, Integer, Integer> key) -> key.key2)
+					.thenComparingInt(key -> key.key3));
+
+			for (TriMap.TripleKey<String, Integer, Integer> key : sortedKeys) {
+				String nombre = key.key1;
+				int nivel = key.key2;
+				int linea = key.key3;
+				boolean fatal = smConfigsFilt.get(nombre, nivel, linea);
+				String enlace = consola.agregarErrorALectador(linea, this);
+
+				String cleanConf = nombre.split("\\.json")[0].replace(".mixins", "").replace(".mixin", "")
 						.replace("mixins.", "").replace("mixin.", "");
 
 				constructor.append("<li>");
-				if (cfg.getValue()) {
+				if (fatal) {
 					constructor.append(MonitorDePID.idioma.posibilidad_fatal());
 				}
-				constructor.append(cleanConf).append(" ").append(cfg.getKey().key1).append("</li>");
+				constructor.append(cleanConf).append(" ").append(MonitorDePID.idioma.nivel()).append(nivel).append(",")
+						.append(linea);
+				// Agregar el enlace
+				if (enlace != null && !enlace.isEmpty()) {
+					constructor.append(" ").append(enlace);
+				}
+				constructor.append("</li>");
 			}
 			constructor.append("</ul>");
 		}
@@ -295,16 +354,6 @@ public class ContentoDeTraces implements Verificaciones {
 			rutaDelPaquete.append(partesDelPaquete[i]);
 		}
 		return rutaDelPaquete.toString();
-	}
-
-	private static <K> List<Entry<DoubleKey<K, String>, Boolean>> ordenarPorNivel(BiMap<K, String, Boolean> mapa) {
-
-		List<Entry<DoubleKey<K, String>, Boolean>> lista = new ArrayList<>(mapa.entrySet());
-
-		lista.sort(compNumerico(e -> e.getKey().key1));
-
-		return lista;
-
 	}
 
 	@Override

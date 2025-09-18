@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.swing.DefaultComboBoxModel;
@@ -16,6 +15,7 @@ import javax.swing.JTextArea;
 
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.TriMap;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
@@ -38,9 +38,17 @@ public class FaltasClases implements Verificaciones {
 		VerificacionDeStackTrace vdst = consola.verificacion_de_stacktrace;
 
 		// Agregar clases faltantes desde stacktraces fatales
-		for (Entry<String, String> clase : vdst.fatal_clases_no_existe.entrySet()) {
-			if (todos.add(clase.getKey())) {
-				clases.put(clase.getKey().replace(".", "/"), clase.getValue());
+		for (TriMap.TripleKey<String, Integer, Integer> key : vdst.clases_fatales_no_existentes.keySet()) {
+			String clase = key.key1; // nombre de la clase
+			int nivel_prioridad = key.key2; // nivel de prioridad
+			int numero_linea_consola = key.key3; // número de línea en la consola
+			String sospechoso = vdst.clases_fatales_no_existentes.get(clase, nivel_prioridad, numero_linea_consola);
+
+			String claseFormateada = clase.replace(".", "/");
+			if (todos.add(clase)) {
+				clases.put(claseFormateada, sospechoso);
+				String enlace = consola.agregarErrorALectador(numero_linea_consola, this);
+				enlacesPorClase.put(claseFormateada, enlace);
 			}
 		}
 
@@ -100,9 +108,11 @@ public class FaltasClases implements Verificaciones {
 		}
 
 		// TODO mejor
-		for (String clase : clases.keySet()) {
+		for (String clase : new ArrayList<>(clases.keySet())) {
 			if (clase.startsWith("gg/essential/") || clase.startsWith("kotlin/") || clase.startsWith("kotlinx/")) {
+				String enlace = enlacesPorClase.get(clase);
 				clases.remove(clase);
+				enlacesPorClase.remove(clase);
 			}
 		}
 
@@ -135,7 +145,7 @@ public class FaltasClases implements Verificaciones {
 			return "";
 
 		StringBuilder html = new StringBuilder("<ul>");
-		for (Entry<String, String> entry : clases.entrySet()) {
+		for (Map.Entry<String, String> entry : clases.entrySet()) {
 			String claseFormateada = entry.getKey();
 			String valor = !entry.getValue().isEmpty() ? " (" + entry.getValue() + ")" : "";
 			String enlace = enlacesPorClase.getOrDefault(claseFormateada, "");
@@ -147,7 +157,12 @@ public class FaltasClases implements Verificaciones {
 				epicfight = true;
 			}
 
-			html.append("<li>").append(claseFormateada).append(valor).append(" ").append(enlace).append("</li>");
+			html.append("<li>").append(claseFormateada).append(valor);
+			// Agregar el enlace solo si existe
+			if (!enlace.isEmpty()) {
+				html.append(" ").append(enlace);
+			}
+			html.append("</li>");
 		}
 		html.append("</ul>");
 

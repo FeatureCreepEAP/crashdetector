@@ -223,7 +223,7 @@ public class Analizador {
 	    CrashDetectorLogger.log("Iniciando análisis de " + consolas.size() + " registros");
 	    
 	    for (Consola consola : consolas) {
-	        consola.verificacion_de_stacktrace.reincinar();
+	        consola.verificacion_de_stacktrace.reiniciar();
 	        
 	        // Iniciar temporizador para esta consola
 	        long consolaStartTime = System.nanoTime();

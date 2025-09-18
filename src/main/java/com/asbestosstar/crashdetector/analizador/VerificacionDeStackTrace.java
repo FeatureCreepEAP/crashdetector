@@ -13,10 +13,10 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.asbestosstar.crashdetector.BiMap;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.TriMap;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.StackTracesDenegadosDeMinecraftPorDefecto;
 
 public class VerificacionDeStackTrace {
@@ -29,22 +29,29 @@ public class VerificacionDeStackTrace {
 	Consola consola;
 	public static String nl = System.lineSeparator();
 
-	// 正则表达式用于匹配Java异常堆栈跟踪
+	// Patrón para coincidir con rastros de pila de excepciones de Java
 	private static final Pattern STACK_TRACE_PATTERN = Pattern.compile("(?m)(^\\S.*(?:\\r?\\n[ \\t]+at\\s+.*)+)");
-	// 正则表达式用于匹配包含org.spongepowered.asm.mixin的异常并提取JSON文件名（不包括refmap）
+	// Patrón para coincidir con excepciones que contienen
+	// org.spongepowered.asm.mixin y extraer nombres de JSON (sin incluir refmap)
 	private static final Pattern JSON_PATTERN = Pattern.compile("(\\S+\\.json)(?=[: ])");
-	// 正则表达式用于匹配{}内的内容
+	// Patrón para coincidir con contenido dentro de llaves {}
 	private static final Pattern BRACE_PATTERN = Pattern.compile("\\{([^}]+)\\}");
 
 	public List<String> sm_config = new ArrayList<>();
 	public Map<String, Boolean> jars = new LinkedHashMap<>();// FATAL
-	public BiMap<String, String, Boolean> modids = new BiMap<>();// FATAL
-	public BiMap<String, String, Boolean> packs = new BiMap<>();// FATAL
-	public BiMap<String, String, Boolean> braces = new BiMap<>();// FATAL
+	public TriMap<String, Integer, Integer, Boolean> modids = new TriMap<>();// FATAL (modid, nivel_prioridad,
+																				// línea_consola, es fatal)
+	public TriMap<String, Integer, Integer, Boolean> packs = new TriMap<>();// FATAL (paquete, nivel_prioridad,
+																			// línea_consola, es fatal)
+	public TriMap<String, Integer, Integer, Boolean> braces = new TriMap<>();// FATAL (contenido llaves,
+																				// nivel_prioridad, línea_consola, es
+																				// fatal)
+	public TriMap<String, Integer, Integer, String> clases_fatales_no_existentes = new TriMap<>();// (clase,
+																									// nivel_prioridad,
+																									// línea_consola,
+																									// sospechoso)
 
-	public Map<String, String> fatal_clases_no_existe = new HashMap<String, String>();
-
-	// These only contain the content but not lvl
+	// Estos solo contienen el contenido pero no el nivel
 	public List<String> jar_malo = new ArrayList<String>();
 	public List<String> modid_malo = new ArrayList<String>();
 	public List<String> package_malo = new ArrayList<String>();
@@ -66,33 +73,117 @@ public class VerificacionDeStackTrace {
 		this.consola = cons;
 	}
 
-	public void reincinar() {
+	public void reiniciar() {
 
 		sm_config.clear();
 		jars.clear();
 		modids.clear();
 		packs.clear();
-
-		fatal_clases_no_existe.clear();
+		clases_fatales_no_existentes.clear();
 
 		jar_malo.clear();
 		modid_malo.clear();
 		package_malo.clear();
 
-		int lvl = 0;
-		String contento = consola.contenido_verificar;
-		for (String trace : inverso(obtenerTracesFatal(contento))) {// Las ultimas son las más importante
-			lvl++;
-			this.procesarTrace(trace, true, lvl);
+		int nivel_prioridad = 0;
+		String contenido = consola.contenido_verificar;
+		List<TraceInfo> tracesFatal = obtenerTracesFatalConLinea(contenido);
+		Collections.reverse(tracesFatal); // Las últimas son las más importantes
+		for (TraceInfo traceInfo : tracesFatal) {
+			nivel_prioridad++;
+			this.procesarTrace(traceInfo.trace, true, nivel_prioridad, traceInfo.consolaLineaComenzar);
 		}
 
-		for (String trace : inverso(obtenerTraces(contento))) {// Las ultimas son las más importante
-			lvl++;
-			this.procesarTrace(trace, false, lvl);
+		List<TraceInfo> tracesNormales = obtenerTracesConLinea(contenido);
+		Collections.reverse(tracesNormales); // Las últimas son las más importantes
+		for (TraceInfo traceInfo : tracesNormales) {
+			nivel_prioridad++;
+			this.procesarTrace(traceInfo.trace, false, nivel_prioridad, traceInfo.consolaLineaComenzar);
 		}
 	}
 
-	public void procesarTrace(String trace, boolean fatal, int lvl) {
+	/**
+	 * Información sobre un stack trace incluyendo su contenido y la línea inicial
+	 * en la consola
+	 */
+	public static class TraceInfo {
+		public String trace;
+		public int consolaLineaComenzar;
+
+		TraceInfo(String trace, int consolaLineaComenzar) {
+			this.trace = trace;
+			this.consolaLineaComenzar = consolaLineaComenzar;
+		}
+	}
+
+	/**
+	 * Obtiene stack traces fatales junto con su línea inicial en la consola
+	 */
+	public static List<TraceInfo> obtenerTracesFatalConLinea(String log) {
+		List<TraceInfo> ret = new ArrayList<>();
+		String[] lineas = log.split(nl);
+
+		for (int i = 0; i < lineas.length; i++) {
+			String linea = lineas[i];
+			if (linea.contains("/FATAL]")) {
+				StringBuilder trace = new StringBuilder();
+				trace.append(linea);
+				int j = i + 1;
+
+				while (j < lineas.length && esParteDeStack(lineas[j])) {
+					trace.append(nl).append(lineas[j]);
+					j++;
+				}
+
+				if (tracePermite(trace.toString())) {
+					ret.add(new TraceInfo(trace.toString(), i));
+				}
+			}
+		}
+		return ret;
+	}
+
+	/**
+	 * Obtiene stack traces normales junto con su línea inicial en la consola
+	 */
+	public static List<TraceInfo> obtenerTracesConLinea(String log) {
+		List<TraceInfo> ret = new ArrayList<>();
+		String[] lineas = log.split(nl);
+		Matcher matcher = STACK_TRACE_PATTERN.matcher(log);
+
+		int i = 0;
+		while (i < lineas.length && matcher.find()) {
+			// Encontrar la línea donde comienza el stack trace
+			int lineaPrimera = -1;
+			for (int j = i; j < lineas.length; j++) {
+				if (matcher.reset(lineas[j]).find()) {
+					lineaPrimera = j;
+					break;
+				}
+			}
+
+			if (lineaPrimera == -1)
+				break;
+
+			// Construir el stack trace completo
+			StringBuilder trace = new StringBuilder(lineas[lineaPrimera]);
+			int j = lineaPrimera + 1;
+
+			while (j < lineas.length && esParteDeStack(lineas[j])) {
+				trace.append(nl).append(lineas[j]);
+				j++;
+			}
+
+			if (tracePermite(trace.toString())) {
+				ret.add(new TraceInfo(trace.toString(), lineaPrimera));
+			}
+
+			i = j;
+		}
+		return ret;
+	}
+
+	public void procesarTrace(String trace, boolean fatal, int nivel_prioridad, int consolaLineaPrimera) {
 		String idiomaNivel = MonitorDePID.idioma.nivel();
 		List<String> archivos_json = obtenerArchivosJsonEnMixinExceptions(trace);
 
@@ -105,11 +196,13 @@ public class VerificacionDeStackTrace {
 			}
 		} else {
 			String[] arr = trace.split(nl);
-			int linea_num = 0;
-			for (String untrimmed : arr) {
-				linea_num++;
+			for (int i = 0; i < arr.length; i++) {
+				String untrimmed = arr[i];
 				String linea = untrimmed.trim();
-				String dec = Integer.toString(lvl) + "," + Integer.toString(linea_num);
+				// Calcular la línea real en la consola
+				int consolaNumLinea = consolaLineaPrimera + i;
+				String dec = Integer.toString(nivel_prioridad) + "," + Integer.toString(consolaNumLinea);
+
 				// No siempre hay un Jar
 				if (linea.contains("[")) {
 					List<String> jarsEncontrados = extraerJarsDeLinea(linea);
@@ -132,7 +225,8 @@ public class VerificacionDeStackTrace {
 						if (!modid_malo.contains(modid) && !linea.split("/")[0].startsWith("java.")
 								&& !esModNoPermite(modid) && linea.startsWith("at")) {
 							modid_malo.add(modid);
-							modids.put(modid, idiomaNivel + dec, fatal);
+							// Ahora usamos TriMap con nivel de prioridad y número de línea en la consola
+							modids.put(modid, nivel_prioridad, consolaNumLinea, fatal);
 						}
 					}
 				}
@@ -141,7 +235,8 @@ public class VerificacionDeStackTrace {
 					String pack = extraerPaqueteDeLinea(linea);
 					if (pack != null) {
 						if (!package_malo.contains(pack) && !packNoEsPermite(pack, dec, fatal)) {
-							packs.put(pack, idiomaNivel + dec, fatal);
+							// Ahora usamos TriMap con nivel de prioridad y número de línea en la consola
+							packs.put(pack, nivel_prioridad, consolaNumLinea, fatal);
 							package_malo.add(pack);
 						}
 					}
@@ -153,15 +248,14 @@ public class VerificacionDeStackTrace {
 				else if ((linea.contains("ClassNotFoundException") || linea.contains("NoClassDefFoundError"))
 						&& !linea.contains("The specified mixin") && !linea.contains("WARN/]")) {
 
-					Map.Entry<String, String> resultado = procesarErrorClaseNoEncontrada(linea, arr, linea_num, lvl);
+					Map.Entry<String, String> resultado = procesarErrorClaseNoEncontrada(linea, arr, consolaNumLinea,
+							nivel_prioridad);
 					if (resultado != null) {
 						String claseFaltante = resultado.getKey();
 						String sospechoso = resultado.getValue();
 
-						if (!fatal_clases_no_existe.containsKey(claseFaltante)
-								|| fatal_clases_no_existe.get(claseFaltante).isEmpty()) {
-							fatal_clases_no_existe.put(claseFaltante, sospechoso);
-						}
+						// Almacenar con nivel de prioridad y número de línea en la consola
+						clases_fatales_no_existentes.put(claseFaltante, nivel_prioridad, consolaNumLinea, sospechoso);
 					}
 				}
 
@@ -169,7 +263,8 @@ public class VerificacionDeStackTrace {
 				List<String> llavesEncontradas = extraerLlavesDeLinea(linea);
 				for (String content : llavesEncontradas) {
 					if (!brace_malo.contains(content)) {
-						braces.put(content, idiomaNivel + dec, fatal);
+						// Ahora usamos TriMap con nivel de prioridad y número de línea en la consola
+						braces.put(content, nivel_prioridad, consolaNumLinea, fatal);
 						brace_malo.add(content);
 					}
 				}
@@ -252,15 +347,15 @@ public class VerificacionDeStackTrace {
 	 * Procesa líneas que contienen ClassNotFoundException o NoClassDefFoundError
 	 * Busca la clase faltante y trata de identificar el mod/jar sospechoso
 	 * 
-	 * @param linea     Línea que contiene el error de clase
-	 * @param arr       Array completo de líneas del stack trace
-	 * @param linea_num Número de línea actual
-	 * @param lvl       Nivel de prioridad
+	 * @param linea             Línea que contiene el error de clase
+	 * @param arr               Array completo de líneas del stack trace
+	 * @param consoleLineNumber Número de línea actual EN LA CONSOLA
+	 * @param nivel_prioridad   Nivel de prioridad (no es el número de línea)
 	 * @return Un entry con la clase faltante y el sospechoso, o null si no se
 	 *         encontró
 	 */
-	public Map.Entry<String, String> procesarErrorClaseNoEncontrada(String linea, String[] arr, int linea_num,
-			int lvl) {
+	public Map.Entry<String, String> procesarErrorClaseNoEncontrada(String linea, String[] arr, int consoleLineNumber,
+			int nivel_prioridad) {
 		String claseFaltante = null;
 		CrashDetectorLogger.log(linea);
 
@@ -329,7 +424,9 @@ public class VerificacionDeStackTrace {
 			// Extracción de paquetes
 			if (t.startsWith("at ")) {
 				String pack = t.substring(3);
-				if (!packNoEsPermite(pack, Integer.toString(lvl) + "," + Integer.toString(linea_num), false)) {
+				// Usamos consoleLineNumber en lugar de línea dentro del stack trace
+				if (!packNoEsPermite(pack,
+						Integer.toString(nivel_prioridad) + "," + Integer.toString(consoleLineNumber), false)) {
 					sospechoso = pack;
 					return new AbstractMap.SimpleEntry<>(claseFaltante, sospechoso);
 				}
@@ -339,48 +436,51 @@ public class VerificacionDeStackTrace {
 		return null;
 	}
 
+	/**
+	 * Procesa los handlers de SpongeMixin para extraer el modid
+	 * 
+	 * @param pack  Cadena que contiene el handler de SpongeMixin
+	 * @param dec   Cadena que contiene el nivel de prioridad y número de línea de
+	 *              la consola (ej: "1,23")
+	 * @param fatal Indica si es un error fatal
+	 */
 	public void processarSMHandler(String pack, String dec, boolean fatal) {
-		// Split the input string by '$' to identify potential mod IDs
+		// Dividir la cadena por '$' para identificar posibles IDs de mod
 		String[] parts = pack.split("\\$");
 
-		// Check if the string has at least 4 parts (indicating the presence of a mod
-		// ID)
+		// Verificar si la cadena tiene al menos 4 partes (indicando la presencia de un
+		// mod ID)
 		if (parts.length >= 4) {
-			// Extract the mod ID (located after the third '$')
+			// Extraer el mod ID (ubicado después del tercer '$')
 			String modid = parts[3];
 
-			// Log the extracted mod ID for debugging purposes
+			// Registrar el mod ID extraído para propósitos de depuración
 			CrashDetectorLogger.log("Mod ID encontrado: " + modid);
 			if (!modid_malo.contains(modid)) {
 				modid_malo.add(modid);
 
-				// Add the mod ID to the modids map with the appropriate key and value
-				modids.put(modid, MonitorDePID.idioma.nivel() + dec, fatal);
+				// Extraer nivel de prioridad y número de línea de la cadena dec
+				String[] lvlLinea = dec.split(",");
+				int nivel_prioridad = Integer.parseInt(lvlLinea[0]);
+				int consoleLineNumber = Integer.parseInt(lvlLinea[1]);
+
+				// Añadir el mod ID al mapa modids con la clave y valor apropiados
+				modids.put(modid, nivel_prioridad, consoleLineNumber, fatal);
 			}
 
 		} else {
-			// Log that the line does not contain a valid mod ID and will be ignored
+			// Registrar que la línea no contiene un mod ID válido y se ignorará
 			CrashDetectorLogger.log("Línea ignorada: No contiene un mod ID válido.");
 		}
 	}
 
-//	public boolean trace_contain(String[] arr, String cont) {
-//		// TODO Auto-generated method stub
-//		if (arr.length == 1) {
-//			return arr[0].contains(cont);
-//		}
-//
-//		for (int i = 1; i < arr.length; i++) {// start at 1 to only get trace
-//			if (arr[i].contains(cont)) {
-//				return true;
-//			}
-//		}
-//
-//		return false;
-//	}
-
+	/**
+	 * Verifica si un modid está en la lista de elementos no permitidos
+	 * 
+	 * @param modid ID del mod a verificar
+	 * @return true si el modid no está permitido, false en caso contrario
+	 */
 	public static boolean esModNoPermite(String modid) {
-		// TODO Auto-generated method stub
 		if (modid.replace(" ", "").equals("")) {
 			return true;
 		}
@@ -400,13 +500,23 @@ public class VerificacionDeStackTrace {
 		return false;
 	}
 
+	/**
+	 * Verifica si un paquete está en la lista de elementos no permitidos También
+	 * procesa handlers de SpongeMixin si están presentes
+	 * 
+	 * @param pack  Paquete a verificar
+	 * @param dec   Cadena que contiene el nivel de prioridad y número de línea de
+	 *              la consola (ej: "1,23")
+	 * @param fatal Indica si es un error fatal
+	 * @return true si el paquete no está permitido, false en caso contrario
+	 */
 	public boolean packNoEsPermite(String pack, String dec, boolean fatal) {
-		// TODO Auto-generated method stub
-
+		// Si el paquete contiene un handler de SpongeMixin, procesarlo
 		if (pack.contains("handler$")) {
 			processarSMHandler(pack, dec, fatal);
 		}
 
+		// Verificar contra la lista de prefijos no permitidos
 		for (String prefix : package_no_permite) {
 			if (pack.startsWith(prefix)) {
 				return true;
@@ -417,38 +527,13 @@ public class VerificacionDeStackTrace {
 	}
 
 	public static String[] eliminarDuplicados(String[] inputArray) {
-		// 使用LinkedHashSet来保持插入顺序的同时去除重复项
+		// Usar LinkedHashSet para mantener el orden de inserción mientras se eliminan
+		// duplicados
 		Set<String> set = new HashSet<>(Arrays.asList(inputArray));
 
-		// 将去重后的set转回数组
+		// Convertir el set sin duplicados de vuelta a array
 		String[] ret = set.toArray(new String[0]);
 
-		return ret;
-	}
-
-	public static List<String> obtenerTracesFatal(String log) {
-		List<String> ret = new ArrayList<>();
-		String[] lineas = log.split(nl);
-		int len = lineas.length;
-
-		for (int i = 0; i < len; i++) {
-			String linea = lineas[i];
-			if (linea.contains("/FATAL]")) {
-
-				StringBuilder trace = new StringBuilder();
-				trace.append(linea);
-				int j = i + 1;
-
-				while (j < len && esParteDeStack(lineas[j])) {
-					trace.append(nl).append(lineas[j]);
-					j++;
-				}
-				String str = trace.toString();
-				if (tracePermite(str)) {
-					ret.add(str);
-				}
-			}
-		}
 		return ret;
 	}
 
@@ -467,56 +552,8 @@ public class VerificacionDeStackTrace {
 		return t.startsWith("at ") || t.startsWith("Caused by:") || t.startsWith("Suppressed:") || t.startsWith("...")
 		// secure-bootstrap class-loader etc.
 				|| t.startsWith("SECURE-BOOTSTRAP")
-				// excepcion mensajes (“org.spongepowered…InvalidMixinException …”)
+				// mensajes de excepción ("org.spongepowered...InvalidMixinException ...")
 				|| t.matches("^[a-zA-Z0-9_.]+\\.[A-Z][a-zA-Z0-9]+Exception.*");
-	}
-
-//	private static void anadirTracesFata(StringBuilder trace, String[] lineas, int index) {
-//		// TODO Auto-generated method stub
-//		int len = lineas.length;
-//		for (int i = index; i < len; i++) {
-//			String linea = lineas[i];
-//			if (linea.trim().startsWith("at ")) {
-//				trace.append(linea);
-//			} else {
-//				return;
-//			}
-//
-//		}
-//
-//	}
-
-	private void extractarJarNombresEnBrackets(String linea, boolean fatal, int lvl, int linea_num) {
-		int startIdx = linea.indexOf('[');
-		int endIdx = linea.indexOf(']');
-
-		while (startIdx != -1 && endIdx != -1 && startIdx < endIdx) {
-			String candidito = linea.substring(startIdx + 1, endIdx);
-			// Check if the candidate string ends with ".jar" or contains ".jar%23"
-			if (candidito.contains(".jar") && !isJarNoPermite(candidito)) {
-				if (!jar_malo.contains(candidito)) {
-					jar_malo.add(candidito);
-					jars.put(candidito + MonitorDePID.idioma.nivel() + Integer.toString(lvl) + ","
-							+ Integer.toString(linea_num), fatal);
-				}
-			}
-			// Look for the next '[' and ']'
-			startIdx = linea.indexOf('[', endIdx);
-			endIdx = linea.indexOf(']', endIdx + 1);
-		}
-	}
-
-	public static List<String> obtenerTraces(String log) {
-		List<String> stackTraces = new ArrayList<>();
-		Matcher matcher = STACK_TRACE_PATTERN.matcher(log);
-		while (matcher.find()) {
-
-			String str = matcher.group();
-			if (tracePermite(str)) {
-				stackTraces.add(str);
-			}
-		}
-		return stackTraces;
 	}
 
 	public List<String> obtenerArchivosJsonEnMixinExceptions(String contenido_de_logs) {
@@ -553,6 +590,12 @@ public class VerificacionDeStackTrace {
 		return archivos_json;
 	}
 
+	/**
+	 * Verifica si un nombre de jar está en la lista de elementos no permitidos
+	 * 
+	 * @param jarName Nombre del jar a verificar
+	 * @return true si el jar no está permitido, false en caso contrario
+	 */
 	public static boolean isJarNoPermite(String jarName) {
 		if (jarName.startsWith("fml")) {
 			return true;
@@ -682,12 +725,6 @@ public class VerificacionDeStackTrace {
 		}
 
 		return false;
-	}
-
-	public static List<String> inverso(List<String> original) {
-		List<String> reversed = new ArrayList<>(original);
-		Collections.reverse(reversed);
-		return reversed;
 	}
 
 }

@@ -139,14 +139,9 @@ public class StackTracesDenegadosDeMinecraftPorDefecto {
 				contentido -> contentido.contains("rg.betterx.bclib.client.models.CustomModelBakery.addItemModel"));// Puedo
 																													// cambiar
 																													// si
-																													// necisario,
-																													// pero
-																													// BCLib
-																													// es
-																													// un
-																													// comun
-																													// positiva
-																													// falsa
 
+		VerificacionDeStackTrace.denegados.add(
+				contentido -> contentido.contains("Error starting SoundSystem. Turning off sounds & music"));//Tenemos ErrorSistemaSonido
+																													
 	}
 }

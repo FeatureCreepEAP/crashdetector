@@ -14,10 +14,10 @@ import java.util.*;
 public class TriMap<K1, K2, K3, V> {
 
     // Clave compuesta que combina tres claves
-    private static class TripleKey<K1, K2, K3> {
-        private final K1 key1;
-        private final K2 key2;
-        private final K3 key3;
+    public static class TripleKey<K1, K2, K3> {
+    	public final K1 key1;
+        public final K2 key2;
+        public final K3 key3;
 
         public TripleKey(K1 key1, K2 key2, K3 key3) {
             this.key1 = key1;

@@ -6,13 +6,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.AbstractMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.asbestosstar.crashdetector.BiMap.DoubleKey;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.TriMap;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
@@ -81,12 +80,13 @@ public class NullPointer implements Verificaciones {
 		VerificacionDeStackTrace vdst = consola.verificacion_de_stacktrace;
 
 		// Colección de trazos (fatales y no fatales)
-		List<String> trazos = new ArrayList<>();
-		trazos.addAll(VerificacionDeStackTrace.obtenerTraces(consola.contenido_verificar));
-		trazos.addAll(VerificacionDeStackTrace.obtenerTracesFatal(consola.contenido_verificar));
+		List<VerificacionDeStackTrace.TraceInfo> trazosInfo = new ArrayList<>();
+		trazosInfo.addAll(VerificacionDeStackTrace.obtenerTracesConLinea(consola.contenido_verificar));
+		trazosInfo.addAll(VerificacionDeStackTrace.obtenerTracesFatalConLinea(consola.contenido_verificar));
 
 		// Analizar cada trazo
-		for (String trazo : trazos) {
+		for (VerificacionDeStackTrace.TraceInfo traceInfo : trazosInfo) {
+			String trazo = traceInfo.trace;
 			if (!trazo.contains("NullPointerException")) {
 				continue;
 			}
@@ -121,7 +121,7 @@ public class NullPointer implements Verificaciones {
 			}
 
 			// Buscar origen SOLO en este trazo (evita falsos positivos)
-			origen = detectarOrigenEnTraza(trazo, vdst);
+			origen = detectarOrigenEnTraza(trazo, vdst, traceInfo.consolaLineaComenzar);
 
 			// Construir mensaje base (sin el origen)
 			String mensajeBase = MonitorDePID.idioma.null_pointer_error(metodo, objeto);
@@ -167,7 +167,7 @@ public class NullPointer implements Verificaciones {
 		}
 
 		// Buscar origen SOLO en esta línea
-		String origen = detectarOrigenEnLinea(linea, vdst);
+		String origen = detectarOrigenEnLinea(linea, vdst, numeroLinea);
 		String mensajeBase = MonitorDePID.idioma.null_pointer_error(metodo, objeto);
 
 		// Registrar el error en el sistema de lectura
@@ -187,14 +187,14 @@ public class NullPointer implements Verificaciones {
 	 * Busca un origen (mod, JAR o clase) DIRECTAMENTE en el trazo del error. Esto
 	 * evita asociar errores con mods que solo aparecen en otros trazos.
 	 */
-	private String detectarOrigenEnTraza(String trazo, VerificacionDeStackTrace vdst) {
+	private String detectarOrigenEnTraza(String trazo, VerificacionDeStackTrace vdst, int lineaConsola) {
 		String[] lines = trazo.split(NL);
 
 		// Primero, buscar en las primeras líneas del stack trace (donde ocurre el
 		// error)
 		for (int i = 0; i < Math.min(lines.length, 5); i++) {
 			String linea = lines[i];
-			String origen = detectarOrigenEnLinea(linea, vdst);
+			String origen = detectarOrigenEnLinea(linea, vdst, lineaConsola + i);
 			if (!origen.isEmpty()) {
 				return origen;
 			}
@@ -203,7 +203,7 @@ public class NullPointer implements Verificaciones {
 		// Si no encontramos nada en las primeras líneas, buscar en el resto del trazo
 		for (int i = 5; i < lines.length; i++) {
 			String linea = lines[i];
-			String origen = detectarOrigenEnLinea(linea, vdst);
+			String origen = detectarOrigenEnLinea(linea, vdst, lineaConsola + i);
 			if (!origen.isEmpty()) {
 				return origen;
 			}
@@ -216,7 +216,7 @@ public class NullPointer implements Verificaciones {
 	 * Busca un origen (JAR, modid o clase) DIRECTAMENTE en una línea específica.
 	 * Normaliza los nombres para evitar problemas con codificación y sufijos.
 	 */
-	private String detectarOrigenEnLinea(String linea, VerificacionDeStackTrace vdst) {
+	private String detectarOrigenEnLinea(String linea, VerificacionDeStackTrace vdst, int numeroLineaConsola) {
 		// 1. Buscar JAR en la línea
 		List<String> jarsEncontrados = VerificacionDeStackTrace.extraerJarsDeLinea(linea);
 		for (String jar : jarsEncontrados) {
@@ -233,8 +233,12 @@ public class NullPointer implements Verificaciones {
 
 		// 3. Buscar paquete/clase
 		String pack = VerificacionDeStackTrace.extraerPaqueteDeLinea(linea);
-		if (pack != null && !vdst.packNoEsPermite(pack, "", false)) {
-			return pack;
+		if (pack != null) {
+			// Crear una representación adecuada para el método packNoEsPermitido
+			String representacion = "0," + numeroLineaConsola; // nivel 0, número de línea real
+			if (!vdst.packNoEsPermite(pack, representacion, false)) {
+				return pack;
+			}
 		}
 
 		return ""; // No se encontró origen en esta línea
@@ -251,10 +255,10 @@ public class NullPointer implements Verificaciones {
 			return idx == -1 ? clave : clave.substring(0, idx);
 		}
 		if (!vdst.modids.isEmpty()) {
-			return vdst.modids.entrySet().iterator().next().getKey().key0;
+			return vdst.modids.keySet().iterator().next().key1; // key1 es el modid
 		}
 		if (!vdst.packs.isEmpty()) {
-			return vdst.packs.entrySet().iterator().next().getKey().key0;
+			return vdst.packs.keySet().iterator().next().key1; // key1 es el paquete
 		}
 		return "";
 	}

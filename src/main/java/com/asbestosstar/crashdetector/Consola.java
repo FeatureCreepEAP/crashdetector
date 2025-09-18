@@ -410,9 +410,11 @@ public class Consola {
 	}
 
 	public String obtenerMensajeUltimaTrace() {
-	    List<String> traces = VerificacionDeStackTrace.obtenerTraces(contenido_verificar);
-	    if (!traces.isEmpty()) {
-	        String ultimaTrace = traces.get(traces.size() - 1);
+	    List<VerificacionDeStackTrace.TraceInfo> tracesInfo = VerificacionDeStackTrace.obtenerTracesConLinea(contenido_verificar);
+	    if (!tracesInfo.isEmpty()) {
+	        // La última traza en el log es la más reciente (está al final de la lista)
+	        VerificacionDeStackTrace.TraceInfo ultimaTraceInfo = tracesInfo.get(tracesInfo.size() - 1);
+	        String ultimaTrace = ultimaTraceInfo.trace;
 	        String[] lineas = ultimaTrace.split(VerificacionDeStackTrace.nl);
 	        
 	        // Buscar la primera línea con un mensaje real de error
@@ -426,19 +428,22 @@ public class Consola {
 	            // Saltar "Caused by" (se procesa en otro método)
 	            if (trimLinea.contains("Caused by")) continue;
 	            
+	            // Saltar "Suppressed" (son errores secundarios)
+	            if (trimLinea.contains("Suppressed")) continue;
+	            
 	            // Devolver el mensaje limpio
 	            return trimLinea;
 	        }
 	    }
 	    return "";
 	}
-	
-	
-	
+
 	public String obtainerMensajeFatalUltimaTrace() {
-	    List<String> traces = VerificacionDeStackTrace.obtenerTracesFatal(contenido_verificar);
-	    if (!traces.isEmpty()) {
-	        String ultimaTrace = traces.get(traces.size() - 1);
+	    List<VerificacionDeStackTrace.TraceInfo> tracesInfo = VerificacionDeStackTrace.obtenerTracesFatalConLinea(contenido_verificar);
+	    if (!tracesInfo.isEmpty()) {
+	        // La última traza fatal en el log es la más reciente (está al final de la lista)
+	        VerificacionDeStackTrace.TraceInfo ultimaTraceInfo = tracesInfo.get(tracesInfo.size() - 1);
+	        String ultimaTrace = ultimaTraceInfo.trace;
 	        String[] lineas = ultimaTrace.split(VerificacionDeStackTrace.nl);
 	        
 	        // Buscar el mensaje fatal en las líneas
@@ -451,6 +456,9 @@ public class Consola {
 	            
 	            // Saltar "Caused by"
 	            if (trimLinea.contains("Caused by")) continue;
+	            
+	            // Saltar "Suppressed"
+	            if (trimLinea.contains("Suppressed")) continue;
 	            
 	            // Devolver el mensaje limpio
 	            return trimLinea;
