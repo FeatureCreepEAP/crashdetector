@@ -273,4 +273,61 @@ public class Drivers implements Verificaciones {
 		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
 				.construir();
 	}
+
+//  private String obtenerVersionControladorIntel() {
+//  if (!esWindows()) return null;
+//  
+//  try {
+//      Process p = Runtime.getRuntime().exec(
+//          "wmic path win32_VideoController where \"Name like '%Intel%'\" get DriverVersion /value"
+//      );
+//      
+//      try (BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()))) {
+//          String linea;
+//          String ultimaVersion = null;
+//          while ((linea = br.readLine()) != null) {
+//              if (linea.startsWith("DriverVersion=")) {
+//                  String version = linea.split("=")[1].trim();
+//                  if (version.compareTo(ultimaVersion) > 0) {
+//                      ultimaVersion = version;
+//                  }
+//              }
+//          }
+//        return ultimaVersion;
+//  }
+//} catch (IOException e) {
+//  return null;
+//}
+//}
+//
+//private boolean esVersionIntelObsoleta(String version) {
+//String[] partes = version.split("\\.");
+//if (partes.length < 1) return true;
+//
+//try {
+//  int major = Integer.parseInt(partes[0]);
+//  return major < 15;
+//} catch (NumberFormatException e) {
+//  return true;
+//}
+//}
+
+	// TODO
+	/**
+	 * 
+	 * 
+	 * [08:33:15] [Render thread/ERROR]: The game failed to start because the
+	 * currently installed NVIDIA Graphics Driver is not compatible.
+	 * 
+	 * Installed version: 528.92 Required version: 536.23 (or newer)
+	 * 
+	 * Please click the 'Help' button to read more about how to fix this problem.
+	 * 
+	 * For more information, please see:
+	 * https://link.caffeinemc.net/help/sodium/graphics-driver/windows/nvidia/gh-1486
+	 * [08:33:46] [ForkJoinPool.commonPool-worker-1/WARN]: [Iris Update Check] This
+	 * version doesn't have an update index, skipping.
+	 * 
+	 */
+
 }
