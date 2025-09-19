@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.asbestosstar.crashdetector.BiMap;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
@@ -37,7 +38,9 @@ public class VerificacionDeStackTrace {
 	// Patrón para coincidir con contenido dentro de llaves {}
 	private static final Pattern BRACE_PATTERN = Pattern.compile("\\{([^}]+)\\}");
 
-	public List<String> sm_config = new ArrayList<>();
+	// Ahora es un BiMap que asocia (nombre JSON, línea_consola) con si es fatal
+	public BiMap<String, Integer, Boolean> sm_config = new BiMap<>(); // (nombre JSON, línea_consola, es fatal)
+
 	public Map<String, Boolean> jars = new LinkedHashMap<>();// FATAL
 	public TriMap<String, Integer, Integer, Boolean> modids = new TriMap<>();// FATAL (modid, nivel_prioridad,
 																				// línea_consola, es fatal)
@@ -195,8 +198,11 @@ public class VerificacionDeStackTrace {
 		CrashDetectorLogger.log("trace " + trace);
 		if (!archivos_json.isEmpty()) {
 			for (String jsonFile : archivos_json) {
-				if (!sm_config.contains(jsonFile) && !jsonFile.endsWith(".refmap.json")) {
-					sm_config.add(jsonFile);
+				// Cambiado: ahora usamos BiMap con el número de línea
+				if (!jsonFile.endsWith(".refmap.json") && !sm_config.containsKey0(jsonFile)) {
+					// Almacenamos el número de línea actual en la consola
+					int consolaNumLinea = consolaLineaPrimera;
+					sm_config.put(jsonFile, consolaNumLinea, fatal);
 					// build.append(MonitorDePID.idioma.config_spongemixin_problematico(jsonFile)).append(nl_html);
 				}
 			}

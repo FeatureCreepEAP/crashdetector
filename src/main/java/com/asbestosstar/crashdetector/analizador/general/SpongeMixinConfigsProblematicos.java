@@ -1,12 +1,14 @@
 package com.asbestosstar.crashdetector.analizador.general;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.swing.JOptionPane;
 
+import com.asbestosstar.crashdetector.BiMap;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
@@ -20,14 +22,33 @@ import com.asbestosstar.crashdetector.buscar.Buscardor;
 public class SpongeMixinConfigsProblematicos implements Verificaciones {
 
 	private boolean activado = false;
-	private final Set<String> sm_config = new HashSet<>();
+	private final Map<String, Integer> sm_config_con_linea = new HashMap<>();
+	private final Map<String, Boolean> sm_config_es_fatal = new HashMap<>();
+	private final Map<String, String> enlacesPorConfig = new HashMap<>();
 
 	@Override
 	public void verificar(Consola consola) {
-		sm_config.addAll(consola.verificacion_de_stacktrace.sm_config);
-		if (!sm_config.isEmpty()) {
-			activado = true;
+		sm_config_con_linea.clear();
+		sm_config_es_fatal.clear();
+		enlacesPorConfig.clear();
+
+		// Obtener los archivos JSON problemáticos con sus líneas
+		BiMap<String, Integer, Boolean> configs = consola.verificacion_de_stacktrace.sm_config;
+
+		for (BiMap.DoubleKey<String, Integer> key : configs.keySet()) {
+			String fileName = key.key0;
+			int lineNumber = key.key1;
+			boolean isFatal = configs.get(fileName, lineNumber);
+
+			sm_config_con_linea.put(fileName, lineNumber);
+			sm_config_es_fatal.put(fileName, isFatal);
+
+			// Crear enlace para esta línea específica
+			String enlace = consola.agregarErrorALectador(lineNumber, this);
+			enlacesPorConfig.put(fileName, enlace);
 		}
+
+		activado = !sm_config_con_linea.isEmpty();
 	}
 
 	@Override
@@ -47,7 +68,7 @@ public class SpongeMixinConfigsProblematicos implements Verificaciones {
 
 	@Override
 	public String mensaje() {
-		if (sm_config.isEmpty())
+		if (sm_config_con_linea.isEmpty())
 			return "";
 		Buscardor.cargar();
 
@@ -57,7 +78,11 @@ public class SpongeMixinConfigsProblematicos implements Verificaciones {
 				.append("</span>").append(Verificaciones.nl_html).append("<ul>");
 
 		List<String> listItems = new ArrayList<>();
-		for (String sm : sm_config) {
+		for (Map.Entry<String, Integer> entry : sm_config_con_linea.entrySet()) {
+			String sm = entry.getKey();
+			int lineNumber = entry.getValue();
+			boolean isFatal = sm_config_es_fatal.getOrDefault(sm, false);
+
 			String jars_de_sm_string = "";
 			List<String> jars_de_sm = Buscardor.obtenerUbicaciones(Buscardor.buscarModsConTermino(sm));
 
@@ -70,7 +95,13 @@ public class SpongeMixinConfigsProblematicos implements Verificaciones {
 				jars_de_sm_string = " (" + String.join(", ", boldJars) + ")";
 			}
 
-			listItems.add("<li>" + sm + jars_de_sm_string + "</li>");
+			// Obtener el enlace para esta configuración
+			String enlace = enlacesPorConfig.getOrDefault(sm, "");
+
+			// Si es fatal, agregar indicación
+			String prefix = isFatal ? MonitorDePID.idioma.posibilidad_fatal() : "";
+
+			listItems.add("<li>" + prefix + sm + jars_de_sm_string + " " + enlace + "</li>");
 		}
 
 		html.append(String.join("", listItems)).append("</ul>");
@@ -80,7 +111,6 @@ public class SpongeMixinConfigsProblematicos implements Verificaciones {
 
 	@Override
 	public String nombre() {
-		// TODO Auto-generated method stub
 		return MonitorDePID.idioma.nombre_de_spongemixin_configs_problematicos();
 	}
 
@@ -90,7 +120,7 @@ public class SpongeMixinConfigsProblematicos implements Verificaciones {
 				MonitorDePID.idioma.nombre_de_spongemixin_configs_problematicos());
 
 		// Agregar botón para cada JAR encontrado
-		for (String sm : sm_config) {
+		for (String sm : sm_config_con_linea.keySet()) {
 			List<String> jars = Buscardor.obtenerUbicaciones(Buscardor.buscarModsConTermino(sm));
 
 			for (String jar : jars) {
@@ -124,5 +154,4 @@ public class SpongeMixinConfigsProblematicos implements Verificaciones {
 
 		return builder.construir();
 	}
-
 }
