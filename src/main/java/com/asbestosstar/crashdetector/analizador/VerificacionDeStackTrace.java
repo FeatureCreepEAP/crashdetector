@@ -90,7 +90,6 @@ public class VerificacionDeStackTrace {
 
 		int nivel_prioridad = 0;
 		String contenido = consola.contenido_verificar;
-		CrashDetectorLogger.log("VerificacionDeStackTrace buscando para traces reincinar");
 		List<TraceInfo> tracesFatal = obtenerTracesFatalConLinea(contenido);
 		Collections.reverse(tracesFatal); // Las últimas son las más importantes
 		for (TraceInfo traceInfo : tracesFatal) {
@@ -195,7 +194,6 @@ public class VerificacionDeStackTrace {
 	public void procesarTrace(String trace, boolean fatal, int nivel_prioridad, int consolaLineaPrimera) {
 		String idiomaNivel = MonitorDePID.idioma.nivel();
 		List<String> archivos_json = obtenerArchivosJsonEnMixinExceptions(trace);
-		CrashDetectorLogger.log("trace " + trace);
 		if (!archivos_json.isEmpty()) {
 			for (String jsonFile : archivos_json) {
 				// Cambiado: ahora usamos BiMap con el número de línea
@@ -232,9 +230,7 @@ public class VerificacionDeStackTrace {
 				// como TLauncher muestran el modID y la capa, esto es útil
 				// especialmente cuando no se puede encontrar el Jar
 				else if (linea.contains("/") && !linea.contains("NoClassDefFoundError")) {
-					CrashDetectorLogger.log("buscando para modid en " + linea);
 					String modid = extraerModidDeLinea(linea);
-					CrashDetectorLogger.log("modid es  " + linea);
 					if (modid != null) {
 						if (!modid_malo.contains(modid) && !linea.split("/")[0].startsWith("java.")
 								&& !esModNoPermite(modid) && linea.startsWith("at")) {
@@ -566,12 +562,10 @@ public class VerificacionDeStackTrace {
 	public static boolean tracePermite(String str) {
 		for (ListaDenegadosTrace pred : denegados) {
 			if (pred.predicado(str)) {
-				CrashDetectorLogger.log("Trace NO permite " + str);
 				return false;
 			}
 		}
 
-		CrashDetectorLogger.log("Trace permite " + str);
 		// Incluir otras líneas que no coincidan con los criterios de exclusión
 		return true;
 	}
