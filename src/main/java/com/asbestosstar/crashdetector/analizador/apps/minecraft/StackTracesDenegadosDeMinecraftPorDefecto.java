@@ -141,7 +141,7 @@ public class StackTracesDenegadosDeMinecraftPorDefecto {
 																													// si
 
 		VerificacionDeStackTrace.denegados.add(
-				contentido -> contentido.contains("Error starting SoundSystem. Turning off sounds & music"));//Tenemos ErrorSistemaSonido
+				contentido -> contentido.contains("com.sonicether.soundphysics.SoundPhysicsMod.CONFIG"));//Tenemos ErrorSistemaSonido
 																													
 	}
 }

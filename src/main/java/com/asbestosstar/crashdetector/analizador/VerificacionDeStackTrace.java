@@ -61,7 +61,7 @@ public class VerificacionDeStackTrace {
 			"it.unimi", "com.mojang.", "cpw.", "featurecreep.", "jdk.", "sun.", "com.sun.", "org.lwjgl.", "org.apache.",
 			"io.netty", "org.prismlauncher", "io.github.zekerzhayard", "org.multimc", "org.polymc", "org.tlauncher",
 			"net.fabricmc", "org.objectweb.asm", "datafixerupper", "org.slf4j", "com.asbestosstar", "srg",
-			"asbestosstar.", "org.openjdk", "com.google"
+			"asbestosstar.", "org.openjdk", "com.google", "cpw.mods.modlauncher."
 
 	};
 
@@ -87,6 +87,7 @@ public class VerificacionDeStackTrace {
 
 		int nivel_prioridad = 0;
 		String contenido = consola.contenido_verificar;
+		CrashDetectorLogger.log("VerificacionDeStackTrace buscando para traces reincinar");
 		List<TraceInfo> tracesFatal = obtenerTracesFatalConLinea(contenido);
 		Collections.reverse(tracesFatal); // Las últimas son las más importantes
 		for (TraceInfo traceInfo : tracesFatal) {
@@ -147,46 +148,51 @@ public class VerificacionDeStackTrace {
 	 * Obtiene stack traces normales junto con su línea inicial en la consola
 	 */
 	public static List<TraceInfo> obtenerTracesConLinea(String log) {
-		List<TraceInfo> ret = new ArrayList<>();
+		List<TraceInfo> resultado = new ArrayList<>();
 		String[] lineas = log.split(nl);
-		Matcher matcher = STACK_TRACE_PATTERN.matcher(log);
+		Matcher coincidencia = STACK_TRACE_PATTERN.matcher(log);
 
-		int i = 0;
-		while (i < lineas.length && matcher.find()) {
-			// Encontrar la línea donde comienza el stack trace
-			int lineaPrimera = -1;
-			for (int j = i; j < lineas.length; j++) {
-				if (matcher.reset(lineas[j]).find()) {
-					lineaPrimera = j;
+		while (coincidencia.find()) {
+			// Calcular en qué línea comienza el stack trace
+			int inicio = coincidencia.start();
+			int caracteresProcesados = 0;
+			int numeroLinea = 0;
+
+			// Recorrer las líneas hasta encontrar dónde comienza el stack trace
+			for (int i = 0; i < lineas.length; i++) {
+				// Si la posición de inicio está dentro de esta línea, hemos encontrado la línea
+				// inicial
+				if (inicio < caracteresProcesados + lineas[i].length()) {
+					numeroLinea = i;
 					break;
 				}
+
+				// Sumar la longitud de la línea actual + el separador de línea
+				caracteresProcesados += lineas[i].length() + nl.length();
 			}
 
-			if (lineaPrimera == -1)
-				break;
-
 			// Construir el stack trace completo
-			StringBuilder trace = new StringBuilder(lineas[lineaPrimera]);
-			int j = lineaPrimera + 1;
+			StringBuilder traza = new StringBuilder(lineas[numeroLinea]);
+			int j = numeroLinea + 1;
 
+			// Agregar todas las líneas que forman parte del stack trace
 			while (j < lineas.length && esParteDeStack(lineas[j])) {
-				trace.append(nl).append(lineas[j]);
+				traza.append(nl).append(lineas[j]);
 				j++;
 			}
 
-			if (tracePermite(trace.toString())) {
-				ret.add(new TraceInfo(trace.toString(), lineaPrimera));
+			// Verificar si el stack trace está permitido
+			if (tracePermite(traza.toString())) {
+				resultado.add(new TraceInfo(traza.toString(), numeroLinea));
 			}
-
-			i = j;
 		}
-		return ret;
+		return resultado;
 	}
 
 	public void procesarTrace(String trace, boolean fatal, int nivel_prioridad, int consolaLineaPrimera) {
 		String idiomaNivel = MonitorDePID.idioma.nivel();
 		List<String> archivos_json = obtenerArchivosJsonEnMixinExceptions(trace);
-
+		CrashDetectorLogger.log("trace " + trace);
 		if (!archivos_json.isEmpty()) {
 			for (String jsonFile : archivos_json) {
 				if (!sm_config.contains(jsonFile) && !jsonFile.endsWith(".refmap.json")) {
@@ -220,7 +226,9 @@ public class VerificacionDeStackTrace {
 				// como TLauncher muestran el modID y la capa, esto es útil
 				// especialmente cuando no se puede encontrar el Jar
 				else if (linea.contains("/") && !linea.contains("NoClassDefFoundError")) {
+					CrashDetectorLogger.log("buscando para modid en " + linea);
 					String modid = extraerModidDeLinea(linea);
+					CrashDetectorLogger.log("modid es  " + linea);
 					if (modid != null) {
 						if (!modid_malo.contains(modid) && !linea.split("/")[0].startsWith("java.")
 								&& !esModNoPermite(modid) && linea.startsWith("at")) {
@@ -289,6 +297,14 @@ public class VerificacionDeStackTrace {
 
 		while (startIdx != -1 && endIdx != -1 && startIdx < endIdx) {
 			String candidito = linea.substring(startIdx + 1, endIdx);
+
+			// Limpiar el nombre del JAR - eliminar cualquier contenido después de ".jar"
+			int jarIndex = candidito.indexOf(".jar");
+			if (jarIndex != -1) {
+				// Incluir los 4 caracteres de ".jar" en el resultado
+				candidito = candidito.substring(0, jarIndex + 4);
+			}
+
 			jars.add(candidito);
 
 			// Buscar el próximo par de corchetes
@@ -306,10 +322,23 @@ public class VerificacionDeStackTrace {
 	 * @param linea Línea de stack trace a procesar
 	 * @return ModID encontrado o null si no se encontró
 	 */
+	/**
+	 * Extrae identificadores de mods de una línea que contiene barras / Ejemplo: at
+	 * TRANSFORMER/railways@1.6.7+forge-mc1.20.1/com.railwayteam.railways.compat.Mods.asId(Mods.java:69)
+	 * 
+	 * @param linea Línea de stack trace a procesar
+	 * @return ModID encontrado (sin versión) o null si no se encontró
+	 */
 	public static String extraerModidDeLinea(String linea) {
 		String[] arr_modid = linea.split("/");
 		if (arr_modid.length > 1) {
-			return arr_modid[1].split("@")[0];
+			String modidConVersion = arr_modid[1];
+			// Eliminar la versión (todo después de '@')
+			int indiceArroba = modidConVersion.indexOf('@');
+			if (indiceArroba != -1) {
+				return modidConVersion.substring(0, indiceArroba);
+			}
+			return modidConVersion;
 		}
 		return null;
 	}
@@ -357,7 +386,7 @@ public class VerificacionDeStackTrace {
 	public Map.Entry<String, String> procesarErrorClaseNoEncontrada(String linea, String[] arr, int consoleLineNumber,
 			int nivel_prioridad) {
 		String claseFaltante = null;
-		CrashDetectorLogger.log(linea);
+		CrashDetectorLogger.log("procesarErrorClaseNoEncontrada " + linea);
 
 		if (linea.contains("ClassNotFoundException")) {
 			int startIdx = linea.indexOf("ClassNotFoundException:") + "ClassNotFoundException:".length();
@@ -367,9 +396,8 @@ public class VerificacionDeStackTrace {
 			claseFaltante = linea.substring(startIdx).trim();
 		}
 		CrashDetectorLogger.log(claseFaltante);
-		// Ahora extraemos solo el nombre de la clase (eliminamos mensajes adicionales
-		// como "Could not initialize class")
 
+		// Ahora extraemos solo el nombre de la clase (eliminamos mensajes adicionales)
 		if (claseFaltante.contains(" ")) {
 			CrashDetectorLogger.log("espacio");
 			int spaceIdx = claseFaltante.indexOf(' ');
@@ -381,7 +409,6 @@ public class VerificacionDeStackTrace {
 					spaceIdx = claseFaltante.indexOf(' ');
 					CrashDetectorLogger.log(claseFaltante);
 				}
-				// claseFaltante = claseFaltante.substring(0, spaceIdx);
 			}
 		}
 
@@ -394,41 +421,35 @@ public class VerificacionDeStackTrace {
 		}
 		claseFaltante = claseFaltante.replace(".", "/");
 
-		String sospechoso = "";
-		String[] arr_nuevo = Arrays.copyOfRange(arr, 1, arr.length);
-
-		for (String notrim : arr_nuevo) {
+		// ¡CRUCIAL! Buscar desde el fondo hacia arriba (cerca del error), no desde
+		// arriba
+		for (int i = arr.length - 1; i >= 1; i--) {
+			String notrim = arr[i];
 			String t = notrim.trim();
 
-			// Extracción de jar
-			int a = t.indexOf('['), b = t.indexOf(']');
-			if (a != -1 && b != -1 && a < b) {
-				String jar = t.substring(a + 1, b);
-				if (jar.endsWith(".jar") && !isJarNoPermite(jar)) {
-					sospechoso = jar;
-					return new AbstractMap.SimpleEntry<>(claseFaltante, sospechoso);
+			// 1. Usar el método existente para extraer JARs
+			List<String> jarsEncontrados = extraerJarsDeLinea(t);
+			for (String jar : jarsEncontrados) {
+				if (jar.contains(".jar") && !isJarNoPermite(jar)) {
+					CrashDetectorLogger.log("orgin jar " + jar);
+					return new AbstractMap.SimpleEntry<>(claseFaltante, jar);
 				}
 			}
 
-			// Extracción de modid
-			int slash1 = t.indexOf('/');
-			int slash2 = (slash1 != -1) ? t.indexOf('/', slash1 + 1) : -1;
-			if (slash1 != -1 && slash2 != -1) {
-				String cand = t.substring(slash1 + 1, slash2);
-				if (!esModNoPermite(cand) && !cand.isEmpty()) {
-					sospechoso = cand;
-					return new AbstractMap.SimpleEntry<>(claseFaltante, sospechoso);
-				}
+			// 2. Usar el método existente para extraer modid (que ya elimina la versión)
+			String modid = extraerModidDeLinea(t);
+			if (modid != null && !esModNoPermite(modid)) {
+				CrashDetectorLogger.log("orgin modid " + modid);
+				return new AbstractMap.SimpleEntry<>(claseFaltante, modid);
 			}
 
-			// Extracción de paquetes
-			if (t.startsWith("at ")) {
-				String pack = t.substring(3);
-				// Usamos consoleLineNumber en lugar de línea dentro del stack trace
-				if (!packNoEsPermite(pack,
-						Integer.toString(nivel_prioridad) + "," + Integer.toString(consoleLineNumber), false)) {
-					sospechoso = pack;
-					return new AbstractMap.SimpleEntry<>(claseFaltante, sospechoso);
+			// 3. Usar el método existente para extraer paquetes
+			String pack = extraerPaqueteDeLinea(t);
+			if (pack != null) {
+				String representacion = Integer.toString(nivel_prioridad) + "," + Integer.toString(consoleLineNumber);
+				if (!packNoEsPermite(pack, representacion, false)) {
+					CrashDetectorLogger.log("orgin paq " + pack);
+					return new AbstractMap.SimpleEntry<>(claseFaltante, pack);
 				}
 			}
 		}
@@ -477,16 +498,16 @@ public class VerificacionDeStackTrace {
 	/**
 	 * Verifica si un modid está en la lista de elementos no permitidos
 	 * 
-	 * @param modid ID del mod a verificar
+	 * @param modid ID del mod a verificar (sin versión)
 	 * @return true si el modid no está permitido, false en caso contrario
 	 */
 	public static boolean esModNoPermite(String modid) {
-		if (modid.replace(" ", "").equals("")) {
+		if (modid == null || modid.replace(" ", "").equals("")) {
 			return true;
 		}
 
-		String[] ids = { "java", "minecraft", "minecraftforge", "net.minecraftforge", "eventbus", "cpw.", "coremods",
-				"featurecreep", "mixin", "accesstransformer", "forge", "authlib", "sun.", "jdk.", "java.", "fmlloader",
+		String[] ids = { "java", "minecraft", "minecraftforge", "net.minecraftforge", "eventbus", "cpw", "coremods",
+				"featurecreep", "mixin", "accesstransformer", "forge", "authlib", "sun", "jdk", "java", "fmlloader",
 				"fmlcore", "org.spongepowered.mixin", "fmlearlydisplay", "com.sun.jna", "text2speech",
 				"xf:crashdetector:default", "crashdetector", "srg", "org.objectweb.asm", "it.unimi", "datafixerupper",
 				"com.google.gson", "org.openjdk", "launchwrapper" };
@@ -496,7 +517,6 @@ public class VerificacionDeStackTrace {
 				return true;
 			}
 		}
-
 		return false;
 	}
 
@@ -540,20 +560,36 @@ public class VerificacionDeStackTrace {
 	public static boolean tracePermite(String str) {
 		for (ListaDenegadosTrace pred : denegados) {
 			if (pred.predicado(str)) {
+				CrashDetectorLogger.log("Trace NO permite " + str);
 				return false;
 			}
 		}
+
+		CrashDetectorLogger.log("Trace permite " + str);
 		// Incluir otras líneas que no coincidan con los criterios de exclusión
 		return true;
 	}
 
+	/**
+	 * Verifica si una línea es parte de un stack trace
+	 */
 	private static boolean esParteDeStack(String l) {
 		String t = l.trim();
+
+		// Excluir líneas que contienen "more..." ya que indican que hay más elementos
+		// en el stack trace pero no son parte del mismo
+		if (t.endsWith("more")) {
+			return false;
+		}
+
 		return t.startsWith("at ") || t.startsWith("Caused by:") || t.startsWith("Suppressed:") || t.startsWith("...")
-		// secure-bootstrap class-loader etc.
-				|| t.startsWith("SECURE-BOOTSTRAP")
+				||
+
+				// secure-bootstrap class-loader etc.
+				t.startsWith("SECURE-BOOTSTRAP") ||
+
 				// mensajes de excepción ("org.spongepowered...InvalidMixinException ...")
-				|| t.matches("^[a-zA-Z0-9_.]+\\.[A-Z][a-zA-Z0-9]+Exception.*");
+				t.matches("^[a-zA-Z0-9_.]+\\.[A-Z][a-zA-Z0-9]+Exception.*");
 	}
 
 	public List<String> obtenerArchivosJsonEnMixinExceptions(String contenido_de_logs) {

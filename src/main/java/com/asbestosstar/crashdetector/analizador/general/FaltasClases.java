@@ -43,10 +43,14 @@ public class FaltasClases implements Verificaciones {
 			int nivel_prioridad = key.key2; // nivel de prioridad
 			int numero_linea_consola = key.key3; // número de línea en la consola
 			String sospechoso = vdst.clases_fatales_no_existentes.get(clase, nivel_prioridad, numero_linea_consola);
-
-			String claseFormateada = clase.replace(".", "/");
+			
+			// Limpiar el origen usando los métodos de VerificacionDeStackTrace
+			String origenLimpio = limpiarOrigen(sospechoso);
+			
+			// Asegurarnos de que la clase está en formato con barras
+			String claseFormateada = formatearClase(clase);
 			if (todos.add(clase)) {
-				clases.put(claseFormateada, sospechoso);
+				clases.put(claseFormateada, origenLimpio);
 				String enlace = consola.agregarErrorALectador(numero_linea_consola, this);
 				enlacesPorClase.put(claseFormateada, enlace);
 			}
@@ -100,14 +104,17 @@ public class FaltasClases implements Verificaciones {
 
 			// Validar formato de clase antes de agregarla
 			if (clase != null && esNombreClaseValido(clase) && todos.add(clase)) {
-				String claseFormateada = clase.replace(".", "/");
-				clases.putIfAbsent(claseFormateada, "");
+				String claseFormateada = formatearClase(clase);
+				// Buscar el origen en la misma línea o líneas cercanas
+				String origen = encontrarOrigenEnLinea(linea, i, consola);
+				String origenLimpio = limpiarOrigen(origen);
+				clases.putIfAbsent(claseFormateada, origenLimpio);
 				String enlace = consola.agregarErrorALectador(i, this);
 				enlacesPorClase.put(claseFormateada, enlace);
 			}
 		}
 
-		// TODO mejor
+		// Filtrar clases no relevantes
 		for (String clase : new ArrayList<>(clases.keySet())) {
 			if (clase.startsWith("gg/essential/") || clase.startsWith("kotlin/") || clase.startsWith("kotlinx/")) {
 				String enlace = enlacesPorClase.get(clase);
@@ -118,10 +125,141 @@ public class FaltasClases implements Verificaciones {
 
 		activado = !clases.isEmpty();
 	}
+	
+	/**
+	 * Limpia el origen para que solo contenga información relevante (JAR, modid o paquete)
+	 * utilizando los métodos de VerificacionDeStackTrace en lugar de regex
+	 */
+private String limpiarOrigen(String origen) {
+    if (origen == null || origen.isEmpty()) {
+        return "";
+    }
+    
+    // 1. Intentar extraer JAR usando el método de VerificacionDeStackTrace
+    List<String> jarsEncontrados = VerificacionDeStackTrace.extraerJarsDeLinea(origen);
+    for (String jar : jarsEncontrados) {
+        if (jar.contains(".jar") && !VerificacionDeStackTrace.isJarNoPermite(jar)) {
+            return jar;
+        }
+    }
+    
+    // 2. Intentar extraer modid usando el método de VerificacionDeStackTrace
+    String modid = VerificacionDeStackTrace.extraerModidDeLinea(origen);
+    if (modid != null && !VerificacionDeStackTrace.esModNoPermite(modid)) {
+        return modid;
+    }
+    
+    // 3. Intentar extraer paquete usando el método de VerificacionDeStackTrace
+    String pack = VerificacionDeStackTrace.extraerPaqueteDeLinea(origen);
+    if (pack != null && !esPaqueteNoPermitido(pack)) {
+        return pack;
+    }
+    
+    // 4. Si nada de lo anterior funciona, devolvemos una cadena vacía
+    return "";
+}
+	
+	/**
+	 * Verifica si un paquete está en la lista de elementos no permitidos
+	 */
+	private boolean esPaqueteNoPermitido(String pack) {
+		for (String prefix : VerificacionDeStackTrace.package_no_permite) {
+			if (pack.startsWith(prefix)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Busca el origen (JAR, modid o paquete) en la línea actual o en líneas cercanas
+	 * utilizando los métodos de VerificacionDeStackTrace en lugar de implementar lógica propia
+	 */
+	private String encontrarOrigenEnLinea(String linea, int numeroLinea, Consola consola) {
+	    // Primero intentamos encontrar en la misma línea usando los métodos existentes
+	    String resultado = buscarOrigenEnLinea(linea);
+	    if (!resultado.isEmpty()) {
+	        return resultado;
+	    }
+	    
+	    // Si no encontramos en la misma línea, buscar en las líneas cercanas
+	    String[] lineas = consola.contenido_verificar.split(Verificaciones.nl);
+	    
+	    // ¡CRUCIAL! Buscar desde el fondo hacia arriba (cerca del error), no desde arriba
+	    for (int i = numeroLinea + 1; i < Math.min(numeroLinea + 20, lineas.length); i++) {
+	        String siguienteLinea = lineas[i].trim();
+	        resultado = buscarOrigenEnLinea(siguienteLinea);
+	        if (!resultado.isEmpty()) {
+	            return resultado;
+	        }
+	    }
+	    
+	    // También buscar en las líneas anteriores (a veces el error está en líneas previas)
+	    for (int i = numeroLinea - 1; i >= Math.max(0, numeroLinea - 5); i--) {
+	        String lineaAnterior = lineas[i].trim();
+	        resultado = buscarOrigenEnLinea(lineaAnterior);
+	        if (!resultado.isEmpty()) {
+	            return resultado;
+	        }
+	    }
+	    
+	    // Si no encontramos nada, devolvemos una cadena vacía
+	    return "";
+	}
+
+	/**
+	 * Busca origen en una línea específica utilizando los métodos existentes
+	 */
+	private String buscarOrigenEnLinea(String linea) {
+	    // 1. Buscar JARs
+	    List<String> jarsEncontrados = VerificacionDeStackTrace.extraerJarsDeLinea(linea);
+	    for (String jar : jarsEncontrados) {
+	        if (jar.contains(".jar") && !VerificacionDeStackTrace.isJarNoPermite(jar)) {
+	            return jar;
+	        }
+	    }
+	    
+	    // 2. Buscar modid
+	    String modid = VerificacionDeStackTrace.extraerModidDeLinea(linea);
+	    if (modid != null && !VerificacionDeStackTrace.esModNoPermite(modid)) {
+	        return modid;
+	    }
+	    
+	    // 3. Buscar paquete
+	    String pack = VerificacionDeStackTrace.extraerPaqueteDeLinea(linea);
+	    if (pack != null) {
+	        // No necesitamos verificar con packNoEsPermite porque ya lo hace el método original
+	        return pack;
+	    }
+	    
+	    return "";
+	}
+	
+
+	/**
+	 * Formatea un nombre de clase a formato con barras en lugar de puntos
+	 */
+	private String formatearClase(String clase) {
+		// Primero eliminamos cualquier contenido adicional después de la clase
+		int indiceParentesis = clase.indexOf('(');
+		if (indiceParentesis != -1) {
+			clase = clase.substring(0, indiceParentesis).trim();
+		}
+		
+		int indiceEspacio = clase.indexOf(' ');
+		if (indiceEspacio != -1) {
+			clase = clase.substring(0, indiceEspacio).trim();
+		}
+		
+		// Convertimos puntos a barras
+		return clase.replace(".", "/");
+	}
 
 	// Validar que el nombre siga el patrón de una clase Java
 	private boolean esNombreClaseValido(String clase) {
-		return clase.matches("[a-zA-Z_][a-zA-Z0-9_]*(\\.[a-zA-Z_][a-zA-Z0-9_]*)+");
+		// Convertir a formato punto para validación
+		String dotForm = clase.replace('/', '.');
+		return dotForm.matches("[a-zA-Z_][a-zA-Z0-9_]*(\\.[a-zA-Z_][a-zA-Z0-9_]*)+");
 	}
 
 	@Override
