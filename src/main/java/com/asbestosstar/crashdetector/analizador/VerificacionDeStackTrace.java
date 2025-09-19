@@ -229,7 +229,10 @@ public class VerificacionDeStackTrace {
 				// desarrollo
 				// como TLauncher muestran el modID y la capa, esto es útil
 				// especialmente cuando no se puede encontrar el Jar
-				else if (linea.contains("/") && !linea.contains("NoClassDefFoundError")) {
+				else if (linea.startsWith("at TRANSFORMER/")
+						|| (linea.contains("/") && !linea.contains("NoClassDefFoundError") && !linea.contains("@"))
+								&& !linea.contains("$$Lambda") && !linea.matches(".*?/0x[0-9a-fA-F]+.*")) {
+
 					String modid = extraerModidDeLinea(linea);
 					if (modid != null) {
 						if (!modid_malo.contains(modid) && !linea.split("/")[0].startsWith("java.")
@@ -283,79 +286,111 @@ public class VerificacionDeStackTrace {
 	}
 
 	/**
-	 * Extrae nombres de jars de una línea de stack trace que contiene corchetes []
-	 * Ejemplo: at
-	 * net.createmod.catnip.render.StitchedSprite.<init>(StitchedSprite.java:23)
-	 * ~[Ponder-Forge-1.20.1-1.0.80.jar%23795!/:1.0.80]
-	 * 
-	 * @param linea Línea de stack trace a procesar
-	 * @return Lista de nombres de jars encontrados en la línea
+	 * Extrae nombres de jars de una línea de stack trace. Ejemplo:
+	 * ~[Ponder-Forge-1.20.1-1.0.80.jar%23795!/:1.0.80] ->
+	 * "Ponder-Forge-1.20.1-1.0.80.jar"
 	 */
 	public static List<String> extraerJarsDeLinea(String linea) {
 		List<String> jars = new ArrayList<>();
+		int inicio = 0;
 
-		int startIdx = linea.indexOf('[');
-		int endIdx = linea.indexOf(']');
+		while (true) {
+			int abrir = linea.indexOf('[', inicio);
+			if (abrir == -1)
+				break;
+			int cerrar = linea.indexOf(']', abrir);
+			if (cerrar == -1)
+				break;
 
-		while (startIdx != -1 && endIdx != -1 && startIdx < endIdx) {
-			String candidito = linea.substring(startIdx + 1, endIdx);
+			String contenido = linea.substring(abrir + 1, cerrar);
 
-			// Limpiar el nombre del JAR - eliminar cualquier contenido después de ".jar"
-			int jarIndex = candidito.indexOf(".jar");
-			if (jarIndex != -1) {
-				// Incluir los 4 caracteres de ".jar" en el resultado
-				candidito = candidito.substring(0, jarIndex + 4);
+			// Buscar ".jar" y cortar ahí
+			int indiceJar = contenido.indexOf(".jar");
+			if (indiceJar != -1) {
+				String nombreJar = contenido.substring(0, indiceJar + 4);
+				jars.add(nombreJar);
 			}
 
-			jars.add(candidito);
-
-			// Buscar el próximo par de corchetes
-			startIdx = linea.indexOf('[', endIdx);
-			endIdx = linea.indexOf(']', endIdx + 1);
+			inicio = cerrar + 1;
 		}
 
 		return jars;
 	}
 
 	/**
-	 * Extrae identificadores de mods de una línea que contiene barras / Ejemplo: at
-	 * TRANSFORMER/createappliedkinetics@1.3.2-1.20.1/com.forsteri.createappliedkinetics.entry.Registration.<clinit>(Registration.java:81)
-	 * 
-	 * @param linea Línea de stack trace a procesar
-	 * @return ModID encontrado o null si no se encontró
-	 */
-	/**
-	 * Extrae identificadores de mods de una línea que contiene barras / Ejemplo: at
-	 * TRANSFORMER/railways@1.6.7+forge-mc1.20.1/com.railwayteam.railways.compat.Mods.asId(Mods.java:69)
-	 * 
-	 * @param linea Línea de stack trace a procesar
-	 * @return ModID encontrado (sin versión) o null si no se encontró
+	 * Extrae identificador de mod de líneas estilo
+	 * TRANSFORMER/<modid>@<version>/... Ejemplo: at
+	 * TRANSFORMER/railways@1.6.7+forge-mc1.20.1/com.railwayteam.railways... ->
+	 * "railways"
 	 */
 	public static String extraerModidDeLinea(String linea) {
-		String[] arr_modid = linea.split("/");
-		if (arr_modid.length > 1) {
-			String modidConVersion = arr_modid[1];
-			// Eliminar la versión (todo después de '@')
-			int indiceArroba = modidConVersion.indexOf('@');
-			if (indiceArroba != -1) {
-				return modidConVersion.substring(0, indiceArroba);
-			}
-			return modidConVersion;
+		if (!linea.contains("/"))
+			return null;
+		CrashDetectorLogger.log("Linea extractat modid " + linea);
+
+		String[] partes = linea.trim().split("/");
+		if (partes.length < 2)
+			return null;
+
+		String candidato = partes[1];
+		// Quitar versión después de @
+		int indiceArroba = candidato.indexOf('@');
+		if (indiceArroba != -1) {
+			candidato = candidato.substring(0, indiceArroba);
 		}
-		return null;
+
+		// Filtrar vacíos
+		if (candidato.isEmpty())
+			return null;
+		return candidato;
 	}
 
 	/**
-	 * Extrae nombres de paquetes de una línea que comienza con "at" Ejemplo: at
-	 * java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
-	 * 
-	 * @param linea Línea de stack trace a procesar
-	 * @return Nombre del paquete encontrado o null si no se encontró
+	 * Extrae el nombre de paquete de una línea de stack trace. Maneja: - Módulos de
+	 * Java (ej: java.base@21.0.7/Clase.java:línea) - Clases lambda sintéticas
+	 * ($$Lambda/0x...) - Casos normales de paquetes y clases
+	 *
+	 * @param linea Línea completa del stack trace
+	 * @return El paquete extraído o null si no se puede determinar
 	 */
 	public static String extraerPaqueteDeLinea(String linea) {
-		if (linea.startsWith("at")) {
-			return linea.substring(3).trim();
+		if (linea == null)
+			return null;
+		String texto = linea.trim();
+		if (!texto.startsWith("at "))
+			return null;
+
+		// Quitar el prefijo "at "
+		texto = texto.substring(3).trim();
+
+		// Quitar el contenido dentro de paréntesis "(...)"
+		int indiceParentesis = texto.indexOf('(');
+		if (indiceParentesis != -1) {
+			texto = texto.substring(0, indiceParentesis);
 		}
+
+		// Manejar clases lambda sintéticas
+		int indiceLambda = texto.indexOf("$$Lambda");
+		if (indiceLambda != -1) {
+			// Quedarse solo con la parte antes del $$Lambda
+			texto = texto.substring(0, indiceLambda);
+		}
+
+		// Eliminar cualquier dirección /0x... sobrante
+		texto = texto.replaceAll("/0x[0-9a-fA-F]+.*", "");
+
+		// Quitar sufijo de módulos de Java (ejemplo: java.base@21.0.7/Clase)
+		if (texto.contains("@") && texto.contains("/")) {
+			int barra = texto.indexOf('/');
+			texto = texto.substring(0, barra);
+		}
+
+		// Extraer solo el paquete (todo antes del último punto)
+		int indiceUltimoPunto = texto.lastIndexOf('.');
+		if (indiceUltimoPunto > 0) {
+			return texto.substring(0, indiceUltimoPunto);
+		}
+
 		return null;
 	}
 
@@ -423,37 +458,95 @@ public class VerificacionDeStackTrace {
 		}
 		claseFaltante = claseFaltante.replace(".", "/");
 
-		// ¡CRUCIAL! Buscar desde el fondo hacia arriba (cerca del error), no desde
-		// arriba
-		for (int i = arr.length - 1; i >= 1; i--) {
+		// Variables para almacenar el mejor origen encontrado
+		String mejorOrigen = null;
+		boolean esOrigenDirecto = false;
+		boolean esTransformer = false;
+
+		// Primero buscamos desde el principio del stack trace (cerca del error) hacia
+		// abajo
+		for (int i = 0; i < arr.length; i++) {
 			String notrim = arr[i];
 			String t = notrim.trim();
 
-			// 1. Usar el método existente para extraer JARs
+			// Ignorar líneas irrelevantes
+			if (t.isEmpty() || t.contains("... more")) {
+				continue;
+			}
+
+			// 1. Verificar si es una línea TRANSFORMER (prioridad máxima)
+			boolean esLineaTransformer = t.startsWith("at TRANSFORMER/");
+
+			// 2. Verificar si es una línea directamente relacionada con el error
+			boolean esLineaDirecta = t.contains(claseFaltante.replace("/", "."));
+
+			// 3. Extraer JARs
 			List<String> jarsEncontrados = extraerJarsDeLinea(t);
 			for (String jar : jarsEncontrados) {
 				if (jar.contains(".jar") && !isJarNoPermite(jar)) {
-					CrashDetectorLogger.log("orgin jar " + jar);
-					return new AbstractMap.SimpleEntry<>(claseFaltante, jar);
+					// Si encontramos un JAR válido y es una línea directa o TRANSFORMER, es
+					// prioritario
+					if (esLineaDirecta || esLineaTransformer) {
+						mejorOrigen = jar;
+						esOrigenDirecto = esLineaDirecta;
+						esTransformer = esLineaTransformer;
+						// Continuamos buscando pero priorizamos este origen
+					}
+					// Si no hemos encontrado un origen mejor, guardamos este
+					else if (mejorOrigen == null) {
+						mejorOrigen = jar;
+					}
 				}
 			}
 
-			// 2. Usar el método existente para extraer modid (que ya elimina la versión)
+			// 4. Extraer modid
 			String modid = extraerModidDeLinea(t);
 			if (modid != null && !esModNoPermite(modid)) {
-				CrashDetectorLogger.log("orgin modid " + modid);
-				return new AbstractMap.SimpleEntry<>(claseFaltante, modid);
+				// Si encontramos un modid válido y es una línea directa o TRANSFORMER, es
+				// prioritario
+				if (esLineaDirecta || esLineaTransformer) {
+					mejorOrigen = modid;
+					esOrigenDirecto = esLineaDirecta;
+					esTransformer = esLineaTransformer;
+					// Continuamos buscando pero priorizamos este origen
+				}
+				// Si no hemos encontrado un origen mejor, guardamos este
+				else if (mejorOrigen == null) {
+					mejorOrigen = modid;
+				}
 			}
 
-			// 3. Usar el método existente para extraer paquetes
+			// 5. Extraer paquetes
 			String pack = extraerPaqueteDeLinea(t);
 			if (pack != null) {
 				String representacion = Integer.toString(nivel_prioridad) + "," + Integer.toString(consoleLineNumber);
 				if (!packNoEsPermite(pack, representacion, false)) {
-					CrashDetectorLogger.log("orgin paq " + pack);
-					return new AbstractMap.SimpleEntry<>(claseFaltante, pack);
+					// Si encontramos un paquete válido y es una línea directa o TRANSFORMER, es
+					// prioritario
+					if (esLineaDirecta || esLineaTransformer) {
+						mejorOrigen = pack;
+						esOrigenDirecto = esLineaDirecta;
+						esTransformer = esLineaTransformer;
+						// Continuamos buscando pero priorizamos este origen
+					}
+					// Si no hemos encontrado un origen mejor, guardamos este
+					else if (mejorOrigen == null) {
+						mejorOrigen = pack;
+					}
 				}
 			}
+
+			// Si ya encontramos un origen TRANSFORMER, es muy probable que sea el culpable
+			if (esTransformer) {
+				break;
+			}
+		}
+
+		// Devolver el mejor origen encontrado
+		if (mejorOrigen != null) {
+			CrashDetectorLogger.log("Origen identificado: " + mejorOrigen
+					+ (esTransformer ? " (TRANSFORMER)" : esOrigenDirecto ? " (directo)" : ""));
+			return new AbstractMap.SimpleEntry<>(claseFaltante, mejorOrigen);
 		}
 
 		return null;
