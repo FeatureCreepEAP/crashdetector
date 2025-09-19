@@ -3,6 +3,7 @@ package com.asbestosstar.crashdetector.analizador.general;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.regex.Pattern;
 
 import com.asbestosstar.crashdetector.CDStringBuilder;
 import com.asbestosstar.crashdetector.Consola;
@@ -35,7 +36,11 @@ public class Drivers implements Verificaciones {
 																												// soporte
 			"GLFW error 65543", // "OpenGL profile requested but …"
 			"GLFW error 1282", // ResourcePack problema, TODO mas mejor
-			"No context is current or a function that is not available in the current context",
+			"No context is current or a function that is not available in the current context", // TODO hacer un
+																								// verificacion dedicado
+																								// para situaciones
+																								// similar a
+																								// https://discord.com/channels/1129059589325852724/1129069799545241703/1418053692384346183
 			"The driver does not appear to support framebuffer objects",
 			// Excepciones típicas
 			"org.lwjgl.LWJGLException"
@@ -66,25 +71,23 @@ public class Drivers implements Verificaciones {
 	public void verificar(Consola consola) {
 		String log = consola.contenido_verificar;
 
-		if (log.contains("EXCEPTION_ACCESS_VIOLATION") && log.contains("atio6axx.dll")) {
-			procesarProblemaAMD();
+		// Verificar si hay errores relacionados con Nouveau (controlador de NVIDIA
+		// open-source)
+		if (contienePatronNouveau(log)) {
+			procesarProblemaNouveau();
 			return;
 		}
-		if (log.contains("EXCEPTION_ACCESS_VIOLATION") && log.contains("atioglxx.dll")) {
-			procesarProblemaAMD();
-			return;
-		}
-		if (log.contains("EXCEPTION_ACCESS_VIOLATION") && log.contains("nouveau")
-				|| log.contains("EXCEPTION_ACCESS_VIOLATION") && log.contains("libgallium-24.2.8.so")// posible?
-				|| log.contains("A fatal error has been detected by the Java Runtime Environment")
-						&& log.contains("libopenal.so"))// posible?
-		{
-			mensajes.append(MonitorDePID.idioma.problema_con_graficas_nouveau());
-			activado = true;
-			return;
 
+		if (log.contains("EXCEPTION_ACCESS_VIOLATION") && log.contains("[atio6axx.dll]")) {
+			procesarProblemaAMD();
+			return;
 		}
-		if (contienePatron(log, new String[] { "PhysX_64.dll", "glfw.dll" })
+		if (log.contains("EXCEPTION_ACCESS_VIOLATION") && log.contains("[atioglxx.dll]")) {
+			procesarProblemaAMD();
+			return;
+		}
+
+		if (contienePatron(log, new String[] { "[PhysX_64.dll]", "[glfw.dll]" })
 				&& log.contains("EXCEPTION_ACCESS_VIOLATION")) {
 			procesarProblemaGraficos();
 			return;
@@ -117,6 +120,32 @@ public class Drivers implements Verificaciones {
 		}
 	}
 
+	/**
+	 * Verifica si el log contiene referencias a bibliotecas Nouveau Maneja
+	 * múltiples formatos posibles: - libnouveau.so - libnouveau.so.2 -
+	 * libnouveau.so.2.0.0 - libdrm_nouveau.so - libdrm_nouveau.so.2 -
+	 * libdrm_nouveau.so.2.0.0 - Cualquier otro archivo .so que contenga "nouveau"
+	 * en su nombre
+	 */
+	private boolean contienePatronNouveau(String log) {
+		// Patrones de bibliotecas Nouveau comunes en Linux
+		String[] patronesNouveau = { "\\[libnouveau\\.so\\]", "\\[libnouveau\\.so\\.\\d+\\]",
+				"\\[libnouveau\\.so\\.\\d+\\.\\d+\\]", "\\[libnouveau\\.so\\.\\d+\\.\\d+\\.\\d+\\]",
+				"\\[libdrm_nouveau\\.so\\]", "\\[libdrm_nouveau\\.so\\.\\d+\\]",
+				"\\[libdrm_nouveau\\.so\\.\\d+\\.\\d+\\]", "\\[libdrm_nouveau\\.so\\.\\d+\\.\\d+\\.\\d+\\]",
+				"\\[nouveau\\]", "\\[.*nouveau.*\\.so\\]" // Patrón para detectar cualquier archivo .so que contenga
+															// "nouveau"
+		};
+
+		for (String patron : patronesNouveau) {
+			if (Pattern.compile(patron).matcher(log).find()) {
+				CrashDetectorLogger.log("Patrón Nouveau encontrado: " + patron);
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private void procesarProblemaGraficos() {
 		boolean esWindows = esWindows();
 		boolean tieneNvidia = esWindows && tieneNvidiaGPU();
@@ -138,6 +167,11 @@ public class Drivers implements Verificaciones {
 
 	private void procesarProblemaAMD() {
 		mensajes.append(MonitorDePID.idioma.problema_con_graficas_ati());
+		activado = true;
+	}
+
+	private void procesarProblemaNouveau() {
+		mensajes.append(MonitorDePID.idioma.problema_con_graficas_nouveau());
 		activado = true;
 	}
 
@@ -192,8 +226,9 @@ public class Drivers implements Verificaciones {
 
 	// En la clase Drivers (analizador)
 	private void verificarProblemasIntel(String log) {
-		String[] dllsIntel = { "ig7icd32.dll", "ig7icd64.dll", "ig75icd32.dll", "ig75icd64.dll", "ig8icd64.dll",
-				"ig9icd32.dll", "ig9icd64.dll" };// https://tlauncher.org/en/ig9icd32-dll-error.html TODO para intel
+		String[] dllsIntel = { "[ig7icd32.dll]", "[ig7icd64.dll]", "[ig75icd32.dll]", "[ig75icd64.dll]",
+				"[ig8icd64.dll]", "[ig9icd32.dll]", "[ig9icd64.dll]" };// https://tlauncher.org/en/ig9icd32-dll-error.html
+																		// TODO para intel
 
 		for (String dll : dllsIntel) {
 			if (log.contains(dll) && log.contains("EXCEPTION_ACCESS_VIOLATION")) {
@@ -207,44 +242,6 @@ public class Drivers implements Verificaciones {
 		mensajes.append(MonitorDePID.idioma.problema_con_graficas_intel());
 		activado = true;
 	}
-
-//    private String obtenerVersionControladorIntel() {
-//        if (!esWindows()) return null;
-//        
-//        try {
-//            Process p = Runtime.getRuntime().exec(
-//                "wmic path win32_VideoController where \"Name like '%Intel%'\" get DriverVersion /value"
-//            );
-//            
-//            try (BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()))) {
-//                String linea;
-//                String ultimaVersion = null;
-//                while ((linea = br.readLine()) != null) {
-//                    if (linea.startsWith("DriverVersion=")) {
-//                        String version = linea.split("=")[1].trim();
-//                        if (version.compareTo(ultimaVersion) > 0) {
-//                            ultimaVersion = version;
-//                        }
-//                    }
-//                }
-//                return ultimaVersion;
-//            }
-//        } catch (IOException e) {
-//            return null;
-//        }
-//    }
-//
-//    private boolean esVersionIntelObsoleta(String version) {
-//        String[] partes = version.split("\\.");
-//        if (partes.length < 1) return true;
-//        
-//        try {
-//            int major = Integer.parseInt(partes[0]);
-//            return major < 15;
-//        } catch (NumberFormatException e) {
-//            return true;
-//        }
-//    }
 
 	@Override
 	public Verificaciones nueva() {
@@ -268,7 +265,6 @@ public class Drivers implements Verificaciones {
 
 	@Override
 	public String nombre() {
-		// TODO Auto-generated method stub
 		return MonitorDePID.idioma.nombre_de_drivers();
 	}
 
@@ -277,27 +273,4 @@ public class Drivers implements Verificaciones {
 		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
 				.construir();
 	}
-
-	// TODO
-	/**
-	 * 
-	 * 
-	 * [08:33:15] [Render thread/ERROR]: The game failed to start because the
-	 * currently installed NVIDIA Graphics Driver is not compatible.
-	 * 
-	 * Installed version: 528.92 Required version: 536.23 (or newer)
-	 * 
-	 * Please click the 'Help' button to read more about how to fix this problem.
-	 * 
-	 * For more information, please see:
-	 * https://link.caffeinemc.net/help/sodium/graphics-driver/windows/nvidia/gh-1486
-	 * [08:33:46] [ForkJoinPool.commonPool-worker-1/WARN]: [Iris Update Check] This
-	 * version doesn't have an update index, skipping.
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 */
-
 }
