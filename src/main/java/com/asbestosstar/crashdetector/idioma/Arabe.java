@@ -2880,6 +2880,22 @@ public String verEnConsola() {
 	return "عرض في السجل";
 }
 
+@Override
+public String advertencia() {
+	// TODO Auto-generated method stub
+	return "تحذير";
+}
+
+@Override
+public String fatal() {
+	// TODO Auto-generated method stub
+	return "مortal";
+}
+
+
+
+
+
 
 
 

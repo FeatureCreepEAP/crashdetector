@@ -2872,7 +2872,17 @@ public String verEnConsola() {
 	// TODO Auto-generated method stub
 	return "Просмотреть в логе";
 }
+@Override
+public String advertencia() {
+	// TODO Auto-generated method stub
+	return "Предупреждение";
+}
 
+@Override
+public String fatal() {
+	// TODO Auto-generated method stub
+	return "Фатально";
+}
 
 
 

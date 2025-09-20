@@ -2878,6 +2878,21 @@ public String verEnConsola() {
 	return "مشاهده در لاگ";
 }
 
+@Override
+public String advertencia() {
+	// TODO Auto-generated method stub
+	return "هشدار";
+}
+
+@Override
+public String fatal() {
+	// TODO Auto-generated method stub
+	return "کشنده";
+}
+
+
+
+
 
 
 

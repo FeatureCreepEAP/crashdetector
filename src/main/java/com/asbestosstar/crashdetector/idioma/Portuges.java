@@ -2867,6 +2867,21 @@ public String verEnConsola() {
 	return "Ver no Log";
 }
 
+@Override
+public String advertencia() {
+	// TODO Auto-generated method stub
+	return "Aviso";
+}
+
+@Override
+public String fatal() {
+	// TODO Auto-generated method stub
+	return "Fatal";
+}
+
+
+
+
 
 
 

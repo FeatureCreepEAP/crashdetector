@@ -2914,6 +2914,21 @@ public String verEnConsola() {
 	return "Vidi en ĵurnalo";
 }
 
+@Override
+public String advertencia() {
+	// TODO Auto-generated method stub
+	return "Averto";
+}
+
+@Override
+public String fatal() {
+	// TODO Auto-generated method stub
+	return "Fatale";
+}
+
+
+
+
 
 
 

@@ -2865,6 +2865,22 @@ public String verEnConsola() {
 	return "로그에서 보기";
 }
 
+@Override
+public String advertencia() {
+	// TODO Auto-generated method stub
+	return "경고";
+}
+
+@Override
+public String fatal() {
+	// TODO Auto-generated method stub
+	return "치명적";
+}
+
+
+
+
+
 
 
 

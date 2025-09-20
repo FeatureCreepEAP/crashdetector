@@ -1250,6 +1250,10 @@ public interface Idioma {
 
 	public String verEnConsola();
 
+	public String advertencia();
+
+	public String fatal();
+
 	
 	
 	

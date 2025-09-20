@@ -2881,6 +2881,21 @@ public String verEnConsola() {
 	return "在日志中查看";
 }
 
+@Override
+public String advertencia() {
+	// TODO Auto-generated method stub
+	return "警告";
+}
+
+@Override
+public String fatal() {
+	// TODO Auto-generated method stub
+	return "致命";
+}
+
+
+
+
 
 
 

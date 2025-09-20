@@ -2884,6 +2884,21 @@ public String verEnConsola() {
 	return "ログで表示";
 }
 
+@Override
+public String advertencia() {
+	// TODO Auto-generated method stub
+	return "警告";
+}
+
+@Override
+public String fatal() {
+	// TODO Auto-generated method stub
+	return "重大";
+}
+
+
+
+
 
 
 
