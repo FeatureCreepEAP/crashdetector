@@ -2,6 +2,7 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -12,6 +13,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.buscar.Buscardor;
 
 /**
  * Detecta mods sospechosos y excepciones relacionadas con Forge.
@@ -23,8 +25,22 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 public class MCForgeModsSuspechoso implements Verificaciones {
 
 	private boolean activado = false;
+
+	/**
+	 * Conjunto de mensajes finales únicos que se mostrarán.
+	 */
 	private final Set<String> errores = new HashSet<>();
+
+	/**
+	 * Enlace HTML (ancla) por mensaje final.
+	 */
 	private final Map<String, String> enlacesPorError = new HashMap<>();
+
+	/**
+	 * ModID asociado a cada mensaje final (cuando aplique). Sirve para que el
+	 * buscador encuentre las ubicaciones del mod.
+	 */
+	private final Map<String, String> modidPorError = new HashMap<>();
 
 	@Override
 	public void verificar(Consola consola) {
@@ -40,15 +56,14 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 		Pattern pAffectedMod = Pattern.compile("(?i)\\bAffected\\s+mod\\s*:\\s*([a-z0-9_\\-.]+)");
 		Pattern pModidEq = Pattern.compile("(?i)\\bmodid=([a-z0-9_\\-.]+)");
 
-		// Patrón directo: "... dispatch for modid <id>" compatible con "encountered..."
-		// y "caught exception..."
+		// Patrón directo: “... dispatch for modid <id>”
 		Pattern patronDespachoModid = Pattern.compile(
 				"(?i)(?:encountered\\s+an\\s+(?:error|exception)|caught\\s+exception)\\s+during\\s+.*?dispatch\\s+for\\s+modid\\s+([a-z0-9_\\-.]+)");
 
-		// Patrón: "Caught exception from <Nombre Legible>"
+		// “Caught exception from <Nombre legible>”
 		Pattern pCaughtFrom = Pattern.compile("(?i)Caught\\s+exception\\s+from\\s+([^\\(\\n]+)");
 
-		// Patrón ModLoadingException multilinea
+		// ModLoadingException multilinea
 		Pattern pModLoading = Pattern.compile(
 				"ModLoadingException:\\s+([^\\(\\n]+?)\\s*\\(([^\\)\\n]+)\\)\\s+encountered\\s+an\\s+error\\s+during\\s+the\\s+([a-zA-Z_]+)\\s+event\\s+phase",
 				Pattern.CASE_INSENSITIVE);
@@ -56,8 +71,7 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 		for (int i = 0; i < lineas.length; i++) {
 			String linea = lineas[i];
 
-			// 1) Bloque "Suspected Mod:" seguido de la línea con el nombre (formato del
-			// crash report)
+			// 1) Bloque "Suspected Mod:"
 			if (linea.contains("Suspected Mod:")) {
 				if (i + 1 < lineas.length) {
 					String modLinea = lineas[i + 1].trim();
@@ -71,13 +85,14 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 					if (errores.add(mensaje)) {
 						String enlace = consola.agregarErrorALectador(i + 1, this);
 						enlacesPorError.put(mensaje, enlace);
+						modidPorError.put(mensaje, modID.trim());
 					}
 					activado = true;
 				}
 				continue;
 			}
 
-			// 2) Línea "Failed to create mod instance. ModID: <id>"
+			// 2) "Failed to create mod instance. ModID: <id>"
 			if (linea.contains("Failed to create mod instance. ModID:")) {
 				try {
 					String prefijo = "Failed to create mod instance. ModID: ";
@@ -102,6 +117,7 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 							if (errores.add(mensaje)) {
 								String enlace = consola.agregarErrorALectador(i, this);
 								enlacesPorError.put(mensaje, enlace);
+								modidPorError.put(mensaje, modID);
 							}
 							activado = true;
 						}
@@ -112,7 +128,7 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 				continue;
 			}
 
-			// 3) Línea "Failure message: (modid)" en la misma línea
+			// 3) "Failure message: (modid)"
 			if (linea.contains("Failure message:")) {
 				int inicio = linea.indexOf('(');
 				if (inicio != -1) {
@@ -123,14 +139,14 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 						if (errores.add(mensaje)) {
 							String enlace = consola.agregarErrorALectador(i, this);
 							enlacesPorError.put(mensaje, enlace);
+							modidPorError.put(mensaje, modID);
 						}
 						activado = true;
 					}
 				}
-				// no continuar; también puede casar con el caso 4
 			}
 
-			// 4) Detección directa “... dispatch for modid <id>”
+			// 4) “… dispatch for modid <id>”
 			Matcher matcherDespacho = patronDespachoModid.matcher(linea);
 			while (matcherDespacho.find()) {
 				String modID = matcherDespacho.group(1).trim();
@@ -138,12 +154,12 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 				if (errores.add(mensaje)) {
 					String enlace = consola.agregarErrorALectador(i, this);
 					enlacesPorError.put(mensaje, enlace);
+					modidPorError.put(mensaje, modID);
 				}
 				activado = true;
 			}
 
-			// 5) Detección por bloque “Encountered an error/exception” o “Caught exception
-			// during ...”
+			// 5) Bloques “Encountered an error/exception …” o “Caught exception during …”
 			Matcher mEnc = pEncontradoDurante.matcher(linea);
 			if (mEnc.find()) {
 				String modID = null;
@@ -154,7 +170,7 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 					modID = mInline.group(1).trim();
 				}
 
-				// si no está inline, buscar en las siguientes líneas del bloque
+				// si no está inline, buscarlo dentro de un bloque siguiente
 				if (modID == null) {
 					int ventana = Math.min(lineas.length, i + 25);
 					for (int k = i; k < ventana; k++) {
@@ -163,7 +179,7 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 						Matcher mId1 = pModIdColon.matcher(l2);
 						if (mId1.find()) {
 							modID = mId1.group(1).trim();
-							i = k; // anclar el enlace donde se encontró el modid
+							i = k;
 							break;
 						}
 						Matcher mId2 = pModidColonEq.matcher(l2);
@@ -192,18 +208,18 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 					if (errores.add(mensaje)) {
 						String enlace = consola.agregarErrorALectador(i, this);
 						enlacesPorError.put(mensaje, enlace);
+						modidPorError.put(mensaje, modID);
 					}
 					activado = true;
 				}
 			}
 
-			// 6) “Caught exception from <Nombre Legible>” (nombre de mod legible)
+			// 6) “Caught exception from <Nombre legible>” (no siempre hay modid)
 			if (linea.toLowerCase().contains("caught exception from ")) {
 				Matcher m = pCaughtFrom.matcher(linea);
 				if (m.find()) {
 					String nombreLegible = m.group(1).trim();
 					if (!nombreLegible.isEmpty()) {
-						// Se conserva el mensaje de excepción de mod en forma legible
 						String mensaje = MonitorDePID.idioma.mensajeModExcepcionSingular(nombreLegible);
 						if (errores.add(mensaje)) {
 							String enlace = consola.agregarErrorALectador(i, this);
@@ -214,27 +230,25 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 				}
 			}
 
-			// 7) ModLoadingException (puede ser multilínea); se analiza con una pequeña
-			// ventana
+			// 7) ModLoadingException (escaneo con ventana pequeña)
 			if (linea.contains("ModLoadingException:")) {
 				StringBuilder ventana = new StringBuilder(linea);
-				// incluir varias líneas siguientes para capturar el patrón completo
 				for (int k = 1; k <= 4 && i + k < lineas.length; k++) {
 					ventana.append('\n').append(lineas[i + k]);
 				}
 				Matcher m = pModLoading.matcher(ventana.toString());
 				if (m.find()) {
-					String nombreLegible = m.group(1).trim(); // texto legible
-					String modid = m.group(2).trim(); // modid dentro de paréntesis
-
-					// Preferimos mostrar modid para mantener coherencia con el buscador;
-					// si no hay modid razonable, usamos el nombre legible.
+					String nombreLegible = m.group(1).trim();
+					String modid = m.group(2).trim();
 					String etiqueta = (modid.isEmpty() ? nombreLegible : modid);
 					String mensaje = MonitorDePID.idioma.mcforge_mod_sospechoso() + etiqueta;
 
 					if (errores.add(mensaje)) {
 						String enlace = consola.agregarErrorALectador(i, this);
 						enlacesPorError.put(mensaje, enlace);
+						if (!modid.isEmpty()) {
+							modidPorError.put(mensaje, modid);
+						}
 					}
 					activado = true;
 				}
@@ -261,10 +275,33 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 	public String mensaje() {
 		if (errores.isEmpty())
 			return "";
+
 		StringBuilder html = new StringBuilder("<ul>");
 		for (String error : errores) {
 			String enlace = enlacesPorError.getOrDefault(error, "");
-			html.append("<li>").append(error).append(" ").append(enlace).append("</li>");
+			String extraUbicaciones = "";
+
+			// Si hay modid asociado al mensaje, consultar las ubicaciones por nombre
+			// (modid)
+			String modid = modidPorError.get(error);
+			if (modid != null && !modid.isEmpty()) {
+				List<String> ubicaciones = Buscardor.obtenerModsConNombre(modid);
+				if (!ubicaciones.isEmpty()) {
+					StringBuilder sb = new StringBuilder();
+					for (int i = 0; i < ubicaciones.size(); i++) {
+						if (i > 0)
+							sb.append(", ");
+						sb.append(ubicaciones.get(i));
+					}
+					extraUbicaciones = " (" + sb + ")";
+				}
+			}
+
+			html.append("<li>").append(error).append(extraUbicaciones);
+			if (!enlace.isEmpty()) {
+				html.append(" ").append(enlace);
+			}
+			html.append("</li>");
 		}
 		html.append("</ul>");
 		return html.toString();
