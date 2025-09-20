@@ -24,58 +24,67 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 		String contenidoConsola = consola.contenido_verificar;
 		String[] lineas = contenidoConsola.split(Verificaciones.nl);
 
-		// Patrón para errores durante la fase de registro
-		Pattern patronFaseRegistro = Pattern
-				.compile("(?i)encountered an error during the .*? dispatch for modid ([a-z0-9_\\-.]+)");
+		// Patrones auxiliares para extraer modid en bloques cercanos
+		// Disparo de bloque: línea cabecera del diagnóstico
+		Pattern pEncontradoDurante = Pattern.compile(
+		    "(?i)(?:encountered\\s+an\\s+(?:error|exception)|caught\\s+exception)\\s+during\\s+[^\\r\\n]*"
+		);
+		Pattern pForModidInline = Pattern.compile("(?i)for\\s+modid\\s+([a-z0-9_\\-.]+)");
+		Pattern pModIdColon = Pattern.compile("(?i)\\bMod\\s*ID\\s*:\\s*([a-z0-9_\\-.]+)");
+		Pattern pModidColonEq = Pattern.compile("(?i)\\bmodid\\s*[:=]\\s*([a-z0-9_\\-.]+)");
+		Pattern pAffectedMod = Pattern.compile("(?i)\\bAffected\\s+mod\\s*:\\s*([a-z0-9_\\-.]+)");
+		Pattern pModidEq = Pattern.compile("(?i)\\bmodid=([a-z0-9_\\-.]+)");
 
+		// Patrón unificado: acepta "encountered an error/exception" o "caught exception"
+		Pattern patronDespachoModid = Pattern.compile(
+		    "(?i)(?:encountered\\s+an\\s+(?:error|exception)|caught\\s+exception)\\s+during\\s+.*?dispatch\\s+for\\s+modid\\s+([a-z0-9_\\-.]+)"
+		);
+
+		
+		
 		for (int i = 0; i < lineas.length; i++) {
 			String linea = lineas[i];
 
-			// 1. Detectar mods sospechosos
+			// 1) Bloque "Suspected Mod:"
 			if (linea.contains("Suspected Mod:")) {
 				if (i + 1 < lineas.length) {
 					String modLinea = lineas[i + 1].trim();
-
 					int inicio = modLinea.indexOf('(');
 					int fin = modLinea.indexOf(')');
 					String modID = modLinea;
-
 					if (inicio != -1 && fin != -1 && inicio < fin) {
 						modID = modLinea.substring(inicio + 1, fin).trim();
 					}
-
 					String mensaje = MonitorDePID.idioma.mcforge_mod_sospechoso() + modID.trim();
-
 					if (errores.add(mensaje)) {
 						String enlace = consola.agregarErrorALectador(i + 1, this);
 						enlacesPorError.put(mensaje, enlace);
 					}
 					activado = true;
 				}
+				continue;
 			}
 
-			// 2. ModID fallido al crear instancia
-			else if (linea.contains("Failed to create mod instance. ModID:")) {
+			// 2) Línea "Failed to create mod instance. ModID: <id>"
+			if (linea.contains("Failed to create mod instance. ModID:")) {
 				try {
 					String prefijo = "Failed to create mod instance. ModID: ";
 					int indiceInicio = linea.indexOf(prefijo);
 					if (indiceInicio != -1) {
 						indiceInicio += prefijo.length();
-						String parteDespuesDelPrefijo = linea.substring(indiceInicio).trim();
-
-						String modID = "";
+						String resto = linea.substring(indiceInicio).trim();
+						StringBuilder sb = new StringBuilder();
 						int j = 0;
-						while (j < parteDespuesDelPrefijo.length()) {
-							char c = parteDespuesDelPrefijo.charAt(j);
+						while (j < resto.length()) {
+							char c = resto.charAt(j);
 							if (Character.isLetterOrDigit(c) || c == '_' || c == '-' || c == '.' || c == '+') {
-								modID += c;
+								sb.append(c);
 								j++;
 							} else {
 								break;
 							}
 						}
-						modID = modID.trim();
-
+						String modID = sb.toString().trim();
 						if (!modID.isEmpty()) {
 							String mensaje = MonitorDePID.idioma.mcforge_mod_sospechoso() + modID;
 							if (errores.add(mensaje)) {
@@ -86,13 +95,13 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 						}
 					}
 				} catch (Exception e) {
-					// Ignorar errores de formato
 					consola.agregarErrorALectador(i, this);
 				}
+				continue;
 			}
 
-			// 3. Mensaje de fallo con ModID
-			else if (linea.contains("Failure message:")) {
+			// 3) Línea "Failure message: (...)"
+			if (linea.contains("Failure message:")) {
 				int inicio = linea.indexOf('(');
 				if (inicio != -1) {
 					int fin = linea.indexOf(')', inicio + 1);
@@ -106,18 +115,74 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 						activado = true;
 					}
 				}
+				// no continuar; puede coincidir también con el caso 4 más abajo
 			}
 
-			// 4. Nueva detección: errores durante la fase de registro
-			Matcher matcherFaseRegistro = patronFaseRegistro.matcher(linea);
-			while (matcherFaseRegistro.find()) {
-				String modID = matcherFaseRegistro.group(1).trim();
-				String mensaje = MonitorDePID.idioma.mcforge_mod_sospechoso() + modID;
-				if (errores.add(mensaje)) {
-					String enlace = consola.agregarErrorALectador(i, this);
-					enlacesPorError.put(mensaje, enlace);
+			// 4) Detección directa “... dispatch for modid <id>”
+			Matcher matcherDespacho = patronDespachoModid.matcher(linea);
+			while (matcherDespacho.find()) {
+			    String modID = matcherDespacho.group(1).trim();
+			    String mensaje = MonitorDePID.idioma.mcforge_mod_sospechoso() + modID;
+			    if (errores.add(mensaje)) {
+			        String enlace = consola.agregarErrorALectador(i, this);
+			        enlacesPorError.put(mensaje, enlace);
+			    }
+			    activado = true;
+			}
+
+
+			// 5) Detección robusta por bloque: “Encountered an error/exception during ...”
+			Matcher mEnc = pEncontradoDurante.matcher(linea);
+			if (mEnc.find()) {
+				String modID = null;
+
+				// intento inline “for modid <id>”
+				Matcher mInline = pForModidInline.matcher(linea);
+				if (mInline.find()) {
+					modID = mInline.group(1).trim();
 				}
-				activado = true;
+
+				// si no está inline, buscar en un bloque siguiente (ventana limitada)
+				if (modID == null) {
+					int ventana = Math.min(lineas.length, i + 25);
+					for (int k = i; k < ventana; k++) {
+						String l2 = lineas[k];
+
+						Matcher mId1 = pModIdColon.matcher(l2);
+						if (mId1.find()) {
+							modID = mId1.group(1).trim();
+							i = k; // anclar el enlace donde se encontró el modid
+							break;
+						}
+						Matcher mId2 = pModidColonEq.matcher(l2);
+						if (mId2.find()) {
+							modID = mId2.group(1).trim();
+							i = k;
+							break;
+						}
+						Matcher mId3 = pAffectedMod.matcher(l2);
+						if (mId3.find()) {
+							modID = mId3.group(1).trim();
+							i = k;
+							break;
+						}
+						Matcher mId4 = pModidEq.matcher(l2);
+						if (mId4.find()) {
+							modID = mId4.group(1).trim();
+							i = k;
+							break;
+						}
+					}
+				}
+
+				if (modID != null && !modID.isEmpty()) {
+					String mensaje = MonitorDePID.idioma.mcforge_mod_sospechoso() + modID;
+					if (errores.add(mensaje)) {
+						String enlace = consola.agregarErrorALectador(i, this);
+						enlacesPorError.put(mensaje, enlace);
+					}
+					activado = true;
+				}
 			}
 		}
 	}
@@ -134,7 +199,7 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 
 	@Override
 	public float prioridad() {
-		return 900.0f; // Prioridad alta para errores durante la carga
+		return 900.0f;
 	}
 
 	@Override

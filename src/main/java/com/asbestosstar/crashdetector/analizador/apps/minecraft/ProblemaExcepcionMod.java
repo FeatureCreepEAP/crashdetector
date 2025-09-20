@@ -12,9 +12,7 @@ import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 /**
- * Clase que detecta excepciones causadas por mods en Forge. Gracias a Aternos
- * por que esta es una implementacion de su codex
- * https://github.com/aternosorg/codex-minecraft
+ * Clase que detecta excepciones causadas por mods en Forge.
  */
 public class ProblemaExcepcionMod implements Verificaciones {
 
@@ -22,19 +20,19 @@ public class ProblemaExcepcionMod implements Verificaciones {
 	private String mensaje = "";
 	private final List<String> nombresMods = new ArrayList<>();
 
-	/**
-	 * Verifica si el log contiene excepciones de mods en Forge.
-	 */
+	// Patrón para ModLoadingException: "ModLoadingException: <Nombre Mod> (<modid>)
+	// encountered an error during the <fase> event phase"
+	private static final Pattern PATRON_MODLOADING_ENCONTRADO = Pattern.compile(
+			"ModLoadingException:\\s+([^\\(\\n]+?)\\s*\\(([^\\)\\n]+)\\)\\s+encountered\\s+an\\s+error\\s+during\\s+the\\s+([a-zA-Z_]+)\\s+event\\s+phase",
+			Pattern.CASE_INSENSITIVE);
+
 	@Override
 	public void verificar(Consola consola) {
 		String contenido = consola.contenido_verificar;
 
-		// Patrón para detectar excepciones de mods
 		Pattern[] patrones = { Pattern.compile("Caught exception from ([^\\(\\n]+)", Pattern.DOTALL), Pattern.compile(
 				"net\\.forge\\..*?Loading errors encountered: \\[\\s+([^\\$\\n]+) \\$\\$[^\\)]+\\) encountered an error during",
-				Pattern.DOTALL)
-
-		};
+				Pattern.DOTALL) };
 
 		for (Pattern patron : patrones) {
 			Matcher coincidencia = patron.matcher(contenido);
@@ -46,59 +44,52 @@ public class ProblemaExcepcionMod implements Verificaciones {
 			}
 		}
 
-		if (!nombresMods.isEmpty()) {
-			if (nombresMods.size() > 1) {
-				this.mensaje = MonitorDePID.idioma.mensajeModExcepcionPlural(nombresMods);
-			} else {
-				this.mensaje = MonitorDePID.idioma.mensajeModExcepcionSingular(nombresMods.get(0));
+		Matcher m = PATRON_MODLOADING_ENCONTRADO.matcher(contenido);
+		while (m.find()) {
+			String nombreLegible = m.group(1).trim();
+			if (!nombreLegible.isEmpty() && !nombresMods.contains(nombreLegible)) {
+				nombresMods.add(nombreLegible);
 			}
+		}
+
+		if (!nombresMods.isEmpty()) {
+			StringBuilder sb = new StringBuilder();
+			sb.append(MonitorDePID.idioma.mensajeModExcepcionPlural(nombresMods));
+			sb.append("<ul>");
+			for (String mod : nombresMods) {
+				sb.append("<li>").append(mod).append("</li>");
+			}
+			sb.append("</ul>");
+			this.mensaje = sb.toString();
 			activado = true;
 		}
 	}
 
-	/**
-	 * Crea una nueva instancia del verificador.
-	 */
 	@Override
 	public Verificaciones nueva() {
 		return new ProblemaExcepcionMod();
 	}
 
-	/**
-	 * Indica si el problema fue detectado.
-	 */
 	@Override
 	public boolean activado() {
 		return activado;
 	}
 
-	/**
-	 * Prioridad del problema (alta).
-	 */
 	@Override
 	public float prioridad() {
 		return 1000.0f;
 	}
 
-	/**
-	 * Devuelve el mensaje de error almacenado.
-	 */
 	@Override
 	public String mensaje() {
 		return mensaje;
 	}
 
-	/**
-	 * Devuelve el nombre del problema para mostrar en la interfaz.
-	 */
 	@Override
 	public String nombre() {
 		return MonitorDePID.idioma.nombreProblemaModExcepcion();
 	}
 
-	/**
-	 * Devuelve las soluciones posibles para este problema.
-	 */
 	@Override
 	public QuickFix solucion() {
 		Builder builder = new Builder(nombre());

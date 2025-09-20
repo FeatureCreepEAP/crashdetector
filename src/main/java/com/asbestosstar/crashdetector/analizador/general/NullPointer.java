@@ -11,7 +11,6 @@ import java.util.regex.Pattern;
 
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
-import com.asbestosstar.crashdetector.TriMap;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
@@ -67,7 +66,8 @@ public class NullPointer implements Verificaciones {
 	private boolean activado = false;
 
 	/**
-	 * Almacena el enlace HTML por mensaje base (solo para líneas sueltas)
+	 * Almacena el enlace HTML por mensaje base (tanto para líneas sueltas como para
+	 * trazos). NOTA: la clave SIEMPRE es el mensaje base SIN orígenes añadidos.
 	 */
 	private final Map<String, String> enlacesPorLinea = new HashMap<>();
 
@@ -126,6 +126,11 @@ public class NullPointer implements Verificaciones {
 			// Construir mensaje base (sin el origen)
 			String mensajeBase = MonitorDePID.idioma.null_pointer_error(metodo, objeto);
 
+			// NUEVO: registrar enlace también para NPEs provenientes de un trazo
+			// (usamos la línea inicial del trazo en la consola)
+			enlacesPorLinea.putIfAbsent(mensajeBase,
+					consola.agregarErrorALectador(traceInfo.consolaLineaComenzar, this));
+
 			// Agregar el error al mapa, agrupando por mensaje base
 			errores.computeIfAbsent(mensajeBase, k -> new HashSet<>());
 			if (!origen.isEmpty()) {
@@ -170,9 +175,8 @@ public class NullPointer implements Verificaciones {
 		String origen = detectarOrigenEnLinea(linea, vdst, numeroLinea);
 		String mensajeBase = MonitorDePID.idioma.null_pointer_error(metodo, objeto);
 
-		// Registrar el error en el sistema de lectura
-		String enlace = consola.agregarErrorALectador(numeroLinea, this);
-		enlacesPorLinea.put(mensajeBase, enlace);
+		// Registrar el error en el sistema de lectura (enlace para la línea suelta)
+		enlacesPorLinea.put(mensajeBase, consola.agregarErrorALectador(numeroLinea, this));
 
 		// Agregar el error al mapa, agrupando por mensaje base
 		errores.computeIfAbsent(mensajeBase, k -> new HashSet<>());
@@ -287,10 +291,14 @@ public class NullPointer implements Verificaciones {
 
 		// Para cada tipo de error
 		for (Map.Entry<String, Set<String>> entry : errores.entrySet()) {
-			String mensajeBase = entry.getKey();
+			// Usar SIEMPRE la clave base (sin orígenes) para buscar el enlace
+			final String claveBase = entry.getKey();
+
+			// Construimos el texto que se mostrará (al que sí añadiremos orígenes, si hay)
+			String mensajeMostrado = claveBase;
 			Set<String> origenes = entry.getValue();
 
-			// Si hay origenes, añadirlos al mensaje
+			// Si hay orígenes, añadirlos al mensaje mostrado (no a la clave)
 			if (!origenes.isEmpty()) {
 				StringBuilder origenesStr = new StringBuilder();
 				for (String origen : origenes) {
@@ -299,16 +307,16 @@ public class NullPointer implements Verificaciones {
 					}
 					origenesStr.append(origen);
 				}
-				mensajeBase += " (" + origenesStr.toString() + ")";
+				mensajeMostrado += " (" + origenesStr.toString() + ")";
 			}
 
-			// Añadir enlace solo si es de línea suelta
-			String enlace = enlacesPorLinea.getOrDefault(mensajeBase, "");
+			// Recuperar el enlace con la CLAVE BASE (sin orígenes añadidos)
+			String enlace = enlacesPorLinea.getOrDefault(claveBase, "");
 			if (!enlace.isEmpty()) {
-				mensajeBase += " " + enlace;
+				mensajeMostrado += " " + enlace;
 			}
 
-			sb.append("<li>").append(mensajeBase).append("</li>");
+			sb.append("<li>").append(mensajeMostrado).append("</li>");
 		}
 
 		sb.append("</ul>");
