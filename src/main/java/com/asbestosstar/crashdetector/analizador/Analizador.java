@@ -48,7 +48,6 @@ import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaDependen
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaDependenciaPluginPocketMine;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaEjecucionPlugin;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaExcepcionComandoPlugin;
-import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaExcepcionMod;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaModDuplicadoFabric;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaModFaltanteEnDatapack;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaModFaltanteEnMundo;
@@ -156,7 +155,7 @@ public class Analizador {
 		verificaciones.add(new ProblemaDependenciaPTRLib());
 		verificaciones.add(new ProblemaEjecucionPlugin());
 		verificaciones.add(new ProblemaExcepcionComandoPlugin());
-		verificaciones.add(new ProblemaExcepcionMod());
+		//verificaciones.add(new ProblemaExcepcionMod());
 		verificaciones.add(new ProblemaSpongeMixinFabric());
 		verificaciones.add(new ProblemaModDuplicadoFabric());
 		verificaciones.add(new ProblemaModFaltanteEnDatapack());
