@@ -285,19 +285,22 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 
 		// Manejador de clics para selección de errores
 		txtRegistros.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				int pos = txtRegistros.viewToModel(e.getPoint());
-				try {
-					int linea = txtRegistros.getDocument().getDefaultRootElement().getElementIndex(pos);
-					String textoLinea = texto_de_linea(linea);
-					procesarSeleccionError(textoLinea);
-				} catch (Exception ex) {
-					JOptionPane.showMessageDialog(LectadorDeConsolas.this, idioma.obtenerErrorAlProcesarLinea(),
-							idioma.obtenerTituloError(), JOptionPane.ERROR_MESSAGE);
-				}
-			}
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		        int pos = txtRegistros.viewToModel(e.getPoint());
+		        int linea = txtRegistros.getDocument().getDefaultRootElement().getElementIndex(pos);
+
+		        String nombreArchivo = (String) cmbConsolas.getSelectedItem();
+		        Consola consolaSeleccionada = consolas.stream()
+		            .filter(c -> new File(c.archivo.toString()).getName().equals(nombreArchivo))
+		            .findFirst().orElse(null);
+
+		        if (consolaSeleccionada != null) {
+		        	procesarSeleccionError(linea, consolaSeleccionada);
+		        }
+		    }
 		});
+
 	}
 
 	/**
@@ -547,18 +550,31 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 		}
 	}
 
-	/**
-	 * Procesa la selección de un error en los registros
-	 */
-	private void procesarSeleccionError(String textoLinea) {
-		if (textoLinea.contains("ERROR") || textoLinea.contains("EXCEPTION")) {
-			txtNombreError.setText(idioma.obtenerNombreErrorPorDefecto());
-			txtDescripcionError.setText(idioma.obtenerDescripcionErrorPorDefecto());
-		} else {
-			txtNombreError.setText("");
-			txtDescripcionError.setText("");
-		}
+	private void procesarSeleccionError(int numeroLinea, Consola consola) {
+	    // 🔹 Limpiar paneles
+	    txtNombreError.setText("");
+	    txtDescripcionError.setText("");
+
+	    // 🔹 Buscar errores en esa línea
+	    List<ErrorDeLectador> erroresEnLinea = consola.errores_de_lectadores.stream()
+	            .filter(err -> err.obtenerLinea() == numeroLinea)
+	            .collect(Collectors.toList());
+
+	    if (!erroresEnLinea.isEmpty()) {
+	        for (ErrorDeLectador err : erroresEnLinea) {
+	            txtNombreError.append(err.verificacion.nombre() + "\n");
+	            txtDescripcionError.append(err.verificacion.mensaje() + "\n\n");
+	        }
+	    } else {
+	        // fallback si no hay error de verificación, pero sí es una excepción genérica
+	        String textoLinea = texto_de_linea(numeroLinea);
+	        if (textoLinea.contains("ERROR") || textoLinea.contains("EXCEPTION")) {
+	            txtNombreError.setText(idioma.obtenerNombreErrorPorDefecto());
+	            txtDescripcionError.setText(idioma.obtenerDescripcionErrorPorDefecto());
+	        }
+	    }
 	}
+
 
 	/**
 	 * Implementación de la interfaz BotonDeBarraLateralDerecha Acción ejecutada al
