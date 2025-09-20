@@ -14,6 +14,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import com.asbestosstar.crashdetector.Consola;
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.TriMap;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
@@ -61,16 +62,20 @@ public class FaltasClases implements Verificaciones {
 		for (int i = 0; i < lineas.length; i++) {
 			String linea = lineas[i];
 
+
+
+			// Saltar líneas con WARN (sin excepciones)
+			if (linea.contains("/WARN]") || linea.contains("Warn") || VerificacionDeStackTrace.esLineaDeAdvertenciaEstandar(linea)){
+				continue;
+			}
+			
 			// Eliminar prefijo de log
 			int indiceDosPuntos = linea.indexOf(':');
 			if (indiceDosPuntos != -1 && linea.charAt(0) == '[') {
 				linea = linea.substring(indiceDosPuntos + 1).trim();
 			}
-
-			// Saltar líneas con WARN (sin excepciones)
-			if (linea.contains("/WARN]") || linea.contains("Warn")) {
-				continue;
-			}
+			
+			
 
 			String clase = null;
 
@@ -86,6 +91,8 @@ public class FaltasClases implements Verificaciones {
 						String candidate = linea.substring(index + lleva.length()).trim();
 						if (!candidate.isEmpty()) {
 							clase = candidate.split("[\\s\\)]")[0].trim();
+							
+							
 							break;
 						}
 					}
@@ -109,6 +116,11 @@ public class FaltasClases implements Verificaciones {
 				String origen = encontrarOrigenEnLinea(linea, i, consola);
 				String origenLimpio = limpiarOrigen(origen);
 				clases.putIfAbsent(claseFormateada, origenLimpio);
+				CrashDetectorLogger.log("Fatals clases clase no advatencia "+ clase);
+				CrashDetectorLogger.log("OG "+ clase);
+				CrashDetectorLogger.log("TRIM "+ clase);
+
+				
 				String enlace = consola.agregarErrorALectador(i, this);
 				enlacesPorClase.put(claseFormateada, enlace);
 			}

@@ -785,7 +785,7 @@ public class MonitorDePID {
 			resultados = true;
 		}
 
-		CrashDetectorLogger.log("resultdos " + res);
+		//CrashDetectorLogger.log("resultdos " + res);
 		contenidoInforme = constructor;
 		local = GeneradorDeInformacion.generarLocal(consolas, utc).getAbsolutePath();
 	}

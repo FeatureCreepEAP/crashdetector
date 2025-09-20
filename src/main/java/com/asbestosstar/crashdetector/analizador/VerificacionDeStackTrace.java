@@ -40,18 +40,15 @@ public class VerificacionDeStackTrace {
 
 	// === Patrones para detectar modid de forma estricta ===
 	// Solo acepta frames TRANSFORMER/<modid>@<version>/...
-	private static final Pattern PATRON_MODID_TRANSFORMER =
-	        Pattern.compile("^\\s*at\\s+TRANSFORMER/([a-z0-9_\\-.]+)(?:@|/).*$");
+	private static final Pattern PATRON_MODID_TRANSFORMER = Pattern
+			.compile("^\\s*at\\s+TRANSFORMER/([a-z0-9_\\-.]+)(?:@|/).*$");
 
 	// Opcional y conservador: admite "at <modid>@<ver>/..."
-	// Evita confundir paquetes comunes (java, jdk, sun, org, com, net) y modids con puntos.
-	private static final Pattern PATRON_MODID_SIMPLE =
-	        Pattern.compile("^\\s*at\\s+(?!java\\b|jdk\\b|sun\\b|org\\b|com\\b|net\\b)([a-z0-9_\\-]+)@[^/]+/.*$");
+	// Evita confundir paquetes comunes (java, jdk, sun, org, com, net) y modids con
+	// puntos.
+	private static final Pattern PATRON_MODID_SIMPLE = Pattern
+			.compile("^\\s*at\\s+(?!java\\b|jdk\\b|sun\\b|org\\b|com\\b|net\\b)([a-z0-9_\\-]+)@[^/]+/.*$");
 
-	
-	
-	
-	
 	// Ahora es un BiMap que asocia (nombre JSON, línea_consola) con si es fatal
 	public BiMap<String, Integer, Boolean> sm_config = new BiMap<>(); // (nombre JSON, línea_consola, es fatal)
 
@@ -78,7 +75,7 @@ public class VerificacionDeStackTrace {
 			"it.unimi", "com.mojang.", "cpw.", "featurecreep.", "jdk.", "sun.", "com.sun.", "org.lwjgl.", "org.apache.",
 			"io.netty", "org.prismlauncher", "io.github.zekerzhayard", "org.multimc", "org.polymc", "org.tlauncher",
 			"net.fabricmc", "org.objectweb.asm", "datafixerupper", "org.slf4j", "com.asbestosstar", "srg",
-			"asbestosstar.", "org.openjdk", "com.google", "cpw.mods.modlauncher."
+			"asbestosstar.", "org.openjdk", "com.google", "cpw.mods.modlauncher.","com.modrinth.theseus."
 
 	};
 
@@ -273,7 +270,8 @@ public class VerificacionDeStackTrace {
 				// No necesitamos fatal para FabricMC o FeatureCreep y en casos en ModLauncher
 				// en launcher_log
 				else if ((linea.contains("ClassNotFoundException") || linea.contains("NoClassDefFoundError"))
-						&& !linea.contains("The specified mixin") && !linea.contains("WARN/]")) {
+						&& !linea.contains("The specified mixin") && !linea.contains("WARN/]")
+						&& !linea.contains("/WARN]") && !esLineaDeAdvertenciaEstandar(linea)) {
 
 					Map.Entry<String, String> resultado = procesarErrorClaseNoEncontrada(linea, arr, consolaNumLinea,
 							nivel_prioridad);
@@ -298,6 +296,26 @@ public class VerificacionDeStackTrace {
 			}
 		}
 	}
+
+	public static boolean esLineaDeAdvertenciaEstandar(String l) {
+	    if (l == null) return false;
+	    String t = l.trim();
+
+	    // Casos típicos con corchetes de log, por ejemplo:
+	    // [08:53:21] [mixin/WARN]: ..., [main] [Render thread/WARN]: ...
+	    if (t.contains("/WARN]")) return true;
+	    if (t.contains("] [WARN")) return true;
+
+	    // Forma genérica: dos bloques entre [ ] y el segundo contiene WARN antes de ':'
+	    // y luego cualquier texto.
+	    if (t.matches(".*\\[[^\\]]*\\]\\s*\\[[^\\]]*\\bWARN\\b[^\\]]*\\]\\s*:.*")) return true;
+
+	    // También cubrir formatos tipo "[mixin/WARN]:" directamente
+	    if (t.matches(".*\\[[^\\]]*\\bWARN\\b[^\\]]*\\]:.*")) return true;
+
+	    return false;
+	}
+
 
 	/**
 	 * Extrae nombres de jars de una línea de stack trace. Ejemplo:
@@ -332,32 +350,33 @@ public class VerificacionDeStackTrace {
 	}
 
 	/**
-	 * Extrae un modid de una línea de stack trace de forma estricta.
-	 * Prioriza el formato TRANSFORMER/<modid>@<version>. En caso de no coincidir,
-	 * opcionalmente intenta con un patrón simple "at <modid>@<ver>/...".
-	 * Devuelve null si no se detecta un modid confiable.
+	 * Extrae un modid de una línea de stack trace de forma estricta. Prioriza el
+	 * formato TRANSFORMER/<modid>@<version>. En caso de no coincidir, opcionalmente
+	 * intenta con un patrón simple "at <modid>@<ver>/...". Devuelve null si no se
+	 * detecta un modid confiable.
 	 */
 	public static String extraerModidDeLinea(String linea) {
-	    if (linea == null) return null;
-	    String t = linea.trim();
+		if (linea == null)
+			return null;
+		String t = linea.trim();
 
-	    // Caso 1: SOLO si es un frame de TRANSFORMER
-	    Matcher mTrans = PATRON_MODID_TRANSFORMER.matcher(t);
-	    if (mTrans.matches()) {
-	        return mTrans.group(1);
-	    }
+		// Caso 1: SOLO si es un frame de TRANSFORMER
+		Matcher mTrans = PATRON_MODID_TRANSFORMER.matcher(t);
+		if (mTrans.matches()) {
+			return mTrans.group(1);
+		}
 
-	    // Caso 2 (opcional y conservador): "at <modid>@<ver>/..."
-	    // Quita este bloque si quieres ser 100% estricto y aceptar ÚNICAMENTE TRANSFORMER.
-	    Matcher mSimple = PATRON_MODID_SIMPLE.matcher(t);
-	    if (mSimple.matches()) {
-	        return mSimple.group(1);
-	    }
+		// Caso 2 (opcional y conservador): "at <modid>@<ver>/..."
+		// Quita este bloque si quieres ser 100% estricto y aceptar ÚNICAMENTE
+		// TRANSFORMER.
+		Matcher mSimple = PATRON_MODID_SIMPLE.matcher(t);
+		if (mSimple.matches()) {
+			return mSimple.group(1);
+		}
 
-	    // No hay modid válido
-	    return null;
+		// No hay modid válido
+		return null;
 	}
-
 
 	/**
 	 * Extrae el nombre de paquete de una línea de stack trace. Maneja: - Módulos de
@@ -415,71 +434,70 @@ public class VerificacionDeStackTrace {
 	 * @return Lista de contenidos encontrados dentro de llaves
 	 */
 	public static List<String> extraerLlavesDeLinea(String linea) {
-	    List<String> llaves = new ArrayList<>();
-	    Matcher m = BRACE_PATTERN.matcher(linea);
-	    while (m.find()) {
-	        String contenido = m.group(1).trim();
-	        if (esLlaveDeSistema(contenido)) {
-	            llaves.add(contenido);
-	        }
-	    }
-	    return llaves;
+		List<String> llaves = new ArrayList<>();
+		Matcher m = BRACE_PATTERN.matcher(linea);
+		while (m.find()) {
+			String contenido = m.group(1).trim();
+			if (esLlaveDeSistema(contenido)) {
+				llaves.add(contenido);
+			}
+		}
+		return llaves;
 	}
 
-	
 	// Heurística general para decidir si el contenido entre llaves representa
 	// pares "clave:valor" de sistema/cargador y no un toString() de objetos.
 	// Criterios:
-	//  - No debe contener '=' (propio de toString tipo name=value)
-	//  - Debe tener al menos un ':'
-	//  - Debe consistir en segmentos separados por comas
-	//  - Cada segmento debe tener forma clave:valor con clave alfanumérica sencilla
-	//  - Evitar valores con espacios “largos” (frases) u otros '='
+	// - No debe contener '=' (propio de toString tipo name=value)
+	// - Debe tener al menos un ':'
+	// - Debe consistir en segmentos separados por comas
+	// - Cada segmento debe tener forma clave:valor con clave alfanumérica sencilla
+	// - Evitar valores con espacios “largos” (frases) u otros '='
 	private static boolean esLlaveDeSistema(String c) {
-	    if (c == null) return false;
-	    String s = c.trim();
+		if (c == null)
+			return false;
+		String s = c.trim();
 
-	    // Rechazar formatos típicos de toString()
-	    if (s.indexOf('=') >= 0) return false;
+		// Rechazar formatos típicos de toString()
+		if (s.indexOf('=') >= 0)
+			return false;
 
-	    // Debe existir al menos un ':'
-	    if (s.indexOf(':') < 0) return false;
+		// Debe existir al menos un ':'
+		if (s.indexOf(':') < 0)
+			return false;
 
-	    String[] segs = s.split("\\s*,\\s*");
-	    if (segs.length == 0) return false;
+		String[] segs = s.split("\\s*,\\s*");
+		if (segs.length == 0)
+			return false;
 
-	    int paresValidos = 0;
+		int paresValidos = 0;
 
-	    for (String seg : segs) {
-	        int p = seg.indexOf(':');
-	        if (p <= 0 || p == seg.length() - 1) return false; // sin clave o sin valor
+		for (String seg : segs) {
+			int p = seg.indexOf(':');
+			if (p <= 0 || p == seg.length() - 1)
+				return false; // sin clave o sin valor
 
-	        String clave = seg.substring(0, p).trim();
-	        String valor = seg.substring(p + 1).trim();
+			String clave = seg.substring(0, p).trim();
+			String valor = seg.substring(p + 1).trim();
 
-	        // clave alfanumérica simple para evitar frases
-	        if (!clave.matches("[a-z][a-z0-9_\\-]*")) return false;
+			// clave alfanumérica simple para evitar frases
+			if (!clave.matches("[a-z][a-z0-9_\\-]*"))
+				return false;
 
-	        // evitar valores con '=' (otra señal de toString) o espacios excesivos tipo frases
-	        if (valor.indexOf('=') >= 0) return false;
-	        if (valor.matches(".*\\s{2,}.*")) return false;
+			// evitar valores con '=' (otra señal de toString) o espacios excesivos tipo
+			// frases
+			if (valor.indexOf('=') >= 0)
+				return false;
+			if (valor.matches(".*\\s{2,}.*"))
+				return false;
 
-	        paresValidos++;
-	    }
+			paresValidos++;
+		}
 
-	    // Requiere al menos 2 pares para ser confiable
-	    return paresValidos >= 2;
+		// Requiere al menos 2 pares para ser confiable
+		return paresValidos >= 2;
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Procesa líneas que contienen ClassNotFoundException o NoClassDefFoundError
 	 * Busca la clase faltante y trata de identificar el mod/jar sospechoso
@@ -622,24 +640,24 @@ public class VerificacionDeStackTrace {
 
 		return null;
 	}
-	
-	
-	
-	
-	
+
 	// Heurística: ¿parece un modid válido?
 	private static boolean esModIdPlausible(String s) {
-	    // minúsculas, dígitos, guion y guion_bajo, opcionalmente con puntos
-	    return s != null && s.matches("^[a-z0-9_\\-.]{2,64}$");
+		// minúsculas, dígitos, guion y guion_bajo, opcionalmente con puntos
+		return s != null && s.matches("^[a-z0-9_\\-.]{2,64}$");
 	}
 
 	// Heurística: ¿parece nombre de método o clase?
 	private static boolean pareceMetodoOClase(String s) {
-	    if (s == null) return false;
-	    if (s.indexOf('(') >= 0) return true;                 // foo(bar)
-	    if (s.indexOf('.') >= 0) return true;                 // paquete.clase
-	    if (!s.equals(s.toLowerCase())) return true;          // camelCase o Mayúsculas
-	    return false;
+		if (s == null)
+			return false;
+		if (s.indexOf('(') >= 0)
+			return true; // foo(bar)
+		if (s.indexOf('.') >= 0)
+			return true; // paquete.clase
+		if (!s.equals(s.toLowerCase()))
+			return true; // camelCase o Mayúsculas
+		return false;
 	}
 
 	/**
@@ -652,77 +670,83 @@ public class VerificacionDeStackTrace {
 	 */
 	// Sustituye tu processarSMHandler por esta versión
 	public void processarSMHandler(String pack, String dec, boolean fatal) {
-	    try {
-	        int idx = pack.indexOf("handler$");
-	        if (idx < 0) return;
+		try {
+			int idx = pack.indexOf("handler$");
+			if (idx < 0)
+				return;
 
-	        // Partes tras "handler$"
-	        String tail = pack.substring(idx + "handler$".length());
-	        String[] segs = tail.split("\\$");
-	        if (segs.length == 0) return;
+			// Partes tras "handler$"
+			String tail = pack.substring(idx + "handler$".length());
+			String[] segs = tail.split("\\$");
+			if (segs.length == 0)
+				return;
 
-	        String candidato = null;
+			String candidato = null;
 
-	        // Caso preferente: segs[0] suele ser el modid en muchas trazas modernas
-	        String s0 = sane(segs[0]);
-	        if (esModIdPlausible(s0) && !esModNoPermite(s0)) {
-	            // Si además segs[1] parece método/clase, refuerza la hipótesis
-	            if (segs.length >= 2) {
-	                String s1 = sane(segs[1]);
-	                if (pareceMetodoOClase(s1) || !esModIdPlausible(s1)) {
-	                    candidato = s0;
-	                }
-	            } else {
-	                candidato = s0;
-	            }
-	        }
+			// Caso preferente: segs[0] suele ser el modid en muchas trazas modernas
+			String s0 = sane(segs[0]);
+			if (esModIdPlausible(s0) && !esModNoPermite(s0)) {
+				// Si además segs[1] parece método/clase, refuerza la hipótesis
+				if (segs.length >= 2) {
+					String s1 = sane(segs[1]);
+					if (pareceMetodoOClase(s1) || !esModIdPlausible(s1)) {
+						candidato = s0;
+					}
+				} else {
+					candidato = s0;
+				}
+			}
 
-	        // Fallback clásico: segs[1] como modid (cuando segs[0] era hash)
-	        if (candidato == null && segs.length >= 2) {
-	            String s1 = sane(segs[1]);
-	            if (esModIdPlausible(s1) && !esModNoPermite(s1)) {
-	                candidato = s1;
-	            }
-	        }
+			// Fallback clásico: segs[1] como modid (cuando segs[0] era hash)
+			if (candidato == null && segs.length >= 2) {
+				String s1 = sane(segs[1]);
+				if (esModIdPlausible(s1) && !esModNoPermite(s1)) {
+					candidato = s1;
+				}
+			}
 
-	        // Escaneo adicional por si aparece más adelante
-	        if (candidato == null && segs.length >= 2) {
-	            for (int i = 2; i < segs.length; i++) {
-	                String si = sane(segs[i]);
-	                if (esModIdPlausible(si) && !esModNoPermite(si) && !pareceMetodoOClase(si)) {
-	                    candidato = si;
-	                    break;
-	                }
-	            }
-	        }
+			// Escaneo adicional por si aparece más adelante
+			if (candidato == null && segs.length >= 2) {
+				for (int i = 2; i < segs.length; i++) {
+					String si = sane(segs[i]);
+					if (esModIdPlausible(si) && !esModNoPermite(si) && !pareceMetodoOClase(si)) {
+						candidato = si;
+						break;
+					}
+				}
+			}
 
-	        if (candidato == null) return;
+			if (candidato == null)
+				return;
 
-	        if (!modid_malo.contains(candidato)) {
-	            modid_malo.add(candidato);
-	            String[] lvlLinea = dec.split(",");
-	            int nivel_prioridad = Integer.parseInt(lvlLinea[0]);
-	            int consoleLineNumber = Integer.parseInt(lvlLinea[1]);
-	            modids.put(candidato, nivel_prioridad, consoleLineNumber, fatal);
-	            CrashDetectorLogger.log("Mod ID por handler detectado: " + candidato);
-	        }
-	    } catch (Exception ex) {
-	        CrashDetectorLogger.log("processarSMHandler ignorado: " + ex.getMessage());
-	    }
+			if (!modid_malo.contains(candidato)) {
+				modid_malo.add(candidato);
+				String[] lvlLinea = dec.split(",");
+				int nivel_prioridad = Integer.parseInt(lvlLinea[0]);
+				int consoleLineNumber = Integer.parseInt(lvlLinea[1]);
+				modids.put(candidato, nivel_prioridad, consoleLineNumber, fatal);
+				CrashDetectorLogger.log("Mod ID por handler detectado: " + candidato);
+			}
+		} catch (Exception ex) {
+			CrashDetectorLogger.log("processarSMHandler ignorado: " + ex.getMessage());
+		}
 	}
 
-	// Limpieza básica de un segmento: corta "(", y si hay puntos, deja el primer token
+	// Limpieza básica de un segmento: corta "(", y si hay puntos, deja el primer
+	// token
 	private static String sane(String s) {
-	    if (s == null) return "";
-	    int p = s.indexOf('(');
-	    if (p >= 0) s = s.substring(0, p);
-	    // En handler suelen venir cosas como "paquete.Clase.metodo"
-	    // nos quedamos con el primer token para comparar contra modid
-	    int dot = s.indexOf('.');
-	    if (dot >= 0) s = s.substring(0, dot);
-	    return s;
+		if (s == null)
+			return "";
+		int p = s.indexOf('(');
+		if (p >= 0)
+			s = s.substring(0, p);
+		// En handler suelen venir cosas como "paquete.Clase.metodo"
+		// nos quedamos con el primer token para comparar contra modid
+		int dot = s.indexOf('.');
+		if (dot >= 0)
+			s = s.substring(0, dot);
+		return s;
 	}
-
 
 	/**
 	 * Verifica si un modid está en la lista de elementos no permitidos
@@ -986,6 +1010,12 @@ public class VerificacionDeStackTrace {
 		if (jarName.startsWith("datafixerupper")) {
 			return true;
 		}
+		
+		if (jarName.startsWith("theseus")) {
+			return true;
+		}
+		
+		
 
 		return false;
 	}
