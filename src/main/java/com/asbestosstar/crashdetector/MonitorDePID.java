@@ -274,7 +274,7 @@ public class MonitorDePID {
 	}
 
 	private static void monitor_proceso(long pid) {
-		List<Consola> consolas_sin_processando = Consola.obtenerConsolas();
+		//List<Consola> consolas_sin_processando = Consola.obtenerConsolas();
 		MonitorDePID.pid = pid;
 		Transformaciones.init();
 		if(ultimo_mods.toFile().exists()) {
@@ -304,7 +304,7 @@ public class MonitorDePID {
 				
 				
 				
-				consolas_sin_processando.addAll(Consola.obtenerConsolas());
+				List<Consola> consolas_sin_processando = Consola.obtenerConsolas();
 
 				if (!ArchivoDeCodigoError0.exists() && !Consola.tiene_registro_de_launcher(consolas_sin_processando)) {
 					try {// Cuando tiene una informe de crash esta codio 0 y tiene tiempo para esperar

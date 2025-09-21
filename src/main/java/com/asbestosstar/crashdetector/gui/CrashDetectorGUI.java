@@ -22,6 +22,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import java.util.function.Supplier;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -71,32 +72,30 @@ public class CrashDetectorGUI extends JFrame {
 	/**
 	 * Botons de la barra lateral
 	 */
-	public static List<BotonDeBarraLateralDerecha> botons_de_barra_lateral_derecha = new ArrayList<>();
+	private static List<Supplier<BotonDeBarraLateralDerecha>> botons_de_barra_lateral_derecha = new ArrayList<>();
 
 	static {
-		CrashDetectorLogger.log(String.valueOf(MonitorDePID.consolas.size()));
-		botons_de_barra_lateral_derecha.add(new BusquedaGUI());
-		CrashDetectorLogger.log(String.valueOf(MonitorDePID.consolas.size()));
-		botons_de_barra_lateral_derecha.add(new EscanerMCreatorGUI());
-		CrashDetectorLogger.log(String.valueOf(MonitorDePID.consolas.size()));
-		botons_de_barra_lateral_derecha.add(new HistoriaModsGUI());
-		CrashDetectorLogger.log(String.valueOf(MonitorDePID.consolas.size()));
-		botons_de_barra_lateral_derecha.add(new ArbolDeModsGUI());
-		CrashDetectorLogger.log(String.valueOf(MonitorDePID.consolas.size()));
-		botons_de_barra_lateral_derecha.add(new LectadorDeConsolas());
-		CrashDetectorLogger.log(String.valueOf(MonitorDePID.consolas.size()));
+		registrarBotonDeBarraLateralDerecha(() -> new BusquedaGUI());
+		registrarBotonDeBarraLateralDerecha(() -> new EscanerMCreatorGUI());
+		registrarBotonDeBarraLateralDerecha(() -> new HistoriaModsGUI());
+		registrarBotonDeBarraLateralDerecha(() -> new ArbolDeModsGUI());
+		registrarBotonDeBarraLateralDerecha(() -> new LectadorDeConsolas());
 
-		
 	}
 
 	public CrashDetectorGUI(Instant tiempoFallo, CountDownLatch cerrojo) {
 		this.tiempoFallo = tiempoFallo;
 		this.cerrojo = cerrojo;
-		CrashDetectorLogger.log(String.valueOf(MonitorDePID.consolas.size()));
 
 		inicializarInterfaz();
-		CrashDetectorLogger.log(String.valueOf(MonitorDePID.consolas.size()));
 
+	}
+
+	/**
+	 * Registrar Botons de la barra lateral
+	 */
+	public static void registrarBotonDeBarraLateralDerecha(Supplier<BotonDeBarraLateralDerecha> boton) {
+		botons_de_barra_lateral_derecha.add(boton);
 	}
 
 	private void inicializarInterfaz() {
@@ -116,31 +115,25 @@ public class CrashDetectorGUI extends JFrame {
 					"<html><body style='color:#ff6b6b'>Problema con el Informe: " + e.getMessage() + "</body></html>");
 		}
 
-
 		pantalla.addHyperlinkListener(e -> {
-		    if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-		        try {
-		            // Usar getDescription() porque getURL() puede ser null en protocolos custom
-		            String url = e.getDescription();
+			if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+				try {
+					// Usar getDescription() porque getURL() puede ser null en protocolos custom
+					String url = e.getDescription();
 
-		            if (url.startsWith("lectador://")) {
-		                CrashDetectorLogger.log(url + " (lectador url)");
-		                LectadorDeConsolas.procesarHipervinculo(url);
-		            } else {
-		                // Para URLs estándar (http/https/file/etc.)
-		                Desktop.getDesktop().browse(new java.net.URI(url));
-		            }
-		        } catch (Exception ex) {
-		            CrashDetectorLogger.logException(ex);
-		        }
-		    }
+					if (url.startsWith("lectador://")) {
+						CrashDetectorLogger.log(url + " (lectador url)");
+						LectadorDeConsolas.procesarHipervinculo(url);
+					} else {
+						// Para URLs estándar (http/https/file/etc.)
+						Desktop.getDesktop().browse(new java.net.URI(url));
+					}
+				} catch (Exception ex) {
+					CrashDetectorLogger.logException(ex);
+				}
+			}
 		});
 
-
-		
-		
-		
-		
 		CrashDetectorLogger.log("estabalar frontera");
 		scrollPane.setBorder(BorderFactory.createEmptyBorder());
 		scrollPane.getViewport().setBackground(colorCajaTexto);
@@ -359,7 +352,8 @@ public class CrashDetectorGUI extends JFrame {
 		CrashDetectorLogger.log("estabalar lateral derecha");
 		// Botones dinámicos (grepr/fgrepr y MCreator)
 
-		for (BotonDeBarraLateralDerecha bt : botons_de_barra_lateral_derecha) {
+		for (Supplier<BotonDeBarraLateralDerecha> sup : botons_de_barra_lateral_derecha) {
+			BotonDeBarraLateralDerecha bt = sup.get();
 			JButton btn = new JButton(bt.etiquetaDelBoton());
 			if (bt.icon() != null) {
 				btn.setIcon(bt.icon());

@@ -100,9 +100,22 @@ public class Consola {
 		super();
 		this.archivo = archivo;
 		linea_original = 0;
-		if(!archivos_en_lista.contains(archivo.toAbsolutePath().toString())) {
-		archivos_en_lista.add(archivo.toAbsolutePath().toString());
-		}
+
+
+	    String clave;
+	    try {
+	        clave = archivo.toFile().getCanonicalPath().replace('\\','/');
+	    } catch (IOException e) {
+	        clave = archivo.toAbsolutePath().normalize().toString().replace('\\','/');
+	    }
+
+	    if (!archivos_en_lista.contains(clave)) {
+	        archivos_en_lista.add(clave); // marcar como visto
+	    }
+		
+		
+		
+		
 		for (DivisorDeArchivos div : divisores) {
 			if (div.predicado(archivo)) {
 				String contento_existe = MonitorDePID.leer_archivo(archivo);
@@ -313,25 +326,54 @@ public void finalizarContenido(Instant tiempo, boolean ignorar_necesita_estar_de
 	}
 
 	public static List<Consola> obtenerConsolas() {
-		List<Consola> resulto = new ArrayList<Consola>();
-		//resulto.addAll(leerMapaConsolasComoLista());
-		for (File archivo : obtenerArchivosDeConsolas()) {
-			if (archivo.exists()) {
-				if (!archivos_en_lista.contains(archivo.getAbsolutePath())) {
-					try {
-						resulto.add(new Consola(archivo.toPath()));
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}
+	    List<Consola> resultado = new ArrayList<>();
 
-		}
+	    for (Consola c : leerMapaConsolasComoLista()) {
+	        String k = clave(c.archivo);
+	            resultado.add(c);
+	        
+	    }
 
-		return resulto;
+	    for (File archivo : obtenerArchivosDeConsolas()) {
+	        if (archivo == null || !archivo.exists() || !archivo.isFile()) continue;
 
+	        String k = clave(archivo);
+	        if (archivos_en_lista.contains(k)) {
+	            continue;
+	        }
+
+	        try {
+	            Consola c = new Consola(archivo.toPath());
+	            resultado.add(c);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	    return resultado;
 	}
+
+	
+	private static String clave(Path p) {
+	    try {
+	        return p.toFile().getCanonicalPath().replace('\\','/');
+	    } catch (IOException e) {
+	        return p.toAbsolutePath().normalize().toString().replace('\\','/');
+	    }
+	}
+
+	private static String clave(File f) {
+	    try {
+	        return f.getCanonicalPath().replace('\\','/');
+	    } catch (IOException e) {
+	        return f.getAbsolutePath().replace('\\','/');
+	    }
+	}
+
+	
+	
+	
+	
 
 	public static List<File> obtenerArchivosDeConsolas() {
 		List<File> resultado = new ArrayList<>();
