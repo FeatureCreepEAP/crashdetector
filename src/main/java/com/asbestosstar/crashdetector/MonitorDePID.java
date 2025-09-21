@@ -37,7 +37,7 @@ public class MonitorDePID {
 	public static Path carpeta = new File("crash_detector/").toPath();
 	public static File ArchivoDeCodigoError0 = new File("crash_detector/ArchivoDeCodigoError0");
 	public static Path ultimo_mods = carpeta.resolve("ultima_mods");
-	// public static Path viajo_ultima_mods = carpeta.resolve("viajo_ultima_mods");
+	//public static Path viajo_ultima_mods = carpeta.resolve("viajo_ultima_mods");
 	public static List<Consola> consolas = new ArrayList<Consola>();
 	public static Analizador analizador = new Analizador();
 
@@ -62,6 +62,7 @@ public class MonitorDePID {
 			monitor_proceso(pid);
 			return;
 		}
+
 		if (args.length > 0 && (args[0].equals("grepr") || args[0].equals("fgrepr"))) {
 			boolean useRegex = args[0].equals("grepr");
 			boolean caseInsensitive = false;
@@ -99,11 +100,13 @@ public class MonitorDePID {
 			}
 			return;
 		}
-
+		
 		ProxySysOutSysErr.init();
 
-		ArchivoDeCodigoError0.delete();
 
+		ArchivoDeCodigoError0.delete();
+		
+		
 		String mods = "";
 		if (ultimo_mods.toFile().exists()) {
 			try {
@@ -113,6 +116,50 @@ public class MonitorDePID {
 				e.printStackTrace();
 			}
 		}
+		
+		
+		
+		
+		File html = new File("crash_detector/pantilla.htm");
+
+		copiarACarpetaDesdeJar("/pantilla.htm", html);
+
+		copiarACarpetaDesdeJar("/imagenes/gura.png", new File("crash_detector/imagenes/gura.png"));
+		copiarACarpetaDesdeJar("/imagenes/clio.png", new File("crash_detector/imagenes/clio.png"));
+		copiarACarpetaDesdeJar("/imagenes/hamu.png", new File("crash_detector/imagenes/hamu.png"));
+		copiarACarpetaDesdeJar("/imagenes/nanashi_mumei.png", new File("crash_detector/imagenes/nanashi_mumei.png"));
+		copiarACarpetaDesdeJar("/imagenes/shion.png", new File("crash_detector/imagenes/shion.png"));
+		copiarACarpetaDesdeJar("/imagenes/vshojo.png", new File("crash_detector/imagenes/vshojo.png"));
+		copiarACarpetaDesdeJar("/imagenes/rosemi.png", new File("crash_detector/imagenes/rosemi.png"));
+		copiarACarpetaDesdeJar("/imagenes/kiara_ame.png", new File("crash_detector/imagenes/kiara_ame.png"));
+
+		copiarACarpetaDesdeJar("/imagenes/padoru.gif", new File("crash_detector/imagenes/padoru.gif"));
+
+		
+		
+		copiarACarpetaDesdeJar("/imagenes/boton_agregar.png", new File("crash_detector/imagenes/boton_agregar.png"));
+		copiarACarpetaDesdeJar("/imagenes/boton_compartir.png",
+				new File("crash_detector/imagenes/boton_compartir.png"));
+		copiarACarpetaDesdeJar("/imagenes/boton_actualizar.png",
+				new File("crash_detector/imagenes/boton_actualizar.png"));
+		copiarACarpetaDesdeJar("/imagenes/boton_archivos.png", new File("crash_detector/imagenes/boton_archivos.png"));
+		copiarACarpetaDesdeJar("/imagenes/boton_config.png", new File("crash_detector/imagenes/boton_config.png"));
+		copiarACarpetaDesdeJar("/imagenes/cd_logo.png", new File("crash_detector/imagenes/cd_logo.png"));
+		copiarACarpetaDesdeJar("/imagenes/profeco.jpg", new File("crash_detector/imagenes/profeco.jpg"));
+
+		
+		
+		copiarACarpetaDesdeJar("/imagenes/mod.png", new File("crash_detector/imagenes/mod.png"));
+		copiarACarpetaDesdeJar("/imagenes/clase.png", new File("crash_detector/imagenes/clase.png"));
+		copiarACarpetaDesdeJar("/imagenes/metodo.png", new File("crash_detector/imagenes/metodo.png"));
+		copiarACarpetaDesdeJar("/imagenes/campo.png", new File("crash_detector/imagenes/campo.png"));
+		copiarACarpetaDesdeJar("/imagenes/paquete.png", new File("crash_detector/imagenes/paquete.png"));
+		copiarACarpetaDesdeJar("/imagenes/referencia_metodo.png", new File("crash_detector/imagenes/referencia_metodo.png"));
+		copiarACarpetaDesdeJar("/imagenes/referencia_campo.png", new File("crash_detector/imagenes/referencia_campo.png"));
+
+		
+		
+		
 
 //		new File(viajo_ultima_mods.toString()).delete();
 //		try {
@@ -157,7 +204,7 @@ public class MonitorDePID {
 		}
 
 		File um_archivo = new File(ultimo_mods.toString());
-		um_archivo.delete();
+				um_archivo.delete();
 		try {
 			um_archivo.createNewFile();
 			FileWriter escribidor = new FileWriter(ultimo_mods.toFile());
@@ -167,46 +214,13 @@ public class MonitorDePID {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		// cargardor de extenciones aqui
+		
+		
+		
+		//cargardor de extenciones aqui
 		CargadorExtensiones.cargarExtensionesProcesoApp(um_archivo);
-
 		Consola.escribirMapa(Instant.now());
-
-		File html = new File("crash_detector/pantilla.htm");
-
-		copiarACarpetaDesdeJar("/pantilla.htm", html);
-
-		copiarACarpetaDesdeJar("/imagenes/gura.png", new File("crash_detector/imagenes/gura.png"));
-		copiarACarpetaDesdeJar("/imagenes/clio.png", new File("crash_detector/imagenes/clio.png"));
-		copiarACarpetaDesdeJar("/imagenes/hamu.png", new File("crash_detector/imagenes/hamu.png"));
-		copiarACarpetaDesdeJar("/imagenes/nanashi_mumei.png", new File("crash_detector/imagenes/nanashi_mumei.png"));
-		copiarACarpetaDesdeJar("/imagenes/shion.png", new File("crash_detector/imagenes/shion.png"));
-		copiarACarpetaDesdeJar("/imagenes/vshojo.png", new File("crash_detector/imagenes/vshojo.png"));
-		copiarACarpetaDesdeJar("/imagenes/rosemi.png", new File("crash_detector/imagenes/rosemi.png"));
-		copiarACarpetaDesdeJar("/imagenes/kiara_ame.png", new File("crash_detector/imagenes/kiara_ame.png"));
-
-		copiarACarpetaDesdeJar("/imagenes/padoru.gif", new File("crash_detector/imagenes/padoru.gif"));
-
-		copiarACarpetaDesdeJar("/imagenes/boton_agregar.png", new File("crash_detector/imagenes/boton_agregar.png"));
-		copiarACarpetaDesdeJar("/imagenes/boton_compartir.png",
-				new File("crash_detector/imagenes/boton_compartir.png"));
-		copiarACarpetaDesdeJar("/imagenes/boton_actualizar.png",
-				new File("crash_detector/imagenes/boton_actualizar.png"));
-		copiarACarpetaDesdeJar("/imagenes/boton_archivos.png", new File("crash_detector/imagenes/boton_archivos.png"));
-		copiarACarpetaDesdeJar("/imagenes/boton_config.png", new File("crash_detector/imagenes/boton_config.png"));
-		copiarACarpetaDesdeJar("/imagenes/cd_logo.png", new File("crash_detector/imagenes/cd_logo.png"));
-		copiarACarpetaDesdeJar("/imagenes/profeco.jpg", new File("crash_detector/imagenes/profeco.jpg"));
-
-		copiarACarpetaDesdeJar("/imagenes/mod.png", new File("crash_detector/imagenes/mod.png"));
-		copiarACarpetaDesdeJar("/imagenes/clase.png", new File("crash_detector/imagenes/clase.png"));
-		copiarACarpetaDesdeJar("/imagenes/metodo.png", new File("crash_detector/imagenes/metodo.png"));
-		copiarACarpetaDesdeJar("/imagenes/campo.png", new File("crash_detector/imagenes/campo.png"));
-		copiarACarpetaDesdeJar("/imagenes/paquete.png", new File("crash_detector/imagenes/paquete.png"));
-		copiarACarpetaDesdeJar("/imagenes/referencia_metodo.png",
-				new File("crash_detector/imagenes/referencia_metodo.png"));
-		copiarACarpetaDesdeJar("/imagenes/referencia_campo.png",
-				new File("crash_detector/imagenes/referencia_campo.png"));
+		
 
 		long pid = obtenerPID();
 		System.out.println("PID: " + pid);
@@ -244,6 +258,7 @@ public class MonitorDePID {
 			System.out.println("JVM " + javaBinary);
 		}
 
+
 		// Launch the child monitor process
 		try {
 			String cp = System.getProperty("java.class.path") + File.pathSeparator + jar;
@@ -254,6 +269,7 @@ public class MonitorDePID {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 
 	}
 
@@ -261,10 +277,11 @@ public class MonitorDePID {
 		List<Consola> consolas_sin_processando = Consola.obtenerConsolas();
 		MonitorDePID.pid = pid;
 		Transformaciones.init();
-		if (ultimo_mods.toFile().exists()) {
+		if(ultimo_mods.toFile().exists()) {
 			CargadorExtensiones.cargarExtensionesProcesoMonitor(ultimo_mods.toFile());
 		}
-
+		
+		
 		System.out.println(idioma.buscando_para_pid(pid));
 		CountDownLatch latch = new CountDownLatch(1); // Necesito por que sin esta preceso esta muerte
 
@@ -283,6 +300,10 @@ public class MonitorDePID {
 				// if (duration.getSeconds() >= 25) {// Para las consolas completa
 				// } else {
 
+				
+				
+				
+				
 				consolas_sin_processando.addAll(Consola.obtenerConsolas());
 
 				if (!ArchivoDeCodigoError0.exists() && !Consola.tiene_registro_de_launcher(consolas_sin_processando)) {
@@ -308,8 +329,9 @@ public class MonitorDePID {
 						obtenerConsolaDeLauncher(utc);
 					}
 				}
-
+				
 				historia_mods();
+				
 
 				Instant luego = Instant.now();
 				recargar(true, luego);
@@ -372,42 +394,53 @@ public class MonitorDePID {
 		// TODO Auto-generated method stub
 
 		ArchivoDeCodigoError0.delete();
-		// viajo_ultima_mods.toFile().delete();
+		//viajo_ultima_mods.toFile().delete();
 		latch.countDown();
 		System.exit(0);
 	}
-
+	
+	
+	
+	
+	
+	
 	public static void historia_mods() {
 
-		try {
-			Path directorioHistorial = carpeta.resolve("historia_mods");
-			Files.createDirectories(directorioHistorial);
+	    try {
+	        Path directorioHistorial = carpeta.resolve("historia_mods");
+	        Files.createDirectories(directorioHistorial);
 
-			File[] archivosHistorial = directorioHistorial.toFile().listFiles();
-			int siguienteNumero = 0;
-			if (archivosHistorial != null) {
-				for (File archivo : archivosHistorial) {
-					String nombre = archivo.getName();
-					if (nombre.matches("\\d{6}\\.falla") || nombre.matches("\\d{6}\\.exito")) {
-						int num = Integer.parseInt(nombre.substring(0, 6));
-						if (num >= siguienteNumero)
-							siguienteNumero = num + 1;
-					}
-				}
-			}
+	        File[] archivosHistorial = directorioHistorial.toFile().listFiles();
+	        int siguienteNumero = 0;
+	        if (archivosHistorial != null) {
+	            for (File archivo : archivosHistorial) {
+	                String nombre = archivo.getName();
+	                if (nombre.matches("\\d{6}\\.falla") || nombre.matches("\\d{6}\\.exito")) {
+	                    int num = Integer.parseInt(nombre.substring(0, 6));
+	                    if (num >= siguienteNumero) siguienteNumero = num + 1;
+	                }
+	            }
+	        }
 
-			String extension = activar() ? "falla" : "exito";
-			String nombreArchivo = String.format("%06d.%s", siguienteNumero, extension);
-			Path archivoHistorial = directorioHistorial.resolve(nombreArchivo);
+	        String extension = activar() ? "falla" : "exito";
+	        String nombreArchivo = String.format("%06d.%s", siguienteNumero, extension);
+	        Path archivoHistorial = directorioHistorial.resolve(nombreArchivo);
 
-			if (ultimo_mods.toFile().exists()) {
-				String contenido = new String(Files.readAllBytes(ultimo_mods), StandardCharsets.UTF_8);
-				Files.write(archivoHistorial, contenido.getBytes(StandardCharsets.UTF_8));
-			}
-		} catch (IOException e) {
-			CrashDetectorLogger.log("Error al crear historial de modlist: " + e.getMessage());
-		}
+	        if (ultimo_mods.toFile().exists()) {
+	            String contenido = new String(Files.readAllBytes(ultimo_mods), StandardCharsets.UTF_8);
+	            Files.write(archivoHistorial, contenido.getBytes(StandardCharsets.UTF_8));
+	        }
+	    } catch (IOException e) {
+	        CrashDetectorLogger.log("Error al crear historial de modlist: " + e.getMessage());
+	    }
 	}
+	
+	
+	
+	
+	
+	
+	
 
 	/**
 	 * asegura los registros son completa para 20 segundos
@@ -712,7 +745,7 @@ public class MonitorDePID {
 					FileOutputStream outputStream = new FileOutputStream(resultdo)) {
 
 				if (inputStream == null) {
-					throw new RuntimeException("El archivo de CrashDetector no tiene " + ubicacion_en_jar);
+					throw new RuntimeException("El archivo de CrashDetector no tiene "+ubicacion_en_jar);
 				}
 				byte[] buffer = new byte[1024];
 				int bytesRead;
@@ -754,7 +787,7 @@ public class MonitorDePID {
 			resultados = true;
 		}
 
-		// CrashDetectorLogger.log("resultdos " + res);
+		//CrashDetectorLogger.log("resultdos " + res);
 		contenidoInforme = constructor;
 		local = GeneradorDeInformacion.generarLocal(consolas, utc).getAbsolutePath();
 	}

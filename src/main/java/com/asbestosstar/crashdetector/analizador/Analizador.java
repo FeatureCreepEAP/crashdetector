@@ -222,8 +222,9 @@ public class Analizador {
 	    CrashDetectorLogger.log("Iniciando análisis de " + consolas.size() + " registros");
 	    
 	    for (Consola consola : consolas) {
+	        CrashDetectorLogger.log("comenz analiz");
 	        consola.verificacion_de_stacktrace.reiniciar();
-	        
+	        CrashDetectorLogger.log("reinciar vdst");
 	        // Iniciar temporizador para esta consola
 	        long consolaStartTime = System.nanoTime();
 	        CrashDetectorLogger.log("Analizando registro: " + consola.archivo.getFileName());
@@ -300,6 +301,9 @@ public class Analizador {
 
 				constructor.append("<br>").append(ver.mensaje()).append("<hr style='border: 0; border-top: 1px solid #")
 						.append(tituloColor).append("; margin: 8px 0;' />").append("</li>");
+		
+			CrashDetectorLogger.log("razon " +ver.mensaje());
+			
 			}
 		}
 

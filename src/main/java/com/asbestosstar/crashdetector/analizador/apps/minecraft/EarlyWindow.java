@@ -1,6 +1,7 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
 import com.asbestosstar.crashdetector.Consola;
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;

@@ -52,7 +52,7 @@ public class Consola {
 
 	public LimpiadorDeRegistro limpiador;
 
-	public static ArrayList<File> archivos_en_lista = new ArrayList<File>();
+	public static ArrayList<String> archivos_en_lista = new ArrayList<String>();
 
 	/**
 	 * Si el registro es un registro de lanzer o consola registar aqui en
@@ -100,14 +100,17 @@ public class Consola {
 		super();
 		this.archivo = archivo;
 		linea_original = 0;
-		archivos_en_lista.add(archivo.toFile());
-
+		if(!archivos_en_lista.contains(archivo.toAbsolutePath().toString())) {
+		archivos_en_lista.add(archivo.toAbsolutePath().toString());
+		}
 		for (DivisorDeArchivos div : divisores) {
 			if (div.predicado(archivo)) {
 				String contento_existe = MonitorDePID.leer_archivo(archivo);
 				linea_original = div.obtenerLineaOriginal(contento_existe);
 			}
 		}
+		CrashDetectorLogger.log(archivo.toAbsolutePath()+" linea "+ String.valueOf(linea_original));
+
 
 	}
 
@@ -188,152 +191,105 @@ public class Consola {
 		return total;
 	}
 
-	// lector que solo devuelve consolas de archivos que hayan cambiado
-	public static List<Consola> leerMapaConsolasComoLista() {
-		List<Consola> lista = new ArrayList<>();
-		File carpeta = new File("crash_detector");
-		File mapa = new File(carpeta, "mapa_de_registros");
-		if (!mapa.exists() || !mapa.isFile()) {
-			return lista;
-		}
+// lector que solo devuelve consolas de archivos cuyo mtime es posterior al del mapa
+public static List<Consola> leerMapaConsolasComoLista() {
+    List<Consola> lista = new ArrayList<>();
+    File carpeta = new File("crash_detector");
+    File mapa = new File(carpeta, "mapa_de_registros");
+    if (!mapa.exists() || !mapa.isFile()) {
+        return lista;
+    }
 
-		Set<String> vistas = new HashSet<>();
+    Set<String> vistas = new HashSet<>();
 
-		try (BufferedReader br = new BufferedReader(new FileReader(mapa))) {
-			String linea;
-			while ((linea = br.readLine()) != null) {
-				String l = linea.trim();
-				if (l.isEmpty())
-					continue;
+    try (BufferedReader br = new BufferedReader(new FileReader(mapa))) {
+        String linea;
+        while ((linea = br.readLine()) != null) {
+            String l = linea.trim();
+            if (l.isEmpty()) continue;
 
-				String[] partes = l.split("\t");
-				if (partes.length < 3)
-					continue;
+            String[] partes = l.split("\t");
+            if (partes.length < 3) continue;
 
-				String ruta = partes[0].trim();
-				long tiempoGuardado = 0L;
-				int lineaGuardada = 0;
-				try {
-					tiempoGuardado = Long.parseLong(partes[1].trim());
-				} catch (NumberFormatException ignore) {
-				}
-				try {
-					lineaGuardada = Integer.parseInt(partes[2].trim());
-				} catch (NumberFormatException ignore) {
-				}
+            String ruta = partes[0].trim();
+            long tiempoGuardado = 0L;
+            int lineaGuardada = 0;
+            try { tiempoGuardado = Long.parseLong(partes[1].trim()); } catch (NumberFormatException ignore) {}
+            try { lineaGuardada = Integer.parseInt(partes[2].trim()); } catch (NumberFormatException ignore) {}
 
-				File f = new File(ruta);
-				if (!f.exists() || !f.isFile())
-					continue;
+            File f = new File(ruta);
+            if (!f.exists() || !f.isFile()) continue;
 
-				try {
-					File fCanonico = f.getCanonicalFile();
-					String key = fCanonico.getAbsolutePath();
-					if (vistas.contains(key))
-						continue;
-					vistas.add(key);
+            try {
+                File fCanonico = f.getCanonicalFile();
+                String key = fCanonico.getAbsolutePath();
+                if (vistas.contains(key)) continue;
+                vistas.add(key);
 
-					long modAhora = fCanonico.lastModified();
+                long modAhora = fCanonico.lastModified();
 
-					int lineaActual = 0;
-					boolean huboDivisor = false;
-					for (DivisorDeArchivos div : divisores) {
-						try {
-							if (div.predicado(fCanonico.toPath())) {
-								huboDivisor = true;
-								String contenido = MonitorDePID.leer_archivo(fCanonico.toPath());
-								int ln = div.obtenerLineaOriginal(contenido);
-								if (ln > 0) {
-									lineaActual = ln;
-									break;
-								}
-							}
-						} catch (Exception ex) {
-							CrashDetectorLogger.logException(ex);
-						}
-					}
-					if (!huboDivisor || lineaActual <= 0) {
-						lineaActual = contarLineas(fCanonico.toPath());
-					}
+                if (modAhora > tiempoGuardado) {
+                    Consola c = new Consola(fCanonico.toPath());
+                    if (lineaGuardada > 0) {
+                        c.linea_original = lineaGuardada;
+                    }
+                    lista.add(c);
 
-					boolean cambioPorTiempo = modAhora > tiempoGuardado;
-					boolean cambioPorLineas = lineaActual > lineaGuardada;
+                }
+            } catch (IOException e) {
+                CrashDetectorLogger.logException(e);
+            }
+        }
+    } catch (IOException e) {
+        CrashDetectorLogger.logException(e);
+    }
 
-					if (cambioPorTiempo || cambioPorLineas) {
-						Consola c = new Consola(fCanonico.toPath());
-						if (lineaGuardada > 0) {
-							c.linea_original = lineaGuardada;
-						}
-						lista.add(c);
+    return lista;
+}
 
-						boolean yaEsta = false;
-						for (File ya : archivos_en_lista) {
-							try {
-								if (ya.getCanonicalPath().equals(fCanonico.getCanonicalPath())) {
-									yaEsta = true;
-									break;
-								}
-							} catch (IOException ignore) {
-							}
-						}
-						if (!yaEsta) {
-							archivos_en_lista.add(fCanonico);
-						}
-					}
-				} catch (IOException e) {
-					CrashDetectorLogger.logException(e);
-				}
-			}
-		} catch (IOException e) {
-			CrashDetectorLogger.logException(e);
-		}
 
-		return lista;
-	}
+public void finalizarContenido(Instant tiempo, boolean ignorar_necesita_estar_despues_de_tiempo) {
+    try {
+        Instant epoc = Instant.ofEpochMilli(archivo.toFile().lastModified());
 
-	public void finalizarContenido(Instant tiempo, boolean ignorar_necesita_estar_despues_de_tiempo) {
-		try {
+        if (epoc.isAfter(tiempo) || ignorar_necesita_estar_despues_de_tiempo || nueva) {
+            nueva = true;
+            contenido = MonitorDePID.leer_archivo(archivo);
 
-			Instant epoc = Instant.ofEpochMilli(archivo.toFile().lastModified());
+            String[] lineas = contenido.split("\\r?\\n", -1); // conserva línea vacía final si existe
+            StringBuilder para_verificar = new StringBuilder(contenido.length() + 64);
+            int inicio = Math.max(0, linea_original);
+            for (int i = inicio; i < lineas.length; i++) {
+                para_verificar.append(lineas[i]);
+                if (i < lineas.length - 1) para_verificar.append('\n');
+            }
 
-			if (epoc.isAfter(tiempo) || ignorar_necesita_estar_despues_de_tiempo || nueva) {
-				nueva = true;
-				contenido = MonitorDePID.leer_archivo(archivo);
+            CrashDetectorLogger.log("archivo nombre: " + archivo.toString());
+            boolean limpiado = false;
+            for (LimpiadorDeRegistro limp : limpiadores) {
+                if (limp.predicado(archivo)) {
+                    contenido_verificar = limp.limpiarConsola(para_verificar.toString());
+                    this.limpiador = limp;
+                    limpiado = true;
+                }
+            }
+            if (!limpiado) {
+                this.limpiador = new LimpiadorNingun();
+                contenido_verificar = para_verificar.toString();
+            }
 
-				StringBuilder para_verificar = new StringBuilder();
-				String[] lineas = contenido.split(File.pathSeparator);
-				for (int i = linea_original; i < lineas.length - 1; i++) {
-					para_verificar.append(lineas[i]).append(File.pathSeparator);
-				}
+            if (contenido_verificar.contains(MonitorDePID.mensaje_de_registro_lanzer_completo)) {
+                MonitorDePID.tiene_mensaje_de_registro_launcher_completa = true;
+            }
+        } else {
+            nueva = false;
+            contenido = "";
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
 
-				CrashDetectorLogger.log("archivo nombre: " + archivo.toString());
-				boolean limpiado = false;
-				for (LimpiadorDeRegistro limp : limpiadores) {
-					if (limp.predicado(archivo)) {
-						contenido_verificar = limp.limpiarConsola(para_verificar.toString());
-						this.limpiador = limp;
-						limpiado = true;
-					}
-				}
-				if (!limpiado) {
-					this.limpiador = new LimpiadorNingun();
-					contenido_verificar = para_verificar.toString();
-				}
-
-				if (contenido_verificar.contains(MonitorDePID.mensaje_de_registro_lanzer_completo)) {
-					MonitorDePID.tiene_mensaje_de_registro_launcher_completa = true;
-				}
-
-			} else {
-				nueva = false;
-				contenido = "";
-			}
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 
 	public void finalizarContenidoInyectado(String contento) {
 		nueva = true;
@@ -358,10 +314,10 @@ public class Consola {
 
 	public static List<Consola> obtenerConsolas() {
 		List<Consola> resulto = new ArrayList<Consola>();
-		resulto.addAll(leerMapaConsolasComoLista());
+		//resulto.addAll(leerMapaConsolasComoLista());
 		for (File archivo : obtenerArchivosDeConsolas()) {
 			if (archivo.exists()) {
-				if (!archivos_en_lista.contains(archivo)) {
+				if (!archivos_en_lista.contains(archivo.getAbsolutePath())) {
 					try {
 						resulto.add(new Consola(archivo.toPath()));
 					} catch (IOException e) {

@@ -110,10 +110,15 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 
 	public LectadorDeConsolas() {
 		super(idioma.tituloLectador());
+		CrashDetectorLogger.log(String.valueOf(MonitorDePID.consolas.size()));
 		configurarVentana();
+		CrashDetectorLogger.log(String.valueOf(MonitorDePID.consolas.size()));
 		inicializarComponentes();
+		CrashDetectorLogger.log(String.valueOf(MonitorDePID.consolas.size()));
 		cargarConsolas();
+		CrashDetectorLogger.log(String.valueOf(MonitorDePID.consolas.size()));
 		precargarLineasEnSegundoPlano();
+		CrashDetectorLogger.log(String.valueOf(MonitorDePID.consolas.size()));
 	}
 
 	private void configurarVentana() {
@@ -486,9 +491,11 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 	}
 
 	private void cargarConsolas() {
+		CrashDetectorLogger.log("consolas carg "+String.valueOf(consolas.size()));
 		for (Consola consola : consolas) {
 			String nombreArchivo = new File(consola.archivo.toString()).getName();
 			cmbConsolas.addItem(nombreArchivo);
+			CrashDetectorLogger.log(consola.contenido_verificar);
 		}
 		if (cmbConsolas.getItemCount() > 0) {
 			cmbConsolas.setSelectedIndex(0);

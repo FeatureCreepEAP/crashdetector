@@ -2,6 +2,7 @@ package com.asbestosstar.crashdetector.analizador.general;
 
 import com.asbestosstar.crashdetector.CDStringBuilder;
 import com.asbestosstar.crashdetector.Consola;
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
@@ -18,6 +19,8 @@ public class NoTieneMemoria implements Verificaciones {
 	public void verificar(Consola consola) {
 		String contenidoConsola = consola.contenido_verificar;
 
+		
+		
 		// Muchos de las ideas son de TLauncher signatures.json o HMCL
 		// CrashAnalyzer.java
 
@@ -49,6 +52,11 @@ public class NoTieneMemoria implements Verificaciones {
 			verificarJVMMemoria();
 			activado = true;
 		}
+		
+
+		
+		
+		
 	}
 
 	/**

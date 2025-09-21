@@ -74,18 +74,29 @@ public class CrashDetectorGUI extends JFrame {
 	public static List<BotonDeBarraLateralDerecha> botons_de_barra_lateral_derecha = new ArrayList<>();
 
 	static {
+		CrashDetectorLogger.log(String.valueOf(MonitorDePID.consolas.size()));
 		botons_de_barra_lateral_derecha.add(new BusquedaGUI());
+		CrashDetectorLogger.log(String.valueOf(MonitorDePID.consolas.size()));
 		botons_de_barra_lateral_derecha.add(new EscanerMCreatorGUI());
+		CrashDetectorLogger.log(String.valueOf(MonitorDePID.consolas.size()));
 		botons_de_barra_lateral_derecha.add(new HistoriaModsGUI());
+		CrashDetectorLogger.log(String.valueOf(MonitorDePID.consolas.size()));
 		botons_de_barra_lateral_derecha.add(new ArbolDeModsGUI());
+		CrashDetectorLogger.log(String.valueOf(MonitorDePID.consolas.size()));
 		botons_de_barra_lateral_derecha.add(new LectadorDeConsolas());
+		CrashDetectorLogger.log(String.valueOf(MonitorDePID.consolas.size()));
+
 		
 	}
 
 	public CrashDetectorGUI(Instant tiempoFallo, CountDownLatch cerrojo) {
 		this.tiempoFallo = tiempoFallo;
 		this.cerrojo = cerrojo;
+		CrashDetectorLogger.log(String.valueOf(MonitorDePID.consolas.size()));
+
 		inicializarInterfaz();
+		CrashDetectorLogger.log(String.valueOf(MonitorDePID.consolas.size()));
+
 	}
 
 	private void inicializarInterfaz() {

@@ -1,6 +1,7 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
 import com.asbestosstar.crashdetector.Consola;
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
@@ -26,7 +27,7 @@ public class ErrorJEIPluginFallido implements Verificaciones {
 	public void verificar(Consola consola) {
 		String contenidoConsola = consola.contenido_verificar;
 		String[] lineas = contenidoConsola.split(Verificaciones.nl);
-
+CrashDetectorLogger.log("ultima ver");
 		// Analiza cada línea del registro buscando el patrón específico de error de
 		// plugin JEI
 		for (int i = 0; i < lineas.length; i++) {
@@ -69,6 +70,7 @@ public class ErrorJEIPluginFallido implements Verificaciones {
 
 	@Override
 	public String mensaje() {
+        CrashDetectorLogger.log("Ultima Mensaje");
 		if (!activado)
 			return "";
 		return mensaje + enlaceHtml;

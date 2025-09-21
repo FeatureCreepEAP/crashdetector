@@ -49,5 +49,13 @@ public class TransformacionesCPW implements  ITransformer<ClassNode> {
 		
 		return resultdo;
 	}
+	
+	
+	//@Override
+//	public cpw.mods.modlauncher.api.TargetType getTargetType() {
+//	return TargetType.CLASS;	
+//	}
+	
+	
 
 }
