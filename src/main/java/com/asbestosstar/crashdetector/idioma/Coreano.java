@@ -2876,6 +2876,23 @@ public String fatal() {
 	// TODO Auto-generated method stub
 	return "치명적";
 }
+@Override
+public String noRegistroDeBattly() {
+	// TODO Auto-generated method stub
+	return "BattlyLauncher에는 복사할 수 있는 로그나 콘솔이 없습니다. 게임을 재시작하면서 STDOUT과 STDERR를 가로채기 위해 ProxySysOutSysErr를 사용할 수 있지만, STDOUT이나 STDERR를 수정하는 모드와 충돌할 수 있습니다.";
+}
+
+@Override
+public String noRegistroDeNightWorld() {
+	// TODO Auto-generated method stub
+	return "NightWorld 설정에서 디버그 모드를 활성화하여 런처 로그를 확보해야 합니다. 특히 STDOUT과 STDERR를 포함하기 때문에 매우 중요합니다.";
+}
+
+@Override
+public String noRegistroDeMCServidor() {
+	// TODO Auto-generated method stub
+	return "서버 터미널의 내용을 저장하거나 붙여넣어야 합니다. 다른 로그에는 없는 정보(예: STDOUT, STDERR 및 기타 오류)가 포함되어 있기 때문입니다. 최근 세션의 내용을 붙여넣어 주세요. 앞으로는 매번 붙여넣지 않도록 하려면 명령어 뒤에 >> cd_launcherlog를 추가하여 터미널 출력을 파일에 저장할 수 있습니다(이미지 참조). 이렇게 하면 터미널에 표시되지 않고 해당 파일에만 기록됩니다.";
+}
 
 
 

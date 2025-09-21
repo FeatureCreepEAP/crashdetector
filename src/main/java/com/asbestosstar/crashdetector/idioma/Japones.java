@@ -2895,6 +2895,23 @@ public String fatal() {
 	// TODO Auto-generated method stub
 	return "重大";
 }
+@Override
+public String noRegistroDeBattly() {
+	// TODO Auto-generated method stub
+	return "BattlyLauncher にはコピー可能なログやコンソールがありません。ゲームを再起動して ProxySysOutSysErr を使用し、STDOUT と STDERR を傍受できますが、STDOUT や STDERR を変更するMODと衝突する可能性があります";
+}
+
+@Override
+public String noRegistroDeNightWorld() {
+	// TODO Auto-generated method stub
+	return "ランチャーログを取得するには、NightWorld の設定でデバッグモードを有効にする必要があります。特に STDOUT と STDERR を含むため、非常に重要です";
+}
+
+@Override
+public String noRegistroDeMCServidor() {
+	// TODO Auto-generated method stub
+	return "サーバーの端末内容を保存または貼り付ける必要があります。他のログにない情報（STDOUT、STDERR、その他のエラーなど）が含まれているためです。直近のセッション内容を貼り付けてください。今後は、起動コマンド後に >> cd_launcherlog を追加して、端末出力を cd_launcherlog というファイルに保存できます（画像参照）。これにより端末への表示はされず、出力はこのファイルにのみ記録されますのでご注意ください。";
+}
 
 
 

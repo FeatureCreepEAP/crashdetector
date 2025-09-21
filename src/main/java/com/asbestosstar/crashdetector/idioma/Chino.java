@@ -2892,6 +2892,23 @@ public String fatal() {
 	// TODO Auto-generated method stub
 	return "致命";
 }
+@Override
+public String noRegistroDeBattly() {
+	// TODO Auto-generated method stub
+	return "BattlyLauncher 没有可供复制的日志或控制台。你可以使用 ProxySysOutSysErr 来拦截 STDOUT 和 STDERR 并重启游戏，但 ProxySysOutSysErr 可能与修改 STDOUT 或 STDERR 的模组发生冲突";
+}
+
+@Override
+public String noRegistroDeNightWorld() {
+	// TODO Auto-generated method stub
+	return "你需要在 NightWorld 设置中启用调试模式以获取启动器日志。这非常重要，因为它包含 STDOUT 和 STDERR";
+}
+
+@Override
+public String noRegistroDeMCServidor() {
+	// TODO Auto-generated method stub
+	return "你需要保存或粘贴你服务器终端的内容，因为它包含其他日志中没有的信息，包括 STDOUT、STDERR 和其他错误。请粘贴最近一次会话的内容。今后，你可以将终端输出保存到文件 cd_launcherlog 中。为避免手动粘贴，在启动命令后添加 >> cd_launcherlog（如图所示）。请注意，这样做将阻止信息显示在终端上；所有内容只会记录到该文件中。";
+}
 
 
 

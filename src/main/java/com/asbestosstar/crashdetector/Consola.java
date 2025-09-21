@@ -212,6 +212,14 @@ public class Consola {
 			agregarLauncherLog(new File(appdata + "/.minecraft/launcher_log.txt"), resultado, rutasLauncherLog); // CurseForgeApp
 		}
 
+
+	    // Lexplosion/NightWorld: buscar en %APPDATA%/lexplosion-data los debug y crash del launcher https://discord.com/channels/958036956464422935/1012318418579497061/1417817825908752425
+	    if (appdata != null) {
+	        File carpetaLexplosion = new File(appdata + "/lexplosion-data/");
+	        agregarDirectorio(resultado,  carpetaLexplosion);
+	    }
+		
+		
 		agregarDirectorio(resultado, new File("../.hmcl/logs/"));
 		agregarDirectorio(resultado, new File(home + "/.hmcl/logs/"));
 		if (appdata != null) {

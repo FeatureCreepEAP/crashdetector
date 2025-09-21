@@ -1254,6 +1254,12 @@ public interface Idioma {
 
 	public String fatal();
 
+	public String noRegistroDeBattly();
+
+	public String noRegistroDeNightWorld();
+
+	public String noRegistroDeMCServidor();
+
 	
 	
 	

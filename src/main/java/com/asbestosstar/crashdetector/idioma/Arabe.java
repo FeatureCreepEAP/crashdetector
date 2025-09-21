@@ -2892,6 +2892,24 @@ public String fatal() {
 	return "مortal";
 }
 
+@Override
+public String noRegistroDeBattly() {
+	// TODO Auto-generated method stub
+	return "BattlyLauncher no tiene un registro ni una consola para copiando. Puedes usar ProxySysOutSysErr para interceptar STDOUT y STDERR y reiniciar el juego pero ProxySysOutSysErr puede conflictar con mods modificando STDOUT o STDERR";
+}
+
+@Override
+public String noRegistroDeNightWorld() {
+	// TODO Auto-generated method stub
+	return "Necesitas hablicar modo de depuración en la configuracion de NightWorld para obtener un registro de lanzer. Es muy importante especialemente por que tiene STDOUT y STDERR";
+}
+
+@Override
+public String noRegistroDeMCServidor() {
+	// TODO Auto-generated method stub
+	return "Necesitas guardar o pegar el contenido de la Terminal de tu servidor porque tiene informacion no en otro registros incluyendo STDOUT, STDERR, y otras errores. Por favor pegar el contenido de la ultima sesion. Para la future, puedes guardar el contenido de la terminal al archivo cd_launcherlog Para evitar tener que pegarlo, añade >> cd_launcherlog después del comando, como se muestra en la imagen. Ten en cuenta que esto impedirá que se muestre en la terminal; solo aparecerá en ese archivo una vez hecho esto.";
+}
+
 
 
 

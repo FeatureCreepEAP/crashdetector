@@ -129,10 +129,12 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/hamu.png", new File("crash_detector/imagenes/hamu.png"));
 		copiarACarpetaDesdeJar("/imagenes/nanashi_mumei.png", new File("crash_detector/imagenes/nanashi_mumei.png"));
 		copiarACarpetaDesdeJar("/imagenes/shion.png", new File("crash_detector/imagenes/shion.png"));
+		copiarACarpetaDesdeJar("/imagenes/vshojo.png", new File("crash_detector/imagenes/vshojo.png"));
 		copiarACarpetaDesdeJar("/imagenes/rosemi.png", new File("crash_detector/imagenes/rosemi.png"));
 		copiarACarpetaDesdeJar("/imagenes/kiara_ame.png", new File("crash_detector/imagenes/kiara_ame.png"));
 
-		
+		copiarACarpetaDesdeJar("/imagenes/padoru.gif", new File("crash_detector/imagenes/padoru.gif"));
+
 		
 		
 		copiarACarpetaDesdeJar("/imagenes/boton_agregar.png", new File("crash_detector/imagenes/boton_agregar.png"));

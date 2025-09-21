@@ -2958,6 +2958,23 @@ public String fatal() {
 	// TODO Auto-generated method stub
 	return "Fatal";
 }
+@Override
+public String noRegistroDeBattly() {
+	// TODO Auto-generated method stub
+	return "BattlyLauncher does not have a log or console available for copying. You can use ProxySysOutSysErr to intercept STDOUT and STDERR by restarting the game, but ProxySysOutSysErr may conflict with mods that modify STDOUT or STDERR";
+}
+
+@Override
+public String noRegistroDeNightWorld() {
+	// TODO Auto-generated method stub
+	return "You need to enable debug mode in NightWorld's settings to obtain a launcher log. This is very important, especially because it includes STDOUT and STDERR";
+}
+
+@Override
+public String noRegistroDeMCServidor() {
+	// TODO Auto-generated method stub
+	return "You need to save or paste the content from your server's terminal, as it contains information not found in other logs, including STDOUT, STDERR, and other errors. Please paste the content from your most recent session. For the future, you can save terminal output to a file called cd_launcherlog. To avoid having to paste it, add >> cd_launcherlog after your startup command, as shown in the image. Note this will prevent display in the terminal; output will only appear in that file afterward.";
+}
 
 
 

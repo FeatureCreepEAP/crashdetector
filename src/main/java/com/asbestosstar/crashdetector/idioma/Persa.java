@@ -2889,6 +2889,23 @@ public String fatal() {
 	// TODO Auto-generated method stub
 	return "کشنده";
 }
+@Override
+public String noRegistroDeBattly() {
+	// TODO Auto-generated method stub
+	return "BattlyLauncher لاگ یا کنسولی برای کپی کردن ندارد. می‌توانید از ProxySysOutSysErr برای درنگ کردن STDOUT و STDERR و ری‌استارت بازی استفاده کنید، اما ممکن است ProxySysOutSysErr با مودهایی که STDOUT یا STDERR را تغییر می‌دهند تداخل داشته باشد";
+}
+
+@Override
+public String noRegistroDeNightWorld() {
+	// TODO Auto-generated method stub
+	return "برای دریافت لاگ راه‌انداز، باید حالت دیباگ را در تنظیمات NightWorld فعال کنید. این موضوع بسیار مهم است، به‌ویژه چون شامل STDOUT و STDERR می‌شود";
+}
+
+@Override
+public String noRegistroDeMCServidor() {
+	// TODO Auto-generated method stub
+	return "باید محتوای ترمینال سرور خود را ذخیره یا جایگذاری کنید، زیرا حاوی اطلاعاتی است که در سایر لاگ‌ها وجود ندارد، از جمله STDOUT، STDERR و سایر خطاها. لطفاً محتوای آخرین جلسه را جایگذاری کنید. برای آینده، می‌توانید خروجی ترمینال را به فایلی به نام cd_launcherlog ذخیره کنید. برای جلوگیری از نیاز به جایگذاری، پس از دستور راه‌اندازی عبارت >> cd_launcherlog را اضافه کنید (همانطور که در تصویر نشان داده شده). توجه داشته باشید که این کار باعث می‌شود خروجی در ترمینال نمایش داده نشود و فقط در آن فایل ثبت شود.";
+}
 
 
 

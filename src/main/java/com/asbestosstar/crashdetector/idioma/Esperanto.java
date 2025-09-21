@@ -2925,6 +2925,23 @@ public String fatal() {
 	// TODO Auto-generated method stub
 	return "Fatale";
 }
+@Override
+public String noRegistroDeBattly() {
+	// TODO Auto-generated method stub
+	return "BattlyLauncher ne havas registron aŭ konzolon por kopii. Vi povas uzi ProxySysOutSysErr por interkapti STDOUT kaj STDERR kai restarti la ludon, sed ProxySysOutSysErr povas malboni kun aldonaĵoj kiuj modifas STDOUT aŭ STDERR";
+}
+
+@Override
+public String noRegistroDeNightWorld() {
+	// TODO Auto-generated method stub
+	return "Vi devas ebligi sencivan reĝimon en la agordo de NightWorld por ricevi lanĉan registron. Tio estas tre grave, precipe ĉar inkluzivas STDOUT kaj STDERR";
+}
+
+@Override
+public String noRegistroDeMCServidor() {
+	// TODO Auto-generated method stub
+	return "Vi devas konservi aŭ alglui la enhavon de via servila terminalo, ĉar ĝi enhavas informon ne trovitan en aliaj logoj, inkluzive de STDOUT, STDERR kai aliajn erarojn. Bonvolu alglui la enhavon de via lasta sesio. Por estonteco, vi povas savu la terminalan eligon al dosiero cd_launcherlog. Por eviti algluon, aldonu >> cd_launcherlog post via komenco-komando, kiel montrite sur la bildo. Rimarku ke tio malebligos videblon en la terminalo; nur videblas en tiu dosiero post tio.";
+}
 
 
 

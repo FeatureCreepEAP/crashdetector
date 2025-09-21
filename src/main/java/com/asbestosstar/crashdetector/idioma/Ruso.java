@@ -2883,6 +2883,23 @@ public String fatal() {
 	// TODO Auto-generated method stub
 	return "Фатально";
 }
+@Override
+public String noRegistroDeBattly() {
+	// TODO Auto-generated method stub
+	return "У BattlyLauncher нет доступного лога или консоли для копирования. Вы можете использовать ProxySysOutSysErr, чтобы перехватывать STDOUT и STDERR, перезапустив игру, но ProxySysOutSysErr может конфликтовать с модами, изменяющими STDOUT или STDERR";
+}
+
+@Override
+public String noRegistroDeNightWorld() {
+	// TODO Auto-generated method stub
+	return "Вам нужно включить режим отладки в настройках NightWorld, чтобы получить лог лаунчера. Это очень важно, особенно потому что он включает STDOUT и STDERR";
+}
+
+@Override
+public String noRegistroDeMCServidor() {
+	// TODO Auto-generated method stub
+	return "Вам нужно сохранить или вставить содержимое терминала вашего сервера, так как оно содержит информацию, отсутствующую в других логах, включая STDOUT, STDERR и другие ошибки. Пожалуйста, вставьте содержимое последней сессии. В будущем вы можете сохранять вывод терминала в файл под названием cd_launcherlog. Чтобы избежать необходимости вставки, добавьте >> cd_launcherlog после команды запуска, как показано на изображении. Обратите внимание: это предотвратит отображение в терминале; вся информация будет записываться только в этот файл.";
+}
 
 
 
