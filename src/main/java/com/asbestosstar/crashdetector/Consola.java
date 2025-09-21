@@ -1,7 +1,8 @@
 package com.asbestosstar.crashdetector;
 
-import java.awt.Color;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -47,38 +48,41 @@ public class Consola {
 
 	public VerificacionDeStackTrace verificacion_de_stacktrace;
 
-	public List<ErrorDeLectador> errores_de_lectadores=new ArrayList<ErrorDeLectador>();
+	public List<ErrorDeLectador> errores_de_lectadores = new ArrayList<ErrorDeLectador>();
 
 	public LimpiadorDeRegistro limpiador;
 
 	public static ArrayList<File> archivos_en_lista = new ArrayList<File>();
-	
+
 	/**
-	 * Si el registro es un registro de lanzer o consola registar aqui en procesoDeLaMonitorizacionDePID. 
+	 * Si el registro es un registro de lanzer o consola registar aqui en
+	 * procesoDeLaMonitorizacionDePID.
 	 */
 	public static List<String> tipos_de_registros_de_launcher = new ArrayList<String>();// No para registros
-																									// con "launcher en
-																									// el nombre"
+																						// con "launcher en
+																						// el nombre"
 
 	public static SecureLoggerAPI secure_logger_api = new SecureLoggerAPI();
 
 	/**
-	 * Divisores de archivos de registro. Importante cuando tienes archivos de registro que contienen contenido de la aplicación o el juego que se ejecuta varias veces.. Registrar en procesoDelApp
+	 * Divisores de archivos de registro. Importante cuando tienes archivos de
+	 * registro que contienen contenido de la aplicación o el juego que se ejecuta
+	 * varias veces.. Registrar en procesoDelApp
 	 */
 	public static List<DivisorDeArchivos> divisores = new ArrayList<DivisorDeArchivos>();
-	
+
 	/**
 	 * Limpiadores de los registros. Registrar en procesoDeLaMonitorizacionDePID
 	 */
 	public static List<LimpiadorDeRegistro> limpiadores = new ArrayList<LimpiadorDeRegistro>();
 
 	/**
-	 * La ubicacion para añadir mas registro archivos. Para los longs que se necesiten dividir se deben declarar aquí tanto en procesoDelApp como en procesoDeLaMonitorizacionDePID
+	 * La ubicacion para añadir mas registro archivos. Para los longs que se
+	 * necesiten dividir se deben declarar aquí tanto en procesoDelApp como en
+	 * procesoDeLaMonitorizacionDePID
 	 */
 	public static ArrayList<File> archivos_para_mapa = new ArrayList<File>();
 
-	
-	
 	static { // APIS Por Defecto
 		APIdeSitioDeRegistro.APIS.add(secure_logger_api);
 		APIdeSitioDeRegistro.APIS.add(new StikkedAPI());
@@ -89,7 +93,7 @@ public class Consola {
 		tipos_de_registros_de_launcher.add(NoRegistroDeLauncher.cd_launcherlog.getName());
 		limpiadores.add(new LimpiadorRegistroDeLauncherVainilla());
 		limpiadores.add(new LimpiadorRegistroLatestLog());
-		archivos_para_mapa.addAll(obtenerArchivosDeConsolas());//TODO crearar una mapa antes del processo de CD
+		archivos_para_mapa.addAll(obtenerArchivosDeConsolas());// TODO crearar una mapa antes del processo de CD
 	}
 
 	public Consola(Path archivo) throws IOException {
@@ -98,15 +102,193 @@ public class Consola {
 		linea_original = 0;
 		archivos_en_lista.add(archivo.toFile());
 
-		
-		
-		for(DivisorDeArchivos div:divisores) {
-			if(div.predicado(archivo)) {
+		for (DivisorDeArchivos div : divisores) {
+			if (div.predicado(archivo)) {
 				String contento_existe = MonitorDePID.leer_archivo(archivo);
-				linea_original=div.obtenerLineaOriginal(contento_existe);
+				linea_original = div.obtenerLineaOriginal(contento_existe);
 			}
 		}
 
+	}
+
+	// escribirMapa: SIN escribir tiempo global al final
+	public static void escribirMapa(Instant tiempo) {
+		File carpetaDestino = new File("crash_detector");
+		if (!carpetaDestino.exists()) {
+			carpetaDestino.mkdirs();
+		}
+		File mapa = new File(carpetaDestino, "mapa_de_registros");
+
+		if (mapa.exists()) {
+			mapa.delete();
+		}
+		String nl = System.lineSeparator();
+		StringBuilder sb = new StringBuilder();
+		Set<String> vistos = new HashSet<>();
+
+		for (File f : archivos_para_mapa) {
+			if (f == null)
+				continue;
+			try {
+				String rutaCanonica = f.getCanonicalPath();
+				if (vistos.contains(rutaCanonica))
+					continue;
+				vistos.add(rutaCanonica);
+
+				if (!f.exists() || !f.isFile())
+					continue;
+
+				int linea = 0;
+				boolean huboDivisor = false;
+
+				for (DivisorDeArchivos div : divisores) {
+					try {
+						if (div.predicado(f.toPath())) {
+							huboDivisor = true;
+							String contenido = MonitorDePID.leer_archivo(f.toPath());
+							int ln = div.obtenerLineaOriginal(contenido);
+							if (ln > 0) {
+								linea = ln;
+								break;
+							}
+						}
+					} catch (Exception ex) {
+						CrashDetectorLogger.logException(ex);
+					}
+				}
+
+				if (!huboDivisor || linea <= 0) {
+					linea = contarLineas(f.toPath());
+				}
+
+				if (linea > 0) {
+					sb.append(rutaCanonica).append('\t').append(tiempo.toEpochMilli()).append('\t').append(linea)
+							.append(nl);
+				}
+			} catch (IOException e) {
+				CrashDetectorLogger.logException(e);
+			}
+		}
+
+		try (java.io.BufferedWriter w = new java.io.BufferedWriter(new java.io.FileWriter(mapa))) {
+			w.write(sb.toString());
+		} catch (IOException e) {
+			CrashDetectorLogger.logException(e);
+		}
+	}
+
+	private static int contarLineas(java.nio.file.Path ruta) {
+		int total = 0;
+		try (java.io.BufferedReader br = java.nio.file.Files.newBufferedReader(ruta)) {
+			while (br.readLine() != null)
+				total++;
+		} catch (IOException e) {
+			CrashDetectorLogger.logException(e);
+		}
+		return total;
+	}
+
+	// lector que solo devuelve consolas de archivos que hayan cambiado
+	public static List<Consola> leerMapaConsolasComoLista() {
+		List<Consola> lista = new ArrayList<>();
+		File carpeta = new File("crash_detector");
+		File mapa = new File(carpeta, "mapa_de_registros");
+		if (!mapa.exists() || !mapa.isFile()) {
+			return lista;
+		}
+
+		Set<String> vistas = new HashSet<>();
+
+		try (BufferedReader br = new BufferedReader(new FileReader(mapa))) {
+			String linea;
+			while ((linea = br.readLine()) != null) {
+				String l = linea.trim();
+				if (l.isEmpty())
+					continue;
+
+				String[] partes = l.split("\t");
+				if (partes.length < 3)
+					continue;
+
+				String ruta = partes[0].trim();
+				long tiempoGuardado = 0L;
+				int lineaGuardada = 0;
+				try {
+					tiempoGuardado = Long.parseLong(partes[1].trim());
+				} catch (NumberFormatException ignore) {
+				}
+				try {
+					lineaGuardada = Integer.parseInt(partes[2].trim());
+				} catch (NumberFormatException ignore) {
+				}
+
+				File f = new File(ruta);
+				if (!f.exists() || !f.isFile())
+					continue;
+
+				try {
+					File fCanonico = f.getCanonicalFile();
+					String key = fCanonico.getAbsolutePath();
+					if (vistas.contains(key))
+						continue;
+					vistas.add(key);
+
+					long modAhora = fCanonico.lastModified();
+
+					int lineaActual = 0;
+					boolean huboDivisor = false;
+					for (DivisorDeArchivos div : divisores) {
+						try {
+							if (div.predicado(fCanonico.toPath())) {
+								huboDivisor = true;
+								String contenido = MonitorDePID.leer_archivo(fCanonico.toPath());
+								int ln = div.obtenerLineaOriginal(contenido);
+								if (ln > 0) {
+									lineaActual = ln;
+									break;
+								}
+							}
+						} catch (Exception ex) {
+							CrashDetectorLogger.logException(ex);
+						}
+					}
+					if (!huboDivisor || lineaActual <= 0) {
+						lineaActual = contarLineas(fCanonico.toPath());
+					}
+
+					boolean cambioPorTiempo = modAhora > tiempoGuardado;
+					boolean cambioPorLineas = lineaActual > lineaGuardada;
+
+					if (cambioPorTiempo || cambioPorLineas) {
+						Consola c = new Consola(fCanonico.toPath());
+						if (lineaGuardada > 0) {
+							c.linea_original = lineaGuardada;
+						}
+						lista.add(c);
+
+						boolean yaEsta = false;
+						for (File ya : archivos_en_lista) {
+							try {
+								if (ya.getCanonicalPath().equals(fCanonico.getCanonicalPath())) {
+									yaEsta = true;
+									break;
+								}
+							} catch (IOException ignore) {
+							}
+						}
+						if (!yaEsta) {
+							archivos_en_lista.add(fCanonico);
+						}
+					}
+				} catch (IOException e) {
+					CrashDetectorLogger.logException(e);
+				}
+			}
+		} catch (IOException e) {
+			CrashDetectorLogger.logException(e);
+		}
+
+		return lista;
 	}
 
 	public void finalizarContenido(Instant tiempo, boolean ignorar_necesita_estar_despues_de_tiempo) {
@@ -124,17 +306,17 @@ public class Consola {
 					para_verificar.append(lineas[i]).append(File.pathSeparator);
 				}
 
-				CrashDetectorLogger.log("archivo nombre: "+archivo.toString());
-				boolean limpiado=false;
-				for(LimpiadorDeRegistro limp:limpiadores) {
-					if(limp.predicado(archivo)) {
-						contenido_verificar=limp.limpiarConsola(para_verificar.toString());
-						this.limpiador=limp;
-						limpiado=true;
+				CrashDetectorLogger.log("archivo nombre: " + archivo.toString());
+				boolean limpiado = false;
+				for (LimpiadorDeRegistro limp : limpiadores) {
+					if (limp.predicado(archivo)) {
+						contenido_verificar = limp.limpiarConsola(para_verificar.toString());
+						this.limpiador = limp;
+						limpiado = true;
 					}
 				}
-				if (!limpiado)  {
-					this.limpiador=new LimpiadorNingun();
+				if (!limpiado) {
+					this.limpiador = new LimpiadorNingun();
 					contenido_verificar = para_verificar.toString();
 				}
 
@@ -157,27 +339,26 @@ public class Consola {
 		nueva = true;
 		this.contenido = contento;
 
-		CrashDetectorLogger.log("archivo nombre inyectado: "+archivo.toString());
-		
-		boolean limpiado=false;
-		for(LimpiadorDeRegistro limp:limpiadores) {
-			if(limp.predicado(archivo)) {
-				contenido_verificar=limp.limpiarConsola(contento);
-				limpiado=true;
-				this.limpiador=limp;
+		CrashDetectorLogger.log("archivo nombre inyectado: " + archivo.toString());
+
+		boolean limpiado = false;
+		for (LimpiadorDeRegistro limp : limpiadores) {
+			if (limp.predicado(archivo)) {
+				contenido_verificar = limp.limpiarConsola(contento);
+				limpiado = true;
+				this.limpiador = limp;
 			}
 		}
-		if (!limpiado)  {
-			this.limpiador=new LimpiadorNingun();
+		if (!limpiado) {
+			this.limpiador = new LimpiadorNingun();
 			contenido_verificar = contento.toString();
 		}
 
-	
 	}
 
 	public static List<Consola> obtenerConsolas() {
 		List<Consola> resulto = new ArrayList<Consola>();
-
+		resulto.addAll(leerMapaConsolasComoLista());
 		for (File archivo : obtenerArchivosDeConsolas()) {
 			if (archivo.exists()) {
 				if (!archivos_en_lista.contains(archivo)) {
@@ -212,14 +393,14 @@ public class Consola {
 			agregarLauncherLog(new File(appdata + "/.minecraft/launcher_log.txt"), resultado, rutasLauncherLog); // CurseForgeApp
 		}
 
+		// Lexplosion/NightWorld: buscar en %APPDATA%/lexplosion-data los debug y crash
+		// del launcher
+		// https://discord.com/channels/958036956464422935/1012318418579497061/1417817825908752425
+		if (appdata != null) {
+			File carpetaLexplosion = new File(appdata + "/lexplosion-data/");
+			agregarDirectorio(resultado, carpetaLexplosion);
+		}
 
-	    // Lexplosion/NightWorld: buscar en %APPDATA%/lexplosion-data los debug y crash del launcher https://discord.com/channels/958036956464422935/1012318418579497061/1417817825908752425
-	    if (appdata != null) {
-	        File carpetaLexplosion = new File(appdata + "/lexplosion-data/");
-	        agregarDirectorio(resultado,  carpetaLexplosion);
-	    }
-		
-		
 		agregarDirectorio(resultado, new File("../.hmcl/logs/"));
 		agregarDirectorio(resultado, new File(home + "/.hmcl/logs/"));
 		if (appdata != null) {
@@ -256,15 +437,14 @@ public class Consola {
 		// Agregar otros archivos directamente
 		agregarLauncherLog(new File(home + ".minecraft/launcher_log.txt"), resultado, rutasLauncherLog); // CurseForgeApp
 																											// y TL
-		String str_carpHMCL=Config.obtenerInstancia().obtenerCarpetaHMCL();
-		if(!str_carpHMCL.isEmpty()) {
+		String str_carpHMCL = Config.obtenerInstancia().obtenerCarpetaHMCL();
+		if (!str_carpHMCL.isEmpty()) {
 			File carpHMCL = new File(str_carpHMCL);
 			agregarDirectorio(resultado, carpHMCL);
 		}
-		
+
 		resultado.add(archivoTLLegacy);
 
-		
 		// segundo
 		resultado.add(new File("../../logs/ftb-app-electron.log")); // FTB
 		resultado.add(new File("sklauncher/sklauncher_logs.txt"));
@@ -390,7 +570,7 @@ public class Consola {
 			if (nombre.toLowerCase().contains("klauncher") && nombre.toLowerCase().contains("logs")) {
 				return true;
 			}
-			
+
 			for (String regdelauncher : Consola.tipos_de_registros_de_launcher) {
 				if (nombre.equals(regdelauncher)) {
 					return true;
@@ -418,96 +598,98 @@ public class Consola {
 	}
 
 	public String obtenerMensajeUltimaTrace() {
-	    List<VerificacionDeStackTrace.TraceInfo> tracesInfo = VerificacionDeStackTrace.obtenerTracesConLinea(contenido_verificar);
-	    if (!tracesInfo.isEmpty()) {
-	        // La última traza en el log es la más reciente (está al final de la lista)
-	        VerificacionDeStackTrace.TraceInfo ultimaTraceInfo = tracesInfo.get(tracesInfo.size() - 1);
-	        String ultimaTrace = ultimaTraceInfo.trace;
-	        String[] lineas = ultimaTrace.split(VerificacionDeStackTrace.nl);
-	        
-	        // Buscar la primera línea con un mensaje real de error
-	        for (String linea : lineas) {
-	            String trimLinea = linea.trim();
-	            if (trimLinea.isEmpty()) continue;
-	            
-	            // Saltar líneas de pila ("at ...")
-	            if (trimLinea.startsWith("at ")) continue;
-	            
-	            // Saltar "Caused by" (se procesa en otro método)
-	            if (trimLinea.contains("Caused by")) continue;
-	            
-	            // Saltar "Suppressed" (son errores secundarios)
-	            if (trimLinea.contains("Suppressed")) continue;
-	            
-	            // Devolver el mensaje limpio
-	            return trimLinea;
-	        }
-	    }
-	    return "";
+		List<VerificacionDeStackTrace.TraceInfo> tracesInfo = VerificacionDeStackTrace
+				.obtenerTracesConLinea(contenido_verificar);
+		if (!tracesInfo.isEmpty()) {
+			// La última traza en el log es la más reciente (está al final de la lista)
+			VerificacionDeStackTrace.TraceInfo ultimaTraceInfo = tracesInfo.get(tracesInfo.size() - 1);
+			String ultimaTrace = ultimaTraceInfo.trace;
+			String[] lineas = ultimaTrace.split(VerificacionDeStackTrace.nl);
+
+			// Buscar la primera línea con un mensaje real de error
+			for (String linea : lineas) {
+				String trimLinea = linea.trim();
+				if (trimLinea.isEmpty())
+					continue;
+
+				// Saltar líneas de pila ("at ...")
+				if (trimLinea.startsWith("at "))
+					continue;
+
+				// Saltar "Caused by" (se procesa en otro método)
+				if (trimLinea.contains("Caused by"))
+					continue;
+
+				// Saltar "Suppressed" (son errores secundarios)
+				if (trimLinea.contains("Suppressed"))
+					continue;
+
+				// Devolver el mensaje limpio
+				return trimLinea;
+			}
+		}
+		return "";
 	}
 
 	public String obtainerMensajeFatalUltimaTrace() {
-	    List<VerificacionDeStackTrace.TraceInfo> tracesInfo = VerificacionDeStackTrace.obtenerTracesFatalConLinea(contenido_verificar);
-	    if (!tracesInfo.isEmpty()) {
-	        // La última traza fatal en el log es la más reciente (está al final de la lista)
-	        VerificacionDeStackTrace.TraceInfo ultimaTraceInfo = tracesInfo.get(tracesInfo.size() - 1);
-	        String ultimaTrace = ultimaTraceInfo.trace;
-	        String[] lineas = ultimaTrace.split(VerificacionDeStackTrace.nl);
-	        
-	        // Buscar el mensaje fatal en las líneas
-	        for (String linea : lineas) {
-	            String trimLinea = linea.trim();
-	            if (trimLinea.isEmpty()) continue;
-	            
-	            // Saltar líneas de pila
-	            if (trimLinea.startsWith("at ")) continue;
-	            
-	            // Saltar "Caused by"
-	            if (trimLinea.contains("Caused by")) continue;
-	            
-	            // Saltar "Suppressed"
-	            if (trimLinea.contains("Suppressed")) continue;
-	            
-	            // Devolver el mensaje limpio
-	            return trimLinea;
-	        }
-	    }
-	    return "";
+		List<VerificacionDeStackTrace.TraceInfo> tracesInfo = VerificacionDeStackTrace
+				.obtenerTracesFatalConLinea(contenido_verificar);
+		if (!tracesInfo.isEmpty()) {
+			// La última traza fatal en el log es la más reciente (está al final de la
+			// lista)
+			VerificacionDeStackTrace.TraceInfo ultimaTraceInfo = tracesInfo.get(tracesInfo.size() - 1);
+			String ultimaTrace = ultimaTraceInfo.trace;
+			String[] lineas = ultimaTrace.split(VerificacionDeStackTrace.nl);
+
+			// Buscar el mensaje fatal en las líneas
+			for (String linea : lineas) {
+				String trimLinea = linea.trim();
+				if (trimLinea.isEmpty())
+					continue;
+
+				// Saltar líneas de pila
+				if (trimLinea.startsWith("at "))
+					continue;
+
+				// Saltar "Caused by"
+				if (trimLinea.contains("Caused by"))
+					continue;
+
+				// Saltar "Suppressed"
+				if (trimLinea.contains("Suppressed"))
+					continue;
+
+				// Devolver el mensaje limpio
+				return trimLinea;
+			}
+		}
+		return "";
 	}
-	
+
 	/**
 	 * Agregar un error a Lectador De Consolas
-	 * @param numero_de_linea el numero de linea del error. puedes usar esta metedo mas de una vez si el error es de mas 1 linea
-	 * @param verificacion la verificaion
-	 * @param color Color en la clase LectadorDeConsolas
+	 * 
+	 * @param numero_de_linea el numero de linea del error. puedes usar esta metedo
+	 *                        mas de una vez si el error es de mas 1 linea
+	 * @param verificacion    la verificaion
+	 * @param color           Color en la clase LectadorDeConsolas
 	 * @return la enlace del error
 	 */
 	public String agregarErrorALectador(int numero_de_linea, Verificaciones verificacion) {
-	    ErrorDeLectador letc = new ErrorDeLectador(this, numero_de_linea, verificacion);
-	    errores_de_lectadores.add(letc);
+		ErrorDeLectador letc = new ErrorDeLectador(this, numero_de_linea, verificacion);
+		errores_de_lectadores.add(letc);
 
-	    String url = letc.toString();
-	    String texto = MonitorDePID.idioma.verEnConsola();
-	    String color = Config.obtenerInstancia().obtenerColorEnlace();
+		String url = letc.toString();
+		String texto = MonitorDePID.idioma.verEnConsola();
+		String color = Config.obtenerInstancia().obtenerColorEnlace();
 
-	    String enlaceHtml = "<a href=\"" + url + "\" style=\"color:" + color + ";\">"
-	                      + texto
-	                      + "</a>";
+		String enlaceHtml = "<a href=\"" + url + "\" style=\"color:" + color + ";\">" + texto + "</a>";
 
-	    return enlaceHtml;
+		return enlaceHtml;
 	}
 
-
-	
 	public LimpiadorDeRegistro obtenerLimpiador() {
 		return limpiador;
 	}
-	
-	
-
-	
-	
-	
-	
 
 }
