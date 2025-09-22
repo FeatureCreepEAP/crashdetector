@@ -134,6 +134,7 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/kiara_ame.png", new File("crash_detector/imagenes/kiara_ame.png"));
 
 		copiarACarpetaDesdeJar("/imagenes/padoru.gif", new File("crash_detector/imagenes/padoru.gif"));
+		copiarACarpetaDesdeJar("/imagenes/demonslayers.png", new File("crash_detector/imagenes/demonslayers.png"));
 
 		
 		

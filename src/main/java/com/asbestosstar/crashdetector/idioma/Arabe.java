@@ -265,7 +265,7 @@ public String ubicacionesDeLogs() {
 
 @Override
 public String infoDeVerificaciones() {
-    return "<b style='color:#" + config.obtenerColorInfo() + "'>هذه هي نتائج التحقق الخاصة بك. إصلاح الأجزاء العليا من السجلات هو الأولوية الأولى. قم بذلك ببطء.</b>";
+    return "<b style='color:#" + config.obtenerColorInfo() + "'>إليك نتائج الفحوصات الخاصة بك. يجب أن يكون إصلاح الأخطاء في أعلى التتبعات أولوية قصوى. اعمل ببطء، فعادةً السبب الصحيح يكون في الفحص 1 أو 2، ويمكنك استخدام الفحوصات الأخرى (الأخطاء 3 فما فوق) للتأكيد فقط، لكن غالبًا ما تكون أخطاء متسلسلة يمكن تجاهلها. تحدث الأعطال على طبقات، لذا فإن حل المشكلة الصحيحة سيحل هذا الخطأ تحديدًا اليوم، ولكن قد يظهر غدًا خطأ جديد غير مرتبط بالخطأ الحالي، لأن خطأً واحدًا غالبًا ما يمنع ظهور خطأ آخر في وحدة التحكم.</b>";
 }
 
 
@@ -2910,8 +2910,258 @@ public String noRegistroDeMCServidor() {
 	return "Necesitas guardar o pegar el contenido de la Terminal de tu servidor porque tiene informacion no en otro registros incluyendo STDOUT, STDERR, y otras errores. Por favor pegar el contenido de la ultima sesion. Para la future, puedes guardar el contenido de la terminal al archivo cd_launcherlog Para evitar tener que pegarlo, añade >> cd_launcherlog después del comando, como se muestra en la imagen. Ten en cuenta que esto impedirá que se muestre en la terminal; solo aparecerá en ese archivo una vez hecho esto.";
 }
 
+@Override
+public String errorLexForgeMLTransformerEnNeoForge(String claseReceptora,
+                                                   String interfazObjetivo,
+                                                   String firmaMetodoFaltante,
+                                                   List<String> modsUbicacion) {
+    StringBuilder sb = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    sb.append("خطأ حرج: تم اكتشاف محول LexForge في بيئة NeoForge. ");
+    sb.append("</b>");
 
+    sb.append("الصفحة المتورطة: <b>").append(claseReceptora).append("</b>. ");
+    sb.append("الواجهة المتأثرة هي <b>").append(interfazObjetivo).append("</b> ");
+    sb.append("ويتعذر العثور على الطريقة <b>").append(firmaMetodoFaltante).append("</b>. ");
 
+    if (modsUbicacion != null && !modsUbicacion.isEmpty()) {
+        sb.append("تم العثور على الصف في: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            sb.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) sb.append(", ");
+        }
+        if (modsUbicacion.size() > 3) sb.append(", وآخرين...");
+        sb.append("</b>. ");
+    } else {
+        sb.append("لم يتم العثور على ملفات JAR تحتوي هذه الصفحة؛ قد تكون مُظلَّلة أو مضمنة كـ jar-in-jar. ");
+    }
+
+    sb.append("يحدث هذا الفشل عندما يتم تحميل محول/خدمة من ModLauncher تم تجميعها لـ MinecraftForge/LexForge ");
+    sb.append("ضمن بيئة NeoForge باستخدام إصدار غير متوافق من واجهة برمجة تطبيقات ModLauncher. ");
+    sb.append("قم بتحديث المكوّن أو استبدله بإصدار مخصص لـ NeoForge.");
+    return sb.toString();
+}
+
+@Override
+public String nombre_de_LexForgeMLTransformerEnNeoForge() {
+    return "محوّل LexForge مستخدم في NeoForge";
+}
+
+@Override
+public String paso1_LexForgeMLTransformerEnNeoForge(String claseReceptora,
+                                                    String interfazObjetivo,
+                                                    String firmaMetodoFaltante) {
+    return "حدد المحول غير المتوافق: <b>" + claseReceptora + "</b>. "
+         + "الواجهة المتوقعة هي <b>" + interfazObjetivo + "</b> ويتعذر العثور على الطريقة <b>" + firmaMetodoFaltante + "</b>. "
+         + "تحقق مما إذا كان التعديل يسجل هذه الصفحة في <b>META-INF/services</b>، ثم قم بحذفها أو تعطيلها في NeoForge.";
+}
+
+@Override
+public String paso2_LexForgeMLTransformerEnNeoForge(List<String> modsUbicacion) {
+    StringBuilder sb = new StringBuilder();
+    if (modsUbicacion != null && !modsUbicacion.isEmpty()) {
+        sb.append("موقع المود(التعديلات) المتورط(ة): <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            sb.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) sb.append(", ");
+        }
+        if (modsUbicacion.size() > 3) sb.append(", وآخرين...");
+        sb.append("</b>. ");
+    } else {
+        sb.append("لم يتم العثور على ملفات JAR تحتوي هذه الصفحة. تحقق من التبعيات المضمّنة (jar-in-jar) والمظللة. ");
+    }
+    sb.append("أزل مؤقتًا تلك الملفات أو استخدم إصدارات متوافقة مع NeoForge للتأكد من المصدر.");
+    return sb.toString();
+}
+
+@Override
+public String paso3_LexForgeMLTransformerEnNeoForge() {
+    return "استبدل المكوّن بإصدار مخصص لـ NeoForge أو أعد ترجمته باستخدام "
+         + "إصدار ModLauncher الذي يستخدمه NeoForge. تجنب الملفات الثنائية القديمة من LexForge/MinecraftForge.";
+}
+
+@Override
+public String paso4_LexForgeMLTransformerEnNeoForge() {
+    return "نظّف مجلد التعديلات وأزل التكرارات من نوع jar-in-jar. امسح ذاكرة التخزين المؤقت للرامب إن لزم الأمر "
+         + "وأعد التشغيل للتحقق من عدم تحميل أي محولات من LexForge.";
+}
+
+@Override
+public String errorWaterMediaXenonIncompatible(String modNombre, String modId, List<String> modsUbicacion) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("لا يمكن لـ WaterMedia البدء: Xenon ");
+    sb.append("(").append(modId).append(") ");
+    if (modNombre != null && !modNombre.isEmpty()) sb.append("[").append(modNombre).append("] ");
+    sb.append("غير متوافق.</b> ");
+    sb.append("أزل Xenon واستخدم Embeddium أو Sodium. ");
+    if (modsUbicacion != null && !modsUbicacion.isEmpty()) {
+        sb.append("تم اكتشافه في: <b>");
+        for (int i = 0; i < Math.min(3, modsUbicacion.size()); i++) {
+            if (i > 0) sb.append(", ");
+            sb.append(modsUbicacion.get(i));
+        }
+        if (modsUbicacion.size() > 3) sb.append(", وآخرين...");
+        sb.append("</b>.");
+    }
+    return sb.toString();
+}
+
+@Override
+public String nombreDeWaterMediaXenonIncompatible() {
+    return "WaterMedia غير متوافق مع Xenon";
+}
+
+@Override
+public String paso1WaterMediaXenonIncompatible(String modNombre, String modId) {
+    String label = "Xenon (" + modId + ")";
+    if (modNombre != null && !modNombre.isEmpty()) label += " [" + modNombre + "]";
+    return "تم اكتشاف " + label + " غير متوافق مع WaterMedia. قم بإزالته من الملف الشخصي.";
+}
+
+@Override
+public String paso2WaterMediaXenonIncompatible(List<String> modsUbicacion) {
+    if (modsUbicacion != null && !modsUbicacion.isEmpty()) {
+        StringBuilder sb = new StringBuilder("المواقع: <b>");
+        for (int i = 0; i < Math.min(3, modsUbicacion.size()); i++) {
+            if (i > 0) sb.append(", ");
+            sb.append(modsUbicacion.get(i));
+        }
+        if (modsUbicacion.size() > 3) sb.append(", وآخرين...");
+        sb.append("</b>. قم بحذف هذا الملف JAR.");
+        return sb.toString();
+    }
+    return "لم يتم العثور على ملفات JAR. تحقق من مجلد التعديلات وأزل Xenon.";
+}
+
+@Override
+public String paso3WaterMediaXenonIncompatible() {
+    return "ثبّت Embeddium أو Sodium كبديل وأعد تشغيل اللعبة.";
+}
+
+@Override
+public String nombreDeTaczDeflaterCerrado() {
+    return "خطأ في الضغط (TACZ)";
+}
+
+@Override
+public String errorTaczDeflaterCerrado(java.util.List<String> modsUbicacion) {
+    StringBuilder sb = new StringBuilder("<b>تم إغلاق Deflater أثناء نسخ موارد TACZ.</b> ");
+    if (modsUbicacion != null && !modsUbicacion.isEmpty()) {
+        sb.append("مرتبط بـ: <b>");
+        for (int i = 0; i < Math.min(3, modsUbicacion.size()); i++) {
+            if (i > 0) sb.append(", ");
+            sb.append(modsUbicacion.get(i));
+        }
+        if (modsUbicacion.size() > 3) sb.append(", وآخرين");
+        sb.append("</b>. ");
+    }
+    sb.append("<br/><b>الحل:</b> في <code>tacz/tacz-pre.toml</code> عيّن <code>DefaultPackDebug=true</code>. ")
+      .append("إذا لزم الأمر، قم أولاً بإنشاء خريطة ثم فعّلها.");
+    return sb.toString();
+}
+
+@Override
+public String pasoTaczDeflaterCerrado() {
+    return "في ملف tacz/tacz-pre.toml عيّن DefaultPackDebug=true. إذا لزم الأمر، قم بإنشاء خريطة أولاً ثم فعّلها.";
+}
+
+@Override
+public String nombreDeFuncionesDeDensidadNoVinculadas() {
+    return "وظائف الكثافة غير المرتبطة";
+}
+
+@Override
+public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves) {
+    StringBuilder sb = new StringBuilder("<b>مفقودة وظائف الكثافة من السجل.</b> ");
+    if (claves != null && !claves.isEmpty()) {
+        sb.append("المفقودة: ");
+        for (int i = 0; i < Math.min(4, claves.size()); i++) {
+            if (i > 0) sb.append(", ");
+            sb.append("<code>").append(claves.get(i)).append("</code>");
+        }
+        if (claves.size() > 4) sb.append(", …");
+        sb.append(". ");
+    }
+    sb.append("<br/><b>الحل:</b> قم بتثبيت أو تفعيل المود/حزمة البيانات التي تعرّف هذه الوظائف وأعد التشغيل.");
+    return sb.toString();
+}
+
+@Override
+public String pasoFuncionesDeDensidadNoVinculadas() {
+    return "قم بتثبيت أو تفعيل المود/حزمة البيانات التي توفر هذه الوظائف وأعد تشغيل اللعبة.";
+}
+
+@Override
+public String errorRailwaysCreate6Alfa(String claveFaltante) {
+    // رسالة قصيرة، بلون الخطأ، تشير صراحة إلى المود
+    StringBuilder sb = new StringBuilder("<b style='color:#")
+            .append(config.obtenerColorError())
+            .append("'>");
+    sb.append("مُدخل التسجيل غير موجود: ").append(claveFaltante).append(". ");
+    sb.append("شائع مع إصدار ألفا من Steam & Railways لـ Create 6.");
+    sb.append("</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreDeRailwaysCreate6Alfa() {
+    return "Create 6: Steam & Railways (ألفا)";
+}
+
+@Override
+public String pasoRailwaysCreate6Alfa() {
+    return "أزل أو استبدل إصدار ألفا من Steam & Railways لـ Create 6 بإصدار متوافق.";
+}
+
+@Override
+public String errorConflictoMultiworldRendimiento() {
+    // قصير، بلون الخطأ ونصيحة مباشرة
+    StringBuilder sb = new StringBuilder("<b style='color:#")
+            .append(config.obtenerColorError())
+            .append("'>");
+    sb.append("تضارب في التحميل: استخدام Multiworld مع Sodium/Embeddium/Rubidium يتسبب في ")
+      .append("IncompatibleClassChangeError (FabricLoader.getInstance). ")
+      .append("اقتراح: أزل Multiworld أو أحد تعديلات الأداء، أو استخدم إصدارات متوافقة.");
+    sb.append("</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreDeConflictoMultiworldRendimiento() {
+    return "تضارب: Multiworld مع تعديلات الأداء";
+}
+
+@Override
+public String pasoConflictoMultiworldRendimiento() {
+    return "أزل Multiworld أو Sodium/Embeddium/Rubidium، أو حدّث إلى إصدارات متوافقة مع بعضها.";
+}
+@Override
+public String problema_con_graficas_sodium() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "كشف Sodium عن برنامج تشغيل رسومي غير متوافق. "
+         + "قم بتحديث برنامج تشغيل وحدة معالجة الرسوميات (GPU) إلى الحد الأدنى المطلوب أو اتبع دليل Sodium."
+         + "</b>";
+}
+
+@Override
+public String nombreErrorContextoOpenGL() { return "خطأ في سياق OpenGL"; }
+
+@Override
+public String errorContextoOpenGL() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "فشل OpenGL: لا يوجد سياق حالي أو أن الوظيفة غير متوفرة في هذا السياق. "
+         + "قد يكون أيضًا مشكلة في تعريفات بطاقة الفيديو."
+         + "</b>";
+}
+
+@Override
+public String paso1ErrorContextoOpenGL() {
+    return "قم بتحديث/إعادة تثبيت تعريفات وحدة معالجة الرسوميات (GPU) وأعد التشغيل؛ عطل أي طبقات علوية وجرب اللعب بدون تعديلات الأداء.";
+}
+
+@Override
+public String copiadoAlPortapapeles() {
+    return "تم نسخ الرابط إلى الحافظة.";
+}
 
 
 

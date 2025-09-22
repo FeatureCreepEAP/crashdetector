@@ -266,7 +266,7 @@ public String ubicacionesDeLogs() {
 
 @Override
 public String infoDeVerificaciones() {
-    return "<b style='color:#" + config.obtenerColorInfo() + "'>여기에 검증 결과가 있습니다. 로그의 상단 부분을 수정하는 것이 첫 번째 우선 순위입니다. 천천히 진행하세요.</b>";
+    return "<b style='color:#" + config.obtenerColorInfo() + "'>여기에 귀하의 검사 결과가 있습니다. 트레이스 상단 부분을 수정하는 것이 최우선입니다. 천천히 진행하세요. 일반적으로 올바른 원인은 검사 1번 또는 2번에 있습니다. 나머지(오류 3번 이상)는 확인용으로 사용할 수 있지만, 대부분 연쇄 오류이므로 무시해도 됩니다. 오류는 여러 계층에서 발생하므로 올바른 문제를 해결하면 오늘 이 특정 오류는 사라지지만, 내일 또 다른 관련 없는 새로운 오류가 나타날 수 있습니다. 한 오류가 콘솔에 다른 오류의 출력을 막는 경우가 많기 때문입니다.</b>";
 }
 
 @Override
@@ -2894,8 +2894,257 @@ public String noRegistroDeMCServidor() {
 	return "서버 터미널의 내용을 저장하거나 붙여넣어야 합니다. 다른 로그에는 없는 정보(예: STDOUT, STDERR 및 기타 오류)가 포함되어 있기 때문입니다. 최근 세션의 내용을 붙여넣어 주세요. 앞으로는 매번 붙여넣지 않도록 하려면 명령어 뒤에 >> cd_launcherlog를 추가하여 터미널 출력을 파일에 저장할 수 있습니다(이미지 참조). 이렇게 하면 터미널에 표시되지 않고 해당 파일에만 기록됩니다.";
 }
 
+@Override
+public String errorLexForgeMLTransformerEnNeoForge(String claseReceptora,
+                                                   String interfazObjetivo,
+                                                   String firmaMetodoFaltante,
+                                                   List<String> modsUbicacion) {
+    StringBuilder sb = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    sb.append("치명적 오류: NeoForge 환경에서 LexForge 변환기가 감지되었습니다. ");
+    sb.append("</b>");
 
+    sb.append("관련 클래스: <b>").append(claseReceptora).append("</b>. ");
+    sb.append("영향을 받는 인터페이스는 <b>").append(interfazObjetivo).append("</b>이며, ");
+    sb.append("다음 메서드가 누락되었습니다: <b>").append(firmaMetodoFaltante).append("</b>. ");
 
+    if (modsUbicacion != null && !modsUbicacion.isEmpty()) {
+        sb.append("클래스 위치: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            sb.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) sb.append(", ");
+        }
+        if (modsUbicacion.size() > 3) sb.append(", 기타...");
+        sb.append("</b>. ");
+    } else {
+        sb.append("해당 클래스를 포함하는 JAR 파일을 찾을 수 없습니다. 그림자 처리되었거나 jar-in-jar로 포함되었을 수 있습니다. ");
+    }
+
+    sb.append("MinecraftForge/LexForge용으로 컴파일된 ModLauncher 변환기/서비스가 ");
+    sb.append("호환되지 않는 ModLauncher API 버전과 함께 NeoForge에서 로드될 때 이 오류가 발생합니다. ");
+    sb.append("NeoForge 전용 버전으로 구성 요소를 업데이트하거나 교체하세요.");
+    return sb.toString();
+}
+
+@Override
+public String nombre_de_LexForgeMLTransformerEnNeoForge() {
+    return "NeoForge에서 사용된 LexForge 변환기";
+}
+
+@Override
+public String paso1_LexForgeMLTransformerEnNeoForge(String claseReceptora,
+                                                    String interfazObjetivo,
+                                                    String firmaMetodoFaltante) {
+    return "비호환 변환기를 식별하세요: <b>" + claseReceptora + "</b>. "
+         + "기대되는 API는 <b>" + interfazObjetivo + "</b>이며, 다음이 누락되었습니다: <b>" + firmaMetodoFaltante + "</b>. "
+         + "Mod가 <b>META-INF/services</b>에 이 클래스를 등록했는지 확인하고, NeoForge에서 제거하거나 비활성화하세요.";
+}
+
+@Override
+public String paso2_LexForgeMLTransformerEnNeoForge(List<String> modsUbicacion) {
+    StringBuilder sb = new StringBuilder();
+    if (modsUbicacion != null && !modsUbicacion.isEmpty()) {
+        sb.append("관련 모드 위치: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            sb.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) sb.append(", ");
+        }
+        if (modsUbicacion.size() > 3) sb.append(", 기타...");
+        sb.append("</b>. ");
+    } else {
+        sb.append("해당 클래스를 포함하는 JAR를 찾을 수 없습니다. jar-in-jar 및 쉐도잉된 종속성을 확인하세요. ");
+    }
+    sb.append("일시적으로 해당 JAR를 제거하거나 NeoForge 호환 버전을 사용하여 원인을 확인하세요.");
+    return sb.toString();
+}
+
+@Override
+public String paso3_LexForgeMLTransformerEnNeoForge() {
+    return "구성 요소를 NeoForge 전용 버전으로 교체하거나, NeoForge에서 사용하는 ModLauncher 버전을 기준으로 다시 컴파일하세요. "
+         + "오래된 LexForge/MinecraftForge 바이너리를 피하세요.";
+}
+
+@Override
+public String paso4_LexForgeMLTransformerEnNeoForge() {
+    return "Mods 폴더를 정리하고 중복된 jar-in-jar 항목을 제거하세요. 필요 시 런처 캐시를 삭제하고 "
+         + "재시작하여 LexForge 변환기가 더 이상 로드되지 않는지 확인하세요.";
+}
+
+@Override
+public String errorWaterMediaXenonIncompatible(String modNombre, String modId, List<String> modsUbicacion) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("WaterMedia를 시작할 수 없습니다: Xenon ");
+    sb.append("(").append(modId).append(") ");
+    if (modNombre != null && !modNombre.isEmpty()) sb.append("[").append(modNombre).append("] ");
+    sb.append("과 호환되지 않습니다.</b> ");
+    sb.append("Xenon을 제거하고 Embeddium 또는 Sodium을 사용하세요. ");
+    if (modsUbicacion != null && !modsUbicacion.isEmpty()) {
+        sb.append("발견 위치: <b>");
+        for (int i = 0; i < Math.min(3, modsUbicacion.size()); i++) {
+            if (i > 0) sb.append(", ");
+            sb.append(modsUbicacion.get(i));
+        }
+        if (modsUbicacion.size() > 3) sb.append(", 기타...");
+        sb.append("</b>.");
+    }
+    return sb.toString();
+}
+
+@Override
+public String nombreDeWaterMediaXenonIncompatible() {
+    return "WaterMedia와 Xenon 불호환";
+}
+
+@Override
+public String paso1WaterMediaXenonIncompatible(String modNombre, String modId) {
+    String label = "Xenon (" + modId + ")";
+    if (modNombre != null && !modNombre.isEmpty()) label += " [" + modNombre + "]";
+    return label + "이(가) WaterMedia와 호환되지 않습니다. 프로필에서 제거하세요.";
+}
+
+@Override
+public String paso2WaterMediaXenonIncompatible(List<String> modsUbicacion) {
+    if (modsUbicacion != null && !modsUbicacion.isEmpty()) {
+        StringBuilder sb = new StringBuilder("위치: <b>");
+        for (int i = 0; i < Math.min(3, modsUbicacion.size()); i++) {
+            if (i > 0) sb.append(", ");
+            sb.append(modsUbicacion.get(i));
+        }
+        if (modsUbicacion.size() > 3) sb.append(", 기타...");
+        sb.append("</b>. 해당 JAR 파일을 삭제하세요.");
+        return sb.toString();
+    }
+    return "JAR 파일을 찾을 수 없습니다. mods 폴더를 확인하고 Xenon을 제거하세요.";
+}
+
+@Override
+public String paso3WaterMediaXenonIncompatible() {
+    return "Embeddium 또는 Sodium을 대체로 설치하고 게임을 재시작하세요.";
+}
+
+@Override
+public String nombreDeTaczDeflaterCerrado() {
+    return "압축 오류 (TACZ)";
+}
+
+@Override
+public String errorTaczDeflaterCerrado(java.util.List<String> modsUbicacion) {
+    StringBuilder sb = new StringBuilder("<b>TACZ 리소스 복사 도중 Deflater가 종료되었습니다.</b> ");
+    if (modsUbicacion != null && !modsUbicacion.isEmpty()) {
+        sb.append("관련된 항목: <b>");
+        for (int i = 0; i < Math.min(3, modsUbicacion.size()); i++) {
+            if (i > 0) sb.append(", ");
+            sb.append(modsUbicacion.get(i));
+        }
+        if (modsUbicacion.size() > 3) sb.append(", 기타");
+        sb.append("</b>. ");
+    }
+    sb.append("<br/><b>해결 방법:</b> <code>tacz/tacz-pre.toml</code>에서 <code>DefaultPackDebug=true</code>로 설정하세요. ")
+      .append("필요시 먼저 맵을 생성한 후 활성화하세요.");
+    return sb.toString();
+}
+
+@Override
+public String pasoTaczDeflaterCerrado() {
+    return "tacz/tacz-pre.toml에서 DefaultPackDebug=true로 설정하세요. 필요하면 먼저 맵을 생성하고 활성화하세요.";
+}
+
+@Override
+public String nombreDeFuncionesDeDensidadNoVinculadas() {
+    return "밀도 함수 미바인딩";
+}
+
+@Override
+public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves) {
+    StringBuilder sb = new StringBuilder("<b>등록부에 밀도 함수가 누락되었습니다.</b> ");
+    if (claves != null && !claves.isEmpty()) {
+        sb.append("누락된 항목: ");
+        for (int i = 0; i < Math.min(4, claves.size()); i++) {
+            if (i > 0) sb.append(", ");
+            sb.append("<code>").append(claves.get(i)).append("</code>");
+        }
+        if (claves.size() > 4) sb.append(", …");
+        sb.append(". ");
+    }
+    sb.append("<br/><b>해결 방법:</b> 해당 함수를 정의하는 모드/데이터팩을 설치하거나 활성화하고 재시작하세요.");
+    return sb.toString();
+}
+
+@Override
+public String pasoFuncionesDeDensidadNoVinculadas() {
+    return "해당 함수를 제공하는 모드/데이터팩을 설치하거나 활성화하고 게임을 재시작하세요.";
+}
+
+@Override
+public String errorRailwaysCreate6Alfa(String claveFaltante) {
+    // 짧고 오류 색상의 메시지로 모드를 명시적으로 언급
+    StringBuilder sb = new StringBuilder("<b style='color:#")
+            .append(config.obtenerColorError())
+            .append("'>");
+    sb.append("등록 항목이 존재하지 않음: ").append(claveFaltante).append(". ");
+    sb.append("Create 6용 Steam & Railways 알파 버전에서 자주 발생합니다.");
+    sb.append("</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreDeRailwaysCreate6Alfa() {
+    return "Create 6: Steam & Railways (알파)";
+}
+
+@Override
+public String pasoRailwaysCreate6Alfa() {
+    return "Create 6용 Steam & Railways 알파 버전을 호환 가능한 버전으로 제거하거나 교체하세요.";
+}
+
+@Override
+public String errorConflictoMultiworldRendimiento() {
+    // 짧고 오류 색상, 직접적인 권장사항 포함
+    StringBuilder sb = new StringBuilder("<b style='color:#")
+            .append(config.obtenerColorError())
+            .append("'>");
+    sb.append("로딩 충돌: Multiworld와 Sodium/Embeddium/Rubidium 함께 사용 시 ")
+      .append("IncompatibleClassChangeError (FabricLoader.getInstance) 발생. ")
+      .append("권장: Multiworld 또는 성능 모드 중 하나를 제거하거나 호환되는 버전을 사용하세요.");
+    sb.append("</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreDeConflictoMultiworldRendimiento() {
+    return "충돌: Multiworld과 성능 모드";
+}
+
+@Override
+public String pasoConflictoMultiworldRendimiento() {
+    return "Multiworld 또는 Sodium/Embeddium/Rubidium을 제거하거나, 서로 호환되는 버전으로 업데이트하세요.";
+}
+@Override
+public String problema_con_graficas_sodium() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Sodium이 호환되지 않는 그래픽 드라이버를 감지했습니다. "
+         + "GPU 드라이버를 최소 요구 사양 이상으로 업데이트하거나 Sodium 가이드를 따르세요."
+         + "</b>";
+}
+
+@Override
+public String nombreErrorContextoOpenGL() { return "OpenGL 컨텍스트 오류"; }
+
+@Override
+public String errorContextoOpenGL() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "OpenGL 실패: 현재 컨텍스트가 없거나 이 컨텍스트에서 해당 기능을 사용할 수 없습니다. "
+         + "비디오 드라이버 문제일 수도 있습니다."
+         + "</b>";
+}
+
+@Override
+public String paso1ErrorContextoOpenGL() {
+    return "GPU 드라이버를 업데이트하거나 재설치하고 재시작하세요. 오버레이 기능을 비활성화하고 성능 모드 없이 실행해 보세요.";
+}
+@Override
+public String copiadoAlPortapapeles() {
+    return "링크가 클립보드에 복사되었습니다.";
+}
 
 
 

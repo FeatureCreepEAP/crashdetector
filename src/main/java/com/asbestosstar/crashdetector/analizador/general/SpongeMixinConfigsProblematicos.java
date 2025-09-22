@@ -26,30 +26,45 @@ public class SpongeMixinConfigsProblematicos implements Verificaciones {
 	private final Map<String, Boolean> sm_config_es_fatal = new HashMap<>();
 	private final Map<String, String> enlacesPorConfig = new HashMap<>();
 
-	@Override
-	public void verificar(Consola consola) {
-		sm_config_con_linea.clear();
-		sm_config_es_fatal.clear();
-		enlacesPorConfig.clear();
+@Override
+public void verificar(Consola consola) {
+	sm_config_con_linea.clear();
+	sm_config_es_fatal.clear();
+	enlacesPorConfig.clear();
 
-		// Obtener los archivos JSON problemáticos con sus líneas
-		BiMap<String, Integer, Boolean> configs = consola.verificacion_de_stacktrace.sm_config;
+	// Origen existente: parser de stacktrace
+	BiMap<String, Integer, Boolean> configs = consola.verificacion_de_stacktrace.sm_config;
+	for (BiMap.DoubleKey<String, Integer> clave : configs.keySet()) {
+		String nombreArchivo = clave.key0;
+		int linea = clave.key1;
+		boolean esFatal = configs.get(nombreArchivo, linea);
 
-		for (BiMap.DoubleKey<String, Integer> key : configs.keySet()) {
-			String fileName = key.key0;
-			int lineNumber = key.key1;
-			boolean isFatal = configs.get(fileName, lineNumber);
-
-			sm_config_con_linea.put(fileName, lineNumber);
-			sm_config_es_fatal.put(fileName, isFatal);
-
-			// Crear enlace para esta línea específica
-			String enlace = consola.agregarErrorALectador(lineNumber, this);
-			enlacesPorConfig.put(fileName, enlace);
-		}
-
-		activado = !sm_config_con_linea.isEmpty();
+		sm_config_con_linea.put(nombreArchivo, linea);
+		sm_config_es_fatal.put(nombreArchivo, esFatal);
+		enlacesPorConfig.put(nombreArchivo, consola.agregarErrorALectador(linea, this));
 	}
+
+	String[] lineas = consola.contenido_verificar.split(Verificaciones.nl);
+	for (int i = 0; i < lineas.length; i++) {
+		String linea = lineas[i];
+		if (linea.contains("The specified resource '") && linea.contains("' was invalid or could not be read")) {
+			int ini = linea.indexOf("The specified resource '") + "The specified resource '".length();
+			int fin = linea.indexOf("'", ini);
+			if (fin > ini) {
+				String nombre = linea.substring(ini, fin).trim();
+				// Solo mixins *.json
+				if (nombre.contains("mixins") && nombre.endsWith(".json") && !sm_config_con_linea.containsKey(nombre)) {
+					sm_config_con_linea.put(nombre, i);
+					sm_config_es_fatal.put(nombre, true);
+					enlacesPorConfig.put(nombre, consola.agregarErrorALectador(i, this));
+				}
+			}
+		}
+	}
+
+	activado = !sm_config_con_linea.isEmpty();
+}
+
 
 	@Override
 	public Verificaciones nueva() {

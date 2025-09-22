@@ -263,7 +263,7 @@ public String ubicacionesDeLogs() {
 
 @Override
 public String infoDeVerificaciones() {
-    return "<b style='color:#" + config.obtenerColorInfo() + "'>اینجا نتایج بررسی‌های شما هستند. تعمیر بخش‌های بالایی لاگ‌ها اولویت اول است. آن را به آرامی انجام دهید.</b>";
+    return "<b style='color:#" + config.obtenerColorInfo() + "'>در اینجا نتایج بررسی‌های شما آمده است. اولویت اول، رفع مشکلات بالای ردپای پشته است. آرام پیش بروید؛ معمولاً علت صحیح در بررسی ۱ یا ۲ است. سایر موارد (خطاهای ۳ به بعد) می‌توانند برای تأیید استفاده شوند اما اغلب خطاهای زنجیره‌ای هستند و عموماً می‌توان آنها را نادیده گرفت. خطاها به صورت لایه‌ای رخ می‌دهند، بنابراین رفع مشکل اصلی امروز این خطا را حل می‌کند، اما فردا ممکن است خطای جدیدی که ارتباطی با خطای فعلی ندارد ظاهر شود، چون اغلب یک خطا مانع نمایش خطا‌های دیگر در کنسول می‌شود.</b>";
 }
 
 
@@ -2906,6 +2906,257 @@ public String noRegistroDeMCServidor() {
 	// TODO Auto-generated method stub
 	return "باید محتوای ترمینال سرور خود را ذخیره یا جایگذاری کنید، زیرا حاوی اطلاعاتی است که در سایر لاگ‌ها وجود ندارد، از جمله STDOUT، STDERR و سایر خطاها. لطفاً محتوای آخرین جلسه را جایگذاری کنید. برای آینده، می‌توانید خروجی ترمینال را به فایلی به نام cd_launcherlog ذخیره کنید. برای جلوگیری از نیاز به جایگذاری، پس از دستور راه‌اندازی عبارت >> cd_launcherlog را اضافه کنید (همانطور که در تصویر نشان داده شده). توجه داشته باشید که این کار باعث می‌شود خروجی در ترمینال نمایش داده نشود و فقط در آن فایل ثبت شود.";
 }
+
+@Override
+public String errorLexForgeMLTransformerEnNeoForge(String claseReceptora,
+                                                   String interfazObjetivo,
+                                                   String firmaMetodoFaltante,
+                                                   List<String> modsUbicacion) {
+    StringBuilder sb = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    sb.append("خطای بحرانی: ترانسفورمر LexForge در محیط NeoForge شناسایی شد. ");
+    sb.append("</b>");
+
+    sb.append("کلاس درگیر: <b>").append(claseReceptora).append("</b>. ");
+    sb.append("رابط متاثر <b>").append(interfazObjetivo).append("</b> است و ");
+    sb.append("متد گمشده <b>").append(firmaMetodoFaltante).append("</b> می‌باشد. ");
+
+    if (modsUbicacion != null && !modsUbicacion.isEmpty()) {
+        sb.append("این کلاس در این مکان‌ها یافت شد: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            sb.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) sb.append(", ");
+        }
+        if (modsUbicacion.size() > 3) sb.append(", و دیگران...");
+        sb.append("</b>. ");
+    } else {
+        sb.append("هیچ JARی حاوی این کلاس پیدا نشد؛ ممکن است سایه‌زنی شده باشد یا به صورت jar-in-jar تعبیه شده باشد. ");
+    }
+
+    sb.append("این خطا زمانی رخ می‌دهد که یک ترانسفورمر/سرویس ModLauncher که برای MinecraftForge/LexForge کامپایل شده، ");
+    sb.append("در NeoForge با نسخه‌ای ناسازگار از API ModLauncher بارگذاری شود. ");
+    sb.append("برای NeoForge، این جزء را به‌روزرسانی یا جایگزین کنید.");
+    return sb.toString();
+}
+
+@Override
+public String nombre_de_LexForgeMLTransformerEnNeoForge() {
+    return "ترانسفورمر LexForge در NeoForge استفاده شده";
+}
+
+@Override
+public String paso1_LexForgeMLTransformerEnNeoForge(String claseReceptora,
+                                                    String interfazObjetivo,
+                                                    String firmaMetodoFaltante) {
+    return "ترانسفورمر ناسازگار را شناسایی کنید: <b>" + claseReceptora + "</b>. "
+         + "API مورد انتظار <b>" + interfazObjetivo + "</b> است و متد گمشده <b>" + firmaMetodoFaltante + "</b> می‌باشد. "
+         + "بررسی کنید آیا مود این کلاس را در <b>META-INF/services</b> ثبت کرده است و آن را در NeoForge حذف یا غیرفعال کنید.";
+}
+
+@Override
+public String paso2_LexForgeMLTransformerEnNeoForge(List<String> modsUbicacion) {
+    StringBuilder sb = new StringBuilder();
+    if (modsUbicacion != null && !modsUbicacion.isEmpty()) {
+        sb.append("مکان مود(های) درگیر: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            sb.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) sb.append(", ");
+        }
+        if (modsUbicacion.size() > 3) sb.append(", و دیگران...");
+        sb.append("</b>. ");
+    } else {
+        sb.append("هیچ JARی حاوی این کلاس یافت نشد. jar-in-jar و وابستگی‌های سایه‌زنی شده را بررسی کنید. ");
+    }
+    sb.append("موقتاً این JARها را حذف کنید یا از نسخه‌های سازگار با NeoForge استفاده کنید تا منشأ مشکل را تأیید کنید.");
+    return sb.toString();
+}
+
+@Override
+public String paso3_LexForgeMLTransformerEnNeoForge() {
+    return "این جزء را با نسخه خاص NeoForge جایگزین کنید یا آن را نسبت به نسخه ModLauncher مورد استفاده توسط NeoForge "
+         + "دوباره کامپایل کنید. از فایل‌های باینری قدیمی LexForge/MinecraftForge خودداری کنید.";
+}
+
+@Override
+public String paso4_LexForgeMLTransformerEnNeoForge() {
+    return "پوشه mods را پاکسازی کنید و موارد تکراری jar-in-jar را حذف کنید. در صورت نیاز کش راه‌انداز را پاک کنید "
+         + "و مجدداً راه‌اندازی کنید تا مطمئن شوید هیچ ترانسفورمر LexForgeای بارگذاری نمی‌شود.";
+}
+
+@Override
+public String errorWaterMediaXenonIncompatible(String modNombre, String modId, List<String> modsUbicacion) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("WaterMedia نمی‌تواند راه‌اندازی شود: Xenon ");
+    sb.append("(").append(modId).append(") ");
+    if (modNombre != null && !modNombre.isEmpty()) sb.append("[").append(modNombre).append("] ");
+    sb.append("ناسازگار است.</b> ");
+    sb.append("Xenon را حذف کنید و به جای آن از Embeddium یا Sodium استفاده کنید. ");
+    if (modsUbicacion != null && !modsUbicacion.isEmpty()) {
+        sb.append("در این مسیرها پیدا شد: <b>");
+        for (int i = 0; i < Math.min(3, modsUbicacion.size()); i++) {
+            if (i > 0) sb.append(", ");
+            sb.append(modsUbicacion.get(i));
+        }
+        if (modsUbicacion.size() > 3) sb.append(", و دیگران...");
+        sb.append("</b>.");
+    }
+    return sb.toString();
+}
+
+@Override
+public String nombreDeWaterMediaXenonIncompatible() {
+    return "نا سازگاری WaterMedia با Xenon";
+}
+
+@Override
+public String paso1WaterMediaXenonIncompatible(String modNombre, String modId) {
+    String label = "Xenon (" + modId + ")";
+    if (modNombre != null && !modNombre.isEmpty()) label += " [" + modNombre + "]";
+    return label + " با WaterMedia ناسازگار است. آن را از پروفایل خود حذف کنید.";
+}
+
+@Override
+public String paso2WaterMediaXenonIncompatible(List<String> modsUbicacion) {
+    if (modsUbicacion != null && !modsUbicacion.isEmpty()) {
+        StringBuilder sb = new StringBuilder("مسیرها: <b>");
+        for (int i = 0; i < Math.min(3, modsUbicacion.size()); i++) {
+            if (i > 0) sb.append(", ");
+            sb.append(modsUbicacion.get(i));
+        }
+        if (modsUbicacion.size() > 3) sb.append(", و دیگران...");
+        sb.append("</b>. این فایل JAR را حذف کنید.");
+        return sb.toString();
+    }
+    return "هیچ فایل JARی پیدا نشد. پوشه mods را بررسی کرده و Xenon را حذف کنید.";
+}
+
+@Override
+public String paso3WaterMediaXenonIncompatible() {
+    return "به عنوان جایگزین، Embeddium یا Sodium را نصب کرده و بازی را مجدداً راه‌اندازی کنید.";
+}
+@Override
+public String nombreDeTaczDeflaterCerrado() {
+    return "خطای فشرده‌سازی (TACZ)";
+}
+
+@Override
+public String errorTaczDeflaterCerrado(java.util.List<String> modsUbicacion) {
+    StringBuilder sb = new StringBuilder("<b>Deflater در حین کپی منابع TACZ بسته شد.</b> ");
+    if (modsUbicacion != null && !modsUbicacion.isEmpty()) {
+        sb.append("مرتبط با: <b>");
+        for (int i = 0; i < Math.min(3, modsUbicacion.size()); i++) {
+            if (i > 0) sb.append(", ");
+            sb.append(modsUbicacion.get(i));
+        }
+        if (modsUbicacion.size() > 3) sb.append(", و دیگران");
+        sb.append("</b>. ");
+    }
+    sb.append("<br/><b>راه‌حل:</b> در <code>tacz/tacz-pre.toml</code> مقدار <code>DefaultPackDebug=true</code> را تنظیم کنید. ")
+      .append("در صورت نیاز، ابتدا یک نقشه ایجاد کرده و سپس آن را فعال کنید.");
+    return sb.toString();
+}
+
+@Override
+public String pasoTaczDeflaterCerrado() {
+    return "در فایل tacz/tacz-pre.toml مقدار DefaultPackDebug=true را تنظیم کنید. در صورت نیاز، ابتدا نقشه‌ای ایجاد کرده و سپس آن را فعال کنید.";
+}
+
+@Override
+public String nombreDeFuncionesDeDensidadNoVinculadas() {
+    return "توابع چگالی متصل‌نشده";
+}
+
+@Override
+public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves) {
+    StringBuilder sb = new StringBuilder("<b>توابع چگالی در رجیستر گم شده‌اند.</b> ");
+    if (claves != null && !claves.isEmpty()) {
+        sb.append("گم شده: ");
+        for (int i = 0; i < Math.min(4, claves.size()); i++) {
+            if (i > 0) sb.append(", ");
+            sb.append("<code>").append(claves.get(i)).append("</code>");
+        }
+        if (claves.size() > 4) sb.append(", …");
+        sb.append(". ");
+    }
+    sb.append("<br/><b>راه‌حل:</b> مود یا دیتاپکی که این توابع را تعریف می‌کند را نصب یا فعال کنید و مجدداً راه‌اندازی کنید.");
+    return sb.toString();
+}
+
+@Override
+public String pasoFuncionesDeDensidadNoVinculadas() {
+    return "مود یا دیتاپکی که این توابع را فراهم می‌کند را نصب یا فعال کرده و بازی را مجدداً راه‌اندازی کنید.";
+}
+
+@Override
+public String errorRailwaysCreate6Alfa(String claveFaltante) {
+    // پیام کوتاه با رنگ خطا، به‌طور صریح نام مود ذکر شده است
+    StringBuilder sb = new StringBuilder("<b style='color:#")
+            .append(config.obtenerColorError())
+            .append("'>");
+    sb.append("ورودی رجیستر وجود ندارد: ").append(claveFaltante).append(". ");
+    sb.append("معمولاً در نسخه آلفای Steam & Railways برای Create 6 اتفاق می‌افتد.");
+    sb.append("</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreDeRailwaysCreate6Alfa() {
+    return "Create 6: Steam & Railways (آلفا)";
+}
+
+@Override
+public String pasoRailwaysCreate6Alfa() {
+    return "نسخه آلفای Steam & Railways برای Create 6 را حذف یا با نسخه سازگار جایگزین کنید.";
+}
+@Override
+public String errorConflictoMultiworldRendimiento() {
+    // کوتاه، با رنگ خطا و پیشنهاد مستقیم
+    StringBuilder sb = new StringBuilder("<b style='color:#")
+            .append(config.obtenerColorError())
+            .append("'>");
+    sb.append("تضاد بارگذاری: استفاده همزمان Multiworld با Sodium/Embeddium/Rubidium باعث ")
+      .append("IncompatibleClassChangeError (FabricLoader.getInstance) می‌شود. ")
+      .append("پیشنهاد: Multiworld یا مود بهینه‌سازی عملکرد را حذف کنید، یا از نسخه‌های سازگار استفاده کنید.");
+    sb.append("</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreDeConflictoMultiworldRendimiento() {
+    return "تضاد: Multiworld با مودهای عملکردی";
+}
+
+@Override
+public String pasoConflictoMultiworldRendimiento() {
+    return "Multiworld یا Sodium/Embeddium/Rubidium را حذف کنید، یا به نسخه‌های سازگار به‌روزرسانی کنید.";
+}
+@Override
+public String problema_con_graficas_sodium() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Sodium درایور گرافیکی ناسازگاری را تشخیص داده است. "
+         + "درایور GPU خود را به حداقل نسخه مورد نیاز به‌روزرسانی کنید یا راهنمای Sodium را دنبال کنید."
+         + "</b>";
+}
+@Override
+public String nombreErrorContextoOpenGL() { return "خطای متن OpenGL"; }
+
+@Override
+public String errorContextoOpenGL() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "OpenGL شکست خورد: هیچ متن فعلی وجود ندارد یا تابع در این متن در دسترس نیست. "
+         + "همچنین ممکن است مشکلی در درایورهای ویدئویی باشد."
+         + "</b>";
+}
+
+@Override
+public String paso1ErrorContextoOpenGL() {
+    return "درایورهای GPU خود را به‌روزرسانی یا دوباره نصب کنید و مجدداً راه‌اندازی کنید؛ رویهم‌گذاری‌ها را غیرفعال کرده و بدون مودهای عملکردی امتحان کنید.";
+}
+@Override
+public String copiadoAlPortapapeles() {
+    return "لینک در حافظه موقت کپی شد.";
+}
+
+
 
 
 

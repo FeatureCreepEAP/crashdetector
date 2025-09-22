@@ -19,8 +19,6 @@ public class NoTieneMemoria implements Verificaciones {
 	public void verificar(Consola consola) {
 		String contenidoConsola = consola.contenido_verificar;
 
-		
-		
 		// Muchos de las ideas son de TLauncher signatures.json o HMCL
 		// CrashAnalyzer.java
 
@@ -52,29 +50,27 @@ public class NoTieneMemoria implements Verificaciones {
 			verificarJVMMemoria();
 			activado = true;
 		}
-		
 
-		
-		
-		
 	}
 
-	/**
-	 * Determina si el problema es que el juego no tiene suficiente memoria asignada
-	 * (necesita más RAM para funcionar correctamente)
-	 */
+	// Falta de memoria asignada al heap u otros límites típicos de OOME
 	private boolean esProblemaMemoriaInsuficiente(String contenidoConsola) {
-		return contenidoConsola.contains("java.lang.OutOfMemoryError")
-				&& !contenidoConsola.contains("Could not reserve enough space for")
-				&& !contenidoConsola.contains("The specified size exceeds the maximum representable size")
-				&& !contenidoConsola.contains("Invalid maximum heap size")
-				&& !contenidoConsola
-						.contains("There is insufficient memory for the Java Runtime Environment to continue")
-				&& (contenidoConsola.contains("The system is out of physical RAM or swap space")
-						|| contenidoConsola.contains("Out of Memory Error")
-						|| contenidoConsola.contains("Too small maximum heap")
-						|| contenidoConsola.contains("Insufficient memory") || // DH TODO escribies descripcion
-						contenidoConsola.contains("Problem with RAM"));
+		if (!contenidoConsola.contains("java.lang.OutOfMemoryError"))
+			return false;
+		if (contenidoConsola.contains("Could not reserve enough space for")
+				|| contenidoConsola.contains("The specified size exceeds the maximum representable size")
+				|| contenidoConsola.contains("Invalid maximum heap size") || contenidoConsola
+						.contains("There is insufficient memory for the Java Runtime Environment to continue")) {
+			return false;
+		}
+
+		return contenidoConsola.contains("Java heap space") || contenidoConsola.contains("GC overhead limit exceeded")
+				|| contenidoConsola.contains("Requested array size exceeds VM limit")
+				|| contenidoConsola.contains("Direct buffer memory")
+				|| contenidoConsola.contains("unable to create new native thread")
+				|| contenidoConsola.contains("Out of Memory Error")
+				|| contenidoConsola.contains("Too small maximum heap")
+				|| contenidoConsola.contains("Insufficient memory") || contenidoConsola.contains("Problem with RAM");
 	}
 
 	/**
@@ -118,7 +114,7 @@ public class NoTieneMemoria implements Verificaciones {
 
 	@Override
 	public float prioridad() {
-		return 400.0f; // Prioridad crítica para errores de memoria
+		return 1000.0f; // Prioridad crítica para errores de memoria
 	}
 
 	@Override

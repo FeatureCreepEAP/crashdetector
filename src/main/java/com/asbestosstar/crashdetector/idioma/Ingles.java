@@ -260,7 +260,7 @@ public String ubicacionesDeLogs() {
 
 @Override
 public String infoDeVerificaciones() {
-    return "<b style='color:#" + config.obtenerColorInfo() + "'>Here are the results of your checks. Fixing the upper parts of the logs is the first priority. Do it slowly.</b>";
+    return "<b style='color:#" + config.obtenerColorInfo() + "'>Here are the results of your checks. Fixing the top parts of stack traces is the first priority. Work slowly—usually the correct cause is in check 1 or 2; others (errors 3+) can be used for confirmation but are often cascade errors and can generally be ignored. Failures occur in layers, so fixing the right issue will resolve this particular error today, but a new unrelated error might be back at it again tommarow since one error often prevents another from showing up in the console.</b>";
 }
 
 
@@ -2976,7 +2976,257 @@ public String noRegistroDeMCServidor() {
 	return "You need to save or paste the content from your server's terminal, as it contains information not found in other logs, including STDOUT, STDERR, and other errors. Please paste the content from your most recent session. For the future, you can save terminal output to a file called cd_launcherlog. To avoid having to paste it, add >> cd_launcherlog after your startup command, as shown in the image. Note this will prevent display in the terminal; output will only appear in that file afterward.";
 }
 
+@Override
+public String errorLexForgeMLTransformerEnNeoForge(String claseReceptora,
+                                                   String interfazObjetivo,
+                                                   String firmaMetodoFaltante,
+                                                   List<String> modsUbicacion) {
+    StringBuilder sb = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    sb.append("Critical error: LexForge transformer detected in a NeoForge environment. ");
+    sb.append("</b>");
 
+    sb.append("Involved class: <b>").append(claseReceptora).append("</b>. ");
+    sb.append("The affected interface is <b>").append(interfazObjetivo).append("</b> ");
+    sb.append("and the missing method is <b>").append(firmaMetodoFaltante).append("</b>. ");
+
+    if (modsUbicacion != null && !modsUbicacion.isEmpty()) {
+        sb.append("The class was found in: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            sb.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) sb.append(", ");
+        }
+        if (modsUbicacion.size() > 3) sb.append(", and others...");
+        sb.append("</b>. ");
+    } else {
+        sb.append("No JARs containing this class were located; it may be shaded or embedded as jar-in-jar. ");
+    }
+
+    sb.append("This failure occurs when a ModLauncher transformer/service compiled for MinecraftForge/LexForge ");
+    sb.append("is loaded under NeoForge with an incompatible version of the ModLauncher API. ");
+    sb.append("Update or replace the component for NeoForge.");
+    return sb.toString();
+}
+
+@Override
+public String nombre_de_LexForgeMLTransformerEnNeoForge() {
+    return "LexForge Transformer Used in NeoForge";
+}
+
+@Override
+public String paso1_LexForgeMLTransformerEnNeoForge(String claseReceptora,
+                                                    String interfazObjetivo,
+                                                    String firmaMetodoFaltante) {
+    return "Identify the incompatible transformer: <b>" + claseReceptora + "</b>. "
+         + "The expected API is <b>" + interfazObjetivo + "</b> and the missing method is <b>" + firmaMetodoFaltante + "</b>. "
+         + "Check if the mod registers this class in <b>META-INF/services</b> and remove or disable it in NeoForge.";
+}
+
+@Override
+public String paso2_LexForgeMLTransformerEnNeoForge(List<String> modsUbicacion) {
+    StringBuilder sb = new StringBuilder();
+    if (modsUbicacion != null && !modsUbicacion.isEmpty()) {
+        sb.append("Location of involved mod(s): <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            sb.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) sb.append(", ");
+        }
+        if (modsUbicacion.size() > 3) sb.append(", and others...");
+        sb.append("</b>. ");
+    } else {
+        sb.append("No JARs containing the class were found. Check jar-in-jar and shaded dependencies. ");
+    }
+    sb.append("Temporarily remove those JARs or use NeoForge-compatible versions to confirm the source.");
+    return sb.toString();
+}
+
+@Override
+public String paso3_LexForgeMLTransformerEnNeoForge() {
+    return "Replace the component with a NeoForge-specific version or recompile it against the "
+         + "ModLauncher version used by NeoForge. Avoid old binaries from LexForge/MinecraftForge.";
+}
+
+@Override
+public String paso4_LexForgeMLTransformerEnNeoForge() {
+    return "Clean your mods folder and remove duplicate jar-in-jar entries. Clear launcher cache if needed "
+         + "and restart to ensure no LexForge transformers are being loaded.";
+}
+
+@Override
+public String errorWaterMediaXenonIncompatible(String modNombre, String modId, List<String> modsUbicacion) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("WaterMedia cannot start: Xenon ");
+    sb.append("(").append(modId).append(") ");
+    if (modNombre != null && !modNombre.isEmpty()) sb.append("[").append(modNombre).append("] ");
+    sb.append("is incompatible.</b> ");
+    sb.append("Remove Xenon and use Embeddium or Sodium instead. ");
+    if (modsUbicacion != null && !modsUbicacion.isEmpty()) {
+        sb.append("Detected in: <b>");
+        for (int i = 0; i < Math.min(3, modsUbicacion.size()); i++) {
+            if (i > 0) sb.append(", ");
+            sb.append(modsUbicacion.get(i));
+        }
+        if (modsUbicacion.size() > 3) sb.append(", and others...");
+        sb.append("</b>.");
+    }
+    return sb.toString();
+}
+
+@Override
+public String nombreDeWaterMediaXenonIncompatible() {
+    return "WaterMedia incompatible with Xenon";
+}
+
+@Override
+public String paso1WaterMediaXenonIncompatible(String modNombre, String modId) {
+    String label = "Xenon (" + modId + ")";
+    if (modNombre != null && !modNombre.isEmpty()) label += " [" + modNombre + "]";
+    return "Detected " + label + " incompatible with WaterMedia. Remove it from your profile.";
+}
+
+@Override
+public String paso2WaterMediaXenonIncompatible(List<String> modsUbicacion) {
+    if (modsUbicacion != null && !modsUbicacion.isEmpty()) {
+        StringBuilder sb = new StringBuilder("Locations: <b>");
+        for (int i = 0; i < Math.min(3, modsUbicacion.size()); i++) {
+            if (i > 0) sb.append(", ");
+            sb.append(modsUbicacion.get(i));
+        }
+        if (modsUbicacion.size() > 3) sb.append(", and others...");
+        sb.append("</b>. Delete that JAR.");
+        return sb.toString();
+    }
+    return "No JARs found. Check your mods folder and remove Xenon.";
+}
+
+@Override
+public String paso3WaterMediaXenonIncompatible() {
+    return "Install Embeddium or Sodium as a replacement and restart the game.";
+}
+
+@Override
+public String nombreDeTaczDeflaterCerrado() {
+    return "Compression error (TACZ)";
+}
+
+@Override
+public String errorTaczDeflaterCerrado(java.util.List<String> modsUbicacion) {
+    StringBuilder sb = new StringBuilder("<b>Deflater closed during TACZ resource copy.</b> ");
+    if (modsUbicacion != null && !modsUbicacion.isEmpty()) {
+        sb.append("Related to: <b>");
+        for (int i = 0; i < Math.min(3, modsUbicacion.size()); i++) {
+            if (i > 0) sb.append(", ");
+            sb.append(modsUbicacion.get(i));
+        }
+        if (modsUbicacion.size() > 3) sb.append(", and others");
+        sb.append("</b>. ");
+    }
+    sb.append("<br/><b>Solution:</b> in <code>tacz/tacz-pre.toml</code>, set <code>DefaultPackDebug=true</code>. ")
+      .append("If needed, generate a map first and then activate it.");
+    return sb.toString();
+}
+
+@Override
+public String pasoTaczDeflaterCerrado() {
+    return "In tacz/tacz-pre.toml, set DefaultPackDebug=true. If needed, generate a map first and then activate it.";
+}
+
+@Override
+public String nombreDeFuncionesDeDensidadNoVinculadas() {
+    return "Unbound density functions";
+}
+
+@Override
+public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves) {
+    StringBuilder sb = new StringBuilder("<b>Density functions missing from registry.</b> ");
+    if (claves != null && !claves.isEmpty()) {
+        sb.append("Missing: ");
+        for (int i = 0; i < Math.min(4, claves.size()); i++) {
+            if (i > 0) sb.append(", ");
+            sb.append("<code>").append(claves.get(i)).append("</code>");
+        }
+        if (claves.size() > 4) sb.append(", …");
+        sb.append(". ");
+    }
+    sb.append("<br/><b>Solution:</b> install or enable the mod/datapack that defines these functions and restart.");
+    return sb.toString();
+}
+
+@Override
+public String pasoFuncionesDeDensidadNoVinculadas() {
+    return "Install or enable the mod/datapack providing these functions and restart the game.";
+}
+
+@Override
+public String errorRailwaysCreate6Alfa(String claveFaltante) {
+    // Short message in error colour, explicitly mentioning the mod
+    StringBuilder sb = new StringBuilder("<b style='color:#")
+            .append(config.obtenerColorError())
+            .append("'>");
+    sb.append("Registry entry not present: ").append(claveFaltante).append(". ");
+    sb.append("Common with the alpha version of Steam & Railways for Create 6.");
+    sb.append("</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreDeRailwaysCreate6Alfa() {
+    return "Create 6: Steam & Railways (alpha)";
+}
+
+@Override
+public String pasoRailwaysCreate6Alfa() {
+    return "Remove or replace the alpha version of Steam & Railways for Create 6 with a compatible version.";
+}
+
+@Override
+public String errorConflictoMultiworldRendimiento() {
+    // Short, in error colour with direct recommendation
+    StringBuilder sb = new StringBuilder("<b style='color:#")
+            .append(config.obtenerColorError())
+            .append("'>");
+    sb.append("Load conflict: Multiworld together with Sodium/Embeddium/Rubidium causes ")
+      .append("IncompatibleClassChangeError (FabricLoader.getInstance). ")
+      .append("Suggestion: remove Multiworld or the performance mod, or use compatible versions.");
+    sb.append("</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreDeConflictoMultiworldRendimiento() {
+    return "Conflict: Multiworld with performance mods";
+}
+
+@Override
+public String pasoConflictoMultiworldRendimiento() {
+    return "Uninstall Multiworld or Sodium/Embeddium/Rubidium, or update to mutually compatible versions.";
+}
+@Override
+public String problema_con_graficas_sodium() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Sodium detected an incompatible graphics driver. "
+         + "Update your GPU driver to the minimum required or follow the Sodium guide."
+         + "</b>";
+}
+@Override
+public String nombreErrorContextoOpenGL() { return "OpenGL Context Error"; }
+
+@Override
+public String errorContextoOpenGL() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "OpenGL failed: no current context or function not available in this context. "
+         + "It could also be a video driver issue."
+         + "</b>";
+}
+
+@Override
+public String paso1ErrorContextoOpenGL() {
+    return "Update/reinstall your GPU drivers and restart; disable overlays and try without performance mods.";
+}
+
+@Override
+public String copiadoAlPortapapeles() {
+    return "Link copied to clipboard.";
+}
 
 
 

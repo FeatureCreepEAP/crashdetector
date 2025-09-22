@@ -16,7 +16,7 @@ public class ModsDuplicadosModLauncher implements Verificaciones {
 		String contenidoConsola = consola.contenido_verificar;
 		String[] lineas = contenidoConsola.split(Verificaciones.nl);
 
-		if (contenidoConsola.contains("Found duplicate mods")) {
+		if (contenidoConsola.contains("Found duplicate mods")||contenidoConsola.contains("Found more than one mod with modid")) {
 			mensaje.append(MonitorDePID.idioma.no_tienes_las_dependencias_necesarias()).append(Verificaciones.nl_html);
 
 			for (int i = 0; i < lineas.length; i++) {
@@ -26,6 +26,9 @@ public class ModsDuplicadosModLauncher implements Verificaciones {
 					String enlace = consola.agregarErrorALectador(i, this);
 					// Añadir mensaje + enlace en la misma línea
 					mensaje.append(mensajeMod).append(" ").append(enlace).append(Verificaciones.nl_html);
+				}else if (linea.contains("Found more than one mod with modid \"crash_assistant\". Crash Assistant is duplicated. Crashing!")) {
+					String enlace = consola.agregarErrorALectador(i, this);
+					mensaje.append("crash_assistant").append(" ").append(enlace).append(Verificaciones.nl_html);
 				}
 			}
 			activado = true;
@@ -44,7 +47,7 @@ public class ModsDuplicadosModLauncher implements Verificaciones {
 
 	@Override
 	public float prioridad() {
-		return 1000.0f;
+		return 1050.0f;
 	}
 
 	@Override

@@ -260,7 +260,7 @@ public String ubicacionesDeLogs() {
 
 @Override
 public String infoDeVerificaciones() {
-    return "<b style='color:#" + config.obtenerColorInfo() + "'>Вот результаты ваших проверок. Исправление верхних частей логов является первоочередной задачей. Делайте это медленно.</b>";
+    return "<b style='color:#" + config.obtenerColorInfo() + "'>Вот результаты ваших проверок. Приоритет №1 — исправление верхних частей стектрейсов. Действуйте медленно: обычно корень проблемы находится в проверке 1 или 2; остальные (ошибки 3 и выше) можно использовать для подтверждения, но зачастую это каскадные ошибки, которые можно игнорировать. Сбои возникают слоями, поэтому устранение правильной проблемы решит именно эту конкретную ошибку сегодня, но завтра может появиться новая, не связанная с текущей ошибка, так как одна ошибка часто мешает появлению другой в консоли.</b>";
 }
 
 
@@ -2900,6 +2900,263 @@ public String noRegistroDeMCServidor() {
 	// TODO Auto-generated method stub
 	return "Вам нужно сохранить или вставить содержимое терминала вашего сервера, так как оно содержит информацию, отсутствующую в других логах, включая STDOUT, STDERR и другие ошибки. Пожалуйста, вставьте содержимое последней сессии. В будущем вы можете сохранять вывод терминала в файл под названием cd_launcherlog. Чтобы избежать необходимости вставки, добавьте >> cd_launcherlog после команды запуска, как показано на изображении. Обратите внимание: это предотвратит отображение в терминале; вся информация будет записываться только в этот файл.";
 }
+
+@Override
+public String errorLexForgeMLTransformerEnNeoForge(String claseReceptora,
+                                                   String interfazObjetivo,
+                                                   String firmaMetodoFaltante,
+                                                   List<String> modsUbicacion) {
+    StringBuilder sb = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    sb.append("Критическая ошибка: обнаружен трансформер LexForge в среде NeoForge. ");
+    sb.append("</b>");
+
+    sb.append("Задействованный класс: <b>").append(claseReceptora).append("</b>. ");
+    sb.append("Затронутый интерфейс — <b>").append(interfazObjetivo).append("</b>, ");
+    sb.append("отсутствующий метод — <b>").append(firmaMetodoFaltante).append("</b>. ");
+
+    if (modsUbicacion != null && !modsUbicacion.isEmpty()) {
+        sb.append("Класс найден в: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            sb.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) sb.append(", ");
+        }
+        if (modsUbicacion.size() > 3) sb.append(", и другие...");
+        sb.append("</b>. ");
+    } else {
+        sb.append("JAR-файлы с этим классом не найдены; возможно, он затенён или встроен как jar-in-jar. ");
+    }
+
+    sb.append("Эта ошибка возникает, когда трансформер/сервис ModLauncher, скомпилированный для MinecraftForge/LexForge, ");
+    sb.append("загружается в NeoForge с несовместимой версией API ModLauncher. ");
+    sb.append("Обновите или замените компонент на версию для NeoForge.");
+    return sb.toString();
+}
+
+@Override
+public String nombre_de_LexForgeMLTransformerEnNeoForge() {
+    return "Использование трансформера LexForge в NeoForge";
+}
+
+@Override
+public String paso1_LexForgeMLTransformerEnNeoForge(String claseReceptora,
+                                                    String interfazObjetivo,
+                                                    String firmaMetodoFaltante) {
+    return "Определите несовместимый трансформер: <b>" + claseReceptora + "</b>. "
+         + "Ожидаемое API — <b>" + interfazObjetivo + "</b>, отсутствует метод <b>" + firmaMetodoFaltante + "</b>. "
+         + "Проверьте, регистрирует ли мод этот класс в <b>META-INF/services</b>, и удалите или отключите его в NeoForge.";
+}
+
+@Override
+public String paso2_LexForgeMLTransformerEnNeoForge(List<String> modsUbicacion) {
+    StringBuilder sb = new StringBuilder();
+    if (modsUbicacion != null && !modsUbicacion.isEmpty()) {
+        sb.append("Расположение мода(ов): <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            sb.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) sb.append(", ");
+        }
+        if (modsUbicacion.size() > 3) sb.append(", и другие...");
+        sb.append("</b>. ");
+    } else {
+        sb.append("JAR-файлы с этим классом не найдены. Проверьте вложенные jar-in-jar и затенённые зависимости. ");
+    }
+    sb.append("Временно удалите эти JAR-файлы или используйте версии, совместимые с NeoForge, чтобы подтвердить источник.");
+    return sb.toString();
+}
+
+@Override
+public String paso3_LexForgeMLTransformerEnNeoForge() {
+    return "Замените компонент на специальную версию для NeoForge или перекомпилируйте его под версию ModLauncher, "
+         + "используемую NeoForge. Избегайте старых бинарников от LexForge/MinecraftForge.";
+}
+
+@Override
+public String paso4_LexForgeMLTransformerEnNeoForge() {
+    return "Очистите папку mods и удалите дублированные jar-in-jar-файлы. При необходимости очистите кэш лаунчера "
+         + "и перезапустите, чтобы убедиться, что трансформеры LexForge больше не загружаются.";
+}
+
+@Override
+public String errorWaterMediaXenonIncompatible(String modNombre, String modId, List<String> modsUbicacion) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("WaterMedia не может запуститься: Xenon ");
+    sb.append("(").append(modId).append(") ");
+    if (modNombre != null && !modNombre.isEmpty()) sb.append("[").append(modNombre).append("] ");
+    sb.append("несовместим.</b> ");
+    sb.append("Удалите Xenon и используйте вместо него Embeddium или Sodium. ");
+    if (modsUbicacion != null && !modsUbicacion.isEmpty()) {
+        sb.append("Обнаружен в: <b>");
+        for (int i = 0; i < Math.min(3, modsUbicacion.size()); i++) {
+            if (i > 0) sb.append(", ");
+            sb.append(modsUbicacion.get(i));
+        }
+        if (modsUbicacion.size() > 3) sb.append(", и другие...");
+        sb.append("</b>.");
+    }
+    return sb.toString();
+}
+
+@Override
+public String nombreDeWaterMediaXenonIncompatible() {
+    return "WaterMedia несовместим с Xenon";
+}
+
+@Override
+public String paso1WaterMediaXenonIncompatible(String modNombre, String modId) {
+    String label = "Xenon (" + modId + ")";
+    if (modNombre != null && !modNombre.isEmpty()) label += " [" + modNombre + "]";
+    return "Обнаружен " + label + ", несовместимый с WaterMedia. Удалите его из профиля.";
+}
+
+@Override
+public String paso2WaterMediaXenonIncompatible(List<String> modsUbicacion) {
+    if (modsUbicacion != null && !modsUbicacion.isEmpty()) {
+        StringBuilder sb = new StringBuilder("Местоположения: <b>");
+        for (int i = 0; i < Math.min(3, modsUbicacion.size()); i++) {
+            if (i > 0) sb.append(", ");
+            sb.append(modsUbicacion.get(i));
+        }
+        if (modsUbicacion.size() > 3) sb.append(", и другие...");
+        sb.append("</b>. Удалите этот JAR-файл.");
+        return sb.toString();
+    }
+    return "JAR-файлы не найдены. Проверьте папку mods и удалите Xenon.";
+}
+
+@Override
+public String paso3WaterMediaXenonIncompatible() {
+    return "Установите Embeddium или Sodium как замену и перезапустите игру.";
+}
+@Override
+public String nombreDeTaczDeflaterCerrado() {
+    return "Ошибка сжатия (TACZ)";
+}
+
+@Override
+public String errorTaczDeflaterCerrado(java.util.List<String> modsUbicacion) {
+    StringBuilder sb = new StringBuilder("<b>Deflater закрыт во время копирования ресурсов TACZ.</b> ");
+    if (modsUbicacion != null && !modsUbicacion.isEmpty()) {
+        sb.append("Связано с: <b>");
+        for (int i = 0; i < Math.min(3, modsUbicacion.size()); i++) {
+            if (i > 0) sb.append(", ");
+            sb.append(modsUbicacion.get(i));
+        }
+        if (modsUbicacion.size() > 3) sb.append(", и другие");
+        sb.append("</b>. ");
+    }
+    sb.append("<br/><b>Решение:</b> в файле <code>tacz/tacz-pre.toml</code> установите <code>DefaultPackDebug=true</code>. ")
+      .append("При необходимости сначала создайте карту, затем активируйте её.");
+    return sb.toString();
+}
+
+@Override
+public String pasoTaczDeflaterCerrado() {
+    return "В файле tacz/tacz-pre.toml установите DefaultPackDebug=true. При необходимости сначала создайте карту, затем активируйте её.";
+}
+
+@Override
+public String nombreDeFuncionesDeDensidadNoVinculadas() {
+    return "Несвязанные функции плотности";
+}
+
+@Override
+public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves) {
+    StringBuilder sb = new StringBuilder("<b>Функции плотности отсутствуют в реестре.</b> ");
+    if (claves != null && !claves.isEmpty()) {
+        sb.append("Отсутствуют: ");
+        for (int i = 0; i < Math.min(4, claves.size()); i++) {
+            if (i > 0) sb.append(", ");
+            sb.append("<code>").append(claves.get(i)).append("</code>");
+        }
+        if (claves.size() > 4) sb.append(", …");
+        sb.append(". ");
+    }
+    sb.append("<br/><b>Решение:</b> установите или включите мод/датапак, определяющий эти функции, и перезапустите.");
+    return sb.toString();
+}
+
+@Override
+public String pasoFuncionesDeDensidadNoVinculadas() {
+    return "Установите или включите мод/датапак, предоставляющий эти функции, и перезапустите игру.";
+}
+
+@Override
+public String errorRailwaysCreate6Alfa(String claveFaltante) {
+    // Краткое сообщение цветом ошибки с явным упоминанием мода
+    StringBuilder sb = new StringBuilder("<b style='color:#")
+            .append(config.obtenerColorError())
+            .append("'>");
+    sb.append("Запись в реестре отсутствует: ").append(claveFaltante).append(". ");
+    sb.append("Часто встречается в альфа-версии Steam & Railways для Create 6.");
+    sb.append("</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreDeRailwaysCreate6Alfa() {
+    return "Create 6: Steam & Railways (альфа)";
+}
+
+@Override
+public String pasoRailwaysCreate6Alfa() {
+    return "Удалите или замените альфа-версию Steam & Railways для Create 6 на совместимую версию.";
+}
+@Override
+public String errorConflictoMultiworldRendimiento() {
+    // Кратко, цветом ошибки, с прямой рекомендацией
+    StringBuilder sb = new StringBuilder("<b style='color:#")
+            .append(config.obtenerColorError())
+            .append("'>");
+    sb.append("Конфликт загрузки: Multiworld вместе с Sodium/Embeddium/Rubidium вызывает ")
+      .append("IncompatibleClassChangeError (FabricLoader.getInstance). ")
+      .append("Рекомендация: удалите Multiworld или мод производительности, либо используйте совместимые версии.");
+    sb.append("</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreDeConflictoMultiworldRendimiento() {
+    return "Конфликт: Multiworld с модами производительности";
+}
+
+@Override
+public String pasoConflictoMultiworldRendimiento() {
+    return "Удалите Multiworld или Sodium/Embeddium/Rubidium, либо обновитесь до взаимно совместимых версий.";
+}
+@Override
+public String problema_con_graficas_sodium() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Sodium обнаружил несовместимый графический драйвер. "
+         + "Обновите драйвер вашей видеокарты до минимально требуемой версии или следуйте руководству по Sodium."
+         + "</b>";
+}
+@Override
+public String nombreErrorContextoOpenGL() { return "Ошибка контекста OpenGL"; }
+
+@Override
+public String errorContextoOpenGL() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Сбой OpenGL: отсутствует текущий контекст или функция недоступна в этом контексте. "
+         + "Также может быть проблема с драйверами видеокарты."
+         + "</b>";
+}
+
+@Override
+public String paso1ErrorContextoOpenGL() {
+    return "Обновите/переустановите драйверы GPU и перезагрузитесь; отключите оверлеи и попробуйте запустить без модов производительности.";
+}
+@Override
+public String copiadoAlPortapapeles() {
+    return "Ссылка скопирована в буфер обмена.";
+}
+
+
+
+
+
+
+
+
 
 
 

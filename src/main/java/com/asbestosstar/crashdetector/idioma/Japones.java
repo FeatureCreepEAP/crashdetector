@@ -259,7 +259,7 @@ public String ubicacionesDeLogs() {
 
 @Override
 public String infoDeVerificaciones() {
-    return "<b style='color:#" + config.obtenerColorInfo() + "'>こちらが検証結果です。ログの上部を修正することが最優先事項です。ゆっくり行ってください。</b>";
+    return "<b style='color:#" + config.obtenerColorInfo() + "'>ここにあなたのチェック結果を示します。スタックトレースの上部を修正することが最優先です。ゆっくり進めてください。正しい原因は通常チェック1または2にあります。それ以外（エラー3以上）は確認用には使えますが、多くの場合連鎖的なエラーなので無視しても構いません。エラーは層状に発生するため、今日この特定のエラーを解決しても、明日まったく関係のない新しいエラーが現れる可能性があります。あるエラーが別のエラーの表示を妨げていることがよくあるからです。</b>";
 }
 
 @Override
@@ -2912,6 +2912,256 @@ public String noRegistroDeMCServidor() {
 	// TODO Auto-generated method stub
 	return "サーバーの端末内容を保存または貼り付ける必要があります。他のログにない情報（STDOUT、STDERR、その他のエラーなど）が含まれているためです。直近のセッション内容を貼り付けてください。今後は、起動コマンド後に >> cd_launcherlog を追加して、端末出力を cd_launcherlog というファイルに保存できます（画像参照）。これにより端末への表示はされず、出力はこのファイルにのみ記録されますのでご注意ください。";
 }
+
+@Override
+public String errorLexForgeMLTransformerEnNeoForge(String claseReceptora,
+                                                   String interfazObjetivo,
+                                                   String firmaMetodoFaltante,
+                                                   List<String> modsUbicacion) {
+    StringBuilder sb = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    sb.append("重大なエラー: NeoForge環境でLexForgeのトランスフォーマーが検出されました。 ");
+    sb.append("</b>");
+
+    sb.append("対象クラス: <b>").append(claseReceptora).append("</b>。 ");
+    sb.append("影響を受けるインターフェースは <b>").append(interfazObjetivo).append("</b> で、");
+    sb.append("不足しているメソッドは <b>").append(firmaMetodoFaltante).append("</b> です。 ");
+
+    if (modsUbicacion != null && !modsUbicacion.isEmpty()) {
+        sb.append("このクラスは以下の場所にあります: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            sb.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) sb.append(", ");
+        }
+        if (modsUbicacion.size() > 3) sb.append(", その他...");
+        sb.append("</b>。 ");
+    } else {
+        sb.append("このクラスを含むJARファイルが見つかりません。シェイディングされているか、jar-in-jar形式で埋め込まれている可能性があります。 ");
+    }
+
+    sb.append("MinecraftForge/LexForge向けにコンパイルされたModLauncherのトランスフォーマー/サービスが、");
+    sb.append("互換性のないModLauncher APIバージョンとともにNeoForge上で読み込まれると、このエラーが発生します。 ");
+    sb.append("NeoForge用のコンポーネントに更新または置き換えてください。");
+    return sb.toString();
+}
+
+@Override
+public String nombre_de_LexForgeMLTransformerEnNeoForge() {
+    return "NeoForgeで使用されたLexForgeトランスフォーマー";
+}
+
+@Override
+public String paso1_LexForgeMLTransformerEnNeoForge(String claseReceptora,
+                                                    String interfazObjetivo,
+                                                    String firmaMetodoFaltante) {
+    return "非互換のトランスフォーマーを特定してください: <b>" + claseReceptora + "</b>。 "
+         + "期待されるAPIは <b>" + interfazObjetivo + "</b> で、欠落しているメソッドは <b>" + firmaMetodoFaltante + "</b> です。 "
+         + "MODが <b>META-INF/services</b> にこのクラスを登録していないか確認し、NeoForgeで削除または無効にしてください。";
+}
+
+@Override
+public String paso2_LexForgeMLTransformerEnNeoForge(List<String> modsUbicacion) {
+    StringBuilder sb = new StringBuilder();
+    if (modsUbicacion != null && !modsUbicacion.isEmpty()) {
+        sb.append("関係するMODの場所: <b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            sb.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) sb.append(", ");
+        }
+        if (modsUbicacion.size() > 3) sb.append(", その他...");
+        sb.append("</b>。 ");
+    } else {
+        sb.append("クラスを含むJARが見つかりませんでした。jar-in-jarやシェイドされた依存関係を確認してください。 ");
+    }
+    sb.append("一時的にこれらのJARを削除するか、NeoForge対応バージョンを使用して原因を確認してください。");
+    return sb.toString();
+}
+
+@Override
+public String paso3_LexForgeMLTransformerEnNeoForge() {
+    return "コンポーネントをNeoForge専用バージョンに置き換えるか、NeoForgeが使用するModLauncherバージョンに対して再コンパイルしてください。 "
+         + "古いLexForge/MinecraftForgeのバイナリは避けてください。";
+}
+
+@Override
+public String paso4_LexForgeMLTransformerEnNeoForge() {
+    return "modsフォルダをクリーンアップし、重複したjar-in-jarエントリを削除してください。必要であればランチャーキャッシュを消去し、"
+         + "再起動してLexForgeのトランスフォーマーが読み込まれていないことを確認してください。";
+}
+
+@Override
+public String errorWaterMediaXenonIncompatible(String modNombre, String modId, List<String> modsUbicacion) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("WaterMediaを起動できません：Xenon ");
+    sb.append("(").append(modId).append(") ");
+    if (modNombre != null && !modNombre.isEmpty()) sb.append("[").append(modNombre).append("] ");
+    sb.append("は互換性がありません。</b> ");
+    sb.append("Xenonを削除し、代わりにEmbeddiumまたはSodiumを使用してください。 ");
+    if (modsUbicacion != null && !modsUbicacion.isEmpty()) {
+        sb.append("検出場所：<b>");
+        for (int i = 0; i < Math.min(3, modsUbicacion.size()); i++) {
+            if (i > 0) sb.append(", ");
+            sb.append(modsUbicacion.get(i));
+        }
+        if (modsUbicacion.size() > 3) sb.append(", その他...");
+        sb.append("</b>.");
+    }
+    return sb.toString();
+}
+
+@Override
+public String nombreDeWaterMediaXenonIncompatible() {
+    return "WaterMediaとXenonの互換性エラー";
+}
+
+@Override
+public String paso1WaterMediaXenonIncompatible(String modNombre, String modId) {
+    String label = "Xenon (" + modId + ")";
+    if (modNombre != null && !modNombre.isEmpty()) label += " [" + modNombre + "]";
+    return label + " がWaterMediaと互換性がないことが判明しました。プロファイルから削除してください。";
+}
+
+@Override
+public String paso2WaterMediaXenonIncompatible(List<String> modsUbicacion) {
+    if (modsUbicacion != null && !modsUbicacion.isEmpty()) {
+        StringBuilder sb = new StringBuilder("場所：<b>");
+        for (int i = 0; i < Math.min(3, modsUbicacion.size()); i++) {
+            if (i > 0) sb.append(", ");
+            sb.append(modsUbicacion.get(i));
+        }
+        if (modsUbicacion.size() > 3) sb.append(", その他...");
+        sb.append("</b>。そのJARファイルを削除してください。");
+        return sb.toString();
+    }
+    return "JARファイルが見つかりません。modsフォルダを確認し、Xenonを削除してください。";
+}
+
+@Override
+public String paso3WaterMediaXenonIncompatible() {
+    return "EmbeddiumまたはSodiumを代替としてインストールし、ゲームを再起動してください。";
+}
+@Override
+public String nombreDeTaczDeflaterCerrado() {
+    return "圧縮エラー (TACZ)";
+}
+
+@Override
+public String errorTaczDeflaterCerrado(java.util.List<String> modsUbicacion) {
+    StringBuilder sb = new StringBuilder("<b>TACZリソースのコピー中にDeflaterが閉じられました。</b> ");
+    if (modsUbicacion != null && !modsUbicacion.isEmpty()) {
+        sb.append("関連するもの: <b>");
+        for (int i = 0; i < Math.min(3, modsUbicacion.size()); i++) {
+            if (i > 0) sb.append(", ");
+            sb.append(modsUbicacion.get(i));
+        }
+        if (modsUbicacion.size() > 3) sb.append(", その他");
+        sb.append("</b>. ");
+    }
+    sb.append("<br/><b>解決策:</b> <code>tacz/tacz-pre.toml</code> で <code>DefaultPackDebug=true</code> に設定してください。")
+      .append("必要に応じて、まずマップを生成してから有効化してください。");
+    return sb.toString();
+}
+
+@Override
+public String pasoTaczDeflaterCerrado() {
+    return "tacz/tacz-pre.toml で DefaultPackDebug=true に設定してください。必要であれば、まずマップを生成してから有効化してください。";
+}
+
+@Override
+public String nombreDeFuncionesDeDensidadNoVinculadas() {
+    return "バインドされていない密度関数";
+}
+
+@Override
+public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves) {
+    StringBuilder sb = new StringBuilder("<b>レジストリに密度関数がありません。</b> ");
+    if (claves != null && !claves.isEmpty()) {
+        sb.append("不足しているもの: ");
+        for (int i = 0; i < Math.min(4, claves.size()); i++) {
+            if (i > 0) sb.append(", ");
+            sb.append("<code>").append(claves.get(i)).append("</code>");
+        }
+        if (claves.size() > 4) sb.append(", …");
+        sb.append(". ");
+    }
+    sb.append("<br/><b>解決策:</b> これらの関数を定義するMOD/データパックをインストールまたは有効化し、再起動してください。");
+    return sb.toString();
+}
+
+@Override
+public String pasoFuncionesDeDensidadNoVinculadas() {
+    return "これらの関数を提供するMOD/データパックをインストールまたは有効化し、ゲームを再起動してください。";
+}
+
+@Override
+public String errorRailwaysCreate6Alfa(String claveFaltante) {
+    // モジュールを明示的に言及し、エラー色の短いメッセージ
+    StringBuilder sb = new StringBuilder("<b style='color:#")
+            .append(config.obtenerColorError())
+            .append("'>");
+    sb.append("レジストリエントリが存在しません: ").append(claveFaltante).append(". ");
+    sb.append("Create 6 向けの Steam & Railways アルファ版でよく発生します。");
+    sb.append("</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreDeRailwaysCreate6Alfa() {
+    return "Create 6: Steam & Railways (アルファ)";
+}
+
+@Override
+public String pasoRailwaysCreate6Alfa() {
+    return "Create 6 向けの Steam & Railways アルファ版を互換性のあるバージョンに置き換えるか削除してください。";
+}
+@Override
+public String errorConflictoMultiworldRendimiento() {
+    // 短く、エラー色で、直接的な推奨を含む
+    StringBuilder sb = new StringBuilder("<b style='color:#")
+            .append(config.obtenerColorError())
+            .append("'>");
+    sb.append("読み込み衝突: Multiworld と Sodium/Embeddium/Rubidium を併用すると ")
+      .append("IncompatibleClassChangeError (FabricLoader.getInstance) が発生します。 ")
+      .append("提案: Multiworld またはパフォーマンスMODを削除するか、互換性のあるバージョンを使用してください。");
+    sb.append("</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreDeConflictoMultiworldRendimiento() {
+    return "衝突: Multiworld とパフォーマンスMOD";
+}
+
+@Override
+public String pasoConflictoMultiworldRendimiento() {
+    return "Multiworld または Sodium/Embeddium/Rubidium をアンインストールするか、互換性のあるバージョンに更新してください。";
+}
+@Override
+public String problema_con_graficas_sodium() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Sodiumが互換性のないグラフィックドライバーを検出しました。 "
+         + "GPUドライバーを最低要件まで更新するか、Sodiumのガイドに従ってください。"
+         + "</b>";
+}
+@Override
+public String nombreErrorContextoOpenGL() { return "OpenGLコンテキストエラー"; }
+
+@Override
+public String errorContextoOpenGL() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "OpenGLに失敗しました：現在のコンテキストがありません、またはこのコンテキストでは機能が利用できません。 "
+         + "ビデオドライバーの問題である可能性もあります。"
+         + "</b>";
+}
+
+@Override
+public String paso1ErrorContextoOpenGL() {
+    return "GPUドライバーを更新・再インストールして再起動してください。オーバーレイを無効にし、パフォーマンスMODなしで試してみてください。";
+}
+@Override
+public String copiadoAlPortapapeles() {
+    return "リンクがクリップボードにコピーされました。";
+}
+
 
 
 

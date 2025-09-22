@@ -13,6 +13,7 @@ import com.asbestosstar.crashdetector.analizador.apps.minecraft.AuditorTransform
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.AzureGeckoLibInicializoPronto;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.BloqueTeselado;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ConflictoDeIDsMinecraft;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ConflictoMultiworldRendimiento;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.CursedConsola;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.EarlyWindow;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorAccessTransformerInvalido;
@@ -28,9 +29,11 @@ import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorSistemaSoni
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorUnionFileSystemCorrupto;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.FabricMCRuntimeErrorProvidedBy;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.FaltasDependenciasModLaunche;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.FuncionesDeDensidadNoVinculadas;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.KubeJSResourcePack;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.LegacyRandomSourceMultiHilos;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.LenguajeProveedorCheck;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.LexForgeMLTransformerEnNeoForge;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.MCForgeInstallacionNoEstaCompleta;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.MCForgeModsSuspechoso;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ModsDuplicadosModLauncher;
@@ -61,17 +64,21 @@ import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaTickingR
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaVersionAPIIncompatible;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaVersionDowngrade;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ProblemaVersionModMundo;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.RailwaysCreate6Alfa;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.RegistrosMalMapeados;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.SCOErrorCompatibilidadC2ME;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.Segundo60Tick;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ServicioDeModLauncherNoFunciona;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.TaczDeflaterCerrado;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.WaterMediaTL;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.WaterMediaVLC;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.WaterMediaXenonIncompatible;
 import com.asbestosstar.crashdetector.analizador.general.AdvertenciaFaltasClases;
 import com.asbestosstar.crashdetector.analizador.general.ContentoDeTraces;
 import com.asbestosstar.crashdetector.analizador.general.DifDeMods;
 import com.asbestosstar.crashdetector.analizador.general.Drivers;
 import com.asbestosstar.crashdetector.analizador.general.ErrorCaracteresInvalidosEnNombre;
+import com.asbestosstar.crashdetector.analizador.general.ErrorContextoOpenGL;
 import com.asbestosstar.crashdetector.analizador.general.ErrorDeEnlaceInsatisfecho;
 import com.asbestosstar.crashdetector.analizador.general.ErrorDeMonitorLWJGL;
 import com.asbestosstar.crashdetector.analizador.general.FaltaModuleJPMS;
@@ -199,6 +206,16 @@ public class Analizador {
 		verificaciones.add(new SCOErrorCompatibilidadC2ME());
 		verificaciones.add(new ErrorJEIPluginFallido());
 
+		verificaciones.add(new LexForgeMLTransformerEnNeoForge());
+		verificaciones.add(new WaterMediaXenonIncompatible());
+		verificaciones.add(new TaczDeflaterCerrado());
+		verificaciones.add(new FuncionesDeDensidadNoVinculadas());
+		verificaciones.add(new RailwaysCreate6Alfa());
+		verificaciones.add(new ConflictoMultiworldRendimiento());
+		verificaciones.add(new ErrorContextoOpenGL());
+
+		
+		
 		
 		
 		
@@ -207,7 +224,7 @@ public class Analizador {
 		verificaciones.add(new DifDeMods());
 
 		
-		
+		//TODO https://discord.com/channels/1129059589325852724/1129069799545241703/1418708211636113498 
 		
 	}
 

@@ -259,7 +259,7 @@ public String ubicacionesDeLogs() {
 
 @Override
 public String infoDeVerificaciones() {
-    return "<b style='color:#" + config.obtenerColorInfo() + "'>以下是您的检查结果。修复日志的上半部分是首要任务。请慢慢来。</b>";
+    return "<b style='color:#" + config.obtenerColorInfo() + "'>以下是你的检查结果。优先修复堆栈顶部的问题。请耐心处理，通常根本原因在第1或第2项检查中，其他检查（错误3及以上）可用于确认，但通常是连锁错误，可忽略。故障是分层出现的，因此今天解决正确的根本问题可以消除此特定错误，但明天可能又会出现一个与当前错误无关的新错误，因为一个错误常常会阻止另一个错误在日志中显示出来。</b>";
 }
 
 
@@ -2910,7 +2910,258 @@ public String noRegistroDeMCServidor() {
 	return "你需要保存或粘贴你服务器终端的内容，因为它包含其他日志中没有的信息，包括 STDOUT、STDERR 和其他错误。请粘贴最近一次会话的内容。今后，你可以将终端输出保存到文件 cd_launcherlog 中。为避免手动粘贴，在启动命令后添加 >> cd_launcherlog（如图所示）。请注意，这样做将阻止信息显示在终端上；所有内容只会记录到该文件中。";
 }
 
+@Override
+public String errorLexForgeMLTransformerEnNeoForge(String claseReceptora,
+                                                   String interfazObjetivo,
+                                                   String firmaMetodoFaltante,
+                                                   List<String> modsUbicacion) {
+    StringBuilder sb = new StringBuilder("<b style='color:#" + config.obtenerColorError() + "'>");
+    sb.append("严重错误：在 NeoForge 环境中检测到 LexForge 转换器。 ");
+    sb.append("</b>");
 
+    sb.append("涉及的类： <b>").append(claseReceptora).append("</b>。 ");
+    sb.append("受影响的接口是 <b>").append(interfazObjetivo).append("</b>，");
+    sb.append("缺少的方法为 <b>").append(firmaMetodoFaltante).append("</b>。 ");
+
+    if (modsUbicacion != null && !modsUbicacion.isEmpty()) {
+        sb.append("该类位于：<b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            sb.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) sb.append(", ");
+        }
+        if (modsUbicacion.size() > 3) sb.append(", 等等...");
+        sb.append("</b>。 ");
+    } else {
+        sb.append("未找到包含此类的 JAR 文件；可能被阴影化或以 jar-in-jar 形式嵌入。 ");
+    }
+
+    sb.append("当为 MinecraftForge/LexForge 编译的 ModLauncher 转换器/服务 ");
+    sb.append("在 NeoForge 中使用不兼容的 ModLauncher API 版本加载时，会出现此错误。 ");
+    sb.append("请更新或替换适用于 NeoForge 的组件。");
+    return sb.toString();
+}
+
+@Override
+public String nombre_de_LexForgeMLTransformerEnNeoForge() {
+    return "在 NeoForge 中使用了 LexForge 转换器";
+}
+
+@Override
+public String paso1_LexForgeMLTransformerEnNeoForge(String claseReceptora,
+                                                    String interfazObjetivo,
+                                                    String firmaMetodoFaltante) {
+    return "识别不兼容的转换器：<b>" + claseReceptora + "</b>。 "
+         + "预期的 API 是 <b>" + interfazObjetivo + "</b>，缺少方法 <b>" + firmaMetodoFaltante + "</b>。 "
+         + "检查模组是否在 <b>META-INF/services</b> 中注册了此类，并在 NeoForge 中移除或禁用它。";
+}
+
+@Override
+public String paso2_LexForgeMLTransformerEnNeoForge(List<String> modsUbicacion) {
+    StringBuilder sb = new StringBuilder();
+    if (modsUbicacion != null && !modsUbicacion.isEmpty()) {
+        sb.append("相关模组位置：<b>");
+        for (int i = 0; i < Math.min(modsUbicacion.size(), 3); i++) {
+            sb.append(modsUbicacion.get(i));
+            if (i < modsUbicacion.size() - 1 && i < 2) sb.append(", ");
+        }
+        if (modsUbicacion.size() > 3) sb.append(", 等等...");
+        sb.append("</b>。 ");
+    } else {
+        sb.append("未找到包含该类的 JAR 文件。请检查 jar-in-jar 和阴影依赖项。 ");
+    }
+    sb.append("暂时移除这些 JAR 文件，或使用支持 NeoForge 的版本来确认问题来源。");
+    return sb.toString();
+}
+
+@Override
+public String paso3_LexForgeMLTransformerEnNeoForge() {
+    return "将组件替换为 NeoForge 专用版本，或针对 NeoForge 所使用的 ModLauncher 版本重新编译。"
+         + "避免使用旧版 LexForge/MinecraftForge 二进制文件。";
+}
+
+@Override
+public String paso4_LexForgeMLTransformerEnNeoForge() {
+    return "清理 mods 文件夹并删除重复的 jar-in-jar 文件。如有必要清空启动器缓存，"
+         + "然后重启以确认不再加载 LexForge 转换器。";
+}
+
+@Override
+public String errorWaterMediaXenonIncompatible(String modNombre, String modId, List<String> modsUbicacion) {
+    StringBuilder sb = new StringBuilder("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("WaterMedia 无法启动：Xenon ");
+    sb.append("(").append(modId).append(") ");
+    if (modNombre != null && !modNombre.isEmpty()) sb.append("[").append(modNombre).append("] ");
+    sb.append("不兼容。</b> ");
+    sb.append("请移除 Xenon，改用 Embeddium 或 Sodium。 ");
+    if (modsUbicacion != null && !modsUbicacion.isEmpty()) {
+        sb.append("检测到位置：<b>");
+        for (int i = 0; i < Math.min(3, modsUbicacion.size()); i++) {
+            if (i > 0) sb.append(", ");
+            sb.append(modsUbicacion.get(i));
+        }
+        if (modsUbicacion.size() > 3) sb.append(", 等等...");
+        sb.append("</b>.");
+    }
+    return sb.toString();
+}
+
+@Override
+public String nombreDeWaterMediaXenonIncompatible() {
+    return "WaterMedia 与 Xenon 不兼容";
+}
+
+@Override
+public String paso1WaterMediaXenonIncompatible(String modNombre, String modId) {
+    String label = "Xenon (" + modId + ")";
+    if (modNombre != null && !modNombre.isEmpty()) label += " [" + modNombre + "]";
+    return "检测到 " + label + " 与 WaterMedia 不兼容。请从配置中移除它。";
+}
+
+@Override
+public String paso2WaterMediaXenonIncompatible(List<String> modsUbicacion) {
+    if (modsUbicacion != null && !modsUbicacion.isEmpty()) {
+        StringBuilder sb = new StringBuilder("位置：<b>");
+        for (int i = 0; i < Math.min(3, modsUbicacion.size()); i++) {
+            if (i > 0) sb.append(", ");
+            sb.append(modsUbicacion.get(i));
+        }
+        if (modsUbicacion.size() > 3) sb.append(", 等等...");
+        sb.append("</b>。删除该 JAR 文件。");
+        return sb.toString();
+    }
+    return "未找到 JAR 文件。检查 mods 文件夹并删除 Xenon。";
+}
+
+@Override
+public String paso3WaterMediaXenonIncompatible() {
+    return "安装 Embeddium 或 Sodium 作为替代，并重启游戏。";
+}
+
+@Override
+public String nombreDeTaczDeflaterCerrado() {
+    return "压缩错误 (TACZ)";
+}
+
+@Override
+public String errorTaczDeflaterCerrado(java.util.List<String> modsUbicacion) {
+    StringBuilder sb = new StringBuilder("<b>TACZ 资源复制过程中 Deflater 已关闭。</b> ");
+    if (modsUbicacion != null && !modsUbicacion.isEmpty()) {
+        sb.append("相关文件: <b>");
+        for (int i = 0; i < Math.min(3, modsUbicacion.size()); i++) {
+            if (i > 0) sb.append(", ");
+            sb.append(modsUbicacion.get(i));
+        }
+        if (modsUbicacion.size() > 3) sb.append(", 等等");
+        sb.append("</b>. ");
+    }
+    sb.append("<br/><b>解决方案：</b>在 <code>tacz/tacz-pre.toml</code> 中设置 <code>DefaultPackDebug=true</code>。")
+      .append("如有需要，请先生成地图再激活。");
+    return sb.toString();
+}
+
+@Override
+public String pasoTaczDeflaterCerrado() {
+    return "在 tacz/tacz-pre.toml 中设置 DefaultPackDebug=true。如有需要，请先生成地图再激活。";
+}
+
+@Override
+public String nombreDeFuncionesDeDensidadNoVinculadas() {
+    return "未绑定的密度函数";
+}
+
+@Override
+public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves) {
+    StringBuilder sb = new StringBuilder("<b>注册表中缺少密度函数。</b> ");
+    if (claves != null && !claves.isEmpty()) {
+        sb.append("缺失：");
+        for (int i = 0; i < Math.min(4, claves.size()); i++) {
+            if (i > 0) sb.append(", ");
+            sb.append("<code>").append(claves.get(i)).append("</code>");
+        }
+        if (claves.size() > 4) sb.append(", …");
+        sb.append("。 ");
+    }
+    sb.append("<br/><b>解决方案：</b>安装或启用定义这些函数的模组/数据包，然后重启游戏。");
+    return sb.toString();
+}
+
+@Override
+public String pasoFuncionesDeDensidadNoVinculadas() {
+    return "安装或启用提供这些函数的模组/数据包，并重新启动游戏。";
+}
+
+@Override
+public String errorRailwaysCreate6Alfa(String claveFaltante) {
+    // 简短错误消息，用错误颜色显示，并明确提及模组
+    StringBuilder sb = new StringBuilder("<b style='color:#")
+            .append(config.obtenerColorError())
+            .append("'>");
+    sb.append("注册表项不存在: ").append(claveFaltante).append(". ");
+    sb.append("常见于 Create 6 的 Steam & Railways 测试版（Alpha）。");
+    sb.append("</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreDeRailwaysCreate6Alfa() {
+    return "Create 6: Steam & Railways (测试版)";
+}
+
+@Override
+public String pasoRailwaysCreate6Alfa() {
+    return "移除或替换 Create 6 的 Steam & Railways 测试版为兼容版本。";
+}
+
+@Override
+public String errorConflictoMultiworldRendimiento() {
+    // 简短，使用错误颜色并直接提供建议
+    StringBuilder sb = new StringBuilder("<b style='color:#")
+            .append(config.obtenerColorError())
+            .append("'>");
+    sb.append("加载冲突：Multiworld 与 Sodium/Embeddium/Rubidium 同时使用会导致 ")
+      .append("IncompatibleClassChangeError (FabricLoader.getInstance)。")
+      .append("建议：移除 Multiworld 或性能模组，或使用相互兼容的版本。");
+    sb.append("</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombreDeConflictoMultiworldRendimiento() {
+    return "冲突：Multiworld 与性能模组";
+}
+
+@Override
+public String pasoConflictoMultiworldRendimiento() {
+    return "卸载 Multiworld 或 Sodium/Embeddium/Rubidium，或更新为彼此兼容的版本。";
+}
+@Override
+public String problema_con_graficas_sodium() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "Sodium 检测到不兼容的显卡驱动程序。"
+         + "请将您的 GPU 驱动更新至最低要求版本，或参考 Sodium 指南进行操作。"
+         + "</b>";
+}
+
+@Override
+public String nombreErrorContextoOpenGL() { return "OpenGL 上下文错误"; }
+
+@Override
+public String errorContextoOpenGL() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "OpenGL 失败：无当前上下文，或该函数在此上下文中不可用。"
+         + "也可能是显卡驱动问题。"
+         + "</b>";
+}
+
+@Override
+public String paso1ErrorContextoOpenGL() {
+    return "更新或重新安装 GPU 驱动并重启；关闭所有覆盖层，并尝试在不使用性能模组的情况下运行。";
+}
+
+@Override
+public String copiadoAlPortapapeles() {
+    return "链接已复制到剪贴板。";
+}
 
 
 

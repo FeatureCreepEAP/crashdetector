@@ -26,44 +26,50 @@ import com.asbestosstar.crashdetector.parches.Parche;
 public class ConfigPanel extends JPanel {
 	public CrashDetectorGUI cdgui;
 	private JTabbedPane tabbedPane;
+	private Color colorFondoPestanias;
 
 	public ConfigPanel(CrashDetectorGUI cdgui) {
 		this.cdgui = cdgui;
 		setLayout(new BorderLayout());
 		setBackground(CrashDetectorGUI.colorFondo);
 
-		// Create pestañas con etiquetas personalizadas
+		// Crear el contenedor de pestañas
 		tabbedPane = new JTabbedPane();
 
-		Color tabLabelColor = CrashDetectorGUI.esMac() ? null : CrashDetectorGUI.colorTexto;
+		// Si NO es macOS, oscurecer el fondo de las pestañas para mejorar el contraste
+		if (!CrashDetectorGUI.esMac()) {
+			// Dos niveles más oscuro suele dar buen contraste con texto claro
+			colorFondoPestanias = CrashDetectorGUI.colorFondo.darker().darker();
+			tabbedPane.setBackground(colorFondoPestanias);
+			tabbedPane.setOpaque(true);
+		}
+
+		// Color del texto de las etiquetas de las pestañas
+		Color colorTextoPestanias = CrashDetectorGUI.esMac() ? null : CrashDetectorGUI.colorTexto;
 
 		// Pestaña "Inicio de Juego/App"
 		JLabel incicio_del_juego = new JLabel(MonitorDePID.idioma.inicioApp());
-		if (tabLabelColor != null) {
-			incicio_del_juego.setForeground(tabLabelColor);
-		}
+		if (colorTextoPestanias != null)
+			incicio_del_juego.setForeground(colorTextoPestanias);
 		tabbedPane.addTab("", null, tabDelJuego(), MonitorDePID.idioma.tooltip());
-		tabbedPane.setTabComponentAt(0, incicio_del_juego);
+		// Envolver la etiqueta para que pinte el fondo oscuro en el área de la pestaña
+		tabbedPane.setTabComponentAt(0, crearComponentePestania(incicio_del_juego));
 
 		// Pestaña "Ajustes CrashDetector"
 		JLabel cdajustes = new JLabel(MonitorDePID.idioma.ajustesCrashDetector());
-		if (tabLabelColor != null) {
-			cdajustes.setForeground(tabLabelColor);
-		}
+		if (colorTextoPestanias != null)
+			cdajustes.setForeground(colorTextoPestanias);
 		tabbedPane.addTab("", null, tabCrashDetector(), MonitorDePID.idioma.tooltip());
-		tabbedPane.setTabComponentAt(1, cdajustes);
+		tabbedPane.setTabComponentAt(1, crearComponentePestania(cdajustes));
 
 		// Pestaña "Confidencialidad"
 		JLabel confidencialidad = new JLabel(MonitorDePID.idioma.confidencialidad());
-		if (tabLabelColor != null) {
-			confidencialidad.setForeground(tabLabelColor);
-		}
+		if (colorTextoPestanias != null)
+			confidencialidad.setForeground(colorTextoPestanias);
 		tabbedPane.addTab("", null, tabConfidentialidad(), MonitorDePID.idioma.tooltip());
-		tabbedPane.setTabComponentAt(2, confidencialidad);
+		tabbedPane.setTabComponentAt(2, crearComponentePestania(confidencialidad));
 
 		add(tabbedPane, BorderLayout.CENTER);
-
-		// --- Nuevo: Botón "Guardar" ---
 		JButton guardarButon = new JButton(MonitorDePID.idioma.guardarYCerrar());
 
 		if (CrashDetectorGUI.esMac()) {
@@ -115,44 +121,66 @@ public class ConfigPanel extends JPanel {
 		add(butonPanel, BorderLayout.SOUTH);
 	}
 
-	private JPanel tabDelJuego() {
-	    JPanel panel = new JPanel();
-	    panel.setBackground(CrashDetectorGUI.colorFondo);
-	    panel.setLayout(new GridLayout(0, 1, 5, 5));
-	    
-    	CrashDetectorLogger.log("Tab Del Juego ");
+	// Helper: envuelve la etiqueta de la pestaña en un panel opaco para pintar el
+	// fondo oscuro
+	private Component crearComponentePestania(JLabel etiqueta) {
+		// En macOS dejamos el comportamiento por defecto del LAF
+		if (CrashDetectorGUI.esMac()) {
+			return etiqueta;
+		}
 
-	    // Agregar todos los parches de la aplicación
-	    for (Parche<?> parche : Parche.parches) {
-	    	CrashDetectorLogger.log("Parche " + parche.nombre_de_gui());
-	        JPanel parchePanel = new JPanel(new BorderLayout());
-	        parchePanel.setBackground(CrashDetectorGUI.colorFondo);
-	        
-	        // Crear checkbox para activar/desactivar el parche
-	        JCheckBox checkBox = new JCheckBox();
-	        checkBox.setBackground(CrashDetectorGUI.colorFondo);
-	        checkBox.setForeground(CrashDetectorGUI.colorTexto);
-	        checkBox.setSelected(ConfigDeParches.obtenerInstancia().estaActivo(parche.id()));
-	        
-	        // Actualizar estado cuando se hace clic
-	        checkBox.addActionListener(e -> {
-	            ConfigDeParches.obtenerInstancia().establecerActivo(parche.id(), checkBox.isSelected());
-	        });
-	        
-	        // Etiqueta con el nombre del parche
-	        JLabel label = new JLabel(parche.nombre_de_gui());
-	        label.setForeground(CrashDetectorGUI.colorTexto);
-	        label.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-	        
-	        // Agregar componentes al panel
-	        parchePanel.add(checkBox, BorderLayout.WEST);
-	        parchePanel.add(label, BorderLayout.CENTER);
-	        
-	        // Añadir el panel del parche al panel principal
-	        panel.add(parchePanel);
-	    }
-	    
-	    return panel;
+		JPanel envoltura = new JPanel(new BorderLayout());
+		envoltura.setOpaque(true);
+		// Usar el color calculado; si faltara por alguna razón, oscurecer el fondo base
+		envoltura.setBackground(
+				colorFondoPestanias != null ? colorFondoPestanias : CrashDetectorGUI.colorFondo.darker());
+
+		// Un poco de padding para mejorar legibilidad
+		etiqueta.setBorder(BorderFactory.createEmptyBorder(6, 12, 6, 12));
+		etiqueta.setOpaque(false); // el fondo lo pinta la envoltura
+
+		envoltura.add(etiqueta, BorderLayout.CENTER);
+		return envoltura;
+	}
+
+	private JPanel tabDelJuego() {
+		JPanel panel = new JPanel();
+		panel.setBackground(CrashDetectorGUI.colorFondo);
+		panel.setLayout(new GridLayout(0, 1, 5, 5));
+
+		CrashDetectorLogger.log("Tab Del Juego ");
+
+		// Agregar todos los parches de la aplicación
+		for (Parche<?> parche : Parche.parches) {
+			CrashDetectorLogger.log("Parche " + parche.nombre_de_gui());
+			JPanel parchePanel = new JPanel(new BorderLayout());
+			parchePanel.setBackground(CrashDetectorGUI.colorFondo);
+
+			// Crear checkbox para activar/desactivar el parche
+			JCheckBox checkBox = new JCheckBox();
+			checkBox.setBackground(CrashDetectorGUI.colorFondo);
+			checkBox.setForeground(CrashDetectorGUI.colorTexto);
+			checkBox.setSelected(ConfigDeParches.obtenerInstancia().estaActivo(parche.id()));
+
+			// Actualizar estado cuando se hace clic
+			checkBox.addActionListener(e -> {
+				ConfigDeParches.obtenerInstancia().establecerActivo(parche.id(), checkBox.isSelected());
+			});
+
+			// Etiqueta con el nombre del parche
+			JLabel label = new JLabel(parche.nombre_de_gui());
+			label.setForeground(CrashDetectorGUI.colorTexto);
+			label.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+
+			// Agregar componentes al panel
+			parchePanel.add(checkBox, BorderLayout.WEST);
+			parchePanel.add(label, BorderLayout.CENTER);
+
+			// Añadir el panel del parche al panel principal
+			panel.add(parchePanel);
+		}
+
+		return panel;
 	}
 
 	// Campos de texto para ajustes de CrashDetector
@@ -324,8 +352,7 @@ public class ConfigPanel extends JPanel {
 			colorEnlaceTextoField.setForeground(CrashDetectorGUI.colorTexto);
 		}
 		panel.add(colorEnlaceTextoField);
-		
-		
+
 		// Campo: ¿Usar proxy para System.out y System.err?
 		JLabel labelProxy = new JLabel("proxySysOutSysErr");
 		labelProxy.setForeground(color_de_texto_de_gui);
@@ -335,8 +362,6 @@ public class ConfigPanel extends JPanel {
 		proxySysOutSysErrCheckBox.setForeground(CrashDetectorGUI.colorTexto);
 		proxySysOutSysErrCheckBox.setSelected(config.obtenerProxySysOutSysErr());
 		panel.add(proxySysOutSysErrCheckBox);
-		
-		
 
 		return panel;
 	}

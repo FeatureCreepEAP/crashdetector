@@ -1260,6 +1260,64 @@ public interface Idioma {
 
 	public String noRegistroDeMCServidor();
 
+	public String errorLexForgeMLTransformerEnNeoForge(String claseReceptora, String interfazObjetivo,
+			String firmaMetodoFaltante, List<String> modsUbicacion);
+
+	public String nombre_de_LexForgeMLTransformerEnNeoForge();
+
+	public String paso1_LexForgeMLTransformerEnNeoForge(String claseReceptora, String interfazObjetivo,
+			String firmaMetodoFaltante);
+
+	public String paso2_LexForgeMLTransformerEnNeoForge(List<String> modsUbicacion);
+
+	public String paso3_LexForgeMLTransformerEnNeoForge();
+
+	public String paso4_LexForgeMLTransformerEnNeoForge();
+
+	public String errorWaterMediaXenonIncompatible(String modNombre, String modId, List<String> modsUbicacion);
+
+	public String nombreDeWaterMediaXenonIncompatible();
+
+	public String paso1WaterMediaXenonIncompatible(String modNombre, String modId);
+
+	public String paso2WaterMediaXenonIncompatible(List<String> modsUbicacion);
+
+	public String paso3WaterMediaXenonIncompatible();
+
+	public String nombreDeTaczDeflaterCerrado();
+
+	public String errorTaczDeflaterCerrado(List<String> modsUbicacion);
+
+	public String pasoTaczDeflaterCerrado();
+
+	public String errorFuncionesDeDensidadNoVinculadas(List<String> clavesFaltantes);
+
+	public String nombreDeFuncionesDeDensidadNoVinculadas();
+
+	public String pasoFuncionesDeDensidadNoVinculadas();
+
+	public String nombreDeRailwaysCreate6Alfa();
+
+	public String pasoRailwaysCreate6Alfa();
+
+	public String errorRailwaysCreate6Alfa(String claveFaltante);
+
+	public String errorConflictoMultiworldRendimiento();
+
+	public String nombreDeConflictoMultiworldRendimiento();
+
+	public String pasoConflictoMultiworldRendimiento();
+
+	public String problema_con_graficas_sodium();
+
+	public String errorContextoOpenGL();
+
+	public String nombreErrorContextoOpenGL();
+
+	public String paso1ErrorContextoOpenGL();
+
+	public String copiadoAlPortapapeles();
+
 	
 	
 	
