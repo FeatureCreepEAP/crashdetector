@@ -9,7 +9,6 @@ import com.asbestosstar.crashdetector.parches.Parche;
 
 import cpw.mods.modlauncher.api.ITransformer;
 import cpw.mods.modlauncher.api.ITransformerVotingContext;
-import cpw.mods.modlauncher.api.TargetType;
 import cpw.mods.modlauncher.api.TransformerVoteResult;
 
 public class TransformacionesCPW implements  ITransformer<ClassNode> {
@@ -34,7 +33,7 @@ public class TransformacionesCPW implements  ITransformer<ClassNode> {
 	}
 
 	@Override
-	public Set targets() {
+	public Set<Target> targets() {
 		// TODO Auto-generated method stub
 		Set<Target> resultdo = new HashSet<Target>();
 		//resulto.add(Target.targetClass("net.minecraft.server.MinecraftServer"));
@@ -49,12 +48,6 @@ public class TransformacionesCPW implements  ITransformer<ClassNode> {
 		
 		
 		return resultdo;
-	}
-
-	@Override
-	public TargetType<ClassNode> getTargetType() {
-		// TODO Auto-generated method stub
-		return TargetType.CLASS;
 	}
 
 }

@@ -40,17 +40,17 @@ if(!Statics.cargador)	{
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public List transformers() {
+	public List<ITransformer> transformers() {
 		// TODO Auto-generated method stub
 		ArrayList<ITransformer> transformers = new ArrayList<ITransformer>();
 		transformers.add(new TransformacionesCPW());
 		return transformers;
 	}
-//
-//	@Override
-//	public void beginScanning(IEnvironment environment) {
-//		// TODO Auto-generated method stub
-//		
-//	}
+
+	@Override
+	public void beginScanning(IEnvironment environment) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
