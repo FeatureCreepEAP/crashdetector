@@ -14,6 +14,9 @@ public class CrashDetectorFCMC {
 		//Buscar para archivos de mods si es FC
 boolean es_fc = true;
 		if (clase_existe("featurecreep.loader.FCLoaderBasic")) {
+			if(clase_existe("dangerzone.BaseMod")) {Statics.APP=App.DANGERZONE;}//TODO para otras applicaciones
+			
+			
 			Transformaciones.init();
 			FCLoaderBasic fc = null;
 			if (instrument instanceof FCInstrumentation) {

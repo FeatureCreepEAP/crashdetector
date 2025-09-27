@@ -22,9 +22,11 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.anon.AnonimizadorDeRuta;
 import com.asbestosstar.crashdetector.cargador.Cargador;
+import com.asbestosstar.crashdetector.cargador.CargadorDangerZone;
 import com.asbestosstar.crashdetector.cargador.CargadorFabric;
 import com.asbestosstar.crashdetector.cargador.CargadorFeatureCreep;
 import com.asbestosstar.crashdetector.cargador.CargadorMCForge;
+import com.asbestosstar.crashdetector.cargador.CargadorNXOpen;
 import com.asbestosstar.crashdetector.cargador.CargadorNeoForge;
 
 public class Buscardor {
@@ -38,6 +40,8 @@ public class Buscardor {
     	Cargador.cargadores.add(new CargadorFabric());
     	Cargador.cargadores.add(new CargadorMCForge());
     	Cargador.cargadores.add(new CargadorNeoForge());
+    	Cargador.cargadores.add(new CargadorDangerZone());
+    	Cargador.cargadores.add(new CargadorNXOpen());
     }
 
    

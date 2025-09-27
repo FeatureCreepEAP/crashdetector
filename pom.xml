@@ -178,6 +178,23 @@
 </dependency>
 
 
+<!-- https://mvnrepository.com/artifact/org.jboss/jboss-dmr -->
+<dependency>
+    <groupId>org.jboss</groupId>
+    <artifactId>jboss-dmr</artifactId>
+    <version>1.6.1.Final</version>
+</dependency>
+
+<dependency>
+    <groupId>com.electronwill.night-config</groupId>
+    <artifactId>toml</artifactId>
+    <version>3.6.0</version>
+</dependency>
+
+
+
+
+
 		<!-- existe porque una limitacion de nivel src para servicio modlauncher
 		. TODO publicar en Central
 		<dependency>

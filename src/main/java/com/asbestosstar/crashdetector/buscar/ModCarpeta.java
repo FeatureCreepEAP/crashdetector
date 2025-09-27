@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
+import com.asbestosstar.crashdetector.cargador.Cargador;
+import com.asbestosstar.crashdetector.cargador.CargadorFeatureCreep;
 
 /**
  * Clase que procesa carpetas para buscar mods y clases dentro de ellas.
@@ -31,7 +33,9 @@ public class ModCarpeta implements ArchivoDeMod {
     public List<String> archivos = new ArrayList<>();
     private final Map<String, byte[]> mapaBytesClase = new HashMap<>();
     private final Path rutaRaiz;
+    public List<Cargador> cargadores_de_mod = new ArrayList<Cargador>();
 
+    
     /**
      * Constructor principal que procesa una carpeta de mods.
      * Detecta automáticamente si es un mod de HOI4 o un módulo de JBoss.
@@ -77,17 +81,34 @@ public class ModCarpeta implements ArchivoDeMod {
                         contieneDefinicionMod = true;
                         
                         if (nombre.endsWith("modules.xml")) {
-                            nombres.add(parsearNombreModuloJBoss(Files.readAllBytes(entrada)));
+                            nombres.addAll(CargadorFeatureCreep.parsearNombreModuloJBoss(Files.readAllBytes(entrada)));
                         } else if (nombre.endsWith(".mod")) {
-                            nombres.add(parsearNombreModHOI4(Files.readAllBytes(entrada)));
+                            nombres.addAll(CargadorFeatureCreep.parsearNombreModHOI4(Files.readAllBytes(entrada)));
                         }
                     } else if (nombre.endsWith(".class")) {
                         procesarClase(entrada);
                     } else if (esArchivoAnidado(nombre)) {
                         procesarArchivoAnidado(entrada, nombre);
+                    }                    else if (nombre.endsWith(".toml")||nombre.endsWith(".json")||nombre.endsWith(".yaml")||nombre.endsWith(".xml")||nombre.endsWith(".MF")||nombre.endsWith(".txt")||nombre.endsWith(".lang")) {//TODO dmr si es version texto
+                    	mapaBytesClase.put(nombre, Files.readAllBytes(entrada));
                     }
+                    
+                    
+                    
+                    
+
+                    
+                    
+                    
+                    
                 }
             }
+            
+            
+            for(Cargador cargador:Cargador.cargadores) {
+            	if(cargador.modEsDeCargador(this)) {cargadores_de_mod.add(cargador);}
+            }
+            
         } catch (IOException e) {
             CrashDetectorLogger.logException(e);
         }
@@ -144,26 +165,6 @@ public class ModCarpeta implements ArchivoDeMod {
                 nombreArchivo.endsWith(".war") ||
                 nombreArchivo.endsWith(".ear") ||
                 nombreArchivo.endsWith(".rar");
-    }
-
-    /**
-     * Extrae el nombre del módulo de un archivo modules.xml (JBoss).
-     */
-    private String parsearNombreModuloJBoss(byte[] contenido) throws IOException {
-        String xml = new String(contenido);
-        int inicio = xml.indexOf("name=\"") + "name=\"".length();
-        int fin = xml.indexOf("\"", inicio);
-        return (inicio != -1 && fin != -1) ? xml.substring(inicio, fin) : "Módulo JBoss desconocido";
-    }
-
-    /**
-     * Extrae el nombre del mod de un archivo HOI4 (.mod).
-     */
-    private String parsearNombreModHOI4(byte[] contenido) throws IOException {
-        String texto = new String(contenido);
-        int inicio = texto.indexOf("name=\"") + "name=\"".length();
-        int fin = texto.indexOf("\"", inicio);
-        return (inicio != -1 && fin != -1) ? texto.substring(inicio, fin) : "Mod HOI4 desconocido";
     }
 
     // Métodos de búsqueda recursiva
@@ -276,4 +277,13 @@ public class ModCarpeta implements ArchivoDeMod {
     public List<String> obtenerTodosLosNombresDeClases() {
         return new ArrayList<>(mapaBytesClase.keySet());
     }
+	@Override
+	public List<Cargador> cargadores() {
+		// TODO Auto-generated method stub
+		return cargadores_de_mod;
+	}
+    
+    
+    
+    
 }

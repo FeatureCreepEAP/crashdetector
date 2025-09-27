@@ -34,7 +34,10 @@ public class Config {
 	public static final String VALOR_POR_DEFECTO_SITIO_DE_REGISTROS_SELECCIONADO = "https://securelogger.net/save/log?";
 	private static final boolean VALOR_POR_DEFECTO_ANONIMIZAR_REGISTROS = true;
 	private static final boolean PROXY_SYSOUT_SYSERR = false;
+	private static final boolean EXTREGAR_TOKEN_DE_ACCESO = false;
 
+	
+	
 	
 	
 	// Ruta al archivo de configuración
@@ -86,7 +89,9 @@ public class Config {
 			propiedadesConfig.setProperty("api_de_registros_seleccionada", VALOR_POR_DEFECTO_API_DE_REGISTROS_SELECCIONADA);
 			propiedadesConfig.setProperty("sitio_de_registros_seleccionado", VALOR_POR_DEFECTO_SITIO_DE_REGISTROS_SELECCIONADO);
 			propiedadesConfig.setProperty("anonimizar_registros", String.valueOf(VALOR_POR_DEFECTO_ANONIMIZAR_REGISTROS));		
-			
+			propiedadesConfig.setProperty("proxy_sysout_syserr", String.valueOf(PROXY_SYSOUT_SYSERR));		
+			propiedadesConfig.setProperty("habilitar_token_de_acceso_en_la_entrega_del_MonitorDePID", String.valueOf(EXTREGAR_TOKEN_DE_ACCESO));		
+
 			guardar();
 		}
 	}
@@ -382,4 +387,24 @@ public class Config {
 		propiedadesConfig.setProperty("proxy_sysout_syserr", String.valueOf(valor));
 	}
 
+	/**
+	 * No es recomendado , solo existe para CDLauncher si necesitas servidores en modio enlinea pero activado es menos seguro. TODO mover a una config solo para usarios fin
+	 * @return
+	 */
+	public boolean habilitarTokenDeAccesoEnLaEntregaDelMonitorDePID() {
+		// TODO Auto-generated method stub
+		return Boolean.parseBoolean(propiedadesConfig.getProperty("habilitar_token_de_acceso_en_la_entrega_del_MonitorDePID", String.valueOf(EXTREGAR_TOKEN_DE_ACCESO)));
+
+	}
+
+	/**
+	 * No es recomendado , solo existe para CDLauncher si necesitas servidores en modio enlinea pero activado es menos seguro. TODO mover a una config solo para usarios fin
+	 * @return
+	 */
+	public void guardarHabilitarTokenDeAccesoEnLaEntregaDelMonitorDePID(boolean valor) {
+		// TODO Auto-generated method stub
+		propiedadesConfig.setProperty("habilitar_token_de_acceso_en_la_entrega_del_MonitorDePID", String.valueOf(valor));
+	}
+	
+	
 }

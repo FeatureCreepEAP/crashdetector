@@ -8,7 +8,8 @@ import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 public interface Cargador {
 	
 	public static final List<Cargador> cargadores = new ArrayList<Cargador>();
-	
+	public static final List<Cargador> cargadores_activados = new ArrayList<Cargador>();
+
 	
 	
 	/**

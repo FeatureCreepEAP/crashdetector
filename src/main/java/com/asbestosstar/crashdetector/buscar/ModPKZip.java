@@ -4,17 +4,18 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
+import com.asbestosstar.crashdetector.cargador.Cargador;
+import com.asbestosstar.crashdetector.cargador.CargadorFabric;
+import com.asbestosstar.crashdetector.cargador.CargadorFeatureCreep;
+import com.asbestosstar.crashdetector.cargador.CargadorMCForge;
 
 /**
  * Clase que procesa archivos ZIP/JAR para buscar mods y clases dentro de ellos.
@@ -29,7 +30,10 @@ public class ModPKZip implements ArchivoDeMod {
     public List<String> clases = new ArrayList<>();
     public List<String> archivos = new ArrayList<>();
     private final Map<String, byte[]> bytesClaseMap = new HashMap<>();
-
+    public List<Cargador> cargadores_de_mod = new ArrayList<Cargador>();
+    
+    
+    
     /**
      * Constructor principal que procesa un archivo ZIP/JAR.
      * Lee todas las entradas del flujo de entrada al inicio para evitar cierre prematuro.
@@ -59,14 +63,25 @@ public class ModPKZip implements ArchivoDeMod {
                 } else {
                     // Procesar metadatos
                     if (nombreArchivo.endsWith("modules.xml")) {
-                        nombres.add(parsearNombreModuloJBoss(contenido));
+                    	bytesClaseMap.put(nombreArchivo, contenido);
+                        nombres.addAll(CargadorFeatureCreep.parsearNombreModuloJBoss(contenido));
                     } else if (nombreArchivo.endsWith(".mod")) {
-                        nombres.add(parsearNombreModHOI4(contenido));
+                    	bytesClaseMap.put(nombreArchivo, contenido);
+                        nombres.addAll(CargadorFeatureCreep.parsearNombreModHOI4(contenido));
                     } else if (nombreArchivo.equals("fabric.mod.json")) {
-                        nombres.add(parsearIdModFabric(contenido));
-                    } else if (nombreArchivo.endsWith("mods.toml")) {
-                        nombres.add(parsearIdModMCForge(contenido));
-                    } else if (nombreArchivo.endsWith(".class")) {
+                    	bytesClaseMap.put(nombreArchivo, contenido);
+                        nombres.addAll(CargadorFabric.parsearIdModFabric(contenido));
+                    }else if (nombreArchivo.endsWith("mods.toml")) {
+                        nombres.addAll(CargadorMCForge.parsearIdModMCForge(contenido));
+                        bytesClaseMap.put(nombreArchivo, contenido);
+                    }
+                    else if (nombreArchivo.endsWith(".toml")||nombreArchivo.endsWith(".json")||nombreArchivo.endsWith(".yaml")||nombreArchivo.endsWith(".xml")||nombreArchivo.endsWith(".MF")||nombreArchivo.endsWith(".txt")||nombreArchivo.endsWith(".lang")) {//TODO dmr si es version texto
+                        bytesClaseMap.put(nombreArchivo, contenido);
+                    }
+                    
+                    
+                    
+                    else if (nombreArchivo.endsWith(".class")) {
                         String nombreClase = nombreArchivo.replace("/", ".").replace(".class", "");
                         clases.add(nombreClase);
                         // Guardar bytes de clase para análisis posterior con ASM
@@ -74,8 +89,15 @@ public class ModPKZip implements ArchivoDeMod {
                         bytesClaseMap.put(nombreInterno, contenido);
                     }
                 }
-            }
+                
 
+                
+                
+                
+            }
+            for(Cargador cargador:Cargador.cargadores) {
+            	if(cargador.modEsDeCargador(this)) {cargadores_de_mod.add(cargador);}
+            }
         } catch (IOException e) {
             CrashDetectorLogger.logException(e);
         }
@@ -127,74 +149,7 @@ public class ModPKZip implements ArchivoDeMod {
                nombreArchivo.endsWith(".rar");
     }
 
-    /**
-     * Extrae el nombre del módulo de un archivo modules.xml (JBoss).
-     */
-    private String parsearNombreModuloJBoss(byte[] contenido) throws IOException {
-        String xml = new String(contenido);
-        int inicio = xml.indexOf("name=\"") + "name=\"".length();
-        int fin = xml.indexOf("\"", inicio);
-        return (inicio != -1 && fin != -1) ? xml.substring(inicio, fin) : "Módulo JBoss desconocido";
-    }
 
-    /**
-     * Extrae el nombre del mod de un archivo HOI4 (.mod).
-     */
-    private String parsearNombreModHOI4(byte[] contenido) throws IOException {
-        String txt = new String(contenido);
-        int inicio = txt.indexOf("name=\"") + "name=\"".length();
-        int fin = txt.indexOf("\"", inicio);
-        return (inicio != -1 && fin != -1) ? txt.substring(inicio, fin) : "Mod HOI4 desconocido";
-    }
-
-    /**
-     * Extrae el id del mod de un archivo fabric.mod.json.
-     */
-    private String parsearIdModFabric(byte[] contenido) throws IOException {
-        String json = new String(contenido);
-        int inicio = json.indexOf("\"id\": \"") + "\"id\": \"".length();
-        int fin = json.indexOf("\"", inicio);
-        return (inicio != -1 && fin != -1) ? json.substring(inicio, fin) : "Mod Fabric desconocido";
-    }
-
-    /**
-     * Extrae el modId de un archivo mods.toml (Forge).
-     */
-    private String parsearIdModMCForge(byte[] contenido) throws IOException {
-        String toml = new String(contenido, StandardCharsets.UTF_8);
-        
-        // Limpiar la lista de nombres previos
-        this.nombres.clear();
-
-        // Patrón para encontrar el modId principal en el bloque [[mods]]
-        Pattern modPattern = Pattern.compile("\\[\\[mods\\]\\][^\\[]*modId\\s*=\\s*\"([^\"]+)\"", Pattern.DOTALL);
-        Matcher modMatcher = modPattern.matcher(toml);
-
-        // Valor por defecto si no se encuentra el modId
-        String modIdPrincipal = "Mod Forge desconocido";
-
-        if (modMatcher.find()) {
-            modIdPrincipal = modMatcher.group(1);
-        }
-
-        // Añadir el modId principal a la lista de nombres
-        this.nombres.add(modIdPrincipal);
-
-        // Patrón para encontrar nombres en bloques de dependencias: [[dependencies.nombre]] por que es la causa de una problema grande
-        Pattern depPattern = Pattern.compile("\\[\\[dependencies\\.([a-zA-Z0-9_]+)\\]\\]");
-        Matcher depMatcher = depPattern.matcher(toml);
-
-        // Añadir cada nombre encontrado en dependencies a la lista de nombres
-        while (depMatcher.find()) {
-            String nombreDependencia = depMatcher.group(1);
-            // Evitar duplicados
-            if (!this.nombres.contains(nombreDependencia)) {
-                this.nombres.add(nombreDependencia);
-            }
-        }
-
-        return modIdPrincipal;
-    }
 
     // Métodos de búsqueda recursiva
 
@@ -306,4 +261,10 @@ public class ModPKZip implements ArchivoDeMod {
     public List<String> obtenerTodosLosNombresDeClases() {
         return new ArrayList<>(bytesClaseMap.keySet());
     }
+
+	@Override
+	public List<Cargador> cargadores() {
+		// TODO Auto-generated method stub
+		return cargadores_de_mod;
+	}
 }
