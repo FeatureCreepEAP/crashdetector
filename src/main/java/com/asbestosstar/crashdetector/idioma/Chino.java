@@ -3164,7 +3164,11 @@ public String copiadoAlPortapapeles() {
 }
 
 
-
+//Chino
+@Override
+public String buscarDentroDeComprimidos() {
+ return "在压缩包内搜索 (.zip/.jar/.war/.ear/.fpm/.rar（用于 Java）*)";
+}
 
 
 

@@ -1,11 +1,14 @@
 package com.asbestosstar.crashdetector.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
@@ -20,108 +23,250 @@ import javax.swing.SwingWorker;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.grepr.BusquedaArchivos;
 
-public class BusquedaGUI extends JFrame  implements BotonDeBarraLateralDerecha{
-    private JTextField dirField;
-    private JTextField searchField;
-    private JCheckBox regexCheck;
-    private JCheckBox caseCheck;
-    private JTextArea resultsArea;
+public class BusquedaGUI extends JFrame implements BotonDeBarraLateralDerecha {
 
-    public BusquedaGUI() {
-        setTitle("grepr/fgrepr");
-        setSize(800, 600);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
-        getContentPane().setBackground(CrashDetectorGUI.colorFondo);
-        setLayout(new BorderLayout(10, 10));
+    private JTextField campoDirectorio;
+    private JTextField campoCadena;
+    private JCheckBox chkRegex;
+    private JCheckBox chkIgnorarMayus;
+    private JCheckBox chkBuscarEnComprimidos;
+    private JTextArea areaResultados;
 
-        JPanel inputPanel = new JPanel(new GridLayout(4, 2, 10, 10));
-        inputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+    // Colores del tema noche
+    private final Color colorFondoVentana = new Color(12, 18, 56);
+    private final Color colorPanel = new Color(20, 28, 78);
+    private final Color colorTexto = Color.WHITE;
+    private final Color colorBoton = new Color(220, 64, 92);
+    private final Color colorBotonTexto = Color.WHITE;
+    private final Color colorCampo = new Color(16, 22, 66);
 
-        dirField = new JTextField();
-        JButton browseBtn = new JButton(MonitorDePID.idioma.seleccionarCarpeta());
-        browseBtn.addActionListener(e -> seleccionarCarpeta());
-        inputPanel.add(dirField);
-        inputPanel.add(browseBtn);
+public BusquedaGUI() {
+    setTitle("grepr/fgrepr");
+    setSize(1000, 600);
+    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    setLocationRelativeTo(null);
 
-        searchField = new JTextField();
-        inputPanel.add(new JLabel(MonitorDePID.idioma.cadenaBusqueda()));
-        inputPanel.add(searchField);
+    getContentPane().setBackground(colorFondoVentana);
+    setLayout(new BorderLayout(10, 10));
 
-        regexCheck = new JCheckBox(MonitorDePID.idioma.usarRegex());
-        caseCheck = new JCheckBox(MonitorDePID.idioma.ignorarMayusculas());
-        inputPanel.add(regexCheck);
-        inputPanel.add(caseCheck);
+    java.awt.GridBagLayout gbl = new java.awt.GridBagLayout();
+    JPanel panelEntrada = new JPanel(gbl);
+    panelEntrada.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+    panelEntrada.setBackground(colorPanel);
 
-        JButton searchBtn = new JButton(MonitorDePID.idioma.buscar());
-        searchBtn.addActionListener(e -> iniciarBusqueda());
-        inputPanel.add(searchBtn);
+    // izquierda sin espacio vertical entre controles
+    java.awt.GridBagConstraints L = new java.awt.GridBagConstraints();
+    L.insets = new java.awt.Insets(0, 0, 0, 8);
+    L.fill = java.awt.GridBagConstraints.HORIZONTAL;
+    L.weightx = 0.4;
+    L.anchor = java.awt.GridBagConstraints.WEST;
 
-        resultsArea = new JTextArea();
-        resultsArea.setEditable(false);
-        JScrollPane scrollPane = new JScrollPane(resultsArea);
+    // derecha con mayor peso para ocupar 60 por ciento aprox
+    java.awt.GridBagConstraints R = new java.awt.GridBagConstraints();
+    R.insets = new java.awt.Insets(5, 8, 5, 0);
+    R.fill = java.awt.GridBagConstraints.HORIZONTAL;
+    R.weightx = 0.6;
+    R.anchor = java.awt.GridBagConstraints.WEST;
 
-        add(inputPanel, BorderLayout.NORTH);
-        add(scrollPane, BorderLayout.CENTER);
+    // fila 0 directorio y boton
+    campoDirectorio = new JTextField();
+    estilizarCampo(campoDirectorio);
+    L.gridx = 0; L.gridy = 0;
+    panelEntrada.add(campoDirectorio, L);
+
+    JButton btnExaminar = new JButton(MonitorDePID.idioma.seleccionarCarpeta());
+    estilizarBoton(btnExaminar);
+    btnExaminar.addActionListener(e -> seleccionarCarpeta());
+    R.gridx = 1; R.gridy = 0;
+    panelEntrada.add(btnExaminar, R);
+
+    // fila 1 etiqueta y campo de cadena
+    JLabel lblCadena = new JLabel(MonitorDePID.idioma.cadenaBusqueda());
+    lblCadena.setForeground(colorTexto);
+    L.gridx = 0; L.gridy = 1;
+    panelEntrada.add(lblCadena, L);
+
+    campoCadena = new JTextField();
+    estilizarCampo(campoCadena);
+    R.gridx = 1; R.gridy = 1;
+    panelEntrada.add(campoCadena, R);
+
+    // fila 2 check izquierda y derecha
+    chkRegex = new JCheckBox(MonitorDePID.idioma.usarRegex());
+    estilizarCheck(chkRegex);
+    L.gridx = 0; L.gridy = 2;
+    panelEntrada.add(chkRegex, L);
+
+    chkIgnorarMayus = new JCheckBox(MonitorDePID.idioma.ignorarMayusculas());
+    estilizarCheck(chkIgnorarMayus);
+    R.gridx = 1; R.gridy = 2;
+    panelEntrada.add(chkIgnorarMayus, R);
+
+    // fila 3 checkbox de comprimidos a la izquierda
+    chkBuscarEnComprimidos = new JCheckBox(MonitorDePID.idioma.buscarDentroDeComprimidos());
+    estilizarCheck(chkBuscarEnComprimidos);
+    L.gridx = 0; L.gridy = 3;
+    panelEntrada.add(chkBuscarEnComprimidos, L);
+
+    // fila 3 imagen a la derecha bajo el checkbox derecho
+    JLabel lblImagen = crearImagenEscalada("crash_detector/imagenes/saliormoongrep.png", 150, 100);
+    lblImagen.setOpaque(true);
+    lblImagen.setBackground(colorPanel);
+    lblImagen.setPreferredSize(new java.awt.Dimension(150, 100));
+    R.gridx = 1; R.gridy = 3;
+    panelEntrada.add(lblImagen, R);
+
+    // fila 4 boton buscar a la izquierda sin espacio vertical
+    JButton btnBuscar = new JButton(MonitorDePID.idioma.buscar());
+    estilizarBoton(btnBuscar);
+    btnBuscar.addActionListener(e -> iniciarBusqueda());
+    L.gridx = 0; L.gridy = 4;
+    panelEntrada.add(btnBuscar, L);
+
+    // relleno a la derecha para mantener el 60 por ciento
+    R.gridx = 1; R.gridy = 4;
+    R.weightx = 0.6;
+    panelEntrada.add(new JLabel(), R);
+
+    areaResultados = new JTextArea();
+    areaResultados.setEditable(false);
+    areaResultados.setBackground(colorCampo);
+    areaResultados.setForeground(colorTexto);
+    areaResultados.setCaretColor(colorTexto);
+    areaResultados.setSelectionColor(new Color(255, 215, 0));
+    areaResultados.setSelectedTextColor(Color.BLACK);
+
+    JScrollPane scroll = new JScrollPane(areaResultados);
+    scroll.getViewport().setBackground(colorCampo);
+    scroll.setBackground(colorPanel);
+    scroll.setBorder(BorderFactory.createLineBorder(new Color(255, 215, 0), 1));
+
+    add(panelEntrada, BorderLayout.NORTH);
+    add(scroll, BorderLayout.CENTER);
+}
+
+
+    
+    
+    
+
+    
+    
+    
+    
+    // Carga y escala la imagen solicitada
+    private JLabel crearImagenEscalada(String ruta, int w, int h) {
+        // intenta ruta tal cual en disco
+        java.io.File f = new java.io.File(ruta);
+        if (!f.isAbsolute()) {
+            // si es relativa, pruébala relativa a user.dir
+            f = new java.io.File(System.getProperty("user.dir"), ruta);
+        }
+        if (f.exists() && f.isFile()) {
+            javax.swing.ImageIcon base = new javax.swing.ImageIcon(f.getAbsolutePath());
+            java.awt.Image esc = base.getImage().getScaledInstance(w, h, java.awt.Image.SCALE_SMOOTH);
+            return new javax.swing.JLabel(new javax.swing.ImageIcon(esc));
+        }
+
+        // respaldo por si en el futuro va dentro del jar
+        java.net.URL url = getClass().getClassLoader().getResource(ruta);
+        if (url != null) {
+            javax.swing.ImageIcon base = new javax.swing.ImageIcon(url);
+            java.awt.Image esc = base.getImage().getScaledInstance(w, h, java.awt.Image.SCALE_SMOOTH);
+            return new javax.swing.JLabel(new javax.swing.ImageIcon(esc));
+        }
+
+        // mensaje si no se encuentra
+        javax.swing.JLabel fallo = new javax.swing.JLabel("imagen no encontrada " + ruta);
+        fallo.setForeground(colorTexto);
+        return fallo;
+    }
+
+
+    // Estilo para botones
+    private void estilizarBoton(JButton b) {
+        b.setBackground(colorBoton);
+        b.setForeground(colorBotonTexto);
+        b.setFocusPainted(false);
+        b.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(255, 215, 0), 1),
+                BorderFactory.createEmptyBorder(6, 12, 6, 12)
+        ));
+    }
+
+    // Estilo para campos de texto
+    private void estilizarCampo(JTextField f) {
+        f.setBackground(colorCampo);
+        f.setForeground(colorTexto);
+        f.setCaretColor(colorTexto);
+        f.setSelectionColor(new Color(255, 215, 0));
+        f.setSelectedTextColor(Color.BLACK);
+        f.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(255, 215, 0), 1),
+                BorderFactory.createEmptyBorder(4, 8, 4, 8)
+        ));
+    }
+
+    // Estilo para checkboxes y etiquetas
+    private void estilizarCheck(JCheckBox c) {
+        c.setBackground(colorPanel);
+        c.setForeground(colorTexto);
+        c.setFocusPainted(false);
     }
 
     private void seleccionarCarpeta() {
         JFileChooser chooser = new JFileChooser();
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-            dirField.setText(chooser.getSelectedFile().getAbsolutePath());
+            campoDirectorio.setText(chooser.getSelectedFile().getAbsolutePath());
         }
     }
 
     private void iniciarBusqueda() {
-        String dirfield = dirField.getText().trim();
-    	final String directorio;
-        
-        if (dirfield.replace(" ", "").equals("")) {
-            directorio = System.getProperty("user.dir");
-        }else {
-        	directorio= dirfield;
-        }
-        String cadena = searchField.getText().trim();
-        boolean usarRegex = regexCheck.isSelected();
-        boolean ignorarMayus = caseCheck.isSelected();
+        String dirCrudo = campoDirectorio.getText().trim();
+        final String directorio = dirCrudo.replace(" ", "").isEmpty()
+                ? System.getProperty("user.dir")
+                : dirCrudo;
 
-        resultsArea.setText(MonitorDePID.idioma.busquedaEnProgreso() + "\n");
+        String cadena = campoCadena.getText().trim();
+        boolean usarRegex = chkRegex.isSelected();
+        boolean ignorarMayus = chkIgnorarMayus.isSelected();
+        boolean buscarEnComprimidos = chkBuscarEnComprimidos.isSelected();
+
+        areaResultados.setText(MonitorDePID.idioma.busquedaEnProgreso() + "\n");
 
         new SwingWorker<List<String>, Void>() {
             @Override
             protected List<String> doInBackground() {
-                return BusquedaArchivos.buscar(directorio, cadena, usarRegex, ignorarMayus);
+                return BusquedaArchivos.buscar(directorio, cadena, usarRegex, ignorarMayus, buscarEnComprimidos);
             }
 
             @Override
             protected void done() {
                 try {
                     List<String> resultados = get();
-                    resultsArea.setText("");
+                    areaResultados.setText("");
                     if (resultados.isEmpty()) {
-                        resultsArea.append(MonitorDePID.idioma.noSeEncontraronResultados());
+                        areaResultados.append(MonitorDePID.idioma.noSeEncontraronResultados());
                     } else {
-                        for (String res : resultados) {
-                            resultsArea.append(res + "\n");
+                        for (String r : resultados) {
+                            areaResultados.append(r + "\n");
                         }
                     }
                 } catch (InterruptedException | ExecutionException e) {
-                    resultsArea.append(MonitorDePID.idioma.errorBusqueda() + e.getMessage());
+                    areaResultados.append(MonitorDePID.idioma.errorBusqueda() + e.getMessage());
                 }
             }
         }.execute();
     }
 
-	@Override
-	public void init() {
-		// TODO Auto-generated method stub
-		this.setVisible(true);
-	}
+    @Override
+    public void init() {
+        this.setVisible(true);
+    }
 
-	@Override
-	public String etiquetaDelBoton() {
-		// TODO Auto-generated method stub
-		return "grepr/fgrepr";
-	}
+    @Override
+    public String etiquetaDelBoton() {
+        return "grepr/fgrepr";
+    }
 }

@@ -3157,7 +3157,10 @@ public String copiadoAlPortapapeles() {
 }
 
 
-
+@Override
+public String buscarDentroDeComprimidos() {
+    return "جستجو داخل بایگانی‌ها (.zip/.jar/.war/.ear/.fpm/.rar برای Java*)";
+}
 
 
 

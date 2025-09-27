@@ -3146,7 +3146,10 @@ public String copiadoAlPortapapeles() {
 }
 
 
-
+@Override
+public String buscarDentroDeComprimidos() {
+    return "Pesquisar dentro de arquivos compactados (.zip/.jar/.war/.ear/.fpm/.rar para Java*)";
+}
 
 
 

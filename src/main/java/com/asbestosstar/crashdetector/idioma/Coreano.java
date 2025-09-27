@@ -3147,7 +3147,11 @@ public String copiadoAlPortapapeles() {
 }
 
 
-
+//Coreano
+@Override
+public String buscarDentroDeComprimidos() {
+ return "압축 파일 내부 검색 (.zip/.jar/.war/.ear/.fpm/.rar(자바용)*)";
+}
 
 
 

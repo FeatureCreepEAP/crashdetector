@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import javax.swing.Icon;
+
 import com.asbestosstar.crashdetector.idioma.Arabe;
 import com.asbestosstar.crashdetector.idioma.Chino;
 import com.asbestosstar.crashdetector.idioma.Coreano;
@@ -1317,6 +1319,8 @@ public interface Idioma {
 	public String paso1ErrorContextoOpenGL();
 
 	public String copiadoAlPortapapeles();
+
+	public String buscarDentroDeComprimidos();
 
 	
 	

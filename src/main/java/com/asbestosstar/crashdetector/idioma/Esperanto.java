@@ -3195,7 +3195,11 @@ public String copiadoAlPortapapeles() {
 }
 
 
-
+//Esperanto
+@Override
+public String buscarDentroDeComprimidos() {
+ return "Serĉi ene de arkivoj (.zip/.jar/.war/.ear/.fpm/.rar por Java*)";
+}
 
 
 

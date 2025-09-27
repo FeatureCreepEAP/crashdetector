@@ -3150,7 +3150,10 @@ public String copiadoAlPortapapeles() {
     return "Ссылка скопирована в буфер обмена.";
 }
 
-
+@Override
+public String buscarDentroDeComprimidos() {
+    return "Искать внутри архивов (.zip/.jar/.war/.ear/.fpm/.rar для Java*)";
+}
 
 
 

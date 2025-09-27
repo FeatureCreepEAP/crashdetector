@@ -3895,6 +3895,12 @@ public String copiadoAlPortapapeles() {
     return "Enlace copiado al portapapeles.";
 }
 
+@Override
+public String buscarDentroDeComprimidos() {
+	// TODO Auto-generated method stub
+	return "Buscar dentro de comprimidos (.zip/.jar/.war/.ear/.fpm/.rar de Java*)";
+}
+
 
 
 

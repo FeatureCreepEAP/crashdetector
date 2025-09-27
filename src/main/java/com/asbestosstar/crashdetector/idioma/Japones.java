@@ -3162,7 +3162,10 @@ public String copiadoAlPortapapeles() {
     return "リンクがクリップボードにコピーされました。";
 }
 
-
+@Override
+public String buscarDentroDeComprimidos() {
+    return "圧縮ファイル内を検索（.zip/.jar/.war/.ear/.fpm/.rar（Java 用）*）";
+}
 
 
 
