@@ -51,8 +51,9 @@ public class TransformacionesCPW implements  ITransformer<ClassNode> {
 		return resultdo;
 	}
 
-	@Override
-	public TargetType<ClassNode> getTargetType() {
+	//@Override
+	//public TargetType<ClassNode> getTargetType() {
+	public cpw.mods.modlauncher.api.TargetType getTargetType() {
 		// TODO Auto-generated method stub
 		return TargetType.CLASS;
 	}

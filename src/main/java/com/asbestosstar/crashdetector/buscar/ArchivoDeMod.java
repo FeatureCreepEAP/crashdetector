@@ -430,4 +430,60 @@ public interface ArchivoDeMod {
 			return new ArrayList<Cargador>();
 		}
 	}
+	
+	
+    public static class Constante {
+        private final String clase;               // clase donde se encontró (formato interno ej. a/b/C)
+        private final String metodo;              // nombre del método
+        private final String descriptorMetodo;    // descriptor del método
+        private final Object valor;               // el valor literal (String, Integer, Float, Long, Double, etc.)
+        private final String tipo;                // nombre simple del tipo (String, int, float, long, double, Class, …)
+
+        public Constante(String clase, String metodo, String descriptorMetodo, Object valor, String tipo) {
+            this.clase = clase;
+            this.metodo = metodo;
+            this.descriptorMetodo = descriptorMetodo;
+            this.valor = valor;
+            this.tipo = tipo;
+        }
+
+        public String obtenerClase() { return clase; }
+        public String obtenerMetodo() { return metodo; }
+        public String obtenerDescriptorMetodo() { return descriptorMetodo; }
+        public Object obtenerValor() { return valor; }
+        public String obtenerTipo() { return tipo; }
+
+        @Override public String toString() {
+            return "Constante{clase=" + clase + ", metodo=" + metodo + ", desc=" + descriptorMetodo +
+                   ", tipo=" + tipo + ", valor=" + String.valueOf(valor) + "}";
+        }
+    }
+
+    // === NUEVO: API de alto nivel para constantes ===
+    /**
+     * Busca constantes (LDC, BIPUSH, SIPUSH, ICONST_x, FCONST_x, LCONST_x, DCONST_x, etc.) usadas
+     * dentro de un método específico.
+     *
+     * @param nombreClase      Clase (formato interno ej. "a/b/C")
+     * @param nombreMetodo     Nombre del método
+     * @param descriptorMetodo Descriptor del método
+     * @return Lista de constantes encontradas
+     */
+    default List<Constante> buscarConstantesEnMetodo(String nombreClase, String nombreMetodo, String descriptorMetodo) {
+        if (ASM_DISPONIBLE) {
+            return AnalizadorBytecodeASM.analizarConstantesEnMetodo(this, nombreClase, nombreMetodo, descriptorMetodo);
+        } else if (JAVASSIST_DISPONIBLE) {
+            return AnalizadorBytecodeJavassist.analizarConstantesEnMetodo(this, nombreClase, nombreMetodo, descriptorMetodo);
+        } else {
+            return new ArrayList<>();
+        }
+    }
+	
+	
+	
+	
+	
+	
+	
+	
 }

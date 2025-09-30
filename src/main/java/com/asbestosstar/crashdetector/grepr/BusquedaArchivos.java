@@ -7,12 +7,15 @@ import java.nio.file.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 public class BusquedaArchivos {
 
-    private static final Set<String> EXT_COMPRIMIDOS_ZIP = Set.of(".zip", ".jar", ".war", ".ear", ".fpm",".litemod");
+    private static final Set<String> EXT_COMPRIMIDOS_ZIP =
+            new HashSet<>(Arrays.asList(".zip", ".jar", ".war", ".ear", ".fpm", ".litemod"));
     private static final String EXT_RAR = ".rar";
     private static final int PROFUNDIDAD_MAX_ANIDADO = 2;
 
@@ -29,10 +32,10 @@ public class BusquedaArchivos {
                                       boolean ignorarMayusculas,
                                       boolean buscarEnComprimidos) {
 
-        // resultados es seguro para varios hilos
-        final ConcurrentLinkedQueue<String> resultados = new ConcurrentLinkedQueue<>();
+        // resultados seguro para varios hilos
+        final ConcurrentLinkedQueue<String> resultados = new ConcurrentLinkedQueue<String>();
 
-        // preparar patron y literales una sola vez
+        // preparar patron y literales una vez
         final Pattern patron;
         final byte[] literalBytes;
         final String literalTextoISO;
@@ -47,57 +50,60 @@ public class BusquedaArchivos {
             literalTextoISO = ignorarMayusculas ? cadenaBusqueda.toLowerCase(Locale.ROOT) : cadenaBusqueda;
         }
 
-        // recoger archivos primero para tamaño del trabajo
+        // recolectar archivos primero
         final List<Path> archivos;
-        try (var stream = Files.walk(Paths.get(directorio))) {
-            archivos = stream.filter(Files::isRegularFile).toList();
+        try (Stream<Path> stream = Files.walk(Paths.get(directorio))) {
+            archivos = stream.filter(Files::isRegularFile).collect(Collectors.toList());
         } catch (IOException e) {
-            return List.of("Error al recorrer directorio " + e.getMessage());
+            return Arrays.asList("Error al recorrer directorio " + e.getMessage());
         }
 
-        // tamaño del pool segun cantidad de nucleos
+        // tamano del pool segun nucleos
         final int hilos = Math.max(1, Runtime.getRuntime().availableProcessors());
         ExecutorService pool = Executors.newFixedThreadPool(hilos);
 
         try {
-            List<Future<?>> futures = new ArrayList<>(archivos.size());
+            List<Future<?>> futures = new ArrayList<Future<?>>(archivos.size());
 
-            for (Path ruta : archivos) {
-                futures.add(pool.submit(() -> {
-                    String nombre = ruta.getFileName().toString();
-                    String lower = nombre.toLowerCase(Locale.ROOT);
+            for (final Path ruta : archivos) {
+                futures.add(pool.submit(new Runnable() {
+                    @Override
+                    public void run() {
+                        String nombre = ruta.getFileName().toString();
+                        String lower = nombre.toLowerCase(Locale.ROOT);
 
-                    try {
-                        // comprimidos tipo zip por extension
-                        if (buscarEnComprimidos && terminaCon(lower, EXT_COMPRIMIDOS_ZIP)) {
-                            buscarDentroDeZip(ruta, resultados, patron, literalBytes, literalTextoISO, ignorarMayusculas, 0,
-                                    ruta.toAbsolutePath().toString());
-                            return;
-                        }
-
-                        // rar con deteccion por cabecera
-                        if (buscarEnComprimidos && lower.endsWith(EXT_RAR)) {
-                            if (cabeceraPareceZip(ruta)) {
+                        try {
+                            // comprimidos tipo zip por extension
+                            if (buscarEnComprimidos && terminaCon(lower, EXT_COMPRIMIDOS_ZIP)) {
                                 buscarDentroDeZip(ruta, resultados, patron, literalBytes, literalTextoISO, ignorarMayusculas, 0,
                                         ruta.toAbsolutePath().toString());
-                            } else if (cabeceraPareceRar(ruta)) {
-                                resultados.add(ruta.toAbsolutePath() + " [OMITIDO rar real no soportado]");
-                            } else {
-                                procesarArchivoPlano(ruta, resultados, patron, literalBytes, literalTextoISO, ignorarMayusculas);
+                                return;
                             }
-                            return;
+
+                            // rar con deteccion por cabecera
+                            if (buscarEnComprimidos && lower.endsWith(EXT_RAR)) {
+                                if (cabeceraPareceZip(ruta)) {
+                                    buscarDentroDeZip(ruta, resultados, patron, literalBytes, literalTextoISO, ignorarMayusculas, 0,
+                                            ruta.toAbsolutePath().toString());
+                                } else if (cabeceraPareceRar(ruta)) {
+                                    resultados.add(ruta.toAbsolutePath() + " [OMITIDO rar real no soportado]");
+                                } else {
+                                    procesarArchivoPlano(ruta, resultados, patron, literalBytes, literalTextoISO, ignorarMayusculas);
+                                }
+                                return;
+                            }
+
+                            // archivo normal
+                            procesarArchivoPlano(ruta, resultados, patron, literalBytes, literalTextoISO, ignorarMayusculas);
+
+                        } catch (IOException e) {
+                            resultados.add(ruta.toAbsolutePath() + " [ERROR " + e.getMessage() + "]");
                         }
-
-                        // archivo normal
-                        procesarArchivoPlano(ruta, resultados, patron, literalBytes, literalTextoISO, ignorarMayusculas);
-
-                    } catch (IOException e) {
-                        resultados.add(ruta.toAbsolutePath() + " [ERROR " + e.getMessage() + "]");
                     }
                 }));
             }
 
-            // esperar a que terminen todas las tareas
+            // esperar tareas
             for (Future<?> f : futures) {
                 try {
                     f.get();
@@ -113,7 +119,7 @@ public class BusquedaArchivos {
             pool.shutdown();
         }
 
-        return new ArrayList<>(resultados);
+        return new ArrayList<String>(resultados);
     }
 
     private static boolean coincideContenido(byte[] contenidoBytes,
@@ -197,25 +203,35 @@ public class BusquedaArchivos {
     }
 
     private static boolean cabeceraPareceZip(Path ruta) {
-        try (InputStream in = Files.newInputStream(ruta)) {
+        InputStream in = null;
+        try {
+            in = Files.newInputStream(ruta);
             byte[] sig = new byte[4];
             int r = in.read(sig);
             if (r >= 2) {
                 return sig[0] == 'P' && sig[1] == 'K';
             }
-        } catch (IOException ignored) {}
+        } catch (IOException ignored) {
+        } finally {
+            if (in != null) try { in.close(); } catch (IOException ignored) {}
+        }
         return false;
     }
 
     private static boolean cabeceraPareceRar(Path ruta) {
-        try (InputStream in = Files.newInputStream(ruta)) {
+        InputStream in = null;
+        try {
+            in = Files.newInputStream(ruta);
             byte[] sig = new byte[7];
             int r = in.read(sig);
             if (r >= 7) {
                 return sig[0] == 'R' && sig[1] == 'a' && sig[2] == 'r' && sig[3] == '!' &&
                        sig[4] == 0x1A && sig[5] == 0x07;
             }
-        } catch (IOException ignored) {}
+        } catch (IOException ignored) {
+        } finally {
+            if (in != null) try { in.close(); } catch (IOException ignored) {}
+        }
         return false;
     }
 
@@ -239,10 +255,13 @@ public class BusquedaArchivos {
 
                 if (profundidad < PROFUNDIDAD_MAX_ANIDADO && terminaCon(lower, EXT_COMPRIMIDOS_ZIP)) {
                     byte[] bytesAnidado = leerEntrada(zip, entrada);
-                    try (java.util.zip.ZipInputStream zin =
-                                 new java.util.zip.ZipInputStream(new java.io.ByteArrayInputStream(bytesAnidado))) {
+                    java.util.zip.ZipInputStream zin = null;
+                    try {
+                        zin = new java.util.zip.ZipInputStream(new java.io.ByteArrayInputStream(bytesAnidado));
                         procesarZipAnidado(zin, resultados, patron, literalBytes, literalTextoISO, ignorarMayusculas,
                                 profundidad + 1, rutaVisual + "!" + nombreEntrada);
+                    } finally {
+                        if (zin != null) try { zin.close(); } catch (IOException ignored) {}
                     }
                     continue;
                 }
@@ -275,10 +294,13 @@ public class BusquedaArchivos {
 
             if (profundidad < PROFUNDIDAD_MAX_ANIDADO && terminaCon(lower, EXT_COMPRIMIDOS_ZIP)) {
                 byte[] nested = leerTodo(zin);
-                try (java.util.zip.ZipInputStream zin2 =
-                             new java.util.zip.ZipInputStream(new java.io.ByteArrayInputStream(nested))) {
+                java.util.zip.ZipInputStream zin2 = null;
+                try {
+                    zin2 = new java.util.zip.ZipInputStream(new java.io.ByteArrayInputStream(nested));
                     procesarZipAnidado(zin2, resultados, patron, literalBytes, literalTextoISO, ignorarMayusculas,
                             profundidad + 1, rutaVisual + "!" + nombreEntrada);
+                } finally {
+                    if (zin2 != null) try { zin2.close(); } catch (IOException ignored) {}
                 }
             } else {
                 byte[] bytes = leerTodo(zin);
@@ -295,8 +317,12 @@ public class BusquedaArchivos {
     }
 
     private static byte[] leerEntrada(ZipFile zip, ZipEntry entrada) throws IOException {
-        try (InputStream in = zip.getInputStream(entrada)) {
+        InputStream in = null;
+        try {
+            in = zip.getInputStream(entrada);
             return leerTodo(in);
+        } finally {
+            if (in != null) try { in.close(); } catch (IOException ignored) {}
         }
     }
 

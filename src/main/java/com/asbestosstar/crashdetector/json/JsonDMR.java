@@ -5,7 +5,7 @@ import org.jboss.dmr.ModelType;
 
 /**
  * Motor basado en JBoss DMR
- * Sigue el estilo de ModelNode con nombres en español
+ * Estilo de ModelNode con nombres en español
  */
 public class JsonDMR implements Json.Motor {
 
@@ -58,18 +58,25 @@ public class JsonDMR implements Json.Motor {
             n.clear();
             return actual;
         }
-        if (valor instanceof Json.Nodo otro) {
-            n.set((ModelNode) otro.interno);
-        } else if (valor instanceof String s) {
-            n.set(s);
-        } else if (valor instanceof Integer i) {
-            n.set(i.intValue());
-        } else if (valor instanceof Long l) {
-            n.set(l.longValue());
-        } else if (valor instanceof Boolean b) {
-            n.set(b.booleanValue());
-        } else if (valor instanceof Double d) {
-            n.set(d.doubleValue());
+        if (valor instanceof Json.Nodo) {
+            n.set((ModelNode) ((Json.Nodo) valor).interno);
+        } else if (valor instanceof String) {
+            n.set((String) valor);
+        } else if (valor instanceof Integer) {
+            n.set(((Integer) valor).intValue());
+        } else if (valor instanceof Long) {
+            n.set(((Long) valor).longValue());
+        } else if (valor instanceof Boolean) {
+            n.set(((Boolean) valor).booleanValue());
+        } else if (valor instanceof Double) {
+            n.set(((Double) valor).doubleValue());
+        } else if (valor instanceof Float) {
+            n.set(((Float) valor).floatValue());
+        } else if (valor instanceof Short) {
+            n.set(((Short) valor).shortValue());
+        } else if (valor instanceof Number) {
+            // conversion generica para otros numeros
+            n.set(((Number) valor).doubleValue());
         } else {
             throw new IllegalArgumentException("Tipo no soportado por DMR");
         }
@@ -82,27 +89,33 @@ public class JsonDMR implements Json.Motor {
         if (n.getType() == ModelType.UNDEFINED) n.setEmptyList();
         if (n.getType() != ModelType.LIST) throw new IllegalStateException("No es arreglo");
 
+        int idx = n.asList().size();
         ModelNode nuevo = n.add();
+
         if (valor == null) {
             nuevo.clear();
-            return new Json.Nodo(nuevo, this, n, null, n.asList().size() - 1);
-        }
-        if (valor instanceof Json.Nodo otro) {
-            nuevo.set((ModelNode) otro.interno);
-        } else if (valor instanceof String s) {
-            nuevo.set(s);
-        } else if (valor instanceof Integer i) {
-            nuevo.set(i.intValue());
-        } else if (valor instanceof Long l) {
-            nuevo.set(l.longValue());
-        } else if (valor instanceof Boolean b) {
-            nuevo.set(b.booleanValue());
-        } else if (valor instanceof Double d) {
-            nuevo.set(d.doubleValue());
+        } else if (valor instanceof Json.Nodo) {
+            nuevo.set((ModelNode) ((Json.Nodo) valor).interno);
+        } else if (valor instanceof String) {
+            nuevo.set((String) valor);
+        } else if (valor instanceof Integer) {
+            nuevo.set(((Integer) valor).intValue());
+        } else if (valor instanceof Long) {
+            nuevo.set(((Long) valor).longValue());
+        } else if (valor instanceof Boolean) {
+            nuevo.set(((Boolean) valor).booleanValue());
+        } else if (valor instanceof Double) {
+            nuevo.set(((Double) valor).doubleValue());
+        } else if (valor instanceof Float) {
+            nuevo.set(((Float) valor).floatValue());
+        } else if (valor instanceof Short) {
+            nuevo.set(((Short) valor).shortValue());
+        } else if (valor instanceof Number) {
+            nuevo.set(((Number) valor).doubleValue());
         } else {
             throw new IllegalArgumentException("Tipo no soportado por DMR");
         }
-        return new Json.Nodo(nuevo, this, n, null, n.asList().size() - 1);
+        return new Json.Nodo(nuevo, this, n, null, idx);
     }
 
     @Override
@@ -120,7 +133,7 @@ public class JsonDMR implements Json.Motor {
     @Override
     public Json.Nodo en(Json.Nodo arreglo, int indice) {
         ModelNode n = (ModelNode) arreglo.interno;
-        if (n.getType() != ModelType.LIST) throw new IllegalStateException("No es arreglo");
+        if (n.asType() != ModelType.LIST) throw new IllegalStateException("No es arreglo");
         return new Json.Nodo(n.get(indice), this, n, null, indice);
     }
 

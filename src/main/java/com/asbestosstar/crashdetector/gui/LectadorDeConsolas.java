@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
-import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JEditorPane;
@@ -37,6 +36,7 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
+import javax.swing.AbstractListModel;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.StyleSheet;
 
@@ -50,21 +50,20 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 
 	// Campos de idioma y datos
 	private static final Idioma idioma = MonitorDePID.idioma;
-	private final List<Consola> consolas = MonitorDePID.consolas;
+	public List<Consola> consolas = MonitorDePID.consolas;
 
 	// Cache concurrente de líneas por consola
 	private final Map<String, List<String>> cacheLineasPorConsola = new ConcurrentHashMap<>();
 
-	// Ejecutor con número de hilos igual a la mitad de los núcleos (mínimo 1)
-	// Número de hilos prudente para no saturar CPU
+	// Ejecutor con número de hilos prudente
 	final int CORES = Runtime.getRuntime().availableProcessors();
 	final int N_HILOS = Math.min(4, Math.max(2, CORES - 1));
-
-	// Cola acotada para evitar explosión de memoria si hay muchas consolas
 	final int CAPACIDAD_COLA = N_HILOS * 4;
 
-	private final ThreadPoolExecutor pool = new ThreadPoolExecutor(N_HILOS, N_HILOS, 30L, TimeUnit.SECONDS,
-			new LinkedBlockingQueue<Runnable>(CAPACIDAD_COLA), new ThreadFactory() {
+	private final ThreadPoolExecutor pool = new ThreadPoolExecutor(
+			N_HILOS, N_HILOS, 30L, TimeUnit.SECONDS,
+			new LinkedBlockingQueue<Runnable>(CAPACIDAD_COLA),
+			new ThreadFactory() {
 				@Override
 				public Thread newThread(Runnable r) {
 					Thread t = new Thread(r, "LectadorPool-" + System.nanoTime());
@@ -72,18 +71,16 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 					return t;
 				}
 			},
-			// Si la cola se llena, ejecutar en el hilo del llamador para frenar la
-			// producción
-			new ThreadPoolExecutor.CallerRunsPolicy());
+			new ThreadPoolExecutor.CallerRunsPolicy()
+	);
 
-	// Opcional: permitir que los hilos core expiren si queda inactivo
 	{
 		pool.allowCoreThreadTimeOut(true);
 	}
 
-	// Componentes UI
-	private final DefaultListModel<String> modeloRegistros = new DefaultListModel<>();
-	private final JList<String> listaRegistros = new JList<>(modeloRegistros);
+	// Estado/UI
+	private List<String> lineasActuales = java.util.Collections.emptyList();
+	private final JList<String> listaRegistros = new JList<>();
 
 	private final JComboBox<String> cmbConsolas = new JComboBox<>();
 	private final JTextArea txtNombreError = new JTextArea();
@@ -105,8 +102,8 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 
 	// Fondo cargado en segundo plano
 	private FondoPanel fondo;
-	private final JEditorPane txtDescripcionError = new JEditorPane(); // ahora HTML
-	private JScrollPane scrollDescripcion; // scroll del panel HTML
+	private final JEditorPane txtDescripcionError = new JEditorPane(); // HTML
+	private JScrollPane scrollDescripcion;
 
 	public LectadorDeConsolas() {
 		super(idioma.tituloLectador());
@@ -146,10 +143,7 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 		addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override
 			public void windowClosed(java.awt.event.WindowEvent e) {
-				try {
-					pool.shutdownNow();
-				} catch (Exception ignored) {
-				}
+				try { pool.shutdownNow(); } catch (Exception ignored) {}
 			}
 		});
 	}
@@ -158,9 +152,7 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 		private volatile java.awt.Image imagen;
 		private final String ruta;
 
-		public FondoPanel(String ruta) {
-			this.ruta = ruta;
-		}
+		public FondoPanel(String ruta) { this.ruta = ruta; }
 
 		@Override
 		protected void paintComponent(java.awt.Graphics g) {
@@ -174,12 +166,8 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 			pool.submit(new Runnable() {
 				@Override
 				public void run() {
-					try {
-						java.awt.Image temp = ImageIO.read(new File(ruta));
-						imagen = temp;
-					} catch (Exception ex) {
-						CrashDetectorLogger.log("No se pudo cargar fondo: " + ex.getMessage());
-					}
+					try { imagen = ImageIO.read(new File(ruta)); }
+					catch (Exception ex) { CrashDetectorLogger.log("No se pudo cargar fondo: " + ex.getMessage()); }
 					SwingUtilities.invokeLater(whenLoadedOnEDT);
 				}
 			});
@@ -191,9 +179,7 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 
 		fondo.cargarAsincrono(pool, new Runnable() {
 			@Override
-			public void run() {
-				repaint();
-			}
+			public void run() { repaint(); }
 		});
 
 		configurarAreaRegistros();
@@ -225,56 +211,43 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 	}
 
 	private void recolocarComponentes() {
-		int anchoBase = 1280;
-		int altoBase = 720;
-
-		int anchoActual = getWidth();
-		int altoActual = getHeight();
-
+		int anchoBase = 1280, altoBase = 720;
+		int anchoActual = getWidth(), altoActual = getHeight();
 		double escX = (double) anchoActual / anchoBase;
 		double escY = (double) altoActual / altoBase;
 
 		if (scrollLogs != null) {
 			scrollLogs.setBounds((int) (232 * escX), (int) (15 * escY), (int) (820 * escX), (int) (475 * escY));
 		}
-
 		if (pnlInferior != null) {
 			pnlInferior.setBounds((int) (375 * escX), (int) (533 * escY), (int) (535 * escX), (int) (140 * escY));
 		}
-
 		if (pnlLeyenda != null) {
 			pnlLeyenda.setBounds((int) (30 * escX), (int) (30 * escY), (int) (180 * escX), (int) (200 * escY));
 		}
-
 		if (pnlSelector != null) {
 			pnlSelector.setBounds((int) ((anchoBase - 225) * escX), (int) (30 * escY), (int) (220 * escX),
 					(int) (80 * escY));
 		}
-
 		if (scrollLogs != null) {
 			scrollLogs.revalidate();
 			scrollLogs.repaint();
 		}
-
 		recolocarBuscador();
 		revalidate();
 		repaint();
 	}
 
 	private void recolocarBuscador() {
-		// Ubicar el buscador justo debajo del panel de selectores (combo + modo)
 		if (pnlSelector != null) {
-			int margen = 8; // separación vertical
+			int margen = 8;
 			int x = pnlSelector.getX();
 			int y = pnlSelector.getY() + pnlSelector.getHeight() + margen;
 			int w = pnlSelector.getWidth();
-			int h = 40; // alto razonable del buscador
-
+			int h = 40;
 			txtBuscar.setBounds(x, y, w, h);
 		} else {
-			// Fallback si aún no existe pnlSelector
-			int ancho = 200;
-			int alto = 40;
+			int ancho = 200, alto = 40;
 			txtBuscar.setBounds(getWidth() - ancho - 30, 30, ancho, alto);
 		}
 		txtBuscar.revalidate();
@@ -290,9 +263,7 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 
 		txtBuscar.addActionListener(new java.awt.event.ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				saltarSiguienteCoincidencia();
-			}
+			public void actionPerformed(ActionEvent e) { saltarSiguienteCoincidencia(); }
 		});
 
 		KeyStroke keyStroke = KeyStroke.getKeyStroke("control F");
@@ -312,14 +283,12 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 
 	private void saltarSiguienteCoincidencia() {
 		String texto = txtBuscar.getText();
-		if (texto == null || texto.isEmpty())
-			return;
+		if (texto == null || texto.isEmpty()) return;
 
 		if (posicionesCoincidencias.isEmpty()) {
 			buscarTexto(texto);
 			return;
 		}
-
 		indiceBusquedaActual = (indiceBusquedaActual + 1) % posicionesCoincidencias.size();
 		resaltarCoincidenciaActual();
 	}
@@ -328,13 +297,12 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 		posicionesCoincidencias.clear();
 		indiceBusquedaActual = -1;
 
-		if (texto == null || texto.isEmpty())
-			return;
+		if (texto == null || texto.isEmpty()) return;
 
 		String t = texto.toLowerCase();
-		for (int i = 0; i < modeloRegistros.size(); i++) {
-			String linea = modeloRegistros.get(i).toLowerCase();
-			if (linea.contains(t)) {
+		for (int i = 0; i < lineasActuales.size(); i++) {
+			String linea = lineasActuales.get(i);
+			if (linea != null && linea.toLowerCase().contains(t)) {
 				posicionesCoincidencias.add(i);
 			}
 		}
@@ -343,14 +311,11 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 			indiceBusquedaActual = 0;
 			resaltarCoincidenciaActual();
 		}
-
 		listaRegistros.repaint();
 	}
 
 	private void resaltarCoincidenciaActual() {
-		if (indiceBusquedaActual < 0 || indiceBusquedaActual >= posicionesCoincidencias.size())
-			return;
-
+		if (indiceBusquedaActual < 0 || indiceBusquedaActual >= posicionesCoincidencias.size()) return;
 		int pos = posicionesCoincidencias.get(indiceBusquedaActual);
 		listaRegistros.setSelectedIndex(pos);
 		listaRegistros.ensureIndexIsVisible(pos);
@@ -404,7 +369,7 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 		listaRegistros.setFixedCellHeight(16);
 
 		listaRegistros.setCellRenderer((list, value, index, isSelected, cellHasFocus) -> {
-			JLabel lbl = new JLabel(value);
+			JLabel lbl = new JLabel(value == null ? "" : value);
 			lbl.setOpaque(true);
 			lbl.setForeground(colorTexto);
 			lbl.setBackground(colorFondo);
@@ -412,15 +377,16 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 			Consola consola = obtenerConsolaSeleccionada();
 			if (consola != null) {
 				List<ErrorDeLectador> errores = consola.errores_de_lectadores.stream()
-						.filter(err -> err.obtenerLinea() == index).collect(Collectors.toList());
+						.filter(err -> err.obtenerLinea() == index)
+						.collect(Collectors.toList());
 
 				if (!errores.isEmpty()) {
 					lbl.setBackground(errores.get(0).obtenerColor());
 					lbl.setForeground(Color.BLACK);
-				} else if (value.contains("ERROR") || value.contains("EXCEPTION")) {
+				} else if (value != null && (value.contains("ERROR") || value.contains("EXCEPTION"))) {
 					lbl.setBackground(colorError);
 					lbl.setForeground(Color.BLACK);
-				} else if (value.contains("STACKTRACE") || value.contains("at ")) {
+				} else if (value != null && (value.contains("STACKTRACE") || value.contains("at "))) {
 					lbl.setBackground(colorPila);
 					lbl.setForeground(Color.BLACK);
 				}
@@ -446,8 +412,7 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 
 	private Consola obtenerConsolaSeleccionada() {
 		String nombreArchivo = (String) cmbConsolas.getSelectedItem();
-		if (nombreArchivo == null)
-			return null;
+		if (nombreArchivo == null) return null;
 		for (Consola c : consolas) {
 			if (new File(c.archivo.toString()).getName().equals(nombreArchivo)) {
 				return c;
@@ -465,7 +430,7 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 		txtNombreError.setForeground(colorTexto);
 		pnl.add(txtNombreError);
 
-		// Derecha: visor HTML sin CSS; inicia con fondo negro usando atributos HTML
+		// Derecha: visor HTML
 		txtDescripcionError.setEditable(false);
 		txtDescripcionError.setContentType("text/html");
 		txtDescripcionError.setOpaque(true);
@@ -473,8 +438,11 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 		txtDescripcionError.setForeground(colorTexto);
 		txtDescripcionError.setText("<html><body bgcolor='#111111' text='#FFFFFF'></body></html>");
 
-		scrollDescripcion = new JScrollPane(txtDescripcionError, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollDescripcion = new JScrollPane(
+				txtDescripcionError,
+				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED
+		);
 		pnl.add(scrollDescripcion);
 
 		return pnl;
@@ -491,7 +459,7 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 	}
 
 	private void cargarConsolas() {
-		CrashDetectorLogger.log("consolas carg "+String.valueOf(consolas.size()));
+		CrashDetectorLogger.log("consolas carg " + String.valueOf(consolas.size()));
 		for (Consola consola : consolas) {
 			String nombreArchivo = new File(consola.archivo.toString()).getName();
 			cmbConsolas.addItem(nombreArchivo);
@@ -506,14 +474,23 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 	private void precargarLineasEnSegundoPlano() {
 		for (final Consola consola : consolas) {
 			final String nombreArchivo = new File(consola.archivo.toString()).getName();
-			if (cacheLineasPorConsola.containsKey(nombreArchivo))
-				continue;
+			if (cacheLineasPorConsola.containsKey(nombreArchivo)) continue;
 
 			pool.submit(new Runnable() {
 				@Override
 				public void run() {
 					try {
 						List<String> lineas = Arrays.asList(consola.contenido_verificar.split(Verificaciones.nl));
+						
+						CrashDetectorLogger.log(consola.archivo.toString() + " linea size " + String.valueOf(lineas.size()));
+					
+						
+						if(lineas.size()== 1) {
+							CrashDetectorLogger.log(String.valueOf(consola.contenido_verificar.length()));
+							CrashDetectorLogger.log(consola.archivo.toString() + " linea 1 " + lineas.get(0));
+						}
+						
+						
 						cacheLineasPorConsola.put(nombreArchivo, lineas);
 						SwingUtilities.invokeLater(new Runnable() {
 							@Override
@@ -533,8 +510,7 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 
 	private void actualizarConsola() {
 		final Consola consola = obtenerConsolaSeleccionada();
-		if (consola == null)
-			return;
+		if (consola == null) return;
 
 		final String nombreArchivo = new File(consola.archivo.toString()).getName();
 
@@ -544,10 +520,8 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 			return;
 		}
 
-		modeloRegistros.clear();
-		modeloRegistros.addElement("Cargando " + nombreArchivo + " ...");
-
-		// Cambiar cursor a “espera” (beach ball / reloj de arena)
+		// Mostrar mensaje de carga sin bloquear EDT
+		setLoadingModel("Cargando " + nombreArchivo + " ...");
 		setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR));
 
 		pool.submit(new Runnable() {
@@ -564,7 +538,6 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 							if (nombreArchivo.equals(cmbConsolas.getSelectedItem())) {
 								refrescarModeloCon(lineasFinal);
 							}
-							// Restaurar cursor normal
 							setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
 						}
 					});
@@ -573,9 +546,7 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 					SwingUtilities.invokeLater(new Runnable() {
 						@Override
 						public void run() {
-							modeloRegistros.clear();
-							modeloRegistros.addElement("Error al cargar " + nombreArchivo + ": " + t.getMessage());
-							// Restaurar cursor normal incluso si falla
+							setLoadingModel("Error al cargar " + nombreArchivo + ": " + t.getMessage());
 							setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
 						}
 					});
@@ -584,11 +555,24 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 		});
 	}
 
+	private void setLoadingModel(String mensaje) {
+		final List<String> soloMensaje = java.util.Collections.singletonList(mensaje);
+		lineasActuales = soloMensaje;
+		listaRegistros.setModel(new AbstractListModel<String>() {
+			@Override public int getSize() { return soloMensaje.size(); }
+			@Override public String getElementAt(int index) { return soloMensaje.get(index); }
+		});
+	}
+
 	private void refrescarModeloCon(List<String> lineas) {
-		modeloRegistros.clear();
-		for (String l : lineas) {
-			modeloRegistros.addElement(l);
-		}
+		lineasActuales = (lineas == null) ? java.util.Collections.emptyList() : lineas;
+		listaRegistros.setModel(new AbstractListModel<String>() {
+			@Override public int getSize() { return lineasActuales.size(); }
+			@Override public String getElementAt(int index) { return lineasActuales.get(index); }
+		});
+		// Reiniciar estado de búsqueda al cambiar de consola
+		posicionesCoincidencias.clear();
+		indiceBusquedaActual = -1;
 	}
 
 	public static void procesarHipervinculo(String url) {
@@ -637,7 +621,7 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 						lector.cacheLineasPorConsola.put(nombreArchivo, lineas);
 					}
 
-					final List<String> lineasFinal = lineas; // declaración final
+					final List<String> lineasFinal = lineas;
 					final int salto = Math.max(0, Math.min(numeroLinea, lineasFinal.size() - 1));
 
 					SwingUtilities.invokeLater(new Runnable() {
@@ -645,7 +629,7 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 						public void run() {
 							lector.refrescarModeloCon(lineasFinal);
 							try {
-								if (salto >= 0 && salto < lector.modeloRegistros.size()) {
+								if (salto >= 0 && salto < lector.lineasActuales.size()) {
 									lector.listaRegistros.setSelectedIndex(salto);
 									lector.listaRegistros.ensureIndexIsVisible(salto);
 									lector.listaRegistros.requestFocus();
@@ -670,23 +654,21 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 		StringBuilder detallePlano = new StringBuilder();
 
 		List<ErrorDeLectador> erroresEnLinea = consola.errores_de_lectadores.stream()
-				.filter(err -> err.obtenerLinea() == numeroLinea).collect(Collectors.toList());
+				.filter(err -> err.obtenerLinea() == numeroLinea)
+				.collect(Collectors.toList());
 
 		if (!erroresEnLinea.isEmpty()) {
 			// Izquierda: nombres separados por salto de línea
 			StringBuilder nombres = new StringBuilder();
 
 			for (ErrorDeLectador err : erroresEnLinea) {
-				if (nombres.length() > 0)
-					nombres.append("\n");
+				if (nombres.length() > 0) nombres.append("\n");
 				nombres.append(err.verificacion.nombre());
 
 				String tituloPlano = htmlAPlano(err.verificacion.nombre());
 				String mensaje = err.verificacion.mensaje();
 				String mensajePlano = htmlAPlano(mensaje);
 
-				// Si parece stacktrace, lo dejamos tal cual; si no, lo mostramos como bloques
-				// con línea separadora
 				detallePlano.append(tituloPlano).append("\n");
 				detallePlano.append(mensajePlano).append("\n");
 				detallePlano.append("--------------------------------------------------").append("\n");
@@ -695,9 +677,9 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 			txtNombreError.setText(nombres.toString());
 			descripcionHtml(detallePlano.toString());
 		} else {
-			if (numeroLinea >= 0 && numeroLinea < modeloRegistros.size()) {
-				String textoLinea = modeloRegistros.get(numeroLinea);
-				if (textoLinea.contains("ERROR") || textoLinea.contains("EXCEPTION")) {
+			if (numeroLinea >= 0 && numeroLinea < lineasActuales.size()) {
+				String textoLinea = lineasActuales.get(numeroLinea);
+				if (textoLinea != null && (textoLinea.contains("ERROR") || textoLinea.contains("EXCEPTION"))) {
 					txtNombreError.setText(idioma.obtenerNombreErrorPorDefecto());
 					String porDefectoPlano = htmlAPlano(idioma.obtenerDescripcionErrorPorDefecto());
 					descripcionHtml(porDefectoPlano);
@@ -712,39 +694,29 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 		}
 	}
 
-//Convierte una cadena con HTML a texto plano: quita todas las etiquetas y normaliza saltos de línea
+	// Convierte HTML a texto plano
 	private static String htmlAPlano(String s) {
-		if (s == null)
-			return "";
+		if (s == null) return "";
 		String r = s;
-		// Reemplazar algunos tags de bloque por saltos de línea para mantener
-		// legibilidad
 		r = r.replaceAll("(?is)<br\\s*/?>", "\n");
 		r = r.replaceAll("(?is)</p\\s*>", "\n");
 		r = r.replaceAll("(?is)</div\\s*>", "\n");
 		r = r.replaceAll("(?is)</li\\s*>", "\n");
 		r = r.replaceAll("(?is)</tr\\s*>", "\n");
-
-		// Quitar todas las etiquetas que queden
 		r = r.replaceAll("(?is)<[^>]+>", "");
-
-		// Deshacer algunas entidades comunes
 		r = r.replace("&nbsp;", " ");
 		r = r.replace("&lt;", "<").replace("&gt;", ">");
 		r = r.replace("&quot;", "\"").replace("&#39;", "'");
 		r = r.replace("&amp;", "&");
-
-		// Normalizar múltiples saltos de línea consecutivos
 		r = r.replaceAll("\\n{3,}", "\n\n");
 		return r.trim();
 	}
 
 	private static String escHtml(String s) {
-		if (s == null)
-			return "";
+		if (s == null) return "";
 		String r = s;
-		r = r.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'",
-				"&#39;");
+		r = r.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+			 .replace("\"", "&quot;").replace("'", "&#39;");
 		return r;
 	}
 
@@ -756,14 +728,10 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 	}
 
 	@Override
-	public void init() {
-		setVisible(true);
-	}
+	public void init() { setVisible(true); }
 
 	@Override
-	public String etiquetaDelBoton() {
-		return idioma.obtenerEtiquetaBotonLectador();
-	}
+	public String etiquetaDelBoton() { return idioma.obtenerEtiquetaBotonLectador(); }
 
 	public static class ErrorDeLectador {
 		public Consola consola;
@@ -776,17 +744,13 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 			this.verificacion = verificacion;
 		}
 
-		public Color obtenerColor() {
-			return verificacion.nivel_de_criticalidad().color;
-		}
+		public Color obtenerColor() { return verificacion.nivel_de_criticalidad().color; }
 
 		@Override
 		public String toString() {
 			return "lectador://" + consola.archivo.toString() + ":" + String.valueOf(numero_de_linea);
 		}
 
-		public int obtenerLinea() {
-			return numero_de_linea;
-		}
+		public int obtenerLinea() { return numero_de_linea; }
 	}
 }

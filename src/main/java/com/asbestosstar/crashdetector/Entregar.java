@@ -7,17 +7,19 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.cargador.Cargador;
 
 //Handover
 public class Entregar {
 
     public static File archivo = new File("crash_detector/entregar");
+    private static final String MASK = "*********************************";
 
     // escritor
     public static void comenzarEntregar() {
         String idApp = App.obtenerApp() != null ? App.obtenerApp().id() : "";
-
+Buscardor.cargadoresPredetermindado();
         // se detectan cargadores activos sin tocar la lista global
         List<Cargador> activos = new ArrayList<Cargador>();
         for (Cargador c : Cargador.cargadores) {
@@ -31,7 +33,7 @@ public class Entregar {
         // args actuales sin usar ARGS_DE_APP
         String args = obtenerArgsDelPrograma();
         if (!Config.obtenerInstancia().habilitarTokenDeAccesoEnLaEntregaDelMonitorDePID()) {
-            args = eliminarTokenDeAcceso(args);
+            args = eliminarTokenDeAcceso(args); // ahora enmascara en lugar de borrar
         }
 
         // no fijar Statics.ARGS_DE_APP aqui
@@ -67,6 +69,8 @@ public class Entregar {
             // fijar ARGS_DE_APP solo aqui
             Statics.ARGS_DE_APP = args != null ? args : "";
 
+            
+            Buscardor.cargadoresPredetermindado();
             // agregar cargadores activos segun archivo sin limpiar la lista global
             if (idsCargadores != null && !idsCargadores.isEmpty()) {
                 String[] parts = idsCargadores.split(",");
@@ -80,6 +84,7 @@ public class Entregar {
                 }
             }
         } catch (IOException ignored) {}
+        archivo.delete();
     }
 
     // utilidades
@@ -124,7 +129,7 @@ public class Entregar {
             }
             if (App.APPS instanceof java.lang.Iterable) {
                 for (Object o : (Iterable<?>) App.APPS) {
-                    if (o instanceof App a && id.equals(a.id())) return a;
+                    if (o instanceof App && id.equals(((App)o).id())) return (App)o;
                 }
             }
         } catch (Throwable ignored) {}
@@ -140,13 +145,38 @@ public class Entregar {
         return null;
     }
 
+    /**
+     * Enmascara el valor del access token, preservando el campo/clave y (si existían) las comillas.
+     * Soporta variantes:
+     *   --accessToken <valor>
+     *   --accessToken="<valor>"
+     *   --accessToken='<valor>'
+     *   --accessToken=<valor>
+     *   "accessToken":"valor"  (JSON)
+     *   'accessToken':'valor'  (JSON con comillas simples)
+     */
     private static String eliminarTokenDeAcceso(String args) {
         if (args == null || args.isEmpty()) return "";
-        String sin = args.replaceAll("(?i)\\s*--token\\s+\\S+", "");
-        sin = sin.replaceAll("(?i)\\s*-token\\s+\\S+", "");
-        sin = sin.replaceAll("(?i)\\s*token\\s*=\\s*\\S+", "");
-        sin = sin.replaceAll("(?i)\\s*token\\s+\\S+", "");
-        return sin.trim().replaceAll("\\s{2,}", " ");
+
+        String out = args;
+
+        // Formatos con '=' y comillas
+        out = out.replaceAll("(?i)(--accessToken\\s*=\\s*\")([^\"]*)(\")", "$1" + MASK + "$3");
+        out = out.replaceAll("(?i)(--accessToken\\s*=\\s*')([^']*)(')", "$1" + MASK + "$3");
+        // Formato con '=' sin comillas
+        out = out.replaceAll("(?i)(--accessToken\\s*=\\s*)(\\S+)", "$1" + MASK);
+
+        // Formatos con espacio y comillas
+        out = out.replaceAll("(?i)(--accessToken\\s+\")([^\"]*)(\")", "$1" + MASK + "$3");
+        out = out.replaceAll("(?i)(--accessToken\\s+')([^']*)(')", "$1" + MASK + "$3");
+        // Formato con espacio sin comillas
+        out = out.replaceAll("(?i)(--accessToken\\s+)(\\S+)", "$1" + MASK);
+
+        // Estilo JSON (dobles y simples comillas)
+        out = out.replaceAll("(?i)(\"accessToken\"\\s*:\\s*\")([^\"]*)(\")", "$1" + MASK + "$3");
+        out = out.replaceAll("(?i)('accessToken'\\s*:\\s*')([^']*)(')", "$1" + MASK + "$3");
+
+        return out;
     }
 
     // intenta obtener args del programa desde sun.java.command
@@ -154,21 +184,12 @@ public class Entregar {
         try {
             String cmd = System.getProperty("sun.java.command", "");
             if (cmd == null || cmd.isEmpty()) {
-                // intento alterno con RuntimeMXBean
+                // intento alterno con RuntimeMXBean (nota: trae args de la JVM, no siempre los del programa)
                 cmd = String.join(" ", ManagementFactory.getRuntimeMXBean().getInputArguments());
-                // inputArguments trae args de la JVM no del programa, se usa solo si no hay nada
                 return cmd != null ? cmd : "";
             }
-            // sun.java.command trae clase o jar seguido de args
-            // se remueve el primer token y se devuelve el resto
-            String[] partes = cmd.split("\\s+");
-            if (partes.length <= 1) return "";
-            StringBuilder sb = new StringBuilder();
-            for (int i = 1; i < partes.length; i++) {
-                if (i > 1) sb.append(' ');
-                sb.append(partes[i]);
-            }
-            return sb.toString();
+            // Devolver tal cual (incluye clase/jar + args)
+            return cmd;
         } catch (Throwable t) {
             return "";
         }

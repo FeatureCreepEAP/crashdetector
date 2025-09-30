@@ -27,7 +27,6 @@ public class ErrorJEIPluginFallido implements Verificaciones {
 	public void verificar(Consola consola) {
 		String contenidoConsola = consola.contenido_verificar;
 		String[] lineas = contenidoConsola.split(Verificaciones.nl);
-CrashDetectorLogger.log("ultima ver");
 		// Analiza cada línea del registro buscando el patrón específico de error de
 		// plugin JEI
 		for (int i = 0; i < lineas.length; i++) {
@@ -70,7 +69,6 @@ CrashDetectorLogger.log("ultima ver");
 
 	@Override
 	public String mensaje() {
-        CrashDetectorLogger.log("Ultima Mensaje");
 		if (!activado)
 			return "";
 		return mensaje + enlaceHtml;

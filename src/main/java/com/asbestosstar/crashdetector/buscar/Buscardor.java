@@ -35,17 +35,6 @@ public class Buscardor {
 
     public static boolean cargado = false;
     
-    static {
-    	Cargador.cargadores.add(new CargadorFeatureCreep());
-    	Cargador.cargadores.add(new CargadorFabric());
-    	Cargador.cargadores.add(new CargadorMCForge());
-    	Cargador.cargadores.add(new CargadorNeoForge());
-    	Cargador.cargadores.add(new CargadorDangerZone());
-    	Cargador.cargadores.add(new CargadorNXOpen());
-    }
-
-   
-    
     public static void cargar() {
         if (!cargado) {
             try {
@@ -503,4 +492,21 @@ public class Buscardor {
 		if(ArchivoDeMod.JAVASSIST_DISPONIBLE) {return true;}
 		return false;
 	}
+	
+	
+	public static void cargadoresPredetermindado() {
+		Cargador.cargadores.add(new CargadorFeatureCreep());
+    	Cargador.cargadores.add(new CargadorFabric());
+    	Cargador.cargadores.add(new CargadorMCForge());
+    	Cargador.cargadores.add(new CargadorNeoForge());
+    	Cargador.cargadores.add(new CargadorDangerZone());
+    	Cargador.cargadores.add(new CargadorNXOpen());
+	}
+	
+	
+	
+	
+	
+	
+	
 }

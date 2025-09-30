@@ -4,7 +4,7 @@ import com.google.gson.*;
 
 /**
  * Motor basado en Gson
- * Implementa nodos con contexto para operar como DMR
+ * Nodos con contexto para operar como DMR
  */
 public class JsonGson implements Json.Motor {
 
@@ -40,14 +40,12 @@ public class JsonGson implements Json.Motor {
 
     @Override
     public Json.Nodo obtener(Json.Nodo actual, String nombre) {
-        // asegura que el actual sea objeto o null representando objeto
         JsonElement base = (JsonElement) actual.interno;
 
         if (base.isJsonNull()) {
             JsonObject nuevo = new JsonObject();
-            // si hay padre y clave se sustituye en el padre
-            if (actual.padre instanceof JsonObject po && actual.claveEnPadre != null) {
-                po.add(actual.claveEnPadre, nuevo);
+            if (actual.padre instanceof JsonObject && actual.claveEnPadre != null) {
+                ((JsonObject) actual.padre).add(actual.claveEnPadre, nuevo);
             }
             actual.interno = nuevo;
             base = nuevo;
@@ -60,43 +58,37 @@ public class JsonGson implements Json.Motor {
         JsonObject obj = base.getAsJsonObject();
         JsonElement hijo = obj.get(nombre);
         if (hijo == null) {
-            // insertar placeholder para poder usar poner mas tarde
             hijo = JsonNull.INSTANCE;
             obj.add(nombre, hijo);
         }
-        // devuelve nodo hijo con contexto al padre y la clave
         return new Json.Nodo(hijo, this, obj, nombre, null);
     }
 
     @Override
     public Json.Nodo poner(Json.Nodo actual, Object valor) {
-        // si el nodo representa una propiedad de un objeto
-        if (actual.padre instanceof JsonObject po && actual.claveEnPadre != null) {
+        if (actual.padre instanceof JsonObject && actual.claveEnPadre != null) {
             JsonElement e = aElemento(valor);
-            po.add(actual.claveEnPadre, e);
+            ((JsonObject) actual.padre).add(actual.claveEnPadre, e);
             actual.interno = e;
             return actual;
         }
 
-        // si el nodo representa un elemento de arreglo
-        if (actual.padre instanceof JsonArray pa && actual.indiceEnPadre != null) {
+        if (actual.padre instanceof JsonArray && actual.indiceEnPadre != null) {
+            JsonArray pa = (JsonArray) actual.padre;
             JsonElement e = aElemento(valor);
-            int idx = actual.indiceEnPadre;
-            // reemplazo seguro
+            int idx = actual.indiceEnPadre.intValue();
             while (pa.size() <= idx) pa.add(JsonNull.INSTANCE);
             pa.set(idx, e);
             actual.interno = e;
             return actual;
         }
 
-        // si es nodo raiz
         if (actual.interno instanceof JsonObject || actual.interno instanceof JsonArray || actual.interno instanceof JsonNull) {
             JsonElement e = aElemento(valor);
             actual.interno = e;
             return actual;
         }
 
-        // si es primitivo sin padre no se puede cambiar de tipo con seguridad
         JsonElement e = aElemento(valor);
         actual.interno = e;
         return actual;
@@ -106,16 +98,14 @@ public class JsonGson implements Json.Motor {
     public Json.Nodo agregar(Json.Nodo actual, Object valor) {
         JsonElement base = (JsonElement) actual.interno;
 
-        // si actual es una propiedad nula dentro de un objeto convertir a arreglo
-        if (base.isJsonNull() && actual.padre instanceof JsonObject po && actual.claveEnPadre != null) {
+        if (base.isJsonNull() && actual.padre instanceof JsonObject && actual.claveEnPadre != null) {
             JsonArray nuevo = new JsonArray();
-            po.add(actual.claveEnPadre, nuevo);
+            ((JsonObject) actual.padre).add(actual.claveEnPadre, nuevo);
             actual.interno = nuevo;
             base = nuevo;
         }
 
         if (!base.isJsonArray()) {
-            // si no es arreglo y es raiz nula convertir a arreglo
             if (base.isJsonNull()) {
                 JsonArray arr = new JsonArray();
                 actual.interno = arr;
@@ -190,12 +180,12 @@ public class JsonGson implements Json.Motor {
 
     private JsonElement aElemento(Object v) {
         if (v == null) return JsonNull.INSTANCE;
-        if (v instanceof Json.Nodo n) return (JsonElement) n.interno;
-        if (v instanceof String s) return new JsonPrimitive(s);
-        if (v instanceof Integer i) return new JsonPrimitive(i);
-        if (v instanceof Long l) return new JsonPrimitive(l);
-        if (v instanceof Boolean b) return new JsonPrimitive(b);
-        if (v instanceof Double d) return new JsonPrimitive(d);
+        if (v instanceof Json.Nodo) return (JsonElement) ((Json.Nodo) v).interno;
+        if (v instanceof String) return new JsonPrimitive((String) v);
+        if (v instanceof Integer) return new JsonPrimitive(((Integer) v).intValue());
+        if (v instanceof Long) return new JsonPrimitive(((Long) v).longValue());
+        if (v instanceof Boolean) return new JsonPrimitive(((Boolean) v).booleanValue());
+        if (v instanceof Double) return new JsonPrimitive(((Double) v).doubleValue());
         throw new IllegalArgumentException("Tipo no soportado por Gson");
     }
 }

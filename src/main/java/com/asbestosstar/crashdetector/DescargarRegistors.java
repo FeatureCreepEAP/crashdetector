@@ -43,7 +43,7 @@ public class DescargarRegistors {
         for (String url : urls) {
             try {
                 String urlProcesada = procesarURL(url);
-                CrashDetectorLogger.log(urlProcesada);
+                //CrashDetectorLogger.log(urlProcesada);
                 String contenido = descargarContenido(urlProcesada);
                 
                 // Determinar nombre de archivo

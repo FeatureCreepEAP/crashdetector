@@ -25,9 +25,9 @@ public class AnalizadorModsTomlForgeElectronwill {
         Object modsVal = root.get("mods");
         if (modsVal instanceof List<?>) {
             List<?> mods = (List<?>) modsVal;
-            if (!mods.isEmpty() && mods.get(0) instanceof UnmodifiableConfig primero) {
-                Object modId = primero.get("modId");
-                if (modId instanceof String s && !s.isEmpty()) agregarUnico(salida, s);
+            if (!mods.isEmpty() && mods.get(0) instanceof UnmodifiableConfig) {
+                Object modId = ((UnmodifiableConfig)mods.get(0)).get("modId");
+                if (modId instanceof String && !((String)modId).isEmpty()) agregarUnico(salida, (String)modId);
             }
         }
 

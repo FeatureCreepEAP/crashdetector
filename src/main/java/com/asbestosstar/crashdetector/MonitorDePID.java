@@ -222,7 +222,7 @@ public class MonitorDePID {
 		//cargardor de extenciones aqui
 		CargadorExtensiones.cargarExtensionesProcesoApp(um_archivo);
 		Entregar.comenzarEntregar();
-		Consola.escribirMapa(Instant.now());
+		//Consola.escribirMapa(Instant.now());
 		
 
 		long pid = obtenerPID();

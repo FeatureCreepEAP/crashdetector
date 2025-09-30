@@ -126,7 +126,7 @@ public class Consola {
 				linea_original = div.obtenerLineaOriginal(contento_existe);
 			}
 		}
-		CrashDetectorLogger.log(archivo.toAbsolutePath()+" linea "+ String.valueOf(linea_original));
+		//CrashDetectorLogger.log(archivo.toAbsolutePath()+" linea "+ String.valueOf(linea_original));
 
 
 	}
@@ -281,7 +281,7 @@ public void finalizarContenido(Instant tiempo, boolean ignorar_necesita_estar_de
                 if (i < lineas.length - 1) para_verificar.append('\n');
             }
 
-            CrashDetectorLogger.log("archivo nombre: " + archivo.toString());
+            //CrashDetectorLogger.log("archivo nombre: " + archivo.toString());
             boolean limpiado = false;
             for (LimpiadorDeRegistro limp : limpiadores) {
                 if (limp.predicado(archivo)) {
@@ -305,6 +305,7 @@ public void finalizarContenido(Instant tiempo, boolean ignorar_necesita_estar_de
     } catch (IOException e) {
         e.printStackTrace();
     }
+
 }
 
 
@@ -312,7 +313,7 @@ public void finalizarContenido(Instant tiempo, boolean ignorar_necesita_estar_de
 		nueva = true;
 		this.contenido = contento;
 
-		CrashDetectorLogger.log("archivo nombre inyectado: " + archivo.toString());
+		//CrashDetectorLogger.log("archivo nombre inyectado: " + archivo.toString());
 
 		boolean limpiado = false;
 		for (LimpiadorDeRegistro limp : limpiadores) {
@@ -332,11 +333,11 @@ public void finalizarContenido(Instant tiempo, boolean ignorar_necesita_estar_de
 	public static List<Consola> obtenerConsolas() {
 	    List<Consola> resultado = new ArrayList<>();
 
-	    for (Consola c : leerMapaConsolasComoLista()) {
-	        String k = clave(c.archivo);
-	            resultado.add(c);
-	        
-	    }
+//	    for (Consola c : leerMapaConsolasComoLista()) {
+//	        String k = clave(c.archivo);
+//	            resultado.add(c);
+//	        
+//	    }
 
 	    for (File archivo : obtenerArchivosDeConsolas()) {
 	        if (archivo == null || !archivo.exists() || !archivo.isFile()) continue;
@@ -548,7 +549,7 @@ public void finalizarContenido(Instant tiempo, boolean ignorar_necesita_estar_de
 	// funcion misma
 	public String obtainerEnlance() throws DemasiadoGrande, ErrorConPublicar, NoAPIdeRegistro {
 		if (enlance != null) {
-			CrashDetectorLogger.log("elance no es null");
+			//CrashDetectorLogger.log("elance no es null");
 
 			return enlance;
 		} else {

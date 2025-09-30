@@ -10,6 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.asbestosstar.crashdetector.Consola;
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
@@ -76,7 +77,6 @@ public class NullPointer implements Verificaciones {
 		// Limpiar resultados anteriores
 		errores.clear();
 		activado = false;
-
 		VerificacionDeStackTrace vdst = consola.verificacion_de_stacktrace;
 
 		// Colección de trazos (fatales y no fatales)
