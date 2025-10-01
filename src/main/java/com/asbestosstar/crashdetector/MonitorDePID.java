@@ -34,8 +34,9 @@ import com.asbestosstar.crashdetector.gui.NoRegistroDeLauncher;
 public class MonitorDePID {
 
 	public static final String mensaje_de_registro_lanzer_completo = "Puedes ignorar esta linea, solo es para CrashDetector, este mensaje es siempre en espanol";
-	public static Path carpeta = new File("crash_detector/").toPath();
-	public static File ArchivoDeCodigoError0 = new File("crash_detector/ArchivoDeCodigoError0");
+	public static File carpeta_como_archivo = new File("crash_detector/");
+	public static Path carpeta = carpeta_como_archivo.toPath();
+	public static File ArchivoDeCodigoError0 = carpeta.resolve("ArchivoDeCodigoError0").toFile();
 	public static Path ultimo_mods = carpeta.resolve("ultima_mods");
 	//public static Path viajo_ultima_mods = carpeta.resolve("viajo_ultima_mods");
 	public static List<Consola> consolas = new ArrayList<Consola>();
@@ -100,13 +101,11 @@ public class MonitorDePID {
 			}
 			return;
 		}
-		
+
 		ProxySysOutSysErr.init();
 
-
 		ArchivoDeCodigoError0.delete();
-		
-		
+
 		String mods = "";
 		if (ultimo_mods.toFile().exists()) {
 			try {
@@ -116,52 +115,42 @@ public class MonitorDePID {
 				e.printStackTrace();
 			}
 		}
-		
-		
-		
-		
-		File html = new File("crash_detector/pantilla.htm");
 
+		File html = carpeta.resolve("pantilla.htm").toFile();
 		copiarACarpetaDesdeJar("/pantilla.htm", html);
 
-		copiarACarpetaDesdeJar("/imagenes/gura.png", new File("crash_detector/imagenes/gura.png"));
-		copiarACarpetaDesdeJar("/imagenes/clio.png", new File("crash_detector/imagenes/clio.png"));
-		copiarACarpetaDesdeJar("/imagenes/hamu.png", new File("crash_detector/imagenes/hamu.png"));
-		copiarACarpetaDesdeJar("/imagenes/nanashi_mumei.png", new File("crash_detector/imagenes/nanashi_mumei.png"));
-		copiarACarpetaDesdeJar("/imagenes/shion.png", new File("crash_detector/imagenes/shion.png"));
-		copiarACarpetaDesdeJar("/imagenes/vshojo.png", new File("crash_detector/imagenes/vshojo.png"));
-		copiarACarpetaDesdeJar("/imagenes/rosemi.png", new File("crash_detector/imagenes/rosemi.png"));
-		copiarACarpetaDesdeJar("/imagenes/kiara_ame.png", new File("crash_detector/imagenes/kiara_ame.png"));
+		copiarACarpetaDesdeJar("/imagenes/gura.png", carpeta.resolve("imagenes/gura.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/clio.png", carpeta.resolve("imagenes/clio.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/hamu.png", carpeta.resolve("imagenes/hamu.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/nanashi_mumei.png", carpeta.resolve("imagenes/nanashi_mumei.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/shion.png", carpeta.resolve("imagenes/shion.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/vshojo.png", carpeta.resolve("imagenes/vshojo.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/rosemi.png", carpeta.resolve("imagenes/rosemi.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/kiara_ame.png", carpeta.resolve("imagenes/kiara_ame.png").toFile());
 
-		copiarACarpetaDesdeJar("/imagenes/padoru.gif", new File("crash_detector/imagenes/padoru.gif"));
-		copiarACarpetaDesdeJar("/imagenes/demonslayers.png", new File("crash_detector/imagenes/demonslayers.png"));
+		copiarACarpetaDesdeJar("/imagenes/padoru.gif", carpeta.resolve("imagenes/padoru.gif").toFile());
+		copiarACarpetaDesdeJar("/imagenes/demonslayers.png", carpeta.resolve("imagenes/demonslayers.png").toFile());
 
-		
-		
-		copiarACarpetaDesdeJar("/imagenes/boton_agregar.png", new File("crash_detector/imagenes/boton_agregar.png"));
+		copiarACarpetaDesdeJar("/imagenes/boton_agregar.png", carpeta.resolve("imagenes/boton_agregar.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/boton_compartir.png",
-				new File("crash_detector/imagenes/boton_compartir.png"));
+				carpeta.resolve("imagenes/boton_compartir.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/boton_actualizar.png",
-				new File("crash_detector/imagenes/boton_actualizar.png"));
-		copiarACarpetaDesdeJar("/imagenes/boton_archivos.png", new File("crash_detector/imagenes/boton_archivos.png"));
-		copiarACarpetaDesdeJar("/imagenes/boton_config.png", new File("crash_detector/imagenes/boton_config.png"));
-		copiarACarpetaDesdeJar("/imagenes/cd_logo.png", new File("crash_detector/imagenes/cd_logo.png"));
-		copiarACarpetaDesdeJar("/imagenes/profeco.jpg", new File("crash_detector/imagenes/profeco.jpg"));
-		copiarACarpetaDesdeJar("/imagenes/saliormoongrep.png", new File("crash_detector/imagenes/saliormoongrep.png"));
+				carpeta.resolve("imagenes/boton_actualizar.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/boton_archivos.png", carpeta.resolve("imagenes/boton_archivos.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/boton_config.png", carpeta.resolve("imagenes/boton_config.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/cd_logo.png", carpeta.resolve("imagenes/cd_logo.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/profeco.jpg", carpeta.resolve("imagenes/profeco.jpg").toFile());
+		copiarACarpetaDesdeJar("/imagenes/saliormoongrep.png", carpeta.resolve("imagenes/saliormoongrep.png").toFile());
 
-		
-		
-		copiarACarpetaDesdeJar("/imagenes/mod.png", new File("crash_detector/imagenes/mod.png"));
-		copiarACarpetaDesdeJar("/imagenes/clase.png", new File("crash_detector/imagenes/clase.png"));
-		copiarACarpetaDesdeJar("/imagenes/metodo.png", new File("crash_detector/imagenes/metodo.png"));
-		copiarACarpetaDesdeJar("/imagenes/campo.png", new File("crash_detector/imagenes/campo.png"));
-		copiarACarpetaDesdeJar("/imagenes/paquete.png", new File("crash_detector/imagenes/paquete.png"));
-		copiarACarpetaDesdeJar("/imagenes/referencia_metodo.png", new File("crash_detector/imagenes/referencia_metodo.png"));
-		copiarACarpetaDesdeJar("/imagenes/referencia_campo.png", new File("crash_detector/imagenes/referencia_campo.png"));
-
-		
-		
-		
+		copiarACarpetaDesdeJar("/imagenes/mod.png", carpeta.resolve("imagenes/mod.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/clase.png", carpeta.resolve("imagenes/clase.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/metodo.png", carpeta.resolve("imagenes/metodo.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/campo.png", carpeta.resolve("imagenes/campo.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/paquete.png", carpeta.resolve("imagenes/paquete.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/referencia_metodo.png",
+				carpeta.resolve("imagenes/referencia_metodo.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/referencia_campo.png",
+				carpeta.resolve("imagenes/referencia_campo.png").toFile());
 
 //		new File(viajo_ultima_mods.toString()).delete();
 //		try {
@@ -206,7 +195,7 @@ public class MonitorDePID {
 		}
 
 		File um_archivo = new File(ultimo_mods.toString());
-				um_archivo.delete();
+		um_archivo.delete();
 		try {
 			um_archivo.createNewFile();
 			FileWriter escribidor = new FileWriter(ultimo_mods.toFile());
@@ -216,14 +205,11 @@ public class MonitorDePID {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
-		//cargardor de extenciones aqui
+
+		// cargardor de extenciones aqui
 		CargadorExtensiones.cargarExtensionesProcesoApp(um_archivo);
 		Entregar.comenzarEntregar();
-		//Consola.escribirMapa(Instant.now());
-		
+		// Consola.escribirMapa(Instant.now());
 
 		long pid = obtenerPID();
 		System.out.println("PID: " + pid);
@@ -261,7 +247,6 @@ public class MonitorDePID {
 			System.out.println("JVM " + javaBinary);
 		}
 
-
 		// Launch the child monitor process
 		try {
 			String cp = System.getProperty("java.class.path") + File.pathSeparator + jar;
@@ -272,7 +257,6 @@ public class MonitorDePID {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 
 	}
 
