@@ -78,7 +78,7 @@ public class TransformacionDeMinecraftCodigo0 implements ParcheClassNode {
 						InsnList insnList = new InsnList();
 						insnList.add(new InsnNode(Opcodes.ICONST_1));// es_servidor=true
 						insnList.add(new MethodInsnNode(Opcodes.INVOKESTATIC,
-								"com/asbestosstar/crashdetector/parches/minecraft/TransformacionDeMinecraftCodigo0",
+								TransformacionDeMinecraftCodigo0.class.getCanonicalName().replace('.', '/'),
 								"hechoArchivoDeCodigoError0", "(Z)V", false));
 						method.instructions.insert(insnList);
 					}
@@ -102,7 +102,7 @@ public class TransformacionDeMinecraftCodigo0 implements ParcheClassNode {
 						InsnList insnList = new InsnList();
 						insnList.add(new InsnNode(Opcodes.ICONST_0)); // es_servidor=false
 						insnList.add(new MethodInsnNode(Opcodes.INVOKESTATIC,
-								"com/asbestosstar/crashdetector/parches/minecraft/TransformacionDeMinecraftCodigo0",
+								TransformacionDeMinecraftCodigo0.class.getCanonicalName().replace('.', '/'),
 								"hechoArchivoDeCodigoError0", "(Z)V", false));
 						method.instructions.insert(insnList);
 					}
