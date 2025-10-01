@@ -35,13 +35,14 @@ public class Config {
 	private static final boolean VALOR_POR_DEFECTO_ANONIMIZAR_REGISTROS = true;
 	private static final boolean PROXY_SYSOUT_SYSERR = false;
 	private static final boolean EXTREGAR_TOKEN_DE_ACCESO = false;
+	public static final String NOMBRE_CD = "CrashDetector";
 
 	
 	
 	
 	
 	// Ruta al archivo de configuración
-	private static final String RUTA_ARCHIVO_CONFIG = "crash_detector/crashdetector_config.properties";
+	private static final String RUTA_ARCHIVO_CONFIG = MonitorDePID.carpeta.resolve("crashdetector_config.properties").toString();
 	public static File archivoConfig = new File(RUTA_ARCHIVO_CONFIG);
 
 	
@@ -92,6 +93,9 @@ public class Config {
 			propiedadesConfig.setProperty("proxy_sysout_syserr", String.valueOf(PROXY_SYSOUT_SYSERR));		
 			propiedadesConfig.setProperty("habilitar_token_de_acceso_en_la_entrega_del_MonitorDePID", String.valueOf(EXTREGAR_TOKEN_DE_ACCESO));		
 
+			propiedadesConfig.setProperty("nombre_cd", NOMBRE_CD);		
+
+			
 			guardar();
 		}
 	}
@@ -391,7 +395,7 @@ public class Config {
 	 * No es recomendado , solo existe para CDLauncher si necesitas servidores en modio enlinea pero activado es menos seguro. TODO mover a una config solo para usarios fin
 	 * @return
 	 */
-	public boolean habilitarTokenDeAccesoEnLaEntregaDelMonitorDePID() {
+	public boolean obtenerHabilitarTokenDeAccesoEnLaEntregaDelMonitorDePID() {
 		// TODO Auto-generated method stub
 		return Boolean.parseBoolean(propiedadesConfig.getProperty("habilitar_token_de_acceso_en_la_entrega_del_MonitorDePID", String.valueOf(EXTREGAR_TOKEN_DE_ACCESO)));
 
@@ -406,5 +410,17 @@ public class Config {
 		propiedadesConfig.setProperty("habilitar_token_de_acceso_en_la_entrega_del_MonitorDePID", String.valueOf(valor));
 	}
 	
+	/**
+	 * Estabalar el nombre public de esta GUI
+	 * @param valor
+	 */
+	public void guardarNombreCD(String valor) {
+	    propiedadesConfig.setProperty("nombre_cd", valor);
+	    this.guardar();
+	}
 	
+	public String obtenerNombreCD() {
+		// TODO Auto-generated method stub
+		return propiedadesConfig.getProperty("nombre_cd", NOMBRE_CD);
+	}
 }

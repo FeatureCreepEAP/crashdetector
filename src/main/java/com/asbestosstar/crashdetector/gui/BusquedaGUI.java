@@ -109,7 +109,7 @@ public BusquedaGUI() {
     panelEntrada.add(chkBuscarEnComprimidos, L);
 
     // fila 3 imagen a la derecha bajo el checkbox derecho
-    JLabel lblImagen = crearImagenEscalada("crash_detector/imagenes/saliormoongrep.png", 150, 100);
+    JLabel lblImagen = crearImagenEscalada(MonitorDePID.carpeta.resolve("imagenes/saliormoongrep.png").toString(), 150, 100);
     lblImagen.setOpaque(true);
     lblImagen.setBackground(colorPanel);
     lblImagen.setPreferredSize(new java.awt.Dimension(150, 100));

@@ -14,8 +14,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.parches.Parche;
 import com.asbestosstar.crashdetector.parches.ParcheClassNode;
 
-public class TransformacionDeMinecraftCodigo0 implements ParcheClassNode{
-
+public class TransformacionDeMinecraftCodigo0 implements ParcheClassNode {
 
 	// net.minecraft.server.MinecraftServer//todos pero no FCI
 	// game.Server//FCI Ingles
@@ -39,26 +38,19 @@ public class TransformacionDeMinecraftCodigo0 implements ParcheClassNode{
 	// stop SugarCane
 	// method_1592 FAIN
 	// m_91395_ //SRG
-	
 
 	public boolean completa_servidor = false;
 	public boolean completa_cliente = false;
 
 	public static boolean tiene_clase_cliente = false;
-	
-	
-	
-	
-	
-	
+
 	@Override
 	public Set<String> clases() {
 		// TODO Auto-generated method stub
-		Set<String> clases=new HashSet<String>();
+		Set<String> clases = new HashSet<String>();
 		clases.add("net.minecraft.server.MinecraftServer");
 		clases.add("game.Server");
 
-		
 		clases.add("game.Client");
 		clases.add("net.minecraft.class_310");
 		clases.add("net.minecraft.client.Minecraft");
@@ -68,12 +60,10 @@ public class TransformacionDeMinecraftCodigo0 implements ParcheClassNode{
 	@Override
 	public void parchClassNode(ClassNode node, String nombre_de_clase) {
 		// TODO Auto-generated method stub
-		
-		
 
 		if (nombre_de_clase.equals("net.minecraft.server.MinecraftServer") || nombre_de_clase.equals("game.Server")) {
 
-			if (!completa_servidor&&!completa_cliente) {
+			if (!completa_servidor && !completa_cliente) {
 
 				// si es un nombre de una clase en la lista , modificar el method incluir
 				// hechoArchivoDeCodioError0 en la cima.
@@ -85,16 +75,12 @@ public class TransformacionDeMinecraftCodigo0 implements ParcheClassNode{
 							|| methodName.equals("m_7041_") || methodName.equals("method_3782"))
 							&& methodDesc.equals("()V")) {
 
-		                InsnList insnList = new InsnList();
-		                insnList.add(new InsnNode(Opcodes.ICONST_1));//es_servidor=true
-		                insnList.add(new MethodInsnNode(
-		                    Opcodes.INVOKESTATIC,
-		                    "com/asbestosstar/crashdetector/parches/minecraft/TransformacionDeMinecraftCodigo0",
-		                    "hechoArchivoDeCodigoError0",
-		                    "(Z)V",
-		                    false
-		                ));
-		                method.instructions.insert(insnList);
+						InsnList insnList = new InsnList();
+						insnList.add(new InsnNode(Opcodes.ICONST_1));// es_servidor=true
+						insnList.add(new MethodInsnNode(Opcodes.INVOKESTATIC,
+								"com/asbestosstar/crashdetector/parches/minecraft/TransformacionDeMinecraftCodigo0",
+								"hechoArchivoDeCodigoError0", "(Z)V", false));
+						method.instructions.insert(insnList);
 					}
 				});
 				completa_servidor = true;
@@ -111,18 +97,14 @@ public class TransformacionDeMinecraftCodigo0 implements ParcheClassNode{
 
 					if ((methodName.equals("shutdown") || methodName.equals("stop") || methodName.equals("m_91395_")
 							|| methodName.equals("method_1592")) && methodDesc.equals("()V")) {
-						System.out.println ("CD Transformando CLIENT");
+						System.out.println("CD Transformando CLIENT");
 
-		                InsnList insnList = new InsnList();
-		                insnList.add(new InsnNode(Opcodes.ICONST_0)); //es_servidor=false
-		                insnList.add(new MethodInsnNode(
-		                    Opcodes.INVOKESTATIC,
-		                    "com/asbestosstar/crashdetector/parches/minecraft/TransformacionDeMinecraftCodigo0",
-		                    "hechoArchivoDeCodigoError0",
-		                    "(Z)V",
-		                    false
-		                ));
-		                method.instructions.insert(insnList);
+						InsnList insnList = new InsnList();
+						insnList.add(new InsnNode(Opcodes.ICONST_0)); // es_servidor=false
+						insnList.add(new MethodInsnNode(Opcodes.INVOKESTATIC,
+								"com/asbestosstar/crashdetector/parches/minecraft/TransformacionDeMinecraftCodigo0",
+								"hechoArchivoDeCodigoError0", "(Z)V", false));
+						method.instructions.insert(insnList);
 					}
 				});
 
@@ -131,17 +113,11 @@ public class TransformacionDeMinecraftCodigo0 implements ParcheClassNode{
 			}
 
 		}
-		
-		
-		
-		
-		
-		
+
 	}
-	
-	
+
 	public static void hechoArchivoDeCodigoError0(boolean es_servidor) {
-		System.out.println("hechoArchivoDeCodigoError0 "+String.valueOf(es_servidor));
+		System.out.println("hechoArchivoDeCodigoError0 " + String.valueOf(es_servidor));
 		if (tiene_clase_cliente && es_servidor) {
 		} else {
 			try {
@@ -170,7 +146,7 @@ public class TransformacionDeMinecraftCodigo0 implements ParcheClassNode{
 		// TODO Auto-generated method stub
 		return MonitorDePID.idioma.transformacionDeMinecraftCodigo0();
 	}
-	
+
 	@Override
 	public boolean predeterminado() {
 		return true;

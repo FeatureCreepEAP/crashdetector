@@ -13,8 +13,8 @@ import com.asbestosstar.crashdetector.cargador.Cargador;
 //Handover
 public class Entregar {
 
-    public static File archivo = new File("crash_detector/entregar");
-    private static final String MASK = "*********************************";
+	public static File archivo = MonitorDePID.carpeta.resolve("entregar").toFile();
+	private static final String MASK = "*********************************";
 
     // escritor
     public static void comenzarEntregar() {
@@ -32,7 +32,7 @@ Buscardor.cargadoresPredetermindado();
 
         // args actuales sin usar ARGS_DE_APP
         String args = obtenerArgsDelPrograma();
-        if (!Config.obtenerInstancia().habilitarTokenDeAccesoEnLaEntregaDelMonitorDePID()) {
+        if (!Config.obtenerInstancia().obtenerHabilitarTokenDeAccesoEnLaEntregaDelMonitorDePID()) {
             args = eliminarTokenDeAcceso(args); // ahora enmascara en lugar de borrar
         }
 

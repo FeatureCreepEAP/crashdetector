@@ -13,13 +13,12 @@ import java.util.Date;
 
 public class CrashDetectorLogger {
 
-    private static final String LOG_FILE_PATH = "crash_detector/log.txt";
-
+	private static final String LOG_FILE_PATH = MonitorDePID.carpeta.resolve("log.txt").toString();
 
     public static void log(String message) {
         try {
             // Ensure the directory exists
-            Path logDir = Paths.get("crash_detector");
+            Path logDir = MonitorDePID.carpeta;
             if (!Files.exists(logDir)) {
                 Files.createDirectories(logDir);
             }

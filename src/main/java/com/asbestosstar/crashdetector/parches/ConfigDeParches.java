@@ -4,14 +4,16 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Properties;
 import java.util.Set;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
+import com.asbestosstar.crashdetector.MonitorDePID;
 
 public class ConfigDeParches {
-    private static final String RUTA_ARCHIVO_CONFIG_PARCHES = "crash_detector/parches.properties";
-    public static File archivoConfigParches = new File(RUTA_ARCHIVO_CONFIG_PARCHES);
+	private static final Path RUTA_ARCHIVO_CONFIG_PARCHES = MonitorDePID.carpeta.resolve("parches.properties");
+	public static File archivoConfigParches = RUTA_ARCHIVO_CONFIG_PARCHES.toFile();
 
     private Properties propiedadesConfig;
     private static ConfigDeParches instancia;

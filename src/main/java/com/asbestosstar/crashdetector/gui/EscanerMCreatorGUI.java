@@ -59,9 +59,8 @@ public class EscanerMCreatorGUI extends JFrame  implements BotonDeBarraLateralDe
         JScrollPane panelDesplazamiento = new JScrollPane(areaResultados);
         panelDesplazamiento.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200)));
 
-        // === NUEVO: Verificar y cargar imagen desde sistema de archivos ===
         JLabel etiquetaImagen = null;
-        File archivoImagen = new File("crash_detector/imagenes/rosemi.png");
+        File archivoImagen = MonitorDePID.carpeta.resolve("imagenes/rosemi.png").toFile();
         
         // Verificar si el archivo de imagen existe en el sistema del usuario
         if (archivoImagen.exists()) {

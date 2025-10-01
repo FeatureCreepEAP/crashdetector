@@ -293,16 +293,24 @@ public class CrashDetectorGUI extends JFrame {
 		JPanel botonesDerecha = new JPanel(new GridLayout(1, 5, 10, 10));
 		botonesDerecha.setBackground(colorFondo);
 		CrashDetectorLogger.log("botones principales");
-		JButton botonAgregar = añadirBotonImagen(botonesDerecha, "crash_detector/imagenes/boton_agregar.png",
+		JButton botonAgregar = añadirBotonImagen(botonesDerecha,
+				MonitorDePID.carpeta.resolve("imagenes/boton_agregar.png").toString(),
 				MonitorDePID.idioma.anadirRegistro());
-		JButton botonCompartir = añadirBotonImagen(botonesDerecha, "crash_detector/imagenes/boton_compartir.png",
+
+		JButton botonCompartir = añadirBotonImagen(botonesDerecha,
+				MonitorDePID.carpeta.resolve("imagenes/boton_compartir.png").toString(),
 				MonitorDePID.idioma.botonDeCompartirInforme());
-		JButton botonActualizar = añadirBotonImagen(botonesDerecha, "crash_detector/imagenes/boton_actualizar.png",
+
+		JButton botonActualizar = añadirBotonImagen(botonesDerecha,
+				MonitorDePID.carpeta.resolve("imagenes/boton_actualizar.png").toString(),
 				MonitorDePID.idioma.actualizar());
-		JButton botonArchivos = añadirBotonImagen(botonesDerecha, "crash_detector/imagenes/boton_archivos.png",
+
+		JButton botonArchivos = añadirBotonImagen(botonesDerecha,
+				MonitorDePID.carpeta.resolve("imagenes/boton_archivos.png").toString(),
 				MonitorDePID.idioma.abrirCarpeta());
-		botonConfiguracion = añadirBotonImagen(botonesDerecha, "crash_detector/imagenes/boton_config.png",
-				MonitorDePID.idioma.config());
+
+		botonConfiguracion = añadirBotonImagen(botonesDerecha,
+				MonitorDePID.carpeta.resolve("imagenes/boton_config.png").toString(), MonitorDePID.idioma.config());
 
 		botonCompartir.addActionListener(e -> new DialogoCompartir(this, tiempoFallo).setVisible(true));
 		botonActualizar.addActionListener(e -> recargar());
@@ -332,7 +340,7 @@ public class CrashDetectorGUI extends JFrame {
 		logoLabel.setOpaque(true);
 
 		// 加载 logo 图片
-		ImageIcon logoIcon = new ImageIcon("crash_detector/imagenes/cd_logo.png");
+		ImageIcon logoIcon = new ImageIcon(MonitorDePID.carpeta.resolve("imagenes/cd_logo.png").toString());
 		Image logoImagen = logoIcon.getImage();
 		Image escalarLogo = logoImagen.getScaledInstance(120, -1, Image.SCALE_SMOOTH); // -1 保持宽高比
 		logoLabel.setIcon(new ImageIcon(escalarLogo));

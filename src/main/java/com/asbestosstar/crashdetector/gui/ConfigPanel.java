@@ -400,7 +400,7 @@ public class ConfigPanel extends JPanel {
 		etiquetaImagen.setHorizontalAlignment(JLabel.CENTER);
 
 		try {
-			ImageIcon iconoImagen = new ImageIcon("crash_detector/imagenes/profeco.jpg");
+			ImageIcon iconoImagen = new ImageIcon(MonitorDePID.carpeta.resolve("imagenes/profeco.jpg").toString());
 			etiquetaImagen.setIcon(iconoImagen);
 		} catch (Exception e) {
 			etiquetaImagen.setText("Error al cargar la imagen");

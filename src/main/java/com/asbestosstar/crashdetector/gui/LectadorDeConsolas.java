@@ -126,7 +126,7 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 		layeredPane.setLayout(null);
 		setContentPane(layeredPane);
 
-		fondo = new FondoPanel("crash_detector/imagenes/kiara_ame.png");
+		fondo = new FondoPanel(MonitorDePID.carpeta.resolve("imagenes/kiara_ame.png").toString());
 		fondo.setBounds(0, 0, getWidth(), getHeight());
 		layeredPane.add(fondo, JLayeredPane.DEFAULT_LAYER);
 

@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 
+import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 
 /**
@@ -46,7 +47,11 @@ public class PanelQuickFix extends JScrollPane {
         piePanel.setLayout(new BoxLayout(piePanel, BoxLayout.Y_AXIS));
         piePanel.setBorder(BorderFactory.createEmptyBorder(12, 0, 0, 0));
 
-        JLabel img1024 = crearEtiquetaImagenEscalada("crash_detector/imagenes/demonslayers.png", 1024, 1024);
+        JLabel img1024 = crearEtiquetaImagenEscalada(
+        	    MonitorDePID.carpeta.resolve("imagenes/demonslayers.png").toString(),
+        	    32,
+        	    32
+        	);
         if (img1024 != null) {
             img1024.setAlignmentX(Component.CENTER_ALIGNMENT);
             piePanel.add(img1024);

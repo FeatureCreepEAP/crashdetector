@@ -42,8 +42,8 @@ public class GeneradorDeInformacion {
             
             
             
-			String pantilla = MonitorDePID.leer_archivo(new File("crash_detector/pantilla.htm").toPath());
-			String carp="crash_detector/.informes/";
+            String pantilla = MonitorDePID.leer_archivo(MonitorDePID.carpeta.resolve("pantilla.htm"));
+            String carp = MonitorDePID.carpeta.resolve(".informes").toString() + "/";
 			File carp_file=new File(carp);
 			carp_file.mkdirs();
 			File ret = new File(carp + instant.toString().replace(":", "") + ".htm");
@@ -61,8 +61,7 @@ public class GeneradorDeInformacion {
 	
 	public static String imagenesLocales() {
 	    StringBuilder cons = new StringBuilder();
-	    File imagenDir = new File("crash_detector/imagenes/");
-	    
+	    File imagenDir = MonitorDePID.carpeta.resolve("imagenes").toFile();	    
 	    String guraUrl = new File(imagenDir, "gura.png").toURI().toString();
 	    String mumeiUrl = new File(imagenDir, "nanashi_mumei.png").toURI().toString();
 	    String shionUrl = new File(imagenDir, "shion.png").toURI().toString();
@@ -92,8 +91,7 @@ public class GeneradorDeInformacion {
 	            cons.append(generarTextoArcoiris("Feliz mes del orgullo"));
 	            cons.append("</center>");
 
-			String pantilla = MonitorDePID.leer_archivo(new File("crash_detector/pantilla.htm").toPath());
-			String ret = enviarInforme(
+	            String pantilla = MonitorDePID.leer_archivo(MonitorDePID.carpeta.resolve("pantilla.htm"));			String ret = enviarInforme(
 					pantilla.replace("{constructor}", cons.toString() + "<br>" + MonitorDePID.idioma.infoDeVerificaciones() + "<br>" + MonitorDePID.idioma.infoDeVerificaciones() + "<br>" + MonitorDePID.contenidoInforme.toString()+imagenesParaCompartir()));
 			CrashDetectorLogger.log(ret);
 			return ret;

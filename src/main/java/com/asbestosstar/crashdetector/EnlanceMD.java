@@ -18,8 +18,7 @@ import java.util.regex.Pattern;
 public class EnlanceMD {
 
 	/** Carpeta temporal donde se guardan los registros descargados. */
-	public static File carpeta = new File("crash_detector/.tmp/tmp_registros/");
-
+	public static File carpeta = MonitorDePID.carpeta.resolve(".tmp/tmp_registros").toFile();
 	/**
 	 * Contador para nombres genéricos cuando no se puede extraer un nombre claro.
 	 */

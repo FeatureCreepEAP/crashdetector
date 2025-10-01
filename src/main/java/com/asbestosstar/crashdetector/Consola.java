@@ -133,7 +133,7 @@ public class Consola {
 
 	// escribirMapa: SIN escribir tiempo global al final
 	public static void escribirMapa(Instant tiempo) {
-		File carpetaDestino = new File("crash_detector");
+		File carpetaDestino = MonitorDePID.carpeta_como_archivo;
 		if (!carpetaDestino.exists()) {
 			carpetaDestino.mkdirs();
 		}
@@ -211,7 +211,7 @@ public class Consola {
 // lector que solo devuelve consolas de archivos cuyo mtime es posterior al del mapa
 public static List<Consola> leerMapaConsolasComoLista() {
     List<Consola> lista = new ArrayList<>();
-    File carpeta = new File("crash_detector");
+    File carpeta = MonitorDePID.carpeta_como_archivo;
     File mapa = new File(carpeta, "mapa_de_registros");
     if (!mapa.exists() || !mapa.isFile()) {
         return lista;
