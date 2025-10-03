@@ -3201,6 +3201,52 @@ public String buscarDentroDeComprimidos() {
  return "Serĉi ene de arkivoj (.zip/.jar/.war/.ear/.fpm/.rar por Java*)";
 }
 
+@Override
+public String error_resolucion_textura(String recurso, String tamaño) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+            + "Eraro pri tekstura risolucio: ne povas adapti " + recurso + " - grandeco: " + tamaño + "</b>";
+}
+
+@Override
+public String nombre_de_error_resolucion_textura() {
+    return "Eraro pri Tekstura Risolucio";
+}
+
+@Override
+public String solucion_resolucion_textura() {
+    return "Tiu eraro okazas kiam teksturoj estas tro grandaj aŭ ekzistas tro da rimedopakoj. "
+            + "Provu uzi rimedopakojn kun pli malalta risolucio aŭ forigu kelkajn. "
+            + "Certigu, ke vi ne aldonis kutimajn teksturojn per pli alta ol permesita risolucio.";
+}
+
+@Override
+public String error_modlauncher_path() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+            + "Eraro de ModLauncher-servoj: vojo kun nevalidaj signoj. "
+            + "ModLauncher-servoj ne povas prilabori vojojn kiuj enhavas ne-ASCII aŭ specialajn signojn. "
+            + "Problemaj signoj inkludas: ¡, !, مرحبا, Olá, سلام, Привет, 你好, Saluton, こんにちは, 안녕하세요, kiel ankaŭ precipe la signo '\"' se ĝi troviĝas je fino de nomo. "
+            + "Komunaj servoj en ModLauncher inkludas CrashDetector, "+ Config.obtenerInstancia().obtenerNombreCD() +", FeatureCreep, Vivicraft, Optifine, Sodium, clonos, Iris Shaders/Oculus, MixerLogger, CrashAssistant kaj Sintrya Connector. "
+            + "Vi povas forigi ĉiujn servojn, sed eble estos aliaj problemoj pro via voja nomo. "
+            + "Solvado: Ŝanĝu la nomon de via instanco por uzi nur ASCII-signojn (a-z, A-Z, 0-9), sen spacetoj aŭ specialaj signoj.</b>";
+}
+
+@Override
+public String nombre_error_modlauncher_path() {
+    return "Eraro pri Vojo en ModLauncher";
+}
+
+@Override
+public String solucion_modlauncher_path() {
+    return "Tiu eraro okazas kiam la instanca vojo enhavas ne-ASCII aŭ specialajn signojn. "
+            + "ModLauncher-servoj ne povas pritrakti tiujn vojojn. "
+            + "Solvado: ŝanĝu la instancan nomon por uzi nur ASCII-signojn (a-z, A-Z, 0-9), evitu spacetojn kaj specialajn signojn. "
+            + "Prestu apartan atenton al la signo '\"', kiu tre problemas, precipe se ĝi estas je fino de nomo.";
+}
+
+
+
+
+
 
 
 

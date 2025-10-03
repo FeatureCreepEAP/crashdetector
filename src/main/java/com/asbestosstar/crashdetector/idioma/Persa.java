@@ -3162,6 +3162,50 @@ public String buscarDentroDeComprimidos() {
     return "جستجو داخل بایگانی‌ها (.zip/.jar/.war/.ear/.fpm/.rar برای Java*)";
 }
 
+@Override
+public String error_resolucion_textura(String recurso, String tamaño) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+            + "خطای وضوح بافت: نمی‌توان " + recurso + " را بارگذاری کرد - اندازه: " + tamaño + "</b>";
+}
+
+@Override
+public String nombre_de_error_resolucion_textura() {
+    return "خطای وضوح بافت";
+}
+
+@Override
+public String solucion_resolucion_textura() {
+    return "این خطا زمانی رخ می‌دهد که بافت‌ها خیلی بزرگ باشند یا تعداد زیادی پک منابع وجود داشته باشد. "
+            + "سعی کنید از پک‌های منابع با وضوح پایین‌تر استفاده کنید یا برخی از پک‌ها را حذف کنید. "
+            + "بررسی کنید که آیا بافت سفارشی با وضوح بالاتر از حد مجاز اضافه نکرده‌اید.";
+}
+@Override
+public String error_modlauncher_path() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+            + "خطای سرویس‌های ModLauncher: مسیر شامل کاراکترهای نامعتبر است. "
+            + "سرویس‌های ModLauncher نمی‌توانند مسیرهایی که شامل کاراکترهای غیر ASCII یا کاراکترهای خاص باشند را پردازش کنند. "
+            + "کاراکترهای مشکل‌ساز شامل: ¡, !, مرحبا, Olá, سلام, Привет, 你好, Saluton, こんにちは, 안녕하세요 و به‌ویژه کاراکتر '\"' در صورتی که در انتهای نام باشد، می‌شود. "
+            + "مولفه‌های رایج سرویس در ModLauncher شامل CrashDetector، "+ Config.obtenerInstancia().obtenerNombreCD() +"، FeatureCreep، Vivicraft، Optifine، Sodium، clonos، Iris Shaders/Oculus، MixerLogger، CrashAssistant و Sintrya Connector هستند. "
+            + "می‌توانید تمام سرویس‌ها را حذف کنید، اما ممکن است به دلیل نام مسیر، مشکلات دیگری پیش بیاید. "
+            + "راه‌حل: نام مجموعه را فقط با کاراکترهای ASCII (a-z, A-Z, 0-9) تغییر دهید و از فاصله و کاراکترهای خاص پرهیز کنید.</b>";
+}
+
+@Override
+public String nombre_error_modlauncher_path() {
+    return "خطای مسیر ModLauncher";
+}
+
+@Override
+public String solucion_modlauncher_path() {
+    return "این خطا زمانی رخ می‌دهد که مسیر مجموعه شامل کاراکترهای غیر ASCII یا کاراکترهای خاص باشد. "
+            + "سرویس‌های ModLauncher نمی‌توانند این مسیرها را مدیریت کنند. "
+            + "راه‌حل: نام مجموعه را به گونه‌ای تغییر دهید که فقط از کاراکترهای ASCII (a-z, A-Z, 0-9) استفاده شود و از فاصله و کاراکترهای خاص اجتناب کنید. "
+            + "به کاراکتر '\"' توجه ویژه‌ای داشته باشید که بسیار مشکل‌ساز است، به‌ویژه وقتی در انتهای نام قرار دارد.";
+}
+
+
+
+
 
 
 

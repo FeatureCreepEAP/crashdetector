@@ -1322,6 +1322,18 @@ public interface Idioma {
 
 	public String buscarDentroDeComprimidos();
 
+	public String error_resolucion_textura(String recurso, String tamaño);
+
+	public String nombre_de_error_resolucion_textura();
+
+	public String solucion_resolucion_textura();
+
+	public String error_modlauncher_path();
+
+	public String nombre_error_modlauncher_path();
+
+	public String solucion_modlauncher_path();
+
 	
 	
 	

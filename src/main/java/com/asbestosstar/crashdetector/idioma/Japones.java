@@ -3166,6 +3166,50 @@ public String copiadoAlPortapapeles() {
 public String buscarDentroDeComprimidos() {
     return "圧縮ファイル内を検索（.zip/.jar/.war/.ear/.fpm/.rar（Java 用）*）";
 }
+@Override
+public String error_resolucion_textura(String recurso, String tamaño) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+            + "テクスチャ解像度エラー: ロードできません " + recurso + " - サイズ: " + tamaño + "</b>";
+}
+
+@Override
+public String nombre_de_error_resolucion_textura() {
+    return "テクスチャ解像度エラー";
+}
+
+@Override
+public String solucion_resolucion_textura() {
+    return "このエラーは、テクスチャが大きすぎるか、リソースパックが多すぎる場合に発生します。"
+            + "解像度の低いリソースパックを使用するか、いくつかのリソースパックを削除してください。"
+            + "許可された解像度を超えるカスタムテクスチャを追加していないか確認してください。";
+}
+@Override
+public String error_modlauncher_path() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+            + "ModLauncher サービスエラー：パスに無効な文字が含まれています。 "
+            + "ModLauncher サービスは、ASCII以外や特殊文字を含むパスを処理できません。 "
+            + "問題のある文字には ¡, !, مرحبا, Olá, سلام, Привет, 你好, Saluton, こんにちは, 안녕하세요 があり、特に名前の末尾にある '\"' 文字は深刻です。 "
+            + "一般的な ModLauncher サービスコンポーネントには、CrashDetector、"+ Config.obtenerInstancia().obtenerNombreCD() +"、FeatureCreep、Vivicraft、Optifine、Sodium、clonos、Iris Shaders/Oculus、MixerLogger、CrashAssistant、Sintrya Connector などがあります。 "
+            + "すべてのサービスを削除できますが、パス名自体が原因で他の問題が発生する可能性があります。 "
+            + "解決策：インスタンス名を ASCII 文字（a-z, A-Z, 0-9）のみを使用するように変更し、スペースや特殊文字は避けてください。</b>";
+}
+
+@Override
+public String nombre_error_modlauncher_path() {
+    return "ModLauncher パスエラー";
+}
+
+@Override
+public String solucion_modlauncher_path() {
+    return "このエラーは、インスタンスのパスにASCII以外の文字や特殊文字が含まれている場合に発生します。 "
+            + "ModLauncherのサービスはこれらのパスを処理できません。 "
+            + "解決策：インスタンス名をASCII文字（a-z, A-Z, 0-9）のみに変更し、スペースや特殊文字を避けてください。 "
+            + "特に名前の末尾にある '\"' 文字は非常に問題となるため、注意してください。";
+}
+
+
+
+
 
 
 

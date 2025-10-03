@@ -3902,6 +3902,48 @@ public String buscarDentroDeComprimidos() {
 }
 
 
+@Override
+public String error_resolucion_textura(String recurso, String tamaño) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+            + "Error de resolución de texturas: No se puede ajustar " + recurso + " - tamaño: " + tamaño + "</b>";
+}
+
+@Override
+public String nombre_de_error_resolucion_textura() {
+    return "Error de Resolución de Texturas";
+}
+
+@Override
+public String solucion_resolucion_textura() {
+    return "Este error ocurre cuando las texturas son demasiado grandes o hay demasiados paquetes de recursos. "
+            + "Intenta usar paquetes de recursos de menor resolución o elimina algunos paquetes de recursos. "
+            + "Verifica que no hayas agregado texturas personalizadas con resolución mayor a la permitida.";
+}
+
+@Override
+public String error_modlauncher_path() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+            + "Error de servicios de ModLauncher: Ruta con caracteres no válidos. "
+            + "Los servicios de ModLauncher no pueden procesar rutas que contienen caracteres no ASCII o caracteres especiales. "
+            + "Caracteres problemáticos incluyen: ¡, !, مرحبا, Olá, سلام, Привет, 你好, Saluton, こんにちは, 안녕하세요, y especialmente el carácter '\"' cuando está al final del nombre. "
+            + "Componentes de servicios comunes en ModLauncher incluyen CrashDetector, "+ Config.obtenerInstancia().obtenerNombreCD() +", FeatureCreep, Vivicraft, Optifine, Sodium, clonos, Iris Shaders/Oculus, MixerLogger, CrashAssistant y Sintrya Connector. "
+            + "Puedes eliminar todos los servicios, pero otros problemas pueden surgir debido al nombre de la ruta. "
+            + "Solución: Renombra la instancia para usar solo caracteres ASCII (a-z, A-Z, 0-9), sin espacios ni caracteres especiales.</b>";
+}//TODO incluye un Buscardor para mods con servicios
+
+@Override
+public String nombre_error_modlauncher_path() {
+    return "Error de Ruta en ModLauncher";
+}
+
+@Override
+public String solucion_modlauncher_path() {
+    return "Este error ocurre cuando la ruta de la instancia contiene caracteres no ASCII o caracteres especiales. "
+            + "Los servicios de ModLauncher no pueden manejar estas rutas. "
+            + "Solución: Renombra la instancia para usar solo caracteres ASCII (a-z, A-Z, 0-9) y evita espacios y caracteres especiales. "
+            + "Presta especial atención al carácter '\"' que es muy problemático, especialmente cuando está al final del nombre.";
+}
+
 
 
 

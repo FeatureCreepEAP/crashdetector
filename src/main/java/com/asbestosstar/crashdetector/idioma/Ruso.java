@@ -3155,7 +3155,51 @@ public String buscarDentroDeComprimidos() {
     return "Искать внутри архивов (.zip/.jar/.war/.ear/.fpm/.rar для Java*)";
 }
 
+@Override
+public String error_resolucion_textura(String recurso, String tamaño) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+            + "Ошибка разрешения текстуры: невозможно загрузить " + recurso + " — размер: " + tamaño + "</b>";
+}
 
+@Override
+public String nombre_de_error_resolucion_textura() {
+    return "Ошибка разрешения текстуры";
+}
+
+@Override
+public String solucion_resolucion_textura() {
+    return "Эта ошибка возникает, когда текстуры слишком большие или слишком много ресурс-паков. "
+            + "Попробуйте использовать ресурс-паки с более низким разрешением или удалите некоторые из них. "
+            + "Убедитесь, что вы не добавили пользовательские текстуры с разрешением выше допустимого.";
+}
+
+
+
+
+
+@Override
+public String error_modlauncher_path() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+            + "Ошибка службы ModLauncher: путь содержит недопустимые символы. "
+            + "Службы ModLauncher не могут обрабатывать пути, содержащие не-ASCII или специальные символы. "
+            + "Проблемные символы включают: ¡, !, مرحبا, Olá, سلام, Привет, 你好, Saluton, こんにちは, 안녕하세요, и особенно символ '\"', если он находится в конце имени. "
+            + "Распространённые компоненты служб в ModLauncher включают CrashDetector, "+ Config.obtenerInstancia().obtenerNombreCD() +", FeatureCreep, Vivicraft, Optifine, Sodium, clonos, Iris Shaders/Oculus, MixerLogger, CrashAssistant и Sintrya Connector. "
+            + "Вы можете удалить все службы, но другие проблемы могут возникнуть из-за имени пути. "
+            + "Решение: переименуйте экземпляр, используя только ASCII-символы (a-z, A-Z, 0-9), без пробелов и специальных символов.</b>";
+}
+
+@Override
+public String nombre_error_modlauncher_path() {
+    return "Ошибка пути в ModLauncher";
+}
+
+@Override
+public String solucion_modlauncher_path() {
+    return "Эта ошибка возникает, когда путь к экземпляру содержит не-ASCII или специальные символы. "
+            + "Службы ModLauncher не могут обрабатывать такие пути. "
+            + "Решение: переименуйте экземпляр, используя только ASCII-символы (a-z, A-Z, 0-9), избегайте пробелов и специальных символов. "
+            + "Особое внимание уделите символу '\"', который вызывает серьёзные проблемы, особенно в конце имени.";
+}
 
 
 

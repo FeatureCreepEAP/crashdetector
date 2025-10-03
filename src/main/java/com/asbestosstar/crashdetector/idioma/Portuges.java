@@ -3151,6 +3151,54 @@ public String buscarDentroDeComprimidos() {
     return "Pesquisar dentro de arquivos compactados (.zip/.jar/.war/.ear/.fpm/.rar para Java*)";
 }
 
+@Override
+public String error_resolucion_textura(String recurso, String tamaño) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+            + "Erro de resolução de textura: Não foi possível carregar " + recurso + " - tamanho: " + tamaño + "</b>";
+}
+
+@Override
+public String nombre_de_error_resolucion_textura() {
+    return "Erro de Resolução de Textura";
+}
+
+@Override
+public String solucion_resolucion_textura() {
+    return "Esse erro ocorre quando as texturas são muito grandes ou há muitos pacotes de recursos. "
+            + "Tente usar pacotes de recursos de resolução mais baixa ou remova alguns pacotes. "
+            + "Verifique se você não adicionou texturas personalizadas com resolução acima do limite permitido.";
+}
+
+@Override
+public String error_modlauncher_path() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+            + "Erro nos serviços do ModLauncher: caminho com caracteres inválidos. "
+            + "Os serviços do ModLauncher não conseguem processar caminhos que contenham caracteres não ASCII ou caracteres especiais. "
+            + "Caracteres problemáticos incluem: ¡, !, مرحبا, Olá, سلام, Привет, 你好, Saluton, こんにちは, 안녕하세요, e especialmente o caractere '\"' quando no final do nome. "
+            + "Componentes comuns de serviço no ModLauncher incluem CrashDetector, "+ Config.obtenerInstancia().obtenerNombreCD() +", FeatureCreep, Vivicraft, Optifine, Sodium, clonos, Iris Shaders/Oculus, MixerLogger, CrashAssistant e Sintrya Connector. "
+            + "Você pode remover todos os serviços, mas outros problemas podem surgir devido ao nome do caminho. "
+            + "Solução: renomeie a instância para usar apenas caracteres ASCII (a-z, A-Z, 0-9), sem espaços ou caracteres especiais.</b>";
+}
+
+@Override
+public String nombre_error_modlauncher_path() {
+    return "Erro de Caminho no ModLauncher";
+}
+
+@Override
+public String solucion_modlauncher_path() {
+    return "Este erro ocorre quando o caminho da instância contém caracteres não ASCII ou caracteres especiais. "
+            + "Os serviços do ModLauncher não conseguem lidar com esses caminhos. "
+            + "Solução: renomeie a instância para usar apenas caracteres ASCII (a-z, A-Z, 0-9) e evite espaços e caracteres especiais. "
+            + "Preste atenção especial ao caractere '\"', que é altamente problemático, especialmente quando no final do nome.";
+}
+
+
+
+
+
+
+
 
 
 

@@ -456,15 +456,15 @@ public class NoRegistroDeLauncher extends JDialog {
 		switch (tipo) {
 		case CURSE:
 			desc = MonitorDePID.idioma.descripcionCurseforge();
-			icono = cargarIconoAyudaFlexible("/imagenes/omitir_launcher_curseforge.png");
+			icono = cargarIconoAyudaFlexible("/imagenes/cfskiplauncher.png");
 			mostrarArea = false;
 			break;
 		case PRISM:
 			desc = MonitorDePID.idioma.descripcionPrism();
-			icono = cargarIconoAyudaFlexible("/imagenes/registros_del_lanzador_prism.png");
+			icono = cargarIconoAyudaFlexible("/imagenes/registros_de_launcher_prism.png");
 			break;
 		case HMCL:
-			icono = cargarIconoAyudaFlexible("/imagenes/hmcl.png");
+			icono = cargarIconoAyudaFlexible("/imagenes/hcml.png");
 			mostrarArea = false;
 			mostrarBotonHMCL = true;
 			break;
@@ -474,11 +474,11 @@ public class NoRegistroDeLauncher extends JDialog {
 			break;
 		case ATL:
 			desc = MonitorDePID.idioma.descripcionATLauncher();
-			icono = cargarIconoAyudaFlexible("/imagenes/registros_atlauncher.png");
+			icono = cargarIconoAyudaFlexible("/imagenes/atlogs.png");
 			break;
 		case GD:
 			desc = MonitorDePID.idioma.descripcionGDLauncher();
-			icono = cargarIconoAyudaFlexible("/imagenes/gdlauncher_consola.png");
+			icono = cargarIconoAyudaFlexible("/imagenes/gdconsola.png");
 			break;
 		case ENLACE_MD:
 			desc = MonitorDePID.idioma.descripcionLinksMarkdown();
@@ -496,11 +496,11 @@ public class NoRegistroDeLauncher extends JDialog {
 			break;
 		case MCSERVER:
 			desc = MonitorDePID.idioma.noRegistroDeMCServidor();
-			icono = cargarIconoAyudaFlexible("/imagenes/servidor_minecraft.png");
+			icono = cargarIconoAyudaFlexible("/imagenes/minecraftserver.png");
 			mostrarArea = true;
 			break;
 		default:
-			icono = cargarIconoAyudaFlexible("/imagenes/registros_del_lanzador_generico.png");
+			icono = cargarIconoAyudaFlexible("/imagenes/registros_de_lanzar.png");
 		}
 
 		// Render HTML crudo

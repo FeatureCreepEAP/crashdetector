@@ -3235,7 +3235,46 @@ public String buscarDentroDeComprimidos() {
     return "Search inside archives (.zip/.jar/.war/.ear/.fpm/.rar for Java*)";
 }
 
+@Override
+public String error_resolucion_textura(String recurso, String tamaño) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+            + "Texture resolution error: Cannot load " + recurso + " - size: " + tamaño + "</b>";
+}
 
+@Override
+public String nombre_de_error_resolucion_textura() {
+    return "Texture Resolution Error";
+}
+
+@Override
+public String solucion_resolucion_textura() {
+    return "This error occurs when textures are too large or there are too many resource packs. "
+            + "Try using lower-resolution resource packs or removing some resource packs. "
+            + "Check that you haven't added custom textures with resolution exceeding the allowed limit.";
+}
+@Override
+public String error_modlauncher_path() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+            + "ModLauncher service error: Path contains invalid characters. "
+            + "ModLauncher services cannot process paths containing non-ASCII or special characters. "
+            + "Problematic characters include: ¡, !, مرحبا, Olá, سلام, Привет, 你好, Saluton, こんにちは, 안녕하세요, and especially the '\"' character when at the end of the name. "
+            + "Common ModLauncher service components include CrashDetector, "+ Config.obtenerInstancia().obtenerNombreCD() +", FeatureCreep, Vivicraft, Optifine, Sodium, clonos, Iris Shaders/Oculus, MixerLogger, CrashAssistant and Sintrya Connector. "
+            + "You can remove all services, but other issues may arise due to the path name. "
+            + "Solution: Rename the instance to use only ASCII characters (a-z, A-Z, 0-9), without spaces or special characters.</b>";
+}
+
+@Override
+public String nombre_error_modlauncher_path() {
+    return "ModLauncher Path Error";
+}
+
+@Override
+public String solucion_modlauncher_path() {
+    return "This error occurs when the instance path contains non-ASCII or special characters. "
+            + "ModLauncher services cannot handle these paths. "
+            + "Solution: Rename the instance to use only ASCII characters (a-z, A-Z, 0-9) and avoid spaces and special characters. "
+            + "Pay special attention to the '\"' character, which is highly problematic, especially when at the end of the name.";
+}
 
 
 

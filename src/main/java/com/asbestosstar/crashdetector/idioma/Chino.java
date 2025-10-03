@@ -3170,7 +3170,46 @@ public String buscarDentroDeComprimidos() {
  return "在压缩包内搜索 (.zip/.jar/.war/.ear/.fpm/.rar（用于 Java）*)";
 }
 
+@Override
+public String error_resolucion_textura(String recurso, String tamaño) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+            + "纹理分辨率错误：无法加载资源 " + recurso + " — 尺寸：" + tamaño + "</b>";
+}
 
+@Override
+public String nombre_de_error_resolucion_textura() {
+    return "纹理分辨率错误";
+}
+
+@Override
+public String solucion_resolucion_textura() {
+    return "当纹理过大或资源包过多时会发生此错误。"
+            + "请尝试使用较低分辨率的资源包，或删除部分资源包。"
+            + "检查是否添加了超出允许尺寸的自定义纹理。";
+}
+@Override
+public String error_modlauncher_path() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+            + "ModLauncher 服务错误：路径包含无效字符。 "
+            + "ModLauncher 服务无法处理包含非 ASCII 字符或特殊字符的路径。 "
+            + "问题字符包括：¡, !, مرحبا, Olá, سلام, Привет, 你好, Saluton, こんにちは, 안녕하세요，尤其是名称末尾的 '\"' 字符。 "
+            + "常见的 ModLauncher 服务组件包括 CrashDetector、"+ Config.obtenerInstancia().obtenerNombreCD() +"、FeatureCreep、Vivicraft、Optifine、Sodium、clonos、Iris Shaders/Oculus、MixerLogger、CrashAssistant 和 Sintrya Connector。 "
+            + "你可以移除所有服务，但路径名称仍可能导致其他问题。 "
+            + "解决方案：将实例重命名为仅使用 ASCII 字符（a-z, A-Z, 0-9），避免空格和特殊字符。</b>";
+}
+
+@Override
+public String nombre_error_modlauncher_path() {
+    return "ModLauncher 路径错误";
+}
+
+@Override
+public String solucion_modlauncher_path() {
+    return "当实例路径包含非 ASCII 字符或特殊字符时会发生此错误。 "
+            + "ModLauncher 服务无法处理此类路径。 "
+            + "解决方案：将实例重命名为仅使用 ASCII 字符（a-z, A-Z, 0-9），避免空格和特殊字符。 "
+            + "特别注意 '\"' 字符，它非常容易引发问题，尤其是在名称末尾时。";
+}
 
 
 

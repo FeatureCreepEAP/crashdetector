@@ -13,6 +13,7 @@ import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -25,7 +26,6 @@ import javax.swing.SwingUtilities;
 import com.asbestosstar.crashdetector.analizador.Analizador;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.grepr.BusquedaArchivos;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
@@ -141,7 +141,10 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/cd_logo.png", carpeta.resolve("imagenes/cd_logo.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/profeco.jpg", carpeta.resolve("imagenes/profeco.jpg").toFile());
 		copiarACarpetaDesdeJar("/imagenes/saliormoongrep.png", carpeta.resolve("imagenes/saliormoongrep.png").toFile());
-
+	
+		
+		
+		
 		copiarACarpetaDesdeJar("/imagenes/mod.png", carpeta.resolve("imagenes/mod.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/clase.png", carpeta.resolve("imagenes/clase.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/metodo.png", carpeta.resolve("imagenes/metodo.png").toFile());
@@ -255,8 +258,10 @@ public class MonitorDePID {
 			new ProcessBuilder(javaBinary, "-cp", cp, "com.asbestosstar.crashdetector.MonitorDePID", "--monitor",
 					String.valueOf(pid)).inheritIO().start();
 		} catch (Exception e) {
+			System.out.println("error con comenzando el proceso CD");
 			e.printStackTrace();
 		}
+		System.out.println("completa con comenzando el proceso CD");
 
 	}
 
@@ -725,26 +730,76 @@ public class MonitorDePID {
 //	    return false;
 //	}
 
-	public static void copiarACarpetaDesdeJar(String ubicacion_en_jar, File resultdo) {
-		if (!resultdo.exists()) {
-			resultdo.getParentFile().mkdirs();
-			try (InputStream inputStream = MonitorDePID.class.getResourceAsStream(ubicacion_en_jar);
-					FileOutputStream outputStream = new FileOutputStream(resultdo)) {
+/**
+ * Copia un recurso desde el JAR a una ubicación en el disco, preservando archivos existentes válidos
+ * @param ubicacionEnJar Ruta del recurso dentro del JAR
+ * @param resultado Archivo de destino en el sistema de archivos
+ */
+public static void copiarACarpetaDesdeJar(String ubicacionEnJar, File resultado) {
+    // Verificar si el archivo ya existe y es válido (con contenido)
+    if (resultado.exists()) {
+        // Si el archivo es válido (tamaño mayor a cero), no hacer nada
+        if (resultado.length() > 0) {
+            return;
+        }
+        
+        // Si el archivo existe pero está vacío (0 bytes), registrar y eliminar para recrearlo
+        if (resultado.length() == 0) {
+            if (!resultado.delete()) {
+                CrashDetectorLogger.log("No se pudo eliminar el archivo vacío para recrearlo: " + resultado.getAbsolutePath());
+                return;
+            }
+        }
+    } else {
+        // Si el archivo no existe, crear directorios necesarios
+        resultado.getParentFile().mkdirs();
+    }
 
-				if (inputStream == null) {
-					throw new RuntimeException("El archivo de CrashDetector no tiene "+ubicacion_en_jar);
-				}
-				byte[] buffer = new byte[1024];
-				int bytesRead;
-				while ((bytesRead = inputStream.read(buffer)) != -1) {
-					outputStream.write(buffer, 0, bytesRead);
-				}
+    File archivoTemporal = null;
+    try {
+        // Preparar archivo temporal
+        archivoTemporal = new File(resultado.getParentFile(), resultado.getName() + ".tmp");
+        
+        try (InputStream inputStream = MonitorDePID.class.getResourceAsStream(ubicacionEnJar);
+             FileOutputStream outputStream = new FileOutputStream(archivoTemporal)) {
 
-			} catch (IOException e) {
-				System.err.println("No puede extractar HTML de CrashDetector: " + e.getMessage());
-			}
-		}
-	}
+            if (inputStream == null) {
+                throw new RuntimeException("Recurso no encontrado en el JAR: " + ubicacionEnJar);
+            }
+
+            byte[] buffer = new byte[8192]; // Buffer más grande para mayor eficiencia
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+        }
+
+        // Validar que el archivo temporal se escribió correctamente
+        if (archivoTemporal.length() == 0) {
+            throw new IOException("El recurso se escribió como archivo vacío: " + ubicacionEnJar);
+        }
+
+        // Mover el archivo temporal al destino final (reemplaza solo si es necesario)
+        if (resultado.exists() && !resultado.delete()) {
+            CrashDetectorLogger.log("No se pudo eliminar archivo previo para reemplazar: " + resultado.getAbsolutePath());
+            return;
+        }
+        
+        if (!archivoTemporal.renameTo(resultado)) {
+            Files.copy(archivoTemporal.toPath(), resultado.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            Files.delete(archivoTemporal.toPath());
+        }
+    } catch (Exception e) {
+        CrashDetectorLogger.log("Error al extraer recurso " + ubicacionEnJar + " al disco: " + e.getMessage());
+        if (archivoTemporal != null && archivoTemporal.exists()) {
+            try {
+                Files.delete(archivoTemporal.toPath());
+            } catch (IOException ex) {
+                CrashDetectorLogger.log("No se pudo limpiar el archivo temporal: " + archivoTemporal.getAbsolutePath());
+            }
+        }
+    }
+}
 
 	/**
 	 * 

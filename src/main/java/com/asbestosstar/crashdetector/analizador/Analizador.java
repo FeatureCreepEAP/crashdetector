@@ -24,6 +24,8 @@ import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorDiscrepanci
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorJEIPluginFallido;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorMetadataModsTomlFaltante;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorRegistroSuscriptoresAutomaticos;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorResolucionDeTextura;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorRutaModLauncher;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorSinListenersEnClase;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorSistemaSonido;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorUnionFileSystemCorrupto;
@@ -213,6 +215,8 @@ public class Analizador {
 		verificaciones.add(new RailwaysCreate6Alfa());
 		verificaciones.add(new ConflictoMultiworldRendimiento());
 		verificaciones.add(new ErrorContextoOpenGL());
+		verificaciones.add(new ErrorResolucionDeTextura());
+		verificaciones.add(new ErrorRutaModLauncher());
 
 		
 		

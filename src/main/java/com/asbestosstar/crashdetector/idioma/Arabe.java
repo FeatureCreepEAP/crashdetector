@@ -3170,6 +3170,54 @@ public String buscarDentroDeComprimidos() {
 }
 
 
+@Override
+public String error_resolucion_textura(String recurso, String tamaño) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+            + "خطأ في دقة الملمس: لا يمكن تحميل " + recurso + " - الحجم: " + tamaño + "</b>";
+}
+
+@Override
+public String nombre_de_error_resolucion_textura() {
+    return "خطأ في دقة الملمس";
+}
+
+@Override
+public String solucion_resolucion_textura() {
+    return "يحدث هذا الخطأ عندما تكون الملمسات كبيرة جدًا أو عند وجود عدد كبير جدًا من حزم الموارد. "
+            + "حاول استخدام حزم موارد ذات دقة أقل أو قم بإزالة بعض حزم الموارد. "
+            + "تأكد من أنك لم تقم بإضافة ملمسات مخصصة بدقة أعلى من المسموح بها.";
+}
+
+@Override
+public String error_modlauncher_path() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+            + "خطأ في خدمات ModLauncher: المسار يحتوي على أحرف غير صالحة. "
+            + "لا يمكن لخدمات ModLauncher معالجة المسارات التي تحتوي على أحرف غير ASCII أو أحرف خاصة. "
+            + "من الأحرف المسببة للمشاكل: ¡, !, مرحبا, Olá, سلام, Привет, 你好, Saluton, こんにちは, 안녕하세요، وخصوصًا الرمز '\"' عندما يكون في نهاية الاسم. "
+            + "تشمل مكونات الخدمات الشائعة في ModLauncher كلاً من CrashDetector، "+ Config.obtenerInstancia().obtenerNombreCD() +"، FeatureCreep، Vivicraft، Optifine، Sodium، clonos، Iris Shaders/Oculus، MixerLogger، CrashAssistant وSintrya Connector. "
+            + "يمكنك إزالة جميع الخدمات، لكن قد تظهر مشاكل أخرى بسبب اسم المسار. "
+            + "الحل: أعد تسمية المجلد ليحتوي فقط أحرف ASCII (a-z, A-Z, 0-9)، دون مسافات أو رموز خاصة.</b>";
+}
+
+@Override
+public String nombre_error_modlauncher_path() {
+    return "خطأ في مسار ModLauncher";
+}
+
+@Override
+public String solucion_modlauncher_path() {
+    return "يحدث هذا الخطأ عندما يحتوي مسار المثيل على أحرف غير ASCII أو رموز خاصة. "
+            + "لا يمكن لخدمات ModLauncher التعامل مع هذه المسارات. "
+            + "الحل: قم بإعادة تسمية المثيل باستخدام أحرف ASCII فقط (a-z, A-Z, 0-9)، وتجنب المسافات والرموز الخاصة. "
+            + "ولاحظ بعناية الرمز '\"' فهو مشكلة كبيرة، خصوصًا عند وضعه في نهاية الاسم.";
+}
+
+
+
+
+
+
+
 
 
 }

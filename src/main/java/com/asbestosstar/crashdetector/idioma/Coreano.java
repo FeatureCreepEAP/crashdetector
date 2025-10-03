@@ -3153,6 +3153,50 @@ public String buscarDentroDeComprimidos() {
  return "압축 파일 내부 검색 (.zip/.jar/.war/.ear/.fpm/.rar(자바용)*)";
 }
 
+@Override
+public String error_resolucion_textura(String recurso, String tamaño) {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+            + "텍스처 해상도 오류: 다음을 조정할 수 없음 " + recurso + " - 크기: " + tamaño + "</b>";
+}
+
+@Override
+public String nombre_de_error_resolucion_textura() {
+    return "텍스처 해상도 오류";
+}
+
+@Override
+public String solucion_resolucion_textura() {
+    return "이 오류는 텍스처가 너무 크거나 리소스 팩이 지나치게 많을 때 발생합니다. "
+            + "해상도가 낮은 리소스 팩을 사용하거나 일부 리소스 팩을 제거해 보세요. "
+            + "허용된 해상도를 초과하는 맞춤형 텍스처를 추가하지 않았는지 확인하세요.";
+}
+@Override
+public String error_modlauncher_path() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+            + "ModLauncher 서비스 오류: 잘못된 문자가 포함된 경로. "
+            + "ModLauncher 서비스는 ASCII 이외의 문자나 특수 문자를 포함한 경로를 처리할 수 없습니다. "
+            + "문제가 되는 문자에는 ¡, !, مرحبا, Olá, سلام, Привет, 你好, Saluton, こんにちは, 안녕하세요 가 있으며, 특히 이름 끝에 있는 '\"' 문자는 매우 치명적입니다. "
+            + "ModLauncher에서 흔히 사용되는 서비스 컴포넌트로는 CrashDetector, "+ Config.obtenerInstancia().obtenerNombreCD() +", FeatureCreep, Vivicraft, Optifine, Sodium, clonos, Iris Shaders/Oculus, MixerLogger, CrashAssistant 및 Sintrya Connector 등이 있습니다. "
+            + "모든 서비스를 제거할 수는 있지만, 경로 이름 자체로 인해 다른 문제가 발생할 수 있습니다. "
+            + "해결 방법: 공백이나 특수 문자 없이 ASCII 문자(a-z, A-Z, 0-9)만 사용하도록 인스턴스 이름을 변경하세요.</b>";
+}
+
+@Override
+public String nombre_error_modlauncher_path() {
+    return "ModLauncher 경로 오류";
+}
+
+@Override
+public String solucion_modlauncher_path() {
+    return "인스턴스 경로에 ASCII가 아닌 문자나 특수 문자가 포함될 경우 이 오류가 발생합니다. "
+            + "ModLauncher 서비스는 이러한 경로를 처리할 수 없습니다. "
+            + "해결 방법: 인스턴스 이름을 ASCII 문자(a-z, A-Z, 0-9)만 사용하도록 바꾸고, 공백과 특수 문자는 피하세요. "
+            + "특히 이름 끝에 있는 '\"' 문자는 매우 문제를 일으키므로 주의 깊게 확인하세요.";
+}
+
+
+
+
 
 
 
