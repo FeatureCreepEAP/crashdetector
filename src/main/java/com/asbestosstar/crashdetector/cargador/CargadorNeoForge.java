@@ -39,7 +39,7 @@ public class CargadorNeoForge implements Cargador {
     @Override
     public boolean cargadorEsActivado() {
         // es comun en versiones actuales y 1.13
-		return Cargador.claseExiste("cpw.mods.modlauncher.api.TargetType")&&Cargador.claseExiste("cpw.mods.modlauncher.api.ITransformationService");//TargetType solo existe en ML de CPW en NeoForge y  Pillow. No creo otra cargadores usa esta version de ML y ML independente es decrecado
+		return Cargador.claseExiste("cpw.mods.modlauncher.api.TargetType")&&Cargador.claseExiste("cpw.mods.modlauncher.api.ITransformationService") || Cargador.claseExiste("net.neoforged.neoforgespi.transformation.ClassProcessor");//TargetType solo existe en ML de CPW en NeoForge y  Pillow. No creo otra cargadores usa esta version de ML y ML independente es decrecado
     }
 
 	@Override

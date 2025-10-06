@@ -23,7 +23,7 @@ public class Transformaciones implements ClassFileTransformer {
 		
 	}
 
-	// Para FeatureCreep y Agentes
+	// Para FeatureCreep y MangoModLoader y Agentes
 	@Override
 	public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined,
 			ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
