@@ -310,6 +310,54 @@ private void inicializarInterfaz() {
     // Añadir el contenedor horizontal a la sección de configuración
     seccionConfiguracion.add(panelHorizontal);
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    final int ANCHO_CONTROLES = 220;   // un “poquito” más ancho (ajusta a 230 si lo ves mejor)
+    final int ALTO_CONTROLES  = 30;
+
+    // columna izquierda (idioma)
+    comboIdioma.setPreferredSize(new Dimension(ANCHO_CONTROLES, ALTO_CONTROLES));
+    comboIdioma.setMaximumSize(new Dimension(ANCHO_CONTROLES, ALTO_CONTROLES));
+    comboIdioma.setAlignmentX(Component.LEFT_ALIGNMENT);  // alinear al borde izquierdo
+
+    chkIdiomaSistema.setPreferredSize(new Dimension(ANCHO_CONTROLES, ALTO_CONTROLES));
+    chkIdiomaSistema.setMaximumSize(new Dimension(ANCHO_CONTROLES, ALTO_CONTROLES));
+    chkIdiomaSistema.setAlignmentX(Component.LEFT_ALIGNMENT); // alinear con el combo
+    // (opcional) pequeño margen superior para separar del combo
+    chkIdiomaSistema.setBorder(new EmptyBorder(6, 0, 0, 0));
+
+    // columna derecha (aplicación)
+    comboAplicacion.setPreferredSize(new Dimension(ANCHO_CONTROLES, ALTO_CONTROLES));
+    comboAplicacion.setMaximumSize(new Dimension(ANCHO_CONTROLES, ALTO_CONTROLES));
+    comboAplicacion.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+    chkDetectarAuto.setPreferredSize(new Dimension(ANCHO_CONTROLES, ALTO_CONTROLES));
+    chkDetectarAuto.setMaximumSize(new Dimension(ANCHO_CONTROLES, ALTO_CONTROLES));
+    chkDetectarAuto.setAlignmentX(Component.LEFT_ALIGNMENT);
+    chkDetectarAuto.setBorder(new EmptyBorder(6, 0, 0, 0));
+
+    // asegurar que las columnas también alineen al borde izquierdo del BoxLayout
+    columnaIzquierda.setAlignmentX(Component.LEFT_ALIGNMENT);
+    columnaDerecha.setAlignmentX(Component.LEFT_ALIGNMENT);
+    
+    
+    
+    
+    
+    
+    
+    
+    
     // --- Botón QuickFix (centrado) ------------------------------------------------------------
     JButton botonQuickFix = new JButton("QuickFix");
     botonQuickFix.setEnabled(MonitorDePID.analizador.obtenerSoluciones().size() > 0);
