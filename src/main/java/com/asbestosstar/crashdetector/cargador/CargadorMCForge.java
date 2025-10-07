@@ -53,8 +53,8 @@ public class CargadorMCForge implements Cargador {
 	/**
 	 * Extrae el modId de un archivo mods.toml (Forge).
 	 */
-	public static List<String> parsearIdModMCForge(byte[] contenido) throws IOException {
-	    return AnalizadorModsTomlForge.extraerModIds(contenido);
+	public static List<String> parsearIdModMCForge(String toml) throws IOException {
+	    return AnalizadorModsTomlForge.extraerModIds(toml);
 	}
 
 

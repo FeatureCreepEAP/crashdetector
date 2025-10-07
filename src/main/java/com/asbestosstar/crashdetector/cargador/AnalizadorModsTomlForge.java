@@ -28,8 +28,7 @@ public class AnalizadorModsTomlForge {
      * Usa Electronwill si esta presente
      * Usa regex si no lo esta
      */
-    public static List<String> extraerModIds(byte[] contenido) {
-        String toml = new String(contenido, StandardCharsets.UTF_8);
+    public static List<String> extraerModIds(String toml) {
         if (electronwillDisponible()) {
             return AnalizadorModsTomlForgeElectronwill.extraerModIds(toml);
         } else {

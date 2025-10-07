@@ -143,8 +143,17 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/saliormoongrep.png", carpeta.resolve("imagenes/saliormoongrep.png").toFile());
 	
 		
-		
-		
+		copiarACarpetaDesdeJar("/imagenes/bandera_mexico.png", carpeta.resolve("imagenes/bandera_mexico.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/bandera_inglaterra.png", carpeta.resolve("imagenes/bandera_inglaterra.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/bandera_arabia.png", carpeta.resolve("imagenes/bandera_arabia.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/bandera_brasil.png", carpeta.resolve("imagenes/bandera_brasil.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/bandera_iran.png", carpeta.resolve("imagenes/bandera_iran.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/bandera_rusia.png", carpeta.resolve("imagenes/bandera_rusia.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/bandera_china.png", carpeta.resolve("imagenes/bandera_china.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/bandera_esperanto.png", carpeta.resolve("imagenes/bandera_esperanto.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/bandera_japon.png", carpeta.resolve("imagenes/bandera_japon.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/bandera_corea.png", carpeta.resolve("imagenes/bandera_corea.png").toFile());
+
 		copiarACarpetaDesdeJar("/imagenes/mod.png", carpeta.resolve("imagenes/mod.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/clase.png", carpeta.resolve("imagenes/clase.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/metodo.png", carpeta.resolve("imagenes/metodo.png").toFile());

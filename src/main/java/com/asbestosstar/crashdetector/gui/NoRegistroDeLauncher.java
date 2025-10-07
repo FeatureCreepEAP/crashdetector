@@ -18,6 +18,7 @@ import java.net.URL;
 import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
+import java.util.LinkedHashMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -28,10 +29,10 @@ import javax.swing.JDialog;
 import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JProgressBar;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.SwingWorker;
@@ -185,9 +186,22 @@ public class NoRegistroDeLauncher extends JDialog {
 				refrescarInterfaz();
 		});
 
-		comboBoxIdioma = new JComboBox<>(new String[] { "Español", "English", "العربية", "Português", "فارسی",
-				"Русский", "简体中文", "Esperanto", "日本語", "한국어" });
+		LinkedHashMap<String, String> banderas = new LinkedHashMap<>();
+		banderas.put("Español",   "imagenes/bandera_mexico.png");
+		banderas.put("English",   "imagenes/bandera_inglaterra.png");
+		banderas.put("العربية",   "imagenes/bandera_arabia.png");
+		banderas.put("Português", "imagenes/bandera_brasil.png");
+		banderas.put("فارسی",     "imagenes/bandera_iran.png");
+		banderas.put("Русский",   "imagenes/bandera_rusia.png");
+		banderas.put("简体中文",   "imagenes/bandera_china.png");
+		banderas.put("Esperanto", "imagenes/bandera_esperanto.png");
+		banderas.put("日本語",     "imagenes/bandera_japon.png");
+		banderas.put("한국어",     "imagenes/bandera_corea.png");
+		comboBoxIdioma = new ComboIdiomasConIcono(banderas);
 		estilizarCombo(comboBoxIdioma);
+		if (!CrashDetectorGUI.esMac()) {
+		    ((ComboIdiomasConIcono) comboBoxIdioma).aplicarColores(COLOR_BOTON, COLOR_TEXTO);
+		}
 		switch (MonitorDePID.idioma.codigo()) {
 		case "es":
 			comboBoxIdioma.setSelectedItem("Español");
@@ -292,7 +306,7 @@ public class NoRegistroDeLauncher extends JDialog {
 		JPanel pie = new JPanel(new GridBagLayout());
 		pie.setBackground(COLOR_FONDO);
 
-		ImageIcon vshojoIcon = cargarIconoEncajado("/imagenes/vshojo.png", 140, 90, true);
+		ImageIcon vshojoIcon = cargarIconoEncajado("imagenes/vshojo.png", 140, 90, true);
 		int filaAltura = (vshojoIcon != null ? vshojoIcon.getIconHeight() : 90);
 
 		if (vshojoIcon != null) {
@@ -445,8 +459,10 @@ public class NoRegistroDeLauncher extends JDialog {
 		// Textos HTML específicos
 		if (HMCL.equals(tipo)) {
 			desc = "HMCL (HelloMinecraftLauncher): You must select the folder where HMCL is installed and choose the \".hmcl\" folder. HMCL logs are saved here and contain important error information.<br>";
+			desc=MonitorDePID.idioma.descripcionHMCL();
 		} else if (GEN.equals(tipo)) {
-			desc = "GENERIC: Select the type of launcher you're using. Launcher logs (launcher_log.txt, stdout, etc.) contain vital error details not present in latest.log. CrashDetector cannot read your launcher's logs — it might not generate one, so you'll need to paste the logs manually.<br>For more info, see <a href=\"https://github.com/HMCL-dev/HMCL/issues/2663 \">this issue</a>. These logs include standard output (STDOUT), which is essential for diagnosing many types of errors.";
+			desc=MonitorDePID.idioma.noRegistroDeLauncher();
+			//desc = "GENERIC: Select the type of launcher you're using. Launcher logs (launcher_log.txt, stdout, etc.) contain vital error details not present in latest.log. CrashDetector cannot read your launcher's logs — it might not generate one, so you'll need to paste the logs manually.<br>For more info, see <a href=\"https://github.com/HMCL-dev/HMCL/issues/2663 \">this issue</a>. These logs include standard output (STDOUT), which is essential for diagnosing many types of errors.";
 		}
 
 		ImageIcon icono = null;
@@ -705,12 +721,12 @@ public class NoRegistroDeLauncher extends JDialog {
 
 	/** Escalado genérico (logo). */
 	private ImageIcon cargarIconoEncajado(String ruta, int maxAncho, int maxAlto, boolean noAmpliar) {
-		URL url = getClass().getResource(ruta);
-		if (url == null) {
+		File archivo = MonitorDePID.carpeta.resolve(ruta).toFile();
+		if (archivo == null) {
 			CrashDetectorLogger.log("No se encontró la imagen " + ruta);
 			return null;
 		}
-		ImageIcon original = new ImageIcon(url);
+		ImageIcon original = new ImageIcon(archivo.getAbsolutePath());
 		int w = original.getIconWidth();
 		int h = original.getIconHeight();
 		if (w <= 0 || h <= 0)

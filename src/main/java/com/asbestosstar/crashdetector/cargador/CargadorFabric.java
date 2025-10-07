@@ -42,9 +42,8 @@ public class CargadorFabric implements Cargador{
 	 * Devuelve una lista con valores unicos
 	 * Usa la clase Json y si falla usa una ruta de respaldo con regex
 	 */
-	public static java.util.List<String> parsearIdModFabric(byte[] contenido) throws java.io.IOException {
+	public static java.util.List<String> parsearIdModFabric(String texto) throws java.io.IOException {
 	    java.util.List<String> salida = new java.util.ArrayList<>();
-	    String texto = new String(contenido, java.nio.charset.StandardCharsets.UTF_8);
 
 	    try {
 	        // intento con la capa Json

@@ -253,6 +253,14 @@ public interface ArchivoDeMod {
 
 		return false;
 	}
+	
+	/**
+	 * Si el archivo (descriptor.mod, modules.xml,fabric.mod.json,mods.toml,etc) tiene String mcreator.
+	 * @return
+	 */
+	public default boolean MetaDataTieneReferenciaDeMCReator() {
+		return false;
+	}
 
 	// CLASES AUXILIARES PARA ANÁLISIS DE BYTECODE
 

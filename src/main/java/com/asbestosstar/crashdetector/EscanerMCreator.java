@@ -8,84 +8,100 @@ import com.asbestosstar.crashdetector.buscar.Buscardor;
 
 public class EscanerMCreator {
 
-    public static String obtainerMCreatorMods() {
-        StringBuilder resultado = new StringBuilder();
-        Buscardor.cargar(); // Carga todos los mods
+	public static String obtainerMCreatorMods() {
+		StringBuilder resultado = new StringBuilder();
+		Buscardor.cargar(); // Carga todos los mods
 
-        List<ArchivoDeMod> todosLosMods = new ArrayList<>();
-        // Recopilar todos los mods incluyendo anidados
-        for (ArchivoDeMod mod : Buscardor.mods) {
-            coleccionarModsAnidados(mod, todosLosMods);
-        }
+		List<ArchivoDeMod> todosLosMods = new ArrayList<>();
+		// Recopilar todos los mods incluyendo anidados
+		for (ArchivoDeMod mod : Buscardor.mods) {
+			coleccionarModsAnidados(mod, todosLosMods);
+		}
 
-        List<ArchivoDeMod> altaPrioridad = new ArrayList<>();
-        List<ArchivoDeMod> mediaPrioridad = new ArrayList<>();
+		List<ArchivoDeMod> altaPrioridad = new ArrayList<>();
+		List<ArchivoDeMod> menosAltaPrioridad = new ArrayList<>();
+		List<ArchivoDeMod> mediaPrioridad = new ArrayList<>();
 
-        for (ArchivoDeMod mod : todosLosMods) {
-            boolean esAlta = false;
-            boolean esMedia = false;
+		for (ArchivoDeMod mod : todosLosMods) {
+			boolean esAlta = false;
+			boolean esMenosAlta = false;
+			boolean esMedia = false;
 
-            for (String clase : mod.clases()) {
-                int ultimoPunto = clase.lastIndexOf('/');
-                if (ultimoPunto != -1) {
-                    String paquete = clase.substring(0, ultimoPunto);
-                	//CrashDetectorLogger.log(paquete);
+			// Verificación de media prioridad (solo si no es alta)
+			if (!esAlta && mod.MetaDataTieneReferenciaDeMCReator()) {
+				esMenosAlta = true;
+			}
 
-                    // Verificación de alta prioridad
-                    if (paquete.startsWith("net/mcreator")) {
-                        esAlta = true;
-                        break; // Prioridad máxima, no seguimos revisando
-                    }
-                    
-                    // Verificación de media prioridad (solo si no es alta)
-                    if (!esAlta && (paquete.endsWith("/procedures") || 
-                                   paquete.endsWith("/elements"))) {
-                        esMedia = true;
-                    }
-                }
-            }
+			for (String clase : mod.clases()) {
+				int ultimoPunto = clase.lastIndexOf('/');
+				if (ultimoPunto != -1) {
+					String paquete = clase.substring(0, ultimoPunto);
+					// CrashDetectorLogger.log(paquete);
 
-            if (esAlta) {
-                altaPrioridad.add(mod);
-            } else if (esMedia) {
-                mediaPrioridad.add(mod);
-            }
-        }
+					// Verificación de alta prioridad
+					if (paquete.startsWith("net/mcreator")) {
+						esAlta = true;
+						break; // Prioridad máxima, no seguimos revisando
+					}
 
-        // Construir resultado
-        resultado.append("Resultados del análisis MCreator:\n");
-        
-        if (!altaPrioridad.isEmpty()) {
-            resultado.append("\n--- Alta Prioridad (net.mcreator) ---\n");
-            for (ArchivoDeMod mod : altaPrioridad) {
-                resultado.append(Buscardor.rutaParaPublicar(mod.ubicacion()))
-                         .append("\n");
-            }
-        }
+					// Verificación de media prioridad (solo si no es alta)
+					if (!esAlta && !esMenosAlta && (paquete.endsWith("/procedures")
+							|| paquete.endsWith("/elements") && !esAlta && !esMenosAlta)) {
+						esMedia = true;
+					}
+				}
+			}
 
-        if (!mediaPrioridad.isEmpty()) {
-            resultado.append("\n--- Media Prioridad (procedures/elements) ---\n");
-            for (ArchivoDeMod mod : mediaPrioridad) {
-                resultado.append(Buscardor.rutaParaPublicar(mod.ubicacion()))
-                         .append("\n");
-            }
-        }
+			if (esAlta) {
+				altaPrioridad.add(mod);
+			} else if (esMenosAlta) {
+				menosAltaPrioridad.add(mod);
+			}
 
-        if (altaPrioridad.isEmpty() && mediaPrioridad.isEmpty()) {
-            resultado.append("\nNo se encontraron mods de MCreator");
-        }
+			else if (esMedia) {
+				mediaPrioridad.add(mod);
+			}
+		}
 
-        return resultado.toString();
-    }
+		// Construir resultado
+		resultado.append("Resultados del análisis MCreator:\n");
 
-    /**
-     * Recursivamente colecciona todos los mods anidados
-     */
-    private static void coleccionarModsAnidados(ArchivoDeMod mod, 
-                                              List<ArchivoDeMod> coleccion) {
-        coleccion.add(mod);
-        for (ArchivoDeMod submod : mod.mods_en_mods()) {
-            coleccionarModsAnidados(submod, coleccion);
-        }
-    }
+		if (!altaPrioridad.isEmpty()) {
+			resultado.append("\n--- Alta Prioridad (net.mcreator) ---\n");
+			for (ArchivoDeMod mod : altaPrioridad) {
+				resultado.append(Buscardor.rutaParaPublicar(mod.ubicacion())).append("\n");
+			}
+		}
+
+		if (!menosAltaPrioridad.isEmpty()) {
+			resultado.append(
+					"\n--- Menos Alta Prioridad (Referencia a mcreator en fabric.mod.json/mods.toml/modules.xml/descriptor.mod/neoforge.mods.toml) ---\n");
+			for (ArchivoDeMod mod : menosAltaPrioridad) {
+				resultado.append(Buscardor.rutaParaPublicar(mod.ubicacion())).append("\n");
+			}
+		}
+
+		if (!mediaPrioridad.isEmpty()) {
+			resultado.append("\n--- Media Prioridad (procedures/elements) ---\n");
+			for (ArchivoDeMod mod : mediaPrioridad) {
+				resultado.append(Buscardor.rutaParaPublicar(mod.ubicacion())).append("\n");
+			}
+		}
+
+		if (altaPrioridad.isEmpty() && menosAltaPrioridad.isEmpty() && mediaPrioridad.isEmpty()) {
+			resultado.append("\nNo se encontraron mods de MCreator");
+		}
+
+		return resultado.toString();
+	}
+
+	/**
+	 * Recursivamente colecciona todos los mods anidados
+	 */
+	private static void coleccionarModsAnidados(ArchivoDeMod mod, List<ArchivoDeMod> coleccion) {
+		coleccion.add(mod);
+		for (ArchivoDeMod submod : mod.mods_en_mods()) {
+			coleccionarModsAnidados(submod, coleccion);
+		}
+	}
 }
