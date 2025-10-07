@@ -20,6 +20,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.function.Supplier;
@@ -157,12 +158,22 @@ public class CrashDetectorGUI extends JFrame {
 		JLabel iconoIdioma = new JLabel("🌐");
 		iconoIdioma.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 20));
 
-		String[] idiomas = { "Español", "English", "العربية", "Português", "فارسی", "Русский", "简体中文", "Esperanto",
-				"日本語", "한국어" };
+		LinkedHashMap<String, String> idiomas = new LinkedHashMap<>();
+		idiomas.put("Español", "imagenes/bandera_mexico.png");
+		idiomas.put("English", "imagenes/bandera_inglaterra.png");
+		idiomas.put("العربية", "imagenes/bandera_arabia.png");
+		idiomas.put("Português", "imagenes/bandera_brasil.png");
+		idiomas.put("فارسی", "imagenes/bandera_iran.png");
+		idiomas.put("Русский", "imagenes/bandera_rusia.png");
+		idiomas.put("简体中文", "imagenes/bandera_china.png");
+		idiomas.put("Esperanto", "imagenes/bandera_esperanto.png");
+		idiomas.put("日本語", "imagenes/bandera_japon.png");
+		idiomas.put("한국어", "imagenes/bandera_corea.png");
 
 		CrashDetectorLogger.log("combobox");
-		JComboBox<String> comboBoxIdioma = new JComboBox<>(idiomas);
+		JComboBox<String> comboBoxIdioma = new ComboIdiomasConIcono(idiomas);
 		comboBoxIdioma.setMaximumSize(new Dimension(200, 30));
+		comboBoxIdioma.setPreferredSize(new Dimension(200, 30));
 		if (!esMac()) {
 			comboBoxIdioma.setBackground(colorBoton);
 			comboBoxIdioma.setForeground(colorTexto);

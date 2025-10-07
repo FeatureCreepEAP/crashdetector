@@ -458,11 +458,9 @@ public class NoRegistroDeLauncher extends JDialog {
 
 		// Textos HTML específicos
 		if (HMCL.equals(tipo)) {
-			desc = "HMCL (HelloMinecraftLauncher): You must select the folder where HMCL is installed and choose the \".hmcl\" folder. HMCL logs are saved here and contain important error information.<br>";
 			desc=MonitorDePID.idioma.descripcionHMCL();
 		} else if (GEN.equals(tipo)) {
 			desc=MonitorDePID.idioma.noRegistroDeLauncher();
-			//desc = "GENERIC: Select the type of launcher you're using. Launcher logs (launcher_log.txt, stdout, etc.) contain vital error details not present in latest.log. CrashDetector cannot read your launcher's logs — it might not generate one, so you'll need to paste the logs manually.<br>For more info, see <a href=\"https://github.com/HMCL-dev/HMCL/issues/2663 \">this issue</a>. These logs include standard output (STDOUT), which is essential for diagnosing many types of errors.";
 		}
 
 		ImageIcon icono = null;
