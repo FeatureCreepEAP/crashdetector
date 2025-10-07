@@ -99,310 +99,345 @@ public class CrashDetectorGUI extends JFrame {
 		botons_de_barra_lateral_derecha.add(boton);
 	}
 
-	private void inicializarInterfaz() {
-		CrashDetectorLogger.log("inicializar interfaz");
-		pantalla.setContentType("text/html");
-		pantalla.setEditable(false);
-		pantalla.setBackground(colorCajaTexto);
-		pantalla.setForeground(colorEnlace);
-		pantalla.setFont(new Font("Consolas", Font.PLAIN, 14));
-		try {
-			CrashDetectorLogger.log("estabalar texto");
-			pantalla.setText(new String(Files.readAllBytes(Paths.get(MonitorDePID.local))));
-			pantalla.setCaretPosition(0);// Mas alto
-			CrashDetectorLogger.log("estabalar texto completa");
-		} catch (IOException e) {
-			pantalla.setText(
-					"<html><body style='color:#ff6b6b'>Problema con el Informe: " + e.getMessage() + "</body></html>");
-		}
+private void inicializarInterfaz() {
+    // --- Inicialización del visor HTML ---------------------------------------------------------
+    CrashDetectorLogger.log("inicializar interfaz");
+    pantalla.setContentType("text/html");
+    pantalla.setEditable(false);
+    pantalla.setBackground(colorCajaTexto);
+    pantalla.setForeground(colorEnlace);
+    pantalla.setFont(new Font("Consolas", Font.PLAIN, 14));
 
-		pantalla.addHyperlinkListener(e -> {
-			if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-				try {
-					// Usar getDescription() porque getURL() puede ser null en protocolos custom
-					String url = e.getDescription();
+    try {
+        CrashDetectorLogger.log("establecer texto");
+        pantalla.setText(new String(Files.readAllBytes(Paths.get(MonitorDePID.local))));
+        pantalla.setCaretPosition(0); // Ir al inicio
+        CrashDetectorLogger.log("establecer texto completado");
+    } catch (IOException e) {
+        pantalla.setText("<html><body style='color:#ff6b6b'>Problema con el Informe: "
+                + e.getMessage() + "</body></html>");
+    }
 
-					if (url.startsWith("lectador://")) {
-						CrashDetectorLogger.log(url + " (lectador url)");
-						LectadorDeConsolas.procesarHipervinculo(url);
-					} else {
-						// Para URLs estándar (http/https/file/etc.)
-						Desktop.getDesktop().browse(new java.net.URI(url));
-					}
-				} catch (Exception ex) {
-					CrashDetectorLogger.logException(ex);
-				}
-			}
-		});
+    // Abrir hipervínculos (incluyendo protocolo interno lectador://)
+    pantalla.addHyperlinkListener(e -> {
+        if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+            try {
+                String url = e.getDescription();
+                if (url != null && url.startsWith("lectador://")) {
+                    CrashDetectorLogger.log(url + " (lectador url)");
+                    LectadorDeConsolas.procesarHipervinculo(url);
+                } else if (url != null) {
+                    Desktop.getDesktop().browse(new java.net.URI(url));
+                }
+            } catch (Exception ex) {
+                CrashDetectorLogger.logException(ex);
+            }
+        }
+    });
 
-		CrashDetectorLogger.log("estabalar frontera");
-		scrollPane.setBorder(BorderFactory.createEmptyBorder());
-		scrollPane.getViewport().setBackground(colorCajaTexto);
+    // Borde y color de fondo del scroll
+    CrashDetectorLogger.log("establecer borde del scroll");
+    scrollPane.setBorder(BorderFactory.createEmptyBorder());
+    scrollPane.getViewport().setBackground(colorCajaTexto);
+    if (scrollPane.getVerticalScrollBar() != null) {
+        scrollPane.getVerticalScrollBar().setValue(0);
+    }
 
-		// Mas alto
-		if (scrollPane.getVerticalScrollBar() != null) {
-			scrollPane.getVerticalScrollBar().setValue(0);
-		}
+    // --- Panel inferior principal (configuración + botón QuickFix + botones de acción) --------
+    JPanel panelInferior = new JPanel(new BorderLayout(5, 5));
+    panelInferior.setBackground(colorFondo);
+    panelInferior.setBorder(new EmptyBorder(10, 20, 10, 20));
 
-		JPanel panelInferior = new JPanel(new BorderLayout(5, 5));
-		panelInferior.setBackground(colorFondo);
-		panelInferior.setBorder(new EmptyBorder(10, 20, 10, 20));
+    // Sección de configuración (dos columnas: izquierda = idioma, derecha = aplicación)
+    JPanel seccionConfiguracion = new JPanel();
+    seccionConfiguracion.setLayout(new BoxLayout(seccionConfiguracion, BoxLayout.Y_AXIS));
+    seccionConfiguracion.setBackground(colorFondo);
 
-		JPanel seccionIdioma = new JPanel();
-		seccionIdioma.setLayout(new BoxLayout(seccionIdioma, BoxLayout.Y_AXIS));
-		seccionIdioma.setBackground(colorFondo);
+    // Contenedor horizontal para tener ambos controles (izquierda/derecha) uno al lado del otro
+    JPanel panelHorizontal = new JPanel();
+    panelHorizontal.setLayout(new BoxLayout(panelHorizontal, BoxLayout.X_AXIS));
+    panelHorizontal.setBackground(colorFondo);
 
-		JPanel panelDesplegableIdioma = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
-		panelDesplegableIdioma.setBackground(colorFondo);
+    // Columna izquierda (idioma): dropdown arriba, checkbox debajo
+    JPanel columnaIzquierda = new JPanel();
+    columnaIzquierda.setLayout(new BoxLayout(columnaIzquierda, BoxLayout.Y_AXIS));
+    columnaIzquierda.setBackground(colorFondo);
 
-		JLabel iconoIdioma = new JLabel("🌐");
-		iconoIdioma.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 20));
+    // Columna derecha (aplicación): dropdown arriba, checkbox debajo
+    JPanel columnaDerecha = new JPanel();
+    columnaDerecha.setLayout(new BoxLayout(columnaDerecha, BoxLayout.Y_AXIS));
+    columnaDerecha.setBackground(colorFondo);
 
-		LinkedHashMap<String, String> idiomas = new LinkedHashMap<>();
-		idiomas.put("Español", "imagenes/bandera_mexico.png");
-		idiomas.put("English", "imagenes/bandera_inglaterra.png");
-		idiomas.put("العربية", "imagenes/bandera_arabia.png");
-		idiomas.put("Português", "imagenes/bandera_brasil.png");
-		idiomas.put("فارسی", "imagenes/bandera_iran.png");
-		idiomas.put("Русский", "imagenes/bandera_rusia.png");
-		idiomas.put("简体中文", "imagenes/bandera_china.png");
-		idiomas.put("Esperanto", "imagenes/bandera_esperanto.png");
-		idiomas.put("日本語", "imagenes/bandera_japon.png");
-		idiomas.put("한국어", "imagenes/bandera_corea.png");
+    // --- Datos de idiomas con iconos ----------------------------------------------------------
+    LinkedHashMap<String, String> idiomas = new LinkedHashMap<>();
+    idiomas.put("Español",   "imagenes/bandera_mexico.png");
+    idiomas.put("English",   "imagenes/bandera_inglaterra.png");
+    idiomas.put("العربية",   "imagenes/bandera_arabia.png");
+    idiomas.put("Português", "imagenes/bandera_brasil.png");
+    idiomas.put("فارسی",     "imagenes/bandera_iran.png");
+    idiomas.put("Русский",   "imagenes/bandera_rusia.png");
+    idiomas.put("简体中文",   "imagenes/bandera_china.png");
+    idiomas.put("Esperanto", "imagenes/bandera_esperanto.png");
+    idiomas.put("日本語",     "imagenes/bandera_japon.png");
+    idiomas.put("한국어",     "imagenes/bandera_corea.png");
 
-		CrashDetectorLogger.log("combobox");
-		JComboBox<String> comboBoxIdioma = new ComboIdiomasConIcono(idiomas);
-		comboBoxIdioma.setMaximumSize(new Dimension(200, 30));
-		comboBoxIdioma.setPreferredSize(new Dimension(200, 30));
-		if (!esMac()) {
-			comboBoxIdioma.setBackground(colorBoton);
-			comboBoxIdioma.setForeground(colorTexto);
-		}
-		CrashDetectorLogger.log("idioma");
-		String currentLangCode = MonitorDePID.idioma.codigo();
-		switch (currentLangCode) {
-		case "es":
-			comboBoxIdioma.setSelectedItem("Español");
-			break;
-		case "en":
-			comboBoxIdioma.setSelectedItem("English");
-			break;
-		case "ar":
-			comboBoxIdioma.setSelectedItem("العربية");
-			break;
-		case "pt":
-			comboBoxIdioma.setSelectedItem("Português");
-			break;
-		case "fa":
-			comboBoxIdioma.setSelectedItem("فارسی");
-			break;
-		case "ru":
-			comboBoxIdioma.setSelectedItem("Русский");
-			break;
-		case "zh":
-			comboBoxIdioma.setSelectedItem("简体中文");
-			break;
-		case "eo":
-			comboBoxIdioma.setSelectedItem("Esperanto");
-			break;
-		case "ja":
-			comboBoxIdioma.setSelectedItem("日本語");
-			break;
-		case "ko":
-			comboBoxIdioma.setSelectedItem("한국어");
-			break;
-		default:
-			comboBoxIdioma.setSelectedItem("Español");
-		}
+    // --- Selector de idioma -------------------------------------------------------------------
+    JComboBox<String> comboIdioma = new ComboIdiomasConIcono(idiomas);
+    comboIdioma.setMaximumSize(new Dimension(200, 30));
+    comboIdioma.setPreferredSize(new Dimension(200, 30));
+    if (!esMac()) {
+        comboIdioma.setBackground(colorBoton);
+        comboIdioma.setForeground(colorTexto);
+    }
 
-		comboBoxIdioma.addActionListener(e -> {
-			String seleccion = (String) comboBoxIdioma.getSelectedItem();
-			String codigoIdioma = obtenerCodigoIdioma(seleccion);
+    // Seleccionar por defecto según el código actual de idioma detectado
+    String codigoActual = MonitorDePID.idioma.codigo();
+    switch (codigoActual) {
+        case "es": comboIdioma.setSelectedItem("Español");   break;
+        case "en": comboIdioma.setSelectedItem("English");   break;
+        case "ar": comboIdioma.setSelectedItem("العربية");   break;
+        case "pt": comboIdioma.setSelectedItem("Português"); break;
+        case "fa": comboIdioma.setSelectedItem("فارسی");     break;
+        case "ru": comboIdioma.setSelectedItem("Русский");   break;
+        case "zh": comboIdioma.setSelectedItem("简体中文");   break;
+        case "eo": comboIdioma.setSelectedItem("Esperanto"); break;
+        case "ja": comboIdioma.setSelectedItem("日本語");     break;
+        case "ko": comboIdioma.setSelectedItem("한국어");     break;
+        default:   comboIdioma.setSelectedItem("Español");   break;
+    }
 
-			if (codigoIdioma != null) {
-				Idioma.archivo.getParentFile().mkdirs();
-				try (BufferedWriter writer = Files.newBufferedWriter(Idioma.archivo.toPath(), StandardOpenOption.CREATE,
-						StandardOpenOption.TRUNCATE_EXISTING)) {
-					writer.write(codigoIdioma);
-				} catch (IOException ex) {
-					CrashDetectorLogger.logException(ex);
-				}
-			}
-			MonitorDePID.idioma = Idioma.detectar();
-			recargar();
-		});
+    // Checkbox "usar idioma del sistema"
+    JCheckBox chkIdiomaSistema = new JCheckBox(MonitorDePID.idioma.usarIdiomaDelSistema());
+    chkIdiomaSistema.setForeground(colorTexto);
+    chkIdiomaSistema.setBackground(colorFondo);
+    chkIdiomaSistema.setOpaque(false);
+    chkIdiomaSistema.setHorizontalAlignment(SwingConstants.LEFT);
+    chkIdiomaSistema.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+    chkIdiomaSistema.setMaximumSize(new Dimension(200, 30));
 
-		panelDesplegableIdioma.add(iconoIdioma);
-		panelDesplegableIdioma.add(comboBoxIdioma);
+    // Estado inicial del checkbox: si NO existe archivo de preferencia => usar sistema
+    boolean existePreferencia = Files.exists(Idioma.archivo.toPath());
+    boolean usarSistemaInicial = !existePreferencia;
+    chkIdiomaSistema.setSelected(usarSistemaInicial);
+    comboIdioma.setEnabled(!usarSistemaInicial);
 
-		JCheckBox casillaVerificacionSistema = new JCheckBox(MonitorDePID.idioma.usarIdiomaDelSistema());
-		casillaVerificacionSistema.setForeground(colorTexto);
-		casillaVerificacionSistema.setBackground(colorFondo);
-		casillaVerificacionSistema.setOpaque(false);
-		casillaVerificacionSistema.setHorizontalAlignment(SwingConstants.LEFT);
-		casillaVerificacionSistema.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-		casillaVerificacionSistema.setMaximumSize(new Dimension(200, 30));
+    // Acción al cambiar idioma manualmente desde el combo
+    comboIdioma.addActionListener(e -> {
+        // Si el usuario elige manualmente, desmarcamos "usar sistema" y persistimos preferencia
+        chkIdiomaSistema.setSelected(false);
+        comboIdioma.setEnabled(true);
 
-		casillaVerificacionSistema.addActionListener(e -> {
-			if (casillaVerificacionSistema.isSelected()) {
-				boolean usarSistema = casillaVerificacionSistema.isSelected();
+        String seleccion = (String) comboIdioma.getSelectedItem();
+        String codigo = obtenerCodigoIdioma(seleccion);
+        if (codigo != null) {
+            try (BufferedWriter w = Files.newBufferedWriter(
+                    Idioma.archivo.toPath(),
+                    StandardOpenOption.CREATE,
+                    StandardOpenOption.TRUNCATE_EXISTING)) {
+                w.write(codigo);
+            } catch (IOException ex) {
+                CrashDetectorLogger.logException(ex);
+            }
+            // Re-detectar idioma y recargar la UI
+            MonitorDePID.idioma = Idioma.detectar();
+            recargar();
+        }
+    });
 
-				comboBoxIdioma.setEnabled(!usarSistema);
+    // Acción al marcar/desmarcar "usar idioma del sistema"
+    chkIdiomaSistema.addActionListener(e -> {
+        boolean usarSistema = chkIdiomaSistema.isSelected();
+        comboIdioma.setEnabled(!usarSistema);
 
-				if (usarSistema) {
-					try {
-						Files.deleteIfExists(Idioma.archivo.toPath());
-						MonitorDePID.idioma = Idioma.detectar();
-						recargar();
-					} catch (IOException ex) {
-						CrashDetectorLogger.logException(ex);
-					}
-				}
-			}
-		});
+        if (usarSistema) {
+            // Borrar preferencia guardada para forzar el uso del idioma del sistema
+            try {
+                Files.deleteIfExists(Idioma.archivo.toPath());
+            } catch (IOException ex) {
+                CrashDetectorLogger.logException(ex);
+            }
+            MonitorDePID.idioma = Idioma.detectar();
+            recargar();
+        } else {
+            // Vuelve a habilitar selección manual y persistir lo que esté seleccionado
+            String seleccion = (String) comboIdioma.getSelectedItem();
+            String codigo = obtenerCodigoIdioma(seleccion);
+            if (codigo != null) {
+                try (BufferedWriter w = Files.newBufferedWriter(
+                        Idioma.archivo.toPath(),
+                        StandardOpenOption.CREATE,
+                        StandardOpenOption.TRUNCATE_EXISTING)) {
+                    w.write(codigo);
+                } catch (IOException ex) {
+                    CrashDetectorLogger.logException(ex);
+                }
+                MonitorDePID.idioma = Idioma.detectar();
+                recargar();
+            }
+        }
+    });
 
-		CrashDetectorLogger.log("estabalar casilla");
-		JPanel panelCasilla = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
-		panelCasilla.setBackground(colorFondo);
-		panelCasilla.add(casillaVerificacionSistema);
+    // Añadir controles de idioma a la columna izquierda (dropdown arriba, checkbox debajo)
+    columnaIzquierda.add(comboIdioma);
+    columnaIzquierda.add(chkIdiomaSistema);
 
-		seccionIdioma.add(panelDesplegableIdioma);
-		seccionIdioma.add(Box.createVerticalStrut(5));
-		seccionIdioma.add(panelCasilla);
+    // --- Columna derecha: selector de aplicación + detectar automáticamente --------------------
+    // Nota: este combo es un marcador de posición; se respeta el layout solicitado.
+    JComboBox<String> comboAplicacion = new ComboIdiomasConIcono(new LinkedHashMap<String, String>());
+    comboAplicacion.setMaximumSize(new Dimension(200, 30));
+    comboAplicacion.setPreferredSize(new Dimension(200, 30));
+    if (!esMac()) {
+        comboAplicacion.setBackground(colorBoton);
+        comboAplicacion.setForeground(colorTexto);
+    }
 
-		CrashDetectorLogger.log("estabalar quickfix");
-		JButton botonQuickFix = new JButton("QuickFix");
-		botonQuickFix.setEnabled(MonitorDePID.analizador.obtenerSoluciones().size() > 0);
-		botonQuickFix.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-		botonQuickFix.setMinimumSize(new Dimension(150, 40));
-		botonQuickFix.setMaximumSize(new Dimension(300, 40));
-		botonQuickFix.setPreferredSize(new Dimension(200, 40));
-		botonQuickFix.setFocusPainted(false);
+    JCheckBox chkDetectarAuto = new JCheckBox("Detectar automáticamente");
+    chkDetectarAuto.setForeground(colorTexto);
+    chkDetectarAuto.setBackground(colorFondo);
+    chkDetectarAuto.setOpaque(false);
+    chkDetectarAuto.setHorizontalAlignment(SwingConstants.LEFT);
+    chkDetectarAuto.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+    chkDetectarAuto.setMaximumSize(new Dimension(200, 30));
 
-		if (esMac()) {
-			botonQuickFix.setContentAreaFilled(false); // Estilo nativo de macOS
-		} else {
-			botonQuickFix.setFont(botonQuickFix.getFont().deriveFont(Font.BOLD, 16f));
-			botonQuickFix.setBackground(colorBoton);
-			botonQuickFix.setForeground(colorTexto); // Color original en otros sistemas
-			botonQuickFix.setContentAreaFilled(true);
-			botonQuickFix.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
-		}
+    columnaDerecha.add(comboAplicacion);
+    columnaDerecha.add(chkDetectarAuto);
 
-		botonQuickFix.addActionListener(e -> mostrarVentanaQuickFix());
-//		botonQuickFix.addActionListener(e -> {
-//		    contenidoPrincipal.removeAll();
-//		    contenidoPrincipal.add(crearPanelQuickFix(), BorderLayout.CENTER);
-//		    contenidoPrincipal.revalidate();
-//		    contenidoPrincipal.repaint();
-//		    botonVolver.setEnabled(true);
-//		});
+    // Añadir las dos columnas al contenedor horizontal
+    panelHorizontal.add(columnaIzquierda);
+    panelHorizontal.add(Box.createHorizontalStrut(20)); // pequeño espacio entre columnas
+    panelHorizontal.add(columnaDerecha);
 
-		CrashDetectorLogger.log("panelInferior");
-		panelInferior.add(botonQuickFix, BorderLayout.CENTER);
-		CrashDetectorLogger.log("estabalar derecha");
-		JPanel botonesDerecha = new JPanel(new GridLayout(1, 5, 10, 10));
-		botonesDerecha.setBackground(colorFondo);
-		CrashDetectorLogger.log("botones principales");
-		JButton botonAgregar = añadirBotonImagen(botonesDerecha,
-				MonitorDePID.carpeta.resolve("imagenes/boton_agregar.png").toString(),
-				MonitorDePID.idioma.anadirRegistro());
+    // Añadir el contenedor horizontal a la sección de configuración
+    seccionConfiguracion.add(panelHorizontal);
 
-		JButton botonCompartir = añadirBotonImagen(botonesDerecha,
-				MonitorDePID.carpeta.resolve("imagenes/boton_compartir.png").toString(),
-				MonitorDePID.idioma.botonDeCompartirInforme());
+    // --- Botón QuickFix (centrado) ------------------------------------------------------------
+    JButton botonQuickFix = new JButton("QuickFix");
+    botonQuickFix.setEnabled(MonitorDePID.analizador.obtenerSoluciones().size() > 0);
+    botonQuickFix.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+    botonQuickFix.setMinimumSize(new Dimension(120, 30));
+    botonQuickFix.setMaximumSize(new Dimension(180, 40));
+    botonQuickFix.setPreferredSize(new Dimension(150, 30));
+    if (esMac()) {
+        botonQuickFix.setContentAreaFilled(false);
+    } else {
+        botonQuickFix.setFont(botonQuickFix.getFont().deriveFont(Font.BOLD, 16f));
+        botonQuickFix.setBackground(colorBoton);
+        botonQuickFix.setForeground(colorTexto);
+        botonQuickFix.setContentAreaFilled(true);
+        botonQuickFix.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+    }
+    botonQuickFix.addActionListener(e -> mostrarVentanaQuickFix());
 
-		JButton botonActualizar = añadirBotonImagen(botonesDerecha,
-				MonitorDePID.carpeta.resolve("imagenes/boton_actualizar.png").toString(),
-				MonitorDePID.idioma.actualizar());
+    // --- Botones de acción (derecha) ----------------------------------------------------------
+    JPanel panelBotonesDerecha = new JPanel(new GridLayout(1, 5, 10, 10));
+    panelBotonesDerecha.setBackground(colorFondo);
 
-		JButton botonArchivos = añadirBotonImagen(botonesDerecha,
-				MonitorDePID.carpeta.resolve("imagenes/boton_archivos.png").toString(),
-				MonitorDePID.idioma.abrirCarpeta());
+    JButton btnAgregar = añadirBotonImagen(panelBotonesDerecha,
+            MonitorDePID.carpeta.resolve("imagenes/boton_agregar.png").toString(),
+            MonitorDePID.idioma.anadirRegistro());
 
-		botonConfiguracion = añadirBotonImagen(botonesDerecha,
-				MonitorDePID.carpeta.resolve("imagenes/boton_config.png").toString(), MonitorDePID.idioma.config());
+    JButton btnCompartir = añadirBotonImagen(panelBotonesDerecha,
+            MonitorDePID.carpeta.resolve("imagenes/boton_compartir.png").toString(),
+            MonitorDePID.idioma.botonDeCompartirInforme());
 
-		botonCompartir.addActionListener(e -> new DialogoCompartir(this, tiempoFallo).setVisible(true));
-		botonActualizar.addActionListener(e -> recargar());
-		botonAgregar.addActionListener(e -> anadirRegistro());
-		botonArchivos.addActionListener(e -> abrirDirectorioEnExplorador());
-		;
-		botonConfiguracion.addActionListener(e -> {
-			contenidoPrincipal.removeAll();
-			contenidoPrincipal.add(panelConfiguracion, BorderLayout.CENTER);
-			contenidoPrincipal.revalidate();
-			contenidoPrincipal.repaint();
-			botonVolver.setEnabled(true);
-		});
+    JButton btnActualizar = añadirBotonImagen(panelBotonesDerecha,
+            MonitorDePID.carpeta.resolve("imagenes/boton_actualizar.png").toString(),
+            MonitorDePID.idioma.actualizar());
 
-		panelInferior.add(seccionIdioma, BorderLayout.WEST);
-		panelInferior.add(botonQuickFix, BorderLayout.CENTER);
-		panelInferior.add(botonesDerecha, BorderLayout.EAST);
+    JButton btnArchivos = añadirBotonImagen(panelBotonesDerecha,
+            MonitorDePID.carpeta.resolve("imagenes/boton_archivos.png").toString(),
+            MonitorDePID.idioma.abrirCarpeta());
 
-		JPanel barraLateralDerecha = new JPanel();
-		barraLateralDerecha.setLayout(new BoxLayout(barraLateralDerecha, BoxLayout.Y_AXIS));
-		barraLateralDerecha.setBackground(colorBoton.darker());
-		barraLateralDerecha.setPreferredSize(new Dimension(175, 0));
+    botonConfiguracion = añadirBotonImagen(panelBotonesDerecha,
+            MonitorDePID.carpeta.resolve("imagenes/boton_config.png").toString(),
+            MonitorDePID.idioma.config());
 
-		CrashDetectorLogger.log("estabalar logo");
-		JLabel logoLabel = new JLabel();
-		logoLabel.setBackground(colorBoton.darker());
-		logoLabel.setOpaque(true);
+    btnCompartir.addActionListener(e -> new DialogoCompartir(this, tiempoFallo).setVisible(true));
+    btnActualizar.addActionListener(e -> recargar());
+    btnAgregar.addActionListener(e -> anadirRegistro());
+    btnArchivos.addActionListener(e -> abrirDirectorioEnExplorador());
+    botonConfiguracion.addActionListener(e -> {
+        contenidoPrincipal.removeAll();
+        contenidoPrincipal.add(panelConfiguracion, BorderLayout.CENTER);
+        contenidoPrincipal.revalidate();
+        contenidoPrincipal.repaint();
+        botonVolver.setEnabled(true);
+    });
 
-		// 加载 logo 图片
-		ImageIcon logoIcon = new ImageIcon(MonitorDePID.carpeta.resolve("imagenes/cd_logo.png").toString());
-		Image logoImagen = logoIcon.getImage();
-		Image escalarLogo = logoImagen.getScaledInstance(120, -1, Image.SCALE_SMOOTH); // -1 保持宽高比
-		logoLabel.setIcon(new ImageIcon(escalarLogo));
-		logoLabel.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-		logoLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // 周围留白
+    // Colocar secciones en el panel inferior
+    panelInferior.add(seccionConfiguracion, BorderLayout.WEST);
+    panelInferior.add(botonQuickFix,        BorderLayout.CENTER);
+    panelInferior.add(panelBotonesDerecha,  BorderLayout.EAST);
 
-		// Botón Volver (top)
-		estilizarBoton(botonVolver);
-		botonVolver.setEnabled(false);
-		botonVolver.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-		botonVolver.addActionListener(e -> {
-			volver();
-		});
-		barraLateralDerecha.add(logoLabel);
-		barraLateralDerecha.add(botonVolver);
-		barraLateralDerecha.add(Box.createVerticalStrut(10)); // Espaciado entre botones
-		CrashDetectorLogger.log("estabalar lateral derecha");
-		// Botones dinámicos (grepr/fgrepr y MCreator)
+    // --- Barra lateral derecha ---------------------------------------------------------------
+    JPanel barraLateralDerecha = new JPanel();
+    barraLateralDerecha.setLayout(new BoxLayout(barraLateralDerecha, BoxLayout.Y_AXIS));
+    barraLateralDerecha.setBackground(colorBoton.darker());
+    barraLateralDerecha.setPreferredSize(new Dimension(230, 0)); // más ancho para evitar cortes
 
-		for (Supplier<BotonDeBarraLateralDerecha> sup : botons_de_barra_lateral_derecha) {
-			BotonDeBarraLateralDerecha bt = sup.get();
-			JButton btn = new JButton(bt.etiquetaDelBoton());
-			if (bt.icon() != null) {
-				btn.setIcon(bt.icon());
-			}
+    JLabel logoLabel = new JLabel();
+    logoLabel.setBackground(colorBoton.darker());
+    logoLabel.setOpaque(true);
+    ImageIcon logoIcon = new ImageIcon(MonitorDePID.carpeta.resolve("imagenes/cd_logo.png").toString());
+    Image logoImg = logoIcon.getImage();
+    Image logoEscalado = logoImg.getScaledInstance(120, -1, Image.SCALE_SMOOTH);
+    logoLabel.setIcon(new ImageIcon(logoEscalado));
+    logoLabel.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+    logoLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-			estilizarBoton(btn);
-			btn.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+    estilizarBoton(botonVolver);
+    botonVolver.setEnabled(false);
+    botonVolver.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+    botonVolver.addActionListener(e -> volver());
 
-			// Asignar acciones según el botón
+    barraLateralDerecha.add(logoLabel);
+    barraLateralDerecha.add(botonVolver);
+    barraLateralDerecha.add(Box.createVerticalStrut(10));
 
-			btn.addActionListener(e -> {
-				bt.init();
-			});
+    // Botones dinámicos registrados
+    for (Supplier<BotonDeBarraLateralDerecha> sup : botons_de_barra_lateral_derecha) {
+        BotonDeBarraLateralDerecha b = sup.get();
+        JButton btn = new JButton(b.etiquetaDelBoton());
+        if (b.icon() != null) {
+            btn.setIcon(b.icon());
+        }
+        estilizarBoton(btn);
+        btn.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+        btn.addActionListener(e -> b.init());
+        barraLateralDerecha.add(btn);
+    }
 
-			barraLateralDerecha.add(btn);
-		}
+    // --- Layout principal de la ventana -------------------------------------------------------
+    setLayout(new BorderLayout(5, 5));
+    contenidoPrincipal.add(scrollPane, BorderLayout.CENTER);
+    add(contenidoPrincipal, BorderLayout.CENTER);
+    add(panelInferior,      BorderLayout.SOUTH);
+    add(barraLateralDerecha,BorderLayout.EAST);
 
-		CrashDetectorLogger.log("estabalar layout");
-		setLayout(new BorderLayout(5, 5));
-		// add(scrollPane, BorderLayout.CENTER);
-		contenidoPrincipal.add(scrollPane, BorderLayout.CENTER);
-		add(contenidoPrincipal, BorderLayout.CENTER);
-		add(panelInferior, BorderLayout.SOUTH);
-		add(barraLateralDerecha, BorderLayout.EAST);
-		CrashDetectorLogger.log("estabalar titilo");
-		setTitle("CrashDetector");
-		setSize(1000, 650);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setLocationRelativeTo(null);
-	}
+    setTitle("CrashDetector");
+    setSize(1050, 650); // ancho ajustado
+    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    setLocationRelativeTo(null);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+	
+	
 
 	public void volver() {
 		// TODO Auto-generated method stub
@@ -552,46 +587,39 @@ public class CrashDetectorGUI extends JFrame {
 		}
 	}
 
-	// 替换 emoji 按钮为图像按钮
-	private JButton añadirBotonImagen(JPanel panel, String imagePath, String tooltip) {
-		JButton boton = new JButton();
-		boton.setToolTipText(tooltip);
+private JButton añadirBotonImagen(JPanel panel, String imagePath, String tooltip) {
+    JButton boton = new JButton();
+    boton.setToolTipText(tooltip);
 
-		// 加载图像
-		ImageIcon originalIcon = new ImageIcon(imagePath);
-		Image image = originalIcon.getImage();
+    ImageIcon originalIcon = new ImageIcon(imagePath);
+    Image image = originalIcon.getImage();
+    int BUTTON_SIZE = 40; 
+    Image scaledImage = image.getScaledInstance(BUTTON_SIZE - 10, BUTTON_SIZE - 10, Image.SCALE_SMOOTH);
+    ImageIcon icon = new ImageIcon(scaledImage);
 
-		// 调整图像大小（64x64）
-		int BUTTON_SIZE = 64; // 设置按钮大小
-		Image scaledImage = image.getScaledInstance(BUTTON_SIZE - 10, BUTTON_SIZE - 10, Image.SCALE_SMOOTH);
-		ImageIcon icon = new ImageIcon(scaledImage);
+    boton.setIcon(icon);
+    boton.setText(""); 
+    boton.setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
+    boton.setBackground(colorFondo);
+    boton.setBorder(BorderFactory.createLineBorder(colorFondo, 1));
+    boton.setFocusPainted(false);
+    boton.setMargin(new Insets(0, 0, 0, 0)); // Reduced margin
 
-		// 设置按钮样式
-		boton.setIcon(icon);
-		boton.setText(""); // 隐藏文本
-		boton.setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
-		// boton.setBackground(colorBoton);
-		boton.setBackground(colorFondo);
-		boton.setBorder(BorderFactory.createLineBorder(colorFondo, 1));
-		boton.setFocusPainted(false);
-		boton.setMargin(new Insets(0, 0, 0, 0)); // 减少内边距
+    boton.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            boton.setBackground(colorBoton.brighter());
+        }
 
-		// 悬停效果
-		boton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				boton.setBackground(colorBoton.brighter());
-			}
+        @Override
+        public void mouseExited(MouseEvent e) {
+            boton.setBackground(colorFondo);
+        }
+    });
 
-			@Override
-			public void mouseExited(MouseEvent e) {
-				boton.setBackground(colorFondo);
-			}
-		});
-
-		panel.add(boton);
-		return boton;
-	}
+    panel.add(boton);
+    return boton;
+}
 
 //    private JPanel crearPanelQuickFix() {
 //        JPanel panel = new JPanel(new BorderLayout());
