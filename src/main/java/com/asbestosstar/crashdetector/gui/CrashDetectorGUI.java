@@ -281,9 +281,13 @@ private void inicializarInterfaz() {
     columnaIzquierda.add(comboIdioma);
     columnaIzquierda.add(chkIdiomaSistema);
 
+    LinkedHashMap<String, String> apps = new LinkedHashMap<>();
+    apps.put("Minecraft",   "imagenes/cd_chars.png");
+    
+    
     // --- Columna derecha: selector de aplicación + detectar automáticamente --------------------
     // Nota: este combo es un marcador de posición; se respeta el layout solicitado.
-    JComboBox<String> comboAplicacion = new ComboIdiomasConIcono(new LinkedHashMap<String, String>());
+    JComboBox<String> comboAplicacion = new ComboIdiomasConIcono(apps);
     comboAplicacion.setMaximumSize(new Dimension(200, 30));
     comboAplicacion.setPreferredSize(new Dimension(200, 30));
     if (!esMac()) {
@@ -349,8 +353,10 @@ private void inicializarInterfaz() {
     // asegurar que las columnas también alineen al borde izquierdo del BoxLayout
     columnaIzquierda.setAlignmentX(Component.LEFT_ALIGNMENT);
     columnaDerecha.setAlignmentX(Component.LEFT_ALIGNMENT);
-    
-    
+    chkDetectarAuto.setEnabled(false);
+    chkDetectarAuto.setSelected(true);
+    comboAplicacion.setEnabled(false);
+
     
     
     
@@ -380,6 +386,13 @@ private void inicializarInterfaz() {
     JPanel panelBotonesDerecha = new JPanel(new GridLayout(1, 5, 10, 10));
     panelBotonesDerecha.setBackground(colorFondo);
 
+ // luego el botón de ícono CDMods (deshabilitado), a la derecha
+    JButton boton_CDMods = añadirBotonImagen(
+    		panelBotonesDerecha,
+            MonitorDePID.carpeta.resolve("imagenes/boton_cdmods.png").toString(),
+            "CD Mods");
+    boton_CDMods.setEnabled(false);
+    
     JButton btnAgregar = añadirBotonImagen(panelBotonesDerecha,
             MonitorDePID.carpeta.resolve("imagenes/boton_agregar.png").toString(),
             MonitorDePID.idioma.anadirRegistro());

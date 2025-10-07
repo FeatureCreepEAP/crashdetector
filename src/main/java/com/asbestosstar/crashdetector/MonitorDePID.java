@@ -138,6 +138,11 @@ public class MonitorDePID {
 				carpeta.resolve("imagenes/boton_actualizar.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/boton_archivos.png", carpeta.resolve("imagenes/boton_archivos.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/boton_config.png", carpeta.resolve("imagenes/boton_config.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/boton_cdmods.png", carpeta.resolve("imagenes/boton_cdmods.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/cd_chars.png", carpeta.resolve("imagenes/cd_chars.png").toFile());
+
+		
+		
 		copiarACarpetaDesdeJar("/imagenes/cd_logo.png", carpeta.resolve("imagenes/cd_logo.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/profeco.jpg", carpeta.resolve("imagenes/profeco.jpg").toFile());
 		copiarACarpetaDesdeJar("/imagenes/saliormoongrep.png", carpeta.resolve("imagenes/saliormoongrep.png").toFile());
@@ -154,6 +159,11 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/bandera_japon.png", carpeta.resolve("imagenes/bandera_japon.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/bandera_corea.png", carpeta.resolve("imagenes/bandera_corea.png").toFile());
 
+		
+
+		
+		
+		
 		copiarACarpetaDesdeJar("/imagenes/mod.png", carpeta.resolve("imagenes/mod.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/clase.png", carpeta.resolve("imagenes/clase.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/metodo.png", carpeta.resolve("imagenes/metodo.png").toFile());
