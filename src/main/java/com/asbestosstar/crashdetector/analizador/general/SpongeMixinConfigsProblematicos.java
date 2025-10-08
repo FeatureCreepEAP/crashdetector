@@ -26,27 +26,29 @@ public class SpongeMixinConfigsProblematicos implements Verificaciones {
 	private final Map<String, Boolean> sm_config_es_fatal = new HashMap<>();
 	private final Map<String, String> enlacesPorConfig = new HashMap<>();
 
-@Override
-public void verificar(Consola consola) {
-	sm_config_con_linea.clear();
-	sm_config_es_fatal.clear();
-	enlacesPorConfig.clear();
+	@Override
+	public void verificar(Consola consola) {
+		sm_config_con_linea.clear();
+		sm_config_es_fatal.clear();
+		enlacesPorConfig.clear();
 
-	// Origen existente: parser de stacktrace
-	BiMap<String, Integer, Boolean> configs = consola.verificacion_de_stacktrace.sm_config;
-	for (BiMap.DoubleKey<String, Integer> clave : configs.keySet()) {
-		String nombreArchivo = clave.key0;
-		int linea = clave.key1;
-		boolean esFatal = configs.get(nombreArchivo, linea);
+		// Origen existente: parser de stacktrace
+		BiMap<String, Integer, Boolean> configs = consola.verificacion_de_stacktrace.sm_config;
+		for (BiMap.DoubleKey<String, Integer> clave : configs.keySet()) {
+			String nombreArchivo = clave.key0;
+			int linea = clave.key1;
+			boolean esFatal = configs.get(nombreArchivo, linea);
 
-		sm_config_con_linea.put(nombreArchivo, linea);
-		sm_config_es_fatal.put(nombreArchivo, esFatal);
-		enlacesPorConfig.put(nombreArchivo, consola.agregarErrorALectador(linea, this));
+			sm_config_con_linea.put(nombreArchivo, linea);
+			sm_config_es_fatal.put(nombreArchivo, esFatal);
+			enlacesPorConfig.put(nombreArchivo, consola.agregarErrorALectador(linea, this));
+		}
+
+		activado = !sm_config_con_linea.isEmpty();
 	}
 
-	String[] lineas = consola.contenido_verificar.split(Verificaciones.nl);
-	for (int i = 0; i < lineas.length; i++) {
-		String linea = lineas[i];
+	@Override
+	public void verificar(Consola consola, String linea, int i) {
 		if (linea.contains("The specified resource '") && linea.contains("' was invalid or could not be read")) {
 			int ini = linea.indexOf("The specified resource '") + "The specified resource '".length();
 			int fin = linea.indexOf("'", ini);
@@ -57,14 +59,11 @@ public void verificar(Consola consola) {
 					sm_config_con_linea.put(nombre, i);
 					sm_config_es_fatal.put(nombre, true);
 					enlacesPorConfig.put(nombre, consola.agregarErrorALectador(i, this));
+					activado = true;
 				}
 			}
 		}
 	}
-
-	activado = !sm_config_con_linea.isEmpty();
-}
-
 
 	@Override
 	public Verificaciones nueva() {
@@ -169,7 +168,7 @@ public void verificar(Consola consola) {
 
 		return builder.construir();
 	}
-	
+
 	@Override
 	public String id() {
 		// TODO Auto-generated method stub

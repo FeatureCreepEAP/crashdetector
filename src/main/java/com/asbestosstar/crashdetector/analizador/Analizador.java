@@ -117,7 +117,6 @@ public class Analizador {
 		verificaciones.add(new WaterMediaTL());
 		verificaciones.add(new WaterMediaVLC());
 
-
 		verificaciones.add(new NoPuedeAnalizarJSONDeRegistro());
 		verificaciones.add(new BloqueTeselado());
 
@@ -141,7 +140,7 @@ public class Analizador {
 		verificaciones.add(new KubeJSResourcePack());
 		verificaciones.add(new Segundo60Tick());
 		verificaciones.add(new NoTieneMemoria());
-		//verificaciones.add(new Theseus());
+		// verificaciones.add(new Theseus());
 		verificaciones.add(new CursedConsola());
 		verificaciones.add(new NullPointer());
 		verificaciones.add(new ContentoDeTraces());
@@ -164,7 +163,7 @@ public class Analizador {
 		verificaciones.add(new ProblemaDependenciaPTRLib());
 		verificaciones.add(new ProblemaEjecucionPlugin());
 		verificaciones.add(new ProblemaExcepcionComandoPlugin());
-		//verificaciones.add(new ProblemaExcepcionMod());
+		// verificaciones.add(new ProblemaExcepcionMod());
 		verificaciones.add(new ProblemaSpongeMixinFabric());
 		verificaciones.add(new ProblemaModDuplicadoFabric());
 		verificaciones.add(new ProblemaModFaltanteEnDatapack());
@@ -180,16 +179,8 @@ public class Analizador {
 		verificaciones.add(new ProblemaVersionModMundo());
 		verificaciones.add(new ProblemaDependenciaModFabric());
 
-
-		
-		
-		
-		
 		// Fin de Codex Aternos
 
-		
-		
-		
 		verificaciones.add(new MCForgeInstallacionNoEstaCompleta());
 		verificaciones.add(new ErrorDeEnlaceInsatisfecho());
 		verificaciones.add(new ConflictoDeIDsMinecraft());
@@ -218,18 +209,11 @@ public class Analizador {
 		verificaciones.add(new ErrorResolucionDeTextura());
 		verificaciones.add(new ErrorRutaModLauncher());
 
-		
-		
-		
-		
-		
-		
-		
 		verificaciones.add(new DifDeMods());
 
-		
-		//TODO https://discord.com/channels/1129059589325852724/1129069799545241703/1418708211636113498 
-		
+		// TODO
+		// https://discord.com/channels/1129059589325852724/1129069799545241703/1418708211636113498
+
 	}
 
 	public Analizador() {
@@ -239,68 +223,57 @@ public class Analizador {
 	}
 
 	public void analizar(List<Consola> consolas) {
-	    long totalStartTime = System.nanoTime();
-	    CrashDetectorLogger.log("Iniciando análisis de " + consolas.size() + " registros");
-	    
-	    for (Consola consola : consolas) {
-	        CrashDetectorLogger.log("comenz analiz");
-	        consola.verificacion_de_stacktrace.reiniciar();
-	        CrashDetectorLogger.log("reinciar vdst");
-	        // Iniciar temporizador para esta consola
-	        long consolaStartTime = System.nanoTime();
-	        CrashDetectorLogger.log("Analizando registro: " + consola.archivo.getFileName());
-	        
-	        for (Verificaciones ver : verificaciones_activados) {
-	            long verificacionStartTime = System.nanoTime();
-	            
-	            try {
-	                CrashDetectorLogger.log(consola.archivo + " " + ver.nombre());
-	                ver.verificar(consola);
-	                
-	                // Calcular tiempo de esta verificación
-	                long verificacionEndTime = System.nanoTime();
-	                double tiempoVerificacion = (verificacionEndTime - verificacionStartTime) / 1_000_000.0; // Convertir a milisegundos
-	                
-	                CrashDetectorLogger.log(String.format(
-	                    "Verificación completada: %s - Tiempo: %.2f ms", 
-	                    ver.nombre(), 
-	                    tiempoVerificacion
-	                ));
-	            } catch (Exception e) {
-	                CrashDetectorLogger.logException(e);
-	                
-	                // Registrar error pero continuar con otras verificaciones
-	                long verificacionEndTime = System.nanoTime();
-	                double tiempoVerificacion = (verificacionEndTime - verificacionStartTime) / 1_000_000.0;
-	                
-	                CrashDetectorLogger.log(String.format(
-	                    "Error en verificación %s - Tiempo transcurrido: %.2f ms", 
-	                    ver.nombre(), 
-	                    tiempoVerificacion
-	                ));
-	            }
-	        }
-	        
-	        // Calcular tiempo total para esta consola
-	        long consolaEndTime = System.nanoTime();
-	        double tiempoConsola = (consolaEndTime - consolaStartTime) / 1_000_000.0;
-	        CrashDetectorLogger.log(String.format(
-	            "Análisis del registro %s completado en: %.2f ms", 
-	            consola.archivo.getFileName(), 
-	            tiempoConsola
-	        ));
-	    }
-	    
-	    // Calcular tiempo total de análisis
-	    long totalEndTime = System.nanoTime();
-	    double tiempoTotal = (totalEndTime - totalStartTime) / 1_000_000.0;
-	    CrashDetectorLogger.log(String.format(
-	        "Análisis completado para %d registros en: %.2f ms", 
-	        consolas.size(), 
-	        tiempoTotal
-	    ));
-	}
+		long totalStartTime = System.nanoTime();
+		CrashDetectorLogger.log("Iniciando análisis de " + consolas.size() + " registros");
 
+		for (Consola consola : consolas) {
+			CrashDetectorLogger.log("comenz analiz");
+			consola.verificacion_de_stacktrace.reiniciar();
+			CrashDetectorLogger.log("reinciar vdst");
+
+			long consolaStartTime = System.nanoTime();
+			CrashDetectorLogger.log("Analizando registro: " + consola.archivo.getFileName());
+
+
+			final String[] lineas = consola.contenido_verificar.split(Verificaciones.nl);
+
+			for (Verificaciones ver : verificaciones_activados) {
+				long t0 = System.nanoTime();
+				try {
+					CrashDetectorLogger.log(consola.archivo + " " + ver.nombre());
+					ver.verificar(consola);
+					long t1 = System.nanoTime();
+					CrashDetectorLogger.log(String.format("Pase global completado: %s - Tiempo: %.2f ms", ver.nombre(),
+							(t1 - t0) / 1_000_000.0));
+				} catch (Exception e) {
+					CrashDetectorLogger.logException(e);
+				}
+			}
+
+
+			for (int i = 0; i < lineas.length; i++) {
+				final String line = lineas[i];
+				for (Verificaciones ver : verificaciones_activados) {
+					try {
+						ver.verificar(consola, line, i);
+					} catch (Exception e) {
+						CrashDetectorLogger.logException(e);
+					}
+				}
+			}
+
+			// 3) MÉTRICAS POR CONSOLA
+			long consolaEndTime = System.nanoTime();
+			double tiempoConsola = (consolaEndTime - consolaStartTime) / 1_000_000.0;
+			CrashDetectorLogger.log(String.format("Análisis del registro %s completado en: %.2f ms",
+					consola.archivo.getFileName(), tiempoConsola));
+		}
+
+		long totalEndTime = System.nanoTime();
+		double tiempoTotal = (totalEndTime - totalStartTime) / 1_000_000.0;
+		CrashDetectorLogger
+				.log(String.format("Análisis completado para %d registros en: %.2f ms", consolas.size(), tiempoTotal));
+	}
 
 	public Set<Verificaciones> organizar(Set<Verificaciones> vers) {
 		List<Verificaciones> ret = new ArrayList<>(vers);
@@ -322,9 +295,9 @@ public class Analizador {
 
 				constructor.append("<br>").append(ver.mensaje()).append("<hr style='border: 0; border-top: 1px solid #")
 						.append(tituloColor).append("; margin: 8px 0;' />").append("</li>");
-		
-			CrashDetectorLogger.log("razon " +ver.mensaje());
-			
+
+				CrashDetectorLogger.log("razon " + ver.mensaje());
+
 			}
 		}
 

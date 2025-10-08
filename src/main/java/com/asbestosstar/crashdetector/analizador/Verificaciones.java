@@ -12,7 +12,19 @@ public interface Verificaciones {
 	public static String nl_html = "<br>";
 	
 	
+	/**
+	 * Aqui es donde verificar. Se ejecuta una vez por consola.
+	 * @param consola
+	 */
 	public void verificar(Consola consola);
+	
+	/**
+	 * Aqui es donde verificar contenido en una linea specific. Se ejecuta para todos lineas.
+	 * @param consola
+	 */
+	public default void verificar(Consola consola, String linea,int numero_de_linea) {
+		//Por defecto hace nada, para muchos puede usar verificar(Consola)
+	}
 	
 	/**
 	 * Una nueva instancia
