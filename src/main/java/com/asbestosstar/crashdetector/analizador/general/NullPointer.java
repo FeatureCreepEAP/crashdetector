@@ -139,15 +139,13 @@ public class NullPointer implements Verificaciones {
 
 			activado = true;
 		}
+	}
 
-		// Analizar líneas sueltas sin trazo completo (ej: errores sin "at ...")
-		String[] lineas = consola.contenido_verificar.split(NL);
-		for (int i = 0; i < lineas.length; i++) {
-			String linea = lineas[i];
-			if (linea.contains("NullPointerException") && !linea.contains("at ")
-					&& VerificacionDeStackTrace.tracePermite(linea)) {
-				procesarLineaSinTraza(linea, vdst, i, consola);
-			}
+	@Override
+	public void verificar(Consola consola, String linea, int i) {
+		if (linea.contains("NullPointerException") && !linea.contains("at ")
+				&& VerificacionDeStackTrace.tracePermite(linea)) {
+			procesarLineaSinTraza(linea, consola.verificacion_de_stacktrace, i, consola);
 		}
 	}
 
@@ -333,7 +331,7 @@ public class NullPointer implements Verificaciones {
 		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
 				.construir();
 	}
-	
+
 	@Override
 	public String id() {
 		// TODO Auto-generated method stub
