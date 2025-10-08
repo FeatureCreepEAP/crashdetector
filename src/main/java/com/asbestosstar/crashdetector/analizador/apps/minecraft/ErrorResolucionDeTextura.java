@@ -176,4 +176,10 @@ public class ErrorResolucionDeTextura implements Verificaciones {
 				.agregarEtiqueta(MonitorDePID.idioma.solucion_resolucion_textura())
 				.construir();
 	}
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "error_resolucion_de_textura";
+	}
 }

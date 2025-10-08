@@ -84,4 +84,10 @@ public class ErrorUnionFileSystemCorrupto implements Verificaciones {
 				.agregarEtiqueta(MonitorDePID.idioma.paso2_union_filesystem_corrupto())
 				.agregarEtiqueta(MonitorDePID.idioma.paso3_union_filesystem_corrupto()).construir();
 	}
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "union_filesystem_corrupto";
+	}
 }

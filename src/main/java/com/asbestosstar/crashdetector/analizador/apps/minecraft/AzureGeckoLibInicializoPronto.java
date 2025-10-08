@@ -86,4 +86,11 @@ public class AzureGeckoLibInicializoPronto implements Verificaciones {
 				.agregarEtiqueta(MonitorDePID.idioma.paso1_azure_geckolib_inicializo_pronto())
 				.agregarEtiqueta(MonitorDePID.idioma.paso2_azure_geckolib_inicializo_pronto()).construir();
 	}
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "azuregeckolibinicialaizo";
+	}
+	
 }

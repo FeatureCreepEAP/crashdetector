@@ -105,4 +105,10 @@ public class ErrorRegistroSuscriptoresAutomaticos implements Verificaciones {
 				.agregarEtiqueta(MonitorDePID.idioma.paso4_registro_suscriptores_automaticos()) // Nuevo paso añadido
 				.construir();
 	}
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "registro_subscriptores_automaticos";
+	}
 }

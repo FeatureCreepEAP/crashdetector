@@ -204,4 +204,11 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 
 		return builder.construir();
 	}
+	
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "modules_duplicados_java_module_platform";
+	}
 }

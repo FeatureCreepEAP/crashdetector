@@ -514,4 +514,11 @@ public class FaltasClases implements Verificaciones {
 					}
 				}, true).construir();
 	}
+	
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "faltas_clases";
+	}
 }

@@ -96,4 +96,10 @@ public class PreferIPV4Trace implements Verificaciones {
 							JOptionPane.INFORMATION_MESSAGE);
 				}, true).construir();
 	}
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "prefer_ipv4_trace";
+	}
 }

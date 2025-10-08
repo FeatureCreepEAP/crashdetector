@@ -78,4 +78,10 @@ public class ErrorAccessTransformerInvalido implements Verificaciones {
 				.agregarEtiqueta(MonitorDePID.idioma.paso2_access_transformer_invalido(nombreJar))
 				.agregarEtiqueta(MonitorDePID.idioma.paso3_access_transformer_invalido()).construir();
 	}
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "access_transformer_invalido";
+	}
 }

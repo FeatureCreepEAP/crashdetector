@@ -92,5 +92,11 @@ public class ProblemaVersionDowngrade implements Verificaciones {
 	public boolean anularNormal() {
 		return true;
 	}
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "version_downgrade";
+	}
 
 }

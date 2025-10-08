@@ -143,4 +143,12 @@ public class FuncionesDeDensidadNoVinculadas implements Verificaciones {
         }
         return lineas;
     }
+    
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "funciones_de_densidad_no_vinculadas";
+	}
+    
+    
 }

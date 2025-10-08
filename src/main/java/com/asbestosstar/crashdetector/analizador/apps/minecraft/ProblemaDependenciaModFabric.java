@@ -211,4 +211,12 @@ public class ProblemaDependenciaModFabric implements Verificaciones {
 
 		return builder.construir();
 	}
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "dependencia_mod_fabric";
+	}
+	
+	
 }

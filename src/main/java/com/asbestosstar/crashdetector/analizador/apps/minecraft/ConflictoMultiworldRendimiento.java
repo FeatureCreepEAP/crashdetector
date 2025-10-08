@@ -65,4 +65,12 @@ public class ConflictoMultiworldRendimiento implements Verificaciones {
                 .agregarEtiqueta(MonitorDePID.idioma.pasoConflictoMultiworldRendimiento())
                 .construir();
     }
+    
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "conflicto_multiworld_rendimiento";
+	}
+    
+    
 }

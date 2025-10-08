@@ -111,4 +111,14 @@ public class MCForgeInstallacionNoEstaCompleta implements Verificaciones {
 			e.printStackTrace();
 		}
 	}
+
+
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "mcforge_installacion_no_esta_completa";
+	}
+	
+	
+	
 }

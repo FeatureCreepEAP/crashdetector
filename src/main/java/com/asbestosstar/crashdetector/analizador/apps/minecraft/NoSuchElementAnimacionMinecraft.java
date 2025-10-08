@@ -124,4 +124,13 @@ public class NoSuchElementAnimacionMinecraft implements Verificaciones {
 
 		return builder.construir();
 	}
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "no_such_element_animacion_minecraft";
+	}
+	
+	
+	
 }

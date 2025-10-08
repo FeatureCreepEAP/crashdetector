@@ -169,4 +169,10 @@ public void verificar(Consola consola) {
 
 		return builder.construir();
 	}
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "spongemixin_configs_problematicos";
+	}
 }

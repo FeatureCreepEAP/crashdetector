@@ -85,4 +85,10 @@ public class TaczDeflaterCerrado implements Verificaciones {
                 .agregarEtiqueta(MonitorDePID.idioma.pasoTaczDeflaterCerrado())
                 .construir();
     }
+    
+    @Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "tacz_deflater_cerrado";
+	}
 }

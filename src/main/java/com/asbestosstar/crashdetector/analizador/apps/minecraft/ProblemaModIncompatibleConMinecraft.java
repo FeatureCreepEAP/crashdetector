@@ -115,4 +115,17 @@ public class ProblemaModIncompatibleConMinecraft implements Verificaciones {
 
 		return builder.construir();
 	}
+
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "mod_incompaible_con_minecraft_version";
+	}
+
+
+
+
+
+
+
 }

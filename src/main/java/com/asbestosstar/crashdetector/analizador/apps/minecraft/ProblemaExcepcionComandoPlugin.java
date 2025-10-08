@@ -93,4 +93,10 @@ public class ProblemaExcepcionComandoPlugin implements Verificaciones {
 				.agregarEtiqueta(MonitorDePID.idioma.solucionInstalarVersionDiferentePlugin(nombrePlugin))
 				.agregarEtiqueta(MonitorDePID.idioma.solucionEliminarPlugin(nombrePlugin)).construir();
 	}
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "excepcion_comando_plugin";
+	}
 }

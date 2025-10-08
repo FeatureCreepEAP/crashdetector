@@ -208,4 +208,10 @@ public class AuditorTransformer implements Verificaciones {
 				.construir();
 	}
 
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "auditortransformer";
+	}
+
 }

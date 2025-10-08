@@ -116,4 +116,10 @@ public class WaterMediaXenonIncompatible implements Verificaciones {
                 .agregarEtiqueta(MonitorDePID.idioma.paso3WaterMediaXenonIncompatible())
                 .construir();
     }
+    
+    @Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "watermedia_xenon";
+	}
 }

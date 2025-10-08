@@ -155,4 +155,11 @@ public class ErrorContextoOpenGL implements Verificaciones {
             .agregarEtiqueta(MonitorDePID.idioma.paso1ErrorContextoOpenGL())
             .construir();
     }
+    
+    
+    @Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "contexto_opengl";
+	}
 }

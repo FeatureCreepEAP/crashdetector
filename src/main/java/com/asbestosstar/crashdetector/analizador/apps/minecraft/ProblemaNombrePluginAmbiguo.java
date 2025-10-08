@@ -128,4 +128,10 @@ public class ProblemaNombrePluginAmbiguo implements Verificaciones {
 
 		return builder.construir();
 	}
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "nombre_plugin_ambiguo";
+	}
 }

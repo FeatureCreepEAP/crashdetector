@@ -113,4 +113,11 @@ public class ProblemaEjecucionPlugin implements Verificaciones {
 
 		return builder.construir();
 	}
+	
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "ejecucion_plugin";
+	}
 }

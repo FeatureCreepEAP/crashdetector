@@ -99,4 +99,11 @@ public class ErrorSinListenersEnClase implements Verificaciones {
 				.agregarEtiqueta(MonitorDePID.idioma.paso3_sin_listeners_en_clase(nombreClase, modsUbicacion))
 				.construir();
 	}
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "sin_listeners_en_clase";
+	}
+	
 }

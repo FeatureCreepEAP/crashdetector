@@ -117,4 +117,10 @@ public class NoPuedeAnalizarJSONDeRegistro implements Verificaciones {
 		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
 				.construir();
 	}
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "no_puede_analizar_json_de_registro";
+	}
 }

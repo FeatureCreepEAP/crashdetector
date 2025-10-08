@@ -92,4 +92,10 @@ public class ProblemaCargaMultiverso implements Verificaciones {
 	public boolean anularNormal() {
 		return true;
 	}
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "carga_multiverso";
+	}
 }

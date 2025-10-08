@@ -123,4 +123,13 @@ public class LexForgeMLTransformerEnNeoForge implements Verificaciones {
                 .agregarEtiqueta(MonitorDePID.idioma.paso4_LexForgeMLTransformerEnNeoForge())
                 .construir();
     }
+    
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "lexforge_ml_transformer_en_neoforge";
+	}
+    
+    
+    
 }

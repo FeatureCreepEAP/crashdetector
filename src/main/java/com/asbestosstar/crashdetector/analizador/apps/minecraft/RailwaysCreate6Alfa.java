@@ -72,4 +72,12 @@ public class RailwaysCreate6Alfa implements Verificaciones {
                 .agregarEtiqueta(MonitorDePID.idioma.pasoRailwaysCreate6Alfa())
                 .construir();
     }
+    
+    @Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "railways_6_alfa";
+	}
+    
+    
 }

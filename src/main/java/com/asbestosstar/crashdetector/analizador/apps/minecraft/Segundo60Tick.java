@@ -55,4 +55,11 @@ public class Segundo60Tick implements Verificaciones {
 				.construir();
 	}
 
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "segundo_60_tick";
+	}
+	
+	
 }

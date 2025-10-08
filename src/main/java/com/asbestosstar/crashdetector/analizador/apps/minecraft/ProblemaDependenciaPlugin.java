@@ -214,4 +214,10 @@ public class ProblemaDependenciaPlugin implements Verificaciones {
 
 		return builder.construir();
 	}
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "dependencia_plugin";
+	}
 }

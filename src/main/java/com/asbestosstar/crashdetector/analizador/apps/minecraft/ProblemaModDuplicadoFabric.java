@@ -91,4 +91,10 @@ public class ProblemaModDuplicadoFabric implements Verificaciones {
 		return new Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.solucionEliminarModDuplicado(rutaMod))
 				.construir();
 	}
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "mod_duplicado_fabric";
+	}
 }

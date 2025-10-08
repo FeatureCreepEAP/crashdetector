@@ -153,4 +153,11 @@ public class NoTieneMemoria implements Verificaciones {
 
 		return new QuickFix.Builder(nombre()).agregarEtiqueta(solucion.toString()).construir();
 	}
+	
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "no_tiene_memoria";
+	}
 }

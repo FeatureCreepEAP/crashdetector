@@ -117,4 +117,10 @@ public class ErrorRutaModLauncher implements Verificaciones {
 				.agregarEtiqueta(MonitorDePID.idioma.solucion_modlauncher_path())
 				.construir();
 	}
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "ruta_modlauncher";
+	}
 }

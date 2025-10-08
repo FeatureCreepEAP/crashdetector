@@ -63,4 +63,11 @@ public class ErrorDeMonitorLWJGL implements Verificaciones {
 				.construir();
 	}
 
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "monitor_lwjgl";
+	}
+	
+	
 }

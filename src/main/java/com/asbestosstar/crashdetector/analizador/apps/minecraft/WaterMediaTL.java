@@ -51,4 +51,10 @@ public class WaterMediaTL implements Verificaciones {
 					ConfigDeParches.obtenerInstancia().establecerActivo("watermedia_tl", true);
 				}, true).construir();
 	}
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "watermedia_tl";
+	}
 }

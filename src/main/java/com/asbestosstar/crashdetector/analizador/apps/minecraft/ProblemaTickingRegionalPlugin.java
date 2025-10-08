@@ -124,4 +124,10 @@ public class ProblemaTickingRegionalPlugin implements Verificaciones {
 
 		return builder.construir();
 	}
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "ticking_regional_plugin";
+	}
 }

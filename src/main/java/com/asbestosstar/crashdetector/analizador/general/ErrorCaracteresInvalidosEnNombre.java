@@ -89,4 +89,10 @@ public class ErrorCaracteresInvalidosEnNombre implements Verificaciones {
 				.agregarEtiqueta(MonitorDePID.idioma.paso2_caracteres_invalidos(nombreModulo))
 				.agregarEtiqueta(MonitorDePID.idioma.paso3_caracteres_invalidos()).construir();
 	}
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "caracters_invalidos_en_nombre";
+	}
 }

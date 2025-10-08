@@ -85,4 +85,10 @@ public class ProblemaConfiguracionPermissionsEx implements Verificaciones {
 	public boolean anularNormal() {
 		return true;
 	}
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "config_permissions_ex";
+	}
 }

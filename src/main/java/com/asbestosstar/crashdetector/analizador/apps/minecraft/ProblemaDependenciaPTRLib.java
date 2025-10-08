@@ -86,4 +86,10 @@ public class ProblemaDependenciaPTRLib implements Verificaciones {
 	public QuickFix solucion() {
 		return new Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.solucionInstalarMod(nombreMod)).construir();
 	}
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "problema_dependencia_ptrlib";
+	}
 }

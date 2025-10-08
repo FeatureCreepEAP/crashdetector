@@ -84,4 +84,9 @@ public class ErrorDiscrepanciaModID implements Verificaciones {
 				.agregarEtiqueta(MonitorDePID.idioma.paso2_discrepancia_mod_id())
 				.agregarEtiqueta(MonitorDePID.idioma.paso3_discrepancia_mod_id()).construir();
 	}
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "discrepancia_modid";
+	}
 }

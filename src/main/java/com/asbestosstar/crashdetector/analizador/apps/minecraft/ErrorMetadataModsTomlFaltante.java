@@ -88,4 +88,10 @@ public class ErrorMetadataModsTomlFaltante implements Verificaciones {
 				.agregarEtiqueta(MonitorDePID.idioma.paso2_metadata_mods_toml_faltante(modIdFaltante))
 				.agregarEtiqueta(MonitorDePID.idioma.paso3_metadata_mods_toml_faltante(modIdFaltante)).construir();
 	}
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "metadata_mods_toml_faltante";
+	}
 }

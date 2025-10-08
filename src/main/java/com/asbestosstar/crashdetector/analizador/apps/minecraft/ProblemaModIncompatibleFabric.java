@@ -91,4 +91,10 @@ public class ProblemaModIncompatibleFabric implements Verificaciones {
 		return new Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.solucionEliminarMod(primerMod))
 				.agregarEtiqueta(MonitorDePID.idioma.solucionEliminarMod(segundoMod)).construir();
 	}
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "mod_incompatible_fabric";
+	}
 }

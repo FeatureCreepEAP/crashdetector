@@ -140,4 +140,12 @@ public class ProblemaTickingEntidadBloque implements Verificaciones {
 				.agregarEtiqueta(MonitorDePID.idioma.solucionEliminarEntidadBloque(nombreEntidad, coordenadas))
 				.construir();
 	}
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "problema_ticking_entidad_bloque";
+	}
+	
+	
 }

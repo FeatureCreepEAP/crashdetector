@@ -78,4 +78,10 @@ public class ErrorDependenciaModFaltante implements Verificaciones {
 				.agregarEtiqueta(MonitorDePID.idioma.paso2_dependencia_mod_faltante(nombreJar))
 				.agregarEtiqueta(MonitorDePID.idioma.paso3_dependencia_mod_faltante()).construir();
 	}
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "dependencia_mod_faltante";
+	}
 }

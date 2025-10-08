@@ -83,4 +83,10 @@ public class SCOErrorCompatibilidadC2ME implements Verificaciones {
 				.agregarEtiqueta(MonitorDePID.idioma.paso2_compatibilidad_c2me())
 				.agregarEtiqueta(MonitorDePID.idioma.paso3_compatibilidad_c2me()).construir();
 	}
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "sco_error_compatibilidad_c2me";
+	}
 }

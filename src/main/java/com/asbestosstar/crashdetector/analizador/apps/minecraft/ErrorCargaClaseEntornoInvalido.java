@@ -83,4 +83,10 @@ public class ErrorCargaClaseEntornoInvalido implements Verificaciones {
 				.agregarEtiqueta(MonitorDePID.idioma.paso2_mod_plataforma_incorrecta(entornoInvalido))
 				.agregarEtiqueta(MonitorDePID.idioma.paso3_mod_plataforma_incorrecta()).construir();
 	}
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "error_carga_clase_entorno_invalido";
+	}
 }

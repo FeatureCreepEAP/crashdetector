@@ -87,4 +87,10 @@ public class ProblemaSpongeMixinFabric implements Verificaciones {
 	public QuickFix solucion() {
 		return new Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.solucionEliminarMod(nombreMod)).construir();
 	}
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "problema_spongemixin_fabric";
+	}
 }

@@ -88,7 +88,11 @@ public interface Verificaciones {
     	
     }
     
-    
+    /**
+     * Una id sin simbolas o accentos o espacios
+     * @return
+     */
+    public String id();
     
     
     

@@ -65,4 +65,12 @@ public class BloqueTeselado implements Verificaciones {
 		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
 				.construir();
 	}
+	
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "bloqueteselado";
+	}
+	
 }

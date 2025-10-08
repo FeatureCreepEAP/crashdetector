@@ -90,4 +90,10 @@ public class ProblemaCargaChunk implements Verificaciones {
 				.agregarEtiqueta(MonitorDePID.idioma.solucionEliminarCarpetaMundo("world"))
 				.agregarEtiqueta(MonitorDePID.idioma.solucionEliminarChunk()).construir();
 	}
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "carga_chunk";
+	}
 }

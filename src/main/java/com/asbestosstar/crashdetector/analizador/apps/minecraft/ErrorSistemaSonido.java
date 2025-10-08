@@ -67,4 +67,10 @@ public class ErrorSistemaSonido implements Verificaciones {
 				.agregarEtiqueta(MonitorDePID.idioma.paso2_sistema_sonido())
 				.agregarEtiqueta(MonitorDePID.idioma.paso3_sistema_sonido()).construir();
 	}
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "error_en_sistema_sonido";
+	}
 }

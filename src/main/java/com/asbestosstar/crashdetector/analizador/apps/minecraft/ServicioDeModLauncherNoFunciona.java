@@ -82,4 +82,10 @@ public class ServicioDeModLauncherNoFunciona implements Verificaciones {
 		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
 				.construir();
 	}
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "servicio_de_modlauncher_no_funciona";
+	}
 }

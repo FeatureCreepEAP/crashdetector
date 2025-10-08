@@ -110,4 +110,11 @@ public class ConflictoDeIDsMinecraft implements Verificaciones {
 		return "";
 	}
 
+	
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "conflicto_de_ids_minecraft";
+	}
+	
 }

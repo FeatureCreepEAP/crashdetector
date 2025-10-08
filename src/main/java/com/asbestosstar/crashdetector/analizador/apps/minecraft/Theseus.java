@@ -57,4 +57,10 @@ public class Theseus implements Verificaciones {
 		return Criticalidad.ADVERTENCIA;
 	}
 
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return "theseus";
+	}
+	
 }
