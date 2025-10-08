@@ -41,7 +41,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
 
 import com.asbestosstar.crashdetector.MonitorDePID;
-import com.asbestosstar.crashdetector.analizador.Verificaciones.Criticalidad;
+import com.asbestosstar.crashdetector.analizador.Criticalidad;
 import com.asbestosstar.crashdetector.analizador.codice.CargadorDeCodice;
 import com.asbestosstar.crashdetector.analizador.codice.FiltrodeCodice;
 import com.asbestosstar.crashdetector.analizador.codice.v0.CodiceV0;

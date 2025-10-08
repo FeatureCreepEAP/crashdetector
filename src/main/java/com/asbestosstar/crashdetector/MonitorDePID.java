@@ -40,7 +40,6 @@ public class MonitorDePID {
 	public static Path ultimo_mods = carpeta.resolve("ultima_mods");
 	//public static Path viajo_ultima_mods = carpeta.resolve("viajo_ultima_mods");
 	public static List<Consola> consolas = new ArrayList<Consola>();
-	public static Analizador analizador = new Analizador();
 
 	public static String nl = System.lineSeparator();
 	public static Idioma idioma = Idioma.detectar();
@@ -51,6 +50,8 @@ public class MonitorDePID {
 	public static boolean tiene_mensaje_de_registro_launcher_completa = false;
 	public static boolean consola_de_launcher_inyectado = false;
 	public static StringBuilder contenidoInforme;
+	public static Analizador analizador = new Analizador();
+
 
 	/**
 	 * Es diferente en el process diferente

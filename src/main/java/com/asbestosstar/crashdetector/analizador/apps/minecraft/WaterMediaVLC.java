@@ -5,10 +5,10 @@ import java.net.URI;
 
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.analizador.Criticalidad;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.analizador.Verificaciones.Criticalidad;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class WaterMediaVLC implements Verificaciones {
 	private boolean activado = false;

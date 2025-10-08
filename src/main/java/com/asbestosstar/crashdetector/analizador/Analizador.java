@@ -107,6 +107,8 @@ public class Analizador {
 	public HashSet<Verificaciones> verificaciones_activados = new LinkedHashSet<Verificaciones>();
 
 	static {
+		CrashDetectorLogger.log(Criticalidad.ADVERTENCIA.toString() + " buscando para advertencias ");
+		
 		verificaciones.add(new SpongeMixinConfigsProblematicos());
 		verificaciones.add(new NoSuchElementAnimacionMinecraft());
 		verificaciones.add(new PreferIPV4Trace());

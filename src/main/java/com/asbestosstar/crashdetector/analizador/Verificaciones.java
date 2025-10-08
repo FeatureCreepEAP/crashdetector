@@ -74,32 +74,6 @@ public interface Verificaciones {
     public default Criticalidad nivel_de_criticalidad() {
     	return Criticalidad.ERROR;
     }
-
-    
-    
-    public static class Criticalidad{
-    	
-    	public static Criticalidad FATAL = new Criticalidad(Color.RED,MonitorDePID.idioma.fatal());
-    	public static Criticalidad ERROR = new Criticalidad(Config.convertirAColor(Config.obtenerInstancia().obtenerColorError()),MonitorDePID.idioma.error());
-    	public static Criticalidad ADVERTENCIA = new Criticalidad(Config.convertirAColor(Config.obtenerInstancia().obtenerColorAdvertencia()),MonitorDePID.idioma.advertencia());
-    	
-    	/**
-    	 * Color en lectador
-    	 */
-    	public Color color;
-    	public String nombre;
-    	
-    	
-    	/**
-    	 * Criticalidad en Lectador
-    	 * @param color
-    	 */
-    	public Criticalidad(Color color,String nombre) {
-    		this.color=color;
-    		this.nombre=nombre;
-    	}
-    	
-    }
     
     /**
      * Una id sin simbolas o accentos o espacios

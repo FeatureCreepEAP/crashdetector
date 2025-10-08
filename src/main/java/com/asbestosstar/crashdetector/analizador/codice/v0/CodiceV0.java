@@ -7,8 +7,9 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
-import com.asbestosstar.crashdetector.analizador.Verificaciones.Criticalidad;
+import com.asbestosstar.crashdetector.analizador.Criticalidad;
 import com.asbestosstar.crashdetector.analizador.codice.FiltrodeCodice;
 import com.asbestosstar.crashdetector.json.Json;
 import com.asbestosstar.crashdetector.json.Json.Nodo;
@@ -44,85 +45,144 @@ public static List<VerificacionCodexV0> cargar() {
     final Path ruta = MonitorDePID.carpeta.resolve(NOMBRE_ARCHIVO);
     final List<VerificacionCodexV0> lista = new ArrayList<VerificacionCodexV0>();
 
-    if (!Files.exists(ruta)) {
-        return lista;
-    }
     try {
-        String json = new String(Files.readAllBytes(ruta), StandardCharsets.UTF_8);
+
+        if (!Files.exists(ruta)) {
+            return lista;
+        }
+
+        byte[] bytes = Files.readAllBytes(ruta);
+        String json = new String(bytes, StandardCharsets.UTF_8);
+ 
+
         Nodo raiz = Json.leer(json);
 
-        Nodo nSchema = raiz.obtener("schema");
-        int schema = (nSchema == null) ? SCHEMA : nSchema.comoEntero();
+        // Schema
+        Nodo nSchema = raiz != null ? raiz.obtener("schema") : null;
+
+        int schema;
+        try {
+            schema = (nSchema == null) ? SCHEMA : nSchema.comoEntero();
+        } catch (Throwable te) {
+            // Intento parsear desde cadena si vino en minúsculas o texto
+            String sraw = (nSchema == null ? null : nSchema.comoCadena());
+            if (sraw != null) {
+                try {
+                    schema = Integer.parseInt(sraw.trim());
+                } catch (NumberFormatException nfe) {
+                    schema = SCHEMA;
+                }
+            } else {
+                schema = SCHEMA;
+            }
+        }
+
         if (schema != SCHEMA) {
             return lista;
         }
 
+        // verificaciones
         Nodo arr = raiz.obtener("verificaciones");
-        // Más tolerante: si el motor no reporta "arreglo", iteramos igualmente por tamano()
-        if (arr != null && arr.tamano() > 0) {
-            for (int i = 0; i < arr.tamano(); i++) {
-                Nodo v = arr.en(i);
-
-                String id = seguro(v.obtener("id"));
-                String para_buscar = seguro(v.obtener("para_buscar"));
-                String idFiltro = seguro(v.obtener("filtro"));
-                FiltrodeCodice filtro = FiltrodeCodice.obtener(idFiltro);
-
-                String critStr = seguro(v.obtener("criticalidad"));
-                Criticalidad criticalidad = parseCriticalidad(critStr);
-
-                int prioridad = 0;
-                Nodo nPrio = v.obtener("prioridad");
-                if (nPrio != null) {
-                    prioridad = nPrio.comoEntero();
-                }
-
-                Nodo nombres = v.obtener("nombres");
-                String nombre_ar = val(nombres, "ar");
-                String nombre_zh = val(nombres, "zh");
-                String nombre_kp = val(nombres, "kp");
-                String nombre_es = val(nombres, "es");
-                String nombre_eo = val(nombres, "eo");
-                String nombre_en = val(nombres, "en");
-                String nombre_jp = val(nombres, "jp");
-                String nombre_fa = val(nombres, "fa");
-                String nombre_pt = val(nombres, "pt");
-                String nombre_ru = val(nombres, "ru");
-
-                Nodo resultados = v.obtener("resultados");
-                String resultado_ar = val(resultados, "ar");
-                String resultado_zh = val(resultados, "zh");
-                String resultado_kp = val(resultados, "kp");
-                String resultado_es = val(resultados, "es");
-                String resultado_eo = val(resultados, "eo");
-                String resultado_en = val(resultados, "en");
-                String resultado_jp = val(resultados, "jp");
-                String resultado_fa = val(resultados, "fa");
-                String resultado_pt = val(resultados, "pt");
-                String resultado_ru = val(resultados, "ru");
-
-                VerificacionCodexV0 ver = new VerificacionCodexV0(
-                        id,
-                        nombre_ar, resultado_ar,
-                        nombre_zh, resultado_zh,
-                        nombre_kp, resultado_kp,
-                        nombre_es, resultado_es,
-                        nombre_eo, resultado_eo,
-                        nombre_en, resultado_en,
-                        nombre_jp, resultado_jp,
-                        nombre_fa, resultado_fa,
-                        nombre_pt, resultado_pt,
-                        nombre_ru, resultado_ru,
-                        criticalidad, prioridad, para_buscar, filtro
-                );
-                lista.add(ver);
+        if (arr != null) {
+            boolean esArr;
+            int tam = 0;
+            try {
+                esArr = arr.esArreglo();
+            } catch (Throwable te) {
+                esArr = false;            }
+            try {
+                tam = arr.tamano();
+            } catch (Throwable te) {
+                tam = 0;
             }
+
+            if (tam > 0) {
+                for (int i = 0; i < tam; i++) {
+                    try {
+                        Nodo v = arr.en(i);
+
+                        String id = seguro(v.obtener("id"));
+                        String para_buscar = seguro(v.obtener("para_buscar"));
+                        String idFiltro = seguro(v.obtener("filtro"));
+
+
+                        FiltrodeCodice filtro = FiltrodeCodice.obtener(idFiltro);
+
+                        String critStr = seguro(v.obtener("criticalidad"));
+                        Criticalidad criticalidad = parseCriticalidad(critStr);
+
+                        int prioridad = 0;
+                        Nodo nPrio = v.obtener("prioridad");
+                        if (nPrio != null) {
+                            try {
+                                prioridad = nPrio.comoEntero();
+                            } catch (Throwable te) {
+                                String pr = nPrio.comoCadena();
+                                try { prioridad = Integer.parseInt(pr.trim()); } catch (Throwable ignore) { prioridad = 0; }
+                            }
+                        }
+
+                        // nombres
+                        Nodo nombres = v.obtener("nombres");
+                        String nombre_ar = val(nombres, "ar");
+                        String nombre_zh = val(nombres, "zh");
+                        String nombre_kp = val(nombres, "kp");
+                        String nombre_es = val(nombres, "es");
+                        String nombre_eo = val(nombres, "eo");
+                        String nombre_en = val(nombres, "en");
+                        String nombre_jp = val(nombres, "jp");
+                        String nombre_fa = val(nombres, "fa");
+                        String nombre_pt = val(nombres, "pt");
+                        String nombre_ru = val(nombres, "ru");
+
+
+                        // resultados
+                        Nodo resultados = v.obtener("resultados");
+                        String resultado_ar = val(resultados, "ar");
+                        String resultado_zh = val(resultados, "zh");
+                        String resultado_kp = val(resultados, "kp");
+                        String resultado_es = val(resultados, "es");
+                        String resultado_eo = val(resultados, "eo");
+                        String resultado_en = val(resultados, "en");
+                        String resultado_jp = val(resultados, "jp");
+                        String resultado_fa = val(resultados, "fa");
+                        String resultado_pt = val(resultados, "pt");
+                        String resultado_ru = val(resultados, "ru");
+
+
+                        VerificacionCodexV0 ver = new VerificacionCodexV0(
+                                id,
+                                nombre_ar, resultado_ar,
+                                nombre_zh, resultado_zh,
+                                nombre_kp, resultado_kp,
+                                nombre_es, resultado_es,
+                                nombre_eo, resultado_eo,
+                                nombre_en, resultado_en,
+                                nombre_jp, resultado_jp,
+                                nombre_fa, resultado_fa,
+                                nombre_pt, resultado_pt,
+                                nombre_ru, resultado_ru,
+                                criticalidad, prioridad, para_buscar, filtro
+                        );
+                        lista.add(ver);
+                    } catch (Throwable ite) {
+                        CrashDetectorLogger.log("[CodiceV0] ERROR en item i=" + i + ": " + ite.getClass().getName() + " - " + ite.getMessage());
+                    }
+                }
+            } else {
+                CrashDetectorLogger.log("[CodiceV0] 'verificaciones' sin elementos.");
+            }
+        } else {
+            CrashDetectorLogger.log("[CodiceV0] 'verificaciones' es null.");
         }
     } catch (Throwable t) {
-        // silenciar: devolvemos lo acumulado
+        CrashDetectorLogger.log("[CodiceV0] EXCEPCIÓN cargar(): " + t.getClass().getName() + " - " + t.getMessage());
     }
+
+    CrashDetectorLogger.log("[CodiceV0] retorno lista con size=" + lista.size());
     return lista;
 }
+
 
 
     /** Guarda la lista de verificaciones en codice.json con schema=0. Crea carpeta/archivo si no existen. */
@@ -226,7 +286,7 @@ public static List<VerificacionCodexV0> cargar() {
     }
 
     /** Parse de criticalidad con respaldo a ADVERTENCIA. Soporta ADVERTENCIA, ERROR, FATAL. */
-    private static Criticalidad parseCriticalidad(String s) {
+    public static Criticalidad parseCriticalidad(String s) {
         if (s == null) return Criticalidad.ADVERTENCIA;
         String up = s.trim().toUpperCase();
         if ("ERROR".equals(up)) return Criticalidad.ERROR;

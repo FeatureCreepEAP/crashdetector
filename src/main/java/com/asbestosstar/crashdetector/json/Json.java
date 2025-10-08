@@ -2,6 +2,8 @@ package com.asbestosstar.crashdetector.json;
 
 import java.nio.charset.StandardCharsets;
 
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
+
 /**
  * Punto de entrada para leer y escribir datos tipo JSON
  * Detecta Gson o JBoss DMR por clases disponibles
@@ -42,6 +44,7 @@ public class Json {
     private static boolean claseExiste(String cn) {
         try {
             Class.forName(cn, false, Json.class.getClassLoader());
+            CrashDetectorLogger.log("JSON clase "+ cn);
             return true;
         } catch (Throwable t) {
             return false;
