@@ -4,6 +4,7 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones.Criticalidad;
 
 public class Theseus implements Verificaciones {
@@ -61,6 +62,11 @@ public class Theseus implements Verificaciones {
 	public String id() {
 		// TODO Auto-generated method stub
 		return "theseus";
+	}
+	@Override
+	public boolean ocupaTrazo(TraceInfo trazo) {
+		// TODO Auto-generated method stub
+		return false;//TODO
 	}
 	
 }

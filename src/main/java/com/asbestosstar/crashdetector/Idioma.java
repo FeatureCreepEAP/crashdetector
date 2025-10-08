@@ -1334,6 +1334,62 @@ public interface Idioma {
 
 	public String solucion_modlauncher_path();
 
+	public String tituloEditorCodice();
+
+	public String nuevo();
+
+	public String actualizarSeleccionado();
+
+	public String eliminarSeleccionado();
+
+	public String exportarJSON();
+
+	public String guardarTodo();
+
+	public String general();
+
+	public String id();
+
+	public String paraBuscar();
+
+	public String filtro();
+
+	public String criticalidad();
+
+	public String prioridad();
+
+	public String lista();
+
+	public String colIdioma();
+
+	public String colNombre();
+
+	public String colResultado();
+
+	public String vistaJson();
+
+	public String idiomas();
+
+	public String elegirFiltro();
+
+	public String eligeFiltroMsg();
+
+	public String eligeFiltroTitulo();
+
+	public String faltanCampos();
+
+	public String critInvalida();
+
+	public String filtroNoExiste();
+
+	public String faltanIdiomas();
+
+	public String verificacionInvalida();
+
+	public String guardadoOk();
+
+	public String editorCodiceBoton();
+
 	
 	
 	

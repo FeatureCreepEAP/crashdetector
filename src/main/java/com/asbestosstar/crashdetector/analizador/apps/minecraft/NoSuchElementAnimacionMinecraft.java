@@ -13,6 +13,7 @@ import com.asbestosstar.crashdetector.EliminadorDeMod;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
 
 public class NoSuchElementAnimacionMinecraft implements Verificaciones {
@@ -130,6 +131,15 @@ public class NoSuchElementAnimacionMinecraft implements Verificaciones {
 		// TODO Auto-generated method stub
 		return "no_such_element_animacion_minecraft";
 	}
+	
+	@Override
+	public boolean ocupaTrazo(TraceInfo trazo) {
+		// TODO Auto-generated method stub
+		return false;//TODO
+	}
+	
+	
+	
 	
 	
 	

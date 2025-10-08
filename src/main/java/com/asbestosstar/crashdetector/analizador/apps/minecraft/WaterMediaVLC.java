@@ -7,6 +7,7 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones.Criticalidad;
 
 public class WaterMediaVLC implements Verificaciones {
@@ -73,4 +74,17 @@ public class WaterMediaVLC implements Verificaciones {
 		// TODO Auto-generated method stub
 		return "watermedia_tl";
 	}
+	@Override
+	public boolean ocupaTrazo(TraceInfo trazo) {
+		// TODO Auto-generated method stub
+		return false;//TODO
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 }

@@ -4,6 +4,7 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 
 /**
  * Verificador que detecta errores relacionados con el teselado de bloques en
@@ -71,6 +72,12 @@ public class BloqueTeselado implements Verificaciones {
 	public String id() {
 		// TODO Auto-generated method stub
 		return "bloqueteselado";
+	}
+	
+	@Override
+	public boolean ocupaTrazo(TraceInfo trazo) {
+		// TODO Auto-generated method stub
+		return false;//TODO
 	}
 	
 }

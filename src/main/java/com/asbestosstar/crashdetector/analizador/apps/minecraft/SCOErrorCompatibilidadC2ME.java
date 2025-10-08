@@ -4,6 +4,7 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 
 /**
  * Analiza errores de compatibilidad entre C2ME y mods de conexión. Detecta
@@ -89,4 +90,14 @@ public class SCOErrorCompatibilidadC2ME implements Verificaciones {
 		// TODO Auto-generated method stub
 		return "sco_error_compatibilidad_c2me";
 	}
+	@Override
+	public boolean ocupaTrazo(TraceInfo trazo) {
+		// TODO Auto-generated method stub
+		return false;//TODO
+	}
+	
+	
+	
+	
+	
 }

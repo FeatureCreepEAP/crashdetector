@@ -7,6 +7,7 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 
 /**
  * https://github.com/HMCL-dev/HMCL/blob/77dc5dbe06ef1ca1cc08cd6c47525999d92a992a/HMCLCore/src/main/java/org/jackhuang/hmcl/game/CrashReportAnalyzer.java#L109C55-L109C80
@@ -115,6 +116,12 @@ public class ConflictoDeIDsMinecraft implements Verificaciones {
 	public String id() {
 		// TODO Auto-generated method stub
 		return "conflicto_de_ids_minecraft";
+	}
+	
+	@Override
+	public boolean ocupaTrazo(TraceInfo trazo) {
+		// TODO Auto-generated method stub
+		return false;//TODO
 	}
 	
 }

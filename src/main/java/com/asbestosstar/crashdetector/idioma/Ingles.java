@@ -3275,6 +3275,147 @@ public String solucion_modlauncher_path() {
             + "Solution: Rename the instance to use only ASCII characters (a-z, A-Z, 0-9) and avoid spaces and special characters. "
             + "Pay special attention to the '\"' character, which is highly problematic, especially when at the end of the name.";
 }
+@Override
+public String tituloEditorCodice() {
+    return "Codice Editor";
+}
+
+@Override
+public String nuevo() {
+    return "New";
+}
+
+@Override
+public String actualizarSeleccionado() {
+    return "Update selected";
+}
+
+@Override
+public String eliminarSeleccionado() {
+    return "Delete selected";
+}
+
+@Override
+public String exportarJSON() {
+    return "Export JSON...";
+}
+
+@Override
+public String guardarTodo() {
+    return "Save all";
+}
+
+@Override
+public String general() {
+    return "General";
+}
+
+@Override
+public String id() {
+    return "ID";
+}
+
+@Override
+public String paraBuscar() {
+    return "Text to search";
+}
+
+@Override
+public String filtro() {
+    return "Filter (id)";
+}
+
+@Override
+public String criticalidad() {
+    return "Criticality (WARNING/ERROR/FATAL)";
+}
+
+@Override
+public String prioridad() {
+    return "Priority";
+}
+
+@Override
+public String lista() {
+    return "Checks";
+}
+
+@Override
+public String colIdioma() {
+    return "Language";
+}
+
+@Override
+public String colNombre() {
+    return "Name";
+}
+
+@Override
+public String colResultado() {
+    return "Result";
+}
+
+@Override
+public String vistaJson() {
+    return "JSON Preview";
+}
+
+@Override
+public String idiomas() {
+    return "Languages (all required)";
+}
+
+@Override
+public String elegirFiltro() {
+    return "Choose...";
+}
+
+@Override
+public String eligeFiltroMsg() {
+    return "Select a filter";
+}
+
+@Override
+public String eligeFiltroTitulo() {
+    return "Available filters";
+}
+
+@Override
+public String faltanCampos() {
+    return "Fill in all mandatory general fields.";
+}
+
+@Override
+public String critInvalida() {
+    return "Invalid criticality. Use WARNING, ERROR or FATAL.";
+}
+
+@Override
+public String filtroNoExiste() {
+    return "The specified filter does not exist.";
+}
+
+@Override
+public String faltanIdiomas() {
+    return "Complete name and result for all languages:";
+}
+
+@Override
+public String verificacionInvalida() {
+    return "A verification is invalid. Please check the fields.";
+}
+
+@Override
+public String guardadoOk() {
+    return "Saved successfully.";
+}
+
+@Override
+public String editorCodiceBoton() {
+    return "Codice Editor";
+}
+
+
 
 
 

@@ -20,6 +20,7 @@ import com.asbestosstar.crashdetector.TriMap;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.waifu.RespuestaWaifu;
 import com.asbestosstar.crashdetector.waifu.VersionWaifu;
 import com.asbestosstar.crashdetector.waifu.WaifuAPI;
@@ -521,4 +522,13 @@ public class FaltasClases implements Verificaciones {
 		// TODO Auto-generated method stub
 		return "faltas_clases";
 	}
+	@Override
+	public boolean ocupaTrazo(TraceInfo trazo) {
+		// TODO Auto-generated method stub
+		return false;//TODO
+	}
+	
+	
+	
+	
 }

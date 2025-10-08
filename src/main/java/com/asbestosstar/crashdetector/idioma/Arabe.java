@@ -3212,6 +3212,147 @@ public String solucion_modlauncher_path() {
             + "ولاحظ بعناية الرمز '\"' فهو مشكلة كبيرة، خصوصًا عند وضعه في نهاية الاسم.";
 }
 
+@Override
+public String tituloEditorCodice() {
+    return "محرر كوديس";
+}
+
+@Override
+public String nuevo() {
+    return "جديد";
+}
+
+@Override
+public String actualizarSeleccionado() {
+    return "تحديث المحدد";
+}
+
+@Override
+public String eliminarSeleccionado() {
+    return "حذف المحدد";
+}
+
+@Override
+public String exportarJSON() {
+    return "تصدير JSON...";
+}
+
+@Override
+public String guardarTodo() {
+    return "حفظ الكل";
+}
+
+@Override
+public String general() {
+    return "عام";
+}
+
+@Override
+public String id() {
+    return "المعرف";
+}
+
+@Override
+public String paraBuscar() {
+    return "النص للبحث";
+}
+
+@Override
+public String filtro() {
+    return "عامل التصفية (المعرف)";
+}
+
+@Override
+public String criticalidad() {
+    return "الأهمية (تحذير/خطأ/مميت)";
+}
+
+@Override
+public String prioridad() {
+    return "الأولوية";
+}
+
+@Override
+public String lista() {
+    return "التحقق";
+}
+
+@Override
+public String colIdioma() {
+    return "اللغة";
+}
+
+@Override
+public String colNombre() {
+    return "الاسم";
+}
+
+@Override
+public String colResultado() {
+    return "النتيجة";
+}
+
+@Override
+public String vistaJson() {
+    return "معاينة JSON";
+}
+
+@Override
+public String idiomas() {
+    return "اللغات (جميعها إلزامية)";
+}
+
+@Override
+public String elegirFiltro() {
+    return "اختر...";
+}
+
+@Override
+public String eligeFiltroMsg() {
+    return "اختر عامل تصفية";
+}
+
+@Override
+public String eligeFiltroTitulo() {
+    return "عوامل التصفية المتاحة";
+}
+
+@Override
+public String faltanCampos() {
+    return "أكمل جميع الحقول العامة الإلزامية.";
+}
+
+@Override
+public String critInvalida() {
+    return "أهمية غير صالحة. استخدم: تحذير، خطأ أو مميت.";
+}
+
+@Override
+public String filtroNoExiste() {
+    return "عامل التصفية المحدد غير موجود.";
+}
+
+@Override
+public String faltanIdiomas() {
+    return "أكمل الاسم والنتيجة لكل اللغات:";
+}
+
+@Override
+public String verificacionInvalida() {
+    return "فحص غير صالح. راجع الحقول.";
+}
+
+@Override
+public String guardadoOk() {
+    return "تم الحفظ بنجاح.";
+}
+
+@Override
+public String editorCodiceBoton() {
+    return "محرر كوديس";
+}
+
+
 
 
 

@@ -13,6 +13,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 
 /**
  * Verificación especializada para detectar errores de resolución de texturas que
@@ -182,4 +183,11 @@ public class ErrorResolucionDeTextura implements Verificaciones {
 		// TODO Auto-generated method stub
 		return "error_resolucion_de_textura";
 	}
+	@Override
+	public boolean ocupaTrazo(TraceInfo trazo) {
+		// TODO Auto-generated method stub
+		return false;//TODO
+	}
+	
+	
 }

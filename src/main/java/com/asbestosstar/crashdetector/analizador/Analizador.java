@@ -75,6 +75,7 @@ import com.asbestosstar.crashdetector.analizador.apps.minecraft.TaczDeflaterCerr
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.WaterMediaTL;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.WaterMediaVLC;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.WaterMediaXenonIncompatible;
+import com.asbestosstar.crashdetector.analizador.codice.CargadorDeCodice;
 import com.asbestosstar.crashdetector.analizador.general.AdvertenciaFaltasClases;
 import com.asbestosstar.crashdetector.analizador.general.ContentoDeTraces;
 import com.asbestosstar.crashdetector.analizador.general.DifDeMods;
@@ -209,6 +210,10 @@ public class Analizador {
 		verificaciones.add(new ErrorResolucionDeTextura());
 		verificaciones.add(new ErrorRutaModLauncher());
 
+		
+		verificaciones.addAll(CargadorDeCodice.cargarVerificaciones());
+		CrashDetectorLogger.log("Numero de Codices " + String.valueOf(CargadorDeCodice.cargarVerificaciones().size()));
+		
 		verificaciones.add(new DifDeMods());
 
 		// TODO

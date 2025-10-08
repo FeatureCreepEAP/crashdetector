@@ -4,6 +4,7 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 
 /**
  * Analiza errores cuando AzureLib o GeckoLib se inicializan demasiado pronto.
@@ -91,6 +92,12 @@ public class AzureGeckoLibInicializoPronto implements Verificaciones {
 	public String id() {
 		// TODO Auto-generated method stub
 		return "azuregeckolibinicialaizo";
+	}
+	
+	@Override
+	public boolean ocupaTrazo(TraceInfo trazo) {
+		// TODO Auto-generated method stub
+		return false;//TODO
 	}
 	
 }

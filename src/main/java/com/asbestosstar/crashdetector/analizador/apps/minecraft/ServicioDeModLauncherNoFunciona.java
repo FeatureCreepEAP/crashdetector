@@ -10,6 +10,7 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 
 public class ServicioDeModLauncherNoFunciona implements Verificaciones {
 
@@ -88,4 +89,13 @@ public class ServicioDeModLauncherNoFunciona implements Verificaciones {
 		// TODO Auto-generated method stub
 		return "servicio_de_modlauncher_no_funciona";
 	}
+	@Override
+	public boolean ocupaTrazo(TraceInfo trazo) {
+		// TODO Auto-generated method stub
+		return false;//TODO
+	}
+	
+	
+	
+	
 }

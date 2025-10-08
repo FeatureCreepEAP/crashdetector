@@ -3202,6 +3202,149 @@ public String solucion_modlauncher_path() {
             + "راه‌حل: نام مجموعه را به گونه‌ای تغییر دهید که فقط از کاراکترهای ASCII (a-z, A-Z, 0-9) استفاده شود و از فاصله و کاراکترهای خاص اجتناب کنید. "
             + "به کاراکتر '\"' توجه ویژه‌ای داشته باشید که بسیار مشکل‌ساز است، به‌ویژه وقتی در انتهای نام قرار دارد.";
 }
+@Override
+public String tituloEditorCodice() {
+    return "ویرایشگر کدیس";
+}
+
+@Override
+public String nuevo() {
+    return "جدید";
+}
+
+@Override
+public String actualizarSeleccionado() {
+    return "به‌روزرسانی مورد انتخاب شده";
+}
+
+@Override
+public String eliminarSeleccionado() {
+    return "حذف مورد انتخاب شده";
+}
+
+@Override
+public String exportarJSON() {
+    return "صدور JSON...";
+}
+
+@Override
+public String guardarTodo() {
+    return "ذخیره همه";
+}
+
+@Override
+public String general() {
+    return "عمومی";
+}
+
+@Override
+public String id() {
+    return "شناسه";
+}
+
+@Override
+public String paraBuscar() {
+    return "متن جستجو";
+}
+
+@Override
+public String filtro() {
+    return "فیلتر (شناسه)";
+}
+
+@Override
+public String criticalidad() {
+    return "سطح اهمیت (هشدار/خطا/کشنده)";
+}
+
+@Override
+public String prioridad() {
+    return "اولویت";
+}
+
+@Override
+public String lista() {
+    return "بررسی‌ها";
+}
+
+@Override
+public String colIdioma() {
+    return "زبان";
+}
+
+@Override
+public String colNombre() {
+    return "نام";
+}
+
+@Override
+public String colResultado() {
+    return "نتیجه";
+}
+
+@Override
+public String vistaJson() {
+    return "پیش‌نمایش JSON";
+}
+
+@Override
+public String idiomas() {
+    return "زبان‌ها (همه الزامی)";
+}
+
+@Override
+public String elegirFiltro() {
+    return "انتخاب...";
+}
+
+@Override
+public String eligeFiltroMsg() {
+    return "یک فیلتر را انتخاب کنید";
+}
+
+@Override
+public String eligeFiltroTitulo() {
+    return "فیلترهای موجود";
+}
+
+@Override
+public String faltanCampos() {
+    return "تمام فیلدهای عمومی ضروری را پر کنید.";
+}
+
+@Override
+public String critInvalida() {
+    return "سطح اهمیت نامعتبر است. از گزینه‌های هشدار، خطا یا کشنده استفاده کنید.";
+}
+
+@Override
+public String filtroNoExiste() {
+    return "فیلتر مشخص شده وجود ندارد.";
+}
+
+@Override
+public String faltanIdiomas() {
+    return "نام و نتیجه را برای تمام زبان‌ها تکمیل کنید:";
+}
+
+@Override
+public String verificacionInvalida() {
+    return "یک بررسی نامعتبر است. لطفاً فیلدها را بررسی کنید.";
+}
+
+@Override
+public String guardadoOk() {
+    return "با موفقیت ذخیره شد.";
+}
+
+@Override
+public String editorCodiceBoton() {
+    return "ویرایشگر کدیس";
+}
+
+
+
+
 
 
 

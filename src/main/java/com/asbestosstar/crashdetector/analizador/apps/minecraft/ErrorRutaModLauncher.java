@@ -7,6 +7,7 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 
 /**
  * Verificación especializada para detectar errores de ModLauncher causados por rutas
@@ -123,4 +124,12 @@ public class ErrorRutaModLauncher implements Verificaciones {
 		// TODO Auto-generated method stub
 		return "ruta_modlauncher";
 	}
+	@Override
+	public boolean ocupaTrazo(TraceInfo trazo) {
+		// TODO Auto-generated method stub
+		return false;//TODO
+	}
+
+
+
 }

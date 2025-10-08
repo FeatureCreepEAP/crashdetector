@@ -8,6 +8,7 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
 
 /**
@@ -94,4 +95,12 @@ public class ErrorMetadataModsTomlFaltante implements Verificaciones {
 		// TODO Auto-generated method stub
 		return "metadata_mods_toml_faltante";
 	}
+	@Override
+	public boolean ocupaTrazo(TraceInfo trazo) {
+		// TODO Auto-generated method stub
+		return false;//TODO
+	}
+	
+	
+	
 }

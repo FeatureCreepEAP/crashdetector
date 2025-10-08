@@ -3200,7 +3200,145 @@ public String solucion_modlauncher_path() {
             + "Решение: переименуйте экземпляр, используя только ASCII-символы (a-z, A-Z, 0-9), избегайте пробелов и специальных символов. "
             + "Особое внимание уделите символу '\"', который вызывает серьёзные проблемы, особенно в конце имени.";
 }
+@Override
+public String tituloEditorCodice() {
+    return "Редактор Codice";
+}
 
+@Override
+public String nuevo() {
+    return "Новый";
+}
+
+@Override
+public String actualizarSeleccionado() {
+    return "Обновить выбранное";
+}
+
+@Override
+public String eliminarSeleccionado() {
+    return "Удалить выбранное";
+}
+
+@Override
+public String exportarJSON() {
+    return "Экспортировать JSON...";
+}
+
+@Override
+public String guardarTodo() {
+    return "Сохранить всё";
+}
+
+@Override
+public String general() {
+    return "Общее";
+}
+
+@Override
+public String id() {
+    return "ID";
+}
+
+@Override
+public String paraBuscar() {
+    return "Текст для поиска";
+}
+
+@Override
+public String filtro() {
+    return "Фильтр (id)";
+}
+
+@Override
+public String criticalidad() {
+    return "Критичность (ПРЕДУПРЕЖДЕНИЕ/ОШИБКА/ФАТАЛЬНО)";
+}
+
+@Override
+public String prioridad() {
+    return "Приоритет";
+}
+
+@Override
+public String lista() {
+    return "Проверки";
+}
+
+@Override
+public String colIdioma() {
+    return "Язык";
+}
+
+@Override
+public String colNombre() {
+    return "Имя";
+}
+
+@Override
+public String colResultado() {
+    return "Результат";
+}
+
+@Override
+public String vistaJson() {
+    return "Просмотр JSON";
+}
+
+@Override
+public String idiomas() {
+    return "Языки (все обязательны)";
+}
+
+@Override
+public String elegirFiltro() {
+    return "Выбрать...";
+}
+
+@Override
+public String eligeFiltroMsg() {
+    return "Выберите фильтр";
+}
+
+@Override
+public String eligeFiltroTitulo() {
+    return "Доступные фильтры";
+}
+
+@Override
+public String faltanCampos() {
+    return "Заполните все обязательные общие поля.";
+}
+
+@Override
+public String critInvalida() {
+    return "Недопустимая критичность. Используйте ПРЕДУПРЕЖДЕНИЕ, ОШИБКА или ФАТАЛЬНО.";
+}
+
+@Override
+public String filtroNoExiste() {
+    return "Указанный фильтр не существует.";
+}
+
+@Override
+public String faltanIdiomas() {
+    return "Заполните имя и результат для всех языков:";
+}
+
+@Override
+public String verificacionInvalida() {
+    return "Одна из проверок недействительна. Проверьте поля.";
+}
+
+@Override
+public String guardadoOk() {
+    return "Успешно сохранено.";
+}
+
+@Override
+public String editorCodiceBoton() {
+    return "Редактор Codice";
+}
 
 
 

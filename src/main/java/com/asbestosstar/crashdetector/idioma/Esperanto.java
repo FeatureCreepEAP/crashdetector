@@ -3242,6 +3242,147 @@ public String solucion_modlauncher_path() {
             + "Solvado: ŝanĝu la instancan nomon por uzi nur ASCII-signojn (a-z, A-Z, 0-9), evitu spacetojn kaj specialajn signojn. "
             + "Prestu apartan atenton al la signo '\"', kiu tre problemas, precipe se ĝi estas je fino de nomo.";
 }
+@Override
+public String tituloEditorCodice() {
+    return "Redaktilo de Codice";
+}
+
+@Override
+public String nuevo() {
+    return "Nova";
+}
+
+@Override
+public String actualizarSeleccionado() {
+    return "Ĝisdatigi elektitan";
+}
+
+@Override
+public String eliminarSeleccionado() {
+    return "Forigi elektitan";
+}
+
+@Override
+public String exportarJSON() {
+    return "Eksporti JSON...";
+}
+
+@Override
+public String guardarTodo() {
+    return "Konservi ĉion";
+}
+
+@Override
+public String general() {
+    return "Ĝenerala";
+}
+
+@Override
+public String id() {
+    return "ID";
+}
+
+@Override
+public String paraBuscar() {
+    return "Teksto por serĉi";
+}
+
+@Override
+public String filtro() {
+    return "Filtraĵo (id)";
+}
+
+@Override
+public String criticalidad() {
+    return "Graveco (AVERTO/ERARO/FATALE)";
+}
+
+@Override
+public String prioridad() {
+    return "Prioritato";
+}
+
+@Override
+public String lista() {
+    return "Kontroloj";
+}
+
+@Override
+public String colIdioma() {
+    return "Lingvo";
+}
+
+@Override
+public String colNombre() {
+    return "Nomo";
+}
+
+@Override
+public String colResultado() {
+    return "Rezulto";
+}
+
+@Override
+public String vistaJson() {
+    return "Antaŭvido de JSON";
+}
+
+@Override
+public String idiomas() {
+    return "Lingvoj (ĉiuj devigaj)";
+}
+
+@Override
+public String elegirFiltro() {
+    return "Elekti...";
+}
+
+@Override
+public String eligeFiltroMsg() {
+    return "Bonvolu elekti filtrilon";
+}
+
+@Override
+public String eligeFiltroTitulo() {
+    return "Disponeblaj filtriloj";
+}
+
+@Override
+public String faltanCampos() {
+    return "Plenu ĉiujn devigajn ĝeneralajn kampojn.";
+}
+
+@Override
+public String critInvalida() {
+    return "Nevalida graveco. Uzu AVERTO, ERARO aŭ FATALE.";
+}
+
+@Override
+public String filtroNoExiste() {
+    return "La indikita filtrilo ne ekzistas.";
+}
+
+@Override
+public String faltanIdiomas() {
+    return "Bonvolu plenumi nomon kaj rezulton por ĉiuj lingvoj:";
+}
+
+@Override
+public String verificacionInvalida() {
+    return "Unu kontrolo estas nevalida. Bonvolu revizii la kampojn.";
+}
+
+@Override
+public String guardadoOk() {
+    return "Konservite sukcese.";
+}
+
+@Override
+public String editorCodiceBoton() {
+    return "Redaktilo de Codice";
+}
+
+
 
 
 

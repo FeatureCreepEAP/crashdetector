@@ -10,6 +10,7 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 
 public class FaltasDependenciasModLaunche implements Verificaciones {
 
@@ -152,4 +153,12 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 		// TODO Auto-generated method stub
 		return "faltas_dependencias_modlauncher";
 	}
+
+	@Override
+	public boolean ocupaTrazo(TraceInfo trazo) {
+		// TODO Auto-generated method stub
+		return false;//TODO
+	}
+
+
 }

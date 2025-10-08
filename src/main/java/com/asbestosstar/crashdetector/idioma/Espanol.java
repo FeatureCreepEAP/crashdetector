@@ -3943,6 +3943,150 @@ public String solucion_modlauncher_path() {
             + "Solución: Renombra la instancia para usar solo caracteres ASCII (a-z, A-Z, 0-9) y evita espacios y caracteres especiales. "
             + "Presta especial atención al carácter '\"' que es muy problemático, especialmente cuando está al final del nombre.";
 }
+@Override
+public String tituloEditorCodice() {
+    return "Editor de Codice";
+}
+
+@Override
+public String nuevo() {
+    return "Nuevo";
+}
+
+@Override
+public String actualizarSeleccionado() {
+    return "Actualizar seleccionado";
+}
+
+@Override
+public String eliminarSeleccionado() {
+    return "Eliminar seleccionado";
+}
+
+@Override
+public String exportarJSON() {
+    return "Exportar JSON...";
+}
+
+@Override
+public String guardarTodo() {
+    return "Guardar todo";
+}
+
+@Override
+public String general() {
+    return "General";
+}
+
+@Override
+public String id() {
+    return "ID";
+}
+
+@Override
+public String paraBuscar() {
+    return "Texto a buscar";
+}
+
+@Override
+public String filtro() {
+    return "Filtro (id)";
+}
+
+@Override
+public String criticalidad() {
+    return "Criticalidad (ADVERTENCIA/ERROR/FATAL)";
+}
+
+@Override
+public String prioridad() {
+    return "Prioridad";
+}
+
+@Override
+public String lista() {
+    return "Verificaciones";
+}
+
+@Override
+public String colIdioma() {
+    return "Idioma";
+}
+
+@Override
+public String colNombre() {
+    return "Nombre";
+}
+
+@Override
+public String colResultado() {
+    return "Resultado";
+}
+
+@Override
+public String vistaJson() {
+    return "Vista previa JSON";
+}
+
+@Override
+public String idiomas() {
+    return "Idiomas (todos obligatorios)";
+}
+
+@Override
+public String elegirFiltro() {
+    return "Elegir...";
+}
+
+@Override
+public String eligeFiltroMsg() {
+    return "Seleccione un filtro";
+}
+
+@Override
+public String eligeFiltroTitulo() {
+    return "Filtros disponibles";
+}
+
+@Override
+public String faltanCampos() {
+    return "Complete todos los campos generales obligatorios.";
+}
+
+@Override
+public String critInvalida() {
+    return "Criticalidad inválida. Use ADVERTENCIA, ERROR o FATAL.";
+}
+
+@Override
+public String filtroNoExiste() {
+    return "El filtro indicado no existe.";
+}
+
+@Override
+public String faltanIdiomas() {
+    return "Complete nombre y resultado para todos los idiomas:";
+}
+
+@Override
+public String verificacionInvalida() {
+    return "Una verificación es inválida. Revise los campos.";
+}
+
+@Override
+public String guardadoOk() {
+    return "Guardado correcto.";
+}
+
+@Override
+public String editorCodiceBoton() {
+    return "Editor de Codice";
+}
+
+
+
+
+
 
 
 

@@ -3206,6 +3206,148 @@ public String solucion_modlauncher_path() {
             + "解決策：インスタンス名をASCII文字（a-z, A-Z, 0-9）のみに変更し、スペースや特殊文字を避けてください。 "
             + "特に名前の末尾にある '\"' 文字は非常に問題となるため、注意してください。";
 }
+@Override
+public String tituloEditorCodice() {
+    return "Codiceエディター";
+}
+
+@Override
+public String nuevo() {
+    return "新規";
+}
+
+@Override
+public String actualizarSeleccionado() {
+    return "選択項目を更新";
+}
+
+@Override
+public String eliminarSeleccionado() {
+    return "選択項目を削除";
+}
+
+@Override
+public String exportarJSON() {
+    return "JSONをエクスポート...";
+}
+
+@Override
+public String guardarTodo() {
+    return "すべて保存";
+}
+
+@Override
+public String general() {
+    return "一般";
+}
+
+@Override
+public String id() {
+    return "ID";
+}
+
+@Override
+public String paraBuscar() {
+    return "検索テキスト";
+}
+
+@Override
+public String filtro() {
+    return "フィルター (ID)";
+}
+
+@Override
+public String criticalidad() {
+    return "重要度 (警告/エラー/致命的)";
+}
+
+@Override
+public String prioridad() {
+    return "優先度";
+}
+
+@Override
+public String lista() {
+    return "チェック項目";
+}
+
+@Override
+public String colIdioma() {
+    return "言語";
+}
+
+@Override
+public String colNombre() {
+    return "名前";
+}
+
+@Override
+public String colResultado() {
+    return "結果";
+}
+
+@Override
+public String vistaJson() {
+    return "JSONプレビュー";
+}
+
+@Override
+public String idiomas() {
+    return "言語 (すべて必須)";
+}
+
+@Override
+public String elegirFiltro() {
+    return "選択...";
+}
+
+@Override
+public String eligeFiltroMsg() {
+    return "フィルターを選択してください";
+}
+
+@Override
+public String eligeFiltroTitulo() {
+    return "利用可能なフィルター";
+}
+
+@Override
+public String faltanCampos() {
+    return "すべての必須一般項目を入力してください。";
+}
+
+@Override
+public String critInvalida() {
+    return "無効な重要度です。警告、エラー、または致命的を使用してください。";
+}
+
+@Override
+public String filtroNoExiste() {
+    return "指定されたフィルターは存在しません。";
+}
+
+@Override
+public String faltanIdiomas() {
+    return "すべての言語について名前と結果を入力してください：";
+}
+
+@Override
+public String verificacionInvalida() {
+    return "チェック項目が無効です。フィールドを確認してください。";
+}
+
+@Override
+public String guardadoOk() {
+    return "正常に保存されました。";
+}
+
+@Override
+public String editorCodiceBoton() {
+    return "Codiceエディター";
+}
+
+
+
 
 
 

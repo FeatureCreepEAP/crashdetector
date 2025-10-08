@@ -11,6 +11,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 
 public class FaltaModuleJPMS implements Verificaciones {
 
@@ -97,6 +98,11 @@ public class FaltaModuleJPMS implements Verificaciones {
 	public String id() {
 		// TODO Auto-generated method stub
 		return "falta_module_jpms";
+	}
+	@Override
+	public boolean ocupaTrazo(TraceInfo trazo) {
+		// TODO Auto-generated method stub
+		return false;//TODO
 	}
 
 }

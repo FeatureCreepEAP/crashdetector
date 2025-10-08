@@ -4,6 +4,7 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 
 public class ErrorConfiguracionMCForge implements Verificaciones {
 
@@ -65,4 +66,11 @@ public class ErrorConfiguracionMCForge implements Verificaciones {
 		// TODO Auto-generated method stub
 		return "config_mcforge";
 	}
+	
+	@Override
+	public boolean ocupaTrazo(TraceInfo trazo) {
+		// TODO Auto-generated method stub
+		return false;//TODO
+	}
+	
 }

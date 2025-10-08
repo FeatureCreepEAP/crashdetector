@@ -3210,6 +3210,145 @@ public String solucion_modlauncher_path() {
             + "解决方案：将实例重命名为仅使用 ASCII 字符（a-z, A-Z, 0-9），避免空格和特殊字符。 "
             + "特别注意 '\"' 字符，它非常容易引发问题，尤其是在名称末尾时。";
 }
+@Override
+public String tituloEditorCodice() {
+    return "Codice 编辑器";
+}
+
+@Override
+public String nuevo() {
+    return "新建";
+}
+
+@Override
+public String actualizarSeleccionado() {
+    return "更新选中项";
+}
+
+@Override
+public String eliminarSeleccionado() {
+    return "删除选中项";
+}
+
+@Override
+public String exportarJSON() {
+    return "导出 JSON...";
+}
+
+@Override
+public String guardarTodo() {
+    return "保存全部";
+}
+
+@Override
+public String general() {
+    return "通用";
+}
+
+@Override
+public String id() {
+    return "ID";
+}
+
+@Override
+public String paraBuscar() {
+    return "搜索文本";
+}
+
+@Override
+public String filtro() {
+    return "过滤器 (ID)";
+}
+
+@Override
+public String criticalidad() {
+    return "严重性 (警告/错误/致命)";
+}
+
+@Override
+public String prioridad() {
+    return "优先级";
+}
+
+@Override
+public String lista() {
+    return "检查项";
+}
+
+@Override
+public String colIdioma() {
+    return "语言";
+}
+
+@Override
+public String colNombre() {
+    return "名称";
+}
+
+@Override
+public String colResultado() {
+    return "结果";
+}
+
+@Override
+public String vistaJson() {
+    return "JSON 预览";
+}
+
+@Override
+public String idiomas() {
+    return "语言 (全部必填)";
+}
+
+@Override
+public String elegirFiltro() {
+    return "选择...";
+}
+
+@Override
+public String eligeFiltroMsg() {
+    return "请选择一个过滤器";
+}
+
+@Override
+public String eligeFiltroTitulo() {
+    return "可用过滤器";
+}
+
+@Override
+public String faltanCampos() {
+    return "请填写所有必填的通用字段。";
+}
+
+@Override
+public String critInvalida() {
+    return "严重性无效。请使用 警告、错误 或 致命。";
+}
+
+@Override
+public String filtroNoExiste() {
+    return "指定的过滤器不存在。";
+}
+
+@Override
+public String faltanIdiomas() {
+    return "请为所有语言填写名称和结果：";
+}
+
+@Override
+public String verificacionInvalida() {
+    return "某项检查无效，请检查字段。";
+}
+
+@Override
+public String guardadoOk() {
+    return "保存成功。";
+}
+
+@Override
+public String editorCodiceBoton() {
+    return "Codice 编辑器";
+}
 
 
 

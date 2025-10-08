@@ -3193,6 +3193,147 @@ public String solucion_modlauncher_path() {
             + "해결 방법: 인스턴스 이름을 ASCII 문자(a-z, A-Z, 0-9)만 사용하도록 바꾸고, 공백과 특수 문자는 피하세요. "
             + "특히 이름 끝에 있는 '\"' 문자는 매우 문제를 일으키므로 주의 깊게 확인하세요.";
 }
+@Override
+public String tituloEditorCodice() {
+    return "코디체 편집기";
+}
+
+@Override
+public String nuevo() {
+    return "새로 만들기";
+}
+
+@Override
+public String actualizarSeleccionado() {
+    return "선택 항목 업데이트";
+}
+
+@Override
+public String eliminarSeleccionado() {
+    return "선택 항목 삭제";
+}
+
+@Override
+public String exportarJSON() {
+    return "JSON 내보내기...";
+}
+
+@Override
+public String guardarTodo() {
+    return "모두 저장";
+}
+
+@Override
+public String general() {
+    return "일반";
+}
+
+@Override
+public String id() {
+    return "ID";
+}
+
+@Override
+public String paraBuscar() {
+    return "검색할 텍스트";
+}
+
+@Override
+public String filtro() {
+    return "필터 (ID)";
+}
+
+@Override
+public String criticalidad() {
+    return "중요도 (경고/오류/치명적)";
+}
+
+@Override
+public String prioridad() {
+    return "우선순위";
+}
+
+@Override
+public String lista() {
+    return "검사 목록";
+}
+
+@Override
+public String colIdioma() {
+    return "언어";
+}
+
+@Override
+public String colNombre() {
+    return "이름";
+}
+
+@Override
+public String colResultado() {
+    return "결과";
+}
+
+@Override
+public String vistaJson() {
+    return "JSON 미리보기";
+}
+
+@Override
+public String idiomas() {
+    return "언어 (모두 필수)";
+}
+
+@Override
+public String elegirFiltro() {
+    return "선택...";
+}
+
+@Override
+public String eligeFiltroMsg() {
+    return "필터를 선택하세요";
+}
+
+@Override
+public String eligeFiltroTitulo() {
+    return "사용 가능한 필터";
+}
+
+@Override
+public String faltanCampos() {
+    return "모든 필수 일반 항목을 입력하세요.";
+}
+
+@Override
+public String critInvalida() {
+    return "잘못된 중요도입니다. ADVERTENCIA(경고), ERROR(오류), FATAL(치명적) 중 하나를 사용하세요.";
+}
+
+@Override
+public String filtroNoExiste() {
+    return "지정한 필터가 존재하지 않습니다.";
+}
+
+@Override
+public String faltanIdiomas() {
+    return "모든 언어에 대해 이름과 결과를 입력하세요:";
+}
+
+@Override
+public String verificacionInvalida() {
+    return "검사 항목이 잘못되었습니다. 필드를 확인하세요.";
+}
+
+@Override
+public String guardadoOk() {
+    return "저장 완료.";
+}
+
+@Override
+public String editorCodiceBoton() {
+    return "코디체 편집기";
+}
+
+
 
 
 

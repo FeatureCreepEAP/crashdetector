@@ -5,6 +5,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 
 /**
  * Detecta "FATAL ERROR in native method … No context is current or a function that is not available…".
@@ -162,4 +163,13 @@ public class ErrorContextoOpenGL implements Verificaciones {
 		// TODO Auto-generated method stub
 		return "contexto_opengl";
 	}
+	@Override
+	public boolean ocupaTrazo(TraceInfo trazo) {
+		// TODO Auto-generated method stub
+		return false;//TODO
+	}
+    
+    
+    
+    
 }

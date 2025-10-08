@@ -4,6 +4,7 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 
 public class NecesitasSodium implements Verificaciones {
 
@@ -56,6 +57,11 @@ public class NecesitasSodium implements Verificaciones {
 	public String id() {
 		// TODO Auto-generated method stub
 		return "necesitas_sodium";
+	}
+	@Override
+	public boolean ocupaTrazo(TraceInfo trazo) {
+		// TODO Auto-generated method stub
+		return false;//TODO
 	}
 	
 	

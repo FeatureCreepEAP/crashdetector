@@ -19,6 +19,7 @@ import com.asbestosstar.crashdetector.TriMap;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
 
 /**
@@ -106,7 +107,7 @@ public class ContentoDeTraces implements Verificaciones {
 	}
 
 	@Override
-	public void verificar(Consola consola) {
+	public void verificar(Consola consola) {//TODO, no incluir trazos ocupados
 		VerificacionDeStackTrace vdst = consola.verificacion_de_stacktrace;
 		StringBuilder constructor = new StringBuilder();
 		String mensajeFatal = consola.obtainerMensajeFatalUltimaTrace();
@@ -367,5 +368,11 @@ public class ContentoDeTraces implements Verificaciones {
 	public String id() {
 		// TODO Auto-generated method stub
 		return "contenido_de_trazos";
+	}
+	
+	@Override
+	public boolean ocupaTrazo(TraceInfo trazo) {
+		// TODO Auto-generated method stub
+		return false;//TODO
 	}
 }

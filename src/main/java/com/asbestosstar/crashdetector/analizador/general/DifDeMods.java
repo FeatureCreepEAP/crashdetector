@@ -15,6 +15,7 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 
 public class DifDeMods implements Verificaciones {
 	private boolean activado = false;
@@ -202,4 +203,12 @@ public class DifDeMods implements Verificaciones {
 		// TODO Auto-generated method stub
 		return "dif_de_mods";
 	}
+	
+	@Override
+	public boolean ocupaTrazo(TraceInfo trazo) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	
 }

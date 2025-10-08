@@ -5,6 +5,7 @@ import java.awt.Color;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 
 public interface Verificaciones {
 
@@ -56,7 +57,7 @@ public interface Verificaciones {
 	
 	public QuickFix solucion();
 	
-	
+	public boolean ocupaTrazo(TraceInfo trazo);
 	
     
     public static void abrirEnNavegador(String url) {
