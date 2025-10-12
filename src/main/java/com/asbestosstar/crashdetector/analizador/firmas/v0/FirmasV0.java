@@ -38,7 +38,7 @@ import com.asbestosstar.crashdetector.json.Json.Nodo;
 public class FirmasV0 {
 
     public static final int SCHEMA = 0;
-    private static final String NOMBRE_ARCHIVO = "codice.json";
+    private static final String NOMBRE_ARCHIVO = "firmas.json";
 
     /** Carga verificaciones desde codice.json. Si no existe o si el schema no es 0, retorna lista vacía. */
 public static List<VerificacionFirmasV0> cargar() {

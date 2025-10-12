@@ -91,7 +91,7 @@ public class EditorCodiceGUI extends JFrame implements BotonDeBarraLateralDerech
     private JButton btnNuevo, btnActualizar, btnEliminar, btnExportar, btnGuardar;
 
     // Archivo
-    private final Path rutaCodice = MonitorDePID.carpeta.resolve("codice.json");
+    private final Path rutaCodice = MonitorDePID.carpeta.resolve("firmas.json");
 
     public EditorCodiceGUI() {
         setTitle(MonitorDePID.idioma.tituloEditorCodice());
