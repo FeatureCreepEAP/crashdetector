@@ -4150,8 +4150,61 @@ public String paso2_configuracion_servicio() {
     return "2. Actualiza, reinstala o elimina el mod. Asegurate de usar una version compatible con tu Forge/NeoForge.";
 }
 
+@Override
+public String errorCampoInexistente(String campo, String lineaCompleta) {
+    String colorError = config.obtenerColorError();
+    String colorCodigo = "888888"; // Gris neutro para nombres de clase/campo
+
+    return "<b style='color:#" + colorError + "'>Error critico: Campo inexistente.</b><br>" +
+           "El mod intento acceder al campo <b style='color:#" + colorCodigo + "'>" + campo + "</b>, " +
+           "que no existe en esta version del juego o de otro mod.<br>" +
+           "<span style='color:#" + colorCodigo + "; font-family:monospace;'>" + 
+           escapeHtml(lineaCompleta) + "</span>";
+}
+
+@Override
+public String nombre_error_campo_inexistente() {
+    return "Campo Inexistente (NoSuchFieldError)";
+}
+
+@Override
+public String paso1_campo_inexistente() {
+    return "1. Este error suele ocurrir cuando un mod es incompatible con la version actual del juego o de otro mod.";
+}
+
+@Override
+public String paso2_campo_inexistente() {
+    return "2. Actualiza todos los mods afectados. Si el problema persiste, contacta al autor del mod que genero el error.";
+}
 
 
+
+@Override
+public String errorMetodoInexistente(String metodo, String lineaCompleta) {
+    String colorError = config.obtenerColorError();
+    String colorCodigo = "888888"; // Gris para metodos/clases
+
+    return "<b style='color:#" + colorError + "'>Error critico: Metodo inexistente.</b><br>" +
+           "El mod intento llamar al metodo <b style='color:#" + colorCodigo + "'>" + metodo + "</b>, " +
+           "que no existe en esta version del juego o de otro mod.<br>" +
+           "<span style='color:#" + colorCodigo + "; font-family:monospace;'>" + 
+           escapeHtml(lineaCompleta) + "</span>";
+}
+
+@Override
+public String nombre_error_metodo_inexistente() {
+    return "Metodo Inexistente (NoSuchMethodError)";
+}
+
+@Override
+public String paso1_metodo_inexistente() {
+    return "1. Este error ocurre cuando un mod es incompatible con la version actual del juego o de otro mod.";
+}
+
+@Override
+public String paso2_metodo_inexistente() {
+    return "2. Actualiza todos los mods involucrados. Si persiste, reporta el error al autor del mod afectado.";
+}
 
 
 

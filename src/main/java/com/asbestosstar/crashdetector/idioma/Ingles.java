@@ -3480,6 +3480,60 @@ public String paso2_configuracion_servicio() {
     return "2. Update, reinstall, or remove the mod. Make sure to use a version compatible with your Forge/NeoForge.";
 }
 
+@Override
+public String errorMetodoInexistente(String metodo, String lineaCompleta) {
+    String colorError = config.obtenerColorError();
+    String colorCodigo = "888888";
+
+    return "<b style='color:#" + colorError + "'>Critical error: Method not found.</b><br>" +
+           "The mod attempted to call the method <b style='color:#" + colorCodigo + "'>" + metodo + "</b>, " +
+           "which does not exist in this version of the game or another mod.<br>" +
+           "<span style='color:#" + colorCodigo + "; font-family:monospace;'>" + 
+           escapeHtml(lineaCompleta) + "</span>";
+}
+
+@Override
+public String nombre_error_metodo_inexistente() {
+    return "Method Not Found (NoSuchMethodError)";
+}
+
+@Override
+public String paso1_metodo_inexistente() {
+    return "1. This error occurs when a mod is incompatible with the current version of the game or another mod.";
+}
+
+@Override
+public String paso2_metodo_inexistente() {
+    return "2. Update all involved mods. If it persists, report the issue to the author of the affected mod.";
+}
+
+@Override
+public String errorCampoInexistente(String campo, String lineaCompleta) {
+    String colorError = config.obtenerColorError();
+    String colorCodigo = "888888";
+
+    return "<b style='color:#" + colorError + "'>Critical error: Field not found.</b><br>" +
+           "The mod attempted to access the field <b style='color:#" + colorCodigo + "'>" + campo + "</b>, " +
+           "which does not exist in this version of the game or another mod.<br>" +
+           "<span style='color:#" + colorCodigo + "; font-family:monospace;'>" + 
+           escapeHtml(lineaCompleta) + "</span>";
+}
+
+@Override
+public String nombre_error_campo_inexistente() {
+    return "Field Not Found (NoSuchFieldError)";
+}
+
+@Override
+public String paso1_campo_inexistente() {
+    return "1. This error usually occurs when a mod is incompatible with the current version of the game or another mod.";
+}
+
+@Override
+public String paso2_campo_inexistente() {
+    return "2. Update all affected mods. If the problem persists, contact the author of the mod that caused the error.";
+}
+
 
 
 

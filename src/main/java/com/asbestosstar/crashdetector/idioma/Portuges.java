@@ -3398,6 +3398,60 @@ public String paso2_configuracion_servicio() {
     return "2. Atualize, reinstale ou remova o mod. Certifique-se de usar uma versão compatível com seu Forge/NeoForge.";
 }
 
+@Override
+public String errorMetodoInexistente(String metodo, String lineaCompleta) {
+    String colorError = config.obtenerColorError();
+    String colorCodigo = "888888";
+
+    return "<b style='color:#" + colorError + "'>Erro crítico: Método inexistente.</b><br>" +
+           "O mod tentou chamar o método <b style='color:#" + colorCodigo + "'>" + metodo + "</b>, " +
+           "que não existe nesta versão do jogo ou de outro mod.<br>" +
+           "<span style='color:#" + colorCodigo + "; font-family:monospace;'>" + 
+           escapeHtml(lineaCompleta) + "</span>";
+}
+
+@Override
+public String nombre_error_metodo_inexistente() {
+    return "Método Inexistente (NoSuchMethodError)";
+}
+
+@Override
+public String paso1_metodo_inexistente() {
+    return "1. Este erro ocorre quando um mod é incompatível com a versão atual do jogo ou de outro mod.";
+}
+
+@Override
+public String paso2_metodo_inexistente() {
+    return "2. Atualize todos os mods envolvidos. Se persistir, reporte o erro ao autor do mod afetado.";
+}
+
+@Override
+public String errorCampoInexistente(String campo, String lineaCompleta) {
+    String colorError = config.obtenerColorError();
+    String colorCodigo = "888888";
+
+    return "<b style='color:#" + colorError + "'>Erro crítico: Campo inexistente.</b><br>" +
+           "O mod tentou acessar o campo <b style='color:#" + colorCodigo + "'>" + campo + "</b>, " +
+           "que não existe nesta versão do jogo ou de outro mod.<br>" +
+           "<span style='color:#" + colorCodigo + "; font-family:monospace;'>" + 
+           escapeHtml(lineaCompleta) + "</span>";
+}
+
+@Override
+public String nombre_error_campo_inexistente() {
+    return "Campo Inexistente (NoSuchFieldError)";
+}
+
+@Override
+public String paso1_campo_inexistente() {
+    return "1. Este erro geralmente ocorre quando um mod é incompatível com a versão atual do jogo ou de outro mod.";
+}
+
+@Override
+public String paso2_campo_inexistente() {
+    return "2. Atualize todos os mods afetados. Se o problema persistir, entre em contato com o autor do mod que gerou o erro.";
+}
+
 
 
 

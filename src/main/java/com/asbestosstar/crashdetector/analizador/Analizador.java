@@ -9,6 +9,7 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
+import com.asbestosstar.crashdetector.analizador.apps.general.ErrorMetodoInexistente;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.AuditorTransformer;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.AzureGeckoLibInicializoPronto;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.BloqueTeselado;
@@ -81,6 +82,7 @@ import com.asbestosstar.crashdetector.analizador.general.AdvertenciaFaltasClases
 import com.asbestosstar.crashdetector.analizador.general.ContentoDeTraces;
 import com.asbestosstar.crashdetector.analizador.general.DifDeMods;
 import com.asbestosstar.crashdetector.analizador.general.Drivers;
+import com.asbestosstar.crashdetector.analizador.general.ErrorCampoInexistente;
 import com.asbestosstar.crashdetector.analizador.general.ErrorCaracteresInvalidosEnNombre;
 import com.asbestosstar.crashdetector.analizador.general.ErrorContextoOpenGL;
 import com.asbestosstar.crashdetector.analizador.general.ErrorDeEnlaceInsatisfecho;
@@ -213,6 +215,8 @@ public class Analizador {
 		verificaciones.add(new ErrorResolucionDeTextura());
 		verificaciones.add(new ErrorRutaModLauncher());
 		verificaciones.add(new ErrorConfiguracionServicioIDependencyLocator());
+		verificaciones.add(new ErrorCampoInexistente());
+		verificaciones.add(new ErrorMetodoInexistente());
 
 		
 		

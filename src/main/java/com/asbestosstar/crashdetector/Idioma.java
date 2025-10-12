@@ -1408,7 +1408,29 @@ public interface Idioma {
 
 	public String errorConfiguracionServicio(String clase, List<String> mods);
 
-	
+	public String errorCampoInexistente(String nombreCampo, String lineaCompleta);
+
+	public String nombre_error_campo_inexistente();
+
+	public String paso1_campo_inexistente();
+
+	public String paso2_campo_inexistente();
+
+	public String errorMetodoInexistente(String metodo, String lineaCompleta);
+
+	public String nombre_error_metodo_inexistente();
+
+	public String paso1_metodo_inexistente();
+
+	public String paso2_metodo_inexistente();
+
+	// Helper para escapar HTML en la linea completa
+	default String escapeHtml(String s) {
+	    return s.replace("&", "&amp;")
+	            .replace("<", "<")
+	            .replace(">", ">")
+	            .replace("\"", "&quot;");
+	}
 	
 	
 	

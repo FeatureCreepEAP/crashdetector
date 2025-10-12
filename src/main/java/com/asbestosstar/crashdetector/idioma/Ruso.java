@@ -3406,6 +3406,60 @@ public String paso2_configuracion_servicio() {
     return "2. Обновите, переустановите или удалите мод. Убедитесь, что используется версия, совместимая с вашим Forge/NeoForge.";
 }
 
+@Override
+public String errorMetodoInexistente(String metodo, String lineaCompleta) {
+    String colorError = config.obtenerColorError();
+    String colorCodigo = "888888";
+
+    return "<b style='color:#" + colorError + "'>Критическая ошибка: Метод не существует.</b><br>" +
+           "Мод попытался вызвать метод <b style='color:#" + colorCodigo + "'>" + metodo + "</b>, " +
+           "который отсутствует в этой версии игры или другого мода.<br>" +
+           "<span style='color:#" + colorCodigo + "; font-family:monospace;'>" + 
+           escapeHtml(lineaCompleta) + "</span>";
+}
+
+@Override
+public String nombre_error_metodo_inexistente() {
+    return "Метод не существует (NoSuchMethodError)";
+}
+
+@Override
+public String paso1_metodo_inexistente() {
+    return "1. Эта ошибка возникает, когда мод несовместим с текущей версией игры или другим модом.";
+}
+
+@Override
+public String paso2_metodo_inexistente() {
+    return "2. Обновите все затронутые моды. Если проблема сохраняется, сообщите об ошибке автору затронутого мода.";
+}
+
+@Override
+public String errorCampoInexistente(String campo, String lineaCompleta) {
+    String colorError = config.obtenerColorError();
+    String colorCodigo = "888888";
+
+    return "<b style='color:#" + colorError + "'>Критическая ошибка: Поле не существует.</b><br>" +
+           "Мод попытался получить доступ к полю <b style='color:#" + colorCodigo + "'>" + campo + "</b>, " +
+           "которое отсутствует в этой версии игры или другого мода.<br>" +
+           "<span style='color:#" + colorCodigo + "; font-family:monospace;'>" + 
+           escapeHtml(lineaCompleta) + "</span>";
+}
+
+@Override
+public String nombre_error_campo_inexistente() {
+    return "Поле не существует (NoSuchFieldError)";
+}
+
+@Override
+public String paso1_campo_inexistente() {
+    return "1. Эта ошибка обычно возникает, когда мод несовместим с текущей версией игры или другим модом.";
+}
+
+@Override
+public String paso2_campo_inexistente() {
+    return "2. Обновите все затронутые моды. Если проблема сохраняется, свяжитесь с автором мода, вызвавшего ошибку.";
+}
+
 
 
 

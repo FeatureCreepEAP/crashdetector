@@ -3416,6 +3416,60 @@ public String paso2_configuracion_servicio() {
     return "2. 更新、重新安装或删除该模组。请确保使用与你的 Forge/NeoForge 兼容的版本。";
 }
 
+@Override
+public String errorMetodoInexistente(String metodo, String lineaCompleta) {
+    String colorError = config.obtenerColorError();
+    String colorCodigo = "888888";
+
+    return "<b style='color:#" + colorError + "'>严重错误：方法不存在。</b><br>" +
+           "该模组试图调用方法 <b style='color:#" + colorCodigo + "'>" + metodo + "</b>，" +
+           "但该方法在当前游戏版本或其他模组中不存在。<br>" +
+           "<span style='color:#" + colorCodigo + "; font-family:monospace;'>" + 
+           escapeHtml(lineaCompleta) + "</span>";
+}
+
+@Override
+public String nombre_error_metodo_inexistente() {
+    return "方法不存在 (NoSuchMethodError)";
+}
+
+@Override
+public String paso1_metodo_inexistente() {
+    return "1. 此错误通常发生在模组与当前游戏版本或其他模组不兼容时。";
+}
+
+@Override
+public String paso2_metodo_inexistente() {
+    return "2. 更新所有相关模组。如果问题仍然存在，请向受影响模组的作者报告此错误。";
+}
+
+@Override
+public String errorCampoInexistente(String campo, String lineaCompleta) {
+    String colorError = config.obtenerColorError();
+    String colorCodigo = "888888";
+
+    return "<b style='color:#" + colorError + "'>严重错误：字段不存在。</b><br>" +
+           "该模组试图访问字段 <b style='color:#" + colorCodigo + "'>" + campo + "</b>，" +
+           "但该字段在当前游戏版本或其他模组中不存在。<br>" +
+           "<span style='color:#" + colorCodigo + "; font-family:monospace;'>" + 
+           escapeHtml(lineaCompleta) + "</span>";
+}
+
+@Override
+public String nombre_error_campo_inexistente() {
+    return "字段不存在 (NoSuchFieldError)";
+}
+
+@Override
+public String paso1_campo_inexistente() {
+    return "1. 此错误通常发生在模组与当前游戏版本或其他模组不兼容时。";
+}
+
+@Override
+public String paso2_campo_inexistente() {
+    return "2. 更新所有受影响的模组。如果问题持续存在，请联系引发错误的模组作者。";
+}
+
 
 
 

@@ -3447,7 +3447,59 @@ public String paso2_configuracion_servicio() {
     return "2. Ĝisdatigu, reinstalu aŭ forigu la aldonaĵon. Certigu uzi version kompatan kun via Forge/NeoForge.";
 }
 
+@Override
+public String errorMetodoInexistente(String metodo, String lineaCompleta) {
+    String colorError = config.obtenerColorError();
+    String colorCodigo = "888888";
 
+    return "<b style='color:#" + colorError + "'>Grava eraro: Neksista metodo.</b><br>" +
+           "La aldonaĵo provis voki la metodon <b style='color:#" + colorCodigo + "'>" + metodo + "</b>, " +
+           "kiu ne ekzistas en tiu ĉi versio de la ludo aŭ alia aldonaĵo.<br>" +
+           "<span style='color:#" + colorCodigo + "; font-family:monospace;'>" + 
+           escapeHtml(lineaCompleta) + "</span>";
+}
+
+@Override
+public String nombre_error_metodo_inexistente() {
+    return "Neksista Metodo (NoSuchMethodError)";
+}
+
+@Override
+public String paso1_metodo_inexistente() {
+    return "1. Tiu eraro okazas kiam aldonaĵo ne estas kompatibla kun la nuna versio de la ludo aŭ alia aldonaĵo.";
+}
+
+@Override
+public String paso2_metodo_inexistente() {
+    return "2. Ĝisdatigu ĉiujn rilatajn aldonaĵojn. Se daŭras, raportu la eraron al la verkinto de la tuŝita aldonaĵo.";
+}
+
+@Override
+public String errorCampoInexistente(String campo, String lineaCompleta) {
+    String colorError = config.obtenerColorError();
+    String colorCodigo = "888888";
+
+    return "<b style='color:#" + colorError + "'>Grava eraro: Neksista kampo.</b><br>" +
+           "La aldonaĵo provis aliri kampon <b style='color:#" + colorCodigo + "'>" + campo + "</b>, " +
+           "kiu ne ekzistas en tiu ĉi versio de la ludo aŭ alia aldonaĵo.<br>" +
+           "<span style='color:#" + colorCodigo + "; font-family:monospace;'>" + 
+           escapeHtml(lineaCompleta) + "</span>";
+}
+
+@Override
+public String nombre_error_campo_inexistente() {
+    return "Neksista Kampo (NoSuchFieldError)";
+}
+
+@Override
+public String paso1_campo_inexistente() {
+    return "1. Tiu eraro kutime okazas kiam aldonaĵo ne estas kompatibla kun la nuna versio de la ludo aŭ alia aldonaĵo.";
+}
+
+@Override
+public String paso2_campo_inexistente() {
+    return "2. Ĝisdatigu ĉiujn tuŝitajn aldonaĵojn. Se daŭras, kontaktu la verkinton de la aldonaĵo kaŭzanta la eraron.";
+}
 
 
 

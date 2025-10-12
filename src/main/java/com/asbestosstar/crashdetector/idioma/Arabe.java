@@ -3418,6 +3418,60 @@ public String paso2_configuracion_servicio() {
     return "2. حدّث أو أعد تثبيت أو احذف التعديل. تأكد من استخدام إصدار متوافق مع إصدار Forge/NeoForge الخاص بك.";
 }
 
+@Override
+public String errorMetodoInexistente(String metodo, String lineaCompleta) {
+    String colorError = config.obtenerColorError();
+    String colorCodigo = "888888";
+
+    return "<b style='color:#" + colorError + "'>خطأ حرج: طريقة غير موجودة.</b><br>" +
+           "حاول التعديل استدعاء الطريقة <b style='color:#" + colorCodigo + "'>" + metodo + "</b>، " +
+           "والتي لا توجد في هذا الإصدار من اللعبة أو تعديل آخر.<br>" +
+           "<span style='color:#" + colorCodigo + "; font-family:monospace;'>" + 
+           escapeHtml(lineaCompleta) + "</span>";
+}
+
+@Override
+public String nombre_error_metodo_inexistente() {
+    return "طريقة غير موجودة (NoSuchMethodError)";
+}
+
+@Override
+public String paso1_metodo_inexistente() {
+    return "1. يحدث هذا الخطأ عندما يكون التعديل غير متوافق مع إصدار اللعبة الحالي أو مع تعديل آخر.";
+}
+
+@Override
+public String paso2_metodo_inexistente() {
+    return "2. حدّث جميع التعديلات المعنية. إذا استمر الخطأ، قم بالإبلاغ عنه لمطوّر التعديل المتأثر.";
+}
+
+@Override
+public String errorCampoInexistente(String campo, String lineaCompleta) {
+    String colorError = config.obtenerColorError();
+    String colorCodigo = "888888";
+
+    return "<b style='color:#" + colorError + "'>خطأ حرج: حقل غير موجود.</b><br>" +
+           "حاول التعديل الوصول إلى الحقل <b style='color:#" + colorCodigo + "'>" + campo + "</b>، " +
+           "الذي لا يوجد في هذا الإصدار من اللعبة أو تعديل آخر.<br>" +
+           "<span style='color:#" + colorCodigo + "; font-family:monospace;'>" + 
+           escapeHtml(lineaCompleta) + "</span>";
+}
+
+@Override
+public String nombre_error_campo_inexistente() {
+    return "حقل غير موجود (NoSuchFieldError)";
+}
+
+@Override
+public String paso1_campo_inexistente() {
+    return "1. يحدث هذا الخطأ عادةً عندما يكون التعديل غير متوافق مع إصدار اللعبة الحالي أو مع تعديل آخر.";
+}
+
+@Override
+public String paso2_campo_inexistente() {
+    return "2. حدّث جميع التعديلات المتضررة. إذا استمرت المشكلة، اتصل بمطوّر التعديل الذي تسبب في الخطأ.";
+}
+
 
 
 

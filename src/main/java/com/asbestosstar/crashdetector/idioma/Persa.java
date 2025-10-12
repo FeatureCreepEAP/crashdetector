@@ -3408,6 +3408,60 @@ public String paso2_configuracion_servicio() {
     return "2. مود را به‌روزرسانی، دوباره نصب یا حذف کنید. مطمئن شوید از نسخه‌ای سازگار با Forge/NeoForge خود استفاده می‌کنید.";
 }
 
+@Override
+public String errorMetodoInexistente(String metodo, String lineaCompleta) {
+    String colorError = config.obtenerColorError();
+    String colorCodigo = "888888";
+
+    return "<b style='color:#" + colorError + "'>خطای بحرانی: متود وجود ندارد.</b><br>" +
+           "مود سعی کرد به متود <b style='color:#" + colorCodigo + "'>" + metodo + "</b> فراخوانی کند، " +
+           "که در این نسخه از بازی یا مود دیگر وجود ندارد.<br>" +
+           "<span style='color:#" + colorCodigo + "; font-family:monospace;'>" + 
+           escapeHtml(lineaCompleta) + "</span>";
+}
+
+@Override
+public String nombre_error_metodo_inexistente() {
+    return "متود وجود ندارد (NoSuchMethodError)";
+}
+
+@Override
+public String paso1_metodo_inexistente() {
+    return "1. این خطا زمانی رخ می‌دهد که یک مود با نسخه فعلی بازی یا مود دیگری ناسازگار باشد.";
+}
+
+@Override
+public String paso2_metodo_inexistente() {
+    return "2. تمام مودهای درگیر را به‌روزرسانی کنید. اگر مشکل باقی ماند، خطای را به نویسنده مود تحت تأثیر گزارش دهید.";
+}
+
+@Override
+public String errorCampoInexistente(String campo, String lineaCompleta) {
+    String colorError = config.obtenerColorError();
+    String colorCodigo = "888888";
+
+    return "<b style='color:#" + colorError + "'>خطای بحرانی: فیلد وجود ندارد.</b><br>" +
+           "مود سعی کرد به فیلد <b style='color:#" + colorCodigo + "'>" + campo + "</b> دسترسی پیدا کند، " +
+           "که در این نسخه از بازی یا مود دیگر وجود ندارد.<br>" +
+           "<span style='color:#" + colorCodigo + "; font-family:monospace;'>" + 
+           escapeHtml(lineaCompleta) + "</span>";
+}
+
+@Override
+public String nombre_error_campo_inexistente() {
+    return "فیلد وجود ندارد (NoSuchFieldError)";
+}
+
+@Override
+public String paso1_campo_inexistente() {
+    return "1. این خطا معمولاً زمانی رخ می‌دهد که یک مود با نسخه فعلی بازی یا مود دیگری ناسازگار باشد.";
+}
+
+@Override
+public String paso2_campo_inexistente() {
+    return "2. تمام مودهای تحت تأثیر را به‌روزرسانی کنید. اگر مشکل ادامه داشت، با توسعه‌دهنده مودی که خطا را ایجاد کرده تماس بگیرید.";
+}
+
 
 
 

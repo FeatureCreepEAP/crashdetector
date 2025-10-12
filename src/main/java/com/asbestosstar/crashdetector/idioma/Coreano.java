@@ -3399,6 +3399,60 @@ public String paso2_configuracion_servicio() {
     return "2. 모드를 업데이트, 재설치 또는 삭제하세요. Forge/NeoForge와 호환되는 버전을 사용하고 있는지 확인하세요.";
 }
 
+@Override
+public String errorMetodoInexistente(String metodo, String lineaCompleta) {
+    String colorError = config.obtenerColorError();
+    String colorCodigo = "888888";
+
+    return "<b style='color:#" + colorError + "'>치명적 오류: 존재하지 않는 메서드.</b><br>" +
+           "모드가 <b style='color:#" + colorCodigo + "'>" + metodo + "</b> 메서드를 호출하려 했지만, " +
+           "이 메서드는 현재 게임 또는 다른 모드 버전에 존재하지 않습니다.<br>" +
+           "<span style='color:#" + colorCodigo + "; font-family:monospace;'>" + 
+           escapeHtml(lineaCompleta) + "</span>";
+}
+
+@Override
+public String nombre_error_metodo_inexistente() {
+    return "존재하지 않는 메서드 (NoSuchMethodError)";
+}
+
+@Override
+public String paso1_metodo_inexistente() {
+    return "1. 이 오류는 모드가 현재 게임 버전이나 다른 모드와 호환되지 않을 때 발생합니다.";
+}
+
+@Override
+public String paso2_metodo_inexistente() {
+    return "2. 관련된 모든 모드를 업데이트하세요. 지속되면 영향을 받은 모드의 제작자에게 오류를 보고하세요.";
+}
+
+@Override
+public String errorCampoInexistente(String campo, String lineaCompleta) {
+    String colorError = config.obtenerColorError();
+    String colorCodigo = "888888";
+
+    return "<b style='color:#" + colorError + "'>치명적 오류: 존재하지 않는 필드.</b><br>" +
+           "모드가 <b style='color:#" + colorCodigo + "'>" + campo + "</b> 필드에 접근하려 했지만, " +
+           "이 필드는 현재 게임 또는 다른 모드 버전에 존재하지 않습니다.<br>" +
+           "<span style='color:#" + colorCodigo + "; font-family:monospace;'>" + 
+           escapeHtml(lineaCompleta) + "</span>";
+}
+
+@Override
+public String nombre_error_campo_inexistente() {
+    return "존재하지 않는 필드 (NoSuchFieldError)";
+}
+
+@Override
+public String paso1_campo_inexistente() {
+    return "1. 이 오류는 일반적으로 모드가 현재 게임 버전이나 다른 모드와 호환되지 않을 때 발생합니다.";
+}
+
+@Override
+public String paso2_campo_inexistente() {
+    return "2. 영향받은 모든 모드를 업데이트하세요. 문제가 계속되면 오류를 유발한 모드의 개발자에게 문의하세요.";
+}
+
 
 
 
