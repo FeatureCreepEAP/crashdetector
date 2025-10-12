@@ -3330,7 +3330,32 @@ public String guardadoOk() {
 
 @Override
 public String editorCodiceBoton() {
-    return "코디체 편집기";
+    return "이유 추가";
+}
+
+@Override
+public String descripcionEditorCodice() {
+    return "여기에 이유를 등록할 수 있습니다. ID가 필요하며, 특수 문자, 악센트 기호, 공백 없이 문자열로 작성해야 합니다. 필터에는 \"줄 포함\"을 사용하여 줄 내 문자열 검색, \"전체 포함\"은 로그 전체에 특정 문자열이 있는지 확인, \"정규식 줄\"은 줄 단위 정규식 매칭, \"정규식 전체\"는 전체 로그에서 정규식 검색(줄 단위 버전 사용 권장)을 할 수 있습니다. 색상을 지정하려면 FATAL(치명적), ERROR(오류), ADVERTENCIA(경고) 중 하나의 중요도를 설정해야 합니다. 모든 언어에 대해 화면에 표시될 이름과 결과를 입력해야 합니다. 검사 항목을 추가하거나 삭제할 수 있으며, 완료 시 저장됩니다.";
+}
+
+@Override
+public String descartarCambios() {
+    return "현재 검사에서 저장되지 않은 변경 사항을 취소하시겠습니까?";
+}
+
+@Override
+public String confirmacion() {
+    return "확인";
+}
+
+@Override
+public String guardarAntesDeSalir() {
+    return "나가기 전에 변경 사항을 저장하시겠습니까?";
+}
+
+@Override
+public String salirSinGuardar() {
+    return "저장하지 않고 나가기";
 }
 
 

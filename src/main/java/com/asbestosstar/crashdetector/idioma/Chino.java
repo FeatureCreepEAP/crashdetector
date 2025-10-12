@@ -3347,9 +3347,33 @@ public String guardadoOk() {
 
 @Override
 public String editorCodiceBoton() {
-    return "Codice 编辑器";
+    return "添加原因";
 }
 
+@Override
+public String descripcionEditorCodice() {
+    return "你可以在此注册原因。你需要一个ID，即不含特殊字符、重音符号或空格的字符串。对于过滤器，可使用“行包含”来搜索某行中的字符串，“全文包含”用于判断日志是否包含某字符串，“行正则”用于匹配某行的正则表达式，“全文正则”（建议优先使用行级版本）。你必须设置严重性：FATAL（致命）、ERROR（错误）或ADVERTENCIA（警告），以决定颜色显示。每种语言都需填写名称和结果，这些内容将显示在界面上。你可以添加更多检查项或删除已有项。完成时会自动保存。";
+}
+
+@Override
+public String descartarCambios() {
+    return "是否放弃当前检查中的未保存更改？";
+}
+
+@Override
+public String confirmacion() {
+    return "确认";
+}
+
+@Override
+public String guardarAntesDeSalir() {
+    return "您想在退出前保存更改吗？";
+}
+
+@Override
+public String salirSinGuardar() {
+    return "退出不保存";
+}
 
 
 

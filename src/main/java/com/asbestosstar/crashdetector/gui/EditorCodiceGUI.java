@@ -19,6 +19,7 @@ import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -26,6 +27,7 @@ import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -76,9 +78,10 @@ public class EditorCodiceGUI extends JFrame implements BotonDeBarraLateralDerech
     private JTextArea vistaJson;
 
     // Campos generales
-    private JTextField fId, fParaBuscar, fFiltro, fCriticalidad;
+    private JTextField fId, fParaBuscar;
+    private JComboBox<String> cbFiltro, cbCriticalidad; // Cambiado a JComboBox para dropdowns
     private JSpinner spPrioridad;
-    private JButton btnElegirFiltro;
+    private JButton btnElegirFiltro; // No necesario ahora, pero lo dejamos por compatibilidad
 
     // Campos por idioma (nombre, resultado) → clave -> {nombre, resultado}
     private final Map<String, JTextField[]> camposIdiomas = new LinkedHashMap<String, JTextField[]>();
@@ -95,7 +98,34 @@ public class EditorCodiceGUI extends JFrame implements BotonDeBarraLateralDerech
 
     public EditorCodiceGUI() {
         setTitle(MonitorDePID.idioma.tituloEditorCodice());
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+     // In your EditorCodiceGUI() constructor, after setDefaultCloseOperation:
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                if (hayCambiosNoGuardados()) {
+                    int resp = JOptionPane.showConfirmDialog(
+                        EditorCodiceGUI.this,
+                        MonitorDePID.idioma.guardarAntesDeSalir(),
+                        MonitorDePID.idioma.salirSinGuardar(),
+                        JOptionPane.YES_NO_CANCEL_OPTION,
+                        JOptionPane.WARNING_MESSAGE
+                    );
+                    if (resp == JOptionPane.YES_OPTION) {
+                        guardarTodo();
+                        dispose();
+                    } else if (resp == JOptionPane.NO_OPTION) {
+                        dispose();
+                    }
+                } else {
+                    dispose();
+                }
+            }
+        });
+        
+        
+        
         setSize(1120, 740);
         setLocationRelativeTo(null);
         getContentPane().setBackground(rosaFondo);
@@ -111,23 +141,49 @@ public class EditorCodiceGUI extends JFrame implements BotonDeBarraLateralDerech
         actualizarVistaJson();
     }
 
-    // -------------------- UI --------------------
+ private JPanel crearEncabezado() {
+    JPanel p = new JPanel();
+    p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS)); // Vertical stack
+    p.setBackground(rosaFondo);
+    p.setBorder(BorderFactory.createEmptyBorder(8, 12, 0, 12));
 
-    private JPanel crearEncabezado() {
-        JPanel p = new JPanel(new BorderLayout());
-        p.setBackground(rosaFondo);
-        p.setBorder(BorderFactory.createEmptyBorder(8, 12, 0, 12));
+    // --- Título ---
+    JLabel titulo = new JLabel(MonitorDePID.idioma.tituloEditorCodice());
+    titulo.setFont(new Font("Segoe UI", Font.BOLD, 20));
+    titulo.setForeground(moradoAcento);
+    p.add(titulo);
 
-        JLabel titulo = new JLabel(MonitorDePID.idioma.tituloEditorCodice());
-        titulo.setFont(new Font("Segoe UI", Font.BOLD, 20));
-        titulo.setForeground(moradoAcento);
-        p.add(titulo, BorderLayout.WEST);
+    // --- Contenedor de descripción + imagen (horizontal) ---
+    JPanel descRow = new JPanel();
+    descRow.setLayout(new BoxLayout(descRow, BoxLayout.X_AXIS));
+    descRow.setOpaque(false);
+    descRow.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        etiquetaIronmouse = cargarImagen("imagenes/ironmouse.png", 240, 130);
-        if (etiquetaIronmouse != null) p.add(etiquetaIronmouse, BorderLayout.EAST);
+    // Descripción (left side)
+    String descText = "<html><body style='width: 600px;'>" +
+            MonitorDePID.idioma.descripcionEditorCodice() +
+            "</body></html>";
+    JLabel descripcion = new JLabel(descText);
+    descripcion.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+    descripcion.setForeground(textoOscuro);
+    descripcion.setAlignmentY(Component.CENTER_ALIGNMENT);
+    descRow.add(descripcion);
+    descRow.add(Box.createHorizontalStrut(20)); // Space between text and image
 
-        return p;
+    // Imagen (right side, vertically centered)
+    etiquetaIronmouse = cargarImagen("imagenes/ironmouse.png", 240, 130);
+    if (etiquetaIronmouse != null) {
+        JPanel imgPanel = new JPanel(new BorderLayout());
+        imgPanel.setOpaque(false);
+        imgPanel.add(etiquetaIronmouse, BorderLayout.CENTER);
+        imgPanel.setAlignmentY(Component.CENTER_ALIGNMENT);
+        descRow.add(imgPanel);
     }
+
+    p.add(descRow);
+
+    return p;
+}
 
     private JSplitPane crearSplit() {
         JSplitPane split = new JSplitPane(
@@ -214,12 +270,37 @@ public class EditorCodiceGUI extends JFrame implements BotonDeBarraLateralDerech
 
         fId          = campo(general, c, MonitorDePID.idioma.id());
         fParaBuscar  = campo(general, c, MonitorDePID.idioma.paraBuscar());
-        fFiltro      = campoConBoton(general, c, MonitorDePID.idioma.filtro());
-        fCriticalidad= campo(general, c, MonitorDePID.idioma.criticalidad());
+
+        // Filtro como dropdown
+        etiqueta(general, c, MonitorDePID.idioma.filtro());
+        GridBagConstraints c2 = (GridBagConstraints) c.clone();
+        c2.gridx = 1; c2.weightx = 1;
+        cbFiltro = new JComboBox<>();
+        cbFiltro.addItem(""); // Opción vacía
+        List<String> ids = new ArrayList<>(FiltrodeCodice.filtros.keySet());
+        ids.sort(String::compareToIgnoreCase);
+        for (String id : ids) {
+            cbFiltro.addItem(id);
+        }
+        estilizarCampo(cbFiltro);
+        general.add(cbFiltro, c2);
+        c.gridy++; c.gridx = 0; c.weightx = 0;
+
+        // Criticalidad como dropdown con valores localizados
+        etiqueta(general, c, MonitorDePID.idioma.criticalidad());
+        c2 = (GridBagConstraints) c.clone();
+        c2.gridx = 1; c2.weightx = 1;
+        cbCriticalidad = new JComboBox<>();
+        cbCriticalidad.addItem(Criticalidad.ADVERTENCIA.nombre); // Localizado
+        cbCriticalidad.addItem(Criticalidad.ERROR.nombre);       // Localizado
+        cbCriticalidad.addItem(Criticalidad.FATAL.nombre);       // Localizado
+        estilizarCampo(cbCriticalidad);
+        general.add(cbCriticalidad, c2);
+        c.gridy++; c.gridx = 0; c.weightx = 0;
 
         // prioridad
         etiqueta(general, c, MonitorDePID.idioma.prioridad());
-        GridBagConstraints c2 = (GridBagConstraints) c.clone();
+        c2 = (GridBagConstraints) c.clone();
         c2.gridx = 1; c2.weightx = 1;
         spPrioridad = new JSpinner(new SpinnerNumberModel(0, -1000, 1000, 1));
         estilizarCampo(spPrioridad);
@@ -365,23 +446,6 @@ public class EditorCodiceGUI extends JFrame implements BotonDeBarraLateralDerech
         return t;
     }
 
-    private JTextField campoConBoton(JPanel p, GridBagConstraints base, String etiqueta) {
-        etiqueta(p, base, etiqueta);
-        GridBagConstraints c2 = (GridBagConstraints) base.clone();
-        c2.gridx = 1; c2.weightx = 1;
-        fFiltro = new JTextField();
-        estilizarCampo(fFiltro);
-        p.add(fFiltro, c2);
-
-        GridBagConstraints c3 = (GridBagConstraints) base.clone();
-        c3.gridx = 2; c3.weightx = 0;
-        btnElegirFiltro = boton(MonitorDePID.idioma.elegirFiltro(), this::elegirFiltro);
-        p.add(btnElegirFiltro, c3);
-
-        base.gridy++; base.gridx = 0; base.weightx = 0;
-        return fFiltro;
-    }
-
     private void etiqueta(JPanel p, GridBagConstraints c, String txt) {
         JLabel l = new JLabel(txt);
         l.setFont(new Font("Segoe UI", Font.PLAIN, 12));
@@ -392,6 +456,7 @@ public class EditorCodiceGUI extends JFrame implements BotonDeBarraLateralDerech
     private void estilizarCampo(Component comp) {
         comp.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         if (comp instanceof JTextField) ((JTextField) comp).setBackground(Color.WHITE);
+        if (comp instanceof JComboBox) ((JComboBox<?>) comp).setBackground(Color.WHITE);
     }
 
     private JButton boton(String texto, Runnable r) {
@@ -454,8 +519,21 @@ public class EditorCodiceGUI extends JFrame implements BotonDeBarraLateralDerech
     private void cargarEnFormulario(VerificacionFirmasV0 v) {
         fId.setText(nz(v.id));
         fParaBuscar.setText(nz(v.para_buscar));
-        fFiltro.setText(v.filtro != null ? nz(v.filtro.id) : "");
-        fCriticalidad.setText(v.criticalidad != null ? v.criticalidad.nombre : "ADVERTENCIA");
+        
+        // Establecer filtro en el combo
+        if (v.filtro != null) {
+            cbFiltro.setSelectedItem(v.filtro.id);
+        } else {
+            cbFiltro.setSelectedIndex(0);
+        }
+        
+        // Establecer criticalidad en el combo (localizada)
+        if (v.criticalidad != null) {
+            cbCriticalidad.setSelectedItem(v.criticalidad.nombre);
+        } else {
+            cbCriticalidad.setSelectedItem(Criticalidad.ADVERTENCIA.nombre);
+        }
+        
         spPrioridad.setValue(Integer.valueOf(v.prioridad));
 
         setLang("es", v.nombre_es, v.resultado_es);
@@ -472,6 +550,36 @@ public class EditorCodiceGUI extends JFrame implements BotonDeBarraLateralDerech
         actualizarVistaJson();
     }
 
+    
+    private boolean esFormularioModificado() {
+        if (lista.getSelectedValue() == null) {
+            return !isEmpty(fId.getText()) || !isEmpty(fParaBuscar.getText()) ||
+                   cbFiltro.getSelectedIndex() != 0 ||
+                   !cbCriticalidad.getSelectedItem().equals(Criticalidad.ADVERTENCIA.nombre) ||
+                   (Integer)spPrioridad.getValue() != 0 ||
+                   camposIdiomas.values().stream()
+                       .anyMatch(arr -> !isEmpty(arr[0].getText()) || !isEmpty(arr[1].getText()));
+        }
+        
+        VerificacionFirmasV0 actual = lista.getSelectedValue();
+        return !fId.getText().trim().equals(actual.id) ||
+               !fParaBuscar.getText().trim().equals(actual.para_buscar) ||
+               !cbFiltro.getSelectedItem().equals(actual.filtro != null ? actual.filtro.id : "") ||
+               !cbCriticalidad.getSelectedItem().equals(actual.criticalidad != null ? actual.criticalidad.nombre : Criticalidad.ADVERTENCIA.nombre) ||
+               (Integer)spPrioridad.getValue() != actual.prioridad ||
+               !val("es",0).equals(actual.nombre_es) || !val("es",1).equals(actual.resultado_es) ||
+               !val("en",0).equals(actual.nombre_en) || !val("en",1).equals(actual.resultado_en) ||
+               !val("ar",0).equals(actual.nombre_ar) || !val("ar",1).equals(actual.resultado_ar) ||
+               !val("pt",0).equals(actual.nombre_pt) || !val("pt",1).equals(actual.resultado_pt) ||
+               !val("fa",0).equals(actual.nombre_fa) || !val("fa",1).equals(actual.resultado_fa) ||
+               !val("ru",0).equals(actual.nombre_ru) || !val("ru",1).equals(actual.resultado_ru) ||
+               !val("zh",0).equals(actual.nombre_zh) || !val("zh",1).equals(actual.resultado_zh) ||
+               !val("eo",0).equals(actual.nombre_eo) || !val("eo",1).equals(actual.resultado_eo) ||
+               !val("jp",0).equals(actual.nombre_jp) || !val("jp",1).equals(actual.resultado_jp) ||
+               !val("kp",0).equals(actual.nombre_kp) || !val("kp",1).equals(actual.resultado_kp);
+    }
+    
+    
     private void setLang(String code, String nombre, String resultado) {
         JTextField[] arr = camposIdiomas.get(code);
         if (arr != null) {
@@ -481,47 +589,65 @@ public class EditorCodiceGUI extends JFrame implements BotonDeBarraLateralDerech
     }
 
     private void limpiarFormulario() {
+        if (esFormularioModificado()) {
+            int resp = JOptionPane.showConfirmDialog(
+                this,
+                MonitorDePID.idioma.descartarCambios(),
+                MonitorDePID.idioma.confirmacion(),
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+            );
+            if (resp != JOptionPane.YES_OPTION) {
+                return;
+            }
+        }
         lista.clearSelection();
         fId.setText("");
         fParaBuscar.setText("");
-        fFiltro.setText("");
-        fCriticalidad.setText("ADVERTENCIA");
-        spPrioridad.setValue(Integer.valueOf(0));
-        for (JTextField[] arr : camposIdiomas.values()) { arr[0].setText(""); arr[1].setText(""); }
+        cbFiltro.setSelectedIndex(0);
+        cbCriticalidad.setSelectedItem(Criticalidad.ADVERTENCIA.nombre);
+        spPrioridad.setValue(0);
+        for (JTextField[] arr : camposIdiomas.values()) {
+            arr[0].setText("");
+            arr[1].setText("");
+        }
         actualizarVistaJson();
     }
 
+    // El botón de elegir filtro ya no es necesario, pero lo dejamos sin funcionalidad
     private void elegirFiltro() {
-        List<String> ids = new ArrayList<String>(FiltrodeCodice.filtros.keySet());
-        ids.sort(String::compareToIgnoreCase);
-        String sel = (String) javax.swing.JOptionPane.showInputDialog(
-                this,
-                MonitorDePID.idioma.eligeFiltroMsg(),
-                MonitorDePID.idioma.eligeFiltroTitulo(),
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                ids.toArray(new String[0]),
-                fFiltro.getText());
-        if (sel != null) fFiltro.setText(sel);
+        // No hace nada, porque ahora usamos un JComboBox
     }
 
     private boolean validarFormulario() {
-        if (vacio(fId) || vacio(fParaBuscar) || vacio(fFiltro) || vacio(fCriticalidad)) {
+        if (vacio(fId) || vacio(fParaBuscar)) {
             JOptionPane.showMessageDialog(this, MonitorDePID.idioma.faltanCampos(),
                     "Validación", JOptionPane.WARNING_MESSAGE);
             return false;
         }
-        String crit = fCriticalidad.getText().trim().toUpperCase();
-        if (!(crit.equals("ADVERTENCIA") || crit.equals("ERROR") || crit.equals("FATAL"))) {
-            JOptionPane.showMessageDialog(this, MonitorDePID.idioma.critInvalida(),
-                    "Validación", JOptionPane.WARNING_MESSAGE);
-            return false;
-        }
-        if (FiltrodeCodice.filtros.get(fFiltro.getText().trim()) == null) {
+        
+        // Validar que se haya seleccionado un filtro (no vacío)
+        if (cbFiltro.getSelectedItem() == null || "".equals(cbFiltro.getSelectedItem())) {
             JOptionPane.showMessageDialog(this, MonitorDePID.idioma.filtroNoExiste(),
                     "Validación", JOptionPane.WARNING_MESSAGE);
             return false;
         }
+        
+        // Validar que se haya seleccionado una criticalidad
+        if (cbCriticalidad.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, MonitorDePID.idioma.critInvalida(),
+                    "Validación", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+        
+        // Validar que el filtro exista realmente
+        String idFiltro = (String) cbFiltro.getSelectedItem();
+        if (FiltrodeCodice.filtros.get(idFiltro) == null) {
+            JOptionPane.showMessageDialog(this, MonitorDePID.idioma.filtroNoExiste(),
+                    "Validación", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+        
         for (Map.Entry<String, JTextField[]> e : camposIdiomas.entrySet()) {
             if (vacio(e.getValue()[0]) || vacio(e.getValue()[1])) {
                 JOptionPane.showMessageDialog(this,
@@ -536,13 +662,19 @@ public class EditorCodiceGUI extends JFrame implements BotonDeBarraLateralDerech
     private VerificacionFirmasV0 construirDesdeFormulario() {
         String id = fId.getText().trim();
         String paraBuscar = fParaBuscar.getText().trim();
-        String idFiltro = fFiltro.getText().trim();
+        String idFiltro = (String) cbFiltro.getSelectedItem();
         FiltrodeCodice filtro = FiltrodeCodice.filtros.get(idFiltro);
 
-        String crit = fCriticalidad.getText().trim().toUpperCase();
-        Criticalidad criticalidad =
-                "ERROR".equals(crit) ? Criticalidad.ERROR :
-                "FATAL".equals(crit) ? Criticalidad.FATAL : Criticalidad.ADVERTENCIA;
+        // Convertir el valor localizado del combo a la criticalidad correspondiente
+        String critLocalizado = (String) cbCriticalidad.getSelectedItem();
+        Criticalidad criticalidad;
+        if (critLocalizado.equals(Criticalidad.ERROR.nombre)) {
+            criticalidad = Criticalidad.ERROR;
+        } else if (critLocalizado.equals(Criticalidad.FATAL.nombre)) {
+            criticalidad = Criticalidad.FATAL;
+        } else {
+            criticalidad = Criticalidad.ADVERTENCIA;
+        }
 
         int prio = ((Number) spPrioridad.getValue()).intValue();
 
@@ -653,6 +785,23 @@ public class EditorCodiceGUI extends JFrame implements BotonDeBarraLateralDerech
             vistaJson.setText("{ \"error\": \"" + ex.getMessage() + "\" }");
         }
     }
+    
+    private boolean hayCambiosNoGuardados() {
+        try {
+            List<VerificacionFirmasV0> enDisco = CargadorDeCodice.cargarVerificaciones();
+            if (enDisco.size() != modeloLista.size()) return true;
+            
+            for (int i = 0; i < modeloLista.size(); i++) {
+                VerificacionFirmasV0 enMem = modeloLista.get(i);
+                VerificacionFirmasV0 enArc = enDisco.get(i);
+                if (!enMem.equals(enArc)) return true;
+            }
+            return false;
+        } catch (Exception ex) {
+            return true; 
+        }
+    }
+    
 
     // Vista previa manual (solo para mostrar; el guardado real lo hace CodiceV0)
     private String construirJsonPreview(List<VerificacionFirmasV0> arr) {

@@ -3329,7 +3329,32 @@ public String guardadoOk() {
 
 @Override
 public String editorCodiceBoton() {
-    return "Editor de Codice";
+    return "Adicionar razões";
+}
+
+@Override
+public String descripcionEditorCodice() {
+    return "Você pode registrar razões aqui. Você precisa de um ID, uma string sem caracteres especiais, acentos ou espaços. Para filtros, você pode usar \"linha contém\" para procurar uma string em uma linha, \"tudo contém\" se o log tem uma string, \"regex linha\" se uma linha corresponde a uma expressão regular, e \"regex tudo\" (sugerimos usar as versões de linha). Você precisa definir a criticidade: FATAL, ERRO ou ADVERTÊNCIA para as cores. Para todos os idiomas, é necessário escrever um nome e um resultado que aparecerá na tela. Você pode adicionar mais verificações ou remover outras. Salvo ao concluir.";
+}
+
+@Override
+public String descartarCambios() {
+    return "Descartar as alterações não salvas na verificação atual?";
+}
+
+@Override
+public String confirmacion() {
+    return "Confirmação";
+}
+
+@Override
+public String guardarAntesDeSalir() {
+    return "Deseja salvar as alterações antes de sair?";
+}
+
+@Override
+public String salirSinGuardar() {
+    return "Sair sem salvar";
 }
 
 

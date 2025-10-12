@@ -1390,6 +1390,16 @@ public interface Idioma {
 
 	public String editorCodiceBoton();
 
+	public String descripcionEditorCodice();
+
+	public String guardarAntesDeSalir();
+
+	public String salirSinGuardar();
+
+	public String descartarCambios();
+
+	public String confirmacion();
+
 	
 	
 	

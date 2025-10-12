@@ -3412,7 +3412,32 @@ public String guardadoOk() {
 
 @Override
 public String editorCodiceBoton() {
-    return "Codice Editor";
+    return "Add reasons";
+}
+
+@Override
+public String descripcionEditorCodice() {
+    return "You can register reasons here. You need an ID — a string without special characters, accents or spaces. For filters, you can use \"line contains\" to search for a string in a line, \"all contains\" if the log contains a string, \"regex line\" if a line matches a regex, and \"regex all\" (we suggest using the line versions). You must set the criticality: FATAL, ERROR, or WARNING for colouring. For each language, you need to enter a name and result that will appear on screen. You can add more checks or remove others. Saved upon completion.";
+}
+
+@Override
+public String descartarCambios() {
+    return "Discard unsaved changes in the current check?";
+}
+
+@Override
+public String confirmacion() {
+    return "Confirmation";
+}
+
+@Override
+public String guardarAntesDeSalir() {
+    return "Do you want to save your changes before exiting?";
+}
+
+@Override
+public String salirSinGuardar() {
+    return "Exit without saving";
 }
 
 

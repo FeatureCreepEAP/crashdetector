@@ -4080,7 +4080,33 @@ public String guardadoOk() {
 
 @Override
 public String editorCodiceBoton() {
-    return "Editor de Codice";
+    return "Agregar razones";
+}
+
+@Override
+public String descripcionEditorCodice() {
+    // TODO Auto-generated method stub
+    return "Puedes registrar razones aqui. Neceistas una ID, una string sin caractares speciales o marcos accentos o espacios. Para filtros puedes usar son \"linea containe\" para buscar para un string en una linea, \"todo containe\" si el registro tiene un string, \"regex linea\" si una linea tiene regex, y \"regex todos\" sugeste usar las versiones de linea. Necesitas poder la criticalidad, FATAL, ERROR, o ADVERTENCIA para los colores. Para todas las idiomas necesitas escribir un nombre y respunta para la pantalla.Puedes agregar mas verificaciones o eliminar otras. Guardas cunado completa.";
+}
+
+@Override
+public String descartarCambios() {
+    return "¿Descartar los cambios no guardados en la verificación actual?";
+}
+
+@Override
+public String confirmacion() {
+    return "Confirmación";
+}
+
+@Override
+public String guardarAntesDeSalir() {
+    return "¿Desea guardar los cambios antes de salir?";
+}
+
+@Override
+public String salirSinGuardar() {
+    return "Salir sin guardar";
 }
 
 

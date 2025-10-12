@@ -3343,10 +3343,33 @@ public String guardadoOk() {
 
 @Override
 public String editorCodiceBoton() {
-    return "Codiceエディター";
+    return "理由を追加";
 }
 
+@Override
+public String descripcionEditorCodice() {
+    return "ここに理由を登録できます。IDが必要で、これは特殊文字・アクセント記号・スペースを含まない文字列である必要があります。フィルターには、「行に含まれる」で特定の文字列を1行内から検索、「全体に含まれる」でログ全体に文字列があるか確認、「行正規表現」で1行が正規表現に一致するかチェック、「全体正規表現」でログ全体を正規表現で検索（行単位のバージョンの使用を推奨）できます。色分けのために、重大度としてFATAL（致命的）、ERROR（エラー）、ADVERTENCIA（警告）のいずれかを設定する必要があります。すべての言語について、画面に表示される名前と結果を入力してください。他の検査項目を追加または削除できます。完了時に保存されます。";
+}
 
+@Override
+public String descartarCambios() {
+    return "現在のチェックで保存されていない変更を破棄しますか？";
+}
+
+@Override
+public String confirmacion() {
+    return "確認";
+}
+
+@Override
+public String guardarAntesDeSalir() {
+    return "終了する前に変更を保存しますか？";
+}
+
+@Override
+public String salirSinGuardar() {
+    return "保存せずに終了";
+}
 
 
 

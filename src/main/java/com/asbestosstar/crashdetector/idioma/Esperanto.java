@@ -3379,7 +3379,32 @@ public String guardadoOk() {
 
 @Override
 public String editorCodiceBoton() {
-    return "Redaktilo de Codice";
+    return "Aldoni kaŭzojn";
+}
+
+@Override
+public String descripcionEditorCodice() {
+    return "Vi povas registri kaŭzojn ĉi tie. Vi bezonas ID-on, tekston sen specialaj signoj, akcentoj aŭ spacetoj. Por filtriloj vi povas uzi \"linio enhavas\" por serĉi tekston en linio, \"ĉio enhavas\" se la protokolo havas tekston, \"regex linio\" se linio konformas regulan esprimon, kai \"regex ĉio\" (rekomencas uzi liniajn versiojn). Vi devas agordi gravecon: FATAL, ERARO aŭ AVERTO por la koloroj. Por ĉiuj lingvoj vi devas tajpi nomon kai respondon por la ekrano. Vi povas aldoni pliajn kontrolojn aŭ forigi aliajn. Vi konservas post kompletigo.";
+}
+
+@Override
+public String descartarCambios() {
+    return "Ĉu ĉesi senkonservitajn ŝanĝojn en la nuna kontrolo?";
+}
+
+@Override
+public String confirmacion() {
+    return "Konfirmo";
+}
+
+@Override
+public String guardarAntesDeSalir() {
+    return "Ĉu vi volas konservi viajn ŝanĝojn antaŭ ol eliri?";
+}
+
+@Override
+public String salirSinGuardar() {
+    return "Eliri sen konservi";
 }
 
 

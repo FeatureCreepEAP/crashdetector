@@ -1,5 +1,7 @@
 package com.asbestosstar.crashdetector.analizador.firmas.v0;
 
+import java.util.Objects;
+
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.Idioma;
@@ -7,9 +9,9 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.Criticalidad;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.firmas.FiltrodeCodice;
 import com.asbestosstar.crashdetector.analizador.firmas.TipoDeFiltrodeCodice;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.idioma.Arabe;
 import com.asbestosstar.crashdetector.idioma.Chino;
 import com.asbestosstar.crashdetector.idioma.Coreano;
@@ -264,6 +266,42 @@ public class VerificacionFirmasV0 implements Verificaciones{
 	public String id() {
 		// TODO Auto-generated method stub
 		return id;
+	}
+	
+	
+	
+	
+	
+	@Override
+	public boolean equals(Object o) {
+	    if (this == o) return true;
+	    if (o == null || getClass() != o.getClass()) return false;
+	    VerificacionFirmasV0 v = (VerificacionFirmasV0) o;
+	    return prioridad == v.prioridad &&
+	           Objects.equals(id, v.id) &&
+	           Objects.equals(para_buscar, v.para_buscar) &&
+	           Objects.equals(filtro, v.filtro) &&
+	           criticalidad == v.criticalidad &&
+	           Objects.equals(nombre_es, v.nombre_es) &&
+	           Objects.equals(resultado_es, v.resultado_es) &&
+	           Objects.equals(nombre_en, v.nombre_en) &&
+	           Objects.equals(resultado_en, v.resultado_en) &&
+	           Objects.equals(nombre_ar, v.nombre_ar) &&
+	           Objects.equals(resultado_ar, v.resultado_ar) &&
+	           Objects.equals(nombre_pt, v.nombre_pt) &&
+	           Objects.equals(resultado_pt, v.resultado_pt) &&
+	           Objects.equals(nombre_fa, v.nombre_fa) &&
+	           Objects.equals(resultado_fa, v.resultado_fa) &&
+	           Objects.equals(nombre_ru, v.nombre_ru) &&
+	           Objects.equals(resultado_ru, v.resultado_ru) &&
+	           Objects.equals(nombre_zh, v.nombre_zh) &&
+	           Objects.equals(resultado_zh, v.resultado_zh) &&
+	           Objects.equals(nombre_eo, v.nombre_eo) &&
+	           Objects.equals(resultado_eo, v.resultado_eo) &&
+	           Objects.equals(nombre_jp, v.nombre_jp) &&
+	           Objects.equals(resultado_jp, v.resultado_jp) &&
+	           Objects.equals(nombre_kp, v.nombre_kp) &&
+	           Objects.equals(resultado_kp, v.resultado_kp);
 	}
 
 }

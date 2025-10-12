@@ -3349,7 +3349,32 @@ public String guardadoOk() {
 
 @Override
 public String editorCodiceBoton() {
-    return "محرر كوديس";
+    return "إضافة أسباب";
+}
+
+@Override
+public String descripcionEditorCodice() {
+    return "يمكنك تسجيل الأسباب هنا. تحتاج إلى معرف (ID)، وهو نص بدون رموز خاصة أو أحرف مشوّهة أو فراغات. بالنسبة للمرشحات، يمكنك استخدام \"السطر يحتوي\" للبحث عن نص داخل سطر، و\"الكل يحتوي\" إذا كان السجل يحتوي على نص معين، و\"تعبير عادي في السطر\" إذا كان السطر يطابق تعبيرًا منتظمًا، و\"تعبير عادي في الكل\" (نُوصي باستخدام إصدارات السطر). يجب تحديد المستوى: FATAL (قاتلة)، ERROR (خطأ) أو ADVERTENCIA (تحذير) لتحديد الألوان. لكل لغة، يجب كتابة اسم ونتيجة ستظهر على الشاشة. يمكنك إضافة المزيد من عمليات التحقق أو حذف البعض. يتم الحفظ عند الإكمال.";
+}
+
+@Override
+public String descartarCambios() {
+    return "هل تريد تجاهل التغييرات غير المحفوظة في التحقق الحالي؟";
+}
+
+@Override
+public String confirmacion() {
+    return "تأكيد";
+}
+
+@Override
+public String guardarAntesDeSalir() {
+    return "هل ترغب في حفظ التغييرات قبل الخروج؟";
+}
+
+@Override
+public String salirSinGuardar() {
+    return "الخروج بدون حفظ";
 }
 
 

@@ -3339,7 +3339,32 @@ public String guardadoOk() {
 
 @Override
 public String editorCodiceBoton() {
-    return "ویرایشگر کدیس";
+    return "افزودن دلایل";
+}
+
+@Override
+public String descripcionEditorCodice() {
+    return "می‌توانید اینجا دلایل را ثبت کنید. به یک شناسه (ID) نیاز دارید که رشته‌ای بدون کاراکترهای خاص، علامت لهجه یا فاصله باشد. برای فیلترها می‌توانید از «خط شامل» برای جستجوی یک رشته در یک خط، «همه شامل» اگر سیاهه شامل یک رشته باشد، «عبارت منظم خط» اگر یک خط با عبارت منظم تطبیق داشته باشد، و «عبارت منظم همه» استفاده کنید (پیشنهاد می‌شود از نسخه‌های خط استفاده کنید). باید سطح اهمیت را تعیین کنید: FATAL، ERROR یا ADVERTENCIA تا رنگ‌بندی انجام شود. برای تمام زبان‌ها باید یک نام و پاسخ بنویسید که روی صفحه نمایش داده می‌شود. می‌توانید بررسی‌های بیشتری اضافه یا برخی را حذف کنید. پس از تکمیل ذخیره می‌شود.";
+}
+
+@Override
+public String descartarCambios() {
+    return "آیا می‌خواهید تغییرات ذخیره‌نشده در بررسی جاری را دور بیندازید؟";
+}
+
+@Override
+public String confirmacion() {
+    return "تایید";
+}
+
+@Override
+public String guardarAntesDeSalir() {
+    return "آیا قبل از خروج، تغییرات را ذخیره می‌کنید؟";
+}
+
+@Override
+public String salirSinGuardar() {
+    return "خروج بدون ذخیره";
 }
 
 
