@@ -75,7 +75,7 @@ import com.asbestosstar.crashdetector.analizador.apps.minecraft.TaczDeflaterCerr
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.WaterMediaTL;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.WaterMediaVLC;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.WaterMediaXenonIncompatible;
-import com.asbestosstar.crashdetector.analizador.codice.CargadorDeCodice;
+import com.asbestosstar.crashdetector.analizador.firmas.CargadorDeCodice;
 import com.asbestosstar.crashdetector.analizador.general.AdvertenciaFaltasClases;
 import com.asbestosstar.crashdetector.analizador.general.ContentoDeTraces;
 import com.asbestosstar.crashdetector.analizador.general.DifDeMods;

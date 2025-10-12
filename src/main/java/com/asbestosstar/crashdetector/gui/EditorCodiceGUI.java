@@ -42,10 +42,10 @@ import javax.swing.SpinnerNumberModel;
 
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.Criticalidad;
-import com.asbestosstar.crashdetector.analizador.codice.CargadorDeCodice;
-import com.asbestosstar.crashdetector.analizador.codice.FiltrodeCodice;
-import com.asbestosstar.crashdetector.analizador.codice.v0.CodiceV0;
-import com.asbestosstar.crashdetector.analizador.codice.v0.VerificacionCodexV0;
+import com.asbestosstar.crashdetector.analizador.firmas.CargadorDeCodice;
+import com.asbestosstar.crashdetector.analizador.firmas.FiltrodeCodice;
+import com.asbestosstar.crashdetector.analizador.firmas.v0.CodiceV0;
+import com.asbestosstar.crashdetector.analizador.firmas.v0.VerificacionCodexV0;
 
 /**
  * Editor de codice.json (schema 0) SIN pestañas.

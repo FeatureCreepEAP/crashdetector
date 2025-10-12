@@ -1,9 +1,9 @@
-package com.asbestosstar.crashdetector.analizador.codice;
+package com.asbestosstar.crashdetector.analizador.firmas;
 
 import java.util.List;
 
-import com.asbestosstar.crashdetector.analizador.codice.v0.CodiceV0;
-import com.asbestosstar.crashdetector.analizador.codice.v0.VerificacionCodexV0;
+import com.asbestosstar.crashdetector.analizador.firmas.v0.CodiceV0;
+import com.asbestosstar.crashdetector.analizador.firmas.v0.VerificacionCodexV0;
 
 /**
  * Enrutador de esquemas. Por ahora delega directamente a V0.

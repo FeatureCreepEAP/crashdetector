@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetector.analizador.codice;
+package com.asbestosstar.crashdetector.analizador.firmas;
 
 import java.util.HashMap;
 import java.util.Map;

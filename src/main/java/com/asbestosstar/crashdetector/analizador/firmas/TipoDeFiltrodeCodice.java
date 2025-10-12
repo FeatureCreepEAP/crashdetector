@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetector.analizador.codice;
+package com.asbestosstar.crashdetector.analizador.firmas;
 
 public class TipoDeFiltrodeCodice {
 	public static TipoDeFiltrodeCodice DE_LINEA = new TipoDeFiltrodeCodice();

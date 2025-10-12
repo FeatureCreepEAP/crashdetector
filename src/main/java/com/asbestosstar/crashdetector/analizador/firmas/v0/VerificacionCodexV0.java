@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetector.analizador.codice.v0;
+package com.asbestosstar.crashdetector.analizador.firmas.v0;
 
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Consola;
@@ -7,9 +7,9 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.Criticalidad;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.firmas.FiltrodeCodice;
+import com.asbestosstar.crashdetector.analizador.firmas.TipoDeFiltrodeCodice;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.analizador.codice.FiltrodeCodice;
-import com.asbestosstar.crashdetector.analizador.codice.TipoDeFiltrodeCodice;
 import com.asbestosstar.crashdetector.idioma.Arabe;
 import com.asbestosstar.crashdetector.idioma.Chino;
 import com.asbestosstar.crashdetector.idioma.Coreano;

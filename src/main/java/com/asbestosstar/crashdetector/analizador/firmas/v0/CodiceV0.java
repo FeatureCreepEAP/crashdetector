@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetector.analizador.codice.v0;
+package com.asbestosstar.crashdetector.analizador.firmas.v0;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -10,7 +10,7 @@ import java.util.List;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.Criticalidad;
-import com.asbestosstar.crashdetector.analizador.codice.FiltrodeCodice;
+import com.asbestosstar.crashdetector.analizador.firmas.FiltrodeCodice;
 import com.asbestosstar.crashdetector.json.Json;
 import com.asbestosstar.crashdetector.json.Json.Nodo;
 
