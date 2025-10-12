@@ -3439,6 +3439,46 @@ public String guardarAntesDeSalir() {
 public String salirSinGuardar() {
     return "Exit without saving";
 }
+@Override
+public String errorConfiguracionServicio(String clase, List<String> mods) {
+    StringBuilder sb = new StringBuilder();
+    sb.append("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("Critical error: Failed to load a modlauncher service (IDependencyLocator).<br>");
+    sb.append("🔹 <b>Problematic class:</b> <code>").append(clase).append("</code><br>");
+    
+    if (mods != null && !mods.isEmpty()) {
+        sb.append("🔸 <b>Affected mod:</b> ").append(String.join(", ", mods)).append("<br>");
+    } else {
+        sb.append("🔸 <b>Mod not identified.</b> Check recently installed, development, or poorly packaged mods.<br>");
+    }
+    
+    sb.append("🔸 <b>Cause:</b> The mod's <code>META-INF/services/...</code> file is corrupted, ");
+    sb.append("incompatible with this version of Forge/NeoForge, or the mod is for the wrong version.<br>");
+    sb.append("🔸 <b>Consequence:</b> Forge/NeoForge cannot register the mod's dependencies, ");
+    sb.append("preventing the game from starting.<br>");
+    sb.append("🔸 <b>Solution:</b> Update, reinstall, or remove the problematic mod. ");
+    sb.append("If using development mods, ensure they are compiled for your exact Forge/NeoForge version.");
+    sb.append("</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombre_error_configuracion_servicio() {
+    return "Service Configuration Error (IDependencyLocator)";
+}
+
+@Override
+public String paso1_configuracion_servicio(List<String> mods) {
+    if (mods == null || mods.isEmpty()) {
+        return "1. Identify the culprit mod: check recently installed or development mods.";
+    }
+    return "1. The problematic mod is: " + String.join(", ", mods);
+}
+
+@Override
+public String paso2_configuracion_servicio() {
+    return "2. Update, reinstall, or remove the mod. Make sure to use a version compatible with your Forge/NeoForge.";
+}
 
 
 

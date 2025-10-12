@@ -4109,6 +4109,46 @@ public String salirSinGuardar() {
     return "Salir sin guardar";
 }
 
+@Override
+public String errorConfiguracionServicio(String clase, List<String> mods) {
+    StringBuilder sb = new StringBuilder();
+    sb.append("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("Error critico: Falla al cargar un servicio de modlauncher (IDependencyLocator).<br>");
+    sb.append("🔹 <b>Clase problematica:</b> <code>").append(clase).append("</code><br>");
+    
+    if (mods != null && !mods.isEmpty()) {
+        sb.append("🔸 <b>Mod afectado:</b> ").append(String.join(", ", mods)).append("<br>");
+    } else {
+        sb.append("🔸 <b>Mod no identificado.</b> Revisa mods recientes, de desarrollo o mal empaquetados.<br>");
+    }
+    
+    sb.append("🔸 <b>Causa:</b> El archivo <code>META-INF/services/...</code> del mod esta corrupto, ");
+    sb.append("es incompatible con esta version de Forge/NeoForge, o el mod es para una version incorrecta.<br>");
+    sb.append("🔸 <b>Consecuencia:</b> Forge/NeoForge no puede registrar dependencias del mod, ");
+    sb.append("lo que impide el inicio del juego.<br>");
+    sb.append("🔸 <b>Solucion:</b> Actualiza, reinstala o elimina el mod problemático. ");
+    sb.append("Si usas mods de desarrollo, asegurate de que esten compilados para tu version exacta de Forge/NeoForge.");
+    sb.append("</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombre_error_configuracion_servicio() {
+    return "Error de Configuracion de Servicio (IDependencyLocator)";
+}
+
+@Override
+public String paso1_configuracion_servicio(List<String> mods) {
+    if (mods == null || mods.isEmpty()) {
+        return "1. Identifica el mod causante: revisa mods instalados recientemente o de desarrollo.";
+    }
+    return "1. El mod problemático es: " + String.join(", ", mods);
+}
+
+@Override
+public String paso2_configuracion_servicio() {
+    return "2. Actualiza, reinstala o elimina el mod. Asegurate de usar una version compatible con tu Forge/NeoForge.";
+}
 
 
 

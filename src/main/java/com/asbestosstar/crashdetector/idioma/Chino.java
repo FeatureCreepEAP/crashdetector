@@ -3375,6 +3375,47 @@ public String salirSinGuardar() {
     return "退出不保存";
 }
 
+@Override
+public String errorConfiguracionServicio(String clase, List<String> mods) {
+    StringBuilder sb = new StringBuilder();
+    sb.append("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("严重错误：加载 modlauncher 服务 (IDependencyLocator) 失败。<br>");
+    sb.append("🔹 <b>问题类：</b> <code>").append(clase).append("</code><br>");
+    
+    if (mods != null && !mods.isEmpty()) {
+        sb.append("🔸 <b>受影响的模组：</b> ").append(String.join(", ", mods)).append("<br>");
+    } else {
+        sb.append("🔸 <b>模组未识别。</b> 请检查最近安装的、开发中的或打包错误的模组。<br>");
+    }
+    
+    sb.append("🔸 <b>原因：</b> 模组的 <code>META-INF/services/...</code> 文件已损坏，");
+    sb.append("与当前版本的 Forge/NeoForge 不兼容，或该模组适用于错误版本。<br>");
+    sb.append("🔸 <b>后果：</b> Forge/NeoForge 无法注册模组依赖项，");
+    sb.append("导致游戏无法启动。<br>");
+    sb.append("🔸 <b>解决方案：</b> 更新、重新安装或删除有问题的模组。");
+    sb.append("如果使用开发版模组，请确保其编译版本与你的 Forge/NeoForge 版本完全匹配。");
+    sb.append("</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombre_error_configuracion_servicio() {
+    return "服务配置错误 (IDependencyLocator)";
+}
+
+@Override
+public String paso1_configuracion_servicio(List<String> mods) {
+    if (mods == null || mods.isEmpty()) {
+        return "1. 确定导致问题的模组：检查最近安装或正在开发的模组。";
+    }
+    return "1. 有问题的模组是：" + String.join(", ", mods);
+}
+
+@Override
+public String paso2_configuracion_servicio() {
+    return "2. 更新、重新安装或删除该模组。请确保使用与你的 Forge/NeoForge 兼容的版本。";
+}
+
 
 
 

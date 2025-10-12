@@ -1,0 +1,112 @@
+package com.asbestosstar.crashdetector.analizador.apps.minecraft;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import com.asbestosstar.crashdetector.Consola;
+import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.analizador.QuickFix;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
+import com.asbestosstar.crashdetector.buscar.Buscardor;
+
+/**
+ * Detecta errores ServiceConfigurationError relacionados con IDependencyLocator
+ * en Forge o NeoForge. Este error ocurre cuando un archivo de servicio de modlauncher
+ * esta corrupto, es de version incorrecta, o el mod no es compatible con la version
+ * actual del cargador de mods.
+ */
+public class ErrorConfiguracionServicioIDependencyLocator implements Verificaciones {
+
+    private static final String PATRON_ERROR = 
+        "Caused by: java\\.util\\.ServiceConfigurationError: .*IDependencyLocator: Unable to load ([^\\s]+)";
+
+    private boolean activado = false;
+    private String mensaje = "";
+    private String claseProblematica = "";
+    private List<String> modsUbicacion = new ArrayList<>();
+    private String enlaceHtml = "";
+
+    @Override
+    public void verificar(Consola consola) {
+        String contenido = consola.contenido_verificar;
+        String[] lineas = contenido.split(Verificaciones.nl);
+
+        for (int i = 0; i < lineas.length; i++) {
+            String linea = lineas[i];
+            if (linea.contains("ServiceConfigurationError") && linea.contains("IDependencyLocator")) {
+                Pattern patron = Pattern.compile(PATRON_ERROR);
+                Matcher matcher = patron.matcher(linea);
+                if (matcher.find()) {
+                    claseProblematica = matcher.group(1);
+                    
+                    // Buscar el mod que contiene esta clase
+                    String classPath = claseProblematica.replace('.', '/') + ".class";
+                    List<ArchivoDeMod> mods = Buscardor.buscarModsConTermino(classPath);
+                    
+                    for (ArchivoDeMod mod : mods) {
+                        modsUbicacion.add(mod.ubicacion_para_publicar());
+                    }
+
+                    enlaceHtml = consola.agregarErrorALectador(i, this);
+                    activado = true;
+                    break;
+                }
+            }
+        }
+
+        if (activado) {
+            mensaje = MonitorDePID.idioma.errorConfiguracionServicio(
+                claseProblematica, 
+                modsUbicacion.isEmpty() ? null : modsUbicacion
+            ) + Verificaciones.nl_html + enlaceHtml;
+        }
+    }
+
+    @Override
+    public Verificaciones nueva() {
+        return new ErrorConfiguracionServicioIDependencyLocator();
+    }
+
+    @Override
+    public boolean activado() {
+        return activado;
+    }
+
+    @Override
+    public float prioridad() {
+        return 1300.0f; // Prioridad alta: impide el inicio del juego
+    }
+
+    @Override
+    public String mensaje() {
+        return mensaje;
+    }
+
+    @Override
+    public String nombre() {
+        return MonitorDePID.idioma.nombre_error_configuracion_servicio();
+    }
+
+    @Override
+    public QuickFix solucion() {
+        return new QuickFix.Builder(nombre())
+            .agregarEtiqueta(MonitorDePID.idioma.paso1_configuracion_servicio(modsUbicacion))
+            .agregarEtiqueta(MonitorDePID.idioma.paso2_configuracion_servicio())
+            .construir();
+    }
+
+    @Override
+    public String id() {
+        return "error_configuracion_servicio"; // Sin acentos, en minusculas, guiones bajos
+    }
+
+    @Override
+    public boolean ocupaTrazo(TraceInfo trazo) {
+        return trazo.trace.contains("ServiceConfigurationError") && 
+               trazo.trace.contains("IDependencyLocator");
+    }
+}

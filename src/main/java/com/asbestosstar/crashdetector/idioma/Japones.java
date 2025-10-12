@@ -3370,6 +3370,46 @@ public String guardarAntesDeSalir() {
 public String salirSinGuardar() {
     return "保存せずに終了";
 }
+@Override
+public String errorConfiguracionServicio(String clase, List<String> mods) {
+    StringBuilder sb = new StringBuilder();
+    sb.append("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("重大なエラー: modlauncher サービス (IDependencyLocator) の読み込みに失敗しました。<br>");
+    sb.append("🔹 <b>問題のあるクラス:</b> <code>").append(clase).append("</code><br>");
+    
+    if (mods != null && !mods.isEmpty()) {
+        sb.append("🔸 <b>影響を受けるMOD:</b> ").append(String.join(", ", mods)).append("<br>");
+    } else {
+        sb.append("🔸 <b>MODが特定できません。</b> 最近インストールしたMOD、開発版MOD、または不適切にパッケージされたMODを確認してください。<br>");
+    }
+    
+    sb.append("🔸 <b>原因:</b> MODの <code>META-INF/services/...</code> ファイルが破損しているか、");
+    sb.append("現在のForge/NeoForgeバージョンと互換性がないか、間違ったバージョン用のMODです。<br>");
+    sb.append("🔸 <b>結果:</b> Forge/NeoForgeがMODの依存関係を登録できず、");
+    sb.append("ゲームの起動が妨げられます。<br>");
+    sb.append("🔸 <b>解決策:</b> 問題のあるMODを更新、再インストール、または削除してください。");
+    sb.append("開発版MODを使用している場合は、正確なForge/NeoForgeバージョン向けにコンパイルされていることを確認してください。");
+    sb.append("</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombre_error_configuracion_servicio() {
+    return "サービス構成エラー (IDependencyLocator)";
+}
+
+@Override
+public String paso1_configuracion_servicio(List<String> mods) {
+    if (mods == null || mods.isEmpty()) {
+        return "1. 原因となるMODを特定します：最近インストールしたMODや開発版MODを確認してください。";
+    }
+    return "1. 問題のあるMODは： " + String.join(", ", mods);
+}
+
+@Override
+public String paso2_configuracion_servicio() {
+    return "2. MODを更新、再インストール、または削除してください。Forge/NeoForgeと互換性のあるバージョンを使用していることを確認してください。";
+}
 
 
 

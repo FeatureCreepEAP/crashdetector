@@ -19,6 +19,7 @@ import com.asbestosstar.crashdetector.analizador.apps.minecraft.EarlyWindow;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorAccessTransformerInvalido;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorCargaClaseEntornoInvalido;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorConfiguracionMCForge;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorConfiguracionServicioIDependencyLocator;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorDependenciaModFaltante;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorDiscrepanciaModID;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorJEIPluginFallido;
@@ -211,7 +212,14 @@ public class Analizador {
 		verificaciones.add(new ErrorContextoOpenGL());
 		verificaciones.add(new ErrorResolucionDeTextura());
 		verificaciones.add(new ErrorRutaModLauncher());
+		verificaciones.add(new ErrorConfiguracionServicioIDependencyLocator());
 
+		
+		
+		
+		
+		
+		
 		
 		verificaciones.addAll(CargadorDeCodice.cargarVerificaciones());
 		CrashDetectorLogger.log("Numero de Codices " + String.valueOf(CargadorDeCodice.cargarVerificaciones().size()));

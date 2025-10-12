@@ -3406,6 +3406,46 @@ public String guardarAntesDeSalir() {
 public String salirSinGuardar() {
     return "Eliri sen konservi";
 }
+@Override
+public String errorConfiguracionServicio(String clase, List<String> mods) {
+    StringBuilder sb = new StringBuilder();
+    sb.append("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("Grava eraro: Malsukcesis ŝargi servon de modlauncher (IDependencyLocator).<br>");
+    sb.append("🔹 <b>Problema klaso:</b> <code>").append(clase).append("</code><br>");
+    
+    if (mods != null && !mods.isEmpty()) {
+        sb.append("🔸 <b>Afektita aldonaĵo:</b> ").append(String.join(", ", mods)).append("<br>");
+    } else {
+        sb.append("🔸 <b>Aldonaĵo neidentigita.</b> Bonvolu kontroli lastatempe instalitajn, evoluajn aŭ malbone pakitajn aldonaĵojn.<br>");
+    }
+    
+    sb.append("🔸 <b>Kaŭzo:</b> La dosiero <code>META-INF/services/...</code> de la aldonaĵo estas difektita, ");
+    sb.append("nekompatibla kun via versio de Forge/NeoForge, aŭ la aldonaĵo estas por malĝusta versio.<br>");
+    sb.append("🔸 <b>Konsekvenco:</b> Forge/NeoForge ne povas registri dependecojn de la aldonaĵo, ");
+    sb.append("tio malebligas lanĉon de la ludo.<br>");
+    sb.append("🔸 <b>Solvo:</b> Ĝisdatigu, reinstalu aŭ forigu la probleman aldonaĵon. ");
+    sb.append("Se vi uzas evoluajn aldonaĵojn, certigu ke ili estas kompilitaj por via ekzakta Forge/NeoForge-versio.");
+    sb.append("</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombre_error_configuracion_servicio() {
+    return "Eraro pri Servokonfiguracio (IDependencyLocator)";
+}
+
+@Override
+public String paso1_configuracion_servicio(List<String> mods) {
+    if (mods == null || mods.isEmpty()) {
+        return "1. Identigu la kaŭzan aldonaĵon: kontrolu antaŭnelonge instalitajn aŭ evoluajn aldonaĵojn.";
+    }
+    return "1. La problemeca aldonaĵo estas: " + String.join(", ", mods);
+}
+
+@Override
+public String paso2_configuracion_servicio() {
+    return "2. Ĝisdatigu, reinstalu aŭ forigu la aldonaĵon. Certigu uzi version kompatan kun via Forge/NeoForge.";
+}
 
 
 

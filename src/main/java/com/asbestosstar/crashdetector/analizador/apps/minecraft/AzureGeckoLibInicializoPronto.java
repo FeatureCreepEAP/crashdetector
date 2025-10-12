@@ -20,7 +20,10 @@ public class AzureGeckoLibInicializoPronto implements Verificaciones {
 	private boolean geckoLibError = false;
 	private boolean connectorPresente = false;
 	private String enlaceHtml = "";
-
+	String azure="AzureLib was initialized too early!";
+	String geck="GeckoLib was initialized too early!";
+	
+	
 	@Override
 	public void verificar(Consola consola) {
 		String contenidoConsola = consola.contenido_verificar;
@@ -29,12 +32,12 @@ public class AzureGeckoLibInicializoPronto implements Verificaciones {
 		// Analiza cada línea del registro para detectar los errores específicos
 		for (int i = 0; i < lineas.length; i++) {
 			String linea = lineas[i];
-			if (linea.contains("AzureLib was initialized too early!")) {
+			if (linea.contains(azure)) {
 				azureLibError = true;
 				activado = true;
 				enlaceHtml = consola.agregarErrorALectador(i, this);
 			}
-			if (linea.contains("GeckoLib was initialized too early!")) {
+			if (linea.contains(geck)) {
 				geckoLibError = true;
 				activado = true;
 				// Solo sobrescribir el enlace si aún no se ha registrado (para mantener el
@@ -97,7 +100,7 @@ public class AzureGeckoLibInicializoPronto implements Verificaciones {
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
 		// TODO Auto-generated method stub
-		return false;//TODO
+		return trazo.trace.contains(geck) || trazo.trace.contains(azure);
 	}
 	
 }

@@ -1400,6 +1400,14 @@ public interface Idioma {
 
 	public String confirmacion();
 
+	public String nombre_error_configuracion_servicio();
+
+	public String paso1_configuracion_servicio(List<String> modsUbicacion);
+
+	public String paso2_configuracion_servicio();
+
+	public String errorConfiguracionServicio(String clase, List<String> mods);
+
 	
 	
 	

@@ -3377,6 +3377,47 @@ public String salirSinGuardar() {
     return "الخروج بدون حفظ";
 }
 
+@Override
+public String errorConfiguracionServicio(String clase, List<String> mods) {
+    StringBuilder sb = new StringBuilder();
+    sb.append("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("خطأ حرج: فشل في تحميل خدمة من modlauncher (IDependencyLocator).<br>");
+    sb.append("🔹 <b>الصف المسبب للمشكلة:</b> <code>").append(clase).append("</code><br>");
+    
+    if (mods != null && !mods.isEmpty()) {
+        sb.append("🔸 <b>التعديل المتضرر:</b> ").append(String.join(", ", mods)).append("<br>");
+    } else {
+        sb.append("🔸 <b>التعديل غير معروف.</b> راجع التعديلات المثبتة حديثًا أو الخاصة بالتطوير أو ذات الحزمة السيئة.<br>");
+    }
+    
+    sb.append("🔸 <b>السبب:</b> ملف <code>META-INF/services/...</code> الخاص بالتعديل تالف، ");
+    sb.append("أو غير متوافق مع إصدار Forge/NeoForge الحالي، أو أن التعديل مخصص لإصدار خاطئ.<br>");
+    sb.append("🔸 <b>النتيجة:</b> لا يمكن لـ Forge/NeoForge تسجيل تبعيات التعديل، ");
+    sb.append("مما يمنع بدء تشغيل اللعبة.<br>");
+    sb.append("🔸 <b>الحل:</b> حدّث أو أعد تثبيت أو احذف التعديل المسبب للمشكلة. ");
+    sb.append("إذا كنت تستخدم تعديلات قيد التطوير، فتأكد من أنها تم تجميعها للإصدار الدقيق من Forge/NeoForge.");
+    sb.append("</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombre_error_configuracion_servicio() {
+    return "خطأ في تهيئة الخدمة (IDependencyLocator)";
+}
+
+@Override
+public String paso1_configuracion_servicio(List<String> mods) {
+    if (mods == null || mods.isEmpty()) {
+        return "1. حدّد التعديل المسبب: راجع التعديلات المثبتة مؤخرًا أو تلك الخاصة بالتطوير.";
+    }
+    return "1. التعديل المسبب هو: " + String.join(", ", mods);
+}
+
+@Override
+public String paso2_configuracion_servicio() {
+    return "2. حدّث أو أعد تثبيت أو احذف التعديل. تأكد من استخدام إصدار متوافق مع إصدار Forge/NeoForge الخاص بك.";
+}
+
 
 
 

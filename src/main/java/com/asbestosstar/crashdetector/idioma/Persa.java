@@ -3367,6 +3367,47 @@ public String salirSinGuardar() {
     return "خروج بدون ذخیره";
 }
 
+@Override
+public String errorConfiguracionServicio(String clase, List<String> mods) {
+    StringBuilder sb = new StringBuilder();
+    sb.append("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("خطای بحرانی: بارگذاری سرویس modlauncher (IDependencyLocator) شکست خورد.<br>");
+    sb.append("🔹 <b>کلاس مشکل‌ساز:</b> <code>").append(clase).append("</code><br>");
+    
+    if (mods != null && !mods.isEmpty()) {
+        sb.append("🔸 <b>مود تحت تأثیر:</b> ").append(String.join(", ", mods)).append("<br>");
+    } else {
+        sb.append("🔸 <b>مود شناسایی نشد.</b> مودهای اخیراً نصب شده، توسعه‌ای یا بد بسته‌بندی شده را بررسی کنید.<br>");
+    }
+    
+    sb.append("🔸 <b>علت:</b> فایل <code>META-INF/services/...</code> مود خراب است، ");
+    sb.append("با نسخه فعلی Forge/NeoForge سازگار نیست، یا مود برای نسخه اشتباهی است.<br>");
+    sb.append("🔸 <b>پیامد:</b> Forge/NeoForge نمی‌تواند وابستگی‌های مود را ثبت کند، ");
+    sb.append("که باعث جلوگیری از راه‌اندازی بازی می‌شود.<br>");
+    sb.append("🔸 <b>راه‌حل:</b> مود مشکل‌دار را به‌روزرسانی، دوباره نصب یا حذف کنید. ");
+    sb.append("اگر از مودهای توسعه‌ای استفاده می‌کنید، مطمئن شوید برای نسخه دقیق Forge/NeoForge شما کامپایل شده‌اند.");
+    sb.append("</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombre_error_configuracion_servicio() {
+    return "خطای پیکربندی سرویس (IDependencyLocator)";
+}
+
+@Override
+public String paso1_configuracion_servicio(List<String> mods) {
+    if (mods == null || mods.isEmpty()) {
+        return "1. مود عامل را شناسایی کنید: مودهای اخیراً نصب شده یا در حال توسعه را بررسی کنید.";
+    }
+    return "1. مود مشکل‌دار این است: " + String.join(", ", mods);
+}
+
+@Override
+public String paso2_configuracion_servicio() {
+    return "2. مود را به‌روزرسانی، دوباره نصب یا حذف کنید. مطمئن شوید از نسخه‌ای سازگار با Forge/NeoForge خود استفاده می‌کنید.";
+}
+
 
 
 

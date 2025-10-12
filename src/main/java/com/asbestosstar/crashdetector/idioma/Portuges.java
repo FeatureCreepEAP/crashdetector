@@ -3357,6 +3357,47 @@ public String salirSinGuardar() {
     return "Sair sem salvar";
 }
 
+@Override
+public String errorConfiguracionServicio(String clase, List<String> mods) {
+    StringBuilder sb = new StringBuilder();
+    sb.append("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("Erro crítico: Falha ao carregar um serviço do modlauncher (IDependencyLocator).<br>");
+    sb.append("🔹 <b>Classe problemática:</b> <code>").append(clase).append("</code><br>");
+    
+    if (mods != null && !mods.isEmpty()) {
+        sb.append("🔸 <b>Mod afetado:</b> ").append(String.join(", ", mods)).append("<br>");
+    } else {
+        sb.append("🔸 <b>Mod não identificado.</b> Verifique mods recentemente instalados, de desenvolvimento ou mal empacotados.<br>");
+    }
+    
+    sb.append("🔸 <b>Causa:</b> O arquivo <code>META-INF/services/...</code> do mod está corrompido, ");
+    sb.append("é incompatível com esta versão do Forge/NeoForge, ou o mod é para uma versão incorreta.<br>");
+    sb.append("🔸 <b>Consequência:</b> O Forge/NeoForge não pode registrar as dependências do mod, ");
+    sb.append("impedindo o início do jogo.<br>");
+    sb.append("🔸 <b>Solução:</b> Atualize, reinstale ou remova o mod problemático. ");
+    sb.append("Se estiver usando mods de desenvolvimento, certifique-se de que foram compilados para a sua versão exata do Forge/NeoForge.");
+    sb.append("</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombre_error_configuracion_servicio() {
+    return "Erro de Configuração de Serviço (IDependencyLocator)";
+}
+
+@Override
+public String paso1_configuracion_servicio(List<String> mods) {
+    if (mods == null || mods.isEmpty()) {
+        return "1. Identifique o mod causador: verifique mods instalados recentemente ou em desenvolvimento.";
+    }
+    return "1. O mod problemático é: " + String.join(", ", mods);
+}
+
+@Override
+public String paso2_configuracion_servicio() {
+    return "2. Atualize, reinstale ou remova o mod. Certifique-se de usar uma versão compatível com seu Forge/NeoForge.";
+}
+
 
 
 

@@ -3365,6 +3365,46 @@ public String salirSinGuardar() {
     return "Выйти без сохранения";
 }
 
+@Override
+public String errorConfiguracionServicio(String clase, List<String> mods) {
+    StringBuilder sb = new StringBuilder();
+    sb.append("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("Критическая ошибка: не удалось загрузить сервис modlauncher (IDependencyLocator).<br>");
+    sb.append("🔹 <b>Проблемный класс:</b> <code>").append(clase).append("</code><br>");
+    
+    if (mods != null && !mods.isEmpty()) {
+        sb.append("🔸 <b>Затронутый мод:</b> ").append(String.join(", ", mods)).append("<br>");
+    } else {
+        sb.append("🔸 <b>Мод не определён.</b> Проверьте недавно установленные, разрабатываемые или неправильно упакованные моды.<br>");
+    }
+    
+    sb.append("🔸 <b>Причина:</b> Файл <code>META-INF/services/...</code> мода повреждён, ");
+    sb.append("несовместим с этой версией Forge/NeoForge или предназначен для неверной версии.<br>");
+    sb.append("🔸 <b>Последствие:</b> Forge/NeoForge не может зарегистрировать зависимости мода, ");
+    sb.append("что блокирует запуск игры.<br>");
+    sb.append("🔸 <b>Решение:</b> Обновите, переустановите или удалите проблемный мод. ");
+    sb.append("Если вы используете моды в стадии разработки, убедитесь, что они скомпилированы под точную версию вашего Forge/NeoForge.");
+    sb.append("</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombre_error_configuracion_servicio() {
+    return "Ошибка конфигурации службы (IDependencyLocator)";
+}
+
+@Override
+public String paso1_configuracion_servicio(List<String> mods) {
+    if (mods == null || mods.isEmpty()) {
+        return "1. Определите виновный мод: проверьте недавно установленные или разрабатываемые моды.";
+    }
+    return "1. Проблемный мод: " + String.join(", ", mods);
+}
+
+@Override
+public String paso2_configuracion_servicio() {
+    return "2. Обновите, переустановите или удалите мод. Убедитесь, что используется версия, совместимая с вашим Forge/NeoForge.";
+}
 
 
 

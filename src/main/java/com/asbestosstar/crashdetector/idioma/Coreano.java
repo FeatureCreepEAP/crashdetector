@@ -3358,6 +3358,47 @@ public String salirSinGuardar() {
     return "저장하지 않고 나가기";
 }
 
+@Override
+public String errorConfiguracionServicio(String clase, List<String> mods) {
+    StringBuilder sb = new StringBuilder();
+    sb.append("<b style='color:#").append(config.obtenerColorError()).append("'>");
+    sb.append("치명적 오류: modlauncher 서비스(IDependencyLocator) 로딩 실패.<br>");
+    sb.append("🔹 <b>문제 클래스:</b> <code>").append(clase).append("</code><br>");
+    
+    if (mods != null && !mods.isEmpty()) {
+        sb.append("🔸 <b>영향받은 모드:</b> ").append(String.join(", ", mods)).append("<br>");
+    } else {
+        sb.append("🔸 <b>모드를 식별할 수 없습니다.</b> 최근 설치한 모드, 개발 중인 모드 또는 잘못 패키징된 모드를 확인하세요.<br>");
+    }
+    
+    sb.append("🔸 <b>원인:</b> 모드의 <code>META-INF/services/...</code> 파일이 손상되었거나, ");
+    sb.append("현재 Forge/NeoForge 버전과 호환되지 않거나, 잘못된 버전용 모드입니다.<br>");
+    sb.append("🔸 <b>결과:</b> Forge/NeoForge가 모드의 의존성을 등록할 수 없어 ");
+    sb.append("게임 시작이 차단됩니다.<br>");
+    sb.append("🔸 <b>해결책:</b> 문제 있는 모드를 업데이트, 재설치 또는 삭제하세요. ");
+    sb.append("개발 중인 모드를 사용하는 경우 정확한 Forge/NeoForge 버전에 맞게 컴파일되었는지 확인하세요.");
+    sb.append("</b>");
+    return sb.toString();
+}
+
+@Override
+public String nombre_error_configuracion_servicio() {
+    return "서비스 구성 오류 (IDependencyLocator)";
+}
+
+@Override
+public String paso1_configuracion_servicio(List<String> mods) {
+    if (mods == null || mods.isEmpty()) {
+        return "1. 원인 모드 식별: 최근 설치하거나 개발 중인 모드를 확인하세요.";
+    }
+    return "1. 문제가 있는 모드는: " + String.join(", ", mods);
+}
+
+@Override
+public String paso2_configuracion_servicio() {
+    return "2. 모드를 업데이트, 재설치 또는 삭제하세요. Forge/NeoForge와 호환되는 버전을 사용하고 있는지 확인하세요.";
+}
+
 
 
 
