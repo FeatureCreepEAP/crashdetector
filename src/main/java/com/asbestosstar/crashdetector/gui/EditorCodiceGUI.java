@@ -44,8 +44,8 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.Criticalidad;
 import com.asbestosstar.crashdetector.analizador.firmas.CargadorDeCodice;
 import com.asbestosstar.crashdetector.analizador.firmas.FiltrodeCodice;
-import com.asbestosstar.crashdetector.analizador.firmas.v0.CodiceV0;
-import com.asbestosstar.crashdetector.analizador.firmas.v0.VerificacionCodexV0;
+import com.asbestosstar.crashdetector.analizador.firmas.v0.FirmasV0;
+import com.asbestosstar.crashdetector.analizador.firmas.v0.VerificacionFirmasV0;
 
 /**
  * Editor de codice.json (schema 0) SIN pestañas.
@@ -69,8 +69,8 @@ public class EditorCodiceGUI extends JFrame implements BotonDeBarraLateralDerech
     private final Color bordeSuave = new Color(220, 180, 210);
 
     // Modelo / lista
-    private final DefaultListModel<VerificacionCodexV0> modeloLista = new DefaultListModel<VerificacionCodexV0>();
-    private JList<VerificacionCodexV0> lista;
+    private final DefaultListModel<VerificacionFirmasV0> modeloLista = new DefaultListModel<VerificacionFirmasV0>();
+    private JList<VerificacionFirmasV0> lista;
 
     // Vista previa
     private JTextArea vistaJson;
@@ -146,7 +146,7 @@ public class EditorCodiceGUI extends JFrame implements BotonDeBarraLateralDerech
         cont.setBorder(BorderFactory.createEmptyBorder(8, 12, 12, 6));
 
         // Lista de verificaciones
-        lista = new JList<VerificacionCodexV0>(modeloLista);
+        lista = new JList<VerificacionFirmasV0>(modeloLista);
         lista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         lista.setCellRenderer((list, value, index, isSelected, cellHasFocus) -> {
             JLabel l = new JLabel(value.id + " · " + nz(value.nombre_es));
@@ -440,18 +440,18 @@ public class EditorCodiceGUI extends JFrame implements BotonDeBarraLateralDerech
 
     private void recargarDesdeDisco() {
         modeloLista.clear();
-        List<VerificacionCodexV0> datos = CargadorDeCodice.cargarVerificaciones();
-        datos.sort(new Comparator<VerificacionCodexV0>() {
-            @Override public int compare(VerificacionCodexV0 a, VerificacionCodexV0 b) {
+        List<VerificacionFirmasV0> datos = CargadorDeCodice.cargarVerificaciones();
+        datos.sort(new Comparator<VerificacionFirmasV0>() {
+            @Override public int compare(VerificacionFirmasV0 a, VerificacionFirmasV0 b) {
                 int cmp = Integer.compare(b.prioridad, a.prioridad);
                 return (cmp != 0) ? cmp : nz(a.id).compareToIgnoreCase(nz(b.id));
             }
         });
-        for (VerificacionCodexV0 v : datos) modeloLista.addElement(v);
+        for (VerificacionFirmasV0 v : datos) modeloLista.addElement(v);
         if (!datos.isEmpty()) lista.setSelectedIndex(0);
     }
 
-    private void cargarEnFormulario(VerificacionCodexV0 v) {
+    private void cargarEnFormulario(VerificacionFirmasV0 v) {
         fId.setText(nz(v.id));
         fParaBuscar.setText(nz(v.para_buscar));
         fFiltro.setText(v.filtro != null ? nz(v.filtro.id) : "");
@@ -533,7 +533,7 @@ public class EditorCodiceGUI extends JFrame implements BotonDeBarraLateralDerech
         return true;
     }
 
-    private VerificacionCodexV0 construirDesdeFormulario() {
+    private VerificacionFirmasV0 construirDesdeFormulario() {
         String id = fId.getText().trim();
         String paraBuscar = fParaBuscar.getText().trim();
         String idFiltro = fFiltro.getText().trim();
@@ -546,7 +546,7 @@ public class EditorCodiceGUI extends JFrame implements BotonDeBarraLateralDerech
 
         int prio = ((Number) spPrioridad.getValue()).intValue();
 
-        return new VerificacionCodexV0(
+        return new VerificacionFirmasV0(
             id,
             val("ar",0), val("ar",1),
             val("zh",0), val("zh",1),
@@ -569,7 +569,7 @@ public class EditorCodiceGUI extends JFrame implements BotonDeBarraLateralDerech
 
     private void actualizarSeleccionado() {
         if (!validarFormulario()) return;
-        VerificacionCodexV0 nuevo = construirDesdeFormulario();
+        VerificacionFirmasV0 nuevo = construirDesdeFormulario();
         int idx = lista.getSelectedIndex();
         if (idx >= 0) {
             modeloLista.set(idx, nuevo);
@@ -600,9 +600,9 @@ public class EditorCodiceGUI extends JFrame implements BotonDeBarraLateralDerech
                     return;
                 }
             }
-            List<VerificacionCodexV0> arr = new ArrayList<VerificacionCodexV0>();
+            List<VerificacionFirmasV0> arr = new ArrayList<VerificacionFirmasV0>();
             for (int i = 0; i < modeloLista.size(); i++) arr.add(modeloLista.get(i));
-            CodiceV0.guardar(arr);
+            FirmasV0.guardar(arr);
             JOptionPane.showMessageDialog(this, MonitorDePID.idioma.guardadoOk(), "OK",
                     JOptionPane.INFORMATION_MESSAGE);
             actualizarVistaJson();
@@ -626,7 +626,7 @@ public class EditorCodiceGUI extends JFrame implements BotonDeBarraLateralDerech
         }
     }
 
-    private boolean validarVerificacion(VerificacionCodexV0 v) {
+    private boolean validarVerificacion(VerificacionFirmasV0 v) {
         if (isEmpty(v.id) || isEmpty(v.para_buscar) || v.filtro == null || isEmpty(v.filtro.id)) return false;
         if (v.criticalidad == null) return false;
         return !(
@@ -645,7 +645,7 @@ public class EditorCodiceGUI extends JFrame implements BotonDeBarraLateralDerech
 
     private void actualizarVistaJson() {
         try {
-            List<VerificacionCodexV0> arr = new ArrayList<VerificacionCodexV0>();
+            List<VerificacionFirmasV0> arr = new ArrayList<VerificacionFirmasV0>();
             for (int i = 0; i < modeloLista.size(); i++) arr.add(modeloLista.get(i));
             vistaJson.setText(construirJsonPreview(arr));
             vistaJson.setCaretPosition(0);
@@ -655,14 +655,14 @@ public class EditorCodiceGUI extends JFrame implements BotonDeBarraLateralDerech
     }
 
     // Vista previa manual (solo para mostrar; el guardado real lo hace CodiceV0)
-    private String construirJsonPreview(List<VerificacionCodexV0> arr) {
+    private String construirJsonPreview(List<VerificacionFirmasV0> arr) {
         String nl = "\n";
         StringBuilder sb = new StringBuilder();
         sb.append("{").append(nl);
         sb.append("  \"schema\": 0,").append(nl);
         sb.append("  \"verificaciones\": [").append(nl);
         for (int i = 0; i < arr.size(); i++) {
-            VerificacionCodexV0 v = arr.get(i);
+            VerificacionFirmasV0 v = arr.get(i);
             sb.append("    {").append(nl);
             w(sb,"id",v.id,6).append(",").append(nl);
             w(sb,"para_buscar",v.para_buscar,6).append(",").append(nl);

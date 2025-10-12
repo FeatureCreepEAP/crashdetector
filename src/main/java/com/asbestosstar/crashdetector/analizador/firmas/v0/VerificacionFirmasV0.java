@@ -20,7 +20,7 @@ import com.asbestosstar.crashdetector.idioma.Persa;
 import com.asbestosstar.crashdetector.idioma.Portuges;
 import com.asbestosstar.crashdetector.idioma.Ruso;
 
-public class VerificacionCodexV0 implements Verificaciones{
+public class VerificacionFirmasV0 implements Verificaciones{
 
 	
 
@@ -65,7 +65,7 @@ public class VerificacionCodexV0 implements Verificaciones{
     
     public String enlace="";
     
-    public VerificacionCodexV0(String id,
+    public VerificacionFirmasV0(String id,
             String nombre_ar, String resultado_ar,
             String nombre_zh, String resultado_zh,
             String nombre_kp, String resultado_kp,
@@ -145,7 +145,7 @@ public class VerificacionCodexV0 implements Verificaciones{
 	@Override
 	public Verificaciones nueva() {
 		// TODO Auto-generated method stub
-		return new VerificacionCodexV0(id,
+		return new VerificacionFirmasV0(id,
 	            nombre_ar,  resultado_ar,
 	             nombre_zh, resultado_zh,
 	             nombre_kp,  resultado_kp,

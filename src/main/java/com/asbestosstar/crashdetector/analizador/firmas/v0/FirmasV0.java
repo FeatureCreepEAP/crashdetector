@@ -35,15 +35,15 @@ import com.asbestosstar.crashdetector.json.Json.Nodo;
  *
  * Compatibilidad: Java 8 (sin usar APIs posteriores como Files.readString).
  */
-public class CodiceV0 {
+public class FirmasV0 {
 
     public static final int SCHEMA = 0;
     private static final String NOMBRE_ARCHIVO = "codice.json";
 
     /** Carga verificaciones desde codice.json. Si no existe o si el schema no es 0, retorna lista vacía. */
-public static List<VerificacionCodexV0> cargar() {
+public static List<VerificacionFirmasV0> cargar() {
     final Path ruta = MonitorDePID.carpeta.resolve(NOMBRE_ARCHIVO);
-    final List<VerificacionCodexV0> lista = new ArrayList<VerificacionCodexV0>();
+    final List<VerificacionFirmasV0> lista = new ArrayList<VerificacionFirmasV0>();
 
     try {
 
@@ -150,7 +150,7 @@ public static List<VerificacionCodexV0> cargar() {
                         String resultado_ru = val(resultados, "ru");
 
 
-                        VerificacionCodexV0 ver = new VerificacionCodexV0(
+                        VerificacionFirmasV0 ver = new VerificacionFirmasV0(
                                 id,
                                 nombre_ar, resultado_ar,
                                 nombre_zh, resultado_zh,
@@ -186,7 +186,7 @@ public static List<VerificacionCodexV0> cargar() {
 
 
     /** Guarda la lista de verificaciones en codice.json con schema=0. Crea carpeta/archivo si no existen. */
-    public static void guardar(List<VerificacionCodexV0> verificaciones) throws IOException {
+    public static void guardar(List<VerificacionFirmasV0> verificaciones) throws IOException {
         final Path carpeta = MonitorDePID.carpeta;
         final Path ruta = carpeta.resolve(NOMBRE_ARCHIVO);
 
@@ -199,7 +199,7 @@ public static List<VerificacionCodexV0> cargar() {
 
         Nodo arr = raiz.obtener("verificaciones");
         if (verificaciones != null) {
-            for (VerificacionCodexV0 v : verificaciones) {
+            for (VerificacionFirmasV0 v : verificaciones) {
                 if (v == null) continue;
 
                 Nodo item = Json.crearObjeto();
@@ -247,22 +247,22 @@ public static List<VerificacionCodexV0> cargar() {
 
     /** Builder sencillo para armar y persistir listas V0. */
     public static class Builder {
-        private final List<VerificacionCodexV0> lista = new ArrayList<VerificacionCodexV0>();
+        private final List<VerificacionFirmasV0> lista = new ArrayList<VerificacionFirmasV0>();
 
         /** Agrega una verificación a la lista. */
-        public Builder agregar(VerificacionCodexV0 v) {
+        public Builder agregar(VerificacionFirmasV0 v) {
             if (v != null) lista.add(v);
             return this;
         }
 
         /** Retorna una copia de la lista construida. */
-        public List<VerificacionCodexV0> build() {
-            return new ArrayList<VerificacionCodexV0>(lista);
+        public List<VerificacionFirmasV0> build() {
+            return new ArrayList<VerificacionFirmasV0>(lista);
         }
 
         /** Guarda inmediatamente la lista construida en codice.json (schema 0). */
         public void guardar() throws IOException {
-            CodiceV0.guardar(lista);
+            FirmasV0.guardar(lista);
         }
     }
 
