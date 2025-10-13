@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
+import com.asbestosstar.crashdetector.MonitorDePID;
 
 public class Arabe implements Idioma {
     private final Config config = Config.obtenerInstancia();
@@ -3470,6 +3471,28 @@ public String paso1_campo_inexistente() {
 @Override
 public String paso2_campo_inexistente() {
     return "2. حدّث جميع التعديلات المتضررة. إذا استمرت المشكلة، اتصل بمطوّر التعديل الذي تسبب في الخطأ.";
+}
+
+@Override
+public String mensajeAyudar() {
+    String iconoCompartir = MonitorDePID.carpeta
+            .resolve("imagenes")
+            .resolve("boton_compartir_icon.png")
+            .toAbsolutePath()
+            .toUri()
+            .toString();
+
+            String colorTexto = Config.obtenerInstancia().obtenerColorTexto();
+
+    return ""
+        + "<div style='color:" + colorTexto + ";'>"
+        + "  <strong>هل تحتاج مساعدة؟</strong><br>"
+        + "  إذا كنت لا تعرف كيفية الإصلاح أو لم تُذكر المشكلة هنا، يمكنك الحصول على مساعدة عبر شبكاتنا الاجتماعية. "
+        + "  استخدم الزر <img src='" + iconoCompartir + "' alt='مشاركة' style='height:12px;vertical-align:middle;'/> "
+        + "  <strong>مشاركة</strong> للحصول على روابط للسجلات ونتائج التحليل لفريق الدعم. "
+        + "  إذا كنت منشئ حزمة تعديلات أو شركة، فقم بتعديل <code>crash_detector/plantilla.htm</code> "
+        + "  لتخصيص الروابط الخاصة بفريقك."
+        + "</div>";
 }
 
 

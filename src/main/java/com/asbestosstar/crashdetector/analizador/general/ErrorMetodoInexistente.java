@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetector.analizador.apps.general;
+package com.asbestosstar.crashdetector.analizador.general;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,57 +15,51 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
  */
 public class ErrorMetodoInexistente implements Verificaciones {
 
-    private static final String PATRON_ERROR = "java\\.lang\\.NoSuchMethodError: ([^\\s]+)";
+    private static final Pattern PATRON = Pattern.compile("java\\.lang\\.NoSuchMethodError:\\s*(.+)$");
 
     private boolean activado = false;
     private String mensaje = "";
     private String enlaceHtml = "";
+    private String firmaMetodo = "";
+    private String lineaSiguiente = "";
 
     @Override
-    public void verificar(Consola consola) {
-        String contenido = consola.contenido_verificar;
-        String[] lineas = contenido.split(Verificaciones.nl);
+    public void verificar(Consola consola, String linea, int numLinea) {
+        if (activado) return;
 
-        for (int i = 0; i < lineas.length; i++) {
-            String linea = lineas[i];
-            if (linea.contains("java.lang.NoSuchMethodError:")) {
-                Pattern patron = Pattern.compile(PATRON_ERROR);
-                Matcher matcher = patron.matcher(linea);
-                if (matcher.find()) {
-                    String nombreMetodo = matcher.group(1);
-                    String lineaError = linea.trim();
-                    String lineaSiguiente = "";
+        if (linea.contains("java.lang.NoSuchMethodError:")) {
+            Matcher m = PATRON.matcher(linea);
+            if (m.find()) {
+                this.firmaMetodo = m.group(1).trim();
 
-                    // Incluir la siguiente linea si empieza con "at "
-                    if (i + 1 < lineas.length && lineas[i + 1].trim().startsWith("at ")) {
-                        lineaSiguiente = lineas[i + 1].trim();
+                // Obtener la siguiente linea si empieza con "at "
+                String[] lineas = consola.contenido_verificar.split(Verificaciones.nl);
+                if (numLinea + 1 < lineas.length) {
+                    String sig = lineas[numLinea + 1].trim();
+                    if (sig.startsWith("at ")) {
+                        this.lineaSiguiente = sig;
                     }
+                }
 
-                    this.enlaceHtml = consola.agregarErrorALectador(i, this);
-                    this.activado = true;
+                this.enlaceHtml = consola.agregarErrorALectador(numLinea, this);
+                this.activado = true;
 
-                    // Construir mensaje: texto localizado + lineas del log
-                    StringBuilder sb = new StringBuilder();
-                    sb.append(MonitorDePID.idioma.errorMetodoInexistente(nombreMetodo, lineaError));
+                // Solo el mensaje localizado + (opcional) la linea "at ..."
+                StringBuilder sb = new StringBuilder();
+                sb.append(MonitorDePID.idioma.errorMetodoInexistente(firmaMetodo, firmaMetodo));
+                if (!lineaSiguiente.isEmpty()) {
                     sb.append(Verificaciones.nl_html);
                     sb.append("<span style='color:#888888; font-family:monospace;'>");
-                    //sb.append(escapeHtml(lineaError));
-                    if (!lineaSiguiente.isEmpty()) {
-                      //  sb.append(Verificaciones.nl_html);
-                        sb.append(escapeHtml(lineaSiguiente));
-                    }
+                    sb.append(escapeHtml(lineaSiguiente));
                     sb.append("</span>");
-                    sb.append(Verificaciones.nl_html);
-                    sb.append(enlaceHtml);
-
-                    this.mensaje = sb.toString();
-                    break;
                 }
+                sb.append(Verificaciones.nl_html);
+                sb.append(enlaceHtml);
+                this.mensaje = sb.toString();
             }
         }
     }
 
-    // Escapa caracteres especiales para HTML
     private String escapeHtml(String s) {
         return s.replace("&", "&amp;")
                 .replace("<", "<")
@@ -85,7 +79,7 @@ public class ErrorMetodoInexistente implements Verificaciones {
 
     @Override
     public float prioridad() {
-        return 840.0f;
+        return 1100.0f;
     }
 
     @Override
@@ -114,5 +108,10 @@ public class ErrorMetodoInexistente implements Verificaciones {
     @Override
     public boolean ocupaTrazo(TraceInfo trazo) {
         return trazo.trace.contains("NoSuchMethodError");
+    }
+
+    @Override
+    public void verificar(Consola consola) {
+        // No se usa; el sistema llama a verificar(Consola, String, int)
     }
 }

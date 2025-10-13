@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
+import com.asbestosstar.crashdetector.MonitorDePID;
  
 public class Persa implements Idioma {
     private final Config config = Config.obtenerInstancia();
@@ -3460,6 +3461,27 @@ public String paso1_campo_inexistente() {
 @Override
 public String paso2_campo_inexistente() {
     return "2. تمام مودهای تحت تأثیر را به‌روزرسانی کنید. اگر مشکل ادامه داشت، با توسعه‌دهنده مودی که خطا را ایجاد کرده تماس بگیرید.";
+}
+@Override
+public String mensajeAyudar() {
+    String iconoCompartir = MonitorDePID.carpeta
+            .resolve("imagenes")
+            .resolve("boton_compartir_icon.png")
+            .toAbsolutePath()
+            .toUri()
+            .toString();
+
+            String colorTexto = Config.obtenerInstancia().obtenerColorTexto();
+
+    return ""
+        + "<div style='color:" + colorTexto + ";'>"
+        + "  <strong>به کمک نیاز دارید؟</strong><br>"
+        + "  اگر نمی‌دانید چگونه آن را رفع کنید یا علت در اینجا وجود ندارد، می‌توانید از طریق شبکه‌های اجتماعی ما کمک بگیرید. "
+        + "  از دکمه <img src='" + iconoCompartir + "' alt='اشتراک‌گذاری' style='height:12px;vertical-align:middle;'/> "
+        + "  <strong>اشتراک‌گذاری</strong> استفاده کنید تا پیوندهایی به سیاهه‌ها و نتایج برای تیم ما دریافت کنید. "
+        + "  اگر سازندهٔ مودپک یا یک شرکت هستید، فایل <code>crash_detector/plantilla.htm</code> را ویرایش کنید "
+        + "  تا پیوندهای تیم خود را شخصی‌سازی کنید."
+        + "</div>";
 }
 
 

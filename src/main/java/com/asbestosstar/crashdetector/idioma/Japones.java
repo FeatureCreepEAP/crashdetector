@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
+import com.asbestosstar.crashdetector.MonitorDePID;
 
 public class Japones implements Idioma {
     private final Config config = Config.obtenerInstancia();
@@ -3463,6 +3464,27 @@ public String paso1_campo_inexistente() {
 @Override
 public String paso2_campo_inexistente() {
     return "2. 影響を受けるすべてのMODを更新してください。問題が解決しない場合は、エラーを引き起こしたMODの作者に連絡してください。";
+}
+@Override
+public String mensajeAyudar() {
+    String iconoCompartir = MonitorDePID.carpeta
+            .resolve("imagenes")
+            .resolve("boton_compartir_icon.png")
+            .toAbsolutePath()
+            .toUri()
+            .toString();
+
+            String colorTexto = Config.obtenerInstancia().obtenerColorTexto();
+
+    return ""
+        + "<div style='color:" + colorTexto + ";'>"
+        + "  <strong>助けが必要ですか？</strong><br>"
+        + "  修正方法がわからない場合や、ここに理由が載っていない場合は、ソーシャルネットワークでサポートを受けられます。"
+        + "  ボタン <img src='" + iconoCompartir + "' alt='共有' style='height:12px;vertical-align:middle;'/> "
+        + "  <strong>共有</strong> を使って、ログと解析結果のリンクをチームに送信できます。"
+        + "  Modpack作成者または企業の方は、<code>crash_detector/plantilla.htm</code> を編集して、"
+        + "  チーム専用のリンクをカスタマイズしてください。"
+        + "</div>";
 }
 
 

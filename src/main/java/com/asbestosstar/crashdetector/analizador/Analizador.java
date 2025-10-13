@@ -9,7 +9,6 @@ import java.util.Set;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
-import com.asbestosstar.crashdetector.analizador.apps.general.ErrorMetodoInexistente;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.AuditorTransformer;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.AzureGeckoLibInicializoPronto;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.BloqueTeselado;
@@ -87,6 +86,7 @@ import com.asbestosstar.crashdetector.analizador.general.ErrorCaracteresInvalido
 import com.asbestosstar.crashdetector.analizador.general.ErrorContextoOpenGL;
 import com.asbestosstar.crashdetector.analizador.general.ErrorDeEnlaceInsatisfecho;
 import com.asbestosstar.crashdetector.analizador.general.ErrorDeMonitorLWJGL;
+import com.asbestosstar.crashdetector.analizador.general.ErrorMetodoInexistente;
 import com.asbestosstar.crashdetector.analizador.general.FaltaModuleJPMS;
 import com.asbestosstar.crashdetector.analizador.general.FaltasClases;
 import com.asbestosstar.crashdetector.analizador.general.JavaVersiones;
@@ -232,7 +232,11 @@ public class Analizador {
 
 		// TODO
 		// https://discord.com/channels/1129059589325852724/1129069799545241703/1418708211636113498
+//https://wiki.lunapixel.gg/performance-guide
+		//	at knot//de.keksuccino.fancymenu.customization.screen.identifier.ScreenIdentifierHandler.isValidIdentifier(ScreenIdentifierHandler.java:44) knott// o app// enmodid 
+		//	at com.mojang.blaze3d.vertex.BufferBuilder.handler$cdk000$iris$beforeNext(BufferBuilder.java:2173) ~[client-1.20.1-20230612.114412-srg.jar%23561!/:?] {re:mixin,pl:accesstransformer:B,pl:runtimedistcleaner:A,re:classloading,pl:accesstransformer:B,pl:mixin:APP:mixins.oculus.vertexformat.json:block_rendering.MixinBufferBuilder_SeparateAo,pl:mixin:APP:flywheel.mixins.json:BufferBuilderMixin,pl:mixin:APP:immediatelyfast-common.mixins.json:core.MixinBufferBuilder,pl:mixin:APP:mixins.oculus.vertexformat.json:MixinBufferBuilder,pl:mixin:APP:oculus-batched-entity-rendering.mixins.json:MixinBufferBuilder,pl:mixin:APP:entity_texture_features-common.mixins.json:MixinBufferBuilder,pl:mixin:APP:creativecore.mixins.json:BufferBuilderAccessor,pl:mixin:APP:embeddium.mixins.json:features.render.immediate.buffer_builder.BufferBuilderMixin,pl:mixin:APP:embeddium.mixins.json:core.render.immediate.consumer.BufferBuilderMixin,pl:mixin:APP:embeddium.mixins.json:features.render.immediate.buffer_builder.sorting.BufferBuilderMixin,pl:mixin:APP:embeddium.mixins.json:features.render.immediate.buffer_builder.intrinsics.BufferBuilderMixin,pl:mixin:APP:oculus-batched-entity-rendering.mixins.json:MixinBufferBuilder_SegmentRendering,pl:mixin:A,pl:runtimedistcleaner:A} en $ contenido otra vez
 
+	
 	}
 
 	public Analizador() {

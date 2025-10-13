@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
+import com.asbestosstar.crashdetector.MonitorDePID;
 
 public class Chino implements Idioma {
     private final Config config = Config.obtenerInstancia();
@@ -3468,6 +3469,26 @@ public String paso1_campo_inexistente() {
 @Override
 public String paso2_campo_inexistente() {
     return "2. 更新所有受影响的模组。如果问题持续存在，请联系引发错误的模组作者。";
+}
+@Override
+public String mensajeAyudar() {
+    String iconoCompartir = MonitorDePID.carpeta
+            .resolve("imagenes")
+            .resolve("boton_compartir_icon.png")
+            .toAbsolutePath()
+            .toUri()
+            .toString();
+    String colorTexto = Config.obtenerInstancia().obtenerColorTexto();
+
+    return ""
+        + "<div style='color:" + colorTexto + ";'>"
+        + "  <strong>需要帮助吗？</strong><br>"
+        + "  如果你不知道如何修复，或此处未列出原因，可通过我们的社交网络获得帮助。"
+        + "  使用 <img src='" + iconoCompartir + "' alt='分享' style='height:12px;vertical-align:middle;'/> "
+        + "  <strong>分享</strong> 按钮获取日志和分析结果的链接，以便提交给我们的团队。"
+        + "  如果你是整合包作者或组织，请编辑 <code>crash_detector/plantilla.htm</code> "
+        + "  来自定义你的团队链接。"
+        + "</div>";
 }
 
 

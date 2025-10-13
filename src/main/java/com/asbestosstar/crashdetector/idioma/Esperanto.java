@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
+import com.asbestosstar.crashdetector.MonitorDePID;
 
 public class Esperanto implements Idioma {
     private final Config config = Config.obtenerInstancia();
@@ -3499,6 +3500,27 @@ public String paso1_campo_inexistente() {
 @Override
 public String paso2_campo_inexistente() {
     return "2. Ĝisdatigu ĉiujn tuŝitajn aldonaĵojn. Se daŭras, kontaktu la verkinton de la aldonaĵo kaŭzanta la eraron.";
+}
+
+@Override
+public String mensajeAyudar() {
+    String iconoCompartir = MonitorDePID.carpeta
+            .resolve("imagenes")
+            .resolve("boton_compartir_icon.png")
+            .toAbsolutePath()
+            .toUri()
+            .toString();
+    String colorTexto = Config.obtenerInstancia().obtenerColorTexto();
+
+    return ""
+        + "<div style='color:" + colorTexto + ";'>"
+        + "  <strong>Ĉu vi bezonas helpon?</strong><br>"
+        + "  Se vi ne scias kiel ripari ĉi tion aŭ se la kaŭzo ne estas tie ĉi, vi povas ricevi helpon per niaj sociaj retoj. "
+        + "  Uzu la butonon <img src='" + iconoCompartir + "' alt='Komunigi' style='height:12px;vertical-align:middle;'/> "
+        + "  <strong>Komunigi</strong> por akiri ligilojn al viaj protokoloj kai rezultoj por nia teamo. "
+        + "  Se vi estas kreinto de modpack aŭ korporacio, redaktu <code>crash_detector/plantilla.htm</code> "
+        + "  por alĝustigi viajn teamajn ligilojn."
+        + "</div>";
 }
 
 

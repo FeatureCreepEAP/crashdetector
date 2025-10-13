@@ -15,10 +15,12 @@ public class Entregar {
 
 	public static File archivo = MonitorDePID.carpeta.resolve("entregar").toFile();
 	private static final String MASK = "*********************************";
+	public static App app_detecta;
 
     // escritor
     public static void comenzarEntregar() {
-        String idApp = App.obtenerApp() != null ? App.obtenerApp().id() : "";
+    	app_detecta=App.obtenerApp();
+        String idApp = app_detecta != null ? app_detecta.id() : "";
 Buscardor.cargadoresPredetermindado();
         // se detectan cargadores activos sin tocar la lista global
         List<Cargador> activos = new ArrayList<Cargador>();
@@ -64,7 +66,8 @@ Buscardor.cargadoresPredetermindado();
             }
 
             // restaurar app
-            Statics.APP = buscarAppPorId(idApp);
+            app_detecta=buscarAppPorId(idApp);
+            Statics.APP = app_detecta;
 
             // fijar ARGS_DE_APP solo aqui
             Statics.ARGS_DE_APP = args != null ? args : "";

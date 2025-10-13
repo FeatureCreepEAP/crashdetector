@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
+import com.asbestosstar.crashdetector.MonitorDePID;
 
 public class Espanol implements Idioma {
     Config config = Config.obtenerInstancia();
@@ -4204,6 +4205,28 @@ public String paso1_metodo_inexistente() {
 @Override
 public String paso2_metodo_inexistente() {
     return "2. Actualiza todos los mods involucrados. Si persiste, reporta el error al autor del mod afectado.";
+}
+
+@Override
+public String mensajeAyudar() {
+    String iconoCompartir = MonitorDePID.carpeta
+            .resolve("imagenes")
+            .resolve("boton_compartir_icon.png")
+            .toAbsolutePath()
+            .toUri()
+            .toString();
+
+            String colorTexto = Config.obtenerInstancia().obtenerColorTexto();
+
+    return ""
+        + "<div style='color:" + colorTexto + ";'>"
+        + "  <strong>¿Necesitas ayuda?</strong><br>"
+        + "  Si no sabes cómo arreglarlo o la razón no está aquí, puedes recibir ayuda en nuestras redes sociales. "
+        + "  Usa el botón <img src='" + iconoCompartir + "' alt='Compartir' style='height:12px;vertical-align:middle;'/> "
+        + "  <strong>Compartir</strong> para obtener enlaces a los registros y a los resultados para nuestro equipo. "
+        + "  Si eres un creador de modpack o una corporación, edita <code>crash_detector/plantilla.htm</code> "
+        + "  para personalizar los enlaces de tu equipo."
+        + "</div>";
 }
 
 

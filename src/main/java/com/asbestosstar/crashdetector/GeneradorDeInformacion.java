@@ -48,7 +48,7 @@ public class GeneradorDeInformacion {
 			carp_file.mkdirs();
 			File ret = new File(carp + instant.toString().replace(":", "") + ".htm");
 			FileWriter escribidor = new FileWriter(ret);
-			escribidor.write(pantilla.replace("{constructor}", cons.toString() + "<br>" +MonitorDePID.idioma.infoDeVerificaciones() + "<br>" + MonitorDePID.contenidoInforme.toString()+imagenesLocales()));
+			escribidor.write(pantilla.replace("{constructor}", cons.toString() + "<br>" +MonitorDePID.idioma.infoDeVerificaciones() + "<br>" + MonitorDePID.contenidoInforme.toString()+imagenesLocales()).replace("{mensaje_ayudar}",MonitorDePID.idioma.mensajeAyudar()));
 			escribidor.close();
 			return ret;
 		} catch (IOException e) {

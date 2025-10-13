@@ -31,7 +31,8 @@ public class VerificacionDeStackTrace {
 	public static String nl = System.lineSeparator();
 
 	// Patrón para coincidir con rastros de pila de excepciones de Java
-	private static final Pattern STACK_TRACE_PATTERN = Pattern.compile("(?m)(^\\S.*(?:\\r?\\n[ \\t]+at\\s+.*)+)");
+	private static final Pattern STACK_TRACE_PATTERN = Pattern
+			.compile("(?m)(^\\S.*(?:\\r?\\n[ \\t]*(?://\\s*)?at\\s+.*)+)");
 	// Patrón para coincidir con excepciones que contienen
 	// org.spongepowered.asm.mixin y extraer nombres de JSON (sin incluir refmap)
 	private static final Pattern JSON_PATTERN = Pattern.compile("(\\S+\\.json)(?=[: ])");
@@ -48,6 +49,9 @@ public class VerificacionDeStackTrace {
 	// puntos.
 	private static final Pattern PATRON_MODID_SIMPLE = Pattern
 			.compile("^\\s*at\\s+(?!java\\b|jdk\\b|sun\\b|org\\b|com\\b|net\\b)([a-z0-9_\\-]+)@[^/]+/.*$");
+
+	private static final java.util.Set<String> TOKENS_FALSOS_SM = new java.util.HashSet<>(Arrays.asList("app", "APP",
+			"a", "A", "b", "B", "mixin", "pl", "re", "accesstransformer", "runtimedistcleaner", "classloading"));
 
 	// Ahora es un BiMap que asocia (nombre JSON, línea_consola) con si es fatal
 	public BiMap<String, Integer, Boolean> sm_config = new BiMap<>(); // (nombre JSON, línea_consola, es fatal)
@@ -75,7 +79,7 @@ public class VerificacionDeStackTrace {
 			"it.unimi", "com.mojang.", "cpw.", "featurecreep.", "jdk.", "sun.", "com.sun.", "org.lwjgl.", "org.apache.",
 			"io.netty", "org.prismlauncher", "io.github.zekerzhayard", "org.multimc", "org.polymc", "org.tlauncher",
 			"net.fabricmc", "org.objectweb.asm", "datafixerupper", "org.slf4j", "com.asbestosstar", "srg",
-			"asbestosstar.", "org.openjdk", "com.google", "cpw.mods.modlauncher.","com.modrinth.theseus."
+			"asbestosstar.", "org.openjdk", "com.google", "cpw.mods.modlauncher.", "com.modrinth.theseus."
 
 	};
 
@@ -219,14 +223,21 @@ public class VerificacionDeStackTrace {
 			String[] arr = trace.split(nl);
 			for (int i = 0; i < arr.length; i++) {
 				String untrimmed = arr[i];
-				String linea = untrimmed.trim();
+
+				// Normalizamos aquí una sola vez (quita // y prefijos knot//, knott//, app//)
+				String linea = normalizarLineaStack(untrimmed);
+
 				// Calcular la línea real en la consola
 				int consolaNumLinea = consolaLineaPrimera + i;
 				String dec = Integer.toString(nivel_prioridad) + "," + Integer.toString(consolaNumLinea);
 
+				if (linea == null)
+					continue;
+				String lineaTrim = linea.trim();
+
 				// No siempre hay un Jar
-				if (linea.contains("[")) {
-					List<String> jarsEncontrados = extraerJarsDeLinea(linea);
+				if (lineaTrim.contains("[")) {
+					List<String> jarsEncontrados = extraerJarsDeLinea(lineaTrim);
 					for (String jar : jarsEncontrados) {
 						if (jar.contains(".jar") && !isJarNoPermite(jar)) {
 							if (!jar_malo.contains(jar)) {
@@ -240,14 +251,14 @@ public class VerificacionDeStackTrace {
 				// desarrollo
 				// como TLauncher muestran el modID y la capa, esto es útil
 				// especialmente cuando no se puede encontrar el Jar
-				else if (linea.startsWith("at TRANSFORMER/")
-						|| (linea.contains("/") && !linea.contains("NoClassDefFoundError") && !linea.contains("@"))
-								&& !linea.contains("$$Lambda") && !linea.matches(".*?/0x[0-9a-fA-F]+.*")) {
+				else if (lineaTrim.startsWith("at TRANSFORMER/") || (lineaTrim.contains("/")
+						&& !lineaTrim.contains("NoClassDefFoundError") && !lineaTrim.contains("@"))
+						&& !lineaTrim.contains("$$Lambda") && !lineaTrim.matches(".*?/0x[0-9a-fA-F]+.*")) {
 
-					String modid = extraerModidDeLinea(linea);
+					String modid = extraerModidDeLinea(lineaTrim);
 					if (modid != null) {
-						if (!modid_malo.contains(modid) && !linea.split("/")[0].startsWith("java.")
-								&& !esModNoPermite(modid) && linea.startsWith("at")) {
+						if (!modid_malo.contains(modid) && !lineaTrim.split("/")[0].startsWith("java.")
+								&& !esModNoPermite(modid) && lineaTrim.startsWith("at")) {
 							modid_malo.add(modid);
 							// Ahora usamos TriMap con nivel de prioridad y número de línea en la consola
 							modids.put(modid, nivel_prioridad, consolaNumLinea, fatal);
@@ -255,8 +266,8 @@ public class VerificacionDeStackTrace {
 					}
 				}
 				// A veces necesitamos usar paquetes
-				else if (linea.startsWith("at")) {
-					String pack = extraerPaqueteDeLinea(linea);
+				else if (lineaTrim.startsWith("at")) {
+					String pack = extraerPaqueteDeLinea(lineaTrim);
 					if (pack != null) {
 						if (!package_malo.contains(pack) && !packNoEsPermite(pack, dec, fatal)) {
 							// Ahora usamos TriMap con nivel de prioridad y número de línea en la consola
@@ -269,12 +280,12 @@ public class VerificacionDeStackTrace {
 				// Procesar línea que contiene ClassNotFoundException
 				// No necesitamos fatal para FabricMC o FeatureCreep y en casos en ModLauncher
 				// en launcher_log
-				else if ((linea.contains("ClassNotFoundException") || linea.contains("NoClassDefFoundError"))
-						&& !linea.contains("The specified mixin") && !linea.contains("WARN/]")
-						&& !linea.contains("/WARN]") && !esLineaDeAdvertenciaEstandar(linea)) {
+				else if ((lineaTrim.contains("ClassNotFoundException") || lineaTrim.contains("NoClassDefFoundError"))
+						&& !lineaTrim.contains("The specified mixin") && !lineaTrim.contains("WARN/]")
+						&& !lineaTrim.contains("/WARN]") && !esLineaDeAdvertenciaEstandar(lineaTrim)) {
 
-					Map.Entry<String, String> resultado = procesarErrorClaseNoEncontrada(linea, arr, consolaNumLinea,
-							nivel_prioridad);
+					Map.Entry<String, String> resultado = procesarErrorClaseNoEncontrada(lineaTrim, arr,
+							consolaNumLinea, nivel_prioridad);
 					if (resultado != null) {
 						String claseFaltante = resultado.getKey();
 						String sospechoso = resultado.getValue();
@@ -285,12 +296,23 @@ public class VerificacionDeStackTrace {
 				}
 
 				// Extraer contenido entre llaves
-				List<String> llavesEncontradas = extraerLlavesDeLinea(linea);
+				List<String> llavesEncontradas = extraerLlavesDeLinea(lineaTrim);
 				for (String content : llavesEncontradas) {
 					if (!brace_malo.contains(content)) {
 						// Ahora usamos TriMap con nivel de prioridad y número de línea en la consola
 						braces.put(content, nivel_prioridad, consolaNumLinea, fatal);
 						brace_malo.add(content);
+
+						// Heurística adicional: proponer modid desde "mixins.<mod>.json" dentro de las
+						// llaves
+						Matcher mm = Pattern.compile("\\bmixins\\.([a-z0-9_\\-]+)\\b").matcher(content);
+						while (mm.find()) {
+							String cand = mm.group(1);
+							if (esModIdPlausible(cand) && !esModNoPermite(cand) && !modid_malo.contains(cand)) {
+								modid_malo.add(cand);
+								modids.put(cand, nivel_prioridad, consolaNumLinea, fatal);
+							}
+						}
 					}
 				}
 			}
@@ -298,24 +320,28 @@ public class VerificacionDeStackTrace {
 	}
 
 	public static boolean esLineaDeAdvertenciaEstandar(String l) {
-	    if (l == null) return false;
-	    String t = l.trim();
+		if (l == null)
+			return false;
+		String t = l.trim();
 
-	    // Casos típicos con corchetes de log, por ejemplo:
-	    // [08:53:21] [mixin/WARN]: ..., [main] [Render thread/WARN]: ...
-	    if (t.contains("/WARN]")) return true;
-	    if (t.contains("] [WARN")) return true;
+		// Casos típicos con corchetes de log, por ejemplo:
+		// [08:53:21] [mixin/WARN]: ..., [main] [Render thread/WARN]: ...
+		if (t.contains("/WARN]"))
+			return true;
+		if (t.contains("] [WARN"))
+			return true;
 
-	    // Forma genérica: dos bloques entre [ ] y el segundo contiene WARN antes de ':'
-	    // y luego cualquier texto.
-	    if (t.matches(".*\\[[^\\]]*\\]\\s*\\[[^\\]]*\\bWARN\\b[^\\]]*\\]\\s*:.*")) return true;
+		// Forma genérica: dos bloques entre [ ] y el segundo contiene WARN antes de ':'
+		// y luego cualquier texto.
+		if (t.matches(".*\\[[^\\]]*\\]\\s*\\[[^\\]]*\\bWARN\\b[^\\]]*\\]\\s*:.*"))
+			return true;
 
-	    // También cubrir formatos tipo "[mixin/WARN]:" directamente
-	    if (t.matches(".*\\[[^\\]]*\\bWARN\\b[^\\]]*\\]:.*")) return true;
+		// También cubrir formatos tipo "[mixin/WARN]:" directamente
+		if (t.matches(".*\\[[^\\]]*\\bWARN\\b[^\\]]*\\]:.*"))
+			return true;
 
-	    return false;
+		return false;
 	}
-
 
 	/**
 	 * Extrae nombres de jars de una línea de stack trace. Ejemplo:
@@ -358,23 +384,42 @@ public class VerificacionDeStackTrace {
 	public static String extraerModidDeLinea(String linea) {
 		if (linea == null)
 			return null;
-		String t = linea.trim();
+		String t = normalizarLineaStack(linea);
+		if (t == null)
+			return null;
+		t = t.trim();
 
-		// Caso 1: SOLO si es un frame de TRANSFORMER
 		Matcher mTrans = PATRON_MODID_TRANSFORMER.matcher(t);
 		if (mTrans.matches()) {
 			return mTrans.group(1);
 		}
 
-		// Caso 2 (opcional y conservador): "at <modid>@<ver>/..."
-		// Quita este bloque si quieres ser 100% estricto y aceptar ÚNICAMENTE
-		// TRANSFORMER.
 		Matcher mSimple = PATRON_MODID_SIMPLE.matcher(t);
 		if (mSimple.matches()) {
-			return mSimple.group(1);
+			String cand = mSimple.group(1);
+			return esModNoPermite(cand) ? null : cand;
 		}
 
-		// No hay modid válido
+		// Detección adicional: handler$...$<modid>$...
+		// Ej.: "...BufferBuilder.handler$cdk000$iris$beforeNext..."
+		int h = t.indexOf("handler$");
+		if (h >= 0) {
+			String tail = t.substring(h + "handler$".length());
+			String[] segs = tail.split("\\$");
+			for (String s : segs) {
+				String k = sane(s);
+				if (k.isEmpty())
+					continue;
+				if (TOKENS_FALSOS_SM.contains(k))
+					continue;
+				if (pareceMetodoOClase(k))
+					continue;
+				if (esModIdPlausible(k) && !esModNoPermite(k)) {
+					return k; // p.ej. "iris"
+				}
+			}
+		}
+
 		return null;
 	}
 
@@ -389,41 +434,47 @@ public class VerificacionDeStackTrace {
 	public static String extraerPaqueteDeLinea(String linea) {
 		if (linea == null)
 			return null;
-		String texto = linea.trim();
+		String texto = normalizarLineaStack(linea);
+		if (texto == null)
+			return null;
+		texto = texto.trim();
 		if (!texto.startsWith("at "))
 			return null;
 
-		// Quitar el prefijo "at "
+		// quitar "at "
 		texto = texto.substring(3).trim();
 
-		// Quitar el contenido dentro de paréntesis "(...)"
-		int indiceParentesis = texto.indexOf('(');
-		if (indiceParentesis != -1) {
-			texto = texto.substring(0, indiceParentesis);
+		// si aún quedara un prefijo tipo "knot//"
+		for (String p : PREFIJOS_CARGADOR) {
+			if (texto.startsWith(p)) {
+				texto = texto.substring(p.length());
+				break;
+			}
 		}
 
-		// Manejar clases lambda sintéticas
-		int indiceLambda = texto.indexOf("$$Lambda");
-		if (indiceLambda != -1) {
-			// Quedarse solo con la parte antes del $$Lambda
-			texto = texto.substring(0, indiceLambda);
-		}
+		// cortar "(...)" si existe
+		int idxPar = texto.indexOf('(');
+		if (idxPar != -1)
+			texto = texto.substring(0, idxPar);
 
-		// Eliminar cualquier dirección /0x... sobrante
+		// manejar lambdas sintéticas
+		int idxLambda = texto.indexOf("$$Lambda");
+		if (idxLambda != -1)
+			texto = texto.substring(0, idxLambda);
+
+		// purgar direcciones /0x...
 		texto = texto.replaceAll("/0x[0-9a-fA-F]+.*", "");
 
-		// Quitar sufijo de módulos de Java (ejemplo: java.base@21.0.7/Clase)
+		// formato módulos java: paquete@ver/Clase -> quedarnos con paquete
 		if (texto.contains("@") && texto.contains("/")) {
 			int barra = texto.indexOf('/');
 			texto = texto.substring(0, barra);
 		}
 
-		// Extraer solo el paquete (todo antes del último punto)
-		int indiceUltimoPunto = texto.lastIndexOf('.');
-		if (indiceUltimoPunto > 0) {
-			return texto.substring(0, indiceUltimoPunto);
+		int ultimoPunto = texto.lastIndexOf('.');
+		if (ultimoPunto > 0) {
+			return texto.substring(0, ultimoPunto);
 		}
-
 		return null;
 	}
 
@@ -668,14 +719,12 @@ public class VerificacionDeStackTrace {
 	 *              la consola (ej: "1,23")
 	 * @param fatal Indica si es un error fatal
 	 */
-	// Sustituye tu processarSMHandler por esta versión
 	public void processarSMHandler(String pack, String dec, boolean fatal) {
 		try {
 			int idx = pack.indexOf("handler$");
 			if (idx < 0)
 				return;
 
-			// Partes tras "handler$"
 			String tail = pack.substring(idx + "handler$".length());
 			String[] segs = tail.split("\\$");
 			if (segs.length == 0)
@@ -683,10 +732,9 @@ public class VerificacionDeStackTrace {
 
 			String candidato = null;
 
-			// Caso preferente: segs[0] suele ser el modid en muchas trazas modernas
+			// Preferir primer segmento si parece modid real
 			String s0 = sane(segs[0]);
-			if (esModIdPlausible(s0) && !esModNoPermite(s0)) {
-				// Si además segs[1] parece método/clase, refuerza la hipótesis
+			if (!TOKENS_FALSOS_SM.contains(s0) && esModIdPlausible(s0) && !esModNoPermite(s0)) {
 				if (segs.length >= 2) {
 					String s1 = sane(segs[1]);
 					if (pareceMetodoOClase(s1) || !esModIdPlausible(s1)) {
@@ -697,18 +745,21 @@ public class VerificacionDeStackTrace {
 				}
 			}
 
-			// Fallback clásico: segs[1] como modid (cuando segs[0] era hash)
+			// Fallback: seg[1]
 			if (candidato == null && segs.length >= 2) {
 				String s1 = sane(segs[1]);
-				if (esModIdPlausible(s1) && !esModNoPermite(s1)) {
+				if (!TOKENS_FALSOS_SM.contains(s1) && esModIdPlausible(s1) && !esModNoPermite(s1)
+						&& !pareceMetodoOClase(s1)) {
 					candidato = s1;
 				}
 			}
 
-			// Escaneo adicional por si aparece más adelante
+			// Escaneo extendido
 			if (candidato == null && segs.length >= 2) {
 				for (int i = 2; i < segs.length; i++) {
 					String si = sane(segs[i]);
+					if (TOKENS_FALSOS_SM.contains(si))
+						continue;
 					if (esModIdPlausible(si) && !esModNoPermite(si) && !pareceMetodoOClase(si)) {
 						candidato = si;
 						break;
@@ -825,22 +876,16 @@ public class VerificacionDeStackTrace {
 	 * Verifica si una línea es parte de un stack trace
 	 */
 	private static boolean esParteDeStack(String l) {
-		String t = l.trim();
-
-		// Excluir líneas que contienen "more..." ya que indican que hay más elementos
-		// en el stack trace pero no son parte del mismo
-		if (t.endsWith("more")) {
+		String t = normalizarLineaStack(l);
+		if (t == null)
 			return false;
-		}
+		t = t.trim();
+
+		if (t.endsWith("more"))
+			return false;
 
 		return t.startsWith("at ") || t.startsWith("Caused by:") || t.startsWith("Suppressed:") || t.startsWith("...")
-				||
-
-				// secure-bootstrap class-loader etc.
-				t.startsWith("SECURE-BOOTSTRAP") ||
-
-				// mensajes de excepción ("org.spongepowered...InvalidMixinException ...")
-				t.matches("^[a-zA-Z0-9_.]+\\.[A-Z][a-zA-Z0-9]+Exception.*");
+				|| t.startsWith("SECURE-BOOTSTRAP") || t.matches("^[a-zA-Z0-9_.]+\\.[A-Z][a-zA-Z0-9]+Exception.*");
 	}
 
 	public List<String> obtenerArchivosJsonEnMixinExceptions(String contenido_de_logs) {
@@ -1010,14 +1055,57 @@ public class VerificacionDeStackTrace {
 		if (jarName.startsWith("datafixerupper")) {
 			return true;
 		}
-		
+
 		if (jarName.startsWith("theseus")) {
 			return true;
 		}
-		
-		
 
 		return false;
+	}
+
+	// 🧹 Normalizador de líneas de stack: quita // y prefijos de cargador conocidos
+	private static final String[] PREFIJOS_CARGADOR = { "knot//", "knott//", "app//" };
+
+	private static String normalizarLineaStack(String l) {
+		if (l == null)
+			return null;
+		String t = l.trim();
+
+		// Si la línea viene comentada tipo "// at ..."
+		if (t.startsWith("//")) {
+			t = t.substring(2).trim();
+		}
+		// Quitar prefijos de cargador antes de "at " o justo después de "at "
+		// Casos: "at knot//com.paquete.Clase.metodo(...)" ó "knot//at com..."
+		if (t.startsWith("at ")) {
+			// remover prefijos justo después de "at "
+			for (String p : PREFIJOS_CARGADOR) {
+				String marca = "at " + p;
+				if (t.startsWith(marca)) {
+					t = "at " + t.substring(marca.length());
+					break;
+				}
+			}
+		} else {
+			// si viene como "knot//at ..."
+			for (String p : PREFIJOS_CARGADOR) {
+				String marca = p + "at ";
+				if (t.startsWith(marca)) {
+					t = "at " + t.substring(marca.length());
+					break;
+				}
+			}
+		}
+
+		// También limpiar cualquier prefijo repetido "knot//" al inicio de la parte de
+		// clase/paquete
+		for (String p : PREFIJOS_CARGADOR) {
+			if (t.startsWith("at " + p)) {
+				t = "at " + t.substring(("at " + p).length());
+			}
+		}
+
+		return t;
 	}
 
 }

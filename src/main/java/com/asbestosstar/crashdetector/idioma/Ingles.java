@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
+import com.asbestosstar.crashdetector.MonitorDePID;
 
 public class Ingles implements Idioma {
     private final Config config = Config.obtenerInstancia(); // Assuming this is how you get the Config instance, like in Espanol
@@ -3532,6 +3533,26 @@ public String paso1_campo_inexistente() {
 @Override
 public String paso2_campo_inexistente() {
     return "2. Update all affected mods. If the problem persists, contact the author of the mod that caused the error.";
+}
+@Override
+public String mensajeAyudar() {
+    String iconoCompartir = MonitorDePID.carpeta
+            .resolve("imagenes")
+            .resolve("boton_compartir_icon.png")
+            .toAbsolutePath()
+            .toUri()
+            .toString();
+    String colorTexto = Config.obtenerInstancia().obtenerColorTexto();
+
+    return ""
+        + "<div style='color:" + colorTexto + ";'>"
+        + "  <strong>Need help?</strong><br>"
+        + "  If you don't know how to fix it or the reason isn't listed here, you can get help through our social networks. "
+        + "  Use the <img src='" + iconoCompartir + "' alt='Share' style='height:12px;vertical-align:middle;'/> "
+        + "  <strong>Share</strong> button to generate links to your logs and results for our team. "
+        + "  If you're a modpack creator or organisation, edit <code>crash_detector/plantilla.htm</code> "
+        + "  to customise your team's links."
+        + "</div>";
 }
 
 

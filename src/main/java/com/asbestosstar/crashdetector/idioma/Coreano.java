@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
+import com.asbestosstar.crashdetector.MonitorDePID;
 
 public class Coreano implements Idioma {
     private final Config config = Config.obtenerInstancia();
@@ -3452,6 +3453,28 @@ public String paso1_campo_inexistente() {
 public String paso2_campo_inexistente() {
     return "2. 영향받은 모든 모드를 업데이트하세요. 문제가 계속되면 오류를 유발한 모드의 개발자에게 문의하세요.";
 }
+@Override
+public String mensajeAyudar() {
+    String iconoCompartir = MonitorDePID.carpeta
+            .resolve("imagenes")
+            .resolve("boton_compartir_icon.png")
+            .toAbsolutePath()
+            .toUri()
+            .toString();
+    String colorTexto = Config.obtenerInstancia().obtenerColorTexto();
+
+    return ""
+        + "<div style='color:" + colorTexto + ";'>"
+        + "  <strong>도움이 필요하십니까?</strong><br>"
+        + "  해결 방법을 모르거나 여기에 원인이 없으면 소셜 미디어를 통해 도움을 받을 수 있습니다. "
+        + "  <img src='" + iconoCompartir + "' alt='공유' style='height:12px;vertical-align:middle;'/> "
+        + "  <strong>공유</strong> 버튼을 사용하여 로그와 분석 결과 링크를 팀에 전달하세요. "
+        + "  모드팩 제작자나 기관이라면 <code>crash_detector/plantilla.htm</code> 파일을 수정하여 "
+        + "  팀 전용 링크를 맞춤 설정할 수 있습니다."
+        + "</div>";
+}
+
+
 
 
 

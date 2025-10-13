@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
+import com.asbestosstar.crashdetector.MonitorDePID;
 
 public class Ruso implements Idioma {
     private final Config config = Config.obtenerInstancia();
@@ -3458,6 +3459,27 @@ public String paso1_campo_inexistente() {
 @Override
 public String paso2_campo_inexistente() {
     return "2. Обновите все затронутые моды. Если проблема сохраняется, свяжитесь с автором мода, вызвавшего ошибку.";
+}
+@Override
+public String mensajeAyudar() {
+    String iconoCompartir = MonitorDePID.carpeta
+            .resolve("imagenes")
+            .resolve("boton_compartir_icon.png")
+            .toAbsolutePath()
+            .toUri()
+            .toString();
+
+            String colorTexto = Config.obtenerInstancia().obtenerColorTexto();
+
+    return ""
+        + "<div style='color:" + colorTexto + ";'>"
+        + "  <strong>Нужна помощь?</strong><br>"
+        + "  Если вы не знаете, как исправить проблему, или причина отсутствует здесь, вы можете получить помощь через наши социальные сети. "
+        + "  Нажмите кнопку <img src='" + iconoCompartir + "' alt='Поделиться' style='height:12px;vertical-align:middle;'/> "
+        + "  <strong>Поделиться</strong>, чтобы получить ссылки на логи и результаты для нашей команды. "
+        + "  Если вы создатель модпака или организация, отредактируйте файл <code>crash_detector/plantilla.htm</code>, "
+        + "  чтобы настроить ссылки вашей команды."
+        + "</div>";
 }
 
 

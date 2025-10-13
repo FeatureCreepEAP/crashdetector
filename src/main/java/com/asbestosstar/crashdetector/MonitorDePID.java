@@ -136,6 +136,8 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/boton_agregar.png", carpeta.resolve("imagenes/boton_agregar.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/boton_compartir.png",
 				carpeta.resolve("imagenes/boton_compartir.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/boton_compartir_icon.png",
+				carpeta.resolve("imagenes/boton_compartir_icon.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/boton_actualizar.png",
 				carpeta.resolve("imagenes/boton_actualizar.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/boton_archivos.png", carpeta.resolve("imagenes/boton_archivos.png").toFile());

@@ -1431,6 +1431,8 @@ public interface Idioma {
 	            .replace(">", ">")
 	            .replace("\"", "&quot;");
 	}
+
+	public String mensajeAyudar();
 	
 	
 	

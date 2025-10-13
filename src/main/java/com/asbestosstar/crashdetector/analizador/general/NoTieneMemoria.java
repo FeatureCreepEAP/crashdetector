@@ -39,11 +39,13 @@ public class NoTieneMemoria implements Verificaciones {
 		}
 
 		// Verificación específica de PermGen (solo en Java 7 y anteriores)
-		if (contenidoConsola.contains("exit code: -805306369") || contenidoConsola.contains("PermGen error")
+		if (contenidoConsola.contains("exit code: -805306369") || contenidoConsola.contains("exit code -805306369") ||contenidoConsola.contains("PermGen error")
 				|| contenidoConsola.contains("java.lang.OutOfMemoryError: PermGen space")) {
 
 			esProblemaPermGen = true;
 			mensajes.append(Verificaciones.nl_html).append(MonitorDePID.idioma.permGenError());
+			mensajes.append(Verificaciones.nl_html).append(MonitorDePID.idioma.noTieneMemoria());
+
 		}
 
 		// Si se detectó algún problema de memoria, activamos el verificador
