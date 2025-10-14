@@ -293,6 +293,17 @@ public class VerificacionDeStackTrace {
 						// Almacenar con nivel de prioridad y número de línea en la consola
 						clases_fatales_no_existentes.put(claseFaltante, nivel_prioridad, consolaNumLinea, sospechoso);
 					}
+				} else if (lineaTrim
+						.contains("org.spongepowered.asm.mixin.throwables.ClassMetadataNotFoundException:")) {
+					// Otra forma de "clase faltante" desde SpongeMixin:
+					// org.spongepowered.asm.mixin.throwables.ClassMetadataNotFoundException:
+					// <clase>
+					// Ver referencia en mcforge discord:
+					// https://discord.com/channels/1129059589325852724/1129069799545241703/1427526571622928384
+					String clase = extraerClaseDeMetadataNoEncontrada(lineaTrim);
+					if (clase != null && !clase.isEmpty()) {
+						clases_fatales_no_existentes.put(clase, nivel_prioridad, consolaNumLinea, "");
+					}
 				}
 
 				// Extraer contenido entre llaves
@@ -317,6 +328,29 @@ public class VerificacionDeStackTrace {
 				}
 			}
 		}
+	}
+
+	/**
+	 * 
+	 * Otra forma de "clase faltante" desde SpongeMixin:
+	 * org.spongepowered.asm.mixin.throwables.ClassMetadataNotFoundException:
+	 * <clase> Ver referencia en mcforge discord:
+	 * https://discord.com/channels/1129059589325852724/1129069799545241703/1427526571622928384
+	 * 
+	 * Extrae la clase desde:
+	 * "org.spongepowered.asm.mixin.throwables.ClassMetadataNotFoundException:
+	 * com.ejemplo.Algo" Devuelve en formato con barras: com/ejemplo/Algo
+	 */
+	private static String extraerClaseDeMetadataNoEncontrada(String linea) {
+		if (linea == null)
+			return null;
+		final String clave = "ClassMetadataNotFoundException:";
+		int p = linea.indexOf(clave);
+		if (p < 0)
+			return null;
+		String clase = linea.substring(p + clave.length()).trim();
+		// Normalizamos a forma con '/' para ser consistente con otras rutas de clase
+		return clase.replace('.', '/');
 	}
 
 	public static boolean esLineaDeAdvertenciaEstandar(String l) {

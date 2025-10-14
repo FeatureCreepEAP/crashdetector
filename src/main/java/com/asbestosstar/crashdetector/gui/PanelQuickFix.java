@@ -49,8 +49,8 @@ public class PanelQuickFix extends JScrollPane {
 
         JLabel img1024 = crearEtiquetaImagenEscalada(
         	    MonitorDePID.carpeta.resolve("imagenes/demonslayers.png").toString(),
-        	    32,
-        	    32
+        	    128,
+        	    128
         	);
         if (img1024 != null) {
             img1024.setAlignmentX(Component.CENTER_ALIGNMENT);
