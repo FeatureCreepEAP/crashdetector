@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetector.gui;
+package com.asbestosstar.crashdetector.gui.principal;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -57,6 +57,17 @@ import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
+import com.asbestosstar.crashdetector.gui.ArbolDeModsGUI;
+import com.asbestosstar.crashdetector.gui.BotonDeBarraLateralDerecha;
+import com.asbestosstar.crashdetector.gui.BusquedaGUI;
+import com.asbestosstar.crashdetector.gui.ComboIdiomasConIcono;
+import com.asbestosstar.crashdetector.gui.ConfigPanel;
+import com.asbestosstar.crashdetector.gui.DialogoCompartir;
+import com.asbestosstar.crashdetector.gui.EditorCodiceGUI;
+import com.asbestosstar.crashdetector.gui.EscanerMCreatorGUI;
+import com.asbestosstar.crashdetector.gui.HistoriaModsGUI;
+import com.asbestosstar.crashdetector.gui.LectadorDeConsolas;
+import com.asbestosstar.crashdetector.gui.PanelQuickFix;
 
 public class PrincipalGUIEstiloLanzer extends JFrame {
 	private final Instant tiempoFallo;
