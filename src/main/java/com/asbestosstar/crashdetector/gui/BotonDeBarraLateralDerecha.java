@@ -9,17 +9,4 @@ public interface BotonDeBarraLateralDerecha {
 	 */
 	public void init();
 
-	/**
-	 * el etiquera del boton en la barra lateral
-	 * @return
-	 */
-	public String etiquetaDelBoton();
-	
-	/**
-	 * Icon del boton
-	 * @return
-	 */
-	public default Icon icon() {
-		return null;
-	}
 }

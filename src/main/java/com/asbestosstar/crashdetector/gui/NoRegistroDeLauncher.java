@@ -116,7 +116,7 @@ public class NoRegistroDeLauncher extends JDialog {
 		super(blanco, true);
 		this.instant = instant;
 
-		setTitle("CrashDetector – " + MonitorDePID.idioma.noRegistroLauncherTitulo());
+		setTitle(Config.obtenerInstancia().obtenerNombreCD()+" – " + MonitorDePID.idioma.noRegistroLauncherTitulo());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(true);
 		setMinimumSize(new Dimension(700, 520));

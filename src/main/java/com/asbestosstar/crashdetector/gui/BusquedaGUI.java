@@ -265,8 +265,4 @@ public BusquedaGUI() {
         this.setVisible(true);
     }
 
-    @Override
-    public String etiquetaDelBoton() {
-        return "grepr/fgrepr";
-    }
 }
