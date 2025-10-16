@@ -23,7 +23,6 @@ public class ConfigBoolean implements ElementoConfig<Boolean> {
 		}
 
 		String trimmed = valor.trim().toLowerCase();
-
 		if (!trimmed.equals("true") && !trimmed.equals("false")) {
 			throw new IllegalStateException("El valor de la clave no es un booleano válido: " + valor);
 		}
@@ -39,19 +38,26 @@ public class ConfigBoolean implements ElementoConfig<Boolean> {
 
 	/**
 	 * Crea una instancia de ConfigBoolean para la clave indicada.
+	 * Si la clave no existe, se crea con el valor por defecto proporcionado.
 	 * 
-	 * @param clave Nombre de la clave en el archivo de configuración.
+	 * @param clave            Nombre de la clave en el archivo de configuración.
+	 * @param valorPorDefecto  Valor booleano a usar si la clave no existe.
 	 * @return Nueva instancia de ConfigBoolean.
-	 * @throws IllegalArgumentException Si la clave no existe.
-	 * @throws IllegalStateException    Si el valor de la clave no representa un booleano válido.
+	 * @throws IllegalStateException Si la clave existe pero el valor no representa un booleano válido.
 	 */
-	public static ConfigBoolean de(String clave) throws IllegalArgumentException, IllegalStateException {
-		String valor = Config.obtenerInstancia().propiedadesConfig.getProperty(clave);
+	public static ConfigBoolean de(String clave, boolean valorPorDefecto) throws IllegalStateException {
+		Config config = Config.obtenerInstancia();
+
+		String valor = config.propiedadesConfig.getProperty(clave);
 
 		if (valor == null) {
-			throw new IllegalArgumentException("La clave de configuración no existe: " + clave);
+			// Crear con el valor por defecto y guardar
+			config.propiedadesConfig.setProperty(clave, Boolean.toString(valorPorDefecto));
+			config.guardar();
+			return new ConfigBoolean(clave);
 		}
 
+		// Validar que el valor existente sea un booleano válido
 		String trimmed = valor.trim().toLowerCase();
 		if (!trimmed.equals("true") && !trimmed.equals("false")) {
 			throw new IllegalStateException("El valor de la clave no representa un booleano válido: " + valor);

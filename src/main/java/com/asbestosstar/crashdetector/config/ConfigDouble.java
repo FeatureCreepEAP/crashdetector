@@ -36,20 +36,25 @@ public class ConfigDouble implements ElementoConfig<Double> {
 
 	/**
 	 * Crea una instancia de ConfigDouble para la clave indicada.
+	 * Si la clave no existe, se crea automáticamente con el valor por defecto.
 	 * 
-	 * @param clave Nombre de la clave en el archivo de configuración.
+	 * @param clave            Nombre de la clave en el archivo de configuración.
+	 * @param valorPorDefecto  Valor numérico a usar si la clave no existe.
 	 * @return Nueva instancia de ConfigDouble.
-	 * @throws IllegalArgumentException Si la clave no existe.
-	 * @throws IllegalStateException    Si el valor de la clave no puede convertirse a Double.
+	 * @throws IllegalStateException Si la clave existe pero su valor no representa un número válido.
 	 */
-	public static ConfigDouble de(String clave) throws IllegalArgumentException, IllegalStateException {
-		String valor = Config.obtenerInstancia().propiedadesConfig.getProperty(clave);
+	public static ConfigDouble de(String clave, double valorPorDefecto) throws IllegalStateException {
+		Config config = Config.obtenerInstancia();
+		String valor = config.propiedadesConfig.getProperty(clave);
 
 		if (valor == null) {
-			throw new IllegalArgumentException("La clave de configuración no existe: " + clave);
+			// Crear la clave con valor por defecto
+			config.propiedadesConfig.setProperty(clave, Double.toString(valorPorDefecto));
+			config.guardar();
+			return new ConfigDouble(clave);
 		}
 
-		// Verificar que el valor sea un número válido antes de crear la instancia
+		// Verificar que el valor existente sea un número válido
 		try {
 			Double.parseDouble(valor.trim());
 		} catch (NumberFormatException e) {

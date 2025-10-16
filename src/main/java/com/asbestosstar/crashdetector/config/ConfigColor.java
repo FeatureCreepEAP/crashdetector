@@ -37,20 +37,25 @@ public class ConfigColor implements ElementoConfig<Color> {
 
 	/**
 	 * Crea una instancia de ConfigColor para la clave indicada.
+	 * Si la clave no existe, se crea automáticamente con el color por defecto.
 	 * 
-	 * @param clave Nombre de la clave en el archivo de configuración.
+	 * @param clave            Nombre de la clave en el archivo de configuración.
+	 * @param valorPorDefecto  Color a usar si la clave no existe.
 	 * @return Nueva instancia de ConfigColor.
-	 * @throws IllegalArgumentException Si la clave no existe.
-	 * @throws IllegalStateException    Si el valor de la clave no representa un color válido.
+	 * @throws IllegalStateException Si el valor existente no representa un color válido.
 	 */
-	public static ConfigColor de(String clave) throws IllegalArgumentException, IllegalStateException {
-		String valor = Config.obtenerInstancia().propiedadesConfig.getProperty(clave);
+	public static ConfigColor de(String clave, Color valorPorDefecto) throws IllegalStateException {
+		Config config = Config.obtenerInstancia();
+		String valor = config.propiedadesConfig.getProperty(clave);
 
 		if (valor == null) {
-			throw new IllegalArgumentException("La clave de configuración no existe: " + clave);
+			// Crear con el valor por defecto y guardar
+			config.propiedadesConfig.setProperty(clave, Config.colorAHexHtml(valorPorDefecto));
+			config.guardar();
+			return new ConfigColor(clave);
 		}
 
-		// Verificar que el valor sea un color válido antes de crear la instancia
+		// Verificar que el valor existente sea un color válido
 		try {
 			Config.convertirAColor(valor);
 		} catch (Exception e) {
