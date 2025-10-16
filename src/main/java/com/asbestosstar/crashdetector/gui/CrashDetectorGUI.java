@@ -20,8 +20,11 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.CountDownLatch;
 import java.util.function.Supplier;
 
@@ -78,6 +81,12 @@ public class CrashDetectorGUI extends JFrame {
 	 */
 	private static List<Supplier<BotonDeBarraLateralDerecha>> botons_de_barra_lateral_derecha = new ArrayList<>();
 
+	/**
+	 * para botones initalizado
+	 */
+	private Map<BotonDeBarraLateralDerecha,JButton> botons_de_barra_lateral_derecha_initalizado = new HashMap<>();
+	
+	
 	static {
 		registrarBotonDeBarraLateralDerecha(() -> new BusquedaGUI());
 		registrarBotonDeBarraLateralDerecha(() -> new EscanerMCreatorGUI());
@@ -588,6 +597,9 @@ public class CrashDetectorGUI extends JFrame {
 			if (b.icon() != null) {
 				btn.setIcon(b.icon());
 			}
+			
+			botons_de_barra_lateral_derecha_initalizado.put(b, btn);
+			
 			estilizarBoton(btn);
 			btn.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 			btn.addActionListener(e -> b.init());
@@ -602,7 +614,7 @@ public class CrashDetectorGUI extends JFrame {
 		add(panelInferior, BorderLayout.SOUTH);
 		add(barraLateralDerecha, BorderLayout.EAST);
 
-		setTitle("CrashDetector");
+		setTitle(Config.obtenerInstancia().obtenerNombreCD());
 		setSize(1050, 650); // ancho ajustado
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
@@ -738,6 +750,17 @@ public class CrashDetectorGUI extends JFrame {
 		try {
 			pantalla.setText(new String(Files.readAllBytes(Paths.get(MonitorDePID.local))));
 			pantalla.setCaretPosition(0);// Mas alto
+		
+		
+		
+			for(Entry<BotonDeBarraLateralDerecha, JButton> entry:botons_de_barra_lateral_derecha_initalizado.entrySet()) {
+				entry.getValue().setText(entry.getKey().etiquetaDelBoton());
+			}
+			botonVolver.setText(MonitorDePID.idioma.volver());
+			
+			
+			
+		
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

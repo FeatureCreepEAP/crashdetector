@@ -47,7 +47,7 @@ public class Config {
 
 	
 	// Propiedades de configuración
-	private Properties propiedadesConfig;
+	public Properties propiedadesConfig;
 
 	// Instancia única para la clase Config (patrón Singleton)
 	private static Config instancia;
@@ -355,22 +355,52 @@ public class Config {
 	
 
 	/**
-	 * Convierte un código de color HTML (#RRGGBB) en un objeto Color.
+	 * Convierte un código de color HTML en un objeto {@link Color} de forma segura.
+	 * <p>
+	 * Acepta los formatos "#RRGGBB" o "RRGGBB" (con o sin el numeral inicial).
 	 *
-	 * @param hexColor Código de color en formato hexadecimal (e.g., "#RRGGBB").
-	 * @return Objeto Color correspondiente al código hexadecimal.
+	 * @param color Cadena del color en formato hexadecimal (ej. "#FF0000" o "FF0000").
+	 * @return Objeto {@link Color} correspondiente al valor hexadecimal.
+	 * @throws IllegalArgumentException Si la cadena es nula, está vacía o tiene un formato no válido.
+	 * @throws NumberFormatException    Si ocurre un error al convertir los valores hexadecimales.
 	 */
-	public static Color convertirAColor(String color) {
-		String hexColor = "#" + color;
-		if (hexColor == null || !hexColor.startsWith("#") || hexColor.length() != 7) {
-			throw new IllegalArgumentException("Formato de color inválido: " + hexColor);
+	public static Color convertirAColor(String color)
+			throws IllegalArgumentException, NumberFormatException {
+
+		if (color == null) {
+			throw new IllegalArgumentException("El valor del color no puede ser nulo.");
 		}
-		int r = Integer.parseInt(hexColor.substring(1, 3), 16);
-		int g = Integer.parseInt(hexColor.substring(3, 5), 16);
-		int b = Integer.parseInt(hexColor.substring(5, 7), 16);
+
+		String hex = color.trim();
+
+		// Aceptar tanto "#RRGGBB" como "RRGGBB"
+		if (hex.startsWith("#")) {
+			hex = hex.substring(1);
+		}
+
+		// Validar longitud exacta
+		if (hex.length() != 6) {
+			throw new IllegalArgumentException("Formato de color inválido (debe ser RRGGBB): " + color);
+		}
+
+		// Validar caracteres permitidos
+		if (!hex.matches("^[0-9A-Fa-f]{6}$")) {
+			throw new IllegalArgumentException("El color contiene caracteres no válidos: " + color);
+		}
+
+		int r = Integer.parseInt(hex.substring(0, 2), 16);
+		int g = Integer.parseInt(hex.substring(2, 4), 16);
+		int b = Integer.parseInt(hex.substring(4, 6), 16);
+
 		return new Color(r, g, b);
 	}
 
+
+	/** * Devuelve el color en formato HTML hexadecimal "#RRGGBB". */
+	public static String colorAHexHtml(Color c) {
+	    return Integer.toHexString(c.getRGB()).substring(2).toUpperCase();
+	}
+	
 	public String obtenerCarpetaHMCL() {
 		// TODO Auto-generated method stub
 		return propiedadesConfig.getProperty("hmcl_carpeta", HMCL_CARPETA);

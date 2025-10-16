@@ -49,7 +49,6 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDerecha {
 
 	// Campos de idioma y datos
-	private static final Idioma idioma = MonitorDePID.idioma;
 	public List<Consola> consolas = MonitorDePID.consolas;
 
 	// Cache concurrente de líneas por consola
@@ -106,7 +105,7 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 	private JScrollPane scrollDescripcion;
 
 	public LectadorDeConsolas() {
-		super(idioma.tituloLectador());
+		super(MonitorDePID.idioma.tituloLectador());
 		CrashDetectorLogger.log(String.valueOf(MonitorDePID.consolas.size()));
 		configurarVentana();
 		CrashDetectorLogger.log(String.valueOf(MonitorDePID.consolas.size()));
@@ -325,7 +324,7 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 		JPanel pnl = new JPanel();
 		pnl.setLayout(new javax.swing.BoxLayout(pnl, javax.swing.BoxLayout.Y_AXIS));
 		pnl.setBackground(colorFondo);
-		pnl.setBorder(BorderFactory.createTitledBorder(idioma.obtenerTituloLeyenda()));
+		pnl.setBorder(BorderFactory.createTitledBorder(MonitorDePID.idioma.obtenerTituloLeyenda()));
 
 		java.util.Set<Color> coloresMostrados = new java.util.HashSet<Color>();
 
@@ -345,7 +344,7 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 			}
 		}
 
-		JLabel lblPila = new JLabel(idioma.obtenerStacktraceEnLeyenda());
+		JLabel lblPila = new JLabel(MonitorDePID.idioma.obtenerStacktraceEnLeyenda());
 		lblPila.setOpaque(true);
 		lblPila.setBackground(colorPila);
 		lblPila.setForeground(Color.BLACK);
@@ -680,8 +679,8 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 			if (numeroLinea >= 0 && numeroLinea < lineasActuales.size()) {
 				String textoLinea = lineasActuales.get(numeroLinea);
 				if (textoLinea != null && (textoLinea.contains("ERROR") || textoLinea.contains("EXCEPTION"))) {
-					txtNombreError.setText(idioma.obtenerNombreErrorPorDefecto());
-					String porDefectoPlano = htmlAPlano(idioma.obtenerDescripcionErrorPorDefecto());
+					txtNombreError.setText(MonitorDePID.idioma.obtenerNombreErrorPorDefecto());
+					String porDefectoPlano = htmlAPlano(MonitorDePID.idioma.obtenerDescripcionErrorPorDefecto());
 					descripcionHtml(porDefectoPlano);
 				} else {
 					txtNombreError.setText("");
@@ -731,7 +730,7 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 	public void init() { setVisible(true); }
 
 	@Override
-	public String etiquetaDelBoton() { return idioma.obtenerEtiquetaBotonLectador(); }
+	public String etiquetaDelBoton() { return MonitorDePID.idioma.obtenerEtiquetaBotonLectador(); }
 
 	public static class ErrorDeLectador {
 		public Consola consola;
