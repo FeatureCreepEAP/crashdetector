@@ -14,6 +14,14 @@ public abstract class TipoGUI {
 	 */
 	public static List<TipoGUI> TIPOS_DE_GUI = new ArrayList<>();
 	
+	
+	
+	
+
+	
+	
+	
+	
 	/**
 	 * La GUI Principal
 	 */
@@ -181,4 +189,25 @@ public abstract class TipoGUI {
 	public Icon icon() {
 		return null;
 	}	
+	
+	
+	
+	
+	
+	/**
+	 * Registro estático de todos los tipos de GUI en la lista global.
+	 */
+	static {
+		TIPOS_DE_GUI.add(PRINCIPAL);
+		TIPOS_DE_GUI.add(GREPR);
+		TIPOS_DE_GUI.add(ARBOL_DE_MODS);
+		TIPOS_DE_GUI.add(DIALOGO_COMPARTIR);
+		TIPOS_DE_GUI.add(EDITOR_FIRMAS);
+		TIPOS_DE_GUI.add(TODOS_QUICKFIXES);
+		TIPOS_DE_GUI.add(QUICKFIX);
+		TIPOS_DE_GUI.add(ESCANER_MCREATOR);
+		TIPOS_DE_GUI.add(HISTORIA_DE_MODS);
+		TIPOS_DE_GUI.add(LECTADOR_DE_CONSOLAS);
+		TIPOS_DE_GUI.add(NO_REGISTRO_LANZER);
+	}
 }
