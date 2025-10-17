@@ -28,8 +28,10 @@ import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.grepr.BusquedaArchivos;
-import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.NoRegistroDeLauncher;
+import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
+import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUI;
+import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUIEstiloLanzer;
 
 public class MonitorDePID {
 
@@ -364,7 +366,15 @@ public class MonitorDePID {
 					} else {
 						CrashDetectorLogger.log("no headless ");
 
-						SwingUtilities.invokeLater(() -> new CrashDetectorGUI(utc, latch).setVisible(true));
+final 						PrincipalGUI gui = TipoGUI.PRINCIPAL.obtenerGUIPredeterminado(PrincipalGUIEstiloLanzer.ID, () -> { return new PrincipalGUIEstiloLanzer(); });
+
+						SwingUtilities.invokeLater(() -> 
+						
+						
+						gui.constructir(utc, latch)
+						
+								
+						);
 					}
 
 				} else {

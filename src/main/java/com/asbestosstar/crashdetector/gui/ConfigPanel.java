@@ -16,6 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
@@ -26,12 +28,14 @@ import com.asbestosstar.crashdetector.parches.Parche;
 public class ConfigPanel extends JPanel {
 	public CrashDetectorGUI cdgui;
 	private JTabbedPane tabbedPane;
+
+	// Color de fondo calculado para las pestañas (no Mac)
 	private Color colorFondoPestanias;
 
 	public ConfigPanel(CrashDetectorGUI cdgui) {
 		this.cdgui = cdgui;
 		setLayout(new BorderLayout());
-		setBackground(CrashDetectorGUI.colorFondo);
+		setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()));
 
 		// Crear el contenedor de pestañas
 		tabbedPane = new JTabbedPane();
@@ -39,13 +43,13 @@ public class ConfigPanel extends JPanel {
 		// Si NO es macOS, oscurecer el fondo de las pestañas para mejorar el contraste
 		if (!CrashDetectorGUI.esMac()) {
 			// Dos niveles más oscuro suele dar buen contraste con texto claro
-			colorFondoPestanias = CrashDetectorGUI.colorFondo.darker().darker();
+			colorFondoPestanias = Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()).darker().darker();
 			tabbedPane.setBackground(colorFondoPestanias);
 			tabbedPane.setOpaque(true);
 		}
 
 		// Color del texto de las etiquetas de las pestañas
-		Color colorTextoPestanias = CrashDetectorGUI.esMac() ? null : CrashDetectorGUI.colorTexto;
+		Color colorTextoPestanias = CrashDetectorGUI.esMac() ? null : Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto());
 
 		// Pestaña "Inicio de Juego/App"
 		JLabel incicio_del_juego = new JLabel(MonitorDePID.idioma.inicioApp());
@@ -75,34 +79,15 @@ public class ConfigPanel extends JPanel {
 		if (CrashDetectorGUI.esMac()) {
 			guardarButon.setContentAreaFilled(false);
 		} else {
-			guardarButon.setForeground(CrashDetectorGUI.colorTexto);
-			guardarButon.setBackground(CrashDetectorGUI.colorBoton);
+			guardarButon.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
+			guardarButon.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorBoton()));
 			guardarButon.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 			guardarButon.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 		}
 		guardarButon.setFocusPainted(false);
 
+		// Ya no se leen fields; todo se guarda al vuelo en los listeners.
 		guardarButon.addActionListener(e -> {
-			Config config = Config.obtenerInstancia();
-
-			// Actualizar los valores desde los campos de texto
-			config.guardarSitioDeInformes(sitioDeInformesField.getText());
-			config.guardarCarpetaHMCL(carpetaHMCL.getText());
-			config.guardarColorFondo(colorFondoField.getText());
-			config.guardarColorTexto(colorTextoField.getText());
-			config.guardarColorBoton(colorBotonField.getText());
-			config.guardarColorCajaTexto(colorCajaTextoField.getText());
-			config.guardarColorEnlace(colorEnlaceField.getText());
-			config.guardarColorDeTitulosDeConsolas(colorTitulosConsolasField.getText());
-			config.guardarColorError(colorErrorField.getText());
-			config.guardarColorAdvertencia(colorAdvertenciaField.getText());
-			config.guardarColorInfo(colorInfoField.getText());
-			config.guardarColorTitulo(colorTituloField.getText());
-			config.guardarColorEnlaceTexto(colorEnlaceTextoField.getText());
-			config.guardarProxySysOutSysErr(proxySysOutSysErrCheckBox.isSelected());
-			// Guardar la nueva configuración
-			config.guardar();
-
 			// Volver a la ventana principal
 			cdgui.volver();
 		});
@@ -110,7 +95,7 @@ public class ConfigPanel extends JPanel {
 		// Panel para el botón
 		JPanel butonPanel = new JPanel(new BorderLayout());
 		if (!CrashDetectorGUI.esMac()) {
-			butonPanel.setBackground(CrashDetectorGUI.colorFondo);
+			butonPanel.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()));
 		} else {
 			butonPanel.setOpaque(false); // Let macOS decide
 		}
@@ -133,7 +118,7 @@ public class ConfigPanel extends JPanel {
 		envoltura.setOpaque(true);
 		// Usar el color calculado; si faltara por alguna razón, oscurecer el fondo base
 		envoltura.setBackground(
-				colorFondoPestanias != null ? colorFondoPestanias : CrashDetectorGUI.colorFondo.darker());
+				colorFondoPestanias != null ? colorFondoPestanias : Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()).darker());
 
 		// Un poco de padding para mejorar legibilidad
 		etiqueta.setBorder(BorderFactory.createEmptyBorder(6, 12, 6, 12));
@@ -145,7 +130,7 @@ public class ConfigPanel extends JPanel {
 
 	private JPanel tabDelJuego() {
 		JPanel panel = new JPanel();
-		panel.setBackground(CrashDetectorGUI.colorFondo);
+		panel.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()));
 		panel.setLayout(new GridLayout(0, 1, 5, 5));
 
 		CrashDetectorLogger.log("Tab Del Juego ");
@@ -154,12 +139,12 @@ public class ConfigPanel extends JPanel {
 		for (Parche<?> parche : Parche.parches) {
 			CrashDetectorLogger.log("Parche " + parche.nombre_de_gui());
 			JPanel parchePanel = new JPanel(new BorderLayout());
-			parchePanel.setBackground(CrashDetectorGUI.colorFondo);
+			parchePanel.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()));
 
 			// Crear checkbox para activar/desactivar el parche
 			JCheckBox checkBox = new JCheckBox();
-			checkBox.setBackground(CrashDetectorGUI.colorFondo);
-			checkBox.setForeground(CrashDetectorGUI.colorTexto);
+			checkBox.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()));
+			checkBox.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
 			checkBox.setSelected(ConfigDeParches.obtenerInstancia().estaActivo(parche.id()));
 
 			// Actualizar estado cuando se hace clic
@@ -169,7 +154,7 @@ public class ConfigPanel extends JPanel {
 
 			// Etiqueta con el nombre del parche
 			JLabel label = new JLabel(parche.nombre_de_gui());
-			label.setForeground(CrashDetectorGUI.colorTexto);
+			label.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
 			label.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 
 			// Agregar componentes al panel
@@ -183,41 +168,39 @@ public class ConfigPanel extends JPanel {
 		return panel;
 	}
 
-	// Campos de texto para ajustes de CrashDetector
-	private JTextField sitioDeInformesField;
-	private JTextField carpetaHMCL;
-	private JTextField colorFondoField;
-	private JTextField colorTextoField;
-	private JTextField colorBotonField;
-	private JTextField colorCajaTextoField;
-	private JTextField colorEnlaceField;
-	private JTextField colorTitulosConsolasField;
-	private JTextField colorErrorField;
-	private JTextField colorAdvertenciaField;
-	private JTextField colorInfoField;
-	private JTextField colorTituloField;
-	private JTextField colorEnlaceTextoField;
-	private JCheckBox proxySysOutSysErrCheckBox;
+	// === Helper para vincular un JTextField a un setter de Config con auto-guardado ===
+	private static JTextField crearCampoTextoConfig(String valorInicial, java.util.function.Consumer<String> onChange) {
+		JTextField field = new JTextField(valorInicial);
+		field.getDocument().addDocumentListener(new DocumentListener() {
+			@Override public void insertUpdate(DocumentEvent e) { onChange.accept(field.getText()); }
+			@Override public void removeUpdate(DocumentEvent e) { onChange.accept(field.getText()); }
+			@Override public void changedUpdate(DocumentEvent e) { onChange.accept(field.getText()); }
+		});
+		return field;
+	}
 
 	private JPanel tabCrashDetector() {
 		JPanel panel = new JPanel();
-		panel.setBackground(CrashDetectorGUI.colorFondo);
+		panel.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()));
 		panel.setLayout(new GridLayout(0, 2, 5, 5));
 
 		Config config = Config.obtenerInstancia();
 
 		// Helper to reduce redundancy
 		boolean isMac = CrashDetectorGUI.esMac();
-		Color color_de_texto_de_gui = CrashDetectorGUI.colorTexto;
+		Color color_de_texto_de_gui = Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto());
 
 		// Campo: Sitio de informes
 		JLabel labelSitio = new JLabel(MonitorDePID.idioma.sitoDeLogging());
 		labelSitio.setForeground(color_de_texto_de_gui);
 		panel.add(labelSitio);
-		sitioDeInformesField = new JTextField(config.obtenerSitoDeInformes());
+		JTextField sitioDeInformesField = crearCampoTextoConfig(
+				config.obtenerSitoDeInformes(),
+				config::guardarSitioDeInformes
+		);
 		if (!isMac) {
-			sitioDeInformesField.setBackground(CrashDetectorGUI.colorCajaTexto);
-			sitioDeInformesField.setForeground(CrashDetectorGUI.colorTexto);
+			sitioDeInformesField.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
+			sitioDeInformesField.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
 		}
 		panel.add(sitioDeInformesField);
 
@@ -225,10 +208,13 @@ public class ConfigPanel extends JPanel {
 		JLabel labelHMCL = new JLabel(MonitorDePID.idioma.carpetaHMCL());
 		labelHMCL.setForeground(color_de_texto_de_gui);
 		panel.add(labelHMCL);
-		carpetaHMCL = new JTextField(config.obtenerCarpetaHMCL());
+		JTextField carpetaHMCL = crearCampoTextoConfig(
+				config.obtenerCarpetaHMCL(),
+				config::guardarCarpetaHMCL
+		);
 		if (!isMac) {
-			carpetaHMCL.setBackground(CrashDetectorGUI.colorCajaTexto);
-			carpetaHMCL.setForeground(CrashDetectorGUI.colorTexto);
+			carpetaHMCL.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
+			carpetaHMCL.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
 		}
 		panel.add(carpetaHMCL);
 
@@ -236,10 +222,13 @@ public class ConfigPanel extends JPanel {
 		JLabel labelFondo = new JLabel(MonitorDePID.idioma.colorFondo());
 		labelFondo.setForeground(color_de_texto_de_gui);
 		panel.add(labelFondo);
-		colorFondoField = new JTextField(config.obtenerColorFondo());
+		JTextField colorFondoField = crearCampoTextoConfig(
+				config.obtenerColorFondo(),
+				config::guardarColorFondo
+		);
 		if (!isMac) {
-			colorFondoField.setBackground(CrashDetectorGUI.colorCajaTexto);
-			colorFondoField.setForeground(CrashDetectorGUI.colorTexto);
+			colorFondoField.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
+			colorFondoField.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
 		}
 		panel.add(colorFondoField);
 
@@ -247,10 +236,13 @@ public class ConfigPanel extends JPanel {
 		JLabel labelTexto = new JLabel(MonitorDePID.idioma.colorTexto());
 		labelTexto.setForeground(color_de_texto_de_gui);
 		panel.add(labelTexto);
-		colorTextoField = new JTextField(config.obtenerColorTexto());
+		JTextField colorTextoField = crearCampoTextoConfig(
+				config.obtenerColorTexto(),
+				config::guardarColorTexto
+		);
 		if (!isMac) {
-			colorTextoField.setBackground(CrashDetectorGUI.colorCajaTexto);
-			colorTextoField.setForeground(CrashDetectorGUI.colorTexto);
+			colorTextoField.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
+			colorTextoField.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
 		}
 		panel.add(colorTextoField);
 
@@ -258,10 +250,13 @@ public class ConfigPanel extends JPanel {
 		JLabel labelBoton = new JLabel(MonitorDePID.idioma.colorBoton());
 		labelBoton.setForeground(color_de_texto_de_gui);
 		panel.add(labelBoton);
-		colorBotonField = new JTextField(config.obtenerColorBoton());
+		JTextField colorBotonField = crearCampoTextoConfig(
+				config.obtenerColorBoton(),
+				config::guardarColorBoton
+		);
 		if (!isMac) {
-			colorBotonField.setBackground(CrashDetectorGUI.colorCajaTexto);
-			colorBotonField.setForeground(CrashDetectorGUI.colorTexto);
+			colorBotonField.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
+			colorBotonField.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
 		}
 		panel.add(colorBotonField);
 
@@ -269,10 +264,13 @@ public class ConfigPanel extends JPanel {
 		JLabel labelCajaTexto = new JLabel(MonitorDePID.idioma.colorCajaTexto());
 		labelCajaTexto.setForeground(color_de_texto_de_gui);
 		panel.add(labelCajaTexto);
-		colorCajaTextoField = new JTextField(config.obtenerColorCajaTexto());
+		JTextField colorCajaTextoField = crearCampoTextoConfig(
+				config.obtenerColorCajaTexto(),
+				config::guardarColorCajaTexto
+		);
 		if (!isMac) {
-			colorCajaTextoField.setBackground(CrashDetectorGUI.colorCajaTexto);
-			colorCajaTextoField.setForeground(CrashDetectorGUI.colorTexto);
+			colorCajaTextoField.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
+			colorCajaTextoField.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
 		}
 		panel.add(colorCajaTextoField);
 
@@ -280,10 +278,13 @@ public class ConfigPanel extends JPanel {
 		JLabel labelEnlace = new JLabel(MonitorDePID.idioma.colorEnlace());
 		labelEnlace.setForeground(color_de_texto_de_gui);
 		panel.add(labelEnlace);
-		colorEnlaceField = new JTextField(config.obtenerColorEnlace());
+		JTextField colorEnlaceField = crearCampoTextoConfig(
+				config.obtenerColorEnlace(),
+				config::guardarColorEnlace
+		);
 		if (!isMac) {
-			colorEnlaceField.setBackground(CrashDetectorGUI.colorCajaTexto);
-			colorEnlaceField.setForeground(CrashDetectorGUI.colorTexto);
+			colorEnlaceField.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
+			colorEnlaceField.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
 		}
 		panel.add(colorEnlaceField);
 
@@ -291,10 +292,13 @@ public class ConfigPanel extends JPanel {
 		JLabel labelTitulosConsolas = new JLabel(MonitorDePID.idioma.colorTitulosConsolas());
 		labelTitulosConsolas.setForeground(color_de_texto_de_gui);
 		panel.add(labelTitulosConsolas);
-		colorTitulosConsolasField = new JTextField(config.obtenerColorDeTitulosDeConsolas());
+		JTextField colorTitulosConsolasField = crearCampoTextoConfig(
+				config.obtenerColorDeTitulosDeConsolas(),
+				config::guardarColorDeTitulosDeConsolas
+		);
 		if (!isMac) {
-			colorTitulosConsolasField.setBackground(CrashDetectorGUI.colorCajaTexto);
-			colorTitulosConsolasField.setForeground(CrashDetectorGUI.colorTexto);
+			colorTitulosConsolasField.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
+			colorTitulosConsolasField.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
 		}
 		panel.add(colorTitulosConsolasField);
 
@@ -302,10 +306,13 @@ public class ConfigPanel extends JPanel {
 		JLabel labelError = new JLabel(MonitorDePID.idioma.colorError());
 		labelError.setForeground(color_de_texto_de_gui);
 		panel.add(labelError);
-		colorErrorField = new JTextField(config.obtenerColorError());
+		JTextField colorErrorField = crearCampoTextoConfig(
+				config.obtenerColorError(),
+				config::guardarColorError
+		);
 		if (!isMac) {
-			colorErrorField.setBackground(CrashDetectorGUI.colorCajaTexto);
-			colorErrorField.setForeground(CrashDetectorGUI.colorTexto);
+			colorErrorField.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
+			colorErrorField.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
 		}
 		panel.add(colorErrorField);
 
@@ -313,10 +320,13 @@ public class ConfigPanel extends JPanel {
 		JLabel labelAdvertencia = new JLabel(MonitorDePID.idioma.colorAdvertencia());
 		labelAdvertencia.setForeground(color_de_texto_de_gui);
 		panel.add(labelAdvertencia);
-		colorAdvertenciaField = new JTextField(config.obtenerColorAdvertencia());
+		JTextField colorAdvertenciaField = crearCampoTextoConfig(
+				config.obtenerColorAdvertencia(),
+				config::guardarColorAdvertencia
+		);
 		if (!isMac) {
-			colorAdvertenciaField.setBackground(CrashDetectorGUI.colorCajaTexto);
-			colorAdvertenciaField.setForeground(CrashDetectorGUI.colorTexto);
+			colorAdvertenciaField.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
+			colorAdvertenciaField.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
 		}
 		panel.add(colorAdvertenciaField);
 
@@ -324,10 +334,13 @@ public class ConfigPanel extends JPanel {
 		JLabel labelInfo = new JLabel(MonitorDePID.idioma.colorInfo());
 		labelInfo.setForeground(color_de_texto_de_gui);
 		panel.add(labelInfo);
-		colorInfoField = new JTextField(config.obtenerColorInfo());
+		JTextField colorInfoField = crearCampoTextoConfig(
+				config.obtenerColorInfo(),
+				config::guardarColorInfo
+		);
 		if (!isMac) {
-			colorInfoField.setBackground(CrashDetectorGUI.colorCajaTexto);
-			colorInfoField.setForeground(CrashDetectorGUI.colorTexto);
+			colorInfoField.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
+			colorInfoField.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
 		}
 		panel.add(colorInfoField);
 
@@ -335,10 +348,13 @@ public class ConfigPanel extends JPanel {
 		JLabel labelTitulo = new JLabel(MonitorDePID.idioma.colorTitulo());
 		labelTitulo.setForeground(color_de_texto_de_gui);
 		panel.add(labelTitulo);
-		colorTituloField = new JTextField(config.obtenerColorTitulo());
+		JTextField colorTituloField = crearCampoTextoConfig(
+				config.obtenerColorTitulo(),
+				config::guardarColorTitulo
+		);
 		if (!isMac) {
-			colorTituloField.setBackground(CrashDetectorGUI.colorCajaTexto);
-			colorTituloField.setForeground(CrashDetectorGUI.colorTexto);
+			colorTituloField.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
+			colorTituloField.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
 		}
 		panel.add(colorTituloField);
 
@@ -346,10 +362,13 @@ public class ConfigPanel extends JPanel {
 		JLabel labelEnlaceTexto = new JLabel(MonitorDePID.idioma.colorEnlaceTexto());
 		labelEnlaceTexto.setForeground(color_de_texto_de_gui);
 		panel.add(labelEnlaceTexto);
-		colorEnlaceTextoField = new JTextField(config.obtenerColorEnlace());
+		JTextField colorEnlaceTextoField = crearCampoTextoConfig(
+				config.obtenerColorEnlace(),  // usa el nuevo getter
+				config::guardarColorEnlaceTexto
+		);
 		if (!isMac) {
-			colorEnlaceTextoField.setBackground(CrashDetectorGUI.colorCajaTexto);
-			colorEnlaceTextoField.setForeground(CrashDetectorGUI.colorTexto);
+			colorEnlaceTextoField.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
+			colorEnlaceTextoField.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
 		}
 		panel.add(colorEnlaceTextoField);
 
@@ -357,10 +376,12 @@ public class ConfigPanel extends JPanel {
 		JLabel labelProxy = new JLabel("proxySysOutSysErr");
 		labelProxy.setForeground(color_de_texto_de_gui);
 		panel.add(labelProxy);
-		proxySysOutSysErrCheckBox = new JCheckBox();
-		proxySysOutSysErrCheckBox.setBackground(CrashDetectorGUI.colorFondo);
-		proxySysOutSysErrCheckBox.setForeground(CrashDetectorGUI.colorTexto);
+		JCheckBox proxySysOutSysErrCheckBox = new JCheckBox();
+		proxySysOutSysErrCheckBox.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()));
+		proxySysOutSysErrCheckBox.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
 		proxySysOutSysErrCheckBox.setSelected(config.obtenerProxySysOutSysErr());
+		// Guardar al vuelo cambios en el checkbox
+		proxySysOutSysErrCheckBox.addItemListener(e -> config.guardarProxySysOutSysErr(proxySysOutSysErrCheckBox.isSelected()));
 		panel.add(proxySysOutSysErrCheckBox);
 
 		return panel;
@@ -368,7 +389,7 @@ public class ConfigPanel extends JPanel {
 
 	private JPanel tabConfidentialidad() {
 		JPanel panel = new JPanel(new BorderLayout());
-		panel.setBackground(CrashDetectorGUI.colorFondo);
+		panel.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()));
 
 		// JTextArea para texto multilinea
 		JTextArea areaTexto = new JTextArea(MonitorDePID.idioma.arco());
@@ -376,15 +397,15 @@ public class ConfigPanel extends JPanel {
 		areaTexto.setWrapStyleWord(true); // Romper líneas por palabras
 		areaTexto.setEditable(false); // No permitir edición
 		areaTexto.setOpaque(false); // Para que se respete el fondo del panel
-		areaTexto.setBackground(CrashDetectorGUI.colorFondo);
-		areaTexto.setForeground(CrashDetectorGUI.colorTexto);
+		areaTexto.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()));
+		areaTexto.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
 
 		if (!CrashDetectorGUI.esMac()) {
-			areaTexto.setForeground(CrashDetectorGUI.colorTexto);
+			areaTexto.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
 		}
 
 		JPanel panelTexto = new JPanel(new BorderLayout());
-		panelTexto.setBackground(CrashDetectorGUI.colorFondo);
+		panelTexto.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()));
 		panelTexto.add(areaTexto, BorderLayout.CENTER);
 
 		panelTexto.setMaximumSize(new Dimension(600, Short.MAX_VALUE)); // Máximo 600px de ancho
@@ -393,7 +414,7 @@ public class ConfigPanel extends JPanel {
 		panel.add(panelTexto, BorderLayout.CENTER);
 
 		JPanel placeholderImagen = new JPanel();
-		placeholderImagen.setBackground(CrashDetectorGUI.colorFondo);
+		placeholderImagen.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()));
 		placeholderImagen.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0)); // Espaciado superior e inferior
 
 		JLabel etiquetaImagen = new JLabel();
@@ -405,7 +426,7 @@ public class ConfigPanel extends JPanel {
 		} catch (Exception e) {
 			etiquetaImagen.setText("Error al cargar la imagen");
 			if (!CrashDetectorGUI.esMac()) {
-				etiquetaImagen.setForeground(CrashDetectorGUI.colorTexto);
+				etiquetaImagen.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
 			}
 		}
 

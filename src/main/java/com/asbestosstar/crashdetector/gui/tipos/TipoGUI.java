@@ -11,13 +11,25 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 
+import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUI;
+import com.asbestosstar.crashdetector.gui.tipos.grepr.GrepRGUI;
+import com.asbestosstar.crashdetector.gui.tipos.arbol.ArbolDeModsGUI;
+import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartirGUI;
+import com.asbestosstar.crashdetector.gui.tipos.editor.EditorFirmasGUI;
+import com.asbestosstar.crashdetector.gui.tipos.quickfix.TodosQuickFixesGUI;
+import com.asbestosstar.crashdetector.gui.tipos.quickfix.QuickFixGUI;
+import com.asbestosstar.crashdetector.gui.tipos.mcreator.EscanerMCreatorGUI;
+import com.asbestosstar.crashdetector.gui.tipos.historia.HistoriaDeModsGUI;
+import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasGUI;
+import com.asbestosstar.crashdetector.gui.tipos.no_registro_lanzador.NoRegistroLanzadorGUI;
+
 public abstract class TipoGUI<T extends CrashDetectorGUI> {
 
 	/**
 	 * Para todos GUIS por favor registrar un tipo
 	 */
 	public static List<TipoGUI> TIPOS_DE_GUI = new ArrayList<>();
-	
+
 	
 	
 	
@@ -29,7 +41,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 	/**
 	 * La GUI Principal
 	 */
-	public static TipoGUI PRINCIPAL = new TipoGUI() {
+	public static TipoGUI<PrincipalGUI> PRINCIPAL = new TipoGUI<PrincipalGUI>() {
 		@Override
 		public String etiquetaDelBoton() {
 			return "GUI";
@@ -38,12 +50,20 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		public String id() {
 			return "principal";
 		}
+		@Override
+		public void registrarGUI(String id, Supplier<PrincipalGUI> gui) {
+			PrincipalGUI.GUIS.put(id, gui);
+		}
+		@Override
+		public Map<String, Supplier<PrincipalGUI>> obtenerGUIs() {
+			return PrincipalGUI.GUIS;
+		}
 	};
 
 	/**
 	 * La GUI de GrepR
 	 */
-	public static TipoGUI GREPR = new TipoGUI() {
+	public static TipoGUI<GrepRGUI> GREPR = new TipoGUI<GrepRGUI>() {
 		@Override
 		public String id() {
 			return "grepr";
@@ -52,12 +72,20 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		public String etiquetaDelBoton() {
 			return "grepr/fgrepr";
 		}
+		@Override
+		public void registrarGUI(String id, Supplier<GrepRGUI> gui) {
+			GrepRGUI.GUIS.put(id, gui);
+		}
+		@Override
+		public Map<String, Supplier<GrepRGUI>> obtenerGUIs() {
+			return GrepRGUI.GUIS;
+		}
 	};
 	
 	/**
 	 * Para Árbol de Mods
 	 */
-	public static TipoGUI ARBOL_DE_MODS = new TipoGUI() {
+	public static TipoGUI<ArbolDeModsGUI> ARBOL_DE_MODS = new TipoGUI<ArbolDeModsGUI>() {
 		@Override
 		public String id() {
 			return "arbol_de_mods";
@@ -66,12 +94,20 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		public String etiquetaDelBoton() {
 			return MonitorDePID.idioma.arbolDeMods();
 		}
+		@Override
+		public void registrarGUI(String id, Supplier<ArbolDeModsGUI> gui) {
+			ArbolDeModsGUI.GUIS.put(id, gui);
+		}
+		@Override
+		public Map<String, Supplier<ArbolDeModsGUI>> obtenerGUIs() {
+			return ArbolDeModsGUI.GUIS;
+		}
 	};
 	
 	/**
 	 * Diálogo Compartir
 	 */
-	public static TipoGUI DIALOGO_COMPARTIR = new TipoGUI() {
+	public static TipoGUI<DialogoCompartirGUI> DIALOGO_COMPARTIR = new TipoGUI<DialogoCompartirGUI>() {
 		@Override
 		public String id() {
 			return "dialogo_compartir";
@@ -80,12 +116,20 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		public String etiquetaDelBoton() {
 			return MonitorDePID.idioma.botonDeCompartirInforme();
 		}
+		@Override
+		public void registrarGUI(String id, Supplier<DialogoCompartirGUI> gui) {
+			DialogoCompartirGUI.GUIS.put(id, gui);
+		}
+		@Override
+		public Map<String, Supplier<DialogoCompartirGUI>> obtenerGUIs() {
+			return DialogoCompartirGUI.GUIS;
+		}
 	};
 
 	/**
 	 * Editor de firmas de razones personalizadas
 	 */
-	public static TipoGUI EDITOR_FIRMAS = new TipoGUI() {
+	public static TipoGUI<EditorFirmasGUI> EDITOR_FIRMAS = new TipoGUI<EditorFirmasGUI>() {
 		@Override
 		public String id() {
 			return "editor_firmas";
@@ -94,12 +138,20 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		public String etiquetaDelBoton() {
 			return MonitorDePID.idioma.editorCodiceBoton();
 		}
+		@Override
+		public void registrarGUI(String id, Supplier<EditorFirmasGUI> gui) {
+			EditorFirmasGUI.GUIS.put(id, gui);
+		}
+		@Override
+		public Map<String, Supplier<EditorFirmasGUI>> obtenerGUIs() {
+			return EditorFirmasGUI.GUIS;
+		}
 	};
 
 	/**
 	 * GUI con TODOS los QuickFix
 	 */
-	public static TipoGUI TODOS_QUICKFIXES = new TipoGUI() {
+	public static TipoGUI<TodosQuickFixesGUI> TODOS_QUICKFIXES = new TipoGUI<TodosQuickFixesGUI>() {
 		@Override
 		public String id() {
 			return "quickfix_todos";
@@ -108,12 +160,20 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		public String etiquetaDelBoton() {
 			return "QuickFix";
 		}
+		@Override
+		public void registrarGUI(String id, Supplier<TodosQuickFixesGUI> gui) {
+			TodosQuickFixesGUI.GUIS.put(id, gui);
+		}
+		@Override
+		public Map<String, Supplier<TodosQuickFixesGUI>> obtenerGUIs() {
+			return TodosQuickFixesGUI.GUIS;
+		}
 	};
 
 	/**
 	 * GUI con QuickFix individuales
 	 */
-	public static TipoGUI QUICKFIX = new TipoGUI() {
+	public static TipoGUI<QuickFixGUI> QUICKFIX = new TipoGUI<QuickFixGUI>() {
 		@Override
 		public String id() {
 			return "quickfix";
@@ -122,12 +182,20 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		public String etiquetaDelBoton() {
 			return "QuickFix";
 		}
+		@Override
+		public void registrarGUI(String id, Supplier<QuickFixGUI> gui) {
+			QuickFixGUI.GUIS.put(id, gui);
+		}
+		@Override
+		public Map<String, Supplier<QuickFixGUI>> obtenerGUIs() {
+			return QuickFixGUI.GUIS;
+		}
 	};
 	
 	/**
 	 * Escáner de MCreator
 	 */
-	public static TipoGUI ESCANER_MCREATOR = new TipoGUI() {
+	public static TipoGUI<EscanerMCreatorGUI> ESCANER_MCREATOR = new TipoGUI<EscanerMCreatorGUI>() {
 		@Override
 		public String id() {
 			return "escaner_mcreator";
@@ -136,12 +204,20 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		public String etiquetaDelBoton() {
 			return MonitorDePID.idioma.escanearDeMCreator();
 		}
+		@Override
+		public void registrarGUI(String id, Supplier<EscanerMCreatorGUI> gui) {
+			EscanerMCreatorGUI.GUIS.put(id, gui);
+		}
+		@Override
+		public Map<String, Supplier<EscanerMCreatorGUI>> obtenerGUIs() {
+			return EscanerMCreatorGUI.GUIS;
+		}
 	};
 	
 	/**
 	 * Historia de Mods
 	 */
-	public static TipoGUI HISTORIA_DE_MODS = new TipoGUI() {
+	public static TipoGUI<HistoriaDeModsGUI> HISTORIA_DE_MODS = new TipoGUI<HistoriaDeModsGUI>() {
 		@Override
 		public String id() {
 			return "historia_de_mods";
@@ -150,12 +226,20 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		public String etiquetaDelBoton() {
 			return MonitorDePID.idioma.historialDeMods();
 		}
+		@Override
+		public void registrarGUI(String id, Supplier<HistoriaDeModsGUI> gui) {
+			HistoriaDeModsGUI.GUIS.put(id, gui);
+		}
+		@Override
+		public Map<String, Supplier<HistoriaDeModsGUI>> obtenerGUIs() {
+			return HistoriaDeModsGUI.GUIS;
+		}
 	};
 	
 	/**
 	 * Lectador de Consolas
 	 */
-	public static TipoGUI LECTADOR_DE_CONSOLAS = new TipoGUI() {
+	public static TipoGUI<LectadorDeConsolasGUI> LECTADOR_DE_CONSOLAS = new TipoGUI<LectadorDeConsolasGUI>() {
 		@Override
 		public String id() {
 			return "lectador_de_consolas";
@@ -164,12 +248,20 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		public String etiquetaDelBoton() {
 			return MonitorDePID.idioma.obtenerEtiquetaBotonLectador();
 		}
+		@Override
+		public void registrarGUI(String id, Supplier<LectadorDeConsolasGUI> gui) {
+			LectadorDeConsolasGUI.GUIS.put(id, gui);
+		}
+		@Override
+		public Map<String, Supplier<LectadorDeConsolasGUI>> obtenerGUIs() {
+			return LectadorDeConsolasGUI.GUIS;
+		}
 	};
 	
 	/**
 	 * No registro de Launcher
 	 */
-	public static TipoGUI NO_REGISTRO_LANZER = new TipoGUI() {
+	public static TipoGUI<NoRegistroLanzadorGUI> NO_REGISTRO_LANZER = new TipoGUI<NoRegistroLanzadorGUI>() {
 		@Override
 		public String id() {
 			return "no_registro_launcher";
@@ -177,6 +269,14 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		@Override
 		public String etiquetaDelBoton() {
 			return MonitorDePID.idioma.noRegistroLauncherTitulo();
+		}
+		@Override
+		public void registrarGUI(String id, Supplier<NoRegistroLanzadorGUI> gui) {
+			NoRegistroLanzadorGUI.GUIS.put(id, gui);
+		}
+		@Override
+		public Map<String, Supplier<NoRegistroLanzadorGUI>> obtenerGUIs() {
+			return NoRegistroLanzadorGUI.GUIS;
 		}
 	};
 	

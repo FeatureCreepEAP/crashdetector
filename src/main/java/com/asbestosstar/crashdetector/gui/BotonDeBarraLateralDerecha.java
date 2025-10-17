@@ -1,8 +1,6 @@
 package com.asbestosstar.crashdetector.gui;
 
-import javax.swing.Icon;
-
-public interface BotonDeBarraLateralDerecha {
+public interface BotonDeBarraLateralDerecha extends CrashDetectorGUI	{
 	
 	/**
 	 * acción cuando se presiona el botón
