@@ -128,7 +128,7 @@ public interface CrashDetectorGUI {
 		}
 	}
 
-	public default boolean esMac() {
+	public static boolean esMac() {
 		return System.getProperty("os.name").toLowerCase().contains("mac");
 	}
 
@@ -138,7 +138,7 @@ public interface CrashDetectorGUI {
 				String url = e.getDescription();
 				if (url != null && url.startsWith("lectador://")) {
 					CrashDetectorLogger.log(url + " (lectador url)");
-					com.asbestosstar.crashdetector.gui.LectadorDeConsolasHoloTalk.procesarHipervinculo(url);
+					com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasHoloTalk.procesarHipervinculo(url);
 				} else if (url != null) {
 					Desktop.getDesktop().browse(new java.net.URI(url));
 				}

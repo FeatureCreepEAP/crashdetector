@@ -28,8 +28,8 @@ import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.grepr.BusquedaArchivos;
-import com.asbestosstar.crashdetector.gui.NoRegistroDeLauncher;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
+import com.asbestosstar.crashdetector.gui.tipos.no_registro_lanzador.NoRegistroDeLauncher;
 import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUI;
 import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUIEstiloLanzer;
 

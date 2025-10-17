@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetector.gui;
+package com.asbestosstar.crashdetector.gui.tipos.no_registro_lanzador;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -46,6 +46,8 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.EnlanceMD;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.gui.ComboIdiomasConIcono;
+import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 
 /**
  * Diálogo cuando el launcher no provee registro. - Descripción HTML arriba

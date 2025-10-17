@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetector.gui;
+package com.asbestosstar.crashdetector.gui.tipos.editor;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -48,6 +48,7 @@ import com.asbestosstar.crashdetector.analizador.firmas.CargadorDeCodice;
 import com.asbestosstar.crashdetector.analizador.firmas.FiltrodeCodice;
 import com.asbestosstar.crashdetector.analizador.firmas.v0.FirmasV0;
 import com.asbestosstar.crashdetector.analizador.firmas.v0.VerificacionFirmasV0;
+import com.asbestosstar.crashdetector.gui.BotonDeBarraLateralDerecha;
 
 /**
  * Editor de codice.json (schema 0) SIN pestañas. El usuario define TODOS los

@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetector.gui;
+package com.asbestosstar.crashdetector.gui.tipos.mcreator;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -20,6 +20,8 @@ import javax.swing.SwingWorker;
 
 import com.asbestosstar.crashdetector.EscanerMCreator;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.gui.BotonDeBarraLateralDerecha;
+import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 
 public class EscanerMCreatorGUIRosemiLoveLock extends JFrame  implements BotonDeBarraLateralDerecha{
     private JTextArea areaResultados;

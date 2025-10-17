@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetector.gui;
+package com.asbestosstar.crashdetector.gui.tipos.quickfix;
 
 import java.awt.Color;
 import java.awt.Component;

@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetector.gui;
+package com.asbestosstar.crashdetector.gui.tipos.grepr;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -22,6 +22,7 @@ import javax.swing.SwingWorker;
 
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.grepr.BusquedaArchivos;
+import com.asbestosstar.crashdetector.gui.BotonDeBarraLateralDerecha;
 
 public class BusquedaGUISaliorMoon extends JFrame implements BotonDeBarraLateralDerecha {
 

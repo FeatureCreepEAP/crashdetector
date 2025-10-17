@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetector.gui;
+package com.asbestosstar.crashdetector.gui.tipos.historia;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -41,6 +41,7 @@ import javax.swing.SwingUtilities;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.gui.BotonDeBarraLateralDerecha;
 
 public class HistoriaModsGUILegacy extends JFrame implements BotonDeBarraLateralDerecha {
     private static final long serialVersionUID = 1L;

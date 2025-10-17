@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetector.gui;
+package com.asbestosstar.crashdetector.gui.tipos.lectador;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -45,6 +45,8 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.gui.BotonDeBarraLateralDerecha;
+import com.asbestosstar.crashdetector.gui.NumeradorDeLineas;
 
 public class LectadorDeConsolasHoloTalk extends JFrame implements BotonDeBarraLateralDerecha {
 

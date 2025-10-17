@@ -1,7 +1,8 @@
 package com.asbestosstar.crashdetector;
 
 import java.io.*;
-import com.asbestosstar.crashdetector.gui.NoRegistroDeLauncher;
+
+import com.asbestosstar.crashdetector.gui.tipos.no_registro_lanzador.NoRegistroDeLauncher;
 
 /**
  * Si tu Launcher no tiene registros puede usar esta.

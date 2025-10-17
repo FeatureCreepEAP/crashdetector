@@ -17,10 +17,9 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComponent;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
-import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -32,8 +31,9 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.gui.BotonDeBarraLateralDerecha;
 import com.asbestosstar.crashdetector.gui.ComboIdiomasConIcono;
-import com.asbestosstar.crashdetector.gui.DialogoCompartir;
-import com.asbestosstar.crashdetector.gui.PanelQuickFix;
+import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
+import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartir;
+import com.asbestosstar.crashdetector.gui.tipos.quickfix.PanelQuickFix;
 
 public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 
@@ -165,7 +165,7 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 
 		// Idioma
 		if (comboIdioma != null) {
-			if (!esMac()) {
+			if (!CrashDetectorGUI.esMac()) {
 				comboIdioma.setBackground(colorBoton);
 				comboIdioma.setForeground(colorTexto);
 			} else {
@@ -373,7 +373,7 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 	}
 
 	private void estilizarBoton(JButton boton) {
-		if (!esMac()) {
+		if (!CrashDetectorGUI.esMac()) {
 			boton.setBackground(colorBoton);
 			boton.setForeground(colorTexto);
 			boton.setContentAreaFilled(true);
