@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetector.gui;
+package com.asbestosstar.crashdetector.gui.tipos.arbol;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -49,8 +49,9 @@ import javax.swing.tree.TreePath;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.gui.BotonDeBarraLateralDerecha;
 
-public class ArbolDeModsGUI extends JFrame implements BotonDeBarraLateralDerecha {
+public class ArbolDeModsGUIHamu extends JFrame implements BotonDeBarraLateralDerecha {
 
 	public JTree arbolModulos;
 	private DefaultTreeModel modeloArbol;
@@ -77,7 +78,7 @@ public class ArbolDeModsGUI extends JFrame implements BotonDeBarraLateralDerecha
 	private SwingWorker<DefaultMutableTreeNode, Void> workerConstruir;
 	private SwingWorker<DefaultMutableTreeNode, Void> workerBuscar;
 
-	public ArbolDeModsGUI() {
+	public ArbolDeModsGUIHamu() {
 		// Título y marco
 		setTitle(MonitorDePID.idioma.tituloArbolDeMods());
 		setSize(1200, 800);

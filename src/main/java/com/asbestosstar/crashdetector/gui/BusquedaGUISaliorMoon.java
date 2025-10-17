@@ -23,7 +23,7 @@ import javax.swing.SwingWorker;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.grepr.BusquedaArchivos;
 
-public class BusquedaGUI extends JFrame implements BotonDeBarraLateralDerecha {
+public class BusquedaGUISaliorMoon extends JFrame implements BotonDeBarraLateralDerecha {
 
     private JTextField campoDirectorio;
     private JTextField campoCadena;
@@ -40,7 +40,7 @@ public class BusquedaGUI extends JFrame implements BotonDeBarraLateralDerecha {
     private final Color colorBotonTexto = Color.WHITE;
     private final Color colorCampo = new Color(16, 22, 66);
 
-public BusquedaGUI() {
+public BusquedaGUISaliorMoon() {
     setTitle("grepr/fgrepr");
     setSize(1000, 600);
     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

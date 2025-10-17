@@ -46,7 +46,7 @@ import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
-public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDerecha {
+public class LectadorDeConsolasHoloTalk extends JFrame implements BotonDeBarraLateralDerecha {
 
 	// Campos de idioma y datos
 	public List<Consola> consolas = MonitorDePID.consolas;
@@ -104,7 +104,7 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 	private final JEditorPane txtDescripcionError = new JEditorPane(); // HTML
 	private JScrollPane scrollDescripcion;
 
-	public LectadorDeConsolas() {
+	public LectadorDeConsolasHoloTalk() {
 		super(MonitorDePID.idioma.tituloLectador());
 		CrashDetectorLogger.log(String.valueOf(MonitorDePID.consolas.size()));
 		configurarVentana();
@@ -604,7 +604,7 @@ public class LectadorDeConsolas extends JFrame implements BotonDeBarraLateralDer
 
 			CrashDetectorLogger.log("seleccionada " + consolaSeleccionada.archivo.toString());
 
-			final LectadorDeConsolas lector = new LectadorDeConsolas();
+			final LectadorDeConsolasHoloTalk lector = new LectadorDeConsolasHoloTalk();
 			lector.setVisible(true);
 
 			final String nombreArchivo = new File(consolaSeleccionada.archivo.toString()).getName();

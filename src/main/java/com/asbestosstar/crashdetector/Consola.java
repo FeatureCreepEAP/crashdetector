@@ -28,7 +28,7 @@ import com.asbestosstar.crashdetector.api_sito_registro.StikkedAPI;
 import com.asbestosstar.crashdetector.divisor.DivisorDeArchivos;
 import com.asbestosstar.crashdetector.divisor.TLauncherConsolaDivisor;
 import com.asbestosstar.crashdetector.divisor.VainillaConsolaDivisor;
-import com.asbestosstar.crashdetector.gui.LectadorDeConsolas.ErrorDeLectador;
+import com.asbestosstar.crashdetector.gui.LectadorDeConsolasHoloTalk.ErrorDeLectador;
 import com.asbestosstar.crashdetector.gui.NoRegistroDeLauncher;
 import com.asbestosstar.crashdetector.limpiador.LimpiadorDeRegistro;
 import com.asbestosstar.crashdetector.limpiador.LimpiadorNingun;

@@ -42,7 +42,7 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
 
-public class HistoriaModsGUI extends JFrame implements BotonDeBarraLateralDerecha {
+public class HistoriaModsGUILegacy extends JFrame implements BotonDeBarraLateralDerecha {
     private static final long serialVersionUID = 1L;
     
     // Componentes de la interfaz
@@ -55,7 +55,7 @@ public class HistoriaModsGUI extends JFrame implements BotonDeBarraLateralDerech
     // Atributos para internacionalización
     private Idioma idioma = MonitorDePID.idioma;
 
-    public HistoriaModsGUI() {
+    public HistoriaModsGUILegacy() {
         // Configuración básica de la ventana
         setTitle(idioma.historialDeMods());
         setSize(800, 700);
@@ -404,7 +404,7 @@ public class HistoriaModsGUI extends JFrame implements BotonDeBarraLateralDerech
     // Método para mostrar la GUI
     public static void mostrarGUIHistorialMods() {
         SwingUtilities.invokeLater(() -> {
-            HistoriaModsGUI gui = new HistoriaModsGUI();
+            HistoriaModsGUILegacy gui = new HistoriaModsGUILegacy();
             gui.setVisible(true);
         });
     }

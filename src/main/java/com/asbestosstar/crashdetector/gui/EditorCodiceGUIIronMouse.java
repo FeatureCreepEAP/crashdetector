@@ -60,7 +60,7 @@ import com.asbestosstar.crashdetector.analizador.firmas.v0.VerificacionFirmasV0;
  *
  * Compatibilidad: Java 8.
  */
-public class EditorCodiceGUI extends JFrame implements BotonDeBarraLateralDerecha {
+public class EditorCodiceGUIIronMouse extends JFrame implements BotonDeBarraLateralDerecha {
 
 	// Paleta inspirada en la estética de ironmouse (rosas/morados)
 	private final Color rosaFondo = new Color(250, 230, 245);
@@ -97,7 +97,7 @@ public class EditorCodiceGUI extends JFrame implements BotonDeBarraLateralDerech
 
 	private VerificacionFirmasV0 verificacionCargadaEnFormulario = null;
 
-	public EditorCodiceGUI() {
+	public EditorCodiceGUIIronMouse() {
 		setTitle(MonitorDePID.idioma.tituloEditorCodice());
 
 		// In your EditorCodiceGUI() constructor, after setDefaultCloseOperation:
@@ -106,7 +106,7 @@ public class EditorCodiceGUI extends JFrame implements BotonDeBarraLateralDerech
 			@Override
 			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
 				if (hayCambiosNoGuardados()) {
-					int resp = JOptionPane.showConfirmDialog(EditorCodiceGUI.this,
+					int resp = JOptionPane.showConfirmDialog(EditorCodiceGUIIronMouse.this,
 							MonitorDePID.idioma.guardarAntesDeSalir(), MonitorDePID.idioma.salirSinGuardar(),
 							JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
 					if (resp == JOptionPane.YES_OPTION) {
@@ -214,7 +214,7 @@ public class EditorCodiceGUI extends JFrame implements BotonDeBarraLateralDerech
 
 			// Si estamos dejando una verificación modificada
 			if (verificacionCargadaEnFormulario != null && esFormularioModificado()) {
-				int respuesta = JOptionPane.showConfirmDialog(EditorCodiceGUI.this,
+				int respuesta = JOptionPane.showConfirmDialog(EditorCodiceGUIIronMouse.this,
 						MonitorDePID.idioma.descartarCambios(), MonitorDePID.idioma.confirmacion(),
 						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 

@@ -138,7 +138,7 @@ public interface CrashDetectorGUI {
 				String url = e.getDescription();
 				if (url != null && url.startsWith("lectador://")) {
 					CrashDetectorLogger.log(url + " (lectador url)");
-					com.asbestosstar.crashdetector.gui.LectadorDeConsolas.procesarHipervinculo(url);
+					com.asbestosstar.crashdetector.gui.LectadorDeConsolasHoloTalk.procesarHipervinculo(url);
 				} else if (url != null) {
 					Desktop.getDesktop().browse(new java.net.URI(url));
 				}

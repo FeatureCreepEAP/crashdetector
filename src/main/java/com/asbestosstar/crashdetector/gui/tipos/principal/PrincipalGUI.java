@@ -39,12 +39,12 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 	protected final Map<BotonDeBarraLateralDerecha, javax.swing.JButton> botonesSidebarInicializados = new HashMap<>();
 
 	static {
-		BOTONES_REGISTRADOS.add(() -> new com.asbestosstar.crashdetector.gui.BusquedaGUI());
-		BOTONES_REGISTRADOS.add(() -> new com.asbestosstar.crashdetector.gui.EscanerMCreatorGUI());
-		BOTONES_REGISTRADOS.add(() -> new com.asbestosstar.crashdetector.gui.HistoriaModsGUI());
-		BOTONES_REGISTRADOS.add(() -> new com.asbestosstar.crashdetector.gui.ArbolDeModsGUI());
-		BOTONES_REGISTRADOS.add(() -> new com.asbestosstar.crashdetector.gui.LectadorDeConsolas());
-		BOTONES_REGISTRADOS.add(() -> new com.asbestosstar.crashdetector.gui.EditorCodiceGUI());
+		BOTONES_REGISTRADOS.add(() -> new com.asbestosstar.crashdetector.gui.BusquedaGUISaliorMoon());
+		BOTONES_REGISTRADOS.add(() -> new com.asbestosstar.crashdetector.gui.EscanerMCreatorGUIRosemiLoveLock());
+		BOTONES_REGISTRADOS.add(() -> new com.asbestosstar.crashdetector.gui.HistoriaModsGUILegacy());
+		BOTONES_REGISTRADOS.add(() -> new com.asbestosstar.crashdetector.gui.tipos.arbol.ArbolDeModsGUIHamu());
+		BOTONES_REGISTRADOS.add(() -> new com.asbestosstar.crashdetector.gui.LectadorDeConsolasHoloTalk());
+		BOTONES_REGISTRADOS.add(() -> new com.asbestosstar.crashdetector.gui.EditorCodiceGUIIronMouse());
 	}
 
 	public static void registrarBotonSidebar(Supplier<BotonDeBarraLateralDerecha> sup) {

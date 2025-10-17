@@ -21,12 +21,12 @@ import javax.swing.SwingWorker;
 import com.asbestosstar.crashdetector.EscanerMCreator;
 import com.asbestosstar.crashdetector.MonitorDePID;
 
-public class EscanerMCreatorGUI extends JFrame  implements BotonDeBarraLateralDerecha{
+public class EscanerMCreatorGUIRosemiLoveLock extends JFrame  implements BotonDeBarraLateralDerecha{
     private JTextArea areaResultados;
     private JLabel etiquetaEstado;
     private JButton botonEscanear;
 
-    public EscanerMCreatorGUI() {
+    public EscanerMCreatorGUIRosemiLoveLock() {
         setTitle("Escaner MCreator");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
