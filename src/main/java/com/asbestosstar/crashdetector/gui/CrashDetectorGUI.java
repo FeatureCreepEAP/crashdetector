@@ -146,9 +146,12 @@ public interface CrashDetectorGUI {
 				CrashDetectorLogger.logException(ex);
 			}
 		}
-	}
-	
+	}	
 
+	/**
+	 * Initialisar GUI. No esta usada en PrincipalGUI
+	 */
+	public void init();
 
 	
 }

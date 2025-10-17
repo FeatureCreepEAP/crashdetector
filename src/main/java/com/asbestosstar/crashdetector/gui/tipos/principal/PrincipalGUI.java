@@ -124,5 +124,13 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		}
 		return pantalla;
 	}
+	
+	/**
+	 * Hacer nada en init, usa constructir.
+	 */
+	public void init() {}
+	
+	public abstract void volver();
+
 
 }

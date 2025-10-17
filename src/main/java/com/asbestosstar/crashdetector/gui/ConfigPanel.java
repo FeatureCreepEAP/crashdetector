@@ -22,17 +22,18 @@ import javax.swing.event.DocumentListener;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUI;
 import com.asbestosstar.crashdetector.parches.ConfigDeParches;
 import com.asbestosstar.crashdetector.parches.Parche;
 
-public class ConfigPanel extends JPanel {
-	public CrashDetectorGUI cdgui;
+public class ConfigPanel<PrincipalGUI> extends JPanel {
+	public PrincipalGUI cdgui;
 	private JTabbedPane tabbedPane;
 
 	// Color de fondo calculado para las pestañas (no Mac)
 	private Color colorFondoPestanias;
 
-	public ConfigPanel(CrashDetectorGUI cdgui) {
+	public ConfigPanel(PrincipalGUI cdgui) {
 		this.cdgui = cdgui;
 		setLayout(new BorderLayout());
 		setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()));
@@ -89,7 +90,7 @@ public class ConfigPanel extends JPanel {
 		// Ya no se leen fields; todo se guarda al vuelo en los listeners.
 		guardarButon.addActionListener(e -> {
 			// Volver a la ventana principal
-			cdgui.volver();
+			((com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUI) cdgui).volver();
 		});
 
 		// Panel para el botón

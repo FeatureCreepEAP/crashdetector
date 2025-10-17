@@ -2,36 +2,16 @@ package com.asbestosstar.crashdetector.gui.tipos.grepr;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.SwingWorker;
 
 import com.asbestosstar.crashdetector.MonitorDePID;
-import com.asbestosstar.crashdetector.grepr.BusquedaArchivos;
-import com.asbestosstar.crashdetector.gui.BotonDeBarraLateralDerecha;
 
-public class BusquedaGUISaliorMoon extends JFrame implements BotonDeBarraLateralDerecha {
-
-    private JTextField campoDirectorio;
-    private JTextField campoCadena;
-    private JCheckBox chkRegex;
-    private JCheckBox chkIgnorarMayus;
-    private JCheckBox chkBuscarEnComprimidos;
-    private JTextArea areaResultados;
+public class BusquedaGUISaliorMoon extends GrepRGUI {
 
     // Colores del tema noche
     private final Color colorFondoVentana = new Color(12, 18, 56);
@@ -41,151 +21,102 @@ public class BusquedaGUISaliorMoon extends JFrame implements BotonDeBarraLateral
     private final Color colorBotonTexto = Color.WHITE;
     private final Color colorCampo = new Color(16, 22, 66);
 
-public BusquedaGUISaliorMoon() {
-    setTitle("grepr/fgrepr");
-    setSize(1000, 600);
-    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    setLocationRelativeTo(null);
+    @Override
+    protected void construirInterfaz() {
+        setTitle("grepr/fgrepr");
+        getContentPane().setBackground(colorFondoVentana);
+        setLayout(new BorderLayout(10, 10));
 
-    getContentPane().setBackground(colorFondoVentana);
-    setLayout(new BorderLayout(10, 10));
+        // --- Panel superior (entradas) con GridBag ---
+        java.awt.GridBagLayout gbl = new java.awt.GridBagLayout();
+        JPanel panelEntrada = new JPanel(gbl);
+        panelEntrada.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        panelEntrada.setBackground(colorPanel);
 
-    java.awt.GridBagLayout gbl = new java.awt.GridBagLayout();
-    JPanel panelEntrada = new JPanel(gbl);
-    panelEntrada.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-    panelEntrada.setBackground(colorPanel);
+        java.awt.GridBagConstraints L = new java.awt.GridBagConstraints();
+        L.insets = new java.awt.Insets(0, 0, 0, 8);
+        L.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        L.weightx = 0.4;
+        L.anchor = java.awt.GridBagConstraints.WEST;
 
-    // izquierda sin espacio vertical entre controles
-    java.awt.GridBagConstraints L = new java.awt.GridBagConstraints();
-    L.insets = new java.awt.Insets(0, 0, 0, 8);
-    L.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    L.weightx = 0.4;
-    L.anchor = java.awt.GridBagConstraints.WEST;
+        java.awt.GridBagConstraints R = new java.awt.GridBagConstraints();
+        R.insets = new java.awt.Insets(5, 8, 5, 0);
+        R.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        R.weightx = 0.6;
+        R.anchor = java.awt.GridBagConstraints.WEST;
 
-    // derecha con mayor peso para ocupar 60 por ciento aprox
-    java.awt.GridBagConstraints R = new java.awt.GridBagConstraints();
-    R.insets = new java.awt.Insets(5, 8, 5, 0);
-    R.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    R.weightx = 0.6;
-    R.anchor = java.awt.GridBagConstraints.WEST;
+        // Fila 0: directorio + botón examinar
+        estilizarCampo(campoDirectorio);
+        L.gridx = 0; L.gridy = 0;
+        panelEntrada.add(campoDirectorio, L);
 
-    // fila 0 directorio y boton
-    campoDirectorio = new JTextField();
-    estilizarCampo(campoDirectorio);
-    L.gridx = 0; L.gridy = 0;
-    panelEntrada.add(campoDirectorio, L);
+        JButton btnExaminar = new JButton(MonitorDePID.idioma.seleccionarCarpeta());
+        estilizarBoton(btnExaminar);
+        R.gridx = 1; R.gridy = 0;
+        panelEntrada.add(btnExaminar, R);
 
-    JButton btnExaminar = new JButton(MonitorDePID.idioma.seleccionarCarpeta());
-    estilizarBoton(btnExaminar);
-    btnExaminar.addActionListener(e -> seleccionarCarpeta());
-    R.gridx = 1; R.gridy = 0;
-    panelEntrada.add(btnExaminar, R);
+        // Fila 1: etiqueta + campo cadena
+        JLabel lblCadena = new JLabel(MonitorDePID.idioma.cadenaBusqueda());
+        lblCadena.setForeground(colorTexto);
+        L.gridx = 0; L.gridy = 1;
+        panelEntrada.add(lblCadena, L);
 
-    // fila 1 etiqueta y campo de cadena
-    JLabel lblCadena = new JLabel(MonitorDePID.idioma.cadenaBusqueda());
-    lblCadena.setForeground(colorTexto);
-    L.gridx = 0; L.gridy = 1;
-    panelEntrada.add(lblCadena, L);
+        estilizarCampo(campoCadena);
+        R.gridx = 1; R.gridy = 1;
+        panelEntrada.add(campoCadena, R);
 
-    campoCadena = new JTextField();
-    estilizarCampo(campoCadena);
-    R.gridx = 1; R.gridy = 1;
-    panelEntrada.add(campoCadena, R);
+        // Fila 2: checks
+        estilizarCheck(chkRegex);
+        L.gridx = 0; L.gridy = 2;
+        panelEntrada.add(chkRegex, L);
 
-    // fila 2 check izquierda y derecha
-    chkRegex = new JCheckBox(MonitorDePID.idioma.usarRegex());
-    estilizarCheck(chkRegex);
-    L.gridx = 0; L.gridy = 2;
-    panelEntrada.add(chkRegex, L);
+        estilizarCheck(chkIgnorarMayus);
+        R.gridx = 1; R.gridy = 2;
+        panelEntrada.add(chkIgnorarMayus, R);
 
-    chkIgnorarMayus = new JCheckBox(MonitorDePID.idioma.ignorarMayusculas());
-    estilizarCheck(chkIgnorarMayus);
-    R.gridx = 1; R.gridy = 2;
-    panelEntrada.add(chkIgnorarMayus, R);
+        // Fila 3: check de comprimidos + imagen
+        estilizarCheck(chkBuscarEnComprimidos);
+        L.gridx = 0; L.gridy = 3;
+        panelEntrada.add(chkBuscarEnComprimidos, L);
 
-    // fila 3 checkbox de comprimidos a la izquierda
-    chkBuscarEnComprimidos = new JCheckBox(MonitorDePID.idioma.buscarDentroDeComprimidos());
-    estilizarCheck(chkBuscarEnComprimidos);
-    L.gridx = 0; L.gridy = 3;
-    panelEntrada.add(chkBuscarEnComprimidos, L);
+        JLabel lblImagen = crearImagenEscalada(
+                MonitorDePID.carpeta.resolve("imagenes/saliormoongrep.png").toString(), 150, 100);
+        lblImagen.setOpaque(true);
+        lblImagen.setBackground(colorPanel);
+        lblImagen.setForeground(colorTexto);
+        R.gridx = 1; R.gridy = 3;
+        panelEntrada.add(lblImagen, R);
 
-    // fila 3 imagen a la derecha bajo el checkbox derecho
-    JLabel lblImagen = crearImagenEscalada(MonitorDePID.carpeta.resolve("imagenes/saliormoongrep.png").toString(), 150, 100);
-    lblImagen.setOpaque(true);
-    lblImagen.setBackground(colorPanel);
-    lblImagen.setPreferredSize(new java.awt.Dimension(150, 100));
-    R.gridx = 1; R.gridy = 3;
-    panelEntrada.add(lblImagen, R);
+        // Fila 4: botón buscar + relleno
+        JButton btnBuscar = new JButton(MonitorDePID.idioma.buscar());
+        estilizarBoton(btnBuscar);
+        L.gridx = 0; L.gridy = 4;
+        panelEntrada.add(btnBuscar, L);
 
-    // fila 4 boton buscar a la izquierda sin espacio vertical
-    JButton btnBuscar = new JButton(MonitorDePID.idioma.buscar());
-    estilizarBoton(btnBuscar);
-    btnBuscar.addActionListener(e -> iniciarBusqueda());
-    L.gridx = 0; L.gridy = 4;
-    panelEntrada.add(btnBuscar, L);
+        R.gridx = 1; R.gridy = 4;
+        panelEntrada.add(new JLabel(), R);
 
-    // relleno a la derecha para mantener el 60 por ciento
-    R.gridx = 1; R.gridy = 4;
-    R.weightx = 0.6;
-    panelEntrada.add(new JLabel(), R);
+        // Resultados
+        areaResultados.setBackground(colorCampo);
+        areaResultados.setForeground(colorTexto);
+        areaResultados.setCaretColor(colorTexto);
+        areaResultados.setSelectionColor(new Color(255, 215, 0));
+        areaResultados.setSelectedTextColor(Color.BLACK);
 
-    areaResultados = new JTextArea();
-    areaResultados.setEditable(false);
-    areaResultados.setBackground(colorCampo);
-    areaResultados.setForeground(colorTexto);
-    areaResultados.setCaretColor(colorTexto);
-    areaResultados.setSelectionColor(new Color(255, 215, 0));
-    areaResultados.setSelectedTextColor(Color.BLACK);
+        scrollResultados.getViewport().setBackground(colorCampo);
+        scrollResultados.setBackground(colorPanel);
+        scrollResultados.setBorder(BorderFactory.createLineBorder(new Color(255, 215, 0), 1));
 
-    JScrollPane scroll = new JScrollPane(areaResultados);
-    scroll.getViewport().setBackground(colorCampo);
-    scroll.setBackground(colorPanel);
-    scroll.setBorder(BorderFactory.createLineBorder(new Color(255, 215, 0), 1));
+        add(panelEntrada, BorderLayout.NORTH);
+        add(scrollResultados, BorderLayout.CENTER);
 
-    add(panelEntrada, BorderLayout.NORTH);
-    add(scroll, BorderLayout.CENTER);
-}
-
-
-    
-    
-    
-
-    
-    
-    
-    
-    // Carga y escala la imagen solicitada
-    private JLabel crearImagenEscalada(String ruta, int w, int h) {
-        // intenta ruta tal cual en disco
-        java.io.File f = new java.io.File(ruta);
-        if (!f.isAbsolute()) {
-            // si es relativa, pruébala relativa a user.dir
-            f = new java.io.File(System.getProperty("user.dir"), ruta);
-        }
-        if (f.exists() && f.isFile()) {
-            javax.swing.ImageIcon base = new javax.swing.ImageIcon(f.getAbsolutePath());
-            java.awt.Image esc = base.getImage().getScaledInstance(w, h, java.awt.Image.SCALE_SMOOTH);
-            return new javax.swing.JLabel(new javax.swing.ImageIcon(esc));
-        }
-
-        // respaldo por si en el futuro va dentro del jar
-        java.net.URL url = getClass().getClassLoader().getResource(ruta);
-        if (url != null) {
-            javax.swing.ImageIcon base = new javax.swing.ImageIcon(url);
-            java.awt.Image esc = base.getImage().getScaledInstance(w, h, java.awt.Image.SCALE_SMOOTH);
-            return new javax.swing.JLabel(new javax.swing.ImageIcon(esc));
-        }
-
-        // mensaje si no se encuentra
-        javax.swing.JLabel fallo = new javax.swing.JLabel("imagen no encontrada " + ruta);
-        fallo.setForeground(colorTexto);
-        return fallo;
+        // Acciones
+        conectarAcciones(btnExaminar, btnBuscar);
     }
 
-
-    // Estilo para botones
-    private void estilizarBoton(JButton b) {
+    // --- Estilo del tema ---
+    @Override
+    protected void estilizarBoton(JButton b) {
         b.setBackground(colorBoton);
         b.setForeground(colorBotonTexto);
         b.setFocusPainted(false);
@@ -195,8 +126,8 @@ public BusquedaGUISaliorMoon() {
         ));
     }
 
-    // Estilo para campos de texto
-    private void estilizarCampo(JTextField f) {
+    @Override
+    protected void estilizarCampo(javax.swing.JTextField f) {
         f.setBackground(colorCampo);
         f.setForeground(colorTexto);
         f.setCaretColor(colorTexto);
@@ -208,62 +139,99 @@ public BusquedaGUISaliorMoon() {
         ));
     }
 
-    // Estilo para checkboxes y etiquetas
-    private void estilizarCheck(JCheckBox c) {
+    @Override
+    protected void estilizarCheck(JCheckBox c) {
         c.setBackground(colorPanel);
         c.setForeground(colorTexto);
         c.setFocusPainted(false);
     }
 
-    private void seleccionarCarpeta() {
-        JFileChooser chooser = new JFileChooser();
-        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-            campoDirectorio.setText(chooser.getSelectedFile().getAbsolutePath());
-        }
-    }
+	@Override
+	public String id() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    private void iniciarBusqueda() {
-        String dirCrudo = campoDirectorio.getText().trim();
-        final String directorio = dirCrudo.replace(" ", "").isEmpty()
-                ? System.getProperty("user.dir")
-                : dirCrudo;
+	@Override
+	public void recargarApariencia() {
+	    // Reaplicar colores principales
+	    getContentPane().setBackground(colorFondoVentana);
 
-        String cadena = campoCadena.getText().trim();
-        boolean usarRegex = chkRegex.isSelected();
-        boolean ignorarMayus = chkIgnorarMayus.isSelected();
-        boolean buscarEnComprimidos = chkBuscarEnComprimidos.isSelected();
+	    // Campos
+	    estilizarCampo(campoDirectorio);
+	    estilizarCampo(campoCadena);
 
-        areaResultados.setText(MonitorDePID.idioma.busquedaEnProgreso() + "\n");
+	    // Checkboxes con textos actualizados
+	    chkRegex.setText(MonitorDePID.idioma.usarRegex());
+	    chkIgnorarMayus.setText(MonitorDePID.idioma.ignorarMayusculas());
+	    chkBuscarEnComprimidos.setText(MonitorDePID.idioma.buscarDentroDeComprimidos());
+	    estilizarCheck(chkRegex);
+	    estilizarCheck(chkIgnorarMayus);
+	    estilizarCheck(chkBuscarEnComprimidos);
 
-        new SwingWorker<List<String>, Void>() {
-            @Override
-            protected List<String> doInBackground() {
-                return BusquedaArchivos.buscar(directorio, cadena, usarRegex, ignorarMayus, buscarEnComprimidos);
-            }
+	    // Área de resultados
+	    areaResultados.setBackground(colorCampo);
+	    areaResultados.setForeground(colorTexto);
+	    areaResultados.setCaretColor(colorTexto);
+	    areaResultados.setSelectionColor(new Color(255, 215, 0));
+	    areaResultados.setSelectedTextColor(Color.BLACK);
 
-            @Override
-            protected void done() {
-                try {
-                    List<String> resultados = get();
-                    areaResultados.setText("");
-                    if (resultados.isEmpty()) {
-                        areaResultados.append(MonitorDePID.idioma.noSeEncontraronResultados());
-                    } else {
-                        for (String r : resultados) {
-                            areaResultados.append(r + "\n");
-                        }
-                    }
-                } catch (InterruptedException | ExecutionException e) {
-                    areaResultados.append(MonitorDePID.idioma.errorBusqueda() + e.getMessage());
-                }
-            }
-        }.execute();
-    }
+	    scrollResultados.getViewport().setBackground(colorCampo);
+	    scrollResultados.setBackground(colorPanel);
+	    scrollResultados.setBorder(BorderFactory.createLineBorder(new Color(255, 215, 0), 1));
 
-    @Override
-    public void init() {
-        this.setVisible(true);
-    }
+	    // Actualizar botones
+	    for (java.awt.Component comp : ((java.awt.Container)getContentPane().getComponent(0)).getComponents()) {
+	        if (comp instanceof JButton) {
+	            JButton b = (JButton) comp;
+	            // Detecta botones por texto anterior o heurística simple
+	            String txt = b.getText().toLowerCase();
+	            if (txt.contains("buscar")) {
+	                b.setText(MonitorDePID.idioma.buscar());
+	            } else if (txt.contains("carpeta")) {
+	                b.setText(MonitorDePID.idioma.seleccionarCarpeta());
+	            }
+	            estilizarBoton(b);
+	        } else if (comp instanceof JLabel) {
+	            JLabel lbl = (JLabel) comp;
+	            // Reaplica color de texto para etiquetas
+	            lbl.setForeground(colorTexto);
+	        }
+	    }
+
+	    // Reaplicar imagen de tema
+	    // Busca dentro del panel superior cualquier JLabel con icono
+	    actualizarImagenesRecursivamente(getContentPane());
+
+	    // Forzar actualización visual
+	    revalidate();
+	    repaint();
+	}
+
+	/**
+	 * Busca recursivamente etiquetas con íconos para reestablecer las imágenes
+	 * (en caso de cambio de idioma o tema)
+	 */
+	private void actualizarImagenesRecursivamente(java.awt.Container contenedor) {
+	    for (java.awt.Component comp : contenedor.getComponents()) {
+	        if (comp instanceof JLabel) {
+	            JLabel lbl = (JLabel) comp;
+	            // Reasigna la imagen si era la de Sailor Moon
+	            if (lbl.getIcon() != null || lbl.getText().contains("saliormoongrep")) {
+	                JLabel nueva = crearImagenEscalada(
+	                    MonitorDePID.carpeta.resolve("imagenes/saliormoongrep.png").toString(),
+	                    150, 100
+	                );
+	                lbl.setIcon(nueva.getIcon());
+	                lbl.setText("");
+	                lbl.setBackground(colorPanel);
+	            } else {
+	                lbl.setForeground(colorTexto);
+	            }
+	        } else if (comp instanceof java.awt.Container) {
+	            actualizarImagenesRecursivamente((java.awt.Container) comp);
+	        }
+	    }
+	}
 
 }

@@ -20,6 +20,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
+import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -57,6 +58,7 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 
 	/** Visor técnico del informe (compartido) */
 	JScrollPane scrollPane;
+	JEditorPane visor;
 
 	
 	/**
@@ -64,72 +66,70 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 	 * @param tiempoFallo
 	 * @param cerrojo
 	 */
-	public void constructir(Instant tiempoFallo, CountDownLatch cerrojo) {
-		this.tiempoFallo = tiempoFallo;
-		this.cerrojo = cerrojo;
+    @Override
+    public void constructir(Instant tiempoFallo, CountDownLatch cerrojo) {
+        this.tiempoFallo = tiempoFallo;
+        this.cerrojo = cerrojo;
 
-		// Delegar TODO el layout/estética a la subclase:
-		constuctirFormato(BOTONES_REGISTRADOS, botonesSidebarInicializados);
-		scrollPane = new JScrollPane(pantalla());
+        // Crear el visor técnico una sola vez y su scroll
+        this.visor = pantalla();                // usa la factory técnica del base
+        this.scrollPane = new JScrollPane(visor);
 
-		// Aplicar apariencia inicial (colores/labels) totalmente en la subclase
-		recargarApariencia();
-		setVisible(true);
-	}
+        // Delegar TODO el layout/estética a la subclase (registra botones, contenedores, etc.)
+        constuctirFormato(BOTONES_REGISTRADOS, botonesSidebarInicializados);
+
+        // Apariencia inicial (colores/labels)
+        recargarApariencia();
+        setVisible(true);
+    }
 
 
-	@Override
-	protected void constuctirFormato(List<Supplier<BotonDeBarraLateralDerecha>> registrados,
-			Map<BotonDeBarraLateralDerecha, JButton> salidaBotonesSidebar) {
-		// Raíz
-		root = new JPanel(new BorderLayout(5, 5));
-		setContentPane(root);
+ @Override
+    protected void constuctirFormato(
+            List<Supplier<BotonDeBarraLateralDerecha>> registrados,
+            Map<BotonDeBarraLateralDerecha, JButton> salidaBotonesSidebar) {
 
-		// Centro con el visor
-		contenido = new JPanel(new BorderLayout());
-		contenido.add(pantalla(), BorderLayout.CENTER);
-		root.add(contenido, BorderLayout.CENTER);
+        // Raíz
+        root = new JPanel(new BorderLayout(5, 5));
+        setContentPane(root);
 
-		// Panel inferior (idioma + acciones)
-		panelInferior = crearPanelInferior();
-		root.add(panelInferior, BorderLayout.SOUTH);
+        // Centro con el visor (siempre el mismo scrollPane)
+        contenido = new JPanel(new BorderLayout());
+        contenido.add(scrollPane, BorderLayout.CENTER);   // <— use the shared scrollPane
+        root.add(contenido, BorderLayout.CENTER);
 
-		// Barra lateral (logo + volver + botones registrados)
-		barraLateral = crearBarraLateralDerecha();
-		// Logo
-		JLabel logo = new JLabel(new ImageIcon(MonitorDePID.carpeta.resolve("imagenes/cd_logo.png").toString()));
-		logo.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-		logo.setBorder(new EmptyBorder(10, 10, 10, 10));
-		barraLateral.add(logo);
+        // Panel inferior (idioma + acciones)
+        panelInferior = crearPanelInferior();
+        root.add(panelInferior, BorderLayout.SOUTH);
 
-		// Volver
-		botonVolver = crearBotonTexto(MonitorDePID.idioma.volver());
-		botonVolver.addActionListener(e -> {
-			contenido.removeAll();
-			contenido.add(scrollPane, BorderLayout.CENTER);
-			contenido.revalidate();
-			contenido.repaint();
-			botonVolver.setEnabled(false);
-			recargarApariencia(); // actualiza labels/colores
-		});
-		barraLateral.add(botonVolver);
-		barraLateral.add(Box.createVerticalStrut(10));
+        // Barra lateral (logo + volver + botones registrados)
+        barraLateral = crearBarraLateralDerecha();
+        JLabel logo = new JLabel(new ImageIcon(MonitorDePID.carpeta.resolve("imagenes/cd_logo.png").toString()));
+        logo.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+        logo.setBorder(new EmptyBorder(10, 10, 10, 10));
+        barraLateral.add(logo);
 
-		// Botones dinámicos
-		for (Supplier<BotonDeBarraLateralDerecha> sup : registrados) {
-			BotonDeBarraLateralDerecha b = sup.get();
-			JButton btn = crearBotonTexto(b.tipo().etiquetaDelBoton());
-			btn.addActionListener(e -> b.init());
-			barraLateral.add(btn);
-			salidaBotonesSidebar.put(b, btn);
-		}
-		root.add(barraLateral, BorderLayout.EAST);
+        // Volver
+        botonVolver = crearBotonTexto(MonitorDePID.idioma.volver());
+        botonVolver.addActionListener(e -> volver());     // <— now calls the new method
+        barraLateral.add(botonVolver);
+        barraLateral.add(Box.createVerticalStrut(10));
 
-		// Ventana
-		setSize(1050, 650);
-		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-		setLocationRelativeTo(null);
-	}
+        // Botones dinámicos
+        for (Supplier<BotonDeBarraLateralDerecha> sup : registrados) {
+            BotonDeBarraLateralDerecha b = sup.get();
+            JButton btn = crearBotonTexto(b.tipo().etiquetaDelBoton());
+            btn.addActionListener(e -> b.init());
+            barraLateral.add(btn);
+            salidaBotonesSidebar.put(b, btn);
+        }
+        root.add(barraLateral, BorderLayout.EAST);
+
+        // Ventana
+        setSize(1050, 650);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
+    }
 
 	@Override
 	protected void aplicarApariancia(Map<BotonDeBarraLateralDerecha, JButton> botonesSidebar) {
@@ -393,7 +393,32 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 		return ID;
 	}
 	
-	
+    /**
+     * Implementación de volver() solicitada:
+     * - repone el visor dentro del contenedor principal
+     * - desactiva el botón Volver
+     * - re-aplica apariencia (labels/colores)
+     */
+    @Override
+    public void volver() {
+        if (contenido != null) {
+            contenido.removeAll();
+            // Asegura que mostramos el visor técnico compartido
+            if (scrollPane == null) {
+                // fallback seguro si algo cambió en el ciclo de vida
+                visor = pantalla();
+                scrollPane = new JScrollPane(visor);
+            }
+            contenido.add(scrollPane, BorderLayout.CENTER);
+            contenido.revalidate();
+            contenido.repaint();
+        }
+        if (botonVolver != null) {
+            botonVolver.setEnabled(false);
+        }
+        // Actualiza títulos/colores/etiquetas
+        recargarApariencia();
+    }
 	
 	
 	
