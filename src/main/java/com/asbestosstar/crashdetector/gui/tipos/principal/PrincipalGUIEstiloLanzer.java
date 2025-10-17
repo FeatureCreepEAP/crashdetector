@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetector.gui.principal;
+package com.asbestosstar.crashdetector.gui.tipos.principal;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

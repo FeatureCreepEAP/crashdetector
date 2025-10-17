@@ -43,7 +43,13 @@ public interface CrashDetectorGUI {
 		recargarApariencia();
 	}
 
-	
+	/**
+	 * Si un usario puede editar la aparencia en la GUI
+	 * @return
+	 */
+	public default boolean puedeEditarApariencia() {
+		return true;
+	}
 	
 	
 
