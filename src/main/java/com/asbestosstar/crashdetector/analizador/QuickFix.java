@@ -11,6 +11,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 
@@ -113,8 +114,8 @@ public class QuickFix {
 
 		private void estilizarBoton(JButton boton) {
 			if (!CrashDetectorGUI.esMac()) {
-				boton.setBackground(CrashDetectorGUI.colorBoton);
-				boton.setForeground(CrashDetectorGUI.colorTexto);
+				boton.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorBoton()));
+				boton.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
 				boton.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 				boton.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 			}
@@ -134,8 +135,8 @@ public class QuickFix {
 			JLabel label = new JLabel(texto);
 			if (!CrashDetectorGUI.esMac()) {
 				label.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-				label.setBackground(CrashDetectorGUI.colorBoton);
-				label.setForeground(CrashDetectorGUI.colorTexto);
+				label.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorBoton()));
+				label.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
 				label.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 			}
 			return label;

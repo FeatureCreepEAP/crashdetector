@@ -7,6 +7,7 @@ import java.util.function.Supplier;
 
 import javax.swing.Icon;
 
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
@@ -308,6 +309,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 	
 	public T obtenerGUIPredeterminado(String id_de_por_defecto,Supplier<T> por_defecto) {
 		ConfigString str =ConfigString.de("guitipo_"+this.id(), id_de_por_defecto);
+		CrashDetectorLogger.log(str.obtener());
 		return obtenerGUIs().getOrDefault(str.obtener(), por_defecto).get();
 	}
 	

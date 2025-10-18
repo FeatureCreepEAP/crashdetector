@@ -35,6 +35,7 @@ public class ConfigPanel<PrincipalGUI> extends JPanel {
 
 	public ConfigPanel(PrincipalGUI cdgui) {
 		this.cdgui = cdgui;
+		CrashDetectorLogger.log("configpanel const");
 		setLayout(new BorderLayout());
 		setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()));
 

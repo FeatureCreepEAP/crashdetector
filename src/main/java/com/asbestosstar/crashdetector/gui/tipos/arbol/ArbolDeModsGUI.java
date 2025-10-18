@@ -86,169 +86,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 	public SwingWorker<DefaultMutableTreeNode, Void> workerBuscar;
 
 	public ArbolDeModsGUI() {
-		// Título y marco
-		setTitle(MonitorDePID.idioma.tituloArbolDeMods());
-		setSize(1200, 800);
-		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setLayout(new BorderLayout());
 
-		// Fondo del frame
-		getContentPane().setBackground(new Color(144, 203, 239)); // #90cbef
-
-		iconoMod = crearIcono(MonitorDePID.carpeta.resolve("imagenes/mod.png").toString(), "M");
-		iconoClase = crearIcono(MonitorDePID.carpeta.resolve("imagenes/clase.png").toString(), "C");
-		iconoMetodo = crearIcono(MonitorDePID.carpeta.resolve("imagenes/metodo.png").toString(), "m");
-		iconoCampo = crearIcono(MonitorDePID.carpeta.resolve("imagenes/campo.png").toString(), "f");
-		iconoPaquete = crearIcono(MonitorDePID.carpeta.resolve("imagenes/paquete.png").toString(), "P");
-		iconoReferenciaMetodo = crearIcono(MonitorDePID.carpeta.resolve("imagenes/referencia_metodo.png").toString(), "RM");
-		iconoReferenciaCampo = crearIcono(MonitorDePID.carpeta.resolve("imagenes/referencia_campo.png").toString(), "RC");
-		// iconoConstante = crearIcono(MonitorDePID.carpeta.resolve("imagenes/constante.png").toString(), "K");
-		iconoConstante = crearIcono(MonitorDePID.carpeta.resolve("imagenes/referencia_campo.png").toString(), "K");
-
-		// === Barra superior / búsqueda ===
-		JPanel barraSuperior = new JPanel(new BorderLayout());
-		barraSuperior.setOpaque(false);
-		barraSuperior.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-
-		JPanel panelBusqueda = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		panelBusqueda.setOpaque(false);
-		JLabel etiquetaTipo = new JLabel(MonitorDePID.idioma.tipoBusqueda() + ":");
-		String[] opcionesFiltro = { "*", MonitorDePID.idioma.filtroPaquetes(), MonitorDePID.idioma.filtroClases(),
-				MonitorDePID.idioma.filtroMetodos(), MonitorDePID.idioma.filtroCampos(),
-				MonitorDePID.idioma.filtroReferenciasCampo(), MonitorDePID.idioma.filtroReferenciasMetodo(),
-				MonitorDePID.idioma.filtroReferenciasClase(), "Constantes" };
-		comboFiltro = new JComboBox<>(opcionesFiltro);
-		campoBuscar = new JTextField(30);
-		campoBuscar.setToolTipText(MonitorDePID.idioma.tipBuscar());
-		JButton botonBuscar = new JButton(MonitorDePID.idioma.botonBuscar());
-
-		panelBusqueda.add(etiquetaTipo);
-		panelBusqueda.add(comboFiltro);
-		panelBusqueda.add(campoBuscar);
-		panelBusqueda.add(botonBuscar);
-
-		// Imagen inferior
-		imagenHamu = new JLabel(new ImageIcon(MonitorDePID.carpeta.resolve("imagenes/hamu.png").toString()));
-		// Botón reset
-		botonReset = new JButton(MonitorDePID.idioma.botonResetearArbol());
-		botonReset.addActionListener(e -> {
-			construirArbolInicialAsync();
-			areaContenido.setText("");
-			campoBuscar.setText("");
-		});
-
-		// Árbol
-		arbolModulos = new JTree();
-		arbolModulos.setRootVisible(false);
-		arbolModulos.setShowsRootHandles(true);
-		arbolModulos.setCellRenderer(new RenderizadorCeldasArbol());
-
-		// Menú contextual del árbol
-		arbolModulos.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				if (e.isPopupTrigger())
-					mostrarMenuContexto(e);
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				if (e.isPopupTrigger())
-					mostrarMenuContexto(e);
-			}
-		});
-		arbolModulos.addTreeSelectionListener(e -> {
-			TreePath ruta = arbolModulos.getSelectionPath();
-			if (ruta == null)
-				return;
-
-			DefaultMutableTreeNode nodo = (DefaultMutableTreeNode) ruta.getLastPathComponent();
-			if (nodo == null)
-				return;
-
-			Object user = nodo.getUserObject();
-			Object objReal = (user instanceof NodoConTexto) ? ((NodoConTexto) user).objeto() : user;
-
-			if (objReal instanceof Object[]) {
-				Object[] datos = (Object[]) objReal;
-				if (datos.length == 3 && datos[2] instanceof ArchivoDeMod.InfoMetodo) {
-					asegurarNodoConstantesPara(nodo);
-				}
-			}
-
-			// Mostrar detalles como siempre
-			mostrarDetallesNodo(objReal);
-		});
-
-		// Área de contenido
-		areaContenido = new JTextArea();
-		areaContenido.setEditable(false);
-		areaContenido.setLineWrap(true);
-		areaContenido.setWrapStyleWord(true);
-		areaContenido.setFont(new Font("Monospaced", Font.PLAIN, 12));
-
-		// Panel inferior (izq: imagen / der: botones)
-		JPanel panelInferior = new JPanel(new BorderLayout());
-		panelInferior.setOpaque(false);
-		panelInferior.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-
-		JPanel panelIzquierdo = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		panelIzquierdo.setOpaque(false);
-		panelIzquierdo.add(imagenHamu);
-
-		JPanel panelDerecho = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		panelDerecho.setOpaque(false);
-
-		JButton botonDescompilar = new JButton(MonitorDePID.idioma.descompilar());
-		JButton botonExportar = new JButton(MonitorDePID.idioma.exportar());
-		JButton botonImportar = new JButton(MonitorDePID.idioma.importar());
-
-		// Deshabilitado por ahora
-		botonDescompilar.setEnabled(false);
-
-		botonDescompilar.addActionListener(e -> descompilarElementoSeleccionado());
-		botonExportar.addActionListener(e -> exportarEstructura());
-		botonImportar.addActionListener(e -> importarEstructura());
-
-		panelDerecho.add(botonDescompilar);
-		panelDerecho.add(botonExportar);
-		panelDerecho.add(botonImportar);
-
-		panelInferior.add(panelIzquierdo, BorderLayout.WEST);
-		panelInferior.add(panelDerecho, BorderLayout.EAST);
-
-		// Estructura principal
-		add(panelInferior, BorderLayout.SOUTH);
-		add(botonReset, BorderLayout.NORTH);
-		add(barraSuperior, BorderLayout.CENTER);
-
-		JSplitPane panelDividido = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new JScrollPane(arbolModulos),
-				new JScrollPane(areaContenido));
-		panelDividido.setDividerLocation(500);
-		barraSuperior.add(panelBusqueda, BorderLayout.NORTH);
-		barraSuperior.add(panelDividido, BorderLayout.CENTER);
-
-		// Listeners de búsqueda → versión asíncrona
-		campoBuscar.addActionListener(e -> filtrarArbolAsync());
-		botonBuscar.addActionListener(e -> filtrarArbolAsync());
-		comboFiltro.addActionListener(e -> filtrarArbolAsync());
-
-		// Overlay de carga (padoru.gif)
-		initOverlayCarga();
-		setCargando(false); // oculto por defecto
-
-		// Asegura que el árbol no salga vacío y que los mods estén cargados ya:
-		try {
-			Buscardor.cargar();
-		} catch (Throwable t) {
-		}
-
-		DefaultMutableTreeNode placeholder = new DefaultMutableTreeNode(MonitorDePID.idioma.cargando());
-		modeloArbol = new DefaultTreeModel(placeholder);
-		arbolModulos.setModel(modeloArbol);
-
-		// Construcción inicial del árbol en segundo plano
-		construirArbolInicialAsync();
 	}
 
 	/**
@@ -501,6 +339,169 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 
 	@Override
 	public void init() {
+		// Título y marco
+		setTitle(MonitorDePID.idioma.tituloArbolDeMods());
+		setSize(1200, 800);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		setLayout(new BorderLayout());
+
+		// Fondo del frame
+		getContentPane().setBackground(new Color(144, 203, 239)); // #90cbef
+
+		iconoMod = crearIcono(MonitorDePID.carpeta.resolve("imagenes/mod.png").toString(), "M");
+		iconoClase = crearIcono(MonitorDePID.carpeta.resolve("imagenes/clase.png").toString(), "C");
+		iconoMetodo = crearIcono(MonitorDePID.carpeta.resolve("imagenes/metodo.png").toString(), "m");
+		iconoCampo = crearIcono(MonitorDePID.carpeta.resolve("imagenes/campo.png").toString(), "f");
+		iconoPaquete = crearIcono(MonitorDePID.carpeta.resolve("imagenes/paquete.png").toString(), "P");
+		iconoReferenciaMetodo = crearIcono(MonitorDePID.carpeta.resolve("imagenes/referencia_metodo.png").toString(), "RM");
+		iconoReferenciaCampo = crearIcono(MonitorDePID.carpeta.resolve("imagenes/referencia_campo.png").toString(), "RC");
+		// iconoConstante = crearIcono(MonitorDePID.carpeta.resolve("imagenes/constante.png").toString(), "K");
+		iconoConstante = crearIcono(MonitorDePID.carpeta.resolve("imagenes/referencia_campo.png").toString(), "K");
+
+		// === Barra superior / búsqueda ===
+		JPanel barraSuperior = new JPanel(new BorderLayout());
+		barraSuperior.setOpaque(false);
+		barraSuperior.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+		JPanel panelBusqueda = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panelBusqueda.setOpaque(false);
+		JLabel etiquetaTipo = new JLabel(MonitorDePID.idioma.tipoBusqueda() + ":");
+		String[] opcionesFiltro = { "*", MonitorDePID.idioma.filtroPaquetes(), MonitorDePID.idioma.filtroClases(),
+				MonitorDePID.idioma.filtroMetodos(), MonitorDePID.idioma.filtroCampos(),
+				MonitorDePID.idioma.filtroReferenciasCampo(), MonitorDePID.idioma.filtroReferenciasMetodo(),
+				MonitorDePID.idioma.filtroReferenciasClase(), "Constantes" };
+		comboFiltro = new JComboBox<>(opcionesFiltro);
+		campoBuscar = new JTextField(30);
+		campoBuscar.setToolTipText(MonitorDePID.idioma.tipBuscar());
+		JButton botonBuscar = new JButton(MonitorDePID.idioma.botonBuscar());
+
+		panelBusqueda.add(etiquetaTipo);
+		panelBusqueda.add(comboFiltro);
+		panelBusqueda.add(campoBuscar);
+		panelBusqueda.add(botonBuscar);
+
+		// Imagen inferior
+		imagenHamu = new JLabel(new ImageIcon(MonitorDePID.carpeta.resolve("imagenes/hamu.png").toString()));
+		// Botón reset
+		botonReset = new JButton(MonitorDePID.idioma.botonResetearArbol());
+		botonReset.addActionListener(e -> {
+			construirArbolInicialAsync();
+			areaContenido.setText("");
+			campoBuscar.setText("");
+		});
+
+		// Árbol
+		arbolModulos = new JTree();
+		arbolModulos.setRootVisible(false);
+		arbolModulos.setShowsRootHandles(true);
+		arbolModulos.setCellRenderer(new RenderizadorCeldasArbol());
+
+		// Menú contextual del árbol
+		arbolModulos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if (e.isPopupTrigger())
+					mostrarMenuContexto(e);
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger())
+					mostrarMenuContexto(e);
+			}
+		});
+		arbolModulos.addTreeSelectionListener(e -> {
+			TreePath ruta = arbolModulos.getSelectionPath();
+			if (ruta == null)
+				return;
+
+			DefaultMutableTreeNode nodo = (DefaultMutableTreeNode) ruta.getLastPathComponent();
+			if (nodo == null)
+				return;
+
+			Object user = nodo.getUserObject();
+			Object objReal = (user instanceof NodoConTexto) ? ((NodoConTexto) user).objeto() : user;
+
+			if (objReal instanceof Object[]) {
+				Object[] datos = (Object[]) objReal;
+				if (datos.length == 3 && datos[2] instanceof ArchivoDeMod.InfoMetodo) {
+					asegurarNodoConstantesPara(nodo);
+				}
+			}
+
+			// Mostrar detalles como siempre
+			mostrarDetallesNodo(objReal);
+		});
+
+		// Área de contenido
+		areaContenido = new JTextArea();
+		areaContenido.setEditable(false);
+		areaContenido.setLineWrap(true);
+		areaContenido.setWrapStyleWord(true);
+		areaContenido.setFont(new Font("Monospaced", Font.PLAIN, 12));
+
+		// Panel inferior (izq: imagen / der: botones)
+		JPanel panelInferior = new JPanel(new BorderLayout());
+		panelInferior.setOpaque(false);
+		panelInferior.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+		JPanel panelIzquierdo = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panelIzquierdo.setOpaque(false);
+		panelIzquierdo.add(imagenHamu);
+
+		JPanel panelDerecho = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		panelDerecho.setOpaque(false);
+
+		JButton botonDescompilar = new JButton(MonitorDePID.idioma.descompilar());
+		JButton botonExportar = new JButton(MonitorDePID.idioma.exportar());
+		JButton botonImportar = new JButton(MonitorDePID.idioma.importar());
+
+		// Deshabilitado por ahora
+		botonDescompilar.setEnabled(false);
+
+		botonDescompilar.addActionListener(e -> descompilarElementoSeleccionado());
+		botonExportar.addActionListener(e -> exportarEstructura());
+		botonImportar.addActionListener(e -> importarEstructura());
+
+		panelDerecho.add(botonDescompilar);
+		panelDerecho.add(botonExportar);
+		panelDerecho.add(botonImportar);
+
+		panelInferior.add(panelIzquierdo, BorderLayout.WEST);
+		panelInferior.add(panelDerecho, BorderLayout.EAST);
+
+		// Estructura principal
+		add(panelInferior, BorderLayout.SOUTH);
+		add(botonReset, BorderLayout.NORTH);
+		add(barraSuperior, BorderLayout.CENTER);
+
+		JSplitPane panelDividido = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new JScrollPane(arbolModulos),
+				new JScrollPane(areaContenido));
+		panelDividido.setDividerLocation(500);
+		barraSuperior.add(panelBusqueda, BorderLayout.NORTH);
+		barraSuperior.add(panelDividido, BorderLayout.CENTER);
+
+		// Listeners de búsqueda → versión asíncrona
+		campoBuscar.addActionListener(e -> filtrarArbolAsync());
+		botonBuscar.addActionListener(e -> filtrarArbolAsync());
+		comboFiltro.addActionListener(e -> filtrarArbolAsync());
+
+		// Overlay de carga (padoru.gif)
+		initOverlayCarga();
+		setCargando(false); // oculto por defecto
+
+		// Asegura que el árbol no salga vacío y que los mods estén cargados ya:
+		try {
+			Buscardor.cargar();
+		} catch (Throwable t) {
+		}
+
+		DefaultMutableTreeNode placeholder = new DefaultMutableTreeNode(MonitorDePID.idioma.cargando());
+		modeloArbol = new DefaultTreeModel(placeholder);
+		arbolModulos.setModel(modeloArbol);
+
+		// Construcción inicial del árbol en segundo plano
+		construirArbolInicialAsync();
 		this.setVisible(true);
 		Buscardor.cargar();
 	}

@@ -29,9 +29,18 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.grepr.BusquedaArchivos;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
-import com.asbestosstar.crashdetector.gui.tipos.no_registro_lanzador.NoRegistroDeLauncher;
+import com.asbestosstar.crashdetector.gui.tipos.arbol.ArbolDeModsGUIHamu;
+import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartir;
+import com.asbestosstar.crashdetector.gui.tipos.editor.EditorCodiceGUIIronMouse;
+import com.asbestosstar.crashdetector.gui.tipos.grepr.BusquedaGUISaliorMoon;
+import com.asbestosstar.crashdetector.gui.tipos.historia.HistoriaModsGUILegacy;
+import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasHoloTalk;
+import com.asbestosstar.crashdetector.gui.tipos.mcreator.EscanerMCreatorGUIRosemiLoveLock;
+import com.asbestosstar.crashdetector.gui.tipos.no_registro_lanzador.NoRegistroDeLauncherVShojo;
+import com.asbestosstar.crashdetector.gui.tipos.no_registro_lanzador.NoRegistroLanzadorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUI;
 import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUIEstiloLanzer;
+import com.asbestosstar.crashdetector.gui.tipos.quickfix.PanelQuickFixDemonSlayers;
 
 public class MonitorDePID {
 
@@ -61,6 +70,7 @@ public class MonitorDePID {
 	public static Instant utc = Instant.now();
 
 	public static void main(String[] args) {
+		registrarGUISPredeterminado();
 		if (args.length > 0 && args[0].equals("--monitor")) {
 			long pid = Long.parseLong(args[1]);
 			monitor_proceso(pid);
@@ -280,8 +290,12 @@ public class MonitorDePID {
 			String cp = System.getProperty("java.class.path") + File.pathSeparator + jar;
 			// System.out.println("******************" + cp);
 
-			new ProcessBuilder(javaBinary, "-cp", cp, "com.asbestosstar.crashdetector.MonitorDePID", "--monitor",
-					String.valueOf(pid)).inheritIO().start();
+		ProcessBuilder pb=	new ProcessBuilder(javaBinary, "-cp", cp, "com.asbestosstar.crashdetector.MonitorDePID", "--monitor",
+					String.valueOf(pid)).inheritIO();
+		pb.redirectError(new File(CrashDetectorLogger.LOG_FILE_PATH));
+		//pb.redirectOutput(new File(CrashDetectorLogger.LOG_FILE_PATH));
+
+		pb.start();
 		} catch (Exception e) {
 			System.out.println("error con comenzando el proceso CD");
 			e.printStackTrace();
@@ -290,8 +304,26 @@ public class MonitorDePID {
 
 	}
 
+	public static void registrarGUISPredeterminado() {
+		// TODO Auto-generated method stub
+		
+		TipoGUI.PRINCIPAL.registrarGUI(PrincipalGUIEstiloLanzer.ID, ()->new PrincipalGUIEstiloLanzer());
+		TipoGUI.TODOS_QUICKFIXES.registrarGUI(PanelQuickFixDemonSlayers.ID, ()->new PanelQuickFixDemonSlayers());
+		TipoGUI.NO_REGISTRO_LANZER.registrarGUI(NoRegistroDeLauncherVShojo.ID, ()->new NoRegistroDeLauncherVShojo());
+		TipoGUI.ESCANER_MCREATOR.registrarGUI(EscanerMCreatorGUIRosemiLoveLock.ID, ()->new EscanerMCreatorGUIRosemiLoveLock());
+		TipoGUI.LECTADOR_DE_CONSOLAS.registrarGUI(LectadorDeConsolasHoloTalk.ID, ()->new LectadorDeConsolasHoloTalk());
+		TipoGUI.HISTORIA_DE_MODS.registrarGUI(HistoriaModsGUILegacy.ID, ()->new HistoriaModsGUILegacy());
+		TipoGUI.GREPR.registrarGUI(BusquedaGUISaliorMoon.ID, ()->new BusquedaGUISaliorMoon());
+		TipoGUI.EDITOR_FIRMAS.registrarGUI(EditorCodiceGUIIronMouse.ID, ()->new EditorCodiceGUIIronMouse());
+		//TipoGUI.PRINCIPAL.registrarGUI(DialogoCompartir.ID, ()->new DialogoCompartir());
+		TipoGUI.ARBOL_DE_MODS.registrarGUI(ArbolDeModsGUIHamu.ID, ()->new ArbolDeModsGUIHamu());
+
+
+	}
+
 	private static void monitor_proceso(long pid) {
 		//List<Consola> consolas_sin_processando = Consola.obtenerConsolas();
+		ProxySysOutSysErrCDProceso.init();
 		MonitorDePID.pid = pid;
 		Transformaciones.init();
 		if(ultimo_mods.toFile().exists()) {
@@ -367,6 +399,7 @@ public class MonitorDePID {
 						CrashDetectorLogger.log("no headless ");
 
 final 						PrincipalGUI gui = TipoGUI.PRINCIPAL.obtenerGUIPredeterminado(PrincipalGUIEstiloLanzer.ID, () -> { return new PrincipalGUIEstiloLanzer(); });
+CrashDetectorLogger.log("tiene principal gui");
 
 						SwingUtilities.invokeLater(() -> 
 						
@@ -532,9 +565,11 @@ final 						PrincipalGUI gui = TipoGUI.PRINCIPAL.obtenerGUIPredeterminado(Princi
 		frame_blanco.setVisible(true);
 
 		CountDownLatch templach = new CountDownLatch(1);
+		final 						NoRegistroLanzadorGUI noreg = TipoGUI.NO_REGISTRO_LANZER.obtenerGUIPredeterminado(NoRegistroDeLauncherVShojo.ID, () -> { return new NoRegistroDeLauncherVShojo(); });
 
 		SwingUtilities.invokeLater(() -> {
-			NoRegistroDeLauncher noreg = new NoRegistroDeLauncher(frame_blanco, utc);
+			noreg.preparar(frame_blanco, utc);
+			noreg.init();
 			noreg.addWindowListener(new java.awt.event.WindowAdapter() {
 				@Override
 				public void windowClosed(java.awt.event.WindowEvent e) {

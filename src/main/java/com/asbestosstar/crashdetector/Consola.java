@@ -28,8 +28,8 @@ import com.asbestosstar.crashdetector.api_sito_registro.StikkedAPI;
 import com.asbestosstar.crashdetector.divisor.DivisorDeArchivos;
 import com.asbestosstar.crashdetector.divisor.TLauncherConsolaDivisor;
 import com.asbestosstar.crashdetector.divisor.VainillaConsolaDivisor;
-import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasHoloTalk.ErrorDeLectador;
-import com.asbestosstar.crashdetector.gui.tipos.no_registro_lanzador.NoRegistroDeLauncher;
+import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasGUI.ErrorDeLectador;
+import com.asbestosstar.crashdetector.gui.tipos.no_registro_lanzador.NoRegistroDeLauncherVShojo;
 import com.asbestosstar.crashdetector.limpiador.LimpiadorDeRegistro;
 import com.asbestosstar.crashdetector.limpiador.LimpiadorNingun;
 import com.asbestosstar.crashdetector.limpiador.LimpiadorRegistroDeLauncherVainilla;
@@ -94,7 +94,7 @@ public class Consola {
 		divisores.add(new TLauncherConsolaDivisor());
 		divisores.add(new VainillaConsolaDivisor());
 		tipos_de_registros_de_launcher.add("../../logs/ftb-app-electron.log");
-		tipos_de_registros_de_launcher.add(NoRegistroDeLauncher.cd_launcherlog.getName());
+		tipos_de_registros_de_launcher.add(NoRegistroDeLauncherVShojo.cd_launcherlog.getName());
 		limpiadores.add(new LimpiadorRegistroDeLauncherVainilla());
 		limpiadores.add(new LimpiadorRegistroLatestLog());
 		archivos_para_mapa.addAll(obtenerArchivosDeConsolas());// TODO crearar una mapa antes del processo de CD
@@ -451,7 +451,7 @@ public class Consola {
 		// segundo
 		resultado.add(new File("../../logs/ftb-app-electron.log")); // FTB
 		resultado.add(new File("sklauncher/sklauncher_logs.txt"));
-		resultado.add(NoRegistroDeLauncher.cd_launcherlog);
+		resultado.add(NoRegistroDeLauncherVShojo.cd_launcherlog);
 		resultado.add(new File("hs_err_pid" + String.valueOf(MonitorDePID.pid) + ".log")); // hs
 
 		return resultado;

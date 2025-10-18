@@ -98,42 +98,7 @@ public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLate
 	private VerificacionFirmasV0 verificacionCargadaEnFormulario = null;
 
 	public EditorFirmasGUI() {
-		setTitle(MonitorDePID.idioma.tituloEditorCodice());
-
-		// In your EditorCodiceGUI() constructor, after setDefaultCloseOperation:
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		addWindowListener(new java.awt.event.WindowAdapter() {
-			@Override
-			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-				if (hayCambiosNoGuardados()) {
-					int resp = JOptionPane.showConfirmDialog(EditorFirmasGUI.this,
-							MonitorDePID.idioma.guardarAntesDeSalir(), MonitorDePID.idioma.salirSinGuardar(),
-							JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-					if (resp == JOptionPane.YES_OPTION) {
-						guardarTodo();
-						dispose();
-					} else if (resp == JOptionPane.NO_OPTION) {
-						dispose();
-					}
-				} else {
-					dispose();
-				}
-			}
-		});
-
-		setSize(1120, 740);
-		setLocationRelativeTo(null);
-		getContentPane().setBackground(rosaFondo);
-		setLayout(new BorderLayout(10, 10));
-
-		cargarIconos();
-
-		add(crearEncabezado(), BorderLayout.NORTH);
-		add(crearSplit(), BorderLayout.CENTER);
-
-		asegurarArchivo();
-		recargarDesdeDisco();
-		actualizarVistaJson();
+		
 	}
 
 	private JPanel crearEncabezado() {
@@ -953,6 +918,42 @@ public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLate
 
 	@Override
 	public void init() {
+		setTitle(MonitorDePID.idioma.tituloEditorCodice());
+
+		// In your EditorCodiceGUI() constructor, after setDefaultCloseOperation:
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		addWindowListener(new java.awt.event.WindowAdapter() {
+			@Override
+			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+				if (hayCambiosNoGuardados()) {
+					int resp = JOptionPane.showConfirmDialog(EditorFirmasGUI.this,
+							MonitorDePID.idioma.guardarAntesDeSalir(), MonitorDePID.idioma.salirSinGuardar(),
+							JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+					if (resp == JOptionPane.YES_OPTION) {
+						guardarTodo();
+						dispose();
+					} else if (resp == JOptionPane.NO_OPTION) {
+						dispose();
+					}
+				} else {
+					dispose();
+				}
+			}
+		});
+
+		setSize(1120, 740);
+		setLocationRelativeTo(null);
+		getContentPane().setBackground(rosaFondo);
+		setLayout(new BorderLayout(10, 10));
+
+		cargarIconos();
+
+		add(crearEncabezado(), BorderLayout.NORTH);
+		add(crearSplit(), BorderLayout.CENTER);
+
+		asegurarArchivo();
+		recargarDesdeDisco();
+		actualizarVistaJson();
 		setVisible(true);
 	}
 

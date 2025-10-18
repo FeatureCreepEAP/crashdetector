@@ -8,10 +8,12 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 
 public class ArbolDeModsGUIHamu extends ArbolDeModsGUI {
 
+	public static String ID="hamu";
+	
 	@Override
 	public String id() {
 		// TODO Auto-generated method stub
-		return "hamu";
+		return ID;
 	}
 
 

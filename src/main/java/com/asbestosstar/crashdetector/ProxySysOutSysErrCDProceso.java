@@ -1,19 +1,23 @@
 package com.asbestosstar.crashdetector;
 
-import java.io.*;
-
-import com.asbestosstar.crashdetector.gui.tipos.no_registro_lanzador.NoRegistroDeLauncherVShojo;
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 
 /**
  * Si tu Launcher no tiene registros puede usar esta.
  * Soluciona el problema de escritura interrumpida al registrar System.out/System.err
  * Incluye manejo robusto de errores para evitar que fallos en consola detengan el registro
  */
-public class ProxySysOutSysErr {
+public class ProxySysOutSysErrCDProceso {
 
     public static void init() {
         if (Config.obtenerInstancia().obtenerProxySysOutSysErr()) {
-            File archivoLog = NoRegistroDeLauncherVShojo.cd_launcherlog;
+            File archivoLog = new File(CrashDetectorLogger.LOG_FILE_PATH);
             try {
                 // 1. Crea un ÚNICO flujo de archivo sincronizado y resistente a errores
                 FileOutputStream flujoArchivo = new FileOutputStream(archivoLog, false);

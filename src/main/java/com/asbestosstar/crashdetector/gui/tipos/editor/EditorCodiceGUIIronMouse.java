@@ -13,10 +13,12 @@ package com.asbestosstar.crashdetector.gui.tipos.editor;
  */
 public class EditorCodiceGUIIronMouse extends EditorFirmasGUI {
 
+	public static String ID = "ironmouse";
+	
 	@Override
 	public String id() {
 		// TODO Auto-generated method stub
-		return "ironmouse";
+		return ID;
 	}
 
 	@Override

@@ -13,7 +13,7 @@ import java.util.Date;
 
 public class CrashDetectorLogger {
 
-	private static final String LOG_FILE_PATH = MonitorDePID.carpeta.resolve("log.txt").toString();
+	public static final String LOG_FILE_PATH = MonitorDePID.carpeta.resolve("log.txt").toString();
 
     public static void log(String message) {
         try {
