@@ -10,6 +10,8 @@ import javax.swing.event.HyperlinkEvent;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
+import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasGUI;
+import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasHoloTalk;
 
 public interface CrashDetectorGUI {
 
@@ -138,7 +140,8 @@ public interface CrashDetectorGUI {
 				String url = e.getDescription();
 				if (url != null && url.startsWith("lectador://")) {
 					CrashDetectorLogger.log(url + " (lectador url)");
-					com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasHoloTalk.procesarHipervinculo(url);
+					LectadorDeConsolasGUI lectador = TipoGUI.LECTADOR_DE_CONSOLAS.obtenerGUIPredeterminado(LectadorDeConsolasHoloTalk.ID, ()->new LectadorDeConsolasHoloTalk());
+					lectador.procesarHipervinculo(url);
 				} else if (url != null) {
 					Desktop.getDesktop().browse(new java.net.URI(url));
 				}

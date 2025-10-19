@@ -719,7 +719,8 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 	
 	
 	
-	
+    public abstract void procesarHipervinculo(String url);
+
 	
 	
 	

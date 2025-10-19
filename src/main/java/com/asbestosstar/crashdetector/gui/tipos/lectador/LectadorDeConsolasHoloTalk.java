@@ -113,7 +113,7 @@ public class LectadorDeConsolasHoloTalk extends LectadorDeConsolasGUI {
     }
 
     // ====== Navegación por enlace (mantener API estática) ======
-    public static void procesarHipervinculo(String url) {
+    public void procesarHipervinculo(String url) {
         try {
             String sinPrefijo = url.substring("lectador://".length());
             CrashDetectorLogger.log("sin prefijo " + sinPrefijo);
@@ -145,7 +145,8 @@ public class LectadorDeConsolasHoloTalk extends LectadorDeConsolasGUI {
             CrashDetectorLogger.log("seleccionada " + consolaSeleccionada.archivo.toString());
 
             final LectadorDeConsolasHoloTalk lector = new LectadorDeConsolasHoloTalk();
-            lector.setVisible(true);
+          lector.init();
+            //lector.setVisible(true);
 
             final String nombreArchivo = new File(consolaSeleccionada.archivo.toString()).getName();
             lector.cmbConsolas.setSelectedItem(nombreArchivo);
