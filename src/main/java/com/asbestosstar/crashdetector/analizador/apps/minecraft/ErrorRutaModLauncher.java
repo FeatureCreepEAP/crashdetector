@@ -10,13 +10,14 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 
 /**
- * Verificación especializada para detectar errores de ModLauncher causados por rutas
- * que contienen caracteres no ASCII o caracteres especiales.
+ * Verificación especializada para detectar errores de ModLauncher causados por
+ * rutas que contienen caracteres no ASCII o caracteres especiales.
  * <p>
- * - Analiza la consola en busca del error específico "Bad escape" de ModLauncher
- * - Detecta cuando las rutas contienen caracteres no ASCII que rompen el sistema de servicios
- * - Incluye la solución directamente en el mensaje principal
- * - La salida es un bloque HTML con información detallada para la UI
+ * - Analiza la consola en busca del error específico "Bad escape" de
+ * ModLauncher - Detecta cuando las rutas contienen caracteres no ASCII que
+ * rompen el sistema de servicios - Incluye la solución directamente en el
+ * mensaje principal - La salida es un bloque HTML con información detallada
+ * para la UI
  */
 public class ErrorRutaModLauncher implements Verificaciones {
 
@@ -47,8 +48,8 @@ public class ErrorRutaModLauncher implements Verificaciones {
 		activado = false;
 
 		// Buscar el error específico en la consola
-		if (!consola.contenido_verificar.contains("java.lang.IllegalArgumentException: Bad escape") || 
-			!consola.contenido_verificar.contains("sun.nio.fs.UnixUriUtils.fromUri")) {
+		if (!consola.contenido_verificar.contains("java.lang.IllegalArgumentException: Bad escape")
+				|| !consola.contenido_verificar.contains("sun.nio.fs.UnixUriUtils.fromUri")) {
 			return;
 		}
 
@@ -58,11 +59,11 @@ public class ErrorRutaModLauncher implements Verificaciones {
 			String linea = lineas[i];
 			if (linea.contains("java.lang.IllegalArgumentException: Bad escape")) {
 				String mensajeBase = MonitorDePID.idioma.error_modlauncher_path();
-				
+
 				// Registrar el enlace a esta línea
 				String enlace = consola.agregarErrorALectador(i, this);
 				enlacesPorLinea.putIfAbsent(mensajeBase, enlace);
-				
+
 				// Agregar el error al mapa
 				errores.put(mensajeBase, "");
 				activado = true;
@@ -114,22 +115,20 @@ public class ErrorRutaModLauncher implements Verificaciones {
 
 	@Override
 	public QuickFix solucion() {
-		return new QuickFix.Builder(nombre())
-				.agregarEtiqueta(MonitorDePID.idioma.solucion_modlauncher_path())
+		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.solucion_modlauncher_path())
 				.construir();
 	}
-	
+
 	@Override
 	public String id() {
 		// TODO Auto-generated method stub
 		return "ruta_modlauncher";
 	}
+
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
 		// TODO Auto-generated method stub
-		return false;//TODO
+		return false;// TODO
 	}
-
-
 
 }

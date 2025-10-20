@@ -8,15 +8,13 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 
 public class ArbolDeModsGUIHamu extends ArbolDeModsGUI {
 
-	public static String ID="hamu";
-	
+	public static String ID = "hamu";
+
 	@Override
 	public String id() {
 		// TODO Auto-generated method stub
 		return ID;
 	}
-
-
 
 	@Override
 	public void recargarApariencia() {
@@ -36,18 +34,12 @@ public class ArbolDeModsGUIHamu extends ArbolDeModsGUI {
 		if (comboFiltro != null) {
 			Object previa = comboFiltro.getSelectedItem();
 			comboFiltro.removeAllItems();
-			String[] opcionesFiltro = {
-				"*",
-				MonitorDePID.idioma.filtroPaquetes(),
-				MonitorDePID.idioma.filtroClases(),
-				MonitorDePID.idioma.filtroMetodos(),
-				MonitorDePID.idioma.filtroCampos(),
-				MonitorDePID.idioma.filtroReferenciasCampo(),
-				MonitorDePID.idioma.filtroReferenciasMetodo(),
-				MonitorDePID.idioma.filtroReferenciasClase(),
-				"Constantes"
-			};
-			for (String op : opcionesFiltro) comboFiltro.addItem(op);
+			String[] opcionesFiltro = { "*", MonitorDePID.idioma.filtroPaquetes(), MonitorDePID.idioma.filtroClases(),
+					MonitorDePID.idioma.filtroMetodos(), MonitorDePID.idioma.filtroCampos(),
+					MonitorDePID.idioma.filtroReferenciasCampo(), MonitorDePID.idioma.filtroReferenciasMetodo(),
+					MonitorDePID.idioma.filtroReferenciasClase(), "Constantes" };
+			for (String op : opcionesFiltro)
+				comboFiltro.addItem(op);
 
 			// Reintentar seleccionar lo que el usuario tenía (si existe aún)
 			if (previa != null) {
@@ -61,15 +53,17 @@ public class ArbolDeModsGUIHamu extends ArbolDeModsGUI {
 		}
 
 		// 4) Recargar iconos (por si cambiaron assets/tema)
-		iconoMod               = crearIcono(MonitorDePID.carpeta.resolve("imagenes/mod.png").toString(), "M");
-		iconoClase             = crearIcono(MonitorDePID.carpeta.resolve("imagenes/clase.png").toString(), "C");
-		iconoMetodo            = crearIcono(MonitorDePID.carpeta.resolve("imagenes/metodo.png").toString(), "m");
-		iconoCampo             = crearIcono(MonitorDePID.carpeta.resolve("imagenes/campo.png").toString(), "f");
-		iconoPaquete           = crearIcono(MonitorDePID.carpeta.resolve("imagenes/paquete.png").toString(), "P");
-		iconoReferenciaMetodo  = crearIcono(MonitorDePID.carpeta.resolve("imagenes/referencia_metodo.png").toString(), "RM");
-		iconoReferenciaCampo   = crearIcono(MonitorDePID.carpeta.resolve("imagenes/referencia_campo.png").toString(), "RC");
+		iconoMod = crearIcono(MonitorDePID.carpeta.resolve("imagenes/mod.png").toString(), "M");
+		iconoClase = crearIcono(MonitorDePID.carpeta.resolve("imagenes/clase.png").toString(), "C");
+		iconoMetodo = crearIcono(MonitorDePID.carpeta.resolve("imagenes/metodo.png").toString(), "m");
+		iconoCampo = crearIcono(MonitorDePID.carpeta.resolve("imagenes/campo.png").toString(), "f");
+		iconoPaquete = crearIcono(MonitorDePID.carpeta.resolve("imagenes/paquete.png").toString(), "P");
+		iconoReferenciaMetodo = crearIcono(MonitorDePID.carpeta.resolve("imagenes/referencia_metodo.png").toString(),
+				"RM");
+		iconoReferenciaCampo = crearIcono(MonitorDePID.carpeta.resolve("imagenes/referencia_campo.png").toString(),
+				"RC");
 		// Si no hay imagen de constantes, reusar una conocida
-		iconoConstante         = crearIcono(MonitorDePID.carpeta.resolve("imagenes/constante.png").toString(), "K");
+		iconoConstante = crearIcono(MonitorDePID.carpeta.resolve("imagenes/constante.png").toString(), "K");
 		if (iconoConstante.getIconWidth() <= 0) {
 			iconoConstante = crearIcono(MonitorDePID.carpeta.resolve("imagenes/referencia_campo.png").toString(), "K");
 		}
@@ -89,18 +83,19 @@ public class ArbolDeModsGUIHamu extends ArbolDeModsGUI {
 			gifCarga.setText(MonitorDePID.idioma.cargando());
 		}
 
-		// 7) Renderer (refresca textos de contenedores según idioma y aplica nuevos iconos)
+		// 7) Renderer (refresca textos de contenedores según idioma y aplica nuevos
+		// iconos)
 		if (arbolModulos != null) {
 			arbolModulos.setCellRenderer(new RenderizadorCeldasArbol());
 		}
 
-		// 8) Reconstruir el árbol para que todos los rótulos (raíz/paquetes/contenedores) se actualicen
+		// 8) Reconstruir el árbol para que todos los rótulos
+		// (raíz/paquetes/contenedores) se actualicen
 		construirArbolInicialAsync();
 
 		// 9) Refrescar la ventana
 		revalidate();
 		repaint();
 	}
-
 
 }

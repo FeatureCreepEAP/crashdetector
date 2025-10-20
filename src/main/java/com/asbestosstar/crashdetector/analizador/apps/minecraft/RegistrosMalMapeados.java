@@ -127,23 +127,17 @@ public class RegistrosMalMapeados implements Verificaciones {
 		return true;// Normalment el juego salir normalmente, pero esta problema generalment es solo
 					// cuando conectarse a un mundo o servidor
 	}
-	
-	
+
 	@Override
 	public String id() {
 		// TODO Auto-generated method stub
 		return "registros_mal_mapeados";
 	}
+
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
 		// TODO Auto-generated method stub
-		return false;//TODO
+		return false;// TODO
 	}
-	
-	
-	
-	
-	
-	
-	
+
 }

@@ -111,7 +111,7 @@ public class Analizador {
 
 	static {
 		CrashDetectorLogger.log(Criticalidad.ADVERTENCIA.toString() + " buscando para advertencias ");
-		
+
 		verificaciones.add(new SpongeMixinConfigsProblematicos());
 		verificaciones.add(new NoSuchElementAnimacionMinecraft());
 		verificaciones.add(new PreferIPV4Trace());
@@ -218,25 +218,23 @@ public class Analizador {
 		verificaciones.add(new ErrorCampoInexistente());
 		verificaciones.add(new ErrorMetodoInexistente());
 
-		
-		
-		
-		
-		
-		
-		
 		verificaciones.addAll(CargadorDeCodice.cargarVerificaciones());
 		CrashDetectorLogger.log("Numero de Codices " + String.valueOf(CargadorDeCodice.cargarVerificaciones().size()));
-		
+
 		verificaciones.add(new DifDeMods());
 
 		// TODO
 		// https://discord.com/channels/1129059589325852724/1129069799545241703/1418708211636113498
 //https://wiki.lunapixel.gg/performance-guide
-		//	at knot//de.keksuccino.fancymenu.customization.screen.identifier.ScreenIdentifierHandler.isValidIdentifier(ScreenIdentifierHandler.java:44) knott// o app// enmodid 
-		//	at com.mojang.blaze3d.vertex.BufferBuilder.handler$cdk000$iris$beforeNext(BufferBuilder.java:2173) ~[client-1.20.1-20230612.114412-srg.jar%23561!/:?] {re:mixin,pl:accesstransformer:B,pl:runtimedistcleaner:A,re:classloading,pl:accesstransformer:B,pl:mixin:APP:mixins.oculus.vertexformat.json:block_rendering.MixinBufferBuilder_SeparateAo,pl:mixin:APP:flywheel.mixins.json:BufferBuilderMixin,pl:mixin:APP:immediatelyfast-common.mixins.json:core.MixinBufferBuilder,pl:mixin:APP:mixins.oculus.vertexformat.json:MixinBufferBuilder,pl:mixin:APP:oculus-batched-entity-rendering.mixins.json:MixinBufferBuilder,pl:mixin:APP:entity_texture_features-common.mixins.json:MixinBufferBuilder,pl:mixin:APP:creativecore.mixins.json:BufferBuilderAccessor,pl:mixin:APP:embeddium.mixins.json:features.render.immediate.buffer_builder.BufferBuilderMixin,pl:mixin:APP:embeddium.mixins.json:core.render.immediate.consumer.BufferBuilderMixin,pl:mixin:APP:embeddium.mixins.json:features.render.immediate.buffer_builder.sorting.BufferBuilderMixin,pl:mixin:APP:embeddium.mixins.json:features.render.immediate.buffer_builder.intrinsics.BufferBuilderMixin,pl:mixin:APP:oculus-batched-entity-rendering.mixins.json:MixinBufferBuilder_SegmentRendering,pl:mixin:A,pl:runtimedistcleaner:A} en $ contenido otra vez
+		// at
+		// knot//de.keksuccino.fancymenu.customization.screen.identifier.ScreenIdentifierHandler.isValidIdentifier(ScreenIdentifierHandler.java:44)
+		// knott// o app// enmodid
+		// at
+		// com.mojang.blaze3d.vertex.BufferBuilder.handler$cdk000$iris$beforeNext(BufferBuilder.java:2173)
+		// ~[client-1.20.1-20230612.114412-srg.jar%23561!/:?]
+		// {re:mixin,pl:accesstransformer:B,pl:runtimedistcleaner:A,re:classloading,pl:accesstransformer:B,pl:mixin:APP:mixins.oculus.vertexformat.json:block_rendering.MixinBufferBuilder_SeparateAo,pl:mixin:APP:flywheel.mixins.json:BufferBuilderMixin,pl:mixin:APP:immediatelyfast-common.mixins.json:core.MixinBufferBuilder,pl:mixin:APP:mixins.oculus.vertexformat.json:MixinBufferBuilder,pl:mixin:APP:oculus-batched-entity-rendering.mixins.json:MixinBufferBuilder,pl:mixin:APP:entity_texture_features-common.mixins.json:MixinBufferBuilder,pl:mixin:APP:creativecore.mixins.json:BufferBuilderAccessor,pl:mixin:APP:embeddium.mixins.json:features.render.immediate.buffer_builder.BufferBuilderMixin,pl:mixin:APP:embeddium.mixins.json:core.render.immediate.consumer.BufferBuilderMixin,pl:mixin:APP:embeddium.mixins.json:features.render.immediate.buffer_builder.sorting.BufferBuilderMixin,pl:mixin:APP:embeddium.mixins.json:features.render.immediate.buffer_builder.intrinsics.BufferBuilderMixin,pl:mixin:APP:oculus-batched-entity-rendering.mixins.json:MixinBufferBuilder_SegmentRendering,pl:mixin:A,pl:runtimedistcleaner:A}
+		// en $ contenido otra vez
 
-	
 	}
 
 	public Analizador() {
@@ -257,7 +255,6 @@ public class Analizador {
 			long consolaStartTime = System.nanoTime();
 			CrashDetectorLogger.log("Analizando registro: " + consola.archivo.getFileName());
 
-
 			final String[] lineas = consola.contenido_verificar.split(Verificaciones.nl);
 
 			for (Verificaciones ver : verificaciones_activados) {
@@ -272,7 +269,6 @@ public class Analizador {
 					CrashDetectorLogger.logException(e);
 				}
 			}
-
 
 			for (int i = 0; i < lineas.length; i++) {
 				final String line = lineas[i];

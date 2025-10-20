@@ -80,9 +80,8 @@ import com.asbestosstar.crashdetector.gui.tipos.quickfix.TodosQuickFixesGUI;
  */
 public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 
-	public static Map<String,Supplier<PrincipalGUI>> GUIS = new HashMap<>();
-	
-	
+	public static Map<String, Supplier<PrincipalGUI>> GUIS = new HashMap<>();
+
 	public Instant tiempoFallo;
 
 	public static final Color colorFondo = Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo());
@@ -103,46 +102,46 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 	/**
 	 * Botons de la barra lateral
 	 */
-	private static BiMap<TipoGUI<? extends BotonDeBarraLateralDerecha>,String,Supplier<BotonDeBarraLateralDerecha>> botons_de_barra_lateral_derecha = new BiMap<>();
+	private static BiMap<TipoGUI<? extends BotonDeBarraLateralDerecha>, String, Supplier<BotonDeBarraLateralDerecha>> botons_de_barra_lateral_derecha = new BiMap<>();
 
 	/**
 	 * para botones initalizado
 	 */
-	private Map<BotonDeBarraLateralDerecha,JButton> botons_de_barra_lateral_derecha_initalizado = new HashMap<>();
-	
-	
-	static {		
+	private Map<BotonDeBarraLateralDerecha, JButton> botons_de_barra_lateral_derecha_initalizado = new HashMap<>();
+
+	static {
 		CrashDetectorLogger.log("Principal Static");
-		registrarBotonDeBarraLateralDerecha(TipoGUI.GREPR,BusquedaGUISaliorMoon.ID, ()->new BusquedaGUISaliorMoon());
-		registrarBotonDeBarraLateralDerecha(TipoGUI.ESCANER_MCREATOR,EscanerMCreatorGUIRosemiLoveLock.ID, ()->new EscanerMCreatorGUIRosemiLoveLock());
-		registrarBotonDeBarraLateralDerecha(TipoGUI.HISTORIA_DE_MODS,HistoriaModsGUILegacy.ID, ()->new HistoriaModsGUILegacy());
-		registrarBotonDeBarraLateralDerecha(TipoGUI.ARBOL_DE_MODS,ArbolDeModsGUIHamu.ID, ()->new ArbolDeModsGUIHamu());
-		registrarBotonDeBarraLateralDerecha(TipoGUI.LECTADOR_DE_CONSOLAS,LectadorDeConsolasHoloTalk.ID, ()->new LectadorDeConsolasHoloTalk());
-		registrarBotonDeBarraLateralDerecha(TipoGUI.EDITOR_FIRMAS,EditorCodiceGUIIronMouse.ID, ()->new EditorCodiceGUIIronMouse());
+		registrarBotonDeBarraLateralDerecha(TipoGUI.GREPR, BusquedaGUISaliorMoon.ID, () -> new BusquedaGUISaliorMoon());
+		registrarBotonDeBarraLateralDerecha(TipoGUI.ESCANER_MCREATOR, EscanerMCreatorGUIRosemiLoveLock.ID,
+				() -> new EscanerMCreatorGUIRosemiLoveLock());
+		registrarBotonDeBarraLateralDerecha(TipoGUI.HISTORIA_DE_MODS, HistoriaModsGUILegacy.ID,
+				() -> new HistoriaModsGUILegacy());
+		registrarBotonDeBarraLateralDerecha(TipoGUI.ARBOL_DE_MODS, ArbolDeModsGUIHamu.ID,
+				() -> new ArbolDeModsGUIHamu());
+		registrarBotonDeBarraLateralDerecha(TipoGUI.LECTADOR_DE_CONSOLAS, LectadorDeConsolasHoloTalk.ID,
+				() -> new LectadorDeConsolasHoloTalk());
+		registrarBotonDeBarraLateralDerecha(TipoGUI.EDITOR_FIRMAS, EditorCodiceGUIIronMouse.ID,
+				() -> new EditorCodiceGUIIronMouse());
 	}
 
-	
-	
-
-public PrincipalGUI() {
-	CrashDetectorLogger.log("construcoor principal");
-}
+	public PrincipalGUI() {
+		CrashDetectorLogger.log("construcoor principal");
+	}
 
 	public void constructir(Instant utc, CountDownLatch latch) {
 		this.tiempoFallo = utc;
 		this.cerrojo = latch;
-CrashDetectorLogger.log("en constructir");
+		CrashDetectorLogger.log("en constructir");
 		inicializarInterfaz();
 		this.setVisible(true);
 
 	}
-	
-	
 
 	/**
 	 * Registrar Botons de la barra lateral
 	 */
-	public static void registrarBotonDeBarraLateralDerecha(TipoGUI<? extends BotonDeBarraLateralDerecha> boton,String predeterminado,Supplier<BotonDeBarraLateralDerecha> gui_predeterminado) {
+	public static void registrarBotonDeBarraLateralDerecha(TipoGUI<? extends BotonDeBarraLateralDerecha> boton,
+			String predeterminado, Supplier<BotonDeBarraLateralDerecha> gui_predeterminado) {
 		botons_de_barra_lateral_derecha.put(boton, predeterminado, gui_predeterminado);
 	}
 
@@ -150,7 +149,7 @@ CrashDetectorLogger.log("en constructir");
 		// --- Inicialización del visor HTML
 		// ---------------------------------------------------------
 		CrashDetectorLogger.log("inicializar configpanel");
-		panelConfiguracion= new ConfigPanel(this);
+		panelConfiguracion = new ConfigPanel(this);
 		CrashDetectorLogger.log("inicializar interfaz");
 		pantalla.setContentType("text/html");
 		pantalla.setEditable(false);
@@ -520,9 +519,9 @@ CrashDetectorLogger.log("en constructir");
 		// asegurar que las columnas también alineen al borde izquierdo del BoxLayout
 		columnaIzquierda.setAlignmentX(Component.LEFT_ALIGNMENT);
 		columnaDerecha.setAlignmentX(Component.LEFT_ALIGNMENT);
-		//chkDetectarAuto.setEnabled(false);
+		// chkDetectarAuto.setEnabled(false);
 		chkDetectarAuto.setSelected(true);
-		//comboAplicacion.setEnabled(false);
+		// comboAplicacion.setEnabled(false);
 
 		// --- Botón QuickFix (centrado)
 		// ------------------------------------------------------------
@@ -616,12 +615,12 @@ CrashDetectorLogger.log("en constructir");
 		barraLateralDerecha.add(Box.createVerticalStrut(10));
 
 		// Botones dinámicos registrados
-		for (Entry<DoubleKey<TipoGUI<? extends BotonDeBarraLateralDerecha>, String>, Supplier<BotonDeBarraLateralDerecha>> sup : botons_de_barra_lateral_derecha.entrySet()) {
+		for (Entry<DoubleKey<TipoGUI<? extends BotonDeBarraLateralDerecha>, String>, Supplier<BotonDeBarraLateralDerecha>> sup : botons_de_barra_lateral_derecha
+				.entrySet()) {
 			CrashDetectorLogger.log("registrando boton");
 			String id_predeterminado = sup.getKey().key1;
 			CrashDetectorLogger.log(id_predeterminado + "pre");
 			TipoGUI<? extends BotonDeBarraLateralDerecha> tipo = sup.getKey().key0;
-		
 
 			Supplier gui_predeterminado = sup.getValue();
 			BotonDeBarraLateralDerecha b = tipo.obtenerGUIPredeterminado(id_predeterminado, gui_predeterminado);
@@ -643,7 +642,7 @@ CrashDetectorLogger.log("en constructir");
 			CrashDetectorLogger.log(b.id() + "agrearboton");
 
 		}
-		
+
 		CrashDetectorLogger.log("Completa con botones");
 
 		// --- Layout principal de la ventana
@@ -791,17 +790,13 @@ CrashDetectorLogger.log("en constructir");
 		try {
 			pantalla.setText(new String(Files.readAllBytes(Paths.get(MonitorDePID.local))));
 			pantalla.setCaretPosition(0);// Mas alto
-		
-		
-		
-			for(Entry<BotonDeBarraLateralDerecha, JButton> entry:botons_de_barra_lateral_derecha_initalizado.entrySet()) {
+
+			for (Entry<BotonDeBarraLateralDerecha, JButton> entry : botons_de_barra_lateral_derecha_initalizado
+					.entrySet()) {
 				entry.getValue().setText(entry.getKey().tipo().etiquetaDelBoton());
 			}
 			botonVolver.setText(MonitorDePID.idioma.volver());
-			
-			
-			
-		
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -908,10 +903,12 @@ CrashDetectorLogger.log("en constructir");
 		if (!CrashDetectorGUI.esMac()) {
 			panelQuickFix.setBackground(colorFondo);
 		}
-		
-		// Crear el scrollable QuickFix panel
-		TodosQuickFixesGUI panelContenido = TipoGUI.TODOS_QUICKFIXES.obtenerGUIPredeterminado(PanelQuickFixDemonSlayers.ID, () -> { return new PanelQuickFixDemonSlayers(); });
 
+		// Crear el scrollable QuickFix panel
+		TodosQuickFixesGUI panelContenido = TipoGUI.TODOS_QUICKFIXES
+				.obtenerGUIPredeterminado(PanelQuickFixDemonSlayers.ID, () -> {
+					return new PanelQuickFixDemonSlayers();
+				});
 
 //        // Ejemplo 1: Con checkbox
 //        QuickFix fixConRetener = new QuickFix.Builder("Limpiar caché temporal")
@@ -965,17 +962,16 @@ CrashDetectorLogger.log("en constructir");
 		super.dispose();
 		MonitorDePID.fin(cerrojo);
 	}
-	
+
 	@Override
 	public TipoGUI<PrincipalGUI> tipo() {
 		// TODO Auto-generated method stub
 		return TipoGUI.PRINCIPAL;
 	}
-	
-	
+
 	@Override
 	public void init() {
-		// usar constructir 
+		// usar constructir
 	}
 
 }

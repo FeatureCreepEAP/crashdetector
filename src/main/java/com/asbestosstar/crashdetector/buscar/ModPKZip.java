@@ -32,7 +32,7 @@ public class ModPKZip implements ArchivoDeMod {
 	public List<String> archivos = new ArrayList<>();
 	private final Map<String, byte[]> bytesClaseMap = new HashMap<>();
 	public List<Cargador> cargadores_de_mod = new ArrayList<Cargador>();
-	public boolean meta_tiene_referencia_de_mcreator=false;
+	public boolean meta_tiene_referencia_de_mcreator = false;
 
 	/**
 	 * Constructor principal que procesa un archivo ZIP/JAR. Lee todas las entradas
@@ -69,15 +69,19 @@ public class ModPKZip implements ArchivoDeMod {
 						bytesClaseMap.put(nombreArchivo, contenido);
 						nombres.addAll(CargadorFeatureCreep.parsearNombreModHOI4(contenido));
 					} else if (nombreArchivo.equals("fabric.mod.json")) {
-					    String texto = new String(contenido, java.nio.charset.StandardCharsets.UTF_8);
+						String texto = new String(contenido, java.nio.charset.StandardCharsets.UTF_8);
 						bytesClaseMap.put(nombreArchivo, contenido);
 						nombres.addAll(CargadorFabric.parsearIdModFabric(texto));
-						if(texto.toLowerCase().contains("mcreator")) {meta_tiene_referencia_de_mcreator=true;}
+						if (texto.toLowerCase().contains("mcreator")) {
+							meta_tiene_referencia_de_mcreator = true;
+						}
 					} else if (nombreArchivo.endsWith("mods.toml")) {
 						String toml = new String(contenido, StandardCharsets.UTF_8);
 						nombres.addAll(CargadorMCForge.parsearIdModMCForge(toml));
 						bytesClaseMap.put(nombreArchivo, contenido);
-						if(toml.toLowerCase().contains("mcreator")) {meta_tiene_referencia_de_mcreator=true;}
+						if (toml.toLowerCase().contains("mcreator")) {
+							meta_tiene_referencia_de_mcreator = true;
+						}
 					} else if (nombreArchivo.endsWith(".toml") || nombreArchivo.endsWith(".json")
 							|| nombreArchivo.endsWith(".yaml") || nombreArchivo.endsWith(".xml")
 							|| nombreArchivo.endsWith(".MF") || nombreArchivo.endsWith(".txt")
@@ -272,11 +276,10 @@ public class ModPKZip implements ArchivoDeMod {
 		// TODO Auto-generated method stub
 		return cargadores_de_mod;
 	}
-	
+
 	@Override
 	public boolean MetaDataTieneReferenciaDeMCReator() {
 		return meta_tiene_referencia_de_mcreator;
 	}
-	
-	
+
 }

@@ -63,16 +63,17 @@ public class ErrorDeEnlaceInsatisfecho implements Verificaciones {
 		return new QuickFix.Builder(nombre())
 				.agregarEtiqueta(MonitorDePID.idioma.solucion_para_error_enlace_insatisfecho()).construir();
 	}
-	
+
 	@Override
 	public String id() {
 		// TODO Auto-generated method stub
 		return "enlace_insatisfecho";
 	}
+
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
 		// TODO Auto-generated method stub
-		return false;//TODO
+		return false;// TODO
 	}
-	
+
 }

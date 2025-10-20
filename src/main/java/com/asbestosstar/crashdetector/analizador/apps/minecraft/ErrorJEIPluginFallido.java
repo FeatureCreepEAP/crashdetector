@@ -87,17 +87,17 @@ public class ErrorJEIPluginFallido implements Verificaciones {
 				.agregarEtiqueta(MonitorDePID.idioma.paso2_jei_plugin_fallido(modId))
 				.agregarEtiqueta(MonitorDePID.idioma.paso3_jei_plugin_fallido(modId)).construir();
 	}
-	
+
 	@Override
 	public String id() {
 		// TODO Auto-generated method stub
 		return "jei_plugin_fallido";
 	}
-	
+
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
 		// TODO Auto-generated method stub
-		return false;//TODO
+		return false;// TODO
 	}
-	
+
 }

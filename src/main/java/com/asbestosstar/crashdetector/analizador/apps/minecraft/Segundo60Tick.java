@@ -61,11 +61,11 @@ public class Segundo60Tick implements Verificaciones {
 		// TODO Auto-generated method stub
 		return "segundo_60_tick";
 	}
+
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
 		// TODO Auto-generated method stub
-		return false;//TODO
+		return false;// TODO
 	}
-	
-	
+
 }

@@ -200,19 +200,17 @@ public class ProblemaVersionAPIIncompatible implements Verificaciones {
 		}
 		return builder.construir();
 	}
-	
+
 	@Override
 	public String id() {
 		// TODO Auto-generated method stub
 		return "problema_version_api_incompatible";
 	}
+
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
 		// TODO Auto-generated method stub
-		return false;//TODO
+		return false;// TODO
 	}
-	
-	
-	
-	
+
 }

@@ -45,13 +45,15 @@ public class ConfigPanel<PrincipalGUI> extends JPanel {
 		// Si NO es macOS, oscurecer el fondo de las pestañas para mejorar el contraste
 		if (!CrashDetectorGUI.esMac()) {
 			// Dos niveles más oscuro suele dar buen contraste con texto claro
-			colorFondoPestanias = Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()).darker().darker();
+			colorFondoPestanias = Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()).darker()
+					.darker();
 			tabbedPane.setBackground(colorFondoPestanias);
 			tabbedPane.setOpaque(true);
 		}
 
 		// Color del texto de las etiquetas de las pestañas
-		Color colorTextoPestanias = CrashDetectorGUI.esMac() ? null : Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto());
+		Color colorTextoPestanias = CrashDetectorGUI.esMac() ? null
+				: Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto());
 
 		// Pestaña "Inicio de Juego/App"
 		JLabel incicio_del_juego = new JLabel(MonitorDePID.idioma.inicioApp());
@@ -119,8 +121,8 @@ public class ConfigPanel<PrincipalGUI> extends JPanel {
 		JPanel envoltura = new JPanel(new BorderLayout());
 		envoltura.setOpaque(true);
 		// Usar el color calculado; si faltara por alguna razón, oscurecer el fondo base
-		envoltura.setBackground(
-				colorFondoPestanias != null ? colorFondoPestanias : Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()).darker());
+		envoltura.setBackground(colorFondoPestanias != null ? colorFondoPestanias
+				: Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()).darker());
 
 		// Un poco de padding para mejorar legibilidad
 		etiqueta.setBorder(BorderFactory.createEmptyBorder(6, 12, 6, 12));
@@ -170,13 +172,25 @@ public class ConfigPanel<PrincipalGUI> extends JPanel {
 		return panel;
 	}
 
-	// === Helper para vincular un JTextField a un setter de Config con auto-guardado ===
+	// === Helper para vincular un JTextField a un setter de Config con
+	// auto-guardado ===
 	private static JTextField crearCampoTextoConfig(String valorInicial, java.util.function.Consumer<String> onChange) {
 		JTextField field = new JTextField(valorInicial);
 		field.getDocument().addDocumentListener(new DocumentListener() {
-			@Override public void insertUpdate(DocumentEvent e) { onChange.accept(field.getText()); }
-			@Override public void removeUpdate(DocumentEvent e) { onChange.accept(field.getText()); }
-			@Override public void changedUpdate(DocumentEvent e) { onChange.accept(field.getText()); }
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				onChange.accept(field.getText());
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				onChange.accept(field.getText());
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				onChange.accept(field.getText());
+			}
 		});
 		return field;
 	}
@@ -196,12 +210,11 @@ public class ConfigPanel<PrincipalGUI> extends JPanel {
 		JLabel labelSitio = new JLabel(MonitorDePID.idioma.sitoDeLogging());
 		labelSitio.setForeground(color_de_texto_de_gui);
 		panel.add(labelSitio);
-		JTextField sitioDeInformesField = crearCampoTextoConfig(
-				config.obtenerSitoDeInformes(),
-				config::guardarSitioDeInformes
-		);
+		JTextField sitioDeInformesField = crearCampoTextoConfig(config.obtenerSitoDeInformes(),
+				config::guardarSitioDeInformes);
 		if (!isMac) {
-			sitioDeInformesField.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
+			sitioDeInformesField
+					.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
 			sitioDeInformesField.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
 		}
 		panel.add(sitioDeInformesField);
@@ -210,10 +223,7 @@ public class ConfigPanel<PrincipalGUI> extends JPanel {
 		JLabel labelHMCL = new JLabel(MonitorDePID.idioma.carpetaHMCL());
 		labelHMCL.setForeground(color_de_texto_de_gui);
 		panel.add(labelHMCL);
-		JTextField carpetaHMCL = crearCampoTextoConfig(
-				config.obtenerCarpetaHMCL(),
-				config::guardarCarpetaHMCL
-		);
+		JTextField carpetaHMCL = crearCampoTextoConfig(config.obtenerCarpetaHMCL(), config::guardarCarpetaHMCL);
 		if (!isMac) {
 			carpetaHMCL.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
 			carpetaHMCL.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
@@ -224,10 +234,7 @@ public class ConfigPanel<PrincipalGUI> extends JPanel {
 		JLabel labelFondo = new JLabel(MonitorDePID.idioma.colorFondo());
 		labelFondo.setForeground(color_de_texto_de_gui);
 		panel.add(labelFondo);
-		JTextField colorFondoField = crearCampoTextoConfig(
-				config.obtenerColorFondo(),
-				config::guardarColorFondo
-		);
+		JTextField colorFondoField = crearCampoTextoConfig(config.obtenerColorFondo(), config::guardarColorFondo);
 		if (!isMac) {
 			colorFondoField.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
 			colorFondoField.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
@@ -238,10 +245,7 @@ public class ConfigPanel<PrincipalGUI> extends JPanel {
 		JLabel labelTexto = new JLabel(MonitorDePID.idioma.colorTexto());
 		labelTexto.setForeground(color_de_texto_de_gui);
 		panel.add(labelTexto);
-		JTextField colorTextoField = crearCampoTextoConfig(
-				config.obtenerColorTexto(),
-				config::guardarColorTexto
-		);
+		JTextField colorTextoField = crearCampoTextoConfig(config.obtenerColorTexto(), config::guardarColorTexto);
 		if (!isMac) {
 			colorTextoField.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
 			colorTextoField.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
@@ -252,10 +256,7 @@ public class ConfigPanel<PrincipalGUI> extends JPanel {
 		JLabel labelBoton = new JLabel(MonitorDePID.idioma.colorBoton());
 		labelBoton.setForeground(color_de_texto_de_gui);
 		panel.add(labelBoton);
-		JTextField colorBotonField = crearCampoTextoConfig(
-				config.obtenerColorBoton(),
-				config::guardarColorBoton
-		);
+		JTextField colorBotonField = crearCampoTextoConfig(config.obtenerColorBoton(), config::guardarColorBoton);
 		if (!isMac) {
 			colorBotonField.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
 			colorBotonField.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
@@ -266,12 +267,11 @@ public class ConfigPanel<PrincipalGUI> extends JPanel {
 		JLabel labelCajaTexto = new JLabel(MonitorDePID.idioma.colorCajaTexto());
 		labelCajaTexto.setForeground(color_de_texto_de_gui);
 		panel.add(labelCajaTexto);
-		JTextField colorCajaTextoField = crearCampoTextoConfig(
-				config.obtenerColorCajaTexto(),
-				config::guardarColorCajaTexto
-		);
+		JTextField colorCajaTextoField = crearCampoTextoConfig(config.obtenerColorCajaTexto(),
+				config::guardarColorCajaTexto);
 		if (!isMac) {
-			colorCajaTextoField.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
+			colorCajaTextoField
+					.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
 			colorCajaTextoField.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
 		}
 		panel.add(colorCajaTextoField);
@@ -280,10 +280,7 @@ public class ConfigPanel<PrincipalGUI> extends JPanel {
 		JLabel labelEnlace = new JLabel(MonitorDePID.idioma.colorEnlace());
 		labelEnlace.setForeground(color_de_texto_de_gui);
 		panel.add(labelEnlace);
-		JTextField colorEnlaceField = crearCampoTextoConfig(
-				config.obtenerColorEnlace(),
-				config::guardarColorEnlace
-		);
+		JTextField colorEnlaceField = crearCampoTextoConfig(config.obtenerColorEnlace(), config::guardarColorEnlace);
 		if (!isMac) {
 			colorEnlaceField.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
 			colorEnlaceField.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
@@ -294,13 +291,13 @@ public class ConfigPanel<PrincipalGUI> extends JPanel {
 		JLabel labelTitulosConsolas = new JLabel(MonitorDePID.idioma.colorTitulosConsolas());
 		labelTitulosConsolas.setForeground(color_de_texto_de_gui);
 		panel.add(labelTitulosConsolas);
-		JTextField colorTitulosConsolasField = crearCampoTextoConfig(
-				config.obtenerColorDeTitulosDeConsolas(),
-				config::guardarColorDeTitulosDeConsolas
-		);
+		JTextField colorTitulosConsolasField = crearCampoTextoConfig(config.obtenerColorDeTitulosDeConsolas(),
+				config::guardarColorDeTitulosDeConsolas);
 		if (!isMac) {
-			colorTitulosConsolasField.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
-			colorTitulosConsolasField.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
+			colorTitulosConsolasField
+					.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
+			colorTitulosConsolasField
+					.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
 		}
 		panel.add(colorTitulosConsolasField);
 
@@ -308,10 +305,7 @@ public class ConfigPanel<PrincipalGUI> extends JPanel {
 		JLabel labelError = new JLabel(MonitorDePID.idioma.colorError());
 		labelError.setForeground(color_de_texto_de_gui);
 		panel.add(labelError);
-		JTextField colorErrorField = crearCampoTextoConfig(
-				config.obtenerColorError(),
-				config::guardarColorError
-		);
+		JTextField colorErrorField = crearCampoTextoConfig(config.obtenerColorError(), config::guardarColorError);
 		if (!isMac) {
 			colorErrorField.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
 			colorErrorField.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
@@ -322,12 +316,11 @@ public class ConfigPanel<PrincipalGUI> extends JPanel {
 		JLabel labelAdvertencia = new JLabel(MonitorDePID.idioma.colorAdvertencia());
 		labelAdvertencia.setForeground(color_de_texto_de_gui);
 		panel.add(labelAdvertencia);
-		JTextField colorAdvertenciaField = crearCampoTextoConfig(
-				config.obtenerColorAdvertencia(),
-				config::guardarColorAdvertencia
-		);
+		JTextField colorAdvertenciaField = crearCampoTextoConfig(config.obtenerColorAdvertencia(),
+				config::guardarColorAdvertencia);
 		if (!isMac) {
-			colorAdvertenciaField.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
+			colorAdvertenciaField
+					.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
 			colorAdvertenciaField.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
 		}
 		panel.add(colorAdvertenciaField);
@@ -336,10 +329,7 @@ public class ConfigPanel<PrincipalGUI> extends JPanel {
 		JLabel labelInfo = new JLabel(MonitorDePID.idioma.colorInfo());
 		labelInfo.setForeground(color_de_texto_de_gui);
 		panel.add(labelInfo);
-		JTextField colorInfoField = crearCampoTextoConfig(
-				config.obtenerColorInfo(),
-				config::guardarColorInfo
-		);
+		JTextField colorInfoField = crearCampoTextoConfig(config.obtenerColorInfo(), config::guardarColorInfo);
 		if (!isMac) {
 			colorInfoField.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
 			colorInfoField.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
@@ -350,10 +340,7 @@ public class ConfigPanel<PrincipalGUI> extends JPanel {
 		JLabel labelTitulo = new JLabel(MonitorDePID.idioma.colorTitulo());
 		labelTitulo.setForeground(color_de_texto_de_gui);
 		panel.add(labelTitulo);
-		JTextField colorTituloField = crearCampoTextoConfig(
-				config.obtenerColorTitulo(),
-				config::guardarColorTitulo
-		);
+		JTextField colorTituloField = crearCampoTextoConfig(config.obtenerColorTitulo(), config::guardarColorTitulo);
 		if (!isMac) {
 			colorTituloField.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
 			colorTituloField.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
@@ -364,12 +351,11 @@ public class ConfigPanel<PrincipalGUI> extends JPanel {
 		JLabel labelEnlaceTexto = new JLabel(MonitorDePID.idioma.colorEnlaceTexto());
 		labelEnlaceTexto.setForeground(color_de_texto_de_gui);
 		panel.add(labelEnlaceTexto);
-		JTextField colorEnlaceTextoField = crearCampoTextoConfig(
-				config.obtenerColorEnlace(),  // usa el nuevo getter
-				config::guardarColorEnlaceTexto
-		);
+		JTextField colorEnlaceTextoField = crearCampoTextoConfig(config.obtenerColorEnlace(), // usa el nuevo getter
+				config::guardarColorEnlaceTexto);
 		if (!isMac) {
-			colorEnlaceTextoField.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
+			colorEnlaceTextoField
+					.setBackground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
 			colorEnlaceTextoField.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
 		}
 		panel.add(colorEnlaceTextoField);
@@ -383,7 +369,8 @@ public class ConfigPanel<PrincipalGUI> extends JPanel {
 		proxySysOutSysErrCheckBox.setForeground(Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
 		proxySysOutSysErrCheckBox.setSelected(config.obtenerProxySysOutSysErr());
 		// Guardar al vuelo cambios en el checkbox
-		proxySysOutSysErrCheckBox.addItemListener(e -> config.guardarProxySysOutSysErr(proxySysOutSysErrCheckBox.isSelected()));
+		proxySysOutSysErrCheckBox
+				.addItemListener(e -> config.guardarProxySysOutSysErr(proxySysOutSysErrCheckBox.isSelected()));
 		panel.add(proxySysOutSysErrCheckBox);
 
 		return panel;

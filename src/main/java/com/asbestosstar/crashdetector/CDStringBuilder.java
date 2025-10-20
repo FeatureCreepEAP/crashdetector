@@ -6,31 +6,31 @@ public class CDStringBuilder {
 
 	StringBuilder esta = new StringBuilder();
 
-	
 	public CDStringBuilder append(String str) {
-		if(str.equals(Verificaciones.nl)&&!esta.toString().endsWith(Verificaciones.nl)&&!esta.toString().replace(" ", "").equals("")) {
+		if (str.equals(Verificaciones.nl) && !esta.toString().endsWith(Verificaciones.nl)
+				&& !esta.toString().replace(" ", "").equals("")) {
 			esta.append(str);
-		}else if (str.equals(Verificaciones.nl_html) && !esta.toString().endsWith(Verificaciones.nl_html)&&!esta.toString().replace(" ", "").equals("")) {
+		} else if (str.equals(Verificaciones.nl_html) && !esta.toString().endsWith(Verificaciones.nl_html)
+				&& !esta.toString().replace(" ", "").equals("")) {
 			esta.append(str);
-		}
-		else if(!esta.toString().contains(str)) {
+		} else if (!esta.toString().contains(str)) {
 			esta.append(str);
 		}
 		return this;
 	}
-	
+
 	@Override
 	public String toString() {
 		return esta.toString();
 	}
-	
+
 	public int length() {
 		return esta.length();
 	}
 
-
 	/**
 	 * Puedes Append si es un duplicado
+	 * 
 	 * @param str
 	 * @return
 	 */
@@ -39,5 +39,5 @@ public class CDStringBuilder {
 		esta.append(str);
 		return this;
 	}
-	
+
 }

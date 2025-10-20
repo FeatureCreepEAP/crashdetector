@@ -12,13 +12,12 @@ import cpw.mods.modlauncher.api.ITransformerVotingContext;
 import cpw.mods.modlauncher.api.TargetType;
 import cpw.mods.modlauncher.api.TransformerVoteResult;
 
-public class TransformacionesCPW implements  ITransformer<ClassNode> {
+public class TransformacionesCPW implements ITransformer<ClassNode> {
 
-	static{
+	static {
 		Transformaciones.init();
 	}
-	
-	
+
 	// Para CPW Transformer
 	@Override
 	public ClassNode transform(ClassNode input, ITransformerVotingContext context) {
@@ -37,22 +36,20 @@ public class TransformacionesCPW implements  ITransformer<ClassNode> {
 	public Set targets() {
 		// TODO Auto-generated method stub
 		Set<Target> resultdo = new HashSet<Target>();
-		//resulto.add(Target.targetClass("net.minecraft.server.MinecraftServer"));
-		//resulto.add(Target.targetClass("net.minecraft.client.Minecraft"));
-		for(Parche<?> parche:Parche.parches) {
-			for(String clase:parche.clases()) {
+		// resulto.add(Target.targetClass("net.minecraft.server.MinecraftServer"));
+		// resulto.add(Target.targetClass("net.minecraft.client.Minecraft"));
+		for (Parche<?> parche : Parche.parches) {
+			for (String clase : parche.clases()) {
 				resultdo.add(Target.targetClass(clase));
 			}
-			
-			
+
 		}
-		
-		
+
 		return resultdo;
 	}
 
-	//@Override
-	//public TargetType<ClassNode> getTargetType() {
+	// @Override
+	// public TargetType<ClassNode> getTargetType() {
 	public cpw.mods.modlauncher.api.TargetType getTargetType() {
 		// TODO Auto-generated method stub
 		return TargetType.CLASS;

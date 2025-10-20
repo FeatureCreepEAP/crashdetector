@@ -214,12 +214,11 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 		// TODO Auto-generated method stub
 		return "modules_duplicados_java_module_platform";
 	}
+
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
 		// TODO Auto-generated method stub
-		return false;//TODO
+		return false;// TODO
 	}
-	
-	
-	
+
 }

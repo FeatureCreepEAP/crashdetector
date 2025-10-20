@@ -14,7 +14,7 @@ package com.asbestosstar.crashdetector.gui.tipos.editor;
 public class EditorCodiceGUIIronMouse extends EditorFirmasGUI {
 
 	public static String ID = "ironmouse";
-	
+
 	@Override
 	public String id() {
 		// TODO Auto-generated method stub
@@ -24,9 +24,7 @@ public class EditorCodiceGUIIronMouse extends EditorFirmasGUI {
 	@Override
 	public void recargarApariencia() {
 		// TODO Auto-generated method stub
-	    recargarTextosYEstilo();
+		recargarTextosYEstilo();
 	}
-
-	
 
 }

@@ -1,7 +1,7 @@
 package com.asbestosstar.crashdetector.gui;
 
-public interface BotonDeBarraLateralDerecha extends CrashDetectorGUI	{
-	
+public interface BotonDeBarraLateralDerecha extends CrashDetectorGUI {
+
 	/**
 	 * acción cuando se presiona el botón
 	 */

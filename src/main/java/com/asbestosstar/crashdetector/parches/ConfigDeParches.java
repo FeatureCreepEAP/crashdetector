@@ -15,127 +15,131 @@ public class ConfigDeParches {
 	private static final Path RUTA_ARCHIVO_CONFIG_PARCHES = MonitorDePID.carpeta.resolve("parches.properties");
 	public static File archivoConfigParches = RUTA_ARCHIVO_CONFIG_PARCHES.toFile();
 
-    private Properties propiedadesConfig;
-    private static ConfigDeParches instancia;
+	private Properties propiedadesConfig;
+	private static ConfigDeParches instancia;
 
-    /**
-     * Constructor privado para cargar o crear el archivo de configuración.
-     * Inicializa todas las propiedades de parches faltantes con sus valores predeterminados.
-     */
-    private ConfigDeParches() {
-        propiedadesConfig = new Properties();
-        
-        // Cargar configuración existente si el archivo existe
-        if (archivoConfigParches.exists()) {
-            try (FileReader lector = new FileReader(archivoConfigParches)) {
-                propiedadesConfig.load(lector);
-            } catch (IOException e) {
-                System.err.println("Error al leer el archivo de configuración de parches: " + e.getMessage());
-            }
-        }
+	/**
+	 * Constructor privado para cargar o crear el archivo de configuración.
+	 * Inicializa todas las propiedades de parches faltantes con sus valores
+	 * predeterminados.
+	 */
+	private ConfigDeParches() {
+		propiedadesConfig = new Properties();
 
-        // Asegurar que todos los parches tengan su propiedad configurada
-        inicializarParchesFaltantes();
-        guardar(); // Guardar configuración actualizada
-    }
+		// Cargar configuración existente si el archivo existe
+		if (archivoConfigParches.exists()) {
+			try (FileReader lector = new FileReader(archivoConfigParches)) {
+				propiedadesConfig.load(lector);
+			} catch (IOException e) {
+				System.err.println("Error al leer el archivo de configuración de parches: " + e.getMessage());
+			}
+		}
 
-    /**
-     * Devuelve la instancia única de la clase ConfigDeParches (patrón Singleton)
-     */
-    public static synchronized ConfigDeParches obtenerInstancia() {
-        if (instancia == null) {
-            instancia = new ConfigDeParches();
-        }
-        return instancia;
-    }
+		// Asegurar que todos los parches tengan su propiedad configurada
+		inicializarParchesFaltantes();
+		guardar(); // Guardar configuración actualizada
+	}
 
-    /**
-     * Inicializa las propiedades faltantes usando los IDs y valores predeterminados de los parches
-     */
-    private void inicializarParchesFaltantes() {
-        for (Parche<?> parche : Parche.parches) {
-            String id = parche.id();
-            if (!propiedadesConfig.containsKey(id)) {
-                propiedadesConfig.setProperty(id, String.valueOf(parche.predeterminado()));
-            }
-        }
-    }
+	/**
+	 * Devuelve la instancia única de la clase ConfigDeParches (patrón Singleton)
+	 */
+	public static synchronized ConfigDeParches obtenerInstancia() {
+		if (instancia == null) {
+			instancia = new ConfigDeParches();
+		}
+		return instancia;
+	}
 
-    /**
-     * Guarda la configuración actual en el archivo
-     */
-    public void guardar() {
-        archivoConfigParches.getParentFile().mkdirs();
-        try (FileWriter escritor = new FileWriter(archivoConfigParches)) {
-            propiedadesConfig.store(escritor, "Configuración de parches - Activación por ID");
-        } catch (IOException e) {
-            CrashDetectorLogger.log("Error al guardar el archivo de configuración de parches: " + e.getMessage());
-        }
-    }
+	/**
+	 * Inicializa las propiedades faltantes usando los IDs y valores predeterminados
+	 * de los parches
+	 */
+	private void inicializarParchesFaltantes() {
+		for (Parche<?> parche : Parche.parches) {
+			String id = parche.id();
+			if (!propiedadesConfig.containsKey(id)) {
+				propiedadesConfig.setProperty(id, String.valueOf(parche.predeterminado()));
+			}
+		}
+	}
 
-    /**
-     * Obtiene el estado de activación de un parche por su ID
-     */
-    public boolean obtenerActivacion(String id) {
-        String valor = propiedadesConfig.getProperty(id);
-        return valor != null ? Boolean.parseBoolean(valor) : false;
-    }
+	/**
+	 * Guarda la configuración actual en el archivo
+	 */
+	public void guardar() {
+		archivoConfigParches.getParentFile().mkdirs();
+		try (FileWriter escritor = new FileWriter(archivoConfigParches)) {
+			propiedadesConfig.store(escritor, "Configuración de parches - Activación por ID");
+		} catch (IOException e) {
+			CrashDetectorLogger.log("Error al guardar el archivo de configuración de parches: " + e.getMessage());
+		}
+	}
 
-    /**
-     * Guarda el estado de activación de un parche por su ID
-     */
-    public void guardarActivacion(String id, boolean activo) {
-        propiedadesConfig.setProperty(id, String.valueOf(activo));
-        guardar();
-    }
+	/**
+	 * Obtiene el estado de activación de un parche por su ID
+	 */
+	public boolean obtenerActivacion(String id) {
+		String valor = propiedadesConfig.getProperty(id);
+		return valor != null ? Boolean.parseBoolean(valor) : false;
+	}
 
-    /**
-     * Devuelve todos los IDs de parches disponibles en la configuración
-     */
-    public Set<String> obtenerIDsParches() {
-        return propiedadesConfig.stringPropertyNames();
-    }
+	/**
+	 * Guarda el estado de activación de un parche por su ID
+	 */
+	public void guardarActivacion(String id, boolean activo) {
+		propiedadesConfig.setProperty(id, String.valueOf(activo));
+		guardar();
+	}
 
-    /**
-     * Devuelve el estado de activación de un parche por su ID
-     * @param id El ID del parche
-     * @return true si está activo, false en caso contrario
-     */
-    public boolean estaActivo(String id) {
-        return Boolean.parseBoolean(propiedadesConfig.getProperty(id, "false"));
-    }
+	/**
+	 * Devuelve todos los IDs de parches disponibles en la configuración
+	 */
+	public Set<String> obtenerIDsParches() {
+		return propiedadesConfig.stringPropertyNames();
+	}
 
-    /**
-     * Activa o desactiva un parche por su ID
-     * @param id El ID del parche
-     * @param activo true para activar, false para desactivar
-     */
-    public void establecerActivo(String id, boolean activo) {
-        propiedadesConfig.setProperty(id, String.valueOf(activo));
-        guardar();
-    }
+	/**
+	 * Devuelve el estado de activación de un parche por su ID
+	 * 
+	 * @param id El ID del parche
+	 * @return true si está activo, false en caso contrario
+	 */
+	public boolean estaActivo(String id) {
+		return Boolean.parseBoolean(propiedadesConfig.getProperty(id, "false"));
+	}
 
-    /**
-     * Asegura que todos los parches tengan su propiedad configurada
-     */
-    public void asegurarParches() {
-        boolean cambios = false;
-        for (Parche<?> parche : Parche.parches) {
-            String id = parche.id();
-            if (!propiedadesConfig.containsKey(id)) {
-                propiedadesConfig.setProperty(id, String.valueOf(parche.predeterminado()));
-                cambios = true;
-            }
-        }
-        if (cambios) {
-            guardar();
-        }
-    }
+	/**
+	 * Activa o desactiva un parche por su ID
+	 * 
+	 * @param id     El ID del parche
+	 * @param activo true para activar, false para desactivar
+	 */
+	public void establecerActivo(String id, boolean activo) {
+		propiedadesConfig.setProperty(id, String.valueOf(activo));
+		guardar();
+	}
 
-    /**
-     * Devuelve todas las propiedades de configuración
-     */
-    public Properties obtenerPropiedades() {
-        return propiedadesConfig;
-    }
+	/**
+	 * Asegura que todos los parches tengan su propiedad configurada
+	 */
+	public void asegurarParches() {
+		boolean cambios = false;
+		for (Parche<?> parche : Parche.parches) {
+			String id = parche.id();
+			if (!propiedadesConfig.containsKey(id)) {
+				propiedadesConfig.setProperty(id, String.valueOf(parche.predeterminado()));
+				cambios = true;
+			}
+		}
+		if (cambios) {
+			guardar();
+		}
+	}
+
+	/**
+	 * Devuelve todas las propiedades de configuración
+	 */
+	public Properties obtenerPropiedades() {
+		return propiedadesConfig;
+	}
 }

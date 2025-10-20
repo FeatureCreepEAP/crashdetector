@@ -113,17 +113,16 @@ public class MCForgeInstallacionNoEstaCompleta implements Verificaciones {
 		}
 	}
 
-
 	@Override
 	public String id() {
 		// TODO Auto-generated method stub
 		return "mcforge_installacion_no_esta_completa";
 	}
+
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
 		// TODO Auto-generated method stub
-		return false;//TODO
+		return false;// TODO
 	}
-	
-	
+
 }

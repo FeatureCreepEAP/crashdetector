@@ -63,10 +63,11 @@ public class Theseus implements Verificaciones {
 		// TODO Auto-generated method stub
 		return "theseus";
 	}
+
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
 		// TODO Auto-generated method stub
-		return false;//TODO
+		return false;// TODO
 	}
-	
+
 }

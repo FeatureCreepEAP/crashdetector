@@ -39,7 +39,8 @@ public class NoTieneMemoria implements Verificaciones {
 		}
 
 		// Verificación específica de PermGen (solo en Java 7 y anteriores)
-		if (contenidoConsola.contains("exit code: -805306369") || contenidoConsola.contains("exit code -805306369") ||contenidoConsola.contains("PermGen error")
+		if (contenidoConsola.contains("exit code: -805306369") || contenidoConsola.contains("exit code -805306369")
+				|| contenidoConsola.contains("PermGen error")
 				|| contenidoConsola.contains("java.lang.OutOfMemoryError: PermGen space")) {
 
 			esProblemaPermGen = true;
@@ -156,18 +157,17 @@ public class NoTieneMemoria implements Verificaciones {
 
 		return new QuickFix.Builder(nombre()).agregarEtiqueta(solucion.toString()).construir();
 	}
-	
-	
+
 	@Override
 	public String id() {
 		// TODO Auto-generated method stub
 		return "no_tiene_memoria";
 	}
+
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
 		// TODO Auto-generated method stub
-		return false;//TODO
+		return false;// TODO
 	}
-	
-	
+
 }

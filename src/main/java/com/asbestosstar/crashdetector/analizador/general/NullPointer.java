@@ -338,10 +338,11 @@ public class NullPointer implements Verificaciones {
 		// TODO Auto-generated method stub
 		return "nullpointer";
 	}
+
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
 		// TODO Auto-generated method stub
-		return false;//TODO
+		return false;// TODO
 	}
-	
+
 }

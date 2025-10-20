@@ -16,14 +16,15 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 
 /**
- * Verificación especializada para detectar errores de resolución de texturas que
- * ocurren cuando las texturas no caben en la hoja de texturas.
+ * Verificación especializada para detectar errores de resolución de texturas
+ * que ocurren cuando las texturas no caben en la hoja de texturas.
  * <p>
- * - Analiza stack traces en busca de la frase clave "Unable to fit:" y "Maybe try a lower resolution resourcepack?"
- * - Extrae información sobre el recurso problemático y su tamaño
- * - No busca un origen específico (JAR/mod) ya que el problema es de resolución de texturas
- * - Proporciona soluciones prácticas específicas para este problema
- * - La salida es un bloque HTML con información detallada para la UI
+ * - Analiza stack traces en busca de la frase clave "Unable to fit:" y "Maybe
+ * try a lower resolution resourcepack?" - Extrae información sobre el recurso
+ * problemático y su tamaño - No busca un origen específico (JAR/mod) ya que el
+ * problema es de resolución de texturas - Proporciona soluciones prácticas
+ * específicas para este problema - La salida es un bloque HTML con información
+ * detallada para la UI
  */
 public class ErrorResolucionDeTextura implements Verificaciones {
 
@@ -70,10 +71,9 @@ public class ErrorResolucionDeTextura implements Verificaciones {
 		// Analizar cada trazo
 		for (VerificacionDeStackTrace.TraceInfo traceInfo : trazosInfo) {
 			String trazo = traceInfo.trace;
-			
+
 			// Verificar las frases clave específicas
-			if (!trazo.contains("Unable to fit:") || 
-				!trazo.contains("Maybe try a lower resolution resourcepack?")) {
+			if (!trazo.contains("Unable to fit:") || !trazo.contains("Maybe try a lower resolution resourcepack?")) {
 				continue;
 			}
 
@@ -99,17 +99,16 @@ public class ErrorResolucionDeTextura implements Verificaciones {
 		String[] lineas = consola.contenido_verificar.split(NL);
 		for (int i = 0; i < lineas.length; i++) {
 			String linea = lineas[i];
-			if (linea.contains("Unable to fit:") && 
-				linea.contains("Maybe try a lower resolution resourcepack?") && 
-				!linea.contains("at ") && 
-				VerificacionDeStackTrace.tracePermite(linea)) {
+			if (linea.contains("Unable to fit:") && linea.contains("Maybe try a lower resolution resourcepack?")
+					&& !linea.contains("at ") && VerificacionDeStackTrace.tracePermite(linea)) {
 				procesarLineaSinTraza(linea, vdst, i, consola);
 			}
 		}
 	}
 
 	/**
-	 * Procesa una línea con error de resolución de texturas que no tiene stack trace completo
+	 * Procesa una línea con error de resolución de texturas que no tiene stack
+	 * trace completo
 	 */
 	private void procesarLineaSinTraza(String linea, VerificacionDeStackTrace vdst, int numeroLinea, Consola consola) {
 		Matcher matcher = ERRORES_RESOLUCION.matcher(linea);
@@ -156,7 +155,8 @@ public class ErrorResolucionDeTextura implements Verificaciones {
 			// Recuperar el enlace
 			String enlace = enlacesPorLinea.getOrDefault(mensajeBase, "");
 			if (!enlace.isEmpty()) {
-				sb.append("<li>").append(mensajeBase).append(MonitorDePID.idioma.solucion_resolucion_textura()).append(" ").append(enlace).append("</li>");
+				sb.append("<li>").append(mensajeBase).append(MonitorDePID.idioma.solucion_resolucion_textura())
+						.append(" ").append(enlace).append("</li>");
 			} else {
 				sb.append("<li>").append(mensajeBase).append("</li>");
 			}
@@ -173,21 +173,20 @@ public class ErrorResolucionDeTextura implements Verificaciones {
 
 	@Override
 	public QuickFix solucion() {
-		return new QuickFix.Builder(nombre())
-				.agregarEtiqueta(MonitorDePID.idioma.solucion_resolucion_textura())
+		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.solucion_resolucion_textura())
 				.construir();
 	}
-	
+
 	@Override
 	public String id() {
 		// TODO Auto-generated method stub
 		return "error_resolucion_de_textura";
 	}
+
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
 		// TODO Auto-generated method stub
-		return false;//TODO
+		return false;// TODO
 	}
-	
-	
+
 }

@@ -68,23 +68,17 @@ public class WaterMediaVLC implements Verificaciones {
 	public Criticalidad nivel_de_criticalidad() {
 		return Criticalidad.ADVERTENCIA;
 	}
-	
+
 	@Override
 	public String id() {
 		// TODO Auto-generated method stub
 		return "watermedia_tl";
 	}
+
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
 		// TODO Auto-generated method stub
-		return false;//TODO
+		return false;// TODO
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

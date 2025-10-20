@@ -10,10 +10,10 @@ import com.asbestosstar.crashdetector.parches.ConfigDeParches;
 import com.asbestosstar.crashdetector.parches.Parche;
 import com.asbestosstar.crashdetector.parches.ParcheClassNode;
 
-public class PreferIPv4StackParch implements ParcheClassNode{
+public class PreferIPv4StackParch implements ParcheClassNode {
 
 	public static String id = "preferIPv4Stack";
-	
+
 	@Override
 	public Set<String> clases() {
 		// TODO Auto-generated method stub
@@ -42,18 +42,16 @@ public class PreferIPv4StackParch implements ParcheClassNode{
 	public void parchClassNode(ClassNode node, String nombre) {
 		// TODO Auto-generated method stub
 	}
-	
+
 	@Override
 	public boolean activar() {
 		boolean ret = ConfigDeParches.obtenerInstancia().estaActivo(this.id());
-		if(ret) {
+		if (ret) {
 			CrashDetectorLogger.log("preferIPV4Stack");
 			System.setProperty("java.net.preferIPv4Stack", "true");
 		}
-		
+
 		return ret;
 	}
-	
-	
 
 }

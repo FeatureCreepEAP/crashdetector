@@ -424,15 +424,25 @@ public interface Idioma {
 	public String volver();
 
 	public String colorFondo();
+
 	public String colorTexto();
+
 	public String colorBoton();
+
 	public String colorCajaTexto();
+
 	public String colorEnlace();
+
 	public String colorTitulosConsolas();
+
 	public String colorError();
+
 	public String colorAdvertencia();
+
 	public String colorInfo();
+
 	public String colorTitulo();
+
 	public String colorEnlaceTexto();
 
 	public String transformacionDeMinecraftCodigo0();
@@ -501,13 +511,12 @@ public interface Idioma {
 
 	public String solucionFaltasClases();
 
-	
 	public String solucionParaJavaInstallar();
 
 	public String error_animacion_no_encontrada();
 
 	public String nombre_de_error_animacion_minecraft();
-	
+
 	public String no_se_encontraron_mods_para_eliminar();
 
 	public String opcionesGCInvalidas();
@@ -786,7 +795,7 @@ public interface Idioma {
 	public String forgeClaseMinecraftFaltante();
 
 	public String forgeInstallacionNoCompleta();
-	
+
 	public String nombre_de_forge_instalacion_no_completa();
 
 	public String solucion_para_forge_instalacion_no_completa();
@@ -794,7 +803,7 @@ public interface Idioma {
 	public String descargar_forge_oficial();
 
 	public String reinstalar_forge_correctamente();
-	
+
 	public String instrucciones_reinstalar_forge();
 
 	public String titulo_instrucciones_reinstaler_mcforge();
@@ -829,228 +838,266 @@ public interface Idioma {
 
 	/**
 	 * Obtiene el título de la ventana del árbol de mods.
+	 * 
 	 * @return Título de la ventana
 	 */
 	public String tituloArbolDeMods();
 
 	/**
 	 * Obtiene el texto para la etiqueta de tipo de búsqueda.
+	 * 
 	 * @return Texto de la etiqueta
 	 */
 	String tipoBusqueda();
 
 	/**
 	 * Obtiene el texto para el filtro "Todos".
+	 * 
 	 * @return Texto del filtro
 	 */
 	String filtroTodos();
 
 	/**
 	 * Obtiene el texto para el filtro "Paquetes".
+	 * 
 	 * @return Texto del filtro
 	 */
 	String filtroPaquetes();
 
 	/**
 	 * Obtiene el texto para el filtro "Clases".
+	 * 
 	 * @return Texto del filtro
 	 */
 	String filtroClases();
 
 	/**
 	 * Obtiene el texto para el filtro "Métodos".
+	 * 
 	 * @return Texto del filtro
 	 */
 	String filtroMetodos();
 
 	/**
 	 * Obtiene el texto para el filtro "Campos".
+	 * 
 	 * @return Texto del filtro
 	 */
 	String filtroCampos();
 
 	/**
 	 * Obtiene el texto para el filtro "Referencias de Campo".
+	 * 
 	 * @return Texto del filtro
 	 */
 	String filtroReferenciasCampo();
 
 	/**
 	 * Obtiene el texto para el filtro "Referencias de Método".
+	 * 
 	 * @return Texto del filtro
 	 */
 	String filtroReferenciasMetodo();
 
 	/**
 	 * Obtiene el texto para el filtro "Referencias de Clase".
+	 * 
 	 * @return Texto del filtro
 	 */
 	String filtroReferenciasClase();
 
 	/**
 	 * Obtiene el texto para el tooltip del campo de búsqueda.
+	 * 
 	 * @return Texto del tooltip
 	 */
 	String tipBuscar();
 
 	/**
 	 * Obtiene el texto para el botón de búsqueda.
+	 * 
 	 * @return Texto del botón
 	 */
 	String botonBuscar();
 
 	/**
 	 * Obtiene el texto para el botón de resetear árbol.
+	 * 
 	 * @return Texto del botón
 	 */
 	String botonResetearArbol();
 
 	/**
 	 * Obtiene el texto para indicar los mods cargados.
+	 * 
 	 * @return Texto descriptivo
 	 */
 	String modsCargados();
 
 	/**
 	 * Obtiene el texto para la categoría de clases.
+	 * 
 	 * @return Texto de la categoría
 	 */
 	String clases();
 
 	/**
 	 * Obtiene el texto para la categoría de métodos.
+	 * 
 	 * @return Texto de la categoría
 	 */
 	String metodos();
 
 	/**
 	 * Obtiene el texto para la categoría de campos.
+	 * 
 	 * @return Texto de la categoría
 	 */
 	String campos();
 
 	/**
 	 * Obtiene el texto para la categoría de referencias.
+	 * 
 	 * @return Texto de la categoría
 	 */
 	String referencias();
 
 	/**
 	 * Obtiene el texto para los resultados de búsqueda.
+	 * 
 	 * @return Texto de resultados
 	 */
 	String resultadosBusqueda();
 
 	/**
 	 * Obtiene el texto para la opción de buscar referencias.
+	 * 
 	 * @return Texto de la opción
 	 */
 	String buscarReferencias();
 
 	/**
 	 * Obtiene el texto para las referencias de mod.
+	 * 
 	 * @return Texto descriptivo
 	 */
 	String referenciasMod();
 
 	/**
 	 * Obtiene el texto para las referencias de clase.
+	 * 
 	 * @return Texto descriptivo
 	 */
 	String referenciasClase();
 
 	/**
 	 * Obtiene el texto para las referencias de método.
+	 * 
 	 * @return Texto descriptivo
 	 */
 	String referenciasMetodo();
 
 	/**
 	 * Obtiene el texto para las referencias de campo.
+	 * 
 	 * @return Texto descriptivo
 	 */
 	String referenciasCampo();
 
 	/**
 	 * Obtiene el texto cuando no se encuentran referencias.
+	 * 
 	 * @return Mensaje de error
 	 */
 	String noSeEncontraronReferencias();
 
 	/**
 	 * Obtiene el texto para el detalle de mod.
+	 * 
 	 * @return Título de detalle
 	 */
 	String detalleMod();
 
 	/**
 	 * Obtiene el texto para la ubicación.
+	 * 
 	 * @return Etiqueta de ubicación
 	 */
 	String ubicacion();
 
 	/**
 	 * Obtiene el texto para los nombres.
+	 * 
 	 * @return Etiqueta de nombres
 	 */
 	String nombres();
 
 	/**
 	 * Obtiene el texto para el módulo.
+	 * 
 	 * @return Etiqueta de módulo
 	 */
 	String modulo();
 
 	/**
 	 * Obtiene el texto para el detalle de clase.
+	 * 
 	 * @return Título de detalle
 	 */
 	String detalleClase();
 
 	/**
 	 * Obtiene el texto para el detalle de método.
+	 * 
 	 * @return Título de detalle
 	 */
 	String detalleMetodo();
 
 	/**
 	 * Obtiene el texto para el detalle de campo.
+	 * 
 	 * @return Título de detalle
 	 */
 	String detalleCampo();
 
 	/**
 	 * Obtiene el texto para la clase.
+	 * 
 	 * @return Etiqueta de clase
 	 */
 	String clase();
 
 	/**
 	 * Obtiene el texto para el tipo.
+	 * 
 	 * @return Etiqueta de tipo
 	 */
 	String tipo();
 
 	/**
 	 * Obtiene el texto para las referencias a métodos.
+	 * 
 	 * @return Etiqueta de referencias
 	 */
 	String referenciasAMetodos();
 
 	/**
 	 * Obtiene el texto para las referencias a campos.
+	 * 
 	 * @return Etiqueta de referencias
 	 */
 	String referenciasACampos();
 
 	/**
 	 * Obtiene el texto para el botón de árbol de mods.
+	 * 
 	 * @return Texto del botón
 	 */
 	String arbolDeMods();
 
 	/**
 	 * Obtiene el texto para método.
+	 * 
 	 * @return Palabra "Método"
 	 */
 	String metodo();
@@ -1426,20 +1473,11 @@ public interface Idioma {
 
 	// Helper para escapar HTML en la linea completa
 	default String escapeHtml(String s) {
-	    return s.replace("&", "&amp;")
-	            .replace("<", "<")
-	            .replace(">", ">")
-	            .replace("\"", "&quot;");
+		return s.replace("&", "&amp;").replace("<", "<").replace(">", ">").replace("\"", "&quot;");
 	}
 
 	public String mensajeAyudar();
-	
-	
-	
-	
-	
-	
-	
+
 	// public String advertenciaMalwareFalso();
 
 }

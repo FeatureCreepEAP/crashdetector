@@ -4,31 +4,11 @@ import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 
 public class BusquedaGUISaliorMoon extends GrepRGUI {
 
-    public static final String ID = "saliormoon_grep";
+	public static final String ID = "saliormoon_grep";
 
-
-
-
-
-    
-    
-    
-    
- 
-
-    @Override public String id() { return ID; }
-
-
-
-
-
-
-
-
-
-
-
-	
-
+	@Override
+	public String id() {
+		return ID;
+	}
 
 }

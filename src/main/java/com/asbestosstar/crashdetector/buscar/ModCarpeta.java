@@ -17,273 +17,268 @@ import com.asbestosstar.crashdetector.cargador.Cargador;
 import com.asbestosstar.crashdetector.cargador.CargadorFeatureCreep;
 
 /**
- * Clase que procesa carpetas para buscar mods y clases dentro de ellas.
- * Soporta tanto mods de HOI4 como módulos de JBoss en estructuras de carpetas.
- * Maneja archivos JAR/ZIP anidados dentro de estructuras de carpetas (especialmente para JBoss).
+ * Clase que procesa carpetas para buscar mods y clases dentro de ellas. Soporta
+ * tanto mods de HOI4 como módulos de JBoss en estructuras de carpetas. Maneja
+ * archivos JAR/ZIP anidados dentro de estructuras de carpetas (especialmente
+ * para JBoss).
  * 
- * NOTA: Las subcarpetas normalmente NO son mods independientes, sino parte del mismo mod.
+ * NOTA: Las subcarpetas normalmente NO son mods independientes, sino parte del
+ * mismo mod.
  */
 public class ModCarpeta implements ArchivoDeMod {
 
-    public ArchivoDeMod desde;
-    public String ubicacion;
-    public List<ArchivoDeMod> mods_en_mod = new ArrayList<>();
-    public List<String> nombres = new ArrayList<>();
-    public List<String> clases = new ArrayList<>();
-    public List<String> archivos = new ArrayList<>();
-    private final Map<String, byte[]> mapaBytesClase = new HashMap<>();
-    private final Path rutaRaiz;
-    public List<Cargador> cargadores_de_mod = new ArrayList<Cargador>();
+	public ArchivoDeMod desde;
+	public String ubicacion;
+	public List<ArchivoDeMod> mods_en_mod = new ArrayList<>();
+	public List<String> nombres = new ArrayList<>();
+	public List<String> clases = new ArrayList<>();
+	public List<String> archivos = new ArrayList<>();
+	private final Map<String, byte[]> mapaBytesClase = new HashMap<>();
+	private final Path rutaRaiz;
+	public List<Cargador> cargadores_de_mod = new ArrayList<Cargador>();
 
-    
-    /**
-     * Constructor principal que procesa una carpeta de mods.
-     * Detecta automáticamente si es un mod de HOI4 o un módulo de JBoss.
-     */
-    public ModCarpeta(String ubicacion, ArchivoDeMod desde, Path rutaRaiz) {
-        this.ubicacion = ubicacion;
-        this.desde = desde;
-        this.rutaRaiz = rutaRaiz;
+	/**
+	 * Constructor principal que procesa una carpeta de mods. Detecta
+	 * automáticamente si es un mod de HOI4 o un módulo de JBoss.
+	 */
+	public ModCarpeta(String ubicacion, ArchivoDeMod desde, Path rutaRaiz) {
+		this.ubicacion = ubicacion;
+		this.desde = desde;
+		this.rutaRaiz = rutaRaiz;
 
-        try {
-            procesarCarpeta(rutaRaiz, true);
-        } catch (Exception e) {
-            CrashDetectorLogger.logException(e);
-        }
-    }
+		try {
+			procesarCarpeta(rutaRaiz, true);
+		} catch (Exception e) {
+			CrashDetectorLogger.logException(e);
+		}
+	}
 
-    /**
-     * Procesa recursivamente una carpeta para identificar mods y clases.
-     * @param ruta Ruta a procesar
-     * @param esRaiz Indica si es la carpeta raíz del mod actual
-     */
-    private boolean procesarCarpeta(Path ruta, boolean esRaiz) {
-        boolean contieneDefinicionMod = false;
-        
-        try (DirectoryStream<Path> flujoDirectorio = Files.newDirectoryStream(ruta)) {
-            for (Path entrada : flujoDirectorio) {
-                String nombre = entrada.getFileName().toString();
-                archivos.add(nombre);
+	/**
+	 * Procesa recursivamente una carpeta para identificar mods y clases.
+	 * 
+	 * @param ruta   Ruta a procesar
+	 * @param esRaiz Indica si es la carpeta raíz del mod actual
+	 */
+	private boolean procesarCarpeta(Path ruta, boolean esRaiz) {
+		boolean contieneDefinicionMod = false;
 
-                if (Files.isDirectory(entrada)) {
-                    // Procesar subcarpeta
-                    boolean subContieneDefinicionMod = procesarCarpeta(entrada, false);
-                    
-                    // Si la subcarpeta contiene un mod definido y estamos en un nivel raíz,
-                    // entonces es un mod independiente
-                    if (subContieneDefinicionMod && esRaiz) {
-                        String nuevaUbicacion = ubicacion + "/" + nombre;
-                        mods_en_mod.add(new ModCarpeta(nuevaUbicacion, this, entrada));
-                    }
-                } else {
-                    // Procesar archivo
-                    if (nombre.endsWith("modules.xml") || nombre.endsWith(".mod")) {
-                        contieneDefinicionMod = true;
-                        
-                        if (nombre.endsWith("modules.xml")) {
-                            nombres.addAll(CargadorFeatureCreep.parsearNombreModuloJBoss(Files.readAllBytes(entrada)));
-                        } else if (nombre.endsWith(".mod")) {
-                            nombres.addAll(CargadorFeatureCreep.parsearNombreModHOI4(Files.readAllBytes(entrada)));
-                        }
-                    } else if (nombre.endsWith(".class")) {
-                        procesarClase(entrada);
-                    } else if (esArchivoAnidado(nombre)) {
-                        procesarArchivoAnidado(entrada, nombre);
-                    }                    else if (nombre.endsWith(".toml")||nombre.endsWith(".json")||nombre.endsWith(".yaml")||nombre.endsWith(".xml")||nombre.endsWith(".MF")||nombre.endsWith(".txt")||nombre.endsWith(".lang")) {//TODO dmr si es version texto
-                    	mapaBytesClase.put(nombre, Files.readAllBytes(entrada));
-                    }
-                    
-                    
-                    
-                    
+		try (DirectoryStream<Path> flujoDirectorio = Files.newDirectoryStream(ruta)) {
+			for (Path entrada : flujoDirectorio) {
+				String nombre = entrada.getFileName().toString();
+				archivos.add(nombre);
 
-                    
-                    
-                    
-                    
-                }
-            }
-            
-            
-            for(Cargador cargador:Cargador.cargadores) {
-            	if(cargador.modEsDeCargador(this)) {cargadores_de_mod.add(cargador);}
-            }
-            
-        } catch (IOException e) {
-            CrashDetectorLogger.logException(e);
-        }
-        
-        return contieneDefinicionMod;
-    }
+				if (Files.isDirectory(entrada)) {
+					// Procesar subcarpeta
+					boolean subContieneDefinicionMod = procesarCarpeta(entrada, false);
 
-    /**
-     * Procesa un archivo de clase y lo añade al mapa de bytes de clase.
-     */
-    private void procesarClase(Path entrada) {
-        String nombreClase = entrada.toString()
-                .replace(rutaRaiz.toString(), "")
-                .replace(File.separator, ".")
-                .replace(".class", "");
-        if (nombreClase.startsWith(".")) {
-            nombreClase = nombreClase.substring(1);
-        }
-        clases.add(nombreClase);
-        
-        // Guardar bytes de clase para análisis posterior con ASM
-        String nombreInterno = entrada.toString()
-                .replace(rutaRaiz.toString(), "")
-                .substring(1)
-                .replace(File.separator, "/")
-                .replace(".class", "");
-        try {
-            mapaBytesClase.put(nombreInterno, Files.readAllBytes(entrada));
-        } catch (IOException e) {
-            CrashDetectorLogger.logException(e);
-        }
-    }
+					// Si la subcarpeta contiene un mod definido y estamos en un nivel raíz,
+					// entonces es un mod independiente
+					if (subContieneDefinicionMod && esRaiz) {
+						String nuevaUbicacion = ubicacion + "/" + nombre;
+						mods_en_mod.add(new ModCarpeta(nuevaUbicacion, this, entrada));
+					}
+				} else {
+					// Procesar archivo
+					if (nombre.endsWith("modules.xml") || nombre.endsWith(".mod")) {
+						contieneDefinicionMod = true;
 
-    /**
-     * Procesa archivos anidados (JAR, ZIP, etc.) creando instancias de ModPKZip.
-     */
-    private void procesarArchivoAnidado(Path entrada, String nombre) {
-        try (InputStream inputStream = new FileInputStream(entrada.toFile())) {
-            String nuevaUbicacion = ubicacion + "/" + nombre;
-            mods_en_mod.add(new ModPKZip(nuevaUbicacion, this, inputStream));
-        } catch (IOException e) {
-            CrashDetectorLogger.logException(e);
-        }
-    }
+						if (nombre.endsWith("modules.xml")) {
+							nombres.addAll(CargadorFeatureCreep.parsearNombreModuloJBoss(Files.readAllBytes(entrada)));
+						} else if (nombre.endsWith(".mod")) {
+							nombres.addAll(CargadorFeatureCreep.parsearNombreModHOI4(Files.readAllBytes(entrada)));
+						}
+					} else if (nombre.endsWith(".class")) {
+						procesarClase(entrada);
+					} else if (esArchivoAnidado(nombre)) {
+						procesarArchivoAnidado(entrada, nombre);
+					} else if (nombre.endsWith(".toml") || nombre.endsWith(".json") || nombre.endsWith(".yaml")
+							|| nombre.endsWith(".xml") || nombre.endsWith(".MF") || nombre.endsWith(".txt")
+							|| nombre.endsWith(".lang")) {// TODO dmr si es version texto
+						mapaBytesClase.put(nombre, Files.readAllBytes(entrada));
+					}
 
-    /**
-     * Devuelve true si el archivo es un contenedor anidado (como .jar, .zip, etc.)
-     */
-    private boolean esArchivoAnidado(String nombreArchivo) {
-        return nombreArchivo.endsWith(".jar") ||
-                nombreArchivo.endsWith(".zip") ||
-                nombreArchivo.endsWith(".fpm") ||
-                nombreArchivo.endsWith(".litemod") ||
-                nombreArchivo.endsWith(".war") ||
-                nombreArchivo.endsWith(".ear") ||
-                nombreArchivo.endsWith(".rar");
-    }
+				}
+			}
 
-    // Métodos de búsqueda recursiva
+			for (Cargador cargador : Cargador.cargadores) {
+				if (cargador.modEsDeCargador(this)) {
+					cargadores_de_mod.add(cargador);
+				}
+			}
 
-    @Override
-    public ArchivoDeMod obtenerDesde() {
-        return desde;
-    }
+		} catch (IOException e) {
+			CrashDetectorLogger.logException(e);
+		}
 
-    @Override
-    public List<ArchivoDeMod> mods_en_mods() {
-        return mods_en_mod;
-    }
+		return contieneDefinicionMod;
+	}
 
-    @Override
-    public List<String> nombre() {
-        return nombres;
-    }
+	/**
+	 * Procesa un archivo de clase y lo añade al mapa de bytes de clase.
+	 */
+	private void procesarClase(Path entrada) {
+		String nombreClase = entrada.toString().replace(rutaRaiz.toString(), "").replace(File.separator, ".")
+				.replace(".class", "");
+		if (nombreClase.startsWith(".")) {
+			nombreClase = nombreClase.substring(1);
+		}
+		clases.add(nombreClase);
 
-    @Override
-    public String ubicacion() {
-        return ubicacion;
-    }
+		// Guardar bytes de clase para análisis posterior con ASM
+		String nombreInterno = entrada.toString().replace(rutaRaiz.toString(), "").substring(1)
+				.replace(File.separator, "/").replace(".class", "");
+		try {
+			mapaBytesClase.put(nombreInterno, Files.readAllBytes(entrada));
+		} catch (IOException e) {
+			CrashDetectorLogger.logException(e);
+		}
+	}
 
-    @Override
-    public List<String> clases() {
-        return clases;
-    }
+	/**
+	 * Procesa archivos anidados (JAR, ZIP, etc.) creando instancias de ModPKZip.
+	 */
+	private void procesarArchivoAnidado(Path entrada, String nombre) {
+		try (InputStream inputStream = new FileInputStream(entrada.toFile())) {
+			String nuevaUbicacion = ubicacion + "/" + nombre;
+			mods_en_mod.add(new ModPKZip(nuevaUbicacion, this, inputStream));
+		} catch (IOException e) {
+			CrashDetectorLogger.logException(e);
+		}
+	}
 
-    @Override
-    public boolean tieneNombreRecursivo(String nombre) {
-        if (this.nombres.contains(nombre)) return true;
-        for (ArchivoDeMod mod : mods_en_mods()) {
-            if (mod.tieneNombreRecursivo(nombre)) return true;
-        }
-        return false;
-    }
+	/**
+	 * Devuelve true si el archivo es un contenedor anidado (como .jar, .zip, etc.)
+	 */
+	private boolean esArchivoAnidado(String nombreArchivo) {
+		return nombreArchivo.endsWith(".jar") || nombreArchivo.endsWith(".zip") || nombreArchivo.endsWith(".fpm")
+				|| nombreArchivo.endsWith(".litemod") || nombreArchivo.endsWith(".war")
+				|| nombreArchivo.endsWith(".ear") || nombreArchivo.endsWith(".rar");
+	}
 
-    @Override
-    public String obtenerNombreRecursivo(String nombre) {
-        if (tieneNombreRecursivo(nombre)) {
-            if (this.nombres.contains(nombre)) return this.ubicacion();
-            for (ArchivoDeMod mod : mods_en_mods()) {
-                String resultado = mod.obtenerNombreRecursivo(nombre);
-                if (resultado != null) return resultado;
-            }
-        }
-        return null;
-    }
+	// Métodos de búsqueda recursiva
 
-    @Override
-    public boolean tieneArchivoRecursivo(String archivo) {
-        if (this.archivos().contains(archivo)) return true;
-        for (ArchivoDeMod mod : mods_en_mods()) {
-            if (mod.tieneArchivoRecursivo(archivo)) return true;
-        }
-        return false;
-    }
+	@Override
+	public ArchivoDeMod obtenerDesde() {
+		return desde;
+	}
 
-    @Override
-    public String obtenerArchivoRecursivo(String archivo) {
-        if (tieneArchivoRecursivo(archivo)) {
-            if (this.archivos().contains(archivo)) return this.ubicacion() + "/" + archivo;
-            for (ArchivoDeMod mod : mods_en_mods()) {
-                String resultado = mod.obtenerArchivoRecursivo(archivo);
-                if (resultado != null) return resultado;
-            }
-        }
-        return null;
-    }
+	@Override
+	public List<ArchivoDeMod> mods_en_mods() {
+		return mods_en_mod;
+	}
 
-    @Override
-    public List<String> archivos() {
-        return archivos;
-    }
+	@Override
+	public List<String> nombre() {
+		return nombres;
+	}
 
-    @Override
-    public List<ArchivoDeMod> buscarModsCon(String termino) {
-        List<ArchivoDeMod> resultados = new ArrayList<>();
+	@Override
+	public String ubicacion() {
+		return ubicacion;
+	}
 
-        boolean tieneArchivo = archivos.contains(termino);
-        boolean tieneClase = clases.contains(termino);
-        String rutaPaquete = termino.replace('.', '/');
-        boolean tienePaquete = clases.stream().anyMatch(clase -> clase.startsWith(rutaPaquete));
+	@Override
+	public List<String> clases() {
+		return clases;
+	}
 
-        if (tieneArchivo || tieneClase || tienePaquete) {
-            resultados.add(this);
-        }
+	@Override
+	public boolean tieneNombreRecursivo(String nombre) {
+		if (this.nombres.contains(nombre))
+			return true;
+		for (ArchivoDeMod mod : mods_en_mods()) {
+			if (mod.tieneNombreRecursivo(nombre))
+				return true;
+		}
+		return false;
+	}
 
-        for (ArchivoDeMod mod : mods_en_mod) {
-            resultados.addAll(mod.buscarModsCon(termino));
-        }
+	@Override
+	public String obtenerNombreRecursivo(String nombre) {
+		if (tieneNombreRecursivo(nombre)) {
+			if (this.nombres.contains(nombre))
+				return this.ubicacion();
+			for (ArchivoDeMod mod : mods_en_mods()) {
+				String resultado = mod.obtenerNombreRecursivo(nombre);
+				if (resultado != null)
+					return resultado;
+			}
+		}
+		return null;
+	}
 
-        return resultados;
-    }
-    
-    @Override
-    public boolean existeClase(String nombreClase) {
-        // Convertir nombre de clase de formato interno (ej: "java/lang/Object") a formato Java (ej: "java.lang.Object")
-        String formatoJava = nombreClase.replace('/', '.');
-        return clases.contains(formatoJava);
-    }
-    
-    @Override
-    public byte[] obtenerBytesClase(String nombreClase) {
-        return mapaBytesClase.get(nombreClase);
-    }
-    
-    @Override
-    public List<String> obtenerTodosLosNombresDeClases() {
-        return new ArrayList<>(mapaBytesClase.keySet());
-    }
+	@Override
+	public boolean tieneArchivoRecursivo(String archivo) {
+		if (this.archivos().contains(archivo))
+			return true;
+		for (ArchivoDeMod mod : mods_en_mods()) {
+			if (mod.tieneArchivoRecursivo(archivo))
+				return true;
+		}
+		return false;
+	}
+
+	@Override
+	public String obtenerArchivoRecursivo(String archivo) {
+		if (tieneArchivoRecursivo(archivo)) {
+			if (this.archivos().contains(archivo))
+				return this.ubicacion() + "/" + archivo;
+			for (ArchivoDeMod mod : mods_en_mods()) {
+				String resultado = mod.obtenerArchivoRecursivo(archivo);
+				if (resultado != null)
+					return resultado;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public List<String> archivos() {
+		return archivos;
+	}
+
+	@Override
+	public List<ArchivoDeMod> buscarModsCon(String termino) {
+		List<ArchivoDeMod> resultados = new ArrayList<>();
+
+		boolean tieneArchivo = archivos.contains(termino);
+		boolean tieneClase = clases.contains(termino);
+		String rutaPaquete = termino.replace('.', '/');
+		boolean tienePaquete = clases.stream().anyMatch(clase -> clase.startsWith(rutaPaquete));
+
+		if (tieneArchivo || tieneClase || tienePaquete) {
+			resultados.add(this);
+		}
+
+		for (ArchivoDeMod mod : mods_en_mod) {
+			resultados.addAll(mod.buscarModsCon(termino));
+		}
+
+		return resultados;
+	}
+
+	@Override
+	public boolean existeClase(String nombreClase) {
+		// Convertir nombre de clase de formato interno (ej: "java/lang/Object") a
+		// formato Java (ej: "java.lang.Object")
+		String formatoJava = nombreClase.replace('/', '.');
+		return clases.contains(formatoJava);
+	}
+
+	@Override
+	public byte[] obtenerBytesClase(String nombreClase) {
+		return mapaBytesClase.get(nombreClase);
+	}
+
+	@Override
+	public List<String> obtenerTodosLosNombresDeClases() {
+		return new ArrayList<>(mapaBytesClase.keySet());
+	}
+
 	@Override
 	public List<Cargador> cargadores() {
 		// TODO Auto-generated method stub
 		return cargadores_de_mod;
 	}
-    
-    
-    
-    
+
 }

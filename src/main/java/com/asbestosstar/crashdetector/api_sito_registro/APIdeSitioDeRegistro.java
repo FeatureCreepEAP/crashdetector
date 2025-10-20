@@ -7,35 +7,31 @@ import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Consola;
 
 public interface APIdeSitioDeRegistro {
-	
-	List<APIdeSitioDeRegistro> APIS = new ArrayList<APIdeSitioDeRegistro>();
-	
-	
 
-	
+	List<APIdeSitioDeRegistro> APIS = new ArrayList<APIdeSitioDeRegistro>();
+
 	public static APIdeSitioDeRegistro obtenerAPIdeConfig() throws NoAPIdeRegistro {
-		
-	String nom =	Config.obtenerInstancia().obtenerApiSeleccionada();
-		for(APIdeSitioDeRegistro reg:APIS) {
-			if(reg.nombre().equals(nom)) {
+
+		String nom = Config.obtenerInstancia().obtenerApiSeleccionada();
+		for (APIdeSitioDeRegistro reg : APIS) {
+			if (reg.nombre().equals(nom)) {
 				return reg;
 			}
 		}
-		
+
 		throw new NoAPIdeRegistro();
 	}
-	
-	
+
 	public String nombre();
-	
+
 	/**
 	 * 
 	 * @return enlance TODO mas de uno
 	 */
 	public String publicarRegistro(Consola registro) throws DemasiadoGrande, ErrorConPublicar;
-	
+
 	public List<String> sitiosPorDefecto();
-	
+
 	public static String sitioDeConfig() {
 		return Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado();
 	}

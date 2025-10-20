@@ -58,19 +58,17 @@ public class LegacyRandomSourceMultiHilos implements Verificaciones {
 				.construir();
 
 	}
-	
+
 	@Override
 	public String id() {
 		// TODO Auto-generated method stub
 		return "legacy_random_source_multihilo";
 	}
-	
+
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
 		// TODO Auto-generated method stub
-		return false;//TODO
+		return false;// TODO
 	}
-	
-	
 
 }

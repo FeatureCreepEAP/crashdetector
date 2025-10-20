@@ -197,18 +197,17 @@ public class DifDeMods implements Verificaciones {
 		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
 				.construir();
 	}
-	
+
 	@Override
 	public String id() {
 		// TODO Auto-generated method stub
 		return "dif_de_mods";
 	}
-	
+
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
-	
+
 }

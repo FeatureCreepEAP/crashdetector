@@ -175,12 +175,11 @@ public class SpongeMixinConfigsProblematicos implements Verificaciones {
 		// TODO Auto-generated method stub
 		return "spongemixin_configs_problematicos";
 	}
-	
+
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
 		// TODO Auto-generated method stub
-		return false;//TODO
+		return false;// TODO
 	}
-	
-	
+
 }

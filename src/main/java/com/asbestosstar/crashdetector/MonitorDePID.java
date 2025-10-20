@@ -49,7 +49,7 @@ public class MonitorDePID {
 	public static Path carpeta = carpeta_como_archivo.toPath();
 	public static File ArchivoDeCodigoError0 = carpeta.resolve("ArchivoDeCodigoError0").toFile();
 	public static Path ultimo_mods = carpeta.resolve("ultima_mods");
-	//public static Path viajo_ultima_mods = carpeta.resolve("viajo_ultima_mods");
+	// public static Path viajo_ultima_mods = carpeta.resolve("viajo_ultima_mods");
 	public static List<Consola> consolas = new ArrayList<Consola>();
 
 	public static String nl = System.lineSeparator();
@@ -62,7 +62,6 @@ public class MonitorDePID {
 	public static boolean consola_de_launcher_inyectado = false;
 	public static StringBuilder contenidoInforme;
 	public static Analizador analizador = new Analizador();
-
 
 	/**
 	 * Es diferente en el process diferente
@@ -157,29 +156,23 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/boton_cdmods.png", carpeta.resolve("imagenes/boton_cdmods.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/cd_chars.png", carpeta.resolve("imagenes/cd_chars.png").toFile());
 
-		
-		
 		copiarACarpetaDesdeJar("/imagenes/cd_logo.png", carpeta.resolve("imagenes/cd_logo.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/profeco.jpg", carpeta.resolve("imagenes/profeco.jpg").toFile());
 		copiarACarpetaDesdeJar("/imagenes/saliormoongrep.png", carpeta.resolve("imagenes/saliormoongrep.png").toFile());
-	
-		
+
 		copiarACarpetaDesdeJar("/imagenes/bandera_mexico.png", carpeta.resolve("imagenes/bandera_mexico.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/bandera_inglaterra.png", carpeta.resolve("imagenes/bandera_inglaterra.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/bandera_inglaterra.png",
+				carpeta.resolve("imagenes/bandera_inglaterra.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/bandera_arabia.png", carpeta.resolve("imagenes/bandera_arabia.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/bandera_brasil.png", carpeta.resolve("imagenes/bandera_brasil.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/bandera_iran.png", carpeta.resolve("imagenes/bandera_iran.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/bandera_rusia.png", carpeta.resolve("imagenes/bandera_rusia.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/bandera_china.png", carpeta.resolve("imagenes/bandera_china.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/bandera_esperanto.png", carpeta.resolve("imagenes/bandera_esperanto.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/bandera_esperanto.png",
+				carpeta.resolve("imagenes/bandera_esperanto.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/bandera_japon.png", carpeta.resolve("imagenes/bandera_japon.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/bandera_corea.png", carpeta.resolve("imagenes/bandera_corea.png").toFile());
 
-		
-
-		
-		
-		
 		copiarACarpetaDesdeJar("/imagenes/mod.png", carpeta.resolve("imagenes/mod.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/clase.png", carpeta.resolve("imagenes/clase.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/metodo.png", carpeta.resolve("imagenes/metodo.png").toFile());
@@ -290,12 +283,12 @@ public class MonitorDePID {
 			String cp = System.getProperty("java.class.path") + File.pathSeparator + jar;
 			// System.out.println("******************" + cp);
 
-		ProcessBuilder pb=	new ProcessBuilder(javaBinary, "-cp", cp, "com.asbestosstar.crashdetector.MonitorDePID", "--monitor",
-					String.valueOf(pid)).inheritIO();
-		pb.redirectError(new File(CrashDetectorLogger.LOG_FILE_PATH));
-		//pb.redirectOutput(new File(CrashDetectorLogger.LOG_FILE_PATH));
+			ProcessBuilder pb = new ProcessBuilder(javaBinary, "-cp", cp, "com.asbestosstar.crashdetector.MonitorDePID",
+					"--monitor", String.valueOf(pid)).inheritIO();
+			pb.redirectError(new File(CrashDetectorLogger.LOG_FILE_PATH));
+			// pb.redirectOutput(new File(CrashDetectorLogger.LOG_FILE_PATH));
 
-		pb.start();
+			pb.start();
 		} catch (Exception e) {
 			System.out.println("error con comenzando el proceso CD");
 			e.printStackTrace();
@@ -306,31 +299,33 @@ public class MonitorDePID {
 
 	public static void registrarGUISPredeterminado() {
 		// TODO Auto-generated method stub
-		
-		TipoGUI.PRINCIPAL.registrarGUI(PrincipalGUIEstiloLanzer.ID, ()->new PrincipalGUIEstiloLanzer());
-		TipoGUI.TODOS_QUICKFIXES.registrarGUI(PanelQuickFixDemonSlayers.ID, ()->new PanelQuickFixDemonSlayers());
-		TipoGUI.NO_REGISTRO_LANZER.registrarGUI(NoRegistroDeLauncherVShojo.ID, ()->new NoRegistroDeLauncherVShojo());
-		TipoGUI.ESCANER_MCREATOR.registrarGUI(EscanerMCreatorGUIRosemiLoveLock.ID, ()->new EscanerMCreatorGUIRosemiLoveLock());
-		TipoGUI.LECTADOR_DE_CONSOLAS.registrarGUI(LectadorDeConsolasHoloTalk.ID, ()->new LectadorDeConsolasHoloTalk());
-		TipoGUI.HISTORIA_DE_MODS.registrarGUI(HistoriaModsGUILegacy.ID, ()->new HistoriaModsGUILegacy());
-		TipoGUI.GREPR.registrarGUI(BusquedaGUISaliorMoon.ID, ()->new BusquedaGUISaliorMoon());
-		TipoGUI.EDITOR_FIRMAS.registrarGUI(EditorCodiceGUIIronMouse.ID, ()->new EditorCodiceGUIIronMouse());
-		//TipoGUI.PRINCIPAL.registrarGUI(DialogoCompartir.ID, ()->new DialogoCompartir());
-		TipoGUI.ARBOL_DE_MODS.registrarGUI(ArbolDeModsGUIHamu.ID, ()->new ArbolDeModsGUIHamu());
 
+		TipoGUI.PRINCIPAL.registrarGUI(PrincipalGUIEstiloLanzer.ID, () -> new PrincipalGUIEstiloLanzer());
+		TipoGUI.TODOS_QUICKFIXES.registrarGUI(PanelQuickFixDemonSlayers.ID, () -> new PanelQuickFixDemonSlayers());
+		TipoGUI.NO_REGISTRO_LANZER.registrarGUI(NoRegistroDeLauncherVShojo.ID, () -> new NoRegistroDeLauncherVShojo());
+		TipoGUI.ESCANER_MCREATOR.registrarGUI(EscanerMCreatorGUIRosemiLoveLock.ID,
+				() -> new EscanerMCreatorGUIRosemiLoveLock());
+		TipoGUI.LECTADOR_DE_CONSOLAS.registrarGUI(LectadorDeConsolasHoloTalk.ID,
+				() -> new LectadorDeConsolasHoloTalk());
+		TipoGUI.HISTORIA_DE_MODS.registrarGUI(HistoriaModsGUILegacy.ID, () -> new HistoriaModsGUILegacy());
+		TipoGUI.GREPR.registrarGUI(BusquedaGUISaliorMoon.ID, () -> new BusquedaGUISaliorMoon());
+		TipoGUI.EDITOR_FIRMAS.registrarGUI(EditorCodiceGUIIronMouse.ID, () -> new EditorCodiceGUIIronMouse());
+		// TipoGUI.PRINCIPAL.registrarGUI(DialogoCompartir.ID, ()->new
+		// DialogoCompartir());
+		TipoGUI.ARBOL_DE_MODS.registrarGUI(ArbolDeModsGUIHamu.ID, () -> new ArbolDeModsGUIHamu());
 
 	}
 
 	private static void monitor_proceso(long pid) {
-		//List<Consola> consolas_sin_processando = Consola.obtenerConsolas();
+		// List<Consola> consolas_sin_processando = Consola.obtenerConsolas();
 		ProxySysOutSysErrCDProceso.init();
 		MonitorDePID.pid = pid;
 		Transformaciones.init();
-		if(ultimo_mods.toFile().exists()) {
+		if (ultimo_mods.toFile().exists()) {
 			CargadorExtensiones.cargarExtensionesProcesoMonitor(ultimo_mods.toFile());
 		}
 		Entregar.recibir();
-		
+
 		System.out.println(idioma.buscando_para_pid(pid));
 		CountDownLatch latch = new CountDownLatch(1); // Necesito por que sin esta preceso esta muerte
 
@@ -349,10 +344,6 @@ public class MonitorDePID {
 				// if (duration.getSeconds() >= 25) {// Para las consolas completa
 				// } else {
 
-				
-				
-				
-				
 				List<Consola> consolas_sin_processando = Consola.obtenerConsolas();
 
 				if (!ArchivoDeCodigoError0.exists() && !Consola.tiene_registro_de_launcher(consolas_sin_processando)) {
@@ -378,9 +369,8 @@ public class MonitorDePID {
 						obtenerConsolaDeLauncher(utc);
 					}
 				}
-				
+
 				historia_mods();
-				
 
 				Instant luego = Instant.now();
 				recargar(true, luego);
@@ -398,15 +388,16 @@ public class MonitorDePID {
 					} else {
 						CrashDetectorLogger.log("no headless ");
 
-final 						PrincipalGUI gui = TipoGUI.PRINCIPAL.obtenerGUIPredeterminado(PrincipalGUIEstiloLanzer.ID, () -> { return new PrincipalGUIEstiloLanzer(); });
-CrashDetectorLogger.log("tiene principal gui");
+						final PrincipalGUI gui = TipoGUI.PRINCIPAL.obtenerGUIPredeterminado(PrincipalGUIEstiloLanzer.ID,
+								() -> {
+									return new PrincipalGUIEstiloLanzer();
+								});
+						CrashDetectorLogger.log("tiene principal gui");
 
-						SwingUtilities.invokeLater(() -> 
-						
-						
+						SwingUtilities.invokeLater(() ->
+
 						gui.constructir(utc, latch)
-						
-								
+
 						);
 					}
 
@@ -452,53 +443,42 @@ CrashDetectorLogger.log("tiene principal gui");
 		// TODO Auto-generated method stub
 
 		ArchivoDeCodigoError0.delete();
-		//viajo_ultima_mods.toFile().delete();
+		// viajo_ultima_mods.toFile().delete();
 		latch.countDown();
 		System.exit(0);
 	}
-	
-	
-	
-	
-	
-	
+
 	public static void historia_mods() {
 
-	    try {
-	        Path directorioHistorial = carpeta.resolve("historia_mods");
-	        Files.createDirectories(directorioHistorial);
+		try {
+			Path directorioHistorial = carpeta.resolve("historia_mods");
+			Files.createDirectories(directorioHistorial);
 
-	        File[] archivosHistorial = directorioHistorial.toFile().listFiles();
-	        int siguienteNumero = 0;
-	        if (archivosHistorial != null) {
-	            for (File archivo : archivosHistorial) {
-	                String nombre = archivo.getName();
-	                if (nombre.matches("\\d{6}\\.falla") || nombre.matches("\\d{6}\\.exito")) {
-	                    int num = Integer.parseInt(nombre.substring(0, 6));
-	                    if (num >= siguienteNumero) siguienteNumero = num + 1;
-	                }
-	            }
-	        }
+			File[] archivosHistorial = directorioHistorial.toFile().listFiles();
+			int siguienteNumero = 0;
+			if (archivosHistorial != null) {
+				for (File archivo : archivosHistorial) {
+					String nombre = archivo.getName();
+					if (nombre.matches("\\d{6}\\.falla") || nombre.matches("\\d{6}\\.exito")) {
+						int num = Integer.parseInt(nombre.substring(0, 6));
+						if (num >= siguienteNumero)
+							siguienteNumero = num + 1;
+					}
+				}
+			}
 
-	        String extension = activar() ? "falla" : "exito";
-	        String nombreArchivo = String.format("%06d.%s", siguienteNumero, extension);
-	        Path archivoHistorial = directorioHistorial.resolve(nombreArchivo);
+			String extension = activar() ? "falla" : "exito";
+			String nombreArchivo = String.format("%06d.%s", siguienteNumero, extension);
+			Path archivoHistorial = directorioHistorial.resolve(nombreArchivo);
 
-	        if (ultimo_mods.toFile().exists()) {
-	            String contenido = new String(Files.readAllBytes(ultimo_mods), StandardCharsets.UTF_8);
-	            Files.write(archivoHistorial, contenido.getBytes(StandardCharsets.UTF_8));
-	        }
-	    } catch (IOException e) {
-	        CrashDetectorLogger.log("Error al crear historial de modlist: " + e.getMessage());
-	    }
+			if (ultimo_mods.toFile().exists()) {
+				String contenido = new String(Files.readAllBytes(ultimo_mods), StandardCharsets.UTF_8);
+				Files.write(archivoHistorial, contenido.getBytes(StandardCharsets.UTF_8));
+			}
+		} catch (IOException e) {
+			CrashDetectorLogger.log("Error al crear historial de modlist: " + e.getMessage());
+		}
 	}
-	
-	
-	
-	
-	
-	
-	
 
 	/**
 	 * asegura los registros son completa para 20 segundos
@@ -565,7 +545,10 @@ CrashDetectorLogger.log("tiene principal gui");
 		frame_blanco.setVisible(true);
 
 		CountDownLatch templach = new CountDownLatch(1);
-		final 						NoRegistroLanzadorGUI noreg = TipoGUI.NO_REGISTRO_LANZER.obtenerGUIPredeterminado(NoRegistroDeLauncherVShojo.ID, () -> { return new NoRegistroDeLauncherVShojo(); });
+		final NoRegistroLanzadorGUI noreg = TipoGUI.NO_REGISTRO_LANZER
+				.obtenerGUIPredeterminado(NoRegistroDeLauncherVShojo.ID, () -> {
+					return new NoRegistroDeLauncherVShojo();
+				});
 
 		SwingUtilities.invokeLater(() -> {
 			noreg.preparar(frame_blanco, utc);
@@ -798,76 +781,82 @@ CrashDetectorLogger.log("tiene principal gui");
 //	    return false;
 //	}
 
-/**
- * Copia un recurso desde el JAR a una ubicación en el disco, preservando archivos existentes válidos
- * @param ubicacionEnJar Ruta del recurso dentro del JAR
- * @param resultado Archivo de destino en el sistema de archivos
- */
-public static void copiarACarpetaDesdeJar(String ubicacionEnJar, File resultado) {
-    // Verificar si el archivo ya existe y es válido (con contenido)
-    if (resultado.exists()) {
-        // Si el archivo es válido (tamaño mayor a cero), no hacer nada
-        if (resultado.length() > 0) {
-            return;
-        }
-        
-        // Si el archivo existe pero está vacío (0 bytes), registrar y eliminar para recrearlo
-        if (resultado.length() == 0) {
-            if (!resultado.delete()) {
-                CrashDetectorLogger.log("No se pudo eliminar el archivo vacío para recrearlo: " + resultado.getAbsolutePath());
-                return;
-            }
-        }
-    } else {
-        // Si el archivo no existe, crear directorios necesarios
-        resultado.getParentFile().mkdirs();
-    }
+	/**
+	 * Copia un recurso desde el JAR a una ubicación en el disco, preservando
+	 * archivos existentes válidos
+	 * 
+	 * @param ubicacionEnJar Ruta del recurso dentro del JAR
+	 * @param resultado      Archivo de destino en el sistema de archivos
+	 */
+	public static void copiarACarpetaDesdeJar(String ubicacionEnJar, File resultado) {
+		// Verificar si el archivo ya existe y es válido (con contenido)
+		if (resultado.exists()) {
+			// Si el archivo es válido (tamaño mayor a cero), no hacer nada
+			if (resultado.length() > 0) {
+				return;
+			}
 
-    File archivoTemporal = null;
-    try {
-        // Preparar archivo temporal
-        archivoTemporal = new File(resultado.getParentFile(), resultado.getName() + ".tmp");
-        
-        try (InputStream inputStream = MonitorDePID.class.getResourceAsStream(ubicacionEnJar);
-             FileOutputStream outputStream = new FileOutputStream(archivoTemporal)) {
+			// Si el archivo existe pero está vacío (0 bytes), registrar y eliminar para
+			// recrearlo
+			if (resultado.length() == 0) {
+				if (!resultado.delete()) {
+					CrashDetectorLogger
+							.log("No se pudo eliminar el archivo vacío para recrearlo: " + resultado.getAbsolutePath());
+					return;
+				}
+			}
+		} else {
+			// Si el archivo no existe, crear directorios necesarios
+			resultado.getParentFile().mkdirs();
+		}
 
-            if (inputStream == null) {
-                throw new RuntimeException("Recurso no encontrado en el JAR: " + ubicacionEnJar);
-            }
+		File archivoTemporal = null;
+		try {
+			// Preparar archivo temporal
+			archivoTemporal = new File(resultado.getParentFile(), resultado.getName() + ".tmp");
 
-            byte[] buffer = new byte[8192]; // Buffer más grande para mayor eficiencia
-            int bytesRead;
-            while ((bytesRead = inputStream.read(buffer)) != -1) {
-                outputStream.write(buffer, 0, bytesRead);
-            }
-        }
+			try (InputStream inputStream = MonitorDePID.class.getResourceAsStream(ubicacionEnJar);
+					FileOutputStream outputStream = new FileOutputStream(archivoTemporal)) {
 
-        // Validar que el archivo temporal se escribió correctamente
-        if (archivoTemporal.length() == 0) {
-            throw new IOException("El recurso se escribió como archivo vacío: " + ubicacionEnJar);
-        }
+				if (inputStream == null) {
+					throw new RuntimeException("Recurso no encontrado en el JAR: " + ubicacionEnJar);
+				}
 
-        // Mover el archivo temporal al destino final (reemplaza solo si es necesario)
-        if (resultado.exists() && !resultado.delete()) {
-            CrashDetectorLogger.log("No se pudo eliminar archivo previo para reemplazar: " + resultado.getAbsolutePath());
-            return;
-        }
-        
-        if (!archivoTemporal.renameTo(resultado)) {
-            Files.copy(archivoTemporal.toPath(), resultado.toPath(), StandardCopyOption.REPLACE_EXISTING);
-            Files.delete(archivoTemporal.toPath());
-        }
-    } catch (Exception e) {
-        CrashDetectorLogger.log("Error al extraer recurso " + ubicacionEnJar + " al disco: " + e.getMessage());
-        if (archivoTemporal != null && archivoTemporal.exists()) {
-            try {
-                Files.delete(archivoTemporal.toPath());
-            } catch (IOException ex) {
-                CrashDetectorLogger.log("No se pudo limpiar el archivo temporal: " + archivoTemporal.getAbsolutePath());
-            }
-        }
-    }
-}
+				byte[] buffer = new byte[8192]; // Buffer más grande para mayor eficiencia
+				int bytesRead;
+				while ((bytesRead = inputStream.read(buffer)) != -1) {
+					outputStream.write(buffer, 0, bytesRead);
+				}
+			}
+
+			// Validar que el archivo temporal se escribió correctamente
+			if (archivoTemporal.length() == 0) {
+				throw new IOException("El recurso se escribió como archivo vacío: " + ubicacionEnJar);
+			}
+
+			// Mover el archivo temporal al destino final (reemplaza solo si es necesario)
+			if (resultado.exists() && !resultado.delete()) {
+				CrashDetectorLogger
+						.log("No se pudo eliminar archivo previo para reemplazar: " + resultado.getAbsolutePath());
+				return;
+			}
+
+			if (!archivoTemporal.renameTo(resultado)) {
+				Files.copy(archivoTemporal.toPath(), resultado.toPath(), StandardCopyOption.REPLACE_EXISTING);
+				Files.delete(archivoTemporal.toPath());
+			}
+		} catch (Exception e) {
+			CrashDetectorLogger.log("Error al extraer recurso " + ubicacionEnJar + " al disco: " + e.getMessage());
+			if (archivoTemporal != null && archivoTemporal.exists()) {
+				try {
+					Files.delete(archivoTemporal.toPath());
+				} catch (IOException ex) {
+					CrashDetectorLogger
+							.log("No se pudo limpiar el archivo temporal: " + archivoTemporal.getAbsolutePath());
+				}
+			}
+		}
+	}
 
 	/**
 	 * 
@@ -897,7 +886,7 @@ public static void copiarACarpetaDesdeJar(String ubicacionEnJar, File resultado)
 			resultados = true;
 		}
 
-		//CrashDetectorLogger.log("resultdos " + res);
+		// CrashDetectorLogger.log("resultdos " + res);
 		contenidoInforme = constructor;
 		local = GeneradorDeInformacion.generarLocal(consolas, utc).getAbsolutePath();
 	}

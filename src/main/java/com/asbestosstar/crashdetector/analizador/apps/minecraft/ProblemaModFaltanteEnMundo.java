@@ -114,21 +114,17 @@ public class ProblemaModFaltanteEnMundo implements Verificaciones {
 	public boolean anularNormal() {
 		return true;
 	}
-	
+
 	@Override
 	public String id() {
 		// TODO Auto-generated method stub
 		return "mod_faltante_en_mundo";
 	}
+
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
 		// TODO Auto-generated method stub
-		return false;//TODO
+		return false;// TODO
 	}
-	
-	
-	
-	
-	
-	
+
 }

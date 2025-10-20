@@ -125,22 +125,17 @@ public class NoSuchElementAnimacionMinecraft implements Verificaciones {
 
 		return builder.construir();
 	}
-	
+
 	@Override
 	public String id() {
 		// TODO Auto-generated method stub
 		return "no_such_element_animacion_minecraft";
 	}
-	
+
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
 		// TODO Auto-generated method stub
-		return false;//TODO
+		return false;// TODO
 	}
-	
-	
-	
-	
-	
-	
+
 }

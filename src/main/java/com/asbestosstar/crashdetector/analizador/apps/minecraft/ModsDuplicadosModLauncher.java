@@ -17,7 +17,8 @@ public class ModsDuplicadosModLauncher implements Verificaciones {
 		String contenidoConsola = consola.contenido_verificar;
 		String[] lineas = contenidoConsola.split(Verificaciones.nl);
 
-		if (contenidoConsola.contains("Found duplicate mods")||contenidoConsola.contains("Found more than one mod with modid")) {
+		if (contenidoConsola.contains("Found duplicate mods")
+				|| contenidoConsola.contains("Found more than one mod with modid")) {
 			mensaje.append(MonitorDePID.idioma.no_tienes_las_dependencias_necesarias()).append(Verificaciones.nl_html);
 
 			for (int i = 0; i < lineas.length; i++) {
@@ -27,7 +28,8 @@ public class ModsDuplicadosModLauncher implements Verificaciones {
 					String enlace = consola.agregarErrorALectador(i, this);
 					// Añadir mensaje + enlace en la misma línea
 					mensaje.append(mensajeMod).append(" ").append(enlace).append(Verificaciones.nl_html);
-				}else if (linea.contains("Found more than one mod with modid \"crash_assistant\". Crash Assistant is duplicated. Crashing!")) {
+				} else if (linea.contains(
+						"Found more than one mod with modid \"crash_assistant\". Crash Assistant is duplicated. Crashing!")) {
 					String enlace = consola.agregarErrorALectador(i, this);
 					mensaje.append("crash_assistant").append(" ").append(enlace).append(Verificaciones.nl_html);
 				}
@@ -108,21 +110,17 @@ public class ModsDuplicadosModLauncher implements Verificaciones {
 		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
 				.construir();
 	}
-	
+
 	@Override
 	public String id() {
 		// TODO Auto-generated method stub
 		return "mods_duplicados_modlauncher";
 	}
+
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
 		// TODO Auto-generated method stub
-		return false;//TODO
+		return false;// TODO
 	}
-	
-	
-	
-	
-	
-	
+
 }

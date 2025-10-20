@@ -35,7 +35,7 @@ public class EnlanceMD {
 	 * @param textoDeMensaje Texto Markdown con enlaces del tipo [texto](url)
 	 */
 	public static void guardar(String textoDeMensaje) {
-		//CrashDetectorLogger.log("EnlaceMD: limpiando carpeta temporal");
+		// CrashDetectorLogger.log("EnlaceMD: limpiando carpeta temporal");
 		limpiarCarpetaTemporal();
 		contadorGenerico.set(1);
 
@@ -48,12 +48,12 @@ public class EnlanceMD {
 		while (m.find()) {
 			String texto = m.group(1);
 			String url = m.group(2);
-			//CrashDetectorLogger.log("EnlaceMD: enlace -> " + url);
+			// CrashDetectorLogger.log("EnlaceMD: enlace -> " + url);
 			enlaces.add(new Enlace(texto, url));
 		}
 
 		if (enlaces.isEmpty()) {
-			//CrashDetectorLogger.log("EnlaceMD: no se encontraron enlaces");
+			// CrashDetectorLogger.log("EnlaceMD: no se encontraron enlaces");
 			return;
 		}
 
@@ -72,9 +72,9 @@ public class EnlanceMD {
 					consolasNuevas.add(c);
 			} catch (InterruptedException ex) {
 				Thread.currentThread().interrupt();
-			//	CrashDetectorLogger.log("EnlaceMD: descarga interrumpida");
+				// CrashDetectorLogger.log("EnlaceMD: descarga interrumpida");
 			} catch (ExecutionException ex) {
-			//	CrashDetectorLogger.log("EnlaceMD: error en tarea -> " + ex.getCause());
+				// CrashDetectorLogger.log("EnlaceMD: error en tarea -> " + ex.getCause());
 			}
 		}
 
@@ -85,7 +85,8 @@ public class EnlanceMD {
 			MonitorDePID.consola_de_launcher_inyectado = true;
 		}
 
-		//CrashDetectorLogger.log("EnlaceMD: finalizado, consolas nuevas = " + consolasNuevas.size());
+		// CrashDetectorLogger.log("EnlaceMD: finalizado, consolas nuevas = " +
+		// consolasNuevas.size());
 	}
 
 	/** Datos de un enlace Markdown. */
@@ -117,7 +118,7 @@ public class EnlanceMD {
 
 			String fuenteDeNombre = contieneNombreLog(url) ? url : texto;
 			if (!contieneNombreLog(fuenteDeNombre)) {
-				//CrashDetectorLogger.log("EnlaceMD: se omite (no parece log) -> " + url);
+				// CrashDetectorLogger.log("EnlaceMD: se omite (no parece log) -> " + url);
 				return null;
 			}
 
@@ -131,7 +132,8 @@ public class EnlanceMD {
 				consola.finalizarContenidoInyectado(MonitorDePID.leer_archivo(destino.toPath()));
 				return consola;
 			} catch (Exception e) {
-			//	CrashDetectorLogger.log("EnlaceMD: error procesando " + url + " -> " + e.getMessage());
+				// CrashDetectorLogger.log("EnlaceMD: error procesando " + url + " -> " +
+				// e.getMessage());
 				return null;
 			}
 		}

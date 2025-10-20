@@ -35,13 +35,14 @@ public class ConfigDouble implements ElementoConfig<Double> {
 	}
 
 	/**
-	 * Crea una instancia de ConfigDouble para la clave indicada.
-	 * Si la clave no existe, se crea automáticamente con el valor por defecto.
+	 * Crea una instancia de ConfigDouble para la clave indicada. Si la clave no
+	 * existe, se crea automáticamente con el valor por defecto.
 	 * 
-	 * @param clave            Nombre de la clave en el archivo de configuración.
-	 * @param valorPorDefecto  Valor numérico a usar si la clave no existe.
+	 * @param clave           Nombre de la clave en el archivo de configuración.
+	 * @param valorPorDefecto Valor numérico a usar si la clave no existe.
 	 * @return Nueva instancia de ConfigDouble.
-	 * @throws IllegalStateException Si la clave existe pero su valor no representa un número válido.
+	 * @throws IllegalStateException Si la clave existe pero su valor no representa
+	 *                               un número válido.
 	 */
 	public static ConfigDouble de(String clave, double valorPorDefecto) throws IllegalStateException {
 		Config config = Config.obtenerInstancia();

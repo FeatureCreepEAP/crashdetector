@@ -47,9 +47,10 @@ import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUI;
 /**
  * GUI base (abstracta) para Historia de Mods.
  * 
- * OBJETIVO: concentrar aquí la lógica técnica (carga, normalización y comparación de archivos),
- * así como la estructura base de la interfaz. La implementación concreta (Legacy) debe centrarse
- * en la apariencia (colores, tamaños, fuentes, imágenes) y en cualquier texto NO localizado.
+ * OBJETIVO: concentrar aquí la lógica técnica (carga, normalización y
+ * comparación de archivos), así como la estructura base de la interfaz. La
+ * implementación concreta (Legacy) debe centrarse en la apariencia (colores,
+ * tamaños, fuentes, imágenes) y en cualquier texto NO localizado.
  * 
  * NOTA: Se mantienen y refuerzan comentarios en español.
  */
@@ -57,7 +58,7 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 
 	private static final long serialVersionUID = 1L;
 
-	public static Map<String,Supplier<HistoriaDeModsGUI>> GUIS = new HashMap<>();
+	public static Map<String, Supplier<HistoriaDeModsGUI>> GUIS = new HashMap<>();
 
 	// ====== Campos técnicos base (compartidos) ======
 	protected final Idioma idioma = MonitorDePID.idioma;
@@ -84,7 +85,8 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 	protected JScrollPane scrollResultado;
 
 	/**
-	 * Constructor base: configura ventana, estructura y lógica. La apariencia se delega a la impl.
+	 * Constructor base: configura ventana, estructura y lógica. La apariencia se
+	 * delega a la impl.
 	 */
 	public HistoriaDeModsGUI() {
 
@@ -92,8 +94,8 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 
 	// ====== Estructura base (técnico) ======
 	/**
-	 * Construye el armazón de la UI con componentes mínimos (sin estilos).
-	 * La implementación concreta ajustará estilos/colores en aplicarApariencia().
+	 * Construye el armazón de la UI con componentes mínimos (sin estilos). La
+	 * implementación concreta ajustará estilos/colores en aplicarApariencia().
 	 */
 	protected void construirEstructuraBase() {
 		panelPrincipal = new JPanel(new BorderLayout(10, 10));
@@ -106,23 +108,37 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 		gbc.insets = new Insets(5, 5, 5, 5);
 
 		// Etiquetas de columnas (localizadas)
-		gbc.gridx = 0; gbc.gridy = 0; gbc.weightx = 0.5; gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.weightx = 0.5;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
 		JLabel etiquetaIzquierda = new JLabel(idioma.archivo0());
 		panelSuperior.add(etiquetaIzquierda, gbc);
 
-		gbc.gridx = 1; gbc.gridy = 0; gbc.weightx = 0.5; gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		gbc.weightx = 0.5;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
 		JLabel etiquetaDerecha = new JLabel(idioma.archivo1());
 		panelSuperior.add(etiquetaDerecha, gbc);
 
 		// Paneles de listas
-		gbc.gridx = 0; gbc.gridy = 1; gbc.weightx = 0.5; gbc.weighty = 1.0; gbc.fill = GridBagConstraints.BOTH;
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.weightx = 0.5;
+		gbc.weighty = 1.0;
+		gbc.fill = GridBagConstraints.BOTH;
 		panelIzquierdo = new JPanel();
 		panelIzquierdo.setLayout(new BoxLayout(panelIzquierdo, BoxLayout.Y_AXIS));
 		scrollIzquierdo = new JScrollPane(panelIzquierdo);
 		scrollIzquierdo.setPreferredSize(new Dimension(350, 300));
 		panelSuperior.add(scrollIzquierdo, gbc);
 
-		gbc.gridx = 1; gbc.gridy = 1; gbc.weightx = 0.5; gbc.weighty = 1.0; gbc.fill = GridBagConstraints.BOTH;
+		gbc.gridx = 1;
+		gbc.gridy = 1;
+		gbc.weightx = 0.5;
+		gbc.weighty = 1.0;
+		gbc.fill = GridBagConstraints.BOTH;
 		panelDerecho = new JPanel();
 		panelDerecho.setLayout(new BoxLayout(panelDerecho, BoxLayout.Y_AXIS));
 		scrollDerecho = new JScrollPane(panelDerecho);
@@ -130,7 +146,12 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 		panelSuperior.add(scrollDerecho, gbc);
 
 		// Botón de comparar (texto localizado; estilos van en la impl)
-		gbc.gridx = 0; gbc.gridy = 2; gbc.gridwidth = 2; gbc.weightx = 0; gbc.weighty = 0; gbc.fill = GridBagConstraints.NONE;
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		gbc.gridwidth = 2;
+		gbc.weightx = 0;
+		gbc.weighty = 0;
+		gbc.fill = GridBagConstraints.NONE;
 		botonComparar = new JButton(idioma.comparar());
 		panelSuperior.add(botonComparar, gbc);
 
@@ -150,14 +171,15 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 
 	// ====== Lógica técnica: carga/parseo/normalización/comparación ======
 	/**
-	 * Carga los archivos históricos desde el directorio historia_mods y llena los paneles izq/der.
+	 * Carga los archivos históricos desde el directorio historia_mods y llena los
+	 * paneles izq/der.
 	 */
 	protected void cargarArchivosHistoricos() {
 		try {
 			Path directorioHistorial = MonitorDePID.carpeta.resolve("historia_mods");
 			if (Files.exists(directorioHistorial)) {
-				File[] archivos = directorioHistorial.toFile().listFiles((dir, name) ->
-					name.matches("\\d{6}\\.falla") || name.matches("\\d{6}\\.exito"));
+				File[] archivos = directorioHistorial.toFile()
+						.listFiles((dir, name) -> name.matches("\\d{6}\\.falla") || name.matches("\\d{6}\\.exito"));
 
 				if (archivos != null && archivos.length > 0) {
 					// Orden descendente por número de archivo
@@ -193,8 +215,9 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 	}
 
 	/**
-	 * Crea una fila con JRadioButton (nombre de archivo) + etiqueta de estado "(éxito)/(fallo)".
-	 * Apariencia (colores/fuentes) delegada a métodos de estilo para que la impl los sobreescriba.
+	 * Crea una fila con JRadioButton (nombre de archivo) + etiqueta de estado
+	 * "(éxito)/(fallo)". Apariencia (colores/fuentes) delegada a métodos de estilo
+	 * para que la impl los sobreescriba.
 	 */
 	protected JPanel crearLineaArchivo(File archivo, ButtonGroup grupo) {
 		JPanel linea = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
@@ -235,7 +258,8 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 				: grupoDerecho.getSelection().getActionCommand();
 
 		if (archivoIzq == null || archivoDer == null || archivoIzq.equals(archivoDer)) {
-			resultadoPanel.setText("<html><body><font color='red'>" + idioma.seleccionarDosArchivos() + "</font></body></html>");
+			resultadoPanel.setText(
+					"<html><body><font color='red'>" + idioma.seleccionarDosArchivos() + "</font></body></html>");
 			return;
 		}
 
@@ -252,7 +276,8 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 			generarHTMLResultado(archivoIzq, archivoDer, diferencias);
 		} catch (Exception e) {
 			CrashDetectorLogger.log("Error comparando archivos: " + e.getMessage());
-			resultadoPanel.setText("<html><body><font color='red'>" + idioma.errorComparandoArchivos() + "</font></body></html>");
+			resultadoPanel.setText(
+					"<html><body><font color='red'>" + idioma.errorComparandoArchivos() + "</font></body></html>");
 		}
 	}
 
@@ -275,7 +300,8 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 	}
 
 	/**
-	 * Normaliza el nombre del mod (lowercase + sin extensión, solo nombre de archivo).
+	 * Normaliza el nombre del mod (lowercase + sin extensión, solo nombre de
+	 * archivo).
 	 */
 	protected String normalizarNombreMod(String ruta) {
 		String nombre = new File(ruta).getName().toLowerCase();
@@ -308,23 +334,24 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 	}
 
 	/**
-	 * Genera HTML del resultado (estructura técnica). Colores de +/− y estilos de fuente
-	 * pueden ser influidos por la impl vía CSS inline o estilizado del JTextPane.
+	 * Genera HTML del resultado (estructura técnica). Colores de +/− y estilos de
+	 * fuente pueden ser influidos por la impl vía CSS inline o estilizado del
+	 * JTextPane.
 	 */
 	protected void generarHTMLResultado(String archivo1, String archivo2, List<String> diferencias) {
 		StringBuilder html = new StringBuilder();
 		html.append("<html><body>");
-		html.append("<div style='margin:10px 0;padding:10px;border:1px solid #ccc'>")
-			.append("<h3>").append(idioma.comparando()).append(" ")
-			.append(archivo1).append(" ").append(idioma.con()).append(" ")
-			.append(archivo2).append(":</h3>");
+		html.append("<div style='margin:10px 0;padding:10px;border:1px solid #ccc'>").append("<h3>")
+				.append(idioma.comparando()).append(" ").append(archivo1).append(" ").append(idioma.con()).append(" ")
+				.append(archivo2).append(":</h3>");
 
 		if (diferencias.isEmpty()) {
 			html.append("<p style='color:green'>").append(idioma.noHayCambios()).append("</p>");
 		} else {
 			html.append("<ul>");
 			for (String linea : diferencias) {
-				String color = linea.startsWith("+") ? colorHexParaResultadoAnadido() : colorHexParaResultadoEliminado();
+				String color = linea.startsWith("+") ? colorHexParaResultadoAnadido()
+						: colorHexParaResultadoEliminado();
 				html.append("<li style='color:").append(color).append("'>").append(linea).append("</li>");
 			}
 			html.append("</ul>");
@@ -348,23 +375,27 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 	 * Colores semánticos para estados (impl decide paleta).
 	 */
 	protected abstract Color colorEstadoExito();
+
 	protected abstract Color colorEstadoFallo();
 
 	/**
 	 * Colores hex para diffs en HTML (impl decide paleta).
 	 */
 	protected abstract String colorHexParaResultadoAnadido();
+
 	protected abstract String colorHexParaResultadoEliminado();
 
 	/**
-	 * Estilizar radio y etiqueta de estado en las listas (impl decide fuentes/tamaños).
+	 * Estilizar radio y etiqueta de estado en las listas (impl decide
+	 * fuentes/tamaños).
 	 */
 	protected abstract void estilizarRadioArchivo(JRadioButton radio);
+
 	protected abstract void estilizarEstadoArchivo(JLabel estado);
 
 	/**
-	 * Aplicar (o re-aplicar) la apariencia completa de la pantalla: colores, bordes,
-	 * tamaños, imágenes opcionales y cualquier texto NO localizado.
+	 * Aplicar (o re-aplicar) la apariencia completa de la pantalla: colores,
+	 * bordes, tamaños, imágenes opcionales y cualquier texto NO localizado.
 	 * 
 	 * IMPORTANTE: debe restablecer **todos** los colores y textos no localizados.
 	 */
@@ -379,7 +410,9 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 	}
 
 	@Override
-	public boolean puedeEditarApariencia() { return true; }
+	public boolean puedeEditarApariencia() {
+		return true;
+	}
 
 	@Override
 	public TipoGUI<HistoriaDeModsGUI> tipo() {
@@ -395,10 +428,9 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 			gui.setVisible(true);
 		});
 	}
-	
-	
-    @Override
-    public void init() {
+
+	@Override
+	public void init() {
 		// Configuración mínima y localizada
 		setTitle(idioma.historialDeMods());
 		setSize(800, 700);
@@ -413,7 +445,7 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 
 		// Aplicar apariencia inicial (colores, fuentes, textos no localizados)
 		aplicarApariencia();
-        this.setVisible(true);
-    }
-	
+		this.setVisible(true);
+	}
+
 }

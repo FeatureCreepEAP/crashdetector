@@ -11,12 +11,13 @@ import featurecreep.loader.FCLoaderBasic;
 public class CrashDetectorFCMC {
 
 	public static void premain(String args, Instrumentation instrument) {
-		//Buscar para archivos de mods si es FC
-boolean es_fc = true;
+		// Buscar para archivos de mods si es FC
+		boolean es_fc = true;
 		if (clase_existe("featurecreep.loader.FCLoaderBasic")) {
-			if(clase_existe("dangerzone.BaseMod")) {Statics.APP=App.DANGERZONE;}//TODO para otras applicaciones
-			
-			
+			if (clase_existe("dangerzone.BaseMod")) {
+				Statics.APP = App.DANGERZONE;
+			} // TODO para otras applicaciones
+
 			Transformaciones.init();
 			FCLoaderBasic fc = null;
 			if (instrument instanceof FCInstrumentation) {
@@ -27,8 +28,8 @@ boolean es_fc = true;
 					Field field = Class.forName("featurecreep.api.GameInjections").getDeclaredField("loader");
 					fc = (FCLoaderBasic) field.get(null);
 
-				} catch (NoSuchFieldException | SecurityException | ClassNotFoundException
-						| IllegalArgumentException | IllegalAccessException e) {
+				} catch (NoSuchFieldException | SecurityException | ClassNotFoundException | IllegalArgumentException
+						| IllegalAccessException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -44,19 +45,13 @@ boolean es_fc = true;
 			}
 
 		} else {// featurecreep no existe
-			es_fc=false;
+			es_fc = false;
 		}
-		
-		
-		
-		
-		
-		
-		
+
 		if (!Statics.cargador) {
 			Statics.cargador = true;
-			if(!es_fc) {
-				Statics.carpetas_de_mods.add(new File("mods/").toPath());//La carpeta de mods es de la superloader
+			if (!es_fc) {
+				Statics.carpetas_de_mods.add(new File("mods/").toPath());// La carpeta de mods es de la superloader
 			}
 			instrument.addTransformer(new Transformaciones());
 			MonitorDePID.main(new String[] {});

@@ -56,10 +56,8 @@ import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUI;
 
 public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLateralDerecha {
 
-	
-	public static Map<String,Supplier<ArbolDeModsGUI>> GUIS = new HashMap<>();
+	public static Map<String, Supplier<ArbolDeModsGUI>> GUIS = new HashMap<>();
 
-	
 	public JTree arbolModulos;
 	public DefaultTreeModel modeloArbol;
 	public JTextField campoBuscar;
@@ -353,9 +351,13 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		iconoMetodo = crearIcono(MonitorDePID.carpeta.resolve("imagenes/metodo.png").toString(), "m");
 		iconoCampo = crearIcono(MonitorDePID.carpeta.resolve("imagenes/campo.png").toString(), "f");
 		iconoPaquete = crearIcono(MonitorDePID.carpeta.resolve("imagenes/paquete.png").toString(), "P");
-		iconoReferenciaMetodo = crearIcono(MonitorDePID.carpeta.resolve("imagenes/referencia_metodo.png").toString(), "RM");
-		iconoReferenciaCampo = crearIcono(MonitorDePID.carpeta.resolve("imagenes/referencia_campo.png").toString(), "RC");
-		// iconoConstante = crearIcono(MonitorDePID.carpeta.resolve("imagenes/constante.png").toString(), "K");
+		iconoReferenciaMetodo = crearIcono(MonitorDePID.carpeta.resolve("imagenes/referencia_metodo.png").toString(),
+				"RM");
+		iconoReferenciaCampo = crearIcono(MonitorDePID.carpeta.resolve("imagenes/referencia_campo.png").toString(),
+				"RC");
+		// iconoConstante =
+		// crearIcono(MonitorDePID.carpeta.resolve("imagenes/constante.png").toString(),
+		// "K");
 		iconoConstante = crearIcono(MonitorDePID.carpeta.resolve("imagenes/referencia_campo.png").toString(), "K");
 
 		// === Barra superior / búsqueda ===
@@ -505,7 +507,6 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		this.setVisible(true);
 		Buscardor.cargar();
 	}
-
 
 	public void construirArbolInicial() {
 		DefaultMutableTreeNode raiz = new DefaultMutableTreeNode(MonitorDePID.idioma.modsCargados());
@@ -1492,7 +1493,8 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
 		// Intenta cargar el GIF
-		ImageIcon icon = new ImageIcon(MonitorDePID.carpeta.resolve("imagenes/padoru.gif").toString());		if (icon.getIconWidth() <= 0) {
+		ImageIcon icon = new ImageIcon(MonitorDePID.carpeta.resolve("imagenes/padoru.gif").toString());
+		if (icon.getIconWidth() <= 0) {
 			// Fallback visual si no existe el GIF
 			icon = crearIcono("", "…");
 		}
@@ -2112,9 +2114,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 			return texto; // siempre muestra el texto esperado
 		}
 	}
-	
-	
-	
+
 	@Override
 	public TipoGUI tipo() {
 		// TODO Auto-generated method stub

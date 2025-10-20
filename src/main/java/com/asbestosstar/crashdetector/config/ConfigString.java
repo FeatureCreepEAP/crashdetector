@@ -31,11 +31,12 @@ public class ConfigString implements ElementoConfig<String> {
 	}
 
 	/**
-	 * Crea una instancia de ConfigString para la clave indicada.
-	 * Si la clave no existe, se crea automáticamente con el valor por defecto.
+	 * Crea una instancia de ConfigString para la clave indicada. Si la clave no
+	 * existe, se crea automáticamente con el valor por defecto.
 	 * 
-	 * @param clave            Nombre de la clave en el archivo de configuración.
-	 * @param valorPorDefecto  Valor de texto por defecto que se usará si la clave no existe.
+	 * @param clave           Nombre de la clave en el archivo de configuración.
+	 * @param valorPorDefecto Valor de texto por defecto que se usará si la clave no
+	 *                        existe.
 	 * @return Nueva instancia de ConfigString.
 	 */
 	public static ConfigString de(String clave, String valorPorDefecto) {

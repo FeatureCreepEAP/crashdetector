@@ -14,7 +14,7 @@ public class VainillaConsolaDivisor implements DivisorDeArchivos {
 		String[] lineas = contentido_existente.split(Verificaciones.nl);
 		System.out.println("DEBUG Linea de launcher_log es " + String.valueOf(lineas.length));
 		return lineas.length;
-	
+
 	}
 
 	@Override

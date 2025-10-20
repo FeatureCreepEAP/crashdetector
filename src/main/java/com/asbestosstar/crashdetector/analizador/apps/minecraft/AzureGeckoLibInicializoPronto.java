@@ -20,10 +20,9 @@ public class AzureGeckoLibInicializoPronto implements Verificaciones {
 	private boolean geckoLibError = false;
 	private boolean connectorPresente = false;
 	private String enlaceHtml = "";
-	String azure="AzureLib was initialized too early!";
-	String geck="GeckoLib was initialized too early!";
-	
-	
+	String azure = "AzureLib was initialized too early!";
+	String geck = "GeckoLib was initialized too early!";
+
 	@Override
 	public void verificar(Consola consola) {
 		String contenidoConsola = consola.contenido_verificar;
@@ -90,17 +89,17 @@ public class AzureGeckoLibInicializoPronto implements Verificaciones {
 				.agregarEtiqueta(MonitorDePID.idioma.paso1_azure_geckolib_inicializo_pronto())
 				.agregarEtiqueta(MonitorDePID.idioma.paso2_azure_geckolib_inicializo_pronto()).construir();
 	}
-	
+
 	@Override
 	public String id() {
 		// TODO Auto-generated method stub
 		return "azuregeckolibinicialaizo";
 	}
-	
+
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
 		// TODO Auto-generated method stub
 		return trazo.trace.contains(geck) || trazo.trace.contains(azure);
 	}
-	
+
 }

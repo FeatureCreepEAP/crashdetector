@@ -6,7 +6,7 @@ import java.util.Set;
 import org.objectweb.asm.tree.ClassNode;
 
 public interface Parche<T> {
-	
+
 	public static Set<Parche<?>> parches = new HashSet<Parche<?>>();
 
 	public Set<String> clases();
@@ -14,6 +14,7 @@ public interface Parche<T> {
 	public default boolean activar() {
 		return ConfigDeParches.obtenerInstancia().estaActivo(this.id());
 	}
+
 	public default boolean predeterminado() {
 		return false;
 	}
@@ -21,10 +22,11 @@ public interface Parche<T> {
 	public T parche(T contento, String nombre);
 
 	public Class<T> tipo();
-	
+
 	public Parche<T> nuevo();
-	
+
 	public String id();
+
 	public String nombre_de_gui();
 
 	/**
@@ -33,23 +35,27 @@ public interface Parche<T> {
 	 * el nombre proporcionado
 	 */
 	public static <T> T aplicarParches(T contenido, String nombre) {
-	    if (contenido == null || nombre == null) return contenido;
-	    String nombre_codigo=nombre.replace("/", ".");
-	    T resultado = contenido;
+		if (contenido == null || nombre == null)
+			return contenido;
+		String nombre_codigo = nombre.replace("/", ".");
+		T resultado = contenido;
 
-	    for (Parche<?> parche : parches) {
-	        if (!parche.tipo().isAssignableFrom(resultado.getClass())) continue;
+		for (Parche<?> parche : parches) {
+			if (!parche.tipo().isAssignableFrom(resultado.getClass()))
+				continue;
 
-	        @SuppressWarnings("unchecked")
-	        Parche<T> tipo = (Parche<T>) parche;
+			@SuppressWarnings("unchecked")
+			Parche<T> tipo = (Parche<T>) parche;
 
-	        if (!tipo.activar()) continue;
-	        if (!tipo.clases().contains(nombre_codigo)) continue;
+			if (!tipo.activar())
+				continue;
+			if (!tipo.clases().contains(nombre_codigo))
+				continue;
 
-	        resultado = tipo.nuevo().parche(resultado, nombre_codigo);
-	    }
+			resultado = tipo.nuevo().parche(resultado, nombre_codigo);
+		}
 
-	    return resultado;
+		return resultado;
 	}
 
 	/**
@@ -58,7 +64,7 @@ public interface Parche<T> {
 	public static void applicarParches(ClassNode contento, String nombre) {
 		if (contento == null || nombre == null)
 			return;
-		String nombre_codigo=nombre.replace("/", ".");
+		String nombre_codigo = nombre.replace("/", ".");
 		for (Parche<?> parche : parches) {
 			if (parche instanceof ParcheClassNode) {
 				if (parche.activar() && parche.clases().contains(nombre_codigo)) {

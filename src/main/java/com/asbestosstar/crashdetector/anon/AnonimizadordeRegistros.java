@@ -37,11 +37,9 @@ public class AnonimizadordeRegistros {
 	private static final Pattern PATRON_USUARIO_GENERIC = Pattern.compile("\\busername[:=]\\s*([A-Za-z0-9_]{3,16})\\b",
 			Pattern.CASE_INSENSITIVE);
 
-	
- private static final Pattern PATRON_USUARIO_MINECRAFT = Pattern.compile(	
-		    "\\b([A-Za-z0-9_]{3,16})\\b(?=\\s*:(?:\\s*logged in| joined| has| connected| disconnected))");
-	
- 
+	private static final Pattern PATRON_USUARIO_MINECRAFT = Pattern
+			.compile("\\b([A-Za-z0-9_]{3,16})\\b(?=\\s*:(?:\\s*logged in| joined| has| connected| disconnected))");
+
 	private static final Pattern PATRON_USER_LINE = Pattern.compile("\\bUser\\s+([A-Za-z0-9._-]+)\\b",
 			Pattern.CASE_INSENSITIVE);
 
@@ -52,7 +50,8 @@ public class AnonimizadordeRegistros {
 	private static final Pattern PATRON_UUID_MINECRAFT = Pattern.compile("uuid='[0-9A-Fa-f\\-]+(?='|$)");
 
 	private static final Pattern PATRON_ID_SESION = Pattern.compile("Session ID is token:[^:]+:[^\\s]+");
-	//private static final Pattern PATRON_TOKEN_ACCESO = Pattern.compile("--accessToken [^ ]+");
+	// private static final Pattern PATRON_TOKEN_ACCESO =
+	// Pattern.compile("--accessToken [^ ]+");
 	private static final Pattern PATRON_TOKEN_BEARER = Pattern.compile("Bearer [A-Za-z0-9-._~:/?#\\[\\]@!$&'()*+,;=]+");
 	private static final Pattern PATRON_TOKEN_SESION = Pattern.compile("session: [A-Za-z0-9-]+");
 
@@ -69,10 +68,9 @@ public class AnonimizadordeRegistros {
 
 	private static final Pattern PATRON_TOKEN_ACCESO_PARAM = Pattern
 			.compile("--accessToken(?:\\s*,\\s*|\\s+)([^\\s,]+)");
-	
+
 	private static final Pattern PATRON_CLIENT_ID = Pattern.compile("--clientId,\\s*([^,]+)");
 	private static final Pattern PATRON_XUID = Pattern.compile("--xuid,\\s*([^,]+)");
-	
 
 	public static String anonimizar(String contenido) {
 		Set<String> nombres_de_usario = obtenerNombresUsarios(contenido);
@@ -91,59 +89,57 @@ public class AnonimizadordeRegistros {
 		return contenido;
 	}
 
+	private static Set<String> obtenerNombresUsarios(String contenido) {
+		Set<String> usuarios = new HashSet<>();
 
-	  private static Set<String> obtenerNombresUsarios(String contenido) {
-	        Set<String> usuarios = new HashSet<>();
+		for (Pattern p : PATRONES_USUARIO_WINDOWS) {
+			Matcher m = p.matcher(contenido);
+			while (m.find()) {
+				String user = m.group(1);
+				if (!USUARIOS_PRIVILEGIADOS.contains(user.toLowerCase())) {
+					usuarios.add(user);
+				}
+			}
+		}
 
-	        for (Pattern p : PATRONES_USUARIO_WINDOWS) {
-	            Matcher m = p.matcher(contenido);
-	            while (m.find()) {
-	                String user = m.group(1);
-	                if (!USUARIOS_PRIVILEGIADOS.contains(user.toLowerCase())) {
-	                    usuarios.add(user);
-	                }
-	            }
-	        }
+		for (Pattern p : PATRONES_USUARIO_UNIX) {
+			Matcher m = p.matcher(contenido);
+			while (m.find()) {
+				String user = m.group(1);
+				if (!USUARIOS_PRIVILEGIADOS.contains(user.toLowerCase())) {
+					usuarios.add(user);
+				}
+			}
+		}
 
-	        for (Pattern p : PATRONES_USUARIO_UNIX) {
-	            Matcher m = p.matcher(contenido);
-	            while (m.find()) {
-	                String user = m.group(1);
-	                if (!USUARIOS_PRIVILEGIADOS.contains(user.toLowerCase())) {
-	                    usuarios.add(user);
-	                }
-	            }
-	        }
+		Matcher mGeneric = PATRON_USUARIO_GENERIC.matcher(contenido);
+		while (mGeneric.find()) {
+			usuarios.add(mGeneric.group(1));
+		}
 
-	        Matcher mGeneric = PATRON_USUARIO_GENERIC.matcher(contenido);
-	        while (mGeneric.find()) {
-	            usuarios.add(mGeneric.group(1));
-	        }
+		Matcher mMc = PATRON_USUARIO_MINECRAFT.matcher(contenido);
+		while (mMc.find()) {
+			usuarios.add(mMc.group(1));
+		}
 
-	        Matcher mMc = PATRON_USUARIO_MINECRAFT.matcher(contenido);
-	        while (mMc.find()) {
-	            usuarios.add(mMc.group(1));
-	        }
+		Matcher mUserLine = PATRON_USER_LINE.matcher(contenido);
+		while (mUserLine.find()) {
+			usuarios.add(mUserLine.group(1));
+		}
 
-	        Matcher mUserLine = PATRON_USER_LINE.matcher(contenido);
-	        while (mUserLine.find()) {
-	            usuarios.add(mUserLine.group(1));
-	        }
+		Matcher mSetting = PATRON_USERNAME_SETTING.matcher(contenido);
+		while (mSetting.find()) {
+			usuarios.add(mSetting.group(1));
+		}
 
-	        Matcher mSetting = PATRON_USERNAME_SETTING.matcher(contenido);
-	        while (mSetting.find()) {
-	            usuarios.add(mSetting.group(1));
-	        }
+		Matcher mArg = PATRON_USERNAME_ARGUMENT.matcher(contenido);
+		while (mArg.find()) {
+			usuarios.add(mArg.group(1));
+		}
 
-	        Matcher mArg = PATRON_USERNAME_ARGUMENT.matcher(contenido);
-	        while (mArg.find()) {
-	            usuarios.add(mArg.group(1));
-	        }
+		return usuarios;
+	}
 
-	        return usuarios;
-	    }
-	
-	
 	private static String anonimizarIP(String linea) {
 		/* IPv4 */
 		Matcher m4 = PATRON_IPV4.matcher(linea);
@@ -219,18 +215,18 @@ public class AnonimizadordeRegistros {
 
 		return linea;
 	}
-	
-    private static String anonimizarTokens(String linea) {
-        linea = PATRON_ID_SESION.matcher(linea).replaceAll("Session ID is token:anon:anon");
-        linea = PATRON_TOKEN_ACCESO_PARAM.matcher(linea).replaceAll("--accessToken anon:anon");
-        linea = PATRON_TOKEN_BEARER.matcher(linea).replaceAll("Bearer anon:anon");
-        linea = PATRON_TOKEN_SESION.matcher(linea).replaceAll("session: anon");
-        
-        linea = PATRON_CLIENT_ID.matcher(linea).replaceAll("--clientId, anon");
-        linea = PATRON_XUID.matcher(linea).replaceAll("--xuid, anon");
-        
-        return linea;
-    }
+
+	private static String anonimizarTokens(String linea) {
+		linea = PATRON_ID_SESION.matcher(linea).replaceAll("Session ID is token:anon:anon");
+		linea = PATRON_TOKEN_ACCESO_PARAM.matcher(linea).replaceAll("--accessToken anon:anon");
+		linea = PATRON_TOKEN_BEARER.matcher(linea).replaceAll("Bearer anon:anon");
+		linea = PATRON_TOKEN_SESION.matcher(linea).replaceAll("session: anon");
+
+		linea = PATRON_CLIENT_ID.matcher(linea).replaceAll("--clientId, anon");
+		linea = PATRON_XUID.matcher(linea).replaceAll("--xuid, anon");
+
+		return linea;
+	}
 
 	private static String anonimizarUUID(String linea) {
 		linea = PATRON_UUID_NORMAL.matcher(linea).replaceAll("anon-anon-anon-anon-anon");

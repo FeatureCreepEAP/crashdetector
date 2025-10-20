@@ -4,5 +4,5 @@ package com.asbestosstar.crashdetector.analizador;
 public interface ListaDenegadosTrace {
 
 	public boolean predicado(String contentido);
-	
+
 }

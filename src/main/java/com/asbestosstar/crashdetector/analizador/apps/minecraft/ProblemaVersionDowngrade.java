@@ -93,17 +93,17 @@ public class ProblemaVersionDowngrade implements Verificaciones {
 	public boolean anularNormal() {
 		return true;
 	}
-	
+
 	@Override
 	public String id() {
 		// TODO Auto-generated method stub
 		return "version_downgrade";
 	}
-	
+
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
 		// TODO Auto-generated method stub
-		return false;//TODO
+		return false;// TODO
 	}
 
 }

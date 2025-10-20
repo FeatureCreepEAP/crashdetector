@@ -108,21 +108,17 @@ public class ProblemaPluginIncompatible implements Verificaciones {
 
 		return builder.construir();
 	}
-	
-	
+
 	@Override
 	public String id() {
 		// TODO Auto-generated method stub
 		return "plugin_incompatible";
 	}
-	
+
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
 		// TODO Auto-generated method stub
-		return false;//TODO
+		return false;// TODO
 	}
-	
-	
-	
-	
+
 }

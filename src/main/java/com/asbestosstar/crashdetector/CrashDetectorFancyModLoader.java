@@ -11,28 +11,25 @@ import net.neoforged.neoforgespi.transformation.ProcessorName;
 
 public class CrashDetectorFancyModLoader implements ClassProcessor {
 
+	static {
+		if (!Statics.cargador) {
+			Statics.cargador = true;
+			Statics.carpetas_de_mods.add(new File("mods/").toPath());
+			MonitorDePID.main(new String[] {});
+			Transformaciones.init();
+		}
+	}
 
-static {
-if(!Statics.cargador)	{
-	Statics.cargador= true;
-	Statics.carpetas_de_mods.add(new File("mods/").toPath());
-	MonitorDePID.main(new String[]{});
-	Transformaciones.init();
-}
-}
-	
-	
-	
 	@Override
 	public ProcessorName name() {
 		// TODO Auto-generated method stub
-		return new ProcessorName("crashdetector","fancymodloader");
+		return new ProcessorName("crashdetector", "fancymodloader");
 	}
 
 	@Override
 	public boolean handlesClass(SelectionContext context) {
 		// TODO Auto-generated method stub
-		return true;//TODO
+		return true;// TODO
 	}
 
 	@Override
@@ -41,7 +38,7 @@ if(!Statics.cargador)	{
 		ClassNode input = context.node();
 		Parche.applicarParches(input, input.name);
 
-		return ComputeFlags.COMPUTE_FRAMES;//TODO NONE si no editar
+		return ComputeFlags.COMPUTE_FRAMES;// TODO NONE si no editar
 	}
 
 }

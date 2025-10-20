@@ -15,17 +15,16 @@ import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 import com.asbestosstar.crashdetector.Transformaciones;
 import com.asbestosstar.crashdetector.parches.Parche;
 
-public class CoreModFabricMC implements IMixinConfigPlugin{
+public class CoreModFabricMC implements IMixinConfigPlugin {
 
-	static{
+	static {
 		Transformaciones.init();
 	}
-	
-	
+
 	@Override
 	public void onLoad(String mixinPackage) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -43,7 +42,7 @@ public class CoreModFabricMC implements IMixinConfigPlugin{
 	@Override
 	public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -62,7 +61,7 @@ public class CoreModFabricMC implements IMixinConfigPlugin{
 	public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
 		// TODO Auto-generated method stub
 		Parche.applicarParches(targetClass, targetClassName);
-		  
+
 	}
 
 }

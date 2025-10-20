@@ -20,7 +20,6 @@ public class Transformaciones implements ClassFileTransformer {
 		Parche.parches.add(new ParcheWaterMediaTL());
 		Parche.parches.add(new PreferIPv4StackParch());
 
-		
 	}
 
 	// Para FeatureCreep y MangoModLoader y Agentes

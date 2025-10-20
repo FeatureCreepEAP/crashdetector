@@ -7,303 +7,270 @@ import java.util.List;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 
-public class LimpiadorRegistroDeLauncherVainilla implements LimpiadorDeRegistro{
-	
-	// Mapeo que almacena para cada línea nueva (índice 0-based) el índice de la línea original (0-based)
+public class LimpiadorRegistroDeLauncherVainilla implements LimpiadorDeRegistro {
+
+	// Mapeo que almacena para cada línea nueva (índice 0-based) el índice de la
+	// línea original (0-based)
 	private List<Integer> mapeoLineasOriginales;
 	// Indica si el mapeo actual es válido (después de limpiar un registro)
 	private boolean mapeoValido;
 
-    /**
-     * Limpia el contenido completo de la consola.
-     * 
-     * @param contento_de_consola Contenido completo de la consola
-     * @return Contenido procesado sin corchetes ni etiquetas innecesarias
-     */
+	/**
+	 * Limpia el contenido completo de la consola.
+	 * 
+	 * @param contento_de_consola Contenido completo de la consola
+	 * @return Contenido procesado sin corchetes ni etiquetas innecesarias
+	 */
 	@Override
-    public String limpiarConsola(String contento_de_consola) {
-    	CrashDetectorLogger.log("limpiar vainilla");
-        // Dividir el contenido en líneas usando el separador del sistema
-        String[] lineas_viejas = contento_de_consola.split(System.lineSeparator());
-        
-        // Limpiar cada línea individualmente y construir el mapeo de líneas
-        List<String> lineas_limpias = new ArrayList<>();
-        mapeoLineasOriginales = new ArrayList<>(); // Reiniciar el mapeo
-        
-        for (int indice_original = 0; indice_original < lineas_viejas.length; indice_original++) {
-            String linea = lineas_viejas[indice_original];
-            String lineaProcesada = limpiarLinea(linea);
-            String trim = lineaProcesada.trim();
-            if (!trim.isEmpty()) {
-                lineas_limpias.add(lineaProcesada);
-                mapeoLineasOriginales.add(indice_original); // Almacenar índice original de la línea válida
-            }
-        }
-        
-        mapeoValido = true; // Marcar el mapeo como válido después de limpiar
-        
-        // Unir las líneas limpias con el separador del sistema
-        return String.join(System.lineSeparator(), lineas_limpias);
-    }
+	public String limpiarConsola(String contento_de_consola) {
+		CrashDetectorLogger.log("limpiar vainilla");
+		// Dividir el contenido en líneas usando el separador del sistema
+		String[] lineas_viejas = contento_de_consola.split(System.lineSeparator());
 
-    /**
-     * Limpia una sola línea de registro.
-     * 
-     * @param linea Línea original del registro
-     * @return Línea procesada sin elementos innecesarios
-     */
-    public static String limpiarLinea(String linea) {
-        // Eliminar corchetes iniciales y su contenido
-        if(linea.contains("LauncherAppRenderer.cpp")) {
-        	linea="";
-        }
-        if(linea.contains("ControllerInterface.cpp")) {
-        	linea="";
-        }
-        if(linea.contains("LauncherController.cpp")) {
-        	linea="";
-        } 
-        if(linea.contains("NetQueue.cpp")) {
-        	linea="";
-        } 
-        if(linea.contains("KeyMaker.cpp")) {
-        	linea="";
-        } 
-        if(linea.contains("GamecoreClientApi_win32.cpp")) {
-        	linea="";
-        } 
-        if(linea.contains("Sha1Cacher.cpp")) {
-        	linea="";
-        } 
-        
-        if(linea.contains("Updating.cpp")) {
-        	linea="";
-        } 
-        
-        if(linea.contains("Common.cpp")) {
-        	linea="";
-        } 
-        if(linea.contains("mainWindows.cpp")) {
-        	linea="";
-        } 
-        if(linea.contains("AzureUpdateTools.cpp")) {
-        	linea="";
-        } 
-        if(linea.contains("CoreUpdateSystemCheck.cpp")) {
-        	linea="";
-        } 
-        if(linea.contains("CurlNetQueue.cpp")) {
-        	linea="";
-        } 
-        
-        if(linea.contains("TreatmentTagFetcher.cpp")) {
-        	linea="";
-        } 
-        
-        
-        if(linea.contains("main.cpp")) {
-        	linea="";
-        } 
-        
-        if(linea.contains("StartLibrary.cpp")) {
-        	linea="";
-        } 
-        
-        
-        if(linea.contains("PreferencesManager.cpp")) {
-        	linea="";
-        } 
-        
-        
-        if(linea.contains("SkinManager.cpp")) {
-        	linea="";
-        } 
-        
-        if(linea.contains("CefUI.cpp")) {
-        	linea="";
-        } 
-        if(linea.contains("main_context.cpp")) {
-        	linea="";
-        } 
-        
-        
-        
-        if(linea.contains("root_window_manager.cpp")) {
-        	linea="";
-        } 
-        
-        if(linea.contains("client_handler.cpp")) {
-        	linea="";
-        } 
-        if(linea.contains("JreManifestManager.cpp")) {
-        	linea="";
-        } 
-        
-        
-        
-        
-        
-        if(linea.contains("PersistentReflectedStruct.h")) {
-        	linea="";
-        } 
-        if(linea.contains("GameVersionManager.cpp")) {
-        	linea="";
-        } 
-        if(linea.contains("Xal.lib")) {
-        	linea="";
-        } 
-        if(linea.contains("UserIdentity.cpp")) {
-        	linea="";
-        } 
-        if(linea.contains("MSIPatchInstaller.cpp")) {
-        	linea="";
-        } 
-        if(linea.contains("KeyMakerCache.cpp")) {
-        	linea="";
-        } 
-        if(linea.contains("UpdateChecking.cpp")) {
-        	linea="";
-        } 
-        if(linea.contains("LauncherMain.cpp")) {
-        	linea="";
-        } 
-        if(linea.contains("SettingsManager.cpp")) {
-        	linea="";
-        } 
-        
-        
-        
+		// Limpiar cada línea individualmente y construir el mapeo de líneas
+		List<String> lineas_limpias = new ArrayList<>();
+		mapeoLineasOriginales = new ArrayList<>(); // Reiniciar el mapeo
 
-    	
-    	
-        if(linea.contains("Common_p.h")) {
-        	linea="";
-        } 
-        
-        
-        if(linea.contains("XalStorage.cpp")) {
-        	linea="";
-        } 
-        if(linea.contains("XalApi.cpp")) {
-        	linea="";
-        } 
-        if(linea.contains("XalContext.cpp")) {
-        	linea="";
-        } 
-        if(linea.contains("SentryAPI.cpp")) {
-        	linea="";
-        } 
-        if(linea.contains("CoreFileUtils.cpp")) {
-        	linea="";
-        } 
-        if(linea.contains("ProductInstance.cpp")) {
-        	linea="";
-        } 
-        if(linea.contains("UnifiedMSAAccounts.cpp")) {
-        	linea="";
-        } 
-        if(linea.contains("TelemetryEventSink_1DS.cpp")) {
-        	linea="";
-        } 
-        if(linea.contains("EntitlementsManager.cpp")) {
-        	linea="";
-        } 
-        if(linea.contains("TelemetryEventSink.cpp")) {
-        	linea="";
-        } 
-        if(linea.contains("PistonInstaller.cpp")) {
-        	linea="";
-        } 
-        
-        if(linea.contains("CefUI.cpp")) {
-        	linea="";
-        } 
-        if(linea.contains("LauncherAppBrowser.cpp")) {
-        	linea="";
-        } 
-        if(linea.contains("MinecraftServicesApi.cpp")) {
-        	linea="";
-        } 
-        if(linea.contains("Auth.cpp")) {
-        	linea="";
-        } 
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	if (linea.startsWith("[")) {
-            int finCorchete = linea.indexOf(']');
-            if (finCorchete != -1) {
-                linea = linea.substring(finCorchete + 1);
-            }
-        }
+		for (int indice_original = 0; indice_original < lineas_viejas.length; indice_original++) {
+			String linea = lineas_viejas[indice_original];
+			String lineaProcesada = limpiarLinea(linea);
+			String trim = lineaProcesada.trim();
+			if (!trim.isEmpty()) {
+				lineas_limpias.add(lineaProcesada);
+				mapeoLineasOriginales.add(indice_original); // Almacenar índice original de la línea válida
+			}
+		}
 
-        // Eliminar "Game/game () Info" y espacios previos
-        linea = linea.replaceFirst("^\\s*Game/game \\(\\) Info", "");
+		mapeoValido = true; // Marcar el mapeo como válido después de limpiar
 
-        // Limpiar espacios y ajustar formato de stacktrace
-        linea = linea.trim();
-        if (linea.startsWith("at ")) {  // Verificar si es línea de stacktrace
-            linea = " " + linea;        // Agregar espacio solo para "at"
-        }
-        
-        if(linea.startsWith("Authorization:Bearer")) {
-        	linea="";
-        } 
-        if(linea.startsWith("Method:")) {
-        	linea="";
-        } 
-        if(linea.startsWith("Headers:")) {
-        	linea="";
-        } 
-        
-        if(linea.startsWith("Content-Type:")) {
-        	linea="";
-        } 
-        
-        if(linea.startsWith("Body:")) {
-        	linea="";
-        } 
-        if(linea.startsWith("Response")) {
-        	linea="";
-        } 
+		// Unir las líneas limpias con el separador del sistema
+		return String.join(System.lineSeparator(), lineas_limpias);
+	}
 
-        
-        
+	/**
+	 * Limpia una sola línea de registro.
+	 * 
+	 * @param linea Línea original del registro
+	 * @return Línea procesada sin elementos innecesarios
+	 */
+	public static String limpiarLinea(String linea) {
+		// Eliminar corchetes iniciales y su contenido
+		if (linea.contains("LauncherAppRenderer.cpp")) {
+			linea = "";
+		}
+		if (linea.contains("ControllerInterface.cpp")) {
+			linea = "";
+		}
+		if (linea.contains("LauncherController.cpp")) {
+			linea = "";
+		}
+		if (linea.contains("NetQueue.cpp")) {
+			linea = "";
+		}
+		if (linea.contains("KeyMaker.cpp")) {
+			linea = "";
+		}
+		if (linea.contains("GamecoreClientApi_win32.cpp")) {
+			linea = "";
+		}
+		if (linea.contains("Sha1Cacher.cpp")) {
+			linea = "";
+		}
 
-        return linea;
-    }
+		if (linea.contains("Updating.cpp")) {
+			linea = "";
+		}
 
-    /**
-     * Procesa múltiples líneas de registro.
-     * 
-     * @param lineas Lista de líneas originales
-     * @return Lista de líneas procesadas (sin líneas vacías)
-     */
-    public static List<String> limpiarLineas(Iterable<String> lineas) {
-        List<String> resultado = new ArrayList<>();
-        for (String linea : lineas) {
-            String lineaProcesada = limpiarLinea(linea);
-            String trim = lineaProcesada.trim();
-            if (!trim.isEmpty()) {
-                resultado.add(lineaProcesada);
-            }
-        }
-        return resultado;
-    }
+		if (linea.contains("Common.cpp")) {
+			linea = "";
+		}
+		if (linea.contains("mainWindows.cpp")) {
+			linea = "";
+		}
+		if (linea.contains("AzureUpdateTools.cpp")) {
+			linea = "";
+		}
+		if (linea.contains("CoreUpdateSystemCheck.cpp")) {
+			linea = "";
+		}
+		if (linea.contains("CurlNetQueue.cpp")) {
+			linea = "";
+		}
+
+		if (linea.contains("TreatmentTagFetcher.cpp")) {
+			linea = "";
+		}
+
+		if (linea.contains("main.cpp")) {
+			linea = "";
+		}
+
+		if (linea.contains("StartLibrary.cpp")) {
+			linea = "";
+		}
+
+		if (linea.contains("PreferencesManager.cpp")) {
+			linea = "";
+		}
+
+		if (linea.contains("SkinManager.cpp")) {
+			linea = "";
+		}
+
+		if (linea.contains("CefUI.cpp")) {
+			linea = "";
+		}
+		if (linea.contains("main_context.cpp")) {
+			linea = "";
+		}
+
+		if (linea.contains("root_window_manager.cpp")) {
+			linea = "";
+		}
+
+		if (linea.contains("client_handler.cpp")) {
+			linea = "";
+		}
+		if (linea.contains("JreManifestManager.cpp")) {
+			linea = "";
+		}
+
+		if (linea.contains("PersistentReflectedStruct.h")) {
+			linea = "";
+		}
+		if (linea.contains("GameVersionManager.cpp")) {
+			linea = "";
+		}
+		if (linea.contains("Xal.lib")) {
+			linea = "";
+		}
+		if (linea.contains("UserIdentity.cpp")) {
+			linea = "";
+		}
+		if (linea.contains("MSIPatchInstaller.cpp")) {
+			linea = "";
+		}
+		if (linea.contains("KeyMakerCache.cpp")) {
+			linea = "";
+		}
+		if (linea.contains("UpdateChecking.cpp")) {
+			linea = "";
+		}
+		if (linea.contains("LauncherMain.cpp")) {
+			linea = "";
+		}
+		if (linea.contains("SettingsManager.cpp")) {
+			linea = "";
+		}
+
+		if (linea.contains("Common_p.h")) {
+			linea = "";
+		}
+
+		if (linea.contains("XalStorage.cpp")) {
+			linea = "";
+		}
+		if (linea.contains("XalApi.cpp")) {
+			linea = "";
+		}
+		if (linea.contains("XalContext.cpp")) {
+			linea = "";
+		}
+		if (linea.contains("SentryAPI.cpp")) {
+			linea = "";
+		}
+		if (linea.contains("CoreFileUtils.cpp")) {
+			linea = "";
+		}
+		if (linea.contains("ProductInstance.cpp")) {
+			linea = "";
+		}
+		if (linea.contains("UnifiedMSAAccounts.cpp")) {
+			linea = "";
+		}
+		if (linea.contains("TelemetryEventSink_1DS.cpp")) {
+			linea = "";
+		}
+		if (linea.contains("EntitlementsManager.cpp")) {
+			linea = "";
+		}
+		if (linea.contains("TelemetryEventSink.cpp")) {
+			linea = "";
+		}
+		if (linea.contains("PistonInstaller.cpp")) {
+			linea = "";
+		}
+
+		if (linea.contains("CefUI.cpp")) {
+			linea = "";
+		}
+		if (linea.contains("LauncherAppBrowser.cpp")) {
+			linea = "";
+		}
+		if (linea.contains("MinecraftServicesApi.cpp")) {
+			linea = "";
+		}
+		if (linea.contains("Auth.cpp")) {
+			linea = "";
+		}
+
+		if (linea.startsWith("[")) {
+			int finCorchete = linea.indexOf(']');
+			if (finCorchete != -1) {
+				linea = linea.substring(finCorchete + 1);
+			}
+		}
+
+		// Eliminar "Game/game () Info" y espacios previos
+		linea = linea.replaceFirst("^\\s*Game/game \\(\\) Info", "");
+
+		// Limpiar espacios y ajustar formato de stacktrace
+		linea = linea.trim();
+		if (linea.startsWith("at ")) { // Verificar si es línea de stacktrace
+			linea = " " + linea; // Agregar espacio solo para "at"
+		}
+
+		if (linea.startsWith("Authorization:Bearer")) {
+			linea = "";
+		}
+		if (linea.startsWith("Method:")) {
+			linea = "";
+		}
+		if (linea.startsWith("Headers:")) {
+			linea = "";
+		}
+
+		if (linea.startsWith("Content-Type:")) {
+			linea = "";
+		}
+
+		if (linea.startsWith("Body:")) {
+			linea = "";
+		}
+		if (linea.startsWith("Response")) {
+			linea = "";
+		}
+
+		return linea;
+	}
+
+	/**
+	 * Procesa múltiples líneas de registro.
+	 * 
+	 * @param lineas Lista de líneas originales
+	 * @return Lista de líneas procesadas (sin líneas vacías)
+	 */
+	public static List<String> limpiarLineas(Iterable<String> lineas) {
+		List<String> resultado = new ArrayList<>();
+		for (String linea : lineas) {
+			String lineaProcesada = limpiarLinea(linea);
+			String trim = lineaProcesada.trim();
+			if (!trim.isEmpty()) {
+				resultado.add(lineaProcesada);
+			}
+		}
+		return resultado;
+	}
 
 	@Override
 	public boolean predicado(Path archivo) {
@@ -312,7 +279,8 @@ public class LimpiadorRegistroDeLauncherVainilla implements LimpiadorDeRegistro{
 	}
 
 	/**
-	 * Obtiene el número de línea original correspondiente a una línea nueva procesada.
+	 * Obtiene el número de línea original correspondiente a una línea nueva
+	 * procesada.
 	 * 
 	 * @param linea_nueva Número de línea en el registro limpio (1-based)
 	 * @return Número de línea original (1-based) o -1 si no es válido
@@ -323,12 +291,12 @@ public class LimpiadorRegistroDeLauncherVainilla implements LimpiadorDeRegistro{
 		if (!mapeoValido || linea_nueva < 1 || linea_nueva > mapeoLineasOriginales.size()) {
 			return -1;
 		}
-		
+
 		// Convertir a índice 0-based para el mapeo
 		int indice_nuevo = linea_nueva - 1;
 		int indice_original = mapeoLineasOriginales.get(indice_nuevo);
-		
+
 		// Convertir índice original 0-based a 1-based
-		return indice_original + 1+linea_de_comenzar;
+		return indice_original + 1 + linea_de_comenzar;
 	}
 }

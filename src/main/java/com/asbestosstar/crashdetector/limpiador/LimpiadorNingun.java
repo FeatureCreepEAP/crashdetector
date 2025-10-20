@@ -2,7 +2,7 @@ package com.asbestosstar.crashdetector.limpiador;
 
 import java.nio.file.Path;
 
-public class LimpiadorNingun implements LimpiadorDeRegistro{
+public class LimpiadorNingun implements LimpiadorDeRegistro {
 
 	@Override
 	public String limpiarConsola(String contento_de_consola) {

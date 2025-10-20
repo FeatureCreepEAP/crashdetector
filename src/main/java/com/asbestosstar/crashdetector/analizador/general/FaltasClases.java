@@ -63,20 +63,17 @@ public class FaltasClases implements Verificaciones {
 		for (int i = 0; i < lineas.length; i++) {
 			String linea = lineas[i];
 
-
-
 			// Saltar líneas con WARN (sin excepciones)
-			if (linea.contains("/WARN]") || linea.contains("Warn") || VerificacionDeStackTrace.esLineaDeAdvertenciaEstandar(linea)){
+			if (linea.contains("/WARN]") || linea.contains("Warn")
+					|| VerificacionDeStackTrace.esLineaDeAdvertenciaEstandar(linea)) {
 				continue;
 			}
-			
+
 			// Eliminar prefijo de log
 			int indiceDosPuntos = linea.indexOf(':');
 			if (indiceDosPuntos != -1 && linea.charAt(0) == '[') {
 				linea = linea.substring(indiceDosPuntos + 1).trim();
 			}
-			
-			
 
 			String clase = null;
 
@@ -92,8 +89,7 @@ public class FaltasClases implements Verificaciones {
 						String candidate = linea.substring(index + lleva.length()).trim();
 						if (!candidate.isEmpty()) {
 							clase = candidate.split("[\\s\\)]")[0].trim();
-							
-							
+
 							break;
 						}
 					}
@@ -117,11 +113,10 @@ public class FaltasClases implements Verificaciones {
 				String origen = encontrarOrigenEnLinea(linea, i, consola);
 				String origenLimpio = limpiarOrigen(origen);
 				clases.putIfAbsent(claseFormateada, origenLimpio);
-				CrashDetectorLogger.log("Fatals clases clase no advatencia "+ clase);
-				CrashDetectorLogger.log("OG "+ clase);
-				CrashDetectorLogger.log("TRIM "+ clase);
+				CrashDetectorLogger.log("Fatals clases clase no advatencia " + clase);
+				CrashDetectorLogger.log("OG " + clase);
+				CrashDetectorLogger.log("TRIM " + clase);
 
-				
 				String enlace = consola.agregarErrorALectador(i, this);
 				enlacesPorClase.put(claseFormateada, enlace);
 			}
@@ -138,10 +133,10 @@ public class FaltasClases implements Verificaciones {
 
 		activado = !clases.isEmpty();
 
-	if(activado) {
-		completarOrigenesSiFaltan(consola.verificacion_de_stacktrace);
-	}
-	
+		if (activado) {
+			completarOrigenesSiFaltan(consola.verificacion_de_stacktrace);
+		}
+
 	}
 
 	/**
@@ -347,90 +342,92 @@ public class FaltasClases implements Verificaciones {
 		return MonitorDePID.idioma.nombre_de_faltar_de_clases();
 	}
 
-	
-	
 	/**
-	 * Completa el origen de cada clase faltante si actualmente está vacío,
-	 * usando información agregada por VerificacionDeStackTrace (packs, modids, jars).
+	 * Completa el origen de cada clase faltante si actualmente está vacío, usando
+	 * información agregada por VerificacionDeStackTrace (packs, modids, jars).
 	 */
 	private void completarOrigenesSiFaltan(VerificacionDeStackTrace vdst) {
-	    if (vdst == null || clases.isEmpty()) return;
+		if (vdst == null || clases.isEmpty())
+			return;
 
-	    for (Map.Entry<String, String> e : clases.entrySet()) {
-	        if (e.getValue() != null && !e.getValue().isEmpty()) continue;
+		for (Map.Entry<String, String> e : clases.entrySet()) {
+			if (e.getValue() != null && !e.getValue().isEmpty())
+				continue;
 
-	        String clase = e.getKey(); // formato con "/"
-	        String origen = inferirOrigenParaClase(clase, vdst);
-	        if (origen != null && !origen.isEmpty()) {
-	            e.setValue(origen);
-	        }
-	    }
+			String clase = e.getKey(); // formato con "/"
+			String origen = inferirOrigenParaClase(clase, vdst);
+			if (origen != null && !origen.isEmpty()) {
+				e.setValue(origen);
+			}
+		}
 	}
 
 	/**
-	 * Intenta inferir un origen plausible a partir de packs, modids y jars detectados
-	 * en otros stacktraces. Prefiere:
-	 *  1) pack que sea prefijo del paquete de la clase,
-	 *  2) modid presente en la ruta,
-	 *  3) jar cuyo nombre contenga el prefijo del paquete.
+	 * Intenta inferir un origen plausible a partir de packs, modids y jars
+	 * detectados en otros stacktraces. Prefiere: 1) pack que sea prefijo del
+	 * paquete de la clase, 2) modid presente en la ruta, 3) jar cuyo nombre
+	 * contenga el prefijo del paquete.
 	 */
 	private String inferirOrigenParaClase(String claseSlash, VerificacionDeStackTrace vdst) {
-	    if (claseSlash == null || claseSlash.isEmpty()) return "";
+		if (claseSlash == null || claseSlash.isEmpty())
+			return "";
 
-	    // paquete de la clase (sin el último segmento)
-	    String pkgSlash = claseSlash.contains("/") ? claseSlash.substring(0, claseSlash.lastIndexOf('/')) : claseSlash;
-	    String[] seg = pkgSlash.split("/");
-	    String pref1 = seg.length >= 1 ? seg[0] : "";
-	    String pref2 = seg.length >= 2 ? (seg[0] + "/" + seg[1]) : pref1;
+		// paquete de la clase (sin el último segmento)
+		String pkgSlash = claseSlash.contains("/") ? claseSlash.substring(0, claseSlash.lastIndexOf('/')) : claseSlash;
+		String[] seg = pkgSlash.split("/");
+		String pref1 = seg.length >= 1 ? seg[0] : "";
+		String pref2 = seg.length >= 2 ? (seg[0] + "/" + seg[1]) : pref1;
 
-	    // 1) packs: buscar pack que sea prefijo del paquete de la clase
-	    for (TriMap.TripleKey<String, Integer, Integer> k : vdst.packs.keySet()) {
-	        String packDot = k.key1; // "com.ejemplo"
-	        String packSlash = packDot.replace('.', '/');
-	        if (!packSlash.isEmpty() && (pkgSlash.startsWith(packSlash) || packSlash.startsWith(pref2))) {
-	            return packDot; // usar pack (ya es informativo)
-	        }
-	    }
+		// 1) packs: buscar pack que sea prefijo del paquete de la clase
+		for (TriMap.TripleKey<String, Integer, Integer> k : vdst.packs.keySet()) {
+			String packDot = k.key1; // "com.ejemplo"
+			String packSlash = packDot.replace('.', '/');
+			if (!packSlash.isEmpty() && (pkgSlash.startsWith(packSlash) || packSlash.startsWith(pref2))) {
+				return packDot; // usar pack (ya es informativo)
+			}
+		}
 
-	    // 2) modids: si el modid aparece dentro del path de la clase o prefijos
-	    for (TriMap.TripleKey<String, Integer, Integer> k : vdst.modids.keySet()) {
-	        String modid = k.key1;
-	        if (modid == null || modid.isEmpty()) continue;
-	        if (claseSlash.contains(modid) || pref1.equals(modid) || pref2.contains(modid)) {
-	            return modid;
-	        }
-	    }
+		// 2) modids: si el modid aparece dentro del path de la clase o prefijos
+		for (TriMap.TripleKey<String, Integer, Integer> k : vdst.modids.keySet()) {
+			String modid = k.key1;
+			if (modid == null || modid.isEmpty())
+				continue;
+			if (claseSlash.contains(modid) || pref1.equals(modid) || pref2.contains(modid)) {
+				return modid;
+			}
+		}
 
-	    // 3) jars: elegir jar cuyo nombre contenga el prefijo del paquete
-	    String[] candidatos = { pref1, seg.length >= 2 ? seg[1] : "" };
-	    for (Map.Entry<String, Boolean> ent : vdst.jars.entrySet()) {
-	        String clave = ent.getKey(); // "jarName.jar" + nivel + "x,y"
-	        String jar = extraerJarDesdeClaveJars(clave);
-	        if (jar == null || jar.isEmpty()) continue;
-	        String low = jar.toLowerCase();
-	        for (String c : candidatos) {
-	            if (c != null && !c.isEmpty() && low.contains(c.toLowerCase())) {
-	                return jar;
-	            }
-	        }
-	    }
+		// 3) jars: elegir jar cuyo nombre contenga el prefijo del paquete
+		String[] candidatos = { pref1, seg.length >= 2 ? seg[1] : "" };
+		for (Map.Entry<String, Boolean> ent : vdst.jars.entrySet()) {
+			String clave = ent.getKey(); // "jarName.jar" + nivel + "x,y"
+			String jar = extraerJarDesdeClaveJars(clave);
+			if (jar == null || jar.isEmpty())
+				continue;
+			String low = jar.toLowerCase();
+			for (String c : candidatos) {
+				if (c != null && !c.isEmpty() && low.contains(c.toLowerCase())) {
+					return jar;
+				}
+			}
+		}
 
-	    return "";
+		return "";
 	}
 
-	/** Extrae el "xxx.jar" de la clave usada en vdst.jars (que es "xxx.jar" + idiomaNivel + "nivel,linea"). */
+	/**
+	 * Extrae el "xxx.jar" de la clave usada en vdst.jars (que es "xxx.jar" +
+	 * idiomaNivel + "nivel,linea").
+	 */
 	private String extraerJarDesdeClaveJars(String clave) {
-	    if (clave == null) return null;
-	    int p = clave.indexOf(".jar");
-	    if (p >= 0) return clave.substring(0, p + 4);
-	    return null;
+		if (clave == null)
+			return null;
+		int p = clave.indexOf(".jar");
+		if (p >= 0)
+			return clave.substring(0, p + 4);
+		return null;
 	}
 
-	
-	
-	
-	
-	
 	// En la clase FaltasClases
 	@Override
 	public QuickFix solucion() {
@@ -515,20 +512,17 @@ public class FaltasClases implements Verificaciones {
 					}
 				}, true).construir();
 	}
-	
-	
+
 	@Override
 	public String id() {
 		// TODO Auto-generated method stub
 		return "faltas_clases";
 	}
+
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
 		// TODO Auto-generated method stub
-		return false;//TODO
+		return false;// TODO
 	}
-	
-	
-	
-	
+
 }

@@ -107,7 +107,7 @@ public class ContentoDeTraces implements Verificaciones {
 	}
 
 	@Override
-	public void verificar(Consola consola) {//TODO, no incluir trazos ocupados
+	public void verificar(Consola consola) {// TODO, no incluir trazos ocupados
 		VerificacionDeStackTrace vdst = consola.verificacion_de_stacktrace;
 		StringBuilder constructor = new StringBuilder();
 		String mensajeFatal = consola.obtainerMensajeFatalUltimaTrace();
@@ -363,16 +363,16 @@ public class ContentoDeTraces implements Verificaciones {
 		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
 				.construir();
 	}
-	
+
 	@Override
 	public String id() {
 		// TODO Auto-generated method stub
 		return "contenido_de_trazos";
 	}
-	
+
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
 		// TODO Auto-generated method stub
-		return false;//TODO
+		return false;// TODO
 	}
 }

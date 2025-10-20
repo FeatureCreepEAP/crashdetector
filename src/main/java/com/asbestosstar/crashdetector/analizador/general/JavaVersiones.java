@@ -160,16 +160,17 @@ public class JavaVersiones implements Verificaciones {
 			CrashDetectorLogger.logException(e);
 		}
 	}
-	
+
 	@Override
 	public String id() {
 		// TODO Auto-generated method stub
 		return "java_versiones";
 	}
+
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
 		// TODO Auto-generated method stub
-		return false;//TODO
+		return false;// TODO
 	}
 
 }

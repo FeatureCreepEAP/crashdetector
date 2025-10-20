@@ -101,23 +101,32 @@ public interface CrashDetectorGUI {
 	}
 
 	public default String nombreDeIdiomaDesdeCondigo(String codigoActual) {
-	    switch (codigoActual) {
-	        case "es": return "Español";
-	        case "en": return "English";
-	        case "ar": return "العربية";
-	        case "pt": return "Português";
-	        case "fa": return "فارسی";
-	        case "ru": return "Русский";
-	        case "zh": return "简体中文";
-	        case "eo": return "Esperanto";
-	        case "ja": return "日本語";
-	        case "ko": return "한국어";
-	        default: return "Español";
-	    }
+		switch (codigoActual) {
+		case "es":
+			return "Español";
+		case "en":
+			return "English";
+		case "ar":
+			return "العربية";
+		case "pt":
+			return "Português";
+		case "fa":
+			return "فارسی";
+		case "ru":
+			return "Русский";
+		case "zh":
+			return "简体中文";
+		case "eo":
+			return "Esperanto";
+		case "ja":
+			return "日本語";
+		case "ko":
+			return "한국어";
+		default:
+			return "Español";
+		}
 	}
 
-	
-	
 	public static void abrirDirectorioEnExplorador() {
 		File directorio = new File(System.getProperty("user.dir"));
 
@@ -140,7 +149,8 @@ public interface CrashDetectorGUI {
 				String url = e.getDescription();
 				if (url != null && url.startsWith("lectador://")) {
 					CrashDetectorLogger.log(url + " (lectador url)");
-					LectadorDeConsolasGUI lectador = TipoGUI.LECTADOR_DE_CONSOLAS.obtenerGUIPredeterminado(LectadorDeConsolasHoloTalk.ID, ()->new LectadorDeConsolasHoloTalk());
+					LectadorDeConsolasGUI lectador = TipoGUI.LECTADOR_DE_CONSOLAS.obtenerGUIPredeterminado(
+							LectadorDeConsolasHoloTalk.ID, () -> new LectadorDeConsolasHoloTalk());
 					lectador.procesarHipervinculo(url);
 				} else if (url != null) {
 					Desktop.getDesktop().browse(new java.net.URI(url));
@@ -149,12 +159,11 @@ public interface CrashDetectorGUI {
 				CrashDetectorLogger.logException(ex);
 			}
 		}
-	}	
+	}
 
 	/**
 	 * Initialisar GUI. No esta usada en PrincipalGUI
 	 */
 	public void init();
 
-	
 }

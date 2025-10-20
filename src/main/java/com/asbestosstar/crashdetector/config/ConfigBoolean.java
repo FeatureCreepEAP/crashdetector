@@ -37,13 +37,14 @@ public class ConfigBoolean implements ElementoConfig<Boolean> {
 	}
 
 	/**
-	 * Crea una instancia de ConfigBoolean para la clave indicada.
-	 * Si la clave no existe, se crea con el valor por defecto proporcionado.
+	 * Crea una instancia de ConfigBoolean para la clave indicada. Si la clave no
+	 * existe, se crea con el valor por defecto proporcionado.
 	 * 
-	 * @param clave            Nombre de la clave en el archivo de configuración.
-	 * @param valorPorDefecto  Valor booleano a usar si la clave no existe.
+	 * @param clave           Nombre de la clave en el archivo de configuración.
+	 * @param valorPorDefecto Valor booleano a usar si la clave no existe.
 	 * @return Nueva instancia de ConfigBoolean.
-	 * @throws IllegalStateException Si la clave existe pero el valor no representa un booleano válido.
+	 * @throws IllegalStateException Si la clave existe pero el valor no representa
+	 *                               un booleano válido.
 	 */
 	public static ConfigBoolean de(String clave, boolean valorPorDefecto) throws IllegalStateException {
 		Config config = Config.obtenerInstancia();

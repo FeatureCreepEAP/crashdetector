@@ -31,14 +31,6 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 	 */
 	public static List<TipoGUI> TIPOS_DE_GUI = new ArrayList<>();
 
-	
-	
-	
-
-	
-	
-	
-	
 	/**
 	 * La GUI Principal
 	 */
@@ -47,14 +39,17 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		public String etiquetaDelBoton() {
 			return "GUI";
 		}
+
 		@Override
 		public String id() {
 			return "principal";
 		}
+
 		@Override
 		public void registrarGUI(String id, Supplier<PrincipalGUI> gui) {
 			PrincipalGUI.GUIS.put(id, gui);
 		}
+
 		@Override
 		public Map<String, Supplier<PrincipalGUI>> obtenerGUIs() {
 			return PrincipalGUI.GUIS;
@@ -69,20 +64,23 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		public String id() {
 			return "grepr";
 		}
+
 		@Override
 		public String etiquetaDelBoton() {
 			return "grepr/fgrepr";
 		}
+
 		@Override
 		public void registrarGUI(String id, Supplier<GrepRGUI> gui) {
 			GrepRGUI.GUIS.put(id, gui);
 		}
+
 		@Override
 		public Map<String, Supplier<GrepRGUI>> obtenerGUIs() {
 			return GrepRGUI.GUIS;
 		}
 	};
-	
+
 	/**
 	 * Para Árbol de Mods
 	 */
@@ -91,20 +89,23 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		public String id() {
 			return "arbol_de_mods";
 		}
+
 		@Override
 		public String etiquetaDelBoton() {
 			return MonitorDePID.idioma.arbolDeMods();
 		}
+
 		@Override
 		public void registrarGUI(String id, Supplier<ArbolDeModsGUI> gui) {
 			ArbolDeModsGUI.GUIS.put(id, gui);
 		}
+
 		@Override
 		public Map<String, Supplier<ArbolDeModsGUI>> obtenerGUIs() {
 			return ArbolDeModsGUI.GUIS;
 		}
 	};
-	
+
 	/**
 	 * Diálogo Compartir
 	 */
@@ -113,14 +114,17 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		public String id() {
 			return "dialogo_compartir";
 		}
+
 		@Override
 		public String etiquetaDelBoton() {
 			return MonitorDePID.idioma.botonDeCompartirInforme();
 		}
+
 		@Override
 		public void registrarGUI(String id, Supplier<DialogoCompartirGUI> gui) {
 			DialogoCompartirGUI.GUIS.put(id, gui);
 		}
+
 		@Override
 		public Map<String, Supplier<DialogoCompartirGUI>> obtenerGUIs() {
 			return DialogoCompartirGUI.GUIS;
@@ -135,14 +139,17 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		public String id() {
 			return "editor_firmas";
 		}
+
 		@Override
 		public String etiquetaDelBoton() {
 			return MonitorDePID.idioma.editorCodiceBoton();
 		}
+
 		@Override
 		public void registrarGUI(String id, Supplier<EditorFirmasGUI> gui) {
 			EditorFirmasGUI.GUIS.put(id, gui);
 		}
+
 		@Override
 		public Map<String, Supplier<EditorFirmasGUI>> obtenerGUIs() {
 			return EditorFirmasGUI.GUIS;
@@ -157,14 +164,17 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		public String id() {
 			return "quickfix_todos";
 		}
+
 		@Override
 		public String etiquetaDelBoton() {
 			return "QuickFix";
 		}
+
 		@Override
 		public void registrarGUI(String id, Supplier<TodosQuickFixesGUI> gui) {
 			TodosQuickFixesGUI.GUIS.put(id, gui);
 		}
+
 		@Override
 		public Map<String, Supplier<TodosQuickFixesGUI>> obtenerGUIs() {
 			return TodosQuickFixesGUI.GUIS;
@@ -179,20 +189,23 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		public String id() {
 			return "quickfix";
 		}
+
 		@Override
 		public String etiquetaDelBoton() {
 			return "QuickFix";
 		}
+
 		@Override
 		public void registrarGUI(String id, Supplier<QuickFixGUI> gui) {
 			QuickFixGUI.GUIS.put(id, gui);
 		}
+
 		@Override
 		public Map<String, Supplier<QuickFixGUI>> obtenerGUIs() {
 			return QuickFixGUI.GUIS;
 		}
 	};
-	
+
 	/**
 	 * Escáner de MCreator
 	 */
@@ -201,20 +214,23 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		public String id() {
 			return "escaner_mcreator";
 		}
+
 		@Override
 		public String etiquetaDelBoton() {
 			return MonitorDePID.idioma.escanearDeMCreator();
 		}
+
 		@Override
 		public void registrarGUI(String id, Supplier<EscanerMCreatorGUI> gui) {
 			EscanerMCreatorGUI.GUIS.put(id, gui);
 		}
+
 		@Override
 		public Map<String, Supplier<EscanerMCreatorGUI>> obtenerGUIs() {
 			return EscanerMCreatorGUI.GUIS;
 		}
 	};
-	
+
 	/**
 	 * Historia de Mods
 	 */
@@ -223,20 +239,23 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		public String id() {
 			return "historia_de_mods";
 		}
+
 		@Override
 		public String etiquetaDelBoton() {
 			return MonitorDePID.idioma.historialDeMods();
 		}
+
 		@Override
 		public void registrarGUI(String id, Supplier<HistoriaDeModsGUI> gui) {
 			HistoriaDeModsGUI.GUIS.put(id, gui);
 		}
+
 		@Override
 		public Map<String, Supplier<HistoriaDeModsGUI>> obtenerGUIs() {
 			return HistoriaDeModsGUI.GUIS;
 		}
 	};
-	
+
 	/**
 	 * Lectador de Consolas
 	 */
@@ -245,20 +264,23 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		public String id() {
 			return "lectador_de_consolas";
 		}
+
 		@Override
 		public String etiquetaDelBoton() {
 			return MonitorDePID.idioma.obtenerEtiquetaBotonLectador();
 		}
+
 		@Override
 		public void registrarGUI(String id, Supplier<LectadorDeConsolasGUI> gui) {
 			LectadorDeConsolasGUI.GUIS.put(id, gui);
 		}
+
 		@Override
 		public Map<String, Supplier<LectadorDeConsolasGUI>> obtenerGUIs() {
 			return LectadorDeConsolasGUI.GUIS;
 		}
 	};
-	
+
 	/**
 	 * No registro de Launcher
 	 */
@@ -267,54 +289,57 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		public String id() {
 			return "no_registro_launcher";
 		}
+
 		@Override
 		public String etiquetaDelBoton() {
 			return MonitorDePID.idioma.noRegistroLauncherTitulo();
 		}
+
 		@Override
 		public void registrarGUI(String id, Supplier<NoRegistroLanzadorGUI> gui) {
 			NoRegistroLanzadorGUI.GUIS.put(id, gui);
 		}
+
 		@Override
 		public Map<String, Supplier<NoRegistroLanzadorGUI>> obtenerGUIs() {
 			return NoRegistroLanzadorGUI.GUIS;
 		}
 	};
-	
+
 	public abstract String id();
-	
+
 	/**
 	 * La etiqueta del botón en la barra lateral.
 	 */
 	public abstract String etiquetaDelBoton();
-	
+
 	/**
 	 * Icono del botón.
 	 */
 	public Icon icon() {
 		return null;
-	}	
-	
+	}
+
 	/**
 	 * Register una GUI
+	 * 
 	 * @param gui
 	 */
-	public abstract void registrarGUI(String id,Supplier<T> gui);
-	
+	public abstract void registrarGUI(String id, Supplier<T> gui);
+
 	/**
 	 * IDs de GUIs con Suppliers para las GUIs
+	 * 
 	 * @return
 	 */
-	public abstract Map<String,Supplier<T>> obtenerGUIs();
-	
-	public T obtenerGUIPredeterminado(String id_de_por_defecto,Supplier<T> por_defecto) {
-		ConfigString str =ConfigString.de("guitipo_"+this.id(), id_de_por_defecto);
+	public abstract Map<String, Supplier<T>> obtenerGUIs();
+
+	public T obtenerGUIPredeterminado(String id_de_por_defecto, Supplier<T> por_defecto) {
+		ConfigString str = ConfigString.de("guitipo_" + this.id(), id_de_por_defecto);
 		CrashDetectorLogger.log(str.obtener());
 		return obtenerGUIs().getOrDefault(str.obtener(), por_defecto).get();
 	}
-	
-	
-	
+
 	/**
 	 * Registro estático de todos los tipos de GUI en la lista global.
 	 */

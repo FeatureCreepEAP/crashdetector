@@ -72,9 +72,19 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 	protected final int N_HILOS = Math.min(4, Math.max(2, CORES - 1));
 	protected final int CAPACIDAD_COLA = N_HILOS * 4;
 
-	protected final ThreadPoolExecutor pool=new ThreadPoolExecutor(N_HILOS,N_HILOS,30L,TimeUnit.SECONDS,new LinkedBlockingQueue<Runnable>(CAPACIDAD_COLA),new ThreadFactory(){@Override public Thread newThread(Runnable r){Thread t=new Thread(r,"LectadorPool-"+System.nanoTime());t.setDaemon(true);return t;}},new ThreadPoolExecutor.CallerRunsPolicy());
+	protected final ThreadPoolExecutor pool = new ThreadPoolExecutor(N_HILOS, N_HILOS, 30L, TimeUnit.SECONDS,
+			new LinkedBlockingQueue<Runnable>(CAPACIDAD_COLA), new ThreadFactory() {
+				@Override
+				public Thread newThread(Runnable r) {
+					Thread t = new Thread(r, "LectadorPool-" + System.nanoTime());
+					t.setDaemon(true);
+					return t;
+				}
+			}, new ThreadPoolExecutor.CallerRunsPolicy());
 
-	{pool.allowCoreThreadTimeOut(true);}
+	{
+		pool.allowCoreThreadTimeOut(true);
+	}
 
 	// ====== Estado/UI técnico ======
 	protected List<String> lineasActuales = java.util.Collections.emptyList();
@@ -448,47 +458,53 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 	}
 
 	protected void actualizarConsola() {
-        final Consola consola = obtenerConsolaSeleccionada();
-        if (consola == null) return;
+		final Consola consola = obtenerConsolaSeleccionada();
+		if (consola == null)
+			return;
 
-        final String nombreArchivo = new File(consola.archivo.toString()).getName();
+		final String nombreArchivo = new File(consola.archivo.toString()).getName();
 
-        List<String> cache = cacheLineasPorConsola.get(nombreArchivo);
-        if (cache != null) {
-            refrescarModeloCon(cache);
-            return;
-        }
+		List<String> cache = cacheLineasPorConsola.get(nombreArchivo);
+		if (cache != null) {
+			refrescarModeloCon(cache);
+			return;
+		}
 
-        // Mostrar mensaje de carga sin bloquear EDT
-        setLoadingModel("Cargando " + nombreArchivo + " ...");
-        setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR));
+		// Mostrar mensaje de carga sin bloquear EDT
+		setLoadingModel("Cargando " + nombreArchivo + " ...");
+		setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR));
 
-        pool.submit(new Runnable() {
-            @Override public void run() {
-                try {
-                    List<String> lineas = Arrays.asList(consola.contenido_verificar.split(Verificaciones.nl));
-                    cacheLineasPorConsola.put(nombreArchivo, lineas);
-                    final List<String> lineasFinal = lineas;
+		pool.submit(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					List<String> lineas = Arrays.asList(consola.contenido_verificar.split(Verificaciones.nl));
+					cacheLineasPorConsola.put(nombreArchivo, lineas);
+					final List<String> lineasFinal = lineas;
 
-                    SwingUtilities.invokeLater(new Runnable() {
-                        @Override public void run() {
-                            if (nombreArchivo.equals(cmbConsolas.getSelectedItem())) {
-                                refrescarModeloCon(lineasFinal);
-                            }
-                            setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
-                        }
-                    });
-                } catch (Throwable t) {
-                    CrashDetectorLogger.logException(t);
-                    SwingUtilities.invokeLater(new Runnable() {
-                        @Override public void run() {
-                            setLoadingModel("Error al cargar " + nombreArchivo + ": " + t.getMessage());
-                            setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
-                        }
-                    });
-                }
+					SwingUtilities.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							if (nombreArchivo.equals(cmbConsolas.getSelectedItem())) {
+								refrescarModeloCon(lineasFinal);
+							}
+							setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
+						}
+					});
+				} catch (Throwable t) {
+					CrashDetectorLogger.logException(t);
+					SwingUtilities.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							setLoadingModel("Error al cargar " + nombreArchivo + ": " + t.getMessage());
+							setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
+						}
+					});
+				}
 
-	}});}
+			}
+		});
+	}
 
 	protected Consola obtenerConsolaSeleccionada() {
 		String nombreArchivo = (String) cmbConsolas.getSelectedItem();
@@ -686,12 +702,7 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 		precargarLineasEnSegundoPlano();
 		setVisible(true);
 	}
-	
-	
-	
-	
-	
-	
+
 	public static class ErrorDeLectador {
 		public Consola consola;
 		public int numero_de_linea;
@@ -716,17 +727,7 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 			return numero_de_linea;
 		}
 	}
-	
-	
-	
-    public abstract void procesarHipervinculo(String url);
 
-	
-	
-	
-	
-	
-	
+	public abstract void procesarHipervinculo(String url);
 
 }
-

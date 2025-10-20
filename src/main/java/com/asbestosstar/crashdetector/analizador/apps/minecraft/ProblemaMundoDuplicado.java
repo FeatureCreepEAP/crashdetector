@@ -89,15 +89,16 @@ public class ProblemaMundoDuplicado implements Verificaciones {
 		return new Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.solucionEliminarUID(nombreMundo))
 				.agregarEtiqueta(MonitorDePID.idioma.solucionEliminarMundo(nombreMundo)).construir();
 	}
-	
+
 	@Override
 	public String id() {
 		// TODO Auto-generated method stub
 		return "mundo_duplicado";
 	}
+
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
 		// TODO Auto-generated method stub
-		return false;//TODO
+		return false;// TODO
 	}
 }

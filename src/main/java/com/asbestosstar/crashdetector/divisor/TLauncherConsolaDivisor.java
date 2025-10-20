@@ -11,17 +11,17 @@ public class TLauncherConsolaDivisor implements DivisorDeArchivos {
 	@Override
 	public int obtenerLineaOriginal(String contentido_existente) {
 		// TODO Auto-generated method stub
-		
+
 		String[] lineas = contentido_existente.split(Verificaciones.nl);
 		int ultima = 0;
 		for (int i = 0; i < lineas.length - 1; i++) {
 			String lin = lineas[i];
-			if (lin.contains("[Launcher] Launching Minecraft...")||lin.contains("[MinecraftLauncher] Starting")) {
-				ultima=i;
+			if (lin.contains("[Launcher] Launching Minecraft...") || lin.contains("[MinecraftLauncher] Starting")) {
+				ultima = i;
 			}
 
 		}
-		
+
 		return ultima;
 	}
 

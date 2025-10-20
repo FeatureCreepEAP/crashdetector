@@ -98,7 +98,7 @@ public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLate
 	private VerificacionFirmasV0 verificacionCargadaEnFormulario = null;
 
 	public EditorFirmasGUI() {
-		
+
 	}
 
 	private JPanel crearEncabezado() {
@@ -957,69 +957,76 @@ public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLate
 		setVisible(true);
 	}
 
-	
 	// --- NUEVO MÉTODO PÚBLICO ---
 	public void recargarTextosYEstilo() {
-	    // 1) Snapshot del estado del formulario y la selección
-	    int indiceSeleccion = (lista != null) ? lista.getSelectedIndex() : -1;
+		// 1) Snapshot del estado del formulario y la selección
+		int indiceSeleccion = (lista != null) ? lista.getSelectedIndex() : -1;
 
-	    // Tomar valores del formulario actual (aunque no sea válido)
-	    String sId = fId != null ? fId.getText() : "";
-	    String sBuscar = fParaBuscar != null ? fParaBuscar.getText() : "";
-	    Object selFiltro = cbFiltro != null ? cbFiltro.getSelectedItem() : null;
-	    Object selCrit  = cbCriticalidad != null ? cbCriticalidad.getSelectedItem() : null;
-	    int prio = spPrioridad != null ? ((Number) spPrioridad.getValue()).intValue() : 0;
+		// Tomar valores del formulario actual (aunque no sea válido)
+		String sId = fId != null ? fId.getText() : "";
+		String sBuscar = fParaBuscar != null ? fParaBuscar.getText() : "";
+		Object selFiltro = cbFiltro != null ? cbFiltro.getSelectedItem() : null;
+		Object selCrit = cbCriticalidad != null ? cbCriticalidad.getSelectedItem() : null;
+		int prio = spPrioridad != null ? ((Number) spPrioridad.getValue()).intValue() : 0;
 
-	    Map<String, String[]> snapshotIdiomas = new LinkedHashMap<String, String[]>();
-	    for (Map.Entry<String, JTextField[]> e : camposIdiomas.entrySet()) {
-	        JTextField[] arr = e.getValue();
-	        snapshotIdiomas.put(e.getKey(), new String[] {
-	            arr[0].getText(),  // nombre
-	            arr[1].getText()   // resultado
-	        });
-	    }
+		Map<String, String[]> snapshotIdiomas = new LinkedHashMap<String, String[]>();
+		for (Map.Entry<String, JTextField[]> e : camposIdiomas.entrySet()) {
+			JTextField[] arr = e.getValue();
+			snapshotIdiomas.put(e.getKey(), new String[] { arr[0].getText(), // nombre
+					arr[1].getText() // resultado
+			});
+		}
 
-	    // 2) Reconstruir completamente el contenido con textos locales nuevos
-	    getContentPane().removeAll();
-	    setTitle(MonitorDePID.idioma.tituloEditorCodice());
-	    add(crearEncabezado(), BorderLayout.NORTH);
-	    add(crearSplit(), BorderLayout.CENTER);
+		// 2) Reconstruir completamente el contenido con textos locales nuevos
+		getContentPane().removeAll();
+		setTitle(MonitorDePID.idioma.tituloEditorCodice());
+		add(crearEncabezado(), BorderLayout.NORTH);
+		add(crearSplit(), BorderLayout.CENTER);
 
-	    // 3) Restaura la selección de la lista
-	    if (indiceSeleccion >= 0 && indiceSeleccion < modeloLista.size()) {
-	        lista.setSelectedIndex(indiceSeleccion);
-	    }
+		// 3) Restaura la selección de la lista
+		if (indiceSeleccion >= 0 && indiceSeleccion < modeloLista.size()) {
+			lista.setSelectedIndex(indiceSeleccion);
+		}
 
-	    // 4) Restaura los datos que el usuario tenía escritos (aunque no estén guardados)
-	    if (fId != null) fId.setText(sId);
-	    if (fParaBuscar != null) fParaBuscar.setText(sBuscar);
-	    if (cbFiltro != null && selFiltro != null) cbFiltro.setSelectedItem(selFiltro);
-	    if (cbCriticalidad != null && selCrit != null) cbCriticalidad.setSelectedItem(selCrit);
-	    if (spPrioridad != null) spPrioridad.setValue(prio);
+		// 4) Restaura los datos que el usuario tenía escritos (aunque no estén
+		// guardados)
+		if (fId != null)
+			fId.setText(sId);
+		if (fParaBuscar != null)
+			fParaBuscar.setText(sBuscar);
+		if (cbFiltro != null && selFiltro != null)
+			cbFiltro.setSelectedItem(selFiltro);
+		if (cbCriticalidad != null && selCrit != null)
+			cbCriticalidad.setSelectedItem(selCrit);
+		if (spPrioridad != null)
+			spPrioridad.setValue(prio);
 
-	    for (Map.Entry<String, String[]> e : snapshotIdiomas.entrySet()) {
-	        JTextField[] arr = camposIdiomas.get(e.getKey());
-	        if (arr != null) {
-	            arr[0].setText(e.getValue()[0]);
-	            arr[1].setText(e.getValue()[1]);
-	        }
-	    }
+		for (Map.Entry<String, String[]> e : snapshotIdiomas.entrySet()) {
+			JTextField[] arr = camposIdiomas.get(e.getKey());
+			if (arr != null) {
+				arr[0].setText(e.getValue()[0]);
+				arr[1].setText(e.getValue()[1]);
+			}
+		}
 
-	    // 5) Botones con textos actuales (por claridad; crearSplit ya usa idioma)
-	    if (btnNuevo != null)      btnNuevo.setText(MonitorDePID.idioma.nuevo());
-	    if (btnActualizar != null) btnActualizar.setText(MonitorDePID.idioma.actualizarSeleccionado());
-	    if (btnEliminar != null)   btnEliminar.setText(MonitorDePID.idioma.eliminarSeleccionado());
-	    if (btnExportar != null)   btnExportar.setText(MonitorDePID.idioma.exportarJSON());
-	    if (btnGuardar != null)    btnGuardar.setText(MonitorDePID.idioma.guardarTodo());
+		// 5) Botones con textos actuales (por claridad; crearSplit ya usa idioma)
+		if (btnNuevo != null)
+			btnNuevo.setText(MonitorDePID.idioma.nuevo());
+		if (btnActualizar != null)
+			btnActualizar.setText(MonitorDePID.idioma.actualizarSeleccionado());
+		if (btnEliminar != null)
+			btnEliminar.setText(MonitorDePID.idioma.eliminarSeleccionado());
+		if (btnExportar != null)
+			btnExportar.setText(MonitorDePID.idioma.exportarJSON());
+		if (btnGuardar != null)
+			btnGuardar.setText(MonitorDePID.idioma.guardarTodo());
 
-	    // 6) Refrescar vista previa
-	    actualizarVistaJson();
+		// 6) Refrescar vista previa
+		actualizarVistaJson();
 
-	    // 7) Repintar
-	    revalidate();
-	    repaint();
+		// 7) Repintar
+		revalidate();
+		repaint();
 	}
 
-	
-	
 }

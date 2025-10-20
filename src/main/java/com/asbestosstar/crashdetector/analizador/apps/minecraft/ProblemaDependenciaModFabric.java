@@ -16,7 +16,8 @@ import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceI
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 /**
- * Clase que detecta dependencias faltantes o versiones incorrectas en mods de Fabric.
+ * Clase que detecta dependencias faltantes o versiones incorrectas en mods de
+ * Fabric.
  *
  * Soporta tanto el bloque "A potential solution has been determined" (líneas
  * "Install ..." y "Replace ...") como la sección "More details:" con mensajes
@@ -38,8 +39,8 @@ public class ProblemaDependenciaModFabric implements Verificaciones {
 	private final Set<String> clavesUnicas = new LinkedHashSet<>();
 
 	// Patrones reutilizables (en minúsculas/insensible a mayúsculas)
-	private static final Pattern P_INSTALAR = Pattern.compile(
-			"^-\\s*Install\\s+([^,]+),\\s*version\\s+([^\\.]+)\\s+or\\s+later\\.", Pattern.CASE_INSENSITIVE);
+	private static final Pattern P_INSTALAR = Pattern
+			.compile("^-\\s*Install\\s+([^,]+),\\s*version\\s+([^\\.]+)\\s+or\\s+later\\.", Pattern.CASE_INSENSITIVE);
 
 	private static final Pattern P_REEMPLAZO_RANGO = Pattern.compile(
 			"^-\\s*Replace\\s+.*?\\(([^\\)]+)\\).*?with\\s+any\\s+version\\s+between\\s+([^\\s]+)\\s*\\(inclusive\\)\\s*and\\s*([^\\s]+)\\s*\\(exclusive\\)\\.",
@@ -47,9 +48,8 @@ public class ProblemaDependenciaModFabric implements Verificaciones {
 
 	// Detalles: faltante "requires version X or later of Y, which is missing!"
 	private static final Pattern P_FALTANTE_MINIMO = Pattern.compile(
-	    "^-\\s*mod\\s+.+?\\(([^\\)]+)\\)\\s*[^\\)]*\\)?\\s*.*?requires\\s+version\\s+([^\\s]+)\\s*.*?or\\s+later\\s+of\\s+([a-z0-9_\\-]+)\\s*,\\s*which\\s+is\\s+missing",
-	    Pattern.CASE_INSENSITIVE
-	);
+			"^-\\s*mod\\s+.+?\\(([^\\)]+)\\)\\s*[^\\)]*\\)?\\s*.*?requires\\s+version\\s+([^\\s]+)\\s*.*?or\\s+later\\s+of\\s+([a-z0-9_\\-]+)\\s*,\\s*which\\s+is\\s+missing",
+			Pattern.CASE_INSENSITIVE);
 
 	// Detalles: rango requerido de otro mod y versión equivocada presente
 	private static final Pattern P_RANGO_PRESENTE_INCORRECTO = Pattern.compile(
@@ -57,7 +57,8 @@ public class ProblemaDependenciaModFabric implements Verificaciones {
 			Pattern.CASE_INSENSITIVE);
 
 	/**
-	 * Verifica si el log contiene dependencias faltantes o versiones incorrectas en mods de Fabric.
+	 * Verifica si el log contiene dependencias faltantes o versiones incorrectas en
+	 * mods de Fabric.
 	 */
 	@Override
 	public void verificar(Consola consola) {
@@ -193,9 +194,8 @@ public class ProblemaDependenciaModFabric implements Verificaciones {
 					String min = partes.length > 1 ? partes[1] : "";
 					String max = partes.length > 2 ? partes[2] : "";
 					String actual = partes.length > 3 ? partes[3] : "";
-					sb.append("Requiere un rango de versión para <b>")
-					  .append(dep).append("</b>: [").append(min).append(" – ").append(max)
-					  .append(")");
+					sb.append("Requiere un rango de versión para <b>").append(dep).append("</b>: [").append(min)
+							.append(" – ").append(max).append(")");
 					if (!actual.isEmpty()) {
 						sb.append(" (actual: ").append(actual).append(")");
 					}
@@ -203,21 +203,21 @@ public class ProblemaDependenciaModFabric implements Verificaciones {
 
 				} else if (ver.startsWith("mínima ")) {
 					String min = ver.substring("mínima ".length()).trim();
-					sb.append(MonitorDePID.idioma.mensajeDependenciaModFaltante(mod, dep, "mínima " + min))
-					  .append(" ").append(enlace).append("<br><br>");
+					sb.append(MonitorDePID.idioma.mensajeDependenciaModFaltante(mod, dep, "mínima " + min)).append(" ")
+							.append(enlace).append("<br><br>");
 
 				} else if (ver.startsWith("requiere ")) {
-					sb.append(MonitorDePID.idioma.mensajeDependenciaModFaltante(mod, dep, ver))
-					  .append(" ").append(enlace).append("<br><br>");
+					sb.append(MonitorDePID.idioma.mensajeDependenciaModFaltante(mod, dep, ver)).append(" ")
+							.append(enlace).append("<br><br>");
 
 				} else if (ver.startsWith("no encontrada")) {
-					sb.append(MonitorDePID.idioma.mensajeDependenciaModFaltante(mod, dep, "no encontrada"))
-					  .append(" ").append(enlace).append("<br><br>");
+					sb.append(MonitorDePID.idioma.mensajeDependenciaModFaltante(mod, dep, "no encontrada")).append(" ")
+							.append(enlace).append("<br><br>");
 
 				} else {
 					// Caso genérico
-					sb.append(MonitorDePID.idioma.mensajeDependenciaModFaltante(mod, dep, ver))
-					  .append(" ").append(enlace).append("<br><br>");
+					sb.append(MonitorDePID.idioma.mensajeDependenciaModFaltante(mod, dep, ver)).append(" ")
+							.append(enlace).append("<br><br>");
 				}
 			}
 
@@ -228,6 +228,7 @@ public class ProblemaDependenciaModFabric implements Verificaciones {
 
 	/**
 	 * Inserta un problema si no existe ya (deduplicación por clave).
+	 * 
 	 * @return true si se insertó; false si era duplicado.
 	 */
 	private boolean agregarProblema(String mod, String dep, String ver, String enlace) {
@@ -247,7 +248,8 @@ public class ProblemaDependenciaModFabric implements Verificaciones {
 	 * Limpia caracteres de color/estilo y símbolos raros para poder hacer matching.
 	 */
 	private static String limpiarLinea(String s) {
-		if (s == null) return "";
+		if (s == null)
+			return "";
 		String out = s;
 
 		// Códigos de color §x
@@ -272,7 +274,8 @@ public class ProblemaDependenciaModFabric implements Verificaciones {
 	 * Normaliza una cadena de versión (limpieza básica).
 	 */
 	private static String normalizarVersion(String v) {
-		if (v == null) return "";
+		if (v == null)
+			return "";
 		return limpiarLinea(v).trim();
 	}
 
@@ -321,8 +324,8 @@ public class ProblemaDependenciaModFabric implements Verificaciones {
 				String max = partes.length > 2 ? partes[2] : "";
 				String actual = partes.length > 3 ? partes[3] : "";
 
-				String etiqueta = "Reemplazar/ajustar \"" + dep + "\" a una versión entre "
-						+ min + " y " + max + " (exclusivo).";
+				String etiqueta = "Reemplazar/ajustar \"" + dep + "\" a una versión entre " + min + " y " + max
+						+ " (exclusivo).";
 				if (!actual.isEmpty()) {
 					etiqueta += " Versión actual detectada: " + actual + ".";
 				}

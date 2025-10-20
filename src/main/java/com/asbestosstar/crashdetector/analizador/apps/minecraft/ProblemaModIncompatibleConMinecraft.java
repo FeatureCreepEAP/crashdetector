@@ -122,19 +122,11 @@ public class ProblemaModIncompatibleConMinecraft implements Verificaciones {
 		// TODO Auto-generated method stub
 		return "mod_incompaible_con_minecraft_version";
 	}
+
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
 		// TODO Auto-generated method stub
-		return false;//TODO
+		return false;// TODO
 	}
-	
-	
-	
-
-
-
-
-
-
 
 }

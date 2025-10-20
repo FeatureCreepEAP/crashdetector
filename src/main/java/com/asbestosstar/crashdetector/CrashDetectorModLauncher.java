@@ -10,17 +10,16 @@ import cpw.mods.modlauncher.api.ITransformationService;
 import cpw.mods.modlauncher.api.ITransformer;
 import cpw.mods.modlauncher.api.IncompatibleEnvironmentException;
 
-
 public class CrashDetectorModLauncher implements ITransformationService {
 
-static {
-if(!Statics.cargador)	{
-	Statics.cargador= true;
-	Statics.carpetas_de_mods.add(new File("mods/").toPath());
-	MonitorDePID.main(new String[]{});
-}
-}
-	
+	static {
+		if (!Statics.cargador) {
+			Statics.cargador = true;
+			Statics.carpetas_de_mods.add(new File("mods/").toPath());
+			MonitorDePID.main(new String[] {});
+		}
+	}
+
 	@Override
 	public void initialize(IEnvironment arg0) {
 		// TODO Auto-generated method stub
@@ -36,7 +35,6 @@ if(!Statics.cargador)	{
 	public void onLoad(IEnvironment arg0, Set<String> arg1) throws IncompatibleEnvironmentException {
 		// TODO Auto-generated method stub
 	}
-
 
 	@SuppressWarnings("rawtypes")
 	@Override
