@@ -1,8 +1,10 @@
 package com.asbestosstar.crashdetector.gui.tipos.quickfix;
 
 import java.awt.Color;
+import java.util.List;
 
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.config.ElementoConfig;
 
 /**
  * Implementación "DemonSlayers" centrada en APARIENCIA.
@@ -72,5 +74,11 @@ public class PanelQuickFixDemonSlayers extends TodosQuickFixesGUI {
 	public void init() {
 		// TODO Auto-generated method stub
 		this.setVisible(true);
+	}
+
+	@Override
+	public List<ElementoConfig> obtenerElementosConfigs() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -4,11 +4,13 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import javax.swing.event.HyperlinkEvent;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.config.ElementoConfig;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasHoloTalk;
@@ -166,4 +168,13 @@ public interface CrashDetectorGUI {
 	 */
 	public void init();
 
+	
+	/**
+	 * Elementos de Configs para elementos incluyendo colores y imagenes y superpuesta
+	 * @return
+	 */
+	public List<ElementoConfig> obtenerElementosConfigs();
+	
+	
+	
 }

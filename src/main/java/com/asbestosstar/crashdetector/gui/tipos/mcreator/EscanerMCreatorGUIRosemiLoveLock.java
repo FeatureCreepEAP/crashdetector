@@ -3,116 +3,99 @@ package com.asbestosstar.crashdetector.gui.tipos.mcreator;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 
-import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.config.ConfigColor;
+import com.asbestosstar.crashdetector.config.ElementoConfig;
+import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 
-/**
- * Apariencia que replica EXACTAMENTE la GUI antigua: - Fondo de ventana =
- * colorFondo de Config - Área de resultados: Consolas 12, fg (50,50,50), bg
- * blanco - Estado: gris (150,150,150) - Botón: fondo = colorBoton de Config,
- * texto = verde - Título: "Escaner MCreator" - Imagen rosemi.png escalada
- * (200x112) - Textos de estado: "cargando", "esta completdo", "error"
- */
 public class EscanerMCreatorGUIRosemiLoveLock extends EscanerMCreatorGUI {
 
-	private static final long serialVersionUID = 1L;
-	public static final String ID = "rosemi_lovelock";
+    private static final long serialVersionUID = 1L;
+    public static final String ID = "rosemi_lovelock";
 
-	// Colores tomados para igualar la GUI antigua
-	private static Color cfgColor(String hex) {
-		// helper if you ever want literals; not used now
-		return Color.decode(hex);
-	}
+    @Override
+    public void init() {
+        // Inicializar colores PRIMERO
+        colorFondoVentana = ConfigColor.de("tema.rosemi_lovelock.mcreator.color.fondo.ventana", new Color(248, 205, 205));
+        colorTextoPrincipal = ConfigColor.de("tema.rosemi_lovelock.mcreator.color.texto.principal", Color.WHITE);
+        colorFondoResultados = ConfigColor.de("tema.rosemi_lovelock.mcreator.color.fondo.resultados", new Color(240, 200, 200));
+        colorEstado = ConfigColor.de("tema.rosemi_lovelock.mcreator.color.estado", new Color(230, 180, 180));
+        colorBotonFondo = ConfigColor.de("tema.rosemi_lovelock.mcreator.color.boton.fondo", new Color(220, 150, 150));
+        colorBotonTexto = ConfigColor.de("tema.rosemi_lovelock.mcreator.color.boton.texto", Color.WHITE);
+        colorBordeScroll = ConfigColor.de("tema.rosemi_lovelock.mcreator.color.borde.scroll", new Color(200, 150, 150));
+        colorTextoDescripcion = ConfigColor.de("tema.rosemi_lovelock.mcreator.color.texto.descripcion", Color.WHITE);
 
-	private static Color colorFromConfig(java.util.function.Supplier<String> hex) {
-		return Config.convertirAColor(hex.get());
-	}
+        // AHORA llamamos al init del padre
+        super.init();
+    }
 
-	// === Paleta EXACTA del viejo layout ===
-	@Override
-	protected Color colorFondoVentana() {
-		return colorFromConfig(() -> Config.obtenerInstancia().obtenerColorFondo());
-	}
+    @Override
+    protected Font fuenteDescripcion() {
+        return new Font("Segoe UI", Font.BOLD, 18);
+    }
 
-	@Override
-	protected Color colorTextoPrincipal() {
-		return new Color(50, 50, 50);
-	} // área de resultados (fg)
+    @Override
+    protected Font fuenteResultados() {
+        return new Font("Segoe UI", Font.PLAIN, 13);
+    }
 
-	@Override
-	protected Color colorFondoResultados() {
-		return Color.WHITE;
-	} // área de resultados (bg)
+    @Override
+    protected Font fuenteBoton() {
+        return new Font("Segoe UI", Font.BOLD, 16);
+    }
 
-	@Override
-	protected Color colorEstado() {
-		return new Color(150, 150, 150);
-	} // etiqueta de estado
+    @Override
+    protected ImageIcon iconoDecorativo() {
+        File archivoImagen = MonitorDePID.carpeta.resolve("imagenes/rosemi.png").toFile();
+        if (archivoImagen.exists()) {
+            ImageIcon icon = new ImageIcon(archivoImagen.getPath());
+            if (icon.getIconWidth() > 0)
+                return icon;
+        }
+        return null;
+    }
 
-	@Override
-	protected Color colorBotonFondo() {
-		return colorFromConfig(() -> Config.obtenerInstancia().obtenerColorBoton());
-	}
+    @Override
+    protected String textoEstadoCargando() {
+        return "Escaneando archivos...";
+    }
 
-	@Override
-	protected Color colorBotonTexto() {
-		return Color.GREEN;
-	} // botón "Escanear"
+    @Override
+    protected String textoEstadoCompletado() {
+        return "Escaneo completado";
+    }
 
-	// === Fuentes EXACTAS del viejo layout ===
-	@Override
-	protected Font fuenteResultados() {
-		return new Font("Consolas", Font.PLAIN, 12);
-	}
+    @Override
+    protected String textoEstadoError() {
+        return "Error en escaneo";
+    }
 
-	@Override
-	protected Font fuenteDescripcion() {
-		return new Font("Segoe UI", Font.PLAIN, 14);
-	}
+    @Override
+    protected String tituloVentanaNoLocalizado() {
+        return "Escaneo MCreator - Rosemi LoveLock";
+    }
 
-	@Override
-	protected Font fuenteBoton() {
-		return new Font("Segoe UI", Font.BOLD, 14);
-	}
+    @Override
+    public String id() {
+        return ID;
+    }
 
-	// === Imagen decorativa (se escala a 200x112 en la base) ===
-	@Override
-	protected ImageIcon iconoDecorativo() {
-		File archivoImagen = MonitorDePID.carpeta.resolve("imagenes/rosemi.png").toFile();
-		if (archivoImagen.exists()) {
-			ImageIcon icon = new ImageIcon(archivoImagen.getPath());
-			if (icon.getIconWidth() > 0)
-				return icon;
-		}
-		return null;
-	}
-
-	// === Textos (replican los de la clase antigua) ===
-	@Override
-	protected String textoEstadoCargando() {
-		return "cargando";
-	}
-
-	@Override
-	protected String textoEstadoCompletado() {
-		return "esta completdo";
-	} // coincide con el texto/typo original
-
-	@Override
-	protected String textoEstadoError() {
-		return "error";
-	}
-
-	@Override
-	protected String tituloVentanaNoLocalizado() {
-		return "Escaner MCreator";
-	}
-
-	@Override
-	public String id() {
-		return ID;
-	}
+    @Override
+    public List<ElementoConfig> obtenerElementosConfigs() {
+        List<ElementoConfig> elementos = new ArrayList<>();
+        elementos.add(colorFondoVentana);
+        elementos.add(colorTextoPrincipal);
+        elementos.add(colorFondoResultados);
+        elementos.add(colorEstado);
+        elementos.add(colorBotonFondo);
+        elementos.add(colorBotonTexto);
+        elementos.add(colorBordeScroll);
+        elementos.add(colorTextoDescripcion);
+        return elementos;
+    }
 }
