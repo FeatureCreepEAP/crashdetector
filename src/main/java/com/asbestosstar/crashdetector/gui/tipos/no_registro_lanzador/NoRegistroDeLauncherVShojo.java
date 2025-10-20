@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
@@ -18,11 +19,11 @@ public class NoRegistroDeLauncherVShojo extends NoRegistroLanzadorGUI {
     @Override
     public void init() {
         // Inicializar colores PRIMERO
-        colorFondoVentana = ConfigColor.de("tema.vshojo.no_registro.color.fondo.ventana", new Color(240, 240, 240));
-        colorTexto = ConfigColor.de("tema.vshojo.no_registro.color.texto", Color.BLACK);
-        colorBoton = ConfigColor.de("tema.vshojo.no_registro.color.boton", new Color(200, 200, 255));
-        colorCajaTexto = ConfigColor.de("tema.vshojo.no_registro.color.caja_texto", Color.WHITE);
-        colorEnlace = ConfigColor.de("tema.vshojo.no_registro.color.enlace", Color.BLUE);
+        colorFondoVentana = ConfigColor.de("tema.vshojo.no_registro.color.fondo.ventana", Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()));
+        colorTexto = ConfigColor.de("tema.vshojo.no_registro.color.texto", Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
+        colorBoton = ConfigColor.de("tema.vshojo.no_registro.color.boton", Config.convertirAColor(Config.obtenerInstancia().obtenerColorBoton()));
+        colorCajaTexto = ConfigColor.de("tema.vshojo.no_registro.color.caja_texto", Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
+        colorEnlace = ConfigColor.de("tema.vshojo.no_registro.color.enlace", Config.convertirAColor(Config.obtenerInstancia().obtenerColorEnlace()));
 
         // AHORA llamamos al init del padre
         super.init();

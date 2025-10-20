@@ -56,6 +56,7 @@ import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
+import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.gui.BotonDeBarraLateralDerecha;
 import com.asbestosstar.crashdetector.gui.ComboIdiomasConIcono;
 import com.asbestosstar.crashdetector.gui.ConfigPanel;
@@ -84,14 +85,14 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 
 	public Instant tiempoFallo;
 
-	public static final Color colorFondo = Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo());
-	public static final Color colorTexto = Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto());
-	public static final Color colorBoton = Config.convertirAColor(Config.obtenerInstancia().obtenerColorBoton());
-	public static final Color colorCajaTexto = Config
-			.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto());
-	public static final Color colorEnlace = Config.convertirAColor(Config.obtenerInstancia().obtenerColorEnlace());
+	// Variables de color que usarán ConfigColor en lugar de colores hardcodeados
+	public ConfigColor colorFondo;
+	public ConfigColor colorTexto;
+	public ConfigColor colorBoton;
+	public ConfigColor colorCajaTexto;
+	public ConfigColor colorEnlace;
 
-	private CountDownLatch cerrojo;
+	public CountDownLatch cerrojo;
 	JEditorPane pantalla = new JEditorPane();
 	JScrollPane scrollPane = new JScrollPane(pantalla);
 	ConfigPanel<PrincipalGUI> panelConfiguracion;
@@ -125,16 +126,24 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 	}
 
 	public PrincipalGUI() {
-		CrashDetectorLogger.log("construcoor principal");
+		// Constructor vacío según los requisitos
+		// No debe contener código
 	}
 
 	public void constructir(Instant utc, CountDownLatch latch) {
 		this.tiempoFallo = utc;
 		this.cerrojo = latch;
+		
+		// Inicializar los colores de configuración
+		this.colorFondo = ConfigColor.de("color.fondo", new Color(240, 240, 240));
+		this.colorTexto = ConfigColor.de("color.texto", new Color(0, 0, 0));
+		this.colorBoton = ConfigColor.de("color.boton", new Color(70, 130, 180));
+		this.colorCajaTexto = ConfigColor.de("color.cajaTexto", new Color(255, 255, 255));
+		this.colorEnlace = ConfigColor.de("color.enlace", new Color(0, 0, 255));
+		
 		CrashDetectorLogger.log("en constructir");
 		inicializarInterfaz();
 		this.setVisible(true);
-
 	}
 
 	/**
@@ -145,7 +154,7 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		botons_de_barra_lateral_derecha.put(boton, predeterminado, gui_predeterminado);
 	}
 
-	private void inicializarInterfaz() {
+	public void inicializarInterfaz() {
 		// --- Inicialización del visor HTML
 		// ---------------------------------------------------------
 		CrashDetectorLogger.log("inicializar configpanel");
@@ -153,8 +162,8 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		CrashDetectorLogger.log("inicializar interfaz");
 		pantalla.setContentType("text/html");
 		pantalla.setEditable(false);
-		pantalla.setBackground(colorCajaTexto);
-		pantalla.setForeground(colorEnlace);
+		pantalla.setBackground(colorCajaTexto.obtener());
+		pantalla.setForeground(colorEnlace.obtener());
 		pantalla.setFont(new Font("Consolas", Font.PLAIN, 14));
 
 		try {
@@ -175,7 +184,7 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		// Borde y color de fondo del scroll
 		CrashDetectorLogger.log("establecer borde del scroll");
 		scrollPane.setBorder(BorderFactory.createEmptyBorder());
-		scrollPane.getViewport().setBackground(colorCajaTexto);
+		scrollPane.getViewport().setBackground(colorCajaTexto.obtener());
 		if (scrollPane.getVerticalScrollBar() != null) {
 			scrollPane.getVerticalScrollBar().setValue(0);
 		}
@@ -183,30 +192,30 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		// --- Panel inferior principal (configuración + botón QuickFix + botones de
 		// acción) --------
 		JPanel panelInferior = new JPanel(new BorderLayout(5, 5));
-		panelInferior.setBackground(colorFondo);
+		panelInferior.setBackground(colorFondo.obtener());
 		panelInferior.setBorder(new EmptyBorder(10, 20, 10, 20));
 
 		// Sección de configuración (dos columnas: izquierda = idioma, derecha =
 		// aplicación)
 		JPanel seccionConfiguracion = new JPanel();
 		seccionConfiguracion.setLayout(new BoxLayout(seccionConfiguracion, BoxLayout.Y_AXIS));
-		seccionConfiguracion.setBackground(colorFondo);
+		seccionConfiguracion.setBackground(colorFondo.obtener());
 
 		// Contenedor horizontal para tener ambos controles (izquierda/derecha) uno al
 		// lado del otro
 		JPanel panelHorizontal = new JPanel();
 		panelHorizontal.setLayout(new BoxLayout(panelHorizontal, BoxLayout.X_AXIS));
-		panelHorizontal.setBackground(colorFondo);
+		panelHorizontal.setBackground(colorFondo.obtener());
 
 		// Columna izquierda (idioma): dropdown arriba, checkbox debajo
 		JPanel columnaIzquierda = new JPanel();
 		columnaIzquierda.setLayout(new BoxLayout(columnaIzquierda, BoxLayout.Y_AXIS));
-		columnaIzquierda.setBackground(colorFondo);
+		columnaIzquierda.setBackground(colorFondo.obtener());
 
 		// Columna derecha (aplicación): dropdown arriba, checkbox debajo
 		JPanel columnaDerecha = new JPanel();
 		columnaDerecha.setLayout(new BoxLayout(columnaDerecha, BoxLayout.Y_AXIS));
-		columnaDerecha.setBackground(colorFondo);
+		columnaDerecha.setBackground(colorFondo.obtener());
 
 		// --- Datos de idiomas con iconos
 		// ----------------------------------------------------------
@@ -228,8 +237,8 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		comboIdioma.setMaximumSize(new Dimension(200, 30));
 		comboIdioma.setPreferredSize(new Dimension(200, 30));
 		if (!CrashDetectorGUI.esMac()) {
-			comboIdioma.setBackground(colorBoton);
-			comboIdioma.setForeground(colorTexto);
+			comboIdioma.setBackground(colorBoton.obtener());
+			comboIdioma.setForeground(colorTexto.obtener());
 		}
 
 		// Seleccionar por defecto según el código actual de idioma detectado
@@ -272,8 +281,8 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 
 		// Checkbox "usar idioma del sistema"
 		JCheckBox chkIdiomaSistema = new JCheckBox(MonitorDePID.idioma.usarIdiomaDelSistema());
-		chkIdiomaSistema.setForeground(colorTexto);
-		chkIdiomaSistema.setBackground(colorFondo);
+		chkIdiomaSistema.setForeground(colorTexto.obtener());
+		chkIdiomaSistema.setBackground(colorFondo.obtener());
 		chkIdiomaSistema.setOpaque(false);
 		chkIdiomaSistema.setHorizontalAlignment(SwingConstants.LEFT);
 		chkIdiomaSistema.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -417,14 +426,14 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		comboAplicacion.setMaximumSize(new Dimension(200, 30));
 		comboAplicacion.setPreferredSize(new Dimension(200, 30));
 		if (!CrashDetectorGUI.esMac()) {
-			comboAplicacion.setBackground(colorBoton);
-			comboAplicacion.setForeground(colorTexto);
+			comboAplicacion.setBackground(colorBoton.obtener());
+			comboAplicacion.setForeground(colorTexto.obtener());
 		}
 
 		// Checkbox detectar automáticamente (por defecto activado)
 		JCheckBox chkDetectarAuto = new JCheckBox("Detectar automáticamente");
-		chkDetectarAuto.setForeground(colorTexto);
-		chkDetectarAuto.setBackground(colorFondo);
+		chkDetectarAuto.setForeground(colorTexto.obtener());
+		chkDetectarAuto.setBackground(colorFondo.obtener());
 		chkDetectarAuto.setOpaque(false);
 		chkDetectarAuto.setHorizontalAlignment(SwingConstants.LEFT);
 		chkDetectarAuto.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -442,8 +451,8 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		String etiquetaDetectada = etiquetaParaApp.apply(detectada);
 		comboAplicacion.setSelectedItem(etiquetaDetectada);
 
-		// Listener del combo: solo aplica cuando NO está marcado “detectar
-		// automáticamente”
+		// Listener del combo: solo aplica cuando NO está marcado "detectar
+		// automáticamente"
 		comboAplicacion.addActionListener(e -> {
 			if (chkDetectarAuto.isSelected())
 				return; // ignorar si está en modo automático
@@ -492,7 +501,7 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		// Añadir el contenedor horizontal a la sección de configuración
 		seccionConfiguracion.add(panelHorizontal);
 
-		final int ANCHO_CONTROLES = 220; // un “poquito” más ancho (ajusta a 230 si lo ves mejor)
+		final int ANCHO_CONTROLES = 220; // un "poquito" más ancho (ajusta a 230 si lo ves mejor)
 		final int ALTO_CONTROLES = 30;
 
 		// columna izquierda (idioma)
@@ -535,8 +544,8 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 			botonQuickFix.setContentAreaFilled(false);
 		} else {
 			botonQuickFix.setFont(botonQuickFix.getFont().deriveFont(Font.BOLD, 16f));
-			botonQuickFix.setBackground(colorBoton);
-			botonQuickFix.setForeground(colorTexto);
+			botonQuickFix.setBackground(colorBoton.obtener());
+			botonQuickFix.setForeground(colorTexto.obtener());
 			botonQuickFix.setContentAreaFilled(true);
 			botonQuickFix.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 		}
@@ -545,7 +554,7 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		// --- Botones de acción (derecha)
 		// ----------------------------------------------------------
 		JPanel panelBotonesDerecha = new JPanel(new GridLayout(1, 5, 10, 10));
-		panelBotonesDerecha.setBackground(colorFondo);
+		panelBotonesDerecha.setBackground(colorFondo.obtener());
 
 		// luego el botón de ícono CDMods (deshabilitado), a la derecha
 		JButton boton_CDMods = añadirBotonImagen(panelBotonesDerecha,
@@ -592,11 +601,11 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		// ---------------------------------------------------------------
 		JPanel barraLateralDerecha = new JPanel();
 		barraLateralDerecha.setLayout(new BoxLayout(barraLateralDerecha, BoxLayout.Y_AXIS));
-		barraLateralDerecha.setBackground(colorBoton.darker());
+		barraLateralDerecha.setBackground(colorBoton.obtener().darker());
 		barraLateralDerecha.setPreferredSize(new Dimension(230, 0)); // más ancho para evitar cortes
 
 		JLabel logoLabel = new JLabel();
-		logoLabel.setBackground(colorBoton.darker());
+		logoLabel.setBackground(colorBoton.obtener().darker());
 		logoLabel.setOpaque(true);
 		ImageIcon logoIcon = new ImageIcon(MonitorDePID.carpeta.resolve("imagenes/cd_logo.png").toString());
 		Image logoImg = logoIcon.getImage();
@@ -669,7 +678,7 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		botonVolver.setEnabled(false);
 	}
 
-	private String obtenerCodigoIdioma(String nombreIdioma) {
+	public String obtenerCodigoIdioma(String nombreIdioma) {
 		switch (nombreIdioma) {
 		case "Español":
 			return "es";
@@ -696,7 +705,7 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		}
 	}
 
-	private void anadirRegistro() {
+	public void anadirRegistro() {
 		// TODO Auto-generated method stub
 		JFileChooser selectorArchivo = new JFileChooser();
 
@@ -723,7 +732,7 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		}
 	}
 
-	private JButton añadirBotonEmoji(JPanel panel, String emoji, String tooltip) {
+	public JButton añadirBotonEmoji(JPanel panel, String emoji, String tooltip) {
 		JButton boton = new JButton(emoji);
 		boton.setToolTipText(tooltip);
 		boton.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 20));
@@ -735,16 +744,16 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		boton.setMaximumSize(new Dimension(40, 40));
 		boton.setMinimumSize(new Dimension(40, 40));
 
-		boton.setForeground(colorTexto);
+		boton.setForeground(colorTexto.obtener());
 		boton.addMouseListener(new MouseAdapter() {
 			public void mouseEntered(MouseEvent evt) {
-				boton.setBackground(colorBoton.brighter());
+				boton.setBackground(colorBoton.obtener().brighter());
 				boton.setForeground(Color.BLACK);
 			}
 
 			public void mouseExited(MouseEvent evt) {
-				boton.setBackground(colorFondo);
-				boton.setForeground(colorTexto);
+				boton.setBackground(colorFondo.obtener());
+				boton.setForeground(colorTexto.obtener());
 			}
 		});
 
@@ -752,10 +761,10 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		return boton;
 	}
 
-	private void añadirBotonBarraLateral(JPanel panel, String texto) {
+	public void añadirBotonBarraLateral(JPanel panel, String texto) {
 		JButton boton = new JButton(texto);
-		boton.setBackground(colorBoton.darker());
-		boton.setForeground(colorTexto);
+		boton.setBackground(colorBoton.obtener().darker());
+		boton.setForeground(colorTexto.obtener());
 		boton.setFont(boton.getFont().deriveFont(Font.BOLD, 14f));
 		boton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		boton.setMargin(new Insets(10, 20, 10, 20));
@@ -767,12 +776,12 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		panel.add(boton);
 	}
 
-	private void estilizarBoton(JButton boton) {
+	public void estilizarBoton(JButton boton) {
 		if (!CrashDetectorGUI.esMac()) {
 			boton.setAlignmentX(Component.CENTER_ALIGNMENT);
-			boton.setBackground(colorBoton);
+			boton.setBackground(colorBoton.obtener());
 			boton.setContentAreaFilled(true);
-			boton.setForeground(colorTexto);
+			boton.setForeground(colorTexto.obtener());
 			boton.setFocusPainted(false);
 			boton.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 			boton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
@@ -815,7 +824,7 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		}
 	}
 
-	private JButton añadirBotonImagen(JPanel panel, String imagePath, String tooltip) {
+	public JButton añadirBotonImagen(JPanel panel, String imagePath, String tooltip) {
 		JButton boton = new JButton();
 		boton.setToolTipText(tooltip);
 
@@ -828,20 +837,20 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		boton.setIcon(icon);
 		boton.setText("");
 		boton.setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
-		boton.setBackground(colorFondo);
-		boton.setBorder(BorderFactory.createLineBorder(colorFondo, 1));
+		boton.setBackground(colorFondo.obtener());
+		boton.setBorder(BorderFactory.createLineBorder(colorFondo.obtener(), 1));
 		boton.setFocusPainted(false);
 		boton.setMargin(new Insets(0, 0, 0, 0)); // Reduced margin
 
 		boton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				boton.setBackground(colorBoton.brighter());
+				boton.setBackground(colorBoton.obtener().brighter());
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				boton.setBackground(colorFondo);
+				boton.setBackground(colorFondo.obtener());
 			}
 		});
 
@@ -849,49 +858,7 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		return boton;
 	}
 
-//    private JPanel crearPanelQuickFix() {
-//        JPanel panel = new JPanel(new BorderLayout());
-//        panel.setBackground(colorFondo);
-//        
-//        // Create the scrollable QuickFix panel
-//        PanelQuickFix panelQuickFix = new PanelQuickFix();
-//        
-//        // Example 1: With checkbox
-//        QuickFix fixConRetener = new QuickFix.Builder("Limpiar caché temporal")
-//            .conRetener()
-//            .agregarBoton("Limpiar", retener -> {
-//                System.out.println("Limpiando caché. Retener: " + retener);
-//                JOptionPane.showMessageDialog(this, 
-//                    "Limpiando caché\nRetener: " + retener, 
-//                    "Acción de QuickFix", 
-//                    JOptionPane.INFORMATION_MESSAGE);
-//            })
-//            .agregarEtiqueta("Este proceso eliminará archivos temporales")
-//            .construir();
-//        
-//        // Example 2: Without checkbox
-//        QuickFix fixSinRetener = new QuickFix.Builder("Optimizar base de datos")
-//            .agregarBoton("Optimizar", retener -> {
-//                System.out.println("Optimizando base de datos. Retener: " + retener);
-//                JOptionPane.showMessageDialog(this, 
-//                    "Optimizando base de datos\nRetener: " + retener, 
-//                    "Acción de QuickFix", 
-//                    JOptionPane.INFORMATION_MESSAGE);
-//            })
-//            .agregarEtiqueta("Este proceso optimizará el rendimiento de la base de datos")
-//            .construir();
-//        
-//        // Add both QuickFix entries to the panel
-//        panelQuickFix.agregarQuickFix(fixConRetener);
-//        panelQuickFix.agregarQuickFix(fixSinRetener);
-//        
-//        // Add to main panel with scroll support
-//        panel.add(panelQuickFix, BorderLayout.CENTER);
-//        
-//        return panel;
-//    }
-
-	private void mostrarVentanaQuickFix() {
+	public void mostrarVentanaQuickFix() {
 		// Crear el diálogo emergente
 		JDialog dialogo = new JDialog(this, "QuickFix", true);
 		dialogo.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -901,7 +868,7 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		// Crear el panel QuickFix
 		JPanel panelQuickFix = new JPanel(new BorderLayout());
 		if (!CrashDetectorGUI.esMac()) {
-			panelQuickFix.setBackground(colorFondo);
+			panelQuickFix.setBackground(colorFondo.obtener());
 		}
 
 		// Crear el scrollable QuickFix panel
@@ -910,39 +877,12 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 					return new PanelQuickFixDemonSlayers();
 				});
 
-//        // Ejemplo 1: Con checkbox
-//        QuickFix fixConRetener = new QuickFix.Builder("Limpiar caché temporal")
-//            .conRetener()
-//            .agregarBoton("Limpiar", retener -> {
-//                System.out.println("Limpiando caché. Retener: " + retener);
-//                JOptionPane.showMessageDialog(dialogo, 
-//                    "Limpiando caché\nRetener: " + retener, 
-//                    "Acción de QuickFix", 
-//                    JOptionPane.INFORMATION_MESSAGE);
-//            })
-//            .agregarEtiqueta("Este proceso eliminará archivos temporales")
-//            .construir();
-//        
-//        // Ejemplo 2: Sin checkbox
-//        QuickFix fixSinRetener = new QuickFix.Builder("Optimizar base de datos")
-//            .agregarBoton("Optimizar", retener -> {
-//                System.out.println("Optimizando base de datos. Retener: " + retener);
-//                JOptionPane.showMessageDialog(dialogo, 
-//                    "Optimizando base de datos\nRetener: " + retener, 
-//                    "Acción de QuickFix", 
-//                    JOptionPane.INFORMATION_MESSAGE);
-//            })
-//            .agregarEtiqueta("Este proceso optimizará el rendimiento de la base de datos")
-//            .construir();
-//        
-//        panelContenido.agregarQuickFix(fixConRetener);
-//        panelContenido.agregarQuickFix(fixSinRetener);
 		for (QuickFix solucion : MonitorDePID.analizador.obtenerSoluciones()) {
 			panelContenido.agregarQuickFix(solucion);
 		}
 
 		JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		panelInferior.setBackground(colorFondo);
+		panelInferior.setBackground(colorFondo.obtener());
 
 		JButton botonCerrar = new JButton(MonitorDePID.idioma.volver());
 		estilizarBoton(botonCerrar);

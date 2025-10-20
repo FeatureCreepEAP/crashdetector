@@ -124,11 +124,11 @@ public abstract class NoRegistroLanzadorGUI extends JDialog implements CrashDete
     public NoRegistroLanzadorGUI() {
         super();
         // Inicializar campos de color con valores por defecto para evitar NPE
-        colorFondoVentana = ConfigColor.de("tema.default.no_registro.color.fondo.ventana", new Color(240, 240, 240));
-        colorTexto = ConfigColor.de("tema.default.no_registro.color.texto", Color.BLACK);
-        colorBoton = ConfigColor.de("tema.default.no_registro.color.boton", new Color(200, 200, 255));
-        colorCajaTexto = ConfigColor.de("tema.default.no_registro.color.caja_texto", Color.WHITE);
-        colorEnlace = ConfigColor.de("tema.default.no_registro.color.enlace", Color.BLUE);
+        colorFondoVentana = ConfigColor.de("tema.vshojo.no_registro.color.fondo.ventana", Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()));
+        colorTexto = ConfigColor.de("tema.vshojo.no_registro.color.texto", Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
+        colorBoton = ConfigColor.de("tema.vshojo.no_registro.color.boton", Config.convertirAColor(Config.obtenerInstancia().obtenerColorBoton()));
+        colorCajaTexto = ConfigColor.de("tema.vshojo.no_registro.color.caja_texto", Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
+        colorEnlace = ConfigColor.de("tema.vshojo.no_registro.color.enlace", Config.convertirAColor(Config.obtenerInstancia().obtenerColorEnlace()));
     }
 
     /**
@@ -214,7 +214,6 @@ public abstract class NoRegistroLanzadorGUI extends JDialog implements CrashDete
 
         // Fila de controles (selector + idiomas)
         JPanel filaControles = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
-
         selector = new JComboBox<>(
                 new String[] { GEN, CURSE, PRISM, HMCL, FENIX, ATL, GD, BATTLY, NIGHTWORLD, MCSERVER, ENLACE_MD });
         estilizarCombo(selector);
@@ -291,7 +290,7 @@ public abstract class NoRegistroLanzadorGUI extends JDialog implements CrashDete
         filaControles.add(selector);
         filaControles.add(Box.createHorizontalStrut(10));
         filaControles.add(comboBoxIdioma);
-        filaControles.setBackground(getContentPane().getBackground());
+        filaControles.setBackground(this.colorFondoVentana.obtener());
         encabezadoPanel.add(filaControles, BorderLayout.SOUTH);
 
         raizPanel.add(encabezadoPanel, BorderLayout.NORTH);
