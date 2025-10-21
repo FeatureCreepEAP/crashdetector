@@ -11,18 +11,18 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
-
-import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUI;
-import com.asbestosstar.crashdetector.gui.tipos.grepr.GrepRGUI;
 import com.asbestosstar.crashdetector.gui.tipos.arbol.ArbolDeModsGUI;
 import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartirGUI;
+import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanel;
 import com.asbestosstar.crashdetector.gui.tipos.editor.EditorFirmasGUI;
-import com.asbestosstar.crashdetector.gui.tipos.quickfix.TodosQuickFixesGUI;
-import com.asbestosstar.crashdetector.gui.tipos.quickfix.QuickFixGUI;
-import com.asbestosstar.crashdetector.gui.tipos.mcreator.EscanerMCreatorGUI;
+import com.asbestosstar.crashdetector.gui.tipos.grepr.GrepRGUI;
 import com.asbestosstar.crashdetector.gui.tipos.historia.HistoriaDeModsGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasGUI;
+import com.asbestosstar.crashdetector.gui.tipos.mcreator.EscanerMCreatorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.no_registro_lanzador.NoRegistroLanzadorGUI;
+import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUI;
+import com.asbestosstar.crashdetector.gui.tipos.quickfix.QuickFixGUI;
+import com.asbestosstar.crashdetector.gui.tipos.quickfix.TodosQuickFixesGUI;
 
 public abstract class TipoGUI<T extends CrashDetectorGUI> {
 
@@ -340,6 +340,34 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		return obtenerGUIs().getOrDefault(str.obtener(), por_defecto).get();
 	}
 
+	
+	/**
+	 * No registro de Launcher
+	 */
+	public static TipoGUI<ConfigPanel> CONFIG_PANEL = new TipoGUI<ConfigPanel>() {
+		@Override
+		public String id() {
+			return "config_panel";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.config();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<ConfigPanel> gui) {
+			ConfigPanel.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<ConfigPanel>> obtenerGUIs() {
+			return ConfigPanel.GUIS;
+		}
+	};
+	
+	
+	
 	/**
 	 * Registro estático de todos los tipos de GUI en la lista global.
 	 */
@@ -355,5 +383,6 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		TIPOS_DE_GUI.add(HISTORIA_DE_MODS);
 		TIPOS_DE_GUI.add(LECTADOR_DE_CONSOLAS);
 		TIPOS_DE_GUI.add(NO_REGISTRO_LANZER);
+		TIPOS_DE_GUI.add(CONFIG_PANEL);
 	}
 }

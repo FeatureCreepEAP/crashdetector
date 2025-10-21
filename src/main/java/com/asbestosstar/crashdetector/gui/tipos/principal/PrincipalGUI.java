@@ -59,11 +59,12 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.gui.BotonDeBarraLateralDerecha;
 import com.asbestosstar.crashdetector.gui.ComboIdiomasConIcono;
-import com.asbestosstar.crashdetector.gui.ConfigPanel;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.arbol.ArbolDeModsGUIHamu;
 import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartir;
+import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanel;
+import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanelEstiloTL;
 import com.asbestosstar.crashdetector.gui.tipos.editor.EditorCodiceGUIIronMouse;
 import com.asbestosstar.crashdetector.gui.tipos.grepr.BusquedaGUISaliorMoon;
 import com.asbestosstar.crashdetector.gui.tipos.historia.HistoriaModsGUILegacy;
@@ -135,12 +136,12 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		this.cerrojo = latch;
 		
 		// Inicializar los colores de configuración
-		this.colorFondo = ConfigColor.de("color.fondo", new Color(240, 240, 240));
-		this.colorTexto = ConfigColor.de("color.texto", new Color(0, 0, 0));
-		this.colorBoton = ConfigColor.de("color.boton", new Color(70, 130, 180));
-		this.colorCajaTexto = ConfigColor.de("color.cajaTexto", new Color(255, 255, 255));
-		this.colorEnlace = ConfigColor.de("color.enlace", new Color(0, 0, 255));
-		
+        colorFondo = ConfigColor.de("gui.principal.color.fondo", Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()));
+        colorTexto = ConfigColor.de("gui.principal.color.texto", Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
+        colorBoton = ConfigColor.de("gui.principal.color.boton", Config.convertirAColor(Config.obtenerInstancia().obtenerColorBoton()));
+        colorCajaTexto = ConfigColor.de("gui.principal.color.cajaTexto", Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
+        colorEnlace = ConfigColor.de("gui.principal.color.enlace", Config.convertirAColor(Config.obtenerInstancia().obtenerColorEnlace()));
+    
 		CrashDetectorLogger.log("en constructir");
 		inicializarInterfaz();
 		this.setVisible(true);
@@ -158,7 +159,8 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		// --- Inicialización del visor HTML
 		// ---------------------------------------------------------
 		CrashDetectorLogger.log("inicializar configpanel");
-		panelConfiguracion = new ConfigPanel(this);
+		panelConfiguracion = TipoGUI.CONFIG_PANEL.obtenerGUIPredeterminado(ConfigPanelEstiloTL.ID, () ->new ConfigPanelEstiloTL());
+		panelConfiguracion.constructir(this);
 		CrashDetectorLogger.log("inicializar interfaz");
 		pantalla.setContentType("text/html");
 		pantalla.setEditable(false);

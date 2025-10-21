@@ -30,7 +30,7 @@ import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.grepr.BusquedaArchivos;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.arbol.ArbolDeModsGUIHamu;
-import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartir;
+import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanelEstiloTL;
 import com.asbestosstar.crashdetector.gui.tipos.editor.EditorCodiceGUIIronMouse;
 import com.asbestosstar.crashdetector.gui.tipos.grepr.BusquedaGUISaliorMoon;
 import com.asbestosstar.crashdetector.gui.tipos.historia.HistoriaModsGUILegacy;
@@ -301,6 +301,7 @@ public class MonitorDePID {
 		// TODO Auto-generated method stub
 
 		TipoGUI.PRINCIPAL.registrarGUI(PrincipalGUIEstiloLanzer.ID, () -> new PrincipalGUIEstiloLanzer());
+		TipoGUI.CONFIG_PANEL.registrarGUI(ConfigPanelEstiloTL.ID, () -> new ConfigPanelEstiloTL());
 		TipoGUI.TODOS_QUICKFIXES.registrarGUI(PanelQuickFixDemonSlayers.ID, () -> new PanelQuickFixDemonSlayers());
 		TipoGUI.NO_REGISTRO_LANZER.registrarGUI(NoRegistroDeLauncherVShojo.ID, () -> new NoRegistroDeLauncherVShojo());
 		TipoGUI.ESCANER_MCREATOR.registrarGUI(EscanerMCreatorGUIRosemiLoveLock.ID,

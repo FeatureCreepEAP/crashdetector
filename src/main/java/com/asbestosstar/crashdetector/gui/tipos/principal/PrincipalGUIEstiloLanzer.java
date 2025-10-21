@@ -24,15 +24,6 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
     public ConfigColor colorCajaTexto;
     public ConfigColor colorEnlace;
 
-    public PrincipalGUIEstiloLanzer() {
-        // Inicializar los elementos de configuración de color con valores predeterminados
-        colorFondo = ConfigColor.de("color.fondo", Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()));
-        colorTexto = ConfigColor.de("color.texto", Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
-        colorBoton = ConfigColor.de("color.boton", Config.convertirAColor(Config.obtenerInstancia().obtenerColorBoton()));
-        colorCajaTexto = ConfigColor.de("color.cajaTexto", Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
-        colorEnlace = ConfigColor.de("color.enlace", Config.convertirAColor(Config.obtenerInstancia().obtenerColorEnlace()));
-    }
-
     @Override
     public String id() {
         return ID;
