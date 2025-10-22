@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetector.gui;
+package com.asbestosstar.crashdetector.gui.elementos;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;

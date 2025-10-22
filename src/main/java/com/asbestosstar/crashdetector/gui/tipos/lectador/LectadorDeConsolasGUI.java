@@ -38,9 +38,9 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.config.ConfigColor;
-import com.asbestosstar.crashdetector.gui.BotonDeBarraLateralDerecha;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
-import com.asbestosstar.crashdetector.gui.NumeradorDeLineas;
+import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
+import com.asbestosstar.crashdetector.gui.elementos.NumeradorDeLineas;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 
 public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetectorGUI, BotonDeBarraLateralDerecha {

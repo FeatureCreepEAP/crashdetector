@@ -50,8 +50,8 @@ import com.asbestosstar.crashdetector.EnlanceMD;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.config.ConfigColor;
-import com.asbestosstar.crashdetector.gui.ComboIdiomasConIcono;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
+import com.asbestosstar.crashdetector.gui.elementos.ComboIdiomasConIcono;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 
 public abstract class NoRegistroLanzadorGUI extends JDialog implements CrashDetectorGUI {

@@ -50,7 +50,7 @@ import javax.swing.tree.TreePath;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
-import com.asbestosstar.crashdetector.gui.BotonDeBarraLateralDerecha;
+import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUI;
 

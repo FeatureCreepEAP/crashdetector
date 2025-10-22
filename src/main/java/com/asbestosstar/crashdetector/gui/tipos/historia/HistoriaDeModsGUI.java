@@ -39,8 +39,8 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.config.ConfigColor;
-import com.asbestosstar.crashdetector.gui.BotonDeBarraLateralDerecha;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
+import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 
 public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorGUI, BotonDeBarraLateralDerecha {

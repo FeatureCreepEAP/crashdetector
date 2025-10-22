@@ -51,7 +51,7 @@ import com.asbestosstar.crashdetector.analizador.firmas.FiltrodeCodice;
 import com.asbestosstar.crashdetector.analizador.firmas.v0.FirmasV0;
 import com.asbestosstar.crashdetector.analizador.firmas.v0.VerificacionFirmasV0;
 import com.asbestosstar.crashdetector.config.ConfigColor;
-import com.asbestosstar.crashdetector.gui.BotonDeBarraLateralDerecha;
+import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 
 public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLateralDerecha {
