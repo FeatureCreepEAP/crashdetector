@@ -259,7 +259,7 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
     botonEditarColores.setFocusPainted(false);
     botonEditarColores.addActionListener(e -> {
         JDialog dialogo = new JDialog(SwingUtilities.getWindowAncestor(this), 
-            "Configuración de Colores");
+            "HTML WYSIWYG PLANTILLA");
         dialogo.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         EditorPlantilla editor_plantilla = TipoGUI.EDITOR_PLANTILLA.obtenerGUIPredeterminado(EditorPlantillaPredeterminado.ID, ()->new EditorPlantillaPredeterminado());
         editor_plantilla.init();

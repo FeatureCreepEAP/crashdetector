@@ -378,7 +378,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 
 		@Override
 		public String etiquetaDelBoton() {
-			return MonitorDePID.idioma.config();
+			return "Plantilla HTML";
 		}
 
 		@Override
@@ -409,5 +409,6 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		TIPOS_DE_GUI.add(LECTADOR_DE_CONSOLAS);
 		TIPOS_DE_GUI.add(NO_REGISTRO_LANZER);
 		TIPOS_DE_GUI.add(CONFIG_PANEL);
+		TIPOS_DE_GUI.add(EDITOR_PLANTILLA);
 	}
 }
