@@ -14,6 +14,7 @@ import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.arbol.ArbolDeModsGUI;
 import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartirGUI;
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanel;
+import com.asbestosstar.crashdetector.gui.tipos.config.EditorPantilla;
 import com.asbestosstar.crashdetector.gui.tipos.editor.EditorFirmasGUI;
 import com.asbestosstar.crashdetector.gui.tipos.grepr.GrepRGUI;
 import com.asbestosstar.crashdetector.gui.tipos.historia.HistoriaDeModsGUI;
@@ -365,7 +366,31 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 			return ConfigPanel.GUIS;
 		}
 	};
-	
+
+	/**
+	 * No registro de Launcher
+	 */
+	public static TipoGUI<EditorPantilla> EDITOR_PLANTILLA = new TipoGUI<EditorPantilla>() {
+		@Override
+		public String id() {
+			return "editor_plantilla";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.config();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<EditorPantilla> gui) {
+			EditorPantilla.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<EditorPantilla>> obtenerGUIs() {
+			return EditorPantilla.GUIS;
+		}
+	};	
 	
 	
 	/**

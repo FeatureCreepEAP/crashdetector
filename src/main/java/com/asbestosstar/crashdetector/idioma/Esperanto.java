@@ -1916,7 +1916,7 @@ public class Esperanto implements Idioma {
 
 	@Override
 	public String disminuirMemoriaHeap() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>アプリに割り当てられたヒープメモリを減らすには、ランチャーの設定を開き、RAM オプションを探します。最大値 (Xmx) を適切な量に下げてください。例：8GB の RAM がある場合、3～4GB を割り当てます。16GB の場合、6～8GB が適切です。OS や他のプログラムのために十分なメモリを残すことを忘れないでください。</b>";
 	}
 
@@ -1960,7 +1960,7 @@ public class Esperanto implements Idioma {
 
 	@Override
 	public String solucion_para_forge_instalacion_no_completa() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>Por solvi tion, reinstalu Forge ĝuste. Certiĝu pri la ĝusta versio por via Minecraft-versio kaj plenumu la instalprocezon sen interrompo.</b>";
 	}
 
@@ -2012,7 +2012,7 @@ public class Esperanto implements Idioma {
 
 	@Override
 	public String solucion_para_error_enlace_insatisfecho() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>Malsukcesis ŝargi bibliotekon. Eblaj solvoj:<br/><br/>"
 				+ "a) Aldonu la dosierujon kun la komuna biblioteko al -Djava.library.path aŭ -Dorg.lwjgl.librarypath.<br/>"
 				+ "b) Aldonu la JAR-dosieron kun la komuna biblioteko al la classpath.<br/><br/>"
@@ -2040,13 +2040,13 @@ public class Esperanto implements Idioma {
 
 	@Override
 	public String solucion_maximo_rango() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>Por solvi tion en Minecraft 1.12.2, instalu <a href='https://www.curseforge.com/minecraft/mc-mods/justenoughids'>JustEnoughIDs</a>. Por 1.7.10, uzu <a href='https://www.curseforge.com/minecraft/mc-mods/endless-ids'>EndlessIDs</a>.</b>";
 	}
 
 	@Override
 	public String solucion_colision_id() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>Uzu ilojn kiel <a href='https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/1291014-idfix-and-idfix-minus-mods-for-resolving-id'>IdFix Minus</a> aŭ <a href='https://github.com/SS111/Minecraft-ID-Resolver'>Minecraft-ID-Resolver</a> por solvi ID-konfliktojn.</b>";
 	}
 
@@ -3586,7 +3586,7 @@ public class Esperanto implements Idioma {
 	public String mensajeAyudar() {
 		String iconoCompartir = MonitorDePID.carpeta.resolve("imagenes").resolve("boton_compartir_icon.png")
 				.toAbsolutePath().toUri().toString();
-		String colorTexto = Config.obtenerInstancia().obtenerColorTexto();
+		String colorTexto = Config.obtenerInstancia().obtenerColorInfo();
 
 		return "" + "<div style='color:" + colorTexto + ";'>" + "  <strong>Ĉu vi bezonas helpon?</strong><br>"
 				+ "  Se vi ne scias kiel ripari ĉi tion aŭ se la kaŭzo ne estas tie ĉi, vi povas ricevi helpon per niaj sociaj retoj. "
@@ -3595,6 +3595,26 @@ public class Esperanto implements Idioma {
 				+ "  <strong>Komunigi</strong> por akiri ligilojn al viaj protokoloj kai rezultoj por nia teamo. "
 				+ "  Se vi estas kreinto de modpack aŭ korporacio, redaktu <code>crash_detector/plantilla.htm</code> "
 				+ "  por alĝustigi viajn teamajn ligilojn." + "</div>";
+	}
+	
+	@Override
+	public String restablecerPlantilla() {
+	    return "Restarigi ŝablonon";
+	}
+
+	@Override
+	public String restablecer() {
+	    return "Restarigi";
+	}
+
+	@Override
+	public String restablecerImagenMensjae(String nombreImagen) {
+	    return "Ĉu restarigi " + nombreImagen + " al defaŭltaj valoroj?";
+	}
+
+	@Override
+	public String restablecerPlantillaMensaje() {
+	    return "Ĉu restarigi la ŝablonon al defaŭltaj valoroj?";
 	}
 
 }

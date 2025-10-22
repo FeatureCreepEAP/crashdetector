@@ -1924,7 +1924,7 @@ public class Portuges implements Idioma {
 
 	@Override
 	public String disminuirMemoriaHeap() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>Para reduzir a memória heap, abra as configurações do seu launcher e encontre a opção de memória RAM. Reduza o valor máximo (Xmx) para um valor adequado. Exemplo: com 8 GB de RAM, use 3-4 GB; com 16 GB, use 6-8 GB. Deixe memória suficiente para o sistema operacional e outros programas.</b>";
 	}
 
@@ -1968,7 +1968,7 @@ public class Portuges implements Idioma {
 
 	@Override
 	public String solucion_para_forge_instalacion_no_completa() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>Para resolver este problema, necesitas reinstalar Forge correctamente. Asegúrate de descargar la versión adecuada para tu versión de Minecraft y seguir el proceso de instalación completo sin interrumpirlo.</b>";
 	}
 
@@ -2019,7 +2019,7 @@ public class Portuges implements Idioma {
 
 	@Override
 	public String solucion_para_error_enlace_insatisfecho() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>Failed to load a library. Possible solutions:<br/><br/>"
 				+ "a) Add the directory containing the shared library to -Djava.library.path or -Dorg.lwjgl.librarypath.<br/>"
 				+ "b) Add the JAR file containing the shared library to the classpath.<br/><br/>"
@@ -2048,13 +2048,13 @@ public class Portuges implements Idioma {
 
 	@Override
 	public String solucion_maximo_rango() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>Para resolver isso no Minecraft 1.12.2, instale <a href='https://www.curseforge.com/minecraft/mc-mods/justenoughids'>JustEnoughIDs</a>. Para 1.7.10, use <a href='https://www.curseforge.com/minecraft/mc-mods/endless-ids'>EndlessIDs</a>.</b>";
 	}
 
 	@Override
 	public String solucion_colision_id() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>Use ferramentas como <a href='https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/1291014-idfix-and-idfix-minus-mods-for-resolving-id'>IdFix Minus</a> ou <a href='https://github.com/SS111/Minecraft-ID-Resolver'>Minecraft-ID-Resolver</a> para resolver conflitos de ID.</b>";
 	}
 
@@ -3602,7 +3602,7 @@ public class Portuges implements Idioma {
 		String iconoCompartir = MonitorDePID.carpeta.resolve("imagenes").resolve("boton_compartir_icon.png")
 				.toAbsolutePath().toUri().toString();
 
-		String colorTexto = Config.obtenerInstancia().obtenerColorTexto();
+		String colorTexto = Config.obtenerInstancia().obtenerColorInfo();
 
 		return "" + "<div style='color:" + colorTexto + ";'>" + "  <strong>Precisa de ajuda?</strong><br>"
 				+ "  Se você não sabe como corrigir ou a razão não está aqui, pode obter ajuda em nossas redes sociais. "
@@ -3613,4 +3613,26 @@ public class Portuges implements Idioma {
 				+ "  para personalizar os links da sua equipe." + "</div>";
 	}
 
+	@Override
+	public String restablecerPlantilla() {
+	    return "Redefinir Modelo";
+	}
+
+	@Override
+	public String restablecer() {
+	    return "Redefinir";
+	}
+
+	@Override
+	public String restablecerImagenMensjae(String nombreImagen) {
+	    return "Redefinir " + nombreImagen + " para os valores padrão?";
+	}
+
+	@Override
+	public String restablecerPlantillaMensaje() {
+	    return "Redefinir modelo para os valores padrão?";
+	}
+	
+	
+	
 }

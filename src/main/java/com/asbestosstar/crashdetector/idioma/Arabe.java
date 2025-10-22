@@ -1911,7 +1911,7 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String disminuirMemoriaHeap() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>لتقليل ذاكرة heap المخصصة للتطبيق، افتح إعدادات اللانشر وابحث عن خيار الذاكرة. قلل القيمة القصوى (Xmx) إلى كمية مناسبة. على سبيل المثال، إذا كانت لديك 8 جيجابايت من RAM، خصص 3-4 جيجابايت للتطبيق. إذا كانت لديك 16 جيجابايت، يمكنك تخصيص 6-8 جيجابايت. تأكد من ترك ذاكرة كافية للنظام والبرامج الأخرى.</b>";
 	}
 
@@ -1954,7 +1954,7 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String solucion_para_forge_instalacion_no_completa() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>لحل هذه المشكلة، أعد تثبيت Forge بشكل صحيح. تأكد من تنزيل الإصدار المناسب لإصدار ماينكرافت الخاص بك، واتبع عملية التثبيت بالكامل دون مقاطعة.</b>";
 	}
 
@@ -2003,7 +2003,7 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String solucion_para_error_enlace_insatisfecho() {
-		return "<b style='color:#" + config.obtenerColorTexto() + "'>فشل في تحميل مكتبة. الحلول الممكنة:<br/><br/>"
+		return "<b style='color:#" + config.obtenerColorInfo() + "'>فشل في تحميل مكتبة. الحلول الممكنة:<br/><br/>"
 				+ "أ) أضف الدليل الذي يحتوي على المكتبة المشتركة إلى -Djava.library.path أو -Dorg.lwjgl.librarypath.<br/>"
 				+ "ب) أضف ملف JAR الذي يحتوي على المكتبة المشتركة إلى classpath.<br/><br/>"
 				+ "هذه الحلول التقنية مخصصة للمستخدمين المتقدمين. معظم المستخدمين يجب أن يحاولوا "
@@ -2030,13 +2030,13 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String solucion_maximo_rango() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>لحل هذه المشكلة في ماينكرافت 1.12.2، قم بتثبيت <a href='https://www.curseforge.com/minecraft/mc-mods/justenoughids'>JustEnoughIDs</a>. أما في 1.7.10، استخدم <a href='https://www.curseforge.com/minecraft/mc-mods/endless-ids'>EndlessIDs</a>.</b>";
 	}
 
 	@Override
 	public String solucion_colision_id() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>استخدم أدوات مثل <a href='https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/1291014-idfix-and-idfix-minus-mods-for-resolving-id'>IdFix Minus</a> أو <a href='https://github.com/SS111/Minecraft-ID-Resolver'>Minecraft-ID-Resolver</a> لحل تضارب المعرفات.</b>";
 	}
 
@@ -3561,7 +3561,7 @@ public class Arabe implements Idioma {
 		String iconoCompartir = MonitorDePID.carpeta.resolve("imagenes").resolve("boton_compartir_icon.png")
 				.toAbsolutePath().toUri().toString();
 
-		String colorTexto = Config.obtenerInstancia().obtenerColorTexto();
+		String colorTexto = Config.obtenerInstancia().obtenerColorInfo();
 
 		return "" + "<div style='color:" + colorTexto + ";'>" + "  <strong>هل تحتاج مساعدة؟</strong><br>"
 				+ "  إذا كنت لا تعرف كيفية الإصلاح أو لم تُذكر المشكلة هنا، يمكنك الحصول على مساعدة عبر شبكاتنا الاجتماعية. "
@@ -3572,4 +3572,28 @@ public class Arabe implements Idioma {
 				+ "  لتخصيص الروابط الخاصة بفريقك." + "</div>";
 	}
 
+	@Override
+	public String restablecerPlantilla() {
+	    return "إعادة تعيين القالب";
+	}
+
+	@Override
+	public String restablecer() {
+	    return "إعادة تعيين";
+	}
+
+	@Override
+	public String restablecerImagenMensjae(String nombreImagen) {
+	    return "هل تريد إعادة تعيين " + nombreImagen + " إلى الإعدادات الافتراضية؟";
+	}
+
+	@Override
+	public String restablecerPlantillaMensaje() {
+	    return "هل تريد إعادة تعيين القالب إلى الإعدادات الافتراضية؟";
+	}
+	
+	
+	
+	
+	
 }

@@ -2,24 +2,36 @@ package com.asbestosstar.crashdetector.gui.tipos.config;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
+import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -37,30 +49,31 @@ import javax.swing.text.StyledDocument;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.config.ConfigColor;
+import com.asbestosstar.crashdetector.config.ElementoConfig;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
+import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 
-public class EditorPantilla extends JPanel {
-    private JTextPane editorHTML;
-    private JPanel vistaPrevia;
-    private JButton botonResetearPlantilla;
-    private JButton botonResetearImágenes;
-    private JButton botonCerrar;
+public class EditorPantilla extends JPanel implements CrashDetectorGUI{
+
+	public static Map<String, Supplier<EditorPantilla>> GUIS = new HashMap<>();
+
+	
+    public JTextPane editorHTML;
+    public JEditorPane vistaPrevia;
+    public JButton botonGuardar;
+    public JButton botonRestablecerPlantilla;
+    public JButton botonCerrar;
     
-    private boolean esMac = CrashDetectorGUI.esMac();
-    private Config configuracion = Config.obtenerInstancia();
-    private boolean actualizandoVista = false;
-    private File archivoPlantilla;
+    public boolean esMac = CrashDetectorGUI.esMac();
+    public Config configuracion = Config.obtenerInstancia();
+    public boolean actualizandoVista = false;
+    public File archivoPlantilla;
     
-    // Color configuration panels
-    private Map<String, ConfigColor> colorMap = new HashMap<>();
-    private JPanel panelColores;
+    public Map<String, ConfigColor> colorMap = new HashMap<>();
+    public JPanel panelConfiguracion;
 
-    public EditorPantilla() {
-        inicializarComponentes();
-        cargarContenidoPlantilla();
-    }
 
-    private void inicializarComponentes() {
+    public void inicializarComponentes() {
         setLayout(new BorderLayout());
         setBackground(Config.convertirAColor(configuracion.obtenerColorFondo()));
         
@@ -69,29 +82,32 @@ public class EditorPantilla extends JPanel {
         panelSuperior.setBackground(Config.convertirAColor(configuracion.obtenerColorFondo()));
         panelSuperior.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
         
-        // Botón para resetear la plantilla
-        botonResetearPlantilla = new JButton("Resetear Plantilla");
-        configurarBoton(botonResetearPlantilla);
-        botonResetearPlantilla.addActionListener(e -> resetearPlantilla());
-        panelSuperior.add(botonResetearPlantilla);
+        botonGuardar = new JButton(MonitorDePID.idioma.guardarTodo());
+        configurarBoton(botonGuardar);
+        botonGuardar.addActionListener(e -> guardarPlantilla());
+        panelSuperior.add(botonGuardar);
         
-        // Botón para resetear las imágenes
-        botonResetearImágenes = new JButton("Resetear Imágenes");
-        configurarBoton(botonResetearImágenes);
-        botonResetearImágenes.addActionListener(e -> resetearImágenes());
-        panelSuperior.add(botonResetearImágenes);
+        botonRestablecerPlantilla = new JButton(MonitorDePID.idioma.restablecerPlantilla());
+        configurarBoton(botonRestablecerPlantilla);
+        botonRestablecerPlantilla.addActionListener(e -> restablecerPlantilla());
+        panelSuperior.add(botonRestablecerPlantilla);
+        
+        botonCerrar = new JButton(MonitorDePID.idioma.omitirYCerrar());
+        configurarBoton(botonCerrar);
+        botonCerrar.addActionListener(e -> cerrarEditor());
+        panelSuperior.add(botonCerrar);
         
         add(panelSuperior, BorderLayout.NORTH);
         
-        // Main split pane - horizontal (editor/preview on left, color config on right)
-        JSplitPane mainSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-        mainSplitPane.setDividerLocation(0.65);
+        // Panel principal (división horizontal)
+        JSplitPane splitPanePrincipal = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+        splitPanePrincipal.setDividerLocation(0.65);
         
-        // Create the left side (editor and preview)
-        JSplitPane editorSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-        editorSplitPane.setDividerLocation(0.5);
+        // Panel izquierdo: editor y vista previa (editor más alto)
+        JSplitPane splitPaneEditor = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        splitPaneEditor.setDividerLocation(0.75); // Editor ocupa 75% del espacio vertical
         
-        // Editor de HTML (izquierda)
+        // Editor HTML
         JPanel panelEditor = new JPanel(new BorderLayout());
         panelEditor.setBorder(BorderFactory.createTitledBorder("Editor HTML"));
         panelEditor.setBackground(Config.convertirAColor(configuracion.obtenerColorFondo()));
@@ -106,56 +122,63 @@ public class EditorPantilla extends JPanel {
         scrollEditor.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         panelEditor.add(scrollEditor, BorderLayout.CENTER);
         
-        // Vista previa (derecha)
+        // Vista previa
         JPanel panelVistaPrevia = new JPanel(new BorderLayout());
         panelVistaPrevia.setBorder(BorderFactory.createTitledBorder("Vista Previa"));
         panelVistaPrevia.setBackground(Config.convertirAColor(configuracion.obtenerColorFondo()));
         
-        vistaPrevia = new JPanel(new BorderLayout());
+        vistaPrevia = new JEditorPane();
+        vistaPrevia.setEditable(false);
+        vistaPrevia.setContentType("text/html");
         vistaPrevia.setBackground(Color.WHITE);
-        vistaPrevia.setPreferredSize(new Dimension(400, 500));
         
         JScrollPane scrollVistaPrevia = new JScrollPane(vistaPrevia);
         scrollVistaPrevia.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         panelVistaPrevia.add(scrollVistaPrevia, BorderLayout.CENTER);
         
-        editorSplitPane.setTopComponent(panelEditor);
-        editorSplitPane.setBottomComponent(panelVistaPrevia);
+        splitPaneEditor.setTopComponent(panelEditor);
+        splitPaneEditor.setBottomComponent(panelVistaPrevia);
         
-        // Create the color configuration panel (right side)
-        panelColores = new JPanel(new BorderLayout());
-        panelColores.setBorder(BorderFactory.createTitledBorder("Configuración de Colores"));
+        // Panel derecho: configuración de colores e imágenes
+        panelConfiguracion = new JPanel(new BorderLayout());
+        panelConfiguracion.setBorder(BorderFactory.createTitledBorder("Configuración de Colores e Imágenes"));
+        panelConfiguracion.setBackground(Config.convertirAColor(configuracion.obtenerColorFondo()));
+        
+        // Panel de colores
+        JPanel panelColores = new JPanel(new GridLayout(0, 1, 5, 5));
         panelColores.setBackground(Config.convertirAColor(configuracion.obtenerColorFondo()));
+        panelColores.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        inicializarConfiguracionColores(panelColores);
         
-        // Main panel for color fields
-        JPanel panelCampos = new JPanel(new GridLayout(0, 1, 5, 5));
-        panelCampos.setBackground(Config.convertirAColor(configuracion.obtenerColorFondo()));
-        panelCampos.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        // Panel de imágenes con ruta
+        JPanel panelImagenes = new JPanel(new BorderLayout());
+        panelImagenes.setBackground(Config.convertirAColor(configuracion.obtenerColorFondo()));
         
-        // Initialize color configuration
-        inicializarConfiguracionColores(panelCampos);
+        Path rutaImagenes = MonitorDePID.carpeta.resolve("imagenes");
+        String rutaFormateada = rutaImagenes.toString().replace("\\", "/");
+        panelImagenes.setBorder(BorderFactory.createTitledBorder(
+            "Imágenes (" + rutaFormateada + ")"));
         
-        panelColores.add(panelCampos, BorderLayout.CENTER);
+        JPanel panelContenidoImagenes = new JPanel(new GridLayout(0, 1, 5, 5));
+        panelContenidoImagenes.setBackground(Config.convertirAColor(configuracion.obtenerColorFondo()));
+        panelContenidoImagenes.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         
-        // Add both panels to the main split pane
-        mainSplitPane.setLeftComponent(editorSplitPane);
-        mainSplitPane.setRightComponent(panelColores);
+        String[] imagenes = {"gura.png", "nanashi_mumei.png", "shion.png"};
+        for (String imagen : imagenes) {
+            panelContenidoImagenes.add(crearPanelImagen(imagen));
+        }
         
-        add(mainSplitPane, BorderLayout.CENTER);
+        panelImagenes.add(panelContenidoImagenes, BorderLayout.CENTER);
         
-        // Panel inferior con botón de cierre
-        JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        panelInferior.setBackground(Config.convertirAColor(configuracion.obtenerColorFondo()));
-        panelInferior.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        panelConfiguracion.add(panelColores, BorderLayout.CENTER);
+        panelConfiguracion.add(panelImagenes, BorderLayout.SOUTH);
         
-        botonCerrar = new JButton("Cerrar");
-        configurarBoton(botonCerrar);
-        botonCerrar.addActionListener(e -> cerrarEditor());
-        panelInferior.add(botonCerrar);
+        splitPanePrincipal.setLeftComponent(splitPaneEditor);
+        splitPanePrincipal.setRightComponent(panelConfiguracion);
         
-        add(panelInferior, BorderLayout.SOUTH);
+        add(splitPanePrincipal, BorderLayout.CENTER);
         
-        // Agregar listener para actualizar vista previa en tiempo real
+        // Listener para actualizar vista previa
         editorHTML.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -173,17 +196,13 @@ public class EditorPantilla extends JPanel {
             }
         });
         
-        // Agregar KeyListener para resaltar sintaxis
+        // Listener para resaltar sintaxis
         editorHTML.addKeyListener(new KeyListener() {
             @Override
-            public void keyTyped(KeyEvent e) {
-                // No necesario para resaltado en tiempo real
-            }
+            public void keyTyped(KeyEvent e) {}
 
             @Override
-            public void keyPressed(KeyEvent e) {
-                // No necesario para resaltado en tiempo real
-            }
+            public void keyPressed(KeyEvent e) {}
 
             @Override
             public void keyReleased(KeyEvent e) {
@@ -191,53 +210,138 @@ public class EditorPantilla extends JPanel {
             }
         });
         
-        // Configurar el editor con el contenido inicial
         resaltarSintaxis();
     }
     
-    private void inicializarConfiguracionColores(JPanel panelCampos) {
-        Color colorTexto = Config.convertirAColor(configuracion.obtenerColorTexto());
-        
-        // Map of color names to ConfigColor objects
-        // REEMPLAZADAS LAS CLAVES POR LAS REALES QUE EXISTEN EN EL SISTEMA DE CONFIGURACIÓN
-    //    colorMap.put("fondo", ConfigColor.de("color_fondo", Config.convertirAColor(configuracion.obtenerColorFondo())));
-        colorMap.put("texto", ConfigColor.de("color_texto", Config.convertirAColor(configuracion.obtenerColorTexto())));
-      //  colorMap.put("boton", ConfigColor.de("color_boton", Config.convertirAColor(configuracion.obtenerColorBoton())));
-        colorMap.put("cajaTexto", ConfigColor.de("color_caja_texto", Config.convertirAColor(configuracion.obtenerColorCajaTexto())));
+    public void inicializarConfiguracionColores(JPanel panelCampos) {
         colorMap.put("enlace", ConfigColor.de("color_enlace", Config.convertirAColor(configuracion.obtenerColorEnlace())));
         colorMap.put("titulosConsolas", ConfigColor.de("color_de_titulos_de_consolas", Config.convertirAColor(configuracion.obtenerColorDeTitulosDeConsolas())));
         colorMap.put("error", ConfigColor.de("color_error", Config.convertirAColor(configuracion.obtenerColorError())));
         colorMap.put("advertencia", ConfigColor.de("color_advertencia", Config.convertirAColor(configuracion.obtenerColorAdvertencia())));
         colorMap.put("info", ConfigColor.de("color_info", Config.convertirAColor(configuracion.obtenerColorInfo())));
         colorMap.put("titulo", ConfigColor.de("color_titulo", Config.convertirAColor(configuracion.obtenerColorTitulo())));
-        colorMap.put("enlaceTexto", ConfigColor.de("color_enlace_texto", Config.convertirAColor(configuracion.obtenerColorEnlace())));
         
-        // Agregar campos de color con vista previa
-        //panelCampos.add(crearCampoDeColor("Color de fondo (#RRGGBB):", colorMap.get("fondo")));
-        panelCampos.add(crearCampoDeColor(MonitorDePID.idioma.colorTexto(), colorMap.get("texto")));
-       // panelCampos.add(crearCampoDeColor("Color de botón (#RRGGBB):", colorMap.get("boton")));
-        panelCampos.add(crearCampoDeColor(MonitorDePID.idioma.colorCajaTexto(), colorMap.get("cajaTexto")));
         panelCampos.add(crearCampoDeColor(MonitorDePID.idioma.colorEnlace(), colorMap.get("enlace")));
         panelCampos.add(crearCampoDeColor(MonitorDePID.idioma.colorTitulosConsolas(), colorMap.get("titulosConsolas")));
         panelCampos.add(crearCampoDeColor(MonitorDePID.idioma.colorError(), colorMap.get("error")));
         panelCampos.add(crearCampoDeColor(MonitorDePID.idioma.colorAdvertencia(), colorMap.get("advertencia")));
         panelCampos.add(crearCampoDeColor(MonitorDePID.idioma.colorInfo(), colorMap.get("info")));
         panelCampos.add(crearCampoDeColor(MonitorDePID.idioma.colorTitulo(), colorMap.get("titulo")));
-        panelCampos.add(crearCampoDeColor(MonitorDePID.idioma.colorEnlaceTexto(), colorMap.get("enlaceTexto")));
+    }
+    
+    public JPanel crearPanelImagen(String nombreImagen) {
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.setBackground(Config.convertirAColor(configuracion.obtenerColorFondo()));
+        
+        // Nombre de la imagen
+        JLabel label = new JLabel(nombreImagen);
+        label.setForeground(Config.convertirAColor(configuracion.obtenerColorTexto()));
+        label.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
+        panel.add(label, BorderLayout.NORTH);
+        
+        // Panel para vista previa y botón (horizontal)
+        JPanel panelContenido = new JPanel();
+        panelContenido.setLayout(new BoxLayout(panelContenido, BoxLayout.X_AXIS));
+        panelContenido.setBackground(Config.convertirAColor(configuracion.obtenerColorFondo()));
+        panelContenido.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        
+        // Vista previa de la imagen con relación de aspecto 200:112 (1.78:1)
+        JLabel previewLabel = new JLabel();
+        // Tamaño 100x56 mantiene la relación de aspecto 200:112
+        previewLabel.setPreferredSize(new Dimension(100, 56));
+        previewLabel.setAlignmentY(Component.CENTER_ALIGNMENT);
+        actualizarVistaPreviaImagen(nombreImagen, previewLabel);
+        
+        // Botón para restablecer imagen
+        JButton botonRestablecer = new JButton(MonitorDePID.idioma.restablecer());
+        configurarBoton(botonRestablecer);
+        botonRestablecer.setPreferredSize(new Dimension(80, 25));
+        botonRestablecer.setAlignmentY(Component.CENTER_ALIGNMENT);
+        botonRestablecer.addActionListener(e -> restablecerImagen(nombreImagen, previewLabel));
+        
+        panelContenido.add(previewLabel);
+        panelContenido.add(Box.createHorizontalStrut(10));
+        panelContenido.add(botonRestablecer);
+        
+        panel.add(panelContenido, BorderLayout.CENTER);
+        return panel;
+    }
+    
+    public void actualizarVistaPreviaImagen(String nombreImagen, JLabel previewLabel) {
+        File imagenFile = MonitorDePID.carpeta.resolve("imagenes").resolve(nombreImagen).toFile();
+        
+        if (imagenFile.exists()) {
+            try {
+                BufferedImage img = ImageIO.read(imagenFile);
+                // Mantener relación de aspecto 200:112 (1.78:1)
+                int ancho = 100;
+                int alto = (int) (ancho * 0.56); // 100 * (112/200) = 56
+                Image scaledImage = img.getScaledInstance(ancho, alto, Image.SCALE_SMOOTH);
+                previewLabel.setIcon(new ImageIcon(scaledImage));
+            } catch (IOException e) {
+                previewLabel.setText("Error");
+            }
+        } else {
+            previewLabel.setText("No existe");
+        }
+    }
+    
+    public void restablecerImagen(String nombreImagen, JLabel previewLabel) {
+        int confirmacion = JOptionPane.showConfirmDialog(
+            this,
+            MonitorDePID.idioma.restablecerImagenMensjae(nombreImagen),
+            MonitorDePID.idioma.restablecer(),
+            JOptionPane.YES_NO_OPTION
+        );
+        
+        if (confirmacion != JOptionPane.YES_OPTION) return;
+        
+        String rutaRecurso = "/imagenes/" + nombreImagen;
+        try (InputStream is = getClass().getClassLoader().getResourceAsStream(rutaRecurso)) {
+            if (is == null) {
+                JOptionPane.showMessageDialog(this, 
+                    "No se encontró la imagen en el recurso: " + rutaRecurso,
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            File destino = MonitorDePID.carpeta.resolve("imagenes").resolve(nombreImagen).toFile();
+            destino.getParentFile().mkdirs();
+            
+            try (OutputStream os = new java.io.FileOutputStream(destino)) {
+                byte[] buffer = new byte[4096];
+                int length;
+                while ((length = is.read(buffer)) > 0) {
+                    os.write(buffer, 0, length);
+                }
+            }
+            
+            JOptionPane.showMessageDialog(this, 
+                "Imagen restablecida: " + nombreImagen,
+                "Éxito",
+                JOptionPane.INFORMATION_MESSAGE);
+            
+            actualizarVistaPreviaImagen(nombreImagen, previewLabel);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, 
+                "Error al restablecer la imagen: " + e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+        }
     }
 
-    private void configurarBoton(JButton boton) {
+    public void configurarBoton(JButton boton) {
         if (!esMac) {
             boton.setForeground(Config.convertirAColor(configuracion.obtenerColorTexto()));
             boton.setBackground(Config.convertirAColor(configuracion.obtenerColorBoton()));
-            boton.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-            boton.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+            boton.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+            boton.setBorder(BorderFactory.createEmptyBorder(3, 5, 3, 5));
         }
         boton.setFocusPainted(false);
     }
 
-    private void cargarContenidoPlantilla() {
-        // Primero intentamos cargar desde disco
+    public void cargarContenidoPlantilla() {
         archivoPlantilla = MonitorDePID.carpeta.resolve("pantilla.htm").toFile();
         
         if (archivoPlantilla.exists()) {
@@ -254,14 +358,12 @@ public class EditorPantilla extends JPanel {
                 resaltarSintaxis();
                 actualizarVistaPrevia();
             } catch (IOException e) {
-                // Si hay error al cargar desde disco, mostramos mensaje
                 JOptionPane.showMessageDialog(this, 
                     "Error al cargar la plantilla desde disco: " + e.getMessage(),
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            // Si no existe en disco, intentamos cargar desde el JAR
             try {
                 String rutaPlantilla = "pantilla.htm";
                 InputStream is = getClass().getClassLoader().getResourceAsStream(rutaPlantilla);
@@ -278,24 +380,21 @@ public class EditorPantilla extends JPanel {
                     actualizarVistaPrevia();
                 }
             } catch (IOException e) {
-                // Si no se encuentra en el JAR, mostramos mensaje
                 JOptionPane.showMessageDialog(this, 
-                    "No se encontró la plantilla en disco ni en el JAR. " +
-                    "Por favor, restablece la plantilla desde el botón 'Resetear Plantilla'.",
+                    "No se encontró la plantilla. Restablezca usando el botón 'Restablecer Plantilla'.",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
             }
         }
     }
 
-    private void resaltarSintaxis() {
+    public void resaltarSintaxis() {
         if (actualizandoVista) return;
         actualizandoVista = true;
         
         StyledDocument doc = editorHTML.getStyledDocument();
         String text = editorHTML.getText();
         
-        // Limpiar estilos
         SimpleAttributeSet normal = new SimpleAttributeSet();
         StyleConstants.setForeground(normal, Config.convertirAColor(configuracion.obtenerColorTexto()));
         doc.setCharacterAttributes(0, text.length(), normal, true);
@@ -304,7 +403,7 @@ public class EditorPantilla extends JPanel {
         int inicio = 0;
         while ((inicio = text.indexOf("{constructor}", inicio)) != -1) {
             SimpleAttributeSet style = new SimpleAttributeSet();
-            StyleConstants.setForeground(style, new Color(0, 120, 212)); // Azul
+            StyleConstants.setForeground(style, new Color(0, 120, 212));
             StyleConstants.setBold(style, true);
             doc.setCharacterAttributes(inicio, 13, style, false);
             inicio += 13;
@@ -314,7 +413,7 @@ public class EditorPantilla extends JPanel {
         inicio = 0;
         while ((inicio = text.indexOf("{mensaje_ayudar}", inicio)) != -1) {
             SimpleAttributeSet style = new SimpleAttributeSet();
-            StyleConstants.setForeground(style, new Color(153, 0, 153)); // Morado
+            StyleConstants.setForeground(style, new Color(153, 0, 153));
             StyleConstants.setBold(style, true);
             doc.setCharacterAttributes(inicio, 16, style, false);
             inicio += 16;
@@ -329,9 +428,8 @@ public class EditorPantilla extends JPanel {
             int cierre = text.indexOf(">", abertura);
             if (cierre == -1) break;
             
-            // Resaltar la etiqueta completa
             SimpleAttributeSet style = new SimpleAttributeSet();
-            StyleConstants.setForeground(style, new Color(153, 0, 153)); // Morado para etiquetas
+            StyleConstants.setForeground(style, new Color(153, 0, 153));
             doc.setCharacterAttributes(abertura, cierre - abertura + 1, style, false);
             
             inicio = cierre + 1;
@@ -340,21 +438,13 @@ public class EditorPantilla extends JPanel {
         actualizandoVista = false;
     }
 
-    private void actualizarVistaPrevia() {
+    public void actualizarVistaPrevia() {
         if (actualizandoVista) return;
         actualizandoVista = true;
         
-        // Limpiar vista previa
         vistaPrevia.removeAll();
         
-        // Crear panel para la vista previa
-        JPanel panelVista = new JPanel(new BorderLayout());
-        panelVista.setBackground(Color.WHITE);
-        
-        // Simular contenido con los marcadores reemplazados
         String contenido = editorHTML.getText();
-        
-        // Crear el ejemplo de análisis con todos los colores configurables
         String colorError = configuracion.obtenerColorError();
         String colorAdvertencia = configuracion.obtenerColorAdvertencia();
         String colorInfo = configuracion.obtenerColorInfo();
@@ -378,79 +468,28 @@ public class EditorPantilla extends JPanel {
             .replace("{constructor}", ejemploAnalisis)
             .replace("{mensaje_ayudar}", ejemploAyuda);
         
-        // Mostrar contenido HTML en vista previa
-        JLabel etiquetaVista = new JLabel(contenidoVista);
-        etiquetaVista.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-        etiquetaVista.setVerticalAlignment(JLabel.TOP);
-        
-        // Configurar etiqueta para que renderice HTML
-        etiquetaVista.setText(contenidoVista);
-        
-        panelVista.add(etiquetaVista, BorderLayout.CENTER);
-        
-        // Añadir una sección de ejemplo de imágenes
-        JPanel panelImágenes = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
-        panelImágenes.setBackground(Color.WHITE);
-        
-        // Crear etiquetas de imágenes con ejemplos
-        try {
-            JLabel imgGura = new JLabel("gura.png");
-            imgGura.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
-            imgGura.setPreferredSize(new Dimension(200, 112));
-            imgGura.setHorizontalAlignment(JLabel.CENTER);
-            imgGura.setVerticalAlignment(JLabel.CENTER);
-            panelImágenes.add(imgGura);
-            
-            JLabel imgMumei = new JLabel("nanashi_mumei.png");
-            imgMumei.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
-            imgMumei.setPreferredSize(new Dimension(200, 112));
-            imgMumei.setHorizontalAlignment(JLabel.CENTER);
-            imgMumei.setVerticalAlignment(JLabel.CENTER);
-            panelImágenes.add(imgMumei);
-            
-            JLabel imgShion = new JLabel("shion.png");
-            imgShion.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
-            imgShion.setPreferredSize(new Dimension(200, 112));
-            imgShion.setHorizontalAlignment(JLabel.CENTER);
-            imgShion.setVerticalAlignment(JLabel.CENTER);
-            panelImágenes.add(imgShion);
-        } catch (Exception e) {
-            // En caso de error al cargar imágenes, mostrar texto
-            JLabel imgError = new JLabel("Imágenes no disponibles");
-            imgError.setForeground(Color.RED);
-            imgError.setHorizontalAlignment(JLabel.CENTER);
-            panelImágenes.add(imgError);
-        }
-        
-        panelVista.add(panelImágenes, BorderLayout.SOUTH);
-        
-        vistaPrevia.add(panelVista);
-        vistaPrevia.revalidate();
-        vistaPrevia.repaint();
+        vistaPrevia.setText(contenidoVista);
+        vistaPrevia.setCaretPosition(0);
         
         actualizandoVista = false;
     }
 
-    private JPanel crearCampoDeColor(String nombre, ConfigColor configColor) {
+    public JPanel crearCampoDeColor(String nombre, ConfigColor configColor) {
         JPanel panel = new JPanel(new BorderLayout(5, 0));
         panel.setBackground(Config.convertirAColor(configuracion.obtenerColorFondo()));
         
-        // Etiqueta del campo
         JLabel label = new JLabel(nombre);
         label.setForeground(Config.convertirAColor(configuracion.obtenerColorTexto()));
         label.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
         panel.add(label, BorderLayout.WEST);
         
-        // Panel para el campo de texto y el selector
         JPanel inputPanel = new JPanel(new BorderLayout(5, 0));
         inputPanel.setBackground(Config.convertirAColor(configuracion.obtenerColorFondo()));
         
-        // Campo de texto para el valor HEX
         JTextField textField = crearCampoTextoConfiguracion(Config.colorAHexHtml(configColor.obtener()), configColor);
         textField.setPreferredSize(new Dimension(80, 25));
         inputPanel.add(textField, BorderLayout.CENTER);
         
-        // Cuadro de vista previa de color
         PanelPrevisualizacionColor colorPreview = new PanelPrevisualizacionColor(textField, configColor);
         inputPanel.add(colorPreview, BorderLayout.EAST);
         
@@ -458,7 +497,7 @@ public class EditorPantilla extends JPanel {
         return panel;
     }
     
-    private JTextField crearCampoTextoConfiguracion(String valorInicial, ConfigColor configColor) {
+    public JTextField crearCampoTextoConfiguracion(String valorInicial, ConfigColor configColor) {
         JTextField field = new JTextField(valorInicial);
         field.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -481,22 +520,18 @@ public class EditorPantilla extends JPanel {
                 if (texto == null || texto.isEmpty()) return;
                 
                 try {
-                    // Si comienza con #, quitarlo para nuestro sistema
                     if (texto.startsWith("#")) {
                         texto = texto.substring(1);
                     }
                     
-                    // Validar que sea un hex válido (3 o 6 caracteres)
                     if (texto.length() == 3 || texto.length() == 6) {
-                        // Asegurar que solo contiene caracteres hexadecimales
                         if (texto.matches("[0-9A-Fa-f]+")) {
-                            // Convertir a color para validar
                             Color color = Color.decode("#" + texto);
                             configColor.escribir(color);
                         }
                     }
                 } catch (Exception ex) {
-                    // Ignorar, el usuario está editando
+                    // Ignorar durante la edición
                 }
             }
         });
@@ -509,18 +544,39 @@ public class EditorPantilla extends JPanel {
         return field;
     }
 
-    private void resetearPlantilla() {
+    public void guardarPlantilla() {
+        if (archivoPlantilla == null || !archivoPlantilla.exists()) {
+            archivoPlantilla = MonitorDePID.carpeta.resolve("pantilla.htm").toFile();
+        }
+        
+        try {
+            try (java.io.FileWriter writer = new java.io.FileWriter(archivoPlantilla)) {
+                writer.write(editorHTML.getText());
+            }
+            
+            JOptionPane.showMessageDialog(this, 
+                "Plantilla guardada en: " + archivoPlantilla.getAbsolutePath(), 
+                "Éxito", 
+                JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, 
+                "Error al guardar: " + e.getMessage(), 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void restablecerPlantilla() {
         int confirmacion = JOptionPane.showConfirmDialog(
             this,
-            "¿Estás seguro de que quieres resetear la plantilla a los valores predeterminados?",
-            "Confirmar Reset",
+            MonitorDePID.idioma.restablecerPlantillaMensaje(),
+            MonitorDePID.idioma.confirmacion(),
             JOptionPane.YES_NO_OPTION,
             JOptionPane.WARNING_MESSAGE
         );
         
         if (confirmacion == JOptionPane.YES_OPTION) {
             try {
-                // Cargar contenido desde el JAR
                 String rutaPlantilla = "pantilla.htm";
                 InputStream is = getClass().getClassLoader().getResourceAsStream(rutaPlantilla);
                 if (is != null) {
@@ -532,91 +588,35 @@ public class EditorPantilla extends JPanel {
                         }
                     }
                     
-                    // Escribir contenido al archivo en disco
                     try (java.io.FileWriter writer = new java.io.FileWriter(archivoPlantilla)) {
                         writer.write(contenido.toString());
                     }
                     
-                    // Actualizar la interfaz
                     editorHTML.setText(contenido.toString());
                     resaltarSintaxis();
                     actualizarVistaPrevia();
                     
-                    // Mostrar mensaje de éxito
                     JOptionPane.showMessageDialog(this, 
-                        "La plantilla se ha restablecido correctamente.", 
+                        "Plantilla restablecida correctamente.", 
                         "Éxito", 
                         JOptionPane.INFORMATION_MESSAGE);
                 }
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(this, 
-                    "Error al resetear la plantilla: " + e.getMessage(), 
+                    "Error al restablecer: " + e.getMessage(), 
                     "Error", 
                     JOptionPane.ERROR_MESSAGE);
             }
         }
     }
 
-    private void resetearImágenes() {
-        int confirmacion = JOptionPane.showConfirmDialog(
-            this,
-            "¿Estás seguro de que quieres resetear las imágenes a los valores predeterminados?",
-            "Confirmar Reset",
-            JOptionPane.YES_NO_OPTION,
-            JOptionPane.WARNING_MESSAGE
-        );
-        
-        if (confirmacion == JOptionPane.YES_OPTION) {
-            try {
-                // Rutas de las imágenes
-                String[] imagenes = {"gura.png", "nanashi_mumei.png", "shion.png"};
-                int imagenesRestablecidas = 0;
-                
-                for (String imagen : imagenes) {
-                    String rutaRecurso = "/imagenes/" + imagen;
-                    InputStream is = getClass().getClassLoader().getResourceAsStream(rutaRecurso);
-                    
-                    if (is != null) {
-                        File destino = new File(MonitorDePID.carpeta.resolve("imagenes").toString(), imagen);
-                        destino.getParentFile().mkdirs();
-                        
-                        // Copiar desde el JAR al disco
-                        try (java.io.OutputStream os = new java.io.FileOutputStream(destino)) {
-                            byte[] buffer = new byte[4096];
-                            int length;
-                            while ((length = is.read(buffer)) > 0) {
-                                os.write(buffer, 0, length);
-                            }
-                        }
-                        
-                        imagenesRestablecidas++;
-                    }
-                }
-                
-                // Mostrar mensaje de éxito
-                JOptionPane.showMessageDialog(this, 
-                    "Se han restablecido " + imagenesRestablecidas + " imágenes.", 
-                    "Éxito", 
-                    JOptionPane.INFORMATION_MESSAGE);
-                
-                actualizarVistaPrevia();
-            } catch (IOException e) {
-                JOptionPane.showMessageDialog(this, 
-                    "Error al resetear las imágenes: " + e.getMessage(), 
-                    "Error", 
-                    JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }
-
-    private void cerrarEditor() {
-        // Lógica para cerrar el editor (en este contexto, probablemente cerrar el diálogo)
+    public void cerrarEditor() {
         if (SwingUtilities.getWindowAncestor(this) instanceof java.awt.Dialog) {
             ((java.awt.Dialog) SwingUtilities.getWindowAncestor(this)).dispose();
         }
     }
     
-    private class PanelPrevisualizacionColor extends JPanel {
+    public class PanelPrevisualizacionColor extends JPanel {
         private JTextField textField;
         private ConfigColor configColor;
         
@@ -627,7 +627,6 @@ public class EditorPantilla extends JPanel {
             setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
             setBackground(configColor.obtener());
             
-            // Añadir listener para abrir el selector de color
             addMouseListener(new java.awt.event.MouseAdapter() {
                 @Override
                 public void mouseClicked(java.awt.event.MouseEvent e) {
@@ -645,12 +644,35 @@ public class EditorPantilla extends JPanel {
             setBackground(color);
             repaint();
             
-            // Convertir a formato hex sin #
             String hexColor = String.format("%06X", (0xFFFFFF & color.getRGB()));
             textField.setText(hexColor);
-            
-            // Actualizar la vista previa del HTML
             actualizarVistaPrevia();
         }
     }
+
+
+	@Override
+	public TipoGUI tipo() {
+		// TODO Auto-generated method stub
+		return TipoGUI.EDITOR_PLANTILLA;
+	}
+
+	@Override
+	public void recargarApariencia() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+        inicializarComponentes();
+        cargarContenidoPlantilla();
+	}
+
+	@Override
+	public List<ElementoConfig> obtenerElementosConfigs() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

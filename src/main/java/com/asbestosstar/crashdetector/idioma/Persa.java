@@ -1912,7 +1912,7 @@ public class Persa implements Idioma {
 
 	@Override
 	public String disminuirMemoriaHeap() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>لتقليل ذاكرة heap المخصصة للتطبيق، افتح إعدادات اللانشر وابحث عن خيار الذاكرة. قلل القيمة القصوى (Xmx) إلى كمية مناسبة. على سبيل المثال، إذا كانت لديك 8 جيجابايت من RAM، خصص 3-4 جيجابايت للتطبيق. إذا كانت لديك 16 جيجابايت، يمكنك تخصيص 6-8 جيجابايت. تأكد من ترك ذاكرة كافية للنظام والبرامج الأخرى.</b>";
 	}
 
@@ -1955,7 +1955,7 @@ public class Persa implements Idioma {
 
 	@Override
 	public String solucion_para_forge_instalacion_no_completa() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>برای حل این مشکل، Forge را به درستی دوباره نصب کنید. مطمئن شوید نسخه مناسب را برای نسخه ماين كرافت خود دانلود کرده و فرآیند نصب را بدون قطع کردن انجام دهید.</b>";
 	}
 
@@ -2007,7 +2007,7 @@ public class Persa implements Idioma {
 
 	@Override
 	public String solucion_para_error_enlace_insatisfecho() {
-		return "<b style='color:#" + config.obtenerColorTexto() + "'>فشل في تحميل مكتبة. الحلول الممكنة:<br/><br/>"
+		return "<b style='color:#" + config.obtenerColorInfo() + "'>فشل في تحميل مكتبة. الحلول الممكنة:<br/><br/>"
 				+ "أ) أضف الدليل الذي يحتوي على المكتبة المشتركة إلى -Djava.library.path أو -Dorg.lwjgl.librarypath.<br/>"
 				+ "ب) أضف ملف JAR الذي يحتوي على المكتبة المشتركة إلى classpath.<br/><br/>"
 				+ "هذه الحلول التقنية مخصصة للمستخدمين المتقدمين. معظم المستخدمين يجب أن يحاولوا "
@@ -2035,13 +2035,13 @@ public class Persa implements Idioma {
 
 	@Override
 	public String solucion_maximo_rango() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>برای حل این مشکل در ماين كرافت 1.12.2، <a href='https://www.curseforge.com/minecraft/mc-mods/justenoughids'>JustEnoughIDs</a> را نصب کنید. برای 1.7.10، از <a href='https://www.curseforge.com/minecraft/mc-mods/endless-ids'>EndlessIDs</a> استفاده کنید.</b>";
 	}
 
 	@Override
 	public String solucion_colision_id() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>از ابزارهایی مانند <a href='https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/1291014-idfix-and-idfix-minus-mods-for-resolving-id'>IdFix Minus</a> یا <a href='https://github.com/SS111/Minecraft-ID-Resolver'>Minecraft-ID-Resolver</a> برای حل تداخل شناسه‌ها استفاده کنید.</b>";
 	}
 
@@ -3577,7 +3577,7 @@ public class Persa implements Idioma {
 		String iconoCompartir = MonitorDePID.carpeta.resolve("imagenes").resolve("boton_compartir_icon.png")
 				.toAbsolutePath().toUri().toString();
 
-		String colorTexto = Config.obtenerInstancia().obtenerColorTexto();
+		String colorTexto = Config.obtenerInstancia().obtenerColorInfo();
 
 		return "" + "<div style='color:" + colorTexto + ";'>" + "  <strong>به کمک نیاز دارید؟</strong><br>"
 				+ "  اگر نمی‌دانید چگونه آن را رفع کنید یا علت در اینجا وجود ندارد، می‌توانید از طریق شبکه‌های اجتماعی ما کمک بگیرید. "
@@ -3588,4 +3588,26 @@ public class Persa implements Idioma {
 				+ "  تا پیوندهای تیم خود را شخصی‌سازی کنید." + "</div>";
 	}
 
+	@Override
+	public String restablecerPlantilla() {
+	    return "بازنشانی الگو";
+	}
+
+	@Override
+	public String restablecer() {
+	    return "بازنشانی";
+	}
+
+	@Override
+	public String restablecerImagenMensjae(String nombreImagen) {
+	    return "آیا " + nombreImagen + " را به مقادیر پیش‌فرض بازنشانی کنیم؟";
+	}
+
+	@Override
+	public String restablecerPlantillaMensaje() {
+	    return "آیا الگو را به مقادیر پیش‌فرض بازنشانی کنیم؟";
+	}
+	
+	
+	
 }

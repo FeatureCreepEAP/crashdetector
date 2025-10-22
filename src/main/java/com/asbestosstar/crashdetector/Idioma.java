@@ -1478,6 +1478,14 @@ public interface Idioma {
 
 	public String mensajeAyudar();
 
+	public String restablecerPlantilla();
+
+	public String restablecer();
+
+	public String restablecerImagenMensjae(String nombreImagen);
+
+	public String restablecerPlantillaMensaje();
+
 	// public String advertenciaMalwareFalso();
 
 }

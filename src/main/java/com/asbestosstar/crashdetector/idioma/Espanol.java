@@ -2271,7 +2271,7 @@ public class Espanol implements Idioma {
 
 	@Override
 	public String disminuirMemoriaHeap() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>Para disminuir la memoria heap asignada a la app, abre la configuración de tu lanzador y busca la opción de memoria RAM. Reduce el valor máximo (Xmx) a una cantidad más adecuada. Por ejemplo, si tienes 8 GB de RAM, asigna entre 3-4 GB a la app. Si tienes 16 GB de RAM, puedes asignar entre 6-8 GB. Recuerda dejar suficiente memoria para el sistema operativo y otros programas.</b>";
 	}
 
@@ -2315,7 +2315,7 @@ public class Espanol implements Idioma {
 
 	@Override
 	public String solucion_para_forge_instalacion_no_completa() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>Para resolver este problema, necesitas reinstalar Forge correctamente. Asegúrate de descargar la versión adecuada para tu versión de Minecraft y seguir el proceso de instalación completo sin interrumpirlo.</b>";
 	}
 
@@ -2367,7 +2367,7 @@ public class Espanol implements Idioma {
 
 	@Override
 	public String solucion_para_error_enlace_insatisfecho() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>No se pudo cargar una biblioteca. Posibles soluciones:<br/><br/>"
 				+ "a) Añade el directorio que contiene la biblioteca compartida a -Djava.library.path o -Dorg.lwjgl.librarypath.<br/>"
 				+ "b) Añade el archivo JAR que contiene la biblioteca compartida al classpath.<br/><br/>"
@@ -2396,13 +2396,13 @@ public class Espanol implements Idioma {
 
 	@Override
 	public String solucion_maximo_rango() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>Para resolver esto en Minecraft 1.12.2, instala <a href='https://www.curseforge.com/minecraft/mc-mods/justenoughids'>JustEnoughIDs</a>. Para 1.7.10, usa <a href='https://www.curseforge.com/minecraft/mc-mods/endless-ids'>EndlessIDs</a>.</b>";
 	}
 
 	@Override
 	public String solucion_colision_id() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>Usa herramientas como <a href='https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/1291014-idfix-and-idfix-minus-mods-for-resolving-id'>IdFix Minus</a> o <a href='https://github.com/SS111/Minecraft-ID-Resolver'>Minecraft-ID-Resolver</a> para resolver colisiones de IDs.</b>";
 	}
 
@@ -4260,7 +4260,7 @@ public class Espanol implements Idioma {
 		String iconoCompartir = MonitorDePID.carpeta.resolve("imagenes").resolve("boton_compartir_icon.png")
 				.toAbsolutePath().toUri().toString();
 
-		String colorTexto = Config.obtenerInstancia().obtenerColorTexto();
+		String colorTexto = Config.obtenerInstancia().obtenerColorInfo();
 
 		return "" + "<div style='color:" + colorTexto + ";'>" + "  <strong>¿Necesitas ayuda?</strong><br>"
 				+ "  Si no sabes cómo arreglarlo o la razón no está aquí, puedes recibir ayuda en nuestras redes sociales. "
@@ -4269,6 +4269,30 @@ public class Espanol implements Idioma {
 				+ "  <strong>Compartir</strong> para obtener enlaces a los registros y a los resultados para nuestro equipo. "
 				+ "  Si eres un creador de modpack o una corporación, edita <code>crash_detector/plantilla.htm</code> "
 				+ "  para personalizar los enlaces de tu equipo." + "</div>";
+	}
+
+	@Override
+	public String restablecerPlantilla() {
+		// TODO Auto-generated method stub
+		return "Restablecer Plantilla";
+	}
+
+	@Override
+	public String restablecer() {
+		// TODO Auto-generated method stub
+		return "Restablecer";
+	}
+
+	@Override
+	public String restablecerImagenMensjae(String nombreImagen) {
+		// TODO Auto-generated method stub
+		return "¿Restablecer " + nombreImagen + " a valores predeterminados?";
+	}
+
+	@Override
+	public String restablecerPlantillaMensaje() {
+		// TODO Auto-generated method stub
+		return "¿Restablecer plantilla a valores predeterminados?";
 	}
 
 }

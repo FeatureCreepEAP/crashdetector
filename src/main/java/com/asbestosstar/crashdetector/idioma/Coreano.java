@@ -1871,7 +1871,7 @@ public class Coreano implements Idioma {
 
 	@Override
 	public String disminuirMemoriaHeap() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>앱의 힙(heap) 메모리를 줄이려면, 런처 설정을 열고 RAM 옵션을 찾으세요. 최대값(Xmx)을 더 적절한 수치로 줄이세요. 예를 들어, 8GB RAM을 가진 경우 3~4GB를, 16GB를 가진 경우 6~8GB를 할당할 수 있습니다. 운영체제와 다른 프로그램을 위해 충분한 메모리를 남겨두는 것을 잊지 마세요.</b>";
 	}
 
@@ -1913,7 +1913,7 @@ public class Coreano implements Idioma {
 
 	@Override
 	public String solucion_para_forge_instalacion_no_completa() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>이 문제를 해결하려면 Forge를 다시 올바르게 설치하세요. 마인크래프트 버전에 맞는 올바른 버전을 다운로드하고 설치 과정을 중단하지 말고 완료하세요.</b>";
 	}
 
@@ -1958,7 +1958,7 @@ public class Coreano implements Idioma {
 
 	@Override
 	public String solucion_para_error_enlace_insatisfecho() {
-		return "<b style='color:#" + config.obtenerColorTexto() + "'>라이브러리 로드 실패. 가능한 해결 방법:<br/><br/>"
+		return "<b style='color:#" + config.obtenerColorInfo() + "'>라이브러리 로드 실패. 가능한 해결 방법:<br/><br/>"
 				+ "a) 공유 라이브러리가 있는 디렉터리를 -Djava.library.path 또는 -Dorg.lwjgl.librarypath에 추가하세요.<br/>"
 				+ "b) 공유 라이브러리를 포함하는 JAR 파일을 classpath에 추가하세요.<br/><br/>"
 				+ "이러한 기술적 해결책은 고급 사용자를 위한 것입니다. 대부분의 사용자는 이러한 매개변수를 수정하기 전에 " + "마인크래프트를 재설치하는 것이 좋습니다.</b>";
@@ -1984,13 +1984,13 @@ public class Coreano implements Idioma {
 
 	@Override
 	public String solucion_maximo_rango() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>이 문제를 해결하려면 마인크래프트 1.12.2에 <a href='https://www.curseforge.com/minecraft/mc-mods/justenoughids'>JustEnoughIDs</a>를 설치하세요. 1.7.10의 경우 <a href='https://www.curseforge.com/minecraft/mc-mods/endless-ids'>EndlessIDs</a>를 사용하세요.</b>";
 	}
 
 	@Override
 	public String solucion_colision_id() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>ID 충돌을 해결하려면 <a href='https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/1291014-idfix-and-idfix-minus-mods-for-resolving-id'>IdFix Minus</a> 또는 <a href='https://github.com/SS111/Minecraft-ID-Resolver'>Minecraft-ID-Resolver</a>와 같은 도구를 사용하세요.</b>";
 	}
 
@@ -3489,7 +3489,7 @@ public class Coreano implements Idioma {
 	public String mensajeAyudar() {
 		String iconoCompartir = MonitorDePID.carpeta.resolve("imagenes").resolve("boton_compartir_icon.png")
 				.toAbsolutePath().toUri().toString();
-		String colorTexto = Config.obtenerInstancia().obtenerColorTexto();
+		String colorTexto = Config.obtenerInstancia().obtenerColorInfo();
 
 		return "" + "<div style='color:" + colorTexto + ";'>" + "  <strong>도움이 필요하십니까?</strong><br>"
 				+ "  해결 방법을 모르거나 여기에 원인이 없으면 소셜 미디어를 통해 도움을 받을 수 있습니다. " + "  <img src='" + iconoCompartir
@@ -3498,5 +3498,26 @@ public class Coreano implements Idioma {
 				+ "  모드팩 제작자나 기관이라면 <code>crash_detector/plantilla.htm</code> 파일을 수정하여 " + "  팀 전용 링크를 맞춤 설정할 수 있습니다."
 				+ "</div>";
 	}
+	
+	@Override
+	public String restablecerPlantilla() {
+	    return "템플릿 초기화";
+	}
+
+	@Override
+	public String restablecer() {
+	    return "초기화";
+	}
+
+	@Override
+	public String restablecerImagenMensjae(String nombreImagen) {
+	    return nombreImagen + "을(를) 기본값으로 초기화하시겠습니까?";
+	}
+
+	@Override
+	public String restablecerPlantillaMensaje() {
+	    return "템플릿을 기본값으로 초기화하시겠습니까?";
+	}
+	
 
 }

@@ -21,7 +21,6 @@ public class Config {
 	private static final String VALOR_POR_DEFECTO_COLOR_ADVERTENCIA = "FFD700"; // narajnja
 	private static final String VALOR_POR_DEFECTO_COLOR_INFO = "FFFFFF"; // blanco
 	private static final String VALOR_POR_DEFECTO_COLOR_TITULO = "56CCF2"; // azul
-	private static final String VALOR_POR_DEFECTO_COLOR_ENLACE_TEXTO = "56CCF2"; // azul mas contrast
 
 	public static final String HMCL_CARPETA = "";// ES SOLO PARA HMCL
 
@@ -72,7 +71,6 @@ public class Config {
 			propiedadesConfig.setProperty("color_advertencia", VALOR_POR_DEFECTO_COLOR_ADVERTENCIA);
 			propiedadesConfig.setProperty("color_info", VALOR_POR_DEFECTO_COLOR_INFO);
 			propiedadesConfig.setProperty("color_titulo", VALOR_POR_DEFECTO_COLOR_TITULO);
-			propiedadesConfig.setProperty("color_enlace_texto", VALOR_POR_DEFECTO_COLOR_ENLACE_TEXTO);
 
 			propiedadesConfig.setProperty("hmcl_carpeta", HMCL_CARPETA);
 
@@ -277,11 +275,6 @@ public class Config {
 
 	public void guardarColorTitulo(String valor) {
 		propiedadesConfig.setProperty("color_titulo", valor);
-		this.guardar();
-	}
-
-	public void guardarColorEnlaceTexto(String valor) {
-		propiedadesConfig.setProperty("color_enlace_texto", valor);
 		this.guardar();
 	}
 

@@ -1876,7 +1876,7 @@ public class Japones implements Idioma {
 
 	@Override
 	public String disminuirMemoriaHeap() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>アプリに割り当てられたヒープメモリを減らすには、ランチャーの設定を開き、RAM オプションを探します。最大値 (Xmx) を適切な量に下げてください。例：8GB の RAM がある場合、3～4GB を割り当てます。16GB の場合、6～8GB が適切です。OS や他のプログラムのために十分なメモリを残すことを忘れないでください。</b>";
 	}
 
@@ -1918,7 +1918,7 @@ public class Japones implements Idioma {
 
 	@Override
 	public String solucion_para_forge_instalacion_no_completa() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>この問題を解決するには、Forgeを正しく再インストールしてください。Minecraftのバージョンに合った正しいバージョンをダウンロードし、中断せずにインストール手順を完了してください。</b>";
 	}
 
@@ -1964,7 +1964,7 @@ public class Japones implements Idioma {
 
 	@Override
 	public String solucion_para_error_enlace_insatisfecho() {
-		return "<b style='color:#" + config.obtenerColorTexto() + "'>ライブラリの読み込みに失敗しました。考えられる解決策：<br/><br/>"
+		return "<b style='color:#" + config.obtenerColorInfo() + "'>ライブラリの読み込みに失敗しました。考えられる解決策：<br/><br/>"
 				+ "a) 共有ライブラリを含むディレクトリを -Djava.library.path または -Dorg.lwjgl.librarypath に追加します。<br/>"
 				+ "b) 共有ライブラリを含む JAR ファイルを classpath に追加します。<br/><br/>"
 				+ "これらの技術的解決策は上級者向けです。ほとんどのユーザーは、これらのパラメータを変更する前に " + "Minecraft を再インストールすることをお勧めします。</b>";
@@ -1990,13 +1990,13 @@ public class Japones implements Idioma {
 
 	@Override
 	public String solucion_maximo_rango() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>この問題を解決するには、Minecraft 1.12.2に <a href='https://www.curseforge.com/minecraft/mc-mods/justenoughids'>JustEnoughIDs</a> をインストールしてください。1.7.10の場合は <a href='https://www.curseforge.com/minecraft/mc-mods/endless-ids'>EndlessIDs</a> を使用してください。</b>";
 	}
 
 	@Override
 	public String solucion_colision_id() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>IDの衝突を解決するには、<a href='https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/1291014-idfix-and-idfix-minus-mods-for-resolving-id'>IdFix Minus</a> や <a href='https://github.com/SS111/Minecraft-ID-Resolver'>Minecraft-ID-Resolver</a> などのツールを使用してください。</b>";
 	}
 
@@ -3494,7 +3494,7 @@ public class Japones implements Idioma {
 		String iconoCompartir = MonitorDePID.carpeta.resolve("imagenes").resolve("boton_compartir_icon.png")
 				.toAbsolutePath().toUri().toString();
 
-		String colorTexto = Config.obtenerInstancia().obtenerColorTexto();
+		String colorTexto = Config.obtenerInstancia().obtenerColorInfo();
 
 		return "" + "<div style='color:" + colorTexto + ";'>" + "  <strong>助けが必要ですか？</strong><br>"
 				+ "  修正方法がわからない場合や、ここに理由が載っていない場合は、ソーシャルネットワークでサポートを受けられます。" + "  ボタン <img src='" + iconoCompartir
@@ -3504,4 +3504,25 @@ public class Japones implements Idioma {
 				+ "</div>";
 	}
 
+	@Override
+	public String restablecerPlantilla() {
+	    return "テンプレートをリセット";
+	}
+
+	@Override
+	public String restablecer() {
+	    return "リセット";
+	}
+
+	@Override
+	public String restablecerImagenMensjae(String nombreImagen) {
+	    return nombreImagen + " を既定値にリセットしますか？";
+	}
+
+	@Override
+	public String restablecerPlantillaMensaje() {
+	    return "テンプレートを既定値にリセットしますか？";
+	}
+	
+	
 }

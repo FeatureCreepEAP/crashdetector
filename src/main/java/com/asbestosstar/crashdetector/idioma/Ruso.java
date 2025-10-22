@@ -1923,7 +1923,7 @@ public class Ruso implements Idioma {
 
 	@Override
 	public String disminuirMemoriaHeap() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>Чтобы уменьшить выделенную кучу (heap), откройте настройки лаунчера и найдите параметр памяти. Уменьшите максимальное значение (Xmx) до подходящего. Например, при 8 ГБ ОЗУ выделите 3–4 ГБ; при 16 ГБ — 6–8 ГБ. Оставьте достаточно памяти для ОС и других программ.</b>";
 	}
 
@@ -1966,7 +1966,7 @@ public class Ruso implements Idioma {
 
 	@Override
 	public String solucion_para_forge_instalacion_no_completa() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>Чтобы решить проблему, переустановите Forge. Убедитесь, что вы скачали версию, совместимую с вашей версией Minecraft, и завершите установку без перерывов.</b>";
 	}
 
@@ -2018,7 +2018,7 @@ public class Ruso implements Idioma {
 
 	@Override
 	public String solucion_para_error_enlace_insatisfecho() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>Не удалось загрузить библиотеку. Возможные решения:<br/><br/>"
 				+ "a) Добавьте каталог с общей библиотекой в -Djava.library.path или -Dorg.lwjgl.librarypath.<br/>"
 				+ "b) Добавьте JAR-файл с общей библиотекой в classpath.<br/><br/>"
@@ -2047,13 +2047,13 @@ public class Ruso implements Idioma {
 
 	@Override
 	public String solucion_maximo_rango() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>Чтобы решить это в Minecraft 1.12.2, установите <a href='https://www.curseforge.com/minecraft/mc-mods/justenoughids'>JustEnoughIDs</a>. Для 1.7.10 используйте <a href='https://www.curseforge.com/minecraft/mc-mods/endless-ids'>EndlessIDs</a>.</b>";
 	}
 
 	@Override
 	public String solucion_colision_id() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>Используйте такие инструменты, как <a href='https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/1291014-idfix-and-idfix-minus-mods-for-resolving-id'>IdFix Minus</a> или <a href='https://github.com/SS111/Minecraft-ID-Resolver'>Minecraft-ID-Resolver</a>, чтобы устранить конфликты ID.</b>";
 	}
 
@@ -3598,7 +3598,7 @@ public class Ruso implements Idioma {
 		String iconoCompartir = MonitorDePID.carpeta.resolve("imagenes").resolve("boton_compartir_icon.png")
 				.toAbsolutePath().toUri().toString();
 
-		String colorTexto = Config.obtenerInstancia().obtenerColorTexto();
+		String colorTexto = Config.obtenerInstancia().obtenerColorInfo();
 
 		return "" + "<div style='color:" + colorTexto + ";'>" + "  <strong>Нужна помощь?</strong><br>"
 				+ "  Если вы не знаете, как исправить проблему, или причина отсутствует здесь, вы можете получить помощь через наши социальные сети. "
@@ -3609,4 +3609,24 @@ public class Ruso implements Idioma {
 				+ "  чтобы настроить ссылки вашей команды." + "</div>";
 	}
 
+	@Override
+	public String restablecerPlantilla() {
+	    return "Сбросить шаблон";
+	}
+
+	@Override
+	public String restablecer() {
+	    return "Сбросить";
+	}
+
+	@Override
+	public String restablecerImagenMensjae(String nombreImagen) {
+	    return "Сбросить " + nombreImagen + " до значений по умолчанию?";
+	}
+
+	@Override
+	public String restablecerPlantillaMensaje() {
+	    return "Сбросить шаблон до значений по умолчанию?";
+	}
+	
 }

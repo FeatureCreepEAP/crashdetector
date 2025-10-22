@@ -1960,7 +1960,7 @@ public class Ingles implements Idioma {
 
 	@Override
 	public String disminuirMemoriaHeap() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>To reduce the heap memory allocated to the app, open your launcher settings and find the RAM option. Lower the maximum value (Xmx) to a more suitable amount. For example, if you have 8 GB of RAM, assign 3–4 GB to the app. With 16 GB, you can assign 6–8 GB. Remember to leave enough memory for your OS and other programs.</b>";
 	}
 
@@ -2004,7 +2004,7 @@ public class Ingles implements Idioma {
 
 	@Override
 	public String solucion_para_forge_instalacion_no_completa() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>Para resolver este problema, necesitas reinstalar Forge correctamente. Asegúrate de descargar la versión adecuada para tu versión de Minecraft y seguir el proceso de instalación completo sin interrumpirlo.</b>";
 	}
 
@@ -2055,7 +2055,7 @@ public class Ingles implements Idioma {
 
 	@Override
 	public String solucion_para_error_enlace_insatisfecho() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>Failed to load a library. Possible solutions:<br/><br/>"
 				+ "a) Add the directory containing the shared library to -Djava.library.path or -Dorg.lwjgl.librarypath.<br/>"
 				+ "b) Add the JAR file containing the shared library to the classpath.<br/><br/>"
@@ -2084,13 +2084,13 @@ public class Ingles implements Idioma {
 
 	@Override
 	public String solucion_maximo_rango() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>To fix this on Minecraft 1.12.2, install <a href='https://www.curseforge.com/minecraft/mc-mods/justenoughids'>JustEnoughIDs</a>. For 1.7.10, use <a href='https://www.curseforge.com/minecraft/mc-mods/endless-ids'>EndlessIDs</a>.</b>";
 	}
 
 	@Override
 	public String solucion_colision_id() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>Use tools like <a href='https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/1291014-idfix-and-idfix-minus-mods-for-resolving-id'>IdFix Minus</a> or <a href='https://github.com/SS111/Minecraft-ID-Resolver'>Minecraft-ID-Resolver</a> to resolve ID conflicts.</b>";
 	}
 
@@ -3632,7 +3632,7 @@ public class Ingles implements Idioma {
 	public String mensajeAyudar() {
 		String iconoCompartir = MonitorDePID.carpeta.resolve("imagenes").resolve("boton_compartir_icon.png")
 				.toAbsolutePath().toUri().toString();
-		String colorTexto = Config.obtenerInstancia().obtenerColorTexto();
+		String colorTexto = Config.obtenerInstancia().obtenerColorInfo();
 
 		return "" + "<div style='color:" + colorTexto + ";'>" + "  <strong>Need help?</strong><br>"
 				+ "  If you don't know how to fix it or the reason isn't listed here, you can get help through our social networks. "
@@ -3643,4 +3643,26 @@ public class Ingles implements Idioma {
 				+ "  to customise your team's links." + "</div>";
 	}
 
+	
+	@Override
+	public String restablecerPlantilla() {
+	    return "Reset Template";
+	}
+
+	@Override
+	public String restablecer() {
+	    return "Reset";
+	}
+
+	@Override
+	public String restablecerImagenMensjae(String nombreImagen) {
+	    return "Reset " + nombreImagen + " to default values?";
+	}
+
+	@Override
+	public String restablecerPlantillaMensaje() {
+	    return "Reset template to default values?";
+	}
+	
+	
 }

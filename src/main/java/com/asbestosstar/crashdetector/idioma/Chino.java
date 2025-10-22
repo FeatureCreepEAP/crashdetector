@@ -1842,7 +1842,7 @@ public class Chino implements Idioma {
 
 	@Override
 	public String disminuirMemoriaHeap() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>要减少应用的堆内存，请打开启动器设置并找到内存选项。将最大值 (Xmx) 调整为更合适的数值。例如，8 GB 内存可分配 3-4 GB，16 GB 可分配 6-8 GB。请为操作系统和其他程序保留足够内存。</b>";
 	}
 
@@ -1884,7 +1884,7 @@ public class Chino implements Idioma {
 
 	@Override
 	public String solucion_para_forge_instalacion_no_completa() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>要解决此问题，请重新正确安装 Forge。确保下载与您 Minecraft 版本匹配的版本，并完整执行安装过程，不要中断。</b>";
 	}
 
@@ -1928,7 +1928,7 @@ public class Chino implements Idioma {
 
 	@Override
 	public String solucion_para_error_enlace_insatisfecho() {
-		return "<b style='color:#" + config.obtenerColorTexto() + "'>无法加载库。可能的解决方案：<br/><br/>"
+		return "<b style='color:#" + config.obtenerColorInfo() + "'>无法加载库。可能的解决方案：<br/><br/>"
 				+ "a) 将包含共享库的目录添加到 -Djava.library.path 或 -Dorg.lwjgl.librarypath。<br/>"
 				+ "b) 将包含共享库的 JAR 文件添加到 classpath。<br/><br/>" + "这些技术方案适用于高级用户。大多数用户应在修改这些参数前尝试重新安装 Minecraft。</b>";
 	}
@@ -1953,13 +1953,13 @@ public class Chino implements Idioma {
 
 	@Override
 	public String solucion_maximo_rango() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>解决方法：在 Minecraft 1.12.2 中安装 <a href='https://www.curseforge.com/minecraft/mc-mods/justenoughids'>JustEnoughIDs</a>，1.7.10 版本请使用 <a href='https://www.curseforge.com/minecraft/mc-mods/endless-ids'>EndlessIDs</a>。</b>";
 	}
 
 	@Override
 	public String solucion_colision_id() {
-		return "<b style='color:#" + config.obtenerColorTexto()
+		return "<b style='color:#" + config.obtenerColorInfo()
 				+ "'>使用 <a href='https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/1291014-idfix-and-idfix-minus-mods-for-resolving-id'>IdFix Minus</a> 或 <a href='https://github.com/SS111/Minecraft-ID-Resolver'>Minecraft-ID-Resolver</a> 等工具解决 ID 冲突。</b>";
 	}
 
@@ -3436,13 +3436,33 @@ public class Chino implements Idioma {
 	public String mensajeAyudar() {
 		String iconoCompartir = MonitorDePID.carpeta.resolve("imagenes").resolve("boton_compartir_icon.png")
 				.toAbsolutePath().toUri().toString();
-		String colorTexto = Config.obtenerInstancia().obtenerColorTexto();
+		String colorTexto = Config.obtenerInstancia().obtenerColorInfo();
 
 		return "" + "<div style='color:" + colorTexto + ";'>" + "  <strong>需要帮助吗？</strong><br>"
 				+ "  如果你不知道如何修复，或此处未列出原因，可通过我们的社交网络获得帮助。" + "  使用 <img src='" + iconoCompartir
 				+ "' alt='分享' style='height:12px;vertical-align:middle;'/> "
 				+ "  <strong>分享</strong> 按钮获取日志和分析结果的链接，以便提交给我们的团队。"
 				+ "  如果你是整合包作者或组织，请编辑 <code>crash_detector/plantilla.htm</code> " + "  来自定义你的团队链接。" + "</div>";
+	}
+	
+	@Override
+	public String restablecerPlantilla() {
+	    return "重置模板";
+	}
+
+	@Override
+	public String restablecer() {
+	    return "重置";
+	}
+
+	@Override
+	public String restablecerImagenMensjae(String nombreImagen) {
+	    return "将 " + nombreImagen + " 重置为默认设置？";
+	}
+
+	@Override
+	public String restablecerPlantillaMensaje() {
+	    return "将模板重置为默认设置？";
 	}
 
 }
