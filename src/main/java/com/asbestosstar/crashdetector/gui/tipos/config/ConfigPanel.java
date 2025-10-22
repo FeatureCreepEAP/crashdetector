@@ -32,6 +32,8 @@ import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
+import com.asbestosstar.crashdetector.gui.tipos.editor_plantilla.EditorPlantilla;
+import com.asbestosstar.crashdetector.gui.tipos.editor_plantilla.EditorPlantillaPredeterminado;
 import com.asbestosstar.crashdetector.parches.ConfigDeParches;
 import com.asbestosstar.crashdetector.parches.Parche;
 
@@ -259,7 +261,8 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
         JDialog dialogo = new JDialog(SwingUtilities.getWindowAncestor(this), 
             "Configuración de Colores");
         dialogo.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        dialogo.setContentPane(new EditorPantilla());
+        EditorPlantilla editor_plantilla = TipoGUI.EDITOR_PLANTILLA.obtenerGUIPredeterminado(EditorPlantillaPredeterminado.ID, ()->new EditorPlantillaPredeterminado());
+        dialogo.setContentPane(editor_plantilla);
         dialogo.pack();
         dialogo.setLocationRelativeTo(SwingUtilities.getWindowAncestor(this));
         dialogo.setVisible(true);

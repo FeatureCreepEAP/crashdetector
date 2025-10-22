@@ -14,8 +14,8 @@ import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.arbol.ArbolDeModsGUI;
 import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartirGUI;
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanel;
-import com.asbestosstar.crashdetector.gui.tipos.config.EditorPantilla;
 import com.asbestosstar.crashdetector.gui.tipos.editor.EditorFirmasGUI;
+import com.asbestosstar.crashdetector.gui.tipos.editor_plantilla.EditorPlantilla;
 import com.asbestosstar.crashdetector.gui.tipos.grepr.GrepRGUI;
 import com.asbestosstar.crashdetector.gui.tipos.historia.HistoriaDeModsGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasGUI;
@@ -370,7 +370,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 	/**
 	 * No registro de Launcher
 	 */
-	public static TipoGUI<EditorPantilla> EDITOR_PLANTILLA = new TipoGUI<EditorPantilla>() {
+	public static TipoGUI<EditorPlantilla> EDITOR_PLANTILLA = new TipoGUI<EditorPlantilla>() {
 		@Override
 		public String id() {
 			return "editor_plantilla";
@@ -382,13 +382,13 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		}
 
 		@Override
-		public void registrarGUI(String id, Supplier<EditorPantilla> gui) {
-			EditorPantilla.GUIS.put(id, gui);
+		public void registrarGUI(String id, Supplier<EditorPlantilla> gui) {
+			EditorPlantilla.GUIS.put(id, gui);
 		}
 
 		@Override
-		public Map<String, Supplier<EditorPantilla>> obtenerGUIs() {
-			return EditorPantilla.GUIS;
+		public Map<String, Supplier<EditorPlantilla>> obtenerGUIs() {
+			return EditorPlantilla.GUIS;
 		}
 	};	
 	

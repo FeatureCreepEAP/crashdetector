@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetector.gui.tipos.config;
+package com.asbestosstar.crashdetector.gui.tipos.editor_plantilla;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -53,9 +53,9 @@ import com.asbestosstar.crashdetector.config.ElementoConfig;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 
-public class EditorPantilla extends JPanel implements CrashDetectorGUI{
+public abstract class EditorPlantilla extends JPanel implements CrashDetectorGUI{
 
-	public static Map<String, Supplier<EditorPantilla>> GUIS = new HashMap<>();
+	public static Map<String, Supplier<EditorPlantilla>> GUIS = new HashMap<>();
 
 	
     public JTextPane editorHTML;
