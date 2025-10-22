@@ -262,6 +262,7 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
             "Configuración de Colores");
         dialogo.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         EditorPlantilla editor_plantilla = TipoGUI.EDITOR_PLANTILLA.obtenerGUIPredeterminado(EditorPlantillaPredeterminado.ID, ()->new EditorPlantillaPredeterminado());
+        editor_plantilla.init();
         dialogo.setContentPane(editor_plantilla);
         dialogo.pack();
         dialogo.setLocationRelativeTo(SwingUtilities.getWindowAncestor(this));
