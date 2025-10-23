@@ -218,13 +218,7 @@ public abstract class DialogoCompartir extends JDialog implements CrashDetectorG
 		// TODO ¡NO USAR, usar preperar!
 	}
 
-	@Override
-	public List<ElementoConfig> obtenerElementosConfigs() {
-		ArrayList<ElementoConfig> ret = new ArrayList<>();
-		// ConfigColor ahora acepta Color como parámetro predeterminado
-		ret.add(ConfigColor.de("dialogo_compartir_enlace", java.awt.Color.BLUE.darker()));
-		return ret;
-	}
+
 
 	public APIdeSitioDeRegistro obtenerAPI() throws NoAPIdeRegistro {
 		try {

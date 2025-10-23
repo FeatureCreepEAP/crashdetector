@@ -16,8 +16,10 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -46,6 +48,7 @@ import com.asbestosstar.crashdetector.api_sito_registro.DemasiadoGrande;
 import com.asbestosstar.crashdetector.api_sito_registro.ErrorConPublicar;
 import com.asbestosstar.crashdetector.api_sito_registro.NoAPIdeRegistro;
 import com.asbestosstar.crashdetector.config.ConfigColor;
+import com.asbestosstar.crashdetector.config.ElementoConfig;
 
 /**
  * Implementación concreta del diálogo de compartir con apariencia legada.
@@ -436,6 +439,15 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
         }
     }
 
+	@Override
+	public List<ElementoConfig> obtenerElementosConfigs() {
+		ArrayList<ElementoConfig> ret = new ArrayList<>();
+		// ConfigColor ahora acepta Color como parámetro predeterminado
+		ret.add(ConfigColor.de("dialogo_compartir_enlace", java.awt.Color.BLUE.darker()));
+		ret.add(ConfigColor.de("dialogo_compartir_campo_fondo", Color.YELLOW));		
+		return ret;
+	}
+    
     @Override
     public void recargarApariencia() {
         // Cambia el color de fondo del campo de enlace del informe usando ConfigColor
