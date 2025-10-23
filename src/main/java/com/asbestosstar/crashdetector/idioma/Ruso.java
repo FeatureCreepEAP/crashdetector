@@ -3629,4 +3629,10 @@ public class Ruso implements Idioma {
 	    return "Сбросить шаблон до значений по умолчанию?";
 	}
 	
+	@Override
+	public String faltar_de_clases_azurelib() {
+	    return "<b style='color:#" + config.obtenerColorError()
+	           + "'>Отсутствуют классы AzureLib. Если у вас уже установлен AzureLib, установите версию до 8 октября 2025 года. Это была распространённая проблема. Если у вас нет AzureLib, установите актуальную версию.</b>";
+	}
+	
 }

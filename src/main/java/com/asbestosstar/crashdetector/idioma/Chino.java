@@ -3465,4 +3465,11 @@ public class Chino implements Idioma {
 	    return "将模板重置为默认设置？";
 	}
 
+	@Override
+	public String faltar_de_clases_azurelib() {
+	    return "<b style='color:#" + config.obtenerColorError()
+	           + "'>缺少 AzureLib 的类。如果你已安装 AzureLib，请安装 2025 年 10 月 8 日之前的版本（此问题较为常见）。若未安装 AzureLib，请安装当前最新版本。</b>";
+	}
+	
+	
 }

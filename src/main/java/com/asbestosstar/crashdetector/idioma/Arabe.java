@@ -3592,6 +3592,12 @@ public class Arabe implements Idioma {
 	    return "هل تريد إعادة تعيين القالب إلى الإعدادات الافتراضية؟";
 	}
 	
+	@Override
+	public String faltar_de_clases_azurelib() {
+	    return "<b style='color:#" + config.obtenerColorError()
+	           + "'>تتعذر العثور على بعض كلاسات AzureLib. إذا كنت تمتلك بالفعل AzureLib، يُرجى تثبيت إصدار سابق من AzureLib قبل 8 أكتوبر 2025. كان هذا شائعاً. إذا لم يكن لديك AzureLib، فثبّت الإصدار الحالي.</b>";
+	}
+	
 	
 	
 	

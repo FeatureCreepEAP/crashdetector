@@ -3519,5 +3519,11 @@ public class Coreano implements Idioma {
 	    return "템플릿을 기본값으로 초기화하시겠습니까?";
 	}
 	
+	@Override
+	public String faltar_de_clases_azurelib() {
+	    return "<b style='color:#" + config.obtenerColorError()
+	           + "'>AzureLib 클래스가 누락되었습니다. 이미 AzureLib이 있다면, 2025년 10월 8일 이전 버전을 설치하세요. 흔히 발생하는 문제입니다. AzureLib이 없다면 최신 버전을 설치하세요.</b>";
+	}
+	
 
 }

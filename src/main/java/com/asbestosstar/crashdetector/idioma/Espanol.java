@@ -4295,4 +4295,11 @@ public class Espanol implements Idioma {
 		return "¿Restablecer plantilla a valores predeterminados?";
 	}
 
+	@Override
+	public String faltar_de_clases_azurelib() {
+	    // TODO Auto-generated method stub
+	    return "<b style='color:#" + config.obtenerColorError()
+	           + "'>Faltan clases de AzureLib. Si ya tienes AzureLib, por favor instala una versión anterior al 8 de octubre de 2025. Era común. Si no tienes AzureLib, instala la versión actual.</b>";
+	}
+
 }

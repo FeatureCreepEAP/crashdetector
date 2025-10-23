@@ -3616,5 +3616,11 @@ public class Esperanto implements Idioma {
 	public String restablecerPlantillaMensaje() {
 	    return "Ĉu restarigi la ŝablonon al defaŭltaj valoroj?";
 	}
+	
+	@Override
+	public String faltar_de_clases_azurelib() {
+	    return "<b style='color:#" + config.obtenerColorError()
+	           + "'>Mankas klasoj de AzureLib. Se vi jam havas AzureLib, bonvolu instali version antaŭ la 8-a de oktobro 2025. Tio estis komune. Se vi ne havas AzureLib, instalu la aktualan version.</b>";
+	}
 
 }

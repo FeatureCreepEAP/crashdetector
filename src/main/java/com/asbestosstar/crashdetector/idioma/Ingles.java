@@ -3663,6 +3663,11 @@ public class Ingles implements Idioma {
 	public String restablecerPlantillaMensaje() {
 	    return "Reset template to default values?";
 	}
+	@Override
+	public String faltar_de_clases_azurelib() {
+	    return "<b style='color:#" + config.obtenerColorError()
+	           + "'>Missing AzureLib classes. If you already have AzureLib, please install a version from before 8 October 2025. This was common. If you don't have AzureLib, install the current version.</b>";
+	}
 	
 	
 }

@@ -4,14 +4,18 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,7 +26,6 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
-import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 
 public class HistoriaModsGUILegacy extends HistoriaDeModsGUI {
 
@@ -40,6 +43,33 @@ public class HistoriaModsGUILegacy extends HistoriaDeModsGUI {
     }
 
     @Override
+    public void init() {
+        // Inicializar colores PRIMERO
+        colorEstadoExito = ConfigColor.de("tema.historia_mods.color.estado.exito", new java.awt.Color(0x4C, 0xAF, 0x50));
+        colorEstadoFallo = ConfigColor.de("tema.historia_mods.color.estado.fallo", new java.awt.Color(0xF4, 0x43, 0x36));
+        colorResultadoAnadido = ConfigColor.de("tema.historia_mods.color.resultado.anadido", new java.awt.Color(0x2E, 0x7D, 0x32));
+        colorResultadoEliminado = ConfigColor.de("tema.historia_mods.color.resultado.eliminado", new java.awt.Color(0xC6, 0x28, 0x28));
+        colorBordeScroll = ConfigColor.de("tema.historia_mods.color.borde.scroll", new java.awt.Color(0xDD, 0xDD, 0xDD));
+        colorFondoPanel = ConfigColor.de("tema.historia_mods.color.fondo.panel", new java.awt.Color(0xFF, 0xFF, 0xFF));
+
+        // Configuración básica de la ventana
+        setTitle(MonitorDePID.idioma.historialDeMods());
+        setSize(800, 700);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        // Construir esqueleto técnico/UI base
+        construirEstructuraBase();
+
+        // Cargar archivos históricos (técnico)
+        cargarArchivosHistoricos();
+
+        // Aplicar apariencia inicial
+        aplicarApariencia();
+        setVisible(true);
+    }
+
+    @Override
     public List<ElementoConfig> obtenerElementosConfigs() {
         List<ElementoConfig> elementos = new ArrayList<>();
         elementos.add(colorEstadoExito);
@@ -49,6 +79,82 @@ public class HistoriaModsGUILegacy extends HistoriaDeModsGUI {
         elementos.add(colorBordeScroll);
         elementos.add(colorFondoPanel);
         return elementos;
+    }
+
+    @Override
+    protected void construirEstructuraBase() {
+        panelPrincipal = new JPanel(new BorderLayout(10, 10));
+        panelPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        add(panelPrincipal, BorderLayout.CENTER);
+
+        // Panel superior con GridBag para dos columnas (izq/der) y el botón
+        panelSuperior = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+
+        // Etiquetas de columnas (localizadas)
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 0.5;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        JLabel etiquetaIzquierda = new JLabel(MonitorDePID.idioma.archivo0());
+        panelSuperior.add(etiquetaIzquierda, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.weightx = 0.5;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        JLabel etiquetaDerecha = new JLabel(MonitorDePID.idioma.archivo1());
+        panelSuperior.add(etiquetaDerecha, gbc);
+
+        // Paneles de listas
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.weightx = 0.5;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        panelIzquierdo = new JPanel();
+        panelIzquierdo.setLayout(new BoxLayout(panelIzquierdo, BoxLayout.Y_AXIS));
+        scrollIzquierdo = new JScrollPane(panelIzquierdo);
+        scrollIzquierdo.setPreferredSize(new Dimension(350, 300));
+        panelSuperior.add(scrollIzquierdo, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.weightx = 0.5;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        panelDerecho = new JPanel();
+        panelDerecho.setLayout(new BoxLayout(panelDerecho, BoxLayout.Y_AXIS));
+        scrollDerecho = new JScrollPane(panelDerecho);
+        scrollDerecho.setPreferredSize(new Dimension(350, 300));
+        panelSuperior.add(scrollDerecho, gbc);
+
+        // Botón de comparar (texto localizado; estilos van en la impl)
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.gridwidth = 2;
+        gbc.weightx = 0;
+        gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        botonComparar = new JButton(MonitorDePID.idioma.comparar());
+        panelSuperior.add(botonComparar, gbc);
+
+        // Panel de resultados
+        resultadoPanel = new JTextPane();
+        resultadoPanel.setContentType("text/html");
+        resultadoPanel.setEditable(false);
+        scrollResultado = new JScrollPane(resultadoPanel);
+
+        // Wiring de eventos (técnico)
+        botonComparar.addActionListener(e -> compararArchivosSeleccionados());
+
+        // Ensamblar panel principal
+        panelPrincipal.add(panelSuperior, BorderLayout.NORTH);
+        panelPrincipal.add(scrollResultado, BorderLayout.CENTER);
+
+        // Aplicar apariencia inicial
+        aplicarApariencia();
     }
 
     @Override
@@ -162,25 +268,5 @@ public class HistoriaModsGUILegacy extends HistoriaDeModsGUI {
         panelInferior.setMinimumSize(new Dimension(100, 100));
 
         panelPrincipal.add(panelInferior, BorderLayout.PAGE_END);
-    }
-
-    @Override
-    public void init() {
-        // Configuración básica de la ventana
-    	
-    	
-        colorEstadoExito = ConfigColor.de("tema.historia_mods.color.estado.exito", new java.awt.Color(0x4C, 0xAF, 0x50));
-        colorEstadoFallo = ConfigColor.de("tema.historia_mods.color.estado.fallo", new java.awt.Color(0xF4, 0x43, 0x36));
-        colorResultadoAnadido = ConfigColor.de("tema.historia_mods.color.resultado.anadido", new java.awt.Color(0x2E, 0x7D, 0x32));
-        colorResultadoEliminado = ConfigColor.de("tema.historia_mods.color.resultado.eliminado", new java.awt.Color(0xC6, 0x28, 0x28));
-        colorBordeScroll = ConfigColor.de("tema.historia_mods.color.borde.scroll", new java.awt.Color(0xDD, 0xDD, 0xDD));
-        colorFondoPanel = ConfigColor.de("tema.historia_mods.color.fondo.panel", new java.awt.Color(0xFF, 0xFF, 0xFF));
-        
-        super.init();
-        
-        // Inicializar colores
-
-        // Aplicar apariencia
-        aplicarApariencia();
     }
 }

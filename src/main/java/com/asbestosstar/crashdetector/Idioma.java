@@ -1486,6 +1486,8 @@ public interface Idioma {
 
 	public String restablecerPlantillaMensaje();
 
+	public String faltar_de_clases_azurelib();
+
 	// public String advertenciaMalwareFalso();
 
 }

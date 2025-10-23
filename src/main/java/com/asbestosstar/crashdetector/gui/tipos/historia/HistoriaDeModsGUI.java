@@ -43,14 +43,18 @@ import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 
+/**
+ * Clase base abstracta para la interfaz gráfica del historial de mods.
+ * Contiene la lógica de carga, comparación y visualización de diferencias.
+ * La apariencia y el layout se definen en implementaciones concretas.
+ */
 public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorGUI, BotonDeBarraLateralDerecha {
 
     private static final long serialVersionUID = 1L;
 
     public static Map<String, Supplier<HistoriaDeModsGUI>> GUIS = new HashMap<>();
 
-
-    // Colores configurables (públicos y no finales)
+    // Colores configurables (ahora públicos)
     public ConfigColor colorEstadoExito;
     public ConfigColor colorEstadoFallo;
     public ConfigColor colorResultadoAnadido;
@@ -58,108 +62,46 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
     public ConfigColor colorBordeScroll;
     public ConfigColor colorFondoPanel;
 
-    // Contenedores principales
+    // Contenedores principales (ahora públicos)
     public JPanel panelPrincipal;
     public JPanel panelSuperior;
     public JPanel panelIzquierdo;
     public JPanel panelDerecho;
 
-    // Grupos para selección (izq/der)
+    // Grupos para selección (izq/der) (ahora públicos)
     public ButtonGroup grupoIzquierdo;
     public ButtonGroup grupoDerecho;
 
-    // Presentación del resultado (HTML)
+    // Presentación del resultado (HTML) (ahora público)
     public JTextPane resultadoPanel;
 
-    // Botón de comparar (se crea aquí; estilo lo aplica la impl)
+    // Botón de comparar (se crea aquí; estilo lo aplica la impl) (ahora público)
     public JButton botonComparar;
 
-    // Scrolls (para permitir que la impl ajuste apariencia fácilmente)
+    // Scrolls (para permitir que la impl ajuste apariencia fácilmente) (ahora públicos)
     public JScrollPane scrollIzquierdo;
     public JScrollPane scrollDerecho;
     public JScrollPane scrollResultado;
 
-    // Panel inferior con información adicional
+    // Panel inferior con información adicional (ahora público)
     public JPanel panelInferior;
     public JTextPane descripcionHTML;
 
     // ====== Constructor ======
     public HistoriaDeModsGUI() {
         super();
+        // Inicializar colores con valores por defecto para evitar NPE
+        // Estos serán sobrescritos por la implementación concreta en init()
+        colorEstadoExito = ConfigColor.de("tema.base.historia_mods.color.estado.exito", java.awt.Color.GREEN);
+        colorEstadoFallo = ConfigColor.de("tema.base.historia_mods.color.estado.fallo", java.awt.Color.RED);
+        colorResultadoAnadido = ConfigColor.de("tema.base.historia_mods.color.resultado.anadido", java.awt.Color.GREEN);
+        colorResultadoEliminado = ConfigColor.de("tema.base.historia_mods.color.resultado.eliminado", java.awt.Color.RED);
+        colorBordeScroll = ConfigColor.de("tema.base.historia_mods.color.borde.scroll", java.awt.Color.LIGHT_GRAY);
+        colorFondoPanel = ConfigColor.de("tema.base.historia_mods.color.fondo.panel", java.awt.Color.WHITE);
     }
 
-    // ====== Estructura base (técnico) ======
-    protected void construirEstructuraBase() {
-        panelPrincipal = new JPanel(new BorderLayout(10, 10));
-        panelPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        add(panelPrincipal, BorderLayout.CENTER);
-
-        // Panel superior con GridBag para dos columnas (izq/der) y el botón
-        panelSuperior = new JPanel(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5);
-
-        // Etiquetas de columnas (localizadas)
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 0.5;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        JLabel etiquetaIzquierda = new JLabel(MonitorDePID.idioma.archivo0());
-        panelSuperior.add(etiquetaIzquierda, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.weightx = 0.5;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        JLabel etiquetaDerecha = new JLabel(MonitorDePID.idioma.archivo1());
-        panelSuperior.add(etiquetaDerecha, gbc);
-
-        // Paneles de listas
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.weightx = 0.5;
-        gbc.weighty = 1.0;
-        gbc.fill = GridBagConstraints.BOTH;
-        panelIzquierdo = new JPanel();
-        panelIzquierdo.setLayout(new BoxLayout(panelIzquierdo, BoxLayout.Y_AXIS));
-        scrollIzquierdo = new JScrollPane(panelIzquierdo);
-        scrollIzquierdo.setPreferredSize(new Dimension(350, 300));
-        panelSuperior.add(scrollIzquierdo, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        gbc.weightx = 0.5;
-        gbc.weighty = 1.0;
-        gbc.fill = GridBagConstraints.BOTH;
-        panelDerecho = new JPanel();
-        panelDerecho.setLayout(new BoxLayout(panelDerecho, BoxLayout.Y_AXIS));
-        scrollDerecho = new JScrollPane(panelDerecho);
-        scrollDerecho.setPreferredSize(new Dimension(350, 300));
-        panelSuperior.add(scrollDerecho, gbc);
-
-        // Botón de comparar (texto localizado; estilos van en la impl)
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.gridwidth = 2;
-        gbc.weightx = 0;
-        gbc.weighty = 0;
-        gbc.fill = GridBagConstraints.NONE;
-        botonComparar = new JButton(MonitorDePID.idioma.comparar());
-        panelSuperior.add(botonComparar, gbc);
-
-        // Panel de resultados
-        resultadoPanel = new JTextPane();
-        resultadoPanel.setContentType("text/html");
-        resultadoPanel.setEditable(false);
-        scrollResultado = new JScrollPane(resultadoPanel);
-
-        // Wiring de eventos (técnico)
-        botonComparar.addActionListener(e -> compararArchivosSeleccionados());
-
-        // Ensamblar panel principal
-        panelPrincipal.add(panelSuperior, BorderLayout.NORTH);
-        panelPrincipal.add(scrollResultado, BorderLayout.CENTER);
-    }
+    // ====== Estructura base (ahora abstracta o vacía) ======
+    protected abstract void construirEstructuraBase();
 
     // ====== Lógica técnica: carga/parseo/normalización/comparación ======
     protected void cargarArchivosHistoricos() {
@@ -178,21 +120,33 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
                     });
 
                     // Reset panels y grupos
-                    panelIzquierdo.removeAll();
-                    panelDerecho.removeAll();
+                    if (panelIzquierdo != null) {
+                        panelIzquierdo.removeAll();
+                    }
+                    if (panelDerecho != null) {
+                        panelDerecho.removeAll();
+                    }
                     grupoIzquierdo = new ButtonGroup();
                     grupoDerecho = new ButtonGroup();
 
                     for (File f : archivos) {
-                        panelIzquierdo.add(crearLineaArchivo(f, grupoIzquierdo));
+                        if (panelIzquierdo != null) {
+                            panelIzquierdo.add(crearLineaArchivo(f, grupoIzquierdo));
+                        }
                     }
                     for (File f : archivos) {
-                        panelDerecho.add(crearLineaArchivo(f, grupoDerecho));
+                        if (panelDerecho != null) {
+                            panelDerecho.add(crearLineaArchivo(f, grupoDerecho));
+                        }
                     }
 
                     // Refrescar y scrollear al final
-                    panelIzquierdo.revalidate();
-                    panelDerecho.revalidate();
+                    if (panelIzquierdo != null) {
+                        panelIzquierdo.revalidate();
+                    }
+                    if (panelDerecho != null) {
+                        panelDerecho.revalidate();
+                    }
                     scrollHastaFinal(scrollIzquierdo);
                     scrollHastaFinal(scrollDerecho);
                 }
@@ -216,10 +170,14 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
         JLabel estado = new JLabel();
         if (archivo.getName().endsWith(".exito")) {
             estado.setText(" (" + MonitorDePID.idioma.exito() + ")");
-            estado.setForeground(colorEstadoExito.obtener());
+            if (colorEstadoExito != null) {
+                estado.setForeground(colorEstadoExito.obtener());
+            }
         } else {
             estado.setText(" (" + MonitorDePID.idioma.fallo() + ")");
-            estado.setForeground(colorEstadoFallo.obtener());
+            if (colorEstadoFallo != null) {
+                estado.setForeground(colorEstadoFallo.obtener());
+            }
         }
 
         // Hooks de apariencia (la impl puede ajustar fuente, margen, etc.)
@@ -238,8 +196,10 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
                 : grupoDerecho.getSelection().getActionCommand();
 
         if (archivoIzq == null || archivoDer == null || archivoIzq.equals(archivoDer)) {
-            resultadoPanel.setText(
-                    "<html><body><font color='red'>" + MonitorDePID.idioma.seleccionarDosArchivos() + "</font></body></html>");
+            if (resultadoPanel != null) {
+                resultadoPanel.setText(
+                        "<html><body><font color='red'>" + MonitorDePID.idioma.seleccionarDosArchivos() + "</font></body></html>");
+            }
             return;
         }
 
@@ -256,8 +216,10 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
             generarHTMLResultado(archivoIzq, archivoDer, diferencias);
         } catch (Exception e) {
             CrashDetectorLogger.log("Error comparando archivos: " + e.getMessage());
-            resultadoPanel.setText(
-                    "<html><body><font color='red'>" + MonitorDePID.idioma.errorComparandoArchivos() + "</font></body></html>");
+            if (resultadoPanel != null) {
+                resultadoPanel.setText(
+                        "<html><body><font color='red'>" + MonitorDePID.idioma.errorComparandoArchivos() + "</font></body></html>");
+            }
         }
     }
 
@@ -315,14 +277,16 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
         } else {
             html.append("<ul>");
             for (String linea : diferencias) {
-                String color = linea.startsWith("+") ? colorResultadoAnadido.obtener().toString()
-                        : colorResultadoEliminado.obtener().toString();
+                String color = linea.startsWith("+") ? (colorResultadoAnadido != null ? colorResultadoAnadido.obtener().toString() : "#000000")
+                        : (colorResultadoEliminado != null ? colorResultadoEliminado.obtener().toString() : "#000000");
                 html.append("<li style='color:").append(color).append("'>").append(linea).append("</li>");
             }
             html.append("</ul>");
         }
         html.append("</div></body></html>");
-        resultadoPanel.setText(html.toString());
+        if (resultadoPanel != null) {
+            resultadoPanel.setText(html.toString());
+        }
     }
 
     protected void scrollHastaFinal(JScrollPane sp) {
@@ -364,21 +328,11 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
     }
 
     @Override
-    public void init() {
-        // Configuración mínima y localizada
-        setTitle(MonitorDePID.idioma.historialDeMods());
-        setSize(800, 700);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
+    public abstract void init();
 
-        // Construir esqueleto técnico/UI base
-        construirEstructuraBase();
+    @Override
+    public abstract String id();
 
-        // Cargar archivos históricos (técnico)
-        cargarArchivosHistoricos();
-
-        // Aplicar apariencia inicial
-        aplicarApariencia();
-        setVisible(true);
-    }
+    @Override
+    public abstract java.util.List<com.asbestosstar.crashdetector.config.ElementoConfig> obtenerElementosConfigs();
 }

@@ -3524,5 +3524,10 @@ public class Japones implements Idioma {
 	    return "テンプレートを既定値にリセットしますか？";
 	}
 	
+	@Override
+	public String faltar_de_clases_azurelib() {
+	    return "<b style='color:#" + config.obtenerColorError()
+	           + "'>AzureLibのクラスが不足しています。すでにAzureLibを導入している場合は、2025年10月8日以前のバージョンをインストールしてください。これはよくある問題です。AzureLibを導入していない場合は、最新バージョンをインストールしてください。</b>";
+	}
 	
 }

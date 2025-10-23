@@ -3632,6 +3632,12 @@ public class Portuges implements Idioma {
 	public String restablecerPlantillaMensaje() {
 	    return "Redefinir modelo para os valores padrão?";
 	}
+	@Override
+	public String faltar_de_clases_azurelib() {
+	    return "<b style='color:#" + config.obtenerColorError()
+	           + "'>Faltando classes do AzureLib. Se você já tem o AzureLib, por favor instale uma versão anterior a 8 de outubro de 2025. Era comum. Se você não tem o AzureLib, instale a versão atual.</b>";
+	}
+	
 	
 	
 	

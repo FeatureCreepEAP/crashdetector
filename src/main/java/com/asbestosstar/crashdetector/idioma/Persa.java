@@ -3608,6 +3608,12 @@ public class Persa implements Idioma {
 	    return "آیا الگو را به مقادیر پیش‌فرض بازنشانی کنیم؟";
 	}
 	
+	@Override
+	public String faltar_de_clases_azurelib() {
+	    return "<b style='color:#" + config.obtenerColorError()
+	           + "'>کلاس‌های AzureLib یافت نشد. اگر قبلاً AzureLib دارید، لطفاً نسخه‌ای قبل از ۸ اکتبر ۲۰۲۵ را نصب کنید. این مشکل رایج بود. اگر AzureLib ندارید، آخرین نسخه را نصب کنید.</b>";
+	}
+	
 	
 	
 }
