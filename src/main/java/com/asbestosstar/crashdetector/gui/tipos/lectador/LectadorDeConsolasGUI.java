@@ -403,11 +403,9 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 
     // ====== Técnicas: carga/actualización ======
     protected void cargarConsolas() {
-        CrashDetectorLogger.log("consolas carg " + String.valueOf(consolas.size()));
         for (Consola consola : consolas) {
             String nombreArchivo = new File(consola.archivo.toString()).getName();
             cmbConsolas.addItem(nombreArchivo);
-            CrashDetectorLogger.log(consola.contenido_verificar);
         }
         if (cmbConsolas.getItemCount() > 0) {
             cmbConsolas.setSelectedIndex(0);

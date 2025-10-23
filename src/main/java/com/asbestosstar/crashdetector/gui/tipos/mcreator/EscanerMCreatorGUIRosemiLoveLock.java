@@ -24,19 +24,20 @@ public class EscanerMCreatorGUIRosemiLoveLock extends EscanerMCreatorGUI {
 
     private static final long serialVersionUID = 1L;
     public static final String ID = "rosemi_lovelock";
-
-    public ConfigColor colorFondoVentana = ConfigColor.de("tema.rosemi_lovelock.mcreator.color.fondo.ventana", new Color(229, 175, 177)); // #e5afb1
-    public ConfigColor colorTextoPrincipal = ConfigColor.de("tema.rosemi_lovelock.mcreator.color.texto.principal", new Color(51, 51, 51)); // Gris oscuro
-    public ConfigColor colorFondoResultados = ConfigColor.de("tema.rosemi_lovelock.mcreator.color.fondo.resultados", new Color(255, 230, 237)); // Rosa claro
-    public ConfigColor colorEstado = ConfigColor.de("tema.rosemi_lovelock.mcreator.color.estado", new Color(220, 220, 220)); // Gris muy claro
-    public ConfigColor colorBotonFondo = ConfigColor.de("tema.rosemi_lovelock.mcreator.color.boton.fondo", new Color(255, 153, 180)); // Rosa medio #FF99B4
-    public ConfigColor colorBotonTexto = ConfigColor.de("tema.rosemi_lovelock.mcreator.color.boton.texto", Color.WHITE);
-    public ConfigColor colorBordeScroll = ConfigColor.de("tema.rosemi_lovelock.mcreator.color.borde.scroll", new Color(255, 193, 208)); // Rosa oscuro #FFC1D0
-    public ConfigColor colorTextoDescripcion = ConfigColor.de("tema.rosemi_lovelock.mcreator.color.texto.descripcion", Color.WHITE);
-   // public ConfigColor colorTextoEstado = ConfigColor.de("tema.rosemi_lovelock.mcreator.color.texto.estado", new Color(100, 100, 100)); // Gris medio
+// public ConfigColor colorTextoEstado = ConfigColor.de("tema.rosemi_lovelock.mcreator.color.texto.estado", new Color(100, 100, 100)); // Gris medio
     //public ConfigColor colorTextoExtra = ConfigColor.de("tema.rosemi_lovelock.mcreator.color.texto.extra", new Color(100, 100, 100)); // Gris medio
 
-    
+    public EscanerMCreatorGUIRosemiLoveLock() {
+        colorFondoVentana = ConfigColor.de("tema.rosemi_lovelock.mcreator.color.fondo.ventana", new Color(229, 175, 177)); // #e5afb1
+        colorTextoPrincipal = ConfigColor.de("tema.rosemi_lovelock.mcreator.color.texto.principal", new Color(51, 51, 51)); // Gris oscuro
+        colorFondoResultados = ConfigColor.de("tema.rosemi_lovelock.mcreator.color.fondo.resultados", new Color(255, 230, 237)); // Rosa claro
+        colorEstado = ConfigColor.de("tema.rosemi_lovelock.mcreator.color.estado", new Color(220, 220, 220)); // Gris muy claro
+        colorBotonFondo = ConfigColor.de("tema.rosemi_lovelock.mcreator.color.boton.fondo", new Color(255, 153, 180)); // Rosa medio #FF99B4
+        colorBotonTexto = ConfigColor.de("tema.rosemi_lovelock.mcreator.color.boton.texto", Color.WHITE);
+        colorBordeScroll = ConfigColor.de("tema.rosemi_lovelock.mcreator.color.borde.scroll", new Color(255, 193, 208)); // Rosa oscuro #FFC1D0
+        colorTextoDescripcion = ConfigColor.de("tema.rosemi_lovelock.mcreator.color.texto.descripcion", Color.WHITE);
+       
+    }
     
     @Override
     public void init() {
