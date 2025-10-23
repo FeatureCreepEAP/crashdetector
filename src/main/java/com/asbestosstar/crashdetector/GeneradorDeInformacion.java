@@ -88,8 +88,7 @@ public class GeneradorDeInformacion {
 			String pantilla = MonitorDePID.leer_archivo(MonitorDePID.carpeta.resolve("pantilla.htm"));
 			String ret = enviarInforme(pantilla.replace("{constructor}",
 					cons.toString() + "<br>" + MonitorDePID.idioma.infoDeVerificaciones() + "<br>"
-							+ MonitorDePID.idioma.infoDeVerificaciones() + "<br>"
-							+ MonitorDePID.contenidoInforme.toString() + imagenesParaCompartir()));
+							+ MonitorDePID.contenidoInforme.toString() + imagenesParaCompartir()).replace("{mensaje_ayudar}", MonitorDePID.idioma.mensajeAyudar()));
 			CrashDetectorLogger.log(ret);
 			return ret;
 		} catch (IOException e) {
