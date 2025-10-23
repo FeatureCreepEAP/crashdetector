@@ -34,6 +34,8 @@ import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.editor_plantilla.EditorPlantilla;
 import com.asbestosstar.crashdetector.gui.tipos.editor_plantilla.EditorPlantillaPredeterminado;
+import com.asbestosstar.crashdetector.gui.tipos.editorgui.CDSkinCape;
+import com.asbestosstar.crashdetector.gui.tipos.editorgui.EditorGUI;
 import com.asbestosstar.crashdetector.parches.ConfigDeParches;
 import com.asbestosstar.crashdetector.parches.Parche;
 
@@ -245,11 +247,11 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
     
     
     
-    JLabel labelEditarColores = new JLabel("Configuración de colores:");
+    JLabel labelEditarColores = new JLabel("HTML WYSIWYG PLANTILLA:");
     labelEditarColores.setForeground(colorDeTextoDeGui);
     panel.add(labelEditarColores);
     
-    JButton botonEditarColores = new JButton("Editar Colores");
+    JButton botonEditarColores = new JButton("HTML WYSIWYG PLANTILLA");
     if (!esMac) {
         botonEditarColores.setForeground(colorTexto.obtener());
         botonEditarColores.setBackground(colorBoton.obtener());
@@ -270,6 +272,32 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
     });
     panel.add(botonEditarColores);
 
+    
+    
+    
+    JLabel labelEditarGUI = new JLabel("Editar GUIs:");
+    labelEditarGUI.setForeground(colorDeTextoDeGui);
+    panel.add(labelEditarGUI);
+    
+    
+    
+    JButton botonEditarGUIs = new JButton("Editar GUIs");
+    if (!esMac) {
+    	botonEditarGUIs.setForeground(colorTexto.obtener());
+    	botonEditarGUIs.setBackground(colorBoton.obtener());
+    	botonEditarGUIs.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+    	botonEditarGUIs.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+    }
+    botonEditarGUIs.setFocusPainted(false);
+    botonEditarGUIs.addActionListener(e -> {
+    	EditorGUI editor_gui = TipoGUI.EDITOR_GUI.obtenerGUIPredeterminado(CDSkinCape.ID, ()->new CDSkinCape());
+    	editor_gui.init();
+    });
+    panel.add(botonEditarGUIs);
+
+    
+    
+    
     
     
     

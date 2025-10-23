@@ -53,13 +53,21 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 
 	public static String ID = "estilo_lanzer";
 
-	// Campos públicos para los colores de configuración
-	public ConfigColor colorFondo;
-	public ConfigColor colorTexto;
-	public ConfigColor colorBoton;
-	public ConfigColor colorCajaTexto;
-	public ConfigColor colorEnlace;
 
+
+	
+	public ConfigColor colorFondo = ConfigColor.de("gui.principal.lanzer.color.fondo",
+			Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()));
+	public ConfigColor colorTexto = ConfigColor.de("gui.principal.lanzer.color.texto",
+			Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
+	public ConfigColor colorBoton = ConfigColor.de("gui.principal.lanzer.color.boton",
+			Config.convertirAColor(Config.obtenerInstancia().obtenerColorBoton()));
+	public ConfigColor colorCajaTexto = ConfigColor.de("gui.principal.lanzer.color.cajaTexto",
+			Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
+	public ConfigColor colorEnlace = ConfigColor.de("gui.principal.lanzer.color.enlace",
+			Config.convertirAColor(Config.obtenerInstancia().obtenerColorEnlace()));
+
+	
 	@Override
 	public void init() {
 		// Inicializar colores PRIMERO
@@ -77,16 +85,6 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 	public void inicializarInterfaz() {
 		// Inicializar componentes con colores iniciales
 
-		colorFondo = ConfigColor.de("gui.principal.lanzer.color.fondo",
-				Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()));
-		colorTexto = ConfigColor.de("gui.principal.lanzer.color.texto",
-				Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
-		colorBoton = ConfigColor.de("gui.principal.lanzer.color.boton",
-				Config.convertirAColor(Config.obtenerInstancia().obtenerColorBoton()));
-		colorCajaTexto = ConfigColor.de("gui.principal.lanzer.color.cajaTexto",
-				Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
-		colorEnlace = ConfigColor.de("gui.principal.lanzer.color.enlace",
-				Config.convertirAColor(Config.obtenerInstancia().obtenerColorEnlace()));
 
 		pantalla.setContentType("text/html");
 		pantalla.setEditable(false);

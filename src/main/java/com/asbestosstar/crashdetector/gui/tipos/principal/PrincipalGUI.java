@@ -67,13 +67,20 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 	public static Map<String, Supplier<PrincipalGUI>> GUIS = new HashMap<>();
 	public Instant tiempoFallo;
 
-	// Variables de color que usarán ConfigColor en lugar de colores hardcodeados
-	public ConfigColor colorFondo;
-	public ConfigColor colorTexto;
-	public ConfigColor colorBoton;
-	public ConfigColor colorCajaTexto;
-	public ConfigColor colorEnlace;
+	public ConfigColor colorFondo = ConfigColor.de("gui.principal.color.fondo",
+			Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()));
+	public ConfigColor colorTexto = ConfigColor.de("gui.principal.color.texto",
+			Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
+	public ConfigColor colorBoton = ConfigColor.de("gui.principal.color.boton",
+			Config.convertirAColor(Config.obtenerInstancia().obtenerColorBoton()));
+	public ConfigColor colorCajaTexto = ConfigColor.de("gui.principal.color.cajaTexto",
+			Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
+	public ConfigColor colorEnlace = ConfigColor.de("gui.principal.color.enlace",
+			Config.convertirAColor(Config.obtenerInstancia().obtenerColorEnlace()));
 
+	
+	
+	
 	public CountDownLatch cerrojo;
 
 	// Componentes públicos para que la implementación concreta los estilice
@@ -120,16 +127,6 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		this.cerrojo = latch;
 		// Inicializar los colores de configuración con valores por defecto
 		// Serán sobrescritos por la implementación concreta en init()
-		colorFondo = ConfigColor.de("gui.principal.color.fondo",
-				Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()));
-		colorTexto = ConfigColor.de("gui.principal.color.texto",
-				Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
-		colorBoton = ConfigColor.de("gui.principal.color.boton",
-				Config.convertirAColor(Config.obtenerInstancia().obtenerColorBoton()));
-		colorCajaTexto = ConfigColor.de("gui.principal.color.cajaTexto",
-				Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
-		colorEnlace = ConfigColor.de("gui.principal.color.enlace",
-				Config.convertirAColor(Config.obtenerInstancia().obtenerColorEnlace()));
 
 		CrashDetectorLogger.log("en constructir");
 		inicializarInterfaz();

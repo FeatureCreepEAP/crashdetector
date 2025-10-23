@@ -23,10 +23,12 @@ public class PanelQuickFixDemonSlayers extends TodosQuickFixesGUI {
 	private static final long serialVersionUID = 1L;
 	public static String ID = "demonslayers";
 
+	ConfigColor colorSeparador = ConfigColor.de("quickfix_demonslayers_separador", Color.LIGHT_GRAY);
+
+	
 	public PanelQuickFixDemonSlayers() {
 		super();
 		// Inicializar campos de color específicos para esta implementación
-		colorSeparador = ConfigColor.de("quickfix_demonslayers_separador", Color.LIGHT_GRAY);
 		// Crear la interfaz de usuario
 		inicializarUI();
 	}

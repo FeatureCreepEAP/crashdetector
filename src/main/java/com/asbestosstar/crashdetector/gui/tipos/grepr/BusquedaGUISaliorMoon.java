@@ -12,6 +12,22 @@ public class BusquedaGUISaliorMoon extends GrepRGUI {
 
     public static final String ID = "saliormoon_grep";
 
+public BusquedaGUISaliorMoon() {
+    colorFondoVentana = ConfigColor.de("tema.saliormoon.grep.color.fondo.ventana", new java.awt.Color(12, 18, 56));
+    colorPanel = ConfigColor.de("tema.saliormoon.grep.color.panel", new java.awt.Color(20, 28, 78));
+    colorTexto = ConfigColor.de("tema.saliormoon.grep.color.texto", java.awt.Color.WHITE);
+    colorBoton = ConfigColor.de("tema.saliormoon.grep.color.boton", new java.awt.Color(220, 64, 92));
+    colorBotonTexto = ConfigColor.de("tema.saliormoon.grep.color.texto.boton", java.awt.Color.WHITE);
+    colorCampo = ConfigColor.de("tema.saliormoon.grep.color.campo", new java.awt.Color(16, 22, 66));
+    colorBordeDestacado = ConfigColor.de("tema.saliormoon.grep.color.borde.destacado", new java.awt.Color(255, 215, 0)); // Dorado
+    colorSeleccionTexto = ConfigColor.de("tema.saliormoon.grep.color.seleccion.texto", new java.awt.Color(255, 215, 0)); // Dorado
+    colorTextoSeleccionado = ConfigColor.de("tema.saliormoon.grep.color.texto.seleccionado", java.awt.Color.BLACK); // Negro sobre dorado
+
+}
+    
+    
+    
+    
     @Override
     public String id() {
         return ID;
@@ -20,15 +36,6 @@ public class BusquedaGUISaliorMoon extends GrepRGUI {
     @Override
     public void recargarApariencia() {
         // Inicializar colores (esto asigna valores a los campos públicos del padre)
-        colorFondoVentana = ConfigColor.de("tema.saliormoon.grep.color.fondo.ventana", new java.awt.Color(12, 18, 56));
-        colorPanel = ConfigColor.de("tema.saliormoon.grep.color.panel", new java.awt.Color(20, 28, 78));
-        colorTexto = ConfigColor.de("tema.saliormoon.grep.color.texto", java.awt.Color.WHITE);
-        colorBoton = ConfigColor.de("tema.saliormoon.grep.color.boton", new java.awt.Color(220, 64, 92));
-        colorBotonTexto = ConfigColor.de("tema.saliormoon.grep.color.texto.boton", java.awt.Color.WHITE);
-        colorCampo = ConfigColor.de("tema.saliormoon.grep.color.campo", new java.awt.Color(16, 22, 66));
-        colorBordeDestacado = ConfigColor.de("tema.saliormoon.grep.color.borde.destacado", new java.awt.Color(255, 215, 0)); // Dorado
-        colorSeleccionTexto = ConfigColor.de("tema.saliormoon.grep.color.seleccion.texto", new java.awt.Color(255, 215, 0)); // Dorado
-        colorTextoSeleccionado = ConfigColor.de("tema.saliormoon.grep.color.texto.seleccionado", java.awt.Color.BLACK); // Negro sobre dorado
 
         // Ahora que los colores están inicializados, aplicar estilos
         aplicarEstilos();

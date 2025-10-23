@@ -14,13 +14,17 @@ public class ArbolDeModsGUIHamu extends ArbolDeModsGUI {
 
 	public static String ID = "hamu";
 
-	// Elementos de configuración de color para este tema
-	private ConfigColor colorFondoPrincipal;
-	private ConfigColor colorTextoBotonReset;
-	private ConfigColor colorTextoCampoBuscar;
-	private ConfigColor colorTextoComboFiltro;
-	private ConfigColor colorTextoRenderer;
-	private ConfigColor colorTextoOverlayCarga;
+	
+	private ConfigColor colorFondoPrincipal = ConfigColor.de("tema.hamu.color.fondo", new Color(144, 203, 239)); // #90cbef
+
+	// Colores de texto (pueden ser usados por el renderer o componentes)
+	private ConfigColor colorTextoBotonReset = ConfigColor.de("tema.hamu.color.texto.boton.reset", Color.BLACK);
+	private ConfigColor colorTextoCampoBuscar = ConfigColor.de("tema.hamu.color.texto.tooltip.buscar", Color.DARK_GRAY);
+	private ConfigColor colorTextoComboFiltro = ConfigColor.de("tema.hamu.color.texto.combo.filtro", Color.BLACK);
+	private ConfigColor colorTextoRenderer = ConfigColor.de("tema.hamu.color.texto.renderer", Color.BLACK);
+	private ConfigColor colorTextoOverlayCarga = ConfigColor.de("tema.hamu.color.texto.overlay.carga", Color.WHITE);
+
+	
 
 	@Override
 	public String id() {
@@ -121,15 +125,7 @@ public class ArbolDeModsGUIHamu extends ArbolDeModsGUI {
 	 */
 	private void inicializarColoresConfiguracion() {
 		// Fondo principal
-		colorFondoPrincipal = ConfigColor.de("tema.hamu.color.fondo", new Color(144, 203, 239)); // #90cbef
-
-		// Colores de texto (pueden ser usados por el renderer o componentes)
-		colorTextoBotonReset = ConfigColor.de("tema.hamu.color.texto.boton.reset", Color.BLACK);
-		colorTextoCampoBuscar = ConfigColor.de("tema.hamu.color.texto.tooltip.buscar", Color.DARK_GRAY);
-		colorTextoComboFiltro = ConfigColor.de("tema.hamu.color.texto.combo.filtro", Color.BLACK);
-		colorTextoRenderer = ConfigColor.de("tema.hamu.color.texto.renderer", Color.BLACK);
-		colorTextoOverlayCarga = ConfigColor.de("tema.hamu.color.texto.overlay.carga", Color.WHITE);
-	}
+}
 
 	@Override
 	public List<ElementoConfig> obtenerElementosConfigs() {

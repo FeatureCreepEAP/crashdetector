@@ -16,6 +16,7 @@ import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartir;
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanel;
 import com.asbestosstar.crashdetector.gui.tipos.editor.EditorFirmasGUI;
 import com.asbestosstar.crashdetector.gui.tipos.editor_plantilla.EditorPlantilla;
+import com.asbestosstar.crashdetector.gui.tipos.editorgui.EditorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.grepr.GrepRGUI;
 import com.asbestosstar.crashdetector.gui.tipos.historia.HistoriaDeModsGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasGUI;
@@ -343,7 +344,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 
 	
 	/**
-	 * No registro de Launcher
+	 * Panal Para Config
 	 */
 	public static TipoGUI<ConfigPanel> CONFIG_PANEL = new TipoGUI<ConfigPanel>() {
 		@Override
@@ -368,7 +369,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 	};
 
 	/**
-	 * No registro de Launcher
+	 * Panal Para Editor Plantilla
 	 */
 	public static TipoGUI<EditorPlantilla> EDITOR_PLANTILLA = new TipoGUI<EditorPlantilla>() {
 		@Override
@@ -392,6 +393,32 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		}
 	};	
 	
+	/**
+	 * Editor de GUIs
+	 */
+	public static TipoGUI<EditorGUI> EDITOR_GUI = new TipoGUI<EditorGUI>() {
+		@Override
+		public String id() {
+			return "editor_gui";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return "Plantilla GUI";
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<EditorGUI> gui) {
+			EditorGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<EditorGUI>> obtenerGUIs() {
+			return EditorGUI.GUIS;
+		}
+	};
+	
+	
 	
 	/**
 	 * Registro estático de todos los tipos de GUI en la lista global.
@@ -410,5 +437,6 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		TIPOS_DE_GUI.add(NO_REGISTRO_LANZER);
 		TIPOS_DE_GUI.add(CONFIG_PANEL);
 		TIPOS_DE_GUI.add(EDITOR_PLANTILLA);
+		TIPOS_DE_GUI.add(EDITOR_GUI);
 	}
 }

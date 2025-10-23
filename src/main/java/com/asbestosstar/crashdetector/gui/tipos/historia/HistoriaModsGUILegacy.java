@@ -37,6 +37,16 @@ public class HistoriaModsGUILegacy extends HistoriaDeModsGUI {
     public Font fuenteRadio = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
     public Font fuenteEstado = new Font(Font.SANS_SERIF, Font.PLAIN, 10);
 
+    
+   public ConfigColor colorEstadoExito = ConfigColor.de("tema.historia_mods.color.estado.exito", new java.awt.Color(0x4C, 0xAF, 0x50));
+   public ConfigColor colorEstadoFallo = ConfigColor.de("tema.historia_mods.color.estado.fallo", new java.awt.Color(0xF4, 0x43, 0x36));
+   public ConfigColor colorResultadoAnadido = ConfigColor.de("tema.historia_mods.color.resultado.anadido", new java.awt.Color(0x2E, 0x7D, 0x32));
+   public ConfigColor colorResultadoEliminado = ConfigColor.de("tema.historia_mods.color.resultado.eliminado", new java.awt.Color(0xC6, 0x28, 0x28));
+   public ConfigColor colorBordeScroll = ConfigColor.de("tema.historia_mods.color.borde.scroll", new java.awt.Color(0xDD, 0xDD, 0xDD));
+   public ConfigColor colorFondoPanel = ConfigColor.de("tema.historia_mods.color.fondo.panel", new java.awt.Color(0xFF, 0xFF, 0xFF));
+
+    
+    
     @Override
     public String id() {
         return ID;
@@ -45,12 +55,6 @@ public class HistoriaModsGUILegacy extends HistoriaDeModsGUI {
     @Override
     public void init() {
         // Inicializar colores PRIMERO
-        colorEstadoExito = ConfigColor.de("tema.historia_mods.color.estado.exito", new java.awt.Color(0x4C, 0xAF, 0x50));
-        colorEstadoFallo = ConfigColor.de("tema.historia_mods.color.estado.fallo", new java.awt.Color(0xF4, 0x43, 0x36));
-        colorResultadoAnadido = ConfigColor.de("tema.historia_mods.color.resultado.anadido", new java.awt.Color(0x2E, 0x7D, 0x32));
-        colorResultadoEliminado = ConfigColor.de("tema.historia_mods.color.resultado.eliminado", new java.awt.Color(0xC6, 0x28, 0x28));
-        colorBordeScroll = ConfigColor.de("tema.historia_mods.color.borde.scroll", new java.awt.Color(0xDD, 0xDD, 0xDD));
-        colorFondoPanel = ConfigColor.de("tema.historia_mods.color.fondo.panel", new java.awt.Color(0xFF, 0xFF, 0xFF));
 
         // Configuración básica de la ventana
         setTitle(MonitorDePID.idioma.historialDeMods());

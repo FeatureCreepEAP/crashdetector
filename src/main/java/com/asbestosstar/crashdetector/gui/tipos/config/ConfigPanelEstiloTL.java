@@ -16,14 +16,19 @@ public class ConfigPanelEstiloTL<PrincipalGUI> extends ConfigPanel<PrincipalGUI>
     
     public static String ID = "tl_estilo_config";
     
+    
+    public ConfigPanelEstiloTL() {
+   colorFondo = ConfigColor.de("config.color.fondo", Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()));
+    colorTexto = ConfigColor.de("config.color.texto", Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
+   colorBoton = ConfigColor.de("config.color.boton", Config.convertirAColor(Config.obtenerInstancia().obtenerColorBoton()));
+    colorCajaTexto = ConfigColor.de("config.color.cajaTexto", Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
+    }
+    
+    
     @Override
     public void recargarApariencia() {
         // Estilo TL: fondo oscuro con detalles brillantes
-        colorFondo = ConfigColor.de("config.color.fondo", Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()));
-        colorTexto = ConfigColor.de("config.color.texto", Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
-        colorBoton = ConfigColor.de("config.color.boton", Config.convertirAColor(Config.obtenerInstancia().obtenerColorBoton()));
-        colorCajaTexto = ConfigColor.de("config.color.cajaTexto", Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
-   
+      
         
         // Actualizar el color de fondo del panel
         setBackground(colorFondo.obtener());

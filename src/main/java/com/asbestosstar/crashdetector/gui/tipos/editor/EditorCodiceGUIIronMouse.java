@@ -11,6 +11,21 @@ public class EditorCodiceGUIIronMouse extends EditorFirmasGUI {
 
     public static String ID = "ironmouse";
 
+
+    
+    public EditorCodiceGUIIronMouse() {
+       rosaFondo = ConfigColor.de("tema.ironmouse.editor.color.fondo", new java.awt.Color(250, 230, 245));
+      rosaSuave = ConfigColor.de("tema.ironmouse.editor.color.rosa.suave", new java.awt.Color(255, 204, 235));
+       moradoAcento = ConfigColor.de("tema.ironmouse.editor.color.morado.acento", new java.awt.Color(186, 85, 211));
+      textoOscuro = ConfigColor.de("tema.ironmouse.editor.color.texto.oscuro", new java.awt.Color(40, 35, 45));
+       bordeSuave = ConfigColor.de("tema.ironmouse.editor.color.borde.suave", new java.awt.Color(220, 180, 210));
+     fondoCampo = ConfigColor.de("tema.ironmouse.editor.color.fondo.campo", new java.awt.Color(255, 255, 255));
+
+    }
+    
+    
+    
+    
     @Override
     public String id() {
         return ID;
@@ -31,12 +46,6 @@ public class EditorCodiceGUIIronMouse extends EditorFirmasGUI {
     @Override
     public void recargarApariencia() {
         // Inicializar colores
-        rosaFondo = ConfigColor.de("tema.ironmouse.editor.color.fondo", new java.awt.Color(250, 230, 245));
-        rosaSuave = ConfigColor.de("tema.ironmouse.editor.color.rosa.suave", new java.awt.Color(255, 204, 235));
-        moradoAcento = ConfigColor.de("tema.ironmouse.editor.color.morado.acento", new java.awt.Color(186, 85, 211));
-        textoOscuro = ConfigColor.de("tema.ironmouse.editor.color.texto.oscuro", new java.awt.Color(40, 35, 45));
-        bordeSuave = ConfigColor.de("tema.ironmouse.editor.color.borde.suave", new java.awt.Color(220, 180, 210));
-        fondoCampo = ConfigColor.de("tema.ironmouse.editor.color.fondo.campo", new java.awt.Color(255, 255, 255));
 
         // Aplicar estilos
         aplicarEstilos();

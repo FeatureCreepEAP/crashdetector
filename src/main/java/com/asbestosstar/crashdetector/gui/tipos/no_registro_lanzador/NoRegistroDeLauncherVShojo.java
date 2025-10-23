@@ -39,15 +39,17 @@ public class NoRegistroDeLauncherVShojo extends NoRegistroLanzadorGUI {
 
 	public static String ID = "vshojo";
 
-	private ConfigColor colorFondoVentana;
+	private ConfigColor colorFondoVentana = ConfigColor.de("tema.vshojo.no_registro.color.fondo.ventana",
+			Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()));
+	private ConfigColor colorTexto = ConfigColor.de("tema.vshojo.no_registro.color.texto",
+			Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
+	private ConfigColor colorBoton = ConfigColor.de("tema.vshojo.no_registro.color.boton",
+			Config.convertirAColor(Config.obtenerInstancia().obtenerColorBoton()));
+	private ConfigColor colorCajaTexto = ConfigColor.de("tema.vshojo.no_registro.color.caja_texto",
+			Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
+	private ConfigColor colorEnlace = ConfigColor.de("tema.vshojo.no_registro.color.enlace",
+			Config.convertirAColor(Config.obtenerInstancia().obtenerColorEnlace()));
 
-	private ConfigColor colorTexto;
-
-	private ConfigColor colorBoton;
-
-	private ConfigColor colorCajaTexto;
-
-	private ConfigColor colorEnlace;
 
 	@Override
 	public void init() {
@@ -59,16 +61,6 @@ public class NoRegistroDeLauncherVShojo extends NoRegistroLanzadorGUI {
 	public void preparar(JFrame blanco, Instant instant) {
 		this.instant = instant;
 		// Inicializar colores PRIMERO
-		colorFondoVentana = ConfigColor.de("tema.vshojo.no_registro.color.fondo.ventana",
-				Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()));
-		colorTexto = ConfigColor.de("tema.vshojo.no_registro.color.texto",
-				Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
-		colorBoton = ConfigColor.de("tema.vshojo.no_registro.color.boton",
-				Config.convertirAColor(Config.obtenerInstancia().obtenerColorBoton()));
-		colorCajaTexto = ConfigColor.de("tema.vshojo.no_registro.color.caja_texto",
-				Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
-		colorEnlace = ConfigColor.de("tema.vshojo.no_registro.color.enlace",
-				Config.convertirAColor(Config.obtenerInstancia().obtenerColorEnlace()));
 
 		// Configuración básica de diálogo
 		setModal(true);
