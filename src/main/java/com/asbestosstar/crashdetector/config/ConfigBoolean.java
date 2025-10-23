@@ -1,11 +1,14 @@
 package com.asbestosstar.crashdetector.config;
 
+import java.util.function.Supplier;
+
 import com.asbestosstar.crashdetector.Config;
 
 public class ConfigBoolean implements ElementoConfig<Boolean> {
 
 	private final String clave;
-
+public Supplier<String> nombre;
+	
 	private ConfigBoolean(String clave) {
 		this.clave = clave;
 	}
@@ -65,5 +68,21 @@ public class ConfigBoolean implements ElementoConfig<Boolean> {
 		}
 
 		return new ConfigBoolean(clave);
+	}
+
+	@Override
+	public String obtenerNombreParaMostrar() {
+		// TODO Auto-generated method stub
+		if(nombre!=null && nombre.get()!=null) {
+			return nombre.get();
+		}
+		
+		return clave;
+	}
+
+	@Override
+	public void establecerNombreParaMostrar(Supplier<String> nombre) {
+		// TODO Auto-generated method stub
+		this.nombre=nombre;
 	}
 }

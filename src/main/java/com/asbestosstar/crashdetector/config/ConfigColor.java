@@ -1,11 +1,15 @@
 package com.asbestosstar.crashdetector.config;
 
 import java.awt.Color;
+import java.util.function.Supplier;
+
 import com.asbestosstar.crashdetector.Config;
 
 public class ConfigColor implements ElementoConfig<Color> {
 
 	private final String clave;
+	public Supplier<String> nombre;
+
 
 	private ConfigColor(String clave) {
 		this.clave = clave;
@@ -64,5 +68,21 @@ public class ConfigColor implements ElementoConfig<Color> {
 		}
 
 		return new ConfigColor(clave);
+	}
+
+	@Override
+	public String obtenerNombreParaMostrar() {
+		// TODO Auto-generated method stub
+		if(nombre!=null && nombre.get()!=null) {
+			return nombre.get();
+		}
+		
+		return clave;
+	}
+
+	@Override
+	public void establecerNombreParaMostrar(Supplier<String> nombre) {
+		// TODO Auto-generated method stub
+		this.nombre=nombre;
 	}
 }
