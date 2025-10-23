@@ -63,6 +63,7 @@ import com.asbestosstar.crashdetector.gui.elementos.ComboIdiomasConIcono;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.arbol.ArbolDeModsGUIHamu;
 import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartir;
+import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartirLegacy;
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanel;
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanelEstiloTL;
 import com.asbestosstar.crashdetector.gui.tipos.editor.EditorCodiceGUIIronMouse;
@@ -582,7 +583,9 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		botonConfiguracion = añadirBotonImagen(panelBotonesDerecha,
 				MonitorDePID.carpeta.resolve("imagenes/boton_config.png").toString(), MonitorDePID.idioma.config());
 
-		btnCompartir.addActionListener(e -> new DialogoCompartir(this, tiempoFallo).setVisible(true));
+		
+		DialogoCompartir comp = TipoGUI.DIALOGO_COMPARTIR.obtenerGUIPredeterminado(DialogoCompartirLegacy.ID, () -> new DialogoCompartirLegacy());
+		btnCompartir.addActionListener(e -> comp.preperar(tiempoFallo));
 		btnActualizar.addActionListener(e -> recargar());
 		btnAgregar.addActionListener(e -> anadirRegistro());
 		btnArchivos.addActionListener(e -> abrirDirectorioEnExplorador());

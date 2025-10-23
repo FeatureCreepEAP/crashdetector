@@ -30,6 +30,7 @@ import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.grepr.BusquedaArchivos;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.arbol.ArbolDeModsGUIHamu;
+import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartirLegacy;
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanelEstiloTL;
 import com.asbestosstar.crashdetector.gui.tipos.editor.EditorCodiceGUIIronMouse;
 import com.asbestosstar.crashdetector.gui.tipos.editor_plantilla.EditorPlantillaModioNoche;
@@ -318,6 +319,7 @@ public class MonitorDePID {
 		TipoGUI.ARBOL_DE_MODS.registrarGUI(ArbolDeModsGUIHamu.ID, () -> new ArbolDeModsGUIHamu());
 		TipoGUI.EDITOR_PLANTILLA.registrarGUI(EditorPlantillaPredeterminado.ID, () -> new EditorPlantillaPredeterminado());
 		TipoGUI.EDITOR_PLANTILLA.registrarGUI(EditorPlantillaModioNoche.ID, () -> new EditorPlantillaModioNoche());
+		TipoGUI.DIALOGO_COMPARTIR.registrarGUI(DialogoCompartirLegacy.ID, () -> new DialogoCompartirLegacy());
 
 		
 		

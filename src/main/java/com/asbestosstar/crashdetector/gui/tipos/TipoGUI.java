@@ -12,7 +12,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.arbol.ArbolDeModsGUI;
-import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartirGUI;
+import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartir;
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanel;
 import com.asbestosstar.crashdetector.gui.tipos.editor.EditorFirmasGUI;
 import com.asbestosstar.crashdetector.gui.tipos.editor_plantilla.EditorPlantilla;
@@ -110,7 +110,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 	/**
 	 * Diálogo Compartir
 	 */
-	public static TipoGUI<DialogoCompartirGUI> DIALOGO_COMPARTIR = new TipoGUI<DialogoCompartirGUI>() {
+	public static TipoGUI<DialogoCompartir> DIALOGO_COMPARTIR = new TipoGUI<DialogoCompartir>() {
 		@Override
 		public String id() {
 			return "dialogo_compartir";
@@ -122,13 +122,13 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		}
 
 		@Override
-		public void registrarGUI(String id, Supplier<DialogoCompartirGUI> gui) {
-			DialogoCompartirGUI.GUIS.put(id, gui);
+		public void registrarGUI(String id, Supplier<DialogoCompartir> gui) {
+			DialogoCompartir.GUIS.put(id, gui);
 		}
 
 		@Override
-		public Map<String, Supplier<DialogoCompartirGUI>> obtenerGUIs() {
-			return DialogoCompartirGUI.GUIS;
+		public Map<String, Supplier<DialogoCompartir>> obtenerGUIs() {
+			return DialogoCompartir.GUIS;
 		}
 	};
 

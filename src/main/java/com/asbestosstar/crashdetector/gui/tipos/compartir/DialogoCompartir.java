@@ -27,6 +27,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultCellEditor;
@@ -56,21 +57,23 @@ import com.asbestosstar.crashdetector.api_sito_registro.APIdeSitioDeRegistro;
 import com.asbestosstar.crashdetector.api_sito_registro.DemasiadoGrande;
 import com.asbestosstar.crashdetector.api_sito_registro.ErrorConPublicar;
 import com.asbestosstar.crashdetector.api_sito_registro.NoAPIdeRegistro;
+import com.asbestosstar.crashdetector.config.ConfigColor;
+import com.asbestosstar.crashdetector.config.ElementoConfig;
+import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
+import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 
-public class DialogoCompartir extends JDialog {
-	private final DefaultTableModel modeloTabla;
-	private final JTextField campoEndpoint;
-	private final JComboBox<String> comboAPI;
-	private final JComboBox<String> comboSitioRegistro;
-	private final JCheckBox checkAnonimizar;
+public abstract class DialogoCompartir extends JDialog implements CrashDetectorGUI {
+	public DefaultTableModel modeloTabla;
+	public JTextField campoEndpoint;
+	public JComboBox<String> comboAPI;
+	public JComboBox<String> comboSitioRegistro;
+	public JCheckBox checkAnonimizar;
 	public Instant instant;
-	private final JTextField campoEnlaceReporte;
-	private final JButton botonCompartirTodos;
+	public JTextField campoEnlaceReporte;
+	public JButton botonCompartirTodos;
 
-	public DialogoCompartir(JFrame padre, Instant instant) {
-		super(padre, "Compartir Registros", true);
+	public void preperar(Instant instant) {
 		setSize(900, 700);
-		setLocationRelativeTo(padre);
 		this.instant = instant;
 
 		JPanel panelPrincipal = new JPanel(new BorderLayout(10, 10));
@@ -262,6 +265,7 @@ public class DialogoCompartir extends JDialog {
 
 		add(panelPrincipal);
 		cargarConsolas();
+		this.setVisible(true);
 	}
 
 	// --- Utilidades de UI (evitan crashes AWT y permiten reintentar) ---
@@ -491,7 +495,7 @@ public class DialogoCompartir extends JDialog {
 	private static class URLEditorRenderer extends JLabel implements TableCellRenderer {
 		public URLEditorRenderer() {
 			setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
-			setForeground(Color.BLUE.darker());
+			setForeground(ConfigColor.de("dialogo_compartir_enlace", Color.BLUE.darker()).obtener());
 			addMouseListener(new java.awt.event.MouseAdapter() {
 				@Override
 				public void mouseClicked(java.awt.event.MouseEvent e) {
@@ -535,4 +539,32 @@ public class DialogoCompartir extends JDialog {
 			}
 		}
 	}
+
+	public static Map<String, Supplier<DialogoCompartir>> GUIS = new HashMap<String, Supplier<DialogoCompartir>>();
+
+	@Override
+	public TipoGUI<DialogoCompartir> tipo() {
+		return TipoGUI.DIALOGO_COMPARTIR;
+	}
+
+	@Override
+	public void recargarApariencia() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void init() {
+		// TODO ¡NO USAR, usar preperar!
+
+	}
+
+	@Override
+	public List<ElementoConfig> obtenerElementosConfigs() {
+		// TODO Auto-generated method stub
+		ArrayList<ElementoConfig> ret = new ArrayList<>();
+		ret.add(ConfigColor.de("dialogo_compartir_enlace", Color.BLUE.darker()));
+		return ret;
+	}
+
 }
