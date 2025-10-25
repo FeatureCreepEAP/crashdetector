@@ -4302,4 +4302,57 @@ public class Espanol implements Idioma {
 	           + "'>Faltan clases de AzureLib. Si ya tienes AzureLib, por favor instala una versión anterior al 8 de octubre de 2025. Era común. Si no tienes AzureLib, instala la versión actual.</b>";
 	}
 
+	@Override
+	public String errorHealightINT() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "El mod <code>healight</code> está causando un error crítico: <code>java.lang.NoSuchFieldError: INT</code>. "
+	           + "Este error ocurre porque el mod intenta acceder a un campo que ya no existe en la version de MCForge 47.10 Minecraft 1.20+. "
+	           + "El juego no puede iniciar debido a este problema.</b>";
+	}
+
+	@Override
+	public String solucionHealightINT() {
+	    return "• Elimina o actualiza el mod <code>healight</code>. "
+	           + "La versión actual no es compatible con MinecraftForge 47.10 para 1.20.1. "
+	           + "Busca una versión más reciente del mod o considera usar una alternativa.";
+	}
+
+	@Override
+	public String nombreErrorHealightINT() {
+	    return "Error crítico: healight - Campo 'INT' no encontrado";
+	}
+	
+	@Override
+	public String errorMetodoAbstractoNoImplementadoDetallado(String clase, String metodo, String interfaz, String origen) {
+	    String colorError = config.obtenerColorError();
+	    StringBuilder sb = new StringBuilder();
+	    sb.append("<b style='color:#").append(colorError).append(";'>")
+	      .append("La clase <code>").append(clase).append("</code> no implementa el método requerido:<br>")
+	      .append("<code>").append(metodo).append("</code><br>")
+	      .append("de la interfaz <code>").append(interfaz).append("</code>.");
+
+	    if (!origen.isEmpty()) {
+	        sb.append("<br><br>Mod o archivo sospechoso: <code>").append(origen).append("</code>.");
+	    }
+
+	    sb.append("</b>");
+	    return sb.toString();
+	}
+
+	@Override
+	public String solucionMetodoAbstractoNoImplementado() {
+	    return "• Este error ocurre cuando un mod implementa una interfaz pero omite un método obligatorio. "
+	           + "Actualiza <b>ambos mods</b> involucrados (el que define la interfaz y el que la implementa). "
+	           + "Si no sabes cuáles son, busca los nombres que aparecen en el mensaje de error.";
+	}
+
+	@Override
+	public String nombreErrorMetodoAbstractoNoImplementado() {
+	    return "Método de interfaz no implementado (AbstractMethodError)";
+	}
+	
+	
+	
+	
+	
 }

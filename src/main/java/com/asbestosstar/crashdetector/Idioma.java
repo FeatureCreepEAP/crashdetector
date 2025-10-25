@@ -1488,6 +1488,20 @@ public interface Idioma {
 
 	public String faltar_de_clases_azurelib();
 
+	public String errorHealightINT();
+
+	public String solucionHealightINT();
+
+	public String nombreErrorHealightINT();
+
+	public String errorMetodoAbstractoNoImplementadoDetallado(String claseConcreta, String firmaMetodo, String interfaz,
+			String origen);
+
+	public String solucionMetodoAbstractoNoImplementado();
+
+	public String nombreErrorMetodoAbstractoNoImplementado();
+
+	
 	// public String advertenciaMalwareFalso();
 
 }

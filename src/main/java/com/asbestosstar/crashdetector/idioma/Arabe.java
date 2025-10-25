@@ -3598,7 +3598,54 @@ public class Arabe implements Idioma {
 	           + "'>تتعذر العثور على بعض كلاسات AzureLib. إذا كنت تمتلك بالفعل AzureLib، يُرجى تثبيت إصدار سابق من AzureLib قبل 8 أكتوبر 2025. كان هذا شائعاً. إذا لم يكن لديك AzureLib، فثبّت الإصدار الحالي.</b>";
 	}
 	
+	@Override
+	public String errorHealightINT() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "التعديل <code>healight</code> يتسبب في خطأ حرج: <code>java.lang.NoSuchFieldError: INT</code>. "
+	           + "يحدث هذا الخطأ لأن التعديل يحاول الوصول إلى حقل لم يعد موجودًا في إصدار MCForge 47.10 وما فوق من ماينكرافت 1.20. "
+	           + "لا يمكن للعبة البدء بسبب هذه المشكلة.</b>";
+	}
+
+	@Override
+	public String solucionHealightINT() {
+	    return "• احذف أو حدّث التعديل <code>healight</code>. "
+	           + "الإصدار الحالي غير متوافق مع MinecraftForge 47.10 لإصدار 1.20.1. "
+	           + "ابحث عن إصدار أحدث من التعديل أو فكّر في استخدام بديل.";
+	}
+
+	@Override
+	public String nombreErrorHealightINT() {
+	    return "خطأ حرج: healight - الحقل 'INT' غير موجود";
+	}
 	
+	@Override
+	public String errorMetodoAbstractoNoImplementadoDetallado(String clase, String metodo, String interfaz, String origen) {
+	    String colorError = config.obtenerColorError();
+	    StringBuilder sb = new StringBuilder();
+	    sb.append("<b style='color:#").append(colorError).append(";'>")
+	      .append("الصف <code>").append(clase).append("</code> لا يُنفذ الطريقة المطلوبة:<br>")
+	      .append("<code>").append(metodo).append("</code><br>")
+	      .append("من الواجهة <code>").append(interfaz).append("</code>.");
+
+	    if (!origen.isEmpty()) {
+	        sb.append("<br><br>التعديل أو الملف المشبوه: <code>").append(origen).append("</code>.");
+	    }
+
+	    sb.append("</b>");
+	    return sb.toString();
+	}
+
+	@Override
+	public String solucionMetodoAbstractoNoImplementado() {
+	    return "• يحدث هذا الخطأ عندما يُعدّل تعديلاً واجهة لكنه يتجاهل طريقة إلزامية. "
+	           + "قم بتحديث <b>كلا التعديلين</b> المتورطين (الذي يعرّف الواجهة والذي يُنفّذها). "
+	           + "إذا كنت لا تعرف أيهما، ابحث عن الأسماء الظاهرة في رسالة الخطأ.";
+	}
+
+	@Override
+	public String nombreErrorMetodoAbstractoNoImplementado() {
+	    return "طريقة واجهة غير منفذة (AbstractMethodError)";
+	}
 	
 	
 	

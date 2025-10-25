@@ -3623,4 +3623,55 @@ public class Esperanto implements Idioma {
 	           + "'>Mankas klasoj de AzureLib. Se vi jam havas AzureLib, bonvolu instali version antaŭ la 8-a de oktobro 2025. Tio estis komune. Se vi ne havas AzureLib, instalu la aktualan version.</b>";
 	}
 
+	@Override
+	public String errorHealightINT() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "La aldonaĵo <code>healight</code> kaŭzas gravan eraron: <code>java.lang.NoSuchFieldError: INT</code>. "
+	           + "Tiu eraro okazas ĉar la aldonaĵo provas aliri kampon kiu jam ne ekzistas en MCForge 47.10 por Minecraft 1.20+. "
+	           + "La ludo ne povas lanĉiĝi pro tiu problemo.</b>";
+	}
+
+	@Override
+	public String solucionHealightINT() {
+	    return "• Forigu aŭ ĝisdatigu la aldonaĵon <code>healight</code>. "
+	           + "La nuna versio ne estas kompatibla kun MinecraftForge 47.10 por 1.20.1. "
+	           + "Serĉu pli novan version de la aldonaĵo aŭ pripensu uzon de alternativo.";
+	}
+
+	@Override
+	public String nombreErrorHealightINT() {
+	    return "Grava eraro: healight - Kampo 'INT' ne trovita";
+	}
+	
+	@Override
+	public String errorMetodoAbstractoNoImplementadoDetallado(String clase, String metodo, String interfaz, String origen) {
+	    String colorError = config.obtenerColorError();
+	    StringBuilder sb = new StringBuilder();
+	    sb.append("<b style='color:#").append(colorError).append(";'>")
+	      .append("La klaso <code>").append(clase).append("</code> ne realigas la postulitan metodon:<br>")
+	      .append("<code>").append(metodo).append("</code><br>")
+	      .append("el la interfaceto <code>").append(interfaz).append("</code>.");
+
+	    if (!origen.isEmpty()) {
+	        sb.append("<br><br>Ĉefa afero aŭ dosiero: <code>").append(origen).append("</code>.");
+	    }
+
+	    sb.append("</b>");
+	    return sb.toString();
+	}
+
+	@Override
+	public String solucionMetodoAbstractoNoImplementado() {
+	    return "• Tiu eraro okazas kiam aldonaĵo realigas interfaceton sed preterprenas devigan metodon. "
+	           + "Ĝisdatigu <b>ambaŭn aldonaĵojn</b> implikitajn (tiun kiun difinas la interfaceton kai tiun kiun ĝin realigas). "
+	           + "Se vi ne scias kiuj estas, serĉu la nomojn videblajn en la erarmesaĝo.";
+	}
+
+	@Override
+	public String nombreErrorMetodoAbstractoNoImplementado() {
+	    return "Nerealigita Interfaceta Metodo (AbstractMethodError)";
+	}
+	
+	
+	
 }

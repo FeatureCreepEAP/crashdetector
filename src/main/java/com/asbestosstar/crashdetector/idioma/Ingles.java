@@ -3669,5 +3669,56 @@ public class Ingles implements Idioma {
 	           + "'>Missing AzureLib classes. If you already have AzureLib, please install a version from before 8 October 2025. This was common. If you don't have AzureLib, install the current version.</b>";
 	}
 	
+	@Override
+	public String errorHealightINT() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "The mod <code>healight</code> is causing a critical error: <code>java.lang.NoSuchFieldError: INT</code>. "
+	           + "This error occurs because the mod is trying to access a field that no longer exists in MCForge 47.10 for Minecraft 1.20+. "
+	           + "The game cannot start due to this issue.</b>";
+	}
+
+	@Override
+	public String solucionHealightINT() {
+	    return "• Remove or update the <code>healight</code> mod. "
+	           + "The current version is not compatible with MinecraftForge 47.10 for 1.20.1. "
+	           + "Look for a newer version of the mod or consider using an alternative.";
+	}
+
+	@Override
+	public String nombreErrorHealightINT() {
+	    return "Critical Error: healight - Field 'INT' not found";
+	}
+	
+	@Override
+	public String errorMetodoAbstractoNoImplementadoDetallado(String clase, String metodo, String interfaz, String origen) {
+	    String colorError = config.obtenerColorError();
+	    StringBuilder sb = new StringBuilder();
+	    sb.append("<b style='color:#").append(colorError).append(";'>")
+	      .append("The class <code>").append(clase).append("</code> does not implement the required method:<br>")
+	      .append("<code>").append(metodo).append("</code><br>")
+	      .append("from interface <code>").append(interfaz).append("</code>.");
+
+	    if (!origen.isEmpty()) {
+	        sb.append("<br><br>Suspect mod or file: <code>").append(origen).append("</code>.");
+	    }
+
+	    sb.append("</b>");
+	    return sb.toString();
+	}
+
+	@Override
+	public String solucionMetodoAbstractoNoImplementado() {
+	    return "• This error occurs when a mod implements an interface but omits a required method. "
+	           + "Update <b>both mods</b> involved (the one defining the interface and the one implementing it). "
+	           + "If you don't know which ones, look for the names shown in the error message.";
+	}
+
+	@Override
+	public String nombreErrorMetodoAbstractoNoImplementado() {
+	    return "Interface Method Not Implemented (AbstractMethodError)";
+	}
+	
+	
+	
 	
 }

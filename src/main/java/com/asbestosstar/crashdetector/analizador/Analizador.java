@@ -22,6 +22,7 @@ import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorConfiguraci
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorConfiguracionServicioIDependencyLocator;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorDependenciaModFaltante;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorDiscrepanciaModID;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorHealightINT;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorJEIPluginFallido;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorMetadataModsTomlFaltante;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorRegistroSuscriptoresAutomaticos;
@@ -86,6 +87,7 @@ import com.asbestosstar.crashdetector.analizador.general.ErrorCaracteresInvalido
 import com.asbestosstar.crashdetector.analizador.general.ErrorContextoOpenGL;
 import com.asbestosstar.crashdetector.analizador.general.ErrorDeEnlaceInsatisfecho;
 import com.asbestosstar.crashdetector.analizador.general.ErrorDeMonitorLWJGL;
+import com.asbestosstar.crashdetector.analizador.general.ErrorMetodoAbstractoNoImplementado;
 import com.asbestosstar.crashdetector.analizador.general.ErrorMetodoInexistente;
 import com.asbestosstar.crashdetector.analizador.general.FaltaModuleJPMS;
 import com.asbestosstar.crashdetector.analizador.general.FaltasClases;
@@ -217,6 +219,12 @@ public class Analizador {
 		verificaciones.add(new ErrorConfiguracionServicioIDependencyLocator());
 		verificaciones.add(new ErrorCampoInexistente());
 		verificaciones.add(new ErrorMetodoInexistente());
+		
+		verificaciones.add(new ErrorHealightINT());
+		verificaciones.add(new ErrorMetodoAbstractoNoImplementado());
+
+		
+		
 
 		verificaciones.addAll(CargadorDeCodice.cargarVerificaciones());
 		CrashDetectorLogger.log("Numero de Codices " + String.valueOf(CargadorDeCodice.cargarVerificaciones().size()));

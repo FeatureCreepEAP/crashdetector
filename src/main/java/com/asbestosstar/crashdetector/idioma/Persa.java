@@ -3615,5 +3615,55 @@ public class Persa implements Idioma {
 	}
 	
 	
+	@Override
+	public String errorHealightINT() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "مود <code>healight</code> باعث خطای بحرانی می‌شود: <code>java.lang.NoSuchFieldError: INT</code>. "
+	           + "این خطا زمانی رخ می‌دهد که مود سعی کند به فیلدی دسترسی پیدا کند که در نسخه MCForge 47.10 برای ماینکرفت 1.20+ دیگر وجود ندارد. "
+	           + "به دلیل این مشکل، بازی قابل راه‌اندازی نیست.</b>";
+	}
+
+	@Override
+	public String solucionHealightINT() {
+	    return "• مود <code>healight</code> را حذف یا به‌روزرسانی کنید. "
+	           + "نسخه فعلی با MinecraftForge 47.10 برای 1.20.1 سازگار نیست. "
+	           + "نسخه جدیدتری از مود را پیدا کنید یا از یک جایگزین استفاده کنید.";
+	}
+
+	@Override
+	public String nombreErrorHealightINT() {
+	    return "خطای بحرانی: healight - فیلد 'INT' یافت نشد";
+	}
+	
+	@Override
+	public String errorMetodoAbstractoNoImplementadoDetallado(String clase, String metodo, String interfaz, String origen) {
+	    String colorError = config.obtenerColorError();
+	    StringBuilder sb = new StringBuilder();
+	    sb.append("<b style='color:#").append(colorError).append(";'>")
+	      .append("کلاس <code>").append(clase).append("</code> متد الزامی زیر را پیاده‌سازی نکرده است:<br>")
+	      .append("<code>").append(metodo).append("</code><br>")
+	      .append("از رابط <code>").append(interfaz).append("</code>.");
+
+	    if (!origen.isEmpty()) {
+	        sb.append("<br><br>مود یا فایل مشکوک: <code>").append(origen).append("</code>.");
+	    }
+
+	    sb.append("</b>");
+	    return sb.toString();
+	}
+
+	@Override
+	public String solucionMetodoAbstractoNoImplementado() {
+	    return "• این خطا زمانی رخ می‌دهد که یک مود یک رابط را پیاده‌سازی کند اما یک متد ضروری را فراموش کند. "
+	           + "<b>هر دو مود</b> درگیر را به‌روزرسانی کنید (مودی که رابط را تعریف می‌کند و مودی که آن را پیاده‌سازی می‌کند). "
+	           + "اگر نمی‌دانید کدام هستند، به نام‌هایی که در پیام خطا نشان داده شده نگاه کنید.";
+	}
+
+	@Override
+	public String nombreErrorMetodoAbstractoNoImplementado() {
+	    return "متد رابط پیاده‌سازی نشده (AbstractMethodError)";
+	}
+	
+	
 	
 }

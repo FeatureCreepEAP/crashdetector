@@ -3529,5 +3529,57 @@ public class Japones implements Idioma {
 	    return "<b style='color:#" + config.obtenerColorError()
 	           + "'>AzureLibのクラスが不足しています。すでにAzureLibを導入している場合は、2025年10月8日以前のバージョンをインストールしてください。これはよくある問題です。AzureLibを導入していない場合は、最新バージョンをインストールしてください。</b>";
 	}
+	@Override
+	public String errorHealightINT() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "MOD <code>healight</code> が重大なエラーを引き起こしています: <code>java.lang.NoSuchFieldError: INT</code>。 "
+	           + "このエラーは、MODがMCForge 47.10のMinecraft 1.20+では存在しなくなったフィールドにアクセスしようとしたために発生します。 "
+	           + "この問題のため、ゲームを起動できません。</b>";
+	}
+
+	@Override
+	public String solucionHealightINT() {
+	    return "• MOD <code>healight</code> を削除または更新してください。 "
+	           + "現在のバージョンは1.20.1用のMinecraftForge 47.10と互換性がありません。 "
+	           + "MODの最新版を探すか、代替案の使用を検討してください。";
+	}
+
+	@Override
+	public String nombreErrorHealightINT() {
+	    return "重大なエラー：healight - フィールド 'INT' が見つかりません";
+	}
+	
+	@Override
+	public String errorMetodoAbstractoNoImplementadoDetallado(String clase, String metodo, String interfaz, String origen) {
+	    String colorError = config.obtenerColorError();
+	    StringBuilder sb = new StringBuilder();
+	    sb.append("<b style='color:#").append(colorError).append(";'>")
+	      .append("クラス <code>").append(clase).append("</code> が必須メソッドを実装していません：<br>")
+	      .append("<code>").append(metodo).append("</code><br>")
+	      .append("インターフェース <code>").append(interfaz).append("</code> から。");
+
+	    if (!origen.isEmpty()) {
+	        sb.append("<br><br>問題のあるMODまたはファイル: <code>").append(origen).append("</code>。");
+	    }
+
+	    sb.append("</b>");
+	    return sb.toString();
+	}
+
+	@Override
+	public String solucionMetodoAbstractoNoImplementado() {
+	    return "• このエラーは、MODがインターフェースを実装しているが必須メソッドを省略した場合に発生します。"
+	           + "<b>両方のMOD</b> を更新してください（インターフェースを定義しているものとそれを実装しているもの）。"
+	           + "どれかわからない場合は、エラーメッセージに表示されている名前を確認してください。";
+	}
+
+	@Override
+	public String nombreErrorMetodoAbstractoNoImplementado() {
+	    return "インターフェースのメソッドが未実装 (AbstractMethodError)";
+	}
+	
+	
+	
+	
 	
 }

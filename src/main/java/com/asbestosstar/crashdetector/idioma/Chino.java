@@ -3471,5 +3471,55 @@ public class Chino implements Idioma {
 	           + "'>缺少 AzureLib 的类。如果你已安装 AzureLib，请安装 2025 年 10 月 8 日之前的版本（此问题较为常见）。若未安装 AzureLib，请安装当前最新版本。</b>";
 	}
 	
+	@Override
+	public String errorHealightINT() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "模组 <code>healight</code> 导致严重错误：<code>java.lang.NoSuchFieldError: INT</code>。"
+	           + "此错误是因为该模组试图访问在 MCForge 47.10 及更高版本的 Minecraft 1.20+ 中已不存在的字段。"
+	           + "由于此问题，游戏无法启动。</b>";
+	}
+
+	@Override
+	public String solucionHealightINT() {
+	    return "• 删除或更新 <code>healight</code> 模组。"
+	           + "当前版本与适用于 1.20.1 的 MinecraftForge 47.10 不兼容。"
+	           + "寻找该模组的更新版本，或考虑使用替代方案。";
+	}
+
+	@Override
+	public String nombreErrorHealightINT() {
+	    return "严重错误：healight - 找不到 'INT' 字段";
+	}
+	
+	@Override
+	public String errorMetodoAbstractoNoImplementadoDetallado(String clase, String metodo, String interfaz, String origen) {
+	    String colorError = config.obtenerColorError();
+	    StringBuilder sb = new StringBuilder();
+	    sb.append("<b style='color:#").append(colorError).append(";'>")
+	      .append("类 <code>").append(clase).append("</code> 未实现必需的方法：<br>")
+	      .append("<code>").append(metodo).append("</code><br>")
+	      .append("来自接口 <code>").append(interfaz).append("</code>。");
+
+	    if (!origen.isEmpty()) {
+	        sb.append("<br><br>可疑的模组或文件：<code>").append(origen).append("</code>。");
+	    }
+
+	    sb.append("</b>");
+	    return sb.toString();
+	}
+
+	@Override
+	public String solucionMetodoAbstractoNoImplementado() {
+	    return "• 此错误发生在某个模组实现了接口但遗漏了必需方法时。"
+	           + "请更新<b>两个相关模组</b>（定义接口的和实现接口的）。"
+	           + "如果不清楚是哪些模组，请查看错误消息中出现的名称。";
+	}
+
+	@Override
+	public String nombreErrorMetodoAbstractoNoImplementado() {
+	    return "接口方法未实现 (AbstractMethodError)";
+	}
+	
+	
 	
 }

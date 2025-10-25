@@ -3635,4 +3635,52 @@ public class Ruso implements Idioma {
 	           + "'>Отсутствуют классы AzureLib. Если у вас уже установлен AzureLib, установите версию до 8 октября 2025 года. Это была распространённая проблема. Если у вас нет AzureLib, установите актуальную версию.</b>";
 	}
 	
+	@Override
+	public String errorHealightINT() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "Мод <code>healight</code> вызывает критическую ошибку: <code>java.lang.NoSuchFieldError: INT</code>. "
+	           + "Эта ошибка возникает, потому что мод пытается получить доступ к полю, которое больше не существует в MCForge 47.10 для Minecraft 1.20+. "
+	           + "Из-за этой проблемы игра не может запуститься.</b>";
+	}
+
+	@Override
+	public String solucionHealightINT() {
+	    return "• Удалите или обновите мод <code>healight</code>. "
+	           + "Текущая версия несовместима с MinecraftForge 47.10 для 1.20.1. "
+	           + "Найдите более новую версию мода или рассмотрите использование альтернативы.";
+	}
+
+	@Override
+	public String nombreErrorHealightINT() {
+	    return "Критическая ошибка: healight — Поле 'INT' не найдено";
+	}
+	@Override
+	public String errorMetodoAbstractoNoImplementadoDetallado(String clase, String metodo, String interfaz, String origen) {
+	    String colorError = config.obtenerColorError();
+	    StringBuilder sb = new StringBuilder();
+	    sb.append("<b style='color:#").append(colorError).append(";'>")
+	      .append("Класс <code>").append(clase).append("</code> не реализует требуемый метод:<br>")
+	      .append("<code>").append(metodo).append("</code><br>")
+	      .append("из интерфейса <code>").append(interfaz).append("</code>.");
+
+	    if (!origen.isEmpty()) {
+	        sb.append("<br><br>Подозрительный мод или файл: <code>").append(origen).append("</code>.");
+	    }
+
+	    sb.append("</b>");
+	    return sb.toString();
+	}
+
+	@Override
+	public String solucionMetodoAbstractoNoImplementado() {
+	    return "• Эта ошибка возникает, когда мод реализует интерфейс, но пропускает обязательный метод. "
+	           + "Обновите <b>оба мода</b>, участвующих в этом (тот, что определяет интерфейс, и тот, что его реализует). "
+	           + "Если вы не знаете, какие именно, посмотрите имена в сообщении об ошибке.";
+	}
+
+	@Override
+	public String nombreErrorMetodoAbstractoNoImplementado() {
+	    return "Метод интерфейса не реализован (AbstractMethodError)";
+	}
+	
 }

@@ -3525,5 +3525,56 @@ public class Coreano implements Idioma {
 	           + "'>AzureLib 클래스가 누락되었습니다. 이미 AzureLib이 있다면, 2025년 10월 8일 이전 버전을 설치하세요. 흔히 발생하는 문제입니다. AzureLib이 없다면 최신 버전을 설치하세요.</b>";
 	}
 	
+	@Override
+	public String errorHealightINT() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "모드 <code>healight</code> 가 치명적인 오류를 발생시키고 있습니다: <code>java.lang.NoSuchFieldError: INT</code>. "
+	           + "이 오류는 모드가 MCForge 47.10 이상의 마인크래프트 1.20+ 버전에서는 더 이상 존재하지 않는 필드에 접근하려 할 때 발생합니다. "
+	           + "이 문제로 인해 게임을 시작할 수 없습니다.</b>";
+	}
+
+	@Override
+	public String solucionHealightINT() {
+	    return "• 모드 <code>healight</code> 를 삭제하거나 업데이트하세요. "
+	           + "현재 버전은 1.20.1용 MinecraftForge 47.10과 호환되지 않습니다. "
+	           + "모드의 최신 버전을 찾거나 대체 옵션을 고려하세요.";
+	}
+
+	@Override
+	public String nombreErrorHealightINT() {
+	    return "치명적 오류: healight - 'INT' 필드를 찾을 수 없음";
+	}
+	
+	@Override
+	public String errorMetodoAbstractoNoImplementadoDetallado(String clase, String metodo, String interfaz, String origen) {
+	    String colorError = config.obtenerColorError();
+	    StringBuilder sb = new StringBuilder();
+	    sb.append("<b style='color:#").append(colorError).append(";'>")
+	      .append("클래스 <code>").append(clase).append("</code>가 다음 필수 메서드를 구현하지 않았습니다:<br>")
+	      .append("<code>").append(metodo).append("</code><br>")
+	      .append("인터페이스 <code>").append(interfaz).append("</code>에서 정의됨.");
+
+	    if (!origen.isEmpty()) {
+	        sb.append("<br><br>의심되는 모드 또는 파일: <code>").append(origen).append("</code>.");
+	    }
+
+	    sb.append("</b>");
+	    return sb.toString();
+	}
+
+	@Override
+	public String solucionMetodoAbstractoNoImplementado() {
+	    return "• 이 오류는 모드가 인터페이스를 구현하지만 필수 메서드를 생략할 때 발생합니다. "
+	           + "<b>두 모드 모두</b> 업데이트하세요 (인터페이스를 정의하는 모드와 이를 구현하는 모드). "
+	           + "어떤 모드인지 모르겠다면 오류 메시지에 나타난 이름을 찾아보세요.";
+	}
+
+	@Override
+	public String nombreErrorMetodoAbstractoNoImplementado() {
+	    return "구현되지 않은 인터페이스 메서드 (AbstractMethodError)";
+	}
+	
+	
+	
 
 }
