@@ -3893,7 +3893,7 @@ public class Ruso implements Idioma {
 	@Override
 	public String modIncompatibleConCargadorActivo(List<String> mods) {
 	    StringBuilder sb = new StringBuilder();
-	    sb.append("<b style='color:#").append(config.obtenerColorError()).append(";'>")
+	    sb.append("<b style='color:#").append(config.obtenerColorAdvertencia()).append(";'>")
 	      .append("Найдены моды, не принадлежащие ни одной активной платформе (Forge, Fabric и т.д.):<ul>");
 	    for (String mod : mods) {
 	        sb.append("<li><code>").append(mod).append("</code></li>");

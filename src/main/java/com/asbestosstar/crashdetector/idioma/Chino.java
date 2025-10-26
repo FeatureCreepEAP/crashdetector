@@ -3729,7 +3729,7 @@ public class Chino implements Idioma {
 	@Override
 	public String modIncompatibleConCargadorActivo(List<String> mods) {
 	    StringBuilder sb = new StringBuilder();
-	    sb.append("<b style='color:#").append(config.obtenerColorError()).append(";'>")
+	    sb.append("<b style='color:#").append(config.obtenerColorAdvertencia()).append(";'>")
 	      .append("发现了一些不属于任何激活平台（Forge、Fabric等）的模组：<ul>");
 	    for (String mod : mods) {
 	        sb.append("<li><code>").append(mod).append("</code></li>");

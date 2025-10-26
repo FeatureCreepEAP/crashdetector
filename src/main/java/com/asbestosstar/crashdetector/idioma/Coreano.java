@@ -3783,7 +3783,7 @@ public class Coreano implements Idioma {
 	@Override
 	public String modIncompatibleConCargadorActivo(List<String> mods) {
 	    StringBuilder sb = new StringBuilder();
-	    sb.append("<b style='color:#").append(config.obtenerColorError()).append(";'>")
+	    sb.append("<b style='color:#").append(config.obtenerColorAdvertencia()).append(";'>")
 	      .append("활성화된 플랫폼(Forge, Fabric 등)에 속하지 않는 모드가 발견되었습니다:<ul>");
 	    for (String mod : mods) {
 	        sb.append("<li><code>").append(mod).append("</code></li>");

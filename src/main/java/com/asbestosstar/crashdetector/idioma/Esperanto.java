@@ -3882,7 +3882,7 @@ public class Esperanto implements Idioma {
 	@Override
 	public String modIncompatibleConCargadorActivo(List<String> mods) {
 	    StringBuilder sb = new StringBuilder();
-	    sb.append("<b style='color:#").append(config.obtenerColorError()).append(";'>")
+	    sb.append("<b style='color:#").append(config.obtenerColorAdvertencia()).append(";'>")
 	      .append("Malsukcesis trovi aldonaĵojn kiuj ne apartenas al iu aktiva platformo (Forge, Fabric, ktp.):<ul>");
 	    for (String mod : mods) {
 	        sb.append("<li><code>").append(mod).append("</code></li>");

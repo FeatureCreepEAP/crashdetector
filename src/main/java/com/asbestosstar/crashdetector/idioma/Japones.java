@@ -3787,7 +3787,7 @@ public class Japones implements Idioma {
 	@Override
 	public String modIncompatibleConCargadorActivo(List<String> mods) {
 	    StringBuilder sb = new StringBuilder();
-	    sb.append("<b style='color:#").append(config.obtenerColorError()).append(";'>")
+	    sb.append("<b style='color:#").append(config.obtenerColorAdvertencia()).append(";'>")
 	      .append("アクティブなプラットフォーム（Forge、Fabricなど）に属さないMODが見つかりました：<ul>");
 	    for (String mod : mods) {
 	        sb.append("<li><code>").append(mod).append("</code></li>");
