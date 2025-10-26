@@ -3807,6 +3807,51 @@ public class Coreano implements Idioma {
 	public String nombreModIncompatibleConCargadorActivo() {
 	    return "활성 로더와 호환되지 않는 모드";
 	}
+	@Override
+	public String errorCreacionModeloFallida(String modid, String nombreModelo) {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "모델 <code>" + modid + ":" + nombreModelo + "</code>을(를) 생성할 수 없습니다.<br>"
+	           + "이는 모드 <code>" + modid + "</code>의 리소스가 손상되었거나 누락되었거나 "
+	           + "사용 중인 마인크래프트 버전과 호환되지 않음을 의미합니다.</b>";
+	}
+
+	@Override
+	public String solucionErrorCreacionModeloFallida() {
+	    return "• <b>모드를 업데이트하세요</b>, 인스턴스와 호환되는 최신 버전으로.<br>"
+	           + "• 개발 중이거나 사용자 정의된 버전을 사용 중이라면 공식 버전으로 되돌리세요.<br>"
+	           + "• JAR 파일이 손상되지 않았는지 확인하세요(다시 설치).<br>"
+	           + "• 문제가 지속되면 이 로그를 첨부하여 모드 제작자에게 오류를 보고하세요.";
+	}
+
+	@Override
+	public String nombreErrorCreacionModeloFallida() {
+	    return "리소스 모델 생성 실패";
+	}
+	
+	@Override
+	public String conflictoMoonlightIceberg() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "<code>Moonlight</code>과 <code>Iceberg</code> 모드 사이에 치명적인 충돌이 감지되었습니다.<br>"
+	           + "두 모드 모두 자원 재로딩 시스템을 호환되지 않는 방식으로 등록하려 하며, "
+	           + "이는 유효한 그래픽 컨텍스트가 없어 OpenGL 오류를 유발합니다.<br>"
+	           + "이 문제는 Fabric 모드 어댑터를 포함하는 Forge 버전을 사용할 때 흔히 발생합니다.</b>";
+	}
+
+	@Override
+	public String solucionConflictoMoonlightIceberg() {
+	    return "• <b>두 모드 모두</b> 현재 Forge 버전과 호환되는 최신 버전으로 업데이트하세요.<br>"
+	           + "• 문제가 지속되면 <b>일시적으로 Iceberg를 제거하세요</b>. Moonlight은 다른 많은 모드의 핵심 종속성인 경우가 많습니다.<br>"
+	           + "• 중복되거나 혼합된 Forge/Fabric 버전을 설치하지 않았는지 확인하세요.<br>"
+	           + "• 다른 모드(Supplementaries, Citadel 등)가 이미 Iceberg 기능을 내장하고 있는지 확인하세요.";
+	}
+
+	@Override
+	public String nombreConflictoMoonlightIceberg() {
+	    return "치명적 충돌: Moonlight 대 Iceberg (OpenGL 컨텍스트 없음)";
+	}
+	
+	
+	
 	
 	
 	

@@ -3811,6 +3811,49 @@ public class Japones implements Idioma {
 	public String nombreModIncompatibleConCargadorActivo() {
 	    return "アクティブローダーと互換性のないMOD";
 	}
+	@Override
+	public String errorCreacionModeloFallida(String modid, String nombreModelo) {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "モデル <code>" + modid + ":" + nombreModelo + "</code> の作成に失敗しました。<br>"
+	           + "これは、モド <code>" + modid + "</code> のリソースが破損しているか、不足しているか、"
+	           + "または使用中のMinecraftバージョンと互換性がないことを示しています。</b>";
+	}
+
+	@Override
+	public String solucionErrorCreacionModeloFallida() {
+	    return "• <b>MODを更新してください</b>、あなたのインスタンスと互換性のある最新バージョンへ。<br>"
+	           + "• 開発版やカスタムビルドを使用している場合は、公式リリースに戻してください。<br>"
+	           + "• JARファイルが破損していないか確認してください（再インストール）。<br>"
+	           + "• 問題が解決しない場合は、このログを添えてMOD制作者にエラーを報告してください。";
+	}
+
+	@Override
+	public String nombreErrorCreacionModeloFallida() {
+	    return "リソースモデルの作成に失敗";
+	}
+	@Override
+	public String conflictoMoonlightIceberg() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "<code>Moonlight</code> と <code>Iceberg</code> モドの間で重大な競合が検出されました。<br>"
+	           + "両方とも互換性のない方法でリソース再読み込みシステムを登録しようとしており、"
+	           + "有効なグラフィックコンテキストがないため、OpenGLエラーが発生します。<br>"
+	           + "これは、Fabric MOD用アダプターを含むForgeバージョンを使用している場合に一般的な問題です。</b>";
+	}
+
+	@Override
+	public String solucionConflictoMoonlightIceberg() {
+	    return "• <b>両方のMODを</b> あなたのForgeバージョンと互換性のある最新版に更新してください。<br>"
+	           + "• 問題が解決しない場合は、<b>一時的にIcebergを削除してください</b>。Moonlightは他の多くのMODにとって重要な依存関係であることが多いからです。<br>"
+	           + "• これらのMODの重複または混在したForge/Fabricバージョンをインストールしていないことを確認してください。<br>"
+	           + "• 別のMOD（Supplementaries、Citadelなど）がすでにIcebergの機能を内部に組み込んでいるかどうかを確認してください。";
+	}
+
+	@Override
+	public String nombreConflictoMoonlightIceberg() {
+	    return "重大な衝突：Moonlight 対 Iceberg (OpenGLコンテキストなし)";
+	}
+	
+	
 	
 	
 	

@@ -3907,5 +3907,47 @@ public class Esperanto implements Idioma {
 	    return "Aldonaĵo nekompatibla kun aktiva ŝarĝilo";
 	}
 	
+	@Override
+	public String errorCreacionModeloFallida(String modid, String nombreModelo) {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "Malsukcesis krei modelon <code>" + modid + ":" + nombreModelo + "</code>.<br>"
+	           + "Tio indikas ke la aldonaĵo <code>" + modid + "</code> havas difektitajn, mankantajn "
+	           + "aŭ nekompatiblajn rimedojn por via versio de Minecraft.</b>";
+	}
+
+	@Override
+	public String solucionErrorCreacionModeloFallida() {
+	    return "• <b>Ĝisdatigu la aldonaĵon</b> al la plej nova versio kompata kun via instanco.<br>"
+	           + "• Se vi uzas evoluantan aŭ ĉefan version, revenu al la oficiala versio.<br>"
+	           + "• Kontrolu ke la dosiero JAR ne estas difektita (reinstalu ĝin).<br>"
+	           + "• Se daŭras la problemo, raportu la eraron al la verkinto de la aldonaĵo inkluzive ĉi tiun protokolon.";
+	}
+
+	@Override
+	public String nombreErrorCreacionModeloFallida() {
+	    return "Malsukcesis krei rimedan modelon";
+	}
+	@Override
+	public String conflictoMoonlightIceberg() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "Detektis gravan konflikton inter la aldonaĵoj <code>Moonlight</code> kai <code>Iceberg</code>.<br>"
+	           + "Ambaŭ provas registri rimedajn reŝarĝajn sistemojn nekompatibile, "
+	           + "kiu kaŭzas malsukceson de OpenGL pro foresto de valida grafika konteksto.<br>"
+	           + "Tiu problemo estas ofta dum uzado de versioj de Forge kiuj inkludas adaptilojn por Fabric-aldonaĵoj.</b>";
+	}
+
+	@Override
+	public String solucionConflictoMoonlightIceberg() {
+	    return "• <b>Ĝisdatigu ambaŭn aldonaĵojn</b> al iliaj lastaj versioj kompatoblaj kun via versio de Forge.<br>"
+	           + "• Se daŭras la problemo, <b>forigu tempore Iceberg</b>, ĉar Moonlight kutime estas pli grava dependeco por aliaj aldonaĵoj.<br>"
+	           + "• Certigu ke vi ne havas duoblan aŭ miksitajn versiojn de Forge/Fabric por tiuj ĉi aldonaĵoj.<br>"
+	           + "• Kontrolu ĉu iu alia aldonaĵo (kiel Supplementaries, Citadel, ktp.) jam enhavas funkciecon de Iceberg ene.";
+	}
+
+	@Override
+	public String nombreConflictoMoonlightIceberg() {
+	    return "Grava konflikto: Moonlight kontraŭ Iceberg (OpenGL sen konteksto)";
+	}
+	
 	
 }

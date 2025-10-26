@@ -3754,6 +3754,48 @@ public class Chino implements Idioma {
 	    return "模组与当前加载器不兼容";
 	}
 	
+	@Override
+	public String errorCreacionModeloFallida(String modid, String nombreModelo) {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "无法创建模型 <code>" + modid + ":" + nombreModelo + "</code>。<br>"
+	           + "这表明模组 <code>" + modid + "</code> 的资源已损坏、缺失，"
+	           + "或与你当前的 Minecraft 版本不兼容。</b>";
+	}
+
+	@Override
+	public String solucionErrorCreacionModeloFallida() {
+	    return "• <b>更新该模组</b>至与你的实例兼容的最新版本。<br>"
+	           + "• 如果你使用的是开发版或自定义版本，请切换回官方发布版。<br>"
+	           + "• 检查 JAR 文件是否损坏（重新安装）。<br>"
+	           + "• 如果问题仍然存在，请将此日志附上并报告给模组作者。";
+	}
+
+	@Override
+	public String nombreErrorCreacionModeloFallida() {
+	    return "创建资源模型失败";
+	}
+	@Override
+	public String conflictoMoonlightIceberg() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "检测到 <code>Moonlight</code> 和 <code>Iceberg</code> 模组之间存在严重冲突。<br>"
+	           + "两者都试图以不兼容的方式注册资源重载系统，"
+	           + "导致因缺少有效的图形上下文而引发 OpenGL 错误。<br>"
+	           + "当使用包含 Fabric 模组适配器的 Forge 版本时，此问题很常见。</b>";
+	}
+
+	@Override
+	public String solucionConflictoMoonlightIceberg() {
+	    return "• <b>将两个模组都更新</b>到与你当前 Forge 版本兼容的最新版本。<br>"
+	           + "• 如果问题仍然存在，<b>暂时移除 Iceberg</b>，因为 Moonlight 通常是其他模组的关键依赖。<br>"
+	           + "• 确保没有重复或混合安装这些模组的 Forge/Fabric 版本。<br>"
+	           + "• 检查是否有其他模组（如 Supplementaries、Citadel 等）已内置了 Iceberg 的功能。";
+	}
+
+	@Override
+	public String nombreConflictoMoonlightIceberg() {
+	    return "严重冲突：Moonlight 与 Iceberg 冲突 (OpenGL 无上下文)";
+	}
+	
 	
 	
 	

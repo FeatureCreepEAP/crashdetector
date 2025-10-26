@@ -1563,6 +1563,18 @@ public interface Idioma {
 
 	public String nombreModIncompatibleConCargadorActivo();
 
+	public String errorCreacionModeloFallida(String modid, String nombreModelo);
+
+	public String solucionErrorCreacionModeloFallida();
+
+	public String nombreErrorCreacionModeloFallida();
+
+	public String solucionConflictoMoonlightIceberg();
+
+	public String nombreConflictoMoonlightIceberg();
+
+	public String conflictoMoonlightIceberg();
+
 	
 	// public String advertenciaMalwareFalso();
 

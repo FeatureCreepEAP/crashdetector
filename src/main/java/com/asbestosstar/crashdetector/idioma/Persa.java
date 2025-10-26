@@ -3897,7 +3897,47 @@ public class Persa implements Idioma {
 	public String nombreModIncompatibleConCargadorActivo() {
 	    return "مد با بارگیرنده فعال ناسازگار است";
 	}
-	
+	@Override
+	public String errorCreacionModeloFallida(String modid, String nombreModelo) {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "ایجاد مدل <code>" + modid + ":" + nombreModelo + "</code> ناموفق بود.<br>"
+	           + "این نشان می‌دهد که مود <code>" + modid + "</code> دارای منابع خراب، گم شده، "
+	           + "یا ناسازگار با نسخه ماینکرفت شماست.</b>";
+	}
+
+	@Override
+	public String solucionErrorCreacionModeloFallida() {
+	    return "• <b>مود را به آخرین نسخه سازگار با نمونه خود به‌روزرسانی کنید</b>.<br>"
+	           + "• اگر از نسخه توسعه یا سفارشی استفاده می‌کنید، به نسخه رسمی برگردید.<br>"
+	           + "• مطمئن شوید فایل JAR خراب نیست (دوباره نصب کنید).<br>"
+	           + "• اگر مشکل باقی ماند، خطای را همراه با این لاگ به نویسنده مود گزارش دهید.";
+	}
+
+	@Override
+	public String nombreErrorCreacionModeloFallida() {
+	    return "خطا در ایجاد مدل منبع";
+	}
+	@Override
+	public String conflictoMoonlightIceberg() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "تضاد بحرانی بین مودهای <code>Moonlight</code> و <code>Iceberg</code> تشخیص داده شده است.<br>"
+	           + "هر دو سعی در ثبت سیستم‌های بازبارگیری منابع به شکل ناسازگار دارند، "
+	           + "که باعث خرابی OpenGL به دلیل عدم وجود یک کانتکست گرافیکی معتبر می‌شود.<br>"
+	           + "این مشکل زمانی رایج است که از نسخه‌های Forge که شامل آداپتورهای مود Fabric هستند استفاده می‌کنید.</b>";
+	}
+
+	@Override
+	public String solucionConflictoMoonlightIceberg() {
+	    return "• <b>هر دو مود را به جدیدترین نسخه‌های سازگار با نسخه Forge خود به‌روزرسانی کنید</b>.<br>"
+	           + "• اگر مشکل باقی ماند، <b>به طور موقت Iceberg را حذف کنید</b>، زیرا Moonlight معمولاً یک وابستگی مهم‌تر برای مودهای دیگر است.<br>"
+	           + "• مطمئن شوید نسخه‌های تکراری یا ترکیبی Forge/Fabric از این مودها ندارید.<br>"
+	           + "• بررسی کنید آیا مود دیگری (مثل Supplementaries، Citadel و غیره) قبلاً عملکرد Iceberg را داخلی دارد.";
+	}
+
+	@Override
+	public String nombreConflictoMoonlightIceberg() {
+	    return "تضاد بحرانی: Moonlight در مقابل Iceberg (OpenGL بدون کانتکست)";
+	}
 	
 	
 	

@@ -3881,6 +3881,51 @@ public class Arabe implements Idioma {
 	public String nombreModIncompatibleConCargadorActivo() {
 	    return "تعديل غير متوافق مع المحمل النشط";
 	}
+	@Override
+	public String errorCreacionModeloFallida(String modid, String nombreModelo) {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "تعذر إنشاء النموذج <code>" + modid + ":" + nombreModelo + "</code>.<br>"
+	           + "هذا يشير إلى أن التعديل <code>" + modid + "</code> يحتوي على موارد تالفة أو ناقصة "
+	           + "أو غير متوافقة مع إصدار ماينكرافت الخاص بك.</b>";
+	}
+
+	@Override
+	public String solucionErrorCreacionModeloFallida() {
+	    return "• <b>حدّث التعديل</b> إلى أحدث إصدار متوافق مع بيئة اللعب الخاصة بك.<br>"
+	           + "• إذا كنت تستخدم إصدارًا تجريبيًا أو معدلًا، فعد إلى الإصدار الرسمي.<br>"
+	           + "• تأكد من أن ملف JAR ليس تالفًا (أعد تثبيته).<br>"
+	           + "• إذا استمرت المشكلة، قم بالإبلاغ عن الخطأ لمطوّر التعديل مع تضمين هذا السجل.";
+	}
+
+	@Override
+	public String nombreErrorCreacionModeloFallida() {
+	    return "فشل في إنشاء نموذج المورد";
+	}
+	
+	@Override
+	public String conflictoMoonlightIceberg() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "تم اكتشاف تعارض حرج بين التعديلات <code>Moonlight</code> و <code>Iceberg</code>.<br>"
+	           + "كلاهما يحاول تسجيل أنظمة إعادة تحميل الموارد بشكل غير متوافق، "
+	           + "مما يؤدي إلى فشل في OpenGL بسبب عدم وجود سياق رسومي صالح.<br>"
+	           + "هذه المشكلة شائعة عند استخدام إصدارات من Forge تتضمن محولات لتعديلات Fabric.</b>";
+	}
+
+	@Override
+	public String solucionConflictoMoonlightIceberg() {
+	    return "• <b>حدّث كلا التعديلين</b> إلى أحدث إصداراتهما المتوافقة مع إصدار Forge الخاص بك.<br>"
+	           + "• إذا استمرت المشكلة، <b>احذف مؤقتًا Iceberg</b>، لأن Moonlight غالبًا ما يكون تبعية أساسية للعديد من التعديلات الأخرى.<br>"
+	           + "• تأكد من عدم وجود نسخ مكررة أو مختلطة من Forge/Fabric لهذه التعديلات.<br>"
+	           + "• تحقق مما إذا كان أي تعديل آخر (مثل Supplementaries أو Citadel) يتضمن بالفعل وظائف Iceberg داخليًا.";
+	}
+
+	@Override
+	public String nombreConflictoMoonlightIceberg() {
+	    return "تعارض حرج: Moonlight مقابل Iceberg (فشل OpenGL - لا يوجد سياق)";
+	}
+	
+	
+	
 	
 	
 	

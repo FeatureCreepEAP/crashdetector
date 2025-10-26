@@ -13,6 +13,7 @@ import com.asbestosstar.crashdetector.analizador.apps.minecraft.AuditorTransform
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.AzureGeckoLibInicializoPronto;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.BloqueTeselado;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ConflictoDeIDsMinecraft;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ConflictoMoonlightIceberg;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ConflictoMultiworldRendimiento;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.CursedConsola;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.EarlyWindow;
@@ -23,6 +24,7 @@ import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorCargaNBTMun
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorConfiguracionConnectorCorrupta;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorConfiguracionMCForge;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorConfiguracionServicioIDependencyLocator;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorCreacionModeloFallida;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorDependenciaModFaltante;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorDiscrepanciaModID;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorHealightINT;
@@ -243,6 +245,8 @@ public class Analizador {
 		verificaciones.add(new ErrorBlockItemNuloCreate());
 
 		verificaciones.add(new ModIncompatibleConCargadorActivo());
+		verificaciones.add(new ErrorCreacionModeloFallida());
+		verificaciones.add(new ConflictoMoonlightIceberg());
 
 		
 		

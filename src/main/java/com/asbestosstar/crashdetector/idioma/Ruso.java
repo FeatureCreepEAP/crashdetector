@@ -3917,6 +3917,47 @@ public class Ruso implements Idioma {
 	public String nombreModIncompatibleConCargadorActivo() {
 	    return "Мод несовместим с активным загрузчиком";
 	}
+	@Override
+	public String errorCreacionModeloFallida(String modid, String nombreModelo) {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "Не удалось создать модель <code>" + modid + ":" + nombreModelo + "</code>.<br>"
+	           + "Это означает, что мод <code>" + modid + "</code> имеет повреждённые, отсутствующие "
+	           + "или несовместимые ресурсы для вашей версии Minecraft.</b>";
+	}
+
+	@Override
+	public String solucionErrorCreacionModeloFallida() {
+	    return "• <b>Обновите мод</b> до последней версии, совместимой с вашим экземпляром.<br>"
+	           + "• Если вы используете сборку для разработки или кастомную, вернитесь к официальной версии.<br>"
+	           + "• Убедитесь, что файл JAR не повреждён (переустановите его).<br>"
+	           + "• Если проблема сохраняется, сообщите об ошибке автору мода, приложив этот лог.";
+	}
+
+	@Override
+	public String nombreErrorCreacionModeloFallida() {
+	    return "Не удалось создать модель ресурса";
+	}
+	@Override
+	public String conflictoMoonlightIceberg() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "Обнаружен критический конфликт между модами <code>Moonlight</code> и <code>Iceberg</code>.<br>"
+	           + "Оба пытаются зарегистрировать системы перезагрузки ресурсов несовместимым способом, "
+	           + "что приводит к сбою OpenGL из-за отсутствия валидного графического контекста.<br>"
+	           + "Эта проблема часто возникает при использовании версий Forge, включающих адаптеры для модов Fabric.</b>";
+	}
+
+	@Override
+	public String solucionConflictoMoonlightIceberg() {
+	    return "• <b>Обновите оба мода</b> до последних версий, совместимых с вашей версией Forge.<br>"
+	           + "• Если проблема сохраняется, <b>временно удалите Iceberg</b>, так как Moonlight обычно является более важной зависимостью для других модов.<br>"
+	           + "• Убедитесь, что у вас нет дублирующихся или смешанных версий Forge/Fabric этих модов.<br>"
+	           + "• Проверьте, не включает ли другой мод (например, Supplementaries, Citadel и т.д.) функциональность Iceberg внутри себя.";
+	}
+
+	@Override
+	public String nombreConflictoMoonlightIceberg() {
+	    return "Критический конфликт: Moonlight против Iceberg (OpenGL без контекста)";
+	}
 	
 	
 	
