@@ -3893,6 +3893,36 @@ public class Portuges implements Idioma {
 	public String nombreErrorBlockItemNuloCreate() {
 	    return "BlockItem nulo em addon do Create";
 	}
+	@Override
+	public String modIncompatibleConCargadorActivo(List<String> mods) {
+	    StringBuilder sb = new StringBuilder();
+	    sb.append("<b style='color:#").append(config.obtenerColorError()).append(";'>")
+	      .append("Foram encontrados mods que não pertencem a nenhuma plataforma ativa (Forge, Fabric, etc.):<ul>");
+	    for (String mod : mods) {
+	        sb.append("<li><code>").append(mod).append("</code></li>");
+	    }
+	    sb.append("</ul>Isto geralmente ocorre quando:<br>")
+	      .append("• Mods de <b>Fabric e Forge</b> são misturados na mesma pasta.<br>")
+	      .append("• Um mod é instalado para uma versão incompatível do Minecraft.<br>")
+	      .append("• O mod está corrompido ou não é um arquivo JAR válido.</b>");
+	    return sb.toString();
+	}
+
+	@Override
+	public String solucionModIncompatibleConCargadorActivo() {
+	    return "• <b>Verifique se todos os mods são para a mesma plataforma</b> (Forge <b>ou</b> Fabric, não ambos).<br>"
+	           + "• Use a <b>árvore de mods</b> para identificar qual plataforma cada arquivo é detectado.<br>"
+	           + "• Remova qualquer mod que você não reconheça ou que seja de uma plataforma diferente.<br>"
+	           + "• Se você usa um launcher como CurseForge ou Prism, certifique-se de que o perfil esteja configurado corretamente.";
+	}
+
+	@Override
+	public String nombreModIncompatibleConCargadorActivo() {
+	    return "Mod incompatível com carregador ativo";
+	}
+	
+	
+	
 	
 	
 }

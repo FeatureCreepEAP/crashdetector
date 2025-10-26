@@ -3923,6 +3923,34 @@ public class Ingles implements Idioma {
 	    return "Null BlockItem in Create addon";
 	}
 	
+	@Override
+	public String modIncompatibleConCargadorActivo(List<String> mods) {
+	    StringBuilder sb = new StringBuilder();
+	    sb.append("<b style='color:#").append(config.obtenerColorError()).append(";'>")
+	      .append("Found mods that do not belong to any active platform (Forge, Fabric, etc.):<ul>");
+	    for (String mod : mods) {
+	        sb.append("<li><code>").append(mod).append("</code></li>");
+	    }
+	    sb.append("</ul>This usually occurs when:<br>")
+	      .append("• Mods from <b>Fabric and Forge</b> are mixed in the same folder.<br>")
+	      .append("• A mod is installed for an incompatible version of Minecraft.<br>")
+	      .append("• The mod is corrupted or not a valid JAR file.</b>");
+	    return sb.toString();
+	}
+
+	@Override
+	public String solucionModIncompatibleConCargadorActivo() {
+	    return "• <b>Verify all mods are for the same platform</b> (Forge <b>or</b> Fabric, not both).<br>"
+	           + "• Use the <b>mod tree</b> to identify which platform each file is detected as.<br>"
+	           + "• Remove any mod you don't recognise or that is for a different platform.<br>"
+	           + "• If you're using a launcher like CurseForge or Prism, ensure the profile is configured correctly.";
+	}
+
+	@Override
+	public String nombreModIncompatibleConCargadorActivo() {
+	    return "Mod incompatible with active loader";
+	}
+	
 	
 	
 	

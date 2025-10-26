@@ -3854,6 +3854,34 @@ public class Arabe implements Idioma {
 	    return "عنصر كتلة فارغ في إضافة Create";
 	}
 	
+	@Override
+	public String modIncompatibleConCargadorActivo(List<String> mods) {
+	    StringBuilder sb = new StringBuilder();
+	    sb.append("<b style='color:#").append(config.obtenerColorError()).append(";'>")
+	      .append("تم العثور على تعديلات لا تنتمي إلى أي منصة نشطة (Forge، Fabric، إلخ):<ul>");
+	    for (String mod : mods) {
+	        sb.append("<li><code>").append(mod).append("</code></li>");
+	    }
+	    sb.append("</ul>يحدث هذا عادة عندما:<br>")
+	      .append("• يتم مزج تعديلات <b>Fabric و Forge</b> في نفس المجلد.<br>")
+	      .append("• يتم تثبيت تعديل لإصدار غير متوافق من ماينكرافت.<br>")
+	      .append("• التعديل تالف أو ليس ملف JAR صالحًا.</b>");
+	    return sb.toString();
+	}
+
+	@Override
+	public String solucionModIncompatibleConCargadorActivo() {
+	    return "• <b>تحقق من أن جميع التعديلات مخصصة لنفس المنصة</b> (Forge <b>أو</b> Fabric، وليس كليهما).<br>"
+	           + "• استخدم <b>هيكل التعديلات</b> لتحديد المنصة التي يكتشفها كل ملف.<br>"
+	           + "• احذف أي تعديل لا تتعرف عليه أو يكون لمنصة مختلفة.<br>"
+	           + "• إذا كنت تستخدم مشغلًا مثل CurseForge أو Prism، فتأكد من ضبط الملف الشخصي بشكل صحيح.";
+	}
+
+	@Override
+	public String nombreModIncompatibleConCargadorActivo() {
+	    return "تعديل غير متوافق مع المحمل النشط";
+	}
+	
 	
 	
 }

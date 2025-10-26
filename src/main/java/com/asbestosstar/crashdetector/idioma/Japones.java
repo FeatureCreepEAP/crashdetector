@@ -3784,6 +3784,34 @@ public class Japones implements Idioma {
 	    return "Createアドオン内のnull BlockItem";
 	}
 	
+	@Override
+	public String modIncompatibleConCargadorActivo(List<String> mods) {
+	    StringBuilder sb = new StringBuilder();
+	    sb.append("<b style='color:#").append(config.obtenerColorError()).append(";'>")
+	      .append("アクティブなプラットフォーム（Forge、Fabricなど）に属さないMODが見つかりました：<ul>");
+	    for (String mod : mods) {
+	        sb.append("<li><code>").append(mod).append("</code></li>");
+	    }
+	    sb.append("</ul>これは通常、以下のいずれかの状況で発生します：<br>")
+	      .append("• 同じフォルダ内に<b>FabricとForge</b>のMODが混在している。<br>")
+	      .append("• 非互換なバージョンのMinecraft向けMODをインストールしている。<br>")
+	      .append("• MODが破損しているか、有効なJARファイルではない。</b>");
+	    return sb.toString();
+	}
+
+	@Override
+	public String solucionModIncompatibleConCargadorActivo() {
+	    return "• <b>すべてのMODが同じプラットフォーム用であることを確認してください</b>（Forge<b>または</b>Fabric、両方ではない）。<br>"
+	           + "• <b>MODツリー</b>を使用して、各ファイルがどのプラットフォームとして検出されているかを確認してください。<br>"
+	           + "• 見慣れないMODや異なるプラットフォーム向けのMODは削除してください。<br>"
+	           + "• CurseForgeやPrismなどのランチャーを使用している場合は、プロファイルが正しく設定されていることを確認してください。";
+	}
+
+	@Override
+	public String nombreModIncompatibleConCargadorActivo() {
+	    return "アクティブローダーと互換性のないMOD";
+	}
+	
 	
 	
 	

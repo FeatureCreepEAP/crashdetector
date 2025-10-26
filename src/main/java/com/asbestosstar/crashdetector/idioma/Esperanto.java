@@ -3879,5 +3879,33 @@ public class Esperanto implements Idioma {
 	    return "Nula BlockItem en Create-aldonaĵo";
 	}
 	
+	@Override
+	public String modIncompatibleConCargadorActivo(List<String> mods) {
+	    StringBuilder sb = new StringBuilder();
+	    sb.append("<b style='color:#").append(config.obtenerColorError()).append(";'>")
+	      .append("Malsukcesis trovi aldonaĵojn kiuj ne apartenas al iu aktiva platformo (Forge, Fabric, ktp.):<ul>");
+	    for (String mod : mods) {
+	        sb.append("<li><code>").append(mod).append("</code></li>");
+	    }
+	    sb.append("</ul>Tio kutime okazas kiam:<br>")
+	      .append("• Oni miksis aldonaĵojn de <b>Fabric kai Forge</b> en la sama dosierujo.<br>")
+	      .append("• Oni instalas aldonaĵon por nekompatibla versio de Minecraft.<br>")
+	      .append("• La aldonaĵo estas difektita aŭ ne validas kiel dosiero JAR.</b>");
+	    return sb.toString();
+	}
+
+	@Override
+	public String solucionModIncompatibleConCargadorActivo() {
+	    return "• <b>Kontrolu ke ĉiuj aldonaĵoj estas por la sama platformo</b> (Forge <b>aŭ</b> Fabric, ne ambaŭ).<br>"
+	           + "• Uzu la <b>arbo de aldonaĵoj</b> por identigi kiun platformon detektas ĉiu dosiero.<br>"
+	           + "• Forigu ajnan aldonaĵon kiun vi ne rekonoas aŭ kiu estas por malsama platformo.<br>"
+	           + "• Se vi uzas lanĉilon kiel CurseForge aŭ Prism, certigu ke via profilo estas ĉefe agordita.";
+	}
+
+	@Override
+	public String nombreModIncompatibleConCargadorActivo() {
+	    return "Aldonaĵo nekompatibla kun aktiva ŝarĝilo";
+	}
+	
 	
 }

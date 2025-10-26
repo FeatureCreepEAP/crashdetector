@@ -3890,4 +3890,34 @@ public class Ruso implements Idioma {
 	    return "Null BlockItem в аддоне Create";
 	}
 	
+	@Override
+	public String modIncompatibleConCargadorActivo(List<String> mods) {
+	    StringBuilder sb = new StringBuilder();
+	    sb.append("<b style='color:#").append(config.obtenerColorError()).append(";'>")
+	      .append("Найдены моды, не принадлежащие ни одной активной платформе (Forge, Fabric и т.д.):<ul>");
+	    for (String mod : mods) {
+	        sb.append("<li><code>").append(mod).append("</code></li>");
+	    }
+	    sb.append("</ul>Это обычно происходит, когда:<br>")
+	      .append("• Моды от <b>Fabric и Forge</b> смешаны в одной папке.<br>")
+	      .append("• Установлен мод для несовместимой версии Minecraft.<br>")
+	      .append("• Мод повреждён или не является корректным JAR-файлом.</b>");
+	    return sb.toString();
+	}
+
+	@Override
+	public String solucionModIncompatibleConCargadorActivo() {
+	    return "• <b>Убедитесь, что все моды предназначены для одной платформы</b> (только Forge <b>или</b> только Fabric, а не обе сразу).<br>"
+	           + "• Используйте <b>дерево модов</b>, чтобы определить, какую платформу распознаёт каждый файл.<br>"
+	           + "• Удалите любой мод, который вы не узнаёте или который предназначен для другой платформы.<br>"
+	           + "• Если вы используете лаунчер, например CurseForge или Prism, убедитесь, что профиль настроен правильно.";
+	}
+
+	@Override
+	public String nombreModIncompatibleConCargadorActivo() {
+	    return "Мод несовместим с активным загрузчиком";
+	}
+	
+	
+	
 }

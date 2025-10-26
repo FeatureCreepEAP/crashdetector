@@ -3780,6 +3780,34 @@ public class Coreano implements Idioma {
 	    return "Create 애드온에서의 null 블록 아이템";
 	}
 	
+	@Override
+	public String modIncompatibleConCargadorActivo(List<String> mods) {
+	    StringBuilder sb = new StringBuilder();
+	    sb.append("<b style='color:#").append(config.obtenerColorError()).append(";'>")
+	      .append("활성화된 플랫폼(Forge, Fabric 등)에 속하지 않는 모드가 발견되었습니다:<ul>");
+	    for (String mod : mods) {
+	        sb.append("<li><code>").append(mod).append("</code></li>");
+	    }
+	    sb.append("</ul>이 문제는 일반적으로 다음 경우에 발생합니다:<br>")
+	      .append("• 같은 폴더에 <b>Fabric와 Forge</b> 모드를 섞었을 때.<br>")
+	      .append("• Minecraft의 호환되지 않는 버전용 모드를 설치했을 때.<br>")
+	      .append("• 모드가 손상되었거나 유효한 JAR 파일이 아닐 때.</b>");
+	    return sb.toString();
+	}
+
+	@Override
+	public String solucionModIncompatibleConCargadorActivo() {
+	    return "• <b>모든 모드가 동일한 플랫폼용인지 확인하세요</b> (Forge <b>또는</b> Fabric, 둘 다 아님).<br>"
+	           + "• 각 파일이 어떤 플랫폼으로 인식되는지 확인하려면 <b>모드 트리</b>를 사용하세요.<br>"
+	           + "• 알 수 없거나 다른 플랫폼용인 모드는 삭제하세요.<br>"
+	           + "• CurseForge나 Prism 같은 런처를 사용한다면 프로필 설정이 올바른지 확인하세요.";
+	}
+
+	@Override
+	public String nombreModIncompatibleConCargadorActivo() {
+	    return "활성 로더와 호환되지 않는 모드";
+	}
+	
 	
 	
 	

@@ -3870,6 +3870,35 @@ public class Persa implements Idioma {
 	public String nombreErrorBlockItemNuloCreate() {
 	    return "BlockItem تهی در افزونه Create";
 	}
+	@Override
+	public String modIncompatibleConCargadorActivo(List<String> mods) {
+	    StringBuilder sb = new StringBuilder();
+	    sb.append("<b style='color:#").append(config.obtenerColorError()).append(";'>")
+	      .append("مد/هایی که به هیچ پلتفرم فعالی (مثل Forge، Fabric و غیره) تعلق ندارند پیدا شدند:<ul>");
+	    for (String mod : mods) {
+	        sb.append("<li><code>").append(mod).append("</code></li>");
+	    }
+	    sb.append("</ul>این معمولاً زمانی اتفاق می‌افتد که:<br>")
+	      .append("• مد/های <b>Fabric و Forge</b> در یک پوشه با هم مخلوط شده باشند.<br>")
+	      .append("• مد برای نسخه‌ای ناسازگار از ماینکرفت نصب شده باشد.<br>")
+	      .append("• مد خراب باشد یا یک فایل JAR معتبر نباشد.</b>");
+	    return sb.toString();
+	}
+
+	@Override
+	public String solucionModIncompatibleConCargadorActivo() {
+	    return "• <b>اطمینان حاصل کنید همه مد/ها برای یک پلتفرم هستند</b> (Forge <b>یا</b> Fabric، نه هر دو).<br>"
+	           + "• از <b>درخت مد/ها</b> برای تشخیص پلتفرم هر فایل استفاده کنید.<br>"
+	           + "• هر مدی که نمی‌شناسید یا برای پلتفرم دیگری است را حذف کنید.<br>"
+	           + "• اگر از راه‌اندازی مثل CurseForge یا Prism استفاده می‌کنید، مطمئن شوید پروفایل به درستی تنظیم شده باشد.";
+	}
+
+	@Override
+	public String nombreModIncompatibleConCargadorActivo() {
+	    return "مد با بارگیرنده فعال ناسازگار است";
+	}
+	
+	
 	
 	
 }

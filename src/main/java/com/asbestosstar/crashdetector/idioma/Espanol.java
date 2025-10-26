@@ -4559,5 +4559,33 @@ public class Espanol implements Idioma {
 	    return "BlockItem nulo en addon de Create";
 	}
 	
+	@Override
+	public String modIncompatibleConCargadorActivo(List<String> mods) {
+	    StringBuilder sb = new StringBuilder();
+	    sb.append("<b style='color:#").append(config.obtenerColorError()).append(";'>")
+	      .append("Se encontraron mods que no pertenecen a ninguna plataforma activa (Forge, Fabric, etc.):<ul>");
+	    for (String mod : mods) {
+	        sb.append("<li><code>").append(mod).append("</code></li>");
+	    }
+	    sb.append("</ul>Esto suele ocurrir cuando:<br>")
+	      .append("• Se mezclan mods de <b>Fabric y Forge</b> en la misma carpeta.<br>")
+	      .append("• Se instala un mod para una versión incompatible de Minecraft.<br>")
+	      .append("• El mod está corrupto o no es un archivo JAR válido.</b>");
+	    return sb.toString();
+	}
+
+	@Override
+	public String solucionModIncompatibleConCargadorActivo() {
+	    return "• <b>Verifica que todos los mods sean para la misma plataforma</b> (Forge <b>o</b> Fabric, no ambos).<br>"
+	           + "• Usa el <b>árbol de mods</b> para identificar qué plataforma detecta cada archivo.<br>"
+	           + "• Elimina cualquier mod que no reconozcas o que sea de una plataforma diferente.<br>"
+	           + "• Si usas un lanzador como CurseForge o Prism, asegúrate de que el perfil esté configurado correctamente.";
+	}
+
+	@Override
+	public String nombreModIncompatibleConCargadorActivo() {
+	    return "Mod incompatible con cargador activo";
+	}
+	
 	
 }

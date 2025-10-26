@@ -1557,6 +1557,12 @@ public interface Idioma {
 
 	public String nombreErrorBlockItemNuloCreate();
 
+	public String modIncompatibleConCargadorActivo(List<String> modsIncompatibles);
+
+	public String solucionModIncompatibleConCargadorActivo();
+
+	public String nombreModIncompatibleConCargadorActivo();
+
 	
 	// public String advertenciaMalwareFalso();
 

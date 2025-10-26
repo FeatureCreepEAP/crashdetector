@@ -3726,6 +3726,34 @@ public class Chino implements Idioma {
 	    return "Create 附加模组中的空方块物品";
 	}
 	
+	@Override
+	public String modIncompatibleConCargadorActivo(List<String> mods) {
+	    StringBuilder sb = new StringBuilder();
+	    sb.append("<b style='color:#").append(config.obtenerColorError()).append(";'>")
+	      .append("发现了一些不属于任何激活平台（Forge、Fabric等）的模组：<ul>");
+	    for (String mod : mods) {
+	        sb.append("<li><code>").append(mod).append("</code></li>");
+	    }
+	    sb.append("</ul>这通常发生在以下情况：<br>")
+	      .append("• 在同一文件夹中混合了 <b>Fabric 和 Forge</b> 模组。<br>")
+	      .append("• 安装了与 Minecraft 版本不兼容的模组。<br>")
+	      .append("• 模组已损坏或不是有效的 JAR 文件。</b>");
+	    return sb.toString();
+	}
+
+	@Override
+	public String solucionModIncompatibleConCargadorActivo() {
+	    return "• <b>请确认所有模组都适用于同一平台</b>（仅 Forge <b>或</b> 仅 Fabric，不可混用）。<br>"
+	           + "• 使用<b>模组树</b>来识别每个文件对应的平台。<br>"
+	           + "• 删除任何你不认识或属于不同平台的模组。<br>"
+	           + "• 如果你使用的是 CurseForge 或 Prism 等启动器，请确保配置文件设置正确。";
+	}
+
+	@Override
+	public String nombreModIncompatibleConCargadorActivo() {
+	    return "模组与当前加载器不兼容";
+	}
+	
 	
 	
 	

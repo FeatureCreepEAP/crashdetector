@@ -30,7 +30,13 @@ public class ModIncompatibleConCargadorActivo implements Verificaciones {
     @Override
     public void verificar(Consola consola) {
         // Asegurarse de que los mods y cargadores estén cargados
-        Buscardor.cargar();
+        
+    	if(Cargador.cargadores_activados == null || Cargador.cargadores_activados.isEmpty()) {
+    		return;
+    	}
+    	
+    	
+    	Buscardor.cargar();
         
         modsIncompatibles.clear();
 
