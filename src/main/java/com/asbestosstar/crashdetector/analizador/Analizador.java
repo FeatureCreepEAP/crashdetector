@@ -101,6 +101,7 @@ import com.asbestosstar.crashdetector.analizador.general.ErrorMetodoInexistente;
 import com.asbestosstar.crashdetector.analizador.general.FaltaModuleJPMS;
 import com.asbestosstar.crashdetector.analizador.general.FaltasClases;
 import com.asbestosstar.crashdetector.analizador.general.JavaVersiones;
+import com.asbestosstar.crashdetector.analizador.general.ModIncompatibleConCargadorActivo;
 import com.asbestosstar.crashdetector.analizador.general.ModulesDuplicadosJavaModulePlatform;
 import com.asbestosstar.crashdetector.analizador.general.NoTieneMemoria;
 import com.asbestosstar.crashdetector.analizador.general.NullPointer;
@@ -241,7 +242,8 @@ public class Analizador {
 		verificaciones.add(new ErrorVoiceChatPuertoOcupado());
 		verificaciones.add(new ErrorBlockItemNuloCreate());
 
-		
+		verificaciones.add(new ModIncompatibleConCargadorActivo());
+
 		
 		
 		
@@ -252,7 +254,6 @@ public class Analizador {
 		verificaciones.add(new DifDeMods());
 
 		// TODO
-		// https://discord.com/channels/1129059589325852724/1129069799545241703/1418708211636113498
 //https://wiki.lunapixel.gg/performance-guide
 		// at
 		// com.mojang.blaze3d.vertex.BufferBuilder.handler$cdk000$iris$beforeNext(BufferBuilder.java:2173)
