@@ -47,6 +47,11 @@ public class Drivers implements Verificaciones {
 		// 2) Nouveau
 		if (contienePatronNouveau(log)) {
 			procesarProblemaNouveau();
+			
+			if (contienePatronOpenAL(log)) {
+				procesarProblemaOpenAL();
+			}
+			
 			return;
 		}
 
@@ -130,8 +135,46 @@ public class Drivers implements Verificaciones {
 				return true;
 			}
 		}
+		
+		if(contienePatronOpenAL(log)) {//A veses nouveau puede causar esta problema en mi experiencia
+			return true;
+		}
+		
+		
 		return false;
 	}
+	
+	
+	private boolean contienePatronOpenAL(String log) {
+	    // Verificamos si el log contiene "[" y "]"
+	    if (log.contains("[") && log.contains("]")) {
+	        // Buscamos el índice de los corchetes
+	        int startIdx = log.indexOf("[");
+	        int endIdx = log.indexOf("]", startIdx);
+
+	        // Comprobamos si los índices son válidos
+	        if (startIdx != -1 && endIdx != -1 && endIdx > startIdx) {
+	            // Extraemos el contenido dentro de los corchetes
+	            String contenidoDentroDeCorchetes = log.substring(startIdx + 1, endIdx);
+
+	            // Verificamos si "libopenal.so" está presente dentro de los corchetes
+	            if (contenidoDentroDeCorchetes.contains("libopenal.so")) {
+	                // Si contiene "libopenal.so", retornamos true
+	                CrashDetectorLogger.log("Patrón Nouveau encontrado: " + contenidoDentroDeCorchetes);
+	                return true;
+	            }
+	        }
+	    }
+
+	    // Si no encontramos coincidencias, retornamos false
+	    return false;
+	}
+
+
+
+	
+	
+
 
 	private void procesarProblemaGraficos() {
 		boolean esWindows = esWindows();
@@ -164,6 +207,12 @@ public class Drivers implements Verificaciones {
 
 	private void procesarProblemaNouveau() {
 		mensajes.append(MonitorDePID.idioma.problema_con_graficas_nouveau());
+		activado = true;
+	}
+	
+	private void procesarProblemaOpenAL() {
+		mensajes.append(nl);
+		mensajes.append(MonitorDePID.idioma.problema_con_openAL());
 		activado = true;
 	}
 

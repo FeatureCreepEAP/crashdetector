@@ -3578,6 +3578,212 @@ public class Japones implements Idioma {
 	    return "インターフェースのメソッドが未実装 (AbstractMethodError)";
 	}
 	
+	@Override
+	public String errorMetadataAnimacionEnServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "MODが<b>専用サーバー</b>上で<b>クライアント側</b>のクラス "
+	           + "(<code>AnimationMetadataSection</code>)を読み込もうとしていますが、これは不可能です。 "
+	           + "このエラーは、MODがクライアントとサーバーのコードを正しく分離していない場合に発生します。 "
+	           + "<code>ModernFix</code> の存在がこの問題を表面化する可能性がありますが、直接の原因ではありません。</b>";
+	}
+
+	@Override
+	public String solucionErrorMetadataAnimacionEnServidor() {
+	    return "• <b>即時対応：</b><code>ModernFix</code> を一時的に削除してサーバーが起動するか確認してください。 "
+	           + "起動できた場合、別のMODがサーバー上でクライアントクラスを読み込んでいることが原因です。<br>"
+	           + "• <b>根本的な解決策：</b>問題のあるMOD（アニメーションリソース、カスタムテクスチャ、グラフィックライブラリを使用しているMODなど）を特定し、更新または削除してください。<br>";
+	}
+
+	@Override
+	public String nombreErrorMetadataAnimacionEnServidor() {
+	    return "サーバーでクライアント側のクラスが読み込まれた (AnimationMetadataSection)";
+	}
+	
+	@Override
+	public String errorConfiguracionConnectorCorrupta() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "<code>Sinytra Connector</code> のMODの設定ファイルが破損しています。 "
+	           + "これは、ゲームの予期しない終了、書き込みエラー、またはMOD間の競合により、"
+	           + "ファイルにヌル文字 (<code>\\u0000</code>) が詰まってしまうことが原因で発生します。</b>";
+	}
+
+	@Override
+	public String solucionConfiguracionConnectorCorrupta() {
+	    return "• Minecraftインスタンスの <code>config/</code> フォルダへ移動してください。<br>"
+	           + "• connector関連のMODの設定ファイルを検索し、削除してください。<br>"
+	           + "• ゲームを再起動してください：Sinytra Connectorが新しいクリーンな設定ファイルを生成します。";
+	}
+
+	@Override
+	public String nombreErrorConfiguracionConnectorCorrupta() {
+	    return "Sinytra Connector 設定ファイル破損";
+	}
+	
+	@Override
+	public String errorJarCorruptoConNombre(String nombreJar) {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "ファイル <code>" + nombreJar + "</code> が破損しているか不完全です。<br>"
+	           + "最終的なZIPファイルのヘッダーが欠落しているため、システムはその内容を読み取れません。<br>"
+	           + "このエラーは、ダウンロードが中断された場合やランチャーの障害後に発生することが多いです。</b>";
+	}
+
+	@Override
+	public String nombreErrorJarCorruptoConNombre() {
+	    return "破損したJARファイル（特定の名前付き）";
+	}
+
+	@Override
+	public String solucionJarCorrupto() {
+	    return "• <b>破損したファイルを削除し</b>、公式サイト（CurseForge、MinecraftStorageなど）から再ダウンロードしてください。<br>"
+	           + "• CurseForge、Technic、Luna Pixelなどのランチャーを使用している場合は、"
+	           + "ファイルの整合性をより適切に確認できる<b>ATLauncher</b>または<b>Prism Launcher</b>への切り替えを検討してください。<br>"
+	           + "• ダウンロード中はインターネット接続が安定していることを確認してください。";
+	}
+	
+	@Override
+	public String errorCargaNBTMundoCorruptoConByte(String byteCorrupto) {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "NBTファイルの一つが破損しているため、ワールドを読み込めません "
+	           + "(例: <code>level.dat</code>、<code>playerdata/*.dat</code>、またはチャンクデータ)。<br>"
+	           + "具体的なエラーは: <code>UTFDataFormatException: バイト " + byteCorrupto + " 付近で不正な入力形式</code>です。<br><br>"
+	           + "<b style='color:#" + config.obtenerColorAdvertencia() + ";'>"
+	           + "⚠️ 修復を試みる前に、ワールドフォルダ全体を完全にバックアップしてください。</b><br><br>"
+	           + "破損したファイルは、<a href='https://github.com/tryashtar/nbt-studio'>NBT Studio</a>のような<b>NBTエディタ</b>を使用して修復できます。<br>"
+	           + "深刻な損傷の場合は、<b>16進数エディタ</b>(HxDなど)を使って無効なバイトを検査・修正できます "
+	           + "(ただし、NBTフォーマットに精通している場合のみ推奨)。<br>"
+	           + "最終手段として、バックアップから復元するか、<code>FTB Backup</code>などのMODが提供する<i>ワールド修復</i>機能を使用してください。</b>";
+	}
+
+	@Override
+	public String solucionErrorCargaNBTMundoCorrupto() {
+	    return "• <b>修復を試みる前に、ワールドフォルダを完全にバックアップしてください</b>。<br>"
+	           + "• NBTエディタ(NBT Studioなど)を使用して、破損したファイルを開き修正します。<br>"
+	           + "• 失敗した場合は、壊れたバイトの位置で16進数エディタでファイルを確認します。<br>"
+	           + "• 経験がなければ、最近のバックアップから復元してください。";
+	}
+
+	@Override
+	public String nombreErrorCargaNBTMundoCorrupto() {
+	    return "ワールド破損：NBTデータの読み込みエラー";
+	}
+	
+	@Override
+	public String problema_con_openAL() {
+	    return "<span style='color:#" + config.obtenerColorError()
+	           + "'>OpenALに問題があります。Nouveauドライバーが原因の場合もありますが、アプリケーションに同梱されたOpenALのバージョンがディストリビューションのものと互換性がない場合もあり、その場合はディストリ自身のOpenALを使用する必要があります。詳細な対処法は以下のガイドを参照してください：<a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>LinuxでMinecraftの音声問題を修正する方法</a>。</span>";
+	}
+	
+	@Override
+	public String errorArchivoBloqueadoPorOtroProceso() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "他のプロセスがワールドファイルをロックしているため、サーバーを起動できません。<br>"
+	           + "これは以下のいずれかの場合に発生します：<br>"
+	           + "• すでにサーバーのインスタンスが実行中です。<br>"
+	           + "• ウイルス対策ソフトやファイルエクスプローラーがワールドフォルダを開いています。<br>"
+	           + "• 前回のプロセスが正常に終了せず、ファイルがロックされたままになっています。</b>";
+	}
+
+	@Override
+	public String solucionErrorArchivoBloqueadoPorOtroProceso() {
+	    return "• <b>すべてのサーバーインスタンスを終了してください</b>（javaw.exeなどのバックグラウンドプロセスも含む）。<br>"
+	           + "• ホスティングパネル（Multicraftなど）を使用している場合は、パネルからサーバーを完全に再起動してください。<br>"
+	           + "• ファイルをブロックしている可能性がある場合は、<b>ウイルス対策ソフトを一時的に無効にしてください</b>。<br>"
+	           + "• ローカルシステムでは、ワールドフォルダを表示しているWindowsエクスプローラーのウィンドウをすべて閉じてください。<br>"
+	           + "• 問題が解決しない場合、ワールドフォルダ内の <code>session.lock</code> ファイルを手動で削除してください（別のサーバーが動作していないことを確認してから）。";
+	}
+
+	@Override
+	public String nombreErrorArchivoBloqueadoPorOtroProceso() {
+	    return "他のプロセスによってロックされたワールドファイル";
+	}
+	
+	@Override
+	public String errorClaseFinalExtendida(String claseHija, String clasePadreFinal) {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "MODがクラス <code>" + clasePadreFinal + "</code> を継承しようとしましたが、"
+	           + "このクラスは現在<b>final</b>として定義されており、継承できません。<br>"
+	           + "問題のあるクラスは：<code>" + claseHija + "</code>です。<br><br>"
+	           + "これは通常、Minecraftまたは他の基本MODの古いバージョン向けにコンパイルされたMODで発生します。"
+	           + "これらの基本MODは最近のバージョンでクラスを<code>final</code>にしています。</b>";
+	}
+
+	@Override
+	public String solucionErrorClaseFinalExtendida() {
+	    return "• <b>関係するすべてのMODを更新してください</b>。特に言及されている基本MODに関連している可能性があるMODに注意。<br>"
+	           + "• 問題が解決しない場合は、現在のMinecraftバージョンとその依存関係と互換性のあるMODのバージョンを探してください。<br>"
+	           + "• 場合によっては、子クラスを含むMODを一時的に削除することで原因を特定できます。";
+	}
+
+	@Override
+	public String nombreErrorClaseFinalExtendida() {
+	    return "finalクラスからの継承試行";
+	}
+	
+	@Override
+	public String errorRubidiumObsoletoConIris() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "<b>Rubidium</b>（Forge用のSodiumの廃止されたフォーク）を<b>IrisまたはOculus</b>と一緒に使用しています。<br>"
+	           + "最近のMinecraftバージョン（1.19.2以降）では、"
+	           + "RubidiumはSodiumの進化に追いついておらず、依存関係に問題が生じています。<br><br>"
+	           + "パフォーマンスMOD（Sodium、Rubidium、Embeddium、Bedium、Xeoniumなど）またはIris Shadersと他のMODとの間で競合がある場合にも、このエラーが発生する可能性があります。</b>";
+	}
+
+	@Override
+	public String solucionRubidiumObsoletoConIris() {
+	    return "• <code>mods</code>フォルダから<b>Rubidiumを削除してください</b>。<br>"
+	           + "• <b><a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a>をインストールしてください</b>、"
+	           + "これは1.20+でIris/Oculusをサポートする、アクティブで互換性のあるForge用Sodiumのフォークです。<br>"
+	           + "• 同時に複数のSodiumフォーク（例：RubidiumとEmbeddium）をインストールしないようにしてください。<br>"
+	           + "• IrisではなくOculusを使用している場合は、それもあなたのForgeおよびEmbeddiumのバージョンと互換性があるか確認してください。";
+	}
+
+	@Override
+	public String nombreErrorRubidiumObsoletoConIris() {
+	    return "非推奨のRubidiumとIris/Oculus併用（OptionInstanceはfinal）";
+	}
+	
+	@Override
+	public String errorVoiceChatPuertoOcupado() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "<code>Simple Voice Chat</code> MODは、UDPポートが既に使用中であるか、設定されたIPアドレスが無効なため、音声サーバーを開始できません。<br>"
+	           + "これはゲームの起動を妨げませんが、音声チャット機能が無効になります。</b>";
+	}
+
+	@Override
+	public String solucionErrorVoiceChatPuertoOcupado() {
+	    return "• <b>Minecraftの他のインスタンスや</b> UDPポート24454を使用しているアプリケーションを終了してください。<br>"
+	           + "• サーバー上で動作している場合は、<b>他のサービスが</b>そのポートを使用していないことを確認してください。<br>"
+	           + "• MODの設定 (<code>config/voicechat/</code>) で、UDPポートを空いているもの（例：24455）に変更してください。<br>"
+	           + "• カスタムIPアドレスを使用している場合は、正しいか確認するか、デフォルトを使用するために空白のままにしてください。";
+	}
+
+	@Override
+	public String nombreErrorVoiceChatPuertoOcupado() {
+	    return "ボイスチャット：UDPポートが使用中または無効なIP";
+	}
+	
+	@Override
+	public String errorBlockItemNuloCreate(String nombreBlockItem) {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "BlockItem <code>" + nombreBlockItem + "</code> がnullのブロックを参照しています。<br>"
+	           + "このエラーは通常、<b>Createのアドオン</b>（例：<code>dndecor</code>、<code>createdeco</code>）で発生し、"
+	           + "<code>Amendments</code>や<code>Moonshine</code>との競合、またはブロックの初期化ミスが原因です。<br>"
+	           + "<b>注：</b>これはAmendments自体の直接的なエラーではなく、レジストリ読み込みにおけるより深い問題の症状です。</b>";
+	}
+
+	@Override
+	public String solucionErrorBlockItemNuloCreate() {
+	    return "• <b>関連するすべてのMODを更新してください：</b>Create、Amendments、Moonshine、およびアドオン（特に<code>dndecor</code>と<code>createdeco</code>）を更新します。<br>"
+	           + "• 問題が解決しない場合、<b>Createアドオンを一時的に1つずつ削除して</b>原因を特定してください。<br>"
+	           + "• <b>AmendmentsとMoonshineが使用しているCreateおよびForgeのバージョンと互換性があるか</b>確認してください。<br>"
+	           + "• 問題のあるアドオンにベータ版または更新されたフォークがあるか確認してください。";
+	}
+
+	@Override
+	public String nombreErrorBlockItemNuloCreate() {
+	    return "Createアドオン内のnull BlockItem";
+	}
+	
 	
 	
 	

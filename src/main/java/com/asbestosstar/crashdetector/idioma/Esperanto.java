@@ -3672,6 +3672,212 @@ public class Esperanto implements Idioma {
 	    return "Nerealigita Interfaceta Metodo (AbstractMethodError)";
 	}
 	
+	@Override
+	public String errorMetadataAnimacionEnServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "Aldonaĵo provas ŝargi klason de la <b>klienta flanko</b> "
+	           + "(<code>AnimationMetadataSection</code>) sur <b>diferencitan servilon</b>, kio estas neebla. "
+	           + "Tiu eraro kutime aperas kiam aldonaĵo ne bone apartigas siajn kodon por kliento kaj servilo. "
+	           + "La ĉeesto de <code>ModernFix</code> povas malkovri tiun problemon, kvankam ĝi ne estas rektan kaŭzon.</b>";
+	}
+
+	@Override
+	public String solucionErrorMetadataAnimacionEnServidor() {
+	    return "• <b>Rapida opcio:</b> Forigu tempore <code>ModernFix</code> por konfirmi ĉu la servilo lanĉiĝas. "
+	           + "Se jes, do la problemo estas en alia aldonaĵo kiun ŝargas klientajn klasojn sur servilon.<br>"
+	           + "• <b>Daŭra solvo:</b> Identigu la kulpan aldonaĵon (serĉu aldonaĵojn kun animaciitaj rimedoj, ĉefaj teksturoj aŭ grafikaj bibliotekoj) kai ĝisdatigu aŭ forigu ĝin.<br>";
+	}
+
+	@Override
+	public String nombreErrorMetadataAnimacionEnServidor() {
+	    return "Client-side class ŝargita sur servilo (AnimationMetadataSection)";
+	}
+	
+	@Override
+	public String errorConfiguracionConnectorCorrupta() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "La agorda dosiero de <code>Sinytra Connector</code>-aldonaĵo estas difektita. "
+	           + "Tio ofte okazas kiam la dosiero plenas per nulaj signoj (<code>\\u0000</code>) "
+	           + "pro neatendita ĉesigo de la ludo, skribaj malsukcesoj aŭ aldonaĵaj konfliktoj.</b>";
+	}
+
+	@Override
+	public String solucionConfiguracionConnectorCorrupta() {
+	    return "• Iru al la dosierujon <code>config/</code> de via Minecraft-instanco.<br>"
+	           + "• Serĉu kai forigu la agordojn de connector-aldonaĵoj.<br>"
+	           + "• Restartu la ludon: Sinytra Connector estos kreinta novan, puran agordan dosieron.";
+	}
+
+	@Override
+	public String nombreErrorConfiguracionConnectorCorrupta() {
+	    return "Difektita Agordo de Sinytra Connector";
+	}
+	
+	@Override
+	public String errorJarCorruptoConNombre(String nombreJar) {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "La dosiero <code>" + nombreJar + "</code> estas difektita aŭ nekompleta.<br>"
+	           + "La sistemo ne povas legi ĝian enhavon ĉar mankas la fina kapo de la ZIP-dosiero.<br>"
+	           + "Tiu eraro kutime okazas post nepropra elŝuto aŭ malsukceso de lanĉilo.</b>";
+	}
+
+	@Override
+	public String nombreErrorJarCorruptoConNombre() {
+	    return "Difektita JAR-dosiero (kun specifa nomo)";
+	}
+
+	@Override
+	public String solucionJarCorrupto() {
+	    return "• <b>Forigu la difektitan dosieron</b> kai elŝutu ĝin denove el oficiala fonto (CurseForge, MinecraftStorage, ktp.).<br>"
+	           + "• Se vi uzas lanĉilon kiel CurseForge, Technic aŭ Luna Pixel, pripensu ŝanĝi al <b>ATLauncher</b> aŭ <b>Prism Launcher</b>, "
+	           + "kiuj pli bone kontrolas dosieran integrecon.<br>"
+	           + "• Certigu ke via interreta konekto estu stabila dum la elŝuto.";
+	}
+	
+	@Override
+	public String errorCargaNBTMundoCorruptoConByte(String byteCorrupto) {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "Ne povas ŝargi mondon ĉar unu el liaj NBT-dosieroj estas difektita "
+	           + "(ekzemple: <code>level.dat</code>, <code>playerdata/*.dat</code>, aŭ chunkoj).<br>"
+	           + "La specifa eraro estas: <code>UTFDataFormatException: malĝusta enigo apud bajto " + byteCorrupto + "</code>.<br><br>"
+	           + "<b style='color:#" + config.obtenerColorAdvertencia() + ";'>"
+	           + "⚠️ Antaŭ ol provi iun riparon, faru plenan kopion de la dosierujo de via mondo.</b><br><br>"
+	           + "Vi povas provi ripari la difektitan dosieron uzante <b>redaktilon por NBT</b> kiel <a href='https://github.com/tryashtar/nbt-studio'>NBT Studio</a>.<br>"
+	           + "Se la damaĝo estas grava, uzu <b>heksan redaktilon</b> (kiel HxD) por ekzameni kai ğustigi nevalidajn bajtojn "
+	           + "(nur se vi havas sperton pri la NBT-formato).<br>"
+	           + "Fine, vi povas restaŭri el savkopio aŭ uzi la funkcion <i>repair world</i> de aldonaĵoj kiel <code>FTB Backup</code>.</b>";
+	}
+
+	@Override
+	public String solucionErrorCargaNBTMundoCorrupto() {
+	    return "• <b>Faru plenan sekuran kopion de la mondo-dosierujo</b> antaŭ ol provi iun ajn riparon.<br>"
+	           + "• Uzu NBT-redaktilon (kiel NBT Studio) por malfermi kai ripari la difektitan dosieron.<br>"
+	           + "• Se malsukcesas, ekzamenu la dosieron per heksa redaktilo je la pozicio de la difektita bajto.<br>"
+	           + "• Se vi ne havas sperton, restaŭru el lastatempa sekura kopio.";
+	}
+
+	@Override
+	public String nombreErrorCargaNBTMundoCorrupto() {
+	    return "Difektita mondo: eraro dum ŝarĝado de NBT datumoj";
+	}
+	
+	@Override
+	public String problema_con_openAL() {
+	    return "<span style='color:#" + config.obtenerColorError()
+	           + "'>Vi havas problemon kun OpenAL. Foje peliloj Nouveau povas kaŭzi tion, sed foje la versio de OpenAL en via aplikaĵo ne estas kompatibla kun tiu en via distribuaĵo, do vi devas uzi la version el via distribuaĵo. Vidu ĉi tiun gvidilon por plia helpo: <a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>Kiel solvi sonojn en Minecraft sur Linux</a>.</span>";
+	}
+	
+	@Override
+	public String errorArchivoBloqueadoPorOtroProceso() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "La servilo ne povas lanĉiĝi ĉar dosiero de la mondo estas blokita de alia procezo.<br>"
+	           + "Tio kutime okazas se:<br>"
+	           + "• Jam ekzistas funkcianta servila instanco.<br>"
+	           + "• Antiviruso aŭ dosierumilo havas malfermitan la dosierujon de via mondo.<br>"
+	           + "• La antaŭa procezo ne ĝuste ĉesis kai lasis dosierojn blokitajn.</b>";
+	}
+
+	@Override
+	public String solucionErrorArchivoBloqueadoPorOtroProceso() {
+	    return "• <b>Fermu ĉiujn servilajn instancojn</b> (inkluzive de fono-procezoj kiel javaw.exe).<br>"
+	           + "• Se vi uzas gastigan panelon (kiel Multicraft), tute restartigu la servilon per la panelo.<br>"
+	           + "• <b>Tempe malaktivigu vian antiviruson</b> se vi suspektas ke ĝi blokas dosierojn.<br>"
+	           + "• Je lokaj sistemoj, fermu ajnan Fenestron-Eksplorilan fenestron kiun montras vian mondan dosierujon.<br>"
+	           + "• Se daŭras la problemo, mane forigu la dosieron <code>session.lock</code> ene de via monda dosierujo (nur se vi certas ke neniu alia servilo funkcias).";
+	}
+
+	@Override
+	public String nombreErrorArchivoBloqueadoPorOtroProceso() {
+	    return "Monda dosiero blokita de alia procezo";
+	}
+	
+	@Override
+	public String errorClaseFinalExtendida(String claseHija, String clasePadreFinal) {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "La aldonaĵo provis plilongigi la klason <code>" + clasePadreFinal + "</code>, "
+	           + "sed tiu ĉi klaso nun estas <b>fina</b> kai ne povas esti heredita.<br>"
+	           + "La problemeca klaso estas: <code>" + claseHija + "</code>.<br><br>"
+	           + "Tio kutime okazas kiam aldonaĵo estas kompilita por antaŭa versio de Minecraft aŭ alia baza aldonaĵo, "
+	           + "kiu markis kelkajn klason kiel <code>final</code> en lastatempaj versioj.</b>";
+	}
+
+	@Override
+	public String solucionErrorClaseFinalExtendida() {
+	    return "• <b>Ĝisdatigu ĉiujn implikitajn aldonaĵojn</b>, precipe tiujn kiuj eble rilatas al la menciita baza aldonaĵo.<br>"
+	           + "• Se daŭras la problemo, serĉu version de la aldonaĵo kompatan kun via nuna versio de Minecraft kai ties dependecoj.<br>"
+	           + "• En iuj kazoj, forigo de la aldonaĵo enhavanta la filan klason povas helpi konfirmi la kaŭzon.";
+	}
+
+	@Override
+	public String nombreErrorClaseFinalExtendida() {
+	    return "Demando pri heredo de fina klaso";
+	}
+	
+	@Override
+	public String errorRubidiumObsoletoConIris() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "Vi uzas <b>Rubidium</b> (malnovan furkilon de Sodium por Forge) kun <b>Iris aŭ Oculus</b>.<br>"
+	           + "En lastatempaj versioj de Minecraft (1.19.2+), "
+	           + "Rubidium ne sekvis la pacon de Sodium kai havas problemojn pri dependecoj.<br><br>"
+	           + "Ĉi tiu eraro ankaŭ povas okazi pro konflikto inter rendimentaj aldonaĵoj (Sodium, Rubidium, Embeddium, Bedium, Xeonium, ktp.) aŭ Iris Shaders kun alia aldonaĵo.</b>";
+	}
+
+	@Override
+	public String solucionRubidiumObsoletoConIris() {
+	    return "• <b>Forigu Rubidium</b> el via dosierujo <code>mods</code>.<br>"
+	           + "• <b>Instalu <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a></b>, "
+	           + "la aktivan kai kompatan furkilon de Sodium por Forge kiun subtenas Iris/Oculus en 1.20+.<br>"
+	           + "• Certigu ke vi ne havas pli ol unu furkilon de Sodium instalitan samtempe (ekzemple: Rubidium + Embeddium).<br>"
+	           + "• Se vi uzas Oculus anstataŭe de Iris, kontrolu ke ĝi ankaŭ estas kompata kun via versio de Forge kai Embeddium.";
+	}
+
+	@Override
+	public String nombreErrorRubidiumObsoletoConIris() {
+	    return "Malnova Rubidium kun Iris/Oculus (OptionInstance estas final)";
+	}
+	
+	@Override
+	public String errorVoiceChatPuertoOcupado() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "La aldonaĵo <code>Simple Voice Chat</code> ne povas lanĉi siajn voĉan servilon ĉar "
+	           + "la UDP-pordo jam estas uzata aŭ la agordita IP-adreso ne validas.<br>"
+	           + "Tio ne malebligas lanĉon de la ludo, sed malŝaltas la voĉan babilejan funkcion.</b>";
+	}
+
+	@Override
+	public String solucionErrorVoiceChatPuertoOcupado() {
+	    return "• <b>Fermu ajnan alian instancon de Minecraft</b> aŭ aplikaĵon kiun uzas la UDP-pordon 24454.<br>"
+	           + "• Se vi estas sur servilo, certigu ke <b>neniu alia servo</b> uzas tiun pordon.<br>"
+	           + "• En la agordoj de la aldonaĵo (<code>config/voicechat/</code>), ŝanĝu la UDP-pordon al libera (ekzemple, 24455).<br>"
+	           + "• Se vi uzas propran IP-adreson, kontrolu ke ĝi estas ĝusta aŭ lasu ĝin malplena por uzi la defaŭltan.";
+	}
+
+	@Override
+	public String nombreErrorVoiceChatPuertoOcupado() {
+	    return "Voĉa Babilejo: UDP-pordo okupita aŭ nevalida IP";
+	}
+	
+	@Override
+	public String errorBlockItemNuloCreate(String nombreBlockItem) {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "La BlockItem <code>" + nombreBlockItem + "</code> havas nulan blokon.<br>"
+	           + "Tiu eraro kutime okazas en <b>aldonaĵoj por Create</b> (kiel <code>dndecor</code>, <code>createdeco</code>) "
+	           + "kiam ekzistas konfliktoj kun <code>Amendments</code>, <code>Moonshine</code>, aŭ malĝusta komencaĵo de blokoj.<br>"
+	           + "<b>Noto:</b> Tio ne estas rekte eraro de Amendments, sed simptomo de pli profunda problemo pri registra ŝarĝado.</b>";
+	}
+
+	@Override
+	public String solucionErrorBlockItemNuloCreate() {
+	    return "• <b>Ĝisdatigu ĉiujn rilatajn aldonaĵojn:</b> Create, Amendments, Moonshine, kai ajnan aldonaĵon (precipe <code>dndecor</code> kai <code>createdeco</code>).<br>"
+	           + "• Se daŭras la problemo, <b>forigu tempore la Create-aldonaĵojn</b> unu post alia por trovi la kulpan.<br>"
+	           + "• Certigu ke <b>Amendments kai Moonshine estas kompatoblaj</b> kun via versio de Create kai Forge.<br>"
+	           + "• Kontrolu ĉu ekzistas beta-versioj aŭ aktualigitaj fork'oj de la problemaj aldonaĵoj.";
+	}
+
+	@Override
+	public String nombreErrorBlockItemNuloCreate() {
+	    return "Nula BlockItem en Create-aldonaĵo";
+	}
 	
 	
 }

@@ -1501,6 +1501,62 @@ public interface Idioma {
 
 	public String nombreErrorMetodoAbstractoNoImplementado();
 
+	public String errorMetadataAnimacionEnServidor();
+
+	public String solucionErrorMetadataAnimacionEnServidor();
+
+	public String nombreErrorMetadataAnimacionEnServidor();
+
+	public String errorConfiguracionConnectorCorrupta();
+
+	public String solucionConfiguracionConnectorCorrupta();
+
+	public String nombreErrorConfiguracionConnectorCorrupta();
+
+	public String errorJarCorruptoConNombre(String nombreJar);
+
+	public String solucionJarCorrupto();
+
+	public String nombreErrorJarCorruptoConNombre();
+
+	public String errorCargaNBTMundoCorruptoConByte(String byteCorrupto);
+
+	public String solucionErrorCargaNBTMundoCorrupto();
+
+	public String nombreErrorCargaNBTMundoCorrupto();
+
+	public String problema_con_openAL();
+
+	public String errorArchivoBloqueadoPorOtroProceso();
+
+	public String solucionErrorArchivoBloqueadoPorOtroProceso();
+
+	public String nombreErrorArchivoBloqueadoPorOtroProceso();
+
+	public String errorClaseFinalExtendida(String claseHija, String clasePadreFinal);
+
+	public String solucionErrorClaseFinalExtendida();
+
+	public String nombreErrorClaseFinalExtendida();
+
+	public String errorRubidiumObsoletoConIris();
+
+	public String solucionRubidiumObsoletoConIris();
+
+	public String nombreErrorRubidiumObsoletoConIris();
+
+	public String errorVoiceChatPuertoOcupado();
+
+	public String solucionErrorVoiceChatPuertoOcupado();
+
+	public String nombreErrorVoiceChatPuertoOcupado();
+
+	public String errorBlockItemNuloCreate(String nombreBlockItem);
+
+	public String solucionErrorBlockItemNuloCreate();
+
+	public String nombreErrorBlockItemNuloCreate();
+
 	
 	// public String advertenciaMalwareFalso();
 

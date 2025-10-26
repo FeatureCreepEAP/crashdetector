@@ -3664,6 +3664,212 @@ public class Persa implements Idioma {
 	    return "متد رابط پیاده‌سازی نشده (AbstractMethodError)";
 	}
 	
+	@Override
+	public String errorMetadataAnimacionEnServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "یک مود در حال تلاش برای بارگیری یک کلاس <b>طرف کلاینت</b> "
+	           + "(<code>AnimationMetadataSection</code>) روی یک <b>سرور اختصاصی</b> است، که غیرممکن است. "
+	           + "این خطا معمولاً زمانی رخ می‌دهد که یک مود کد خود را به درستی بین کلاینت و سرور جدا نکند. "
+	           + "وجود <code>ModernFix</code> ممکن است این مشکل را آشکار کند، هرچند علت مستقیم نیست.</b>";
+	}
+
+	@Override
+	public String solucionErrorMetadataAnimacionEnServidor() {
+	    return "• <b>راه‌حل سریع:</b> برای اطمینان از راه‌اندازی سرور، موقتاً <code>ModernFix</code> را حذف کنید. "
+	           + "اگر سرور راه‌اندازی شد، مشکل از مود دیگری است که کلاس‌های کلاینت را روی سرور بارگیری می‌کند.<br>"
+	           + "• <b>راه‌حل دائمی:</b> مود مقصر را شناسایی کنید (به دنبال مودهایی با منابع انیمیشنی، بافت‌های سفارشی یا کتابخانه‌های گرافیکی باشید) و آن را به‌روزرسانی یا حذف کنید.<br>";
+	}
+
+	@Override
+	public String nombreErrorMetadataAnimacionEnServidor() {
+	    return "بارگیری کلاس کلاینت روی سرور (AnimationMetadataSection)";
+	}
+	
+	@Override
+	public String errorConfiguracionConnectorCorrupta() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "فایل پیکربندی یک مود <code>Sinytra Connector</code> خراب است. "
+	           + "این معمولاً زمانی اتفاق می‌افتد که فایل با کاراکترهای خالی (<code>\\u0000</code>) پر شود "
+	           + "به دلیل خاموشی غیرمنتظره بازی، خطا در نوشتن یا تداخل مودها.</b>";
+	}
+
+	@Override
+	public String solucionConfiguracionConnectorCorrupta() {
+	    return "• به پوشه <code>config/</code> نمونه بازی ماینکرفت خود بروید.<br>"
+	           + "• تنظیمات مودهای connector را پیدا کرده و حذف کنید.<br>"
+	           + "• بازی را دوباره راه‌اندازی کنید: Sinytra Connector یک فایل پیکربندی جدید و تمیز ایجاد خواهد کرد.";
+	}
+
+	@Override
+	public String nombreErrorConfiguracionConnectorCorrupta() {
+	    return "پیکربندی خراب Sinytra Connector";
+	}
+	@Override
+	public String errorJarCorruptoConNombre(String nombreJar) {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "فایل <code>" + nombreJar + "</code> خراب یا ناقص است.<br>"
+	           + "سیستم نمی‌تواند محتوای آن را بخواند زیرا هدر پایانی فایل ZIP گم شده است.<br>"
+	           + "این خطا معمولاً پس از دانلود قطع شده یا خرابی راه‌انداز اتفاق می‌افتد.</b>";
+	}
+
+	@Override
+	public String nombreErrorJarCorruptoConNombre() {
+	    return "فایل JAR خراب (با نام مشخص)";
+	}
+
+	@Override
+	public String solucionJarCorrupto() {
+	    return "• <b>فایل خراب را حذف کنید</b> و دوباره از منبع رسمی (CurseForge، MinecraftStorage و غیره) دانلود کنید.<br>"
+	           + "• اگر از راه‌اندازهایی مانند CurseForge، Technic یا Luna Pixel استفاده می‌کنید، بهتر است به <b>ATLauncher</b> یا <b>Prism Launcher</b> تغییر دهید، "
+	           + "که صحت فایل‌ها را بهتر بررسی می‌کنند.<br>"
+	           + "• مطمئن شوید در طول دانلود، اتصال اینترنت شما پایدار باشد.";
+	}
+	
+	@Override
+	public String errorCargaNBTMundoCorruptoConByte(String byteCorrupto) {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "ناتوانی در بارگیری دنیا به دلیل خرابی یکی از فایل‌های NBT آن "
+	           + "(مثلاً: <code>level.dat</code>, <code>playerdata/*.dat</code>، یا چنک‌ها).<br>"
+	           + "خطای خاص: <code>UTFDataFormatException: ورودی معیوب در اطراف بایت " + byteCorrupto + "</code>.<br><br>"
+	           + "<b style='color:#" + config.obtenerColorAdvertencia() + ";'>"
+	           + "⚠️ قبل از هر تلاش برای تعمیر، یک کپی پشتیبان کامل از پوشه دنیا بگیرید.</b><br><br>"
+	           + "می‌توانید سعی کنید فایل خراب را با یک <b>ویرایشگر NBT</b> مانند <a href='https://github.com/tryashtar/nbt-studio'>NBT Studio</a> تعمیر کنید.<br>"
+	           + "اگر آسیب جدی باشد، از یک <b>ویرایشگر هگزادسیمال</b> (مانند HxD) برای بررسی و اصلاح بایت‌های نامعتبر استفاده کنید "
+	           + "(فقط در صورتی که با فرمت NBT تجربه داشته باشید).<br>"
+	           + "در آخرین حالت، از یک پشتیبان بازیابی کنید یا از قابلیت <i>تعمیر دنیا</i> در مودهایی مانند <code>FTB Backup</code> استفاده کنید.</b>";
+	}
+
+	@Override
+	public String solucionErrorCargaNBTMundoCorrupto() {
+	    return "• <b>قبل از هر تلاش برای تعمیر، یک کپی پشتیبان کامل از پوشه دنیا بگیرید</b>.<br>"
+	           + "• از یک ویرایشگر NBT (مانند NBT Studio) برای باز کردن و تعمیر فایل خراب استفاده کنید.<br>"
+	           + "• اگر شکست خورد، فایل را با یک ویرایشگر هگز در موقعیت بایت خراب بررسی کنید.<br>"
+	           + "• اگر تجربه ندارید، از یک پشتیبان اخیر بازیابی کنید.";
+	}
+
+	@Override
+	public String nombreErrorCargaNBTMundoCorrupto() {
+	    return "دنیای خراب: خطای بارگیری داده‌های NBT";
+	}
+	
+	@Override
+	public String problema_con_openAL() {
+	    return "<span style='color:#" + config.obtenerColorError()
+	           + "'>مشکلی با OpenAL دارید. گاهی اوقات درایورهای Nouveau این مشکل را ایجاد می‌کنند، اما گاهی هم نسخهٔ OpenAL که با برنامه بسته‌بندی شده با نسخه موجود در توزیع شما سازگار نیست و باید از نسخه توزیع خود استفاده کنید. برای راهنمایی بیشتر به این راهنما مراجعه کنید: <a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>چگونه مشکلات صدا در ماینکرفت روی لینوکس را رفع کنیم</a>.</span>";
+	}
+	
+	
+	@Override
+	public String errorArchivoBloqueadoPorOtroProceso() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "سرور نمی‌تواند راه‌اندازی شود زیرا یک فایل دنیا توسط فرآیند دیگری قفل شده است.<br>"
+	           + "این معمولاً در صورتی اتفاق می‌افتد که:<br>"
+	           + "• قبلاً یک نمونه سرور در حال اجرا باشد.<br>"
+	           + "• آنتی‌ویروس یا مرورگر فایل، پوشه دنیا را باز کرده باشد.<br>"
+	           + "• فرآیند قبلی به درستی بسته نشده و فایل‌ها قفل مانده‌اند.</b>";
+	}
+
+	@Override
+	public String solucionErrorArchivoBloqueadoPorOtroProceso() {
+	    return "• <b>تمام نمونه‌های سرور را ببندید</b> (شامل فرآیندهای پس‌زمینه مثل javaw.exe).<br>"
+	           + "• اگر از پنل هاستینگ (مثل Multicraft) استفاده می‌کنید، از طریق پنل سرور را کاملاً ریستارت کنید.<br>"
+	           + "• <b>موقتاً آنتی‌ویروس خود را غیرفعال کنید</b> اگر فکر می‌کنید فایل‌ها را مسدود کرده است.<br>"
+	           + "• در سیستم‌های محلی، تمام پنجره‌های اکسپلورر ویندوز که پوشه دنیا را نشان می‌دهند را ببندید.<br>"
+	           + "• اگر مشکل باقی ماند، فایل <code>session.lock</code> را درون پوشه دنیا حذف کنید (فقط در صورتی که مطمئن باشید سرور دیگری فعال نیست).";
+	}
+
+	@Override
+	public String nombreErrorArchivoBloqueadoPorOtroProceso() {
+	    return "فایل دنیا توسط فرآیند دیگری قفل شده است";
+	}
+	
+	@Override
+	public String errorClaseFinalExtendida(String claseHija, String clasePadreFinal) {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "مود سعی کرد کلاس <code>" + clasePadreFinal + "</code> را گسترش دهد، "
+	           + "اما این کلاس اکنون <b>نهایی</b> است و نمی‌تواند به ارث برده شود.<br>"
+	           + "کلاس مشکل‌ساز: <code>" + claseHija + "</code>.<br><br>"
+	           + "این معمولاً زمانی اتفاق می‌افتد که یک مود برای نسخه قبلی ماینکرفت یا یک مود پایه دیگر کامپایل شده باشد، "
+	           + "که در نسخه‌های اخیر کلاس‌ها را به عنوان <code>final</code> علامت‌گذاری کرده است.</b>";
+	}
+
+	@Override
+	public String solucionErrorClaseFinalExtendida() {
+	    return "• <b>تمام مودهای درگیر را به‌روزرسانی کنید</b>، به خصوص آن‌هایی که ممکن است به مود پایه ذکر شده مربوط باشند.<br>"
+	           + "• اگر مشکل باقی ماند، به دنبال نسخه‌ای از مود بگردید که با نسخه فعلی ماینکرفت و وابستگی‌هایش سازگار باشد.<br>"
+	           + "• در برخی موارد، حذف موقت مودی که شامل کلاس فرزند است می‌تواند علت را تأیید کند.";
+	}
+
+	@Override
+	public String nombreErrorClaseFinalExtendida() {
+	    return "تلاش برای ارث‌بری از یک کلاس نهایی";
+	}
+	
+	@Override
+	public String errorRubidiumObsoletoConIris() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "شما از <b>Rubidium</b> (یک نسخه قدیمی شده از Sodium برای Forge) همراه با <b>Iris یا Oculus</b> استفاده می‌کنید.<br>"
+	           + "در نسخه‌های اخیر ماینکرفت (1.19.2 به بعد)، "
+	           + "Rubidium دیگر با Sodium هماهنگ نیست و وابستگی‌های آن مشکلاتی داشته‌اند.<br><br>"
+	           + "این خطا همچنین زمانی رخ می‌دهد که تداخلی بین مودهای عملکردی (Sodium، Rubidium، Embeddium، Bedium، Xeonium و غیره) یا Iris Shaders و یک مود دیگر وجود داشته باشد.</b>";
+	}
+
+	@Override
+	public String solucionRubidiumObsoletoConIris() {
+	    return "• <b>Rubidium را از پوشه <code>mods</code> حذف کنید</b>.<br>"
+	           + "• <b><a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a> را نصب کنید</b>، "
+	           + "این نسخه جایگزین فعال و سازگار Sodium برای Forge است که در 1.20+ از Iris/Oculus پشتیبانی می‌کند.<br>"
+	           + "• مطمئن شوید بیش از یک نسخه از Sodium را همزمان نصب نکرده باشید (مثلاً Rubidium + Embeddium).<br>"
+	           + "• اگر به جای Iris از Oculus استفاده می‌کنید، مطمئن شوید که با نسخه‌های Forge و Embeddium شما سازگار است.";
+	}
+
+	@Override
+	public String nombreErrorRubidiumObsoletoConIris() {
+	    return "Rubidium منسوخ با Iris/Oculus (OptionInstance نهایی است)";
+	}
+	
+	@Override
+	public String errorVoiceChatPuertoOcupado() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "مود <code>Simple Voice Chat</code> نمی‌تواند سرور صدا خود را راه‌اندازی کند زیرا "
+	           + "پورت UDP قبلاً در حال استفاده است یا آدرس IP تنظیم شده معتبر نیست.<br>"
+	           + "این موضوع باعث جلوگیری از راه‌اندازی بازی نمی‌شود، اما عملکرد چت صوتی را غیرفعال می‌کند.</b>";
+	}
+
+	@Override
+	public String solucionErrorVoiceChatPuertoOcupado() {
+	    return "• <b>هر نمونه دیگری از ماینکرفت یا برنامه‌ای که از پورت UDP 24454 استفاده می‌کند را ببندید</b>.<br>"
+	           + "• اگر روی یک سرور هستید، مطمئن شوید <b>هیچ سرویس دیگری</b> از آن پورت استفاده نمی‌کند.<br>"
+	           + "• در تنظیمات مود (<code>config/voicechat/</code>)، پورت UDP را به یک پورت آزاد تغییر دهید (مثلاً 24455).<br>"
+	           + "• اگر از یک آدرس IP شخصی استفاده می‌کنید، صحت آن را بررسی کنید یا برای استفاده از مقدار پیش‌فرض آن را خالی بگذارید.";
+	}
+
+	@Override
+	public String nombreErrorVoiceChatPuertoOcupado() {
+	    return "چت صوتی: پورت UDP اشغال شده یا IP نامعتبر";
+	}
+	
+	@Override
+	public String errorBlockItemNuloCreate(String nombreBlockItem) {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "BlockItem <code>" + nombreBlockItem + "</code> دارای بلوک تهی است.<br>"
+	           + "این خطا معمولاً در <b>افزونه‌های Create</b> (مانند <code>dndecor</code>, <code>createdeco</code>) رخ می‌دهد "
+	           + "وقتی تداخلی با <code>Amendments</code>, <code>Moonshine</code> وجود داشته باشد یا مقداردهی اولیه بلوک‌ها اشتباه باشد.<br>"
+	           + "<b>توجه:</b> این خطا مستقیماً از Amendments نیست، بلکه مشکل عمیق‌تری در بارگیری ثبت‌هاست.</b>";
+	}
+
+	@Override
+	public String solucionErrorBlockItemNuloCreate() {
+	    return "• <b>تمام مودهای مرتبط را به‌روزرسانی کنید:</b> Create، Amendments، Moonshine و هر افزونه‌ای (به خصوص <code>dndecor</code> و <code>createdeco</code>).<br>"
+	           + "• اگر مشکل باقی ماند، <b>افزونه‌های Create را موقتاً یکی یکی حذف کنید</b> تا عامل را پیدا کنید.<br>"
+	           + "• مطمئن شوید <b>Amendments و Moonshine با نسخه Create و Forge شما سازگار باشند</b>.<br>"
+	           + "• بررسی کنید آیا نسخه بتا یا فورک‌های به‌روز شده‌ای از افزونه‌های مشکل‌دار وجود دارد.";
+	}
+
+	@Override
+	public String nombreErrorBlockItemNuloCreate() {
+	    return "BlockItem تهی در افزونه Create";
+	}
 	
 	
 }

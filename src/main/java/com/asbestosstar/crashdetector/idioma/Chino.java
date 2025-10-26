@@ -3520,6 +3520,215 @@ public class Chino implements Idioma {
 	    return "接口方法未实现 (AbstractMethodError)";
 	}
 	
+	@Override
+	public String errorMetadataAnimacionEnServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "一个模组试图在<b>专用服务器</b>上加载属于<b>客户端</b>的类 "
+	           + "(<code>AnimationMetadataSection</code>)，这是不可能的。"
+	           + "当模组未正确分离客户端和服务器代码时，通常会出现此错误。"
+	           + "安装 <code>ModernFix</code> 可能会暴露此问题，但并非直接原因。</b>";
+	}
+
+	@Override
+	public String solucionErrorMetadataAnimacionEnServidor() {
+	    return "• <b>快速解决：</b>临时移除 <code>ModernFix</code> 以确认服务器能否启动。"
+	           + "如果可以，则说明是其他模组在服务器端加载了客户端类。<br>"
+	           + "• <b>永久解决方案：</b>找出有问题的模组（查找包含动画资源、自定义纹理或图形库的模组）并更新或删除它。<br>";
+	}
+
+	@Override
+	public String nombreErrorMetadataAnimacionEnServidor() {
+	    return "在服务器上加载了客户端类 (AnimationMetadataSection)";
+	}
+	
+	@Override
+	public String errorConfiguracionConnectorCorrupta() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "Sinytra Connector 某个模组的配置文件已损坏。"
+	           + "这通常是因为游戏意外关闭、写入失败或模组冲突导致文件中充满了空字符（<code>\\u0000</code>）所致。</b>";
+	}
+
+	@Override
+	public String solucionConfiguracionConnectorCorrupta() {
+	    return "• 进入你的 Minecraft 实例的 <code>config/</code> 文件夹。<br>"
+	           + "• 查找并删除与 connector 相关的模组配置文件。<br>"
+	           + "• 重新启动游戏：Sinytra Connector 将生成一个全新的干净配置文件。";
+	}
+
+	@Override
+	public String nombreErrorConfiguracionConnectorCorrupta() {
+	    return "Sinytra Connector 配置损坏";
+	}
+	
+	@Override
+	public String errorJarCorruptoConNombre(String nombreJar) {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "文件 <code>" + nombreJar + "</code> 已损坏或不完整。<br>"
+	           + "系统无法读取其内容，因为ZIP文件的末尾头部丢失。<br>"
+	           + "此错误通常发生在下载中断或启动器故障后。</b>";
+	}
+
+	@Override
+	public String nombreErrorJarCorruptoConNombre() {
+	    return "JAR文件损坏（含具体名称）";
+	}
+
+	@Override
+	public String solucionJarCorrupto() {
+	    return "• <b>删除损坏的文件</b>，并从官方来源（如CurseForge、MinecraftStorage等）重新下载。<br>"
+	           + "• 如果你使用的是CurseForge、Technic或Luna Pixel等启动器，请考虑改用<b>ATLauncher</b>或<b>Prism Launcher</b>，"
+	           + "它们对文件完整性的校验更完善。<br>"
+	           + "• 确保下载期间你的网络连接稳定。";
+	}
+	
+	@Override
+	public String errorCargaNBTMundoCorruptoConByte(String byteCorrupto) {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "无法加载世界，因为其 NBT 文件之一已损坏 "
+	           + "(例如：<code>level.dat</code>、<code>playerdata/*.dat</code> 或区块数据)。<br>"
+	           + "具体错误为：<code>UTFDataFormatException: 在字节 " + byteCorrupto + " 附近输入格式错误</code>。<br><br>"
+	           + "<b style='color:#" + config.obtenerColorAdvertencia() + ";'>"
+	           + "⚠️ 在尝试任何修复前，请先完整备份整个世界文件夹。</b><br><br>"
+	           + "你可以使用 <b>NBT 编辑器</b>（如 <a href='https://github.com/tryashtar/nbt-studio'>NBT Studio</a>）来尝试修复损坏的文件。<br>"
+	           + "如果损坏严重，可使用<b>十六进制编辑器</b>（如 HxD）检查并修正无效字节 "
+	           + "（仅适用于熟悉 NBT 格式者）。<br>"
+	           + "最后手段是：从备份中恢复，或使用 <code>FTB Backup</code> 等模组提供的“世界修复”功能。</b>";
+	}
+
+	@Override
+	public String solucionErrorCargaNBTMundoCorrupto() {
+	    return "• <b>在尝试修复前，请完整备份世界文件夹</b>。<br>"
+	           + "• 使用 NBT 编辑器（如 NBT Studio）打开并修复损坏的文件。<br>"
+	           + "• 如果失败，在损坏字节位置用十六进制编辑器检查文件。<br>"
+	           + "• 若无经验，请从最近的备份中恢复。";
+	}
+
+	@Override
+	public String nombreErrorCargaNBTMundoCorrupto() {
+	    return "世界损坏：加载 NBT 数据出错";
+	}
+	
+	@Override
+	public String problema_con_openAL() {
+	    return "<span style='color:#" + config.obtenerColorError()
+	           + "'>你的 OpenAL 出现问题。有时是 Nouveau 驱动导致的，但有时是因为应用程序自带的 OpenAL 版本与你系统发行版中的版本不兼容，你需要使用发行版提供的 OpenAL 版本。请参考此指南获取更多帮助：<a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>如何修复 Linux 上 Minecraft 的声音问题</a>。</span>";
+	}
+	
+	@Override
+	public String errorArchivoBloqueadoPorOtroProceso() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "服务器无法启动，因为世界的一个文件被其他进程锁定。<br>"
+	           + "通常在以下情况下发生：<br>"
+	           + "• 已有一个服务器实例正在运行。<br>"
+	           + "• 杀毒软件或文件资源管理器打开了世界文件夹。<br>"
+	           + "• 前一个进程未正确关闭并留下锁定的文件。</b>";
+	}
+
+	@Override
+	public String solucionErrorArchivoBloqueadoPorOtroProceso() {
+	    return "• <b>关闭所有服务器实例</b>（包括后台进程如 javaw.exe）。<br>"
+	           + "• 如果你使用的是托管面板（如 Multicraft），请通过面板完全重启服务器。<br>"
+	           + "• <b>临时禁用你的杀毒软件</b>，如果你怀疑它锁定了文件。<br>"
+	           + "• 在本地系统上，关闭任何显示世界文件夹的Windows资源管理器窗口。<br>"
+	           + "• 如果问题仍然存在，请手动删除世界文件夹内的 <code>session.lock</code> 文件（仅当你确定没有其他服务器在运行时）。";
+	}
+
+	@Override
+	public String nombreErrorArchivoBloqueadoPorOtroProceso() {
+	    return "世界文件被另一进程锁定";
+	}
+	
+	@Override
+	public String errorClaseFinalExtendida(String claseHija, String clasePadreFinal) {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "حاول التعديل توسيع الصنف <code>" + clasePadreFinal + "</code>، "
+	           + "لكن هذا الصنف أصبح الآن <b>نهائيًا</b> ولا يمكن الوراثة منه.<br>"
+	           + "الصنف المسبب للمشكلة هو: <code>" + claseHija + "</code>.<br><br>"
+	           + "يحدث هذا عادة عندما يكون التعديل مُجمَّع لإصدار سابق من ماينكرافت أو تعديل أساسي آخر "
+	           + "قد قام بوضع وسم <code>final</code> على بعض الأصناف في الإصدارات الحديثة.</b>";
+	}
+
+	@Override
+	public String solucionErrorClaseFinalExtendida() {
+	    return "• <b>حدّث جميع التعديلات المتورطة</b>، خاصة تلك التي قد تكون مرتبطة بالتعديل الأساسي المذكور.<br>"
+	           + "• إذا استمرت المشكلة، ابحث عن إصدار من التعديل يتوافق مع إصدار ماينكرافت الحالي واعتمادياته.<br>"
+	           + "• في بعض الحالات، قد يساعد حذف مؤقت للتعديل الذي يحتوي الصنف الفرعي في تأكيد السبب.";
+	}
+
+	@Override
+	public String nombreErrorClaseFinalExtendida() {
+	    return "محاولة وراثة صنف نهائي";
+	}
+	
+	@Override
+	public String errorRubidiumObsoletoConIris() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "你正在将 <b>Rubidium</b>（一个已过时的用于 Forge 的 Sodium 分支）与 <b>Iris 或 Oculus</b> 一起使用。<br>"
+	           + "在较新版本的 Minecraft（1.19.2 及以上）中，"
+	           + "Rubidium 未能跟上 Sodium 的更新步伐，其依赖项出现了问题。<br><br>"
+	           + "如果性能模组（Sodium、Rubidium、Embeddium、Bedium、Xeonium 等）或 Iris Shaders 与其他模组发生冲突，也可能导致此错误。</b>";
+	}
+
+	@Override
+	public String solucionRubidiumObsoletoConIris() {
+	    return "• 从你的 <code>mods</code> 文件夹中<b>删除 Rubidium</b>。<br>"
+	           + "• <b>安装 <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a></b>，"
+	           + "这是一个活跃且兼容的、用于 Forge 的 Sodium 分支，支持在 1.20+ 版本中使用 Iris/Oculus。<br>"
+	           + "• 确保不要同时安装多个 Sodium 分支（例如：Rubidium 和 Embeddium）。<br>"
+	           + "• 如果你使用的是 Oculus 而不是 Iris，请确认它也与你的 Forge 和 Embeddium 版本兼容。";
+	}
+
+	@Override
+	public String nombreErrorRubidiumObsoletoConIris() {
+	    return "Rubidium 已过时，与 Iris/Oculus 不兼容（OptionInstance 是 final）";
+	}
+	
+	@Override
+	public String errorVoiceChatPuertoOcupado() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "لا يمكن للتعديل <code>Simple Voice Chat</code> تشغيل خادم الصوت الخاص به لأن "
+	           + "منفذ UDP مستخدم بالفعل أو عنوان IP المُعد غير صالح.<br>"
+	           + "هذا لا يمنع بدء اللعبة، لكنه يعطل وظيفة الدردشة الصوتية.</b>";
+	}
+
+	@Override
+	public String solucionErrorVoiceChatPuertoOcupado() {
+	    return "• <b>أغلق أي نسخة أخرى من ماينكرافت</b> أو تطبيق يستخدم المنفذ UDP 24454.<br>"
+	           + "• إذا كنت على خادم، تأكد من أن <b>أي خدمة أخرى</b> لا تستخدم هذا المنفذ.<br>"
+	           + "• في إعدادات التعديل (<code>config/voicechat/</code>)، غيّر منفذ UDP إلى منفذ حر (مثلاً 24455).<br>"
+	           + "• إذا كنت تستخدم عنوان IP مخصصًا، فتحقق من صحته أو اتركه فارغًا لاستخدام الإعداد الافتراضي.";
+	}
+
+	@Override
+	public String nombreErrorVoiceChatPuertoOcupado() {
+	    return "الدردشة الصوتية: منفذ UDP مشغول أو عنوان IP غير صالح";
+	}
+	
+	@Override
+	public String errorBlockItemNuloCreate(String nombreBlockItem) {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "方块物品 <code>" + nombreBlockItem + "</code> 指向了一个空方块。<br>"
+	           + "此错误通常发生在 <b>Create 的附加模组</b>（如 <code>dndecor</code>、<code>createdeco</code>）中，"
+	           + "当与 <code>Amendments</code>、<code>Moonshine</code> 存在冲突或方块初始化不正确时出现。<br>"
+	           + "<b>注意：</b> 这并非 Amendments 直接导致的错误，而是注册表加载深层问题的症状。</b>";
+	}
+
+	@Override
+	public String solucionErrorBlockItemNuloCreate() {
+	    return "• <b>更新所有相关模组：</b>包括 Create、Amendments、Moonshine 以及任何附加模组（特别是 <code>dndecor</code> 和 <code>createdeco</code>）。<br>"
+	           + "• 如果问题仍然存在，<b>暂时逐个移除 Create 的附加模组</b>以找出罪魁祸首。<br>"
+	           + "• 确保 <b>Amendments 和 Moonshine 与你的 Create 及 Forge 版本兼容</b>。<br>"
+	           + "• 检查问题模组是否有更新的测试版或分支版本。";
+	}
+
+	@Override
+	public String nombreErrorBlockItemNuloCreate() {
+	    return "Create 附加模组中的空方块物品";
+	}
+	
+	
+	
+	
 	
 	
 }

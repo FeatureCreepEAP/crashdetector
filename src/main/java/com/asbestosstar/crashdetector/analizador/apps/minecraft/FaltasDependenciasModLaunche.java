@@ -114,7 +114,7 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 
 	@Override
 	public float prioridad() {
-		return 900f;
+		return 1100f;
 	}
 
 	@Override

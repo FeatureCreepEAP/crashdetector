@@ -17,20 +17,26 @@ import com.asbestosstar.crashdetector.analizador.apps.minecraft.ConflictoMultiwo
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.CursedConsola;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.EarlyWindow;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorAccessTransformerInvalido;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorBlockItemNuloCreate;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorCargaClaseEntornoInvalido;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorCargaNBTMundoCorrupto;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorConfiguracionConnectorCorrupta;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorConfiguracionMCForge;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorConfiguracionServicioIDependencyLocator;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorDependenciaModFaltante;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorDiscrepanciaModID;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorHealightINT;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorJEIPluginFallido;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorMetadataAnimacionEnServidor;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorMetadataModsTomlFaltante;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorRegistroSuscriptoresAutomaticos;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorResolucionDeTextura;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorRubidiumObsoletoConIris;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorRutaModLauncher;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorSinListenersEnClase;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorSistemaSonido;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorUnionFileSystemCorrupto;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorVoiceChatPuertoOcupado;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.FabricMCRuntimeErrorProvidedBy;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.FaltasDependenciasModLaunche;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.FuncionesDeDensidadNoVinculadas;
@@ -82,11 +88,14 @@ import com.asbestosstar.crashdetector.analizador.general.AdvertenciaFaltasClases
 import com.asbestosstar.crashdetector.analizador.general.ContentoDeTraces;
 import com.asbestosstar.crashdetector.analizador.general.DifDeMods;
 import com.asbestosstar.crashdetector.analizador.general.Drivers;
+import com.asbestosstar.crashdetector.analizador.general.ErrorArchivoBloqueadoPorOtroProceso;
 import com.asbestosstar.crashdetector.analizador.general.ErrorCampoInexistente;
 import com.asbestosstar.crashdetector.analizador.general.ErrorCaracteresInvalidosEnNombre;
+import com.asbestosstar.crashdetector.analizador.general.ErrorClaseFinalExtendida;
 import com.asbestosstar.crashdetector.analizador.general.ErrorContextoOpenGL;
 import com.asbestosstar.crashdetector.analizador.general.ErrorDeEnlaceInsatisfecho;
 import com.asbestosstar.crashdetector.analizador.general.ErrorDeMonitorLWJGL;
+import com.asbestosstar.crashdetector.analizador.general.ErrorJarCorruptoConNombre;
 import com.asbestosstar.crashdetector.analizador.general.ErrorMetodoAbstractoNoImplementado;
 import com.asbestosstar.crashdetector.analizador.general.ErrorMetodoInexistente;
 import com.asbestosstar.crashdetector.analizador.general.FaltaModuleJPMS;
@@ -222,7 +231,18 @@ public class Analizador {
 		
 		verificaciones.add(new ErrorHealightINT());
 		verificaciones.add(new ErrorMetodoAbstractoNoImplementado());
+		verificaciones.add(new ErrorMetadataAnimacionEnServidor());
+		verificaciones.add(new ErrorConfiguracionConnectorCorrupta());
+		verificaciones.add(new ErrorJarCorruptoConNombre());
+		verificaciones.add(new ErrorCargaNBTMundoCorrupto());
+		verificaciones.add(new ErrorArchivoBloqueadoPorOtroProceso());
+		verificaciones.add(new ErrorClaseFinalExtendida());
+		verificaciones.add(new ErrorRubidiumObsoletoConIris());
+		verificaciones.add(new ErrorVoiceChatPuertoOcupado());
+		verificaciones.add(new ErrorBlockItemNuloCreate());
 
+		
+		
 		
 		
 
@@ -234,9 +254,6 @@ public class Analizador {
 		// TODO
 		// https://discord.com/channels/1129059589325852724/1129069799545241703/1418708211636113498
 //https://wiki.lunapixel.gg/performance-guide
-		// at
-		// knot//de.keksuccino.fancymenu.customization.screen.identifier.ScreenIdentifierHandler.isValidIdentifier(ScreenIdentifierHandler.java:44)
-		// knott// o app// enmodid
 		// at
 		// com.mojang.blaze3d.vertex.BufferBuilder.handler$cdk000$iris$beforeNext(BufferBuilder.java:2173)
 		// ~[client-1.20.1-20230612.114412-srg.jar%23561!/:?]

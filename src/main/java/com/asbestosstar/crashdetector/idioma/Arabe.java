@@ -3647,6 +3647,213 @@ public class Arabe implements Idioma {
 	    return "طريقة واجهة غير منفذة (AbstractMethodError)";
 	}
 	
+	@Override
+	public String errorMetadataAnimacionEnServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "يحاول تعديل تحميل صنف من <b>جانب العميل</b> "
+	           + "(<code>AnimationMetadataSection</code>) على <b>خادم مخصص</b>، وهو أمر غير ممكن. "
+	           + "غالبًا ما يظهر هذا الخطأ عندما لا يقوم التعديل بفصل الكود بشكل صحيح بين العميل والخادم. "
+	           + "قد يكشف وجود <code>ModernFix</code> عن هذه المشكلة، رغم أنه ليس السبب المباشر.</b>";
+	}
+
+	@Override
+	public String solucionErrorMetadataAnimacionEnServidor() {
+	    return "• <b>حل سريع:</b> احذف مؤقتًا <code>ModernFix</code> للتأكد من أن الخادم يمكنه البدء. "
+	           + "إذا نجح ذلك، فالمشكلة في تعديل آخر يقوم بتحميل أصناف العميل على الخادم.<br>"
+	           + "• <b>الحل الدائم:</b> حدّد التعديل المسؤول (ابحث عن تعديلات تحتوي على موارد متحركة أو قوام مخصصة أو مكتبات رسومية) وحدّثه أو احذفه.<br>";
+	}
+
+	@Override
+	public String nombreErrorMetadataAnimacionEnServidor() {
+	    return "تم تحميل كلاس عميل على الخادم (AnimationMetadataSection)";
+	}
+	
+	@Override
+	public String errorConfiguracionConnectorCorrupta() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "ملف تهيئة أحد تعديلات <code>Sinytra Connector</code> تالف. "
+	           + "غالبًا ما يحدث هذا عندما يمتلئ الملف بحروف فارغة (<code>\\u0000</code>) "
+	           + "نتيجة لإغلاق غير متوقع للعبة، أو أخطاء في الكتابة، أو تعارض بين التعديلات.</b>";
+	}
+
+	@Override
+	public String solucionConfiguracionConnectorCorrupta() {
+	    return "• انتقل إلى مجلد <code>config/</code> في نسختك من ماينكرافت.<br>"
+	           + "• ابحث عن ملفات تهيئة تعديلات connector واحذفها.<br>"
+	           + "• أعد تشغيل اللعبة: سيقوم Sinytra Connector بإنشاء ملف تهيئة جديد ونظيف.";
+	}
+
+	@Override
+	public String nombreErrorConfiguracionConnectorCorrupta() {
+	    return "تهيئة Sinytra Connector تالفة";
+	}
+	
+	@Override
+	public String errorJarCorruptoConNombre(String nombreJar) {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "الملف <code>" + nombreJar + "</code> تالف أو ناقص.<br>"
+	           + "لا يمكن للنظام قراءة محتواه لأن رأس الملف النهائي لـ ZIP مفقود.<br>"
+	           + "غالبًا ما يحدث هذا الخطأ بعد تنزيل متقطع أو فشل في عمل المُشغل.</b>";
+	}
+
+	@Override
+	public String nombreErrorJarCorruptoConNombre() {
+	    return "ملف JAR تالف (مع اسم محدد)";
+	}
+
+	@Override
+	public String solucionJarCorrupto() {
+	    return "• <b>احذف الملف التالف</b> وقم بتنزيله مرة أخرى من المصدر الرسمي (مثل CurseForge، MinecraftStorage، إلخ).<br>"
+	           + "• إذا كنت تستخدم مشغلًا مثل CurseForge أو Technic أو Luna Pixel، ففكر في التحول إلى <b>ATLauncher</b> أو <b>Prism Launcher</b>، "
+	           + "اللذين يقومان بالتحقق بشكل أفضل من سلامة الملفات.<br>"
+	           + "• تأكد من أن اتصال الإنترنت لديك مستقر أثناء التنزيل.";
+	}
+	
+	@Override
+	public String errorCargaNBTMundoCorruptoConByte(String byteCorrupto) {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "تعذر تحميل العالم لأن أحد ملفات NBT الخاصة به تالفة "
+	           + "(مثلًا: <code>level.dat</code>, <code>playerdata/*.dat</code>، أو القطع).<br>"
+	           + "الخطأ المحدد هو: <code>UTFDataFormatException: مدخل غير سليم حول البايت " + byteCorrupto + "</code>.<br><br>"
+	           + "<b style='color:#" + config.obtenerColorAdvertencia() + ";'>"
+	           + "⚠️ قبل محاولة أي إصلاح، قم بعمل نسخة احتياطية كاملة من مجلد العالم.</b><br><br>"
+	           + "يمكنك محاولة إصلاح الملف التالف باستخدام <b>محرر NBT</b> مثل <a href='https://github.com/tryashtar/nbt-studio'>NBT Studio</a>.<br>"
+	           + "إذا كان التلف شديدًا، استخدم <b>محررًا ثنائيًا</b> (مثل HxD) لفحص وتصحيح البايتات غير الصالحة "
+	           + "(فقط إذا كنت لديك خبرة في تنسيق NBT).<br>"
+	           + "كملاذ أخير، قم باستعادة النسخة الاحتياطية أو استخدم أداة إصلاح العوالم من تعديلات مثل <code>FTB Backup</code>.</b>";
+	}
+
+	@Override
+	public String solucionErrorCargaNBTMundoCorrupto() {
+	    return "• <b>قم بعمل نسخة احتياطية كاملة من مجلد العالم</b> قبل محاولة أي إصلاح.<br>"
+	           + "• استخدم محرر NBT (مثل NBT Studio) لفتح الملف التالف وإصلاحه.<br>"
+	           + "• إذا فشل ذلك، فاحصل على الملف باستخدام محرر ثنائي عند موقع البايت التالف.<br>"
+	           + "• إذا لم تكن لديك خبرة، قم باستعادة العالم من نسخة احتياطية حديثة.";
+	}
+
+	@Override
+	public String nombreErrorCargaNBTMundoCorrupto() {
+	    return "عالم تالف: خطأ في تحميل بيانات NBT";
+	}
+	
+	@Override
+	public String problema_con_openAL() {
+	    return "<span style='color:#" + config.obtenerColorError()
+	           + "'>لديك مشكلة في OpenAL. أحيانًا يمكن أن تسببها تعريفات Nouveau، ولكن في بعض الأحيان تكون المشكلة هي أن إصدار OpenAL المضمن مع التطبيق غير متوافق مع الإصدار الموجود في توزيعتك، وتحتاج إلى استخدام الإصدار الخاص بتوزيعتك. راجع هذا الدليل للحصول على مساعدة إضافية: <a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>كيفية إصلاح مشاكل الصوت في ماينكرافت على لينكس</a>.</span>";
+	}
+	
+	@Override
+	public String errorArchivoBloqueadoPorOtroProceso() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "لا يمكن تشغيل الخادم لأن ملفًا من عالمه محجوب بواسطة عملية أخرى.<br>"
+	           + "عادةً ما يحدث هذا إذا:<br>"
+	           + "• هناك بالفعل نسخة من الخادم قيد التشغيل.<br>"
+	           + "• برنامج مكافحة فيروسات أو مستعرض ملفات لديه مجلد العالم مفتوحًا.<br>"
+	           + "• العملية السابقة لم تُغلق بشكل صحيح وتركت ملفات محجوبة.</b>";
+	}
+
+	@Override
+	public String solucionErrorArchivoBloqueadoPorOtroProceso() {
+	    return "• <b>أغلق جميع نسخ الخادم</b> (بما في ذلك العمليات في الخلفية مثل javaw.exe).<br>"
+	           + "• إذا كنت تستخدم لوحة استضافة (مثل Multicraft)، أعد تشغيل الخادم تمامًا من خلال اللوحة.<br>"
+	           + "• <b>عطّل مؤقتًا برنامج مكافحة الفيروسات</b> إذا شككت في أنه يحجب الملفات.<br>"
+	           + "• على الأنظمة المحلية، أغلق أي نافذة مستعرض ملفات تعرض مجلد العالم.<br>"
+	           + "• إذا استمرت المشكلة، احذف يدويًا ملف <code>session.lock</code> داخل مجلد العالم (فقط إذا كنت متأكدًا من عدم وجود خادم آخر يعمل).";
+	}
+
+	@Override
+	public String nombreErrorArchivoBloqueadoPorOtroProceso() {
+	    return "ملف العالم محجوب بواسطة عملية أخرى";
+	}
+	
+	@Override
+	public String errorClaseFinalExtendida(String claseHija, String clasePadreFinal) {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "حاول التعديل توسيع الصنف <code>" + clasePadreFinal + "</code>، "
+	           + "لكن هذا الصنف أصبح الآن <b>نهائيًا</b> ولا يمكن الوراثة منه.<br>"
+	           + "الصنف المسبب للمشكلة هو: <code>" + claseHija + "</code>.<br><br>"
+	           + "يحدث هذا عادة عندما يكون التعديل مُجمَّع لإصدار سابق من ماينكرافت أو تعديل أساسي آخر "
+	           + "قد قام بوضع وسم <code>final</code> على بعض الأصناف في الإصدارات الحديثة.</b>";
+	}
+
+	@Override
+	public String solucionErrorClaseFinalExtendida() {
+	    return "• <b>حدّث جميع التعديلات المتورطة</b>، خاصة تلك التي قد تكون مرتبطة بالتعديل الأساسي المذكور.<br>"
+	           + "• إذا استمرت المشكلة، ابحث عن إصدار من التعديل يتوافق مع إصدار ماينكرافت الحالي واعتمادياته.<br>"
+	           + "• في بعض الحالات، قد يساعد حذف مؤقت للتعديل الذي يحتوي الصنف الفرعي في تأكيد السبب.";
+	}
+
+	@Override
+	public String nombreErrorClaseFinalExtendida() {
+	    return "محاولة وراثة صنف نهائي";
+	}
+	
+	@Override
+	public String errorRubidiumObsoletoConIris() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "أنت تستخدم <b>Rubidium</b> (نسخة منسوخة قديمة من Sodium لنظام Forge) مع <b>Iris أو Oculus</b>.<br>"
+	           + "في الإصدارات الحديثة من ماينكرافت (1.19.2 فما فوق)، "
+	           + "لم يواصل Rubidium مواكبة Sodium، وظهرت مشكلات في التبعيات.<br><br>"
+	           + "قد يحدث هذا الخطأ أيضًا بسبب تعارض بين تعديلات الأداء (Sodium، Rubidium، Embeddium، Bedium، Xeonium، إلخ) أو Iris Shaders وتعديل آخر.</b>";
+	}
+
+	@Override
+	public String solucionRubidiumObsoletoConIris() {
+	    return "• <b>احذف Rubidium</b> من مجلد <code>mods</code> الخاص بك.<br>"
+	           + "• <b>ثبّت <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a></b>, "
+	           + "النسخة المطورة والمضمنة من Sodium لنظام Forge والتي تدعم Iris/Oculus في 1.20+.<br>"
+	           + "• تأكد من عدم تثبيت أكثر من نسخة من Sodium في نفس الوقت (مثل: Rubidium + Embeddium).<br>"
+	           + "• إذا كنت تستخدم Oculus بدلًا من Iris، تحقق من أنه متوافق مع إصدار Forge وEmbeddium لديك.";
+	}
+
+	@Override
+	public String nombreErrorRubidiumObsoletoConIris() {
+	    return "Rubidium قديم مع Iris/Oculus (OptionInstance هو نهائي)";
+	}
+	
+	@Override
+	public String errorVoiceChatPuertoOcupado() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "لا يمكن للتعديل <code>Simple Voice Chat</code> تشغيل خادم الصوت الخاص به لأن "
+	           + "منفذ UDP مستخدم بالفعل أو عنوان IP المُعد غير صالح.<br>"
+	           + "هذا لا يمنع بدء اللعبة، لكنه يعطل وظيفة الدردشة الصوتية.</b>";
+	}
+
+	@Override
+	public String solucionErrorVoiceChatPuertoOcupado() {
+	    return "• <b>أغلق أي نسخة أخرى من ماينكرافت</b> أو تطبيق يستخدم المنفذ UDP 24454.<br>"
+	           + "• إذا كنت على خادم، تأكد من أن <b>أي خدمة أخرى</b> لا تستخدم هذا المنفذ.<br>"
+	           + "• في إعدادات التعديل (<code>config/voicechat/</code>)، غيّر منفذ UDP إلى منفذ حر (مثلاً 24455).<br>"
+	           + "• إذا كنت تستخدم عنوان IP مخصصًا، فتحقق من صحته أو اتركه فارغًا لاستخدام الإعداد الافتراضي.";
+	}
+
+	@Override
+	public String nombreErrorVoiceChatPuertoOcupado() {
+	    return "الدردشة الصوتية: منفذ UDP مشغول أو عنوان IP غير صالح";
+	}
+	
+	@Override
+	public String errorBlockItemNuloCreate(String nombreBlockItem) {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "عنصر الكتلة <code>" + nombreBlockItem + "</code> يشير إلى كتلة فارغة.<br>"
+	           + "يحدث هذا الخطأ عادة في <b>إضافات Create</b> (مثل <code>dndecor</code>, <code>createdeco</code>) "
+	           + "عندما تكون هناك تعارضات مع <code>Amendments</code>، <code>Moonshine</code>، أو عند تهيئة الكتل بشكل خاطئ.<br>"
+	           + "<b>ملاحظة:</b> هذا ليس خطأ من <code>Amendments</code> مباشرة، بل هو عرضة لمشكلة أعمق في تحميل السجلات.</b>";
+	}
+
+	@Override
+	public String solucionErrorBlockItemNuloCreate() {
+	    return "• <b>حدّث جميع التعديلات المرتبطة:</b> Create و Ammendments و Moonshine وأي إضافة (خاصةً <code>dndecor</code> و <code>createdeco</code>).<br>"
+	           + "• إذا استمرت المشكلة، <b>احذف مؤقتًا إضافات Create</b> واحدة تلو الأخرى لتحديد المسبب.<br>"
+	           + "• تأكد من أن <b>Amendments و Moonshine متوافقان</b> مع إصدارك من Create و Forge.<br>"
+	           + "• ابحث عن إصدارات تجريبية أو نسخ معدلة حديثة من الإضافات المعيبة.";
+	}
+
+	@Override
+	public String nombreErrorBlockItemNuloCreate() {
+	    return "عنصر كتلة فارغ في إضافة Create";
+	}
+	
 	
 	
 }

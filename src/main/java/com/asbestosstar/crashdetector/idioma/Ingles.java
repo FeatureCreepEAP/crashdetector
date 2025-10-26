@@ -3718,6 +3718,214 @@ public class Ingles implements Idioma {
 	    return "Interface Method Not Implemented (AbstractMethodError)";
 	}
 	
+	@Override
+	public String errorMetadataAnimacionEnServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "A mod is attempting to load a <b>client-side</b> class "
+	           + "(<code>AnimationMetadataSection</code>) on a <b>dedicated server</b>, which is impossible. "
+	           + "This error usually occurs when a mod does not properly separate its client and server code. "
+	           + "The presence of <code>ModernFix</code> may expose this issue, although it is not the direct cause.</b>";
+	}
+
+	@Override
+	public String solucionErrorMetadataAnimacionEnServidor() {
+	    return "• <b>Quick fix:</b> Temporarily remove <code>ModernFix</code> to confirm if the server starts. "
+	           + "If it does, the issue lies with another mod loading client classes on the server.<br>"
+	           + "• <b>Permanent solution:</b> Identify the guilty mod (look for mods with animated resources, custom textures, or graphics libraries) and update or remove it.<br>";
+	}
+
+	@Override
+	public String nombreErrorMetadataAnimacionEnServidor() {
+	    return "Client-side class loaded on server (AnimationMetadataSection)";
+	}
+	
+	@Override
+	public String errorConfiguracionConnectorCorrupta() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "The configuration file of a <code>Sinytra Connector</code> mod is corrupted. "
+	           + "This usually happens when the file becomes filled with null characters (<code>\\u0000</code>) "
+	           + "due to an unexpected game shutdown, write failures, or mod conflicts.</b>";
+	}
+
+	@Override
+	public String solucionConfiguracionConnectorCorrupta() {
+	    return "• Navigate to the <code>config/</code> folder of your Minecraft instance.<br>"
+	           + "• Locate and delete the configuration files for connector mods.<br>"
+	           + "• Restart the game: Sinytra Connector will generate a fresh, clean configuration file.";
+	}
+
+	@Override
+	public String nombreErrorConfiguracionConnectorCorrupta() {
+	    return "Sinytra Connector Configuration Corrupted";
+	}
+	@Override
+	public String errorJarCorruptoConNombre(String nombreJar) {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "The file <code>" + nombreJar + "</code> is corrupted or incomplete.<br>"
+	           + "The system cannot read its contents because the final ZIP file header is missing.<br>"
+	           + "This error usually occurs after an interrupted download or launcher failure.</b>";
+	}
+
+	@Override
+	public String nombreErrorJarCorruptoConNombre() {
+	    return "Corrupted JAR file (with specific name)";
+	}
+
+	@Override
+	public String solucionJarCorrupto() {
+	    return "• <b>Delete the corrupted file</b> and re-download it from the official source (CurseForge, MinecraftStorage, etc.).<br>"
+	           + "• If you're using a launcher like CurseForge, Technic, or Luna Pixel, consider switching to <b>ATLauncher</b> or <b>Prism Launcher</b>, "
+	           + "which better verify file integrity.<br>"
+	           + "• Ensure your internet connection is stable during the download.";
+	}
+	
+	@Override
+	public String errorCargaNBTMundoCorruptoConByte(String byteCorrupto) {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "Cannot load the world because one of its NBT files is corrupted "
+	           + "(e.g., <code>level.dat</code>, <code>playerdata/*.dat</code>, or chunks).<br>"
+	           + "The specific error is: <code>UTFDataFormatException: malformed input around byte " + byteCorrupto + "</code>.<br><br>"
+	           + "<b style='color:#" + config.obtenerColorAdvertencia() + ";'>"
+	           + "⚠️ Before attempting any repair, make a full backup of the world folder.</b><br><br>"
+	           + "You can try repairing the corrupted file using an <b>NBT editor</b> like <a href='https://github.com/tryashtar/nbt-studio'>NBT Studio</a>.<br>"
+	           + "If the damage is severe, use a <b>hex editor</b> (like HxD) to inspect and correct invalid bytes "
+	           + "(only if you have experience with the NBT format).<br>"
+	           + "As a last resort, restore from a backup or use the <i>world repair</i> feature from mods like <code>FTB Backup</code>.</b>";
+	}
+
+	@Override
+	public String solucionErrorCargaNBTMundoCorrupto() {
+	    return "• <b>Make a full backup of the world folder</b> before attempting any repair.<br>"
+	           + "• Use an NBT editor (like NBT Studio) to open and fix the corrupted file.<br>"
+	           + "• If that fails, inspect the file with a hex editor at the position of the corrupt byte.<br>"
+	           + "• If inexperienced, restore from a recent backup.";
+	}
+
+	@Override
+	public String nombreErrorCargaNBTMundoCorrupto() {
+	    return "World Corrupted: Error loading NBT data";
+	}
+	@Override
+	public String problema_con_openAL() {
+	    return "<span style='color:#" + config.obtenerColorError()
+	           + "'>You have an issue with OpenAL. Sometimes Nouveau drivers can cause this, but sometimes the application's bundled OpenAL version is incompatible with the one in your distribution and you need to use your distro's version. See this guide for more help: <a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>How to fix Minecraft sound problems using Linux</a>.</span>";
+	}
+	
+	@Override
+	public String errorArchivoBloqueadoPorOtroProceso() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "The server cannot start because a world file is locked by another process.<br>"
+	           + "This usually happens if:<br>"
+	           + "• There is already a server instance running.<br>"
+	           + "• An antivirus or file explorer has the world folder open.<br>"
+	           + "• The previous process did not close properly and left files locked.</b>";
+	}
+
+	@Override
+	public String solucionErrorArchivoBloqueadoPorOtroProceso() {
+	    return "• <b>Close all server instances</b> (including background processes like javaw.exe).<br>"
+	           + "• If you're using a hosting panel (like Multicraft), completely restart the server from the panel.<br>"
+	           + "• <b>Temporarily disable your antivirus</b> if you suspect it's blocking the files.<br>"
+	           + "• On local systems, close any Windows Explorer windows showing the world folder.<br>"
+	           + "• If the problem persists, manually delete the <code>session.lock</code> file inside the world folder (only if you are sure no other server is active).";
+	}
+
+	@Override
+	public String nombreErrorArchivoBloqueadoPorOtroProceso() {
+	    return "World file locked by another process";
+	}
+	
+	@Override
+	public String errorClaseFinalExtendida(String claseHija, String clasePadreFinal) {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "The mod attempted to extend the class <code>" + clasePadreFinal + "</code>, "
+	           + "but this class is now <b>final</b> and cannot be inherited from.<br>"
+	           + "The problematic class is: <code>" + claseHija + "</code>.<br><br>"
+	           + "This usually occurs when a mod is compiled for an older version of Minecraft or another base mod, "
+	           + "which has marked classes as <code>final</code> in recent versions.</b>";
+	}
+
+	@Override
+	public String solucionErrorClaseFinalExtendida() {
+	    return "• <b>Update all involved mods</b>, especially those that might be related to the mentioned base mod.<br>"
+	           + "• If the issue persists, look for a mod version compatible with your current Minecraft version and its dependencies.<br>"
+	           + "• In some cases, temporarily removing the mod containing the child class can help confirm the cause.";
+	}
+
+	@Override
+	public String nombreErrorClaseFinalExtendida() {
+	    return "Attempt to inherit from a final class";
+	}
+	
+	@Override
+	public String errorRubidiumObsoletoConIris() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "You are using <b>Rubidium</b> (an obsolete fork of Sodium for Forge) alongside <b>Iris or Oculus</b>.<br>"
+	           + "In recent versions of Minecraft (1.19.2+), "
+	           + "Rubidium has not kept pace with Sodium and its dependencies have had issues.<br><br>"
+	           + "This error can also occur if there is a conflict between performance mods (Sodium, Rubidium, Embeddium, Bedium, Xeonium, etc.) or Iris Shaders and another mod.</b>";
+	}
+
+	@Override
+	public String solucionRubidiumObsoletoConIris() {
+	    return "• <b>Remove Rubidium</b> from your <code>mods</code> folder.<br>"
+	           + "• <b>Install <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a></b>, "
+	           + "the active and compatible fork of Sodium for Forge that does support Iris/Oculus on 1.20+.<br>"
+	           + "• Make sure you don't have more than one Sodium fork installed at the same time (e.g., Rubidium + Embeddium).<br>"
+	           + "• If you're using Oculus instead of Iris, verify it is also compatible with your Forge and Embeddium versions.";
+	}
+
+	@Override
+	public String nombreErrorRubidiumObsoletoConIris() {
+	    return "Obsolete Rubidium with Iris/Oculus (OptionInstance is final)";
+	}
+	
+	@Override
+	public String errorVoiceChatPuertoOcupado() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "The <code>Simple Voice Chat</code> mod cannot start its voice server because "
+	           + "the UDP port is already in use or the configured IP address is invalid.<br>"
+	           + "This does not prevent the game from starting, but disables the voice chat functionality.</b>";
+	}
+
+	@Override
+	public String solucionErrorVoiceChatPuertoOcupado() {
+	    return "• <b>Close any other instance of Minecraft</b> or application using UDP port 24454.<br>"
+	           + "• If you are on a server, ensure that <b>no other service</b> is using that port.<br>"
+	           + "• In the mod's configuration (<code>config/voicechat/</code>), change the UDP port to a free one (e.g., 24455).<br>"
+	           + "• If you're using a custom IP address, verify it is correct or leave it blank to use the default.";
+	}
+
+	@Override
+	public String nombreErrorVoiceChatPuertoOcupado() {
+	    return "Voice Chat: UDP port occupied or invalid IP";
+	}
+	
+	@Override
+	public String errorBlockItemNuloCreate(String nombreBlockItem) {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "The BlockItem <code>" + nombreBlockItem + "</code> has a null block.<br>"
+	           + "This error usually occurs in <b>Create addons</b> (such as <code>dndecor</code>, <code>createdeco</code>) "
+	           + "when there are conflicts with <code>Amendments</code>, <code>Moonshine</code>, or incorrect block initialization.<br>"
+	           + "<b>Note:</b> This is not a direct error from Amendments, but a symptom of a deeper issue in registry loading.</b>";
+	}
+
+	@Override
+	public String solucionErrorBlockItemNuloCreate() {
+	    return "• <b>Update all related mods:</b> Create, Amendments, Moonshine, and any addon (especially <code>dndecor</code> and <code>createdeco</code>).<br>"
+	           + "• If the problem persists, <b>temporarily remove Create addons</b> one by one to identify the culprit.<br>"
+	           + "• Make sure <b>Amendments and Moonshine are compatible</b> with your version of Create and Forge.<br>"
+	           + "• Check if there are beta versions or updated forks of the problematic addons.";
+	}
+
+	@Override
+	public String nombreErrorBlockItemNuloCreate() {
+	    return "Null BlockItem in Create addon";
+	}
+	
+	
+	
+	
 	
 	
 	

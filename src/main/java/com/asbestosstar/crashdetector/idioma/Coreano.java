@@ -3574,6 +3574,216 @@ public class Coreano implements Idioma {
 	    return "구현되지 않은 인터페이스 메서드 (AbstractMethodError)";
 	}
 	
+	@Override
+	public String errorMetadataAnimacionEnServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "모드가 <b>전용 서버</b>에서 <b>클라이언트 측</b> 클래스인 "
+	           + "(<code>AnimationMetadataSection</code>)를 로드하려 시도하고 있으나, 이는 불가능합니다. "
+	           + "이 오류는 모드가 클라이언트와 서버 코드를 제대로 분리하지 않았을 때 자주 발생합니다. "
+	           + "<code>ModernFix</code>가 설치되어 있으면 이 문제를 드러낼 수 있지만, 직접적인 원인은 아닙니다.</b>";
+	}
+
+	@Override
+	public String solucionErrorMetadataAnimacionEnServidor() {
+	    return "• <b>빠른 해결책:</b> <code>ModernFix</code>를 임시로 제거하여 서버가 시작되는지 확인하세요. "
+	           + "시작된다면 문제는 다른 모드가 서버에 클라이언트 클래스를 로드하고 있기 때문입니다.<br>"
+	           + "• <b>영구적 해결책:</b> 문제의 원인이 되는 모드(애니메이션 리소스, 맞춤 텍스처 또는 그래픽 라이브러리를 사용하는 모드)를 찾아 업데이트하거나 삭제하세요.<br>";
+	}
+
+	@Override
+	public String nombreErrorMetadataAnimacionEnServidor() {
+	    return "서버에서 클라이언트 클래스 로드됨 (AnimationMetadataSection)";
+	}
+	
+	@Override
+	public String errorConfiguracionConnectorCorrupta() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "<code>Sinytra Connector</code> 모드의 설정 파일이 손상되었습니다. "
+	           + "게임이 예기치 않게 종료되거나, 쓰기 오류, 모드 충돌로 인해 파일에 널 문자(<code>\\u0000</code>)가 가득 차는 경우 이 문제가 발생합니다.</b>";
+	}
+
+	@Override
+	public String solucionConfiguracionConnectorCorrupta() {
+	    return "• 마인크래프트 인스턴스의 <code>config/</code> 폴더로 이동하세요.<br>"
+	           + "• connector 관련 모드의 설정 파일을 찾아 삭제하세요.<br>"
+	           + "• 게임을 다시 시작하세요: Sinytra Connector가 새롭고 깨끗한 설정 파일을 생성할 것입니다.";
+	}
+
+	@Override
+	public String nombreErrorConfiguracionConnectorCorrupta() {
+	    return "Sinytra Connector 설정 손상";
+	}
+	
+	@Override
+	public String errorJarCorruptoConNombre(String nombreJar) {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "파일 <code>" + nombreJar + "</code>이(가) 손상되었거나 불완전합니다.<br>"
+	           + "ZIP 파일의 마지막 헤더가 누락되어 시스템이 내용을 읽을 수 없습니다.<br>"
+	           + "이 오류는 일반적으로 다운로드 중단이나 런처 오류 후에 발생합니다.</b>";
+	}
+
+	@Override
+	public String nombreErrorJarCorruptoConNombre() {
+	    return "손상된 JAR 파일 (특정 이름 포함)";
+	}
+
+	@Override
+	public String solucionJarCorrupto() {
+	    return "• <b>손상된 파일을 삭제</b>하고 공식 출처(CurseForge, MinecraftStorage 등)에서 다시 다운로드하세요.<br>"
+	           + "• CurseForge, Technic 또는 Luna Pixel 같은 런처를 사용한다면, "
+	           + "파일 무결성을 더 잘 검사하는 <b>ATLauncher</b> 또는 <b>Prism Launcher</b>로 전환하는 것을 고려하세요.<br>"
+	           + "• 다운로드 중 인터넷 연결이 안정적인지 확인하세요.";
+	}
+	
+	@Override
+	public String errorCargaNBTMundoCorruptoConByte(String byteCorrupto) {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "세계를 불러올 수 없습니다. NBT 파일 중 하나가 손상되었기 때문입니다 "
+	           + "(예: <code>level.dat</code>, <code>playerdata/*.dat</code>, 또는 청크 데이터).<br>"
+	           + "구체적인 오류는 다음과 같습니다: <code>UTFDataFormatException: 바이트 " + byteCorrupto + " 근처에서 잘못된 입력 형식</code>.<br><br>"
+	           + "<b style='color:#" + config.obtenerColorAdvertencia() + ";'>"
+	           + "⚠️ 복구 시도 전에 반드시 세계 폴더 전체를 백업하세요.</b><br><br>"
+	           + "손상된 파일은 <b>NBT 편집기</b>(예: <a href='https://github.com/tryashtar/nbt-studio'>NBT Studio</a>)를 사용해 복구할 수 있습니다.<br>"
+	           + "심각하게 손상된 경우, <b>헥사 에디터</b>(HxD 등)로 무효 바이트를 검사하고 수정할 수 있습니다 "
+	           + "(단, NBT 형식에 익숙한 경우에만 권장).<br>"
+	           + "마지막 수단으로 백업본에서 복원하거나, <code>FTB Backup</code> 등의 MOD에서 제공하는 '월드 복구' 기능을 사용하세요.</b>";
+	}
+
+	@Override
+	public String solucionErrorCargaNBTMundoCorrupto() {
+	    return "• <b>복구 시도 전에 세계 폴더를 완전히 백업하세요</b>.<br>"
+	           + "• NBT 편집기(NBT Studio 등)를 사용하여 손상된 파일을 열고 수정하세요.<br>"
+	           + "• 실패하면 헥사 에디터로 손상된 바이트 위치를 확인하세요.<br>"
+	           + "• 경험이 없다면 최근 백업본에서 복원하세요.";
+	}
+
+	@Override
+	public String nombreErrorCargaNBTMundoCorrupto() {
+	    return "세계 손상: NBT 데이터 로드 오류";
+	}
+	
+	@Override
+	public String problema_con_openAL() {
+	    return "<span style='color:#" + config.obtenerColorError()
+	           + "'>OpenAL에 문제가 있습니다. 가끔 Nouveau 드라이버가 원인일 수 있지만, 때로는 애플리케이션의 OpenAL 버전이 배포판의 버전과 호환되지 않아 배포판에서 제공하는 버전을 사용해야 할 수도 있습니다. 더 많은 도움을 받으려면 다음 가이드를 참조하세요: <a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>리눅스에서 마인크래프트 사운드 문제 해결 방법</a>.</span>";
+	}
+	
+	@Override
+	public String errorArchivoBloqueadoPorOtroProceso() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "서버를 시작할 수 없습니다. 세계의 파일이 다른 프로세스에 의해 잠겨 있기 때문입니다.<br>"
+	           + "다음과 같은 경우에 발생합니다:<br>"
+	           + "• 이미 서버 인스턴스가 실행 중입니다.<br>"
+	           + "• 바이러스 백신 프로그램이나 파일 탐색기가 세계 폴더를 열고 있습니다.<br>"
+	           + "• 이전 프로세스가 정상적으로 종료되지 않아 파일이 잠긴 상태입니다.</b>";
+	}
+
+	@Override
+	public String solucionErrorArchivoBloqueadoPorOtroProceso() {
+	    return "• <b>모든 서버 인스턴스를 종료하세요</b> (javaw.exe와 같은 백그라운드 프로세스 포함).<br>"
+	           + "• 호스팅 패널(Multicraft 등)을 사용한다면 패널에서 서버를 완전히 재시작하세요.<br>"
+	           + "• 파일을 잠그고 있다고 의심되면 <b>바이러스 백신을 일시적으로 비활성화하세요</b>.<br>"
+	           + "• 로컬 시스템에서는 세계 폴더를 표시하는 모든 Windows 탐색기 창을 닫으세요.<br>"
+	           + "• 문제가 지속되면, 세계 폴더 내부의 <code>session.lock</code> 파일을 수동으로 삭제하세요 (다른 서버가 실행 중이지 않다는 확신이 있을 때만).";
+	}
+
+	@Override
+	public String nombreErrorArchivoBloqueadoPorOtroProceso() {
+	    return "다른 프로세스에 의해 잠긴 세계 파일";
+	}
+	
+	@Override
+	public String errorClaseFinalExtendida(String claseHija, String clasePadreFinal) {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "모드가 <code>" + clasePadreFinal + "</code> 클래스를 확장하려 했지만, "
+	           + "이 클래스는 이제 <b>final</b>로 설정되어 상속할 수 없습니다.<br>"
+	           + "문제가 있는 클래스는: <code>" + claseHija + "</code>입니다.<br><br>"
+	           + "이는 일반적으로 모드가 마인크래프트 또는 다른 기본 모드의 이전 버전용으로 컴파일되었으며, "
+	           + "해당 기본 모드가 최근 버전에서 특정 클래스를 <code>final</code>로 지정한 경우에 발생합니다.</b>";
+	}
+
+	@Override
+	public String solucionErrorClaseFinalExtendida() {
+	    return "• <b>관련된 모든 모드를 업데이트하세요</b>, 특히 언급된 기본 모드와 관련이 있을 수 있는 모드들.<br>"
+	           + "• 문제가 지속되면 현재 마인크래프트 버전과 종속성과 호환되는 모드 버전을 찾아보세요.<br>"
+	           + "• 일부 경우, 자식 클래스를 포함한 모드를 일시적으로 제거하면 원인을 확인할 수 있습니다.";
+	}
+
+	@Override
+	public String nombreErrorClaseFinalExtendida() {
+	    return "final 클래스 상속 시도";
+	}
+	
+	@Override
+	public String errorRubidiumObsoletoConIris() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "<b>Rubidium</b>(포지용 소듐 포크 중 폐기된 버전)을 <b>Iris 또는 Oculus</b>와 함께 사용하고 있습니다.<br>"
+	           + "최근 마인크래프트 버전(1.19.2 이상)에서 "
+	           + "Rubidium은 소듐의 업데이트를 따라가지 못했고 관련 모드에 문제가 발생했습니다.<br><br>"
+	           + "성능 향상 모드(Sodium, Rubidium, Embeddium, Bedium, Xeonium 등) 또는 Iris Shaders가 다른 모드와 충돌할 때도 이 오류가 발생할 수 있습니다.</b>";
+	}
+
+	@Override
+	public String solucionRubidiumObsoletoConIris() {
+	    return "• <b>mods</b> 폴더에서 <b>Rubidium을 제거하세요</b>.<br>"
+	           + "• <b><a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a>을 설치하세요</b>, "
+	           + "이것은 1.20+ 버전에서 Iris/Oculus를 지원하는, 포지용으로 활발히 유지보수되는 소듐 포크입니다.<br>"
+	           + "• 동시에 여러 개의 소듐 포크를 설치하지 않도록 하세요(Rubidium과 Embeddium 같이 설치 금지).<br>"
+	           + "• Iris 대신 Oculus를 사용한다면, 그것도 당신의 포지 및 Embeddium 버전과 호환되는지 확인하세요.";
+	}
+
+	@Override
+	public String nombreErrorRubidiumObsoletoConIris() {
+	    return "사용 중단된 Rubidium과 Iris/Oculus 함께 사용 (OptionInstance는 final임)";
+	}
+	
+	@Override
+	public String errorVoiceChatPuertoOcupado() {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "لا يمكن للتعديل <code>Simple Voice Chat</code> تشغيل خادم الصوت الخاص به لأن "
+	           + "منفذ UDP مستخدم بالفعل أو عنوان IP المُعد غير صالح.<br>"
+	           + "هذا لا يمنع بدء اللعبة، لكنه يعطل وظيفة الدردشة الصوتية.</b>";
+	}
+
+	@Override
+	public String solucionErrorVoiceChatPuertoOcupado() {
+	    return "• <b>أغلق أي نسخة أخرى من ماينكرافت</b> أو تطبيق يستخدم المنفذ UDP 24454.<br>"
+	           + "• إذا كنت على خادم، تأكد من أن <b>أي خدمة أخرى</b> لا تستخدم هذا المنفذ.<br>"
+	           + "• في إعدادات التعديل (<code>config/voicechat/</code>)، غيّر منفذ UDP إلى منفذ حر (مثلاً 24455).<br>"
+	           + "• إذا كنت تستخدم عنوان IP مخصصًا، فتحقق من صحته أو اتركه فارغًا لاستخدام الإعداد الافتراضي.";
+	}
+
+	@Override
+	public String nombreErrorVoiceChatPuertoOcupado() {
+	    return "الدردشة الصوتية: منفذ UDP مشغول أو عنوان IP غير صالح";
+	}
+	
+	@Override
+	public String errorBlockItemNuloCreate(String nombreBlockItem) {
+	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
+	           + "블록 아이템 <code>" + nombreBlockItem + "</code>이(가) 블록을 null로 참조하고 있습니다.<br>"
+	           + "이 오류는 일반적으로 <b>Create 애드온</b>(예: <code>dndecor</code>, <code>createdeco</code>)에서 발생하며, "
+	           + "<code>Amendments</code>, <code>Moonshine</code>과의 충돌 또는 블록 초기화 오류로 인해 나타납니다.<br>"
+	           + "<b>참고:</b> 이 오류는 Amendments 자체의 문제가 아니라 등록 로드 과정의 더 깊은 문제를 나타냅니다.</b>";
+	}
+
+	@Override
+	public String solucionErrorBlockItemNuloCreate() {
+	    return "• <b>관련된 모든 모드를 업데이트하세요:</b> Create, Amendments, Moonshine 및 모든 애드온(<code>dndecor</code>, <code>createdeco</code> 포함).<br>"
+	           + "• 문제가 지속되면 <b>Create 애드온을 일시적으로 하나씩 제거</b>하여 원인을 찾아보세요.<br>"
+	           + "• <b>Amendments와 Moonshine이 사용 중인 Create 및 Forge 버전과 호환되는지</b> 확인하세요.<br>"
+	           + "• 문제가 있는 애드온의 베타 버전이나 최신 포크가 있는지 확인하세요.";
+	}
+
+	@Override
+	public String nombreErrorBlockItemNuloCreate() {
+	    return "Create 애드온에서의 null 블록 아이템";
+	}
+	
+	
+	
+	
+	
 	
 	
 
