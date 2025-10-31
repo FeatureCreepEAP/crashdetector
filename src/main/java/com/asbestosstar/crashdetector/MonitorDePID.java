@@ -823,6 +823,7 @@ public class MonitorDePID {
 
 		File archivoTemporal = null;
 		try {
+			CrashDetectorLogger.log("Cargando imagen "+resultado.getAbsolutePath());
 			// Preparar archivo temporal
 			archivoTemporal = new File(resultado.getParentFile(), resultado.getName() + ".tmp");
 
