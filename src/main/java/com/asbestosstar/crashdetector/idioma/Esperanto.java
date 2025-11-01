@@ -3948,6 +3948,54 @@ public class Esperanto implements Idioma {
 	public String nombreConflictoMoonlightIceberg() {
 	    return "Grava konflikto: Moonlight kontraŭ Iceberg (OpenGL sen konteksto)";
 	}
+	@Override
+	public String instantanea() {
+	    return "Bildaĵo";
+	}
+
+	@Override
+	public Object desdeUltimaInstantanea() {
+	    return "Ekde lasta bildaĵo";
+	}
+
+	@Override
+	public String seleccionarUnArchivo() {
+	    return "Elekti dosieron";
+	}
+
+	@Override
+	public String instantaneaCreadaCorrectamente() {
+	    return "Bildaĵo sukcese kreita";
+	}
+
+	@Override
+	public String errorCreandoInstantanea() {
+	    return "Eraro dum kreo de bildaĵo";
+	}
+	
+	@Override
+	public String consejo() {
+	    return "Konsilo";
+	}
+
+	@Override
+	public String resultadoMuestra() {
+	    return "Montri rezulton";
+	}
+	
+	@Override
+	public String historaDeModsDesc() {
+	    return "<html>" + 
+	           "<body style='font-family: sans-serif; font-size: 12px;'>" +
+	           "  <b>Konsilo:</b> Elektu du protokolajn dosierojn por kompari liston de aldonaĵoj. " +
+	           "  La rezulto montras <span style='color:%s;'>aldonitajn (+)</span> kai " +
+	           "  <span style='color:%s;'>forigitajn (&#8722;)</span> bazite sur normigitaj nomoj. " +
+	           "  Uzu la butonon 'Bildaĵo' por krei kopion de ekzistanta dosiero per etendita nomo .instantanea." +
+	           "</body>" + 
+	           "</html>";
+	}
+	
+	
 	
 	
 }

@@ -3991,7 +3991,52 @@ public class Ingles implements Idioma {
 	public String nombreConflictoMoonlightIceberg() {
 	    return "Critical Conflict: Moonlight vs Iceberg (OpenGL without context)";
 	}
+	@Override
+	public String instantanea() {
+	    return "Snapshot";
+	}
+
+	@Override
+	public Object desdeUltimaInstantanea() {
+	    return "Since Last Snapshot";
+	}
+
+	@Override
+	public String seleccionarUnArchivo() {
+	    return "Select a file";
+	}
+
+	@Override
+	public String instantaneaCreadaCorrectamente() {
+	    return "Snapshot created successfully";
+	}
+
+	@Override
+	public String errorCreandoInstantanea() {
+	    return "Error creating snapshot";
+	}
 	
+	@Override
+	public String consejo() {
+	    return "Tip";
+	}
+
+	@Override
+	public String resultadoMuestra() {
+	    return "Show Result";
+	}
+	
+	@Override
+	public String historaDeModsDesc() {
+	    return "<html>" + 
+	           "<body style='font-family: sans-serif; font-size: 12px;'>" +
+	           "  <b>Tip:</b> Select two history files to compare the mod list. " +
+	           "  The result shows <span style='color:%s;'>added (+)</span> and " +
+	           "  <span style='color:%s;'>removed (&#8722;)</span> based on normalised names. " +
+	           "  Use the 'Snapshot' button to create a copy of an existing file with the .instantanea extension." +
+	           "</body>" + 
+	           "</html>";
+	}
 	
 	
 	

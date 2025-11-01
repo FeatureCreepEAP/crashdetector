@@ -27,11 +27,27 @@ public class DifDeMods implements Verificaciones {
 			// Obtener lista actual de mods
 			Set<String> modsActual = obtenerMods(MonitorDePID.ultimo_mods);
 
-			// Buscar últimos archivos históricos
+			// Buscar últimos archivos históricos (exito, falla, instantanea)
 			Path exitoFile = obtenerUltimoArchivo("exito");
 			Path fallaFile = obtenerUltimoArchivo("falla");
+			Path instantaneaFile = obtenerUltimoArchivo("instantanea"); // Nuevo archivo de instantánea
 
-			// Determinar archivo más reciente globalmente
+			// Determinar archivo más reciente globalmente para instantáneas
+			Path archivoInstantaneaUltimo = null;
+			if (instantaneaFile != null) { // Si hay alguna instantánea, usamos la más reciente
+				archivoInstantaneaUltimo = instantaneaFile;
+			}
+
+			// Comparar con la instantánea más reciente (si existe)
+			List<String> diffInstantanea = new ArrayList<>();
+			if (archivoInstantaneaUltimo != null) {
+				Set<String> modsInstantanea = obtenerMods(archivoInstantaneaUltimo);
+				diffInstantanea = compararMods(modsInstantanea, modsActual);
+			}
+
+			// Ajustar archivos a comparar según el último estado para exito/falla
+			// (Lógica original para comparar con el último exito o falla, no con la
+			// instantánea)
 			Path archivoUltimo = null;
 			if (exitoFile != null && fallaFile != null) {
 				int numExito = obtenerNumeroArchivo(exitoFile);
@@ -50,9 +66,9 @@ public class DifDeMods implements Verificaciones {
 				}
 			}
 
-			// Ajustar archivos a comparar según el último estado
+			// Si el archivo más reciente es un éxito, no comparar con falla
 			if (archivoUltimo != null && archivoUltimo.toString().endsWith(".exito")) {
-				fallaFile = null; // Solo comparar con éxito si es el último
+				fallaFile = null;
 			}
 
 			// Comparar con último éxito
@@ -70,9 +86,10 @@ public class DifDeMods implements Verificaciones {
 			}
 
 			// Generar HTML si hay diferencias
-			if (!diffExito.isEmpty() || !diffFalla.isEmpty()) {
+			if (!diffInstantanea.isEmpty() || !diffExito.isEmpty() || !diffFalla.isEmpty()) {
 				activado = true;
-				mensajeHTML = generarHTML(diffExito, diffFalla, exitoFile != null, fallaFile != null);
+				mensajeHTML = generarHTML(diffInstantanea, diffExito, diffFalla, archivoInstantaneaUltimo != null,
+						exitoFile != null, fallaFile != null);
 			}
 
 		} catch (IOException e) {
@@ -104,13 +121,11 @@ public class DifDeMods implements Verificaciones {
 		List<File> sortedFiles = Arrays.stream(files).sorted((f1, f2) -> {
 			int num1 = obtenerNumeroArchivo(f1.toPath());
 			int num2 = obtenerNumeroArchivo(f2.toPath());
-			return Integer.compare(num2, num1);
+			return Integer.compare(num2, num1); // Orden descendente
 		}).collect(Collectors.toList());
 
-		if (sortedFiles.size() > 1) {
-			return sortedFiles.get(1).toPath();
-		} else if (sortedFiles.size() == 1) {
-			return sortedFiles.get(0).toPath();
+		if (!sortedFiles.isEmpty()) {
+			return sortedFiles.get(0).toPath(); // Devuelve la más reciente
 		}
 
 		return null;
@@ -121,9 +136,36 @@ public class DifDeMods implements Verificaciones {
 		return Integer.parseInt(nombre.substring(0, 6));
 	}
 
-	private String generarHTML(List<String> diffExito, List<String> diffFalla, boolean tieneExito, boolean tieneFalla) {
+	// Modificado para incluir la comparación con la instantánea al principio
+	private String generarHTML(List<String> diffInstantanea, List<String> diffExito, List<String> diffFalla,
+			boolean tieneInstantanea, boolean tieneExito, boolean tieneFalla) {
 		StringBuilder html = new StringBuilder();
 
+		// Mostrar diferencias con la instantánea más reciente primero
+		if (tieneInstantanea) {
+			html.append("<div style='margin:10px 0;padding:10px;border:1px solid #ccc;background-color:#f0f8ff;'>") // Fondo
+																													// azul
+																													// claro
+																													// para
+																													// instantánea
+					.append("<h3 style='color:#2196F3;'>") // Color de encabezado azul
+					.append(MonitorDePID.idioma.desdeUltimaInstantanea()).append(" (")
+					.append(extensionToNombre("instantanea")).append("):</h3>"); // Nuevo texto localizado
+
+			if (diffInstantanea.isEmpty()) {
+				html.append("<p style='color:green'>").append(MonitorDePID.idioma.noHayCambios()).append("</p>");
+			} else {
+				html.append("<ul>");
+				for (String linea : diffInstantanea) {
+					String color = linea.startsWith("+") ? "green" : "red";
+					html.append("<li style='color:" + color + "'>").append(linea).append("</li>");
+				}
+				html.append("</ul>");
+			}
+			html.append("</div>");
+		}
+
+		// Mostrar diferencias con el último éxito
 		if (tieneExito) {
 			html.append("<div style='margin:10px 0;padding:10px;border:1px solid #ccc'>").append("<h3>")
 					.append(MonitorDePID.idioma.desdeUltimoExito()).append(" (").append(extensionToNombre("exito"))
@@ -142,6 +184,7 @@ public class DifDeMods implements Verificaciones {
 			html.append("</div>");
 		}
 
+		// Mostrar diferencias con la última falla
 		if (tieneFalla) {
 			html.append("<div style='margin:10px 0;padding:10px;border:1px solid #ccc'>").append("<h3>")
 					.append(MonitorDePID.idioma.desdeUltimoIntento()).append(" (").append(extensionToNombre("falla"))
@@ -164,7 +207,14 @@ public class DifDeMods implements Verificaciones {
 	}
 
 	private String extensionToNombre(String extension) {
-		return extension.equals("exito") ? MonitorDePID.idioma.exito() : MonitorDePID.idioma.fallo();
+		if ("exito".equals(extension)) {
+			return MonitorDePID.idioma.exito();
+		} else if ("falla".equals(extension)) {
+			return MonitorDePID.idioma.fallo();
+		} else if ("instantanea".equals(extension)) {
+			return MonitorDePID.idioma.instantanea(); // Nuevo texto localizado
+		}
+		return extension; // Por si acaso
 	}
 
 	@Override
@@ -184,7 +234,7 @@ public class DifDeMods implements Verificaciones {
 
 	@Override
 	public float prioridad() {
-		return -1000;
+		return -1000; // Prioridad baja, se mantiene igual
 	}
 
 	@Override
@@ -200,14 +250,11 @@ public class DifDeMods implements Verificaciones {
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
 		return "dif_de_mods";
 	}
 
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
 		return false;
 	}
-
 }

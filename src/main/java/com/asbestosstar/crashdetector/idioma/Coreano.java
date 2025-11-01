@@ -3849,6 +3849,53 @@ public class Coreano implements Idioma {
 	public String nombreConflictoMoonlightIceberg() {
 	    return "치명적 충돌: Moonlight 대 Iceberg (OpenGL 컨텍스트 없음)";
 	}
+	@Override
+	public String instantanea() {
+	    return "스냅샷";
+	}
+
+	@Override
+	public Object desdeUltimaInstantanea() {
+	    return "마지막 스냅샷 이후";
+	}
+
+	@Override
+	public String seleccionarUnArchivo() {
+	    return "파일 선택";
+	}
+
+	@Override
+	public String instantaneaCreadaCorrectamente() {
+	    return "스냅샷이 성공적으로 생성되었습니다";
+	}
+
+	@Override
+	public String errorCreandoInstantanea() {
+	    return "스냅샷 생성 중 오류 발생";
+	}
+	
+	@Override
+	public String consejo() {
+	    return "팁";
+	}
+
+	@Override
+	public String resultadoMuestra() {
+	    return "결과 보기";
+	}
+	
+	
+	@Override
+	public String historaDeModsDesc() {
+	    return "<html>" + 
+	           "<body style='font-family: sans-serif; font-size: 12px;'>" +
+	           "  <b>팁:</b> 두 개의 기록 파일을 선택하여 모드 목록을 비교하세요. " +
+	           "  결과는 정규화된 이름을 기준으로 <span style='color:%s;'>추가됨 (+)</span>과 " +
+	           "  <span style='color:%s;'>제거됨 (&#8722;)</span>을 표시합니다. " +
+	           "  '스냅샷' 버튼을 사용하면 기존 파일의 .instantanea 확장자 복사본을 만들 수 있습니다." +
+	           "</body>" + 
+	           "</html>";
+	}
 	
 	
 	

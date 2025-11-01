@@ -49,7 +49,7 @@ import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanel;
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanelEstiloTL;
 import com.asbestosstar.crashdetector.gui.tipos.editor.EditorCodiceGUIIronMouse;
 import com.asbestosstar.crashdetector.gui.tipos.grepr.BusquedaGUISaliorMoon;
-import com.asbestosstar.crashdetector.gui.tipos.historia.HistoriaModsGUILegacy;
+import com.asbestosstar.crashdetector.gui.tipos.historia.ClioOfficeGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasHoloTalk;
 import com.asbestosstar.crashdetector.gui.tipos.mcreator.EscanerMCreatorGUIRosemiLoveLock;
 import com.asbestosstar.crashdetector.gui.tipos.quickfix.PanelQuickFixDemonSlayers;
@@ -107,8 +107,8 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		registrarBotonDeBarraLateralDerecha(TipoGUI.GREPR, BusquedaGUISaliorMoon.ID, () -> new BusquedaGUISaliorMoon());
 		registrarBotonDeBarraLateralDerecha(TipoGUI.ESCANER_MCREATOR, EscanerMCreatorGUIRosemiLoveLock.ID,
 				() -> new EscanerMCreatorGUIRosemiLoveLock());
-		registrarBotonDeBarraLateralDerecha(TipoGUI.HISTORIA_DE_MODS, HistoriaModsGUILegacy.ID,
-				() -> new HistoriaModsGUILegacy());
+		registrarBotonDeBarraLateralDerecha(TipoGUI.HISTORIA_DE_MODS, ClioOfficeGUI.ID,
+				() -> new ClioOfficeGUI());
 		registrarBotonDeBarraLateralDerecha(TipoGUI.ARBOL_DE_MODS, ArbolDeModsGUIHamu.ID,
 				() -> new ArbolDeModsGUIHamu());
 		registrarBotonDeBarraLateralDerecha(TipoGUI.LECTADOR_DE_CONSOLAS, LectadorDeConsolasHoloTalk.ID,

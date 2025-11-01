@@ -3923,9 +3923,52 @@ public class Arabe implements Idioma {
 	public String nombreConflictoMoonlightIceberg() {
 	    return "تعارض حرج: Moonlight مقابل Iceberg (فشل OpenGL - لا يوجد سياق)";
 	}
+	@Override
+	public String instantanea() {
+	    return "لقطة";
+	}
+
+	@Override
+	public Object desdeUltimaInstantanea() {
+	    return "من آخر لقطة";
+	}
+
+	@Override
+	public String seleccionarUnArchivo() {
+	    return "اختر ملفًا";
+	}
+
+	@Override
+	public String instantaneaCreadaCorrectamente() {
+	    return "تم إنشاء اللقطة بنجاح";
+	}
+
+	@Override
+	public String errorCreandoInstantanea() {
+	    return "خطأ أثناء إنشاء اللقطة";
+	}
 	
+	@Override
+	public String consejo() {
+	    return "نصيحة";
+	}
+
+	@Override
+	public String resultadoMuestra() {
+	    return "عرض النتيجة";
+	}
 	
-	
+	@Override
+	public String historaDeModsDesc() {
+	    return "<html>" + 
+	           "<body style='font-family: sans-serif; font-size: 12px;'>" +
+	           "  <b>نصيحة:</b> اختر ملفين من السجل للمقارنة بين قائمة التعديلات. " +
+	           "  يُظهر الناتج العناصر <span style='color:%s;'>المضافة (+)</span> و" +
+	           "  <span style='color:%s;'>المحذوفة (&#8722;)</span> استنادًا إلى أسماء موحّدة. " +
+	           "  استخدم زر 'لقطة' لإنشاء نسخة من ملف موجود بامتداد .instantanea." +
+	           "</body>" + 
+	           "</html>";
+	}
 	
 	
 	

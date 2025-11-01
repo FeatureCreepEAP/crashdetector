@@ -3959,6 +3959,50 @@ public class Ruso implements Idioma {
 	    return "Критический конфликт: Moonlight против Iceberg (OpenGL без контекста)";
 	}
 	
+	@Override
+	public String instantanea() {
+	    return "Снимок";
+	}
+
+	@Override
+	public Object desdeUltimaInstantanea() {
+	    return "С последнего снимка";
+	}
+
+	@Override
+	public String seleccionarUnArchivo() {
+	    return "Выберите файл";
+	}
+
+	@Override
+	public String instantaneaCreadaCorrectamente() {
+	    return "Снимок успешно создан";
+	}
+
+	@Override
+	public String errorCreandoInstantanea() {
+	    return "Ошибка при создании снимка";
+	}
+	@Override
+	public String consejo() {
+	    return "Совет";
+	}
+
+	@Override
+	public String resultadoMuestra() {
+	    return "Показать результат";
+	}
 	
+	@Override
+	public String historaDeModsDesc() {
+	    return "<html>" + 
+	           "<body style='font-family: sans-serif; font-size: 12px;'>" +
+	           "  <b>Совет:</b> Выберите два файла журнала, чтобы сравнить список модов. " +
+	           "  Результат показывает <span style='color:%s;'>добавленные (+)</span> и " +
+	           "  <span style='color:%s;'>удалённые (&#8722;)</span> на основе нормализованных имён. " +
+	           "  Используйте кнопку «Снимок», чтобы создать копию существующего файла с расширением .instantanea." +
+	           "</body>" + 
+	           "</html>";
+	}
 	
 }

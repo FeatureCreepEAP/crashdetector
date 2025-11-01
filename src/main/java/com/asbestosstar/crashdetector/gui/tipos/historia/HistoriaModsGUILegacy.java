@@ -29,248 +29,278 @@ import com.asbestosstar.crashdetector.config.ElementoConfig;
 
 public class HistoriaModsGUILegacy extends HistoriaDeModsGUI {
 
-    public static String ID = "historia_mods_legacy";
-    private static final long serialVersionUID = 1L;
+	public static String ID = "historia_mods_legacy";
+	private static final long serialVersionUID = 1L;
 
-    // ====== Tipografías ======
-    public Font fuenteEtiqueta = new Font(Font.SANS_SERIF, Font.BOLD, 14);
-    public Font fuenteRadio = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
-    public Font fuenteEstado = new Font(Font.SANS_SERIF, Font.PLAIN, 10);
+	// ====== Tipografías ======
+	public Font fuenteEtiqueta = new Font(Font.SANS_SERIF, Font.BOLD, 14);
+	public Font fuenteRadio = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
+	public Font fuenteEstado = new Font(Font.SANS_SERIF, Font.PLAIN, 10);
 
-    
-   public ConfigColor colorEstadoExito = ConfigColor.de("tema.historia_mods.color.estado.exito", new java.awt.Color(0x4C, 0xAF, 0x50));
-   public ConfigColor colorEstadoFallo = ConfigColor.de("tema.historia_mods.color.estado.fallo", new java.awt.Color(0xF4, 0x43, 0x36));
-   public ConfigColor colorResultadoAnadido = ConfigColor.de("tema.historia_mods.color.resultado.anadido", new java.awt.Color(0x2E, 0x7D, 0x32));
-   public ConfigColor colorResultadoEliminado = ConfigColor.de("tema.historia_mods.color.resultado.eliminado", new java.awt.Color(0xC6, 0x28, 0x28));
-   public ConfigColor colorBordeScroll = ConfigColor.de("tema.historia_mods.color.borde.scroll", new java.awt.Color(0xDD, 0xDD, 0xDD));
-   public ConfigColor colorFondoPanel = ConfigColor.de("tema.historia_mods.color.fondo.panel", new java.awt.Color(0xFF, 0xFF, 0xFF));
+	// Colores configurables
+	public ConfigColor colorEstadoExito = ConfigColor.de("tema.historia_mods.color.estado.exito",
+			new java.awt.Color(0x4C, 0xAF, 0x50));
+	public ConfigColor colorEstadoFallo = ConfigColor.de("tema.historia_mods.color.estado.fallo",
+			new java.awt.Color(0xF4, 0x43, 0x36));
+	public ConfigColor colorEstadoInstantanea = ConfigColor.de("tema.historia_mods.color.estado.instantanea",
+			new java.awt.Color(0x21, 0x96, 0xF3)); // Azul para instantánea
+	public ConfigColor colorResultadoAnadido = ConfigColor.de("tema.historia_mods.color.resultado.anadido",
+			new java.awt.Color(0x2E, 0x7D, 0x32));
+	public ConfigColor colorResultadoEliminado = ConfigColor.de("tema.historia_mods.color.resultado.eliminado",
+			new java.awt.Color(0xC6, 0x28, 0x28));
+	public ConfigColor colorBordeScroll = ConfigColor.de("tema.historia_mods.color.borde.scroll",
+			new java.awt.Color(0xDD, 0xDD, 0xDD));
+	public ConfigColor colorFondoPanel = ConfigColor.de("tema.historia_mods.color.fondo.panel",
+			new java.awt.Color(0xFF, 0xFF, 0xFF));
 
-    
-    
-    @Override
-    public String id() {
-        return ID;
-    }
+	@Override
+	public String id() {
+		return ID;
+	}
 
-    @Override
-    public void init() {
-        // Inicializar colores PRIMERO
+	@Override
+	public void init() {
+		// Inicializar colores PRIMERO (esto sobrescribe los valores por defecto del
+		// constructor base)
+		colorEstadoExito = ConfigColor.de("tema.historia_mods.color.estado.exito",
+				new java.awt.Color(0x4C, 0xAF, 0x50));
+		colorEstadoFallo = ConfigColor.de("tema.historia_mods.color.estado.fallo",
+				new java.awt.Color(0xF4, 0x43, 0x36));
+		colorEstadoInstantanea = ConfigColor.de("tema.historia_mods.color.estado.instantanea",
+				new java.awt.Color(0x21, 0x96, 0xF3)); // Azul para instantánea
+		colorResultadoAnadido = ConfigColor.de("tema.historia_mods.color.resultado.anadido",
+				new java.awt.Color(0x2E, 0x7D, 0x32));
+		colorResultadoEliminado = ConfigColor.de("tema.historia_mods.color.resultado.eliminado",
+				new java.awt.Color(0xC6, 0x28, 0x28));
+		colorBordeScroll = ConfigColor.de("tema.historia_mods.color.borde.scroll",
+				new java.awt.Color(0xDD, 0xDD, 0xDD));
+		colorFondoPanel = ConfigColor.de("tema.historia_mods.color.fondo.panel", new java.awt.Color(0xFF, 0xFF, 0xFF));
 
-        // Configuración básica de la ventana
-        setTitle(MonitorDePID.idioma.historialDeMods());
-        setSize(800, 700);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
+		// Configuración básica de la ventana
+		setTitle(MonitorDePID.idioma.historialDeMods());
+		setSize(800, 700);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setLocationRelativeTo(null);
 
-        // Construir esqueleto técnico/UI base
-        construirEstructuraBase();
+		// Construir esqueleto técnico/UI base
+		construirEstructuraBase();
 
-        // Cargar archivos históricos (técnico)
-        cargarArchivosHistoricos();
+		// Cargar archivos históricos (técnico)
+		cargarArchivosHistoricos();
 
-        // Aplicar apariencia inicial
-        aplicarApariencia();
-        setVisible(true);
-    }
+		// Aplicar apariencia inicial
+		aplicarApariencia();
+		setVisible(true);
+	}
 
-    @Override
-    public List<ElementoConfig> obtenerElementosConfigs() {
-        List<ElementoConfig> elementos = new ArrayList<>();
-        elementos.add(colorEstadoExito);
-        elementos.add(colorEstadoFallo);
-        elementos.add(colorResultadoAnadido);
-        elementos.add(colorResultadoEliminado);
-        elementos.add(colorBordeScroll);
-        elementos.add(colorFondoPanel);
-        return elementos;
-    }
+	@Override
+	public List<ElementoConfig> obtenerElementosConfigs() {
+		List<ElementoConfig> elementos = new ArrayList<>();
+		elementos.add(colorEstadoExito);
+		elementos.add(colorEstadoFallo);
+		elementos.add(colorEstadoInstantanea); // Añadir color de instantánea
+		elementos.add(colorResultadoAnadido);
+		elementos.add(colorResultadoEliminado);
+		elementos.add(colorBordeScroll);
+		elementos.add(colorFondoPanel);
+		return elementos;
+	}
 
-    @Override
-    protected void construirEstructuraBase() {
-        panelPrincipal = new JPanel(new BorderLayout(10, 10));
-        panelPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        add(panelPrincipal, BorderLayout.CENTER);
+	@Override
+	protected void construirEstructuraBase() {
+		panelPrincipal = new JPanel(new BorderLayout(10, 10));
+		panelPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		add(panelPrincipal, BorderLayout.CENTER);
 
-        // Panel superior con GridBag para dos columnas (izq/der) y el botón
-        panelSuperior = new JPanel(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5);
+		// Panel superior con GridBag para dos columnas (izq/der) y los botones
+		panelSuperior = new JPanel(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.insets = new Insets(5, 5, 5, 5);
 
-        // Etiquetas de columnas (localizadas)
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 0.5;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        JLabel etiquetaIzquierda = new JLabel(MonitorDePID.idioma.archivo0());
-        panelSuperior.add(etiquetaIzquierda, gbc);
+		// Etiquetas de columnas (localizadas)
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.weightx = 0.5;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		JLabel etiquetaIzquierda = new JLabel(MonitorDePID.idioma.archivo0());
+		panelSuperior.add(etiquetaIzquierda, gbc);
 
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.weightx = 0.5;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        JLabel etiquetaDerecha = new JLabel(MonitorDePID.idioma.archivo1());
-        panelSuperior.add(etiquetaDerecha, gbc);
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		gbc.weightx = 0.5;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		JLabel etiquetaDerecha = new JLabel(MonitorDePID.idioma.archivo1());
+		panelSuperior.add(etiquetaDerecha, gbc);
 
-        // Paneles de listas
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.weightx = 0.5;
-        gbc.weighty = 1.0;
-        gbc.fill = GridBagConstraints.BOTH;
-        panelIzquierdo = new JPanel();
-        panelIzquierdo.setLayout(new BoxLayout(panelIzquierdo, BoxLayout.Y_AXIS));
-        scrollIzquierdo = new JScrollPane(panelIzquierdo);
-        scrollIzquierdo.setPreferredSize(new Dimension(350, 300));
-        panelSuperior.add(scrollIzquierdo, gbc);
+		// Paneles de listas
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.weightx = 0.5;
+		gbc.weighty = 1.0;
+		gbc.fill = GridBagConstraints.BOTH;
+		panelIzquierdo = new JPanel();
+		panelIzquierdo.setLayout(new BoxLayout(panelIzquierdo, BoxLayout.Y_AXIS));
+		scrollIzquierdo = new JScrollPane(panelIzquierdo);
+		scrollIzquierdo.setPreferredSize(new Dimension(350, 300));
+		panelSuperior.add(scrollIzquierdo, gbc);
 
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        gbc.weightx = 0.5;
-        gbc.weighty = 1.0;
-        gbc.fill = GridBagConstraints.BOTH;
-        panelDerecho = new JPanel();
-        panelDerecho.setLayout(new BoxLayout(panelDerecho, BoxLayout.Y_AXIS));
-        scrollDerecho = new JScrollPane(panelDerecho);
-        scrollDerecho.setPreferredSize(new Dimension(350, 300));
-        panelSuperior.add(scrollDerecho, gbc);
+		gbc.gridx = 1;
+		gbc.gridy = 1;
+		gbc.weightx = 0.5;
+		gbc.weighty = 1.0;
+		gbc.fill = GridBagConstraints.BOTH;
+		panelDerecho = new JPanel();
+		panelDerecho.setLayout(new BoxLayout(panelDerecho, BoxLayout.Y_AXIS));
+		scrollDerecho = new JScrollPane(panelDerecho);
+		scrollDerecho.setPreferredSize(new Dimension(350, 300));
+		panelSuperior.add(scrollDerecho, gbc);
 
-        // Botón de comparar (texto localizado; estilos van en la impl)
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.gridwidth = 2;
-        gbc.weightx = 0;
-        gbc.weighty = 0;
-        gbc.fill = GridBagConstraints.NONE;
-        botonComparar = new JButton(MonitorDePID.idioma.comparar());
-        panelSuperior.add(botonComparar, gbc);
+		// Panel para botones
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		gbc.gridwidth = 2;
+		gbc.weightx = 0;
+		gbc.weighty = 0;
+		gbc.fill = GridBagConstraints.NONE;
+		gbc.anchor = GridBagConstraints.CENTER; // Centrar los botones
+		JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0)); // Espacio entre botones
 
-        // Panel de resultados
-        resultadoPanel = new JTextPane();
-        resultadoPanel.setContentType("text/html");
-        resultadoPanel.setEditable(false);
-        scrollResultado = new JScrollPane(resultadoPanel);
+		// Botón de comparar (texto localizado; estilos van en la impl)
+		botonComparar = new JButton(MonitorDePID.idioma.comparar());
+		panelBotones.add(botonComparar);
 
-        // Wiring de eventos (técnico)
-        botonComparar.addActionListener(e -> compararArchivosSeleccionados());
+		// Botón de instantánea (texto localizado)
+		botonInstantanea = new JButton(MonitorDePID.idioma.instantanea()); // Nuevo botón
+		panelBotones.add(botonInstantanea);
 
-        // Ensamblar panel principal
-        panelPrincipal.add(panelSuperior, BorderLayout.NORTH);
-        panelPrincipal.add(scrollResultado, BorderLayout.CENTER);
+		panelSuperior.add(panelBotones, gbc);
 
-        // Aplicar apariencia inicial
-        aplicarApariencia();
-    }
+		// Panel de resultados
+		resultadoPanel = new JTextPane();
+		resultadoPanel.setContentType("text/html");
+		resultadoPanel.setEditable(false);
+		scrollResultado = new JScrollPane(resultadoPanel);
 
-    @Override
-    protected void estilizarRadioArchivo(javax.swing.JRadioButton radio) {
-        radio.setFont(fuenteRadio);
-    }
+		// Wiring de eventos (técnico)
+		botonComparar.addActionListener(e -> compararArchivosSeleccionados());
+		botonInstantanea.addActionListener(e -> crearInstantanea()); // Nuevo listener
 
-    @Override
-    protected void estilizarEstadoArchivo(javax.swing.JLabel estado) {
-        estado.setFont(fuenteEstado);
-    }
+		// Ensamblar panel principal
+		panelPrincipal.add(panelSuperior, BorderLayout.NORTH);
+		panelPrincipal.add(scrollResultado, BorderLayout.CENTER);
 
-    @Override
-    protected void aplicarApariencia() {
-        // Bordes/paddings base
-        if (panelPrincipal != null) {
-            panelPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        }
+		// Aplicar apariencia inicial
+		aplicarApariencia();
+	}
 
-        // Scrolls (marcos suaves)
-        if (scrollIzquierdo != null)
-            scrollIzquierdo.setBorder(BorderFactory.createLineBorder(colorBordeScroll.obtener()));
-        if (scrollDerecho != null)
-            scrollDerecho.setBorder(BorderFactory.createLineBorder(colorBordeScroll.obtener()));
-        if (scrollResultado != null)
-            scrollResultado.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
+	@Override
+	protected void estilizarRadioArchivo(javax.swing.JRadioButton radio) {
+		radio.setFont(fuenteRadio);
+	}
 
-        // Títulos de columnas
-        if (panelSuperior != null && panelSuperior.getComponentCount() >= 2) {
-            if (panelSuperior.getComponent(0) instanceof javax.swing.JLabel) {
-                javax.swing.JLabel lbl0 = (javax.swing.JLabel) panelSuperior.getComponent(0);
-                lbl0.setFont(fuenteEtiqueta);
-            }
-            if (panelSuperior.getComponent(1) instanceof javax.swing.JLabel) {
-                javax.swing.JLabel lbl1 = (javax.swing.JLabel) panelSuperior.getComponent(1);
-                lbl1.setFont(fuenteEtiqueta);
-            }
-        }
+	@Override
+	protected void estilizarEstadoArchivo(javax.swing.JLabel estado) {
+		estado.setFont(fuenteEstado);
+	}
 
-        // Botón comparar
-        if (botonComparar != null) {
-            botonComparar.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
-        }
+	@Override
+	protected void aplicarApariencia() {
+		// Bordes/paddings base
+		if (panelPrincipal != null) {
+			panelPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		}
 
-        // Resultado HTML
-        if (resultadoPanel != null) {
-            resultadoPanel.setMargin(new java.awt.Insets(6, 6, 6, 6));
-        }
+		// Scrolls (marcos suaves)
+		if (scrollIzquierdo != null)
+			scrollIzquierdo.setBorder(BorderFactory.createLineBorder(colorBordeScroll.obtener()));
+		if (scrollDerecho != null)
+			scrollDerecho.setBorder(BorderFactory.createLineBorder(colorBordeScroll.obtener()));
+		if (scrollResultado != null)
+			scrollResultado.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
 
-        // Panel inferior con texto NO localizado + imagen
-        instalarPanelInferiorConImagenYTexto();
-        revalidate();
-        repaint();
-    }
+		// Títulos de columnas
+		if (panelSuperior != null && panelSuperior.getComponentCount() >= 2) {
+			if (panelSuperior.getComponent(0) instanceof javax.swing.JLabel) {
+				javax.swing.JLabel lbl0 = (javax.swing.JLabel) panelSuperior.getComponent(0);
+				lbl0.setFont(fuenteEtiqueta);
+			}
+			if (panelSuperior.getComponent(1) instanceof javax.swing.JLabel) {
+				javax.swing.JLabel lbl1 = (javax.swing.JLabel) panelSuperior.getComponent(1);
+				lbl1.setFont(fuenteEtiqueta);
+			}
+		}
 
-    private void instalarPanelInferiorConImagenYTexto() {
-        // Eliminar si ya existe
-        if (panelInferior != null) {
-            panelPrincipal.remove(panelInferior);
-            panelInferior = null;
-        }
+		// Botones
+		if (botonComparar != null) {
+			botonComparar.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
+		}
+		if (botonInstantanea != null) { // Estilo para el nuevo botón
+			botonInstantanea.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
+		}
 
-        panelInferior = new JPanel(new BorderLayout());
-        panelInferior.setOpaque(false);
+		// Resultado HTML
+		if (resultadoPanel != null) {
+			resultadoPanel.setMargin(new java.awt.Insets(6, 6, 6, 6));
+		}
 
-        // Descripción
-        String ayudaNoLocalizada = String.format("<html>" + "<body style='font-family: sans-serif; font-size: 12px;'>"
-                + "  <b>Consejo:</b> Selecciona dos archivos de historial para comparar la lista de mods. "
-                + "  El resultado muestra <span style='color:%s;'>añadidos (+)</span> y "
-                + "  <span style='color:%s;'>eliminados (&#8722;)</span> basados en nombres normalizados." + 
-                "</body>" + "</html>", 
-                colorResultadoAnadido.obtener().toString(),
-                colorResultadoEliminado.obtener().toString());
+		// Panel inferior con texto NO localizado + imagen
+		instalarPanelInferiorConImagenYTexto();
+		revalidate();
+		repaint();
+	}
 
-        descripcionHTML = new JTextPane();
-        descripcionHTML.setContentType("text/html");
-        descripcionHTML.setEditable(false);
-        descripcionHTML.setText(ayudaNoLocalizada);
+	private void instalarPanelInferiorConImagenYTexto() {
+		// Eliminar si ya existe
+		if (panelInferior != null) {
+			panelPrincipal.remove(panelInferior);
+			panelInferior = null;
+		}
 
-        JScrollPane scrollDescripcion = new JScrollPane(descripcionHTML);
-        scrollDescripcion.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollDescripcion.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollDescripcion.setPreferredSize(new Dimension(600, 100));
-        scrollDescripcion.setBorder(BorderFactory.createEmptyBorder());
+		panelInferior = new JPanel(new BorderLayout());
+		panelInferior.setOpaque(false);
 
-        JPanel textoPanel = new JPanel(new BorderLayout());
-        textoPanel.setOpaque(false);
-        textoPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        textoPanel.add(scrollDescripcion, BorderLayout.CENTER);
+		// Descripción
+		String ayudaNoLocalizada = String.format(MonitorDePID.idioma.historaDeModsDesc(), colorResultadoAnadido.obtener().toString(),
+				colorResultadoEliminado.obtener().toString());
 
-        JPanel contenedor = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-        contenedor.setOpaque(false);
-        contenedor.add(textoPanel);
+		descripcionHTML = new JTextPane();
+		descripcionHTML.setContentType("text/html");
+		descripcionHTML.setEditable(false);
+		descripcionHTML.setText(ayudaNoLocalizada);
 
-        try {
-            Path rutaImagen = MonitorDePID.carpeta.resolve("imagenes/clio.png");
-            if (!Files.exists(rutaImagen)) {
-                MonitorDePID.copiarACarpetaDesdeJar("/imagenes/clio.png", rutaImagen.toFile());
-            }
-            if (Files.exists(rutaImagen)) {
-                ImageIcon icono = new ImageIcon(rutaImagen.toAbsolutePath().toString());
-                java.awt.Image escalado = icono.getImage().getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
-                JLabel etiquetaImagen = new JLabel(new ImageIcon(escalado));
-                contenedor.add(etiquetaImagen);
-            }
-        } catch (Exception e) {
-            CrashDetectorLogger.log("Error cargando clio.png: " + e.getMessage());
-        }
+		JScrollPane scrollDescripcion = new JScrollPane(descripcionHTML);
+		scrollDescripcion.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollDescripcion.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrollDescripcion.setPreferredSize(new Dimension(600, 100));
+		scrollDescripcion.setBorder(BorderFactory.createEmptyBorder());
 
-        panelInferior.add(contenedor, BorderLayout.CENTER);
-        panelInferior.setMinimumSize(new Dimension(100, 100));
+		JPanel textoPanel = new JPanel(new BorderLayout());
+		textoPanel.setOpaque(false);
+		textoPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		textoPanel.add(scrollDescripcion, BorderLayout.CENTER);
 
-        panelPrincipal.add(panelInferior, BorderLayout.PAGE_END);
-    }
+		JPanel contenedor = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+		contenedor.setOpaque(false);
+		contenedor.add(textoPanel);
+
+		try {
+			Path rutaImagen = MonitorDePID.carpeta.resolve("imagenes/clio.png");
+			if (!Files.exists(rutaImagen)) {
+				MonitorDePID.copiarACarpetaDesdeJar("/imagenes/clio.png", rutaImagen.toFile());
+			}
+			if (Files.exists(rutaImagen)) {
+				ImageIcon icono = new ImageIcon(rutaImagen.toAbsolutePath().toString());
+				java.awt.Image escalado = icono.getImage().getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
+				JLabel etiquetaImagen = new JLabel(new ImageIcon(escalado));
+				contenedor.add(etiquetaImagen);
+			}
+		} catch (Exception e) {
+			CrashDetectorLogger.log("Error cargando clio.png: " + e.getMessage());
+		}
+
+		panelInferior.add(contenedor, BorderLayout.CENTER);
+		panelInferior.setMinimumSize(new Dimension(100, 100));
+
+		panelPrincipal.add(panelInferior, BorderLayout.PAGE_END);
+	}
 }

@@ -3963,6 +3963,54 @@ public class Portuges implements Idioma {
 	    return "Conflito crítico: Moonlight vs Iceberg (OpenGL sem contexto)";
 	}
 	
+	@Override
+	public String instantanea() {
+	    return "Instantâneo";
+	}
+
+	@Override
+	public Object desdeUltimaInstantanea() {
+	    return "Desde o último instantâneo";
+	}
+
+	@Override
+	public String seleccionarUnArchivo() {
+	    return "Selecionar um arquivo";
+	}
+
+	@Override
+	public String instantaneaCreadaCorrectamente() {
+	    return "Instantâneo criado com sucesso";
+	}
+
+	@Override
+	public String errorCreandoInstantanea() {
+	    return "Erro ao criar o instantâneo";
+	}
+	@Override
+	public String consejo() {
+	    return "Dica";
+	}
+
+	@Override
+	public String resultadoMuestra() {
+	    return "Mostrar Resultado";
+	}
+	
+	@Override
+	public String historaDeModsDesc() {
+	    return "<html>" + 
+	           "<body style='font-family: sans-serif; font-size: 12px;'>" +
+	           "  <b>Dica:</b> Selecione dois arquivos de histórico para comparar a lista de mods. " +
+	           "  O resultado mostra <span style='color:%s;'>adicionados (+)</span> e " +
+	           "  <span style='color:%s;'>removidos (&#8722;)</span> com base em nomes normalizados. " +
+	           "  Use o botão 'Instantâneo' para criar uma cópia de um arquivo existente com a extensão .instantanea." +
+	           "</body>" + 
+	           "</html>";
+	}
+	
+	
+	
 	
 	
 	

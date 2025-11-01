@@ -1575,6 +1575,24 @@ public interface Idioma {
 
 	public String conflictoMoonlightIceberg();
 
+	public String instantanea();
+
+	public Object desdeUltimaInstantanea();
+
+	public String seleccionarUnArchivo();
+
+	public String instantaneaCreadaCorrectamente();
+
+	public String errorCreandoInstantanea();
+
+	public String consejo();
+
+	public String resultadoMuestra();
+
+	public String historaDeModsDesc();
+
+
+
 	
 	// public String advertenciaMalwareFalso();
 

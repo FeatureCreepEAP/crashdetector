@@ -3795,7 +3795,52 @@ public class Chino implements Idioma {
 	public String nombreConflictoMoonlightIceberg() {
 	    return "严重冲突：Moonlight 与 Iceberg 冲突 (OpenGL 无上下文)";
 	}
+	@Override
+	public String instantanea() {
+	    return "快照";
+	}
+
+	@Override
+	public Object desdeUltimaInstantanea() {
+	    return "自上次快照以来";
+	}
+
+	@Override
+	public String seleccionarUnArchivo() {
+	    return "选择一个文件";
+	}
+
+	@Override
+	public String instantaneaCreadaCorrectamente() {
+	    return "快照创建成功";
+	}
+
+	@Override
+	public String errorCreandoInstantanea() {
+	    return "创建快照时出错";
+	}
 	
+	@Override
+	public String consejo() {
+	    return "提示";
+	}
+
+	@Override
+	public String resultadoMuestra() {
+	    return "结果预览";
+	}
+	
+	@Override
+	public String historaDeModsDesc() {
+	    return "<html>" + 
+	           "<body style='font-family: sans-serif; font-size: 12px;'>" +
+	           "  <b>提示：</b>选择两个历史记录文件来比较模组列表。" +
+	           "  结果会根据标准化的名称显示<span style='color:%s;'>新增的 (+)</span>和" +
+	           "  <span style='color:%s;'>已移除的 (&#8722;)</span>。" +
+	           "  使用“快照”按钮为现有文件创建一个扩展名为 .instantanea 的副本。" +
+	           "</body>" + 
+	           "</html>";
+	}
 	
 	
 	

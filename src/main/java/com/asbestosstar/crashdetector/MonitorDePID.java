@@ -37,6 +37,7 @@ import com.asbestosstar.crashdetector.gui.tipos.editor_plantilla.EditorPlantilla
 import com.asbestosstar.crashdetector.gui.tipos.editor_plantilla.EditorPlantillaPredeterminado;
 import com.asbestosstar.crashdetector.gui.tipos.editorgui.CDSkinCape;
 import com.asbestosstar.crashdetector.gui.tipos.grepr.BusquedaGUISaliorMoon;
+import com.asbestosstar.crashdetector.gui.tipos.historia.ClioOfficeGUI;
 import com.asbestosstar.crashdetector.gui.tipos.historia.HistoriaModsGUILegacy;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasHoloTalk;
 import com.asbestosstar.crashdetector.gui.tipos.mcreator.EscanerMCreatorGUIRosemiLoveLock;
@@ -313,6 +314,7 @@ public class MonitorDePID {
 		TipoGUI.LECTADOR_DE_CONSOLAS.registrarGUI(LectadorDeConsolasHoloTalk.ID,
 				() -> new LectadorDeConsolasHoloTalk());
 		TipoGUI.HISTORIA_DE_MODS.registrarGUI(HistoriaModsGUILegacy.ID, () -> new HistoriaModsGUILegacy());
+		TipoGUI.HISTORIA_DE_MODS.registrarGUI(ClioOfficeGUI.ID, () -> new ClioOfficeGUI());
 		TipoGUI.GREPR.registrarGUI(BusquedaGUISaliorMoon.ID, () -> new BusquedaGUISaliorMoon());
 		TipoGUI.EDITOR_FIRMAS.registrarGUI(EditorCodiceGUIIronMouse.ID, () -> new EditorCodiceGUIIronMouse());
 		// TipoGUI.PRINCIPAL.registrarGUI(DialogoCompartir.ID, ()->new

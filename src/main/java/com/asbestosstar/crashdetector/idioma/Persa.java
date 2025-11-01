@@ -3938,6 +3938,56 @@ public class Persa implements Idioma {
 	public String nombreConflictoMoonlightIceberg() {
 	    return "تضاد بحرانی: Moonlight در مقابل Iceberg (OpenGL بدون کانتکست)";
 	}
+	@Override
+	public String instantanea() {
+	    return "تصویر لحظه‌ای";
+	}
+
+	@Override
+	public Object desdeUltimaInstantanea() {
+	    return "از آخرین تصویر لحظه‌ای";
+	}
+
+	@Override
+	public String seleccionarUnArchivo() {
+	    return "یک فایل انتخاب کنید";
+	}
+
+	@Override
+	public String instantaneaCreadaCorrectamente() {
+	    return "تصویر لحظه‌ای با موفقیت ایجاد شد";
+	}
+
+	@Override
+	public String errorCreandoInstantanea() {
+	    return "خطا در ایجاد تصویر لحظه‌ای";
+	}
+	@Override
+	public String consejo() {
+	    return "نکته";
+	}
+
+	@Override
+	public String resultadoMuestra() {
+	    return "نمایش نتیجه";
+	}
+	
+	@Override
+	public String historaDeModsDesc() {
+	    return "<html>" + 
+	           "<body style='font-family: sans-serif; font-size: 12px;'>" +
+	           "  <b>نکته:</b> دو فایل تاریخچه را برای مقایسه لیست مودها انتخاب کنید. " +
+	           "  نتیجه <span style='color:%s;'>افزوده شده‌ها (+)</span> و " +
+	           "  <span style='color:%s;'>حذف شده‌ها (&#8722;)</span> را بر اساس نام‌های استاندارد شده نشان می‌دهد. " +
+	           "  از دکمه «تصویر لحظه‌ای» برای ایجاد کپی از یک فایل موجود با پسوند .instantanea استفاده کنید." +
+	           "</body>" + 
+	           "</html>";
+	}
+	
+	
+	
+	
+	
 	
 	
 	

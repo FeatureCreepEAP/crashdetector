@@ -4629,6 +4629,59 @@ public class Espanol implements Idioma {
 	public String nombreConflictoMoonlightIceberg() {
 	    return "Conflicto crítico: Moonlight vs Iceberg (OpenGL sin contexto)";
 	}
+
+	@Override
+	public String instantanea() {
+	    // TODO Auto-generated method stub
+	    return "Instantánea";
+	}
+
+	@Override
+	public Object desdeUltimaInstantanea() {
+	    // TODO Auto-generated method stub
+	    return "Desde Última Instantánea";
+	}
+
+	@Override
+	public String seleccionarUnArchivo() {
+	    // TODO Auto-generated method stub
+	    return "Seleccionar un archivo";
+	}
+
+	@Override
+	public String instantaneaCreadaCorrectamente() {
+	    // TODO Auto-generated method stub
+	    return "Instantánea creada correctamente";
+	}
+
+	@Override
+	public String errorCreandoInstantanea() {
+	    // TODO Auto-generated method stub
+	    return "Error al crear la instantánea";
+	}
+
+	@Override
+	public String consejo() {
+		// TODO Auto-generated method stub
+		return "Consejo";
+	}
+
+	@Override
+	public String resultadoMuestra() {
+		// TODO Auto-generated method stub
+		return "Resultado Muestra";
+	}
+
+	@Override
+	public String historaDeModsDesc() {
+		// TODO Auto-generated method stub
+		return "<html>" + "<body style='font-family: sans-serif; font-size: 12px;'>"
+				+ "  <b>Consejo:</b> Selecciona dos archivos de historial para comparar la lista de mods. "
+				+ "  El resultado muestra <span style='color:%s;'>añadidos (+)</span> y "
+				+ "  <span style='color:%s;'>eliminados (&#8722;)</span> basados en nombres normalizados. "
+				+ "  Usa el botón 'Instantánea' para crear una copia de un archivo existente con extensión .instantanea."
+				+ "</body>" + "</html>";
+	}
 	
 	
 	

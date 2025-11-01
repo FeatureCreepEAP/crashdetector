@@ -3852,6 +3852,54 @@ public class Japones implements Idioma {
 	public String nombreConflictoMoonlightIceberg() {
 	    return "重大な衝突：Moonlight 対 Iceberg (OpenGLコンテキストなし)";
 	}
+	@Override
+	public String instantanea() {
+	    return "スナップショット";
+	}
+
+	@Override
+	public Object desdeUltimaInstantanea() {
+	    return "前回のスナップショット以降";
+	}
+
+	@Override
+	public String seleccionarUnArchivo() {
+	    return "ファイルを選択";
+	}
+
+	@Override
+	public String instantaneaCreadaCorrectamente() {
+	    return "スナップショットが正常に作成されました";
+	}
+
+	@Override
+	public String errorCreandoInstantanea() {
+	    return "スナップショットの作成中にエラーが発生しました";
+	}
+	
+	@Override
+	public String consejo() {
+	    return "ヒント";
+	}
+
+	@Override
+	public String resultadoMuestra() {
+	    return "結果を表示";
+	}
+	
+	@Override
+	public String historaDeModsDesc() {
+	    return "<html>" + 
+	           "<body style='font-family: sans-serif; font-size: 12px;'>" +
+	           "  <b>ヒント:</b> 2つの履歴ファイルを選択して、MODリストを比較します。 " +
+	           "  結果は正規化された名前に基づいて、<span style='color:%s;'>追加された (+)</span>と " +
+	           "  <span style='color:%s;'>削除された (&#8722;)</span> を表示します。 " +
+	           "  「スナップショット」ボタンを使用して、拡張子が .instantanea の既存ファイルのコピーを作成できます。" +
+	           "</body>" + 
+	           "</html>";
+	}
+	
+	
 	
 	
 	
