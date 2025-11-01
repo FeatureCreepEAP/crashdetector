@@ -4009,6 +4009,11 @@ public class Portuges implements Idioma {
 	           "</html>";
 	}
 	
+	@Override
+	public String texto_de_boton_compartir_markdown() {
+	    return "Obter Links de Logs como Markdown sem Relatório";
+	}
+	
 	
 	
 	

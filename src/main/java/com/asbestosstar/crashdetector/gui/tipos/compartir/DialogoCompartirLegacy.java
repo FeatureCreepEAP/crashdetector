@@ -51,410 +51,499 @@ import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
 
 /**
- * Implementación concreta del diálogo de compartir con apariencia legada.
- * Esta clase maneja específicamente el layout y la apariencia del diálogo.
+ * Implementación concreta del diálogo de compartir con apariencia legada. Esta
+ * clase maneja específicamente el layout y la apariencia del diálogo.
  */
 public class DialogoCompartirLegacy extends DialogoCompartir {
 
-    public static String ID = "dialogo_compartir_legacy";
+	public static String ID = "dialogo_compartir_legacy";
 
-    @Override
-    public String id() {
-        return ID;
-    }
+	@Override
+	public String id() {
+		return ID;
+	}
 
-    @Override
-    public void preperar(Instant instant) {
-        setSize(900, 700);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE); // Asegura limpieza de recursos
-        this.instant = instant;
+@Override
+public void preperar(Instant instant) {
+    setSize(900, 725);
+    setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    this.instant = instant;
 
-        // Inicializar componentes principales (ahora públicos)
-        panelPrincipal = new JPanel(new BorderLayout(10, 10));
-        panelSuperior = new JPanel(new BorderLayout(0, 10));
-        panelSuperior.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+    // Panel principal y superior
+    panelPrincipal = new JPanel(new BorderLayout(10, 10));
+    panelSuperior = new JPanel(new BorderLayout(0, 10));
+    panelSuperior.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        textoExplicacion = new JTextArea(MonitorDePID.idioma.arco());
-        textoExplicacion.setEditable(false);
-        textoExplicacion.setLineWrap(true);
-        textoExplicacion.setWrapStyleWord(true);
-        textoExplicacion.setBackground(panelSuperior.getBackground());
+    // Texto de explicación
+    textoExplicacion = new JTextArea(MonitorDePID.idioma.arco());
+    textoExplicacion.setEditable(false);
+    textoExplicacion.setLineWrap(true);
+    textoExplicacion.setWrapStyleWord(true);
+    textoExplicacion.setBackground(panelSuperior.getBackground());
 
-        panelControles = new JPanel(new BorderLayout(0, 5));
+    // Panel de controles (botones + campo de enlace)
+    panelControles = new JPanel();
+    panelControles.setLayout(new javax.swing.BoxLayout(panelControles, javax.swing.BoxLayout.Y_AXIS));
 
-        botonCompartirTodos = new JButton(MonitorDePID.idioma.botonDeCompartirInforme());
-        botonCompartirTodos.addActionListener(e -> {
-            setEnviando(true);
-            try {
-                compartirSeleccionados(e);
-            } catch (DemasiadoGrande e0) {
-                mostrarError(MonitorDePID.idioma.registroDemasiadoGrande(), e0);
-            } catch (ErrorConPublicar e1) {
-                mostrarError(MonitorDePID.idioma.errorConPublicarRegistro(e1.problema), e1);
-            } catch (NoAPIdeRegistro e2) {
-                mostrarError(MonitorDePID.idioma.apiDeRegistroNoExiste(), e2);
-            } catch (Throwable t) {
-                // Cualquier otra excepción no prevista
-                mostrarError("Error inesperado al compartir.", t);
-            } finally {
-                setEnviando(false);
-            }
-        });
-
-        campoEnlaceReporte = new JTextField();
-        campoEnlaceReporte.setEditable(false);
-        campoEnlaceReporte.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent e) {
-                if (SwingUtilities.isRightMouseButton(e)) {
-                    copiarAlPortapapeles(campoEnlaceReporte.getText());
-                }
-            }
-        });
-
-        panelControles.add(botonCompartirTodos, BorderLayout.NORTH);
-        panelControles.add(campoEnlaceReporte, BorderLayout.CENTER);
-
-        panelSuperior.add(new JScrollPane(textoExplicacion), BorderLayout.CENTER);
-        panelSuperior.add(panelControles, BorderLayout.SOUTH);
-
-        // Inicializar tabla
-        inicializarTabla();
-
-        // Inicializar panel de configuración
-        inicializarPanelConfiguracion();
-
-        // Estructura principal
-        panelPrincipal.add(panelSuperior, BorderLayout.NORTH);
-        panelPrincipal.add(new JScrollPane(tabla), BorderLayout.CENTER);
-        panelPrincipal.add(panelConfig, BorderLayout.SOUTH);
-
-        add(panelPrincipal);
-        cargarConsolas();
-        this.setVisible(true);
-    }
-
-    /**
-     * Inicializa la tabla de consolas.
-     */
-    private void inicializarTabla() {
-        modeloTabla = new DefaultTableModel() {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return column == 0 || column == 2 || column == 3;
-            }
-
-            @Override
-            public Class<?> getColumnClass(int columnIndex) {
-                return columnIndex == 0 ? Boolean.class : String.class;
-            }
-        };
-        modeloTabla.addColumn(MonitorDePID.idioma.incluir());
-        modeloTabla.addColumn(MonitorDePID.idioma.archivo());
-        modeloTabla.addColumn(MonitorDePID.idioma.abrir());
-        modeloTabla.addColumn(MonitorDePID.idioma.texto_de_buton_compartir_enlace());
-        modeloTabla.addColumn("URL");
-
-        tabla = new JTable(modeloTabla);
-        tabla.setRowHeight(30);
-        tabla.getColumnModel().getColumn(0).setCellRenderer(new CheckBoxRenderer());
-        tabla.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(new JCheckBox()));
-        tabla.getColumnModel().getColumn(2).setCellRenderer(new ButtonRenderer(MonitorDePID.idioma.abrir()));
-        tabla.getColumnModel().getColumn(2).setCellEditor(new ButtonEditor(MonitorDePID.idioma.abrir()));
-        tabla.getColumnModel().getColumn(3)
-                .setCellRenderer(new ButtonRenderer(MonitorDePID.idioma.texto_de_buton_compartir_enlace()));
-        tabla.getColumnModel().getColumn(3)
-                .setCellEditor(new ButtonEditor(MonitorDePID.idioma.texto_de_buton_compartir_enlace()));
-        tabla.getColumnModel().getColumn(4).setCellRenderer(new URLEditorRenderer());
-        tabla.getColumnModel().getColumn(4).setCellEditor(new URLEditor());
-    }
-
-    /**
-     * Inicializa el panel de configuración con campos para endpoint, API, sitio y anonimización.
-     */
-    private void inicializarPanelConfiguracion() {
-        panelConfig = new JPanel(new GridBagLayout());
-        panelConfig.setBorder(BorderFactory.createTitledBorder("Configuración"));
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5);
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.anchor = GridBagConstraints.WEST;
-
-        // Endpoint
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 1.0;
-        panelConfig.add(new JLabel(MonitorDePID.idioma.endpointDeInforme()), gbc);
-        gbc.gridx++;
-        gbc.weightx = 3.0;
-        campoEndpoint = new JTextField(Config.obtenerInstancia().obtenerSitoDeInformes(), 50);
-        campoEndpoint.setMinimumSize(new Dimension(400, 25));
-        panelConfig.add(campoEndpoint, gbc);
-
-        // API
-        gbc.gridx = 0;
-        gbc.gridy++;
-        gbc.weightx = 0;
-        panelConfig.add(new JLabel(MonitorDePID.idioma.apiDeLogging()), gbc);
-        gbc.gridx++;
-
-        CrashDetectorLogger.log("Obtainer sito actual");
-        String sito_actual = Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado();
-        APIdeSitioDeRegistro api_def;
-        CrashDetectorLogger.log("Obtainer API");
-        boolean error_de_api;
+    // ---------- Botón: Compartir informe ----------
+    botonCompartirTodos = new JButton(MonitorDePID.idioma.botonDeCompartirInforme());
+    botonCompartirTodos.addActionListener(e -> {
+        setEnviando(true);
         try {
+            compartirSeleccionados(e);
+        } catch (DemasiadoGrande e0) {
+            mostrarError(MonitorDePID.idioma.registroDemasiadoGrande(), e0);
+        } catch (ErrorConPublicar e1) {
+            mostrarError(MonitorDePID.idioma.errorConPublicarRegistro(e1.problema), e1);
+        } catch (NoAPIdeRegistro e2) {
+            mostrarError(MonitorDePID.idioma.apiDeRegistroNoExiste(), e2);
+        } catch (Throwable t) {
+            mostrarError("Error inesperado al compartir.", t);
+        } finally {
+            setEnviando(false);
+        }
+    });
+
+    // Ajustar tamaño para ocupar todo el ancho
+    int h1 = botonCompartirTodos.getPreferredSize().height;
+    botonCompartirTodos.setMaximumSize(new Dimension(Integer.MAX_VALUE, h1));
+    botonCompartirTodos.setMinimumSize(new Dimension(0, h1));
+    botonCompartirTodos.setAlignmentX(Component.LEFT_ALIGNMENT);
+    panelControles.add(botonCompartirTodos);
+
+    panelControles.add(javax.swing.Box.createVerticalStrut(8));
+
+    // ---------- Botón: Obtener enlaces Markdown ----------
+    botonCompartirMarkdown = new JButton(MonitorDePID.idioma.texto_de_boton_compartir_markdown());
+    botonCompartirMarkdown.addActionListener(e -> {
+        setEnviando(true);
+        try {
+            compartirSoloEnlacesMarkdown(e);
+        } catch (DemasiadoGrande e0) {
+            mostrarError(MonitorDePID.idioma.registroDemasiadoGrande(), e0);
+        } catch (ErrorConPublicar e1) {
+            mostrarError(MonitorDePID.idioma.errorConPublicarRegistro(e1.problema), e1);
+        } catch (NoAPIdeRegistro e2) {
+            mostrarError(MonitorDePID.idioma.apiDeRegistroNoExiste(), e2);
+        } catch (Throwable t) {
+            mostrarError("Error inesperado al generar enlaces.", t);
+        } finally {
+            setEnviando(false);
+        }
+    });
+
+    // Ajustar tamaño para ocupar todo el ancho
+    int h2 = botonCompartirMarkdown.getPreferredSize().height;
+    botonCompartirMarkdown.setMaximumSize(new Dimension(Integer.MAX_VALUE, h2));
+    botonCompartirMarkdown.setMinimumSize(new Dimension(0, h2));
+    botonCompartirMarkdown.setAlignmentX(Component.LEFT_ALIGNMENT);
+    panelControles.add(botonCompartirMarkdown);
+
+    panelControles.add(javax.swing.Box.createVerticalStrut(10));
+
+    // ---------- Campo de enlace ----------
+    campoEnlaceReporte = new JTextField();
+    campoEnlaceReporte.setEditable(false);
+    campoEnlaceReporte.addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent e) {
+            if (SwingUtilities.isRightMouseButton(e)) {
+                copiarAlPortapapeles(campoEnlaceReporte.getText());
+            }
+        }
+    });
+    int hf = 28;
+    campoEnlaceReporte.setMaximumSize(new Dimension(Integer.MAX_VALUE, hf));
+    campoEnlaceReporte.setMinimumSize(new Dimension(0, hf));
+    campoEnlaceReporte.setAlignmentX(Component.LEFT_ALIGNMENT);
+    panelControles.add(campoEnlaceReporte);
+
+    // Agregar texto y controles al panel superior
+    panelSuperior.add(new JScrollPane(textoExplicacion), BorderLayout.CENTER);
+    panelSuperior.add(panelControles, BorderLayout.SOUTH);
+
+    // ---------- Resto de la estructura ----------
+    inicializarTabla();
+    inicializarPanelConfiguracion();
+    panelPrincipal.add(panelSuperior, BorderLayout.NORTH);
+    panelPrincipal.add(new JScrollPane(tabla), BorderLayout.CENTER);
+    panelPrincipal.add(panelConfig, BorderLayout.SOUTH);
+    add(panelPrincipal);
+
+    cargarConsolas();
+    this.setVisible(true);
+}
+
+	/**
+	 * Inicializa la tabla de consolas.
+	 */
+	private void inicializarTabla() {
+		modeloTabla = new DefaultTableModel() {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return column == 0 || column == 2 || column == 3;
+			}
+
+			@Override
+			public Class<?> getColumnClass(int columnIndex) {
+				return columnIndex == 0 ? Boolean.class : String.class;
+			}
+		};
+		modeloTabla.addColumn(MonitorDePID.idioma.incluir());
+		modeloTabla.addColumn(MonitorDePID.idioma.archivo());
+		modeloTabla.addColumn(MonitorDePID.idioma.abrir());
+		modeloTabla.addColumn(MonitorDePID.idioma.texto_de_buton_compartir_enlace());
+		modeloTabla.addColumn("URL");
+
+		tabla = new JTable(modeloTabla);
+		tabla.setRowHeight(30);
+		tabla.getColumnModel().getColumn(0).setCellRenderer(new CheckBoxRenderer());
+		tabla.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(new JCheckBox()));
+		tabla.getColumnModel().getColumn(2).setCellRenderer(new ButtonRenderer(MonitorDePID.idioma.abrir()));
+		tabla.getColumnModel().getColumn(2).setCellEditor(new ButtonEditor(MonitorDePID.idioma.abrir()));
+		tabla.getColumnModel().getColumn(3)
+				.setCellRenderer(new ButtonRenderer(MonitorDePID.idioma.texto_de_buton_compartir_enlace()));
+		tabla.getColumnModel().getColumn(3)
+				.setCellEditor(new ButtonEditor(MonitorDePID.idioma.texto_de_buton_compartir_enlace()));
+		tabla.getColumnModel().getColumn(4).setCellRenderer(new URLEditorRenderer());
+		tabla.getColumnModel().getColumn(4).setCellEditor(new URLEditor());
+	}
+
+	/**
+	 * Inicializa el panel de configuración con campos para endpoint, API, sitio y
+	 * anonimización.
+	 */
+	private void inicializarPanelConfiguracion() {
+		panelConfig = new JPanel(new GridBagLayout());
+		panelConfig.setBorder(BorderFactory.createTitledBorder("Configuración"));
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.insets = new Insets(5, 5, 5, 5);
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.anchor = GridBagConstraints.WEST;
+
+		// Endpoint
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.weightx = 1.0;
+		panelConfig.add(new JLabel(MonitorDePID.idioma.endpointDeInforme()), gbc);
+		gbc.gridx++;
+		gbc.weightx = 3.0;
+		campoEndpoint = new JTextField(Config.obtenerInstancia().obtenerSitoDeInformes(), 50);
+		campoEndpoint.setMinimumSize(new Dimension(400, 25));
+		panelConfig.add(campoEndpoint, gbc);
+
+		// API
+		gbc.gridx = 0;
+		gbc.gridy++;
+		gbc.weightx = 0;
+		panelConfig.add(new JLabel(MonitorDePID.idioma.apiDeLogging()), gbc);
+		gbc.gridx++;
+
+		CrashDetectorLogger.log("Obtainer sito actual");
+		String sito_actual = Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado();
+		APIdeSitioDeRegistro api_def;
+		CrashDetectorLogger.log("Obtainer API");
+		boolean error_de_api;
+		try {
 			api_def = obtenerAPI();
-			error_de_api=false;
+			error_de_api = false;
 		} catch (NoAPIdeRegistro e) {
 			// TODO Auto-generated catch block
-			 CrashDetectorLogger.log("En Catch");
-	            mostrarError(MonitorDePID.idioma.apiDeRegistroNoExiste(), e);
-	            CrashDetectorLogger.log("Popup");
-	            api_def = Consola.secure_logger_api;
-	            sito_actual = "https://securelogger.net/save/log?";
-	            error_de_api=true;
+			CrashDetectorLogger.log("En Catch");
+			mostrarError(MonitorDePID.idioma.apiDeRegistroNoExiste(), e);
+			CrashDetectorLogger.log("Popup");
+			api_def = Consola.secure_logger_api;
+			sito_actual = "https://securelogger.net/save/log?";
+			error_de_api = true;
 		}
 
+		CrashDetectorLogger.log("Obtainer Mapa de API");
+		Map<String, Set<String>> apis = new HashMap<>();
+		for (APIdeSitioDeRegistro api : APIdeSitioDeRegistro.APIS) {
+			Set<String> sits = new LinkedHashSet<>();
+			if (api != null && api.equals(api_def) && !error_de_api && sito_actual != null) {
+				CrashDetectorLogger.log("Anadir sito");
+				sits.add(sito_actual);
+			}
+			sits.addAll(api.sitiosPorDefecto());
+			apis.put(api.nombre(), sits);
+		}
 
-        CrashDetectorLogger.log("Obtainer Mapa de API");
-        Map<String, Set<String>> apis = new HashMap<>();
-        for (APIdeSitioDeRegistro api : APIdeSitioDeRegistro.APIS) {
-            Set<String> sits = new LinkedHashSet<>();
-            if (api != null && api.equals(api_def) && !error_de_api && sito_actual != null) {
-                CrashDetectorLogger.log("Anadir sito");
-                sits.add(sito_actual);
-            }
-            sits.addAll(api.sitiosPorDefecto());
-            apis.put(api.nombre(), sits);
-        }
+		CrashDetectorLogger.log("comboAPI");
+		comboAPI = new JComboBox<>(apis.keySet().toArray(new String[0]));
+		comboAPI.setSelectedItem(api_def.nombre());
+		comboAPI.setPreferredSize(new Dimension(300, 25));
+		panelConfig.add(comboAPI, gbc);
 
-        CrashDetectorLogger.log("comboAPI");
-        comboAPI = new JComboBox<>(apis.keySet().toArray(new String[0]));
-        comboAPI.setSelectedItem(api_def.nombre());
-        comboAPI.setPreferredSize(new Dimension(300, 25));
-        panelConfig.add(comboAPI, gbc);
+		// Sitio
+		gbc.gridx = 0;
+		gbc.gridy++;
+		panelConfig.add(new JLabel(MonitorDePID.idioma.sitoDeLogging()), gbc);
+		gbc.gridx++;
+		comboSitioRegistro = new JComboBox<>(new String[] {});
+		comboSitioRegistro.setPreferredSize(new Dimension(300, 25));
+		panelConfig.add(comboSitioRegistro, gbc);
 
-        // Sitio
-        gbc.gridx = 0;
-        gbc.gridy++;
-        panelConfig.add(new JLabel(MonitorDePID.idioma.sitoDeLogging()), gbc);
-        gbc.gridx++;
-        comboSitioRegistro = new JComboBox<>(new String[] {});
-        comboSitioRegistro.setPreferredSize(new Dimension(300, 25));
-        panelConfig.add(comboSitioRegistro, gbc);
+		CrashDetectorLogger.log(" actualizar comboAPI");
+		actualizarComboSitios(api_def.nombre(), apis.get(api_def.nombre()), sito_actual);
 
-        CrashDetectorLogger.log(" actualizar comboAPI");
-        actualizarComboSitios(api_def.nombre(), apis.get(api_def.nombre()), sito_actual);
+		comboAPI.addActionListener(e -> {
+			String apiSeleccionada = (String) comboAPI.getSelectedItem();
+			Set<String> sitios = apis.get(apiSeleccionada);
+			actualizarComboSitios(apiSeleccionada, sitios, null);
+		});
 
-        comboAPI.addActionListener(e -> {
-            String apiSeleccionada = (String) comboAPI.getSelectedItem();
-            Set<String> sitios = apis.get(apiSeleccionada);
-            actualizarComboSitios(apiSeleccionada, sitios, null);
-        });
+		// Anonimizar
+		gbc.gridx = 0;
+		gbc.gridy++;
+		gbc.gridwidth = 2;
+		checkAnonimizar = new JCheckBox(MonitorDePID.idioma.anonimizarRegistros());
+		checkAnonimizar.setSelected(Config.obtenerInstancia().esAnonimizarRegistros());
+		panelConfig.add(checkAnonimizar, gbc);
 
-        // Anonimizar
-        gbc.gridx = 0;
-        gbc.gridy++;
-        gbc.gridwidth = 2;
-        checkAnonimizar = new JCheckBox(MonitorDePID.idioma.anonimizarRegistros());
-        checkAnonimizar.setSelected(Config.obtenerInstancia().esAnonimizarRegistros());
-        panelConfig.add(checkAnonimizar, gbc);
+		// Guardar config
+		gbc.gridy++;
+		gbc.gridx = 0;
+		gbc.gridwidth = 2;
+		gbc.anchor = GridBagConstraints.WEST;
+		JButton boton_guardar_de_config = new JButton(MonitorDePID.idioma.guardarConfigDeCompartir());
+		boton_guardar_de_config.addActionListener(e -> guardarConfig());
+		panelConfig.add(boton_guardar_de_config, gbc);
+	}
 
-        // Guardar config
-        gbc.gridy++;
-        gbc.gridx = 0;
-        gbc.gridwidth = 2;
-        gbc.anchor = GridBagConstraints.WEST;
-        JButton boton_guardar_de_config = new JButton(MonitorDePID.idioma.guardarConfigDeCompartir());
-        boton_guardar_de_config.addActionListener(e -> guardarConfig());
-        panelConfig.add(boton_guardar_de_config, gbc);
-    }
+	// --- Renderers y Editors para la tabla ---
+	// Renderer para checkboxes
+	private static class CheckBoxRenderer extends JCheckBox implements TableCellRenderer {
+		public CheckBoxRenderer() {
+			setHorizontalAlignment(SwingConstants.CENTER);
+		}
 
-    // --- Renderers y Editors para la tabla ---
-    // Renderer para checkboxes
-    private static class CheckBoxRenderer extends JCheckBox implements TableCellRenderer {
-        public CheckBoxRenderer() {
-            setHorizontalAlignment(SwingConstants.CENTER);
-        }
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+				int row, int column) {
+			setSelected((value != null && (Boolean) value));
+			return this;
+		}
+	}
 
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-                int row, int column) {
-            setSelected((value != null && (Boolean) value));
-            return this;
-        }
-    }
+	// Renderer para botones
+	private static class ButtonRenderer extends JButton implements TableCellRenderer {
+		public ButtonRenderer(String texto) {
+			setText(texto);
+			setMargin(new java.awt.Insets(2, 5, 2, 5));
+		}
 
-    // Renderer para botones
-    private static class ButtonRenderer extends JButton implements TableCellRenderer {
-        public ButtonRenderer(String texto) {
-            setText(texto);
-            setMargin(new java.awt.Insets(2, 5, 2, 5));
-        }
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+				int row, int column) {
+			return this;
+		}
+	}
 
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-                int row, int column) {
-            return this;
-        }
-    }
+	// Editor para botones (abrir carpeta / compartir enlace por fila)
+	private class ButtonEditor extends DefaultCellEditor {
+		private final String accion;
+		private final JButton button;
+		private int currentRow = -1;
 
-    // Editor para botones (abrir carpeta / compartir enlace por fila)
-    private class ButtonEditor extends DefaultCellEditor {
-        private final String accion;
-        private final JButton button;
-        private int currentRow = -1;
+		public ButtonEditor(String accion) {
+			super(new JCheckBox());
+			this.accion = accion;
+			this.button = new JButton(accion);
+			button.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// Aseguramos que el editor no quede activo y la UI muestre un cursor de espera
+					try {
+						button.setEnabled(false);
+						setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR));
 
-        public ButtonEditor(String accion) {
-            super(new JCheckBox());
-            this.accion = accion;
-            this.button = new JButton(accion);
-            button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    // Asegurar que el editor siempre se cierra y no bloquea futuros envíos
-                    try {
-                        button.setEnabled(false);
-                        setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR));
+						// Si por alguna razón no hay fila activa, no hacemos nada
+						if (currentRow < 0)
+							return;
 
-                        if (currentRow >= 0) {
-                            if (accion.equals(MonitorDePID.idioma.abrir())) {
-                                Path archivo = MonitorDePID.consolas.get(currentRow).archivo;
-                                File carpeta = archivo.getParent().toFile();
-                                try {
-                                    java.awt.Desktop.getDesktop().open(carpeta);
-                                } catch (IOException ex) {
-                                    mostrarError("No se pudo abrir la carpeta.", ex);
-                                }
-                            } else if (accion.equals(MonitorDePID.idioma.texto_de_buton_compartir_enlace())) {
-                                CrashDetectorLogger.log("compartir boton");
-                                Consola cons = MonitorDePID.consolas.get(currentRow);
-                                try {
-                                    String url = cons.obtainerEnlance();
-                                    modeloTabla.setValueAt(url, currentRow, 4);
+						// Acción: Abrir carpeta (o archivo si no tiene carpeta)
+						if (accion.equals(MonitorDePID.idioma.abrir())) {
+							try {
+								// Obtenemos la ruta del archivo asociado a la consola de esta fila
+								Path rutaArchivo = MonitorDePID.consolas.get(currentRow).archivo;
 
-                                    if (url != null && !url.isEmpty() && java.awt.Desktop.isDesktopSupported()) {
-                                        java.awt.Desktop.getDesktop().browse(new URL(url).toURI());
-                                    } else if (url != null) {
-                                        copiarAlPortapapeles(url);
-                                        mostrarInfo(MonitorDePID.idioma.copiadoAlPortapapeles());
-                                    }
-                                } catch (MalformedURLException ex) {
-                                    CrashDetectorLogger.logException(ex);
-                                    mostrarError("URL inválida.", ex);
-                                } catch (DemasiadoGrande ex) {
-                                    mostrarError(MonitorDePID.idioma.registroDemasiadoGrande(), ex);
-                                } catch (ErrorConPublicar ex) {
-                                    mostrarError(MonitorDePID.idioma.errorConPublicarRegistro(ex.problema), ex);
-                                } catch (NoAPIdeRegistro ex) {
-                                    mostrarError(MonitorDePID.idioma.apiDeRegistroNoExiste(), ex);
-                                } catch (IOException | URISyntaxException ex) {
-                                    CrashDetectorLogger.logException(ex);
-                                    mostrarError("No se pudo abrir el navegador.", ex);
-                                } catch (Throwable t) {
-                                    mostrarError("Error inesperado al compartir.", t);
-                                }
-                            }
-                        }
-                    } finally {
-                        try {
-                            fireEditingStopped();
-                        } catch (Throwable ignored) {
-                        }
-                        button.setEnabled(true);
-                        setCursor(java.awt.Cursor.getDefaultCursor());
-                    }
-                }
-            });
-        }
+								// Si no hay padre (nombre suelto) abrimos el propio archivo
+								Path padre = (rutaArchivo == null) ? null : rutaArchivo.getParent();
+								File destinoAabrir = (padre != null) ? padre.toFile() : rutaArchivo.toFile();
 
-        @Override
-        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
-                int column) {
-            this.currentRow = row;
-            return button;
-        }
+								// Si lo elegido no existe, probamos la alternativa (archivo vs carpeta)
+								if (destinoAabrir == null || !destinoAabrir.exists()) {
+									File alterno = (rutaArchivo != null) ? rutaArchivo.toFile() : null;
+									if (alterno == null || !alterno.exists()) {
+										mostrarError(
+												"No se encontró la ruta para abrir:\n" + String.valueOf(destinoAabrir),
+												null);
+										return;
+									}
+									destinoAabrir = alterno;
+								}
 
-        @Override
-        public Object getCellEditorValue() {
-            return accion;
-        }
-    }
+								// Si el entorno no soporta Desktop, copiamos la ruta al portapapeles
+								if (!java.awt.Desktop.isDesktopSupported()) {
+									copiarAlPortapapeles(destinoAabrir.getAbsolutePath());
+									mostrarInfo(
+											"El entorno no soporta abrir carpetas/archivos. Se copió la ruta al portapapeles.");
+									return;
+								}
 
-    // Editor para URLs con copiado
-    private static class URLEditor extends DefaultCellEditor {
-        private final JTextField textField;
+								// Abrimos directorio o archivo según corresponda
+								java.awt.Desktop.getDesktop().open(destinoAabrir);
 
-        public URLEditor() {
-            super(new JTextField());
-            textField = (JTextField) getComponent();
-            textField.setEditable(false);
-            textField.addMouseListener(new java.awt.event.MouseAdapter() {
-                @Override
-                public void mouseClicked(java.awt.event.MouseEvent e) {
-                    if (SwingUtilities.isRightMouseButton(e)) {
-                        copiarAlPortapapeles(textField.getText());
-                    }
-                }
-            });
-        }
+							} catch (IOException ex) {
+								mostrarError("No se pudo abrir la ruta.", ex);
+							} catch (Throwable t) {
+								mostrarError("Error inesperado al abrir la ruta.", t);
+							}
+							return; // Terminamos aquí para no evaluar la otra acción
+						}
 
-        @Override
-        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
-                int column) {
-            textField.setText(value == null ? "" : value.toString());
-            return textField;
-        }
+						// Acción: Compartir enlace (por fila)
+						if (accion.equals(MonitorDePID.idioma.texto_de_buton_compartir_enlace())) {
+							try {
+								// Obtenemos la consola de la fila
+								Consola consola = MonitorDePID.consolas.get(currentRow);
 
-        @Override
-        public Object getCellEditorValue() {
-            return textField.getText();
-        }
-    }
+								// Generamos/obtenemos el enlace de esa consola
+								String url = consola.obtainerEnlance();
 
-    // Renderer para URLs con copiado
-    private static class URLEditorRenderer extends JLabel implements TableCellRenderer {
-        public URLEditorRenderer() {
-            setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.TEXT_CURSOR));
-            // ConfigColor con Color como parámetro predeterminado
-            setForeground(ConfigColor.de("dialogo_compartir_enlace", Color.BLUE.darker()).obtener());
-            addMouseListener(new java.awt.event.MouseAdapter() {
-                @Override
-                public void mouseClicked(java.awt.event.MouseEvent e) {
-                    if (SwingUtilities.isRightMouseButton(e)) {
-                        copiarAlPortapapeles(getText());
-                    }
-                }
-            });
-        }
+								// Escribimos la URL en la tabla (columna 4)
+								modeloTabla.setValueAt(url, currentRow, 4);
 
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-                int row, int column) {
-            setText(value == null ? "" : value.toString());
-            return this;
-        }
-    }
+								// Intentamos abrir en navegador; si no se puede, copiamos al portapapeles
+								if (url != null && !url.isEmpty() && java.awt.Desktop.isDesktopSupported()) {
+									java.awt.Desktop.getDesktop().browse(new URL(url).toURI());
+								} else if (url != null) {
+									copiarAlPortapapeles(url);
+									mostrarInfo(MonitorDePID.idioma.copiadoAlPortapapeles());
+								}
+
+							} catch (java.net.MalformedURLException ex) {
+								CrashDetectorLogger.logException(ex);
+								mostrarError("URL inválida.", ex);
+							} catch (DemasiadoGrande ex) {
+								mostrarError(MonitorDePID.idioma.registroDemasiadoGrande(), ex);
+							} catch (ErrorConPublicar ex) {
+								mostrarError(MonitorDePID.idioma.errorConPublicarRegistro(ex.problema), ex);
+							} catch (NoAPIdeRegistro ex) {
+								mostrarError(MonitorDePID.idioma.apiDeRegistroNoExiste(), ex);
+							} catch (IOException | java.net.URISyntaxException ex) {
+								CrashDetectorLogger.logException(ex);
+								mostrarError("No se pudo abrir el navegador.", ex);
+							} catch (Throwable t) {
+								mostrarError("Error inesperado al compartir.", t);
+							}
+							return;
+						}
+
+					} finally {
+						// Siempre cerramos el editor y restauramos el estado del cursor/botón
+						try {
+							fireEditingStopped();
+						} catch (Throwable ignored) {
+							// Evitar que una excepción menor bloquee la UI
+						}
+						button.setEnabled(true);
+						setCursor(java.awt.Cursor.getDefaultCursor());
+					}
+				}
+
+			});
+		}
+
+		@Override
+		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
+				int column) {
+			this.currentRow = row;
+			return button;
+		}
+
+		@Override
+		public Object getCellEditorValue() {
+			return accion;
+		}
+	}
+
+	// Editor para URLs con copiado
+	private static class URLEditor extends DefaultCellEditor {
+		private final JTextField textField;
+
+		public URLEditor() {
+			super(new JTextField());
+			textField = (JTextField) getComponent();
+			textField.setEditable(false);
+			textField.addMouseListener(new java.awt.event.MouseAdapter() {
+				@Override
+				public void mouseClicked(java.awt.event.MouseEvent e) {
+					if (SwingUtilities.isRightMouseButton(e)) {
+						copiarAlPortapapeles(textField.getText());
+					}
+				}
+			});
+		}
+
+		@Override
+		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
+				int column) {
+			textField.setText(value == null ? "" : value.toString());
+			return textField;
+		}
+
+		@Override
+		public Object getCellEditorValue() {
+			return textField.getText();
+		}
+	}
+
+	// Renderer para URLs con copiado
+	private static class URLEditorRenderer extends JLabel implements TableCellRenderer {
+		public URLEditorRenderer() {
+			setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.TEXT_CURSOR));
+			// ConfigColor con Color como parámetro predeterminado
+			setForeground(ConfigColor.de("dialogo_compartir_enlace", Color.BLUE.darker()).obtener());
+			addMouseListener(new java.awt.event.MouseAdapter() {
+				@Override
+				public void mouseClicked(java.awt.event.MouseEvent e) {
+					if (SwingUtilities.isRightMouseButton(e)) {
+						copiarAlPortapapeles(getText());
+					}
+				}
+			});
+		}
+
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+				int row, int column) {
+			setText(value == null ? "" : value.toString());
+			return this;
+		}
+	}
 
 	@Override
 	public List<ElementoConfig> obtenerElementosConfigs() {
 		ArrayList<ElementoConfig> ret = new ArrayList<>();
 		// ConfigColor ahora acepta Color como parámetro predeterminado
 		ret.add(ConfigColor.de("dialogo_compartir_enlace", java.awt.Color.BLUE.darker()));
-		ret.add(ConfigColor.de("dialogo_compartir_campo_fondo", Color.YELLOW));		
+		ret.add(ConfigColor.de("dialogo_compartir_campo_fondo", Color.YELLOW));
 		return ret;
 	}
-    
-    @Override
-    public void recargarApariencia() {
-        // Cambia el color de fondo del campo de enlace del informe usando ConfigColor
-        if (campoEnlaceReporte != null) {
-            // ConfigColor con Color como parámetro predeterminado
-            campoEnlaceReporte.setBackground(ConfigColor.de("dialogo_compartir_campo_fondo", Color.YELLOW).obtener());
-        }
-        // Aquí se pueden agregar más cambios de apariencia específicos para esta implementación
-    }
+
+	@Override
+	public void recargarApariencia() {
+		// Cambia el color de fondo del campo de enlace del informe usando ConfigColor
+		if (campoEnlaceReporte != null) {
+			// ConfigColor con Color como parámetro predeterminado
+			campoEnlaceReporte.setBackground(ConfigColor.de("dialogo_compartir_campo_fondo", Color.YELLOW).obtener());
+		}
+		// Aquí se pueden agregar más cambios de apariencia específicos para esta
+		// implementación
+	}
+
 }

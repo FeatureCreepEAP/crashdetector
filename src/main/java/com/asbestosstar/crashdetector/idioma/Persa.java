@@ -3984,6 +3984,11 @@ public class Persa implements Idioma {
 	           "</html>";
 	}
 	
+	@Override
+	public String texto_de_boton_compartir_markdown() {
+	    return "دریافت پیوندهای سیاهه به صورت مارک‌داون بدون گزارش";
+	}
+	
 	
 	
 	

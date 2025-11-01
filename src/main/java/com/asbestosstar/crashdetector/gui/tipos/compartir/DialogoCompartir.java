@@ -57,6 +57,7 @@ public abstract class DialogoCompartir extends JDialog implements CrashDetectorG
 	public Instant instant;
 	public JTextField campoEnlaceReporte;
 	public JButton botonCompartirTodos;
+	public JButton botonCompartirMarkdown;
 
 	// Variables internas para la lógica
 	protected JTextArea textoExplicacion;
@@ -218,8 +219,6 @@ public abstract class DialogoCompartir extends JDialog implements CrashDetectorG
 		// TODO ¡NO USAR, usar preperar!
 	}
 
-
-
 	public APIdeSitioDeRegistro obtenerAPI() throws NoAPIdeRegistro {
 		try {
 			return APIdeSitioDeRegistro.obtenerAPIdeConfig();
@@ -229,6 +228,100 @@ public abstract class DialogoCompartir extends JDialog implements CrashDetectorG
 			throw new NoAPIdeRegistro();
 		}
 
+	}
+
+	/**
+	 * Genera Markdown con enlaces directos a los logs seleccionados. - Mantiene la
+	 * tabla (columna URL) sincronizada. - Copia el Markdown al portapapeles y lo
+	 * pone en el campo de enlace. - Orden: latest.log, debug.log, launcher.log,
+	 * luego otros por nombre.
+	 */
+	protected void compartirSoloEnlacesMarkdown(ActionEvent e)
+			throws DemasiadoGrande, ErrorConPublicar, NoAPIdeRegistro {
+		// 1) Determinar filas/Consolas seleccionadas (misma semántica que
+		// compartirSeleccionados)
+		List<Integer> filasSel = new ArrayList<>();
+		ArrayList<Consola> seleccionados = new ArrayList<>();
+		if (modeloTabla != null) {
+			for (int i = 0; i < modeloTabla.getRowCount(); i++) {
+				if (Boolean.TRUE.equals(modeloTabla.getValueAt(i, 0))) {
+					filasSel.add(i);
+					seleccionados.add(MonitorDePID.consolas.get(i));
+				}
+			}
+		}
+		if (seleccionados.isEmpty())
+			return;
+
+		// 2) Obtener/crear enlaces por consola y actualizar tabla
+		class Item {
+			String archivo;
+			String url;
+
+			Item(String a, String u) {
+				archivo = a;
+				url = u;
+			}
+		}
+		List<Item> items = new ArrayList<>();
+
+		for (int idx = 0; idx < filasSel.size(); idx++) {
+			int row = filasSel.get(idx);
+			Consola cons = MonitorDePID.consolas.get(row);
+			String nombreArchivo = cons.archivo.getFileName().toString(); // sólo el nombre, sin carpeta
+			String url;
+			try {
+				url = cons.obtainerEnlance(); // mismo mecanismo que “compartir enlace” por fila
+			} catch (DemasiadoGrande | ErrorConPublicar | NoAPIdeRegistro ex) {
+				throw ex;
+			} catch (Throwable t) {
+				CrashDetectorLogger.logException(t);
+				url = ""; // seguimos; se mostrará vacío si algo falló
+			}
+			if (modeloTabla != null) {
+				modeloTabla.setValueAt(url, row, 4); // poblar columna URL
+			}
+			items.add(new Item(nombreArchivo, url));
+		}
+
+		// 3) Orden deseado
+		java.util.Comparator<Item> cmp = (a, b) -> {
+			java.util.function.Function<String, Integer> peso = s -> {
+				String n = s.toLowerCase();
+				if (n.equals("latest.log"))
+					return 0;
+				if (n.equals("debug.log"))
+					return 1;
+				if (n.equals("launcher.log"))
+					return 2;
+				return 3;
+			};
+			int pa = peso.apply(a.archivo);
+			int pb = peso.apply(b.archivo);
+			if (pa != pb)
+				return Integer.compare(pa, pb);
+			return a.archivo.compareToIgnoreCase(b.archivo);
+		};
+		items.sort(cmp);
+
+		// 4) String Markdown en una sola línea, separado por espacios
+		StringBuilder md = new StringBuilder();
+		for (Item it : items) {
+			if (it.url != null && !it.url.isEmpty()) {
+				md.append("[").append(it.archivo).append("](").append(it.url).append(") ");
+			} else {
+				// Sin URL: deja sólo el nombre como texto plano
+				md.append(it.archivo).append(" ");
+			}
+		}
+		String markdown = md.toString().trim();
+
+		// 5) Mostrar y copiar
+		if (campoEnlaceReporte != null) {
+			campoEnlaceReporte.setText(markdown);
+		}
+		copiarAlPortapapeles(markdown);
+		mostrarInfo(MonitorDePID.idioma.copiadoAlPortapapeles());
 	}
 
 }

@@ -3899,6 +3899,11 @@ public class Japones implements Idioma {
 	           "</html>";
 	}
 	
+	@Override
+	public String texto_de_boton_compartir_markdown() {
+	    return "レポートなしでログリンクをMarkdown形式で取得";
+	}
+	
 	
 	
 	

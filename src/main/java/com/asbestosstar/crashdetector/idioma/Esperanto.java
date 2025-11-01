@@ -3995,6 +3995,11 @@ public class Esperanto implements Idioma {
 	           "</html>";
 	}
 	
+	@Override
+	public String texto_de_boton_compartir_markdown() {
+	    return "Akiri retejojn de protokoloj kiel Markdown sen raporto";
+	}
+	
 	
 	
 	

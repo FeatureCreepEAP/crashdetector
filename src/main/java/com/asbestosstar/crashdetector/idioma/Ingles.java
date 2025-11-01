@@ -4038,6 +4038,12 @@ public class Ingles implements Idioma {
 	           "</html>";
 	}
 	
+	@Override
+	public String texto_de_boton_compartir_markdown() {
+	    return "Get Log Links as Markdown without Report";
+	}
+	
+	
 	
 	
 	

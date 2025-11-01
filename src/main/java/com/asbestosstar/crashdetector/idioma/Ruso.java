@@ -4005,4 +4005,9 @@ public class Ruso implements Idioma {
 	           "</html>";
 	}
 	
+	@Override
+	public String texto_de_boton_compartir_markdown() {
+	    return "Получить ссылки на логи в формате Markdown без отчёта";
+	}
+	
 }

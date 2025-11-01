@@ -3970,6 +3970,11 @@ public class Arabe implements Idioma {
 	           "</html>";
 	}
 	
+	@Override
+	public String texto_de_boton_compartir_markdown() {
+	    return "الحصول على روابط السجلات كنص Markdown بدون تقرير";
+	}
+	
 	
 	
 }

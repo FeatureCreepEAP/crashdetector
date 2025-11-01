@@ -4682,6 +4682,12 @@ public class Espanol implements Idioma {
 				+ "  Usa el botón 'Instantánea' para crear una copia de un archivo existente con extensión .instantanea."
 				+ "</body>" + "</html>";
 	}
+
+	@Override
+	public String texto_de_boton_compartir_markdown() {
+	    // TODO Auto-generated method stub
+	    return "Obtener Enlaces a Registros Como Markdown sin Informe";
+	}
 	
 	
 	

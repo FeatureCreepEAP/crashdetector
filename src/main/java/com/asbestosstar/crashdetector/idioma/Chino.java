@@ -3842,6 +3842,11 @@ public class Chino implements Idioma {
 	           "</html>";
 	}
 	
+	@Override
+	public String texto_de_boton_compartir_markdown() {
+	    return "获取日志链接（Markdown格式，不含报告）";
+	}
+	
 	
 	
 	

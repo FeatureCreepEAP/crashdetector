@@ -3897,6 +3897,11 @@ public class Coreano implements Idioma {
 	           "</html>";
 	}
 	
+	@Override
+	public String texto_de_boton_compartir_markdown() {
+	    return "로그 링크를 마크다운 형식으로 가져오기 (보고서 없음)";
+	}
+	
 	
 	
 	
