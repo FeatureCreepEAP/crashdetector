@@ -193,73 +193,75 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 		return linea;
 	}
 
-	// Nuevo método para crear instantánea
-	protected void crearInstantanea() {
-		String archivoSeleccionado = (grupoIzquierdo == null || grupoIzquierdo.getSelection() == null) ? null
-				: grupoIzquierdo.getSelection().getActionCommand();
+// ====== Reemplaza en HistoriaDeModsGUI estos métodos ======
 
-		if (archivoSeleccionado == null) {
-			if (resultadoPanel != null) {
-				resultadoPanel.setText("<html><body><font color='red'>" + MonitorDePID.idioma.seleccionarUnArchivo()
-						+ "</font></body></html>"); // Nuevo mensaje localizado
-			}
-			return;
-		}
+/** Crea una instantánea del archivo seleccionado en la columna izquierda. */
+protected void crearInstantanea() {
+    String archivoSeleccionado = (grupoIzquierdo == null || grupoIzquierdo.getSelection() == null)
+            ? null
+            : grupoIzquierdo.getSelection().getActionCommand();
 
-		try {
-			Path directorio = MonitorDePID.carpeta.resolve("historia_mods");
-			Path rutaOriginal = directorio.resolve(archivoSeleccionado);
+    if (archivoSeleccionado == null) {
+        if (resultadoPanel != null) {
+            resultadoPanel.setText("<html><body><font color='red'>"
+                    + MonitorDePID.idioma.seleccionarUnArchivo()
+                    + "</font></body></html>");
+        }
+        return;
+    }
 
-			if (!Files.exists(rutaOriginal)) {
-				throw new IOException("Archivo original no encontrado: " + rutaOriginal);
-			}
+    try {
+        Path directorio = MonitorDePID.carpeta.resolve("historia_mods");
+        Path rutaOriginal = directorio.resolve(archivoSeleccionado);
 
-			// Generar nuevo nombre con timestamp y extensión .instantanea
-			String nuevoNombre = generarNombreInstantanea();
-			Path rutaNueva = directorio.resolve(nuevoNombre);
+        if (!Files.exists(rutaOriginal)) {
+            throw new IOException("Archivo original no encontrado: " + rutaOriginal);
+        }
 
-			// Copiar el archivo original con el nuevo nombre
-			Files.copy(rutaOriginal, rutaNueva);
-			CrashDetectorLogger.log("Instantánea creada: " + rutaNueva);
+        // === Nuevo: nombre de instantánea = mismo base + ".instantanea" ===
+        String base = archivoSeleccionado.replaceFirst("\\.[^.]+$", ""); // quita la extensión
+        String nuevoNombre = generarNombreInstantaneaDesdeBase(base);     // p.ej. 000452.instantanea
+        Path rutaNueva = directorio.resolve(nuevoNombre);
 
-			// Recargar la interfaz para mostrar el nuevo archivo
-			cargarArchivosHistoricos();
-			if (resultadoPanel != null) {
-				resultadoPanel.setText("<html><body><font color='green'>"
-						+ MonitorDePID.idioma.instantaneaCreadaCorrectamente() + "</font></body></html>"); // Nuevo
-																											// mensaje
-																											// localizado
-			}
+        Files.copy(rutaOriginal, rutaNueva);
+        CrashDetectorLogger.log("Instantánea creada: " + rutaNueva);
 
-		} catch (Exception e) {
-			CrashDetectorLogger.log("Error creando instantánea: " + e.getMessage());
-			if (resultadoPanel != null) {
-				resultadoPanel.setText("<html><body><font color='red'>" + MonitorDePID.idioma.errorCreandoInstantanea()
-						+ "</font></body></html>"); // Nuevo mensaje localizado
-			}
-		}
-	}
+        // Recargar la UI y avisar
+        cargarArchivosHistoricos();
+        if (resultadoPanel != null) {
+            resultadoPanel.setText("<html><body><font color='green'>"
+                    + MonitorDePID.idioma.instantaneaCreadaCorrectamente()
+                    + "</font></body></html>");
+        }
 
-	// Genera un nombre único para la instantánea
-	private String generarNombreInstantanea() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
-		String fecha = LocalDateTime.now().format(formatter);
-		String baseName = fecha + ".instantanea";
+    } catch (Exception e) {
+        CrashDetectorLogger.log("Error creando instantánea: " + e.getMessage());
+        if (resultadoPanel != null) {
+            resultadoPanel.setText("<html><body><font color='red'>"
+                    + MonitorDePID.idioma.errorCreandoInstantanea()
+                    + "</font></body></html>");
+        }
+    }
+}
 
-		Path directorio = MonitorDePID.carpeta.resolve("historia_mods");
-		int i = 0;
-		String nombreCompleto = baseName;
-		Path rutaProvisional = directorio.resolve(nombreCompleto);
+/**
+ * Genera un nombre para la instantánea a partir del nombre base del archivo
+ * original (misma raíz, extensión .instantanea). Si ya existe, agrega _01, _02, ...
+ */
+private String generarNombreInstantaneaDesdeBase(String base) {
+    Path directorio = MonitorDePID.carpeta.resolve("historia_mods");
+    String nombre = base + ".instantanea";
+    Path ruta = directorio.resolve(nombre);
 
-		// Asegurar unicidad del nombre
-		while (Files.exists(rutaProvisional)) {
-			i++;
-			nombreCompleto = fecha + "_" + String.format("%02d", i) + ".instantanea";
-			rutaProvisional = directorio.resolve(nombreCompleto);
-		}
+    int i = 1;
+    while (Files.exists(ruta)) {
+        nombre = base + "_" + String.format("%02d", i) + ".instantanea";
+        ruta = directorio.resolve(nombre);
+        i++;
+    }
+    return nombre;
+}
 
-		return nombreCompleto;
-	}
 
 	protected void compararArchivosSeleccionados() {
 		String archivoIzq = (grupoIzquierdo == null || grupoIzquierdo.getSelection() == null) ? null

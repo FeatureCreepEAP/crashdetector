@@ -67,7 +67,7 @@ public class DifDeMods implements Verificaciones {
 			}
 
 			// Si el archivo más reciente es un éxito, no comparar con falla
-			if (archivoUltimo != null && archivoUltimo.toString().endsWith(".exito")) {
+			if (archivoUltimo != null && archivoUltimo.toString().endsWith(".exito") || archivoUltimo.toString().endsWith(".instantanea")) {
 				fallaFile = null;
 			}
 
