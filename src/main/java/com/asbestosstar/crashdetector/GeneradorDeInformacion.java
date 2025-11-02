@@ -15,11 +15,11 @@ import javax.net.ssl.SSLException;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
-import com.asbestosstar.crashdetector.api_sito_registro.APIdeSitioDeRegistro;
 import com.asbestosstar.crashdetector.api_sito_registro.DemasiadoGrande;
 import com.asbestosstar.crashdetector.api_sito_registro.ErrorConPublicar;
 import com.asbestosstar.crashdetector.api_sito_registro.LimteDeTasa;
 import com.asbestosstar.crashdetector.api_sito_registro.NoAPIdeRegistro;
+import com.asbestosstar.crashdetector.config.ConfigString;
 
 public class GeneradorDeInformacion {
 
@@ -110,7 +110,9 @@ public class GeneradorDeInformacion {
 					.replace("{constructor}",
 							cons.toString() + "<br>" + MonitorDePID.idioma.infoDeVerificaciones() + "<br>"
 									+ MonitorDePID.contenidoInforme.toString() + imagenesParaCompartir())
-					.replace("{mensaje_ayudar}", MonitorDePID.idioma.mensajeAyudar()));
+					.replace("{mensaje_ayudar}", "")// no necesitemos mensaje
+
+			);
 			CrashDetectorLogger.log(ret);
 			return ret;
 		} catch (IOException e) {
@@ -121,13 +123,17 @@ public class GeneradorDeInformacion {
 
 	public static String imagenesParaCompartir() {
 		StringBuilder cons = new StringBuilder();
-//		cons.append("<center>")
-//        .append("<img src='/../gura.png' width='200' height='112'>") // Imagen Gura
-//        .append("&nbsp;&nbsp;&nbsp;") // Espaciado entre imágenes
-//        .append("<img src='/../nanashi_mumei.png' width='200' height='112'>") // Imagen Nanashi Mumei
-//        .append("&nbsp;&nbsp;&nbsp;")
-//        .append("<img src='/../shion.png' width='200' height='112'>") // Imagen Shion
-//        .append("</center>");
+		String enlace_a_imagen_gura = ConfigString
+				.de("enlace_imagen_gura", "http://asbestosstar.egoism.jp/crash_detector/gura.png").obtener();
+		String enlace_a_imagen_mumei = ConfigString
+				.de("enlace_imagen_mumei", "http://asbestosstar.egoism.jp/crash_detector/nanashi_mumei.png").obtener();
+		String enlace_a_imagen_shion = ConfigString
+				.de("enlace_imagen_shion", "http://asbestosstar.egoism.jp/crash_detector/shion.png").obtener();
+
+		cons.append("<center>").append("<img src='").append(enlace_a_imagen_gura).append("' width='200' height='112'>")
+				.append("&nbsp;&nbsp;&nbsp;").append("<img src='").append(enlace_a_imagen_mumei)
+				.append("' width='200' height='112'>").append("&nbsp;&nbsp;&nbsp;").append("<img src='")
+				.append(enlace_a_imagen_shion).append("' width='200' height='112'>").append("</center>");
 		return cons.toString();
 	}
 

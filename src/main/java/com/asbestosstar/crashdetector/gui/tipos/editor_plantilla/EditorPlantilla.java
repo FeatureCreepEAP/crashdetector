@@ -42,6 +42,7 @@ import javax.swing.text.StyledDocument;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.config.ConfigColor;
+import com.asbestosstar.crashdetector.config.ConfigString; // <-- NUEVO: soporte para enlaces configurables
 import com.asbestosstar.crashdetector.config.ElementoConfig;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
@@ -67,6 +68,9 @@ public abstract class EditorPlantilla extends JPanel implements CrashDetectorGUI
 	public boolean actualizandoVista = false;
 	public File archivoPlantilla;
 	public Map<String, ConfigColor> colorMap = new HashMap<>();
+
+	// --- NUEVO: mapa de enlaces configurables para el reporte compartido ---
+	public Map<String, ConfigString> enlacesMap = new HashMap<>();
 
 	// Las implementaciones deben inicializar los componentes
 	public abstract void inicializarComponentes();
@@ -268,6 +272,58 @@ public abstract class EditorPlantilla extends JPanel implements CrashDetectorGUI
 		panelCampos.add(crearCampoDeColor(MonitorDePID.idioma.colorAdvertencia(), colorMap.get("advertencia")));
 		panelCampos.add(crearCampoDeColor(MonitorDePID.idioma.colorInfo(), colorMap.get("info")));
 		panelCampos.add(crearCampoDeColor(MonitorDePID.idioma.colorTitulo(), colorMap.get("titulo")));
+	}
+
+	// --- NUEVO: Inicializa la configuración de enlaces (Gura, Mumei, Shion) ---
+	/**
+	 * Inicializa la configuración de enlaces de imágenes para el reporte compartido.
+	 * Los cambios se guardan inmediatamente mediante ConfigString.escribir(...).
+	 */
+	public void inicializarConfiguracionEnlaces(JPanel panelCampos) {
+		// Valores por defecto (como en tu snippet)
+		enlacesMap.put("gura",
+				ConfigString.de("enlace_imagen_gura", "http://asbestosstar.egoism.jp/crash_detector/gura.png"));
+		enlacesMap.put("mumei", ConfigString.de("enlace_imagen_mumei",
+				"http://asbestosstar.egoism.jp/crash_detector/nanashi_mumei.png"));
+		enlacesMap.put("shion",
+				ConfigString.de("enlace_imagen_shion", "http://asbestosstar.egoism.jp/crash_detector/shion.png"));
+
+		panelCampos.add(crearCampoDeTextoEnlace("Enlace imagen Gura", enlacesMap.get("gura")));
+		panelCampos.add(crearCampoDeTextoEnlace("Enlace imagen Mumei", enlacesMap.get("mumei")));
+		panelCampos.add(crearCampoDeTextoEnlace("Enlace imagen Shion", enlacesMap.get("shion")));
+	}
+
+	// --- NUEVO: helper para crear campo de texto de enlace ---
+	/**
+	 * Crea un campo de texto para editar un enlace de imagen del reporte.
+	 * Guarda al vuelo en configuración.
+	 */
+	public JPanel crearCampoDeTextoEnlace(String etiqueta, ConfigString configString) {
+		JPanel panel = new JPanel(new BorderLayout(5, 0));
+		JLabel label = new JLabel(etiqueta);
+		label.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
+		panel.add(label, BorderLayout.WEST);
+
+		JTextField field = new JTextField(configString.obtener());
+		field.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void insertUpdate(DocumentEvent e) { escribir(); }
+			@Override
+			public void removeUpdate(DocumentEvent e) { escribir(); }
+			@Override
+			public void changedUpdate(DocumentEvent e) { escribir(); }
+
+			private void escribir() {
+				try {
+					// Escribe inmediatamente en la config persistente
+					configString.escribir(field.getText());
+				} catch (Exception ignored) {
+					// Ignorar errores menores durante la edición
+				}
+			}
+		});
+		panel.add(field, BorderLayout.CENTER);
+		return panel;
 	}
 
 	/**

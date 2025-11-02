@@ -2,6 +2,7 @@ package com.asbestosstar.crashdetector.gui.tipos.editor_plantilla;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -82,6 +83,7 @@ public class EditorPlantillaPredeterminado extends EditorPlantilla {
 		splitPaneEditor.setDividerLocation(0.75); // Editor ocupa 75% del espacio vertical
 		splitPaneEditor.setBackground(coloresEditor.get("borde").obtener());
 
+		
 		// Editor HTML
 		JPanel panelEditor = new JPanel(new BorderLayout());
 		panelEditor.setBorder(BorderFactory.createTitledBorder("Editor HTML"));
@@ -114,22 +116,31 @@ public class EditorPlantillaPredeterminado extends EditorPlantilla {
 		splitPaneEditor.setTopComponent(panelEditor);
 		splitPaneEditor.setBottomComponent(panelVistaPrevia);
 
-		// Panel derecho: configuración de colores e imágenes
+		// Panel derecho: configuración de colores, enlaces e imágenes
 		panelConfiguracion = new JPanel(new BorderLayout());
 		panelConfiguracion.setBorder(BorderFactory.createTitledBorder("Configuración de Colores e Imágenes"));
 		panelConfiguracion.setBackground(coloresEditor.get("fondo").obtener());
 
+		splitPanePrincipal.setContinuousLayout(true);
+		splitPanePrincipal.setResizeWeight(0.5); // reparto proporcional al redimensionar
+		// mínimos razonables para que la derecha no “empuje” a la izquierda
+		panelConfiguracion.setMinimumSize(new Dimension(340, 200));
+		splitPaneEditor.setMinimumSize(new Dimension(420, 200));
+		
 		// Panel de colores
 		JPanel panelColores = new JPanel(new GridLayout(0, 1, 5, 5));
 		panelColores.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		panelColores.setBackground(coloresEditor.get("fondo").obtener());
-
-		// Llamada al método de la clase abstracta
 		inicializarConfiguracionColores(panelColores);
+
+		// Panel de enlaces para imágenes del reporte compartido (NUEVO)
+		JPanel panelEnlaces = new JPanel(new GridLayout(0, 1, 5, 5));
+		panelEnlaces.setBorder(BorderFactory.createTitledBorder("Enlaces de imágenes (reporte compartido)"));
+		panelEnlaces.setBackground(coloresEditor.get("fondo").obtener());
+		inicializarConfiguracionEnlaces(panelEnlaces);
 
 		// Panel de imágenes con ruta
 		JPanel panelImagenes = new JPanel(new BorderLayout());
-
 		String rutaFormateada = MonitorDePID.carpeta.resolve("imagenes").toString().replace("\\", "/");
 		panelImagenes.setBorder(BorderFactory.createTitledBorder("Imágenes (" + rutaFormateada + ")"));
 		panelImagenes.setBackground(coloresEditor.get("fondo").obtener());
@@ -142,11 +153,16 @@ public class EditorPlantillaPredeterminado extends EditorPlantilla {
 		for (String imagen : obtenerNombresImágenesVTuber()) {
 			panelContenidoImagenes.add(crearPanelImagen(imagen));
 		}
-
 		panelImagenes.add(panelContenidoImagenes, BorderLayout.CENTER);
 
-		panelConfiguracion.add(panelColores, BorderLayout.CENTER);
-		panelConfiguracion.add(panelImagenes, BorderLayout.SOUTH);
+		// Apilar paneles en la derecha
+		JPanel derechaStack = new JPanel(new GridLayout(0, 1, 8, 8));
+		derechaStack.setBackground(coloresEditor.get("fondo").obtener());
+		derechaStack.add(panelColores);
+		derechaStack.add(panelEnlaces); // <-- NUEVO bloque de enlaces
+		derechaStack.add(panelImagenes);
+
+		panelConfiguracion.add(derechaStack, BorderLayout.CENTER);
 
 		splitPanePrincipal.setLeftComponent(splitPaneEditor);
 		splitPanePrincipal.setRightComponent(panelConfiguracion);
@@ -230,6 +246,11 @@ public class EditorPlantillaPredeterminado extends EditorPlantilla {
 		configs.add(coloresEditor.get("caja_texto"));
 		configs.add(coloresEditor.get("boton"));
 		configs.add(coloresEditor.get("borde"));
+
+		if (enlacesMap != null && !enlacesMap.isEmpty()) {
+			configs.addAll(enlacesMap.values());
+		}
+
 		return configs;
 	}
 }

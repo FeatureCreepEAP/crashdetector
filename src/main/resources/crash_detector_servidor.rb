@@ -4,6 +4,7 @@
 require 'cgi'
 require 'time'
 require 'fileutils'
+require 'uri'  # Necesario para analizar y validar URLs
 
 # Configuraci?n
 DIRECTORIO_INFORMES = File.expand_path('informes')
@@ -23,8 +24,12 @@ begin
     html_original = cgi.params['html_content']&.first&.force_encoding('UTF-8')
     raise "Contenido HTML no recibido" if html_original.nil? || html_original.empty?
 
+    # --- NUEVO: Normalizar entrada a UTF-8 de forma segura (evitar ��) ---
+    # Re-encode desde binario para reemplazar bytes inválidos o no definidos.
+    html_normalizado_utf8 = html_original.encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
+
     # Sanitizaci?n mejorada
-    html_sanitizado = html_original.dup
+    html_sanitizado = html_normalizado_utf8.dup
     html_sanitizado.gsub!(/<script\b[^>]*>.*?<\/script>/im, '')
     html_sanitizado.gsub!(/on\w+\s*=\s*['"][^'"]*['"]/i, '')
 
@@ -45,23 +50,37 @@ begin
       end
     end
 
+    # --- NUEVO: Asegurar <meta charset="utf-8"> para que el navegador renderice bien ---
+    # Si existe <head>, insertamos tras él; si no, lo añadimos al principio.
+    unless html_sanitizado =~ /<meta\s+charset\s*=/i || html_sanitizado =~ /<meta\s+http-equiv=["']Content-Type["']/i
+      if html_sanitizado =~ /<head\b[^>]*>/i
+        html_sanitizado.sub!(/(<head\b[^>]*>)/i, "\\1\n<meta charset=\"utf-8\">\n")
+      else
+        html_sanitizado = "<meta charset=\"utf-8\">\n" + html_sanitizado
+      end
+    end
+
     # Guardar archivo con el contenido sanitizado
     nombre_archivo = Time.now.utc.strftime("%Y%m%d%H%M%S.html")
     ruta_archivo = File.join(DIRECTORIO_INFORMES, nombre_archivo)
+    # --- NUEVO: Escribir explícitamente en UTF-8 para evitar desajustes de plataforma ---
     File.open(ruta_archivo, 'w:utf-8') do |f|
       f.write(html_sanitizado) # Solo escribir el contenido sanitizado
     end
 
     # Respuesta con URL
     url_nuevo = "https://asbestosstar.egoism.jp/crash_detector/#{File.basename(DIRECTORIO_INFORMES)}/#{CGI.escape(nombre_archivo)}"
-    cgi.out('status' => '200 OK', 'Content-Type' => 'text/plain') { url_nuevo }
+    # --- NUEVO: Enviar cabecera con charset para clientes que lean la respuesta directa ---
+    cgi.out('status' => '200 OK', 'Content-Type' => 'text/plain; charset=utf-8') { url_nuevo }
   else
-    cgi.out('status' => '405 Method Not Allowed') { 'M?todo no permitido' }
+    cgi.out('status' => '405 Method Not Allowed', 'Content-Type' => 'text/plain; charset=utf-8') { 'M?todo no permitido' }
   end
 rescue => e
-  puts "Content-Type: text/plain"
+  puts "Content-Type: text/plain; charset=utf-8"
   puts "Status: 500 Internal Server Error"
   puts
+  # Mensajes de error en UTF-8 (el servidor debe respetar la cabecera anterior)
   puts "Error: #{e.message}"
   puts "Tiempo: #{Time.now.utc}"
 end
+

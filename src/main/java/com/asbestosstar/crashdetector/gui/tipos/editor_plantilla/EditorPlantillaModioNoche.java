@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -18,7 +19,9 @@ import javax.swing.JEditorPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -29,6 +32,7 @@ import javax.swing.text.StyledDocument;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.config.ConfigColor;
+import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
 
 /**
@@ -82,7 +86,6 @@ public class EditorPlantillaModioNoche extends EditorPlantilla {
 
 		// Panel principal con división horizontal
 		JSplitPane splitPanePrincipal = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-		splitPanePrincipal.setDividerLocation(0.65);
 		splitPanePrincipal.setBackground(coloresEditor.get("borde").obtener());
 
 		// Panel izquierdo: editor y vista previa (editor más alto)
@@ -123,7 +126,7 @@ public class EditorPlantillaModioNoche extends EditorPlantilla {
 		splitPaneEditor.setTopComponent(panelEditor);
 		splitPaneEditor.setBottomComponent(panelVistaPrevia);
 
-		// Panel derecho: configuración de colores e imágenes
+		// Panel derecho: configuración de colores, imágenes y ENLACES DE IMÁGENES
 		panelConfiguracion = new JPanel(new BorderLayout());
 		panelConfiguracion.setBorder(BorderFactory.createTitledBorder("Configuración de Colores e Imágenes"));
 		panelConfiguracion.setBackground(coloresEditor.get("fondo").obtener());
@@ -139,7 +142,6 @@ public class EditorPlantillaModioNoche extends EditorPlantilla {
 
 		// Panel de imágenes con ruta formateada
 		JPanel panelImagenes = new JPanel(new BorderLayout());
-
 		String rutaFormateada = MonitorDePID.carpeta.resolve("imagenes").toString().replace("\\", "/");
 		panelImagenes.setBorder(BorderFactory.createTitledBorder("Imágenes (" + rutaFormateada + ")"));
 		panelImagenes.setBackground(coloresEditor.get("fondo").obtener());
@@ -148,20 +150,62 @@ public class EditorPlantillaModioNoche extends EditorPlantilla {
 		panelContenidoImagenes.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		panelContenidoImagenes.setBackground(coloresEditor.get("fondo").obtener());
 
-		// Agregar los paneles de imágenes usando los nombres obtenidos
 		for (String imagen : obtenerNombresImágenesVTuber()) {
 			panelContenidoImagenes.add(crearPanelImagen(imagen));
 		}
-
 		panelImagenes.add(panelContenidoImagenes, BorderLayout.CENTER);
 
-		panelConfiguracion.add(panelColores, BorderLayout.CENTER);
-		panelConfiguracion.add(panelImagenes, BorderLayout.SOUTH);
+		// === NUEVO: Panel de ENLACES para imágenes del reporte compartido ===
+		JPanel panelEnlaces = new JPanel(new GridLayout(0, 1, 6, 6));
+		panelEnlaces.setBorder(BorderFactory.createTitledBorder("Enlaces de imágenes (reportes compartidos)"));
+		panelEnlaces.setBackground(coloresEditor.get("fondo").obtener());
+
+		// Campos ligados a ConfigString (persisten)
+		ConfigString cfgGura = ConfigString.de("enlace_imagen_gura",
+				"http://asbestosstar.egoism.jp/crash_detector/gura.png");
+		ConfigString cfgMumei = ConfigString.de("enlace_imagen_mumei",
+				"http://asbestosstar.egoism.jp/crash_detector/nanashi_mumei.png");
+		ConfigString cfgShion = ConfigString.de("enlace_imagen_shion",
+				"http://asbestosstar.egoism.jp/crash_detector/shion.png");
+
+		panelEnlaces.add(crearFilaEnlace("Gura", cfgGura));
+		panelEnlaces.add(crearFilaEnlace("Nanashi Mumei", cfgMumei));
+		panelEnlaces.add(crearFilaEnlace("Shion", cfgShion));
+
+		// Armar la derecha
+		JPanel derechaArriba = new JPanel(new BorderLayout());
+		derechaArriba.setBackground(coloresEditor.get("fondo").obtener());
+		derechaArriba.add(panelColores, BorderLayout.CENTER);
+
+		JPanel derechaAbajo = new JPanel(new BorderLayout());
+		derechaAbajo.setBackground(coloresEditor.get("fondo").obtener());
+		derechaAbajo.add(panelImagenes, BorderLayout.CENTER);
+		derechaAbajo.add(panelEnlaces, BorderLayout.SOUTH);
+
+		JPanel derecha = new JPanel(new BorderLayout());
+		derecha.setBackground(coloresEditor.get("fondo").obtener());
+		derecha.add(derechaArriba, BorderLayout.CENTER);
+		derecha.add(derechaAbajo, BorderLayout.SOUTH);
+
+		// Hacer scroll en la derecha para que no expanda sin límite
+		JScrollPane scrollDerecha = new JScrollPane(derecha);
+		scrollDerecha.setBorder(BorderFactory.createEmptyBorder());
+		panelConfiguracion.add(scrollDerecha, BorderLayout.CENTER);
 
 		splitPanePrincipal.setLeftComponent(splitPaneEditor);
 		splitPanePrincipal.setRightComponent(panelConfiguracion);
 
+		// Mantener 50/50 y que ambas mitades crezcan por igual
+		splitPanePrincipal.setContinuousLayout(true);
+		splitPanePrincipal.setResizeWeight(0.5); // reparto proporcional al redimensionar
+		// mínimos razonables para que la derecha no “empuje” a la izquierda
+		panelConfiguracion.setMinimumSize(new Dimension(340, 200));
+		splitPaneEditor.setMinimumSize(new Dimension(420, 200));
+
 		add(splitPanePrincipal, BorderLayout.CENTER);
+
+		// Colocar el divisor al 50% tras hacer layout
+		SwingUtilities.invokeLater(() -> splitPanePrincipal.setDividerLocation(0.5));
 
 		// Listener para actualizar vista previa cuando el contenido cambia
 		editorHTML.getDocument().addDocumentListener(new DocumentListener() {
@@ -291,7 +335,7 @@ public class EditorPlantillaModioNoche extends EditorPlantilla {
 		StyleConstants.setForeground(normal, coloresEditor.get("texto").obtener());
 		doc.setCharacterAttributes(0, text.length(), normal, true);
 
-		// Resaltar {constructor} con color azul cian
+		// Resaltar {constructor}
 		int inicio = 0;
 		while ((inicio = text.indexOf("{constructor}", inicio)) != -1) {
 			SimpleAttributeSet style = new SimpleAttributeSet();
@@ -301,7 +345,7 @@ public class EditorPlantillaModioNoche extends EditorPlantilla {
 			inicio += 13;
 		}
 
-		// Resaltar {mensaje_ayudar} con color magenta
+		// Resaltar {mensaje_ayudar}
 		inicio = 0;
 		while ((inicio = text.indexOf("{mensaje_ayudar}", inicio)) != -1) {
 			SimpleAttributeSet style = new SimpleAttributeSet();
@@ -311,13 +355,12 @@ public class EditorPlantillaModioNoche extends EditorPlantilla {
 			inicio += 16;
 		}
 
-		// Resaltar etiquetas HTML con color amarillo
+		// Resaltar etiquetas HTML
 		inicio = 0;
 		while (inicio < text.length()) {
 			int abertura = text.indexOf("<", inicio);
 			if (abertura == -1)
 				break;
-
 			int cierre = text.indexOf(">", abertura);
 			if (cierre == -1)
 				break;
@@ -371,8 +414,8 @@ public class EditorPlantillaModioNoche extends EditorPlantilla {
 				ejemploAyuda);
 
 		// Agregar estilos CSS para el tema oscuro
-		String htmlConEstilos = "<html><head><style>" + "body { background-color: "
-				+ Config.colorAHexHtml(coloresEditor.get("fondo_vista_previa").obtener()) + "; " + "color: "
+		String htmlConEstilos = "<html><head><meta charset='UTF-8'><style>" + "body { background-color: "
+				+ Config.colorAHexHtml(coloresEditor.get("fondo_vista_previa").obtener()) + "; color: "
 				+ Config.colorAHexHtml(coloresEditor.get("texto").obtener()) + "; }" + "a { color: " + colorEnlace
 				+ "; text-decoration: underline; }" + "</style></head><body>" + contenidoVista + "</body></html>";
 
@@ -380,5 +423,51 @@ public class EditorPlantillaModioNoche extends EditorPlantilla {
 		vistaPrevia.setCaretPosition(0);
 
 		actualizandoVista = false;
+	}
+
+	// === Helpers ===
+
+	private JPanel crearFilaEnlace(String etiqueta, ConfigString cfg) {
+		JPanel fila = new JPanel(new BorderLayout(8, 0));
+		fila.setBackground(coloresEditor.get("fondo").obtener());
+
+		JLabel lbl = new JLabel(etiqueta + ":");
+		lbl.setForeground(coloresEditor.get("texto").obtener());
+		lbl.setBorder(BorderFactory.createEmptyBorder(0, 8, 0, 0));
+
+		JTextField campo = new JTextField(cfg.obtener());
+		campo.setForeground(coloresEditor.get("texto").obtener());
+		campo.setBackground(coloresEditor.get("caja_texto").obtener());
+		campo.setCaretColor(coloresEditor.get("texto").obtener());
+		campo.setToolTipText("URL usada en reportes compartidos");
+
+		// Persistir al vuelo cambios del usuario
+		campo.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				escribir();
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				escribir();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				escribir();
+			}
+
+			private void escribir() {
+				try {
+					cfg.escribir(campo.getText());
+				} catch (Throwable ignored) {
+				}
+			}
+		});
+
+		fila.add(lbl, BorderLayout.WEST);
+		fila.add(campo, BorderLayout.CENTER);
+		return fila;
 	}
 }
