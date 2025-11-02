@@ -47,10 +47,6 @@ public class CrashDetectorPasteAPI implements APIdeSitioDeRegistro {
 		return sitios;
 	}
 
-	/*
-	 * ========================= Utilidades privadas =========================
-	 */
-
 	/** Garantiza que el endpoint incluya la acción de guardado. */
 	private String normalizarEndpoint(String s) {
 		if (s == null || s.isEmpty()) {
@@ -175,8 +171,7 @@ public class CrashDetectorPasteAPI implements APIdeSitioDeRegistro {
 		return true;
 	}
 
-	private final BiMap<String, Integer, ParteInfo> indicePartes =
-	        new BiMap<>();
+	private final BiMap<String, Integer, ParteInfo> indicePartes = new BiMap<>();
 
 	private final ThreadLocal<String> grupoActual = new ThreadLocal<>();
 
@@ -190,6 +185,70 @@ public class CrashDetectorPasteAPI implements APIdeSitioDeRegistro {
 	public BiMap<String, Integer, ParteInfo> indicePartes() {
 		// TODO Auto-generated method stub
 		return indicePartes;
+	}
+
+	@Override
+	public List<String> publicarRegistroEnPartes(Consola registro)
+			throws DemasiadoGrande, ErrorConPublicar, NoAPIdeRegistro, LimteDeTasa {
+		String contenido = registro.obtainerContenidoParaPublicar();
+		if (contenido == null)
+			contenido = "";
+		final int LIMITE = 20 * 1024 * 1024;
+
+		List<String> urls = new ArrayList<>();
+		String[] lineas = contenido.split("\n", -1);
+		StringBuilder parte = new StringBuilder();
+		int lineaDesde = 1;
+		int acumuladas = 0;
+		int indiceParte = 1;
+		String gid = grupoActual().get();
+
+		for (int i = 0; i < lineas.length; i++) {
+			String l = lineas[i];
+			String candidata = parte.length() == 0 ? l : ("\n" + l);
+			try {
+				byte[] gz = comprimirGZIP((parte.toString() + candidata).getBytes(StandardCharsets.UTF_8));
+				if (gz.length <= LIMITE) {
+					parte.append(candidata);
+					acumuladas++;
+				} else {
+					if (parte.length() == 0) {
+						String u = publicarTexto(
+								registro.archivo != null ? registro.archivo.getFileName().toString() : "log.txt", l);
+						urls.add(u);
+						if (gid != null) {
+							registrarParte(gid, indiceParte++, u, lineaDesde, lineaDesde);
+							lineaDesde++;
+						}
+					} else {
+						String u = publicarTexto(registro.archivo != null
+								? registro.archivo.getFileName().toString() + " (parte " + indiceParte + ")"
+								: "log.txt (parte " + indiceParte + ")", parte.toString());
+						urls.add(u);
+						if (gid != null) {
+							registrarParte(gid, indiceParte++, u, lineaDesde, lineaDesde + acumuladas - 1);
+							lineaDesde += acumuladas;
+						}
+						parte.setLength(0);
+						acumuladas = 0;
+						i--;
+					}
+				}
+			} catch (Exception ex) {
+				throw new ErrorConPublicar(ex.getMessage());
+			}
+		}
+		if (parte.length() > 0) {
+			String u = publicarTexto(registro.archivo != null
+					? registro.archivo.getFileName().toString()
+							+ (indiceParte > 1 ? " (parte " + indiceParte + ")" : "")
+					: ("log.txt" + (indiceParte > 1 ? " (parte " + indiceParte + ")" : "")), parte.toString());
+			urls.add(u);
+			if (gid != null) {
+				registrarParte(gid, indiceParte, u, lineaDesde, lineaDesde + acumuladas - 1);
+			}
+		}
+		return urls;
 	}
 
 }

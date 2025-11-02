@@ -8,29 +8,24 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
-
-import javax.net.ssl.SSLException;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-
-import com.asbestosstar.crashdetector.api_sito_registro.DemasiadoGrande;
-import com.asbestosstar.crashdetector.api_sito_registro.ErrorConPublicar;
-import com.asbestosstar.crashdetector.api_sito_registro.LimteDeTasa;
-import com.asbestosstar.crashdetector.api_sito_registro.NoAPIdeRegistro;
-import com.asbestosstar.crashdetector.config.ConfigString;
-
-// Concurrencia
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-// NUEVO: para crear el patrón de reemplazo seguro
-import java.util.regex.Pattern;
+import javax.net.ssl.SSLException;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+
+import com.asbestosstar.crashdetector.api_sito_registro.APIdeSitioDeRegistro;
+import com.asbestosstar.crashdetector.api_sito_registro.DemasiadoGrande;
+import com.asbestosstar.crashdetector.api_sito_registro.ErrorConPublicar;
+import com.asbestosstar.crashdetector.api_sito_registro.LimteDeTasa;
+import com.asbestosstar.crashdetector.api_sito_registro.NoAPIdeRegistro;
+import com.asbestosstar.crashdetector.config.ConfigString;
 
 public class GeneradorDeInformacion {
 
@@ -98,7 +93,6 @@ public class GeneradorDeInformacion {
 	public static String compartir(List<Consola> consolas, Instant instant)
 			throws DemasiadoGrande, ErrorConPublicar, NoAPIdeRegistro, LimteDeTasa {
 		try {
-			// ejecutar la obtención de enlaces en paralelo (hasta 6 hilos)
 			final int MAX_HILOS = 6;
 			ExecutorService pool = Executors.newFixedThreadPool(Math.min(MAX_HILOS, Math.max(1, consolas.size())));
 			List<Future<ResultadoEnlaces>> tareas = new ArrayList<>(consolas.size());
@@ -106,13 +100,16 @@ public class GeneradorDeInformacion {
 			for (int i = 0; i < consolas.size(); i++) {
 				final int idx = i;
 				final Consola co = consolas.get(i);
-				tareas.add(pool.submit(new Callable<ResultadoEnlaces>() {
-					@Override
-					public ResultadoEnlaces call() throws Exception {
-						List<String> enlaces = co.obtainerEnlaces();
-						String nombre = (co.archivo != null) ? co.archivo.toString().trim() : "log.txt";
-						return new ResultadoEnlaces(idx, nombre, enlaces);
-					}
+				tareas.add(pool.submit(() -> {
+					// Asegura un groupId estable por archivo + instante
+					com.asbestosstar.crashdetector.api_sito_registro.APIdeSitioDeRegistro api = com.asbestosstar.crashdetector.api_sito_registro.APIdeSitioDeRegistro
+							.obtenerAPIdeConfig();
+					String nombre = (co.archivo != null) ? co.archivo.toString().trim() : "log.txt";
+					String gid = nombre + ":" + instant.toString();
+					api.registrarGrupoActual(gid);
+
+					List<String> enlaces = co.obtainerEnlaces();
+					return new ResultadoEnlaces(idx, nombre, enlaces);
 				}));
 			}
 
@@ -160,8 +157,8 @@ public class GeneradorDeInformacion {
 							.append("'>").append(nombre).append("</font>: ");
 					for (int i = 0; i < enlaces.size(); i++) {
 						String url = enlaces.get(i);
-						cons.append("<a href='").append(url).append("'>").append("(p ").append(String.valueOf(i + 1))
-								.append(")").append("</a>");
+						cons.append("<a href='").append(url).append("'>").append("(p ").append(i + 1).append(")")
+								.append("</a>");
 						if (i < enlaces.size() - 1)
 							cons.append(" ");
 					}
@@ -175,33 +172,83 @@ public class GeneradorDeInformacion {
 			cons.append(generarTextoArcoiris("Feliz mes del orgullo"));
 			cons.append("</center>");
 
-			String pantilla = MonitorDePID.leer_archivo(MonitorDePID.carpeta.resolve("pantilla.htm"));
+			String plantilla = MonitorDePID.leer_archivo(MonitorDePID.carpeta.resolve("pantilla.htm"));
 
-			// NUEVO: post-procesado para eliminar enlaces "Ver en consola" hasta que
-			// tengamos el formato correcto.
+			// ¡No aplanamos “Ver en consola” aquí!
 			String constructorHtml = cons.toString() + "<br>" + MonitorDePID.idioma.infoDeVerificaciones() + "<br>"
 					+ MonitorDePID.contenidoInforme.toString() + imagenesParaCompartir();
 
-			String etiquetaVer = MonitorDePID.idioma.verEnConsola();
-			// Reemplaza <a ...>etiquetaVer</a> -> etiquetaVer (sin enlace)
-			// TODO (ES): Implementar salto a línea en APIs de logs que soporten
-			// posiciones/offsets.
-			if (etiquetaVer != null && !etiquetaVer.isEmpty()) {
-				String etiquetaEscapada = Pattern.quote(etiquetaVer);
-				constructorHtml = constructorHtml.replaceAll("(?i)<a\\b[^>]*>\\s*" + etiquetaEscapada + "\\s*</a>",
-						etiquetaVer);
-			}
+			// Convertir lectador://… a enlaces reales (o eliminarlos si no se soportan)
+			constructorHtml = postProcesarLinks(constructorHtml, instant);
 
 			String ret = enviarInforme(
-					pantilla.replace("{constructor}", constructorHtml).replace("{mensaje_ayudar}", "") // no necesitemos
-																										// mensaje
-			);
+					plantilla.replace("{constructor}", constructorHtml).replace("{mensaje_ayudar}", ""));
 			CrashDetectorLogger.log(ret);
 			return ret;
 
 		} catch (IOException e) {
 			CrashDetectorLogger.logException(e);
 			return null;
+		}
+	}
+
+	private static String postProcesarLinks(String html, Instant instant) {
+		try {
+			// API seleccionada y soporte de enlaces por línea
+			APIdeSitioDeRegistro api = APIdeSitioDeRegistro.obtenerAPIdeConfig();
+
+			// 1) Reemplazar <a href="lectador://ruta:linea">...</a>
+			java.util.regex.Pattern pLectador = java.util.regex.Pattern
+					.compile("(?i)<a\\b[^>]*href=[\"']lectador://(.*?):(\\d+)[\"'][^>]*>(.*?)</a>");
+			java.util.regex.Matcher m = pLectador.matcher(html);
+			StringBuffer sb = new StringBuffer();
+			while (m.find()) {
+				String ruta = m.group(1);
+				int linea = Integer.parseInt(m.group(2));
+				String inner = m.group(3);
+
+				String gid = ruta.trim() + ":" + instant.toString();
+				api.registrarGrupoActual(gid);
+
+				String replacement;
+				if (api.soporteEnlacesALinea()) {
+					String urlLinea = api.obtenerEnlaceDeLinea(linea);
+					if (urlLinea != null && !urlLinea.isEmpty()) {
+						replacement = "<a href='" + urlLinea + "'>" + inner + "</a>";
+					} else {
+						// sin URL concreta — eliminar
+						replacement = "";
+					}
+				} else {
+					// no soporta saltos de línea — eliminar
+					replacement = "";
+				}
+				m.appendReplacement(sb, java.util.regex.Matcher.quoteReplacement(replacement));
+			}
+			m.appendTail(sb);
+			html = sb.toString();
+
+			// 2) Si quitamos el enlace, pueden quedar separadores como " - " antes.
+			// Elimina " - " o " — " sueltos justo antes de <br>, </span>, </a>, fin de
+			// línea, etc.
+			html = html.replaceAll("\\s*[-–—]\\s*(?=(</a>|</span>|</div>|<br\\s*/?>|$))", "");
+
+			// 3) Si por alguna razón quedó el texto “Ver en consola” o “View in Log” sin
+			// enlace,
+			// y NO hay soporte, eliminarlo.
+			if (!api.soporteEnlacesALinea()) {
+				String etiqueta = MonitorDePID.idioma.verEnConsola();
+				if (etiqueta != null && !etiqueta.isEmpty()) {
+					String q = java.util.regex.Pattern.quote(etiqueta);
+					// borrar con separadores opcionales previos
+					html = html.replaceAll("\\s*[-–—]?\\s*" + q, "");
+				}
+			}
+
+			return html;
+		} catch (Throwable t) {
+			// En caso de cualquier problema, devolvemos el HTML original
+			return html;
 		}
 	}
 

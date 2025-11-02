@@ -176,28 +176,29 @@ public class MCLogsAPI implements APIdeSitioDeRegistro {
 	}
 
 	@Override
-	public List<String> publicarRegistroEnPartes(Consola registro) throws ErrorConPublicar {
-		// Estrategia: intentar publicar en una sola parte; si el servicio
-		// indica que es demasiado grande (o lo detectamos), dividir en trozos
-		// que respeten simultáneamente LÍMITE DE BYTES y LÍMITE DE LÍNEAS.
+	public List<String> publicarRegistroEnPartes(Consola registro) throws ErrorConPublicar, DemasiadoGrande {
+
 		String contenido = registro.obtainerContenidoParaPublicar();
 		if (contenido == null)
 			contenido = "";
 
-		// 1) Intento directo (una parte)
 		try {
 			String unico = publicarTexto(
 					(registro.archivo != null ? registro.archivo.getFileName().toString() : "log.txt"), contenido);
-			ArrayList<String> una = new ArrayList<>();
+			List<String> una = new ArrayList<>();
 			una.add(unico);
+
+			String gid = grupoActual().get();
+			if (gid != null) {
+				int totalLineas = contenido.split("\n", -1).length;
+				registrarParte(gid, 1, unico, 1, totalLineas);
+			}
 			return una;
 		} catch (DemasiadoGrande e) {
-			// seguimos y troceamos
 		}
 
-		// 2) División conservadora por límites de MCLogs
-		final int MAX_BYTES = ESPACIO_MAXIMO_BYTES; // 10MB
-		final int MAX_LINEAS = LINEAS_MAXIMAS; // 25 000
+		final int MAX_BYTES = ESPACIO_MAXIMO_BYTES;
+		final int MAX_LINEAS = LINEAS_MAXIMAS;
 		String[] lineas = contenido.split("\n", -1);
 
 		List<String> partes = new ArrayList<>();
@@ -218,25 +219,31 @@ public class MCLogsAPI implements APIdeSitioDeRegistro {
 				lineasBloque = 0;
 				bytesBloque = 0;
 			}
-
 			bloque.append(conSalto);
 			lineasBloque++;
 			bytesBloque += bytesLinea;
 		}
-		if (bloque.length() > 0) {
+		if (bloque.length() > 0)
 			partes.add(bloque.toString());
-		}
 
-		// 3) Publicar cada parte y devolver lista de enlaces
 		List<String> enlaces = new ArrayList<>();
 		String nombreBase = (registro.archivo != null ? registro.archivo.getFileName().toString() : "log.txt");
+
+		String gid = grupoActual().get();
+		int lineaDesde = 1;
+
 		for (int i = 0; i < partes.size(); i++) {
 			String etiqueta = (partes.size() == 1) ? nombreBase : (nombreBase + " (parte " + (i + 1) + ")");
-			try {
-				enlaces.add(publicarTexto(etiqueta, partes.get(i)));
-			} catch (DemasiadoGrande e) {
-				// Si una parte aún excede, lo exponemos claramente:
-				throw new ErrorConPublicar("Una parte excede los límites de MCLogs incluso tras dividir.");
+			String bloqueTxt = partes.get(i);
+
+			String url = publicarTexto(etiqueta, bloqueTxt);
+			enlaces.add(url);
+
+			if (gid != null) {
+				int lineasEnParte = bloqueTxt.split("\n", -1).length;
+				int lineaHasta = lineaDesde + lineasEnParte - 1;
+				registrarParte(gid, i + 1, url, lineaDesde, lineaHasta);
+				lineaDesde = lineaHasta + 1;
 			}
 		}
 		return enlaces;
@@ -248,10 +255,7 @@ public class MCLogsAPI implements APIdeSitioDeRegistro {
 		return true;
 	}
 
-	
-
-	private final BiMap<String, Integer, ParteInfo> indicePartes =
-	        new BiMap<>();
+	private final BiMap<String, Integer, ParteInfo> indicePartes = new BiMap<>();
 
 	private final ThreadLocal<String> grupoActual = new ThreadLocal<>();
 
@@ -266,5 +270,5 @@ public class MCLogsAPI implements APIdeSitioDeRegistro {
 		// TODO Auto-generated method stub
 		return indicePartes;
 	}
-	
+
 }

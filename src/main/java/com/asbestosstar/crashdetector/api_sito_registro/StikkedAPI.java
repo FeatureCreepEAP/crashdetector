@@ -150,7 +150,6 @@ public class StikkedAPI implements APIdeSitioDeRegistro {
 
 	@Override
 	public List<String> publicarRegistroEnPartes(Consola registro) throws ErrorConPublicar {
-		// Intentar directo
 		String contenido = registro.obtainerContenidoParaPublicar();
 		if (contenido == null)
 			contenido = "";
@@ -159,65 +158,65 @@ public class StikkedAPI implements APIdeSitioDeRegistro {
 					registro.archivo != null ? registro.archivo.getFileName().toString() : "log.txt", contenido);
 			ArrayList<String> uno = new ArrayList<>();
 			uno.add(enlace);
+			String gid = grupoActual().get();
+			if (gid != null) {
+				int totalLineas = contenido.split("\n", -1).length;
+				registrarParte(gid, 1, enlace, 1, totalLineas);
+			}
 			return uno;
 		} catch (DemasiadoGrande e) {
-			// dividir por tamaño (Stikked usa solo límite de bytes)
 		}
 
-		// Dividir por bytes (máx 16 MB por parte)
 		final int MAX_BYTES = MAX_SIZE_BYTES;
 		List<String> enlaces = new ArrayList<>();
 		byte[] src = contenido.getBytes(StandardCharsets.UTF_8);
 
 		int ini = 0;
 		int parte = 1;
+		int lineaDesde = 1;
 		String nombre = (registro.archivo != null ? registro.archivo.getFileName().toString() : "log.txt");
+		String gid = grupoActual().get();
 
 		while (ini < src.length) {
 			int fin = Math.min(src.length, ini + MAX_BYTES);
-			// Intentar no cortar la última línea si es posible (retroceder hasta '\n')
 			if (fin < src.length) {
 				int back = fin;
 				while (back > ini && src[back - 1] != (byte) '\n')
 					back--;
-				if (back > ini + 1024) { // no retroceder demasiado; umbral heurístico
+				if (back > ini + 1024) {
 					fin = back;
 				}
 			}
 			String bloque = new String(src, ini, fin - ini, StandardCharsets.UTF_8);
-			String etiqueta = nombre + " (parte " + (parte++) + ")";
+			String etiqueta = nombre + " (parte " + (parte) + ")";
 			try {
-				enlaces.add(publicarTexto(etiqueta, bloque));
-			} catch (DemasiadoGrande e) {
-				// Si aún excede, algo raro pasa (caracteres multibyte). Cortar más pequeño:
+				String url = publicarTexto(etiqueta, bloque);
+				enlaces.add(url);
+				if (gid != null) {
+					int lineasEnParte = bloque.split("\n", -1).length;
+					int lineaHasta = lineaDesde + lineasEnParte - 1;
+					registrarParte(gid, parte, url, lineaDesde, lineaHasta);
+					lineaDesde = lineaHasta + 1;
+				}
+				parte++;
+			} catch (DemasiadoGrande ex) {
 				int recorte = Math.min(fin - ini, MAX_BYTES / 2);
 				if (recorte <= 0)
 					throw new ErrorConPublicar("No se pudo dividir para Stikked.");
 				fin = ini + recorte;
-				continue; // reintenta con corte menor
+				continue;
 			}
 			ini = fin;
 		}
 		return enlaces;
 	}
 
-	
-
-
-
-
-
-
-
-
 	@Override
 	public boolean soporteEnlacesALinea() {
-	    return true;
+		return true;
 	}
 
-	
-	private final BiMap<String, Integer, ParteInfo> indicePartes =
-	        new BiMap<>();
+	private final BiMap<String, Integer, ParteInfo> indicePartes = new BiMap<>();
 
 	private final ThreadLocal<String> grupoActual = new ThreadLocal<>();
 
@@ -232,9 +231,5 @@ public class StikkedAPI implements APIdeSitioDeRegistro {
 		// TODO Auto-generated method stub
 		return indicePartes;
 	}
-
-
-	
-	
 
 }

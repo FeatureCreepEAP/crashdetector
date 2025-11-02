@@ -207,9 +207,8 @@ public class SecureLoggerAPI implements APIdeSitioDeRegistro {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	private final BiMap<String, Integer, ParteInfo> indicePartes =
-	        new BiMap<>();
+
+	private final BiMap<String, Integer, ParteInfo> indicePartes = new BiMap<>();
 
 	private final ThreadLocal<String> grupoActual = new ThreadLocal<>();
 
@@ -224,4 +223,75 @@ public class SecureLoggerAPI implements APIdeSitioDeRegistro {
 		// TODO Auto-generated method stub
 		return indicePartes;
 	}
+
+	@Override
+	public List<String> publicarRegistroEnPartes(Consola registro) throws ErrorConPublicar, LimteDeTasa {
+		String contenido = registro.obtainerContenidoParaPublicar();
+		if (contenido == null)
+			contenido = "";
+
+		final int LIMITE = 10 * 1024 * 1024;
+
+		List<String> urls = new ArrayList<>();
+		String[] lineas = contenido.split("\n", -1);
+		StringBuilder parte = new StringBuilder();
+		int lineaDesde = 1;
+		int acumuladas = 0;
+		int indiceParte = 1;
+		String gid = grupoActual().get();
+		String base = (registro.archivo != null ? registro.archivo.getFileName().toString() : "log.txt");
+
+		for (int i = 0; i < lineas.length; i++) {
+			String l = lineas[i];
+			String candidata = parte.length() == 0 ? l : ("\n" + l);
+			try {
+				byte[] cuerpo = (parte.toString() + candidata).getBytes("cp1251");
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				try (GZIPOutputStream gz = new GZIPOutputStream(baos)) {
+					gz.write(cuerpo);
+				}
+				int gzLen = baos.toByteArray().length;
+
+				if (gzLen <= LIMITE) {
+					parte.append(candidata);
+					acumuladas++;
+				} else {
+					if (parte.length() == 0) {
+						String u = publicarTexto(base, l);
+						urls.add(u);
+						if (gid != null) {
+							registrarParte(gid, indiceParte++, u, lineaDesde, lineaDesde);
+							lineaDesde++;
+						}
+					} else {
+						String suf = " (parte " + indiceParte + ")";
+						String u = publicarTexto(base + suf, parte.toString());
+						urls.add(u);
+						if (gid != null) {
+							registrarParte(gid, indiceParte++, u, lineaDesde, lineaDesde + acumuladas - 1);
+							lineaDesde += acumuladas;
+						}
+						parte.setLength(0);
+						acumuladas = 0;
+						i--;
+					}
+				}
+			} catch (LimteDeTasa e) {
+				throw e;
+			} catch (Exception ex) {
+				throw new ErrorConPublicar(ex.getMessage());
+			}
+		}
+
+		if (parte.length() > 0) {
+			String suf = (indiceParte > 1) ? " (parte " + indiceParte + ")" : "";
+			String u = publicarTexto(base + suf, parte.toString());
+			urls.add(u);
+			if (gid != null) {
+				registrarParte(gid, indiceParte, u, lineaDesde, lineaDesde + acumuladas - 1);
+			}
+		}
+		return urls;
+	}
+
 }
