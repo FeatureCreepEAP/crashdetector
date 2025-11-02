@@ -2,8 +2,11 @@ package com.asbestosstar.crashdetector.api_sito_registro;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.nio.charset.StandardCharsets;
+import java.util.Map.Entry;
 
+import com.asbestosstar.crashdetector.BiMap;
+import com.asbestosstar.crashdetector.BiMap.DoubleKey;
+import com.asbestosstar.crashdetector.api_sito_registro.APIdeSitioDeRegistro.ParteInfo;
 import com.asbestosstar.crashdetector.Consola;
 
 public interface APIdeSitioDeRegistro {
@@ -69,4 +72,59 @@ public interface APIdeSitioDeRegistro {
 		return lista;
 	}
 
+	/**
+	 * Si puedes obtener una enlace a linea
+	 * @return
+	 */
+	public boolean soporteEnlacesALinea();
+	
+	/**
+	 * Enlace a numero linea en los registros
+	 * @param linea_numera
+	 * @return
+	 */
+	public default String obtenerEnlaceDeLinea(int linea_numera) {
+	    int n = Math.max(1, linea_numera);
+	    String gid = grupoActual().get();
+	    if (gid == null) {
+	        // (ES) Sin contexto de grupo: devolvemos solo el ancla como fallback.
+	        return "#L" + n;
+	    }
+	    // (ES) Buscar la parte cuyo rango contenga la línea global n.
+	    for (Entry<DoubleKey<String, Integer>, ParteInfo> entry : indicePartes().entrySet()) {
+	        DoubleKey<String, Integer> dk = entry.getKey();
+	        if (!java.util.Objects.equals(dk.key0, gid)) continue;
+	        ParteInfo p = entry.getValue();
+	        if (n >= p.desde && n <= p.hasta) {
+	            int lineaLocal = n - p.desde + 1;
+	            // (ES) Stikked típicamente acepta "#L<n>". Cambiar aquí si tu instancia usa "?hl=".
+	            return p.url + "#L" + lineaLocal;
+	        }
+	    }
+	    // (ES) No se encontró parte: fallback.
+	    return "#L" + n;
+	}	
+	
+	
+	/** (ES) Info de una parte publicada: URL y rango de líneas globales [desde, hasta]. */
+	static class ParteInfo {
+	    final String url;
+	    final int desde;
+	    final int hasta;
+	    ParteInfo(String url, int desde, int hasta) { this.url = url; this.desde = desde; this.hasta = hasta; }
+	}
+	
+	public ThreadLocal<String> grupoActual();
+	
+	public BiMap<String, Integer, ParteInfo> indicePartes();
+	
+	public default void registrarGrupoActual(String grupoId) {
+	    grupoActual().set(grupoId);
+	}
+	
+	/** Registra una parte publicada con su URL y su rango de líneas globales. */
+	public  default void registrarParte(String grupoId, int parteIndexBase1, String url, int desde, int hasta) {
+	    indicePartes().put(grupoId, parteIndexBase1, new ParteInfo(url, desde, hasta));
+	}
+	
 }

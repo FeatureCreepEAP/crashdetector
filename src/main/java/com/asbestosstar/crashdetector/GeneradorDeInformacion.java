@@ -9,6 +9,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.net.ssl.SSLException;
@@ -21,6 +22,16 @@ import com.asbestosstar.crashdetector.api_sito_registro.LimteDeTasa;
 import com.asbestosstar.crashdetector.api_sito_registro.NoAPIdeRegistro;
 import com.asbestosstar.crashdetector.config.ConfigString;
 
+// Concurrencia
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
+// NUEVO: para crear el patrón de reemplazo seguro
+import java.util.regex.Pattern;
+
 public class GeneradorDeInformacion {
 
 	public static File generarLocal(List<Consola> consolas, Instant instant) {
@@ -31,7 +42,6 @@ public class GeneradorDeInformacion {
 			for (Consola co : consolas) {
 				cons.append("<a href='file://").append(co.archivo.toAbsolutePath().toUri().toString())
 						.append("'><font color='").append(Config.obtenerInstancia().obtenerColorEnlace()).append("'>") // Link
-																														// color
 						.append(co.archivo.toString().trim()).append("</font></a><br>");
 			}
 
@@ -53,7 +63,6 @@ public class GeneradorDeInformacion {
 			escribidor.close();
 			return ret;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -73,23 +82,80 @@ public class GeneradorDeInformacion {
 		return cons.toString();
 	}
 
+	// contenedor para resultados concurrentes (índice estable)
+	private static final class ResultadoEnlaces {
+		final int index;
+		final String nombreArchivo;
+		final List<String> enlaces;
+
+		ResultadoEnlaces(int index, String nombreArchivo, List<String> enlaces) {
+			this.index = index;
+			this.nombreArchivo = nombreArchivo;
+			this.enlaces = enlaces;
+		}
+	}
+
 	public static String compartir(List<Consola> consolas, Instant instant)
 			throws DemasiadoGrande, ErrorConPublicar, NoAPIdeRegistro, LimteDeTasa {
 		try {
+			// ejecutar la obtención de enlaces en paralelo (hasta 6 hilos)
+			final int MAX_HILOS = 6;
+			ExecutorService pool = Executors.newFixedThreadPool(Math.min(MAX_HILOS, Math.max(1, consolas.size())));
+			List<Future<ResultadoEnlaces>> tareas = new ArrayList<>(consolas.size());
+
+			for (int i = 0; i < consolas.size(); i++) {
+				final int idx = i;
+				final Consola co = consolas.get(i);
+				tareas.add(pool.submit(new Callable<ResultadoEnlaces>() {
+					@Override
+					public ResultadoEnlaces call() throws Exception {
+						List<String> enlaces = co.obtainerEnlaces();
+						String nombre = (co.archivo != null) ? co.archivo.toString().trim() : "log.txt";
+						return new ResultadoEnlaces(idx, nombre, enlaces);
+					}
+				}));
+			}
+
+			pool.shutdown();
+
+			ResultadoEnlaces[] resultados = new ResultadoEnlaces[consolas.size()];
+			for (Future<ResultadoEnlaces> f : tareas) {
+				try {
+					ResultadoEnlaces r = f.get();
+					resultados[r.index] = r;
+				} catch (ExecutionException ex) {
+					Throwable causa = ex.getCause();
+					if (causa instanceof DemasiadoGrande)
+						throw (DemasiadoGrande) causa;
+					if (causa instanceof ErrorConPublicar)
+						throw (ErrorConPublicar) causa;
+					if (causa instanceof NoAPIdeRegistro)
+						throw (NoAPIdeRegistro) causa;
+					if (causa instanceof LimteDeTasa)
+						throw (LimteDeTasa) causa;
+					CrashDetectorLogger.logException(causa);
+					throw new IOException(causa.getMessage(), causa);
+				} catch (InterruptedException ie) {
+					Thread.currentThread().interrupt();
+					throw new IOException("Operación interrumpida", ie);
+				}
+			}
+
 			StringBuilder cons = new StringBuilder();
 			cons.append("<center>").append(MonitorDePID.idioma.ubicacionesDeLogs()).append("<br>");
 
-			for (Consola co : consolas) {
-				// Para cada consola, obtener TODAS las partes
-				java.util.List<String> enlaces = co.obtainerEnlaces();
-				String nombre = (co.archivo != null) ? co.archivo.toString().trim() : "log.txt";
+			for (ResultadoEnlaces r : resultados) {
+				if (r == null)
+					continue;
 
-				if (enlaces.size() == 1) {
+				List<String> enlaces = r.enlaces;
+				String nombre = r.nombreArchivo;
+
+				if (enlaces != null && enlaces.size() == 1) {
 					cons.append("<a href='").append(enlaces.get(0)).append("'><font color='")
 							.append(Config.obtenerInstancia().obtenerColorEnlace()).append("'>").append(nombre)
 							.append("</font></a><br>");
-				} else {
-					// Varios enlaces: mostrar "nombre (parte 1), (parte 2), ..."
+				} else if (enlaces != null && enlaces.size() > 1) {
 					cons.append("<span><font color='").append(Config.obtenerInstancia().obtenerColorEnlace())
 							.append("'>").append(nombre).append("</font>: ");
 					for (int i = 0; i < enlaces.size(); i++) {
@@ -100,21 +166,39 @@ public class GeneradorDeInformacion {
 							cons.append(" ");
 					}
 					cons.append("</span><br>");
+				} else {
+					cons.append("<span><font color='").append(Config.obtenerInstancia().obtenerColorEnlace())
+							.append("'>").append(nombre).append("</font></span><br>");
 				}
 			}
+
 			cons.append(generarTextoArcoiris("Feliz mes del orgullo"));
 			cons.append("</center>");
 
 			String pantilla = MonitorDePID.leer_archivo(MonitorDePID.carpeta.resolve("pantilla.htm"));
-			String ret = enviarInforme(pantilla
-					.replace("{constructor}",
-							cons.toString() + "<br>" + MonitorDePID.idioma.infoDeVerificaciones() + "<br>"
-									+ MonitorDePID.contenidoInforme.toString() + imagenesParaCompartir())
-					.replace("{mensaje_ayudar}", "")// no necesitemos mensaje
 
+			// NUEVO: post-procesado para eliminar enlaces "Ver en consola" hasta que
+			// tengamos el formato correcto.
+			String constructorHtml = cons.toString() + "<br>" + MonitorDePID.idioma.infoDeVerificaciones() + "<br>"
+					+ MonitorDePID.contenidoInforme.toString() + imagenesParaCompartir();
+
+			String etiquetaVer = MonitorDePID.idioma.verEnConsola();
+			// Reemplaza <a ...>etiquetaVer</a> -> etiquetaVer (sin enlace)
+			// TODO (ES): Implementar salto a línea en APIs de logs que soporten
+			// posiciones/offsets.
+			if (etiquetaVer != null && !etiquetaVer.isEmpty()) {
+				String etiquetaEscapada = Pattern.quote(etiquetaVer);
+				constructorHtml = constructorHtml.replaceAll("(?i)<a\\b[^>]*>\\s*" + etiquetaEscapada + "\\s*</a>",
+						etiquetaVer);
+			}
+
+			String ret = enviarInforme(
+					pantilla.replace("{constructor}", constructorHtml).replace("{mensaje_ayudar}", "") // no necesitemos
+																										// mensaje
 			);
 			CrashDetectorLogger.log(ret);
 			return ret;
+
 		} catch (IOException e) {
 			CrashDetectorLogger.logException(e);
 			return null;
@@ -166,49 +250,30 @@ public class GeneradorDeInformacion {
 				throw new IOException(mensajeError);
 			}
 		} catch (SSLException e) {
-			// Mostrar diálogo de error SSL en el EDT
 			SwingUtilities.invokeLater(() -> {
 				JOptionPane.showMessageDialog(null, MonitorDePID.idioma.errorSSL());
 			});
-			// Registrar el error completo
 			CrashDetectorLogger.logException(e);
 			throw new IOException("Error SSL: " + e.getMessage(), e);
 		}
 	}
 
-	/**
-	 * Genera una cadena HTML con cada letra coloreada en arcoíris.
-	 *
-	 * @param texto El texto de entrada a colorear
-	 * @return Cadena HTML con letras de colores
-	 */
 	private static String generarTextoArcoiris(String texto) {
-		// Colores del arcoíris (formato hexadecimal)
-		String[] coloresArcoiris = { "#FF0000", // Rojo
-				"#FFA500", // Naranja
-				"#FFFF00", // Amarillo
-				"#00FF00", // Verde
-				"#0000FF", // Azul
-				"#4B0082", // Índigo
-				"#EE82EE" // Violeta
-		};
+		String[] coloresArcoiris = { "#FF0000", "#FFA500", "#FFFF00", "#00FF00", "#0000FF", "#4B0082", "#EE82EE" };
 
 		StringBuilder html = new StringBuilder();
 		int indiceColor = 0;
 
-		// Iterar por cada carácter del mensaje
 		for (char c : texto.toCharArray()) {
 			if (c == ' ') {
-				html.append(' '); // Mantener espacios sin color
+				html.append(' ');
 			} else {
-				// Añadir span con color correspondiente
 				html.append("<span style='color:").append(coloresArcoiris[indiceColor % coloresArcoiris.length])
 						.append("'>").append(c).append("</span>");
-				indiceColor++; // Siguiente color
+				indiceColor++;
 			}
 		}
 
 		return html.toString();
 	}
-
 }

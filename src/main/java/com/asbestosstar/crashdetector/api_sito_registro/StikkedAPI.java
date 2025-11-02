@@ -10,7 +10,10 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
 
+import com.asbestosstar.crashdetector.BiMap;
+import com.asbestosstar.crashdetector.BiMap.DoubleKey;
 import com.asbestosstar.crashdetector.Consola;
 
 public class StikkedAPI implements APIdeSitioDeRegistro {
@@ -197,5 +200,41 @@ public class StikkedAPI implements APIdeSitioDeRegistro {
 		}
 		return enlaces;
 	}
+
+	
+
+
+
+
+
+
+
+
+	@Override
+	public boolean soporteEnlacesALinea() {
+	    return true;
+	}
+
+	
+	private final BiMap<String, Integer, ParteInfo> indicePartes =
+	        new BiMap<>();
+
+	private final ThreadLocal<String> grupoActual = new ThreadLocal<>();
+
+	@Override
+	public ThreadLocal<String> grupoActual() {
+		// TODO Auto-generated method stub
+		return grupoActual;
+	}
+
+	@Override
+	public BiMap<String, Integer, ParteInfo> indicePartes() {
+		// TODO Auto-generated method stub
+		return indicePartes;
+	}
+
+
+	
+	
 
 }

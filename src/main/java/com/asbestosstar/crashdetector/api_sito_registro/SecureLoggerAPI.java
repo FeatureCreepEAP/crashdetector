@@ -16,9 +16,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.zip.GZIPOutputStream;
 
+import com.asbestosstar.crashdetector.BiMap;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.api_sito_registro.APIdeSitioDeRegistro.ParteInfo;
 
 public class SecureLoggerAPI implements APIdeSitioDeRegistro {
 
@@ -192,5 +194,34 @@ public class SecureLoggerAPI implements APIdeSitioDeRegistro {
 		} catch (Exception e) {
 			throw new ErrorConPublicar(e.getMessage());
 		}
+	}
+
+	@Override
+	public boolean soporteEnlacesALinea() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public String obtenerEnlaceDeLinea(int linea_numera) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	private final BiMap<String, Integer, ParteInfo> indicePartes =
+	        new BiMap<>();
+
+	private final ThreadLocal<String> grupoActual = new ThreadLocal<>();
+
+	@Override
+	public ThreadLocal<String> grupoActual() {
+		// TODO Auto-generated method stub
+		return grupoActual;
+	}
+
+	@Override
+	public BiMap<String, Integer, ParteInfo> indicePartes() {
+		// TODO Auto-generated method stub
+		return indicePartes;
 	}
 }

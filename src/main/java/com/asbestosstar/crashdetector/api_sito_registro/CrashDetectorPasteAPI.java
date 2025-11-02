@@ -13,8 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.GZIPOutputStream;
 
+import com.asbestosstar.crashdetector.BiMap;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
+import com.asbestosstar.crashdetector.api_sito_registro.APIdeSitioDeRegistro.ParteInfo;
 
 /**
  * API para publicar registros en el servicio PHP de CrashDetector.
@@ -165,6 +167,29 @@ public class CrashDetectorPasteAPI implements APIdeSitioDeRegistro {
 			CrashDetectorLogger.logException(e);
 			return null;
 		}
+	}
+
+	@Override
+	public boolean soporteEnlacesALinea() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	private final BiMap<String, Integer, ParteInfo> indicePartes =
+	        new BiMap<>();
+
+	private final ThreadLocal<String> grupoActual = new ThreadLocal<>();
+
+	@Override
+	public ThreadLocal<String> grupoActual() {
+		// TODO Auto-generated method stub
+		return grupoActual;
+	}
+
+	@Override
+	public BiMap<String, Integer, ParteInfo> indicePartes() {
+		// TODO Auto-generated method stub
+		return indicePartes;
 	}
 
 }
