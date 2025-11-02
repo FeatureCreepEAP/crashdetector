@@ -3998,5 +3998,50 @@ public class Esperanto implements Idioma {
 	public String texto_de_boton_compartir_markdown() {
 		return "Akiri retejojn de protokoloj kiel Markdown sen raporto";
 	}
+	
+	@Override
+	public String titulo_configuracion() { return "Agordo"; }
+
+	@Override
+	public String columna_url() { return "URL"; }
+
+	@Override
+	public String error_inesperado_al_compartir() { return "Necerta eraro dum kunhavigo."; }
+
+	@Override
+	public String error_inesperado_al_generar_enlaces() { return "Necerta eraro dum genero de ligiloj."; }
+
+	@Override
+	public String error_inesperado_al_procesar_boton() { return "Necerta eraro dum prilaboro de butono."; }
+
+	@Override
+	public String sin_archivo_para_abrir() { return "Neniu dosiero estas ligita por malfermi."; }
+
+	@Override
+	public String archivo_no_existe_prefijo() { return "Dosiero ne ekzistas:\n"; }
+
+	@Override
+	public String no_se_pudo_editar_se_copia_ruta() { return "Ne povis malfermi en redaktilo.\nLa vojo estos kopita al tondejo."; }
+
+	@Override
+	public String no_se_pudo_abrir_se_copia_ruta() { return "Ne povis malfermi dosieron; la vojo estis kopita al tondejo."; }
+
+	@Override
+	public String escritorio_no_soportado_se_copia_ruta() { return "Labortablo ne subtenata; la vojo estis kopita al tondejo."; }
+
+	@Override
+	public String limite_de_solicitudes() {
+	    return "Vi spertas limon de petoj. Provuzu alian registran retejon aŭ alian registran API-n.";
+	}
+	
+	@Override
+	public String texto_de_boton_compartir_enlace() {
+	    return "Komuniki ligilon";
+	}
+	
+	
+	
+	
+	
 
 }

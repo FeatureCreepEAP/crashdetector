@@ -3967,5 +3967,45 @@ public class Arabe implements Idioma {
 	public String texto_de_boton_compartir_markdown() {
 		return "الحصول على روابط السجلات كنص Markdown بدون تقرير";
 	}
+	
+	@Override
+	public String titulo_configuracion() { return "الإعدادات"; }
+
+	@Override
+	public String columna_url() { return "الرابط"; }
+
+	@Override
+	public String error_inesperado_al_compartir() { return "حدث خطأ غير متوقع أثناء المشاركة."; }
+
+	@Override
+	public String error_inesperado_al_generar_enlaces() { return "حدث خطأ غير متوقع أثناء إنشاء الروابط."; }
+
+	@Override
+	public String error_inesperado_al_procesar_boton() { return "حدث خطأ غير متوقع أثناء معالجة الزر."; }
+
+	@Override
+	public String sin_archivo_para_abrir() { return "لا يوجد ملف مرتبط للفتح."; }
+
+	@Override
+	public String archivo_no_existe_prefijo() { return "الملف غير موجود:\n"; }
+
+	@Override
+	public String no_se_pudo_editar_se_copia_ruta() { return "تعذر فتح الملف في المحرر.\nسيتم نسخ المسار إلى الحافظة."; }
+
+	@Override
+	public String no_se_pudo_abrir_se_copia_ruta() { return "تعذر فتح الملف؛ تم نسخ المسار إلى الحافظة."; }
+
+	@Override
+	public String escritorio_no_soportado_se_copia_ruta() { return "سطح المكتب غير مدعوم؛ تم نسخ المسار إلى الحافظة."; }
+
+	@Override
+	public String limite_de_solicitudes() {
+	    return "تواجه حدًا على عدد الطلبات. حاول استخدام موقع تسجيل آخر أو واجهة برمجة تطبيقات (API) أخرى للتسجيل.";
+	}
+	
+	@Override
+	public String texto_de_boton_compartir_enlace() {
+	    return "مشاركة الرابط";
+	}
 
 }

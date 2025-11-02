@@ -4685,5 +4685,41 @@ public class Espanol implements Idioma {
 		// TODO Auto-generated method stub
 		return "Obtener Enlaces a Registros Como Markdown sin Informe";
 	}
+	
+	
+	@Override
+	public String titulo_configuracion() { return "Configuración"; }
+	@Override
+	public String columna_url()          { return "URL"; }
+	@Override
+	public String error_inesperado_al_compartir()       { return "Error inesperado al compartir."; }
+	@Override
+	public String error_inesperado_al_generar_enlaces() { return "Error inesperado al generar enlaces."; }
+	@Override
+	public String error_inesperado_al_procesar_boton()  { return "Error inesperado al procesar el botón."; }
+	@Override
+	public String sin_archivo_para_abrir()                 { return "No hay archivo asociado para abrir."; }
+	@Override
+	public String archivo_no_existe_prefijo()              { return "El archivo no existe:\n"; }
+	@Override
+	public String no_se_pudo_editar_se_copia_ruta()        { return "No se pudo abrir en un editor.\nSe copiará la ruta al portapapeles."; }
+	@Override
+	public String no_se_pudo_abrir_se_copia_ruta()         { return "No se pudo abrir el archivo; la ruta se copió al portapapeles."; }
+	@Override
+	public String escritorio_no_soportado_se_copia_ruta()  { return "El escritorio no está soportado; se copió la ruta al portapapeles."; }
+	@Override
+	public String limite_de_solicitudes() {
+	    return "Estás experimentando un límite de solicitudes. Intenta usar otro sitio de registro o otra API de registro.";
+	}
+
+	@Override
+	public String texto_de_boton_compartir_enlace() {
+		// TODO Auto-generated method stub
+		return "Compartir Enlace";
+	}
+
+	
+	
+	
 
 }

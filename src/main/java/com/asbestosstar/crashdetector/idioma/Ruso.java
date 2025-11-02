@@ -4010,5 +4010,45 @@ public class Ruso implements Idioma {
 	public String texto_de_boton_compartir_markdown() {
 		return "Получить ссылки на логи в формате Markdown без отчёта";
 	}
+	
+	@Override
+	public String titulo_configuracion() { return "Настройки"; }
+
+	@Override
+	public String columna_url() { return "URL"; }
+
+	@Override
+	public String error_inesperado_al_compartir() { return "Неожиданная ошибка при отправке."; }
+
+	@Override
+	public String error_inesperado_al_generar_enlaces() { return "Неожиданная ошибка при генерации ссылок."; }
+
+	@Override
+	public String error_inesperado_al_procesar_boton() { return "Неожиданная ошибка при обработке кнопки."; }
+
+	@Override
+	public String sin_archivo_para_abrir() { return "Нет связанного файла для открытия."; }
+
+	@Override
+	public String archivo_no_existe_prefijo() { return "Файл не существует:\n"; }
+
+	@Override
+	public String no_se_pudo_editar_se_copia_ruta() { return "Не удалось открыть в редакторе.\nПуть будет скопирован в буфер обмена."; }
+
+	@Override
+	public String no_se_pudo_abrir_se_copia_ruta() { return "Не удалось открыть файл; путь был скопирован в буфер обмена."; }
+
+	@Override
+	public String escritorio_no_soportado_se_copia_ruta() { return "Рабочий стол не поддерживается; путь был скопирован в буфер обмена."; }
+
+	@Override
+	public String limite_de_solicitudes() {
+	    return "Вы достигли лимита запросов. Попробуйте использовать другой сайт логов или другое API для логирования.";
+	}
+	@Override
+	public String texto_de_boton_compartir_enlace() {
+	    return "Поделиться ссылкой";
+	}
+	
 
 }

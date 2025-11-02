@@ -1593,6 +1593,30 @@ public interface Idioma {
 
 	public String texto_de_boton_compartir_markdown();
 
+	public String error_inesperado_al_compartir();
+
+	public String error_inesperado_al_generar_enlaces();
+
+	public String texto_de_boton_compartir_enlace();
+
+	public String columna_url();
+
+	public String titulo_configuracion();
+
+	public String sin_archivo_para_abrir();
+
+	public String archivo_no_existe_prefijo();
+
+	public String no_se_pudo_abrir_se_copia_ruta();
+
+	public String escritorio_no_soportado_se_copia_ruta();
+
+	public String no_se_pudo_editar_se_copia_ruta();
+
+	public String error_inesperado_al_procesar_boton();
+
+	public String limite_de_solicitudes();
+	
 	// public String advertenciaMalwareFalso();
 
 }

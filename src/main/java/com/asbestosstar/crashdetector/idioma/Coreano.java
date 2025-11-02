@@ -3878,5 +3878,50 @@ public class Coreano implements Idioma {
 	public String texto_de_boton_compartir_markdown() {
 		return "로그 링크를 마크다운 형식으로 가져오기 (보고서 없음)";
 	}
+	
+	@Override
+	public String titulo_configuracion() { return "설정"; }
+
+	@Override
+	public String columna_url() { return "URL"; }
+
+	@Override
+	public String error_inesperado_al_compartir() { return "공유 중 예기치 못한 오류가 발생했습니다."; }
+
+	@Override
+	public String error_inesperado_al_generar_enlaces() { return "링크 생성 중 예기치 못한 오류가 발생했습니다."; }
+
+	@Override
+	public String error_inesperado_al_procesar_boton() { return "버튼 처리 중 예기치 못한 오류가 발생했습니다."; }
+
+	@Override
+	public String sin_archivo_para_abrir() { return "열 파일이 없습니다."; }
+
+	@Override
+	public String archivo_no_existe_prefijo() { return "파일이 존재하지 않습니다:\n"; }
+
+	@Override
+	public String no_se_pudo_editar_se_copia_ruta() { return "편집기에서 열 수 없습니다.\n경로가 클립보드에 복사됩니다."; }
+
+	@Override
+	public String no_se_pudo_abrir_se_copia_ruta() { return "파일을 열 수 없습니다. 경로가 클립보드에 복사되었습니다."; }
+
+	@Override
+	public String escritorio_no_soportado_se_copia_ruta() { return "데스크탑이 지원되지 않습니다. 경로가 클립보드에 복사되었습니다."; }
+
+	@Override
+	public String limite_de_solicitudes() {
+	    return "요청 제한을 초과했습니다. 다른 로그 사이트나 다른 로그 API를 사용해 보세요.";
+	}
+	
+	@Override
+	public String texto_de_boton_compartir_enlace() {
+	    return "링크 공유";
+	}
+	
+	
+	
+	
+	
 
 }

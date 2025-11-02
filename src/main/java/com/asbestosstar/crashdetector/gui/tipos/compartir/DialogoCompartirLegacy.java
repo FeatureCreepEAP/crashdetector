@@ -90,7 +90,8 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 			} catch (NoAPIdeRegistro e2) {
 				mostrarError(MonitorDePID.idioma.apiDeRegistroNoExiste(), e2);
 			} catch (Throwable t) {
-				mostrarError("Error inesperado al compartir.", t);
+				// Mantener el comentario existente, solo se reemplaza el literal
+				mostrarError(MonitorDePID.idioma.error_inesperado_al_compartir(), t);
 			} finally {
 				setEnviando(false);
 			}
@@ -118,7 +119,8 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 			} catch (NoAPIdeRegistro e2) {
 				mostrarError(MonitorDePID.idioma.apiDeRegistroNoExiste(), e2);
 			} catch (Throwable t) {
-				mostrarError("Error inesperado al generar enlaces.", t);
+				// Mantener el comentario existente, solo se reemplaza el literal
+				mostrarError(MonitorDePID.idioma.error_inesperado_al_generar_enlaces(), t);
 			} finally {
 				setEnviando(false);
 			}
@@ -184,8 +186,8 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		modeloTabla.addColumn(MonitorDePID.idioma.incluir());
 		modeloTabla.addColumn(MonitorDePID.idioma.archivo());
 		modeloTabla.addColumn(MonitorDePID.idioma.abrir());
-		modeloTabla.addColumn(MonitorDePID.idioma.texto_de_buton_compartir_enlace());
-		modeloTabla.addColumn("URL");
+		modeloTabla.addColumn(MonitorDePID.idioma.texto_de_boton_compartir_enlace());
+		modeloTabla.addColumn(MonitorDePID.idioma.columna_url()); // <- antes: "URL"
 
 		tabla = new JTable(modeloTabla);
 		tabla.setRowHeight(30);
@@ -194,9 +196,9 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		tabla.getColumnModel().getColumn(2).setCellRenderer(new ButtonRenderer(MonitorDePID.idioma.abrir()));
 		tabla.getColumnModel().getColumn(2).setCellEditor(new ButtonEditor(MonitorDePID.idioma.abrir()));
 		tabla.getColumnModel().getColumn(3)
-				.setCellRenderer(new ButtonRenderer(MonitorDePID.idioma.texto_de_buton_compartir_enlace()));
+				.setCellRenderer(new ButtonRenderer(MonitorDePID.idioma.texto_de_boton_compartir_enlace()));
 		tabla.getColumnModel().getColumn(3)
-				.setCellEditor(new ButtonEditor(MonitorDePID.idioma.texto_de_buton_compartir_enlace()));
+				.setCellEditor(new ButtonEditor(MonitorDePID.idioma.texto_de_boton_compartir_enlace()));
 		tabla.getColumnModel().getColumn(4).setCellRenderer(new URLEditorRenderer());
 		tabla.getColumnModel().getColumn(4).setCellEditor(new URLEditor());
 	}
@@ -207,7 +209,9 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 	 */
 	private void inicializarPanelConfiguracion() {
 		panelConfig = new JPanel(new GridBagLayout());
-		panelConfig.setBorder(BorderFactory.createTitledBorder("Configuración"));
+		panelConfig.setBorder(BorderFactory.createTitledBorder(MonitorDePID.idioma.titulo_configuracion())); // <-
+																												// antes:
+																												// "Configuración"
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(5, 5, 5, 5);
 		gbc.gridx = 0;
@@ -334,7 +338,7 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		}
 	}
 
-// Editor para botones (abrir archivo local / compartir enlace por fila)
+	// Editor para botones (abrir archivo local / compartir enlace por fila)
 	private class ButtonEditor extends DefaultCellEditor {
 		private final String accion;
 		private final JButton button;
@@ -357,12 +361,14 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 					if (accion.equals(MonitorDePID.idioma.abrir())) {
 						// === ABRIR: abrir el archivo local en un editor (NO publicar) ===
 						if (cons == null || cons.archivo == null) {
-							mostrarError("No hay archivo asociado para abrir.", null);
+							mostrarError(MonitorDePID.idioma.sin_archivo_para_abrir(), null); // <- antes literal
 							return;
 						}
 						java.io.File f = cons.archivo.toFile();
 						if (!f.exists()) {
-							mostrarError("El archivo no existe:\n" + f.getAbsolutePath(), null);
+							mostrarError(MonitorDePID.idioma.archivo_no_existe_prefijo() + f.getAbsolutePath(), null); // <-
+																														// antes
+																														// literal
 							return;
 						}
 
@@ -381,22 +387,25 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 										d.open(parent);
 									} else {
 										copiarAlPortapapeles(f.getAbsolutePath());
-										mostrarInfo("No se pudo abrir el archivo; la ruta se copió al portapapeles.");
+										mostrarInfo(MonitorDePID.idioma.no_se_pudo_abrir_se_copia_ruta()); // <- antes
+																											// literal
 									}
 								}
 							} catch (Exception ex) {
 								CrashDetectorLogger.logException(ex);
-								mostrarError("No se pudo abrir en un editor.\nSe copiará la ruta al portapapeles.", ex);
+								mostrarError(MonitorDePID.idioma.no_se_pudo_editar_se_copia_ruta(), ex); // <- antes
+																											// literal
 								copiarAlPortapapeles(f.getAbsolutePath());
 							}
 						} else {
 							copiarAlPortapapeles(f.getAbsolutePath());
-							mostrarInfo("El escritorio no está soportado; se copió la ruta al portapapeles.");
+							mostrarInfo(MonitorDePID.idioma.escritorio_no_soportado_se_copia_ruta()); // <- antes
+																										// literal
 						}
 						return;
 					}
 
-					if (accion.equals(MonitorDePID.idioma.texto_de_buton_compartir_enlace())) {
+					if (accion.equals(MonitorDePID.idioma.texto_de_boton_compartir_enlace())) {
 						// === COMPARTIR ENLACE: publicar y mostrar/guardar enlaces ===
 						java.util.List<String> urls = cons.obtainerEnlaces(); // <- publica si hace falta
 						String celda = (urls == null || urls.isEmpty()) ? "" : String.join("\n", urls);
@@ -420,7 +429,7 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 					mostrarError(MonitorDePID.idioma.apiDeRegistroNoExiste(), ex);
 				} catch (Exception ex) {
 					CrashDetectorLogger.logException(ex);
-					mostrarError("Error inesperado al procesar el botón.", ex);
+					mostrarError(MonitorDePID.idioma.error_inesperado_al_procesar_boton(), ex); // <- antes literal
 				} finally {
 					try {
 						fireEditingStopped();

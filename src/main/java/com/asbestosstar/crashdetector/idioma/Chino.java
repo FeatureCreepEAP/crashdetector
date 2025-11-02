@@ -3811,4 +3811,45 @@ public class Chino implements Idioma {
 		return "获取日志链接（Markdown格式，不含报告）";
 	}
 
+	@Override
+	public String titulo_configuracion() { return "设置"; }
+
+	@Override
+	public String columna_url() { return "网址"; }
+
+	@Override
+	public String error_inesperado_al_compartir() { return "分享时发生意外错误。"; }
+
+	@Override
+	public String error_inesperado_al_generar_enlaces() { return "生成链接时发生意外错误。"; }
+
+	@Override
+	public String error_inesperado_al_procesar_boton() { return "处理按钮时发生意外错误。"; }
+
+	@Override
+	public String sin_archivo_para_abrir() { return "没有关联的文件可供打开。"; }
+
+	@Override
+	public String archivo_no_existe_prefijo() { return "文件不存在：\n"; }
+
+	@Override
+	public String no_se_pudo_editar_se_copia_ruta() { return "无法在编辑器中打开。\n路径将被复制到剪贴板。"; }
+
+	@Override
+	public String no_se_pudo_abrir_se_copia_ruta() { return "无法打开文件；路径已复制到剪贴板。"; }
+
+	@Override
+	public String escritorio_no_soportado_se_copia_ruta() { return "桌面操作不受支持；路径已复制到剪贴板。"; }
+
+	@Override
+	public String limite_de_solicitudes() {
+	    return "您遇到了请求频率限制。请尝试使用其他日志网站或其他日志API。";
+	}
+	
+	@Override
+	public String texto_de_boton_compartir_enlace() {
+	    return "分享链接";
+	}
+	
+	
 }

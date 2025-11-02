@@ -3884,5 +3884,44 @@ public class Japones implements Idioma {
 	public String texto_de_boton_compartir_markdown() {
 		return "レポートなしでログリンクをMarkdown形式で取得";
 	}
+	
+	@Override
+	public String titulo_configuracion() { return "設定"; }
+
+	@Override
+	public String columna_url() { return "URL"; }
+
+	@Override
+	public String error_inesperado_al_compartir() { return "共有中に予期しないエラーが発生しました。"; }
+
+	@Override
+	public String error_inesperado_al_generar_enlaces() { return "リンク生成中に予期しないエラーが発生しました。"; }
+
+	@Override
+	public String error_inesperado_al_procesar_boton() { return "ボタン処理中に予期しないエラーが発生しました。"; }
+
+	@Override
+	public String sin_archivo_para_abrir() { return "開くファイルが関連付けられていません。"; }
+
+	@Override
+	public String archivo_no_existe_prefijo() { return "ファイルが存在しません：\n"; }
+
+	@Override
+	public String no_se_pudo_editar_se_copia_ruta() { return "エディタで開けませんでした。\nパスがクリップボードにコピーされます。"; }
+
+	@Override
+	public String no_se_pudo_abrir_se_copia_ruta() { return "ファイルを開けませんでした。パスはクリップボードにコピーされました。"; }
+
+	@Override
+	public String escritorio_no_soportado_se_copia_ruta() { return "デスクトップがサポートされていません。パスはクリップボードにコピーされました。"; }
+
+	@Override
+	public String limite_de_solicitudes() {
+	    return "リクエスト制限に達しています。別のログサイトまたは別のログAPIを使用してください。";
+	}
+	@Override
+	public String texto_de_boton_compartir_enlace() {
+	    return "リンクを共有";
+	}
 
 }

@@ -4014,4 +4014,44 @@ public class Portuges implements Idioma {
 		return "Obter Links de Logs como Markdown sem Relatório";
 	}
 
+	@Override
+	public String titulo_configuracion() { return "Configuração"; }
+
+	@Override
+	public String columna_url() { return "URL"; }
+
+	@Override
+	public String error_inesperado_al_compartir() { return "Erro inesperado ao compartilhar."; }
+
+	@Override
+	public String error_inesperado_al_generar_enlaces() { return "Erro inesperado ao gerar links."; }
+
+	@Override
+	public String error_inesperado_al_procesar_boton() { return "Erro inesperado ao processar botão."; }
+
+	@Override
+	public String sin_archivo_para_abrir() { return "Nenhum arquivo associado para abrir."; }
+
+	@Override
+	public String archivo_no_existe_prefijo() { return "O arquivo não existe:\n"; }
+
+	@Override
+	public String no_se_pudo_editar_se_copia_ruta() { return "Não foi possível abrir no editor.\nO caminho será copiado para a área de transferência."; }
+
+	@Override
+	public String no_se_pudo_abrir_se_copia_ruta() { return "Não foi possível abrir o arquivo; o caminho foi copiado para a área de transferência."; }
+
+	@Override
+	public String escritorio_no_soportado_se_copia_ruta() { return "Área de trabalho não suportada; o caminho foi copiado para a área de transferência."; }
+
+	@Override
+	public String limite_de_solicitudes() {
+	    return "Você está enfrentando um limite de solicitações. Tente usar outro site de registro ou outra API de registro.";
+	}
+	@Override
+	public String texto_de_boton_compartir_enlace() {
+	    return "Compartilhar Link";
+	}
+	
+	
 }

@@ -3987,5 +3987,45 @@ public class Persa implements Idioma {
 	public String texto_de_boton_compartir_markdown() {
 		return "دریافت پیوندهای سیاهه به صورت مارک‌داون بدون گزارش";
 	}
+	
+	@Override
+	public String titulo_configuracion() { return "پیکربندی"; }
+
+	@Override
+	public String columna_url() { return "آدرس URL"; }
+
+	@Override
+	public String error_inesperado_al_compartir() { return "خطای غیرمنتظره‌ای هنگام اشتراک‌گذاری رخ داد."; }
+
+	@Override
+	public String error_inesperado_al_generar_enlaces() { return "خطای غیرمنتظره‌ای هنگام تولید پیوندها رخ داد."; }
+
+	@Override
+	public String error_inesperado_al_procesar_boton() { return "خطای غیرمنتظره‌ای هنگام پردازش دکمه رخ داد."; }
+
+	@Override
+	public String sin_archivo_para_abrir() { return "فایلی برای باز کردن وجود ندارد."; }
+
+	@Override
+	public String archivo_no_existe_prefijo() { return "فایل وجود ندارد:\n"; }
+
+	@Override
+	public String no_se_pudo_editar_se_copia_ruta() { return "در ویرایشگر باز نشد.\nمسیر به حافظه موقت کپی خواهد شد."; }
+
+	@Override
+	public String no_se_pudo_abrir_se_copia_ruta() { return "عدم توانایی در باز کردن فایل؛ مسیر به حافظه موقت کپی شد."; }
+
+	@Override
+	public String escritorio_no_soportado_se_copia_ruta() { return "دسکتاپ پشتیبانی نمی‌شود؛ مسیر به حافظه موقت کپی شد."; }
+
+	@Override
+	public String limite_de_solicitudes() {
+	    return "به محدودیت درخواست رسیده‌اید. سعی کنید از یک سایت ثبت لاگ دیگر یا یک API ثبت لاگ دیگر استفاده کنید.";
+	}
+	@Override
+	public String texto_de_boton_compartir_enlace() {
+	    return "اشتراک‌گذاری پیوند";
+	}
+	
 
 }

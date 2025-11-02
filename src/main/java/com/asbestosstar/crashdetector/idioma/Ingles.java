@@ -4042,5 +4042,50 @@ public class Ingles implements Idioma {
 	public String texto_de_boton_compartir_markdown() {
 		return "Get Log Links as Markdown without Report";
 	}
+	
+	@Override
+	public String titulo_configuracion() { return "Configuration"; }
+
+	@Override
+	public String columna_url() { return "URL"; }
+
+	@Override
+	public String error_inesperado_al_compartir() { return "Unexpected error while sharing."; }
+
+	@Override
+	public String error_inesperado_al_generar_enlaces() { return "Unexpected error while generating links."; }
+
+	@Override
+	public String error_inesperado_al_procesar_boton() { return "Unexpected error while processing button."; }
+
+	@Override
+	public String sin_archivo_para_abrir() { return "No associated file to open."; }
+
+	@Override
+	public String archivo_no_existe_prefijo() { return "File does not exist:\n"; }
+
+	@Override
+	public String no_se_pudo_editar_se_copia_ruta() { return "Could not open in editor.\nPath will be copied to clipboard."; }
+
+	@Override
+	public String no_se_pudo_abrir_se_copia_ruta() { return "Could not open file; path was copied to clipboard."; }
+
+	@Override
+	public String escritorio_no_soportado_se_copia_ruta() { return "Desktop not supported; path was copied to clipboard."; }
+
+	@Override
+	public String limite_de_solicitudes() {
+	    return "You are experiencing a rate limit. Try using another log site or another logging API.";
+	}
+	@Override
+	public String texto_de_boton_compartir_enlace() {
+	    return "Share Link";
+	}
+	
+	
+	
+	
+	
+	
 
 }
