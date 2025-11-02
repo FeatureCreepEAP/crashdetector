@@ -5,6 +5,7 @@ import java.util.List;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class Persa implements Idioma {
 	private final Config config = Config.obtenerInstancia();
@@ -279,7 +280,7 @@ public class Persa implements Idioma {
 	@Override
 	public String infoDeVerificaciones() {
 		return "<b style='color:#" + config.obtenerColorInfo()
-				+ "'>در اینجا نتایج بررسی‌های شما آمده است. اولویت اول، رفع مشکلات بالای ردپای پشته است. آرام پیش بروید؛ معمولاً علت صحیح در بررسی ۱ یا ۲ است. سایر موارد (خطاهای ۳ به بعد) می‌توانند برای تأیید استفاده شوند اما اغلب خطاهای زنجیره‌ای هستند و عموماً می‌توان آنها را نادیده گرفت. خطاها به صورت لایه‌ای رخ می‌دهند، بنابراین رفع مشکل اصلی امروز این خطا را حل می‌کند، اما فردا ممکن است خطای جدیدی که ارتباطی با خطای فعلی ندارد ظاهر شود، چون اغلب یک خطا مانع نمایش خطا‌های دیگر در کنسول می‌شود.</b>";
+				+ "'>اینجا نتایج بررسی‌های شما آمده است. آرام پیش بروید؛ معمولاً علت درست در بررسی ۱ یا ۲ قرار دارد. بقیه (خطاهای ۳ به بعد) را می‌توان برای تأیید استفاده کرد، اما معمولاً خطاهای زنجیره‌ای هستند که می‌توانید نادیده بگیرید. خطاها به صورت لایه‌ای رخ می‌دهند، بنابراین حل مشکل اصلی این خطا را رفع می‌کند. با این حال، ممکن است فردا خطای جدیدی که با خطای فعلی رابطه‌ای ندارد ظاهر شود، چون اغلب یک خطا مانع نمایش خطای دیگر در کنسول می‌شود.</b>";
 	}
 
 	@Override
@@ -3987,45 +3988,74 @@ public class Persa implements Idioma {
 	public String texto_de_boton_compartir_markdown() {
 		return "دریافت پیوندهای سیاهه به صورت مارک‌داون بدون گزارش";
 	}
-	
-	@Override
-	public String titulo_configuracion() { return "پیکربندی"; }
 
 	@Override
-	public String columna_url() { return "آدرس URL"; }
+	public String titulo_configuracion() {
+		return "پیکربندی";
+	}
 
 	@Override
-	public String error_inesperado_al_compartir() { return "خطای غیرمنتظره‌ای هنگام اشتراک‌گذاری رخ داد."; }
+	public String columna_url() {
+		return "آدرس URL";
+	}
 
 	@Override
-	public String error_inesperado_al_generar_enlaces() { return "خطای غیرمنتظره‌ای هنگام تولید پیوندها رخ داد."; }
+	public String error_inesperado_al_compartir() {
+		return "خطای غیرمنتظره‌ای هنگام اشتراک‌گذاری رخ داد.";
+	}
 
 	@Override
-	public String error_inesperado_al_procesar_boton() { return "خطای غیرمنتظره‌ای هنگام پردازش دکمه رخ داد."; }
+	public String error_inesperado_al_generar_enlaces() {
+		return "خطای غیرمنتظره‌ای هنگام تولید پیوندها رخ داد.";
+	}
 
 	@Override
-	public String sin_archivo_para_abrir() { return "فایلی برای باز کردن وجود ندارد."; }
+	public String error_inesperado_al_procesar_boton() {
+		return "خطای غیرمنتظره‌ای هنگام پردازش دکمه رخ داد.";
+	}
 
 	@Override
-	public String archivo_no_existe_prefijo() { return "فایل وجود ندارد:\n"; }
+	public String sin_archivo_para_abrir() {
+		return "فایلی برای باز کردن وجود ندارد.";
+	}
 
 	@Override
-	public String no_se_pudo_editar_se_copia_ruta() { return "در ویرایشگر باز نشد.\nمسیر به حافظه موقت کپی خواهد شد."; }
+	public String archivo_no_existe_prefijo() {
+		return "فایل وجود ندارد:\n";
+	}
 
 	@Override
-	public String no_se_pudo_abrir_se_copia_ruta() { return "عدم توانایی در باز کردن فایل؛ مسیر به حافظه موقت کپی شد."; }
+	public String no_se_pudo_editar_se_copia_ruta() {
+		return "در ویرایشگر باز نشد.\nمسیر به حافظه موقت کپی خواهد شد.";
+	}
 
 	@Override
-	public String escritorio_no_soportado_se_copia_ruta() { return "دسکتاپ پشتیبانی نمی‌شود؛ مسیر به حافظه موقت کپی شد."; }
+	public String no_se_pudo_abrir_se_copia_ruta() {
+		return "عدم توانایی در باز کردن فایل؛ مسیر به حافظه موقت کپی شد.";
+	}
+
+	@Override
+	public String escritorio_no_soportado_se_copia_ruta() {
+		return "دسکتاپ پشتیبانی نمی‌شود؛ مسیر به حافظه موقت کپی شد.";
+	}
 
 	@Override
 	public String limite_de_solicitudes() {
-	    return "به محدودیت درخواست رسیده‌اید. سعی کنید از یک سایت ثبت لاگ دیگر یا یک API ثبت لاگ دیگر استفاده کنید.";
+		return "به محدودیت درخواست رسیده‌اید. سعی کنید از یک سایت ثبت لاگ دیگر یا یک API ثبت لاگ دیگر استفاده کنید.";
 	}
+
 	@Override
 	public String texto_de_boton_compartir_enlace() {
-	    return "اشتراک‌گذاری پیوند";
+		return "اشتراک‌گذاری پیوند";
 	}
-	
+
+	@Override
+	public String infoDeTrazos() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "رفع مشکل بالای تنه‌ها اولویت اول است. "
+				+ "فرمت به صورت سطح، خط است. " + "همه سیاهه‌ها یک سیستم شماره‌گذاری دارند. " + Verificaciones.nl_html
+				+ "به طور کلی باید در همه سیاهه‌ها به دنبال پایین‌ترین سطوح باشید؛ ردپاها با سطوح بالا معمولاً مثبت کاذب هستند. "
+				+ "استفاده از توانایی خود برای مشاهده کنسول مهم است، زیرا تحلیل ردپاها وقتی تعداد زیادی ردپا وجود داشته باشد کامل نیست."
+				+ "</b>";
+	}
 
 }

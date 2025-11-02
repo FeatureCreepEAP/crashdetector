@@ -5,6 +5,7 @@ import java.util.List;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class Portuges implements Idioma {
 	private final Config config = Config.obtenerInstancia();
@@ -281,7 +282,7 @@ public class Portuges implements Idioma {
 	@Override
 	public String infoDeVerificaciones() {
 		return "<b style='color:#" + config.obtenerColorInfo()
-				+ "'>Aqui estão os resultados das suas verificações. Corrigir as partes superiores dos rastros de pilha é a primeira prioridade. Proceda com calma — geralmente a causa correta está na verificação 1 ou 2; outras (erros 3+) podem ser usadas para confirmação, mas frequentemente são erros em cascata que podem ser ignorados. Falhas ocorrem em camadas, então corrigir o problema certo resolverá esse erro específico hoje, mas amanhã pode surgir um novo erro não relacionado ao atual, já que um erro muitas vezes impede que outro apareça no console.</b>";
+				+ "'>Aqui estão os resultados das suas verificações. Faça com calma; geralmente, a causa correta está na verificação 1 ou 2. O resto (erros 3 e acima) pode ser usado para confirmação, mas geralmente são erros em cascata que você pode ignorar. As falhas ocorrem em camadas, então corrigir o problema principal resolverá esse erro específico. No entanto, amanhã pode aparecer um novo erro não relacionado ao atual, pois muitas vezes um erro impede que outro apareça no console.</b>";
 	}
 
 	@Override
@@ -4015,43 +4016,73 @@ public class Portuges implements Idioma {
 	}
 
 	@Override
-	public String titulo_configuracion() { return "Configuração"; }
+	public String titulo_configuracion() {
+		return "Configuração";
+	}
 
 	@Override
-	public String columna_url() { return "URL"; }
+	public String columna_url() {
+		return "URL";
+	}
 
 	@Override
-	public String error_inesperado_al_compartir() { return "Erro inesperado ao compartilhar."; }
+	public String error_inesperado_al_compartir() {
+		return "Erro inesperado ao compartilhar.";
+	}
 
 	@Override
-	public String error_inesperado_al_generar_enlaces() { return "Erro inesperado ao gerar links."; }
+	public String error_inesperado_al_generar_enlaces() {
+		return "Erro inesperado ao gerar links.";
+	}
 
 	@Override
-	public String error_inesperado_al_procesar_boton() { return "Erro inesperado ao processar botão."; }
+	public String error_inesperado_al_procesar_boton() {
+		return "Erro inesperado ao processar botão.";
+	}
 
 	@Override
-	public String sin_archivo_para_abrir() { return "Nenhum arquivo associado para abrir."; }
+	public String sin_archivo_para_abrir() {
+		return "Nenhum arquivo associado para abrir.";
+	}
 
 	@Override
-	public String archivo_no_existe_prefijo() { return "O arquivo não existe:\n"; }
+	public String archivo_no_existe_prefijo() {
+		return "O arquivo não existe:\n";
+	}
 
 	@Override
-	public String no_se_pudo_editar_se_copia_ruta() { return "Não foi possível abrir no editor.\nO caminho será copiado para a área de transferência."; }
+	public String no_se_pudo_editar_se_copia_ruta() {
+		return "Não foi possível abrir no editor.\nO caminho será copiado para a área de transferência.";
+	}
 
 	@Override
-	public String no_se_pudo_abrir_se_copia_ruta() { return "Não foi possível abrir o arquivo; o caminho foi copiado para a área de transferência."; }
+	public String no_se_pudo_abrir_se_copia_ruta() {
+		return "Não foi possível abrir o arquivo; o caminho foi copiado para a área de transferência.";
+	}
 
 	@Override
-	public String escritorio_no_soportado_se_copia_ruta() { return "Área de trabalho não suportada; o caminho foi copiado para a área de transferência."; }
+	public String escritorio_no_soportado_se_copia_ruta() {
+		return "Área de trabalho não suportada; o caminho foi copiado para a área de transferência.";
+	}
 
 	@Override
 	public String limite_de_solicitudes() {
-	    return "Você está enfrentando um limite de solicitações. Tente usar outro site de registro ou outra API de registro.";
+		return "Você está enfrentando um limite de solicitações. Tente usar outro site de registro ou outra API de registro.";
 	}
+
 	@Override
 	public String texto_de_boton_compartir_enlace() {
-	    return "Compartilhar Link";
+		return "Compartilhar Link";
 	}
-	
-	
+
+	@Override
+	public String infoDeTrazos() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Corrigir as partes superiores dos troncos é a principal prioridade. " + "O formato é Nível, Linha. "
+				+ "Todos os registros têm um sistema de numeração. " + Verificaciones.nl_html
+				+ "Geralmente, você precisa procurar nos níveis mais baixos em todos os registros; rastros com níveis altos geralmente são falsos positivos. "
+				+ "É importante usar sua habilidade de ler na console, pois a análise de rastros não é perfeita quando há muitos rastros."
+				+ "</b>";
+	}
+
 }

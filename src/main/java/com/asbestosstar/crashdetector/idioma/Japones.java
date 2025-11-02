@@ -5,6 +5,7 @@ import java.util.List;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class Japones implements Idioma {
 	private final Config config = Config.obtenerInstancia();
@@ -262,7 +263,7 @@ public class Japones implements Idioma {
 	@Override
 	public String infoDeVerificaciones() {
 		return "<b style='color:#" + config.obtenerColorInfo()
-				+ "'>ここにあなたのチェック結果を示します。スタックトレースの上部を修正することが最優先です。ゆっくり進めてください。正しい原因は通常チェック1または2にあります。それ以外（エラー3以上）は確認用には使えますが、多くの場合連鎖的なエラーなので無視しても構いません。エラーは層状に発生するため、今日この特定のエラーを解決しても、明日まったく関係のない新しいエラーが現れる可能性があります。あるエラーが別のエラーの表示を妨げていることがよくあるからです。</b>";
+				+ "'>ここに検証結果を示します。ゆっくりと確認してください。通常、正しい原因はチェック1または2にあります。それ以降（エラー3以上）は確認用に使えますが、一般的には連鎖的なエラーなので無視して構いません。障害は層状に発生するため、根本的な問題を解決すればこの特定のエラーは解消されます。ただし、あるエラーが別のエラーのコンソール表示を妨げることが多いため、明日になって関係のない新しいエラーが現れる可能性があります。</b>";
 	}
 
 	@Override
@@ -3884,44 +3885,73 @@ public class Japones implements Idioma {
 	public String texto_de_boton_compartir_markdown() {
 		return "レポートなしでログリンクをMarkdown形式で取得";
 	}
-	
-	@Override
-	public String titulo_configuracion() { return "設定"; }
 
 	@Override
-	public String columna_url() { return "URL"; }
+	public String titulo_configuracion() {
+		return "設定";
+	}
 
 	@Override
-	public String error_inesperado_al_compartir() { return "共有中に予期しないエラーが発生しました。"; }
+	public String columna_url() {
+		return "URL";
+	}
 
 	@Override
-	public String error_inesperado_al_generar_enlaces() { return "リンク生成中に予期しないエラーが発生しました。"; }
+	public String error_inesperado_al_compartir() {
+		return "共有中に予期しないエラーが発生しました。";
+	}
 
 	@Override
-	public String error_inesperado_al_procesar_boton() { return "ボタン処理中に予期しないエラーが発生しました。"; }
+	public String error_inesperado_al_generar_enlaces() {
+		return "リンク生成中に予期しないエラーが発生しました。";
+	}
 
 	@Override
-	public String sin_archivo_para_abrir() { return "開くファイルが関連付けられていません。"; }
+	public String error_inesperado_al_procesar_boton() {
+		return "ボタン処理中に予期しないエラーが発生しました。";
+	}
 
 	@Override
-	public String archivo_no_existe_prefijo() { return "ファイルが存在しません：\n"; }
+	public String sin_archivo_para_abrir() {
+		return "開くファイルが関連付けられていません。";
+	}
 
 	@Override
-	public String no_se_pudo_editar_se_copia_ruta() { return "エディタで開けませんでした。\nパスがクリップボードにコピーされます。"; }
+	public String archivo_no_existe_prefijo() {
+		return "ファイルが存在しません：\n";
+	}
 
 	@Override
-	public String no_se_pudo_abrir_se_copia_ruta() { return "ファイルを開けませんでした。パスはクリップボードにコピーされました。"; }
+	public String no_se_pudo_editar_se_copia_ruta() {
+		return "エディタで開けませんでした。\nパスがクリップボードにコピーされます。";
+	}
 
 	@Override
-	public String escritorio_no_soportado_se_copia_ruta() { return "デスクトップがサポートされていません。パスはクリップボードにコピーされました。"; }
+	public String no_se_pudo_abrir_se_copia_ruta() {
+		return "ファイルを開けませんでした。パスはクリップボードにコピーされました。";
+	}
+
+	@Override
+	public String escritorio_no_soportado_se_copia_ruta() {
+		return "デスクトップがサポートされていません。パスはクリップボードにコピーされました。";
+	}
 
 	@Override
 	public String limite_de_solicitudes() {
-	    return "リクエスト制限に達しています。別のログサイトまたは別のログAPIを使用してください。";
+		return "リクエスト制限に達しています。別のログサイトまたは別のログAPIを使用してください。";
 	}
+
 	@Override
 	public String texto_de_boton_compartir_enlace() {
-	    return "リンクを共有";
+		return "リンクを共有";
+	}
+
+	@Override
+	public String infoDeTrazos() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "ログの上部を修正することが最優先事項です。 " + "形式は「レベル、行」です。 "
+				+ "すべてのログには番号体系があります。 " + Verificaciones.nl_html
+				+ "一般的に、すべてのログで最も低いレベルを探る必要があります。高いレベルのトレースは、多くの場合誤検出です。 "
+				+ "トレースが多数ある場合、トレース分析は完璧ではないため、コンソールを直接読む能力を使うことが重要です。" + "</b>";
 	}
 
 }

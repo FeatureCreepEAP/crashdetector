@@ -319,6 +319,7 @@ public class ContentoDeTraces implements Verificaciones {
 	@Override
 	public String mensaje() {
 		StringBuilder constructor = new StringBuilder();
+		constructor.append(MonitorDePID.idioma.infoDeTrazos()).append(nl_html);
 		for (Map.Entry<String, StringBuilder> entry : contento.entrySet()) {
 			String titulo = "<span style='color: #" + Config.obtenerInstancia().obtenerColorDeTitulosDeConsolas()
 					+ "; font-weight: bold;'>";

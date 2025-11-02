@@ -83,7 +83,6 @@ public class EditorPlantillaPredeterminado extends EditorPlantilla {
 		splitPaneEditor.setDividerLocation(0.75); // Editor ocupa 75% del espacio vertical
 		splitPaneEditor.setBackground(coloresEditor.get("borde").obtener());
 
-		
 		// Editor HTML
 		JPanel panelEditor = new JPanel(new BorderLayout());
 		panelEditor.setBorder(BorderFactory.createTitledBorder("Editor HTML"));
@@ -126,7 +125,7 @@ public class EditorPlantillaPredeterminado extends EditorPlantilla {
 		// mínimos razonables para que la derecha no “empuje” a la izquierda
 		panelConfiguracion.setMinimumSize(new Dimension(340, 200));
 		splitPaneEditor.setMinimumSize(new Dimension(420, 200));
-		
+
 		// Panel de colores
 		JPanel panelColores = new JPanel(new GridLayout(0, 1, 5, 5));
 		panelColores.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));

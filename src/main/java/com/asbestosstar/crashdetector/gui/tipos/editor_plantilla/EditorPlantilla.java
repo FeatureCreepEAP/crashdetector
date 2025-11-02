@@ -276,8 +276,9 @@ public abstract class EditorPlantilla extends JPanel implements CrashDetectorGUI
 
 	// --- NUEVO: Inicializa la configuración de enlaces (Gura, Mumei, Shion) ---
 	/**
-	 * Inicializa la configuración de enlaces de imágenes para el reporte compartido.
-	 * Los cambios se guardan inmediatamente mediante ConfigString.escribir(...).
+	 * Inicializa la configuración de enlaces de imágenes para el reporte
+	 * compartido. Los cambios se guardan inmediatamente mediante
+	 * ConfigString.escribir(...).
 	 */
 	public void inicializarConfiguracionEnlaces(JPanel panelCampos) {
 		// Valores por defecto (como en tu snippet)
@@ -295,8 +296,8 @@ public abstract class EditorPlantilla extends JPanel implements CrashDetectorGUI
 
 	// --- NUEVO: helper para crear campo de texto de enlace ---
 	/**
-	 * Crea un campo de texto para editar un enlace de imagen del reporte.
-	 * Guarda al vuelo en configuración.
+	 * Crea un campo de texto para editar un enlace de imagen del reporte. Guarda al
+	 * vuelo en configuración.
 	 */
 	public JPanel crearCampoDeTextoEnlace(String etiqueta, ConfigString configString) {
 		JPanel panel = new JPanel(new BorderLayout(5, 0));
@@ -307,11 +308,19 @@ public abstract class EditorPlantilla extends JPanel implements CrashDetectorGUI
 		JTextField field = new JTextField(configString.obtener());
 		field.getDocument().addDocumentListener(new DocumentListener() {
 			@Override
-			public void insertUpdate(DocumentEvent e) { escribir(); }
+			public void insertUpdate(DocumentEvent e) {
+				escribir();
+			}
+
 			@Override
-			public void removeUpdate(DocumentEvent e) { escribir(); }
+			public void removeUpdate(DocumentEvent e) {
+				escribir();
+			}
+
 			@Override
-			public void changedUpdate(DocumentEvent e) { escribir(); }
+			public void changedUpdate(DocumentEvent e) {
+				escribir();
+			}
 
 			private void escribir() {
 				try {

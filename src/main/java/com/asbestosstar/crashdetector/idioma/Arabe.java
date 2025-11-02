@@ -5,6 +5,7 @@ import java.util.List;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class Arabe implements Idioma {
 	private final Config config = Config.obtenerInstancia();
@@ -276,7 +277,7 @@ public class Arabe implements Idioma {
 	@Override
 	public String infoDeVerificaciones() {
 		return "<b style='color:#" + config.obtenerColorInfo()
-				+ "'>إليك نتائج الفحوصات الخاصة بك. يجب أن يكون إصلاح الأخطاء في أعلى التتبعات أولوية قصوى. اعمل ببطء، فعادةً السبب الصحيح يكون في الفحص 1 أو 2، ويمكنك استخدام الفحوصات الأخرى (الأخطاء 3 فما فوق) للتأكيد فقط، لكن غالبًا ما تكون أخطاء متسلسلة يمكن تجاهلها. تحدث الأعطال على طبقات، لذا فإن حل المشكلة الصحيحة سيحل هذا الخطأ تحديدًا اليوم، ولكن قد يظهر غدًا خطأ جديد غير مرتبط بالخطأ الحالي، لأن خطأً واحدًا غالبًا ما يمنع ظهور خطأ آخر في وحدة التحكم.</b>";
+				+ "'>إليك نتائج عمليات التحقق الخاصة بك. اعمل ببطء؛ عادةً، السبب الصحيح يكون في الفحص الأول أو الثاني. يمكنك استخدام البقية (الأخطاء من 3 فما فوق) للتأكيد، لكنها غالبًا أخطاء متسلسلة يمكن تجاهلها. الأعطال تحدث بشكل طبقي، لذا فإن إصلاح المشكلة الأساسية سيحل هذا الخطأ المحدد. ومع ذلك، قد يظهر غدًا خطأ جديد غير مرتبط بالخطأ الحالي، لأن خطأً واحدًا غالبًا ما يمنع ظهور آخر في وحدة التحكم.</b>";
 	}
 
 	@Override
@@ -3967,45 +3968,74 @@ public class Arabe implements Idioma {
 	public String texto_de_boton_compartir_markdown() {
 		return "الحصول على روابط السجلات كنص Markdown بدون تقرير";
 	}
-	
-	@Override
-	public String titulo_configuracion() { return "الإعدادات"; }
 
 	@Override
-	public String columna_url() { return "الرابط"; }
+	public String titulo_configuracion() {
+		return "الإعدادات";
+	}
 
 	@Override
-	public String error_inesperado_al_compartir() { return "حدث خطأ غير متوقع أثناء المشاركة."; }
+	public String columna_url() {
+		return "الرابط";
+	}
 
 	@Override
-	public String error_inesperado_al_generar_enlaces() { return "حدث خطأ غير متوقع أثناء إنشاء الروابط."; }
+	public String error_inesperado_al_compartir() {
+		return "حدث خطأ غير متوقع أثناء المشاركة.";
+	}
 
 	@Override
-	public String error_inesperado_al_procesar_boton() { return "حدث خطأ غير متوقع أثناء معالجة الزر."; }
+	public String error_inesperado_al_generar_enlaces() {
+		return "حدث خطأ غير متوقع أثناء إنشاء الروابط.";
+	}
 
 	@Override
-	public String sin_archivo_para_abrir() { return "لا يوجد ملف مرتبط للفتح."; }
+	public String error_inesperado_al_procesar_boton() {
+		return "حدث خطأ غير متوقع أثناء معالجة الزر.";
+	}
 
 	@Override
-	public String archivo_no_existe_prefijo() { return "الملف غير موجود:\n"; }
+	public String sin_archivo_para_abrir() {
+		return "لا يوجد ملف مرتبط للفتح.";
+	}
 
 	@Override
-	public String no_se_pudo_editar_se_copia_ruta() { return "تعذر فتح الملف في المحرر.\nسيتم نسخ المسار إلى الحافظة."; }
+	public String archivo_no_existe_prefijo() {
+		return "الملف غير موجود:\n";
+	}
 
 	@Override
-	public String no_se_pudo_abrir_se_copia_ruta() { return "تعذر فتح الملف؛ تم نسخ المسار إلى الحافظة."; }
+	public String no_se_pudo_editar_se_copia_ruta() {
+		return "تعذر فتح الملف في المحرر.\nسيتم نسخ المسار إلى الحافظة.";
+	}
 
 	@Override
-	public String escritorio_no_soportado_se_copia_ruta() { return "سطح المكتب غير مدعوم؛ تم نسخ المسار إلى الحافظة."; }
+	public String no_se_pudo_abrir_se_copia_ruta() {
+		return "تعذر فتح الملف؛ تم نسخ المسار إلى الحافظة.";
+	}
+
+	@Override
+	public String escritorio_no_soportado_se_copia_ruta() {
+		return "سطح المكتب غير مدعوم؛ تم نسخ المسار إلى الحافظة.";
+	}
 
 	@Override
 	public String limite_de_solicitudes() {
-	    return "تواجه حدًا على عدد الطلبات. حاول استخدام موقع تسجيل آخر أو واجهة برمجة تطبيقات (API) أخرى للتسجيل.";
+		return "تواجه حدًا على عدد الطلبات. حاول استخدام موقع تسجيل آخر أو واجهة برمجة تطبيقات (API) أخرى للتسجيل.";
 	}
-	
+
 	@Override
 	public String texto_de_boton_compartir_enlace() {
-	    return "مشاركة الرابط";
+		return "مشاركة الرابط";
+	}
+
+	@Override
+	public String infoDeTrazos() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "إصلاح أجزاء قمم الجذوع هي الأولوية القصوى. "
+				+ "التنسيق هو المستوى، السطر. " + "جميع السجلات لها نظام ترقيم. " + Verificaciones.nl_html
+				+ "بشكل عام، تحتاج إلى البحث في المستويات الأدنى في جميع السجلات؛ فالمسارات ذات المستويات العالية تكون غالبًا إيجابيات زائفة. "
+				+ "من المهم استخدام مهارتك في فهم وحدة التحكم، لأن تحليل المسارات ليس دقيقًا تمامًا عند وجود العديد من المسارات."
+				+ "</b>";
 	}
 
 }

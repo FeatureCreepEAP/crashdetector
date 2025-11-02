@@ -428,10 +428,9 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 					mostrarError(MonitorDePID.idioma.errorConPublicarRegistro(ex.problema), ex);
 				} catch (NoAPIdeRegistro ex) {
 					mostrarError(MonitorDePID.idioma.apiDeRegistroNoExiste(), ex);
-				}catch (LimteDeTasa ex) {
+				} catch (LimteDeTasa ex) {
 					mostrarError(MonitorDePID.idioma.limite_de_solicitudes(), ex);
-				}  
-				catch (Exception ex) {
+				} catch (Exception ex) {
 					CrashDetectorLogger.logException(ex);
 					mostrarError(MonitorDePID.idioma.error_inesperado_al_procesar_boton(), ex); // <- antes literal
 				} finally {

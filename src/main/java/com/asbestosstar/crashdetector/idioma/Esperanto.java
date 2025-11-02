@@ -5,6 +5,7 @@ import java.util.List;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class Esperanto implements Idioma {
 	private final Config config = Config.obtenerInstancia();
@@ -280,7 +281,7 @@ public class Esperanto implements Idioma {
 	@Override
 	public String infoDeVerificaciones() {
 		return "<b style='color:#" + config.obtenerColorInfo()
-				+ "'>Jen viaj inspektaj rezultoj. Ripari la suprajn partojn de stakspuroj estas ĉefa prioritato. Faru tion slowly, kutime la ĉefa kaŭzo troviĝas en kontrolo 1 aŭ 2; aliajn (erarojn 3+) vi povas uzi por konfirmo, sed ili plejofte estas ĉenkorelativaj eraroj kiujn vi povas ignori. Malsukcesoj okazas en tavoloj, do solvi la ĝustan problemon solvos tiun apartan eraron hodiaŭ, sed eble morgaŭ aperos nova eraro ne rilatanta al nuna eraro, ĉar ofte unu eraro malebligas alian montriĝi en la konzolo.</b>";
+				+ "'>Jen viaj rezultoj de kontroloj. Faru ĉion paĉe; kutime la ĉefa kaŭzo troviĝas en la unua aŭ dua kontrolo. La ceteraj (eraroj 3 kai pli supre) povas esti uzitaj por konfirmo, sed ili estas plejofte kaskadaj eraroj kiujn vi povas ĉifone ignori. Malsukcesoj okazas en tavoloj, do solvante la ĉefan problemon vi solvos tiun apartan eraron. Tamen, eble morgaŭ aperos nova eraro ne rilatanta al nuna, ĉar ofte unu eraro malebligas alian aperi en la konzolo.</b>";
 	}
 
 	@Override
@@ -3998,50 +3999,75 @@ public class Esperanto implements Idioma {
 	public String texto_de_boton_compartir_markdown() {
 		return "Akiri retejojn de protokoloj kiel Markdown sen raporto";
 	}
-	
-	@Override
-	public String titulo_configuracion() { return "Agordo"; }
 
 	@Override
-	public String columna_url() { return "URL"; }
+	public String titulo_configuracion() {
+		return "Agordo";
+	}
 
 	@Override
-	public String error_inesperado_al_compartir() { return "Necerta eraro dum kunhavigo."; }
+	public String columna_url() {
+		return "URL";
+	}
 
 	@Override
-	public String error_inesperado_al_generar_enlaces() { return "Necerta eraro dum genero de ligiloj."; }
+	public String error_inesperado_al_compartir() {
+		return "Necerta eraro dum kunhavigo.";
+	}
 
 	@Override
-	public String error_inesperado_al_procesar_boton() { return "Necerta eraro dum prilaboro de butono."; }
+	public String error_inesperado_al_generar_enlaces() {
+		return "Necerta eraro dum genero de ligiloj.";
+	}
 
 	@Override
-	public String sin_archivo_para_abrir() { return "Neniu dosiero estas ligita por malfermi."; }
+	public String error_inesperado_al_procesar_boton() {
+		return "Necerta eraro dum prilaboro de butono.";
+	}
 
 	@Override
-	public String archivo_no_existe_prefijo() { return "Dosiero ne ekzistas:\n"; }
+	public String sin_archivo_para_abrir() {
+		return "Neniu dosiero estas ligita por malfermi.";
+	}
 
 	@Override
-	public String no_se_pudo_editar_se_copia_ruta() { return "Ne povis malfermi en redaktilo.\nLa vojo estos kopita al tondejo."; }
+	public String archivo_no_existe_prefijo() {
+		return "Dosiero ne ekzistas:\n";
+	}
 
 	@Override
-	public String no_se_pudo_abrir_se_copia_ruta() { return "Ne povis malfermi dosieron; la vojo estis kopita al tondejo."; }
+	public String no_se_pudo_editar_se_copia_ruta() {
+		return "Ne povis malfermi en redaktilo.\nLa vojo estos kopita al tondejo.";
+	}
 
 	@Override
-	public String escritorio_no_soportado_se_copia_ruta() { return "Labortablo ne subtenata; la vojo estis kopita al tondejo."; }
+	public String no_se_pudo_abrir_se_copia_ruta() {
+		return "Ne povis malfermi dosieron; la vojo estis kopita al tondejo.";
+	}
+
+	@Override
+	public String escritorio_no_soportado_se_copia_ruta() {
+		return "Labortablo ne subtenata; la vojo estis kopita al tondejo.";
+	}
 
 	@Override
 	public String limite_de_solicitudes() {
-	    return "Vi spertas limon de petoj. Provuzu alian registran retejon aŭ alian registran API-n.";
+		return "Vi spertas limon de petoj. Provuzu alian registran retejon aŭ alian registran API-n.";
 	}
-	
+
 	@Override
 	public String texto_de_boton_compartir_enlace() {
-	    return "Komuniki ligilon";
+		return "Komuniki ligilon";
 	}
-	
-	
-	
-	
-	
+
+	@Override
+	public String infoDeTrazos() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Rezolvi suprajn partojn de trunkoj estas unua prioritato. " + "La formato estas Nivelo, Linio. "
+				+ "Ĉiuj protokoloj havas nombran sistemon. " + Verificaciones.nl_html
+				+ "Ĝenerale vi bezonas serĉi plej malsuprajn nivelojn en ĉiuj protokoloj; spuradoj kun altpoziciaj niveloj kutime estas malveraj pozitivoj. "
+				+ "Gravegas uzi vian kapablon rigardi en la konzolon, ĉar analizo de spuradoj ne estas perfekta kiam ekzistas multaj spuradoj."
+				+ "</b>";
+	}
 
 }

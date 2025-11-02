@@ -5,6 +5,7 @@ import java.util.List;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class Ingles implements Idioma {
 	private final Config config = Config.obtenerInstancia(); // Assuming this is how you get the Config instance, like
@@ -286,7 +287,7 @@ public class Ingles implements Idioma {
 	@Override
 	public String infoDeVerificaciones() {
 		return "<b style='color:#" + config.obtenerColorInfo()
-				+ "'>Here are the results of your checks. Fixing the top parts of stack traces is the first priority. Work slowly—usually the correct cause is in check 1 or 2; others (errors 3+) can be used for confirmation but are often cascade errors and can generally be ignored. Failures occur in layers, so fixing the right issue will resolve this particular error today, but a new unrelated error might be back at it again tommarow since one error often prevents another from showing up in the console.</b>";
+				+ "'>Here are your verification results. Take it slowly; usually, the correct cause is in check 1 or 2. The rest (errors 3 and above) can be used for confirmation, but they're generally cascade errors you can ignore. Failures occur in layers, so fixing the root problem will resolve this particular error today but a new unrelated error may be back at it again tommarow, as one error often prevents another from showing up in the console.</b>";
 	}
 
 	@Override
@@ -4042,50 +4043,74 @@ public class Ingles implements Idioma {
 	public String texto_de_boton_compartir_markdown() {
 		return "Get Log Links as Markdown without Report";
 	}
-	
-	@Override
-	public String titulo_configuracion() { return "Configuration"; }
 
 	@Override
-	public String columna_url() { return "URL"; }
+	public String titulo_configuracion() {
+		return "Configuration";
+	}
 
 	@Override
-	public String error_inesperado_al_compartir() { return "Unexpected error while sharing."; }
+	public String columna_url() {
+		return "URL";
+	}
 
 	@Override
-	public String error_inesperado_al_generar_enlaces() { return "Unexpected error while generating links."; }
+	public String error_inesperado_al_compartir() {
+		return "Unexpected error while sharing.";
+	}
 
 	@Override
-	public String error_inesperado_al_procesar_boton() { return "Unexpected error while processing button."; }
+	public String error_inesperado_al_generar_enlaces() {
+		return "Unexpected error while generating links.";
+	}
 
 	@Override
-	public String sin_archivo_para_abrir() { return "No associated file to open."; }
+	public String error_inesperado_al_procesar_boton() {
+		return "Unexpected error while processing button.";
+	}
 
 	@Override
-	public String archivo_no_existe_prefijo() { return "File does not exist:\n"; }
+	public String sin_archivo_para_abrir() {
+		return "No associated file to open.";
+	}
 
 	@Override
-	public String no_se_pudo_editar_se_copia_ruta() { return "Could not open in editor.\nPath will be copied to clipboard."; }
+	public String archivo_no_existe_prefijo() {
+		return "File does not exist:\n";
+	}
 
 	@Override
-	public String no_se_pudo_abrir_se_copia_ruta() { return "Could not open file; path was copied to clipboard."; }
+	public String no_se_pudo_editar_se_copia_ruta() {
+		return "Could not open in editor.\nPath will be copied to clipboard.";
+	}
 
 	@Override
-	public String escritorio_no_soportado_se_copia_ruta() { return "Desktop not supported; path was copied to clipboard."; }
+	public String no_se_pudo_abrir_se_copia_ruta() {
+		return "Could not open file; path was copied to clipboard.";
+	}
+
+	@Override
+	public String escritorio_no_soportado_se_copia_ruta() {
+		return "Desktop not supported; path was copied to clipboard.";
+	}
 
 	@Override
 	public String limite_de_solicitudes() {
-	    return "You are experiencing a rate limit. Try using another log site or another logging API.";
+		return "You are experiencing a rate limit. Try using another log site or another logging API.";
 	}
+
 	@Override
 	public String texto_de_boton_compartir_enlace() {
-	    return "Share Link";
+		return "Share Link";
 	}
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public String infoDeTrazos() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "Fixing the tops of logs is the top priority. "
+				+ "The format is Level, Line. " + "All logs have a numbering system. " + Verificaciones.nl_html
+				+ "Generally, you need to look at the lowest levels across all logs; traces with high levels are usually false positives. "
+				+ "It's important to use your ability to read the console, as stack trace analysis isn't perfect when there are many traces."
+				+ "</b>";
+	}
 
 }

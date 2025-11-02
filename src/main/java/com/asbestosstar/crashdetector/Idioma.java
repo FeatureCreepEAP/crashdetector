@@ -1616,7 +1616,9 @@ public interface Idioma {
 	public String error_inesperado_al_procesar_boton();
 
 	public String limite_de_solicitudes();
-	
+
+	public String infoDeTrazos();
+
 	// public String advertenciaMalwareFalso();
 
 }

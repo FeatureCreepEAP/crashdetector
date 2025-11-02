@@ -123,67 +123,66 @@ public abstract class DialogoCompartir extends JFrame implements CrashDetectorGU
 		}
 	}
 
-public void compartirSeleccionados(ActionEvent e)
-        throws DemasiadoGrande, ErrorConPublicar, NoAPIdeRegistro  {
-    ArrayList<Consola> seleccionados = new ArrayList<>();
-    ArrayList<Integer> filasSel = new ArrayList<>();
-    if (modeloTabla != null) {
-        for (int i = 0; i < modeloTabla.getRowCount(); i++) {
-            if (Boolean.TRUE.equals(modeloTabla.getValueAt(i, 0))) {
-                seleccionados.add(MonitorDePID.consolas.get(i));
-                filasSel.add(i);
-            }
-        }
-    }
+	public void compartirSeleccionados(ActionEvent e) throws DemasiadoGrande, ErrorConPublicar, NoAPIdeRegistro {
+		ArrayList<Consola> seleccionados = new ArrayList<>();
+		ArrayList<Integer> filasSel = new ArrayList<>();
+		if (modeloTabla != null) {
+			for (int i = 0; i < modeloTabla.getRowCount(); i++) {
+				if (Boolean.TRUE.equals(modeloTabla.getValueAt(i, 0))) {
+					seleccionados.add(MonitorDePID.consolas.get(i));
+					filasSel.add(i);
+				}
+			}
+		}
 
-    if (!seleccionados.isEmpty()) {
-        String enlace;
-        try {
-            enlace = GeneradorDeInformacion.compartir(seleccionados, instant);
-        } catch (LimteDeTasa rl) {
-            mostrarError(MonitorDePID.idioma.limite_de_solicitudes(), rl);
-            return;
-        }
+		if (!seleccionados.isEmpty()) {
+			String enlace;
+			try {
+				enlace = GeneradorDeInformacion.compartir(seleccionados, instant);
+			} catch (LimteDeTasa rl) {
+				mostrarError(MonitorDePID.idioma.limite_de_solicitudes(), rl);
+				return;
+			}
 
-        if (campoEnlaceReporte != null) {
-            campoEnlaceReporte.setText(enlace);
-        }
-        MonitorDePID.enlace = enlace;
+			if (campoEnlaceReporte != null) {
+				campoEnlaceReporte.setText(enlace);
+			}
+			MonitorDePID.enlace = enlace;
 
-        // Actualizar URLs individuales (todas las partes por fila, separadas por espacio)
-        if (modeloTabla != null) {
-            for (int j = 0; j < filasSel.size(); j++) {
-                int row = filasSel.get(j);
-                Consola cons = MonitorDePID.consolas.get(row);
-                java.util.List<String> urls = new ArrayList<String>();
-                		try {
-							urls = cons.obtainerEnlaces();
-						} catch (DemasiadoGrande | ErrorConPublicar | NoAPIdeRegistro | LimteDeTasa e1) {
-							// TODO Auto-generated catch block
-				            mostrarError(e1.getMessage(), e1);
-				            return;
-						}
-                String concatenadas = String.join(" ", urls);
-                modeloTabla.setValueAt(concatenadas, row, 4);
-            }
-        }
+			// Actualizar URLs individuales (todas las partes por fila, separadas por
+			// espacio)
+			if (modeloTabla != null) {
+				for (int j = 0; j < filasSel.size(); j++) {
+					int row = filasSel.get(j);
+					Consola cons = MonitorDePID.consolas.get(row);
+					java.util.List<String> urls = new ArrayList<String>();
+					try {
+						urls = cons.obtainerEnlaces();
+					} catch (DemasiadoGrande | ErrorConPublicar | NoAPIdeRegistro | LimteDeTasa e1) {
+						// TODO Auto-generated catch block
+						mostrarError(e1.getMessage(), e1);
+						return;
+					}
+					String concatenadas = String.join(" ", urls);
+					modeloTabla.setValueAt(concatenadas, row, 4);
+				}
+			}
 
-        // Intentar abrir en navegador; si falla, copiar al portapapeles
-        try {
-            if (enlace != null && !enlace.isEmpty() && Desktop.isDesktopSupported()) {
-                Desktop.getDesktop().browse(new URL(enlace).toURI());
-            } else if (enlace != null) {
-                copiarAlPortapapeles(enlace);
-                mostrarInfo(MonitorDePID.idioma.copiadoAlPortapapeles());
-            }
-        } catch (Exception ex) {
-            copiarAlPortapapeles(enlace);
-            mostrarInfo(MonitorDePID.idioma.copiadoAlPortapapeles());
-            CrashDetectorLogger.logException(ex);
-        }
-    }
-}
-
+			// Intentar abrir en navegador; si falla, copiar al portapapeles
+			try {
+				if (enlace != null && !enlace.isEmpty() && Desktop.isDesktopSupported()) {
+					Desktop.getDesktop().browse(new URL(enlace).toURI());
+				} else if (enlace != null) {
+					copiarAlPortapapeles(enlace);
+					mostrarInfo(MonitorDePID.idioma.copiadoAlPortapapeles());
+				}
+			} catch (Exception ex) {
+				copiarAlPortapapeles(enlace);
+				mostrarInfo(MonitorDePID.idioma.copiadoAlPortapapeles());
+				CrashDetectorLogger.logException(ex);
+			}
+		}
+	}
 
 	// Actualiza el combo de sitios para la API seleccionada
 	protected void actualizarComboSitios(String apiNombre, Set<String> sitios, String sitioSeleccionado) {

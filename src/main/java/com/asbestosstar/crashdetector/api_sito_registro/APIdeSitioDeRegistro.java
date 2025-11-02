@@ -37,7 +37,8 @@ public interface APIdeSitioDeRegistro {
 	 * @param contenido      texto a publicar
 	 * @return enlace del contenido publicado
 	 */
-	public String publicarTexto(String nombreSugerido, String contenido) throws DemasiadoGrande,LimteDeTasa, ErrorConPublicar;
+	public String publicarTexto(String nombreSugerido, String contenido)
+			throws DemasiadoGrande, LimteDeTasa, ErrorConPublicar;
 
 	/**
 	 * Sitios por defecto de la API.
@@ -58,7 +59,7 @@ public interface APIdeSitioDeRegistro {
 	 *         pieza.
 	 */
 	default List<String> publicarRegistroEnPartes(com.asbestosstar.crashdetector.Consola registro)
-			throws DemasiadoGrande, ErrorConPublicar, NoAPIdeRegistro,LimteDeTasa {
+			throws DemasiadoGrande, ErrorConPublicar, NoAPIdeRegistro, LimteDeTasa {
 		final String nombre = (registro.archivo != null) ? registro.archivo.getFileName().toString() : "log.txt";
 		final String contenido = registro.obtainerContenidoParaPublicar();
 

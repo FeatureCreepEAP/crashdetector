@@ -5,6 +5,7 @@ import java.util.List;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class Ruso implements Idioma {
 	private final Config config = Config.obtenerInstancia();
@@ -278,7 +279,7 @@ public class Ruso implements Idioma {
 	@Override
 	public String infoDeVerificaciones() {
 		return "<b style='color:#" + config.obtenerColorInfo()
-				+ "'>Вот результаты ваших проверок. Приоритет №1 — исправление верхних частей стектрейсов. Действуйте медленно: обычно корень проблемы находится в проверке 1 или 2; остальные (ошибки 3 и выше) можно использовать для подтверждения, но зачастую это каскадные ошибки, которые можно игнорировать. Сбои возникают слоями, поэтому устранение правильной проблемы решит именно эту конкретную ошибку сегодня, но завтра может появиться новая, не связанная с текущей ошибка, так как одна ошибка часто мешает появлению другой в консоли.</b>";
+				+ "'>Вот результаты ваших проверок. Действуйте медленно: обычно правильная причина находится в проверке 1 или 2. Остальные (ошибки 3 и выше) можно использовать для подтверждения, но это, как правило, каскадные ошибки, которые можно игнорировать. Сбои происходят слоями, поэтому устранение корневой проблемы решит именно эту конкретную ошибку. Однако завтра может появиться новая ошибка, не связанная с текущей, так как одна ошибка часто мешает появлению другой в консоли.</b>";
 	}
 
 	@Override
@@ -4010,45 +4011,75 @@ public class Ruso implements Idioma {
 	public String texto_de_boton_compartir_markdown() {
 		return "Получить ссылки на логи в формате Markdown без отчёта";
 	}
-	
-	@Override
-	public String titulo_configuracion() { return "Настройки"; }
 
 	@Override
-	public String columna_url() { return "URL"; }
+	public String titulo_configuracion() {
+		return "Настройки";
+	}
 
 	@Override
-	public String error_inesperado_al_compartir() { return "Неожиданная ошибка при отправке."; }
+	public String columna_url() {
+		return "URL";
+	}
 
 	@Override
-	public String error_inesperado_al_generar_enlaces() { return "Неожиданная ошибка при генерации ссылок."; }
+	public String error_inesperado_al_compartir() {
+		return "Неожиданная ошибка при отправке.";
+	}
 
 	@Override
-	public String error_inesperado_al_procesar_boton() { return "Неожиданная ошибка при обработке кнопки."; }
+	public String error_inesperado_al_generar_enlaces() {
+		return "Неожиданная ошибка при генерации ссылок.";
+	}
 
 	@Override
-	public String sin_archivo_para_abrir() { return "Нет связанного файла для открытия."; }
+	public String error_inesperado_al_procesar_boton() {
+		return "Неожиданная ошибка при обработке кнопки.";
+	}
 
 	@Override
-	public String archivo_no_existe_prefijo() { return "Файл не существует:\n"; }
+	public String sin_archivo_para_abrir() {
+		return "Нет связанного файла для открытия.";
+	}
 
 	@Override
-	public String no_se_pudo_editar_se_copia_ruta() { return "Не удалось открыть в редакторе.\nПуть будет скопирован в буфер обмена."; }
+	public String archivo_no_existe_prefijo() {
+		return "Файл не существует:\n";
+	}
 
 	@Override
-	public String no_se_pudo_abrir_se_copia_ruta() { return "Не удалось открыть файл; путь был скопирован в буфер обмена."; }
+	public String no_se_pudo_editar_se_copia_ruta() {
+		return "Не удалось открыть в редакторе.\nПуть будет скопирован в буфер обмена.";
+	}
 
 	@Override
-	public String escritorio_no_soportado_se_copia_ruta() { return "Рабочий стол не поддерживается; путь был скопирован в буфер обмена."; }
+	public String no_se_pudo_abrir_se_copia_ruta() {
+		return "Не удалось открыть файл; путь был скопирован в буфер обмена.";
+	}
+
+	@Override
+	public String escritorio_no_soportado_se_copia_ruta() {
+		return "Рабочий стол не поддерживается; путь был скопирован в буфер обмена.";
+	}
 
 	@Override
 	public String limite_de_solicitudes() {
-	    return "Вы достигли лимита запросов. Попробуйте использовать другой сайт логов или другое API для логирования.";
+		return "Вы достигли лимита запросов. Попробуйте использовать другой сайт логов или другое API для логирования.";
 	}
+
 	@Override
 	public String texto_de_boton_compartir_enlace() {
-	    return "Поделиться ссылкой";
+		return "Поделиться ссылкой";
 	}
-	
+
+	@Override
+	public String infoDeTrazos() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Исправление верхних частей брёвен — главный приоритет. " + "Формат: Уровень, Строка. "
+				+ "Все логи имеют систему нумерации. " + Verificaciones.nl_html
+				+ "Как правило, нужно искать на самых нижних уровнях во всех логах; трассировки с высоким уровнем обычно являются ложноположительными. "
+				+ "Важно использовать вашу способность читать консоль, так как анализ трассировок не является идеальным при большом их количестве."
+				+ "</b>";
+	}
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class Chino implements Idioma {
 	private final Config config = Config.obtenerInstancia();
@@ -253,7 +254,7 @@ public class Chino implements Idioma {
 	@Override
 	public String infoDeVerificaciones() {
 		return "<b style='color:#" + config.obtenerColorInfo()
-				+ "'>以下是你的检查结果。优先修复堆栈顶部的问题。请耐心处理，通常根本原因在第1或第2项检查中，其他检查（错误3及以上）可用于确认，但通常是连锁错误，可忽略。故障是分层出现的，因此今天解决正确的根本问题可以消除此特定错误，但明天可能又会出现一个与当前错误无关的新错误，因为一个错误常常会阻止另一个错误在日志中显示出来。</b>";
+				+ "'>这是你的检查结果。请慢慢分析，通常真正的原因在检查1或2中。后面的（错误3及以上）可用于确认，但通常是连锁错误，可以忽略。故障是分层发生的，因此解决根本问题会修复此特定错误。然而，明天可能会出现一个与当前错误无关的新错误，因为一个错误常常会阻止另一个错误在控制台中显示。</b>";
 	}
 
 	@Override
@@ -3812,44 +3813,70 @@ public class Chino implements Idioma {
 	}
 
 	@Override
-	public String titulo_configuracion() { return "设置"; }
+	public String titulo_configuracion() {
+		return "设置";
+	}
 
 	@Override
-	public String columna_url() { return "网址"; }
+	public String columna_url() {
+		return "网址";
+	}
 
 	@Override
-	public String error_inesperado_al_compartir() { return "分享时发生意外错误。"; }
+	public String error_inesperado_al_compartir() {
+		return "分享时发生意外错误。";
+	}
 
 	@Override
-	public String error_inesperado_al_generar_enlaces() { return "生成链接时发生意外错误。"; }
+	public String error_inesperado_al_generar_enlaces() {
+		return "生成链接时发生意外错误。";
+	}
 
 	@Override
-	public String error_inesperado_al_procesar_boton() { return "处理按钮时发生意外错误。"; }
+	public String error_inesperado_al_procesar_boton() {
+		return "处理按钮时发生意外错误。";
+	}
 
 	@Override
-	public String sin_archivo_para_abrir() { return "没有关联的文件可供打开。"; }
+	public String sin_archivo_para_abrir() {
+		return "没有关联的文件可供打开。";
+	}
 
 	@Override
-	public String archivo_no_existe_prefijo() { return "文件不存在：\n"; }
+	public String archivo_no_existe_prefijo() {
+		return "文件不存在：\n";
+	}
 
 	@Override
-	public String no_se_pudo_editar_se_copia_ruta() { return "无法在编辑器中打开。\n路径将被复制到剪贴板。"; }
+	public String no_se_pudo_editar_se_copia_ruta() {
+		return "无法在编辑器中打开。\n路径将被复制到剪贴板。";
+	}
 
 	@Override
-	public String no_se_pudo_abrir_se_copia_ruta() { return "无法打开文件；路径已复制到剪贴板。"; }
+	public String no_se_pudo_abrir_se_copia_ruta() {
+		return "无法打开文件；路径已复制到剪贴板。";
+	}
 
 	@Override
-	public String escritorio_no_soportado_se_copia_ruta() { return "桌面操作不受支持；路径已复制到剪贴板。"; }
+	public String escritorio_no_soportado_se_copia_ruta() {
+		return "桌面操作不受支持；路径已复制到剪贴板。";
+	}
 
 	@Override
 	public String limite_de_solicitudes() {
-	    return "您遇到了请求频率限制。请尝试使用其他日志网站或其他日志API。";
+		return "您遇到了请求频率限制。请尝试使用其他日志网站或其他日志API。";
 	}
-	
+
 	@Override
 	public String texto_de_boton_compartir_enlace() {
-	    return "分享链接";
+		return "分享链接";
 	}
-	
-	
+
+	@Override
+	public String infoDeTrazos() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "修复原木顶部问题是第一优先级。" + "格式为：层级，行号。"
+				+ "所有日志都有编号系统。" + Verificaciones.nl_html + "通常你需要在所有日志中查找最底层的堆栈（低层级），高层数的堆栈通常是误报。"
+				+ "使用你的控制台阅读能力很重要，因为当堆栈过多时，堆栈分析并不完美。" + "</b>";
+	}
+
 }

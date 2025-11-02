@@ -5,6 +5,7 @@ import java.util.List;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class Coreano implements Idioma {
 	private final Config config = Config.obtenerInstancia();
@@ -263,7 +264,7 @@ public class Coreano implements Idioma {
 	@Override
 	public String infoDeVerificaciones() {
 		return "<b style='color:#" + config.obtenerColorInfo()
-				+ "'>여기에 귀하의 검사 결과가 있습니다. 트레이스 상단 부분을 수정하는 것이 최우선입니다. 천천히 진행하세요. 일반적으로 올바른 원인은 검사 1번 또는 2번에 있습니다. 나머지(오류 3번 이상)는 확인용으로 사용할 수 있지만, 대부분 연쇄 오류이므로 무시해도 됩니다. 오류는 여러 계층에서 발생하므로 올바른 문제를 해결하면 오늘 이 특정 오류는 사라지지만, 내일 또 다른 관련 없는 새로운 오류가 나타날 수 있습니다. 한 오류가 콘솔에 다른 오류의 출력을 막는 경우가 많기 때문입니다.</b>";
+				+ "'>여기에 당신의 검사 결과가 있습니다. 천천히 진행하세요. 일반적으로 올바른 원인은 검사 1 또는 2에 있습니다. 나머지(오류 3 이상)는 확인용으로 사용할 수 있지만, 대개 연쇄 오류이므로 무시해도 됩니다. 오류는 계층적으로 발생하므로 핵심 문제를 해결하면 이 특정 오류가 해결됩니다. 하지만 내일 현재 오류와 관련 없는 새로운 오류가 다시 나타날 수 있습니다. 왜냐하면 한 오류가 다른 오류의 콘솔 표시를 막을 수 있기 때문입니다.</b>";
 	}
 
 	@Override
@@ -3878,50 +3879,73 @@ public class Coreano implements Idioma {
 	public String texto_de_boton_compartir_markdown() {
 		return "로그 링크를 마크다운 형식으로 가져오기 (보고서 없음)";
 	}
-	
-	@Override
-	public String titulo_configuracion() { return "설정"; }
 
 	@Override
-	public String columna_url() { return "URL"; }
+	public String titulo_configuracion() {
+		return "설정";
+	}
 
 	@Override
-	public String error_inesperado_al_compartir() { return "공유 중 예기치 못한 오류가 발생했습니다."; }
+	public String columna_url() {
+		return "URL";
+	}
 
 	@Override
-	public String error_inesperado_al_generar_enlaces() { return "링크 생성 중 예기치 못한 오류가 발생했습니다."; }
+	public String error_inesperado_al_compartir() {
+		return "공유 중 예기치 못한 오류가 발생했습니다.";
+	}
 
 	@Override
-	public String error_inesperado_al_procesar_boton() { return "버튼 처리 중 예기치 못한 오류가 발생했습니다."; }
+	public String error_inesperado_al_generar_enlaces() {
+		return "링크 생성 중 예기치 못한 오류가 발생했습니다.";
+	}
 
 	@Override
-	public String sin_archivo_para_abrir() { return "열 파일이 없습니다."; }
+	public String error_inesperado_al_procesar_boton() {
+		return "버튼 처리 중 예기치 못한 오류가 발생했습니다.";
+	}
 
 	@Override
-	public String archivo_no_existe_prefijo() { return "파일이 존재하지 않습니다:\n"; }
+	public String sin_archivo_para_abrir() {
+		return "열 파일이 없습니다.";
+	}
 
 	@Override
-	public String no_se_pudo_editar_se_copia_ruta() { return "편집기에서 열 수 없습니다.\n경로가 클립보드에 복사됩니다."; }
+	public String archivo_no_existe_prefijo() {
+		return "파일이 존재하지 않습니다:\n";
+	}
 
 	@Override
-	public String no_se_pudo_abrir_se_copia_ruta() { return "파일을 열 수 없습니다. 경로가 클립보드에 복사되었습니다."; }
+	public String no_se_pudo_editar_se_copia_ruta() {
+		return "편집기에서 열 수 없습니다.\n경로가 클립보드에 복사됩니다.";
+	}
 
 	@Override
-	public String escritorio_no_soportado_se_copia_ruta() { return "데스크탑이 지원되지 않습니다. 경로가 클립보드에 복사되었습니다."; }
+	public String no_se_pudo_abrir_se_copia_ruta() {
+		return "파일을 열 수 없습니다. 경로가 클립보드에 복사되었습니다.";
+	}
+
+	@Override
+	public String escritorio_no_soportado_se_copia_ruta() {
+		return "데스크탑이 지원되지 않습니다. 경로가 클립보드에 복사되었습니다.";
+	}
 
 	@Override
 	public String limite_de_solicitudes() {
-	    return "요청 제한을 초과했습니다. 다른 로그 사이트나 다른 로그 API를 사용해 보세요.";
+		return "요청 제한을 초과했습니다. 다른 로그 사이트나 다른 로그 API를 사용해 보세요.";
 	}
-	
+
 	@Override
 	public String texto_de_boton_compartir_enlace() {
-	    return "링크 공유";
+		return "링크 공유";
 	}
-	
-	
-	
-	
-	
+
+	@Override
+	public String infoDeTrazos() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "나무 줄기의 상단 부분을 고치는 것이 최우선입니다. "
+				+ "형식은 레벨, 라인입니다. " + "모든 로그에는 번호 체계가 있습니다. " + Verificaciones.nl_html
+				+ "일반적으로 모든 로그에서 가장 낮은 레벨을 찾아야 합니다. 높은 레벨의 트레이스는 일반적으로 잘못된 긍정입니다. "
+				+ "트레이스가 많을 때 분석이 완벽하지 않으므로 콘솔을 직접 보는 능력을 사용하는 것이 중요합니다." + "</b>";
+	}
 
 }

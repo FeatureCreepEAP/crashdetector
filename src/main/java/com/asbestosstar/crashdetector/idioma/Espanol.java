@@ -5,6 +5,7 @@ import java.util.List;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class Espanol implements Idioma {
 	Config config = Config.obtenerInstancia();
@@ -286,7 +287,7 @@ public class Espanol implements Idioma {
 	@Override
 	public String infoDeVerificaciones() {
 		return "<b style='color:#" + config.obtenerColorInfo()
-				+ "'>Aquí están los resultados de tus verificaciones. Arreglar las partes superiores de los troncos es la primera prioridad. Hazlo lentamente, generlmente la razon correcto es en verificion 1 o 2, otras (errores 3+) puedes usar para confirmacion pero generalment son errores cascades y puedes ignorar son. Los fallos se producen en capas, por lo que solucionar el problema correcto solucionará este error en particular hoy, pero es posible que mañana vuelva a aparecer un nuevo error no relacionado con el error actual, ya que a menudo un error puede impedir que otro aparezca en la consola.</b>";
+				+ "'>Aquí están los resultados de tus verificaciones. Hazlo lentamente, generlmente la razon correcto es en verificion 1 o 2, otras (errores 3+) puedes usar para confirmacion pero generalment son errores cascades y puedes ignorar son. Los fallos se producen en capas, por lo que solucionar el problema correcto solucionará este error en particular hoy, pero es posible que mañana vuelva a aparecer un nuevo error no relacionado con el error actual, ya que a menudo un error puede impedir que otro aparezca en la consola.</b>";
 	}
 
 	@Override
@@ -4685,31 +4686,60 @@ public class Espanol implements Idioma {
 		// TODO Auto-generated method stub
 		return "Obtener Enlaces a Registros Como Markdown sin Informe";
 	}
-	
-	
+
 	@Override
-	public String titulo_configuracion() { return "Configuración"; }
+	public String titulo_configuracion() {
+		return "Configuración";
+	}
+
 	@Override
-	public String columna_url()          { return "URL"; }
+	public String columna_url() {
+		return "URL";
+	}
+
 	@Override
-	public String error_inesperado_al_compartir()       { return "Error inesperado al compartir."; }
+	public String error_inesperado_al_compartir() {
+		return "Error inesperado al compartir.";
+	}
+
 	@Override
-	public String error_inesperado_al_generar_enlaces() { return "Error inesperado al generar enlaces."; }
+	public String error_inesperado_al_generar_enlaces() {
+		return "Error inesperado al generar enlaces.";
+	}
+
 	@Override
-	public String error_inesperado_al_procesar_boton()  { return "Error inesperado al procesar el botón."; }
+	public String error_inesperado_al_procesar_boton() {
+		return "Error inesperado al procesar el botón.";
+	}
+
 	@Override
-	public String sin_archivo_para_abrir()                 { return "No hay archivo asociado para abrir."; }
+	public String sin_archivo_para_abrir() {
+		return "No hay archivo asociado para abrir.";
+	}
+
 	@Override
-	public String archivo_no_existe_prefijo()              { return "El archivo no existe:\n"; }
+	public String archivo_no_existe_prefijo() {
+		return "El archivo no existe:\n";
+	}
+
 	@Override
-	public String no_se_pudo_editar_se_copia_ruta()        { return "No se pudo abrir en un editor.\nSe copiará la ruta al portapapeles."; }
+	public String no_se_pudo_editar_se_copia_ruta() {
+		return "No se pudo abrir en un editor.\nSe copiará la ruta al portapapeles.";
+	}
+
 	@Override
-	public String no_se_pudo_abrir_se_copia_ruta()         { return "No se pudo abrir el archivo; la ruta se copió al portapapeles."; }
+	public String no_se_pudo_abrir_se_copia_ruta() {
+		return "No se pudo abrir el archivo; la ruta se copió al portapapeles.";
+	}
+
 	@Override
-	public String escritorio_no_soportado_se_copia_ruta()  { return "El escritorio no está soportado; se copió la ruta al portapapeles."; }
+	public String escritorio_no_soportado_se_copia_ruta() {
+		return "El escritorio no está soportado; se copió la ruta al portapapeles.";
+	}
+
 	@Override
 	public String limite_de_solicitudes() {
-	    return "Estás experimentando un límite de solicitudes. Intenta usar otro sitio de registro o otra API de registro.";
+		return "Estás experimentando un límite de solicitudes. Intenta usar otro sitio de registro o otra API de registro.";
 	}
 
 	@Override
@@ -4718,8 +4748,16 @@ public class Espanol implements Idioma {
 		return "Compartir Enlace";
 	}
 
-	
-	
-	
+	@Override
+	public String infoDeTrazos() {
+		// TODO Auto-generated method stub
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Arreglar las partes superiores de los troncos es la primera prioridad. "
+				+ "El formato es Nivel, Línea. " + "Todos los registros tienen un sistema de numeración. "
+				+ Verificaciones.nl_html
+				+ "Generalmente necesitas buscar en los niveles más bajos en todos los registros; trazos con niveles altos generalmente son falsos positivos. "
+				+ "Es importante usar tu habilidad para ver en la consola, ya que el análisis de trazos no es perfecto cuando hay muchos trazos."
+				+ "</b>";
+	}
 
 }
