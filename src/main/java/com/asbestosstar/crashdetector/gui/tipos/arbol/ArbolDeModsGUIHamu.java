@@ -14,7 +14,6 @@ public class ArbolDeModsGUIHamu extends ArbolDeModsGUI {
 
 	public static String ID = "hamu";
 
-	
 	private ConfigColor colorFondoPrincipal = ConfigColor.de("tema.hamu.color.fondo", new Color(144, 203, 239)); // #90cbef
 
 	// Colores de texto (pueden ser usados por el renderer o componentes)
@@ -23,8 +22,6 @@ public class ArbolDeModsGUIHamu extends ArbolDeModsGUI {
 	private ConfigColor colorTextoComboFiltro = ConfigColor.de("tema.hamu.color.texto.combo.filtro", Color.BLACK);
 	private ConfigColor colorTextoRenderer = ConfigColor.de("tema.hamu.color.texto.renderer", Color.BLACK);
 	private ConfigColor colorTextoOverlayCarga = ConfigColor.de("tema.hamu.color.texto.overlay.carga", Color.WHITE);
-
-	
 
 	@Override
 	public String id() {
@@ -125,7 +122,7 @@ public class ArbolDeModsGUIHamu extends ArbolDeModsGUI {
 	 */
 	private void inicializarColoresConfiguracion() {
 		// Fondo principal
-}
+	}
 
 	@Override
 	public List<ElementoConfig> obtenerElementosConfigs() {

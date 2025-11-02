@@ -18,7 +18,7 @@ import java.util.function.Supplier;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -36,8 +36,6 @@ import com.asbestosstar.crashdetector.api_sito_registro.APIdeSitioDeRegistro;
 import com.asbestosstar.crashdetector.api_sito_registro.DemasiadoGrande;
 import com.asbestosstar.crashdetector.api_sito_registro.ErrorConPublicar;
 import com.asbestosstar.crashdetector.api_sito_registro.NoAPIdeRegistro;
-import com.asbestosstar.crashdetector.config.ConfigColor;
-import com.asbestosstar.crashdetector.config.ElementoConfig;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 
@@ -46,7 +44,7 @@ import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
  * compartir. La apariencia y el layout específicos se manejarán en
  * implementaciones concretas.
  */
-public abstract class DialogoCompartir extends JDialog implements CrashDetectorGUI {
+public abstract class DialogoCompartir extends JFrame implements CrashDetectorGUI {
 
 	// Componentes de la interfaz (ahora públicos)
 	public DefaultTableModel modeloTabla;
@@ -124,12 +122,14 @@ public abstract class DialogoCompartir extends JDialog implements CrashDetectorG
 		}
 	}
 
-	protected void compartirSeleccionados(ActionEvent e) throws DemasiadoGrande, ErrorConPublicar, NoAPIdeRegistro {
+	public void compartirSeleccionados(ActionEvent e) throws DemasiadoGrande, ErrorConPublicar, NoAPIdeRegistro {
 		ArrayList<Consola> seleccionados = new ArrayList<>();
+		ArrayList<Integer> filasSel = new ArrayList<>();
 		if (modeloTabla != null) {
 			for (int i = 0; i < modeloTabla.getRowCount(); i++) {
 				if (Boolean.TRUE.equals(modeloTabla.getValueAt(i, 0))) {
 					seleccionados.add(MonitorDePID.consolas.get(i));
+					filasSel.add(i);
 				}
 			}
 		}
@@ -141,14 +141,15 @@ public abstract class DialogoCompartir extends JDialog implements CrashDetectorG
 			}
 			MonitorDePID.enlace = enlace;
 
-			// Actualizar URLs individuales
+			// Actualizar URLs individuales (todas las partes por fila, separadas por
+			// espacio)
 			if (modeloTabla != null) {
-				for (int i = 0; i < modeloTabla.getRowCount(); i++) {
-					if (Boolean.TRUE.equals(modeloTabla.getValueAt(i, 0))) {
-						Consola cons = MonitorDePID.consolas.get(i);
-						String url = cons.obtainerEnlance();
-						modeloTabla.setValueAt(url, i, 4);
-					}
+				for (int j = 0; j < filasSel.size(); j++) {
+					int row = filasSel.get(j);
+					Consola cons = MonitorDePID.consolas.get(row);
+					java.util.List<String> urls = GeneradorDeInformacion.obtenerEnlacesDeConsola(cons);
+					String concatenadas = String.join(" ", urls);
+					modeloTabla.setValueAt(concatenadas, row, 4);
 				}
 			}
 
@@ -231,17 +232,24 @@ public abstract class DialogoCompartir extends JDialog implements CrashDetectorG
 	}
 
 	/**
-	 * Genera Markdown con enlaces directos a los logs seleccionados. - Mantiene la
-	 * tabla (columna URL) sincronizada. - Copia el Markdown al portapapeles y lo
-	 * pone en el campo de enlace. - Orden: latest.log, debug.log, launcher.log,
-	 * luego otros por nombre.
+	 * Genera Markdown con enlaces directos a los logs seleccionados. AHORA soporta
+	 * múltiples enlaces por cada consola (cuando la API parte el archivo).
+	 *
+	 * - Mantiene la tabla (columna URL) sincronizada con TODAS las partes (una por
+	 * línea). - Copia el Markdown al portapapeles y lo coloca en el campo de
+	 * enlace. - Orden de archivos: latest.log, debug.log, launcher.log, luego el
+	 * resto alfabético. - Si un log se partió en varias URLs, se etiqueta como:
+	 * nombre (parte N).
+	 *
+	 * @throws DemasiadoGrande  si la API reporta que una parte sigue siendo grande
+	 * @throws ErrorConPublicar si ocurre un error específico de publicación
+	 * @throws NoAPIdeRegistro  si no hay API seleccionada/configurada
 	 */
-	protected void compartirSoloEnlacesMarkdown(ActionEvent e)
-			throws DemasiadoGrande, ErrorConPublicar, NoAPIdeRegistro {
-		// 1) Determinar filas/Consolas seleccionadas (misma semántica que
-		// compartirSeleccionados)
-		List<Integer> filasSel = new ArrayList<>();
-		ArrayList<Consola> seleccionados = new ArrayList<>();
+	public void compartirSoloEnlacesMarkdown(ActionEvent e) throws DemasiadoGrande, ErrorConPublicar, NoAPIdeRegistro {
+
+		// 1) Recolectar filas y consolas seleccionadas
+		final List<Integer> filasSel = new ArrayList<>();
+		final ArrayList<Consola> seleccionados = new ArrayList<>();
 		if (modeloTabla != null) {
 			for (int i = 0; i < modeloTabla.getRowCount(); i++) {
 				if (Boolean.TRUE.equals(modeloTabla.getValueAt(i, 0))) {
@@ -250,73 +258,112 @@ public abstract class DialogoCompartir extends JDialog implements CrashDetectorG
 				}
 			}
 		}
-		if (seleccionados.isEmpty())
-			return;
+		if (seleccionados.isEmpty()) {
+			return; // nada que hacer
+		}
 
-		// 2) Obtener/crear enlaces por consola y actualizar tabla
+		// Para construcción del markdown y del contenido de celda
 		class Item {
-			String archivo;
-			String url;
+			String archivoBase; // nombre base del archivo (p.ej., latest.log)
+			String etiqueta; // etiqueta a mostrar en markdown (p.ej., "latest.log (parte 2)")
+			String url; // enlace de la parte
+			int parteIndex; // 1..N (solo informativo para orden estable dentro del mismo archivo)
 
-			Item(String a, String u) {
-				archivo = a;
-				url = u;
+			Item(String archivoBase, String etiqueta, String url, int parteIndex) {
+				this.archivoBase = archivoBase;
+				this.etiqueta = etiqueta;
+				this.url = url;
+				this.parteIndex = parteIndex;
 			}
 		}
-		List<Item> items = new ArrayList<>();
+		final List<Item> items = new ArrayList<>();
 
+		// 2) Obtener/crear enlaces por consola y actualizar la tabla
 		for (int idx = 0; idx < filasSel.size(); idx++) {
-			int row = filasSel.get(idx);
-			Consola cons = MonitorDePID.consolas.get(row);
-			String nombreArchivo = cons.archivo.getFileName().toString(); // sólo el nombre, sin carpeta
-			String url;
+			final int row = filasSel.get(idx);
+			final Consola cons = MonitorDePID.consolas.get(row);
+
+			final String nombreArchivo = (cons.archivo != null) ? cons.archivo.getFileName().toString() : "log.txt";
+
+			List<String> urls;
 			try {
-				url = cons.obtainerEnlance(); // mismo mecanismo que “compartir enlace” por fila
-			} catch (DemasiadoGrande | ErrorConPublicar | NoAPIdeRegistro ex) {
-				throw ex;
+				// NUEVO: obtener TODAS las partes que la API haya publicado
+				urls = cons.obtainerEnlaces();
 			} catch (Throwable t) {
+				// Propaga las excepciones esperadas; cualquier otra la registramos y seguimos
+				// vacío
+				if (t instanceof DemasiadoGrande)
+					throw (DemasiadoGrande) t;
+				if (t instanceof ErrorConPublicar)
+					throw (ErrorConPublicar) t;
+				if (t instanceof NoAPIdeRegistro)
+					throw (NoAPIdeRegistro) t;
 				CrashDetectorLogger.logException(t);
-				url = ""; // seguimos; se mostrará vacío si algo falló
+				urls = new ArrayList<>();
 			}
+
+			// Actualizar columna URL (columna 4) con TODAS las partes separadas por saltos
+			// de línea
+			final String celda = (urls == null || urls.isEmpty()) ? "" : String.join("\n", urls);
 			if (modeloTabla != null) {
-				modeloTabla.setValueAt(url, row, 4); // poblar columna URL
+				modeloTabla.setValueAt(celda, row, 4);
 			}
-			items.add(new Item(nombreArchivo, url));
+
+			// Preparar ítems para el markdown: si hay varias partes, etiquetar con " (parte
+			// N)"
+			if (urls != null && !urls.isEmpty()) {
+				if (urls.size() == 1) {
+					items.add(new Item(nombreArchivo, nombreArchivo, urls.get(0), 1));
+				} else {
+					for (int p = 0; p < urls.size(); p++) {
+						final int parteN = p + 1;
+						final String etiqueta = nombreArchivo + " (parte " + parteN + ")";
+						items.add(new Item(nombreArchivo, etiqueta, urls.get(p), parteN));
+					}
+				}
+			} else {
+				// Sin URL: aún listamos el nombre para dejar constancia en el markdown si se
+				// desea
+				items.add(new Item(nombreArchivo, nombreArchivo, "", 1));
+			}
 		}
 
-		// 3) Orden deseado
-		java.util.Comparator<Item> cmp = (a, b) -> {
-			java.util.function.Function<String, Integer> peso = s -> {
-				String n = s.toLowerCase();
-				if (n.equals("latest.log"))
-					return 0;
-				if (n.equals("debug.log"))
-					return 1;
-				if (n.equals("launcher.log"))
-					return 2;
-				return 3;
-			};
-			int pa = peso.apply(a.archivo);
-			int pb = peso.apply(b.archivo);
+		// 3) Ordenar: latest.log, debug.log, launcher.log, luego resto por nombre
+		// (estable por parteIndex)
+		final java.util.function.Function<String, Integer> peso = nombre -> {
+			String n = (nombre == null ? "" : nombre.toLowerCase());
+			if (n.equals("latest.log"))
+				return 0;
+			if (n.equals("debug.log"))
+				return 1;
+			if (n.equals("launcher.log"))
+				return 2;
+			return 3;
+		};
+		items.sort((a, b) -> {
+			int pa = peso.apply(a.archivoBase);
+			int pb = peso.apply(b.archivoBase);
 			if (pa != pb)
 				return Integer.compare(pa, pb);
-			return a.archivo.compareToIgnoreCase(b.archivo);
-		};
-		items.sort(cmp);
+			int cmp = a.archivoBase.compareToIgnoreCase(b.archivoBase);
+			if (cmp != 0)
+				return cmp;
+			// A igualdad de archivo, mantener el orden por parte (1,2,3...)
+			return Integer.compare(a.parteIndex, b.parteIndex);
+		});
 
-		// 4) String Markdown en una sola línea, separado por espacios
+		// 4) Construir el Markdown (una línea larga separada por espacios)
 		StringBuilder md = new StringBuilder();
 		for (Item it : items) {
 			if (it.url != null && !it.url.isEmpty()) {
-				md.append("[").append(it.archivo).append("](").append(it.url).append(") ");
+				md.append('[').append(it.etiqueta).append(']').append('(').append(it.url).append(')').append(' ');
 			} else {
-				// Sin URL: deja sólo el nombre como texto plano
-				md.append(it.archivo).append(" ");
+				md.append(it.etiqueta).append(' ');
 			}
 		}
-		String markdown = md.toString().trim();
+		final String markdown = md.toString().trim();
 
-		// 5) Mostrar y copiar
+		// 5) Mostrar en campo, copiar al portapapeles e informar
 		if (campoEnlaceReporte != null) {
 			campoEnlaceReporte.setText(markdown);
 		}

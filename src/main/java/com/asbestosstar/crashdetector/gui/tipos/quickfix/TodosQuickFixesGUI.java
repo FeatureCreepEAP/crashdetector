@@ -29,7 +29,8 @@ import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
  * Expone hooks de apariencia: ruta/tamaño de imagen, color de separador,
  * opacidad, etc.
  *
- * La implementación concreta (p. ej. DemonSlayers) se centra en APARIENCIA y LAYOUT.
+ * La implementación concreta (p. ej. DemonSlayers) se centra en APARIENCIA y
+ * LAYOUT.
  */
 public abstract class TodosQuickFixesGUI extends JScrollPane implements CrashDetectorGUI {
 
@@ -38,13 +39,13 @@ public abstract class TodosQuickFixesGUI extends JScrollPane implements CrashDet
 	/** Mantener este registro de GUIs (no eliminar). */
 	public static Map<String, Supplier<TodosQuickFixesGUI>> GUIS = new HashMap<String, Supplier<TodosQuickFixesGUI>>();
 
-	// ====== Estructura técnica (ahora vacía, se inicializa en la implementación concreta) ======
+	// ====== Estructura técnica (ahora vacía, se inicializa en la implementación
+	// concreta) ======
 	protected JPanel panelContenedor; // donde van los ElementoQuickFix
 	protected JPanel piePanel; // «pie» fijo al final con UNA imagen
 
 	// ====== CAMPOS DE COLOR CONFIGURABLES (ahora públicos) ======
-	public ConfigColor colorSeparador  = ConfigColor.de("quickfix_separador", java.awt.Color.LIGHT_GRAY);
-
+	public ConfigColor colorSeparador = ConfigColor.de("quickfix_separador", java.awt.Color.LIGHT_GRAY);
 
 	// ====== API pública ======
 

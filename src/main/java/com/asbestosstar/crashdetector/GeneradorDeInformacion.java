@@ -15,6 +15,7 @@ import javax.net.ssl.SSLException;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
+import com.asbestosstar.crashdetector.api_sito_registro.APIdeSitioDeRegistro;
 import com.asbestosstar.crashdetector.api_sito_registro.DemasiadoGrande;
 import com.asbestosstar.crashdetector.api_sito_registro.ErrorConPublicar;
 import com.asbestosstar.crashdetector.api_sito_registro.NoAPIdeRegistro;
@@ -78,24 +79,50 @@ public class GeneradorDeInformacion {
 			cons.append("<center>").append(MonitorDePID.idioma.ubicacionesDeLogs()).append("<br>");
 
 			for (Consola co : consolas) {
-				cons.append("<a href='").append(co.obtainerEnlance()).append("'><font color='")
-						.append(Config.obtenerInstancia().obtenerColorEnlace()).append("'>") // Link color
-						.append(co.obtenerRutaParaPublicar().trim()).append("</font></a><br>");
+				// Para cada consola, obtener TODAS las partes
+				java.util.List<String> enlaces = obtenerEnlacesDeConsola(co);
+				String nombre = (co.archivo != null) ? co.archivo.toString().trim() : "log.txt";
+
+				if (enlaces.size() == 1) {
+					cons.append("<a href='").append(enlaces.get(0)).append("'><font color='")
+							.append(Config.obtenerInstancia().obtenerColorEnlace()).append("'>").append(nombre)
+							.append("</font></a><br>");
+				} else {
+					// Varios enlaces: mostrar "nombre (parte 1), (parte 2), ..."
+					cons.append("<span><font color='").append(Config.obtenerInstancia().obtenerColorEnlace())
+							.append("'>").append(nombre).append("</font>: ");
+					for (int i = 0; i < enlaces.size(); i++) {
+						String url = enlaces.get(i);
+						cons.append("<a href='").append(url).append("'>").append("(p ").append(String.valueOf(i + 1))
+								.append(")").append("</a>");
+						if (i < enlaces.size() - 1)
+							cons.append(" ");
+					}
+					cons.append("</span><br>");
+				}
 			}
 			cons.append(generarTextoArcoiris("Feliz mes del orgullo"));
 			cons.append("</center>");
 
 			String pantilla = MonitorDePID.leer_archivo(MonitorDePID.carpeta.resolve("pantilla.htm"));
-			String ret = enviarInforme(pantilla.replace("{constructor}",
-					cons.toString() + "<br>" + MonitorDePID.idioma.infoDeVerificaciones() + "<br>"
-							+ MonitorDePID.contenidoInforme.toString() + imagenesParaCompartir()).replace("{mensaje_ayudar}", MonitorDePID.idioma.mensajeAyudar()));
+			String ret = enviarInforme(pantilla
+					.replace("{constructor}",
+							cons.toString() + "<br>" + MonitorDePID.idioma.infoDeVerificaciones() + "<br>"
+									+ MonitorDePID.contenidoInforme.toString() + imagenesParaCompartir())
+					.replace("{mensaje_ayudar}", MonitorDePID.idioma.mensajeAyudar()));
 			CrashDetectorLogger.log(ret);
 			return ret;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			CrashDetectorLogger.logException(e);
 			return null;
 		}
+	}
+
+	// A) NUEVO: devuelve una lista de enlaces (una por parte)
+	public static java.util.List<String> obtenerEnlacesDeConsola(Consola consola)
+			throws DemasiadoGrande, ErrorConPublicar, NoAPIdeRegistro {
+		APIdeSitioDeRegistro api = APIdeSitioDeRegistro.obtenerAPIdeConfig();
+		return api.publicarRegistroEnPartes(consola);
 	}
 
 	public static String imagenesParaCompartir() {

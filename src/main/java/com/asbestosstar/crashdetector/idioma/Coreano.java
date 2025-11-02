@@ -3498,418 +3498,385 @@ public class Coreano implements Idioma {
 				+ "  모드팩 제작자나 기관이라면 <code>crash_detector/plantilla.htm</code> 파일을 수정하여 " + "  팀 전용 링크를 맞춤 설정할 수 있습니다."
 				+ "</div>";
 	}
-	
+
 	@Override
 	public String restablecerPlantilla() {
-	    return "템플릿 초기화";
+		return "템플릿 초기화";
 	}
 
 	@Override
 	public String restablecer() {
-	    return "초기화";
+		return "초기화";
 	}
 
 	@Override
 	public String restablecerImagenMensjae(String nombreImagen) {
-	    return nombreImagen + "을(를) 기본값으로 초기화하시겠습니까?";
+		return nombreImagen + "을(를) 기본값으로 초기화하시겠습니까?";
 	}
 
 	@Override
 	public String restablecerPlantillaMensaje() {
-	    return "템플릿을 기본값으로 초기화하시겠습니까?";
+		return "템플릿을 기본값으로 초기화하시겠습니까?";
 	}
-	
+
 	@Override
 	public String faltar_de_clases_azurelib() {
-	    return "<b style='color:#" + config.obtenerColorError()
-	           + "'>AzureLib 클래스가 누락되었습니다. 이미 AzureLib이 있다면, 2025년 10월 8일 이전 버전을 설치하세요. 흔히 발생하는 문제입니다. AzureLib이 없다면 최신 버전을 설치하세요.</b>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>AzureLib 클래스가 누락되었습니다. 이미 AzureLib이 있다면, 2025년 10월 8일 이전 버전을 설치하세요. 흔히 발생하는 문제입니다. AzureLib이 없다면 최신 버전을 설치하세요.</b>";
 	}
-	
+
 	@Override
 	public String errorHealightINT() {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "모드 <code>healight</code> 가 치명적인 오류를 발생시키고 있습니다: <code>java.lang.NoSuchFieldError: INT</code>. "
-	           + "이 오류는 모드가 MCForge 47.10 이상의 마인크래프트 1.20+ 버전에서는 더 이상 존재하지 않는 필드에 접근하려 할 때 발생합니다. "
-	           + "이 문제로 인해 게임을 시작할 수 없습니다.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>"
+				+ "모드 <code>healight</code> 가 치명적인 오류를 발생시키고 있습니다: <code>java.lang.NoSuchFieldError: INT</code>. "
+				+ "이 오류는 모드가 MCForge 47.10 이상의 마인크래프트 1.20+ 버전에서는 더 이상 존재하지 않는 필드에 접근하려 할 때 발생합니다. "
+				+ "이 문제로 인해 게임을 시작할 수 없습니다.</b>";
 	}
 
 	@Override
 	public String solucionHealightINT() {
-	    return "• 모드 <code>healight</code> 를 삭제하거나 업데이트하세요. "
-	           + "현재 버전은 1.20.1용 MinecraftForge 47.10과 호환되지 않습니다. "
-	           + "모드의 최신 버전을 찾거나 대체 옵션을 고려하세요.";
+		return "• 모드 <code>healight</code> 를 삭제하거나 업데이트하세요. " + "현재 버전은 1.20.1용 MinecraftForge 47.10과 호환되지 않습니다. "
+				+ "모드의 최신 버전을 찾거나 대체 옵션을 고려하세요.";
 	}
 
 	@Override
 	public String nombreErrorHealightINT() {
-	    return "치명적 오류: healight - 'INT' 필드를 찾을 수 없음";
+		return "치명적 오류: healight - 'INT' 필드를 찾을 수 없음";
 	}
-	
+
 	@Override
-	public String errorMetodoAbstractoNoImplementadoDetallado(String clase, String metodo, String interfaz, String origen) {
-	    String colorError = config.obtenerColorError();
-	    StringBuilder sb = new StringBuilder();
-	    sb.append("<b style='color:#").append(colorError).append(";'>")
-	      .append("클래스 <code>").append(clase).append("</code>가 다음 필수 메서드를 구현하지 않았습니다:<br>")
-	      .append("<code>").append(metodo).append("</code><br>")
-	      .append("인터페이스 <code>").append(interfaz).append("</code>에서 정의됨.");
+	public String errorMetodoAbstractoNoImplementadoDetallado(String clase, String metodo, String interfaz,
+			String origen) {
+		String colorError = config.obtenerColorError();
+		StringBuilder sb = new StringBuilder();
+		sb.append("<b style='color:#").append(colorError).append(";'>").append("클래스 <code>").append(clase)
+				.append("</code>가 다음 필수 메서드를 구현하지 않았습니다:<br>").append("<code>").append(metodo).append("</code><br>")
+				.append("인터페이스 <code>").append(interfaz).append("</code>에서 정의됨.");
 
-	    if (!origen.isEmpty()) {
-	        sb.append("<br><br>의심되는 모드 또는 파일: <code>").append(origen).append("</code>.");
-	    }
+		if (!origen.isEmpty()) {
+			sb.append("<br><br>의심되는 모드 또는 파일: <code>").append(origen).append("</code>.");
+		}
 
-	    sb.append("</b>");
-	    return sb.toString();
+		sb.append("</b>");
+		return sb.toString();
 	}
 
 	@Override
 	public String solucionMetodoAbstractoNoImplementado() {
-	    return "• 이 오류는 모드가 인터페이스를 구현하지만 필수 메서드를 생략할 때 발생합니다. "
-	           + "<b>두 모드 모두</b> 업데이트하세요 (인터페이스를 정의하는 모드와 이를 구현하는 모드). "
-	           + "어떤 모드인지 모르겠다면 오류 메시지에 나타난 이름을 찾아보세요.";
+		return "• 이 오류는 모드가 인터페이스를 구현하지만 필수 메서드를 생략할 때 발생합니다. "
+				+ "<b>두 모드 모두</b> 업데이트하세요 (인터페이스를 정의하는 모드와 이를 구현하는 모드). " + "어떤 모드인지 모르겠다면 오류 메시지에 나타난 이름을 찾아보세요.";
 	}
 
 	@Override
 	public String nombreErrorMetodoAbstractoNoImplementado() {
-	    return "구현되지 않은 인터페이스 메서드 (AbstractMethodError)";
+		return "구현되지 않은 인터페이스 메서드 (AbstractMethodError)";
 	}
-	
+
 	@Override
 	public String errorMetadataAnimacionEnServidor() {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "모드가 <b>전용 서버</b>에서 <b>클라이언트 측</b> 클래스인 "
-	           + "(<code>AnimationMetadataSection</code>)를 로드하려 시도하고 있으나, 이는 불가능합니다. "
-	           + "이 오류는 모드가 클라이언트와 서버 코드를 제대로 분리하지 않았을 때 자주 발생합니다. "
-	           + "<code>ModernFix</code>가 설치되어 있으면 이 문제를 드러낼 수 있지만, 직접적인 원인은 아닙니다.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>" + "모드가 <b>전용 서버</b>에서 <b>클라이언트 측</b> 클래스인 "
+				+ "(<code>AnimationMetadataSection</code>)를 로드하려 시도하고 있으나, 이는 불가능합니다. "
+				+ "이 오류는 모드가 클라이언트와 서버 코드를 제대로 분리하지 않았을 때 자주 발생합니다. "
+				+ "<code>ModernFix</code>가 설치되어 있으면 이 문제를 드러낼 수 있지만, 직접적인 원인은 아닙니다.</b>";
 	}
 
 	@Override
 	public String solucionErrorMetadataAnimacionEnServidor() {
-	    return "• <b>빠른 해결책:</b> <code>ModernFix</code>를 임시로 제거하여 서버가 시작되는지 확인하세요. "
-	           + "시작된다면 문제는 다른 모드가 서버에 클라이언트 클래스를 로드하고 있기 때문입니다.<br>"
-	           + "• <b>영구적 해결책:</b> 문제의 원인이 되는 모드(애니메이션 리소스, 맞춤 텍스처 또는 그래픽 라이브러리를 사용하는 모드)를 찾아 업데이트하거나 삭제하세요.<br>";
+		return "• <b>빠른 해결책:</b> <code>ModernFix</code>를 임시로 제거하여 서버가 시작되는지 확인하세요. "
+				+ "시작된다면 문제는 다른 모드가 서버에 클라이언트 클래스를 로드하고 있기 때문입니다.<br>"
+				+ "• <b>영구적 해결책:</b> 문제의 원인이 되는 모드(애니메이션 리소스, 맞춤 텍스처 또는 그래픽 라이브러리를 사용하는 모드)를 찾아 업데이트하거나 삭제하세요.<br>";
 	}
 
 	@Override
 	public String nombreErrorMetadataAnimacionEnServidor() {
-	    return "서버에서 클라이언트 클래스 로드됨 (AnimationMetadataSection)";
+		return "서버에서 클라이언트 클래스 로드됨 (AnimationMetadataSection)";
 	}
-	
+
 	@Override
 	public String errorConfiguracionConnectorCorrupta() {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "<code>Sinytra Connector</code> 모드의 설정 파일이 손상되었습니다. "
-	           + "게임이 예기치 않게 종료되거나, 쓰기 오류, 모드 충돌로 인해 파일에 널 문자(<code>\\u0000</code>)가 가득 차는 경우 이 문제가 발생합니다.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>"
+				+ "<code>Sinytra Connector</code> 모드의 설정 파일이 손상되었습니다. "
+				+ "게임이 예기치 않게 종료되거나, 쓰기 오류, 모드 충돌로 인해 파일에 널 문자(<code>\\u0000</code>)가 가득 차는 경우 이 문제가 발생합니다.</b>";
 	}
 
 	@Override
 	public String solucionConfiguracionConnectorCorrupta() {
-	    return "• 마인크래프트 인스턴스의 <code>config/</code> 폴더로 이동하세요.<br>"
-	           + "• connector 관련 모드의 설정 파일을 찾아 삭제하세요.<br>"
-	           + "• 게임을 다시 시작하세요: Sinytra Connector가 새롭고 깨끗한 설정 파일을 생성할 것입니다.";
+		return "• 마인크래프트 인스턴스의 <code>config/</code> 폴더로 이동하세요.<br>" + "• connector 관련 모드의 설정 파일을 찾아 삭제하세요.<br>"
+				+ "• 게임을 다시 시작하세요: Sinytra Connector가 새롭고 깨끗한 설정 파일을 생성할 것입니다.";
 	}
 
 	@Override
 	public String nombreErrorConfiguracionConnectorCorrupta() {
-	    return "Sinytra Connector 설정 손상";
+		return "Sinytra Connector 설정 손상";
 	}
-	
+
 	@Override
 	public String errorJarCorruptoConNombre(String nombreJar) {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "파일 <code>" + nombreJar + "</code>이(가) 손상되었거나 불완전합니다.<br>"
-	           + "ZIP 파일의 마지막 헤더가 누락되어 시스템이 내용을 읽을 수 없습니다.<br>"
-	           + "이 오류는 일반적으로 다운로드 중단이나 런처 오류 후에 발생합니다.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>" + "파일 <code>" + nombreJar
+				+ "</code>이(가) 손상되었거나 불완전합니다.<br>" + "ZIP 파일의 마지막 헤더가 누락되어 시스템이 내용을 읽을 수 없습니다.<br>"
+				+ "이 오류는 일반적으로 다운로드 중단이나 런처 오류 후에 발생합니다.</b>";
 	}
 
 	@Override
 	public String nombreErrorJarCorruptoConNombre() {
-	    return "손상된 JAR 파일 (특정 이름 포함)";
+		return "손상된 JAR 파일 (특정 이름 포함)";
 	}
 
 	@Override
 	public String solucionJarCorrupto() {
-	    return "• <b>손상된 파일을 삭제</b>하고 공식 출처(CurseForge, MinecraftStorage 등)에서 다시 다운로드하세요.<br>"
-	           + "• CurseForge, Technic 또는 Luna Pixel 같은 런처를 사용한다면, "
-	           + "파일 무결성을 더 잘 검사하는 <b>ATLauncher</b> 또는 <b>Prism Launcher</b>로 전환하는 것을 고려하세요.<br>"
-	           + "• 다운로드 중 인터넷 연결이 안정적인지 확인하세요.";
+		return "• <b>손상된 파일을 삭제</b>하고 공식 출처(CurseForge, MinecraftStorage 등)에서 다시 다운로드하세요.<br>"
+				+ "• CurseForge, Technic 또는 Luna Pixel 같은 런처를 사용한다면, "
+				+ "파일 무결성을 더 잘 검사하는 <b>ATLauncher</b> 또는 <b>Prism Launcher</b>로 전환하는 것을 고려하세요.<br>"
+				+ "• 다운로드 중 인터넷 연결이 안정적인지 확인하세요.";
 	}
-	
+
 	@Override
 	public String errorCargaNBTMundoCorruptoConByte(String byteCorrupto) {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "세계를 불러올 수 없습니다. NBT 파일 중 하나가 손상되었기 때문입니다 "
-	           + "(예: <code>level.dat</code>, <code>playerdata/*.dat</code>, 또는 청크 데이터).<br>"
-	           + "구체적인 오류는 다음과 같습니다: <code>UTFDataFormatException: 바이트 " + byteCorrupto + " 근처에서 잘못된 입력 형식</code>.<br><br>"
-	           + "<b style='color:#" + config.obtenerColorAdvertencia() + ";'>"
-	           + "⚠️ 복구 시도 전에 반드시 세계 폴더 전체를 백업하세요.</b><br><br>"
-	           + "손상된 파일은 <b>NBT 편집기</b>(예: <a href='https://github.com/tryashtar/nbt-studio'>NBT Studio</a>)를 사용해 복구할 수 있습니다.<br>"
-	           + "심각하게 손상된 경우, <b>헥사 에디터</b>(HxD 등)로 무효 바이트를 검사하고 수정할 수 있습니다 "
-	           + "(단, NBT 형식에 익숙한 경우에만 권장).<br>"
-	           + "마지막 수단으로 백업본에서 복원하거나, <code>FTB Backup</code> 등의 MOD에서 제공하는 '월드 복구' 기능을 사용하세요.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>" + "세계를 불러올 수 없습니다. NBT 파일 중 하나가 손상되었기 때문입니다 "
+				+ "(예: <code>level.dat</code>, <code>playerdata/*.dat</code>, 또는 청크 데이터).<br>"
+				+ "구체적인 오류는 다음과 같습니다: <code>UTFDataFormatException: 바이트 " + byteCorrupto
+				+ " 근처에서 잘못된 입력 형식</code>.<br><br>" + "<b style='color:#" + config.obtenerColorAdvertencia() + ";'>"
+				+ "⚠️ 복구 시도 전에 반드시 세계 폴더 전체를 백업하세요.</b><br><br>"
+				+ "손상된 파일은 <b>NBT 편집기</b>(예: <a href='https://github.com/tryashtar/nbt-studio'>NBT Studio</a>)를 사용해 복구할 수 있습니다.<br>"
+				+ "심각하게 손상된 경우, <b>헥사 에디터</b>(HxD 등)로 무효 바이트를 검사하고 수정할 수 있습니다 " + "(단, NBT 형식에 익숙한 경우에만 권장).<br>"
+				+ "마지막 수단으로 백업본에서 복원하거나, <code>FTB Backup</code> 등의 MOD에서 제공하는 '월드 복구' 기능을 사용하세요.</b>";
 	}
 
 	@Override
 	public String solucionErrorCargaNBTMundoCorrupto() {
-	    return "• <b>복구 시도 전에 세계 폴더를 완전히 백업하세요</b>.<br>"
-	           + "• NBT 편집기(NBT Studio 등)를 사용하여 손상된 파일을 열고 수정하세요.<br>"
-	           + "• 실패하면 헥사 에디터로 손상된 바이트 위치를 확인하세요.<br>"
-	           + "• 경험이 없다면 최근 백업본에서 복원하세요.";
+		return "• <b>복구 시도 전에 세계 폴더를 완전히 백업하세요</b>.<br>" + "• NBT 편집기(NBT Studio 등)를 사용하여 손상된 파일을 열고 수정하세요.<br>"
+				+ "• 실패하면 헥사 에디터로 손상된 바이트 위치를 확인하세요.<br>" + "• 경험이 없다면 최근 백업본에서 복원하세요.";
 	}
 
 	@Override
 	public String nombreErrorCargaNBTMundoCorrupto() {
-	    return "세계 손상: NBT 데이터 로드 오류";
+		return "세계 손상: NBT 데이터 로드 오류";
 	}
-	
+
 	@Override
 	public String problema_con_openAL() {
-	    return "<span style='color:#" + config.obtenerColorError()
-	           + "'>OpenAL에 문제가 있습니다. 가끔 Nouveau 드라이버가 원인일 수 있지만, 때로는 애플리케이션의 OpenAL 버전이 배포판의 버전과 호환되지 않아 배포판에서 제공하는 버전을 사용해야 할 수도 있습니다. 더 많은 도움을 받으려면 다음 가이드를 참조하세요: <a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>리눅스에서 마인크래프트 사운드 문제 해결 방법</a>.</span>";
+		return "<span style='color:#" + config.obtenerColorError()
+				+ "'>OpenAL에 문제가 있습니다. 가끔 Nouveau 드라이버가 원인일 수 있지만, 때로는 애플리케이션의 OpenAL 버전이 배포판의 버전과 호환되지 않아 배포판에서 제공하는 버전을 사용해야 할 수도 있습니다. 더 많은 도움을 받으려면 다음 가이드를 참조하세요: <a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>리눅스에서 마인크래프트 사운드 문제 해결 방법</a>.</span>";
 	}
-	
+
 	@Override
 	public String errorArchivoBloqueadoPorOtroProceso() {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "서버를 시작할 수 없습니다. 세계의 파일이 다른 프로세스에 의해 잠겨 있기 때문입니다.<br>"
-	           + "다음과 같은 경우에 발생합니다:<br>"
-	           + "• 이미 서버 인스턴스가 실행 중입니다.<br>"
-	           + "• 바이러스 백신 프로그램이나 파일 탐색기가 세계 폴더를 열고 있습니다.<br>"
-	           + "• 이전 프로세스가 정상적으로 종료되지 않아 파일이 잠긴 상태입니다.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>"
+				+ "서버를 시작할 수 없습니다. 세계의 파일이 다른 프로세스에 의해 잠겨 있기 때문입니다.<br>" + "다음과 같은 경우에 발생합니다:<br>"
+				+ "• 이미 서버 인스턴스가 실행 중입니다.<br>" + "• 바이러스 백신 프로그램이나 파일 탐색기가 세계 폴더를 열고 있습니다.<br>"
+				+ "• 이전 프로세스가 정상적으로 종료되지 않아 파일이 잠긴 상태입니다.</b>";
 	}
 
 	@Override
 	public String solucionErrorArchivoBloqueadoPorOtroProceso() {
-	    return "• <b>모든 서버 인스턴스를 종료하세요</b> (javaw.exe와 같은 백그라운드 프로세스 포함).<br>"
-	           + "• 호스팅 패널(Multicraft 등)을 사용한다면 패널에서 서버를 완전히 재시작하세요.<br>"
-	           + "• 파일을 잠그고 있다고 의심되면 <b>바이러스 백신을 일시적으로 비활성화하세요</b>.<br>"
-	           + "• 로컬 시스템에서는 세계 폴더를 표시하는 모든 Windows 탐색기 창을 닫으세요.<br>"
-	           + "• 문제가 지속되면, 세계 폴더 내부의 <code>session.lock</code> 파일을 수동으로 삭제하세요 (다른 서버가 실행 중이지 않다는 확신이 있을 때만).";
+		return "• <b>모든 서버 인스턴스를 종료하세요</b> (javaw.exe와 같은 백그라운드 프로세스 포함).<br>"
+				+ "• 호스팅 패널(Multicraft 등)을 사용한다면 패널에서 서버를 완전히 재시작하세요.<br>"
+				+ "• 파일을 잠그고 있다고 의심되면 <b>바이러스 백신을 일시적으로 비활성화하세요</b>.<br>"
+				+ "• 로컬 시스템에서는 세계 폴더를 표시하는 모든 Windows 탐색기 창을 닫으세요.<br>"
+				+ "• 문제가 지속되면, 세계 폴더 내부의 <code>session.lock</code> 파일을 수동으로 삭제하세요 (다른 서버가 실행 중이지 않다는 확신이 있을 때만).";
 	}
 
 	@Override
 	public String nombreErrorArchivoBloqueadoPorOtroProceso() {
-	    return "다른 프로세스에 의해 잠긴 세계 파일";
+		return "다른 프로세스에 의해 잠긴 세계 파일";
 	}
-	
+
 	@Override
 	public String errorClaseFinalExtendida(String claseHija, String clasePadreFinal) {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "모드가 <code>" + clasePadreFinal + "</code> 클래스를 확장하려 했지만, "
-	           + "이 클래스는 이제 <b>final</b>로 설정되어 상속할 수 없습니다.<br>"
-	           + "문제가 있는 클래스는: <code>" + claseHija + "</code>입니다.<br><br>"
-	           + "이는 일반적으로 모드가 마인크래프트 또는 다른 기본 모드의 이전 버전용으로 컴파일되었으며, "
-	           + "해당 기본 모드가 최근 버전에서 특정 클래스를 <code>final</code>로 지정한 경우에 발생합니다.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>" + "모드가 <code>" + clasePadreFinal
+				+ "</code> 클래스를 확장하려 했지만, " + "이 클래스는 이제 <b>final</b>로 설정되어 상속할 수 없습니다.<br>" + "문제가 있는 클래스는: <code>"
+				+ claseHija + "</code>입니다.<br><br>" + "이는 일반적으로 모드가 마인크래프트 또는 다른 기본 모드의 이전 버전용으로 컴파일되었으며, "
+				+ "해당 기본 모드가 최근 버전에서 특정 클래스를 <code>final</code>로 지정한 경우에 발생합니다.</b>";
 	}
 
 	@Override
 	public String solucionErrorClaseFinalExtendida() {
-	    return "• <b>관련된 모든 모드를 업데이트하세요</b>, 특히 언급된 기본 모드와 관련이 있을 수 있는 모드들.<br>"
-	           + "• 문제가 지속되면 현재 마인크래프트 버전과 종속성과 호환되는 모드 버전을 찾아보세요.<br>"
-	           + "• 일부 경우, 자식 클래스를 포함한 모드를 일시적으로 제거하면 원인을 확인할 수 있습니다.";
+		return "• <b>관련된 모든 모드를 업데이트하세요</b>, 특히 언급된 기본 모드와 관련이 있을 수 있는 모드들.<br>"
+				+ "• 문제가 지속되면 현재 마인크래프트 버전과 종속성과 호환되는 모드 버전을 찾아보세요.<br>"
+				+ "• 일부 경우, 자식 클래스를 포함한 모드를 일시적으로 제거하면 원인을 확인할 수 있습니다.";
 	}
 
 	@Override
 	public String nombreErrorClaseFinalExtendida() {
-	    return "final 클래스 상속 시도";
+		return "final 클래스 상속 시도";
 	}
-	
+
 	@Override
 	public String errorRubidiumObsoletoConIris() {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "<b>Rubidium</b>(포지용 소듐 포크 중 폐기된 버전)을 <b>Iris 또는 Oculus</b>와 함께 사용하고 있습니다.<br>"
-	           + "최근 마인크래프트 버전(1.19.2 이상)에서 "
-	           + "Rubidium은 소듐의 업데이트를 따라가지 못했고 관련 모드에 문제가 발생했습니다.<br><br>"
-	           + "성능 향상 모드(Sodium, Rubidium, Embeddium, Bedium, Xeonium 등) 또는 Iris Shaders가 다른 모드와 충돌할 때도 이 오류가 발생할 수 있습니다.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>"
+				+ "<b>Rubidium</b>(포지용 소듐 포크 중 폐기된 버전)을 <b>Iris 또는 Oculus</b>와 함께 사용하고 있습니다.<br>"
+				+ "최근 마인크래프트 버전(1.19.2 이상)에서 " + "Rubidium은 소듐의 업데이트를 따라가지 못했고 관련 모드에 문제가 발생했습니다.<br><br>"
+				+ "성능 향상 모드(Sodium, Rubidium, Embeddium, Bedium, Xeonium 등) 또는 Iris Shaders가 다른 모드와 충돌할 때도 이 오류가 발생할 수 있습니다.</b>";
 	}
 
 	@Override
 	public String solucionRubidiumObsoletoConIris() {
-	    return "• <b>mods</b> 폴더에서 <b>Rubidium을 제거하세요</b>.<br>"
-	           + "• <b><a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a>을 설치하세요</b>, "
-	           + "이것은 1.20+ 버전에서 Iris/Oculus를 지원하는, 포지용으로 활발히 유지보수되는 소듐 포크입니다.<br>"
-	           + "• 동시에 여러 개의 소듐 포크를 설치하지 않도록 하세요(Rubidium과 Embeddium 같이 설치 금지).<br>"
-	           + "• Iris 대신 Oculus를 사용한다면, 그것도 당신의 포지 및 Embeddium 버전과 호환되는지 확인하세요.";
+		return "• <b>mods</b> 폴더에서 <b>Rubidium을 제거하세요</b>.<br>"
+				+ "• <b><a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a>을 설치하세요</b>, "
+				+ "이것은 1.20+ 버전에서 Iris/Oculus를 지원하는, 포지용으로 활발히 유지보수되는 소듐 포크입니다.<br>"
+				+ "• 동시에 여러 개의 소듐 포크를 설치하지 않도록 하세요(Rubidium과 Embeddium 같이 설치 금지).<br>"
+				+ "• Iris 대신 Oculus를 사용한다면, 그것도 당신의 포지 및 Embeddium 버전과 호환되는지 확인하세요.";
 	}
 
 	@Override
 	public String nombreErrorRubidiumObsoletoConIris() {
-	    return "사용 중단된 Rubidium과 Iris/Oculus 함께 사용 (OptionInstance는 final임)";
+		return "사용 중단된 Rubidium과 Iris/Oculus 함께 사용 (OptionInstance는 final임)";
 	}
-	
+
 	@Override
 	public String errorVoiceChatPuertoOcupado() {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "لا يمكن للتعديل <code>Simple Voice Chat</code> تشغيل خادم الصوت الخاص به لأن "
-	           + "منفذ UDP مستخدم بالفعل أو عنوان IP المُعد غير صالح.<br>"
-	           + "هذا لا يمنع بدء اللعبة، لكنه يعطل وظيفة الدردشة الصوتية.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>"
+				+ "لا يمكن للتعديل <code>Simple Voice Chat</code> تشغيل خادم الصوت الخاص به لأن "
+				+ "منفذ UDP مستخدم بالفعل أو عنوان IP المُعد غير صالح.<br>"
+				+ "هذا لا يمنع بدء اللعبة، لكنه يعطل وظيفة الدردشة الصوتية.</b>";
 	}
 
 	@Override
 	public String solucionErrorVoiceChatPuertoOcupado() {
-	    return "• <b>أغلق أي نسخة أخرى من ماينكرافت</b> أو تطبيق يستخدم المنفذ UDP 24454.<br>"
-	           + "• إذا كنت على خادم، تأكد من أن <b>أي خدمة أخرى</b> لا تستخدم هذا المنفذ.<br>"
-	           + "• في إعدادات التعديل (<code>config/voicechat/</code>)، غيّر منفذ UDP إلى منفذ حر (مثلاً 24455).<br>"
-	           + "• إذا كنت تستخدم عنوان IP مخصصًا، فتحقق من صحته أو اتركه فارغًا لاستخدام الإعداد الافتراضي.";
+		return "• <b>أغلق أي نسخة أخرى من ماينكرافت</b> أو تطبيق يستخدم المنفذ UDP 24454.<br>"
+				+ "• إذا كنت على خادم، تأكد من أن <b>أي خدمة أخرى</b> لا تستخدم هذا المنفذ.<br>"
+				+ "• في إعدادات التعديل (<code>config/voicechat/</code>)، غيّر منفذ UDP إلى منفذ حر (مثلاً 24455).<br>"
+				+ "• إذا كنت تستخدم عنوان IP مخصصًا، فتحقق من صحته أو اتركه فارغًا لاستخدام الإعداد الافتراضي.";
 	}
 
 	@Override
 	public String nombreErrorVoiceChatPuertoOcupado() {
-	    return "الدردشة الصوتية: منفذ UDP مشغول أو عنوان IP غير صالح";
+		return "الدردشة الصوتية: منفذ UDP مشغول أو عنوان IP غير صالح";
 	}
-	
+
 	@Override
 	public String errorBlockItemNuloCreate(String nombreBlockItem) {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "블록 아이템 <code>" + nombreBlockItem + "</code>이(가) 블록을 null로 참조하고 있습니다.<br>"
-	           + "이 오류는 일반적으로 <b>Create 애드온</b>(예: <code>dndecor</code>, <code>createdeco</code>)에서 발생하며, "
-	           + "<code>Amendments</code>, <code>Moonshine</code>과의 충돌 또는 블록 초기화 오류로 인해 나타납니다.<br>"
-	           + "<b>참고:</b> 이 오류는 Amendments 자체의 문제가 아니라 등록 로드 과정의 더 깊은 문제를 나타냅니다.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>" + "블록 아이템 <code>" + nombreBlockItem
+				+ "</code>이(가) 블록을 null로 참조하고 있습니다.<br>"
+				+ "이 오류는 일반적으로 <b>Create 애드온</b>(예: <code>dndecor</code>, <code>createdeco</code>)에서 발생하며, "
+				+ "<code>Amendments</code>, <code>Moonshine</code>과의 충돌 또는 블록 초기화 오류로 인해 나타납니다.<br>"
+				+ "<b>참고:</b> 이 오류는 Amendments 자체의 문제가 아니라 등록 로드 과정의 더 깊은 문제를 나타냅니다.</b>";
 	}
 
 	@Override
 	public String solucionErrorBlockItemNuloCreate() {
-	    return "• <b>관련된 모든 모드를 업데이트하세요:</b> Create, Amendments, Moonshine 및 모든 애드온(<code>dndecor</code>, <code>createdeco</code> 포함).<br>"
-	           + "• 문제가 지속되면 <b>Create 애드온을 일시적으로 하나씩 제거</b>하여 원인을 찾아보세요.<br>"
-	           + "• <b>Amendments와 Moonshine이 사용 중인 Create 및 Forge 버전과 호환되는지</b> 확인하세요.<br>"
-	           + "• 문제가 있는 애드온의 베타 버전이나 최신 포크가 있는지 확인하세요.";
+		return "• <b>관련된 모든 모드를 업데이트하세요:</b> Create, Amendments, Moonshine 및 모든 애드온(<code>dndecor</code>, <code>createdeco</code> 포함).<br>"
+				+ "• 문제가 지속되면 <b>Create 애드온을 일시적으로 하나씩 제거</b>하여 원인을 찾아보세요.<br>"
+				+ "• <b>Amendments와 Moonshine이 사용 중인 Create 및 Forge 버전과 호환되는지</b> 확인하세요.<br>"
+				+ "• 문제가 있는 애드온의 베타 버전이나 최신 포크가 있는지 확인하세요.";
 	}
 
 	@Override
 	public String nombreErrorBlockItemNuloCreate() {
-	    return "Create 애드온에서의 null 블록 아이템";
+		return "Create 애드온에서의 null 블록 아이템";
 	}
-	
+
 	@Override
 	public String modIncompatibleConCargadorActivo(List<String> mods) {
-	    StringBuilder sb = new StringBuilder();
-	    sb.append("<b style='color:#").append(config.obtenerColorAdvertencia()).append(";'>")
-	      .append("활성화된 플랫폼(Forge, Fabric 등)에 속하지 않는 모드가 발견되었습니다:<ul>");
-	    for (String mod : mods) {
-	        sb.append("<li><code>").append(mod).append("</code></li>");
-	    }
-	    sb.append("</ul>이 문제는 일반적으로 다음 경우에 발생합니다:<br>")
-	      .append("• 같은 폴더에 <b>Fabric와 Forge</b> 모드를 섞었을 때.<br>")
-	      .append("• Minecraft의 호환되지 않는 버전용 모드를 설치했을 때.<br>")
-	      .append("• 모드가 손상되었거나 유효한 JAR 파일이 아닐 때.</b>");
-	    return sb.toString();
+		StringBuilder sb = new StringBuilder();
+		sb.append("<b style='color:#").append(config.obtenerColorAdvertencia()).append(";'>")
+				.append("활성화된 플랫폼(Forge, Fabric 등)에 속하지 않는 모드가 발견되었습니다:<ul>");
+		for (String mod : mods) {
+			sb.append("<li><code>").append(mod).append("</code></li>");
+		}
+		sb.append("</ul>이 문제는 일반적으로 다음 경우에 발생합니다:<br>").append("• 같은 폴더에 <b>Fabric와 Forge</b> 모드를 섞었을 때.<br>")
+				.append("• Minecraft의 호환되지 않는 버전용 모드를 설치했을 때.<br>").append("• 모드가 손상되었거나 유효한 JAR 파일이 아닐 때.</b>");
+		return sb.toString();
 	}
 
 	@Override
 	public String solucionModIncompatibleConCargadorActivo() {
-	    return "• <b>모든 모드가 동일한 플랫폼용인지 확인하세요</b> (Forge <b>또는</b> Fabric, 둘 다 아님).<br>"
-	           + "• 각 파일이 어떤 플랫폼으로 인식되는지 확인하려면 <b>모드 트리</b>를 사용하세요.<br>"
-	           + "• 알 수 없거나 다른 플랫폼용인 모드는 삭제하세요.<br>"
-	           + "• CurseForge나 Prism 같은 런처를 사용한다면 프로필 설정이 올바른지 확인하세요.";
+		return "• <b>모든 모드가 동일한 플랫폼용인지 확인하세요</b> (Forge <b>또는</b> Fabric, 둘 다 아님).<br>"
+				+ "• 각 파일이 어떤 플랫폼으로 인식되는지 확인하려면 <b>모드 트리</b>를 사용하세요.<br>" + "• 알 수 없거나 다른 플랫폼용인 모드는 삭제하세요.<br>"
+				+ "• CurseForge나 Prism 같은 런처를 사용한다면 프로필 설정이 올바른지 확인하세요.";
 	}
 
 	@Override
 	public String nombreModIncompatibleConCargadorActivo() {
-	    return "활성 로더와 호환되지 않는 모드";
+		return "활성 로더와 호환되지 않는 모드";
 	}
+
 	@Override
 	public String errorCreacionModeloFallida(String modid, String nombreModelo) {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "모델 <code>" + modid + ":" + nombreModelo + "</code>을(를) 생성할 수 없습니다.<br>"
-	           + "이는 모드 <code>" + modid + "</code>의 리소스가 손상되었거나 누락되었거나 "
-	           + "사용 중인 마인크래프트 버전과 호환되지 않음을 의미합니다.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>" + "모델 <code>" + modid + ":" + nombreModelo
+				+ "</code>을(를) 생성할 수 없습니다.<br>" + "이는 모드 <code>" + modid + "</code>의 리소스가 손상되었거나 누락되었거나 "
+				+ "사용 중인 마인크래프트 버전과 호환되지 않음을 의미합니다.</b>";
 	}
 
 	@Override
 	public String solucionErrorCreacionModeloFallida() {
-	    return "• <b>모드를 업데이트하세요</b>, 인스턴스와 호환되는 최신 버전으로.<br>"
-	           + "• 개발 중이거나 사용자 정의된 버전을 사용 중이라면 공식 버전으로 되돌리세요.<br>"
-	           + "• JAR 파일이 손상되지 않았는지 확인하세요(다시 설치).<br>"
-	           + "• 문제가 지속되면 이 로그를 첨부하여 모드 제작자에게 오류를 보고하세요.";
+		return "• <b>모드를 업데이트하세요</b>, 인스턴스와 호환되는 최신 버전으로.<br>" + "• 개발 중이거나 사용자 정의된 버전을 사용 중이라면 공식 버전으로 되돌리세요.<br>"
+				+ "• JAR 파일이 손상되지 않았는지 확인하세요(다시 설치).<br>" + "• 문제가 지속되면 이 로그를 첨부하여 모드 제작자에게 오류를 보고하세요.";
 	}
 
 	@Override
 	public String nombreErrorCreacionModeloFallida() {
-	    return "리소스 모델 생성 실패";
+		return "리소스 모델 생성 실패";
 	}
-	
+
 	@Override
 	public String conflictoMoonlightIceberg() {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "<code>Moonlight</code>과 <code>Iceberg</code> 모드 사이에 치명적인 충돌이 감지되었습니다.<br>"
-	           + "두 모드 모두 자원 재로딩 시스템을 호환되지 않는 방식으로 등록하려 하며, "
-	           + "이는 유효한 그래픽 컨텍스트가 없어 OpenGL 오류를 유발합니다.<br>"
-	           + "이 문제는 Fabric 모드 어댑터를 포함하는 Forge 버전을 사용할 때 흔히 발생합니다.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>"
+				+ "<code>Moonlight</code>과 <code>Iceberg</code> 모드 사이에 치명적인 충돌이 감지되었습니다.<br>"
+				+ "두 모드 모두 자원 재로딩 시스템을 호환되지 않는 방식으로 등록하려 하며, " + "이는 유효한 그래픽 컨텍스트가 없어 OpenGL 오류를 유발합니다.<br>"
+				+ "이 문제는 Fabric 모드 어댑터를 포함하는 Forge 버전을 사용할 때 흔히 발생합니다.</b>";
 	}
 
 	@Override
 	public String solucionConflictoMoonlightIceberg() {
-	    return "• <b>두 모드 모두</b> 현재 Forge 버전과 호환되는 최신 버전으로 업데이트하세요.<br>"
-	           + "• 문제가 지속되면 <b>일시적으로 Iceberg를 제거하세요</b>. Moonlight은 다른 많은 모드의 핵심 종속성인 경우가 많습니다.<br>"
-	           + "• 중복되거나 혼합된 Forge/Fabric 버전을 설치하지 않았는지 확인하세요.<br>"
-	           + "• 다른 모드(Supplementaries, Citadel 등)가 이미 Iceberg 기능을 내장하고 있는지 확인하세요.";
+		return "• <b>두 모드 모두</b> 현재 Forge 버전과 호환되는 최신 버전으로 업데이트하세요.<br>"
+				+ "• 문제가 지속되면 <b>일시적으로 Iceberg를 제거하세요</b>. Moonlight은 다른 많은 모드의 핵심 종속성인 경우가 많습니다.<br>"
+				+ "• 중복되거나 혼합된 Forge/Fabric 버전을 설치하지 않았는지 확인하세요.<br>"
+				+ "• 다른 모드(Supplementaries, Citadel 등)가 이미 Iceberg 기능을 내장하고 있는지 확인하세요.";
 	}
 
 	@Override
 	public String nombreConflictoMoonlightIceberg() {
-	    return "치명적 충돌: Moonlight 대 Iceberg (OpenGL 컨텍스트 없음)";
+		return "치명적 충돌: Moonlight 대 Iceberg (OpenGL 컨텍스트 없음)";
 	}
+
 	@Override
 	public String instantanea() {
-	    return "스냅샷";
+		return "스냅샷";
 	}
 
 	@Override
 	public Object desdeUltimaInstantanea() {
-	    return "마지막 스냅샷 이후";
+		return "마지막 스냅샷 이후";
 	}
 
 	@Override
 	public String seleccionarUnArchivo() {
-	    return "파일 선택";
+		return "파일 선택";
 	}
 
 	@Override
 	public String instantaneaCreadaCorrectamente() {
-	    return "스냅샷이 성공적으로 생성되었습니다";
+		return "스냅샷이 성공적으로 생성되었습니다";
 	}
 
 	@Override
 	public String errorCreandoInstantanea() {
-	    return "스냅샷 생성 중 오류 발생";
+		return "스냅샷 생성 중 오류 발생";
 	}
-	
+
 	@Override
 	public String consejo() {
-	    return "팁";
+		return "팁";
 	}
 
 	@Override
 	public String resultadoMuestra() {
-	    return "결과 보기";
+		return "결과 보기";
 	}
-	
-	
+
 	@Override
 	public String historaDeModsDesc() {
-	    return "<html>" + 
-	           "<body style='font-family: sans-serif; font-size: 12px;'>" +
-	           "  <b>팁:</b> 두 개의 기록 파일을 선택하여 모드 목록을 비교하세요. " +
-	           "  결과는 정규화된 이름을 기준으로 <span style='color:%s;'>추가됨 (+)</span>과 " +
-	           "  <span style='color:%s;'>제거됨 (&#8722;)</span>을 표시합니다. " +
-	           "  '스냅샷' 버튼을 사용하면 기존 파일의 .instantanea 확장자 복사본을 만들 수 있습니다." +
-	           "</body>" + 
-	           "</html>";
+		return "<html>" + "<body style='font-family: sans-serif; font-size: 12px;'>"
+				+ "  <b>팁:</b> 두 개의 기록 파일을 선택하여 모드 목록을 비교하세요. "
+				+ "  결과는 정규화된 이름을 기준으로 <span style='color:%s;'>추가됨 (+)</span>과 "
+				+ "  <span style='color:%s;'>제거됨 (&#8722;)</span>을 표시합니다. "
+				+ "  '스냅샷' 버튼을 사용하면 기존 파일의 .instantanea 확장자 복사본을 만들 수 있습니다." + "</body>" + "</html>";
 	}
-	
+
 	@Override
 	public String texto_de_boton_compartir_markdown() {
-	    return "로그 링크를 마크다운 형식으로 가져오기 (보고서 없음)";
+		return "로그 링크를 마크다운 형식으로 가져오기 (보고서 없음)";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

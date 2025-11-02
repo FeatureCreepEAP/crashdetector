@@ -3596,411 +3596,407 @@ public class Esperanto implements Idioma {
 				+ "  Se vi estas kreinto de modpack aŭ korporacio, redaktu <code>crash_detector/plantilla.htm</code> "
 				+ "  por alĝustigi viajn teamajn ligilojn." + "</div>";
 	}
-	
+
 	@Override
 	public String restablecerPlantilla() {
-	    return "Restarigi ŝablonon";
+		return "Restarigi ŝablonon";
 	}
 
 	@Override
 	public String restablecer() {
-	    return "Restarigi";
+		return "Restarigi";
 	}
 
 	@Override
 	public String restablecerImagenMensjae(String nombreImagen) {
-	    return "Ĉu restarigi " + nombreImagen + " al defaŭltaj valoroj?";
+		return "Ĉu restarigi " + nombreImagen + " al defaŭltaj valoroj?";
 	}
 
 	@Override
 	public String restablecerPlantillaMensaje() {
-	    return "Ĉu restarigi la ŝablonon al defaŭltaj valoroj?";
+		return "Ĉu restarigi la ŝablonon al defaŭltaj valoroj?";
 	}
-	
+
 	@Override
 	public String faltar_de_clases_azurelib() {
-	    return "<b style='color:#" + config.obtenerColorError()
-	           + "'>Mankas klasoj de AzureLib. Se vi jam havas AzureLib, bonvolu instali version antaŭ la 8-a de oktobro 2025. Tio estis komune. Se vi ne havas AzureLib, instalu la aktualan version.</b>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>Mankas klasoj de AzureLib. Se vi jam havas AzureLib, bonvolu instali version antaŭ la 8-a de oktobro 2025. Tio estis komune. Se vi ne havas AzureLib, instalu la aktualan version.</b>";
 	}
 
 	@Override
 	public String errorHealightINT() {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "La aldonaĵo <code>healight</code> kaŭzas gravan eraron: <code>java.lang.NoSuchFieldError: INT</code>. "
-	           + "Tiu eraro okazas ĉar la aldonaĵo provas aliri kampon kiu jam ne ekzistas en MCForge 47.10 por Minecraft 1.20+. "
-	           + "La ludo ne povas lanĉiĝi pro tiu problemo.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>"
+				+ "La aldonaĵo <code>healight</code> kaŭzas gravan eraron: <code>java.lang.NoSuchFieldError: INT</code>. "
+				+ "Tiu eraro okazas ĉar la aldonaĵo provas aliri kampon kiu jam ne ekzistas en MCForge 47.10 por Minecraft 1.20+. "
+				+ "La ludo ne povas lanĉiĝi pro tiu problemo.</b>";
 	}
 
 	@Override
 	public String solucionHealightINT() {
-	    return "• Forigu aŭ ĝisdatigu la aldonaĵon <code>healight</code>. "
-	           + "La nuna versio ne estas kompatibla kun MinecraftForge 47.10 por 1.20.1. "
-	           + "Serĉu pli novan version de la aldonaĵo aŭ pripensu uzon de alternativo.";
+		return "• Forigu aŭ ĝisdatigu la aldonaĵon <code>healight</code>. "
+				+ "La nuna versio ne estas kompatibla kun MinecraftForge 47.10 por 1.20.1. "
+				+ "Serĉu pli novan version de la aldonaĵo aŭ pripensu uzon de alternativo.";
 	}
 
 	@Override
 	public String nombreErrorHealightINT() {
-	    return "Grava eraro: healight - Kampo 'INT' ne trovita";
+		return "Grava eraro: healight - Kampo 'INT' ne trovita";
 	}
-	
+
 	@Override
-	public String errorMetodoAbstractoNoImplementadoDetallado(String clase, String metodo, String interfaz, String origen) {
-	    String colorError = config.obtenerColorError();
-	    StringBuilder sb = new StringBuilder();
-	    sb.append("<b style='color:#").append(colorError).append(";'>")
-	      .append("La klaso <code>").append(clase).append("</code> ne realigas la postulitan metodon:<br>")
-	      .append("<code>").append(metodo).append("</code><br>")
-	      .append("el la interfaceto <code>").append(interfaz).append("</code>.");
+	public String errorMetodoAbstractoNoImplementadoDetallado(String clase, String metodo, String interfaz,
+			String origen) {
+		String colorError = config.obtenerColorError();
+		StringBuilder sb = new StringBuilder();
+		sb.append("<b style='color:#").append(colorError).append(";'>").append("La klaso <code>").append(clase)
+				.append("</code> ne realigas la postulitan metodon:<br>").append("<code>").append(metodo)
+				.append("</code><br>").append("el la interfaceto <code>").append(interfaz).append("</code>.");
 
-	    if (!origen.isEmpty()) {
-	        sb.append("<br><br>Ĉefa afero aŭ dosiero: <code>").append(origen).append("</code>.");
-	    }
+		if (!origen.isEmpty()) {
+			sb.append("<br><br>Ĉefa afero aŭ dosiero: <code>").append(origen).append("</code>.");
+		}
 
-	    sb.append("</b>");
-	    return sb.toString();
+		sb.append("</b>");
+		return sb.toString();
 	}
 
 	@Override
 	public String solucionMetodoAbstractoNoImplementado() {
-	    return "• Tiu eraro okazas kiam aldonaĵo realigas interfaceton sed preterprenas devigan metodon. "
-	           + "Ĝisdatigu <b>ambaŭn aldonaĵojn</b> implikitajn (tiun kiun difinas la interfaceton kai tiun kiun ĝin realigas). "
-	           + "Se vi ne scias kiuj estas, serĉu la nomojn videblajn en la erarmesaĝo.";
+		return "• Tiu eraro okazas kiam aldonaĵo realigas interfaceton sed preterprenas devigan metodon. "
+				+ "Ĝisdatigu <b>ambaŭn aldonaĵojn</b> implikitajn (tiun kiun difinas la interfaceton kai tiun kiun ĝin realigas). "
+				+ "Se vi ne scias kiuj estas, serĉu la nomojn videblajn en la erarmesaĝo.";
 	}
 
 	@Override
 	public String nombreErrorMetodoAbstractoNoImplementado() {
-	    return "Nerealigita Interfaceta Metodo (AbstractMethodError)";
+		return "Nerealigita Interfaceta Metodo (AbstractMethodError)";
 	}
-	
+
 	@Override
 	public String errorMetadataAnimacionEnServidor() {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "Aldonaĵo provas ŝargi klason de la <b>klienta flanko</b> "
-	           + "(<code>AnimationMetadataSection</code>) sur <b>diferencitan servilon</b>, kio estas neebla. "
-	           + "Tiu eraro kutime aperas kiam aldonaĵo ne bone apartigas siajn kodon por kliento kaj servilo. "
-	           + "La ĉeesto de <code>ModernFix</code> povas malkovri tiun problemon, kvankam ĝi ne estas rektan kaŭzon.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>"
+				+ "Aldonaĵo provas ŝargi klason de la <b>klienta flanko</b> "
+				+ "(<code>AnimationMetadataSection</code>) sur <b>diferencitan servilon</b>, kio estas neebla. "
+				+ "Tiu eraro kutime aperas kiam aldonaĵo ne bone apartigas siajn kodon por kliento kaj servilo. "
+				+ "La ĉeesto de <code>ModernFix</code> povas malkovri tiun problemon, kvankam ĝi ne estas rektan kaŭzon.</b>";
 	}
 
 	@Override
 	public String solucionErrorMetadataAnimacionEnServidor() {
-	    return "• <b>Rapida opcio:</b> Forigu tempore <code>ModernFix</code> por konfirmi ĉu la servilo lanĉiĝas. "
-	           + "Se jes, do la problemo estas en alia aldonaĵo kiun ŝargas klientajn klasojn sur servilon.<br>"
-	           + "• <b>Daŭra solvo:</b> Identigu la kulpan aldonaĵon (serĉu aldonaĵojn kun animaciitaj rimedoj, ĉefaj teksturoj aŭ grafikaj bibliotekoj) kai ĝisdatigu aŭ forigu ĝin.<br>";
+		return "• <b>Rapida opcio:</b> Forigu tempore <code>ModernFix</code> por konfirmi ĉu la servilo lanĉiĝas. "
+				+ "Se jes, do la problemo estas en alia aldonaĵo kiun ŝargas klientajn klasojn sur servilon.<br>"
+				+ "• <b>Daŭra solvo:</b> Identigu la kulpan aldonaĵon (serĉu aldonaĵojn kun animaciitaj rimedoj, ĉefaj teksturoj aŭ grafikaj bibliotekoj) kai ĝisdatigu aŭ forigu ĝin.<br>";
 	}
 
 	@Override
 	public String nombreErrorMetadataAnimacionEnServidor() {
-	    return "Client-side class ŝargita sur servilo (AnimationMetadataSection)";
+		return "Client-side class ŝargita sur servilo (AnimationMetadataSection)";
 	}
-	
+
 	@Override
 	public String errorConfiguracionConnectorCorrupta() {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "La agorda dosiero de <code>Sinytra Connector</code>-aldonaĵo estas difektita. "
-	           + "Tio ofte okazas kiam la dosiero plenas per nulaj signoj (<code>\\u0000</code>) "
-	           + "pro neatendita ĉesigo de la ludo, skribaj malsukcesoj aŭ aldonaĵaj konfliktoj.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>"
+				+ "La agorda dosiero de <code>Sinytra Connector</code>-aldonaĵo estas difektita. "
+				+ "Tio ofte okazas kiam la dosiero plenas per nulaj signoj (<code>\\u0000</code>) "
+				+ "pro neatendita ĉesigo de la ludo, skribaj malsukcesoj aŭ aldonaĵaj konfliktoj.</b>";
 	}
 
 	@Override
 	public String solucionConfiguracionConnectorCorrupta() {
-	    return "• Iru al la dosierujon <code>config/</code> de via Minecraft-instanco.<br>"
-	           + "• Serĉu kai forigu la agordojn de connector-aldonaĵoj.<br>"
-	           + "• Restartu la ludon: Sinytra Connector estos kreinta novan, puran agordan dosieron.";
+		return "• Iru al la dosierujon <code>config/</code> de via Minecraft-instanco.<br>"
+				+ "• Serĉu kai forigu la agordojn de connector-aldonaĵoj.<br>"
+				+ "• Restartu la ludon: Sinytra Connector estos kreinta novan, puran agordan dosieron.";
 	}
 
 	@Override
 	public String nombreErrorConfiguracionConnectorCorrupta() {
-	    return "Difektita Agordo de Sinytra Connector";
+		return "Difektita Agordo de Sinytra Connector";
 	}
-	
+
 	@Override
 	public String errorJarCorruptoConNombre(String nombreJar) {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "La dosiero <code>" + nombreJar + "</code> estas difektita aŭ nekompleta.<br>"
-	           + "La sistemo ne povas legi ĝian enhavon ĉar mankas la fina kapo de la ZIP-dosiero.<br>"
-	           + "Tiu eraro kutime okazas post nepropra elŝuto aŭ malsukceso de lanĉilo.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>" + "La dosiero <code>" + nombreJar
+				+ "</code> estas difektita aŭ nekompleta.<br>"
+				+ "La sistemo ne povas legi ĝian enhavon ĉar mankas la fina kapo de la ZIP-dosiero.<br>"
+				+ "Tiu eraro kutime okazas post nepropra elŝuto aŭ malsukceso de lanĉilo.</b>";
 	}
 
 	@Override
 	public String nombreErrorJarCorruptoConNombre() {
-	    return "Difektita JAR-dosiero (kun specifa nomo)";
+		return "Difektita JAR-dosiero (kun specifa nomo)";
 	}
 
 	@Override
 	public String solucionJarCorrupto() {
-	    return "• <b>Forigu la difektitan dosieron</b> kai elŝutu ĝin denove el oficiala fonto (CurseForge, MinecraftStorage, ktp.).<br>"
-	           + "• Se vi uzas lanĉilon kiel CurseForge, Technic aŭ Luna Pixel, pripensu ŝanĝi al <b>ATLauncher</b> aŭ <b>Prism Launcher</b>, "
-	           + "kiuj pli bone kontrolas dosieran integrecon.<br>"
-	           + "• Certigu ke via interreta konekto estu stabila dum la elŝuto.";
+		return "• <b>Forigu la difektitan dosieron</b> kai elŝutu ĝin denove el oficiala fonto (CurseForge, MinecraftStorage, ktp.).<br>"
+				+ "• Se vi uzas lanĉilon kiel CurseForge, Technic aŭ Luna Pixel, pripensu ŝanĝi al <b>ATLauncher</b> aŭ <b>Prism Launcher</b>, "
+				+ "kiuj pli bone kontrolas dosieran integrecon.<br>"
+				+ "• Certigu ke via interreta konekto estu stabila dum la elŝuto.";
 	}
-	
+
 	@Override
 	public String errorCargaNBTMundoCorruptoConByte(String byteCorrupto) {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "Ne povas ŝargi mondon ĉar unu el liaj NBT-dosieroj estas difektita "
-	           + "(ekzemple: <code>level.dat</code>, <code>playerdata/*.dat</code>, aŭ chunkoj).<br>"
-	           + "La specifa eraro estas: <code>UTFDataFormatException: malĝusta enigo apud bajto " + byteCorrupto + "</code>.<br><br>"
-	           + "<b style='color:#" + config.obtenerColorAdvertencia() + ";'>"
-	           + "⚠️ Antaŭ ol provi iun riparon, faru plenan kopion de la dosierujo de via mondo.</b><br><br>"
-	           + "Vi povas provi ripari la difektitan dosieron uzante <b>redaktilon por NBT</b> kiel <a href='https://github.com/tryashtar/nbt-studio'>NBT Studio</a>.<br>"
-	           + "Se la damaĝo estas grava, uzu <b>heksan redaktilon</b> (kiel HxD) por ekzameni kai ğustigi nevalidajn bajtojn "
-	           + "(nur se vi havas sperton pri la NBT-formato).<br>"
-	           + "Fine, vi povas restaŭri el savkopio aŭ uzi la funkcion <i>repair world</i> de aldonaĵoj kiel <code>FTB Backup</code>.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>"
+				+ "Ne povas ŝargi mondon ĉar unu el liaj NBT-dosieroj estas difektita "
+				+ "(ekzemple: <code>level.dat</code>, <code>playerdata/*.dat</code>, aŭ chunkoj).<br>"
+				+ "La specifa eraro estas: <code>UTFDataFormatException: malĝusta enigo apud bajto " + byteCorrupto
+				+ "</code>.<br><br>" + "<b style='color:#" + config.obtenerColorAdvertencia() + ";'>"
+				+ "⚠️ Antaŭ ol provi iun riparon, faru plenan kopion de la dosierujo de via mondo.</b><br><br>"
+				+ "Vi povas provi ripari la difektitan dosieron uzante <b>redaktilon por NBT</b> kiel <a href='https://github.com/tryashtar/nbt-studio'>NBT Studio</a>.<br>"
+				+ "Se la damaĝo estas grava, uzu <b>heksan redaktilon</b> (kiel HxD) por ekzameni kai ğustigi nevalidajn bajtojn "
+				+ "(nur se vi havas sperton pri la NBT-formato).<br>"
+				+ "Fine, vi povas restaŭri el savkopio aŭ uzi la funkcion <i>repair world</i> de aldonaĵoj kiel <code>FTB Backup</code>.</b>";
 	}
 
 	@Override
 	public String solucionErrorCargaNBTMundoCorrupto() {
-	    return "• <b>Faru plenan sekuran kopion de la mondo-dosierujo</b> antaŭ ol provi iun ajn riparon.<br>"
-	           + "• Uzu NBT-redaktilon (kiel NBT Studio) por malfermi kai ripari la difektitan dosieron.<br>"
-	           + "• Se malsukcesas, ekzamenu la dosieron per heksa redaktilo je la pozicio de la difektita bajto.<br>"
-	           + "• Se vi ne havas sperton, restaŭru el lastatempa sekura kopio.";
+		return "• <b>Faru plenan sekuran kopion de la mondo-dosierujo</b> antaŭ ol provi iun ajn riparon.<br>"
+				+ "• Uzu NBT-redaktilon (kiel NBT Studio) por malfermi kai ripari la difektitan dosieron.<br>"
+				+ "• Se malsukcesas, ekzamenu la dosieron per heksa redaktilo je la pozicio de la difektita bajto.<br>"
+				+ "• Se vi ne havas sperton, restaŭru el lastatempa sekura kopio.";
 	}
 
 	@Override
 	public String nombreErrorCargaNBTMundoCorrupto() {
-	    return "Difektita mondo: eraro dum ŝarĝado de NBT datumoj";
+		return "Difektita mondo: eraro dum ŝarĝado de NBT datumoj";
 	}
-	
+
 	@Override
 	public String problema_con_openAL() {
-	    return "<span style='color:#" + config.obtenerColorError()
-	           + "'>Vi havas problemon kun OpenAL. Foje peliloj Nouveau povas kaŭzi tion, sed foje la versio de OpenAL en via aplikaĵo ne estas kompatibla kun tiu en via distribuaĵo, do vi devas uzi la version el via distribuaĵo. Vidu ĉi tiun gvidilon por plia helpo: <a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>Kiel solvi sonojn en Minecraft sur Linux</a>.</span>";
+		return "<span style='color:#" + config.obtenerColorError()
+				+ "'>Vi havas problemon kun OpenAL. Foje peliloj Nouveau povas kaŭzi tion, sed foje la versio de OpenAL en via aplikaĵo ne estas kompatibla kun tiu en via distribuaĵo, do vi devas uzi la version el via distribuaĵo. Vidu ĉi tiun gvidilon por plia helpo: <a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>Kiel solvi sonojn en Minecraft sur Linux</a>.</span>";
 	}
-	
+
 	@Override
 	public String errorArchivoBloqueadoPorOtroProceso() {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "La servilo ne povas lanĉiĝi ĉar dosiero de la mondo estas blokita de alia procezo.<br>"
-	           + "Tio kutime okazas se:<br>"
-	           + "• Jam ekzistas funkcianta servila instanco.<br>"
-	           + "• Antiviruso aŭ dosierumilo havas malfermitan la dosierujon de via mondo.<br>"
-	           + "• La antaŭa procezo ne ĝuste ĉesis kai lasis dosierojn blokitajn.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>"
+				+ "La servilo ne povas lanĉiĝi ĉar dosiero de la mondo estas blokita de alia procezo.<br>"
+				+ "Tio kutime okazas se:<br>" + "• Jam ekzistas funkcianta servila instanco.<br>"
+				+ "• Antiviruso aŭ dosierumilo havas malfermitan la dosierujon de via mondo.<br>"
+				+ "• La antaŭa procezo ne ĝuste ĉesis kai lasis dosierojn blokitajn.</b>";
 	}
 
 	@Override
 	public String solucionErrorArchivoBloqueadoPorOtroProceso() {
-	    return "• <b>Fermu ĉiujn servilajn instancojn</b> (inkluzive de fono-procezoj kiel javaw.exe).<br>"
-	           + "• Se vi uzas gastigan panelon (kiel Multicraft), tute restartigu la servilon per la panelo.<br>"
-	           + "• <b>Tempe malaktivigu vian antiviruson</b> se vi suspektas ke ĝi blokas dosierojn.<br>"
-	           + "• Je lokaj sistemoj, fermu ajnan Fenestron-Eksplorilan fenestron kiun montras vian mondan dosierujon.<br>"
-	           + "• Se daŭras la problemo, mane forigu la dosieron <code>session.lock</code> ene de via monda dosierujo (nur se vi certas ke neniu alia servilo funkcias).";
+		return "• <b>Fermu ĉiujn servilajn instancojn</b> (inkluzive de fono-procezoj kiel javaw.exe).<br>"
+				+ "• Se vi uzas gastigan panelon (kiel Multicraft), tute restartigu la servilon per la panelo.<br>"
+				+ "• <b>Tempe malaktivigu vian antiviruson</b> se vi suspektas ke ĝi blokas dosierojn.<br>"
+				+ "• Je lokaj sistemoj, fermu ajnan Fenestron-Eksplorilan fenestron kiun montras vian mondan dosierujon.<br>"
+				+ "• Se daŭras la problemo, mane forigu la dosieron <code>session.lock</code> ene de via monda dosierujo (nur se vi certas ke neniu alia servilo funkcias).";
 	}
 
 	@Override
 	public String nombreErrorArchivoBloqueadoPorOtroProceso() {
-	    return "Monda dosiero blokita de alia procezo";
+		return "Monda dosiero blokita de alia procezo";
 	}
-	
+
 	@Override
 	public String errorClaseFinalExtendida(String claseHija, String clasePadreFinal) {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "La aldonaĵo provis plilongigi la klason <code>" + clasePadreFinal + "</code>, "
-	           + "sed tiu ĉi klaso nun estas <b>fina</b> kai ne povas esti heredita.<br>"
-	           + "La problemeca klaso estas: <code>" + claseHija + "</code>.<br><br>"
-	           + "Tio kutime okazas kiam aldonaĵo estas kompilita por antaŭa versio de Minecraft aŭ alia baza aldonaĵo, "
-	           + "kiu markis kelkajn klason kiel <code>final</code> en lastatempaj versioj.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>"
+				+ "La aldonaĵo provis plilongigi la klason <code>" + clasePadreFinal + "</code>, "
+				+ "sed tiu ĉi klaso nun estas <b>fina</b> kai ne povas esti heredita.<br>"
+				+ "La problemeca klaso estas: <code>" + claseHija + "</code>.<br><br>"
+				+ "Tio kutime okazas kiam aldonaĵo estas kompilita por antaŭa versio de Minecraft aŭ alia baza aldonaĵo, "
+				+ "kiu markis kelkajn klason kiel <code>final</code> en lastatempaj versioj.</b>";
 	}
 
 	@Override
 	public String solucionErrorClaseFinalExtendida() {
-	    return "• <b>Ĝisdatigu ĉiujn implikitajn aldonaĵojn</b>, precipe tiujn kiuj eble rilatas al la menciita baza aldonaĵo.<br>"
-	           + "• Se daŭras la problemo, serĉu version de la aldonaĵo kompatan kun via nuna versio de Minecraft kai ties dependecoj.<br>"
-	           + "• En iuj kazoj, forigo de la aldonaĵo enhavanta la filan klason povas helpi konfirmi la kaŭzon.";
+		return "• <b>Ĝisdatigu ĉiujn implikitajn aldonaĵojn</b>, precipe tiujn kiuj eble rilatas al la menciita baza aldonaĵo.<br>"
+				+ "• Se daŭras la problemo, serĉu version de la aldonaĵo kompatan kun via nuna versio de Minecraft kai ties dependecoj.<br>"
+				+ "• En iuj kazoj, forigo de la aldonaĵo enhavanta la filan klason povas helpi konfirmi la kaŭzon.";
 	}
 
 	@Override
 	public String nombreErrorClaseFinalExtendida() {
-	    return "Demando pri heredo de fina klaso";
+		return "Demando pri heredo de fina klaso";
 	}
-	
+
 	@Override
 	public String errorRubidiumObsoletoConIris() {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "Vi uzas <b>Rubidium</b> (malnovan furkilon de Sodium por Forge) kun <b>Iris aŭ Oculus</b>.<br>"
-	           + "En lastatempaj versioj de Minecraft (1.19.2+), "
-	           + "Rubidium ne sekvis la pacon de Sodium kai havas problemojn pri dependecoj.<br><br>"
-	           + "Ĉi tiu eraro ankaŭ povas okazi pro konflikto inter rendimentaj aldonaĵoj (Sodium, Rubidium, Embeddium, Bedium, Xeonium, ktp.) aŭ Iris Shaders kun alia aldonaĵo.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>"
+				+ "Vi uzas <b>Rubidium</b> (malnovan furkilon de Sodium por Forge) kun <b>Iris aŭ Oculus</b>.<br>"
+				+ "En lastatempaj versioj de Minecraft (1.19.2+), "
+				+ "Rubidium ne sekvis la pacon de Sodium kai havas problemojn pri dependecoj.<br><br>"
+				+ "Ĉi tiu eraro ankaŭ povas okazi pro konflikto inter rendimentaj aldonaĵoj (Sodium, Rubidium, Embeddium, Bedium, Xeonium, ktp.) aŭ Iris Shaders kun alia aldonaĵo.</b>";
 	}
 
 	@Override
 	public String solucionRubidiumObsoletoConIris() {
-	    return "• <b>Forigu Rubidium</b> el via dosierujo <code>mods</code>.<br>"
-	           + "• <b>Instalu <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a></b>, "
-	           + "la aktivan kai kompatan furkilon de Sodium por Forge kiun subtenas Iris/Oculus en 1.20+.<br>"
-	           + "• Certigu ke vi ne havas pli ol unu furkilon de Sodium instalitan samtempe (ekzemple: Rubidium + Embeddium).<br>"
-	           + "• Se vi uzas Oculus anstataŭe de Iris, kontrolu ke ĝi ankaŭ estas kompata kun via versio de Forge kai Embeddium.";
+		return "• <b>Forigu Rubidium</b> el via dosierujo <code>mods</code>.<br>"
+				+ "• <b>Instalu <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a></b>, "
+				+ "la aktivan kai kompatan furkilon de Sodium por Forge kiun subtenas Iris/Oculus en 1.20+.<br>"
+				+ "• Certigu ke vi ne havas pli ol unu furkilon de Sodium instalitan samtempe (ekzemple: Rubidium + Embeddium).<br>"
+				+ "• Se vi uzas Oculus anstataŭe de Iris, kontrolu ke ĝi ankaŭ estas kompata kun via versio de Forge kai Embeddium.";
 	}
 
 	@Override
 	public String nombreErrorRubidiumObsoletoConIris() {
-	    return "Malnova Rubidium kun Iris/Oculus (OptionInstance estas final)";
+		return "Malnova Rubidium kun Iris/Oculus (OptionInstance estas final)";
 	}
-	
+
 	@Override
 	public String errorVoiceChatPuertoOcupado() {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "La aldonaĵo <code>Simple Voice Chat</code> ne povas lanĉi siajn voĉan servilon ĉar "
-	           + "la UDP-pordo jam estas uzata aŭ la agordita IP-adreso ne validas.<br>"
-	           + "Tio ne malebligas lanĉon de la ludo, sed malŝaltas la voĉan babilejan funkcion.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>"
+				+ "La aldonaĵo <code>Simple Voice Chat</code> ne povas lanĉi siajn voĉan servilon ĉar "
+				+ "la UDP-pordo jam estas uzata aŭ la agordita IP-adreso ne validas.<br>"
+				+ "Tio ne malebligas lanĉon de la ludo, sed malŝaltas la voĉan babilejan funkcion.</b>";
 	}
 
 	@Override
 	public String solucionErrorVoiceChatPuertoOcupado() {
-	    return "• <b>Fermu ajnan alian instancon de Minecraft</b> aŭ aplikaĵon kiun uzas la UDP-pordon 24454.<br>"
-	           + "• Se vi estas sur servilo, certigu ke <b>neniu alia servo</b> uzas tiun pordon.<br>"
-	           + "• En la agordoj de la aldonaĵo (<code>config/voicechat/</code>), ŝanĝu la UDP-pordon al libera (ekzemple, 24455).<br>"
-	           + "• Se vi uzas propran IP-adreson, kontrolu ke ĝi estas ĝusta aŭ lasu ĝin malplena por uzi la defaŭltan.";
+		return "• <b>Fermu ajnan alian instancon de Minecraft</b> aŭ aplikaĵon kiun uzas la UDP-pordon 24454.<br>"
+				+ "• Se vi estas sur servilo, certigu ke <b>neniu alia servo</b> uzas tiun pordon.<br>"
+				+ "• En la agordoj de la aldonaĵo (<code>config/voicechat/</code>), ŝanĝu la UDP-pordon al libera (ekzemple, 24455).<br>"
+				+ "• Se vi uzas propran IP-adreson, kontrolu ke ĝi estas ĝusta aŭ lasu ĝin malplena por uzi la defaŭltan.";
 	}
 
 	@Override
 	public String nombreErrorVoiceChatPuertoOcupado() {
-	    return "Voĉa Babilejo: UDP-pordo okupita aŭ nevalida IP";
+		return "Voĉa Babilejo: UDP-pordo okupita aŭ nevalida IP";
 	}
-	
+
 	@Override
 	public String errorBlockItemNuloCreate(String nombreBlockItem) {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "La BlockItem <code>" + nombreBlockItem + "</code> havas nulan blokon.<br>"
-	           + "Tiu eraro kutime okazas en <b>aldonaĵoj por Create</b> (kiel <code>dndecor</code>, <code>createdeco</code>) "
-	           + "kiam ekzistas konfliktoj kun <code>Amendments</code>, <code>Moonshine</code>, aŭ malĝusta komencaĵo de blokoj.<br>"
-	           + "<b>Noto:</b> Tio ne estas rekte eraro de Amendments, sed simptomo de pli profunda problemo pri registra ŝarĝado.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>" + "La BlockItem <code>" + nombreBlockItem
+				+ "</code> havas nulan blokon.<br>"
+				+ "Tiu eraro kutime okazas en <b>aldonaĵoj por Create</b> (kiel <code>dndecor</code>, <code>createdeco</code>) "
+				+ "kiam ekzistas konfliktoj kun <code>Amendments</code>, <code>Moonshine</code>, aŭ malĝusta komencaĵo de blokoj.<br>"
+				+ "<b>Noto:</b> Tio ne estas rekte eraro de Amendments, sed simptomo de pli profunda problemo pri registra ŝarĝado.</b>";
 	}
 
 	@Override
 	public String solucionErrorBlockItemNuloCreate() {
-	    return "• <b>Ĝisdatigu ĉiujn rilatajn aldonaĵojn:</b> Create, Amendments, Moonshine, kai ajnan aldonaĵon (precipe <code>dndecor</code> kai <code>createdeco</code>).<br>"
-	           + "• Se daŭras la problemo, <b>forigu tempore la Create-aldonaĵojn</b> unu post alia por trovi la kulpan.<br>"
-	           + "• Certigu ke <b>Amendments kai Moonshine estas kompatoblaj</b> kun via versio de Create kai Forge.<br>"
-	           + "• Kontrolu ĉu ekzistas beta-versioj aŭ aktualigitaj fork'oj de la problemaj aldonaĵoj.";
+		return "• <b>Ĝisdatigu ĉiujn rilatajn aldonaĵojn:</b> Create, Amendments, Moonshine, kai ajnan aldonaĵon (precipe <code>dndecor</code> kai <code>createdeco</code>).<br>"
+				+ "• Se daŭras la problemo, <b>forigu tempore la Create-aldonaĵojn</b> unu post alia por trovi la kulpan.<br>"
+				+ "• Certigu ke <b>Amendments kai Moonshine estas kompatoblaj</b> kun via versio de Create kai Forge.<br>"
+				+ "• Kontrolu ĉu ekzistas beta-versioj aŭ aktualigitaj fork'oj de la problemaj aldonaĵoj.";
 	}
 
 	@Override
 	public String nombreErrorBlockItemNuloCreate() {
-	    return "Nula BlockItem en Create-aldonaĵo";
+		return "Nula BlockItem en Create-aldonaĵo";
 	}
-	
+
 	@Override
 	public String modIncompatibleConCargadorActivo(List<String> mods) {
-	    StringBuilder sb = new StringBuilder();
-	    sb.append("<b style='color:#").append(config.obtenerColorAdvertencia()).append(";'>")
-	      .append("Malsukcesis trovi aldonaĵojn kiuj ne apartenas al iu aktiva platformo (Forge, Fabric, ktp.):<ul>");
-	    for (String mod : mods) {
-	        sb.append("<li><code>").append(mod).append("</code></li>");
-	    }
-	    sb.append("</ul>Tio kutime okazas kiam:<br>")
-	      .append("• Oni miksis aldonaĵojn de <b>Fabric kai Forge</b> en la sama dosierujo.<br>")
-	      .append("• Oni instalas aldonaĵon por nekompatibla versio de Minecraft.<br>")
-	      .append("• La aldonaĵo estas difektita aŭ ne validas kiel dosiero JAR.</b>");
-	    return sb.toString();
+		StringBuilder sb = new StringBuilder();
+		sb.append("<b style='color:#").append(config.obtenerColorAdvertencia()).append(";'>").append(
+				"Malsukcesis trovi aldonaĵojn kiuj ne apartenas al iu aktiva platformo (Forge, Fabric, ktp.):<ul>");
+		for (String mod : mods) {
+			sb.append("<li><code>").append(mod).append("</code></li>");
+		}
+		sb.append("</ul>Tio kutime okazas kiam:<br>")
+				.append("• Oni miksis aldonaĵojn de <b>Fabric kai Forge</b> en la sama dosierujo.<br>")
+				.append("• Oni instalas aldonaĵon por nekompatibla versio de Minecraft.<br>")
+				.append("• La aldonaĵo estas difektita aŭ ne validas kiel dosiero JAR.</b>");
+		return sb.toString();
 	}
 
 	@Override
 	public String solucionModIncompatibleConCargadorActivo() {
-	    return "• <b>Kontrolu ke ĉiuj aldonaĵoj estas por la sama platformo</b> (Forge <b>aŭ</b> Fabric, ne ambaŭ).<br>"
-	           + "• Uzu la <b>arbo de aldonaĵoj</b> por identigi kiun platformon detektas ĉiu dosiero.<br>"
-	           + "• Forigu ajnan aldonaĵon kiun vi ne rekonoas aŭ kiu estas por malsama platformo.<br>"
-	           + "• Se vi uzas lanĉilon kiel CurseForge aŭ Prism, certigu ke via profilo estas ĉefe agordita.";
+		return "• <b>Kontrolu ke ĉiuj aldonaĵoj estas por la sama platformo</b> (Forge <b>aŭ</b> Fabric, ne ambaŭ).<br>"
+				+ "• Uzu la <b>arbo de aldonaĵoj</b> por identigi kiun platformon detektas ĉiu dosiero.<br>"
+				+ "• Forigu ajnan aldonaĵon kiun vi ne rekonoas aŭ kiu estas por malsama platformo.<br>"
+				+ "• Se vi uzas lanĉilon kiel CurseForge aŭ Prism, certigu ke via profilo estas ĉefe agordita.";
 	}
 
 	@Override
 	public String nombreModIncompatibleConCargadorActivo() {
-	    return "Aldonaĵo nekompatibla kun aktiva ŝarĝilo";
+		return "Aldonaĵo nekompatibla kun aktiva ŝarĝilo";
 	}
-	
+
 	@Override
 	public String errorCreacionModeloFallida(String modid, String nombreModelo) {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "Malsukcesis krei modelon <code>" + modid + ":" + nombreModelo + "</code>.<br>"
-	           + "Tio indikas ke la aldonaĵo <code>" + modid + "</code> havas difektitajn, mankantajn "
-	           + "aŭ nekompatiblajn rimedojn por via versio de Minecraft.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>" + "Malsukcesis krei modelon <code>" + modid
+				+ ":" + nombreModelo + "</code>.<br>" + "Tio indikas ke la aldonaĵo <code>" + modid
+				+ "</code> havas difektitajn, mankantajn "
+				+ "aŭ nekompatiblajn rimedojn por via versio de Minecraft.</b>";
 	}
 
 	@Override
 	public String solucionErrorCreacionModeloFallida() {
-	    return "• <b>Ĝisdatigu la aldonaĵon</b> al la plej nova versio kompata kun via instanco.<br>"
-	           + "• Se vi uzas evoluantan aŭ ĉefan version, revenu al la oficiala versio.<br>"
-	           + "• Kontrolu ke la dosiero JAR ne estas difektita (reinstalu ĝin).<br>"
-	           + "• Se daŭras la problemo, raportu la eraron al la verkinto de la aldonaĵo inkluzive ĉi tiun protokolon.";
+		return "• <b>Ĝisdatigu la aldonaĵon</b> al la plej nova versio kompata kun via instanco.<br>"
+				+ "• Se vi uzas evoluantan aŭ ĉefan version, revenu al la oficiala versio.<br>"
+				+ "• Kontrolu ke la dosiero JAR ne estas difektita (reinstalu ĝin).<br>"
+				+ "• Se daŭras la problemo, raportu la eraron al la verkinto de la aldonaĵo inkluzive ĉi tiun protokolon.";
 	}
 
 	@Override
 	public String nombreErrorCreacionModeloFallida() {
-	    return "Malsukcesis krei rimedan modelon";
+		return "Malsukcesis krei rimedan modelon";
 	}
+
 	@Override
 	public String conflictoMoonlightIceberg() {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "Detektis gravan konflikton inter la aldonaĵoj <code>Moonlight</code> kai <code>Iceberg</code>.<br>"
-	           + "Ambaŭ provas registri rimedajn reŝarĝajn sistemojn nekompatibile, "
-	           + "kiu kaŭzas malsukceson de OpenGL pro foresto de valida grafika konteksto.<br>"
-	           + "Tiu problemo estas ofta dum uzado de versioj de Forge kiuj inkludas adaptilojn por Fabric-aldonaĵoj.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>"
+				+ "Detektis gravan konflikton inter la aldonaĵoj <code>Moonlight</code> kai <code>Iceberg</code>.<br>"
+				+ "Ambaŭ provas registri rimedajn reŝarĝajn sistemojn nekompatibile, "
+				+ "kiu kaŭzas malsukceson de OpenGL pro foresto de valida grafika konteksto.<br>"
+				+ "Tiu problemo estas ofta dum uzado de versioj de Forge kiuj inkludas adaptilojn por Fabric-aldonaĵoj.</b>";
 	}
 
 	@Override
 	public String solucionConflictoMoonlightIceberg() {
-	    return "• <b>Ĝisdatigu ambaŭn aldonaĵojn</b> al iliaj lastaj versioj kompatoblaj kun via versio de Forge.<br>"
-	           + "• Se daŭras la problemo, <b>forigu tempore Iceberg</b>, ĉar Moonlight kutime estas pli grava dependeco por aliaj aldonaĵoj.<br>"
-	           + "• Certigu ke vi ne havas duoblan aŭ miksitajn versiojn de Forge/Fabric por tiuj ĉi aldonaĵoj.<br>"
-	           + "• Kontrolu ĉu iu alia aldonaĵo (kiel Supplementaries, Citadel, ktp.) jam enhavas funkciecon de Iceberg ene.";
+		return "• <b>Ĝisdatigu ambaŭn aldonaĵojn</b> al iliaj lastaj versioj kompatoblaj kun via versio de Forge.<br>"
+				+ "• Se daŭras la problemo, <b>forigu tempore Iceberg</b>, ĉar Moonlight kutime estas pli grava dependeco por aliaj aldonaĵoj.<br>"
+				+ "• Certigu ke vi ne havas duoblan aŭ miksitajn versiojn de Forge/Fabric por tiuj ĉi aldonaĵoj.<br>"
+				+ "• Kontrolu ĉu iu alia aldonaĵo (kiel Supplementaries, Citadel, ktp.) jam enhavas funkciecon de Iceberg ene.";
 	}
 
 	@Override
 	public String nombreConflictoMoonlightIceberg() {
-	    return "Grava konflikto: Moonlight kontraŭ Iceberg (OpenGL sen konteksto)";
+		return "Grava konflikto: Moonlight kontraŭ Iceberg (OpenGL sen konteksto)";
 	}
+
 	@Override
 	public String instantanea() {
-	    return "Bildaĵo";
+		return "Bildaĵo";
 	}
 
 	@Override
 	public Object desdeUltimaInstantanea() {
-	    return "Ekde lasta bildaĵo";
+		return "Ekde lasta bildaĵo";
 	}
 
 	@Override
 	public String seleccionarUnArchivo() {
-	    return "Elekti dosieron";
+		return "Elekti dosieron";
 	}
 
 	@Override
 	public String instantaneaCreadaCorrectamente() {
-	    return "Bildaĵo sukcese kreita";
+		return "Bildaĵo sukcese kreita";
 	}
 
 	@Override
 	public String errorCreandoInstantanea() {
-	    return "Eraro dum kreo de bildaĵo";
+		return "Eraro dum kreo de bildaĵo";
 	}
-	
+
 	@Override
 	public String consejo() {
-	    return "Konsilo";
+		return "Konsilo";
 	}
 
 	@Override
 	public String resultadoMuestra() {
-	    return "Montri rezulton";
+		return "Montri rezulton";
 	}
-	
+
 	@Override
 	public String historaDeModsDesc() {
-	    return "<html>" + 
-	           "<body style='font-family: sans-serif; font-size: 12px;'>" +
-	           "  <b>Konsilo:</b> Elektu du protokolajn dosierojn por kompari liston de aldonaĵoj. " +
-	           "  La rezulto montras <span style='color:%s;'>aldonitajn (+)</span> kai " +
-	           "  <span style='color:%s;'>forigitajn (&#8722;)</span> bazite sur normigitaj nomoj. " +
-	           "  Uzu la butonon 'Bildaĵo' por krei kopion de ekzistanta dosiero per etendita nomo .instantanea." +
-	           "</body>" + 
-	           "</html>";
+		return "<html>" + "<body style='font-family: sans-serif; font-size: 12px;'>"
+				+ "  <b>Konsilo:</b> Elektu du protokolajn dosierojn por kompari liston de aldonaĵoj. "
+				+ "  La rezulto montras <span style='color:%s;'>aldonitajn (+)</span> kai "
+				+ "  <span style='color:%s;'>forigitajn (&#8722;)</span> bazite sur normigitaj nomoj. "
+				+ "  Uzu la butonon 'Bildaĵo' por krei kopion de ekzistanta dosiero per etendita nomo .instantanea."
+				+ "</body>" + "</html>";
 	}
-	
+
 	@Override
 	public String texto_de_boton_compartir_markdown() {
-	    return "Akiri retejojn de protokoloj kiel Markdown sen raporto";
+		return "Akiri retejojn de protokoloj kiel Markdown sen raporto";
 	}
-	
-	
-	
-	
+
 }

@@ -41,335 +41,344 @@ import com.asbestosstar.crashdetector.config.ElementoConfig;
  */
 public class EditorPlantillaModioNoche extends EditorPlantilla {
 
-    public static final String ID = "editor_plantilla_modio_noche";
-    
-    // Mapa de colores específicos para el tema oscuro
-    private Map<String, ConfigColor> coloresEditor = new HashMap<>();
+	public static final String ID = "editor_plantilla_modio_noche";
 
-    @Override
-    public String id() {
-        return ID;
-    }
+	// Mapa de colores específicos para el tema oscuro
+	private Map<String, ConfigColor> coloresEditor = new HashMap<>();
 
-    @Override
-    public void inicializarComponentes() {
-        setLayout(new BorderLayout());
-        
-        // Inicializar los colores del tema oscuro
-        inicializarColoresEditor();
-        
-        // Panel superior con botones de acción
-        JPanel panelSuperior = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        panelSuperior.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-        panelSuperior.setBackground(coloresEditor.get("fondo").obtener());
+	@Override
+	public String id() {
+		return ID;
+	}
 
-        botonGuardar = new JButton(MonitorDePID.idioma.guardarTodo());
-        configurarBoton(botonGuardar);
-        botonGuardar.addActionListener(e -> guardarPlantilla());
-        panelSuperior.add(botonGuardar);
+	@Override
+	public void inicializarComponentes() {
+		setLayout(new BorderLayout());
 
-        botonRestablecerPlantilla = new JButton(MonitorDePID.idioma.restablecerPlantilla());
-        configurarBoton(botonRestablecerPlantilla);
-        botonRestablecerPlantilla.addActionListener(e -> restablecerPlantilla());
-        panelSuperior.add(botonRestablecerPlantilla);
+		// Inicializar los colores del tema oscuro
+		inicializarColoresEditor();
 
-        botonCerrar = new JButton(MonitorDePID.idioma.omitirYCerrar());
-        configurarBoton(botonCerrar);
-        botonCerrar.addActionListener(e -> cerrarEditor());
-        panelSuperior.add(botonCerrar);
+		// Panel superior con botones de acción
+		JPanel panelSuperior = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		panelSuperior.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+		panelSuperior.setBackground(coloresEditor.get("fondo").obtener());
 
-        add(panelSuperior, BorderLayout.NORTH);
+		botonGuardar = new JButton(MonitorDePID.idioma.guardarTodo());
+		configurarBoton(botonGuardar);
+		botonGuardar.addActionListener(e -> guardarPlantilla());
+		panelSuperior.add(botonGuardar);
 
-        // Panel principal con división horizontal
-        JSplitPane splitPanePrincipal = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-        splitPanePrincipal.setDividerLocation(0.65);
-        splitPanePrincipal.setBackground(coloresEditor.get("borde").obtener());
+		botonRestablecerPlantilla = new JButton(MonitorDePID.idioma.restablecerPlantilla());
+		configurarBoton(botonRestablecerPlantilla);
+		botonRestablecerPlantilla.addActionListener(e -> restablecerPlantilla());
+		panelSuperior.add(botonRestablecerPlantilla);
 
-        // Panel izquierdo: editor y vista previa (editor más alto)
-        JSplitPane splitPaneEditor = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-        splitPaneEditor.setDividerLocation(0.75);
-        splitPaneEditor.setBackground(coloresEditor.get("borde").obtener());
+		botonCerrar = new JButton(MonitorDePID.idioma.omitirYCerrar());
+		configurarBoton(botonCerrar);
+		botonCerrar.addActionListener(e -> cerrarEditor());
+		panelSuperior.add(botonCerrar);
 
-        // Editor HTML con tema oscuro
-        JPanel panelEditor = new JPanel(new BorderLayout());
-        panelEditor.setBorder(BorderFactory.createTitledBorder("Editor HTML"));
-        panelEditor.setBackground(coloresEditor.get("fondo").obtener());
+		add(panelSuperior, BorderLayout.NORTH);
 
-        editorHTML = new JTextPane();
-        editorHTML.setFont(new Font("Monospaced", Font.PLAIN, 13));
-        editorHTML.setCaretColor(coloresEditor.get("texto").obtener());
-        editorHTML.setForeground(coloresEditor.get("texto").obtener());
-        editorHTML.setBackground(coloresEditor.get("caja_texto").obtener());
+		// Panel principal con división horizontal
+		JSplitPane splitPanePrincipal = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+		splitPanePrincipal.setDividerLocation(0.65);
+		splitPanePrincipal.setBackground(coloresEditor.get("borde").obtener());
 
-        JScrollPane scrollEditor = new JScrollPane(editorHTML);
-        scrollEditor.setBorder(BorderFactory.createLineBorder(coloresEditor.get("borde").obtener(), 1));
-        panelEditor.add(scrollEditor, BorderLayout.CENTER);
+		// Panel izquierdo: editor y vista previa (editor más alto)
+		JSplitPane splitPaneEditor = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+		splitPaneEditor.setDividerLocation(0.75);
+		splitPaneEditor.setBackground(coloresEditor.get("borde").obtener());
 
-        // Vista previa con fondo oscuro
-        JPanel panelVistaPrevia = new JPanel(new BorderLayout());
-        panelVistaPrevia.setBorder(BorderFactory.createTitledBorder("Vista Previa"));
-        panelVistaPrevia.setBackground(coloresEditor.get("fondo").obtener());
+		// Editor HTML con tema oscuro
+		JPanel panelEditor = new JPanel(new BorderLayout());
+		panelEditor.setBorder(BorderFactory.createTitledBorder("Editor HTML"));
+		panelEditor.setBackground(coloresEditor.get("fondo").obtener());
 
-        vistaPrevia = new JEditorPane();
-        vistaPrevia.setEditable(false);
-        vistaPrevia.setContentType("text/html");
-        vistaPrevia.setBackground(coloresEditor.get("fondo_vista_previa").obtener());
-        vistaPrevia.setForeground(coloresEditor.get("texto").obtener());
+		editorHTML = new JTextPane();
+		editorHTML.setFont(new Font("Monospaced", Font.PLAIN, 13));
+		editorHTML.setCaretColor(coloresEditor.get("texto").obtener());
+		editorHTML.setForeground(coloresEditor.get("texto").obtener());
+		editorHTML.setBackground(coloresEditor.get("caja_texto").obtener());
 
-        JScrollPane scrollVistaPrevia = new JScrollPane(vistaPrevia);
-        scrollVistaPrevia.setBorder(BorderFactory.createLineBorder(coloresEditor.get("borde").obtener(), 1));
-        panelVistaPrevia.add(scrollVistaPrevia, BorderLayout.CENTER);
+		JScrollPane scrollEditor = new JScrollPane(editorHTML);
+		scrollEditor.setBorder(BorderFactory.createLineBorder(coloresEditor.get("borde").obtener(), 1));
+		panelEditor.add(scrollEditor, BorderLayout.CENTER);
 
-        splitPaneEditor.setTopComponent(panelEditor);
-        splitPaneEditor.setBottomComponent(panelVistaPrevia);
+		// Vista previa con fondo oscuro
+		JPanel panelVistaPrevia = new JPanel(new BorderLayout());
+		panelVistaPrevia.setBorder(BorderFactory.createTitledBorder("Vista Previa"));
+		panelVistaPrevia.setBackground(coloresEditor.get("fondo").obtener());
 
-        // Panel derecho: configuración de colores e imágenes
-        panelConfiguracion = new JPanel(new BorderLayout());
-        panelConfiguracion.setBorder(BorderFactory.createTitledBorder("Configuración de Colores e Imágenes"));
-        panelConfiguracion.setBackground(coloresEditor.get("fondo").obtener());
+		vistaPrevia = new JEditorPane();
+		vistaPrevia.setEditable(false);
+		vistaPrevia.setContentType("text/html");
+		vistaPrevia.setBackground(coloresEditor.get("fondo_vista_previa").obtener());
+		vistaPrevia.setForeground(coloresEditor.get("texto").obtener());
 
-        // Panel de colores con tema oscuro
-        JPanel panelColores = new JPanel(new GridLayout(0, 1, 5, 5));
-        panelColores.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        panelColores.setBackground(coloresEditor.get("fondo").obtener());
-        
-        // Inicializar la configuración de colores usando el método de la clase abstracta
-        inicializarConfiguracionColores(panelColores);
+		JScrollPane scrollVistaPrevia = new JScrollPane(vistaPrevia);
+		scrollVistaPrevia.setBorder(BorderFactory.createLineBorder(coloresEditor.get("borde").obtener(), 1));
+		panelVistaPrevia.add(scrollVistaPrevia, BorderLayout.CENTER);
 
-        // Panel de imágenes con ruta formateada
-        JPanel panelImagenes = new JPanel(new BorderLayout());
-        
-        String rutaFormateada = MonitorDePID.carpeta.resolve("imagenes").toString().replace("\\", "/");
-        panelImagenes.setBorder(BorderFactory.createTitledBorder("Imágenes (" + rutaFormateada + ")"));
-        panelImagenes.setBackground(coloresEditor.get("fondo").obtener());
+		splitPaneEditor.setTopComponent(panelEditor);
+		splitPaneEditor.setBottomComponent(panelVistaPrevia);
 
-        JPanel panelContenidoImagenes = new JPanel(new GridLayout(0, 1, 5, 5));
-        panelContenidoImagenes.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        panelContenidoImagenes.setBackground(coloresEditor.get("fondo").obtener());
+		// Panel derecho: configuración de colores e imágenes
+		panelConfiguracion = new JPanel(new BorderLayout());
+		panelConfiguracion.setBorder(BorderFactory.createTitledBorder("Configuración de Colores e Imágenes"));
+		panelConfiguracion.setBackground(coloresEditor.get("fondo").obtener());
 
-        // Agregar los paneles de imágenes usando los nombres obtenidos
-        for (String imagen : obtenerNombresImágenesVTuber()) {
-            panelContenidoImagenes.add(crearPanelImagen(imagen));
-        }
+		// Panel de colores con tema oscuro
+		JPanel panelColores = new JPanel(new GridLayout(0, 1, 5, 5));
+		panelColores.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		panelColores.setBackground(coloresEditor.get("fondo").obtener());
 
-        panelImagenes.add(panelContenidoImagenes, BorderLayout.CENTER);
+		// Inicializar la configuración de colores usando el método de la clase
+		// abstracta
+		inicializarConfiguracionColores(panelColores);
 
-        panelConfiguracion.add(panelColores, BorderLayout.CENTER);
-        panelConfiguracion.add(panelImagenes, BorderLayout.SOUTH);
+		// Panel de imágenes con ruta formateada
+		JPanel panelImagenes = new JPanel(new BorderLayout());
 
-        splitPanePrincipal.setLeftComponent(splitPaneEditor);
-        splitPanePrincipal.setRightComponent(panelConfiguracion);
+		String rutaFormateada = MonitorDePID.carpeta.resolve("imagenes").toString().replace("\\", "/");
+		panelImagenes.setBorder(BorderFactory.createTitledBorder("Imágenes (" + rutaFormateada + ")"));
+		panelImagenes.setBackground(coloresEditor.get("fondo").obtener());
 
-        add(splitPanePrincipal, BorderLayout.CENTER);
+		JPanel panelContenidoImagenes = new JPanel(new GridLayout(0, 1, 5, 5));
+		panelContenidoImagenes.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		panelContenidoImagenes.setBackground(coloresEditor.get("fondo").obtener());
 
-        // Listener para actualizar vista previa cuando el contenido cambia
-        editorHTML.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                actualizarVistaPrevia();
-            }
+		// Agregar los paneles de imágenes usando los nombres obtenidos
+		for (String imagen : obtenerNombresImágenesVTuber()) {
+			panelContenidoImagenes.add(crearPanelImagen(imagen));
+		}
 
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                actualizarVistaPrevia();
-            }
+		panelImagenes.add(panelContenidoImagenes, BorderLayout.CENTER);
 
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                actualizarVistaPrevia();
-            }
-        });
+		panelConfiguracion.add(panelColores, BorderLayout.CENTER);
+		panelConfiguracion.add(panelImagenes, BorderLayout.SOUTH);
 
-        // Listener para resaltar sintaxis cuando se escribe en el editor
-        editorHTML.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
+		splitPanePrincipal.setLeftComponent(splitPaneEditor);
+		splitPanePrincipal.setRightComponent(panelConfiguracion);
 
-            @Override
-            public void keyPressed(KeyEvent e) {
-            }
+		add(splitPanePrincipal, BorderLayout.CENTER);
 
-            @Override
-            public void keyReleased(KeyEvent e) {
-                resaltarSintaxis();
-            }
-        });
+		// Listener para actualizar vista previa cuando el contenido cambia
+		editorHTML.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				actualizarVistaPrevia();
+			}
 
-        resaltarSintaxis();
-    }
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				actualizarVistaPrevia();
+			}
 
-    /**
-     * Inicializa los colores específicos para el tema oscuro "Modio Noche".
-     * Define todos los colores como ConfigColor para permitir personalización completa.
-     */
-    private void inicializarColoresEditor() {
-        // Colores básicos del tema
-        coloresEditor.put("fondo", ConfigColor.de("color_fondo_editor_plantilla_modio_noche", new Color(0x1e, 0x1e, 0x1e)));
-        coloresEditor.put("texto", ConfigColor.de("color_texto_editor_plantilla_modio_noche", new Color(0xe0, 0xe0, 0xe0)));
-        coloresEditor.put("caja_texto", ConfigColor.de("color_caja_texto_editor_plantilla_modio_noche", new Color(0x2d, 0x2d, 0x2d)));
-        coloresEditor.put("boton", ConfigColor.de("color_boton_editor_plantilla_modio_noche", new Color(0x2a, 0x2a, 0x2a)));
-        coloresEditor.put("borde", ConfigColor.de("color_borde_editor_plantilla_modio_noche", new Color(0x40, 0x40, 0x40)));
-        coloresEditor.put("fondo_vista_previa", ConfigColor.de("color_fondo_vista_previa_modio_noche", new Color(0x1e, 0x1e, 0x1e)));
-        
-        // Colores para resaltado de sintaxis
-        coloresEditor.put("sintaxis_constructor", ConfigColor.de("color_sintaxis_constructor_modio_noche", new Color(0x00, 0xcc, 0xff)));
-        coloresEditor.put("sintaxis_mensaje_ayudar", ConfigColor.de("color_sintaxis_mensaje_ayudar_modio_noche", new Color(0xff, 0x66, 0xff)));
-        coloresEditor.put("sintaxis_etiquetas_html", ConfigColor.de("color_sintaxis_etiquetas_html_modio_noche", new Color(0xff, 0xcc, 0x00)));
-    }
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				actualizarVistaPrevia();
+			}
+		});
 
-    /**
-     * Configura los botones con el estilo del tema oscuro.
-     * Ajusta el color de texto, fondo, fuente y borde para mantener la coherencia visual.
-     * 
-     * @param boton El botón a configurar con el estilo oscuro
-     */
-    private void configurarBoton(JButton boton) {
-        boton.setForeground(coloresEditor.get("texto").obtener());
-        boton.setBackground(coloresEditor.get("boton").obtener());
-        boton.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        boton.setBorder(BorderFactory.createEmptyBorder(3, 5, 3, 5));
-        boton.setFocusPainted(false);
-        boton.setOpaque(true);
-    }
+		// Listener para resaltar sintaxis cuando se escribe en el editor
+		editorHTML.addKeyListener(new KeyListener() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+			}
 
-    @Override
-    public void recargarApariencia() {
-        // Actualizar la apariencia de todos los componentes
-        SwingUtilities.updateComponentTreeUI(this);
-        
-        // Reinicializar los colores del tema oscuro
-        inicializarColoresEditor();
-        
-        // Volver a configurar los componentes con los nuevos colores
-        if (getParent() != null) {
-            inicializarComponentes();
-            repaint();
-        }
-    }
+			@Override
+			public void keyPressed(KeyEvent e) {
+			}
 
-    @Override
-    public List<ElementoConfig> obtenerElementosConfigs() {
-        ArrayList<ElementoConfig> configs = new ArrayList<>();
-        configs.add(coloresEditor.get("fondo"));
-        configs.add(coloresEditor.get("texto"));
-        configs.add(coloresEditor.get("caja_texto"));
-        configs.add(coloresEditor.get("boton"));
-        configs.add(coloresEditor.get("borde"));
-        configs.add(coloresEditor.get("fondo_vista_previa"));
-        configs.add(coloresEditor.get("sintaxis_constructor"));
-        configs.add(coloresEditor.get("sintaxis_mensaje_ayudar"));
-        configs.add(coloresEditor.get("sintaxis_etiquetas_html"));
-        return configs;
-    }
-    
-    /**
-     * Resalta la sintaxis con colores definidos en ConfigColor.
-     * Asegura que los elementos clave sean visibles y diferenciables.
-     */
-    @Override
-    public void resaltarSintaxis() {
-        if (actualizandoVista)
-            return;
-        actualizandoVista = true;
+			@Override
+			public void keyReleased(KeyEvent e) {
+				resaltarSintaxis();
+			}
+		});
 
-        StyledDocument doc = editorHTML.getStyledDocument();
-        String text = editorHTML.getText();
+		resaltarSintaxis();
+	}
 
-        // Estilo normal para texto sin formato
-        SimpleAttributeSet normal = new SimpleAttributeSet();
-        StyleConstants.setForeground(normal, coloresEditor.get("texto").obtener());
-        doc.setCharacterAttributes(0, text.length(), normal, true);
+	/**
+	 * Inicializa los colores específicos para el tema oscuro "Modio Noche". Define
+	 * todos los colores como ConfigColor para permitir personalización completa.
+	 */
+	private void inicializarColoresEditor() {
+		// Colores básicos del tema
+		coloresEditor.put("fondo",
+				ConfigColor.de("color_fondo_editor_plantilla_modio_noche", new Color(0x1e, 0x1e, 0x1e)));
+		coloresEditor.put("texto",
+				ConfigColor.de("color_texto_editor_plantilla_modio_noche", new Color(0xe0, 0xe0, 0xe0)));
+		coloresEditor.put("caja_texto",
+				ConfigColor.de("color_caja_texto_editor_plantilla_modio_noche", new Color(0x2d, 0x2d, 0x2d)));
+		coloresEditor.put("boton",
+				ConfigColor.de("color_boton_editor_plantilla_modio_noche", new Color(0x2a, 0x2a, 0x2a)));
+		coloresEditor.put("borde",
+				ConfigColor.de("color_borde_editor_plantilla_modio_noche", new Color(0x40, 0x40, 0x40)));
+		coloresEditor.put("fondo_vista_previa",
+				ConfigColor.de("color_fondo_vista_previa_modio_noche", new Color(0x1e, 0x1e, 0x1e)));
 
-        // Resaltar {constructor} con color azul cian
-        int inicio = 0;
-        while ((inicio = text.indexOf("{constructor}", inicio)) != -1) {
-            SimpleAttributeSet style = new SimpleAttributeSet();
-            StyleConstants.setForeground(style, coloresEditor.get("sintaxis_constructor").obtener());
-            StyleConstants.setBold(style, true);
-            doc.setCharacterAttributes(inicio, 13, style, false);
-            inicio += 13;
-        }
+		// Colores para resaltado de sintaxis
+		coloresEditor.put("sintaxis_constructor",
+				ConfigColor.de("color_sintaxis_constructor_modio_noche", new Color(0x00, 0xcc, 0xff)));
+		coloresEditor.put("sintaxis_mensaje_ayudar",
+				ConfigColor.de("color_sintaxis_mensaje_ayudar_modio_noche", new Color(0xff, 0x66, 0xff)));
+		coloresEditor.put("sintaxis_etiquetas_html",
+				ConfigColor.de("color_sintaxis_etiquetas_html_modio_noche", new Color(0xff, 0xcc, 0x00)));
+	}
 
-        // Resaltar {mensaje_ayudar} con color magenta
-        inicio = 0;
-        while ((inicio = text.indexOf("{mensaje_ayudar}", inicio)) != -1) {
-            SimpleAttributeSet style = new SimpleAttributeSet();
-            StyleConstants.setForeground(style, coloresEditor.get("sintaxis_mensaje_ayudar").obtener());
-            StyleConstants.setBold(style, true);
-            doc.setCharacterAttributes(inicio, 16, style, false);
-            inicio += 16;
-        }
+	/**
+	 * Configura los botones con el estilo del tema oscuro. Ajusta el color de
+	 * texto, fondo, fuente y borde para mantener la coherencia visual.
+	 * 
+	 * @param boton El botón a configurar con el estilo oscuro
+	 */
+	private void configurarBoton(JButton boton) {
+		boton.setForeground(coloresEditor.get("texto").obtener());
+		boton.setBackground(coloresEditor.get("boton").obtener());
+		boton.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		boton.setBorder(BorderFactory.createEmptyBorder(3, 5, 3, 5));
+		boton.setFocusPainted(false);
+		boton.setOpaque(true);
+	}
 
-        // Resaltar etiquetas HTML con color amarillo
-        inicio = 0;
-        while (inicio < text.length()) {
-            int abertura = text.indexOf("<", inicio);
-            if (abertura == -1)
-                break;
+	@Override
+	public void recargarApariencia() {
+		// Actualizar la apariencia de todos los componentes
+		SwingUtilities.updateComponentTreeUI(this);
 
-            int cierre = text.indexOf(">", abertura);
-            if (cierre == -1)
-                break;
+		// Reinicializar los colores del tema oscuro
+		inicializarColoresEditor();
 
-            SimpleAttributeSet style = new SimpleAttributeSet();
-            StyleConstants.setForeground(style, coloresEditor.get("sintaxis_etiquetas_html").obtener());
-            doc.setCharacterAttributes(abertura, cierre - abertura + 1, style, false);
+		// Volver a configurar los componentes con los nuevos colores
+		if (getParent() != null) {
+			inicializarComponentes();
+			repaint();
+		}
+	}
 
-            inicio = cierre + 1;
-        }
+	@Override
+	public List<ElementoConfig> obtenerElementosConfigs() {
+		ArrayList<ElementoConfig> configs = new ArrayList<>();
+		configs.add(coloresEditor.get("fondo"));
+		configs.add(coloresEditor.get("texto"));
+		configs.add(coloresEditor.get("caja_texto"));
+		configs.add(coloresEditor.get("boton"));
+		configs.add(coloresEditor.get("borde"));
+		configs.add(coloresEditor.get("fondo_vista_previa"));
+		configs.add(coloresEditor.get("sintaxis_constructor"));
+		configs.add(coloresEditor.get("sintaxis_mensaje_ayudar"));
+		configs.add(coloresEditor.get("sintaxis_etiquetas_html"));
+		return configs;
+	}
 
-        actualizandoVista = false;
-    }
-    
-    /**
-     * Actualiza la vista previa con el tema oscuro.
-     * Modifica los estilos para asegurar que se vea bien con el fondo oscuro.
-     */
-    @Override
-    public void actualizarVistaPrevia() {
-        if (actualizandoVista)
-            return;
-        actualizandoVista = true;
+	/**
+	 * Resalta la sintaxis con colores definidos en ConfigColor. Asegura que los
+	 * elementos clave sean visibles y diferenciables.
+	 */
+	@Override
+	public void resaltarSintaxis() {
+		if (actualizandoVista)
+			return;
+		actualizandoVista = true;
 
-        vistaPrevia.removeAll();
+		StyledDocument doc = editorHTML.getStyledDocument();
+		String text = editorHTML.getText();
 
-        String contenido = editorHTML.getText();
-        String colorError = configuracion.obtenerColorError();
-        String colorAdvertencia = configuracion.obtenerColorAdvertencia();
-        String colorInfo = configuracion.obtenerColorInfo();
-        String colorTitulo = configuracion.obtenerColorTitulo();
-        String colorTitulosConsolas = configuracion.obtenerColorDeTitulosDeConsolas();
-        String colorEnlace = configuracion.obtenerColorEnlace();
+		// Estilo normal para texto sin formato
+		SimpleAttributeSet normal = new SimpleAttributeSet();
+		StyleConstants.setForeground(normal, coloresEditor.get("texto").obtener());
+		doc.setCharacterAttributes(0, text.length(), normal, true);
 
-        // Ejemplo de análisis con estilos para tema oscuro
-        String ejemploAnalisis = "<div style='color:#" + colorTitulo
-                + "; font-weight: bold; margin-bottom: 10px;'>Ejemplo de Análisis</div>" + "<div style='color:#"
-                + colorTitulosConsolas + "; font-weight: bold; margin-bottom: 5px;'>Título de Consola de Ejemplo</div>"
-                + "<div style='color:#" + colorError
-                + "'>[EJEMPLO] Error crítico: No se pudo cargar el mod 'ExampleMod'</div>" + "<div style='color:#"
-                + colorAdvertencia + "'>[EJEMPLO] Advertencia: Conflictos entre mods detectados</div>"
-                + "<div style='color:#" + colorInfo
-                + "'>[EJEMPLO] Información: 5 soluciones potenciales encontradas</div>";
+		// Resaltar {constructor} con color azul cian
+		int inicio = 0;
+		while ((inicio = text.indexOf("{constructor}", inicio)) != -1) {
+			SimpleAttributeSet style = new SimpleAttributeSet();
+			StyleConstants.setForeground(style, coloresEditor.get("sintaxis_constructor").obtener());
+			StyleConstants.setBold(style, true);
+			doc.setCharacterAttributes(inicio, 13, style, false);
+			inicio += 13;
+		}
 
-        // Mensaje de ayuda con estilo oscuro
-        String ejemploAyuda = "<div style='color:#" + colorEnlace + "; margin-top: 20px;'>"
-                + "¿Necesitas ayuda? Usa el botón Compartir para obtener enlaces a los registros y a los resultados."
-                + "</div>";
+		// Resaltar {mensaje_ayudar} con color magenta
+		inicio = 0;
+		while ((inicio = text.indexOf("{mensaje_ayudar}", inicio)) != -1) {
+			SimpleAttributeSet style = new SimpleAttributeSet();
+			StyleConstants.setForeground(style, coloresEditor.get("sintaxis_mensaje_ayudar").obtener());
+			StyleConstants.setBold(style, true);
+			doc.setCharacterAttributes(inicio, 16, style, false);
+			inicio += 16;
+		}
 
-        String contenidoVista = contenido.replace("{constructor}", ejemploAnalisis).replace("{mensaje_ayudar}",
-                ejemploAyuda);
+		// Resaltar etiquetas HTML con color amarillo
+		inicio = 0;
+		while (inicio < text.length()) {
+			int abertura = text.indexOf("<", inicio);
+			if (abertura == -1)
+				break;
 
-        // Agregar estilos CSS para el tema oscuro
-        String htmlConEstilos = "<html><head><style>"
-                + "body { background-color: " + Config.colorAHexHtml(coloresEditor.get("fondo_vista_previa").obtener()) + "; "
-                + "color: " + Config.colorAHexHtml(coloresEditor.get("texto").obtener()) + "; }"
-                + "a { color: " + colorEnlace + "; text-decoration: underline; }"
-                + "</style></head><body>" + contenidoVista + "</body></html>";
+			int cierre = text.indexOf(">", abertura);
+			if (cierre == -1)
+				break;
 
-        vistaPrevia.setText(htmlConEstilos);
-        vistaPrevia.setCaretPosition(0);
+			SimpleAttributeSet style = new SimpleAttributeSet();
+			StyleConstants.setForeground(style, coloresEditor.get("sintaxis_etiquetas_html").obtener());
+			doc.setCharacterAttributes(abertura, cierre - abertura + 1, style, false);
 
-        actualizandoVista = false;
-    }
+			inicio = cierre + 1;
+		}
+
+		actualizandoVista = false;
+	}
+
+	/**
+	 * Actualiza la vista previa con el tema oscuro. Modifica los estilos para
+	 * asegurar que se vea bien con el fondo oscuro.
+	 */
+	@Override
+	public void actualizarVistaPrevia() {
+		if (actualizandoVista)
+			return;
+		actualizandoVista = true;
+
+		vistaPrevia.removeAll();
+
+		String contenido = editorHTML.getText();
+		String colorError = configuracion.obtenerColorError();
+		String colorAdvertencia = configuracion.obtenerColorAdvertencia();
+		String colorInfo = configuracion.obtenerColorInfo();
+		String colorTitulo = configuracion.obtenerColorTitulo();
+		String colorTitulosConsolas = configuracion.obtenerColorDeTitulosDeConsolas();
+		String colorEnlace = configuracion.obtenerColorEnlace();
+
+		// Ejemplo de análisis con estilos para tema oscuro
+		String ejemploAnalisis = "<div style='color:#" + colorTitulo
+				+ "; font-weight: bold; margin-bottom: 10px;'>Ejemplo de Análisis</div>" + "<div style='color:#"
+				+ colorTitulosConsolas + "; font-weight: bold; margin-bottom: 5px;'>Título de Consola de Ejemplo</div>"
+				+ "<div style='color:#" + colorError
+				+ "'>[EJEMPLO] Error crítico: No se pudo cargar el mod 'ExampleMod'</div>" + "<div style='color:#"
+				+ colorAdvertencia + "'>[EJEMPLO] Advertencia: Conflictos entre mods detectados</div>"
+				+ "<div style='color:#" + colorInfo
+				+ "'>[EJEMPLO] Información: 5 soluciones potenciales encontradas</div>";
+
+		// Mensaje de ayuda con estilo oscuro
+		String ejemploAyuda = "<div style='color:#" + colorEnlace + "; margin-top: 20px;'>"
+				+ "¿Necesitas ayuda? Usa el botón Compartir para obtener enlaces a los registros y a los resultados."
+				+ "</div>";
+
+		String contenidoVista = contenido.replace("{constructor}", ejemploAnalisis).replace("{mensaje_ayudar}",
+				ejemploAyuda);
+
+		// Agregar estilos CSS para el tema oscuro
+		String htmlConEstilos = "<html><head><style>" + "body { background-color: "
+				+ Config.colorAHexHtml(coloresEditor.get("fondo_vista_previa").obtener()) + "; " + "color: "
+				+ Config.colorAHexHtml(coloresEditor.get("texto").obtener()) + "; }" + "a { color: " + colorEnlace
+				+ "; text-decoration: underline; }" + "</style></head><body>" + contenidoVista + "</body></html>";
+
+		vistaPrevia.setText(htmlConEstilos);
+		vistaPrevia.setCaretPosition(0);
+
+		actualizandoVista = false;
+	}
 }

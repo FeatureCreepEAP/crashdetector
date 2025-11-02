@@ -3611,403 +3611,404 @@ public class Ruso implements Idioma {
 
 	@Override
 	public String restablecerPlantilla() {
-	    return "Сбросить шаблон";
+		return "Сбросить шаблон";
 	}
 
 	@Override
 	public String restablecer() {
-	    return "Сбросить";
+		return "Сбросить";
 	}
 
 	@Override
 	public String restablecerImagenMensjae(String nombreImagen) {
-	    return "Сбросить " + nombreImagen + " до значений по умолчанию?";
+		return "Сбросить " + nombreImagen + " до значений по умолчанию?";
 	}
 
 	@Override
 	public String restablecerPlantillaMensaje() {
-	    return "Сбросить шаблон до значений по умолчанию?";
+		return "Сбросить шаблон до значений по умолчанию?";
 	}
-	
+
 	@Override
 	public String faltar_de_clases_azurelib() {
-	    return "<b style='color:#" + config.obtenerColorError()
-	           + "'>Отсутствуют классы AzureLib. Если у вас уже установлен AzureLib, установите версию до 8 октября 2025 года. Это была распространённая проблема. Если у вас нет AzureLib, установите актуальную версию.</b>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>Отсутствуют классы AzureLib. Если у вас уже установлен AzureLib, установите версию до 8 октября 2025 года. Это была распространённая проблема. Если у вас нет AzureLib, установите актуальную версию.</b>";
 	}
-	
+
 	@Override
 	public String errorHealightINT() {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "Мод <code>healight</code> вызывает критическую ошибку: <code>java.lang.NoSuchFieldError: INT</code>. "
-	           + "Эта ошибка возникает, потому что мод пытается получить доступ к полю, которое больше не существует в MCForge 47.10 для Minecraft 1.20+. "
-	           + "Из-за этой проблемы игра не может запуститься.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>"
+				+ "Мод <code>healight</code> вызывает критическую ошибку: <code>java.lang.NoSuchFieldError: INT</code>. "
+				+ "Эта ошибка возникает, потому что мод пытается получить доступ к полю, которое больше не существует в MCForge 47.10 для Minecraft 1.20+. "
+				+ "Из-за этой проблемы игра не может запуститься.</b>";
 	}
 
 	@Override
 	public String solucionHealightINT() {
-	    return "• Удалите или обновите мод <code>healight</code>. "
-	           + "Текущая версия несовместима с MinecraftForge 47.10 для 1.20.1. "
-	           + "Найдите более новую версию мода или рассмотрите использование альтернативы.";
+		return "• Удалите или обновите мод <code>healight</code>. "
+				+ "Текущая версия несовместима с MinecraftForge 47.10 для 1.20.1. "
+				+ "Найдите более новую версию мода или рассмотрите использование альтернативы.";
 	}
 
 	@Override
 	public String nombreErrorHealightINT() {
-	    return "Критическая ошибка: healight — Поле 'INT' не найдено";
+		return "Критическая ошибка: healight — Поле 'INT' не найдено";
 	}
+
 	@Override
-	public String errorMetodoAbstractoNoImplementadoDetallado(String clase, String metodo, String interfaz, String origen) {
-	    String colorError = config.obtenerColorError();
-	    StringBuilder sb = new StringBuilder();
-	    sb.append("<b style='color:#").append(colorError).append(";'>")
-	      .append("Класс <code>").append(clase).append("</code> не реализует требуемый метод:<br>")
-	      .append("<code>").append(metodo).append("</code><br>")
-	      .append("из интерфейса <code>").append(interfaz).append("</code>.");
+	public String errorMetodoAbstractoNoImplementadoDetallado(String clase, String metodo, String interfaz,
+			String origen) {
+		String colorError = config.obtenerColorError();
+		StringBuilder sb = new StringBuilder();
+		sb.append("<b style='color:#").append(colorError).append(";'>").append("Класс <code>").append(clase)
+				.append("</code> не реализует требуемый метод:<br>").append("<code>").append(metodo)
+				.append("</code><br>").append("из интерфейса <code>").append(interfaz).append("</code>.");
 
-	    if (!origen.isEmpty()) {
-	        sb.append("<br><br>Подозрительный мод или файл: <code>").append(origen).append("</code>.");
-	    }
+		if (!origen.isEmpty()) {
+			sb.append("<br><br>Подозрительный мод или файл: <code>").append(origen).append("</code>.");
+		}
 
-	    sb.append("</b>");
-	    return sb.toString();
+		sb.append("</b>");
+		return sb.toString();
 	}
 
 	@Override
 	public String solucionMetodoAbstractoNoImplementado() {
-	    return "• Эта ошибка возникает, когда мод реализует интерфейс, но пропускает обязательный метод. "
-	           + "Обновите <b>оба мода</b>, участвующих в этом (тот, что определяет интерфейс, и тот, что его реализует). "
-	           + "Если вы не знаете, какие именно, посмотрите имена в сообщении об ошибке.";
+		return "• Эта ошибка возникает, когда мод реализует интерфейс, но пропускает обязательный метод. "
+				+ "Обновите <b>оба мода</b>, участвующих в этом (тот, что определяет интерфейс, и тот, что его реализует). "
+				+ "Если вы не знаете, какие именно, посмотрите имена в сообщении об ошибке.";
 	}
 
 	@Override
 	public String nombreErrorMetodoAbstractoNoImplementado() {
-	    return "Метод интерфейса не реализован (AbstractMethodError)";
+		return "Метод интерфейса не реализован (AbstractMethodError)";
 	}
-	
+
 	@Override
 	public String errorMetadataAnimacionEnServidor() {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "Мод пытается загрузить <b>клиентский</b> класс "
-	           + "(<code>AnimationMetadataSection</code>) на <b>выделенном сервере</b>, что невозможно. "
-	           + "Эта ошибка обычно возникает, когда мод неправильно разделяет код для клиента и сервера. "
-	           + "Наличие <code>ModernFix</code> может выявить эту проблему, хотя и не является её прямой причиной.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>"
+				+ "Мод пытается загрузить <b>клиентский</b> класс "
+				+ "(<code>AnimationMetadataSection</code>) на <b>выделенном сервере</b>, что невозможно. "
+				+ "Эта ошибка обычно возникает, когда мод неправильно разделяет код для клиента и сервера. "
+				+ "Наличие <code>ModernFix</code> может выявить эту проблему, хотя и не является её прямой причиной.</b>";
 	}
 
 	@Override
 	public String solucionErrorMetadataAnimacionEnServidor() {
-	    return "• <b>Быстрое решение:</b> Временно удалите <code>ModernFix</code>, чтобы проверить, запускается ли сервер. "
-	           + "Если да, значит, проблема в другом моде, который загружает клиентские классы на сервер.<br>"
-	           + "• <b>Постоянное решение:</b> Найдите виновный мод (ищите моды с анимированными ресурсами, кастомными текстурами или графическими библиотеками) и обновите или удалите его.<br>";
+		return "• <b>Быстрое решение:</b> Временно удалите <code>ModernFix</code>, чтобы проверить, запускается ли сервер. "
+				+ "Если да, значит, проблема в другом моде, который загружает клиентские классы на сервер.<br>"
+				+ "• <b>Постоянное решение:</b> Найдите виновный мод (ищите моды с анимированными ресурсами, кастомными текстурами или графическими библиотеками) и обновите или удалите его.<br>";
 	}
 
 	@Override
 	public String nombreErrorMetadataAnimacionEnServidor() {
-	    return "Клиентский класс загружен на сервере (AnimationMetadataSection)";
+		return "Клиентский класс загружен на сервере (AnimationMetadataSection)";
 	}
-	
+
 	@Override
 	public String errorConfiguracionConnectorCorrupta() {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "Файл конфигурации мода <code>Sinytra Connector</code> повреждён. "
-	           + "Обычно это происходит, когда файл заполняется нулевыми символами (<code>\\u0000</code>) "
-	           + "из-за неожиданного завершения игры, сбоев записи или конфликтов модов.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>"
+				+ "Файл конфигурации мода <code>Sinytra Connector</code> повреждён. "
+				+ "Обычно это происходит, когда файл заполняется нулевыми символами (<code>\\u0000</code>) "
+				+ "из-за неожиданного завершения игры, сбоев записи или конфликтов модов.</b>";
 	}
 
 	@Override
 	public String solucionConfiguracionConnectorCorrupta() {
-	    return "• Перейдите в папку <code>config/</code> вашего экземпляра Minecraft.<br>"
-	           + "• Найдите и удалите конфигурационные файлы модов connector.<br>"
-	           + "• Перезапустите игру: Sinytra Connector создаст новый чистый файл конфигурации.";
+		return "• Перейдите в папку <code>config/</code> вашего экземпляра Minecraft.<br>"
+				+ "• Найдите и удалите конфигурационные файлы модов connector.<br>"
+				+ "• Перезапустите игру: Sinytra Connector создаст новый чистый файл конфигурации.";
 	}
 
 	@Override
 	public String nombreErrorConfiguracionConnectorCorrupta() {
-	    return "Повреждённая конфигурация Sinytra Connector";
+		return "Повреждённая конфигурация Sinytra Connector";
 	}
-	
+
 	@Override
 	public String errorJarCorruptoConNombre(String nombreJar) {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "Файл <code>" + nombreJar + "</code> повреждён или неполный.<br>"
-	           + "Система не может прочитать его содержимое, так как отсутствует конечный заголовок ZIP-файла.<br>"
-	           + "Эта ошибка обычно возникает после прерванной загрузки или сбоя лаунчера.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>" + "Файл <code>" + nombreJar
+				+ "</code> повреждён или неполный.<br>"
+				+ "Система не может прочитать его содержимое, так как отсутствует конечный заголовок ZIP-файла.<br>"
+				+ "Эта ошибка обычно возникает после прерванной загрузки или сбоя лаунчера.</b>";
 	}
 
 	@Override
 	public String nombreErrorJarCorruptoConNombre() {
-	    return "Повреждённый JAR-файл (с указанием имени)";
+		return "Повреждённый JAR-файл (с указанием имени)";
 	}
 
 	@Override
 	public String solucionJarCorrupto() {
-	    return "• <b>Удалите повреждённый файл</b> и повторно загрузите его с официального источника (CurseForge, MinecraftStorage и т.д.).<br>"
-	           + "• Если вы используете лаунчер вроде CurseForge, Technic или Luna Pixel, рассмотрите переход на <b>ATLauncher</b> или <b>Prism Launcher</b>, "
-	           + "которые лучше проверяют целостность файлов.<br>"
-	           + "• Убедитесь, что ваше интернет-соединение стабильно во время загрузки.";
+		return "• <b>Удалите повреждённый файл</b> и повторно загрузите его с официального источника (CurseForge, MinecraftStorage и т.д.).<br>"
+				+ "• Если вы используете лаунчер вроде CurseForge, Technic или Luna Pixel, рассмотрите переход на <b>ATLauncher</b> или <b>Prism Launcher</b>, "
+				+ "которые лучше проверяют целостность файлов.<br>"
+				+ "• Убедитесь, что ваше интернет-соединение стабильно во время загрузки.";
 	}
-	
+
 	@Override
 	public String errorCargaNBTMundoCorruptoConByte(String byteCorrupto) {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "Не удаётся загрузить мир, так как один из его NBT-файлов повреждён "
-	           + "(например: <code>level.dat</code>, <code>playerdata/*.dat</code> или чанки).<br>"
-	           + "Конкретная ошибка: <code>UTFDataFormatException: некорректный ввод около байта " + byteCorrupto + "</code>.<br><br>"
-	           + "<b style='color:#" + config.obtenerColorAdvertencia() + ";'>"
-	           + "⚠️ Перед любой попыткой восстановления сделайте полную резервную копию папки мира.</b><br><br>"
-	           + "Вы можете попробовать починить повреждённый файл с помощью <b>редактора NBT</b>, например <a href='https://github.com/tryashtar/nbt-studio'>NBT Studio</a>.<br>"
-	           + "Если повреждение серьёзное, используйте <b>шестнадцатеричный редактор</b> (например, HxD), чтобы проверить и исправить недопустимые байты "
-	           + "(только если вы разбираетесь в формате NBT).<br>"
-	           + "В крайнем случае восстановите мир из резервной копии или используйте функцию <i>восстановления мира</i> модов, таких как <code>FTB Backup</code>.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>"
+				+ "Не удаётся загрузить мир, так как один из его NBT-файлов повреждён "
+				+ "(например: <code>level.dat</code>, <code>playerdata/*.dat</code> или чанки).<br>"
+				+ "Конкретная ошибка: <code>UTFDataFormatException: некорректный ввод около байта " + byteCorrupto
+				+ "</code>.<br><br>" + "<b style='color:#" + config.obtenerColorAdvertencia() + ";'>"
+				+ "⚠️ Перед любой попыткой восстановления сделайте полную резервную копию папки мира.</b><br><br>"
+				+ "Вы можете попробовать починить повреждённый файл с помощью <b>редактора NBT</b>, например <a href='https://github.com/tryashtar/nbt-studio'>NBT Studio</a>.<br>"
+				+ "Если повреждение серьёзное, используйте <b>шестнадцатеричный редактор</b> (например, HxD), чтобы проверить и исправить недопустимые байты "
+				+ "(только если вы разбираетесь в формате NBT).<br>"
+				+ "В крайнем случае восстановите мир из резервной копии или используйте функцию <i>восстановления мира</i> модов, таких как <code>FTB Backup</code>.</b>";
 	}
 
 	@Override
 	public String solucionErrorCargaNBTMundoCorrupto() {
-	    return "• <b>Сделайте полную резервную копию папки мира</b> перед попыткой восстановления.<br>"
-	           + "• Используйте редактор NBT (например, NBT Studio), чтобы открыть и исправить повреждённый файл.<br>"
-	           + "• Если не получится, проверьте файл шестнадцатеричным редактором в позиции повреждённого байта.<br>"
-	           + "• При отсутствии опыта восстановите мир из последней резервной копии.";
+		return "• <b>Сделайте полную резервную копию папки мира</b> перед попыткой восстановления.<br>"
+				+ "• Используйте редактор NBT (например, NBT Studio), чтобы открыть и исправить повреждённый файл.<br>"
+				+ "• Если не получится, проверьте файл шестнадцатеричным редактором в позиции повреждённого байта.<br>"
+				+ "• При отсутствии опыта восстановите мир из последней резервной копии.";
 	}
 
 	@Override
 	public String nombreErrorCargaNBTMundoCorrupto() {
-	    return "Повреждённый мир: ошибка загрузки данных NBT";
+		return "Повреждённый мир: ошибка загрузки данных NBT";
 	}
-	
+
 	@Override
 	public String problema_con_openAL() {
-	    return "<span style='color:#" + config.obtenerColorError()
-	           + "'>У вас возникла проблема с OpenAL. Иногда её вызывают драйверы Nouveau, но иногда виной тому версия OpenAL, поставляемая с приложением, которая несовместима с версией в вашем дистрибутиве, и вам нужно использовать версию из вашего дистрибутива. См. это руководство для получения дополнительной помощи: <a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>Как исправить проблемы со звуком в Minecraft на Linux</a>.</span>";
+		return "<span style='color:#" + config.obtenerColorError()
+				+ "'>У вас возникла проблема с OpenAL. Иногда её вызывают драйверы Nouveau, но иногда виной тому версия OpenAL, поставляемая с приложением, которая несовместима с версией в вашем дистрибутиве, и вам нужно использовать версию из вашего дистрибутива. См. это руководство для получения дополнительной помощи: <a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>Как исправить проблемы со звуком в Minecraft на Linux</a>.</span>";
 	}
-	
+
 	@Override
 	public String errorArchivoBloqueadoPorOtroProceso() {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "Сервер не может запуститься, потому что файл мира заблокирован другим процессом.<br>"
-	           + "Это обычно происходит, если:<br>"
-	           + "• Уже запущен другой экземпляр сервера.<br>"
-	           + "• Антивирус или проводник имеет открытой папку мира.<br>"
-	           + "• Предыдущий процесс завершился некорректно и оставил файлы заблокированными.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>"
+				+ "Сервер не может запуститься, потому что файл мира заблокирован другим процессом.<br>"
+				+ "Это обычно происходит, если:<br>" + "• Уже запущен другой экземпляр сервера.<br>"
+				+ "• Антивирус или проводник имеет открытой папку мира.<br>"
+				+ "• Предыдущий процесс завершился некорректно и оставил файлы заблокированными.</b>";
 	}
 
 	@Override
 	public String solucionErrorArchivoBloqueadoPorOtroProceso() {
-	    return "• <b>Закройте все экземпляры сервера</b> (включая фоновые процессы вроде javaw.exe).<br>"
-	           + "• Если вы используете хостинг-панель (например, Multicraft), полностью перезапустите сервер через панель.<br>"
-	           + "• <b>Временно отключите антивирус</b>, если подозреваете, что он блокирует файлы.<br>"
-	           + "• На локальных системах закройте все окна Проводника, показывающие папку мира.<br>"
-	           + "• Если проблема сохраняется, вручную удалите файл <code>session.lock</code> внутри папки мира (только если вы уверены, что нет активного сервера).";
+		return "• <b>Закройте все экземпляры сервера</b> (включая фоновые процессы вроде javaw.exe).<br>"
+				+ "• Если вы используете хостинг-панель (например, Multicraft), полностью перезапустите сервер через панель.<br>"
+				+ "• <b>Временно отключите антивирус</b>, если подозреваете, что он блокирует файлы.<br>"
+				+ "• На локальных системах закройте все окна Проводника, показывающие папку мира.<br>"
+				+ "• Если проблема сохраняется, вручную удалите файл <code>session.lock</code> внутри папки мира (только если вы уверены, что нет активного сервера).";
 	}
 
 	@Override
 	public String nombreErrorArchivoBloqueadoPorOtroProceso() {
-	    return "Файл мира заблокирован другим процессом";
+		return "Файл мира заблокирован другим процессом";
 	}
-	
+
 	@Override
 	public String errorClaseFinalExtendida(String claseHija, String clasePadreFinal) {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "Мод попытался расширить класс <code>" + clasePadreFinal + "</code>, "
-	           + "но этот класс теперь помечен как <b>final</b> и не может быть унаследован.<br>"
-	           + "Проблемный класс: <code>" + claseHija + "</code>.<br><br>"
-	           + "Это обычно происходит, когда мод скомпилирован для более старой версии Minecraft или другого базового мода, "
-	           + "который в недавних версиях пометил классы как <code>final</code>.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>" + "Мод попытался расширить класс <code>"
+				+ clasePadreFinal + "</code>, "
+				+ "но этот класс теперь помечен как <b>final</b> и не может быть унаследован.<br>"
+				+ "Проблемный класс: <code>" + claseHija + "</code>.<br><br>"
+				+ "Это обычно происходит, когда мод скомпилирован для более старой версии Minecraft или другого базового мода, "
+				+ "который в недавних версиях пометил классы как <code>final</code>.</b>";
 	}
 
 	@Override
 	public String solucionErrorClaseFinalExtendida() {
-	    return "• <b>Обновите все затронутые моды</b>, особенно те, которые могут быть связаны с упомянутым базовым модом.<br>"
-	           + "• Если проблема сохраняется, найдите версию мода, совместимую с вашей текущей версией Minecraft и её зависимостями.<br>"
-	           + "• В некоторых случаях временное удаление мода, содержащего дочерний класс, поможет подтвердить причину.";
+		return "• <b>Обновите все затронутые моды</b>, особенно те, которые могут быть связаны с упомянутым базовым модом.<br>"
+				+ "• Если проблема сохраняется, найдите версию мода, совместимую с вашей текущей версией Minecraft и её зависимостями.<br>"
+				+ "• В некоторых случаях временное удаление мода, содержащего дочерний класс, поможет подтвердить причину.";
 	}
 
 	@Override
 	public String nombreErrorClaseFinalExtendida() {
-	    return "Попытка наследования от final-класса";
+		return "Попытка наследования от final-класса";
 	}
-	
+
 	@Override
 	public String errorRubidiumObsoletoConIris() {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "Вы используете <b>Rubidium</b> (устаревшую ветку Sodium для Forge) вместе с <b>Iris или Oculus</b>.<br>"
-	           + "В последних версиях Minecraft (1.19.2 и выше) "
-	           + "Rubidium не успел за обновлениями Sodium, и у его зависимостей возникли проблемы.<br><br>"
-	           + "Эта ошибка также может возникнуть из-за конфликта между модами производительности (Sodium, Rubidium, Embeddium, Bedium, Xeonium и т.д.) или Iris Shaders и другим модом.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>"
+				+ "Вы используете <b>Rubidium</b> (устаревшую ветку Sodium для Forge) вместе с <b>Iris или Oculus</b>.<br>"
+				+ "В последних версиях Minecraft (1.19.2 и выше) "
+				+ "Rubidium не успел за обновлениями Sodium, и у его зависимостей возникли проблемы.<br><br>"
+				+ "Эта ошибка также может возникнуть из-за конфликта между модами производительности (Sodium, Rubidium, Embeddium, Bedium, Xeonium и т.д.) или Iris Shaders и другим модом.</b>";
 	}
 
 	@Override
 	public String solucionRubidiumObsoletoConIris() {
-	    return "• <b>Удалите Rubidium</b> из папки <code>mods</code>.<br>"
-	           + "• <b>Установите <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a></b>, "
-	           + "активную и совместимую ветку Sodium для Forge, которая поддерживает Iris/Oculus на 1.20+.<br>"
-	           + "• Убедитесь, что у вас не установлено более одной ветки Sodium одновременно (например: Rubidium + Embeddium).<br>"
-	           + "• Если вы используете Oculus вместо Iris, проверьте его совместимость с вашей версией Forge и Embeddium.";
+		return "• <b>Удалите Rubidium</b> из папки <code>mods</code>.<br>"
+				+ "• <b>Установите <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a></b>, "
+				+ "активную и совместимую ветку Sodium для Forge, которая поддерживает Iris/Oculus на 1.20+.<br>"
+				+ "• Убедитесь, что у вас не установлено более одной ветки Sodium одновременно (например: Rubidium + Embeddium).<br>"
+				+ "• Если вы используете Oculus вместо Iris, проверьте его совместимость с вашей версией Forge и Embeddium.";
 	}
 
 	@Override
 	public String nombreErrorRubidiumObsoletoConIris() {
-	    return "Устаревший Rubidium с Iris/Oculus (OptionInstance является final)";
+		return "Устаревший Rubidium с Iris/Oculus (OptionInstance является final)";
 	}
-	
+
 	@Override
 	public String errorVoiceChatPuertoOcupado() {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "Мод <code>Simple Voice Chat</code> не может запустить свой голосовой сервер, потому что "
-	           + "UDP-порт уже используется или настроенный IP-адрес недействителен.<br>"
-	           + "Это не мешает запуску игры, но отключает функцию голосового чата.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>"
+				+ "Мод <code>Simple Voice Chat</code> не может запустить свой голосовой сервер, потому что "
+				+ "UDP-порт уже используется или настроенный IP-адрес недействителен.<br>"
+				+ "Это не мешает запуску игры, но отключает функцию голосового чата.</b>";
 	}
 
 	@Override
 	public String solucionErrorVoiceChatPuertoOcupado() {
-	    return "• <b>Закройте любые другие экземпляры Minecraft</b> или приложение, использующее UDP-порт 24454.<br>"
-	           + "• Если вы находитесь на сервере, убедитесь, что <b>ни одна другая служба</b> не использует этот порт.<br>"
-	           + "• В настройках мода (<code>config/voicechat/</code>) измените UDP-порт на свободный (например, 24455).<br>"
-	           + "• Если вы используете пользовательский IP-адрес, проверьте его правильность или оставьте пустым для использования значения по умолчанию.";
+		return "• <b>Закройте любые другие экземпляры Minecraft</b> или приложение, использующее UDP-порт 24454.<br>"
+				+ "• Если вы находитесь на сервере, убедитесь, что <b>ни одна другая служба</b> не использует этот порт.<br>"
+				+ "• В настройках мода (<code>config/voicechat/</code>) измените UDP-порт на свободный (например, 24455).<br>"
+				+ "• Если вы используете пользовательский IP-адрес, проверьте его правильность или оставьте пустым для использования значения по умолчанию.";
 	}
 
 	@Override
 	public String nombreErrorVoiceChatPuertoOcupado() {
-	    return "Голосовой чат: UDP-порт занят или неверный IP";
+		return "Голосовой чат: UDP-порт занят или неверный IP";
 	}
-	
+
 	@Override
 	public String errorBlockItemNuloCreate(String nombreBlockItem) {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "У BlockItem <code>" + nombreBlockItem + "</code> блок равен null.<br>"
-	           + "Эта ошибка обычно возникает в <b>аддонах для Create</b> (например, <code>dndecor</code>, <code>createdeco</code>) "
-	           + "при конфликтах с <code>Amendments</code>, <code>Moonshine</code> или неправильной инициализации блоков.<br>"
-	           + "<b>Примечание:</b> Это не прямая ошибка Amendments, а симптом более глубокой проблемы при загрузке реестра.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>" + "У BlockItem <code>" + nombreBlockItem
+				+ "</code> блок равен null.<br>"
+				+ "Эта ошибка обычно возникает в <b>аддонах для Create</b> (например, <code>dndecor</code>, <code>createdeco</code>) "
+				+ "при конфликтах с <code>Amendments</code>, <code>Moonshine</code> или неправильной инициализации блоков.<br>"
+				+ "<b>Примечание:</b> Это не прямая ошибка Amendments, а симптом более глубокой проблемы при загрузке реестра.</b>";
 	}
 
 	@Override
 	public String solucionErrorBlockItemNuloCreate() {
-	    return "• <b>Обновите все связанные моды:</b> Create, Amendments, Moonshine и любые аддоны (особенно <code>dndecor</code> и <code>createdeco</code>).<br>"
-	           + "• Если проблема сохраняется, <b>временно удалите аддоны для Create</b> по одному, чтобы найти виновника.<br>"
-	           + "• Убедитесь, что <b>Amendments и Moonshine совместимы</b> с вашей версией Create и Forge.<br>"
-	           + "• Проверьте, есть ли бета-версии или обновлённые форки проблемных аддонов.";
+		return "• <b>Обновите все связанные моды:</b> Create, Amendments, Moonshine и любые аддоны (особенно <code>dndecor</code> и <code>createdeco</code>).<br>"
+				+ "• Если проблема сохраняется, <b>временно удалите аддоны для Create</b> по одному, чтобы найти виновника.<br>"
+				+ "• Убедитесь, что <b>Amendments и Moonshine совместимы</b> с вашей версией Create и Forge.<br>"
+				+ "• Проверьте, есть ли бета-версии или обновлённые форки проблемных аддонов.";
 	}
 
 	@Override
 	public String nombreErrorBlockItemNuloCreate() {
-	    return "Null BlockItem в аддоне Create";
+		return "Null BlockItem в аддоне Create";
 	}
-	
+
 	@Override
 	public String modIncompatibleConCargadorActivo(List<String> mods) {
-	    StringBuilder sb = new StringBuilder();
-	    sb.append("<b style='color:#").append(config.obtenerColorAdvertencia()).append(";'>")
-	      .append("Найдены моды, не принадлежащие ни одной активной платформе (Forge, Fabric и т.д.):<ul>");
-	    for (String mod : mods) {
-	        sb.append("<li><code>").append(mod).append("</code></li>");
-	    }
-	    sb.append("</ul>Это обычно происходит, когда:<br>")
-	      .append("• Моды от <b>Fabric и Forge</b> смешаны в одной папке.<br>")
-	      .append("• Установлен мод для несовместимой версии Minecraft.<br>")
-	      .append("• Мод повреждён или не является корректным JAR-файлом.</b>");
-	    return sb.toString();
+		StringBuilder sb = new StringBuilder();
+		sb.append("<b style='color:#").append(config.obtenerColorAdvertencia()).append(";'>")
+				.append("Найдены моды, не принадлежащие ни одной активной платформе (Forge, Fabric и т.д.):<ul>");
+		for (String mod : mods) {
+			sb.append("<li><code>").append(mod).append("</code></li>");
+		}
+		sb.append("</ul>Это обычно происходит, когда:<br>")
+				.append("• Моды от <b>Fabric и Forge</b> смешаны в одной папке.<br>")
+				.append("• Установлен мод для несовместимой версии Minecraft.<br>")
+				.append("• Мод повреждён или не является корректным JAR-файлом.</b>");
+		return sb.toString();
 	}
 
 	@Override
 	public String solucionModIncompatibleConCargadorActivo() {
-	    return "• <b>Убедитесь, что все моды предназначены для одной платформы</b> (только Forge <b>или</b> только Fabric, а не обе сразу).<br>"
-	           + "• Используйте <b>дерево модов</b>, чтобы определить, какую платформу распознаёт каждый файл.<br>"
-	           + "• Удалите любой мод, который вы не узнаёте или который предназначен для другой платформы.<br>"
-	           + "• Если вы используете лаунчер, например CurseForge или Prism, убедитесь, что профиль настроен правильно.";
+		return "• <b>Убедитесь, что все моды предназначены для одной платформы</b> (только Forge <b>или</b> только Fabric, а не обе сразу).<br>"
+				+ "• Используйте <b>дерево модов</b>, чтобы определить, какую платформу распознаёт каждый файл.<br>"
+				+ "• Удалите любой мод, который вы не узнаёте или который предназначен для другой платформы.<br>"
+				+ "• Если вы используете лаунчер, например CurseForge или Prism, убедитесь, что профиль настроен правильно.";
 	}
 
 	@Override
 	public String nombreModIncompatibleConCargadorActivo() {
-	    return "Мод несовместим с активным загрузчиком";
+		return "Мод несовместим с активным загрузчиком";
 	}
+
 	@Override
 	public String errorCreacionModeloFallida(String modid, String nombreModelo) {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "Не удалось создать модель <code>" + modid + ":" + nombreModelo + "</code>.<br>"
-	           + "Это означает, что мод <code>" + modid + "</code> имеет повреждённые, отсутствующие "
-	           + "или несовместимые ресурсы для вашей версии Minecraft.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>" + "Не удалось создать модель <code>" + modid
+				+ ":" + nombreModelo + "</code>.<br>" + "Это означает, что мод <code>" + modid
+				+ "</code> имеет повреждённые, отсутствующие "
+				+ "или несовместимые ресурсы для вашей версии Minecraft.</b>";
 	}
 
 	@Override
 	public String solucionErrorCreacionModeloFallida() {
-	    return "• <b>Обновите мод</b> до последней версии, совместимой с вашим экземпляром.<br>"
-	           + "• Если вы используете сборку для разработки или кастомную, вернитесь к официальной версии.<br>"
-	           + "• Убедитесь, что файл JAR не повреждён (переустановите его).<br>"
-	           + "• Если проблема сохраняется, сообщите об ошибке автору мода, приложив этот лог.";
+		return "• <b>Обновите мод</b> до последней версии, совместимой с вашим экземпляром.<br>"
+				+ "• Если вы используете сборку для разработки или кастомную, вернитесь к официальной версии.<br>"
+				+ "• Убедитесь, что файл JAR не повреждён (переустановите его).<br>"
+				+ "• Если проблема сохраняется, сообщите об ошибке автору мода, приложив этот лог.";
 	}
 
 	@Override
 	public String nombreErrorCreacionModeloFallida() {
-	    return "Не удалось создать модель ресурса";
+		return "Не удалось создать модель ресурса";
 	}
+
 	@Override
 	public String conflictoMoonlightIceberg() {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "Обнаружен критический конфликт между модами <code>Moonlight</code> и <code>Iceberg</code>.<br>"
-	           + "Оба пытаются зарегистрировать системы перезагрузки ресурсов несовместимым способом, "
-	           + "что приводит к сбою OpenGL из-за отсутствия валидного графического контекста.<br>"
-	           + "Эта проблема часто возникает при использовании версий Forge, включающих адаптеры для модов Fabric.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>"
+				+ "Обнаружен критический конфликт между модами <code>Moonlight</code> и <code>Iceberg</code>.<br>"
+				+ "Оба пытаются зарегистрировать системы перезагрузки ресурсов несовместимым способом, "
+				+ "что приводит к сбою OpenGL из-за отсутствия валидного графического контекста.<br>"
+				+ "Эта проблема часто возникает при использовании версий Forge, включающих адаптеры для модов Fabric.</b>";
 	}
 
 	@Override
 	public String solucionConflictoMoonlightIceberg() {
-	    return "• <b>Обновите оба мода</b> до последних версий, совместимых с вашей версией Forge.<br>"
-	           + "• Если проблема сохраняется, <b>временно удалите Iceberg</b>, так как Moonlight обычно является более важной зависимостью для других модов.<br>"
-	           + "• Убедитесь, что у вас нет дублирующихся или смешанных версий Forge/Fabric этих модов.<br>"
-	           + "• Проверьте, не включает ли другой мод (например, Supplementaries, Citadel и т.д.) функциональность Iceberg внутри себя.";
+		return "• <b>Обновите оба мода</b> до последних версий, совместимых с вашей версией Forge.<br>"
+				+ "• Если проблема сохраняется, <b>временно удалите Iceberg</b>, так как Moonlight обычно является более важной зависимостью для других модов.<br>"
+				+ "• Убедитесь, что у вас нет дублирующихся или смешанных версий Forge/Fabric этих модов.<br>"
+				+ "• Проверьте, не включает ли другой мод (например, Supplementaries, Citadel и т.д.) функциональность Iceberg внутри себя.";
 	}
 
 	@Override
 	public String nombreConflictoMoonlightIceberg() {
-	    return "Критический конфликт: Moonlight против Iceberg (OpenGL без контекста)";
+		return "Критический конфликт: Moonlight против Iceberg (OpenGL без контекста)";
 	}
-	
+
 	@Override
 	public String instantanea() {
-	    return "Снимок";
+		return "Снимок";
 	}
 
 	@Override
 	public Object desdeUltimaInstantanea() {
-	    return "С последнего снимка";
+		return "С последнего снимка";
 	}
 
 	@Override
 	public String seleccionarUnArchivo() {
-	    return "Выберите файл";
+		return "Выберите файл";
 	}
 
 	@Override
 	public String instantaneaCreadaCorrectamente() {
-	    return "Снимок успешно создан";
+		return "Снимок успешно создан";
 	}
 
 	@Override
 	public String errorCreandoInstantanea() {
-	    return "Ошибка при создании снимка";
+		return "Ошибка при создании снимка";
 	}
+
 	@Override
 	public String consejo() {
-	    return "Совет";
+		return "Совет";
 	}
 
 	@Override
 	public String resultadoMuestra() {
-	    return "Показать результат";
+		return "Показать результат";
 	}
-	
+
 	@Override
 	public String historaDeModsDesc() {
-	    return "<html>" + 
-	           "<body style='font-family: sans-serif; font-size: 12px;'>" +
-	           "  <b>Совет:</b> Выберите два файла журнала, чтобы сравнить список модов. " +
-	           "  Результат показывает <span style='color:%s;'>добавленные (+)</span> и " +
-	           "  <span style='color:%s;'>удалённые (&#8722;)</span> на основе нормализованных имён. " +
-	           "  Используйте кнопку «Снимок», чтобы создать копию существующего файла с расширением .instantanea." +
-	           "</body>" + 
-	           "</html>";
+		return "<html>" + "<body style='font-family: sans-serif; font-size: 12px;'>"
+				+ "  <b>Совет:</b> Выберите два файла журнала, чтобы сравнить список модов. "
+				+ "  Результат показывает <span style='color:%s;'>добавленные (+)</span> и "
+				+ "  <span style='color:%s;'>удалённые (&#8722;)</span> на основе нормализованных имён. "
+				+ "  Используйте кнопку «Снимок», чтобы создать копию существующего файла с расширением .instantanea."
+				+ "</body>" + "</html>";
 	}
-	
+
 	@Override
 	public String texto_de_boton_compartir_markdown() {
-	    return "Получить ссылки на логи в формате Markdown без отчёта";
+		return "Получить ссылки на логи в формате Markdown без отчёта";
 	}
-	
+
 }

@@ -22,191 +22,188 @@ import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 
 public class LectadorDeConsolasHoloTalk extends LectadorDeConsolasGUI {
 
-    public static String ID = "holotalk";
+	public static String ID = "holotalk";
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    
+	public LectadorDeConsolasHoloTalk() {
 
-    
-    public LectadorDeConsolasHoloTalk() {
-    	
-        super();
-    
-        colorFondo = ConfigColor.de("tema.holotalk.lectador.color.fondo", java.awt.Color.BLACK);
-        colorTexto = ConfigColor.de("tema.holotalk.lectador.color.texto", java.awt.Color.WHITE);
-           colorError = ConfigColor.de("tema.holotalk.lectador.color.error", new java.awt.Color(255, 165, 0));
-          colorPila = ConfigColor.de("tema.holotalk.lectador.color.pila", java.awt.Color.BLUE);
-          colorFondoPanel = ConfigColor.de("tema.holotalk.lectador.color.fondo.panel", new java.awt.Color(30, 30, 30));
-        colorTextoPanel = ConfigColor.de("tema.holotalk.lectador.color.texto.panel", new java.awt.Color(200, 200, 200));
-        colorTextoNegro = ConfigColor.de("tema.holotalk.lectador.color.texto.negro", java.awt.Color.BLACK);
+		super();
 
-    }
+		colorFondo = ConfigColor.de("tema.holotalk.lectador.color.fondo", java.awt.Color.BLACK);
+		colorTexto = ConfigColor.de("tema.holotalk.lectador.color.texto", java.awt.Color.WHITE);
+		colorError = ConfigColor.de("tema.holotalk.lectador.color.error", new java.awt.Color(255, 165, 0));
+		colorPila = ConfigColor.de("tema.holotalk.lectador.color.pila", java.awt.Color.BLUE);
+		colorFondoPanel = ConfigColor.de("tema.holotalk.lectador.color.fondo.panel", new java.awt.Color(30, 30, 30));
+		colorTextoPanel = ConfigColor.de("tema.holotalk.lectador.color.texto.panel", new java.awt.Color(200, 200, 200));
+		colorTextoNegro = ConfigColor.de("tema.holotalk.lectador.color.texto.negro", java.awt.Color.BLACK);
 
-    @Override
-    protected void aplicarApariencia() {
-        // Solo apariencia, no datos
-        repaint();
-    }
+	}
 
-    @Override
-    protected String textoNormalLeyenda() {
-        return "Texto normal";
-    }
+	@Override
+	protected void aplicarApariencia() {
+		// Solo apariencia, no datos
+		repaint();
+	}
 
-    @Override
-    protected void instalarFondoApariencia(JLayeredPane capa) {
-        FondoPanel fondo = new FondoPanel(MonitorDePID.carpeta.resolve("imagenes/kiara_ame.png").toString());
-        fondo.setBounds(0, 0, getWidth(), getHeight());
-        capa.add(fondo, JLayeredPane.DEFAULT_LAYER);
+	@Override
+	protected String textoNormalLeyenda() {
+		return "Texto normal";
+	}
 
-        addComponentListener(new java.awt.event.ComponentAdapter() {
-            @Override
-            public void componentResized(java.awt.event.ComponentEvent e) {
-                if (fondo != null)
-                    fondo.setBounds(0, 0, getWidth(), getHeight());
-            }
-        });
+	@Override
+	protected void instalarFondoApariencia(JLayeredPane capa) {
+		FondoPanel fondo = new FondoPanel(MonitorDePID.carpeta.resolve("imagenes/kiara_ame.png").toString());
+		fondo.setBounds(0, 0, getWidth(), getHeight());
+		capa.add(fondo, JLayeredPane.DEFAULT_LAYER);
 
-        fondo.cargarAsincrono(pool, new Runnable() {
-            @Override
-            public void run() {
-                repaint();
-            }
-        });
-    }
+		addComponentListener(new java.awt.event.ComponentAdapter() {
+			@Override
+			public void componentResized(java.awt.event.ComponentEvent e) {
+				if (fondo != null)
+					fondo.setBounds(0, 0, getWidth(), getHeight());
+			}
+		});
 
-    private static class FondoPanel extends JPanel {
-        private volatile java.awt.Image imagen;
-        private final String ruta;
+		fondo.cargarAsincrono(pool, new Runnable() {
+			@Override
+			public void run() {
+				repaint();
+			}
+		});
+	}
 
-        public FondoPanel(String ruta) {
-            this.ruta = ruta;
-            setOpaque(false);
-        }
+	private static class FondoPanel extends JPanel {
+		private volatile java.awt.Image imagen;
+		private final String ruta;
 
-        @Override
-        protected void paintComponent(java.awt.Graphics g) {
-            super.paintComponent(g);
-            if (imagen != null) {
-                g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
-            }
-        }
+		public FondoPanel(String ruta) {
+			this.ruta = ruta;
+			setOpaque(false);
+		}
 
-        public void cargarAsincrono(java.util.concurrent.ExecutorService pool, final Runnable whenLoadedOnEDT) {
-            pool.submit(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        imagen = ImageIO.read(new File(ruta));
-                    } catch (Exception ex) {
-                        CrashDetectorLogger.log("No se pudo cargar fondo: " + ex.getMessage());
-                    }
-                    SwingUtilities.invokeLater(whenLoadedOnEDT);
-                }
-            });
-        }
-    }
+		@Override
+		protected void paintComponent(java.awt.Graphics g) {
+			super.paintComponent(g);
+			if (imagen != null) {
+				g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
+			}
+		}
 
-    @Override
-    public String id() {
-        return ID;
-    }
+		public void cargarAsincrono(java.util.concurrent.ExecutorService pool, final Runnable whenLoadedOnEDT) {
+			pool.submit(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						imagen = ImageIO.read(new File(ruta));
+					} catch (Exception ex) {
+						CrashDetectorLogger.log("No se pudo cargar fondo: " + ex.getMessage());
+					}
+					SwingUtilities.invokeLater(whenLoadedOnEDT);
+				}
+			});
+		}
+	}
 
-    @Override
-    public void init() {
-        // Inicializar todos los colores primero
+	@Override
+	public String id() {
+		return ID;
+	}
 
-        // Luego inicializar la interfaz
-        super.init();
-    }
+	@Override
+	public void init() {
+		// Inicializar todos los colores primero
 
-    @Override
-    public List<ElementoConfig> obtenerElementosConfigs() {
-        List<ElementoConfig> elementos = new java.util.ArrayList<>();
-        elementos.add(colorFondo);
-        elementos.add(colorTexto);
-        elementos.add(colorError);
-        elementos.add(colorPila);
-        elementos.add(colorFondoPanel);
-        elementos.add(colorTextoPanel);
-        elementos.add(colorTextoNegro);
-        return elementos;
-    }
+		// Luego inicializar la interfaz
+		super.init();
+	}
 
-    @Override
-    public void procesarHipervinculo(String url) {
-        try {
-            String sinPrefijo = url.substring("lectador://".length());
-            CrashDetectorLogger.log("sin prefijo " + sinPrefijo);
-            int idx = sinPrefijo.lastIndexOf(":");
-            if (idx == -1) {
-                CrashDetectorLogger.logException(new IllegalArgumentException("URL de lectador inválida: " + url));
-                return;
-            }
+	@Override
+	public List<ElementoConfig> obtenerElementosConfigs() {
+		List<ElementoConfig> elementos = new java.util.ArrayList<>();
+		elementos.add(colorFondo);
+		elementos.add(colorTexto);
+		elementos.add(colorError);
+		elementos.add(colorPila);
+		elementos.add(colorFondoPanel);
+		elementos.add(colorTextoPanel);
+		elementos.add(colorTextoNegro);
+		return elementos;
+	}
 
-            String rutaArchivo = sinPrefijo.substring(0, idx);
-            int numeroLinea = Integer.parseInt(sinPrefijo.substring(idx + 1));
-            CrashDetectorLogger.log("ruta " + rutaArchivo);
+	@Override
+	public void procesarHipervinculo(String url) {
+		try {
+			String sinPrefijo = url.substring("lectador://".length());
+			CrashDetectorLogger.log("sin prefijo " + sinPrefijo);
+			int idx = sinPrefijo.lastIndexOf(":");
+			if (idx == -1) {
+				CrashDetectorLogger.logException(new IllegalArgumentException("URL de lectador inválida: " + url));
+				return;
+			}
 
-            Consola consolaSeleccionada = null;
-            for (Consola c : MonitorDePID.consolas) {
-                if (c.archivo.toString().equals(rutaArchivo)) {
-                    consolaSeleccionada = c;
-                    break;
-                }
-            }
+			String rutaArchivo = sinPrefijo.substring(0, idx);
+			int numeroLinea = Integer.parseInt(sinPrefijo.substring(idx + 1));
+			CrashDetectorLogger.log("ruta " + rutaArchivo);
 
-            if (consolaSeleccionada == null) {
-                javax.swing.JOptionPane.showMessageDialog(null,
-                        "No se encontró la consola para el archivo: " + rutaArchivo, "Error",
-                        javax.swing.JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+			Consola consolaSeleccionada = null;
+			for (Consola c : MonitorDePID.consolas) {
+				if (c.archivo.toString().equals(rutaArchivo)) {
+					consolaSeleccionada = c;
+					break;
+				}
+			}
 
-            CrashDetectorLogger.log("seleccionada " + consolaSeleccionada.archivo.toString());
+			if (consolaSeleccionada == null) {
+				javax.swing.JOptionPane.showMessageDialog(null,
+						"No se encontró la consola para el archivo: " + rutaArchivo, "Error",
+						javax.swing.JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 
-            final LectadorDeConsolasHoloTalk lector = new LectadorDeConsolasHoloTalk();
-            lector.init();
-            lector.setVisible(true);
+			CrashDetectorLogger.log("seleccionada " + consolaSeleccionada.archivo.toString());
 
-            final String nombreArchivo = new File(consolaSeleccionada.archivo.toString()).getName();
-            lector.cmbConsolas.setSelectedItem(nombreArchivo);
+			final LectadorDeConsolasHoloTalk lector = new LectadorDeConsolasHoloTalk();
+			lector.init();
+			lector.setVisible(true);
 
-            final Consola consolaFinal = consolaSeleccionada;
-            lector.pool.submit(new Runnable() {
-                @Override
-                public void run() {
-                    java.util.List<String> lineas = lector.cacheLineasPorConsola.get(nombreArchivo);
-                    if (lineas == null) {
-                        lineas = java.util.Arrays.asList(consolaFinal.contenido_verificar.split(Verificaciones.nl));
-                        lector.cacheLineasPorConsola.put(nombreArchivo, lineas);
-                    }
+			final String nombreArchivo = new File(consolaSeleccionada.archivo.toString()).getName();
+			lector.cmbConsolas.setSelectedItem(nombreArchivo);
 
-                    final java.util.List<String> lineasFinal = lineas;
-                    final int salto = Math.max(0, Math.min(numeroLinea, lineasFinal.size() - 1));
+			final Consola consolaFinal = consolaSeleccionada;
+			lector.pool.submit(new Runnable() {
+				@Override
+				public void run() {
+					java.util.List<String> lineas = lector.cacheLineasPorConsola.get(nombreArchivo);
+					if (lineas == null) {
+						lineas = java.util.Arrays.asList(consolaFinal.contenido_verificar.split(Verificaciones.nl));
+						lector.cacheLineasPorConsola.put(nombreArchivo, lineas);
+					}
 
-                    SwingUtilities.invokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            lector.refrescarModeloCon(lineasFinal);
-                            try {
-                                if (salto >= 0 && salto < lector.lineasActuales.size()) {
-                                    lector.listaRegistros.setSelectedIndex(salto);
-                                    lector.listaRegistros.ensureIndexIsVisible(salto);
-                                    lector.listaRegistros.requestFocus();
-                                    CrashDetectorLogger.log("línea seleccionada en JList: " + salto);
-                                }
-                            } catch (Exception ex) {
-                                CrashDetectorLogger.logException(ex);
-                            }
-                        }
-                    });
-                }
-            });
+					final java.util.List<String> lineasFinal = lineas;
+					final int salto = Math.max(0, Math.min(numeroLinea, lineasFinal.size() - 1));
 
-        } catch (Exception ex) {
-            CrashDetectorLogger.logException(ex);
-        }
-    }
+					SwingUtilities.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							lector.refrescarModeloCon(lineasFinal);
+							try {
+								if (salto >= 0 && salto < lector.lineasActuales.size()) {
+									lector.listaRegistros.setSelectedIndex(salto);
+									lector.listaRegistros.ensureIndexIsVisible(salto);
+									lector.listaRegistros.requestFocus();
+									CrashDetectorLogger.log("línea seleccionada en JList: " + salto);
+								}
+							} catch (Exception ex) {
+								CrashDetectorLogger.logException(ex);
+							}
+						}
+					});
+				}
+			});
+
+		} catch (Exception ex) {
+			CrashDetectorLogger.logException(ex);
+		}
+	}
 }

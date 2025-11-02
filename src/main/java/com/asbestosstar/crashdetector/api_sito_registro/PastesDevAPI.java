@@ -42,62 +42,6 @@ public class PastesDevAPI implements APIdeSitioDeRegistro {
 		return sitios;
 	}
 
-	@Override
-	public String publicarRegistro(Consola registro) {
-		try {
-			// Contenido del log a publicar (UTF-8 recomendado)
-			String contenido = registro.obtainerContenidoParaPublicar();
-			byte[] datos = contenido.getBytes(StandardCharsets.UTF_8);
-
-			// Normalizar endpoint desde Config (APIdeSitioDeRegistro.sitioDeConfig())
-			String endpoint = normalizarEndpoint(APIdeSitioDeRegistro.sitioDeConfig());
-			URL url = new URL(endpoint);
-
-			// Enviar POST GZIP y procesar la respuesta
-			HttpURLConnection con = (HttpURLConnection) url.openConnection(Proxy.NO_PROXY);
-			con.setRequestMethod("POST");
-			con.setConnectTimeout(TIMEOUT);
-			con.setReadTimeout(TIMEOUT);
-			con.setRequestProperty("User-Agent", UA);
-			con.setRequestProperty("Content-Type", "text/plain; charset=utf-8");
-			con.setRequestProperty("Content-Encoding", "gzip");
-			con.setDoOutput(true);
-
-			// Escribir cuerpo comprimido
-			try (OutputStream os = con.getOutputStream()) {
-				os.write(comprimirGZIP(datos));
-			}
-
-			int code = con.getResponseCode();
-			if (code != HttpURLConnection.HTTP_CREATED && code != HttpURLConnection.HTTP_OK) {
-				// Intentar leer error para log
-				String err = leer(con.getErrorStream());
-				CrashDetectorLogger.log("PastesDev HTTP " + code + (err == null ? "" : (": " + err)));
-				return null;
-			}
-
-			// 1) Intentar desde Location
-			String location = con.getHeaderField("Location");
-			String key = extraerKeyDeLocation(location);
-			if (key == null || key.isEmpty()) {
-				// 2) Intentar desde JSON del body
-				String body = leer(con.getInputStream());
-				key = extraerKeyDeJson(body);
-			}
-
-			if (key == null || key.isEmpty()) {
-				CrashDetectorLogger.log("PastesDev: no se pudo extraer la clave del paste.");
-				return null;
-			}
-
-			// Enlace público
-			return "https://pastes.dev/" + key;
-		} catch (Exception ex) {
-			CrashDetectorLogger.logException(ex);
-			return null;
-		}
-	}
-
 	/*
 	 * ========================= Métodos auxiliares =========================
 	 */
@@ -190,4 +134,58 @@ public class PastesDevAPI implements APIdeSitioDeRegistro {
 
 		return json.substring(pos + 1, fin);
 	}
+
+	// PastesDevAPI.java
+	@Override
+	public String publicarTexto(String nombreSugerido, String contenido) throws ErrorConPublicar {
+		try {
+			byte[] datos = (contenido == null ? "" : contenido).getBytes(StandardCharsets.UTF_8);
+			String endpoint = normalizarEndpoint(APIdeSitioDeRegistro.sitioDeConfig());
+			URL url = new URL(endpoint);
+
+			HttpURLConnection con = (HttpURLConnection) url.openConnection(Proxy.NO_PROXY);
+			con.setRequestMethod("POST");
+			con.setConnectTimeout(TIMEOUT);
+			con.setReadTimeout(TIMEOUT);
+			con.setRequestProperty("User-Agent", UA);
+			con.setRequestProperty("Content-Type", "text/plain; charset=utf-8");
+			con.setRequestProperty("Content-Encoding", "gzip");
+			con.setDoOutput(true);
+
+			try (OutputStream os = con.getOutputStream()) {
+				os.write(comprimirGZIP(datos));
+			}
+
+			int code = con.getResponseCode();
+			if (code != HttpURLConnection.HTTP_CREATED && code != HttpURLConnection.HTTP_OK) {
+				String err = leer(con.getErrorStream());
+				throw new ErrorConPublicar("PastesDev HTTP " + code + (err == null ? "" : (": " + err)));
+			}
+
+			String location = con.getHeaderField("Location");
+			String key = extraerKeyDeLocation(location);
+			if (key == null || key.isEmpty()) {
+				String body = leer(con.getInputStream());
+				key = extraerKeyDeJson(body);
+			}
+			if (key == null || key.isEmpty()) {
+				throw new ErrorConPublicar("PastesDev sin clave en la respuesta");
+			}
+			return "https://pastes.dev/" + key;
+		} catch (Exception ex) {
+			throw new ErrorConPublicar(ex.getMessage());
+		}
+	}
+
+	@Override
+	public String publicarRegistro(Consola registro) {
+		try {
+			return publicarTexto(registro.archivo != null ? registro.archivo.getFileName().toString() : "log.txt",
+					registro.obtainerContenidoParaPublicar());
+		} catch (ErrorConPublicar e) {
+			CrashDetectorLogger.logException(e);
+			return null;
+		}
+	}
+
 }

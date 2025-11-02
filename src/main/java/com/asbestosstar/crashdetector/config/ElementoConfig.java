@@ -25,18 +25,21 @@ public interface ElementoConfig<T> {
 	 * @param valor
 	 */
 	public void escribir(T valor);
-	
-	
+
 	/**
-	 * el nombre para el publico en la editor de configuraciones. Si no hay un valor devuelve la clave
+	 * el nombre para el publico en la editor de configuraciones. Si no hay un valor
+	 * devuelve la clave
+	 * 
 	 * @return
 	 */
 	public String obtenerNombreParaMostrar();
-	
+
 	/**
-	 * el nombre para el publico en la editor de configuraciones. preferemos un valor localizado e.g. () -> MonitorDePID.idioma.miNombreParaMostrar();
+	 * el nombre para el publico en la editor de configuraciones. preferemos un
+	 * valor localizado e.g. () -> MonitorDePID.idioma.miNombreParaMostrar();
+	 * 
 	 * @param nombre
 	 */
 	public void establecerNombreParaMostrar(Supplier<String> nombre);
-	
+
 }

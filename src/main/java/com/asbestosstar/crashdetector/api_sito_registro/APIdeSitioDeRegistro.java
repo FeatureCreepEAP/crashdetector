@@ -2,8 +2,8 @@ package com.asbestosstar.crashdetector.api_sito_registro;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.nio.charset.StandardCharsets;
 
-import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Consola;
 
 public interface APIdeSitioDeRegistro {
@@ -11,29 +11,61 @@ public interface APIdeSitioDeRegistro {
 	List<APIdeSitioDeRegistro> APIS = new ArrayList<APIdeSitioDeRegistro>();
 
 	public static APIdeSitioDeRegistro obtenerAPIdeConfig() throws NoAPIdeRegistro {
-
-		String nom = Config.obtenerInstancia().obtenerApiSeleccionada();
+		String nom = com.asbestosstar.crashdetector.Config.obtenerInstancia().obtenerApiSeleccionada();
 		for (APIdeSitioDeRegistro reg : APIS) {
 			if (reg.nombre().equals(nom)) {
 				return reg;
 			}
 		}
-
 		throw new NoAPIdeRegistro();
 	}
 
-	public String nombre();
+	String nombre();
 
 	/**
+	 * Publica un registro completo leyendo su contenido desde la Consola.
 	 * 
-	 * @return enlance TODO mas de uno
+	 * @return enlace único del registro publicado.
 	 */
-	public String publicarRegistro(Consola registro) throws DemasiadoGrande, ErrorConPublicar;
+	String publicarRegistro(Consola registro) throws DemasiadoGrande, ErrorConPublicar;
 
-	public List<String> sitiosPorDefecto();
+	/**
+	 * Publica texto arbitrario (sin depender de la clase Consola). Las
+	 * implementaciones deben aplicar sus validaciones de tamaño/líneas.
+	 *
+	 * @param nombreSugerido solo informativo (algunos servicios lo ignoran)
+	 * @param contenido      texto a publicar
+	 * @return enlace del contenido publicado
+	 */
+	String publicarTexto(String nombreSugerido, String contenido) throws DemasiadoGrande, ErrorConPublicar;
+
+	/**
+	 * Sitios por defecto de la API.
+	 */
+	List<String> sitiosPorDefecto();
 
 	public static String sitioDeConfig() {
-		return Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado();
+		return com.asbestosstar.crashdetector.Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado();
+	}
+
+// En APIdeSitioDeRegistro
+	/**
+	 * PUBLICACIÓN EN PARTES (COMPORTAMIENTO POR DEFECTO SIN LÍMITES): - Por defecto
+	 * NO divide el contenido. Publica en una sola petición. - Cualquier API que
+	 * requiera límites/partición DEBE sobrescribir este método.
+	 *
+	 * @return lista con un único enlace si la publicación se hace en una sola
+	 *         pieza.
+	 */
+	default List<String> publicarRegistroEnPartes(com.asbestosstar.crashdetector.Consola registro)
+			throws DemasiadoGrande, ErrorConPublicar, NoAPIdeRegistro {
+		final String nombre = (registro.archivo != null) ? registro.archivo.getFileName().toString() : "log.txt";
+		final String contenido = registro.obtainerContenidoParaPublicar();
+
+		String enlace = publicarTexto(nombre, contenido); // sin división por defecto
+		ArrayList<String> lista = new ArrayList<>();
+		lista.add(enlace);
+		return lista;
 	}
 
 }

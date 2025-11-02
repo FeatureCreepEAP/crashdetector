@@ -9,7 +9,6 @@ public class ConfigDouble implements ElementoConfig<Double> {
 	private final String clave;
 	public Supplier<String> nombre;
 
-
 	private ConfigDouble(String clave) {
 		this.clave = clave;
 	}
@@ -72,16 +71,16 @@ public class ConfigDouble implements ElementoConfig<Double> {
 	@Override
 	public String obtenerNombreParaMostrar() {
 		// TODO Auto-generated method stub
-		if(nombre!=null && nombre.get()!=null) {
+		if (nombre != null && nombre.get() != null) {
 			return nombre.get();
 		}
-		
+
 		return clave;
 	}
 
 	@Override
 	public void establecerNombreParaMostrar(Supplier<String> nombre) {
 		// TODO Auto-generated method stub
-		this.nombre=nombre;
+		this.nombre = nombre;
 	}
 }

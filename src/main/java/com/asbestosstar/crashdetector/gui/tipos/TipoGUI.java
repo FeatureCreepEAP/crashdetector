@@ -342,7 +342,6 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		return obtenerGUIs().getOrDefault(str.obtener(), por_defecto).get();
 	}
 
-	
 	/**
 	 * Panal Para Config
 	 */
@@ -391,8 +390,8 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		public Map<String, Supplier<EditorPlantilla>> obtenerGUIs() {
 			return EditorPlantilla.GUIS;
 		}
-	};	
-	
+	};
+
 	/**
 	 * Editor de GUIs
 	 */
@@ -417,9 +416,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 			return EditorGUI.GUIS;
 		}
 	};
-	
-	
-	
+
 	/**
 	 * Registro estático de todos los tipos de GUI en la lista global.
 	 */

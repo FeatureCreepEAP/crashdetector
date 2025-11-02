@@ -45,54 +45,6 @@ public class CrashDetectorPasteAPI implements APIdeSitioDeRegistro {
 		return sitios;
 	}
 
-	@Override
-	public String publicarRegistro(Consola registro) {
-		try {
-			// Contenido del log (UTF-8)
-			String contenido = registro.obtainerContenidoParaPublicar();
-			byte[] datos = contenido.getBytes(StandardCharsets.UTF_8);
-
-			// Normalizar endpoint según Config
-			String endpoint = normalizarEndpoint(APIdeSitioDeRegistro.sitioDeConfig());
-			URL url = new URL(endpoint);
-
-			HttpURLConnection con = (HttpURLConnection) url.openConnection(Proxy.NO_PROXY);
-			con.setRequestMethod("POST");
-			con.setConnectTimeout(TIMEOUT);
-			con.setReadTimeout(TIMEOUT);
-			con.setRequestProperty("User-Agent", UA);
-			con.setRequestProperty("Content-Type", "application/octet-stream");
-			con.setRequestProperty("Content-Encoding", "gzip");
-			con.setDoOutput(true);
-
-			// Enviar cuerpo comprimido en GZIP
-			try (OutputStream os = con.getOutputStream()) {
-				os.write(comprimirGZIP(datos));
-			}
-
-			int code = con.getResponseCode();
-			if (code != HttpURLConnection.HTTP_OK) {
-				String err = leer(con.getErrorStream());
-				CrashDetectorLogger.log("CrashDetectorPaste HTTP " + code + (err == null ? "" : (": " + err)));
-				return null;
-			}
-
-			// Leer JSON y extraer "link"
-			String body = leer(con.getInputStream());
-			String link = extraerLinkDeJson(body);
-			if (link == null || link.isEmpty()) {
-				CrashDetectorLogger.log("CrashDetectorPaste: no se pudo extraer el enlace.");
-				return null;
-			}
-
-			// Algunos servidores devuelven barras escapadas
-			return link.replace("\\/", "/");
-		} catch (Exception ex) {
-			CrashDetectorLogger.logException(ex);
-			return null;
-		}
-	}
-
 	/*
 	 * ========================= Utilidades privadas =========================
 	 */
@@ -166,4 +118,53 @@ public class CrashDetectorPasteAPI implements APIdeSitioDeRegistro {
 
 		return json.substring(pos + 1, fin);
 	}
+
+	// CrashDetectorPasteAPI.java
+	@Override
+	public String publicarTexto(String nombreSugerido, String contenido) throws ErrorConPublicar {
+		try {
+			byte[] datos = (contenido == null ? "" : contenido).getBytes(StandardCharsets.UTF_8);
+			String endpoint = normalizarEndpoint(APIdeSitioDeRegistro.sitioDeConfig());
+			URL url = new URL(endpoint);
+
+			HttpURLConnection con = (HttpURLConnection) url.openConnection(Proxy.NO_PROXY);
+			con.setRequestMethod("POST");
+			con.setConnectTimeout(TIMEOUT);
+			con.setReadTimeout(TIMEOUT);
+			con.setRequestProperty("User-Agent", UA);
+			con.setRequestProperty("Content-Type", "application/octet-stream");
+			con.setRequestProperty("Content-Encoding", "gzip");
+			con.setDoOutput(true);
+
+			try (OutputStream os = con.getOutputStream()) {
+				os.write(comprimirGZIP(datos));
+			}
+
+			int code = con.getResponseCode();
+			if (code != HttpURLConnection.HTTP_OK) {
+				String err = leer(con.getErrorStream());
+				throw new ErrorConPublicar("CrashDetectorPaste HTTP " + code + (err == null ? "" : (": " + err)));
+			}
+
+			String body = leer(con.getInputStream());
+			String link = extraerLinkDeJson(body);
+			if (link == null || link.isEmpty())
+				throw new ErrorConPublicar("Respuesta sin link");
+			return link.replace("\\/", "/");
+		} catch (Exception ex) {
+			throw new ErrorConPublicar(ex.getMessage());
+		}
+	}
+
+	@Override
+	public String publicarRegistro(Consola registro) {
+		try {
+			return publicarTexto(registro.archivo != null ? registro.archivo.getFileName().toString() : "log.txt",
+					registro.obtainerContenidoParaPublicar());
+		} catch (ErrorConPublicar e) {
+			CrashDetectorLogger.logException(e);
+			return null;
+		}
+	}
+
 }

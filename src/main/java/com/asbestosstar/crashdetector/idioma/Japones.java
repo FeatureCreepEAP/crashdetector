@@ -3506,410 +3506,383 @@ public class Japones implements Idioma {
 
 	@Override
 	public String restablecerPlantilla() {
-	    return "テンプレートをリセット";
+		return "テンプレートをリセット";
 	}
 
 	@Override
 	public String restablecer() {
-	    return "リセット";
+		return "リセット";
 	}
 
 	@Override
 	public String restablecerImagenMensjae(String nombreImagen) {
-	    return nombreImagen + " を既定値にリセットしますか？";
+		return nombreImagen + " を既定値にリセットしますか？";
 	}
 
 	@Override
 	public String restablecerPlantillaMensaje() {
-	    return "テンプレートを既定値にリセットしますか？";
+		return "テンプレートを既定値にリセットしますか？";
 	}
-	
+
 	@Override
 	public String faltar_de_clases_azurelib() {
-	    return "<b style='color:#" + config.obtenerColorError()
-	           + "'>AzureLibのクラスが不足しています。すでにAzureLibを導入している場合は、2025年10月8日以前のバージョンをインストールしてください。これはよくある問題です。AzureLibを導入していない場合は、最新バージョンをインストールしてください。</b>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>AzureLibのクラスが不足しています。すでにAzureLibを導入している場合は、2025年10月8日以前のバージョンをインストールしてください。これはよくある問題です。AzureLibを導入していない場合は、最新バージョンをインストールしてください。</b>";
 	}
+
 	@Override
 	public String errorHealightINT() {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "MOD <code>healight</code> が重大なエラーを引き起こしています: <code>java.lang.NoSuchFieldError: INT</code>。 "
-	           + "このエラーは、MODがMCForge 47.10のMinecraft 1.20+では存在しなくなったフィールドにアクセスしようとしたために発生します。 "
-	           + "この問題のため、ゲームを起動できません。</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>"
+				+ "MOD <code>healight</code> が重大なエラーを引き起こしています: <code>java.lang.NoSuchFieldError: INT</code>。 "
+				+ "このエラーは、MODがMCForge 47.10のMinecraft 1.20+では存在しなくなったフィールドにアクセスしようとしたために発生します。 "
+				+ "この問題のため、ゲームを起動できません。</b>";
 	}
 
 	@Override
 	public String solucionHealightINT() {
-	    return "• MOD <code>healight</code> を削除または更新してください。 "
-	           + "現在のバージョンは1.20.1用のMinecraftForge 47.10と互換性がありません。 "
-	           + "MODの最新版を探すか、代替案の使用を検討してください。";
+		return "• MOD <code>healight</code> を削除または更新してください。 " + "現在のバージョンは1.20.1用のMinecraftForge 47.10と互換性がありません。 "
+				+ "MODの最新版を探すか、代替案の使用を検討してください。";
 	}
 
 	@Override
 	public String nombreErrorHealightINT() {
-	    return "重大なエラー：healight - フィールド 'INT' が見つかりません";
+		return "重大なエラー：healight - フィールド 'INT' が見つかりません";
 	}
-	
+
 	@Override
-	public String errorMetodoAbstractoNoImplementadoDetallado(String clase, String metodo, String interfaz, String origen) {
-	    String colorError = config.obtenerColorError();
-	    StringBuilder sb = new StringBuilder();
-	    sb.append("<b style='color:#").append(colorError).append(";'>")
-	      .append("クラス <code>").append(clase).append("</code> が必須メソッドを実装していません：<br>")
-	      .append("<code>").append(metodo).append("</code><br>")
-	      .append("インターフェース <code>").append(interfaz).append("</code> から。");
+	public String errorMetodoAbstractoNoImplementadoDetallado(String clase, String metodo, String interfaz,
+			String origen) {
+		String colorError = config.obtenerColorError();
+		StringBuilder sb = new StringBuilder();
+		sb.append("<b style='color:#").append(colorError).append(";'>").append("クラス <code>").append(clase)
+				.append("</code> が必須メソッドを実装していません：<br>").append("<code>").append(metodo).append("</code><br>")
+				.append("インターフェース <code>").append(interfaz).append("</code> から。");
 
-	    if (!origen.isEmpty()) {
-	        sb.append("<br><br>問題のあるMODまたはファイル: <code>").append(origen).append("</code>。");
-	    }
+		if (!origen.isEmpty()) {
+			sb.append("<br><br>問題のあるMODまたはファイル: <code>").append(origen).append("</code>。");
+		}
 
-	    sb.append("</b>");
-	    return sb.toString();
+		sb.append("</b>");
+		return sb.toString();
 	}
 
 	@Override
 	public String solucionMetodoAbstractoNoImplementado() {
-	    return "• このエラーは、MODがインターフェースを実装しているが必須メソッドを省略した場合に発生します。"
-	           + "<b>両方のMOD</b> を更新してください（インターフェースを定義しているものとそれを実装しているもの）。"
-	           + "どれかわからない場合は、エラーメッセージに表示されている名前を確認してください。";
+		return "• このエラーは、MODがインターフェースを実装しているが必須メソッドを省略した場合に発生します。"
+				+ "<b>両方のMOD</b> を更新してください（インターフェースを定義しているものとそれを実装しているもの）。"
+				+ "どれかわからない場合は、エラーメッセージに表示されている名前を確認してください。";
 	}
 
 	@Override
 	public String nombreErrorMetodoAbstractoNoImplementado() {
-	    return "インターフェースのメソッドが未実装 (AbstractMethodError)";
+		return "インターフェースのメソッドが未実装 (AbstractMethodError)";
 	}
-	
+
 	@Override
 	public String errorMetadataAnimacionEnServidor() {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "MODが<b>専用サーバー</b>上で<b>クライアント側</b>のクラス "
-	           + "(<code>AnimationMetadataSection</code>)を読み込もうとしていますが、これは不可能です。 "
-	           + "このエラーは、MODがクライアントとサーバーのコードを正しく分離していない場合に発生します。 "
-	           + "<code>ModernFix</code> の存在がこの問題を表面化する可能性がありますが、直接の原因ではありません。</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>" + "MODが<b>専用サーバー</b>上で<b>クライアント側</b>のクラス "
+				+ "(<code>AnimationMetadataSection</code>)を読み込もうとしていますが、これは不可能です。 "
+				+ "このエラーは、MODがクライアントとサーバーのコードを正しく分離していない場合に発生します。 "
+				+ "<code>ModernFix</code> の存在がこの問題を表面化する可能性がありますが、直接の原因ではありません。</b>";
 	}
 
 	@Override
 	public String solucionErrorMetadataAnimacionEnServidor() {
-	    return "• <b>即時対応：</b><code>ModernFix</code> を一時的に削除してサーバーが起動するか確認してください。 "
-	           + "起動できた場合、別のMODがサーバー上でクライアントクラスを読み込んでいることが原因です。<br>"
-	           + "• <b>根本的な解決策：</b>問題のあるMOD（アニメーションリソース、カスタムテクスチャ、グラフィックライブラリを使用しているMODなど）を特定し、更新または削除してください。<br>";
+		return "• <b>即時対応：</b><code>ModernFix</code> を一時的に削除してサーバーが起動するか確認してください。 "
+				+ "起動できた場合、別のMODがサーバー上でクライアントクラスを読み込んでいることが原因です。<br>"
+				+ "• <b>根本的な解決策：</b>問題のあるMOD（アニメーションリソース、カスタムテクスチャ、グラフィックライブラリを使用しているMODなど）を特定し、更新または削除してください。<br>";
 	}
 
 	@Override
 	public String nombreErrorMetadataAnimacionEnServidor() {
-	    return "サーバーでクライアント側のクラスが読み込まれた (AnimationMetadataSection)";
+		return "サーバーでクライアント側のクラスが読み込まれた (AnimationMetadataSection)";
 	}
-	
+
 	@Override
 	public String errorConfiguracionConnectorCorrupta() {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "<code>Sinytra Connector</code> のMODの設定ファイルが破損しています。 "
-	           + "これは、ゲームの予期しない終了、書き込みエラー、またはMOD間の競合により、"
-	           + "ファイルにヌル文字 (<code>\\u0000</code>) が詰まってしまうことが原因で発生します。</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>"
+				+ "<code>Sinytra Connector</code> のMODの設定ファイルが破損しています。 " + "これは、ゲームの予期しない終了、書き込みエラー、またはMOD間の競合により、"
+				+ "ファイルにヌル文字 (<code>\\u0000</code>) が詰まってしまうことが原因で発生します。</b>";
 	}
 
 	@Override
 	public String solucionConfiguracionConnectorCorrupta() {
-	    return "• Minecraftインスタンスの <code>config/</code> フォルダへ移動してください。<br>"
-	           + "• connector関連のMODの設定ファイルを検索し、削除してください。<br>"
-	           + "• ゲームを再起動してください：Sinytra Connectorが新しいクリーンな設定ファイルを生成します。";
+		return "• Minecraftインスタンスの <code>config/</code> フォルダへ移動してください。<br>"
+				+ "• connector関連のMODの設定ファイルを検索し、削除してください。<br>"
+				+ "• ゲームを再起動してください：Sinytra Connectorが新しいクリーンな設定ファイルを生成します。";
 	}
 
 	@Override
 	public String nombreErrorConfiguracionConnectorCorrupta() {
-	    return "Sinytra Connector 設定ファイル破損";
+		return "Sinytra Connector 設定ファイル破損";
 	}
-	
+
 	@Override
 	public String errorJarCorruptoConNombre(String nombreJar) {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "ファイル <code>" + nombreJar + "</code> が破損しているか不完全です。<br>"
-	           + "最終的なZIPファイルのヘッダーが欠落しているため、システムはその内容を読み取れません。<br>"
-	           + "このエラーは、ダウンロードが中断された場合やランチャーの障害後に発生することが多いです。</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>" + "ファイル <code>" + nombreJar
+				+ "</code> が破損しているか不完全です。<br>" + "最終的なZIPファイルのヘッダーが欠落しているため、システムはその内容を読み取れません。<br>"
+				+ "このエラーは、ダウンロードが中断された場合やランチャーの障害後に発生することが多いです。</b>";
 	}
 
 	@Override
 	public String nombreErrorJarCorruptoConNombre() {
-	    return "破損したJARファイル（特定の名前付き）";
+		return "破損したJARファイル（特定の名前付き）";
 	}
 
 	@Override
 	public String solucionJarCorrupto() {
-	    return "• <b>破損したファイルを削除し</b>、公式サイト（CurseForge、MinecraftStorageなど）から再ダウンロードしてください。<br>"
-	           + "• CurseForge、Technic、Luna Pixelなどのランチャーを使用している場合は、"
-	           + "ファイルの整合性をより適切に確認できる<b>ATLauncher</b>または<b>Prism Launcher</b>への切り替えを検討してください。<br>"
-	           + "• ダウンロード中はインターネット接続が安定していることを確認してください。";
+		return "• <b>破損したファイルを削除し</b>、公式サイト（CurseForge、MinecraftStorageなど）から再ダウンロードしてください。<br>"
+				+ "• CurseForge、Technic、Luna Pixelなどのランチャーを使用している場合は、"
+				+ "ファイルの整合性をより適切に確認できる<b>ATLauncher</b>または<b>Prism Launcher</b>への切り替えを検討してください。<br>"
+				+ "• ダウンロード中はインターネット接続が安定していることを確認してください。";
 	}
-	
+
 	@Override
 	public String errorCargaNBTMundoCorruptoConByte(String byteCorrupto) {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "NBTファイルの一つが破損しているため、ワールドを読み込めません "
-	           + "(例: <code>level.dat</code>、<code>playerdata/*.dat</code>、またはチャンクデータ)。<br>"
-	           + "具体的なエラーは: <code>UTFDataFormatException: バイト " + byteCorrupto + " 付近で不正な入力形式</code>です。<br><br>"
-	           + "<b style='color:#" + config.obtenerColorAdvertencia() + ";'>"
-	           + "⚠️ 修復を試みる前に、ワールドフォルダ全体を完全にバックアップしてください。</b><br><br>"
-	           + "破損したファイルは、<a href='https://github.com/tryashtar/nbt-studio'>NBT Studio</a>のような<b>NBTエディタ</b>を使用して修復できます。<br>"
-	           + "深刻な損傷の場合は、<b>16進数エディタ</b>(HxDなど)を使って無効なバイトを検査・修正できます "
-	           + "(ただし、NBTフォーマットに精通している場合のみ推奨)。<br>"
-	           + "最終手段として、バックアップから復元するか、<code>FTB Backup</code>などのMODが提供する<i>ワールド修復</i>機能を使用してください。</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>" + "NBTファイルの一つが破損しているため、ワールドを読み込めません "
+				+ "(例: <code>level.dat</code>、<code>playerdata/*.dat</code>、またはチャンクデータ)。<br>"
+				+ "具体的なエラーは: <code>UTFDataFormatException: バイト " + byteCorrupto + " 付近で不正な入力形式</code>です。<br><br>"
+				+ "<b style='color:#" + config.obtenerColorAdvertencia() + ";'>"
+				+ "⚠️ 修復を試みる前に、ワールドフォルダ全体を完全にバックアップしてください。</b><br><br>"
+				+ "破損したファイルは、<a href='https://github.com/tryashtar/nbt-studio'>NBT Studio</a>のような<b>NBTエディタ</b>を使用して修復できます。<br>"
+				+ "深刻な損傷の場合は、<b>16進数エディタ</b>(HxDなど)を使って無効なバイトを検査・修正できます " + "(ただし、NBTフォーマットに精通している場合のみ推奨)。<br>"
+				+ "最終手段として、バックアップから復元するか、<code>FTB Backup</code>などのMODが提供する<i>ワールド修復</i>機能を使用してください。</b>";
 	}
 
 	@Override
 	public String solucionErrorCargaNBTMundoCorrupto() {
-	    return "• <b>修復を試みる前に、ワールドフォルダを完全にバックアップしてください</b>。<br>"
-	           + "• NBTエディタ(NBT Studioなど)を使用して、破損したファイルを開き修正します。<br>"
-	           + "• 失敗した場合は、壊れたバイトの位置で16進数エディタでファイルを確認します。<br>"
-	           + "• 経験がなければ、最近のバックアップから復元してください。";
+		return "• <b>修復を試みる前に、ワールドフォルダを完全にバックアップしてください</b>。<br>" + "• NBTエディタ(NBT Studioなど)を使用して、破損したファイルを開き修正します。<br>"
+				+ "• 失敗した場合は、壊れたバイトの位置で16進数エディタでファイルを確認します。<br>" + "• 経験がなければ、最近のバックアップから復元してください。";
 	}
 
 	@Override
 	public String nombreErrorCargaNBTMundoCorrupto() {
-	    return "ワールド破損：NBTデータの読み込みエラー";
+		return "ワールド破損：NBTデータの読み込みエラー";
 	}
-	
+
 	@Override
 	public String problema_con_openAL() {
-	    return "<span style='color:#" + config.obtenerColorError()
-	           + "'>OpenALに問題があります。Nouveauドライバーが原因の場合もありますが、アプリケーションに同梱されたOpenALのバージョンがディストリビューションのものと互換性がない場合もあり、その場合はディストリ自身のOpenALを使用する必要があります。詳細な対処法は以下のガイドを参照してください：<a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>LinuxでMinecraftの音声問題を修正する方法</a>。</span>";
+		return "<span style='color:#" + config.obtenerColorError()
+				+ "'>OpenALに問題があります。Nouveauドライバーが原因の場合もありますが、アプリケーションに同梱されたOpenALのバージョンがディストリビューションのものと互換性がない場合もあり、その場合はディストリ自身のOpenALを使用する必要があります。詳細な対処法は以下のガイドを参照してください：<a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>LinuxでMinecraftの音声問題を修正する方法</a>。</span>";
 	}
-	
+
 	@Override
 	public String errorArchivoBloqueadoPorOtroProceso() {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "他のプロセスがワールドファイルをロックしているため、サーバーを起動できません。<br>"
-	           + "これは以下のいずれかの場合に発生します：<br>"
-	           + "• すでにサーバーのインスタンスが実行中です。<br>"
-	           + "• ウイルス対策ソフトやファイルエクスプローラーがワールドフォルダを開いています。<br>"
-	           + "• 前回のプロセスが正常に終了せず、ファイルがロックされたままになっています。</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>" + "他のプロセスがワールドファイルをロックしているため、サーバーを起動できません。<br>"
+				+ "これは以下のいずれかの場合に発生します：<br>" + "• すでにサーバーのインスタンスが実行中です。<br>"
+				+ "• ウイルス対策ソフトやファイルエクスプローラーがワールドフォルダを開いています。<br>" + "• 前回のプロセスが正常に終了せず、ファイルがロックされたままになっています。</b>";
 	}
 
 	@Override
 	public String solucionErrorArchivoBloqueadoPorOtroProceso() {
-	    return "• <b>すべてのサーバーインスタンスを終了してください</b>（javaw.exeなどのバックグラウンドプロセスも含む）。<br>"
-	           + "• ホスティングパネル（Multicraftなど）を使用している場合は、パネルからサーバーを完全に再起動してください。<br>"
-	           + "• ファイルをブロックしている可能性がある場合は、<b>ウイルス対策ソフトを一時的に無効にしてください</b>。<br>"
-	           + "• ローカルシステムでは、ワールドフォルダを表示しているWindowsエクスプローラーのウィンドウをすべて閉じてください。<br>"
-	           + "• 問題が解決しない場合、ワールドフォルダ内の <code>session.lock</code> ファイルを手動で削除してください（別のサーバーが動作していないことを確認してから）。";
+		return "• <b>すべてのサーバーインスタンスを終了してください</b>（javaw.exeなどのバックグラウンドプロセスも含む）。<br>"
+				+ "• ホスティングパネル（Multicraftなど）を使用している場合は、パネルからサーバーを完全に再起動してください。<br>"
+				+ "• ファイルをブロックしている可能性がある場合は、<b>ウイルス対策ソフトを一時的に無効にしてください</b>。<br>"
+				+ "• ローカルシステムでは、ワールドフォルダを表示しているWindowsエクスプローラーのウィンドウをすべて閉じてください。<br>"
+				+ "• 問題が解決しない場合、ワールドフォルダ内の <code>session.lock</code> ファイルを手動で削除してください（別のサーバーが動作していないことを確認してから）。";
 	}
 
 	@Override
 	public String nombreErrorArchivoBloqueadoPorOtroProceso() {
-	    return "他のプロセスによってロックされたワールドファイル";
+		return "他のプロセスによってロックされたワールドファイル";
 	}
-	
+
 	@Override
 	public String errorClaseFinalExtendida(String claseHija, String clasePadreFinal) {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "MODがクラス <code>" + clasePadreFinal + "</code> を継承しようとしましたが、"
-	           + "このクラスは現在<b>final</b>として定義されており、継承できません。<br>"
-	           + "問題のあるクラスは：<code>" + claseHija + "</code>です。<br><br>"
-	           + "これは通常、Minecraftまたは他の基本MODの古いバージョン向けにコンパイルされたMODで発生します。"
-	           + "これらの基本MODは最近のバージョンでクラスを<code>final</code>にしています。</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>" + "MODがクラス <code>" + clasePadreFinal
+				+ "</code> を継承しようとしましたが、" + "このクラスは現在<b>final</b>として定義されており、継承できません。<br>" + "問題のあるクラスは：<code>"
+				+ claseHija + "</code>です。<br><br>" + "これは通常、Minecraftまたは他の基本MODの古いバージョン向けにコンパイルされたMODで発生します。"
+				+ "これらの基本MODは最近のバージョンでクラスを<code>final</code>にしています。</b>";
 	}
 
 	@Override
 	public String solucionErrorClaseFinalExtendida() {
-	    return "• <b>関係するすべてのMODを更新してください</b>。特に言及されている基本MODに関連している可能性があるMODに注意。<br>"
-	           + "• 問題が解決しない場合は、現在のMinecraftバージョンとその依存関係と互換性のあるMODのバージョンを探してください。<br>"
-	           + "• 場合によっては、子クラスを含むMODを一時的に削除することで原因を特定できます。";
+		return "• <b>関係するすべてのMODを更新してください</b>。特に言及されている基本MODに関連している可能性があるMODに注意。<br>"
+				+ "• 問題が解決しない場合は、現在のMinecraftバージョンとその依存関係と互換性のあるMODのバージョンを探してください。<br>"
+				+ "• 場合によっては、子クラスを含むMODを一時的に削除することで原因を特定できます。";
 	}
 
 	@Override
 	public String nombreErrorClaseFinalExtendida() {
-	    return "finalクラスからの継承試行";
+		return "finalクラスからの継承試行";
 	}
-	
+
 	@Override
 	public String errorRubidiumObsoletoConIris() {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "<b>Rubidium</b>（Forge用のSodiumの廃止されたフォーク）を<b>IrisまたはOculus</b>と一緒に使用しています。<br>"
-	           + "最近のMinecraftバージョン（1.19.2以降）では、"
-	           + "RubidiumはSodiumの進化に追いついておらず、依存関係に問題が生じています。<br><br>"
-	           + "パフォーマンスMOD（Sodium、Rubidium、Embeddium、Bedium、Xeoniumなど）またはIris Shadersと他のMODとの間で競合がある場合にも、このエラーが発生する可能性があります。</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>"
+				+ "<b>Rubidium</b>（Forge用のSodiumの廃止されたフォーク）を<b>IrisまたはOculus</b>と一緒に使用しています。<br>"
+				+ "最近のMinecraftバージョン（1.19.2以降）では、" + "RubidiumはSodiumの進化に追いついておらず、依存関係に問題が生じています。<br><br>"
+				+ "パフォーマンスMOD（Sodium、Rubidium、Embeddium、Bedium、Xeoniumなど）またはIris Shadersと他のMODとの間で競合がある場合にも、このエラーが発生する可能性があります。</b>";
 	}
 
 	@Override
 	public String solucionRubidiumObsoletoConIris() {
-	    return "• <code>mods</code>フォルダから<b>Rubidiumを削除してください</b>。<br>"
-	           + "• <b><a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a>をインストールしてください</b>、"
-	           + "これは1.20+でIris/Oculusをサポートする、アクティブで互換性のあるForge用Sodiumのフォークです。<br>"
-	           + "• 同時に複数のSodiumフォーク（例：RubidiumとEmbeddium）をインストールしないようにしてください。<br>"
-	           + "• IrisではなくOculusを使用している場合は、それもあなたのForgeおよびEmbeddiumのバージョンと互換性があるか確認してください。";
+		return "• <code>mods</code>フォルダから<b>Rubidiumを削除してください</b>。<br>"
+				+ "• <b><a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a>をインストールしてください</b>、"
+				+ "これは1.20+でIris/Oculusをサポートする、アクティブで互換性のあるForge用Sodiumのフォークです。<br>"
+				+ "• 同時に複数のSodiumフォーク（例：RubidiumとEmbeddium）をインストールしないようにしてください。<br>"
+				+ "• IrisではなくOculusを使用している場合は、それもあなたのForgeおよびEmbeddiumのバージョンと互換性があるか確認してください。";
 	}
 
 	@Override
 	public String nombreErrorRubidiumObsoletoConIris() {
-	    return "非推奨のRubidiumとIris/Oculus併用（OptionInstanceはfinal）";
+		return "非推奨のRubidiumとIris/Oculus併用（OptionInstanceはfinal）";
 	}
-	
+
 	@Override
 	public String errorVoiceChatPuertoOcupado() {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "<code>Simple Voice Chat</code> MODは、UDPポートが既に使用中であるか、設定されたIPアドレスが無効なため、音声サーバーを開始できません。<br>"
-	           + "これはゲームの起動を妨げませんが、音声チャット機能が無効になります。</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>"
+				+ "<code>Simple Voice Chat</code> MODは、UDPポートが既に使用中であるか、設定されたIPアドレスが無効なため、音声サーバーを開始できません。<br>"
+				+ "これはゲームの起動を妨げませんが、音声チャット機能が無効になります。</b>";
 	}
 
 	@Override
 	public String solucionErrorVoiceChatPuertoOcupado() {
-	    return "• <b>Minecraftの他のインスタンスや</b> UDPポート24454を使用しているアプリケーションを終了してください。<br>"
-	           + "• サーバー上で動作している場合は、<b>他のサービスが</b>そのポートを使用していないことを確認してください。<br>"
-	           + "• MODの設定 (<code>config/voicechat/</code>) で、UDPポートを空いているもの（例：24455）に変更してください。<br>"
-	           + "• カスタムIPアドレスを使用している場合は、正しいか確認するか、デフォルトを使用するために空白のままにしてください。";
+		return "• <b>Minecraftの他のインスタンスや</b> UDPポート24454を使用しているアプリケーションを終了してください。<br>"
+				+ "• サーバー上で動作している場合は、<b>他のサービスが</b>そのポートを使用していないことを確認してください。<br>"
+				+ "• MODの設定 (<code>config/voicechat/</code>) で、UDPポートを空いているもの（例：24455）に変更してください。<br>"
+				+ "• カスタムIPアドレスを使用している場合は、正しいか確認するか、デフォルトを使用するために空白のままにしてください。";
 	}
 
 	@Override
 	public String nombreErrorVoiceChatPuertoOcupado() {
-	    return "ボイスチャット：UDPポートが使用中または無効なIP";
+		return "ボイスチャット：UDPポートが使用中または無効なIP";
 	}
-	
+
 	@Override
 	public String errorBlockItemNuloCreate(String nombreBlockItem) {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "BlockItem <code>" + nombreBlockItem + "</code> がnullのブロックを参照しています。<br>"
-	           + "このエラーは通常、<b>Createのアドオン</b>（例：<code>dndecor</code>、<code>createdeco</code>）で発生し、"
-	           + "<code>Amendments</code>や<code>Moonshine</code>との競合、またはブロックの初期化ミスが原因です。<br>"
-	           + "<b>注：</b>これはAmendments自体の直接的なエラーではなく、レジストリ読み込みにおけるより深い問題の症状です。</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>" + "BlockItem <code>" + nombreBlockItem
+				+ "</code> がnullのブロックを参照しています。<br>"
+				+ "このエラーは通常、<b>Createのアドオン</b>（例：<code>dndecor</code>、<code>createdeco</code>）で発生し、"
+				+ "<code>Amendments</code>や<code>Moonshine</code>との競合、またはブロックの初期化ミスが原因です。<br>"
+				+ "<b>注：</b>これはAmendments自体の直接的なエラーではなく、レジストリ読み込みにおけるより深い問題の症状です。</b>";
 	}
 
 	@Override
 	public String solucionErrorBlockItemNuloCreate() {
-	    return "• <b>関連するすべてのMODを更新してください：</b>Create、Amendments、Moonshine、およびアドオン（特に<code>dndecor</code>と<code>createdeco</code>）を更新します。<br>"
-	           + "• 問題が解決しない場合、<b>Createアドオンを一時的に1つずつ削除して</b>原因を特定してください。<br>"
-	           + "• <b>AmendmentsとMoonshineが使用しているCreateおよびForgeのバージョンと互換性があるか</b>確認してください。<br>"
-	           + "• 問題のあるアドオンにベータ版または更新されたフォークがあるか確認してください。";
+		return "• <b>関連するすべてのMODを更新してください：</b>Create、Amendments、Moonshine、およびアドオン（特に<code>dndecor</code>と<code>createdeco</code>）を更新します。<br>"
+				+ "• 問題が解決しない場合、<b>Createアドオンを一時的に1つずつ削除して</b>原因を特定してください。<br>"
+				+ "• <b>AmendmentsとMoonshineが使用しているCreateおよびForgeのバージョンと互換性があるか</b>確認してください。<br>"
+				+ "• 問題のあるアドオンにベータ版または更新されたフォークがあるか確認してください。";
 	}
 
 	@Override
 	public String nombreErrorBlockItemNuloCreate() {
-	    return "Createアドオン内のnull BlockItem";
+		return "Createアドオン内のnull BlockItem";
 	}
-	
+
 	@Override
 	public String modIncompatibleConCargadorActivo(List<String> mods) {
-	    StringBuilder sb = new StringBuilder();
-	    sb.append("<b style='color:#").append(config.obtenerColorAdvertencia()).append(";'>")
-	      .append("アクティブなプラットフォーム（Forge、Fabricなど）に属さないMODが見つかりました：<ul>");
-	    for (String mod : mods) {
-	        sb.append("<li><code>").append(mod).append("</code></li>");
-	    }
-	    sb.append("</ul>これは通常、以下のいずれかの状況で発生します：<br>")
-	      .append("• 同じフォルダ内に<b>FabricとForge</b>のMODが混在している。<br>")
-	      .append("• 非互換なバージョンのMinecraft向けMODをインストールしている。<br>")
-	      .append("• MODが破損しているか、有効なJARファイルではない。</b>");
-	    return sb.toString();
+		StringBuilder sb = new StringBuilder();
+		sb.append("<b style='color:#").append(config.obtenerColorAdvertencia()).append(";'>")
+				.append("アクティブなプラットフォーム（Forge、Fabricなど）に属さないMODが見つかりました：<ul>");
+		for (String mod : mods) {
+			sb.append("<li><code>").append(mod).append("</code></li>");
+		}
+		sb.append("</ul>これは通常、以下のいずれかの状況で発生します：<br>").append("• 同じフォルダ内に<b>FabricとForge</b>のMODが混在している。<br>")
+				.append("• 非互換なバージョンのMinecraft向けMODをインストールしている。<br>").append("• MODが破損しているか、有効なJARファイルではない。</b>");
+		return sb.toString();
 	}
 
 	@Override
 	public String solucionModIncompatibleConCargadorActivo() {
-	    return "• <b>すべてのMODが同じプラットフォーム用であることを確認してください</b>（Forge<b>または</b>Fabric、両方ではない）。<br>"
-	           + "• <b>MODツリー</b>を使用して、各ファイルがどのプラットフォームとして検出されているかを確認してください。<br>"
-	           + "• 見慣れないMODや異なるプラットフォーム向けのMODは削除してください。<br>"
-	           + "• CurseForgeやPrismなどのランチャーを使用している場合は、プロファイルが正しく設定されていることを確認してください。";
+		return "• <b>すべてのMODが同じプラットフォーム用であることを確認してください</b>（Forge<b>または</b>Fabric、両方ではない）。<br>"
+				+ "• <b>MODツリー</b>を使用して、各ファイルがどのプラットフォームとして検出されているかを確認してください。<br>"
+				+ "• 見慣れないMODや異なるプラットフォーム向けのMODは削除してください。<br>"
+				+ "• CurseForgeやPrismなどのランチャーを使用している場合は、プロファイルが正しく設定されていることを確認してください。";
 	}
 
 	@Override
 	public String nombreModIncompatibleConCargadorActivo() {
-	    return "アクティブローダーと互換性のないMOD";
+		return "アクティブローダーと互換性のないMOD";
 	}
+
 	@Override
 	public String errorCreacionModeloFallida(String modid, String nombreModelo) {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "モデル <code>" + modid + ":" + nombreModelo + "</code> の作成に失敗しました。<br>"
-	           + "これは、モド <code>" + modid + "</code> のリソースが破損しているか、不足しているか、"
-	           + "または使用中のMinecraftバージョンと互換性がないことを示しています。</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>" + "モデル <code>" + modid + ":" + nombreModelo
+				+ "</code> の作成に失敗しました。<br>" + "これは、モド <code>" + modid + "</code> のリソースが破損しているか、不足しているか、"
+				+ "または使用中のMinecraftバージョンと互換性がないことを示しています。</b>";
 	}
 
 	@Override
 	public String solucionErrorCreacionModeloFallida() {
-	    return "• <b>MODを更新してください</b>、あなたのインスタンスと互換性のある最新バージョンへ。<br>"
-	           + "• 開発版やカスタムビルドを使用している場合は、公式リリースに戻してください。<br>"
-	           + "• JARファイルが破損していないか確認してください（再インストール）。<br>"
-	           + "• 問題が解決しない場合は、このログを添えてMOD制作者にエラーを報告してください。";
+		return "• <b>MODを更新してください</b>、あなたのインスタンスと互換性のある最新バージョンへ。<br>" + "• 開発版やカスタムビルドを使用している場合は、公式リリースに戻してください。<br>"
+				+ "• JARファイルが破損していないか確認してください（再インストール）。<br>" + "• 問題が解決しない場合は、このログを添えてMOD制作者にエラーを報告してください。";
 	}
 
 	@Override
 	public String nombreErrorCreacionModeloFallida() {
-	    return "リソースモデルの作成に失敗";
+		return "リソースモデルの作成に失敗";
 	}
+
 	@Override
 	public String conflictoMoonlightIceberg() {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "<code>Moonlight</code> と <code>Iceberg</code> モドの間で重大な競合が検出されました。<br>"
-	           + "両方とも互換性のない方法でリソース再読み込みシステムを登録しようとしており、"
-	           + "有効なグラフィックコンテキストがないため、OpenGLエラーが発生します。<br>"
-	           + "これは、Fabric MOD用アダプターを含むForgeバージョンを使用している場合に一般的な問題です。</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>"
+				+ "<code>Moonlight</code> と <code>Iceberg</code> モドの間で重大な競合が検出されました。<br>"
+				+ "両方とも互換性のない方法でリソース再読み込みシステムを登録しようとしており、" + "有効なグラフィックコンテキストがないため、OpenGLエラーが発生します。<br>"
+				+ "これは、Fabric MOD用アダプターを含むForgeバージョンを使用している場合に一般的な問題です。</b>";
 	}
 
 	@Override
 	public String solucionConflictoMoonlightIceberg() {
-	    return "• <b>両方のMODを</b> あなたのForgeバージョンと互換性のある最新版に更新してください。<br>"
-	           + "• 問題が解決しない場合は、<b>一時的にIcebergを削除してください</b>。Moonlightは他の多くのMODにとって重要な依存関係であることが多いからです。<br>"
-	           + "• これらのMODの重複または混在したForge/Fabricバージョンをインストールしていないことを確認してください。<br>"
-	           + "• 別のMOD（Supplementaries、Citadelなど）がすでにIcebergの機能を内部に組み込んでいるかどうかを確認してください。";
+		return "• <b>両方のMODを</b> あなたのForgeバージョンと互換性のある最新版に更新してください。<br>"
+				+ "• 問題が解決しない場合は、<b>一時的にIcebergを削除してください</b>。Moonlightは他の多くのMODにとって重要な依存関係であることが多いからです。<br>"
+				+ "• これらのMODの重複または混在したForge/Fabricバージョンをインストールしていないことを確認してください。<br>"
+				+ "• 別のMOD（Supplementaries、Citadelなど）がすでにIcebergの機能を内部に組み込んでいるかどうかを確認してください。";
 	}
 
 	@Override
 	public String nombreConflictoMoonlightIceberg() {
-	    return "重大な衝突：Moonlight 対 Iceberg (OpenGLコンテキストなし)";
+		return "重大な衝突：Moonlight 対 Iceberg (OpenGLコンテキストなし)";
 	}
+
 	@Override
 	public String instantanea() {
-	    return "スナップショット";
+		return "スナップショット";
 	}
 
 	@Override
 	public Object desdeUltimaInstantanea() {
-	    return "前回のスナップショット以降";
+		return "前回のスナップショット以降";
 	}
 
 	@Override
 	public String seleccionarUnArchivo() {
-	    return "ファイルを選択";
+		return "ファイルを選択";
 	}
 
 	@Override
 	public String instantaneaCreadaCorrectamente() {
-	    return "スナップショットが正常に作成されました";
+		return "スナップショットが正常に作成されました";
 	}
 
 	@Override
 	public String errorCreandoInstantanea() {
-	    return "スナップショットの作成中にエラーが発生しました";
+		return "スナップショットの作成中にエラーが発生しました";
 	}
-	
+
 	@Override
 	public String consejo() {
-	    return "ヒント";
+		return "ヒント";
 	}
 
 	@Override
 	public String resultadoMuestra() {
-	    return "結果を表示";
+		return "結果を表示";
 	}
-	
+
 	@Override
 	public String historaDeModsDesc() {
-	    return "<html>" + 
-	           "<body style='font-family: sans-serif; font-size: 12px;'>" +
-	           "  <b>ヒント:</b> 2つの履歴ファイルを選択して、MODリストを比較します。 " +
-	           "  結果は正規化された名前に基づいて、<span style='color:%s;'>追加された (+)</span>と " +
-	           "  <span style='color:%s;'>削除された (&#8722;)</span> を表示します。 " +
-	           "  「スナップショット」ボタンを使用して、拡張子が .instantanea の既存ファイルのコピーを作成できます。" +
-	           "</body>" + 
-	           "</html>";
+		return "<html>" + "<body style='font-family: sans-serif; font-size: 12px;'>"
+				+ "  <b>ヒント:</b> 2つの履歴ファイルを選択して、MODリストを比較します。 "
+				+ "  結果は正規化された名前に基づいて、<span style='color:%s;'>追加された (+)</span>と "
+				+ "  <span style='color:%s;'>削除された (&#8722;)</span> を表示します。 "
+				+ "  「スナップショット」ボタンを使用して、拡張子が .instantanea の既存ファイルのコピーを作成できます。" + "</body>" + "</html>";
 	}
-	
+
 	@Override
 	public String texto_de_boton_compartir_markdown() {
-	    return "レポートなしでログリンクをMarkdown形式で取得";
+		return "レポートなしでログリンクをMarkdown形式で取得";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

@@ -1593,9 +1593,6 @@ public interface Idioma {
 
 	public String texto_de_boton_compartir_markdown();
 
-
-
-	
 	// public String advertenciaMalwareFalso();
 
 }

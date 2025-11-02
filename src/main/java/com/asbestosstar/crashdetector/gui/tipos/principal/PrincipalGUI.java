@@ -78,9 +78,6 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 	public ConfigColor colorEnlace = ConfigColor.de("gui.principal.color.enlace",
 			Config.convertirAColor(Config.obtenerInstancia().obtenerColorEnlace()));
 
-	
-	
-	
 	public CountDownLatch cerrojo;
 
 	// Componentes públicos para que la implementación concreta los estilice
@@ -107,8 +104,7 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		registrarBotonDeBarraLateralDerecha(TipoGUI.GREPR, BusquedaGUISaliorMoon.ID, () -> new BusquedaGUISaliorMoon());
 		registrarBotonDeBarraLateralDerecha(TipoGUI.ESCANER_MCREATOR, EscanerMCreatorGUIRosemiLoveLock.ID,
 				() -> new EscanerMCreatorGUIRosemiLoveLock());
-		registrarBotonDeBarraLateralDerecha(TipoGUI.HISTORIA_DE_MODS, ClioOfficeGUI.ID,
-				() -> new ClioOfficeGUI());
+		registrarBotonDeBarraLateralDerecha(TipoGUI.HISTORIA_DE_MODS, ClioOfficeGUI.ID, () -> new ClioOfficeGUI());
 		registrarBotonDeBarraLateralDerecha(TipoGUI.ARBOL_DE_MODS, ArbolDeModsGUIHamu.ID,
 				() -> new ArbolDeModsGUIHamu());
 		registrarBotonDeBarraLateralDerecha(TipoGUI.LECTADOR_DE_CONSOLAS, LectadorDeConsolasHoloTalk.ID,

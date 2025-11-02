@@ -7,14 +7,6 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Path;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,116 +55,116 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		return ID;
 	}
 
-@Override
-public void preperar(Instant instant) {
-    setSize(900, 725);
-    setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-    this.instant = instant;
+	@Override
+	public void preperar(Instant instant) {
+		setSize(900, 725);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		this.instant = instant;
 
-    // Panel principal y superior
-    panelPrincipal = new JPanel(new BorderLayout(10, 10));
-    panelSuperior = new JPanel(new BorderLayout(0, 10));
-    panelSuperior.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		// Panel principal y superior
+		panelPrincipal = new JPanel(new BorderLayout(10, 10));
+		panelSuperior = new JPanel(new BorderLayout(0, 10));
+		panelSuperior.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-    // Texto de explicación
-    textoExplicacion = new JTextArea(MonitorDePID.idioma.arco());
-    textoExplicacion.setEditable(false);
-    textoExplicacion.setLineWrap(true);
-    textoExplicacion.setWrapStyleWord(true);
-    textoExplicacion.setBackground(panelSuperior.getBackground());
+		// Texto de explicación
+		textoExplicacion = new JTextArea(MonitorDePID.idioma.arco());
+		textoExplicacion.setEditable(false);
+		textoExplicacion.setLineWrap(true);
+		textoExplicacion.setWrapStyleWord(true);
+		textoExplicacion.setBackground(panelSuperior.getBackground());
 
-    // Panel de controles (botones + campo de enlace)
-    panelControles = new JPanel();
-    panelControles.setLayout(new javax.swing.BoxLayout(panelControles, javax.swing.BoxLayout.Y_AXIS));
+		// Panel de controles (botones + campo de enlace)
+		panelControles = new JPanel();
+		panelControles.setLayout(new javax.swing.BoxLayout(panelControles, javax.swing.BoxLayout.Y_AXIS));
 
-    // ---------- Botón: Compartir informe ----------
-    botonCompartirTodos = new JButton(MonitorDePID.idioma.botonDeCompartirInforme());
-    botonCompartirTodos.addActionListener(e -> {
-        setEnviando(true);
-        try {
-            compartirSeleccionados(e);
-        } catch (DemasiadoGrande e0) {
-            mostrarError(MonitorDePID.idioma.registroDemasiadoGrande(), e0);
-        } catch (ErrorConPublicar e1) {
-            mostrarError(MonitorDePID.idioma.errorConPublicarRegistro(e1.problema), e1);
-        } catch (NoAPIdeRegistro e2) {
-            mostrarError(MonitorDePID.idioma.apiDeRegistroNoExiste(), e2);
-        } catch (Throwable t) {
-            mostrarError("Error inesperado al compartir.", t);
-        } finally {
-            setEnviando(false);
-        }
-    });
+		// ---------- Botón: Compartir informe ----------
+		botonCompartirTodos = new JButton(MonitorDePID.idioma.botonDeCompartirInforme());
+		botonCompartirTodos.addActionListener(e -> {
+			setEnviando(true);
+			try {
+				compartirSeleccionados(e);
+			} catch (DemasiadoGrande e0) {
+				mostrarError(MonitorDePID.idioma.registroDemasiadoGrande(), e0);
+			} catch (ErrorConPublicar e1) {
+				mostrarError(MonitorDePID.idioma.errorConPublicarRegistro(e1.problema), e1);
+			} catch (NoAPIdeRegistro e2) {
+				mostrarError(MonitorDePID.idioma.apiDeRegistroNoExiste(), e2);
+			} catch (Throwable t) {
+				mostrarError("Error inesperado al compartir.", t);
+			} finally {
+				setEnviando(false);
+			}
+		});
 
-    // Ajustar tamaño para ocupar todo el ancho
-    int h1 = botonCompartirTodos.getPreferredSize().height;
-    botonCompartirTodos.setMaximumSize(new Dimension(Integer.MAX_VALUE, h1));
-    botonCompartirTodos.setMinimumSize(new Dimension(0, h1));
-    botonCompartirTodos.setAlignmentX(Component.LEFT_ALIGNMENT);
-    panelControles.add(botonCompartirTodos);
+		// Ajustar tamaño para ocupar todo el ancho
+		int h1 = botonCompartirTodos.getPreferredSize().height;
+		botonCompartirTodos.setMaximumSize(new Dimension(Integer.MAX_VALUE, h1));
+		botonCompartirTodos.setMinimumSize(new Dimension(0, h1));
+		botonCompartirTodos.setAlignmentX(Component.LEFT_ALIGNMENT);
+		panelControles.add(botonCompartirTodos);
 
-    panelControles.add(javax.swing.Box.createVerticalStrut(8));
+		panelControles.add(javax.swing.Box.createVerticalStrut(8));
 
-    // ---------- Botón: Obtener enlaces Markdown ----------
-    botonCompartirMarkdown = new JButton(MonitorDePID.idioma.texto_de_boton_compartir_markdown());
-    botonCompartirMarkdown.addActionListener(e -> {
-        setEnviando(true);
-        try {
-            compartirSoloEnlacesMarkdown(e);
-        } catch (DemasiadoGrande e0) {
-            mostrarError(MonitorDePID.idioma.registroDemasiadoGrande(), e0);
-        } catch (ErrorConPublicar e1) {
-            mostrarError(MonitorDePID.idioma.errorConPublicarRegistro(e1.problema), e1);
-        } catch (NoAPIdeRegistro e2) {
-            mostrarError(MonitorDePID.idioma.apiDeRegistroNoExiste(), e2);
-        } catch (Throwable t) {
-            mostrarError("Error inesperado al generar enlaces.", t);
-        } finally {
-            setEnviando(false);
-        }
-    });
+		// ---------- Botón: Obtener enlaces Markdown ----------
+		botonCompartirMarkdown = new JButton(MonitorDePID.idioma.texto_de_boton_compartir_markdown());
+		botonCompartirMarkdown.addActionListener(e -> {
+			setEnviando(true);
+			try {
+				compartirSoloEnlacesMarkdown(e);
+			} catch (DemasiadoGrande e0) {
+				mostrarError(MonitorDePID.idioma.registroDemasiadoGrande(), e0);
+			} catch (ErrorConPublicar e1) {
+				mostrarError(MonitorDePID.idioma.errorConPublicarRegistro(e1.problema), e1);
+			} catch (NoAPIdeRegistro e2) {
+				mostrarError(MonitorDePID.idioma.apiDeRegistroNoExiste(), e2);
+			} catch (Throwable t) {
+				mostrarError("Error inesperado al generar enlaces.", t);
+			} finally {
+				setEnviando(false);
+			}
+		});
 
-    // Ajustar tamaño para ocupar todo el ancho
-    int h2 = botonCompartirMarkdown.getPreferredSize().height;
-    botonCompartirMarkdown.setMaximumSize(new Dimension(Integer.MAX_VALUE, h2));
-    botonCompartirMarkdown.setMinimumSize(new Dimension(0, h2));
-    botonCompartirMarkdown.setAlignmentX(Component.LEFT_ALIGNMENT);
-    panelControles.add(botonCompartirMarkdown);
+		// Ajustar tamaño para ocupar todo el ancho
+		int h2 = botonCompartirMarkdown.getPreferredSize().height;
+		botonCompartirMarkdown.setMaximumSize(new Dimension(Integer.MAX_VALUE, h2));
+		botonCompartirMarkdown.setMinimumSize(new Dimension(0, h2));
+		botonCompartirMarkdown.setAlignmentX(Component.LEFT_ALIGNMENT);
+		panelControles.add(botonCompartirMarkdown);
 
-    panelControles.add(javax.swing.Box.createVerticalStrut(10));
+		panelControles.add(javax.swing.Box.createVerticalStrut(10));
 
-    // ---------- Campo de enlace ----------
-    campoEnlaceReporte = new JTextField();
-    campoEnlaceReporte.setEditable(false);
-    campoEnlaceReporte.addMouseListener(new java.awt.event.MouseAdapter() {
-        @Override
-        public void mouseClicked(java.awt.event.MouseEvent e) {
-            if (SwingUtilities.isRightMouseButton(e)) {
-                copiarAlPortapapeles(campoEnlaceReporte.getText());
-            }
-        }
-    });
-    int hf = 28;
-    campoEnlaceReporte.setMaximumSize(new Dimension(Integer.MAX_VALUE, hf));
-    campoEnlaceReporte.setMinimumSize(new Dimension(0, hf));
-    campoEnlaceReporte.setAlignmentX(Component.LEFT_ALIGNMENT);
-    panelControles.add(campoEnlaceReporte);
+		// ---------- Campo de enlace ----------
+		campoEnlaceReporte = new JTextField();
+		campoEnlaceReporte.setEditable(false);
+		campoEnlaceReporte.addMouseListener(new java.awt.event.MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				if (SwingUtilities.isRightMouseButton(e)) {
+					copiarAlPortapapeles(campoEnlaceReporte.getText());
+				}
+			}
+		});
+		int hf = 28;
+		campoEnlaceReporte.setMaximumSize(new Dimension(Integer.MAX_VALUE, hf));
+		campoEnlaceReporte.setMinimumSize(new Dimension(0, hf));
+		campoEnlaceReporte.setAlignmentX(Component.LEFT_ALIGNMENT);
+		panelControles.add(campoEnlaceReporte);
 
-    // Agregar texto y controles al panel superior
-    panelSuperior.add(new JScrollPane(textoExplicacion), BorderLayout.CENTER);
-    panelSuperior.add(panelControles, BorderLayout.SOUTH);
+		// Agregar texto y controles al panel superior
+		panelSuperior.add(new JScrollPane(textoExplicacion), BorderLayout.CENTER);
+		panelSuperior.add(panelControles, BorderLayout.SOUTH);
 
-    // ---------- Resto de la estructura ----------
-    inicializarTabla();
-    inicializarPanelConfiguracion();
-    panelPrincipal.add(panelSuperior, BorderLayout.NORTH);
-    panelPrincipal.add(new JScrollPane(tabla), BorderLayout.CENTER);
-    panelPrincipal.add(panelConfig, BorderLayout.SOUTH);
-    add(panelPrincipal);
+		// ---------- Resto de la estructura ----------
+		inicializarTabla();
+		inicializarPanelConfiguracion();
+		panelPrincipal.add(panelSuperior, BorderLayout.NORTH);
+		panelPrincipal.add(new JScrollPane(tabla), BorderLayout.CENTER);
+		panelPrincipal.add(panelConfig, BorderLayout.SOUTH);
+		add(panelPrincipal);
 
-    cargarConsolas();
-    this.setVisible(true);
-}
+		cargarConsolas();
+		this.setVisible(true);
+	}
 
 	/**
 	 * Inicializa la tabla de consolas.
@@ -342,7 +334,7 @@ public void preperar(Instant instant) {
 		}
 	}
 
-	// Editor para botones (abrir carpeta / compartir enlace por fila)
+// Editor para botones (abrir archivo local / compartir enlace por fila)
 	private class ButtonEditor extends DefaultCellEditor {
 		private final String accion;
 		private final JButton button;
@@ -352,109 +344,91 @@ public void preperar(Instant instant) {
 			super(new JCheckBox());
 			this.accion = accion;
 			this.button = new JButton(accion);
-			button.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// Aseguramos que el editor no quede activo y la UI muestre un cursor de espera
-					try {
-						button.setEnabled(false);
-						setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR));
 
-						// Si por alguna razón no hay fila activa, no hacemos nada
-						if (currentRow < 0)
+			button.addActionListener(e -> {
+				try {
+					button.setEnabled(false);
+					setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR));
+					if (currentRow < 0)
+						return;
+
+					Consola cons = MonitorDePID.consolas.get(currentRow);
+
+					if (accion.equals(MonitorDePID.idioma.abrir())) {
+						// === ABRIR: abrir el archivo local en un editor (NO publicar) ===
+						if (cons == null || cons.archivo == null) {
+							mostrarError("No hay archivo asociado para abrir.", null);
 							return;
+						}
+						java.io.File f = cons.archivo.toFile();
+						if (!f.exists()) {
+							mostrarError("El archivo no existe:\n" + f.getAbsolutePath(), null);
+							return;
+						}
 
-						// Acción: Abrir carpeta (o archivo si no tiene carpeta)
-						if (accion.equals(MonitorDePID.idioma.abrir())) {
+						if (java.awt.Desktop.isDesktopSupported()) {
+							java.awt.Desktop d = java.awt.Desktop.getDesktop();
 							try {
-								// Obtenemos la ruta del archivo asociado a la consola de esta fila
-								Path rutaArchivo = MonitorDePID.consolas.get(currentRow).archivo;
-
-								// Si no hay padre (nombre suelto) abrimos el propio archivo
-								Path padre = (rutaArchivo == null) ? null : rutaArchivo.getParent();
-								File destinoAabrir = (padre != null) ? padre.toFile() : rutaArchivo.toFile();
-
-								// Si lo elegido no existe, probamos la alternativa (archivo vs carpeta)
-								if (destinoAabrir == null || !destinoAabrir.exists()) {
-									File alterno = (rutaArchivo != null) ? rutaArchivo.toFile() : null;
-									if (alterno == null || !alterno.exists()) {
-										mostrarError(
-												"No se encontró la ruta para abrir:\n" + String.valueOf(destinoAabrir),
-												null);
-										return;
+								if (d.isSupported(java.awt.Desktop.Action.EDIT)) {
+									d.edit(f); // preferir editor
+								} else if (d.isSupported(java.awt.Desktop.Action.OPEN)) {
+									d.open(f); // fallback: abrir con app por defecto
+								} else {
+									// Último recurso: abrir carpeta que lo contiene
+									java.io.File parent = f.getParentFile();
+									if (parent != null && parent.exists()
+											&& d.isSupported(java.awt.Desktop.Action.OPEN)) {
+										d.open(parent);
+									} else {
+										copiarAlPortapapeles(f.getAbsolutePath());
+										mostrarInfo("No se pudo abrir el archivo; la ruta se copió al portapapeles.");
 									}
-									destinoAabrir = alterno;
 								}
-
-								// Si el entorno no soporta Desktop, copiamos la ruta al portapapeles
-								if (!java.awt.Desktop.isDesktopSupported()) {
-									copiarAlPortapapeles(destinoAabrir.getAbsolutePath());
-									mostrarInfo(
-											"El entorno no soporta abrir carpetas/archivos. Se copió la ruta al portapapeles.");
-									return;
-								}
-
-								// Abrimos directorio o archivo según corresponda
-								java.awt.Desktop.getDesktop().open(destinoAabrir);
-
-							} catch (IOException ex) {
-								mostrarError("No se pudo abrir la ruta.", ex);
-							} catch (Throwable t) {
-								mostrarError("Error inesperado al abrir la ruta.", t);
-							}
-							return; // Terminamos aquí para no evaluar la otra acción
-						}
-
-						// Acción: Compartir enlace (por fila)
-						if (accion.equals(MonitorDePID.idioma.texto_de_buton_compartir_enlace())) {
-							try {
-								// Obtenemos la consola de la fila
-								Consola consola = MonitorDePID.consolas.get(currentRow);
-
-								// Generamos/obtenemos el enlace de esa consola
-								String url = consola.obtainerEnlance();
-
-								// Escribimos la URL en la tabla (columna 4)
-								modeloTabla.setValueAt(url, currentRow, 4);
-
-								// Intentamos abrir en navegador; si no se puede, copiamos al portapapeles
-								if (url != null && !url.isEmpty() && java.awt.Desktop.isDesktopSupported()) {
-									java.awt.Desktop.getDesktop().browse(new URL(url).toURI());
-								} else if (url != null) {
-									copiarAlPortapapeles(url);
-									mostrarInfo(MonitorDePID.idioma.copiadoAlPortapapeles());
-								}
-
-							} catch (java.net.MalformedURLException ex) {
+							} catch (Exception ex) {
 								CrashDetectorLogger.logException(ex);
-								mostrarError("URL inválida.", ex);
-							} catch (DemasiadoGrande ex) {
-								mostrarError(MonitorDePID.idioma.registroDemasiadoGrande(), ex);
-							} catch (ErrorConPublicar ex) {
-								mostrarError(MonitorDePID.idioma.errorConPublicarRegistro(ex.problema), ex);
-							} catch (NoAPIdeRegistro ex) {
-								mostrarError(MonitorDePID.idioma.apiDeRegistroNoExiste(), ex);
-							} catch (IOException | java.net.URISyntaxException ex) {
-								CrashDetectorLogger.logException(ex);
-								mostrarError("No se pudo abrir el navegador.", ex);
-							} catch (Throwable t) {
-								mostrarError("Error inesperado al compartir.", t);
+								mostrarError("No se pudo abrir en un editor.\nSe copiará la ruta al portapapeles.", ex);
+								copiarAlPortapapeles(f.getAbsolutePath());
 							}
-							return;
+						} else {
+							copiarAlPortapapeles(f.getAbsolutePath());
+							mostrarInfo("El escritorio no está soportado; se copió la ruta al portapapeles.");
 						}
-
-					} finally {
-						// Siempre cerramos el editor y restauramos el estado del cursor/botón
-						try {
-							fireEditingStopped();
-						} catch (Throwable ignored) {
-							// Evitar que una excepción menor bloquee la UI
-						}
-						button.setEnabled(true);
-						setCursor(java.awt.Cursor.getDefaultCursor());
+						return;
 					}
-				}
 
+					if (accion.equals(MonitorDePID.idioma.texto_de_buton_compartir_enlace())) {
+						// === COMPARTIR ENLACE: publicar y mostrar/guardar enlaces ===
+						java.util.List<String> urls = cons.obtainerEnlaces(); // <- publica si hace falta
+						String celda = (urls == null || urls.isEmpty()) ? "" : String.join("\n", urls);
+						modeloTabla.setValueAt(celda, currentRow, 4);
+
+						if (campoEnlaceReporte != null) {
+							campoEnlaceReporte.setText(celda);
+						}
+						if (celda != null && !celda.isEmpty()) {
+							copiarAlPortapapeles(celda);
+							mostrarInfo(MonitorDePID.idioma.copiadoAlPortapapeles());
+						}
+						return;
+					}
+
+				} catch (DemasiadoGrande ex) {
+					mostrarError(MonitorDePID.idioma.registroDemasiadoGrande(), ex);
+				} catch (ErrorConPublicar ex) {
+					mostrarError(MonitorDePID.idioma.errorConPublicarRegistro(ex.problema), ex);
+				} catch (NoAPIdeRegistro ex) {
+					mostrarError(MonitorDePID.idioma.apiDeRegistroNoExiste(), ex);
+				} catch (Exception ex) {
+					CrashDetectorLogger.logException(ex);
+					mostrarError("Error inesperado al procesar el botón.", ex);
+				} finally {
+					try {
+						fireEditingStopped();
+					} catch (Throwable ignored) {
+					}
+					button.setEnabled(true);
+					setCursor(java.awt.Cursor.getDefaultCursor());
+				}
 			});
 		}
 

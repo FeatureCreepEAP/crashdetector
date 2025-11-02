@@ -260,8 +260,8 @@ public class HistoriaModsGUILegacy extends HistoriaDeModsGUI {
 		panelInferior.setOpaque(false);
 
 		// Descripción
-		String ayudaNoLocalizada = String.format(MonitorDePID.idioma.historaDeModsDesc(), colorResultadoAnadido.obtener().toString(),
-				colorResultadoEliminado.obtener().toString());
+		String ayudaNoLocalizada = String.format(MonitorDePID.idioma.historaDeModsDesc(),
+				colorResultadoAnadido.obtener().toString(), colorResultadoEliminado.obtener().toString());
 
 		descripcionHTML = new JTextPane();
 		descripcionHTML.setContentType("text/html");

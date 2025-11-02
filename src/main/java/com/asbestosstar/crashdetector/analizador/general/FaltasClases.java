@@ -30,7 +30,7 @@ public class FaltasClases implements Verificaciones {
 	private boolean activado = false;
 	public boolean create = false;
 	public boolean epicfight = false;
-	public boolean azurelib=false;
+	public boolean azurelib = false;
 
 	private final Map<String, String> clases = new HashMap<>();
 	public final Set<String> todos = new LinkedHashSet<>();
@@ -319,13 +319,10 @@ public class FaltasClases implements Verificaciones {
 			if (claseFormateada.trim().startsWith("yesman/epicfight")) {
 				epicfight = true;
 			}
-			
+
 			if (claseFormateada.trim().startsWith("mod/azure/azurelib")) {
 				azurelib = true;
 			}
-			
-			
-			
 
 			html.append("<li>").append(claseFormateada).append(valor);
 			// Agregar el enlace solo si existe
@@ -346,7 +343,7 @@ public class FaltasClases implements Verificaciones {
 		if (azurelib) {
 			html.append(MonitorDePID.idioma.faltar_de_clases_azurelib());
 		}
-		
+
 		return MonitorDePID.idioma.falta_de_clases_fatales() + html;
 	}
 

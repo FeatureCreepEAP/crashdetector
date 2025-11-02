@@ -320,13 +320,12 @@ public class MonitorDePID {
 		// TipoGUI.PRINCIPAL.registrarGUI(DialogoCompartir.ID, ()->new
 		// DialogoCompartir());
 		TipoGUI.ARBOL_DE_MODS.registrarGUI(ArbolDeModsGUIHamu.ID, () -> new ArbolDeModsGUIHamu());
-		TipoGUI.EDITOR_PLANTILLA.registrarGUI(EditorPlantillaPredeterminado.ID, () -> new EditorPlantillaPredeterminado());
+		TipoGUI.EDITOR_PLANTILLA.registrarGUI(EditorPlantillaPredeterminado.ID,
+				() -> new EditorPlantillaPredeterminado());
 		TipoGUI.EDITOR_PLANTILLA.registrarGUI(EditorPlantillaModioNoche.ID, () -> new EditorPlantillaModioNoche());
 		TipoGUI.DIALOGO_COMPARTIR.registrarGUI(DialogoCompartirLegacy.ID, () -> new DialogoCompartirLegacy());
 		TipoGUI.EDITOR_GUI.registrarGUI(CDSkinCape.ID, () -> new CDSkinCape());
 
-		
-		
 	}
 
 	private static void monitor_proceso(long pid) {
@@ -825,7 +824,7 @@ public class MonitorDePID {
 
 		File archivoTemporal = null;
 		try {
-			CrashDetectorLogger.log("Cargando imagen "+resultado.getAbsolutePath());
+			CrashDetectorLogger.log("Cargando imagen " + resultado.getAbsolutePath());
 			// Preparar archivo temporal
 			archivoTemporal = new File(resultado.getParentFile(), resultado.getName() + ".tmp");
 
@@ -887,7 +886,7 @@ public class MonitorDePID {
 		}
 		for (Consola consola : consolas) {
 			consola.verificacion_de_stacktrace = new VerificacionDeStackTrace(consola);
-			consola.enlance = null;
+			consola.enlaces.clear();
 		}
 		CrashDetectorLogger.log("Analyzador Consolas");
 

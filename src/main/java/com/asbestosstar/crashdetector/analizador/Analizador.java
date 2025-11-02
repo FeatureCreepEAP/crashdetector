@@ -231,7 +231,7 @@ public class Analizador {
 		verificaciones.add(new ErrorConfiguracionServicioIDependencyLocator());
 		verificaciones.add(new ErrorCampoInexistente());
 		verificaciones.add(new ErrorMetodoInexistente());
-		
+
 		verificaciones.add(new ErrorHealightINT());
 		verificaciones.add(new ErrorMetodoAbstractoNoImplementado());
 		verificaciones.add(new ErrorMetadataAnimacionEnServidor());
@@ -247,10 +247,6 @@ public class Analizador {
 		verificaciones.add(new ModIncompatibleConCargadorActivo());
 		verificaciones.add(new ErrorCreacionModeloFallida());
 		verificaciones.add(new ConflictoMoonlightIceberg());
-
-		
-		
-		
 
 		verificaciones.addAll(CargadorDeCodice.cargarVerificaciones());
 		CrashDetectorLogger.log("Numero de Codices " + String.valueOf(CargadorDeCodice.cargarVerificaciones().size()));

@@ -3444,411 +3444,371 @@ public class Chino implements Idioma {
 				+ "  <strong>分享</strong> 按钮获取日志和分析结果的链接，以便提交给我们的团队。"
 				+ "  如果你是整合包作者或组织，请编辑 <code>crash_detector/plantilla.htm</code> " + "  来自定义你的团队链接。" + "</div>";
 	}
-	
+
 	@Override
 	public String restablecerPlantilla() {
-	    return "重置模板";
+		return "重置模板";
 	}
 
 	@Override
 	public String restablecer() {
-	    return "重置";
+		return "重置";
 	}
 
 	@Override
 	public String restablecerImagenMensjae(String nombreImagen) {
-	    return "将 " + nombreImagen + " 重置为默认设置？";
+		return "将 " + nombreImagen + " 重置为默认设置？";
 	}
 
 	@Override
 	public String restablecerPlantillaMensaje() {
-	    return "将模板重置为默认设置？";
+		return "将模板重置为默认设置？";
 	}
 
 	@Override
 	public String faltar_de_clases_azurelib() {
-	    return "<b style='color:#" + config.obtenerColorError()
-	           + "'>缺少 AzureLib 的类。如果你已安装 AzureLib，请安装 2025 年 10 月 8 日之前的版本（此问题较为常见）。若未安装 AzureLib，请安装当前最新版本。</b>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>缺少 AzureLib 的类。如果你已安装 AzureLib，请安装 2025 年 10 月 8 日之前的版本（此问题较为常见）。若未安装 AzureLib，请安装当前最新版本。</b>";
 	}
-	
+
 	@Override
 	public String errorHealightINT() {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "模组 <code>healight</code> 导致严重错误：<code>java.lang.NoSuchFieldError: INT</code>。"
-	           + "此错误是因为该模组试图访问在 MCForge 47.10 及更高版本的 Minecraft 1.20+ 中已不存在的字段。"
-	           + "由于此问题，游戏无法启动。</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>"
+				+ "模组 <code>healight</code> 导致严重错误：<code>java.lang.NoSuchFieldError: INT</code>。"
+				+ "此错误是因为该模组试图访问在 MCForge 47.10 及更高版本的 Minecraft 1.20+ 中已不存在的字段。" + "由于此问题，游戏无法启动。</b>";
 	}
 
 	@Override
 	public String solucionHealightINT() {
-	    return "• 删除或更新 <code>healight</code> 模组。"
-	           + "当前版本与适用于 1.20.1 的 MinecraftForge 47.10 不兼容。"
-	           + "寻找该模组的更新版本，或考虑使用替代方案。";
+		return "• 删除或更新 <code>healight</code> 模组。" + "当前版本与适用于 1.20.1 的 MinecraftForge 47.10 不兼容。"
+				+ "寻找该模组的更新版本，或考虑使用替代方案。";
 	}
 
 	@Override
 	public String nombreErrorHealightINT() {
-	    return "严重错误：healight - 找不到 'INT' 字段";
+		return "严重错误：healight - 找不到 'INT' 字段";
 	}
-	
+
 	@Override
-	public String errorMetodoAbstractoNoImplementadoDetallado(String clase, String metodo, String interfaz, String origen) {
-	    String colorError = config.obtenerColorError();
-	    StringBuilder sb = new StringBuilder();
-	    sb.append("<b style='color:#").append(colorError).append(";'>")
-	      .append("类 <code>").append(clase).append("</code> 未实现必需的方法：<br>")
-	      .append("<code>").append(metodo).append("</code><br>")
-	      .append("来自接口 <code>").append(interfaz).append("</code>。");
+	public String errorMetodoAbstractoNoImplementadoDetallado(String clase, String metodo, String interfaz,
+			String origen) {
+		String colorError = config.obtenerColorError();
+		StringBuilder sb = new StringBuilder();
+		sb.append("<b style='color:#").append(colorError).append(";'>").append("类 <code>").append(clase)
+				.append("</code> 未实现必需的方法：<br>").append("<code>").append(metodo).append("</code><br>")
+				.append("来自接口 <code>").append(interfaz).append("</code>。");
 
-	    if (!origen.isEmpty()) {
-	        sb.append("<br><br>可疑的模组或文件：<code>").append(origen).append("</code>。");
-	    }
+		if (!origen.isEmpty()) {
+			sb.append("<br><br>可疑的模组或文件：<code>").append(origen).append("</code>。");
+		}
 
-	    sb.append("</b>");
-	    return sb.toString();
+		sb.append("</b>");
+		return sb.toString();
 	}
 
 	@Override
 	public String solucionMetodoAbstractoNoImplementado() {
-	    return "• 此错误发生在某个模组实现了接口但遗漏了必需方法时。"
-	           + "请更新<b>两个相关模组</b>（定义接口的和实现接口的）。"
-	           + "如果不清楚是哪些模组，请查看错误消息中出现的名称。";
+		return "• 此错误发生在某个模组实现了接口但遗漏了必需方法时。" + "请更新<b>两个相关模组</b>（定义接口的和实现接口的）。" + "如果不清楚是哪些模组，请查看错误消息中出现的名称。";
 	}
 
 	@Override
 	public String nombreErrorMetodoAbstractoNoImplementado() {
-	    return "接口方法未实现 (AbstractMethodError)";
+		return "接口方法未实现 (AbstractMethodError)";
 	}
-	
+
 	@Override
 	public String errorMetadataAnimacionEnServidor() {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "一个模组试图在<b>专用服务器</b>上加载属于<b>客户端</b>的类 "
-	           + "(<code>AnimationMetadataSection</code>)，这是不可能的。"
-	           + "当模组未正确分离客户端和服务器代码时，通常会出现此错误。"
-	           + "安装 <code>ModernFix</code> 可能会暴露此问题，但并非直接原因。</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>" + "一个模组试图在<b>专用服务器</b>上加载属于<b>客户端</b>的类 "
+				+ "(<code>AnimationMetadataSection</code>)，这是不可能的。" + "当模组未正确分离客户端和服务器代码时，通常会出现此错误。"
+				+ "安装 <code>ModernFix</code> 可能会暴露此问题，但并非直接原因。</b>";
 	}
 
 	@Override
 	public String solucionErrorMetadataAnimacionEnServidor() {
-	    return "• <b>快速解决：</b>临时移除 <code>ModernFix</code> 以确认服务器能否启动。"
-	           + "如果可以，则说明是其他模组在服务器端加载了客户端类。<br>"
-	           + "• <b>永久解决方案：</b>找出有问题的模组（查找包含动画资源、自定义纹理或图形库的模组）并更新或删除它。<br>";
+		return "• <b>快速解决：</b>临时移除 <code>ModernFix</code> 以确认服务器能否启动。" + "如果可以，则说明是其他模组在服务器端加载了客户端类。<br>"
+				+ "• <b>永久解决方案：</b>找出有问题的模组（查找包含动画资源、自定义纹理或图形库的模组）并更新或删除它。<br>";
 	}
 
 	@Override
 	public String nombreErrorMetadataAnimacionEnServidor() {
-	    return "在服务器上加载了客户端类 (AnimationMetadataSection)";
+		return "在服务器上加载了客户端类 (AnimationMetadataSection)";
 	}
-	
+
 	@Override
 	public String errorConfiguracionConnectorCorrupta() {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "Sinytra Connector 某个模组的配置文件已损坏。"
-	           + "这通常是因为游戏意外关闭、写入失败或模组冲突导致文件中充满了空字符（<code>\\u0000</code>）所致。</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>" + "Sinytra Connector 某个模组的配置文件已损坏。"
+				+ "这通常是因为游戏意外关闭、写入失败或模组冲突导致文件中充满了空字符（<code>\\u0000</code>）所致。</b>";
 	}
 
 	@Override
 	public String solucionConfiguracionConnectorCorrupta() {
-	    return "• 进入你的 Minecraft 实例的 <code>config/</code> 文件夹。<br>"
-	           + "• 查找并删除与 connector 相关的模组配置文件。<br>"
-	           + "• 重新启动游戏：Sinytra Connector 将生成一个全新的干净配置文件。";
+		return "• 进入你的 Minecraft 实例的 <code>config/</code> 文件夹。<br>" + "• 查找并删除与 connector 相关的模组配置文件。<br>"
+				+ "• 重新启动游戏：Sinytra Connector 将生成一个全新的干净配置文件。";
 	}
 
 	@Override
 	public String nombreErrorConfiguracionConnectorCorrupta() {
-	    return "Sinytra Connector 配置损坏";
+		return "Sinytra Connector 配置损坏";
 	}
-	
+
 	@Override
 	public String errorJarCorruptoConNombre(String nombreJar) {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "文件 <code>" + nombreJar + "</code> 已损坏或不完整。<br>"
-	           + "系统无法读取其内容，因为ZIP文件的末尾头部丢失。<br>"
-	           + "此错误通常发生在下载中断或启动器故障后。</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>" + "文件 <code>" + nombreJar
+				+ "</code> 已损坏或不完整。<br>" + "系统无法读取其内容，因为ZIP文件的末尾头部丢失。<br>" + "此错误通常发生在下载中断或启动器故障后。</b>";
 	}
 
 	@Override
 	public String nombreErrorJarCorruptoConNombre() {
-	    return "JAR文件损坏（含具体名称）";
+		return "JAR文件损坏（含具体名称）";
 	}
 
 	@Override
 	public String solucionJarCorrupto() {
-	    return "• <b>删除损坏的文件</b>，并从官方来源（如CurseForge、MinecraftStorage等）重新下载。<br>"
-	           + "• 如果你使用的是CurseForge、Technic或Luna Pixel等启动器，请考虑改用<b>ATLauncher</b>或<b>Prism Launcher</b>，"
-	           + "它们对文件完整性的校验更完善。<br>"
-	           + "• 确保下载期间你的网络连接稳定。";
+		return "• <b>删除损坏的文件</b>，并从官方来源（如CurseForge、MinecraftStorage等）重新下载。<br>"
+				+ "• 如果你使用的是CurseForge、Technic或Luna Pixel等启动器，请考虑改用<b>ATLauncher</b>或<b>Prism Launcher</b>，"
+				+ "它们对文件完整性的校验更完善。<br>" + "• 确保下载期间你的网络连接稳定。";
 	}
-	
+
 	@Override
 	public String errorCargaNBTMundoCorruptoConByte(String byteCorrupto) {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "无法加载世界，因为其 NBT 文件之一已损坏 "
-	           + "(例如：<code>level.dat</code>、<code>playerdata/*.dat</code> 或区块数据)。<br>"
-	           + "具体错误为：<code>UTFDataFormatException: 在字节 " + byteCorrupto + " 附近输入格式错误</code>。<br><br>"
-	           + "<b style='color:#" + config.obtenerColorAdvertencia() + ";'>"
-	           + "⚠️ 在尝试任何修复前，请先完整备份整个世界文件夹。</b><br><br>"
-	           + "你可以使用 <b>NBT 编辑器</b>（如 <a href='https://github.com/tryashtar/nbt-studio'>NBT Studio</a>）来尝试修复损坏的文件。<br>"
-	           + "如果损坏严重，可使用<b>十六进制编辑器</b>（如 HxD）检查并修正无效字节 "
-	           + "（仅适用于熟悉 NBT 格式者）。<br>"
-	           + "最后手段是：从备份中恢复，或使用 <code>FTB Backup</code> 等模组提供的“世界修复”功能。</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>" + "无法加载世界，因为其 NBT 文件之一已损坏 "
+				+ "(例如：<code>level.dat</code>、<code>playerdata/*.dat</code> 或区块数据)。<br>"
+				+ "具体错误为：<code>UTFDataFormatException: 在字节 " + byteCorrupto + " 附近输入格式错误</code>。<br><br>"
+				+ "<b style='color:#" + config.obtenerColorAdvertencia() + ";'>"
+				+ "⚠️ 在尝试任何修复前，请先完整备份整个世界文件夹。</b><br><br>"
+				+ "你可以使用 <b>NBT 编辑器</b>（如 <a href='https://github.com/tryashtar/nbt-studio'>NBT Studio</a>）来尝试修复损坏的文件。<br>"
+				+ "如果损坏严重，可使用<b>十六进制编辑器</b>（如 HxD）检查并修正无效字节 " + "（仅适用于熟悉 NBT 格式者）。<br>"
+				+ "最后手段是：从备份中恢复，或使用 <code>FTB Backup</code> 等模组提供的“世界修复”功能。</b>";
 	}
 
 	@Override
 	public String solucionErrorCargaNBTMundoCorrupto() {
-	    return "• <b>在尝试修复前，请完整备份世界文件夹</b>。<br>"
-	           + "• 使用 NBT 编辑器（如 NBT Studio）打开并修复损坏的文件。<br>"
-	           + "• 如果失败，在损坏字节位置用十六进制编辑器检查文件。<br>"
-	           + "• 若无经验，请从最近的备份中恢复。";
+		return "• <b>在尝试修复前，请完整备份世界文件夹</b>。<br>" + "• 使用 NBT 编辑器（如 NBT Studio）打开并修复损坏的文件。<br>"
+				+ "• 如果失败，在损坏字节位置用十六进制编辑器检查文件。<br>" + "• 若无经验，请从最近的备份中恢复。";
 	}
 
 	@Override
 	public String nombreErrorCargaNBTMundoCorrupto() {
-	    return "世界损坏：加载 NBT 数据出错";
+		return "世界损坏：加载 NBT 数据出错";
 	}
-	
+
 	@Override
 	public String problema_con_openAL() {
-	    return "<span style='color:#" + config.obtenerColorError()
-	           + "'>你的 OpenAL 出现问题。有时是 Nouveau 驱动导致的，但有时是因为应用程序自带的 OpenAL 版本与你系统发行版中的版本不兼容，你需要使用发行版提供的 OpenAL 版本。请参考此指南获取更多帮助：<a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>如何修复 Linux 上 Minecraft 的声音问题</a>。</span>";
+		return "<span style='color:#" + config.obtenerColorError()
+				+ "'>你的 OpenAL 出现问题。有时是 Nouveau 驱动导致的，但有时是因为应用程序自带的 OpenAL 版本与你系统发行版中的版本不兼容，你需要使用发行版提供的 OpenAL 版本。请参考此指南获取更多帮助：<a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>如何修复 Linux 上 Minecraft 的声音问题</a>。</span>";
 	}
-	
+
 	@Override
 	public String errorArchivoBloqueadoPorOtroProceso() {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "服务器无法启动，因为世界的一个文件被其他进程锁定。<br>"
-	           + "通常在以下情况下发生：<br>"
-	           + "• 已有一个服务器实例正在运行。<br>"
-	           + "• 杀毒软件或文件资源管理器打开了世界文件夹。<br>"
-	           + "• 前一个进程未正确关闭并留下锁定的文件。</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>" + "服务器无法启动，因为世界的一个文件被其他进程锁定。<br>"
+				+ "通常在以下情况下发生：<br>" + "• 已有一个服务器实例正在运行。<br>" + "• 杀毒软件或文件资源管理器打开了世界文件夹。<br>"
+				+ "• 前一个进程未正确关闭并留下锁定的文件。</b>";
 	}
 
 	@Override
 	public String solucionErrorArchivoBloqueadoPorOtroProceso() {
-	    return "• <b>关闭所有服务器实例</b>（包括后台进程如 javaw.exe）。<br>"
-	           + "• 如果你使用的是托管面板（如 Multicraft），请通过面板完全重启服务器。<br>"
-	           + "• <b>临时禁用你的杀毒软件</b>，如果你怀疑它锁定了文件。<br>"
-	           + "• 在本地系统上，关闭任何显示世界文件夹的Windows资源管理器窗口。<br>"
-	           + "• 如果问题仍然存在，请手动删除世界文件夹内的 <code>session.lock</code> 文件（仅当你确定没有其他服务器在运行时）。";
+		return "• <b>关闭所有服务器实例</b>（包括后台进程如 javaw.exe）。<br>" + "• 如果你使用的是托管面板（如 Multicraft），请通过面板完全重启服务器。<br>"
+				+ "• <b>临时禁用你的杀毒软件</b>，如果你怀疑它锁定了文件。<br>" + "• 在本地系统上，关闭任何显示世界文件夹的Windows资源管理器窗口。<br>"
+				+ "• 如果问题仍然存在，请手动删除世界文件夹内的 <code>session.lock</code> 文件（仅当你确定没有其他服务器在运行时）。";
 	}
 
 	@Override
 	public String nombreErrorArchivoBloqueadoPorOtroProceso() {
-	    return "世界文件被另一进程锁定";
+		return "世界文件被另一进程锁定";
 	}
-	
+
 	@Override
 	public String errorClaseFinalExtendida(String claseHija, String clasePadreFinal) {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "حاول التعديل توسيع الصنف <code>" + clasePadreFinal + "</code>، "
-	           + "لكن هذا الصنف أصبح الآن <b>نهائيًا</b> ولا يمكن الوراثة منه.<br>"
-	           + "الصنف المسبب للمشكلة هو: <code>" + claseHija + "</code>.<br><br>"
-	           + "يحدث هذا عادة عندما يكون التعديل مُجمَّع لإصدار سابق من ماينكرافت أو تعديل أساسي آخر "
-	           + "قد قام بوضع وسم <code>final</code> على بعض الأصناف في الإصدارات الحديثة.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>" + "حاول التعديل توسيع الصنف <code>"
+				+ clasePadreFinal + "</code>، " + "لكن هذا الصنف أصبح الآن <b>نهائيًا</b> ولا يمكن الوراثة منه.<br>"
+				+ "الصنف المسبب للمشكلة هو: <code>" + claseHija + "</code>.<br><br>"
+				+ "يحدث هذا عادة عندما يكون التعديل مُجمَّع لإصدار سابق من ماينكرافت أو تعديل أساسي آخر "
+				+ "قد قام بوضع وسم <code>final</code> على بعض الأصناف في الإصدارات الحديثة.</b>";
 	}
 
 	@Override
 	public String solucionErrorClaseFinalExtendida() {
-	    return "• <b>حدّث جميع التعديلات المتورطة</b>، خاصة تلك التي قد تكون مرتبطة بالتعديل الأساسي المذكور.<br>"
-	           + "• إذا استمرت المشكلة، ابحث عن إصدار من التعديل يتوافق مع إصدار ماينكرافت الحالي واعتمادياته.<br>"
-	           + "• في بعض الحالات، قد يساعد حذف مؤقت للتعديل الذي يحتوي الصنف الفرعي في تأكيد السبب.";
+		return "• <b>حدّث جميع التعديلات المتورطة</b>، خاصة تلك التي قد تكون مرتبطة بالتعديل الأساسي المذكور.<br>"
+				+ "• إذا استمرت المشكلة، ابحث عن إصدار من التعديل يتوافق مع إصدار ماينكرافت الحالي واعتمادياته.<br>"
+				+ "• في بعض الحالات، قد يساعد حذف مؤقت للتعديل الذي يحتوي الصنف الفرعي في تأكيد السبب.";
 	}
 
 	@Override
 	public String nombreErrorClaseFinalExtendida() {
-	    return "محاولة وراثة صنف نهائي";
+		return "محاولة وراثة صنف نهائي";
 	}
-	
+
 	@Override
 	public String errorRubidiumObsoletoConIris() {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "你正在将 <b>Rubidium</b>（一个已过时的用于 Forge 的 Sodium 分支）与 <b>Iris 或 Oculus</b> 一起使用。<br>"
-	           + "在较新版本的 Minecraft（1.19.2 及以上）中，"
-	           + "Rubidium 未能跟上 Sodium 的更新步伐，其依赖项出现了问题。<br><br>"
-	           + "如果性能模组（Sodium、Rubidium、Embeddium、Bedium、Xeonium 等）或 Iris Shaders 与其他模组发生冲突，也可能导致此错误。</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>"
+				+ "你正在将 <b>Rubidium</b>（一个已过时的用于 Forge 的 Sodium 分支）与 <b>Iris 或 Oculus</b> 一起使用。<br>"
+				+ "在较新版本的 Minecraft（1.19.2 及以上）中，" + "Rubidium 未能跟上 Sodium 的更新步伐，其依赖项出现了问题。<br><br>"
+				+ "如果性能模组（Sodium、Rubidium、Embeddium、Bedium、Xeonium 等）或 Iris Shaders 与其他模组发生冲突，也可能导致此错误。</b>";
 	}
 
 	@Override
 	public String solucionRubidiumObsoletoConIris() {
-	    return "• 从你的 <code>mods</code> 文件夹中<b>删除 Rubidium</b>。<br>"
-	           + "• <b>安装 <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a></b>，"
-	           + "这是一个活跃且兼容的、用于 Forge 的 Sodium 分支，支持在 1.20+ 版本中使用 Iris/Oculus。<br>"
-	           + "• 确保不要同时安装多个 Sodium 分支（例如：Rubidium 和 Embeddium）。<br>"
-	           + "• 如果你使用的是 Oculus 而不是 Iris，请确认它也与你的 Forge 和 Embeddium 版本兼容。";
+		return "• 从你的 <code>mods</code> 文件夹中<b>删除 Rubidium</b>。<br>"
+				+ "• <b>安装 <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a></b>，"
+				+ "这是一个活跃且兼容的、用于 Forge 的 Sodium 分支，支持在 1.20+ 版本中使用 Iris/Oculus。<br>"
+				+ "• 确保不要同时安装多个 Sodium 分支（例如：Rubidium 和 Embeddium）。<br>"
+				+ "• 如果你使用的是 Oculus 而不是 Iris，请确认它也与你的 Forge 和 Embeddium 版本兼容。";
 	}
 
 	@Override
 	public String nombreErrorRubidiumObsoletoConIris() {
-	    return "Rubidium 已过时，与 Iris/Oculus 不兼容（OptionInstance 是 final）";
+		return "Rubidium 已过时，与 Iris/Oculus 不兼容（OptionInstance 是 final）";
 	}
-	
+
 	@Override
 	public String errorVoiceChatPuertoOcupado() {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "لا يمكن للتعديل <code>Simple Voice Chat</code> تشغيل خادم الصوت الخاص به لأن "
-	           + "منفذ UDP مستخدم بالفعل أو عنوان IP المُعد غير صالح.<br>"
-	           + "هذا لا يمنع بدء اللعبة، لكنه يعطل وظيفة الدردشة الصوتية.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>"
+				+ "لا يمكن للتعديل <code>Simple Voice Chat</code> تشغيل خادم الصوت الخاص به لأن "
+				+ "منفذ UDP مستخدم بالفعل أو عنوان IP المُعد غير صالح.<br>"
+				+ "هذا لا يمنع بدء اللعبة، لكنه يعطل وظيفة الدردشة الصوتية.</b>";
 	}
 
 	@Override
 	public String solucionErrorVoiceChatPuertoOcupado() {
-	    return "• <b>أغلق أي نسخة أخرى من ماينكرافت</b> أو تطبيق يستخدم المنفذ UDP 24454.<br>"
-	           + "• إذا كنت على خادم، تأكد من أن <b>أي خدمة أخرى</b> لا تستخدم هذا المنفذ.<br>"
-	           + "• في إعدادات التعديل (<code>config/voicechat/</code>)، غيّر منفذ UDP إلى منفذ حر (مثلاً 24455).<br>"
-	           + "• إذا كنت تستخدم عنوان IP مخصصًا، فتحقق من صحته أو اتركه فارغًا لاستخدام الإعداد الافتراضي.";
+		return "• <b>أغلق أي نسخة أخرى من ماينكرافت</b> أو تطبيق يستخدم المنفذ UDP 24454.<br>"
+				+ "• إذا كنت على خادم، تأكد من أن <b>أي خدمة أخرى</b> لا تستخدم هذا المنفذ.<br>"
+				+ "• في إعدادات التعديل (<code>config/voicechat/</code>)، غيّر منفذ UDP إلى منفذ حر (مثلاً 24455).<br>"
+				+ "• إذا كنت تستخدم عنوان IP مخصصًا، فتحقق من صحته أو اتركه فارغًا لاستخدام الإعداد الافتراضي.";
 	}
 
 	@Override
 	public String nombreErrorVoiceChatPuertoOcupado() {
-	    return "الدردشة الصوتية: منفذ UDP مشغول أو عنوان IP غير صالح";
+		return "الدردشة الصوتية: منفذ UDP مشغول أو عنوان IP غير صالح";
 	}
-	
+
 	@Override
 	public String errorBlockItemNuloCreate(String nombreBlockItem) {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "方块物品 <code>" + nombreBlockItem + "</code> 指向了一个空方块。<br>"
-	           + "此错误通常发生在 <b>Create 的附加模组</b>（如 <code>dndecor</code>、<code>createdeco</code>）中，"
-	           + "当与 <code>Amendments</code>、<code>Moonshine</code> 存在冲突或方块初始化不正确时出现。<br>"
-	           + "<b>注意：</b> 这并非 Amendments 直接导致的错误，而是注册表加载深层问题的症状。</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>" + "方块物品 <code>" + nombreBlockItem
+				+ "</code> 指向了一个空方块。<br>"
+				+ "此错误通常发生在 <b>Create 的附加模组</b>（如 <code>dndecor</code>、<code>createdeco</code>）中，"
+				+ "当与 <code>Amendments</code>、<code>Moonshine</code> 存在冲突或方块初始化不正确时出现。<br>"
+				+ "<b>注意：</b> 这并非 Amendments 直接导致的错误，而是注册表加载深层问题的症状。</b>";
 	}
 
 	@Override
 	public String solucionErrorBlockItemNuloCreate() {
-	    return "• <b>更新所有相关模组：</b>包括 Create、Amendments、Moonshine 以及任何附加模组（特别是 <code>dndecor</code> 和 <code>createdeco</code>）。<br>"
-	           + "• 如果问题仍然存在，<b>暂时逐个移除 Create 的附加模组</b>以找出罪魁祸首。<br>"
-	           + "• 确保 <b>Amendments 和 Moonshine 与你的 Create 及 Forge 版本兼容</b>。<br>"
-	           + "• 检查问题模组是否有更新的测试版或分支版本。";
+		return "• <b>更新所有相关模组：</b>包括 Create、Amendments、Moonshine 以及任何附加模组（特别是 <code>dndecor</code> 和 <code>createdeco</code>）。<br>"
+				+ "• 如果问题仍然存在，<b>暂时逐个移除 Create 的附加模组</b>以找出罪魁祸首。<br>"
+				+ "• 确保 <b>Amendments 和 Moonshine 与你的 Create 及 Forge 版本兼容</b>。<br>" + "• 检查问题模组是否有更新的测试版或分支版本。";
 	}
 
 	@Override
 	public String nombreErrorBlockItemNuloCreate() {
-	    return "Create 附加模组中的空方块物品";
+		return "Create 附加模组中的空方块物品";
 	}
-	
+
 	@Override
 	public String modIncompatibleConCargadorActivo(List<String> mods) {
-	    StringBuilder sb = new StringBuilder();
-	    sb.append("<b style='color:#").append(config.obtenerColorAdvertencia()).append(";'>")
-	      .append("发现了一些不属于任何激活平台（Forge、Fabric等）的模组：<ul>");
-	    for (String mod : mods) {
-	        sb.append("<li><code>").append(mod).append("</code></li>");
-	    }
-	    sb.append("</ul>这通常发生在以下情况：<br>")
-	      .append("• 在同一文件夹中混合了 <b>Fabric 和 Forge</b> 模组。<br>")
-	      .append("• 安装了与 Minecraft 版本不兼容的模组。<br>")
-	      .append("• 模组已损坏或不是有效的 JAR 文件。</b>");
-	    return sb.toString();
+		StringBuilder sb = new StringBuilder();
+		sb.append("<b style='color:#").append(config.obtenerColorAdvertencia()).append(";'>")
+				.append("发现了一些不属于任何激活平台（Forge、Fabric等）的模组：<ul>");
+		for (String mod : mods) {
+			sb.append("<li><code>").append(mod).append("</code></li>");
+		}
+		sb.append("</ul>这通常发生在以下情况：<br>").append("• 在同一文件夹中混合了 <b>Fabric 和 Forge</b> 模组。<br>")
+				.append("• 安装了与 Minecraft 版本不兼容的模组。<br>").append("• 模组已损坏或不是有效的 JAR 文件。</b>");
+		return sb.toString();
 	}
 
 	@Override
 	public String solucionModIncompatibleConCargadorActivo() {
-	    return "• <b>请确认所有模组都适用于同一平台</b>（仅 Forge <b>或</b> 仅 Fabric，不可混用）。<br>"
-	           + "• 使用<b>模组树</b>来识别每个文件对应的平台。<br>"
-	           + "• 删除任何你不认识或属于不同平台的模组。<br>"
-	           + "• 如果你使用的是 CurseForge 或 Prism 等启动器，请确保配置文件设置正确。";
+		return "• <b>请确认所有模组都适用于同一平台</b>（仅 Forge <b>或</b> 仅 Fabric，不可混用）。<br>" + "• 使用<b>模组树</b>来识别每个文件对应的平台。<br>"
+				+ "• 删除任何你不认识或属于不同平台的模组。<br>" + "• 如果你使用的是 CurseForge 或 Prism 等启动器，请确保配置文件设置正确。";
 	}
 
 	@Override
 	public String nombreModIncompatibleConCargadorActivo() {
-	    return "模组与当前加载器不兼容";
+		return "模组与当前加载器不兼容";
 	}
-	
+
 	@Override
 	public String errorCreacionModeloFallida(String modid, String nombreModelo) {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "无法创建模型 <code>" + modid + ":" + nombreModelo + "</code>。<br>"
-	           + "这表明模组 <code>" + modid + "</code> 的资源已损坏、缺失，"
-	           + "或与你当前的 Minecraft 版本不兼容。</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>" + "无法创建模型 <code>" + modid + ":" + nombreModelo
+				+ "</code>。<br>" + "这表明模组 <code>" + modid + "</code> 的资源已损坏、缺失，" + "或与你当前的 Minecraft 版本不兼容。</b>";
 	}
 
 	@Override
 	public String solucionErrorCreacionModeloFallida() {
-	    return "• <b>更新该模组</b>至与你的实例兼容的最新版本。<br>"
-	           + "• 如果你使用的是开发版或自定义版本，请切换回官方发布版。<br>"
-	           + "• 检查 JAR 文件是否损坏（重新安装）。<br>"
-	           + "• 如果问题仍然存在，请将此日志附上并报告给模组作者。";
+		return "• <b>更新该模组</b>至与你的实例兼容的最新版本。<br>" + "• 如果你使用的是开发版或自定义版本，请切换回官方发布版。<br>" + "• 检查 JAR 文件是否损坏（重新安装）。<br>"
+				+ "• 如果问题仍然存在，请将此日志附上并报告给模组作者。";
 	}
 
 	@Override
 	public String nombreErrorCreacionModeloFallida() {
-	    return "创建资源模型失败";
+		return "创建资源模型失败";
 	}
+
 	@Override
 	public String conflictoMoonlightIceberg() {
-	    return "<b style='color:#" + config.obtenerColorError() + ";'>"
-	           + "检测到 <code>Moonlight</code> 和 <code>Iceberg</code> 模组之间存在严重冲突。<br>"
-	           + "两者都试图以不兼容的方式注册资源重载系统，"
-	           + "导致因缺少有效的图形上下文而引发 OpenGL 错误。<br>"
-	           + "当使用包含 Fabric 模组适配器的 Forge 版本时，此问题很常见。</b>";
+		return "<b style='color:#" + config.obtenerColorError() + ";'>"
+				+ "检测到 <code>Moonlight</code> 和 <code>Iceberg</code> 模组之间存在严重冲突。<br>" + "两者都试图以不兼容的方式注册资源重载系统，"
+				+ "导致因缺少有效的图形上下文而引发 OpenGL 错误。<br>" + "当使用包含 Fabric 模组适配器的 Forge 版本时，此问题很常见。</b>";
 	}
 
 	@Override
 	public String solucionConflictoMoonlightIceberg() {
-	    return "• <b>将两个模组都更新</b>到与你当前 Forge 版本兼容的最新版本。<br>"
-	           + "• 如果问题仍然存在，<b>暂时移除 Iceberg</b>，因为 Moonlight 通常是其他模组的关键依赖。<br>"
-	           + "• 确保没有重复或混合安装这些模组的 Forge/Fabric 版本。<br>"
-	           + "• 检查是否有其他模组（如 Supplementaries、Citadel 等）已内置了 Iceberg 的功能。";
+		return "• <b>将两个模组都更新</b>到与你当前 Forge 版本兼容的最新版本。<br>"
+				+ "• 如果问题仍然存在，<b>暂时移除 Iceberg</b>，因为 Moonlight 通常是其他模组的关键依赖。<br>"
+				+ "• 确保没有重复或混合安装这些模组的 Forge/Fabric 版本。<br>"
+				+ "• 检查是否有其他模组（如 Supplementaries、Citadel 等）已内置了 Iceberg 的功能。";
 	}
 
 	@Override
 	public String nombreConflictoMoonlightIceberg() {
-	    return "严重冲突：Moonlight 与 Iceberg 冲突 (OpenGL 无上下文)";
+		return "严重冲突：Moonlight 与 Iceberg 冲突 (OpenGL 无上下文)";
 	}
+
 	@Override
 	public String instantanea() {
-	    return "快照";
+		return "快照";
 	}
 
 	@Override
 	public Object desdeUltimaInstantanea() {
-	    return "自上次快照以来";
+		return "自上次快照以来";
 	}
 
 	@Override
 	public String seleccionarUnArchivo() {
-	    return "选择一个文件";
+		return "选择一个文件";
 	}
 
 	@Override
 	public String instantaneaCreadaCorrectamente() {
-	    return "快照创建成功";
+		return "快照创建成功";
 	}
 
 	@Override
 	public String errorCreandoInstantanea() {
-	    return "创建快照时出错";
+		return "创建快照时出错";
 	}
-	
+
 	@Override
 	public String consejo() {
-	    return "提示";
+		return "提示";
 	}
 
 	@Override
 	public String resultadoMuestra() {
-	    return "结果预览";
+		return "结果预览";
 	}
-	
+
 	@Override
 	public String historaDeModsDesc() {
-	    return "<html>" + 
-	           "<body style='font-family: sans-serif; font-size: 12px;'>" +
-	           "  <b>提示：</b>选择两个历史记录文件来比较模组列表。" +
-	           "  结果会根据标准化的名称显示<span style='color:%s;'>新增的 (+)</span>和" +
-	           "  <span style='color:%s;'>已移除的 (&#8722;)</span>。" +
-	           "  使用“快照”按钮为现有文件创建一个扩展名为 .instantanea 的副本。" +
-	           "</body>" + 
-	           "</html>";
+		return "<html>" + "<body style='font-family: sans-serif; font-size: 12px;'>" + "  <b>提示：</b>选择两个历史记录文件来比较模组列表。"
+				+ "  结果会根据标准化的名称显示<span style='color:%s;'>新增的 (+)</span>和"
+				+ "  <span style='color:%s;'>已移除的 (&#8722;)</span>。" + "  使用“快照”按钮为现有文件创建一个扩展名为 .instantanea 的副本。"
+				+ "</body>" + "</html>";
 	}
-	
+
 	@Override
 	public String texto_de_boton_compartir_markdown() {
-	    return "获取日志链接（Markdown格式，不含报告）";
+		return "获取日志链接（Markdown格式，不含报告）";
 	}
-	
-	
-	
-	
-	
+
 }

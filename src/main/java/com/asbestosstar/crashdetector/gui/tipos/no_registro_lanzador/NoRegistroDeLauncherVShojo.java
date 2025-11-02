@@ -50,7 +50,6 @@ public class NoRegistroDeLauncherVShojo extends NoRegistroLanzadorGUI {
 	private ConfigColor colorEnlace = ConfigColor.de("tema.vshojo.no_registro.color.enlace",
 			Config.convertirAColor(Config.obtenerInstancia().obtenerColorEnlace()));
 
-
 	@Override
 	public void init() {
 		// AHORA llamamos al init del padre

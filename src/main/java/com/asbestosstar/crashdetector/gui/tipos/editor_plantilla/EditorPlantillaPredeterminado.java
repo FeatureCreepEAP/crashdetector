@@ -28,208 +28,208 @@ import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
 
 /**
- * Implementación predeterminada del editor de plantilla.
- * Maneja la apariencia y diseño de la interfaz.
+ * Implementación predeterminada del editor de plantilla. Maneja la apariencia y
+ * diseño de la interfaz.
  */
 public class EditorPlantillaPredeterminado extends EditorPlantilla {
 
-    public static final String ID = "editor_plantilla_predeterminado";
-    
-    // Mapa de colores específico para esta implementación
-    private Map<String, ConfigColor> coloresEditor = new HashMap<>();
+	public static final String ID = "editor_plantilla_predeterminado";
 
-    @Override
-    public String id() {
-        return ID;
-    }
+	// Mapa de colores específico para esta implementación
+	private Map<String, ConfigColor> coloresEditor = new HashMap<>();
 
-    @Override
-    public void inicializarComponentes() {
-        setLayout(new BorderLayout());
-        
-        // Colores predeterminados para esta implementación
-        inicializarColoresEditor();
-        
-        // Panel superior con botones
-        JPanel panelSuperior = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        panelSuperior.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-        panelSuperior.setBackground(coloresEditor.get("fondo").obtener());
+	@Override
+	public String id() {
+		return ID;
+	}
 
-        botonGuardar = new JButton(MonitorDePID.idioma.guardarTodo());
-        configurarBoton(botonGuardar);
-        botonGuardar.addActionListener(e -> guardarPlantilla());
-        panelSuperior.add(botonGuardar);
+	@Override
+	public void inicializarComponentes() {
+		setLayout(new BorderLayout());
 
-        botonRestablecerPlantilla = new JButton(MonitorDePID.idioma.restablecerPlantilla());
-        configurarBoton(botonRestablecerPlantilla);
-        botonRestablecerPlantilla.addActionListener(e -> restablecerPlantilla());
-        panelSuperior.add(botonRestablecerPlantilla);
+		// Colores predeterminados para esta implementación
+		inicializarColoresEditor();
 
-        botonCerrar = new JButton(MonitorDePID.idioma.omitirYCerrar());
-        configurarBoton(botonCerrar);
-        botonCerrar.addActionListener(e -> cerrarEditor());
-        panelSuperior.add(botonCerrar);
+		// Panel superior con botones
+		JPanel panelSuperior = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		panelSuperior.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+		panelSuperior.setBackground(coloresEditor.get("fondo").obtener());
 
-        add(panelSuperior, BorderLayout.NORTH);
+		botonGuardar = new JButton(MonitorDePID.idioma.guardarTodo());
+		configurarBoton(botonGuardar);
+		botonGuardar.addActionListener(e -> guardarPlantilla());
+		panelSuperior.add(botonGuardar);
 
-        // Panel principal (división horizontal)
-        JSplitPane splitPanePrincipal = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-        splitPanePrincipal.setDividerLocation(0.65);
-        splitPanePrincipal.setBackground(coloresEditor.get("borde").obtener());
+		botonRestablecerPlantilla = new JButton(MonitorDePID.idioma.restablecerPlantilla());
+		configurarBoton(botonRestablecerPlantilla);
+		botonRestablecerPlantilla.addActionListener(e -> restablecerPlantilla());
+		panelSuperior.add(botonRestablecerPlantilla);
 
-        // Panel izquierdo: editor y vista previa (editor más alto)
-        JSplitPane splitPaneEditor = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-        splitPaneEditor.setDividerLocation(0.75); // Editor ocupa 75% del espacio vertical
-        splitPaneEditor.setBackground(coloresEditor.get("borde").obtener());
+		botonCerrar = new JButton(MonitorDePID.idioma.omitirYCerrar());
+		configurarBoton(botonCerrar);
+		botonCerrar.addActionListener(e -> cerrarEditor());
+		panelSuperior.add(botonCerrar);
 
-        // Editor HTML
-        JPanel panelEditor = new JPanel(new BorderLayout());
-        panelEditor.setBorder(BorderFactory.createTitledBorder("Editor HTML"));
-        panelEditor.setBackground(coloresEditor.get("fondo").obtener());
+		add(panelSuperior, BorderLayout.NORTH);
 
-        editorHTML = new JTextPane();
-        editorHTML.setFont(new Font("Monospaced", Font.PLAIN, 13));
-        editorHTML.setCaretColor(coloresEditor.get("texto").obtener());
-        editorHTML.setForeground(coloresEditor.get("texto").obtener());
-        editorHTML.setBackground(coloresEditor.get("caja_texto").obtener());
+		// Panel principal (división horizontal)
+		JSplitPane splitPanePrincipal = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+		splitPanePrincipal.setDividerLocation(0.65);
+		splitPanePrincipal.setBackground(coloresEditor.get("borde").obtener());
 
-        JScrollPane scrollEditor = new JScrollPane(editorHTML);
-        scrollEditor.setBorder(BorderFactory.createLineBorder(coloresEditor.get("borde").obtener(), 1));
-        panelEditor.add(scrollEditor, BorderLayout.CENTER);
+		// Panel izquierdo: editor y vista previa (editor más alto)
+		JSplitPane splitPaneEditor = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+		splitPaneEditor.setDividerLocation(0.75); // Editor ocupa 75% del espacio vertical
+		splitPaneEditor.setBackground(coloresEditor.get("borde").obtener());
 
-        // Vista previa
-        JPanel panelVistaPrevia = new JPanel(new BorderLayout());
-        panelVistaPrevia.setBorder(BorderFactory.createTitledBorder("Vista Previa"));
-        panelVistaPrevia.setBackground(coloresEditor.get("fondo").obtener());
+		// Editor HTML
+		JPanel panelEditor = new JPanel(new BorderLayout());
+		panelEditor.setBorder(BorderFactory.createTitledBorder("Editor HTML"));
+		panelEditor.setBackground(coloresEditor.get("fondo").obtener());
 
-        vistaPrevia = new JEditorPane();
-        vistaPrevia.setEditable(false);
-        vistaPrevia.setContentType("text/html");
-        vistaPrevia.setBackground(Color.WHITE);
+		editorHTML = new JTextPane();
+		editorHTML.setFont(new Font("Monospaced", Font.PLAIN, 13));
+		editorHTML.setCaretColor(coloresEditor.get("texto").obtener());
+		editorHTML.setForeground(coloresEditor.get("texto").obtener());
+		editorHTML.setBackground(coloresEditor.get("caja_texto").obtener());
 
-        JScrollPane scrollVistaPrevia = new JScrollPane(vistaPrevia);
-        scrollVistaPrevia.setBorder(BorderFactory.createLineBorder(coloresEditor.get("borde").obtener(), 1));
-        panelVistaPrevia.add(scrollVistaPrevia, BorderLayout.CENTER);
+		JScrollPane scrollEditor = new JScrollPane(editorHTML);
+		scrollEditor.setBorder(BorderFactory.createLineBorder(coloresEditor.get("borde").obtener(), 1));
+		panelEditor.add(scrollEditor, BorderLayout.CENTER);
 
-        splitPaneEditor.setTopComponent(panelEditor);
-        splitPaneEditor.setBottomComponent(panelVistaPrevia);
+		// Vista previa
+		JPanel panelVistaPrevia = new JPanel(new BorderLayout());
+		panelVistaPrevia.setBorder(BorderFactory.createTitledBorder("Vista Previa"));
+		panelVistaPrevia.setBackground(coloresEditor.get("fondo").obtener());
 
-        // Panel derecho: configuración de colores e imágenes
-        panelConfiguracion = new JPanel(new BorderLayout());
-        panelConfiguracion.setBorder(BorderFactory.createTitledBorder("Configuración de Colores e Imágenes"));
-        panelConfiguracion.setBackground(coloresEditor.get("fondo").obtener());
+		vistaPrevia = new JEditorPane();
+		vistaPrevia.setEditable(false);
+		vistaPrevia.setContentType("text/html");
+		vistaPrevia.setBackground(Color.WHITE);
 
-        // Panel de colores
-        JPanel panelColores = new JPanel(new GridLayout(0, 1, 5, 5));
-        panelColores.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        panelColores.setBackground(coloresEditor.get("fondo").obtener());
-        
-        // Llamada al método de la clase abstracta
-        inicializarConfiguracionColores(panelColores);
+		JScrollPane scrollVistaPrevia = new JScrollPane(vistaPrevia);
+		scrollVistaPrevia.setBorder(BorderFactory.createLineBorder(coloresEditor.get("borde").obtener(), 1));
+		panelVistaPrevia.add(scrollVistaPrevia, BorderLayout.CENTER);
 
-        // Panel de imágenes con ruta
-        JPanel panelImagenes = new JPanel(new BorderLayout());
-        
-        String rutaFormateada = MonitorDePID.carpeta.resolve("imagenes").toString().replace("\\", "/");
-        panelImagenes.setBorder(BorderFactory.createTitledBorder("Imágenes (" + rutaFormateada + ")"));
-        panelImagenes.setBackground(coloresEditor.get("fondo").obtener());
+		splitPaneEditor.setTopComponent(panelEditor);
+		splitPaneEditor.setBottomComponent(panelVistaPrevia);
 
-        JPanel panelContenidoImagenes = new JPanel(new GridLayout(0, 1, 5, 5));
-        panelContenidoImagenes.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        panelContenidoImagenes.setBackground(coloresEditor.get("fondo").obtener());
+		// Panel derecho: configuración de colores e imágenes
+		panelConfiguracion = new JPanel(new BorderLayout());
+		panelConfiguracion.setBorder(BorderFactory.createTitledBorder("Configuración de Colores e Imágenes"));
+		panelConfiguracion.setBackground(coloresEditor.get("fondo").obtener());
 
-        // Usar el método de la clase abstracta para obtener los nombres de imágenes
-        for (String imagen : obtenerNombresImágenesVTuber()) {
-            panelContenidoImagenes.add(crearPanelImagen(imagen));
-        }
+		// Panel de colores
+		JPanel panelColores = new JPanel(new GridLayout(0, 1, 5, 5));
+		panelColores.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		panelColores.setBackground(coloresEditor.get("fondo").obtener());
 
-        panelImagenes.add(panelContenidoImagenes, BorderLayout.CENTER);
+		// Llamada al método de la clase abstracta
+		inicializarConfiguracionColores(panelColores);
 
-        panelConfiguracion.add(panelColores, BorderLayout.CENTER);
-        panelConfiguracion.add(panelImagenes, BorderLayout.SOUTH);
+		// Panel de imágenes con ruta
+		JPanel panelImagenes = new JPanel(new BorderLayout());
 
-        splitPanePrincipal.setLeftComponent(splitPaneEditor);
-        splitPanePrincipal.setRightComponent(panelConfiguracion);
+		String rutaFormateada = MonitorDePID.carpeta.resolve("imagenes").toString().replace("\\", "/");
+		panelImagenes.setBorder(BorderFactory.createTitledBorder("Imágenes (" + rutaFormateada + ")"));
+		panelImagenes.setBackground(coloresEditor.get("fondo").obtener());
 
-        add(splitPanePrincipal, BorderLayout.CENTER);
+		JPanel panelContenidoImagenes = new JPanel(new GridLayout(0, 1, 5, 5));
+		panelContenidoImagenes.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		panelContenidoImagenes.setBackground(coloresEditor.get("fondo").obtener());
 
-        // Listener para actualizar vista previa
-        editorHTML.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                actualizarVistaPrevia();
-            }
+		// Usar el método de la clase abstracta para obtener los nombres de imágenes
+		for (String imagen : obtenerNombresImágenesVTuber()) {
+			panelContenidoImagenes.add(crearPanelImagen(imagen));
+		}
 
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                actualizarVistaPrevia();
-            }
+		panelImagenes.add(panelContenidoImagenes, BorderLayout.CENTER);
 
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                actualizarVistaPrevia();
-            }
-        });
+		panelConfiguracion.add(panelColores, BorderLayout.CENTER);
+		panelConfiguracion.add(panelImagenes, BorderLayout.SOUTH);
 
-        // Listener para resaltar sintaxis
-        editorHTML.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
+		splitPanePrincipal.setLeftComponent(splitPaneEditor);
+		splitPanePrincipal.setRightComponent(panelConfiguracion);
 
-            @Override
-            public void keyPressed(KeyEvent e) {
-            }
+		add(splitPanePrincipal, BorderLayout.CENTER);
 
-            @Override
-            public void keyReleased(KeyEvent e) {
-                resaltarSintaxis();
-            }
-        });
+		// Listener para actualizar vista previa
+		editorHTML.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				actualizarVistaPrevia();
+			}
 
-        resaltarSintaxis();
-    }
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				actualizarVistaPrevia();
+			}
 
-    private void inicializarColoresEditor() {
-        // Inicializar colores específicos para esta implementación usando el método de
-        coloresEditor.put("fondo", ConfigColor.de("color_fondo_editor_plantilla", new Color(240, 240, 245)));
-        coloresEditor.put("texto", ConfigColor.de("color_texto_editor_plantilla", new Color(50, 50, 50)));
-        coloresEditor.put("caja_texto", ConfigColor.de("color_caja_texto_editor_plantilla", new Color(255, 255, 255)));
-        coloresEditor.put("boton", ConfigColor.de("color_boton_editor_plantilla", new Color(220, 220, 230)));
-        coloresEditor.put("borde", ConfigColor.de("color_borde_editor_plantilla", new Color(180, 180, 200)));
-    }
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				actualizarVistaPrevia();
+			}
+		});
 
-    private void configurarBoton(JButton boton) {
-        boton.setForeground(coloresEditor.get("texto").obtener());
-        boton.setBackground(coloresEditor.get("boton").obtener());
-        boton.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        boton.setBorder(BorderFactory.createEmptyBorder(3, 5, 3, 5));
-        boton.setFocusPainted(false);
-    }
+		// Listener para resaltar sintaxis
+		editorHTML.addKeyListener(new KeyListener() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+			}
 
-    @Override
-    public void recargarApariencia() {
-        // Actualizar la apariencia de todos los componentes
-        SwingUtilities.updateComponentTreeUI(this);
-        
-        // También necesitamos configurar los colores nuevamente
-        inicializarColoresEditor();
-        
-        // Configurar apariencia de los componentes
-        if (getParent() != null) {
-            inicializarComponentes();
-            repaint();
-        }
-    }
+			@Override
+			public void keyPressed(KeyEvent e) {
+			}
 
-    @Override
-    public List<ElementoConfig> obtenerElementosConfigs() {
-        ArrayList<ElementoConfig> configs = new ArrayList<>();
-        configs.add(coloresEditor.get("fondo"));
-        configs.add(coloresEditor.get("texto"));
-        configs.add(coloresEditor.get("caja_texto"));
-        configs.add(coloresEditor.get("boton"));
-        configs.add(coloresEditor.get("borde"));
-        return configs;
-    }
+			@Override
+			public void keyReleased(KeyEvent e) {
+				resaltarSintaxis();
+			}
+		});
+
+		resaltarSintaxis();
+	}
+
+	private void inicializarColoresEditor() {
+		// Inicializar colores específicos para esta implementación usando el método de
+		coloresEditor.put("fondo", ConfigColor.de("color_fondo_editor_plantilla", new Color(240, 240, 245)));
+		coloresEditor.put("texto", ConfigColor.de("color_texto_editor_plantilla", new Color(50, 50, 50)));
+		coloresEditor.put("caja_texto", ConfigColor.de("color_caja_texto_editor_plantilla", new Color(255, 255, 255)));
+		coloresEditor.put("boton", ConfigColor.de("color_boton_editor_plantilla", new Color(220, 220, 230)));
+		coloresEditor.put("borde", ConfigColor.de("color_borde_editor_plantilla", new Color(180, 180, 200)));
+	}
+
+	private void configurarBoton(JButton boton) {
+		boton.setForeground(coloresEditor.get("texto").obtener());
+		boton.setBackground(coloresEditor.get("boton").obtener());
+		boton.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		boton.setBorder(BorderFactory.createEmptyBorder(3, 5, 3, 5));
+		boton.setFocusPainted(false);
+	}
+
+	@Override
+	public void recargarApariencia() {
+		// Actualizar la apariencia de todos los componentes
+		SwingUtilities.updateComponentTreeUI(this);
+
+		// También necesitamos configurar los colores nuevamente
+		inicializarColoresEditor();
+
+		// Configurar apariencia de los componentes
+		if (getParent() != null) {
+			inicializarComponentes();
+			repaint();
+		}
+	}
+
+	@Override
+	public List<ElementoConfig> obtenerElementosConfigs() {
+		ArrayList<ElementoConfig> configs = new ArrayList<>();
+		configs.add(coloresEditor.get("fondo"));
+		configs.add(coloresEditor.get("texto"));
+		configs.add(coloresEditor.get("caja_texto"));
+		configs.add(coloresEditor.get("boton"));
+		configs.add(coloresEditor.get("borde"));
+		return configs;
+	}
 }

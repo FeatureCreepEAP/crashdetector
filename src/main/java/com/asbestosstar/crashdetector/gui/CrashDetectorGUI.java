@@ -168,13 +168,12 @@ public interface CrashDetectorGUI {
 	 */
 	public void init();
 
-	
 	/**
-	 * Elementos de Configs para elementos incluyendo colores y imagenes y superpuesta
+	 * Elementos de Configs para elementos incluyendo colores y imagenes y
+	 * superpuesta
+	 * 
 	 * @return
 	 */
 	public List<ElementoConfig> obtenerElementosConfigs();
-	
-	
-	
+
 }

@@ -25,7 +25,6 @@ public class PanelQuickFixDemonSlayers extends TodosQuickFixesGUI {
 
 	ConfigColor colorSeparador = ConfigColor.de("quickfix_demonslayers_separador", Color.LIGHT_GRAY);
 
-	
 	public PanelQuickFixDemonSlayers() {
 		super();
 		// Inicializar campos de color específicos para esta implementación

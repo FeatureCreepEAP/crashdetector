@@ -2,6 +2,7 @@ package com.asbestosstar.crashdetector.api_sito_registro;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -40,7 +41,7 @@ public class SecureLoggerAPI implements APIdeSitioDeRegistro {
 	public String publicarRegistro(Consola registro) {
 		// TODO Auto-generated method stub
 		CrashDetectorLogger.log("enlance null");
-		String req = logRequest("USER_CODE", registro);
+		String req = logRequest("USER_CODE", registro.obtainerContenidoParaPublicar());
 
 		return extractLink(req);
 	}
@@ -92,15 +93,11 @@ public class SecureLoggerAPI implements APIdeSitioDeRegistro {
 	}
 
 	// Simplificación de métodos relacionados con la solicitud HTTP
-	public String logRequest(String tipoCliente, Consola consola) {
+	public String logRequest(String tipoCliente, String contenidoLog) {
 		try {
 			// Construir parámetros de la URL
 			String parametros = "version=2.923&clientType=" + URLEncoder.encode(tipoCliente, "UTF-8");
 			String urlCompleta = APIdeSitioDeRegistro.sitioDeConfig() + parametros;
-
-			// Leer contenido del archivo de log
-			String contenidoLog = consola.obtainerContenidoParaPublicar(); // para ahora solo los registros para
-																			// verificar
 
 			// Realizar solicitud POST comprimida
 			return enviarPost(new URL(urlCompleta), contenidoLog.getBytes("cp1251"));
@@ -135,6 +132,21 @@ public class SecureLoggerAPI implements APIdeSitioDeRegistro {
 			gzip.write(datos);
 		}
 		return buffer.toByteArray();
+	}
+
+	// SecureLoggerAPI.java
+	@Override
+	public String publicarTexto(String nombreSugerido, String contenido) throws ErrorConPublicar {
+		try {
+			String req = logRequest("USER_CODE", contenido);
+			String link = extractLink(req);
+			if (link == null || link.isEmpty()) {
+				throw new ErrorConPublicar("Respuesta sin enlace de SecureLogger");
+			}
+			return link;
+		} catch (Exception e) {
+			throw new ErrorConPublicar(e.getMessage());
+		}
 	}
 
 }

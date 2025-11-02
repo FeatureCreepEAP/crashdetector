@@ -43,7 +43,7 @@ public class Consola {
 	public String contenido;
 
 	public Path archivo;
-	public String enlance;
+	public List<String> enlaces = new ArrayList<String>();
 	public int linea_original;
 	public boolean nueva = false;
 	public String contenido_verificar;
@@ -556,20 +556,6 @@ public class Consola {
 		return priorizadas;
 	}
 
-	// Para todos el code aqui,escribir otra vez estar mas simplicado pero hacer la
-	// funcion misma
-	public String obtainerEnlance() throws DemasiadoGrande, ErrorConPublicar, NoAPIdeRegistro {
-		if (enlance != null) {
-			// CrashDetectorLogger.log("elance no es null");
-
-			return enlance;
-		} else {
-
-			this.enlance = APIdeSitioDeRegistro.obtenerAPIdeConfig().publicarRegistro(this);
-			return enlance;
-		}
-	}
-
 	public static boolean tiene_registro_de_launcher(List<Consola> cons) {
 		for (Consola con : cons) {
 			File arch = con.archivo.toFile();
@@ -704,6 +690,24 @@ public class Consola {
 
 	public LimpiadorDeRegistro obtenerLimpiador() {
 		return limpiador;
+	}
+
+	// En Consola.java (o clase equivalente)
+	public List<String> obtainerEnlaces() throws DemasiadoGrande, ErrorConPublicar, NoAPIdeRegistro {
+		if (enlaces.isEmpty()) {
+			APIdeSitioDeRegistro api = APIdeSitioDeRegistro.obtenerAPIdeConfig();
+			List<String> ret = api.publicarRegistroEnPartes(this);
+			enlaces.addAll(ret);
+		}
+		return enlaces;
+	}
+
+	// Para todos el code aqui,escribir otra vez estar mas simplicado pero hacer la
+	// funcion misma
+	@Deprecated
+	public String obtainerEnlance() throws DemasiadoGrande, ErrorConPublicar, NoAPIdeRegistro {
+		List<String> ls = obtainerEnlaces();
+		return (ls != null && !ls.isEmpty()) ? ls.get(0) : null;
 	}
 
 }

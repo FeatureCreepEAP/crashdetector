@@ -53,9 +53,6 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 
 	public static String ID = "estilo_lanzer";
 
-
-
-	
 	public ConfigColor colorFondo = ConfigColor.de("gui.principal.lanzer.color.fondo",
 			Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()));
 	public ConfigColor colorTexto = ConfigColor.de("gui.principal.lanzer.color.texto",
@@ -67,7 +64,6 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 	public ConfigColor colorEnlace = ConfigColor.de("gui.principal.lanzer.color.enlace",
 			Config.convertirAColor(Config.obtenerInstancia().obtenerColorEnlace()));
 
-	
 	@Override
 	public void init() {
 		// Inicializar colores PRIMERO
@@ -84,7 +80,6 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 	@Override
 	public void inicializarInterfaz() {
 		// Inicializar componentes con colores iniciales
-
 
 		pantalla.setContentType("text/html");
 		pantalla.setEditable(false);

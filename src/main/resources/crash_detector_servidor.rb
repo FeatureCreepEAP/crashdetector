@@ -7,7 +7,7 @@ require 'fileutils'
 
 # Configuraci?n
 DIRECTORIO_INFORMES = File.expand_path('informes')
-DOMINIOS_PERMITIDOS = ['securelogger.net', 'curseforge.com', 'discord.gg', 'qq.com', 'mclo.gs','mikumikudance.jp','egoism.jp','nvidia.com','amd.com','intel.com']
+DOMINIOS_PERMITIDOS = ['securelogger.net', 'curseforge.com', 'discord.gg', 'qq.com', 'mclo.gs','mikumikudance.jp','egoism.jp','nvidia.com','amd.com','intel.com',"pastes.dev"]
 
 begin
   FileUtils.mkdir_p(DIRECTORIO_INFORMES) unless File.directory?(DIRECTORIO_INFORMES)
