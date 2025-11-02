@@ -20,6 +20,7 @@ import com.asbestosstar.crashdetector.api_sito_registro.APIdeSitioDeRegistro;
 import com.asbestosstar.crashdetector.api_sito_registro.CrashDetectorPasteAPI;
 import com.asbestosstar.crashdetector.api_sito_registro.DemasiadoGrande;
 import com.asbestosstar.crashdetector.api_sito_registro.ErrorConPublicar;
+import com.asbestosstar.crashdetector.api_sito_registro.LimteDeTasa;
 import com.asbestosstar.crashdetector.api_sito_registro.MCLogsAPI;
 import com.asbestosstar.crashdetector.api_sito_registro.NoAPIdeRegistro;
 import com.asbestosstar.crashdetector.api_sito_registro.PastesDevAPI;
@@ -693,7 +694,7 @@ public class Consola {
 	}
 
 	// En Consola.java (o clase equivalente)
-	public List<String> obtainerEnlaces() throws DemasiadoGrande, ErrorConPublicar, NoAPIdeRegistro {
+	public List<String> obtainerEnlaces() throws DemasiadoGrande, ErrorConPublicar, NoAPIdeRegistro, LimteDeTasa {
 		if (enlaces.isEmpty()) {
 			APIdeSitioDeRegistro api = APIdeSitioDeRegistro.obtenerAPIdeConfig();
 			List<String> ret = api.publicarRegistroEnPartes(this);
@@ -705,7 +706,7 @@ public class Consola {
 	// Para todos el code aqui,escribir otra vez estar mas simplicado pero hacer la
 	// funcion misma
 	@Deprecated
-	public String obtainerEnlance() throws DemasiadoGrande, ErrorConPublicar, NoAPIdeRegistro {
+	public String obtainerEnlance() throws DemasiadoGrande, ErrorConPublicar, NoAPIdeRegistro, LimteDeTasa {
 		List<String> ls = obtainerEnlaces();
 		return (ls != null && !ls.isEmpty()) ? ls.get(0) : null;
 	}

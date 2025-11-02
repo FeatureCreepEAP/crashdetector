@@ -18,6 +18,7 @@ import java.util.zip.GZIPOutputStream;
 
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
+import com.asbestosstar.crashdetector.MonitorDePID;
 
 public class SecureLoggerAPI implements APIdeSitioDeRegistro {
 
@@ -33,17 +34,21 @@ public class SecureLoggerAPI implements APIdeSitioDeRegistro {
 		List<String> sitios = new ArrayList<String>();
 		sitios.add("https://securelogger.net/save/log?");
 		sitios.add("https://securelogger.top/save/log?");
-
 		return sitios;
 	}
 
 	@Override
-	public String publicarRegistro(Consola registro) {
+	public String publicarRegistro(Consola registro) throws ErrorConPublicar {
 		// TODO Auto-generated method stub
 		CrashDetectorLogger.log("enlance null");
-		String req = logRequest("USER_CODE", registro.obtainerContenidoParaPublicar());
-
-		return extractLink(req);
+		try {
+			String req = logRequest("USER_CODE", registro.obtainerContenidoParaPublicar());
+			return extractLink(req);
+		} catch (LimteDeTasa lt) {
+			// Mantener el flujo existente: convertir a ErrorConPublicar con mensaje humano
+			// para que la GUI muestre un popup ya con el texto correcto.
+			throw new ErrorConPublicar(MonitorDePID.idioma.limite_de_solicitudes());
+		}
 	}
 
 	/**
@@ -93,7 +98,7 @@ public class SecureLoggerAPI implements APIdeSitioDeRegistro {
 	}
 
 	// Simplificación de métodos relacionados con la solicitud HTTP
-	public String logRequest(String tipoCliente, String contenidoLog) {
+	public String logRequest(String tipoCliente, String contenidoLog) throws LimteDeTasa {
 		try {
 			// Construir parámetros de la URL
 			String parametros = "version=2.923&clientType=" + URLEncoder.encode(tipoCliente, "UTF-8");
@@ -101,13 +106,16 @@ public class SecureLoggerAPI implements APIdeSitioDeRegistro {
 
 			// Realizar solicitud POST comprimida
 			return enviarPost(new URL(urlCompleta), contenidoLog.getBytes("cp1251"));
+		} catch (LimteDeTasa e) {
+			// Repropagar tal cual para que la capa superior lo trate con popup
+			throw e;
 		} catch (Exception e) {
 			CrashDetectorLogger.logException(e);
 			return "Error: " + e.getMessage();
 		}
 	}
 
-	private String enviarPost(URL url, byte[] cuerpo) throws IOException {
+	private String enviarPost(URL url, byte[] cuerpo) throws IOException, LimteDeTasa {
 		HttpURLConnection conexion = (HttpURLConnection) url.openConnection(Proxy.NO_PROXY);
 		conexion.setRequestMethod("POST");
 		conexion.setConnectTimeout(30000);
@@ -116,10 +124,44 @@ public class SecureLoggerAPI implements APIdeSitioDeRegistro {
 		conexion.setRequestProperty("Content-Encoding", "gzip");
 		conexion.setDoOutput(true);
 
+		// Enviar cuerpo (comprimido)
 		try (OutputStream os = conexion.getOutputStream()) {
 			os.write(comprimirGZIP(cuerpo));
 		}
 
+		int code = conexion.getResponseCode();
+		if (code == 429) {
+			// Límite de tasa alcanzado: lanzar excepción con mensaje de idioma
+			String msg = MonitorDePID.idioma.limite_de_solicitudes();
+			try (InputStream es = conexion.getErrorStream()) {
+				if (es != null) {
+					String extra = new BufferedReader(new InputStreamReader(es)).lines()
+							.collect(Collectors.joining("\n"));
+					if (extra != null && !extra.isEmpty()) {
+						msg = msg + "\n" + extra;
+					}
+				}
+			} catch (Throwable ignore) {
+			}
+			throw new LimteDeTasa(msg);
+		} else if (code < 200 || code >= 300) {
+			// Otros errores HTTP: propaga con mensaje aprovechable por la GUI
+			StringBuilder err = new StringBuilder();
+			err.append("HTTP ").append(code);
+			try (InputStream es = conexion.getErrorStream()) {
+				if (es != null) {
+					String extra = new BufferedReader(new InputStreamReader(es)).lines()
+							.collect(Collectors.joining("\n"));
+					if (extra != null && !extra.isEmpty()) {
+						err.append(": ").append(extra);
+					}
+				}
+			} catch (Throwable ignore) {
+			}
+			throw new IOException(err.toString());
+		}
+
+		// OK (2xx): leer respuesta
 		try (InputStream is = conexion.getInputStream();
 				BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
 			return reader.lines().collect(Collectors.joining("\n"));
@@ -136,7 +178,7 @@ public class SecureLoggerAPI implements APIdeSitioDeRegistro {
 
 	// SecureLoggerAPI.java
 	@Override
-	public String publicarTexto(String nombreSugerido, String contenido) throws ErrorConPublicar {
+	public String publicarTexto(String nombreSugerido, String contenido) throws ErrorConPublicar, LimteDeTasa {
 		try {
 			String req = logRequest("USER_CODE", contenido);
 			String link = extractLink(req);
@@ -144,9 +186,11 @@ public class SecureLoggerAPI implements APIdeSitioDeRegistro {
 				throw new ErrorConPublicar("Respuesta sin enlace de SecureLogger");
 			}
 			return link;
+		} catch (LimteDeTasa rl) {
+			// Repropagar tal cual: la capa GUI lo atrapará y mostrará popup
+			throw rl;
 		} catch (Exception e) {
 			throw new ErrorConPublicar(e.getMessage());
 		}
 	}
-
 }

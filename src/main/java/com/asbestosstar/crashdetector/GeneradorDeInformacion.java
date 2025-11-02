@@ -18,6 +18,7 @@ import javax.swing.SwingUtilities;
 import com.asbestosstar.crashdetector.api_sito_registro.APIdeSitioDeRegistro;
 import com.asbestosstar.crashdetector.api_sito_registro.DemasiadoGrande;
 import com.asbestosstar.crashdetector.api_sito_registro.ErrorConPublicar;
+import com.asbestosstar.crashdetector.api_sito_registro.LimteDeTasa;
 import com.asbestosstar.crashdetector.api_sito_registro.NoAPIdeRegistro;
 
 public class GeneradorDeInformacion {
@@ -73,14 +74,14 @@ public class GeneradorDeInformacion {
 	}
 
 	public static String compartir(List<Consola> consolas, Instant instant)
-			throws DemasiadoGrande, ErrorConPublicar, NoAPIdeRegistro {
+			throws DemasiadoGrande, ErrorConPublicar, NoAPIdeRegistro, LimteDeTasa {
 		try {
 			StringBuilder cons = new StringBuilder();
 			cons.append("<center>").append(MonitorDePID.idioma.ubicacionesDeLogs()).append("<br>");
 
 			for (Consola co : consolas) {
 				// Para cada consola, obtener TODAS las partes
-				java.util.List<String> enlaces = obtenerEnlacesDeConsola(co);
+				java.util.List<String> enlaces = co.obtainerEnlaces();
 				String nombre = (co.archivo != null) ? co.archivo.toString().trim() : "log.txt";
 
 				if (enlaces.size() == 1) {
@@ -116,13 +117,6 @@ public class GeneradorDeInformacion {
 			CrashDetectorLogger.logException(e);
 			return null;
 		}
-	}
-
-	// A) NUEVO: devuelve una lista de enlaces (una por parte)
-	public static java.util.List<String> obtenerEnlacesDeConsola(Consola consola)
-			throws DemasiadoGrande, ErrorConPublicar, NoAPIdeRegistro {
-		APIdeSitioDeRegistro api = APIdeSitioDeRegistro.obtenerAPIdeConfig();
-		return api.publicarRegistroEnPartes(consola);
 	}
 
 	public static String imagenesParaCompartir() {

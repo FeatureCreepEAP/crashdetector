@@ -38,6 +38,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.api_sito_registro.APIdeSitioDeRegistro;
 import com.asbestosstar.crashdetector.api_sito_registro.DemasiadoGrande;
 import com.asbestosstar.crashdetector.api_sito_registro.ErrorConPublicar;
+import com.asbestosstar.crashdetector.api_sito_registro.LimteDeTasa;
 import com.asbestosstar.crashdetector.api_sito_registro.NoAPIdeRegistro;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
@@ -427,7 +428,10 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 					mostrarError(MonitorDePID.idioma.errorConPublicarRegistro(ex.problema), ex);
 				} catch (NoAPIdeRegistro ex) {
 					mostrarError(MonitorDePID.idioma.apiDeRegistroNoExiste(), ex);
-				} catch (Exception ex) {
+				}catch (LimteDeTasa ex) {
+					mostrarError(MonitorDePID.idioma.limite_de_solicitudes(), ex);
+				}  
+				catch (Exception ex) {
 					CrashDetectorLogger.logException(ex);
 					mostrarError(MonitorDePID.idioma.error_inesperado_al_procesar_boton(), ex); // <- antes literal
 				} finally {
