@@ -4760,4 +4760,33 @@ public class Espanol implements Idioma {
 				+ "</b>";
 	}
 
+	// --- Buscador de Canario de Orden (Warrant Canary) ---
+
+	/**
+	 * Texto del botón para el buscador de canario de orden. Ejemplo: "Buscador de
+	 * canario de orden"
+	 */
+	@Override
+	public String buscador_canario_de_orden_label() {
+		return "Buscador de canario de orden";
+	}
+
+	/**
+	 * Mensaje mostrado en el cuadro de diálogo informando que la función estará
+	 * disponible próximamente.
+	 */
+	@Override
+	public String buscador_canario_de_orden_mensaje_proximamente() {
+		return "Esta función estará disponible próximamente.";
+	}
+
+	/**
+	 * Título del cuadro de diálogo que informa sobre la disponibilidad futura del
+	 * buscador de canario de orden.
+	 */
+	@Override
+	public String buscador_canario_de_orden_titulo_proximamente() {
+		return "Próximamente";
+	}
+
 }

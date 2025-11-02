@@ -4085,4 +4085,32 @@ public class Portuges implements Idioma {
 				+ "</b>";
 	}
 
+	// --- Localizador de Canary de Mandado (Warrant Canary) ---
+	/**
+	 * Texto do botão para o localizador de canary de mandado. Exemplo: "Localizador
+	 * de canary de mandado"
+	 */
+	@Override
+	public String buscador_canario_de_orden_label() {
+		return "Localizador de Canary de Mandado";
+	}
+
+	/**
+	 * Mensagem exibida na caixa de diálogo informando que o recurso estará
+	 * disponível em breve.
+	 */
+	@Override
+	public String buscador_canario_de_orden_mensaje_proximamente() {
+		return "Este recurso estará disponível em breve.";
+	}
+
+	/**
+	 * Título da caixa de diálogo que informa sobre a disponibilidade futura do
+	 * localizador de canary de mandado.
+	 */
+	@Override
+	public String buscador_canario_de_orden_titulo_proximamente() {
+		return "Em Breve";
+	}
+
 }

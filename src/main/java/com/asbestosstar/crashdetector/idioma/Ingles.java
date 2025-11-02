@@ -4113,4 +4113,32 @@ public class Ingles implements Idioma {
 				+ "</b>";
 	}
 
+	// --- Warrant Canary Searcher ---
+	/**
+	 * Text on the button for the warrant canary searcher. Example: "Warrant Canary
+	 * Searcher"
+	 */
+	@Override
+	public String buscador_canario_de_orden_label() {
+		return "Warrant Canary Searcher";
+	}
+
+	/**
+	 * Message shown in the dialog box informing that the feature will be available
+	 * soon.
+	 */
+	@Override
+	public String buscador_canario_de_orden_mensaje_proximamente() {
+		return "This feature will be available soon.";
+	}
+
+	/**
+	 * Title of the dialog box informing about the future availability of the
+	 * warrant canary searcher.
+	 */
+	@Override
+	public String buscador_canario_de_orden_titulo_proximamente() {
+		return "Coming Soon";
+	}
+
 }

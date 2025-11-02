@@ -4070,4 +4070,31 @@ public class Esperanto implements Idioma {
 				+ "</b>";
 	}
 
+	// --- Serĉilo pri Ordo-Kanario (Warrant Canary) ---
+	/**
+	 * Teksto sur la butono por la serĉilo pri ordo-kanario. Ekzemple: "Serĉilo pri
+	 * ordo-kanario"
+	 */
+	@Override
+	public String buscador_canario_de_orden_label() {
+		return "Serĉilo pri ordo-kanario";
+	}
+
+	/**
+	 * Mesaĝo montrita en dialogo informante ke la funkcio estos disponebla baldaŭ.
+	 */
+	@Override
+	public String buscador_canario_de_orden_mensaje_proximamente() {
+		return "Ĉi tiu funkcio estos disponebla baldaŭ.";
+	}
+
+	/**
+	 * Titolo de la dialogo, kiu informas pri la venonta disponebleco de la serĉilo
+	 * pri ordo-kanario.
+	 */
+	@Override
+	public String buscador_canario_de_orden_titulo_proximamente() {
+		return "Baldaŭ";
+	}
+
 }

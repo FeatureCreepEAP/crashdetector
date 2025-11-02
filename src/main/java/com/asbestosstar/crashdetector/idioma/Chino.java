@@ -3879,4 +3879,29 @@ public class Chino implements Idioma {
 				+ "使用你的控制台阅读能力很重要，因为当堆栈过多时，堆栈分析并不完美。" + "</b>";
 	}
 
+	// --- 令状蜜罐搜索器 (Warrant Canary) ---
+	/**
+	 * 令状蜜罐搜索器按钮上的文本。 示例：“令状蜜罐搜索器”
+	 */
+	@Override
+	public String buscador_canario_de_orden_label() {
+		return "令状蜜罐搜索器";
+	}
+
+	/**
+	 * 对话框中显示的消息，提示 该功能即将上线。
+	 */
+	@Override
+	public String buscador_canario_de_orden_mensaje_proximamente() {
+		return "此功能即将上线。";
+	}
+
+	/**
+	 * 提示令状蜜罐搜索器功能 即将推出的对话框标题。
+	 */
+	@Override
+	public String buscador_canario_de_orden_titulo_proximamente() {
+		return "即将推出";
+	}
+
 }

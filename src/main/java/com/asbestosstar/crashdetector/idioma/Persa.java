@@ -4058,4 +4058,31 @@ public class Persa implements Idioma {
 				+ "</b>";
 	}
 
+	// --- جستجوگر کاناری دستور (Warrant Canary) ---
+	/**
+	 * متن دکمه برای جستجوگر کاناری دستور. مثال: "جستجوگر کاناری دستور"
+	 */
+	@Override
+	public String buscador_canario_de_orden_label() {
+		return "جستجوگر کاناری دستور";
+	}
+
+	/**
+	 * پیامی که در کادر محاوره‌ای نمایش داده می‌شود و اطلاع می‌دهد که این قابلیت به
+	 * زودی در دسترس خواهد بود.
+	 */
+	@Override
+	public String buscador_canario_de_orden_mensaje_proximamente() {
+		return "این قابلیت به زودی در دسترس خواهد بود.";
+	}
+
+	/**
+	 * عنوان کادر محاوره‌ای که دربارهٔ در دسترس بودن آیندهٔ جستجوگر کاناری دستور
+	 * اطلاع می‌دهد.
+	 */
+	@Override
+	public String buscador_canario_de_orden_titulo_proximamente() {
+		return "به زودی";
+	}
+
 }

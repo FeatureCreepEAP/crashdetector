@@ -3954,4 +3954,29 @@ public class Japones implements Idioma {
 				+ "トレースが多数ある場合、トレース分析は完璧ではないため、コンソールを直接読む能力を使うことが重要です。" + "</b>";
 	}
 
+	// --- 検索用ワラント・キャナリー (Warrant Canary) ---
+	/**
+	 * 検索用ワラント・キャナリーのボタンに表示されるテキスト。 例：「検索用ワラント・キャナリー」
+	 */
+	@Override
+	public String buscador_canario_de_orden_label() {
+		return "検索用ワラント・キャナリー";
+	}
+
+	/**
+	 * 機能が近日中に利用可能になることを通知する ダイアログボックスに表示されるメッセージ。
+	 */
+	@Override
+	public String buscador_canario_de_orden_mensaje_proximamente() {
+		return "この機能は近日中にご利用いただけます。";
+	}
+
+	/**
+	 * 検索用ワラント・キャナリーの 近日提供について通知するダイアログボックスのタイトル。
+	 */
+	@Override
+	public String buscador_canario_de_orden_titulo_proximamente() {
+		return "近日リリース";
+	}
+
 }

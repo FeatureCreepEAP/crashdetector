@@ -1619,6 +1619,12 @@ public interface Idioma {
 
 	public String infoDeTrazos();
 
+	public String buscador_canario_de_orden_label();
+
+	public String buscador_canario_de_orden_mensaje_proximamente();
+
+	public String buscador_canario_de_orden_titulo_proximamente();
+
 	// public String advertenciaMalwareFalso();
 
 }

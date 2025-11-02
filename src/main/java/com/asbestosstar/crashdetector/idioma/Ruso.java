@@ -4082,4 +4082,32 @@ public class Ruso implements Idioma {
 				+ "</b>";
 	}
 
+	// --- Поисковик «Канарейки ордера» (Warrant Canary) ---
+	/**
+	 * Текст на кнопке для поисковика «канарейки ордера». Пример: "Поисковик
+	 * канарейки ордера"
+	 */
+	@Override
+	public String buscador_canario_de_orden_label() {
+		return "Поисковик канарейки ордера";
+	}
+
+	/**
+	 * Сообщение, отображаемое в диалоговом окне, информирующее, что функция скоро
+	 * будет доступна.
+	 */
+	@Override
+	public String buscador_canario_de_orden_mensaje_proximamente() {
+		return "Эта функция станет доступной в ближайшее время.";
+	}
+
+	/**
+	 * Заголовок диалогового окна, информирующего о скором появлении поисковика
+	 * «канарейки ордера».
+	 */
+	@Override
+	public String buscador_canario_de_orden_titulo_proximamente() {
+		return "Скоро будет";
+	}
+
 }

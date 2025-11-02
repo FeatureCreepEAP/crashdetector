@@ -19,15 +19,13 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.api_sito_registro.APIdeSitioDeRegistro.ParteInfo;
 
 /**
- * API para publicar registros en el servicio PHP de CrashDetector.
+ * Implementación de APIdeSitioDeRegistro para publicar registros comprimidos en
+ * el servicio PHP remoto (CrashDetector Paste API).
  *
- * Fuente del endpoint:
- * https://pagure.io/CrashDetectorMC/blob/main/f/paste/endpoint.php
- *
- * - Envía el log comprimido en GZIP por POST a:
- * https://asbestosstar.egoism.jp/crash_detector/paste/endpoint.php?action=save_log
- * - Respuesta JSON con {"link":"https://..."} que se devuelve como enlace
- * público.
+ * - Envía el log comprimido con GZIP mediante POST. - Si el registro completo
+ * pesa menos de 20 MB (sin comprimir), se envía en una sola parte (sin
+ * dividir). - Si supera ese tamaño, se divide inteligentemente sin comprimir
+ * cada línea de manera individual.
  */
 public class CrashDetectorPasteAPI implements APIdeSitioDeRegistro {
 
@@ -41,18 +39,16 @@ public class CrashDetectorPasteAPI implements APIdeSitioDeRegistro {
 
 	@Override
 	public List<String> sitiosPorDefecto() {
-		// Endpoint recomendado con la acción de guardado
 		List<String> sitios = new ArrayList<>();
 		sitios.add("https://asbestosstar.egoism.jp/crash_detector/paste/endpoint.php?action=save_log");
 		return sitios;
 	}
 
-	/** Garantiza que el endpoint incluya la acción de guardado. */
+	/** Asegura que el endpoint contenga la acción de guardado. */
 	private String normalizarEndpoint(String s) {
 		if (s == null || s.isEmpty()) {
 			return "https://asbestosstar.egoism.jp/crash_detector/paste/endpoint.php?action=save_log";
 		}
-		// Si el usuario pegó la ruta sin acción, añadirla.
 		String basePhp = "endpoint.php";
 		if (s.endsWith("?"))
 			s = s.substring(0, s.length() - 1);
@@ -66,7 +62,7 @@ public class CrashDetectorPasteAPI implements APIdeSitioDeRegistro {
 		return s;
 	}
 
-	/** Comprime un arreglo de bytes en GZIP. */
+	/** Comprime un arreglo de bytes usando GZIP. */
 	private static byte[] comprimirGZIP(byte[] datos) throws Exception {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		try (GZIPOutputStream gz = new GZIPOutputStream(baos)) {
@@ -75,7 +71,7 @@ public class CrashDetectorPasteAPI implements APIdeSitioDeRegistro {
 		return baos.toByteArray();
 	}
 
-	/** Lee un InputStream completo a String (UTF-8). */
+	/** Lee un flujo de entrada completo y lo devuelve como texto UTF-8. */
 	private static String leer(InputStream is) {
 		if (is == null)
 			return null;
@@ -91,20 +87,19 @@ public class CrashDetectorPasteAPI implements APIdeSitioDeRegistro {
 		}
 	}
 
-	/** Extrae el valor de "link" de un JSON simple: {"link":"..."} */
+	/** Extrae el valor del campo "link" de una respuesta JSON simple. */
 	private static String extraerLinkDeJson(String json) {
 		if (json == null)
 			return null;
-		String key = "\"link\"";
-		int i = json.indexOf(key);
+		String clave = "\"link\"";
+		int i = json.indexOf(clave);
 		if (i < 0)
 			return null;
-		int colon = json.indexOf(':', i);
-		if (colon < 0)
+		int dosPuntos = json.indexOf(':', i);
+		if (dosPuntos < 0)
 			return null;
 
-		int pos = colon + 1;
-		// Saltar espacios
+		int pos = dosPuntos + 1;
 		while (pos < json.length() && Character.isWhitespace(json.charAt(pos)))
 			pos++;
 
@@ -117,13 +112,16 @@ public class CrashDetectorPasteAPI implements APIdeSitioDeRegistro {
 		return json.substring(pos + 1, fin);
 	}
 
-	// CrashDetectorPasteAPI.java
+	/** Publica texto arbitrario en el servidor remoto. */
 	@Override
 	public String publicarTexto(String nombreSugerido, String contenido) throws ErrorConPublicar {
 		try {
 			byte[] datos = (contenido == null ? "" : contenido).getBytes(StandardCharsets.UTF_8);
 			String endpoint = normalizarEndpoint(APIdeSitioDeRegistro.sitioDeConfig());
 			URL url = new URL(endpoint);
+
+			// Comprimir y enviar con longitud fija para evitar transferencia chunked
+			byte[] gzData = comprimirGZIP(datos);
 
 			HttpURLConnection con = (HttpURLConnection) url.openConnection(Proxy.NO_PROXY);
 			con.setRequestMethod("POST");
@@ -133,9 +131,10 @@ public class CrashDetectorPasteAPI implements APIdeSitioDeRegistro {
 			con.setRequestProperty("Content-Type", "application/octet-stream");
 			con.setRequestProperty("Content-Encoding", "gzip");
 			con.setDoOutput(true);
+			con.setFixedLengthStreamingMode(gzData.length); // ← importante
 
 			try (OutputStream os = con.getOutputStream()) {
-				os.write(comprimirGZIP(datos));
+				os.write(gzData);
 			}
 
 			int code = con.getResponseCode();
@@ -167,37 +166,59 @@ public class CrashDetectorPasteAPI implements APIdeSitioDeRegistro {
 
 	@Override
 	public boolean soporteEnlacesALinea() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	private final BiMap<String, Integer, ParteInfo> indicePartes = new BiMap<>();
-
 	private final ThreadLocal<String> grupoActual = new ThreadLocal<>();
 
 	@Override
 	public ThreadLocal<String> grupoActual() {
-		// TODO Auto-generated method stub
 		return grupoActual;
 	}
 
 	@Override
 	public BiMap<String, Integer, ParteInfo> indicePartes() {
-		// TODO Auto-generated method stub
 		return indicePartes;
 	}
 
+	/**
+	 * Publica el registro en una o varias partes. Si el texto sin comprimir es ≤ 20
+	 * MB, se publica directamente sin dividir.
+	 */
 	@Override
 	public List<String> publicarRegistroEnPartes(Consola registro)
 			throws DemasiadoGrande, ErrorConPublicar, NoAPIdeRegistro, LimteDeTasa {
+
 		String contenido = registro.obtainerContenidoParaPublicar();
 		if (contenido == null)
 			contenido = "";
-		final int LIMITE = 20 * 1024 * 1024;
 
+		final int LIMITE_GZIP = 20 * 1024 * 1024; // límite del servidor (20 MB)
+		final int PRESUPUESTO_RAW = 22 * 1024 * 1024; // margen antes de comprimir
+		byte[] sinComprimir = contenido.getBytes(StandardCharsets.UTF_8);
+
+		// ---- Caso simple: ≤ 20 MB sin comprimir → publicar sin dividir ----
+		if (sinComprimir.length <= LIMITE_GZIP) {
+			String base = (registro.archivo != null) ? registro.archivo.getFileName().toString() : "log.txt";
+			String url = publicarTexto(base, contenido);
+			List<String> unica = new ArrayList<>();
+			unica.add(url);
+
+			String gid = grupoActual().get();
+			if (gid != null) {
+				int totalLineas = contenido.isEmpty() ? 0 : contenido.split("\n", -1).length;
+				registrarParte(gid, 1, url, 1, Math.max(1, totalLineas));
+			}
+			return unica;
+		}
+
+		// ---- Caso avanzado: > 20 MB → dividir en partes ----
 		List<String> urls = new ArrayList<>();
 		String[] lineas = contenido.split("\n", -1);
+
 		StringBuilder parte = new StringBuilder();
+		int bytesParte = 0;
 		int lineaDesde = 1;
 		int acumuladas = 0;
 		int indiceParte = 1;
@@ -205,44 +226,71 @@ public class CrashDetectorPasteAPI implements APIdeSitioDeRegistro {
 
 		for (int i = 0; i < lineas.length; i++) {
 			String l = lineas[i];
-			String candidata = parte.length() == 0 ? l : ("\n" + l);
+			String candidata = (parte.length() == 0) ? l : ("\n" + l);
+			int bytesCand = candidata.getBytes(StandardCharsets.UTF_8).length;
+
+			if (bytesParte + bytesCand <= PRESUPUESTO_RAW) {
+				parte.append(candidata);
+				bytesParte += bytesCand;
+				acumuladas++;
+				continue;
+			}
+
+			// Alcanzado el presupuesto → comprimir una sola vez
 			try {
-				byte[] gz = comprimirGZIP((parte.toString() + candidata).getBytes(StandardCharsets.UTF_8));
-				if (gz.length <= LIMITE) {
-					parte.append(candidata);
-					acumuladas++;
-				} else {
-					if (parte.length() == 0) {
-						String u = publicarTexto(
-								registro.archivo != null ? registro.archivo.getFileName().toString() : "log.txt", l);
-						urls.add(u);
-						if (gid != null) {
-							registrarParte(gid, indiceParte++, u, lineaDesde, lineaDesde);
-							lineaDesde++;
-						}
-					} else {
-						String u = publicarTexto(registro.archivo != null
-								? registro.archivo.getFileName().toString() + " (parte " + indiceParte + ")"
-								: "log.txt (parte " + indiceParte + ")", parte.toString());
-						urls.add(u);
-						if (gid != null) {
-							registrarParte(gid, indiceParte++, u, lineaDesde, lineaDesde + acumuladas - 1);
-							lineaDesde += acumuladas;
-						}
-						parte.setLength(0);
-						acumuladas = 0;
-						i--;
+				byte[] gz = comprimirGZIP(parte.toString().getBytes(StandardCharsets.UTF_8));
+				if (gz.length <= LIMITE_GZIP) {
+					String u = publicarParte(registro, indiceParte, parte.toString());
+					urls.add(u);
+					if (gid != null) {
+						registrarParte(gid, indiceParte++, u, lineaDesde, lineaDesde + acumuladas - 1);
+						lineaDesde += acumuladas;
 					}
+					parte.setLength(0);
+					bytesParte = 0;
+					acumuladas = 0;
+					i--; // repetir esta línea en la nueva parte
+				} else {
+					// Si aún excede → dividir a la mitad (o menos)
+					int mid = parte.length() / 2;
+					int split = parte.lastIndexOf("\n", mid);
+					if (split <= 0)
+						split = mid;
+					String izquierda = parte.substring(0, split);
+					byte[] gzIzq = comprimirGZIP(izquierda.getBytes(StandardCharsets.UTF_8));
+
+					if (gzIzq.length > LIMITE_GZIP) {
+						int q = parte.length() / 4;
+						int s2 = parte.lastIndexOf("\n", q);
+						if (s2 > 0)
+							split = s2;
+						izquierda = parte.substring(0, split);
+						gzIzq = comprimirGZIP(izquierda.getBytes(StandardCharsets.UTF_8));
+					}
+
+					String u = publicarParte(registro, indiceParte, izquierda);
+					urls.add(u);
+					if (gid != null) {
+						int lineasIzq = izquierda.isEmpty() ? 0 : izquierda.split("\n", -1).length;
+						registrarParte(gid, indiceParte++, u, lineaDesde, lineaDesde + lineasIzq - 1);
+						lineaDesde += lineasIzq;
+					}
+
+					String derecha = parte.substring(split);
+					parte.setLength(0);
+					parte.append(derecha);
+					bytesParte = derecha.getBytes(StandardCharsets.UTF_8).length;
+					acumuladas = derecha.isEmpty() ? 0 : derecha.split("\n", -1).length;
+					i--;
 				}
 			} catch (Exception ex) {
 				throw new ErrorConPublicar(ex.getMessage());
 			}
 		}
+
+		// Última parte pendiente
 		if (parte.length() > 0) {
-			String u = publicarTexto(registro.archivo != null
-					? registro.archivo.getFileName().toString()
-							+ (indiceParte > 1 ? " (parte " + indiceParte + ")" : "")
-					: ("log.txt" + (indiceParte > 1 ? " (parte " + indiceParte + ")" : "")), parte.toString());
+			String u = publicarParte(registro, indiceParte, parte.toString());
 			urls.add(u);
 			if (gid != null) {
 				registrarParte(gid, indiceParte, u, lineaDesde, lineaDesde + acumuladas - 1);
@@ -251,4 +299,10 @@ public class CrashDetectorPasteAPI implements APIdeSitioDeRegistro {
 		return urls;
 	}
 
+	/** Publica una parte con el nombre adecuado. */
+	private String publicarParte(Consola registro, int indiceParte, String texto) throws ErrorConPublicar {
+		String base = (registro.archivo != null) ? registro.archivo.getFileName().toString() : "log.txt";
+		String nombre = (indiceParte > 1) ? base + " (parte " + indiceParte + ")" : base;
+		return publicarTexto(nombre, texto);
+	}
 }

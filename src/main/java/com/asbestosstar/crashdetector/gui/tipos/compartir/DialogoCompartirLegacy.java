@@ -21,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -206,13 +207,11 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 
 	/**
 	 * Inicializa el panel de configuración con campos para endpoint, API, sitio y
-	 * anonimización.
+	 * anonimización. Incluye botón para el buscador de "canario de orden".
 	 */
 	private void inicializarPanelConfiguracion() {
 		panelConfig = new JPanel(new GridBagLayout());
-		panelConfig.setBorder(BorderFactory.createTitledBorder(MonitorDePID.idioma.titulo_configuracion())); // <-
-																												// antes:
-																												// "Configuración"
+		panelConfig.setBorder(BorderFactory.createTitledBorder(MonitorDePID.idioma.titulo_configuracion()));
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(5, 5, 5, 5);
 		gbc.gridx = 0;
@@ -238,37 +237,30 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		panelConfig.add(new JLabel(MonitorDePID.idioma.apiDeLogging()), gbc);
 		gbc.gridx++;
 
-		CrashDetectorLogger.log("Obtainer sito actual");
 		String sito_actual = Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado();
 		APIdeSitioDeRegistro api_def;
-		CrashDetectorLogger.log("Obtainer API");
 		boolean error_de_api;
+
 		try {
 			api_def = obtenerAPI();
 			error_de_api = false;
 		} catch (NoAPIdeRegistro e) {
-			// TODO Auto-generated catch block
-			CrashDetectorLogger.log("En Catch");
 			mostrarError(MonitorDePID.idioma.apiDeRegistroNoExiste(), e);
-			CrashDetectorLogger.log("Popup");
 			api_def = Consola.secure_logger_api;
-			sito_actual = "https://securelogger.net/save/log?";
+			sito_actual = "https://securelogger.net/save/log?"; // se mantiene la compatibilidad de comportamiento
 			error_de_api = true;
 		}
 
-		CrashDetectorLogger.log("Obtainer Mapa de API");
 		Map<String, Set<String>> apis = new HashMap<>();
 		for (APIdeSitioDeRegistro api : APIdeSitioDeRegistro.APIS) {
 			Set<String> sits = new LinkedHashSet<>();
 			if (api != null && api.equals(api_def) && !error_de_api && sito_actual != null) {
-				CrashDetectorLogger.log("Anadir sito");
 				sits.add(sito_actual);
 			}
 			sits.addAll(api.sitiosPorDefecto());
 			apis.put(api.nombre(), sits);
 		}
 
-		CrashDetectorLogger.log("comboAPI");
 		comboAPI = new JComboBox<>(apis.keySet().toArray(new String[0]));
 		comboAPI.setSelectedItem(api_def.nombre());
 		comboAPI.setPreferredSize(new Dimension(300, 25));
@@ -283,7 +275,6 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		comboSitioRegistro.setPreferredSize(new Dimension(300, 25));
 		panelConfig.add(comboSitioRegistro, gbc);
 
-		CrashDetectorLogger.log(" actualizar comboAPI");
 		actualizarComboSitios(api_def.nombre(), apis.get(api_def.nombre()), sito_actual);
 
 		comboAPI.addActionListener(e -> {
@@ -308,6 +299,22 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		JButton boton_guardar_de_config = new JButton(MonitorDePID.idioma.guardarConfigDeCompartir());
 		boton_guardar_de_config.addActionListener(e -> guardarConfig());
 		panelConfig.add(boton_guardar_de_config, gbc);
+
+		// Botón: Buscador de canario de orden (warrant canary)
+		gbc.gridy++;
+		gbc.gridx = 0;
+		gbc.gridwidth = 2;
+		gbc.anchor = GridBagConstraints.WEST;
+		JButton botonCanario = new JButton(MonitorDePID.idioma.buscador_canario_de_orden_label());
+		botonCanario.addActionListener(e -> {
+			SwingUtilities.invokeLater(() -> {
+				JOptionPane.showMessageDialog(DialogoCompartirLegacy.this,
+						MonitorDePID.idioma.buscador_canario_de_orden_mensaje_proximamente(),
+						MonitorDePID.idioma.buscador_canario_de_orden_titulo_proximamente(),
+						JOptionPane.INFORMATION_MESSAGE);
+			});
+		});
+		panelConfig.add(botonCanario, gbc);
 	}
 
 	// --- Renderers y Editors para la tabla ---

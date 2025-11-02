@@ -3948,4 +3948,29 @@ public class Coreano implements Idioma {
 				+ "트레이스가 많을 때 분석이 완벽하지 않으므로 콘솔을 직접 보는 능력을 사용하는 것이 중요합니다." + "</b>";
 	}
 
+	// --- 영장 캐나리 검색기 (Warrant Canary) ---
+	/**
+	 * 영장 캐나리 검색기 버튼의 텍스트입니다. 예시: "영장 캐나리 검색기"
+	 */
+	@Override
+	public String buscador_canario_de_orden_label() {
+		return "영장 캐나리 검색기";
+	}
+
+	/**
+	 * 기능이 곧 제공될 것임을 알리는 대화 상자에 표시되는 메시지입니다.
+	 */
+	@Override
+	public String buscador_canario_de_orden_mensaje_proximamente() {
+		return "이 기능은 곧 사용 가능하게 될 예정입니다.";
+	}
+
+	/**
+	 * 영장 캐나리 검색기의 향후 제공에 대해 알리는 대화 상자의 제목입니다.
+	 */
+	@Override
+	public String buscador_canario_de_orden_titulo_proximamente() {
+		return "곧 출시 예정";
+	}
+
 }

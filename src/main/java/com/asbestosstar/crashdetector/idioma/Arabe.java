@@ -4038,4 +4038,29 @@ public class Arabe implements Idioma {
 				+ "</b>";
 	}
 
+	// --- أداة بحث كاناري للطلب (Warrant Canary) ---
+	/**
+	 * نص الزر الخاص بأداة بحث كاناري للطلب. مثال: "أداة بحث كاناري للطلب"
+	 */
+	@Override
+	public String buscador_canario_de_orden_label() {
+		return "مُبحِث كاناري للطلب";
+	}
+
+	/**
+	 * الرسالة المعروضة في مربع الحوار لإعلام أن الميزة ستكون متاحة قريبًا.
+	 */
+	@Override
+	public String buscador_canario_de_orden_mensaje_proximamente() {
+		return "ستصبح هذه الميزة متاحة قريبًا.";
+	}
+
+	/**
+	 * عنوان مربع الحوار الذي يُعلم بتوفر أداة بحث كاناري للطلب في المستقبل.
+	 */
+	@Override
+	public String buscador_canario_de_orden_titulo_proximamente() {
+		return "قريبًا";
+	}
+
 }
