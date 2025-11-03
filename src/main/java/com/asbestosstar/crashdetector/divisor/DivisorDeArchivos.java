@@ -6,6 +6,6 @@ public interface DivisorDeArchivos {
 
 	public int obtenerLineaOriginal(String contentido_existente);
 
-	public boolean predicado(Path archivo);
+	public boolean predicado(Path archivo, String contento_existe);
 
 }

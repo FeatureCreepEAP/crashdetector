@@ -8,9 +8,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
@@ -27,6 +30,7 @@ import com.asbestosstar.crashdetector.api_sito_registro.PastesDevAPI;
 import com.asbestosstar.crashdetector.api_sito_registro.SecureLoggerAPI;
 import com.asbestosstar.crashdetector.api_sito_registro.StikkedAPI;
 import com.asbestosstar.crashdetector.divisor.DivisorDeArchivos;
+import com.asbestosstar.crashdetector.divisor.HolaMundoConsolaDivisidor;
 import com.asbestosstar.crashdetector.divisor.TLauncherConsolaDivisor;
 import com.asbestosstar.crashdetector.divisor.VainillaConsolaDivisor;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasGUI.ErrorDeLectador;
@@ -86,6 +90,13 @@ public class Consola {
 	 */
 	public static ArrayList<File> archivos_para_mapa = new ArrayList<File>();
 
+	/**
+	 * Para Strings de partes de nombres registros inutiles. Si el nombre de log
+	 * contente algun de estos strings no incluye cuando buscando en carpetas (solo
+	 * para buscando en carpetas)
+	 */
+	public static ArrayList<String> inutiles_archivo_strs = new ArrayList<>(); // TODO opcion de la config
+
 	static { // APIS Por Defecto
 		APIdeSitioDeRegistro.APIS.add(secure_logger_api);
 		APIdeSitioDeRegistro.APIS.add(new StikkedAPI());
@@ -93,12 +104,14 @@ public class Consola {
 		APIdeSitioDeRegistro.APIS.add(new PastesDevAPI());
 		APIdeSitioDeRegistro.APIS.add(new CrashDetectorPasteAPI());
 		divisores.add(new TLauncherConsolaDivisor());
+		divisores.add(new HolaMundoConsolaDivisidor());
 		divisores.add(new VainillaConsolaDivisor());
 		tipos_de_registros_de_launcher.add("../../logs/ftb-app-electron.log");
 		tipos_de_registros_de_launcher.add(NoRegistroDeLauncherVShojo.cd_launcherlog.getName());
 		limpiadores.add(new LimpiadorRegistroDeLauncherVainilla());
 		limpiadores.add(new LimpiadorRegistroLatestLog());
 		archivos_para_mapa.addAll(obtenerArchivosDeConsolas());// TODO crearar una mapa antes del processo de CD
+		inutilesArchivoStrsPredetermindados();
 	}
 
 	public Consola(Path archivo) throws IOException {
@@ -118,13 +131,30 @@ public class Consola {
 		}
 
 		for (DivisorDeArchivos div : divisores) {
-			if (div.predicado(archivo)) {
-				String contento_existe = MonitorDePID.leer_archivo(archivo);
-				linea_original = div.obtenerLineaOriginal(contento_existe);
+			String contento_existe = MonitorDePID.leer_archivo(archivo);
+			if (div.predicado(archivo, contento_existe)) {
+				int ln = div.obtenerLineaOriginal(contento_existe);
+				if (ln > 0) {
+					linea_original = ln;
+					break;
+				}
+				;
 			}
 		}
 		// CrashDetectorLogger.log(archivo.toAbsolutePath()+" linea "+
 		// String.valueOf(linea_original));
+
+	}
+
+	private static void inutilesArchivoStrsPredetermindados() {
+		// TODO Auto-generated method stub
+		inutiles_archivo_strs.add("kubejs");// no tiene nada
+		inutiles_archivo_strs.add("crafttweaker");// no tiene nada
+		inutiles_archivo_strs.add("crash_assistant");// no tiene nada y Aún es demasiado pronto para usarlo
+														// correctamente y a veces genera un error de pila y puede tener
+														// falsos positivos; probablemente esta sea también una causa
+														// conocida del engaño de incompatibilidad que intentan imponer.
+		inutiles_archivo_strs.add("telemetry");// no tiene nada y es comun en la lanzer vainilla
 
 	}
 
@@ -160,9 +190,9 @@ public class Consola {
 
 				for (DivisorDeArchivos div : divisores) {
 					try {
-						if (div.predicado(f.toPath())) {
+						String contenido = MonitorDePID.leer_archivo(f.toPath());
+						if (div.predicado(f.toPath(), contenido)) {
 							huboDivisor = true;
-							String contenido = MonitorDePID.leer_archivo(f.toPath());
 							int ln = div.obtenerLineaOriginal(contenido);
 							if (ln > 0) {
 								linea = ln;
@@ -515,15 +545,35 @@ public class Consola {
 			return;
 		}
 
+		// preparar conjunto en minúsculas para comparación eficiente a partir de la
+		// lista externa
+		// (si la lista es null o vacía, se comporta como no haber filtros)
+		final Set<String> inutilesLower = (inutiles_archivo_strs == null) ? Collections.emptySet()
+				: inutiles_archivo_strs.stream().filter(Objects::nonNull).map(String::toLowerCase)
+						.collect(Collectors.toSet());
+
 		File[] archivos = directorio.listFiles();
 		if (archivos == null)
 			return;
 
 		for (File archivo : archivos) {
+			if (archivo == null)
+				continue;
+
 			if (archivo.isDirectory()) {
-				agregarDirectorio(resultado, archivo); // Llamada recursiva
-			} else if (!archivo.getName().endsWith(".gz") && !archivo.getName().endsWith(".xz") && archivo.isFile()) {
-				resultado.add(archivo);
+				agregarDirectorio(resultado, archivo); // llamada recursiva mantiene la misma firma
+			} else if (archivo.isFile()) {
+				String nombre = archivo.getName();
+				if (nombre == null)
+					continue;
+
+				String lower = nombre.toLowerCase();
+				boolean esComprimido = lower.endsWith(".gz") || lower.endsWith(".xz");
+				boolean contieneInutil = !inutilesLower.isEmpty() && inutilesLower.stream().anyMatch(lower::contains);
+
+				if (!esComprimido && !contieneInutil) {
+					resultado.add(archivo);
+				}
 			}
 		}
 	}

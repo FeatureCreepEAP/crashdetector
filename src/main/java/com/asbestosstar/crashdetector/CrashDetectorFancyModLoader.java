@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.objectweb.asm.tree.ClassNode;
 
+import com.asbestosstar.crashdetector.divisor.HolaMundoConsolaDivisidor;
 import com.asbestosstar.crashdetector.parches.Parche;
 
 import net.neoforged.neoforgespi.transformation.ClassProcessor;
@@ -12,6 +13,7 @@ import net.neoforged.neoforgespi.transformation.ProcessorName;
 public class CrashDetectorFancyModLoader implements ClassProcessor {
 
 	static {
+		System.out.println(HolaMundoConsolaDivisidor.HOLA_MUNDO);
 		if (!Statics.cargador) {
 			Statics.cargador = true;
 			Statics.carpetas_de_mods.add(new File("mods/").toPath());

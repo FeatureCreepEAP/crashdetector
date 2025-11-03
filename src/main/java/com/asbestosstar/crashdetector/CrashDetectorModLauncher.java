@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import com.asbestosstar.crashdetector.divisor.HolaMundoConsolaDivisidor;
+
 import cpw.mods.modlauncher.api.IEnvironment;
 import cpw.mods.modlauncher.api.ITransformationService;
 import cpw.mods.modlauncher.api.ITransformer;
@@ -13,6 +15,7 @@ import cpw.mods.modlauncher.api.IncompatibleEnvironmentException;
 public class CrashDetectorModLauncher implements ITransformationService {
 
 	static {
+		System.out.println(HolaMundoConsolaDivisidor.HOLA_MUNDO);
 		if (!Statics.cargador) {
 			Statics.cargador = true;
 			Statics.carpetas_de_mods.add(new File("mods/").toPath());

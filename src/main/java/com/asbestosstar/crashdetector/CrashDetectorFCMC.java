@@ -5,6 +5,8 @@ import java.lang.instrument.Instrumentation;
 import java.lang.reflect.Field;
 import java.nio.file.Path;
 
+import com.asbestosstar.crashdetector.divisor.HolaMundoConsolaDivisidor;
+
 import featurecreep.loader.FCInstrumentation;
 import featurecreep.loader.FCLoaderBasic;
 
@@ -12,6 +14,7 @@ public class CrashDetectorFCMC {
 
 	public static void premain(String args, Instrumentation instrument) {
 		// Buscar para archivos de mods si es FC
+		System.out.println(HolaMundoConsolaDivisidor.HOLA_MUNDO);
 		boolean es_fc = true;
 		if (clase_existe("featurecreep.loader.FCLoaderBasic")) {
 			if (clase_existe("dangerzone.BaseMod")) {
