@@ -47,6 +47,14 @@ public class EarlyWindow implements Verificaciones {
 			enlaceHtml = consola.agregarErrorALectador(indiceUltimaLinea, this);
 			activado = true;
 		}
+		
+		
+		else if(contenidoConsola.contains("Failed to initialize the mod loading system and display.")){
+			mensaje = MonitorDePID.idioma.fmlEarlyWindow() + Verificaciones.nl_html;
+			activado = true;
+		}
+		
+		
 	}
 
 	@Override

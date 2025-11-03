@@ -4,6 +4,8 @@ import java.io.File;
 import java.lang.instrument.IllegalClassFormatException;
 import java.nio.ByteBuffer;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
 import org.mangorage.loader.api.IClassTransformer;
 import org.mangorage.loader.api.TransformResult;
 import org.mangorage.loader.api.TransformerFlag;
@@ -12,7 +14,7 @@ import com.asbestosstar.crashdetector.divisor.HolaMundoConsolaDivisidor;
 
 public class CrashDetectorMangoLoader implements IClassTransformer {
 	static {
-		System.out.println(HolaMundoConsolaDivisidor.HOLA_MUNDO);
+		LogManager.getLogger(HolaMundoConsolaDivisidor.class).log(Level.ERROR, HolaMundoConsolaDivisidor.HOLA_MUNDO);
 		if (!Statics.cargador) {
 			Statics.cargador = true;
 			Statics.carpetas_de_mods.add(new File("mods/").toPath());

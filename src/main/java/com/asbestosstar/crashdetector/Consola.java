@@ -105,7 +105,7 @@ public class Consola {
 		APIdeSitioDeRegistro.APIS.add(new CrashDetectorPasteAPI());
 		divisores.add(new TLauncherConsolaDivisor());
 		divisores.add(new HolaMundoConsolaDivisidor());
-		divisores.add(new VainillaConsolaDivisor());
+		//divisores.add(new VainillaConsolaDivisor());
 		tipos_de_registros_de_launcher.add("../../logs/ftb-app-electron.log");
 		tipos_de_registros_de_launcher.add(NoRegistroDeLauncherVShojo.cd_launcherlog.getName());
 		limpiadores.add(new LimpiadorRegistroDeLauncherVainilla());
@@ -332,9 +332,19 @@ public class Consola {
 					contenido_verificar = para_verificar.toString();
 				}
 
-				if (contenido_verificar.contains(MonitorDePID.mensaje_de_registro_lanzer_completo)) {
-					MonitorDePID.tiene_mensaje_de_registro_launcher_completa = true;
-				}
+//				if (contenido_verificar.contains(MonitorDePID.mensaje_de_registro_lanzer_completo)) {
+//					MonitorDePID.tiene_mensaje_de_registro_launcher_completa = true;
+//				}
+			if (
+					contenido_verificar.contains("Minecraft closed with exit code")||//TLauncher
+					contenido_verificar.contains("Process crashed with exit code")||//Vainilla
+					contenido_verificar.contains("Process exited with status")//Astralrinth
+
+					
+					
+					) {
+				MonitorDePID.tiene_mensaje_de_registro_launcher_completa = true;
+			}
 			} else {
 				nueva = false;
 				contenido = "";
@@ -422,7 +432,9 @@ public class Consola {
 		agregarLauncherLog(new File("launcher_log.txt"), resultado, rutasLauncherLog);
 		agregarLauncherLog(new File("../../Install/launcher_log.txt"), resultado, rutasLauncherLog); // CurseForgeApp
 		agregarLauncherLog(new File(soporteAplicaciones + "minecraft/launcher_log.txt"), resultado, rutasLauncherLog); // CurseForgeApp
+		agregarLauncherLog(new File(home + "/.minecraft/launcher_log.txt"), resultado, rutasLauncherLog); // CurseForgeApp
 
+		
 		if (appdata != null) {
 			agregarLauncherLog(new File(appdata + "/.minecraft/launcher_log.txt"), resultado, rutasLauncherLog); // CurseForgeApp
 		}
@@ -480,8 +492,8 @@ public class Consola {
 		resultado.add(archivoTLLegacy);
 
 		// segundo
-		resultado.add(new File("../../logs/ftb-app-electron.log")); // FTB
-		resultado.add(new File("sklauncher/sklauncher_logs.txt"));
+		//resultado.add(new File("../../logs/ftb-app-electron.log")); // FTB
+		//resultado.add(new File("sklauncher/sklauncher_logs.txt"));no funciona
 		resultado.add(NoRegistroDeLauncherVShojo.cd_launcherlog);
 		resultado.add(new File("hs_err_pid" + String.valueOf(MonitorDePID.pid) + ".log")); // hs
 

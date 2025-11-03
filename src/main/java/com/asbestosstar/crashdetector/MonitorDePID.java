@@ -289,8 +289,10 @@ public class MonitorDePID {
 			// System.out.println("******************" + cp);
 
 			ProcessBuilder pb = new ProcessBuilder(javaBinary, "-cp", cp, "com.asbestosstar.crashdetector.MonitorDePID",
-					"--monitor", String.valueOf(pid)).inheritIO();
-			pb.redirectError(new File(CrashDetectorLogger.LOG_FILE_PATH));
+					"--monitor", String.valueOf(pid))
+					//.inheritIO()
+					;
+			//pb.redirectError(new File(CrashDetectorLogger.LOG_FILE_PATH));
 			// pb.redirectOutput(new File(CrashDetectorLogger.LOG_FILE_PATH));
 
 			pb.start();

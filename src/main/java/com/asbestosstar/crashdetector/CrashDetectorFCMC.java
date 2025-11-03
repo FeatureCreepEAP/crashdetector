@@ -14,7 +14,7 @@ public class CrashDetectorFCMC {
 
 	public static void premain(String args, Instrumentation instrument) {
 		// Buscar para archivos de mods si es FC
-		System.out.println(HolaMundoConsolaDivisidor.HOLA_MUNDO);
+		System.err.println(HolaMundoConsolaDivisidor.HOLA_MUNDO);
 		boolean es_fc = true;
 		if (clase_existe("featurecreep.loader.FCLoaderBasic")) {
 			if (clase_existe("dangerzone.BaseMod")) {

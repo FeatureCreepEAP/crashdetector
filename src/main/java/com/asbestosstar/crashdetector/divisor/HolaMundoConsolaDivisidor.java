@@ -60,7 +60,11 @@ public class HolaMundoConsolaDivisidor  implements DivisorDeArchivos {
 		}
 		
 		
-		contento_existe.contains(HOLA_MUNDO);
+		if(contento_existe.contains(HOLA_MUNDO)) {
+			return true;
+		}
+	
+		
 		return false;
 	}
 
