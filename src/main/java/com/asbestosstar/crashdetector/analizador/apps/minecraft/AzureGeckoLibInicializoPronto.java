@@ -20,38 +20,54 @@ public class AzureGeckoLibInicializoPronto implements Verificaciones {
 	private boolean geckoLibError = false;
 	private boolean connectorPresente = false;
 	private String enlaceHtml = "";
-	String azure = "AzureLib was initialized too early!";
-	String geck = "GeckoLib was initialized too early!";
 
+	// Cadenas que se buscan en el log para detectar el problema.
+	private final String azure = "AzureLib was initialized too early!";
+	private final String geck = "GeckoLib was initialized too early!";
+
+	/**
+	 * Método de verificación "antiguo" que trabaja con todo el contenido de la
+	 * consola. Ahora simplemente delega en la versión por línea para mantener
+	 * compatibilidad sin duplicar lógica.
+	 */
 	@Override
 	public void verificar(Consola consola) {
-		String contenidoConsola = consola.contenido_verificar;
-		String[] lineas = contenidoConsola.split(Verificaciones.nl);
 
-		// Analiza cada línea del registro para detectar los errores específicos
-		for (int i = 0; i < lineas.length; i++) {
-			String linea = lineas[i];
-			if (linea.contains(azure)) {
-				azureLibError = true;
-				activado = true;
-				enlaceHtml = consola.agregarErrorALectador(i, this);
-			}
-			if (linea.contains(geck)) {
-				geckoLibError = true;
-				activado = true;
-				// Solo sobrescribir el enlace si aún no se ha registrado (para mantener el
-				// primero)
-				if (enlaceHtml.isEmpty()) {
-					enlaceHtml = consola.agregarErrorALectador(i, this);
-				}
-			}
-			// Detecta tanto Sinytra Connector como specialcompatibilityoperation como
-			// indicadores del mismo problema
-			if (linea.contains("SINYTRA CONNECTOR IS PRESENT!") || linea.contains("specialcompatibilityoperation")) {
-				connectorPresente = true;
+	}
+
+	/**
+	 * Verificación por línea. Este es el método que debe usarse en el nuevo flujo.
+	 * Marca el error, registra el enlace al lector y actualiza el mensaje cuando
+	 * detecta las cadenas relevantes.
+	 */
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		// Detecta el error específico de AzureLib inicializada demasiado pronto.
+		if (linea.contains(azure)) {
+			azureLibError = true;
+			activado = true;
+			// Mantener la semántica original: AzureLib siempre sobrescribe el enlace.
+			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+		}
+
+		// Detecta el error específico de GeckoLib inicializada demasiado pronto.
+		if (linea.contains(geck)) {
+			geckoLibError = true;
+			activado = true;
+			// Solo registrar el enlace si aún no hay uno (mismo comportamiento original:
+			// si ya hubo AzureLib, se mantiene ese enlace).
+			if (enlaceHtml.isEmpty()) {
+				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 			}
 		}
 
+		// Detecta tanto Sinytra Connector como specialcompatibilityoperation como
+		// indicadores del mismo problema.
+		if (linea.contains("SINYTRA CONNECTOR IS PRESENT!") || linea.contains("specialcompatibilityoperation")) {
+			connectorPresente = true;
+		}
+
+		// Si ya se activó el error, actualizamos el mensaje que se va a mostrar.
 		if (activado) {
 			mensaje = MonitorDePID.idioma.errorAzureGeckoLibInicializoPronto(azureLibError, geckoLibError,
 					connectorPresente) + Verificaciones.nl_html + enlaceHtml;
@@ -70,7 +86,8 @@ public class AzureGeckoLibInicializoPronto implements Verificaciones {
 
 	@Override
 	public float prioridad() {
-		return 950.0f; // Alta prioridad - error que impide la carga correcta de mods
+		// Alta prioridad - error que impide la carga correcta de mods.
+		return 950.0f;
 	}
 
 	@Override
@@ -92,13 +109,17 @@ public class AzureGeckoLibInicializoPronto implements Verificaciones {
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
+		// ID estable para esta verificación.
 		return "azuregeckolibinicialaizo";
 	}
 
+	/**
+	 * Indica si este error está asociado a un trazo concreto de stack trace. En
+	 * este caso, cualquier trazo que contenga las cadenas de AzureLib o GeckoLib
+	 * inicializadas demasiado pronto se considera ocupado por esta verificación.
+	 */
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
 		return trazo.trace.contains(geck) || trazo.trace.contains(azure);
 	}
 

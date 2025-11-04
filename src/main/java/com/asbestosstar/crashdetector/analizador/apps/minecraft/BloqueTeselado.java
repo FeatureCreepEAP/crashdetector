@@ -57,7 +57,6 @@ public class BloqueTeselado implements Verificaciones {
 
 	@Override
 	public String nombre() {
-		// TODO Auto-generated method stub
 		return MonitorDePID.idioma.nombre_de_bloque_teselado();
 	}
 
@@ -69,14 +68,29 @@ public class BloqueTeselado implements Verificaciones {
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
 		return "bloqueteselado";
 	}
 
+	/**
+	 * Indica si este verificador "ocupa" un trazo concreto.
+	 * <p>
+	 * Para evitar falsos positivos, solo marcamos el trazo como ocupado si:
+	 * <ul>
+	 * <li>El verificador ya se activó (hay un error de teselado detectado en el log
+	 * completo), y</li>
+	 * <li>El texto del trazo contiene explícitamente la cadena "Tesselating block
+	 * in world".</li>
+	 * </ul>
+	 * Esto puede producir falsos negativos si el trazo no incluye esa línea
+	 * concreta, pero minimiza casi por completo los falsos positivos.
+	 */
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+		if (!activado || trazo == null || trazo.trace == null) {
+			return false;
+		}
+
+		return trazo.trace.contains("Tesselating block in world");
 	}
 
 }

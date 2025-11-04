@@ -117,10 +117,41 @@ public class ConflictoDeIDsMinecraft implements Verificaciones {
 		return "conflicto_de_ids_minecraft";
 	}
 
+	/**
+	 * Indica si este verificador "ocupa" un trazo concreto del stack trace.
+	 * <p>
+	 * Para evitar falsos positivos, solo se marca como ocupado cuando:
+	 * <ul>
+	 * <li>El verificador ya se activó (es decir, se detectó un conflicto de IDs en
+	 * el log completo), y</li>
+	 * <li>El texto del trazo contiene exactamente la misma cadena que se usó para
+	 * detectar el conflicto.</li>
+	 * </ul>
+	 * Esto es muy conservador: es preferible un falso negativo a marcar un trazo
+	 * que no pertenece realmente a este tipo de conflicto.
+	 */
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+		if (!activado || trazo == null || trazo.trace == null) {
+			return false;
+		}
+
+		String t = trazo.trace;
+
+		if ("maximo_rango".equals(tipoConflicto)) {
+			// Caso de "maximum id range exceeded"
+			return t.contains("maximum id range exceeded");
+		} else if ("colision_id".equals(tipoConflicto)) {
+			// Caso de colisión de ID: usar exactamente la misma línea detectada por el
+			// patrón para minimizar falsos positivos.
+			if (!idConflictivo.isEmpty() && !modOrigen.isEmpty() && !modDestino.isEmpty()) {
+				String esperado = "java.lang.IllegalArgumentException: Slot " + idConflictivo
+						+ " is already occupied by " + modOrigen + " when adding " + modDestino;
+				return t.contains(esperado);
+			}
+		}
+
+		return false;
 	}
 
 }
