@@ -23,32 +23,54 @@ public class ErrorDiscrepanciaModID implements Verificaciones {
 	private String nombreMod = "";
 	private String enlaceHtml = "";
 
+	/**
+	 * Verificación global no utilizada en este verificador.
+	 * <p>
+	 * La detección real se hace por línea en
+	 * {@link #verificar(Consola, String, int)}, llamada por el analizador línea a
+	 * línea.
+	 * </p>
+	 */
 	@Override
 	public void verificar(Consola consola) {
-		String contenidoConsola = consola.contenido_verificar;
-		String[] lineas = contenidoConsola.split(Verificaciones.nl);
+		// No se usa: este verificador funciona en modo por línea.
+	}
 
-		// Analiza cada línea del registro buscando el patrón específico de error de
-		// discrepancia de IDs
-		for (int i = 0; i < lineas.length; i++) {
-			String linea = lineas[i];
-			// Detecta el error específico de mods no encontrados
-			if (linea.contains("has mods that were not found")) {
-				// Extrae la ruta del mod problemático usando expresión regular
-				Pattern pattern = Pattern.compile("The Mod File (.+) has mods that were not found");
-				Matcher matcher = pattern.matcher(linea);
-				if (matcher.find()) {
-					rutaMod = matcher.group(1);
+	/**
+	 * Verificación por línea del registro.
+	 * <p>
+	 * Busca el patrón: "The Mod File (ruta) has mods that were not found" en la
+	 * línea actual, extrae la ruta y el nombre del archivo/directorio, y registra
+	 * el enlace correspondiente.
+	 * </p>
+	 */
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		// Si ya se activó, no seguimos procesando más líneas.
+		if (activado) {
+			return;
+		}
 
-					// Extrae solo el nombre del archivo/directorio de la ruta completa
-					nombreMod = rutaMod.contains("\\") ? rutaMod.substring(rutaMod.lastIndexOf("\\") + 1)
-							: rutaMod.contains("/") ? rutaMod.substring(rutaMod.lastIndexOf("/") + 1) : rutaMod;
+		// Detecta el error específico de mods no encontrados
+		if (linea.contains("has mods that were not found")) {
+			// Extrae la ruta del mod problemático usando expresión regular
+			Pattern pattern = Pattern.compile("The Mod File (.+) has mods that were not found");
+			Matcher matcher = pattern.matcher(linea);
+			if (matcher.find()) {
+				rutaMod = matcher.group(1);
 
-					mensaje = MonitorDePID.idioma.errorDiscrepanciaModID(nombreMod) + Verificaciones.nl_html;
-					enlaceHtml = consola.agregarErrorALectador(i, this);
-					activado = true;
-					break; // Detiene al encontrar el primer error
+				// Extrae solo el nombre del archivo/directorio de la ruta completa
+				if (rutaMod.contains("\\")) {
+					nombreMod = rutaMod.substring(rutaMod.lastIndexOf("\\") + 1);
+				} else if (rutaMod.contains("/")) {
+					nombreMod = rutaMod.substring(rutaMod.lastIndexOf("/") + 1);
+				} else {
+					nombreMod = rutaMod;
 				}
+
+				mensaje = MonitorDePID.idioma.errorDiscrepanciaModID(nombreMod) + Verificaciones.nl_html;
+				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+				activado = true;
 			}
 		}
 	}
@@ -89,14 +111,37 @@ public class ErrorDiscrepanciaModID implements Verificaciones {
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
 		return "discrepancia_modid";
 	}
 
+	/**
+	 * Indica si este verificador "ocupa" un trazo concreto del stack trace.
+	 * <p>
+	 * Para evitar falsos positivos, solo devuelve {@code true} cuando:
+	 * <ul>
+	 * <li>El verificador ya se activó, y</li>
+	 * <li>El trazo contiene la frase completa con la ruta del mod, o, en su
+	 * defecto, el patrón base del error.</li>
+	 * </ul>
+	 * Es deliberadamente conservador: se prefiere un falso negativo antes que
+	 * marcar un trazo ajeno a este error.
+	 * </p>
+	 */
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+		if (!activado || trazo == null || trazo.trace == null) {
+			return false;
+		}
+
+		String t = trazo.trace;
+
+		if (rutaMod != null && !rutaMod.isEmpty()) {
+			String esperado = "The Mod File " + rutaMod + " has mods that were not found";
+			return t.contains(esperado);
+		}
+
+		// Fallback muy estricto si por alguna razón no se guardó la ruta.
+		return t.contains("The Mod File ") && t.contains(" has mods that were not found");
 	}
 
 }

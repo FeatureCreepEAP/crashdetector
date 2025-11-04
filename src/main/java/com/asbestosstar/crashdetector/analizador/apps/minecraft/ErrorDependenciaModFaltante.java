@@ -21,27 +21,43 @@ public class ErrorDependenciaModFaltante implements Verificaciones {
 	private String nombreJar = "";
 	private String enlaceHtml = "";
 
+	/**
+	 * Verificación global no utilizada en este verificador.
+	 * <p>
+	 * La detección real se hace por línea en
+	 * {@link #verificar(Consola, String, int)}, llamada por el analizador línea a
+	 * línea.
+	 * </p>
+	 */
 	@Override
 	public void verificar(Consola consola) {
-		String contenidoConsola = consola.contenido_verificar;
-		String[] lineas = contenidoConsola.split(Verificaciones.nl);
+		// No se usa: este verificador funciona en modo por línea.
+	}
 
-		// Analiza cada línea del registro buscando el patrón específico de error de
-		// dependencia
-		for (int i = 0; i < lineas.length; i++) {
-			String linea = lineas[i];
-			// Detecta el error específico de campo obligatorio faltante en dependencias
-			if (linea.contains("Missing required field mandatory in dependency")) {
-				// Extrae el nombre del JAR problemático usando expresión regular
-				Pattern pattern = Pattern.compile("Missing required field mandatory in dependency \\(([^)]+)\\)");
-				Matcher matcher = pattern.matcher(linea);
-				if (matcher.find()) {
-					nombreJar = matcher.group(1);
-					mensaje = MonitorDePID.idioma.errorDependenciaModFaltante(nombreJar) + Verificaciones.nl_html;
-					enlaceHtml = consola.agregarErrorALectador(i, this);
-					activado = true;
-					break; // Detiene al encontrar el primer error (es crítico y ocurre una vez)
-				}
+	/**
+	 * Verificación por línea del registro.
+	 * <p>
+	 * Busca el patrón: "Missing required field mandatory in dependency (<jar>)" en
+	 * la línea actual, extrae el nombre del JAR y registra el enlace.
+	 * </p>
+	 */
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		// Si ya se activó, no seguimos procesando más líneas.
+		if (activado) {
+			return;
+		}
+
+		// Detecta el error específico de campo obligatorio faltante en dependencias
+		if (linea.contains("Missing required field mandatory in dependency")) {
+			// Extrae el nombre del JAR problemático usando expresión regular
+			Pattern pattern = Pattern.compile("Missing required field mandatory in dependency \\(([^)]+)\\)");
+			Matcher matcher = pattern.matcher(linea);
+			if (matcher.find()) {
+				nombreJar = matcher.group(1);
+				mensaje = MonitorDePID.idioma.errorDependenciaModFaltante(nombreJar) + Verificaciones.nl_html;
+				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+				activado = true;
 			}
 		}
 	}
@@ -83,14 +99,37 @@ public class ErrorDependenciaModFaltante implements Verificaciones {
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
 		return "dependencia_mod_faltante";
 	}
 
+	/**
+	 * Indica si este verificador "ocupa" un trazo concreto del stack trace.
+	 * <p>
+	 * Para evitar falsos positivos, solo devuelve {@code true} cuando:
+	 * <ul>
+	 * <li>El verificador ya se activó, y</li>
+	 * <li>El trazo contiene la cadena base del error y, si se conoce, el nombre del
+	 * JAR problemático.</li>
+	 * </ul>
+	 * Es intencionadamente conservador: se prefiere un falso negativo a marcar
+	 * trazos que no correspondan a este error.
+	 * </p>
+	 */
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+		if (!activado || trazo == null || trazo.trace == null) {
+			return false;
+		}
+
+		String t = trazo.trace;
+
+		if (!nombreJar.isEmpty()) {
+			String esperado = "Missing required field mandatory in dependency (" + nombreJar + ")";
+			return t.contains(esperado);
+		}
+
+		// Fallback muy estricto si por alguna razón no se capturó el nombre del JAR.
+		return t.contains("Missing required field mandatory in dependency");
 	}
 
 }

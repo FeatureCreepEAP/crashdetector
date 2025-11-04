@@ -29,37 +29,55 @@ public class ErrorConfiguracionServicioIDependencyLocator implements Verificacio
 	private List<String> modsUbicacion = new ArrayList<>();
 	private String enlaceHtml = "";
 
+	/**
+	 * Verificación global no utilizada en este verificador.
+	 * <p>
+	 * La detección real se hace por línea en
+	 * {@link #verificar(Consola, String, int)}, que es llamado por el sistema de
+	 * análisis línea a línea.
+	 * </p>
+	 */
 	@Override
 	public void verificar(Consola consola) {
-		String contenido = consola.contenido_verificar;
-		String[] lineas = contenido.split(Verificaciones.nl);
+		// No se usa: este verificador funciona en modo por línea.
+	}
 
-		for (int i = 0; i < lineas.length; i++) {
-			String linea = lineas[i];
-			if (linea.contains("ServiceConfigurationError") && linea.contains("IDependencyLocator")) {
-				Pattern patron = Pattern.compile(PATRON_ERROR);
-				Matcher matcher = patron.matcher(linea);
-				if (matcher.find()) {
-					claseProblematica = matcher.group(1);
-
-					// Buscar el mod que contiene esta clase
-					String classPath = claseProblematica.replace('.', '/') + ".class";
-					List<ArchivoDeMod> mods = Buscardor.buscarModsConTermino(classPath);
-
-					for (ArchivoDeMod mod : mods) {
-						modsUbicacion.add(mod.ubicacion_para_publicar());
-					}
-
-					enlaceHtml = consola.agregarErrorALectador(i, this);
-					activado = true;
-					break;
-				}
-			}
+	/**
+	 * Verificación por línea del registro.
+	 * <p>
+	 * Busca líneas con: "ServiceConfigurationError" + "IDependencyLocator" y aplica
+	 * el patrón PATRON_ERROR para extraer la clase problemática. Luego intenta
+	 * localizar los mods que contienen dicha clase.
+	 * </p>
+	 */
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		// Si ya se activó, no es necesario seguir comprobando más líneas.
+		if (activado) {
+			return;
 		}
 
-		if (activado) {
-			mensaje = MonitorDePID.idioma.errorConfiguracionServicio(claseProblematica,
-					modsUbicacion.isEmpty() ? null : modsUbicacion) + Verificaciones.nl_html + enlaceHtml;
+		if (linea.contains("ServiceConfigurationError") && linea.contains("IDependencyLocator")) {
+			Pattern patron = Pattern.compile(PATRON_ERROR);
+			Matcher matcher = patron.matcher(linea);
+			if (matcher.find()) {
+				claseProblematica = matcher.group(1);
+
+				// Buscar el mod que contiene esta clase
+				String classPath = claseProblematica.replace('.', '/') + ".class";
+				List<ArchivoDeMod> mods = Buscardor.buscarModsConTermino(classPath);
+
+				for (ArchivoDeMod mod : mods) {
+					modsUbicacion.add(mod.ubicacion_para_publicar());
+				}
+
+				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+				activado = true;
+
+				// Construir el mensaje final ahora que tenemos toda la info relevante
+				mensaje = MonitorDePID.idioma.errorConfiguracionServicio(claseProblematica,
+						modsUbicacion.isEmpty() ? null : modsUbicacion) + Verificaciones.nl_html + enlaceHtml;
+			}
 		}
 	}
 
@@ -100,8 +118,34 @@ public class ErrorConfiguracionServicioIDependencyLocator implements Verificacio
 		return "error_configuracion_servicio"; // Sin acentos, en minusculas, guiones bajos
 	}
 
+	/**
+	 * Indica si este verificador "ocupa" un trazo concreto del stack trace.
+	 * <p>
+	 * Para evitar falsos positivos, solo devuelve {@code true} si:
+	 * <ul>
+	 * <li>El verificador ya se activó, y</li>
+	 * <li>El trazo contiene la firma del problema de configuración de servicio para
+	 * IDependencyLocator, idealmente con la clase problemática.</li>
+	 * </ul>
+	 * Es deliberadamente conservador: mejor un falso negativo que marcar un trazo
+	 * que no corresponde a este error.
+	 * </p>
+	 */
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		return trazo.trace.contains("ServiceConfigurationError") && trazo.trace.contains("IDependencyLocator");
+		if (!activado || trazo == null || trazo.trace == null) {
+			return false;
+		}
+
+		String t = trazo.trace;
+
+		if (claseProblematica != null && !claseProblematica.isEmpty()) {
+			return t.contains("ServiceConfigurationError") && t.contains("IDependencyLocator")
+					&& t.contains(claseProblematica);
+		}
+
+		// Fallback muy estricto si por alguna razón no se guardó la clase.
+		return t.contains("ServiceConfigurationError") && t.contains("IDependencyLocator")
+				&& t.contains("Unable to load");
 	}
 }
