@@ -28,43 +28,61 @@ public class ErrorRegistroSuscriptoresAutomaticos implements Verificaciones {
 	private List<String> modsUbicacion = new ArrayList<>();
 	private String enlaceHtml = "";
 
+	/**
+	 * Verificación global no utilizada en este verificador.
+	 * <p>
+	 * La detección real se hace por línea en
+	 * {@link #verificar(Consola, String, int)}, llamada por el analizador línea a
+	 * línea.
+	 * </p>
+	 */
 	@Override
 	public void verificar(Consola consola) {
-		String contenidoConsola = consola.contenido_verificar;
-		String[] lineas = contenidoConsola.split(Verificaciones.nl);
+		// No se usa: este verificador funciona en modo por línea.
+	}
 
-		// Analiza cada línea del registro buscando el patrón específico de error
-		for (int i = 0; i < lineas.length; i++) {
-			String linea = lineas[i];
-			// Detecta el error específico de registro de suscriptores automáticos
-			if (linea.contains("Failed to register automatic subscribers. ModID:")) {
+	/**
+	 * Verificación por línea del registro.
+	 * <p>
+	 * Busca el patrón: "Failed to register automatic subscribers. ModID: <modid>,
+	 * class <clase>" en la línea actual, extrae modId y nombre de clase, localiza
+	 * los mods implicados y registra la línea en el lector.
+	 * </p>
+	 */
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		// Si ya se activó, no seguimos procesando más líneas.
+		if (activado) {
+			return;
+		}
 
-				// Extrae el modid y el nombre de la clase usando expresión regular
-				Pattern pattern = Pattern
-						.compile("Failed to register automatic subscribers\\. ModID: ([^,]+), class ([^\\s]+)");
-				Matcher matcher = pattern.matcher(linea);
+		// Detecta el error específico de registro de suscriptores automáticos
+		if (linea.contains("Failed to register automatic subscribers. ModID:")) {
 
-				if (matcher.find()) {
-					modId = matcher.group(1).trim();
-					nombreClase = matcher.group(2).trim();
+			// Extrae el modid y el nombre de la clase usando expresión regular
+			Pattern pattern = Pattern
+					.compile("Failed to register automatic subscribers\\. ModID: ([^,]+), class ([^\\s]+)");
+			Matcher matcher = pattern.matcher(linea);
 
-					// Convierte el nombre de clase a formato de ruta para buscar en JARs
-					String classPath = nombreClase.replace('.', '/') + ".class";
+			if (matcher.find()) {
+				modId = matcher.group(1).trim();
+				nombreClase = matcher.group(2).trim();
 
-					// Busca mods que contienen esta clase
-					List<ArchivoDeMod> modsPotenciales = Buscardor.buscarModsConTermino(classPath);
+				// Convierte el nombre de clase a formato de ruta para buscar en JARs
+				String classPath = nombreClase.replace('.', '/') + ".class";
 
-					// Extrae las ubicaciones para publicar de cada mod encontrado
-					for (ArchivoDeMod mod : modsPotenciales) {
-						modsUbicacion.add(mod.ubicacion_para_publicar());
-					}
+				// Busca mods que contienen esta clase
+				List<ArchivoDeMod> modsPotenciales = Buscardor.buscarModsConTermino(classPath);
 
-					mensaje = MonitorDePID.idioma.errorRegistroSuscriptoresAutomaticos(modId, nombreClase,
-							modsUbicacion) + Verificaciones.nl_html;
-					enlaceHtml = consola.agregarErrorALectador(i, this);
-					activado = true;
-					break; // Detiene al encontrar el primer error
+				// Extrae las ubicaciones para publicar de cada mod encontrado
+				for (ArchivoDeMod mod : modsPotenciales) {
+					modsUbicacion.add(mod.ubicacion_para_publicar());
 				}
+
+				mensaje = MonitorDePID.idioma.errorRegistroSuscriptoresAutomaticos(modId, nombreClase, modsUbicacion)
+						+ Verificaciones.nl_html;
+				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+				activado = true;
 			}
 		}
 	}
@@ -103,20 +121,43 @@ public class ErrorRegistroSuscriptoresAutomaticos implements Verificaciones {
 				.agregarEtiqueta(
 						MonitorDePID.idioma.paso2_registro_suscriptores_automaticos(modId, nombreClase, modsUbicacion))
 				.agregarEtiqueta(MonitorDePID.idioma.paso3_registro_suscriptores_automaticos(modId))
-				.agregarEtiqueta(MonitorDePID.idioma.paso4_registro_suscriptores_automaticos()) // Nuevo paso añadido
-				.construir();
+				.agregarEtiqueta(MonitorDePID.idioma.paso4_registro_suscriptores_automaticos()).construir();
 	}
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
+		// Sin acentos, en minúsculas, con guiones bajos
 		return "registro_subscriptores_automaticos";
 	}
 
+	/**
+	 * Indica si este verificador "ocupa" un trazo concreto del stack trace.
+	 * <p>
+	 * Para evitar falsos positivos, solo devuelve {@code true} cuando:
+	 * <ul>
+	 * <li>El verificador ya se activó, y</li>
+	 * <li>El trazo contiene el texto completo del error con los datos conocidos
+	 * (modId y clase), o bien el patrón base de forma muy estricta.</li>
+	 * </ul>
+	 * Es intencionadamente conservador: se prefiere un falso negativo a marcar un
+	 * trazo que no corresponda a este error.
+	 * </p>
+	 */
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+		if (!activado || trazo == null || trazo.trace == null) {
+			return false;
+		}
+
+		String t = trazo.trace;
+
+		if (!modId.isEmpty() && !nombreClase.isEmpty()) {
+			String esperado = "Failed to register automatic subscribers. ModID: " + modId + ", class " + nombreClase;
+			return t.contains(esperado);
+		}
+
+		// Fallback muy estricto si por alguna razón no se capturaron los datos.
+		return t.contains("Failed to register automatic subscribers. ModID:");
 	}
 
 }

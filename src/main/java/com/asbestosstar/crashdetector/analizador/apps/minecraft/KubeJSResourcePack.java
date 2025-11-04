@@ -17,30 +17,51 @@ public class KubeJSResourcePack implements Verificaciones {
 	private final Set<String> errores = new HashSet<>();
 	private final Map<String, String> enlacesPorError = new HashMap<>();
 
+	/**
+	 * Verificación global no utilizada en este verificador.
+	 * <p>
+	 * La detección real se hace por línea en
+	 * {@link #verificar(Consola, String, int)}, llamada por el analizador línea a
+	 * línea.
+	 * </p>
+	 */
 	@Override
 	public void verificar(Consola consola) {
-		String contenidoConsola = consola.contenido_verificar;
-		String[] lineas = contenidoConsola.split(Verificaciones.nl);
+		// No se usa: este verificador funciona en modo por línea.
+	}
 
-		for (int i = 0; i < lineas.length; i++) {
-			String linea = lineas[i];
-			if (linea.contains("from pack KubeJS Resource Pack [data]") && linea.contains("Failed to parse ")) {
+	/**
+	 * Verificación por línea del registro.
+	 * <p>
+	 * Busca líneas que contengan:
+	 * <ul>
+	 * <li>"from pack KubeJS Resource Pack [data]"</li>
+	 * <li>"Failed to parse "</li>
+	 * </ul>
+	 * e intenta extraer el nombre "lógico" del recurso/mod que aparece justo
+	 * después de "Failed to parse ".
+	 * </p>
+	 */
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		if (!linea.contains("from pack KubeJS Resource Pack [data]") || !linea.contains("Failed to parse ")) {
+			return;
+		}
 
-				try {
-					String modNombre = linea.split("Failed to parse ")[1].split(":")[0];
-					String mensaje = MonitorDePID.idioma.kubeJSResourcePack(modNombre);
+		try {
+			String modNombre = linea.split("Failed to parse ")[1].split(":")[0];
+			String mensaje = MonitorDePID.idioma.kubeJSResourcePack(modNombre);
 
-					// Solo registrar si es un error nuevo
-					if (errores.add(mensaje)) {
-						String enlace = consola.agregarErrorALectador(i, this);
-						enlacesPorError.put(mensaje, enlace);
-					}
-					activado = true;
-				} catch (Exception e) {
-					// Ignora errores de parseo para evitar fallos críticos
-					consola.agregarErrorALectador(i, this); // Registrar línea como problema
-				}
+			// Solo registrar si es un error nuevo
+			if (errores.add(mensaje)) {
+				String enlace = consola.agregarErrorALectador(numero_de_linea, this);
+				enlacesPorError.put(mensaje, enlace);
 			}
+			activado = true;
+		} catch (Exception e) {
+			// Ignora errores de parseo para evitar fallos críticos,
+			// pero aún así registra la línea como problemática.
+			consola.agregarErrorALectador(numero_de_linea, this);
 		}
 	}
 
@@ -75,7 +96,6 @@ public class KubeJSResourcePack implements Verificaciones {
 
 	@Override
 	public String nombre() {
-		// TODO Auto-generated method stub
 		return MonitorDePID.idioma.nombre_de_faltar_de_kubejs_resourcepack();
 	}
 
@@ -87,14 +107,34 @@ public class KubeJSResourcePack implements Verificaciones {
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
 		return "kubejs_resourcepack";
 	}
 
+	/**
+	 * Indica si este verificador "ocupa" un trazo concreto del stack trace.
+	 * <p>
+	 * Para evitar falsos positivos, solo devuelve {@code true} cuando:
+	 * <ul>
+	 * <li>El verificador ya se activó, y</li>
+	 * <li>El trazo contiene las cadenas características del problema de KubeJS
+	 * Resource Pack:</li>
+	 * <ul>
+	 * <li>"from pack KubeJS Resource Pack [data]"</li>
+	 * <li>"Failed to parse "</li>
+	 * </ul>
+	 * </ul>
+	 * Es intencionadamente conservador: se prefiere un falso negativo a marcar un
+	 * trazo que no corresponda realmente a este error.
+	 * </p>
+	 */
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+		if (!activado || trazo == null || trazo.trace == null) {
+			return false;
+		}
+
+		String t = trazo.trace;
+		return t.contains("from pack KubeJS Resource Pack [data]") && t.contains("Failed to parse ");
 	}
 
 }

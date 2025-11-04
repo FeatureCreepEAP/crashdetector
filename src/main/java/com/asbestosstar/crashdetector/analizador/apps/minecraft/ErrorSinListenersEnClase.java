@@ -27,40 +27,58 @@ public class ErrorSinListenersEnClase implements Verificaciones {
 	private List<String> modsUbicacion = new ArrayList<>();
 	private String enlaceHtml = "";
 
+	/**
+	 * Verificación global no utilizada en este verificador.
+	 * <p>
+	 * La detección real se hace por línea en
+	 * {@link #verificar(Consola, String, int)}, llamada por el analizador línea a
+	 * línea.
+	 * </p>
+	 */
 	@Override
 	public void verificar(Consola consola) {
-		String contenidoConsola = consola.contenido_verificar;
-		String[] lineas = contenidoConsola.split(Verificaciones.nl);
+		// No se usa: este verificador funciona en modo por línea.
+	}
 
-		// Analiza cada línea del registro buscando el patrón específico de error
-		for (int i = 0; i < lineas.length; i++) {
-			String linea = lineas[i];
-			// Detecta el error específico de clase sin listeners
-			if (linea.contains("No listeners found in class")) {
+	/**
+	 * Verificación por línea del registro.
+	 * <p>
+	 * Busca el patrón: "No listeners found in class <clase>" en la línea actual,
+	 * extrae el nombre de la clase, localiza los mods que contienen esa clase y
+	 * registra la línea en el lector.
+	 * </p>
+	 */
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		// Si ya se activó, no seguimos procesando más líneas.
+		if (activado) {
+			return;
+		}
 
-				// Extrae el nombre de la clase usando expresión regular
-				Pattern pattern = Pattern.compile("No listeners found in class ([^\\s]+)");
-				Matcher matcher = pattern.matcher(linea);
-				if (matcher.find()) {
-					nombreClase = matcher.group(1);
+		// Detecta el error específico de clase sin listeners
+		if (linea.contains("No listeners found in class")) {
 
-					// Convierte el nombre de clase de notación con puntos a notación con barras
-					String classPath = nombreClase.replace('.', '/');
+			// Extrae el nombre de la clase usando expresión regular
+			Pattern pattern = Pattern.compile("No listeners found in class ([^\\s]+)");
+			Matcher matcher = pattern.matcher(linea);
+			if (matcher.find()) {
+				nombreClase = matcher.group(1);
 
-					// Busca mods que contienen esta clase
-					List<ArchivoDeMod> modsPotenciales = Buscardor.buscarModsConTermino(classPath + ".class");
+				// Convierte el nombre de clase de notación con puntos a notación con barras
+				String classPath = nombreClase.replace('.', '/');
 
-					// Extrae las ubicaciones para publicar de cada mod encontrado
-					for (ArchivoDeMod mod : modsPotenciales) {
-						modsUbicacion.add(mod.ubicacion_para_publicar());
-					}
+				// Busca mods que contienen esta clase
+				List<ArchivoDeMod> modsPotenciales = Buscardor.buscarModsConTermino(classPath + ".class");
 
-					mensaje = MonitorDePID.idioma.errorSinListenersEnClase(nombreClase, modsUbicacion)
-							+ Verificaciones.nl_html;
-					enlaceHtml = consola.agregarErrorALectador(i, this);
-					activado = true;
-					break; // Detiene al encontrar el primer error
+				// Extrae las ubicaciones para publicar de cada mod encontrado
+				for (ArchivoDeMod mod : modsPotenciales) {
+					modsUbicacion.add(mod.ubicacion_para_publicar());
 				}
+
+				mensaje = MonitorDePID.idioma.errorSinListenersEnClase(nombreClase, modsUbicacion)
+						+ Verificaciones.nl_html;
+				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+				activado = true;
 			}
 		}
 	}
@@ -103,14 +121,38 @@ public class ErrorSinListenersEnClase implements Verificaciones {
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
 		return "sin_listeners_en_clase";
 	}
 
+	/**
+	 * Indica si este verificador "ocupa" un trazo concreto del stack trace.
+	 * <p>
+	 * Para evitar falsos positivos, solo devuelve {@code true} cuando:
+	 * <ul>
+	 * <li>El verificador ya se activó, y</li>
+	 * <li>El trazo contiene el texto completo del error con la clase conocida, o,
+	 * como fallback muy estricto, el patrón base.</li>
+	 * </ul>
+	 * Es intencionadamente conservador: se prefiere un falso negativo a marcar un
+	 * trazo que no corresponda a este error.
+	 * </p>
+	 */
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+		if (!activado || trazo == null || trazo.trace == null) {
+			return false;
+		}
+
+		String t = trazo.trace;
+
+		if (nombreClase != null && !nombreClase.isEmpty()) {
+			String esperado = "No listeners found in class " + nombreClase;
+			return t.contains(esperado);
+		}
+
+		// Fallback muy estricto si por alguna razón no se capturó el nombre de la
+		// clase.
+		return t.contains("No listeners found in class ");
 	}
 
 }

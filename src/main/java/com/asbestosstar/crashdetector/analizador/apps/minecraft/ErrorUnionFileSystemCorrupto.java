@@ -23,32 +23,59 @@ public class ErrorUnionFileSystemCorrupto implements Verificaciones {
 	private boolean esModpack = false;
 	private String enlaceHtml = "";
 
+	/**
+	 * Verificación global no utilizada en este verificador.
+	 * <p>
+	 * La detección real se hace por línea en
+	 * {@link #verificar(Consola, String, int)}, llamada por el analizador línea a
+	 * línea.
+	 * </p>
+	 */
 	@Override
 	public void verificar(Consola consola) {
-		String contenidoConsola = consola.contenido_verificar;
-		String[] lineas = contenidoConsola.split(Verificaciones.nl);
+		// No se usa: este verificador funciona en modo por línea.
+	}
 
-		// Analiza cada línea del registro buscando el patrón específico de error de
-		// UnionFileSystem
-		for (int i = 0; i < lineas.length; i++) {
-			String linea = lineas[i];
-			// Detecta el error específico de UnionFileSystem con ZipException
-			if (linea.contains("cpw.mods.niofs.union.UnionFileSystem$UncheckedIOException")
-					&& linea.contains("java.util.zip.ZipException: zip END header not found")) {
+	/**
+	 * Verificación por línea del registro.
+	 * <p>
+	 * Busca la combinación:
+	 * <ul>
+	 * <li>"cpw.mods.niofs.union.UnionFileSystem$UncheckedIOException"</li>
+	 * <li>"java.util.zip.ZipException: zip END header not found"</li>
+	 * </ul>
+	 * en la línea actual. Cuando la encuentra:
+	 * <ul>
+	 * <li>Intenta localizar el nombre del .jar problemático escaneando el contenido
+	 * completo del log.</li>
+	 * <li>Registra la línea en el lector.</li>
+	 * <li>Activa el verificador y construye el mensaje de error.</li>
+	 * </ul>
+	 * </p>
+	 */
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		// Si ya se activó, no seguimos procesando más líneas.
+		if (activado) {
+			return;
+		}
 
-				// Intenta identificar el nombre del archivo problemático en las líneas
-				// siguientes
-				Pattern pattern = Pattern.compile("at.*?/(.*?\\.jar)");
-				Matcher matcher = pattern.matcher(contenidoConsola);
-				if (matcher.find()) {
-					nombreArchivo = matcher.group(1);
-				}
+		// Detecta el error específico de UnionFileSystem con ZipException
+		if (linea.contains("cpw.mods.niofs.union.UnionFileSystem$UncheckedIOException")
+				&& linea.contains("java.util.zip.ZipException: zip END header not found")) {
 
-				mensaje = MonitorDePID.idioma.errorUnionFileSystemCorrupto(nombreArchivo) + Verificaciones.nl_html;
-				enlaceHtml = consola.agregarErrorALectador(i, this);
-				activado = true;
-				break; // Detiene al encontrar el primer error
+			// Intenta identificar el nombre del archivo problemático en el contenido
+			// completo
+			String contenidoConsola = consola.contenido_verificar;
+			Pattern pattern = Pattern.compile("at.*?/(.*?\\.jar)");
+			Matcher matcher = pattern.matcher(contenidoConsola);
+			if (matcher.find()) {
+				nombreArchivo = matcher.group(1);
 			}
+
+			mensaje = MonitorDePID.idioma.errorUnionFileSystemCorrupto(nombreArchivo) + Verificaciones.nl_html;
+			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+			activado = true;
 		}
 	}
 
@@ -89,14 +116,31 @@ public class ErrorUnionFileSystemCorrupto implements Verificaciones {
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
 		return "union_filesystem_corrupto";
 	}
 
+	/**
+	 * Indica si este verificador "ocupa" un trazo concreto del stack trace.
+	 * <p>
+	 * Para evitar falsos positivos, solo devuelve {@code true} cuando:
+	 * <ul>
+	 * <li>El verificador ya se activó, y</li>
+	 * <li>El trazo contiene tanto la clase de UnionFileSystem como la ZipException
+	 * concreta "zip END header not found".</li>
+	 * </ul>
+	 * Es intencionadamente conservador: mejor un falso negativo que marcar un trazo
+	 * que no corresponde a este problema.
+	 * </p>
+	 */
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+		if (!activado || trazo == null || trazo.trace == null) {
+			return false;
+		}
+
+		String t = trazo.trace;
+		return t.contains("cpw.mods.niofs.union.UnionFileSystem$UncheckedIOException")
+				&& t.contains("java.util.zip.ZipException: zip END header not found");
 	}
 
 }

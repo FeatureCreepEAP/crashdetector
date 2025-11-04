@@ -56,12 +56,19 @@ public class ErrorResolucionDeTextura implements Verificaciones {
 	 */
 	private final Map<String, String> enlacesPorLinea = new HashMap<>();
 
+	/**
+	 * Verificación global: analiza los stack traces completos en busca del patrón
+	 * de StitcherException (errores de texturas que no caben en la hoja).
+	 * <p>
+	 * La detección de líneas sueltas sin traza se hace en el método por línea.
+	 * </p>
+	 */
 	@Override
 	public void verificar(Consola consola) {
 		// Limpiar resultados anteriores
 		errores.clear();
+		enlacesPorLinea.clear();
 		activado = false;
-		VerificacionDeStackTrace vdst = consola.verificacion_de_stacktrace;
 
 		// Colección de trazos (fatales y no fatales)
 		List<VerificacionDeStackTrace.TraceInfo> trazosInfo = new ArrayList<>();
@@ -72,7 +79,7 @@ public class ErrorResolucionDeTextura implements Verificaciones {
 		for (VerificacionDeStackTrace.TraceInfo traceInfo : trazosInfo) {
 			String trazo = traceInfo.trace;
 
-			// Verificar las frases clave específicas
+			// Verificar las frases clave específicas mínimas
 			if (!trazo.contains("Unable to fit:") || !trazo.contains("Maybe try a lower resolution resourcepack?")) {
 				continue;
 			}
@@ -94,23 +101,28 @@ public class ErrorResolucionDeTextura implements Verificaciones {
 			errores.put(mensajeBase, "");
 			activado = true;
 		}
+	}
 
-		// Analizar líneas sueltas sin trazo completo
-		String[] lineas = consola.contenido_verificar.split(NL);
-		for (int i = 0; i < lineas.length; i++) {
-			String linea = lineas[i];
-			if (linea.contains("Unable to fit:") && linea.contains("Maybe try a lower resolution resourcepack?")
-					&& !linea.contains("at ") && VerificacionDeStackTrace.tracePermite(linea)) {
-				procesarLineaSinTraza(linea, vdst, i, consola);
-			}
+	/**
+	 * Verificación por línea: analiza líneas sueltas sin traza completa que
+	 * contengan el mensaje de error, típicamente fuera de un stack trace.
+	 */
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		// Solo consideramos líneas que parecen mensaje, no frames de stack
+		if (!linea.contains("Unable to fit:") || !linea.contains("Maybe try a lower resolution resourcepack?")
+				|| linea.contains("at ") || !VerificacionDeStackTrace.tracePermite(linea)) {
+			return;
 		}
+
+		procesarLineaSinTraza(linea, numero_de_linea, consola);
 	}
 
 	/**
 	 * Procesa una línea con error de resolución de texturas que no tiene stack
-	 * trace completo
+	 * trace completo.
 	 */
-	private void procesarLineaSinTraza(String linea, VerificacionDeStackTrace vdst, int numeroLinea, Consola consola) {
+	private void procesarLineaSinTraza(String linea, int numeroLinea, Consola consola) {
 		Matcher matcher = ERRORES_RESOLUCION.matcher(linea);
 		if (!matcher.find()) {
 			return;
@@ -179,14 +191,29 @@ public class ErrorResolucionDeTextura implements Verificaciones {
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
 		return "error_resolucion_de_textura";
 	}
 
+	/**
+	 * Indica si este verificador "ocupa" un trazo concreto del stack trace.
+	 * <p>
+	 * Para evitar falsos positivos, solo devuelve {@code true} cuando:
+	 * <ul>
+	 * <li>El verificador ya se activó, y</li>
+	 * <li>El trazo coincide con el patrón de {@link #ERRORES_RESOLUCION}, es decir,
+	 * contiene la StitcherException con el formato esperado.</li>
+	 * </ul>
+	 * Es deliberadamente conservador: se prefieren falsos negativos a marcar trazos
+	 * que no correspondan a este problema concreto.
+	 * </p>
+	 */
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+		if (!activado || trazo == null || trazo.trace == null) {
+			return false;
+		}
+
+		return ERRORES_RESOLUCION.matcher(trazo.trace).find();
 	}
 
 }

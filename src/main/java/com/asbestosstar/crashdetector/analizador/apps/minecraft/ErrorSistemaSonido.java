@@ -17,21 +17,37 @@ public class ErrorSistemaSonido implements Verificaciones {
 	private String mensaje = "";
 	private String enlaceHtml = "";
 
+	/**
+	 * Verificación global no utilizada en este verificador.
+	 * <p>
+	 * La detección real se hace por línea en
+	 * {@link #verificar(Consola, String, int)}, llamada por el analizador línea a
+	 * línea.
+	 * </p>
+	 */
 	@Override
 	public void verificar(Consola consola) {
-		String contenidoConsola = consola.contenido_verificar;
-		String[] lineas = contenidoConsola.split(Verificaciones.nl);
+		// No se usa: este verificador funciona en modo por línea.
+	}
 
-		// Analiza cada línea del registro buscando el mensaje específico de error de
-		// sonido
-		for (int i = 0; i < lineas.length; i++) {
-			String linea = lineas[i];
-			if (linea.contains("Error starting SoundSystem. Turning off sounds & music")) {
-				mensaje = MonitorDePID.idioma.errorSistemaSonido() + Verificaciones.nl_html;
-				enlaceHtml = consola.agregarErrorALectador(i, this);
-				activado = true;
-				break; // Detiene al encontrar el primer error
-			}
+	/**
+	 * Verificación por línea del registro.
+	 * <p>
+	 * Busca el mensaje: "Error starting SoundSystem. Turning off sounds & music" en
+	 * la línea actual y registra el enlace correspondiente.
+	 * </p>
+	 */
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		// Si ya se activó, no seguimos procesando más líneas.
+		if (activado) {
+			return;
+		}
+
+		if (linea.contains("Error starting SoundSystem. Turning off sounds & music")) {
+			mensaje = MonitorDePID.idioma.errorSistemaSonido() + Verificaciones.nl_html;
+			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+			activado = true;
 		}
 	}
 
@@ -71,14 +87,29 @@ public class ErrorSistemaSonido implements Verificaciones {
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
 		return "error_en_sistema_sonido";
 	}
 
+	/**
+	 * Indica si este verificador "ocupa" un trazo concreto del stack trace.
+	 * <p>
+	 * Para evitar falsos positivos, solo devuelve {@code true} cuando:
+	 * <ul>
+	 * <li>El verificador ya se activó, y</li>
+	 * <li>El trazo contiene exactamente el mensaje de error del sistema de
+	 * sonido.</li>
+	 * </ul>
+	 * Es intencionadamente conservador: mejor un falso negativo que marcar un trazo
+	 * que no corresponda a este problema.
+	 * </p>
+	 */
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+		if (!activado || trazo == null || trazo.trace == null) {
+			return false;
+		}
+
+		return trazo.trace.contains("Error starting SoundSystem. Turning off sounds & music");
 	}
 
 }

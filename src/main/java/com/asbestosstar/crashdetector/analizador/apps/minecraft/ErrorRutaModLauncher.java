@@ -41,34 +41,53 @@ public class ErrorRutaModLauncher implements Verificaciones {
 	 */
 	private final Map<String, String> enlacesPorLinea = new HashMap<>();
 
+	/**
+	 * Verificación global no utilizada en este verificador.
+	 * <p>
+	 * La detección real se hace por línea en
+	 * {@link #verificar(Consola, String, int)}, llamada por el analizador línea a
+	 * línea.
+	 * </p>
+	 */
 	@Override
 	public void verificar(Consola consola) {
-		// Limpiar resultados anteriores
-		errores.clear();
-		activado = false;
+		// No se usa: este verificador funciona en modo por línea.
+	}
 
-		// Buscar el error específico en la consola
-		if (!consola.contenido_verificar.contains("java.lang.IllegalArgumentException: Bad escape")
-				|| !consola.contenido_verificar.contains("sun.nio.fs.UnixUriUtils.fromUri")) {
+	/**
+	 * Verificación por línea del registro.
+	 * <p>
+	 * Busca el patrón: "java.lang.IllegalArgumentException: Bad escape" siempre y
+	 * cuando en el contenido completo del log también aparezca
+	 * "sun.nio.fs.UnixUriUtils.fromUri" (misma condición que en la versión original
+	 * para reducir falsos positivos).
+	 * </p>
+	 */
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		// Comprobación global del tipo de error (igual que en la versión original).
+		String contenido = consola.contenido_verificar;
+		if (!contenido.contains("java.lang.IllegalArgumentException: Bad escape")
+				|| !contenido.contains("sun.nio.fs.UnixUriUtils.fromUri")) {
 			return;
 		}
 
-		// Analizar líneas para encontrar el error específico
-		String[] lineas = consola.contenido_verificar.split(NL);
-		for (int i = 0; i < lineas.length; i++) {
-			String linea = lineas[i];
-			if (linea.contains("java.lang.IllegalArgumentException: Bad escape")) {
-				String mensajeBase = MonitorDePID.idioma.error_modlauncher_path();
-
-				// Registrar el enlace a esta línea
-				String enlace = consola.agregarErrorALectador(i, this);
-				enlacesPorLinea.putIfAbsent(mensajeBase, enlace);
-
-				// Agregar el error al mapa
-				errores.put(mensajeBase, "");
-				activado = true;
-			}
+		// Analizar solo líneas que contengan el mensaje concreto
+		if (!linea.contains("java.lang.IllegalArgumentException: Bad escape")) {
+			return;
 		}
+
+		String mensajeBase = MonitorDePID.idioma.error_modlauncher_path();
+
+		// Registrar el enlace a esta línea solo la primera vez
+		if (!enlacesPorLinea.containsKey(mensajeBase)) {
+			String enlace = consola.agregarErrorALectador(numero_de_linea, this);
+			enlacesPorLinea.put(mensajeBase, enlace);
+		}
+
+		// Agregar el error al mapa (clave única por mensaje base)
+		errores.put(mensajeBase, "");
+		activado = true;
 	}
 
 	@Override
@@ -121,14 +140,31 @@ public class ErrorRutaModLauncher implements Verificaciones {
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
 		return "ruta_modlauncher";
 	}
 
+	/**
+	 * Indica si este verificador "ocupa" un trazo concreto del stack trace.
+	 * <p>
+	 * Para evitar falsos positivos, solo devuelve {@code true} cuando:
+	 * <ul>
+	 * <li>El verificador ya se activó, y</li>
+	 * <li>El trazo contiene tanto "java.lang.IllegalArgumentException: Bad escape"
+	 * como "sun.nio.fs.UnixUriUtils.fromUri".</li>
+	 * </ul>
+	 * Es intencionadamente conservador: se prefieren falsos negativos a marcar
+	 * trazos que no correspondan a este problema concreto.
+	 * </p>
+	 */
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+		if (!activado || trazo == null || trazo.trace == null) {
+			return false;
+		}
+
+		String t = trazo.trace;
+		return t.contains("java.lang.IllegalArgumentException: Bad escape")
+				&& t.contains("sun.nio.fs.UnixUriUtils.fromUri");
 	}
 
 }

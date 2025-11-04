@@ -25,32 +25,50 @@ public class ErrorMetadataModsTomlFaltante implements Verificaciones {
 	private List<String> modsPotenciales = null;
 	private String enlaceHtml = "";
 
+	/**
+	 * Verificación global no utilizada en este verificador.
+	 * <p>
+	 * La detección real se hace por línea en
+	 * {@link #verificar(Consola, String, int)}, llamada por el analizador línea a
+	 * línea.
+	 * </p>
+	 */
 	@Override
 	public void verificar(Consola consola) {
-		String contenidoConsola = consola.contenido_verificar;
-		String[] lineas = contenidoConsola.split(Verificaciones.nl);
+		// No se usa: este verificador funciona en modo por línea.
+	}
 
-		// Analiza cada línea del registro buscando el patrón específico de error
-		for (int i = 0; i < lineas.length; i++) {
-			String linea = lineas[i];
-			// Detecta el error específico de metadata faltante
-			if (linea.contains("mods.toml missing metadata for modid")) {
+	/**
+	 * Verificación por línea del registro.
+	 * <p>
+	 * Busca el patrón: "mods.toml missing metadata for modid <modid>" en la línea
+	 * actual, extrae el modid y usa Buscardor para obtener mods potencialmente
+	 * relacionados. También registra la línea en el lector.
+	 * </p>
+	 */
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		// Si ya se activó, no seguimos procesando más líneas.
+		if (activado) {
+			return;
+		}
 
-				// Extrae el modid faltante usando expresión regular
-				Pattern pattern = Pattern.compile("mods\\.toml missing metadata for modid (\\w+)");
-				Matcher matcher = pattern.matcher(linea);
-				if (matcher.find()) {
-					modIdFaltante = matcher.group(1);
+		// Detecta el error específico de metadata faltante
+		if (linea.contains("mods.toml missing metadata for modid")) {
 
-					// Busca mods que podrían estar causando el problema
-					modsPotenciales = Buscardor.obtenerModsConNombre(modIdFaltante);
+			// Extrae el modid faltante usando expresión regular
+			Pattern pattern = Pattern.compile("mods\\.toml missing metadata for modid (\\w+)");
+			Matcher matcher = pattern.matcher(linea);
+			if (matcher.find()) {
+				modIdFaltante = matcher.group(1);
 
-					mensaje = MonitorDePID.idioma.errorMetadataModsTomlFaltante(modIdFaltante, modsPotenciales)
-							+ Verificaciones.nl_html;
-					enlaceHtml = consola.agregarErrorALectador(i, this);
-					activado = true;
-					break;
-				}
+				// Busca mods que podrían estar causando el problema
+				modsPotenciales = Buscardor.obtenerModsConNombre(modIdFaltante);
+
+				mensaje = MonitorDePID.idioma.errorMetadataModsTomlFaltante(modIdFaltante, modsPotenciales)
+						+ Verificaciones.nl_html;
+				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+				activado = true;
 			}
 		}
 	}
@@ -92,14 +110,37 @@ public class ErrorMetadataModsTomlFaltante implements Verificaciones {
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
 		return "metadata_mods_toml_faltante";
 	}
 
+	/**
+	 * Indica si este verificador "ocupa" un trazo concreto del stack trace.
+	 * <p>
+	 * Para evitar falsos positivos, solo devuelve {@code true} cuando:
+	 * <ul>
+	 * <li>El verificador ya se activó, y</li>
+	 * <li>El trazo contiene el texto exacto del error, incluyendo el modid si está
+	 * disponible.</li>
+	 * </ul>
+	 * Es intencionadamente conservador: se prefiere un falso negativo a marcar un
+	 * trazo que no corresponda a este error.
+	 * </p>
+	 */
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+		if (!activado || trazo == null || trazo.trace == null) {
+			return false;
+		}
+
+		String t = trazo.trace;
+
+		if (modIdFaltante != null && !modIdFaltante.isEmpty()) {
+			String esperado = "mods.toml missing metadata for modid " + modIdFaltante;
+			return t.contains(esperado);
+		}
+
+		// Fallback muy estricto si por alguna razón no se capturó el modid.
+		return t.contains("mods.toml missing metadata for modid ");
 	}
 
 }
