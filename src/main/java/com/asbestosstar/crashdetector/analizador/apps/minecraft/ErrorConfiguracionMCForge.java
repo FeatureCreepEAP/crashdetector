@@ -24,54 +24,67 @@ public class ErrorConfiguracionMCForge implements Verificaciones {
 			"(?:ConfigFileTypeHandler|ConfigSpecWrapper)\\$ConfigLoadingException:\\s*Failed\\s+loading\\s+config\\s+file\\s+([^\\s]+)\\s+of\\s+type\\s+[^\\s]+\\s+for\\s+modid\\s+([^\\s]+)",
 			Pattern.CASE_INSENSITIVE);
 
+	private static final String PARSING_EXCEPTION = "ParsingException: Not enough data available";
+	private static final String CFG_HANDLER = "ConfigFileTypeHandler$ConfigLoadingException:";
+	private static final String CFG_WRAPPER = "ConfigSpecWrapper$ConfigLoadingException:";
+	private static final String CFG_FAILED = "Failed loading config file";
+
+	/**
+	 * Verificación global no utilizada en este verificador.
+	 * <p>
+	 * La detección se hace por línea en {@link #verificar(Consola, String, int)},
+	 * llamado por el sistema de análisis línea a línea.
+	 * </p>
+	 */
 	@Override
 	public void verificar(Consola consola) {
-		String contenidoConsola = consola.contenido_verificar;
-		String[] lineas = contenidoConsola.split(Verificaciones.nl);
+		// No se usa: este verificador funciona en modo por línea.
+	}
 
-		// Detectar condición principal: mensaje de ParsingException o cualquier
-		// excepción de carga de config.
-		for (int i = 0; i < lineas.length; i++) {
-			String linea = lineas[i];
-
-			// Caso clásico Forge:
-			if (linea.contains("ParsingException: Not enough data available")) {
+	/**
+	 * Verificación por línea del registro.
+	 * <p>
+	 * Detecta:
+	 * <ul>
+	 * <li>El caso clásico Forge: "ParsingException: Not enough data available"</li>
+	 * <li>El caso alterno Forge/Moonlight:
+	 * "<code>ConfigFileTypeHandler$ConfigLoadingException</code>" o
+	 * "<code>ConfigSpecWrapper$ConfigLoadingException</code>" con "Failed loading
+	 * config file".</li>
+	 * </ul>
+	 * Además, intenta extraer archivo y modid usando {@link #P_FALLO_CARGA_CONFIG}.
+	 * </p>
+	 */
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		// 1) Detección base del error (si aún no se ha activado).
+		if (!activado) {
+			// Caso clásico Forge
+			if (linea.contains(PARSING_EXCEPTION)) {
 				mensaje = MonitorDePID.idioma.errorConfigMCForge() + Verificaciones.nl_html;
-				enlaceHtml = consola.agregarErrorALectador(i, this);
+				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 				activado = true;
-				break;
 			}
-
 			// Caso alterno: excepciones de carga de config (Forge/Moonlight)
-			if ((linea.contains("ConfigFileTypeHandler$ConfigLoadingException:")
-					|| linea.contains("ConfigSpecWrapper$ConfigLoadingException:"))
-					&& linea.contains("Failed loading config file")) {
+			else if ((linea.contains(CFG_HANDLER) || linea.contains(CFG_WRAPPER)) && linea.contains(CFG_FAILED)) {
 				mensaje = MonitorDePID.idioma.errorConfigMCForge() + Verificaciones.nl_html;
-				enlaceHtml = consola.agregarErrorALectador(i, this);
+				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 				activado = true;
-				break;
 			}
 		}
 
-		// Si se activó, intentar complementar con el detalle de archivo/modid en
-		// cualquier parte del log.
-		if (activado) {
-			for (int i = 0; i < lineas.length; i++) {
-				String l = lineas[i];
-				if ((l.contains("ConfigFileTypeHandler$ConfigLoadingException:")
-						|| l.contains("ConfigSpecWrapper$ConfigLoadingException:"))
-						&& l.contains("Failed loading config file")) {
+		// 2) (Opcional) Intentar complementar con detalle de archivo/modid.
+		// No exigimos que "activado" sea true aquí: puede aparecer antes o después.
+		// Solo se mostrará si al final el verificador está activado.
+		if ((detalleArchivoHtml == null || detalleArchivoHtml.isEmpty())
+				&& (linea.contains(CFG_HANDLER) || linea.contains(CFG_WRAPPER)) && linea.contains(CFG_FAILED)) {
 
-					Matcher m = P_FALLO_CARGA_CONFIG.matcher(l);
-					if (m.find()) {
-						String archivo = m.group(1);
-						String modid = m.group(2);
-						String enlaceDetalle = consola.agregarErrorALectador(i, this);
-						detalleArchivoHtml = "<b>" + archivo + "</b> (modid: <code>" + modid + "</code>). "
-								+ enlaceDetalle;
-						break; // con el primer match es suficiente
-					}
-				}
+			Matcher m = P_FALLO_CARGA_CONFIG.matcher(linea);
+			if (m.find()) {
+				String archivo = m.group(1);
+				String modid = m.group(2);
+				String enlaceDetalle = consola.agregarErrorALectador(numero_de_linea, this);
+				detalleArchivoHtml = "<b>" + archivo + "</b> (modid: <code>" + modid + "</code>). " + enlaceDetalle;
 			}
 		}
 	}
@@ -118,8 +131,37 @@ public class ErrorConfiguracionMCForge implements Verificaciones {
 		return "config_mcforge";
 	}
 
+	/**
+	 * Indica si este verificador "ocupa" un trazo concreto del stack trace.
+	 * <p>
+	 * Para evitar falsos positivos, solo marca trazos que contienen las cadenas
+	 * características de este fallo:
+	 * <ul>
+	 * <li>"ParsingException: Not enough data available", o</li>
+	 * <li>"ConfigFileTypeHandler$ConfigLoadingException"/
+	 * "ConfigSpecWrapper$ConfigLoadingException" junto con "Failed loading config
+	 * file".</li>
+	 * </ul>
+	 * Es intencionadamente conservador (mejor falsos negativos que falsos
+	 * positivos).
+	 * </p>
+	 */
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		return false; // no consume trazos específicos
+		if (!activado || trazo == null || trazo.trace == null) {
+			return false;
+		}
+
+		String t = trazo.trace;
+
+		if (t.contains(PARSING_EXCEPTION)) {
+			return true;
+		}
+
+		if ((t.contains(CFG_HANDLER) || t.contains(CFG_WRAPPER)) && t.contains(CFG_FAILED)) {
+			return true;
+		}
+
+		return false;
 	}
 }
