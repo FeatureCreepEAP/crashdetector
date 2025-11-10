@@ -248,8 +248,8 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String theseus() {
-		return "<b style='color:#" + config.obtenerColorAdvertencia()
-				+ "'>إذا كنت تستخدم Theseus/ModrinthApp، لا يمكننا مساعدتك كثيرًا لأن Theseus ليس لديه وحدة تحكم في المشغل (Launcher). لدى Theseus أيضًا مشاكل أخرى، بما في ذلك إصدارات قديمة من برامج تحميل التعديلات، برمجيات تجسس، سجلات سيئة، وأكثر. شركة Modrinth ليست صادقة أيضًا. يقومون بتهم كاذبة بأن مطوري التعديلات يستخدمون الروبوتات لزيادة تنزيلاتهم وقد غيروا ادعاءاتهم حول تحقيق الدخل عدة مرات.</b>";
+	    return "<b style='color:#" + config.obtenerColorAdvertencia()
+	           + "'>يواجه Theseus أيضًا مشاكل أخرى، بما في ذلك فشله في إزالة التعديلات عند محاولة ذلك. إذا كنت بحاجة إلى تشغيل ملفات mrpack، يمكنك استخدام مشغلات أخرى مثل Prism Launcher (مخصص لـ modrinth.com فقط)، ATLauncher (مخصص لـ modrinth.com فقط)، أو Hello Minecraft Launcher (يدعم modrinth.com و bbsmc.net).</b>";
 	}
 
 	@Override
@@ -485,14 +485,14 @@ public class Arabe implements Idioma {
 				+ "' أو أحدث، ولكن تم العثور فقط على الإصدار '" + encontrado + "'.</b>";
 	}
 
-//@Override
-//public String advertenciaMalwareFalso() {
-//    return "<b style='color:#" + config.obtenerColorError() + "'>"
-//         + "تنبيه! Crash Assistant هو كاشف برامج ضارة مزيف. يقوم بحظر اللعبة عن التشغيل بشكل متعمد، مع تجاهل حريتك في متابعة اللعب باستخدام التعديلات التي يستهدفها. "
-//         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>عرض كود MalwareMod.java</a>   "
-//         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>عرض كود JarInJarHelper.java</a>. "
-//         + "هذا التعديل فقط هو الموجود في قائمتهم حالياً، وهم يستهدفون فقط موقع تسجيل السجلات الافتراضي، والذي يمكن للمستخدم تغييره، وهذا يحدث فقط إذا اخترت صراحة استخدام ميزة مشاركة السجلات المدمجة. CrashAssistant لا يقوم بأي فحوصات لتحديد موقع التسجيل المستخدم ولا يشرح كيفية تغييره (هناك قائمة منسدلة في أسفل مربع الحوار الخاص بالمشاركة)، وبغض النظر عن الموقع الذي قمت بتكوينه، فإن CrashAssistant سيمنع تشغيل اللعبة. في رسالتهم يقولون أن تقوم بإجراء بحثك الخاص، افعل ذلك، انظر إلى كود CrashDetector وCrash Assistant وافهم ما يقومون به، لا تعتمد على استدعاء السلطة.</b>";
-//}
+@Override
+public String advertenciaMalwareFalso() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "تنبيه! Crash Assistant هو كاشف برامج ضارة مزيف. يقوم بحظر اللعبة عن التشغيل بشكل متعمد، مع تجاهل حريتك في متابعة اللعب باستخدام التعديلات التي يستهدفها. "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>عرض كود MalwareMod.java</a>   "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>عرض كود JarInJarHelper.java</a>. "
+         + "هذا التعديل فقط هو الموجود في قائمتهم حالياً، وهم يستهدفون فقط موقع تسجيل السجلات الافتراضي، والذي يمكن للمستخدم تغييره، وهذا يحدث فقط إذا اخترت صراحة استخدام ميزة مشاركة السجلات المدمجة. CrashAssistant لا يقوم بأي فحوصات لتحديد موقع التسجيل المستخدم ولا يشرح كيفية تغييره (هناك قائمة منسدلة في أسفل مربع الحوار الخاص بالمشاركة)، وبغض النظر عن الموقع الذي قمت بتكوينه، فإن CrashAssistant سيمنع تشغيل اللعبة. في رسالتهم يقولون أن تقوم بإجراء بحثك الخاص، افعل ذلك، انظر إلى كود CrashDetector وCrash Assistant وافهم ما يقومون به، لا تعتمد على استدعاء السلطة.</b>";
+}
 
 	@Override
 	public String error_clase_no_encontrada_mcforge_mod_suspechoso(String idMod, String claseNoEncontrada) {
@@ -4062,5 +4062,27 @@ public class Arabe implements Idioma {
 	public String buscador_canario_de_orden_titulo_proximamente() {
 		return "قريبًا";
 	}
+	@Override
+	public String nombre_de_mods_incompatibles_crash_assistant() {
+	    return "التعديلات غير المتوافقة مع Crash Assistant (خطأ)";
+	}
+
+	@Override
+	public String nombre_de_modpack_incompatible_crash_assistant() {
+	    return "حزمة تعديلات غير متوافقة مع CrashAssistant";
+	}
+
+	@Override
+	public String advertenciaCrashAssistantModpackIncompatibleFalso() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>يحتوي Crash Assistant على قائمة بتعديلات يقول إنها غير متوافقة، لكن ليس لدينا أدلة على ذلك، والخطأ باللغة الإنجليزية فقط. إذا أردت اللعب باستخدام هذه التعديلات، يمكنك تحرير الملف <code>config/crash_assistant/config.toml</code> وتغيير <code>enabled = true</code> في القسم [compatibility] إلى <code>enabled = false</code>.</b>";
+	}
+
+	@Override
+	public String advertenciaCrashAssistantModsIncompatibles() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>يمكن لـ Crash Assistant أن يُصنّف التعديلات على أنها غير متوافقة، لكن في بعض الأحيان يكون هذا التصنيف خاطئًا، والرسالة باللغة الإنجليزية فقط. إذا أردت استخدام هذه التعديلات، يمكنك تحرير الملف <code>config/crash_assistant/problematic_mods_config.json</code> وتغيير قيمة <code>should_crash_on_startup</code> من <code>true</code> إلى <code>false</code>.</b>";
+	}
+	
+	
+	
 
 }

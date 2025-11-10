@@ -33,6 +33,24 @@ public class Drivers implements Verificaciones {
 			"The game failed to start because the currently installed" // Sodium a veces muestra esto
 	};
 
+	/**
+	 * Patrones de nouveau precompilados para evitar recompilar en cada
+	 * verificación.
+	 */
+	private static final Pattern[] PATRONES_NOUVEAU = { Pattern.compile("\\[libnouveau\\.so\\]"),
+			Pattern.compile("\\[libnouveau\\.so\\.\\d+\\]"), Pattern.compile("\\[libnouveau\\.so\\.\\d+\\.\\d+\\]"),
+			Pattern.compile("\\[libnouveau\\.so\\.\\d+\\.\\d+\\.\\d+\\]"), Pattern.compile("\\[libdrm_nouveau\\.so\\]"),
+			Pattern.compile("\\[libdrm_nouveau\\.so\\.\\d+\\]"),
+			Pattern.compile("\\[libdrm_nouveau\\.so\\.\\d+\\.\\d+\\]"),
+			Pattern.compile("\\[libdrm_nouveau\\.so\\.\\d+\\.\\d+\\.\\d+\\]"), Pattern.compile("\\[nouveau\\]"),
+			Pattern.compile("\\[.*nouveau.*\\.so\\]") };
+
+	/**
+	 * Cache de plataforma y GPU para no repetir detecciones costosas.
+	 */
+	private static final boolean ES_WINDOWS = System.getProperty("os.name", "").toLowerCase().contains("windows");
+	private static Boolean TIENE_NVIDIA_CACHE = null;
+
 	@Override
 	public void verificar(Consola consola) {
 		String log = consola.contenido_verificar;
@@ -106,6 +124,21 @@ public class Drivers implements Verificaciones {
 		}
 	}
 
+	/**
+	 * Verificación por línea.
+	 * <p>
+	 * En este verificador no se hace análisis por línea porque todas las
+	 * heurísticas necesitan el contexto completo del log (hs_err, última línea,
+	 * presencia de varias DLL, etc.). Se deja implementado vacío para cumplir con
+	 * la interfaz y mantener un punto de extensión futuro si hiciera falta añadir
+	 * detecciones ligeras por línea.
+	 * </p>
+	 */
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		// No se usa en este verificador: requiere el log completo para decidir.
+	}
+
 	// Detecta el aviso propio de Sodium sobre controlador incompatible
 	private boolean esProblemaSodiumDrivers(String log) {
 		String low = log.toLowerCase();
@@ -124,19 +157,24 @@ public class Drivers implements Verificaciones {
 	}
 
 	private boolean contienePatronNouveau(String log) {
-		String[] patronesNouveau = { "\\[libnouveau\\.so\\]", "\\[libnouveau\\.so\\.\\d+\\]",
-				"\\[libnouveau\\.so\\.\\d+\\.\\d+\\]", "\\[libnouveau\\.so\\.\\d+\\.\\d+\\.\\d+\\]",
-				"\\[libdrm_nouveau\\.so\\]", "\\[libdrm_nouveau\\.so\\.\\d+\\]",
-				"\\[libdrm_nouveau\\.so\\.\\d+\\.\\d+\\]", "\\[libdrm_nouveau\\.so\\.\\d+\\.\\d+\\.\\d+\\]",
-				"\\[nouveau\\]", "\\[.*nouveau.*\\.so\\]" };
-		for (String patron : patronesNouveau) {
-			if (Pattern.compile(patron).matcher(log).find()) {
-				CrashDetectorLogger.log("Patrón Nouveau encontrado: " + patron);
+		// Atajo rápido: si el log no menciona "nouveau" ni "libdrm_nouveau" ni
+		// "libnouveau",
+		// evitamos todas las búsquedas con regex
+		String low = log.toLowerCase();
+		if (!low.contains("nouveau") && !low.contains("libdrm_nouveau") && !low.contains("libnouveau")) {
+			if (!contienePatronOpenAL(log)) { // OpenAL también puede indicar nouveau en algunos casos
+				return false;
+			}
+		}
+
+		for (Pattern patron : PATRONES_NOUVEAU) {
+			if (patron.matcher(log).find()) {
+				CrashDetectorLogger.log("Patrón Nouveau encontrado: " + patron.pattern());
 				return true;
 			}
 		}
 
-		if (contienePatronOpenAL(log)) {// A veses nouveau puede causar esta problema en mi experiencia
+		if (contienePatronOpenAL(log)) { // A veces nouveau puede causar esta problema en mi experiencia
 			return true;
 		}
 
@@ -145,26 +183,24 @@ public class Drivers implements Verificaciones {
 
 	private boolean contienePatronOpenAL(String log) {
 		// Verificamos si el log contiene "[" y "]"
-		if (log.contains("[") && log.contains("]")) {
-			// Buscamos el índice de los corchetes
-			int startIdx = log.indexOf("[");
-			int endIdx = log.indexOf("]", startIdx);
-
-			// Comprobamos si los índices son válidos
-			if (startIdx != -1 && endIdx != -1 && endIdx > startIdx) {
-				// Extraemos el contenido dentro de los corchetes
-				String contenidoDentroDeCorchetes = log.substring(startIdx + 1, endIdx);
-
-				// Verificamos si "libopenal.so" está presente dentro de los corchetes
-				if (contenidoDentroDeCorchetes.contains("libopenal.so")) {
-					// Si contiene "libopenal.so", retornamos true
-					CrashDetectorLogger.log("Patrón Nouveau encontrado: " + contenidoDentroDeCorchetes);
-					return true;
-				}
-			}
+		int startIdx = log.indexOf('[');
+		if (startIdx == -1) {
+			return false;
+		}
+		int endIdx = log.indexOf(']', startIdx);
+		if (endIdx == -1 || endIdx <= startIdx) {
+			return false;
 		}
 
-		// Si no encontramos coincidencias, retornamos false
+		// Extraemos el contenido dentro de los corchetes
+		String contenidoDentroDeCorchetes = log.substring(startIdx + 1, endIdx);
+
+		// Verificamos si "libopenal.so" está presente dentro de los corchetes
+		if (contenidoDentroDeCorchetes.contains("libopenal.so")) {
+			CrashDetectorLogger.log("Patrón Nouveau encontrado: " + contenidoDentroDeCorchetes);
+			return true;
+		}
+
 		return false;
 	}
 
@@ -219,35 +255,49 @@ public class Drivers implements Verificaciones {
 	}
 
 	private String obtenerUltimaLinea(String log) {
-		String[] lineas = log.split(nl);
+		if (log == null || log.isEmpty()) {
+			return null;
+		}
+
+		String[] lineas = log.split(Verificaciones.nl);
 		return lineas.length > 0 ? lineas[lineas.length - 1] : null;
 	}
 
 	private boolean esWindows() {
-		return System.getProperty("os.name").toLowerCase().contains("windows");
+		return ES_WINDOWS;
 	}
 
 	private boolean tieneNvidiaGPU() {
-		if (!esWindows())
+		if (!ES_WINDOWS) {
 			return false;
+		}
+		// Cachear el resultado: ejecutar wmic sólo la primera vez
+		if (TIENE_NVIDIA_CACHE != null) {
+			return TIENE_NVIDIA_CACHE;
+		}
+		boolean tiene = false;
 		try {
 			Process p = Runtime.getRuntime().exec("wmic path win32_VideoController get name");
 			try (BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()))) {
 				String l;
 				while ((l = br.readLine()) != null) {
-					if (l.toLowerCase().contains("nvidia"))
-						return true;
+					if (l.toLowerCase().contains("nvidia")) {
+						tiene = true;
+						break;
+					}
 				}
 			}
 		} catch (IOException ignored) {
 		}
-		return false;
+		TIENE_NVIDIA_CACHE = tiene;
+		return tiene;
 	}
 
 	private boolean esWindows11OServer2025() {
-		if (!esWindows())
+		if (!ES_WINDOWS) {
 			return false;
-		String[] v = System.getProperty("os.version").split("\\.");
+		}
+		String[] v = System.getProperty("os.version", "").split("\\.");
 		try {
 			int build = v.length > 2 ? Integer.parseInt(v[2]) : 0;
 			return "10".equals(v[0]) && "0".equals(v[1]) && build >= 22000;

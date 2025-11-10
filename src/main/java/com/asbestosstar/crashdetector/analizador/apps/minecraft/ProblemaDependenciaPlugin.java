@@ -27,56 +27,32 @@ public class ProblemaDependenciaPlugin implements Verificaciones {
 
 	/**
 	 * Verifica si el log contiene errores de dependencias faltantes.
+	 * 
+	 * En esta implementación, el análisis real se realiza línea a línea en
+	 * {@link #verificar(Consola, String, int)}, aprovechando el estado interno para
+	 * relacionar la línea de carga del plugin con las líneas de dependencias.
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		String contenido = consola.contenido_verificar;
-		String[] lineas = contenido.split("\n");
+		// No se recorre el contenido completo aquí; el escaneo se hace en el método
+		// verificar(Consola, String, int) que se llama por cada línea.
+	}
 
-		for (int i = 0; i < lineas.length; i++) {
-			String linea = lineas[i];
-			// 1. Detecta carga fallida de plugin
-			if (linea.contains("Could not load 'plugins/")) {
-				extraerNombrePluginDesdeRuta(linea, i, consola);
-			}
-			// 2. Detecta dependencias múltiples
-			else if (linea.contains("Unknown/missing dependency plugins:")) {
-				procesarLineaDependenciaMultiple(linea);
-			}
-			// 3. Detecta dependencia única
-			else if (linea.contains("Unknown dependency")) {
-				procesarLineaDependenciaUnica(linea);
-			}
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		// 1. Detecta carga fallida de plugin
+		if (linea.contains("Could not load 'plugins/")) {
+			extraerNombrePluginDesdeRuta(linea, numero_de_linea, consola);
 		}
-
-		// 4. Si hay plugins con dependencias faltantes
-		if (!plugins.isEmpty()) {
-			StringBuilder mensajeBuilder = new StringBuilder();
-			boolean primerPlugin = true;
-
-			for (Map.Entry<String, List<String>> entry : plugins.entrySet()) {
-				String nombrePlugin = entry.getKey();
-				List<String> dependencias = entry.getValue();
-				String enlace = enlacesPorPlugin.getOrDefault(nombrePlugin, "");
-
-				if (!primerPlugin) {
-					mensajeBuilder.append("<br>");
-				}
-
-				if (dependencias.size() == 1) {
-					mensajeBuilder.append(
-							MonitorDePID.idioma.mensajeDependenciaPluginUnica(nombrePlugin, dependencias.get(0)));
-				} else {
-					mensajeBuilder
-							.append(MonitorDePID.idioma.mensajeDependenciaPluginMultiples(nombrePlugin, dependencias));
-				}
-
-				mensajeBuilder.append(" ").append(enlace);
-				primerPlugin = false;
-			}
-
-			this.mensaje = mensajeBuilder.toString();
-			activado = true;
+		// 2. Detecta dependencias múltiples
+		else if (linea.contains("Unknown/missing dependency plugins:")) {
+			procesarLineaDependenciaMultiple(linea);
+			reconstruirMensaje();
+		}
+		// 3. Detecta dependencia única
+		else if (linea.contains("Unknown dependency")) {
+			procesarLineaDependenciaUnica(linea);
+			reconstruirMensaje();
 		}
 	}
 
@@ -141,6 +117,45 @@ public class ProblemaDependenciaPlugin implements Verificaciones {
 
 			nombrePluginActual = ""; // Reinicia para evitar duplicados
 		}
+	}
+
+	/**
+	 * Reconstruye el mensaje final a partir del mapa de plugins y dependencias. Se
+	 * llama cada vez que se añaden dependencias para mantener el mensaje al día.
+	 */
+	private void reconstruirMensaje() {
+		if (plugins.isEmpty()) {
+			mensaje = "";
+			activado = false;
+			return;
+		}
+
+		StringBuilder mensajeBuilder = new StringBuilder();
+		boolean primerPlugin = true;
+
+		for (Map.Entry<String, List<String>> entry : plugins.entrySet()) {
+			String nombrePlugin = entry.getKey();
+			List<String> dependencias = entry.getValue();
+			String enlace = enlacesPorPlugin.getOrDefault(nombrePlugin, "");
+
+			if (!primerPlugin) {
+				mensajeBuilder.append("<br>");
+			}
+
+			if (dependencias.size() == 1) {
+				mensajeBuilder
+						.append(MonitorDePID.idioma.mensajeDependenciaPluginUnica(nombrePlugin, dependencias.get(0)));
+			} else {
+				mensajeBuilder
+						.append(MonitorDePID.idioma.mensajeDependenciaPluginMultiples(nombrePlugin, dependencias));
+			}
+
+			mensajeBuilder.append(" ").append(enlace);
+			primerPlugin = false;
+		}
+
+		this.mensaje = mensajeBuilder.toString();
+		activado = true;
 	}
 
 	/**

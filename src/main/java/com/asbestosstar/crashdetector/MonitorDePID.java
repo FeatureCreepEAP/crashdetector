@@ -188,6 +188,8 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/referencia_campo.png",
 				carpeta.resolve("imagenes/referencia_campo.png").toFile());
 
+		copiarACarpetaDesdeJar("/imagenes/sabalifecruel.png", carpeta.resolve("imagenes/sabalifecruel.png").toFile());
+
 //		new File(viajo_ultima_mods.toString()).delete();
 //		try {
 //			new File(viajo_ultima_mods.toString()).createNewFile();
@@ -288,11 +290,13 @@ public class MonitorDePID {
 			String cp = System.getProperty("java.class.path") + File.pathSeparator + jar;
 			// System.out.println("******************" + cp);
 
-			ProcessBuilder pb = new ProcessBuilder(javaBinary, "-cp", cp, "com.asbestosstar.crashdetector.MonitorDePID",
+			ProcessBuilder pb = new ProcessBuilder(javaBinary, 
+				//	"-XX:MaxJavaStackTraceDepth=1000000",
+					"-cp", cp, "com.asbestosstar.crashdetector.MonitorDePID",
 					"--monitor", String.valueOf(pid))
-					//.inheritIO()
-					;
-			//pb.redirectError(new File(CrashDetectorLogger.LOG_FILE_PATH));
+			// .inheritIO()
+			;
+		//	 pb.redirectError(new File(CrashDetectorLogger.LOG_ERR_FILE_PATH));
 			// pb.redirectOutput(new File(CrashDetectorLogger.LOG_FILE_PATH));
 
 			pb.start();
@@ -883,6 +887,7 @@ public class MonitorDePID {
 		StringBuilder constructor = new StringBuilder();
 		Buscardor.mods.clear();
 		Buscardor.cargado = false;
+		Buscardor.cargadotodos=false;
 		if (finalizar_contento) {
 			finalizarConsolasLentas(luego);
 		}

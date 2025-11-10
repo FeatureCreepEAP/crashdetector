@@ -258,8 +258,8 @@ public class Ingles implements Idioma {
 
 	@Override
 	public String theseus() {
-		return "<b style='color:#" + config.obtenerColorAdvertencia()
-				+ "'>If you're using Theseus/ModrinthApp, we can't help much because Theseus doesn't have a Launcher console. Theseus also has more issues, including outdated Mod Loader versions, spyware, bad logs, and more. The Modrinth company isn't honest either. They make false accusations that mod developers use bots to inflate their downloads and have changed their monetisation claims multiple times.</b>";
+	    return "<b style='color:#" + config.obtenerColorAdvertencia()
+	           + "'>Theseus has additional issues, including failing to remove mods when you try. If you need to play with mrpack files, you can use alternative launchers such as Prism Launcher (for modrinth.com only), ATLauncher (for modrinth.com only), or Hello Minecraft Launcher (supports modrinth.com and bbsmc.net).</b>";
 	}
 
 	@Override
@@ -487,13 +487,13 @@ public class Ingles implements Idioma {
 				+ "' or higher, but only version '" + encontrado + "' was found.</b>";
 	}
 
-//@Override
-//public String advertenciaMalwareFalso() {
-//    return "<b style='color:#" + config.obtenerColorError() + "'>"
-//         + "ALERT! Crash Assistant is a fake malware detector. It intentionally blocks the game from launching disregarding your freedom to keep playing with the mods it targets. "
-//         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>View MalwareMod.java code  </a>   "
-//         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>View JarInJarHelper.java code  </a>. Only this mod is on their list at this time and they are only really going after the default logging site which can be changed by the user and that only ever does anything if you explicitly choose to use the built in log sharing feature. CrashAssistant does NOT do any checks to even check which logging site is the one being set and do not explain how to change it (there is a dropdown on the bottom of the share dialogue) and no matter what site you have CrashAssistant will block the game from launching. In their message they say to do your own research, DO IT, look into the code of CrashDetector and Crash Assistant and understand what they do, do NOT rely on appeal to authority.</b>";
-//}
+@Override
+public String advertenciaMalwareFalso() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "ALERT! Crash Assistant is a fake malware detector. It intentionally blocks the game from launching disregarding your freedom to keep playing with the mods it targets. "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>View MalwareMod.java code  </a>   "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>View JarInJarHelper.java code  </a>. Only this mod is on their list at this time and they are only really going after the default logging site which can be changed by the user and that only ever does anything if you explicitly choose to use the built in log sharing feature. CrashAssistant does NOT do any checks to even check which logging site is the one being set and do not explain how to change it (there is a dropdown on the bottom of the share dialogue) and no matter what site you have CrashAssistant will block the game from launching. In their message they say to do your own research, DO IT, look into the code of CrashDetector and Crash Assistant and understand what they do, do NOT rely on appeal to authority.</b>";
+}
 
 	@Override
 	public String error_clase_no_encontrada_mcforge_mod_suspechoso(String idMod, String claseNoEncontrada) {
@@ -4141,4 +4141,26 @@ public class Ingles implements Idioma {
 		return "Coming Soon";
 	}
 
+	@Override
+	public String nombre_de_mods_incompatibles_crash_assistant() {
+	    return "Mods Incompatible with Crash Assistant (False)";
+	}
+
+	@Override
+	public String nombre_de_modpack_incompatible_crash_assistant() {
+	    return "Mod Incompatible with Modpack using CrashAssistant";
+	}
+
+	@Override
+	public String advertenciaCrashAssistantModpackIncompatibleFalso() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>Crash Assistant has a list of mods it says are incompatible, but we have no evidence they are and the error is only in English. If you want to play with these mods, you can edit the file <code>config/crash_assistant/config.toml</code> and change <code>enabled = true</code> in the [compatibility] section to <code>enabled = false</code>.</b>";
+	}
+
+	@Override
+	public String advertenciaCrashAssistantModsIncompatibles() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>Crash Assistant has the ability to mark mods as incompatible, but sometimes this is incorrect and the error message is only in one language. If you want to use these mods, you can edit the file <code>config/crash_assistant/problematic_mods_config.json</code> and change <code>should_crash_on_startup</code> from <code>true</code> to <code>false</code>.</b>";
+	}
+	
+	
+	
 }

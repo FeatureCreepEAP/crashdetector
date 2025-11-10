@@ -252,8 +252,8 @@ public class Esperanto implements Idioma {
 
 	@Override
 	public String theseus() {
-		return "<b style='color:#" + config.obtenerColorAdvertencia()
-				+ "'>Se vi uzas Theseus/ModrinthApp, ni ne povas helpi multe ĉar Theseus ne havas lanĉilan konzolon. Theseus ankaŭ havas pliajn problemojn, inkluzive de malnovaj versioj de Mod-ŝarĝiloj, spionprogramaro, malbonaj registroj, kaj pli. La kompanio Modrinth ankaŭ ne estas honesta. Ili faras malverajn akuzojn, ke la programistoj de modoj uzas robotprogramojn por pligrandigi siajn elŝutojn kaj multfoje ŝanĝis siajn asertojn pri monumado.</b>";
+	    return "<b style='color:#" + config.obtenerColorAdvertencia()
+	           + "'>Theseus havas pliajn problemojn, inkluzive de malsukceso dum forigo de aldonaĵoj kiam vi provas. Se vi bezonas ludi kun mrpack-dosieroj, vi povas uzi aliajn lanĉilojn kiel Prism Launcher (nur por modrinth.com), ATLauncher (nur por modrinth.com), aŭ Hello Minecraft Launcher (por modrinth.com kai bbsmc.net).</b>";
 	}
 
 	@Override
@@ -480,14 +480,14 @@ public class Esperanto implements Idioma {
 				+ "' aŭ pli novan, sed nur la versio '" + encontrado + "' estis trovita.</b>";
 	}
 
-//@Override
-//public String advertenciaMalwareFalso() {
-//    return "<b style='color:#" + config.obtenerColorError() + "'>"
-//         + "ATENTU! Crash Assistant estas falsa malprogram-detektilo. Ĝi intence blokas la lanĉon de la ludo, ignorante vian liberecon daŭrigi ludi kun la celitaj kromprogramoj. "
-//         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>Vidi kodon de MalwareMod.java</a>   "
-//         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>Vidi kodon de JarInJarHelper.java</a>. "
-//         + "Nur ĉi tiu kromprogramo estas nuntempe sur ilia listo, kaj ili fakte nur celas la defaŭltan protokolregistran retejon, kiun la uzanto povas ŝanĝi, kaj tio nur okazas se vi elekte uzas la enigitan protokolan kunhavigan funkcion. CrashAssistant NE faras iujn ajn kontroladojn por eĉ determini kiu protokolregistra retejo estas uzata kaj ne klarigas kiel ŝanĝi ĝin (estas falmenuo ĉe la malsupra parto de la kunhaviga dialogo), kaj sendepende de la agordita retejo, CrashAssistant blokos la lanĉon de la ludo. En sia mesaĝo, ili diras fari vian propran esploradon, FARU ĜIN, rigardu la kodon de CrashDetector kaj Crash Assistant kaj komprenu kion ili faras, NE fidas al aŭtoritato.</b>";
-//}
+@Override
+public String advertenciaMalwareFalso() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "ATENTU! Crash Assistant estas falsa malprogram-detektilo. Ĝi intence blokas la lanĉon de la ludo, ignorante vian liberecon daŭrigi ludi kun la celitaj kromprogramoj. "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>Vidi kodon de MalwareMod.java</a>   "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>Vidi kodon de JarInJarHelper.java</a>. "
+         + "Nur ĉi tiu kromprogramo estas nuntempe sur ilia listo, kaj ili fakte nur celas la defaŭltan protokolregistran retejon, kiun la uzanto povas ŝanĝi, kaj tio nur okazas se vi elekte uzas la enigitan protokolan kunhavigan funkcion. CrashAssistant NE faras iujn ajn kontroladojn por eĉ determini kiu protokolregistra retejo estas uzata kaj ne klarigas kiel ŝanĝi ĝin (estas falmenuo ĉe la malsupra parto de la kunhaviga dialogo), kaj sendepende de la agordita retejo, CrashAssistant blokos la lanĉon de la ludo. En sia mesaĝo, ili diras fari vian propran esploradon, FARU ĜIN, rigardu la kodon de CrashDetector kaj Crash Assistant kaj komprenu kion ili faras, NE fidas al aŭtoritato.</b>";
+}
 
 	@Override
 	public String error_clase_no_encontrada_mcforge_mod_suspechoso(String idMod, String claseNoEncontrada) {
@@ -4097,4 +4097,25 @@ public class Esperanto implements Idioma {
 		return "Baldaŭ";
 	}
 
+	@Override
+	public String nombre_de_mods_incompatibles_crash_assistant() {
+	    return "Nekongruaj aldonaĵoj kun Crash Assistant (Malveraĵo)";
+	}
+
+	@Override
+	public String nombre_de_modpack_incompatible_crash_assistant() {
+	    return "Nekongrua Modpack kun CrashAssistant";
+	}
+
+	@Override
+	public String advertenciaCrashAssistantModpackIncompatibleFalso() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>Crash Assistant havas liston de aldonaĵoj kiujn ĝi diras esti nekongruaj, sed ni ne havas pruvon ke ili estas nekongruaj kai la eraro estas nur angle. Se vi volas ludi per tiuj aldonaĵoj, vi povas redakti la dosieron <code>config/crash_assistant/config.toml</code> kai ŝanĝi <code>enabled = true</code> en [kompatibileco] al <code>enabled = false</code>.</b>";
+	}
+
+	@Override
+	public String advertenciaCrashAssistantModsIncompatibles() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>Crash Assistant povas diri ke iuj aldonaĵoj estas nekongruaj, sed foje ili estas kompatataj kai la eraro estas nur en unu lingvo. Se vi volas uzi tiujn aldonaĵojn, vi povas redakti la dosieron <code>config/crash_assistant/problematic_mods_config.json</code> kai ŝanĝi <code>should_crash_on_startup</code> de <code>true</code> al <code>false</code>.</b>";
+	}
+	
+	
 }

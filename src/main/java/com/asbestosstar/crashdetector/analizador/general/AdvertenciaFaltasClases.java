@@ -31,27 +31,45 @@ public class AdvertenciaFaltasClases implements Verificaciones {
 
 	@Override
 	public void verificar(Consola consola) {
-		String contenidoConsola = consola.contenido_verificar;
+		// La detección real se hace por línea en verificar(Consola, String, int).
+		// Este método se mantiene vacío para cumplir con la interfaz y permitir
+		// realizar pre-cálculos globales en el futuro si fuera necesario.
+	}
 
-		// Dividir el contenido UNA SOLA VEZ (no en cada iteración)
-		String[] lineas = contenidoConsola.split(Verificaciones.nl);
+	/**
+	 * Verifica una línea concreta del log para detectar advertencias de clases que
+	 * no se han podido cargar.
+	 * <p>
+	 * Busca líneas que contengan "Error loading class:" y "WARN". Por cada clase
+	 * nueva detectada:
+	 * <ul>
+	 * <li>La guarda en el conjunto {@code clases} en formato path (reemplazando "."
+	 * por "/").</li>
+	 * <li>Registra un enlace HTML a la línea correspondiente mediante
+	 * {@link Consola#agregarErrorALectador(int, Verificaciones)}.</li>
+	 * </ul>
+	 * Al menos una clase detectada activará este verificador.
+	 * </p>
+	 */
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		if (linea == null) {
+			return;
+		}
 
-		for (int i = 0; i < lineas.length; i++) {
-			String linea = lineas[i];
-			if (linea.contains("Error loading class:") && linea.contains("WARN")) {
-				try {
-					String clase = linea.split("Error loading class: ")[1].split(" ")[0].trim();
-					String claseFormateada = clase.replace(".", "/");
+		if (linea.contains("Error loading class:") && linea.contains("WARN")) {
+			try {
+				String clase = linea.split("Error loading class: ")[1].split(" ")[0].trim();
+				String claseFormateada = clase.replace(".", "/");
 
-					// Solo registrar el enlace si es una clase nueva
-					if (clases.add(claseFormateada)) {
-						String enlace = consola.agregarErrorALectador(i, this);
-						enlacesPorClase.put(claseFormateada, enlace);
-					}
-				} catch (Exception ignored) {
-					// Registrar sin procesamiento de clase
-					consola.agregarErrorALectador(i, this);
+				// Solo registrar el enlace si es una clase nueva
+				if (clases.add(claseFormateada)) {
+					String enlace = consola.agregarErrorALectador(numero_de_linea, this);
+					enlacesPorClase.put(claseFormateada, enlace);
 				}
+			} catch (Exception ignored) {
+				// Registrar sin procesamiento de clase
+				consola.agregarErrorALectador(numero_de_linea, this);
 			}
 		}
 

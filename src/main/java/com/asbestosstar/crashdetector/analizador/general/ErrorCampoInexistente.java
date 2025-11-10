@@ -33,24 +33,60 @@ public class ErrorCampoInexistente implements Verificaciones {
 	private static final Pattern PATRON_ERROR_MIEMBRO = Pattern.compile(
 			"java\\.lang\\.NoSuchFieldError:\\s*Class\\s+[^\\s]+\\s+does\\s+not\\s+have\\s+member\\s+field\\s+'([^']+)'");
 
+	/**
+	 * Bandera para indicar si ya se detectó este problema en el log.
+	 */
 	private boolean activado = false;
+
+	/**
+	 * Bandera global ligera: solo indica si el log contiene alguna referencia a
+	 * {@code java.lang.NoSuchFieldError}. Sirve como filtro rápido para el análisis
+	 * línea a línea.
+	 */
+	private boolean posibleNoSuchField = false;
+
+	/**
+	 * Bandera interna para indicar que ya se encontró la línea del error y se está
+	 * esperando la primera línea de stack que comience por {@code "at "}.
+	 */
+	private boolean esperandoLineaStack = false;
+
 	private String mensaje = "";
 	private String enlaceHtml = "";
 
+	// Datos que se extraen durante el análisis y se usan al construir el mensaje
+	private String nombreCampoDetectado = "";
+	private String lineaError = "";
+	private String lineaStack = "";
+
 	@Override
 	public void verificar(Consola consola) {
+		// Análisis global muy ligero: solo comprobamos si aparece el texto base
+		// de NoSuchFieldError en algún punto del log.
+		// Si no aparece, la verificación por línea saldrá inmediatamente y evitamos
+		// trabajo innecesario.
 		String contenido = consola.contenido_verificar;
-		String[] lineas = contenido.split(Verificaciones.nl);
+		this.posibleNoSuchField = contenido != null && contenido.contains("java.lang.NoSuchFieldError:");
+	}
 
-		for (int i = 0; i < lineas.length; i++) {
-			String linea = lineas[i];
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		// Si ya estamos activados, o ni siquiera hay rastro de NoSuchFieldError en
+		// todo el log, no hacemos más trabajo.
+		if (activado && !esperandoLineaStack) {
+			return;
+		}
+		if (!posibleNoSuchField || linea == null) {
+			return;
+		}
 
-			if (!linea.contains("java.lang.NoSuchFieldError:"))
-				continue;
+		String l = linea;
 
+		// Si todavía no se ha detectado el error principal, buscarlo en esta línea
+		if (!activado && l.contains("java.lang.NoSuchFieldError:")) {
 			// Intentar patrón extendido primero
 			String nombreCampo = null;
-			Matcher mExt = PATRON_ERROR_MIEMBRO.matcher(linea);
+			Matcher mExt = PATRON_ERROR_MIEMBRO.matcher(l);
 			if (mExt.find()) {
 				// Dentro de la comilla simple puede venir "paquete.Clase$Tipo nombreCampo"
 				// Nos quedamos con el último token después del espacio, si existe.
@@ -60,40 +96,31 @@ public class ErrorCampoInexistente implements Verificaciones {
 						: crudo;
 			} else {
 				// Fallback: patrón simple clásico
-				Matcher mSimple = PATRON_ERROR_SIMPLE.matcher(linea);
+				Matcher mSimple = PATRON_ERROR_SIMPLE.matcher(l);
 				if (mSimple.find()) {
 					nombreCampo = mSimple.group(1);
 				}
 			}
 
 			if (nombreCampo != null && !nombreCampo.isEmpty()) {
-				String lineaError = linea.trim();
-
-				// Buscar la primera línea siguiente que empiece por "at "
-				String lineaSiguiente = "";
-				if (i + 1 < lineas.length && lineas[i + 1].trim().startsWith("at ")) {
-					lineaSiguiente = lineas[i + 1].trim();
-				}
-
-				this.enlaceHtml = consola.agregarErrorALectador(i, this);
+				this.nombreCampoDetectado = nombreCampo;
+				this.lineaError = l.trim();
+				this.enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 				this.activado = true;
+				this.esperandoLineaStack = true;
+				// No construimos el mensaje todavía; se hará en mensaje() para poder incluir
+				// la primera línea "at ..." que encontremos después.
+				return;
+			}
+		}
 
-				// Construir mensaje: primero el mensaje localizado, luego un bloque
-				// monoespaciado con contexto y enlace
-				StringBuilder sb = new StringBuilder();
-				sb.append(MonitorDePID.idioma.errorCampoInexistente(nombreCampo, lineaError));
-				sb.append(Verificaciones.nl_html);
-				sb.append("<span style='color:#888888; font-family:monospace;'>");
-				// Mostrar la línea "at ..." si existe
-				if (!lineaSiguiente.isEmpty()) {
-					sb.append(escapeHtml(lineaSiguiente));
-				}
-				sb.append("</span>");
-				sb.append(Verificaciones.nl_html);
-				sb.append(enlaceHtml);
-
-				this.mensaje = sb.toString();
-				break; // con el primer match es suficiente
+		// Si ya se detectó la línea del error y estamos esperando la primera línea
+		// de stack que comience por "at ", la capturamos aquí.
+		if (activado && esperandoLineaStack) {
+			String trim = l.trim();
+			if (trim.startsWith("at ")) {
+				this.lineaStack = trim;
+				this.esperandoLineaStack = false;
 			}
 		}
 	}
@@ -122,6 +149,30 @@ public class ErrorCampoInexistente implements Verificaciones {
 
 	@Override
 	public String mensaje() {
+		if (!activado) {
+			return "";
+		}
+
+		// Si ya construimos el mensaje previamente, devolverlo tal cual
+		if (mensaje != null && !mensaje.isEmpty()) {
+			return mensaje;
+		}
+
+		// Construir mensaje: primero el mensaje localizado, luego un bloque
+		// monoespaciado con contexto y enlace
+		StringBuilder sb = new StringBuilder();
+		sb.append(MonitorDePID.idioma.errorCampoInexistente(nombreCampoDetectado, lineaError));
+		sb.append(Verificaciones.nl_html);
+		sb.append("<span style='color:#888888; font-family:monospace;'>");
+		// Mostrar la línea "at ..." si existe
+		if (lineaStack != null && !lineaStack.isEmpty()) {
+			sb.append(escapeHtml(lineaStack));
+		}
+		sb.append("</span>");
+		sb.append(Verificaciones.nl_html);
+		sb.append(enlaceHtml);
+
+		this.mensaje = sb.toString();
 		return mensaje;
 	}
 
@@ -141,8 +192,23 @@ public class ErrorCampoInexistente implements Verificaciones {
 		return "error_campo_inexistente";
 	}
 
+	/**
+	 * Marca trazos que pertenezcan a este problema.
+	 * <p>
+	 * Para evitar falsos positivos, solo devuelve {@code true} cuando:
+	 * <ul>
+	 * <li>El verificador ya se ha activado, y</li>
+	 * <li>El trazo contiene claramente "NoSuchFieldError".</li>
+	 * </ul>
+	 * Es intencionadamente conservador: se prefiere un falso negativo a asociar un
+	 * trazo que no corresponda realmente a este error.
+	 * </p>
+	 */
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		return trazo != null && trazo.trace != null && trazo.trace.contains("NoSuchFieldError");
+		if (!activado || trazo == null || trazo.trace == null) {
+			return false;
+		}
+		return trazo.trace.contains("NoSuchFieldError");
 	}
 }

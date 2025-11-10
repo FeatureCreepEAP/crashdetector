@@ -18,57 +18,79 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 	private final Set<String> errores = new HashSet<>();
 	private final Map<String, String> enlacesPorError = new HashMap<>();
 
+	// Cache del contenido de la consola dividido por líneas para evitar repetir el
+	// split.
+	private String[] lineasConsola = null;
+
 	@Override
 	public void verificar(Consola consola) {
-		String contenidoConsola = consola.contenido_verificar;
-		String[] lineas = contenidoConsola.split(Verificaciones.nl);
+		// Ahora toda la lógica principal se hace en el método por línea.
+		// Este método se deja vacío por rendimiento y claridad.
+	}
 
-		for (int i = 0; i < lineas.length; i++) {
-			String linea = lineas[i].trim();
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		// Si ya se activó, no seguimos procesando más líneas.
+		if (activado) {
+			return;
+		}
 
-			if (linea.contains("only supports") && linea.contains("or above")) {
-				try {
-					String modId = extraerModId(linea);
-					String dependencia = extraerDependencia(linea);
-					String versionRequerida = extraerVersionRequerida(linea);
+		// Inicializa el array de líneas una sola vez usando el contenido completo.
+		if (lineasConsola == null) {
+			lineasConsola = consola.contenido_verificar.split(Verificaciones.nl);
+		}
 
-					if (i + 1 < lineas.length) {
-						String lineaSiguiente = lineas[i + 1].trim();
-						if (lineaSiguiente.startsWith("Currently,")) {
-							String versionActual = extraerVersionActual(lineaSiguiente, dependencia);
-							String mensaje = MonitorDePID.idioma.errorVersionDependencia(modId, dependencia,
-									versionRequerida, versionActual);
+		String lineaActual = linea.trim();
 
-							// Solo registrar si es un error nuevo
-							if (errores.add(mensaje)) {
-								String enlace = consola.agregarErrorALectador(i, this);
-								enlacesPorError.put(mensaje, enlace);
-							}
+		// "Failure message: Mod deeper_oceans requires lithostitched 0 or above"
+		// con la siguiente línea:
+		// "Currently, lithostitched is not installed"
+		if ((lineaActual.contains("only supports") || lineaActual.contains("requires"))
+				&& lineaActual.contains("or above")) {
+			try {
+				String modId = extraerModId(lineaActual);
+				String dependencia = extraerDependencia(lineaActual);
+				String versionRequerida = extraerVersionRequerida(lineaActual);
 
-							activado = true;
-						}
-					}
-				} catch (Exception e) {
-					// Ignora errores de parseo
-					consola.agregarErrorALectador(i, this); // Registrar línea como problema
-				}
-			}
+				// Busca la línea siguiente en el contenido completo.
+				int i = numero_de_linea;
+				if (i + 1 < lineasConsola.length) {
+					String lineaSiguiente = lineasConsola[i + 1].trim();
+					if (lineaSiguiente.startsWith("Currently,")) {
+						String versionActual = extraerVersionActual(lineaSiguiente, dependencia);
+						String mensaje = MonitorDePID.idioma.errorVersionDependencia(modId, dependencia,
+								versionRequerida, versionActual);
 
-			// Formato antiguo de dependencias faltantes
-			else if (linea.contains("Missing or unsupported mandatory dependencies:")) {
-
-				for (int j = i + 1; j < lineas.length; j++) {
-					String lineaDep = lineas[j].trim();
-					if (lineaDep.startsWith("Currently,") || lineaDep.isEmpty())
-						break;
-					if (lineaDep.contains("Mod ID") && lineaDep.contains("Requested by")) {
-						String mensaje = MonitorDePID.idioma.linea_de_dependencia(lineaDep);
+						// Solo registrar si es un error nuevo
 						if (errores.add(mensaje)) {
-							String enlace = consola.agregarErrorALectador(j, this);
+							String enlace = consola.agregarErrorALectador(i, this);
 							enlacesPorError.put(mensaje, enlace);
 						}
+
 						activado = true;
 					}
+				}
+			} catch (Exception e) {
+				// Ignora errores de parseo
+				consola.agregarErrorALectador(numero_de_linea, this); // Registrar línea como problema
+			}
+		}
+
+		// Formato antiguo de dependencias faltantes
+		else if (lineaActual.contains("Missing or unsupported mandatory dependencies:")) {
+
+			int i = numero_de_linea;
+			for (int j = i + 1; j < lineasConsola.length; j++) {
+				String lineaDep = lineasConsola[j].trim();
+				if (lineaDep.startsWith("Currently,") || lineaDep.isEmpty())
+					break;
+				if (lineaDep.contains("Mod ID") && lineaDep.contains("Requested by")) {
+					String mensaje = MonitorDePID.idioma.linea_de_dependencia(lineaDep);
+					if (errores.add(mensaje)) {
+						String enlace = consola.agregarErrorALectador(j, this);
+						enlacesPorError.put(mensaje, enlace);
+					}
+					activado = true;
 				}
 			}
 		}
@@ -77,19 +99,49 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 	// Métodos auxiliares de parseo (mantenidos igual)
 	private String extraerModId(String linea) {
 		int inicio = linea.indexOf("Mod ") + 4;
+
+		// Soporta tanto:
+		// "Mod X only supports ..."
+		// como:
+		// "Mod X requires ..."
 		int fin = linea.indexOf(" only supports");
+		if (fin == -1) {
+			fin = linea.indexOf(" requires");
+		}
+
 		return limpiarFormato(linea.substring(inicio, fin));
 	}
 
 	private String extraerDependencia(String linea) {
-		int inicio = linea.indexOf("supports ") + 9;
+		// Decide qué palabra clave usar según el texto
+		String clave;
+		if (linea.contains("only supports")) {
+			clave = "supports ";
+		} else {
+			clave = "requires ";
+		}
+
+		int inicio = linea.indexOf(clave) + clave.length();
 		int fin = linea.indexOf(" ", inicio);
+
 		return limpiarFormato(linea.substring(inicio, fin));
 	}
 
 	private String extraerVersionRequerida(String linea) {
-		int inicio = linea.indexOf("supports ") + 9;
+		// Igual que arriba, soporta "only supports" y "requires"
+		String clave;
+		if (linea.contains("only supports")) {
+			clave = "supports ";
+		} else {
+			clave = "requires ";
+		}
+
+		int inicio = linea.indexOf(clave) + clave.length();
 		int fin = linea.indexOf(" or above");
+
+		// Ejemplo:
+		// "Mod deeper_oceans requires lithostitched 0 or above"
+		// substring(inicio, fin) => "lithostitched 0"
 		return limpiarFormato(linea.substring(inicio, fin));
 	}
 
@@ -156,8 +208,34 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+		// Si el verificador nunca se activó o el trazo es nulo, no marcamos nada.
+		if (!activado || trazo == null || trazo.trace == null) {
+			return false;
+		}
+
+		String contenido = trazo.trace;
+
+		// Primero intentamos ver si el trazo contiene alguno de los mensajes ya
+		// construidos (traducciones humanas). Esto es muy preciso si coincide.
+		for (String error : errores) {
+			if (error != null && !error.isEmpty()) {
+				String trim = error.trim();
+				if (!trim.isEmpty() && contenido.contains(trim)) {
+					return true;
+				}
+			}
+		}
+
+		// Heurística secundaria: patrones típicos de errores de dependencias de Forge.
+		// Preferimos falsos negativos antes que marcar cosas que no tocan.
+		if (contenido.contains("Missing or unsupported mandatory dependencies:")
+				|| (contenido.contains("only supports") && contenido.contains("or above"))
+				|| (contenido.contains("requires") && contenido.contains("or above")
+						&& contenido.contains("Currently,"))) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

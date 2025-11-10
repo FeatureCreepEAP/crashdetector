@@ -13,35 +13,49 @@ public class RailwaysCreate6Alfa implements Verificaciones {
 	private String enlaceHtml = "";
 	private String claveFaltante = "";
 
+	// Flags para comprobaciones globales (evita repetir contains() en cada línea)
+	private boolean tieneObjects = false;
+	private boolean tieneRegistrate = false;
+
 	@Override
 	public void verificar(Consola consola) {
-		String[] lineas = consola.contenido_verificar.split(Verificaciones.nl);
-
-		int lineaPrincipal = -1;
-		for (int i = 0; i < lineas.length; i++) {
-			String l = lineas[i];
-			if (l.contains("java.lang.NullPointerException: Registry entry not present:")) {
-				int idx = l.indexOf("present:");
-				if (idx >= 0) {
-					claveFaltante = l.substring(idx + "present:".length()).trim();
-				}
-				lineaPrincipal = i;
-				break;
-			}
-		}
-		if (lineaPrincipal < 0 || claveFaltante.isEmpty())
-			return;
+		String texto = consola.contenido_verificar;
 
 		// Contexto típico del rastro de Create/Registrate
-		String texto = consola.contenido_verificar;
-		boolean tieneObjects = texto.contains("at java.util.Objects.requireNonNull(");
-		boolean tieneRegistrate = texto.contains("at com.tterrag.registrate.util.entry.RegistryEntry.get(");
-		if (!tieneObjects || !tieneRegistrate)
-			return;
+		tieneObjects = texto.contains("at java.util.Objects.requireNonNull(");
+		tieneRegistrate = texto.contains("at com.tterrag.registrate.util.entry.RegistryEntry.get(");
 
-		mensaje = MonitorDePID.idioma.errorRailwaysCreate6Alfa(claveFaltante);
-		enlaceHtml = consola.agregarErrorALectador(lineaPrincipal, this);
-		activado = true;
+		// Si no se cumple el contexto global, no vale la pena seguir analizando por
+		// línea
+		if (!tieneObjects || !tieneRegistrate) {
+			return;
+		}
+
+		// La detección de la línea concreta se hace en verificar(Consola, String, int)
+	}
+
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		// Si ya se activó o el contexto global no coincide, no hacemos nada
+		if (activado || !tieneObjects || !tieneRegistrate || linea == null) {
+			return;
+		}
+
+		// Buscar la línea que contiene el NullPointer con la clave de registro
+		if (linea.contains("java.lang.NullPointerException: Registry entry not present:")) {
+			int idx = linea.indexOf("present:");
+			if (idx >= 0) {
+				claveFaltante = linea.substring(idx + "present:".length()).trim();
+			}
+
+			if (claveFaltante == null || claveFaltante.isEmpty()) {
+				return;
+			}
+
+			mensaje = MonitorDePID.idioma.errorRailwaysCreate6Alfa(claveFaltante);
+			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+			activado = true;
+		}
 	}
 
 	@Override
@@ -81,10 +95,40 @@ public class RailwaysCreate6Alfa implements Verificaciones {
 		return "railways_6_alfa";
 	}
 
+	/**
+	 * Indica si este verificador debe "ocupar" un trazo concreto del stack trace.
+	 * <p>
+	 * Para evitar falsos positivos se comprueba:
+	 * <ul>
+	 * <li>Que el verificador ya se haya activado.</li>
+	 * <li>Que el trazo contenga el mensaje de NPE con "Registry entry not
+	 * present".</li>
+	 * <li>Opcionalmente, se intenta afinar con la clave faltante y/o el frame de
+	 * Registrate si están presentes.</li>
+	 * </ul>
+	 * Es intencionadamente conservador: se prefiere un falso negativo antes que
+	 * marcar un trazo que no pertenezca realmente a este error.
+	 */
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+		if (!activado || trazo == null || trazo.trace == null) {
+			return false;
+		}
+
+		String t = trazo.trace;
+
+		// Coincidencia fuerte: el propio mensaje de NPE de Registry
+		if (t.contains("java.lang.NullPointerException: Registry entry not present:")) {
+			return true;
+		}
+
+		// Afinar con la clave faltante y el frame de Registrate, si los tenemos
+		if (!claveFaltante.isEmpty() && t.contains("Registry entry not present:") && t.contains(claveFaltante)
+				&& t.contains("com.tterrag.registrate.util.entry.RegistryEntry.get(")) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

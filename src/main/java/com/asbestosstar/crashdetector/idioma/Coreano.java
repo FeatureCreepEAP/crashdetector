@@ -235,8 +235,8 @@ public class Coreano implements Idioma {
 
 	@Override
 	public String theseus() {
-		return "<b style='color:#" + config.obtenerColorAdvertencia()
-				+ "'>Theseus/ModrinthApp를 사용 중이라면 도와드릴 수 있는 게 많지 않습니다. Theseus에는 런처 콘솔이 없기 때문입니다. Theseus는 또한 오래된 모드 로더 버전, 스파이웨어, 잘못된 로그 등의 문제도 가지고 있습니다. Modrinth 회사는 정직하지 않으며, 모드 개발자들이 다운로드 수를 부풀리기 위해 봇을 사용한다고 허위 주장을 하고 있으며, 수익화 관련 주장도 여러 번 변경했습니다.</b>";
+	    return "<b style='color:#" + config.obtenerColorAdvertencia()
+	           + "'>Theseus는 또한 모드를 삭제하려 할 때 실패하는 등의 추가적인 문제가 있습니다. mrpack 파일을 사용해야 한다면, Prism Launcher(modrinth.com 전용), ATLauncher(modrinth.com 전용), 또는 Hello Minecraft Launcher(modrinth.com 및 bbsmc.net 지원)와 같은 다른 런처를 사용할 수 있습니다.</b>";
 	}
 
 	@Override
@@ -458,14 +458,14 @@ public class Coreano implements Idioma {
 				+ proveedor + "'의 버전 '" + requerido + "' 이상이 필요하지만, 발견된 버전은 '" + encontrado + "'입니다.</b>";
 	}
 
-//@Override
-//public String advertenciaMalwareFalso() {
-//    return "<b style='color:#" + config.obtenerColorError() + "'>"
-//         + "경고! Crash Assistant는 가짜 악성코드 감지기입니다. 이 프로그램은 의도적으로 게임 실행을 차단하며, 타겟팅된 모드로 계속 플레이할 자유를 무시합니다. "
-//         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>MalwareMod.java 코드 보기</a>   "
-//         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>JarInJarHelper.java 코드 보기</a>. "
-//         + "현재 리스트에는 이 모드만 있으며, 실제로는 사용자가 변경할 수 있는 기본 로그 사이트만을 대상으로 합니다. 이 기능은 내장된 로그 공유 기능을 명시적으로 선택한 경우에만 작동합니다. CrashAssistant는 어떤 로그 사이트가 설정되었는지 확인하지 않으며, 변경 방법(공유 대화 상자의 하단에 드롭다운 메뉴 있음)도 설명하지 않습니다. 설정된 사이트와 관계없이 CrashAssistant는 게임 실행을 차단합니다. 그들의 메시지에서는 직접 조사하라고 하지만, 실제로 그렇게 하십시오. CrashDetector와 Crash Assistant의 코드를 살펴보고 무엇을 하는지 이해하십시오. 권위에 호소하는 것에 의존하지 마십시오.</b>";
-//}
+@Override
+public String advertenciaMalwareFalso() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "경고! Crash Assistant는 가짜 악성코드 감지기입니다. 이 프로그램은 의도적으로 게임 실행을 차단하며, 타겟팅된 모드로 계속 플레이할 자유를 무시합니다. "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>MalwareMod.java 코드 보기</a>   "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>JarInJarHelper.java 코드 보기</a>. "
+         + "현재 리스트에는 이 모드만 있으며, 실제로는 사용자가 변경할 수 있는 기본 로그 사이트만을 대상으로 합니다. 이 기능은 내장된 로그 공유 기능을 명시적으로 선택한 경우에만 작동합니다. CrashAssistant는 어떤 로그 사이트가 설정되었는지 확인하지 않으며, 변경 방법(공유 대화 상자의 하단에 드롭다운 메뉴 있음)도 설명하지 않습니다. 설정된 사이트와 관계없이 CrashAssistant는 게임 실행을 차단합니다. 그들의 메시지에서는 직접 조사하라고 하지만, 실제로 그렇게 하십시오. CrashDetector와 Crash Assistant의 코드를 살펴보고 무엇을 하는지 이해하십시오. 권위에 호소하는 것에 의존하지 마십시오.</b>";
+}
 
 	@Override
 	public String error_clase_no_encontrada_mcforge_mod_suspechoso(String idMod, String claseNoEncontrada) {
@@ -3972,5 +3972,27 @@ public class Coreano implements Idioma {
 	public String buscador_canario_de_orden_titulo_proximamente() {
 		return "곧 출시 예정";
 	}
+	@Override
+	public String nombre_de_mods_incompatibles_crash_assistant() {
+	    return "Crash Assistant와 호환되지 않는 모드 (거짓)";
+	}
 
+	@Override
+	public String nombre_de_modpack_incompatible_crash_assistant() {
+	    return "CrashAssistant를 사용하는 모드팩과 호환되지 않는 모드";
+	}
+
+	@Override
+	public String advertenciaCrashAssistantModpackIncompatibleFalso() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>Crash Assistant는 호환되지 않는다고 표시하는 모드 목록이 있지만, 실제로 호환되지 않는다는 증거는 없으며 오류 메시지는 영어로만 제공됩니다. 이 모드들과 함께 게임을 하고 싶다면, <code>config/crash_assistant/config.toml</code> 파일을 열어 [compatibility] 섹션의 <code>enabled = true</code>를 <code>enabled = false</code>로 변경하면 됩니다.</b>";
+	}
+
+	@Override
+	public String advertenciaCrashAssistantModsIncompatibles() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>Crash Assistant는 모드가 호환되지 않는다고 판단할 수 있지만, 때때로 잘못된 판단을 하며 오류 메시지가 영어로만 나옵니다. 이 모드들을 사용하고 싶다면, <code>config/crash_assistant/problematic_mods_config.json</code> 파일을 편집하여 <code>should_crash_on_startup</code> 값을 <code>true</code>에서 <code>false</code>로 바꾸면 됩니다.</b>";
+	}
+	
+	
+	
+	
 }

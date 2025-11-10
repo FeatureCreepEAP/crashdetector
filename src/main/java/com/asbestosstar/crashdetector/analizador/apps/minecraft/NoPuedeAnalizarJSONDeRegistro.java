@@ -19,72 +19,64 @@ public class NoPuedeAnalizarJSONDeRegistro implements Verificaciones {
 	private final Map<String, String> enlacesPorError = new HashMap<>();
 
 	/**
-	 * Verifica el contenido de la consola para detectar errores de análisis en
-	 * archivos JSON de mods. Este método procesa cada línea de la salida de la
-	 * consola para identificar problemas relacionados con el análisis fallido de
-	 * archivos JSON en mods. Extrae detalles relevantes como el nombre del archivo
-	 * JAR y el recurso problemático, y añade un mensaje detallado al
-	 * {@code CDStringBuilder} proporcionado.
-	 *
-	 * @param contenido_de_consola La salida cruda de la consola que puede contener
-	 *                             mensajes de error.
-	 * @param constructor          Una instancia de {@code CDStringBuilder} usada
-	 *                             para construir el mensaje final de error.
-	 *
-	 *                             El formato esperado del mensaje de error en la
-	 *                             consola es:
-	 * 
-	 *                             <pre>
-	 * java.lang.IllegalStateException: Failed to parse [recurso_problematico] from pack [archivo_jar]
-	 *                             </pre>
-	 *
-	 *                             Ejemplo:
-	 * 
-	 *                             <pre>
-	 * java.lang.IllegalStateException: Failed to parse souls_like_bosses:worldgen/structure/lothric_castle.json from pack souls_like_bosses_1.1_Forge+Fabric-1.20.1.jar
-	 *                             </pre>
+	 * Verificación global no utilizada en este verificador.
+	 * <p>
+	 * La detección real se hace por línea en
+	 * {@link #verificar(Consola, String, int)}, llamada por el analizador línea a
+	 * línea.
+	 * </p>
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		String contenidoConsola = consola.contenido_verificar;
-		String[] lineas = contenidoConsola.split(Verificaciones.nl);
+		// No se usa: este verificador funciona en modo por línea.
+	}
 
-		for (int i = 0; i < lineas.length; i++) {
-			String linea = lineas[i];
-			if (linea.contains("Failed to parse") && linea.contains(".json from pack")) {
-				CrashDetectorLogger.log("Se detectó error de análisis JSON en registro");
+	/**
+	 * Verifica una línea de la consola para detectar errores de análisis en
+	 * archivos JSON de mods.
+	 * <p>
+	 * Formato esperado:
+	 * 
+	 * <pre>
+	 * java.lang.IllegalStateException: Failed to parse [recurso] from pack [archivo.jar]
+	 * </pre>
+	 */
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		if (!linea.contains("Failed to parse") || !linea.contains(".json from pack")) {
+			return;
+		}
 
-				try {
-					String archivoJar = linea.split("from pack ")[1].split("\\.jar")[0].trim() + ".jar";
-					String recurso = linea.split("Failed to parse ")[1].split(" from pack")[0].trim();
+		CrashDetectorLogger.log("Se detectó error de análisis JSON en registro");
 
-					String mensaje = MonitorDePID.idioma.errorConJSONDeRegistro(archivoJar, recurso);
+		try {
+			String archivoJar = linea.split("from pack ")[1].split("\\.jar")[0].trim() + ".jar";
+			String recurso = linea.split("Failed to parse ")[1].split(" from pack")[0].trim();
 
-					// Solo registrar si es un error nuevo
-					if (erroresJSON.add(mensaje)) {
-						String enlace = consola.agregarErrorALectador(i, this);
-						enlacesPorError.put(mensaje, enlace);
-					}
-					activado = true;
+			String mensaje = MonitorDePID.idioma.errorConJSONDeRegistro(archivoJar, recurso);
 
-				} catch (Exception e) {
-					CrashDetectorLogger.logException(e);
-					// Aún así registrar la línea como problema
-					consola.agregarErrorALectador(i, this);
-				}
+			// Solo registrar si es un error nuevo
+			if (!erroresJSON.contains(mensaje)) {
+				erroresJSON.add(mensaje);
+				String enlace = consola.agregarErrorALectador(numero_de_linea, this);
+				enlacesPorError.put(mensaje, enlace);
 			}
+			activado = true;
+
+		} catch (Exception e) {
+			CrashDetectorLogger.logException(e);
+			// Aún así registrar la línea como problema
+			consola.agregarErrorALectador(numero_de_linea, this);
 		}
 	}
 
 	@Override
 	public Verificaciones nueva() {
-		// TODO Auto-generated method stub
 		return new NoPuedeAnalizarJSONDeRegistro();
 	}
 
 	@Override
 	public boolean activado() {
-		// TODO Auto-generated method stub
 		return activado;
 	}
 
@@ -109,7 +101,6 @@ public class NoPuedeAnalizarJSONDeRegistro implements Verificaciones {
 
 	@Override
 	public String nombre() {
-		// TODO Auto-generated method stub
 		return MonitorDePID.idioma.nombre_de_no_puede_analizar_json_de_registro();
 	}
 
@@ -121,13 +112,35 @@ public class NoPuedeAnalizarJSONDeRegistro implements Verificaciones {
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
 		return "no_puede_analizar_json_de_registro";
 	}
 
+	/**
+	 * Marca un trazo como ocupado si contiene claramente el mismo patrón que usamos
+	 * para detectar el error en el log:
+	 * <ul>
+	 * <li>"Failed to parse"</li>
+	 * <li>".json from pack"</li>
+	 * </ul>
+	 * Se exige además que el verificador ya esté activado para reducir falsos
+	 * positivos. Es deliberadamente conservador: mejor falso negativo que atribuir
+	 * un trazo incorrecto.
+	 */
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+		if (!activado || trazo == null || trazo.trace == null) {
+			return false;
+		}
+
+		String t = trazo.trace;
+
+		if (!t.contains("Failed to parse") || !t.contains(".json from pack")) {
+			return false;
+		}
+
+		// Opcionalmente podríamos exigir también " from pack " para ser aún más
+		// estrictos,
+		// pero con ".json from pack" ya es bastante específico.
+		return true;
 	}
 }

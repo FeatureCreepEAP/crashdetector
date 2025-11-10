@@ -35,6 +35,9 @@ public class Buscardor {
 
 	public static boolean cargado = false;
 
+	/** Evita precargar varias veces todas las clases en todos los mods. */
+	public static volatile boolean cargadotodos = false;
+
 	public static void cargar() {
 		if (!cargado) {
 			try {
@@ -66,9 +69,72 @@ public class Buscardor {
 	}
 
 	/**
+	 * Carga mods (usando el flujo original) y luego precarga en paralelo los bytes
+	 * de TODAS las clases en la caché de cada mod (incluyendo anidados). Es
+	 * idempotente gracias a la bandera {@link #cargadotodos}.
+	 */
+	public static void cargarYPrecargarClasesEnCache() {
+		if (cargadotodos) {
+			return;
+		}
+		cargar(); // llama al original
+		precargarClasesEnCacheParaModsCargados();
+		cargadotodos = true;
+	}
+
+	/**
+	 * Precarga en paralelo los bytes de clase para TODOS los mods ya cargados. Si
+	 * no hay mods, no hace nada. No devuelve conteos (void).
+	 */
+	public static void precargarClasesEnCacheParaModsCargados() {
+		if (mods.isEmpty()) {
+			return;
+		}
+
+		int numeroHilos = calcularHilosOptimos(mods.size());
+		ThreadPoolExecutor ejecutor = crearThreadPoolExecutor(numeroHilos);
+		AtomicInteger totalPrecargadas = new AtomicInteger(0);
+
+		for (ArchivoDeMod mod : mods) {
+			ejecutor.submit(() -> {
+				try {
+					int count = precargarClasesDeUnMod(mod);
+					int total = totalPrecargadas.addAndGet(count);
+					if (count > 0) {
+						CrashDetectorLogger.log("Precargadas " + count + " clases en " + mod.ubicacion()
+								+ " (acumulado=" + total + ")");
+					}
+				} catch (Throwable t) {
+					CrashDetectorLogger.log("Error precargando clases en " + mod.ubicacion() + ": " + t.getMessage());
+					CrashDetectorLogger.logException(t);
+				}
+			});
+		}
+
+		cerrarThreadPoolExecutor(ejecutor);
+	}
+
+	/**
+	 * Precarga todas las clases de un mod concreto, incluyendo anidados si
+	 * corresponde.
+	 * 
+	 * @return número de clases precargadas para logging interno
+	 */
+	private static int precargarClasesDeUnMod(ArchivoDeMod mod) {
+		if (mod instanceof ModCarpeta) {
+			return ((ModCarpeta) mod).precargarTodasLasClasesRecursivo();
+		} else if (mod instanceof ModPKZip) {
+			return ((ModPKZip) mod).precargarTodasLasClasesRecursivo();
+		} else {
+			// Tipos no soportados para precarga explícita
+			return 0;
+		}
+	}
+
+	/**
 	 * Crea un ThreadPoolExecutor configurado específicamente para operaciones I/O
 	 * bound.
-	 * 
+	 *
 	 * @param numeroHilos Número óptimo de hilos para la operación
 	 * @return ThreadPoolExecutor configurado
 	 */
@@ -107,12 +173,12 @@ public class Buscardor {
 
 	/**
 	 * Calcula el número óptimo de hilos para operaciones I/O bound.
-	 * 
+	 *
 	 * @param numeroMods Número de mods a cargar
 	 * @return Número óptimo de hilos
 	 */
 	private static int calcularHilosOptimos(int numeroMods) {
-		// Usamos ManagementFactory para obtener el número de hilos
+		// Usamos ManagementFactory para obtener el número de hilos (heurística ligera)
 		int cpus = ManagementFactory.getThreadMXBean().getThreadCount();
 
 		// Para operaciones de disco, usamos un factor de 2
@@ -124,7 +190,7 @@ public class Buscardor {
 
 	/**
 	 * Procesa los mods en paralelo utilizando el ThreadPoolExecutor.
-	 * 
+	 *
 	 * @param rutasMods Array de rutas de mods a cargar
 	 * @param ejecutor  ThreadPoolExecutor para ejecutar las tareas
 	 */
@@ -169,7 +235,7 @@ public class Buscardor {
 
 	/**
 	 * Cierra el ThreadPoolExecutor de manera ordenada.
-	 * 
+	 *
 	 * @param ejecutor ThreadPoolExecutor a cerrar
 	 */
 	private static void cerrarThreadPoolExecutor(ThreadPoolExecutor ejecutor) {
@@ -200,7 +266,7 @@ public class Buscardor {
 
 	/**
 	 * Prepara una ruta para publicación, anonimizando si es necesario.
-	 * 
+	 *
 	 * @param ruta Ruta a preparar
 	 * @return Ruta anonimizada o original según configuración
 	 */
@@ -214,7 +280,7 @@ public class Buscardor {
 
 	/**
 	 * Obtiene mods que contienen un archivo con el nombre especificado.
-	 * 
+	 *
 	 * @param nombre Nombre del archivo a buscar
 	 * @return Lista de rutas de mods que contienen el archivo
 	 */
@@ -230,7 +296,7 @@ public class Buscardor {
 
 	/**
 	 * Busca todos los mods que contienen un archivo, clase o paquete específico.
-	 * 
+	 *
 	 * @param termino Término a buscar (archivo, clase o paquete)
 	 * @return Lista de mods que contienen el término
 	 */
@@ -244,7 +310,7 @@ public class Buscardor {
 
 	/**
 	 * Convierte una lista de mods a sus ubicaciones para publicación.
-	 * 
+	 *
 	 * @param mods Lista de mods
 	 * @return Lista de ubicaciones anonimizadas
 	 */
@@ -260,7 +326,7 @@ public class Buscardor {
 
 	/**
 	 * Verifica si alguna mod contiene la clase especificada.
-	 * 
+	 *
 	 * @param nombreClase Nombre completo de la clase (ej: "java/lang/Object")
 	 * @return true si al menos un mod contiene la clase, false en caso contrario
 	 */
@@ -275,7 +341,7 @@ public class Buscardor {
 
 	/**
 	 * Obtiene información detallada de métodos para una clase específica.
-	 * 
+	 *
 	 * @param nombreClase Nombre completo de la clase
 	 * @return Lista de información de métodos con sus referencias
 	 */
@@ -298,7 +364,7 @@ public class Buscardor {
 
 	/**
 	 * Obtiene campos declarados en una clase específica.
-	 * 
+	 *
 	 * @param nombreClase Nombre completo de la clase
 	 * @return Lista de información de campos
 	 */
@@ -321,7 +387,7 @@ public class Buscardor {
 
 	/**
 	 * Busca todas las referencias dentro de un método específico.
-	 * 
+	 *
 	 * @param nombreClase  Nombre completo de la clase
 	 * @param nombreMetodo Nombre del método
 	 * @param descriptor   Descriptor del método
@@ -344,7 +410,7 @@ public class Buscardor {
 
 	/**
 	 * Busca todas las referencias a un método específico (llamadas externas).
-	 * 
+	 *
 	 * @param claseObjetivo      Clase objetivo del método
 	 * @param metodoObjetivo     Nombre del método objetivo
 	 * @param descriptorObjetivo Descriptor del método objetivo
@@ -407,7 +473,7 @@ public class Buscardor {
 
 	/**
 	 * Busca todas las referencias hacia un método específico en todos los mods.
-	 * 
+	 *
 	 * @param claseObjetivo      Clase objetivo del método
 	 * @param metodoObjetivo     Nombre del método objetivo
 	 * @param descriptorObjetivo Descriptor del método objetivo
@@ -496,7 +562,6 @@ public class Buscardor {
 	}
 
 	public static boolean puedeAnalizarElContentidoDeClase() {
-		// TODO Auto-generated method stub
 		if (ArchivoDeMod.ASM_DISPONIBLE) {
 			return true;
 		}

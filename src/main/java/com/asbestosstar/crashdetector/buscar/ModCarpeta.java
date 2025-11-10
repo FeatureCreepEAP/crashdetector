@@ -21,7 +21,7 @@ import com.asbestosstar.crashdetector.cargador.CargadorFeatureCreep;
  * tanto mods de HOI4 como módulos de JBoss en estructuras de carpetas. Maneja
  * archivos JAR/ZIP anidados dentro de estructuras de carpetas (especialmente
  * para JBoss).
- * 
+ *
  * NOTA: Las subcarpetas normalmente NO son mods independientes, sino parte del
  * mismo mod.
  */
@@ -33,7 +33,18 @@ public class ModCarpeta implements ArchivoDeMod {
 	public List<String> nombres = new ArrayList<>();
 	public List<String> clases = new ArrayList<>();
 	public List<String> archivos = new ArrayList<>();
-	private final Map<String, byte[]> mapaBytesClase = new HashMap<>();
+
+	private final Map<String, Path> mapaRutasClase = new HashMap<>(); // clave = nombre interno "pkg/Clase"
+	private final Map<String, byte[]> cacheBytesClase = new HashMap<>(); // bytes cacheados tras la primera lectura
+
+	// Métricas para decidir precarga (opcional) en mods pequeños
+	private long totalTamanoClases = 0L;
+	private int totalConteoClases = 0;
+
+	// Umbrales de precarga (ajustables)
+	private static final int EAGER_MAX_CLASES = 150;
+	private static final long EAGER_MAX_BYTES = 1_500_000L; // ~1.5 MB
+
 	private final Path rutaRaiz;
 	public List<Cargador> cargadores_de_mod = new ArrayList<Cargador>();
 
@@ -48,6 +59,8 @@ public class ModCarpeta implements ArchivoDeMod {
 
 		try {
 			procesarCarpeta(rutaRaiz, true);
+			// Precarga opcional sólo si el mod es pequeño
+			precargarSiPequeno();
 		} catch (Exception e) {
 			CrashDetectorLogger.logException(e);
 		}
@@ -55,7 +68,7 @@ public class ModCarpeta implements ArchivoDeMod {
 
 	/**
 	 * Procesa recursivamente una carpeta para identificar mods y clases.
-	 * 
+	 *
 	 * @param ruta   Ruta a procesar
 	 * @param esRaiz Indica si es la carpeta raíz del mod actual
 	 */
@@ -91,12 +104,9 @@ public class ModCarpeta implements ArchivoDeMod {
 						procesarClase(entrada);
 					} else if (esArchivoAnidado(nombre)) {
 						procesarArchivoAnidado(entrada, nombre);
-					} else if (nombre.endsWith(".toml") || nombre.endsWith(".json") || nombre.endsWith(".yaml")
-							|| nombre.endsWith(".xml") || nombre.endsWith(".MF") || nombre.endsWith(".txt")
-							|| nombre.endsWith(".lang")) {// TODO dmr si es version texto
-						mapaBytesClase.put(nombre, Files.readAllBytes(entrada));
+					} else {
+						// No cargamos bytes por adelantado para mejorar rendimiento.
 					}
-
 				}
 			}
 
@@ -114,23 +124,44 @@ public class ModCarpeta implements ArchivoDeMod {
 	}
 
 	/**
-	 * Procesa un archivo de clase y lo añade al mapa de bytes de clase.
+	 * Procesa un archivo de clase. No carga bytes por adelantado; sólo registra la
+	 * ruta y nombres (Java e interno).
 	 */
 	private void procesarClase(Path entrada) {
-		String nombreClase = entrada.toString().replace(rutaRaiz.toString(), "").replace(File.separator, ".")
+		String nombreClaseJava = entrada.toString().replace(rutaRaiz.toString(), "").replace(File.separator, ".")
 				.replace(".class", "");
-		if (nombreClase.startsWith(".")) {
-			nombreClase = nombreClase.substring(1);
+		if (nombreClaseJava.startsWith(".")) {
+			nombreClaseJava = nombreClaseJava.substring(1);
 		}
-		clases.add(nombreClase);
+		clases.add(nombreClaseJava);
 
-		// Guardar bytes de clase para análisis posterior con ASM
+		// Nombre interno estilo ASM: pkg/Clase (sin .class)
 		String nombreInterno = entrada.toString().replace(rutaRaiz.toString(), "").substring(1)
 				.replace(File.separator, "/").replace(".class", "");
+
+		// Guardamos ruta para carga perezosa
+		mapaRutasClase.put(nombreInterno, entrada);
+		totalConteoClases++;
 		try {
-			mapaBytesClase.put(nombreInterno, Files.readAllBytes(entrada));
+			totalTamanoClases += Files.size(entrada);
 		} catch (IOException e) {
+			// no crítico; continuar
 			CrashDetectorLogger.logException(e);
+		}
+	}
+
+	/**
+	 * Si el módulo es pequeño, precarga bytes para acelerar accesos posteriores.
+	 */
+	private void precargarSiPequeno() {
+		if (totalConteoClases <= EAGER_MAX_CLASES && totalTamanoClases <= EAGER_MAX_BYTES) {
+			for (Map.Entry<String, Path> e : mapaRutasClase.entrySet()) {
+				try {
+					cacheBytesClase.put(e.getKey(), Files.readAllBytes(e.getValue()));
+				} catch (IOException ex) {
+					CrashDetectorLogger.logException(ex);
+				}
+			}
 		}
 	}
 
@@ -265,20 +296,106 @@ public class ModCarpeta implements ArchivoDeMod {
 		return clases.contains(formatoJava);
 	}
 
+	/**
+	 * Devuelve los bytes de la clase solicitada. Acepta nombre interno "pkg/Clase"
+	 * o con puntos "pkg.Clase"; ignora ".class". Carga perezosa y cachea el
+	 * resultado.
+	 */
 	@Override
 	public byte[] obtenerBytesClase(String nombreClase) {
-		return mapaBytesClase.get(nombreClase);
+		if (nombreClase == null || nombreClase.isEmpty())
+			return null;
+
+		// Normalizar a nombre interno ASM (pkg/Clase)
+		String interno = normalizarNombreInterno(nombreClase);
+
+		// 1) caché en memoria
+		byte[] bytes = cacheBytesClase.get(interno);
+		if (bytes != null)
+			return bytes;
+
+		// 2) cargar desde disco bajo demanda
+		Path ruta = mapaRutasClase.get(interno);
+		if (ruta == null)
+			return null;
+
+		try {
+			bytes = Files.readAllBytes(ruta);
+			cacheBytesClase.put(interno, bytes);
+			return bytes;
+		} catch (IOException e) {
+			CrashDetectorLogger.logException(e);
+			return null;
+		}
 	}
 
 	@Override
 	public List<String> obtenerTodosLosNombresDeClases() {
-		return new ArrayList<>(mapaBytesClase.keySet());
+		// Devolver los nombres internos (pkg/Clase) conocidos
+		return new ArrayList<>(mapaRutasClase.keySet());
 	}
 
 	@Override
 	public List<Cargador> cargadores() {
-		// TODO Auto-generated method stub
 		return cargadores_de_mod;
 	}
 
+
+	/**
+	 * Precarga los bytes de TODAS las clases de esta carpeta en el caché interno.
+	 *
+	 * @return número de clases cargadas en caché en esta instancia
+	 */
+	public int precargarTodasLasClases() {
+		int cargadas = 0;
+		for (Map.Entry<String, Path> e : mapaRutasClase.entrySet()) {
+			final String interno = e.getKey();
+			if (cacheBytesClase.containsKey(interno)) {
+				continue; // ya en caché
+			}
+			try {
+				byte[] data = Files.readAllBytes(e.getValue());
+				if (data != null) {
+					cacheBytesClase.put(interno, data);
+					cargadas++;
+				}
+			} catch (IOException ex) {
+				CrashDetectorLogger.logException(ex);
+			}
+		}
+		return cargadas;
+	}
+
+	/**
+	 * Precarga de forma RECURSIVA todas las clases de esta carpeta y de sus mods
+	 * anidados (ModCarpeta/ModPKZip).
+	 *
+	 * @return número total de clases precargadas (esta instancia + anidados)
+	 */
+	public int precargarTodasLasClasesRecursivo() {
+		int total = precargarTodasLasClases();
+		for (ArchivoDeMod hijo : mods_en_mod) {
+			try {
+				if (hijo instanceof ModCarpeta) {
+					total += ((ModCarpeta) hijo).precargarTodasLasClasesRecursivo();
+				} else if (hijo instanceof ModPKZip) {
+					total += ((ModPKZip) hijo).precargarTodasLasClasesRecursivo();
+				}
+			} catch (Throwable t) {
+				CrashDetectorLogger.logException(t);
+			}
+		}
+		return total;
+	}
+
+	// --- util ---
+
+	private static String normalizarNombreInterno(String nombre) {
+		String n = nombre;
+		if (n.endsWith(".class"))
+			n = n.substring(0, n.length() - 6);
+		// si viene con puntos, convertir a slashes
+		n = n.replace('.', '/');
+		return n;
+	}
 }

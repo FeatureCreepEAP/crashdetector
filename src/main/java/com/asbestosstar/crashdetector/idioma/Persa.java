@@ -251,8 +251,8 @@ public class Persa implements Idioma {
 
 	@Override
 	public String theseus() {
-		return "<b style='color:#" + config.obtenerColorAdvertencia()
-				+ "'>اگر از Theseus/ModrinthApp استفاده می‌کنید، نمی‌توانیم کمک زیادی به شما کنیم زیرا Theseus فاقد کنسول لانچر است. Theseus همچنین مشکلات دیگری دارد، از جمله نسخه‌های قدیمی بارگذارهای مود، نرم‌افزار جاسوس، لاگ‌های بد و موارد دیگر. شرکت Modrinth هم صادقانه عمل نمی‌کند. آنها اتهامات کاذب می‌زنند که توسعه‌دهندگان مودها از ربات‌ها برای افزایش دانلودها استفاده می‌کنند و ادعاهای خود درباره درآمدزایی را چندین بار تغییر داده‌اند.</b>";
+	    return "<b style='color:#" + config.obtenerColorAdvertencia()
+	           + "'>Theseus همچنین مشکلات دیگری دارد، از جمله عدم توانایی در حذف مودها وقتی که سعی می‌کنید. اگر نیاز به اجرای فایل‌های mrpack دارید، می‌توانید از راه‌اندازهای دیگری مانند Prism Launcher (فقط برای modrinth.com)، ATLauncher (فقط برای modrinth.com) یا Hello Minecraft Launcher (پشتیبانی از modrinth.com و bbsmc.net) استفاده کنید.</b>";
 	}
 
 	@Override
@@ -479,14 +479,14 @@ public class Persa implements Idioma {
 				+ "' یا بالاتر نیاز دارد، اما فقط نسخه '" + encontrado + "' پیدا شد.</b>";
 	}
 
-//@Override
-//public String advertenciaMalwareFalso() {
-//    return "<b style='color:#" + config.obtenerColorError() + "'>"
-//         + "هشدار! Crash Assistant یک تشخیص‌دهنده بدافزار جعلی است. این برنامه به‌طور عمدی بازی را از اجرای شروع مسدود می‌کند و آزادی شما برای ادامه بازی با افزونه‌های هدف‌گیری‌شده را نادیده می‌گیرد. "
-//         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>مشاهده کد MalwareMod.java</a>   "
-//         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>مشاهده کد JarInJarHelper.java</a>. "
-//         + "در حال حاضر فقط این افزونه در لیست آنها قرار دارد و در واقع فقط به سایت ثبت لاگ پیش‌فرض حمله می‌کنند که می‌تواند توسط کاربر تغییر کند و این فقط زمانی اتفاق می‌افتد که به‌صورت صریح از ویژگی مشارکت لاگ داخلی استفاده کنید. CrashAssistant هیچ بررسی‌ای برای حتی تعیین اینکه کدام سایت ثبت لاگ استفاده می‌شود انجام نمی‌دهد و نحوه تغییر آن را توضیح نمی‌دهد (یک منوی کشویی در پایین جعبه محاوره‌ای اشتراک وجود دارد) و صرف‌نظر از اینکه چه سایتی تنظیم کرده‌اید، CrashAssistant اجرای بازی را مسدود خواهد کرد. در پیام آنها اشاره شده که تحقیقات خود را انجام دهید، این کار را انجام دهید، به کد CrashDetector و Crash Assistant نگاه کنید و درک کنید که چه کاری انجام می‌دهند، به استدلال اقتباس به مقام اعتماد نکنید.</b>";
-//}
+@Override
+public String advertenciaMalwareFalso() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "هشدار! Crash Assistant یک تشخیص‌دهنده بدافزار جعلی است. این برنامه به‌طور عمدی بازی را از اجرای شروع مسدود می‌کند و آزادی شما برای ادامه بازی با افزونه‌های هدف‌گیری‌شده را نادیده می‌گیرد. "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>مشاهده کد MalwareMod.java</a>   "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>مشاهده کد JarInJarHelper.java</a>. "
+         + "در حال حاضر فقط این افزونه در لیست آنها قرار دارد و در واقع فقط به سایت ثبت لاگ پیش‌فرض حمله می‌کنند که می‌تواند توسط کاربر تغییر کند و این فقط زمانی اتفاق می‌افتد که به‌صورت صریح از ویژگی مشارکت لاگ داخلی استفاده کنید. CrashAssistant هیچ بررسی‌ای برای حتی تعیین اینکه کدام سایت ثبت لاگ استفاده می‌شود انجام نمی‌دهد و نحوه تغییر آن را توضیح نمی‌دهد (یک منوی کشویی در پایین جعبه محاوره‌ای اشتراک وجود دارد) و صرف‌نظر از اینکه چه سایتی تنظیم کرده‌اید، CrashAssistant اجرای بازی را مسدود خواهد کرد. در پیام آنها اشاره شده که تحقیقات خود را انجام دهید، این کار را انجام دهید، به کد CrashDetector و Crash Assistant نگاه کنید و درک کنید که چه کاری انجام می‌دهند، به استدلال اقتباس به مقام اعتماد نکنید.</b>";
+}
 
 	@Override
 	public String error_clase_no_encontrada_mcforge_mod_suspechoso(String idMod, String claseNoEncontrada) {
@@ -4084,5 +4084,28 @@ public class Persa implements Idioma {
 	public String buscador_canario_de_orden_titulo_proximamente() {
 		return "به زودی";
 	}
+	@Override
+	public String nombre_de_mods_incompatibles_crash_assistant() {
+	    return "مودهای ناسازگار با Crash Assistant (غلط)";
+	}
+
+	@Override
+	public String nombre_de_modpack_incompatible_crash_assistant() {
+	    return "مود ناسازگار با مودپک با استفاده از CrashAssistant";
+	}
+
+	@Override
+	public String advertenciaCrashAssistantModpackIncompatibleFalso() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>Crash Assistant لیستی از مودهایی دارد که می‌گوید ناسازگار هستند، اما ما شواهدی نداریم و خطای آن فقط به انگلیسی است. اگر می‌خواهید با این مودها بازی کنید، می‌توانید فایل <code>config/crash_assistant/config.toml</code> را ویرایش کرده و <code>enabled = true</code> در بخش [compatibility] را به <code>enabled = false</code> تغییر دهید.</b>";
+	}
+
+	@Override
+	public String advertenciaCrashAssistantModsIncompatibles() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>Crash Assistant توانایی گفتن ناسازگاری مودها را دارد، اما گاهی این موضوع اشتباه است و خطای آن فقط به یک زبان است. اگر می‌خواهید با این مودها بازی کنید، می‌توانید فایل <code>config/crash_assistant/problematic_mods_config.json</code> را ویرایش کرده و <code>should_crash_on_startup</code> را از <code>true</code> به <code>false</code> تغییر دهید.</b>";
+	}
+	
+	
+	
+	
 
 }

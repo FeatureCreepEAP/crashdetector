@@ -41,6 +41,8 @@ public class ErrorRutaModLauncher implements Verificaciones {
 	 */
 	private final Map<String, String> enlacesPorLinea = new HashMap<>();
 
+	boolean no_UnixUriUtils = false;
+
 	/**
 	 * Verificación global no utilizada en este verificador.
 	 * <p>
@@ -51,7 +53,11 @@ public class ErrorRutaModLauncher implements Verificaciones {
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		// No se usa: este verificador funciona en modo por línea.
+		String contenido = consola.contenido_verificar;
+		if (!contenido.contains("java.lang.IllegalArgumentException: Bad escape")
+				|| !contenido.contains("sun.nio.fs.UnixUriUtils.fromUri")) {
+			no_UnixUriUtils = true;
+		}
 	}
 
 	/**
@@ -66,9 +72,7 @@ public class ErrorRutaModLauncher implements Verificaciones {
 	@Override
 	public void verificar(Consola consola, String linea, int numero_de_linea) {
 		// Comprobación global del tipo de error (igual que en la versión original).
-		String contenido = consola.contenido_verificar;
-		if (!contenido.contains("java.lang.IllegalArgumentException: Bad escape")
-				|| !contenido.contains("sun.nio.fs.UnixUriUtils.fromUri")) {
+		if (!no_UnixUriUtils) {
 			return;
 		}
 

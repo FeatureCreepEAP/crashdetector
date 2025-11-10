@@ -1,10 +1,16 @@
 package com.asbestosstar.crashdetector.analizador;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Consola;
@@ -48,6 +54,7 @@ import com.asbestosstar.crashdetector.analizador.apps.minecraft.LenguajeProveedo
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.LexForgeMLTransformerEnNeoForge;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.MCForgeInstallacionNoEstaCompleta;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.MCForgeModsSuspechoso;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.MalwareFalsoCrashAssistant;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ModsDuplicadosModLauncher;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.NecesitasSodium;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.NoPuedeAnalizarJSONDeRegistro;
@@ -82,6 +89,7 @@ import com.asbestosstar.crashdetector.analizador.apps.minecraft.SCOErrorCompatib
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.Segundo60Tick;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ServicioDeModLauncherNoFunciona;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.TaczDeflaterCerrado;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.Theseus;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.WaterMediaTL;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.WaterMediaVLC;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.WaterMediaXenonIncompatible;
@@ -110,20 +118,56 @@ import com.asbestosstar.crashdetector.analizador.general.NullPointer;
 import com.asbestosstar.crashdetector.analizador.general.OpcionesJavaGCInvalidas;
 import com.asbestosstar.crashdetector.analizador.general.PreferIPV4Trace;
 import com.asbestosstar.crashdetector.analizador.general.SpongeMixinConfigsProblematicos;
+import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.config.ConfigStringArray;
 
 public class Analizador {
 
 	/*
-	 * Para Registrar
+	 * Registro de TODAS las verificaciones disponibles.
 	 */
-	public static HashSet<Verificaciones> verificaciones = new HashSet<Verificaciones>();
+	public static HashSet<Verificaciones> verificaciones = new HashSet<>();
 
 	/**
-	 * para analizando
+	 * Conjuntos separados de verificaciones activadas: - normales: se ejecutan
+	 * primero en paralelo (multinúcleo) - tardías: se ejecutan después, en un solo
+	 * hilo
 	 */
-	public HashSet<Verificaciones> verificaciones_activados = new LinkedHashSet<Verificaciones>();
+	public HashSet<Verificaciones> verificaciones_normales_activadas = new LinkedHashSet<>();
+	public HashSet<Verificaciones> verificaciones_tardias_activadas = new LinkedHashSet<>();
+
+	/**
+	 * Conservamos este conjunto como unión de ambas para compatibilidad con
+	 * toString() y obtenerSoluciones().
+	 */
+	public HashSet<Verificaciones> verificaciones_activados = new LinkedHashSet<>();
+
+	/**
+	 * Clave de configuración para la lista de denegación de verificaciones.
+	 */
+	private static final String CONFIG_CLAVE_LISTA_DENEGACION = "verificaciones.lista_de_denegacion";
+
+	/**
+	 * Elemento de configuración que maneja la lista de denegación (por defecto
+	 * vacío).
+	 */
+	private static final ConfigStringArray CONFIG_LISTA_DENEGACION = ConfigStringArray.de(CONFIG_CLAVE_LISTA_DENEGACION,
+			new ArrayList<>());
+
+	/**
+	 * Repositorios en memoria para declarar verificaciones "tardías" SOLO vía
+	 * código. No hay configuración externa; otros módulos deben llamar a los
+	 * métodos registrar*.
+	 */
+	private static final Set<Class<? extends Verificaciones>> CLASES_TARDIAS_REGISTRADAS = Collections
+			.newSetFromMap(new ConcurrentHashMap<>());
+	private static final Set<String> IDS_TARDIAS_REGISTRADAS = Collections.newSetFromMap(new ConcurrentHashMap<>());
 
 	static {
+		// Registrar por defecto las que deben ser tardías usando la API en-código:
+		registrarVerificacionTardia(ContentoDeTraces.class);
+		registrarVerificacionTardia(AdvertenciaFaltasClases.class);
+
 		CrashDetectorLogger.log(Criticalidad.ADVERTENCIA.toString() + " buscando para advertencias ");
 
 		verificaciones.add(new SpongeMixinConfigsProblematicos());
@@ -139,38 +183,29 @@ public class Analizador {
 
 		verificaciones.add(new NoPuedeAnalizarJSONDeRegistro());
 		verificaciones.add(new BloqueTeselado());
-
-		// verificaciones.add(verificacion_de_stacktrace); No necesitemos aqui, es en la
-		// clase Consola antes de esta contructor // Para Configs de SpongeMixin
-		// problematicos
 		verificaciones.add(new OptifineObsoleta());
 		verificaciones.add(new ServicioDeModLauncherNoFunciona());
 		verificaciones.add(new FabricMCRuntimeErrorProvidedBy());
 		verificaciones.add(new MCForgeModsSuspechoso());
 		verificaciones.add(new JavaVersiones());
-		verificaciones.add(new FaltasClases());
+		verificaciones.add(new FaltasClases()); // regla distinta a la "advertencia"
 		verificaciones.add(new Drivers());
 		verificaciones.add(new ErrorDeMonitorLWJGL());
 		verificaciones.add(new OpcionesJavaGCInvalidas());
 		verificaciones.add(new ErrorConfiguracionMCForge());
-
 		verificaciones.add(new EarlyWindow());
 		verificaciones.add(new NecesitasSodium());
 		verificaciones.add(new FaltasDependenciasModLaunche());
 		verificaciones.add(new KubeJSResourcePack());
 		verificaciones.add(new Segundo60Tick());
 		verificaciones.add(new NoTieneMemoria());
-		// verificaciones.add(new Theseus());
+		verificaciones.add(new Theseus());
 		verificaciones.add(new CursedConsola());
 		verificaciones.add(new NullPointer());
 		verificaciones.add(new ContentoDeTraces());
-
 		verificaciones.add(new AuditorTransformer());
-
 		verificaciones.add(new AdvertenciaFaltasClases());
-		// verificaciones.add(new MalwareFalsoCrashAssistant());
-
-		// verificaciones.add(new ObjetoDeRegistroNoPresente());
+		verificaciones.add(new MalwareFalsoCrashAssistant());
 		verificaciones.add(new LegacyRandomSourceMultiHilos());
 
 		// De Codex Aternos
@@ -183,7 +218,6 @@ public class Analizador {
 		verificaciones.add(new ProblemaDependenciaPTRLib());
 		verificaciones.add(new ProblemaEjecucionPlugin());
 		verificaciones.add(new ProblemaExcepcionComandoPlugin());
-		// verificaciones.add(new ProblemaExcepcionMod());
 		verificaciones.add(new ProblemaSpongeMixinFabric());
 		verificaciones.add(new ProblemaModDuplicadoFabric());
 		verificaciones.add(new ProblemaModFaltanteEnDatapack());
@@ -198,7 +232,6 @@ public class Analizador {
 		verificaciones.add(new ProblemaVersionDowngrade());
 		verificaciones.add(new ProblemaVersionModMundo());
 		verificaciones.add(new ProblemaDependenciaModFabric());
-
 		// Fin de Codex Aternos
 
 		verificaciones.add(new MCForgeInstallacionNoEstaCompleta());
@@ -214,11 +247,9 @@ public class Analizador {
 		verificaciones.add(new ErrorSinListenersEnClase());
 		verificaciones.add(new ErrorUnionFileSystemCorrupto());
 		verificaciones.add(new ErrorRegistroSuscriptoresAutomaticos());
-
 		verificaciones.add(new AzureGeckoLibInicializoPronto());
 		verificaciones.add(new SCOErrorCompatibilidadC2ME());
 		verificaciones.add(new ErrorJEIPluginFallido());
-
 		verificaciones.add(new LexForgeMLTransformerEnNeoForge());
 		verificaciones.add(new WaterMediaXenonIncompatible());
 		verificaciones.add(new TaczDeflaterCerrado());
@@ -231,7 +262,6 @@ public class Analizador {
 		verificaciones.add(new ErrorConfiguracionServicioIDependencyLocator());
 		verificaciones.add(new ErrorCampoInexistente());
 		verificaciones.add(new ErrorMetodoInexistente());
-
 		verificaciones.add(new ErrorHealightINT());
 		verificaciones.add(new ErrorMetodoAbstractoNoImplementado());
 		verificaciones.add(new ErrorMetadataAnimacionEnServidor());
@@ -243,81 +273,184 @@ public class Analizador {
 		verificaciones.add(new ErrorRubidiumObsoletoConIris());
 		verificaciones.add(new ErrorVoiceChatPuertoOcupado());
 		verificaciones.add(new ErrorBlockItemNuloCreate());
-
 		verificaciones.add(new ModIncompatibleConCargadorActivo());
 		verificaciones.add(new ErrorCreacionModeloFallida());
 		verificaciones.add(new ConflictoMoonlightIceberg());
-
 		verificaciones.addAll(CargadorDeCodice.cargarVerificaciones());
-		CrashDetectorLogger.log("Numero de Codices " + String.valueOf(CargadorDeCodice.cargarVerificaciones().size()));
+
+		CrashDetectorLogger.log("Número de códices " + String.valueOf(CargadorDeCodice.cargarVerificaciones().size()));
 
 		verificaciones.add(new DifDeMods());
-
-		// TODO
-//https://wiki.lunapixel.gg/performance-guide
-		// at
-		// com.mojang.blaze3d.vertex.BufferBuilder.handler$cdk000$iris$beforeNext(BufferBuilder.java:2173)
-		// ~[client-1.20.1-20230612.114412-srg.jar%23561!/:?]
-		// {re:mixin,pl:accesstransformer:B,pl:runtimedistcleaner:A,re:classloading,pl:accesstransformer:B,pl:mixin:APP:mixins.oculus.vertexformat.json:block_rendering.MixinBufferBuilder_SeparateAo,pl:mixin:APP:flywheel.mixins.json:BufferBuilderMixin,pl:mixin:APP:immediatelyfast-common.mixins.json:core.MixinBufferBuilder,pl:mixin:APP:mixins.oculus.vertexformat.json:MixinBufferBuilder,pl:mixin:APP:oculus-batched-entity-rendering.mixins.json:MixinBufferBuilder,pl:mixin:APP:entity_texture_features-common.mixins.json:MixinBufferBuilder,pl:mixin:APP:creativecore.mixins.json:BufferBuilderAccessor,pl:mixin:APP:embeddium.mixins.json:features.render.immediate.buffer_builder.BufferBuilderMixin,pl:mixin:APP:embeddium.mixins.json:core.render.immediate.consumer.BufferBuilderMixin,pl:mixin:APP:embeddium.mixins.json:features.render.immediate.buffer_builder.sorting.BufferBuilderMixin,pl:mixin:APP:embeddium.mixins.json:features.render.immediate.buffer_builder.intrinsics.BufferBuilderMixin,pl:mixin:APP:oculus-batched-entity-rendering.mixins.json:MixinBufferBuilder_SegmentRendering,pl:mixin:A,pl:runtimedistcleaner:A}
-		// en $ contenido otra vez
-
 	}
 
-	public Analizador() {
-		for (Verificaciones ver : verificaciones) {
-			verificaciones_activados.add(ver.nueva());
+	/**
+	 * API pública para que terceros registren verificaciones como "tardías" (sólo
+	 * código). Se puede registrar por clase o por ID/nombre de clase.
+	 */
+	public static void registrarVerificacionTardia(Class<? extends Verificaciones> clase) {
+		if (clase != null) {
+			CLASES_TARDIAS_REGISTRADAS.add(clase);
 		}
 	}
 
-	public void analizar(List<Consola> consolas) {
-		long totalStartTime = System.nanoTime();
-		CrashDetectorLogger.log("Iniciando análisis de " + consolas.size() + " registros");
-
-		for (Consola consola : consolas) {
-			CrashDetectorLogger.log("comenz analiz");
-			consola.verificacion_de_stacktrace.reiniciar();
-			CrashDetectorLogger.log("reinciar vdst");
-
-			long consolaStartTime = System.nanoTime();
-			CrashDetectorLogger.log("Analizando registro: " + consola.archivo.getFileName());
-
-			final String[] lineas = consola.contenido_verificar.split(Verificaciones.nl);
-
-			for (Verificaciones ver : verificaciones_activados) {
-				long t0 = System.nanoTime();
-				try {
-					CrashDetectorLogger.log(consola.archivo + " " + ver.nombre());
-					ver.verificar(consola);
-					long t1 = System.nanoTime();
-					CrashDetectorLogger.log(String.format("Pase global completado: %s - Tiempo: %.2f ms", ver.nombre(),
-							(t1 - t0) / 1_000_000.0));
-				} catch (Exception e) {
-					CrashDetectorLogger.logException(e);
+	public static void registrarVerificacionesTardias(List<Class<? extends Verificaciones>> clases) {
+		if (clases != null) {
+			for (Class<? extends Verificaciones> c : clases) {
+				if (c != null) {
+					CLASES_TARDIAS_REGISTRADAS.add(c);
 				}
 			}
+		}
+	}
 
-			for (int i = 0; i < lineas.length; i++) {
-				final String line = lineas[i];
-				for (Verificaciones ver : verificaciones_activados) {
+	public static void registrarVerificacionTardiaPorId(String idOClase) {
+		if (idOClase != null && !idOClase.isEmpty()) {
+			IDS_TARDIAS_REGISTRADAS.add(idOClase);
+		}
+	}
+
+	public Analizador() {
+		// 1) cargar lista de denegación desde config
+		List<String> denegadas = CONFIG_LISTA_DENEGACION.obtener();
+
+		// 2) construir conjuntos activados clasificando por "tardía" o "normal"
+		for (Verificaciones ver : verificaciones) {
+			String id = ver.id();
+			if (denegadas.contains(id)) {
+				CrashDetectorLogger.log("Verificación '" + id + "' está en la lista de denegación; se desactiva.");
+				continue;
+			}
+			Verificaciones instancia = ver.nueva();
+
+			// Criterios de "tardía": clase registrada o ID/nombre registrado por código
+			boolean esTardia = CLASES_TARDIAS_REGISTRADAS.contains(instancia.getClass())
+					|| IDS_TARDIAS_REGISTRADAS.contains(id)
+					|| IDS_TARDIAS_REGISTRADAS.contains(instancia.getClass().getName())
+					|| IDS_TARDIAS_REGISTRADAS.contains(instancia.getClass().getSimpleName());
+
+			if (esTardia) {
+				verificaciones_tardias_activadas.add(instancia);
+			} else {
+				verificaciones_normales_activadas.add(instancia);
+			}
+		}
+
+		// Unión para mantener compatibilidad con APIs existentes de esta clase
+		verificaciones_activados.addAll(verificaciones_normales_activadas);
+		verificaciones_activados.addAll(verificaciones_tardias_activadas);
+	}
+
+	public void analizar(List<Consola> consolas) {
+		Buscardor.cargar();
+		CrashDetectorLogger.log("Iniciando análisis de " + consolas.size() + " registros");
+
+		// Hilos = 2 * núcleos lógicos
+		final int hilos = Math.max(1, 2 * Runtime.getRuntime().availableProcessors());
+		CrashDetectorLogger.log("Analizador paralelo (normales) con hilos=" + hilos);
+
+		final ThreadFactory fabrica = r -> {
+			Thread t = new Thread(r, "Analizador-Normal-" + r.hashCode());
+			t.setDaemon(true);
+			return t;
+		};
+		final ExecutorService pool = Executors.newFixedThreadPool(hilos, fabrica);
+
+		try {
+			for (Consola consola : consolas) {
+				CrashDetectorLogger.log("comenz analiz");
+				consola.verificacion_de_stacktrace.reiniciar();
+				CrashDetectorLogger.log("reinciar vdst");
+
+				CrashDetectorLogger.log("Analizando registro: " + consola.archivo.getFileName());
+				final String[] lineas = consola.contenido_verificar.split(Verificaciones.nl);
+
+				// 1) Pre-pass en paralelo: verificar(consola) para TODAS las verificaciones
+				// normales
+				List<Callable<Void>> tareasPre = new ArrayList<>(verificaciones_normales_activadas.size());
+				for (Verificaciones ver : verificaciones_normales_activadas) {
+					tareasPre.add(() -> {
+						try {
+							CrashDetectorLogger.log(consola.archivo + " " + ver.nombre());
+							ver.verificar(consola);
+						} catch (Exception e) {
+							CrashDetectorLogger.logException(e);
+						}
+						return null;
+					});
+				}
+				try {
+					pool.invokeAll(tareasPre);
+				} catch (InterruptedException ie) {
+					Thread.currentThread().interrupt();
+					CrashDetectorLogger.logException(ie);
+				}
+
+				// 2) PER-LINE multihilo para verificaciones NORMALES (un solo recorrido de
+				// líneas total)
+				final Verificaciones[] normales = verificaciones_normales_activadas.toArray(new Verificaciones[0]);
+
+				// Particionar líneas en chunks para limitar overhead de tareas
+				final int total = lineas.length;
+				final int chunks = Math.min(total, Math.max(hilos * 4, 1));
+				final int chunkSize = (total + chunks - 1) / chunks;
+
+				List<Callable<Void>> tareasLineas = new ArrayList<>(chunks);
+				for (int c = 0; c < chunks; c++) {
+					final int start = c * chunkSize;
+					final int end = Math.min(total, start + chunkSize);
+					if (start >= end)
+						break;
+
+					tareasLineas.add(() -> {
+						for (int i = start; i < end; i++) {
+							final String linea = lineas[i];
+							// IMPORTANTE: protegemos cada instancia de Verificaciones para evitar
+							// condiciones de carrera.
+							// Si ver.verificar(...) es thread-safe, se puede quitar el synchronized para
+							// mayor rendimiento.
+							for (Verificaciones ver : normales) {
+								try {
+									synchronized (ver) {
+										ver.verificar(consola, linea, i);
+									}
+								} catch (Exception e) {
+									CrashDetectorLogger.logException(e);
+								}
+							}
+						}
+						return null;
+					});
+				}
+				try {
+					pool.invokeAll(tareasLineas);
+				} catch (InterruptedException ie) {
+					Thread.currentThread().interrupt();
+					CrashDetectorLogger.logException(ie);
+				}
+
+				// 3) Verificaciones TARDÍAS: secuenciales, con su propio recorrido por líneas
+				// (sin cambios)
+				for (Verificaciones ver : verificaciones_tardias_activadas) {
 					try {
-						ver.verificar(consola, line, i);
+						CrashDetectorLogger.log(consola.archivo + " (tardía) " + ver.nombre());
+						ver.verificar(consola);
 					} catch (Exception e) {
 						CrashDetectorLogger.logException(e);
 					}
 				}
+				for (Verificaciones ver : verificaciones_tardias_activadas) {
+					for (int i = 0; i < lineas.length; i++) {
+						try {
+							ver.verificar(consola, lineas[i], i);
+						} catch (Exception e) {
+							CrashDetectorLogger.logException(e);
+						}
+					}
+				}
 			}
-
-			// 3) MÉTRICAS POR CONSOLA
-			long consolaEndTime = System.nanoTime();
-			double tiempoConsola = (consolaEndTime - consolaStartTime) / 1_000_000.0;
-			CrashDetectorLogger.log(String.format("Análisis del registro %s completado en: %.2f ms",
-					consola.archivo.getFileName(), tiempoConsola));
+		} finally {
+			pool.shutdown();
 		}
-
-		long totalEndTime = System.nanoTime();
-		double tiempoTotal = (totalEndTime - totalStartTime) / 1_000_000.0;
-		CrashDetectorLogger
-				.log(String.format("Análisis completado para %d registros en: %.2f ms", consolas.size(), tiempoTotal));
 	}
 
 	public Set<Verificaciones> organizar(Set<Verificaciones> vers) {
@@ -326,23 +459,27 @@ public class Analizador {
 		return new LinkedHashSet<>(ret);
 	}
 
+	@Override
 	public String toString() {
 		StringBuilder constructor = new StringBuilder();
 		constructor.append("<ol>");
 
-		for (Verificaciones ver : organizar(this.verificaciones_activados)) {
+		// Unir ambas listas y ordenar por prioridad
+		HashSet<Verificaciones> union = new LinkedHashSet<>();
+		union.addAll(this.verificaciones_normales_activadas);
+		union.addAll(this.verificaciones_tardias_activadas);
+
+		for (Verificaciones ver : organizar(union)) {
 			if (ver.activado()) {
 				constructor.append("<li>");
 
 				String tituloColor = Config.obtenerInstancia().obtenerColorDeTitulosDeConsolas();
 				constructor.append("<span style='color: #").append(tituloColor).append("; font-weight: bold;'>")
 						.append(ver.nombre()).append("</span>");
-
 				constructor.append("<br>").append(ver.mensaje()).append("<hr style='border: 0; border-top: 1px solid #")
 						.append(tituloColor).append("; margin: 8px 0;' />").append("</li>");
 
 				CrashDetectorLogger.log("razon " + ver.mensaje());
-
 			}
 		}
 
@@ -351,14 +488,18 @@ public class Analizador {
 	}
 
 	public List<QuickFix> obtenerSoluciones() {
-		List<QuickFix> soluciones = new ArrayList<QuickFix>();
-		for (Verificaciones ver : organizar(this.verificaciones_activados)) {
+		List<QuickFix> soluciones = new ArrayList<>();
+
+		// Unir ambas listas y ordenar por prioridad
+		HashSet<Verificaciones> union = new LinkedHashSet<>();
+		union.addAll(this.verificaciones_normales_activadas);
+		union.addAll(this.verificaciones_tardias_activadas);
+
+		for (Verificaciones ver : organizar(union)) {
 			if (ver.activado()) {
 				soluciones.add(ver.solucion());
 			}
-
 		}
 		return soluciones;
 	}
-
 }

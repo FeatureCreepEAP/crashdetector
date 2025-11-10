@@ -118,7 +118,7 @@ public class NoTieneMemoria implements Verificaciones {
 
 	@Override
 	public float prioridad() {
-		return 1000.0f; // Prioridad crítica para errores de memoria
+		return 1400.0f; // Prioridad crítica para errores de memoria
 	}
 
 	@Override

@@ -53,8 +53,9 @@ public class ErrorCargaClaseEntornoInvalido implements Verificaciones {
 		// Detecta el error específico de carga en entorno incorrecto
 		if (linea.contains("Attempted to load class") && linea.contains("for invalid dist")) {
 
-			// Extrae el nombre de la clase y el entorno usando expresión regular
-			Pattern pattern = Pattern.compile("Attempted to load class ([^ ]+) for invalid dist (CLIENT|SERVER)");
+			// Extrae el nombre de la clase y el entorno usando expresión regular.
+			// Acepta CLIENT, SERVER, DEDICATED_SERVER, etc. (cualquier token MAYÚSCULAS+_).
+			Pattern pattern = Pattern.compile("Attempted to load class\\s+([^ ]+)\\s+for invalid dist\\s+([A-Z_]+)");
 			Matcher matcher = pattern.matcher(linea);
 			if (matcher.find()) {
 				nombreClase = matcher.group(1);

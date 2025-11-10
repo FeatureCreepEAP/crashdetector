@@ -1,14 +1,13 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.asbestosstar.crashdetector.Consola;
-import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 /**
  * Analiza errores críticos relacionados con plugins de JEI (Just Enough Items)

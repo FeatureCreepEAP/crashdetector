@@ -18,25 +18,43 @@ public class ServicioDeModLauncherNoFunciona implements Verificaciones {
 	private final Set<String> serviciosFallidos = new HashSet<>();
 	private final Map<String, String> enlacesPorServicio = new HashMap<>();
 
+	// Texto base que indica fallo de carga de un servicio de ModLauncher
+	private static final String CARGA_FALLIDA = "Service failed to load";
+
+	/**
+	 * Verificación global del contenido de la consola.
+	 * <p>
+	 * En este verificador no es necesario hacer un análisis global pesado: la
+	 * detección real se hace por línea en {@link #verificar(Consola, String, int)},
+	 * que es llamado para cada línea del log. Este método existe para mantener el
+	 * contrato de la interfaz.
+	 * </p>
+	 */
 	@Override
 	public void verificar(Consola consola) {
-		String contenidoConsola = consola.contenido_verificar;
-		String[] lineas = contenidoConsola.split(Verificaciones.nl);
-		String carga = "Service failed to load";
+		// No se realiza análisis global aquí; todo se hace en el método por línea.
+	}
 
-		for (int i = 0; i < lineas.length; i++) {
-			String linea = lineas[i];
-			if (linea.contains(carga)) {
-				String servicio = linea.split(carga)[1].trim();
-				String mensaje = MonitorDePID.idioma.servicioMLNoPudoCargar(servicio);
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		if (linea == null) {
+			return;
+		}
 
-				// Solo registrar si es nuevo
-				if (serviciosFallidos.add(mensaje)) {
-					String enlace = consola.agregarErrorALectador(i, this);
-					enlacesPorServicio.put(mensaje, enlace);
-				}
-				activado = true;
+		// Buscar el patrón "Service failed to load" en la línea actual
+		if (linea.contains(CARGA_FALLIDA)) {
+			// Extraer el nombre/identificador del servicio que no pudo cargar
+			String[] partes = linea.split(CARGA_FALLIDA, 2);
+			String servicio = partes.length > 1 ? partes[1].trim() : "";
+
+			String mensaje = MonitorDePID.idioma.servicioMLNoPudoCargar(servicio);
+
+			// Solo registrar si es nuevo
+			if (serviciosFallidos.add(mensaje)) {
+				String enlace = consola.agregarErrorALectador(numero_de_linea, this);
+				enlacesPorServicio.put(mensaje, enlace);
 			}
+			activado = true;
 		}
 	}
 

@@ -26,45 +26,64 @@ public class ProblemaNombrePluginAmbiguo implements Verificaciones {
 	private List<String> segundosArchivos = new ArrayList<>();
 	private final List<String> enlaces = new ArrayList<>();
 
+	// Patrón mejorado para manejar cualquier combinación de comillas (cacheado)
+	private static final Pattern PATRON = Pattern.compile(
+			"Ambiguous plugin name [`']([^`']*)[`'].*?files [`']plugins/([^`']*)[`'].*?and [`']plugins/([^`']*)[`']");
+
 	/**
 	 * Verifica si el log contiene errores de nombre ambiguo de plugins.
+	 * 
+	 * En esta versión, el análisis real se hace línea a línea en
+	 * {@link #verificar(Consola, String, int)}, aprovechando que el motor de
+	 * análisis llama a ese método para cada línea de la consola.
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		String contenido = consola.contenido_verificar;
-		String[] lineas = contenido.split("\n");
+		// No se recorre el contenido completo aquí; cada línea se procesa en
+		// verificar(Consola, String, int).
+	}
 
-		// Patrón mejorado para manejar cualquier combinación de comillas
-		Pattern patron = Pattern.compile(
-				"Ambiguous plugin name [`']([^`']*)[`'].*?files [`']plugins/([^`']*)[`'].*?and [`']plugins/([^`']*)[`']");
-
-		for (int i = 0; i < lineas.length; i++) {
-			String linea = lineas[i];
-			Matcher coincidencia = patron.matcher(linea.trim());
-
-			if (coincidencia.find()) {
-				nombresPlugins.add(coincidencia.group(1));
-				primerosArchivos.add(extraerNombrePlugin(coincidencia.group(2)));
-				segundosArchivos.add(extraerNombrePlugin(coincidencia.group(3)));
-				String enlace = consola.agregarErrorALectador(i, this);
-				enlaces.add(enlace);
-			}
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		if (linea == null) {
+			return;
 		}
 
-		if (!nombresPlugins.isEmpty()) {
-			StringBuilder mensajeBuilder = new StringBuilder();
+		Matcher coincidencia = PATRON.matcher(linea.trim());
 
-			for (int i = 0; i < nombresPlugins.size(); i++) {
-				String enlace = i < enlaces.size() ? enlaces.get(i) : "";
-				mensajeBuilder
-						.append(MonitorDePID.idioma.mensajeNombrePluginAmbiguo(nombresPlugins.get(i),
-								primerosArchivos.get(i), segundosArchivos.get(i)))
-						.append(" ").append(enlace).append("<br>");
-			}
+		if (coincidencia.find()) {
+			nombresPlugins.add(coincidencia.group(1));
+			primerosArchivos.add(extraerNombrePlugin(coincidencia.group(2)));
+			segundosArchivos.add(extraerNombrePlugin(coincidencia.group(3)));
+			String enlace = consola.agregarErrorALectador(numero_de_linea, this);
+			enlaces.add(enlace);
 
-			this.mensaje = mensajeBuilder.toString();
+			reconstruirMensaje();
 			activado = true;
 		}
+	}
+
+	/**
+	 * Reconstruye el mensaje HTML a partir de las listas internas. Se llama cada
+	 * vez que se encuentra un nuevo caso de nombre ambiguo.
+	 */
+	private void reconstruirMensaje() {
+		if (nombresPlugins.isEmpty()) {
+			mensaje = "";
+			return;
+		}
+
+		StringBuilder mensajeBuilder = new StringBuilder();
+
+		for (int i = 0; i < nombresPlugins.size(); i++) {
+			String enlace = i < enlaces.size() ? enlaces.get(i) : "";
+			mensajeBuilder
+					.append(MonitorDePID.idioma.mensajeNombrePluginAmbiguo(nombresPlugins.get(i),
+							primerosArchivos.get(i), segundosArchivos.get(i)))
+					.append(" ").append(enlace).append("<br>");
+		}
+
+		this.mensaje = mensajeBuilder.toString();
 	}
 
 	/**

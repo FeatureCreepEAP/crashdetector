@@ -225,8 +225,8 @@ public class Chino implements Idioma {
 
 	@Override
 	public String theseus() {
-		return "<b style='color:#" + config.obtenerColorAdvertencia()
-				+ "'>如果您正在使用Theseus/ModrinthApp，我们无法提供太多帮助，因为Theseus没有启动器控制台。Theseus还存在其他问题，包括过时的Mod加载器版本、间谍软件、错误日志等。Modrinth公司也不诚实，他们虚假指控Mod开发者使用机器人来增加下载量，并且多次更改了他们的盈利声明。</b>";
+	    return "<b style='color:#" + config.obtenerColorAdvertencia()
+	           + "'>Theseus 还存在其他问题，包括在尝试删除模组时会失败。如果你需要运行 mrpack 文件，可以使用其他启动器，例如 Prism Launcher（仅支持 modrinth.com）、ATLauncher（仅支持 modrinth.com）或 Hello Minecraft Launcher（支持 modrinth.com 和 bbsmc.net）。</b>";
 	}
 
 	@Override
@@ -444,14 +444,14 @@ public class Chino implements Idioma {
 				+ proveedor + "' 的版本 '" + requerido + "' 或更高版本，但仅找到版本 '" + encontrado + "'。</b>";
 	}
 
-//@Override
-//public String advertenciaMalwareFalso() {
-//    return "<b style='color:#" + config.obtenerColorError() + "'>"
-//         + "警告！Crash Assistant 是一个伪造的恶意软件检测器。它故意阻止游戏启动，无视您继续使用目标模组进行游戏的自由。 "
-//         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>查看 MalwareMod.java 代码</a>   "
-//         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>查看 JarInJarHelper.java 代码</a>. "
-//         + "目前只有这个模组在他们的列表中，并且他们实际上只针对默认的日志站点，而该站点可以由用户更改，只有在明确选择使用内置日志共享功能时才会生效。CrashAssistant 不会检查当前使用的是哪个日志站点，也不会解释如何更改它（共享对话框底部有一个下拉菜单），无论配置了哪个站点，CrashAssistant 都会阻止游戏启动。在他们的消息中，他们说要自己做研究，那就去做吧，查看 CrashDetector 和 Crash Assistant 的代码，了解它们的作用，不要依赖权威的呼吁。</b>";
-//}
+@Override
+public String advertenciaMalwareFalso() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "警告！Crash Assistant 是一个伪造的恶意软件检测器。它故意阻止游戏启动，无视您继续使用目标模组进行游戏的自由。 "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>查看 MalwareMod.java 代码</a>   "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>查看 JarInJarHelper.java 代码</a>. "
+         + "目前只有这个模组在他们的列表中，并且他们实际上只针对默认的日志站点，而该站点可以由用户更改，只有在明确选择使用内置日志共享功能时才会生效。CrashAssistant 不会检查当前使用的是哪个日志站点，也不会解释如何更改它（共享对话框底部有一个下拉菜单），无论配置了哪个站点，CrashAssistant 都会阻止游戏启动。在他们的消息中，他们说要自己做研究，那就去做吧，查看 CrashDetector 和 Crash Assistant 的代码，了解它们的作用，不要依赖权威的呼吁。</b>";
+}
 
 	@Override
 	public String error_clase_no_encontrada_mcforge_mod_suspechoso(String idMod, String claseNoEncontrada) {
@@ -3904,4 +3904,26 @@ public class Chino implements Idioma {
 		return "即将推出";
 	}
 
+	@Override
+	public String nombre_de_mods_incompatibles_crash_assistant() {
+	    return "与 Crash Assistant 不兼容的模组（误报）";
+	}
+
+	@Override
+	public String nombre_de_modpack_incompatible_crash_assistant() {
+	    return "使用 CrashAssistant 的整合包存在不兼容的模组";
+	}
+
+	@Override
+	public String advertenciaCrashAssistantModpackIncompatibleFalso() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>Crash Assistant 有一个标记为不兼容的模组列表，但我们没有证据表明它们真的不兼容，且该错误提示仅以英文显示。如果你想使用这些模组，可以编辑文件 <code>config/crash_assistant/config.toml</code>，将 [compatibility] 部分中的 <code>enabled = true</code> 修改为 <code>enabled = false</code>。</b>";
+	}
+
+	@Override
+	public String advertenciaCrashAssistantModsIncompatibles() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>Crash Assistant 具有判断模组不兼容的能力，但有时并不准确，且错误信息仅为英文。如果你想使用这些模组，可以编辑文件 <code>config/crash_assistant/problematic_mods_config.json</code>，将 <code>should_crash_on_startup</code> 从 <code>true</code> 改为 <code>false</code>。</b>";
+	}
+	
+	
+	
 }

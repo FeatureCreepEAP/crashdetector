@@ -18,6 +18,10 @@ public class LenguajeProveedorCheck implements Verificaciones {
 	public boolean activado = false;
 	private final Map<String, String> enlacesPorError = new HashMap<>();
 
+	// Cache del contenido de la consola dividido por líneas para evitar hacer split
+	// repetidos.
+	private String[] lineasConsola = null;
+
 	/**
 	 * Verifica el contenido de la consola para detectar errores relacionados con
 	 * proveedores de lenguaje. Este método procesa cada línea de la salida de la
@@ -26,56 +30,73 @@ public class LenguajeProveedorCheck implements Verificaciones {
 	 * archivo JAR, el proveedor requerido, su versión y la versión disponible.
 	 * Además, añade un mensaje detallado al {@code CDStringBuilder} proporcionado.
 	 *
-	 * @param contenido_de_consola La salida cruda de la consola que puede contener
-	 *                             mensajes de error.
-	 * @param constructor          Una instancia de {@code CDStringBuilder} usada
-	 *                             para construir el mensaje final de error.
+	 * @param consola La consola que contiene el texto a analizar.
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		String contenidoConsola = consola.contenido_verificar;
-		String[] lineas = contenidoConsola.split(Verificaciones.nl);
+		// La lógica principal se realiza ahora en el método por línea para mejorar
+		// el rendimiento y reutilizar el mismo análisis en el escaneo línea a línea.
+	}
 
-		for (int i = 0; i < lineas.length; i++) {
-			String linea = lineas[i];
+	/**
+	 * Verificación por línea del registro.
+	 * <p>
+	 * Se ejecuta para cada línea de la consola. Cuando encuentra una línea con el
+	 * patrón "Mod File ... needs language provider ...", extrae los datos
+	 * relevantes y busca más información en las líneas siguientes (como "We have
+	 * found ...") usando el array cacheado de líneas.
+	 * </p>
+	 */
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		// Si ya se activó, no seguimos procesando más líneas.
+		if (activado) {
+			return;
+		}
 
-			if (linea.contains("Mod File") && linea.contains("needs language provider")) {
-				try {
-					// Extraer detalles del error
-					String archivoJar = linea.split("Mod File ")[1].split(" needs")[0].trim();
-					String proveedor = linea.split("language provider ")[1].split(" ")[0].trim();
-					String req = proveedor.split(":")[1];
-					String encontrado = "";
+		// Inicializamos el array de líneas una sola vez usando el contenido completo.
+		if (lineasConsola == null) {
+			lineasConsola = consola.contenido_verificar.split(Verificaciones.nl);
+		}
 
-					// Buscar versión disponible en líneas posteriores
-					for (int j = i; j < lineas.length; j++) {
-						if (lineas[j].contains("We have found ")) {
-							encontrado = lineas[j].split("We have found ")[1].split("§")[0].trim();
-							break;
-						}
+		String lineaActual = linea;
+
+		if (lineaActual.contains("Mod File") && lineaActual.contains("needs language provider")) {
+			try {
+				// Extraer detalles del error
+				String archivoJar = lineaActual.split("Mod File ")[1].split(" needs")[0].trim();
+				String proveedor = lineaActual.split("language provider ")[1].split(" ")[0].trim();
+				String req = proveedor.split(":")[1];
+				String encontrado = "";
+
+				// Buscar versión disponible en líneas posteriores
+				for (int j = numero_de_linea; j < lineasConsola.length; j++) {
+					if (lineasConsola[j].contains("We have found ")) {
+						encontrado = lineasConsola[j].split("We have found ")[1].split("§")[0].trim();
+						break;
 					}
-
-					// Construir mensaje base
-					String mensaje = MonitorDePID.idioma.errorProveedorVersion(archivoJar, proveedor.split(":")[0], req,
-							encontrado);
-
-					// Agregar mensaje especial para JavaFML/MCForge
-					if (proveedor.toLowerCase().contains("javafml")) {
-						mensaje += Verificaciones.nl_html + MonitorDePID.idioma.errorJavaFML_MCForge();
-					}
-
-					// Solo registrar si es un error nuevo
-					if (errores.add(mensaje)) {
-						String enlace = consola.agregarErrorALectador(i, this);
-						enlacesPorError.put(mensaje, enlace);
-					}
-					activado = true;
-
-				} catch (Exception e) {
-					CrashDetectorLogger.logException(e);
-					// Registrar la línea incluso si falla el parseo
-					consola.agregarErrorALectador(i, this);
 				}
+
+				// Construir mensaje base
+				String mensaje = MonitorDePID.idioma.errorProveedorVersion(archivoJar, proveedor.split(":")[0], req,
+						encontrado);
+
+				// Agregar mensaje especial para JavaFML/MCForge
+				if (proveedor.toLowerCase().contains("javafml")) {
+					mensaje += Verificaciones.nl_html + MonitorDePID.idioma.errorJavaFML_MCForge();
+				}
+
+				// Solo registrar si es un error nuevo
+				if (errores.add(mensaje)) {
+					String enlace = consola.agregarErrorALectador(numero_de_linea, this);
+					enlacesPorError.put(mensaje, enlace);
+				}
+				activado = true;
+
+			} catch (Exception e) {
+				CrashDetectorLogger.logException(e);
+				// Registrar la línea incluso si falla el parseo
+				consola.agregarErrorALectador(numero_de_linea, this);
 			}
 		}
 	}
@@ -111,7 +132,6 @@ public class LenguajeProveedorCheck implements Verificaciones {
 
 	@Override
 	public String nombre() {
-		// TODO Auto-generated method stub
 		return MonitorDePID.idioma.nombre_de_lenguaje_proveedor_check();
 	}
 
@@ -123,14 +143,31 @@ public class LenguajeProveedorCheck implements Verificaciones {
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
 		return "lenguaje_proveedor_check";
 	}
 
+	/**
+	 * Indica si este verificador "ocupa" un trazo concreto del stack trace.
+	 * <p>
+	 * Para evitar falsos positivos, solo devuelve {@code true} cuando:
+	 * <ul>
+	 * <li>Ya se ha activado esta verificación, y</li>
+	 * <li>El trazo contiene claramente el patrón de error de proveedor de lenguaje
+	 * de ModLauncher: una línea con "Mod File" y "needs language provider".</li>
+	 * </ul>
+	 * Es deliberadamente conservador: se prefiere un falso negativo antes que
+	 * asociar un trazo que no corresponda realmente a este problema.
+	 * </p>
+	 */
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+		if (!activado || trazo == null || trazo.trace == null) {
+			return false;
+		}
+
+		String t = trazo.trace;
+
+		return t.contains("Mod File") && t.contains("needs language provider");
 	}
 
 }

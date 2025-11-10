@@ -2,6 +2,7 @@ package com.asbestosstar.crashdetector.analizador.general;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -32,113 +33,187 @@ public class FaltasClases implements Verificaciones {
 	public boolean epicfight = false;
 	public boolean azurelib = false;
 
+	/**
+	 * Mapa de clase formateada (com/x/Y -> com/x/Y) -> origen (modid/jar/paquete).
+	 * Contiene TODAS las clases detectadas (antes de filtrar kotlin/essential).
+	 */
 	private final Map<String, String> clases = new HashMap<>();
+
+	/**
+	 * Conjunto auxiliar para evitar duplicados. Guardamos el nombre de la clase en
+	 * formato ruta (con "/").
+	 */
 	public final Set<String> todos = new LinkedHashSet<>();
-	private final Map<String, String> enlacesPorClase = new HashMap<>(); // Clase en formato ruta -> enlace HTML
+
+	/**
+	 * Clase en formato ruta (com/x/Y) -> enlace HTML de la consola.
+	 */
+	private final Map<String, String> enlacesPorClase = new HashMap<>();
+
+	/**
+	 * Referencia al analizador de stacktrace para poder completar orígenes más
+	 * tarde (una vez que se hayan procesado todas las líneas).
+	 */
+	private VerificacionDeStackTrace vdst;
+
+	/**
+	 * Mapa filtrado que se usará realmente para mensaje(), activado() y solucion():
+	 * contiene solo clases relevantes (se filtran gg/essential, kotlin, kotlinx).
+	 */
+	private Map<String, String> clasesFiltradas = null;
+
+	/**
+	 * Marca para asegurarnos de que el post-procesado (completar orígenes +
+	 * filtrado) solo se hace una vez.
+	 */
+	private boolean postProcesado = false;
 
 	@Override
 	public void verificar(Consola consola) {
-		String contenidoConsola = consola.contenido_verificar;
-		VerificacionDeStackTrace vdst = consola.verificacion_de_stacktrace;
+		this.vdst = consola.verificacion_de_stacktrace;
 
 		// Agregar clases faltantes desde stacktraces fatales
-		for (TriMap.TripleKey<String, Integer, Integer> key : vdst.clases_fatales_no_existentes.keySet()) {
-			String clase = key.key1; // nombre de la clase
-			int nivel_prioridad = key.key2; // nivel de prioridad
-			int numero_linea_consola = key.key3; // número de línea en la consola
-			String sospechoso = vdst.clases_fatales_no_existentes.get(clase, nivel_prioridad, numero_linea_consola);
+		for (TriMap.TripleKey<String, Integer, Integer> llave : vdst.clases_fatales_no_existentes.keySet()) {
+			String claseCruda = llave.key1; // nombre de la clase tal cual viene
+			int nivel_prioridad = llave.key2; // nivel de prioridad (no lo usamos aquí)
+			int numero_linea_consola = llave.key3; // número de línea en la consola
+			String sospechoso = vdst.clases_fatales_no_existentes.get(claseCruda, nivel_prioridad,
+					numero_linea_consola);
 
-			// Limpiar el origen usando los métodos de VerificacionDeStackTrace
-			String origenLimpio = limpiarOrigen(sospechoso);
-
-			// Asegurarnos de que la clase está en formato con barras
-			String claseFormateada = formatearClase(clase);
-			if (todos.add(clase)) {
-				clases.put(claseFormateada, origenLimpio);
-				String enlace = consola.agregarErrorALectador(numero_linea_consola, this);
-				enlacesPorClase.put(claseFormateada, enlace);
+			String claseFormateada = formatearClase(claseCruda);
+			if (!esNombreClaseValido(claseFormateada)) {
+				continue;
 			}
-		}
-
-		// Procesar línea por línea la consola
-		String[] lineas = contenidoConsola.split(Verificaciones.nl);
-		for (int i = 0; i < lineas.length; i++) {
-			String linea = lineas[i];
-
-			// Saltar líneas con WARN (sin excepciones)
-			if (linea.contains("/WARN]") || linea.contains("Warn")
-					|| VerificacionDeStackTrace.esLineaDeAdvertenciaEstandar(linea)) {
+			// Ignorar clases no relevantes (kotlin, gg/essential, etc.)
+			if (esClaseNoRelevante(claseFormateada)) {
+				continue;
+			}
+			// Si ya tenemos esta clase, no recalculamos origen ni enlace
+			if (!todos.add(claseFormateada)) {
 				continue;
 			}
 
-			// Eliminar prefijo de log
-			int indiceDosPuntos = linea.indexOf(':');
-			if (indiceDosPuntos != -1 && linea.charAt(0) == '[') {
-				linea = linea.substring(indiceDosPuntos + 1).trim();
-			}
+			String origenLimpio = limpiarOrigen(sospechoso);
+			clases.put(claseFormateada, origenLimpio);
 
-			String clase = null;
+			String enlace = consola.agregarErrorALectador(numero_linea_consola, this);
+			enlacesPorClase.put(claseFormateada, enlace);
+		}
 
-			// Procesar errores de clase faltante
-			if (linea.contains("java.lang.ClassNotFoundException:")
-					|| linea.contains("java.lang.NoClassDefFoundError:")) {
+		// El resto del trabajo (por línea) se hace en verificar(Consola, String, int)
+	}
 
-				String[] llevas = { "java.lang.ClassNotFoundException:", "java.lang.NoClassDefFoundError:" };
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		if (linea == null) {
+			return;
+		}
 
-				for (String lleva : llevas) {
-					int index = linea.indexOf(lleva);
-					if (index != -1) {
-						String candidate = linea.substring(index + lleva.length()).trim();
-						if (!candidate.isEmpty()) {
-							clase = candidate.split("[\\s\\)]")[0].trim();
+		// Saltar líneas con WARN (sin excepciones)
+		if (linea.contains("/WARN]") || linea.contains("Warn")
+				|| VerificacionDeStackTrace.esLineaDeAdvertenciaEstandar(linea)) {
+			return;
+		}
 
-							break;
-						}
-					}
-				}
+		// Eliminar prefijo de log tipo "[hh:mm:ss] [Server thread/INFO]: ..."
+		int indiceDosPuntos = linea.indexOf(':');
+		if (indiceDosPuntos != -1 && linea.charAt(0) == '[') {
+			linea = linea.substring(indiceDosPuntos + 1).trim();
+		}
 
-			} else if (linea.contains("Error loading class:")) {
-				// Este caso ya no debería ocurrir por el filtro anterior
-				int index = linea.indexOf("Error loading class:");
+		String claseCruda = null;
+
+		// Procesar errores de clase faltante
+		if (linea.contains("java.lang.ClassNotFoundException:") || linea.contains("java.lang.NoClassDefFoundError:")) {
+
+			String[] llevas = { "java.lang.ClassNotFoundException:", "java.lang.NoClassDefFoundError:" };
+
+			for (String lleva : llevas) {
+				int index = linea.indexOf(lleva);
 				if (index != -1) {
-					String candidate = linea.substring(index + "Error loading class:".length()).trim();
-					if (!candidate.isEmpty()) {
-						clase = candidate.split("[\\s\\)]")[0].trim();
+					String candidato = linea.substring(index + lleva.length()).trim();
+					if (!candidato.isEmpty()) {
+						claseCruda = candidato.split("[\\s\\)]")[0].trim();
+						break;
 					}
 				}
 			}
 
-			// Validar formato de clase antes de agregarla
-			if (clase != null && esNombreClaseValido(clase) && todos.add(clase)) {
-				String claseFormateada = formatearClase(clase);
-				// Buscar el origen en la misma línea o líneas cercanas
-				String origen = encontrarOrigenEnLinea(linea, i, consola);
-				String origenLimpio = limpiarOrigen(origen);
-				clases.putIfAbsent(claseFormateada, origenLimpio);
-				CrashDetectorLogger.log("Fatals clases clase no advatencia " + clase);
-				CrashDetectorLogger.log("OG " + clase);
-				CrashDetectorLogger.log("TRIM " + clase);
-
-				String enlace = consola.agregarErrorALectador(i, this);
-				enlacesPorClase.put(claseFormateada, enlace);
+		} else if (linea.contains("Error loading class:")) {
+			// Caso antiguo, se deja por seguridad
+			int index = linea.indexOf("Error loading class:");
+			if (index != -1) {
+				String candidato = linea.substring(index + "Error loading class:".length()).trim();
+				if (!candidato.isEmpty()) {
+					claseCruda = candidato.split("[\\s\\)]")[0].trim();
+				}
 			}
 		}
 
-		// Filtrar clases no relevantes
-		for (String clase : new ArrayList<>(clases.keySet())) {
-			if (clase.startsWith("gg/essential/") || clase.startsWith("kotlin/") || clase.startsWith("kotlinx/")) {
-				String enlace = enlacesPorClase.get(clase);
-				clases.remove(clase);
-				enlacesPorClase.remove(clase);
+		if (claseCruda == null) {
+			return;
+		}
+
+		String claseFormateada = formatearClase(claseCruda);
+		if (!esNombreClaseValido(claseFormateada)) {
+			return;
+		}
+		// Ignorar clases no relevantes (kotlin, gg/essential, etc.)
+		if (esClaseNoRelevante(claseFormateada)) {
+			return;
+		}
+		// Si ya vimos esta clase (en fatales o en otra línea), no volvemos a buscar
+		// origen
+		if (!todos.add(claseFormateada)) {
+			return;
+		}
+
+		// Buscar el origen en la misma línea o líneas cercanas
+		String origen = encontrarOrigenEnLinea(linea, numero_de_linea, consola);
+		String origenLimpio = limpiarOrigen(origen);
+		clases.putIfAbsent(claseFormateada, origenLimpio);
+
+		CrashDetectorLogger.log("Fatals clases clase no advertencia " + claseFormateada);
+
+		String enlace = consola.agregarErrorALectador(numero_de_linea, this);
+		enlacesPorClase.put(claseFormateada, enlace);
+	}
+
+	/**
+	 * Determina si una clase debe ser filtrada por no ser relevante (por ejemplo,
+	 * kotlin/kotlinx o gg/essential).
+	 */
+	private boolean esClaseNoRelevante(String claseFormateada) {
+		String c = claseFormateada.trim();
+		return c.startsWith("gg/essential/") || c.startsWith("kotlin/") || c.startsWith("kotlinx/");
+	}
+
+	/**
+	 * Post-procesa las clases solo una vez: completa orígenes que falten usando
+	 * VerificacionDeStackTrace y filtra las clases de gg/essential y kotlin/kotlinx
+	 * para que no aparezcan ni cuenten como activadas.
+	 */
+	private void postProcesarSiNecesario() {
+		if (postProcesado) {
+			return;
+		}
+		postProcesado = true;
+
+		// Completar orígenes si tenemos referencia al analizador de stacktrace
+		if (vdst != null && !clases.isEmpty()) {
+			completarOrigenesSiFaltan(vdst);
+		}
+
+		// Filtrar clases no relevantes EN ESTA FASE (redundante si ya se filtró antes,
+		// pero seguro por si se coló alguna).
+		clasesFiltradas = new LinkedHashMap<>();
+		for (Map.Entry<String, String> e : clases.entrySet()) {
+			String clase = e.getKey();
+			if (esClaseNoRelevante(clase)) {
+				continue;
 			}
+			clasesFiltradas.put(clase, e.getValue());
 		}
-
-		activado = !clases.isEmpty();
-
-		if (activado) {
-			completarOrigenesSiFaltan(consola.verificacion_de_stacktrace);
-		}
-
 	}
 
 	/**
@@ -182,11 +257,11 @@ public class FaltasClases implements Verificaciones {
 	}
 
 	/**
-	 * Verifica si un paquete está en la lista de elementos no permitidos
+	 * Verifica si un paquete está en la lista de elementos no permitidos.
 	 */
 	private boolean esPaqueteNoPermitido(String pack) {
-		for (String prefix : VerificacionDeStackTrace.package_no_permite) {
-			if (pack.startsWith(prefix)) {
+		for (String prefijo : VerificacionDeStackTrace.package_no_permite) {
+			if (pack.startsWith(prefijo)) {
 				return true;
 			}
 		}
@@ -195,21 +270,17 @@ public class FaltasClases implements Verificaciones {
 
 	/**
 	 * Busca el origen (JAR, modid o paquete) en la línea actual o en líneas
-	 * cercanas utilizando los métodos de VerificacionDeStackTrace en lugar de
-	 * implementar lógica propia
+	 * cercanas utilizando los métodos de VerificacionDeStackTrace.
 	 */
 	private String encontrarOrigenEnLinea(String linea, int numeroLinea, Consola consola) {
-		// Primero intentamos encontrar en la misma línea usando los métodos existentes
 		String resultado = buscarOrigenEnLinea(linea);
 		if (!resultado.isEmpty()) {
 			return resultado;
 		}
 
-		// Si no encontramos en la misma línea, buscar en las líneas cercanas
 		String[] lineas = consola.contenido_verificar.split(Verificaciones.nl);
 
-		// ¡CRUCIAL! Buscar desde el fondo hacia arriba (cerca del error), no desde
-		// arriba
+		// Buscar hacia abajo (líneas siguientes)
 		for (int i = numeroLinea + 1; i < Math.min(numeroLinea + 20, lineas.length); i++) {
 			String siguienteLinea = lineas[i].trim();
 			resultado = buscarOrigenEnLinea(siguienteLinea);
@@ -218,8 +289,7 @@ public class FaltasClases implements Verificaciones {
 			}
 		}
 
-		// También buscar en las líneas anteriores (a veces el error está en líneas
-		// previas)
+		// Buscar en las líneas anteriores
 		for (int i = numeroLinea - 1; i >= Math.max(0, numeroLinea - 5); i--) {
 			String lineaAnterior = lineas[i].trim();
 			resultado = buscarOrigenEnLinea(lineaAnterior);
@@ -228,12 +298,11 @@ public class FaltasClases implements Verificaciones {
 			}
 		}
 
-		// Si no encontramos nada, devolvemos una cadena vacía
 		return "";
 	}
 
 	/**
-	 * Busca origen en una línea específica utilizando los métodos existentes
+	 * Busca origen en una línea específica utilizando los métodos existentes.
 	 */
 	private String buscarOrigenEnLinea(String linea) {
 		// 1. Buscar JARs
@@ -253,8 +322,6 @@ public class FaltasClases implements Verificaciones {
 		// 3. Buscar paquete
 		String pack = VerificacionDeStackTrace.extraerPaqueteDeLinea(linea);
 		if (pack != null) {
-			// No necesitamos verificar con packNoEsPermite porque ya lo hace el método
-			// original
 			return pack;
 		}
 
@@ -262,26 +329,33 @@ public class FaltasClases implements Verificaciones {
 	}
 
 	/**
-	 * Formatea un nombre de clase a formato con barras en lugar de puntos
+	 * Formatea un nombre de clase a formato con barras en lugar de puntos,
+	 * eliminando cualquier basura extra (paréntesis, espacios, etc.).
 	 */
 	private String formatearClase(String clase) {
-		// Primero eliminamos cualquier contenido adicional después de la clase
+		if (clase == null) {
+			return "";
+		}
+		// Quitar contenido después de '('
 		int indiceParentesis = clase.indexOf('(');
 		if (indiceParentesis != -1) {
 			clase = clase.substring(0, indiceParentesis).trim();
 		}
-
+		// Quitar contenido después de primer espacio
 		int indiceEspacio = clase.indexOf(' ');
 		if (indiceEspacio != -1) {
 			clase = clase.substring(0, indiceEspacio).trim();
 		}
-
-		// Convertimos puntos a barras
+		// Convertir puntos a barras
 		return clase.replace(".", "/");
 	}
 
-	// Validar que el nombre siga el patrón de una clase Java
+	// Validar que el nombre siga el patrón de una clase Java (en formato con puntos
+	// o barras)
 	private boolean esNombreClaseValido(String clase) {
+		if (clase == null || clase.isEmpty()) {
+			return false;
+		}
 		// Convertir a formato punto para validación
 		String dotForm = clase.replace('/', '.');
 		return dotForm.matches("[a-zA-Z_][a-zA-Z0-9_]*(\\.[a-zA-Z_][a-zA-Z0-9_]*)+");
@@ -294,7 +368,11 @@ public class FaltasClases implements Verificaciones {
 
 	@Override
 	public boolean activado() {
-		return activado;
+		// Asegurarse de que las clases no relevantes se han filtrado antes de
+		// decidir si está activado o no.
+		postProcesarSiNecesario();
+		this.activado = clasesFiltradas != null && !clasesFiltradas.isEmpty();
+		return this.activado;
 	}
 
 	@Override
@@ -304,11 +382,14 @@ public class FaltasClases implements Verificaciones {
 
 	@Override
 	public String mensaje() {
-		if (clases.isEmpty())
+		// Filtrar y completar orígenes antes de construir el mensaje
+		postProcesarSiNecesario();
+
+		if (clasesFiltradas == null || clasesFiltradas.isEmpty())
 			return "";
 
 		StringBuilder html = new StringBuilder("<ul>");
-		for (Map.Entry<String, String> entry : clases.entrySet()) {
+		for (Map.Entry<String, String> entry : clasesFiltradas.entrySet()) {
 			String claseFormateada = entry.getKey();
 			String valor = !entry.getValue().isEmpty() ? " (" + entry.getValue() + ")" : "";
 			String enlace = enlacesPorClase.getOrDefault(claseFormateada, "");
@@ -319,13 +400,11 @@ public class FaltasClases implements Verificaciones {
 			if (claseFormateada.trim().startsWith("yesman/epicfight")) {
 				epicfight = true;
 			}
-
 			if (claseFormateada.trim().startsWith("mod/azure/azurelib")) {
 				azurelib = true;
 			}
 
 			html.append("<li>").append(claseFormateada).append(valor);
-			// Agregar el enlace solo si existe
 			if (!enlace.isEmpty()) {
 				html.append(" ").append(enlace);
 			}
@@ -339,7 +418,6 @@ public class FaltasClases implements Verificaciones {
 		if (epicfight) {
 			html.append(MonitorDePID.idioma.faltar_de_clases_epicfight());
 		}
-
 		if (azurelib) {
 			html.append(MonitorDePID.idioma.faltar_de_clases_azurelib());
 		}
@@ -361,10 +439,13 @@ public class FaltasClases implements Verificaciones {
 			return;
 
 		for (Map.Entry<String, String> e : clases.entrySet()) {
+			String clase = e.getKey();
+			if (esClaseNoRelevante(clase)) {
+				continue;
+			}
 			if (e.getValue() != null && !e.getValue().isEmpty())
 				continue;
 
-			String clase = e.getKey(); // formato con "/"
 			String origen = inferirOrigenParaClase(clase, vdst);
 			if (origen != null && !origen.isEmpty()) {
 				e.setValue(origen);
@@ -382,7 +463,6 @@ public class FaltasClases implements Verificaciones {
 		if (claseSlash == null || claseSlash.isEmpty())
 			return "";
 
-		// paquete de la clase (sin el último segmento)
 		String pkgSlash = claseSlash.contains("/") ? claseSlash.substring(0, claseSlash.lastIndexOf('/')) : claseSlash;
 		String[] seg = pkgSlash.split("/");
 		String pref1 = seg.length >= 1 ? seg[0] : "";
@@ -393,7 +473,7 @@ public class FaltasClases implements Verificaciones {
 			String packDot = k.key1; // "com.ejemplo"
 			String packSlash = packDot.replace('.', '/');
 			if (!packSlash.isEmpty() && (pkgSlash.startsWith(packSlash) || packSlash.startsWith(pref2))) {
-				return packDot; // usar pack (ya es informativo)
+				return packDot;
 			}
 		}
 
@@ -438,9 +518,11 @@ public class FaltasClases implements Verificaciones {
 		return null;
 	}
 
-	// En la clase FaltasClases
 	@Override
 	public QuickFix solucion() {
+		// Asegurarse de trabajar con el conjunto filtrado de clases
+		postProcesarSiNecesario();
+
 		// Crear selectores
 		JComboBox<String> cargadorCombo = new JComboBox<>();
 		JComboBox<String> versionCombo = new JComboBox<>();
@@ -465,8 +547,9 @@ public class FaltasClases implements Verificaciones {
 			}
 		});
 
-		// Configurar combo de clases
-		claseCombo.setModel(new DefaultComboBoxModel<>(clases.keySet().toArray(new String[0])));
+		// Clases mostradas en el combo: ya filtradas de kotlin/essential, etc.
+		Set<String> clavesCombo = clasesFiltradas != null ? clasesFiltradas.keySet() : clases.keySet();
+		claseCombo.setModel(new DefaultComboBoxModel<>(clavesCombo.toArray(new String[0])));
 
 		// Seleccionar primeros elementos
 		if (cargadorCombo.getItemCount() > 0) {
@@ -525,14 +608,14 @@ public class FaltasClases implements Verificaciones {
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
 		return "faltas_clases";
 	}
 
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+		// De momento no reclamamos trazos concretos para evitar solaparnos con otros
+		// analizadores más específicos.
+		return false;
 	}
 
 }

@@ -493,20 +493,44 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		setCargando(false); // oculto por defecto
 
 		// Asegura que el árbol no salga vacío y que los mods estén cargados ya:
-		try {
-			Buscardor.cargar();
-		} catch (Throwable t) {
-		}
+		// try {
+		// Buscardor.cargarYPrecargarClasesEnCache();
+		// } catch (Throwable t) {
+		// }
 
 		DefaultMutableTreeNode placeholder = new DefaultMutableTreeNode(MonitorDePID.idioma.cargando());
 		modeloArbol = new DefaultTreeModel(placeholder);
 		arbolModulos.setModel(modeloArbol);
 
-		// Construcción inicial del árbol en segundo plano
-		construirArbolInicialAsync();
-		this.setVisible(true);
-		Buscardor.cargar();
+		this.setVisible(true); 
+		iniciarCargaPesada(); 
 	}
+	
+	public void iniciarCargaPesada() {
+	    setCargando(true);
+	    // ensure glass pane is actually visible once the frame is showing
+	    getRootPane().getGlassPane().setVisible(true);
+
+	    new SwingWorker<Void, Void>() {
+	        @Override
+	        protected Void doInBackground() throws Exception {
+	            // heavy/IO/ASM work OFF the EDT
+	            Buscardor.cargarYPrecargarClasesEnCache();
+	            return null;
+	        }
+
+	        @Override
+	        protected void done() {
+	            try {
+	                get(); // surface any exception to log/UI if you want
+	            } catch (Exception ignored) { }
+	            // now rebuild the tree with the loaded caches
+	            construirArbolInicialAsync();
+	            setCargando(false);
+	        }
+	    }.execute();
+	}
+
 
 	public void construirArbolInicial() {
 		DefaultMutableTreeNode raiz = new DefaultMutableTreeNode(MonitorDePID.idioma.modsCargados());

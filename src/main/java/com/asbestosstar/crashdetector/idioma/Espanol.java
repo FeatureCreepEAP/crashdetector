@@ -258,10 +258,9 @@ public class Espanol implements Idioma {
 
 	@Override
 	public String theseus() {
-		return "<b style='color:#" + config.obtenerColorAdvertencia()
-				+ "'>Si estás usando Theseus/ModrinthApp no podemos ayudarte mucho porque Theseus no tiene una consola de Launcher. Theseus también tiene más problemas, incluidos versiones de Cargadores de Mods viejas, software espía, registros malos, y más. La empresa de Modrinth tampoco es honesta. Hacen acusaciones falsas de que los desarrolladores de mods usan bots para aumentar sus descargas y han cambiado sus afirmaciones de monetización muchas veces.</b>";
+	    return "<b style='color:#" + config.obtenerColorAdvertencia()
+	           + "'>Theseus también tiene más problemas, incluyendo fallas al eliminar mods cuando lo intentas. Si necesitas jugar con archivos mrpack, puedes usar otros lanzadores como Prism Launcher (solo para modrinth.com), ATLauncher (solo para modrinth.com) o Hello Minecraft Launcher (compatible con modrinth.com y bbsmc.net).</b>";
 	}
-
 	@Override
 	public String noTieneConsolaDeLauncherCursedForge() {
 		return "<b style='color:#" + config.obtenerColorAdvertencia()
@@ -518,14 +517,14 @@ public class Espanol implements Idioma {
 				+ "' o superior, pero solo se encontró la versión '" + encontrado + "'.</b>";
 	}
 
-//@Override
-//public String advertenciaMalwareFalso() {
-//    return "<b style='color:#" + config.obtenerColorError() + "'>"
-//         + "¡ALERTA! Crash Assistant es un detector de malware falso. Bloquea intencionalmente el lanzamiento del juego, ignorando tu libertad de seguir jugando con los mods que apunta. "
-//         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>Ver código MalwareMod.java</a>   "
-//         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>Ver código JarInJarHelper.java</a>. "
-//         + "Solo este mod está en su lista en este momento y solo están yendo realmente tras el sitio de registro predeterminado, que puede ser cambiado por el usuario, y eso solo ocurre si eliges explícitamente usar la función integrada de compartir registros. CrashAssistant NO realiza ninguna verificación para determinar qué sitio de registro se está utilizando ni explica cómo cambiarlo (hay un menú desplegable en la parte inferior del cuadro de diálogo de compartir), y sin importar qué sitio tengas configurado, CrashAssistant bloqueará el lanzamiento del juego. En su mensaje dicen que hagas tu propia investigación, HAZLO, investiga el código de CrashDetector y Crash Assistant y entiende lo que hacen, NO te bases en una apelación a la autoridad.</b>";
-//}
+@Override
+public String advertenciaMalwareFalso() {
+    return "<b style='color:#" + config.obtenerColorError() + "'>"
+         + "¡ALERTA! Crash Assistant es un detector de malware falso. Bloquea intencionalmente el lanzamiento del juego, ignorando tu libertad de seguir jugando con los mods que apunta. "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>Ver código MalwareMod.java</a>   "
+         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>Ver código JarInJarHelper.java</a>. "
+         + "Solo este mod está en su lista en este momento y solo están yendo realmente tras el sitio de registro predeterminado, que puede ser cambiado por el usuario, y eso solo ocurre si eliges explícitamente usar la función integrada de compartir registros. CrashAssistant NO realiza ninguna verificación para determinar qué sitio de registro se está utilizando ni explica cómo cambiarlo (hay un menú desplegable en la parte inferior del cuadro de diálogo de compartir), y sin importar qué sitio tengas configurado, CrashAssistant bloqueará el lanzamiento del juego. En su mensaje dicen que hagas tu propia investigación, HAZLO, investiga el código de CrashDetector y Crash Assistant y entiende lo que hacen, NO te bases en una apelación a la autoridad.</b>";
+}
 
 	@Override
 	public String error_clase_no_encontrada_mcforge_mod_suspechoso(String idMod, String claseNoEncontrada) {
@@ -4787,6 +4786,30 @@ public class Espanol implements Idioma {
 	@Override
 	public String buscador_canario_de_orden_titulo_proximamente() {
 		return "Próximamente";
+	}
+
+	@Override
+	public String nombre_de_mods_incompatibles_crash_assistant() {
+	    // TODO Auto-generated method stub
+	    return "Mods Incompatibles Con Crash Assistant (Falso)";
+	}
+
+	@Override
+	public String nombre_de_modpack_incompatible_crash_assistant() {
+	    // TODO Auto-generated method stub
+	    return "Mod Incompatible Con Paquete de Mods (Modpack) usando CrashAssistant";
+	}
+
+	@Override
+	public String advertenciaCrashAssistantModpackIncompatibleFalso() {
+	    // TODO Auto-generated method stub
+	    return "<b style='color:#" + config.obtenerColorError() + "'>Crash Assistant tiene una lista de mods que dice son incompatibles, pero no tenemos evidencia de que lo sean y el error solo está en inglés. Si deseas jugar con estos mods, puedes editar el archivo <code>config/crash_assistant/config.toml</code> y cambiar <code>enabled = true</code> en la sección [compatibility] a <code>enabled = false</code>.</b>";
+	}
+
+	@Override
+	public String advertenciaCrashAssistantModsIncompatibles() {
+	    // TODO Auto-generated method stub
+	    return "<b style='color:#" + config.obtenerColorError() + "'>Crash Assistant tiene la capacidad de marcar mods como incompatibles, pero a veces esto es incorrecto y el mensaje de error solo está disponible en inglés. Si deseas jugar con estos mods, puedes editar el archivo <code>config/crash_assistant/problematic_mods_config.json</code> y cambiar <code>should_crash_on_startup</code> de <code>true</code> a <code>false</code>.</b>";
 	}
 
 }

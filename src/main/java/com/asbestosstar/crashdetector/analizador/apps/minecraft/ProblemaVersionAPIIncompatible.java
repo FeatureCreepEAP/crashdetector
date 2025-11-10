@@ -45,6 +45,11 @@ public class ProblemaVersionAPIIncompatible implements Verificaciones {
 			.compile("Could not load plugin '([^']+)' in folder.*?\\n.*?\\n.*?\\n"
 					+ "Plugin API version ([\\d\\.]+) is not supported by this server", Pattern.DOTALL);
 
+	// Estado para el procesamiento línea a línea del nuevo formato de Paper
+	// (1.20.6+)
+	private String pluginPendiente = null;
+	private boolean esperandoVersionAPI = false;
+
 	/**
 	 * Verifica si el log contiene errores de versión de API incompatible.
 	 */
@@ -58,21 +63,57 @@ public class ProblemaVersionAPIIncompatible implements Verificaciones {
 		procesarCoincidenciasRegex(PATRON_PAPER_NUEVO.matcher(contenido));
 		procesarCoincidenciasRegex(PATRON_PAPER_MENSAJE.matcher(contenido));
 
-		// 2. Procesar el nuevo formato de Paper 1.20.6+ sin regex
-		procesarFormatoPaperNuevo(consola);
+		// 2. El nuevo formato de Paper 1.20.6+ se procesa ahora línea a línea
+		// en verificar(Consola, String, int). Este método ya no recorre las líneas
+		// para ese caso por motivos de rendimiento.
 
-		// 3. Generar mensaje si se encontraron plugins problemáticos
-		if (!nombresPlugins.isEmpty()) {
-			StringBuilder mensajeBuilder = new StringBuilder();
+		// 3. Generar mensaje si se encontraron plugins problemáticos (por regex)
+		reconstruirMensaje();
+	}
 
-			for (int i = 0; i < nombresPlugins.size(); i++) {
-				mensajeBuilder.append(
-						MonitorDePID.idioma.mensajeVersionAPIIncompatible(nombresPlugins.get(i), versionesAPI.get(i)))
-						.append("<br><br>");
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		if (linea == null) {
+			return;
+		}
+
+		String l = linea.trim();
+
+		// 1) Detectar la línea principal del nuevo formato Paper 1.20.6+
+		// "Could not load plugin 'X.jar' in folder ..."
+		if (l.contains("Could not load plugin") && l.contains(".jar")) {
+			int inicioNombre = l.indexOf('\'') + 1;
+			int finNombre = l.indexOf('\'', inicioNombre);
+			if (inicioNombre > 0 && finNombre > inicioNombre) {
+				String nombrePlugin = extraerNombrePlugin(l.substring(inicioNombre, finNombre));
+				if (!nombrePlugin.isEmpty()) {
+					pluginPendiente = nombrePlugin;
+					esperandoVersionAPI = true;
+				}
+			}
+			return;
+		}
+
+		// 2) Si estamos esperando la línea con "Plugin API version ..."
+		if (esperandoVersionAPI && l.contains("Plugin API version")) {
+			int inicioVersion = l.indexOf("Plugin API version ") + "Plugin API version ".length();
+			if (inicioVersion <= 0 || inicioVersion >= l.length()) {
+				return;
+			}
+			int finVersion = l.indexOf(" ", inicioVersion);
+			if (finVersion == -1) {
+				finVersion = l.length();
 			}
 
-			this.mensaje = mensajeBuilder.toString();
-			activado = true;
+			String version = l.substring(inicioVersion, finVersion).trim();
+
+			if (pluginPendiente != null && !pluginPendiente.isEmpty() && !version.isEmpty()) {
+				nombresPlugins.add(pluginPendiente);
+				versionesAPI.add(version);
+				pluginPendiente = null;
+				esperandoVersionAPI = false;
+				reconstruirMensaje();
+			}
 		}
 	}
 
@@ -90,54 +131,48 @@ public class ProblemaVersionAPIIncompatible implements Verificaciones {
 
 	/**
 	 * Procesa el nuevo formato de Paper 1.20.6+ sin usar regex específicos.
+	 *
+	 * En la versión actual, el procesamiento de este formato se realiza línea a
+	 * línea en {@link #verificar(Consola, String, int)}, por lo que este método se
+	 * mantiene únicamente por compatibilidad y ya no realiza trabajo adicional.
 	 */
+	@SuppressWarnings("unused")
 	private void procesarFormatoPaperNuevo(Consola consola) {
-		String[] lineas = consola.contenido_verificar.split("\n");
-
-		for (int i = 0; i < lineas.length; i++) {
-			String linea = lineas[i].trim();
-
-			// Busca líneas que contengan la carga fallida de un plugin
-			if (linea.contains("Could not load plugin") && linea.contains(".jar")) {
-				procesarErrorPaper1206(lineas, i);
-			}
-		}
+		// Lógica migrada a verificar(Consola, String, int).
 	}
 
 	/**
 	 * Procesa errores específicos del nuevo formato de Paper 1.20.6+
+	 *
+	 * En la versión actual se utiliza un pequeño estado (pluginPendiente /
+	 * esperandoVersionAPI) en el análisis por línea, por lo que este método ya no
+	 * es necesario y se mantiene solo por compatibilidad histórica.
 	 */
+	@SuppressWarnings("unused")
 	private void procesarErrorPaper1206(String[] lineas, int indiceLinea) {
-		String lineaPrincipal = lineas[indiceLinea].trim();
+		// Lógica migrada a verificar(Consola, String, int).
+	}
 
-		// Extrae el nombre del plugin entre comillas simples
-		int inicioNombre = lineaPrincipal.indexOf("'") + 1;
-		int finNombre = lineaPrincipal.indexOf("'", inicioNombre);
-		if (inicioNombre <= 0 || finNombre <= inicioNombre)
+	/**
+	 * Reconstruye el mensaje HTML basado en las listas de plugins/versiones.
+	 */
+	private void reconstruirMensaje() {
+		if (nombresPlugins.isEmpty()) {
+			mensaje = "";
+			activado = false;
 			return;
-
-		String nombrePlugin = extraerNombrePlugin(lineaPrincipal.substring(inicioNombre, finNombre));
-
-		// Busca la línea con el mensaje de versión incompatible
-		for (int j = indiceLinea + 1; j < Math.min(indiceLinea + 5, lineas.length); j++) {
-			String lineaError = lineas[j].trim();
-
-			if (lineaError.contains("Plugin API version")) {
-				// Extrae la versión de API
-				int inicioVersion = lineaError.indexOf("Plugin API version ") + 21;
-				int finVersion = lineaError.indexOf(" ", inicioVersion);
-				if (inicioVersion <= 0 || finVersion <= inicioVersion)
-					continue;
-
-				String version = lineaError.substring(inicioVersion, finVersion);
-
-				if (!nombrePlugin.isEmpty() && !version.isEmpty()) {
-					nombresPlugins.add(nombrePlugin);
-					versionesAPI.add(version);
-				}
-				break;
-			}
 		}
+
+		StringBuilder mensajeBuilder = new StringBuilder();
+
+		for (int i = 0; i < nombresPlugins.size(); i++) {
+			mensajeBuilder.append(
+					MonitorDePID.idioma.mensajeVersionAPIIncompatible(nombresPlugins.get(i), versionesAPI.get(i)))
+					.append("<br><br>");
+		}
+
+		this.mensaje = mensajeBuilder.toString();
+		activado = true;
 	}
 
 	/**

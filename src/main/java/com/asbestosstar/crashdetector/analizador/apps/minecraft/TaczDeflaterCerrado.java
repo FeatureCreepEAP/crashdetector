@@ -23,23 +23,40 @@ public class TaczDeflaterCerrado implements Verificaciones {
 	private String enlaceHtml = "";
 	private final List<String> modsUbicacion = new ArrayList<>();
 
+	// Flag global para saber si en algún lugar del log aparece la NPE concreta
+	private boolean tieneDeflaterCerradoEnLog = false;
+
+	/**
+	 * Verificación global sobre el contenido completo de la consola.
+	 * <p>
+	 * Aquí solo se comprueba si aparece la NPE "Caused by:
+	 * java.lang.NullPointerException: Deflater has been closed" en el texto
+	 * completo del log. La detección de la línea concreta del stack de
+	 * {@code GetJarResources.backupFiles} se hace en
+	 * {@link #verificar(Consola, String, int)}.
+	 * </p>
+	 */
 	@Override
 	public void verificar(Consola consola) {
 		String contenido = consola.contenido_verificar;
-		String[] lineas = contenido.split(Verificaciones.nl);
-
-		boolean tieneDeflaterCerrado = contenido
+		tieneDeflaterCerradoEnLog = contenido
 				.contains("Caused by: java.lang.NullPointerException: Deflater has been closed");
+	}
 
-		int lineaStack = -1;
-		for (int i = 0; i < lineas.length; i++) {
-			if (lineas[i].contains("at com.tacz.guns.util.GetJarResources.lambda$backupFiles$2")) {
-				lineaStack = i;
-				break;
-			}
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		if (activado || linea == null) {
+			return;
 		}
 
-		if (tieneDeflaterCerrado && lineaStack >= 0) {
+		// Si globalmente no hemos visto la NPE de Deflater, no seguimos
+		if (!tieneDeflaterCerradoEnLog) {
+			return;
+		}
+
+		// Buscar el frame específico del stack de TACZ
+		if (linea.contains("at com.tacz.guns.util.GetJarResources.lambda$backupFiles$2")) {
+
 			// Buscar el JAR que contiene la clase implicada
 			String classPath = "com/tacz/guns/util/GetJarResources.class";
 			for (ArchivoDeMod mod : Buscardor.buscarModsConTermino(classPath)) {
@@ -48,7 +65,7 @@ public class TaczDeflaterCerrado implements Verificaciones {
 
 			// Mensaje y enlace
 			mensaje = MonitorDePID.idioma.errorTaczDeflaterCerrado(modsUbicacion) + Verificaciones.nl_html;
-			enlaceHtml = consola.agregarErrorALectador(lineaStack, this);
+			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 			activado = true;
 		}
 	}
@@ -93,10 +110,42 @@ public class TaczDeflaterCerrado implements Verificaciones {
 		return "tacz_deflater_cerrado";
 	}
 
+	/**
+	 * Indica si este verificador debe "ocupar" un trazo concreto del stack trace.
+	 * <p>
+	 * Para evitar falsos positivos, el trazo se considera perteneciente a este
+	 * problema solo cuando:
+	 * <ul>
+	 * <li>El verificador ya se activó.</li>
+	 * <li>El trazo contiene la NPE "Deflater has been closed".</li>
+	 * <li>Y además hace referencia a la clase
+	 * {@code com.tacz.guns.util.GetJarResources} (idealmente al método
+	 * {@code backupFiles}).</li>
+	 * </ul>
+	 * Es intencionadamente conservador: se prefiere un falso negativo antes que
+	 * marcar un trazo que no pertenezca realmente a este error.
+	 * </p>
+	 */
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+		if (!activado || trazo == null || trazo.trace == null) {
+			return false;
+		}
+
+		String t = trazo.trace;
+
+		// La NPE característica del problema
+		if (!t.contains("NullPointerException: Deflater has been closed")) {
+			return false;
+		}
+
+		// Afinar con la clase/método implicados
+		if (t.contains("com.tacz.guns.util.GetJarResources")
+				&& (t.contains("backupFiles") || t.contains("lambda$backupFiles$2"))) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

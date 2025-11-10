@@ -66,9 +66,13 @@ public class VerificacionDeStackTrace {
 																				// fatal)
 	public TriMap<String, Integer, Integer, String> clases_fatales_no_existentes = new TriMap<>();// (clase,
 																									// nivel_prioridad,
+	
 																									// línea_consola,
 																									// sospechoso)
-
+	public Map<Integer, TraceInfo> nivel_trazo = new HashMap<>();
+	
+	
+	
 	// Estos solo contienen el contenido pero no el nivel
 	public List<String> jar_malo = new ArrayList<String>();
 	public List<String> modid_malo = new ArrayList<String>();
@@ -102,13 +106,13 @@ public class VerificacionDeStackTrace {
 		jar_malo.clear();
 		modid_malo.clear();
 		package_malo.clear();
-
 		int nivel_prioridad = 0;
 		String contenido = consola.contenido_verificar;
 		List<TraceInfo> tracesFatal = obtenerTracesFatalConLinea(contenido);
 		Collections.reverse(tracesFatal); // Las últimas son las más importantes
 		for (TraceInfo traceInfo : tracesFatal) {
 			nivel_prioridad++;
+			nivel_trazo.put(nivel_prioridad, traceInfo);
 			this.procesarTrace(traceInfo.trace, true, nivel_prioridad, traceInfo.consolaLineaComenzar);
 		}
 
@@ -116,8 +120,10 @@ public class VerificacionDeStackTrace {
 		Collections.reverse(tracesNormales); // Las últimas son las más importantes
 		for (TraceInfo traceInfo : tracesNormales) {
 			nivel_prioridad++;
+			nivel_trazo.put(nivel_prioridad, traceInfo);
 			this.procesarTrace(traceInfo.trace, false, nivel_prioridad, traceInfo.consolaLineaComenzar);
 		}
+
 	}
 
 	/**
@@ -167,42 +173,56 @@ public class VerificacionDeStackTrace {
 	public static List<TraceInfo> obtenerTracesConLinea(String log) {
 		List<TraceInfo> resultado = new ArrayList<>();
 		String[] lineas = log.split(nl);
-		Matcher coincidencia = STACK_TRACE_PATTERN.matcher(log);
 
-		while (coincidencia.find()) {
-			// Calcular en qué línea comienza el stack trace
-			int inicio = coincidencia.start();
-			int caracteresProcesados = 0;
-			int numeroLinea = 0;
-
-			// Recorrer las líneas hasta encontrar dónde comienza el stack trace
-			for (int i = 0; i < lineas.length; i++) {
-				// Si la posición de inicio está dentro de esta línea, hemos encontrado la línea
-				// inicial
-				if (inicio < caracteresProcesados + lineas[i].length()) {
-					numeroLinea = i;
-					break;
-				}
-
-				// Sumar la longitud de la línea actual + el separador de línea
-				caracteresProcesados += lineas[i].length() + nl.length();
+		int i = 0;
+		while (i < lineas.length - 1) { // -1 porque siempre vemos at i+1
+			String header = lineas[i];
+			if (header == null || header.isEmpty()) {
+				i++;
+				continue;
 			}
 
-			// Construir el stack trace completo
-			StringBuilder traza = new StringBuilder(lineas[numeroLinea]);
-			int j = numeroLinea + 1;
+			// Emular ^\S.* → primera columna NO es espacio/tab
+			char c0 = header.charAt(0);
+			if (Character.isWhitespace(c0)) {
+				i++;
+				continue;
+			}
 
-			// Agregar todas las líneas que forman parte del stack trace
+			// La regex exige que la siguiente línea sea algo como:
+			// [spaces][//]at ...
+			String next = normalizarLineaStack(lineas[i + 1]);
+			if (next == null) {
+				i++;
+				continue;
+			}
+			next = next.trim();
+			if (!next.startsWith("at ")) {
+				// No cumple la parte "(?://\\s*)?at\\s+..."
+				i++;
+				continue;
+			}
+
+			// En este punto, tenemos el mismo "inicio de stacktrace" que encontraba la
+			// regex
+			int startLine = i;
+			StringBuilder traza = new StringBuilder(header);
+
+			int j = i + 1;
 			while (j < lineas.length && esParteDeStack(lineas[j])) {
 				traza.append(nl).append(lineas[j]);
 				j++;
 			}
 
-			// Verificar si el stack trace está permitido
-			if (tracePermite(traza.toString())) {
-				resultado.add(new TraceInfo(traza.toString(), numeroLinea));
+			String traceStr = traza.toString();
+			if (tracePermite(traceStr)) {
+				resultado.add(new TraceInfo(traceStr, startLine));
 			}
+
+			// Saltar todo este trazo; el siguiente potencial comienzo es después del final
+			i = j;
 		}
+
 		return resultado;
 	}
 

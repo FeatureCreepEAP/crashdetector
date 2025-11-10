@@ -1625,6 +1625,14 @@ public interface Idioma {
 
 	public String buscador_canario_de_orden_titulo_proximamente();
 
-	// public String advertenciaMalwareFalso();
+	public String nombre_de_mods_incompatibles_crash_assistant();
+
+	public String nombre_de_modpack_incompatible_crash_assistant();
+
+	public String advertenciaCrashAssistantModpackIncompatibleFalso();
+
+	public String advertenciaCrashAssistantModsIncompatibles();
+
+	public String advertenciaMalwareFalso();
 
 }

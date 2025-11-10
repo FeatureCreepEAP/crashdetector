@@ -19,35 +19,54 @@ public class FaltaModuleJPMS implements Verificaciones {
 	private final Set<String> errores = new HashSet<>();
 	private final List<String> enlaces = new ArrayList<>();
 
+	/**
+	 * Bandera ligera para indicar si el log contiene, en general, el patrón de
+	 * módulos JPMS faltantes. Esto permite que el verificador por línea se salte
+	 * todo el trabajo si no hay ninguna coincidencia global.
+	 */
+	private boolean posibleFaltaModulo = false;
+
 	@Override
 	public void verificar(Consola consola) {
 		String contenidoConsola = consola.contenido_verificar;
-		String[] lineas = contenidoConsola.split(Verificaciones.nl);
-
-		for (int i = 0; i < lineas.length; i++) {
-			String linea = lineas[i];
-			if (linea.contains("java.lang.module.FindException: Module ")
-					&& linea.contains(" not found, required by ")) {
-
-				try {
-					String modNecesitado = linea.split("Module ")[1].split(" not found")[0].trim();
-					String modRequeridor = linea.split("required by ")[1].trim();
-
-					String mensaje = MonitorDePID.idioma.jpms_modules_faltas(modNecesitado, modRequeridor);
-
-					// Solo agregar si es un error nuevo
-					if (errores.add(mensaje)) {
-						String enlace = consola.agregarErrorALectador(i, this);
-						enlaces.add(enlace);
-					}
-				} catch (Exception e) {
-					// Ignora errores de parseo para evitar fallos críticos
-					consola.agregarErrorALectador(i, this); // Aún así registra la línea como problema
-				}
-			}
+		if (contenidoConsola == null || contenidoConsola.isEmpty()) {
+			posibleFaltaModulo = false;
+			return;
 		}
 
-		activado = !errores.isEmpty();
+		// Verificación global mínima: solo comprobamos si aparecen los fragmentos
+		// clave del error JPMS. El análisis real se hace en el método por línea.
+		posibleFaltaModulo = contenidoConsola.contains("java.lang.module.FindException: Module ")
+				&& contenidoConsola.contains(" not found, required by ");
+	}
+
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		// Si el log no parece contener el error, evitamos trabajo extra por cada línea.
+		if (!posibleFaltaModulo || linea == null) {
+			return;
+		}
+
+		if (linea.contains("java.lang.module.FindException: Module ") && linea.contains(" not found, required by ")) {
+
+			try {
+				String modNecesitado = linea.split("Module ")[1].split(" not found")[0].trim();
+				String modRequeridor = linea.split("required by ")[1].trim();
+
+				String mensaje = MonitorDePID.idioma.jpms_modules_faltas(modNecesitado, modRequeridor);
+
+				// Solo agregar si es un error nuevo
+				if (errores.add(mensaje)) {
+					String enlace = consola.agregarErrorALectador(numero_de_linea, this);
+					enlaces.add(enlace);
+					activado = true;
+				}
+			} catch (Exception e) {
+				// Ignora errores de parseo para evitar fallos críticos,
+				// pero aún así registra la línea como problema.
+				consola.agregarErrorALectador(numero_de_linea, this);
+			}
+		}
 	}
 
 	@Override
@@ -102,8 +121,18 @@ public class FaltaModuleJPMS implements Verificaciones {
 
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+		// Para ser conservadores, solo marcamos el trazo como perteneciente a este
+		// verificador si:
+		// - Ya se ha activado (es decir, se detectó al menos un error JPMS en el log),
+		// y
+		// - El texto del trazo contiene claramente el patrón de FindException de
+		// módulos faltantes.
+		if (!activado || trazo == null || trazo.trace == null) {
+			return false;
+		}
+
+		String t = trazo.trace;
+		return t.contains("java.lang.module.FindException: Module ") && t.contains(" not found, required by ");
 	}
 
 }

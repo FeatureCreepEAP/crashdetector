@@ -20,17 +20,36 @@ public class ErrorClaseFinalExtendida implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
+
+	// Patrón reutilizable para extraer la clase hija y la clase padre final.
 	private static final Pattern PATRON_CLASE_FINAL = Pattern.compile(
 			"java\\.lang\\.IncompatibleClassChangeError: class ([^ ]+) cannot inherit from final class ([^\\s]+)");
 
+	/**
+	 * Bandera ligera para saber si el log contiene indicios de este error. Se usa
+	 * como filtro rápido antes del análisis línea a línea.
+	 */
+	private boolean posibleErrorClaseFinal = false;
+
 	@Override
 	public void verificar(Consola consola) {
-		// Este método no se usa; el análisis se hace por línea
+		// Trabajo global mínimo: solo comprobamos si el texto base del error aparece
+		// en algún punto del log. Si no, la verificación por línea se saltará.
+		String contenido = consola.contenido_verificar;
+		if (contenido == null) {
+			posibleErrorClaseFinal = false;
+			return;
+		}
+
+		posibleErrorClaseFinal = contenido.contains("IncompatibleClassChangeError: class")
+				&& contenido.contains("cannot inherit from final class");
 	}
 
 	@Override
 	public void verificar(Consola consola, String linea, int numero_de_linea) {
-		if (this.activado) {
+		// Si ya se activó o sabemos que el log no contiene este tipo de error,
+		// no hacemos trabajo adicional.
+		if (this.activado || !posibleErrorClaseFinal || linea == null) {
 			return;
 		}
 
@@ -47,7 +66,19 @@ public class ErrorClaseFinalExtendida implements Verificaciones {
 
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		return PATRON_CLASE_FINAL.matcher(trazo.trace).find();
+		// Para evitar falsos positivos, solo marcamos el trazo si:
+		// - El verificador ya se activó
+		// - El trazo no es nulo
+		// - El texto del trazo contiene la forma básica del error
+		if (!activado || trazo == null || trazo.trace == null) {
+			return false;
+		}
+		String t = trazo.trace;
+		if (!(t.contains("IncompatibleClassChangeError: class") && t.contains("cannot inherit from final class"))) {
+			return false;
+		}
+		// Comprobación más precisa usando el mismo patrón que en la verificación.
+		return PATRON_CLASE_FINAL.matcher(t).find();
 	}
 
 	@Override

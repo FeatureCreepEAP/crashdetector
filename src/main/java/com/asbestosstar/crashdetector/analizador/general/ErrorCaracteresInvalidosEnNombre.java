@@ -17,41 +17,69 @@ import java.util.regex.Matcher;
  */
 public class ErrorCaracteresInvalidosEnNombre implements Verificaciones {
 
+	// Patrón reutilizable para no recompilarlo por cada línea.
+	private static final Pattern PATRON_ERROR = Pattern
+			.compile("IllegalArgumentException: ([^:]+): Invalid module name: '([^']+)'");
+
 	private boolean activado = false;
 	private String mensaje = "";
 	private String nombreModulo = "";
 	private String parteInvalida = "";
 	private String enlaceHtml = "";
 
+	/**
+	 * Bandera ligera para saber si el log contiene indicios del error. Se usa como
+	 * filtro rápido antes del análisis línea a línea.
+	 */
+	private boolean posibleErrorNombreInvalido = false;
+
 	@Override
 	public void verificar(Consola consola) {
+		// Trabajo global mínimo: solo comprobamos si el texto base del error aparece
+		// en algún punto del log. Si no, la verificación por línea se saltará.
 		String contenidoConsola = consola.contenido_verificar;
-		String[] lineas = contenidoConsola.split(Verificaciones.nl);
+		if (contenidoConsola == null) {
+			posibleErrorNombreInvalido = false;
+			return;
+		}
 
-		// Analiza cada línea del registro buscando el patrón específico de error de
-		// nombre inválido
-		for (int i = 0; i < lineas.length; i++) {
-			String linea = lineas[i];
-			// Detecta cualquier caso de "Invalid module name: 'X' is not a Java identifier"
-			if (linea.contains("Invalid module name: '") && linea.contains("' is not a Java identifier")) {
+		posibleErrorNombreInvalido = contenidoConsola.contains("Invalid module name: '")
+				&& contenidoConsola.contains("' is not a Java identifier");
+	}
 
-				// Extrae el nombre completo del módulo y la parte inválida usando expresiones
-				// regulares
-				Pattern pattern = Pattern.compile("IllegalArgumentException: ([^:]+): Invalid module name: '([^']+)'");
-				Matcher matcher = pattern.matcher(linea);
+	/**
+	 * Análisis por línea del registro.
+	 * <p>
+	 * Busca el patrón:
+	 * {@code IllegalArgumentException: <modulo>: Invalid module name: '<x>' is not a Java identifier}
+	 * y extrae tanto el nombre del módulo como la parte inválida.
+	 * </p>
+	 */
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		// Si ya se activó o sabemos que el log no contiene este tipo de error,
+		// no hacemos trabajo adicional.
+		if (activado || !posibleErrorNombreInvalido || linea == null) {
+			return;
+		}
 
-				if (matcher.find()) {
-					nombreModulo = matcher.group(1);
-					parteInvalida = matcher.group(2);
+		// Detecta cualquier caso de "Invalid module name: 'X' is not a Java identifier"
+		if (linea.contains("Invalid module name: '") && linea.contains("' is not a Java identifier")) {
 
-					// Registrar el error en el sistema de lectura con el número de línea
-					enlaceHtml = consola.agregarErrorALectador(i, this);
+			// Extrae el nombre completo del módulo y la parte inválida usando expresiones
+			// regulares
+			Matcher matcher = PATRON_ERROR.matcher(linea);
 
-					mensaje = MonitorDePID.idioma.errorCaracteresInvalidosEnNombre(nombreModulo, parteInvalida)
-							+ Verificaciones.nl_html;
-					activado = true;
-					break; // Detiene al encontrar el primer error (es crítico y ocurre una vez)
-				}
+			if (matcher.find()) {
+				nombreModulo = matcher.group(1);
+				parteInvalida = matcher.group(2);
+
+				// Registrar el error en el sistema de lectura con el número de línea
+				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+
+				mensaje = MonitorDePID.idioma.errorCaracteresInvalidosEnNombre(nombreModulo, parteInvalida)
+						+ Verificaciones.nl_html;
+				activado = true; // Es crítico y suele ocurrir una sola vez
 			}
 		}
 	}
@@ -98,10 +126,23 @@ public class ErrorCaracteresInvalidosEnNombre implements Verificaciones {
 		return "caracters_invalidos_en_nombre";
 	}
 
+	/**
+	 * Marca trazos del stack trace que corresponden claramente a este problema.
+	 * <p>
+	 * Para evitar falsos positivos, solo devuelve {@code true} cuando:
+	 * <ul>
+	 * <li>El verificador ya se ha activado, y</li>
+	 * <li>El trazo contiene tanto la frase base "Invalid module name:" como "is not
+	 * a Java identifier".</li>
+	 * </ul>
+	 * </p>
+	 */
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+		if (!activado || trazo == null || trazo.trace == null) {
+			return false;
+		}
+		String t = trazo.trace;
+		return t.contains("Invalid module name:") && t.contains("is not a Java identifier");
 	}
-
 }

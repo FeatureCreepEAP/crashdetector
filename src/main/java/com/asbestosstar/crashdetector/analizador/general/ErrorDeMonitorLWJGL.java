@@ -13,20 +13,39 @@ public class ErrorDeMonitorLWJGL implements Verificaciones {
 	private String mensaje = "";
 	private String enlaceHtml = "";
 
+	/**
+	 * Bandera ligera para saber si el log contiene el texto base del error. Sirve
+	 * como filtro rápido antes del análisis por línea.
+	 */
+	private boolean posibleErrorMonitor = false;
+
 	@Override
 	public void verificar(Consola consola) {
 		String contenidoConsola = consola.contenido_verificar;
-		String[] lineas = contenidoConsola.split(Verificaciones.nl);
+
+		// Trabajo global mínimo: solo comprobamos si aparece el texto del error.
+		// Si no está, la verificación por línea se saltará completamente.
+		if (contenidoConsola != null
+				&& contenidoConsola.contains("org.lwjgl.LWJGLException: Failed to set display mode")) {
+			posibleErrorMonitor = true;
+		} else {
+			posibleErrorMonitor = false;
+		}
+	}
+
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		// Si ya se activó o sabemos que no hay rastro del error en el log, no hacemos
+		// nada.
+		if (activado || !posibleErrorMonitor || linea == null) {
+			return;
+		}
 
 		// Verifica cada línea buscando el error específico
-		for (int i = 0; i < lineas.length; i++) {
-			String linea = lineas[i];
-			if (linea.contains("org.lwjgl.LWJGLException: Failed to set display mode")) {
-				mensaje = MonitorDePID.idioma.errorMonitorLWJGL() + Verificaciones.nl_html;
-				enlaceHtml = consola.agregarErrorALectador(i, this);
-				activado = true;
-				break;
-			}
+		if (linea.contains("org.lwjgl.LWJGLException: Failed to set display mode")) {
+			mensaje = MonitorDePID.idioma.errorMonitorLWJGL() + Verificaciones.nl_html;
+			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+			activado = true;
 		}
 	}
 
@@ -72,8 +91,12 @@ public class ErrorDeMonitorLWJGL implements Verificaciones {
 
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+		// Solo marcamos trazos si ya se detectó el problema y el texto del trazo
+		// contiene exactamente el error de LWJGL sobre el modo de pantalla.
+		if (!activado || trazo == null || trazo.trace == null) {
+			return false;
+		}
+		return trazo.trace.contains("org.lwjgl.LWJGLException: Failed to set display mode");
 	}
 
 }

@@ -12,28 +12,50 @@ public class ModsDuplicadosModLauncher implements Verificaciones {
 	private boolean activado = false;
 	private final CDStringBuilder mensaje = new CDStringBuilder();
 
+	// Indicador de que el log contiene mensajes de mods duplicados.
+	private boolean hayDuplicados = false;
+	// Para no repetir la cabecera explicativa varias veces.
+	private boolean cabeceraAñadida = false;
+
 	@Override
 	public void verificar(Consola consola) {
 		String contenidoConsola = consola.contenido_verificar;
-		String[] lineas = contenidoConsola.split(Verificaciones.nl);
 
-		if (contenidoConsola.contains("Found duplicate mods")
-				|| contenidoConsola.contains("Found more than one mod with modid")) {
+		// Detectar de forma global si en el log hay mensajes de mods duplicados.
+		hayDuplicados = contenidoConsola.contains("Found duplicate mods")
+				|| contenidoConsola.contains("Found more than one mod with modid");
+
+		// Si no hay duplicados, no hacemos nada más.
+		if (!hayDuplicados) {
+			return;
+		}
+
+		// Añadir la cabecera una sola vez antes de procesar líneas individuales.
+		if (!cabeceraAñadida) {
 			mensaje.append(MonitorDePID.idioma.no_tienes_las_dependencias_necesarias()).append(Verificaciones.nl_html);
+			cabeceraAñadida = true;
+		}
+	}
 
-			for (int i = 0; i < lineas.length; i++) {
-				String linea = lineas[i];
-				if (linea.contains("Mod ID") && linea.contains("from mod files")) {
-					String mensajeMod = MonitorDePID.idioma.modlauncher_mods_duplicado(linea);
-					String enlace = consola.agregarErrorALectador(i, this);
-					// Añadir mensaje + enlace en la misma línea
-					mensaje.append(mensajeMod).append(" ").append(enlace).append(Verificaciones.nl_html);
-				} else if (linea.contains(
-						"Found more than one mod with modid \"crash_assistant\". Crash Assistant is duplicated. Crashing!")) {
-					String enlace = consola.agregarErrorALectador(i, this);
-					mensaje.append("crash_assistant").append(" ").append(enlace).append(Verificaciones.nl_html);
-				}
-			}
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		// Si globalmente no se detectaron duplicados, no hay nada que hacer por línea.
+		if (!hayDuplicados) {
+			return;
+		}
+
+		String lineaActual = linea;
+
+		if (lineaActual.contains("Mod ID") && lineaActual.contains("from mod files")) {
+			String mensajeMod = MonitorDePID.idioma.modlauncher_mods_duplicado(lineaActual);
+			String enlace = consola.agregarErrorALectador(numero_de_linea, this);
+			// Añadir mensaje + enlace en la misma línea
+			mensaje.append(mensajeMod).append(" ").append(enlace).append(Verificaciones.nl_html);
+			activado = true;
+		} else if (lineaActual.contains(
+				"Found more than one mod with modid \"crash_assistant\". Crash Assistant is duplicated. Crashing!")) {
+			String enlace = consola.agregarErrorALectador(numero_de_linea, this);
+			mensaje.append("crash_assistant").append(" ").append(enlace).append(Verificaciones.nl_html);
 			activado = true;
 		}
 	}

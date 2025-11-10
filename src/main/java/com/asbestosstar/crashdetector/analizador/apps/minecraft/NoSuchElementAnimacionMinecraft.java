@@ -22,24 +22,29 @@ public class NoSuchElementAnimacionMinecraft implements Verificaciones {
 	private String namespaceEncontrado = null;
 	private String enlaceHtml = "";
 
+	// Patrón para detectar el error con cualquier namespace (cacheado a nivel de
+	// clase)
+	private static final Pattern PATTERN = Pattern
+			.compile("java\\.util\\.NoSuchElementException: No animation with registry name ([a-zA-Z0-9_]+):");
+
 	@Override
 	public void verificar(Consola consola) {
-		String contenido = consola.contenido_verificar;
-		String[] lineas = contenido.split(Verificaciones.nl);
+		// La detección se realiza en el método por línea para evitar recorrer dos veces
+		// el contenido completo de la consola y aprovechar el escaneo línea a línea.
+	}
 
-		// Patrón para detectar el error con cualquier namespace
-		Pattern pattern = Pattern
-				.compile("java\\.util\\.NoSuchElementException: No animation with registry name ([a-zA-Z0-9_]+):");
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		// Si ya se activó, no seguimos buscando más coincidencias.
+		if (activado) {
+			return;
+		}
 
-		for (int i = 0; i < lineas.length; i++) {
-			String linea = lineas[i];
-			Matcher matcher = pattern.matcher(linea);
-			if (matcher.find()) {
-				namespaceEncontrado = matcher.group(1);
-				enlaceHtml = consola.agregarErrorALectador(i, this);
-				activado = true;
-				break;
-			}
+		Matcher matcher = PATTERN.matcher(linea);
+		if (matcher.find()) {
+			namespaceEncontrado = matcher.group(1);
+			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+			activado = true;
 		}
 	}
 
