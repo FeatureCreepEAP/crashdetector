@@ -28,7 +28,7 @@ public class Config {
 	public static final String VALOR_POR_DEFECTO_API_DE_REGISTROS_SELECCIONADA = "SecureLogger";
 	public static final String VALOR_POR_DEFECTO_SITIO_DE_REGISTROS_SELECCIONADO = "https://securelogger.net/save/log?";
 	private static final boolean VALOR_POR_DEFECTO_ANONIMIZAR_REGISTROS = true;
-	private static final boolean PROXY_SYSOUT_SYSERR = false;
+	private static final boolean PROXY_SYSOUT_SYSERR = true;
 	private static final boolean EXTREGAR_TOKEN_DE_ACCESO = false;
 	public static final String NOMBRE_CD = "CrashDetector";
 

@@ -439,6 +439,12 @@ public interface ArchivoDeMod {
 			// TODO Auto-generated method stub
 			return new ArrayList<Cargador>();
 		}
+
+		@Override
+		public int precargarTodasLasClasesRecursivo() {
+			// TODO Auto-generated method stub
+			return 0;
+		}
 	}
 
 	public static class Constante {
@@ -503,5 +509,7 @@ public interface ArchivoDeMod {
 			return new ArrayList<>();
 		}
 	}
+
+	public int precargarTodasLasClasesRecursivo();
 
 }

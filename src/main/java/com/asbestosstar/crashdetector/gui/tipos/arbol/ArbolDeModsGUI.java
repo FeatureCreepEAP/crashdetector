@@ -22,6 +22,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
 
 import javax.swing.BorderFactory;
@@ -52,7 +60,6 @@ import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
-import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUI;
 
 public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLateralDerecha {
 
@@ -502,35 +509,36 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		modeloArbol = new DefaultTreeModel(placeholder);
 		arbolModulos.setModel(modeloArbol);
 
-		this.setVisible(true); 
-		iniciarCargaPesada(); 
+		this.setVisible(true);
+		iniciarCargaPesada();
 	}
-	
+
 	public void iniciarCargaPesada() {
-	    setCargando(true);
-	    // ensure glass pane is actually visible once the frame is showing
-	    getRootPane().getGlassPane().setVisible(true);
+		setCargando(true);
+		// ensure glass pane is actually visible once the frame is showing
+		getRootPane().getGlassPane().setVisible(true);
 
-	    new SwingWorker<Void, Void>() {
-	        @Override
-	        protected Void doInBackground() throws Exception {
-	            // heavy/IO/ASM work OFF the EDT
-	            Buscardor.cargarYPrecargarClasesEnCache();
-	            return null;
-	        }
+		new SwingWorker<Void, Void>() {
+			@Override
+			protected Void doInBackground() throws Exception {
+				// heavy/IO/ASM work OFF the EDT
+				Buscardor.cargarYPrecargarClasesEnCache();
+				return null;
+			}
 
-	        @Override
-	        protected void done() {
-	            try {
-	                get(); // surface any exception to log/UI if you want
-	            } catch (Exception ignored) { }
-	            // now rebuild the tree with the loaded caches
-	            construirArbolInicialAsync();
-	            setCargando(false);
-	        }
-	    }.execute();
+			@Override
+			protected void done() {
+				try {
+					get(); // surface any exception to log/UI if you want
+				} catch (Exception ignored) {
+				}
+				// now rebuild the tree with the loaded caches
+				construirArbolInicialAsync();
+				setCargando(false);
+				com.asbestosstar.crashdetector.CrashDetectorLogger.log("iniciarCargaPesada done");
+			}
+		}.execute();
 	}
-
 
 	public void construirArbolInicial() {
 		DefaultMutableTreeNode raiz = new DefaultMutableTreeNode(MonitorDePID.idioma.modsCargados());
@@ -1546,27 +1554,66 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 	}
 
 	// Construye el árbol en un hilo de fondo
+// Construye el árbol completo en paralelo (una tarea por mod de nivel superior).
 	public void construirArbolInicialAsync() {
-		// Si había un worker anterior, cancelarlo
+		// Cancelar worker previo si sigue en curso
 		if (workerConstruir != null && !workerConstruir.isDone()) {
 			workerConstruir.cancel(true);
 		}
 
 		setCargando(true);
+		com.asbestosstar.crashdetector.CrashDetectorLogger.log("workerConstruir");
 
 		workerConstruir = new SwingWorker<DefaultMutableTreeNode, Void>() {
 			@Override
 			protected DefaultMutableTreeNode doInBackground() {
-				// NO tocar componentes Swing aquí
+				com.asbestosstar.crashdetector.CrashDetectorLogger.log("async bg");
+
+				// Raíz provisional que se llenará con subárboles ya construidos (fuera del EDT)
 				DefaultMutableTreeNode raiz = new DefaultMutableTreeNode(MonitorDePID.idioma.modsCargados());
 
-				// Construcción pesada fuera del EDT
-				for (ArchivoDeMod mod : Buscardor.mods) {
-					if (isCancelled())
-						break;
-					DefaultMutableTreeNode nodoModulo = construirNodoModulo(mod);
-					raiz.add(nodoModulo);
+				// Snapshot de la lista de mods para evitar concurrencia con modificaciones
+				// externas
+				List<ArchivoDeMod> modsSnapshot = new ArrayList<>(Buscardor.mods);
+
+				// Crear una tarea por mod (cada tarea construye su subárbol completo)
+				List<Callable<DefaultMutableTreeNode>> tareas = new ArrayList<>(modsSnapshot.size());
+				for (ArchivoDeMod mod : modsSnapshot) {
+					tareas.add(() -> construirNodoModulo(mod)); // NINGÚN acceso a Swing aquí
 				}
+
+				// Ejecutar todas las tareas en paralelo
+				List<Future<DefaultMutableTreeNode>> futuros;
+				try {
+					futuros = POOL_BG.invokeAll(tareas);
+				} catch (InterruptedException ie) {
+					// Cancelado: devolver raíz tal cual
+					return raiz;
+				}
+
+				// Recoger resultados; respetar cancelación del SwingWorker
+				for (Future<DefaultMutableTreeNode> f : futuros) {
+					if (isCancelled()) {
+						// Intentar cancelar el resto
+						for (Future<DefaultMutableTreeNode> ff : futuros)
+							ff.cancel(true);
+						break;
+					}
+					try {
+						DefaultMutableTreeNode nodo = f.get();
+						if (nodo != null) {
+							raiz.add(nodo);
+						}
+					} catch (CancellationException | InterruptedException ex) {
+						// Cancelado: ignorar
+					} catch (ExecutionException ex) {
+						// Registrar error de la tarea individual pero continuar con las demás
+						com.asbestosstar.crashdetector.CrashDetectorLogger
+								.log("construir nodo falló: " + ex.getCause());
+					}
+				}
+
+				com.asbestosstar.crashdetector.CrashDetectorLogger.log("async bg completa");
 				return raiz;
 			}
 
@@ -1576,19 +1623,39 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 					if (isCancelled())
 						return;
 					DefaultMutableTreeNode raiz = get();
-					// Sí tocar Swing aquí (EDT)
+					com.asbestosstar.crashdetector.CrashDetectorLogger.log("antes model");
 					modeloArbol = new DefaultTreeModel(raiz);
 					arbolModulos.setModel(modeloArbol);
+					com.asbestosstar.crashdetector.CrashDetectorLogger.log("despues model");
 				} catch (Exception ex) {
-					// Opcional: log / mensaje
+					// (Opcional) log de error
 				} finally {
 					setCargando(false);
+					com.asbestosstar.crashdetector.CrashDetectorLogger.log("no cargando completa");
 				}
 			}
 		};
 
 		workerConstruir.execute();
+		com.asbestosstar.crashdetector.CrashDetectorLogger.log("workerConstruir completa");
 	}
+
+	private static final int NUCLEOS = Math.max(1, Runtime.getRuntime().availableProcessors());
+	private static final int TAM_POOL = Math.max(2, NUCLEOS * 4);
+
+	// Hilos daemon para no bloquear el cierre de la app.
+	// Todos los trabajos pesados de construcción/filtrado del árbol van aquí (fuera
+	// del EDT).
+	private static final ExecutorService POOL_BG = Executors.newFixedThreadPool(TAM_POOL, new ThreadFactory() {
+		private final AtomicInteger n = new AtomicInteger(1);
+
+		@Override
+		public Thread newThread(Runnable r) {
+			Thread t = new Thread(r, "ArbolMods-BG-" + n.getAndIncrement());
+			t.setDaemon(true);
+			return t;
+		}
+	});
 
 	public DefaultMutableTreeNode construirNodoModulo(ArchivoDeMod mod) {
 		String ubicacionPublica = mod.ubicacion_para_publicar();
@@ -1710,17 +1777,18 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		return nodoModulo;
 	}
 
+// Filtrado paralelo: cada mod se procesa en su propia tarea en el pool.
 	public void filtrarArbolAsync() {
 		final String filtro = campoBuscar.getText().trim().toLowerCase();
 		final String tipoFiltro = (String) comboFiltro.getSelectedItem();
 
-		// Si cadena vacía, reconstruir árbol completo
+		// Si no hay filtro, reconstruir el árbol completo (también en paralelo)
 		if (filtro.isEmpty()) {
 			construirArbolInicialAsync();
 			return;
 		}
 
-		// Cancela búsqueda anterior si existe
+		// Cancelar búsqueda anterior si existía
 		if (workerBuscar != null && !workerBuscar.isDone()) {
 			workerBuscar.cancel(true);
 		}
@@ -1731,17 +1799,47 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 			@Override
 			protected DefaultMutableTreeNode doInBackground() {
 				DefaultMutableTreeNode raiz = new DefaultMutableTreeNode(MonitorDePID.idioma.resultadosBusqueda());
-				boolean encontrado = false;
 
-				for (ArchivoDeMod mod : Buscardor.mods) {
-					if (isCancelled())
+				// Snapshot de mods
+				List<ArchivoDeMod> modsSnapshot = new ArrayList<>(Buscardor.mods);
+
+				// Una tarea por mod: arma el nodo del módulo si tiene resultados; si no,
+				// retorna null
+				List<Callable<DefaultMutableTreeNode>> tareas = new ArrayList<>(modsSnapshot.size());
+				for (ArchivoDeMod mod : modsSnapshot) {
+					tareas.add(() -> {
+						// Construcción en segundo plano; NO tocar Swing aquí
+						DefaultMutableTreeNode nodoModulo = new DefaultMutableTreeNode(
+								new NodoConTexto(mod.ubicacion_para_publicar(), mod));
+						boolean agregar = buscarEnModuloBG(nodoModulo, mod, filtro, tipoFiltro, this);
+						return agregar ? nodoModulo : null;
+					});
+				}
+
+				List<Future<DefaultMutableTreeNode>> futuros;
+				try {
+					futuros = POOL_BG.invokeAll(tareas);
+				} catch (InterruptedException ie) {
+					return raiz; // cancelado
+				}
+
+				boolean encontrado = false;
+				for (Future<DefaultMutableTreeNode> f : futuros) {
+					if (isCancelled()) {
+						for (Future<DefaultMutableTreeNode> ff : futuros)
+							ff.cancel(true);
 						break;
-					DefaultMutableTreeNode nodoModulo = new DefaultMutableTreeNode(
-							new NodoConTexto(mod.ubicacion_para_publicar(), mod));
-					boolean agregar = buscarEnModuloBG(nodoModulo, mod, filtro, tipoFiltro, this);
-					if (agregar) {
-						raiz.add(nodoModulo);
-						encontrado = true;
+					}
+					try {
+						DefaultMutableTreeNode nodo = f.get();
+						if (nodo != null) {
+							raiz.add(nodo);
+							encontrado = true;
+						}
+					} catch (CancellationException | InterruptedException ex) {
+						// cancelado: ignorar
+					} catch (ExecutionException ex) {
+						com.asbestosstar.crashdetector.CrashDetectorLogger.log("filtrar nodo falló: " + ex.getCause());
 					}
 				}
 
@@ -1760,7 +1858,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 					modeloArbol = new DefaultTreeModel(raiz);
 					arbolModulos.setModel(modeloArbol);
 				} catch (Exception ex) {
-					// Opcional: log / UI
+					// (Opcional) log de error
 				} finally {
 					setCargando(false);
 				}

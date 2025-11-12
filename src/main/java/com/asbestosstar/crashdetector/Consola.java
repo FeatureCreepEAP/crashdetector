@@ -155,6 +155,7 @@ public class Consola {
 														// falsos positivos; probablemente esta sea también una causa
 														// conocida del engaño de incompatibilidad que intentan imponer.
 		inutiles_archivo_strs.add("telemetry");// no tiene nada y es comun en la lanzer vainilla
+		inutiles_archivo_strs.add("launcher");//no quieremos launcher logs, KLauncher y Astralrinth y mas incluye sus registros aqui
 
 	}
 
@@ -335,16 +336,16 @@ public class Consola {
 //				if (contenido_verificar.contains(MonitorDePID.mensaje_de_registro_lanzer_completo)) {
 //					MonitorDePID.tiene_mensaje_de_registro_launcher_completa = true;
 //				}
-			if (
-					contenido_verificar.contains("Minecraft closed with exit code")||//TLauncher
-					contenido_verificar.contains("Process crashed with exit code")||//Vainilla
-					contenido_verificar.contains("Process exited with status")//Astralrinth
-
-					
-					
-					) {
-				MonitorDePID.tiene_mensaje_de_registro_launcher_completa = true;
-			}
+//			if (
+//					contenido_verificar.contains("Minecraft closed with exit code")||//TLauncher
+//					contenido_verificar.contains("Process crashed with exit code")||//Vainilla
+//					contenido_verificar.contains("Process exited with status")//Astralrinth
+//
+//					
+//					
+//					) {
+//				MonitorDePID.tiene_mensaje_de_registro_launcher_completa = true;
+//			}
 			} else {
 				nueva = false;
 				contenido = "";
@@ -423,36 +424,36 @@ public class Consola {
 
 	public static List<File> obtenerArchivosDeConsolas() {
 		List<File> resultado = new ArrayList<>();
-		Set<String> rutasLauncherLog = new HashSet<>(); // Solo para launcher_log.txt
-		String home = System.getProperty("user.home");
-		String soporteAplicaciones = home + "/Library/Application Support/";
-		String appdata = System.getenv("APPDATA");
+//		Set<String> rutasLauncherLog = new HashSet<>(); // Solo para launcher_log.txt
+//		String home = System.getProperty("user.home");
+//		String soporteAplicaciones = home + "/Library/Application Support/";
+//		String appdata = System.getenv("APPDATA");
 
 		// Agregar logs principales con control de duplicados
-		agregarLauncherLog(new File("launcher_log.txt"), resultado, rutasLauncherLog);
-		agregarLauncherLog(new File("../../Install/launcher_log.txt"), resultado, rutasLauncherLog); // CurseForgeApp
-		agregarLauncherLog(new File(soporteAplicaciones + "minecraft/launcher_log.txt"), resultado, rutasLauncherLog); // CurseForgeApp
-		agregarLauncherLog(new File(home + "/.minecraft/launcher_log.txt"), resultado, rutasLauncherLog); // CurseForgeApp
-
-		
-		if (appdata != null) {
-			agregarLauncherLog(new File(appdata + "/.minecraft/launcher_log.txt"), resultado, rutasLauncherLog); // CurseForgeApp
-		}
+//		agregarLauncherLog(new File("launcher_log.txt"), resultado, rutasLauncherLog);
+//		agregarLauncherLog(new File("../../Install/launcher_log.txt"), resultado, rutasLauncherLog); // CurseForgeApp
+//		agregarLauncherLog(new File(soporteAplicaciones + "minecraft/launcher_log.txt"), resultado, rutasLauncherLog); // CurseForgeApp
+//		agregarLauncherLog(new File(home + "/.minecraft/launcher_log.txt"), resultado, rutasLauncherLog); // CurseForgeApp
+//
+//		
+//		if (appdata != null) {
+//			agregarLauncherLog(new File(appdata + "/.minecraft/launcher_log.txt"), resultado, rutasLauncherLog); // CurseForgeApp
+//		}
 
 		// Lexplosion/NightWorld: buscar en %APPDATA%/lexplosion-data los debug y crash
 		// del launcher
 		// https://discord.com/channels/958036956464422935/1012318418579497061/1417817825908752425
-		if (appdata != null) {
-			File carpetaLexplosion = new File(appdata + "/lexplosion-data/");
-			agregarDirectorio(resultado, carpetaLexplosion);
-		}
+//		if (appdata != null) {
+//			File carpetaLexplosion = new File(appdata + "/lexplosion-data/");
+//			agregarDirectorio(resultado, carpetaLexplosion);
+//		}
 
-		agregarDirectorio(resultado, new File("../.hmcl/logs/"));
-		agregarDirectorio(resultado, new File(home + "/.hmcl/logs/"));
-		if (appdata != null) {
-			agregarDirectorio(resultado, new File(appdata + "/.hmcl/logs/"));
-		}
-		agregarDirectorio(resultado, obtanerHMCLDirMunidial().toFile());
+//		agregarDirectorio(resultado, new File("../.hmcl/logs/"));
+//		agregarDirectorio(resultado, new File(home + "/.hmcl/logs/"));
+//		if (appdata != null) {
+//			agregarDirectorio(resultado, new File(appdata + "/.hmcl/logs/"));
+//		}
+//		agregarDirectorio(resultado, obtanerHMCLDirMunidial().toFile());
 //https://github.com/HMCL-dev/HMCL/issues/2663
 
 		// Agregar otros logs sin control de duplicados
@@ -460,36 +461,36 @@ public class Consola {
 		agregarDirectorio(resultado, new File("crash-reports/"));
 
 		// Configuración de TLauncher
-		File carpetaTLauncherStarter;
-		File carpetaTLauncher;
-		File archivoTLLegacy;
-		if (appdata != null) {
-			carpetaTLauncherStarter = new File(appdata + "/.tlauncher/logs/starter/");
-			carpetaTLauncher = new File(appdata + "/.tlauncher/logs/tlauncher/");
-			archivoTLLegacy = new File(appdata + "/.tlauncher/logs/launcher.log");
-		} else if (new File(soporteAplicaciones + "/tlauncher/").exists()) {
-			carpetaTLauncherStarter = new File(soporteAplicaciones + "/tlauncher/logs/starter/");
-			carpetaTLauncher = new File(soporteAplicaciones + "/tlauncher/logs/tlauncher/");
-			archivoTLLegacy = new File(soporteAplicaciones + "/tlauncher/logs/launcher.log");
-		} else {
-			carpetaTLauncherStarter = new File(home + "/.tlauncher/logs/starter/");
-			carpetaTLauncher = new File(home + "/.tlauncher/logs/tlauncher/");
-			archivoTLLegacy = new File(home + "/.tlauncher/logs/launcher.log");
-		}
+//		File carpetaTLauncherStarter;
+//		File carpetaTLauncher;
+//		File archivoTLLegacy;
+//		if (appdata != null) {
+//			carpetaTLauncherStarter = new File(appdata + "/.tlauncher/logs/starter/");
+//			carpetaTLauncher = new File(appdata + "/.tlauncher/logs/tlauncher/");
+//			archivoTLLegacy = new File(appdata + "/.tlauncher/logs/launcher.log");
+//		} else if (new File(soporteAplicaciones + "/tlauncher/").exists()) {
+//			carpetaTLauncherStarter = new File(soporteAplicaciones + "/tlauncher/logs/starter/");
+//			carpetaTLauncher = new File(soporteAplicaciones + "/tlauncher/logs/tlauncher/");
+//			archivoTLLegacy = new File(soporteAplicaciones + "/tlauncher/logs/launcher.log");
+//		} else {
+//			carpetaTLauncherStarter = new File(home + "/.tlauncher/logs/starter/");
+//			carpetaTLauncher = new File(home + "/.tlauncher/logs/tlauncher/");
+//			archivoTLLegacy = new File(home + "/.tlauncher/logs/launcher.log");
+//		}
 
-		agregarDirectorio(resultado, carpetaTLauncher);
-		agregarDirectorio(resultado, carpetaTLauncherStarter);
+		//agregarDirectorio(resultado, carpetaTLauncher);
+		//agregarDirectorio(resultado, carpetaTLauncherStarter);
 
 		// Agregar otros archivos directamente
-		agregarLauncherLog(new File(home + ".minecraft/launcher_log.txt"), resultado, rutasLauncherLog); // CurseForgeApp
+	//	agregarLauncherLog(new File(home + ".minecraft/launcher_log.txt"), resultado, rutasLauncherLog); // CurseForgeApp
 																											// y TL
-		String str_carpHMCL = Config.obtenerInstancia().obtenerCarpetaHMCL();
-		if (!str_carpHMCL.isEmpty()) {
-			File carpHMCL = new File(str_carpHMCL);
-			agregarDirectorio(resultado, carpHMCL);
-		}
-
-		resultado.add(archivoTLLegacy);
+//		String str_carpHMCL = Config.obtenerInstancia().obtenerCarpetaHMCL();
+//		if (!str_carpHMCL.isEmpty()) {
+//			File carpHMCL = new File(str_carpHMCL);
+//			agregarDirectorio(resultado, carpHMCL);
+//		}
+//
+//		resultado.add(archivoTLLegacy);
 
 		// segundo
 		//resultado.add(new File("../../logs/ftb-app-electron.log")); // FTB
@@ -509,44 +510,44 @@ public class Consola {
 	 * 
 	 * @return Ruta al directorio principal de HMCL
 	 */
-	private static Path obtanerHMCLDirMunidial() {
-		// Primero verificar propiedad del sistema
-		String hmclHomeProp = System.getProperty("hmcl.home");
-		if (hmclHomeProp != null) {
-			return Paths.get(hmclHomeProp).toAbsolutePath().normalize();
-		}
-
-		// Lógica específica para Linux/BSD
-		if (ES_LINUX_O_BSD) {
-			String xdgData = System.getenv("XDG_DATA_HOME");
-			if (xdgData != null && !xdgData.isEmpty()) {
-				return Paths.get(xdgData, "hmcl").toAbsolutePath().normalize();
-			}
-			return Paths.get(System.getProperty("user.home"), ".local", "share", "hmcl").toAbsolutePath().normalize();
-		}
-
-		// Para Windows y macOS
-		return Paths.get(System.getProperty("user.home"), ".hmcl").toAbsolutePath().normalize();
-	}
+//	private static Path obtanerHMCLDirMunidial() {
+//		// Primero verificar propiedad del sistema
+//		String hmclHomeProp = System.getProperty("hmcl.home");
+//		if (hmclHomeProp != null) {
+//			return Paths.get(hmclHomeProp).toAbsolutePath().normalize();
+//		}
+//
+//		// Lógica específica para Linux/BSD
+//		if (ES_LINUX_O_BSD) {
+//			String xdgData = System.getenv("XDG_DATA_HOME");
+//			if (xdgData != null && !xdgData.isEmpty()) {
+//				return Paths.get(xdgData, "hmcl").toAbsolutePath().normalize();
+//			}
+//			return Paths.get(System.getProperty("user.home"), ".local", "share", "hmcl").toAbsolutePath().normalize();
+//		}
+//
+//		// Para Windows y macOS
+//		return Paths.get(System.getProperty("user.home"), ".hmcl").toAbsolutePath().normalize();
+//	}
 
 	/**
 	 * Agrega archivos de logs evitando duplicados solo para launcher_log.txt
 	 */
-	private static void agregarLauncherLog(File archivo, List<File> resultado, Set<String> rutas) {
-		if (archivo.getName().equals("launcher_log.txt")) {
-			try {
-				String rutaCanonica = archivo.getCanonicalPath();
-				if (!rutas.contains(rutaCanonica)) {
-					resultado.add(archivo);
-					rutas.add(rutaCanonica);
-				}
-			} catch (IOException e) {
-				resultado.add(archivo);
-			}
-		} else {
-			resultado.add(archivo);
-		}
-	}
+//	private static void agregarLauncherLog(File archivo, List<File> resultado, Set<String> rutas) {
+//		if (archivo.getName().equals("launcher_log.txt")) {
+//			try {
+//				String rutaCanonica = archivo.getCanonicalPath();
+//				if (!rutas.contains(rutaCanonica)) {
+//					resultado.add(archivo);
+//					rutas.add(rutaCanonica);
+//				}
+//			} catch (IOException e) {
+//				resultado.add(archivo);
+//			}
+//		} else {
+//			resultado.add(archivo);
+//		}
+//	}
 
 	/**
 	 * Agrega recursivamente todos los archivos de un directorio y sus

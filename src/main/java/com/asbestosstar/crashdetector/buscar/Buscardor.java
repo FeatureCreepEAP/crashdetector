@@ -121,14 +121,7 @@ public class Buscardor {
 	 * @return número de clases precargadas para logging interno
 	 */
 	private static int precargarClasesDeUnMod(ArchivoDeMod mod) {
-		if (mod instanceof ModCarpeta) {
-			return ((ModCarpeta) mod).precargarTodasLasClasesRecursivo();
-		} else if (mod instanceof ModPKZip) {
-			return ((ModPKZip) mod).precargarTodasLasClasesRecursivo();
-		} else {
-			// Tipos no soportados para precarga explícita
-			return 0;
-		}
+		return mod.precargarTodasLasClasesRecursivo();
 	}
 
 	/**
@@ -182,10 +175,10 @@ public class Buscardor {
 		int cpus = ManagementFactory.getThreadMXBean().getThreadCount();
 
 		// Para operaciones de disco, usamos un factor de 2
-		int hilosOptimos = Math.min(numeroMods, cpus * 2);
+		int hilosOptimos = Math.min(numeroMods, cpus * 4);
 
 		// Asegurar mínimo 1 y máximo razonable
-		return Math.max(1, Math.min(hilosOptimos, 8));
+		return Math.max(1, Math.min(hilosOptimos, 512));
 	}
 
 	/**

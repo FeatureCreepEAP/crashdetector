@@ -1,7 +1,14 @@
 package com.asbestosstar.crashdetector;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 
+import com.asbestosstar.crashdetector.config.ConfigBoolean;
 import com.asbestosstar.crashdetector.gui.tipos.no_registro_lanzador.NoRegistroDeLauncherVShojo;
 
 /**
@@ -12,8 +19,10 @@ import com.asbestosstar.crashdetector.gui.tipos.no_registro_lanzador.NoRegistroD
 public class ProxySysOutSysErr {
 
 	public static void init() {
-		if (Config.obtenerInstancia().obtenerProxySysOutSysErr()) {
+		if (Config.obtenerInstancia().obtenerProxySysOutSysErr() || !Config.obtenerInstancia().propiedadesConfig.containsKey("0351")) {
 			File archivoLog = NoRegistroDeLauncherVShojo.cd_launcherlog;
+			ConfigBoolean mas0351 = ConfigBoolean.de("0351", true);
+			Config.obtenerInstancia().guardarProxySysOutSysErr(true);//para migracion do versiones viajas
 			try {
 				// 1. Crea un ÚNICO flujo de archivo sincronizado y resistente a errores
 				FileOutputStream flujoArchivo = new FileOutputStream(archivoLog, false);

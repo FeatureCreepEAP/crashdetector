@@ -283,6 +283,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		}
 	};
 
+	@Deprecated
 	/**
 	 * No registro de Launcher
 	 */

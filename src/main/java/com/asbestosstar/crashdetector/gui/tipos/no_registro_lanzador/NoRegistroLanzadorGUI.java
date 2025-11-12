@@ -45,6 +45,7 @@ import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 
+@Deprecated
 /**
  * Clase abstracta que define la funcionalidad base para la GUI de no registro
  * de lanzador. La apariencia, el layout y la creación de componentes se manejan

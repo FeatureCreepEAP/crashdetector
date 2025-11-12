@@ -63,7 +63,6 @@ public class MonitorDePID {
 	public static String enlace;
 	public static long pid;
 	public static boolean resultados = false;
-	public static boolean tiene_mensaje_de_registro_launcher_completa = false;
 	public static boolean consola_de_launcher_inyectado = false;
 	public static StringBuilder contenidoInforme;
 	public static Analizador analizador = new Analizador();
@@ -290,13 +289,12 @@ public class MonitorDePID {
 			String cp = System.getProperty("java.class.path") + File.pathSeparator + jar;
 			// System.out.println("******************" + cp);
 
-			ProcessBuilder pb = new ProcessBuilder(javaBinary, 
-				//	"-XX:MaxJavaStackTraceDepth=1000000",
-					"-cp", cp, "com.asbestosstar.crashdetector.MonitorDePID",
-					"--monitor", String.valueOf(pid))
+			ProcessBuilder pb = new ProcessBuilder(javaBinary,
+					// "-XX:MaxJavaStackTraceDepth=1000000",
+					"-cp", cp, "com.asbestosstar.crashdetector.MonitorDePID", "--monitor", String.valueOf(pid))
 			// .inheritIO()
 			;
-		//	 pb.redirectError(new File(CrashDetectorLogger.LOG_ERR_FILE_PATH));
+			// pb.redirectError(new File(CrashDetectorLogger.LOG_ERR_FILE_PATH));
 			// pb.redirectOutput(new File(CrashDetectorLogger.LOG_FILE_PATH));
 
 			pb.start();
@@ -509,17 +507,17 @@ public class MonitorDePID {
 		if (Consola.tiene_registro_de_launcher(consolas) && !consola_de_launcher_inyectado) {
 			Duration duration = Duration.between(luego, Instant.now());
 
-			while (!tiene_mensaje_de_registro_launcher_completa && duration.getSeconds() < 20) {// TODO Config para
-																								// tiempo
-				CrashDetectorLogger.log("reincinar finalizacion " + duration.getSeconds());
-				duration = Duration.between(luego, Instant.now());
-				for (Consola consola : consolas) {
-					consola.finalizarContenido(utc, false);
-				}
-
+			// while (!tiene_mensaje_de_registro_launcher_completa && duration.getSeconds()
+			// < 20) {// TODO Config para
+			// tiempo
+			CrashDetectorLogger.log("reincinar finalizacion " + duration.getSeconds());
+			// duration = Duration.between(luego, Instant.now());
+			for (Consola consola : consolas) {
+				consola.finalizarContenido(utc, false);
 			}
-			CrashDetectorLogger.log("tiene_mensaje_de_registro_launcher_completa es valor "
-					+ String.valueOf(tiene_mensaje_de_registro_launcher_completa));
+
+			// }
+
 		}
 
 	}
@@ -887,7 +885,7 @@ public class MonitorDePID {
 		StringBuilder constructor = new StringBuilder();
 		Buscardor.mods.clear();
 		Buscardor.cargado = false;
-		Buscardor.cargadotodos=false;
+		Buscardor.cargadotodos = false;
 		if (finalizar_contento) {
 			finalizarConsolasLentas(luego);
 		}
