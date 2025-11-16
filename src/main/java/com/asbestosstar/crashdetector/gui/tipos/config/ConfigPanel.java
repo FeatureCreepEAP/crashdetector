@@ -28,6 +28,7 @@ import javax.swing.event.DocumentListener;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
@@ -384,7 +385,7 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 		etiquetaImagen.setHorizontalAlignment(JLabel.CENTER);
 
 		try {
-			ImageIcon iconoImagen = new ImageIcon(MonitorDePID.carpeta.resolve("imagenes/profeco.jpg").toString());
+			ImageIcon iconoImagen = new ImageIcon(Statics.carpeta.resolve("imagenes/profeco.jpg").toString());
 			etiquetaImagen.setIcon(iconoImagen);
 		} catch (Exception e) {
 			etiquetaImagen.setText("Error al cargar la imagen");

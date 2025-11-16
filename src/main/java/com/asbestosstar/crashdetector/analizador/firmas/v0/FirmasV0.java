@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
-import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.Criticalidad;
 import com.asbestosstar.crashdetector.analizador.firmas.FiltrodeCodice;
 import com.asbestosstar.crashdetector.json.Json;
@@ -37,7 +37,7 @@ public class FirmasV0 {
 	 * retorna lista vacía.
 	 */
 	public static List<VerificacionFirmasV0> cargar() {
-		final Path ruta = MonitorDePID.carpeta.resolve(NOMBRE_ARCHIVO);
+		final Path ruta = Statics.carpeta.resolve(NOMBRE_ARCHIVO);
 		final List<VerificacionFirmasV0> lista = new ArrayList<VerificacionFirmasV0>();
 
 		try {
@@ -177,7 +177,7 @@ public class FirmasV0 {
 	 * carpeta/archivo si no existen.
 	 */
 	public static void guardar(List<VerificacionFirmasV0> verificaciones) throws IOException {
-		final Path carpeta = MonitorDePID.carpeta;
+		final Path carpeta = Statics.carpeta;
 		final Path ruta = carpeta.resolve(NOMBRE_ARCHIVO);
 
 		if (!Files.exists(carpeta)) {

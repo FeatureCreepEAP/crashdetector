@@ -44,8 +44,8 @@ public class GeneradorDeInformacion {
 
 			cons.append("</center>");
 
-			String pantilla = MonitorDePID.leer_archivo(MonitorDePID.carpeta.resolve("pantilla.htm"));
-			String carp = MonitorDePID.carpeta.resolve(".informes").toString() + "/";
+			String pantilla = MonitorDePID.leer_archivo(Statics.carpeta.resolve("pantilla.htm"));
+			String carp = Statics.carpeta.resolve(".informes").toString() + "/";
 			File carp_file = new File(carp);
 			carp_file.mkdirs();
 			File ret = new File(carp + instant.toString().replace(":", "") + ".htm");
@@ -65,7 +65,7 @@ public class GeneradorDeInformacion {
 
 	public static String imagenesLocales() {
 		StringBuilder cons = new StringBuilder();
-		File imagenDir = MonitorDePID.carpeta.resolve("imagenes").toFile();
+		File imagenDir = Statics.carpeta.resolve("imagenes").toFile();
 		String guraUrl = new File(imagenDir, "gura.png").toURI().toString();
 		String mumeiUrl = new File(imagenDir, "nanashi_mumei.png").toURI().toString();
 		String shionUrl = new File(imagenDir, "shion.png").toURI().toString();
@@ -172,7 +172,7 @@ public class GeneradorDeInformacion {
 			cons.append(generarTextoArcoiris("Feliz mes del orgullo"));
 			cons.append("</center>");
 
-			String plantilla = MonitorDePID.leer_archivo(MonitorDePID.carpeta.resolve("pantilla.htm"));
+			String plantilla = MonitorDePID.leer_archivo(Statics.carpeta.resolve("pantilla.htm"));
 
 			// ¡No aplanamos “Ver en consola” aquí!
 			String constructorHtml = cons.toString() + "<br>" + MonitorDePID.idioma.infoDeVerificaciones() + "<br>"

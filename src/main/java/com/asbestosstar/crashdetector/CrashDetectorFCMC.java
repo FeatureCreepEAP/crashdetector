@@ -2,63 +2,88 @@ package com.asbestosstar.crashdetector;
 
 import java.io.File;
 import java.lang.instrument.Instrumentation;
-import java.lang.reflect.Field;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Nullable;
+
+import org.jboss.modules.ModuleClassLoader;
+import org.jboss.modules.ModuleLoader;
 
 import com.asbestosstar.crashdetector.divisor.HolaMundoConsolaDivisidor;
 
-import featurecreep.loader.FCInstrumentation;
 import featurecreep.loader.FCLoaderBasic;
 
 public class CrashDetectorFCMC {
 
 	public static void premain(String args, Instrumentation instrument) {
 		// Buscar para archivos de mods si es FC
-		System.err.println(HolaMundoConsolaDivisidor.HOLA_MUNDO);
-		boolean es_fc = true;
-		if (clase_existe("featurecreep.loader.FCLoaderBasic")) {
+		if (FCExiste()) {
 			if (clase_existe("dangerzone.BaseMod")) {
 				Statics.APP = App.DANGERZONE;
 			} // TODO para otras applicaciones
 
 			Transformaciones.init();
-			FCLoaderBasic fc = null;
-			if (instrument instanceof FCInstrumentation) {
-				FCInstrumentation fcinstrument = (FCInstrumentation) instrument;
-				fc = fcinstrument.loader;
-			} else if (clase_existe("featurecreep.api.GameInjections")) {
-				try {
-					Field field = Class.forName("featurecreep.api.GameInjections").getDeclaredField("loader");
-					fc = (FCLoaderBasic) field.get(null);
 
-				} catch (NoSuchFieldException | SecurityException | ClassNotFoundException | IllegalArgumentException
-						| IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-
-			// TODO mas
-
-			if (fc != null) {
-				for (Path path : fc.getCombindedModulePKZipLocations()) {
-					Statics.carpetas_de_mods.add(path);
-				}
-
-			}
-
-		} else {// featurecreep no existe
-			es_fc = false;
+			CargadoresComun.init(obtenerPathsDeMods(), CargadoresComun.CDOrigin.FEATURECREEP);
 		}
 
-		if (!Statics.cargador) {
-			Statics.cargador = true;
-			if (!es_fc) {
-				Statics.carpetas_de_mods.add(new File("mods/").toPath());// La carpeta de mods es de la superloader
-			}
-			instrument.addTransformer(new Transformaciones());
-			MonitorDePID.main(new String[] {});
+		instrument.addTransformer(new Transformaciones());
+
+	}
+
+	public static boolean FCExiste() {// TODO improver
+		return clase_existe("featurecreep.loader.FCLoaderBasic");
+	}
+
+	/**
+	 * 
+	 * @return FCLoaderBasic. Si Es FeatureCreep y cargando de FeatureCreep puedemos
+	 *         obener FCLoaderBasic. Null si no es FCLoaderBasic
+	 */
+	public static @Nullable FCLoaderBasic obtenerFCLoaderBasic() {
+		if(!FCExiste()) {
+			return null;
 		}
+		
+		ClassLoader cl = CrashDetectorFCMC.class.getClassLoader();
+		if (cl instanceof ModuleClassLoader) {
+			ModuleClassLoader mcl = (ModuleClassLoader) cl;
+			ModuleLoader ml = mcl.getModule().getModuleLoader();
+
+			if (ml instanceof FCLoaderBasic) {
+				return (FCLoaderBasic) ml;
+			} else {
+				// UN OTRA JBOSS MODULES O JBOSS FORGE
+				return null;
+			}
+
+		} else {
+			// NO EJECTIR DESDE FEATURECREEP
+			return null;
+		}
+	}
+
+	public static List<Path> obtenerPathsDeMods() {
+		ArrayList<Path> paths = new ArrayList<Path>();// TODO obtener desde GameProviders cuando no ejecutir desde FC
+
+		FCLoaderBasic fc = obtenerFCLoaderBasic();
+
+		// TODO mas
+
+		if (fc != null) {
+			for (Path path : fc.getCombindedModulePKZipLocations()) {
+				paths.add(path);
+			}
+
+		}
+
+		if (paths.isEmpty()) {
+			paths.add(new File("mods/").toPath());
+		} // La carpeta de mods es de la superloader
+
+		return paths;
 	}
 
 	public static boolean clase_existe(String clase) {

@@ -15,8 +15,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Supplier;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -26,10 +24,10 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
-import javax.swing.SwingUtilities;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
@@ -104,7 +102,7 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 	// ====== Lógica técnica: carga/parseo/normalización/comparación ======
 	protected void cargarArchivosHistoricos() {
 		try {
-			Path directorioHistorial = MonitorDePID.carpeta.resolve("historia_mods");
+			Path directorioHistorial = Statics.carpeta.resolve("historia_mods");
 			if (Files.exists(directorioHistorial)) {
 				File[] archivos = directorioHistorial.toFile().listFiles((dir, name) -> name.matches("\\d{6}\\.falla")
 						|| name.matches("\\d{6}\\.exito") || name.matches("\\d{6}\\.instantanea")); // Incluye
@@ -209,7 +207,7 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 		}
 
 		try {
-			Path directorio = MonitorDePID.carpeta.resolve("historia_mods");
+			Path directorio = Statics.carpeta.resolve("historia_mods");
 			Path rutaOriginal = directorio.resolve(archivoSeleccionado);
 
 			if (!Files.exists(rutaOriginal)) {
@@ -246,7 +244,7 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 	 * ...
 	 */
 	private String generarNombreInstantaneaDesdeBase(String base) {
-		Path directorio = MonitorDePID.carpeta.resolve("historia_mods");
+		Path directorio = Statics.carpeta.resolve("historia_mods");
 		String nombre = base + ".instantanea";
 		Path ruta = directorio.resolve(nombre);
 
@@ -274,7 +272,7 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 		}
 
 		try {
-			Path directorio = MonitorDePID.carpeta.resolve("historia_mods");
+			Path directorio = Statics.carpeta.resolve("historia_mods");
 			Path rutaIzquierda = directorio.resolve(archivoIzq);
 			Path rutaDerecha = directorio.resolve(archivoDer);
 

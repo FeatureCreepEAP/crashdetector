@@ -31,6 +31,7 @@ import javax.swing.JViewport;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
 
@@ -157,7 +158,7 @@ public class ClioOfficeGUI extends HistoriaDeModsGUI {
 	/** Carga la imagen de fondo y guarda su tamaño real. */
 	private void cargarImagenFondo() {
 		try {
-			Path ruta = MonitorDePID.carpeta.resolve("imagenes/cliosoffice.png");
+			Path ruta = Statics.carpeta.resolve("imagenes/cliosoffice.png");
 			if (!Files.exists(ruta)) {
 				MonitorDePID.copiarACarpetaDesdeJar("/imagenes/cliosoffice.png", ruta.toFile());
 			}
@@ -383,7 +384,7 @@ public class ClioOfficeGUI extends HistoriaDeModsGUI {
 	@Override
 	protected void cargarArchivosHistoricos() {
 		try {
-			Path dir = MonitorDePID.carpeta.resolve("historia_mods");
+			Path dir = Statics.carpeta.resolve("historia_mods");
 			if (Files.exists(dir)) {
 				File[] archivos = dir.toFile().listFiles((d, name) -> name.matches("\\d{6}\\.falla")
 						|| name.matches("\\d{6}\\.exito") || name.matches("\\d{6}\\.instantanea"));

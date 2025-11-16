@@ -1,12 +1,10 @@
 package com.asbestosstar.crashdetector;
 
 import java.io.File;
+import java.nio.file.Path;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
 import org.objectweb.asm.tree.ClassNode;
 
-import com.asbestosstar.crashdetector.divisor.HolaMundoConsolaDivisidor;
 import com.asbestosstar.crashdetector.parches.Parche;
 
 import net.neoforged.neoforgespi.transformation.ClassProcessor;
@@ -15,13 +13,9 @@ import net.neoforged.neoforgespi.transformation.ProcessorName;
 public class CrashDetectorFancyModLoader implements ClassProcessor {
 
 	static {
-		LogManager.getLogger(HolaMundoConsolaDivisidor.class).log(Level.ERROR, HolaMundoConsolaDivisidor.HOLA_MUNDO);
-		if (!Statics.cargador) {
-			Statics.cargador = true;
-			Statics.carpetas_de_mods.add(new File("mods/").toPath());
-			MonitorDePID.main(new String[] {});
-			Transformaciones.init();
-		}
+		CargadoresComun.init(new Path[] { new File("mods/").toPath() }, CargadoresComun.CDOrigin.FANCYMODLOADER);
+		Transformaciones.init();
+
 	}
 
 	@Override

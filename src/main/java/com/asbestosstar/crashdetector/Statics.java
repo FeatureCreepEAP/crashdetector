@@ -1,5 +1,6 @@
 package com.asbestosstar.crashdetector;
 
+import java.io.File;
 import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,6 +14,9 @@ public class Statics {
 							// cargadores specificalmente para otras applicaciones
 	public static String ARGS_DE_APP;// SOLO PARA despues de Entregar en proceso CD
 
+	public static File carpeta_como_archivo = new File("crash_detector/");
+	public static Path carpeta = carpeta_como_archivo.toPath();
+	
 	static {
 		App.APPS.add(App.MINECRAFT);
 		App.APPS.add(App.DANGERZONE);

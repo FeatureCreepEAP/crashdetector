@@ -34,14 +34,13 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.SwingWorker;
 import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
 
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.EnlanceMD;
 import com.asbestosstar.crashdetector.MonitorDePID;
-import com.asbestosstar.crashdetector.config.ConfigColor;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 
@@ -446,7 +445,7 @@ public abstract class NoRegistroLanzadorGUI extends JDialog implements CrashDete
 
 	/** Escalado genérico (logo). */
 	public ImageIcon cargarIconoEncajado(String ruta, int maxAncho, int maxAlto, boolean noAmpliar) {
-		File archivo = MonitorDePID.carpeta.resolve(ruta).toFile();
+		File archivo = Statics.carpeta.resolve(ruta).toFile();
 		if (archivo == null) {
 			CrashDetectorLogger.log("No se encontró la imagen " + ruta);
 			return null;

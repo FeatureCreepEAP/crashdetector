@@ -1,13 +1,9 @@
 package com.asbestosstar.crashdetector.gui.tipos.lectador;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.io.File;
 import java.util.List;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -15,10 +11,10 @@ import javax.swing.SwingUtilities;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
-import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 
 public class LectadorDeConsolasHoloTalk extends LectadorDeConsolasGUI {
 
@@ -53,7 +49,7 @@ public class LectadorDeConsolasHoloTalk extends LectadorDeConsolasGUI {
 
 	@Override
 	protected void instalarFondoApariencia(JLayeredPane capa) {
-		FondoPanel fondo = new FondoPanel(MonitorDePID.carpeta.resolve("imagenes/kiara_ame.png").toString());
+		FondoPanel fondo = new FondoPanel(Statics.carpeta.resolve("imagenes/kiara_ame.png").toString());
 		fondo.setBounds(0, 0, getWidth(), getHeight());
 		capa.add(fondo, JLayeredPane.DEFAULT_LAYER);
 

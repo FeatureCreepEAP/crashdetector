@@ -9,10 +9,10 @@ import java.util.Properties;
 import java.util.Set;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
-import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.Statics;
 
 public class ConfigDeParches {
-	private static final Path RUTA_ARCHIVO_CONFIG_PARCHES = MonitorDePID.carpeta.resolve("parches.properties");
+	private static final Path RUTA_ARCHIVO_CONFIG_PARCHES = Statics.carpeta.resolve("parches.properties");
 	public static File archivoConfigParches = RUTA_ARCHIVO_CONFIG_PARCHES.toFile();
 
 	private Properties propiedadesConfig;

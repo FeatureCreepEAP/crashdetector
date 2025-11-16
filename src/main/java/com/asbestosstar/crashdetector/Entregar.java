@@ -13,7 +13,7 @@ import com.asbestosstar.crashdetector.cargador.Cargador;
 //Handover
 public class Entregar {
 
-	public static File archivo = MonitorDePID.carpeta.resolve("entregar").toFile();
+	public static File archivo = Statics.carpeta.resolve("entregar").toFile();
 	private static final String MASK = "*********************************";
 	public static App app_detecta;
 

@@ -56,6 +56,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
@@ -353,19 +354,19 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		// Fondo del frame
 		getContentPane().setBackground(new Color(144, 203, 239)); // #90cbef
 
-		iconoMod = crearIcono(MonitorDePID.carpeta.resolve("imagenes/mod.png").toString(), "M");
-		iconoClase = crearIcono(MonitorDePID.carpeta.resolve("imagenes/clase.png").toString(), "C");
-		iconoMetodo = crearIcono(MonitorDePID.carpeta.resolve("imagenes/metodo.png").toString(), "m");
-		iconoCampo = crearIcono(MonitorDePID.carpeta.resolve("imagenes/campo.png").toString(), "f");
-		iconoPaquete = crearIcono(MonitorDePID.carpeta.resolve("imagenes/paquete.png").toString(), "P");
-		iconoReferenciaMetodo = crearIcono(MonitorDePID.carpeta.resolve("imagenes/referencia_metodo.png").toString(),
+		iconoMod = crearIcono(Statics.carpeta.resolve("imagenes/mod.png").toString(), "M");
+		iconoClase = crearIcono(Statics.carpeta.resolve("imagenes/clase.png").toString(), "C");
+		iconoMetodo = crearIcono(Statics.carpeta.resolve("imagenes/metodo.png").toString(), "m");
+		iconoCampo = crearIcono(Statics.carpeta.resolve("imagenes/campo.png").toString(), "f");
+		iconoPaquete = crearIcono(Statics.carpeta.resolve("imagenes/paquete.png").toString(), "P");
+		iconoReferenciaMetodo = crearIcono(Statics.carpeta.resolve("imagenes/referencia_metodo.png").toString(),
 				"RM");
-		iconoReferenciaCampo = crearIcono(MonitorDePID.carpeta.resolve("imagenes/referencia_campo.png").toString(),
+		iconoReferenciaCampo = crearIcono(Statics.carpeta.resolve("imagenes/referencia_campo.png").toString(),
 				"RC");
 		// iconoConstante =
 		// crearIcono(MonitorDePID.carpeta.resolve("imagenes/constante.png").toString(),
 		// "K");
-		iconoConstante = crearIcono(MonitorDePID.carpeta.resolve("imagenes/referencia_campo.png").toString(), "K");
+		iconoConstante = crearIcono(Statics.carpeta.resolve("imagenes/referencia_campo.png").toString(), "K");
 
 		// === Barra superior / búsqueda ===
 		JPanel barraSuperior = new JPanel(new BorderLayout());
@@ -390,7 +391,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		panelBusqueda.add(botonBuscar);
 
 		// Imagen inferior
-		imagenHamu = new JLabel(new ImageIcon(MonitorDePID.carpeta.resolve("imagenes/hamu.png").toString()));
+		imagenHamu = new JLabel(new ImageIcon(Statics.carpeta.resolve("imagenes/hamu.png").toString()));
 		// Botón reset
 		botonReset = new JButton(MonitorDePID.idioma.botonResetearArbol());
 		botonReset.addActionListener(e -> {
@@ -1525,7 +1526,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
 		// Intenta cargar el GIF
-		ImageIcon icon = new ImageIcon(MonitorDePID.carpeta.resolve("imagenes/padoru.gif").toString());
+		ImageIcon icon = new ImageIcon(Statics.carpeta.resolve("imagenes/padoru.gif").toString());
 		if (icon.getIconWidth() <= 0) {
 			// Fallback visual si no existe el GIF
 			icon = crearIcono("", "…");

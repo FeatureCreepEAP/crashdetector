@@ -25,6 +25,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
 
@@ -140,7 +141,7 @@ public class EditorPlantillaPredeterminado extends EditorPlantilla {
 
 		// Panel de imágenes con ruta
 		JPanel panelImagenes = new JPanel(new BorderLayout());
-		String rutaFormateada = MonitorDePID.carpeta.resolve("imagenes").toString().replace("\\", "/");
+		String rutaFormateada = Statics.carpeta.resolve("imagenes").toString().replace("\\", "/");
 		panelImagenes.setBorder(BorderFactory.createTitledBorder("Imágenes (" + rutaFormateada + ")"));
 		panelImagenes.setBackground(coloresEditor.get("fondo").obtener());
 

@@ -13,9 +13,10 @@ import java.util.stream.Collectors;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class DifDeMods implements Verificaciones {
 	private boolean activado = false;
@@ -110,7 +111,7 @@ public class DifDeMods implements Verificaciones {
 	}
 
 	private Path obtenerUltimoArchivo(String extension) {
-		Path dir = MonitorDePID.carpeta.resolve("historia_mods");
+		Path dir = Statics.carpeta.resolve("historia_mods");
 		if (!Files.exists(dir))
 			return null;
 

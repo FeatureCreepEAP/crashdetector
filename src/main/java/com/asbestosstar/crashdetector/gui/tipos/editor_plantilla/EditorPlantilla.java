@@ -41,9 +41,9 @@ import javax.swing.text.StyledDocument;
 
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ConfigString; // <-- NUEVO: soporte para enlaces configurables
-import com.asbestosstar.crashdetector.config.ElementoConfig;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 
@@ -79,7 +79,7 @@ public abstract class EditorPlantilla extends JPanel implements CrashDetectorGUI
 	 * Carga el contenido de la plantilla en el editor.
 	 */
 	public void cargarContenidoPlantilla() {
-		archivoPlantilla = MonitorDePID.carpeta.resolve("pantilla.htm").toFile();
+		archivoPlantilla = Statics.carpeta.resolve("pantilla.htm").toFile();
 
 		if (archivoPlantilla.exists()) {
 			try {
@@ -339,7 +339,7 @@ public abstract class EditorPlantilla extends JPanel implements CrashDetectorGUI
 	 * Actualiza la vista previa de una imagen.
 	 */
 	public void actualizarVistaPreviaImagen(String nombreImagen, JLabel previewLabel) {
-		File imagenFile = MonitorDePID.carpeta.resolve("imagenes").resolve(nombreImagen).toFile();
+		File imagenFile = Statics.carpeta.resolve("imagenes").resolve(nombreImagen).toFile();
 
 		if (imagenFile.exists()) {
 			try {
@@ -375,7 +375,7 @@ public abstract class EditorPlantilla extends JPanel implements CrashDetectorGUI
 				return;
 			}
 
-			File destino = MonitorDePID.carpeta.resolve("imagenes").resolve(nombreImagen).toFile();
+			File destino = Statics.carpeta.resolve("imagenes").resolve(nombreImagen).toFile();
 			destino.getParentFile().mkdirs();
 
 			try (OutputStream os = new java.io.FileOutputStream(destino)) {
@@ -469,7 +469,7 @@ public abstract class EditorPlantilla extends JPanel implements CrashDetectorGUI
 	 */
 	public void guardarPlantilla() {
 		if (archivoPlantilla == null || !archivoPlantilla.exists()) {
-			archivoPlantilla = MonitorDePID.carpeta.resolve("pantilla.htm").toFile();
+			archivoPlantilla = Statics.carpeta.resolve("pantilla.htm").toFile();
 		}
 
 		try {

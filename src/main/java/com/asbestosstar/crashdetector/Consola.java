@@ -156,12 +156,14 @@ public class Consola {
 														// conocida del engaño de incompatibilidad que intentan imponer.
 		inutiles_archivo_strs.add("telemetry");// no tiene nada y es comun en la lanzer vainilla
 		inutiles_archivo_strs.add("launcher");//no quieremos launcher logs, KLauncher y Astralrinth y mas incluye sus registros aqui
+		inutiles_archivo_strs.add("latest.log");//no necesitemos latest.log no mas porque tenemos ProxyLog4J2
+		inutiles_archivo_strs.add("debug.log");//no necesitemos latest.log no mas porque tenemos ProxyLog4J2
 
 	}
 
 	// escribirMapa: SIN escribir tiempo global al final
 	public static void escribirMapa(Instant tiempo) {
-		File carpetaDestino = MonitorDePID.carpeta_como_archivo;
+		File carpetaDestino = Statics.carpeta_como_archivo;
 		if (!carpetaDestino.exists()) {
 			carpetaDestino.mkdirs();
 		}
@@ -239,7 +241,7 @@ public class Consola {
 // lector que solo devuelve consolas de archivos cuyo mtime es posterior al del mapa
 	public static List<Consola> leerMapaConsolasComoLista() {
 		List<Consola> lista = new ArrayList<>();
-		File carpeta = MonitorDePID.carpeta_como_archivo;
+		File carpeta = Statics.carpeta_como_archivo;
 		File mapa = new File(carpeta, "mapa_de_registros");
 		if (!mapa.exists() || !mapa.isFile()) {
 			return lista;
@@ -457,8 +459,9 @@ public class Consola {
 //https://github.com/HMCL-dev/HMCL/issues/2663
 
 		// Agregar otros logs sin control de duplicados
-		agregarDirectorio(resultado, new File("logs/"));
-		agregarDirectorio(resultado, new File("crash-reports/"));
+		agregarDirectorio(resultado, new File("logs/"));//Minecraft Logs
+		agregarDirectorio(resultado, new File("crash-reports/"));//Minecraft Crash Reports
+		agregarDirectorio(resultado, new File("var/logs/"));//FeatureCreep Logs
 
 		// Configuración de TLauncher
 //		File carpetaTLauncherStarter;

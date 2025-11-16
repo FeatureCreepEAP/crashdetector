@@ -7,6 +7,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
 
@@ -71,29 +72,27 @@ public class ArbolDeModsGUIHamu extends ArbolDeModsGUI {
 		}
 
 		// 5) Recargar iconos (por si cambiaron assets/tema)
-		iconoMod = crearIcono(MonitorDePID.carpeta.resolve("imagenes/mod.png").toString(), "M");
-		iconoClase = crearIcono(MonitorDePID.carpeta.resolve("imagenes/clase.png").toString(), "C");
-		iconoMetodo = crearIcono(MonitorDePID.carpeta.resolve("imagenes/metodo.png").toString(), "m");
-		iconoCampo = crearIcono(MonitorDePID.carpeta.resolve("imagenes/campo.png").toString(), "f");
-		iconoPaquete = crearIcono(MonitorDePID.carpeta.resolve("imagenes/paquete.png").toString(), "P");
-		iconoReferenciaMetodo = crearIcono(MonitorDePID.carpeta.resolve("imagenes/referencia_metodo.png").toString(),
-				"RM");
-		iconoReferenciaCampo = crearIcono(MonitorDePID.carpeta.resolve("imagenes/referencia_campo.png").toString(),
-				"RC");
+		iconoMod = crearIcono(Statics.carpeta.resolve("imagenes/mod.png").toString(), "M");
+		iconoClase = crearIcono(Statics.carpeta.resolve("imagenes/clase.png").toString(), "C");
+		iconoMetodo = crearIcono(Statics.carpeta.resolve("imagenes/metodo.png").toString(), "m");
+		iconoCampo = crearIcono(Statics.carpeta.resolve("imagenes/campo.png").toString(), "f");
+		iconoPaquete = crearIcono(Statics.carpeta.resolve("imagenes/paquete.png").toString(), "P");
+		iconoReferenciaMetodo = crearIcono(Statics.carpeta.resolve("imagenes/referencia_metodo.png").toString(), "RM");
+		iconoReferenciaCampo = crearIcono(Statics.carpeta.resolve("imagenes/referencia_campo.png").toString(), "RC");
 		// Si no hay imagen de constantes, reusar una conocida
-		iconoConstante = crearIcono(MonitorDePID.carpeta.resolve("imagenes/constante.png").toString(), "K");
+		iconoConstante = crearIcono(Statics.carpeta.resolve("imagenes/constante.png").toString(), "K");
 		if (iconoConstante.getIconWidth() <= 0) {
-			iconoConstante = crearIcono(MonitorDePID.carpeta.resolve("imagenes/referencia_campo.png").toString(), "K");
+			iconoConstante = crearIcono(Statics.carpeta.resolve("imagenes/referencia_campo.png").toString(), "K");
 		}
 
 		// 6) Imagen “Hamu” inferior
 		if (imagenHamu != null) {
-			imagenHamu.setIcon(new ImageIcon(MonitorDePID.carpeta.resolve("imagenes/hamu.png").toString()));
+			imagenHamu.setIcon(new ImageIcon(Statics.carpeta.resolve("imagenes/hamu.png").toString()));
 		}
 
 		// 7) Overlay de carga (gif + texto)
 		if (gifCarga != null) {
-			ImageIcon icon = new ImageIcon(MonitorDePID.carpeta.resolve("imagenes/padoru.gif").toString());
+			ImageIcon icon = new ImageIcon(Statics.carpeta.resolve("imagenes/padoru.gif").toString());
 			if (icon.getIconWidth() <= 0) {
 				icon = crearIcono("", "…");
 			}

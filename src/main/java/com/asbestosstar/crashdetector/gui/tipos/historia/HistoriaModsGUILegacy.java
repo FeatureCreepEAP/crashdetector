@@ -24,6 +24,7 @@ import javax.swing.JTextPane;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
 
@@ -284,7 +285,7 @@ public class HistoriaModsGUILegacy extends HistoriaDeModsGUI {
 		contenedor.add(textoPanel);
 
 		try {
-			Path rutaImagen = MonitorDePID.carpeta.resolve("imagenes/clio.png");
+			Path rutaImagen = Statics.carpeta.resolve("imagenes/clio.png");
 			if (!Files.exists(rutaImagen)) {
 				MonitorDePID.copiarACarpetaDesdeJar("/imagenes/clio.png", rutaImagen.toFile());
 			}

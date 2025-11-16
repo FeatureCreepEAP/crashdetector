@@ -45,6 +45,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
 
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.Criticalidad;
 import com.asbestosstar.crashdetector.analizador.firmas.CargadorDeCodice;
 import com.asbestosstar.crashdetector.analizador.firmas.FiltrodeCodice;
@@ -91,7 +92,7 @@ public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLate
 	public JButton btnNuevo, btnActualizar, btnEliminar, btnExportar, btnGuardar;
 
 	// Archivo
-	public final Path rutaCodice = MonitorDePID.carpeta.resolve("firmas.json");
+	public final Path rutaCodice = Statics.carpeta.resolve("firmas.json");
 
 	public VerificacionFirmasV0 verificacionCargadaEnFormulario = null;
 
@@ -418,7 +419,7 @@ public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLate
 	// -------------------- Utilidades UI --------------------
 
 	public JLabel cargarImagen(String relativa, int w, int h) {
-		File f = MonitorDePID.carpeta.resolve(relativa).toFile();
+		File f = Statics.carpeta.resolve(relativa).toFile();
 		if (!f.exists())
 			return null;
 		ImageIcon ic = new ImageIcon(f.getAbsolutePath());
@@ -433,7 +434,7 @@ public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLate
 				"bandera_brasil.png", "bandera_iran.png", "bandera_rusia.png", "bandera_china.png",
 				"bandera_esperanto.png", "bandera_japon.png", "bandera_corea.png", "ironmouse.png" };
 		for (String a : archivos) {
-			File f = MonitorDePID.carpeta.resolve("imagenes").resolve(a).toFile();
+			File f = Statics.carpeta.resolve("imagenes").resolve(a).toFile();
 			if (f.exists()) {
 				iconos.put(a, new ImageIcon(f.getAbsolutePath()));
 			}
@@ -523,8 +524,8 @@ public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLate
 
 	public void asegurarArchivo() {
 		try {
-			if (!Files.exists(MonitorDePID.carpeta)) {
-				Files.createDirectories(MonitorDePID.carpeta);
+			if (!Files.exists(Statics.carpeta)) {
+				Files.createDirectories(Statics.carpeta);
 			}
 			if (!Files.exists(rutaCodice)) {
 				String base = "{ \"schema\": 0, \"verificaciones\": [] }";

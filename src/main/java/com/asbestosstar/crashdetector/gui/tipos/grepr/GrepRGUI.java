@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.grepr.BusquedaArchivos;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
@@ -230,7 +231,7 @@ public abstract class GrepRGUI extends JFrame implements CrashDetectorGUI, Boton
 		L.gridy = 3;
 		panelEntrada.add(chkBuscarEnComprimidos, L);
 
-		JLabel lblImagen = crearImagenEscalada(MonitorDePID.carpeta.resolve("imagenes/saliormoongrep.png").toString(),
+		JLabel lblImagen = crearImagenEscalada(Statics.carpeta.resolve("imagenes/saliormoongrep.png").toString(),
 				150, 100);
 		lblImagen.setOpaque(true);
 		lblImagen.setBackground(colorPanel.obtener());

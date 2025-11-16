@@ -3,6 +3,9 @@ package com.asbestosstar.crashdetector;
 import java.awt.GraphicsConfiguration;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -78,7 +81,7 @@ public interface Idioma {
 			return null;
 		}
 		try {
-			String texto = MonitorDePID.leer_archivo(archivo.toPath());
+			String texto = leer_archivo(archivo.toPath());
 
 			String codigo = texto.trim().toLowerCase();
 			Set<String> soportados = new HashSet<>(
@@ -92,6 +95,10 @@ public interface Idioma {
 			return null;
 		}
 
+	}
+	
+	public static String leer_archivo(Path path) throws IOException {
+		return new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
 	}
 
 	/**

@@ -39,21 +39,21 @@ public class CursedConsola implements Verificaciones {
 
 	@Override
 	public void verificar(Consola consolaog) {
-		try {
-			// Validar entorno básico
-			if (!esEntornoCurseForge())
-				return;
-
-			// Verificar existencia de logs del launcher
-			if (!tieneLogLauncher()) {
-				mensaje = MonitorDePID.idioma.noTieneConsolaDeLauncherCursedForge();
-				activado = true;
-			}
-		} catch (Exception e) {
-			// En caso de error inesperado, desactivar notificación
-			CrashDetectorLogger.logException(e);
-			activado = false;
-		}
+//		try {
+//			// Validar entorno básico
+//			if (!esEntornoCurseForge())
+//				return;
+//
+//			// Verificar existencia de logs del launcher
+//			if (!tieneLogLauncher()) {
+//				mensaje = MonitorDePID.idioma.noTieneConsolaDeLauncherCursedForge();
+//				activado = true;
+//			}
+//		} catch (Exception e) {
+//			// En caso de error inesperado, desactivar notificación
+//			CrashDetectorLogger.logException(e);
+//			activado = false;
+//		} Ahora no usemos laucnher log pero CurseForge launcher tiene otras problemas
 	}
 
 	private boolean esEntornoCurseForge() {

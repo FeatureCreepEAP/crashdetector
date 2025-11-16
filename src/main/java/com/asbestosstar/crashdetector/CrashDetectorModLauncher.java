@@ -1,14 +1,10 @@
 package com.asbestosstar.crashdetector;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-
-import com.asbestosstar.crashdetector.divisor.HolaMundoConsolaDivisidor;
 
 import cpw.mods.modlauncher.api.IEnvironment;
 import cpw.mods.modlauncher.api.ITransformationService;
@@ -18,12 +14,7 @@ import cpw.mods.modlauncher.api.IncompatibleEnvironmentException;
 public class CrashDetectorModLauncher implements ITransformationService {
 
 	static {
-		LogManager.getLogger(HolaMundoConsolaDivisidor.class).log(Level.ERROR, HolaMundoConsolaDivisidor.HOLA_MUNDO);
-		if (!Statics.cargador) {
-			Statics.cargador = true;
-			Statics.carpetas_de_mods.add(new File("mods/").toPath());
-			MonitorDePID.main(new String[] {});
-		}
+		CargadoresComun.init(new Path[] {new File("mods/").toPath()},CargadoresComun.CDOrigin.MODLAUNCHER);		
 	}
 
 	@Override

@@ -1,12 +1,20 @@
 package com.asbestosstar.crashdetector.gui.elementos;
 
-import javax.swing.*;
-import javax.swing.plaf.basic.BasicComboBoxRenderer;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Image;
 import java.io.File;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import com.asbestosstar.crashdetector.MonitorDePID;
+
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.plaf.basic.BasicComboBoxRenderer;
+
+import com.asbestosstar.crashdetector.Statics;
 
 /**
  * ComboBox que muestra una bandera o icono junto al nombre del idioma. Las
@@ -44,7 +52,7 @@ public class ComboIdiomasConIcono extends JComboBox<String> {
 
 	private Icon cargarIconoLocal(String rutaRelativa, int w, int h) {
 		try {
-			File archivo = MonitorDePID.carpeta.resolve(rutaRelativa).toFile();
+			File archivo = Statics.carpeta.resolve(rutaRelativa).toFile();
 			if (!archivo.exists())
 				return null;
 			ImageIcon base = new ImageIcon(archivo.getAbsolutePath());

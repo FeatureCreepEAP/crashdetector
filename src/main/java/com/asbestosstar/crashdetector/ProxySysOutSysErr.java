@@ -2,156 +2,166 @@ package com.asbestosstar.crashdetector;
 
 import java.io.File;
 import java.io.FileDescriptor;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
-import com.asbestosstar.crashdetector.config.ConfigBoolean;
 import com.asbestosstar.crashdetector.gui.tipos.no_registro_lanzador.NoRegistroDeLauncherVShojo;
 
 /**
- * Si tu Launcher no tiene registros puede usar esta. Soluciona el problema de
- * escritura interrumpida al registrar System.out/System.err Incluye manejo
- * robusto de errores para evitar que fallos en consola detengan el registro
+ * Proxy para System.out y System.err cuando el Launcher no tiene registros.
+ * Soluciona problemas de escritura interrumpida y garantiza que TODOS los
+ * mensajes.
  */
 public class ProxySysOutSysErr {
 
+	public static File archivoLog = NoRegistroDeLauncherVShojo.cd_launcherlog;
+	public static FileOutputStream flujoArchivo;
+	// FLUJO SINCRONIZADO Y SEGURO QUE SE COMPARTIRÁ CON LOG4J2
+	public static OutputStream flujoSincronizadoSeguro;
+
+	static {
+		try {
+			archivoLog.delete();
+			archivoLog.createNewFile();
+			flujoArchivo = new FileOutputStream(archivoLog, false);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public static void init() {
-		if (Config.obtenerInstancia().obtenerProxySysOutSysErr() || !Config.obtenerInstancia().propiedadesConfig.containsKey("0351")) {
-			File archivoLog = NoRegistroDeLauncherVShojo.cd_launcherlog;
-			ConfigBoolean mas0351 = ConfigBoolean.de("0351", true);
-			Config.obtenerInstancia().guardarProxySysOutSysErr(true);//para migracion do versiones viajas
-			try {
-				// 1. Crea un ÚNICO flujo de archivo sincronizado y resistente a errores
-				FileOutputStream flujoArchivo = new FileOutputStream(archivoLog, false);
-				OutputStream flujoArchivoSeguro = new OutputStream() {
-					private final Object cerrojo = new Object();
+		Config config = Config.obtenerInstancia();
 
-					@Override
-					public void write(int b) throws IOException {
-						synchronized (cerrojo) {
-							try {
-								flujoArchivo.write(b);
-							} catch (IOException e) {
-								// Intenta registrar el error en consola (si está disponible)
-								try {
-									System.err.println("[REGISTRO] Error al escribir en archivo: " + e.getMessage());
-								} catch (Throwable t) {
-									// Ignora errores secundarios para no colapsar el sistema
-								}
-								throw e; // Propaga el error para que PrintStream lo maneje
-							}
-						}
-					}
+		// Depuración: Mostrar condición de inicialización
+		boolean condicion = config.obtenerProxySysOutSysErr() || !config.propiedadesConfig.containsKey("0351");
+		System.err.println("[ProxySysOutSysErr] Condición de init: " + condicion + " (proxyHabilitado="
+				+ config.obtenerProxySysOutSysErr() + ", tiene0351=" + config.propiedadesConfig.containsKey("0351")
+				+ ")");
 
-					@Override
-					public void flush() throws IOException {
-						synchronized (cerrojo) {
-							flujoArchivo.flush();
-						}
-					}
+		try {
+			// 1. Crear FLUJO SINCRONIZADO que será compartido con Log4j2
+			flujoSincronizadoSeguro = new OutputStream() {
+				private final Object cerrojo = new Object();
 
-					@Override
-					public void close() throws IOException {
-						flush(); // Nunca cierra el flujo de archivo
-					}
-				};
-
-				// 2. Guarda referencias a los flujos originales
-				PrintStream salidaOriginal = System.out;
-				PrintStream errorOriginal = System.err;
-
-				// 3. Crea flujos combinados con manejo de errores para consola
-				OutputStream flujoSalidaCombinado = new OutputStream() {
-					@Override
-					public void write(int b) {
+				@Override
+				public void write(int b) throws IOException {
+					synchronized (cerrojo) {
 						try {
-							// Escribe en archivo (puede lanzar IOException)
-							flujoArchivoSeguro.write(b);
+							flujoArchivo.write(b);
 						} catch (IOException e) {
-							// Manejo especial para errores de archivo
-							manejarErrorRegistro(e, "salida");
+							manejarErrorRegistro(e, "archivo");
+							throw e;
 						}
-
-						// Escribe en consola con manejo de errores (NO lanza excepciones)
-						escribirEnConsolaSeguro(salidaOriginal, b);
 					}
+				}
 
-					@Override
-					public void flush() {
+				@Override
+				public void write(byte[] b, int off, int len) throws IOException {
+					synchronized (cerrojo) {
 						try {
-							flujoArchivoSeguro.flush();
+							flujoArchivo.write(b, off, len);
 						} catch (IOException e) {
-							manejarErrorRegistro(e, "salida");
+							manejarErrorRegistro(e, "archivo");
+							throw e;
 						}
-						salidaOriginal.flush();
 					}
-				};
+				}
 
-				OutputStream flujoErrorCombinado = new OutputStream() {
-					@Override
-					public void write(int b) {
-						try {
-							flujoArchivoSeguro.write(b);
-						} catch (IOException e) {
-							manejarErrorRegistro(e, "error");
-						}
-
-						escribirEnConsolaSeguro(errorOriginal, b);
+				@Override
+				public void flush() throws IOException {
+					synchronized (cerrojo) {
+						flujoArchivo.flush();
 					}
+				}
 
-					@Override
-					public void flush() {
-						try {
-							flujoArchivoSeguro.flush();
-						} catch (IOException e) {
-							manejarErrorRegistro(e, "error");
-						}
-						errorOriginal.flush();
-					}
-				};
+				@Override
+				public void close() {
+					// NUNCA CERRAR - mantener el flujo abierto durante toda la ejecución
+				}
+			};
 
-				// 4. Configura los nuevos flujos con auto-vaciado
-				System.setOut(new PrintStream(flujoSalidaCombinado, true));
-				System.setErr(new PrintStream(flujoErrorCombinado, true));
+			// 2. Guardar REFERENCIAS a los flujos originales de consola
+			PrintStream salidaOriginal = System.out;
+			PrintStream errorOriginal = System.err;
 
-			} catch (FileNotFoundException e) {
-				System.err.println("ERROR: No se encontró el archivo de registro - " + e.getMessage());
+			// 3. Crear FLUJOS COMBINADOS con manejo de errores
+			OutputStream flujoSalidaCombinado = crearFlujoCombinado(flujoSincronizadoSeguro, salidaOriginal, "salida");
+			OutputStream flujoErrorCombinado = crearFlujoCombinado(flujoSincronizadoSeguro, errorOriginal, "error");
+
+			// 4. CONFIGURAR LOS NUEVOS FLUJOS con auto-vaciado
+			System.setOut(new PrintStream(flujoSalidaCombinado, true));
+			System.setErr(new PrintStream(flujoErrorCombinado, true));
+
+			// 5. Actualizar configuración DESPUÉS de inicialización exitosa
+			config.guardarProxySysOutSysErr(true);
+			if (!config.propiedadesConfig.containsKey("0351")) {
+				config.propiedadesConfig.put("0351", "true"); // Marcar migración completada
 			}
-		}
-	}
 
-	/**
-	 * Escribe en consola de forma segura ignorando errores (evita que fallos en
-	 * consola detengan el registro de archivos)
-	 */
-	private static void escribirEnConsolaSeguro(PrintStream flujo, int dato) {
-		try {
-			flujo.write(dato);
-		} catch (Throwable e) {
-			// Ignora errores de consola para no afectar el registro principal
-			// (común en entornos sin consola como algunos launchers)
-		}
-	}
+			System.err
+					.println("[ProxySysOutSysErr] Proxy inicializado. Escribiendo en: " + archivoLog.getAbsolutePath());
 
-	/**
-	 * Maneja errores críticos durante la escritura en archivo (muestra advertencia
-	 * pero mantiene funcionamiento del registro)
-	 */
-	private static void manejarErrorRegistro(IOException e, String tipoFlujo) {
-		try {
-			// Intenta registrar el error usando el flujo de error original
-			System.err.println("[CRITICO] Fallo en registro de " + tipoFlujo + " - Archivo: " + e.getMessage());
 		} catch (Throwable t) {
-			// Si todo falla, usa el último recurso disponible
-			try {
-				new FileOutputStream(FileDescriptor.err)
-						.write(("[FALLA TOTAL] Registro " + tipoFlujo + " inaccesible\n").getBytes());
-			} catch (IOException ex) {
-				// Sin opciones restantes - el sistema está en estado crítico
-			}
+			System.err.println("[CRÍTICO] Falló inicialización de ProxySysOutSysErr: " + t.getMessage());
+			t.printStackTrace();
 		}
 	}
+
+	private static OutputStream crearFlujoCombinado(OutputStream flujoArchivo, PrintStream flujoConsola,
+			String tipoFlujo) {
+		return new OutputStream() {
+			@Override
+			public void write(int b) {
+				try {
+					flujoArchivo.write(b);
+				} catch (IOException e) {
+					manejarErrorRegistro(e, tipoFlujo + "-archivo");
+				}
+				escribirEnConsolaSeguro(flujoConsola, b);
+			}
+
+			@Override
+			public void write(byte[] b, int off, int len) {
+				try {
+					flujoArchivo.write(b, off, len);
+				} catch (IOException e) {
+					manejarErrorRegistro(e, tipoFlujo + "-archivo");
+				}
+				try {
+					flujoConsola.write(b, off, len);
+				} catch (Throwable ignorado) {
+				}
+			}
+
+			@Override
+			public void flush() {
+				try {
+					flujoArchivo.flush();
+				} catch (IOException ignorado) {
+				}
+				flujoConsola.flush();
+			}
+		};
+	}
+
+	private static void escribirEnConsolaSeguro(PrintStream flujo, int b) {
+		try {
+			flujo.write(b);
+		} catch (Throwable ignorado) {
+			// Fallo silencioso - no romper el registro por errores de consola
+		}
+	}
+
+	private static void manejarErrorRegistro(IOException e, String origen) {
+		try {
+			String mensaje = String.format("[REGISTRO FALLIDO][%s] %s: %s", Thread.currentThread().getName(), origen,
+					e.getMessage());
+			System.err.println(mensaje);
+		} catch (Throwable ignorado) {
+			// Manejo de excepciones de error al intentar registrar el error
+		}
+	}
+
 }

@@ -472,22 +472,22 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 
 		// luego el botón de ícono CDMods (deshabilitado), a la derecha
 		JButton boton_CDMods = añadirBotonImagen(panelBotonesDerecha,
-				MonitorDePID.carpeta.resolve("imagenes/boton_cdmods.png").toString(), "CD Mods");
+				Statics.carpeta.resolve("imagenes/boton_cdmods.png").toString(), "CD Mods");
 		boton_CDMods.setEnabled(false);
 		JButton btnAgregar = añadirBotonImagen(panelBotonesDerecha,
-				MonitorDePID.carpeta.resolve("imagenes/boton_agregar.png").toString(),
+				Statics.carpeta.resolve("imagenes/boton_agregar.png").toString(),
 				MonitorDePID.idioma.anadirRegistro());
 		JButton btnCompartir = añadirBotonImagen(panelBotonesDerecha,
-				MonitorDePID.carpeta.resolve("imagenes/boton_compartir.png").toString(),
+				Statics.carpeta.resolve("imagenes/boton_compartir.png").toString(),
 				MonitorDePID.idioma.botonDeCompartirInforme());
 		JButton btnActualizar = añadirBotonImagen(panelBotonesDerecha,
-				MonitorDePID.carpeta.resolve("imagenes/boton_actualizar.png").toString(),
+				Statics.carpeta.resolve("imagenes/boton_actualizar.png").toString(),
 				MonitorDePID.idioma.actualizar());
 		JButton btnArchivos = añadirBotonImagen(panelBotonesDerecha,
-				MonitorDePID.carpeta.resolve("imagenes/boton_archivos.png").toString(),
+				Statics.carpeta.resolve("imagenes/boton_archivos.png").toString(),
 				MonitorDePID.idioma.abrirCarpeta());
 		botonConfiguracion = añadirBotonImagen(panelBotonesDerecha,
-				MonitorDePID.carpeta.resolve("imagenes/boton_config.png").toString(), MonitorDePID.idioma.config());
+				Statics.carpeta.resolve("imagenes/boton_config.png").toString(), MonitorDePID.idioma.config());
 
 		DialogoCompartir comp = TipoGUI.DIALOGO_COMPARTIR.obtenerGUIPredeterminado(DialogoCompartirLegacy.ID,
 				() -> new DialogoCompartirLegacy());
@@ -518,7 +518,7 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 		JLabel logoLabel = new JLabel();
 		logoLabel.setBackground(colorBoton.obtener().darker());
 		logoLabel.setOpaque(true);
-		ImageIcon logoIcon = new ImageIcon(MonitorDePID.carpeta.resolve("imagenes/cd_logo.png").toString());
+		ImageIcon logoIcon = new ImageIcon(Statics.carpeta.resolve("imagenes/cd_logo.png").toString());
 		Image logoImg = logoIcon.getImage();
 		Image logoEscalado = logoImg.getScaledInstance(120, -1, Image.SCALE_SMOOTH);
 		logoLabel.setIcon(new ImageIcon(logoEscalado));

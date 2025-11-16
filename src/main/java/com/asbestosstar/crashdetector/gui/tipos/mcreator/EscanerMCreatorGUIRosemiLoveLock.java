@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
 
@@ -138,7 +139,7 @@ public class EscanerMCreatorGUIRosemiLoveLock extends EscanerMCreatorGUI {
 	@Override
 	protected ImageIcon iconoDecorativo() {
 		try {
-			File archivoImagen = MonitorDePID.carpeta.resolve("imagenes/rosemi.png").toFile();
+			File archivoImagen = Statics.carpeta.resolve("imagenes/rosemi.png").toFile();
 			if (archivoImagen.exists()) {
 				BufferedImage originalImage = ImageIO.read(archivoImagen);
 				// Escalar a 200x250 para que coincida con el diseño

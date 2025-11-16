@@ -7,7 +7,7 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 
-import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
 
@@ -70,7 +70,7 @@ public class PanelQuickFixDemonSlayers extends TodosQuickFixesGUI {
 
 	@Override
 	protected String rutaImagenPie() {
-		return MonitorDePID.carpeta.resolve("imagenes/demonslayers.png").toString();
+		return Statics.carpeta.resolve("imagenes/demonslayers.png").toString();
 	}
 
 	// Si quieres que sea 1024x1024 como decía el comentario original, cambia a

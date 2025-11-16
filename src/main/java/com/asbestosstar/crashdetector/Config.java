@@ -33,7 +33,7 @@ public class Config {
 	public static final String NOMBRE_CD = "CrashDetector";
 
 	// Ruta al archivo de configuración
-	private static final String RUTA_ARCHIVO_CONFIG = MonitorDePID.carpeta.resolve("crashdetector_config.properties")
+	private static final String RUTA_ARCHIVO_CONFIG = Statics.carpeta.resolve("crashdetector_config.properties")
 			.toString();
 	public static File archivoConfig = new File(RUTA_ARCHIVO_CONFIG);
 

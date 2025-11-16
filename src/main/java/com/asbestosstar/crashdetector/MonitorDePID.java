@@ -50,10 +50,8 @@ import com.asbestosstar.crashdetector.gui.tipos.quickfix.PanelQuickFixDemonSlaye
 public class MonitorDePID {
 
 	public static final String mensaje_de_registro_lanzer_completo = "Puedes ignorar esta linea, solo es para CrashDetector, este mensaje es siempre en espanol";
-	public static File carpeta_como_archivo = new File("crash_detector/");
-	public static Path carpeta = carpeta_como_archivo.toPath();
-	public static File ArchivoDeCodigoError0 = carpeta.resolve("ArchivoDeCodigoError0").toFile();
-	public static Path ultimo_mods = carpeta.resolve("ultima_mods");
+	public static File ArchivoDeCodigoError0 = Statics.carpeta.resolve("ArchivoDeCodigoError0").toFile();
+	public static Path ultimo_mods = Statics.carpeta.resolve("ultima_mods");
 	// public static Path viajo_ultima_mods = carpeta.resolve("viajo_ultima_mods");
 	public static List<Consola> consolas = new ArrayList<Consola>();
 
@@ -118,8 +116,6 @@ public class MonitorDePID {
 			return;
 		}
 
-		ProxySysOutSysErr.init();
-
 		ArchivoDeCodigoError0.delete();
 
 		String mods = "";
@@ -132,62 +128,78 @@ public class MonitorDePID {
 			}
 		}
 
-		File html = carpeta.resolve("pantilla.htm").toFile();
+		File html = Statics.carpeta.resolve("pantilla.htm").toFile();
 		copiarACarpetaDesdeJar("/pantilla.htm", html);
 
-		copiarACarpetaDesdeJar("/imagenes/gura.png", carpeta.resolve("imagenes/gura.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/clio.png", carpeta.resolve("imagenes/clio.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/hamu.png", carpeta.resolve("imagenes/hamu.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/nanashi_mumei.png", carpeta.resolve("imagenes/nanashi_mumei.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/shion.png", carpeta.resolve("imagenes/shion.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/vshojo.png", carpeta.resolve("imagenes/vshojo.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/rosemi.png", carpeta.resolve("imagenes/rosemi.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/kiara_ame.png", carpeta.resolve("imagenes/kiara_ame.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/ironmouse.png", carpeta.resolve("imagenes/ironmouse.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/gura.png", Statics.carpeta.resolve("imagenes/gura.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/clio.png", Statics.carpeta.resolve("imagenes/clio.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/hamu.png", Statics.carpeta.resolve("imagenes/hamu.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/nanashi_mumei.png",
+				Statics.carpeta.resolve("imagenes/nanashi_mumei.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/shion.png", Statics.carpeta.resolve("imagenes/shion.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/vshojo.png", Statics.carpeta.resolve("imagenes/vshojo.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/rosemi.png", Statics.carpeta.resolve("imagenes/rosemi.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/kiara_ame.png", Statics.carpeta.resolve("imagenes/kiara_ame.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/ironmouse.png", Statics.carpeta.resolve("imagenes/ironmouse.png").toFile());
 
-		copiarACarpetaDesdeJar("/imagenes/padoru.gif", carpeta.resolve("imagenes/padoru.gif").toFile());
-		copiarACarpetaDesdeJar("/imagenes/demonslayers.png", carpeta.resolve("imagenes/demonslayers.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/padoru.gif", Statics.carpeta.resolve("imagenes/padoru.gif").toFile());
+		copiarACarpetaDesdeJar("/imagenes/demonslayers.png",
+				Statics.carpeta.resolve("imagenes/demonslayers.png").toFile());
 
-		copiarACarpetaDesdeJar("/imagenes/boton_agregar.png", carpeta.resolve("imagenes/boton_agregar.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/boton_agregar.png",
+				Statics.carpeta.resolve("imagenes/boton_agregar.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/boton_compartir.png",
-				carpeta.resolve("imagenes/boton_compartir.png").toFile());
+				Statics.carpeta.resolve("imagenes/boton_compartir.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/boton_compartir_icon.png",
-				carpeta.resolve("imagenes/boton_compartir_icon.png").toFile());
+				Statics.carpeta.resolve("imagenes/boton_compartir_icon.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/boton_actualizar.png",
-				carpeta.resolve("imagenes/boton_actualizar.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/boton_archivos.png", carpeta.resolve("imagenes/boton_archivos.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/boton_config.png", carpeta.resolve("imagenes/boton_config.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/boton_cdmods.png", carpeta.resolve("imagenes/boton_cdmods.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/cd_chars.png", carpeta.resolve("imagenes/cd_chars.png").toFile());
+				Statics.carpeta.resolve("imagenes/boton_actualizar.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/boton_archivos.png",
+				Statics.carpeta.resolve("imagenes/boton_archivos.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/boton_config.png",
+				Statics.carpeta.resolve("imagenes/boton_config.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/boton_cdmods.png",
+				Statics.carpeta.resolve("imagenes/boton_cdmods.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/cd_chars.png", Statics.carpeta.resolve("imagenes/cd_chars.png").toFile());
 
-		copiarACarpetaDesdeJar("/imagenes/cd_logo.png", carpeta.resolve("imagenes/cd_logo.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/profeco.jpg", carpeta.resolve("imagenes/profeco.jpg").toFile());
-		copiarACarpetaDesdeJar("/imagenes/saliormoongrep.png", carpeta.resolve("imagenes/saliormoongrep.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/cd_logo.png", Statics.carpeta.resolve("imagenes/cd_logo.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/profeco.jpg", Statics.carpeta.resolve("imagenes/profeco.jpg").toFile());
+		copiarACarpetaDesdeJar("/imagenes/saliormoongrep.png",
+				Statics.carpeta.resolve("imagenes/saliormoongrep.png").toFile());
 
-		copiarACarpetaDesdeJar("/imagenes/bandera_mexico.png", carpeta.resolve("imagenes/bandera_mexico.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/bandera_mexico.png",
+				Statics.carpeta.resolve("imagenes/bandera_mexico.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/bandera_inglaterra.png",
-				carpeta.resolve("imagenes/bandera_inglaterra.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/bandera_arabia.png", carpeta.resolve("imagenes/bandera_arabia.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/bandera_brasil.png", carpeta.resolve("imagenes/bandera_brasil.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/bandera_iran.png", carpeta.resolve("imagenes/bandera_iran.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/bandera_rusia.png", carpeta.resolve("imagenes/bandera_rusia.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/bandera_china.png", carpeta.resolve("imagenes/bandera_china.png").toFile());
+				Statics.carpeta.resolve("imagenes/bandera_inglaterra.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/bandera_arabia.png",
+				Statics.carpeta.resolve("imagenes/bandera_arabia.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/bandera_brasil.png",
+				Statics.carpeta.resolve("imagenes/bandera_brasil.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/bandera_iran.png",
+				Statics.carpeta.resolve("imagenes/bandera_iran.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/bandera_rusia.png",
+				Statics.carpeta.resolve("imagenes/bandera_rusia.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/bandera_china.png",
+				Statics.carpeta.resolve("imagenes/bandera_china.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/bandera_esperanto.png",
-				carpeta.resolve("imagenes/bandera_esperanto.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/bandera_japon.png", carpeta.resolve("imagenes/bandera_japon.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/bandera_corea.png", carpeta.resolve("imagenes/bandera_corea.png").toFile());
+				Statics.carpeta.resolve("imagenes/bandera_esperanto.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/bandera_japon.png",
+				Statics.carpeta.resolve("imagenes/bandera_japon.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/bandera_corea.png",
+				Statics.carpeta.resolve("imagenes/bandera_corea.png").toFile());
 
-		copiarACarpetaDesdeJar("/imagenes/mod.png", carpeta.resolve("imagenes/mod.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/clase.png", carpeta.resolve("imagenes/clase.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/metodo.png", carpeta.resolve("imagenes/metodo.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/campo.png", carpeta.resolve("imagenes/campo.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/paquete.png", carpeta.resolve("imagenes/paquete.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/mod.png", Statics.carpeta.resolve("imagenes/mod.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/clase.png", Statics.carpeta.resolve("imagenes/clase.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/metodo.png", Statics.carpeta.resolve("imagenes/metodo.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/campo.png", Statics.carpeta.resolve("imagenes/campo.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/paquete.png", Statics.carpeta.resolve("imagenes/paquete.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/referencia_metodo.png",
-				carpeta.resolve("imagenes/referencia_metodo.png").toFile());
+				Statics.carpeta.resolve("imagenes/referencia_metodo.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/referencia_campo.png",
-				carpeta.resolve("imagenes/referencia_campo.png").toFile());
+				Statics.carpeta.resolve("imagenes/referencia_campo.png").toFile());
 
-		copiarACarpetaDesdeJar("/imagenes/sabalifecruel.png", carpeta.resolve("imagenes/sabalifecruel.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/sabalifecruel.png",
+				Statics.carpeta.resolve("imagenes/sabalifecruel.png").toFile());
 
 //		new File(viajo_ultima_mods.toString()).delete();
 //		try {
@@ -467,7 +479,7 @@ public class MonitorDePID {
 	public static void historia_mods() {
 
 		try {
-			Path directorioHistorial = carpeta.resolve("historia_mods");
+			Path directorioHistorial = Statics.carpeta.resolve("historia_mods");
 			Files.createDirectories(directorioHistorial);
 
 			File[] archivosHistorial = directorioHistorial.toFile().listFiles();
