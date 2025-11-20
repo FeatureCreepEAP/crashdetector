@@ -108,6 +108,7 @@ import com.asbestosstar.crashdetector.analizador.general.ErrorDeMonitorLWJGL;
 import com.asbestosstar.crashdetector.analizador.general.ErrorJarCorruptoConNombre;
 import com.asbestosstar.crashdetector.analizador.general.ErrorMetodoAbstractoNoImplementado;
 import com.asbestosstar.crashdetector.analizador.general.ErrorMetodoInexistente;
+import com.asbestosstar.crashdetector.analizador.general.FallosEjecucionTareas;
 import com.asbestosstar.crashdetector.analizador.general.FaltaModuleJPMS;
 import com.asbestosstar.crashdetector.analizador.general.FaltasClases;
 import com.asbestosstar.crashdetector.analizador.general.JavaVersiones;
@@ -276,6 +277,23 @@ public class Analizador {
 		verificaciones.add(new ModIncompatibleConCargadorActivo());
 		verificaciones.add(new ErrorCreacionModeloFallida());
 		verificaciones.add(new ConflictoMoonlightIceberg());
+
+		//Plan de 5 Semanas 
+		
+		
+		
+		verificaciones.add(new FallosEjecucionTareas());
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		verificaciones.addAll(CargadorDeCodice.cargarVerificaciones());
 
 		CrashDetectorLogger.log("Número de códices " + String.valueOf(CargadorDeCodice.cargarVerificaciones().size()));

@@ -182,22 +182,9 @@ public class Drivers implements Verificaciones {
 	}
 
 	private boolean contienePatronOpenAL(String log) {
-		// Verificamos si el log contiene "[" y "]"
-		int startIdx = log.indexOf('[');
-		if (startIdx == -1) {
-			return false;
-		}
-		int endIdx = log.indexOf(']', startIdx);
-		if (endIdx == -1 || endIdx <= startIdx) {
-			return false;
-		}
-
-		// Extraemos el contenido dentro de los corchetes
-		String contenidoDentroDeCorchetes = log.substring(startIdx + 1, endIdx);
-
 		// Verificamos si "libopenal.so" está presente dentro de los corchetes
-		if (contenidoDentroDeCorchetes.contains("libopenal.so")) {
-			CrashDetectorLogger.log("Patrón Nouveau encontrado: " + contenidoDentroDeCorchetes);
+		if (log.contains("[libopenal.so+")) {
+			CrashDetectorLogger.log("Patrón Nouveau encontrado: libopenal");
 			return true;
 		}
 
@@ -234,8 +221,41 @@ public class Drivers implements Verificaciones {
 	}
 
 	private void procesarProblemaNouveau() {
-		mensajes.append(MonitorDePID.idioma.problema_con_graficas_nouveau());
-		activado = true;
+		boolean tieneNvidia = false;
+
+		try {
+			// Ejecutar el comando a través de un shell para manejar el pipe
+			Process process = Runtime.getRuntime().exec(new String[] { "sh", "-c", "lspci | grep -i vga" });
+			try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+				String linea;
+				while ((linea = reader.readLine()) != null) {
+					String lineaBaja = linea.toLowerCase();
+					// Verificar identificadores de tarjetas NVIDIA
+					if (lineaBaja.contains("nvidia") || lineaBaja.contains("rtx") || lineaBaja.contains("gtx")
+							|| lineaBaja.contains("gt") || lineaBaja.contains("titan") || lineaBaja.contains("quadro")
+							|| lineaBaja.contains("tesla") || lineaBaja.contains("ampere")) {
+						tieneNvidia = true;
+						break;
+					}
+				}
+			}
+
+			// Esperar a que el proceso termine
+			int salir = process.waitFor();
+			if (salir != 0) {
+				// Si el comando falla, asumir que hay una tarjeta NVIDIA
+				tieneNvidia = true;
+			}
+		} catch (Exception e) {
+			// Si el comando falla o no se puede ejecutar, asumir que hay una tarjeta NVIDIA
+			tieneNvidia = true;
+		}
+
+		// Si se detecta una GPU NVIDIA (o el comando falló), mostrar el mensaje
+		if (tieneNvidia) {
+			mensajes.append(MonitorDePID.idioma.problema_con_graficas_nouveau());
+			activado = true;
+		}
 	}
 
 	private void procesarProblemaOpenAL() {

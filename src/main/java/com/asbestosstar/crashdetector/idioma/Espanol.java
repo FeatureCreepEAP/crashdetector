@@ -4442,9 +4442,9 @@ public String advertenciaMalwareFalso() {
 
 	@Override
 	public String problema_con_openAL() {
-		// TODO Auto-generated method stub
-		return "<span style='color:#" + config.obtenerColorError()
-				+ "'>Tienes un problema con OpenAL. A veces los controladores Nouveau pueden causarlo, pero a veces la versión de OpenAL incluida en la aplicación no es compatible con la versión en tu distribución y necesitas usar la versión proporcionada por tu distro. Consulta esta guía para más ayuda: <a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>Solución a problemas de sonido en Minecraft en Linux</a>.</span>";
+	    // TODO Auto-generated method stub
+	    return "<span style='color:#" + config.obtenerColorError()
+	           + "'>Tienes un problema con OpenAL. A veces los controladores Nouveau pueden causarlo, pero a veces la versión de OpenAL incluida en la aplicación no es compatible con la versión en tu distribución y necesitas usar la versión proporcionada por tu distro, es especialmente común con distribuciones Red Hat y con mods de sonido como Sound Physics Remastered. Consulta esta guía para más ayuda: <a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>Solución a problemas de sonido en Minecraft en Linux</a>.</span>";
 	}
 
 	@Override
@@ -4810,6 +4810,52 @@ public String advertenciaMalwareFalso() {
 	public String advertenciaCrashAssistantModsIncompatibles() {
 	    // TODO Auto-generated method stub
 	    return "<b style='color:#" + config.obtenerColorError() + "'>Crash Assistant tiene la capacidad de marcar mods como incompatibles, pero a veces esto es incorrecto y el mensaje de error solo está disponible en inglés. Si deseas jugar con estos mods, puedes editar el archivo <code>config/crash_assistant/problematic_mods_config.json</code> y cambiar <code>should_crash_on_startup</code> de <code>true</code> a <code>false</code>.</b>";
+	}
+	
+	@Override
+	public String errorDependenciaSimple(String modId, String dependencia, String actual) {
+	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
+	           "Error: El mod '" + modId + "' requiere el mod '" + dependencia + "'. Actualmente, " + actual + "." +
+	           "</span>";
+	}
+
+	@Override
+	public String errorDependenciaNoInstalada(String modId, String dependencia, String requerido) {
+	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
+	           "Error: El mod '" + modId + "' requiere la versión '" + requerido + "' o superior de '" + dependencia + "', pero el mod no está instalado." +
+	           "</span>";
+	}
+	
+	// En la clase MonitorDePID.idioma (añadir este método)
+	public String errorSuperbWarfareIncompatible(String modId, String dependencia, String versionActual) {
+	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
+	           "Error: El mod '" + modId + "' es incompatible con la versión actual de '" + dependencia + "'. " +
+	           "Debes eliminar el mod 'Iris/Oculus & GeckoLib Compat' ya que es incompatible con Superb Warfare y no funciona con la última versión de GeckoLib. " +
+	           "Versión actual: " + versionActual +
+	           "</span>";
+	}
+	
+	
+	public String fallo_ejecucion_tarea_descripcion(String clase) {
+	    return "Error: No se pudo ejecutar la tarea para la clase '" + clase + "'. " +
+	           "Este error es común con mods que no son compatibles entre sí o que tienen conflictos con otros mods instalados.";
+	}
+
+	public String nombre_fallos_ejecucion_tareas() {
+	    return "Fallos en la ejecución de tareas";
+	}
+
+	public String recomendacion_fallos_ejecucion() {
+	    return "Este tipo de error suele ocurrir cuando hay incompatibilidades entre mods. " +
+	           "Especialmente común con mods que no funcionan correctamente con ConnectorMod.";
+	}
+
+	public String info_clase_problematica() {
+	    return "Clase problemática:";
+	}
+
+	public String no_se_encontraron_clases_problema() {
+	    return "No se encontraron clases específicas con problemas de ejecución.";
 	}
 
 }

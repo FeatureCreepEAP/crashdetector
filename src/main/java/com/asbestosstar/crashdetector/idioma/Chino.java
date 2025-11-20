@@ -3595,8 +3595,8 @@ public String advertenciaMalwareFalso() {
 
 	@Override
 	public String problema_con_openAL() {
-		return "<span style='color:#" + config.obtenerColorError()
-				+ "'>你的 OpenAL 出现问题。有时是 Nouveau 驱动导致的，但有时是因为应用程序自带的 OpenAL 版本与你系统发行版中的版本不兼容，你需要使用发行版提供的 OpenAL 版本。请参考此指南获取更多帮助：<a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>如何修复 Linux 上 Minecraft 的声音问题</a>。</span>";
+	    return "<span style='color:#" + config.obtenerColorError()
+	           + "'>你的 OpenAL 出现问题。有时是 Nouveau 驱动导致的，但有时是因为应用程序自带的 OpenAL 版本与你系统发行版中的版本不兼容，你需要使用发行版提供的 OpenAL 版本。这在 Red Hat 系发行版和 Sound Physics Remastered 等声音模组中尤为常见。请参考此指南获取更多帮助：<a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>如何修复 Linux 上 Minecraft 的声音问题</a>。</span>";
 	}
 
 	@Override
@@ -3923,6 +3923,58 @@ public String advertenciaMalwareFalso() {
 	public String advertenciaCrashAssistantModsIncompatibles() {
 	    return "<b style='color:#" + config.obtenerColorError() + "'>Crash Assistant 具有判断模组不兼容的能力，但有时并不准确，且错误信息仅为英文。如果你想使用这些模组，可以编辑文件 <code>config/crash_assistant/problematic_mods_config.json</code>，将 <code>should_crash_on_startup</code> 从 <code>true</code> 改为 <code>false</code>。</b>";
 	}
+	
+	@Override
+	public String errorDependenciaSimple(String modId, String dependencia, String actual) {
+	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
+	           "错误：模组 '" + modId + "' 需要模组 '" + dependencia + "'。当前，" + actual + "。" +
+	           "</span>";
+	}
+
+	@Override
+	public String errorDependenciaNoInstalada(String modId, String dependencia, String requerido) {
+	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
+	           "错误：模组 '" + modId + "' 需要 '" + dependencia + "' 的 '" + requerido + "' 或更高版本，但该模组未安装。" +
+	           "</span>";
+	}
+	
+	// 在类 MonitorDePID.idioma 中（添加此方法）
+	public String errorSuperbWarfareIncompatible(String modId, String dependencia, String versionActual) {
+	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
+	           "错误：模组 '" + modId + "' 与 '" + dependencia + "' 的当前版本不兼容。" +
+	           "你必须删除模组 'Iris/Oculus & GeckoLib Compat'，因为它与 Superb Warfare 不兼容，并且无法与最新版 GeckoLib 正常工作。" +
+	           "当前版本：" + versionActual +
+	           "</span>";
+	}
+	
+	public String fallo_ejecucion_tarea_descripcion(String clase) {
+	    return "错误：无法为类 '" + clase + "' 执行任务。" +
+	           "当模组之间不兼容或与其他已安装的模组发生冲突时，通常会出现此错误。";
+	}
+
+	public String nombre_fallos_ejecucion_tareas() {
+	    return "任务执行失败";
+	}
+
+	public String recomendacion_fallos_ejecucion() {
+	    return "此类错误通常是由于模组之间的不兼容性引起的。" +
+	           "特别是那些在使用 ConnectorMod 时不能正常工作的模组。";
+	}
+
+	public String info_clase_problematica() {
+	    return "问题类：";
+	}
+
+	public String ver_en_log() {
+	    return "在日志中查看";
+	}
+
+	public String no_se_encontraron_clases_problema() {
+	    return "未找到存在执行问题的具体类。";
+	}
+	
+	
+	
 	
 	
 	

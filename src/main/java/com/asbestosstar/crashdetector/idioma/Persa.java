@@ -3755,8 +3755,8 @@ public String advertenciaMalwareFalso() {
 
 	@Override
 	public String problema_con_openAL() {
-		return "<span style='color:#" + config.obtenerColorError()
-				+ "'>مشکلی با OpenAL دارید. گاهی اوقات درایورهای Nouveau این مشکل را ایجاد می‌کنند، اما گاهی هم نسخهٔ OpenAL که با برنامه بسته‌بندی شده با نسخه موجود در توزیع شما سازگار نیست و باید از نسخه توزیع خود استفاده کنید. برای راهنمایی بیشتر به این راهنما مراجعه کنید: <a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>چگونه مشکلات صدا در ماینکرفت روی لینوکس را رفع کنیم</a>.</span>";
+	    return "<span style='color:#" + config.obtenerColorError()
+	           + "'>مشکلی با OpenAL دارید. گاهی اوقات درایورهای Nouveau این مشکل را ایجاد می‌کنند، اما گاهی هم نسخهٔ OpenAL که با برنامه بسته‌بندی شده با نسخه موجود در توزیع شما سازگار نیست و باید از نسخه توزیع خود استفاده کنید. این موضوع به ویژه در توزیع‌های مبتنی بر Red Hat و با مودهای صدا مانند Sound Physics Remastered رایج است. برای راهنمایی بیشتر به این راهنما مراجعه کنید: <a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>چگونه مشکلات صدا در ماینکرفت روی لینوکس را رفع کنیم</a>.</span>";
 	}
 
 	@Override
@@ -4103,6 +4103,57 @@ public String advertenciaMalwareFalso() {
 	public String advertenciaCrashAssistantModsIncompatibles() {
 	    return "<b style='color:#" + config.obtenerColorError() + "'>Crash Assistant توانایی گفتن ناسازگاری مودها را دارد، اما گاهی این موضوع اشتباه است و خطای آن فقط به یک زبان است. اگر می‌خواهید با این مودها بازی کنید، می‌توانید فایل <code>config/crash_assistant/problematic_mods_config.json</code> را ویرایش کرده و <code>should_crash_on_startup</code> را از <code>true</code> به <code>false</code> تغییر دهید.</b>";
 	}
+	
+	@Override
+	public String errorDependenciaSimple(String modId, String dependencia, String actual) {
+	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
+	           "خطا: مود '" + modId + "' به مود '" + dependencia + "' نیاز دارد. در حال حاضر، " + actual + " است." +
+	           "</span>";
+	}
+
+	@Override
+	public String errorDependenciaNoInstalada(String modId, String dependencia, String requerido) {
+	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
+	           "خطا: مود '" + modId + "' به نسخهٔ '" + requerido + "' یا بالاتر از '" + dependencia + "' نیاز دارد، اما این مود نصب نشده است." +
+	           "</span>";
+	}
+	
+	// در کلاس MonitorDePID.idioma (این متد را اضافه کنید)
+	public String errorSuperbWarfareIncompatible(String modId, String dependencia, String versionActual) {
+	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
+	           "خطا: مود '" + modId + "' با نسخه فعلی '" + dependencia + "' سازگار نیست. " +
+	           "باید مود 'Iris/Oculus & GeckoLib Compat' را حذف کنید زیرا با Superb Warfare سازگار نیست و با آخرین نسخه GeckoLib کار نمی‌کند. " +
+	           "نسخه فعلی: " + versionActual +
+	           "</span>";
+	}
+	
+	public String fallo_ejecucion_tarea_descripcion(String clase) {
+	    return "خطا: اجرای وظیفه برای کلاس '" + clase + "' ناموفق بود. " +
+	           "این خطا معمولاً با مودهایی که با هم سازگار نیستند یا با سایر مودهای نصب شده تداخل دارند رخ می‌دهد.";
+	}
+
+	public String nombre_fallos_ejecucion_tareas() {
+	    return "شکست در اجرای وظایف";
+	}
+
+	public String recomendacion_fallos_ejecucion() {
+	    return "این نوع خطا معمولاً زمانی رخ می‌دهد که بین مودها عدم سازگاری وجود داشته باشد. " +
+	           "به خصوص برای مودهایی که به درستی با ConnectorMod کار نمی‌کنند، رایج است.";
+	}
+
+	public String info_clase_problematica() {
+	    return "کلاس مشکل‌دار:";
+	}
+
+	public String ver_en_log() {
+	    return "مشاهده در سیاهه";
+	}
+
+	public String no_se_encontraron_clases_problema() {
+	    return "هیچ کلاس خاصی با مشکلات اجرایی پیدا نشد.";
+	}
+	
+	
 	
 	
 	

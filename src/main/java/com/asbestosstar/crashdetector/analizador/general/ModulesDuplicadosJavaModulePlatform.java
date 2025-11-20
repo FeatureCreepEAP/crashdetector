@@ -28,18 +28,28 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 	private boolean recolectando = false;
 	private StringBuilder mensajeBuilder = null;
 	private int indiceUltimaNoStack = -1;
+	// Nuevo: almacenar consola para finalización
+	private Consola consolaRef = null;
 
 	@Override
 	public void verificar(Consola consola) {
+		// Finalizar cualquier bloque pendiente al final del procesamiento
+		if (recolectando && consolaRef != null) {
+			CrashDetectorLogger.log("Finalizando bloque pendiente al final del procesamiento");
+			finalizarBloque(consolaRef, indiceUltimaNoStack >= 0 ? indiceUltimaNoStack : 0);
+		}
+		consolaRef = null;
 	}
 
 	@Override
 	public void verificar(Consola consola, String lineaOriginal, int i) {
 		String linea = lineaOriginal.trim();
+		String lineaMinuscula = linea.toLowerCase();
 
-		boolean esCabecera = linea.contains("java.lang.module.ResolutionException:")
-				|| linea.contains("contains package") || linea.contains("export package")
-				|| linea.contains("exports package");
+		boolean esCabecera = lineaMinuscula.contains("java.lang.module.resolutionexception:")
+				|| lineaMinuscula.contains("contains package") || lineaMinuscula.contains("export package")
+				|| lineaMinuscula.contains("exports package")
+				|| (lineaMinuscula.startsWith("exception in thread") && lineaMinuscula.contains("resolutionexception"));
 
 		if (esCabecera) {
 			if (recolectando) {
@@ -47,7 +57,12 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 			}
 			recolectando = true;
 			mensajeBuilder = new StringBuilder(linea);
-			indiceUltimaNoStack = i;
+
+			// Procesar inmediatamente si es una línea completa sin stack trace
+			if (!linea.contains("\tat ")) {
+				finalizarBloque(consola, i);
+				recolectando = false;
+			}
 			return;
 		}
 
@@ -61,39 +76,61 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 		}
 	}
 
+	// Resto del código igual, pero con este cambio crucial en finalizarBloque:
 	private void finalizarBloque(Consola consola, int indiceParaEnlace) {
 		try {
-			String mensaje = mensajeBuilder.toString().replace("ResolutionException:", "").trim();
-			mensaje = mensaje.replaceFirst(".*?(?=Modules|Module)", "").trim();
+			String mensajeCompleto = mensajeBuilder.toString().trim();
+
+			// Limpieza específica para el formato problemático
+			String mensaje = mensajeCompleto.replace("Exception in thread \"main\" ", "")
+					.replace("java.lang.module.ResolutionException: ", "").trim();
 
 			String modulosCombinados = "";
 			String paquete = "";
+			boolean encontrado = false;
 
-			if (mensaje.contains("contains package")) {
-				String[] partes = mensaje.split("contains package");
-				modulosCombinados = partes[0].replace("Module", "").trim();
-				paquete = partes[1].split("module ")[1].split(" ")[0].trim();
-				activado = true;
+			// Detección específica para: "Modules jlayer and mts export package
+			// javazoom.jl.player to module fabric_screen_handler_api_v1"
+			if (mensaje.toLowerCase().contains("modules") && mensaje.toLowerCase().contains("export package")
+					&& mensaje.toLowerCase().contains("to module")) {
 
-			} else if (mensaje.contains("export package")) {
-				String[] partes = mensaje.split("export package");
-				modulosCombinados = partes[0].replace("Modules", "").replace(" and ", "+").trim();
-				paquete = partes[1].split("to module")[0].trim();
-				activado = true;
+				// Extraer los módulos conflictivos
+				String parteModulos = mensaje.substring(0, mensaje.toLowerCase().indexOf("export package")).trim();
+				if (parteModulos.toLowerCase().startsWith("modules")) {
+					parteModulos = parteModulos.substring("modules".length()).trim();
+				}
+				modulosCombinados = parteModulos.replace("and", "+").trim();
 
-			} else if (mensaje.contains("exports package")) {
-				String[] partes = mensaje.split("exports package");
-				modulosCombinados = partes[0].trim().replace("and", "+");
-				paquete = partes[1].split("to module")[0].trim();
+				// Extraer el paquete problemático
+				int inicioPaquete = mensaje.toLowerCase().indexOf("export package") + "export package".length();
+				int finPaquete = mensaje.toLowerCase().indexOf("to module");
+				paquete = mensaje.substring(inicioPaquete, finPaquete).trim().replace("\"", "");
+
+				encontrado = true;
 				activado = true;
 			}
 
-			if (activado) {
-				paquete = paquete.replaceAll("^\"|\"$", "").trim();
+			// Mantener compatibilidad con otros formatos
+			if (!encontrado && mensaje.toLowerCase().contains("contains package")) {
+				String[] partes = mensaje.split("contains package", 2);
+				if (partes.length > 1) {
+					modulosCombinados = partes[0].replace("Module", "").trim();
+					String[] resto = partes[1].split("module ");
+					if (resto.length > 1) {
+						paquete = resto[1].split(" ")[0].trim().replace("\"", "");
+						encontrado = true;
+						activado = true;
+					}
+				}
+			}
+
+			if (encontrado && !paquete.isEmpty()) {
 				paqueteProblematico = paquete;
 				Buscardor.cargar();
 				List<ArchivoDeMod> mods = Buscardor.buscarModsConTermino(paquete);
-				String resultado = formatearResultadoBusqueda(mods);
+
+				// Si no encuentra mods, igual mostrar el mensaje básico
+				String resultado = mods.isEmpty() ? "" : formatearResultadoBusqueda(mods);
 
 				String enlace = consola.agregarErrorALectador(indiceParaEnlace, this);
 				enlacesPorPaquete.put(paquete, enlace);
@@ -101,17 +138,20 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 				StringBuilder mensajeFinal = new StringBuilder();
 				mensajeFinal.append(MonitorDePID.idioma.module_resolution_exception());
 
-				if (!modulosCombinados.isEmpty() && !paquete.isEmpty()) {
-					mensajeFinal.append("<br><br><b>" + MonitorDePID.idioma.modulos() + ":</b><br>").append("<ul>");
-					for (String modulo : modulosCombinados.split("\\+")) {
-						mensajeFinal.append("<li>").append(modulo.trim()).append("</li>");
-					}
-					mensajeFinal.append("</ul>");
-					mensajeFinal.append("<b>" + MonitorDePID.idioma.paquete() + ":</b><br>").append("<code>")
-							.append(paquete.replace(".", "/")).append("</code> ");
-					mensajeFinal.append(resultado).append(Verificaciones.nl_html);
-					mensajeFinal.append(" ").append(enlace);
+				mensajeFinal.append("<br><br><b>").append(MonitorDePID.idioma.modulos()).append(":</b><br><ul>");
+				for (String modulo : modulosCombinados.split("\\+")) {
+					mensajeFinal.append("<li>").append(modulo.trim()).append("</li>");
 				}
+				mensajeFinal.append("</ul>");
+
+				mensajeFinal.append("<b>").append(MonitorDePID.idioma.paquete()).append(":</b><br>").append("<code>")
+						.append(paquete.replace(".", "/")).append("</code>");
+
+				if (!mods.isEmpty()) {
+					mensajeFinal.append(" ").append(resultado);
+				}
+
+				mensajeFinal.append(Verificaciones.nl_html).append(enlace);
 
 				mensajes.append(mensajeFinal.toString());
 			}
@@ -124,6 +164,11 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 		}
 	}
 
+	// Resto de los métodos sin cambios (formatearResultadoBusqueda, nueva,
+	// activado, etc.)
+	// [Mantener todos los métodos existentes iguales]
+
+	// Solo para referencia, asegurarse de tener estos métodos:
 	private String formatearResultadoBusqueda(List<ArchivoDeMod> mods) {
 		if (mods.isEmpty())
 			return "()";
@@ -162,6 +207,7 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 
 	@Override
 	public QuickFix solucion() {
+		// [Mantener implementación existente]
 		QuickFix.Builder builder = new QuickFix.Builder(MonitorDePID.idioma.nombre_de_modules_duplicados_jmps());
 
 		if (!activado || paqueteProblematico == null || paqueteProblematico.isEmpty()) {
@@ -211,14 +257,11 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
 		return "modules_duplicados_java_module_platform";
 	}
 
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+		return false;
 	}
-
 }

@@ -4,6 +4,8 @@ import java.awt.Desktop;
 import java.net.URI;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
@@ -18,10 +20,29 @@ public class JavaVersiones implements Verificaciones {
 
 	private boolean activado = false;
 	private final Set<String> mensajes = new HashSet<>();
+	// Nuevo: para almacenar la clase específica con problema de versión
+	private String claseConProblema = null;
+	// Nuevo: patrón para detectar errores de versión de clase específica
+	private final Pattern patronVersionClase = Pattern.compile(
+			"UnsupportedClassVersionError:\\s*([a-zA-Z0-9_/]+)\\s+has been compiled by a more recent version of the Java Runtime \\(class file version (\\d+)\\.0\\), this version of the Java Runtime only recognizes class file versions up to (\\d+)\\.0");
 
 	@Override
 	public void verificar(Consola consola) {
 		String contenidoConsola = consola.contenido_verificar;
+
+		// Buscar errores de versión de clase específica
+		Matcher matcher = patronVersionClase.matcher(contenidoConsola);
+		while (matcher.find()) {
+			claseConProblema = matcher.group(1).replace("/", ".");
+			String versionCompilada = matcher.group(2);
+			String versionActual = matcher.group(3);
+
+			// Determinar qué versión de Java se necesita
+			String versionJavaNecesaria = determinarVersionJava(versionCompilada);
+			mensajes.add(MonitorDePID.idioma.javaObsoleta() + " JVM: "
+					+ versionJavaNecesaria);
+			activado = true;
+		}
 
 		// Verificación de versión Java 22 no soportada
 		if (contenidoConsola.contains("Unsupported class file major version")) {
@@ -35,12 +56,14 @@ public class JavaVersiones implements Verificaciones {
 			}
 		}
 
-		// Verificación de versión Java obsoleta
-		if (contenidoConsola.contains("has been compiled by a more recent version of the Java Runtime")) {
+		// Verificación de versión Java obsoleta (genérica)
+		if (contenidoConsola.contains("has been compiled by a more recent version of the Java Runtime")
+				&& claseConProblema == null) {
 			mensajes.add(MonitorDePID.idioma.javaObsoleta());
 			activado = true;
 		}
 
+		// Resto de las verificaciones existentes
 		// Verificación de incompatibilidad con Java 8
 		if (contenidoConsola.contains(
 				"class jdk.internal.loader.ClassLoaders$AppClassLoader cannot be cast to class java.net.URLClassLoader")) {
@@ -76,7 +99,52 @@ public class JavaVersiones implements Verificaciones {
 			mensajes.add(MonitorDePID.idioma.necesitasJDK11());
 			activado = true;
 		}
+	}
 
+	// Nuevo: método para determinar la versión de Java a partir del número de clase
+	private String determinarVersionJava(String versionClase) {
+		int version = Integer.parseInt(versionClase);
+		switch (version) {
+		case 61:
+			return "17";
+		case 62:
+			return "18";
+		case 63:
+			return "19";
+		case 64:
+			return "20";
+		case 65:
+			return "21";
+		case 66:
+			return "22";
+		default:
+			if (version < 50)
+				return "1.6 o anterior";
+			else if (version == 50)
+				return "1.6";
+			else if (version == 51)
+				return "1.7";
+			else if (version == 52)
+				return "1.8";
+			else if (version == 53)
+				return "9";
+			else if (version == 54)
+				return "10";
+			else if (version == 55)
+				return "11";
+			else if (version == 56)
+				return "12";
+			else if (version == 57)
+				return "13";
+			else if (version == 58)
+				return "14";
+			else if (version == 59)
+				return "15";
+			else if (version == 60)
+				return "16";
+			else
+				return "desconocida (" + version + ")";
+		}
 	}
 
 	@Override
@@ -91,7 +159,7 @@ public class JavaVersiones implements Verificaciones {
 
 	@Override
 	public float prioridad() {
-		return 800.0f;
+		return 925.0f;
 	}
 
 	@Override
@@ -103,13 +171,19 @@ public class JavaVersiones implements Verificaciones {
 		for (String msg : mensajes) {
 			html.append("<li>").append(msg).append("</li>");
 		}
+
+		// Nuevo: agregar información sobre la clase específica si se detectó
+		if (claseConProblema != null && !claseConProblema.isEmpty()) {
+			html.append("<li><b>").append("Clase").append(":</b> ")
+					.append(claseConProblema).append("</li>");
+		}
+
 		html.append("</ul>");
 		return html.toString();
 	}
 
 	@Override
 	public String nombre() {
-		// TODO Auto-generated method stub
 		return MonitorDePID.idioma.nombre_de_java_versiones();
 	}
 
@@ -163,14 +237,11 @@ public class JavaVersiones implements Verificaciones {
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
 		return "java_versiones";
 	}
 
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+		return false;
 	}
-
 }

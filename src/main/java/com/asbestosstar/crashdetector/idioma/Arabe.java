@@ -3737,8 +3737,8 @@ public String advertenciaMalwareFalso() {
 
 	@Override
 	public String problema_con_openAL() {
-		return "<span style='color:#" + config.obtenerColorError()
-				+ "'>لديك مشكلة في OpenAL. أحيانًا يمكن أن تسببها تعريفات Nouveau، ولكن في بعض الأحيان تكون المشكلة هي أن إصدار OpenAL المضمن مع التطبيق غير متوافق مع الإصدار الموجود في توزيعتك، وتحتاج إلى استخدام الإصدار الخاص بتوزيعتك. راجع هذا الدليل للحصول على مساعدة إضافية: <a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>كيفية إصلاح مشاكل الصوت في ماينكرافت على لينكس</a>.</span>";
+	    return "<span style='color:#" + config.obtenerColorError()
+	           + "'>لديك مشكلة في OpenAL. أحيانًا يمكن أن تسببها تعريفات Nouveau، ولكن في بعض الأحيان تكون المشكلة هي أن إصدار OpenAL المضمن مع التطبيق غير متوافق مع الإصدار الموجود في توزيعتك، وتحتاج إلى استخدام الإصدار الخاص بتوزيعتك. هذا شائع بشكل خاص مع توزيعات Red Hat ومع تعديلات الصوت مثل Sound Physics Remastered. راجع هذا الدليل للحصول على مساعدة إضافية: <a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>كيفية إصلاح مشاكل الصوت في ماينكرافت على لينكس</a>.</span>";
 	}
 
 	@Override
@@ -4081,6 +4081,57 @@ public String advertenciaMalwareFalso() {
 	public String advertenciaCrashAssistantModsIncompatibles() {
 	    return "<b style='color:#" + config.obtenerColorError() + "'>يمكن لـ Crash Assistant أن يُصنّف التعديلات على أنها غير متوافقة، لكن في بعض الأحيان يكون هذا التصنيف خاطئًا، والرسالة باللغة الإنجليزية فقط. إذا أردت استخدام هذه التعديلات، يمكنك تحرير الملف <code>config/crash_assistant/problematic_mods_config.json</code> وتغيير قيمة <code>should_crash_on_startup</code> من <code>true</code> إلى <code>false</code>.</b>";
 	}
+	
+	@Override
+	public String errorDependenciaSimple(String modId, String dependencia, String actual) {
+	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
+	           "خطأ: التعديل '" + modId + "' يتطلب التعديل '" + dependencia + "'. حاليًا، " + actual + "." +
+	           "</span>";
+	}
+
+	@Override
+	public String errorDependenciaNoInstalada(String modId, String dependencia, String requerido) {
+	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
+	           "خطأ: التعديل '" + modId + "' يتطلب الإصدار '" + requerido + "' أو أحدث من '" + dependencia + "'، لكن التعديل غير مثبت." +
+	           "</span>";
+	}
+	
+	// في كلاس MonitorDePID.idioma (إضافة هذه الطريقة)
+	public String errorSuperbWarfareIncompatible(String modId, String dependencia, String versionActual) {
+	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
+	           "خطأ: التعديل '" + modId + "' غير متوافق مع الإصدار الحالي من '" + dependencia + "'. " +
+	           "يجب عليك حذف التعديل 'Iris/Oculus & GeckoLib Compat' لأنه غير متوافق مع Superb Warfare ولا يعمل مع أحدث إصدار من GeckoLib. " +
+	           "الإصدار الحالي: " + versionActual +
+	           "</span>";
+	}
+	
+	public String fallo_ejecucion_tarea_descripcion(String clase) {
+	    return "خطأ: تعذر تنفيذ المهمة للصنف '" + clase + "'. " +
+	           "هذا الخطأ شائع مع التعديلات التي لا تكون متوافقة فيما بينها أو التي لديها تعارضات مع تعديلات أخرى مثبتة.";
+	}
+
+	public String nombre_fallos_ejecucion_tareas() {
+	    return "فشل تنفيذ المهام";
+	}
+
+	public String recomendacion_fallos_ejecucion() {
+	    return "يحدث هذا النوع من الأخطاء عادةً بسبب التعارضات بين التعديلات. " +
+	           "وهو شائع بشكل خاص مع التعديلات التي لا تعمل بشكل صحيح مع ConnectorMod.";
+	}
+
+	public String info_clase_problematica() {
+	    return "الصنف المسبب للمشكلة:";
+	}
+
+	public String ver_en_log() {
+	    return "عرض في السجل";
+	}
+
+	public String no_se_encontraron_clases_problema() {
+	    return "لم يتم العثور على أصناف محددة تعاني من مشاكل في التنفيذ.";
+	}
+	
+	
 	
 	
 	

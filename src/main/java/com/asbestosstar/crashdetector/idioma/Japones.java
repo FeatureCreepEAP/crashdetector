@@ -3663,8 +3663,8 @@ public String advertenciaMalwareFalso() {
 
 	@Override
 	public String problema_con_openAL() {
-		return "<span style='color:#" + config.obtenerColorError()
-				+ "'>OpenALに問題があります。Nouveauドライバーが原因の場合もありますが、アプリケーションに同梱されたOpenALのバージョンがディストリビューションのものと互換性がない場合もあり、その場合はディストリ自身のOpenALを使用する必要があります。詳細な対処法は以下のガイドを参照してください：<a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>LinuxでMinecraftの音声問題を修正する方法</a>。</span>";
+	    return "<span style='color:#" + config.obtenerColorError()
+	           + "'>You have an issue with OpenAL. Sometimes Nouveau drivers can cause this, but sometimes the application's bundled OpenAL version is incompatible with the one in your distribution and you need to use your distro's version. This is especially common with Red Hat-based distributions and sound mods like Sound Physics Remastered. See this guide for more help: <a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>How to fix Minecraft sound problems using Linux</a>.</span>";
 	}
 
 	@Override
@@ -3998,6 +3998,59 @@ public String advertenciaMalwareFalso() {
 	public String advertenciaCrashAssistantModsIncompatibles() {
 	    return "<b style='color:#" + config.obtenerColorError() + "'>Crash AssistantはMODを互換性なしと判定する機能がありますが、時には誤った判定であり、エラーメッセージは1か国語しかありません。これらのMODを使用したい場合は、<code>config/crash_assistant/problematic_mods_config.json</code>ファイルを編集して、<code>should_crash_on_startup</code>を<code>true</code>から<code>false</code>に変更してください。</b>";
 	}
+	
+	@Override
+	public String errorDependenciaSimple(String modId, String dependencia, String actual) {
+	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
+	           "エラー：MOD '" + modId + "' は MOD '" + dependencia + "' を必要とします。現在、" + actual + "。" +
+	           "</span>";
+	}
+
+	@Override
+	public String errorDependenciaNoInstalada(String modId, String dependencia, String requerido) {
+	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
+	           "エラー：MOD '" + modId + "' は '" + dependencia + "' のバージョン '" + requerido + "' 以上を必要としますが、そのMODはインストールされていません。" +
+	           "</span>";
+	}
+	
+	// クラス MonitorDePID.idioma に（このメソッドを追加）
+	public String errorSuperbWarfareIncompatible(String modId, String dependencia, String versionActual) {
+	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
+	           "エラー: モド '" + modId + "' は '" + dependencia + "' の現在のバージョンと互換性がありません。 " +
+	           "'Iris/Oculus & GeckoLib Compat' モドを削除する必要があります。これは Superb Warfare と互換性がなく、最新版の GeckoLib では動作しません。 " +
+	           "現在のバージョン: " + versionActual +
+	           "</span>";
+	}
+	
+	public String fallo_ejecucion_tarea_descripcion(String clase) {
+	    return "エラー: クラス '" + clase + "' のタスクを実行できませんでした。 " +
+	           "このエラーは、互換性のないMODや他のインストール済みMODと競合するMODでよく発生します。";
+	}
+
+	public String nombre_fallos_ejecucion_tareas() {
+	    return "タスク実行失敗";
+	}
+
+	public String recomendacion_fallos_ejecucion() {
+	    return "この種のエラーは、MOD間の互換性の問題が原因で発生することが多いです。 " +
+	           "特にConnectorModと正しく動作しないMODで一般的です。";
+	}
+
+	public String info_clase_problematica() {
+	    return "問題のあるクラス：";
+	}
+
+	public String ver_en_log() {
+	    return "ログで表示";
+	}
+
+	public String no_se_encontraron_clases_problema() {
+	    return "実行に問題がある特定のクラスは見つかりませんでした。";
+	}
+	
+	
+	
+	
 	
 	
 	

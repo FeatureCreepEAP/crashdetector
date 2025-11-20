@@ -3776,8 +3776,8 @@ public String advertenciaMalwareFalso() {
 
 	@Override
 	public String problema_con_openAL() {
-		return "<span style='color:#" + config.obtenerColorError()
-				+ "'>У вас возникла проблема с OpenAL. Иногда её вызывают драйверы Nouveau, но иногда виной тому версия OpenAL, поставляемая с приложением, которая несовместима с версией в вашем дистрибутиве, и вам нужно использовать версию из вашего дистрибутива. См. это руководство для получения дополнительной помощи: <a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>Как исправить проблемы со звуком в Minecraft на Linux</a>.</span>";
+	    return "<span style='color:#" + config.obtenerColorError()
+	           + "'>У вас возникла проблема с OpenAL. Иногда её вызывают драйверы Nouveau, но иногда виной тому версия OpenAL, поставляемая с приложением, которая несовместима с версией в вашем дистрибутиве, и вам нужно использовать версию из вашего дистрибутива. Это особенно часто встречается в дистрибутивах на базе Red Hat и с модами на звук, такими как Sound Physics Remastered. См. это руководство для получения дополнительной помощи: <a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>Как исправить проблемы со звуком в Minecraft на Linux</a>.</span>";
 	}
 
 	@Override
@@ -4128,6 +4128,60 @@ public String advertenciaMalwareFalso() {
 	public String advertenciaCrashAssistantModsIncompatibles() {
 	    return "<b style='color:#" + config.obtenerColorError() + "'>Crash Assistant может помечать моды как несовместимые, но иногда это неверно, и сообщение об ошибке доступно только на одном языке. Если вы хотите использовать эти моды, вы можете отредактировать файл <code>config/crash_assistant/problematic_mods_config.json</code> и изменить значение <code>should_crash_on_startup</code> с <code>true</code> на <code>false</code>.</b>";
 	}
+	
+	@Override
+	public String errorDependenciaSimple(String modId, String dependencia, String actual) {
+	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
+	           "Ошибка: Мод '" + modId + "' требует мод '" + dependencia + "'. В настоящее время, " + actual + "." +
+	           "</span>";
+	}
+
+	@Override
+	public String errorDependenciaNoInstalada(String modId, String dependencia, String requerido) {
+	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
+	           "Ошибка: Моду '" + modId + "' требуется версия '" + requerido + "' или выше мода '" + dependencia + "', но этот мод не установлен." +
+	           "</span>";
+	}
+	
+	// В классе MonitorDePID.idioma (добавить этот метод)
+	public String errorSuperbWarfareIncompatible(String modId, String dependencia, String versionActual) {
+	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
+	           "Ошибка: Мод '" + modId + "' несовместим с текущей версией '" + dependencia + "'. " +
+	           "Вы должны удалить мод 'Iris/Oculus & GeckoLib Compat', так как он несовместим с Superb Warfare и не работает с последней версией GeckoLib. " +
+	           "Текущая версия: " + versionActual +
+	           "</span>";
+	}
+	
+	
+	public String fallo_ejecucion_tarea_descripcion(String clase) {
+	    return "Ошибка: Не удалось выполнить задачу для класса '" + clase + "'. " +
+	           "Эта ошибка часто возникает с модами, которые несовместимы друг с другом или имеют конфликты с другими установленными модами.";
+	}
+
+	public String nombre_fallos_ejecucion_tareas() {
+	    return "Сбои при выполнении задач";
+	}
+
+	public String recomendacion_fallos_ejecucion() {
+	    return "Такой тип ошибки обычно возникает из-за несовместимости между модами. " +
+	           "Особенно распространено с модами, которые неправильно работают с ConnectorMod.";
+	}
+
+	public String info_clase_problematica() {
+	    return "Проблемный класс:";
+	}
+
+	public String ver_en_log() {
+	    return "Просмотреть в логе";
+	}
+
+	public String no_se_encontraron_clases_problema() {
+	    return "Не найдено конкретных классов с проблемами выполнения.";
+	}
+	
+	
+	
+	
 	
 	
 	

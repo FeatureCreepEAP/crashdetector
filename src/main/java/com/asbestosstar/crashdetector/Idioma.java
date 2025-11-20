@@ -1642,4 +1642,20 @@ public interface Idioma {
 
 	public String advertenciaMalwareFalso();
 
+	public String errorDependenciaSimple(String modId, String dependencia, String versionActual);
+
+	public String errorDependenciaNoInstalada(String modId, String dependencia, String versionRequerida);
+
+	public String errorSuperbWarfareIncompatible(String modId, String dependencia, String versionActual);
+
+	public String fallo_ejecucion_tarea_descripcion(String clase);
+
+	public String recomendacion_fallos_ejecucion();
+
+	public String info_clase_problematica();
+
+	public String nombre_fallos_ejecucion_tareas();
+
+	public String no_se_encontraron_clases_problema();
+
 }

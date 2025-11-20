@@ -3656,8 +3656,8 @@ public String advertenciaMalwareFalso() {
 
 	@Override
 	public String problema_con_openAL() {
-		return "<span style='color:#" + config.obtenerColorError()
-				+ "'>OpenAL에 문제가 있습니다. 가끔 Nouveau 드라이버가 원인일 수 있지만, 때로는 애플리케이션의 OpenAL 버전이 배포판의 버전과 호환되지 않아 배포판에서 제공하는 버전을 사용해야 할 수도 있습니다. 더 많은 도움을 받으려면 다음 가이드를 참조하세요: <a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>리눅스에서 마인크래프트 사운드 문제 해결 방법</a>.</span>";
+	    return "<span style='color:#" + config.obtenerColorError()
+	           + "'>OpenAL에 문제가 있습니다. 가끔 Nouveau 드라이버가 원인일 수 있지만, 때로는 애플리케이션의 OpenAL 버전이 배포판의 버전과 호환되지 않아 배포판에서 제공하는 버전을 사용해야 할 수도 있습니다. 이는 특히 Red Hat 계열 배포판 및 Sound Physics Remastered 같은 사운드 모드와 함께 사용할 때 흔히 발생합니다. 더 많은 도움을 받으려면 다음 가이드를 참조하세요: <a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>리눅스에서 마인크래프트 사운드 문제 해결 방법</a>.</span>";
 	}
 
 	@Override
@@ -3991,6 +3991,58 @@ public String advertenciaMalwareFalso() {
 	public String advertenciaCrashAssistantModsIncompatibles() {
 	    return "<b style='color:#" + config.obtenerColorError() + "'>Crash Assistant는 모드가 호환되지 않는다고 판단할 수 있지만, 때때로 잘못된 판단을 하며 오류 메시지가 영어로만 나옵니다. 이 모드들을 사용하고 싶다면, <code>config/crash_assistant/problematic_mods_config.json</code> 파일을 편집하여 <code>should_crash_on_startup</code> 값을 <code>true</code>에서 <code>false</code>로 바꾸면 됩니다.</b>";
 	}
+	
+	@Override
+	public String errorDependenciaSimple(String modId, String dependencia, String actual) {
+	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
+	           "오류: 모드 '" + modId + "'은(는) '" + dependencia + "' 모드를 필요로 합니다. 현재 " + actual + "입니다." +
+	           "</span>";
+	}
+
+	@Override
+	public String errorDependenciaNoInstalada(String modId, String dependencia, String requerido) {
+	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
+	           "오류: 모드 '" + modId + "'은(는) '" + dependencia + "'의 버전 '" + requerido + "' 이상이 필요하지만, 해당 모드가 설치되어 있지 않습니다." +
+	           "</span>";
+	}
+	
+	// MonitorDePID.idioma 클래스에 (이 메서드 추가)
+	public String errorSuperbWarfareIncompatible(String modId, String dependencia, String versionActual) {
+	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
+	           "오류: '" + modId + "' 모드는 '" + dependencia + "'의 현재 버전과 호환되지 않습니다. " +
+	           "'Iris/Oculus & GeckoLib Compat' 모드를 제거해야 합니다. 이 모드는 Superb Warfare와 호환되지 않으며 최신 버전의 GeckoLib과 함께 작동하지 않습니다. " +
+	           "현재 버전: " + versionActual +
+	           "</span>";
+	}
+	
+	public String fallo_ejecucion_tarea_descripcion(String clase) {
+	    return "오류: '" + clase + "' 클래스의 작업을 실행할 수 없습니다. " +
+	           "이 오류는 서로 호환되지 않거나 설치된 다른 모드와 충돌하는 모드에서 흔히 발생합니다.";
+	}
+
+	public String nombre_fallos_ejecucion_tareas() {
+	    return "작업 실행 실패";
+	}
+
+	public String recomendacion_fallos_ejecucion() {
+	    return "이러한 종류의 오류는 일반적으로 모드 간의 호환성 문제로 인해 발생합니다. " +
+	           "특히 ConnectorMod과 함께 제대로 작동하지 않는 모드에서 흔합니다.";
+	}
+
+	public String info_clase_problematica() {
+	    return "문제 있는 클래스:";
+	}
+
+	public String ver_en_log() {
+	    return "로그에서 보기";
+	}
+
+	public String no_se_encontraron_clases_problema() {
+	    return "실행 문제가 있는 특정 클래스를 찾을 수 없습니다.";
+	}
+	
+	
+	
 	
 	
 	

@@ -3764,8 +3764,8 @@ public String advertenciaMalwareFalso() {
 
 	@Override
 	public String problema_con_openAL() {
-		return "<span style='color:#" + config.obtenerColorError()
-				+ "'>Vi havas problemon kun OpenAL. Foje peliloj Nouveau povas kaŭzi tion, sed foje la versio de OpenAL en via aplikaĵo ne estas kompatibla kun tiu en via distribuaĵo, do vi devas uzi la version el via distribuaĵo. Vidu ĉi tiun gvidilon por plia helpo: <a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>Kiel solvi sonojn en Minecraft sur Linux</a>.</span>";
+	    return "<span style='color:#" + config.obtenerColorError()
+	           + "'>Vi havas problemon kun OpenAL. Foje peliloj Nouveau povas kaŭzi tion, sed foje la versio de OpenAL en via aplikaĵo ne estas kompatibla kun tiu en via distribuaĵo, do vi devas uzi la version el via distribuaĵo. Tio estas aparte ofta ĉe Red Hat-similaj distribuaĵoj kai kun sono-modifoj kiel Sound Physics Remastered. Vidu ĉi tiun gvidilon por plia helpo: <a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>Kiel solvi sonojn en Minecraft sur Linux</a>.</span>";
 	}
 
 	@Override
@@ -4116,6 +4116,58 @@ public String advertenciaMalwareFalso() {
 	public String advertenciaCrashAssistantModsIncompatibles() {
 	    return "<b style='color:#" + config.obtenerColorError() + "'>Crash Assistant povas diri ke iuj aldonaĵoj estas nekongruaj, sed foje ili estas kompatataj kai la eraro estas nur en unu lingvo. Se vi volas uzi tiujn aldonaĵojn, vi povas redakti la dosieron <code>config/crash_assistant/problematic_mods_config.json</code> kai ŝanĝi <code>should_crash_on_startup</code> de <code>true</code> al <code>false</code>.</b>";
 	}
+	
+	@Override
+	public String errorDependenciaSimple(String modId, String dependencia, String actual) {
+	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
+	           "Eraro: La aldonaĵo '" + modId + "' bezonas la aldonaĵon '" + dependencia + "'. Nuntempe, " + actual + "." +
+	           "</span>";
+	}
+
+	@Override
+	public String errorDependenciaNoInstalada(String modId, String dependencia, String requerido) {
+	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
+	           "Eraro: La aldonaĵo '" + modId + "' postulas version '" + requerido + "' aŭ pli novan de '" + dependencia + "', sed la aldonaĵo ne estas instalita." +
+	           "</span>";
+	}
+	
+	// En la klaso MonitorDePID.idioma (aldonu tiun metodon)
+	public String errorSuperbWarfareIncompatible(String modId, String dependencia, String versionActual) {
+	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
+	           "Eraro: La aldonaĵo '" + modId + "' ne estas kompata kun la nuna versio de '" + dependencia + "'. " +
+	           "Vi devas forigi la aldonaĵon 'Iris/Oculus & GeckoLib Compat' ĉar ĝi ne estas kompata kun Superb Warfare kai ne funkcias per la plej nova versio de GeckoLib. " +
+	           "Nuna versio: " + versionActual +
+	           "</span>";
+	}
+	
+	public String fallo_ejecucion_tarea_descripcion(String clase) {
+	    return "오류: '" + clase + "' 클래스의 작업을 실행할 수 없습니다. " +
+	           "이 오류는 서로 호환되지 않거나 설치된 다른 모드와 충돌하는 모드에서 흔히 발생합니다.";
+	}
+
+	public String nombre_fallos_ejecucion_tareas() {
+	    return "작업 실행 실패";
+	}
+
+	public String recomendacion_fallos_ejecucion() {
+	    return "이러한 종류의 오류는 일반적으로 모드 간의 호환성 문제로 인해 발생합니다. " +
+	           "특히 ConnectorMod과 함께 제대로 작동하지 않는 모드에서 흔합니다.";
+	}
+
+	public String info_clase_problematica() {
+	    return "문제 있는 클래스:";
+	}
+
+	public String ver_en_log() {
+	    return "로그에서 보기";
+	}
+
+	public String no_se_encontraron_clases_problema() {
+	    return "실행 문제가 있는 특정 클래스를 찾을 수 없습니다.";
+	}
+	
+	
+	
 	
 	
 }

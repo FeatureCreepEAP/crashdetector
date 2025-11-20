@@ -3780,8 +3780,8 @@ public String advertenciaMalwareFalso() {
 
 	@Override
 	public String problema_con_openAL() {
-		return "<span style='color:#" + config.obtenerColorError()
-				+ "'>Você tem um problema com o OpenAL. Às vezes os drivers Nouveau podem causar isso, mas às vezes a versão do OpenAL incluída na aplicação não é compatível com a versão da sua distribuição e você precisa usar a versão da sua distro. Veja este guia para mais ajuda: <a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>Como corrigir problemas de som no Minecraft usando Linux</a>.</span>";
+	    return "<span style='color:#" + config.obtenerColorError()
+	           + "'>Você tem um problema com o OpenAL. Às vezes os drivers Nouveau podem causar isso, mas às vezes a versão do OpenAL incluída na aplicação não é compatível com a versão da sua distribuição e você precisa usar a versão da sua distro. Isso é especialmente comum em distribuições baseadas em Red Hat e com mods de som como o Sound Physics Remastered. Veja este guia para mais ajuda: <a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>Como corrigir problemas de som no Minecraft usando Linux</a>.</span>";
 	}
 
 	@Override
@@ -4132,4 +4132,58 @@ public String advertenciaMalwareFalso() {
 	    return "<b style='color:#" + config.obtenerColorError() + "'>O Crash Assistant tem a capacidade de dizer que mods são incompatíveis, mas às vezes isso é incorreto e a mensagem de erro está apenas em um idioma. Se você quiser usar esses mods, pode editar o arquivo <code>config/crash_assistant/problematic_mods_config.json</code> e mudar <code>should_crash_on_startup</code> de <code>true</code> para <code>false</code>.</b>";
 	}
 
+	@Override
+	public String errorDependenciaSimple(String modId, String dependencia, String actual) {
+	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
+	           "Erro: O mod '" + modId + "' requer o mod '" + dependencia + "'. Atualmente, " + actual + "." +
+	           "</span>";
+	}
+
+	@Override
+	public String errorDependenciaNoInstalada(String modId, String dependencia, String requerido) {
+	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
+	           "Erro: O mod '" + modId + "' requer a versão '" + requerido + "' ou superior do '" + dependencia + "', mas o mod não está instalado." +
+	           "</span>";
+	}
+	
+	// Na classe MonitorDePID.idioma (adicione este método)
+	public String errorSuperbWarfareIncompatible(String modId, String dependencia, String versionActual) {
+	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
+	           "Erro: O mod '" + modId + "' é incompatível com a versão atual de '" + dependencia + "'. " +
+	           "Você deve remover o mod 'Iris/Oculus & GeckoLib Compat', pois ele é incompatível com o Superb Warfare e não funciona com a versão mais recente do GeckoLib. " +
+	           "Versão atual: " + versionActual +
+	           "</span>";
+	}
+	
+	public String fallo_ejecucion_tarea_descripcion(String clase) {
+	    return "Erro: Falha ao executar a tarefa para a classe '" + clase + "'. " +
+	           "Esse erro é comum com mods que não são compatíveis entre si ou que têm conflitos com outros mods instalados.";
+	}
+
+	public String nombre_fallos_ejecucion_tareas() {
+	    return "Falhas na execução de tarefas";
+	}
+
+	public String recomendacion_fallos_ejecucion() {
+	    return "Esse tipo de erro geralmente ocorre quando há incompatibilidades entre mods. " +
+	           "Especialmente comum com mods que não funcionam corretamente com o ConnectorMod.";
+	}
+
+	public String info_clase_problematica() {
+	    return "Classe problemática:";
+	}
+
+	public String ver_en_log() {
+	    return "Ver no Log";
+	}
+
+	public String no_se_encontraron_clases_problema() {
+	    return "Nenhuma classe específica com problemas de execução foi encontrada.";
+	}
+	
+	
+	
+	
+	
+	
 }

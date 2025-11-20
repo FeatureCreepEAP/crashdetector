@@ -18,6 +18,11 @@ public class CargadorMCForge implements Cargador {
 	@Override
 	public boolean modEsDeCargador(ArchivoDeMod mod) {
 		// se recorre la lista de rutas internas del mod
+
+		if(mod.ubicacion_para_publicar().contains("kotlinforforge"))
+		{
+			return true;
+		}
 		for (String archivo : mod.archivos()) {
 			String norm = archivo.replace('\\', '/');
 			String lower = norm.toLowerCase(Locale.ROOT);
