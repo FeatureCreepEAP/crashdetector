@@ -4207,6 +4207,195 @@ public String advertenciaMalwareFalso() {
 	    return "No specific classes with execution problems were found.";
 	}
 	
+	@Override
+	public String errorConflictoOptiFineEMF() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	           + "A critical conflict between OptiFine and Entity Model Features (EMF) has been detected. "
+	           + "These mods are incompatible and cause an injection failure that prevents the game from starting." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoOptiFineEMF() {
+	    return "Conflict between OptiFine and Entity Model Features";
+	}
+
+	@Override
+	public String pasoConflictoOptiFineEMF() {
+	    return "Uninstall either OptiFine or Entity Model Features, as they are not compatible with each other.";
+	}
+	
+	@Override
+	public String errorConflictoOptiFineFusion() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	           + "A critical conflict between OptiFine and Fusion has been detected. "
+	           + "These mods are incompatible and cause an injection failure that prevents the game from starting." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoOptiFineFusion() {
+	    return "Conflict between OptiFine and Fusion";
+	}
+
+	@Override
+	public String pasoConflictoOptiFineFusion() {
+	    return "Uninstall either OptiFine or Fusion, as they are not compatible with each other.";
+	}
+	
+	@Override
+	public String errorConflictoFlywheelSodium() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Flywheel (required by Create) needs Sodium 0.6.0-beta.2 or higher. Rubidium is 0.5.3. "
+	            + "Consider using <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a> as an alternative." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoFlywheelSodium() {
+	    return "Flywheel and Sodium version conflict";
+	}
+
+	@Override
+	public String pasoConflictoFlywheelSodium() {
+	    return "Update Sodium to 0.6.0-beta.2 or higher, or install <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a> as a compatible alternative.";
+	}
+	
+	@Override
+	public String errorConflictoOptiFineEpicFight() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "A critical conflict between OptiFine and Epic Fight has been detected. "
+	            + "These mods are incompatible and cause an injection failure that prevents the game from starting." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoOptiFineEpicFight() {
+	    return "Conflict between OptiFine and Epic Fight";
+	}
+
+	@Override
+	public String pasoConflictoOptiFineEpicFight() {
+	    return "Uninstall either OptiFine or Epic Fight, as they are not compatible with each other.";
+	}
+	
+	@Override
+	public String errorConflictoOptiFineRubidium() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "A critical conflict has been detected between OptiFine and Rubidium. "
+	            + "These mods are incompatible and cause an injection failure that prevents the game from launching." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoOptiFineRubidium() {
+	    return "OptiFine and Rubidium Conflict";
+	}
+
+	@Override
+	public String pasoConflictoOptiFineRubidium() {
+	    return "Uninstall OptiFine or Rubidium, as they are incompatible with each other.";
+	}
+	
+	@Override
+	public String errorFreeCamServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "FreeCam is attempting to load on a dedicated server, but it is only compatible with the client. "
+	            + "Remove FreeCam from the server or ensure it is installed only on the client." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorFreeCamServidor() {
+	    return "FreeCam on dedicated server";
+	}
+
+	@Override
+	public String pasoErrorFreeCamServidor() {
+	    return "Remove FreeCam from the dedicated server, as it should only be installed on the client.";
+	}
+	
+	@Override
+	public String errorEntityTextureFeaturesServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Entity Texture Features (ETF) is attempting to load on a dedicated server, but it is only compatible with the client. "
+	            + "Remove ETF from the server or ensure it is installed only on the client." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorEntityTextureFeaturesServidor() {
+	    return "Entity Texture Features on dedicated server";
+	}
+
+	@Override
+	public String pasoErrorEntityTextureFeaturesServidor() {
+	    return "Remove Entity Texture Features from the dedicated server, as it should only be installed on the client.";
+	}
+	
+	@Override
+	public String errorEULANoAceptado() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "You must accept the Minecraft EULA to run the server. "
+	            + "Edit the eula.txt file and change 'eula=false' to 'eula=true'." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorEULANoAceptado() {
+	    return "Minecraft EULA not accepted";
+	}
+
+	@Override
+	public String pasoErrorEULANoAceptado() {
+	    return "Edit the eula.txt file in the server folder and change 'eula=false' to 'eula=true'.";
+	}
+	
+	@Override
+	public String errorOptiFineServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "OptiFine is attempting to load on a dedicated server, but it is only compatible with the client. "
+	            + "Remove OptiFine from the server or ensure it is installed only on the client." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorOptiFineServidor() {
+	    return "OptiFine on dedicated server";
+	}
+
+	@Override
+	public String pasoErrorOptiFineServidor() {
+	    return "Remove OptiFine from the dedicated server, as it should only be installed on the client.";
+	}
+	
+	@Override
+	public String errorIronSpellbooksVersion() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Iron's Spellbooks is incorrectly marked for 1.20.1 but uses methods from 1.21.1. "
+	            + "The mod is attempting to use ResourceLocation.fromNamespaceAndPath, which does not exist in 1.20.1." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorIronSpellbooksVersion() {
+	    return "Iron's Spellbooks version error";
+	}
+
+	@Override
+	public String pasoErrorIronSpellbooksVersion() {
+	    return "Ensure you are using the correct version of Iron's Spellbooks compatible with your Minecraft version.";
+	}
+	
+	@Override
+	public String errorConflictoOptiFineEmbeddium() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "A critical conflict has been detected between OptiFine and Embeddium. "
+	            + "These mods are incompatible and cause an injection failure that prevents the game from launching." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoOptiFineEmbeddium() {
+	    return "OptiFine and Embeddium Conflict";
+	}
+
+	@Override
+	public String pasoConflictoOptiFineEmbeddium() {
+	    return "Uninstall OptiFine or Embeddium, as they are incompatible with each other.";
+	}
+	
+	
+	
 	
 	
 	

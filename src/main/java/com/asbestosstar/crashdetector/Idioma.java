@@ -1658,4 +1658,70 @@ public interface Idioma {
 
 	public String no_se_encontraron_clases_problema();
 
+	public String errorConflictoOptiFineEMF();
+
+	public String nombreDeConflictoOptiFineEMF();
+
+	public String pasoConflictoOptiFineEMF();
+
+	public String errorConflictoOptiFineFusion();
+
+	public String nombreDeConflictoOptiFineFusion();
+
+	public String pasoConflictoOptiFineFusion();
+
+	public String errorConflictoFlywheelSodium();
+
+	public String nombreDeConflictoFlywheelSodium();
+
+	public String pasoConflictoFlywheelSodium();
+
+	public String errorConflictoOptiFineEpicFight();
+
+	public String nombreDeConflictoOptiFineEpicFight();
+
+	public String pasoConflictoOptiFineEpicFight();
+
+	public String errorConflictoOptiFineRubidium();
+
+	public String nombreDeConflictoOptiFineRubidium();
+
+	public String pasoConflictoOptiFineRubidium();
+
+	public String errorFreeCamServidor();
+
+	public String nombreDeErrorFreeCamServidor();
+
+	public String pasoErrorFreeCamServidor();
+
+	public String errorEntityTextureFeaturesServidor();
+
+	public String nombreDeErrorEntityTextureFeaturesServidor();
+
+	public String pasoErrorEntityTextureFeaturesServidor();
+
+	public String errorEULANoAceptado();
+
+	public String nombreDeErrorEULANoAceptado();
+
+	public String pasoErrorEULANoAceptado();
+
+	public String errorOptiFineServidor();
+
+	public String nombreDeErrorOptiFineServidor();
+
+	public String pasoErrorOptiFineServidor();
+
+	public String errorIronSpellbooksVersion();
+
+	public String nombreDeErrorIronSpellbooksVersion();
+
+	public String pasoErrorIronSpellbooksVersion();
+
+	public String errorConflictoOptiFineEmbeddium();
+
+	public String nombreDeConflictoOptiFineEmbeddium();
+
+	public String pasoConflictoOptiFineEmbeddium();
+
 }

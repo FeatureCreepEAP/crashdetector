@@ -3972,6 +3972,195 @@ public String advertenciaMalwareFalso() {
 	public String no_se_encontraron_clases_problema() {
 	    return "未找到存在执行问题的具体类。";
 	}
+	@Override
+	public String errorConflictoOptiFineEMF() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	           + "检测到 OptiFine 和实体模型功能 (EMF) 之间存在严重冲突。"
+	           + "这两个模组不兼容，会导致注入失败，从而阻止游戏启动。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoOptiFineEMF() {
+	    return "OptiFine 与实体模型功能冲突";
+	}
+
+	@Override
+	public String pasoConflictoOptiFineEMF() {
+	    return "卸载 OptiFine 或 实体模型功能 (EMF)，因为它们彼此不兼容。";
+	}
+	
+	@Override
+	public String errorConflictoOptiFineFusion() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	           + "检测到 OptiFine 和 Fusion 之间存在严重冲突。"
+	           + "这两个模组不兼容，会导致注入失败，从而阻止游戏启动。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoOptiFineFusion() {
+	    return "OptiFine 与 Fusion 冲突";
+	}
+
+	@Override
+	public String pasoConflictoOptiFineFusion() {
+	    return "卸载 OptiFine 或 Fusion，因为它们彼此不兼容。";
+	}
+	
+	@Override
+	public String errorConflictoFlywheelSodium() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Flywheel（由 Create 所需）需要 Sodium 0.6.0-beta.2 或更高版本。Rubidium 是 0.5.3。"
+	            + "请考虑使用 <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a> 作为替代方案。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoFlywheelSodium() {
+	    return "Flywheel 与 Sodium 版本冲突";
+	}
+
+	@Override
+	public String pasoConflictoFlywheelSodium() {
+	    return "将 Sodium 更新至 0.6.0-beta.2 或更高版本，或安装 <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a> 作为兼容的替代品。";
+	}
+	
+	@Override
+	public String errorConflictoOptiFineEpicFight() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "检测到 OptiFine 和 Epic Fight 之间存在严重冲突。"
+	            + "这两个模组不兼容，会导致注入失败，从而阻止游戏启动。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoOptiFineEpicFight() {
+	    return "OptiFine 与 Epic Fight 冲突";
+	}
+
+	@Override
+	public String pasoConflictoOptiFineEpicFight() {
+	    return "卸载 OptiFine 或 Epic Fight，因为它们彼此不兼容。";
+	}
+	
+	@Override
+	public String errorConflictoOptiFineRubidium() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "检测到 OptiFine 和 Rubidium 之间的严重冲突。 "
+	            + "这些模组不兼容，会导致注入失败，使游戏无法启动。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoOptiFineRubidium() {
+	    return "OptiFine 和 Rubidium 冲突";
+	}
+
+	@Override
+	public String pasoConflictoOptiFineRubidium() {
+	    return "卸载 OptiFine 或 Rubidium，因为它们彼此不兼容。";
+	}
+	
+	@Override
+	public String errorFreeCamServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "FreeCam 正试图在专用服务器上加载，但它仅与客户端兼容。 "
+	            + "请从服务器中移除 FreeCam，或确保它仅安装在客户端上。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorFreeCamServidor() {
+	    return "FreeCam 在专用服务器上";
+	}
+
+	@Override
+	public String pasoErrorFreeCamServidor() {
+	    return "请从专用服务器中移除 FreeCam，因为它只能安装在客户端上。";
+	}
+	
+	@Override
+	public String errorEntityTextureFeaturesServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Entity Texture Features (ETF) 正试图在专用服务器上加载，但它仅与客户端兼容。 "
+	            + "请从服务器中移除 ETF，或确保它仅安装在客户端上。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorEntityTextureFeaturesServidor() {
+	    return "Entity Texture Features 在专用服务器上";
+	}
+
+	@Override
+	public String pasoErrorEntityTextureFeaturesServidor() {
+	    return "请从专用服务器中移除 Entity Texture Features，因为它只能安装在客户端上。";
+	}
+	
+	@Override
+	public String errorEULANoAceptado() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "必须接受 Minecraft 的 EULA 才能运行服务器。 "
+	            + "编辑 eula.txt 文件，将 'eula=false' 改为 'eula=true'。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorEULANoAceptado() {
+	    return "Minecraft 的 EULA 未接受";
+	}
+
+	@Override
+	public String pasoErrorEULANoAceptado() {
+	    return "编辑服务器文件夹中的 eula.txt 文件，将 'eula=false' 改为 'eula=true'。";
+	}
+	
+	@Override
+	public String errorOptiFineServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "OptiFine 正试图在专用服务器上加载，但它仅与客户端兼容。 "
+	            + "请从服务器中移除 OptiFine，或确保它仅安装在客户端上。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorOptiFineServidor() {
+	    return "OptiFine 在专用服务器上";
+	}
+
+	@Override
+	public String pasoErrorOptiFineServidor() {
+	    return "请从专用服务器中移除 OptiFine，因为它只能安装在客户端上。";
+	}
+	
+	@Override
+	public String errorIronSpellbooksVersion() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Iron's Spellbooks 被错误地标记为 1.20.1 版本，但使用了 1.21.1 的方法。 "
+	            + "该模组正尝试使用在 1.20.1 中不存在的 ResourceLocation.fromNamespaceAndPath。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorIronSpellbooksVersion() {
+	    return "Iron's Spellbooks 版本错误";
+	}
+
+	@Override
+	public String pasoErrorIronSpellbooksVersion() {
+	    return "请确保使用与你的 Minecraft 版本兼容的 Iron's Spellbooks 正确版本。";
+	}
+	
+	@Override
+	public String errorConflictoOptiFineEmbeddium() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "检测到 OptiFine 和 Embeddium 之间的严重冲突。 "
+	            + "这些模组不兼容，会导致注入失败，使游戏无法启动。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoOptiFineEmbeddium() {
+	    return "OptiFine 和 Embeddium 冲突";
+	}
+
+	@Override
+	public String pasoConflictoOptiFineEmbeddium() {
+	    return "卸载 OptiFine 或 Embeddium，因为它们彼此不兼容。";
+	}
+	
+	
+	
 	
 	
 	

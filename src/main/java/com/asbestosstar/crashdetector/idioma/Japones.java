@@ -4048,6 +4048,195 @@ public String advertenciaMalwareFalso() {
 	    return "実行に問題がある特定のクラスは見つかりませんでした。";
 	}
 	
+	@Override
+	public String errorConflictoOptiFineEMF() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	           + "OptiFineとEntity Model Features (EMF)の間に重大な競合が検出されました。"
+	           + "これらのMODは互換性がなく、ゲームの起動を妨げるインジェクションエラーを引き起こします。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoOptiFineEMF() {
+	    return "OptiFineとEntity Model Featuresの衝突";
+	}
+
+	@Override
+	public String pasoConflictoOptiFineEMF() {
+	    return "OptiFineまたはEntity Model Featuresのいずれかをアンインストールしてください。これらは互いに互換性がありません。";
+	}
+	
+	@Override
+	public String errorConflictoOptiFineFusion() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	           + "OptiFineとFusionの間に重大な競合が検出されました。 "
+	           + "これらのMODは互換性がなく、ゲームの起動を妨げるインジェクションエラーを引き起こします。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoOptiFineFusion() {
+	    return "OptiFineとFusionの衝突";
+	}
+
+	@Override
+	public String pasoConflictoOptiFineFusion() {
+	    return "OptiFineまたはFusionをアンインストールしてください。両者は互いに互換性がありません。";
+	}
+	
+	@Override
+	public String errorConflictoFlywheelSodium() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Flywheel（Createが必要とするもの）はSodium 0.6.0-beta.2以上を必要とします。Rubidiumは0.5.3です。"
+	            + "代替として<a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a>の使用を検討してください。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoFlywheelSodium() {
+	    return "FlywheelとSodiumバージョンの衝突";
+	}
+
+	@Override
+	public String pasoConflictoFlywheelSodium() {
+	    return "Sodiumを0.6.0-beta.2以上に更新するか、互換性のある代替として<a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a>をインストールしてください。";
+	}
+	
+	@Override
+	public String errorConflictoOptiFineEpicFight() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "OptiFineとEpic Fightの間に重大な競合が検出されました。 "
+	            + "これらのMODは互換性がなく、ゲームの起動を妨げるインジェクションエラーを引き起こします。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoOptiFineEpicFight() {
+	    return "OptiFineとEpic Fightの衝突";
+	}
+
+	@Override
+	public String pasoConflictoOptiFineEpicFight() {
+	    return "OptiFineまたはEpic Fightをアンインストールしてください。両者は互いに互換性がありません。";
+	}
+	
+	@Override
+	public String errorConflictoOptiFineRubidium() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "OptiFine と Rubidium の間に深刻な競合が検出されました。 "
+	            + "これらのモッドは互換性がなく、インジェクションの失敗を引き起こし、ゲームの起動を妨げます。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoOptiFineRubidium() {
+	    return "OptiFine と Rubidium の競合";
+	}
+
+	@Override
+	public String pasoConflictoOptiFineRubidium() {
+	    return "OptiFine または Rubidium をアンインストールしてください。両者は互換性がありません。";
+	}
+	
+	@Override
+	public String errorFreeCamServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "FreeCam が専用サーバーでの読み込みを試みていますが、これはクライアントでのみ互換性があります。 "
+	            + "サーバーから FreeCam を削除するか、クライアントにのみインストールされていることを確認してください。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorFreeCamServidor() {
+	    return "専用サーバー上の FreeCam";
+	}
+
+	@Override
+	public String pasoErrorFreeCamServidor() {
+	    return "FreeCam はクライアントにのみインストールする必要がありますので、専用サーバーから削除してください。";
+	}
+	
+	@Override
+	public String errorEntityTextureFeaturesServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Entity Texture Features (ETF) が専用サーバーでの読み込みを試みていますが、これはクライアントでのみ互換性があります。 "
+	            + "サーバーから ETF を削除するか、クライアントにのみインストールされていることを確認してください。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorEntityTextureFeaturesServidor() {
+	    return "専用サーバー上の Entity Texture Features";
+	}
+
+	@Override
+	public String pasoErrorEntityTextureFeaturesServidor() {
+	    return "Entity Texture Features はクライアントにのみインストールする必要がありますので、専用サーバーから削除してください。";
+	}
+	
+	@Override
+	public String errorEULANoAceptado() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "サーバーを起動するには、MinecraftのEULAに同意する必要があります。 "
+	            + "eula.txtファイルを編集して、'eula=false'を'eula=true'に変更してください。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorEULANoAceptado() {
+	    return "Minecraft EULA 未承認";
+	}
+
+	@Override
+	public String pasoErrorEULANoAceptado() {
+	    return "サーバーフォルダ内の eula.txt ファイルを編集し、'eula=false'を'eula=true'に変更してください。";
+	}
+	
+	@Override
+	public String errorOptiFineServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "OptiFine が専用サーバーでの読み込みを試みていますが、これはクライアントでのみ互換性があります。 "
+	            + "サーバーから OptiFine を削除するか、クライアントにのみインストールされていることを確認してください。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorOptiFineServidor() {
+	    return "専用サーバー上の OptiFine";
+	}
+
+	@Override
+	public String pasoErrorOptiFineServidor() {
+	    return "OptiFine はクライアントにのみインストールする必要がありますので、専用サーバーから削除してください。";
+	}
+	
+	@Override
+	public String errorIronSpellbooksVersion() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Iron's Spellbooks が誤って 1.20.1 向けとマークされていますが、1.21.1 のメソッドを使用しています。 "
+	            + "モッドは 1.20.1 に存在しない ResourceLocation.fromNamespaceAndPath を使用しようとしています。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorIronSpellbooksVersion() {
+	    return "Iron's Spellbooks のバージョンエラー";
+	}
+
+	@Override
+	public String pasoErrorIronSpellbooksVersion() {
+	    return "使用している Minecraft バージョンと互換性のある正しいバージョンの Iron's Spellbooks を使用していることを確認してください。";
+	}
+	
+	@Override
+	public String errorConflictoOptiFineEmbeddium() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "OptiFine と Embeddium の間に深刻な競合が検出されました。 "
+	            + "これらのモッドは互換性がなく、インジェクションの失敗を引き起こし、ゲームの起動を妨げます。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoOptiFineEmbeddium() {
+	    return "OptiFine と Embeddium の競合";
+	}
+
+	@Override
+	public String pasoConflictoOptiFineEmbeddium() {
+	    return "OptiFine または Embeddium をアンインストールしてください。両者は互換性がありません。";
+	}
+	
+	
+	
 	
 	
 	

@@ -4041,6 +4041,196 @@ public String advertenciaMalwareFalso() {
 	    return "실행 문제가 있는 특정 클래스를 찾을 수 없습니다.";
 	}
 	
+	@Override
+	public String errorConflictoOptiFineEMF() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	           + "OptiFine과 Entity Model Features(EMF) 사이에 치명적인 충돌이 감지되었습니다. "
+	           + "이 두 모드는 서로 호환되지 않으며 게임 시작을 방해하는 주입 오류를 유발합니다." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoOptiFineEMF() {
+	    return "OptiFine 및 Entity Model Features 충돌";
+	}
+
+	@Override
+	public String pasoConflictoOptiFineEMF() {
+	    return "OptiFine 또는 Entity Model Features를 제거하세요. 이 둘은 서로 호환되지 않습니다.";
+	}
+	
+	@Override
+	public String errorConflictoOptiFineFusion() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	           + "OptiFine과 Fusion 사이에 치명적인 충돌이 감지되었습니다. "
+	           + "이 두 모드는 서로 호환되지 않으며 게임 시작을 방해하는 주입 오류를 유발합니다." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoOptiFineFusion() {
+	    return "OptiFine 및 Fusion 충돌";
+	}
+
+	@Override
+	public String pasoConflictoOptiFineFusion() {
+	    return "OptiFine 또는 Fusion를 제거하세요. 이 둘은 서로 호환되지 않습니다.";
+	}
+	
+	@Override
+	public String errorConflictoFlywheelSodium() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Create에서 요구하는 Flywheel은 Sodium 0.6.0-beta.2 이상이 필요합니다. Rubidium은 0.5.3입니다. "
+	            + "대안으로 <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a> 사용을 고려하세요." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoFlywheelSodium() {
+	    return "Flywheel과 Sodium 버전 충돌";
+	}
+
+	@Override
+	public String pasoConflictoFlywheelSodium() {
+	    return "Sodium를 0.6.0-beta.2 이상으로 업데이트하거나, 호환 가능한 대체품으로 <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a>을 설치하세요.";
+	}
+	
+	@Override
+	public String errorConflictoOptiFineEpicFight() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "OptiFine과 Epic Fight 사이에 치명적인 충돌이 감지되었습니다. "
+	            + "이 두 모드는 서로 호환되지 않으며 게임 시작을 방해하는 주입 오류를 유발합니다." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoOptiFineEpicFight() {
+	    return "OptiFine 및 Epic Fight 충돌";
+	}
+
+	@Override
+	public String pasoConflictoOptiFineEpicFight() {
+	    return "OptiFine 또는 Epic Fight를 제거하세요. 이 둘은 서로 호환되지 않습니다.";
+	}
+	
+	@Override
+	public String errorConflictoOptiFineRubidium() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "OptiFine 과 Rubidium 간에 심각한 충돌이 감지되었습니다. "
+	            + "이 모드들은 호환되지 않으며, 주입 실패로 인해 게임 시작을 방해합니다." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoOptiFineRubidium() {
+	    return "OptiFine 과 Rubidium 충돌";
+	}
+
+	@Override
+	public String pasoConflictoOptiFineRubidium() {
+	    return "OptiFine 또는 Rubidium을 제거하세요. 이 둘은 서로 호환되지 않습니다.";
+	}
+	
+	@Override
+	public String errorFreeCamServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "FreeCam이 전용 서버에서 로드를 시도하고 있지만, 이는 클라이언트에서만 호환됩니다. "
+	            + "서버에서 FreeCam을 제거하거나, 클라이언트에만 설치되어 있는지 확인하세요." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorFreeCamServidor() {
+	    return "전용 서버의 FreeCam";
+	}
+
+	@Override
+	public String pasoErrorFreeCamServidor() {
+	    return "FreeCam은 클라이언트에만 설치해야 하므로 전용 서버에서 제거하세요.";
+	}
+	
+	@Override
+	public String errorEntityTextureFeaturesServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Entity Texture Features (ETF)가 전용 서버에서 로드를 시도하고 있지만, 이는 클라이언트에서만 호환됩니다. "
+	            + "서버에서 ETF를 제거하거나, 클라이언트에만 설치되어 있는지 확인하세요." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorEntityTextureFeaturesServidor() {
+	    return "전용 서버의 Entity Texture Features";
+	}
+
+	@Override
+	public String pasoErrorEntityTextureFeaturesServidor() {
+	    return "Entity Texture Features는 클라이언트에만 설치해야 하므로 전용 서버에서 제거하세요.";
+	}
+	
+	@Override
+	public String errorEULANoAceptado() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "서버를 실행하려면 Minecraft의 EULA에 동의해야 합니다. "
+	            + "eula.txt 파일을 편집하여 'eula=false'를 'eula=true'로 변경하세요." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorEULANoAceptado() {
+	    return "Minecraft EULA 미동의";
+	}
+
+	@Override
+	public String pasoErrorEULANoAceptado() {
+	    return "서버 폴더의 eula.txt 파일을 편집하여 'eula=false'를 'eula=true'로 변경하세요.";
+	}
+	
+	@Override
+	public String errorOptiFineServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "OptiFine이 전용 서버에서 로드를 시도하고 있지만, 이는 클라이언트에서만 호환됩니다. "
+	            + "서버에서 OptiFine을 제거하거나, 클라이언트에만 설치되어 있는지 확인하세요." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorOptiFineServidor() {
+	    return "전용 서버의 OptiFine";
+	}
+
+	@Override
+	public String pasoErrorOptiFineServidor() {
+	    return "OptiFine은 클라이언트에만 설치해야 하므로 전용 서버에서 제거하세요.";
+	}
+	
+	@Override
+	public String errorIronSpellbooksVersion() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Iron's Spellbooks가 1.20.1용으로 잘못 표시되었지만 1.21.1의 메서드를 사용하고 있습니다. "
+	            + "모드가 1.20.1에 존재하지 않는 ResourceLocation.fromNamespaceAndPath를 사용하려고 시도하고 있습니다." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorIronSpellbooksVersion() {
+	    return "Iron's Spellbooks 버전 오류";
+	}
+
+	@Override
+	public String pasoErrorIronSpellbooksVersion() {
+	    return "Minecraft 버전과 호환되는 올바른 버전의 Iron's Spellbooks를 사용하고 있는지 확인하세요.";
+	}
+	
+	@Override
+	public String errorConflictoOptiFineEmbeddium() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "OptiFine 과 Embeddium 간에 심각한 충돌이 감지되었습니다. "
+	            + "이 모드들은 호환되지 않으며, 주입 실패로 인해 게임 시작을 방해합니다." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoOptiFineEmbeddium() {
+	    return "OptiFine 과 Embeddium 충돌";
+	}
+
+	@Override
+	public String pasoConflictoOptiFineEmbeddium() {
+	    return "OptiFine 또는 Embeddium을 제거하세요. 이 둘은 서로 호환되지 않습니다.";
+	}
+	
+	
+	
+	
 	
 	
 	

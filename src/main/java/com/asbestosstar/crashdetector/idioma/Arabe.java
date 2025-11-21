@@ -4130,6 +4130,197 @@ public String advertenciaMalwareFalso() {
 	public String no_se_encontraron_clases_problema() {
 	    return "لم يتم العثور على أصناف محددة تعاني من مشاكل في التنفيذ.";
 	}
+	@Override
+	public String errorConflictoOptiFineEMF() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	           + "تم اكتشاف تعارض حرج بين OptiFine وEntity Model Features (EMF). "
+	           + "هذان التعديلان غير متوافقين ويؤديان إلى فشل في الإدخال يمنع بدء اللعبة." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoOptiFineEMF() {
+	    return "تعارض بين OptiFine وEntity Model Features";
+	}
+
+	@Override
+	public String pasoConflictoOptiFineEMF() {
+	    return "أزل إما OptiFine أو Entity Model Features، لأنهما غير متوافقين مع بعضهما البعض.";
+	}
+	
+	@Override
+	public String errorConflictoOptiFineFusion() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	           + "تم اكتشاف تعارض حرج بين OptiFine وFusion. "
+	           + "هذان التعديلان غير متوافقين ويؤديان إلى فشل في الإدخال يمنع بدء اللعبة." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoOptiFineFusion() {
+	    return "تعارض بين OptiFine وFusion";
+	}
+
+	@Override
+	public String pasoConflictoOptiFineFusion() {
+	    return "أزل إما OptiFine أو Fusion، لأنهما غير متوافقين مع بعضهما البعض.";
+	}
+	
+	@Override
+	public String errorConflictoFlywheelSodium() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "يحتاج Flywheel (مطلوب من قبل Create) إلى Sodium 0.6.0-beta.2 أو أحدث. إصدار Rubidium هو 0.5.3. "
+	            + "فكر في استخدام <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a> كبديل." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoFlywheelSodium() {
+	    return "تعارض Flywheel وإصدار Sodium";
+	}
+
+	@Override
+	public String pasoConflictoFlywheelSodium() {
+	    return "حدّث Sodium إلى إصدار 0.6.0-beta.2 أو أحدث، أو قم بتثبيت <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a> كبديل متوافق.";
+	}
+	
+	@Override
+	public String errorConflictoOptiFineEpicFight() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "تم اكتشاف تعارض حرج بين OptiFine وEpic Fight. "
+	            + "هذان التعديلان غير متوافقين ويؤديان إلى فشل في الإدخال يمنع بدء اللعبة." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoOptiFineEpicFight() {
+	    return "تعارض بين OptiFine وEpic Fight";
+	}
+
+	@Override
+	public String pasoConflictoOptiFineEpicFight() {
+	    return "أزل إما OptiFine أو Epic Fight، لأنهما غير متوافقين مع بعضهما البعض.";
+	}
+	
+	@Override
+	public String errorConflictoOptiFineRubidium() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "تم اكتشاف تعارض حرج بين OptiFine و Rubidium. "
+	            + "هذه الوحدات غير متوافقة وتسبب فشلاً في الحقن يمنع تشغيل اللعبة." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoOptiFineRubidium() {
+	    return "التعارض بين OptiFine و Rubidium";
+	}
+
+	@Override
+	public String pasoConflictoOptiFineRubidium() {
+	    return "قم بإزالة OptiFine أو Rubidium، لأنهما غير متوافقين مع بعضهما.";
+	}
+	
+	@Override
+	public String errorFreeCamServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "يحاول FreeCam التحميل على خادم مخصص، لكنه متوافق فقط مع العميل. "
+	            + "أزل FreeCam من الخادم أو تأكد من أنه مثبت فقط على العميل." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorFreeCamServidor() {
+	    return "FreeCam على خادم مخصص";
+	}
+
+	@Override
+	public String pasoErrorFreeCamServidor() {
+	    return "أزل FreeCam من الخادم المخصص، لأنه يجب تثبيته فقط على العميل.";
+	}
+	
+	@Override
+	public String errorEntityTextureFeaturesServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Entity Texture Features (ETF) يحاول التحميل على خادم مخصص، لكنه متوافق فقط مع العميل. "
+	            + "أزل ETF من الخادم أو تأكد من أنه مثبت فقط على العميل." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorEntityTextureFeaturesServidor() {
+	    return "Entity Texture Features على خادم مخصص";
+	}
+
+	@Override
+	public String pasoErrorEntityTextureFeaturesServidor() {
+	    return "أزل Entity Texture Features من الخادم المخصص، لأنه يجب تثبيته فقط على العميل.";
+	}
+	
+	@Override
+	public String errorEULANoAceptado() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "يجب قبول EULA الخاص بـ Minecraft لتشغيل الخادم. "
+	            + "قم بتحرير ملف eula.txt وغيّر 'eula=false' إلى 'eula=true'." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorEULANoAceptado() {
+	    return "EULA الخاص بـ Minecraft غير مقبول";
+	}
+
+	@Override
+	public String pasoErrorEULANoAceptado() {
+	    return "قم بتحرير ملف eula.txt في مجلد الخادم وغيّر 'eula=false' إلى 'eula=true'.";
+	}
+	
+	@Override
+	public String errorOptiFineServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "OptiFine يحاول التحميل على خادم مخصص، لكنه متوافق فقط مع العميل. "
+	            + "أزل OptiFine من الخادم أو تأكد من أنه مثبت فقط على العميل." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorOptiFineServidor() {
+	    return "OptiFine على خادم مخصص";
+	}
+
+	@Override
+	public String pasoErrorOptiFineServidor() {
+	    return "أزل OptiFine من الخادم المخصص، لأنه يجب تثبيته فقط على العميل.";
+	}
+	
+	@Override
+	public String errorIronSpellbooksVersion() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "تم تمييز Iron's Spellbooks بشكل خاطئ على أنه مخصص لـ 1.20.1 لكنه يستخدم طرق 1.21.1. "
+	            + "المود يحاول استخدام ResourceLocation.fromNamespaceAndPath، وهو غير موجود في 1.20.1." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorIronSpellbooksVersion() {
+	    return "خطأ في إصدار Iron's Spellbooks";
+	}
+
+	@Override
+	public String pasoErrorIronSpellbooksVersion() {
+	    return "تأكد من استخدامك للإصدار الصحيح من Iron's Spellbooks المتوافق مع إصدار ماينكرافت الخاص بك.";
+	}
+	
+	@Override
+	public String errorConflictoOptiFineEmbeddium() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "تم اكتشاف تعارض حرج بين OptiFine و Embeddium. "
+	            + "هذه الوحدات غير متوافقة وتسبب فشلاً في الحقن يمنع تشغيل اللعبة." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoOptiFineEmbeddium() {
+	    return "التعارض بين OptiFine و Embeddium";
+	}
+
+	@Override
+	public String pasoConflictoOptiFineEmbeddium() {
+	    return "قم بإزالة OptiFine أو Embeddium، لأنهما غير متوافقين مع بعضهما.";
+	}
+	
+	
+	
+	
+	
 	
 	
 	

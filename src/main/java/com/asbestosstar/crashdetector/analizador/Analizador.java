@@ -19,8 +19,14 @@ import com.asbestosstar.crashdetector.analizador.apps.minecraft.AuditorTransform
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.AzureGeckoLibInicializoPronto;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.BloqueTeselado;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ConflictoDeIDsMinecraft;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ConflictoFlywheelRubidium;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ConflictoMoonlightIceberg;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ConflictoMultiworldRendimiento;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ConflictoOptiFineEMF;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ConflictoOptiFineEmbeddium;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ConflictoOptiFineEpicFight;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ConflictoOptiFineFusion;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ConflictoOptiFineRubidium;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.CursedConsola;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.EarlyWindow;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorAccessTransformerInvalido;
@@ -33,10 +39,15 @@ import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorConfiguraci
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorCreacionModeloFallida;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorDependenciaModFaltante;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorDiscrepanciaModID;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorEULANoAceptado;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorEntityTextureFeaturesServidor;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorFreeCamServidor;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorHealightINT;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorIronSpellbooksVersion;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorJEIPluginFallido;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorMetadataAnimacionEnServidor;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorMetadataModsTomlFaltante;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorOptiFineServidor;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorRegistroSuscriptoresAutomaticos;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorResolucionDeTextura;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorRubidiumObsoletoConIris;
@@ -283,6 +294,17 @@ public class Analizador {
 		
 		
 		verificaciones.add(new FallosEjecucionTareas());
+		verificaciones.add(new ConflictoOptiFineEMF());
+		verificaciones.add(new ConflictoOptiFineFusion());
+		verificaciones.add(new ConflictoFlywheelRubidium());
+		verificaciones.add(new ConflictoOptiFineEpicFight());
+		verificaciones.add(new ConflictoOptiFineRubidium());
+		verificaciones.add(new ErrorFreeCamServidor());
+		verificaciones.add(new ErrorEntityTextureFeaturesServidor());
+		verificaciones.add(new ErrorEULANoAceptado());
+		verificaciones.add(new ErrorOptiFineServidor());
+		verificaciones.add(new ErrorIronSpellbooksVersion());
+		verificaciones.add(new ConflictoOptiFineEmbeddium());
 
 		
 		

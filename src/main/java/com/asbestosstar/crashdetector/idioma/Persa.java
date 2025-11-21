@@ -4152,6 +4152,193 @@ public String advertenciaMalwareFalso() {
 	public String no_se_encontraron_clases_problema() {
 	    return "هیچ کلاس خاصی با مشکلات اجرایی پیدا نشد.";
 	}
+	@Override
+	public String errorConflictoOptiFineEMF() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	           + "تضاد بحرانی بین OptiFine و Entity Model Features (EMF) شناسایی شد. "
+	           + "این دو مود با هم سازگار نیستند و باعث خرابی درج (injection failure) شده و از راه‌اندازی بازی جلوگیری می‌کنند." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoOptiFineEMF() {
+	    return "تضاد OptiFine و Entity Model Features";
+	}
+
+	@Override
+	public String pasoConflictoOptiFineEMF() {
+	    return "یکی از OptiFine یا Entity Model Features را حذف کنید، زیرا آنها با هم سازگار نیستند.";
+	}
+	
+	@Override
+	public String errorConflictoOptiFineFusion() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	           + "تضاد بحرانی بین OptiFine و Fusion شناسایی شد. "
+	           + "این دو مود با هم سازگار نیستند و باعث خرابی درج (injection failure) شده و از راه‌اندازی بازی جلوگیری می‌کنند." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoOptiFineFusion() {
+	    return "تضاد OptiFine و Fusion";
+	}
+
+	@Override
+	public String pasoConflictoOptiFineFusion() {
+	    return "OptiFine یا Fusion را حذف کنید، زیرا آنها با هم سازگار نیستند.";
+	}
+	
+	@Override
+	public String errorConflictoFlywheelSodium() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Flywheel (که توسط Create نیاز است) به Sodium 0.6.0-beta.2 یا بالاتر نیاز دارد. Rubidium نسخه 0.5.3 است. "
+	            + "استفاده از <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a> را به عنوان جایگزین در نظر بگیرید." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoFlywheelSodium() {
+	    return "تضاد Flywheel و نسخه Sodium";
+	}
+
+	@Override
+	public String pasoConflictoFlywheelSodium() {
+	    return "Sodium را به نسخه 0.6.0-beta.2 یا بالاتر بروزرسانی کنید، یا <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a> را به عنوان جایگزین سازگار نصب کنید.";
+	}
+	
+	@Override
+	public String errorConflictoOptiFineEpicFight() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "تضاد بحرانی بین OptiFine و Epic Fight شناسایی شد. "
+	            + "این دو مود با هم سازگار نیستند و باعث خرابی درج (injection failure) شده و از راه‌اندازی بازی جلوگیری می‌کنند." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoOptiFineEpicFight() {
+	    return "تضاد OptiFine و Epic Fight";
+	}
+
+	@Override
+	public String pasoConflictoOptiFineEpicFight() {
+	    return "OptiFine یا Epic Fight را حذف کنید، زیرا آنها با هم سازگار نیستند.";
+	}
+	
+	@Override
+	public String errorConflictoOptiFineRubidium() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "تضاد بحرانی بین OptiFine و Rubidium تشخیص داده شده است. "
+	            + "این افزونه‌ها ناسازگار هستند و باعث شکست تزریق می‌شوند که جلوی راه‌اندازی بازی را می‌گیرد." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoOptiFineRubidium() {
+	    return "تضاد OptiFine و Rubidium";
+	}
+
+	@Override
+	public String pasoConflictoOptiFineRubidium() {
+	    return "OptiFine یا Rubidium را حذف کنید، زیرا با یکدیگر سازگار نیستند.";
+	}
+	
+	@Override
+	public String errorFreeCamServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "FreeCam در تلاش برای بارگذاری در سرور اختصاصی است، اما تنها با کلاینت سازگار است. "
+	            + "FreeCam را از سرور حذف کنید یا مطمئن شوید که تنها در کلاینت نصب شده است." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorFreeCamServidor() {
+	    return "FreeCam در سرور اختصاصی";
+	}
+
+	@Override
+	public String pasoErrorFreeCamServidor() {
+	    return "FreeCam را از سرور اختصاصی حذف کنید، زیرا باید فقط در کلاینت نصب شود.";
+	}
+	
+	@Override
+	public String errorEntityTextureFeaturesServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Entity Texture Features (ETF) در تلاش برای بارگذاری در سرور اختصاصی است، اما تنها با کلاینت سازگار است. "
+	            + "ETF را از سرور حذف کنید یا مطمئن شوید که تنها در کلاینت نصب شده است." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorEntityTextureFeaturesServidor() {
+	    return "Entity Texture Features در سرور اختصاصی";
+	}
+
+	@Override
+	public String pasoErrorEntityTextureFeaturesServidor() {
+	    return "Entity Texture Features را از سرور اختصاصی حذف کنید، زیرا باید فقط در کلاینت نصب شود.";
+	}
+	
+	@Override
+	public String errorEULANoAceptado() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "برای اجرای سرور، باید EULA ماینکرافت را بپذیرید. "
+	            + "فایل eula.txt را ویرایش کرده و 'eula=false' را به 'eula=true' تغییر دهید." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorEULANoAceptado() {
+	    return "EULA ماینکرافت پذیرفته نشده";
+	}
+
+	@Override
+	public String pasoErrorEULANoAceptado() {
+	    return "فایل eula.txt را در پوشه سرور ویرایش کرده و 'eula=false' را به 'eula=true' تغییر دهید.";
+	}
+	
+	@Override
+	public String errorOptiFineServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "OptiFine در تلاش برای بارگذاری در سرور اختصاصی است، اما تنها با کلاینت سازگار است. "
+	            + "OptiFine را از سرور حذف کنید یا مطمئن شوید که تنها در کلاینت نصب شده است." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorOptiFineServidor() {
+	    return "OptiFine در سرور اختصاصی";
+	}
+
+	@Override
+	public String pasoErrorOptiFineServidor() {
+	    return "OptiFine را از سرور اختصاصی حذف کنید، زیرا باید فقط در کلاینت نصب شود.";
+	}
+	
+	@Override
+	public String errorIronSpellbooksVersion() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Iron's Spellbooks به اشتباه برای 1.20.1 علامت‌گذاری شده اما از متدهای 1.21.1 استفاده می‌کند. "
+	            + "این افزونه در حال تلاش برای استفاده از ResourceLocation.fromNamespaceAndPath است که در 1.20.1 وجود ندارد." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorIronSpellbooksVersion() {
+	    return "خطای نسخه Iron's Spellbooks";
+	}
+
+	@Override
+	public String pasoErrorIronSpellbooksVersion() {
+	    return "مطمئن شوید که نسخه صحیح Iron's Spellbooks سازگار با نسخه ماینکرافت خود را استفاده می‌کنید.";
+	}
+	
+	@Override
+	public String errorConflictoOptiFineEmbeddium() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "تضاد بحرانی بین OptiFine و Embeddium تشخیص داده شده است. "
+	            + "این افزونه‌ها ناسازگار هستند و باعث شکست تزریق می‌شوند که جلوی راه‌اندازی بازی را می‌گیرد." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoOptiFineEmbeddium() {
+	    return "تضاد OptiFine و Embeddium";
+	}
+
+	@Override
+	public String pasoConflictoOptiFineEmbeddium() {
+	    return "OptiFine یا Embeddium را حذف کنید، زیرا با یکدیگر سازگار نیستند.";
+	}
+	
 	
 	
 	
