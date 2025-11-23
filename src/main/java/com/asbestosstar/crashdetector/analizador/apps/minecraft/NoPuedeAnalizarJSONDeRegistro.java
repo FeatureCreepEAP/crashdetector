@@ -90,7 +90,7 @@ public class NoPuedeAnalizarJSONDeRegistro implements Verificaciones {
 		if (erroresJSON.isEmpty())
 			return "";
 
-		StringBuilder html = new StringBuilder("<ul>");
+		StringBuilder html = new StringBuilder(MonitorDePID.idioma.noPuedeAnalizarJSON() +"<ul>");
 		for (String error : erroresJSON) {
 			String enlace = enlacesPorError.getOrDefault(error, "");
 			html.append("<li>").append(error).append(" ").append(enlace).append("</li>");

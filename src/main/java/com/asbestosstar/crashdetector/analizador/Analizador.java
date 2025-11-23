@@ -33,18 +33,24 @@ import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorAccessTrans
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorBlockItemNuloCreate;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorCargaClaseEntornoInvalido;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorCargaNBTMundoCorrupto;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorCodigo1073741819;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorConfiguracionConnectorCorrupta;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorConfiguracionMCForge;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorConfiguracionServicioIDependencyLocator;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorControllableServidor;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorCreacionModeloFallida;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorDependenciaModFaltante;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorDiscrepanciaModID;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorEULANoAceptado;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorEntityTextureFeaturesServidor;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorEveryCompatNombreInvalido;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorFreeCamServidor;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorGroovyModloaderModuloFaltante;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorHealightINT;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorImmersiveTooltipsSinDependencia;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorIronSpellbooksVersion;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorJEIPluginFallido;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorMedievalOriginsCast;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorMetadataAnimacionEnServidor;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorMetadataModsTomlFaltante;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorOptiFineServidor;
@@ -54,6 +60,7 @@ import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorRubidiumObs
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorRutaModLauncher;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorSinListenersEnClase;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorSistemaSonido;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorSupplementariesCargaServidor;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorUnionFileSystemCorrupto;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorVoiceChatPuertoOcupado;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.FabricMCRuntimeErrorProvidedBy;
@@ -305,6 +312,13 @@ public class Analizador {
 		verificaciones.add(new ErrorOptiFineServidor());
 		verificaciones.add(new ErrorIronSpellbooksVersion());
 		verificaciones.add(new ConflictoOptiFineEmbeddium());
+		verificaciones.add(new ErrorControllableServidor());
+		verificaciones.add(new ErrorSupplementariesCargaServidor());
+		verificaciones.add(new ErrorGroovyModloaderModuloFaltante());
+		verificaciones.add(new ErrorEveryCompatNombreInvalido());
+		verificaciones.add(new ErrorCodigo1073741819());
+		verificaciones.add(new ErrorImmersiveTooltipsSinDependencia());
+		verificaciones.add(new ErrorMedievalOriginsCast());
 
 		
 		

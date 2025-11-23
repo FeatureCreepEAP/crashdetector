@@ -3043,23 +3043,23 @@ public String advertenciaMalwareFalso() {
 		return "未绑定的密度函数";
 	}
 
-	@Override
-	public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves) {
-		StringBuilder sb = new StringBuilder("<b>注册表中缺少密度函数。</b> ");
-		if (claves != null && !claves.isEmpty()) {
-			sb.append("缺失：");
-			for (int i = 0; i < Math.min(4, claves.size()); i++) {
-				if (i > 0)
-					sb.append(", ");
-				sb.append("<code>").append(claves.get(i)).append("</code>");
-			}
-			if (claves.size() > 4)
-				sb.append(", …");
-			sb.append("。 ");
-		}
-		sb.append("<br/><b>解决方案：</b>安装或启用定义这些函数的模组/数据包，然后重启游戏。");
-		return sb.toString();
-	}
+@Override
+public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves) {
+    StringBuilder sb = new StringBuilder("<b>注册表中缺少密度函数。</b> ");
+    if (claves != null && !claves.isEmpty()) {
+        sb.append("缺失项：");
+        for (int i = 0; i < Math.min(4, claves.size()); i++) {
+            if (i > 0)
+                sb.append(", ");
+            sb.append("<code>").append(claves.get(i)).append("</code>");
+        }
+        if (claves.size() > 4)
+            sb.append(", …");
+        sb.append("。");
+    }
+    sb.append("<br/><b>解决方案：</b>安装或启用定义这些函数的 mod/datapack 并重启。另一个常见原因是：虽然你安装了所需的 mod，但它自身存在问题或与其他 mod 冲突；例如，Terralith 存在许多问题，可能引发此错误及其他问题，包括 JSON 错误。");
+    return sb.toString();
+}
 
 	@Override
 	public String pasoFuncionesDeDensidadNoVinculadas() {
@@ -4157,6 +4157,131 @@ public String advertenciaMalwareFalso() {
 	@Override
 	public String pasoConflictoOptiFineEmbeddium() {
 	    return "卸载 OptiFine 或 Embeddium，因为它们彼此不兼容。";
+	}
+	
+	@Override
+	public String noPuedeAnalizarJSON() {
+	    return "<span style='color:#" + config.obtenerColorError()
+	        + "'>这通常由世界生成模组冲突引起，尤其是 Terralinth、AmplifiedNether、Nullscape 和 Incendium 等世界生成类模组。也可能是因为缺少某个必需的模组。</span>";
+	}
+	@Override
+	public String errorControllableServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Controllable 正试图在专用服务器上加载，但它仅与客户端兼容。 "
+	            + "请从服务器中移除 Controllable，或确保它仅安装在客户端上。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorControllableServidor() {
+	    return "Controllable 在专用服务器上";
+	}
+
+	@Override
+	public String pasoErrorControllableServidor() {
+	    return "请从专用服务器中移除 Controllable，因为它只能安装在客户端上。";
+	}
+	
+	@Override
+	public String errorSupplementariesCargaServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Supplementaries 正在引发一个错误，导致服务器无法加载。 "
+	            + "该模组在注册火焰行为时存在问题，会在 datapacks 加载期间引发故障。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorSupplementariesCargaServidor() {
+	    return "Supplementaries 阻止服务器加载";
+	}
+
+	@Override
+	public String pasoErrorSupplementariesCargaServidor() {
+	    return "请尝试将 Supplementaries 更新到最新版本，或暂时禁用它以允许服务器加载。";
+	}
+	
+	@Override
+	public String errorGroovyModloaderModuloFaltante() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Groovy Modloader (GML) 发现缺少 Jackson 模块的问题。 "
+	            + "某些模组（如 Valkyrien Skies）可能因未包含所有必要依赖而引发此错误。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorGroovyModloaderModuloFaltante() {
+	    return "Groovy Modloader 缺少 Jackson 模块";
+	}
+
+	@Override
+	public String pasoErrorGroovyModloaderModuloFaltante() {
+	    return "移除 Groovy Modloader 以及可能引发依赖冲突的相关模组（如 Valkyrien Skies）。";
+	}
+	
+	@Override
+	public String errorEveryCompatNombreInvalido() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Every Compat 发现了一个无效的木头方块名称。 "
+	            + "Every Compat 通常存在很多问题。请不要使用它！" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorEveryCompatNombreInvalido() {
+	    return "Every Compat 中的无效名称";
+	}
+
+	@Override
+	public String pasoErrorEveryCompatNombreInvalido() {
+	    return "检查使用 Every Compat 的资源包或模组，它们可能包含无效的方块名称。";
+	}
+	
+	
+
+	@Override
+	public String errorCodigo1073741819() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "检测到错误代码 (-1073741819)，可能由 Razer 的 GameCaster、Discord、OBS Studio 等 overlay 或 NVIDIA 驱动问题引起。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorCodigo1073741819() {
+	    return "错误代码 -1073741819";
+	}
+
+	@Override
+	public String pasoErrorCodigo1073741819() {
+	    return "尝试禁用 GameCaster、Discord 或 OBS Studio 等 overlay，并确保你的 NVIDIA 驱动程序已更新。";
+	}
+	
+	@Override
+	public String errorImmersiveTooltipsSinDependencia() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Immersive Tooltips 需要依赖 Immersive Messages，但未安装。 "
+	            + "请安装 Immersive Messages 以确保 Immersive Tooltips 正常工作。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorImmersiveTooltipsSinDependencia() {
+	    return "Immersive Tooltips 缺少依赖";
+	}
+
+	@Override
+	public String pasoErrorImmersiveTooltipsSinDependencia() {
+	    return "安装 Immersive Messages，因为它是 Immersive Tooltips 所需的依赖。";
+	}
+	
+	@Override
+	public String errorMedievalOriginsCast() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Medieval Origins 与 Apoli Mod 存在兼容性问题，其中 ItemStack 无法转换为 EntityLinkedItemStack。 "
+	            + "此问题常见于 6.6.0 以上版本。建议使用更早版本，或尝试在 Fabric 和 Forge 版本之间切换。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorMedievalOriginsCast() {
+	    return "Medieval Origins 类型转换错误";
+	}
+
+	@Override
+	public String pasoErrorMedievalOriginsCast() {
+	    return "请使用 Medieval Origins 6.6.0 或更早版本，或尝试切换该 mod 的 Fabric 与 Forge 版本。";
 	}
 	
 	

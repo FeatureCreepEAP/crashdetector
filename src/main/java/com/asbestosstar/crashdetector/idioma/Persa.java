@@ -3171,21 +3171,20 @@ public String advertenciaMalwareFalso() {
 
 	@Override
 	public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves) {
-		StringBuilder sb = new StringBuilder("<b>توابع چگالی در رجیستر گم شده‌اند.</b> ");
-		if (claves != null && !claves.isEmpty()) {
-			sb.append("گم شده: ");
-			for (int i = 0; i < Math.min(4, claves.size()); i++) {
-				if (i > 0)
-					sb.append(", ");
-				sb.append("<code>").append(claves.get(i)).append("</code>");
-			}
-			if (claves.size() > 4)
-				sb.append(", …");
-			sb.append(". ");
-		}
-		sb.append(
-				"<br/><b>راه‌حل:</b> مود یا دیتاپکی که این توابع را تعریف می‌کند را نصب یا فعال کنید و مجدداً راه‌اندازی کنید.");
-		return sb.toString();
+	    StringBuilder sb = new StringBuilder("<b>توابع چگالی در رجیستری وجود ندارند.</b> ");
+	    if (claves != null && !claves.isEmpty()) {
+	        sb.append("مفقود شده‌ها: ");
+	        for (int i = 0; i < Math.min(4, claves.size()); i++) {
+	            if (i > 0)
+	                sb.append(", ");
+	            sb.append("<code>").append(claves.get(i)).append("</code>");
+	        }
+	        if (claves.size() > 4)
+	            sb.append(", …");
+	        sb.append(". ");
+	    }
+	    sb.append("<br/><b>راه‌حل:</b> mod/datapackی را که این توابع را تعریف می‌کند، نصب یا فعال کنید و مجدداً راه‌اندازی نمایید. دلیل دیگر رایج این مشکل این است که شما mod لازم را دارید اما آن mod دچار مشکل است یا با mod دیگری در تداخل است؛ به‌عنوان مثال، Terralith مشکلات زیادی دارد و می‌تواند این خطا و سایر خطاها از جمله خطاهای JSON را ایجاد کند.");
+	    return sb.toString();
 	}
 
 	@Override
@@ -4338,6 +4337,132 @@ public String advertenciaMalwareFalso() {
 	public String pasoConflictoOptiFineEmbeddium() {
 	    return "OptiFine یا Embeddium را حذف کنید، زیرا با یکدیگر سازگار نیستند.";
 	}
+	
+	@Override
+	public String noPuedeAnalizarJSON() {
+	    return "<span style='color:#" + config.obtenerColorError()
+	        + "'>این مسئله معمولاً با افزونه‌های تولید دنیای متناقض رخ می‌دهد، به‌ویژه Terralinth، AmplifiedNether، Nullscape و Incendium و سایر افزونه‌های تولید دنیا. همچنین ممکن است نیاز باشد یک افزونهٔ گم‌شده را نصب کنید.</span>";
+	}
+	@Override
+	public String errorControllableServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Controllable が専用サーバーでの読み込みを試みていますが、これはクライアントでのみ互換性があります。 "
+	            + "サーバーから Controllable を削除するか、クライアントにのみインストールされていることを確認してください。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorControllableServidor() {
+	    return "専用サーバー上の Controllable";
+	}
+
+	@Override
+	public String pasoErrorControllableServidor() {
+	    return "Controllable はクライアントにのみインストールする必要がありますので、専用サーバーから削除してください。";
+	}
+	
+	@Override
+	public String errorSupplementariesCargaServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Supplementaries باعث خطایی شده که از بارگذاری سرور جلوگیری می‌کند. "
+	            + "این افزونه در ثبت رفتارهای آتش مشکل دارد که طی بارگذاری datapackها باعث شکست می‌شود." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorSupplementariesCargaServidor() {
+	    return "Supplementaries مانع از بارگذاری سرور شده است";
+	}
+
+	@Override
+	public String pasoErrorSupplementariesCargaServidor() {
+	    return "تلاش کنید Supplementaries را به آخرین نسخه بروزرسانی کنید یا به طور موقت آن را غیرفعال کنید تا سرور بتواند بارگذاری شود.";
+	}
+	
+	@Override
+	public String errorGroovyModloaderModuloFaltante() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Groovy Modloader (GML) با مشکلی در مورد ماژول‌های گم‌شده Jackson مواجه شد. "
+	            + "برخی افزونه‌ها مانند Valkyrien Skies ممکن است به دلیل عدم ارائهٔ تمام وابستگی‌های لازم، این خطا را ایجاد کنند." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorGroovyModloaderModuloFaltante() {
+	    return "ماژول Jackson در Groovy Modloader گم شده است";
+	}
+
+	@Override
+	public String pasoErrorGroovyModloaderModuloFaltante() {
+	    return "Groovy Modloader و افزونه‌های مرتبط مانند Valkyrien Skies که ممکن است باعث تداخل وابستگی‌ها شوند را حذف کنید.";
+	}
+	
+	@Override
+	public String errorEveryCompatNombreInvalido() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Every Compat نام نامعتبر بلوک چوبی را پیدا کرد. "
+	            + "Every Compat معمولاً مشکلات زیادی دارد. از آن استفاده نکنید!" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorEveryCompatNombreInvalido() {
+	    return "نام نامعتبر در Every Compat";
+	}
+
+	@Override
+	public String pasoErrorEveryCompatNombreInvalido() {
+	    return "پک‌های منابع یا افزونه‌هایی را که از Every Compat استفاده می‌کنند بررسی کنید، زیرا ممکن است حاوی نام‌های نامعتبر بلوک باشند.";
+	}
+	
+
+
+	@Override
+	public String errorCodigo1073741819() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "کد خطای (-1073741819) شناسایی شد که ممکن است ناشی از overlayهایی مانند GameCasterِ Razer، Discord، OBS Studio یا مشکلات درایورهای NVIDIA باشد." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorCodigo1073741819() {
+	    return "کد خطا -1073741819";
+	}
+
+	@Override
+	public String pasoErrorCodigo1073741819() {
+	    return "سعی کنید overlayهایی مانند GameCaster، Discord یا OBS Studio را غیرفعال کنید و مطمئن شوید که درایورهای NVIDIA شما به‌روز هستند.";
+	}
+	@Override
+	public String errorImmersiveTooltipsSinDependencia() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Immersive Tooltips به Immersive Messages به عنوان یک dependencia نیاز دارد اما نصب نشده است. "
+	            + "برای اینکه Immersive Tooltips به درستی کار کند، Immersive Messages را نصب کنید." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorImmersiveTooltipsSinDependencia() {
+	    return "Immersive Tooltips بدون dependencia";
+	}
+
+	@Override
+	public String pasoErrorImmersiveTooltipsSinDependencia() {
+	    return "Immersive Messages را نصب کنید، زیرا این یک dependencia ضروری برای Immersive Tooltips است.";
+	}
+	
+	@Override
+	public String errorMedievalOriginsCast() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Medieval Origins با Apoli Mod مشکل سازگاری دارد که در آن ItemStack نمی‌تواند به EntityLinkedItemStack cast شود. "
+	            + "این مسئله در نسخه‌های بالاتر از 6.6.0 رایج است. استفاده از نسخه‌ی قدیمی‌تر یا تعویض بین نسخه‌های Fabric و Forge را در نظر بگیرید." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorMedievalOriginsCast() {
+	    return "خطای cast در Medieval Origins";
+	}
+
+	@Override
+	public String pasoErrorMedievalOriginsCast() {
+	    return "از نسخه‌ی 6.6.0 یا قدیمی‌تر Medieval Origins استفاده کنید، یا بین نسخه‌های Fabric و Forge این افزونه تغییر دهید.";
+	}
+	
+	
 	
 	
 	

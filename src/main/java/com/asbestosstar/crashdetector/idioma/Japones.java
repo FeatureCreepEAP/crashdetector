@@ -3098,20 +3098,20 @@ public String advertenciaMalwareFalso() {
 
 	@Override
 	public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves) {
-		StringBuilder sb = new StringBuilder("<b>レジストリに密度関数がありません。</b> ");
-		if (claves != null && !claves.isEmpty()) {
-			sb.append("不足しているもの: ");
-			for (int i = 0; i < Math.min(4, claves.size()); i++) {
-				if (i > 0)
-					sb.append(", ");
-				sb.append("<code>").append(claves.get(i)).append("</code>");
-			}
-			if (claves.size() > 4)
-				sb.append(", …");
-			sb.append(". ");
-		}
-		sb.append("<br/><b>解決策:</b> これらの関数を定義するMOD/データパックをインストールまたは有効化し、再起動してください。");
-		return sb.toString();
+	    StringBuilder sb = new StringBuilder("<b>レジストリに密度関数が不足しています。</b> ");
+	    if (claves != null && !claves.isEmpty()) {
+	        sb.append("不足しているもの: ");
+	        for (int i = 0; i < Math.min(4, claves.size()); i++) {
+	            if (i > 0)
+	                sb.append(", ");
+	            sb.append("<code>").append(claves.get(i)).append("</code>");
+	        }
+	        if (claves.size() > 4)
+	            sb.append(", …");
+	        sb.append("。");
+	    }
+	    sb.append("<br/><b>解決方法:</b> これらの関数を定義する mod/datapack をインストールまたは有効にして再起動してください。この問題のもう一つのよくある原因は、必要な mod はインストールされているものの、その mod に問題があるか、他の mod と競合している場合です。例えば、Terralith は多くの問題を抱えており、このエラーや JSON エラーを含むさまざまな問題を引き起こす可能性があります。");
+	    return sb.toString();
 	}
 
 	@Override
@@ -4234,6 +4234,133 @@ public String advertenciaMalwareFalso() {
 	public String pasoConflictoOptiFineEmbeddium() {
 	    return "OptiFine または Embeddium をアンインストールしてください。両者は互換性がありません。";
 	}
+	
+	@Override
+	public String noPuedeAnalizarJSON() {
+	    return "<span style='color:#" + config.obtenerColorError()
+	        + "'>これは、特に Terralinth、AmplifiedNether、Nullscape、Incendium などの世界生成系 mod 同士の競合でよく発生します。不足している mod をインストールする必要がある場合もあります。</span>";
+	}
+	@Override
+	public String errorControllableServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Controllable が専用サーバーでの読み込みを試みていますが、これはクライアントでのみ互換性があります。 "
+	            + "サーバーから Controllable を削除するか、クライアントにのみインストールされていることを確認してください。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorControllableServidor() {
+	    return "専用サーバー上の Controllable";
+	}
+
+	@Override
+	public String pasoErrorControllableServidor() {
+	    return "Controllable はクライアントにのみインストールする必要がありますので、専用サーバーから削除してください。";
+	}
+	
+	@Override
+	public String errorSupplementariesCargaServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Supplementaries がエラーを引き起こしており、サーバーの読み込みを妨げています。 "
+	            + "この mod は火の挙動の登録で問題を抱えており、datapack の読み込み中に失敗します。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorSupplementariesCargaServidor() {
+	    return "Supplementaries がサーバー読み込みを妨害";
+	}
+
+	@Override
+	public String pasoErrorSupplementariesCargaServidor() {
+	    return "Supplementaries を最新バージョンに更新するか、一時的に無効にしてサーバーの読み込みを可能にしてください。";
+	}
+	
+	@Override
+	public String errorGroovyModloaderModuloFaltante() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Groovy Modloader (GML) は、不足している Jackson モジュールに関する問題を検出しました。 "
+	            + "Valkyrien Skies のような一部の mod は、必要な依存関係をすべて含んでいないため、このエラーを引き起こす可能性があります。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorGroovyModloaderModuloFaltante() {
+	    return "Groovy Modloader で Jackson モジュールが不足";
+	}
+
+	@Override
+	public String pasoErrorGroovyModloaderModuloFaltante() {
+	    return "依存関係の競合を引き起こす可能性のある Groovy Modloader や Valkyrien Skies などの関連 mod を削除してください。";
+	}
+	
+	@Override
+	public String errorEveryCompatNombreInvalido() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Every Compat が無効な木材ブロック名を検出しました。 "
+	            + "Every Compat は通常、多くの問題を抱えています。使用しないでください！" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorEveryCompatNombreInvalido() {
+	    return "Every Compat の無効な名前";
+	}
+
+	
+	@Override
+	public String pasoErrorEveryCompatNombreInvalido() {
+	    return "Every Compat を使用しているリソースパックや mod を確認してください。無効なブロック名が含まれている可能性があります。";
+	}
+
+	@Override
+	public String errorCodigo1073741819() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "エラーコード (-1073741819) が検出されました。これは Razer の GameCaster、Discord、OBS Studio などのオーバーレイや、NVIDIA ドライバーの問題によって引き起こされる可能性があります。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorCodigo1073741819() {
+	    return "エラーコード -1073741819";
+	}
+
+	@Override
+	public String pasoErrorCodigo1073741819() {
+	    return "GameCaster、Discord、OBS Studio などのオーバーレイを無効化し、NVIDIA ドライバーが最新であることを確認してください。";
+	}
+	@Override
+	public String errorImmersiveTooltipsSinDependencia() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Immersive Tooltips は dependencia として Immersive Messages を必要としますが、インストールされていません。 "
+	            + "Immersive Tooltips を正しく動作させるには、Immersive Messages をインストールしてください。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorImmersiveTooltipsSinDependencia() {
+	    return "dependencia のない Immersive Tooltips";
+	}
+
+	@Override
+	public String pasoErrorImmersiveTooltipsSinDependencia() {
+	    return "Immersive Tooltips に必要な dependencia である Immersive Messages をインストールしてください。";
+	}
+	
+	@Override
+	public String errorMedievalOriginsCast() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Medieval Origins は Apoli Mod との互換性に問題があり、ItemStack を EntityLinkedItemStack にキャストできません。 "
+	            + "これはバージョン 6.6.0 より新しいものでよく発生します。以前のバージョンを使用するか、Fabric と Forge バージョンを切り替えることを検討してください。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorMedievalOriginsCast() {
+	    return "Medieval Origins のキャストエラー";
+	}
+
+	@Override
+	public String pasoErrorMedievalOriginsCast() {
+	    return "Medieval Origins の 6.6.0 以前のバージョンを使用するか、mod の Fabric と Forge バージョンを切り替えてみてください。";
+	}
+	
+	
+	
+	
 	
 	
 	

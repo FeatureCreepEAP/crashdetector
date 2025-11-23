@@ -1724,4 +1724,48 @@ public interface Idioma {
 
 	public String pasoConflictoOptiFineEmbeddium();
 
+	public String noPuedeAnalizarJSON();
+
+	public String errorControllableServidor();
+
+	public String nombreDeErrorControllableServidor();
+
+	public String pasoErrorControllableServidor();
+
+	public String errorSupplementariesCargaServidor();
+
+	public String nombreDeErrorSupplementariesCargaServidor();
+
+	public String pasoErrorSupplementariesCargaServidor();
+
+	public String errorGroovyModloaderModuloFaltante();
+
+	public String nombreDeErrorGroovyModloaderModuloFaltante();
+
+	public String pasoErrorGroovyModloaderModuloFaltante();
+
+	public String errorEveryCompatNombreInvalido();
+
+	public String nombreDeErrorEveryCompatNombreInvalido();
+
+	public String pasoErrorEveryCompatNombreInvalido();
+
+	public String nombreDeErrorCodigo1073741819();
+
+	public String pasoErrorCodigo1073741819();
+
+	public String errorCodigo1073741819();
+
+	public String pasoErrorImmersiveTooltipsSinDependencia();
+
+	public String nombreDeErrorImmersiveTooltipsSinDependencia();
+
+	public String errorImmersiveTooltipsSinDependencia();
+
+	public String errorMedievalOriginsCast();
+
+	public String nombreDeErrorMedievalOriginsCast();
+
+	public String pasoErrorMedievalOriginsCast();
+
 }

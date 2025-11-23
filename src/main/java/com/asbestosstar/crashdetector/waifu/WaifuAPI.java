@@ -8,25 +8,20 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
-import com.asbestosstar.crashdetector.waifu.RespuestaWaifu.Arista;
-import com.asbestosstar.crashdetector.waifu.RespuestaWaifu.Definicion;
-import com.google.gson.Gson;
+import com.asbestosstar.crashdetector.json.Json;
 
-//curl 'https://api.waifu.neoforged.net/graphql' -X POST -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:128.0) Gecko/20100101 Firefox/128.0' -H 'Accept: application/json, multipart/mixed' -H 'Accept-Language: es-MX,es;q=0.8,en-US;q=0.5,en;q=0.3' -H 'Accept-Encoding: gzip, deflate, br, zstd' -H 'Referer: https://api.waifu.neoforged.net/graphql.html' -H 'content-type: application/json' -H 'Origin: https://api.waifu.neoforged.net' -H 'DNT: 1' -H 'Sec-GPC: 1' -H 'Connection: keep-alive' -H 'Sec-Fetch-Dest: empty' -H 'Sec-Fetch-Mode: cors' -H 'Sec-Fetch-Site: same-origin' -H 'Priority: u=0' --data-raw '{"query":"query ModsWithClass {\n  gameVersion(loader: NeoForge, version: \"1.21.1\") {\n    classes(where: {name: {equals: \"com/simibubi/create/foundation/utility/Lang\"}}, first: 1) {\n      edges {\n        node {\n          definitions {\n            mod {\n              name\n              curseforgeProjectId\n              modrinthProjectId\n            }\n          }\n        }\n      }\n    }\n  }\n}","operationName":"ModsWithClass"}'
+//curl 'https://api.waifu.neoforged.net/graphql  ' -X POST -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:128.0) Gecko/20100101 Firefox/128.0' -H 'Accept: application/json, multipart/mixed' -H 'Accept-Language: es-MX,es;q=0.8,en-US;q=0.5,en;q=0.3' -H 'Accept-Encoding: gzip, deflate, br, zstd' -H 'Referer: https://api.waifu.neoforged.net/graphql.html  ' -H 'content-type: application/json' -H 'Origin: https://api.waifu.neoforged.net  ' -H 'DNT: 1' -H 'Sec-GPC: 1' -H 'Connection: keep-alive' -H 'Sec-Fetch-Dest: empty' -H 'Sec-Fetch-Mode: cors' -H 'Sec-Fetch-Site: same-origin' -H 'Priority: u=0' --data-raw '{"query":"query ModsWithClass {\n  gameVersion(loader: NeoForge, version: \"1.21.1\") {\n    classes(where: {name: {equals: \"com/simibubi/create/foundation/utility/Lang\"}}, first: 1) {\n      edges {\n        node {\n          definitions {\n            mod {\n              name\n              curseforgeProjectId\n              modrinthProjectId\n            }\n          }\n        }\n      }\n    }\n  }\n}","operationName":"ModsWithClass"}'
 
-//https://api.waifu.neoforged.net/mod_url/987863
+//https://api.waifu.neoforged.net/mod_url/987863  
 /**
  * No ESTA COMPLETA WIP
  */
 public class WaifuAPI {
 	// URL del endpoint GraphQL
-	private static final String GRAPHQL_URL = "https://api.waifu.neoforged.net/graphql";
-	private static final Gson gson = new Gson();
+	private static final String GRAPHQL_URL = "https://api.waifu.neoforged.net/graphql  ";
 
 	public static List<VersionWaifu> versiones = new ArrayList<VersionWaifu>();
 
@@ -63,13 +58,44 @@ public class WaifuAPI {
 			String graphqlQuery = generarConsultaGraphQL(clase, version);
 			String jsonResponse = enviarSolicitudGraphQL(graphqlQuery);
 
-			RespuestaWaifu respuesta = gson.fromJson(jsonResponse, RespuestaWaifu.class);
-			if (respuesta != null && respuesta.data != null && respuesta.data.gameVersion != null) {
-				for (Arista arista : respuesta.data.gameVersion.classes.edges) {
-					if (arista.node != null && arista.node.definitions != null) {
-						for (Definicion def : arista.node.definitions) {
-							if (def.mod != null) {
-								modsEncontrados.add(def.mod);
+			Json.Nodo respuestaNodo = Json.leer(jsonResponse);
+
+			// Navegar por el JSON para extraer los mods
+			Json.Nodo dataNodo = respuestaNodo.obtener("data");
+			if (dataNodo != null && !dataNodo.comoCadena().equals("null")) {
+				Json.Nodo gameVersionNodo = dataNodo.obtener("gameVersion");
+				if (gameVersionNodo != null && !gameVersionNodo.comoCadena().equals("null")) {
+					Json.Nodo classesNodo = gameVersionNodo.obtener("classes");
+					if (classesNodo != null && !classesNodo.comoCadena().equals("null")) {
+						Json.Nodo edgesNodo = classesNodo.obtener("edges");
+						if (edgesNodo != null && edgesNodo.esArreglo()) {
+							for (int i = 0; i < edgesNodo.tamano(); i++) {
+								Json.Nodo aristaNodo = edgesNodo.en(i);
+								Json.Nodo nodeNodo = aristaNodo.obtener("node");
+								if (nodeNodo != null && !nodeNodo.comoCadena().equals("null")) {
+									Json.Nodo definitionsNodo = nodeNodo.obtener("definitions");
+									if (definitionsNodo != null && definitionsNodo.esArreglo()) {
+										for (int j = 0; j < definitionsNodo.tamano(); j++) {
+											Json.Nodo defNodo = definitionsNodo.en(j);
+											Json.Nodo modNodo = defNodo.obtener("mod");
+											if (modNodo != null && !modNodo.comoCadena().equals("null")) {
+												RespuestaWaifu.Mod mod = new RespuestaWaifu.Mod();
+												mod.name = modNodo.obtener("name").comoCadena();
+												Json.Nodo curseforgeIdNodo = modNodo.obtener("curseforgeProjectId");
+												if (curseforgeIdNodo.comoCadena() != null
+														&& !curseforgeIdNodo.comoCadena().equals("null")) {
+													mod.curseforgeProjectId = curseforgeIdNodo.comoEntero();
+												}
+												Json.Nodo modrinthIdNodo = modNodo.obtener("modrinthProjectId");
+												if (modrinthIdNodo.comoCadena() != null
+														&& !modrinthIdNodo.comoCadena().equals("null")) {
+													mod.modrinthProjectId = modrinthIdNodo.comoCadena();
+												}
+												modsEncontrados.add(mod);
+											}
+										}
+									}
+								}
 							}
 						}
 					}
@@ -108,13 +134,6 @@ public class WaifuAPI {
 	 * @return Respuesta del servidor en formato JSON
 	 * @throws IOException Si hay un error de red o E/S
 	 */
-	/**
-	 * Envía una solicitud GraphQL al servidor especificado
-	 * 
-	 * @param query Consulta GraphQL a enviar
-	 * @return Respuesta del servidor en formato JSON
-	 * @throws IOException Si hay un error de red o E/S
-	 */
 	public static String enviarSolicitudGraphQL(String query) throws IOException {
 		URL url = new URL(GRAPHQL_URL);
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -125,17 +144,16 @@ public class WaifuAPI {
 		conn.setRequestProperty("Accept", "application/json, multipart/mixed");
 		conn.setRequestProperty("Accept-Language", "es-MX,es;q=0.8,en-US;q=0.5,en;q=0.3");
 		conn.setRequestProperty("Accept-Encoding", "gzip, deflate, br");
-		conn.setRequestProperty("Referer", "https://api.waifu.neoforged.net/graphql.html");
-		conn.setRequestProperty("Origin", "https://api.waifu.neoforged.net");
+		conn.setRequestProperty("Referer", "https://api.waifu.neoforged.net/graphql.html  ");
+		conn.setRequestProperty("Origin", "https://api.waifu.neoforged.net  ");
 		conn.setRequestProperty("Connection", "keep-alive");
 		conn.setDoOutput(true);
 
-		// Construye el JSON de forma segura con Gson para que escape correctamente
-		// newlines y comillas
-		Map<String, Object> payload = new HashMap<>();
-		payload.put("query", query);
-		payload.put("operationName", "ModsWithClass");
-		String cuerpoJSON = gson.toJson(payload);
+		// Construye el JSON de forma segura usando el API de Json
+		Json.Nodo payload = Json.crearObjeto();
+		payload.obtener("query").poner(query);
+		payload.obtener("operationName").poner("ModsWithClass");
+		String cuerpoJSON = payload.escribir();
 
 		try (OutputStream os = conn.getOutputStream()) {
 			byte[] input = cuerpoJSON.getBytes(StandardCharsets.UTF_8);

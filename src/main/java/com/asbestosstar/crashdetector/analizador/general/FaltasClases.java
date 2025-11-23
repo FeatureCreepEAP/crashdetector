@@ -71,6 +71,7 @@ public class FaltasClases implements Verificaciones {
 	@Override
 	public void verificar(Consola consola) {
 		this.vdst = consola.verificacion_de_stacktrace;
+		String cont = consola.contenido_verificar;
 
 		// Agregar clases faltantes desde stacktraces fatales
 		for (TriMap.TripleKey<String, Integer, Integer> llave : vdst.clases_fatales_no_existentes.keySet()) {
@@ -79,6 +80,14 @@ public class FaltasClases implements Verificaciones {
 			int numero_linea_consola = llave.key3; // número de línea en la consola
 			String sospechoso = vdst.clases_fatales_no_existentes.get(claseCruda, nivel_prioridad,
 					numero_linea_consola);
+
+			if (numero_linea_consola > 0) {
+				String linea_menos1 = consola.contenido_verificar.split(nl)[numero_linea_consola - 1];
+				//CrashDetectorLogger.log(linea_menos1+ " linea menos 1");
+				if (linea_menos1.toLowerCase().contains("catching")) {// A veces lineas tiene esta
+					continue;//TODO apender a Advertencia faltas clases
+				}
+			}
 
 			String claseFormateada = formatearClase(claseCruda);
 			if (!esNombreClaseValido(claseFormateada)) {
@@ -108,10 +117,18 @@ public class FaltasClases implements Verificaciones {
 		if (linea == null) {
 			return;
 		}
+		
+		
+		
+		
 
 		// Saltar líneas con WARN (sin excepciones)
 		if (linea.contains("/WARN]") || linea.contains("Warn")
 				|| VerificacionDeStackTrace.esLineaDeAdvertenciaEstandar(linea)) {
+			return;
+		}
+		
+		if (linea.contains("avaritia")) {//Positiva falsa comun con KubJS y avaritia 
 			return;
 		}
 
@@ -153,6 +170,15 @@ public class FaltasClases implements Verificaciones {
 		if (claseCruda == null) {
 			return;
 		}
+		
+		if (numero_de_linea > 0) {
+			String linea_menos1 = consola.contenido_verificar.split(nl)[numero_de_linea - 1];
+			//CrashDetectorLogger.log(linea_menos1+ " linea menos 1");
+			if (linea_menos1.toLowerCase().contains("catching")) {// A veces lineas tiene esta
+				return;//TODO apender a Advertencia faltas clases
+			}
+		}
+		
 
 		String claseFormateada = formatearClase(claseCruda);
 		if (!esNombreClaseValido(claseFormateada)) {

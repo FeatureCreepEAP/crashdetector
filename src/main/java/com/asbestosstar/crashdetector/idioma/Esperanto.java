@@ -3183,21 +3183,20 @@ public String advertenciaMalwareFalso() {
 
 	@Override
 	public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves) {
-		StringBuilder sb = new StringBuilder("<b>Mankas densofunkcioj en la registro.</b> ");
-		if (claves != null && !claves.isEmpty()) {
-			sb.append("Mankas: ");
-			for (int i = 0; i < Math.min(4, claves.size()); i++) {
-				if (i > 0)
-					sb.append(", ");
-				sb.append("<code>").append(claves.get(i)).append("</code>");
-			}
-			if (claves.size() > 4)
-				sb.append(", …");
-			sb.append(". ");
-		}
-		sb.append(
-				"<br/><b>Solvo:</b> instalu aŭ aktivigu la modon/datopakon kiu difinas tiujn funkciojn kai restartu.");
-		return sb.toString();
+	    StringBuilder sb = new StringBuilder("<b>Mankas densecaj funkcioj en la registro.</b> ");
+	    if (claves != null && !claves.isEmpty()) {
+	        sb.append("Mankantaj: ");
+	        for (int i = 0; i < Math.min(4, claves.size()); i++) {
+	            if (i > 0)
+	                sb.append(", ");
+	            sb.append("<code>").append(claves.get(i)).append("</code>");
+	        }
+	        if (claves.size() > 4)
+	            sb.append(", …");
+	        sb.append(". ");
+	    }
+	    sb.append("<br/><b>Solvo:</b> instalu aŭ aktivigu la mod/datapack, kiu difinas tiujn funkciojn, kaj restartigu. Alia komuna kialo por tiu ĉi problemo estas, kiam vi havas la bezonatan modon, sed ĝi havas problemon aŭ konflikton kun alia mod; ekzemple, Terralith havas multajn problemojn kaj povas kaŭzi tiun ĉi eraron kaj aliajn, inkluzive de eraroj kun JSON.");
+	    return sb.toString();
 	}
 
 	@Override
@@ -4353,6 +4352,132 @@ public String advertenciaMalwareFalso() {
 	public String pasoConflictoOptiFineEmbeddium() {
 	    return "Forigu OptiFine aŭ Embeddium, ĉar ili ne estas kongruaj unu kun la alia.";
 	}
+	
+	@Override
+	public String noPuedeAnalizarJSON() {
+	    return "<span style='color:#" + config.obtenerColorError()
+	        + "'>Tio estas ofta ĉe konfliktaj mondo-generantaj modoj, precipe Terralinth, AmplifiedNether, Nullscape kaj Incendium, kaj aliaj mondo-generantaj modoj. Eble vi devas instali mankantan modon.</span>";
+	}
+	@Override
+	public String errorControllableServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Controllable provas ŝargiĝi sur dediĉita servilo, sed ĝi estas kompatibla nur kun la kliento. "
+	            + "Forigu Controllable de la servilo aŭ certigu, ke ĝi estas instalita nur sur la kliento." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorControllableServidor() {
+	    return "Controllable sur dediĉita servilo";
+	}
+
+	@Override
+	public String pasoErrorControllableServidor() {
+	    return "Forigu Controllable de la dediĉita servilo, ĉar ĝi devas esti instalita nur sur la kliento.";
+	}
+	
+	@Override
+	public String errorSupplementariesCargaServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Supplementaries kaŭzas eraron, kiu malhelpas la ŝargadon de la servilo. "
+	            + "La mod havas problemojn kun la registo de fajrokondutoj, kiuj kaŭzas fiaskon dum la ŝargado de datapack-oj." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorSupplementariesCargaServidor() {
+	    return "Supplementaries malhelpas la ŝargadon de la servilo";
+	}
+
+	@Override
+	public String pasoErrorSupplementariesCargaServidor() {
+	    return "Provu ĝisdatigi Supplementaries al la plej nova versio aŭ malaktivigu ĝin provizore por permesi la ŝargadon de la servilo.";
+	}
+	
+	@Override
+	public String errorGroovyModloaderModuloFaltante() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Groovy Modloader (GML) trovis problemon pro mankantaj Jackson-moduloj. "
+	            + "Iuj modoj kiel Valkyrien Skies povas kaŭzi tiun eraron pro ne inkluzivi ĉiujn necesajn dependecojn." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorGroovyModloaderModuloFaltante() {
+	    return "Mankanta Jackson-modulo en Groovy Modloader";
+	}
+
+	@Override
+	public String pasoErrorGroovyModloaderModuloFaltante() {
+	    return "Forigu Groovy Modloader kaj rilatajn modojn kiel Valkyrien Skies, kiuj povas kaŭzi konfliktojn de dependecoj.";
+	}
+	
+	@Override
+	public String errorEveryCompatNombreInvalido() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Every Compat trovis nevalidan nomon de lignon blokon. "
+	            + "Every Compat ĝenerale havas multajn problemojn. Ne uzu ĝin!" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorEveryCompatNombreInvalido() {
+	    return "Nevalida nomo en Every Compat";
+	}
+
+	@Override
+	public String pasoErrorEveryCompatNombreInvalido() {
+	    return "Kontrolu la risurcpakojn aŭ modojn, kiuj uzas Every Compat, ĉar ili povas enhavi nevalidajn bloknomojn.";
+	}
+
+	@Override
+	public String errorCodigo1073741819() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Erara kodo (-1073741819) estis trovita, kiu povas esti kaŭzita de supermetoj (overlays) kiel GameCaster de Razer, Discord, OBS Studio aŭ problemoj kun NVIDIA-aj peliloj." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorCodigo1073741819() {
+	    return "Erara kodo -1073741819";
+	}
+
+	@Override
+	public String pasoErrorCodigo1073741819() {
+	    return "Provu malŝalti supermetojn kiel GameCaster, Discord aŭ OBS Studio, kaj kontrolu ke viaj NVIDIA-aj peliloj estu ĝisdataj.";
+	}
+	
+	@Override
+	public String errorImmersiveTooltipsSinDependencia() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Immersive Tooltips는 dependencia인 Immersive Messages가 필요하지만 설치되어 있지 않습니다. "
+	            + "Immersive Tooltips가 제대로 작동하려면 Immersive Messages를 설치하세요." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorImmersiveTooltipsSinDependencia() {
+	    return "dependencia 없는 Immersive Tooltips";
+	}
+
+	@Override
+	public String pasoErrorImmersiveTooltipsSinDependencia() {
+	    return "Immersive Tooltips에 필요한 dependencia인 Immersive Messages를 설치하세요.";
+	}
+	
+	@Override
+	public String errorMedievalOriginsCast() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Medieval Origins havas kongruecproblemon kun Apoli Mod, kie ItemStack ne povas esti 'cast'-ita al EntityLinkedItemStack. "
+	            + "Tio estas komuna en versioj pli novaj ol 6.6.0. Konsideru uzi pli malnovan version aŭ ŝanĝi inter versioj de Fabric kaj Forge." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorMedievalOriginsCast() {
+	    return "Eraro de 'cast' en Medieval Origins";
+	}
+
+	@Override
+	public String pasoErrorMedievalOriginsCast() {
+	    return "Uzu version de Medieval Origins 6.6.0 aŭ pli malnovan, aŭ provu ŝanĝi inter versioj de Fabric kaj Forge de la mod.";
+	}
+	
+	
+	
 	
 	
 	

@@ -37,13 +37,7 @@ public class Drivers implements Verificaciones {
 	 * Patrones de nouveau precompilados para evitar recompilar en cada
 	 * verificación.
 	 */
-	private static final Pattern[] PATRONES_NOUVEAU = { Pattern.compile("\\[libnouveau\\.so\\]"),
-			Pattern.compile("\\[libnouveau\\.so\\.\\d+\\]"), Pattern.compile("\\[libnouveau\\.so\\.\\d+\\.\\d+\\]"),
-			Pattern.compile("\\[libnouveau\\.so\\.\\d+\\.\\d+\\.\\d+\\]"), Pattern.compile("\\[libdrm_nouveau\\.so\\]"),
-			Pattern.compile("\\[libdrm_nouveau\\.so\\.\\d+\\]"),
-			Pattern.compile("\\[libdrm_nouveau\\.so\\.\\d+\\.\\d+\\]"),
-			Pattern.compile("\\[libdrm_nouveau\\.so\\.\\d+\\.\\d+\\.\\d+\\]"), Pattern.compile("\\[nouveau\\]"),
-			Pattern.compile("\\[.*nouveau.*\\.so\\]") };
+	private static final String[] PATRONES_NOUVEAU_LITERAL = { "libnouveau.so", "libdrm_nouveau.so", "nouveau" };
 
 	/**
 	 * Cache de plataforma y GPU para no repetir detecciones costosas.
@@ -157,28 +151,34 @@ public class Drivers implements Verificaciones {
 	}
 
 	private boolean contienePatronNouveau(String log) {
-		// Atajo rápido: si el log no menciona "nouveau" ni "libdrm_nouveau" ni
-		// "libnouveau",
-		// evitamos todas las búsquedas con regex
+		// Búsqueda rápida con cadenas literales antes de usar expresiones regulares
 		String low = log.toLowerCase();
-		if (!low.contains("nouveau") && !low.contains("libdrm_nouveau") && !low.contains("libnouveau")) {
-			if (!contienePatronOpenAL(log)) { // OpenAL también puede indicar nouveau en algunos casos
-				return false;
+
+		boolean encontradoLiteral = false;
+		for (String patronLiteral : PATRONES_NOUVEAU_LITERAL) {
+			if (low.contains(patronLiteral)) {
+				encontradoLiteral = true;
+				break;
 			}
 		}
 
-		for (Pattern patron : PATRONES_NOUVEAU) {
-			if (patron.matcher(log).find()) {
-				CrashDetectorLogger.log("Patrón Nouveau encontrado: " + patron.pattern());
-				return true;
-			}
+		// Si no se encontró ninguno de los patrones literales, verificamos OpenAL
+		if (!encontradoLiteral) {
+			return contienePatronOpenAL(log); // OpenAL también puede indicar nouveau en algunos casos
 		}
 
-		if (contienePatronOpenAL(log)) { // A veces nouveau puede causar esta problema en mi experiencia
+		// Si se encontró un patrón literal, ahora verificamos con expresiones regulares
+		// más específicas
+		// para confirmar que es un patrón completo (por ejemplo, con números de
+		// versión)
+		if (log.contains("nouveau") && (log.matches(".*libnouveau\\.so(\\.\\d+)*\\s*")
+				|| log.matches(".*libdrm_nouveau\\.so(\\.\\d+)*\\s*"))) {
 			return true;
 		}
 
-		return false;
+
+		// A veces nouveau puede causar problemas con OpenAL en mi experiencia
+		return contienePatronOpenAL(log);
 	}
 
 	private boolean contienePatronOpenAL(String log) {

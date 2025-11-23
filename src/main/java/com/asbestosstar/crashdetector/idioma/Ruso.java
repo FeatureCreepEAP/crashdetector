@@ -250,8 +250,8 @@ public class Ruso implements Idioma {
 
 	@Override
 	public String theseus() {
-	    return "<b style='color:#" + config.obtenerColorAdvertencia()
-	           + "'>У Theseus есть и другие проблемы, включая сбои при удалении модов. Если вам нужно запускать файлы mrpack, вы можете использовать альтернативные лаунчеры, такие как Prism Launcher (только для modrinth.com), ATLauncher (только для modrinth.com) или Hello Minecraft Launcher (поддерживает modrinth.com и bbsmc.net).</b>";
+		return "<b style='color:#" + config.obtenerColorAdvertencia()
+				+ "'>У Theseus есть и другие проблемы, включая сбои при удалении модов. Если вам нужно запускать файлы mrpack, вы можете использовать альтернативные лаунчеры, такие как Prism Launcher (только для modrinth.com), ATLauncher (только для modrinth.com) или Hello Minecraft Launcher (поддерживает modrinth.com и bbsmc.net).</b>";
 	}
 
 	@Override
@@ -478,14 +478,14 @@ public class Ruso implements Idioma {
 				+ "' или выше, но найдена только версия '" + encontrado + "'.</b>";
 	}
 
-@Override
-public String advertenciaMalwareFalso() {
-    return "<b style='color:#" + config.obtenerColorError() + "'>"
-         + "ВНИМАНИЕ! Crash Assistant — это поддельный детектор вредоносного ПО. Он намеренно блокирует запуск игры, игнорируя вашу свободу продолжать играть с целевыми модификациями. "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>Посмотреть код MalwareMod.java</a>   "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>Посмотреть код JarInJarHelper.java</a>. "
-         + "На данный момент в их списке только этот мод, и они фактически нацелены только на сайт записи по умолчанию, который может быть изменён пользователем, и это происходит только если вы явно выбираете использовать встроенную функцию обмена логами. CrashAssistant НЕ проводит никаких проверок, чтобы определить, какой сайт записи используется, и не объясняет, как его изменить (есть выпадающее меню внизу диалогового окна обмена), и независимо от настроенного сайта, CrashAssistant заблокирует запуск игры. В их сообщении говорится, чтобы вы провели своё собственное исследование, СДЕЛАЙТЕ ЭТО, изучите код CrashDetector и Crash Assistant и поймите, что они делают, НЕ полагайтесь на обращение к авторитету.</b>";
-}
+	@Override
+	public String advertenciaMalwareFalso() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "ВНИМАНИЕ! Crash Assistant — это поддельный детектор вредоносного ПО. Он намеренно блокирует запуск игры, игнорируя вашу свободу продолжать играть с целевыми модификациями. "
+				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>Посмотреть код MalwareMod.java</a>   "
+				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>Посмотреть код JarInJarHelper.java</a>. "
+				+ "На данный момент в их списке только этот мод, и они фактически нацелены только на сайт записи по умолчанию, который может быть изменён пользователем, и это происходит только если вы явно выбираете использовать встроенную функцию обмена логами. CrashAssistant НЕ проводит никаких проверок, чтобы определить, какой сайт записи используется, и не объясняет, как его изменить (есть выпадающее меню внизу диалогового окна обмена), и независимо от настроенного сайта, CrashAssistant заблокирует запуск игры. В их сообщении говорится, чтобы вы провели своё собственное исследование, СДЕЛАЙТЕ ЭТО, изучите код CrashDetector и Crash Assistant и поймите, что они делают, НЕ полагайтесь на обращение к авторитету.</b>";
+	}
 
 	@Override
 	public String error_clase_no_encontrada_mcforge_mod_suspechoso(String idMod, String claseNoEncontrada) {
@@ -3192,7 +3192,7 @@ public String advertenciaMalwareFalso() {
 
 	@Override
 	public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves) {
-		StringBuilder sb = new StringBuilder("<b>Функции плотности отсутствуют в реестре.</b> ");
+		StringBuilder sb = new StringBuilder("<b>В реестре отсутствуют функции плотности.</b> ");
 		if (claves != null && !claves.isEmpty()) {
 			sb.append("Отсутствуют: ");
 			for (int i = 0; i < Math.min(4, claves.size()); i++) {
@@ -3205,7 +3205,7 @@ public String advertenciaMalwareFalso() {
 			sb.append(". ");
 		}
 		sb.append(
-				"<br/><b>Решение:</b> установите или включите мод/датапак, определяющий эти функции, и перезапустите.");
+				"<br/><b>Решение:</b> установите или активируйте мод/datapack, определяющий эти функции, и перезапустите. Другая распространённая причина этой проблемы — наличие необходимого мода, но с ошибкой или конфликтом с другим модом; например, Terralith часто вызывает множество проблем и может привести к этой ошибке и другим, включая ошибки JSON.");
 		return sb.toString();
 	}
 
@@ -3596,8 +3596,8 @@ public String advertenciaMalwareFalso() {
 
 	@Override
 	public String mensajeAyudar() {
-		String iconoCompartir = Statics.carpeta.resolve("imagenes").resolve("boton_compartir_icon.png")
-				.toAbsolutePath().toUri().toString();
+		String iconoCompartir = Statics.carpeta.resolve("imagenes").resolve("boton_compartir_icon.png").toAbsolutePath()
+				.toUri().toString();
 
 		String colorTexto = Config.obtenerInstancia().obtenerColorInfo();
 
@@ -3776,8 +3776,8 @@ public String advertenciaMalwareFalso() {
 
 	@Override
 	public String problema_con_openAL() {
-	    return "<span style='color:#" + config.obtenerColorError()
-	           + "'>У вас возникла проблема с OpenAL. Иногда её вызывают драйверы Nouveau, но иногда виной тому версия OpenAL, поставляемая с приложением, которая несовместима с версией в вашем дистрибутиве, и вам нужно использовать версию из вашего дистрибутива. Это особенно часто встречается в дистрибутивах на базе Red Hat и с модами на звук, такими как Sound Physics Remastered. См. это руководство для получения дополнительной помощи: <a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>Как исправить проблемы со звуком в Minecraft на Linux</a>.</span>";
+		return "<span style='color:#" + config.obtenerColorError()
+				+ "'>У вас возникла проблема с OpenAL. Иногда её вызывают драйверы Nouveau, но иногда виной тому версия OpenAL, поставляемая с приложением, которая несовместима с версией в вашем дистрибутиве, и вам нужно использовать версию из вашего дистрибутива. Это особенно часто встречается в дистрибутивах на базе Red Hat и с модами на звук, такими как Sound Physics Remastered. См. это руководство для получения дополнительной помощи: <a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>Как исправить проблемы со звуком в Minecraft на Linux</a>.</span>";
 	}
 
 	@Override
@@ -4109,264 +4109,391 @@ public String advertenciaMalwareFalso() {
 	public String buscador_canario_de_orden_titulo_proximamente() {
 		return "Скоро будет";
 	}
+
 	@Override
 	public String nombre_de_mods_incompatibles_crash_assistant() {
-	    return "Моды, несовместимые с Crash Assistant (Ложные)";
+		return "Моды, несовместимые с Crash Assistant (Ложные)";
 	}
 
 	@Override
 	public String nombre_de_modpack_incompatible_crash_assistant() {
-	    return "Мод несовместим с модпаком, использующим CrashAssistant";
+		return "Мод несовместим с модпаком, использующим CrashAssistant";
 	}
 
 	@Override
 	public String advertenciaCrashAssistantModpackIncompatibleFalso() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>Crash Assistant имеет список модов, которые он считает несовместимыми, но у нас нет доказательств этому, и ошибка отображается только на английском языке. Если вы хотите играть с этими модами, вы можете отредактировать файл <code>config/crash_assistant/config.toml</code> и изменить <code>enabled = true</code> в разделе [compatibility] на <code>enabled = false</code>.</b>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>Crash Assistant имеет список модов, которые он считает несовместимыми, но у нас нет доказательств этому, и ошибка отображается только на английском языке. Если вы хотите играть с этими модами, вы можете отредактировать файл <code>config/crash_assistant/config.toml</code> и изменить <code>enabled = true</code> в разделе [compatibility] на <code>enabled = false</code>.</b>";
 	}
 
 	@Override
 	public String advertenciaCrashAssistantModsIncompatibles() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>Crash Assistant может помечать моды как несовместимые, но иногда это неверно, и сообщение об ошибке доступно только на одном языке. Если вы хотите использовать эти моды, вы можете отредактировать файл <code>config/crash_assistant/problematic_mods_config.json</code> и изменить значение <code>should_crash_on_startup</code> с <code>true</code> на <code>false</code>.</b>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>Crash Assistant может помечать моды как несовместимые, но иногда это неверно, и сообщение об ошибке доступно только на одном языке. Если вы хотите использовать эти моды, вы можете отредактировать файл <code>config/crash_assistant/problematic_mods_config.json</code> и изменить значение <code>should_crash_on_startup</code> с <code>true</code> на <code>false</code>.</b>";
 	}
-	
+
 	@Override
 	public String errorDependenciaSimple(String modId, String dependencia, String actual) {
-	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
-	           "Ошибка: Мод '" + modId + "' требует мод '" + dependencia + "'. В настоящее время, " + actual + "." +
-	           "</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>" + "Ошибка: Мод '" + modId + "' требует мод '"
+				+ dependencia + "'. В настоящее время, " + actual + "." + "</span>";
 	}
 
 	@Override
 	public String errorDependenciaNoInstalada(String modId, String dependencia, String requerido) {
-	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
-	           "Ошибка: Моду '" + modId + "' требуется версия '" + requerido + "' или выше мода '" + dependencia + "', но этот мод не установлен." +
-	           "</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>" + "Ошибка: Моду '" + modId
+				+ "' требуется версия '" + requerido + "' или выше мода '" + dependencia
+				+ "', но этот мод не установлен." + "</span>";
 	}
-	
+
 	// В классе MonitorDePID.idioma (добавить этот метод)
 	public String errorSuperbWarfareIncompatible(String modId, String dependencia, String versionActual) {
-	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
-	           "Ошибка: Мод '" + modId + "' несовместим с текущей версией '" + dependencia + "'. " +
-	           "Вы должны удалить мод 'Iris/Oculus & GeckoLib Compat', так как он несовместим с Superb Warfare и не работает с последней версией GeckoLib. " +
-	           "Текущая версия: " + versionActual +
-	           "</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>" + "Ошибка: Мод '" + modId
+				+ "' несовместим с текущей версией '" + dependencia + "'. "
+				+ "Вы должны удалить мод 'Iris/Oculus & GeckoLib Compat', так как он несовместим с Superb Warfare и не работает с последней версией GeckoLib. "
+				+ "Текущая версия: " + versionActual + "</span>";
 	}
-	
-	
+
 	public String fallo_ejecucion_tarea_descripcion(String clase) {
-	    return "Ошибка: Не удалось выполнить задачу для класса '" + clase + "'. " +
-	           "Эта ошибка часто возникает с модами, которые несовместимы друг с другом или имеют конфликты с другими установленными модами.";
+		return "Ошибка: Не удалось выполнить задачу для класса '" + clase + "'. "
+				+ "Эта ошибка часто возникает с модами, которые несовместимы друг с другом или имеют конфликты с другими установленными модами.";
 	}
 
 	public String nombre_fallos_ejecucion_tareas() {
-	    return "Сбои при выполнении задач";
+		return "Сбои при выполнении задач";
 	}
 
 	public String recomendacion_fallos_ejecucion() {
-	    return "Такой тип ошибки обычно возникает из-за несовместимости между модами. " +
-	           "Особенно распространено с модами, которые неправильно работают с ConnectorMod.";
+		return "Такой тип ошибки обычно возникает из-за несовместимости между модами. "
+				+ "Особенно распространено с модами, которые неправильно работают с ConnectorMod.";
 	}
 
 	public String info_clase_problematica() {
-	    return "Проблемный класс:";
+		return "Проблемный класс:";
 	}
 
 	public String ver_en_log() {
-	    return "Просмотреть в логе";
+		return "Просмотреть в логе";
 	}
 
 	public String no_se_encontraron_clases_problema() {
-	    return "Не найдено конкретных классов с проблемами выполнения.";
+		return "Не найдено конкретных классов с проблемами выполнения.";
 	}
+
 	@Override
 	public String errorConflictoOptiFineEMF() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	           + "Обнаружен критический конфликт между OptiFine и Entity Model Features (EMF). "
-	           + "Эти моды несовместимы и вызывают сбой внедрения, который мешает запуску игры." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Обнаружен критический конфликт между OptiFine и Entity Model Features (EMF). "
+				+ "Эти моды несовместимы и вызывают сбой внедрения, который мешает запуску игры." + "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoOptiFineEMF() {
-	    return "Конфликт между OptiFine и Entity Model Features";
+		return "Конфликт между OptiFine и Entity Model Features";
 	}
 
 	@Override
 	public String pasoConflictoOptiFineEMF() {
-	    return "Удалите либо OptiFine, либо Entity Model Features, так как они несовместимы друг с другом.";
+		return "Удалите либо OptiFine, либо Entity Model Features, так как они несовместимы друг с другом.";
 	}
-	
+
 	@Override
 	public String errorConflictoOptiFineFusion() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	           + "Обнаружен критический конфликт между OptiFine и Fusion. "
-	           + "Эти моды несовместимы и вызывают сбой внедрения, который мешает запуску игры." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Обнаружен критический конфликт между OptiFine и Fusion. "
+				+ "Эти моды несовместимы и вызывают сбой внедрения, который мешает запуску игры." + "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoOptiFineFusion() {
-	    return "Конфликт между OptiFine и Fusion";
+		return "Конфликт между OptiFine и Fusion";
 	}
 
 	@Override
 	public String pasoConflictoOptiFineFusion() {
-	    return "Удалите либо OptiFine, либо Fusion, так как они несовместимы друг с другом.";
+		return "Удалите либо OptiFine, либо Fusion, так как они несовместимы друг с другом.";
 	}
-	
+
 	@Override
 	public String errorConflictoFlywheelSodium() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Flywheel (требуется для Create) нуждается в Sodium версии 0.6.0-beta.2 или выше. Rubidium — это 0.5.3. "
-	            + "Рассмотрите возможность использования <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a> в качестве альтернативы." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Flywheel (требуется для Create) нуждается в Sodium версии 0.6.0-beta.2 или выше. Rubidium — это 0.5.3. "
+				+ "Рассмотрите возможность использования <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a> в качестве альтернативы."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoFlywheelSodium() {
-	    return "Конфликт Flywheel и версии Sodium";
+		return "Конфликт Flywheel и версии Sodium";
 	}
 
 	@Override
 	public String pasoConflictoFlywheelSodium() {
-	    return "Обновите Sodium до версии 0.6.0-beta.2 или выше, либо установите <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a> в качестве совместимой альтернативы.";
+		return "Обновите Sodium до версии 0.6.0-beta.2 или выше, либо установите <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a> в качестве совместимой альтернативы.";
 	}
-	
+
 	@Override
 	public String errorConflictoOptiFineEpicFight() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Обнаружен критический конфликт между OptiFine и Epic Fight. "
-	            + "Эти моды несовместимы и вызывают сбой внедрения, который мешает запуску игры." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Обнаружен критический конфликт между OptiFine и Epic Fight. "
+				+ "Эти моды несовместимы и вызывают сбой внедрения, который мешает запуску игры." + "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoOptiFineEpicFight() {
-	    return "Конфликт между OptiFine и Epic Fight";
+		return "Конфликт между OptiFine и Epic Fight";
 	}
 
 	@Override
 	public String pasoConflictoOptiFineEpicFight() {
-	    return "Удалите либо OptiFine, либо Epic Fight, так как они несовместимы друг с другом.";
+		return "Удалите либо OptiFine, либо Epic Fight, так как они несовместимы друг с другом.";
 	}
-	
+
 	@Override
 	public String errorConflictoOptiFineRubidium() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Обнаружен критический конфликт между OptiFine и Rubidium. "
-	            + "Эти моды несовместимы и вызывают сбой внедрения, препятствующий запуску игры." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Обнаружен критический конфликт между OptiFine и Rubidium. "
+				+ "Эти моды несовместимы и вызывают сбой внедрения, препятствующий запуску игры." + "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoOptiFineRubidium() {
-	    return "Конфликт OptiFine и Rubidium";
+		return "Конфликт OptiFine и Rubidium";
 	}
 
 	@Override
 	public String pasoConflictoOptiFineRubidium() {
-	    return "Удалите OptiFine или Rubidium, так как они несовместимы друг с другом.";
+		return "Удалите OptiFine или Rubidium, так как они несовместимы друг с другом.";
 	}
-	
+
 	@Override
 	public String errorFreeCamServidor() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "FreeCam пытается загрузиться на выделенном сервере, но совместим только с клиентом. "
-	            + "Удалите FreeCam с сервера или убедитесь, что он установлен только на клиенте." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "FreeCam пытается загрузиться на выделенном сервере, но совместим только с клиентом. "
+				+ "Удалите FreeCam с сервера или убедитесь, что он установлен только на клиенте." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorFreeCamServidor() {
-	    return "FreeCam на выделенном сервере";
+		return "FreeCam на выделенном сервере";
 	}
 
 	@Override
 	public String pasoErrorFreeCamServidor() {
-	    return "Удалите FreeCam с выделенного сервера, так как он должен быть установлен только на клиенте.";
+		return "Удалите FreeCam с выделенного сервера, так как он должен быть установлен только на клиенте.";
 	}
-	
+
 	@Override
 	public String errorEntityTextureFeaturesServidor() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Entity Texture Features (ETF) пытается загрузиться на выделенном сервере, но совместим только с клиентом. "
-	            + "Удалите ETF с сервера или убедитесь, что он установлен только на клиенте." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Entity Texture Features (ETF) пытается загрузиться на выделенном сервере, но совместим только с клиентом. "
+				+ "Удалите ETF с сервера или убедитесь, что он установлен только на клиенте." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorEntityTextureFeaturesServidor() {
-	    return "Entity Texture Features на выделенном сервере";
+		return "Entity Texture Features на выделенном сервере";
 	}
 
 	@Override
 	public String pasoErrorEntityTextureFeaturesServidor() {
-	    return "Удалите Entity Texture Features с выделенного сервера, так как он должен быть установлен только на клиенте.";
+		return "Удалите Entity Texture Features с выделенного сервера, так как он должен быть установлен только на клиенте.";
 	}
-	
+
 	@Override
 	public String errorEULANoAceptado() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Вы должны принять EULA Minecraft, чтобы запустить сервер. "
-	            + "Отредактируйте файл eula.txt и измените 'eula=false' на 'eula=true'." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Вы должны принять EULA Minecraft, чтобы запустить сервер. "
+				+ "Отредактируйте файл eula.txt и измените 'eula=false' на 'eula=true'." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorEULANoAceptado() {
-	    return "EULA Minecraft не принята";
+		return "EULA Minecraft не принята";
 	}
 
 	@Override
 	public String pasoErrorEULANoAceptado() {
-	    return "Отредактируйте файл eula.txt в папке сервера и измените 'eula=false' на 'eula=true'.";
+		return "Отредактируйте файл eula.txt в папке сервера и измените 'eula=false' на 'eula=true'.";
 	}
-	
+
 	@Override
 	public String errorOptiFineServidor() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "OptiFine пытается загрузиться на выделенном сервере, но совместим только с клиентом. "
-	            + "Удалите OptiFine с сервера или убедитесь, что он установлен только на клиенте." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "OptiFine пытается загрузиться на выделенном сервере, но совместим только с клиентом. "
+				+ "Удалите OptiFine с сервера или убедитесь, что он установлен только на клиенте." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorOptiFineServidor() {
-	    return "OptiFine на выделенном сервере";
+		return "OptiFine на выделенном сервере";
 	}
 
 	@Override
 	public String pasoErrorOptiFineServidor() {
-		
-		
-	    return "Удалите OptiFine с выделенного сервера, так как он должен быть установлен только на клиенте.";
+
+		return "Удалите OptiFine с выделенного сервера, так как он должен быть установлен только на клиенте.";
 	}
-	
+
 	@Override
 	public String errorIronSpellbooksVersion() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Iron's Spellbooks неправильно помечен для 1.20.1, но использует методы из 1.21.1. "
-	            + "Мод пытается использовать ResourceLocation.fromNamespaceAndPath, которого не существует в 1.20.1." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Iron's Spellbooks неправильно помечен для 1.20.1, но использует методы из 1.21.1. "
+				+ "Мод пытается использовать ResourceLocation.fromNamespaceAndPath, которого не существует в 1.20.1."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorIronSpellbooksVersion() {
-	    return "Ошибка версии Iron's Spellbooks";
+		return "Ошибка версии Iron's Spellbooks";
 	}
 
 	@Override
 	public String pasoErrorIronSpellbooksVersion() {
-	    return "Убедитесь, что вы используете правильную версию Iron's Spellbooks, совместимую с вашей версией Minecraft.";
+		return "Убедитесь, что вы используете правильную версию Iron's Spellbooks, совместимую с вашей версией Minecraft.";
 	}
-	
-	
+
 	@Override
 	public String errorConflictoOptiFineEmbeddium() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Обнаружен критический конфликт между OptiFine и Embeddium. "
-	            + "Эти моды несовместимы и вызывают сбой внедрения, препятствующий запуску игры." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Обнаружен критический конфликт между OptiFine и Embeddium. "
+				+ "Эти моды несовместимы и вызывают сбой внедрения, препятствующий запуску игры." + "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoOptiFineEmbeddium() {
-	    return "Конфликт OptiFine и Embeddium";
+		return "Конфликт OptiFine и Embeddium";
 	}
 
 	@Override
 	public String pasoConflictoOptiFineEmbeddium() {
-	    return "Удалите OptiFine или Embeddium, так как они несовместимы друг с другом.";
+		return "Удалите OptiFine или Embeddium, так как они несовместимы друг с другом.";
 	}
+
+	@Override
+	public String noPuedeAnalizarJSON() {
+		return "<span style='color:#" + config.obtenerColorError()
+				+ "'>Это часто происходит из-за конфликтующих модов генерации мира, особенно Terralinth, AmplifiedNether, Nullscape и Incendium, а также других модов генерации мира. Возможно, вам также нужно установить отсутствующий мод.</span>";
+	}
+	@Override
+	public String errorControllableServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Controllable пытается загрузиться на выделенном сервере, но совместим только с клиентом. "
+	            + "Удалите Controllable с сервера или убедитесь, что он установлен только на клиенте." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorControllableServidor() {
+	    return "Controllable на выделенном сервере";
+	}
+
+	@Override
+	public String pasoErrorControllableServidor() {
+	    return "Удалите Controllable с выделенного сервера, так как он должен быть установлен только на клиенте.";
+	}
+	
+	@Override
+	public String errorSupplementariesCargaServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Supplementaries вызывает ошибку, которая мешает загрузке сервера. "
+	            + "Мод имеет проблемы с реестром поведения огня, что приводит к сбою во время загрузки datapack'ов." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorSupplementariesCargaServidor() {
+	    return "Supplementaries мешает загрузке сервера";
+	}
+
+	@Override
+	public String pasoErrorSupplementariesCargaServidor() {
+	    return "Попробуйте обновить Supplementaries до последней версии или временно отключите его, чтобы разрешить загрузку сервера.";
+	}
+	
+	@Override
+	public String errorGroovyModloaderModuloFaltante() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Groovy Modloader (GML) обнаружил проблему с отсутствующими модулями Jackson. "
+	            + "Некоторые моды, такие как Valkyrien Skies, могут вызывать эту ошибку, если не включают все необходимые зависимости." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorGroovyModloaderModuloFaltante() {
+	    return "Отсутствует модуль Jackson в Groovy Modloader";
+	}
+
+	@Override
+	public String pasoErrorGroovyModloaderModuloFaltante() {
+	    return "Удалите Groovy Modloader и связанные моды, такие как Valkyrien Skies, которые могут вызывать конфликты зависимостей.";
+	}
+	
+	@Override
+	public String errorEveryCompatNombreInvalido() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Every Compat обнаружил недопустимое имя деревянного блока. "
+	            + "Every Compat обычно вызывает множество проблем. Не используйте его!" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorEveryCompatNombreInvalido() {
+	    return "Недопустимое имя в Every Compat";
+	}
+
+	@Override
+	public String pasoErrorEveryCompatNombreInvalido() {
+	    return "Проверьте ресурспаки или моды, использующие Every Compat, так как они могут содержать недопустимые имена блоков.";
+	}
+
+
+	@Override
+	public String errorCodigo1073741819() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Обнаружен код ошибки (-1073741819), который может быть вызван оверлеями, такими как GameCaster от Razer, Discord, OBS Studio, или проблемами с драйверами NVIDIA." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorCodigo1073741819() {
+	    return "Код ошибки -1073741819";
+	}
+
+	@Override
+	public String pasoErrorCodigo1073741819() {
+	    return "Попробуйте отключить оверлеи, такие как GameCaster, Discord или OBS Studio, и убедитесь, что драйверы NVIDIA обновлены.";
+	}
+	
+	@Override
+	public String errorImmersiveTooltipsSinDependencia() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Immersive Tooltips требует Immersive Messages в качестве зависимости, но она не установлена. "
+	            + "Установите Immersive Messages, чтобы Immersive Tooltips работал корректно." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorImmersiveTooltipsSinDependencia() {
+	    return "Immersive Tooltips без зависимости";
+	}
+
+	@Override
+	public String pasoErrorImmersiveTooltipsSinDependencia() {
+	    return "Установите Immersive Messages, так как это необходимая зависимость для Immersive Tooltips.";
+	}
+	
+	@Override
+	public String errorMedievalOriginsCast() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Medieval Origins имеет проблему совместимости с Apoli Mod: ItemStack не может быть приведён (cast) к EntityLinkedItemStack. "
+	            + "Это часто встречается в версиях новее 6.6.0. Рассмотрите возможность использования более ранней версии или переключения между версиями для Fabric и Forge." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorMedievalOriginsCast() {
+	    return "Ошибка приведения типов (cast) в Medieval Origins";
+	}
+
+	@Override
+	public String pasoErrorMedievalOriginsCast() {
+	    return "Используйте Medieval Origins версии 6.6.0 или более раннюю, либо попробуйте переключиться между версиями мода для Fabric и Forge.";
+	}
+	
+	
 	
 	
 	

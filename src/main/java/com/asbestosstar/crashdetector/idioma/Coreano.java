@@ -3091,23 +3091,23 @@ public String advertenciaMalwareFalso() {
 		return "밀도 함수 미바인딩";
 	}
 
-	@Override
-	public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves) {
-		StringBuilder sb = new StringBuilder("<b>등록부에 밀도 함수가 누락되었습니다.</b> ");
-		if (claves != null && !claves.isEmpty()) {
-			sb.append("누락된 항목: ");
-			for (int i = 0; i < Math.min(4, claves.size()); i++) {
-				if (i > 0)
-					sb.append(", ");
-				sb.append("<code>").append(claves.get(i)).append("</code>");
-			}
-			if (claves.size() > 4)
-				sb.append(", …");
-			sb.append(". ");
-		}
-		sb.append("<br/><b>해결 방법:</b> 해당 함수를 정의하는 모드/데이터팩을 설치하거나 활성화하고 재시작하세요.");
-		return sb.toString();
-	}
+@Override
+public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves) {
+    StringBuilder sb = new StringBuilder("<b>레지스트리에 밀도 함수가 누락되었습니다.</b> ");
+    if (claves != null && !claves.isEmpty()) {
+        sb.append("누락됨: ");
+        for (int i = 0; i < Math.min(4, claves.size()); i++) {
+            if (i > 0)
+                sb.append(", ");
+            sb.append("<code>").append(claves.get(i)).append("</code>");
+        }
+        if (claves.size() > 4)
+            sb.append(", …");
+        sb.append(". ");
+    }
+    sb.append("<br/><b>해결 방법:</b> 해당 함수를 정의하는 mod/datapack을 설치하거나 활성화하고 재시작하세요. 이 문제의 또 다른 흔한 원인은 필요한 mod는 설치했지만, 그 mod에 문제가 있거나 다른 mod와 충돌하는 경우입니다. 예를 들어, Terralith는 많은 문제를 일으키며 이 오류와 JSON 오류를 포함한 다양한 문제를 유발할 수 있습니다.");
+    return sb.toString();
+}
 
 	@Override
 	public String pasoFuncionesDeDensidadNoVinculadas() {
@@ -4226,6 +4226,131 @@ public String advertenciaMalwareFalso() {
 	@Override
 	public String pasoConflictoOptiFineEmbeddium() {
 	    return "OptiFine 또는 Embeddium을 제거하세요. 이 둘은 서로 호환되지 않습니다.";
+	}
+	
+	@Override
+	public String noPuedeAnalizarJSON() {
+	    return "<span style='color:#" + config.obtenerColorError()
+	        + "'>이는 일반적으로 세계 생성 모드 간의 충돌로 인해 발생합니다. 특히 Terralinth, AmplifiedNether, Nullscape, Incendium 및 기타 세계 생성 모드에서 흔합니다. 누락된 모드를 설치해야 할 수도 있습니다.</span>";
+	}
+	@Override
+	public String errorControllableServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Controllable이 전용 서버에서 로드를 시도하고 있지만, 이는 클라이언트에서만 호환됩니다. "
+	            + "서버에서 Controllable을 제거하거나, 클라이언트에만 설치되어 있는지 확인하세요." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorControllableServidor() {
+	    return "전용 서버의 Controllable";
+	}
+
+	@Override
+	public String pasoErrorControllableServidor() {
+	    return "Controllable은 클라이언트에만 설치해야 하므로 전용 서버에서 제거하세요.";
+	}
+	
+	@Override
+	public String errorSupplementariesCargaServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Supplementaries가 서버 로드를 방해하는 오류를 일으키고 있습니다. "
+	            + "해당 모드는 화염 동작 등록 시 문제가 발생하여 datapack 로드 도중 실패합니다." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorSupplementariesCargaServidor() {
+	    return "Supplementaries가 서버 로드를 방해함";
+	}
+
+	@Override
+	public String pasoErrorSupplementariesCargaServidor() {
+	    return "Supplementaries를 최신 버전으로 업데이트하거나, 서버 로드를 허용하기 위해 임시로 비활성화해 보세요.";
+	}
+	
+	@Override
+	public String errorGroovyModloaderModuloFaltante() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Groovy Modloader(GML)가 누락된 Jackson 모듈로 인해 문제를 발견했습니다. "
+	            + "Valkyrien Skies와 같은 일부 모드는 필요한 모든 종속성을 포함하지 않아 이 오류를 일으킬 수 있습니다." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorGroovyModloaderModuloFaltante() {
+	    return "Groovy Modloader의 Jackson 모듈 누락";
+	}
+
+	@Override
+	public String pasoErrorGroovyModloaderModuloFaltante() {
+	    return "종속성 충돌을 유발할 수 있는 Groovy Modloader 및 Valkyrien Skies와 같은 관련 모드를 제거하세요.";
+	}
+	
+	@Override
+	public String errorEveryCompatNombreInvalido() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Every Compat가 잘못된 나무 블록 이름을 발견했습니다. "
+	            + "Every Compat는 일반적으로 많은 문제를 일으킵니다. 사용하지 마세요!" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorEveryCompatNombreInvalido() {
+	    return "Every Compat의 잘못된 이름";
+	}
+
+	@Override
+	public String pasoErrorEveryCompatNombreInvalido() {
+	    return "Every Compat를 사용하는 리소스 팩이나 모드를 확인하세요. 잘못된 블록 이름이 포함되어 있을 수 있습니다.";
+	}
+	
+
+
+	@Override
+	public String errorCodigo1073741819() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "오류 코드(-1073741819)가 감지되었습니다. 이는 Razer의 GameCaster, Discord, OBS Studio와 같은 오버레이 또는 NVIDIA 드라이버 문제로 인해 발생할 수 있습니다." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorCodigo1073741819() {
+	    return "오류 코드 -1073741819";
+	}
+
+	@Override
+	public String pasoErrorCodigo1073741819() {
+	    return "GameCaster, Discord, OBS Studio와 같은 오버레이를 비활성화하고, NVIDIA 드라이버가 최신 상태인지 확인하세요.";
+	}
+	
+	@Override
+	public String errorImmersiveTooltipsSinDependencia() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Immersive Tooltips는 dependencia인 Immersive Messages가 필요하지만 설치되어 있지 않습니다. "
+	            + "Immersive Tooltips가 제대로 작동하려면 Immersive Messages를 설치하세요." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorImmersiveTooltipsSinDependencia() {
+	    return "dependencia 없는 Immersive Tooltips";
+	}
+
+	@Override
+	public String pasoErrorImmersiveTooltipsSinDependencia() {
+	    return "Immersive Tooltips에 필요한 dependencia인 Immersive Messages를 설치하세요.";
+	}
+	
+	@Override
+	public String errorMedievalOriginsCast() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Medieval Origins가 Apoli Mod와 호환성 문제가 있으며, ItemStack을 EntityLinkedItemStack으로 캐스트할 수 없습니다. "
+	            + "이는 6.6.0보다 높은 버전에서 흔합니다. 이전 버전을 사용하거나 Fabric과 Forge 버전 간에 전환하는 것을 고려하세요." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorMedievalOriginsCast() {
+	    return "Medieval Origins 캐스트 오류";
+	}
+
+	@Override
+	public String pasoErrorMedievalOriginsCast() {
+	    return "Medieval Origins 6.6.0 이하 버전을 사용하거나, mod의 Fabric과 Forge 버전 간에 전환해 보세요.";
 	}
 	
 	

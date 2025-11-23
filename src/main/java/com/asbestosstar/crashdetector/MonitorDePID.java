@@ -306,6 +306,8 @@ public class MonitorDePID {
 					"-cp", cp, "com.asbestosstar.crashdetector.MonitorDePID", "--monitor", String.valueOf(pid))
 			// .inheritIO()
 			;
+			
+			//System.out.println("classpath"+cp);
 			// pb.redirectError(new File(CrashDetectorLogger.LOG_ERR_FILE_PATH));
 			// pb.redirectOutput(new File(CrashDetectorLogger.LOG_FILE_PATH));
 
@@ -348,7 +350,12 @@ public class MonitorDePID {
 		// List<Consola> consolas_sin_processando = Consola.obtenerConsolas();
 		ProxySysOutSysErrCDProceso.init();
 		MonitorDePID.pid = pid;
-		Transformaciones.init();
+		try {
+			Transformaciones.init();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if (ultimo_mods.toFile().exists()) {
 			CargadorExtensiones.cargarExtensionesProcesoMonitor(ultimo_mods.toFile());
 		}

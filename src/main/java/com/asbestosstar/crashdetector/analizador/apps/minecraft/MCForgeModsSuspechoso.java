@@ -29,6 +29,9 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 	private final Map<String, String> enlacesPorError = new HashMap<>();
 	private final Map<String, String> modidPorError = new HashMap<>();
 
+	// Patrón para saltar líneas de nivel DEBUG/TRACE
+	private final Pattern patronNivelLogParaSaltar = Pattern.compile("^\\[[^\\]]*/(DEBUG|TRACE)\\].*");
+
 	// Patrones para extraer mod IDs de las líneas de error
 	private final Pattern pModidEnLinea = Pattern.compile("(?i)for\\s+modid\\s+([a-z0-9_\\-.]+)");
 	private final Pattern pModIdDosPuntos = Pattern.compile("(?i)\\bMod\\s*ID\\s*:\\s*([a-z0-9_\\-.]+)");
@@ -41,6 +44,10 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 
 	// Patrón mejorado para detectar mod IDs en la sección "Suspected Mod"
 	private final Pattern patronSuspectedMod = Pattern.compile("(?i)\\b([a-z0-9_\\-.]+)\\s*\\(([a-z0-9_\\-.]+)\\)");
+
+	// Patrón para detectar líneas con indicadores de error
+	private final Pattern patronIndicadorError = Pattern.compile(
+			"(?i)(error|exception|fail|crash|problem|unable|cannot|didn't|couldn't|missing|corrupt|invalid|unsupported)");
 
 	// Función para extraer el mod ID de cada línea usando expresiones regulares
 	private String extraerModidDeLinea(String linea, boolean esSeccionSuspectedMod) {
@@ -91,6 +98,11 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 
 		for (int i = 0; i < lineas.length; i++) {
 			String linea = lineas[i].trim();
+
+			// Saltar líneas de nivel DEBUG/TRACE para evitar falsos positivos
+			if (patronNivelLogParaSaltar.matcher(linea).matches()) {
+				continue;
+			}
 
 			// 1) Detectar secciones de mods específicos (-- MOD modid --)
 			Matcher mModSection = patronModSection.matcher(linea);
@@ -211,17 +223,20 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 				activado = true;
 			}
 
-			// 9) Detectar mod ID en otras excepciones
+			// 9) Detectar mod ID en otras excepciones - SOLO si hay indicadores de error
 			if (!encontradoModSection) {
-				String modID = extraerModidDeLinea(linea, false);
-				if (modID != null && !modID.isEmpty()) {
-					String mensaje = MonitorDePID.idioma.mcforge_mod_sospechoso() + modID;
-					if (errores.add(mensaje)) {
-						String enlace = consola.agregarErrorALectador(i, this);
-						enlacesPorError.put(mensaje, enlace);
-						modidPorError.put(mensaje, modID);
+				// Verificar si la línea contiene indicadores de error antes de procesar
+				if (patronIndicadorError.matcher(linea).find()) {
+					String modID = extraerModidDeLinea(linea, false);
+					if (modID != null && !modID.isEmpty()) {
+						String mensaje = MonitorDePID.idioma.mcforge_mod_sospechoso() + modID;
+						if (errores.add(mensaje)) {
+							String enlace = consola.agregarErrorALectador(i, this);
+							enlacesPorError.put(mensaje, enlace);
+							modidPorError.put(mensaje, modID);
+						}
+						activado = true;
 					}
-					activado = true;
 				}
 			}
 		}

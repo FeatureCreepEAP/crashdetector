@@ -152,7 +152,7 @@ public class ErrorResolucionDeTextura implements Verificaciones {
 
 	@Override
 	public float prioridad() {
-		return 1000f; // Prioridad muy alta: problema crítico que impide el arranque
+		return 1400f; // Prioridad muy alta: problema crítico que impide el arranque
 	}
 
 	@Override

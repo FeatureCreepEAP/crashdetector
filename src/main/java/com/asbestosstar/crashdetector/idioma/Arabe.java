@@ -3158,20 +3158,20 @@ public String advertenciaMalwareFalso() {
 
 	@Override
 	public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves) {
-		StringBuilder sb = new StringBuilder("<b>مفقودة وظائف الكثافة من السجل.</b> ");
-		if (claves != null && !claves.isEmpty()) {
-			sb.append("المفقودة: ");
-			for (int i = 0; i < Math.min(4, claves.size()); i++) {
-				if (i > 0)
-					sb.append(", ");
-				sb.append("<code>").append(claves.get(i)).append("</code>");
-			}
-			if (claves.size() > 4)
-				sb.append(", …");
-			sb.append(". ");
-		}
-		sb.append("<br/><b>الحل:</b> قم بتثبيت أو تفعيل المود/حزمة البيانات التي تعرّف هذه الوظائف وأعد التشغيل.");
-		return sb.toString();
+	    StringBuilder sb = new StringBuilder("<b>تَنْصُر دوال الكثافة مفقودة في السجل.</b> ");
+	    if (claves != null && !claves.isEmpty()) {
+	        sb.append("المفقودة: ");
+	        for (int i = 0; i < Math.min(4, claves.size()); i++) {
+	            if (i > 0)
+	                sb.append(", ");
+	            sb.append("<code>").append(claves.get(i)).append("</code>");
+	        }
+	        if (claves.size() > 4)
+	            sb.append(", …");
+	        sb.append(". ");
+	    }
+	    sb.append("<br/><b>الحل:</b> قم بتثبيت أو تفعيل الـ mod/datapack الذي يُعرِّف تلك الدوال ثم أعد التشغيل. سبب آخر شائع لهذه المشكلة هو أنك تمتلك الـ mod المطلوب، لكنه يعاني من خلل أو تعارض مع mod آخر؛ على سبيل المثال، يعاني Terralith من مشاكل كثيرة ويمكن أن يسبب هذا الخطأ وغيره، بما في ذلك أخطاء JSON.");
+	    return sb.toString();
 	}
 
 	@Override
@@ -4317,8 +4317,131 @@ public String advertenciaMalwareFalso() {
 	    return "قم بإزالة OptiFine أو Embeddium، لأنهما غير متوافقين مع بعضهما.";
 	}
 	
+	@Override
+	public String noPuedeAnalizarJSON() {
+	    return "<span style='color:#" + config.obtenerColorError()
+	        + "'>هذا شائع مع وحدات تعديل توليد العالم المتعارضة، خاصةً Terralinth وAmplifiedNether وNullscape وIncendium وغيرها من وحدات تعديل توليد العالم. قد تحتاج أيضًا إلى تثبيت وحدة تعديل مفقودة.</span>";
+	}
 	
+	@Override
+	public String errorControllableServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Controllable يحاول التحميل على خادم مخصص، لكنه متوافق فقط مع العميل. "
+	            + "أزل Controllable من الخادم أو تأكد من أنه مثبت فقط على العميل." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorControllableServidor() {
+	    return "Controllable على خادم مخصص";
+	}
+
+	@Override
+	public String pasoErrorControllableServidor() {
+	    return "أزل Controllable من الخادم المخصص، لأنه يجب تثبيته فقط على العميل.";
+	}
 	
+	@Override
+	public String errorSupplementariesCargaServidor() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "ي causing Supplementaries خطأً يمنع تحميل الخادم. "
+	            + "يواجه المود مشاكل في تسجيل سلوكيات النار تؤدي إلى فشل أثناء تحميل حزم البيانات (datapacks)." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorSupplementariesCargaServidor() {
+	    return "Supplementaries يمنع تحميل الخادم";
+	}
+
+	@Override
+	public String pasoErrorSupplementariesCargaServidor() {
+	    return "حاول تحديث Supplementaries إلى أحدث إصدار أو قم بتعطيله مؤقتًا للسماح بتحميل الخادم.";
+	}
+	
+	@Override
+	public String errorGroovyModloaderModuloFaltante() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "واجه Groovy Modloader (GML) مشكلة بسبب وحدات Jackson المفقودة. "
+	            + "قد يسبب بعض الوحدات مثل Valkyrien Skies هذا الخطأ لعدم تضمين جميع التبعيات المطلوبة." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorGroovyModloaderModuloFaltante() {
+	    return "وحدة Jackson مفقودة في Groovy Modloader";
+	}
+
+	@Override
+	public String pasoErrorGroovyModloaderModuloFaltante() {
+	    return "قم بإزالة Groovy Modloader والوحدات المرتبطة مثل Valkyrien Skies التي قد تسبب تعارضات في التبعيات.";
+	}
+	
+	@Override
+	public String errorEveryCompatNombreInvalido() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Every Compat وجد اسم كتلة خشب غير صالح. "
+	            + "عادةً ما يعاني Every Compat من مشاكل كثيرة. لا تستخدمه!" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorEveryCompatNombreInvalido() {
+	    return "اسم غير صالح في Every Compat";
+	}
+
+	@Override
+	public String pasoErrorEveryCompatNombreInvalido() {
+	    return "تحقق من حزم الموارد أو الوحدات التي تستخدم Every Compat، فقد تحتوي على أسماء كتل غير صالحة.";
+	}
+	
+
+
+	@Override
+	public String errorCodigo1073741819() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "تم اكتشاف رمز خطأ (-1073741819) قد يكون ناتجًا عن طبقات العرض (overlays) مثل GameCaster من Razer أو Discord أو OBS Studio أو مشاكل في تعريفات NVIDIA." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorCodigo1073741819() {
+	    return "رمز الخطأ -1073741819";
+	}
+
+	@Override
+	public String pasoErrorCodigo1073741819() {
+	    return "حاول تعطيل طبقات العرض مثل GameCaster أو Discord أو OBS Studio، وتأكد من أن تعريفات NVIDIA الخاصة بك محدثة.";
+	}
+	
+	@Override
+	public String errorImmersiveTooltipsSinDependencia() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Immersive Tooltips يتطلب Immersive Messages ك(dependencia) لكنه غير مثبت. "
+	            + "قم بتثبيت Immersive Messages لكي يعمل Immersive Tooltips بشكل صحيح." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorImmersiveTooltipsSinDependencia() {
+	    return "Immersive Tooltips بدون dependencia";
+	}
+
+	@Override
+	public String pasoErrorImmersiveTooltipsSinDependencia() {
+	    return "قم بتثبيت Immersive Messages، لأنه dependencia ضرورية لـ Immersive Tooltips.";
+	}
+	
+	@Override
+	public String errorMedievalOriginsCast() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Medieval Origins tiene un problema de compatibilidad con Apoli Mod donde ItemStack no puede ser casteado a EntityLinkedItemStack. "
+	            + "Esto es común en versiones superiores a 6.6.0. Considera usar una versión anterior o cambiar entre versiones de Fabric y Forge." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorMedievalOriginsCast() {
+	    return "Error de casteo en Medieval Origins";
+	}
+
+	@Override
+	public String pasoErrorMedievalOriginsCast() {
+	    return "Usa una versión de Medieval Origins 6.6.0 o anterior, o intenta cambiar entre versiones de Fabric y Forge del mod.";
+	}
 	
 	
 	
