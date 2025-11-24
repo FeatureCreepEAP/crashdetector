@@ -40,6 +40,11 @@ public class FaltasClases implements Verificaciones {
 	private final Map<String, String> clases = new HashMap<>();
 
 	/**
+	 * Ignorar lineas o trazos con son Strings
+	 */
+	public static List<String> ignorar = new ArrayList<>();
+
+	/**
 	 * Conjunto auxiliar para evitar duplicados. Guardamos el nombre de la clase en
 	 * formato ruta (con "/").
 	 */
@@ -68,6 +73,10 @@ public class FaltasClases implements Verificaciones {
 	 */
 	private boolean postProcesado = false;
 
+	static {
+		ignorar.add("avaritia");// Positiva falsa comun con KubJS y avaritia TODO agregar a advertencia
+	}
+
 	@Override
 	public void verificar(Consola consola) {
 		this.vdst = consola.verificacion_de_stacktrace;
@@ -82,10 +91,12 @@ public class FaltasClases implements Verificaciones {
 					numero_linea_consola);
 
 			if (numero_linea_consola > 0) {
-				String linea_menos1 = consola.contenido_verificar.split(nl)[numero_linea_consola - 1];
-				//CrashDetectorLogger.log(linea_menos1+ " linea menos 1");
-				if (linea_menos1.toLowerCase().contains("catching")) {// A veces lineas tiene esta
-					continue;//TODO apender a Advertencia faltas clases
+				String linea_menos1 = cont.split(nl)[numero_linea_consola - 1];
+				// CrashDetectorLogger.log(linea_menos1+ " linea menos 1");
+				if (linea_menos1.toLowerCase().contains("catching")
+						
+						) {
+					continue;// TODO apender a Advertencia faltas clases
 				}
 			}
 
@@ -93,6 +104,11 @@ public class FaltasClases implements Verificaciones {
 			if (!esNombreClaseValido(claseFormateada)) {
 				continue;
 			}
+			
+			if (!ignorarClaseOLinea(claseFormateada)) {
+				continue;
+			}
+			
 			// Ignorar clases no relevantes (kotlin, gg/essential, etc.)
 			if (esClaseNoRelevante(claseFormateada)) {
 				continue;
@@ -117,18 +133,14 @@ public class FaltasClases implements Verificaciones {
 		if (linea == null) {
 			return;
 		}
-		
-		
-		
-		
 
 		// Saltar líneas con WARN (sin excepciones)
 		if (linea.contains("/WARN]") || linea.contains("Warn")
 				|| VerificacionDeStackTrace.esLineaDeAdvertenciaEstandar(linea)) {
 			return;
 		}
-		
-		if (linea.contains("avaritia")) {//Positiva falsa comun con KubJS y avaritia 
+
+		if (ignorarClaseOLinea(linea)) {
 			return;
 		}
 
@@ -170,15 +182,14 @@ public class FaltasClases implements Verificaciones {
 		if (claseCruda == null) {
 			return;
 		}
-		
+
 		if (numero_de_linea > 0) {
 			String linea_menos1 = consola.contenido_verificar.split(nl)[numero_de_linea - 1];
-			//CrashDetectorLogger.log(linea_menos1+ " linea menos 1");
+			// CrashDetectorLogger.log(linea_menos1+ " linea menos 1");
 			if (linea_menos1.toLowerCase().contains("catching")) {// A veces lineas tiene esta
-				return;//TODO apender a Advertencia faltas clases
+				return;// TODO apender a Advertencia faltas clases
 			}
 		}
-		
 
 		String claseFormateada = formatearClase(claseCruda);
 		if (!esNombreClaseValido(claseFormateada)) {
@@ -240,6 +251,20 @@ public class FaltasClases implements Verificaciones {
 			}
 			clasesFiltradas.put(clase, e.getValue());
 		}
+	}
+
+	/**
+	 * Si ignoremos un clase o linea
+	 * 
+	 * @return
+	 */
+	public static boolean ignorarClaseOLinea(String str) {
+		for (String ign : ignorar) {
+			if (str.contains(ign)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**

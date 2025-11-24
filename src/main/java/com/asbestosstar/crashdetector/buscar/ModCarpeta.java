@@ -272,10 +272,11 @@ public class ModCarpeta implements ArchivoDeMod {
 	public List<ArchivoDeMod> buscarModsCon(String termino) {
 		List<ArchivoDeMod> resultados = new ArrayList<>();
 
+
 		boolean tieneArchivo = archivos.contains(termino);
 		boolean tieneClase = clases.contains(termino);
 		String rutaPaquete = termino.replace('.', '/');
-		boolean tienePaquete = clases.stream().anyMatch(clase -> clase.startsWith(rutaPaquete));
+		boolean tienePaquete = clases.stream().anyMatch(clase -> clase.replace(".", "/").startsWith(rutaPaquete));
 
 		if (tieneArchivo || tieneClase || tienePaquete) {
 			resultados.add(this);

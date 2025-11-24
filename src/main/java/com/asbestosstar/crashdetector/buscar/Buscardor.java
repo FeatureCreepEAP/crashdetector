@@ -295,7 +295,7 @@ public class Buscardor {
 	 */
 	public static List<ArchivoDeMod> buscarModsConTermino(String termino) {
 		List<ArchivoDeMod> resultados = new ArrayList<>();
-		for (ArchivoDeMod mod : mods) {
+		for (ArchivoDeMod mod : mods) {			
 			resultados.addAll(mod.buscarModsCon(termino));
 		}
 		return resultados;

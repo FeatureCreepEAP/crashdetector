@@ -290,8 +290,8 @@ public class ModPKZip implements ArchivoDeMod {
 		boolean tieneArchivo = archivos.contains(termino);
 		boolean tieneClase = clases.contains(termino);
 		String rutaPaquete = termino.replace('.', '/');
-		boolean tienePaquete = clases.stream().anyMatch(clase -> clase.startsWith(rutaPaquete));
-
+		boolean tienePaquete = clases.stream().anyMatch(clase -> clase.replace(".", "/").startsWith(rutaPaquete));
+		
 		if (tieneArchivo || tieneClase || tienePaquete) {
 			resultados.add(this);
 		}

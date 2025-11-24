@@ -126,6 +126,7 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 
 			if (encontrado && !paquete.isEmpty()) {
 				paqueteProblematico = paquete;
+				CrashDetectorLogger.log("paqueteProblematico "+ paqueteProblematico);
 				Buscardor.cargar();
 				List<ArchivoDeMod> mods = Buscardor.buscarModsConTermino(paquete);
 
