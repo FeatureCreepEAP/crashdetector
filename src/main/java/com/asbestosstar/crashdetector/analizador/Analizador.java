@@ -55,6 +55,7 @@ import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorMetadataAni
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorMetadataModsTomlFaltante;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorOptiFineServidor;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorRegistroSuscriptoresAutomaticos;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorReignOfNetherMusicManager;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorResolucionDeTextura;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorRubidiumObsoletoConIris;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorRutaModLauncher;
@@ -63,6 +64,7 @@ import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorSistemaSoni
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorSupplementariesCargaServidor;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorUnionFileSystemCorrupto;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorVoiceChatPuertoOcupado;
+import com.asbestosstar.crashdetector.analizador.apps.minecraft.ErrorYesSteveModelLinux;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.FabricMCRuntimeErrorProvidedBy;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.FaltasDependenciasModLaunche;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.FuncionesDeDensidadNoVinculadas;
@@ -319,6 +321,8 @@ public class Analizador {
 		verificaciones.add(new ErrorCodigo1073741819());
 		verificaciones.add(new ErrorImmersiveTooltipsSinDependencia());
 		verificaciones.add(new ErrorMedievalOriginsCast());
+		verificaciones.add(new ErrorReignOfNetherMusicManager());
+		verificaciones.add(new ErrorYesSteveModelLinux());
 
 		
 		

@@ -4490,6 +4490,41 @@ public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves
 	    return "Use uma versão do Medieval Origins 6.6.0 ou anterior, ou tente alternar entre as versões Fabric e Forge do mod.";
 	}
 	
+	@Override
+	public String errorReignOfNetherMusicManager() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Reign of Nether está causando um erro com um Registry Object ausente no MusicManager. "
+	            + "Esse problema está relacionado ao mixin do MusicManager do Reign of Nether." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorReignOfNetherMusicManager() {
+	    return "Erro do MusicManager no Reign of Nether";
+	}
+
+	@Override
+	public String pasoErrorReignOfNetherMusicManager() {
+	    return "Tente atualizar o Reign of Nether ou removê-lo temporariamente para resolver o erro.";
+	}
+	@Override
+	public String errorYesSteveModelLinux() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "YesSteveModel suporta o servidor YSM apenas no Linux ou Android. "
+	            + "Esse problema foi corrigido em versões mais recentes a partir de 23 de novembro de 2025 no Modrinth." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorYesSteveModelLinux() {
+	    return "YesSteveModel incompatível com Linux";
+	}
+
+	@Override
+	public String pasoErrorYesSteveModelLinux() {
+	    return "Atualize o YesSteveModel para uma versão mais recente no Modrinth, pois o problema foi corrigido após 23 de novembro.";
+	}
+	
+	
+	
 	
 	
 	

@@ -92,11 +92,8 @@ public class FaltasClases implements Verificaciones {
 
 			if (numero_linea_consola > 0) {
 				String linea_menos1 = cont.split(nl)[numero_linea_consola - 1];
-				// CrashDetectorLogger.log(linea_menos1+ " linea menos 1");
-				if (linea_menos1.toLowerCase().contains("catching")
-
-				) {
-					continue;// TODO apender a Advertencia faltas clases
+				if (linea_menos1.toLowerCase().contains("catching")) {
+					continue; // Skip catching errors
 				}
 			}
 
@@ -130,8 +127,6 @@ public class FaltasClases implements Verificaciones {
 			String enlace = consola.agregarErrorALectador(numero_linea_consola, this);
 			enlacesPorClase.put(claseFormateada, enlace);
 		}
-
-		// El resto del trabajo (por línea) se hace en verificar(Consola, String, int)
 	}
 
 	@Override
@@ -206,8 +201,18 @@ public class FaltasClases implements Verificaciones {
 			return;
 		}
 		// Buscar el origen en la misma línea o líneas cercanas
+		// Buscar el origen en la misma línea o líneas cercanas
 		String origen = encontrarOrigenEnLinea(linea, numero_de_linea, consola);
 		String origenLimpio = limpiarOrigen(origen);
+
+		// Si no encontramos origen en el stacktrace cercano,
+		// intentamos usar la línea anterior tipo "Failed to create mod instance..."
+		if (origenLimpio == null || origenLimpio.isEmpty()) {
+			String origenPrevio = buscarOrigenEnLineaAnterior(numero_de_linea, consola);
+			if (origenPrevio != null && !origenPrevio.isEmpty()) {
+				origenLimpio = origenPrevio;
+			}
+		}
 
 		// Si ya existe la clase, solo rellenamos si le falta origen
 		if (!todos.add(claseFormateada)) {
@@ -234,6 +239,31 @@ public class FaltasClases implements Verificaciones {
 	private boolean esClaseNoRelevante(String claseFormateada) {
 		String c = claseFormateada.trim();
 		return c.startsWith("gg/essential/") || c.startsWith("kotlin/") || c.startsWith("kotlinx/");
+	}
+
+	// Detecta si una línea "parece" parte de un stacktrace.
+	// Esto evita que el escaneo se vaya a otras secciones del log (WARN/INFO
+	// sueltos).
+	private boolean esLineaStackish(String l) {
+		if (l == null)
+			return false;
+		String t = l.trim();
+
+		// Permitir líneas comentadas tipo "// at ..."
+		if (t.startsWith("//"))
+			t = t.substring(2).trim();
+
+		return t.startsWith("at ") || t.startsWith("Caused by:") || t.startsWith("Suppressed:") || t.startsWith("...")
+				|| t.startsWith("SECURE-BOOTSTRAP");
+	}
+
+	// Heurística para rechazar modids sospechosos típicos de handlers/mixins.
+	// Ejemplo real: "hld000" no es un mod, es un shard interno.
+	private boolean esModidSospechoso(String modid) {
+		if (modid == null)
+			return true;
+		// Token corto que termina en 3+ dígitos -> casi siempre falso positivo.
+		return modid.length() <= 6 && modid.matches(".*\\d{3,}$");
 	}
 
 	/**
@@ -350,19 +380,25 @@ public class FaltasClases implements Verificaciones {
 
 		String[] lineas = consola.contenido_verificar.split(Verificaciones.nl);
 
-		// Buscar hacia abajo (líneas siguientes)
-		for (int i = numeroLinea + 1; i < Math.min(numeroLinea + 20, lineas.length); i++) {
-			String siguienteLinea = lineas[i].trim();
-			resultado = buscarOrigenEnLinea(siguienteLinea);
+		// Buscar hacia abajo SOLO dentro del mismo bloque de stacktrace
+		for (int i = numeroLinea + 1; i < lineas.length && i <= numeroLinea + 50; i++) {
+			String siguiente = lineas[i];
+			if (!esLineaStackish(siguiente)) {
+				break; // Ya salimos del stacktrace, no seguir buscando
+			}
+			resultado = buscarOrigenEnLinea(siguiente.trim());
 			if (!resultado.isEmpty()) {
 				return resultado;
 			}
 		}
 
-		// Buscar en las líneas anteriores
-		for (int i = numeroLinea - 1; i >= Math.max(0, numeroLinea - 5); i--) {
-			String lineaAnterior = lineas[i].trim();
-			resultado = buscarOrigenEnLinea(lineaAnterior);
+		// Buscar hacia arriba SOLO dentro del mismo bloque de stacktrace
+		for (int i = numeroLinea - 1; i >= 0 && i >= numeroLinea - 20; i--) {
+			String anterior = lineas[i];
+			if (!esLineaStackish(anterior)) {
+				break; // Ya salimos del stacktrace, no seguir buscando
+			}
+			resultado = buscarOrigenEnLinea(anterior.trim());
 			if (!resultado.isEmpty()) {
 				return resultado;
 			}
@@ -375,7 +411,7 @@ public class FaltasClases implements Verificaciones {
 	 * Busca origen en una línea específica utilizando los métodos existentes.
 	 */
 	private String buscarOrigenEnLinea(String linea) {
-		// 1. Buscar JARs
+		// 1) Buscar JARs (prioridad más alta)
 		List<String> jarsEncontrados = VerificacionDeStackTrace.extraerJarsDeLinea(linea);
 		for (String jar : jarsEncontrados) {
 			if (jar.contains(".jar") && !VerificacionDeStackTrace.isJarNoPermite(jar)) {
@@ -383,13 +419,17 @@ public class FaltasClases implements Verificaciones {
 			}
 		}
 
-		// 2. Buscar modid
-		String modid = VerificacionDeStackTrace.extraerModidDeLinea(linea);
-		if (modid != null && !VerificacionDeStackTrace.esModNoPermite(modid)) {
-			return modid;
+		// 2) Buscar modid:
+		// IMPORTANTE: ignorar modids detectados desde líneas "handler$"
+		// porque suelen ser artefactos de mixins y generan falsos positivos.
+		if (!linea.contains("handler$")) {// TODO filtrar hablerers importantes, pero no hld000 o cdk000
+			String modid = VerificacionDeStackTrace.extraerModidDeLinea(linea);
+			if (modid != null && !VerificacionDeStackTrace.esModNoPermite(modid) && !esModidSospechoso(modid)) {
+				return modid;
+			}
 		}
 
-		// 3. Buscar paquete
+		// 3) Buscar paquete
 		String pack = VerificacionDeStackTrace.extraerPaqueteDeLinea(linea);
 		if (pack != null && !esPaqueteNoPermitido(pack)) {
 			return pack;
@@ -420,15 +460,19 @@ public class FaltasClases implements Verificaciones {
 		return clase.replace(".", "/");
 	}
 
-	// Validar que el nombre siga el patrón de una clase Java (en formato con puntos
-	// o barras)
+	// Validar que el nombre siga el patrón de una clase Java.
+	// Ahora permite '$' para clases internas (inner classes).
 	private boolean esNombreClaseValido(String clase) {
 		if (clase == null || clase.isEmpty()) {
 			return false;
 		}
 		// Convertir a formato punto para validación
 		String dotForm = clase.replace('/', '.');
-		return dotForm.matches("[a-zA-Z_][a-zA-Z0-9_]*(\\.[a-zA-Z_][a-zA-Z0-9_]*)+");
+
+		// Segmentos tipo paquete/clase:
+		// - empiezan por letra o '_'
+		// - luego letras, dígitos, '_' o '$' (para inner classes)
+		return dotForm.matches("[a-zA-Z_][a-zA-Z0-9_\\$]*(\\.[a-zA-Z_][a-zA-Z0-9_\\$]*)+");
 	}
 
 	@Override
@@ -563,12 +607,15 @@ public class FaltasClases implements Verificaciones {
 			return mejorPack;
 
 		// 2) Modids: solo permitidos
+		// 2) Modids: solo permitidos y no sospechosos
 		for (TriMap.TripleKey<String, Integer, Integer> k : vdst.modids.keySet()) {
 			String modid = k.key1;
 			if (modid == null || modid.isEmpty())
 				continue;
 			if (VerificacionDeStackTrace.esModNoPermite(modid))
 				continue;
+			if (esModidSospechoso(modid))
+				continue; // <-- NUEVO filtro anti "hld000"
 
 			if (claseSlash.contains(modid) || pref1.equals(modid) || pref2.contains(modid)) {
 				return modid;
@@ -607,6 +654,47 @@ public class FaltasClases implements Verificaciones {
 		if (p >= 0)
 			return clave.substring(0, p + 4);
 		return null;
+	}
+
+	// Extrae un origen desde una línea tipo:
+	// "Failed to create mod instance. ModID: steampowered, class ..."
+	// Devuelve el modid si es plausible y no está en la lista no permitida.
+	private String extraerOrigenDeLineaModInstance(String linea) {
+		if (linea == null)
+			return "";
+
+		String t = linea.trim();
+		int idx = t.indexOf("ModID:");
+		if (idx == -1)
+			return "";
+
+		// Cortar desde "ModID:" hacia adelante
+		String tail = t.substring(idx + "ModID:".length()).trim();
+
+		// El modid suele terminar en coma o espacio
+		String modid = tail.split("[,\\s]")[0].trim();
+
+		if (modid.isEmpty())
+			return "";
+		if (VerificacionDeStackTrace.esModNoPermite(modid))
+			return "";
+		if (esModidSospechoso(modid))
+			return "";
+
+		return modid;
+	}
+
+	// Busca origen en la línea anterior del log.
+	// Solo se usa si NO encontramos origen en el stacktrace cercano.
+	private String buscarOrigenEnLineaAnterior(int numeroLinea, Consola consola) {
+		if (consola == null)
+			return "";
+		String[] lineas = consola.contenido_verificar.split(Verificaciones.nl);
+		if (numeroLinea <= 0 || numeroLinea >= lineas.length)
+			return "";
+
+		String anterior = lineas[numeroLinea - 1];
+		return extraerOrigenDeLineaModInstance(anterior);
 	}
 
 	@Override

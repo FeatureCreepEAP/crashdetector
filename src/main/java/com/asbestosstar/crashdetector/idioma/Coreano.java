@@ -4353,6 +4353,40 @@ public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves
 	    return "Medieval Origins 6.6.0 이하 버전을 사용하거나, mod의 Fabric과 Forge 버전 간에 전환해 보세요.";
 	}
 	
+	@Override
+	public String errorReignOfNetherMusicManager() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Reign of Nether가 MusicManager에 존재하지 않는 Registry Object로 인해 오류를 일으키고 있습니다. "
+	            + "이 문제는 Reign of Nether의 MusicManager mixin과 관련이 있습니다." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorReignOfNetherMusicManager() {
+	    return "Reign of Nether의 MusicManager 오류";
+	}
+
+	@Override
+	public String pasoErrorReignOfNetherMusicManager() {
+	    return "이 오류를 해결하려면 Reign of Nether를 업데이트하거나 임시로 제거해 보세요.";
+	}
+	
+	@Override
+	public String errorYesSteveModelLinux() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "YesSteveModel은 Linux 또는 Android에서만 YSM 서버를 지원합니다. "
+	            + "이 문제는 2025년 11월 23일 이후 Modrinth의 최신 버전에서 수정되었습니다." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorYesSteveModelLinux() {
+	    return "YesSteveModel이 Linux와 호환되지 않음";
+	}
+
+	@Override
+	public String pasoErrorYesSteveModelLinux() {
+	    return "Modrinth에서 YesSteveModel을 최신 버전으로 업데이트하세요. 이 문제는 11월 23일 이후 수정되었습니다.";
+	}
+	
 	
 	
 	

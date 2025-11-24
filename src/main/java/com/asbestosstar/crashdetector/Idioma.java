@@ -1768,4 +1768,16 @@ public interface Idioma {
 
 	public String pasoErrorMedievalOriginsCast();
 
+	public String errorReignOfNetherMusicManager();
+
+	public String nombreDeErrorReignOfNetherMusicManager();
+
+	public String pasoErrorReignOfNetherMusicManager();
+
+	public String errorYesSteveModelLinux();
+
+	public String nombreDeErrorYesSteveModelLinux();
+
+	public String pasoErrorYesSteveModelLinux();
+
 }

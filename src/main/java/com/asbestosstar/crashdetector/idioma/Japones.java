@@ -4358,6 +4358,43 @@ public String advertenciaMalwareFalso() {
 	    return "Medieval Origins の 6.6.0 以前のバージョンを使用するか、mod の Fabric と Forge バージョンを切り替えてみてください。";
 	}
 	
+	@Override
+	public String errorReignOfNetherMusicManager() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Reign of Nether が、MusicManager に存在しない Registry Object に関連するエラーを引き起こしています。 "
+	            + "この問題は Reign of Nether の MusicManager mixin に関連しています。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorReignOfNetherMusicManager() {
+	    return "Reign of Nether の MusicManager エラー";
+	}
+
+	@Override
+	public String pasoErrorReignOfNetherMusicManager() {
+	    return "このエラーを解決するには、Reign of Nether を更新するか、一時的に削除してみてください。";
+	}
+	@Override
+	public String errorYesSteveModelLinux() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "YesSteveModel は Linux または Android 上の YSM サーバーのみをサポートしています。 "
+	            + "この問題は、2025年11月23日以降に Modrinth で公開された新しいバージョンで修正されています。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorYesSteveModelLinux() {
+	    return "YesSteveModel が Linux と非互換";
+	}
+
+	@Override
+	public String pasoErrorYesSteveModelLinux() {
+	    return "この問題は 11月23日以降に修正されているため、Modrinth から YesSteveModel を最新版に更新してください。";
+	}
+	
+	
+	
+	
+	
 	
 	
 	

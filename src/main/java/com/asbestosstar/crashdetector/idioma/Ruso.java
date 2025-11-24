@@ -4493,6 +4493,42 @@ public class Ruso implements Idioma {
 	    return "Используйте Medieval Origins версии 6.6.0 или более раннюю, либо попробуйте переключиться между версиями мода для Fabric и Forge.";
 	}
 	
+	@Override
+	public String errorReignOfNetherMusicManager() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Reign of Nether вызывает ошибку из-за отсутствующего Registry Object в MusicManager. "
+	            + "Эта проблема связана с mixin MusicManager из Reign of Nether." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorReignOfNetherMusicManager() {
+	    return "Ошибка MusicManager в Reign of Nether";
+	}
+
+	@Override
+	public String pasoErrorReignOfNetherMusicManager() {
+	    return "Попробуйте обновить Reign of Nether или временно удалить его, чтобы устранить ошибку.";
+	}
+	@Override
+	public String errorYesSteveModelLinux() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "YesSteveModel поддерживает сервер YSM только на Linux или Android. "
+	            + "Эта проблема была исправлена в более новых версиях начиная с 23 ноября 2025 года на Modrinth." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorYesSteveModelLinux() {
+	    return "YesSteveModel несовместим с Linux";
+	}
+
+	@Override
+	public String pasoErrorYesSteveModelLinux() {
+	    return "Обновите YesSteveModel до более новой версии с Modrinth, так как проблема была исправлена после 23 ноября.";
+	}
+	
+	
+	
+	
 	
 	
 	
