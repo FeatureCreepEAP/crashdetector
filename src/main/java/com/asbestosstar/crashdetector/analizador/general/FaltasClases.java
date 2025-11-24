@@ -94,8 +94,8 @@ public class FaltasClases implements Verificaciones {
 				String linea_menos1 = cont.split(nl)[numero_linea_consola - 1];
 				// CrashDetectorLogger.log(linea_menos1+ " linea menos 1");
 				if (linea_menos1.toLowerCase().contains("catching")
-						
-						) {
+
+				) {
 					continue;// TODO apender a Advertencia faltas clases
 				}
 			}
@@ -104,21 +104,27 @@ public class FaltasClases implements Verificaciones {
 			if (!esNombreClaseValido(claseFormateada)) {
 				continue;
 			}
-			
-			if (!ignorarClaseOLinea(claseFormateada)) {
+
+			if (ignorarClaseOLinea(claseFormateada)) {
 				continue;
 			}
-			
+
 			// Ignorar clases no relevantes (kotlin, gg/essential, etc.)
 			if (esClaseNoRelevante(claseFormateada)) {
 				continue;
 			}
-			// Si ya tenemos esta clase, no recalculamos origen ni enlace
+			String origenLimpio = limpiarOrigen(sospechoso);
+
+			// Si ya vimos esta clase antes, SOLO actualizamos si falta origen
 			if (!todos.add(claseFormateada)) {
+				String actual = clases.getOrDefault(claseFormateada, "");
+				if ((actual == null || actual.isEmpty()) && origenLimpio != null && !origenLimpio.isEmpty()) {
+					clases.put(claseFormateada, origenLimpio);
+				}
 				continue;
 			}
 
-			String origenLimpio = limpiarOrigen(sospechoso);
+			// Primera vez que aparece
 			clases.put(claseFormateada, origenLimpio);
 
 			String enlace = consola.agregarErrorALectador(numero_linea_consola, this);
@@ -199,16 +205,21 @@ public class FaltasClases implements Verificaciones {
 		if (esClaseNoRelevante(claseFormateada)) {
 			return;
 		}
-		// Si ya vimos esta clase (en fatales o en otra línea), no volvemos a buscar
-		// origen
-		if (!todos.add(claseFormateada)) {
-			return;
-		}
-
 		// Buscar el origen en la misma línea o líneas cercanas
 		String origen = encontrarOrigenEnLinea(linea, numero_de_linea, consola);
 		String origenLimpio = limpiarOrigen(origen);
-		clases.putIfAbsent(claseFormateada, origenLimpio);
+
+		// Si ya existe la clase, solo rellenamos si le falta origen
+		if (!todos.add(claseFormateada)) {
+			String actual = clases.getOrDefault(claseFormateada, "");
+			if ((actual == null || actual.isEmpty()) && origenLimpio != null && !origenLimpio.isEmpty()) {
+				clases.put(claseFormateada, origenLimpio);
+			}
+			return;
+		}
+
+		// Primera vez que aparece
+		clases.put(claseFormateada, origenLimpio);
 
 		CrashDetectorLogger.log("Fatals clases clase no advertencia " + claseFormateada);
 
@@ -269,36 +280,44 @@ public class FaltasClases implements Verificaciones {
 
 	/**
 	 * Limpia el origen para que solo contenga información relevante (JAR, modid o
-	 * paquete) utilizando los métodos de VerificacionDeStackTrace en lugar de regex
+	 * paquete). Ahora también acepta nombres de jar "crudos" sin corchetes.
 	 */
 	private String limpiarOrigen(String origen) {
 		if (origen == null || origen.isEmpty()) {
 			return "";
 		}
 
+		String o = origen.trim();
+
+		// 0) Si ya es un jar "crudo" (sin corchetes), aceptarlo directo
+		// Ej: "Create-DnDesire-1.20.1-0.1b.Release-Early-Dev.jar"
+		if (o.endsWith(".jar") && !VerificacionDeStackTrace.isJarNoPermite(o)) {
+			return o;
+		}
+
 		// 1. Si parece un modid directo (sin slash, sin punto, y no termina en .jar)
-		if (!origen.contains("/") && !origen.contains(".") && !origen.endsWith(".jar")) {
-			if (!VerificacionDeStackTrace.esModNoPermite(origen)) {
-				return origen; // ej: "railways"
+		if (!o.contains("/") && !o.contains(".") && !o.endsWith(".jar")) {
+			if (!VerificacionDeStackTrace.esModNoPermite(o)) {
+				return o; // ej: "railways"
 			}
 		}
 
-		// 2. Intentar extraer un JAR usando VerificacionDeStackTrace
-		List<String> jars_encontrados = VerificacionDeStackTrace.extraerJarsDeLinea(origen);
+		// 2. Intentar extraer un JAR desde línea con corchetes
+		List<String> jars_encontrados = VerificacionDeStackTrace.extraerJarsDeLinea(o);
 		for (String jar : jars_encontrados) {
 			if (jar.contains(".jar") && !VerificacionDeStackTrace.isJarNoPermite(jar)) {
 				return jar;
 			}
 		}
 
-		// 3. Intentar extraer modid usando VerificacionDeStackTrace
-		String modid = VerificacionDeStackTrace.extraerModidDeLinea(origen);
+		// 3. Intentar extraer modid
+		String modid = VerificacionDeStackTrace.extraerModidDeLinea(o);
 		if (modid != null && !VerificacionDeStackTrace.esModNoPermite(modid)) {
 			return modid;
 		}
 
-		// 4. Intentar extraer paquete usando VerificacionDeStackTrace
-		String paquete = VerificacionDeStackTrace.extraerPaqueteDeLinea(origen);
+		// 4. Intentar extraer paquete
+		String paquete = VerificacionDeStackTrace.extraerPaqueteDeLinea(o);
 		if (paquete != null && !esPaqueteNoPermitido(paquete)) {
 			return paquete;
 		}
@@ -372,7 +391,7 @@ public class FaltasClases implements Verificaciones {
 
 		// 3. Buscar paquete
 		String pack = VerificacionDeStackTrace.extraerPaqueteDeLinea(linea);
-		if (pack != null) {
+		if (pack != null && !esPaqueteNoPermitido(pack)) {
 			return pack;
 		}
 
@@ -506,45 +525,66 @@ public class FaltasClases implements Verificaciones {
 
 	/**
 	 * Intenta inferir un origen plausible a partir de packs, modids y jars
-	 * detectados en otros stacktraces. Prefiere: 1) pack que sea prefijo del
-	 * paquete de la clase, 2) modid presente en la ruta, 3) jar cuyo nombre
-	 * contenga el prefijo del paquete.
+	 * detectados en otros stacktraces.
+	 *
+	 * Reglas: 1) Elegir el pack PERMITIDO más largo que sea prefijo del paquete de
+	 * la clase. 2) Si no, elegir un modid permitido que aparezca en la ruta o
+	 * prefijos. 3) Si no, elegir un jar permitido cuyo nombre contenga el prefijo
+	 * del paquete.
 	 */
 	private String inferirOrigenParaClase(String claseSlash, VerificacionDeStackTrace vdst) {
 		if (claseSlash == null || claseSlash.isEmpty())
 			return "";
 
 		String pkgSlash = claseSlash.contains("/") ? claseSlash.substring(0, claseSlash.lastIndexOf('/')) : claseSlash;
+
 		String[] seg = pkgSlash.split("/");
 		String pref1 = seg.length >= 1 ? seg[0] : "";
 		String pref2 = seg.length >= 2 ? (seg[0] + "/" + seg[1]) : pref1;
 
-		// 1) packs: buscar pack que sea prefijo del paquete de la clase
+		// 1) Packs: escoger el más específico permitido
+		String mejorPack = "";
 		for (TriMap.TripleKey<String, Integer, Integer> k : vdst.packs.keySet()) {
 			String packDot = k.key1; // "com.ejemplo"
+			if (packDot == null || packDot.isEmpty())
+				continue;
+			if (esPaqueteNoPermitido(packDot))
+				continue;
+
 			String packSlash = packDot.replace('.', '/');
-			if (!packSlash.isEmpty() && (pkgSlash.startsWith(packSlash) || packSlash.startsWith(pref2))) {
-				return packDot;
+			if (pkgSlash.startsWith(packSlash)) {
+				// Nos quedamos con el pack más largo (más específico)
+				if (packSlash.length() > mejorPack.length()) {
+					mejorPack = packDot;
+				}
 			}
 		}
+		if (!mejorPack.isEmpty())
+			return mejorPack;
 
-		// 2) modids: si el modid aparece dentro del path de la clase o prefijos
+		// 2) Modids: solo permitidos
 		for (TriMap.TripleKey<String, Integer, Integer> k : vdst.modids.keySet()) {
 			String modid = k.key1;
 			if (modid == null || modid.isEmpty())
 				continue;
+			if (VerificacionDeStackTrace.esModNoPermite(modid))
+				continue;
+
 			if (claseSlash.contains(modid) || pref1.equals(modid) || pref2.contains(modid)) {
 				return modid;
 			}
 		}
 
-		// 3) jars: elegir jar cuyo nombre contenga el prefijo del paquete
+		// 3) Jars: solo permitidos
 		String[] candidatos = { pref1, seg.length >= 2 ? seg[1] : "" };
 		for (Map.Entry<String, Boolean> ent : vdst.jars.entrySet()) {
-			String clave = ent.getKey(); // "jarName.jar" + nivel + "x,y"
+			String clave = ent.getKey();
 			String jar = extraerJarDesdeClaveJars(clave);
 			if (jar == null || jar.isEmpty())
 				continue;
+			if (VerificacionDeStackTrace.isJarNoPermite(jar))
+				continue;
+
 			String low = jar.toLowerCase();
 			for (String c : candidatos) {
 				if (c != null && !c.isEmpty() && low.contains(c.toLowerCase())) {
