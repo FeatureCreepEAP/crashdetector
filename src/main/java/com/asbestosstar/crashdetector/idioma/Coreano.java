@@ -4387,6 +4387,40 @@ public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves
 	    return "Modrinth에서 YesSteveModel을 최신 버전으로 업데이트하세요. 이 문제는 11월 23일 이후 수정되었습니다.";
 	}
 	
+	@Override
+	public String errorConflictoMovingElevatorsOptiFine() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Moving Elevators와 OptiFine 간에 심각한 충돌이 감지되었습니다. "
+	            + "이 모드들은 호환되지 않으며, 주입 실패로 인해 게임 시작을 방해합니다." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoMovingElevatorsOptiFine() {
+	    return "Moving Elevators와 OptiFine 충돌";
+	}
+
+	@Override
+	public String pasoConflictoMovingElevatorsOptiFine() {
+	    return "Moving Elevators 또는 OptiFine을 제거하세요. 이 둘은 서로 호환되지 않습니다.";
+	}
+	
+	@Override
+	public String errorConflictoFabricAPIOptiFine() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Fabric API(fabric-resource-loader-v0)와 OptiFine 간에 심각한 충돌이 감지되었습니다. "
+	            + "이 모드들은 호환되지 않으며, 주입 실패로 인해 게임 시작을 방해합니다." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoFabricAPIOptiFine() {
+	    return "Fabric API와 OptiFine 충돌";
+	}
+
+	@Override
+	public String pasoConflictoFabricAPIOptiFine() {
+	    return "OptiFine을 제거하거나 Fabric API를 호환되는 버전으로 업데이트하세요.";
+	}
+	
 	
 	
 	

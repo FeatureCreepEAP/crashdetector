@@ -5203,6 +5203,40 @@ public String advertenciaMalwareFalso() {
 	    return "Actualiza YesSteveModel a una versión más reciente desde Modrinth, ya que el problema ha sido corregido después del 23 de noviembre.";
 	}
 	
+	@Override
+	public String errorConflictoMovingElevatorsOptiFine() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Se detectó un conflicto crítico entre Moving Elevators y OptiFine. "
+	            + "Estos mods no son compatibles y provocan un fallo de inyección que impide el inicio del juego." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoMovingElevatorsOptiFine() {
+	    return "Conflicto Moving Elevators y OptiFine";
+	}
+
+	@Override
+	public String pasoConflictoMovingElevatorsOptiFine() {
+	    return "Desinstala OptiFine o Moving Elevators, ya que no son compatibles entre sí.";
+	}
+	
+	@Override
+	public String errorConflictoFabricAPIOptiFine() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Se detectó un conflicto crítico entre Fabric API (fabric-resource-loader-v0) y OptiFine. "
+	            + "Estos mods no son compatibles y provocan un fallo de inyección que impide el inicio del juego." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoFabricAPIOptiFine() {
+	    return "Conflicto Fabric API y OptiFine";
+	}
+
+	@Override
+	public String pasoConflictoFabricAPIOptiFine() {
+	    return "Desinstala OptiFine o actualiza Fabric API a una versión compatible.";
+	}
+	
 	
 	
 	

@@ -4510,6 +4510,40 @@ public String advertenciaMalwareFalso() {
 	    return "Ĝisdatigu YesSteveModel al pli nova versio el Modrinth, ĉar la problemo estis riparita post la 23-a de novembro.";
 	}
 	
+	@Override
+	public String errorConflictoMovingElevatorsOptiFine() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Detektita grava konflikto inter Moving Elevators kaj OptiFine. "
+	            + "Tiuj modoj ne estas kongruaj kaj kaŭzas enjekcian fiaskon, kiu malpermesas lanĉon de la ludo." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoMovingElevatorsOptiFine() {
+	    return "Konflikto inter Moving Elevators kaj OptiFine";
+	}
+
+	@Override
+	public String pasoConflictoMovingElevatorsOptiFine() {
+	    return "Forigu OptiFine aŭ Moving Elevators, ĉar ili ne estas kongruaj unu kun la alia.";
+	}
+	
+	@Override
+	public String errorConflictoFabricAPIOptiFine() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Detektita grava konflikto inter Fabric API (fabric-resource-loader-v0) kaj OptiFine. "
+	            + "Tiuj modoj ne estas kongruaj kaj kaŭzas enjekcian fiaskon, kiu malpermesas lanĉon de la ludo." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoFabricAPIOptiFine() {
+	    return "Konflikto inter Fabric API kaj OptiFine";
+	}
+
+	@Override
+	public String pasoConflictoFabricAPIOptiFine() {
+	    return "Forigu OptiFine aŭ ĝisdatigu Fabric API al kongrua versio.";
+	}
+	
 	
 	
 	

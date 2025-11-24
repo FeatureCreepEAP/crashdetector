@@ -4391,6 +4391,40 @@ public String advertenciaMalwareFalso() {
 	    return "この問題は 11月23日以降に修正されているため、Modrinth から YesSteveModel を最新版に更新してください。";
 	}
 	
+	@Override
+	public String errorConflictoMovingElevatorsOptiFine() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Moving Elevators と OptiFine の間に深刻な競合が検出されました。 "
+	            + "これらのモッドは互換性がなく、インジェクションの失敗を引き起こし、ゲームの起動を妨げます。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoMovingElevatorsOptiFine() {
+	    return "Moving Elevators と OptiFine の競合";
+	}
+
+	@Override
+	public String pasoConflictoMovingElevatorsOptiFine() {
+	    return "OptiFine または Moving Elevators をアンインストールしてください。両者は互換性がありません。";
+	}
+	
+	@Override
+	public String errorConflictoFabricAPIOptiFine() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Fabric API（fabric-resource-loader-v0）と OptiFine の間に深刻な競合が検出されました。 "
+	            + "これらのモッドは互換性がなく、インジェクションの失敗を引き起こし、ゲームの起動を妨げます。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoFabricAPIOptiFine() {
+	    return "Fabric API と OptiFine の競合";
+	}
+
+	@Override
+	public String pasoConflictoFabricAPIOptiFine() {
+	    return "OptiFine をアンインストールするか、Fabric API を互換性のあるバージョンに更新してください。";
+	}
+	
 	
 	
 	

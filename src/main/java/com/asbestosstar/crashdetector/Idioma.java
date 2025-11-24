@@ -1780,4 +1780,16 @@ public interface Idioma {
 
 	public String pasoErrorYesSteveModelLinux();
 
+	public String errorConflictoMovingElevatorsOptiFine();
+
+	public String nombreDeConflictoMovingElevatorsOptiFine();
+
+	public String pasoConflictoMovingElevatorsOptiFine();
+
+	public String errorConflictoFabricAPIOptiFine();
+
+	public String nombreDeConflictoFabricAPIOptiFine();
+
+	public String pasoConflictoFabricAPIOptiFine();
+
 }

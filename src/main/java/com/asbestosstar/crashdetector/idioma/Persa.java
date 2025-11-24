@@ -4495,6 +4495,40 @@ public String advertenciaMalwareFalso() {
 	    return "YesSteveModel را از Modrinth به نسخه‌ای جدیدتر بروزرسانی کنید، زیرا این مشکل پس از ۲۳ نوامبر رفع شده است.";
 	}
 	
+	@Override
+	public String errorConflictoMovingElevatorsOptiFine() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "تضاد بحرانی بین Moving Elevators و OptiFine تشخیص داده شده است. "
+	            + "این افزونه‌ها ناسازگار هستند و باعث شکست تزریق می‌شوند که جلوی راه‌اندازی بازی را می‌گیرد." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoMovingElevatorsOptiFine() {
+	    return "تضاد Moving Elevators و OptiFine";
+	}
+
+	@Override
+	public String pasoConflictoMovingElevatorsOptiFine() {
+	    return "Moving Elevators یا OptiFine را حذف کنید، زیرا با یکدیگر سازگار نیستند.";
+	}
+	
+	@Override
+	public String errorConflictoFabricAPIOptiFine() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "تضاد بحرانی بین Fabric API (fabric-resource-loader-v0) و OptiFine تشخیص داده شده است. "
+	            + "این افزونه‌ها ناسازگار هستند و باعث شکست تزریق می‌شوند که جلوی راه‌اندازی بازی را می‌گیرد." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoFabricAPIOptiFine() {
+	    return "تضاد Fabric API و OptiFine";
+	}
+
+	@Override
+	public String pasoConflictoFabricAPIOptiFine() {
+	    return "OptiFine را حذف کنید یا Fabric API را به نسخه‌ای سازگار بروزرسانی نمایید.";
+	}
+	
 	
 	
 	

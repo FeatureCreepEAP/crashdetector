@@ -4526,6 +4526,40 @@ public class Ruso implements Idioma {
 	    return "Обновите YesSteveModel до более новой версии с Modrinth, так как проблема была исправлена после 23 ноября.";
 	}
 	
+	@Override
+	public String errorConflictoMovingElevatorsOptiFine() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Обнаружен критический конфликт между Moving Elevators и OptiFine. "
+	            + "Эти моды несовместимы и вызывают сбой внедрения, препятствующий запуску игры." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoMovingElevatorsOptiFine() {
+	    return "Конфликт Moving Elevators и OptiFine";
+	}
+
+	@Override
+	public String pasoConflictoMovingElevatorsOptiFine() {
+	    return "Удалите OptiFine или Moving Elevators, так как они несовместимы друг с другом.";
+	}
+	
+	@Override
+	public String errorConflictoFabricAPIOptiFine() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Обнаружен критический конфликт между Fabric API (fabric-resource-loader-v0) и OptiFine. "
+	            + "Эти моды несовместимы и вызывают сбой внедрения, препятствующий запуску игры." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoFabricAPIOptiFine() {
+	    return "Конфликт Fabric API и OptiFine";
+	}
+
+	@Override
+	public String pasoConflictoFabricAPIOptiFine() {
+	    return "Удалите OptiFine или обновите Fabric API до совместимой версии.";
+	}
+	
 	
 	
 	

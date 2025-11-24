@@ -4477,6 +4477,40 @@ public String advertenciaMalwareFalso() {
 	    return "قم بتحديث YesSteveModel إلى إصدار أحدث من Modrinth، حيث تم إصلاح المشكلة بعد 23 نوفمبر.";
 	}
 	
+	@Override
+	public String errorConflictoMovingElevatorsOptiFine() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "تم اكتشاف تعارض حرج بين Moving Elevators و OptiFine. "
+	            + "هذه الوحدات غير متوافقة وتسبب فشلاً في الحقن يمنع تشغيل اللعبة." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoMovingElevatorsOptiFine() {
+	    return "التعارض بين Moving Elevators و OptiFine";
+	}
+
+	@Override
+	public String pasoConflictoMovingElevatorsOptiFine() {
+	    return "قم بإزالة OptiFine أو Moving Elevators، لأنهما غير متوافقين مع بعضهما.";
+	}
+	
+	@Override
+	public String errorConflictoFabricAPIOptiFine() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "تم اكتشاف تعارض حرج بين Fabric API (fabric-resource-loader-v0) و OptiFine. "
+	            + "هذه الوحدات غير متوافقة وتسبب فشلاً في الحقن يمنع تشغيل اللعبة." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoFabricAPIOptiFine() {
+	    return "التعارض بين Fabric API و OptiFine";
+	}
+
+	@Override
+	public String pasoConflictoFabricAPIOptiFine() {
+	    return "قم بإزالة OptiFine أو حدّث Fabric API إلى إصدار متوافق.";
+	}
+	
 	
 	
 	

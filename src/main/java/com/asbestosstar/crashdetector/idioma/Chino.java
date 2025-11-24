@@ -4318,6 +4318,40 @@ public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves
 	    return "请从 Modrinth 更新 YesSteveModel 至更新的版本，该问题已在 11 月 23 日之后修复。";
 	}
 	
+	@Override
+	public String errorConflictoMovingElevatorsOptiFine() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "检测到 Moving Elevators 和 OptiFine 之间的严重冲突。 "
+	            + "这些模组不兼容，会导致注入失败，使游戏无法启动。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoMovingElevatorsOptiFine() {
+	    return "Moving Elevators 与 OptiFine 冲突";
+	}
+
+	@Override
+	public String pasoConflictoMovingElevatorsOptiFine() {
+	    return "卸载 OptiFine 或 Moving Elevators，因为它们彼此不兼容。";
+	}
+	
+	@Override
+	public String errorConflictoFabricAPIOptiFine() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "检测到 Fabric API（fabric-resource-loader-v0）与 OptiFine 之间的严重冲突。 "
+	            + "这些模组不兼容，会导致注入失败，使游戏无法启动。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoFabricAPIOptiFine() {
+	    return "Fabric API 与 OptiFine 冲突";
+	}
+
+	@Override
+	public String pasoConflictoFabricAPIOptiFine() {
+	    return "卸载 OptiFine，或将 Fabric API 更新到兼容版本。";
+	}
+	
 	
 	
 	
