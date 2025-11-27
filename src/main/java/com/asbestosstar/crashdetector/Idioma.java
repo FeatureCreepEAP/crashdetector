@@ -1792,4 +1792,22 @@ public interface Idioma {
 
 	public String pasoConflictoFabricAPIOptiFine();
 
+	public String errorModLauncherTransformationService(String claseProveedor);
+
+	public String nombreDeErrorModLauncherTransformationService();
+
+	public String pasoErrorModLauncherTransformationService(String claseProveedor);
+
+	public String errorVersionInvalidaMod(String versionDetectada);
+
+	public String nombreDeErrorVersionInvalidaMod();
+
+	public String pasoErrorVersionInvalidaMod();
+
+	public String errorStackSmashingDetected();
+
+	public String nombreDeErrorStackSmashingDetected();
+
+	public String pasoErrorStackSmashingDetected();
+
 }

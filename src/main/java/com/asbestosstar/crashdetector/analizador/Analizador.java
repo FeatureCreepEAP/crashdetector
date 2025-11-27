@@ -31,6 +31,8 @@ import com.asbestosstar.crashdetector.analizador.general.ErrorDeMonitorLWJGL;
 import com.asbestosstar.crashdetector.analizador.general.ErrorJarCorruptoConNombre;
 import com.asbestosstar.crashdetector.analizador.general.ErrorMetodoAbstractoNoImplementado;
 import com.asbestosstar.crashdetector.analizador.general.ErrorMetodoInexistente;
+import com.asbestosstar.crashdetector.analizador.general.ErrorStackSmashingDetected;
+import com.asbestosstar.crashdetector.analizador.general.ErrorVersionInvalidaModMaven;
 import com.asbestosstar.crashdetector.analizador.general.FallosEjecucionTareas;
 import com.asbestosstar.crashdetector.analizador.general.FaltaModuleJPMS;
 import com.asbestosstar.crashdetector.analizador.general.FaltasClases;
@@ -228,6 +230,10 @@ public class Analizador {
 		verificaciones.add(new ErrorYesSteveModelLinux());
 		verificaciones.add(new ConflictoMovingElevatorsOptiFine());
 		verificaciones.add(new ConflictoFabricAPIOptiFine());
+		
+		verificaciones.add(new ErrorModLauncherTransformationService());
+		verificaciones.add(new ErrorVersionInvalidaModMaven());
+		verificaciones.add(new ErrorStackSmashingDetected());
 
 		
 		

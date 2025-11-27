@@ -220,6 +220,21 @@ public interface ArchivoDeMod {
 	}
 
 	/**
+	 * 
+	 * @param moduleinfo
+	 * @return
+	 */
+	public default List<String> obtenerNombresDeModuleInfo(byte[] moduleinfo) {
+		if (ASM_DISPONIBLE) {
+			return AnalizadorBytecodeASM.obtenerNombreModuloInfo(moduleinfo);
+		} else if (JAVASSIST_DISPONIBLE) {
+			return AnalizadorBytecodeJavassist.obtenerNombreModuloInfo(moduleinfo);
+		} else {
+			return new ArrayList<>();
+		}
+	}
+
+	/**
 	 * Obtiene los bytes de una clase.
 	 * 
 	 * @param nombreClase Nombre completo de la clase en formato interno (ej:

@@ -126,7 +126,7 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 
 			if (encontrado && !paquete.isEmpty()) {
 				paqueteProblematico = paquete;
-				CrashDetectorLogger.log("paqueteProblematico "+ paqueteProblematico);
+				CrashDetectorLogger.log("paqueteProblematico " + paqueteProblematico);
 				Buscardor.cargar();
 				List<ArchivoDeMod> mods = Buscardor.buscarModsConTermino(paquete);
 
@@ -141,7 +141,8 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 
 				mensajeFinal.append("<br><br><b>").append(MonitorDePID.idioma.modulos()).append(":</b><br><ul>");
 				for (String modulo : modulosCombinados.split("\\+")) {
-					mensajeFinal.append("<li>").append(modulo.trim()).append("</li>");
+					String trim = modulo.trim();
+					mensajeFinal.append("<li>").append("<b>").append(trim).append("</b>").append(procesarModulo(trim)).append("</li>");
 				}
 				mensajeFinal.append("</ul>");
 
@@ -168,6 +169,16 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 	// Resto de los métodos sin cambios (formatearResultadoBusqueda, nueva,
 	// activado, etc.)
 	// [Mantener todos los métodos existentes iguales]
+
+	public static String procesarModulo(String modulo) {
+		// TODO Auto-generated method stub
+		List<String> mods = Buscardor.obtenerModsConNombre(modulo);
+		if (!mods.isEmpty()) {
+			return "(" + String.join(",", mods) + ")";
+		}
+
+		return "";
+	}
 
 	// Solo para referencia, asegurarse de tener estos métodos:
 	private String formatearResultadoBusqueda(List<ArchivoDeMod> mods) {

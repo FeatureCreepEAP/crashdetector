@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.jar.JarInputStream;
+import java.util.jar.Manifest;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -86,7 +88,11 @@ public class ModPKZip implements ArchivoDeMod {
 	 * para extraer 'nombres' y banderas - Construir mods anidados (jar/zip dentro)
 	 */
 	private void indexarYProcesarMetadatos() throws IOException {
-		try (ZipInputStream zip = new ZipInputStream(new ByteArrayInputStream(bytesZip))) {
+		try (JarInputStream zip = new JarInputStream(new ByteArrayInputStream(bytesZip))) {
+			Manifest man = zip.getManifest();
+			if (man != null) {
+				nombres.addAll(ProcesadorManifiesto.obtenerNombresDeModulo(man));
+			}
 			ZipEntry e;
 			while ((e = zip.getNextEntry()) != null) {
 				final String nombreArchivo = e.getName();
@@ -108,6 +114,13 @@ public class ModPKZip implements ArchivoDeMod {
 
 					String nombreInterno = nombreArchivo.substring(0, nombreArchivo.length() - 6); // sin ".class"
 					mapaEntradaPorClase.put(nombreInterno, nombreArchivo);
+
+					if (nombreClaseJava.endsWith("module-info")) {
+						byte[] bytes = this.obtenerBytesClase(nombreClaseJava);
+						if (bytes != null) {
+							nombres.addAll(this.obtenerNombresDeModuleInfo(bytes));
+						}
+					}
 				} else if (nombreArchivo.endsWith("modules.xml")) {
 					// Sólo leer esta entrada para extraer IDs JBoss
 					byte[] content = leerEntrada(nombreArchivo);
@@ -119,7 +132,9 @@ public class ModPKZip implements ArchivoDeMod {
 					if (content != null) {
 						nombres.addAll(CargadorFeatureCreep.parsearNombreModHOI4(content));
 					}
-				} else if (nombreArchivo.equals("fabric.mod.json")) {
+				}
+
+				else if (nombreArchivo.equals("fabric.mod.json")) {
 					byte[] content = leerEntrada(nombreArchivo);
 					if (content != null) {
 						String texto = new String(content, StandardCharsets.UTF_8);
@@ -291,7 +306,7 @@ public class ModPKZip implements ArchivoDeMod {
 		boolean tieneClase = clases.contains(termino);
 		String rutaPaquete = termino.replace('.', '/');
 		boolean tienePaquete = clases.stream().anyMatch(clase -> clase.replace(".", "/").startsWith(rutaPaquete));
-		
+
 		if (tieneArchivo || tieneClase || tienePaquete) {
 			resultados.add(this);
 		}

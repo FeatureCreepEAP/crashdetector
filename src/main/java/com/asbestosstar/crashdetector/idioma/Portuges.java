@@ -4557,6 +4557,57 @@ public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves
 	    return "Desinstale o OptiFine ou atualize o Fabric API para uma versão compatível.";
 	}
 	
+	@Override
+	public String errorModLauncherTransformationService(String claseProveedor) {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Um mod possui um ITransformationService defeituoso que não pode ser instanciado: " + claseProveedor + ". "
+	            + "Esse mod deve ser removido para permitir a inicialização do jogo." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorModLauncherTransformationService() {
+	    return "ITransformationService defeituoso";
+	}
+
+	@Override
+	public String pasoErrorModLauncherTransformationService(String claseProveedor) {
+	    return "Remova o mod que contém a classe " + claseProveedor + ", pois ele possui um ITransformationService defeituoso.";
+	}
+	
+	@Override
+	public String errorVersionInvalidaMod(String version) {
+	    return "<span style='color:#" + config.obtenerColorError() + "'>Um mod possui uma especificação de versão inválida. "
+	            + "A versão deve estar envolvida por colchetes. "
+	            + "Você pode usar o utilitário grep/greprf do painel lateral buscando a versão </span>" + version + "<span style='color:#" + config.obtenerColorError() + "'> para identificar qual mod tem o problema.</span>";
+	}
+
+	@Override
+	public String nombreDeErrorVersionInvalidaMod() {
+	    return "Versão inválida no mod";
+	}
+
+	@Override
+	public String pasoErrorVersionInvalidaMod() {
+	    return "Use o utilitário grep/greprf do painel lateral para buscar a versão problemática e encontrar o mod que a contém.";
+	}
+	
+	@Override
+	public String errorStackSmashingDetected() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Foi detectado um erro de stack smashing que encerrou o processo. "
+	            + "Isso pode ser causado por problemas com Early Window no Forge/NeoForge/PillowMC ou com LWJGL 3.2.2 e versões mais recentes." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorStackSmashingDetected() {
+	    return "Stack Smashing Detectado";
+	}
+
+	@Override
+	public String pasoErrorStackSmashingDetected() {
+	    return "Verifique as configurações do Early Window e considere usar uma versão diferente do LWJGL ou revisar os mods relacionados à janela inicial.";
+	}
+	
 	
 	
 	

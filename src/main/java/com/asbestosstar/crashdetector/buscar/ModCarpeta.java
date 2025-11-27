@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.jar.Manifest;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.cargador.Cargador;
@@ -102,6 +103,8 @@ public class ModCarpeta implements ArchivoDeMod {
 						}
 					} else if (nombre.endsWith(".class")) {
 						procesarClase(entrada);
+					}else if (nombre.endsWith("MANIFEST.MF")) {
+							nombres.addAll(ProcesadorManifiesto.obtenerNombresDeModulo(new Manifest(new FileInputStream(nombre))));
 					} else if (esArchivoAnidado(nombre)) {
 						procesarArchivoAnidado(entrada, nombre);
 					} else {
@@ -148,6 +151,14 @@ public class ModCarpeta implements ArchivoDeMod {
 			// no crítico; continuar
 			CrashDetectorLogger.logException(e);
 		}
+
+		if (nombreClaseJava.endsWith("module-info")) {
+			byte[] bytes = this.obtenerBytesClase(nombreClaseJava);
+			if (bytes != null) {
+				this.nombre().addAll(this.obtenerNombresDeModuleInfo(bytes));
+			}
+		}
+
 	}
 
 	/**
@@ -272,7 +283,6 @@ public class ModCarpeta implements ArchivoDeMod {
 	public List<ArchivoDeMod> buscarModsCon(String termino) {
 		List<ArchivoDeMod> resultados = new ArrayList<>();
 
-
 		boolean tieneArchivo = archivos.contains(termino);
 		boolean tieneClase = clases.contains(termino);
 		String rutaPaquete = termino.replace('.', '/');
@@ -340,7 +350,6 @@ public class ModCarpeta implements ArchivoDeMod {
 	public List<Cargador> cargadores() {
 		return cargadores_de_mod;
 	}
-
 
 	/**
 	 * Precarga los bytes de TODAS las clases de esta carpeta en el caché interno.

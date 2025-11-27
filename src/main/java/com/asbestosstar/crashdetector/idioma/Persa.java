@@ -4530,6 +4530,58 @@ public String advertenciaMalwareFalso() {
 	}
 	
 	
+	@Override
+	public String errorModLauncherTransformationService(String claseProveedor) {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "یک افزونه دارای ITransformationService معیوبی است که نمی‌تواند نمونه‌سازی شود: " + claseProveedor + ". "
+	            + "برای امکان بارگذاری بازی، این افزونه باید حذف شود." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorModLauncherTransformationService() {
+	    return "ITransformationService معیوب";
+	}
+
+	@Override
+	public String pasoErrorModLauncherTransformationService(String claseProveedor) {
+	    return "افزونه‌ای که کلاس " + claseProveedor + " را دارد حذف کنید، زیرا دارای ITransformationService معیوبی است.";
+	}
+	
+	@Override
+	public String errorVersionInvalidaMod(String version) {
+	    return "<span style='color:#" + config.obtenerColorError() + "'>یک افزونه دارای مشخصات نسخهٔ نامعتبری است. "
+	            + "نسخه باید با براکت مربعی احاطه شود. "
+	            + "می‌توانید از ابزار grep/greprf در پنل کناری برای جستجوی نسخهٔ </span>" + version + "<span style='color:#" + config.obtenerColorError() + "'> استفاده کنید تا مشخص کنید کدام افزونه مشکل دارد.</span>";
+	}
+
+	@Override
+	public String nombreDeErrorVersionInvalidaMod() {
+	    return "نسخهٔ نامعتبر در افزونه";
+	}
+
+	@Override
+	public String pasoErrorVersionInvalidaMod() {
+	    return "از ابزار grep/greprf در پنل کناری استفاده کنید تا نسخهٔ مشکل‌دار را جستجو کرده و افزونه‌ای که آن را دارد پیدا کنید.";
+	}
+	
+	@Override
+	public String errorStackSmashingDetected() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "خطای stack smashing شناسایی شد که باعث پایان فرآیند شد. "
+	            + "این ممکن است ناشی از مشکلات Early Window در Forge/NeoForge/PillowMC یا LWJGL نسخه 3.2.2 و جدیدتر باشد." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorStackSmashingDetected() {
+	    return "Stack Smashing شناسایی شد";
+	}
+
+	@Override
+	public String pasoErrorStackSmashingDetected() {
+	    return "تنظیمات Early Window را بررسی کنید و نسخهٔ دیگری از LWJGL را امتحان کنید یا افزونه‌های مرتبط با پنجرهٔ اولیه را بررسی نمایید.";
+	}
+	
+	
 	
 	
 	

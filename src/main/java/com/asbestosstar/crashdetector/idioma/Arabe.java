@@ -4511,6 +4511,57 @@ public String advertenciaMalwareFalso() {
 	    return "قم بإزالة OptiFine أو حدّث Fabric API إلى إصدار متوافق.";
 	}
 	
+	@Override
+	public String errorModLauncherTransformationService(String claseProveedor) {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "يحتوي أحد الوحدات على ITransformationService معطوب لا يمكن إنشاؤه: " + claseProveedor + ". "
+	            + "يجب إزالة هذا المود لتمكين تحميل اللعبة." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorModLauncherTransformationService() {
+	    return "ITransformationService معطوب";
+	}
+
+	@Override
+	public String pasoErrorModLauncherTransformationService(String claseProveedor) {
+	    return "أزل المود الذي يحتوي على الصنف " + claseProveedor + "، لأنه يحتوي على ITransformationService معطوب.";
+	}
+	
+	@Override
+	public String errorVersionInvalidaMod(String version) {
+	    return "<span style='color:#" + config.obtenerColorError() + "'>يحتوي أحد الوحدات على مواصفات إصدار غير صالحة. "
+	            + "يجب أن يكون الإصدار محاطًا بأقواس مربعة. "
+	            + "يمكنك استخدام أداة grep/greprf من اللوحة الجانبية بالبحث عن الإصدار </span>" + version + "<span style='color:#" + config.obtenerColorError() + "'> لتحديد الوحدة التي بها المشكلة.</span>";
+	}
+
+	@Override
+	public String nombreDeErrorVersionInvalidaMod() {
+	    return "إصدار غير صالح في الوحدة";
+	}
+
+	@Override
+	public String pasoErrorVersionInvalidaMod() {
+	    return "استخدم أداة grep/greprf من اللوحة الجانبية للبحث عن الإصدار المشكل وتحديد الوحدة التي تحتويه.";
+	}
+	
+	@Override
+	public String errorStackSmashingDetected() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "تم اكتشاف خطأ stack smashing أدى إلى إنهاء العملية. "
+	            + "قد يكون هذا ناتجًا عن مشاكل في Early Window في Forge/NeoForge/PillowMC أو مع LWJGL 3.2.2 والإصدارات الأحدث." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorStackSmashingDetected() {
+	    return "تم اكتشاف Stack Smashing";
+	}
+
+	@Override
+	public String pasoErrorStackSmashingDetected() {
+	    return "تحقق من إعدادات Early Window وفكّر في استخدام إصدار مختلف من LWJGL أو مراجعة الوحدات المرتبطة بالنوافذ المبكرة.";
+	}
+	
 	
 	
 	

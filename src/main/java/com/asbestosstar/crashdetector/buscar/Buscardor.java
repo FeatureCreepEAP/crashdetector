@@ -198,18 +198,27 @@ public class Buscardor {
 			ejecutor.submit(() -> {
 				try {
 					if (archivoActual.isFile()) {
-						CrashDetectorLogger.log("prearchivo mod " + archivoActual.getName());
-						try (FileInputStream fis = new FileInputStream(archivoActual)) {
-							CrashDetectorLogger.log("En Stream " + archivoActual.getName() + " cargado correctamente");
-							ArchivoDeMod modObj = new ModPKZip(rutaActual, ArchivoDeMod.origin, fis);
-							CrashDetectorLogger.log("crear " + archivoActual.getName() + " cargado correctamente");
-							mods.add(modObj);
-							CrashDetectorLogger
-									.log("archivo mod " + archivoActual.getName() + " cargado correctamente");
-						} catch (IOException e) {
-							CrashDetectorLogger
-									.log("Error al cargar mod ZIP " + archivoActual.getName() + ": " + e.getMessage());
-							CrashDetectorLogger.logException(e);
+						if (!archivoActual.getName().endsWith("deactivation")
+								&& !archivoActual.getName().endsWith("disabled")
+								&& !archivoActual.getName().endsWith("nil.jar")
+								&& !archivoActual.getName().endsWith("nil")
+								&& !archivoActual.getName().endsWith("rpm")
+								) {
+
+							CrashDetectorLogger.log("prearchivo mod " + archivoActual.getName());
+							try (FileInputStream fis = new FileInputStream(archivoActual)) {
+								CrashDetectorLogger
+										.log("En Stream " + archivoActual.getName() + " cargado correctamente");
+								ArchivoDeMod modObj = new ModPKZip(rutaActual, ArchivoDeMod.origin, fis);
+								CrashDetectorLogger.log("crear " + archivoActual.getName() + " cargado correctamente");
+								mods.add(modObj);
+								CrashDetectorLogger
+										.log("archivo mod " + archivoActual.getName() + " cargado correctamente");
+							} catch (IOException e) {
+								CrashDetectorLogger.log(
+										"Error al cargar mod ZIP " + archivoActual.getName() + ": " + e.getMessage());
+								CrashDetectorLogger.logException(e);
+							}
 						}
 					} else {
 						CrashDetectorLogger.log("precarpeta mod " + archivoActual.getName());
@@ -281,6 +290,7 @@ public class Buscardor {
 		List<String> modsConNombre = new ArrayList<String>();
 		for (ArchivoDeMod mod : mods) {
 			if (mod.tieneNombreRecursivo(nombre)) {
+				CrashDetectorLogger.log("tiene recursivo nombre " + mod.ubicacion_para_publicar());
 				modsConNombre.add(rutaParaPublicar(mod.obtenerNombreRecursivo(nombre)));
 			}
 		}
@@ -295,7 +305,7 @@ public class Buscardor {
 	 */
 	public static List<ArchivoDeMod> buscarModsConTermino(String termino) {
 		List<ArchivoDeMod> resultados = new ArrayList<>();
-		for (ArchivoDeMod mod : mods) {			
+		for (ArchivoDeMod mod : mods) {
 			resultados.addAll(mod.buscarModsCon(termino));
 		}
 		return resultados;

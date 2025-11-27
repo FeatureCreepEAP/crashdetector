@@ -2,6 +2,7 @@ package com.asbestosstar.crashdetector.buscar;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -409,4 +410,84 @@ public class AnalizadorBytecodeJavassist {
 		return new ArchivoDeMod.Referencia(f.getClassName().replace('.', '/'), // Formato interno de ASM
 				f.getFieldName(), f.getSignature(), false);
 	}
+
+	/**
+	 * 
+	 * Analiza el bytecode de una clase usando la librería Javassist para encontrar
+	 * el nombre del módulo.
+	 * 
+	 * Este método es específico para archivos 'module-info.class'.
+	 *
+	 * 
+	 * 
+	 * @param classBytes El array de bytes que representa el archivo
+	 *                   module-info.class.
+	 * 
+	 * @return Una lista de Strings. Si se encuentra un nombre de módulo, la lista
+	 * 
+	 *         contendrá un único elemento. De lo contrario, la lista estará vacía.
+	 * 
+	 */
+
+	public static List<String> obtenerNombreModuloInfo(byte[] classBytes) {
+
+		List<String> modulos = new ArrayList<>();
+
+		try {
+
+			// Creamos un objeto ClassFile de Javassist a partir del array de bytes.
+
+			ClassFile classFile = new ClassFile(new DataInputStream(new ByteArrayInputStream(classBytes)));
+
+			// Obtenemos la tabla de constantes (ConstPool) del archivo de clase.
+
+			ConstPool constPool = classFile.getConstPool();
+
+			// Recorremos la tabla de constantes para encontrar la entrada de tipo
+			// ModuleInfo.
+
+			// El tag para ModuleInfo es 19 (ConstPool.CONST_Module).
+
+			// El bucle empieza en 1 porque el índice 0 está reservado por la JVM.
+
+			for (int i = 1; i < constPool.getSize(); i++) {
+
+				// Verificamos si el tag de la entrada actual es ModuleInfo.
+
+				if (constPool.getTag(i) == ConstPool.CONST_Module) {
+
+					// Si encontramos una entrada de módulo, extraemos su nombre.
+
+					// El método getModuleInfo() toma el índice de la entrada y devuelve el nombre.
+
+					String moduleName = constPool.getModuleInfo(i);
+
+					if (moduleName != null && !moduleName.isEmpty()) {
+
+						modulos.add(moduleName);
+
+					}
+
+					// Un archivo module-info.class solo debería tener una entrada de módulo.
+
+					// Una vez encontrado, podríamos salir del bucle para ser más eficientes,
+
+					// pero continuar no causa problemas.
+
+				}
+
+			}
+
+		} catch (IOException e) {
+
+			// TODO Auto-generated catch block
+
+			e.printStackTrace();
+
+		}
+
+		return modulos;
+
+	}
+
 }

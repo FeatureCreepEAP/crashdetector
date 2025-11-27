@@ -4425,6 +4425,57 @@ public String advertenciaMalwareFalso() {
 	    return "OptiFine をアンインストールするか、Fabric API を互換性のあるバージョンに更新してください。";
 	}
 	
+	@Override
+	public String errorModLauncherTransformationService(String claseProveedor) {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "ある mod にインスタンス化できない欠陥のある ITransformationService があります: " + claseProveedor + "。"
+	            + "ゲームを読み込めるようにするには、この mod を削除する必要があります。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorModLauncherTransformationService() {
+	    return "欠陥のある ITransformationService";
+	}
+
+	@Override
+	public String pasoErrorModLauncherTransformationService(String claseProveedor) {
+	    return "欠陥のある ITransformationService を含む " + claseProveedor + " クラスを含む mod を削除してください。";
+	}
+	
+	@Override
+	public String errorVersionInvalidaMod(String version) {
+	    return "<span style='color:#" + config.obtenerColorError() + "'>ある mod が無効なバージョン指定を持っています。 "
+	            + "バージョンは角括弧で囲む必要があります。 "
+	            + "サイドパネルの grep/greprf ユーティリティを使用して、バージョン </span>" + version + "<span style='color:#" + config.obtenerColorError() + "'> を検索し、問題のある mod を特定できます。</span>";
+	}
+
+	@Override
+	public String nombreDeErrorVersionInvalidaMod() {
+	    return "mod 内の無効なバージョン";
+	}
+
+	@Override
+	public String pasoErrorVersionInvalidaMod() {
+	    return "サイドパネルの grep/greprf ユーティリティを使用して問題のバージョンを検索し、それを含む mod を特定してください。";
+	}
+	
+	@Override
+	public String errorStackSmashingDetected() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "stack smashing エラーが検出され、プロセスが終了しました。 "
+	            + "これは、Forge/NeoForge/PillowMC の Early Window の問題、または LWJGL 3.2.2 以降のバージョンに起因する可能性があります。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorStackSmashingDetected() {
+	    return "Stack Smashing 検出";
+	}
+
+	@Override
+	public String pasoErrorStackSmashingDetected() {
+	    return "Early Window の設定を確認し、別のバージョンの LWJGL を使用するか、早期ウィンドウ関連の mod を見直してください。";
+	}
+	
 	
 	
 	

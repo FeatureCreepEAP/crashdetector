@@ -7,6 +7,7 @@ import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.ModuleVisitor;
 import org.objectweb.asm.Opcodes;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
@@ -441,4 +442,73 @@ public class AnalizadorBytecodeASM {
 			throw new RuntimeException("Error al obtener la versión ASM", e);
 		}
 	}
+
+	/**
+	 * 
+	 * Analiza el bytecode de una clase usando la librería ASM para encontrar el
+	 * nombre del módulo.
+	 * 
+	 * Este método es específico para archivos 'module-info.class'.
+	 *
+	 * 
+	 * 
+	 * @param classBytes El array de bytes que representa el archivo
+	 *                   module-info.class.
+	 * 
+	 * @return Una lista de Strings. Si se encuentra un nombre de módulo, la lista
+	 * 
+	 *         contendrá un único elemento. De lo contrario, la lista estará vacía.
+	 * 
+	 */
+
+	public static List<String> obtenerNombreModuloInfo(byte[] classBytes) {
+
+		List<String> modulos = new ArrayList<>();
+
+		// Creamos un ClassReader de ASM a partir del array de bytes.
+
+		ClassReader classReader = new ClassReader(classBytes);
+
+		// Usamos un ClassVisitor para visitar la clase. No necesitamos analizar mucho,
+
+		// solo nos interesa la información del módulo.
+
+		ClassVisitor classVisitor = new ClassVisitor(obtenerVersionMaximaASM()) {
+
+			@Override
+
+			public ModuleVisitor visitModule(String name, int access, String version) {
+
+				// Este método es invocado cuando se encuentra un atributo "Module" en la clase,
+
+				// que es exactamente lo que buscamos en un module-info.class.
+
+				// El parámetro 'name' es el nombre del módulo que queremos.
+
+				if (name != null && !name.isEmpty()) {
+
+					modulos.add(name);
+
+				}
+
+				// Devolvemos null porque no necesitamos visitar el interior del módulo.
+
+				return null;
+
+			}
+
+		};
+
+		// Iniciamos el proceso de análisis. Le decimos al ClassReader que acepte
+		// nuestro visitor.
+
+		// EXPAND_FRAMES es necesario para que ASM pueda analizar correctamente el stack
+		// map frames.
+
+		classReader.accept(classVisitor, ClassReader.EXPAND_FRAMES);
+
+		return modulos;
+
+	}
+
 }

@@ -5237,6 +5237,57 @@ public String advertenciaMalwareFalso() {
 	    return "Desinstala OptiFine o actualiza Fabric API a una versión compatible.";
 	}
 	
+	@Override
+	public String errorModLauncherTransformationService(String claseProveedor) {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Un mod tiene un ITransformationService defectuoso que no puede ser instanciado: " + claseProveedor + ". "
+	            + "Este mod debe ser eliminado para permitir la carga del juego." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorModLauncherTransformationService() {
+	    return "ITransformationService defectuoso";
+	}
+
+	@Override
+	public String pasoErrorModLauncherTransformationService(String claseProveedor) {
+	    return "Elimina el mod que contiene la clase " + claseProveedor + ", ya que tiene un ITransformationService defectuoso.";
+	}
+	
+	
+	@Override
+	public String errorVersionInvalidaMod(String version) {
+	    return "<span style='color:#" + config.obtenerColorError() + "'>Un mod tiene una especificación de versión inválida. "
+	            + "La versión debe estar rodeada por corchetes cuadrados. "
+	            + "Puedes usar la utilidad grep/greprf del panel lateral buscando la versión </span>" + version + "<span style='color:#" + config.obtenerColorError() + "'> para identificar qué mod tiene el problema.</span>";
+	}
+
+	@Override
+	public String nombreDeErrorVersionInvalidaMod() {
+	    return "Versión inválida en mod";
+	}
+
+	@Override
+	public String pasoErrorVersionInvalidaMod() {
+	    return "Usa la utilidad grep/greprf del panel lateral para buscar la versión problemática y encuentra el mod que la contiene.";
+	}
+	
+	@Override
+	public String errorStackSmashingDetected() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Se detectó un error de stack smashing que terminó el proceso. "
+	            + "Esto puede ser causado por problemas con Early Window en Forge/NeoForge/PillowMC o con LWJGL 3.2.2 y más nuevos." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorStackSmashingDetected() {
+	    return "Stack Smashing Detectado";
+	}
+
+	@Override
+	public String pasoErrorStackSmashingDetected() {
+	    return "Verifica los ajustes de Early Window y considera usar una versión diferente de LWJGL o revisar los mods relacionados con la ventana temprana.";
+	}
 	
 	
 	

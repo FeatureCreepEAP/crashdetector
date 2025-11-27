@@ -4352,6 +4352,57 @@ public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves
 	    return "卸载 OptiFine，或将 Fabric API 更新到兼容版本。";
 	}
 	
+	@Override
+	public String errorModLauncherTransformationService(String claseProveedor) {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "某个模组包含一个有缺陷的 ITransformationService，无法实例化：" + claseProveedor + "。"
+	            + "必须移除此模组才能加载游戏。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorModLauncherTransformationService() {
+	    return "有缺陷的 ITransformationService";
+	}
+
+	@Override
+	public String pasoErrorModLauncherTransformationService(String claseProveedor) {
+	    return "移除包含类 " + claseProveedor + " 的模组，因为它包含一个有缺陷的 ITransformationService。";
+	}
+	
+	@Override
+	public String errorVersionInvalidaMod(String version) {
+	    return "<span style='color:#" + config.obtenerColorError() + "'>某个模组的版本声明无效。 "
+	            + "版本号必须用方括号括起来。 "
+	            + "你可以使用侧边栏中的 grep/greprf 工具搜索版本号 </span>" + version + "<span style='color:#" + config.obtenerColorError() + "'>，以确定是哪个模组存在问题。</span>";
+	}
+
+	@Override
+	public String nombreDeErrorVersionInvalidaMod() {
+	    return "模组中的无效版本";
+	}
+
+	@Override
+	public String pasoErrorVersionInvalidaMod() {
+	    return "使用侧边栏中的 grep/greprf 工具搜索有问题的版本号，找到包含它的模组。";
+	}
+	
+	@Override
+	public String errorStackSmashingDetected() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "检测到 stack smashing 错误，导致进程终止。 "
+	            + "这可能是由 Forge/NeoForge/PillowMC 中的 Early Window 问题，或 LWJGL 3.2.2 及更高版本引起的。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorStackSmashingDetected() {
+	    return "检测到 Stack Smashing";
+	}
+
+	@Override
+	public String pasoErrorStackSmashingDetected() {
+	    return "检查 Early Window 设置，并考虑使用其他版本的 LWJGL，或检查与早期窗口相关的模组。";
+	}
+	
 	
 	
 	

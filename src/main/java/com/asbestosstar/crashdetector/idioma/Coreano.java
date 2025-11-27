@@ -4421,6 +4421,57 @@ public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves
 	    return "OptiFine을 제거하거나 Fabric API를 호환되는 버전으로 업데이트하세요.";
 	}
 	
+	@Override
+	public String errorModLauncherTransformationService(String claseProveedor) {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "일부 모드에 인스턴스화할 수 없는 결함 있는 ITransformationService가 있습니다: " + claseProveedor + ". "
+	            + "게임 로드를 허용하려면 이 모드를 제거해야 합니다." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorModLauncherTransformationService() {
+	    return "결함 있는 ITransformationService";
+	}
+
+	@Override
+	public String pasoErrorModLauncherTransformationService(String claseProveedor) {
+	    return "결함 있는 ITransformationService를 가진 " + claseProveedor + " 클래스를 포함한 모드를 제거하세요.";
+	}
+	
+	@Override
+	public String errorVersionInvalidaMod(String version) {
+	    return "<span style='color:#" + config.obtenerColorError() + "'>일부 모드가 잘못된 버전 지정을 가지고 있습니다. "
+	            + "버전은 대괄호([])로 둘러싸여야 합니다. "
+	            + "측면 패널의 grep/greprf 유틸리티를 사용하여 버전 </span>" + version + "<span style='color:#" + config.obtenerColorError() + "'> 을 검색해 문제의 모드를 식별할 수 있습니다.</span>";
+	}
+
+	@Override
+	public String nombreDeErrorVersionInvalidaMod() {
+	    return "모드의 잘못된 버전";
+	}
+
+	@Override
+	public String pasoErrorVersionInvalidaMod() {
+	    return "측면 패널의 grep/greprf 유틸리티를 사용하여 문제의 버전을 검색하고 이를 포함하는 모드를 찾으세요.";
+	}
+	
+	@Override
+	public String errorStackSmashingDetected() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "stack smashing 오류가 감지되어 프로세스가 종료되었습니다. "
+	            + "이는 Forge/NeoForge/PillowMC의 Early Window 문제나 LWJGL 3.2.2 이상 버전과 관련될 수 있습니다." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorStackSmashingDetected() {
+	    return "Stack Smashing 감지됨";
+	}
+
+	@Override
+	public String pasoErrorStackSmashingDetected() {
+	    return "Early Window 설정을 확인하고, 다른 버전의 LWJGL을 사용하거나 초기 창 관련 모드를 점검해 보세요.";
+	}
+	
 	
 	
 	

@@ -48,7 +48,7 @@ public class ErrorGroovyModloaderModuloFaltante implements Verificaciones {
         // Buscamos la línea que contiene el error de módulo faltante de Jackson
         if (linea.contains("java.lang.module.FindException")
                 && linea.contains("Module com.fasterxml.jackson.core not found")
-                && linea.contains("required by com.fasterxml.jackson.module.paramnames")
+                && linea.contains("required by com.fasterxml.jackson")
                 && encontradoGML) {
             
             // Enlazar a la línea del error en el lector
