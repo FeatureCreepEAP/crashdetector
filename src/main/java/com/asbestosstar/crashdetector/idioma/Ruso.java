@@ -4756,5 +4756,32 @@ public class Ruso implements Idioma {
 				+ "</ul>"
 				+ "<p>Примечание: вы можете использовать инструмент <b>grepr/fgrepr</b> на боковой панели, чтобы найти моды, ссылающиеся на отсутствующие классы, при условии, что в именах используется '/'.</p>";
 	}
+	
+	@Override
+	public String uraniumLag() {
+	    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+	        + "У вас установлен мод, который намеренно вызывает лаги. Uranium — это мод для создания лагов. Он не всегда приводит к сбоям, но со временем может вызвать их."
+	        + "</b>";
+	}
+	@Override
+	public String errorFallingAttackVersion() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Falling Attack помечен как совместимый с 1.19.*, но на самом деле предназначен для 1.20.*, что вызывает ошибку «класс не найден». "
+	            + "Мод пытается использовать DamageSources, которых нет в вашей текущей версии Minecraft." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorFallingAttackVersion() {
+	    return "Ошибка версии Falling Attack";
+	}
+
+	@Override
+	public String pasoErrorFallingAttackVersion() {
+	    return "Убедитесь, что вы используете правильную версию Falling Attack, совместимую с вашей версией Minecraft.";
+	}
+	
+	
+	
+	
 
 }

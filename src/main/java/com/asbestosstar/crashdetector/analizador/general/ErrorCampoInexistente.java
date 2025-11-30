@@ -59,6 +59,19 @@ public class ErrorCampoInexistente implements Verificaciones {
 	private String lineaError = "";
 	private String lineaStack = "";
 
+	// Flags para detectar mods específicos
+	private boolean create = false;
+	private boolean epicfight = false;
+	private boolean azurelib = false;
+	private boolean minecraft = false;
+	private boolean dangerzone = false;
+	private boolean featurecreep = false;
+	private boolean modlauncher = false;
+	private boolean minecraftforge = false;
+	private boolean neoforged = false;
+	private boolean fabricloader = false;
+	private boolean pillowmc = false;
+
 	@Override
 	public void verificar(Consola consola) {
 		// Análisis global muy ligero: solo comprobamos si aparece el texto base
@@ -106,6 +119,39 @@ public class ErrorCampoInexistente implements Verificaciones {
 				this.nombreCampoDetectado = nombreCampo;
 				this.lineaError = l.trim();
 				this.enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+
+				// Detectar mods específicos en el stacktrace
+				String[] lineas = consola.contenido_verificar.split(Verificaciones.nl);
+				for (int i = Math.max(0, numero_de_linea - 10); i < Math.min(lineas.length,
+						numero_de_linea + 10); i++) {
+					String stackLine = lineas[i];
+					// Check for both / and . versions of the package names
+					if (stackLine.contains("com/simibubi/create") || stackLine.contains("com.simibubi.create")) {
+						create = true;
+					} else if (stackLine.contains("yesman/epicfight") || stackLine.contains("yesman.epicfight")) {
+						epicfight = true;
+					} else if (stackLine.contains("mod/azure/azurelib") || stackLine.contains("mod.azure.azurelib")) {
+						azurelib = true;
+					} else if (stackLine.contains("net/minecraftforge") || stackLine.contains("net.minecraftforge")) {
+						minecraftforge = true;
+					} else if (stackLine.contains("featurecreep/") || stackLine.contains("featurecreep.")
+							|| stackLine.contains("asbestosstar/") || stackLine.contains("asbestosstar.")) {
+						featurecreep = true;
+					} else if (stackLine.contains("net/fabricmc/") || stackLine.contains("net.fabricmc.")) {
+						fabricloader = true;
+					} else if (stackLine.contains("net/neoforged/") || stackLine.contains("net.neoforged.")) {
+						neoforged = true;
+					} else if (stackLine.contains("net/pillowmc/") || stackLine.contains("net.pillowmc.")) {
+						pillowmc = true;
+					} else if ((stackLine.contains("net/minecraft/") || stackLine.contains("net.minecraft."))
+							&& !stackLine.contains("net/minecraftforge/")
+							&& !stackLine.contains("net.minecraftforge.")) {
+						minecraft = true;
+					} else if (stackLine.contains("dangerzone/") || stackLine.contains("dangerzone.")) {
+						dangerzone = true;
+					}
+				}
+
 				this.activado = true;
 				this.esperandoLineaStack = true;
 				// No construimos el mensaje todavía; se hará en mensaje() para poder incluir
@@ -162,15 +208,49 @@ public class ErrorCampoInexistente implements Verificaciones {
 		// monoespaciado con contexto y enlace
 		StringBuilder sb = new StringBuilder();
 		sb.append(MonitorDePID.idioma.errorCampoInexistente(nombreCampoDetectado, lineaError));
-		sb.append(Verificaciones.nl_html);
-		sb.append("<span style='color:#888888; font-family:monospace;'>");
-		// Mostrar la línea "at ..." si existe
-		if (lineaStack != null && !lineaStack.isEmpty()) {
+		if (!lineaStack.isEmpty()) {
+			sb.append(Verificaciones.nl_html);
+			sb.append("<span style='color:#888888; font-family:monospace;'>");
 			sb.append(escapeHtml(lineaStack));
+			sb.append("</span>");
 		}
-		sb.append("</span>");
 		sb.append(Verificaciones.nl_html);
 		sb.append(enlaceHtml);
+
+		// Agregar mensajes específicos para mods detectados
+		if (create) {
+			sb.append(MonitorDePID.idioma.faltar_de_clases_create());
+		}
+		if (epicfight) {
+			sb.append(MonitorDePID.idioma.faltar_de_clases_epicfight());
+		}
+		if (azurelib) {
+			sb.append(MonitorDePID.idioma.faltar_de_clases_azurelib());
+		}
+		if (minecraft) {
+			sb.append(MonitorDePID.idioma.faltar_de_clases_minecraft());
+		}
+		if (dangerzone) {
+			sb.append(MonitorDePID.idioma.faltar_de_clases_dangerzone());
+		}
+		if (featurecreep) {
+			sb.append(MonitorDePID.idioma.faltar_de_clases_featurecreep());
+		}
+		if (modlauncher) {
+			sb.append(MonitorDePID.idioma.faltar_de_clases_modlauncher());
+		}
+		if (minecraftforge) {
+			sb.append(MonitorDePID.idioma.faltar_de_clases_minecraftforge());
+		}
+		if (neoforged) {
+			sb.append(MonitorDePID.idioma.faltar_de_clases_neoforged());
+		}
+		if (fabricloader) {
+			sb.append(MonitorDePID.idioma.faltar_de_clases_fabricloader());
+		}
+		if (pillowmc) {
+			sb.append(MonitorDePID.idioma.faltar_de_clases_pillowmc());
+		}
 
 		this.mensaje = sb.toString();
 		return mensaje;

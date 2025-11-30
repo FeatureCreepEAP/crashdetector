@@ -4581,5 +4581,29 @@ public class Coreano implements Idioma {
 				+ "<li>설치가 손상되었습니다 (CurseForge 앱, ModrinthApp/Theseus/Astralrinth 등에서 흔함). CurseForge 문제 해결을 위해 <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>튜토리얼 보기</a>.</li>"
 				+ "</ul>" + "<p>참고: 이름에 '/'를 사용하는 경우, 사이드바의 <b>grepr/fgrepr</b> 도구로 누락된 클래스를 참조하는 모드를 찾을 수 있습니다.</p>";
 	}
+	
+	@Override
+	public String uraniumLag() {
+	    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+	        + "의도적으로 렉을 유발하는 모드가 설치되어 있습니다. Uranium은 렉 모드입니다. 항상 오류를 일으키는 것은 아니지만 결국 문제를 일으킬 수 있습니다."
+	        + "</b>";
+	}
+	
+	@Override
+	public String errorFallingAttackVersion() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Falling Attack는 1.19.*와 호환되는 것으로 표시되어 있지만 실제로는 1.20.*용이며, 이로 인해 클래스를 찾을 수 없다는 오류가 발생합니다. "
+	            + "해당 모드는 현재 Minecraft 버전에 존재하지 않는 DamageSources를 사용하려고 시도합니다." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorFallingAttackVersion() {
+	    return "Falling Attack 버전 오류";
+	}
+
+	@Override
+	public String pasoErrorFallingAttackVersion() {
+	    return "사용 중인 Minecraft 버전과 호환되는 올바른 Falling Attack 버전을 사용하고 있는지 확인하세요.";
+	}
 
 }

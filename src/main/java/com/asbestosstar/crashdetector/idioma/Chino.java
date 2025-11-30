@@ -4499,5 +4499,29 @@ public class Chino implements Idioma {
 				+ "<li>你的安装损坏（常见于 CurseForge App、ModrinthApp/Theseus/Astralrinth 等整合包启动器）。<a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>查看教程</a> 以解决 CurseForge 问题。</li>"
 				+ "</ul>" + "<p>注意：只要在名称中使用 '/'，你就可以使用侧边栏中的 <b>grepr/fgrepr</b> 工具来查找引用缺失类的模组。</p>";
 	}
+	
+	@Override
+	public String uraniumLag() {
+	    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+	        + "你安装了一个故意造成卡顿的模组。Uranium 是一个卡顿模组。它并非总会导致崩溃，但最终可能会。"
+	        + "</b>";
+	}
+	
+	@Override
+	public String errorFallingAttackVersion() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Falling Attack 被标记为兼容 1.19.*，但实际是为 1.20.* 设计的，导致出现“类未找到”错误。"
+	            + "该模组尝试使用当前 Minecraft 版本中不存在的 DamageSources。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorFallingAttackVersion() {
+	    return "Falling Attack 版本错误";
+	}
+
+	@Override
+	public String pasoErrorFallingAttackVersion() {
+	    return "请确保你使用的 Falling Attack 版本与你的 Minecraft 版本兼容。";
+	}
 
 }

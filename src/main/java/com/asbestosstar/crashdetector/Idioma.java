@@ -1844,4 +1844,12 @@ public interface Idioma {
 
 	public String faltar_de_clases_pillowmc();
 
+	public String uraniumLag();
+
+	public String errorFallingAttackVersion();
+
+	public String nombreDeErrorFallingAttackVersion();
+
+	public String pasoErrorFallingAttackVersion();
+
 }

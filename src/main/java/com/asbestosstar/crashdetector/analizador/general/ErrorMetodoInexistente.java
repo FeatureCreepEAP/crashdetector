@@ -23,6 +23,19 @@ public class ErrorMetodoInexistente implements Verificaciones {
 	private String firmaMetodo = "";
 	private String lineaSiguiente = "";
 
+	// Flags para detectar mods específicos
+	private boolean create = false;
+	private boolean epicfight = false;
+	private boolean azurelib = false;
+	private boolean minecraft = false;
+	private boolean dangerzone = false;
+	private boolean featurecreep = false;
+	private boolean modlauncher = false;
+	private boolean minecraftforge = false;
+	private boolean neoforged = false;
+	private boolean fabricloader = false;
+	private boolean pillowmc = false;
+
 	@Override
 	public void verificar(Consola consola, String linea, int numLinea) {
 		if (activado)
@@ -42,10 +55,39 @@ public class ErrorMetodoInexistente implements Verificaciones {
 					}
 				}
 
+				// Detectar mods específicos en el stacktrace
+				for (int i = Math.max(0, numLinea - 10); i < Math.min(lineas.length, numLinea + 10); i++) {
+					String l = lineas[i];
+					// Check for both / and . versions of the package names
+					if (l.contains("com/simibubi/create") || l.contains("com.simibubi.create")) {
+						create = true;
+					} else if (l.contains("yesman/epicfight") || l.contains("yesman.epicfight")) {
+						epicfight = true;
+					} else if (l.contains("mod/azure/azurelib") || l.contains("mod.azure.azurelib")) {
+						azurelib = true;
+					} else if (l.contains("net/minecraftforge") || l.contains("net.minecraftforge")) {
+						minecraftforge = true;
+					} else if (l.contains("featurecreep/") || l.contains("featurecreep.") || l.contains("asbestosstar/")
+							|| l.contains("asbestosstar.")) {
+						featurecreep = true;
+					} else if (l.contains("net/fabricmc/") || l.contains("net.fabricmc.")) {
+						fabricloader = true;
+					} else if (l.contains("net/neoforged/") || l.contains("net.neoforged.")) {
+						neoforged = true;
+					} else if (l.contains("net/pillowmc/") || l.contains("net.pillowmc.")) {
+						pillowmc = true;
+					} else if ((l.contains("net/minecraft/") || l.contains("net.minecraft."))
+							&& !l.contains("net/minecraftforge/") && !l.contains("net.minecraftforge.")) {
+						minecraft = true;
+					} else if (l.contains("dangerzone/") || l.contains("dangerzone.")) {
+						dangerzone = true;
+					}
+				}
+
 				this.enlaceHtml = consola.agregarErrorALectador(numLinea, this);
 				this.activado = true;
 
-				// Solo el mensaje localizado + (opcional) la linea "at ..."
+				// Construir el mensaje con las detecciones de mods
 				StringBuilder sb = new StringBuilder();
 				sb.append(MonitorDePID.idioma.errorMetodoInexistente(firmaMetodo, firmaMetodo));
 				if (!lineaSiguiente.isEmpty()) {
@@ -56,6 +98,42 @@ public class ErrorMetodoInexistente implements Verificaciones {
 				}
 				sb.append(Verificaciones.nl_html);
 				sb.append(enlaceHtml);
+
+				// Agregar mensajes específicos para mods detectados
+				if (create) {
+					sb.append(MonitorDePID.idioma.faltar_de_clases_create());
+				}
+				if (epicfight) {
+					sb.append(MonitorDePID.idioma.faltar_de_clases_epicfight());
+				}
+				if (azurelib) {
+					sb.append(MonitorDePID.idioma.faltar_de_clases_azurelib());
+				}
+				if (minecraft) {
+					sb.append(MonitorDePID.idioma.faltar_de_clases_minecraft());
+				}
+				if (dangerzone) {
+					sb.append(MonitorDePID.idioma.faltar_de_clases_dangerzone());
+				}
+				if (featurecreep) {
+					sb.append(MonitorDePID.idioma.faltar_de_clases_featurecreep());
+				}
+				if (modlauncher) {
+					sb.append(MonitorDePID.idioma.faltar_de_clases_modlauncher());
+				}
+				if (minecraftforge) {
+					sb.append(MonitorDePID.idioma.faltar_de_clases_minecraftforge());
+				}
+				if (neoforged) {
+					sb.append(MonitorDePID.idioma.faltar_de_clases_neoforged());
+				}
+				if (fabricloader) {
+					sb.append(MonitorDePID.idioma.faltar_de_clases_fabricloader());
+				}
+				if (pillowmc) {
+					sb.append(MonitorDePID.idioma.faltar_de_clases_pillowmc());
+				}
+
 				this.mensaje = sb.toString();
 			}
 		}

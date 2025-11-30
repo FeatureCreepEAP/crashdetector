@@ -4788,5 +4788,32 @@ public class Ingles implements Idioma {
 				+ "</ul>"
 				+ "<p>Note: You can use the <b>grepr/fgrepr</b> tool in the sidebar to find mods that reference the missing classes, as long as you use '/' in the names.</p>";
 	}
+	
+	@Override
+	public String uraniumLag() {
+	    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+	        + "You have a mod that is intentionally causing lag. Uranium is a lag mod. It does not always cause crashes, but it eventually may."
+	        + "</b>";
+	}
+	@Override
+	public String errorFallingAttackVersion() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Falling Attack is marked as compatible with 1.19.* but is actually for 1.20.*, causing a 'class not found' error. "
+	            + "The mod attempts to use DamageSources that do not exist in your current Minecraft version." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorFallingAttackVersion() {
+	    return "Falling Attack version error";
+	}
+
+	@Override
+	public String pasoErrorFallingAttackVersion() {
+	    return "Ensure you are using the correct version of Falling Attack compatible with your Minecraft version.";
+	}
+	
+	
+	
+	
 
 }

@@ -235,7 +235,12 @@ public class Analizador {
 		verificaciones.add(new ErrorVersionClaseGregTechEasyCore());
 		verificaciones.add(new ConflictoMoniLabsConnectorExtras());
 		verificaciones.add(new ErrorCompatibilidadIrisDH());
+		verificaciones.add(new UraniumLag());
+		verificaciones.add(new ErrorFallingAttackVersion());
 
+		
+		
+		
 		verificaciones.addAll(CargadorDeCodice.cargarVerificaciones());
 
 		CrashDetectorLogger.log("Número de códices " + String.valueOf(CargadorDeCodice.cargarVerificaciones().size()));

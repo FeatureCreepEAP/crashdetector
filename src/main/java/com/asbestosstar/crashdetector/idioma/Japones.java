@@ -4590,5 +4590,30 @@ public class Japones implements Idioma {
 				+ "<li>インストールが破損しています（CurseForge App、ModrinthApp/Theseus/Astralrinth などの modpack ランチャーでよく発生します）。CurseForge の問題解決には<a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>チュートリアルを視聴</a>してください。</li>"
 				+ "</ul>" + "<p>注: 名前に '/' を使用している場合、サイドバーの <b>grepr/fgrepr</b> ツールで不足しているクラスを参照している mod を特定できます。</p>";
 	}
+	
+	@Override
+	public String uraniumLag() {
+	    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+	        + "意図的にラグを引き起こす mod がインストールされています。Uranium はラグ mod です。常にクラッシュするわけではありませんが、最終的にはクラッシュする可能性があります。"
+	        + "</b>";
+	}
+	
+	
+	@Override
+	public String errorFallingAttackVersion() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Falling Attack は 1.19.* 互換と表示されていますが、実際には 1.20.* 用のため、「クラスが見つかりません」エラーが発生します。"
+	            + "この mod は、現在使用中の Minecraft バージョンに存在しない DamageSources を使用しようとします。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorFallingAttackVersion() {
+	    return "Falling Attack のバージョンエラー";
+	}
+
+	@Override
+	public String pasoErrorFallingAttackVersion() {
+	    return "使用中の Minecraft バージョンと互換性のある正しいバージョンの Falling Attack を使用していることを確認してください。";
+	}
 
 }
