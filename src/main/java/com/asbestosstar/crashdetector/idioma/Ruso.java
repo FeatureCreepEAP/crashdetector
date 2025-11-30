@@ -4611,6 +4611,144 @@ public class Ruso implements Idioma {
 	    return "Проверьте настройки Early Window и рассмотрите возможность использования другой версии LWJGL или проверки модов, связанных с ранним окном.";
 	}
 	
+	@Override
+	public String errorVersionClaseGregTechEasyCore() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "GregTechEasyCore предназначен только для определённого модпака и не должен использоваться в обычных установках, так как вызывает проблему." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorVersionClaseGregTechEasyCore() {
+	    return "GregTechEasyCore с несовместимой версией Java";
+	}
+
+	@Override
+	public String pasoErrorVersionClaseGregTechEasyCore() {
+	    return "Удалите GregTechEasyCore, так как он предназначен только для определённого модпака и несовместим с вашей обычной установкой.";
+	}
+	
+	@Override
+	public String errorConflictoMoniLabsConnectorExtras() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Обнаружен конфликт между MoniLabs и Connector Extras, связанный с изменениями в KubeJS. "
+	            + "Эти моды несовместимы в своих модификациях KubeJS." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoMoniLabsConnectorExtras() {
+	    return "Конфликт MoniLabs и Connector Extras";
+	}
+
+	@Override
+	public String pasoConflictoMoniLabsConnectorExtras() {
+	    return "Попробуйте удалить один из модов (MoniLabs или Connector Extras), так как их изменения в KubeJS конфликтуют.";
+	}
+	
+	@Override
+	public String errorCompatibilidadIrisDH() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Iris требует Distant Horizons [2.0.4] или DH API версии [1.1.0] или новее. "
+	            + "Ознакомьтесь с руководством по совместимости по адресу https://gist.github.com/Steveplays28/52db568f297ded527da56dbe6deeec0e, чтобы устранить проблему." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorCompatibilidadIrisDH() {
+	    return "Совместимость Iris и Distant Horizons";
+	}
+
+	@Override
+	public String pasoErrorCompatibilidadIrisDH() {
+	    return "Ознакомьтесь с руководством по совместимости по адресу https://gist.github.com/Steveplays28/52db568f297ded527da56dbe6deeec0e и обновите Iris и Distant Horizons до совместимых версий.";
+	}
+	
+	@Override
+	public String faltar_de_clases_minecraft() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>Отсутствуют классы Minecraft. Возможные причины:</b>"
+	        + "<ul>"
+	        + "<li>У вас установлены моды для других версий игры. Вы можете воспользоваться <a href='https://wagyourtail.xyz/Projects/MinecraftMappingViewer' target='_blank'>MinecraftMappingViewer</a>, чтобы проверить, существует ли класс в вашей версии.</li>"
+	        + "<li>У вас повреждённая установка Minecraft (часто встречается при использовании CurseForge App, ModrinthApp/Theseus/Astralrinth и других лаунчеров модпаков). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Смотрите руководство</a> по устранению проблем с CurseForge.</li>"
+	        + "<li>У вас неисправный coremod (при сбое coremod может блокировать загрузку класса).</li>"
+	        + "</ul>"
+	        + "<p>Примечание: вы можете использовать инструмент <b>grepr/fgrepr</b> на боковой панели, чтобы найти моды, ссылающиеся на отсутствующие классы, при условии, что в именах используется '/'.</p>";
+	}
+
+	@Override
+	public String faltar_de_clases_dangerzone() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>Отсутствуют классы DangerZone. Возможные причины:</b>"
+	        + "<ul>"
+	        + "<li>У вас установлены моды для других версий игры.</li>"
+	        + "<li>У вас неисправные coremod'ы.</li>"
+	        + "<li>У вас повреждён лаунчер или установка.</li>"
+	        + "</ul>"
+	        + "<p>Примечание: вы можете использовать инструмент <b>grepr/fgrepr</b> на боковой панели, чтобы найти моды, ссылающиеся на отсутствующие классы, при условии, что в именах используется '/'.</p>";
+	}
+	
+	@Override
+	public String faltar_de_clases_featurecreep() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>Отсутствуют классы FeatureCreep. Возможные причины:</b>"
+	        + "<ul>"
+	        + "<li>У вас установлены моды для других версий FeatureCreep (например: ESR против Nightly или v4 против v12).</li>"
+	        + "<li>Вы можете установить FeatureCreep с CurseForge или MinecraftStorage.</li>"
+	        + "</ul>"
+	        + "<p>Примечание: вы можете использовать инструмент <b>grepr/fgrepr</b> на боковой панели, чтобы найти моды, ссылающиеся на отсутствующие классы, при условии, что в именах используется '/'.</p>";
+	}
+
+	@Override
+	public String faltar_de_clases_modlauncher() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>Отсутствуют классы ModLauncher. Возможные причины:</b>"
+	        + "<ul>"
+	        + "<li>Ваши моды предназначены для другой сборки MinecraftForge, PillowMC или NeoForge (ModLauncher используется с этими загрузчиками).</li>"
+	        + "<li>Для одной версии Minecraft существует множество обновлений modloader'ов.</li>"
+	        + "<li>У вас повреждённая установка лаунчера (часто встречается при использовании CurseForge App, ModrinthApp/Theseus/Astralrinth и других лаунчеров модпаков). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Смотрите руководство</a> по устранению проблем с CurseForge.</li>"
+	        + "</ul>"
+	        + "<p>Примечание: вы можете использовать инструмент <b>grepr/fgrepr</b> на боковой панели, чтобы найти моды, ссылающиеся на отсутствующие классы, при условии, что в именах используется '/'.</p>";
+	}
+	
+	@Override
+	public String faltar_de_clases_minecraftforge() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>Отсутствуют классы Minecraft Forge. Возможные причины:</b>"
+	        + "<ul>"
+	        + "<li>Ваши моды предназначены для другой сборки MinecraftForge.</li>"
+	        + "<li>Для одной версии Minecraft существует множество обновлений modloader'ов.</li>"
+	        + "<li>У вас повреждённая установка (часто встречается при использовании CurseForge App, ModrinthApp/Theseus/Astralrinth и других лаунчеров модпаков). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Смотрите руководство</a> по устранению проблем с CurseForge.</li>"
+	        + "</ul>"
+	        + "<p>Примечание: вы можете использовать инструмент <b>grepr/fgrepr</b> на боковой панели, чтобы найти моды, ссылающиеся на отсутствующие классы, при условии, что в именах используется '/'.</p>";
+	}
+
+	@Override
+	public String faltar_de_clases_neoforged() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>Отсутствуют классы NeoForge. Возможные причины:</b>"
+	        + "<ul>"
+	        + "<li>Ваши моды предназначены для другой сборки NeoForge.</li>"
+	        + "<li>Для одной версии Minecraft существует множество обновлений modloader'ов.</li>"
+	        + "<li>У вас повреждённая установка (часто встречается при использовании CurseForge App, ModrinthApp/Theseus/Astralrinth и других лаунчеров модпаков). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Смотрите руководство</a> по устранению проблем с CurseForge.</li>"
+	        + "</ul>"
+	        + "<p>Примечание: вы можете использовать инструмент <b>grepr/fgrepr</b> на боковой панели, чтобы найти моды, ссылающиеся на отсутствующие классы, при условии, что в именах используется '/'.</p>";
+	}
+	
+	@Override
+	public String faltar_de_clases_fabricloader() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>Отсутствуют классы Fabric Loader. Возможные причины:</b>"
+	        + "<ul>"
+	        + "<li>Ваши моды предназначены для другой сборки Fabric Loader.</li>"
+	        + "<li>Для одной версии Minecraft существует множество обновлений modloader'ов.</li>"
+	        + "<li>У вас повреждённая установка (часто встречается при использовании CurseForge App, ModrinthApp/Theseus/Astralrinth и других лаунчеров модпаков). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Смотрите руководство</a> по устранению проблем с CurseForge.</li>"
+	        + "<li>Многим модам требуется Fabric API. Установите Fabric API, если это необходимо.</li>"
+	        + "</ul>"
+	        + "<p>Примечание: вы можете использовать инструмент <b>grepr/fgrepr</b> на боковой панели, чтобы найти моды, ссылающиеся на отсутствующие классы, при условии, что в именах используется '/'.</p>";
+	}
+
+	@Override
+	public String faltar_de_clases_pillowmc() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>Отсутствуют классы PillowMC. Возможные причины:</b>"
+	        + "<ul>"
+	        + "<li>Ваши моды предназначены для другой сборки PillowMC.</li>"
+	        + "<li>Для одной версии Minecraft существует множество обновлений modloader'ов.</li>"
+	        + "<li>У вас повреждённая установка (часто встречается при использовании CurseForge App, ModrinthApp/Theseus/Astralrinth и других лаунчеров модпаков). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Смотрите руководство</a> по устранению проблем с CurseForge.</li>"
+	        + "</ul>"
+	        + "<p>Примечание: вы можете использовать инструмент <b>grepr/fgrepr</b> на боковой панели, чтобы найти моды, ссылающиеся на отсутствующие классы, при условии, что в именах используется '/'.</p>";
+	}
+	
 	
 	
 	

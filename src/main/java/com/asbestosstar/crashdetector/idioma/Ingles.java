@@ -4636,6 +4636,143 @@ public String advertenciaMalwareFalso() {
 	    return "Check your Early Window settings and consider using a different version of LWJGL or reviewing mods related to early windowing.";
 	}
 	
+	@Override
+	public String errorVersionClaseGregTechEasyCore() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "GregTechEasyCore is only for a specific modpack and should not be used in general installations, as it causes an issue." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorVersionClaseGregTechEasyCore() {
+	    return "GregTechEasyCore with incompatible Java version";
+	}
+
+	@Override
+	public String pasoErrorVersionClaseGregTechEasyCore() {
+	    return "Remove GregTechEasyCore, as it is only for a specific modpack and is not compatible with your general installation.";
+	}
+	
+	@Override
+	public String errorConflictoMoniLabsConnectorExtras() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "A conflict has been detected between MoniLabs and Connector Extras related to KubeJS modifications. "
+	            + "These mods are incompatible in their KubeJS modifications." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoMoniLabsConnectorExtras() {
+	    return "MoniLabs and Connector Extras Conflict";
+	}
+
+	@Override
+	public String pasoConflictoMoniLabsConnectorExtras() {
+	    return "Try uninstalling one of the mods (MoniLabs or Connector Extras) as they conflict in their KubeJS modifications.";
+	}
+	
+	@Override
+	public String errorCompatibilidadIrisDH() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Iris requires Distant Horizons [2.0.4] or DH API version [1.1.0] or newer. "
+	            + "See the compatibility guide at https://gist.github.com/Steveplays28/52db568f297ded527da56dbe6deeec0e to resolve the issue." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorCompatibilidadIrisDH() {
+	    return "Iris and Distant Horizons Compatibility";
+	}
+
+	@Override
+	public String pasoErrorCompatibilidadIrisDH() {
+	    return "Consult the compatibility guide at https://gist.github.com/Steveplays28/52db568f297ded527da56dbe6deeec0e and update Iris and Distant Horizons to compatible versions.";
+	}
+	
+	@Override
+	public String faltar_de_clases_minecraft() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>You are missing Minecraft classes. Possible reasons:</b>"
+	        + "<ul>"
+	        + "<li>You have mods for other versions of the game. You can use <a href='https://wagyourtail.xyz/Projects/MinecraftMappingViewer' target='_blank'>MinecraftMappingViewer</a> to check if the class exists in your version.</li>"
+	        + "<li>You have a corrupted Minecraft installation (common with CurseForge App, ModrinthApp/Theseus/Astralrinth and other modpack launchers). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Watch tutorial</a> to troubleshoot CurseForge issues.</li>"
+	        + "<li>You have a faulty coremod (if a coremod fails, it may block class loading).</li>"
+	        + "</ul>"
+	        + "<p>Note: You can use the <b>grepr/fgrepr</b> tool in the sidebar to find mods that reference the missing classes, as long as you use '/' in the names.</p>";
+	}
+
+	@Override
+	public String faltar_de_clases_dangerzone() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>You are missing DangerZone classes. Possible reasons:</b>"
+	        + "<ul>"
+	        + "<li>You have mods for other versions of the game.</li>"
+	        + "<li>You have faulty coremods.</li>"
+	        + "<li>You have a corrupted launcher or installation.</li>"
+	        + "</ul>"
+	        + "<p>Note: You can use the <b>grepr/fgrepr</b> tool in the sidebar to find mods that reference the missing classes, as long as you use '/' in the names.</p>";
+	}
+	
+	
+	@Override
+	public String faltar_de_clases_featurecreep() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>You are missing FeatureCreep classes. Possible reasons:</b>"
+	        + "<ul>"
+	        + "<li>You have mods for other versions of FeatureCreep (e.g. ESR vs Nightly or v4 vs v12).</li>"
+	        + "<li>You can install FeatureCreep from CurseForge or MinecraftStorage.</li>"
+	        + "</ul>"
+	        + "<p>Note: You can use the <b>grepr/fgrepr</b> tool in the sidebar to find mods that reference the missing classes, as long as you use '/' in the names.</p>";
+	}
+
+	@Override
+	public String faltar_de_clases_modlauncher() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>You are missing ModLauncher classes. Possible reasons:</b>"
+	        + "<ul>"
+	        + "<li>Your mods are for a different build of MinecraftForge, PillowMC or NeoForge (ModLauncher is used with these loaders).</li>"
+	        + "<li>There are many modloader updates for a single Minecraft version.</li>"
+	        + "<li>You have a corrupted launcher installation (common with CurseForge App, ModrinthApp/Theseus/Astralrinth and other modpack launchers). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Watch tutorial</a> to troubleshoot CurseForge issues.</li>"
+	        + "</ul>"
+	        + "<p>Note: You can use the <b>grepr/fgrepr</b> tool in the sidebar to find mods that reference the missing classes, as long as you use '/' in the names.</p>";
+	}
+	
+	@Override
+	public String faltar_de_clases_minecraftforge() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>You are missing Minecraft Forge classes. Possible reasons:</b>"
+	        + "<ul>"
+	        + "<li>Your mods are for a different build of MinecraftForge.</li>"
+	        + "<li>There are many modloader updates for a single Minecraft version.</li>"
+	        + "<li>You have a corrupted installation (common with CurseForge App, ModrinthApp/Theseus/Astralrinth and other modpack launchers). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Watch tutorial</a> to troubleshoot CurseForge issues.</li>"
+	        + "</ul>"
+	        + "<p>Note: You can use the <b>grepr/fgrepr</b> tool in the sidebar to find mods that reference the missing classes, as long as you use '/' in the names.</p>";
+	}
+
+	@Override
+	public String faltar_de_clases_neoforged() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>You are missing NeoForge classes. Possible reasons:</b>"
+	        + "<ul>"
+	        + "<li>Your mods are for a different build of NeoForge.</li>"
+	        + "<li>There are many modloader updates for a single Minecraft version.</li>"
+	        + "<li>You have a corrupted installation (common with CurseForge App, ModrinthApp/Theseus/Astralrinth and other modpack launchers). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Watch tutorial</a> to troubleshoot CurseForge issues.</li>"
+	        + "</ul>"
+	        + "<p>Note: You can use the <b>grepr/fgrepr</b> tool in the sidebar to find mods that reference the missing classes, as long as you use '/' in the names.</p>";
+	}
+	@Override
+	public String faltar_de_clases_fabricloader() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>You are missing Fabric Loader classes. Possible reasons:</b>"
+	        + "<ul>"
+	        + "<li>Your mods are for a different build of Fabric Loader.</li>"
+	        + "<li>There are many modloader updates for a single Minecraft version.</li>"
+	        + "<li>You have a corrupted installation (common with CurseForge App, ModrinthApp/Theseus/Astralrinth and other modpack launchers). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Watch tutorial</a> to troubleshoot CurseForge issues.</li>"
+	        + "<li>Many mods require Fabric API. Please install Fabric API if needed.</li>"
+	        + "</ul>"
+	        + "<p>Note: You can use the <b>grepr/fgrepr</b> tool in the sidebar to find mods that reference the missing classes, as long as you use '/' in the names.</p>";
+	}
+
+	@Override
+	public String faltar_de_clases_pillowmc() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>You are missing PillowMC classes. Possible reasons:</b>"
+	        + "<ul>"
+	        + "<li>Your mods are for a different build of PillowMC.</li>"
+	        + "<li>There are many modloader updates for a single Minecraft version.</li>"
+	        + "<li>You have a corrupted installation (common with CurseForge App, ModrinthApp/Theseus/Astralrinth and other modpack launchers). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Watch tutorial</a> to troubleshoot CurseForge issues.</li>"
+	        + "</ul>"
+	        + "<p>Note: You can use the <b>grepr/fgrepr</b> tool in the sidebar to find mods that reference the missing classes, as long as you use '/' in the names.</p>";
+	}
 	
 	
 	

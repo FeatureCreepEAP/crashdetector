@@ -998,6 +998,15 @@ public class VerificacionDeStackTrace {
 		if (jarName.startsWith("forge-")) {
 			return true;
 		}
+		
+		if (jarName.startsWith("ForgeWrapper")) {
+			return true;
+		}
+		
+		if (jarName.startsWith("NewLaunch")) {
+			return true;
+		}
+		
 		if (jarName.contains("fmlcore")) {
 			return true;
 		}

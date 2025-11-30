@@ -4403,8 +4403,125 @@ public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves
 	    return "检查 Early Window 设置，并考虑使用其他版本的 LWJGL，或检查与早期窗口相关的模组。";
 	}
 	
+	@Override
+	public String errorVersionClaseGregTechEasyCore() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "GregTechEasyCore 仅适用于特定的整合包（modpack），不应在通用安装中使用，否则会导致问题。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorVersionClaseGregTechEasyCore() {
+	    return "GregTechEasyCore 与 Java 版本不兼容";
+	}
+
+	@Override
+	public String pasoErrorVersionClaseGregTechEasyCore() {
+	    return "请移除 GregTechEasyCore，因为它仅适用于特定整合包，与你的通用安装不兼容。";
+	}
+	
+	@Override
+	public String errorConflictoMoniLabsConnectorExtras() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "检测到 MoniLabs 与 Connector Extras 之间存在与 KubeJS 修改相关的冲突。 "
+	            + "这些模组在 KubeJS 修改方面不兼容。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoMoniLabsConnectorExtras() {
+	    return "MoniLabs 与 Connector Extras 冲突";
+	}
+
+	@Override
+	public String pasoConflictoMoniLabsConnectorExtras() {
+	    return "尝试卸载其中一个模组（MoniLabs 或 Connector Extras），因为它们的 KubeJS 修改存在冲突。";
+	}
+	
+	@Override
+	public String errorCompatibilidadIrisDH() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Iris 需要 Distant Horizons [2.0.4] 或 DH API 版本 [1.1.0] 或更高版本。"
+	            + "请查阅兼容性指南：https://gist.github.com/Steveplays28/52db568f297ded527da56dbe6deeec0e 以解决问题。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorCompatibilidadIrisDH() {
+	    return "Iris 与 Distant Horizons 兼容性";
+	}
+
+	@Override
+	public String pasoErrorCompatibilidadIrisDH() {
+	    return "请查阅兼容性指南 https://gist.github.com/Steveplays28/52db568f297ded527da56dbe6deeec0e，并将 Iris 和 Distant Horizons 更新至兼容版本。";
+	}
+	
+	@Override
+	public String faltar_de_clases_minecraft() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>你缺少 Minecraft 的类文件。可能原因：</b>"
+	        + "<ul>"
+	        + "<li>你安装了适用于其他游戏版本的模组。你可以使用 <a href='https://wagyourtail.xyz/Projects/MinecraftMappingViewer' target='_blank'>MinecraftMappingViewer</a> 来确认该类是否存在于你的版本中。</li>"
+	        + "<li>你的 Minecraft 安装损坏（常见于 CurseForge App、ModrinthApp/Theseus/Astralrinth 及其他整合包启动器）。<a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>查看教程</a> 以解决 CurseForge 问题。</li>"
+	        + "<li>你有一个损坏的 coremod（coremod 失败可能会阻止类的加载）。</li>"
+	        + "</ul>"
+	        + "<p>注意：只要在名称中使用 '/'，你就可以使用侧边栏中的 <b>grepr/fgrepr</b> 工具来查找引用缺失类的模组。</p>";
+	}
+
+	@Override
+	public String faltar_de_clases_dangerzone() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>你缺少 DangerZone 的类文件。可能原因：</b>"
+	        + "<ul>"
+	        + "<li>你安装了适用于其他游戏版本的模组。</li>"
+	        + "<li>你有损坏的 coremod。</li>"
+	        + "<li>你的启动器或安装损坏。</li>"
+	        + "</ul>"
+	        + "<p>注意：只要在名称中使用 '/'，你就可以使用侧边栏中的 <b>grepr/fgrepr</b> 工具来查找引用缺失类的模组。</p>";
+	}
+	
+	@Override public String faltar_de_clases_featurecreep() { return "<b style='color:#" + config.obtenerColorError() + "'>你缺少 FeatureCreep 的类文件。可能原因：</b>" + "<ul>" + "<li>你安装了适用于其他版本 FeatureCreep 的模组（例如：ESR 与 Nightly，或 v4 与 v12）。</li>" + "<li>你可以从 CurseForge 或 MinecraftStorage 安装 FeatureCreep。</li>" + "</ul>" + "<p>注意：只要在名称中使用 '/'，你就可以使用侧边栏中的 <b>grepr/fgrepr</b> 工具来查找引用缺失类的模组。</p>"; } @Override public String faltar_de_clases_modlauncher() { return "<b style='color:#" + config.obtenerColorError() + "'>你缺少 ModLauncher 的类文件。可能原因：</b>" + "<ul>" + "<li>你的模组适用于不同版本的 MinecraftForge、PillowMC 或 NeoForge（ModLauncher 用于这些加载器）。</li>" + "<li>Minecraft 的每个版本都有大量 modloader 更新。</li>" + "<li>你的启动器安装损坏（常见于 CurseForge App、ModrinthApp/Theseus/Astralrinth 等整合包启动器）。<a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>查看教程</a> 以解决 CurseForge 问题。</li>" + "</ul>" + "<p>注意：只要在名称中使用 '/'，你就可以使用侧边栏中的 <b>grepr/fgrepr</b> 工具来查找引用缺失类的模组。</p>"; }
 	
 	
+	@Override
+	public String faltar_de_clases_minecraftforge() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>你缺少 Minecraft Forge 的类文件。可能原因：</b>"
+	        + "<ul>"
+	        + "<li>你的模组适用于不同版本的 MinecraftForge。</li>"
+	        + "<li>Minecraft 的每个版本都有大量 modloader 更新。</li>"
+	        + "<li>你的安装损坏（常见于 CurseForge App、ModrinthApp/Theseus/Astralrinth 等整合包启动器）。<a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>查看教程</a> 以解决 CurseForge 问题。</li>"
+	        + "</ul>"
+	        + "<p>注意：只要在名称中使用 '/'，你就可以使用侧边栏中的 <b>grepr/fgrepr</b> 工具来查找引用缺失类的模组。</p>";
+	}
+
+	@Override
+	public String faltar_de_clases_neoforged() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>你缺少 NeoForge 的类文件。可能原因：</b>"
+	        + "<ul>"
+	        + "<li>你的模组适用于不同版本的 NeoForge。</li>"
+	        + "<li>Minecraft 的每个版本都有大量 modloader 更新。</li>"
+	        + "<li>你的安装损坏（常见于 CurseForge App、ModrinthApp/Theseus/Astralrinth 等整合包启动器）。<a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>查看教程</a> 以解决 CurseForge 问题。</li>"
+	        + "</ul>"
+	        + "<p>注意：只要在名称中使用 '/'，你就可以使用侧边栏中的 <b>grepr/fgrepr</b> 工具来查找引用缺失类的模组。</p>";
+	}
+	
+	@Override
+	public String faltar_de_clases_fabricloader() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>你缺少 Fabric Loader 的类文件。可能原因：</b>"
+	        + "<ul>"
+	        + "<li>你的模组适用于不同版本的 Fabric Loader。</li>"
+	        + "<li>Minecraft 的每个版本都有大量 modloader 更新。</li>"
+	        + "<li>你的安装损坏（常见于 CurseForge App、ModrinthApp/Theseus/Astralrinth 等整合包启动器）。<a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>查看教程</a> 以解决 CurseForge 问题。</li>"
+	        + "<li>许多模组需要 Fabric API。如需要，请安装 Fabric API。</li>"
+	        + "</ul>"
+	        + "<p>注意：只要在名称中使用 '/'，你就可以使用侧边栏中的 <b>grepr/fgrepr</b> 工具来查找引用缺失类的模组。</p>";
+	}
+
+	@Override
+	public String faltar_de_clases_pillowmc() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>你缺少 PillowMC 的类文件。可能原因：</b>"
+	        + "<ul>"
+	        + "<li>你的模组适用于不同版本的 PillowMC。</li>"
+	        + "<li>Minecraft 的每个版本都有大量 modloader 更新。</li>"
+	        + "<li>你的安装损坏（常见于 CurseForge App、ModrinthApp/Theseus/Astralrinth 等整合包启动器）。<a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>查看教程</a> 以解决 CurseForge 问题。</li>"
+	        + "</ul>"
+	        + "<p>注意：只要在名称中使用 '/'，你就可以使用侧边栏中的 <b>grepr/fgrepr</b> 工具来查找引用缺失类的模组。</p>";
+	}
 	
 	
 	

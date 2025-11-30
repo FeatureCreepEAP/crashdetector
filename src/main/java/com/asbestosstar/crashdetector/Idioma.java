@@ -1810,4 +1810,38 @@ public interface Idioma {
 
 	public String pasoErrorStackSmashingDetected();
 
+	public String errorVersionClaseGregTechEasyCore();
+
+	public String nombreDeErrorVersionClaseGregTechEasyCore();
+
+	public String pasoErrorVersionClaseGregTechEasyCore();
+
+	public String errorConflictoMoniLabsConnectorExtras();
+
+	public String nombreDeConflictoMoniLabsConnectorExtras();
+
+	public String pasoConflictoMoniLabsConnectorExtras();
+
+	public String pasoErrorCompatibilidadIrisDH();
+
+	public String nombreDeErrorCompatibilidadIrisDH();
+
+	public String errorCompatibilidadIrisDH();
+
+	public String faltar_de_clases_minecraft();
+
+	public String faltar_de_clases_dangerzone();
+
+	public String faltar_de_clases_featurecreep();
+
+	public String faltar_de_clases_modlauncher();
+
+	public String faltar_de_clases_minecraftforge();
+
+	public String faltar_de_clases_neoforged();
+
+	public String faltar_de_clases_fabricloader();
+
+	public String faltar_de_clases_pillowmc();
+
 }

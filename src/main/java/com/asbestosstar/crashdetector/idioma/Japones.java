@@ -4476,6 +4476,144 @@ public String advertenciaMalwareFalso() {
 	    return "Early Window の設定を確認し、別のバージョンの LWJGL を使用するか、早期ウィンドウ関連の mod を見直してください。";
 	}
 	
+	@Override
+	public String errorVersionClaseGregTechEasyCore() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "GregTechEasyCore は特定の modpack 専用であり、汎用インストールで使用してはいけません。使用すると問題が発生します。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorVersionClaseGregTechEasyCore() {
+	    return "Java バージョンと非互換の GregTechEasyCore";
+	}
+
+	@Override
+	public String pasoErrorVersionClaseGregTechEasyCore() {
+	    return "GregTechEasyCore を削除してください。これは特定の modpack 専用であり、あなたの汎用インストールと互換性がありません。";
+	}
+	
+	@Override
+	public String errorConflictoMoniLabsConnectorExtras() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "MoniLabs と Connector Extras の間で、KubeJS の改造に関連する競合が検出されました。 "
+	            + "これらの mod は、KubeJS の改造内容が互換性ありません。" + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoMoniLabsConnectorExtras() {
+	    return "MoniLabs と Connector Extras の競合";
+	}
+
+	@Override
+	public String pasoConflictoMoniLabsConnectorExtras() {
+	    return "KubeJS の改造内容が競合しているため、MoniLabs または Connector Extras のいずれかをアンインストールしてください。";
+	}
+	
+	@Override
+	public String errorCompatibilidadIrisDH() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Iris には Distant Horizons [2.0.4] または DH API バージョン [1.1.0] 以降が必要です。"
+	            + "問題を解決するには、互換性ガイドをご確認ください: https://gist.github.com/Steveplays28/52db568f297ded527da56dbe6deeec0e" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorCompatibilidadIrisDH() {
+	    return "Iris と Distant Horizons の互換性";
+	}
+
+	@Override
+	public String pasoErrorCompatibilidadIrisDH() {
+	    return "互換性ガイド（https://gist.github.com/Steveplays28/52db568f297ded527da56dbe6deeec0e）を確認し、Iris および Distant Horizons を互換バージョンに更新してください。";
+	}
+	
+	@Override
+	public String faltar_de_clases_minecraft() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>Minecraft のクラスが不足しています。考えられる原因:</b>"
+	        + "<ul>"
+	        + "<li>ゲームの他のバージョン向けの mod を使用しています。<a href='https://wagyourtail.xyz/Projects/MinecraftMappingViewer' target='_blank'>MinecraftMappingViewer</a> を使って、そのクラスがあなたのバージョンに存在するか確認できます。</li>"
+	        + "<li>Minecraft のインストールが破損しています（CurseForge App、ModrinthApp/Theseus/Astralrinth などの modpack ランチャーでよく発生します）。CurseForge の問題解決には<a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>チュートリアルを視聴</a>してください。</li>"
+	        + "<li>不具合のある coremod があります（coremod が失敗すると、クラスの読み込みをブロックする可能性があります）。</li>"
+	        + "</ul>"
+	        + "<p>注: 名前に '/' を使用している場合、サイドバーの <b>grepr/fgrepr</b> ツールで不足しているクラスを参照している mod を特定できます。</p>";
+	}
+
+	@Override
+	public String faltar_de_clases_dangerzone() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>DangerZone のクラスが不足しています。考えられる原因:</b>"
+	        + "<ul>"
+	        + "<li>ゲームの他のバージョン向けの mod を使用しています。</li>"
+	        + "<li>不具合のある coremod があります。</li>"
+	        + "<li>ランチャーやインストールが破損しています。</li>"
+	        + "</ul>"
+	        + "<p>注: 名前に '/' を使用している場合、サイドバーの <b>grepr/fgrepr</b> ツールで不足しているクラスを参照している mod を特定できます。</p>";
+	}
+	
+	@Override
+	public String faltar_de_clases_featurecreep() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>FeatureCreep のクラスが不足しています。考えられる原因:</b>"
+	        + "<ul>"
+	        + "<li>他のバージョンの FeatureCreep 向けの mod を使用しています（例: ESR と Nightly、または v4 と v12）。</li>"
+	        + "<li>CurseForge または MinecraftStorage から FeatureCreep をインストールできます。</li>"
+	        + "</ul>"
+	        + "<p>注: 名前に '/' を使用している場合、サイドバーの <b>grepr/fgrepr</b> ツールで不足しているクラスを参照している mod を特定できます。</p>";
+	}
+
+	@Override
+	public String faltar_de_clases_modlauncher() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>ModLauncher のクラスが不足しています。考えられる原因:</b>"
+	        + "<ul>"
+	        + "<li>mod が MinecraftForge、PillowMC、または NeoForge の別のビルド向けになっています（ModLauncher はこれらのローダーで使用されます）。</li>"
+	        + "<li>Minecraft の1つのバージョンに対し、多数の modloader 更新があります。</li>"
+	        + "<li>ランチャーのインストールが破損しています（CurseForge App、ModrinthApp/Theseus/Astralrinth などの modpack ランチャーでよく発生します）。CurseForge の問題解決には<a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>チュートリアルを視聴</a>してください。</li>"
+	        + "</ul>"
+	        + "<p>注: 名前に '/' を使用している場合、サイドバーの <b>grepr/fgrepr</b> ツールで不足しているクラスを参照している mod を特定できます。</p>";
+	}
+	
+	@Override
+	public String faltar_de_clases_minecraftforge() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>Minecraft Forge のクラスが不足しています。考えられる原因:</b>"
+	        + "<ul>"
+	        + "<li>mod が MinecraftForge の別のビルド向けになっています。</li>"
+	        + "<li>Minecraft の1つのバージョンに対し、多数の modloader 更新があります。</li>"
+	        + "<li>インストールが破損しています（CurseForge App、ModrinthApp/Theseus/Astralrinth などの modpack ランチャーでよく発生します）。CurseForge の問題解決には<a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>チュートリアルを視聴</a>してください。</li>"
+	        + "</ul>"
+	        + "<p>注: 名前に '/' を使用している場合、サイドバーの <b>grepr/fgrepr</b> ツールで不足しているクラスを参照している mod を特定できます。</p>";
+	}
+
+	@Override
+	public String faltar_de_clases_neoforged() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>NeoForge のクラスが不足しています。考えられる原因:</b>"
+	        + "<ul>"
+	        + "<li>mod が NeoForge の別のビルド向けになっています。</li>"
+	        + "<li>Minecraft の1つのバージョンに対し、多数の modloader 更新があります。</li>"
+	        + "<li>インストールが破損しています（CurseForge App、ModrinthApp/Theseus/Astralrinth などの modpack ランチャーでよく発生します）。CurseForge の問題解決には<a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>チュートリアルを視聴</a>してください。</li>"
+	        + "</ul>"
+	        + "<p>注: 名前に '/' を使用している場合、サイドバーの <b>grepr/fgrepr</b> ツールで不足しているクラスを参照している mod を特定できます。</p>";
+	}
+	
+	@Override
+	public String faltar_de_clases_fabricloader() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>Fabric Loader のクラスが不足しています。考えられる原因:</b>"
+	        + "<ul>"
+	        + "<li>mod が Fabric Loader の別のビルド向けになっています。</li>"
+	        + "<li>Minecraft の1つのバージョンに対し、多数の modloader 更新があります。</li>"
+	        + "<li>インストールが破損しています（CurseForge App、ModrinthApp/Theseus/Astralrinth などの modpack ランチャーでよく発生します）。CurseForge の問題解決には<a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>チュートリアルを視聴</a>してください。</li>"
+	        + "<li>多くの mod は Fabric API を必要とします。必要に応じて Fabric API をインストールしてください。</li>"
+	        + "</ul>"
+	        + "<p>注: 名前に '/' を使用している場合、サイドバーの <b>grepr/fgrepr</b> ツールで不足しているクラスを参照している mod を特定できます。</p>";
+	}
+
+	@Override
+	public String faltar_de_clases_pillowmc() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>PillowMC のクラスが不足しています。考えられる原因:</b>"
+	        + "<ul>"
+	        + "<li>mod が PillowMC の別のビルド向けになっています。</li>"
+	        + "<li>Minecraft の1つのバージョンに対し、多数の modloader 更新があります。</li>"
+	        + "<li>インストールが破損しています（CurseForge App、ModrinthApp/Theseus/Astralrinth などの modpack ランチャーでよく発生します）。CurseForge の問題解決には<a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>チュートリアルを視聴</a>してください。</li>"
+	        + "</ul>"
+	        + "<p>注: 名前に '/' を使用している場合、サイドバーの <b>grepr/fgrepr</b> ツールで不足しているクラスを参照している mod を特定できます。</p>";
+	}
+	
 	
 	
 	

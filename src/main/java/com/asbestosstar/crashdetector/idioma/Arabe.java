@@ -4562,6 +4562,145 @@ public String advertenciaMalwareFalso() {
 	    return "تحقق من إعدادات Early Window وفكّر في استخدام إصدار مختلف من LWJGL أو مراجعة الوحدات المرتبطة بالنوافذ المبكرة.";
 	}
 	
+	@Override
+	public String errorVersionClaseGregTechEasyCore() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "GregTechEasyCore مخصص لـ modpack معين فقط ولا يجب استخدامه في تثبيتات عامة، لأنه يسبب مشكلة." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorVersionClaseGregTechEasyCore() {
+	    return "GregTechEasyCore بإصدار Java غير متوافق";
+	}
+
+	@Override
+	public String pasoErrorVersionClaseGregTechEasyCore() {
+	    return "قم بإزالة GregTechEasyCore، لأنه مخصص لـ modpack معين فقط وغير متوافق مع تثبيتك العامة.";
+	}
+	
+	@Override
+	public String errorConflictoMoniLabsConnectorExtras() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "تم اكتشاف تعارض بين MoniLabs و Connector Extras متعلق بتعديلات KubeJS. "
+	            + "هذه الوحدات غير متوافقة في تعديلاتها لـ KubeJS." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoMoniLabsConnectorExtras() {
+	    return "تعارض بين MoniLabs و Connector Extras";
+	}
+
+	@Override
+	public String pasoConflictoMoniLabsConnectorExtras() {
+	    return "حاول إزالة أحد الوحدات (MoniLabs أو Connector Extras) لأن لديهما تعارضات في تعديلات KubeJS.";
+	}
+	
+	@Override
+	public String errorCompatibilidadIrisDH() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "يتطلب Iris وجود Distant Horizons [2.0.4] أو DH API إصدار [1.1.0] أو أحدث. "
+	            + "راجع دليل التوافق على https://gist.github.com/Steveplays28/52db568f297ded527da56dbe6deeec0e لحل المشكلة." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorCompatibilidadIrisDH() {
+	    return "توافق Iris و Distant Horizons";
+	}
+
+	@Override
+	public String pasoErrorCompatibilidadIrisDH() {
+	    return "راجع دليل التوافق على https://gist.github.com/Steveplays28/52db568f297ded527da56dbe6deeec0e وقم بتحديث Iris و Distant Horizons إلى إصدارات متوافقة.";
+	}
+	
+	
+	@Override
+	public String faltar_de_clases_minecraft() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>لديك فئات (classes) مفقودة من Minecraft. الأسباب المحتملة:</b>"
+	        + "<ul>"
+	        + "<li>لديك وحدات لversions أخرى من اللعبة. يمكنك استخدام <a href='https://wagyourtail.xyz/Projects/MinecraftMappingViewer' target='_blank'>MinecraftMappingViewer</a> للتحقق مما إذا كانت الفئة موجودة في إصدارك.</li>"
+	        + "<li>لديك تثبيت تالف لـ Minecraft (شائع مع تطبيق CurseForge وModrinthApp/Theseus/Astralrinth وغيرها من مشغّلات modpacks). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>شاهد البرنامج التعليمي</a> لحل مشاكل CurseForge.</li>"
+	        + "<li>لديك coremod تالف (إذا فشل coremod، فقد يمنع تحميل الفئة).</li>"
+	        + "</ul>"
+	        + "<p>ملاحظة: يمكنك استخدام أداة <b>grepr/fgrepr</b> في الشريط الجانبي للعثور على الوحدات التي تشير إلى الفئات المفقودة، طالما تستخدم '/' في الأسماء.</p>";
+	}
+
+	@Override
+	public String faltar_de_clases_dangerzone() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>لديك فئات مفقودة من DangerZone. الأسباب المحتملة:</b>"
+	        + "<ul>"
+	        + "<li>لديك وحدات لversions أخرى من اللعبة.</li>"
+	        + "<li>لديك coremods تالفة.</li>"
+	        + "<li>لديك مشغّل أو تثبيت تالف.</li>"
+	        + "</ul>"
+	        + "<p>ملاحظة: يمكنك استخدام أداة <b>grepr/fgrepr</b> في الشريط الجانبي للعثور على الوحدات التي تشير إلى الفئات المفقودة، طالما تستخدم '/' في الأسماء.</p>";
+	}
+
+	@Override
+	public String faltar_de_clases_featurecreep() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>لديك فئات مفقودة من FeatureCreep. الأسباب المحتملة:</b>"
+	        + "<ul>"
+	        + "<li>لديك وحدات لإصدارات مختلفة من FeatureCreep (مثال: ESR مقابل Nightly أو v4 مقابل v12).</li>"
+	        + "<li>يمكنك تثبيت FeatureCreep من CurseForge أو MinecraftStorage.</li>"
+	        + "</ul>"
+	        + "<p>ملاحظة: يمكنك استخدام أداة <b>grepr/fgrepr</b> في الشريط الجانبي للعثور على الوحدات التي تشير إلى الفئات المفقودة، طالما تستخدم '/' في الأسماء.</p>";
+	}
+
+	@Override
+	public String faltar_de_clases_modlauncher() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>لديك فئات مفقودة من ModLauncher. الأسباب المحتملة:</b>"
+	        + "<ul>"
+	        + "<li>وحداتك مخصصة لbuild مختلف من MinecraftForge أو PillowMC أو NeoForge (يُستخدم ModLauncher مع هذه المحملات).</li>"
+	        + "<li>هناك العديد من تحديثات محملات الوحدات لكل إصدار من Minecraft.</li>"
+	        + "<li>لديك تثبيت تالف للمشغل (شائع مع تطبيق CurseForge وModrinthApp/Theseus/Astralrinth وغيرها). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>شاهد البرنامج التعليمي</a> لحل مشاكل CurseForge.</li>"
+	        + "</ul>"
+	        + "<p>ملاحظة: يمكنك استخدام أداة <b>grepr/fgrepr</b> في الشريط الجانبي للعثور على الوحدات التي تشير إلى الفئات المفقودة، طالما تستخدم '/' في الأسماء.</p>";
+	}
+
+	@Override
+	public String faltar_de_clases_minecraftforge() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>لديك فئات مفقودة من Minecraft Forge. الأسباب المحتملة:</b>"
+	        + "<ul>"
+	        + "<li>وحداتك مخصصة لbuild مختلف من MinecraftForge.</li>"
+	        + "<li>هناك العديد من تحديثات محملات الوحدات لكل إصدار من Minecraft.</li>"
+	        + "<li>لديك تثبيت تالف (شائع مع تطبيق CurseForge وModrinthApp/Theseus/Astralrinth وغيرها). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>شاهد البرنامج التعليمي</a> لحل مشاكل CurseForge.</li>"
+	        + "</ul>"
+	        + "<p>ملاحظة: يمكنك استخدام أداة <b>grepr/fgrepr</b> في الشريط الجانبي للعثور على الوحدات التي تشير إلى الفئات المفقودة، طالما تستخدم '/' في الأسماء.</p>";
+	}
+
+	@Override
+	public String faltar_de_clases_neoforged() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>لديك فئات مفقودة من NeoForge. الأسباب المحتملة:</b>"
+	        + "<ul>"
+	        + "<li>وحداتك مخصصة لbuild مختلف من NeoForge.</li>"
+	        + "<li>هناك العديد من تحديثات محملات الوحدات لكل إصدار من Minecraft.</li>"
+	        + "<li>لديك تثبيت تالف (شائع مع تطبيق CurseForge وModrinthApp/Theseus/Astralrinth وغيرها). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>شاهد البرنامج التعليمي</a> لحل مشاكل CurseForge.</li>"
+	        + "</ul>"
+	        + "<p>ملاحظة: يمكنك استخدام أداة <b>grepr/fgrepr</b> في الشريط الجانبي للعثور على الوحدات التي تشير إلى الفئات المفقودة، طالما تستخدم '/' في الأسماء.</p>";
+	}
+
+	@Override
+	public String faltar_de_clases_fabricloader() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>لديك فئات مفقودة من Fabric Loader. الأسباب المحتملة:</b>"
+	        + "<ul>"
+	        + "<li>وحداتك مخصصة لbuild مختلف من Fabric Loader.</li>"
+	        + "<li>هناك العديد من تحديثات محملات الوحدات لكل إصدار من Minecraft.</li>"
+	        + "<li>لديك تثبيت تالف (شائع مع تطبيق CurseForge وModrinthApp/Theseus/Astralrinth وغيرها). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>شاهد البرنامج التعليمي</a> لحل مشاكل CurseForge.</li>"
+	        + "<li>العديد من الوحدات تتطلب Fabric API. الرجاء تثبيت Fabric API إذا لزم الأمر.</li>"
+	        + "</ul>"
+	        + "<p>ملاحظة: يمكنك استخدام أداة <b>grepr/fgrepr</b> في الشريط الجانبي للعثور على الوحدات التي تشير إلى الفئات المفقودة، طالما تستخدم '/' في الأسماء.</p>";
+	}
+
+	@Override
+	public String faltar_de_clases_pillowmc() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>لديك فئات مفقودة من PillowMC. الأسباب المحتملة:</b>"
+	        + "<ul>"
+	        + "<li>وحداتك مخصصة لbuild مختلف من PillowMC.</li>"
+	        + "<li>هناك العديد من تحديثات محملات الوحدات لكل إصدار من Minecraft.</li>"
+	        + "<li>لديك تثبيت تالف (شائع مع تطبيق CurseForge وModrinthApp/Theseus/Astralrinth وغيرها). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>شاهد البرنامج التعليمي</a> لحل مشاكل CurseForge.</li>"
+	        + "</ul>"
+	        + "<p>ملاحظة: يمكنك استخدام أداة <b>grepr/fgrepr</b> في الشريط الجانبي للعثور على الوحدات التي تشير إلى الفئات المفقودة، طالما تستخدم '/' في الأسماء.</p>";
+	}
+	
 	
 	
 	

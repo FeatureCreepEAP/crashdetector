@@ -234,6 +234,9 @@ public class Analizador {
 		verificaciones.add(new ErrorModLauncherTransformationService());
 		verificaciones.add(new ErrorVersionInvalidaModMaven());
 		verificaciones.add(new ErrorStackSmashingDetected());
+		verificaciones.add(new ErrorVersionClaseGregTechEasyCore());
+		verificaciones.add(new ConflictoMoniLabsConnectorExtras());
+		verificaciones.add(new ErrorCompatibilidadIrisDH());
 
 		
 		

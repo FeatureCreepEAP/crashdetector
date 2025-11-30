@@ -51,9 +51,9 @@ public class ProxyLog4j2 {
 
 			// Eliminar appenders de consola EXISTENTES para evitar duplicados
 			LoggerConfig loggerRaiz = config.getLoggerConfig(LogManager.ROOT_LOGGER_NAME);
-			loggerRaiz.getAppenders().values().stream()
-					.filter(a -> a instanceof org.apache.logging.log4j.core.appender.ConsoleAppender)
-					.forEach(a -> loggerRaiz.removeAppender(a.getName()));
+//			loggerRaiz.getAppenders().values().stream()
+//					.filter(a -> a instanceof org.apache.logging.log4j.core.appender.ConsoleAppender)
+//					.forEach(a -> loggerRaiz.removeAppender(a.getName()));
 
 			// Añadir nuestro appender de archivo
 			loggerRaiz.addAppender(appender, Level.ALL, null);

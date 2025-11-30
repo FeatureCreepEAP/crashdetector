@@ -4581,6 +4581,144 @@ public String advertenciaMalwareFalso() {
 	    return "تنظیمات Early Window را بررسی کنید و نسخهٔ دیگری از LWJGL را امتحان کنید یا افزونه‌های مرتبط با پنجرهٔ اولیه را بررسی نمایید.";
 	}
 	
+	@Override
+	public String errorVersionClaseGregTechEasyCore() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "GregTechEasyCore فقط برای یک modpack خاص است و نباید در نصب‌های عمومی استفاده شود، زیرا باعث ایجاد مشکل می‌شود." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorVersionClaseGregTechEasyCore() {
+	    return "GregTechEasyCore با نسخهٔ ناسازگار Java";
+	}
+
+	@Override
+	public String pasoErrorVersionClaseGregTechEasyCore() {
+	    return "GregTechEasyCore را حذف کنید، زیرا فقط برای یک modpack خاص است و با نصب عمومی شما سازگار نیست.";
+	}
+	
+	@Override
+	public String errorConflictoMoniLabsConnectorExtras() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "تعارضی بین MoniLabs و Connector Extras در ارتباط با اصلاحات KubeJS شناسایی شد. "
+	            + "این افزونه‌ها در اصلاحات KubeJS خود ناسازگار هستند." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoMoniLabsConnectorExtras() {
+	    return "تعارض MoniLabs و Connector Extras";
+	}
+
+	@Override
+	public String pasoConflictoMoniLabsConnectorExtras() {
+	    return "یکی از افزونه‌ها (MoniLabs یا Connector Extras) را حذف کنید، زیرا اصلاحات KubeJS آن‌ها با هم تداخل دارد.";
+	}
+	
+	@Override
+	public String errorCompatibilidadIrisDH() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Iris نیازمند Distant Horizons [2.0.4] یا DH API نسخهٔ [1.1.0] یا جدیدتر است. "
+	            + "برای رفع این مشکل، راهنمای سازگاری را در https://gist.github.com/Steveplays28/52db568f297ded527da56dbe6deeec0e مشاهده کنید." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorCompatibilidadIrisDH() {
+	    return "سازگاری Iris و Distant Horizons";
+	}
+
+	@Override
+	public String pasoErrorCompatibilidadIrisDH() {
+	    return "راهنمای سازگاری را در https://gist.github.com/Steveplays28/52db568f297ded527da56dbe6deeec0e بررسی کرده و Iris و Distant Horizons را به نسخه‌های سازگار بروزرسانی کنید.";
+	}
+	
+	@Override
+	public String faltar_de_clases_minecraft() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>شما کلاس‌هایی از Minecraft را از دست داده‌اید. دلایل احتمالی:</b>"
+	        + "<ul>"
+	        + "<li>افزونه‌هایی برای نسخه‌های دیگر بازی دارید. می‌توانید از <a href='https://wagyourtail.xyz/Projects/MinecraftMappingViewer' target='_blank'>MinecraftMappingViewer</a> برای بررسی وجود کلاس در نسخهٔ خود استفاده کنید.</li>"
+	        + "<li>نصب‌ شما از Minecraft خراب است (رایج در CurseForge App، ModrinthApp/Theseus/Astralrinth و سایر راه‌اندازهای modpack). برای رفع مشکلات CurseForge، <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>آموزش را ببینید</a>.</li>"
+	        + "<li>coremod معیوبی دارید (در صورت شکست coremod، ممکن است بارگذاری کلاس مسدود شود).</li>"
+	        + "</ul>"
+	        + "<p>نکته: می‌توانید از ابزار <b>grepr/fgrepr</b> در نوار کناری برای یافتن افزونه‌هایی که به کلاس‌های گم‌شده ارجاع می‌دهند استفاده کنید، به شرطی که در نام‌ها از '/' استفاده کنید.</p>";
+	}
+
+	@Override
+	public String faltar_de_clases_dangerzone() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>شما کلاس‌هایی از DangerZone را از دست داده‌اید. دلایل احتمالی:</b>"
+	        + "<ul>"
+	        + "<li>افزونه‌هایی برای نسخه‌های دیگر بازی دارید.</li>"
+	        + "<li>coremodهای معیوبی دارید.</li>"
+	        + "<li>راه‌انداز یا نصب‌ شما خراب است.</li>"
+	        + "</ul>"
+	        + "<p>نکته: می‌توانید از ابزار <b>grepr/fgrepr</b> در نوار کناری برای یافتن افزونه‌هایی که به کلاس‌های گم‌شده ارجاع می‌دهند استفاده کنید، به شرطی که در نام‌ها از '/' استفاده کنید.</p>";
+	}
+	
+	@Override
+	public String faltar_de_clases_featurecreep() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>شما کلاس‌هایی از FeatureCreep را از دست داده‌اید. دلایل احتمالی:</b>"
+	        + "<ul>"
+	        + "<li>افزونه‌هایی برای نسخه‌های دیگر FeatureCreep دارید (مثلاً: ESR در مقابل Nightly یا v4 در مقابل v12).</li>"
+	        + "<li>می‌توانید FeatureCreep را از CurseForge یا MinecraftStorage نصب کنید.</li>"
+	        + "</ul>"
+	        + "<p>نکته: می‌توانید از ابزار <b>grepr/fgrepr</b> در نوار کناری برای یافتن افزونه‌هایی که به کلاس‌های گم‌شده ارجاع می‌دهند استفاده کنید، به شرطی که در نام‌ها از '/' استفاده کنید.</p>";
+	}
+
+	@Override
+	public String faltar_de_clases_modlauncher() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>شما کلاس‌هایی از ModLauncher را از دست داده‌اید. دلایل احتمالی:</b>"
+	        + "<ul>"
+	        + "<li>افزونه‌های شما برای build متفاوتی از MinecraftForge، PillowMC یا NeoForge هستند (ModLauncher با این بارگذارها استفاده می‌شود).</li>"
+	        + "<li>برای هر نسخهٔ Minecraft، بروزرسانی‌های زیادی از modloader وجود دارد.</li>"
+	        + "<li>نصب‌ راه‌انداز شما خراب است (رایج در CurseForge App، ModrinthApp/Theseus/Astralrinth و سایر راه‌اندازهای modpack). برای رفع مشکلات CurseForge، <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>آموزش را ببینید</a>.</li>"
+	        + "</ul>"
+	        + "<p>نکته: می‌توانید از ابزار <b>grepr/fgrepr</b> در نوار کناری برای یافتن افزونه‌هایی که به کلاس‌های گم‌شده ارجاع می‌دهند استفاده کنید، به شرطی که در نام‌ها از '/' استفاده کنید.</p>";
+	}
+	
+	@Override
+	public String faltar_de_clases_minecraftforge() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>شما کلاس‌هایی از Minecraft Forge را از دست داده‌اید. دلایل احتمالی:</b>"
+	        + "<ul>"
+	        + "<li>افزونه‌های شما برای build متفاوتی از MinecraftForge هستند.</li>"
+	        + "<li>برای هر نسخهٔ Minecraft، بروزرسانی‌های زیادی از modloader وجود دارد.</li>"
+	        + "<li>نصب‌ شما خراب است (رایج در CurseForge App، ModrinthApp/Theseus/Astralrinth و سایر راه‌اندازهای modpack). برای رفع مشکلات CurseForge، <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>آموزش را ببینید</a>.</li>"
+	        + "</ul>"
+	        + "<p>نکته: می‌توانید از ابزار <b>grepr/fgrepr</b> در نوار کناری برای یافتن افزونه‌هایی که به کلاس‌های گم‌شده ارجاع می‌دهند استفاده کنید، به شرطی که در نام‌ها از '/' استفاده کنید.</p>";
+	}
+
+	@Override
+	public String faltar_de_clases_neoforged() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>شما کلاس‌هایی از NeoForge را از دست داده‌اید. دلایل احتمالی:</b>"
+	        + "<ul>"
+	        + "<li>افزونه‌های شما برای build متفاوتی از NeoForge هستند.</li>"
+	        + "<li>برای هر نسخهٔ Minecraft، بروزرسانی‌های زیادی از modloader وجود دارد.</li>"
+	        + "<li>نصب‌ شما خراب است (رایج در CurseForge App، ModrinthApp/Theseus/Astralrinth و سایر راه‌اندازهای modpack). برای رفع مشکلات CurseForge، <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>آموزش را ببینید</a>.</li>"
+	        + "</ul>"
+	        + "<p>نکته: می‌توانید از ابزار <b>grepr/fgrepr</b> در نوار کناری برای یافتن افزونه‌هایی که به کلاس‌های گم‌شده ارجاع می‌دهند استفاده کنید، به شرطی که در نام‌ها از '/' استفاده کنید.</p>";
+	}
+	
+	@Override
+	public String faltar_de_clases_fabricloader() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>شما کلاس‌هایی از Fabric Loader را از دست داده‌اید. دلایل احتمالی:</b>"
+	        + "<ul>"
+	        + "<li>افزونه‌های شما برای build متفاوتی از Fabric Loader هستند.</li>"
+	        + "<li>برای هر نسخهٔ Minecraft، بروزرسانی‌های زیادی از modloader وجود دارد.</li>"
+	        + "<li>نصب‌ شما خراب است (رایج در CurseForge App، ModrinthApp/Theseus/Astralrinth و سایر راه‌اندازهای modpack). برای رفع مشکلات CurseForge، <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>آموزش را ببینید</a>.</li>"
+	        + "<li>بسیاری از افزونه‌ها به Fabric API نیاز دارند. در صورت نیاز، Fabric API را نصب کنید.</li>"
+	        + "</ul>"
+	        + "<p>نکته: می‌توانید از ابزار <b>grepr/fgrepr</b> در نوار کناری برای یافتن افزونه‌هایی که به کلاس‌های گم‌شده ارجاع می‌دهند استفاده کنید، به شرطی که در نام‌ها از '/' استفاده کنید.</p>";
+	}
+
+	@Override
+	public String faltar_de_clases_pillowmc() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>شما کلاس‌هایی از PillowMC را از دست داده‌اید. دلایل احتمالی:</b>"
+	        + "<ul>"
+	        + "<li>افزونه‌های شما برای build متفاوتی از PillowMC هستند.</li>"
+	        + "<li>برای هر نسخهٔ Minecraft، بروزرسانی‌های زیادی از modloader وجود دارد.</li>"
+	        + "<li>نصب‌ شما خراب است (رایج در CurseForge App، ModrinthApp/Theseus/Astralrinth و سایر راه‌اندازهای modpack). برای رفع مشکلات CurseForge، <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>آموزش را ببینید</a>.</li>"
+	        + "</ul>"
+	        + "<p>نکته: می‌توانید از ابزار <b>grepr/fgrepr</b> در نوار کناری برای یافتن افزونه‌هایی که به کلاس‌های گم‌شده ارجاع می‌دهند استفاده کنید، به شرطی که در نام‌ها از '/' استفاده کنید.</p>";
+	}
+	
 	
 	
 	

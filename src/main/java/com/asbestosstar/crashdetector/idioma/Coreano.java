@@ -4472,6 +4472,145 @@ public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves
 	    return "Early Window 설정을 확인하고, 다른 버전의 LWJGL을 사용하거나 초기 창 관련 모드를 점검해 보세요.";
 	}
 	
+	@Override
+	public String errorVersionClaseGregTechEasyCore() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "GregTechEasyCore는 특정 modpack 전용이며, 일반 설치에 사용해서는 안 됩니다. 그렇지 않으면 문제가 발생합니다." + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorVersionClaseGregTechEasyCore() {
+	    return "Java 버전과 호환되지 않는 GregTechEasyCore";
+	}
+
+	@Override
+	public String pasoErrorVersionClaseGregTechEasyCore() {
+	    return "GregTechEasyCore를 제거하세요. 이는 특정 modpack 전용이며 일반 설치와 호환되지 않습니다.";
+	}
+	
+	@Override
+	public String errorConflictoMoniLabsConnectorExtras() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "MoniLabs와 Connector Extras 사이에 KubeJS 수정과 관련된 충돌이 감지되었습니다. "
+	            + "이 모드들은 KubeJS 수정 측면에서 호환되지 않습니다." + "</b>";
+	}
+
+	@Override
+	public String nombreDeConflictoMoniLabsConnectorExtras() {
+	    return "MoniLabs와 Connector Extras 충돌";
+	}
+
+	@Override
+	public String pasoConflictoMoniLabsConnectorExtras() {
+	    return "KubeJS 수정이 충돌하므로 MoniLabs 또는 Connector Extras 중 하나를 제거해 보세요.";
+	}
+	
+	@Override
+	public String errorCompatibilidadIrisDH() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Iris는 Distant Horizons [2.0.4] 또는 DH API 버전 [1.1.0] 이상이 필요합니다. "
+	            + "문제를 해결하려면 호환성 안내를 참조하세요: https://gist.github.com/Steveplays28/52db568f297ded527da56dbe6deeec0e" + "</b>";
+	}
+
+	@Override
+	public String nombreDeErrorCompatibilidadIrisDH() {
+	    return "Iris와 Distant Horizons 호환성";
+	}
+
+	@Override
+	public String pasoErrorCompatibilidadIrisDH() {
+	    return "https://gist.github.com/Steveplays28/52db568f297ded527da56dbe6deeec0e 에서 호환성 안내를 확인하고 Iris 및 Distant Horizons를 호환되는 버전으로 업데이트하세요.";
+	}
+	
+	@Override
+	public String faltar_de_clases_minecraft() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>Minecraft의 클래스가 누락되었습니다. 가능한 원인:</b>"
+	        + "<ul>"
+	        + "<li>다른 게임 버전용 모드를 사용하고 있습니다. <a href='https://wagyourtail.xyz/Projects/MinecraftMappingViewer' target='_blank'>MinecraftMappingViewer</a>를 사용하여 해당 클래스가 사용 중인 버전에 존재하는지 확인할 수 있습니다.</li>"
+	        + "<li>Minecraft 설치가 손상되었습니다 (CurseForge 앱, ModrinthApp/Theseus/Astralrinth 등 모드팩 런처에서 흔함). CurseForge 문제 해결을 위해 <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>튜토리얼 보기</a>.</li>"
+	        + "<li>손상된 coremod가 있습니다 (coremod가 실패하면 클래스 로드를 막을 수 있음).</li>"
+	        + "</ul>"
+	        + "<p>참고: 이름에 '/'를 사용하는 경우, 사이드바의 <b>grepr/fgrepr</b> 도구로 누락된 클래스를 참조하는 모드를 찾을 수 있습니다.</p>";
+	}
+
+	@Override
+	public String faltar_de_clases_dangerzone() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>DangerZone의 클래스가 누락되었습니다. 가능한 원인:</b>"
+	        + "<ul>"
+	        + "<li>다른 게임 버전용 모드를 사용하고 있습니다.</li>"
+	        + "<li>손상된 coremod가 있습니다.</li>"
+	        + "<li>런처 또는 설치가 손상되었습니다.</li>"
+	        + "</ul>"
+	        + "<p>참고: 이름에 '/'를 사용하는 경우, 사이드바의 <b>grepr/fgrepr</b> 도구로 누락된 클래스를 참조하는 모드를 찾을 수 있습니다.</p>";
+	}
+	
+
+	@Override
+	public String faltar_de_clases_featurecreep() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>FeatureCreep의 클래스가 누락되었습니다. 가능한 원인:</b>"
+	        + "<ul>"
+	        + "<li>다른 버전의 FeatureCreep(예: ESR 대 Nightly 또는 v4 대 v12)용 모드를 사용하고 있습니다.</li>"
+	        + "<li>CurseForge나 MinecraftStorage에서 FeatureCreep을 설치할 수 있습니다.</li>"
+	        + "</ul>"
+	        + "<p>참고: 이름에 '/'를 사용하는 경우, 사이드바의 <b>grepr/fgrepr</b> 도구로 누락된 클래스를 참조하는 모드를 찾을 수 있습니다.</p>";
+	}
+
+	@Override
+	public String faltar_de_clases_modlauncher() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>ModLauncher의 클래스가 누락되었습니다. 가능한 원인:</b>"
+	        + "<ul>"
+	        + "<li>모드가 MinecraftForge, PillowMC 또는 NeoForge의 다른 빌드용입니다 (ModLauncher는 이 로더들과 함께 사용됨).</li>"
+	        + "<li>Minecraft 한 버전에 대해 여러 modloader 업데이트가 존재합니다.</li>"
+	        + "<li>런처 설치가 손상되었습니다 (CurseForge 앱, ModrinthApp/Theseus/Astralrinth 등에서 흔함). CurseForge 문제 해결을 위해 <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>튜토리얼 보기</a>.</li>"
+	        + "</ul>"
+	        + "<p>참고: 이름에 '/'를 사용하는 경우, 사이드바의 <b>grepr/fgrepr</b> 도구로 누락된 클래스를 참조하는 모드를 찾을 수 있습니다.</p>";
+	}
+	
+	@Override
+	public String faltar_de_clases_minecraftforge() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>Minecraft Forge의 클래스가 누락되었습니다. 가능한 원인:</b>"
+	        + "<ul>"
+	        + "<li>모드가 MinecraftForge의 다른 빌드용입니다.</li>"
+	        + "<li>Minecraft 한 버전에 대해 여러 modloader 업데이트가 존재합니다.</li>"
+	        + "<li>설치가 손상되었습니다 (CurseForge 앱, ModrinthApp/Theseus/Astralrinth 등에서 흔함). CurseForge 문제 해결을 위해 <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>튜토리얼 보기</a>.</li>"
+	        + "</ul>"
+	        + "<p>참고: 이름에 '/'를 사용하는 경우, 사이드바의 <b>grepr/fgrepr</b> 도구로 누락된 클래스를 참조하는 모드를 찾을 수 있습니다.</p>";
+	}
+
+	@Override
+	public String faltar_de_clases_neoforged() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>NeoForge의 클래스가 누락되었습니다. 가능한 원인:</b>"
+	        + "<ul>"
+	        + "<li>모드가 NeoForge의 다른 빌드용입니다.</li>"
+	        + "<li>Minecraft 한 버전에 대해 여러 modloader 업데이트가 존재합니다.</li>"
+	        + "<li>설치가 손상되었습니다 (CurseForge 앱, ModrinthApp/Theseus/Astralrinth 등에서 흔함). CurseForge 문제 해결을 위해 <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>튜토리얼 보기</a>.</li>"
+	        + "</ul>"
+	        + "<p>참고: 이름에 '/'를 사용하는 경우, 사이드바의 <b>grepr/fgrepr</b> 도구로 누락된 클래스를 참조하는 모드를 찾을 수 있습니다.</p>";
+	}
+	
+	@Override
+	public String faltar_de_clases_fabricloader() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>Fabric Loader의 클래스가 누락되었습니다. 가능한 원인:</b>"
+	        + "<ul>"
+	        + "<li>모드가 Fabric Loader의 다른 빌드용입니다.</li>"
+	        + "<li>Minecraft 한 버전에 대해 여러 modloader 업데이트가 존재합니다.</li>"
+	        + "<li>설치가 손상되었습니다 (CurseForge 앱, ModrinthApp/Theseus/Astralrinth 등에서 흔함). CurseForge 문제 해결을 위해 <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>튜토리얼 보기</a>.</li>"
+	        + "<li>많은 모드가 Fabric API를 필요로 합니다. 필요하다면 Fabric API를 설치하세요.</li>"
+	        + "</ul>"
+	        + "<p>참고: 이름에 '/'를 사용하는 경우, 사이드바의 <b>grepr/fgrepr</b> 도구로 누락된 클래스를 참조하는 모드를 찾을 수 있습니다.</p>";
+	}
+
+	@Override
+	public String faltar_de_clases_pillowmc() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>PillowMC의 클래스가 누락되었습니다. 가능한 원인:</b>"
+	        + "<ul>"
+	        + "<li>모드가 PillowMC의 다른 빌드용입니다.</li>"
+	        + "<li>Minecraft 한 버전에 대해 여러 modloader 업데이트가 존재합니다.</li>"
+	        + "<li>설치가 손상되었습니다 (CurseForge 앱, ModrinthApp/Theseus/Astralrinth 등에서 흔함). CurseForge 문제 해결을 위해 <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>튜토리얼 보기</a>.</li>"
+	        + "</ul>"
+	        + "<p>참고: 이름에 '/'를 사용하는 경우, 사이드바의 <b>grepr/fgrepr</b> 도구로 누락된 클래스를 참조하는 모드를 찾을 수 있습니다.</p>";
+	}
+	
 	
 	
 	
