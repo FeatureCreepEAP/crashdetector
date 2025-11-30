@@ -235,8 +235,8 @@ public class Coreano implements Idioma {
 
 	@Override
 	public String theseus() {
-	    return "<b style='color:#" + config.obtenerColorAdvertencia()
-	           + "'>Theseus는 또한 모드를 삭제하려 할 때 실패하는 등의 추가적인 문제가 있습니다. mrpack 파일을 사용해야 한다면, Prism Launcher(modrinth.com 전용), ATLauncher(modrinth.com 전용), 또는 Hello Minecraft Launcher(modrinth.com 및 bbsmc.net 지원)와 같은 다른 런처를 사용할 수 있습니다.</b>";
+		return "<b style='color:#" + config.obtenerColorAdvertencia()
+				+ "'>Theseus는 또한 모드를 삭제하려 할 때 실패하는 등의 추가적인 문제가 있습니다. mrpack 파일을 사용해야 한다면, Prism Launcher(modrinth.com 전용), ATLauncher(modrinth.com 전용), 또는 Hello Minecraft Launcher(modrinth.com 및 bbsmc.net 지원)와 같은 다른 런처를 사용할 수 있습니다.</b>";
 	}
 
 	@Override
@@ -458,14 +458,14 @@ public class Coreano implements Idioma {
 				+ proveedor + "'의 버전 '" + requerido + "' 이상이 필요하지만, 발견된 버전은 '" + encontrado + "'입니다.</b>";
 	}
 
-@Override
-public String advertenciaMalwareFalso() {
-    return "<b style='color:#" + config.obtenerColorError() + "'>"
-         + "경고! Crash Assistant는 가짜 악성코드 감지기입니다. 이 프로그램은 의도적으로 게임 실행을 차단하며, 타겟팅된 모드로 계속 플레이할 자유를 무시합니다. "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>MalwareMod.java 코드 보기</a>   "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>JarInJarHelper.java 코드 보기</a>. "
-         + "현재 리스트에는 이 모드만 있으며, 실제로는 사용자가 변경할 수 있는 기본 로그 사이트만을 대상으로 합니다. 이 기능은 내장된 로그 공유 기능을 명시적으로 선택한 경우에만 작동합니다. CrashAssistant는 어떤 로그 사이트가 설정되었는지 확인하지 않으며, 변경 방법(공유 대화 상자의 하단에 드롭다운 메뉴 있음)도 설명하지 않습니다. 설정된 사이트와 관계없이 CrashAssistant는 게임 실행을 차단합니다. 그들의 메시지에서는 직접 조사하라고 하지만, 실제로 그렇게 하십시오. CrashDetector와 Crash Assistant의 코드를 살펴보고 무엇을 하는지 이해하십시오. 권위에 호소하는 것에 의존하지 마십시오.</b>";
-}
+	@Override
+	public String advertenciaMalwareFalso() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "경고! Crash Assistant는 가짜 악성코드 감지기입니다. 이 프로그램은 의도적으로 게임 실행을 차단하며, 타겟팅된 모드로 계속 플레이할 자유를 무시합니다. "
+				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>MalwareMod.java 코드 보기</a>   "
+				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>JarInJarHelper.java 코드 보기</a>. "
+				+ "현재 리스트에는 이 모드만 있으며, 실제로는 사용자가 변경할 수 있는 기본 로그 사이트만을 대상으로 합니다. 이 기능은 내장된 로그 공유 기능을 명시적으로 선택한 경우에만 작동합니다. CrashAssistant는 어떤 로그 사이트가 설정되었는지 확인하지 않으며, 변경 방법(공유 대화 상자의 하단에 드롭다운 메뉴 있음)도 설명하지 않습니다. 설정된 사이트와 관계없이 CrashAssistant는 게임 실행을 차단합니다. 그들의 메시지에서는 직접 조사하라고 하지만, 실제로 그렇게 하십시오. CrashDetector와 Crash Assistant의 코드를 살펴보고 무엇을 하는지 이해하십시오. 권위에 호소하는 것에 의존하지 마십시오.</b>";
+	}
 
 	@Override
 	public String error_clase_no_encontrada_mcforge_mod_suspechoso(String idMod, String claseNoEncontrada) {
@@ -3091,23 +3091,24 @@ public String advertenciaMalwareFalso() {
 		return "밀도 함수 미바인딩";
 	}
 
-@Override
-public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves) {
-    StringBuilder sb = new StringBuilder("<b>레지스트리에 밀도 함수가 누락되었습니다.</b> ");
-    if (claves != null && !claves.isEmpty()) {
-        sb.append("누락됨: ");
-        for (int i = 0; i < Math.min(4, claves.size()); i++) {
-            if (i > 0)
-                sb.append(", ");
-            sb.append("<code>").append(claves.get(i)).append("</code>");
-        }
-        if (claves.size() > 4)
-            sb.append(", …");
-        sb.append(". ");
-    }
-    sb.append("<br/><b>해결 방법:</b> 해당 함수를 정의하는 mod/datapack을 설치하거나 활성화하고 재시작하세요. 이 문제의 또 다른 흔한 원인은 필요한 mod는 설치했지만, 그 mod에 문제가 있거나 다른 mod와 충돌하는 경우입니다. 예를 들어, Terralith는 많은 문제를 일으키며 이 오류와 JSON 오류를 포함한 다양한 문제를 유발할 수 있습니다.");
-    return sb.toString();
-}
+	@Override
+	public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves) {
+		StringBuilder sb = new StringBuilder("<b>레지스트리에 밀도 함수가 누락되었습니다.</b> ");
+		if (claves != null && !claves.isEmpty()) {
+			sb.append("누락됨: ");
+			for (int i = 0; i < Math.min(4, claves.size()); i++) {
+				if (i > 0)
+					sb.append(", ");
+				sb.append("<code>").append(claves.get(i)).append("</code>");
+			}
+			if (claves.size() > 4)
+				sb.append(", …");
+			sb.append(". ");
+		}
+		sb.append(
+				"<br/><b>해결 방법:</b> 해당 함수를 정의하는 mod/datapack을 설치하거나 활성화하고 재시작하세요. 이 문제의 또 다른 흔한 원인은 필요한 mod는 설치했지만, 그 mod에 문제가 있거나 다른 mod와 충돌하는 경우입니다. 예를 들어, Terralith는 많은 문제를 일으키며 이 오류와 JSON 오류를 포함한 다양한 문제를 유발할 수 있습니다.");
+		return sb.toString();
+	}
 
 	@Override
 	public String pasoFuncionesDeDensidadNoVinculadas() {
@@ -3488,8 +3489,8 @@ public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves
 
 	@Override
 	public String mensajeAyudar() {
-		String iconoCompartir = Statics.carpeta.resolve("imagenes").resolve("boton_compartir_icon.png")
-				.toAbsolutePath().toUri().toString();
+		String iconoCompartir = Statics.carpeta.resolve("imagenes").resolve("boton_compartir_icon.png").toAbsolutePath()
+				.toUri().toString();
 		String colorTexto = Config.obtenerInstancia().obtenerColorInfo();
 
 		return "" + "<div style='color:" + colorTexto + ";'>" + "  <strong>도움이 필요하십니까?</strong><br>"
@@ -3656,8 +3657,8 @@ public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves
 
 	@Override
 	public String problema_con_openAL() {
-	    return "<span style='color:#" + config.obtenerColorError()
-	           + "'>OpenAL에 문제가 있습니다. 가끔 Nouveau 드라이버가 원인일 수 있지만, 때로는 애플리케이션의 OpenAL 버전이 배포판의 버전과 호환되지 않아 배포판에서 제공하는 버전을 사용해야 할 수도 있습니다. 이는 특히 Red Hat 계열 배포판 및 Sound Physics Remastered 같은 사운드 모드와 함께 사용할 때 흔히 발생합니다. 더 많은 도움을 받으려면 다음 가이드를 참조하세요: <a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>리눅스에서 마인크래프트 사운드 문제 해결 방법</a>.</span>";
+		return "<span style='color:#" + config.obtenerColorError()
+				+ "'>OpenAL에 문제가 있습니다. 가끔 Nouveau 드라이버가 원인일 수 있지만, 때로는 애플리케이션의 OpenAL 버전이 배포판의 버전과 호환되지 않아 배포판에서 제공하는 버전을 사용해야 할 수도 있습니다. 이는 특히 Red Hat 계열 배포판 및 Sound Physics Remastered 같은 사운드 모드와 함께 사용할 때 흔히 발생합니다. 더 많은 도움을 받으려면 다음 가이드를 참조하세요: <a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>리눅스에서 마인크래프트 사운드 문제 해결 방법</a>.</span>";
 	}
 
 	@Override
@@ -3972,652 +3973,613 @@ public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves
 	public String buscador_canario_de_orden_titulo_proximamente() {
 		return "곧 출시 예정";
 	}
+
 	@Override
 	public String nombre_de_mods_incompatibles_crash_assistant() {
-	    return "Crash Assistant와 호환되지 않는 모드 (거짓)";
+		return "Crash Assistant와 호환되지 않는 모드 (거짓)";
 	}
 
 	@Override
 	public String nombre_de_modpack_incompatible_crash_assistant() {
-	    return "CrashAssistant를 사용하는 모드팩과 호환되지 않는 모드";
+		return "CrashAssistant를 사용하는 모드팩과 호환되지 않는 모드";
 	}
 
 	@Override
 	public String advertenciaCrashAssistantModpackIncompatibleFalso() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>Crash Assistant는 호환되지 않는다고 표시하는 모드 목록이 있지만, 실제로 호환되지 않는다는 증거는 없으며 오류 메시지는 영어로만 제공됩니다. 이 모드들과 함께 게임을 하고 싶다면, <code>config/crash_assistant/config.toml</code> 파일을 열어 [compatibility] 섹션의 <code>enabled = true</code>를 <code>enabled = false</code>로 변경하면 됩니다.</b>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>Crash Assistant는 호환되지 않는다고 표시하는 모드 목록이 있지만, 실제로 호환되지 않는다는 증거는 없으며 오류 메시지는 영어로만 제공됩니다. 이 모드들과 함께 게임을 하고 싶다면, <code>config/crash_assistant/config.toml</code> 파일을 열어 [compatibility] 섹션의 <code>enabled = true</code>를 <code>enabled = false</code>로 변경하면 됩니다.</b>";
 	}
 
 	@Override
 	public String advertenciaCrashAssistantModsIncompatibles() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>Crash Assistant는 모드가 호환되지 않는다고 판단할 수 있지만, 때때로 잘못된 판단을 하며 오류 메시지가 영어로만 나옵니다. 이 모드들을 사용하고 싶다면, <code>config/crash_assistant/problematic_mods_config.json</code> 파일을 편집하여 <code>should_crash_on_startup</code> 값을 <code>true</code>에서 <code>false</code>로 바꾸면 됩니다.</b>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>Crash Assistant는 모드가 호환되지 않는다고 판단할 수 있지만, 때때로 잘못된 판단을 하며 오류 메시지가 영어로만 나옵니다. 이 모드들을 사용하고 싶다면, <code>config/crash_assistant/problematic_mods_config.json</code> 파일을 편집하여 <code>should_crash_on_startup</code> 값을 <code>true</code>에서 <code>false</code>로 바꾸면 됩니다.</b>";
 	}
-	
+
 	@Override
 	public String errorDependenciaSimple(String modId, String dependencia, String actual) {
-	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
-	           "오류: 모드 '" + modId + "'은(는) '" + dependencia + "' 모드를 필요로 합니다. 현재 " + actual + "입니다." +
-	           "</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>" + "오류: 모드 '" + modId + "'은(는) '" + dependencia
+				+ "' 모드를 필요로 합니다. 현재 " + actual + "입니다." + "</span>";
 	}
 
 	@Override
 	public String errorDependenciaNoInstalada(String modId, String dependencia, String requerido) {
-	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
-	           "오류: 모드 '" + modId + "'은(는) '" + dependencia + "'의 버전 '" + requerido + "' 이상이 필요하지만, 해당 모드가 설치되어 있지 않습니다." +
-	           "</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>" + "오류: 모드 '" + modId + "'은(는) '" + dependencia
+				+ "'의 버전 '" + requerido + "' 이상이 필요하지만, 해당 모드가 설치되어 있지 않습니다." + "</span>";
 	}
-	
+
 	// MonitorDePID.idioma 클래스에 (이 메서드 추가)
 	public String errorSuperbWarfareIncompatible(String modId, String dependencia, String versionActual) {
-	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
-	           "오류: '" + modId + "' 모드는 '" + dependencia + "'의 현재 버전과 호환되지 않습니다. " +
-	           "'Iris/Oculus & GeckoLib Compat' 모드를 제거해야 합니다. 이 모드는 Superb Warfare와 호환되지 않으며 최신 버전의 GeckoLib과 함께 작동하지 않습니다. " +
-	           "현재 버전: " + versionActual +
-	           "</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>" + "오류: '" + modId + "' 모드는 '" + dependencia
+				+ "'의 현재 버전과 호환되지 않습니다. "
+				+ "'Iris/Oculus & GeckoLib Compat' 모드를 제거해야 합니다. 이 모드는 Superb Warfare와 호환되지 않으며 최신 버전의 GeckoLib과 함께 작동하지 않습니다. "
+				+ "현재 버전: " + versionActual + "</span>";
 	}
-	
+
 	public String fallo_ejecucion_tarea_descripcion(String clase) {
-	    return "오류: '" + clase + "' 클래스의 작업을 실행할 수 없습니다. " +
-	           "이 오류는 서로 호환되지 않거나 설치된 다른 모드와 충돌하는 모드에서 흔히 발생합니다.";
+		return "오류: '" + clase + "' 클래스의 작업을 실행할 수 없습니다. " + "이 오류는 서로 호환되지 않거나 설치된 다른 모드와 충돌하는 모드에서 흔히 발생합니다.";
 	}
 
 	public String nombre_fallos_ejecucion_tareas() {
-	    return "작업 실행 실패";
+		return "작업 실행 실패";
 	}
 
 	public String recomendacion_fallos_ejecucion() {
-	    return "이러한 종류의 오류는 일반적으로 모드 간의 호환성 문제로 인해 발생합니다. " +
-	           "특히 ConnectorMod과 함께 제대로 작동하지 않는 모드에서 흔합니다.";
+		return "이러한 종류의 오류는 일반적으로 모드 간의 호환성 문제로 인해 발생합니다. " + "특히 ConnectorMod과 함께 제대로 작동하지 않는 모드에서 흔합니다.";
 	}
 
 	public String info_clase_problematica() {
-	    return "문제 있는 클래스:";
+		return "문제 있는 클래스:";
 	}
 
 	public String ver_en_log() {
-	    return "로그에서 보기";
+		return "로그에서 보기";
 	}
 
 	public String no_se_encontraron_clases_problema() {
-	    return "실행 문제가 있는 특정 클래스를 찾을 수 없습니다.";
+		return "실행 문제가 있는 특정 클래스를 찾을 수 없습니다.";
 	}
-	
+
 	@Override
 	public String errorConflictoOptiFineEMF() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	           + "OptiFine과 Entity Model Features(EMF) 사이에 치명적인 충돌이 감지되었습니다. "
-	           + "이 두 모드는 서로 호환되지 않으며 게임 시작을 방해하는 주입 오류를 유발합니다." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "OptiFine과 Entity Model Features(EMF) 사이에 치명적인 충돌이 감지되었습니다. "
+				+ "이 두 모드는 서로 호환되지 않으며 게임 시작을 방해하는 주입 오류를 유발합니다." + "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoOptiFineEMF() {
-	    return "OptiFine 및 Entity Model Features 충돌";
+		return "OptiFine 및 Entity Model Features 충돌";
 	}
 
 	@Override
 	public String pasoConflictoOptiFineEMF() {
-	    return "OptiFine 또는 Entity Model Features를 제거하세요. 이 둘은 서로 호환되지 않습니다.";
+		return "OptiFine 또는 Entity Model Features를 제거하세요. 이 둘은 서로 호환되지 않습니다.";
 	}
-	
+
 	@Override
 	public String errorConflictoOptiFineFusion() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	           + "OptiFine과 Fusion 사이에 치명적인 충돌이 감지되었습니다. "
-	           + "이 두 모드는 서로 호환되지 않으며 게임 시작을 방해하는 주입 오류를 유발합니다." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "OptiFine과 Fusion 사이에 치명적인 충돌이 감지되었습니다. "
+				+ "이 두 모드는 서로 호환되지 않으며 게임 시작을 방해하는 주입 오류를 유발합니다." + "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoOptiFineFusion() {
-	    return "OptiFine 및 Fusion 충돌";
+		return "OptiFine 및 Fusion 충돌";
 	}
 
 	@Override
 	public String pasoConflictoOptiFineFusion() {
-	    return "OptiFine 또는 Fusion를 제거하세요. 이 둘은 서로 호환되지 않습니다.";
+		return "OptiFine 또는 Fusion를 제거하세요. 이 둘은 서로 호환되지 않습니다.";
 	}
-	
+
 	@Override
 	public String errorConflictoFlywheelSodium() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Create에서 요구하는 Flywheel은 Sodium 0.6.0-beta.2 이상이 필요합니다. Rubidium은 0.5.3입니다. "
-	            + "대안으로 <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a> 사용을 고려하세요." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Create에서 요구하는 Flywheel은 Sodium 0.6.0-beta.2 이상이 필요합니다. Rubidium은 0.5.3입니다. "
+				+ "대안으로 <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a> 사용을 고려하세요."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoFlywheelSodium() {
-	    return "Flywheel과 Sodium 버전 충돌";
+		return "Flywheel과 Sodium 버전 충돌";
 	}
 
 	@Override
 	public String pasoConflictoFlywheelSodium() {
-	    return "Sodium를 0.6.0-beta.2 이상으로 업데이트하거나, 호환 가능한 대체품으로 <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a>을 설치하세요.";
+		return "Sodium를 0.6.0-beta.2 이상으로 업데이트하거나, 호환 가능한 대체품으로 <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a>을 설치하세요.";
 	}
-	
+
 	@Override
 	public String errorConflictoOptiFineEpicFight() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "OptiFine과 Epic Fight 사이에 치명적인 충돌이 감지되었습니다. "
-	            + "이 두 모드는 서로 호환되지 않으며 게임 시작을 방해하는 주입 오류를 유발합니다." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "OptiFine과 Epic Fight 사이에 치명적인 충돌이 감지되었습니다. "
+				+ "이 두 모드는 서로 호환되지 않으며 게임 시작을 방해하는 주입 오류를 유발합니다." + "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoOptiFineEpicFight() {
-	    return "OptiFine 및 Epic Fight 충돌";
+		return "OptiFine 및 Epic Fight 충돌";
 	}
 
 	@Override
 	public String pasoConflictoOptiFineEpicFight() {
-	    return "OptiFine 또는 Epic Fight를 제거하세요. 이 둘은 서로 호환되지 않습니다.";
+		return "OptiFine 또는 Epic Fight를 제거하세요. 이 둘은 서로 호환되지 않습니다.";
 	}
-	
+
 	@Override
 	public String errorConflictoOptiFineRubidium() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "OptiFine 과 Rubidium 간에 심각한 충돌이 감지되었습니다. "
-	            + "이 모드들은 호환되지 않으며, 주입 실패로 인해 게임 시작을 방해합니다." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "OptiFine 과 Rubidium 간에 심각한 충돌이 감지되었습니다. "
+				+ "이 모드들은 호환되지 않으며, 주입 실패로 인해 게임 시작을 방해합니다." + "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoOptiFineRubidium() {
-	    return "OptiFine 과 Rubidium 충돌";
+		return "OptiFine 과 Rubidium 충돌";
 	}
 
 	@Override
 	public String pasoConflictoOptiFineRubidium() {
-	    return "OptiFine 또는 Rubidium을 제거하세요. 이 둘은 서로 호환되지 않습니다.";
+		return "OptiFine 또는 Rubidium을 제거하세요. 이 둘은 서로 호환되지 않습니다.";
 	}
-	
+
 	@Override
 	public String errorFreeCamServidor() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "FreeCam이 전용 서버에서 로드를 시도하고 있지만, 이는 클라이언트에서만 호환됩니다. "
-	            + "서버에서 FreeCam을 제거하거나, 클라이언트에만 설치되어 있는지 확인하세요." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "FreeCam이 전용 서버에서 로드를 시도하고 있지만, 이는 클라이언트에서만 호환됩니다. " + "서버에서 FreeCam을 제거하거나, 클라이언트에만 설치되어 있는지 확인하세요."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorFreeCamServidor() {
-	    return "전용 서버의 FreeCam";
+		return "전용 서버의 FreeCam";
 	}
 
 	@Override
 	public String pasoErrorFreeCamServidor() {
-	    return "FreeCam은 클라이언트에만 설치해야 하므로 전용 서버에서 제거하세요.";
+		return "FreeCam은 클라이언트에만 설치해야 하므로 전용 서버에서 제거하세요.";
 	}
-	
+
 	@Override
 	public String errorEntityTextureFeaturesServidor() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Entity Texture Features (ETF)가 전용 서버에서 로드를 시도하고 있지만, 이는 클라이언트에서만 호환됩니다. "
-	            + "서버에서 ETF를 제거하거나, 클라이언트에만 설치되어 있는지 확인하세요." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Entity Texture Features (ETF)가 전용 서버에서 로드를 시도하고 있지만, 이는 클라이언트에서만 호환됩니다. "
+				+ "서버에서 ETF를 제거하거나, 클라이언트에만 설치되어 있는지 확인하세요." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorEntityTextureFeaturesServidor() {
-	    return "전용 서버의 Entity Texture Features";
+		return "전용 서버의 Entity Texture Features";
 	}
 
 	@Override
 	public String pasoErrorEntityTextureFeaturesServidor() {
-	    return "Entity Texture Features는 클라이언트에만 설치해야 하므로 전용 서버에서 제거하세요.";
+		return "Entity Texture Features는 클라이언트에만 설치해야 하므로 전용 서버에서 제거하세요.";
 	}
-	
+
 	@Override
 	public String errorEULANoAceptado() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "서버를 실행하려면 Minecraft의 EULA에 동의해야 합니다. "
-	            + "eula.txt 파일을 편집하여 'eula=false'를 'eula=true'로 변경하세요." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "서버를 실행하려면 Minecraft의 EULA에 동의해야 합니다. "
+				+ "eula.txt 파일을 편집하여 'eula=false'를 'eula=true'로 변경하세요." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorEULANoAceptado() {
-	    return "Minecraft EULA 미동의";
+		return "Minecraft EULA 미동의";
 	}
 
 	@Override
 	public String pasoErrorEULANoAceptado() {
-	    return "서버 폴더의 eula.txt 파일을 편집하여 'eula=false'를 'eula=true'로 변경하세요.";
+		return "서버 폴더의 eula.txt 파일을 편집하여 'eula=false'를 'eula=true'로 변경하세요.";
 	}
-	
+
 	@Override
 	public String errorOptiFineServidor() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "OptiFine이 전용 서버에서 로드를 시도하고 있지만, 이는 클라이언트에서만 호환됩니다. "
-	            + "서버에서 OptiFine을 제거하거나, 클라이언트에만 설치되어 있는지 확인하세요." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "OptiFine이 전용 서버에서 로드를 시도하고 있지만, 이는 클라이언트에서만 호환됩니다. "
+				+ "서버에서 OptiFine을 제거하거나, 클라이언트에만 설치되어 있는지 확인하세요." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorOptiFineServidor() {
-	    return "전용 서버의 OptiFine";
+		return "전용 서버의 OptiFine";
 	}
 
 	@Override
 	public String pasoErrorOptiFineServidor() {
-	    return "OptiFine은 클라이언트에만 설치해야 하므로 전용 서버에서 제거하세요.";
+		return "OptiFine은 클라이언트에만 설치해야 하므로 전용 서버에서 제거하세요.";
 	}
-	
+
 	@Override
 	public String errorIronSpellbooksVersion() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Iron's Spellbooks가 1.20.1용으로 잘못 표시되었지만 1.21.1의 메서드를 사용하고 있습니다. "
-	            + "모드가 1.20.1에 존재하지 않는 ResourceLocation.fromNamespaceAndPath를 사용하려고 시도하고 있습니다." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Iron's Spellbooks가 1.20.1용으로 잘못 표시되었지만 1.21.1의 메서드를 사용하고 있습니다. "
+				+ "모드가 1.20.1에 존재하지 않는 ResourceLocation.fromNamespaceAndPath를 사용하려고 시도하고 있습니다." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorIronSpellbooksVersion() {
-	    return "Iron's Spellbooks 버전 오류";
+		return "Iron's Spellbooks 버전 오류";
 	}
 
 	@Override
 	public String pasoErrorIronSpellbooksVersion() {
-	    return "Minecraft 버전과 호환되는 올바른 버전의 Iron's Spellbooks를 사용하고 있는지 확인하세요.";
+		return "Minecraft 버전과 호환되는 올바른 버전의 Iron's Spellbooks를 사용하고 있는지 확인하세요.";
 	}
-	
+
 	@Override
 	public String errorConflictoOptiFineEmbeddium() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "OptiFine 과 Embeddium 간에 심각한 충돌이 감지되었습니다. "
-	            + "이 모드들은 호환되지 않으며, 주입 실패로 인해 게임 시작을 방해합니다." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "OptiFine 과 Embeddium 간에 심각한 충돌이 감지되었습니다. "
+				+ "이 모드들은 호환되지 않으며, 주입 실패로 인해 게임 시작을 방해합니다." + "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoOptiFineEmbeddium() {
-	    return "OptiFine 과 Embeddium 충돌";
+		return "OptiFine 과 Embeddium 충돌";
 	}
 
 	@Override
 	public String pasoConflictoOptiFineEmbeddium() {
-	    return "OptiFine 또는 Embeddium을 제거하세요. 이 둘은 서로 호환되지 않습니다.";
+		return "OptiFine 또는 Embeddium을 제거하세요. 이 둘은 서로 호환되지 않습니다.";
 	}
-	
+
 	@Override
 	public String noPuedeAnalizarJSON() {
-	    return "<span style='color:#" + config.obtenerColorError()
-	        + "'>이는 일반적으로 세계 생성 모드 간의 충돌로 인해 발생합니다. 특히 Terralinth, AmplifiedNether, Nullscape, Incendium 및 기타 세계 생성 모드에서 흔합니다. 누락된 모드를 설치해야 할 수도 있습니다.</span>";
+		return "<span style='color:#" + config.obtenerColorError()
+				+ "'>이는 일반적으로 세계 생성 모드 간의 충돌로 인해 발생합니다. 특히 Terralinth, AmplifiedNether, Nullscape, Incendium 및 기타 세계 생성 모드에서 흔합니다. 누락된 모드를 설치해야 할 수도 있습니다.</span>";
 	}
+
 	@Override
 	public String errorControllableServidor() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Controllable이 전용 서버에서 로드를 시도하고 있지만, 이는 클라이언트에서만 호환됩니다. "
-	            + "서버에서 Controllable을 제거하거나, 클라이언트에만 설치되어 있는지 확인하세요." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Controllable이 전용 서버에서 로드를 시도하고 있지만, 이는 클라이언트에서만 호환됩니다. "
+				+ "서버에서 Controllable을 제거하거나, 클라이언트에만 설치되어 있는지 확인하세요." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorControllableServidor() {
-	    return "전용 서버의 Controllable";
+		return "전용 서버의 Controllable";
 	}
 
 	@Override
 	public String pasoErrorControllableServidor() {
-	    return "Controllable은 클라이언트에만 설치해야 하므로 전용 서버에서 제거하세요.";
+		return "Controllable은 클라이언트에만 설치해야 하므로 전용 서버에서 제거하세요.";
 	}
-	
+
 	@Override
 	public String errorSupplementariesCargaServidor() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Supplementaries가 서버 로드를 방해하는 오류를 일으키고 있습니다. "
-	            + "해당 모드는 화염 동작 등록 시 문제가 발생하여 datapack 로드 도중 실패합니다." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "Supplementaries가 서버 로드를 방해하는 오류를 일으키고 있습니다. "
+				+ "해당 모드는 화염 동작 등록 시 문제가 발생하여 datapack 로드 도중 실패합니다." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorSupplementariesCargaServidor() {
-	    return "Supplementaries가 서버 로드를 방해함";
+		return "Supplementaries가 서버 로드를 방해함";
 	}
 
 	@Override
 	public String pasoErrorSupplementariesCargaServidor() {
-	    return "Supplementaries를 최신 버전으로 업데이트하거나, 서버 로드를 허용하기 위해 임시로 비활성화해 보세요.";
+		return "Supplementaries를 최신 버전으로 업데이트하거나, 서버 로드를 허용하기 위해 임시로 비활성화해 보세요.";
 	}
-	
+
 	@Override
 	public String errorGroovyModloaderModuloFaltante() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Groovy Modloader(GML)가 누락된 Jackson 모듈로 인해 문제를 발견했습니다. "
-	            + "Valkyrien Skies와 같은 일부 모드는 필요한 모든 종속성을 포함하지 않아 이 오류를 일으킬 수 있습니다." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Groovy Modloader(GML)가 누락된 Jackson 모듈로 인해 문제를 발견했습니다. "
+				+ "Valkyrien Skies와 같은 일부 모드는 필요한 모든 종속성을 포함하지 않아 이 오류를 일으킬 수 있습니다." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorGroovyModloaderModuloFaltante() {
-	    return "Groovy Modloader의 Jackson 모듈 누락";
+		return "Groovy Modloader의 Jackson 모듈 누락";
 	}
 
 	@Override
 	public String pasoErrorGroovyModloaderModuloFaltante() {
-	    return "종속성 충돌을 유발할 수 있는 Groovy Modloader 및 Valkyrien Skies와 같은 관련 모드를 제거하세요.";
+		return "종속성 충돌을 유발할 수 있는 Groovy Modloader 및 Valkyrien Skies와 같은 관련 모드를 제거하세요.";
 	}
-	
+
 	@Override
 	public String errorEveryCompatNombreInvalido() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Every Compat가 잘못된 나무 블록 이름을 발견했습니다. "
-	            + "Every Compat는 일반적으로 많은 문제를 일으킵니다. 사용하지 마세요!" + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "Every Compat가 잘못된 나무 블록 이름을 발견했습니다. "
+				+ "Every Compat는 일반적으로 많은 문제를 일으킵니다. 사용하지 마세요!" + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorEveryCompatNombreInvalido() {
-	    return "Every Compat의 잘못된 이름";
+		return "Every Compat의 잘못된 이름";
 	}
 
 	@Override
 	public String pasoErrorEveryCompatNombreInvalido() {
-	    return "Every Compat를 사용하는 리소스 팩이나 모드를 확인하세요. 잘못된 블록 이름이 포함되어 있을 수 있습니다.";
+		return "Every Compat를 사용하는 리소스 팩이나 모드를 확인하세요. 잘못된 블록 이름이 포함되어 있을 수 있습니다.";
 	}
-	
-
 
 	@Override
 	public String errorCodigo1073741819() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "오류 코드(-1073741819)가 감지되었습니다. 이는 Razer의 GameCaster, Discord, OBS Studio와 같은 오버레이 또는 NVIDIA 드라이버 문제로 인해 발생할 수 있습니다." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "오류 코드(-1073741819)가 감지되었습니다. 이는 Razer의 GameCaster, Discord, OBS Studio와 같은 오버레이 또는 NVIDIA 드라이버 문제로 인해 발생할 수 있습니다."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorCodigo1073741819() {
-	    return "오류 코드 -1073741819";
+		return "오류 코드 -1073741819";
 	}
 
 	@Override
 	public String pasoErrorCodigo1073741819() {
-	    return "GameCaster, Discord, OBS Studio와 같은 오버레이를 비활성화하고, NVIDIA 드라이버가 최신 상태인지 확인하세요.";
+		return "GameCaster, Discord, OBS Studio와 같은 오버레이를 비활성화하고, NVIDIA 드라이버가 최신 상태인지 확인하세요.";
 	}
-	
+
 	@Override
 	public String errorImmersiveTooltipsSinDependencia() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Immersive Tooltips는 dependencia인 Immersive Messages가 필요하지만 설치되어 있지 않습니다. "
-	            + "Immersive Tooltips가 제대로 작동하려면 Immersive Messages를 설치하세요." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Immersive Tooltips는 dependencia인 Immersive Messages가 필요하지만 설치되어 있지 않습니다. "
+				+ "Immersive Tooltips가 제대로 작동하려면 Immersive Messages를 설치하세요." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorImmersiveTooltipsSinDependencia() {
-	    return "dependencia 없는 Immersive Tooltips";
+		return "dependencia 없는 Immersive Tooltips";
 	}
 
 	@Override
 	public String pasoErrorImmersiveTooltipsSinDependencia() {
-	    return "Immersive Tooltips에 필요한 dependencia인 Immersive Messages를 설치하세요.";
+		return "Immersive Tooltips에 필요한 dependencia인 Immersive Messages를 설치하세요.";
 	}
-	
+
 	@Override
 	public String errorMedievalOriginsCast() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Medieval Origins가 Apoli Mod와 호환성 문제가 있으며, ItemStack을 EntityLinkedItemStack으로 캐스트할 수 없습니다. "
-	            + "이는 6.6.0보다 높은 버전에서 흔합니다. 이전 버전을 사용하거나 Fabric과 Forge 버전 간에 전환하는 것을 고려하세요." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Medieval Origins가 Apoli Mod와 호환성 문제가 있으며, ItemStack을 EntityLinkedItemStack으로 캐스트할 수 없습니다. "
+				+ "이는 6.6.0보다 높은 버전에서 흔합니다. 이전 버전을 사용하거나 Fabric과 Forge 버전 간에 전환하는 것을 고려하세요." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorMedievalOriginsCast() {
-	    return "Medieval Origins 캐스트 오류";
+		return "Medieval Origins 캐스트 오류";
 	}
 
 	@Override
 	public String pasoErrorMedievalOriginsCast() {
-	    return "Medieval Origins 6.6.0 이하 버전을 사용하거나, mod의 Fabric과 Forge 버전 간에 전환해 보세요.";
+		return "Medieval Origins 6.6.0 이하 버전을 사용하거나, mod의 Fabric과 Forge 버전 간에 전환해 보세요.";
 	}
-	
+
 	@Override
 	public String errorReignOfNetherMusicManager() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Reign of Nether가 MusicManager에 존재하지 않는 Registry Object로 인해 오류를 일으키고 있습니다. "
-	            + "이 문제는 Reign of Nether의 MusicManager mixin과 관련이 있습니다." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Reign of Nether가 MusicManager에 존재하지 않는 Registry Object로 인해 오류를 일으키고 있습니다. "
+				+ "이 문제는 Reign of Nether의 MusicManager mixin과 관련이 있습니다." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorReignOfNetherMusicManager() {
-	    return "Reign of Nether의 MusicManager 오류";
+		return "Reign of Nether의 MusicManager 오류";
 	}
 
 	@Override
 	public String pasoErrorReignOfNetherMusicManager() {
-	    return "이 오류를 해결하려면 Reign of Nether를 업데이트하거나 임시로 제거해 보세요.";
+		return "이 오류를 해결하려면 Reign of Nether를 업데이트하거나 임시로 제거해 보세요.";
 	}
-	
+
 	@Override
 	public String errorYesSteveModelLinux() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "YesSteveModel은 Linux 또는 Android에서만 YSM 서버를 지원합니다. "
-	            + "이 문제는 2025년 11월 23일 이후 Modrinth의 최신 버전에서 수정되었습니다." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "YesSteveModel은 Linux 또는 Android에서만 YSM 서버를 지원합니다. "
+				+ "이 문제는 2025년 11월 23일 이후 Modrinth의 최신 버전에서 수정되었습니다." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorYesSteveModelLinux() {
-	    return "YesSteveModel이 Linux와 호환되지 않음";
+		return "YesSteveModel이 Linux와 호환되지 않음";
 	}
 
 	@Override
 	public String pasoErrorYesSteveModelLinux() {
-	    return "Modrinth에서 YesSteveModel을 최신 버전으로 업데이트하세요. 이 문제는 11월 23일 이후 수정되었습니다.";
+		return "Modrinth에서 YesSteveModel을 최신 버전으로 업데이트하세요. 이 문제는 11월 23일 이후 수정되었습니다.";
 	}
-	
+
 	@Override
 	public String errorConflictoMovingElevatorsOptiFine() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Moving Elevators와 OptiFine 간에 심각한 충돌이 감지되었습니다. "
-	            + "이 모드들은 호환되지 않으며, 주입 실패로 인해 게임 시작을 방해합니다." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Moving Elevators와 OptiFine 간에 심각한 충돌이 감지되었습니다. " + "이 모드들은 호환되지 않으며, 주입 실패로 인해 게임 시작을 방해합니다."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoMovingElevatorsOptiFine() {
-	    return "Moving Elevators와 OptiFine 충돌";
+		return "Moving Elevators와 OptiFine 충돌";
 	}
 
 	@Override
 	public String pasoConflictoMovingElevatorsOptiFine() {
-	    return "Moving Elevators 또는 OptiFine을 제거하세요. 이 둘은 서로 호환되지 않습니다.";
+		return "Moving Elevators 또는 OptiFine을 제거하세요. 이 둘은 서로 호환되지 않습니다.";
 	}
-	
+
 	@Override
 	public String errorConflictoFabricAPIOptiFine() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Fabric API(fabric-resource-loader-v0)와 OptiFine 간에 심각한 충돌이 감지되었습니다. "
-	            + "이 모드들은 호환되지 않으며, 주입 실패로 인해 게임 시작을 방해합니다." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Fabric API(fabric-resource-loader-v0)와 OptiFine 간에 심각한 충돌이 감지되었습니다. "
+				+ "이 모드들은 호환되지 않으며, 주입 실패로 인해 게임 시작을 방해합니다." + "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoFabricAPIOptiFine() {
-	    return "Fabric API와 OptiFine 충돌";
+		return "Fabric API와 OptiFine 충돌";
 	}
 
 	@Override
 	public String pasoConflictoFabricAPIOptiFine() {
-	    return "OptiFine을 제거하거나 Fabric API를 호환되는 버전으로 업데이트하세요.";
+		return "OptiFine을 제거하거나 Fabric API를 호환되는 버전으로 업데이트하세요.";
 	}
-	
+
 	@Override
 	public String errorModLauncherTransformationService(String claseProveedor) {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "일부 모드에 인스턴스화할 수 없는 결함 있는 ITransformationService가 있습니다: " + claseProveedor + ". "
-	            + "게임 로드를 허용하려면 이 모드를 제거해야 합니다." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "일부 모드에 인스턴스화할 수 없는 결함 있는 ITransformationService가 있습니다: " + claseProveedor + ". "
+				+ "게임 로드를 허용하려면 이 모드를 제거해야 합니다." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorModLauncherTransformationService() {
-	    return "결함 있는 ITransformationService";
+		return "결함 있는 ITransformationService";
 	}
 
 	@Override
 	public String pasoErrorModLauncherTransformationService(String claseProveedor) {
-	    return "결함 있는 ITransformationService를 가진 " + claseProveedor + " 클래스를 포함한 모드를 제거하세요.";
+		return "결함 있는 ITransformationService를 가진 " + claseProveedor + " 클래스를 포함한 모드를 제거하세요.";
 	}
-	
+
 	@Override
 	public String errorVersionInvalidaMod(String version) {
-	    return "<span style='color:#" + config.obtenerColorError() + "'>일부 모드가 잘못된 버전 지정을 가지고 있습니다. "
-	            + "버전은 대괄호([])로 둘러싸여야 합니다. "
-	            + "측면 패널의 grep/greprf 유틸리티를 사용하여 버전 </span>" + version + "<span style='color:#" + config.obtenerColorError() + "'> 을 검색해 문제의 모드를 식별할 수 있습니다.</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>일부 모드가 잘못된 버전 지정을 가지고 있습니다. "
+				+ "버전은 대괄호([])로 둘러싸여야 합니다. " + "측면 패널의 grep/greprf 유틸리티를 사용하여 버전 </span>" + version
+				+ "<span style='color:#" + config.obtenerColorError() + "'> 을 검색해 문제의 모드를 식별할 수 있습니다.</span>";
 	}
 
 	@Override
 	public String nombreDeErrorVersionInvalidaMod() {
-	    return "모드의 잘못된 버전";
+		return "모드의 잘못된 버전";
 	}
 
 	@Override
 	public String pasoErrorVersionInvalidaMod() {
-	    return "측면 패널의 grep/greprf 유틸리티를 사용하여 문제의 버전을 검색하고 이를 포함하는 모드를 찾으세요.";
+		return "측면 패널의 grep/greprf 유틸리티를 사용하여 문제의 버전을 검색하고 이를 포함하는 모드를 찾으세요.";
 	}
-	
+
 	@Override
 	public String errorStackSmashingDetected() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "stack smashing 오류가 감지되어 프로세스가 종료되었습니다. "
-	            + "이는 Forge/NeoForge/PillowMC의 Early Window 문제나 LWJGL 3.2.2 이상 버전과 관련될 수 있습니다." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "stack smashing 오류가 감지되어 프로세스가 종료되었습니다. "
+				+ "이는 Forge/NeoForge/PillowMC의 Early Window 문제나 LWJGL 3.2.2 이상 버전과 관련될 수 있습니다." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorStackSmashingDetected() {
-	    return "Stack Smashing 감지됨";
+		return "Stack Smashing 감지됨";
 	}
 
 	@Override
 	public String pasoErrorStackSmashingDetected() {
-	    return "Early Window 설정을 확인하고, 다른 버전의 LWJGL을 사용하거나 초기 창 관련 모드를 점검해 보세요.";
+		return "Early Window 설정을 확인하고, 다른 버전의 LWJGL을 사용하거나 초기 창 관련 모드를 점검해 보세요.";
 	}
-	
+
 	@Override
 	public String errorVersionClaseGregTechEasyCore() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "GregTechEasyCore는 특정 modpack 전용이며, 일반 설치에 사용해서는 안 됩니다. 그렇지 않으면 문제가 발생합니다." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "GregTechEasyCore는 특정 modpack 전용이며, 일반 설치에 사용해서는 안 됩니다. 그렇지 않으면 문제가 발생합니다." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorVersionClaseGregTechEasyCore() {
-	    return "Java 버전과 호환되지 않는 GregTechEasyCore";
+		return "Java 버전과 호환되지 않는 GregTechEasyCore";
 	}
 
 	@Override
 	public String pasoErrorVersionClaseGregTechEasyCore() {
-	    return "GregTechEasyCore를 제거하세요. 이는 특정 modpack 전용이며 일반 설치와 호환되지 않습니다.";
+		return "GregTechEasyCore를 제거하세요. 이는 특정 modpack 전용이며 일반 설치와 호환되지 않습니다.";
 	}
-	
+
 	@Override
 	public String errorConflictoMoniLabsConnectorExtras() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "MoniLabs와 Connector Extras 사이에 KubeJS 수정과 관련된 충돌이 감지되었습니다. "
-	            + "이 모드들은 KubeJS 수정 측면에서 호환되지 않습니다." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "MoniLabs와 Connector Extras 사이에 KubeJS 수정과 관련된 충돌이 감지되었습니다. " + "이 모드들은 KubeJS 수정 측면에서 호환되지 않습니다."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoMoniLabsConnectorExtras() {
-	    return "MoniLabs와 Connector Extras 충돌";
+		return "MoniLabs와 Connector Extras 충돌";
 	}
 
 	@Override
 	public String pasoConflictoMoniLabsConnectorExtras() {
-	    return "KubeJS 수정이 충돌하므로 MoniLabs 또는 Connector Extras 중 하나를 제거해 보세요.";
+		return "KubeJS 수정이 충돌하므로 MoniLabs 또는 Connector Extras 중 하나를 제거해 보세요.";
 	}
-	
+
 	@Override
 	public String errorCompatibilidadIrisDH() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Iris는 Distant Horizons [2.0.4] 또는 DH API 버전 [1.1.0] 이상이 필요합니다. "
-	            + "문제를 해결하려면 호환성 안내를 참조하세요: https://gist.github.com/Steveplays28/52db568f297ded527da56dbe6deeec0e" + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Iris는 Distant Horizons [2.0.4] 또는 DH API 버전 [1.1.0] 이상이 필요합니다. "
+				+ "문제를 해결하려면 호환성 안내를 참조하세요: https://gist.github.com/Steveplays28/52db568f297ded527da56dbe6deeec0e"
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorCompatibilidadIrisDH() {
-	    return "Iris와 Distant Horizons 호환성";
+		return "Iris와 Distant Horizons 호환성";
 	}
 
 	@Override
 	public String pasoErrorCompatibilidadIrisDH() {
-	    return "https://gist.github.com/Steveplays28/52db568f297ded527da56dbe6deeec0e 에서 호환성 안내를 확인하고 Iris 및 Distant Horizons를 호환되는 버전으로 업데이트하세요.";
+		return "https://gist.github.com/Steveplays28/52db568f297ded527da56dbe6deeec0e 에서 호환성 안내를 확인하고 Iris 및 Distant Horizons를 호환되는 버전으로 업데이트하세요.";
 	}
-	
+
 	@Override
 	public String faltar_de_clases_minecraft() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>Minecraft의 클래스가 누락되었습니다. 가능한 원인:</b>"
-	        + "<ul>"
-	        + "<li>다른 게임 버전용 모드를 사용하고 있습니다. <a href='https://wagyourtail.xyz/Projects/MinecraftMappingViewer' target='_blank'>MinecraftMappingViewer</a>를 사용하여 해당 클래스가 사용 중인 버전에 존재하는지 확인할 수 있습니다.</li>"
-	        + "<li>Minecraft 설치가 손상되었습니다 (CurseForge 앱, ModrinthApp/Theseus/Astralrinth 등 모드팩 런처에서 흔함). CurseForge 문제 해결을 위해 <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>튜토리얼 보기</a>.</li>"
-	        + "<li>손상된 coremod가 있습니다 (coremod가 실패하면 클래스 로드를 막을 수 있음).</li>"
-	        + "</ul>"
-	        + "<p>참고: 이름에 '/'를 사용하는 경우, 사이드바의 <b>grepr/fgrepr</b> 도구로 누락된 클래스를 참조하는 모드를 찾을 수 있습니다.</p>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>Minecraft의 클래스가 누락되었습니다. 가능한 원인:</b>" + "<ul>"
+				+ "<li>다른 게임 버전용 모드를 사용하고 있습니다. <a href='https://wagyourtail.xyz/Projects/MinecraftMappingViewer' target='_blank'>MinecraftMappingViewer</a>를 사용하여 해당 클래스가 사용 중인 버전에 존재하는지 확인할 수 있습니다.</li>"
+				+ "<li>Minecraft 설치가 손상되었습니다 (CurseForge 앱, ModrinthApp/Theseus/Astralrinth 등 모드팩 런처에서 흔함). CurseForge 문제 해결을 위해 <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>튜토리얼 보기</a>.</li>"
+				+ "<li>손상된 coremod가 있습니다 (coremod가 실패하면 클래스 로드를 막을 수 있음).</li>" + "</ul>"
+				+ "<p>참고: 이름에 '/'를 사용하는 경우, 사이드바의 <b>grepr/fgrepr</b> 도구로 누락된 클래스를 참조하는 모드를 찾을 수 있습니다.</p>";
 	}
 
 	@Override
 	public String faltar_de_clases_dangerzone() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>DangerZone의 클래스가 누락되었습니다. 가능한 원인:</b>"
-	        + "<ul>"
-	        + "<li>다른 게임 버전용 모드를 사용하고 있습니다.</li>"
-	        + "<li>손상된 coremod가 있습니다.</li>"
-	        + "<li>런처 또는 설치가 손상되었습니다.</li>"
-	        + "</ul>"
-	        + "<p>참고: 이름에 '/'를 사용하는 경우, 사이드바의 <b>grepr/fgrepr</b> 도구로 누락된 클래스를 참조하는 모드를 찾을 수 있습니다.</p>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>DangerZone의 클래스가 누락되었습니다. 가능한 원인:</b>" + "<ul>"
+				+ "<li>다른 게임 버전용 모드를 사용하고 있습니다.</li>" + "<li>손상된 coremod가 있습니다.</li>" + "<li>런처 또는 설치가 손상되었습니다.</li>"
+				+ "</ul>" + "<p>참고: 이름에 '/'를 사용하는 경우, 사이드바의 <b>grepr/fgrepr</b> 도구로 누락된 클래스를 참조하는 모드를 찾을 수 있습니다.</p>";
 	}
-	
 
 	@Override
 	public String faltar_de_clases_featurecreep() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>FeatureCreep의 클래스가 누락되었습니다. 가능한 원인:</b>"
-	        + "<ul>"
-	        + "<li>다른 버전의 FeatureCreep(예: ESR 대 Nightly 또는 v4 대 v12)용 모드를 사용하고 있습니다.</li>"
-	        + "<li>CurseForge나 MinecraftStorage에서 FeatureCreep을 설치할 수 있습니다.</li>"
-	        + "</ul>"
-	        + "<p>참고: 이름에 '/'를 사용하는 경우, 사이드바의 <b>grepr/fgrepr</b> 도구로 누락된 클래스를 참조하는 모드를 찾을 수 있습니다.</p>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>FeatureCreep의 클래스가 누락되었습니다. 가능한 원인:</b>" + "<ul>"
+				+ "<li>다른 버전의 FeatureCreep(예: ESR 대 Nightly 또는 v4 대 v12)용 모드를 사용하고 있습니다.</li>"
+				+ "<li>CurseForge나 MinecraftStorage에서 FeatureCreep을 설치할 수 있습니다.</li>" + "</ul>"
+				+ "<p>참고: 이름에 '/'를 사용하는 경우, 사이드바의 <b>grepr/fgrepr</b> 도구로 누락된 클래스를 참조하는 모드를 찾을 수 있습니다.</p>";
 	}
 
 	@Override
 	public String faltar_de_clases_modlauncher() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>ModLauncher의 클래스가 누락되었습니다. 가능한 원인:</b>"
-	        + "<ul>"
-	        + "<li>모드가 MinecraftForge, PillowMC 또는 NeoForge의 다른 빌드용입니다 (ModLauncher는 이 로더들과 함께 사용됨).</li>"
-	        + "<li>Minecraft 한 버전에 대해 여러 modloader 업데이트가 존재합니다.</li>"
-	        + "<li>런처 설치가 손상되었습니다 (CurseForge 앱, ModrinthApp/Theseus/Astralrinth 등에서 흔함). CurseForge 문제 해결을 위해 <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>튜토리얼 보기</a>.</li>"
-	        + "</ul>"
-	        + "<p>참고: 이름에 '/'를 사용하는 경우, 사이드바의 <b>grepr/fgrepr</b> 도구로 누락된 클래스를 참조하는 모드를 찾을 수 있습니다.</p>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>ModLauncher의 클래스가 누락되었습니다. 가능한 원인:</b>" + "<ul>"
+				+ "<li>모드가 MinecraftForge, PillowMC 또는 NeoForge의 다른 빌드용입니다 (ModLauncher는 이 로더들과 함께 사용됨).</li>"
+				+ "<li>Minecraft 한 버전에 대해 여러 modloader 업데이트가 존재합니다.</li>"
+				+ "<li>런처 설치가 손상되었습니다 (CurseForge 앱, ModrinthApp/Theseus/Astralrinth 등에서 흔함). CurseForge 문제 해결을 위해 <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>튜토리얼 보기</a>.</li>"
+				+ "</ul>" + "<p>참고: 이름에 '/'를 사용하는 경우, 사이드바의 <b>grepr/fgrepr</b> 도구로 누락된 클래스를 참조하는 모드를 찾을 수 있습니다.</p>";
 	}
-	
+
 	@Override
 	public String faltar_de_clases_minecraftforge() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>Minecraft Forge의 클래스가 누락되었습니다. 가능한 원인:</b>"
-	        + "<ul>"
-	        + "<li>모드가 MinecraftForge의 다른 빌드용입니다.</li>"
-	        + "<li>Minecraft 한 버전에 대해 여러 modloader 업데이트가 존재합니다.</li>"
-	        + "<li>설치가 손상되었습니다 (CurseForge 앱, ModrinthApp/Theseus/Astralrinth 등에서 흔함). CurseForge 문제 해결을 위해 <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>튜토리얼 보기</a>.</li>"
-	        + "</ul>"
-	        + "<p>참고: 이름에 '/'를 사용하는 경우, 사이드바의 <b>grepr/fgrepr</b> 도구로 누락된 클래스를 참조하는 모드를 찾을 수 있습니다.</p>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>Minecraft Forge의 클래스가 누락되었습니다. 가능한 원인:</b>"
+				+ "<ul>" + "<li>모드가 MinecraftForge의 다른 빌드용입니다.</li>"
+				+ "<li>Minecraft 한 버전에 대해 여러 modloader 업데이트가 존재합니다.</li>"
+				+ "<li>설치가 손상되었습니다 (CurseForge 앱, ModrinthApp/Theseus/Astralrinth 등에서 흔함). CurseForge 문제 해결을 위해 <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>튜토리얼 보기</a>.</li>"
+				+ "</ul>" + "<p>참고: 이름에 '/'를 사용하는 경우, 사이드바의 <b>grepr/fgrepr</b> 도구로 누락된 클래스를 참조하는 모드를 찾을 수 있습니다.</p>";
 	}
 
 	@Override
 	public String faltar_de_clases_neoforged() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>NeoForge의 클래스가 누락되었습니다. 가능한 원인:</b>"
-	        + "<ul>"
-	        + "<li>모드가 NeoForge의 다른 빌드용입니다.</li>"
-	        + "<li>Minecraft 한 버전에 대해 여러 modloader 업데이트가 존재합니다.</li>"
-	        + "<li>설치가 손상되었습니다 (CurseForge 앱, ModrinthApp/Theseus/Astralrinth 등에서 흔함). CurseForge 문제 해결을 위해 <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>튜토리얼 보기</a>.</li>"
-	        + "</ul>"
-	        + "<p>참고: 이름에 '/'를 사용하는 경우, 사이드바의 <b>grepr/fgrepr</b> 도구로 누락된 클래스를 참조하는 모드를 찾을 수 있습니다.</p>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>NeoForge의 클래스가 누락되었습니다. 가능한 원인:</b>" + "<ul>"
+				+ "<li>모드가 NeoForge의 다른 빌드용입니다.</li>" + "<li>Minecraft 한 버전에 대해 여러 modloader 업데이트가 존재합니다.</li>"
+				+ "<li>설치가 손상되었습니다 (CurseForge 앱, ModrinthApp/Theseus/Astralrinth 등에서 흔함). CurseForge 문제 해결을 위해 <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>튜토리얼 보기</a>.</li>"
+				+ "</ul>" + "<p>참고: 이름에 '/'를 사용하는 경우, 사이드바의 <b>grepr/fgrepr</b> 도구로 누락된 클래스를 참조하는 모드를 찾을 수 있습니다.</p>";
 	}
-	
+
 	@Override
 	public String faltar_de_clases_fabricloader() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>Fabric Loader의 클래스가 누락되었습니다. 가능한 원인:</b>"
-	        + "<ul>"
-	        + "<li>모드가 Fabric Loader의 다른 빌드용입니다.</li>"
-	        + "<li>Minecraft 한 버전에 대해 여러 modloader 업데이트가 존재합니다.</li>"
-	        + "<li>설치가 손상되었습니다 (CurseForge 앱, ModrinthApp/Theseus/Astralrinth 등에서 흔함). CurseForge 문제 해결을 위해 <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>튜토리얼 보기</a>.</li>"
-	        + "<li>많은 모드가 Fabric API를 필요로 합니다. 필요하다면 Fabric API를 설치하세요.</li>"
-	        + "</ul>"
-	        + "<p>참고: 이름에 '/'를 사용하는 경우, 사이드바의 <b>grepr/fgrepr</b> 도구로 누락된 클래스를 참조하는 모드를 찾을 수 있습니다.</p>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>Fabric Loader의 클래스가 누락되었습니다. 가능한 원인:</b>" + "<ul>"
+				+ "<li>모드가 Fabric Loader의 다른 빌드용입니다.</li>" + "<li>Minecraft 한 버전에 대해 여러 modloader 업데이트가 존재합니다.</li>"
+				+ "<li>설치가 손상되었습니다 (CurseForge 앱, ModrinthApp/Theseus/Astralrinth 등에서 흔함). CurseForge 문제 해결을 위해 <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>튜토리얼 보기</a>.</li>"
+				+ "<li>많은 모드가 Fabric API를 필요로 합니다. 필요하다면 Fabric API를 설치하세요.</li>" + "</ul>"
+				+ "<p>참고: 이름에 '/'를 사용하는 경우, 사이드바의 <b>grepr/fgrepr</b> 도구로 누락된 클래스를 참조하는 모드를 찾을 수 있습니다.</p>";
 	}
 
 	@Override
 	public String faltar_de_clases_pillowmc() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>PillowMC의 클래스가 누락되었습니다. 가능한 원인:</b>"
-	        + "<ul>"
-	        + "<li>모드가 PillowMC의 다른 빌드용입니다.</li>"
-	        + "<li>Minecraft 한 버전에 대해 여러 modloader 업데이트가 존재합니다.</li>"
-	        + "<li>설치가 손상되었습니다 (CurseForge 앱, ModrinthApp/Theseus/Astralrinth 등에서 흔함). CurseForge 문제 해결을 위해 <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>튜토리얼 보기</a>.</li>"
-	        + "</ul>"
-	        + "<p>참고: 이름에 '/'를 사용하는 경우, 사이드바의 <b>grepr/fgrepr</b> 도구로 누락된 클래스를 참조하는 모드를 찾을 수 있습니다.</p>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>PillowMC의 클래스가 누락되었습니다. 가능한 원인:</b>" + "<ul>"
+				+ "<li>모드가 PillowMC의 다른 빌드용입니다.</li>" + "<li>Minecraft 한 버전에 대해 여러 modloader 업데이트가 존재합니다.</li>"
+				+ "<li>설치가 손상되었습니다 (CurseForge 앱, ModrinthApp/Theseus/Astralrinth 등에서 흔함). CurseForge 문제 해결을 위해 <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>튜토리얼 보기</a>.</li>"
+				+ "</ul>" + "<p>참고: 이름에 '/'를 사용하는 경우, 사이드바의 <b>grepr/fgrepr</b> 도구로 누락된 클래스를 참조하는 모드를 찾을 수 있습니다.</p>";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

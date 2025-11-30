@@ -142,7 +142,8 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 				mensajeFinal.append("<br><br><b>").append(MonitorDePID.idioma.modulos()).append(":</b><br><ul>");
 				for (String modulo : modulosCombinados.split("\\+")) {
 					String trim = modulo.trim();
-					mensajeFinal.append("<li>").append("<b>").append(trim).append("</b>").append(procesarModulo(trim)).append("</li>");
+					mensajeFinal.append("<li>").append("<b>").append(trim).append("</b>").append(procesarModulo(trim))
+							.append("</li>");
 				}
 				mensajeFinal.append("</ul>");
 

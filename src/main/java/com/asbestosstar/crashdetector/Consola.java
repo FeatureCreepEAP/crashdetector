@@ -105,7 +105,7 @@ public class Consola {
 		APIdeSitioDeRegistro.APIS.add(new CrashDetectorPasteAPI());
 		divisores.add(new TLauncherConsolaDivisor());
 		divisores.add(new HolaMundoConsolaDivisidor());
-		//divisores.add(new VainillaConsolaDivisor());
+		// divisores.add(new VainillaConsolaDivisor());
 		tipos_de_registros_de_launcher.add("../../logs/ftb-app-electron.log");
 		tipos_de_registros_de_launcher.add(NoRegistroDeLauncherVShojo.cd_launcherlog.getName());
 		limpiadores.add(new LimpiadorRegistroDeLauncherVainilla());
@@ -155,9 +155,10 @@ public class Consola {
 														// falsos positivos; probablemente esta sea también una causa
 														// conocida del engaño de incompatibilidad que intentan imponer.
 		inutiles_archivo_strs.add("telemetry");// no tiene nada y es comun en la lanzer vainilla
-		inutiles_archivo_strs.add("launcher");//no quieremos launcher logs, KLauncher y Astralrinth y mas incluye sus registros aqui
-		inutiles_archivo_strs.add("latest.log");//no necesitemos latest.log no mas porque tenemos ProxyLog4J2
-		inutiles_archivo_strs.add("debug.log");//no necesitemos latest.log no mas porque tenemos ProxyLog4J2
+		inutiles_archivo_strs.add("launcher");// no quieremos launcher logs, KLauncher y Astralrinth y mas incluye sus
+												// registros aqui
+		inutiles_archivo_strs.add("latest.log");// no necesitemos latest.log no mas porque tenemos ProxyLog4J2
+		inutiles_archivo_strs.add("debug.log");// no necesitemos latest.log no mas porque tenemos ProxyLog4J2
 
 	}
 
@@ -459,9 +460,9 @@ public class Consola {
 //https://github.com/HMCL-dev/HMCL/issues/2663
 
 		// Agregar otros logs sin control de duplicados
-		agregarDirectorio(resultado, new File("logs/"));//Minecraft Logs
-		agregarDirectorio(resultado, new File("crash-reports/"));//Minecraft Crash Reports
-		agregarDirectorio(resultado, new File("var/logs/"));//FeatureCreep Logs
+		agregarDirectorio(resultado, new File("logs/"));// Minecraft Logs
+		agregarDirectorio(resultado, new File("crash-reports/"));// Minecraft Crash Reports
+		agregarDirectorio(resultado, new File("var/logs/"));// FeatureCreep Logs
 
 		// Configuración de TLauncher
 //		File carpetaTLauncherStarter;
@@ -481,12 +482,13 @@ public class Consola {
 //			archivoTLLegacy = new File(home + "/.tlauncher/logs/launcher.log");
 //		}
 
-		//agregarDirectorio(resultado, carpetaTLauncher);
-		//agregarDirectorio(resultado, carpetaTLauncherStarter);
+		// agregarDirectorio(resultado, carpetaTLauncher);
+		// agregarDirectorio(resultado, carpetaTLauncherStarter);
 
 		// Agregar otros archivos directamente
-	//	agregarLauncherLog(new File(home + ".minecraft/launcher_log.txt"), resultado, rutasLauncherLog); // CurseForgeApp
-																											// y TL
+		// agregarLauncherLog(new File(home + ".minecraft/launcher_log.txt"), resultado,
+		// rutasLauncherLog); // CurseForgeApp
+		// y TL
 //		String str_carpHMCL = Config.obtenerInstancia().obtenerCarpetaHMCL();
 //		if (!str_carpHMCL.isEmpty()) {
 //			File carpHMCL = new File(str_carpHMCL);
@@ -496,8 +498,8 @@ public class Consola {
 //		resultado.add(archivoTLLegacy);
 
 		// segundo
-		//resultado.add(new File("../../logs/ftb-app-electron.log")); // FTB
-		//resultado.add(new File("sklauncher/sklauncher_logs.txt"));no funciona
+		// resultado.add(new File("../../logs/ftb-app-electron.log")); // FTB
+		// resultado.add(new File("sklauncher/sklauncher_logs.txt"));no funciona
 		resultado.add(NoRegistroDeLauncherVShojo.cd_launcherlog);
 		resultado.add(new File("hs_err_pid" + String.valueOf(MonitorDePID.pid) + ".log")); // hs
 

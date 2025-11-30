@@ -14,7 +14,7 @@ import cpw.mods.modlauncher.api.IncompatibleEnvironmentException;
 public class CrashDetectorModLauncher implements ITransformationService {
 
 	static {
-		CargadoresComun.init(new Path[] {new File("mods/").toPath()},CargadoresComun.CDOrigin.MODLAUNCHER);		
+		CargadoresComun.init(new Path[] { new File("mods/").toPath() }, CargadoresComun.CDOrigin.MODLAUNCHER);
 	}
 
 	@Override

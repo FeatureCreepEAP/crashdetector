@@ -13,107 +13,106 @@ import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceI
  */
 public class ErrorCodigo1073741819 implements Verificaciones {
 
-    private boolean activado = false;
-    private String mensaje = "";
-    private String enlaceHtml = "";
+	private boolean activado = false;
+	private String mensaje = "";
+	private String enlaceHtml = "";
 
-    /**
-     * Método de compatibilidad — no hace nada, ya que el análisis es por línea.
-     */
-    @Override
-    public void verificar(Consola consola) {
-        // Se usa el método verificar(Consola, String, int) en lugar de este.
-    }
+	/**
+	 * Método de compatibilidad — no hace nada, ya que el análisis es por línea.
+	 */
+	@Override
+	public void verificar(Consola consola) {
+		// Se usa el método verificar(Consola, String, int) en lugar de este.
+	}
 
-    /**
-     * Análisis por línea del registro.
-     * <p>
-     * Se busca el patrón característico del código de error -1073741819
-     * que puede estar relacionado con overlays o problemas de drivers.
-     * </p>
-     */
-    @Override
-    public void verificar(Consola consola, String linea, int numero_de_linea) {
-        if (activado) {
-            // Si ya se activó, no seguimos verificando más líneas.
-            return;
-        }
+	/**
+	 * Análisis por línea del registro.
+	 * <p>
+	 * Se busca el patrón característico del código de error -1073741819 que puede
+	 * estar relacionado con overlays o problemas de drivers.
+	 * </p>
+	 */
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		if (activado) {
+			// Si ya se activó, no seguimos verificando más líneas.
+			return;
+		}
 
-        // Buscamos la línea que contiene el código de error específico
-        if (linea.toLowerCase().contains("exit") && linea.contains("-1073741819")) {
-            
-            // Enlazar a la línea del error en el lector
-            enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+		// Buscamos la línea que contiene el código de error específico
+		if (linea.toLowerCase().contains("exit") && linea.contains("-1073741819")) {
 
-            // Mensaje de error en HTML con referencia al problema de overlays o drivers
-            mensaje = MonitorDePID.idioma.errorCodigo1073741819() + Verificaciones.nl_html;
-            activado = true;
-        }
-        
-        // También buscamos líneas que contengan "error code" y el valor específico
-        if (linea.toLowerCase().contains("error") && linea.contains("-1073741819")) {
-            
-            // Enlazar a la línea del error en el lector
-            enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+			// Enlazar a la línea del error en el lector
+			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
-            // Mensaje de error en HTML con referencia al problema de overlays o drivers
-            mensaje = MonitorDePID.idioma.errorCodigo1073741819() + Verificaciones.nl_html;
-            activado = true;
-        }
-    }
+			// Mensaje de error en HTML con referencia al problema de overlays o drivers
+			mensaje = MonitorDePID.idioma.errorCodigo1073741819() + Verificaciones.nl_html;
+			activado = true;
+		}
 
-    @Override
-    public Verificaciones nueva() {
-        return new ErrorCodigo1073741819();
-    }
+		// También buscamos líneas que contengan "error code" y el valor específico
+		if (linea.toLowerCase().contains("error") && linea.contains("-1073741819")) {
 
-    @Override
-    public boolean activado() {
-        return activado;
-    }
+			// Enlazar a la línea del error en el lector
+			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
-    @Override
-    public float prioridad() {
-        return 1200.0f; // Prioridad media: indica problemas externos al juego
-    }
+			// Mensaje de error en HTML con referencia al problema de overlays o drivers
+			mensaje = MonitorDePID.idioma.errorCodigo1073741819() + Verificaciones.nl_html;
+			activado = true;
+		}
+	}
 
-    @Override
-    public String mensaje() {
-        return activado ? (mensaje + enlaceHtml) : "";
-    }
+	@Override
+	public Verificaciones nueva() {
+		return new ErrorCodigo1073741819();
+	}
 
-    @Override
-    public String nombre() {
-        return MonitorDePID.idioma.nombreDeErrorCodigo1073741819();
-    }
+	@Override
+	public boolean activado() {
+		return activado;
+	}
 
-    @Override
-    public QuickFix solucion() {
-        return new QuickFix.Builder(nombre())
-                .agregarEtiqueta(MonitorDePID.idioma.pasoErrorCodigo1073741819())
-                .construir();
-    }
+	@Override
+	public float prioridad() {
+		return 1200.0f; // Prioridad media: indica problemas externos al juego
+	}
 
-    @Override
-    public String id() {
-        return "error_codigo_especial";
-    }
+	@Override
+	public String mensaje() {
+		return activado ? (mensaje + enlaceHtml) : "";
+	}
 
-    /**
-     * Asocia esta verificación con un trazo específico del stack.
-     * <p>
-     * Devuelve true si el trazo contiene el código de error específico.
-     * </p>
-     */
-    @Override
-    public boolean ocupaTrazo(TraceInfo trazo) {
-        if (!activado || trazo == null || trazo.trace == null) {
-            return false;
-        }
+	@Override
+	public String nombre() {
+		return MonitorDePID.idioma.nombreDeErrorCodigo1073741819();
+	}
 
-        String t = trazo.trace;
+	@Override
+	public QuickFix solucion() {
+		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.pasoErrorCodigo1073741819())
+				.construir();
+	}
 
-        return (t.contains("exit code") && t.contains("-1073741819")) ||
-               (t.contains("error code") && t.contains("-1073741819"));
-    }
+	@Override
+	public String id() {
+		return "error_codigo_especial";
+	}
+
+	/**
+	 * Asocia esta verificación con un trazo específico del stack.
+	 * <p>
+	 * Devuelve true si el trazo contiene el código de error específico.
+	 * </p>
+	 */
+	@Override
+	public boolean ocupaTrazo(TraceInfo trazo) {
+		if (!activado || trazo == null || trazo.trace == null) {
+			return false;
+		}
+
+		String t = trazo.trace;
+
+		return (t.contains("exit code") && t.contains("-1073741819"))
+				|| (t.contains("error code") && t.contains("-1073741819"));
+	}
 }

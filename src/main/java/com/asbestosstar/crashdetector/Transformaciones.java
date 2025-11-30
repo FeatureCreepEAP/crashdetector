@@ -19,9 +19,9 @@ public class Transformaciones implements ClassFileTransformer {
 	public static void init() {
 		if (hayASM()) {// Son ASM Parches, si tienese ASM Parches necesita esta verificacion o puede
 //						// tener problemas
-		Parche.parches.add(new TransformacionDeMinecraftCodigo0());// TODO detecion para app/juego
-		Parche.parches.add(new ParcheWaterMediaTL());
-		Parche.parches.add(new PreferIPv4StackParch());
+			Parche.parches.add(new TransformacionDeMinecraftCodigo0());// TODO detecion para app/juego
+			Parche.parches.add(new ParcheWaterMediaTL());
+			Parche.parches.add(new PreferIPv4StackParch());
 		}
 	}
 

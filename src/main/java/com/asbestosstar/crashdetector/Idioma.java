@@ -96,7 +96,7 @@ public interface Idioma {
 		}
 
 	}
-	
+
 	public static String leer_archivo(Path path) throws IOException {
 		return new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
 	}

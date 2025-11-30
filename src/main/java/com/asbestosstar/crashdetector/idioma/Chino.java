@@ -225,8 +225,8 @@ public class Chino implements Idioma {
 
 	@Override
 	public String theseus() {
-	    return "<b style='color:#" + config.obtenerColorAdvertencia()
-	           + "'>Theseus 还存在其他问题，包括在尝试删除模组时会失败。如果你需要运行 mrpack 文件，可以使用其他启动器，例如 Prism Launcher（仅支持 modrinth.com）、ATLauncher（仅支持 modrinth.com）或 Hello Minecraft Launcher（支持 modrinth.com 和 bbsmc.net）。</b>";
+		return "<b style='color:#" + config.obtenerColorAdvertencia()
+				+ "'>Theseus 还存在其他问题，包括在尝试删除模组时会失败。如果你需要运行 mrpack 文件，可以使用其他启动器，例如 Prism Launcher（仅支持 modrinth.com）、ATLauncher（仅支持 modrinth.com）或 Hello Minecraft Launcher（支持 modrinth.com 和 bbsmc.net）。</b>";
 	}
 
 	@Override
@@ -444,14 +444,14 @@ public class Chino implements Idioma {
 				+ proveedor + "' 的版本 '" + requerido + "' 或更高版本，但仅找到版本 '" + encontrado + "'。</b>";
 	}
 
-@Override
-public String advertenciaMalwareFalso() {
-    return "<b style='color:#" + config.obtenerColorError() + "'>"
-         + "警告！Crash Assistant 是一个伪造的恶意软件检测器。它故意阻止游戏启动，无视您继续使用目标模组进行游戏的自由。 "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>查看 MalwareMod.java 代码</a>   "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>查看 JarInJarHelper.java 代码</a>. "
-         + "目前只有这个模组在他们的列表中，并且他们实际上只针对默认的日志站点，而该站点可以由用户更改，只有在明确选择使用内置日志共享功能时才会生效。CrashAssistant 不会检查当前使用的是哪个日志站点，也不会解释如何更改它（共享对话框底部有一个下拉菜单），无论配置了哪个站点，CrashAssistant 都会阻止游戏启动。在他们的消息中，他们说要自己做研究，那就去做吧，查看 CrashDetector 和 Crash Assistant 的代码，了解它们的作用，不要依赖权威的呼吁。</b>";
-}
+	@Override
+	public String advertenciaMalwareFalso() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "警告！Crash Assistant 是一个伪造的恶意软件检测器。它故意阻止游戏启动，无视您继续使用目标模组进行游戏的自由。 "
+				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>查看 MalwareMod.java 代码</a>   "
+				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>查看 JarInJarHelper.java 代码</a>. "
+				+ "目前只有这个模组在他们的列表中，并且他们实际上只针对默认的日志站点，而该站点可以由用户更改，只有在明确选择使用内置日志共享功能时才会生效。CrashAssistant 不会检查当前使用的是哪个日志站点，也不会解释如何更改它（共享对话框底部有一个下拉菜单），无论配置了哪个站点，CrashAssistant 都会阻止游戏启动。在他们的消息中，他们说要自己做研究，那就去做吧，查看 CrashDetector 和 Crash Assistant 的代码，了解它们的作用，不要依赖权威的呼吁。</b>";
+	}
 
 	@Override
 	public String error_clase_no_encontrada_mcforge_mod_suspechoso(String idMod, String claseNoEncontrada) {
@@ -3043,23 +3043,24 @@ public String advertenciaMalwareFalso() {
 		return "未绑定的密度函数";
 	}
 
-@Override
-public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves) {
-    StringBuilder sb = new StringBuilder("<b>注册表中缺少密度函数。</b> ");
-    if (claves != null && !claves.isEmpty()) {
-        sb.append("缺失项：");
-        for (int i = 0; i < Math.min(4, claves.size()); i++) {
-            if (i > 0)
-                sb.append(", ");
-            sb.append("<code>").append(claves.get(i)).append("</code>");
-        }
-        if (claves.size() > 4)
-            sb.append(", …");
-        sb.append("。");
-    }
-    sb.append("<br/><b>解决方案：</b>安装或启用定义这些函数的 mod/datapack 并重启。另一个常见原因是：虽然你安装了所需的 mod，但它自身存在问题或与其他 mod 冲突；例如，Terralith 存在许多问题，可能引发此错误及其他问题，包括 JSON 错误。");
-    return sb.toString();
-}
+	@Override
+	public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves) {
+		StringBuilder sb = new StringBuilder("<b>注册表中缺少密度函数。</b> ");
+		if (claves != null && !claves.isEmpty()) {
+			sb.append("缺失项：");
+			for (int i = 0; i < Math.min(4, claves.size()); i++) {
+				if (i > 0)
+					sb.append(", ");
+				sb.append("<code>").append(claves.get(i)).append("</code>");
+			}
+			if (claves.size() > 4)
+				sb.append(", …");
+			sb.append("。");
+		}
+		sb.append(
+				"<br/><b>解决方案：</b>安装或启用定义这些函数的 mod/datapack 并重启。另一个常见原因是：虽然你安装了所需的 mod，但它自身存在问题或与其他 mod 冲突；例如，Terralith 存在许多问题，可能引发此错误及其他问题，包括 JSON 错误。");
+		return sb.toString();
+	}
 
 	@Override
 	public String pasoFuncionesDeDensidadNoVinculadas() {
@@ -3435,8 +3436,8 @@ public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves
 
 	@Override
 	public String mensajeAyudar() {
-		String iconoCompartir = Statics.carpeta.resolve("imagenes").resolve("boton_compartir_icon.png")
-				.toAbsolutePath().toUri().toString();
+		String iconoCompartir = Statics.carpeta.resolve("imagenes").resolve("boton_compartir_icon.png").toAbsolutePath()
+				.toUri().toString();
 		String colorTexto = Config.obtenerInstancia().obtenerColorInfo();
 
 		return "" + "<div style='color:" + colorTexto + ";'>" + "  <strong>需要帮助吗？</strong><br>"
@@ -3595,8 +3596,8 @@ public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves
 
 	@Override
 	public String problema_con_openAL() {
-	    return "<span style='color:#" + config.obtenerColorError()
-	           + "'>你的 OpenAL 出现问题。有时是 Nouveau 驱动导致的，但有时是因为应用程序自带的 OpenAL 版本与你系统发行版中的版本不兼容，你需要使用发行版提供的 OpenAL 版本。这在 Red Hat 系发行版和 Sound Physics Remastered 等声音模组中尤为常见。请参考此指南获取更多帮助：<a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>如何修复 Linux 上 Minecraft 的声音问题</a>。</span>";
+		return "<span style='color:#" + config.obtenerColorError()
+				+ "'>你的 OpenAL 出现问题。有时是 Nouveau 驱动导致的，但有时是因为应用程序自带的 OpenAL 版本与你系统发行版中的版本不兼容，你需要使用发行版提供的 OpenAL 版本。这在 Red Hat 系发行版和 Sound Physics Remastered 等声音模组中尤为常见。请参考此指南获取更多帮助：<a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>如何修复 Linux 上 Minecraft 的声音问题</a>。</span>";
 	}
 
 	@Override
@@ -3906,626 +3907,597 @@ public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves
 
 	@Override
 	public String nombre_de_mods_incompatibles_crash_assistant() {
-	    return "与 Crash Assistant 不兼容的模组（误报）";
+		return "与 Crash Assistant 不兼容的模组（误报）";
 	}
 
 	@Override
 	public String nombre_de_modpack_incompatible_crash_assistant() {
-	    return "使用 CrashAssistant 的整合包存在不兼容的模组";
+		return "使用 CrashAssistant 的整合包存在不兼容的模组";
 	}
 
 	@Override
 	public String advertenciaCrashAssistantModpackIncompatibleFalso() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>Crash Assistant 有一个标记为不兼容的模组列表，但我们没有证据表明它们真的不兼容，且该错误提示仅以英文显示。如果你想使用这些模组，可以编辑文件 <code>config/crash_assistant/config.toml</code>，将 [compatibility] 部分中的 <code>enabled = true</code> 修改为 <code>enabled = false</code>。</b>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>Crash Assistant 有一个标记为不兼容的模组列表，但我们没有证据表明它们真的不兼容，且该错误提示仅以英文显示。如果你想使用这些模组，可以编辑文件 <code>config/crash_assistant/config.toml</code>，将 [compatibility] 部分中的 <code>enabled = true</code> 修改为 <code>enabled = false</code>。</b>";
 	}
 
 	@Override
 	public String advertenciaCrashAssistantModsIncompatibles() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>Crash Assistant 具有判断模组不兼容的能力，但有时并不准确，且错误信息仅为英文。如果你想使用这些模组，可以编辑文件 <code>config/crash_assistant/problematic_mods_config.json</code>，将 <code>should_crash_on_startup</code> 从 <code>true</code> 改为 <code>false</code>。</b>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>Crash Assistant 具有判断模组不兼容的能力，但有时并不准确，且错误信息仅为英文。如果你想使用这些模组，可以编辑文件 <code>config/crash_assistant/problematic_mods_config.json</code>，将 <code>should_crash_on_startup</code> 从 <code>true</code> 改为 <code>false</code>。</b>";
 	}
-	
+
 	@Override
 	public String errorDependenciaSimple(String modId, String dependencia, String actual) {
-	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
-	           "错误：模组 '" + modId + "' 需要模组 '" + dependencia + "'。当前，" + actual + "。" +
-	           "</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>" + "错误：模组 '" + modId + "' 需要模组 '" + dependencia
+				+ "'。当前，" + actual + "。" + "</span>";
 	}
 
 	@Override
 	public String errorDependenciaNoInstalada(String modId, String dependencia, String requerido) {
-	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
-	           "错误：模组 '" + modId + "' 需要 '" + dependencia + "' 的 '" + requerido + "' 或更高版本，但该模组未安装。" +
-	           "</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>" + "错误：模组 '" + modId + "' 需要 '" + dependencia
+				+ "' 的 '" + requerido + "' 或更高版本，但该模组未安装。" + "</span>";
 	}
-	
+
 	// 在类 MonitorDePID.idioma 中（添加此方法）
 	public String errorSuperbWarfareIncompatible(String modId, String dependencia, String versionActual) {
-	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
-	           "错误：模组 '" + modId + "' 与 '" + dependencia + "' 的当前版本不兼容。" +
-	           "你必须删除模组 'Iris/Oculus & GeckoLib Compat'，因为它与 Superb Warfare 不兼容，并且无法与最新版 GeckoLib 正常工作。" +
-	           "当前版本：" + versionActual +
-	           "</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>" + "错误：模组 '" + modId + "' 与 '" + dependencia
+				+ "' 的当前版本不兼容。"
+				+ "你必须删除模组 'Iris/Oculus & GeckoLib Compat'，因为它与 Superb Warfare 不兼容，并且无法与最新版 GeckoLib 正常工作。" + "当前版本："
+				+ versionActual + "</span>";
 	}
-	
+
 	public String fallo_ejecucion_tarea_descripcion(String clase) {
-	    return "错误：无法为类 '" + clase + "' 执行任务。" +
-	           "当模组之间不兼容或与其他已安装的模组发生冲突时，通常会出现此错误。";
+		return "错误：无法为类 '" + clase + "' 执行任务。" + "当模组之间不兼容或与其他已安装的模组发生冲突时，通常会出现此错误。";
 	}
 
 	public String nombre_fallos_ejecucion_tareas() {
-	    return "任务执行失败";
+		return "任务执行失败";
 	}
 
 	public String recomendacion_fallos_ejecucion() {
-	    return "此类错误通常是由于模组之间的不兼容性引起的。" +
-	           "特别是那些在使用 ConnectorMod 时不能正常工作的模组。";
+		return "此类错误通常是由于模组之间的不兼容性引起的。" + "特别是那些在使用 ConnectorMod 时不能正常工作的模组。";
 	}
 
 	public String info_clase_problematica() {
-	    return "问题类：";
+		return "问题类：";
 	}
 
 	public String ver_en_log() {
-	    return "在日志中查看";
+		return "在日志中查看";
 	}
 
 	public String no_se_encontraron_clases_problema() {
-	    return "未找到存在执行问题的具体类。";
+		return "未找到存在执行问题的具体类。";
 	}
+
 	@Override
 	public String errorConflictoOptiFineEMF() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	           + "检测到 OptiFine 和实体模型功能 (EMF) 之间存在严重冲突。"
-	           + "这两个模组不兼容，会导致注入失败，从而阻止游戏启动。" + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "检测到 OptiFine 和实体模型功能 (EMF) 之间存在严重冲突。"
+				+ "这两个模组不兼容，会导致注入失败，从而阻止游戏启动。" + "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoOptiFineEMF() {
-	    return "OptiFine 与实体模型功能冲突";
+		return "OptiFine 与实体模型功能冲突";
 	}
 
 	@Override
 	public String pasoConflictoOptiFineEMF() {
-	    return "卸载 OptiFine 或 实体模型功能 (EMF)，因为它们彼此不兼容。";
+		return "卸载 OptiFine 或 实体模型功能 (EMF)，因为它们彼此不兼容。";
 	}
-	
+
 	@Override
 	public String errorConflictoOptiFineFusion() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	           + "检测到 OptiFine 和 Fusion 之间存在严重冲突。"
-	           + "这两个模组不兼容，会导致注入失败，从而阻止游戏启动。" + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "检测到 OptiFine 和 Fusion 之间存在严重冲突。"
+				+ "这两个模组不兼容，会导致注入失败，从而阻止游戏启动。" + "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoOptiFineFusion() {
-	    return "OptiFine 与 Fusion 冲突";
+		return "OptiFine 与 Fusion 冲突";
 	}
 
 	@Override
 	public String pasoConflictoOptiFineFusion() {
-	    return "卸载 OptiFine 或 Fusion，因为它们彼此不兼容。";
+		return "卸载 OptiFine 或 Fusion，因为它们彼此不兼容。";
 	}
-	
+
 	@Override
 	public String errorConflictoFlywheelSodium() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Flywheel（由 Create 所需）需要 Sodium 0.6.0-beta.2 或更高版本。Rubidium 是 0.5.3。"
-	            + "请考虑使用 <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a> 作为替代方案。" + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Flywheel（由 Create 所需）需要 Sodium 0.6.0-beta.2 或更高版本。Rubidium 是 0.5.3。"
+				+ "请考虑使用 <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a> 作为替代方案。"
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoFlywheelSodium() {
-	    return "Flywheel 与 Sodium 版本冲突";
+		return "Flywheel 与 Sodium 版本冲突";
 	}
 
 	@Override
 	public String pasoConflictoFlywheelSodium() {
-	    return "将 Sodium 更新至 0.6.0-beta.2 或更高版本，或安装 <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a> 作为兼容的替代品。";
+		return "将 Sodium 更新至 0.6.0-beta.2 或更高版本，或安装 <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a> 作为兼容的替代品。";
 	}
-	
+
 	@Override
 	public String errorConflictoOptiFineEpicFight() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "检测到 OptiFine 和 Epic Fight 之间存在严重冲突。"
-	            + "这两个模组不兼容，会导致注入失败，从而阻止游戏启动。" + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "检测到 OptiFine 和 Epic Fight 之间存在严重冲突。"
+				+ "这两个模组不兼容，会导致注入失败，从而阻止游戏启动。" + "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoOptiFineEpicFight() {
-	    return "OptiFine 与 Epic Fight 冲突";
+		return "OptiFine 与 Epic Fight 冲突";
 	}
 
 	@Override
 	public String pasoConflictoOptiFineEpicFight() {
-	    return "卸载 OptiFine 或 Epic Fight，因为它们彼此不兼容。";
+		return "卸载 OptiFine 或 Epic Fight，因为它们彼此不兼容。";
 	}
-	
+
 	@Override
 	public String errorConflictoOptiFineRubidium() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "检测到 OptiFine 和 Rubidium 之间的严重冲突。 "
-	            + "这些模组不兼容，会导致注入失败，使游戏无法启动。" + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "检测到 OptiFine 和 Rubidium 之间的严重冲突。 "
+				+ "这些模组不兼容，会导致注入失败，使游戏无法启动。" + "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoOptiFineRubidium() {
-	    return "OptiFine 和 Rubidium 冲突";
+		return "OptiFine 和 Rubidium 冲突";
 	}
 
 	@Override
 	public String pasoConflictoOptiFineRubidium() {
-	    return "卸载 OptiFine 或 Rubidium，因为它们彼此不兼容。";
+		return "卸载 OptiFine 或 Rubidium，因为它们彼此不兼容。";
 	}
-	
+
 	@Override
 	public String errorFreeCamServidor() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "FreeCam 正试图在专用服务器上加载，但它仅与客户端兼容。 "
-	            + "请从服务器中移除 FreeCam，或确保它仅安装在客户端上。" + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "FreeCam 正试图在专用服务器上加载，但它仅与客户端兼容。 "
+				+ "请从服务器中移除 FreeCam，或确保它仅安装在客户端上。" + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorFreeCamServidor() {
-	    return "FreeCam 在专用服务器上";
+		return "FreeCam 在专用服务器上";
 	}
 
 	@Override
 	public String pasoErrorFreeCamServidor() {
-	    return "请从专用服务器中移除 FreeCam，因为它只能安装在客户端上。";
+		return "请从专用服务器中移除 FreeCam，因为它只能安装在客户端上。";
 	}
-	
+
 	@Override
 	public String errorEntityTextureFeaturesServidor() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Entity Texture Features (ETF) 正试图在专用服务器上加载，但它仅与客户端兼容。 "
-	            + "请从服务器中移除 ETF，或确保它仅安装在客户端上。" + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Entity Texture Features (ETF) 正试图在专用服务器上加载，但它仅与客户端兼容。 " + "请从服务器中移除 ETF，或确保它仅安装在客户端上。" + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorEntityTextureFeaturesServidor() {
-	    return "Entity Texture Features 在专用服务器上";
+		return "Entity Texture Features 在专用服务器上";
 	}
 
 	@Override
 	public String pasoErrorEntityTextureFeaturesServidor() {
-	    return "请从专用服务器中移除 Entity Texture Features，因为它只能安装在客户端上。";
+		return "请从专用服务器中移除 Entity Texture Features，因为它只能安装在客户端上。";
 	}
-	
+
 	@Override
 	public String errorEULANoAceptado() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "必须接受 Minecraft 的 EULA 才能运行服务器。 "
-	            + "编辑 eula.txt 文件，将 'eula=false' 改为 'eula=true'。" + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "必须接受 Minecraft 的 EULA 才能运行服务器。 "
+				+ "编辑 eula.txt 文件，将 'eula=false' 改为 'eula=true'。" + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorEULANoAceptado() {
-	    return "Minecraft 的 EULA 未接受";
+		return "Minecraft 的 EULA 未接受";
 	}
 
 	@Override
 	public String pasoErrorEULANoAceptado() {
-	    return "编辑服务器文件夹中的 eula.txt 文件，将 'eula=false' 改为 'eula=true'。";
+		return "编辑服务器文件夹中的 eula.txt 文件，将 'eula=false' 改为 'eula=true'。";
 	}
-	
+
 	@Override
 	public String errorOptiFineServidor() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "OptiFine 正试图在专用服务器上加载，但它仅与客户端兼容。 "
-	            + "请从服务器中移除 OptiFine，或确保它仅安装在客户端上。" + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "OptiFine 正试图在专用服务器上加载，但它仅与客户端兼容。 "
+				+ "请从服务器中移除 OptiFine，或确保它仅安装在客户端上。" + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorOptiFineServidor() {
-	    return "OptiFine 在专用服务器上";
+		return "OptiFine 在专用服务器上";
 	}
 
 	@Override
 	public String pasoErrorOptiFineServidor() {
-	    return "请从专用服务器中移除 OptiFine，因为它只能安装在客户端上。";
+		return "请从专用服务器中移除 OptiFine，因为它只能安装在客户端上。";
 	}
-	
+
 	@Override
 	public String errorIronSpellbooksVersion() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Iron's Spellbooks 被错误地标记为 1.20.1 版本，但使用了 1.21.1 的方法。 "
-	            + "该模组正尝试使用在 1.20.1 中不存在的 ResourceLocation.fromNamespaceAndPath。" + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Iron's Spellbooks 被错误地标记为 1.20.1 版本，但使用了 1.21.1 的方法。 "
+				+ "该模组正尝试使用在 1.20.1 中不存在的 ResourceLocation.fromNamespaceAndPath。" + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorIronSpellbooksVersion() {
-	    return "Iron's Spellbooks 版本错误";
+		return "Iron's Spellbooks 版本错误";
 	}
 
 	@Override
 	public String pasoErrorIronSpellbooksVersion() {
-	    return "请确保使用与你的 Minecraft 版本兼容的 Iron's Spellbooks 正确版本。";
+		return "请确保使用与你的 Minecraft 版本兼容的 Iron's Spellbooks 正确版本。";
 	}
-	
+
 	@Override
 	public String errorConflictoOptiFineEmbeddium() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "检测到 OptiFine 和 Embeddium 之间的严重冲突。 "
-	            + "这些模组不兼容，会导致注入失败，使游戏无法启动。" + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "检测到 OptiFine 和 Embeddium 之间的严重冲突。 "
+				+ "这些模组不兼容，会导致注入失败，使游戏无法启动。" + "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoOptiFineEmbeddium() {
-	    return "OptiFine 和 Embeddium 冲突";
+		return "OptiFine 和 Embeddium 冲突";
 	}
 
 	@Override
 	public String pasoConflictoOptiFineEmbeddium() {
-	    return "卸载 OptiFine 或 Embeddium，因为它们彼此不兼容。";
+		return "卸载 OptiFine 或 Embeddium，因为它们彼此不兼容。";
 	}
-	
+
 	@Override
 	public String noPuedeAnalizarJSON() {
-	    return "<span style='color:#" + config.obtenerColorError()
-	        + "'>这通常由世界生成模组冲突引起，尤其是 Terralinth、AmplifiedNether、Nullscape 和 Incendium 等世界生成类模组。也可能是因为缺少某个必需的模组。</span>";
+		return "<span style='color:#" + config.obtenerColorError()
+				+ "'>这通常由世界生成模组冲突引起，尤其是 Terralinth、AmplifiedNether、Nullscape 和 Incendium 等世界生成类模组。也可能是因为缺少某个必需的模组。</span>";
 	}
+
 	@Override
 	public String errorControllableServidor() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Controllable 正试图在专用服务器上加载，但它仅与客户端兼容。 "
-	            + "请从服务器中移除 Controllable，或确保它仅安装在客户端上。" + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "Controllable 正试图在专用服务器上加载，但它仅与客户端兼容。 "
+				+ "请从服务器中移除 Controllable，或确保它仅安装在客户端上。" + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorControllableServidor() {
-	    return "Controllable 在专用服务器上";
+		return "Controllable 在专用服务器上";
 	}
 
 	@Override
 	public String pasoErrorControllableServidor() {
-	    return "请从专用服务器中移除 Controllable，因为它只能安装在客户端上。";
+		return "请从专用服务器中移除 Controllable，因为它只能安装在客户端上。";
 	}
-	
+
 	@Override
 	public String errorSupplementariesCargaServidor() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Supplementaries 正在引发一个错误，导致服务器无法加载。 "
-	            + "该模组在注册火焰行为时存在问题，会在 datapacks 加载期间引发故障。" + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "Supplementaries 正在引发一个错误，导致服务器无法加载。 "
+				+ "该模组在注册火焰行为时存在问题，会在 datapacks 加载期间引发故障。" + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorSupplementariesCargaServidor() {
-	    return "Supplementaries 阻止服务器加载";
+		return "Supplementaries 阻止服务器加载";
 	}
 
 	@Override
 	public String pasoErrorSupplementariesCargaServidor() {
-	    return "请尝试将 Supplementaries 更新到最新版本，或暂时禁用它以允许服务器加载。";
+		return "请尝试将 Supplementaries 更新到最新版本，或暂时禁用它以允许服务器加载。";
 	}
-	
+
 	@Override
 	public String errorGroovyModloaderModuloFaltante() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Groovy Modloader (GML) 发现缺少 Jackson 模块的问题。 "
-	            + "某些模组（如 Valkyrien Skies）可能因未包含所有必要依赖而引发此错误。" + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "Groovy Modloader (GML) 发现缺少 Jackson 模块的问题。 "
+				+ "某些模组（如 Valkyrien Skies）可能因未包含所有必要依赖而引发此错误。" + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorGroovyModloaderModuloFaltante() {
-	    return "Groovy Modloader 缺少 Jackson 模块";
+		return "Groovy Modloader 缺少 Jackson 模块";
 	}
 
 	@Override
 	public String pasoErrorGroovyModloaderModuloFaltante() {
-	    return "移除 Groovy Modloader 以及可能引发依赖冲突的相关模组（如 Valkyrien Skies）。";
+		return "移除 Groovy Modloader 以及可能引发依赖冲突的相关模组（如 Valkyrien Skies）。";
 	}
-	
+
 	@Override
 	public String errorEveryCompatNombreInvalido() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Every Compat 发现了一个无效的木头方块名称。 "
-	            + "Every Compat 通常存在很多问题。请不要使用它！" + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "Every Compat 发现了一个无效的木头方块名称。 "
+				+ "Every Compat 通常存在很多问题。请不要使用它！" + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorEveryCompatNombreInvalido() {
-	    return "Every Compat 中的无效名称";
+		return "Every Compat 中的无效名称";
 	}
 
 	@Override
 	public String pasoErrorEveryCompatNombreInvalido() {
-	    return "检查使用 Every Compat 的资源包或模组，它们可能包含无效的方块名称。";
+		return "检查使用 Every Compat 的资源包或模组，它们可能包含无效的方块名称。";
 	}
-	
-	
 
 	@Override
 	public String errorCodigo1073741819() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "检测到错误代码 (-1073741819)，可能由 Razer 的 GameCaster、Discord、OBS Studio 等 overlay 或 NVIDIA 驱动问题引起。" + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "检测到错误代码 (-1073741819)，可能由 Razer 的 GameCaster、Discord、OBS Studio 等 overlay 或 NVIDIA 驱动问题引起。" + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorCodigo1073741819() {
-	    return "错误代码 -1073741819";
+		return "错误代码 -1073741819";
 	}
 
 	@Override
 	public String pasoErrorCodigo1073741819() {
-	    return "尝试禁用 GameCaster、Discord 或 OBS Studio 等 overlay，并确保你的 NVIDIA 驱动程序已更新。";
+		return "尝试禁用 GameCaster、Discord 或 OBS Studio 等 overlay，并确保你的 NVIDIA 驱动程序已更新。";
 	}
-	
+
 	@Override
 	public String errorImmersiveTooltipsSinDependencia() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Immersive Tooltips 需要依赖 Immersive Messages，但未安装。 "
-	            + "请安装 Immersive Messages 以确保 Immersive Tooltips 正常工作。" + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Immersive Tooltips 需要依赖 Immersive Messages，但未安装。 "
+				+ "请安装 Immersive Messages 以确保 Immersive Tooltips 正常工作。" + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorImmersiveTooltipsSinDependencia() {
-	    return "Immersive Tooltips 缺少依赖";
+		return "Immersive Tooltips 缺少依赖";
 	}
 
 	@Override
 	public String pasoErrorImmersiveTooltipsSinDependencia() {
-	    return "安装 Immersive Messages，因为它是 Immersive Tooltips 所需的依赖。";
+		return "安装 Immersive Messages，因为它是 Immersive Tooltips 所需的依赖。";
 	}
-	
+
 	@Override
 	public String errorMedievalOriginsCast() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Medieval Origins 与 Apoli Mod 存在兼容性问题，其中 ItemStack 无法转换为 EntityLinkedItemStack。 "
-	            + "此问题常见于 6.6.0 以上版本。建议使用更早版本，或尝试在 Fabric 和 Forge 版本之间切换。" + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Medieval Origins 与 Apoli Mod 存在兼容性问题，其中 ItemStack 无法转换为 EntityLinkedItemStack。 "
+				+ "此问题常见于 6.6.0 以上版本。建议使用更早版本，或尝试在 Fabric 和 Forge 版本之间切换。" + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorMedievalOriginsCast() {
-	    return "Medieval Origins 类型转换错误";
+		return "Medieval Origins 类型转换错误";
 	}
 
 	@Override
 	public String pasoErrorMedievalOriginsCast() {
-	    return "请使用 Medieval Origins 6.6.0 或更早版本，或尝试切换该 mod 的 Fabric 与 Forge 版本。";
+		return "请使用 Medieval Origins 6.6.0 或更早版本，或尝试切换该 mod 的 Fabric 与 Forge 版本。";
 	}
-	
+
 	@Override
 	public String errorReignOfNetherMusicManager() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Reign of Nether 正在引发一个与 MusicManager 中缺失的 Registry Object 相关的错误。 "
-	            + "此问题与 Reign of Nether 的 MusicManager mixin 有关。" + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Reign of Nether 正在引发一个与 MusicManager 中缺失的 Registry Object 相关的错误。 "
+				+ "此问题与 Reign of Nether 的 MusicManager mixin 有关。" + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorReignOfNetherMusicManager() {
-	    return "Reign of Nether 中的 MusicManager 错误";
+		return "Reign of Nether 中的 MusicManager 错误";
 	}
 
 	@Override
 	public String pasoErrorReignOfNetherMusicManager() {
-	    return "尝试更新 Reign of Nether，或临时移除它以解决此错误。";
+		return "尝试更新 Reign of Nether，或临时移除它以解决此错误。";
 	}
-	
+
 	@Override
 	public String errorYesSteveModelLinux() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "YesSteveModel 仅支持 Linux 或 Android 上的 YSM 服务器。 "
-	            + "此问题已在 2025 年 11 月 23 日之后 Modrinth 上的更新版本中修复。" + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "YesSteveModel 仅支持 Linux 或 Android 上的 YSM 服务器。 " + "此问题已在 2025 年 11 月 23 日之后 Modrinth 上的更新版本中修复。"
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorYesSteveModelLinux() {
-	    return "YesSteveModel 与 Linux 不兼容";
+		return "YesSteveModel 与 Linux 不兼容";
 	}
 
 	@Override
 	public String pasoErrorYesSteveModelLinux() {
-	    return "请从 Modrinth 更新 YesSteveModel 至更新的版本，该问题已在 11 月 23 日之后修复。";
+		return "请从 Modrinth 更新 YesSteveModel 至更新的版本，该问题已在 11 月 23 日之后修复。";
 	}
-	
+
 	@Override
 	public String errorConflictoMovingElevatorsOptiFine() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "检测到 Moving Elevators 和 OptiFine 之间的严重冲突。 "
-	            + "这些模组不兼容，会导致注入失败，使游戏无法启动。" + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "检测到 Moving Elevators 和 OptiFine 之间的严重冲突。 "
+				+ "这些模组不兼容，会导致注入失败，使游戏无法启动。" + "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoMovingElevatorsOptiFine() {
-	    return "Moving Elevators 与 OptiFine 冲突";
+		return "Moving Elevators 与 OptiFine 冲突";
 	}
 
 	@Override
 	public String pasoConflictoMovingElevatorsOptiFine() {
-	    return "卸载 OptiFine 或 Moving Elevators，因为它们彼此不兼容。";
+		return "卸载 OptiFine 或 Moving Elevators，因为它们彼此不兼容。";
 	}
-	
+
 	@Override
 	public String errorConflictoFabricAPIOptiFine() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "检测到 Fabric API（fabric-resource-loader-v0）与 OptiFine 之间的严重冲突。 "
-	            + "这些模组不兼容，会导致注入失败，使游戏无法启动。" + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "检测到 Fabric API（fabric-resource-loader-v0）与 OptiFine 之间的严重冲突。 " + "这些模组不兼容，会导致注入失败，使游戏无法启动。" + "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoFabricAPIOptiFine() {
-	    return "Fabric API 与 OptiFine 冲突";
+		return "Fabric API 与 OptiFine 冲突";
 	}
 
 	@Override
 	public String pasoConflictoFabricAPIOptiFine() {
-	    return "卸载 OptiFine，或将 Fabric API 更新到兼容版本。";
+		return "卸载 OptiFine，或将 Fabric API 更新到兼容版本。";
 	}
-	
+
 	@Override
 	public String errorModLauncherTransformationService(String claseProveedor) {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "某个模组包含一个有缺陷的 ITransformationService，无法实例化：" + claseProveedor + "。"
-	            + "必须移除此模组才能加载游戏。" + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "某个模组包含一个有缺陷的 ITransformationService，无法实例化："
+				+ claseProveedor + "。" + "必须移除此模组才能加载游戏。" + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorModLauncherTransformationService() {
-	    return "有缺陷的 ITransformationService";
+		return "有缺陷的 ITransformationService";
 	}
 
 	@Override
 	public String pasoErrorModLauncherTransformationService(String claseProveedor) {
-	    return "移除包含类 " + claseProveedor + " 的模组，因为它包含一个有缺陷的 ITransformationService。";
+		return "移除包含类 " + claseProveedor + " 的模组，因为它包含一个有缺陷的 ITransformationService。";
 	}
-	
+
 	@Override
 	public String errorVersionInvalidaMod(String version) {
-	    return "<span style='color:#" + config.obtenerColorError() + "'>某个模组的版本声明无效。 "
-	            + "版本号必须用方括号括起来。 "
-	            + "你可以使用侧边栏中的 grep/greprf 工具搜索版本号 </span>" + version + "<span style='color:#" + config.obtenerColorError() + "'>，以确定是哪个模组存在问题。</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>某个模组的版本声明无效。 " + "版本号必须用方括号括起来。 "
+				+ "你可以使用侧边栏中的 grep/greprf 工具搜索版本号 </span>" + version + "<span style='color:#"
+				+ config.obtenerColorError() + "'>，以确定是哪个模组存在问题。</span>";
 	}
 
 	@Override
 	public String nombreDeErrorVersionInvalidaMod() {
-	    return "模组中的无效版本";
+		return "模组中的无效版本";
 	}
 
 	@Override
 	public String pasoErrorVersionInvalidaMod() {
-	    return "使用侧边栏中的 grep/greprf 工具搜索有问题的版本号，找到包含它的模组。";
+		return "使用侧边栏中的 grep/greprf 工具搜索有问题的版本号，找到包含它的模组。";
 	}
-	
+
 	@Override
 	public String errorStackSmashingDetected() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "检测到 stack smashing 错误，导致进程终止。 "
-	            + "这可能是由 Forge/NeoForge/PillowMC 中的 Early Window 问题，或 LWJGL 3.2.2 及更高版本引起的。" + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "检测到 stack smashing 错误，导致进程终止。 "
+				+ "这可能是由 Forge/NeoForge/PillowMC 中的 Early Window 问题，或 LWJGL 3.2.2 及更高版本引起的。" + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorStackSmashingDetected() {
-	    return "检测到 Stack Smashing";
+		return "检测到 Stack Smashing";
 	}
 
 	@Override
 	public String pasoErrorStackSmashingDetected() {
-	    return "检查 Early Window 设置，并考虑使用其他版本的 LWJGL，或检查与早期窗口相关的模组。";
+		return "检查 Early Window 设置，并考虑使用其他版本的 LWJGL，或检查与早期窗口相关的模组。";
 	}
-	
+
 	@Override
 	public String errorVersionClaseGregTechEasyCore() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "GregTechEasyCore 仅适用于特定的整合包（modpack），不应在通用安装中使用，否则会导致问题。" + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "GregTechEasyCore 仅适用于特定的整合包（modpack），不应在通用安装中使用，否则会导致问题。" + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorVersionClaseGregTechEasyCore() {
-	    return "GregTechEasyCore 与 Java 版本不兼容";
+		return "GregTechEasyCore 与 Java 版本不兼容";
 	}
 
 	@Override
 	public String pasoErrorVersionClaseGregTechEasyCore() {
-	    return "请移除 GregTechEasyCore，因为它仅适用于特定整合包，与你的通用安装不兼容。";
+		return "请移除 GregTechEasyCore，因为它仅适用于特定整合包，与你的通用安装不兼容。";
 	}
-	
+
 	@Override
 	public String errorConflictoMoniLabsConnectorExtras() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "检测到 MoniLabs 与 Connector Extras 之间存在与 KubeJS 修改相关的冲突。 "
-	            + "这些模组在 KubeJS 修改方面不兼容。" + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "检测到 MoniLabs 与 Connector Extras 之间存在与 KubeJS 修改相关的冲突。 " + "这些模组在 KubeJS 修改方面不兼容。" + "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoMoniLabsConnectorExtras() {
-	    return "MoniLabs 与 Connector Extras 冲突";
+		return "MoniLabs 与 Connector Extras 冲突";
 	}
 
 	@Override
 	public String pasoConflictoMoniLabsConnectorExtras() {
-	    return "尝试卸载其中一个模组（MoniLabs 或 Connector Extras），因为它们的 KubeJS 修改存在冲突。";
+		return "尝试卸载其中一个模组（MoniLabs 或 Connector Extras），因为它们的 KubeJS 修改存在冲突。";
 	}
-	
+
 	@Override
 	public String errorCompatibilidadIrisDH() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Iris 需要 Distant Horizons [2.0.4] 或 DH API 版本 [1.1.0] 或更高版本。"
-	            + "请查阅兼容性指南：https://gist.github.com/Steveplays28/52db568f297ded527da56dbe6deeec0e 以解决问题。" + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Iris 需要 Distant Horizons [2.0.4] 或 DH API 版本 [1.1.0] 或更高版本。"
+				+ "请查阅兼容性指南：https://gist.github.com/Steveplays28/52db568f297ded527da56dbe6deeec0e 以解决问题。" + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorCompatibilidadIrisDH() {
-	    return "Iris 与 Distant Horizons 兼容性";
+		return "Iris 与 Distant Horizons 兼容性";
 	}
 
 	@Override
 	public String pasoErrorCompatibilidadIrisDH() {
-	    return "请查阅兼容性指南 https://gist.github.com/Steveplays28/52db568f297ded527da56dbe6deeec0e，并将 Iris 和 Distant Horizons 更新至兼容版本。";
+		return "请查阅兼容性指南 https://gist.github.com/Steveplays28/52db568f297ded527da56dbe6deeec0e，并将 Iris 和 Distant Horizons 更新至兼容版本。";
 	}
-	
+
 	@Override
 	public String faltar_de_clases_minecraft() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>你缺少 Minecraft 的类文件。可能原因：</b>"
-	        + "<ul>"
-	        + "<li>你安装了适用于其他游戏版本的模组。你可以使用 <a href='https://wagyourtail.xyz/Projects/MinecraftMappingViewer' target='_blank'>MinecraftMappingViewer</a> 来确认该类是否存在于你的版本中。</li>"
-	        + "<li>你的 Minecraft 安装损坏（常见于 CurseForge App、ModrinthApp/Theseus/Astralrinth 及其他整合包启动器）。<a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>查看教程</a> 以解决 CurseForge 问题。</li>"
-	        + "<li>你有一个损坏的 coremod（coremod 失败可能会阻止类的加载）。</li>"
-	        + "</ul>"
-	        + "<p>注意：只要在名称中使用 '/'，你就可以使用侧边栏中的 <b>grepr/fgrepr</b> 工具来查找引用缺失类的模组。</p>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>你缺少 Minecraft 的类文件。可能原因：</b>" + "<ul>"
+				+ "<li>你安装了适用于其他游戏版本的模组。你可以使用 <a href='https://wagyourtail.xyz/Projects/MinecraftMappingViewer' target='_blank'>MinecraftMappingViewer</a> 来确认该类是否存在于你的版本中。</li>"
+				+ "<li>你的 Minecraft 安装损坏（常见于 CurseForge App、ModrinthApp/Theseus/Astralrinth 及其他整合包启动器）。<a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>查看教程</a> 以解决 CurseForge 问题。</li>"
+				+ "<li>你有一个损坏的 coremod（coremod 失败可能会阻止类的加载）。</li>" + "</ul>"
+				+ "<p>注意：只要在名称中使用 '/'，你就可以使用侧边栏中的 <b>grepr/fgrepr</b> 工具来查找引用缺失类的模组。</p>";
 	}
 
 	@Override
 	public String faltar_de_clases_dangerzone() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>你缺少 DangerZone 的类文件。可能原因：</b>"
-	        + "<ul>"
-	        + "<li>你安装了适用于其他游戏版本的模组。</li>"
-	        + "<li>你有损坏的 coremod。</li>"
-	        + "<li>你的启动器或安装损坏。</li>"
-	        + "</ul>"
-	        + "<p>注意：只要在名称中使用 '/'，你就可以使用侧边栏中的 <b>grepr/fgrepr</b> 工具来查找引用缺失类的模组。</p>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>你缺少 DangerZone 的类文件。可能原因：</b>" + "<ul>"
+				+ "<li>你安装了适用于其他游戏版本的模组。</li>" + "<li>你有损坏的 coremod。</li>" + "<li>你的启动器或安装损坏。</li>" + "</ul>"
+				+ "<p>注意：只要在名称中使用 '/'，你就可以使用侧边栏中的 <b>grepr/fgrepr</b> 工具来查找引用缺失类的模组。</p>";
 	}
-	
-	@Override public String faltar_de_clases_featurecreep() { return "<b style='color:#" + config.obtenerColorError() + "'>你缺少 FeatureCreep 的类文件。可能原因：</b>" + "<ul>" + "<li>你安装了适用于其他版本 FeatureCreep 的模组（例如：ESR 与 Nightly，或 v4 与 v12）。</li>" + "<li>你可以从 CurseForge 或 MinecraftStorage 安装 FeatureCreep。</li>" + "</ul>" + "<p>注意：只要在名称中使用 '/'，你就可以使用侧边栏中的 <b>grepr/fgrepr</b> 工具来查找引用缺失类的模组。</p>"; } @Override public String faltar_de_clases_modlauncher() { return "<b style='color:#" + config.obtenerColorError() + "'>你缺少 ModLauncher 的类文件。可能原因：</b>" + "<ul>" + "<li>你的模组适用于不同版本的 MinecraftForge、PillowMC 或 NeoForge（ModLauncher 用于这些加载器）。</li>" + "<li>Minecraft 的每个版本都有大量 modloader 更新。</li>" + "<li>你的启动器安装损坏（常见于 CurseForge App、ModrinthApp/Theseus/Astralrinth 等整合包启动器）。<a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>查看教程</a> 以解决 CurseForge 问题。</li>" + "</ul>" + "<p>注意：只要在名称中使用 '/'，你就可以使用侧边栏中的 <b>grepr/fgrepr</b> 工具来查找引用缺失类的模组。</p>"; }
-	
-	
+
+	@Override
+	public String faltar_de_clases_featurecreep() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>你缺少 FeatureCreep 的类文件。可能原因：</b>" + "<ul>"
+				+ "<li>你安装了适用于其他版本 FeatureCreep 的模组（例如：ESR 与 Nightly，或 v4 与 v12）。</li>"
+				+ "<li>你可以从 CurseForge 或 MinecraftStorage 安装 FeatureCreep。</li>" + "</ul>"
+				+ "<p>注意：只要在名称中使用 '/'，你就可以使用侧边栏中的 <b>grepr/fgrepr</b> 工具来查找引用缺失类的模组。</p>";
+	}
+
+	@Override
+	public String faltar_de_clases_modlauncher() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>你缺少 ModLauncher 的类文件。可能原因：</b>" + "<ul>"
+				+ "<li>你的模组适用于不同版本的 MinecraftForge、PillowMC 或 NeoForge（ModLauncher 用于这些加载器）。</li>"
+				+ "<li>Minecraft 的每个版本都有大量 modloader 更新。</li>"
+				+ "<li>你的启动器安装损坏（常见于 CurseForge App、ModrinthApp/Theseus/Astralrinth 等整合包启动器）。<a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>查看教程</a> 以解决 CurseForge 问题。</li>"
+				+ "</ul>" + "<p>注意：只要在名称中使用 '/'，你就可以使用侧边栏中的 <b>grepr/fgrepr</b> 工具来查找引用缺失类的模组。</p>";
+	}
+
 	@Override
 	public String faltar_de_clases_minecraftforge() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>你缺少 Minecraft Forge 的类文件。可能原因：</b>"
-	        + "<ul>"
-	        + "<li>你的模组适用于不同版本的 MinecraftForge。</li>"
-	        + "<li>Minecraft 的每个版本都有大量 modloader 更新。</li>"
-	        + "<li>你的安装损坏（常见于 CurseForge App、ModrinthApp/Theseus/Astralrinth 等整合包启动器）。<a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>查看教程</a> 以解决 CurseForge 问题。</li>"
-	        + "</ul>"
-	        + "<p>注意：只要在名称中使用 '/'，你就可以使用侧边栏中的 <b>grepr/fgrepr</b> 工具来查找引用缺失类的模组。</p>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>你缺少 Minecraft Forge 的类文件。可能原因：</b>" + "<ul>"
+				+ "<li>你的模组适用于不同版本的 MinecraftForge。</li>" + "<li>Minecraft 的每个版本都有大量 modloader 更新。</li>"
+				+ "<li>你的安装损坏（常见于 CurseForge App、ModrinthApp/Theseus/Astralrinth 等整合包启动器）。<a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>查看教程</a> 以解决 CurseForge 问题。</li>"
+				+ "</ul>" + "<p>注意：只要在名称中使用 '/'，你就可以使用侧边栏中的 <b>grepr/fgrepr</b> 工具来查找引用缺失类的模组。</p>";
 	}
 
 	@Override
 	public String faltar_de_clases_neoforged() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>你缺少 NeoForge 的类文件。可能原因：</b>"
-	        + "<ul>"
-	        + "<li>你的模组适用于不同版本的 NeoForge。</li>"
-	        + "<li>Minecraft 的每个版本都有大量 modloader 更新。</li>"
-	        + "<li>你的安装损坏（常见于 CurseForge App、ModrinthApp/Theseus/Astralrinth 等整合包启动器）。<a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>查看教程</a> 以解决 CurseForge 问题。</li>"
-	        + "</ul>"
-	        + "<p>注意：只要在名称中使用 '/'，你就可以使用侧边栏中的 <b>grepr/fgrepr</b> 工具来查找引用缺失类的模组。</p>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>你缺少 NeoForge 的类文件。可能原因：</b>" + "<ul>"
+				+ "<li>你的模组适用于不同版本的 NeoForge。</li>" + "<li>Minecraft 的每个版本都有大量 modloader 更新。</li>"
+				+ "<li>你的安装损坏（常见于 CurseForge App、ModrinthApp/Theseus/Astralrinth 等整合包启动器）。<a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>查看教程</a> 以解决 CurseForge 问题。</li>"
+				+ "</ul>" + "<p>注意：只要在名称中使用 '/'，你就可以使用侧边栏中的 <b>grepr/fgrepr</b> 工具来查找引用缺失类的模组。</p>";
 	}
-	
+
 	@Override
 	public String faltar_de_clases_fabricloader() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>你缺少 Fabric Loader 的类文件。可能原因：</b>"
-	        + "<ul>"
-	        + "<li>你的模组适用于不同版本的 Fabric Loader。</li>"
-	        + "<li>Minecraft 的每个版本都有大量 modloader 更新。</li>"
-	        + "<li>你的安装损坏（常见于 CurseForge App、ModrinthApp/Theseus/Astralrinth 等整合包启动器）。<a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>查看教程</a> 以解决 CurseForge 问题。</li>"
-	        + "<li>许多模组需要 Fabric API。如需要，请安装 Fabric API。</li>"
-	        + "</ul>"
-	        + "<p>注意：只要在名称中使用 '/'，你就可以使用侧边栏中的 <b>grepr/fgrepr</b> 工具来查找引用缺失类的模组。</p>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>你缺少 Fabric Loader 的类文件。可能原因：</b>" + "<ul>"
+				+ "<li>你的模组适用于不同版本的 Fabric Loader。</li>" + "<li>Minecraft 的每个版本都有大量 modloader 更新。</li>"
+				+ "<li>你的安装损坏（常见于 CurseForge App、ModrinthApp/Theseus/Astralrinth 等整合包启动器）。<a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>查看教程</a> 以解决 CurseForge 问题。</li>"
+				+ "<li>许多模组需要 Fabric API。如需要，请安装 Fabric API。</li>" + "</ul>"
+				+ "<p>注意：只要在名称中使用 '/'，你就可以使用侧边栏中的 <b>grepr/fgrepr</b> 工具来查找引用缺失类的模组。</p>";
 	}
 
 	@Override
 	public String faltar_de_clases_pillowmc() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>你缺少 PillowMC 的类文件。可能原因：</b>"
-	        + "<ul>"
-	        + "<li>你的模组适用于不同版本的 PillowMC。</li>"
-	        + "<li>Minecraft 的每个版本都有大量 modloader 更新。</li>"
-	        + "<li>你的安装损坏（常见于 CurseForge App、ModrinthApp/Theseus/Astralrinth 等整合包启动器）。<a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>查看教程</a> 以解决 CurseForge 问题。</li>"
-	        + "</ul>"
-	        + "<p>注意：只要在名称中使用 '/'，你就可以使用侧边栏中的 <b>grepr/fgrepr</b> 工具来查找引用缺失类的模组。</p>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>你缺少 PillowMC 的类文件。可能原因：</b>" + "<ul>"
+				+ "<li>你的模组适用于不同版本的 PillowMC。</li>" + "<li>Minecraft 的每个版本都有大量 modloader 更新。</li>"
+				+ "<li>你的安装损坏（常见于 CurseForge App、ModrinthApp/Theseus/Astralrinth 等整合包启动器）。<a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>查看教程</a> 以解决 CurseForge 问题。</li>"
+				+ "</ul>" + "<p>注意：只要在名称中使用 '/'，你就可以使用侧边栏中的 <b>grepr/fgrepr</b> 工具来查找引用缺失类的模组。</p>";
 	}
-	
-	
-	
-	
-	
-	
+
 }

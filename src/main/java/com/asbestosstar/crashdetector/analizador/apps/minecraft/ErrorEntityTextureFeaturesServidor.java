@@ -7,113 +7,113 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 
 /**
- * Detecta el uso de Entity Texture Features (ETF) en un servidor dedicado, 
- * lo cual provoca un error porque ETF intenta cargar clases del cliente en un entorno de servidor.
+ * Detecta el uso de Entity Texture Features (ETF) en un servidor dedicado, lo
+ * cual provoca un error porque ETF intenta cargar clases del cliente en un
+ * entorno de servidor.
  */
 public class ErrorEntityTextureFeaturesServidor implements Verificaciones {
 
-    private boolean activado = false;
-    private String mensaje = "";
-    private String enlaceHtml = "";
-    private boolean encontradoETF = false;
+	private boolean activado = false;
+	private String mensaje = "";
+	private String enlaceHtml = "";
+	private boolean encontradoETF = false;
 
-    /**
-     * Método de compatibilidad — busca si ETF está presente en el contenido completo del registro.
-     */
-    @Override
-    public void verificar(Consola consola) {
-        // Verificamos si Entity Texture Features está presente en el contenido del registro
-        if (consola.contenido_verificar != null) {
-            encontradoETF = consola.contenido_verificar.toLowerCase().contains("$entity_texture_features$") || 
-                           consola.contenido_verificar.contains("$etf$");
-        }
-    }
+	/**
+	 * Método de compatibilidad — busca si ETF está presente en el contenido
+	 * completo del registro.
+	 */
+	@Override
+	public void verificar(Consola consola) {
+		// Verificamos si Entity Texture Features está presente en el contenido del
+		// registro
+		if (consola.contenido_verificar != null) {
+			encontradoETF = consola.contenido_verificar.toLowerCase().contains("$entity_texture_features$")
+					|| consola.contenido_verificar.contains("$etf$");
+		}
+	}
 
-    /**
-     * Análisis por línea del registro.
-     * <p>
-     * Se busca el patrón característico del error donde Entity Texture Features 
-     * falla porque intenta cargar clases del cliente en un servidor dedicado.
-     * </p>
-     */
-    @Override
-    public void verificar(Consola consola, String linea, int numero_de_linea) {
-        if (activado) {
-            // Si ya se activó, no seguimos verificando más líneas.
-            return;
-        }
+	/**
+	 * Análisis por línea del registro.
+	 * <p>
+	 * Se busca el patrón característico del error donde Entity Texture Features
+	 * falla porque intenta cargar clases del cliente en un servidor dedicado.
+	 * </p>
+	 */
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		if (activado) {
+			// Si ya se activó, no seguimos verificando más líneas.
+			return;
+		}
 
-        // Buscamos la línea que contiene el error de carga de clase para servidor dedicado relacionado con ETF
-        if (linea.contains("Attempted to load class")
-                && linea.contains("net/minecraft/client/gui/screens/Screen")
-                && linea.contains("for invalid dist DEDICATED_SERVER")
-                && encontradoETF) {
-            
-            // Enlazar a la línea del error en el lector
-            enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+		// Buscamos la línea que contiene el error de carga de clase para servidor
+		// dedicado relacionado con ETF
+		if (linea.contains("Attempted to load class") && linea.contains("net/minecraft/client/gui/screens/Screen")
+				&& linea.contains("for invalid dist DEDICATED_SERVER") && encontradoETF) {
 
-            // Mensaje de error en HTML con referencia al uso incorrecto de Entity Texture Features
-            mensaje = MonitorDePID.idioma.errorEntityTextureFeaturesServidor() + Verificaciones.nl_html;
-            activado = true;
-        }
-    }
+			// Enlazar a la línea del error en el lector
+			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
-    @Override
-    public Verificaciones nueva() {
-        return new ErrorEntityTextureFeaturesServidor();
-    }
+			// Mensaje de error en HTML con referencia al uso incorrecto de Entity Texture
+			// Features
+			mensaje = MonitorDePID.idioma.errorEntityTextureFeaturesServidor() + Verificaciones.nl_html;
+			activado = true;
+		}
+	}
 
-    @Override
-    public boolean activado() {
-        return activado;
-    }
+	@Override
+	public Verificaciones nueva() {
+		return new ErrorEntityTextureFeaturesServidor();
+	}
 
-    @Override
-    public float prioridad() {
-        return 950.0f; // Alta prioridad: rompe la carga del juego
-    }
+	@Override
+	public boolean activado() {
+		return activado;
+	}
 
-    @Override
-    public String mensaje() {
-        return activado ? (mensaje + enlaceHtml) : "";
-    }
+	@Override
+	public float prioridad() {
+		return 950.0f; // Alta prioridad: rompe la carga del juego
+	}
 
-    @Override
-    public String nombre() {
-        return MonitorDePID.idioma.nombreDeErrorEntityTextureFeaturesServidor();
-    }
+	@Override
+	public String mensaje() {
+		return activado ? (mensaje + enlaceHtml) : "";
+	}
 
-    @Override
-    public QuickFix solucion() {
-        return new QuickFix.Builder(nombre())
-                .agregarEtiqueta(MonitorDePID.idioma.pasoErrorEntityTextureFeaturesServidor())
-                .construir();
-    }
+	@Override
+	public String nombre() {
+		return MonitorDePID.idioma.nombreDeErrorEntityTextureFeaturesServidor();
+	}
 
-    @Override
-    public String id() {
-        return "error_etf_servidor";
-    }
+	@Override
+	public QuickFix solucion() {
+		return new QuickFix.Builder(nombre())
+				.agregarEtiqueta(MonitorDePID.idioma.pasoErrorEntityTextureFeaturesServidor()).construir();
+	}
 
-    /**
-     * Asocia esta verificación con un trazo específico del stack.
-     * <p>
-     * Devuelve true si el trazo contiene las cadenas clave del error de
-     * compatibilidad entre Entity Texture Features y servidor dedicado.
-     * </p>
-     */
-    @Override
-    public boolean ocupaTrazo(TraceInfo trazo) {
-        if (!activado || trazo == null || trazo.trace == null) {
-            return false;
-        }
+	@Override
+	public String id() {
+		return "error_etf_servidor";
+	}
 
-        String t = trazo.trace;
+	/**
+	 * Asocia esta verificación con un trazo específico del stack.
+	 * <p>
+	 * Devuelve true si el trazo contiene las cadenas clave del error de
+	 * compatibilidad entre Entity Texture Features y servidor dedicado.
+	 * </p>
+	 */
+	@Override
+	public boolean ocupaTrazo(TraceInfo trazo) {
+		if (!activado || trazo == null || trazo.trace == null) {
+			return false;
+		}
 
-        return t.contains("Attempted to load class")
-                && t.contains("net/minecraft/client/gui/screens/Screen")
-                && t.contains("for invalid dist DEDICATED_SERVER")
-                && (t.contains("entity texture features") || t.contains("etf") || 
-                    t.contains("ResourceLocation.handler$zca000$etf$illegalPathOverride"));
-    }
+		String t = trazo.trace;
+
+		return t.contains("Attempted to load class") && t.contains("net/minecraft/client/gui/screens/Screen")
+				&& t.contains("for invalid dist DEDICATED_SERVER") && (t.contains("entity texture features")
+						|| t.contains("etf") || t.contains("ResourceLocation.handler$zca000$etf$illegalPathOverride"));
+	}
 }

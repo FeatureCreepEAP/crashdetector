@@ -359,10 +359,8 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		iconoMetodo = crearIcono(Statics.carpeta.resolve("imagenes/metodo.png").toString(), "m");
 		iconoCampo = crearIcono(Statics.carpeta.resolve("imagenes/campo.png").toString(), "f");
 		iconoPaquete = crearIcono(Statics.carpeta.resolve("imagenes/paquete.png").toString(), "P");
-		iconoReferenciaMetodo = crearIcono(Statics.carpeta.resolve("imagenes/referencia_metodo.png").toString(),
-				"RM");
-		iconoReferenciaCampo = crearIcono(Statics.carpeta.resolve("imagenes/referencia_campo.png").toString(),
-				"RC");
+		iconoReferenciaMetodo = crearIcono(Statics.carpeta.resolve("imagenes/referencia_metodo.png").toString(), "RM");
+		iconoReferenciaCampo = crearIcono(Statics.carpeta.resolve("imagenes/referencia_campo.png").toString(), "RC");
 		// iconoConstante =
 		// crearIcono(MonitorDePID.carpeta.resolve("imagenes/constante.png").toString(),
 		// "K");

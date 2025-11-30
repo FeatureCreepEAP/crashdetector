@@ -103,8 +103,9 @@ public class ModCarpeta implements ArchivoDeMod {
 						}
 					} else if (nombre.endsWith(".class")) {
 						procesarClase(entrada);
-					}else if (nombre.endsWith("MANIFEST.MF")) {
-							nombres.addAll(ProcesadorManifiesto.obtenerNombresDeModulo(new Manifest(new FileInputStream(nombre))));
+					} else if (nombre.endsWith("MANIFEST.MF")) {
+						nombres.addAll(
+								ProcesadorManifiesto.obtenerNombresDeModulo(new Manifest(new FileInputStream(nombre))));
 					} else if (esArchivoAnidado(nombre)) {
 						procesarArchivoAnidado(entrada, nombre);
 					} else {

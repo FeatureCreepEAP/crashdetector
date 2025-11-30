@@ -198,7 +198,7 @@ public class ContentoDeTraces implements Verificaciones {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			} catch (ExecutionException e) {
-				CrashDetectorLogger.logException( e);
+				CrashDetectorLogger.logException(e);
 			}
 		}
 

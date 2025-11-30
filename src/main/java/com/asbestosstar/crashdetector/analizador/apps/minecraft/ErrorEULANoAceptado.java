@@ -8,101 +8,99 @@ import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceI
 
 /**
  * Detecta que el servidor no puede iniciarse porque el usuario no ha aceptado
- * el EULA de Minecraft, lo cual requiere cambiar 'eula=false' a 'eula=true' en eula.txt.
+ * el EULA de Minecraft, lo cual requiere cambiar 'eula=false' a 'eula=true' en
+ * eula.txt.
  */
 public class ErrorEULANoAceptado implements Verificaciones {
 
-    private boolean activado = false;
-    private String mensaje = "";
-    private String enlaceHtml = "";
+	private boolean activado = false;
+	private String mensaje = "";
+	private String enlaceHtml = "";
 
-    /**
-     * Método de compatibilidad — no hace nada, ya que el análisis es por línea.
-     */
-    @Override
-    public void verificar(Consola consola) {
-        // Se usa el método verificar(Consola, String, int) en lugar de este.
-    }
+	/**
+	 * Método de compatibilidad — no hace nada, ya que el análisis es por línea.
+	 */
+	@Override
+	public void verificar(Consola consola) {
+		// Se usa el método verificar(Consola, String, int) en lugar de este.
+	}
 
-    /**
-     * Análisis por línea del registro.
-     * <p>
-     * Se busca el mensaje característico que indica que el usuario necesita
-     * aceptar el EULA para poder ejecutar el servidor.
-     * </p>
-     */
-    @Override
-    public void verificar(Consola consola, String linea, int numero_de_linea) {
-        if (activado) {
-            // Si ya se activó, no seguimos verificando más líneas.
-            return;
-        }
+	/**
+	 * Análisis por línea del registro.
+	 * <p>
+	 * Se busca el mensaje característico que indica que el usuario necesita aceptar
+	 * el EULA para poder ejecutar el servidor.
+	 * </p>
+	 */
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		if (activado) {
+			// Si ya se activó, no seguimos verificando más líneas.
+			return;
+		}
 
-        // Buscamos la línea que contiene el mensaje de EULA no aceptado
-        if (linea.contains("You need to agree to the EULA in order to run the server")
-                && linea.contains("eula.txt")) {
-            
-            // Enlazar a la línea del error en el lector
-            enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+		// Buscamos la línea que contiene el mensaje de EULA no aceptado
+		if (linea.contains("You need to agree to the EULA in order to run the server") && linea.contains("eula.txt")) {
 
-            // Mensaje de error en HTML con referencia al EULA no aceptado
-            mensaje = MonitorDePID.idioma.errorEULANoAceptado() + Verificaciones.nl_html;
-            activado = true;
-        }
-    }
+			// Enlazar a la línea del error en el lector
+			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
-    @Override
-    public Verificaciones nueva() {
-        return new ErrorEULANoAceptado();
-    }
+			// Mensaje de error en HTML con referencia al EULA no aceptado
+			mensaje = MonitorDePID.idioma.errorEULANoAceptado() + Verificaciones.nl_html;
+			activado = true;
+		}
+	}
 
-    @Override
-    public boolean activado() {
-        return activado;
-    }
+	@Override
+	public Verificaciones nueva() {
+		return new ErrorEULANoAceptado();
+	}
 
-    @Override
-    public float prioridad() {
-        return 1000.0f; // Prioridad máxima: es un error de configuración básico que detiene todo
-    }
+	@Override
+	public boolean activado() {
+		return activado;
+	}
 
-    @Override
-    public String mensaje() {
-        return activado ? (mensaje + enlaceHtml) : "";
-    }
+	@Override
+	public float prioridad() {
+		return 1000.0f; // Prioridad máxima: es un error de configuración básico que detiene todo
+	}
 
-    @Override
-    public String nombre() {
-        return MonitorDePID.idioma.nombreDeErrorEULANoAceptado();
-    }
+	@Override
+	public String mensaje() {
+		return activado ? (mensaje + enlaceHtml) : "";
+	}
 
-    @Override
-    public QuickFix solucion() {
-        return new QuickFix.Builder(nombre())
-                .agregarEtiqueta(MonitorDePID.idioma.pasoErrorEULANoAceptado())
-                .construir();
-    }
+	@Override
+	public String nombre() {
+		return MonitorDePID.idioma.nombreDeErrorEULANoAceptado();
+	}
 
-    @Override
-    public String id() {
-        return "error_eula_no_aceptado";
-    }
+	@Override
+	public QuickFix solucion() {
+		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.pasoErrorEULANoAceptado())
+				.construir();
+	}
 
-    /**
-     * Asocia esta verificación con un trazo específico del stack.
-     * <p>
-     * Devuelve true si el trazo contiene el mensaje de EULA no aceptado.
-     * </p>
-     */
-    @Override
-    public boolean ocupaTrazo(TraceInfo trazo) {
-        if (!activado || trazo == null || trazo.trace == null) {
-            return false;
-        }
+	@Override
+	public String id() {
+		return "error_eula_no_aceptado";
+	}
 
-        String t = trazo.trace;
+	/**
+	 * Asocia esta verificación con un trazo específico del stack.
+	 * <p>
+	 * Devuelve true si el trazo contiene el mensaje de EULA no aceptado.
+	 * </p>
+	 */
+	@Override
+	public boolean ocupaTrazo(TraceInfo trazo) {
+		if (!activado || trazo == null || trazo.trace == null) {
+			return false;
+		}
 
-        return t.contains("You need to agree to the EULA in order to run the server")
-                && t.contains("eula.txt");
-    }
+		String t = trazo.trace;
+
+		return t.contains("You need to agree to the EULA in order to run the server") && t.contains("eula.txt");
+	}
 }

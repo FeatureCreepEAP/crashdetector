@@ -281,7 +281,6 @@ public class MCLogsAPI implements APIdeSitioDeRegistro {
 		return enlaces;
 	}
 
-
 	@Override
 	public boolean soporteEnlacesALinea() {
 		return true;

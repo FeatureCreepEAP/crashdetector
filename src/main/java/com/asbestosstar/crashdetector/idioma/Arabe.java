@@ -248,8 +248,8 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String theseus() {
-	    return "<b style='color:#" + config.obtenerColorAdvertencia()
-	           + "'>يواجه Theseus أيضًا مشاكل أخرى، بما في ذلك فشله في إزالة التعديلات عند محاولة ذلك. إذا كنت بحاجة إلى تشغيل ملفات mrpack، يمكنك استخدام مشغلات أخرى مثل Prism Launcher (مخصص لـ modrinth.com فقط)، ATLauncher (مخصص لـ modrinth.com فقط)، أو Hello Minecraft Launcher (يدعم modrinth.com و bbsmc.net).</b>";
+		return "<b style='color:#" + config.obtenerColorAdvertencia()
+				+ "'>يواجه Theseus أيضًا مشاكل أخرى، بما في ذلك فشله في إزالة التعديلات عند محاولة ذلك. إذا كنت بحاجة إلى تشغيل ملفات mrpack، يمكنك استخدام مشغلات أخرى مثل Prism Launcher (مخصص لـ modrinth.com فقط)، ATLauncher (مخصص لـ modrinth.com فقط)، أو Hello Minecraft Launcher (يدعم modrinth.com و bbsmc.net).</b>";
 	}
 
 	@Override
@@ -485,14 +485,14 @@ public class Arabe implements Idioma {
 				+ "' أو أحدث، ولكن تم العثور فقط على الإصدار '" + encontrado + "'.</b>";
 	}
 
-@Override
-public String advertenciaMalwareFalso() {
-    return "<b style='color:#" + config.obtenerColorError() + "'>"
-         + "تنبيه! Crash Assistant هو كاشف برامج ضارة مزيف. يقوم بحظر اللعبة عن التشغيل بشكل متعمد، مع تجاهل حريتك في متابعة اللعب باستخدام التعديلات التي يستهدفها. "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>عرض كود MalwareMod.java</a>   "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>عرض كود JarInJarHelper.java</a>. "
-         + "هذا التعديل فقط هو الموجود في قائمتهم حالياً، وهم يستهدفون فقط موقع تسجيل السجلات الافتراضي، والذي يمكن للمستخدم تغييره، وهذا يحدث فقط إذا اخترت صراحة استخدام ميزة مشاركة السجلات المدمجة. CrashAssistant لا يقوم بأي فحوصات لتحديد موقع التسجيل المستخدم ولا يشرح كيفية تغييره (هناك قائمة منسدلة في أسفل مربع الحوار الخاص بالمشاركة)، وبغض النظر عن الموقع الذي قمت بتكوينه، فإن CrashAssistant سيمنع تشغيل اللعبة. في رسالتهم يقولون أن تقوم بإجراء بحثك الخاص، افعل ذلك، انظر إلى كود CrashDetector وCrash Assistant وافهم ما يقومون به، لا تعتمد على استدعاء السلطة.</b>";
-}
+	@Override
+	public String advertenciaMalwareFalso() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "تنبيه! Crash Assistant هو كاشف برامج ضارة مزيف. يقوم بحظر اللعبة عن التشغيل بشكل متعمد، مع تجاهل حريتك في متابعة اللعب باستخدام التعديلات التي يستهدفها. "
+				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>عرض كود MalwareMod.java</a>   "
+				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>عرض كود JarInJarHelper.java</a>. "
+				+ "هذا التعديل فقط هو الموجود في قائمتهم حالياً، وهم يستهدفون فقط موقع تسجيل السجلات الافتراضي، والذي يمكن للمستخدم تغييره، وهذا يحدث فقط إذا اخترت صراحة استخدام ميزة مشاركة السجلات المدمجة. CrashAssistant لا يقوم بأي فحوصات لتحديد موقع التسجيل المستخدم ولا يشرح كيفية تغييره (هناك قائمة منسدلة في أسفل مربع الحوار الخاص بالمشاركة)، وبغض النظر عن الموقع الذي قمت بتكوينه، فإن CrashAssistant سيمنع تشغيل اللعبة. في رسالتهم يقولون أن تقوم بإجراء بحثك الخاص، افعل ذلك، انظر إلى كود CrashDetector وCrash Assistant وافهم ما يقومون به، لا تعتمد على استدعاء السلطة.</b>";
+	}
 
 	@Override
 	public String error_clase_no_encontrada_mcforge_mod_suspechoso(String idMod, String claseNoEncontrada) {
@@ -3158,20 +3158,21 @@ public String advertenciaMalwareFalso() {
 
 	@Override
 	public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves) {
-	    StringBuilder sb = new StringBuilder("<b>تَنْصُر دوال الكثافة مفقودة في السجل.</b> ");
-	    if (claves != null && !claves.isEmpty()) {
-	        sb.append("المفقودة: ");
-	        for (int i = 0; i < Math.min(4, claves.size()); i++) {
-	            if (i > 0)
-	                sb.append(", ");
-	            sb.append("<code>").append(claves.get(i)).append("</code>");
-	        }
-	        if (claves.size() > 4)
-	            sb.append(", …");
-	        sb.append(". ");
-	    }
-	    sb.append("<br/><b>الحل:</b> قم بتثبيت أو تفعيل الـ mod/datapack الذي يُعرِّف تلك الدوال ثم أعد التشغيل. سبب آخر شائع لهذه المشكلة هو أنك تمتلك الـ mod المطلوب، لكنه يعاني من خلل أو تعارض مع mod آخر؛ على سبيل المثال، يعاني Terralith من مشاكل كثيرة ويمكن أن يسبب هذا الخطأ وغيره، بما في ذلك أخطاء JSON.");
-	    return sb.toString();
+		StringBuilder sb = new StringBuilder("<b>تَنْصُر دوال الكثافة مفقودة في السجل.</b> ");
+		if (claves != null && !claves.isEmpty()) {
+			sb.append("المفقودة: ");
+			for (int i = 0; i < Math.min(4, claves.size()); i++) {
+				if (i > 0)
+					sb.append(", ");
+				sb.append("<code>").append(claves.get(i)).append("</code>");
+			}
+			if (claves.size() > 4)
+				sb.append(", …");
+			sb.append(". ");
+		}
+		sb.append(
+				"<br/><b>الحل:</b> قم بتثبيت أو تفعيل الـ mod/datapack الذي يُعرِّف تلك الدوال ثم أعد التشغيل. سبب آخر شائع لهذه المشكلة هو أنك تمتلك الـ mod المطلوب، لكنه يعاني من خلل أو تعارض مع mod آخر؛ على سبيل المثال، يعاني Terralith من مشاكل كثيرة ويمكن أن يسبب هذا الخطأ وغيره، بما في ذلك أخطاء JSON.");
+		return sb.toString();
 	}
 
 	@Override
@@ -3559,8 +3560,8 @@ public String advertenciaMalwareFalso() {
 
 	@Override
 	public String mensajeAyudar() {
-		String iconoCompartir = Statics.carpeta.resolve("imagenes").resolve("boton_compartir_icon.png")
-				.toAbsolutePath().toUri().toString();
+		String iconoCompartir = Statics.carpeta.resolve("imagenes").resolve("boton_compartir_icon.png").toAbsolutePath()
+				.toUri().toString();
 
 		String colorTexto = Config.obtenerInstancia().obtenerColorInfo();
 
@@ -3737,8 +3738,8 @@ public String advertenciaMalwareFalso() {
 
 	@Override
 	public String problema_con_openAL() {
-	    return "<span style='color:#" + config.obtenerColorError()
-	           + "'>لديك مشكلة في OpenAL. أحيانًا يمكن أن تسببها تعريفات Nouveau، ولكن في بعض الأحيان تكون المشكلة هي أن إصدار OpenAL المضمن مع التطبيق غير متوافق مع الإصدار الموجود في توزيعتك، وتحتاج إلى استخدام الإصدار الخاص بتوزيعتك. هذا شائع بشكل خاص مع توزيعات Red Hat ومع تعديلات الصوت مثل Sound Physics Remastered. راجع هذا الدليل للحصول على مساعدة إضافية: <a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>كيفية إصلاح مشاكل الصوت في ماينكرافت على لينكس</a>.</span>";
+		return "<span style='color:#" + config.obtenerColorError()
+				+ "'>لديك مشكلة في OpenAL. أحيانًا يمكن أن تسببها تعريفات Nouveau، ولكن في بعض الأحيان تكون المشكلة هي أن إصدار OpenAL المضمن مع التطبيق غير متوافق مع الإصدار الموجود في توزيعتك، وتحتاج إلى استخدام الإصدار الخاص بتوزيعتك. هذا شائع بشكل خاص مع توزيعات Red Hat ومع تعديلات الصوت مثل Sound Physics Remastered. راجع هذا الدليل للحصول على مساعدة إضافية: <a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>كيفية إصلاح مشاكل الصوت في ماينكرافت على لينكس</a>.</span>";
 	}
 
 	@Override
@@ -4062,650 +4063,642 @@ public String advertenciaMalwareFalso() {
 	public String buscador_canario_de_orden_titulo_proximamente() {
 		return "قريبًا";
 	}
+
 	@Override
 	public String nombre_de_mods_incompatibles_crash_assistant() {
-	    return "التعديلات غير المتوافقة مع Crash Assistant (خطأ)";
+		return "التعديلات غير المتوافقة مع Crash Assistant (خطأ)";
 	}
 
 	@Override
 	public String nombre_de_modpack_incompatible_crash_assistant() {
-	    return "حزمة تعديلات غير متوافقة مع CrashAssistant";
+		return "حزمة تعديلات غير متوافقة مع CrashAssistant";
 	}
 
 	@Override
 	public String advertenciaCrashAssistantModpackIncompatibleFalso() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>يحتوي Crash Assistant على قائمة بتعديلات يقول إنها غير متوافقة، لكن ليس لدينا أدلة على ذلك، والخطأ باللغة الإنجليزية فقط. إذا أردت اللعب باستخدام هذه التعديلات، يمكنك تحرير الملف <code>config/crash_assistant/config.toml</code> وتغيير <code>enabled = true</code> في القسم [compatibility] إلى <code>enabled = false</code>.</b>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>يحتوي Crash Assistant على قائمة بتعديلات يقول إنها غير متوافقة، لكن ليس لدينا أدلة على ذلك، والخطأ باللغة الإنجليزية فقط. إذا أردت اللعب باستخدام هذه التعديلات، يمكنك تحرير الملف <code>config/crash_assistant/config.toml</code> وتغيير <code>enabled = true</code> في القسم [compatibility] إلى <code>enabled = false</code>.</b>";
 	}
 
 	@Override
 	public String advertenciaCrashAssistantModsIncompatibles() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>يمكن لـ Crash Assistant أن يُصنّف التعديلات على أنها غير متوافقة، لكن في بعض الأحيان يكون هذا التصنيف خاطئًا، والرسالة باللغة الإنجليزية فقط. إذا أردت استخدام هذه التعديلات، يمكنك تحرير الملف <code>config/crash_assistant/problematic_mods_config.json</code> وتغيير قيمة <code>should_crash_on_startup</code> من <code>true</code> إلى <code>false</code>.</b>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>يمكن لـ Crash Assistant أن يُصنّف التعديلات على أنها غير متوافقة، لكن في بعض الأحيان يكون هذا التصنيف خاطئًا، والرسالة باللغة الإنجليزية فقط. إذا أردت استخدام هذه التعديلات، يمكنك تحرير الملف <code>config/crash_assistant/problematic_mods_config.json</code> وتغيير قيمة <code>should_crash_on_startup</code> من <code>true</code> إلى <code>false</code>.</b>";
 	}
-	
+
 	@Override
 	public String errorDependenciaSimple(String modId, String dependencia, String actual) {
-	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
-	           "خطأ: التعديل '" + modId + "' يتطلب التعديل '" + dependencia + "'. حاليًا، " + actual + "." +
-	           "</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>" + "خطأ: التعديل '" + modId
+				+ "' يتطلب التعديل '" + dependencia + "'. حاليًا، " + actual + "." + "</span>";
 	}
 
 	@Override
 	public String errorDependenciaNoInstalada(String modId, String dependencia, String requerido) {
-	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
-	           "خطأ: التعديل '" + modId + "' يتطلب الإصدار '" + requerido + "' أو أحدث من '" + dependencia + "'، لكن التعديل غير مثبت." +
-	           "</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>" + "خطأ: التعديل '" + modId
+				+ "' يتطلب الإصدار '" + requerido + "' أو أحدث من '" + dependencia + "'، لكن التعديل غير مثبت."
+				+ "</span>";
 	}
-	
+
 	// في كلاس MonitorDePID.idioma (إضافة هذه الطريقة)
 	public String errorSuperbWarfareIncompatible(String modId, String dependencia, String versionActual) {
-	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
-	           "خطأ: التعديل '" + modId + "' غير متوافق مع الإصدار الحالي من '" + dependencia + "'. " +
-	           "يجب عليك حذف التعديل 'Iris/Oculus & GeckoLib Compat' لأنه غير متوافق مع Superb Warfare ولا يعمل مع أحدث إصدار من GeckoLib. " +
-	           "الإصدار الحالي: " + versionActual +
-	           "</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>" + "خطأ: التعديل '" + modId
+				+ "' غير متوافق مع الإصدار الحالي من '" + dependencia + "'. "
+				+ "يجب عليك حذف التعديل 'Iris/Oculus & GeckoLib Compat' لأنه غير متوافق مع Superb Warfare ولا يعمل مع أحدث إصدار من GeckoLib. "
+				+ "الإصدار الحالي: " + versionActual + "</span>";
 	}
-	
+
 	public String fallo_ejecucion_tarea_descripcion(String clase) {
-	    return "خطأ: تعذر تنفيذ المهمة للصنف '" + clase + "'. " +
-	           "هذا الخطأ شائع مع التعديلات التي لا تكون متوافقة فيما بينها أو التي لديها تعارضات مع تعديلات أخرى مثبتة.";
+		return "خطأ: تعذر تنفيذ المهمة للصنف '" + clase + "'. "
+				+ "هذا الخطأ شائع مع التعديلات التي لا تكون متوافقة فيما بينها أو التي لديها تعارضات مع تعديلات أخرى مثبتة.";
 	}
 
 	public String nombre_fallos_ejecucion_tareas() {
-	    return "فشل تنفيذ المهام";
+		return "فشل تنفيذ المهام";
 	}
 
 	public String recomendacion_fallos_ejecucion() {
-	    return "يحدث هذا النوع من الأخطاء عادةً بسبب التعارضات بين التعديلات. " +
-	           "وهو شائع بشكل خاص مع التعديلات التي لا تعمل بشكل صحيح مع ConnectorMod.";
+		return "يحدث هذا النوع من الأخطاء عادةً بسبب التعارضات بين التعديلات. "
+				+ "وهو شائع بشكل خاص مع التعديلات التي لا تعمل بشكل صحيح مع ConnectorMod.";
 	}
 
 	public String info_clase_problematica() {
-	    return "الصنف المسبب للمشكلة:";
+		return "الصنف المسبب للمشكلة:";
 	}
 
 	public String ver_en_log() {
-	    return "عرض في السجل";
+		return "عرض في السجل";
 	}
 
 	public String no_se_encontraron_clases_problema() {
-	    return "لم يتم العثور على أصناف محددة تعاني من مشاكل في التنفيذ.";
+		return "لم يتم العثور على أصناف محددة تعاني من مشاكل في التنفيذ.";
 	}
+
 	@Override
 	public String errorConflictoOptiFineEMF() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	           + "تم اكتشاف تعارض حرج بين OptiFine وEntity Model Features (EMF). "
-	           + "هذان التعديلان غير متوافقين ويؤديان إلى فشل في الإدخال يمنع بدء اللعبة." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "تم اكتشاف تعارض حرج بين OptiFine وEntity Model Features (EMF). "
+				+ "هذان التعديلان غير متوافقين ويؤديان إلى فشل في الإدخال يمنع بدء اللعبة." + "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoOptiFineEMF() {
-	    return "تعارض بين OptiFine وEntity Model Features";
+		return "تعارض بين OptiFine وEntity Model Features";
 	}
 
 	@Override
 	public String pasoConflictoOptiFineEMF() {
-	    return "أزل إما OptiFine أو Entity Model Features، لأنهما غير متوافقين مع بعضهما البعض.";
+		return "أزل إما OptiFine أو Entity Model Features، لأنهما غير متوافقين مع بعضهما البعض.";
 	}
-	
+
 	@Override
 	public String errorConflictoOptiFineFusion() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	           + "تم اكتشاف تعارض حرج بين OptiFine وFusion. "
-	           + "هذان التعديلان غير متوافقين ويؤديان إلى فشل في الإدخال يمنع بدء اللعبة." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "تم اكتشاف تعارض حرج بين OptiFine وFusion. "
+				+ "هذان التعديلان غير متوافقين ويؤديان إلى فشل في الإدخال يمنع بدء اللعبة." + "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoOptiFineFusion() {
-	    return "تعارض بين OptiFine وFusion";
+		return "تعارض بين OptiFine وFusion";
 	}
 
 	@Override
 	public String pasoConflictoOptiFineFusion() {
-	    return "أزل إما OptiFine أو Fusion، لأنهما غير متوافقين مع بعضهما البعض.";
+		return "أزل إما OptiFine أو Fusion، لأنهما غير متوافقين مع بعضهما البعض.";
 	}
-	
+
 	@Override
 	public String errorConflictoFlywheelSodium() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "يحتاج Flywheel (مطلوب من قبل Create) إلى Sodium 0.6.0-beta.2 أو أحدث. إصدار Rubidium هو 0.5.3. "
-	            + "فكر في استخدام <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a> كبديل." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "يحتاج Flywheel (مطلوب من قبل Create) إلى Sodium 0.6.0-beta.2 أو أحدث. إصدار Rubidium هو 0.5.3. "
+				+ "فكر في استخدام <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a> كبديل."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoFlywheelSodium() {
-	    return "تعارض Flywheel وإصدار Sodium";
+		return "تعارض Flywheel وإصدار Sodium";
 	}
 
 	@Override
 	public String pasoConflictoFlywheelSodium() {
-	    return "حدّث Sodium إلى إصدار 0.6.0-beta.2 أو أحدث، أو قم بتثبيت <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a> كبديل متوافق.";
+		return "حدّث Sodium إلى إصدار 0.6.0-beta.2 أو أحدث، أو قم بتثبيت <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a> كبديل متوافق.";
 	}
-	
+
 	@Override
 	public String errorConflictoOptiFineEpicFight() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "تم اكتشاف تعارض حرج بين OptiFine وEpic Fight. "
-	            + "هذان التعديلان غير متوافقين ويؤديان إلى فشل في الإدخال يمنع بدء اللعبة." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "تم اكتشاف تعارض حرج بين OptiFine وEpic Fight. "
+				+ "هذان التعديلان غير متوافقين ويؤديان إلى فشل في الإدخال يمنع بدء اللعبة." + "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoOptiFineEpicFight() {
-	    return "تعارض بين OptiFine وEpic Fight";
+		return "تعارض بين OptiFine وEpic Fight";
 	}
 
 	@Override
 	public String pasoConflictoOptiFineEpicFight() {
-	    return "أزل إما OptiFine أو Epic Fight، لأنهما غير متوافقين مع بعضهما البعض.";
+		return "أزل إما OptiFine أو Epic Fight، لأنهما غير متوافقين مع بعضهما البعض.";
 	}
-	
+
 	@Override
 	public String errorConflictoOptiFineRubidium() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "تم اكتشاف تعارض حرج بين OptiFine و Rubidium. "
-	            + "هذه الوحدات غير متوافقة وتسبب فشلاً في الحقن يمنع تشغيل اللعبة." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "تم اكتشاف تعارض حرج بين OptiFine و Rubidium. "
+				+ "هذه الوحدات غير متوافقة وتسبب فشلاً في الحقن يمنع تشغيل اللعبة." + "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoOptiFineRubidium() {
-	    return "التعارض بين OptiFine و Rubidium";
+		return "التعارض بين OptiFine و Rubidium";
 	}
 
 	@Override
 	public String pasoConflictoOptiFineRubidium() {
-	    return "قم بإزالة OptiFine أو Rubidium، لأنهما غير متوافقين مع بعضهما.";
+		return "قم بإزالة OptiFine أو Rubidium، لأنهما غير متوافقين مع بعضهما.";
 	}
-	
+
 	@Override
 	public String errorFreeCamServidor() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "يحاول FreeCam التحميل على خادم مخصص، لكنه متوافق فقط مع العميل. "
-	            + "أزل FreeCam من الخادم أو تأكد من أنه مثبت فقط على العميل." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "يحاول FreeCam التحميل على خادم مخصص، لكنه متوافق فقط مع العميل. "
+				+ "أزل FreeCam من الخادم أو تأكد من أنه مثبت فقط على العميل." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorFreeCamServidor() {
-	    return "FreeCam على خادم مخصص";
+		return "FreeCam على خادم مخصص";
 	}
 
 	@Override
 	public String pasoErrorFreeCamServidor() {
-	    return "أزل FreeCam من الخادم المخصص، لأنه يجب تثبيته فقط على العميل.";
+		return "أزل FreeCam من الخادم المخصص، لأنه يجب تثبيته فقط على العميل.";
 	}
-	
+
 	@Override
 	public String errorEntityTextureFeaturesServidor() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Entity Texture Features (ETF) يحاول التحميل على خادم مخصص، لكنه متوافق فقط مع العميل. "
-	            + "أزل ETF من الخادم أو تأكد من أنه مثبت فقط على العميل." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Entity Texture Features (ETF) يحاول التحميل على خادم مخصص، لكنه متوافق فقط مع العميل. "
+				+ "أزل ETF من الخادم أو تأكد من أنه مثبت فقط على العميل." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorEntityTextureFeaturesServidor() {
-	    return "Entity Texture Features على خادم مخصص";
+		return "Entity Texture Features على خادم مخصص";
 	}
 
 	@Override
 	public String pasoErrorEntityTextureFeaturesServidor() {
-	    return "أزل Entity Texture Features من الخادم المخصص، لأنه يجب تثبيته فقط على العميل.";
+		return "أزل Entity Texture Features من الخادم المخصص، لأنه يجب تثبيته فقط على العميل.";
 	}
-	
+
 	@Override
 	public String errorEULANoAceptado() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "يجب قبول EULA الخاص بـ Minecraft لتشغيل الخادم. "
-	            + "قم بتحرير ملف eula.txt وغيّر 'eula=false' إلى 'eula=true'." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "يجب قبول EULA الخاص بـ Minecraft لتشغيل الخادم. "
+				+ "قم بتحرير ملف eula.txt وغيّر 'eula=false' إلى 'eula=true'." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorEULANoAceptado() {
-	    return "EULA الخاص بـ Minecraft غير مقبول";
+		return "EULA الخاص بـ Minecraft غير مقبول";
 	}
 
 	@Override
 	public String pasoErrorEULANoAceptado() {
-	    return "قم بتحرير ملف eula.txt في مجلد الخادم وغيّر 'eula=false' إلى 'eula=true'.";
+		return "قم بتحرير ملف eula.txt في مجلد الخادم وغيّر 'eula=false' إلى 'eula=true'.";
 	}
-	
+
 	@Override
 	public String errorOptiFineServidor() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "OptiFine يحاول التحميل على خادم مخصص، لكنه متوافق فقط مع العميل. "
-	            + "أزل OptiFine من الخادم أو تأكد من أنه مثبت فقط على العميل." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "OptiFine يحاول التحميل على خادم مخصص، لكنه متوافق فقط مع العميل. "
+				+ "أزل OptiFine من الخادم أو تأكد من أنه مثبت فقط على العميل." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorOptiFineServidor() {
-	    return "OptiFine على خادم مخصص";
+		return "OptiFine على خادم مخصص";
 	}
 
 	@Override
 	public String pasoErrorOptiFineServidor() {
-	    return "أزل OptiFine من الخادم المخصص، لأنه يجب تثبيته فقط على العميل.";
+		return "أزل OptiFine من الخادم المخصص، لأنه يجب تثبيته فقط على العميل.";
 	}
-	
+
 	@Override
 	public String errorIronSpellbooksVersion() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "تم تمييز Iron's Spellbooks بشكل خاطئ على أنه مخصص لـ 1.20.1 لكنه يستخدم طرق 1.21.1. "
-	            + "المود يحاول استخدام ResourceLocation.fromNamespaceAndPath، وهو غير موجود في 1.20.1." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "تم تمييز Iron's Spellbooks بشكل خاطئ على أنه مخصص لـ 1.20.1 لكنه يستخدم طرق 1.21.1. "
+				+ "المود يحاول استخدام ResourceLocation.fromNamespaceAndPath، وهو غير موجود في 1.20.1." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorIronSpellbooksVersion() {
-	    return "خطأ في إصدار Iron's Spellbooks";
+		return "خطأ في إصدار Iron's Spellbooks";
 	}
 
 	@Override
 	public String pasoErrorIronSpellbooksVersion() {
-	    return "تأكد من استخدامك للإصدار الصحيح من Iron's Spellbooks المتوافق مع إصدار ماينكرافت الخاص بك.";
+		return "تأكد من استخدامك للإصدار الصحيح من Iron's Spellbooks المتوافق مع إصدار ماينكرافت الخاص بك.";
 	}
-	
+
 	@Override
 	public String errorConflictoOptiFineEmbeddium() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "تم اكتشاف تعارض حرج بين OptiFine و Embeddium. "
-	            + "هذه الوحدات غير متوافقة وتسبب فشلاً في الحقن يمنع تشغيل اللعبة." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "تم اكتشاف تعارض حرج بين OptiFine و Embeddium. "
+				+ "هذه الوحدات غير متوافقة وتسبب فشلاً في الحقن يمنع تشغيل اللعبة." + "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoOptiFineEmbeddium() {
-	    return "التعارض بين OptiFine و Embeddium";
+		return "التعارض بين OptiFine و Embeddium";
 	}
 
 	@Override
 	public String pasoConflictoOptiFineEmbeddium() {
-	    return "قم بإزالة OptiFine أو Embeddium، لأنهما غير متوافقين مع بعضهما.";
+		return "قم بإزالة OptiFine أو Embeddium، لأنهما غير متوافقين مع بعضهما.";
 	}
-	
+
 	@Override
 	public String noPuedeAnalizarJSON() {
-	    return "<span style='color:#" + config.obtenerColorError()
-	        + "'>هذا شائع مع وحدات تعديل توليد العالم المتعارضة، خاصةً Terralinth وAmplifiedNether وNullscape وIncendium وغيرها من وحدات تعديل توليد العالم. قد تحتاج أيضًا إلى تثبيت وحدة تعديل مفقودة.</span>";
+		return "<span style='color:#" + config.obtenerColorError()
+				+ "'>هذا شائع مع وحدات تعديل توليد العالم المتعارضة، خاصةً Terralinth وAmplifiedNether وNullscape وIncendium وغيرها من وحدات تعديل توليد العالم. قد تحتاج أيضًا إلى تثبيت وحدة تعديل مفقودة.</span>";
 	}
-	
+
 	@Override
 	public String errorControllableServidor() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Controllable يحاول التحميل على خادم مخصص، لكنه متوافق فقط مع العميل. "
-	            + "أزل Controllable من الخادم أو تأكد من أنه مثبت فقط على العميل." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Controllable يحاول التحميل على خادم مخصص، لكنه متوافق فقط مع العميل. "
+				+ "أزل Controllable من الخادم أو تأكد من أنه مثبت فقط على العميل." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorControllableServidor() {
-	    return "Controllable على خادم مخصص";
+		return "Controllable على خادم مخصص";
 	}
 
 	@Override
 	public String pasoErrorControllableServidor() {
-	    return "أزل Controllable من الخادم المخصص، لأنه يجب تثبيته فقط على العميل.";
+		return "أزل Controllable من الخادم المخصص، لأنه يجب تثبيته فقط على العميل.";
 	}
-	
+
 	@Override
 	public String errorSupplementariesCargaServidor() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "ي causing Supplementaries خطأً يمنع تحميل الخادم. "
-	            + "يواجه المود مشاكل في تسجيل سلوكيات النار تؤدي إلى فشل أثناء تحميل حزم البيانات (datapacks)." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "ي causing Supplementaries خطأً يمنع تحميل الخادم. "
+				+ "يواجه المود مشاكل في تسجيل سلوكيات النار تؤدي إلى فشل أثناء تحميل حزم البيانات (datapacks)."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorSupplementariesCargaServidor() {
-	    return "Supplementaries يمنع تحميل الخادم";
+		return "Supplementaries يمنع تحميل الخادم";
 	}
 
 	@Override
 	public String pasoErrorSupplementariesCargaServidor() {
-	    return "حاول تحديث Supplementaries إلى أحدث إصدار أو قم بتعطيله مؤقتًا للسماح بتحميل الخادم.";
+		return "حاول تحديث Supplementaries إلى أحدث إصدار أو قم بتعطيله مؤقتًا للسماح بتحميل الخادم.";
 	}
-	
+
 	@Override
 	public String errorGroovyModloaderModuloFaltante() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "واجه Groovy Modloader (GML) مشكلة بسبب وحدات Jackson المفقودة. "
-	            + "قد يسبب بعض الوحدات مثل Valkyrien Skies هذا الخطأ لعدم تضمين جميع التبعيات المطلوبة." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "واجه Groovy Modloader (GML) مشكلة بسبب وحدات Jackson المفقودة. "
+				+ "قد يسبب بعض الوحدات مثل Valkyrien Skies هذا الخطأ لعدم تضمين جميع التبعيات المطلوبة." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorGroovyModloaderModuloFaltante() {
-	    return "وحدة Jackson مفقودة في Groovy Modloader";
+		return "وحدة Jackson مفقودة في Groovy Modloader";
 	}
 
 	@Override
 	public String pasoErrorGroovyModloaderModuloFaltante() {
-	    return "قم بإزالة Groovy Modloader والوحدات المرتبطة مثل Valkyrien Skies التي قد تسبب تعارضات في التبعيات.";
+		return "قم بإزالة Groovy Modloader والوحدات المرتبطة مثل Valkyrien Skies التي قد تسبب تعارضات في التبعيات.";
 	}
-	
+
 	@Override
 	public String errorEveryCompatNombreInvalido() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Every Compat وجد اسم كتلة خشب غير صالح. "
-	            + "عادةً ما يعاني Every Compat من مشاكل كثيرة. لا تستخدمه!" + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "Every Compat وجد اسم كتلة خشب غير صالح. "
+				+ "عادةً ما يعاني Every Compat من مشاكل كثيرة. لا تستخدمه!" + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorEveryCompatNombreInvalido() {
-	    return "اسم غير صالح في Every Compat";
+		return "اسم غير صالح في Every Compat";
 	}
 
 	@Override
 	public String pasoErrorEveryCompatNombreInvalido() {
-	    return "تحقق من حزم الموارد أو الوحدات التي تستخدم Every Compat، فقد تحتوي على أسماء كتل غير صالحة.";
+		return "تحقق من حزم الموارد أو الوحدات التي تستخدم Every Compat، فقد تحتوي على أسماء كتل غير صالحة.";
 	}
-	
-
 
 	@Override
 	public String errorCodigo1073741819() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "تم اكتشاف رمز خطأ (-1073741819) قد يكون ناتجًا عن طبقات العرض (overlays) مثل GameCaster من Razer أو Discord أو OBS Studio أو مشاكل في تعريفات NVIDIA." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "تم اكتشاف رمز خطأ (-1073741819) قد يكون ناتجًا عن طبقات العرض (overlays) مثل GameCaster من Razer أو Discord أو OBS Studio أو مشاكل في تعريفات NVIDIA."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorCodigo1073741819() {
-	    return "رمز الخطأ -1073741819";
+		return "رمز الخطأ -1073741819";
 	}
 
 	@Override
 	public String pasoErrorCodigo1073741819() {
-	    return "حاول تعطيل طبقات العرض مثل GameCaster أو Discord أو OBS Studio، وتأكد من أن تعريفات NVIDIA الخاصة بك محدثة.";
+		return "حاول تعطيل طبقات العرض مثل GameCaster أو Discord أو OBS Studio، وتأكد من أن تعريفات NVIDIA الخاصة بك محدثة.";
 	}
-	
+
 	@Override
 	public String errorImmersiveTooltipsSinDependencia() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Immersive Tooltips يتطلب Immersive Messages ك(dependencia) لكنه غير مثبت. "
-	            + "قم بتثبيت Immersive Messages لكي يعمل Immersive Tooltips بشكل صحيح." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Immersive Tooltips يتطلب Immersive Messages ك(dependencia) لكنه غير مثبت. "
+				+ "قم بتثبيت Immersive Messages لكي يعمل Immersive Tooltips بشكل صحيح." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorImmersiveTooltipsSinDependencia() {
-	    return "Immersive Tooltips بدون dependencia";
+		return "Immersive Tooltips بدون dependencia";
 	}
 
 	@Override
 	public String pasoErrorImmersiveTooltipsSinDependencia() {
-	    return "قم بتثبيت Immersive Messages، لأنه dependencia ضرورية لـ Immersive Tooltips.";
+		return "قم بتثبيت Immersive Messages، لأنه dependencia ضرورية لـ Immersive Tooltips.";
 	}
-	
+
 	@Override
 	public String errorMedievalOriginsCast() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Medieval Origins tiene un problema de compatibilidad con Apoli Mod donde ItemStack no puede ser casteado a EntityLinkedItemStack. "
-	            + "Esto es común en versiones superiores a 6.6.0. Considera usar una versión anterior o cambiar entre versiones de Fabric y Forge." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Medieval Origins tiene un problema de compatibilidad con Apoli Mod donde ItemStack no puede ser casteado a EntityLinkedItemStack. "
+				+ "Esto es común en versiones superiores a 6.6.0. Considera usar una versión anterior o cambiar entre versiones de Fabric y Forge."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorMedievalOriginsCast() {
-	    return "Error de casteo en Medieval Origins";
+		return "Error de casteo en Medieval Origins";
 	}
 
 	@Override
 	public String pasoErrorMedievalOriginsCast() {
-	    return "Usa una versión de Medieval Origins 6.6.0 o anterior, o intenta cambiar entre versiones de Fabric y Forge del mod.";
+		return "Usa una versión de Medieval Origins 6.6.0 o anterior, o intenta cambiar entre versiones de Fabric y Forge del mod.";
 	}
-	
+
 	@Override
 	public String errorReignOfNetherMusicManager() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "يسبب Reign of Nether خطأً مع Registry Object غير موجود في MusicManager. "
-	            + "يرتبط هذا المشكل بمixin الخاص بـ MusicManager من Reign of Nether." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "يسبب Reign of Nether خطأً مع Registry Object غير موجود في MusicManager. "
+				+ "يرتبط هذا المشكل بمixin الخاص بـ MusicManager من Reign of Nether." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorReignOfNetherMusicManager() {
-	    return "خطأ MusicManager في Reign of Nether";
+		return "خطأ MusicManager في Reign of Nether";
 	}
 
 	@Override
 	public String pasoErrorReignOfNetherMusicManager() {
-	    return "حاول تحديث Reign of Nether أو إزالته مؤقتًا لحل هذا الخطأ.";
+		return "حاول تحديث Reign of Nether أو إزالته مؤقتًا لحل هذا الخطأ.";
 	}
-	
+
 	@Override
 	public String errorYesSteveModelLinux() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "يدعم YesSteveModel خادم YSM فقط على Linux أو Android. "
-	            + "تم إصلاح هذه المشكلة في الإصدارات الأحدث منذ 23 نوفمبر 2025 على Modrinth." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "يدعم YesSteveModel خادم YSM فقط على Linux أو Android. "
+				+ "تم إصلاح هذه المشكلة في الإصدارات الأحدث منذ 23 نوفمبر 2025 على Modrinth." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorYesSteveModelLinux() {
-	    return "YesSteveModel غير متوافق مع Linux";
+		return "YesSteveModel غير متوافق مع Linux";
 	}
 
 	@Override
 	public String pasoErrorYesSteveModelLinux() {
-	    return "قم بتحديث YesSteveModel إلى إصدار أحدث من Modrinth، حيث تم إصلاح المشكلة بعد 23 نوفمبر.";
+		return "قم بتحديث YesSteveModel إلى إصدار أحدث من Modrinth، حيث تم إصلاح المشكلة بعد 23 نوفمبر.";
 	}
-	
+
 	@Override
 	public String errorConflictoMovingElevatorsOptiFine() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "تم اكتشاف تعارض حرج بين Moving Elevators و OptiFine. "
-	            + "هذه الوحدات غير متوافقة وتسبب فشلاً في الحقن يمنع تشغيل اللعبة." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "تم اكتشاف تعارض حرج بين Moving Elevators و OptiFine. "
+				+ "هذه الوحدات غير متوافقة وتسبب فشلاً في الحقن يمنع تشغيل اللعبة." + "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoMovingElevatorsOptiFine() {
-	    return "التعارض بين Moving Elevators و OptiFine";
+		return "التعارض بين Moving Elevators و OptiFine";
 	}
 
 	@Override
 	public String pasoConflictoMovingElevatorsOptiFine() {
-	    return "قم بإزالة OptiFine أو Moving Elevators، لأنهما غير متوافقين مع بعضهما.";
+		return "قم بإزالة OptiFine أو Moving Elevators، لأنهما غير متوافقين مع بعضهما.";
 	}
-	
+
 	@Override
 	public String errorConflictoFabricAPIOptiFine() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "تم اكتشاف تعارض حرج بين Fabric API (fabric-resource-loader-v0) و OptiFine. "
-	            + "هذه الوحدات غير متوافقة وتسبب فشلاً في الحقن يمنع تشغيل اللعبة." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "تم اكتشاف تعارض حرج بين Fabric API (fabric-resource-loader-v0) و OptiFine. "
+				+ "هذه الوحدات غير متوافقة وتسبب فشلاً في الحقن يمنع تشغيل اللعبة." + "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoFabricAPIOptiFine() {
-	    return "التعارض بين Fabric API و OptiFine";
+		return "التعارض بين Fabric API و OptiFine";
 	}
 
 	@Override
 	public String pasoConflictoFabricAPIOptiFine() {
-	    return "قم بإزالة OptiFine أو حدّث Fabric API إلى إصدار متوافق.";
+		return "قم بإزالة OptiFine أو حدّث Fabric API إلى إصدار متوافق.";
 	}
-	
+
 	@Override
 	public String errorModLauncherTransformationService(String claseProveedor) {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "يحتوي أحد الوحدات على ITransformationService معطوب لا يمكن إنشاؤه: " + claseProveedor + ". "
-	            + "يجب إزالة هذا المود لتمكين تحميل اللعبة." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "يحتوي أحد الوحدات على ITransformationService معطوب لا يمكن إنشاؤه: " + claseProveedor + ". "
+				+ "يجب إزالة هذا المود لتمكين تحميل اللعبة." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorModLauncherTransformationService() {
-	    return "ITransformationService معطوب";
+		return "ITransformationService معطوب";
 	}
 
 	@Override
 	public String pasoErrorModLauncherTransformationService(String claseProveedor) {
-	    return "أزل المود الذي يحتوي على الصنف " + claseProveedor + "، لأنه يحتوي على ITransformationService معطوب.";
+		return "أزل المود الذي يحتوي على الصنف " + claseProveedor + "، لأنه يحتوي على ITransformationService معطوب.";
 	}
-	
+
 	@Override
 	public String errorVersionInvalidaMod(String version) {
-	    return "<span style='color:#" + config.obtenerColorError() + "'>يحتوي أحد الوحدات على مواصفات إصدار غير صالحة. "
-	            + "يجب أن يكون الإصدار محاطًا بأقواس مربعة. "
-	            + "يمكنك استخدام أداة grep/greprf من اللوحة الجانبية بالبحث عن الإصدار </span>" + version + "<span style='color:#" + config.obtenerColorError() + "'> لتحديد الوحدة التي بها المشكلة.</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>يحتوي أحد الوحدات على مواصفات إصدار غير صالحة. "
+				+ "يجب أن يكون الإصدار محاطًا بأقواس مربعة. "
+				+ "يمكنك استخدام أداة grep/greprf من اللوحة الجانبية بالبحث عن الإصدار </span>" + version
+				+ "<span style='color:#" + config.obtenerColorError() + "'> لتحديد الوحدة التي بها المشكلة.</span>";
 	}
 
 	@Override
 	public String nombreDeErrorVersionInvalidaMod() {
-	    return "إصدار غير صالح في الوحدة";
+		return "إصدار غير صالح في الوحدة";
 	}
 
 	@Override
 	public String pasoErrorVersionInvalidaMod() {
-	    return "استخدم أداة grep/greprf من اللوحة الجانبية للبحث عن الإصدار المشكل وتحديد الوحدة التي تحتويه.";
+		return "استخدم أداة grep/greprf من اللوحة الجانبية للبحث عن الإصدار المشكل وتحديد الوحدة التي تحتويه.";
 	}
-	
+
 	@Override
 	public String errorStackSmashingDetected() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "تم اكتشاف خطأ stack smashing أدى إلى إنهاء العملية. "
-	            + "قد يكون هذا ناتجًا عن مشاكل في Early Window في Forge/NeoForge/PillowMC أو مع LWJGL 3.2.2 والإصدارات الأحدث." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "تم اكتشاف خطأ stack smashing أدى إلى إنهاء العملية. "
+				+ "قد يكون هذا ناتجًا عن مشاكل في Early Window في Forge/NeoForge/PillowMC أو مع LWJGL 3.2.2 والإصدارات الأحدث."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorStackSmashingDetected() {
-	    return "تم اكتشاف Stack Smashing";
+		return "تم اكتشاف Stack Smashing";
 	}
 
 	@Override
 	public String pasoErrorStackSmashingDetected() {
-	    return "تحقق من إعدادات Early Window وفكّر في استخدام إصدار مختلف من LWJGL أو مراجعة الوحدات المرتبطة بالنوافذ المبكرة.";
+		return "تحقق من إعدادات Early Window وفكّر في استخدام إصدار مختلف من LWJGL أو مراجعة الوحدات المرتبطة بالنوافذ المبكرة.";
 	}
-	
+
 	@Override
 	public String errorVersionClaseGregTechEasyCore() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "GregTechEasyCore مخصص لـ modpack معين فقط ولا يجب استخدامه في تثبيتات عامة، لأنه يسبب مشكلة." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "GregTechEasyCore مخصص لـ modpack معين فقط ولا يجب استخدامه في تثبيتات عامة، لأنه يسبب مشكلة."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorVersionClaseGregTechEasyCore() {
-	    return "GregTechEasyCore بإصدار Java غير متوافق";
+		return "GregTechEasyCore بإصدار Java غير متوافق";
 	}
 
 	@Override
 	public String pasoErrorVersionClaseGregTechEasyCore() {
-	    return "قم بإزالة GregTechEasyCore، لأنه مخصص لـ modpack معين فقط وغير متوافق مع تثبيتك العامة.";
+		return "قم بإزالة GregTechEasyCore، لأنه مخصص لـ modpack معين فقط وغير متوافق مع تثبيتك العامة.";
 	}
-	
+
 	@Override
 	public String errorConflictoMoniLabsConnectorExtras() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "تم اكتشاف تعارض بين MoniLabs و Connector Extras متعلق بتعديلات KubeJS. "
-	            + "هذه الوحدات غير متوافقة في تعديلاتها لـ KubeJS." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "تم اكتشاف تعارض بين MoniLabs و Connector Extras متعلق بتعديلات KubeJS. "
+				+ "هذه الوحدات غير متوافقة في تعديلاتها لـ KubeJS." + "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoMoniLabsConnectorExtras() {
-	    return "تعارض بين MoniLabs و Connector Extras";
+		return "تعارض بين MoniLabs و Connector Extras";
 	}
 
 	@Override
 	public String pasoConflictoMoniLabsConnectorExtras() {
-	    return "حاول إزالة أحد الوحدات (MoniLabs أو Connector Extras) لأن لديهما تعارضات في تعديلات KubeJS.";
+		return "حاول إزالة أحد الوحدات (MoniLabs أو Connector Extras) لأن لديهما تعارضات في تعديلات KubeJS.";
 	}
-	
+
 	@Override
 	public String errorCompatibilidadIrisDH() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "يتطلب Iris وجود Distant Horizons [2.0.4] أو DH API إصدار [1.1.0] أو أحدث. "
-	            + "راجع دليل التوافق على https://gist.github.com/Steveplays28/52db568f297ded527da56dbe6deeec0e لحل المشكلة." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "يتطلب Iris وجود Distant Horizons [2.0.4] أو DH API إصدار [1.1.0] أو أحدث. "
+				+ "راجع دليل التوافق على https://gist.github.com/Steveplays28/52db568f297ded527da56dbe6deeec0e لحل المشكلة."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorCompatibilidadIrisDH() {
-	    return "توافق Iris و Distant Horizons";
+		return "توافق Iris و Distant Horizons";
 	}
 
 	@Override
 	public String pasoErrorCompatibilidadIrisDH() {
-	    return "راجع دليل التوافق على https://gist.github.com/Steveplays28/52db568f297ded527da56dbe6deeec0e وقم بتحديث Iris و Distant Horizons إلى إصدارات متوافقة.";
+		return "راجع دليل التوافق على https://gist.github.com/Steveplays28/52db568f297ded527da56dbe6deeec0e وقم بتحديث Iris و Distant Horizons إلى إصدارات متوافقة.";
 	}
-	
-	
+
 	@Override
 	public String faltar_de_clases_minecraft() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>لديك فئات (classes) مفقودة من Minecraft. الأسباب المحتملة:</b>"
-	        + "<ul>"
-	        + "<li>لديك وحدات لversions أخرى من اللعبة. يمكنك استخدام <a href='https://wagyourtail.xyz/Projects/MinecraftMappingViewer' target='_blank'>MinecraftMappingViewer</a> للتحقق مما إذا كانت الفئة موجودة في إصدارك.</li>"
-	        + "<li>لديك تثبيت تالف لـ Minecraft (شائع مع تطبيق CurseForge وModrinthApp/Theseus/Astralrinth وغيرها من مشغّلات modpacks). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>شاهد البرنامج التعليمي</a> لحل مشاكل CurseForge.</li>"
-	        + "<li>لديك coremod تالف (إذا فشل coremod، فقد يمنع تحميل الفئة).</li>"
-	        + "</ul>"
-	        + "<p>ملاحظة: يمكنك استخدام أداة <b>grepr/fgrepr</b> في الشريط الجانبي للعثور على الوحدات التي تشير إلى الفئات المفقودة، طالما تستخدم '/' في الأسماء.</p>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>لديك فئات (classes) مفقودة من Minecraft. الأسباب المحتملة:</b>" + "<ul>"
+				+ "<li>لديك وحدات لversions أخرى من اللعبة. يمكنك استخدام <a href='https://wagyourtail.xyz/Projects/MinecraftMappingViewer' target='_blank'>MinecraftMappingViewer</a> للتحقق مما إذا كانت الفئة موجودة في إصدارك.</li>"
+				+ "<li>لديك تثبيت تالف لـ Minecraft (شائع مع تطبيق CurseForge وModrinthApp/Theseus/Astralrinth وغيرها من مشغّلات modpacks). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>شاهد البرنامج التعليمي</a> لحل مشاكل CurseForge.</li>"
+				+ "<li>لديك coremod تالف (إذا فشل coremod، فقد يمنع تحميل الفئة).</li>" + "</ul>"
+				+ "<p>ملاحظة: يمكنك استخدام أداة <b>grepr/fgrepr</b> في الشريط الجانبي للعثور على الوحدات التي تشير إلى الفئات المفقودة، طالما تستخدم '/' في الأسماء.</p>";
 	}
 
 	@Override
 	public String faltar_de_clases_dangerzone() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>لديك فئات مفقودة من DangerZone. الأسباب المحتملة:</b>"
-	        + "<ul>"
-	        + "<li>لديك وحدات لversions أخرى من اللعبة.</li>"
-	        + "<li>لديك coremods تالفة.</li>"
-	        + "<li>لديك مشغّل أو تثبيت تالف.</li>"
-	        + "</ul>"
-	        + "<p>ملاحظة: يمكنك استخدام أداة <b>grepr/fgrepr</b> في الشريط الجانبي للعثور على الوحدات التي تشير إلى الفئات المفقودة، طالما تستخدم '/' في الأسماء.</p>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>لديك فئات مفقودة من DangerZone. الأسباب المحتملة:</b>" + "<ul>"
+				+ "<li>لديك وحدات لversions أخرى من اللعبة.</li>" + "<li>لديك coremods تالفة.</li>"
+				+ "<li>لديك مشغّل أو تثبيت تالف.</li>" + "</ul>"
+				+ "<p>ملاحظة: يمكنك استخدام أداة <b>grepr/fgrepr</b> في الشريط الجانبي للعثور على الوحدات التي تشير إلى الفئات المفقودة، طالما تستخدم '/' في الأسماء.</p>";
 	}
 
 	@Override
 	public String faltar_de_clases_featurecreep() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>لديك فئات مفقودة من FeatureCreep. الأسباب المحتملة:</b>"
-	        + "<ul>"
-	        + "<li>لديك وحدات لإصدارات مختلفة من FeatureCreep (مثال: ESR مقابل Nightly أو v4 مقابل v12).</li>"
-	        + "<li>يمكنك تثبيت FeatureCreep من CurseForge أو MinecraftStorage.</li>"
-	        + "</ul>"
-	        + "<p>ملاحظة: يمكنك استخدام أداة <b>grepr/fgrepr</b> في الشريط الجانبي للعثور على الوحدات التي تشير إلى الفئات المفقودة، طالما تستخدم '/' في الأسماء.</p>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>لديك فئات مفقودة من FeatureCreep. الأسباب المحتملة:</b>" + "<ul>"
+				+ "<li>لديك وحدات لإصدارات مختلفة من FeatureCreep (مثال: ESR مقابل Nightly أو v4 مقابل v12).</li>"
+				+ "<li>يمكنك تثبيت FeatureCreep من CurseForge أو MinecraftStorage.</li>" + "</ul>"
+				+ "<p>ملاحظة: يمكنك استخدام أداة <b>grepr/fgrepr</b> في الشريط الجانبي للعثور على الوحدات التي تشير إلى الفئات المفقودة، طالما تستخدم '/' في الأسماء.</p>";
 	}
 
 	@Override
 	public String faltar_de_clases_modlauncher() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>لديك فئات مفقودة من ModLauncher. الأسباب المحتملة:</b>"
-	        + "<ul>"
-	        + "<li>وحداتك مخصصة لbuild مختلف من MinecraftForge أو PillowMC أو NeoForge (يُستخدم ModLauncher مع هذه المحملات).</li>"
-	        + "<li>هناك العديد من تحديثات محملات الوحدات لكل إصدار من Minecraft.</li>"
-	        + "<li>لديك تثبيت تالف للمشغل (شائع مع تطبيق CurseForge وModrinthApp/Theseus/Astralrinth وغيرها). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>شاهد البرنامج التعليمي</a> لحل مشاكل CurseForge.</li>"
-	        + "</ul>"
-	        + "<p>ملاحظة: يمكنك استخدام أداة <b>grepr/fgrepr</b> في الشريط الجانبي للعثور على الوحدات التي تشير إلى الفئات المفقودة، طالما تستخدم '/' في الأسماء.</p>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>لديك فئات مفقودة من ModLauncher. الأسباب المحتملة:</b>" + "<ul>"
+				+ "<li>وحداتك مخصصة لbuild مختلف من MinecraftForge أو PillowMC أو NeoForge (يُستخدم ModLauncher مع هذه المحملات).</li>"
+				+ "<li>هناك العديد من تحديثات محملات الوحدات لكل إصدار من Minecraft.</li>"
+				+ "<li>لديك تثبيت تالف للمشغل (شائع مع تطبيق CurseForge وModrinthApp/Theseus/Astralrinth وغيرها). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>شاهد البرنامج التعليمي</a> لحل مشاكل CurseForge.</li>"
+				+ "</ul>"
+				+ "<p>ملاحظة: يمكنك استخدام أداة <b>grepr/fgrepr</b> في الشريط الجانبي للعثور على الوحدات التي تشير إلى الفئات المفقودة، طالما تستخدم '/' في الأسماء.</p>";
 	}
 
 	@Override
 	public String faltar_de_clases_minecraftforge() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>لديك فئات مفقودة من Minecraft Forge. الأسباب المحتملة:</b>"
-	        + "<ul>"
-	        + "<li>وحداتك مخصصة لbuild مختلف من MinecraftForge.</li>"
-	        + "<li>هناك العديد من تحديثات محملات الوحدات لكل إصدار من Minecraft.</li>"
-	        + "<li>لديك تثبيت تالف (شائع مع تطبيق CurseForge وModrinthApp/Theseus/Astralrinth وغيرها). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>شاهد البرنامج التعليمي</a> لحل مشاكل CurseForge.</li>"
-	        + "</ul>"
-	        + "<p>ملاحظة: يمكنك استخدام أداة <b>grepr/fgrepr</b> في الشريط الجانبي للعثور على الوحدات التي تشير إلى الفئات المفقودة، طالما تستخدم '/' في الأسماء.</p>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>لديك فئات مفقودة من Minecraft Forge. الأسباب المحتملة:</b>" + "<ul>"
+				+ "<li>وحداتك مخصصة لbuild مختلف من MinecraftForge.</li>"
+				+ "<li>هناك العديد من تحديثات محملات الوحدات لكل إصدار من Minecraft.</li>"
+				+ "<li>لديك تثبيت تالف (شائع مع تطبيق CurseForge وModrinthApp/Theseus/Astralrinth وغيرها). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>شاهد البرنامج التعليمي</a> لحل مشاكل CurseForge.</li>"
+				+ "</ul>"
+				+ "<p>ملاحظة: يمكنك استخدام أداة <b>grepr/fgrepr</b> في الشريط الجانبي للعثور على الوحدات التي تشير إلى الفئات المفقودة، طالما تستخدم '/' في الأسماء.</p>";
 	}
 
 	@Override
 	public String faltar_de_clases_neoforged() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>لديك فئات مفقودة من NeoForge. الأسباب المحتملة:</b>"
-	        + "<ul>"
-	        + "<li>وحداتك مخصصة لbuild مختلف من NeoForge.</li>"
-	        + "<li>هناك العديد من تحديثات محملات الوحدات لكل إصدار من Minecraft.</li>"
-	        + "<li>لديك تثبيت تالف (شائع مع تطبيق CurseForge وModrinthApp/Theseus/Astralrinth وغيرها). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>شاهد البرنامج التعليمي</a> لحل مشاكل CurseForge.</li>"
-	        + "</ul>"
-	        + "<p>ملاحظة: يمكنك استخدام أداة <b>grepr/fgrepr</b> في الشريط الجانبي للعثور على الوحدات التي تشير إلى الفئات المفقودة، طالما تستخدم '/' في الأسماء.</p>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>لديك فئات مفقودة من NeoForge. الأسباب المحتملة:</b>" + "<ul>"
+				+ "<li>وحداتك مخصصة لbuild مختلف من NeoForge.</li>"
+				+ "<li>هناك العديد من تحديثات محملات الوحدات لكل إصدار من Minecraft.</li>"
+				+ "<li>لديك تثبيت تالف (شائع مع تطبيق CurseForge وModrinthApp/Theseus/Astralrinth وغيرها). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>شاهد البرنامج التعليمي</a> لحل مشاكل CurseForge.</li>"
+				+ "</ul>"
+				+ "<p>ملاحظة: يمكنك استخدام أداة <b>grepr/fgrepr</b> في الشريط الجانبي للعثور على الوحدات التي تشير إلى الفئات المفقودة، طالما تستخدم '/' في الأسماء.</p>";
 	}
 
 	@Override
 	public String faltar_de_clases_fabricloader() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>لديك فئات مفقودة من Fabric Loader. الأسباب المحتملة:</b>"
-	        + "<ul>"
-	        + "<li>وحداتك مخصصة لbuild مختلف من Fabric Loader.</li>"
-	        + "<li>هناك العديد من تحديثات محملات الوحدات لكل إصدار من Minecraft.</li>"
-	        + "<li>لديك تثبيت تالف (شائع مع تطبيق CurseForge وModrinthApp/Theseus/Astralrinth وغيرها). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>شاهد البرنامج التعليمي</a> لحل مشاكل CurseForge.</li>"
-	        + "<li>العديد من الوحدات تتطلب Fabric API. الرجاء تثبيت Fabric API إذا لزم الأمر.</li>"
-	        + "</ul>"
-	        + "<p>ملاحظة: يمكنك استخدام أداة <b>grepr/fgrepr</b> في الشريط الجانبي للعثور على الوحدات التي تشير إلى الفئات المفقودة، طالما تستخدم '/' في الأسماء.</p>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>لديك فئات مفقودة من Fabric Loader. الأسباب المحتملة:</b>" + "<ul>"
+				+ "<li>وحداتك مخصصة لbuild مختلف من Fabric Loader.</li>"
+				+ "<li>هناك العديد من تحديثات محملات الوحدات لكل إصدار من Minecraft.</li>"
+				+ "<li>لديك تثبيت تالف (شائع مع تطبيق CurseForge وModrinthApp/Theseus/Astralrinth وغيرها). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>شاهد البرنامج التعليمي</a> لحل مشاكل CurseForge.</li>"
+				+ "<li>العديد من الوحدات تتطلب Fabric API. الرجاء تثبيت Fabric API إذا لزم الأمر.</li>" + "</ul>"
+				+ "<p>ملاحظة: يمكنك استخدام أداة <b>grepr/fgrepr</b> في الشريط الجانبي للعثور على الوحدات التي تشير إلى الفئات المفقودة، طالما تستخدم '/' في الأسماء.</p>";
 	}
 
 	@Override
 	public String faltar_de_clases_pillowmc() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>لديك فئات مفقودة من PillowMC. الأسباب المحتملة:</b>"
-	        + "<ul>"
-	        + "<li>وحداتك مخصصة لbuild مختلف من PillowMC.</li>"
-	        + "<li>هناك العديد من تحديثات محملات الوحدات لكل إصدار من Minecraft.</li>"
-	        + "<li>لديك تثبيت تالف (شائع مع تطبيق CurseForge وModrinthApp/Theseus/Astralrinth وغيرها). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>شاهد البرنامج التعليمي</a> لحل مشاكل CurseForge.</li>"
-	        + "</ul>"
-	        + "<p>ملاحظة: يمكنك استخدام أداة <b>grepr/fgrepr</b> في الشريط الجانبي للعثور على الوحدات التي تشير إلى الفئات المفقودة، طالما تستخدم '/' في الأسماء.</p>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>لديك فئات مفقودة من PillowMC. الأسباب المحتملة:</b>" + "<ul>"
+				+ "<li>وحداتك مخصصة لbuild مختلف من PillowMC.</li>"
+				+ "<li>هناك العديد من تحديثات محملات الوحدات لكل إصدار من Minecraft.</li>"
+				+ "<li>لديك تثبيت تالف (شائع مع تطبيق CurseForge وModrinthApp/Theseus/Astralrinth وغيرها). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>شاهد البرنامج التعليمي</a> لحل مشاكل CurseForge.</li>"
+				+ "</ul>"
+				+ "<p>ملاحظة: يمكنك استخدام أداة <b>grepr/fgrepr</b> في الشريط الجانبي للعثور على الوحدات التي تشير إلى الفئات المفقودة، طالما تستخدم '/' في الأسماء.</p>";
 	}
-	
-	
-	
-	
-	
-	
-	
 
 }

@@ -8,112 +8,109 @@ import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceI
 
 /**
  * Detecta conflictos entre OptiFine y Embeddium que provocan un error de
- * inyección crítica relacionado con InGameHud durante la inicialización del juego.
+ * inyección crítica relacionado con InGameHud durante la inicialización del
+ * juego.
  */
 public class ConflictoOptiFineEmbeddium implements Verificaciones {
 
-    private boolean activado = false;
-    private String mensaje = "";
-    private String enlaceHtml = "";
-    private boolean encontradoOptiFine = false;
+	private boolean activado = false;
+	private String mensaje = "";
+	private String enlaceHtml = "";
+	private boolean encontradoOptiFine = false;
 
-    /**
-     * Método de compatibilidad — busca si OptiFine está presente en el contenido completo del registro.
-     */
-    @Override
-    public void verificar(Consola consola) {
-        // Verificamos si OptiFine está presente en el contenido del registro
-        if (consola.contenido_verificar != null) {
-            encontradoOptiFine = consola.contenido_verificar.toLowerCase().contains("optifine");
-        }
-    }
+	/**
+	 * Método de compatibilidad — busca si OptiFine está presente en el contenido
+	 * completo del registro.
+	 */
+	@Override
+	public void verificar(Consola consola) {
+		// Verificamos si OptiFine está presente en el contenido del registro
+		if (consola.contenido_verificar != null) {
+			encontradoOptiFine = consola.contenido_verificar.toLowerCase().contains("optifine");
+		}
+	}
 
-    /**
-     * Análisis por línea del registro.
-     * <p>
-     * Se busca el patrón característico del error de inyección crítica de Embeddium
-     * con InGameHud, que ocurre cuando OptiFine y Embeddium no son compatibles.
-     * </p>
-     */
-    @Override
-    public void verificar(Consola consola, String linea, int numero_de_linea) {
-        if (activado) {
-            // Si ya se activó, no seguimos verificando más líneas.
-            return;
-        }
+	/**
+	 * Análisis por línea del registro.
+	 * <p>
+	 * Se busca el patrón característico del error de inyección crítica de Embeddium
+	 * con InGameHud, que ocurre cuando OptiFine y Embeddium no son compatibles.
+	 * </p>
+	 */
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		if (activado) {
+			// Si ya se activó, no seguimos verificando más líneas.
+			return;
+		}
 
-        // Verificamos si la línea contiene el error de inyección crítica de Embeddium con InGameHud
-        if (linea.contains("Critical injection failure")
-                && linea.contains("redirectFancyGraphicsVignette")
-                && linea.contains("embeddium.mixins.json")
-                && linea.contains("InGameHudMixin")
-                && encontradoOptiFine) {
+		// Verificamos si la línea contiene el error de inyección crítica de Embeddium
+		// con InGameHud
+		if (linea.contains("Critical injection failure") && linea.contains("redirectFancyGraphicsVignette")
+				&& linea.contains("embeddium.mixins.json") && linea.contains("InGameHudMixin") && encontradoOptiFine) {
 
-            // Enlazar a la línea del error en el lector
-            enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+			// Enlazar a la línea del error en el lector
+			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
-            // Mensaje de error en HTML con referencia al conflicto entre OptiFine y Embeddium
-            mensaje = MonitorDePID.idioma.errorConflictoOptiFineEmbeddium() + Verificaciones.nl_html;
-            activado = true;
-        }
-    }
+			// Mensaje de error en HTML con referencia al conflicto entre OptiFine y
+			// Embeddium
+			mensaje = MonitorDePID.idioma.errorConflictoOptiFineEmbeddium() + Verificaciones.nl_html;
+			activado = true;
+		}
+	}
 
-    @Override
-    public Verificaciones nueva() {
-        return new ConflictoOptiFineEmbeddium();
-    }
+	@Override
+	public Verificaciones nueva() {
+		return new ConflictoOptiFineEmbeddium();
+	}
 
-    @Override
-    public boolean activado() {
-        return activado;
-    }
+	@Override
+	public boolean activado() {
+		return activado;
+	}
 
-    @Override
-    public float prioridad() {
-        return 1100.0f; // Alta prioridad: rompe la inicialización del juego
-    }
+	@Override
+	public float prioridad() {
+		return 1100.0f; // Alta prioridad: rompe la inicialización del juego
+	}
 
-    @Override
-    public String mensaje() {
-        return activado ? (mensaje + enlaceHtml) : "";
-    }
+	@Override
+	public String mensaje() {
+		return activado ? (mensaje + enlaceHtml) : "";
+	}
 
-    @Override
-    public String nombre() {
-        return MonitorDePID.idioma.nombreDeConflictoOptiFineEmbeddium();
-    }
+	@Override
+	public String nombre() {
+		return MonitorDePID.idioma.nombreDeConflictoOptiFineEmbeddium();
+	}
 
-    @Override
-    public QuickFix solucion() {
-        return new QuickFix.Builder(nombre())
-                .agregarEtiqueta(MonitorDePID.idioma.pasoConflictoOptiFineEmbeddium())
-                .construir();
-    }
+	@Override
+	public QuickFix solucion() {
+		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.pasoConflictoOptiFineEmbeddium())
+				.construir();
+	}
 
-    @Override
-    public String id() {
-        return "conflicto_optifine_embeddium";
-    }
+	@Override
+	public String id() {
+		return "conflicto_optifine_embeddium";
+	}
 
-    /**
-     * Asocia esta verificación con un trazo específico del stack.
-     * <p>
-     * Conservador: solo devuelve true si el trazo contiene las cadenas clave
-     * exactas del error y se ha detectado OptiFine.
-     * </p>
-     */
-    @Override
-    public boolean ocupaTrazo(TraceInfo trazo) {
-        if (!activado || trazo == null || trazo.trace == null) {
-            return false;
-        }
+	/**
+	 * Asocia esta verificación con un trazo específico del stack.
+	 * <p>
+	 * Conservador: solo devuelve true si el trazo contiene las cadenas clave
+	 * exactas del error y se ha detectado OptiFine.
+	 * </p>
+	 */
+	@Override
+	public boolean ocupaTrazo(TraceInfo trazo) {
+		if (!activado || trazo == null || trazo.trace == null) {
+			return false;
+		}
 
-        String t = trazo.trace;
+		String t = trazo.trace;
 
-        return t.contains("Critical injection failure")
-                && t.contains("redirectFancyGraphicsVignette")
-                && t.contains("embeddium.mixins.json")
-                && t.contains("InGameHudMixin")
-                && encontradoOptiFine;
-    }
+		return t.contains("Critical injection failure") && t.contains("redirectFancyGraphicsVignette")
+				&& t.contains("embeddium.mixins.json") && t.contains("InGameHudMixin") && encontradoOptiFine;
+	}
 }

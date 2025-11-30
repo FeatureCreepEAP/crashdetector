@@ -39,8 +39,7 @@ public class JavaVersiones implements Verificaciones {
 
 			// Determinar qué versión de Java se necesita
 			String versionJavaNecesaria = determinarVersionJava(versionCompilada);
-			mensajes.add(MonitorDePID.idioma.javaObsoleta() + " JVM: "
-					+ versionJavaNecesaria);
+			mensajes.add(MonitorDePID.idioma.javaObsoleta() + " JVM: " + versionJavaNecesaria);
 			activado = true;
 		}
 
@@ -174,8 +173,7 @@ public class JavaVersiones implements Verificaciones {
 
 		// Nuevo: agregar información sobre la clase específica si se detectó
 		if (claseConProblema != null && !claseConProblema.isEmpty()) {
-			html.append("<li><b>").append("Clase").append(":</b> ")
-					.append(claseConProblema).append("</li>");
+			html.append("<li><b>").append("Clase").append(":</b> ").append(claseConProblema).append("</li>");
 		}
 
 		html.append("</ul>");

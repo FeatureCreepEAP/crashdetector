@@ -19,8 +19,7 @@ public class CargadorMCForge implements Cargador {
 	public boolean modEsDeCargador(ArchivoDeMod mod) {
 		// se recorre la lista de rutas internas del mod
 
-		if(mod.ubicacion_para_publicar().contains("kotlinforforge"))
-		{
+		if (mod.ubicacion_para_publicar().contains("kotlinforforge")) {
 			return true;
 		}
 		for (String archivo : mod.archivos()) {

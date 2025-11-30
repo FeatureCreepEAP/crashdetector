@@ -43,10 +43,10 @@ public class CrashDetectorFCMC {
 	 *         obener FCLoaderBasic. Null si no es FCLoaderBasic
 	 */
 	public static @Nullable FCLoaderBasic obtenerFCLoaderBasic() {
-		if(!FCExiste()) {
+		if (!FCExiste()) {
 			return null;
 		}
-		
+
 		ClassLoader cl = CrashDetectorFCMC.class.getClassLoader();
 		if (cl instanceof ModuleClassLoader) {
 			ModuleClassLoader mcl = (ModuleClassLoader) cl;

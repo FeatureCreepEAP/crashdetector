@@ -176,7 +176,6 @@ public class Drivers implements Verificaciones {
 			return true;
 		}
 
-
 		// A veces nouveau puede causar problemas con OpenAL en mi experiencia
 		return contienePatronOpenAL(log);
 	}

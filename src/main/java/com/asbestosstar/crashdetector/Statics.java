@@ -16,7 +16,7 @@ public class Statics {
 
 	public static File carpeta_como_archivo = new File("crash_detector/");
 	public static Path carpeta = carpeta_como_archivo.toPath();
-	
+
 	static {
 		App.APPS.add(App.MINECRAFT);
 		App.APPS.add(App.DANGERZONE);

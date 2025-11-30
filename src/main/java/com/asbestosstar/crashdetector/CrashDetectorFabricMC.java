@@ -10,7 +10,7 @@ public class CrashDetectorFabricMC implements PreLaunchEntrypoint {
 	@Override
 	public void onPreLaunch() {
 		// TODO Auto-generated method stub
-			CargadoresComun.init(new Path[] {new File("mods/").toPath()},CargadoresComun.CDOrigin.FABRICMC);		
+		CargadoresComun.init(new Path[] { new File("mods/").toPath() }, CargadoresComun.CDOrigin.FABRICMC);
 	}
 
 }

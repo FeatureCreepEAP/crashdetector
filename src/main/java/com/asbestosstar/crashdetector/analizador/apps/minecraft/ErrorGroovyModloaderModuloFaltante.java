@@ -13,111 +13,108 @@ import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceI
  */
 public class ErrorGroovyModloaderModuloFaltante implements Verificaciones {
 
-    private boolean activado = false;
-    private String mensaje = "";
-    private String enlaceHtml = "";
-    private boolean encontradoGML = false;
+	private boolean activado = false;
+	private String mensaje = "";
+	private String enlaceHtml = "";
+	private boolean encontradoGML = false;
 
-    /**
-     * Método de compatibilidad — busca si Groovy Modloader está presente en el contenido completo del registro.
-     */
-    @Override
-    public void verificar(Consola consola) {
-        // Verificamos si Groovy Modloader o mods relacionados están presentes en el contenido del registro
-        if (consola.contenido_verificar != null) {
-            String contenido = consola.contenido_verificar.toLowerCase();
-            encontradoGML = contenido.contains("groovy") || 
-                           contenido.contains("gml");
-        }
-    }
+	/**
+	 * Método de compatibilidad — busca si Groovy Modloader está presente en el
+	 * contenido completo del registro.
+	 */
+	@Override
+	public void verificar(Consola consola) {
+		// Verificamos si Groovy Modloader o mods relacionados están presentes en el
+		// contenido del registro
+		if (consola.contenido_verificar != null) {
+			String contenido = consola.contenido_verificar.toLowerCase();
+			encontradoGML = contenido.contains("groovy") || contenido.contains("gml");
+		}
+	}
 
-    /**
-     * Análisis por línea del registro.
-     * <p>
-     * Se busca el patrón característico del error donde un módulo Jackson no se encuentra
-     * pero es requerido por otro módulo Jackson, común en entornos con Groovy Modloader.
-     * </p>
-     */
-    @Override
-    public void verificar(Consola consola, String linea, int numero_de_linea) {
-        if (activado) {
-            // Si ya se activó, no seguimos verificando más líneas.
-            return;
-        }
+	/**
+	 * Análisis por línea del registro.
+	 * <p>
+	 * Se busca el patrón característico del error donde un módulo Jackson no se
+	 * encuentra pero es requerido por otro módulo Jackson, común en entornos con
+	 * Groovy Modloader.
+	 * </p>
+	 */
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		if (activado) {
+			// Si ya se activó, no seguimos verificando más líneas.
+			return;
+		}
 
-        // Buscamos la línea que contiene el error de módulo faltante de Jackson
-        if (linea.contains("java.lang.module.FindException")
-                && linea.contains("Module com.fasterxml.jackson.core not found")
-                && linea.contains("required by com.fasterxml.jackson")
-                && encontradoGML) {
-            
-            // Enlazar a la línea del error en el lector
-            enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+		// Buscamos la línea que contiene el error de módulo faltante de Jackson
+		if (linea.contains("java.lang.module.FindException")
+				&& linea.contains("Module com.fasterxml.jackson.core not found")
+				&& linea.contains("required by com.fasterxml.jackson") && encontradoGML) {
 
-            // Mensaje de error en HTML con referencia al problema de módulos de GML
-            mensaje = MonitorDePID.idioma.errorGroovyModloaderModuloFaltante() + Verificaciones.nl_html;
-            activado = true;
-        }
-    }
+			// Enlazar a la línea del error en el lector
+			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
-    @Override
-    public Verificaciones nueva() {
-        return new ErrorGroovyModloaderModuloFaltante();
-    }
+			// Mensaje de error en HTML con referencia al problema de módulos de GML
+			mensaje = MonitorDePID.idioma.errorGroovyModloaderModuloFaltante() + Verificaciones.nl_html;
+			activado = true;
+		}
+	}
 
-    @Override
-    public boolean activado() {
-        return activado;
-    }
+	@Override
+	public Verificaciones nueva() {
+		return new ErrorGroovyModloaderModuloFaltante();
+	}
 
-    @Override
-    public float prioridad() {
-        return 1400.0f; // Alta prioridad: rompe la carga del juego
-    }
+	@Override
+	public boolean activado() {
+		return activado;
+	}
 
-    @Override
-    public String mensaje() {
-        return activado ? (mensaje + enlaceHtml) : "";
-    }
+	@Override
+	public float prioridad() {
+		return 1400.0f; // Alta prioridad: rompe la carga del juego
+	}
 
-    @Override
-    public String nombre() {
-        return MonitorDePID.idioma.nombreDeErrorGroovyModloaderModuloFaltante();
-    }
+	@Override
+	public String mensaje() {
+		return activado ? (mensaje + enlaceHtml) : "";
+	}
 
-    @Override
-    public QuickFix solucion() {
-        return new QuickFix.Builder(nombre())
-                .agregarEtiqueta(MonitorDePID.idioma.pasoErrorGroovyModloaderModuloFaltante())
-                .construir();
-    }
+	@Override
+	public String nombre() {
+		return MonitorDePID.idioma.nombreDeErrorGroovyModloaderModuloFaltante();
+	}
 
-    @Override
-    public String id() {
-        return "error_gml_modulo_faltante";
-    }
+	@Override
+	public QuickFix solucion() {
+		return new QuickFix.Builder(nombre())
+				.agregarEtiqueta(MonitorDePID.idioma.pasoErrorGroovyModloaderModuloFaltante()).construir();
+	}
 
-    /**
-     * Asocia esta verificación con un trazo específico del stack.
-     * <p>
-     * Devuelve true si el trazo contiene las cadenas clave del error de
-     * módulos faltantes de Groovy Modloader.
-     * </p>
-     */
-    @Override
-    public boolean ocupaTrazo(TraceInfo trazo) {
-        if (!activado || trazo == null || trazo.trace == null) {
-            return false;
-        }
+	@Override
+	public String id() {
+		return "error_gml_modulo_faltante";
+	}
 
-        String t = trazo.trace;
+	/**
+	 * Asocia esta verificación con un trazo específico del stack.
+	 * <p>
+	 * Devuelve true si el trazo contiene las cadenas clave del error de módulos
+	 * faltantes de Groovy Modloader.
+	 * </p>
+	 */
+	@Override
+	public boolean ocupaTrazo(TraceInfo trazo) {
+		if (!activado || trazo == null || trazo.trace == null) {
+			return false;
+		}
 
-        return t.contains("java.lang.module.FindException")
-                && t.contains("Module com.fasterxml.jackson.core not found")
-                && t.contains("required by com.fasterxml.jackson.module.paramnames")
-                && (t.toLowerCase().contains("groovy modloader") || 
-                    t.toLowerCase().contains("valkyrien") || 
-                    t.toLowerCase().contains("valkerian") ||
-                    t.toLowerCase().contains("gml"));
-    }
+		String t = trazo.trace;
+
+		return t.contains("java.lang.module.FindException") && t.contains("Module com.fasterxml.jackson.core not found")
+				&& t.contains("required by com.fasterxml.jackson.module.paramnames")
+				&& (t.toLowerCase().contains("groovy modloader") || t.toLowerCase().contains("valkyrien")
+						|| t.toLowerCase().contains("valkerian") || t.toLowerCase().contains("gml"));
+	}
 }

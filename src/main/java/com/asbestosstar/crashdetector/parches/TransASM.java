@@ -9,7 +9,7 @@ import org.objectweb.asm.tree.ClassNode;
  */
 public class TransASM {
 
-	public static byte[] obtenerBytes(String clase,byte[] bytes) {
+	public static byte[] obtenerBytes(String clase, byte[] bytes) {
 		ClassReader classReader = new ClassReader(bytes);
 		ClassNode classNode = new ClassNode();
 		classReader.accept(classNode, 0);
@@ -18,6 +18,5 @@ public class TransASM {
 		classNode.accept(cw);
 		return cw.toByteArray();
 	}
-	
-	
+
 }

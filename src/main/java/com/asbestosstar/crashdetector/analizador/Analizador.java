@@ -203,10 +203,8 @@ public class Analizador {
 		verificaciones.add(new ErrorCreacionModeloFallida());
 		verificaciones.add(new ConflictoMoonlightIceberg());
 
-		//Plan de 5 Semanas 
-		
-		
-		
+		// Plan de 5 Semanas
+
 		verificaciones.add(new FallosEjecucionTareas());
 		verificaciones.add(new ConflictoOptiFineEMF());
 		verificaciones.add(new ConflictoOptiFineFusion());
@@ -230,7 +228,7 @@ public class Analizador {
 		verificaciones.add(new ErrorYesSteveModelLinux());
 		verificaciones.add(new ConflictoMovingElevatorsOptiFine());
 		verificaciones.add(new ConflictoFabricAPIOptiFine());
-		
+
 		verificaciones.add(new ErrorModLauncherTransformationService());
 		verificaciones.add(new ErrorVersionInvalidaModMaven());
 		verificaciones.add(new ErrorStackSmashingDetected());
@@ -238,16 +236,6 @@ public class Analizador {
 		verificaciones.add(new ConflictoMoniLabsConnectorExtras());
 		verificaciones.add(new ErrorCompatibilidadIrisDH());
 
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		verificaciones.addAll(CargadorDeCodice.cargarVerificaciones());
 
 		CrashDetectorLogger.log("Número de códices " + String.valueOf(CargadorDeCodice.cargarVerificaciones().size()));

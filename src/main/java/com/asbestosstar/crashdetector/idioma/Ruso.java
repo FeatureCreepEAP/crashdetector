@@ -4374,386 +4374,387 @@ public class Ruso implements Idioma {
 		return "<span style='color:#" + config.obtenerColorError()
 				+ "'>Это часто происходит из-за конфликтующих модов генерации мира, особенно Terralinth, AmplifiedNether, Nullscape и Incendium, а также других модов генерации мира. Возможно, вам также нужно установить отсутствующий мод.</span>";
 	}
+
 	@Override
 	public String errorControllableServidor() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Controllable пытается загрузиться на выделенном сервере, но совместим только с клиентом. "
-	            + "Удалите Controllable с сервера или убедитесь, что он установлен только на клиенте." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Controllable пытается загрузиться на выделенном сервере, но совместим только с клиентом. "
+				+ "Удалите Controllable с сервера или убедитесь, что он установлен только на клиенте." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorControllableServidor() {
-	    return "Controllable на выделенном сервере";
+		return "Controllable на выделенном сервере";
 	}
 
 	@Override
 	public String pasoErrorControllableServidor() {
-	    return "Удалите Controllable с выделенного сервера, так как он должен быть установлен только на клиенте.";
+		return "Удалите Controllable с выделенного сервера, так как он должен быть установлен только на клиенте.";
 	}
-	
+
 	@Override
 	public String errorSupplementariesCargaServidor() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Supplementaries вызывает ошибку, которая мешает загрузке сервера. "
-	            + "Мод имеет проблемы с реестром поведения огня, что приводит к сбою во время загрузки datapack'ов." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Supplementaries вызывает ошибку, которая мешает загрузке сервера. "
+				+ "Мод имеет проблемы с реестром поведения огня, что приводит к сбою во время загрузки datapack'ов."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorSupplementariesCargaServidor() {
-	    return "Supplementaries мешает загрузке сервера";
+		return "Supplementaries мешает загрузке сервера";
 	}
 
 	@Override
 	public String pasoErrorSupplementariesCargaServidor() {
-	    return "Попробуйте обновить Supplementaries до последней версии или временно отключите его, чтобы разрешить загрузку сервера.";
+		return "Попробуйте обновить Supplementaries до последней версии или временно отключите его, чтобы разрешить загрузку сервера.";
 	}
-	
+
 	@Override
 	public String errorGroovyModloaderModuloFaltante() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Groovy Modloader (GML) обнаружил проблему с отсутствующими модулями Jackson. "
-	            + "Некоторые моды, такие как Valkyrien Skies, могут вызывать эту ошибку, если не включают все необходимые зависимости." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Groovy Modloader (GML) обнаружил проблему с отсутствующими модулями Jackson. "
+				+ "Некоторые моды, такие как Valkyrien Skies, могут вызывать эту ошибку, если не включают все необходимые зависимости."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorGroovyModloaderModuloFaltante() {
-	    return "Отсутствует модуль Jackson в Groovy Modloader";
+		return "Отсутствует модуль Jackson в Groovy Modloader";
 	}
 
 	@Override
 	public String pasoErrorGroovyModloaderModuloFaltante() {
-	    return "Удалите Groovy Modloader и связанные моды, такие как Valkyrien Skies, которые могут вызывать конфликты зависимостей.";
+		return "Удалите Groovy Modloader и связанные моды, такие как Valkyrien Skies, которые могут вызывать конфликты зависимостей.";
 	}
-	
+
 	@Override
 	public String errorEveryCompatNombreInvalido() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Every Compat обнаружил недопустимое имя деревянного блока. "
-	            + "Every Compat обычно вызывает множество проблем. Не используйте его!" + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Every Compat обнаружил недопустимое имя деревянного блока. "
+				+ "Every Compat обычно вызывает множество проблем. Не используйте его!" + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorEveryCompatNombreInvalido() {
-	    return "Недопустимое имя в Every Compat";
+		return "Недопустимое имя в Every Compat";
 	}
 
 	@Override
 	public String pasoErrorEveryCompatNombreInvalido() {
-	    return "Проверьте ресурспаки или моды, использующие Every Compat, так как они могут содержать недопустимые имена блоков.";
+		return "Проверьте ресурспаки или моды, использующие Every Compat, так как они могут содержать недопустимые имена блоков.";
 	}
-
 
 	@Override
 	public String errorCodigo1073741819() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Обнаружен код ошибки (-1073741819), который может быть вызван оверлеями, такими как GameCaster от Razer, Discord, OBS Studio, или проблемами с драйверами NVIDIA." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Обнаружен код ошибки (-1073741819), который может быть вызван оверлеями, такими как GameCaster от Razer, Discord, OBS Studio, или проблемами с драйверами NVIDIA."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorCodigo1073741819() {
-	    return "Код ошибки -1073741819";
+		return "Код ошибки -1073741819";
 	}
 
 	@Override
 	public String pasoErrorCodigo1073741819() {
-	    return "Попробуйте отключить оверлеи, такие как GameCaster, Discord или OBS Studio, и убедитесь, что драйверы NVIDIA обновлены.";
+		return "Попробуйте отключить оверлеи, такие как GameCaster, Discord или OBS Studio, и убедитесь, что драйверы NVIDIA обновлены.";
 	}
-	
+
 	@Override
 	public String errorImmersiveTooltipsSinDependencia() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Immersive Tooltips требует Immersive Messages в качестве зависимости, но она не установлена. "
-	            + "Установите Immersive Messages, чтобы Immersive Tooltips работал корректно." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Immersive Tooltips требует Immersive Messages в качестве зависимости, но она не установлена. "
+				+ "Установите Immersive Messages, чтобы Immersive Tooltips работал корректно." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorImmersiveTooltipsSinDependencia() {
-	    return "Immersive Tooltips без зависимости";
+		return "Immersive Tooltips без зависимости";
 	}
 
 	@Override
 	public String pasoErrorImmersiveTooltipsSinDependencia() {
-	    return "Установите Immersive Messages, так как это необходимая зависимость для Immersive Tooltips.";
+		return "Установите Immersive Messages, так как это необходимая зависимость для Immersive Tooltips.";
 	}
-	
+
 	@Override
 	public String errorMedievalOriginsCast() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Medieval Origins имеет проблему совместимости с Apoli Mod: ItemStack не может быть приведён (cast) к EntityLinkedItemStack. "
-	            + "Это часто встречается в версиях новее 6.6.0. Рассмотрите возможность использования более ранней версии или переключения между версиями для Fabric и Forge." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Medieval Origins имеет проблему совместимости с Apoli Mod: ItemStack не может быть приведён (cast) к EntityLinkedItemStack. "
+				+ "Это часто встречается в версиях новее 6.6.0. Рассмотрите возможность использования более ранней версии или переключения между версиями для Fabric и Forge."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorMedievalOriginsCast() {
-	    return "Ошибка приведения типов (cast) в Medieval Origins";
+		return "Ошибка приведения типов (cast) в Medieval Origins";
 	}
 
 	@Override
 	public String pasoErrorMedievalOriginsCast() {
-	    return "Используйте Medieval Origins версии 6.6.0 или более раннюю, либо попробуйте переключиться между версиями мода для Fabric и Forge.";
+		return "Используйте Medieval Origins версии 6.6.0 или более раннюю, либо попробуйте переключиться между версиями мода для Fabric и Forge.";
 	}
-	
+
 	@Override
 	public String errorReignOfNetherMusicManager() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Reign of Nether вызывает ошибку из-за отсутствующего Registry Object в MusicManager. "
-	            + "Эта проблема связана с mixin MusicManager из Reign of Nether." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Reign of Nether вызывает ошибку из-за отсутствующего Registry Object в MusicManager. "
+				+ "Эта проблема связана с mixin MusicManager из Reign of Nether." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorReignOfNetherMusicManager() {
-	    return "Ошибка MusicManager в Reign of Nether";
+		return "Ошибка MusicManager в Reign of Nether";
 	}
 
 	@Override
 	public String pasoErrorReignOfNetherMusicManager() {
-	    return "Попробуйте обновить Reign of Nether или временно удалить его, чтобы устранить ошибку.";
+		return "Попробуйте обновить Reign of Nether или временно удалить его, чтобы устранить ошибку.";
 	}
+
 	@Override
 	public String errorYesSteveModelLinux() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "YesSteveModel поддерживает сервер YSM только на Linux или Android. "
-	            + "Эта проблема была исправлена в более новых версиях начиная с 23 ноября 2025 года на Modrinth." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "YesSteveModel поддерживает сервер YSM только на Linux или Android. "
+				+ "Эта проблема была исправлена в более новых версиях начиная с 23 ноября 2025 года на Modrinth."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorYesSteveModelLinux() {
-	    return "YesSteveModel несовместим с Linux";
+		return "YesSteveModel несовместим с Linux";
 	}
 
 	@Override
 	public String pasoErrorYesSteveModelLinux() {
-	    return "Обновите YesSteveModel до более новой версии с Modrinth, так как проблема была исправлена после 23 ноября.";
+		return "Обновите YesSteveModel до более новой версии с Modrinth, так как проблема была исправлена после 23 ноября.";
 	}
-	
+
 	@Override
 	public String errorConflictoMovingElevatorsOptiFine() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Обнаружен критический конфликт между Moving Elevators и OptiFine. "
-	            + "Эти моды несовместимы и вызывают сбой внедрения, препятствующий запуску игры." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Обнаружен критический конфликт между Moving Elevators и OptiFine. "
+				+ "Эти моды несовместимы и вызывают сбой внедрения, препятствующий запуску игры." + "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoMovingElevatorsOptiFine() {
-	    return "Конфликт Moving Elevators и OptiFine";
+		return "Конфликт Moving Elevators и OptiFine";
 	}
 
 	@Override
 	public String pasoConflictoMovingElevatorsOptiFine() {
-	    return "Удалите OptiFine или Moving Elevators, так как они несовместимы друг с другом.";
+		return "Удалите OptiFine или Moving Elevators, так как они несовместимы друг с другом.";
 	}
-	
+
 	@Override
 	public String errorConflictoFabricAPIOptiFine() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Обнаружен критический конфликт между Fabric API (fabric-resource-loader-v0) и OptiFine. "
-	            + "Эти моды несовместимы и вызывают сбой внедрения, препятствующий запуску игры." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Обнаружен критический конфликт между Fabric API (fabric-resource-loader-v0) и OptiFine. "
+				+ "Эти моды несовместимы и вызывают сбой внедрения, препятствующий запуску игры." + "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoFabricAPIOptiFine() {
-	    return "Конфликт Fabric API и OptiFine";
+		return "Конфликт Fabric API и OptiFine";
 	}
 
 	@Override
 	public String pasoConflictoFabricAPIOptiFine() {
-	    return "Удалите OptiFine или обновите Fabric API до совместимой версии.";
+		return "Удалите OptiFine или обновите Fabric API до совместимой версии.";
 	}
-	
+
 	@Override
 	public String errorModLauncherTransformationService(String claseProveedor) {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "В одном из модов обнаружен неисправный ITransformationService, который невозможно создать: " + claseProveedor + ". "
-	            + "Этот мод необходимо удалить, чтобы игра смогла загрузиться." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "В одном из модов обнаружен неисправный ITransformationService, который невозможно создать: "
+				+ claseProveedor + ". " + "Этот мод необходимо удалить, чтобы игра смогла загрузиться." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorModLauncherTransformationService() {
-	    return "Неисправный ITransformationService";
+		return "Неисправный ITransformationService";
 	}
 
 	@Override
 	public String pasoErrorModLauncherTransformationService(String claseProveedor) {
-	    return "Удалите мод, содержащий класс " + claseProveedor + ", так как он содержит неисправный ITransformationService.";
+		return "Удалите мод, содержащий класс " + claseProveedor
+				+ ", так как он содержит неисправный ITransformationService.";
 	}
-	
+
 	@Override
 	public String errorVersionInvalidaMod(String version) {
-	    return "<span style='color:#" + config.obtenerColorError() + "'>Один из модов содержит недопустимую спецификацию версии. "
-	            + "Версия должна быть заключена в квадратные скобки. "
-	            + "Вы можете использовать утилиту grep/greprf на боковой панели для поиска версии </span>" + version + "<span style='color:#" + config.obtenerColorError() + "'>, чтобы определить, в каком моде проблема.</span>";
+		return "<span style='color:#" + config.obtenerColorError()
+				+ "'>Один из модов содержит недопустимую спецификацию версии. "
+				+ "Версия должна быть заключена в квадратные скобки. "
+				+ "Вы можете использовать утилиту grep/greprf на боковой панели для поиска версии </span>" + version
+				+ "<span style='color:#" + config.obtenerColorError()
+				+ "'>, чтобы определить, в каком моде проблема.</span>";
 	}
 
 	@Override
 	public String nombreDeErrorVersionInvalidaMod() {
-	    return "Недопустимая версия в моде";
+		return "Недопустимая версия в моде";
 	}
 
 	@Override
 	public String pasoErrorVersionInvalidaMod() {
-	    return "Используйте утилиту grep/greprf на боковой панели, чтобы найти проблемную версию и определить, в каком моде она находится.";
+		return "Используйте утилиту grep/greprf на боковой панели, чтобы найти проблемную версию и определить, в каком моде она находится.";
 	}
-	
+
 	@Override
 	public String errorStackSmashingDetected() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Обнаружена ошибка stack smashing, которая завершила процесс. "
-	            + "Это может быть вызвано проблемами с Early Window в Forge/NeoForge/PillowMC или с LWJGL 3.2.2 и новее." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Обнаружена ошибка stack smashing, которая завершила процесс. "
+				+ "Это может быть вызвано проблемами с Early Window в Forge/NeoForge/PillowMC или с LWJGL 3.2.2 и новее."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorStackSmashingDetected() {
-	    return "Обнаружен Stack Smashing";
+		return "Обнаружен Stack Smashing";
 	}
 
 	@Override
 	public String pasoErrorStackSmashingDetected() {
-	    return "Проверьте настройки Early Window и рассмотрите возможность использования другой версии LWJGL или проверки модов, связанных с ранним окном.";
+		return "Проверьте настройки Early Window и рассмотрите возможность использования другой версии LWJGL или проверки модов, связанных с ранним окном.";
 	}
-	
+
 	@Override
 	public String errorVersionClaseGregTechEasyCore() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "GregTechEasyCore предназначен только для определённого модпака и не должен использоваться в обычных установках, так как вызывает проблему." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "GregTechEasyCore предназначен только для определённого модпака и не должен использоваться в обычных установках, так как вызывает проблему."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorVersionClaseGregTechEasyCore() {
-	    return "GregTechEasyCore с несовместимой версией Java";
+		return "GregTechEasyCore с несовместимой версией Java";
 	}
 
 	@Override
 	public String pasoErrorVersionClaseGregTechEasyCore() {
-	    return "Удалите GregTechEasyCore, так как он предназначен только для определённого модпака и несовместим с вашей обычной установкой.";
+		return "Удалите GregTechEasyCore, так как он предназначен только для определённого модпака и несовместим с вашей обычной установкой.";
 	}
-	
+
 	@Override
 	public String errorConflictoMoniLabsConnectorExtras() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Обнаружен конфликт между MoniLabs и Connector Extras, связанный с изменениями в KubeJS. "
-	            + "Эти моды несовместимы в своих модификациях KubeJS." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Обнаружен конфликт между MoniLabs и Connector Extras, связанный с изменениями в KubeJS. "
+				+ "Эти моды несовместимы в своих модификациях KubeJS." + "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoMoniLabsConnectorExtras() {
-	    return "Конфликт MoniLabs и Connector Extras";
+		return "Конфликт MoniLabs и Connector Extras";
 	}
 
 	@Override
 	public String pasoConflictoMoniLabsConnectorExtras() {
-	    return "Попробуйте удалить один из модов (MoniLabs или Connector Extras), так как их изменения в KubeJS конфликтуют.";
+		return "Попробуйте удалить один из модов (MoniLabs или Connector Extras), так как их изменения в KubeJS конфликтуют.";
 	}
-	
+
 	@Override
 	public String errorCompatibilidadIrisDH() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Iris требует Distant Horizons [2.0.4] или DH API версии [1.1.0] или новее. "
-	            + "Ознакомьтесь с руководством по совместимости по адресу https://gist.github.com/Steveplays28/52db568f297ded527da56dbe6deeec0e, чтобы устранить проблему." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Iris требует Distant Horizons [2.0.4] или DH API версии [1.1.0] или новее. "
+				+ "Ознакомьтесь с руководством по совместимости по адресу https://gist.github.com/Steveplays28/52db568f297ded527da56dbe6deeec0e, чтобы устранить проблему."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorCompatibilidadIrisDH() {
-	    return "Совместимость Iris и Distant Horizons";
+		return "Совместимость Iris и Distant Horizons";
 	}
 
 	@Override
 	public String pasoErrorCompatibilidadIrisDH() {
-	    return "Ознакомьтесь с руководством по совместимости по адресу https://gist.github.com/Steveplays28/52db568f297ded527da56dbe6deeec0e и обновите Iris и Distant Horizons до совместимых версий.";
+		return "Ознакомьтесь с руководством по совместимости по адресу https://gist.github.com/Steveplays28/52db568f297ded527da56dbe6deeec0e и обновите Iris и Distant Horizons до совместимых версий.";
 	}
-	
+
 	@Override
 	public String faltar_de_clases_minecraft() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>Отсутствуют классы Minecraft. Возможные причины:</b>"
-	        + "<ul>"
-	        + "<li>У вас установлены моды для других версий игры. Вы можете воспользоваться <a href='https://wagyourtail.xyz/Projects/MinecraftMappingViewer' target='_blank'>MinecraftMappingViewer</a>, чтобы проверить, существует ли класс в вашей версии.</li>"
-	        + "<li>У вас повреждённая установка Minecraft (часто встречается при использовании CurseForge App, ModrinthApp/Theseus/Astralrinth и других лаунчеров модпаков). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Смотрите руководство</a> по устранению проблем с CurseForge.</li>"
-	        + "<li>У вас неисправный coremod (при сбое coremod может блокировать загрузку класса).</li>"
-	        + "</ul>"
-	        + "<p>Примечание: вы можете использовать инструмент <b>grepr/fgrepr</b> на боковой панели, чтобы найти моды, ссылающиеся на отсутствующие классы, при условии, что в именах используется '/'.</p>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>Отсутствуют классы Minecraft. Возможные причины:</b>" + "<ul>"
+				+ "<li>У вас установлены моды для других версий игры. Вы можете воспользоваться <a href='https://wagyourtail.xyz/Projects/MinecraftMappingViewer' target='_blank'>MinecraftMappingViewer</a>, чтобы проверить, существует ли класс в вашей версии.</li>"
+				+ "<li>У вас повреждённая установка Minecraft (часто встречается при использовании CurseForge App, ModrinthApp/Theseus/Astralrinth и других лаунчеров модпаков). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Смотрите руководство</a> по устранению проблем с CurseForge.</li>"
+				+ "<li>У вас неисправный coremod (при сбое coremod может блокировать загрузку класса).</li>" + "</ul>"
+				+ "<p>Примечание: вы можете использовать инструмент <b>grepr/fgrepr</b> на боковой панели, чтобы найти моды, ссылающиеся на отсутствующие классы, при условии, что в именах используется '/'.</p>";
 	}
 
 	@Override
 	public String faltar_de_clases_dangerzone() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>Отсутствуют классы DangerZone. Возможные причины:</b>"
-	        + "<ul>"
-	        + "<li>У вас установлены моды для других версий игры.</li>"
-	        + "<li>У вас неисправные coremod'ы.</li>"
-	        + "<li>У вас повреждён лаунчер или установка.</li>"
-	        + "</ul>"
-	        + "<p>Примечание: вы можете использовать инструмент <b>grepr/fgrepr</b> на боковой панели, чтобы найти моды, ссылающиеся на отсутствующие классы, при условии, что в именах используется '/'.</p>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>Отсутствуют классы DangerZone. Возможные причины:</b>" + "<ul>"
+				+ "<li>У вас установлены моды для других версий игры.</li>" + "<li>У вас неисправные coremod'ы.</li>"
+				+ "<li>У вас повреждён лаунчер или установка.</li>" + "</ul>"
+				+ "<p>Примечание: вы можете использовать инструмент <b>grepr/fgrepr</b> на боковой панели, чтобы найти моды, ссылающиеся на отсутствующие классы, при условии, что в именах используется '/'.</p>";
 	}
-	
+
 	@Override
 	public String faltar_de_clases_featurecreep() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>Отсутствуют классы FeatureCreep. Возможные причины:</b>"
-	        + "<ul>"
-	        + "<li>У вас установлены моды для других версий FeatureCreep (например: ESR против Nightly или v4 против v12).</li>"
-	        + "<li>Вы можете установить FeatureCreep с CurseForge или MinecraftStorage.</li>"
-	        + "</ul>"
-	        + "<p>Примечание: вы можете использовать инструмент <b>grepr/fgrepr</b> на боковой панели, чтобы найти моды, ссылающиеся на отсутствующие классы, при условии, что в именах используется '/'.</p>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>Отсутствуют классы FeatureCreep. Возможные причины:</b>" + "<ul>"
+				+ "<li>У вас установлены моды для других версий FeatureCreep (например: ESR против Nightly или v4 против v12).</li>"
+				+ "<li>Вы можете установить FeatureCreep с CurseForge или MinecraftStorage.</li>" + "</ul>"
+				+ "<p>Примечание: вы можете использовать инструмент <b>grepr/fgrepr</b> на боковой панели, чтобы найти моды, ссылающиеся на отсутствующие классы, при условии, что в именах используется '/'.</p>";
 	}
 
 	@Override
 	public String faltar_de_clases_modlauncher() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>Отсутствуют классы ModLauncher. Возможные причины:</b>"
-	        + "<ul>"
-	        + "<li>Ваши моды предназначены для другой сборки MinecraftForge, PillowMC или NeoForge (ModLauncher используется с этими загрузчиками).</li>"
-	        + "<li>Для одной версии Minecraft существует множество обновлений modloader'ов.</li>"
-	        + "<li>У вас повреждённая установка лаунчера (часто встречается при использовании CurseForge App, ModrinthApp/Theseus/Astralrinth и других лаунчеров модпаков). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Смотрите руководство</a> по устранению проблем с CurseForge.</li>"
-	        + "</ul>"
-	        + "<p>Примечание: вы можете использовать инструмент <b>grepr/fgrepr</b> на боковой панели, чтобы найти моды, ссылающиеся на отсутствующие классы, при условии, что в именах используется '/'.</p>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>Отсутствуют классы ModLauncher. Возможные причины:</b>" + "<ul>"
+				+ "<li>Ваши моды предназначены для другой сборки MinecraftForge, PillowMC или NeoForge (ModLauncher используется с этими загрузчиками).</li>"
+				+ "<li>Для одной версии Minecraft существует множество обновлений modloader'ов.</li>"
+				+ "<li>У вас повреждённая установка лаунчера (часто встречается при использовании CurseForge App, ModrinthApp/Theseus/Astralrinth и других лаунчеров модпаков). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Смотрите руководство</a> по устранению проблем с CurseForge.</li>"
+				+ "</ul>"
+				+ "<p>Примечание: вы можете использовать инструмент <b>grepr/fgrepr</b> на боковой панели, чтобы найти моды, ссылающиеся на отсутствующие классы, при условии, что в именах используется '/'.</p>";
 	}
-	
+
 	@Override
 	public String faltar_de_clases_minecraftforge() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>Отсутствуют классы Minecraft Forge. Возможные причины:</b>"
-	        + "<ul>"
-	        + "<li>Ваши моды предназначены для другой сборки MinecraftForge.</li>"
-	        + "<li>Для одной версии Minecraft существует множество обновлений modloader'ов.</li>"
-	        + "<li>У вас повреждённая установка (часто встречается при использовании CurseForge App, ModrinthApp/Theseus/Astralrinth и других лаунчеров модпаков). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Смотрите руководство</a> по устранению проблем с CurseForge.</li>"
-	        + "</ul>"
-	        + "<p>Примечание: вы можете использовать инструмент <b>grepr/fgrepr</b> на боковой панели, чтобы найти моды, ссылающиеся на отсутствующие классы, при условии, что в именах используется '/'.</p>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>Отсутствуют классы Minecraft Forge. Возможные причины:</b>" + "<ul>"
+				+ "<li>Ваши моды предназначены для другой сборки MinecraftForge.</li>"
+				+ "<li>Для одной версии Minecraft существует множество обновлений modloader'ов.</li>"
+				+ "<li>У вас повреждённая установка (часто встречается при использовании CurseForge App, ModrinthApp/Theseus/Astralrinth и других лаунчеров модпаков). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Смотрите руководство</a> по устранению проблем с CurseForge.</li>"
+				+ "</ul>"
+				+ "<p>Примечание: вы можете использовать инструмент <b>grepr/fgrepr</b> на боковой панели, чтобы найти моды, ссылающиеся на отсутствующие классы, при условии, что в именах используется '/'.</p>";
 	}
 
 	@Override
 	public String faltar_de_clases_neoforged() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>Отсутствуют классы NeoForge. Возможные причины:</b>"
-	        + "<ul>"
-	        + "<li>Ваши моды предназначены для другой сборки NeoForge.</li>"
-	        + "<li>Для одной версии Minecraft существует множество обновлений modloader'ов.</li>"
-	        + "<li>У вас повреждённая установка (часто встречается при использовании CurseForge App, ModrinthApp/Theseus/Astralrinth и других лаунчеров модпаков). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Смотрите руководство</a> по устранению проблем с CurseForge.</li>"
-	        + "</ul>"
-	        + "<p>Примечание: вы можете использовать инструмент <b>grepr/fgrepr</b> на боковой панели, чтобы найти моды, ссылающиеся на отсутствующие классы, при условии, что в именах используется '/'.</p>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>Отсутствуют классы NeoForge. Возможные причины:</b>" + "<ul>"
+				+ "<li>Ваши моды предназначены для другой сборки NeoForge.</li>"
+				+ "<li>Для одной версии Minecraft существует множество обновлений modloader'ов.</li>"
+				+ "<li>У вас повреждённая установка (часто встречается при использовании CurseForge App, ModrinthApp/Theseus/Astralrinth и других лаунчеров модпаков). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Смотрите руководство</a> по устранению проблем с CurseForge.</li>"
+				+ "</ul>"
+				+ "<p>Примечание: вы можете использовать инструмент <b>grepr/fgrepr</b> на боковой панели, чтобы найти моды, ссылающиеся на отсутствующие классы, при условии, что в именах используется '/'.</p>";
 	}
-	
+
 	@Override
 	public String faltar_de_clases_fabricloader() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>Отсутствуют классы Fabric Loader. Возможные причины:</b>"
-	        + "<ul>"
-	        + "<li>Ваши моды предназначены для другой сборки Fabric Loader.</li>"
-	        + "<li>Для одной версии Minecraft существует множество обновлений modloader'ов.</li>"
-	        + "<li>У вас повреждённая установка (часто встречается при использовании CurseForge App, ModrinthApp/Theseus/Astralrinth и других лаунчеров модпаков). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Смотрите руководство</a> по устранению проблем с CurseForge.</li>"
-	        + "<li>Многим модам требуется Fabric API. Установите Fabric API, если это необходимо.</li>"
-	        + "</ul>"
-	        + "<p>Примечание: вы можете использовать инструмент <b>grepr/fgrepr</b> на боковой панели, чтобы найти моды, ссылающиеся на отсутствующие классы, при условии, что в именах используется '/'.</p>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>Отсутствуют классы Fabric Loader. Возможные причины:</b>" + "<ul>"
+				+ "<li>Ваши моды предназначены для другой сборки Fabric Loader.</li>"
+				+ "<li>Для одной версии Minecraft существует множество обновлений modloader'ов.</li>"
+				+ "<li>У вас повреждённая установка (часто встречается при использовании CurseForge App, ModrinthApp/Theseus/Astralrinth и других лаунчеров модпаков). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Смотрите руководство</a> по устранению проблем с CurseForge.</li>"
+				+ "<li>Многим модам требуется Fabric API. Установите Fabric API, если это необходимо.</li>" + "</ul>"
+				+ "<p>Примечание: вы можете использовать инструмент <b>grepr/fgrepr</b> на боковой панели, чтобы найти моды, ссылающиеся на отсутствующие классы, при условии, что в именах используется '/'.</p>";
 	}
 
 	@Override
 	public String faltar_de_clases_pillowmc() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>Отсутствуют классы PillowMC. Возможные причины:</b>"
-	        + "<ul>"
-	        + "<li>Ваши моды предназначены для другой сборки PillowMC.</li>"
-	        + "<li>Для одной версии Minecraft существует множество обновлений modloader'ов.</li>"
-	        + "<li>У вас повреждённая установка (часто встречается при использовании CurseForge App, ModrinthApp/Theseus/Astralrinth и других лаунчеров модпаков). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Смотрите руководство</a> по устранению проблем с CurseForge.</li>"
-	        + "</ul>"
-	        + "<p>Примечание: вы можете использовать инструмент <b>grepr/fgrepr</b> на боковой панели, чтобы найти моды, ссылающиеся на отсутствующие классы, при условии, что в именах используется '/'.</p>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>Отсутствуют классы PillowMC. Возможные причины:</b>" + "<ul>"
+				+ "<li>Ваши моды предназначены для другой сборки PillowMC.</li>"
+				+ "<li>Для одной версии Minecraft существует множество обновлений modloader'ов.</li>"
+				+ "<li>У вас повреждённая установка (часто встречается при использовании CurseForge App, ModrinthApp/Theseus/Astralrinth и других лаунчеров модпаков). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Смотрите руководство</a> по устранению проблем с CurseForge.</li>"
+				+ "</ul>"
+				+ "<p>Примечание: вы можете использовать инструмент <b>grepr/fgrepr</b> на боковой панели, чтобы найти моды, ссылающиеся на отсутствующие классы, при условии, что в именах используется '/'.</p>";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

@@ -7,113 +7,112 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 
 /**
- * Detecta el uso de Controllable en un servidor dedicado, lo cual provoca un error
- * porque Controllable intenta cargar clases del cliente en un entorno de servidor.
+ * Detecta el uso de Controllable en un servidor dedicado, lo cual provoca un
+ * error porque Controllable intenta cargar clases del cliente en un entorno de
+ * servidor.
  */
 public class ErrorControllableServidor implements Verificaciones {
 
-    private boolean activado = false;
-    private String mensaje = "";
-    private String enlaceHtml = "";
-    private boolean encontradoControllable = false;
+	private boolean activado = false;
+	private String mensaje = "";
+	private String enlaceHtml = "";
+	private boolean encontradoControllable = false;
 
-    /**
-     * Método de compatibilidad — busca si Controllable está presente en el contenido completo del registro.
-     */
-    @Override
-    public void verificar(Consola consola) {
-        // Verificamos si Controllable está presente en el contenido del registro
-        if (consola.contenido_verificar != null) {
-            encontradoControllable = consola.contenido_verificar.toLowerCase().contains("com.mrcrayfish.controllable");
-        }
-    }
+	/**
+	 * Método de compatibilidad — busca si Controllable está presente en el
+	 * contenido completo del registro.
+	 */
+	@Override
+	public void verificar(Consola consola) {
+		// Verificamos si Controllable está presente en el contenido del registro
+		if (consola.contenido_verificar != null) {
+			encontradoControllable = consola.contenido_verificar.toLowerCase().contains("com.mrcrayfish.controllable");
+		}
+	}
 
-    /**
-     * Análisis por línea del registro.
-     * <p>
-     * Se busca el patrón característico del error donde Controllable falla al crear
-     * su instancia en un servidor dedicado porque intenta cargar clases del cliente.
-     * </p>
-     */
-    @Override
-    public void verificar(Consola consola, String linea, int numero_de_linea) {
-        if (activado) {
-            // Si ya se activó, no seguimos verificando más líneas.
-            return;
-        }
+	/**
+	 * Análisis por línea del registro.
+	 * <p>
+	 * Se busca el patrón característico del error donde Controllable falla al crear
+	 * su instancia en un servidor dedicado porque intenta cargar clases del
+	 * cliente.
+	 * </p>
+	 */
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		if (activado) {
+			// Si ya se activó, no seguimos verificando más líneas.
+			return;
+		}
 
-        // Buscamos la línea que contiene el error de carga de clase para servidor dedicado de Controllable
-        if (linea.contains("java.lang.BootstrapMethodError")
-                && linea.contains("Attempted to load class")
-                && linea.contains("net/minecraft/client/gui/screens/Screen")
-                && linea.contains("for invalid dist DEDICATED_SERVER")
-                && encontradoControllable) {
-            
-            // Enlazar a la línea del error en el lector
-            enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+		// Buscamos la línea que contiene el error de carga de clase para servidor
+		// dedicado de Controllable
+		if (linea.contains("java.lang.BootstrapMethodError") && linea.contains("Attempted to load class")
+				&& linea.contains("net/minecraft/client/gui/screens/Screen")
+				&& linea.contains("for invalid dist DEDICATED_SERVER") && encontradoControllable) {
 
-            // Mensaje de error en HTML con referencia al uso incorrecto de Controllable
-            mensaje = MonitorDePID.idioma.errorControllableServidor() + Verificaciones.nl_html;
-            activado = true;
-        }
-    }
+			// Enlazar a la línea del error en el lector
+			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
-    @Override
-    public Verificaciones nueva() {
-        return new ErrorControllableServidor();
-    }
+			// Mensaje de error en HTML con referencia al uso incorrecto de Controllable
+			mensaje = MonitorDePID.idioma.errorControllableServidor() + Verificaciones.nl_html;
+			activado = true;
+		}
+	}
 
-    @Override
-    public boolean activado() {
-        return activado;
-    }
+	@Override
+	public Verificaciones nueva() {
+		return new ErrorControllableServidor();
+	}
 
-    @Override
-    public float prioridad() {
-        return 1300.0f; // Alta prioridad: rompe la carga del mod
-    }
+	@Override
+	public boolean activado() {
+		return activado;
+	}
 
-    @Override
-    public String mensaje() {
-        return activado ? (mensaje + enlaceHtml) : "";
-    }
+	@Override
+	public float prioridad() {
+		return 1300.0f; // Alta prioridad: rompe la carga del mod
+	}
 
-    @Override
-    public String nombre() {
-        return MonitorDePID.idioma.nombreDeErrorControllableServidor();
-    }
+	@Override
+	public String mensaje() {
+		return activado ? (mensaje + enlaceHtml) : "";
+	}
 
-    @Override
-    public QuickFix solucion() {
-        return new QuickFix.Builder(nombre())
-                .agregarEtiqueta(MonitorDePID.idioma.pasoErrorControllableServidor())
-                .construir();
-    }
+	@Override
+	public String nombre() {
+		return MonitorDePID.idioma.nombreDeErrorControllableServidor();
+	}
 
-    @Override
-    public String id() {
-        return "error_controllable_servidor";
-    }
+	@Override
+	public QuickFix solucion() {
+		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.pasoErrorControllableServidor())
+				.construir();
+	}
 
-    /**
-     * Asocia esta verificación con un trazo específico del stack.
-     * <p>
-     * Devuelve true si el trazo contiene las cadenas clave del error de
-     * compatibilidad entre Controllable y servidor dedicado.
-     * </p>
-     */
-    @Override
-    public boolean ocupaTrazo(TraceInfo trazo) {
-        if (!activado || trazo == null || trazo.trace == null) {
-            return false;
-        }
+	@Override
+	public String id() {
+		return "error_controllable_servidor";
+	}
 
-        String t = trazo.trace;
+	/**
+	 * Asocia esta verificación con un trazo específico del stack.
+	 * <p>
+	 * Devuelve true si el trazo contiene las cadenas clave del error de
+	 * compatibilidad entre Controllable y servidor dedicado.
+	 * </p>
+	 */
+	@Override
+	public boolean ocupaTrazo(TraceInfo trazo) {
+		if (!activado || trazo == null || trazo.trace == null) {
+			return false;
+		}
 
-        return t.contains("java.lang.BootstrapMethodError")
-                && t.contains("Attempted to load class")
-                && t.contains("net/minecraft/client/gui/screens/Screen")
-                && t.contains("for invalid dist DEDICATED_SERVER")
-                && t.contains("com.mrcrayfish.controllable");
-    }
+		String t = trazo.trace;
+
+		return t.contains("java.lang.BootstrapMethodError") && t.contains("Attempted to load class")
+				&& t.contains("net/minecraft/client/gui/screens/Screen")
+				&& t.contains("for invalid dist DEDICATED_SERVER") && t.contains("com.mrcrayfish.controllable");
+	}
 }

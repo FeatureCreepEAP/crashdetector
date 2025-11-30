@@ -66,13 +66,11 @@ public class VerificacionDeStackTrace {
 																				// fatal)
 	public TriMap<String, Integer, Integer, String> clases_fatales_no_existentes = new TriMap<>();// (clase,
 																									// nivel_prioridad,
-	
-																									// línea_consola,
-																									// sospechoso)
+
+	// línea_consola,
+	// sospechoso)
 	public Map<Integer, TraceInfo> nivel_trazo = new HashMap<>();
-	
-	
-	
+
 	// Estos solo contienen el contenido pero no el nivel
 	public List<String> jar_malo = new ArrayList<String>();
 	public List<String> modid_malo = new ArrayList<String>();
@@ -998,15 +996,15 @@ public class VerificacionDeStackTrace {
 		if (jarName.startsWith("forge-")) {
 			return true;
 		}
-		
+
 		if (jarName.startsWith("ForgeWrapper")) {
 			return true;
 		}
-		
+
 		if (jarName.startsWith("NewLaunch")) {
 			return true;
 		}
-		
+
 		if (jarName.contains("fmlcore")) {
 			return true;
 		}

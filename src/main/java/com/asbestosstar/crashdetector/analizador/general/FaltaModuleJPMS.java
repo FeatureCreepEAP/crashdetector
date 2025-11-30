@@ -53,7 +53,8 @@ public class FaltaModuleJPMS implements Verificaciones {
 				String modNecesitado = linea.split("Module ")[1].split(" not found")[0].trim();
 				String modRequeridor = linea.split("required by ")[1].trim();
 
-				String mensaje = MonitorDePID.idioma.jpms_modules_faltas(modNecesitado, modRequeridor + ModulesDuplicadosJavaModulePlatform.procesarModulo(modRequeridor.trim()));
+				String mensaje = MonitorDePID.idioma.jpms_modules_faltas(modNecesitado,
+						modRequeridor + ModulesDuplicadosJavaModulePlatform.procesarModulo(modRequeridor.trim()));
 
 				// Solo agregar si es un error nuevo
 				if (errores.add(mensaje)) {

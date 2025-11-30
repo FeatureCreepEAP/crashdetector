@@ -258,8 +258,8 @@ public class Ingles implements Idioma {
 
 	@Override
 	public String theseus() {
-	    return "<b style='color:#" + config.obtenerColorAdvertencia()
-	           + "'>Theseus has additional issues, including failing to remove mods when you try. If you need to play with mrpack files, you can use alternative launchers such as Prism Launcher (for modrinth.com only), ATLauncher (for modrinth.com only), or Hello Minecraft Launcher (supports modrinth.com and bbsmc.net).</b>";
+		return "<b style='color:#" + config.obtenerColorAdvertencia()
+				+ "'>Theseus has additional issues, including failing to remove mods when you try. If you need to play with mrpack files, you can use alternative launchers such as Prism Launcher (for modrinth.com only), ATLauncher (for modrinth.com only), or Hello Minecraft Launcher (supports modrinth.com and bbsmc.net).</b>";
 	}
 
 	@Override
@@ -487,13 +487,13 @@ public class Ingles implements Idioma {
 				+ "' or higher, but only version '" + encontrado + "' was found.</b>";
 	}
 
-@Override
-public String advertenciaMalwareFalso() {
-    return "<b style='color:#" + config.obtenerColorError() + "'>"
-         + "ALERT! Crash Assistant is a fake malware detector. It intentionally blocks the game from launching disregarding your freedom to keep playing with the mods it targets. "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>View MalwareMod.java code  </a>   "
-         + "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>View JarInJarHelper.java code  </a>. Only this mod is on their list at this time and they are only really going after the default logging site which can be changed by the user and that only ever does anything if you explicitly choose to use the built in log sharing feature. CrashAssistant does NOT do any checks to even check which logging site is the one being set and do not explain how to change it (there is a dropdown on the bottom of the share dialogue) and no matter what site you have CrashAssistant will block the game from launching. In their message they say to do your own research, DO IT, look into the code of CrashDetector and Crash Assistant and understand what they do, do NOT rely on appeal to authority.</b>";
-}
+	@Override
+	public String advertenciaMalwareFalso() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "ALERT! Crash Assistant is a fake malware detector. It intentionally blocks the game from launching disregarding your freedom to keep playing with the mods it targets. "
+				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/8decd964e629100f36fc72ca2eb3c1226652f223/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/mod_list/MalwareMod.java#L7'>View MalwareMod.java code  </a>   "
+				+ "<a href='https://github.com/KostromDan/Crash-Assistant/blob/0787924a97a29fec8a83969fae3e87e30d816f22/common_config/src/main/java/dev/kostromdan/mods/crash_assistant/common_config/loading_utils/JarInJarHelper.java#L185'>View JarInJarHelper.java code  </a>. Only this mod is on their list at this time and they are only really going after the default logging site which can be changed by the user and that only ever does anything if you explicitly choose to use the built in log sharing feature. CrashAssistant does NOT do any checks to even check which logging site is the one being set and do not explain how to change it (there is a dropdown on the bottom of the share dialogue) and no matter what site you have CrashAssistant will block the game from launching. In their message they say to do your own research, DO IT, look into the code of CrashDetector and Crash Assistant and understand what they do, do NOT rely on appeal to authority.</b>";
+	}
 
 	@Override
 	public String error_clase_no_encontrada_mcforge_mod_suspechoso(String idMod, String claseNoEncontrada) {
@@ -3230,20 +3230,21 @@ public String advertenciaMalwareFalso() {
 
 	@Override
 	public String errorFuncionesDeDensidadNoVinculadas(java.util.List<String> claves) {
-	    StringBuilder sb = new StringBuilder("<b>Density functions are missing from the registry.</b> ");
-	    if (claves != null && !claves.isEmpty()) {
-	        sb.append("Missing: ");
-	        for (int i = 0; i < Math.min(4, claves.size()); i++) {
-	            if (i > 0)
-	                sb.append(", ");
-	            sb.append("<code>").append(claves.get(i)).append("</code>");
-	        }
-	        if (claves.size() > 4)
-	            sb.append(", …");
-	        sb.append(". ");
-	    }
-	    sb.append("<br/><b>Solution:</b> install or enable the mod/datapack that defines those functions and restart. Another common cause of this issue is when you have the required mod, but it has a problem or conflict with another mod; for example, Terralith has many issues and can trigger this error and others, including JSON errors.");
-	    return sb.toString();
+		StringBuilder sb = new StringBuilder("<b>Density functions are missing from the registry.</b> ");
+		if (claves != null && !claves.isEmpty()) {
+			sb.append("Missing: ");
+			for (int i = 0; i < Math.min(4, claves.size()); i++) {
+				if (i > 0)
+					sb.append(", ");
+				sb.append("<code>").append(claves.get(i)).append("</code>");
+			}
+			if (claves.size() > 4)
+				sb.append(", …");
+			sb.append(". ");
+		}
+		sb.append(
+				"<br/><b>Solution:</b> install or enable the mod/datapack that defines those functions and restart. Another common cause of this issue is when you have the required mod, but it has a problem or conflict with another mod; for example, Terralith has many issues and can trigger this error and others, including JSON errors.");
+		return sb.toString();
 	}
 
 	@Override
@@ -3631,8 +3632,8 @@ public String advertenciaMalwareFalso() {
 
 	@Override
 	public String mensajeAyudar() {
-		String iconoCompartir = Statics.carpeta.resolve("imagenes").resolve("boton_compartir_icon.png")
-				.toAbsolutePath().toUri().toString();
+		String iconoCompartir = Statics.carpeta.resolve("imagenes").resolve("boton_compartir_icon.png").toAbsolutePath()
+				.toUri().toString();
 		String colorTexto = Config.obtenerInstancia().obtenerColorInfo();
 
 		return "" + "<div style='color:" + colorTexto + ";'>" + "  <strong>Need help?</strong><br>"
@@ -3810,8 +3811,8 @@ public String advertenciaMalwareFalso() {
 
 	@Override
 	public String problema_con_openAL() {
-	    return "<span style='color:#" + config.obtenerColorError()
-	           + "'>You have an issue with OpenAL. Sometimes Nouveau drivers can cause this, but sometimes the application's bundled OpenAL version is incompatible with the one in your distribution and you need to use your distro's version. This is especially common with Red Hat-based distributions and sound mods like Sound Physics Remastered. See this guide for more help: <a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>How to fix Minecraft sound problems using Linux</a>.</span>";
+		return "<span style='color:#" + config.obtenerColorError()
+				+ "'>You have an issue with OpenAL. Sometimes Nouveau drivers can cause this, but sometimes the application's bundled OpenAL version is incompatible with the one in your distribution and you need to use your distro's version. This is especially common with Red Hat-based distributions and sound mods like Sound Physics Remastered. See this guide for more help: <a href='https://www.reddit.com/r/linux_gaming/comments/15zrzcw/how_to_fix_minecraft_sound_problems_using/' target='_blank'>How to fix Minecraft sound problems using Linux</a>.</span>";
 	}
 
 	@Override
@@ -4143,648 +4144,649 @@ public String advertenciaMalwareFalso() {
 
 	@Override
 	public String nombre_de_mods_incompatibles_crash_assistant() {
-	    return "Mods Incompatible with Crash Assistant (False)";
+		return "Mods Incompatible with Crash Assistant (False)";
 	}
 
 	@Override
 	public String nombre_de_modpack_incompatible_crash_assistant() {
-	    return "Mod Incompatible with Modpack using CrashAssistant";
+		return "Mod Incompatible with Modpack using CrashAssistant";
 	}
 
 	@Override
 	public String advertenciaCrashAssistantModpackIncompatibleFalso() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>Crash Assistant has a list of mods it says are incompatible, but we have no evidence they are and the error is only in English. If you want to play with these mods, you can edit the file <code>config/crash_assistant/config.toml</code> and change <code>enabled = true</code> in the [compatibility] section to <code>enabled = false</code>.</b>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>Crash Assistant has a list of mods it says are incompatible, but we have no evidence they are and the error is only in English. If you want to play with these mods, you can edit the file <code>config/crash_assistant/config.toml</code> and change <code>enabled = true</code> in the [compatibility] section to <code>enabled = false</code>.</b>";
 	}
 
 	@Override
 	public String advertenciaCrashAssistantModsIncompatibles() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>Crash Assistant has the ability to mark mods as incompatible, but sometimes this is incorrect and the error message is only in one language. If you want to use these mods, you can edit the file <code>config/crash_assistant/problematic_mods_config.json</code> and change <code>should_crash_on_startup</code> from <code>true</code> to <code>false</code>.</b>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>Crash Assistant has the ability to mark mods as incompatible, but sometimes this is incorrect and the error message is only in one language. If you want to use these mods, you can edit the file <code>config/crash_assistant/problematic_mods_config.json</code> and change <code>should_crash_on_startup</code> from <code>true</code> to <code>false</code>.</b>";
 	}
-	
+
 	@Override
 	public String errorDependenciaSimple(String modId, String dependencia, String actual) {
-	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
-	           "Error: The mod '" + modId + "' requires the mod '" + dependencia + "'. Currently, " + actual + "." +
-	           "</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>" + "Error: The mod '" + modId
+				+ "' requires the mod '" + dependencia + "'. Currently, " + actual + "." + "</span>";
 	}
 
 	@Override
 	public String errorDependenciaNoInstalada(String modId, String dependencia, String requerido) {
-	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
-	           "Error: The mod '" + modId + "' requires version '" + requerido + "' or higher of '" + dependencia + "', but the mod is not installed." +
-	           "</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>" + "Error: The mod '" + modId
+				+ "' requires version '" + requerido + "' or higher of '" + dependencia
+				+ "', but the mod is not installed." + "</span>";
 	}
-	
+
 	// In the class MonitorDePID.idioma (add this method)
 	public String errorSuperbWarfareIncompatible(String modId, String dependencia, String versionActual) {
-	    return "<span style='color:#" + config.obtenerColorError() + "'>" +
-	           "Error: The mod '" + modId + "' is incompatible with the current version of '" + dependencia + "'. " +
-	           "You must remove the mod 'Iris/Oculus & GeckoLib Compat' as it is incompatible with Superb Warfare and does not work with the latest version of GeckoLib. " +
-	           "Current version: " + versionActual +
-	           "</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>" + "Error: The mod '" + modId
+				+ "' is incompatible with the current version of '" + dependencia + "'. "
+				+ "You must remove the mod 'Iris/Oculus & GeckoLib Compat' as it is incompatible with Superb Warfare and does not work with the latest version of GeckoLib. "
+				+ "Current version: " + versionActual + "</span>";
 	}
-	
+
 	public String fallo_ejecucion_tarea_descripcion(String clase) {
-	    return "Error: Failed to execute task for class '" + clase + "'. " +
-	           "This error is common with mods that are not compatible with each other or have conflicts with other installed mods.";
+		return "Error: Failed to execute task for class '" + clase + "'. "
+				+ "This error is common with mods that are not compatible with each other or have conflicts with other installed mods.";
 	}
 
 	public String nombre_fallos_ejecucion_tareas() {
-	    return "Task Execution Failures";
+		return "Task Execution Failures";
 	}
 
 	public String recomendacion_fallos_ejecucion() {
-	    return "This type of error usually occurs due to incompatibilities between mods. " +
-	           "Especially common with mods that don't work correctly with ConnectorMod.";
+		return "This type of error usually occurs due to incompatibilities between mods. "
+				+ "Especially common with mods that don't work correctly with ConnectorMod.";
 	}
 
 	public String info_clase_problematica() {
-	    return "Problematic Class:";
+		return "Problematic Class:";
 	}
-
 
 	public String no_se_encontraron_clases_problema() {
-	    return "No specific classes with execution problems were found.";
+		return "No specific classes with execution problems were found.";
 	}
-	
+
 	@Override
 	public String errorConflictoOptiFineEMF() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	           + "A critical conflict between OptiFine and Entity Model Features (EMF) has been detected. "
-	           + "These mods are incompatible and cause an injection failure that prevents the game from starting." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "A critical conflict between OptiFine and Entity Model Features (EMF) has been detected. "
+				+ "These mods are incompatible and cause an injection failure that prevents the game from starting."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoOptiFineEMF() {
-	    return "Conflict between OptiFine and Entity Model Features";
+		return "Conflict between OptiFine and Entity Model Features";
 	}
 
 	@Override
 	public String pasoConflictoOptiFineEMF() {
-	    return "Uninstall either OptiFine or Entity Model Features, as they are not compatible with each other.";
+		return "Uninstall either OptiFine or Entity Model Features, as they are not compatible with each other.";
 	}
-	
+
 	@Override
 	public String errorConflictoOptiFineFusion() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	           + "A critical conflict between OptiFine and Fusion has been detected. "
-	           + "These mods are incompatible and cause an injection failure that prevents the game from starting." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "A critical conflict between OptiFine and Fusion has been detected. "
+				+ "These mods are incompatible and cause an injection failure that prevents the game from starting."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoOptiFineFusion() {
-	    return "Conflict between OptiFine and Fusion";
+		return "Conflict between OptiFine and Fusion";
 	}
 
 	@Override
 	public String pasoConflictoOptiFineFusion() {
-	    return "Uninstall either OptiFine or Fusion, as they are not compatible with each other.";
+		return "Uninstall either OptiFine or Fusion, as they are not compatible with each other.";
 	}
-	
+
 	@Override
 	public String errorConflictoFlywheelSodium() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Flywheel (required by Create) needs Sodium 0.6.0-beta.2 or higher. Rubidium is 0.5.3. "
-	            + "Consider using <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a> as an alternative." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Flywheel (required by Create) needs Sodium 0.6.0-beta.2 or higher. Rubidium is 0.5.3. "
+				+ "Consider using <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a> as an alternative."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoFlywheelSodium() {
-	    return "Flywheel and Sodium version conflict";
+		return "Flywheel and Sodium version conflict";
 	}
 
 	@Override
 	public String pasoConflictoFlywheelSodium() {
-	    return "Update Sodium to 0.6.0-beta.2 or higher, or install <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a> as a compatible alternative.";
+		return "Update Sodium to 0.6.0-beta.2 or higher, or install <a href='https://www.curseforge.com/minecraft/mc-mods/embeddium'>Embeddium</a> as a compatible alternative.";
 	}
-	
+
 	@Override
 	public String errorConflictoOptiFineEpicFight() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "A critical conflict between OptiFine and Epic Fight has been detected. "
-	            + "These mods are incompatible and cause an injection failure that prevents the game from starting." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "A critical conflict between OptiFine and Epic Fight has been detected. "
+				+ "These mods are incompatible and cause an injection failure that prevents the game from starting."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoOptiFineEpicFight() {
-	    return "Conflict between OptiFine and Epic Fight";
+		return "Conflict between OptiFine and Epic Fight";
 	}
 
 	@Override
 	public String pasoConflictoOptiFineEpicFight() {
-	    return "Uninstall either OptiFine or Epic Fight, as they are not compatible with each other.";
+		return "Uninstall either OptiFine or Epic Fight, as they are not compatible with each other.";
 	}
-	
+
 	@Override
 	public String errorConflictoOptiFineRubidium() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "A critical conflict has been detected between OptiFine and Rubidium. "
-	            + "These mods are incompatible and cause an injection failure that prevents the game from launching." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "A critical conflict has been detected between OptiFine and Rubidium. "
+				+ "These mods are incompatible and cause an injection failure that prevents the game from launching."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoOptiFineRubidium() {
-	    return "OptiFine and Rubidium Conflict";
+		return "OptiFine and Rubidium Conflict";
 	}
 
 	@Override
 	public String pasoConflictoOptiFineRubidium() {
-	    return "Uninstall OptiFine or Rubidium, as they are incompatible with each other.";
+		return "Uninstall OptiFine or Rubidium, as they are incompatible with each other.";
 	}
-	
+
 	@Override
 	public String errorFreeCamServidor() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "FreeCam is attempting to load on a dedicated server, but it is only compatible with the client. "
-	            + "Remove FreeCam from the server or ensure it is installed only on the client." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "FreeCam is attempting to load on a dedicated server, but it is only compatible with the client. "
+				+ "Remove FreeCam from the server or ensure it is installed only on the client." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorFreeCamServidor() {
-	    return "FreeCam on dedicated server";
+		return "FreeCam on dedicated server";
 	}
 
 	@Override
 	public String pasoErrorFreeCamServidor() {
-	    return "Remove FreeCam from the dedicated server, as it should only be installed on the client.";
+		return "Remove FreeCam from the dedicated server, as it should only be installed on the client.";
 	}
-	
+
 	@Override
 	public String errorEntityTextureFeaturesServidor() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Entity Texture Features (ETF) is attempting to load on a dedicated server, but it is only compatible with the client. "
-	            + "Remove ETF from the server or ensure it is installed only on the client." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Entity Texture Features (ETF) is attempting to load on a dedicated server, but it is only compatible with the client. "
+				+ "Remove ETF from the server or ensure it is installed only on the client." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorEntityTextureFeaturesServidor() {
-	    return "Entity Texture Features on dedicated server";
+		return "Entity Texture Features on dedicated server";
 	}
 
 	@Override
 	public String pasoErrorEntityTextureFeaturesServidor() {
-	    return "Remove Entity Texture Features from the dedicated server, as it should only be installed on the client.";
+		return "Remove Entity Texture Features from the dedicated server, as it should only be installed on the client.";
 	}
-	
+
 	@Override
 	public String errorEULANoAceptado() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "You must accept the Minecraft EULA to run the server. "
-	            + "Edit the eula.txt file and change 'eula=false' to 'eula=true'." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "You must accept the Minecraft EULA to run the server. "
+				+ "Edit the eula.txt file and change 'eula=false' to 'eula=true'." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorEULANoAceptado() {
-	    return "Minecraft EULA not accepted";
+		return "Minecraft EULA not accepted";
 	}
 
 	@Override
 	public String pasoErrorEULANoAceptado() {
-	    return "Edit the eula.txt file in the server folder and change 'eula=false' to 'eula=true'.";
+		return "Edit the eula.txt file in the server folder and change 'eula=false' to 'eula=true'.";
 	}
-	
+
 	@Override
 	public String errorOptiFineServidor() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "OptiFine is attempting to load on a dedicated server, but it is only compatible with the client. "
-	            + "Remove OptiFine from the server or ensure it is installed only on the client." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "OptiFine is attempting to load on a dedicated server, but it is only compatible with the client. "
+				+ "Remove OptiFine from the server or ensure it is installed only on the client." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorOptiFineServidor() {
-	    return "OptiFine on dedicated server";
+		return "OptiFine on dedicated server";
 	}
 
 	@Override
 	public String pasoErrorOptiFineServidor() {
-	    return "Remove OptiFine from the dedicated server, as it should only be installed on the client.";
+		return "Remove OptiFine from the dedicated server, as it should only be installed on the client.";
 	}
-	
+
 	@Override
 	public String errorIronSpellbooksVersion() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Iron's Spellbooks is incorrectly marked for 1.20.1 but uses methods from 1.21.1. "
-	            + "The mod is attempting to use ResourceLocation.fromNamespaceAndPath, which does not exist in 1.20.1." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Iron's Spellbooks is incorrectly marked for 1.20.1 but uses methods from 1.21.1. "
+				+ "The mod is attempting to use ResourceLocation.fromNamespaceAndPath, which does not exist in 1.20.1."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorIronSpellbooksVersion() {
-	    return "Iron's Spellbooks version error";
+		return "Iron's Spellbooks version error";
 	}
 
 	@Override
 	public String pasoErrorIronSpellbooksVersion() {
-	    return "Ensure you are using the correct version of Iron's Spellbooks compatible with your Minecraft version.";
+		return "Ensure you are using the correct version of Iron's Spellbooks compatible with your Minecraft version.";
 	}
-	
+
 	@Override
 	public String errorConflictoOptiFineEmbeddium() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "A critical conflict has been detected between OptiFine and Embeddium. "
-	            + "These mods are incompatible and cause an injection failure that prevents the game from launching." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "A critical conflict has been detected between OptiFine and Embeddium. "
+				+ "These mods are incompatible and cause an injection failure that prevents the game from launching."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoOptiFineEmbeddium() {
-	    return "OptiFine and Embeddium Conflict";
+		return "OptiFine and Embeddium Conflict";
 	}
 
 	@Override
 	public String pasoConflictoOptiFineEmbeddium() {
-	    return "Uninstall OptiFine or Embeddium, as they are incompatible with each other.";
+		return "Uninstall OptiFine or Embeddium, as they are incompatible with each other.";
 	}
-	
+
 	@Override
 	public String noPuedeAnalizarJSON() {
-	    return "<span style='color:#" + config.obtenerColorError()
-	        + "'>This is common with conflicting world generation mods, especially Terralinth, AmplifiedNether, Nullscape, and Incendium, and other world generation mods. You may also need to install a missing mod.</span>";
+		return "<span style='color:#" + config.obtenerColorError()
+				+ "'>This is common with conflicting world generation mods, especially Terralinth, AmplifiedNether, Nullscape, and Incendium, and other world generation mods. You may also need to install a missing mod.</span>";
 	}
+
 	@Override
 	public String errorControllableServidor() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Controllable is attempting to load on a dedicated server, but it is only compatible with the client. "
-	            + "Remove Controllable from the server or ensure it is installed only on the client." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Controllable is attempting to load on a dedicated server, but it is only compatible with the client. "
+				+ "Remove Controllable from the server or ensure it is installed only on the client." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorControllableServidor() {
-	    return "Controllable on dedicated server";
+		return "Controllable on dedicated server";
 	}
 
 	@Override
 	public String pasoErrorControllableServidor() {
-	    return "Remove Controllable from the dedicated server, as it should only be installed on the client.";
+		return "Remove Controllable from the dedicated server, as it should only be installed on the client.";
 	}
-	
-	
+
 	@Override
 	public String errorSupplementariesCargaServidor() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Supplementaries is causing an error that prevents the server from loading. "
-	            + "The mod has issues with the fire behaviour registry that cause a failure during datapack loading." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Supplementaries is causing an error that prevents the server from loading. "
+				+ "The mod has issues with the fire behaviour registry that cause a failure during datapack loading."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorSupplementariesCargaServidor() {
-	    return "Supplementaries prevents server loading";
+		return "Supplementaries prevents server loading";
 	}
 
 	@Override
 	public String pasoErrorSupplementariesCargaServidor() {
-	    return "Try updating Supplementaries to the latest version or temporarily disable it to allow the server to load.";
+		return "Try updating Supplementaries to the latest version or temporarily disable it to allow the server to load.";
 	}
-	
+
 	@Override
 	public String errorGroovyModloaderModuloFaltante() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Groovy Modloader (GML) encountered an issue with missing Jackson modules. "
-	            + "Some mods, such as Valkyrien Skies, may cause this error by not including all required dependencies." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Groovy Modloader (GML) encountered an issue with missing Jackson modules. "
+				+ "Some mods, such as Valkyrien Skies, may cause this error by not including all required dependencies."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorGroovyModloaderModuloFaltante() {
-	    return "Missing Jackson module in Groovy Modloader";
+		return "Missing Jackson module in Groovy Modloader";
 	}
 
 	@Override
 	public String pasoErrorGroovyModloaderModuloFaltante() {
-	    return "Remove Groovy Modloader and related mods such as Valkyrien Skies that may cause dependency conflicts.";
+		return "Remove Groovy Modloader and related mods such as Valkyrien Skies that may cause dependency conflicts.";
 	}
-	
+
 	@Override
 	public String errorEveryCompatNombreInvalido() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Every Compat found an invalid wood block name. "
-	            + "Every Compat generally has many issues. Do not use it!" + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Every Compat found an invalid wood block name. "
+				+ "Every Compat generally has many issues. Do not use it!" + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorEveryCompatNombreInvalido() {
-	    return "Invalid name in Every Compat";
+		return "Invalid name in Every Compat";
 	}
-
 
 	@Override
 	public String pasoErrorEveryCompatNombreInvalido() {
-	    return "Check the resource packs or mods that use Every Compat, as they may contain invalid block names.";
+		return "Check the resource packs or mods that use Every Compat, as they may contain invalid block names.";
 	}
 
 	@Override
 	public String errorCodigo1073741819() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "An error code (-1073741819) was detected, which may be caused by overlays such as Razer's GameCaster, Discord, OBS Studio, or NVIDIA driver issues." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "An error code (-1073741819) was detected, which may be caused by overlays such as Razer's GameCaster, Discord, OBS Studio, or NVIDIA driver issues."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorCodigo1073741819() {
-	    return "Error code -1073741819";
+		return "Error code -1073741819";
 	}
 
 	@Override
 	public String pasoErrorCodigo1073741819() {
-	    return "Try disabling overlays such as GameCaster, Discord or OBS Studio, and ensure your NVIDIA drivers are up to date.";
+		return "Try disabling overlays such as GameCaster, Discord or OBS Studio, and ensure your NVIDIA drivers are up to date.";
 	}
+
 	@Override
 	public String errorImmersiveTooltipsSinDependencia() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Immersive Tooltips requires Immersive Messages as a dependency but it is not installed. "
-	            + "Install Immersive Messages so that Immersive Tooltips works correctly." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Immersive Tooltips requires Immersive Messages as a dependency but it is not installed. "
+				+ "Install Immersive Messages so that Immersive Tooltips works correctly." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorImmersiveTooltipsSinDependencia() {
-	    return "Immersive Tooltips missing dependency";
+		return "Immersive Tooltips missing dependency";
 	}
 
 	@Override
 	public String pasoErrorImmersiveTooltipsSinDependencia() {
-	    return "Install Immersive Messages, as it is a required dependency for Immersive Tooltips.";
+		return "Install Immersive Messages, as it is a required dependency for Immersive Tooltips.";
 	}
-	
+
 	@Override
 	public String errorMedievalOriginsCast() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Medieval Origins has a compatibility issue with Apoli Mod where ItemStack cannot be cast to EntityLinkedItemStack. "
-	            + "This is common in versions later than 6.6.0. Consider using an earlier version or switching between Fabric and Forge versions." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Medieval Origins has a compatibility issue with Apoli Mod where ItemStack cannot be cast to EntityLinkedItemStack. "
+				+ "This is common in versions later than 6.6.0. Consider using an earlier version or switching between Fabric and Forge versions."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorMedievalOriginsCast() {
-	    return "Casting error in Medieval Origins";
+		return "Casting error in Medieval Origins";
 	}
 
 	@Override
 	public String pasoErrorMedievalOriginsCast() {
-	    return "Use Medieval Origins version 6.6.0 or earlier, or try switching between the Fabric and Forge versions of the mod.";
+		return "Use Medieval Origins version 6.6.0 or earlier, or try switching between the Fabric and Forge versions of the mod.";
 	}
-	
+
 	@Override
 	public String errorReignOfNetherMusicManager() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Reign of Nether is causing an error with a Registry Object not present in MusicManager. "
-	            + "This issue is related to the MusicManager mixin from Reign of Nether." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Reign of Nether is causing an error with a Registry Object not present in MusicManager. "
+				+ "This issue is related to the MusicManager mixin from Reign of Nether." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorReignOfNetherMusicManager() {
-	    return "MusicManager error in Reign of Nether";
+		return "MusicManager error in Reign of Nether";
 	}
 
 	@Override
 	public String pasoErrorReignOfNetherMusicManager() {
-	    return "Try updating Reign of Nether or temporarily removing it to resolve the error.";
+		return "Try updating Reign of Nether or temporarily removing it to resolve the error.";
 	}
-	
+
 	@Override
 	public String errorYesSteveModelLinux() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "YesSteveModel only supports the YSM server on Linux or Android. "
-	            + "This issue has been fixed in newer versions since 23 November 2025 on Modrinth." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "YesSteveModel only supports the YSM server on Linux or Android. "
+				+ "This issue has been fixed in newer versions since 23 November 2025 on Modrinth." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorYesSteveModelLinux() {
-	    return "YesSteveModel incompatible with Linux";
+		return "YesSteveModel incompatible with Linux";
 	}
 
 	@Override
 	public String pasoErrorYesSteveModelLinux() {
-	    return "Update YesSteveModel to a newer version from Modrinth, as the issue has been fixed after 23 November.";
+		return "Update YesSteveModel to a newer version from Modrinth, as the issue has been fixed after 23 November.";
 	}
-	
+
 	@Override
 	public String errorConflictoMovingElevatorsOptiFine() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "A critical conflict has been detected between Moving Elevators and OptiFine. "
-	            + "These mods are incompatible and cause an injection failure that prevents the game from launching." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "A critical conflict has been detected between Moving Elevators and OptiFine. "
+				+ "These mods are incompatible and cause an injection failure that prevents the game from launching."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoMovingElevatorsOptiFine() {
-	    return "Moving Elevators and OptiFine Conflict";
+		return "Moving Elevators and OptiFine Conflict";
 	}
 
 	@Override
 	public String pasoConflictoMovingElevatorsOptiFine() {
-	    return "Uninstall OptiFine or Moving Elevators, as they are incompatible with each other.";
+		return "Uninstall OptiFine or Moving Elevators, as they are incompatible with each other.";
 	}
-	
+
 	@Override
 	public String errorConflictoFabricAPIOptiFine() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "A critical conflict has been detected between Fabric API (fabric-resource-loader-v0) and OptiFine. "
-	            + "These mods are incompatible and cause an injection failure that prevents the game from launching." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "A critical conflict has been detected between Fabric API (fabric-resource-loader-v0) and OptiFine. "
+				+ "These mods are incompatible and cause an injection failure that prevents the game from launching."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoFabricAPIOptiFine() {
-	    return "Fabric API and OptiFine Conflict";
+		return "Fabric API and OptiFine Conflict";
 	}
 
 	@Override
 	public String pasoConflictoFabricAPIOptiFine() {
-	    return "Uninstall OptiFine or update Fabric API to a compatible version.";
+		return "Uninstall OptiFine or update Fabric API to a compatible version.";
 	}
+
 	@Override
 	public String errorModLauncherTransformationService(String claseProveedor) {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "A mod has a faulty ITransformationService that cannot be instantiated: " + claseProveedor + ". "
-	            + "This mod must be removed to allow the game to load." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "A mod has a faulty ITransformationService that cannot be instantiated: " + claseProveedor + ". "
+				+ "This mod must be removed to allow the game to load." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorModLauncherTransformationService() {
-	    return "Faulty ITransformationService";
+		return "Faulty ITransformationService";
 	}
 
 	@Override
 	public String pasoErrorModLauncherTransformationService(String claseProveedor) {
-	    return "Remove the mod that contains the class " + claseProveedor + ", as it has a faulty ITransformationService.";
+		return "Remove the mod that contains the class " + claseProveedor
+				+ ", as it has a faulty ITransformationService.";
 	}
-	
+
 	@Override
 	public String errorVersionInvalidaMod(String version) {
-	    return "<span style='color:#" + config.obtenerColorError() + "'>A mod has an invalid version specification. "
-	            + "The version must be enclosed in square brackets. "
-	            + "You can use the grep/greprf utility from the side panel to search for the version </span>" + version + "<span style='color:#" + config.obtenerColorError() + "'> to identify which mod has the issue.</span>";
+		return "<span style='color:#" + config.obtenerColorError() + "'>A mod has an invalid version specification. "
+				+ "The version must be enclosed in square brackets. "
+				+ "You can use the grep/greprf utility from the side panel to search for the version </span>" + version
+				+ "<span style='color:#" + config.obtenerColorError()
+				+ "'> to identify which mod has the issue.</span>";
 	}
 
 	@Override
 	public String nombreDeErrorVersionInvalidaMod() {
-	    return "Invalid version in mod";
+		return "Invalid version in mod";
 	}
 
 	@Override
 	public String pasoErrorVersionInvalidaMod() {
-	    return "Use the grep/greprf utility from the side panel to search for the problematic version and find the mod that contains it.";
+		return "Use the grep/greprf utility from the side panel to search for the problematic version and find the mod that contains it.";
 	}
-	
+
 	@Override
 	public String errorStackSmashingDetected() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "A stack smashing error was detected, which terminated the process. "
-	            + "This may be caused by issues with Early Window in Forge/NeoForge/PillowMC or with LWJGL 3.2.2 and newer." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "A stack smashing error was detected, which terminated the process. "
+				+ "This may be caused by issues with Early Window in Forge/NeoForge/PillowMC or with LWJGL 3.2.2 and newer."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorStackSmashingDetected() {
-	    return "Stack Smashing Detected";
+		return "Stack Smashing Detected";
 	}
 
 	@Override
 	public String pasoErrorStackSmashingDetected() {
-	    return "Check your Early Window settings and consider using a different version of LWJGL or reviewing mods related to early windowing.";
+		return "Check your Early Window settings and consider using a different version of LWJGL or reviewing mods related to early windowing.";
 	}
-	
+
 	@Override
 	public String errorVersionClaseGregTechEasyCore() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "GregTechEasyCore is only for a specific modpack and should not be used in general installations, as it causes an issue." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "GregTechEasyCore is only for a specific modpack and should not be used in general installations, as it causes an issue."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorVersionClaseGregTechEasyCore() {
-	    return "GregTechEasyCore with incompatible Java version";
+		return "GregTechEasyCore with incompatible Java version";
 	}
 
 	@Override
 	public String pasoErrorVersionClaseGregTechEasyCore() {
-	    return "Remove GregTechEasyCore, as it is only for a specific modpack and is not compatible with your general installation.";
+		return "Remove GregTechEasyCore, as it is only for a specific modpack and is not compatible with your general installation.";
 	}
-	
+
 	@Override
 	public String errorConflictoMoniLabsConnectorExtras() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "A conflict has been detected between MoniLabs and Connector Extras related to KubeJS modifications. "
-	            + "These mods are incompatible in their KubeJS modifications." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "A conflict has been detected between MoniLabs and Connector Extras related to KubeJS modifications. "
+				+ "These mods are incompatible in their KubeJS modifications." + "</b>";
 	}
 
 	@Override
 	public String nombreDeConflictoMoniLabsConnectorExtras() {
-	    return "MoniLabs and Connector Extras Conflict";
+		return "MoniLabs and Connector Extras Conflict";
 	}
 
 	@Override
 	public String pasoConflictoMoniLabsConnectorExtras() {
-	    return "Try uninstalling one of the mods (MoniLabs or Connector Extras) as they conflict in their KubeJS modifications.";
+		return "Try uninstalling one of the mods (MoniLabs or Connector Extras) as they conflict in their KubeJS modifications.";
 	}
-	
+
 	@Override
 	public String errorCompatibilidadIrisDH() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Iris requires Distant Horizons [2.0.4] or DH API version [1.1.0] or newer. "
-	            + "See the compatibility guide at https://gist.github.com/Steveplays28/52db568f297ded527da56dbe6deeec0e to resolve the issue." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Iris requires Distant Horizons [2.0.4] or DH API version [1.1.0] or newer. "
+				+ "See the compatibility guide at https://gist.github.com/Steveplays28/52db568f297ded527da56dbe6deeec0e to resolve the issue."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorCompatibilidadIrisDH() {
-	    return "Iris and Distant Horizons Compatibility";
+		return "Iris and Distant Horizons Compatibility";
 	}
 
 	@Override
 	public String pasoErrorCompatibilidadIrisDH() {
-	    return "Consult the compatibility guide at https://gist.github.com/Steveplays28/52db568f297ded527da56dbe6deeec0e and update Iris and Distant Horizons to compatible versions.";
+		return "Consult the compatibility guide at https://gist.github.com/Steveplays28/52db568f297ded527da56dbe6deeec0e and update Iris and Distant Horizons to compatible versions.";
 	}
-	
+
 	@Override
 	public String faltar_de_clases_minecraft() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>You are missing Minecraft classes. Possible reasons:</b>"
-	        + "<ul>"
-	        + "<li>You have mods for other versions of the game. You can use <a href='https://wagyourtail.xyz/Projects/MinecraftMappingViewer' target='_blank'>MinecraftMappingViewer</a> to check if the class exists in your version.</li>"
-	        + "<li>You have a corrupted Minecraft installation (common with CurseForge App, ModrinthApp/Theseus/Astralrinth and other modpack launchers). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Watch tutorial</a> to troubleshoot CurseForge issues.</li>"
-	        + "<li>You have a faulty coremod (if a coremod fails, it may block class loading).</li>"
-	        + "</ul>"
-	        + "<p>Note: You can use the <b>grepr/fgrepr</b> tool in the sidebar to find mods that reference the missing classes, as long as you use '/' in the names.</p>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>You are missing Minecraft classes. Possible reasons:</b>" + "<ul>"
+				+ "<li>You have mods for other versions of the game. You can use <a href='https://wagyourtail.xyz/Projects/MinecraftMappingViewer' target='_blank'>MinecraftMappingViewer</a> to check if the class exists in your version.</li>"
+				+ "<li>You have a corrupted Minecraft installation (common with CurseForge App, ModrinthApp/Theseus/Astralrinth and other modpack launchers). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Watch tutorial</a> to troubleshoot CurseForge issues.</li>"
+				+ "<li>You have a faulty coremod (if a coremod fails, it may block class loading).</li>" + "</ul>"
+				+ "<p>Note: You can use the <b>grepr/fgrepr</b> tool in the sidebar to find mods that reference the missing classes, as long as you use '/' in the names.</p>";
 	}
 
 	@Override
 	public String faltar_de_clases_dangerzone() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>You are missing DangerZone classes. Possible reasons:</b>"
-	        + "<ul>"
-	        + "<li>You have mods for other versions of the game.</li>"
-	        + "<li>You have faulty coremods.</li>"
-	        + "<li>You have a corrupted launcher or installation.</li>"
-	        + "</ul>"
-	        + "<p>Note: You can use the <b>grepr/fgrepr</b> tool in the sidebar to find mods that reference the missing classes, as long as you use '/' in the names.</p>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>You are missing DangerZone classes. Possible reasons:</b>" + "<ul>"
+				+ "<li>You have mods for other versions of the game.</li>" + "<li>You have faulty coremods.</li>"
+				+ "<li>You have a corrupted launcher or installation.</li>" + "</ul>"
+				+ "<p>Note: You can use the <b>grepr/fgrepr</b> tool in the sidebar to find mods that reference the missing classes, as long as you use '/' in the names.</p>";
 	}
-	
-	
+
 	@Override
 	public String faltar_de_clases_featurecreep() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>You are missing FeatureCreep classes. Possible reasons:</b>"
-	        + "<ul>"
-	        + "<li>You have mods for other versions of FeatureCreep (e.g. ESR vs Nightly or v4 vs v12).</li>"
-	        + "<li>You can install FeatureCreep from CurseForge or MinecraftStorage.</li>"
-	        + "</ul>"
-	        + "<p>Note: You can use the <b>grepr/fgrepr</b> tool in the sidebar to find mods that reference the missing classes, as long as you use '/' in the names.</p>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>You are missing FeatureCreep classes. Possible reasons:</b>" + "<ul>"
+				+ "<li>You have mods for other versions of FeatureCreep (e.g. ESR vs Nightly or v4 vs v12).</li>"
+				+ "<li>You can install FeatureCreep from CurseForge or MinecraftStorage.</li>" + "</ul>"
+				+ "<p>Note: You can use the <b>grepr/fgrepr</b> tool in the sidebar to find mods that reference the missing classes, as long as you use '/' in the names.</p>";
 	}
 
 	@Override
 	public String faltar_de_clases_modlauncher() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>You are missing ModLauncher classes. Possible reasons:</b>"
-	        + "<ul>"
-	        + "<li>Your mods are for a different build of MinecraftForge, PillowMC or NeoForge (ModLauncher is used with these loaders).</li>"
-	        + "<li>There are many modloader updates for a single Minecraft version.</li>"
-	        + "<li>You have a corrupted launcher installation (common with CurseForge App, ModrinthApp/Theseus/Astralrinth and other modpack launchers). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Watch tutorial</a> to troubleshoot CurseForge issues.</li>"
-	        + "</ul>"
-	        + "<p>Note: You can use the <b>grepr/fgrepr</b> tool in the sidebar to find mods that reference the missing classes, as long as you use '/' in the names.</p>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>You are missing ModLauncher classes. Possible reasons:</b>" + "<ul>"
+				+ "<li>Your mods are for a different build of MinecraftForge, PillowMC or NeoForge (ModLauncher is used with these loaders).</li>"
+				+ "<li>There are many modloader updates for a single Minecraft version.</li>"
+				+ "<li>You have a corrupted launcher installation (common with CurseForge App, ModrinthApp/Theseus/Astralrinth and other modpack launchers). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Watch tutorial</a> to troubleshoot CurseForge issues.</li>"
+				+ "</ul>"
+				+ "<p>Note: You can use the <b>grepr/fgrepr</b> tool in the sidebar to find mods that reference the missing classes, as long as you use '/' in the names.</p>";
 	}
-	
+
 	@Override
 	public String faltar_de_clases_minecraftforge() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>You are missing Minecraft Forge classes. Possible reasons:</b>"
-	        + "<ul>"
-	        + "<li>Your mods are for a different build of MinecraftForge.</li>"
-	        + "<li>There are many modloader updates for a single Minecraft version.</li>"
-	        + "<li>You have a corrupted installation (common with CurseForge App, ModrinthApp/Theseus/Astralrinth and other modpack launchers). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Watch tutorial</a> to troubleshoot CurseForge issues.</li>"
-	        + "</ul>"
-	        + "<p>Note: You can use the <b>grepr/fgrepr</b> tool in the sidebar to find mods that reference the missing classes, as long as you use '/' in the names.</p>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>You are missing Minecraft Forge classes. Possible reasons:</b>" + "<ul>"
+				+ "<li>Your mods are for a different build of MinecraftForge.</li>"
+				+ "<li>There are many modloader updates for a single Minecraft version.</li>"
+				+ "<li>You have a corrupted installation (common with CurseForge App, ModrinthApp/Theseus/Astralrinth and other modpack launchers). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Watch tutorial</a> to troubleshoot CurseForge issues.</li>"
+				+ "</ul>"
+				+ "<p>Note: You can use the <b>grepr/fgrepr</b> tool in the sidebar to find mods that reference the missing classes, as long as you use '/' in the names.</p>";
 	}
 
 	@Override
 	public String faltar_de_clases_neoforged() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>You are missing NeoForge classes. Possible reasons:</b>"
-	        + "<ul>"
-	        + "<li>Your mods are for a different build of NeoForge.</li>"
-	        + "<li>There are many modloader updates for a single Minecraft version.</li>"
-	        + "<li>You have a corrupted installation (common with CurseForge App, ModrinthApp/Theseus/Astralrinth and other modpack launchers). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Watch tutorial</a> to troubleshoot CurseForge issues.</li>"
-	        + "</ul>"
-	        + "<p>Note: You can use the <b>grepr/fgrepr</b> tool in the sidebar to find mods that reference the missing classes, as long as you use '/' in the names.</p>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>You are missing NeoForge classes. Possible reasons:</b>" + "<ul>"
+				+ "<li>Your mods are for a different build of NeoForge.</li>"
+				+ "<li>There are many modloader updates for a single Minecraft version.</li>"
+				+ "<li>You have a corrupted installation (common with CurseForge App, ModrinthApp/Theseus/Astralrinth and other modpack launchers). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Watch tutorial</a> to troubleshoot CurseForge issues.</li>"
+				+ "</ul>"
+				+ "<p>Note: You can use the <b>grepr/fgrepr</b> tool in the sidebar to find mods that reference the missing classes, as long as you use '/' in the names.</p>";
 	}
+
 	@Override
 	public String faltar_de_clases_fabricloader() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>You are missing Fabric Loader classes. Possible reasons:</b>"
-	        + "<ul>"
-	        + "<li>Your mods are for a different build of Fabric Loader.</li>"
-	        + "<li>There are many modloader updates for a single Minecraft version.</li>"
-	        + "<li>You have a corrupted installation (common with CurseForge App, ModrinthApp/Theseus/Astralrinth and other modpack launchers). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Watch tutorial</a> to troubleshoot CurseForge issues.</li>"
-	        + "<li>Many mods require Fabric API. Please install Fabric API if needed.</li>"
-	        + "</ul>"
-	        + "<p>Note: You can use the <b>grepr/fgrepr</b> tool in the sidebar to find mods that reference the missing classes, as long as you use '/' in the names.</p>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>You are missing Fabric Loader classes. Possible reasons:</b>" + "<ul>"
+				+ "<li>Your mods are for a different build of Fabric Loader.</li>"
+				+ "<li>There are many modloader updates for a single Minecraft version.</li>"
+				+ "<li>You have a corrupted installation (common with CurseForge App, ModrinthApp/Theseus/Astralrinth and other modpack launchers). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Watch tutorial</a> to troubleshoot CurseForge issues.</li>"
+				+ "<li>Many mods require Fabric API. Please install Fabric API if needed.</li>" + "</ul>"
+				+ "<p>Note: You can use the <b>grepr/fgrepr</b> tool in the sidebar to find mods that reference the missing classes, as long as you use '/' in the names.</p>";
 	}
 
 	@Override
 	public String faltar_de_clases_pillowmc() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>You are missing PillowMC classes. Possible reasons:</b>"
-	        + "<ul>"
-	        + "<li>Your mods are for a different build of PillowMC.</li>"
-	        + "<li>There are many modloader updates for a single Minecraft version.</li>"
-	        + "<li>You have a corrupted installation (common with CurseForge App, ModrinthApp/Theseus/Astralrinth and other modpack launchers). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Watch tutorial</a> to troubleshoot CurseForge issues.</li>"
-	        + "</ul>"
-	        + "<p>Note: You can use the <b>grepr/fgrepr</b> tool in the sidebar to find mods that reference the missing classes, as long as you use '/' in the names.</p>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>You are missing PillowMC classes. Possible reasons:</b>" + "<ul>"
+				+ "<li>Your mods are for a different build of PillowMC.</li>"
+				+ "<li>There are many modloader updates for a single Minecraft version.</li>"
+				+ "<li>You have a corrupted installation (common with CurseForge App, ModrinthApp/Theseus/Astralrinth and other modpack launchers). <a href='https://www.youtube.com/watch?v=EeAf_PKXl8c' target='_blank'>Watch tutorial</a> to troubleshoot CurseForge issues.</li>"
+				+ "</ul>"
+				+ "<p>Note: You can use the <b>grepr/fgrepr</b> tool in the sidebar to find mods that reference the missing classes, as long as you use '/' in the names.</p>";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

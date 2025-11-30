@@ -475,17 +475,14 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 				Statics.carpeta.resolve("imagenes/boton_cdmods.png").toString(), "CD Mods");
 		boton_CDMods.setEnabled(false);
 		JButton btnAgregar = añadirBotonImagen(panelBotonesDerecha,
-				Statics.carpeta.resolve("imagenes/boton_agregar.png").toString(),
-				MonitorDePID.idioma.anadirRegistro());
+				Statics.carpeta.resolve("imagenes/boton_agregar.png").toString(), MonitorDePID.idioma.anadirRegistro());
 		JButton btnCompartir = añadirBotonImagen(panelBotonesDerecha,
 				Statics.carpeta.resolve("imagenes/boton_compartir.png").toString(),
 				MonitorDePID.idioma.botonDeCompartirInforme());
 		JButton btnActualizar = añadirBotonImagen(panelBotonesDerecha,
-				Statics.carpeta.resolve("imagenes/boton_actualizar.png").toString(),
-				MonitorDePID.idioma.actualizar());
+				Statics.carpeta.resolve("imagenes/boton_actualizar.png").toString(), MonitorDePID.idioma.actualizar());
 		JButton btnArchivos = añadirBotonImagen(panelBotonesDerecha,
-				Statics.carpeta.resolve("imagenes/boton_archivos.png").toString(),
-				MonitorDePID.idioma.abrirCarpeta());
+				Statics.carpeta.resolve("imagenes/boton_archivos.png").toString(), MonitorDePID.idioma.abrirCarpeta());
 		botonConfiguracion = añadirBotonImagen(panelBotonesDerecha,
 				Statics.carpeta.resolve("imagenes/boton_config.png").toString(), MonitorDePID.idioma.config());
 

@@ -12,106 +12,110 @@ import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceI
  */
 public class ConflictoMoniLabsConnectorExtras implements Verificaciones {
 
-    private boolean activado = false;
-    private String mensaje = "";
-    private String enlaceHtml = "";
-    private boolean encontradoMoniLabs = false;
-    private boolean encontradoConnectorExtras = false;
+	private boolean activado = false;
+	private String mensaje = "";
+	private String enlaceHtml = "";
+	private boolean encontradoMoniLabs = false;
+	private boolean encontradoConnectorExtras = false;
 
-    /**
-     * Método de compatibilidad — busca si MoniLabs y Connector Extras están presentes en el contenido completo del registro.
-     */
-    @Override
-    public void verificar(Consola consola) {
-        // Verificamos si MoniLabs y Connector Extras están presentes en el contenido del registro
-        if (consola.contenido_verificar != null) {
-            String contenido = consola.contenido_verificar.toLowerCase();
-            encontradoMoniLabs = contenido.contains("monilabs");
-            encontradoConnectorExtras = contenido.contains("connectorextras");
-        }
-    }
+	/**
+	 * Método de compatibilidad — busca si MoniLabs y Connector Extras están
+	 * presentes en el contenido completo del registro.
+	 */
+	@Override
+	public void verificar(Consola consola) {
+		// Verificamos si MoniLabs y Connector Extras están presentes en el contenido
+		// del registro
+		if (consola.contenido_verificar != null) {
+			String contenido = consola.contenido_verificar.toLowerCase();
+			encontradoMoniLabs = contenido.contains("monilabs");
+			encontradoConnectorExtras = contenido.contains("connectorextras");
+		}
+	}
 
-    /**
-     * Análisis por línea del registro.
-     * <p>
-     * Se busca el patrón característico del conflicto entre MoniLabs y Connector Extras
-     * relacionado con modificaciones de KubeJS en KubeJSPlugins.
-     * </p>
-     */
-    @Override
-    public void verificar(Consola consola, String linea, int numero_de_linea) {
-        if (activado) {
-            // Si ya se activó, no seguimos verificando más líneas.
-            return;
-        }
+	/**
+	 * Análisis por línea del registro.
+	 * <p>
+	 * Se busca el patrón característico del conflicto entre MoniLabs y Connector
+	 * Extras relacionado con modificaciones de KubeJS en KubeJSPlugins.
+	 * </p>
+	 */
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		if (activado) {
+			// Si ya se activó, no seguimos verificando más líneas.
+			return;
+		}
 
-        // Buscamos la línea que contiene el conflicto entre MoniLabs y Connector Extras con KubeJS
-        if (linea.contains("dev.latvian.mods.kubejs.util.KubeJSPlugins.handler")
-                && linea.contains("$monilabs$moniLabs$injectBeforeLoad")
-                && (encontradoMoniLabs && encontradoConnectorExtras)) {
-            
-            // Enlazar a la línea del error en el lector
-            enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+		// Buscamos la línea que contiene el conflicto entre MoniLabs y Connector Extras
+		// con KubeJS
+		if (linea.contains("dev.latvian.mods.kubejs.util.KubeJSPlugins.handler")
+				&& linea.contains("$monilabs$moniLabs$injectBeforeLoad")
+				&& (encontradoMoniLabs && encontradoConnectorExtras)) {
 
-            // Mensaje de error en HTML con referencia al conflicto entre MoniLabs y Connector Extras
-            mensaje = MonitorDePID.idioma.errorConflictoMoniLabsConnectorExtras() + Verificaciones.nl_html;
-            activado = true;
-        }
-    }
+			// Enlazar a la línea del error en el lector
+			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
-    @Override
-    public Verificaciones nueva() {
-        return new ConflictoMoniLabsConnectorExtras();
-    }
+			// Mensaje de error en HTML con referencia al conflicto entre MoniLabs y
+			// Connector Extras
+			mensaje = MonitorDePID.idioma.errorConflictoMoniLabsConnectorExtras() + Verificaciones.nl_html;
+			activado = true;
+		}
+	}
 
-    @Override
-    public boolean activado() {
-        return activado;
-    }
+	@Override
+	public Verificaciones nueva() {
+		return new ConflictoMoniLabsConnectorExtras();
+	}
 
-    @Override
-    public float prioridad() {
-        return 850.0f; // Prioridad media-alta: rompe funcionalidad de KubeJS
-    }
+	@Override
+	public boolean activado() {
+		return activado;
+	}
 
-    @Override
-    public String mensaje() {
-        return activado ? (mensaje + enlaceHtml) : "";
-    }
+	@Override
+	public float prioridad() {
+		return 850.0f; // Prioridad media-alta: rompe funcionalidad de KubeJS
+	}
 
-    @Override
-    public String nombre() {
-        return MonitorDePID.idioma.nombreDeConflictoMoniLabsConnectorExtras();
-    }
+	@Override
+	public String mensaje() {
+		return activado ? (mensaje + enlaceHtml) : "";
+	}
 
-    @Override
-    public QuickFix solucion() {
-        return new QuickFix.Builder(nombre())
-                .agregarEtiqueta(MonitorDePID.idioma.pasoConflictoMoniLabsConnectorExtras())
-                .construir();
-    }
+	@Override
+	public String nombre() {
+		return MonitorDePID.idioma.nombreDeConflictoMoniLabsConnectorExtras();
+	}
 
-    @Override
-    public String id() {
-        return "conflicto_monilabs_connectorextras";
-    }
+	@Override
+	public QuickFix solucion() {
+		return new QuickFix.Builder(nombre())
+				.agregarEtiqueta(MonitorDePID.idioma.pasoConflictoMoniLabsConnectorExtras()).construir();
+	}
 
-    /**
-     * Asocia esta verificación con un trazo específico del stack.
-     * <p>
-     * Devuelve true si el trazo contiene las cadenas clave del conflicto
-     * entre MoniLabs y Connector Extras.
-     * </p>
-     */
-    @Override
-    public boolean ocupaTrazo(TraceInfo trazo) {
-        if (!activado || trazo == null || trazo.trace == null) {
-            return false;
-        }
+	@Override
+	public String id() {
+		return "conflicto_monilabs_connectorextras";
+	}
 
-        String t = trazo.trace;
+	/**
+	 * Asocia esta verificación con un trazo específico del stack.
+	 * <p>
+	 * Devuelve true si el trazo contiene las cadenas clave del conflicto entre
+	 * MoniLabs y Connector Extras.
+	 * </p>
+	 */
+	@Override
+	public boolean ocupaTrazo(TraceInfo trazo) {
+		if (!activado || trazo == null || trazo.trace == null) {
+			return false;
+		}
 
-        return t.contains("dev.latvian.mods.kubejs.util.KubeJSPlugins.handler")
-            &&t.contains("$monilabs$moniLabs$injectBeforeLoad")    && (t.toLowerCase().contains("monilabs") && t.toLowerCase().contains("connectorextras"));
-    }
+		String t = trazo.trace;
+
+		return t.contains("dev.latvian.mods.kubejs.util.KubeJSPlugins.handler")
+				&& t.contains("$monilabs$moniLabs$injectBeforeLoad")
+				&& (t.toLowerCase().contains("monilabs") && t.toLowerCase().contains("connectorextras"));
+	}
 }

@@ -52,7 +52,7 @@ public class EarlyWindow implements Verificaciones {
 		// Patrón secundario usado en otros logs similares
 		final String falloInicializacion = "Failed to initialize the mod loading system and display.";
 		final String falloInicializacionActual = "Failed to initialize graphics window with current settings.";
-		
+
 		// Solo activar si la última línea no vacía contiene el mensaje principal
 		if (ultimaLinea != null && ultimaLinea.contains("Loading ImmediateWindowProvider fmlearlywindow")) {
 			mensaje = MonitorDePID.idioma.fmlEarlyWindow() + Verificaciones.nl_html;
@@ -64,7 +64,8 @@ public class EarlyWindow implements Verificaciones {
 		// Si no se activó por la última línea, comprobar el mensaje alternativo
 		// Aquí NO intentamos obtener número de línea ni generar enlace HTML, tal como
 		// indicaste: solo activamos el error con un mensaje genérico.
-		else if (contenidoConsola.contains(falloInicializacion)   || contenidoConsola.contains(falloInicializacionActual)) {
+		else if (contenidoConsola.contains(falloInicializacion)
+				|| contenidoConsola.contains(falloInicializacionActual)) {
 			mensaje = MonitorDePID.idioma.fmlEarlyWindow() + Verificaciones.nl_html;
 			activado = true;
 		}

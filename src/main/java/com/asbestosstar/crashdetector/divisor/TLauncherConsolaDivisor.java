@@ -26,7 +26,7 @@ public class TLauncherConsolaDivisor implements DivisorDeArchivos {
 	}
 
 	@Override
-	public boolean predicado(Path archivo,String nada) {
+	public boolean predicado(Path archivo, String nada) {
 		// TODO Auto-generated method stub
 		return archivo.toString().contains("tlauncher") && !archivo.toString().contains("starter");
 	}

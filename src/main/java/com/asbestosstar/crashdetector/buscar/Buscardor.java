@@ -202,8 +202,7 @@ public class Buscardor {
 								&& !archivoActual.getName().endsWith("disabled")
 								&& !archivoActual.getName().endsWith("nil.jar")
 								&& !archivoActual.getName().endsWith("nil")
-								&& !archivoActual.getName().endsWith("rpm")
-								) {
+								&& !archivoActual.getName().endsWith("rpm")) {
 
 							CrashDetectorLogger.log("prearchivo mod " + archivoActual.getName());
 							try (FileInputStream fis = new FileInputStream(archivoActual)) {

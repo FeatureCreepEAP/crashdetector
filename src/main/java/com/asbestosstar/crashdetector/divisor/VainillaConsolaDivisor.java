@@ -18,7 +18,7 @@ public class VainillaConsolaDivisor implements DivisorDeArchivos {
 	}
 
 	@Override
-	public boolean predicado(Path archivo,String nada) {
+	public boolean predicado(Path archivo, String nada) {
 		// TODO Auto-generated method stub
 		return archivo.toString().contains("launcher_log") || archivo.toString().contains(".hmcl");
 	}

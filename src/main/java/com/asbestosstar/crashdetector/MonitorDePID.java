@@ -306,8 +306,8 @@ public class MonitorDePID {
 					"-cp", cp, "com.asbestosstar.crashdetector.MonitorDePID", "--monitor", String.valueOf(pid))
 			// .inheritIO()
 			;
-			
-			//System.out.println("classpath"+cp);
+
+			// System.out.println("classpath"+cp);
 			// pb.redirectError(new File(CrashDetectorLogger.LOG_ERR_FILE_PATH));
 			// pb.redirectOutput(new File(CrashDetectorLogger.LOG_FILE_PATH));
 

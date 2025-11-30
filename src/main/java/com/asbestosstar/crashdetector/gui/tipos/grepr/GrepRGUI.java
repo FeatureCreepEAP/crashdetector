@@ -231,8 +231,8 @@ public abstract class GrepRGUI extends JFrame implements CrashDetectorGUI, Boton
 		L.gridy = 3;
 		panelEntrada.add(chkBuscarEnComprimidos, L);
 
-		JLabel lblImagen = crearImagenEscalada(Statics.carpeta.resolve("imagenes/saliormoongrep.png").toString(),
-				150, 100);
+		JLabel lblImagen = crearImagenEscalada(Statics.carpeta.resolve("imagenes/saliormoongrep.png").toString(), 150,
+				100);
 		lblImagen.setOpaque(true);
 		lblImagen.setBackground(colorPanel.obtener());
 		lblImagen.setPreferredSize(new java.awt.Dimension(150, 100));

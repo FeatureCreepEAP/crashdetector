@@ -16,7 +16,6 @@ public class CrashDetectorLogger {
 	public static final String LOG_FILE_PATH = Statics.carpeta.resolve("log.txt").toString();
 	public static final String LOG_ERR_FILE_PATH = Statics.carpeta.resolve("log_err.txt").toString();
 
-	
 	public static void log(String message) {
 		try {
 			// Ensure the directory exists

@@ -32,21 +32,19 @@ public class FaltasClases implements Verificaciones {
 	public boolean create = false;
 	public boolean epicfight = false;
 	public boolean azurelib = false;
-	
-	//Apps
+
+	// Apps
 	public boolean minecraft = false;
 	public boolean dangerzone = false;
-	//public boolean nxopen = false;
-	
-	
-	//Cargadores
+	// public boolean nxopen = false;
+
+	// Cargadores
 	public boolean featurecreep = false;
 	public boolean modlauncher = false;
 	public boolean minecraftforge = false;
 	public boolean neoforged = false;
 	public boolean fabricloader = false;
 	public boolean pillowmc = false;
-
 
 	/**
 	 * Mapa de clase formateada (com/x/Y -> com/x/Y) -> origen (modid/jar/paquete).
@@ -532,14 +530,12 @@ public class FaltasClases implements Verificaciones {
 			if (claseFormateada.trim().startsWith("mod/azure/azurelib")) {
 				azurelib = true;
 			}
-			
-			
-			
-			
+
 			if (claseFormateada.trim().startsWith("net/minecraftforge")) {
 				minecraftforge = true;
 			}
-			if (claseFormateada.trim().startsWith("featurecreep/")||claseFormateada.trim().startsWith("asbestosstar/")) {
+			if (claseFormateada.trim().startsWith("featurecreep/")
+					|| claseFormateada.trim().startsWith("asbestosstar/")) {
 				featurecreep = true;
 			}
 			if (claseFormateada.trim().startsWith("net/fabricmc/")) {
@@ -551,17 +547,20 @@ public class FaltasClases implements Verificaciones {
 			if (claseFormateada.trim().startsWith("net/pillowmc/")) {
 				pillowmc = true;
 			}
-			
-			if (claseFormateada.trim().startsWith("net/minecraft/")||claseFormateada.trim().startsWith("game/")||claseFormateada.trim().startsWith("juego/")||claseFormateada.trim().startsWith("obf/class_unknown")) {//TODO OBF y Seperar FCI porque no es activo en MC no mas pero es activo en Live2d Cubism
-			if(!claseFormateada.trim().startsWith("net/minecraftforge/")) {	
-				minecraft = true;
+
+			if (claseFormateada.trim().startsWith("net/minecraft/") || claseFormateada.trim().startsWith("game/")
+					|| claseFormateada.trim().startsWith("juego/")
+					|| claseFormateada.trim().startsWith("obf/class_unknown")) {// TODO OBF y Seperar FCI porque no es
+																				// activo en MC no mas pero es activo en
+																				// Live2d Cubism
+				if (!claseFormateada.trim().startsWith("net/minecraftforge/")) {
+					minecraft = true;
+				}
 			}
-			}
-			
+
 			if (claseFormateada.trim().startsWith("dangerzone/")) {
 				dangerzone = true;
 			}
-			
 
 			html.append("<li>").append(claseFormateada).append(valor);
 			if (!enlace.isEmpty()) {
@@ -580,7 +579,7 @@ public class FaltasClases implements Verificaciones {
 		if (azurelib) {
 			html.append(MonitorDePID.idioma.faltar_de_clases_azurelib());
 		}
-		
+
 		if (minecraft) {
 			html.append(MonitorDePID.idioma.faltar_de_clases_minecraft());
 		}
@@ -590,7 +589,7 @@ public class FaltasClases implements Verificaciones {
 		if (featurecreep) {
 			html.append(MonitorDePID.idioma.faltar_de_clases_featurecreep());
 		}
-		
+
 		if (modlauncher) {
 			html.append(MonitorDePID.idioma.faltar_de_clases_modlauncher());
 		}
