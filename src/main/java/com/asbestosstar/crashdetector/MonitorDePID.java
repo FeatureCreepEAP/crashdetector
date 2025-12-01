@@ -28,6 +28,7 @@ import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.grepr.BusquedaArchivos;
+import com.asbestosstar.crashdetector.gui.modapi.CDModsEstiloTL;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.arbol.ArbolDeModsGUIHamu;
 import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartirLegacy;
@@ -343,6 +344,7 @@ public class MonitorDePID {
 		TipoGUI.EDITOR_PLANTILLA.registrarGUI(EditorPlantillaModioNoche.ID, () -> new EditorPlantillaModioNoche());
 		TipoGUI.DIALOGO_COMPARTIR.registrarGUI(DialogoCompartirLegacy.ID, () -> new DialogoCompartirLegacy());
 		TipoGUI.EDITOR_GUI.registrarGUI(CDSkinCape.ID, () -> new CDSkinCape());
+		TipoGUI.MOD_API_PANEL.registrarGUI(CDModsEstiloTL.ID, () -> new CDModsEstiloTL());
 
 	}
 

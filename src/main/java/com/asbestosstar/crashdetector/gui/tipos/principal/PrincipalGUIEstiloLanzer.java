@@ -500,6 +500,16 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 			contenidoPrincipal.repaint();
 			botonVolver.setEnabled(true);
 		});
+		
+		
+		boton_CDMods.addActionListener(e -> {
+			contenidoPrincipal.removeAll();
+			panelCDMods.init();
+			contenidoPrincipal.add(panelCDMods, BorderLayout.CENTER);
+			contenidoPrincipal.revalidate();
+			contenidoPrincipal.repaint();
+			botonVolver.setEnabled(true);
+		});
 
 		// Colocar secciones en el panel inferior
 		panelInferior.add(seccionConfiguracion, BorderLayout.WEST);

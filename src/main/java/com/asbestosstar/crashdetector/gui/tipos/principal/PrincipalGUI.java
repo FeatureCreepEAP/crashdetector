@@ -41,8 +41,11 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.config.ConfigColor;
+import com.asbestosstar.crashdetector.discord.ManagerDiscord;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
+import com.asbestosstar.crashdetector.gui.modapi.CDModsEstiloTL;
+import com.asbestosstar.crashdetector.gui.modapi.PanelAPIBase;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.arbol.ArbolDeModsGUIHamu;
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanel;
@@ -85,6 +88,12 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 	public JScrollPane scrollPane = new JScrollPane(pantalla);
 	public ConfigPanel<PrincipalGUI> panelConfiguracion = TipoGUI.CONFIG_PANEL
 			.obtenerGUIPredeterminado(ConfigPanelEstiloTL.ID, () -> new ConfigPanelEstiloTL());
+	
+	public PanelAPIBase panelCDMods = TipoGUI.MOD_API_PANEL
+			.obtenerGUIPredeterminado(CDModsEstiloTL.ID, () -> new CDModsEstiloTL());
+	
+	
+	
 	public JButton botonVolver = new JButton(MonitorDePID.idioma.volver());
 	public JButton botonConfiguracion;
 	public JPanel contenidoPrincipal = new JPanel(new BorderLayout());
@@ -123,7 +132,7 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		this.cerrojo = latch;
 		// Inicializar los colores de configuración con valores por defecto
 		// Serán sobrescritos por la implementación concreta en init()
-
+		ManagerDiscord.comenzar();
 		CrashDetectorLogger.log("en constructir");
 		inicializarInterfaz();
 		this.setVisible(true);

@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.asbestosstar</groupId>
 	<artifactId>crashdetector</artifactId>
-	<version>0.3.6.3</version>
+	<version>0.3.6.4</version>
 	
 	
 	<!-- Add necessary metadata for Maven Central -->
@@ -229,6 +229,17 @@
 </dependency>
 
 
+<!-- https://mvnrepository.com/artifact/io.github.CDAGaming/DiscordIPC -->
+<dependency>
+    <groupId>io.github.CDAGaming</groupId>
+    <artifactId>DiscordIPC</artifactId>
+    <version>0.10.2</version>
+</dependency>
+
+
+
+
+
 	</dependencies>
 	<repositories>
 		<repository>
@@ -255,9 +266,7 @@
 			<name>mangorage</name>
 			<url>https://maven.mangorage.org/releases/</url>
 		</repository>
-		
 	
-		
 		
 	</repositories>
 	<properties>
