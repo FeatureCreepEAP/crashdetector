@@ -26,12 +26,14 @@ import java.util.NavigableMap;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CancellationException;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
 
@@ -69,7 +71,6 @@ import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
-import com.asbestosstar.crashdetector.gui.tipos.arbol.ArbolDeModsGUI.NodoConTexto;
 
 public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLateralDerecha {
 
@@ -104,104 +105,245 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 	 * Índice plano que permite búsquedas instantáneas. Clave: término en
 	 * minúsculas, Valor: lista de descriptores que lo contienen.
 	 */
-	private NavigableMap<String, List<PathDescriptor>> indiceBusqueda = new ConcurrentSkipListMap<>();
+	public NavigableMap<String, List<PathDescriptor>> indiceBusqueda = new ConcurrentSkipListMap<>();
 
 	public ArbolDeModsGUI() {
 
 	}
 
 	/**
-	 * Construye el índice de búsqueda tras cargar los mods.
+	 * Construye el índice de búsqueda de forma concurrente usando el doble del número
+	 * de hilos lógicos disponibles. Cada mod raíz se indexa en su propio mapa local;
+	 * los mapas se fusionan al final para evitar contención en una estructura global.
 	 */
-	private void construirIndice() {
-		indiceBusqueda.clear();
-		for (ArchivoDeMod mod : Buscardor.mods) {
-			indexarMod(mod);
-		}
+	public void construirIndice() {
+	    indiceBusqueda.clear();
+	    int totalMods = Buscardor.mods.size();
+	    if (totalMods == 0) {
+	        com.asbestosstar.crashdetector.CrashDetectorLogger.log("✅ No hay mods para indexar.");
+	        return;
+	    }
+
+	    int numHilos = Math.max(1, Runtime.getRuntime().availableProcessors() * 2);
+	    ExecutorService executor = Executors.newFixedThreadPool(numHilos, r -> {
+	        Thread hilo = new Thread(r, "Indexador-" + r.hashCode());
+	        hilo.setDaemon(true);
+	        return hilo;
+	    });
+
+	    // Cada tarea devuelve su propio mapa local (sin compartir)
+	    List<Future<Map<String, List<PathDescriptor>>>> futuros = new ArrayList<>(totalMods);
+
+	    final AtomicInteger completados = new AtomicInteger(0);
+
+	    for (ArchivoDeMod mod : Buscardor.mods) {
+	        futuros.add(executor.submit(() -> {
+	            try {
+	                Map<String, List<PathDescriptor>> mapaLocal = new HashMap<>();
+	                indexarModConcurrente(mod, mapaLocal);
+
+	                // ✅ Log de progreso
+	                int ya = completados.incrementAndGet();
+	                com.asbestosstar.crashdetector.CrashDetectorLogger.log(
+	                    String.format("✅ Mod indexado: %s (%d/%d)", 
+	                        mod.ubicacion_para_publicar(), ya, totalMods));
+
+	                return mapaLocal;
+	            } catch (Throwable t) {
+	                com.asbestosstar.crashdetector.CrashDetectorLogger.logException(t);
+	                return new HashMap<>(); // mapa vacío si falla
+	            }
+	        }));
+	    }
+
+	    // Cerrar el pool
+	    executor.shutdown();
+
+	    try {
+	        if (!executor.awaitTermination(120, TimeUnit.SECONDS)) {
+	            executor.shutdownNow();
+	        }
+	    } catch (InterruptedException e) {
+	        executor.shutdownNow();
+	        Thread.currentThread().interrupt();
+	    }
+
+	    // 🔥 FUSIÓN FINAL (secuencial, pero muy rápida)
+	    int totalTerminos = 0;
+	    for (Future<Map<String, List<PathDescriptor>>> futuro : futuros) {
+	        try {
+	            Map<String, List<PathDescriptor>> mapa = futuro.get();
+	            for (Map.Entry<String, List<PathDescriptor>> entry : mapa.entrySet()) {
+	                String termino = entry.getKey();
+	                List<PathDescriptor> descriptores = entry.getValue();
+	                if (termino != null && descriptores != null && !descriptores.isEmpty()) {
+	                    // Acumular en el índice final (ya estamos en hilo único)
+	                    indiceBusqueda.computeIfAbsent(termino, k -> new ArrayList<>()).addAll(descriptores);
+	                    totalTerminos += descriptores.size();
+	                }
+	            }
+	        } catch (Exception e) {
+	            com.asbestosstar.crashdetector.CrashDetectorLogger.log("Error al fusionar mapa de mod: " + e.getMessage());
+	        }
+	    }
+
+	    com.asbestosstar.crashdetector.CrashDetectorLogger.log(
+	        String.format("✅ Índice construido con %d términos únicos y ~%d entradas totales, usando %d hilos.",
+	            indiceBusqueda.size(), totalTerminos, numHilos));
+	}
+	
+	
+	/**
+	 * Indexa recursivamente un mod en el mapa local dado (NO concurrente).
+	 */
+	public void indexarModConcurrente(ArchivoDeMod mod, Map<String, List<PathDescriptor>> indiceLocal) {
+	    String modUbicacion = mod.ubicacion_para_publicar();
+	    String modUbicacionLower = modUbicacion.toLowerCase();
+	    PathDescriptor descMod = new PathDescriptor(modUbicacion, null, null, null, null, "MOD");
+	    indexarTerminoConcurrente(modUbicacionLower, descMod, indiceLocal);
+
+	    for (ArchivoDeMod submod : mod.mods_en_mods()) {
+	        indexarModConcurrente(submod, indiceLocal);
+	    }
+
+	    for (String clasePuntos : mod.clases()) {
+	        String paquete = paqueteDe(clasePuntos);
+	        String claseInterna = Buscardor.convertirFormatoClase(clasePuntos);
+
+	        if (!paquete.isEmpty()) {
+	            PathDescriptor descPaq = new PathDescriptor(modUbicacion, paquete, null, null, null, "PAQUETE");
+	            indexarTerminoConcurrente(paquete.toLowerCase(), descPaq, indiceLocal);
+	        }
+
+	        PathDescriptor descClase = new PathDescriptor(modUbicacion, paquete, clasePuntos, null, null, "CLASE");
+	        indexarTerminoConcurrente(clasePuntos.toLowerCase(), descClase, indiceLocal);
+
+	        if (!Buscardor.puedeAnalizarElContentidoDeClase() || !mod.existeClase(claseInterna)) {
+	            continue;
+	        }
+
+	        // Métodos
+	        for (ArchivoDeMod.InfoMetodo m : mod.obtenerMetodosConReferencias(claseInterna)) {
+	            String firmaLower = (m.obtenerNombre() + m.obtenerDescriptor()).toLowerCase();
+	            PathDescriptor descMetodo = new PathDescriptor(modUbicacion, paquete, clasePuntos,
+	                    m.obtenerNombre(), m.obtenerDescriptor(), "METODO");
+	            indexarTerminoConcurrente(firmaLower, descMetodo, indiceLocal);
+
+	            // Constantes
+	            for (ArchivoDeMod.Constante k : mod.buscarConstantesEnMetodo(claseInterna, m.obtenerNombre(), m.obtenerDescriptor())) {
+	                String constTexto = formatearConstante(k).toLowerCase();
+	                PathDescriptor descConst = new PathDescriptor(modUbicacion, paquete, clasePuntos,
+	                        m.obtenerNombre(), m.obtenerDescriptor(), "CONSTANTE");
+	                indexarTerminoConcurrente(constTexto, descConst, indiceLocal);
+	            }
+	        }
+
+	        // Campos
+	        for (ArchivoDeMod.InfoCampo f : mod.obtenerCampos(claseInterna)) {
+	            String firmaLower = (f.obtenerNombre() + " " + f.obtenerDescriptor()).toLowerCase();
+	            PathDescriptor descCampo = new PathDescriptor(modUbicacion, paquete, clasePuntos,
+	                    f.obtenerNombre(), f.obtenerDescriptor(), "CAMPO");
+	            indexarTerminoConcurrente(firmaLower, descCampo, indiceLocal);
+	        }
+	    }
 	}
 
 	/**
-	 * Indexa recursivamente un mod y todos sus submods en el índice de búsqueda.
-	 * Cada entrada en el índice es una cadena en minúsculas (término de búsqueda)
-	 * que apunta a uno o más descriptores de ubicación (`PathDescriptor`).
-	 *
-	 * @param mod el mod a indexar
+	 * Indexa un término en un mapa local (NO concurrente). Usa HashMap + ArrayList.
 	 */
-	private void indexarMod(ArchivoDeMod mod) {
-		String modUbicacion = mod.ubicacion_para_publicar();
-		String modUbicacionLower = modUbicacion.toLowerCase();
+	public void indexarTerminoConcurrente(String textoOriginal, PathDescriptor desc, Map<String, List<PathDescriptor>> indice) {
+	    // Reutilizamos tu lógica exacta, pero en un mapa local
+	    String normalizado = textoOriginal.toLowerCase().replaceAll("[^a-z0-9]", "");
+	    
+	    agregarAlIndiceLocal(textoOriginal.toLowerCase(), desc, indice);
+	    
+	    if (!normalizado.isEmpty()) {
+	        agregarAlIndiceLocal(normalizado, desc, indice);
+	        if (normalizado.length() <= 50) {
+	            for (int i = 0; i < normalizado.length(); i++) {
+	                for (int j = i + 3; j <= normalizado.length(); j++) {
+	                    String sub = normalizado.substring(i, j);
+	                    if (sub.length() >= 3) {
+	                        agregarAlIndiceLocal(sub, desc, indice);
+	                    }
+	                }
+	            }
+	        }
+	    }
 
-		// Indexar el mod mismo
-		PathDescriptor descMod = new PathDescriptor(modUbicacion, null, null, null, null, "MOD");
-		indexarTermino(modUbicacionLower, descMod);
-
-		// Indexar submods recursivamente
-		for (ArchivoDeMod submod : mod.mods_en_mods()) {
-			indexarMod(submod);
-		}
-
-		// Indexar clases y su contenido (métodos, campos, constantes, referencias)
-		for (String clasePuntos : mod.clases()) {
-			String paquete = paqueteDe(clasePuntos);
-			String claseSimple = nombreSimpleDe(clasePuntos);
-			String claseInterna = Buscardor.convertirFormatoClase(clasePuntos);
-
-			// Indexar paquete (si no está vacío)
-			if (!paquete.isEmpty()) {
-				String paqueteLower = paquete.toLowerCase();
-				PathDescriptor descPaq = new PathDescriptor(modUbicacion, paquete, null, null, null, "PAQUETE");
-				indexarTermino(paqueteLower, descPaq);
-			}
-
-			// Indexar clase completa
-			String clasePuntosLower = clasePuntos.toLowerCase();
-			PathDescriptor descClase = new PathDescriptor(modUbicacion, paquete, clasePuntos, null, null, "CLASE");
-			indexarTermino(clasePuntosLower, descClase);
-
-			// Si no se puede analizar bytecode, saltar métodos/campos
-			if (!Buscardor.puedeAnalizarElContentidoDeClase() || !mod.existeClase(claseInterna)) {
-				continue;
-			}
-
-			// Métodos
-			List<ArchivoDeMod.InfoMetodo> metodos = mod.obtenerMetodosConReferencias(claseInterna);
-			for (ArchivoDeMod.InfoMetodo m : metodos) {
-				String firmaMetodo = m.obtenerNombre() + m.obtenerDescriptor();
-				String firmaLower = firmaMetodo.toLowerCase();
-				PathDescriptor descMetodo = new PathDescriptor(modUbicacion, paquete, clasePuntos, m.obtenerNombre(),
-						m.obtenerDescriptor(), "METODO");
-				indexarTermino(firmaLower, descMetodo);
-
-				// Constantes en el método
-				List<ArchivoDeMod.Constante> constantes = mod.buscarConstantesEnMetodo(claseInterna, m.obtenerNombre(),
-						m.obtenerDescriptor());
-				for (ArchivoDeMod.Constante k : constantes) {
-					String constTexto = formatearConstante(k).toLowerCase();
-					PathDescriptor descConst = new PathDescriptor(modUbicacion, paquete, clasePuntos, m.obtenerNombre(),
-							m.obtenerDescriptor(), "CONSTANTE");
-					// Indexamos la constante completa; el descriptor ya contiene valor/tipo
-					indexarTermino(constTexto, descConst);
-				}
-			}
-
-			// Campos
-			List<ArchivoDeMod.InfoCampo> campos = mod.obtenerCampos(claseInterna);
-			for (ArchivoDeMod.InfoCampo f : campos) {
-				String firmaCampo = f.obtenerNombre() + " " + f.obtenerDescriptor();
-				String firmaLower = firmaCampo.toLowerCase();
-				PathDescriptor descCampo = new PathDescriptor(modUbicacion, paquete, clasePuntos, f.obtenerNombre(),
-						f.obtenerDescriptor(), "CAMPO");
-				indexarTermino(firmaLower, descCampo);
-			}
-		}
+	    String[] tokens = textoOriginal.toLowerCase().split("[^a-z0-9]+");
+	    for (String token : tokens) {
+	        if (token.length() >= 3) {
+	            agregarAlIndiceLocal(token, desc, indice);
+	        }
+	    }
 	}
+
+	/**
+	 * Agrega a un mapa local SIN sincronización.
+	 */
+	public void agregarAlIndiceLocal(String termino, PathDescriptor descriptor, Map<String, List<PathDescriptor>> indice) {
+	    if (termino == null || termino.isEmpty()) return;
+	    indice.computeIfAbsent(termino, k -> new ArrayList<>()).add(descriptor);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+
+
+	/**
+	 * Agrega un descriptor al índice concurrente de forma segura.
+	 */
+	public void agregarAlIndiceConcurrente(String termino, PathDescriptor descriptor,
+	        ConcurrentHashMap<String, List<PathDescriptor>> indice) {
+	    if (termino == null || termino.isEmpty()) return;
+	    indice.compute(termino, (clave, lista) -> {
+	        if (lista == null) {
+	            lista = new ArrayList<>();
+	        }
+	        lista.add(descriptor);
+	        return lista;
+	    });
+	}
+	
+	
+	
+
+
 
 	/**
 	 * Indexa múltiples formas de búsqueda para un descriptor: - término completo -
 	 * tokens separados por /, ., (, ), $, etc. - versión normalizada (solo
 	 * letras/números)
 	 */
-	private void indexarTermino(String textoOriginal, PathDescriptor desc) {
+	public void indexarTermino(String textoOriginal, PathDescriptor desc) {
 		String normalizado = textoOriginal.toLowerCase().replaceAll("[^a-z0-9]", "");
 
 		// 1. Término completo
@@ -238,7 +380,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 	 * Agrega un descriptor a todas las subcadenas relevantes del término (opcional:
 	 * solo palabra completa).
 	 */
-	private void agregarAlIndice(String termino, PathDescriptor descriptor) {
+	public void agregarAlIndice(String termino, PathDescriptor descriptor) {
 		// Para simplicidad, indexamos el término completo.
 		// Puedes usar n-gramas o tokenización si necesitas coincidencias parciales más
 		// potentes.
@@ -788,7 +930,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 	 * Carga el contenido completo de un módulo (clases, métodos, etc.) en segundo
 	 * plano y lo inserta en el nodo ya existente del árbol.
 	 */
-private void cargarContenidoModuloAsync(DefaultMutableTreeNode nodoMod, ArchivoDeMod mod) {
+	public void cargarContenidoModuloAsync(DefaultMutableTreeNode nodoMod, ArchivoDeMod mod) {
     setCargando(true);
     new SwingWorker<List<DefaultMutableTreeNode>, Void>() {
         @Override
@@ -920,73 +1062,7 @@ protected void done() {
     }.execute();
 }
 
-	/**
-	 * Llena un nodo de módulo YA EXISTENTE con su contenido completo (submods,
-	 * clases, etc.). NO crea un nodo nuevo.
-	 */
-	private void llenarNodoModulo(DefaultMutableTreeNode nodoModulo, ArchivoDeMod mod) {
-		// Submods
-		for (ArchivoDeMod submod : mod.mods_en_mods()) {
-			DefaultMutableTreeNode nodoSub = new DefaultMutableTreeNode(
-					new NodoConTexto(submod.ubicacion_para_publicar(), submod));
-			nodoModulo.add(nodoSub);
-			// Opcional: dejar submods también perezosos → no llenar ahora
-		}
 
-		// Paquetes y clases
-		if (!mod.clases().isEmpty()) {
-			Map<String, List<String>> clasesPorPaquete = agruparClasesPorPaquete(mod.clases());
-			for (Map.Entry<String, List<String>> entrada : clasesPorPaquete.entrySet()) {
-				String paquete = entrada.getKey();
-				List<String> clasesEnPaquete = entrada.getValue();
-				DefaultMutableTreeNode nodoPaquete;
-				if (paquete.isEmpty()) {
-					nodoPaquete = new DefaultMutableTreeNode(
-							new NodoConTexto("(paquete por defecto) (" + clasesEnPaquete.size() + " clases)", paquete));
-				} else {
-					nodoPaquete = new DefaultMutableTreeNode(
-							new NodoConTexto(paquete + " (" + clasesEnPaquete.size() + " clases)", paquete));
-				}
-				for (String nombreClase : clasesEnPaquete) {
-					String clasePuntos = paquete.isEmpty() ? nombreClase : paquete + "." + nombreClase;
-					String claseInterna = Buscardor.convertirFormatoClase(clasePuntos);
-					DefaultMutableTreeNode nodoClase = new DefaultMutableTreeNode(
-							new NodoConTexto(nombreClase, new Object[] { mod, clasePuntos }));
-					if (Buscardor.puedeAnalizarElContentidoDeClase() && mod.existeClase(claseInterna)) {
-						// Métodos
-						List<ArchivoDeMod.InfoMetodo> metodos = mod.obtenerMetodosConReferencias(claseInterna);
-						if (!metodos.isEmpty()) {
-							DefaultMutableTreeNode nodoMetodos = new DefaultMutableTreeNode(new NodoConTexto(
-									MonitorDePID.idioma.metodos() + " (" + metodos.size() + ")", "contenedor_metodos"));
-							for (ArchivoDeMod.InfoMetodo metodo : metodos) {
-								DefaultMutableTreeNode nodoMetodo = new DefaultMutableTreeNode(
-										new NodoConTexto(metodo.obtenerNombre() + metodo.obtenerDescriptor(),
-												new Object[] { mod, clasePuntos, metodo }));
-								// Constantes y referencias (igual que en construirNodoModulo)
-								// ... (copia desde tu método original)
-								nodoMetodos.add(nodoMetodo);
-							}
-							nodoClase.add(nodoMetodos);
-						}
-						// Campos
-						List<ArchivoDeMod.InfoCampo> campos = mod.obtenerCampos(claseInterna);
-						if (!campos.isEmpty()) {
-							DefaultMutableTreeNode nodoCampos = new DefaultMutableTreeNode(new NodoConTexto(
-									MonitorDePID.idioma.campos() + " (" + campos.size() + ")", "contenedor_campos"));
-							for (ArchivoDeMod.InfoCampo campo : campos) {
-								nodoCampos.add(new DefaultMutableTreeNode(
-										new NodoConTexto(campo.obtenerNombre() + " " + campo.obtenerDescriptor(),
-												new Object[] { mod, clasePuntos, campo })));
-							}
-							nodoClase.add(nodoCampos);
-						}
-					}
-					nodoPaquete.add(nodoClase);
-				}
-				nodoModulo.add(nodoPaquete);
-			}
-		}
-	}
 
 	public void iniciarCargaPesada() {
 		setCargando(true);
@@ -1020,7 +1096,7 @@ protected void done() {
 	 * Determina si un descriptor debe incluirse según el filtro de tipo
 	 * seleccionado.
 	 */
-	private boolean debeIncluirsePorTipoFiltro(PathDescriptor desc, String tipoFiltro) {
+	public boolean debeIncluirsePorTipoFiltro(PathDescriptor desc, String tipoFiltro) {
 		if ("*".equals(tipoFiltro))
 			return true;
 
@@ -1046,7 +1122,7 @@ protected void done() {
 	 * Crea un placeholder para InfoMetodo o InfoCampo cuando no se tiene el objeto
 	 * real, solo para fines de visualización en búsquedas.
 	 */
-	private Object crearPlaceholderInfo(String nombre, String descriptor, String tipo) {
+	public Object crearPlaceholderInfo(String nombre, String descriptor, String tipo) {
 		if ("METODO".equals(tipo) || "CONSTANTE".equals(tipo)) {
 			return new ArchivoDeMod.InfoMetodo(nombre, descriptor, new ArrayList<>(), new ArrayList<>());
 		} else {
