@@ -385,24 +385,36 @@ public class ModPKZip implements ArchivoDeMod {
 	 *
 	 * @return número de clases cargadas en caché en esta instancia
 	 */
+	/**
+	 * Precarga los bytes de TODAS las clases de este ZIP en el caché interno. Útil
+	 * si se desea evitar lecturas repetidas del ZIP durante un análisis intensivo.
+	 *
+	 * @return número de clases cargadas en caché en esta instancia
+	 */
 	public int precargarTodasLasClases() {
-		int cargadas = 0;
-		for (Map.Entry<String, String> e : mapaEntradaPorClase.entrySet()) {
-			final String interno = e.getKey();
-			if (cacheBytesClase.containsKey(interno)) {
-				continue; // ya en caché
-			}
-			try {
-				byte[] data = leerEntrada(e.getValue());
-				if (data != null) {
-					cacheBytesClase.put(interno, data);
-					cargadas++;
-				}
-			} catch (IOException ex) {
-				CrashDetectorLogger.logException(ex);
-			}
-		}
-		return cargadas;
+	    int cargadas = 0;
+	    try (ZipInputStream zip = new ZipInputStream(new ByteArrayInputStream(bytesZip))) {
+	        ZipEntry entrada;
+	        while ((entrada = zip.getNextEntry()) != null) {
+	            String nombreEntrada = entrada.getName();
+	            if (nombreEntrada.endsWith(".class")) {
+	                String nombreInterno = nombreEntrada.substring(0, nombreEntrada.length() - 6); // sin ".class"
+
+	                // Solo procesar si es una clase indexada (evita redundancias con clases no mapeadas)
+	                if (mapaEntradaPorClase.containsKey(nombreInterno) && !cacheBytesClase.containsKey(nombreInterno)) {
+	                    byte[] data = leer(zip);
+	                    if (data != null) {
+	                        cacheBytesClase.put(nombreInterno, data);
+	                        cargadas++;
+	                    }
+	                }
+	            }
+	            zip.closeEntry();
+	        }
+	    } catch (IOException ex) {
+	        CrashDetectorLogger.logException(ex);
+	    }
+	    return cargadas;
 	}
 
 	/**
