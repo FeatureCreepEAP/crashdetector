@@ -35,8 +35,8 @@ public class ModCarpeta implements ArchivoDeMod {
 	public List<String> clases = new ArrayList<>();
 	public List<String> archivos = new ArrayList<>();
 
-	private final Map<String, Path> mapaRutasClase = new HashMap<>(); // clave = nombre interno "pkg/Clase"
-	private final Map<String, byte[]> cacheBytesClase = new HashMap<>(); // bytes cacheados tras la primera lectura
+	private final Map<String, Path> mapaRutasClase = new java.util.concurrent.ConcurrentHashMap<>();
+	private final Map<String, byte[]> cacheBytesClase = new java.util.concurrent.ConcurrentHashMap<>();
 
 	// Métricas para decidir precarga (opcional) en mods pequeños
 	private long totalTamanoClases = 0L;
@@ -104,8 +104,8 @@ public class ModCarpeta implements ArchivoDeMod {
 					} else if (nombre.endsWith(".class")) {
 						procesarClase(entrada);
 					} else if (nombre.endsWith("MANIFEST.MF")) {
-						nombres.addAll(
-								ProcesadorManifiesto.obtenerNombresDeModulo(new Manifest(new FileInputStream(entrada.toAbsolutePath().toString()))));
+						nombres.addAll(ProcesadorManifiesto.obtenerNombresDeModulo(
+								new Manifest(new FileInputStream(entrada.toAbsolutePath().toString()))));
 					} else if (esArchivoAnidado(nombre)) {
 						procesarArchivoAnidado(entrada, nombre);
 					} else {
@@ -283,13 +283,39 @@ public class ModCarpeta implements ArchivoDeMod {
 	@Override
 	public List<ArchivoDeMod> buscarModsCon(String termino) {
 		List<ArchivoDeMod> resultados = new ArrayList<>();
+		if (termino == null || termino.isEmpty())
+			return resultados;
 
-		boolean tieneArchivo = archivos.contains(termino);
-		boolean tieneClase = clases.contains(termino);
-		String rutaPaquete = termino.replace('.', '/');
-		boolean tienePaquete = clases.stream().anyMatch(clase -> clase.replace(".", "/").startsWith(rutaPaquete));
+		String t = termino;
+		if (t.endsWith(".class"))
+			t = t.substring(0, t.length() - 6);
 
-		if (tieneArchivo || tieneClase || tienePaquete) {
+		// canonical forms
+		String tDots = t.replace('/', '.'); // com.foo.Bar
+		String tSlashes = t.replace('.', '/'); // com/foo/Bar
+
+		// archivo: tu lista 'archivos' solo guarda nombres de archivo (basename),
+		// pero el usuario puede pasar "x/y/z.txt". En ese caso, también probamos
+		// basename.
+		String baseName = t;
+		int slash = baseName.lastIndexOf('/');
+		if (slash >= 0)
+			baseName = baseName.substring(slash + 1);
+		int back = baseName.lastIndexOf('\\');
+		if (back >= 0)
+			baseName = baseName.substring(back + 1);
+
+		boolean tieneArchivo = archivos.contains(termino) || archivos.contains(baseName)
+				|| archivos.contains(baseName + ".class");
+
+		// clase exacta: tu almacenamiento humano es dotted, tu índice real es internal
+		boolean tieneClaseExacta = clases.contains(tDots) || mapaRutasClase.containsKey(tSlashes);
+
+		// paquete: aceptar "com.foo" o "com/foo"
+		boolean tienePaquete = mapaRutasClase.keySet().stream().anyMatch(c -> c.startsWith(tSlashes))
+				|| clases.stream().anyMatch(c -> c.startsWith(tDots));
+
+		if (tieneArchivo || tieneClaseExacta || tienePaquete) {
 			resultados.add(this);
 		}
 
@@ -302,10 +328,15 @@ public class ModCarpeta implements ArchivoDeMod {
 
 	@Override
 	public boolean existeClase(String nombreClase) {
-		// Convertir nombre de clase de formato interno (ej: "java/lang/Object") a
-		// formato Java (ej: "java.lang.Object")
-		String formatoJava = nombreClase.replace('/', '.');
-		return clases.contains(formatoJava);
+		if (nombreClase == null || nombreClase.isEmpty())
+			return false;
+
+		String interno = normalizarNombreInterno(nombreClase);
+		if (mapaRutasClase.containsKey(interno))
+			return true;
+
+		String dots = interno.replace('/', '.');
+		return clases.contains(dots);
 	}
 
 	/**
@@ -318,23 +349,21 @@ public class ModCarpeta implements ArchivoDeMod {
 		if (nombreClase == null || nombreClase.isEmpty())
 			return null;
 
-		// Normalizar a nombre interno ASM (pkg/Clase)
 		String interno = normalizarNombreInterno(nombreClase);
 
-		// 1) caché en memoria
-		byte[] bytes = cacheBytesClase.get(interno);
-		if (bytes != null)
-			return bytes;
+		byte[] cached = cacheBytesClase.get(interno);
+		if (cached != null)
+			return cached;
 
-		// 2) cargar desde disco bajo demanda
 		Path ruta = mapaRutasClase.get(interno);
 		if (ruta == null)
 			return null;
 
 		try {
-			bytes = Files.readAllBytes(ruta);
-			cacheBytesClase.put(interno, bytes);
-			return bytes;
+			byte[] bytes = Files.readAllBytes(ruta);
+			// publish once (if another thread won, reuse theirs)
+			byte[] prev = cacheBytesClase.putIfAbsent(interno, bytes);
+			return (prev != null) ? prev : bytes;
 		} catch (IOException e) {
 			CrashDetectorLogger.logException(e);
 			return null;

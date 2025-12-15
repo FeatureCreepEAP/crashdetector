@@ -43,8 +43,9 @@ public class ModPKZip implements ArchivoDeMod {
 	private final Map<String, String> mapaEntradaPorClase = new HashMap<>();
 
 	// Cachés de bytes de entradas ya leídas
-	private final Map<String, byte[]> cacheBytesEntrada = new HashMap<>();
-	private final Map<String, byte[]> cacheBytesClase = new HashMap<>();
+	private final Map<String, byte[]> cacheBytesEntrada = new java.util.concurrent.ConcurrentHashMap<>();
+	private final Map<String, byte[]> cacheBytesClase = new java.util.concurrent.ConcurrentHashMap<>();
+
 
 	public List<Cargador> cargadores_de_mod = new ArrayList<Cargador>();
 	public boolean meta_tiene_referencia_de_mcreator = false;
@@ -300,31 +301,48 @@ public class ModPKZip implements ArchivoDeMod {
 
 	@Override
 	public List<ArchivoDeMod> buscarModsCon(String termino) {
-		List<ArchivoDeMod> resultados = new ArrayList<>();
+	    List<ArchivoDeMod> resultados = new ArrayList<>();
+	    if (termino == null || termino.isEmpty()) return resultados;
 
-		boolean tieneArchivo = archivos.contains(termino);
-		boolean tieneClase = clases.contains(termino);
-		String rutaPaquete = termino.replace('.', '/');
-		boolean tienePaquete = clases.stream().anyMatch(clase -> clase.replace(".", "/").startsWith(rutaPaquete));
+	    String t = termino;
+	    if (t.endsWith(".class")) t = t.substring(0, t.length() - 6);
 
-		if (tieneArchivo || tieneClase || tienePaquete) {
-			resultados.add(this);
-		}
+	    String tDots = t.replace('/', '.');   // com.foo.Bar
+	    String tSlashes = t.replace('.', '/'); // com/foo/Bar
 
-		for (ArchivoDeMod mod : mods_en_mod) {
-			resultados.addAll(mod.buscarModsCon(termino));
-		}
+	    boolean tieneArchivo = archivos.contains(termino) || archivos.contains(tSlashes + ".class") || archivos.contains(tDots);
 
-		return resultados;
+	    boolean tieneClaseExacta =
+	            clases.contains(tDots) ||                      
+	            mapaEntradaPorClase.containsKey(tSlashes) ||    // internal index
+	            mapaEntradaPorClase.containsKey(normalizarNombreInterno(t)); 
+
+	    boolean tienePaquete =
+	            mapaEntradaPorClase.keySet().stream().anyMatch(c -> c.startsWith(tSlashes)) // internal
+	            || clases.stream().anyMatch(c -> c.startsWith(tDots));                       // dots
+
+	    if (tieneArchivo || tieneClaseExacta || tienePaquete) {
+	        resultados.add(this);
+	    }
+
+	    for (ArchivoDeMod mod : mods_en_mod) {
+	        resultados.addAll(mod.buscarModsCon(termino));
+	    }
+	    return resultados;
 	}
+
 
 	@Override
 	public boolean existeClase(String nombreClase) {
-		// Convertir nombre de clase de formato interno (ej: "java/lang/Object") a
-		// formato Java (ej: "java.lang.Object")
-		String formatoJava = nombreClase.replace('/', '.');
-		return clases.contains(formatoJava);
+	    if (nombreClase == null || nombreClase.isEmpty()) return false;
+
+	    String interno = normalizarNombreInterno(nombreClase); 
+	    if (mapaEntradaPorClase.containsKey(interno)) return true;
+
+	    String dots = interno.replace('/', '.');
+	    return clases.contains(dots);
 	}
+
 
 	/**
 	 * Devuelve los bytes de la clase solicitada. Acepta nombre interno "pkg/Clase"
