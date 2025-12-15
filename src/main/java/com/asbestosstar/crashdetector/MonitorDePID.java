@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.management.ManagementFactory;
-import java.lang.management.OperatingSystemMXBean;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -31,6 +30,8 @@ import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.grepr.BusquedaArchivos;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.arbol.ArbolDeModsGUIHamu;
+import com.asbestosstar.crashdetector.gui.tipos.cfr.BuscarParaCFR;
+import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrSakuraRiddle;
 import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartirLegacy;
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanelEstiloTL;
 import com.asbestosstar.crashdetector.gui.tipos.editor.EditorCodiceGUIIronMouse;
@@ -203,6 +204,11 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/sabalifecruel.png",
 				Statics.carpeta.resolve("imagenes/sabalifecruel.png").toFile());
 
+		copiarACarpetaDesdeJar("/imagenes/sakura_riddle.png",
+				Statics.carpeta.resolve("imagenes/sakura_riddle.png").toFile());
+
+		
+		
 //		new File(viajo_ultima_mods.toString()).delete();
 //		try {
 //			new File(viajo_ultima_mods.toString()).createNewFile();
@@ -300,7 +306,7 @@ public class MonitorDePID {
 
 		// Launch the child monitor process
 		try {
-			String cp = System.getProperty("java.class.path") + File.pathSeparator + jar;
+			String cp = obtenerClassPath(jar);
 			// System.out.println("******************" + cp);
 
 			ProcessBuilder pb = new ProcessBuilder(javaBinary, obtenerXMXPorMitadDeRAM(),
@@ -321,6 +327,33 @@ public class MonitorDePID {
 		System.out.println("completa con comenzando el proceso CD");
 
 	}
+
+	public static String obtenerClassPath(String jar) {
+	    // ClassPath base de la JVM actual
+	    StringBuilder classPath = new StringBuilder(System.getProperty("java.class.path"));
+
+	    // Añadir el JAR proporcionado si no es null/vacío
+	    if (jar != null && !jar.isEmpty()) {
+	        classPath.append(File.pathSeparator).append(jar);
+	    }
+
+	    // Intentar añadir CFR si está instalado
+	    try {
+	        File cfrJar = BuscarParaCFR.encontrarCfr();  // Usando BuscarParaCFR para obtener el JAR de CFR
+	        if (cfrJar != null && cfrJar.exists()) {
+	            String rutaCfr = cfrJar.getAbsolutePath();
+	            // Evitar duplicarlo en el classpath
+	            if (!classPath.toString().contains(rutaCfr)) {
+	                classPath.append(File.pathSeparator).append(rutaCfr);
+	            }
+	        }
+	    } catch (Throwable t) {
+	        // En caso de error con la búsqueda del JAR de CFR, se ignora
+	    }
+
+	    return classPath.toString();
+	}
+
 
 	public static void registrarGUISPredeterminado() {
 		// TODO Auto-generated method stub
@@ -346,6 +379,7 @@ public class MonitorDePID {
 		TipoGUI.DIALOGO_COMPARTIR.registrarGUI(DialogoCompartirLegacy.ID, () -> new DialogoCompartirLegacy());
 		TipoGUI.EDITOR_GUI.registrarGUI(CDSkinCape.ID, () -> new CDSkinCape());
 		TipoGUI.MOD_API_PANEL.registrarGUI(CDModsEstiloTL.ID, () -> new CDModsEstiloTL());
+		TipoGUI.CFR.registrarGUI(CfrSakuraRiddle.ID, () -> new CfrSakuraRiddle());
 
 	}
 

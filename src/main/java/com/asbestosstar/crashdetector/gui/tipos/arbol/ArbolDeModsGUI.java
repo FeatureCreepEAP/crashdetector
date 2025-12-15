@@ -67,6 +67,7 @@ import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
+import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrBase;
 
 public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLateralDerecha {
 
@@ -350,9 +351,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		}
 	}
 
-	public void mostrarCodigoDescompilado(ArchivoDeMod mod, String nombreClase) {
-		// Integración real con descompilador aquí
-	}
+
 
 	public void exportarEstructura() {
 		JFileChooser selectorArchivo = new JFileChooser();
@@ -534,6 +533,10 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 			campoBuscar.setText("");
 		});
 
+		// New "View Code" button
+		JButton botonVerCodigo = new JButton("Ver Código");
+		botonVerCodigo.addActionListener(e -> mostrarCodigoClaseSeleccionada());
+
 		arbolModulos = new JTree();
 		arbolModulos.setRootVisible(false);
 		arbolModulos.setShowsRootHandles(true);
@@ -599,13 +602,6 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 			Object user = nodo.getUserObject();
 			Object objReal = (user instanceof NodoConTexto) ? ((NodoConTexto) user).objeto() : user;
 
-			if (objReal instanceof Object[]) {
-				Object[] datos = (Object[]) objReal;
-				if (datos.length == 3 && datos[2] instanceof ArchivoDeMod.InfoMetodo) {
-					asegurarNodoConstantesPara(nodo);
-				}
-			}
-
 			mostrarDetallesNodo(objReal);
 		});
 
@@ -626,19 +622,15 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		JPanel panelDerecho = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		panelDerecho.setOpaque(false);
 
-		JButton botonDescompilar = new JButton(MonitorDePID.idioma.descompilar());
 		JButton botonExportar = new JButton(MonitorDePID.idioma.exportar());
 		JButton botonImportar = new JButton(MonitorDePID.idioma.importar());
 
-		botonDescompilar.setEnabled(false);
-
-		botonDescompilar.addActionListener(e -> descompilarElementoSeleccionado());
 		botonExportar.addActionListener(e -> exportarEstructura());
 		botonImportar.addActionListener(e -> importarEstructura());
 
-		panelDerecho.add(botonDescompilar);
 		panelDerecho.add(botonExportar);
 		panelDerecho.add(botonImportar);
+		panelDerecho.add(botonVerCodigo); // Add the new "View Code" button
 
 		panelInferior.add(panelIzquierdo, BorderLayout.WEST);
 		panelInferior.add(panelDerecho, BorderLayout.EAST);
@@ -667,6 +659,44 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		this.setVisible(true);
 		iniciarCargaPesada();
 	}
+
+	
+	
+	
+	
+	private void mostrarCodigoClaseSeleccionada() {
+	    TreePath rutaSeleccionada = arbolModulos.getSelectionPath();
+	    if (rutaSeleccionada == null) {
+	        return;
+	    }
+
+	    DefaultMutableTreeNode nodo = (DefaultMutableTreeNode) rutaSeleccionada.getLastPathComponent();
+	    Object objetoUsuario = nodo.getUserObject();
+
+	    if (objetoUsuario instanceof NodoConTexto) {
+	        Object objetoReal = ((NodoConTexto) objetoUsuario).objeto();
+
+	        if (objetoReal instanceof Object[]) {
+	            Object[] datos = (Object[]) objetoReal;
+	            if (datos[0] instanceof ArchivoDeMod && datos[1] instanceof String) {
+	                ArchivoDeMod mod = (ArchivoDeMod) datos[0];
+	                String nombreClase = (String) datos[1];
+	                mostrarCodigoDescompilado(mod, nombreClase);
+	            }
+	        }
+	    }
+	}
+
+	private void mostrarCodigoDescompilado(ArchivoDeMod mod, String nombreClase) {
+	    try {
+	        // Assuming CfrBase provides the decompiling functionality
+	        String codigoDescompilado = CfrBase.descompilarClase(nombreClase);
+	        areaContenido.setText(codigoDescompilado);
+	    } catch (Exception e) {
+	        areaContenido.setText("Error al obtener el código: " + e.getMessage());
+	    }
+	}
+
 
 	/**
 	 * Muestra los detalles del nodo seleccionado en el área de contenido. Este

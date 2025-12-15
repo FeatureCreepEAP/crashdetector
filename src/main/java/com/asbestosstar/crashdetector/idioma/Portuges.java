@@ -4785,4 +4785,86 @@ public class Portuges implements Idioma {
 		return "Certifique-se de estar usando a versão correta do Falling Attack compatível com sua versão do Minecraft.";
 	}
 
+	@Override
+	public String necesitasInstalarCfr() {
+	    String sistema = System.getProperty("os.name").toLowerCase();
+	    StringBuilder mensaje = new StringBuilder();
+	    mensaje.append("<html>")
+	           .append("Você precisa instalar o CFR (Class File Reader) para usar este recurso.<br><br>");
+
+	    if (sistema.contains("linux") || sistema.contains("netbsd") || sistema.contains("freebsd")) {
+	        mensaje.append("Em sistemas Linux, NetBSD ou FreeBSD, você pode instalar o CFR pelo gerenciador de pacotes.<br>")
+	               .append("Procure o pacote em: <a href=\"https://pkgs.org/search/?q=cfr\">https://pkgs.org/search/?q=cfr</a><br><br>");
+	    }
+
+	    mensaje.append("Alternativamente, você pode baixar a versão modificada usada pelo FabricMC em:<br>")
+	           .append("<a href=\"https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar\">")
+	           .append("https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar</a><br><br>")
+	           .append("Salve-o na seguinte pasta:<br>")
+	           .append("<b>")
+	           .append(new java.io.File(System.getProperty("user.home"), "crash_detector/cfr/").getAbsolutePath())
+	           .append("</b><br><br>")
+	           .append("⚠️ <b>Importante:</b> após instalar o CFR, reinicie o mod para que ele seja reconhecido corretamente.")
+	           .append("</html>");
+	    return mensaje.toString();
+	}
+
+	@Override
+	public String cfrNoHayRetrato() {
+	    return "Sem retrato disponível";
+	}
+
+	@Override
+	public String cfrClaseNoEncontrada(String nombreClase) {
+	    return "Não foi possível encontrar a classe: " + nombreClase;
+	}
+
+	@Override
+	public String tituloCfrSakura() {
+	    return "Descompilador CFR – Sakura Riddle (Não Oficial)";
+	}
+
+	@Override
+	public String cfrClaseActual() {
+	    return "Classe atual";
+	}
+
+	@Override
+	public String cfrRetratoDeSakura() {
+	    return "Retrato de Sakura Riddle";
+	}
+
+	@Override
+	public String cfrErrorCargarRetrato() {
+	    return "Erro ao carregar o retrato";
+	}
+	
+	public String noticiaLegalCFR() {
+	    return "Este programa com interface gráfica (GUI) para descompilar mods foi projetado para ajudar os usuários a identificar as causas de falhas no software. "
+	            + "No entanto, a descompilação de mods pode ser necessária, e os usuários devem ter cuidado para não usar o código gerado para infringir a Lei Federal de Direitos Autorais. "
+	            + "Recomenda-se verificar a licença do mod correspondente antes de usar qualquer código obtido. Além disso, muitos mods disponibilizam oficialmente seu código-fonte, "
+	            + "que geralmente é mais limpo e fácil de entender do que o código descompilado. Lembre-se de que o respeito à propriedade intelectual e às licenças de uso é fundamental para "
+	            + "a comunidade de desenvolvedores de mods. Você pode consultar a Lei Federal de Direitos Autorais do México no seguinte link: "
+	            + "<a href=\"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf\" target=\"_blank\">Ley Federal de Derechos de Autor (Espanhol)</a> "
+	            + "e a versão em inglês aqui: <a href=\"https://www.indautor.gob.mx/documentos/marco-juridico/L_Fed_Derecho_de_Autor_(English).pdf\" target=\"_blank\">Copyright Law (English)</a>. "
+	            + "Como você está no CurseForge, também fornecemos o link para a Lei de Direitos Autorais dos EUA em inglês: "
+	            + "<a href=\"https://www.copyright.gov/title17/title17.pdf\" target=\"_blank\">U.S. Copyright Law</a>. "
+	            + "Além disso, recomenda-se que os usuários pesquisem as leis aplicáveis em sua localização. "
+	            + "Nossa GUI é apenas para verificações simples; para análise avançada, use o fork Enigma da FabricMC disponível em "
+	            + "<a href=\"https://github.com/FabricMC/Enigma\" target=\"_blank\">GitHub</a>. Se desejar editar arquivos JAR para criar patches quando o código-fonte não estiver disponível, use o Recaf em "
+	            + "<a href=\"https://recaf.coley.software/home.html\" target=\"_blank\">seu site</a>.";
+	}
+	
+	@Override
+	public String botonDescargarCfr() {
+	    return "Baixar CFR";
+	}
+
+	@Override
+	public String botonAbrirCarpetaCfr() {
+	    return "Abrir pasta de instalação";
+	}
+	
+	
+	
 }

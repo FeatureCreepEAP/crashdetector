@@ -5468,4 +5468,89 @@ public class Espanol implements Idioma {
 		return "Asegúrate de usar la versión correcta de Falling Attack compatible con tu versión de Minecraft.";
 	}
 
+	
+	@Override
+	public String necesitasInstalarCfr() {
+	    String sistema = System.getProperty("os.name").toLowerCase();
+	    StringBuilder mensaje = new StringBuilder();
+	    mensaje.append("<html>")
+	           .append("Necesitas instalar CFR (Class File Reader) para usar esta funcionalidad.<br><br>");
+
+	    if (sistema.contains("linux") || sistema.contains("netbsd") || sistema.contains("freebsd")) {
+	        mensaje.append("En sistemas Linux, NetBSD o FreeBSD, puedes instalar CFR desde tu gestor de paquetes.<br>")
+	               .append("Busca el paquete en: <a href=\"https://pkgs.org/search/?q=cfr\">https://pkgs.org/search/?q=cfr</a><br><br>");
+	    }
+
+	    mensaje.append("Alternativamente, puedes descargar la versión modificada usada por FabricMC desde:<br>")
+	           .append("<a href=\"https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar\">")
+	           .append("https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar</a><br><br>")
+	           .append("Guárdalo en la siguiente carpeta:<br>")
+	           .append("<b>")
+	           .append(new java.io.File(System.getProperty("user.home"), "crash_detector/cfr/").getAbsolutePath())
+	           .append("</b><br><br>")
+	           .append("⚠️ <b>Importante:</b> después de instalar CFR, debes reiniciar el mod para que lo reconozca correctamente.")
+	           .append("</html>");
+	    return mensaje.toString();
+	}
+
+	@Override
+	public String cfrNoHayRetrato() {
+	    return "Sin retrato disponible";
+	}
+
+	@Override
+	public String cfrClaseNoEncontrada(String nombreClase) {
+	    return "No se pudo encontrar la clase: " + nombreClase;
+	}
+
+	@Override
+	public String tituloCfrSakura() {
+	    return "Descompilador CFR – Sakura Riddle (No Oficial)";
+	}
+
+	@Override
+	public String cfrClaseActual() {
+	    return "Clase actual";
+	}
+
+	@Override
+	public String cfrRetratoDeSakura() {
+	    return "Retrato de Sakura Riddle";
+	}
+
+	@Override
+	public String cfrErrorCargarRetrato() {
+	    return "Error al cargar el retrato";
+	}
+	
+	public String noticiaLegalCFR() {
+	    return "Este programa de interfaz gráfica (GUI) para decompilar mods está diseñado para ayudar a los usuarios a identificar las causas de fallos en el software. "
+	            + "Sin embargo, la decompilación de mods puede ser necesaria, y los usuarios deben tener cuidado de no utilizar el código generado para infringir la Ley Federal de Derechos de Autor. "
+	            + "Se recomienda revisar la licencia del mod correspondiente antes de usar cualquier código obtenido. Además, a menudo los mods proporcionan su código fuente oficialmente, "
+	            + "que es generalmente más limpio y fácil de entender que el código descompilado. Recuerde que el respeto por la propiedad intelectual y las licencias de uso es fundamental para "
+	            + "la comunidad de desarrollo de mods. Puede consultar la Ley Federal de Derechos de Autor en el siguiente enlace: "
+	            + "<a href=\"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf\" target=\"_blank\">Ley Federal de Derechos de Autor (Español)</a> "
+	            + "y la versión en inglés aquí: <a href=\"https://www.indautor.gob.mx/documentos/marco-juridico/L_Fed_Derecho_de_Autor_(English).pdf\" target=\"_blank\">Copyright Law (English)</a>. "
+	            + "Dado que estamos en CurseForge, también proporcionamos el enlace a la Ley de Derechos de Autor de EE. UU. en inglés: "
+	            + "<a href=\"https://www.copyright.gov/title17/title17.pdf\" target=\"_blank\">U.S. Copyright Law</a>. "
+	            + "Además, se recomienda que los usuarios consulten dónde se encuentran y se informen sobre las leyes aplicables en su ubicación. "
+	            + "Nuestra GUI es solo para comprobaciones simples; para un análisis más avanzado, deberían usar el Fork Enigma de FabricMC disponible en "
+	            + "<a href=\"https://github.com/FabricMC/Enigma\" target=\"_blank\">GitHub</a>. Si desean editar archivos JAR para hacer parches cuando no hay código fuente disponible, pueden utilizar Recaf en "
+	            + "<a href=\"https://recaf.coley.software/home.html\" target=\"_blank\">su sitio web</a>.";
+	}
+	
+	@Override
+	public String botonDescargarCfr() {
+	    return "Descargar CFR";
+	}
+
+	@Override
+	public String botonAbrirCarpetaCfr() {
+	    return "Abrir carpeta de instalación";
+	}
+	
+	
+	
+	
+	
 }

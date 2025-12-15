@@ -4615,4 +4615,86 @@ public class Japones implements Idioma {
 		return "使用中の Minecraft バージョンと互換性のある正しいバージョンの Falling Attack を使用していることを確認してください。";
 	}
 
+	@Override
+	public String necesitasInstalarCfr() {
+	    String sistema = System.getProperty("os.name").toLowerCase();
+	    StringBuilder mensaje = new StringBuilder();
+	    mensaje.append("<html>")
+	           .append("この機能を使用するには、CFR (Class File Reader) をインストールする必要があります。<br><br>");
+
+	    if (sistema.contains("linux") || sistema.contains("netbsd") || sistema.contains("freebsd")) {
+	        mensaje.append("Linux、NetBSD、FreeBSD システムでは、パッケージマネージャーから CFR をインストールできます。<br>")
+	               .append("こちらでパッケージを検索してください: <a href=\"https://pkgs.org/search/?q=cfr\">https://pkgs.org/search/?q=cfr</a><br><br>");
+	    }
+
+	    mensaje.append("または、FabricMC が使用している修正版を以下からダウンロードできます:<br>")
+	           .append("<a href=\"https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar\">")
+	           .append("https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar</a><br><br>")
+	           .append("以下のフォルダに保存してください:<br>")
+	           .append("<b>")
+	           .append(new java.io.File(System.getProperty("user.home"), "crash_detector/cfr/").getAbsolutePath())
+	           .append("</b><br><br>")
+	           .append("⚠️ <b>重要:</b> CFR をインストール後、mod を再起動しないと正しく認識されません。")
+	           .append("</html>");
+	    return mensaje.toString();
+	}
+
+	@Override
+	public String cfrNoHayRetrato() {
+	    return "利用可能な肖像画なし";
+	}
+
+	@Override
+	public String cfrClaseNoEncontrada(String nombreClase) {
+	    return "クラスが見つかりません: " + nombreClase;
+	}
+
+	@Override
+	public String tituloCfrSakura() {
+	    return "CFR デコンパイラ – Sakura Riddle（非公式）";
+	}
+
+	@Override
+	public String cfrClaseActual() {
+	    return "現在のクラス";
+	}
+
+	@Override
+	public String cfrRetratoDeSakura() {
+	    return "Sakura Riddle の肖像画";
+	}
+
+	@Override
+	public String cfrErrorCargarRetrato() {
+	    return "肖像画の読み込みエラー";
+	}
+	
+	public String noticiaLegalCFR() {
+	    return "この mod の逆コンパイル用グラフィカル・ユーザー・インターフェース（GUI）は、ソフトウェアのクラッシュ原因を特定するためのものです。"
+	            + "ただし mod の逆コンパイルは場合によって必要となることがありますが、生成されたコードを用いて著作権法に違反しないようご注意ください。"
+	            + "コードを使用する前に、該当 mod のライセンスを確認することを推奨します。多くの mod は公式にソースコードを公開しており、"
+	            + "これは逆コンパイル結果と比べて通常、より明確で理解しやすいです。知的財産権およびライセンスへの配慮は、"
+	            + "mod 開発コミュニティにとって不可欠です。メキシコ連邦著作権法については以下をご参照ください："
+	            + "<a href=\"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf\" target=\"_blank\">Ley Federal de Derechos de Autor（スペイン語）</a>、"
+	            + "英語版はこちら：<a href=\"https://www.indautor.gob.mx/documentos/marco-juridico/L_Fed_Derecho_de_Autor_(English).pdf\" target=\"_blank\">Copyright Law (English)</a>。"
+	            + "CurseForge 上での利用を考慮し、米国著作権法も以下に示します："
+	            + "<a href=\"https://www.copyright.gov/title17/title17.pdf\" target=\"_blank\">U.S. Copyright Law</a>。"
+	            + "また、ユーザーご自身の居住地に適用される法律を必ずご確認ください。"
+	            + "本 GUI は簡易診断専用です。詳細な解析には FabricMC 版 Enigma をご利用ください："
+	            + "<a href=\"https://github.com/FabricMC/Enigma\" target=\"_blank\">GitHub</a>。ソースコードが公開されていない場合に JAR ファイルを直接編集してパッチを作るには、Recaf をご検討ください："
+	            + "<a href=\"https://recaf.coley.software/home.html\" target=\"_blank\">公式サイト</a>。";
+	}
+	
+	@Override
+	public String botonDescargarCfr() {
+	    return "CFR をダウンロード";
+	}
+
+	@Override
+	public String botonAbrirCarpetaCfr() {
+	    return "インストールフォルダを開く";
+	}
+	
+	
+	
 }

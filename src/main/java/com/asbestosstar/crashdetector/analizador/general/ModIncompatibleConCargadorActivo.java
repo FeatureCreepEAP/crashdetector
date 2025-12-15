@@ -41,7 +41,7 @@ public class ModIncompatibleConCargadorActivo implements Verificaciones {
 		modsIncompatibles.clear();
 
 		// Recorrer todos los mods detectados
-		for (ArchivoDeMod mod : Buscardor.mods) {
+		for (ArchivoDeMod mod : Buscardor.obtenerTodosLosModsYSubmodsRecursivos()) {
 			boolean compatible = false;
 
 			// Verificar contra cada cargador activo

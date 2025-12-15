@@ -4812,5 +4812,85 @@ public class Ingles implements Idioma {
 	public String pasoErrorFallingAttackVersion() {
 		return "Ensure you are using the correct version of Falling Attack compatible with your Minecraft version.";
 	}
+	
+	@Override
+	public String necesitasInstalarCfr() {
+	    String sistema = System.getProperty("os.name").toLowerCase();
+	    StringBuilder mensaje = new StringBuilder();
+	    mensaje.append("<html>")
+	           .append("You need to install CFR (Class File Reader) to use this feature.<br><br>");
+
+	    if (sistema.contains("linux") || sistema.contains("netbsd") || sistema.contains("freebsd")) {
+	        mensaje.append("On Linux, NetBSD or FreeBSD systems, you can install CFR from your package manager.<br>")
+	               .append("Search for the package at: <a href=\"https://pkgs.org/search/?q=cfr\">https://pkgs.org/search/?q=cfr</a><br><br>");
+	    }
+
+	    mensaje.append("Alternatively, you can download the modified version used by FabricMC from:<br>")
+	           .append("<a href=\"https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar\">")
+	           .append("https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar</a><br><br>")
+	           .append("Save it in the following folder:<br>")
+	           .append("<b>")
+	           .append(new java.io.File(System.getProperty("user.home"), "crash_detector/cfr/").getAbsolutePath())
+	           .append("</b><br><br>")
+	           .append("⚠️ <b>Important:</b> after installing CFR, you must restart the mod for it to be recognised correctly.")
+	           .append("</html>");
+	    return mensaje.toString();
+	}
+
+	@Override
+	public String cfrNoHayRetrato() {
+	    return "No portrait available";
+	}
+
+	@Override
+	public String cfrClaseNoEncontrada(String nombreClase) {
+	    return "Could not find class: " + nombreClase;
+	}
+
+	@Override
+	public String tituloCfrSakura() {
+	    return "CFR Decompiler – Sakura Riddle (Unofficial)";
+	}
+
+	@Override
+	public String cfrClaseActual() {
+	    return "Current class";
+	}
+
+	@Override
+	public String cfrRetratoDeSakura() {
+	    return "Portrait of Sakura Riddle";
+	}
+
+	@Override
+	public String cfrErrorCargarRetrato() {
+	    return "Error loading portrait";
+	}
+	
+	public String noticiaLegalCFR() {
+	    return "This graphical user interface (GUI) for decompiling mods is designed to help users identify the causes of software failures. "
+	            + "However, decompilation may sometimes be necessary, and users must take care not to use the generated code to infringe copyright law. "
+	            + "It is recommended to review the license of the relevant mod before using any obtained code. Moreover, many mods officially provide their source code, "
+	            + "which is generally cleaner and easier to understand than decompiled output. Remember that respect for intellectual property and usage licenses is fundamental to "
+	            + "the mod development community. You may consult Mexico’s Federal Copyright Law here: "
+	            + "<a href=\"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf\" target=\"_blank\">Ley Federal de Derechos de Autor (Spanish)</a> "
+	            + "and the English version here: <a href=\"https://www.indautor.gob.mx/documentos/marco-juridico/L_Fed_Derecho_de_Autor_(English).pdf\" target=\"_blank\">Copyright Law (English)</a>. "
+	            + "Given that you are on CurseForge, we also provide the U.S. Copyright Law in English: "
+	            + "<a href=\"https://www.copyright.gov/title17/title17.pdf\" target=\"_blank\">U.S. Copyright Law</a>. "
+	            + "Furthermore, users are advised to research the laws applicable in their own jurisdiction. "
+	            + "Our GUI is intended only for basic checks; for advanced analysis, please use FabricMC’s Enigma fork available on "
+	            + "<a href=\"https://github.com/FabricMC/Enigma\" target=\"_blank\">GitHub</a>. If you need to edit JAR files directly to create patches when source code is unavailable, consider using Recaf at "
+	            + "<a href=\"https://recaf.coley.software/home.html\" target=\"_blank\">its website</a>.";
+	}
+	
+	@Override
+	public String botonDescargarCfr() {
+	    return "Download CFR";
+	}
+
+	@Override
+	public String botonAbrirCarpetaCfr() {
+	    return "Open installation folder";
+	}
 
 }

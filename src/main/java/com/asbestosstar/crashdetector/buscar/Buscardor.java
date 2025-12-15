@@ -88,7 +88,7 @@ public class Buscardor {
 	 * no hay mods, no hace nada. No devuelve conteos (void).
 	 */
 	public static void precargarClasesEnCacheParaModsCargados() {
-		if (mods.isEmpty()) {
+		if (obtenerTodosLosModsYSubmodsRecursivos().isEmpty()) {
 			return;
 		}
 
@@ -266,6 +266,38 @@ public class Buscardor {
 		}
 	}
 
+
+	public static List<ArchivoDeMod> obtenerTodosLosModsYSubmodsRecursivos() {
+	    List<ArchivoDeMod> modsYSubmods = new ArrayList<>();
+
+	    // Recorrer todos los mods cargados
+	    for (ArchivoDeMod mod : mods) {
+	        // Añadir el mod principal
+	        modsYSubmods.add(mod);
+	        
+	        // Si el mod tiene submods, añadirlos de forma recursiva
+	        agregarSubmodsRecursivos(mod, modsYSubmods);
+	    }
+
+	    return modsYSubmods;
+	}
+
+	/**
+	 * Método recursivo que añade todos los submods de un mod dado.
+	 */
+	public static void agregarSubmodsRecursivos(ArchivoDeMod mod, List<ArchivoDeMod> modsYSubmods) {
+	    // Si el mod tiene submods, los obtenemos y los añadimos recursivamente
+	    List<ArchivoDeMod> submods = mod.mods_en_mods();  // Asegúrate de que esta función exista o sea creada
+
+	    for (ArchivoDeMod submod : submods) {
+	        modsYSubmods.add(submod);
+	        // Llamada recursiva para explorar submods del submod
+	        agregarSubmodsRecursivos(submod, modsYSubmods);
+	    }
+	}
+
+	
+	
 	/**
 	 * Prepara una ruta para publicación, anonimizando si es necesario.
 	 *
@@ -288,7 +320,7 @@ public class Buscardor {
 	 */
 	public static List<String> obtenerModsConNombre(String nombre) {
 		List<String> modsConNombre = new ArrayList<String>();
-		for (ArchivoDeMod mod : mods) {
+		for (ArchivoDeMod mod : obtenerTodosLosModsYSubmodsRecursivos()) {
 			if (mod.tieneNombreRecursivo(nombre)) {
 				CrashDetectorLogger.log("tiene recursivo nombre " + mod.ubicacion_para_publicar());
 				modsConNombre.add(rutaParaPublicar(mod.obtenerNombreRecursivo(nombre)));
@@ -305,11 +337,92 @@ public class Buscardor {
 	 */
 	public static List<ArchivoDeMod> buscarModsConTermino(String termino) {
 		List<ArchivoDeMod> resultados = new ArrayList<>();
-		for (ArchivoDeMod mod : mods) {
+		for (ArchivoDeMod mod : obtenerTodosLosModsYSubmodsRecursivos()) {
 			resultados.addAll(mod.buscarModsCon(termino));
 		}
 		return resultados;
 	}
+	
+	/**
+	 * Obtiene los bytes de una clase desde cualquier mod cargado.
+	 * <p>
+	 * - Acepta nombres en formato:
+	 *   - com.ejemplo.Clase
+	 *   - com/ejemplo/Clase
+	 *   - com/ejemplo/Clase.class
+	 *   - Lcom/ejemplo/Clase;
+	 * - Devuelve SIEMPRE null si la clase no existe.
+	 * - Llama automáticamente a cargarYPrecargarClasesEnCache().
+	 *
+	 * @param nombreClase nombre de la clase
+	 * @return byte[] de la clase o null si no existe
+	 */
+	public static byte[] obtenerBytesDeClase(String nombreClase) {
+		if (nombreClase == null || nombreClase.isEmpty()) {
+			return null;
+		}
+
+		// Normalizar a formato interno ASM: a/b/C
+		String claseInterna = normalizarNombreClaseInterno(nombreClase);
+
+		for (ArchivoDeMod mod : obtenerTodosLosModsYSubmodsRecursivos()) {
+			try {
+				if (mod.existeClase(claseInterna)) {
+					CrashDetectorLogger.log("tenemos clase " + claseInterna + " en mod " + mod.ubicacion_para_publicar());
+					byte[] bytes = mod.obtenerBytesClase(claseInterna);
+					if (bytes != null) {
+						return bytes;
+					}
+					CrashDetectorLogger.log("no bytes");
+				}
+			} catch (Throwable t) {
+				CrashDetectorLogger.log(
+						"Error obteniendo bytes de " + claseInterna + " en " + mod.ubicacion_para_publicar());
+				CrashDetectorLogger.logException(t);
+			}
+		}
+
+		return null;
+	}
+
+	
+	
+	
+	/**
+	 * Normaliza un nombre de clase al formato interno de ASM: a/b/C
+	 * Soporta:
+	 *  - com.ejemplo.Clase
+	 *  - com/ejemplo/Clase
+	 *  - com/ejemplo/Clase.class
+	 *  - Lcom/ejemplo/Clase;
+	 */
+	private static String normalizarNombreClaseInterno(String nombre) {
+		if (nombre == null) {
+			return null;
+		}
+
+		String s = nombre.trim();
+		if (s.isEmpty()) {
+			return s;
+		}
+
+		// Descriptor: Lcom/a/B;
+		if (s.startsWith("L") && s.endsWith(";")) {
+			s = s.substring(1, s.length() - 1);
+		}
+
+		// Quitar sufijo .class
+		if (s.toLowerCase().endsWith(".class")) {
+			s = s.substring(0, s.length() - ".class".length());
+		}
+
+		// Convertir puntos a barras
+		s = s.replace('.', '/');
+
+		return s;
+	}
+
+	
 
 	/**
 	 * Convierte una lista de mods a sus ubicaciones para publicación.
@@ -334,7 +447,7 @@ public class Buscardor {
 	 * @return true si al menos un mod contiene la clase, false en caso contrario
 	 */
 	public static boolean existeClaseEnAlgunMod(String nombreClase) {
-		for (ArchivoDeMod mod : mods) {
+		for (ArchivoDeMod mod : obtenerTodosLosModsYSubmodsRecursivos()) {
 			if (mod.existeClase(nombreClase)) {
 				return true;
 			}
@@ -354,7 +467,7 @@ public class Buscardor {
 		}
 
 		List<InfoMetodoMod> resultados = new ArrayList<>();
-		for (ArchivoDeMod mod : mods) {
+		for (ArchivoDeMod mod : obtenerTodosLosModsYSubmodsRecursivos()) {
 			if (mod.existeClase(nombreClase)) {
 				List<ArchivoDeMod.InfoMetodo> metodos = mod.obtenerMetodosConReferencias(nombreClase);
 				for (ArchivoDeMod.InfoMetodo metodo : metodos) {
@@ -377,7 +490,7 @@ public class Buscardor {
 		}
 
 		List<InfoCampoMod> resultados = new ArrayList<>();
-		for (ArchivoDeMod mod : mods) {
+		for (ArchivoDeMod mod : obtenerTodosLosModsYSubmodsRecursivos()) {
 			if (mod.existeClase(nombreClase)) {
 				List<ArchivoDeMod.InfoCampo> campos = mod.obtenerCampos(nombreClase);
 				for (ArchivoDeMod.InfoCampo campo : campos) {
@@ -403,7 +516,7 @@ public class Buscardor {
 		}
 
 		List<ArchivoDeMod.Referencia> resultados = new ArrayList<>();
-		for (ArchivoDeMod mod : mods) {
+		for (ArchivoDeMod mod : obtenerTodosLosModsYSubmodsRecursivos()) {
 			if (mod.existeClase(nombreClase)) {
 				resultados.addAll(mod.buscarReferenciasEnMetodo(nombreClase, nombreMetodo, descriptor));
 			}
@@ -426,7 +539,7 @@ public class Buscardor {
 		}
 
 		List<ReferenciaMod> resultados = new ArrayList<>();
-		for (ArchivoDeMod mod : mods) {
+		for (ArchivoDeMod mod : obtenerTodosLosModsYSubmodsRecursivos()) {
 			List<ArchivoDeMod.Referencia> referencias = mod.buscarReferenciasAMetodo(claseObjetivo, metodoObjetivo,
 					descriptorObjetivo);
 			for (ArchivoDeMod.Referencia ref : referencias) {
@@ -489,7 +602,7 @@ public class Buscardor {
 		}
 
 		List<ReferenciaMod> resultados = new ArrayList<>();
-		for (ArchivoDeMod mod : mods) {
+		for (ArchivoDeMod mod : obtenerTodosLosModsYSubmodsRecursivos()) {
 			List<ArchivoDeMod.Referencia> referencias = mod.buscarReferenciasAMetodo(claseObjetivo, metodoObjetivo,
 					descriptorObjetivo);
 			for (ArchivoDeMod.Referencia ref : referencias) {

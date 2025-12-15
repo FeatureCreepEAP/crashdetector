@@ -4522,5 +4522,85 @@ public class Chino implements Idioma {
 	public String pasoErrorFallingAttackVersion() {
 		return "请确保你使用的 Falling Attack 版本与你的 Minecraft 版本兼容。";
 	}
+	
+	@Override
+	public String necesitasInstalarCfr() {
+	    String sistema = System.getProperty("os.name").toLowerCase();
+	    StringBuilder mensaje = new StringBuilder();
+	    mensaje.append("<html>")
+	           .append("你需要安装 CFR (Class File Reader) 才能使用此功能。<br><br>");
+
+	    if (sistema.contains("linux") || sistema.contains("netbsd") || sistema.contains("freebsd")) {
+	        mensaje.append("在 Linux、NetBSD 或 FreeBSD 系统上，你可以通过包管理器安装 CFR。<br>")
+	               .append("在此搜索包：<a href=\"https://pkgs.org/search/?q=cfr\">https://pkgs.org/search/?q=cfr</a><br><br>");
+	    }
+
+	    mensaje.append("或者，你可以从以下地址下载 FabricMC 使用的修改版：<br>")
+	           .append("<a href=\"https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar\">")
+	           .append("https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar</a><br><br>")
+	           .append("将其保存到以下文件夹：<br>")
+	           .append("<b>")
+	           .append(new java.io.File(System.getProperty("user.home"), "crash_detector/cfr/").getAbsolutePath())
+	           .append("</b><br><br>")
+	           .append("⚠️ <b>重要：</b>安装 CFR 后，必须重启 mod 才能正确识别。")
+	           .append("</html>");
+	    return mensaje.toString();
+	}
+
+	@Override
+	public String cfrNoHayRetrato() {
+	    return "无可用头像";
+	}
+
+	@Override
+	public String cfrClaseNoEncontrada(String nombreClase) {
+	    return "无法找到类：" + nombreClase;
+	}
+
+	@Override
+	public String tituloCfrSakura() {
+	    return "CFR 反编译器 – Sakura Riddle（非官方）";
+	}
+
+	@Override
+	public String cfrClaseActual() {
+	    return "当前类";
+	}
+
+	@Override
+	public String cfrRetratoDeSakura() {
+	    return "Sakura Riddle 头像";
+	}
+
+	@Override
+	public String cfrErrorCargarRetrato() {
+	    return "加载头像时出错";
+	}
+	
+	public String noticiaLegalCFR() {
+	    return "本图形用户界面（GUI）反编译工具旨在帮助用户诊断模组崩溃的根本原因。"
+	            + "然而，反编译模组可能存在法律风险，用户务必确保不利用生成的代码侵犯《联邦著作权法》。"
+	            + "建议在使用任何反编译代码前，仔细查阅对应模组的许可证。此外，许多模组开发者会主动公开源代码，"
+	            + "这类官方源码通常比反编译结果更清晰、易读。请始终尊重知识产权及软件许可，这是模组开发社区的核心原则。"
+	            + "您可通过以下链接查阅墨西哥《联邦著作权法》："
+	            + "<a href=\"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf\" target=\"_blank\">联邦著作权法（西班牙语）</a>，"
+	            + "英文版在此：<a href=\"https://www.indautor.gob.mx/documentos/marco-juridico/L_Fed_Derecho_de_Autor_(English).pdf\" target=\"_blank\">Copyright Law (English)</a>。"
+	            + "鉴于您正在 CurseForge 平台，我们同时提供美国版权法链接："
+	            + "<a href=\"https://www.copyright.gov/title17/title17.pdf\" target=\"_blank\">U.S. Copyright Law</a>。"
+	            + "我们建议用户主动了解所在地适用的法律法规。"
+	            + "本 GUI 仅适用于简单诊断；如需深度分析，请使用 FabricMC 维护的 Enigma 分支："
+	            + "<a href=\"https://github.com/FabricMC/Enigma\" target=\"_blank\">GitHub</a>。若需在无源码情况下直接编辑 JAR 文件打补丁，可使用 Recaf："
+	            + "<a href=\"https://recaf.coley.software/home.html\" target=\"_blank\">官方网站</a>。";
+	}
+	
+	@Override
+	public String botonDescargarCfr() {
+	    return "下载 CFR";
+	}
+
+	@Override
+	public String botonAbrirCarpetaCfr() {
+	    return "打开安装文件夹";
+	}
 
 }

@@ -4724,5 +4724,85 @@ public class Arabe implements Idioma {
 	public String pasoErrorFallingAttackVersion() {
 		return "Asegúrate de usar la versión correcta de Falling Attack compatible con tu versión de Minecraft.";
 	}
+	
+	@Override
+	public String necesitasInstalarCfr() {
+	    String sistema = System.getProperty("os.name").toLowerCase();
+	    StringBuilder mensaje = new StringBuilder();
+	    mensaje.append("<html>")
+	           .append("تحتاج إلى تثبيت CFR (Class File Reader) لاستخدام هذه الميزة.<br><br>");
+
+	    if (sistema.contains("linux") || sistema.contains("netbsd") || sistema.contains("freebsd")) {
+	        mensaje.append("في أنظمة Linux أو NetBSD أو FreeBSD، يمكنك تثبيت CFR من مدير الحزم الخاص بك.<br>")
+	               .append("ابحث عن الحزمة هنا: <a href=\"https://pkgs.org/search/?q=cfr\">https://pkgs.org/search/?q=cfr</a><br><br>");
+	    }
+
+	    mensaje.append("بدلاً من ذلك، يمكنك تنزيل النسخة المعدّلة التي يستخدمها FabricMC من:<br>")
+	           .append("<a href=\"https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar\">")
+	           .append("https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar</a><br><br>")
+	           .append("احفظه في المجلد التالي:<br>")
+	           .append("<b>")
+	           .append(new java.io.File(System.getProperty("user.home"), "crash_detector/cfr/").getAbsolutePath())
+	           .append("</b><br><br>")
+	           .append("⚠️ <b>مهم:</b> بعد تثبيت CFR، يجب إعادة تشغيل الـ mod ليتم التعرف عليه بشكل صحيح.")
+	           .append("</html>");
+	    return mensaje.toString();
+	}
+
+	@Override
+	public String cfrNoHayRetrato() {
+	    return "لا يوجد صورة متاحة";
+	}
+
+	@Override
+	public String cfrClaseNoEncontrada(String nombreClase) {
+	    return "تعذر العثور على الفئة: " + nombreClase;
+	}
+
+	@Override
+	public String tituloCfrSakura() {
+	    return "مفكك CFR – Sakura Riddle (غير رسمي)";
+	}
+
+	@Override
+	public String cfrClaseActual() {
+	    return "الفئة الحالية";
+	}
+
+	@Override
+	public String cfrRetratoDeSakura() {
+	    return "صورة Sakura Riddle";
+	}
+
+	@Override
+	public String cfrErrorCargarRetrato() {
+	    return "خطأ أثناء تحميل الصورة";
+	}
+	
+	public String noticiaLegalCFR() {
+	    return "تم تصميم برنامج واجهة المستخدم الرسومية هذا (GUI) لتحليل تعديلات الألعاب (mods) بهدف مساعدة المستخدمين على تحديد أسباب أعطال البرمجيات. "
+	            + "ومع ذلك، قد تكون عملية التفكيك (decompilation) ضرورية، ويجب على المستخدمين توخي الحذر بعدم استخدام الكود الناتج لانتهاك قانون حقوق الملكية الفكرية. "
+	            + "يوصى بمراجعة ترخيص التعديل ذي الصلة قبل استخدام أي كود تم الحصول عليه. علاوةً على ذلك، غالبًا ما يوفّر المطورون مصدر الكود رسميًا، "
+	            + "وهو عادةً أكثر وضوحًا وسهولة في الفهم مقارنةً بالكود المفكّك. تذكّر أن احترام الملكية الفكرية وشروط الترخيص أمر جوهري لمجتمع تطوير التعديلات. "
+	            + "يمكنك الاطلاع على قانون حقوق المؤلف المكسيكي عبر هذا الرابط: "
+	            + "<a href=\"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf\" target=\"_blank\">Ley Federal de Derechos de Autor (بالإسبانية)</a> "
+	            + "والنسخة الإنجليزية هنا: <a href=\"https://www.indautor.gob.mx/documentos/marco-juridico/L_Fed_Derecho_de_Autor_(English).pdf\" target=\"_blank\">Copyright Law (بالإنجليزية)</a>. "
+	            + "وبما أنك تستخدم CurseForge، فقد أضفنا أيضًا رابط قانون حقوق النشر الأمريكي: "
+	            + "<a href=\"https://www.copyright.gov/title17/title17.pdf\" target=\"_blank\">U.S. Copyright Law</a>. "
+	            + "نوصي كذلك بأن يُطلِع المستخدمون أنفسهم على القوانين السارية في بلد إقامتهم. "
+	            + "تُعد واجهتنا أداة لفحوصات بسيطة فقط؛ ولتحليل متقدم، ننصح باستخدام نسخة FabricMC المعدّلة من Enigma المتوفرة على "
+	            + "<a href=\"https://github.com/FabricMC/Enigma\" target=\"_blank\">GitHub</a>. إذا أردت تعديل ملفات JAR للتصحيح دون توفر الكود المصدري، يمكنك استخدام Recaf من "
+	            + "<a href=\"https://recaf.coley.software/home.html\" target=\"_blank\">موقعه الرسمي</a>.";
+	}
+	
+	@Override
+	public String botonDescargarCfr() {
+	    return "تنزيل CFR";
+	}
+
+	@Override
+	public String botonAbrirCarpetaCfr() {
+	    return "فتح مجلد التثبيت";
+	}
 
 }

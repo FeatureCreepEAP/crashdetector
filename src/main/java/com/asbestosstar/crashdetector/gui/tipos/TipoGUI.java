@@ -12,6 +12,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.arbol.ArbolDeModsGUI;
+import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrBase;
 import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartir;
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanel;
 import com.asbestosstar.crashdetector.gui.tipos.editor.EditorFirmasGUI;
@@ -443,6 +444,32 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 			return PanelAPIBase.GUIS;
 		}
 	};
+	
+	
+	/**
+	 * Editor de GUIs
+	 */
+	public static TipoGUI<CfrBase> CFR = new TipoGUI<CfrBase>() {
+		@Override
+		public String id() {
+			return "cfr";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return "Cfr";
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<CfrBase> gui) {
+			CfrBase.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<CfrBase>> obtenerGUIs() {
+			return CfrBase.GUIS;
+		}
+	};
 
 	/**
 	 * Registro estático de todos los tipos de GUI en la lista global.
@@ -463,6 +490,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		TIPOS_DE_GUI.add(EDITOR_PLANTILLA);
 		TIPOS_DE_GUI.add(EDITOR_GUI);
 		TIPOS_DE_GUI.add(MOD_API_PANEL);
+		TIPOS_DE_GUI.add(CFR);
 
 	}
 }

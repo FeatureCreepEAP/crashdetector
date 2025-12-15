@@ -237,6 +237,16 @@
 </dependency>
 
 
+<!-- https://mvnrepository.com/artifact/net.fabricmc/cfr -->
+<dependency>
+    <groupId>net.fabricmc</groupId>
+    <artifactId>cfr</artifactId>
+    <version>0.2.2</version>
+</dependency>
+
+
+
+
 
 
 

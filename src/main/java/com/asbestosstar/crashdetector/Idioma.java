@@ -1852,4 +1852,24 @@ public interface Idioma {
 
 	public String pasoErrorFallingAttackVersion();
 
+	public String necesitasInstalarCfr();
+
+	public String cfrNoHayRetrato();
+
+	public String cfrClaseNoEncontrada(String nombreClase);
+
+	public String tituloCfrSakura();
+
+	public String cfrClaseActual();
+
+	public String cfrRetratoDeSakura();
+
+	public String cfrErrorCargarRetrato();
+
+	public String noticiaLegalCFR();
+
+	public String botonDescargarCfr();
+
+	public String botonAbrirCarpetaCfr();
+
 }

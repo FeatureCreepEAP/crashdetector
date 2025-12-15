@@ -4604,5 +4604,85 @@ public class Coreano implements Idioma {
 	public String pasoErrorFallingAttackVersion() {
 		return "사용 중인 Minecraft 버전과 호환되는 올바른 Falling Attack 버전을 사용하고 있는지 확인하세요.";
 	}
+	
+	@Override
+	public String necesitasInstalarCfr() {
+	    String sistema = System.getProperty("os.name").toLowerCase();
+	    StringBuilder mensaje = new StringBuilder();
+	    mensaje.append("<html>")
+	           .append("이 기능을 사용하려면 CFR(Class File Reader)를 설치해야 합니다.<br><br>");
+
+	    if (sistema.contains("linux") || sistema.contains("netbsd") || sistema.contains("freebsd")) {
+	        mensaje.append("Linux, NetBSD 또는 FreeBSD 시스템에서는 패키지 관리자를 통해 CFR를 설치할 수 있습니다.<br>")
+	               .append("다음에서 패키지를 검색하세요: <a href=\"https://pkgs.org/search/?q=cfr\">https://pkgs.org/search/?q=cfr</a><br><br>");
+	    }
+
+	    mensaje.append("또는 FabricMC가 사용하는 수정된 버전을 다음에서 다운로드할 수 있습니다:<br>")
+	           .append("<a href=\"https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar\">")
+	           .append("https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar</a><br><br>")
+	           .append("다음을 폴더에 저장하세요:<br>")
+	           .append("<b>")
+	           .append(new java.io.File(System.getProperty("user.home"), "crash_detector/cfr/").getAbsolutePath())
+	           .append("</b><br><br>")
+	           .append("⚠️ <b>중요:</b> CFR 설치 후 mod를 재시작해야 정상적으로 인식됩니다.")
+	           .append("</html>");
+	    return mensaje.toString();
+	}
+
+	@Override
+	public String cfrNoHayRetrato() {
+	    return "사용 가능한 초상화 없음";
+	}
+
+	@Override
+	public String cfrClaseNoEncontrada(String nombreClase) {
+	    return "클래스를 찾을 수 없습니다: " + nombreClase;
+	}
+
+	@Override
+	public String tituloCfrSakura() {
+	    return "CFR 디컴파일러 – Sakura Riddle (비공식)";
+	}
+
+	@Override
+	public String cfrClaseActual() {
+	    return "현재 클래스";
+	}
+
+	@Override
+	public String cfrRetratoDeSakura() {
+	    return "Sakura Riddle 초상화";
+	}
+
+	@Override
+	public String cfrErrorCargarRetrato() {
+	    return "초상화 로드 오류";
+	}
+	
+	public String noticiaLegalCFR() {
+	    return "이 그래픽 사용자 인터페이스(GUI) 디컴파일 프로그램은 모드의 소프트웨어 오류 원인을 파악하는 데 도움을 주기 위해 설계되었습니다. "
+	            + "그러나 모드 디컴파일은 필요할 수 있으나, 사용자는 생성된 코드로 저작권법을 위반하지 않도록 주의해야 합니다. "
+	            + "얻은 코드를 사용하기 전 해당 모드의 라이선스를 반드시 확인하십시오. 많은 모드는 공식적으로 소스 코드를 제공하며, "
+	            + "이는 디컴파일된 코드보다 일반적으로 더 깔끔하고 이해하기 쉽습니다. 지적 재산권과 사용 라이선스를 존중하는 것이 모드 개발 커뮤니티의 기본입니다. "
+	            + "멕시코 연방 저작권법은 다음 링크에서 확인할 수 있습니다: "
+	            + "<a href=\"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf\" target=\"_blank\">Ley Federal de Derechos de Autor (스페인어)</a> "
+	            + "영문판은 여기에서: <a href=\"https://www.indautor.gob.mx/documentos/marco-juridico/L_Fed_Derecho_de_Autor_(English).pdf\" target=\"_blank\">Copyright Law (영어)</a>. "
+	            + "CurseForge 사용자임을 고려하여 미국 저작권법 링크도 제공합니다: "
+	            + "<a href=\"https://www.copyright.gov/title17/title17.pdf\" target=\"_blank\">U.S. Copyright Law</a>. "
+	            + "사용자는 자신의 위치에서 적용되는 법률을 숙지하는 것이 중요합니다. "
+	            + "이 GUI는 간단한 확인 전용이며, 고급 분석을 위해서는 FabricMC의 Enigma 포크를 사용하십시오: "
+	            + "<a href=\"https://github.com/FabricMC/Enigma\" target=\"_blank\">GitHub</a>. 소스 코드가 없을 때 JAR 파일을 직접 편집해 패치하려면 Recaf를 사용할 수 있습니다: "
+	            + "<a href=\"https://recaf.coley.software/home.html\" target=\"_blank\">공식 사이트</a>.";
+	}
+	
+	@Override
+	public String botonDescargarCfr() {
+	    return "CFR 다운로드";
+	}
+
+	@Override
+	public String botonAbrirCarpetaCfr() {
+	    return "설치 폴더 열기";
+	}
 
 }

@@ -14,7 +14,7 @@ public class EscanerMCreator {
 
 		List<ArchivoDeMod> todosLosMods = new ArrayList<>();
 		// Recopilar todos los mods incluyendo anidados
-		for (ArchivoDeMod mod : Buscardor.mods) {
+		for (ArchivoDeMod mod : Buscardor.obtenerTodosLosModsYSubmodsRecursivos()) {
 			coleccionarModsAnidados(mod, todosLosMods);
 		}
 

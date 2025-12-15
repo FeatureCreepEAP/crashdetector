@@ -4755,5 +4755,88 @@ public class Persa implements Idioma {
 	public String pasoErrorFallingAttackVersion() {
 		return "مطمئن شوید که از نسخهٔ درست Falling Attack که با نسخهٔ Minecraft شما سازگار است، استفاده می‌کنید.";
 	}
+	
+	@Override
+	public String necesitasInstalarCfr() {
+	    String sistema = System.getProperty("os.name").toLowerCase();
+	    StringBuilder mensaje = new StringBuilder();
+	    mensaje.append("<html>")
+	           .append("برای استفاده از این قابلیت، باید CFR (Class File Reader) را نصب کنید.<br><br>");
+
+	    if (sistema.contains("linux") || sistema.contains("netbsd") || sistema.contains("freebsd")) {
+	        mensaje.append("در سیستم‌های Linux، NetBSD یا FreeBSD، می‌توانید CFR را از طریق مدیر بسته نصب کنید.<br>")
+	               .append("بسته را در اینجا جستجو کنید: <a href=\"https://pkgs.org/search/?q=cfr\">https://pkgs.org/search/?q=cfr</a><br><br>");
+	    }
+
+	    mensaje.append("در غیر این صورت، می‌توانید نسخهٔ اصلاح‌شده‌ای که FabricMC از آن استفاده می‌کند را از اینجا دانلود کنید:<br>")
+	           .append("<a href=\"https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar\">")
+	           .append("https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar</a><br><br>")
+	           .append("آن را در پوشهٔ زیر ذخیره کنید:<br>")
+	           .append("<b>")
+	           .append(new java.io.File(System.getProperty("user.home"), "crash_detector/cfr/").getAbsolutePath())
+	           .append("</b><br><br>")
+	           .append("⚠️ <b>مهم:</b> پس از نصب CFR، باید mod را مجدداً راه‌اندازی کنید تا به درستی شناسایی شود.")
+	           .append("</html>");
+	    return mensaje.toString();
+	}
+
+	@Override
+	public String cfrNoHayRetrato() {
+	    return "پرتره‌ای در دسترس نیست";
+	}
+
+	@Override
+	public String cfrClaseNoEncontrada(String nombreClase) {
+	    return "کلاس یافت نشد: " + nombreClase;
+	}
+
+	@Override
+	public String tituloCfrSakura() {
+	    return "دیکامپایلر CFR – Sakura Riddle (غیررسمی)";
+	}
+
+	@Override
+	public String cfrClaseActual() {
+	    return "کلاس فعلی";
+	}
+
+	@Override
+	public String cfrRetratoDeSakura() {
+	    return "پرترهٔ Sakura Riddle";
+	}
+
+	@Override
+	public String cfrErrorCargarRetrato() {
+	    return "خطا در بارگذاری پرتره";
+	}
+
+	public String noticiaLegalCFR() {
+	    return "این رابط کاربری گرافیکی (GUI) برای دیکامپایل افزونه‌ها به منظور کمک به کاربران در شناسایی علت خرابی‌های نرم‌افزاری طراحی شده است. "
+	            + "با این حال، گاهی دیکامپایل افزونه‌ها ضروری است، اما کاربران باید مراقب باشند که از کد تولیدشده برای نقض قانون حق تکثیر استفاده نکنند. "
+	            + "قبل از استفاده از هر کدی، بررسی مجوز افزونهٔ مربوطه توصیه می‌شود. علاوه بر این، بسیاری از افزونه‌ها کد منبع خود را به صورت رسمی ارائه می‌دهند، "
+	            + "که معمولاً تمیزتر و قابل‌درک‌تر از کد دیکامپایل‌شده است. رعایت مالکیت فکری و مجوزهای استفاده، اصلی‌ترین ارزش در جامعهٔ توسعه‌دهندگان افزونه است. "
+	            + "می‌توانید قانون فدرال حق تکثیر مکزیک را در این لینک مشاهده کنید: "
+	            + "<a href=\"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf\" target=\"_blank\">Ley Federal de Derechos de Autor (اسپانیایی)</a> "
+	            + "و نسخهٔ انگلیسی آن را اینجا ببینید: <a href=\"https://www.indautor.gob.mx/documentos/marco-juridico/L_Fed_Derecho_de_Autor_(English).pdf\" target=\"_blank\">Copyright Law (English)</a>. "
+	            + "با توجه به اینکه شما در CurseForge هستید، لینک قانون حق تکثیر ایالات متحده را نیز فراهم کرده‌ایم: "
+	            + "<a href=\"https://www.copyright.gov/title17/title17.pdf\" target=\"_blank\">U.S. Copyright Law</a>. "
+	            + "همچنین توصیه می‌شود کاربران قوانین جاری در کشور خود را بررسی کنند. "
+	            + "این GUI فقط برای بررسی‌های ساده است؛ برای تحلیل پیشرفته، از انشعاب Enigma توسط FabricMC در "
+	            + "<a href=\"https://github.com/FabricMC/Enigma\" target=\"_blank\">GitHub</a> استفاده کنید. اگر نیاز به ویرایش مستقیم فایل‌های JAR برای ایجاد پچ دارید (در صورت عدم دسترسی به کد منبع)، می‌توانید از Recaf در "
+	            + "<a href=\"https://recaf.coley.software/home.html\" target=\"_blank\">وب‌سایتش</a> استفاده کنید.";
+	}
+	
+	@Override
+	public String botonDescargarCfr() {
+	    return "دانلود CFR";
+	}
+
+	@Override
+	public String botonAbrirCarpetaCfr() {
+	    return "باز کردن پوشهٔ نصب";
+	}
+	
+	
+	
 
 }

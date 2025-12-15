@@ -4769,4 +4769,86 @@ public class Esperanto implements Idioma {
 		return "Certigu, ke vi uzas la ĝustan version de Falling Attack, kongruan kun via versio de Minecraft.";
 	}
 
+	@Override
+	public String necesitasInstalarCfr() {
+	    String sistema = System.getProperty("os.name").toLowerCase();
+	    StringBuilder mensaje = new StringBuilder();
+	    mensaje.append("<html>")
+	           .append("Vi devas instali CFR (Class File Reader) por uzi tiun ĉi funkcion.<br><br>");
+
+	    if (sistema.contains("linux") || sistema.contains("netbsd") || sistema.contains("freebsd")) {
+	        mensaje.append("En sistemoj Linux, NetBSD aŭ FreeBSD, vi povas instali CFR per via pakaĵadministrilo.<br>")
+	               .append("Serĉu la pakaĵon ĉe: <a href=\"https://pkgs.org/search/?q=cfr\">https://pkgs.org/search/?q=cfr</a><br><br>");
+	    }
+
+	    mensaje.append("Alternative, vi povas elŝuti la modifitan version uzatan de FabricMC de:<br>")
+	           .append("<a href=\"https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar\">")
+	           .append("https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar</a><br><br>")
+	           .append("Konservu ĝin en la sekva dosierujo:<br>")
+	           .append("<b>")
+	           .append(new java.io.File(System.getProperty("user.home"), "crash_detector/cfr/").getAbsolutePath())
+	           .append("</b><br><br>")
+	           .append("⚠️ <b>Grava:</b> post instali CFR, vi devas restartigi la modon por ke ĝi ĝuste rekonu ĝin.")
+	           .append("</html>");
+	    return mensaje.toString();
+	}
+
+	@Override
+	public String cfrNoHayRetrato() {
+	    return "Neniu portreto disponebla";
+	}
+
+	@Override
+	public String cfrClaseNoEncontrada(String nombreClase) {
+	    return "Ne eblis trovi la klason: " + nombreClase;
+	}
+
+	@Override
+	public String tituloCfrSakura() {
+	    return "Malfasilaĵilo CFR – Sakura Riddle (Neoficiala)";
+	}
+
+	@Override
+	public String cfrClaseActual() {
+	    return "Nuna klaso";
+	}
+
+	@Override
+	public String cfrRetratoDeSakura() {
+	    return "Portreto de Sakura Riddle";
+	}
+
+	@Override
+	public String cfrErrorCargarRetrato() {
+	    return "Eraro dum ŝargado de la portreto";
+	}
+	
+	public String noticiaLegalCFR() {
+	    return "Ĉi tiu grafika uzantinterfaco (GUI) por malfasili modojn estas dizajnita por helpi uzantojn identigi la kialojn de programeraroj. "
+	            + "Tamen, malfasilo de modoj povas esti necesa, kaj uzantoj devas zorgi ne uzi la generitan kodon por transpasi la Federan Leĝon pri Aŭtorrajtoj. "
+	            + "Oni rekomendas kontroli la permesilon de la rilata mod antaŭ ol uzi ajnan akiritan kodon. Plie, ofte modoj ofertas sian fontkodon oficiale, "
+	            + "kiu kutime estas pli klara kaj pli facile komprenebla ol malfasilita kodo. Memorindas ke respekto al intelekta propraĵo kaj uzpermesiloj estas fundamenta por "
+	            + "la mod-elsvolva komunumo. Vi povas konsulti la Federan Leĝon pri Aŭtorrajtoj ĉe: "
+	            + "<a href=\"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf\" target=\"_blank\">Ley Federal de Derechos de Autor (Hispane)</a> "
+	            + "kaj la anglan version ĉi tie: <a href=\"https://www.indautor.gob.mx/documentos/marco-juridico/L_Fed_Derecho_de_Autor_(English).pdf\" target=\"_blank\">Copyright Law (Angle)</a>. "
+	            + "Ĉar ni estas en CurseForge, ni ankaŭ donas ligilon al la Usona Leĝo pri Aŭtorrajto: "
+	            + "<a href=\"https://www.copyright.gov/title17/title17.pdf\" target=\"_blank\">U.S. Copyright Law</a>. "
+	            + "Krome, rekomendiĝas ke uzantoj esploru la leĝojn aplikeblajn en sia propra loko. "
+	            + "Nia GUI estas nur por simplaj kontroloj; por pli progresinta analizo, oni devus uzi la Forkon Enigma de FabricMC ĉe "
+	            + "<a href=\"https://github.com/FabricMC/Enigma\" target=\"_blank\">GitHub</a>. Se oni deziras redakti JAR-dosierojn por flikado sen disponebla fontkodo, oni povas uzi Recaf ĉe "
+	            + "<a href=\"https://recaf.coley.software/home.html\" target=\"_blank\">ĝia retejo</a>.";
+	}
+	
+	@Override
+	public String botonDescargarCfr() {
+	    return "Elŝuti CFR";
+	}
+
+	@Override
+	public String botonAbrirCarpetaCfr() {
+	    return "Malfermi instalan dosierujon";
+	}
+	
+	
+	
 }
