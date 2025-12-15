@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetector.gui.modapi;
+package com.asbestosstar.crashdetector.gui.tipos.modapi;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
