@@ -27,12 +27,11 @@ public class CDModsEstiloTL extends PanelAPIBase {
 	private ConfigColor colorTexto;
 	private ConfigColor colorBoton;
 	private ConfigColor colorCajaTexto;
-	public static String ID="cdmodsestilotl";
+	public static String ID = "cdmodsestilotl";
 
 	// Constructor sin lógica
 	public CDModsEstiloTL() {
 	}
-
 
 	@Override
 	protected void inicializarColores() {
@@ -112,7 +111,7 @@ public class CDModsEstiloTL extends PanelAPIBase {
 	@Override
 	public String id() {
 		// TODO Auto-generated method stub
-		return ID="cdmodsestilotl";
+		return ID = "cdmodsestilotl";
 	}
 
 	@Override

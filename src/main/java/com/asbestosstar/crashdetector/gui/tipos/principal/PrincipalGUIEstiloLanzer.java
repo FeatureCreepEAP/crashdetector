@@ -500,8 +500,7 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 			contenidoPrincipal.repaint();
 			botonVolver.setEnabled(true);
 		});
-		
-		
+
 		boton_CDMods.addActionListener(e -> {
 			contenidoPrincipal.removeAll();
 			panelCDMods.init();

@@ -238,9 +238,6 @@ public class Analizador {
 		verificaciones.add(new UraniumLag());
 		verificaciones.add(new ErrorFallingAttackVersion());
 
-		
-		
-		
 		verificaciones.addAll(CargadorDeCodice.cargarVerificaciones());
 
 		CrashDetectorLogger.log("Número de códices " + String.valueOf(CargadorDeCodice.cargarVerificaciones().size()));

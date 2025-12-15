@@ -4730,32 +4730,30 @@ public class Persa implements Idioma {
 				+ "</ul>"
 				+ "<p>نکته: می‌توانید از ابزار <b>grepr/fgrepr</b> در نوار کناری برای یافتن افزونه‌هایی که به کلاس‌های گم‌شده ارجاع می‌دهند استفاده کنید، به شرطی که در نام‌ها از '/' استفاده کنید.</p>";
 	}
-	
+
 	@Override
 	public String uraniumLag() {
-	    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
-	        + "شما افزونه‌ای دارید که عمداً باعث تأخیر (لاگ) می‌شود. Uranium یک افزونهٔ لاگ است. همیشه باعث crash نمی‌شود، اما ممکن است در نهایت این اتفاق بیفتد."
-	        + "</b>";
+		return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+				+ "شما افزونه‌ای دارید که عمداً باعث تأخیر (لاگ) می‌شود. Uranium یک افزونهٔ لاگ است. همیشه باعث crash نمی‌شود، اما ممکن است در نهایت این اتفاق بیفتد."
+				+ "</b>";
 	}
+
 	@Override
 	public String errorFallingAttackVersion() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Falling Attack به عنوان سازگار با 1.19.* علامت‌گذاری شده اما در واقع مربوط به 1.20.* است که باعث خطای «کلاس یافت نشد» می‌شود. "
-	            + "این افزونه سعی می‌کند از DamageSources‌هایی استفاده کند که در نسخهٔ فعلی Minecraft شما وجود ندارند." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Falling Attack به عنوان سازگار با 1.19.* علامت‌گذاری شده اما در واقع مربوط به 1.20.* است که باعث خطای «کلاس یافت نشد» می‌شود. "
+				+ "این افزونه سعی می‌کند از DamageSources‌هایی استفاده کند که در نسخهٔ فعلی Minecraft شما وجود ندارند."
+				+ "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorFallingAttackVersion() {
-	    return "خطای نسخه Falling Attack";
+		return "خطای نسخه Falling Attack";
 	}
 
 	@Override
 	public String pasoErrorFallingAttackVersion() {
-	    return "مطمئن شوید که از نسخهٔ درست Falling Attack که با نسخهٔ Minecraft شما سازگار است، استفاده می‌کنید.";
+		return "مطمئن شوید که از نسخهٔ درست Falling Attack که با نسخهٔ Minecraft شما سازگار است، استفاده می‌کنید.";
 	}
-	
-	
-	
-	
 
 }

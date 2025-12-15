@@ -4744,31 +4744,29 @@ public class Esperanto implements Idioma {
 				+ "</ul>"
 				+ "<p>Noto: Vi povas uzi la ilon <b>grepr/fgrepr</b> en la flankpanelo por trovi la modojn, kiuj referencas la mankantajn klasojn, ĉiam kiam vi uzas '/' en la nomoj.</p>";
 	}
-	
-	
+
 	@Override
 	public String uraniumLag() {
-	    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
-	        + "Vi havas modon, kiu intence kaŭzas malrapidon (lag). Uranium estas mod de malrapidigo. Ĝi ne ĉiam kaŭzas kraŝojn, sed iam povas fari tion."
-	        + "</b>";
+		return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+				+ "Vi havas modon, kiu intence kaŭzas malrapidon (lag). Uranium estas mod de malrapidigo. Ĝi ne ĉiam kaŭzas kraŝojn, sed iam povas fari tion."
+				+ "</b>";
 	}
-	
+
 	@Override
 	public String errorFallingAttackVersion() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Falling Attack estas markita kiel kongrua kun 1.19.*, sed estas por 1.20.*, kio kaŭzas eraron \"klaso ne trovita\". "
-	            + "La mod provas uzi DamageSources, kiuj ne ekzistas en la nuna versio de Minecraft." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Falling Attack estas markita kiel kongrua kun 1.19.*, sed estas por 1.20.*, kio kaŭzas eraron \"klaso ne trovita\". "
+				+ "La mod provas uzi DamageSources, kiuj ne ekzistas en la nuna versio de Minecraft." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorFallingAttackVersion() {
-	    return "Versieraro en Falling Attack";
+		return "Versieraro en Falling Attack";
 	}
 
 	@Override
 	public String pasoErrorFallingAttackVersion() {
-	    return "Certigu, ke vi uzas la ĝustan version de Falling Attack, kongruan kun via versio de Minecraft.";
+		return "Certigu, ke vi uzas la ĝustan version de Falling Attack, kongruan kun via versio de Minecraft.";
 	}
-	
 
 }

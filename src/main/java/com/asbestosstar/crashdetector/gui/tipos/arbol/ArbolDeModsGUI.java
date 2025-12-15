@@ -1694,8 +1694,8 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 												new Object[] { mod, clasePuntos, metodo }));
 
 								String claseInterna2 = normalizarNombreClaseInterno(claseInterna);
-								List<ArchivoDeMod.Constante> constantes =
-								        mod.buscarConstantesEnMetodo(claseInterna2, metodo.obtenerNombre(), metodo.obtenerDescriptor());
+								List<ArchivoDeMod.Constante> constantes = mod.buscarConstantesEnMetodo(claseInterna2,
+										metodo.obtenerNombre(), metodo.obtenerDescriptor());
 
 								if (!constantes.isEmpty()) {
 									DefaultMutableTreeNode nodoConstantes = new DefaultMutableTreeNode(new NodoConTexto(
@@ -1767,26 +1767,23 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 			}
 		}
 	}
-	
-	
-	
+
 	public List<ArchivoDeMod> obtenerTodosLosMods() {
-	    List<ArchivoDeMod> out = new ArrayList<>();
-	    for (ArchivoDeMod m : Buscardor.mods) {
-	        recolectarModsRec(out, m);
-	    }
-	    return out;
+		List<ArchivoDeMod> out = new ArrayList<>();
+		for (ArchivoDeMod m : Buscardor.mods) {
+			recolectarModsRec(out, m);
+		}
+		return out;
 	}
 
 	public void recolectarModsRec(List<ArchivoDeMod> out, ArchivoDeMod m) {
-	    if (m == null) return;
-	    out.add(m);
-	    for (ArchivoDeMod sub : m.mods_en_mods()) {
-	        recolectarModsRec(out, sub);
-	    }
+		if (m == null)
+			return;
+		out.add(m);
+		for (ArchivoDeMod sub : m.mods_en_mods()) {
+			recolectarModsRec(out, sub);
+		}
 	}
-
-	
 
 	// === (El resto del archivo es igual al tuyo, excepto paqueteDe/nombreSimpleDe
 	// y constantes) ===
@@ -2251,35 +2248,35 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		for (ArchivoDeMod mod : Buscardor.mods) {
 			// Buscar en todas las clases del mod
 			for (String nombreClase : mod.obtenerTodosLosNombresDeClases()) {
-			    String claseOrigenInterna = normalizarNombreClaseInterno(nombreClase);
+				String claseOrigenInterna = normalizarNombreClaseInterno(nombreClase);
 
-			    byte[] bytesClase = mod.obtenerBytesClase(claseOrigenInterna);
-			    if (bytesClase == null) continue;
+				byte[] bytesClase = mod.obtenerBytesClase(claseOrigenInterna);
+				if (bytesClase == null)
+					continue;
 
-			    try {
-			        List<ArchivoDeMod.InfoMetodo> metodos = mod.obtenerMetodosConReferencias(claseOrigenInterna);
-			        for (ArchivoDeMod.InfoMetodo metodo : metodos) {
-			            for (ArchivoDeMod.Referencia ref : metodo.obtenerReferenciasACampos()) {
-			                // IMPORTANT: normalize ref.obtenerClase() too (in case it isn't)
-			                String claseRefInterna = normalizarNombreClaseInterno(ref.obtenerClase());
+				try {
+					List<ArchivoDeMod.InfoMetodo> metodos = mod.obtenerMetodosConReferencias(claseOrigenInterna);
+					for (ArchivoDeMod.InfoMetodo metodo : metodos) {
+						for (ArchivoDeMod.Referencia ref : metodo.obtenerReferenciasACampos()) {
+							// IMPORTANT: normalize ref.obtenerClase() too (in case it isn't)
+							String claseRefInterna = normalizarNombreClaseInterno(ref.obtenerClase());
 
-			                if (claseRefInterna.equals(normalizarNombreClaseInterno(claseObjetivo))
-			                        && ref.obtenerNombre().equals(nombreCampo)
-			                        && ref.obtenerDescriptor().equals(descriptorCampo)) {
+							if (claseRefInterna.equals(normalizarNombreClaseInterno(claseObjetivo))
+									&& ref.obtenerNombre().equals(nombreCampo)
+									&& ref.obtenerDescriptor().equals(descriptorCampo)) {
 
-			                    String claseOrigenMostrar = convertirFormatoClasePuntos(claseOrigenInterna);
-			                    String textoRef = MonitorDePID.idioma.metodo() + ": " + claseOrigenMostrar + "."
-			                            + metodo.obtenerNombre() + metodo.obtenerDescriptor() + " ("
-			                            + mod.ubicacion_para_publicar() + ")";
-			                    raiz.add(new DefaultMutableTreeNode(textoRef));
-			                }
-			            }
-			        }
-			    } catch (Throwable t) {
-			        // seguir
-			    }
+								String claseOrigenMostrar = convertirFormatoClasePuntos(claseOrigenInterna);
+								String textoRef = MonitorDePID.idioma.metodo() + ": " + claseOrigenMostrar + "."
+										+ metodo.obtenerNombre() + metodo.obtenerDescriptor() + " ("
+										+ mod.ubicacion_para_publicar() + ")";
+								raiz.add(new DefaultMutableTreeNode(textoRef));
+							}
+						}
+					}
+				} catch (Throwable t) {
+					// seguir
+				}
 			}
-
 
 		}
 
@@ -2344,48 +2341,49 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		String claseInterna = Buscardor.convertirFormatoClase(nombreClase);
 		List<Buscardor.ReferenciaMod> referencias = new ArrayList<>();
 
-String claseObjetivoInterna = normalizarNombreClaseInterno(nombreClase);
+		String claseObjetivoInterna = normalizarNombreClaseInterno(nombreClase);
 
-for (ArchivoDeMod mod : Buscardor.mods) {
-    for (String nombreClaseActual : mod.obtenerTodosLosNombresDeClases()) {
-        String claseActualInterna = normalizarNombreClaseInterno(nombreClaseActual);
-        if (claseActualInterna.equals(claseObjetivoInterna)) continue;
+		for (ArchivoDeMod mod : Buscardor.mods) {
+			for (String nombreClaseActual : mod.obtenerTodosLosNombresDeClases()) {
+				String claseActualInterna = normalizarNombreClaseInterno(nombreClaseActual);
+				if (claseActualInterna.equals(claseObjetivoInterna))
+					continue;
 
-        byte[] bytesClase = mod.obtenerBytesClase(claseActualInterna);
-        if (bytesClase == null) continue;
+				byte[] bytesClase = mod.obtenerBytesClase(claseActualInterna);
+				if (bytesClase == null)
+					continue;
 
-        try {
-            List<ArchivoDeMod.InfoMetodo> metodos = mod.obtenerMetodosConReferencias(claseActualInterna);
-            for (ArchivoDeMod.InfoMetodo metodo : metodos) {
+				try {
+					List<ArchivoDeMod.InfoMetodo> metodos = mod.obtenerMetodosConReferencias(claseActualInterna);
+					for (ArchivoDeMod.InfoMetodo metodo : metodos) {
 
-                for (ArchivoDeMod.Referencia ref : metodo.obtenerReferenciasAMetodos()) {
-                    if (normalizarNombreClaseInterno(ref.obtenerClase()).equals(claseObjetivoInterna)) {
-                        String origen = convertirFormatoClasePuntos(claseActualInterna);
-                        String textoRef = MonitorDePID.idioma.metodo() + ": " + origen + "."
-                                + metodo.obtenerNombre() + metodo.obtenerDescriptor() + " -> "
-                                + convertirFormatoClasePuntos(claseObjetivoInterna) + "."
-                                + ref.obtenerNombre() + " (" + mod.ubicacion_para_publicar() + ")";
-                        raiz.add(new DefaultMutableTreeNode(textoRef));
-                    }
-                }
+						for (ArchivoDeMod.Referencia ref : metodo.obtenerReferenciasAMetodos()) {
+							if (normalizarNombreClaseInterno(ref.obtenerClase()).equals(claseObjetivoInterna)) {
+								String origen = convertirFormatoClasePuntos(claseActualInterna);
+								String textoRef = MonitorDePID.idioma.metodo() + ": " + origen + "."
+										+ metodo.obtenerNombre() + metodo.obtenerDescriptor() + " -> "
+										+ convertirFormatoClasePuntos(claseObjetivoInterna) + "." + ref.obtenerNombre()
+										+ " (" + mod.ubicacion_para_publicar() + ")";
+								raiz.add(new DefaultMutableTreeNode(textoRef));
+							}
+						}
 
-                for (ArchivoDeMod.Referencia ref : metodo.obtenerReferenciasACampos()) {
-                    if (normalizarNombreClaseInterno(ref.obtenerClase()).equals(claseObjetivoInterna)) {
-                        String origen = convertirFormatoClasePuntos(claseActualInterna);
-                        String textoRef = MonitorDePID.idioma.metodo() + ": " + origen + "."
-                                + metodo.obtenerNombre() + metodo.obtenerDescriptor() + " -> "
-                                + convertirFormatoClasePuntos(claseObjetivoInterna) + "."
-                                + ref.obtenerNombre() + " (" + mod.ubicacion_para_publicar() + ")";
-                        raiz.add(new DefaultMutableTreeNode(textoRef));
-                    }
-                }
-            }
-        } catch (Throwable t) {
-            // seguir
-        }
-    }
-}
-
+						for (ArchivoDeMod.Referencia ref : metodo.obtenerReferenciasACampos()) {
+							if (normalizarNombreClaseInterno(ref.obtenerClase()).equals(claseObjetivoInterna)) {
+								String origen = convertirFormatoClasePuntos(claseActualInterna);
+								String textoRef = MonitorDePID.idioma.metodo() + ": " + origen + "."
+										+ metodo.obtenerNombre() + metodo.obtenerDescriptor() + " -> "
+										+ convertirFormatoClasePuntos(claseObjetivoInterna) + "." + ref.obtenerNombre()
+										+ " (" + mod.ubicacion_para_publicar() + ")";
+								raiz.add(new DefaultMutableTreeNode(textoRef));
+							}
+						}
+					}
+				} catch (Throwable t) {
+					// seguir
+				}
+			}
+		}
 
 		if (raiz.getChildCount() == 0) {
 			raiz.add(new DefaultMutableTreeNode(MonitorDePID.idioma.noSeEncontraronReferencias()));

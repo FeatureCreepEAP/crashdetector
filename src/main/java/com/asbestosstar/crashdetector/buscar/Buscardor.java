@@ -31,11 +31,9 @@ import com.asbestosstar.crashdetector.cargador.CargadorNeoForge;
 
 public class Buscardor {
 
+	public static Set<ArchivoDeMod> mods = java.util.Collections
+			.newSetFromMap(new java.util.concurrent.ConcurrentHashMap<>());
 
-	public static Set<ArchivoDeMod> mods =
-		    java.util.Collections.newSetFromMap(new java.util.concurrent.ConcurrentHashMap<>());
-
-	
 	public static boolean cargado = false;
 
 	/** Evita precargar varias veces todas las clases en todos los mods. */
@@ -575,15 +573,6 @@ public class Buscardor {
 		}
 		return false;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 	public static void cargadoresPredetermindado() {
 		Cargador.cargadores.add(new CargadorFeatureCreep());

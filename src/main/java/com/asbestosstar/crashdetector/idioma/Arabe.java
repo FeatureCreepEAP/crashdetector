@@ -4700,32 +4700,29 @@ public class Arabe implements Idioma {
 				+ "</ul>"
 				+ "<p>ملاحظة: يمكنك استخدام أداة <b>grepr/fgrepr</b> في الشريط الجانبي للعثور على الوحدات التي تشير إلى الفئات المفقودة، طالما تستخدم '/' في الأسماء.</p>";
 	}
-	
+
 	@Override
 	public String uraniumLag() {
-	    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
-	        + "لديك وحدة تتسبب عمداً في التباطؤ (lag). Uranium هو وحدة تباطؤ. قد لا تسبب أعطالاً دائماً، لكنها قد تفعل ذلك في النهاية."
-	        + "</b>";
+		return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+				+ "لديك وحدة تتسبب عمداً في التباطؤ (lag). Uranium هو وحدة تباطؤ. قد لا تسبب أعطالاً دائماً، لكنها قد تفعل ذلك في النهاية."
+				+ "</b>";
 	}
-	
+
 	@Override
 	public String errorFallingAttackVersion() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Falling Attack está marcado como compatible con 1.19.* pero es para 1.20.*, lo que causa un error de clase no encontrada. "
-	            + "El mod intenta usar DamageSources que no existen en la versión de Minecraft actual." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Falling Attack está marcado como compatible con 1.19.* pero es para 1.20.*, lo que causa un error de clase no encontrada. "
+				+ "El mod intenta usar DamageSources que no existen en la versión de Minecraft actual." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorFallingAttackVersion() {
-	    return "Error de versión en Falling Attack";
+		return "Error de versión en Falling Attack";
 	}
 
 	@Override
 	public String pasoErrorFallingAttackVersion() {
-	    return "Asegúrate de usar la versión correcta de Falling Attack compatible con tu versión de Minecraft.";
+		return "Asegúrate de usar la versión correcta de Falling Attack compatible con tu versión de Minecraft.";
 	}
-	
-	
-	
 
 }

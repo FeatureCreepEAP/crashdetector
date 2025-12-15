@@ -46,7 +46,6 @@ public class ModPKZip implements ArchivoDeMod {
 	private final Map<String, byte[]> cacheBytesEntrada = new java.util.concurrent.ConcurrentHashMap<>();
 	private final Map<String, byte[]> cacheBytesClase = new java.util.concurrent.ConcurrentHashMap<>();
 
-
 	public List<Cargador> cargadores_de_mod = new ArrayList<Cargador>();
 	public boolean meta_tiene_referencia_de_mcreator = false;
 
@@ -301,48 +300,49 @@ public class ModPKZip implements ArchivoDeMod {
 
 	@Override
 	public List<ArchivoDeMod> buscarModsCon(String termino) {
-	    List<ArchivoDeMod> resultados = new ArrayList<>();
-	    if (termino == null || termino.isEmpty()) return resultados;
+		List<ArchivoDeMod> resultados = new ArrayList<>();
+		if (termino == null || termino.isEmpty())
+			return resultados;
 
-	    String t = termino;
-	    if (t.endsWith(".class")) t = t.substring(0, t.length() - 6);
+		String t = termino;
+		if (t.endsWith(".class"))
+			t = t.substring(0, t.length() - 6);
 
-	    String tDots = t.replace('/', '.');   // com.foo.Bar
-	    String tSlashes = t.replace('.', '/'); // com/foo/Bar
+		String tDots = t.replace('/', '.'); // com.foo.Bar
+		String tSlashes = t.replace('.', '/'); // com/foo/Bar
 
-	    boolean tieneArchivo = archivos.contains(termino) || archivos.contains(tSlashes + ".class") || archivos.contains(tDots);
+		boolean tieneArchivo = archivos.contains(termino) || archivos.contains(tSlashes + ".class")
+				|| archivos.contains(tDots);
 
-	    boolean tieneClaseExacta =
-	            clases.contains(tDots) ||                      
-	            mapaEntradaPorClase.containsKey(tSlashes) ||    // internal index
-	            mapaEntradaPorClase.containsKey(normalizarNombreInterno(t)); 
+		boolean tieneClaseExacta = clases.contains(tDots) || mapaEntradaPorClase.containsKey(tSlashes) || // internal
+																											// index
+				mapaEntradaPorClase.containsKey(normalizarNombreInterno(t));
 
-	    boolean tienePaquete =
-	            mapaEntradaPorClase.keySet().stream().anyMatch(c -> c.startsWith(tSlashes)) // internal
-	            || clases.stream().anyMatch(c -> c.startsWith(tDots));                       // dots
+		boolean tienePaquete = mapaEntradaPorClase.keySet().stream().anyMatch(c -> c.startsWith(tSlashes)) // internal
+				|| clases.stream().anyMatch(c -> c.startsWith(tDots)); // dots
 
-	    if (tieneArchivo || tieneClaseExacta || tienePaquete) {
-	        resultados.add(this);
-	    }
+		if (tieneArchivo || tieneClaseExacta || tienePaquete) {
+			resultados.add(this);
+		}
 
-	    for (ArchivoDeMod mod : mods_en_mod) {
-	        resultados.addAll(mod.buscarModsCon(termino));
-	    }
-	    return resultados;
+		for (ArchivoDeMod mod : mods_en_mod) {
+			resultados.addAll(mod.buscarModsCon(termino));
+		}
+		return resultados;
 	}
-
 
 	@Override
 	public boolean existeClase(String nombreClase) {
-	    if (nombreClase == null || nombreClase.isEmpty()) return false;
+		if (nombreClase == null || nombreClase.isEmpty())
+			return false;
 
-	    String interno = normalizarNombreInterno(nombreClase); 
-	    if (mapaEntradaPorClase.containsKey(interno)) return true;
+		String interno = normalizarNombreInterno(nombreClase);
+		if (mapaEntradaPorClase.containsKey(interno))
+			return true;
 
-	    String dots = interno.replace('/', '.');
-	    return clases.contains(dots);
+		String dots = interno.replace('/', '.');
+		return clases.contains(dots);
 	}
-
 
 	/**
 	 * Devuelve los bytes de la clase solicitada. Acepta nombre interno "pkg/Clase"
@@ -410,29 +410,30 @@ public class ModPKZip implements ArchivoDeMod {
 	 * @return número de clases cargadas en caché en esta instancia
 	 */
 	public int precargarTodasLasClases() {
-	    int cargadas = 0;
-	    try (ZipInputStream zip = new ZipInputStream(new ByteArrayInputStream(bytesZip))) {
-	        ZipEntry entrada;
-	        while ((entrada = zip.getNextEntry()) != null) {
-	            String nombreEntrada = entrada.getName();
-	            if (nombreEntrada.endsWith(".class")) {
-	                String nombreInterno = nombreEntrada.substring(0, nombreEntrada.length() - 6); // sin ".class"
+		int cargadas = 0;
+		try (ZipInputStream zip = new ZipInputStream(new ByteArrayInputStream(bytesZip))) {
+			ZipEntry entrada;
+			while ((entrada = zip.getNextEntry()) != null) {
+				String nombreEntrada = entrada.getName();
+				if (nombreEntrada.endsWith(".class")) {
+					String nombreInterno = nombreEntrada.substring(0, nombreEntrada.length() - 6); // sin ".class"
 
-	                // Solo procesar si es una clase indexada (evita redundancias con clases no mapeadas)
-	                if (mapaEntradaPorClase.containsKey(nombreInterno) && !cacheBytesClase.containsKey(nombreInterno)) {
-	                    byte[] data = leer(zip);
-	                    if (data != null) {
-	                        cacheBytesClase.put(nombreInterno, data);
-	                        cargadas++;
-	                    }
-	                }
-	            }
-	            zip.closeEntry();
-	        }
-	    } catch (IOException ex) {
-	        CrashDetectorLogger.logException(ex);
-	    }
-	    return cargadas;
+					// Solo procesar si es una clase indexada (evita redundancias con clases no
+					// mapeadas)
+					if (mapaEntradaPorClase.containsKey(nombreInterno) && !cacheBytesClase.containsKey(nombreInterno)) {
+						byte[] data = leer(zip);
+						if (data != null) {
+							cacheBytesClase.put(nombreInterno, data);
+							cargadas++;
+						}
+					}
+				}
+				zip.closeEntry();
+			}
+		} catch (IOException ex) {
+			CrashDetectorLogger.logException(ex);
+		}
+		return cargadas;
 	}
 
 	/**

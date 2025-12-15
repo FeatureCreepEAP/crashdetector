@@ -4760,32 +4760,29 @@ public class Portuges implements Idioma {
 				+ "</ul>"
 				+ "<p>Observação: você pode usar a ferramenta <b>grepr/fgrepr</b> na barra lateral para encontrar os mods que fazem referência às classes ausentes, desde que use '/' nos nomes.</p>";
 	}
-	
+
 	@Override
 	public String uraniumLag() {
-	    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
-	        + "Você tem um mod que está intencionalmente causando lag. Uranium é um mod de lag. Ele nem sempre causa falhas, mas eventualmente pode causar."
-	        + "</b>";
+		return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+				+ "Você tem um mod que está intencionalmente causando lag. Uranium é um mod de lag. Ele nem sempre causa falhas, mas eventualmente pode causar."
+				+ "</b>";
 	}
+
 	@Override
 	public String errorFallingAttackVersion() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Falling Attack está marcado como compatível com 1.19.*, mas é para 1.20.*, o que causa um erro de 'classe não encontrada'. "
-	            + "O mod tenta usar DamageSources que não existem na versão atual do Minecraft." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Falling Attack está marcado como compatível com 1.19.*, mas é para 1.20.*, o que causa um erro de 'classe não encontrada'. "
+				+ "O mod tenta usar DamageSources que não existem na versão atual do Minecraft." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorFallingAttackVersion() {
-	    return "Erro de versão do Falling Attack";
+		return "Erro de versão do Falling Attack";
 	}
 
 	@Override
 	public String pasoErrorFallingAttackVersion() {
-	    return "Certifique-se de estar usando a versão correta do Falling Attack compatível com sua versão do Minecraft.";
+		return "Certifique-se de estar usando a versão correta do Falling Attack compatível com sua versão do Minecraft.";
 	}
-	
-	
-	
-	
 
 }

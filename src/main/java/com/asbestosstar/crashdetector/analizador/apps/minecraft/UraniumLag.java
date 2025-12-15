@@ -8,17 +8,16 @@ import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceI
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
 
-public class UraniumLag implements Verificaciones{
+public class UraniumLag implements Verificaciones {
 
-	boolean activado=false;
-	
+	boolean activado = false;
+
 	@Override
 	public void verificar(Consola consola) {
 		// TODO Auto-generated method stub
-		
-		activado=Buscardor.existeClaseEnAlgunMod("net.yosa.uranium.Uranium");
-		
-		
+
+		activado = Buscardor.existeClaseEnAlgunMod("net.yosa.uranium.Uranium");
+
 	}
 
 	@Override
@@ -53,8 +52,8 @@ public class UraniumLag implements Verificaciones{
 
 	@Override
 	public QuickFix solucion() {
-		return new QuickFix.Builder(nombre())
-				.agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible()).construir();
+		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
+				.construir();
 	}
 
 	@Override
@@ -68,12 +67,12 @@ public class UraniumLag implements Verificaciones{
 		// TODO Auto-generated method stub
 		return "uraniumlag";
 	}
-	
+
 	@Override
 	public Criticalidad nivel_de_criticalidad() {
 		return Criticalidad.ADVERTENCIA;
 	}
-	
+
 	@Override
 	public boolean anularNormal() {
 		return true;

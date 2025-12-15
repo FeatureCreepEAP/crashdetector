@@ -88,12 +88,10 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 	public JScrollPane scrollPane = new JScrollPane(pantalla);
 	public ConfigPanel<PrincipalGUI> panelConfiguracion = TipoGUI.CONFIG_PANEL
 			.obtenerGUIPredeterminado(ConfigPanelEstiloTL.ID, () -> new ConfigPanelEstiloTL());
-	
-	public PanelAPIBase panelCDMods = TipoGUI.MOD_API_PANEL
-			.obtenerGUIPredeterminado(CDModsEstiloTL.ID, () -> new CDModsEstiloTL());
-	
-	
-	
+
+	public PanelAPIBase panelCDMods = TipoGUI.MOD_API_PANEL.obtenerGUIPredeterminado(CDModsEstiloTL.ID,
+			() -> new CDModsEstiloTL());
+
 	public JButton botonVolver = new JButton(MonitorDePID.idioma.volver());
 	public JButton botonConfiguracion;
 	public JPanel contenidoPrincipal = new JPanel(new BorderLayout());

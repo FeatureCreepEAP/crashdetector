@@ -303,7 +303,7 @@ public class MonitorDePID {
 			String cp = System.getProperty("java.class.path") + File.pathSeparator + jar;
 			// System.out.println("******************" + cp);
 
-			ProcessBuilder pb = new ProcessBuilder(javaBinary,obtenerXMXPorMitadDeRAM(),
+			ProcessBuilder pb = new ProcessBuilder(javaBinary, obtenerXMXPorMitadDeRAM(),
 					// "-XX:MaxJavaStackTraceDepth=1000000",
 					"-cp", cp, "com.asbestosstar.crashdetector.MonitorDePID", "--monitor", String.valueOf(pid))
 			// .inheritIO()
@@ -930,49 +930,48 @@ public class MonitorDePID {
 		contenidoInforme = constructor;
 		local = GeneradorDeInformacion.generarLocal(consolas, utc).getAbsolutePath();
 	}
-	
-	
-	
+
 	/**
-	 * Obtiene una cadena de argumento -Xmx basada en la mitad de la memoria RAM total del sistema.
+	 * Obtiene una cadena de argumento -Xmx basada en la mitad de la memoria RAM
+	 * total del sistema.
 	 * 
-	 * @return cadena en formato "-XmxNNNNm" donde NNNN es la mitad de la RAM en megabytes,
-	 *         redondeada hacia abajo. Si no se puede detectar la RAM, devuelve "-Xmx4096m" (4 GB).
+	 * @return cadena en formato "-XmxNNNNm" donde NNNN es la mitad de la RAM en
+	 *         megabytes, redondeada hacia abajo. Si no se puede detectar la RAM,
+	 *         devuelve "-Xmx4096m" (4 GB).
 	 */
 	public static String obtenerXMXPorMitadDeRAM() {
-	    try {
-	    	//https://stackoverflow.com/questions/950754/how-do-i-find-the-physical-memory-size-in-java
-	    	com.sun.management.OperatingSystemMXBean os = (com.sun.management.OperatingSystemMXBean)
-	    		     java.lang.management.ManagementFactory.getOperatingSystemMXBean();
-	    		long memoriaTotalBytes = os.getTotalPhysicalMemorySize();
-	    	
+		try {
+			// https://stackoverflow.com/questions/950754/how-do-i-find-the-physical-memory-size-in-java
+			com.sun.management.OperatingSystemMXBean os = (com.sun.management.OperatingSystemMXBean) java.lang.management.ManagementFactory
+					.getOperatingSystemMXBean();
+			long memoriaTotalBytes = os.getTotalPhysicalMemorySize();
 
-	        // Si la memoria no está disponible (valor -1 o <= 0), usar valor predeterminado
-	        if (memoriaTotalBytes <= 0) {
-	        	System.out.println("0 ram");
-	            return "-Xmx4096m"; // 4 GB por defecto
-	        }
-	        
-	        // Calcular la mitad de la memoria total
-	        long mitadMemoriaBytes = memoriaTotalBytes / 2;
-	        
-	        // Convertir a megabytes (1 MB = 1024 * 1024 bytes)
-	        long mitadMemoriaMB = mitadMemoriaBytes / (1024 * 1024);
-	        
-	        // Asegurar un mínimo razonable (ej. 512 MB)
-	        if (mitadMemoriaMB < 512) {
-	            mitadMemoriaMB = 512;
-	        }
-	        
-	        // Formatear como argumento de JVM
-		       System.out.println("ram "+mitadMemoriaMB);
-	        return "-Xmx" + mitadMemoriaMB + "m";
-	        
-	    } catch (Exception e) {
-	        // En caso de error (ej. clase no disponible en alguna JVM), usar valor seguro
-	    	System.out.println("fgb ram");
-	    	return "-Xmx4096m";
-	    }
+			// Si la memoria no está disponible (valor -1 o <= 0), usar valor predeterminado
+			if (memoriaTotalBytes <= 0) {
+				System.out.println("0 ram");
+				return "-Xmx4096m"; // 4 GB por defecto
+			}
+
+			// Calcular la mitad de la memoria total
+			long mitadMemoriaBytes = memoriaTotalBytes / 2;
+
+			// Convertir a megabytes (1 MB = 1024 * 1024 bytes)
+			long mitadMemoriaMB = mitadMemoriaBytes / (1024 * 1024);
+
+			// Asegurar un mínimo razonable (ej. 512 MB)
+			if (mitadMemoriaMB < 512) {
+				mitadMemoriaMB = 512;
+			}
+
+			// Formatear como argumento de JVM
+			System.out.println("ram " + mitadMemoriaMB);
+			return "-Xmx" + mitadMemoriaMB + "m";
+
+		} catch (Exception e) {
+			// En caso de error (ej. clase no disponible en alguna JVM), usar valor seguro
+			System.out.println("fgb ram");
+			return "-Xmx4096m";
+		}
 	}
 
 }

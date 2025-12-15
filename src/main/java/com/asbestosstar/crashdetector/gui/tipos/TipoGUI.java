@@ -418,7 +418,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 			return EditorGUI.GUIS;
 		}
 	};
-	
+
 	/**
 	 * Editor de GUIs
 	 */
@@ -443,7 +443,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 			return PanelAPIBase.GUIS;
 		}
 	};
-	
+
 	/**
 	 * Registro estático de todos los tipos de GUI en la lista global.
 	 */

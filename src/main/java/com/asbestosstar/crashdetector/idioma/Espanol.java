@@ -5446,30 +5446,26 @@ public class Espanol implements Idioma {
 
 	@Override
 	public String uraniumLag() {
-	    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
-	        + "Tienes un mod que intencionalmente causa lag. Uranium es un mod de lag. No siempre causa fallos, pero eventualmente puede hacerlo."
-	        + "</b>";
+		return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+				+ "Tienes un mod que intencionalmente causa lag. Uranium es un mod de lag. No siempre causa fallos, pero eventualmente puede hacerlo."
+				+ "</b>";
 	}
-	
+
 	@Override
 	public String errorFallingAttackVersion() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Falling Attack está marcado como compatible con 1.19.* pero es para 1.20.*, lo que causa un error de clase no encontrada. "
-	            + "El mod intenta usar DamageSources que no existen en la versión de Minecraft actual." + "</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Falling Attack está marcado como compatible con 1.19.* pero es para 1.20.*, lo que causa un error de clase no encontrada. "
+				+ "El mod intenta usar DamageSources que no existen en la versión de Minecraft actual." + "</b>";
 	}
 
 	@Override
 	public String nombreDeErrorFallingAttackVersion() {
-	    return "Error de versión en Falling Attack";
+		return "Error de versión en Falling Attack";
 	}
 
 	@Override
 	public String pasoErrorFallingAttackVersion() {
-	    return "Asegúrate de usar la versión correcta de Falling Attack compatible con tu versión de Minecraft.";
+		return "Asegúrate de usar la versión correcta de Falling Attack compatible con tu versión de Minecraft.";
 	}
-	
-	
-	
-	
 
 }
