@@ -1154,7 +1154,8 @@ public class Japones implements Idioma {
 
 	@Override
 	public String mensajeCargaChunk() {
-		return "<b style='color:#" + config.obtenerColorError() + "'>ワールドのチャンク読み込み中に例外が発生しました。</b> ";
+	    return "<b style='color:#" + config.obtenerColorError()
+	            + "'>ワールドがチャンクを読み込んでいる際に例外が発生しました。お使いのプラットフォーム向けに存在する場合、FeatureRecycler で問題を解決できる可能性があります。https://www.curseforge.com/minecraft/mc-mods/feature-recycler</b>";
 	}
 
 	@Override

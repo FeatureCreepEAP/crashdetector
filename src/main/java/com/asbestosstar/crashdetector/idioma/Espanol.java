@@ -1298,8 +1298,8 @@ public class Espanol implements Idioma {
 	 */
 	@Override
 	public String mensajeCargaChunk() {
-		return "<b style='color:#" + config.obtenerColorError()
-				+ "'>Hubo una excepción mientras el mundo cargaba los chunks.</b> ";
+	    return "<b style='color:#" + config.obtenerColorError()
+	            + "'>Hubo una excepción mientras el mundo cargaba los chunks. Si existe para tu plataforma, es posible que FeatureRecycler pueda resolver el problema. https://www.curseforge.com/minecraft/mc-mods/feature-recycler</b>";
 	}
 
 	/**

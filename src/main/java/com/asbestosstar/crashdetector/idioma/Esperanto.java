@@ -1185,8 +1185,8 @@ public class Esperanto implements Idioma {
 
 	@Override
 	public String mensajeCargaChunk() {
-		return "<b style='color:#" + config.obtenerColorError()
-				+ "'>Okazis eraro dum la mondo ŝargis la chunk-ojn.</b> ";
+	    return "<b style='color:#" + config.obtenerColorError()
+	            + "'>Okazis escepto dum la mondo ŝargis chunk-ojn. Se ĝi ekzistas por via platformo, eble FeatureRecycler povas solvi la problemon. https://www.curseforge.com/minecraft/mc-mods/feature-recycler</b>";
 	}
 
 	@Override

@@ -1182,7 +1182,8 @@ public class Persa implements Idioma {
 
 	@Override
 	public String mensajeCargaChunk() {
-		return "<b style='color:#" + config.obtenerColorError() + "'>خطایی هنگام بارگذاری چانک‌ها در جهان رخ داد.</b> ";
+	    return "<b style='color:#" + config.obtenerColorError()
+	            + "'>هنگام بارگذاری چنک‌ها (chunks) توسط دنیا، یک استثنا رخ داد. اگر برای پلتفرم شما موجود باشد، ممکن است FeatureRecycler بتواند این مشکل را حل کند. https://www.curseforge.com/minecraft/mc-mods/feature-recycler</b>";
 	}
 
 	@Override

@@ -554,47 +554,59 @@ public class Consola {
 //		}
 //	}
 
-	/**
-	 * Agrega recursivamente todos los archivos de un directorio y sus
-	 * subdirectorios sin control de duplicados, excluyendo archivos .gz
-	 */
-	public static void agregarDirectorio(List<File> resultado, File directorio) {
-		if (!directorio.exists() || !directorio.isDirectory()) {
-			return;
-		}
+    /**
+     * Agrega recursivamente todos los archivos de un directorio y sus
+     * subdirectorios sin control de duplicados, excluyendo archivos .gz y
+     * subdirectorios que coinciden con patrones de inutiles_archivo_strs.
+     */
+    public static void agregarDirectorio(List<File> resultado, File directorio) {
+        if (!directorio.exists() || !directorio.isDirectory()) {
+            return;
+        }
 
-		// preparar conjunto en minúsculas para comparación eficiente a partir de la
-		// lista externa
-		// (si la lista es null o vacía, se comporta como no haber filtros)
-		final Set<String> inutilesLower = (inutiles_archivo_strs == null) ? Collections.emptySet()
-				: inutiles_archivo_strs.stream().filter(Objects::nonNull).map(String::toLowerCase)
-						.collect(Collectors.toSet());
+        // Preparar conjunto en minúsculas para comparación eficiente a partir de la
+        // lista externa
+        // (si la lista es null o vacía, se comporta como no haber filtros)
+        final Set<String> inutilesLower = (inutiles_archivo_strs == null) ? Collections.emptySet()
+                : inutiles_archivo_strs.stream().filter(Objects::nonNull).map(String::toLowerCase)
+                        .collect(Collectors.toSet());
 
-		File[] archivos = directorio.listFiles();
-		if (archivos == null)
-			return;
+        // Listar los archivos y subdirectorios del directorio actual
+        File[] archivos = directorio.listFiles();
+        if (archivos == null)
+            return;
 
-		for (File archivo : archivos) {
-			if (archivo == null)
-				continue;
+        for (File archivo : archivos) {
+            if (archivo == null)
+                continue;
 
-			if (archivo.isDirectory()) {
-				agregarDirectorio(resultado, archivo); // llamada recursiva mantiene la misma firma
-			} else if (archivo.isFile()) {
-				String nombre = archivo.getName();
-				if (nombre == null)
-					continue;
+            String nombre = archivo.getName();
+            if (nombre == null)
+                continue;
 
-				String lower = nombre.toLowerCase();
-				boolean esComprimido = lower.endsWith(".gz") || lower.endsWith(".xz");
-				boolean contieneInutil = !inutilesLower.isEmpty() && inutilesLower.stream().anyMatch(lower::contains);
+            String lowerNombre = nombre.toLowerCase();
 
-				if (!esComprimido && !contieneInutil) {
-					resultado.add(archivo);
-				}
-			}
-		}
-	}
+            // Si es un directorio, verificar si su nombre debe ser excluido
+            if (archivo.isDirectory()) {
+                // Si el nombre del directorio está en inutilesLower, lo excluimos
+                if (inutilesLower.stream().anyMatch(lowerNombre::contains)) {
+                    continue; // Si el directorio está en la lista de inutiles, lo saltamos
+                }
+
+                // Si no es un directorio excluido, llamamos recursivamente
+                agregarDirectorio(resultado, archivo);
+            } else if (archivo.isFile()) {
+                // Si el archivo es comprimido, lo excluimos
+                boolean esComprimido = lowerNombre.endsWith(".gz") || lowerNombre.endsWith(".xz");
+                // Si contiene una cadena no deseada, también lo excluimos
+                boolean contieneInutil = !inutilesLower.isEmpty() && inutilesLower.stream().anyMatch(lowerNombre::contains);
+
+                if (!esComprimido && !contieneInutil) {
+                    resultado.add(archivo);
+                }
+            }
+        }
+    }
 
 	public static List<Consola> reorganizar(List<Consola> consolas) {
 		List<Consola> crashReports = new ArrayList<>();

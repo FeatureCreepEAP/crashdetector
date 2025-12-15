@@ -1226,8 +1226,8 @@ public class Ingles implements Idioma {
 
 	@Override
 	public String mensajeCargaChunk() {
-		return "<b style='color:#" + config.obtenerColorError()
-				+ "'>An exception occurred while the world was loading chunks.</b> ";
+	    return "<b style='color:#" + config.obtenerColorError()
+	            + "'>An exception occurred while the world was loading chunks. If it exists for your platform, FeatureRecycler may be able to resolve the issue. https://www.curseforge.com/minecraft/mc-mods/feature-recycler</b>";
 	}
 
 	@Override

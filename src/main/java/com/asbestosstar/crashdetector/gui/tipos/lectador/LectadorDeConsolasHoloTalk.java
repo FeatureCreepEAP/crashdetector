@@ -39,6 +39,10 @@ public class LectadorDeConsolasHoloTalk extends LectadorDeConsolasGUI {
 	@Override
 	protected void aplicarApariencia() {
 		// Solo apariencia, no datos
+        //Applicar fondo otra vez
+		if (getContentPane() instanceof JLayeredPane) {
+            instalarFondoApariencia((JLayeredPane) getContentPane());
+        }
 		repaint();
 	}
 
@@ -112,6 +116,7 @@ public class LectadorDeConsolasHoloTalk extends LectadorDeConsolasGUI {
 
 		// Luego inicializar la interfaz
 		super.init();
+		 aplicarApariencia();
 	}
 
 	@Override

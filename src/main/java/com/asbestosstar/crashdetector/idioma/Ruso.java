@@ -1190,8 +1190,8 @@ public class Ruso implements Idioma {
 
 	@Override
 	public String mensajeCargaChunk() {
-		return "<b style='color:#" + config.obtenerColorError()
-				+ "'>Во время загрузки чанков мира произошла ошибка.</b> ";
+	    return "<b style='color:#" + config.obtenerColorError()
+	            + "'>Ocorreu uma exceção enquanto o mundo carregava os chunks. Se existir para sua plataforma, o FeatureRecycler poderá resolver o problema. https://www.curseforge.com/minecraft/mc-mods/feature-recycler</b>";
 	}
 
 	@Override

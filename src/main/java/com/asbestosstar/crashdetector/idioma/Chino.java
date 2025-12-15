@@ -1129,7 +1129,8 @@ public class Chino implements Idioma {
 
 	@Override
 	public String mensajeCargaChunk() {
-		return "<b style='color:#" + config.obtenerColorError() + "'>加载世界区块时发生异常。</b> ";
+	    return "<b style='color:#" + config.obtenerColorError()
+	            + "'>世界加载区块（chunks）时发生异常。如果你的平台有对应版本，FeatureRecycler 或许能解决此问题。https://www.curseforge.com/minecraft/mc-mods/feature-recycler</b>";
 	}
 
 	@Override

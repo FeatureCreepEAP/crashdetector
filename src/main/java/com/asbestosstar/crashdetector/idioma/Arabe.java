@@ -1187,8 +1187,8 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String mensajeCargaChunk() {
-		return "<b style='color:#" + config.obtenerColorError()
-				+ "'>حدث خطأ أثناء تحميل الكتل (chunks) في العالم.</b> ";
+	    return "<b style='color:#" + config.obtenerColorError()
+	            + "'>حدث استثناء أثناء تحميل الـ chunks من العالم. إذا كان متاحًا لمنصتك، فقد يتمكن FeatureRecycler من حل المشكلة. https://www.curseforge.com/minecraft/mc-mods/feature-recycler</b>";
 	}
 
 	@Override

@@ -1151,7 +1151,8 @@ public class Coreano implements Idioma {
 
 	@Override
 	public String mensajeCargaChunk() {
-		return "<b style='color:#" + config.obtenerColorError() + "'>세계 청크를 로드하는 중 오류가 발생했습니다.</b> ";
+	    return "<b style='color:#" + config.obtenerColorError()
+	            + "'>월드가 청크를 로드하는 도중 예외가 발생했습니다. 귀하의 플랫폼용으로 존재한다면, FeatureRecycler가 문제를 해결할 수 있습니다. https://www.curseforge.com/minecraft/mc-mods/feature-recycler</b>";
 	}
 
 	@Override
