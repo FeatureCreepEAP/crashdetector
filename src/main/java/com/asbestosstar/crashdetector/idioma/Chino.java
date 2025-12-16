@@ -4604,4 +4604,254 @@ public class Chino implements Idioma {
 	    return "打开安装文件夹";
 	}
 
+	@Override
+	public String colorFondoPrincipal() {
+	    return "主背景颜色";
+	}
+
+	@Override
+	public String colorTextoBotonReset() {
+	    return "重置按钮文字颜色";
+	}
+
+	@Override
+	public String colorTextoCampoBuscar() {
+	    return "搜索框文字颜色";
+	}
+
+	@Override
+	public String colorTextoComboFiltro() {
+	    return "筛选下拉菜单文字颜色";
+	}
+
+	@Override
+	public String colorTextoRenderer() {
+	    return "渲染器文字颜色";
+	}
+
+	@Override
+	public String colorTextoOverlayCarga() {
+	    return "加载覆盖层文字颜色";
+	}
+
+	@Override
+	public String colorBorde() {
+	    return "边框颜色";
+	}
+	
+	@Override
+	public String colorFondoRetrato() {
+	    return "人像模式背景颜色";
+	}
+
+	@Override
+	public String colorEnlaceCompartir() {
+	    return "分享链接颜色";
+	}
+
+	@Override
+	public String colorFondoCampoCompartir() {
+	    return "分享字段背景颜色";
+	}
+
+	@Override
+	public String rosaFondo() {
+	    return "背景粉红色";
+	}
+
+	@Override
+	public String rosaSuave() {
+	    return "柔和粉红";
+	}
+
+	@Override
+	public String moradoAcento() {
+	    return "强调紫色";
+	}
+
+	@Override
+	public String textoOscuro() {
+	    return "深色文字";
+	}
+
+	@Override
+	public String bordeSuave() {
+	    return "柔和边框";
+	}
+
+	@Override
+	public String fondoCampo() {
+	    return "字段背景";
+	}
+
+	@Override
+	public String fondoVistaPrevia() {
+	    return "预览背景";
+	}
+	@Override
+	public String sintaxisConstructor() {
+	    return "语法颜色：构造函数";
+	}
+
+	@Override
+	public String sintaxisMensajeAyudar() {
+	    return "语法颜色：帮助消息";
+	}
+
+	@Override
+	public String sintaxisEtiquetasHtml() {
+	    return "语法颜色：HTML 标签";
+	}
+
+	@Override
+	public String colorFondoVentana() {
+	    return "窗口背景颜色";
+	}
+
+	@Override
+	public String colorPanel() {
+	    return "面板颜色";
+	}
+
+	@Override
+	public String colorBotonTexto() {
+	    return "按钮文字颜色";
+	}
+
+	@Override
+	public String colorCampo() {
+	    return "字段颜色";
+	}
+
+	@Override
+	public String colorBordeDestacado() {
+	    return "高亮边框颜色";
+	}
+
+	@Override
+	public String colorSeleccionTexto() {
+	    return "文本选中背景色";
+	}
+	
+	@Override
+	public String colorTextoSeleccionado() {
+	    return "选中文本颜色";
+	}
+
+	@Override
+	public String colorEstadoExito() {
+	    return "状态颜色：成功";
+	}
+
+	@Override
+	public String colorEstadoFallo() {
+	    return "状态颜色：失败";
+	}
+
+	@Override
+	public String colorEstadoInstantanea() {
+	    return "状态颜色：即时";
+	}
+
+	@Override
+	public String colorResultadoAnadido() {
+	    return "已添加结果颜色";
+	}
+
+	@Override
+	public String colorResultadoEliminado() {
+	    return "已删除结果颜色";
+	}
+
+	@Override
+	public String colorBordeScroll() {
+	    return "滚动条边框颜色";
+	}
+
+	@Override
+	public String colorFondoPanel() {
+	    return "面板背景颜色";
+	}
+
+	@Override
+	public String colorBeigeListas() {
+	    return "列表米色";
+	}
+
+	@Override
+	public String colorTextoListas() {
+	    return "列表文字颜色";
+	}
+
+	@Override
+	public String colorBordeListas() {
+	    return "列表边框颜色";
+	}
+
+	@Override
+	public String colorBotonFondo() {
+	    return "按钮背景颜色";
+	}
+
+	@Override
+	public String colorBordeBoton() {
+	    return "按钮边框颜色";
+	}
+
+	@Override
+	public String colorDoradoTexto() {
+	    return "金色文字颜色";
+	}
+	
+	@Override
+	public String colorPila() {
+	    return "堆栈跟踪颜色 (stack trace)";
+	}
+
+	@Override
+	public String colorTextoPanel() {
+	    return "面板文字颜色";
+	}
+
+	@Override
+	public String colorTextoNegro() {
+	    return "黑色文字颜色";
+	}
+
+	@Override
+	public String colorTextoPrincipal() {
+	    return "主文字颜色";
+	}
+
+	@Override
+	public String colorFondoResultados() {
+	    return "结果背景颜色";
+	}
+
+	@Override
+	public String colorEstado() {
+	    return "状态颜色";
+	}
+
+	@Override
+	public String colorTextoDescripcion() {
+	    return "描述文字颜色";
+	}
+
+	@Override
+	public String colorTextoEstado() {
+	    return "状态文字颜色";
+	}
+
+	@Override
+	public String colorTextoExtra() {
+	    return "额外文字颜色";
+	}
+
+	@Override
+	public String colorSeparador() {
+	    return "分隔线颜色";
+	}
+	
+	
 }

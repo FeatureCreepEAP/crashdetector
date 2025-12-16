@@ -4805,4 +4805,257 @@ public class Arabe implements Idioma {
 	    return "فتح مجلد التثبيت";
 	}
 
+	
+	
+	@Override
+	public String colorFondoPrincipal() {
+	    return "لون الخلفية الرئيسي";
+	}
+
+	@Override
+	public String colorTextoBotonReset() {
+	    return "لون نص زر إعادة التعيين";
+	}
+
+	@Override
+	public String colorTextoCampoBuscar() {
+	    return "لون نص حقل البحث";
+	}
+
+	@Override
+	public String colorTextoComboFiltro() {
+	    return "لون نص قائمة التصفية المنسدلة";
+	}
+
+	@Override
+	public String colorTextoRenderer() {
+	    return "لون نص المُعَدِّل البصري (الرندرر)";
+	}
+
+	@Override
+	public String colorTextoOverlayCarga() {
+	    return "لون نص طبقة التحميل (overlay)";
+	}
+
+	@Override
+	public String colorBorde() {
+	    return "لون الحدود";
+	}
+	
+	@Override
+	public String colorFondoRetrato() {
+	    return "لون الخلفية في وضع الصورة الشخصية";
+	}
+
+	@Override
+	public String colorEnlaceCompartir() {
+	    return "لون رابط المشاركة";
+	}
+
+	@Override
+	public String colorFondoCampoCompartir() {
+	    return "لون خلفية حقل المشاركة";
+	}
+
+	@Override
+	public String rosaFondo() {
+	    return "وردي الخلفية";
+	}
+
+	@Override
+	public String rosaSuave() {
+	    return "وردي ناعم";
+	}
+
+	@Override
+	public String moradoAcento() {
+	    return "بنفسجي التركيز";
+	}
+
+	@Override
+	public String textoOscuro() {
+	    return "نص داكن";
+	}
+
+	@Override
+	public String bordeSuave() {
+	    return "حافة ناعمة";
+	}
+
+	@Override
+	public String fondoCampo() {
+	    return "خلفية الحقل";
+	}
+
+	@Override
+	public String fondoVistaPrevia() {
+	    return "خلفية معاينة";
+	}
+	
+	@Override
+	public String sintaxisConstructor() {
+	    return "لون بناء الجملة: الباني (constructor)";
+	}
+
+	@Override
+	public String sintaxisMensajeAyudar() {
+	    return "لون بناء الجملة: رسالة المساعدة";
+	}
+
+	@Override
+	public String sintaxisEtiquetasHtml() {
+	    return "لون بناء الجملة: وسوم HTML";
+	}
+
+	@Override
+	public String colorFondoVentana() {
+	    return "لون خلفية النافذة";
+	}
+
+	@Override
+	public String colorPanel() {
+	    return "لون اللوحة";
+	}
+
+	@Override
+	public String colorBotonTexto() {
+	    return "لون نص الزر";
+	}
+
+	@Override
+	public String colorCampo() {
+	    return "لون الحقل";
+	}
+
+	@Override
+	public String colorBordeDestacado() {
+	    return "لون الحدود المميزة";
+	}
+
+	@Override
+	public String colorSeleccionTexto() {
+	    return "لون خلفية تحديد النص";
+	}
+	
+	@Override
+	public String colorTextoSeleccionado() {
+	    return "لون النص المحدد";
+	}
+
+	@Override
+	public String colorEstadoExito() {
+	    return "لون الحالة: نجاح";
+	}
+
+	@Override
+	public String colorEstadoFallo() {
+	    return "لون الحالة: فشل";
+	}
+
+	@Override
+	public String colorEstadoInstantanea() {
+	    return "لون الحالة: فورية";
+	}
+
+	@Override
+	public String colorResultadoAnadido() {
+	    return "لون النتيجة المضافة";
+	}
+
+	@Override
+	public String colorResultadoEliminado() {
+	    return "لون النتيجة المحذوفة";
+	}
+
+	@Override
+	public String colorBordeScroll() {
+	    return "لون حدود شريط التمرير";
+	}
+
+	@Override
+	public String colorFondoPanel() {
+	    return "لون خلفية اللوحة";
+	}
+
+	@Override
+	public String colorBeigeListas() {
+	    return "بيج القوائم";
+	}
+
+	@Override
+	public String colorTextoListas() {
+	    return "لون نص القوائم";
+	}
+
+	@Override
+	public String colorBordeListas() {
+	    return "لون حدود القوائم";
+	}
+
+	@Override
+	public String colorBotonFondo() {
+	    return "لون خلفية الزر";
+	}
+
+	@Override
+	public String colorBordeBoton() {
+	    return "لون حدود الزر";
+	}
+
+	@Override
+	public String colorDoradoTexto() {
+	    return "لون النص الذهبي";
+	}
+	
+	@Override
+	public String colorPila() {
+	    return "لون تتبُّع المكدس (stack trace)";
+	}
+
+	@Override
+	public String colorTextoPanel() {
+	    return "لون نص اللوحة";
+	}
+
+	@Override
+	public String colorTextoNegro() {
+	    return "لون النص الأسود";
+	}
+
+	@Override
+	public String colorTextoPrincipal() {
+	    return "لون النص الرئيسي";
+	}
+
+	@Override
+	public String colorFondoResultados() {
+	    return "لون خلفية النتائج";
+	}
+
+	@Override
+	public String colorEstado() {
+	    return "لون الحالة";
+	}
+
+	@Override
+	public String colorTextoDescripcion() {
+	    return "لون نص الوصف";
+	}
+
+	@Override
+	public String colorTextoEstado() {
+	    return "لون نص الحالة";
+	}
+
+	@Override
+	public String colorTextoExtra() {
+	    return "لون النص الإضافي";
+	}
+
+	@Override
+	public String colorSeparador() {
+	    return "لون الفاصل";
+	}
+	
+	
 }

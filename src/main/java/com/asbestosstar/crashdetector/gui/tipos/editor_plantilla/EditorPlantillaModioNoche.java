@@ -305,17 +305,46 @@ public class EditorPlantillaModioNoche extends EditorPlantilla {
 
 	@Override
 	public List<ElementoConfig> obtenerElementosConfigs() {
-		ArrayList<ElementoConfig> configs = new ArrayList<>();
-		configs.add(coloresEditor.get("fondo"));
-		configs.add(coloresEditor.get("texto"));
-		configs.add(coloresEditor.get("caja_texto"));
-		configs.add(coloresEditor.get("boton"));
-		configs.add(coloresEditor.get("borde"));
-		configs.add(coloresEditor.get("fondo_vista_previa"));
-		configs.add(coloresEditor.get("sintaxis_constructor"));
-		configs.add(coloresEditor.get("sintaxis_mensaje_ayudar"));
-		configs.add(coloresEditor.get("sintaxis_etiquetas_html"));
-		return configs;
+	    ArrayList<ElementoConfig> configs = new ArrayList<>();
+
+	    // Asignar nombres localizados y añadir a la lista
+	    ConfigColor fondo = coloresEditor.get("fondo");
+	    fondo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondo());
+	    configs.add(fondo);
+
+	    ConfigColor texto = coloresEditor.get("texto");
+	    texto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTexto());
+	    configs.add(texto);
+
+	    ConfigColor cajaTexto = coloresEditor.get("caja_texto");
+	    cajaTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorCajaTexto());
+	    configs.add(cajaTexto);
+
+	    ConfigColor boton = coloresEditor.get("boton");
+	    boton.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBoton());
+	    configs.add(boton);
+
+	    ConfigColor borde = coloresEditor.get("borde");
+	    borde.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBorde());
+	    configs.add(borde);
+
+	    ConfigColor fondoVistaPrevia = coloresEditor.get("fondo_vista_previa");
+	    fondoVistaPrevia.establecerNombreParaMostrar(() -> MonitorDePID.idioma.fondoVistaPrevia());
+	    configs.add(fondoVistaPrevia);
+
+	    ConfigColor sintaxisConstructor = coloresEditor.get("sintaxis_constructor");
+	    sintaxisConstructor.establecerNombreParaMostrar(() -> MonitorDePID.idioma.sintaxisConstructor());
+	    configs.add(sintaxisConstructor);
+
+	    ConfigColor sintaxisMensajeAyudar = coloresEditor.get("sintaxis_mensaje_ayudar");
+	    sintaxisMensajeAyudar.establecerNombreParaMostrar(() -> MonitorDePID.idioma.sintaxisMensajeAyudar());
+	    configs.add(sintaxisMensajeAyudar);
+
+	    ConfigColor sintaxisEtiquetasHtml = coloresEditor.get("sintaxis_etiquetas_html");
+	    sintaxisEtiquetasHtml.establecerNombreParaMostrar(() -> MonitorDePID.idioma.sintaxisEtiquetasHtml());
+	    configs.add(sintaxisEtiquetasHtml);
+
+	    return configs;
 	}
 
 	/**

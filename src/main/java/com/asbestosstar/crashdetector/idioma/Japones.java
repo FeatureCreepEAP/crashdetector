@@ -4695,6 +4695,259 @@ public class Japones implements Idioma {
 	public String botonAbrirCarpetaCfr() {
 	    return "インストールフォルダを開く";
 	}
+	@Override
+	public String colorFondoPrincipal() {
+	    return "メイン背景色";
+	}
+
+	@Override
+	public String colorTextoBotonReset() {
+	    return "リセットボタンの文字色";
+	}
+
+	@Override
+	public String colorTextoCampoBuscar() {
+	    return "検索フィールドの文字色";
+	}
+
+	@Override
+	public String colorTextoComboFiltro() {
+	    return "フィルターのドロップダウンメニュー文字色";
+	}
+
+	@Override
+	public String colorTextoRenderer() {
+	    return "レンダラーの文字色";
+	}
+
+	@Override
+	public String colorTextoOverlayCarga() {
+	    return "ロードオーバーレイの文字色";
+	}
+
+	@Override
+	public String colorBorde() {
+	    return "枠線の色";
+	}
+	
+	@Override
+	public String colorFondoRetrato() {
+	    return "ポートレートモードの背景色";
+	}
+
+	@Override
+	public String colorEnlaceCompartir() {
+	    return "共有リンクの色";
+	}
+
+	@Override
+	public String colorFondoCampoCompartir() {
+	    return "共有フィールドの背景色";
+	}
+
+	@Override
+	public String rosaFondo() {
+	    return "背景ピンク";
+	}
+
+	@Override
+	public String rosaSuave() {
+	    return "ソフトピンク";
+	}
+
+	@Override
+	public String moradoAcento() {
+	    return "アクセントパープル";
+	}
+
+	@Override
+	public String textoOscuro() {
+	    return "ダークテキスト";
+	}
+
+	@Override
+	public String bordeSuave() {
+	    return "ソフトボーダー";
+	}
+
+	@Override
+	public String fondoCampo() {
+	    return "フィールド背景";
+	}
+
+	@Override
+	public String fondoVistaPrevia() {
+	    return "プレビュー背景";
+	}
+	
+	@Override
+	public String sintaxisConstructor() {
+	    return "構文色: コンストラクタ";
+	}
+
+	@Override
+	public String sintaxisMensajeAyudar() {
+	    return "構文色: ヘルプメッセージ";
+	}
+
+	@Override
+	public String sintaxisEtiquetasHtml() {
+	    return "構文色: HTMLタグ";
+	}
+
+	@Override
+	public String colorFondoVentana() {
+	    return "ウィンドウ背景色";
+	}
+
+	@Override
+	public String colorPanel() {
+	    return "パネル色";
+	}
+
+	@Override
+	public String colorBotonTexto() {
+	    return "ボタン文字色";
+	}
+
+	@Override
+	public String colorCampo() {
+	    return "フィールド色";
+	}
+
+	@Override
+	public String colorBordeDestacado() {
+	    return "強調枠線色";
+	}
+
+	@Override
+	public String colorSeleccionTexto() {
+	    return "テキスト選択背景色";
+	}
+	
+	@Override
+	public String colorTextoSeleccionado() {
+	    return "選択されたテキストの色";
+	}
+
+	@Override
+	public String colorEstadoExito() {
+	    return "ステータス色: 成功";
+	}
+
+	@Override
+	public String colorEstadoFallo() {
+	    return "ステータス色: 失敗";
+	}
+
+	@Override
+	public String colorEstadoInstantanea() {
+	    return "ステータス色: 即時";
+	}
+
+	@Override
+	public String colorResultadoAnadido() {
+	    return "追加された結果の色";
+	}
+
+	@Override
+	public String colorResultadoEliminado() {
+	    return "削除された結果の色";
+	}
+
+	@Override
+	public String colorBordeScroll() {
+	    return "スクロールバーの枠線色";
+	}
+
+	@Override
+	public String colorFondoPanel() {
+	    return "パネル背景色";
+	}
+
+	@Override
+	public String colorBeigeListas() {
+	    return "リストベージュ";
+	}
+
+	@Override
+	public String colorTextoListas() {
+	    return "リストの文字色";
+	}
+
+	@Override
+	public String colorBordeListas() {
+	    return "リストの枠線色";
+	}
+
+	@Override
+	public String colorBotonFondo() {
+	    return "ボタンの背景色";
+	}
+
+	@Override
+	public String colorBordeBoton() {
+	    return "ボタンの枠線色";
+	}
+
+	@Override
+	public String colorDoradoTexto() {
+	    return "金色の文字色";
+	}
+	
+	@Override
+	public String colorPila() {
+	    return "スタックトレースの色";
+	}
+
+	@Override
+	public String colorTextoPanel() {
+	    return "パネルの文字色";
+	}
+
+	@Override
+	public String colorTextoNegro() {
+	    return "黒色文字";
+	}
+
+	@Override
+	public String colorTextoPrincipal() {
+	    return "メイン文字色";
+	}
+
+	@Override
+	public String colorFondoResultados() {
+	    return "結果の背景色";
+	}
+
+	@Override
+	public String colorEstado() {
+	    return "ステータス色";
+	}
+
+	@Override
+	public String colorTextoDescripcion() {
+	    return "説明文の文字色";
+	}
+
+	@Override
+	public String colorTextoEstado() {
+	    return "ステータス文字色";
+	}
+
+	@Override
+	public String colorTextoExtra() {
+	    return "追加文字色";
+	}
+
+	@Override
+	public String colorSeparador() {
+	    return "区切り線の色";
+	}
+	
+	
+	
+	
 	
 	
 	

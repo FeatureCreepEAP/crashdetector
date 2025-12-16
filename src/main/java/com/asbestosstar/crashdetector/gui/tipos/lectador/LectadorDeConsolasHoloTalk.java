@@ -121,15 +121,25 @@ public class LectadorDeConsolasHoloTalk extends LectadorDeConsolasGUI {
 
 	@Override
 	public List<ElementoConfig> obtenerElementosConfigs() {
-		List<ElementoConfig> elementos = new java.util.ArrayList<>();
-		elementos.add(colorFondo);
-		elementos.add(colorTexto);
-		elementos.add(colorError);
-		elementos.add(colorPila);
-		elementos.add(colorFondoPanel);
-		elementos.add(colorTextoPanel);
-		elementos.add(colorTextoNegro);
-		return elementos;
+	    List<ElementoConfig> elementos = new java.util.ArrayList<>();
+
+	    colorFondo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondo());
+	    colorTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTexto());
+	    colorError.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorError());
+	    colorPila.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorPila());
+	    colorFondoPanel.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondoPanel());
+	    colorTextoPanel.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTextoPanel());
+	    colorTextoNegro.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTextoNegro());
+
+	    elementos.add(colorFondo);
+	    elementos.add(colorTexto);
+	    elementos.add(colorError);
+	    elementos.add(colorPila);
+	    elementos.add(colorFondoPanel);
+	    elementos.add(colorTextoPanel);
+	    elementos.add(colorTextoNegro);
+
+	    return elementos;
 	}
 
 	@Override

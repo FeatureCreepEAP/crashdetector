@@ -4892,5 +4892,260 @@ public class Ingles implements Idioma {
 	public String botonAbrirCarpetaCfr() {
 	    return "Open installation folder";
 	}
+	
+	@Override
+	public String colorFondoPrincipal() {
+	    return "Main background colour";
+	}
+
+	@Override
+	public String colorTextoBotonReset() {
+	    return "Reset button text colour";
+	}
+
+	@Override
+	public String colorTextoCampoBuscar() {
+	    return "Search field text colour";
+	}
+
+	@Override
+	public String colorTextoComboFiltro() {
+	    return "Filter dropdown menu text colour";
+	}
+
+	@Override
+	public String colorTextoRenderer() {
+	    return "Renderer text colour";
+	}
+
+	@Override
+	public String colorTextoOverlayCarga() {
+	    return "Loading overlay text colour";
+	}
+
+	@Override
+	public String colorBorde() {
+	    return "Border colour";
+	}
+	
+	@Override
+	public String colorFondoRetrato() {
+	    return "Portrait mode background colour";
+	}
+
+	@Override
+	public String colorEnlaceCompartir() {
+	    return "Share link colour";
+	}
+
+	@Override
+	public String colorFondoCampoCompartir() {
+	    return "Share field background colour";
+	}
+
+	@Override
+	public String rosaFondo() {
+	    return "Background pink";
+	}
+
+	@Override
+	public String rosaSuave() {
+	    return "Soft pink";
+	}
+
+	@Override
+	public String moradoAcento() {
+	    return "Accent purple";
+	}
+
+	@Override
+	public String textoOscuro() {
+	    return "Dark text";
+	}
+
+	@Override
+	public String bordeSuave() {
+	    return "Soft border";
+	}
+
+	@Override
+	public String fondoCampo() {
+	    return "Field background";
+	}
+
+	@Override
+	public String fondoVistaPrevia() {
+	    return "Preview background";
+	}
+	
+	@Override
+	public String sintaxisConstructor() {
+	    return "Syntax colour: constructor";
+	}
+
+	@Override
+	public String sintaxisMensajeAyudar() {
+	    return "Syntax colour: help message";
+	}
+
+	@Override
+	public String sintaxisEtiquetasHtml() {
+	    return "Syntax colour: HTML tags";
+	}
+
+	@Override
+	public String colorFondoVentana() {
+	    return "Window background colour";
+	}
+
+	@Override
+	public String colorPanel() {
+	    return "Panel colour";
+	}
+
+	@Override
+	public String colorBotonTexto() {
+	    return "Button text colour";
+	}
+
+	@Override
+	public String colorCampo() {
+	    return "Field colour";
+	}
+
+	@Override
+	public String colorBordeDestacado() {
+	    return "Highlighted border colour";
+	}
+
+	@Override
+	public String colorSeleccionTexto() {
+	    return "Text selection background colour";
+	}
+	
+	@Override
+	public String colorTextoSeleccionado() {
+	    return "Selected text colour";
+	}
+
+	@Override
+	public String colorEstadoExito() {
+	    return "Status colour: success";
+	}
+
+	@Override
+	public String colorEstadoFallo() {
+	    return "Status colour: failure";
+	}
+
+	@Override
+	public String colorEstadoInstantanea() {
+	    return "Status colour: instant";
+	}
+
+	@Override
+	public String colorResultadoAnadido() {
+	    return "Added result colour";
+	}
+
+	@Override
+	public String colorResultadoEliminado() {
+	    return "Removed result colour";
+	}
+
+	@Override
+	public String colorBordeScroll() {
+	    return "Scroll bar border colour";
+	}
+
+	@Override
+	public String colorFondoPanel() {
+	    return "Panel background colour";
+	}
+
+	@Override
+	public String colorBeigeListas() {
+	    return "List beige";
+	}
+
+	@Override
+	public String colorTextoListas() {
+	    return "List text colour";
+	}
+
+	@Override
+	public String colorBordeListas() {
+	    return "List border colour";
+	}
+
+	@Override
+	public String colorBotonFondo() {
+	    return "Button background colour";
+	}
+
+	@Override
+	public String colorBordeBoton() {
+	    return "Button border colour";
+	}
+
+	@Override
+	public String colorDoradoTexto() {
+	    return "Golden text colour";
+	}
+	
+	@Override
+	public String colorPila() {
+	    return "Stack trace colour";
+	}
+
+	@Override
+	public String colorTextoPanel() {
+	    return "Panel text colour";
+	}
+
+	@Override
+	public String colorTextoNegro() {
+	    return "Black text colour";
+	}
+
+	@Override
+	public String colorTextoPrincipal() {
+	    return "Main text colour";
+	}
+
+	@Override
+	public String colorFondoResultados() {
+	    return "Results background colour";
+	}
+
+	@Override
+	public String colorEstado() {
+	    return "Status colour";
+	}
+
+	@Override
+	public String colorTextoDescripcion() {
+	    return "Description text colour";
+	}
+
+	@Override
+	public String colorTextoEstado() {
+	    return "Status text colour";
+	}
+
+	@Override
+	public String colorTextoExtra() {
+	    return "Extra text colour";
+	}
+
+	@Override
+	public String colorSeparador() {
+	    return "Separator colour";
+	}
+	
+	
+	
+	
+	
 
 }

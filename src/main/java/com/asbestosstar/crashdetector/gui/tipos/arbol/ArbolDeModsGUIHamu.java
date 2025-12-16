@@ -131,6 +131,13 @@ public class ArbolDeModsGUIHamu extends ArbolDeModsGUI {
 	public List<ElementoConfig> obtenerElementosConfigs() {
 		List<ElementoConfig> elementos = new ArrayList<>();
 
+		colorFondoPrincipal.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondoPrincipal());
+		colorTextoBotonReset.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTextoBotonReset());
+		colorTextoCampoBuscar.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTextoCampoBuscar());
+		colorTextoComboFiltro.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTextoComboFiltro());
+		colorTextoRenderer.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTextoRenderer());
+		colorTextoOverlayCarga.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTextoOverlayCarga());
+
 		elementos.add(colorFondoPrincipal);
 		elementos.add(colorTextoBotonReset);
 		elementos.add(colorTextoCampoBuscar);

@@ -4848,6 +4848,257 @@ public class Esperanto implements Idioma {
 	public String botonAbrirCarpetaCfr() {
 	    return "Malfermi instalan dosierujon";
 	}
+	@Override
+	public String colorFondoPrincipal() {
+	    return "Ĉefa fona koloro";
+	}
+
+	@Override
+	public String colorTextoBotonReset() {
+	    return "Koloro de la teksto de la restar-butono";
+	}
+
+	@Override
+	public String colorTextoCampoBuscar() {
+	    return "Koloro de la serĉkampa teksto";
+	}
+
+	@Override
+	public String colorTextoComboFiltro() {
+	    return "Koloro de la teksto de la falmenuo de filtrado";
+	}
+
+	@Override
+	public String colorTextoRenderer() {
+	    return "Koloro de la teksto de la bildigilo (renderilo)";
+	}
+
+	@Override
+	public String colorTextoOverlayCarga() {
+	    return "Koloro de la teksto de la ŝarĝa supermeto (overlay)";
+	}
+
+	@Override
+	public String colorBorde() {
+	    return "Koloro de la bordero";
+	}
+	
+	@Override
+	public String colorFondoRetrato() {
+	    return "Fona koloro en portreta reĝimo";
+	}
+
+	@Override
+	public String colorEnlaceCompartir() {
+	    return "Koloro de la ligilo por kunhavigi";
+	}
+
+	@Override
+	public String colorFondoCampoCompartir() {
+	    return "Fona koloro de la kunhaviga kampo";
+	}
+
+	@Override
+	public String rosaFondo() {
+	    return "Rozkolora fono";
+	}
+
+	@Override
+	public String rosaSuave() {
+	    return "Milda rozo";
+	}
+
+	@Override
+	public String moradoAcento() {
+	    return "Akkentpurpuro";
+	}
+
+	@Override
+	public String textoOscuro() {
+	    return "Malhela teksto";
+	}
+
+	@Override
+	public String bordeSuave() {
+	    return "Milda bordero";
+	}
+
+	@Override
+	public String fondoCampo() {
+	    return "Kampa fono";
+	}
+
+	@Override
+	public String fondoVistaPrevia() {
+	    return "Antaŭrigarda fono";
+	}
+	
+	@Override
+	public String sintaxisConstructor() {
+	    return "Sintaksa koloro: konstruilo";
+	}
+
+	@Override
+	public String sintaxisMensajeAyudar() {
+	    return "Sintaksa koloro: helpmesaĝo";
+	}
+
+	@Override
+	public String sintaxisEtiquetasHtml() {
+	    return "Sintaksa koloro: HTML-etikedoj";
+	}
+
+	@Override
+	public String colorFondoVentana() {
+	    return "Fena fona koloro";
+	}
+
+	@Override
+	public String colorPanel() {
+	    return "Panela koloro";
+	}
+
+	@Override
+	public String colorBotonTexto() {
+	    return "Butona teksta koloro";
+	}
+
+	@Override
+	public String colorCampo() {
+	    return "Kampa koloro";
+	}
+
+	@Override
+	public String colorBordeDestacado() {
+	    return "Elstara bordera koloro";
+	}
+
+	@Override
+	public String colorSeleccionTexto() {
+	    return "Teksta elekta fona koloro";
+	}
+	@Override
+	public String colorTextoSeleccionado() {
+	    return "Koloro de la elektita teksto";
+	}
+
+	@Override
+	public String colorEstadoExito() {
+	    return "Koloro de stato: sukceso";
+	}
+
+	@Override
+	public String colorEstadoFallo() {
+	    return "Koloro de stato: malsukceso";
+	}
+
+	@Override
+	public String colorEstadoInstantanea() {
+	    return "Koloro de stato: tujtempa";
+	}
+
+	@Override
+	public String colorResultadoAnadido() {
+	    return "Koloro de aldonita rezulto";
+	}
+
+	@Override
+	public String colorResultadoEliminado() {
+	    return "Koloro de forigita rezulto";
+	}
+
+	@Override
+	public String colorBordeScroll() {
+	    return "Koloro de la rul-streka bordero";
+	}
+
+	@Override
+	public String colorFondoPanel() {
+	    return "Fona koloro de la panelo";
+	}
+
+	@Override
+	public String colorBeigeListas() {
+	    return "Beĝa koloro de listoj";
+	}
+
+	@Override
+	public String colorTextoListas() {
+	    return "Teksta koloro en listoj";
+	}
+
+	@Override
+	public String colorBordeListas() {
+	    return "Bordera koloro de listoj";
+	}
+
+	@Override
+	public String colorBotonFondo() {
+	    return "Fona koloro de la butono";
+	}
+
+	@Override
+	public String colorBordeBoton() {
+	    return "Bordera koloro de la butono";
+	}
+
+	@Override
+	public String colorDoradoTexto() {
+	    return "Orkolora teksto";
+	}
+	
+	@Override
+	public String colorPila() {
+	    return "Koloro de la stakspuro (stack trace)";
+	}
+
+	@Override
+	public String colorTextoPanel() {
+	    return "Panea teksta koloro";
+	}
+
+	@Override
+	public String colorTextoNegro() {
+	    return "Nigra teksta koloro";
+	}
+
+	@Override
+	public String colorTextoPrincipal() {
+	    return "Ĉefa teksta koloro";
+	}
+
+	@Override
+	public String colorFondoResultados() {
+	    return "Fona koloro de la rezultoj";
+	}
+
+	@Override
+	public String colorEstado() {
+	    return "Koloro de stato";
+	}
+
+	@Override
+	public String colorTextoDescripcion() {
+	    return "Priskriba teksta koloro";
+	}
+
+	@Override
+	public String colorTextoEstado() {
+	    return "Stata teksta koloro";
+	}
+
+	@Override
+	public String colorTextoExtra() {
+	    return "Kroma teksta koloro";
+	}
+
+	@Override
+	public String colorSeparador() {
+	    return "Koloro de la dividilo";
+	}
+	
+	
+	
 	
 	
 	

@@ -503,7 +503,5 @@ public abstract class NoRegistroLanzadorGUI extends JDialog implements CrashDete
 	@Override
 	public abstract void init();
 
-	// Este método ahora es abstracto y se implementará en la clase concreta
-	@Override
-	public abstract List<com.asbestosstar.crashdetector.config.ElementoConfig> obtenerElementosConfigs();
+
 }

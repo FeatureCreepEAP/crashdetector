@@ -7,6 +7,7 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 
+import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
@@ -122,8 +123,11 @@ public class PanelQuickFixDemonSlayers extends TodosQuickFixesGUI {
 
 	@Override
 	public List<ElementoConfig> obtenerElementosConfigs() {
-		List<ElementoConfig> elementos = new ArrayList<>();
-		elementos.add(colorSeparador);
-		return elementos;
+	    List<ElementoConfig> elementos = new ArrayList<>();
+
+	    colorSeparador.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorSeparador());
+	    elementos.add(colorSeparador);
+
+	    return elementos;
 	}
 }

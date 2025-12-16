@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
+import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
 
@@ -44,17 +45,29 @@ public class BusquedaGUISaliorMoon extends GrepRGUI {
 
 	@Override
 	public List<ElementoConfig> obtenerElementosConfigs() {
-		List<ElementoConfig> elementos = new ArrayList<>();
-		elementos.add(colorFondoVentana);
-		elementos.add(colorPanel);
-		elementos.add(colorTexto);
-		elementos.add(colorBoton);
-		elementos.add(colorBotonTexto);
-		elementos.add(colorCampo);
-		elementos.add(colorBordeDestacado);
-		elementos.add(colorSeleccionTexto);
-		elementos.add(colorTextoSeleccionado);
-		return elementos;
+	    List<ElementoConfig> elementos = new ArrayList<>();
+
+	    colorFondoVentana.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondoVentana());
+	    colorPanel.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorPanel());
+	    colorTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTexto());
+	    colorBoton.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBoton());
+	    colorBotonTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBotonTexto());
+	    colorCampo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorCampo());
+	    colorBordeDestacado.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBordeDestacado());
+	    colorSeleccionTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorSeleccionTexto());
+	    colorTextoSeleccionado.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTextoSeleccionado());
+
+	    elementos.add(colorFondoVentana);
+	    elementos.add(colorPanel);
+	    elementos.add(colorTexto);
+	    elementos.add(colorBoton);
+	    elementos.add(colorBotonTexto);
+	    elementos.add(colorCampo);
+	    elementos.add(colorBordeDestacado);
+	    elementos.add(colorSeleccionTexto);
+	    elementos.add(colorTextoSeleccionado);
+
+	    return elementos;
 	}
 
 	@Override

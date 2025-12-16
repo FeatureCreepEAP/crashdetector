@@ -214,6 +214,5 @@ public abstract class EditorGUI extends JFrame implements CrashDetectorGUI {
 	@Override
 	public abstract void recargarApariencia();
 
-	@Override
-	public abstract java.util.List<com.asbestosstar.crashdetector.config.ElementoConfig> obtenerElementosConfigs();
+	
 }

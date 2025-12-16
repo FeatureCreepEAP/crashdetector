@@ -179,18 +179,31 @@ public class EscanerMCreatorGUIRosemiLoveLock extends EscanerMCreatorGUI {
 
 	@Override
 	public List<ElementoConfig> obtenerElementosConfigs() {
-		List<ElementoConfig> elementos = new ArrayList<>();
-		elementos.add(colorFondoVentana);
-		elementos.add(colorTextoPrincipal);
-		elementos.add(colorFondoResultados);
-		elementos.add(colorEstado);
-		elementos.add(colorBotonFondo);
-		elementos.add(colorBotonTexto);
-		elementos.add(colorBordeScroll);
-		elementos.add(colorTextoDescripcion);
-		elementos.add(colorTextoEstado);
-		elementos.add(colorTextoExtra);
-		return elementos;
+	    List<ElementoConfig> elementos = new ArrayList<>();
+
+	    colorFondoVentana.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondoVentana());
+	    colorTextoPrincipal.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTextoPrincipal());
+	    colorFondoResultados.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondoResultados());
+	    colorEstado.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorEstado());
+	    colorBotonFondo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBotonFondo());
+	    colorBotonTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBotonTexto());
+	    colorBordeScroll.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBordeScroll());
+	    colorTextoDescripcion.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTextoDescripcion());
+	    colorTextoEstado.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTextoEstado());
+	    colorTextoExtra.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTextoExtra());
+
+	    elementos.add(colorFondoVentana);
+	    elementos.add(colorTextoPrincipal);
+	    elementos.add(colorFondoResultados);
+	    elementos.add(colorEstado);
+	    elementos.add(colorBotonFondo);
+	    elementos.add(colorBotonTexto);
+	    elementos.add(colorBordeScroll);
+	    elementos.add(colorTextoDescripcion);
+	    elementos.add(colorTextoEstado);
+	    elementos.add(colorTextoExtra);
+
+	    return elementos;
 	}
 
 	/**

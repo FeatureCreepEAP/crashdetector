@@ -521,11 +521,17 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 
 	@Override
 	public List<ElementoConfig> obtenerElementosConfigs() {
-		ArrayList<ElementoConfig> ret = new ArrayList<>();
-		// ConfigColor ahora acepta Color como parámetro predeterminado
-		ret.add(ConfigColor.de("dialogo_compartir_enlace", java.awt.Color.BLUE.darker()));
-		ret.add(ConfigColor.de("dialogo_compartir_campo_fondo", Color.YELLOW));
-		return ret;
+	    ArrayList<ElementoConfig> ret = new ArrayList<>();
+	    
+	    ConfigColor colorEnlace = ConfigColor.de("dialogo_compartir_enlace", java.awt.Color.BLUE.darker());
+	    colorEnlace.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorEnlaceCompartir());
+	    ret.add(colorEnlace);
+	    
+	    ConfigColor colorFondoCampo = ConfigColor.de("dialogo_compartir_campo_fondo", Color.YELLOW);
+	    colorFondoCampo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondoCampoCompartir());
+	    ret.add(colorFondoCampo);
+	    
+	    return ret;
 	}
 
 	@Override

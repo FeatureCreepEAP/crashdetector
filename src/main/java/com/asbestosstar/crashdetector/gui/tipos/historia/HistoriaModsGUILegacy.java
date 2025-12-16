@@ -96,15 +96,25 @@ public class HistoriaModsGUILegacy extends HistoriaDeModsGUI {
 
 	@Override
 	public List<ElementoConfig> obtenerElementosConfigs() {
-		List<ElementoConfig> elementos = new ArrayList<>();
-		elementos.add(colorEstadoExito);
-		elementos.add(colorEstadoFallo);
-		elementos.add(colorEstadoInstantanea); // Añadir color de instantánea
-		elementos.add(colorResultadoAnadido);
-		elementos.add(colorResultadoEliminado);
-		elementos.add(colorBordeScroll);
-		elementos.add(colorFondoPanel);
-		return elementos;
+	    List<ElementoConfig> elementos = new ArrayList<>();
+
+	    colorEstadoExito.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorEstadoExito());
+	    colorEstadoFallo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorEstadoFallo());
+	    colorEstadoInstantanea.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorEstadoInstantanea());
+	    colorResultadoAnadido.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorResultadoAnadido());
+	    colorResultadoEliminado.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorResultadoEliminado());
+	    colorBordeScroll.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBordeScroll());
+	    colorFondoPanel.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondoPanel());
+
+	    elementos.add(colorEstadoExito);
+	    elementos.add(colorEstadoFallo);
+	    elementos.add(colorEstadoInstantanea);
+	    elementos.add(colorResultadoAnadido);
+	    elementos.add(colorResultadoEliminado);
+	    elementos.add(colorBordeScroll);
+	    elementos.add(colorFondoPanel);
+
+	    return elementos;
 	}
 
 	@Override

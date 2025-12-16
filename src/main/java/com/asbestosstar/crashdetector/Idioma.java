@@ -1872,4 +1872,104 @@ public interface Idioma {
 
 	public String botonAbrirCarpetaCfr();
 
+	public String colorFondoPrincipal();
+
+	public String colorTextoBotonReset();
+
+	public String colorTextoCampoBuscar();
+
+	public String colorTextoComboFiltro();
+
+	public String colorTextoRenderer();
+
+	public String colorTextoOverlayCarga();
+
+	public String colorBorde();
+
+	public String colorFondoRetrato();
+
+	public String colorEnlaceCompartir();
+
+	public String colorFondoCampoCompartir();
+
+	public String rosaFondo();
+
+	public String rosaSuave();
+
+	public String moradoAcento();
+
+	public String textoOscuro();
+
+	public String bordeSuave();
+
+	public String fondoCampo();
+
+	public String fondoVistaPrevia();
+
+	public String sintaxisConstructor();
+
+	public String sintaxisMensajeAyudar();
+
+	public String sintaxisEtiquetasHtml();
+
+	public String colorFondoVentana();
+
+	public String colorPanel();
+
+	public String colorBotonTexto();
+
+	public String colorCampo();
+
+	public String colorBordeDestacado();
+
+	public String colorSeleccionTexto();
+
+	public String colorTextoSeleccionado();
+
+	public String colorEstadoExito();
+
+	public String colorEstadoFallo();
+
+	public String colorEstadoInstantanea();
+
+	public String colorResultadoAnadido();
+
+	public String colorResultadoEliminado();
+
+	public String colorBordeScroll();
+
+	public String colorFondoPanel();
+
+	public String colorBeigeListas();
+
+	public String colorTextoListas();
+
+	public String colorBordeListas();
+
+	public String colorBotonFondo();
+
+	public String colorBordeBoton();
+
+	public String colorDoradoTexto();
+
+	public String colorPila();
+
+	public String colorTextoPanel();
+
+	public String colorTextoNegro();
+
+	public String colorTextoPrincipal();
+
+	public String colorEstado();
+
+	public String colorFondoResultados();
+
+	public String colorTextoDescripcion();
+
+	public String colorTextoEstado();
+
+	public String colorTextoExtra();
+
+	public String colorSeparador();
+
 }

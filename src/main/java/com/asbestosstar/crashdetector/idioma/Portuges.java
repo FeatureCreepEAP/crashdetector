@@ -4864,6 +4864,259 @@ public class Portuges implements Idioma {
 	public String botonAbrirCarpetaCfr() {
 	    return "Abrir pasta de instalação";
 	}
+	@Override
+	public String colorFondoPrincipal() {
+	    return "Cor de fundo principal";
+	}
+
+	@Override
+	public String colorTextoBotonReset() {
+	    return "Cor do texto do botão de reiniciar";
+	}
+
+	@Override
+	public String colorTextoCampoBuscar() {
+	    return "Cor do texto do campo de busca";
+	}
+
+	@Override
+	public String colorTextoComboFiltro() {
+	    return "Cor do texto do menu suspenso de filtro";
+	}
+
+	@Override
+	public String colorTextoRenderer() {
+	    return "Cor do texto do renderizador";
+	}
+
+	@Override
+	public String colorTextoOverlayCarga() {
+	    return "Cor do texto da sobreposição de carregamento";
+	}
+
+	@Override
+	public String colorBorde() {
+	    return "Cor da borda";
+	}
+	
+	@Override
+	public String colorFondoRetrato() {
+	    return "Cor de fundo no modo retrato";
+	}
+
+	@Override
+	public String colorEnlaceCompartir() {
+	    return "Cor do link de compartilhamento";
+	}
+
+	@Override
+	public String colorFondoCampoCompartir() {
+	    return "Cor de fundo do campo de compartilhamento";
+	}
+
+	@Override
+	public String rosaFondo() {
+	    return "Rosa de fundo";
+	}
+
+	@Override
+	public String rosaSuave() {
+	    return "Rosa suave";
+	}
+
+	@Override
+	public String moradoAcento() {
+	    return "Roxo de destaque";
+	}
+
+	@Override
+	public String textoOscuro() {
+	    return "Texto escuro";
+	}
+
+	@Override
+	public String bordeSuave() {
+	    return "Borda suave";
+	}
+
+	@Override
+	public String fondoCampo() {
+	    return "Fundo do campo";
+	}
+
+	@Override
+	public String fondoVistaPrevia() {
+	    return "Fundo da visualização prévia";
+	}
+	
+	@Override
+	public String sintaxisConstructor() {
+	    return "Cor de sintaxe: construtor";
+	}
+
+	@Override
+	public String sintaxisMensajeAyudar() {
+	    return "Cor de sintaxe: mensagem de ajuda";
+	}
+
+	@Override
+	public String sintaxisEtiquetasHtml() {
+	    return "Cor de sintaxe: tags HTML";
+	}
+
+	@Override
+	public String colorFondoVentana() {
+	    return "Cor de fundo da janela";
+	}
+
+	@Override
+	public String colorPanel() {
+	    return "Cor do painel";
+	}
+
+	@Override
+	public String colorBotonTexto() {
+	    return "Cor do texto do botão";
+	}
+
+	@Override
+	public String colorCampo() {
+	    return "Cor do campo";
+	}
+
+	@Override
+	public String colorBordeDestacado() {
+	    return "Cor da borda destacada";
+	}
+
+	@Override
+	public String colorSeleccionTexto() {
+	    return "Cor de fundo da seleção de texto";
+	}
+	
+	@Override
+	public String colorTextoSeleccionado() {
+	    return "Cor do texto selecionado";
+	}
+
+	@Override
+	public String colorEstadoExito() {
+	    return "Cor de estado: sucesso";
+	}
+
+	@Override
+	public String colorEstadoFallo() {
+	    return "Cor de estado: falha";
+	}
+
+	@Override
+	public String colorEstadoInstantanea() {
+	    return "Cor de estado: instantânea";
+	}
+
+	@Override
+	public String colorResultadoAnadido() {
+	    return "Cor de resultado adicionado";
+	}
+
+	@Override
+	public String colorResultadoEliminado() {
+	    return "Cor de resultado removido";
+	}
+
+	@Override
+	public String colorBordeScroll() {
+	    return "Cor da borda da barra de rolagem";
+	}
+
+	@Override
+	public String colorFondoPanel() {
+	    return "Cor de fundo do painel";
+	}
+
+	@Override
+	public String colorBeigeListas() {
+	    return "Bege das listas";
+	}
+
+	@Override
+	public String colorTextoListas() {
+	    return "Cor do texto nas listas";
+	}
+
+	@Override
+	public String colorBordeListas() {
+	    return "Cor da borda das listas";
+	}
+
+	@Override
+	public String colorBotonFondo() {
+	    return "Cor de fundo do botão";
+	}
+
+	@Override
+	public String colorBordeBoton() {
+	    return "Cor da borda do botão";
+	}
+
+	@Override
+	public String colorDoradoTexto() {
+	    return "Cor dourada do texto";
+	}
+	
+	@Override
+	public String colorPila() {
+	    return "Cor do rastro de pilha (stack trace)";
+	}
+
+	@Override
+	public String colorTextoPanel() {
+	    return "Cor do texto do painel";
+	}
+
+	@Override
+	public String colorTextoNegro() {
+	    return "Cor de texto preto";
+	}
+
+	@Override
+	public String colorTextoPrincipal() {
+	    return "Cor do texto principal";
+	}
+
+	@Override
+	public String colorFondoResultados() {
+	    return "Cor de fundo dos resultados";
+	}
+
+	@Override
+	public String colorEstado() {
+	    return "Cor de estado";
+	}
+
+	@Override
+	public String colorTextoDescripcion() {
+	    return "Cor do texto de descrição";
+	}
+
+	@Override
+	public String colorTextoEstado() {
+	    return "Cor do texto de estado";
+	}
+
+	@Override
+	public String colorTextoExtra() {
+	    return "Cor do texto extra";
+	}
+
+	@Override
+	public String colorSeparador() {
+	    return "Cor do separador";
+	}
+	
+	
+	
+	
 	
 	
 	

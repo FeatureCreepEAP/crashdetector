@@ -4836,6 +4836,258 @@ public class Persa implements Idioma {
 	public String botonAbrirCarpetaCfr() {
 	    return "باز کردن پوشهٔ نصب";
 	}
+	@Override
+	public String colorFondoPrincipal() {
+	    return "رنگ پس‌زمینهٔ اصلی";
+	}
+
+	@Override
+	public String colorTextoBotonReset() {
+	    return "رنگ متن دکمهٔ بازنشانی";
+	}
+
+	@Override
+	public String colorTextoCampoBuscar() {
+	    return "رنگ متن فیلد جستجو";
+	}
+
+	@Override
+	public String colorTextoComboFiltro() {
+	    return "رنگ متن منوی کشویی فیلتر";
+	}
+
+	@Override
+	public String colorTextoRenderer() {
+	    return "رنگ متن رندرکننده";
+	}
+
+	@Override
+	public String colorTextoOverlayCarga() {
+	    return "رنگ متن پوشش بارگذاری";
+	}
+
+	@Override
+	public String colorBorde() {
+	    return "رنگ حاشیه";
+	}
+	
+	@Override
+	public String colorFondoRetrato() {
+	    return "رنگ پس‌زمینه در حالت پرتره";
+	}
+
+	@Override
+	public String colorEnlaceCompartir() {
+	    return "رنگ پیوند اشتراک‌گذاری";
+	}
+
+	@Override
+	public String colorFondoCampoCompartir() {
+	    return "رنگ پس‌زمینهٔ فیلد اشتراک‌گذاری";
+	}
+
+	@Override
+	public String rosaFondo() {
+	    return "صورتی پس‌زمینه";
+	}
+
+	@Override
+	public String rosaSuave() {
+	    return "صورتی ملایم";
+	}
+
+	@Override
+	public String moradoAcento() {
+	    return "بنفش برجسته";
+	}
+
+	@Override
+	public String textoOscuro() {
+	    return "متن تیره";
+	}
+
+	@Override
+	public String bordeSuave() {
+	    return "حاشیهٔ ملایم";
+	}
+
+	@Override
+	public String fondoCampo() {
+	    return "پس‌زمینهٔ فیلد";
+	}
+
+	@Override
+	public String fondoVistaPrevia() {
+	    return "پس‌زمینهٔ پیش‌نمایش";
+	}
+	
+	@Override
+	public String sintaxisConstructor() {
+	    return "رنگ نحو: سازنده";
+	}
+
+	@Override
+	public String sintaxisMensajeAyudar() {
+	    return "رنگ نحو: پیام راهنما";
+	}
+
+	@Override
+	public String sintaxisEtiquetasHtml() {
+	    return "رنگ نحو: برچسب‌های HTML";
+	}
+
+	@Override
+	public String colorFondoVentana() {
+	    return "رنگ پس‌زمینهٔ پنجره";
+	}
+
+	@Override
+	public String colorPanel() {
+	    return "رنگ پانل";
+	}
+
+	@Override
+	public String colorBotonTexto() {
+	    return "رنگ متن دکمه";
+	}
+
+	@Override
+	public String colorCampo() {
+	    return "رنگ فیلد";
+	}
+
+	@Override
+	public String colorBordeDestacado() {
+	    return "رنگ حاشیهٔ برجسته";
+	}
+
+	@Override
+	public String colorSeleccionTexto() {
+	    return "رنگ پس‌زمینهٔ انتخاب متن";
+	}
+	
+	@Override
+	public String colorTextoSeleccionado() {
+	    return "رنگ متن انتخاب‌شده";
+	}
+
+	@Override
+	public String colorEstadoExito() {
+	    return "رنگ وضعیت: موفقیت";
+	}
+
+	@Override
+	public String colorEstadoFallo() {
+	    return "رنگ وضعیت: شکست";
+	}
+
+	@Override
+	public String colorEstadoInstantanea() {
+	    return "رنگ وضعیت: لحظه‌ای";
+	}
+
+	@Override
+	public String colorResultadoAnadido() {
+	    return "رنگ نتیجهٔ اضافه‌شده";
+	}
+
+	@Override
+	public String colorResultadoEliminado() {
+	    return "رنگ نتیجهٔ حذف‌شده";
+	}
+
+	@Override
+	public String colorBordeScroll() {
+	    return "رنگ حاشیهٔ نوار پیمایش";
+	}
+
+	@Override
+	public String colorFondoPanel() {
+	    return "رنگ پس‌زمینهٔ پانل";
+	}
+
+	@Override
+	public String colorBeigeListas() {
+	    return "بیژ فهرست‌ها";
+	}
+
+	@Override
+	public String colorTextoListas() {
+	    return "رنگ متن فهرست‌ها";
+	}
+
+	@Override
+	public String colorBordeListas() {
+	    return "رنگ حاشیهٔ فهرست‌ها";
+	}
+
+	@Override
+	public String colorBotonFondo() {
+	    return "رنگ پس‌زمینهٔ دکمه";
+	}
+
+	@Override
+	public String colorBordeBoton() {
+	    return "رنگ حاشیهٔ دکمه";
+	}
+
+	@Override
+	public String colorDoradoTexto() {
+	    return "رنگ طلایی متن";
+	}
+	
+	@Override
+	public String colorPila() {
+	    return "رنگ ردیابی پشته (stack trace)";
+	}
+
+	@Override
+	public String colorTextoPanel() {
+	    return "رنگ متن پانل";
+	}
+
+	@Override
+	public String colorTextoNegro() {
+	    return "رنگ متن سیاه";
+	}
+
+	@Override
+	public String colorTextoPrincipal() {
+	    return "رنگ متن اصلی";
+	}
+
+	@Override
+	public String colorFondoResultados() {
+	    return "رنگ پس‌زمینهٔ نتایج";
+	}
+
+	@Override
+	public String colorEstado() {
+	    return "رنگ وضعیت";
+	}
+
+	@Override
+	public String colorTextoDescripcion() {
+	    return "رنگ متن توضیحات";
+	}
+
+	@Override
+	public String colorTextoEstado() {
+	    return "رنگ متن وضعیت";
+	}
+
+	@Override
+	public String colorTextoExtra() {
+	    return "رنگ متن اضافی";
+	}
+
+	@Override
+	public String colorSeparador() {
+	    return "رنگ جداکننده";
+	}
+	
+	
+	
 	
 	
 	

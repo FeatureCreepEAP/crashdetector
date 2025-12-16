@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.asbestosstar.crashdetector.Config;
+import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
 
@@ -80,14 +81,18 @@ public class ConfigPanelEstiloTL<PrincipalGUI> extends ConfigPanel<PrincipalGUI>
 
 	@Override
 	public List<ElementoConfig> obtenerElementosConfigs() {
-		List<ElementoConfig> elementos = new ArrayList<>();
+	    List<ElementoConfig> elementos = new ArrayList<>();
 
-		// Agregar todos los elementos de configuración de color
-		elementos.add(colorFondo);
-		elementos.add(colorTexto);
-		elementos.add(colorBoton);
-		elementos.add(colorCajaTexto);
+	    colorFondo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondo());
+	    colorTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTexto());
+	    colorBoton.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBoton());
+	    colorCajaTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorCajaTexto());
 
-		return elementos;
+	    elementos.add(colorFondo);
+	    elementos.add(colorTexto);
+	    elementos.add(colorBoton);
+	    elementos.add(colorCajaTexto);
+
+	    return elementos;
 	}
 }

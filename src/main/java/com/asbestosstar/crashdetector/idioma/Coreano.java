@@ -4685,5 +4685,258 @@ public class Coreano implements Idioma {
 	public String botonAbrirCarpetaCfr() {
 	    return "설치 폴더 열기";
 	}
+	
+	@Override
+	public String colorFondoPrincipal() {
+	    return "주 배경색";
+	}
+
+	@Override
+	public String colorTextoBotonReset() {
+	    return "초기화 단추 글자색";
+	}
+
+	@Override
+	public String colorTextoCampoBuscar() {
+	    return "검색란 글자색";
+	}
+
+	@Override
+	public String colorTextoComboFiltro() {
+	    return "필터 펼침메뉴 글자색";
+	}
+
+	@Override
+	public String colorTextoRenderer() {
+	    return "렌더러 글자색";
+	}
+
+	@Override
+	public String colorTextoOverlayCarga() {
+	    return "로딩 오버레이 글자색";
+	}
+
+	@Override
+	public String colorBorde() {
+	    return "테두리 색";
+	}
+	
+	@Override
+	public String colorFondoRetrato() {
+	    return "초상화 모드 배경색";
+	}
+
+	@Override
+	public String colorEnlaceCompartir() {
+	    return "공유 링크 색상";
+	}
+
+	@Override
+	public String colorFondoCampoCompartir() {
+	    return "공유란 배경색";
+	}
+
+	@Override
+	public String rosaFondo() {
+	    return "배경 핑크색";
+	}
+
+	@Override
+	public String rosaSuave() {
+	    return "부드러운 핑크";
+	}
+
+	@Override
+	public String moradoAcento() {
+	    return "강조 보라색";
+	}
+
+	@Override
+	public String textoOscuro() {
+	    return "어두운 글자";
+	}
+
+	@Override
+	public String bordeSuave() {
+	    return "부드러운 테두리";
+	}
+
+	@Override
+	public String fondoCampo() {
+	    return "필드 배경";
+	}
+
+	@Override
+	public String fondoVistaPrevia() {
+	    return "미리보기 배경";
+	}
+	
+	@Override
+	public String sintaxisConstructor() {
+	    return "구문 강조 색: 생성자";
+	}
+
+	@Override
+	public String sintaxisMensajeAyudar() {
+	    return "구문 강조 색: 도움말 메시지";
+	}
+
+	@Override
+	public String sintaxisEtiquetasHtml() {
+	    return "구문 강조 색: HTML 태그";
+	}
+
+	@Override
+	public String colorFondoVentana() {
+	    return "창 배경색";
+	}
+
+	@Override
+	public String colorPanel() {
+	    return "패널 색";
+	}
+
+	@Override
+	public String colorBotonTexto() {
+	    return "단추 글자색";
+	}
+
+	@Override
+	public String colorCampo() {
+	    return "필드 색";
+	}
+
+	@Override
+	public String colorBordeDestacado() {
+	    return "강조 테두리 색";
+	}
+
+	@Override
+	public String colorSeleccionTexto() {
+	    return "텍스트 선택 배경색";
+	}
+	
+	@Override
+	public String colorTextoSeleccionado() {
+	    return "선택된 글자색";
+	}
+
+	@Override
+	public String colorEstadoExito() {
+	    return "상태 색: 성공";
+	}
+
+	@Override
+	public String colorEstadoFallo() {
+	    return "상태 색: 실패";
+	}
+
+	@Override
+	public String colorEstadoInstantanea() {
+	    return "상태 색: 즉시";
+	}
+
+	@Override
+	public String colorResultadoAnadido() {
+	    return "추가된 결과 색";
+	}
+
+	@Override
+	public String colorResultadoEliminado() {
+	    return "삭제된 결과 색";
+	}
+
+	@Override
+	public String colorBordeScroll() {
+	    return "스크롤 테두리 색";
+	}
+
+	@Override
+	public String colorFondoPanel() {
+	    return "패널 배경색";
+	}
+
+	@Override
+	public String colorBeigeListas() {
+	    return "목록 베이지색";
+	}
+
+	@Override
+	public String colorTextoListas() {
+	    return "목록 글자색";
+	}
+
+	@Override
+	public String colorBordeListas() {
+	    return "목록 테두리 색";
+	}
+
+	@Override
+	public String colorBotonFondo() {
+	    return "단추 배경색";
+	}
+
+	@Override
+	public String colorBordeBoton() {
+	    return "단추 테두리 색";
+	}
+
+	@Override
+	public String colorDoradoTexto() {
+	    return "황금빛 글자색";
+	}
+	
+	@Override
+	public String colorPila() {
+	    return "스택 트레이스 색";
+	}
+
+	@Override
+	public String colorTextoPanel() {
+	    return "패널 글자색";
+	}
+
+	@Override
+	public String colorTextoNegro() {
+	    return "검정 글자색";
+	}
+
+	@Override
+	public String colorTextoPrincipal() {
+	    return "주요 글자색";
+	}
+
+	@Override
+	public String colorFondoResultados() {
+	    return "결과 배경색";
+	}
+
+	@Override
+	public String colorEstado() {
+	    return "상태 색";
+	}
+
+	@Override
+	public String colorTextoDescripcion() {
+	    return "설명 글자색";
+	}
+
+	@Override
+	public String colorTextoEstado() {
+	    return "상태 글자색";
+	}
+
+	@Override
+	public String colorTextoExtra() {
+	    return "추가 글자색";
+	}
+
+	@Override
+	public String colorSeparador() {
+	    return "분리선 색";
+	}
+	
+	
+	
 
 }

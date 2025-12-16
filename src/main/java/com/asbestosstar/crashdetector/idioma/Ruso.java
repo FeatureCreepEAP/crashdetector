@@ -4861,6 +4861,263 @@ public class Ruso implements Idioma {
 	    return "Открыть папку установки";
 	}
 	
+	@Override
+	public String colorFondoPrincipal() {
+	    return "Основной цвет фона";
+	}
+
+	@Override
+	public String colorTextoBotonReset() {
+	    return "Цвет текста кнопки сброса";
+	}
+
+	@Override
+	public String colorTextoCampoBuscar() {
+	    return "Цвет текста поля поиска";
+	}
+
+	@Override
+	public String colorTextoComboFiltro() {
+	    return "Цвет текста выпадающего меню фильтра";
+	}
+
+	@Override
+	public String colorTextoRenderer() {
+	    return "Цвет текста рендерера";
+	}
+
+	@Override
+	public String colorTextoOverlayCarga() {
+	    return "Цвет текста оверлея загрузки";
+	}
+
+	@Override
+	public String colorBorde() {
+	    return "Цвет границы";
+	}
+	
+	@Override
+	public String colorFondoRetrato() {
+	    return "Цвет фона в портретном режиме";
+	}
+
+	@Override
+	public String colorEnlaceCompartir() {
+	    return "Цвет ссылки для публикации";
+	}
+
+	@Override
+	public String colorFondoCampoCompartir() {
+	    return "Цвет фона поля публикации";
+	}
+
+	@Override
+	public String rosaFondo() {
+	    return "Розовый фон";
+	}
+
+	@Override
+	public String rosaSuave() {
+	    return "Нежно-розовый";
+	}
+
+	@Override
+	public String moradoAcento() {
+	    return "Акцентный фиолетовый";
+	}
+
+	@Override
+	public String textoOscuro() {
+	    return "Тёмный текст";
+	}
+
+	@Override
+	public String bordeSuave() {
+	    return "Мягкая граница";
+	}
+
+	@Override
+	public String fondoCampo() {
+	    return "Фон поля";
+	}
+
+	@Override
+	public String fondoVistaPrevia() {
+	    return "Фон предпросмотра";
+	}
+	
+	@Override
+	public String sintaxisConstructor() {
+	    return "Цвет синтаксиса: конструктор";
+	}
+
+	@Override
+	public String sintaxisMensajeAyudar() {
+	    return "Цвет синтаксиса: справочное сообщение";
+	}
+
+	@Override
+	public String sintaxisEtiquetasHtml() {
+	    return "Цвет синтаксиса: HTML-теги";
+	}
+
+	@Override
+	public String colorFondoVentana() {
+	    return "Цвет фона окна";
+	}
+
+	@Override
+	public String colorPanel() {
+	    return "Цвет панели";
+	}
+
+	@Override
+	public String colorBotonTexto() {
+	    return "Цвет текста кнопки";
+	}
+
+	@Override
+	public String colorCampo() {
+	    return "Цвет поля";
+	}
+
+	@Override
+	public String colorBordeDestacado() {
+	    return "Цвет выделенной границы";
+	}
+
+	@Override
+	public String colorSeleccionTexto() {
+	    return "Цвет фона выделенного текста";
+	}
+	
+	@Override
+	public String colorTextoSeleccionado() {
+	    return "Цвет выделенного текста";
+	}
+
+	@Override
+	public String colorEstadoExito() {
+	    return "Цвет состояния: успех";
+	}
+
+	@Override
+	public String colorEstadoFallo() {
+	    return "Цвет состояния: ошибка";
+	}
+
+	@Override
+	public String colorEstadoInstantanea() {
+	    return "Цвет состояния: мгновенное";
+	}
+
+	@Override
+	public String colorResultadoAnadido() {
+	    return "Цвет добавленного результата";
+	}
+
+	@Override
+	public String colorResultadoEliminado() {
+	    return "Цвет удалённого результата";
+	}
+
+	@Override
+	public String colorBordeScroll() {
+	    return "Цвет границы полосы прокрутки";
+	}
+
+	@Override
+	public String colorFondoPanel() {
+	    return "Цвет фона панели";
+	}
+
+	@Override
+	public String colorBeigeListas() {
+	    return "Бежевый списков";
+	}
+
+	@Override
+	public String colorTextoListas() {
+	    return "Цвет текста в списках";
+	}
+
+	@Override
+	public String colorBordeListas() {
+	    return "Цвет границ списков";
+	}
+
+	@Override
+	public String colorBotonFondo() {
+	    return "Цвет фона кнопки";
+	}
+
+	@Override
+	public String colorBordeBoton() {
+	    return "Цвет границы кнопки";
+	}
+
+	@Override
+	public String colorDoradoTexto() {
+	    return "Золотой цвет текста";
+	}
+	
+	@Override
+	public String colorPila() {
+	    return "Цвет трассировки стека (stack trace)";
+	}
+
+	@Override
+	public String colorTextoPanel() {
+	    return "Цвет текста панели";
+	}
+
+	@Override
+	public String colorTextoNegro() {
+	    return "Цвет чёрного текста";
+	}
+
+	@Override
+	public String colorTextoPrincipal() {
+	    return "Цвет основного текста";
+	}
+
+	@Override
+	public String colorFondoResultados() {
+	    return "Цвет фона результатов";
+	}
+
+	@Override
+	public String colorEstado() {
+	    return "Цвет состояния";
+	}
+
+	@Override
+	public String colorTextoDescripcion() {
+	    return "Цвет текста описания";
+	}
+
+	@Override
+	public String colorTextoEstado() {
+	    return "Цвет текста состояния";
+	}
+
+	@Override
+	public String colorTextoExtra() {
+	    return "Цвет дополнительного текста";
+	}
+
+	@Override
+	public String colorSeparador() {
+	    return "Цвет разделителя";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }

@@ -5549,8 +5549,266 @@ public class Espanol implements Idioma {
 	    return "Abrir carpeta de instalación";
 	}
 	
+	@Override
+	public String colorFondoPrincipal() {
+		return "Color de fondo principal";
+	}
+
+	@Override
+	public String colorTextoBotonReset() {
+		return "Color del texto del botón de reinicio";
+	}
+
+	@Override
+	public String colorTextoCampoBuscar() {
+		return "Color del texto del campo de búsqueda";
+	}
+
+	@Override
+	public String colorTextoComboFiltro() {
+		return "Color del texto del menú desplegable de filtro";
+	}
+
+	@Override
+	public String colorTextoRenderer() {
+		return "Color del texto del renderizador";
+	}
+
+	@Override
+	public String colorTextoOverlayCarga() {
+		return "Color del texto del overlay de carga";
+	}
+
+	@Override
+	public String colorBorde() {
+	    return "Color del borde";
+	}
+
+	@Override
+	public String colorFondoRetrato() {
+	    return "Color de fondo en modo retrato";
+	}
+	
+	@Override
+	public String colorEnlaceCompartir() {
+	    return "Color del enlace para compartir";
+	}
+
+	@Override
+	public String colorFondoCampoCompartir() {
+	    return "Color de fondo del campo de compartir";
+	}
+	
+	@Override
+	public String rosaFondo() {
+	    return "Rosa de fondo";
+	}
+
+	@Override
+	public String rosaSuave() {
+	    return "Rosa suave";
+	}
+
+	@Override
+	public String moradoAcento() {
+	    return "Morado de acento";
+	}
+
+	@Override
+	public String textoOscuro() {
+	    return "Texto oscuro";
+	}
+
+	@Override
+	public String bordeSuave() {
+	    return "Borde suave";
+	}
+
+	@Override
+	public String fondoCampo() {
+	    return "Fondo de campo";
+	}
+
+	@Override
+	public String fondoVistaPrevia() {
+	    return "Fondo de vista previa";
+	}
+
+	@Override
+	public String sintaxisConstructor() {
+	    return "Color de sintaxis: constructor";
+	}
+
+	@Override
+	public String sintaxisMensajeAyudar() {
+	    return "Color de sintaxis: mensaje de ayuda";
+	}
+
+	@Override
+	public String sintaxisEtiquetasHtml() {
+	    return "Color de sintaxis: etiquetas HTML";
+	}
 	
 	
+	@Override
+	public String colorFondoVentana() {
+	    return "Color de fondo de la ventana";
+	}
+
+	@Override
+	public String colorPanel() {
+	    return "Color del panel";
+	}
+
+	@Override
+	public String colorBotonTexto() {
+	    return "Color del texto del botón";
+	}
+
+	@Override
+	public String colorCampo() {
+	    return "Color del campo";
+	}
+
+	@Override
+	public String colorBordeDestacado() {
+	    return "Color del borde destacado";
+	}
+
+	@Override
+	public String colorSeleccionTexto() {
+	    return "Color de fondo de selección de texto";
+	}
+
+	@Override
+	public String colorTextoSeleccionado() {
+	    return "Color del texto seleccionado";
+	}
+	
+	
+	@Override
+	public String colorEstadoExito() {
+	    return "Color de estado: éxito";
+	}
+
+	@Override
+	public String colorEstadoFallo() {
+	    return "Color de estado: fallo";
+	}
+
+	@Override
+	public String colorEstadoInstantanea() {
+	    return "Color de estado: instantánea";
+	}
+
+	@Override
+	public String colorResultadoAnadido() {
+	    return "Color de resultado añadido";
+	}
+
+	@Override
+	public String colorResultadoEliminado() {
+	    return "Color de resultado eliminado";
+	}
+
+	@Override
+	public String colorBordeScroll() {
+	    return "Color del borde del scroll";
+	}
+
+	@Override
+	public String colorFondoPanel() {
+	    return "Color de fondo del panel";
+	}
+
+	@Override
+	public String colorBeigeListas() {
+	    return "Beige de las listas";
+	}
+
+	@Override
+	public String colorTextoListas() {
+	    return "Color del texto en listas";
+	}
+
+	@Override
+	public String colorBordeListas() {
+	    return "Color del borde de las listas";
+	}
+
+	@Override
+	public String colorBotonFondo() {
+	    return "Color de fondo del botón";
+	}
+
+
+	@Override
+	public String colorBordeBoton() {
+	    return "Color del borde del botón";
+	}
+
+	@Override
+	public String colorDoradoTexto() {
+	    return "Color dorado del texto";
+	}
+	
+
+	@Override
+	public String colorPila() {
+	    return "Color de la pila (stack trace)";
+	}
+
+
+	@Override
+	public String colorTextoPanel() {
+	    return "Color del texto del panel";
+	}
+
+	@Override
+	public String colorTextoNegro() {
+	    return "Color de texto negro";
+	}
+	
+
+
+	@Override
+	public String colorTextoPrincipal() {
+	    return "Color del texto principal";
+	}
+
+	@Override
+	public String colorFondoResultados() {
+	    return "Color de fondo de los resultados";
+	}
+
+	@Override
+	public String colorEstado() {
+	    return "Color de estado";
+	}
+
+
+
+
+
+	@Override
+	public String colorTextoDescripcion() {
+	    return "Color del texto de descripción";
+	}
+
+	@Override
+	public String colorTextoEstado() {
+	    return "Color del texto de estado";
+	}
+
+	@Override
+	public String colorTextoExtra() {
+	    return "Color del texto extra";
+	}
+	
+	@Override
+	public String colorSeparador() {
+	    return "Color del separador";
+	}
 	
 	
 }

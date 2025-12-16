@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.asbestosstar.crashdetector.Config;
+import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
 import com.asbestosstar.crashdetector.dto.modpack.ProveedorMods;
@@ -122,15 +123,18 @@ public class CDModsEstiloTL extends PanelAPIBase {
 
 	@Override
 	public List<ElementoConfig> obtenerElementosConfigs() {
-		// TODO Auto-generated method stub
+	    List<ElementoConfig> artics = new ArrayList<>();
 
-		List<ElementoConfig> artics = new ArrayList<>();
-		artics.add(colorBoton);
-		artics.add(colorFondo);
-		artics.add(colorTexto);
-		artics.add(colorCajaTexto);
+	    colorBoton.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBoton());
+	    colorFondo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondo());
+	    colorTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTexto());
+	    colorCajaTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorCajaTexto());
 
-		return artics;
+	    artics.add(colorBoton);
+	    artics.add(colorFondo);
+	    artics.add(colorTexto);
+	    artics.add(colorCajaTexto);
 
+	    return artics;
 	}
 }

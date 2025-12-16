@@ -23,8 +23,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 
+import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.config.ConfigBoolean;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ConfigDouble;
@@ -411,16 +411,24 @@ public class CDSkinCape extends EditorGUI {
 		labelValor.setForeground(colorTexto.obtener());
 		return labelValor;
 	}
-
+	
 	@Override
 	public List<ElementoConfig> obtenerElementosConfigs() {
-		List<ElementoConfig> elementos = new ArrayList<>();
-		elementos.add(colorFondo);
-		elementos.add(colorTexto);
-		elementos.add(colorBoton);
-		elementos.add(colorCajaTexto);
-		elementos.add(colorBorde);
-		return elementos;
+	    List<ElementoConfig> elementos = new ArrayList<>();
+
+	    colorFondo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondo());
+	    colorTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTexto());
+	    colorBoton.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBoton());
+	    colorCajaTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorCajaTexto());
+	    colorBorde.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBorde());
+
+	    elementos.add(colorFondo);
+	    elementos.add(colorTexto);
+	    elementos.add(colorBoton);
+	    elementos.add(colorCajaTexto);
+	    elementos.add(colorBorde);
+
+	    return elementos;
 	}
 
 	/**

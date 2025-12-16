@@ -395,6 +395,5 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 	@Override
 	public abstract String id();
 
-	@Override
-	public abstract java.util.List<com.asbestosstar.crashdetector.config.ElementoConfig> obtenerElementosConfigs();
+
 }

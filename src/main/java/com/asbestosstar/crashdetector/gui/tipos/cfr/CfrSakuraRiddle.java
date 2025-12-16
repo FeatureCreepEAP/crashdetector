@@ -205,6 +205,11 @@ public class CfrSakuraRiddle extends CfrBase {
 
     @Override
     public List<ElementoConfig> obtenerElementosConfigs() {
+        colorFondo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondo());
+        colorTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTexto());
+        colorBorde.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBorde());
+        colorFondoRetrato.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondoRetrato());
+
         return new ArrayList<>(Arrays.asList(colorFondo, colorTexto, colorBorde, colorFondoRetrato));
     }
 }

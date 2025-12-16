@@ -240,17 +240,44 @@ public class EditorPlantillaPredeterminado extends EditorPlantilla {
 
 	@Override
 	public List<ElementoConfig> obtenerElementosConfigs() {
-		ArrayList<ElementoConfig> configs = new ArrayList<>();
-		configs.add(coloresEditor.get("fondo"));
-		configs.add(coloresEditor.get("texto"));
-		configs.add(coloresEditor.get("caja_texto"));
-		configs.add(coloresEditor.get("boton"));
-		configs.add(coloresEditor.get("borde"));
+	    ArrayList<ElementoConfig> configs = new ArrayList<>();
 
-		if (enlacesMap != null && !enlacesMap.isEmpty()) {
-			configs.addAll(enlacesMap.values());
-		}
+	    // Colores fijos del editor: asignar nombres localizados
+	    ConfigColor fondo = coloresEditor.get("fondo");
+	    if (fondo != null) {
+	        fondo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondo());
+	        configs.add(fondo);
+	    }
 
-		return configs;
+	    ConfigColor texto = coloresEditor.get("texto");
+	    if (texto != null) {
+	        texto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTexto());
+	        configs.add(texto);
+	    }
+
+	    ConfigColor cajaTexto = coloresEditor.get("caja_texto");
+	    if (cajaTexto != null) {
+	        cajaTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorCajaTexto());
+	        configs.add(cajaTexto);
+	    }
+
+	    ConfigColor boton = coloresEditor.get("boton");
+	    if (boton != null) {
+	        boton.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBoton());
+	        configs.add(boton);
+	    }
+
+	    ConfigColor borde = coloresEditor.get("borde");
+	    if (borde != null) {
+	        borde.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBorde());
+	        configs.add(borde);
+	    }
+
+	    // Elementos dinámicos: asumimos que ya tienen nombre o no lo requieren
+	    if (enlacesMap != null && !enlacesMap.isEmpty()) {
+	        configs.addAll(enlacesMap.values());
+	    }
+
+	    return configs;
 	}
 }
