@@ -93,18 +93,18 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 		String[] lineas = contenidoConsola.split(Verificaciones.nl);
 
 		boolean encontradoModSospechoso = false; // Flag para detectar el inicio de "Suspected Mods"
-		boolean encontradoStacktrace = false; // Flag para detectar el fin de la sección "Stacktrace"
-		boolean encontradoModSection = false; // Flag para detectar secciones de mods específicos
+		boolean encontradoStacktrace = false;
+		boolean encontradoModSection = false;
 
 		for (int i = 0; i < lineas.length; i++) {
 			String linea = lineas[i].trim();
 
-			// Saltar líneas de nivel DEBUG/TRACE para evitar falsos positivos
+			// Saltar líneas de nivel DEBUG/TRACE
 			if (patronNivelLogParaSaltar.matcher(linea).matches()) {
 				continue;
 			}
 
-			// 1) Detectar secciones de mods específicos (-- MOD modid --)
+			// 1) Detectar secciones -- MOD modid --
 			Matcher mModSection = patronModSection.matcher(linea);
 			if (mModSection.find()) {
 				encontradoModSection = true;
@@ -118,67 +118,74 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 					}
 					activado = true;
 				}
-				// Continuar procesando la línea para otros posibles errores
-			}
-
-			// 2) Si estamos en una sección de mod específico, buscar detalles adicionales
-			if (encontradoModSection && linea.contains("Failure message:") && i + 1 < lineas.length) {
-				String siguienteLinea = lineas[i + 1].trim();
-				if (siguienteLinea.contains("has failed to load correctly")) {
-					// Ya hemos procesado el mod ID en el patrón anterior
-				}
-			}
-
-			// 3) Detectando "Suspected Mod:" - Solo procesamos las líneas entre "Suspected
-			// Mod:" y "Stacktrace:"
-			if (linea.contains("Suspected Mod:")) {
-				encontradoModSospechoso = true;
-				encontradoStacktrace = false; // Reiniciar para nueva sección
-				continue; // Saltamos la línea que contiene "Suspected Mod:"
-			}
-
-			// 4) Termina la sección "Suspected Mods:" cuando encontramos "Stacktrace:"
-			if (linea.contains("Stacktrace:")) {
-				encontradoStacktrace = true;
-				encontradoModSospechoso = false; // Terminar esta sección
 				continue;
 			}
 
-			// 5) Si encontramos una línea vacía después de "Stacktrace:", terminamos la
-			// sección actual
-			if (encontradoStacktrace && linea.isEmpty()) {
+			// 2) Detectar sección "Suspected Mods:" (soporta singular y plural)
+			if (linea.equalsIgnoreCase("Suspected Mod:") || linea.equalsIgnoreCase("Suspected Mods:")) {
+				encontradoModSospechoso = true;
 				encontradoStacktrace = false;
 				continue;
 			}
 
-			// 6) Procesar mod IDs entre "Suspected Mods:" y "Stacktrace:"
-			if (encontradoModSospechoso && !encontradoStacktrace) {
-				// Saltar líneas que contienen información de stack trace o son demasiado largas
-				if (linea.contains(".java:") || linea.startsWith("at ") || linea.startsWith("java.lang.")) {
+			// 3) Terminar la sección al encontrar "Stacktrace:"
+			if (linea.contains("Stacktrace:")) {
+				encontradoModSospechoso = false;
+				encontradoStacktrace = true;
+				continue;
+			}
+
+			// 4) Procesar los mods dentro de "Suspected Mods:"
+			if (encontradoModSospechoso) {
+				// Saltar líneas vacías o delimitadoras
+				if (linea.isEmpty() || linea.startsWith("--") || linea.contains("Details:")) {
 					continue;
 				}
 
-				// Ignorar líneas que son solo información adicional sin mod IDs
-				if (linea.startsWith("Mixin class:") || linea.startsWith("Target:")
-						|| linea.startsWith("at TRANSFORMER/") || linea.startsWith("at MC-BOOTSTRAP/")) {
+				// Si la línea parece un nombre de mod con versión (ej: "Knight Lib (knightlib),
+				// Version: 1.4.2")
+				// Extraemos el mod ID del primer grupo entre paréntesis
+				Matcher mSuspected = patronSuspectedMod.matcher(linea);
+				if (mSuspected.find()) {
+					String modID = mSuspected.group(2).trim(); // ID entre paréntesis
+					if (!modID.isEmpty()) {
+						String mensaje = MonitorDePID.idioma.mcforge_mod_sospechoso() + modID;
+						if (errores.add(mensaje)) {
+							String enlace = consola.agregarErrorALectador(i, this);
+							enlacesPorError.put(mensaje, enlace);
+							modidPorError.put(mensaje, modID);
+						}
+						activado = true;
+					}
+					// Saltar las siguientes líneas del mismo mod (Mixin class, Target, etc.)
+					while (i + 1 < lineas.length) {
+						String next = lineas[i + 1].trim();
+						if (next.startsWith("Mixin class:") || next.startsWith("Target:")
+								|| next.startsWith("at TRANSFORMER/")) {
+							i++; // consumir la línea
+						} else {
+							break;
+						}
+					}
 					continue;
 				}
 
-				// Extraer mod ID usando la lógica mejorada para esta sección
-				String modId = extraerModidDeLinea(linea, true);
-				if (modId != null && !modId.isEmpty() && !modId.contains(".java")) {
-					String mensaje = MonitorDePID.idioma.mcforge_mod_sospechoso() + modId;
+				// Si no coincide con el patrón de paréntesis, intentar extraer como mod ID
+				// simple (fallback)
+				String modID = extraerModidDeLinea(linea, true);
+				if (modID != null && !modID.isEmpty() && !modID.contains(".java")) {
+					String mensaje = MonitorDePID.idioma.mcforge_mod_sospechoso() + modID;
 					if (errores.add(mensaje)) {
 						String enlace = consola.agregarErrorALectador(i, this);
 						enlacesPorError.put(mensaje, enlace);
-						modidPorError.put(mensaje, modId);
+						modidPorError.put(mensaje, modID);
 					}
 					activado = true;
 				}
 				continue;
 			}
 
-			// 7) Detectar "Fallo al crear la instancia del mod"
+			// 5) Detectar "Failed to create mod instance"
 			if (linea.contains("Failed to create mod instance. ModID:")) {
 				String prefijo = "Failed to create mod instance. ModID: ";
 				int indiceInicio = linea.indexOf(prefijo);
@@ -186,12 +193,10 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 					indiceInicio += prefijo.length();
 					String resto = linea.substring(indiceInicio).trim();
 					StringBuilder sb = new StringBuilder();
-					int j = 0;
-					while (j < resto.length()) {
+					for (int j = 0; j < resto.length(); j++) {
 						char c = resto.charAt(j);
 						if (Character.isLetterOrDigit(c) || c == '_' || c == '-' || c == '.' || c == '+') {
 							sb.append(c);
-							j++;
 						} else {
 							break;
 						}
@@ -210,7 +215,7 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 				continue;
 			}
 
-			// 8) Detectar modid en el patrón "dispatch for modid"
+			// 6) Patrón de despacho de modid
 			Matcher matcherDespacho = patronDespachoModid.matcher(linea);
 			while (matcherDespacho.find()) {
 				String modID = matcherDespacho.group(1).trim();
@@ -223,9 +228,8 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 				activado = true;
 			}
 
-			// 9) Detectar mod ID en otras excepciones - SOLO si hay indicadores de error
+			// 7) Otros errores con indicadores, fuera de secciones específicas
 			if (!encontradoModSection) {
-				// Verificar si la línea contiene indicadores de error antes de procesar
 				if (patronIndicadorError.matcher(linea).find()) {
 					String modID = extraerModidDeLinea(linea, false);
 					if (modID != null && !modID.isEmpty()) {

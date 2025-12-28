@@ -1972,4 +1972,46 @@ public interface Idioma {
 
 	public String colorSeparador();
 
+	public String problema_safe_fetch32_jdk17();
+
+	public String nombre_problema_safe_fetch32_jdk17();
+
+	public String solucion_actualizar_jdk_macos();
+
+	public String solucion_usar_lanzador_con_jdk_actualizado();
+
+	public String solucion_desactivar_spark_mod();
+
+	public String problema_mcef_inicializacion_html();
+
+	public String nombre_problema_mcef_inicializacion();
+
+	public String solucion_eliminar_mod_mcef();
+
+	public String solucion_verificar_compatibilidad_mcef();
+
+	public String conflicto_iris_optifine_html();
+
+	public String nombre_conflicto_iris_optifine();
+
+	public String solucion_eliminar_optifine();
+
+	public String solucion_usar_iris_sin_optifine();
+
+	public String conflicto_modernfix_optifine_html();
+
+	public String nombre_conflicto_modernfix_optifine();
+
+	public String solucion_eliminar_optifine_o_modernfix();
+
+	public String solucion_usar_alternativa_modernfix();
+
+	public String error_clave_registro_mayusculas_html(String clave);
+
+	public String nombre_error_clave_registro_mayusculas();
+
+	public String solucion_buscar_clave_en_archivos();
+
+	public String solucion_eliminar_mod_reciente();
+
 }

@@ -156,12 +156,11 @@ public interface CrashDetectorGUI {
 					LectadorDeConsolasGUI lectador = TipoGUI.LECTADOR_DE_CONSOLAS.obtenerGUIPredeterminado(
 							LectadorDeConsolasHoloTalk.ID, () -> new LectadorDeConsolasHoloTalk());
 					lectador.procesarHipervinculo(url);
-				}else if (url.startsWith("cfr://")) {
-                    CrashDetectorLogger.log(url + " (cfr url)");
-                    CfrBase gui = TipoGUI.CFR.obtenerGUIPredeterminado(CfrSakuraRiddle.ID, CfrSakuraRiddle::new);
-                    gui.procesarHipervinculo(url);
-                }
-				else if (url != null) {
+				} else if (url.startsWith("cfr://")) {
+					CrashDetectorLogger.log(url + " (cfr url)");
+					CfrBase gui = TipoGUI.CFR.obtenerGUIPredeterminado(CfrSakuraRiddle.ID, CfrSakuraRiddle::new);
+					gui.procesarHipervinculo(url);
+				} else if (url != null) {
 					Desktop.getDesktop().browse(new java.net.URI(url));
 				}
 			} catch (Exception ex) {

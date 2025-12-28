@@ -444,8 +444,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 			return PanelAPIBase.GUIS;
 		}
 	};
-	
-	
+
 	/**
 	 * Editor de GUIs
 	 */

@@ -1226,8 +1226,8 @@ public class Ingles implements Idioma {
 
 	@Override
 	public String mensajeCargaChunk() {
-	    return "<b style='color:#" + config.obtenerColorError()
-	            + "'>An exception occurred while the world was loading chunks. If it exists for your platform, FeatureRecycler may be able to resolve the issue. https://www.curseforge.com/minecraft/mc-mods/feature-recycler</b>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>An exception occurred while the world was loading chunks. If it exists for your platform, FeatureRecycler may be able to resolve the issue. https://www.curseforge.com/minecraft/mc-mods/feature-recycler</b>";
 	}
 
 	@Override
@@ -4812,340 +4812,460 @@ public class Ingles implements Idioma {
 	public String pasoErrorFallingAttackVersion() {
 		return "Ensure you are using the correct version of Falling Attack compatible with your Minecraft version.";
 	}
-	
+
 	@Override
 	public String necesitasInstalarCfr() {
-	    String sistema = System.getProperty("os.name").toLowerCase();
-	    StringBuilder mensaje = new StringBuilder();
-	    mensaje.append("<html>")
-	           .append("You need to install CFR (Class File Reader) to use this feature.<br><br>");
+		String sistema = System.getProperty("os.name").toLowerCase();
+		StringBuilder mensaje = new StringBuilder();
+		mensaje.append("<html>").append("You need to install CFR (Class File Reader) to use this feature.<br><br>");
 
-	    if (sistema.contains("linux") || sistema.contains("netbsd") || sistema.contains("freebsd")) {
-	        mensaje.append("On Linux, NetBSD or FreeBSD systems, you can install CFR from your package manager.<br>")
-	               .append("Search for the package at: <a href=\"https://pkgs.org/search/?q=cfr\">https://pkgs.org/search/?q=cfr</a><br><br>");
-	    }
+		if (sistema.contains("linux") || sistema.contains("netbsd") || sistema.contains("freebsd")) {
+			mensaje.append("On Linux, NetBSD or FreeBSD systems, you can install CFR from your package manager.<br>")
+					.append("Search for the package at: <a href=\"https://pkgs.org/search/?q=cfr\">https://pkgs.org/search/?q=cfr</a><br><br>");
+		}
 
-	    mensaje.append("Alternatively, you can download the modified version used by FabricMC from:<br>")
-	           .append("<a href=\"https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar\">")
-	           .append("https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar</a><br><br>")
-	           .append("Save it in the following folder:<br>")
-	           .append("<b>")
-	           .append(new java.io.File(System.getProperty("user.home"), "crash_detector/cfr/").getAbsolutePath())
-	           .append("</b><br><br>")
-	           .append("⚠️ <b>Important:</b> after installing CFR, you must restart the mod for it to be recognised correctly.")
-	           .append("</html>");
-	    return mensaje.toString();
+		mensaje.append("Alternatively, you can download the modified version used by FabricMC from:<br>")
+				.append("<a href=\"https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar\">")
+				.append("https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar</a><br><br>")
+				.append("Save it in the following folder:<br>").append("<b>")
+				.append(new java.io.File(System.getProperty("user.home"), "crash_detector/cfr/").getAbsolutePath())
+				.append("</b><br><br>")
+				.append("⚠️ <b>Important:</b> after installing CFR, you must restart the mod for it to be recognised correctly.")
+				.append("</html>");
+		return mensaje.toString();
 	}
 
 	@Override
 	public String cfrNoHayRetrato() {
-	    return "No portrait available";
+		return "No portrait available";
 	}
 
 	@Override
 	public String cfrClaseNoEncontrada(String nombreClase) {
-	    return "Could not find class: " + nombreClase;
+		return "Could not find class: " + nombreClase;
 	}
 
 	@Override
 	public String tituloCfrSakura() {
-	    return "CFR Decompiler – Sakura Riddle (Unofficial)";
+		return "CFR Decompiler – Sakura Riddle (Unofficial)";
 	}
 
 	@Override
 	public String cfrClaseActual() {
-	    return "Current class";
+		return "Current class";
 	}
 
 	@Override
 	public String cfrRetratoDeSakura() {
-	    return "Portrait of Sakura Riddle";
+		return "Portrait of Sakura Riddle";
 	}
 
 	@Override
 	public String cfrErrorCargarRetrato() {
-	    return "Error loading portrait";
+		return "Error loading portrait";
 	}
-	
+
 	public String noticiaLegalCFR() {
-	    return "This graphical user interface (GUI) for decompiling mods is designed to help users identify the causes of software failures. "
-	            + "However, decompilation may sometimes be necessary, and users must take care not to use the generated code to infringe copyright law. "
-	            + "It is recommended to review the license of the relevant mod before using any obtained code. Moreover, many mods officially provide their source code, "
-	            + "which is generally cleaner and easier to understand than decompiled output. Remember that respect for intellectual property and usage licenses is fundamental to "
-	            + "the mod development community. You may consult Mexico’s Federal Copyright Law here: "
-	            + "<a href=\"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf\" target=\"_blank\">Ley Federal de Derechos de Autor (Spanish)</a> "
-	            + "and the English version here: <a href=\"https://www.indautor.gob.mx/documentos/marco-juridico/L_Fed_Derecho_de_Autor_(English).pdf\" target=\"_blank\">Copyright Law (English)</a>. "
-	            + "Given that you are on CurseForge, we also provide the U.S. Copyright Law in English: "
-	            + "<a href=\"https://www.copyright.gov/title17/title17.pdf\" target=\"_blank\">U.S. Copyright Law</a>. "
-	            + "Furthermore, users are advised to research the laws applicable in their own jurisdiction. "
-	            + "Our GUI is intended only for basic checks; for advanced analysis, please use FabricMC’s Enigma fork available on "
-	            + "<a href=\"https://github.com/FabricMC/Enigma\" target=\"_blank\">GitHub</a>. If you need to edit JAR files directly to create patches when source code is unavailable, consider using Recaf at "
-	            + "<a href=\"https://recaf.coley.software/home.html\" target=\"_blank\">its website</a>.";
+		return "This graphical user interface (GUI) for decompiling mods is designed to help users identify the causes of software failures. "
+				+ "However, decompilation may sometimes be necessary, and users must take care not to use the generated code to infringe copyright law. "
+				+ "It is recommended to review the license of the relevant mod before using any obtained code. Moreover, many mods officially provide their source code, "
+				+ "which is generally cleaner and easier to understand than decompiled output. Remember that respect for intellectual property and usage licenses is fundamental to "
+				+ "the mod development community. You may consult Mexico’s Federal Copyright Law here: "
+				+ "<a href=\"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf\" target=\"_blank\">Ley Federal de Derechos de Autor (Spanish)</a> "
+				+ "and the English version here: <a href=\"https://www.indautor.gob.mx/documentos/marco-juridico/L_Fed_Derecho_de_Autor_(English).pdf\" target=\"_blank\">Copyright Law (English)</a>. "
+				+ "Given that you are on CurseForge, we also provide the U.S. Copyright Law in English: "
+				+ "<a href=\"https://www.copyright.gov/title17/title17.pdf\" target=\"_blank\">U.S. Copyright Law</a>. "
+				+ "Furthermore, users are advised to research the laws applicable in their own jurisdiction. "
+				+ "Our GUI is intended only for basic checks; for advanced analysis, please use FabricMC’s Enigma fork available on "
+				+ "<a href=\"https://github.com/FabricMC/Enigma\" target=\"_blank\">GitHub</a>. If you need to edit JAR files directly to create patches when source code is unavailable, consider using Recaf at "
+				+ "<a href=\"https://recaf.coley.software/home.html\" target=\"_blank\">its website</a>.";
 	}
-	
+
 	@Override
 	public String botonDescargarCfr() {
-	    return "Download CFR";
+		return "Download CFR";
 	}
 
 	@Override
 	public String botonAbrirCarpetaCfr() {
-	    return "Open installation folder";
+		return "Open installation folder";
 	}
-	
+
 	@Override
 	public String colorFondoPrincipal() {
-	    return "Main background colour";
+		return "Main background colour";
 	}
 
 	@Override
 	public String colorTextoBotonReset() {
-	    return "Reset button text colour";
+		return "Reset button text colour";
 	}
 
 	@Override
 	public String colorTextoCampoBuscar() {
-	    return "Search field text colour";
+		return "Search field text colour";
 	}
 
 	@Override
 	public String colorTextoComboFiltro() {
-	    return "Filter dropdown menu text colour";
+		return "Filter dropdown menu text colour";
 	}
 
 	@Override
 	public String colorTextoRenderer() {
-	    return "Renderer text colour";
+		return "Renderer text colour";
 	}
 
 	@Override
 	public String colorTextoOverlayCarga() {
-	    return "Loading overlay text colour";
+		return "Loading overlay text colour";
 	}
 
 	@Override
 	public String colorBorde() {
-	    return "Border colour";
+		return "Border colour";
 	}
-	
+
 	@Override
 	public String colorFondoRetrato() {
-	    return "Portrait mode background colour";
+		return "Portrait mode background colour";
 	}
 
 	@Override
 	public String colorEnlaceCompartir() {
-	    return "Share link colour";
+		return "Share link colour";
 	}
 
 	@Override
 	public String colorFondoCampoCompartir() {
-	    return "Share field background colour";
+		return "Share field background colour";
 	}
 
 	@Override
 	public String rosaFondo() {
-	    return "Background pink";
+		return "Background pink";
 	}
 
 	@Override
 	public String rosaSuave() {
-	    return "Soft pink";
+		return "Soft pink";
 	}
 
 	@Override
 	public String moradoAcento() {
-	    return "Accent purple";
+		return "Accent purple";
 	}
 
 	@Override
 	public String textoOscuro() {
-	    return "Dark text";
+		return "Dark text";
 	}
 
 	@Override
 	public String bordeSuave() {
-	    return "Soft border";
+		return "Soft border";
 	}
 
 	@Override
 	public String fondoCampo() {
-	    return "Field background";
+		return "Field background";
 	}
 
 	@Override
 	public String fondoVistaPrevia() {
-	    return "Preview background";
+		return "Preview background";
 	}
-	
+
 	@Override
 	public String sintaxisConstructor() {
-	    return "Syntax colour: constructor";
+		return "Syntax colour: constructor";
 	}
 
 	@Override
 	public String sintaxisMensajeAyudar() {
-	    return "Syntax colour: help message";
+		return "Syntax colour: help message";
 	}
 
 	@Override
 	public String sintaxisEtiquetasHtml() {
-	    return "Syntax colour: HTML tags";
+		return "Syntax colour: HTML tags";
 	}
 
 	@Override
 	public String colorFondoVentana() {
-	    return "Window background colour";
+		return "Window background colour";
 	}
 
 	@Override
 	public String colorPanel() {
-	    return "Panel colour";
+		return "Panel colour";
 	}
 
 	@Override
 	public String colorBotonTexto() {
-	    return "Button text colour";
+		return "Button text colour";
 	}
 
 	@Override
 	public String colorCampo() {
-	    return "Field colour";
+		return "Field colour";
 	}
 
 	@Override
 	public String colorBordeDestacado() {
-	    return "Highlighted border colour";
+		return "Highlighted border colour";
 	}
 
 	@Override
 	public String colorSeleccionTexto() {
-	    return "Text selection background colour";
+		return "Text selection background colour";
 	}
-	
+
 	@Override
 	public String colorTextoSeleccionado() {
-	    return "Selected text colour";
+		return "Selected text colour";
 	}
 
 	@Override
 	public String colorEstadoExito() {
-	    return "Status colour: success";
+		return "Status colour: success";
 	}
 
 	@Override
 	public String colorEstadoFallo() {
-	    return "Status colour: failure";
+		return "Status colour: failure";
 	}
 
 	@Override
 	public String colorEstadoInstantanea() {
-	    return "Status colour: instant";
+		return "Status colour: instant";
 	}
 
 	@Override
 	public String colorResultadoAnadido() {
-	    return "Added result colour";
+		return "Added result colour";
 	}
 
 	@Override
 	public String colorResultadoEliminado() {
-	    return "Removed result colour";
+		return "Removed result colour";
 	}
 
 	@Override
 	public String colorBordeScroll() {
-	    return "Scroll bar border colour";
+		return "Scroll bar border colour";
 	}
 
 	@Override
 	public String colorFondoPanel() {
-	    return "Panel background colour";
+		return "Panel background colour";
 	}
 
 	@Override
 	public String colorBeigeListas() {
-	    return "List beige";
+		return "List beige";
 	}
 
 	@Override
 	public String colorTextoListas() {
-	    return "List text colour";
+		return "List text colour";
 	}
 
 	@Override
 	public String colorBordeListas() {
-	    return "List border colour";
+		return "List border colour";
 	}
 
 	@Override
 	public String colorBotonFondo() {
-	    return "Button background colour";
+		return "Button background colour";
 	}
 
 	@Override
 	public String colorBordeBoton() {
-	    return "Button border colour";
+		return "Button border colour";
 	}
 
 	@Override
 	public String colorDoradoTexto() {
-	    return "Golden text colour";
+		return "Golden text colour";
 	}
-	
+
 	@Override
 	public String colorPila() {
-	    return "Stack trace colour";
+		return "Stack trace colour";
 	}
 
 	@Override
 	public String colorTextoPanel() {
-	    return "Panel text colour";
+		return "Panel text colour";
 	}
 
 	@Override
 	public String colorTextoNegro() {
-	    return "Black text colour";
+		return "Black text colour";
 	}
 
 	@Override
 	public String colorTextoPrincipal() {
-	    return "Main text colour";
+		return "Main text colour";
 	}
 
 	@Override
 	public String colorFondoResultados() {
-	    return "Results background colour";
+		return "Results background colour";
 	}
 
 	@Override
 	public String colorEstado() {
-	    return "Status colour";
+		return "Status colour";
 	}
 
 	@Override
 	public String colorTextoDescripcion() {
-	    return "Description text colour";
+		return "Description text colour";
 	}
 
 	@Override
 	public String colorTextoEstado() {
-	    return "Status text colour";
+		return "Status text colour";
 	}
 
 	@Override
 	public String colorTextoExtra() {
-	    return "Extra text colour";
+		return "Extra text colour";
 	}
 
 	@Override
 	public String colorSeparador() {
-	    return "Separator colour";
+		return "Separator colour";
 	}
-	
-	
-	
-	
-	
+
+	@Override
+	public String problema_safe_fetch32_jdk17() {
+		return "A native error <code>StubRoutines::SafeFetch32</code> has been detected. "
+				+ "This issue occurs on macOS with JDK 17.0.9 and is fixed in JDK 17.0.10 or later. https://github.com/async-profiler/async-profiler/issues/747 https://www.minecraftforum.net/forums/support/java-edition-support/3192465-issues-with-jre-17-0-9-in-macos-sonoma-14-2-1";
+	}
+
+	@Override
+	public String nombre_problema_safe_fetch32_jdk17() {
+		return "Native SafeFetch32 error in JDK 17.0.9 (macOS)";
+	}
+
+	@Override
+	public String solucion_actualizar_jdk_macos() {
+		return "Update your JDK to version 17.0.10 or later (e.g. 17.0.15).";
+	}
+
+	@Override
+	public String solucion_usar_lanzador_con_jdk_actualizado() {
+		return "If you use a launcher such as MultiMC, Prism Launcher or TLauncher, configure it to use a newer JDK. "
+				+ "Some already include JDK 17.0.15 built-in.";
+	}
+
+	@Override
+	public String solucion_desactivar_spark_mod() {
+		return "The Spark mod may also contribute to this error. Consider disabling it temporarily. https://www.reddit.com/r/fabricmc/comments/17snlol/game_crashing_when_creating_world/";
+	}
+
+	@Override
+	public String problema_mcef_inicializacion_html() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "The MCEF mod (Chromium Embedded Framework) is causing a silent hang.</b>" + "<ul>"
+				+ "<li>MCEF is initialising at the end of the log, which usually means the game froze during loading.</li>"
+				+ "<li>This mod is known to cause crashes on Linux, macOS, or with certain Java versions.</li>"
+				+ "<li>An explicit error does not always appear, but the game never reaches the main menu.</li>"
+				+ "</ul>"
+				+ "<p>If you do not need in-game browser functionality (such as web maps or embedded pages), remove the mod.</p>";
+	}
+
+	@Override
+	public String nombre_problema_mcef_inicializacion() {
+		return "MCEF initialisation issue (embedded browser mod)";
+	}
+
+	@Override
+	public String solucion_eliminar_mod_mcef() {
+		return "Remove the MCEF mod file (look for 'mcef' in the filename) from the 'mods' folder.";
+	}
+
+	@Override
+	public String solucion_verificar_compatibilidad_mcef() {
+		return "If you truly need it, ensure you are using a version compatible with your operating system and Minecraft version.";
+	}
+
+	@Override
+	public String conflicto_iris_optifine_html() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "A conflict has been detected between <b>OptiFine</b> and <b>Iris/Oculus</b>.</b>" + "<ul>"
+				+ "<li>OptiFine modifies Minecraft's rendering in a way incompatible with Iris or Oculus.</li>"
+				+ "<li>The error <code>MixinLevelRenderer failed injection check</code> originates from <code>mixins.iris.json</code> or <code>mixins.oculus.json</code>.</li>"
+				+ "</ul>"
+				+ "<p>These mods cannot be used together. Remove OptiFine to use shaders with Iris or Oculus.</p>";
+	}
+
+	@Override
+	public String nombre_conflicto_iris_optifine() {
+		return "Conflict between OptiFine and Iris/Oculus";
+	}
+
+	@Override
+	public String solucion_eliminar_optifine() {
+		return "Remove the OptiFine file from the 'mods' folder.";
+	}
+
+	@Override
+	public String solucion_usar_iris_sin_optifine() {
+		return "Use Iris or Oculus without OptiFine for modern shaders.";
+	}
+
+	@Override
+	public String conflicto_modernfix_optifine_html() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "A conflict has been detected between <b>ModernFix</b> and <b>OptiFine</b>.</b>" + "<ul>"
+				+ "<li>ModernFix is incompatible with OptiFine because it breaks Forge functionality and slows down startup.</li>"
+				+ "<li>ModernFix itself warns: <i>\"Use of ModernFix with OptiFine is not supported\"</i>.</li>"
+				+ "</ul>" + "<p>You must remove one of the two mods for the game to work correctly.</p>";
+	}
+
+	@Override
+	public String nombre_conflicto_modernfix_optifine() {
+		return "Conflict between ModernFix and OptiFine";
+	}
+
+	@Override
+	public String solucion_eliminar_optifine_o_modernfix() {
+		return "Remove OptiFine or ModernFix from the 'mods' folder. They cannot be used together.";
+	}
+
+	@Override
+	public String solucion_usar_alternativa_modernfix() {
+		return "If you need optimisations, consider using only OptiFine, or replace ModernFix with lighter mods such as FerriteCore or EntityCulling.";
+	}
+
+	@Override
+	public String error_clave_registro_mayusculas_html(String clave) {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Error: invalid registry key with disallowed characters.</b>" + "<ul>"
+				+ "<li><b>Detected key:</b> <code>" + escapeHtml(clave) + "</code></li>"
+				+ "<li>In Minecraft, all registry keys (tags, recipes, advancements, etc.) must be <b>lowercase</b> and use only letters, numbers, underscores, hyphens, and slashes.</li>"
+				+ "<li>This error is usually caused by a poorly coded mod or a faulty datapack.</li>" + "</ul>"
+				+ "<p><b>Important tip:</b> Use the <b>grepr</b> or <b>fgrepr</b> tool in the sidebar and enable the <b>\"Search inside JAR files\"</b> option to find which mod contains this invalid key.</p>";
+	}
+
+	@Override
+	public String nombre_error_clave_registro_mayusculas() {
+		return "Registry key with uppercase or invalid characters";
+	}
+
+	@Override
+	public String solucion_buscar_clave_en_archivos() {
+		return "Use 'grepr' or 'fgrepr' with \"Search inside JAR files\" to locate the offending mod.";
+	}
+
+	@Override
+	public String solucion_eliminar_mod_reciente() {
+		return "If you cannot identify the mod, remove recently added mods, especially those that add blocks, items, or tools.";
+	}
 
 }

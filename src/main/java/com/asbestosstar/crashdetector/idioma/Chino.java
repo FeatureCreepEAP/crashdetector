@@ -1129,8 +1129,8 @@ public class Chino implements Idioma {
 
 	@Override
 	public String mensajeCargaChunk() {
-	    return "<b style='color:#" + config.obtenerColorError()
-	            + "'>世界加载区块（chunks）时发生异常。如果你的平台有对应版本，FeatureRecycler 或许能解决此问题。https://www.curseforge.com/minecraft/mc-mods/feature-recycler</b>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>世界加载区块（chunks）时发生异常。如果你的平台有对应版本，FeatureRecycler 或许能解决此问题。https://www.curseforge.com/minecraft/mc-mods/feature-recycler</b>";
 	}
 
 	@Override
@@ -4523,335 +4523,449 @@ public class Chino implements Idioma {
 	public String pasoErrorFallingAttackVersion() {
 		return "请确保你使用的 Falling Attack 版本与你的 Minecraft 版本兼容。";
 	}
-	
+
 	@Override
 	public String necesitasInstalarCfr() {
-	    String sistema = System.getProperty("os.name").toLowerCase();
-	    StringBuilder mensaje = new StringBuilder();
-	    mensaje.append("<html>")
-	           .append("你需要安装 CFR (Class File Reader) 才能使用此功能。<br><br>");
+		String sistema = System.getProperty("os.name").toLowerCase();
+		StringBuilder mensaje = new StringBuilder();
+		mensaje.append("<html>").append("你需要安装 CFR (Class File Reader) 才能使用此功能。<br><br>");
 
-	    if (sistema.contains("linux") || sistema.contains("netbsd") || sistema.contains("freebsd")) {
-	        mensaje.append("在 Linux、NetBSD 或 FreeBSD 系统上，你可以通过包管理器安装 CFR。<br>")
-	               .append("在此搜索包：<a href=\"https://pkgs.org/search/?q=cfr\">https://pkgs.org/search/?q=cfr</a><br><br>");
-	    }
+		if (sistema.contains("linux") || sistema.contains("netbsd") || sistema.contains("freebsd")) {
+			mensaje.append("在 Linux、NetBSD 或 FreeBSD 系统上，你可以通过包管理器安装 CFR。<br>").append(
+					"在此搜索包：<a href=\"https://pkgs.org/search/?q=cfr\">https://pkgs.org/search/?q=cfr</a><br><br>");
+		}
 
-	    mensaje.append("或者，你可以从以下地址下载 FabricMC 使用的修改版：<br>")
-	           .append("<a href=\"https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar\">")
-	           .append("https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar</a><br><br>")
-	           .append("将其保存到以下文件夹：<br>")
-	           .append("<b>")
-	           .append(new java.io.File(System.getProperty("user.home"), "crash_detector/cfr/").getAbsolutePath())
-	           .append("</b><br><br>")
-	           .append("⚠️ <b>重要：</b>安装 CFR 后，必须重启 mod 才能正确识别。")
-	           .append("</html>");
-	    return mensaje.toString();
+		mensaje.append("或者，你可以从以下地址下载 FabricMC 使用的修改版：<br>")
+				.append("<a href=\"https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar\">")
+				.append("https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar</a><br><br>")
+				.append("将其保存到以下文件夹：<br>").append("<b>")
+				.append(new java.io.File(System.getProperty("user.home"), "crash_detector/cfr/").getAbsolutePath())
+				.append("</b><br><br>").append("⚠️ <b>重要：</b>安装 CFR 后，必须重启 mod 才能正确识别。").append("</html>");
+		return mensaje.toString();
 	}
 
 	@Override
 	public String cfrNoHayRetrato() {
-	    return "无可用头像";
+		return "无可用头像";
 	}
 
 	@Override
 	public String cfrClaseNoEncontrada(String nombreClase) {
-	    return "无法找到类：" + nombreClase;
+		return "无法找到类：" + nombreClase;
 	}
 
 	@Override
 	public String tituloCfrSakura() {
-	    return "CFR 反编译器 – Sakura Riddle（非官方）";
+		return "CFR 反编译器 – Sakura Riddle（非官方）";
 	}
 
 	@Override
 	public String cfrClaseActual() {
-	    return "当前类";
+		return "当前类";
 	}
 
 	@Override
 	public String cfrRetratoDeSakura() {
-	    return "Sakura Riddle 头像";
+		return "Sakura Riddle 头像";
 	}
 
 	@Override
 	public String cfrErrorCargarRetrato() {
-	    return "加载头像时出错";
+		return "加载头像时出错";
 	}
-	
+
 	public String noticiaLegalCFR() {
-	    return "本图形用户界面（GUI）反编译工具旨在帮助用户诊断模组崩溃的根本原因。"
-	            + "然而，反编译模组可能存在法律风险，用户务必确保不利用生成的代码侵犯《联邦著作权法》。"
-	            + "建议在使用任何反编译代码前，仔细查阅对应模组的许可证。此外，许多模组开发者会主动公开源代码，"
-	            + "这类官方源码通常比反编译结果更清晰、易读。请始终尊重知识产权及软件许可，这是模组开发社区的核心原则。"
-	            + "您可通过以下链接查阅墨西哥《联邦著作权法》："
-	            + "<a href=\"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf\" target=\"_blank\">联邦著作权法（西班牙语）</a>，"
-	            + "英文版在此：<a href=\"https://www.indautor.gob.mx/documentos/marco-juridico/L_Fed_Derecho_de_Autor_(English).pdf\" target=\"_blank\">Copyright Law (English)</a>。"
-	            + "鉴于您正在 CurseForge 平台，我们同时提供美国版权法链接："
-	            + "<a href=\"https://www.copyright.gov/title17/title17.pdf\" target=\"_blank\">U.S. Copyright Law</a>。"
-	            + "我们建议用户主动了解所在地适用的法律法规。"
-	            + "本 GUI 仅适用于简单诊断；如需深度分析，请使用 FabricMC 维护的 Enigma 分支："
-	            + "<a href=\"https://github.com/FabricMC/Enigma\" target=\"_blank\">GitHub</a>。若需在无源码情况下直接编辑 JAR 文件打补丁，可使用 Recaf："
-	            + "<a href=\"https://recaf.coley.software/home.html\" target=\"_blank\">官方网站</a>。";
+		return "本图形用户界面（GUI）反编译工具旨在帮助用户诊断模组崩溃的根本原因。" + "然而，反编译模组可能存在法律风险，用户务必确保不利用生成的代码侵犯《联邦著作权法》。"
+				+ "建议在使用任何反编译代码前，仔细查阅对应模组的许可证。此外，许多模组开发者会主动公开源代码，"
+				+ "这类官方源码通常比反编译结果更清晰、易读。请始终尊重知识产权及软件许可，这是模组开发社区的核心原则。" + "您可通过以下链接查阅墨西哥《联邦著作权法》："
+				+ "<a href=\"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf\" target=\"_blank\">联邦著作权法（西班牙语）</a>，"
+				+ "英文版在此：<a href=\"https://www.indautor.gob.mx/documentos/marco-juridico/L_Fed_Derecho_de_Autor_(English).pdf\" target=\"_blank\">Copyright Law (English)</a>。"
+				+ "鉴于您正在 CurseForge 平台，我们同时提供美国版权法链接："
+				+ "<a href=\"https://www.copyright.gov/title17/title17.pdf\" target=\"_blank\">U.S. Copyright Law</a>。"
+				+ "我们建议用户主动了解所在地适用的法律法规。" + "本 GUI 仅适用于简单诊断；如需深度分析，请使用 FabricMC 维护的 Enigma 分支："
+				+ "<a href=\"https://github.com/FabricMC/Enigma\" target=\"_blank\">GitHub</a>。若需在无源码情况下直接编辑 JAR 文件打补丁，可使用 Recaf："
+				+ "<a href=\"https://recaf.coley.software/home.html\" target=\"_blank\">官方网站</a>。";
 	}
-	
+
 	@Override
 	public String botonDescargarCfr() {
-	    return "下载 CFR";
+		return "下载 CFR";
 	}
 
 	@Override
 	public String botonAbrirCarpetaCfr() {
-	    return "打开安装文件夹";
+		return "打开安装文件夹";
 	}
 
 	@Override
 	public String colorFondoPrincipal() {
-	    return "主背景颜色";
+		return "主背景颜色";
 	}
 
 	@Override
 	public String colorTextoBotonReset() {
-	    return "重置按钮文字颜色";
+		return "重置按钮文字颜色";
 	}
 
 	@Override
 	public String colorTextoCampoBuscar() {
-	    return "搜索框文字颜色";
+		return "搜索框文字颜色";
 	}
 
 	@Override
 	public String colorTextoComboFiltro() {
-	    return "筛选下拉菜单文字颜色";
+		return "筛选下拉菜单文字颜色";
 	}
 
 	@Override
 	public String colorTextoRenderer() {
-	    return "渲染器文字颜色";
+		return "渲染器文字颜色";
 	}
 
 	@Override
 	public String colorTextoOverlayCarga() {
-	    return "加载覆盖层文字颜色";
+		return "加载覆盖层文字颜色";
 	}
 
 	@Override
 	public String colorBorde() {
-	    return "边框颜色";
+		return "边框颜色";
 	}
-	
+
 	@Override
 	public String colorFondoRetrato() {
-	    return "人像模式背景颜色";
+		return "人像模式背景颜色";
 	}
 
 	@Override
 	public String colorEnlaceCompartir() {
-	    return "分享链接颜色";
+		return "分享链接颜色";
 	}
 
 	@Override
 	public String colorFondoCampoCompartir() {
-	    return "分享字段背景颜色";
+		return "分享字段背景颜色";
 	}
 
 	@Override
 	public String rosaFondo() {
-	    return "背景粉红色";
+		return "背景粉红色";
 	}
 
 	@Override
 	public String rosaSuave() {
-	    return "柔和粉红";
+		return "柔和粉红";
 	}
 
 	@Override
 	public String moradoAcento() {
-	    return "强调紫色";
+		return "强调紫色";
 	}
 
 	@Override
 	public String textoOscuro() {
-	    return "深色文字";
+		return "深色文字";
 	}
 
 	@Override
 	public String bordeSuave() {
-	    return "柔和边框";
+		return "柔和边框";
 	}
 
 	@Override
 	public String fondoCampo() {
-	    return "字段背景";
+		return "字段背景";
 	}
 
 	@Override
 	public String fondoVistaPrevia() {
-	    return "预览背景";
+		return "预览背景";
 	}
+
 	@Override
 	public String sintaxisConstructor() {
-	    return "语法颜色：构造函数";
+		return "语法颜色：构造函数";
 	}
 
 	@Override
 	public String sintaxisMensajeAyudar() {
-	    return "语法颜色：帮助消息";
+		return "语法颜色：帮助消息";
 	}
 
 	@Override
 	public String sintaxisEtiquetasHtml() {
-	    return "语法颜色：HTML 标签";
+		return "语法颜色：HTML 标签";
 	}
 
 	@Override
 	public String colorFondoVentana() {
-	    return "窗口背景颜色";
+		return "窗口背景颜色";
 	}
 
 	@Override
 	public String colorPanel() {
-	    return "面板颜色";
+		return "面板颜色";
 	}
 
 	@Override
 	public String colorBotonTexto() {
-	    return "按钮文字颜色";
+		return "按钮文字颜色";
 	}
 
 	@Override
 	public String colorCampo() {
-	    return "字段颜色";
+		return "字段颜色";
 	}
 
 	@Override
 	public String colorBordeDestacado() {
-	    return "高亮边框颜色";
+		return "高亮边框颜色";
 	}
 
 	@Override
 	public String colorSeleccionTexto() {
-	    return "文本选中背景色";
+		return "文本选中背景色";
 	}
-	
+
 	@Override
 	public String colorTextoSeleccionado() {
-	    return "选中文本颜色";
+		return "选中文本颜色";
 	}
 
 	@Override
 	public String colorEstadoExito() {
-	    return "状态颜色：成功";
+		return "状态颜色：成功";
 	}
 
 	@Override
 	public String colorEstadoFallo() {
-	    return "状态颜色：失败";
+		return "状态颜色：失败";
 	}
 
 	@Override
 	public String colorEstadoInstantanea() {
-	    return "状态颜色：即时";
+		return "状态颜色：即时";
 	}
 
 	@Override
 	public String colorResultadoAnadido() {
-	    return "已添加结果颜色";
+		return "已添加结果颜色";
 	}
 
 	@Override
 	public String colorResultadoEliminado() {
-	    return "已删除结果颜色";
+		return "已删除结果颜色";
 	}
 
 	@Override
 	public String colorBordeScroll() {
-	    return "滚动条边框颜色";
+		return "滚动条边框颜色";
 	}
 
 	@Override
 	public String colorFondoPanel() {
-	    return "面板背景颜色";
+		return "面板背景颜色";
 	}
 
 	@Override
 	public String colorBeigeListas() {
-	    return "列表米色";
+		return "列表米色";
 	}
 
 	@Override
 	public String colorTextoListas() {
-	    return "列表文字颜色";
+		return "列表文字颜色";
 	}
 
 	@Override
 	public String colorBordeListas() {
-	    return "列表边框颜色";
+		return "列表边框颜色";
 	}
 
 	@Override
 	public String colorBotonFondo() {
-	    return "按钮背景颜色";
+		return "按钮背景颜色";
 	}
 
 	@Override
 	public String colorBordeBoton() {
-	    return "按钮边框颜色";
+		return "按钮边框颜色";
 	}
 
 	@Override
 	public String colorDoradoTexto() {
-	    return "金色文字颜色";
+		return "金色文字颜色";
 	}
-	
+
 	@Override
 	public String colorPila() {
-	    return "堆栈跟踪颜色 (stack trace)";
+		return "堆栈跟踪颜色 (stack trace)";
 	}
 
 	@Override
 	public String colorTextoPanel() {
-	    return "面板文字颜色";
+		return "面板文字颜色";
 	}
 
 	@Override
 	public String colorTextoNegro() {
-	    return "黑色文字颜色";
+		return "黑色文字颜色";
 	}
 
 	@Override
 	public String colorTextoPrincipal() {
-	    return "主文字颜色";
+		return "主文字颜色";
 	}
 
 	@Override
 	public String colorFondoResultados() {
-	    return "结果背景颜色";
+		return "结果背景颜色";
 	}
 
 	@Override
 	public String colorEstado() {
-	    return "状态颜色";
+		return "状态颜色";
 	}
 
 	@Override
 	public String colorTextoDescripcion() {
-	    return "描述文字颜色";
+		return "描述文字颜色";
 	}
 
 	@Override
 	public String colorTextoEstado() {
-	    return "状态文字颜色";
+		return "状态文字颜色";
 	}
 
 	@Override
 	public String colorTextoExtra() {
-	    return "额外文字颜色";
+		return "额外文字颜色";
 	}
 
 	@Override
 	public String colorSeparador() {
-	    return "分隔线颜色";
+		return "分隔线颜色";
 	}
-	
-	
+
+	@Override
+	public String problema_safe_fetch32_jdk17() {
+		return "检测到原生错误 <code>StubRoutines::SafeFetch32</code>。"
+				+ "此问题出现在 macOS 上使用 JDK 17.0.9 时，已在 JDK 17.0.10 及更高版本中修复。https://github.com/async-profiler/async-profiler/issues/747 https://www.minecraftforum.net/forums/support/java-edition-support/3192465-issues-with-jre-17-0-9-in-macos-sonoma-14-2-1";
+	}
+
+	@Override
+	public String nombre_problema_safe_fetch32_jdk17() {
+		return "JDK 17.0.9 (macOS) 中的 SafeFetch32 原生错误";
+	}
+
+	@Override
+	public String solucion_actualizar_jdk_macos() {
+		return "请将 JDK 更新至 17.0.10 或更高版本（例如 17.0.15）。";
+	}
+
+	@Override
+	public String solucion_usar_lanzador_con_jdk_actualizado() {
+		return "如果你使用 MultiMC、Prism Launcher 或 TLauncher 等启动器，请将其配置为使用更新的 JDK。" + "部分启动器已内置 JDK 17.0.15。";
+	}
+
+	@Override
+	public String solucion_desactivar_spark_mod() {
+		return "Spark 模组也可能引发此错误。建议暂时禁用它。https://www.reddit.com/r/fabricmc/comments/17snlol/game_crashing_when_creating_world/";
+	}
+
+	@Override
+	public String problema_mcef_inicializacion_html() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "MCEF 模组（Chromium Embedded Framework）正在导致静默卡死。</b>" + "<ul>"
+				+ "<li>MCEF 在日志末尾初始化，通常意味着游戏在加载过程中卡死。</li>" + "<li>该模组已知会在 Linux、macOS 系统或某些 Java 版本下引发崩溃。</li>"
+				+ "<li>不一定出现明确错误，但游戏始终无法进入主菜单。</li>" + "</ul>" + "<p>如果你不需要游戏内的浏览器功能（如网页地图或嵌入式页面），请移除该模组。</p>";
+	}
+
+	@Override
+	public String nombre_problema_mcef_inicializacion() {
+		return "MCEF（嵌入式浏览器模组）初始化问题";
+	}
+
+	@Override
+	public String solucion_eliminar_mod_mcef() {
+		return "从 'mods' 文件夹中删除 MCEF 模组文件（文件名中包含 'mcef'）。";
+	}
+
+	@Override
+	public String solucion_verificar_compatibilidad_mcef() {
+		return "如果确实需要此功能，请确保使用与你的操作系统和 Minecraft 版本兼容的 MCEF 版本。";
+	}
+
+	@Override
+	public String conflicto_iris_optifine_html() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "检测到 <b>OptiFine</b> 与 <b>Iris/Oculus</b> 之间的冲突。</b>" + "<ul>"
+				+ "<li>OptiFine 以与 Iris 或 Oculus 不兼容的方式修改了 Minecraft 的渲染。</li>"
+				+ "<li>错误 <code>MixinLevelRenderer failed injection check</code> 来源于 <code>mixins.iris.json</code> 或 <code>mixins.oculus.json</code>。</li>"
+				+ "</ul>" + "<p>这些模组不能同时使用。请移除 OptiFine，以便通过 Iris 或 Oculus 使用光影（shaders）。</p>";
+	}
+
+	@Override
+	public String nombre_conflicto_iris_optifine() {
+		return "OptiFine 与 Iris/Oculus 冲突";
+	}
+
+	@Override
+	public String solucion_eliminar_optifine() {
+		return "从 'mods' 文件夹中删除 OptiFine 文件。";
+	}
+
+	@Override
+	public String solucion_usar_iris_sin_optifine() {
+		return "使用 Iris 或 Oculus（不搭配 OptiFine）以获得现代光影效果。";
+	}
+
+	@Override
+	public String conflicto_modernfix_optifine_html() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "检测到 <b>ModernFix</b> 与 <b>OptiFine</b> 之间的冲突。</b>" + "<ul>"
+				+ "<li>ModernFix 与 OptiFine 不兼容，因为它会破坏 Forge 功能并拖慢启动速度。</li>"
+				+ "<li>ModernFix 官方明确警告：<i>\"Use of ModernFix with OptiFine is not supported\"</i>。</li>" + "</ul>"
+				+ "<p>你必须删除其中一个模组，才能让游戏正常运行。</p>";
+	}
+
+	@Override
+	public String nombre_conflicto_modernfix_optifine() {
+		return "ModernFix 与 OptiFine 冲突";
+	}
+
+	@Override
+	public String solucion_eliminar_optifine_o_modernfix() {
+		return "从 'mods' 文件夹中删除 OptiFine 或 ModernFix。二者不能共存。";
+	}
+
+	@Override
+	public String solucion_usar_alternativa_modernfix() {
+		return "如果需要性能优化，可考虑仅使用 OptiFine，或将 ModernFix 替换为更轻量的模组，如 FerriteCore 或 EntityCulling。";
+	}
+
+	@Override
+	public String error_clave_registro_mayusculas_html(String clave) {
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "错误：注册键包含非法字符。</b>" + "<ul>"
+				+ "<li><b>检测到的键：</b> <code>" + escapeHtml(clave) + "</code></li>"
+				+ "<li>在 Minecraft 中，所有注册键（标签、配方、成就等）必须使用<b>小写字母</b>，且仅可包含字母、数字、下划线、连字符和斜杠。</li>"
+				+ "<li>此错误通常由编写不当的模组或有缺陷的 datapack 引起。</li>" + "</ul>"
+				+ "<p><b>重要提示：</b>使用侧边栏中的 <b>grepr</b> 或 <b>fgrepr</b> 工具，并启用 <b>“在 JAR 文件中搜索”</b> 选项，以找出包含此无效键的模组。</p>";
+	}
+
+	@Override
+	public String nombre_error_clave_registro_mayusculas() {
+		return "注册键包含大写字母或非法字符";
+	}
+
+	@Override
+	public String solucion_buscar_clave_en_archivos() {
+		return "使用 'grepr' 或 'fgrepr' 并开启“在 JAR 文件中搜索”以定位问题模组。";
+	}
+
+	@Override
+	public String solucion_eliminar_mod_reciente() {
+		return "如果无法确定具体模组，请移除最近安装的模组，尤其是那些添加方块、物品或工具的模组。";
+	}
+
 }

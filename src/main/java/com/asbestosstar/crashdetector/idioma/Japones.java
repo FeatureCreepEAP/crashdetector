@@ -1154,8 +1154,8 @@ public class Japones implements Idioma {
 
 	@Override
 	public String mensajeCargaChunk() {
-	    return "<b style='color:#" + config.obtenerColorError()
-	            + "'>ワールドがチャンクを読み込んでいる際に例外が発生しました。お使いのプラットフォーム向けに存在する場合、FeatureRecycler で問題を解決できる可能性があります。https://www.curseforge.com/minecraft/mc-mods/feature-recycler</b>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>ワールドがチャンクを読み込んでいる際に例外が発生しました。お使いのプラットフォーム向けに存在する場合、FeatureRecycler で問題を解決できる可能性があります。https://www.curseforge.com/minecraft/mc-mods/feature-recycler</b>";
 	}
 
 	@Override
@@ -4618,337 +4618,451 @@ public class Japones implements Idioma {
 
 	@Override
 	public String necesitasInstalarCfr() {
-	    String sistema = System.getProperty("os.name").toLowerCase();
-	    StringBuilder mensaje = new StringBuilder();
-	    mensaje.append("<html>")
-	           .append("この機能を使用するには、CFR (Class File Reader) をインストールする必要があります。<br><br>");
+		String sistema = System.getProperty("os.name").toLowerCase();
+		StringBuilder mensaje = new StringBuilder();
+		mensaje.append("<html>").append("この機能を使用するには、CFR (Class File Reader) をインストールする必要があります。<br><br>");
 
-	    if (sistema.contains("linux") || sistema.contains("netbsd") || sistema.contains("freebsd")) {
-	        mensaje.append("Linux、NetBSD、FreeBSD システムでは、パッケージマネージャーから CFR をインストールできます。<br>")
-	               .append("こちらでパッケージを検索してください: <a href=\"https://pkgs.org/search/?q=cfr\">https://pkgs.org/search/?q=cfr</a><br><br>");
-	    }
+		if (sistema.contains("linux") || sistema.contains("netbsd") || sistema.contains("freebsd")) {
+			mensaje.append("Linux、NetBSD、FreeBSD システムでは、パッケージマネージャーから CFR をインストールできます。<br>").append(
+					"こちらでパッケージを検索してください: <a href=\"https://pkgs.org/search/?q=cfr\">https://pkgs.org/search/?q=cfr</a><br><br>");
+		}
 
-	    mensaje.append("または、FabricMC が使用している修正版を以下からダウンロードできます:<br>")
-	           .append("<a href=\"https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar\">")
-	           .append("https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar</a><br><br>")
-	           .append("以下のフォルダに保存してください:<br>")
-	           .append("<b>")
-	           .append(new java.io.File(System.getProperty("user.home"), "crash_detector/cfr/").getAbsolutePath())
-	           .append("</b><br><br>")
-	           .append("⚠️ <b>重要:</b> CFR をインストール後、mod を再起動しないと正しく認識されません。")
-	           .append("</html>");
-	    return mensaje.toString();
+		mensaje.append("または、FabricMC が使用している修正版を以下からダウンロードできます:<br>")
+				.append("<a href=\"https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar\">")
+				.append("https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar</a><br><br>")
+				.append("以下のフォルダに保存してください:<br>").append("<b>")
+				.append(new java.io.File(System.getProperty("user.home"), "crash_detector/cfr/").getAbsolutePath())
+				.append("</b><br><br>").append("⚠️ <b>重要:</b> CFR をインストール後、mod を再起動しないと正しく認識されません。").append("</html>");
+		return mensaje.toString();
 	}
 
 	@Override
 	public String cfrNoHayRetrato() {
-	    return "利用可能な肖像画なし";
+		return "利用可能な肖像画なし";
 	}
 
 	@Override
 	public String cfrClaseNoEncontrada(String nombreClase) {
-	    return "クラスが見つかりません: " + nombreClase;
+		return "クラスが見つかりません: " + nombreClase;
 	}
 
 	@Override
 	public String tituloCfrSakura() {
-	    return "CFR デコンパイラ – Sakura Riddle（非公式）";
+		return "CFR デコンパイラ – Sakura Riddle（非公式）";
 	}
 
 	@Override
 	public String cfrClaseActual() {
-	    return "現在のクラス";
+		return "現在のクラス";
 	}
 
 	@Override
 	public String cfrRetratoDeSakura() {
-	    return "Sakura Riddle の肖像画";
+		return "Sakura Riddle の肖像画";
 	}
 
 	@Override
 	public String cfrErrorCargarRetrato() {
-	    return "肖像画の読み込みエラー";
+		return "肖像画の読み込みエラー";
 	}
-	
+
 	public String noticiaLegalCFR() {
-	    return "この mod の逆コンパイル用グラフィカル・ユーザー・インターフェース（GUI）は、ソフトウェアのクラッシュ原因を特定するためのものです。"
-	            + "ただし mod の逆コンパイルは場合によって必要となることがありますが、生成されたコードを用いて著作権法に違反しないようご注意ください。"
-	            + "コードを使用する前に、該当 mod のライセンスを確認することを推奨します。多くの mod は公式にソースコードを公開しており、"
-	            + "これは逆コンパイル結果と比べて通常、より明確で理解しやすいです。知的財産権およびライセンスへの配慮は、"
-	            + "mod 開発コミュニティにとって不可欠です。メキシコ連邦著作権法については以下をご参照ください："
-	            + "<a href=\"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf\" target=\"_blank\">Ley Federal de Derechos de Autor（スペイン語）</a>、"
-	            + "英語版はこちら：<a href=\"https://www.indautor.gob.mx/documentos/marco-juridico/L_Fed_Derecho_de_Autor_(English).pdf\" target=\"_blank\">Copyright Law (English)</a>。"
-	            + "CurseForge 上での利用を考慮し、米国著作権法も以下に示します："
-	            + "<a href=\"https://www.copyright.gov/title17/title17.pdf\" target=\"_blank\">U.S. Copyright Law</a>。"
-	            + "また、ユーザーご自身の居住地に適用される法律を必ずご確認ください。"
-	            + "本 GUI は簡易診断専用です。詳細な解析には FabricMC 版 Enigma をご利用ください："
-	            + "<a href=\"https://github.com/FabricMC/Enigma\" target=\"_blank\">GitHub</a>。ソースコードが公開されていない場合に JAR ファイルを直接編集してパッチを作るには、Recaf をご検討ください："
-	            + "<a href=\"https://recaf.coley.software/home.html\" target=\"_blank\">公式サイト</a>。";
+		return "この mod の逆コンパイル用グラフィカル・ユーザー・インターフェース（GUI）は、ソフトウェアのクラッシュ原因を特定するためのものです。"
+				+ "ただし mod の逆コンパイルは場合によって必要となることがありますが、生成されたコードを用いて著作権法に違反しないようご注意ください。"
+				+ "コードを使用する前に、該当 mod のライセンスを確認することを推奨します。多くの mod は公式にソースコードを公開しており、"
+				+ "これは逆コンパイル結果と比べて通常、より明確で理解しやすいです。知的財産権およびライセンスへの配慮は、"
+				+ "mod 開発コミュニティにとって不可欠です。メキシコ連邦著作権法については以下をご参照ください："
+				+ "<a href=\"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf\" target=\"_blank\">Ley Federal de Derechos de Autor（スペイン語）</a>、"
+				+ "英語版はこちら：<a href=\"https://www.indautor.gob.mx/documentos/marco-juridico/L_Fed_Derecho_de_Autor_(English).pdf\" target=\"_blank\">Copyright Law (English)</a>。"
+				+ "CurseForge 上での利用を考慮し、米国著作権法も以下に示します："
+				+ "<a href=\"https://www.copyright.gov/title17/title17.pdf\" target=\"_blank\">U.S. Copyright Law</a>。"
+				+ "また、ユーザーご自身の居住地に適用される法律を必ずご確認ください。" + "本 GUI は簡易診断専用です。詳細な解析には FabricMC 版 Enigma をご利用ください："
+				+ "<a href=\"https://github.com/FabricMC/Enigma\" target=\"_blank\">GitHub</a>。ソースコードが公開されていない場合に JAR ファイルを直接編集してパッチを作るには、Recaf をご検討ください："
+				+ "<a href=\"https://recaf.coley.software/home.html\" target=\"_blank\">公式サイト</a>。";
 	}
-	
+
 	@Override
 	public String botonDescargarCfr() {
-	    return "CFR をダウンロード";
+		return "CFR をダウンロード";
 	}
 
 	@Override
 	public String botonAbrirCarpetaCfr() {
-	    return "インストールフォルダを開く";
+		return "インストールフォルダを開く";
 	}
+
 	@Override
 	public String colorFondoPrincipal() {
-	    return "メイン背景色";
+		return "メイン背景色";
 	}
 
 	@Override
 	public String colorTextoBotonReset() {
-	    return "リセットボタンの文字色";
+		return "リセットボタンの文字色";
 	}
 
 	@Override
 	public String colorTextoCampoBuscar() {
-	    return "検索フィールドの文字色";
+		return "検索フィールドの文字色";
 	}
 
 	@Override
 	public String colorTextoComboFiltro() {
-	    return "フィルターのドロップダウンメニュー文字色";
+		return "フィルターのドロップダウンメニュー文字色";
 	}
 
 	@Override
 	public String colorTextoRenderer() {
-	    return "レンダラーの文字色";
+		return "レンダラーの文字色";
 	}
 
 	@Override
 	public String colorTextoOverlayCarga() {
-	    return "ロードオーバーレイの文字色";
+		return "ロードオーバーレイの文字色";
 	}
 
 	@Override
 	public String colorBorde() {
-	    return "枠線の色";
+		return "枠線の色";
 	}
-	
+
 	@Override
 	public String colorFondoRetrato() {
-	    return "ポートレートモードの背景色";
+		return "ポートレートモードの背景色";
 	}
 
 	@Override
 	public String colorEnlaceCompartir() {
-	    return "共有リンクの色";
+		return "共有リンクの色";
 	}
 
 	@Override
 	public String colorFondoCampoCompartir() {
-	    return "共有フィールドの背景色";
+		return "共有フィールドの背景色";
 	}
 
 	@Override
 	public String rosaFondo() {
-	    return "背景ピンク";
+		return "背景ピンク";
 	}
 
 	@Override
 	public String rosaSuave() {
-	    return "ソフトピンク";
+		return "ソフトピンク";
 	}
 
 	@Override
 	public String moradoAcento() {
-	    return "アクセントパープル";
+		return "アクセントパープル";
 	}
 
 	@Override
 	public String textoOscuro() {
-	    return "ダークテキスト";
+		return "ダークテキスト";
 	}
 
 	@Override
 	public String bordeSuave() {
-	    return "ソフトボーダー";
+		return "ソフトボーダー";
 	}
 
 	@Override
 	public String fondoCampo() {
-	    return "フィールド背景";
+		return "フィールド背景";
 	}
 
 	@Override
 	public String fondoVistaPrevia() {
-	    return "プレビュー背景";
+		return "プレビュー背景";
 	}
-	
+
 	@Override
 	public String sintaxisConstructor() {
-	    return "構文色: コンストラクタ";
+		return "構文色: コンストラクタ";
 	}
 
 	@Override
 	public String sintaxisMensajeAyudar() {
-	    return "構文色: ヘルプメッセージ";
+		return "構文色: ヘルプメッセージ";
 	}
 
 	@Override
 	public String sintaxisEtiquetasHtml() {
-	    return "構文色: HTMLタグ";
+		return "構文色: HTMLタグ";
 	}
 
 	@Override
 	public String colorFondoVentana() {
-	    return "ウィンドウ背景色";
+		return "ウィンドウ背景色";
 	}
 
 	@Override
 	public String colorPanel() {
-	    return "パネル色";
+		return "パネル色";
 	}
 
 	@Override
 	public String colorBotonTexto() {
-	    return "ボタン文字色";
+		return "ボタン文字色";
 	}
 
 	@Override
 	public String colorCampo() {
-	    return "フィールド色";
+		return "フィールド色";
 	}
 
 	@Override
 	public String colorBordeDestacado() {
-	    return "強調枠線色";
+		return "強調枠線色";
 	}
 
 	@Override
 	public String colorSeleccionTexto() {
-	    return "テキスト選択背景色";
+		return "テキスト選択背景色";
 	}
-	
+
 	@Override
 	public String colorTextoSeleccionado() {
-	    return "選択されたテキストの色";
+		return "選択されたテキストの色";
 	}
 
 	@Override
 	public String colorEstadoExito() {
-	    return "ステータス色: 成功";
+		return "ステータス色: 成功";
 	}
 
 	@Override
 	public String colorEstadoFallo() {
-	    return "ステータス色: 失敗";
+		return "ステータス色: 失敗";
 	}
 
 	@Override
 	public String colorEstadoInstantanea() {
-	    return "ステータス色: 即時";
+		return "ステータス色: 即時";
 	}
 
 	@Override
 	public String colorResultadoAnadido() {
-	    return "追加された結果の色";
+		return "追加された結果の色";
 	}
 
 	@Override
 	public String colorResultadoEliminado() {
-	    return "削除された結果の色";
+		return "削除された結果の色";
 	}
 
 	@Override
 	public String colorBordeScroll() {
-	    return "スクロールバーの枠線色";
+		return "スクロールバーの枠線色";
 	}
 
 	@Override
 	public String colorFondoPanel() {
-	    return "パネル背景色";
+		return "パネル背景色";
 	}
 
 	@Override
 	public String colorBeigeListas() {
-	    return "リストベージュ";
+		return "リストベージュ";
 	}
 
 	@Override
 	public String colorTextoListas() {
-	    return "リストの文字色";
+		return "リストの文字色";
 	}
 
 	@Override
 	public String colorBordeListas() {
-	    return "リストの枠線色";
+		return "リストの枠線色";
 	}
 
 	@Override
 	public String colorBotonFondo() {
-	    return "ボタンの背景色";
+		return "ボタンの背景色";
 	}
 
 	@Override
 	public String colorBordeBoton() {
-	    return "ボタンの枠線色";
+		return "ボタンの枠線色";
 	}
 
 	@Override
 	public String colorDoradoTexto() {
-	    return "金色の文字色";
+		return "金色の文字色";
 	}
-	
+
 	@Override
 	public String colorPila() {
-	    return "スタックトレースの色";
+		return "スタックトレースの色";
 	}
 
 	@Override
 	public String colorTextoPanel() {
-	    return "パネルの文字色";
+		return "パネルの文字色";
 	}
 
 	@Override
 	public String colorTextoNegro() {
-	    return "黒色文字";
+		return "黒色文字";
 	}
 
 	@Override
 	public String colorTextoPrincipal() {
-	    return "メイン文字色";
+		return "メイン文字色";
 	}
 
 	@Override
 	public String colorFondoResultados() {
-	    return "結果の背景色";
+		return "結果の背景色";
 	}
 
 	@Override
 	public String colorEstado() {
-	    return "ステータス色";
+		return "ステータス色";
 	}
 
 	@Override
 	public String colorTextoDescripcion() {
-	    return "説明文の文字色";
+		return "説明文の文字色";
 	}
 
 	@Override
 	public String colorTextoEstado() {
-	    return "ステータス文字色";
+		return "ステータス文字色";
 	}
 
 	@Override
 	public String colorTextoExtra() {
-	    return "追加文字色";
+		return "追加文字色";
 	}
 
 	@Override
 	public String colorSeparador() {
-	    return "区切り線の色";
+		return "区切り線の色";
 	}
-	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public String problema_safe_fetch32_jdk17() {
+		return "ネイティブエラー <code>StubRoutines::SafeFetch32</code> が検出されました。"
+				+ "この問題は macOS で JDK 17.0.9 を使用時に発生し、JDK 17.0.10 以降で修正されています。https://github.com/async-profiler/async-profiler/issues/747 https://www.minecraftforum.net/forums/support/java-edition-support/3192465-issues-with-jre-17-0-9-in-macos-sonoma-14-2-1";
+	}
+
+	@Override
+	public String nombre_problema_safe_fetch32_jdk17() {
+		return "JDK 17.0.9 (macOS) での SafeFetch32 ネイティブエラー";
+	}
+
+	@Override
+	public String solucion_actualizar_jdk_macos() {
+		return "JDK を 17.0.10 以降（例: 17.0.15）に更新してください。";
+	}
+
+	@Override
+	public String solucion_usar_lanzador_con_jdk_actualizado() {
+		return "MultiMC、Prism Launcher、TLauncher などのランチャーを使用している場合、新しい JDK を使うよう設定してください。"
+				+ "一部のランチャーはすでに JDK 17.0.15 を内蔵しています。";
+	}
+
+	@Override
+	public String solucion_desactivar_spark_mod() {
+		return "Spark mod もこのエラーの一因となる可能性があります。一時的に無効化を検討してください。https://www.reddit.com/r/fabricmc/comments/17snlol/game_crashing_when_creating_world/";
+	}
+
+	@Override
+	public String problema_mcef_inicializacion_html() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "MCEF モッド（Chromium Embedded Framework）が無音フリーズを引き起こしています。</b>" + "<ul>"
+				+ "<li>MCEF がログの最後で初期化されています。これは通常、ロード中にゲームがフリーズしたことを意味します。</li>"
+				+ "<li>この mod は Linux や macOS、または特定の Java バージョンでクラッシュを引き起こすことが知られています。</li>"
+				+ "<li>明確なエラーが常に表示されるわけではありませんが、ゲームはメインメニューに到達しません。</li>" + "</ul>"
+				+ "<p>ゲーム内ブラウザ機能（Web マップや埋め込みページなど）が不要であれば、この mod を削除してください。</p>";
+	}
+
+	@Override
+	public String nombre_problema_mcef_inicializacion() {
+		return "MCEF 初期化問題（埋め込みブラウザ mod）";
+	}
+
+	@Override
+	public String solucion_eliminar_mod_mcef() {
+		return "'mods' フォルダから MCEF mod ファイル（ファイル名に 'mcef' を含む）を削除してください。";
+	}
+
+	@Override
+	public String solucion_verificar_compatibilidad_mcef() {
+		return "どうしても必要な場合は、お使いの OS と Minecraft バージョンと互換性のある MCEF バージョンを使用してください。";
+	}
+
+	@Override
+	public String conflicto_iris_optifine_html() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "<b>OptiFine</b> と <b>Iris/Oculus</b> の間に競合が検出されました。</b>" + "<ul>"
+				+ "<li>OptiFine は、Iris や Oculus と非互換な方法で Minecraft のレンダリングを変更します。</li>"
+				+ "<li>エラー <code>MixinLevelRenderer failed injection check</code> は <code>mixins.iris.json</code> または <code>mixins.oculus.json</code> に由来します。</li>"
+				+ "</ul>" + "<p>これらの mod は同時に使用できません。Iris または Oculus でシェーダーを使用するには、OptiFine を削除してください。</p>";
+	}
+
+	@Override
+	public String nombre_conflicto_iris_optifine() {
+		return "OptiFine と Iris/Oculus の競合";
+	}
+
+	@Override
+	public String solucion_eliminar_optifine() {
+		return "'mods' フォルダから OptiFine ファイルを削除してください。";
+	}
+
+	@Override
+	public String solucion_usar_iris_sin_optifine() {
+		return "最新のシェーダーを楽しむには、OptiFine を使用せず Iris または Oculus を利用してください。";
+	}
+
+	@Override
+	public String conflicto_modernfix_optifine_html() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "<b>ModernFix</b> と <b>OptiFine</b> の間に競合が検出されました。</b>" + "<ul>"
+				+ "<li>ModernFix は Forge の機能を破壊し起動を遅くするため、OptiFine と互換性がありません。</li>"
+				+ "<li>ModernFix 自体が警告しています: <i>\"Use of ModernFix with OptiFine is not supported\"</i>。</li>" + "</ul>"
+				+ "<p>ゲームを正常に動作させるには、どちらか一方の mod を削除する必要があります。</p>";
+	}
+
+	@Override
+	public String nombre_conflicto_modernfix_optifine() {
+		return "ModernFix と OptiFine の競合";
+	}
+
+	@Override
+	public String solucion_eliminar_optifine_o_modernfix() {
+		return "'mods' フォルダから OptiFine または ModernFix を削除してください。両立できません。";
+	}
+
+	@Override
+	public String solucion_usar_alternativa_modernfix() {
+		return "最適化が必要な場合は、OptiFine のみを使用するか、ModernFix を FerriteCore や EntityCulling のような軽量 mod に置き換えてください。";
+	}
+
+	@Override
+	public String error_clave_registro_mayusculas_html(String clave) {
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "エラー: 許可されていない文字を含む無効なレジストリキーです。</b>" + "<ul>"
+				+ "<li><b>検出されたキー:</b> <code>" + escapeHtml(clave) + "</code></li>"
+				+ "<li>Minecraft では、すべてのレジストリキー（タグ、レシピ、実績など）は<b>小文字</b>で、英数字、アンダースコア、ハイフン、スラッシュのみを使用する必要があります。</li>"
+				+ "<li>このエラーは、通常、不適切にコーディングされた mod または欠陥のある datapack によって発生します。</li>" + "</ul>"
+				+ "<p><b>重要ヒント:</b> サイドバーの <b>grepr</b> または <b>fgrepr</b> ツールを使い、<b>「JAR ファイル内を検索」</b>オプションを有効にして、この無効なキーを含む mod を特定してください。</p>";
+	}
+
+	@Override
+	public String nombre_error_clave_registro_mayusculas() {
+		return "大文字または無効な文字を含むレジストリキー";
+	}
+
+	@Override
+	public String solucion_buscar_clave_en_archivos() {
+		return "「JAR ファイル内を検索」オプション付きで 'grepr' または 'fgrepr' を使用し、問題の mod を特定してください。";
+	}
+
+	@Override
+	public String solucion_eliminar_mod_reciente() {
+		return "mod を特定できない場合は、特にブロック、アイテム、ツールを追加する最近導入した mod を削除してみてください。";
+	}
+
 }

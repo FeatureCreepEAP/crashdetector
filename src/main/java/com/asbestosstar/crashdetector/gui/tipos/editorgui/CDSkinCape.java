@@ -411,24 +411,24 @@ public class CDSkinCape extends EditorGUI {
 		labelValor.setForeground(colorTexto.obtener());
 		return labelValor;
 	}
-	
+
 	@Override
 	public List<ElementoConfig> obtenerElementosConfigs() {
-	    List<ElementoConfig> elementos = new ArrayList<>();
+		List<ElementoConfig> elementos = new ArrayList<>();
 
-	    colorFondo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondo());
-	    colorTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTexto());
-	    colorBoton.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBoton());
-	    colorCajaTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorCajaTexto());
-	    colorBorde.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBorde());
+		colorFondo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondo());
+		colorTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTexto());
+		colorBoton.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBoton());
+		colorCajaTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorCajaTexto());
+		colorBorde.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBorde());
 
-	    elementos.add(colorFondo);
-	    elementos.add(colorTexto);
-	    elementos.add(colorBoton);
-	    elementos.add(colorCajaTexto);
-	    elementos.add(colorBorde);
+		elementos.add(colorFondo);
+		elementos.add(colorTexto);
+		elementos.add(colorBoton);
+		elementos.add(colorCajaTexto);
+		elementos.add(colorBorde);
 
-	    return elementos;
+		return elementos;
 	}
 
 	/**

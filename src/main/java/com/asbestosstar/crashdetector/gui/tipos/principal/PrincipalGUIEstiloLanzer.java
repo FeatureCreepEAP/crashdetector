@@ -674,20 +674,20 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 	 */
 	@Override
 	public List<ElementoConfig> obtenerElementosConfigs() {
-	    List<ElementoConfig> elementos = new ArrayList<>();
+		List<ElementoConfig> elementos = new ArrayList<>();
 
-	    colorFondo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondo());
-	    colorTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTexto());
-	    colorBoton.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBoton());
-	    colorCajaTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorCajaTexto());
-	    colorEnlace.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorEnlace());
+		colorFondo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondo());
+		colorTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTexto());
+		colorBoton.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBoton());
+		colorCajaTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorCajaTexto());
+		colorEnlace.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorEnlace());
 
-	    elementos.add(colorFondo);
-	    elementos.add(colorTexto);
-	    elementos.add(colorBoton);
-	    elementos.add(colorCajaTexto);
-	    elementos.add(colorEnlace);
+		elementos.add(colorFondo);
+		elementos.add(colorTexto);
+		elementos.add(colorBoton);
+		elementos.add(colorCajaTexto);
+		elementos.add(colorEnlace);
 
-	    return elementos;
+		return elementos;
 	}
 }

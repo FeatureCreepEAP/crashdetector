@@ -43,6 +43,7 @@ import com.asbestosstar.crashdetector.analizador.general.NoTieneMemoria;
 import com.asbestosstar.crashdetector.analizador.general.NullPointer;
 import com.asbestosstar.crashdetector.analizador.general.OpcionesJavaGCInvalidas;
 import com.asbestosstar.crashdetector.analizador.general.PreferIPV4Trace;
+import com.asbestosstar.crashdetector.analizador.general.ProblemaSafeFetch32JDK17;
 import com.asbestosstar.crashdetector.analizador.general.SpongeMixinConfigsProblematicos;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.config.ConfigStringArray;
@@ -237,6 +238,12 @@ public class Analizador {
 		verificaciones.add(new ErrorCompatibilidadIrisDH());
 		verificaciones.add(new UraniumLag());
 		verificaciones.add(new ErrorFallingAttackVersion());
+
+		verificaciones.add(new ProblemaSafeFetch32JDK17());
+		verificaciones.add(new ProblemaMCEFInicializacion());
+		verificaciones.add(new ConflictoIrisOptifine());
+		verificaciones.add(new ConflictoModernFixOptifine());
+		verificaciones.add(new ErrorClaveRegistroMayusculas());
 
 		verificaciones.addAll(CargadorDeCodice.cargarVerificaciones());
 

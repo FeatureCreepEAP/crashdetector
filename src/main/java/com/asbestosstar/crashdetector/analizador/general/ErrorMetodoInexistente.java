@@ -46,48 +46,75 @@ public class ErrorMetodoInexistente implements Verificaciones {
 			if (m.find()) {
 				this.firmaMetodo = m.group(1).trim();
 
-				// Obtener la siguiente linea si empieza con "at "
+				// Obtener la siguiente línea significativa (la primera que empieza con "at ")
 				String[] lineas = consola.contenido_verificar.split(Verificaciones.nl);
-				if (numLinea + 1 < lineas.length) {
-					String sig = lineas[numLinea + 1].trim();
+				this.lineaSiguiente = "";
+				for (int i = numLinea + 1; i < lineas.length; i++) {
+					String sig = lineas[i].trim();
 					if (sig.startsWith("at ")) {
 						this.lineaSiguiente = sig;
+						break;
 					}
 				}
 
-				// Detectar mods específicos en el stacktrace
-				for (int i = Math.max(0, numLinea - 10); i < Math.min(lineas.length, numLinea + 10); i++) {
-					String l = lineas[i];
-					// Check for both / and . versions of the package names
-					if (l.contains("com/simibubi/create") || l.contains("com.simibubi.create")) {
+				// 👇 Resetear todas las banderas antes de analizar
+				this.create = false;
+				this.epicfight = false;
+				this.azurelib = false;
+				this.minecraft = false;
+				this.dangerzone = false;
+				this.featurecreep = false;
+				this.modlauncher = false;
+				this.minecraftforge = false;
+				this.neoforged = false;
+				this.fabricloader = false;
+				this.pillowmc = false;
+
+				// 👇 Analizar la línea del error (la que contiene el mensaje) Y la siguiente
+				// línea (stacktrace)
+				String targetLine = !lineaSiguiente.isEmpty() ? lineaSiguiente : linea;
+
+				// Primero, analizar la línea del error (por ejemplo, "The mod attempted to
+				// call...") para encontrar "net.minecraftforge"
+				if (linea.toLowerCase().contains("net.minecraftforge")
+						|| linea.toLowerCase().contains("minecraftforge")) {
+					minecraftforge = true;
+				}
+
+				// Luego, analizar la línea del stacktrace (si existe)
+				if (!lineaSiguiente.isEmpty()) {
+					if (targetLine.contains("com/simibubi/create") || targetLine.contains("com.simibubi.create")) {
 						create = true;
-					} else if (l.contains("yesman/epicfight") || l.contains("yesman.epicfight")) {
+					} else if (targetLine.contains("yesman/epicfight") || targetLine.contains("yesman.epicfight")) {
 						epicfight = true;
-					} else if (l.contains("mod/azure/azurelib") || l.contains("mod.azure.azurelib")) {
+					} else if (targetLine.contains("mod/azure/azurelib") || targetLine.contains("mod.azure.azurelib")) {
 						azurelib = true;
-					} else if (l.contains("net/minecraftforge") || l.contains("net.minecraftforge")) {
-						minecraftforge = true;
-					} else if (l.contains("featurecreep/") || l.contains("featurecreep.") || l.contains("asbestosstar/")
-							|| l.contains("asbestosstar.")) {
+					} else if (targetLine.contains("asbestosstar/") || targetLine.contains("asbestosstar.")) {
 						featurecreep = true;
-					} else if (l.contains("net/fabricmc/") || l.contains("net.fabricmc.")) {
-						fabricloader = true;
-					} else if (l.contains("net/neoforged/") || l.contains("net.neoforged.")) {
-						neoforged = true;
-					} else if (l.contains("net/pillowmc/") || l.contains("net.pillowmc.")) {
-						pillowmc = true;
-					} else if ((l.contains("net/minecraft/") || l.contains("net.minecraft."))
-							&& !l.contains("net/minecraftforge/") && !l.contains("net.minecraftforge.")) {
-						minecraft = true;
-					} else if (l.contains("dangerzone/") || l.contains("dangerzone.")) {
+					} else if (targetLine.contains("dangerzone/") || targetLine.contains("dangerzone.")) {
 						dangerzone = true;
+					} else if (targetLine.contains("net/fabricmc/") || targetLine.contains("net.fabricmc.")) {
+						fabricloader = true;
+					} else if (targetLine.contains("net/neoforged/") || targetLine.contains("net.neoforged.")) {
+						neoforged = true;
+					} else if (targetLine.contains("net/pillowmc/") || targetLine.contains("net.pillowmc.")) {
+						pillowmc = true;
+					} else if (targetLine.contains("cpw/mods/modlauncher")
+							|| targetLine.contains("cpw.mods.modlauncher")) {
+						modlauncher = true;
+					} else if (targetLine.contains("net/minecraftforge") || targetLine.contains("net.minecraftforge")) {
+						minecraftforge = true;
+					} else if ((targetLine.contains("net/minecraft/") || targetLine.contains("net.minecraft."))
+							&& !targetLine.contains("net/minecraftforge/")
+							&& !targetLine.contains("net.minecraftforge.")) {
+						minecraft = true;
 					}
 				}
 
 				this.enlaceHtml = consola.agregarErrorALectador(numLinea, this);
 				this.activado = true;
 
-				// Construir el mensaje con las detecciones de mods
+				// Construir mensaje
 				StringBuilder sb = new StringBuilder();
 				sb.append(MonitorDePID.idioma.errorMetodoInexistente(firmaMetodo, firmaMetodo));
 				if (!lineaSiguiente.isEmpty()) {
@@ -99,39 +126,42 @@ public class ErrorMetodoInexistente implements Verificaciones {
 				sb.append(Verificaciones.nl_html);
 				sb.append(enlaceHtml);
 
-				// Agregar mensajes específicos para mods detectados
+				// Agregar mensajes específicos solo si se detectaron
 				if (create) {
-					sb.append(MonitorDePID.idioma.faltar_de_clases_create());
+					sb.append(nl_html).append(MonitorDePID.idioma.faltar_de_clases_create());
 				}
 				if (epicfight) {
-					sb.append(MonitorDePID.idioma.faltar_de_clases_epicfight());
+					sb.append(nl_html).append(MonitorDePID.idioma.faltar_de_clases_epicfight());
 				}
 				if (azurelib) {
-					sb.append(MonitorDePID.idioma.faltar_de_clases_azurelib());
-				}
-				if (minecraft) {
-					sb.append(MonitorDePID.idioma.faltar_de_clases_minecraft());
-				}
-				if (dangerzone) {
-					sb.append(MonitorDePID.idioma.faltar_de_clases_dangerzone());
+					sb.append(nl_html).append(MonitorDePID.idioma.faltar_de_clases_azurelib());
 				}
 				if (featurecreep) {
-					sb.append(MonitorDePID.idioma.faltar_de_clases_featurecreep());
+					sb.append(nl_html).append(MonitorDePID.idioma.faltar_de_clases_featurecreep());
+				}
+				if (dangerzone) {
+					sb.append(nl_html).append(MonitorDePID.idioma.faltar_de_clases_dangerzone());
 				}
 				if (modlauncher) {
-					sb.append(MonitorDePID.idioma.faltar_de_clases_modlauncher());
+					sb.append(nl_html).append(MonitorDePID.idioma.faltar_de_clases_modlauncher());
 				}
 				if (minecraftforge) {
-					sb.append(MonitorDePID.idioma.faltar_de_clases_minecraftforge());
+					sb.append(nl_html).append(MonitorDePID.idioma.faltar_de_clases_minecraftforge());
 				}
 				if (neoforged) {
-					sb.append(MonitorDePID.idioma.faltar_de_clases_neoforged());
+					sb.append(nl_html).append(MonitorDePID.idioma.faltar_de_clases_neoforged());
 				}
 				if (fabricloader) {
-					sb.append(MonitorDePID.idioma.faltar_de_clases_fabricloader());
+					sb.append(nl_html).append(MonitorDePID.idioma.faltar_de_clases_fabricloader());
 				}
 				if (pillowmc) {
-					sb.append(MonitorDePID.idioma.faltar_de_clases_pillowmc());
+					sb.append(nl_html).append(MonitorDePID.idioma.faltar_de_clases_pillowmc());
+				}
+				// Solo mostrar "minecraft" si realmente es un error interno de Minecraft (muy
+				// raro)
+				if (minecraft && !create && !epicfight && !azurelib && !featurecreep && !dangerzone && !minecraftforge
+						&& !neoforged && !fabricloader && !pillowmc) {
+					sb.append(nl_html).append(MonitorDePID.idioma.faltar_de_clases_minecraft());
 				}
 
 				this.mensaje = sb.toString();

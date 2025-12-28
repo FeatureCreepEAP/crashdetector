@@ -431,21 +431,21 @@ public class NoRegistroDeLauncherVShojo extends NoRegistroLanzadorGUI {
 
 	@Override
 	public List<ElementoConfig> obtenerElementosConfigs() {
-	    List<ElementoConfig> elementos = new ArrayList<>();
+		List<ElementoConfig> elementos = new ArrayList<>();
 
-	    colorFondoVentana.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondoVentana());
-	    colorTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTexto());
-	    colorBoton.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBoton());
-	    colorCajaTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorCajaTexto());
-	    colorEnlace.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorEnlace());
+		colorFondoVentana.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondoVentana());
+		colorTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTexto());
+		colorBoton.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBoton());
+		colorCajaTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorCajaTexto());
+		colorEnlace.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorEnlace());
 
-	    elementos.add(colorFondoVentana);
-	    elementos.add(colorTexto);
-	    elementos.add(colorBoton);
-	    elementos.add(colorCajaTexto);
-	    elementos.add(colorEnlace);
+		elementos.add(colorFondoVentana);
+		elementos.add(colorTexto);
+		elementos.add(colorBoton);
+		elementos.add(colorCajaTexto);
+		elementos.add(colorEnlace);
 
-	    return elementos;
+		return elementos;
 	}
 
 	// ====== Utilidades de estilo ======

@@ -1,6 +1,7 @@
 package com.asbestosstar.crashdetector.gui.tipos.grepr;
 
 import java.awt.BorderLayout;
+import java.io.File;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -100,6 +101,7 @@ public abstract class GrepRGUI extends JFrame implements CrashDetectorGUI, Boton
 
 	public void seleccionarCarpeta() {
 		JFileChooser chooser = new JFileChooser();
+		chooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
 		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
 			campoDirectorio.setText(chooser.getSelectedFile().getAbsolutePath());

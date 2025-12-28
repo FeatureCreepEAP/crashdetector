@@ -351,8 +351,6 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		}
 	}
 
-
-
 	public void exportarEstructura() {
 		JFileChooser selectorArchivo = new JFileChooser();
 		selectorArchivo.setSelectedFile(new File("arbol_mods.arbolmods"));
@@ -660,43 +658,38 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		iniciarCargaPesada();
 	}
 
-	
-	
-	
-	
 	private void mostrarCodigoClaseSeleccionada() {
-	    TreePath rutaSeleccionada = arbolModulos.getSelectionPath();
-	    if (rutaSeleccionada == null) {
-	        return;
-	    }
+		TreePath rutaSeleccionada = arbolModulos.getSelectionPath();
+		if (rutaSeleccionada == null) {
+			return;
+		}
 
-	    DefaultMutableTreeNode nodo = (DefaultMutableTreeNode) rutaSeleccionada.getLastPathComponent();
-	    Object objetoUsuario = nodo.getUserObject();
+		DefaultMutableTreeNode nodo = (DefaultMutableTreeNode) rutaSeleccionada.getLastPathComponent();
+		Object objetoUsuario = nodo.getUserObject();
 
-	    if (objetoUsuario instanceof NodoConTexto) {
-	        Object objetoReal = ((NodoConTexto) objetoUsuario).objeto();
+		if (objetoUsuario instanceof NodoConTexto) {
+			Object objetoReal = ((NodoConTexto) objetoUsuario).objeto();
 
-	        if (objetoReal instanceof Object[]) {
-	            Object[] datos = (Object[]) objetoReal;
-	            if (datos[0] instanceof ArchivoDeMod && datos[1] instanceof String) {
-	                ArchivoDeMod mod = (ArchivoDeMod) datos[0];
-	                String nombreClase = (String) datos[1];
-	                mostrarCodigoDescompilado(mod, nombreClase);
-	            }
-	        }
-	    }
+			if (objetoReal instanceof Object[]) {
+				Object[] datos = (Object[]) objetoReal;
+				if (datos[0] instanceof ArchivoDeMod && datos[1] instanceof String) {
+					ArchivoDeMod mod = (ArchivoDeMod) datos[0];
+					String nombreClase = (String) datos[1];
+					mostrarCodigoDescompilado(mod, nombreClase);
+				}
+			}
+		}
 	}
 
 	private void mostrarCodigoDescompilado(ArchivoDeMod mod, String nombreClase) {
-	    try {
-	        // Assuming CfrBase provides the decompiling functionality
-	        String codigoDescompilado = CfrBase.descompilarClase(nombreClase);
-	        areaContenido.setText(codigoDescompilado);
-	    } catch (Exception e) {
-	        areaContenido.setText("Error al obtener el código: " + e.getMessage());
-	    }
+		try {
+			// Assuming CfrBase provides the decompiling functionality
+			String codigoDescompilado = CfrBase.descompilarClase(nombreClase);
+			areaContenido.setText(codigoDescompilado);
+		} catch (Exception e) {
+			areaContenido.setText("Error al obtener el código: " + e.getMessage());
+		}
 	}
-
 
 	/**
 	 * Muestra los detalles del nodo seleccionado en el área de contenido. Este

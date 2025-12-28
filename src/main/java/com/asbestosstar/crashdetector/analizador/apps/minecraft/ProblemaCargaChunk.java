@@ -10,98 +10,118 @@ import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceI
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 /**
- * Clase que detecta excepciones al cargar chunks en el mundo.Gracias a Aternos
- * por que esta es una implementacion de su codex
- * https://github.com/aternosorg/codex-minecraft
+ * Detecta errores de carga de chunks procesando línea por línea. Evita regex
+ * costosos con DOTALL. Basado en Codex de Aternos.
  */
 public class ProblemaCargaChunk implements Verificaciones {
 
 	private boolean activado = false;
-	private String mensaje = "";
+	private String enlace = "";
 
-	/**
-	 * Verifica si el log contiene excepciones al cargar chunks.
-	 */
+	// Patrones por línea (sin DOTALL, más rápidos)
+	private static final Pattern PATRON_LOAD_CHUNK = Pattern.compile("at.*ChunkRegionLoader\\.loadChunk",
+			Pattern.CASE_INSENSITIVE);
+	private static final Pattern PATRON_LOAD_ENTITIES = Pattern.compile("at.*ChunkRegionLoader\\.loadEntities",
+			Pattern.CASE_INSENSITIVE);
+	private static final Pattern PATRON_GEN_CHUNK = Pattern.compile("Exception generating new chunk",
+			Pattern.CASE_INSENSITIVE);
+	private static final Pattern PATRON_CANT_LOAD_CHUNK = Pattern.compile("Couldn't load chunk",
+			Pattern.CASE_INSENSITIVE);
+	private static final Pattern PATRON_UNEXPECTED_EXCEPTION = Pattern.compile("Encountered an unexpected exception",
+			Pattern.CASE_INSENSITIVE);
+
+	private boolean viUnexpectedException = false;
+
 	@Override
 	public void verificar(Consola consola) {
-		String contenido = consola.contenido_verificar;
+		this.activado = false;
+		this.enlace = "";
+		this.viUnexpectedException = false;
+	}
 
-		// Patrones de error comunes al cargar chunks
-		Pattern patron1 = Pattern.compile("Encountered an unexpected exception.*?at.*ChunkRegionLoader\\.loadChunk",
-				Pattern.DOTALL);
-		Pattern patron2 = Pattern.compile("Encountered an unexpected exception.*?at.*ChunkRegionLoader\\.loadEntities",
-				Pattern.DOTALL);
-		Pattern patron3 = Pattern.compile("Exception generating new chunk", Pattern.DOTALL);
-		Pattern patron4 = Pattern.compile("Couldn't load chunk", Pattern.DOTALL);
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		if (linea == null)
+			return;
 
-		if (patron1.matcher(contenido).find() || patron2.matcher(contenido).find() || patron3.matcher(contenido).find()
-				|| patron4.matcher(contenido).find()) {
+		String l = linea.trim();
 
-			this.mensaje = MonitorDePID.idioma.mensajeCargaChunk() + Verificaciones.nl_html;
-			activado = true;
+		// Reiniciar estado si la línea no está relacionada
+		if (!l.contains("exception") && !l.contains("chunk") && !l.contains("load") && !l.contains("generate")) {
+			viUnexpectedException = false;
+			return;
+		}
+
+		// 1. Detectar "Encountered an unexpected exception"
+		if (PATRON_UNEXPECTED_EXCEPTION.matcher(l).find()) {
+			viUnexpectedException = true;
+			return;
+		}
+
+		// 2. Si ya vimos "unexpected exception", buscar trazas de ChunkRegionLoader
+		if (viUnexpectedException) {
+			if (PATRON_LOAD_CHUNK.matcher(l).find() || PATRON_LOAD_ENTITIES.matcher(l).find()) {
+				activar(consola, numero_de_linea);
+				return;
+			}
+		}
+
+		// 3. Otros errores directos (no necesitan contexto previo)
+		if (PATRON_GEN_CHUNK.matcher(l).find() || PATRON_CANT_LOAD_CHUNK.matcher(l).find()) {
+			activar(consola, numero_de_linea);
 		}
 	}
 
-	/**
-	 * Crea una nueva instancia del verificador.
-	 */
+	private void activar(Consola consola, int linea) {
+		if (!activado) {
+			this.activado = true;
+			this.enlace = consola.agregarErrorALectador(linea, this);
+		}
+	}
+
 	@Override
 	public Verificaciones nueva() {
 		return new ProblemaCargaChunk();
 	}
 
-	/**
-	 * Indica si el problema fue detectado.
-	 */
 	@Override
 	public boolean activado() {
 		return activado;
 	}
 
-	/**
-	 * Prioridad del problema (alta).
-	 */
 	@Override
 	public float prioridad() {
 		return 1000.0f;
 	}
 
-	/**
-	 * Devuelve el mensaje de error almacenado.
-	 */
 	@Override
 	public String mensaje() {
-		return mensaje;
+		if (!activado)
+			return "";
+		return MonitorDePID.idioma.mensajeCargaChunk() + (enlace.isEmpty() ? "" : " " + enlace);
 	}
 
-	/**
-	 * Devuelve el nombre del problema para mostrar en la interfaz.
-	 */
 	@Override
 	public String nombre() {
 		return MonitorDePID.idioma.nombreProblemaCargaChunk();
 	}
 
-	/**
-	 * Devuelve las soluciones posibles para este problema.
-	 */
 	@Override
 	public QuickFix solucion() {
-		return new Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.solucionRepararMundo("world"))
-				.agregarEtiqueta(MonitorDePID.idioma.solucionEliminarCarpetaMundo("world"))
-				.agregarEtiqueta(MonitorDePID.idioma.solucionEliminarChunk()).construir();
+		Builder builder = new Builder(nombre());
+		builder.agregarEtiqueta(MonitorDePID.idioma.solucionRepararMundo("world"));
+		builder.agregarEtiqueta(MonitorDePID.idioma.solucionEliminarCarpetaMundo("world"));
+		builder.agregarEtiqueta(MonitorDePID.idioma.solucionEliminarChunk());
+		return builder.construir();
 	}
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
 		return "carga_chunk";
 	}
 
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+		return false;
 	}
-
 }

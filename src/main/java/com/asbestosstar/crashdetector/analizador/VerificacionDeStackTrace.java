@@ -230,7 +230,10 @@ public class VerificacionDeStackTrace {
 		if (!archivos_json.isEmpty()) {
 			for (String jsonFile : archivos_json) {
 				// Cambiado: ahora usamos BiMap con el número de línea
-				if (!jsonFile.endsWith(".refmap.json") && !sm_config.containsKey0(jsonFile)) {
+				if (// !jsonFile.endsWith(".refmap.json") && Existe errores solo con refmap,
+					// necesitemos encontar una solucion luego
+
+				!sm_config.containsKey0(jsonFile)) {
 					// Almacenamos el número de línea actual en la consola
 					int consolaNumLinea = consolaLineaPrimera;
 					sm_config.put(jsonFile, consolaNumLinea, fatal);

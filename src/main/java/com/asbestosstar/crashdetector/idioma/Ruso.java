@@ -1190,8 +1190,8 @@ public class Ruso implements Idioma {
 
 	@Override
 	public String mensajeCargaChunk() {
-	    return "<b style='color:#" + config.obtenerColorError()
-	            + "'>Ocorreu uma exceção enquanto o mundo carregava os chunks. Se existir para sua plataforma, o FeatureRecycler poderá resolver o problema. https://www.curseforge.com/minecraft/mc-mods/feature-recycler</b>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>Ocorreu uma exceção enquanto o mundo carregava os chunks. Se existir para sua plataforma, o FeatureRecycler poderá resolver o problema. https://www.curseforge.com/minecraft/mc-mods/feature-recycler</b>";
 	}
 
 	@Override
@@ -4783,341 +4783,458 @@ public class Ruso implements Idioma {
 
 	@Override
 	public String necesitasInstalarCfr() {
-	    String sistema = System.getProperty("os.name").toLowerCase();
-	    StringBuilder mensaje = new StringBuilder();
-	    mensaje.append("<html>")
-	           .append("Для использования этой функции необходимо установить CFR (Class File Reader).<br><br>");
+		String sistema = System.getProperty("os.name").toLowerCase();
+		StringBuilder mensaje = new StringBuilder();
+		mensaje.append("<html>")
+				.append("Для использования этой функции необходимо установить CFR (Class File Reader).<br><br>");
 
-	    if (sistema.contains("linux") || sistema.contains("netbsd") || sistema.contains("freebsd")) {
-	        mensaje.append("В системах Linux, NetBSD или FreeBSD вы можете установить CFR через менеджер пакетов.<br>")
-	               .append("Найдите пакет здесь: <a href=\"https://pkgs.org/search/?q=cfr\">https://pkgs.org/search/?q=cfr</a><br><br>");
-	    }
+		if (sistema.contains("linux") || sistema.contains("netbsd") || sistema.contains("freebsd")) {
+			mensaje.append("В системах Linux, NetBSD или FreeBSD вы можете установить CFR через менеджер пакетов.<br>")
+					.append("Найдите пакет здесь: <a href=\"https://pkgs.org/search/?q=cfr\">https://pkgs.org/search/?q=cfr</a><br><br>");
+		}
 
-	    mensaje.append("Либо вы можете скачать изменённую версию, используемую FabricMC, по ссылке:<br>")
-	           .append("<a href=\"https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar\">")
-	           .append("https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar</a><br><br>")
-	           .append("Сохраните её в следующую папку:<br>")
-	           .append("<b>")
-	           .append(new java.io.File(System.getProperty("user.home"), "crash_detector/cfr/").getAbsolutePath())
-	           .append("</b><br><br>")
-	           .append("⚠️ <b>Важно:</b> после установки CFR необходимо перезапустить мод, чтобы он был корректно распознан.")
-	           .append("</html>");
-	    return mensaje.toString();
+		mensaje.append("Либо вы можете скачать изменённую версию, используемую FabricMC, по ссылке:<br>")
+				.append("<a href=\"https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar\">")
+				.append("https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar</a><br><br>")
+				.append("Сохраните её в следующую папку:<br>").append("<b>")
+				.append(new java.io.File(System.getProperty("user.home"), "crash_detector/cfr/").getAbsolutePath())
+				.append("</b><br><br>")
+				.append("⚠️ <b>Важно:</b> после установки CFR необходимо перезапустить мод, чтобы он был корректно распознан.")
+				.append("</html>");
+		return mensaje.toString();
 	}
 
 	@Override
 	public String cfrNoHayRetrato() {
-	    return "Портрет недоступен";
+		return "Портрет недоступен";
 	}
 
 	@Override
 	public String cfrClaseNoEncontrada(String nombreClase) {
-	    return "Не удалось найти класс: " + nombreClase;
+		return "Не удалось найти класс: " + nombreClase;
 	}
 
 	@Override
 	public String tituloCfrSakura() {
-	    return "Декомпилятор CFR – Sakura Riddle (Неофициальный)";
+		return "Декомпилятор CFR – Sakura Riddle (Неофициальный)";
 	}
 
 	@Override
 	public String cfrClaseActual() {
-	    return "Текущий класс";
+		return "Текущий класс";
 	}
 
 	@Override
 	public String cfrRetratoDeSakura() {
-	    return "Портрет Sakura Riddle";
+		return "Портрет Sakura Riddle";
 	}
 
 	@Override
 	public String cfrErrorCargarRetrato() {
-	    return "Ошибка загрузки портрета";
+		return "Ошибка загрузки портрета";
 	}
-	
+
 	public String noticiaLegalCFR() {
-	    return "Этот графический интерфейс (GUI) для декомпиляции модов предназначен для помощи пользователям в выявлении причин сбоев программного обеспечения. "
-	            + "Однако декомпиляция модов может быть необходима, и пользователям следует избегать использования полученного кода для нарушения Федерального закона об авторском праве. "
-	            + "Рекомендуется ознакомиться с лицензией соответствующего мода перед использованием любого полученного кода. Кроме того, многие моды официально предоставляют исходный код, "
-	            + "который, как правило, чище и проще для понимания, чем декомпилированный. Помните: уважение интеллектуальной собственности и лицензионных условий — основа "
-	            + "сообщества разработчиков модов. Федеральный закон об авторском праве Мексики можно посмотреть по ссылке: "
-	            + "<a href=\"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf\" target=\"_blank\">Ley Federal de Derechos de Autor (на испанском)</a> "
-	            + "и на английском языке здесь: <a href=\"https://www.indautor.gob.mx/documentos/marco-juridico/L_Fed_Derecho_de_Autor_(English).pdf\" target=\"_blank\">Copyright Law (English)</a>. "
-	            + "Поскольку вы находитесь на CurseForge, мы также предоставляем ссылку на закон США об авторском праве: "
-	            + "<a href=\"https://www.copyright.gov/title17/title17.pdf\" target=\"_blank\">U.S. Copyright Law</a>. "
-	            + "Кроме того, пользователям рекомендуется изучить законы, действующие в их стране. "
-	            + "Наш GUI предназначен только для простой диагностики; для углублённого анализа рекомендуем использовать форк Enigma от FabricMC, доступный на "
-	            + "<a href=\"https://github.com/FabricMC/Enigma\" target=\"_blank\">GitHub</a>. Если вам нужно редактировать JAR-файлы для создания патчей при отсутствии исходного кода, используйте Recaf на "
-	            + "<a href=\"https://recaf.coley.software/home.html\" target=\"_blank\">его сайте</a>.";
+		return "Этот графический интерфейс (GUI) для декомпиляции модов предназначен для помощи пользователям в выявлении причин сбоев программного обеспечения. "
+				+ "Однако декомпиляция модов может быть необходима, и пользователям следует избегать использования полученного кода для нарушения Федерального закона об авторском праве. "
+				+ "Рекомендуется ознакомиться с лицензией соответствующего мода перед использованием любого полученного кода. Кроме того, многие моды официально предоставляют исходный код, "
+				+ "который, как правило, чище и проще для понимания, чем декомпилированный. Помните: уважение интеллектуальной собственности и лицензионных условий — основа "
+				+ "сообщества разработчиков модов. Федеральный закон об авторском праве Мексики можно посмотреть по ссылке: "
+				+ "<a href=\"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf\" target=\"_blank\">Ley Federal de Derechos de Autor (на испанском)</a> "
+				+ "и на английском языке здесь: <a href=\"https://www.indautor.gob.mx/documentos/marco-juridico/L_Fed_Derecho_de_Autor_(English).pdf\" target=\"_blank\">Copyright Law (English)</a>. "
+				+ "Поскольку вы находитесь на CurseForge, мы также предоставляем ссылку на закон США об авторском праве: "
+				+ "<a href=\"https://www.copyright.gov/title17/title17.pdf\" target=\"_blank\">U.S. Copyright Law</a>. "
+				+ "Кроме того, пользователям рекомендуется изучить законы, действующие в их стране. "
+				+ "Наш GUI предназначен только для простой диагностики; для углублённого анализа рекомендуем использовать форк Enigma от FabricMC, доступный на "
+				+ "<a href=\"https://github.com/FabricMC/Enigma\" target=\"_blank\">GitHub</a>. Если вам нужно редактировать JAR-файлы для создания патчей при отсутствии исходного кода, используйте Recaf на "
+				+ "<a href=\"https://recaf.coley.software/home.html\" target=\"_blank\">его сайте</a>.";
 	}
-	
+
 	@Override
 	public String botonDescargarCfr() {
-	    return "Скачать CFR";
+		return "Скачать CFR";
 	}
 
 	@Override
 	public String botonAbrirCarpetaCfr() {
-	    return "Открыть папку установки";
+		return "Открыть папку установки";
 	}
-	
+
 	@Override
 	public String colorFondoPrincipal() {
-	    return "Основной цвет фона";
+		return "Основной цвет фона";
 	}
 
 	@Override
 	public String colorTextoBotonReset() {
-	    return "Цвет текста кнопки сброса";
+		return "Цвет текста кнопки сброса";
 	}
 
 	@Override
 	public String colorTextoCampoBuscar() {
-	    return "Цвет текста поля поиска";
+		return "Цвет текста поля поиска";
 	}
 
 	@Override
 	public String colorTextoComboFiltro() {
-	    return "Цвет текста выпадающего меню фильтра";
+		return "Цвет текста выпадающего меню фильтра";
 	}
 
 	@Override
 	public String colorTextoRenderer() {
-	    return "Цвет текста рендерера";
+		return "Цвет текста рендерера";
 	}
 
 	@Override
 	public String colorTextoOverlayCarga() {
-	    return "Цвет текста оверлея загрузки";
+		return "Цвет текста оверлея загрузки";
 	}
 
 	@Override
 	public String colorBorde() {
-	    return "Цвет границы";
+		return "Цвет границы";
 	}
-	
+
 	@Override
 	public String colorFondoRetrato() {
-	    return "Цвет фона в портретном режиме";
+		return "Цвет фона в портретном режиме";
 	}
 
 	@Override
 	public String colorEnlaceCompartir() {
-	    return "Цвет ссылки для публикации";
+		return "Цвет ссылки для публикации";
 	}
 
 	@Override
 	public String colorFondoCampoCompartir() {
-	    return "Цвет фона поля публикации";
+		return "Цвет фона поля публикации";
 	}
 
 	@Override
 	public String rosaFondo() {
-	    return "Розовый фон";
+		return "Розовый фон";
 	}
 
 	@Override
 	public String rosaSuave() {
-	    return "Нежно-розовый";
+		return "Нежно-розовый";
 	}
 
 	@Override
 	public String moradoAcento() {
-	    return "Акцентный фиолетовый";
+		return "Акцентный фиолетовый";
 	}
 
 	@Override
 	public String textoOscuro() {
-	    return "Тёмный текст";
+		return "Тёмный текст";
 	}
 
 	@Override
 	public String bordeSuave() {
-	    return "Мягкая граница";
+		return "Мягкая граница";
 	}
 
 	@Override
 	public String fondoCampo() {
-	    return "Фон поля";
+		return "Фон поля";
 	}
 
 	@Override
 	public String fondoVistaPrevia() {
-	    return "Фон предпросмотра";
+		return "Фон предпросмотра";
 	}
-	
+
 	@Override
 	public String sintaxisConstructor() {
-	    return "Цвет синтаксиса: конструктор";
+		return "Цвет синтаксиса: конструктор";
 	}
 
 	@Override
 	public String sintaxisMensajeAyudar() {
-	    return "Цвет синтаксиса: справочное сообщение";
+		return "Цвет синтаксиса: справочное сообщение";
 	}
 
 	@Override
 	public String sintaxisEtiquetasHtml() {
-	    return "Цвет синтаксиса: HTML-теги";
+		return "Цвет синтаксиса: HTML-теги";
 	}
 
 	@Override
 	public String colorFondoVentana() {
-	    return "Цвет фона окна";
+		return "Цвет фона окна";
 	}
 
 	@Override
 	public String colorPanel() {
-	    return "Цвет панели";
+		return "Цвет панели";
 	}
 
 	@Override
 	public String colorBotonTexto() {
-	    return "Цвет текста кнопки";
+		return "Цвет текста кнопки";
 	}
 
 	@Override
 	public String colorCampo() {
-	    return "Цвет поля";
+		return "Цвет поля";
 	}
 
 	@Override
 	public String colorBordeDestacado() {
-	    return "Цвет выделенной границы";
+		return "Цвет выделенной границы";
 	}
 
 	@Override
 	public String colorSeleccionTexto() {
-	    return "Цвет фона выделенного текста";
+		return "Цвет фона выделенного текста";
 	}
-	
+
 	@Override
 	public String colorTextoSeleccionado() {
-	    return "Цвет выделенного текста";
+		return "Цвет выделенного текста";
 	}
 
 	@Override
 	public String colorEstadoExito() {
-	    return "Цвет состояния: успех";
+		return "Цвет состояния: успех";
 	}
 
 	@Override
 	public String colorEstadoFallo() {
-	    return "Цвет состояния: ошибка";
+		return "Цвет состояния: ошибка";
 	}
 
 	@Override
 	public String colorEstadoInstantanea() {
-	    return "Цвет состояния: мгновенное";
+		return "Цвет состояния: мгновенное";
 	}
 
 	@Override
 	public String colorResultadoAnadido() {
-	    return "Цвет добавленного результата";
+		return "Цвет добавленного результата";
 	}
 
 	@Override
 	public String colorResultadoEliminado() {
-	    return "Цвет удалённого результата";
+		return "Цвет удалённого результата";
 	}
 
 	@Override
 	public String colorBordeScroll() {
-	    return "Цвет границы полосы прокрутки";
+		return "Цвет границы полосы прокрутки";
 	}
 
 	@Override
 	public String colorFondoPanel() {
-	    return "Цвет фона панели";
+		return "Цвет фона панели";
 	}
 
 	@Override
 	public String colorBeigeListas() {
-	    return "Бежевый списков";
+		return "Бежевый списков";
 	}
 
 	@Override
 	public String colorTextoListas() {
-	    return "Цвет текста в списках";
+		return "Цвет текста в списках";
 	}
 
 	@Override
 	public String colorBordeListas() {
-	    return "Цвет границ списков";
+		return "Цвет границ списков";
 	}
 
 	@Override
 	public String colorBotonFondo() {
-	    return "Цвет фона кнопки";
+		return "Цвет фона кнопки";
 	}
 
 	@Override
 	public String colorBordeBoton() {
-	    return "Цвет границы кнопки";
+		return "Цвет границы кнопки";
 	}
 
 	@Override
 	public String colorDoradoTexto() {
-	    return "Золотой цвет текста";
+		return "Золотой цвет текста";
 	}
-	
+
 	@Override
 	public String colorPila() {
-	    return "Цвет трассировки стека (stack trace)";
+		return "Цвет трассировки стека (stack trace)";
 	}
 
 	@Override
 	public String colorTextoPanel() {
-	    return "Цвет текста панели";
+		return "Цвет текста панели";
 	}
 
 	@Override
 	public String colorTextoNegro() {
-	    return "Цвет чёрного текста";
+		return "Цвет чёрного текста";
 	}
 
 	@Override
 	public String colorTextoPrincipal() {
-	    return "Цвет основного текста";
+		return "Цвет основного текста";
 	}
 
 	@Override
 	public String colorFondoResultados() {
-	    return "Цвет фона результатов";
+		return "Цвет фона результатов";
 	}
 
 	@Override
 	public String colorEstado() {
-	    return "Цвет состояния";
+		return "Цвет состояния";
 	}
 
 	@Override
 	public String colorTextoDescripcion() {
-	    return "Цвет текста описания";
+		return "Цвет текста описания";
 	}
 
 	@Override
 	public String colorTextoEstado() {
-	    return "Цвет текста состояния";
+		return "Цвет текста состояния";
 	}
 
 	@Override
 	public String colorTextoExtra() {
-	    return "Цвет дополнительного текста";
+		return "Цвет дополнительного текста";
 	}
 
 	@Override
 	public String colorSeparador() {
-	    return "Цвет разделителя";
+		return "Цвет разделителя";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public String problema_safe_fetch32_jdk17() {
+		return "Обнаружена нативная ошибка <code>StubRoutines::SafeFetch32</code>. "
+				+ "Эта проблема возникает в macOS с JDK 17.0.9 и исправлена в JDK 17.0.10 и новее. https://github.com/async-profiler/async-profiler/issues/747 https://www.minecraftforum.net/forums/support/java-edition-support/3192465-issues-with-jre-17-0-9-in-macos-sonoma-14-2-1";
+	}
+
+	@Override
+	public String nombre_problema_safe_fetch32_jdk17() {
+		return "Нативная ошибка SafeFetch32 в JDK 17.0.9 (macOS)";
+	}
+
+	@Override
+	public String solucion_actualizar_jdk_macos() {
+		return "Обновите JDK до версии 17.0.10 или выше (например, 17.0.15).";
+	}
+
+	@Override
+	public String solucion_usar_lanzador_con_jdk_actualizado() {
+		return "Если вы используете лаунчер (MultiMC, Prism Launcher или TLauncher), настройте его на использование более новой версии JDK. "
+				+ "Некоторые из них уже включают JDK 17.0.15.";
+	}
+
+	@Override
+	public String solucion_desactivar_spark_mod() {
+		return "Мод Spark также может вызывать эту ошибку. Попробуйте временно отключить его. https://www.reddit.com/r/fabricmc/comments/17snlol/game_crashing_when_creating_world/";
+	}
+
+	@Override
+	public String problema_mcef_inicializacion_html() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Мод MCEF (Chromium Embedded Framework) вызывает «тихое» зависание.</b>" + "<ul>"
+				+ "<li>MCEF инициализируется в конце лога, что обычно означает, что игра зависла во время загрузки.</li>"
+				+ "<li>Известно, что этот мод вызывает сбои в Linux, macOS или с определёнными версиями Java.</li>"
+				+ "<li>Явная ошибка появляется не всегда, но игра так и не доходит до главного меню.</li>" + "</ul>"
+				+ "<p>Если вам не нужна функциональность встроенного браузера (например, веб-карты или встроенные страницы), удалите мод.</p>";
+	}
+
+	@Override
+	public String nombre_problema_mcef_inicializacion() {
+		return "Проблема инициализации MCEF (мод встроенного браузера)";
+	}
+
+	@Override
+	public String solucion_eliminar_mod_mcef() {
+		return "Удалите файл мода MCEF (ищите 'mcef' в имени файла) из папки 'mods'.";
+	}
+
+	@Override
+	public String solucion_verificar_compatibilidad_mcef() {
+		return "Если он вам действительно нужен, убедитесь, что используете версию, совместимую с вашей операционной системой и версией Minecraft.";
+	}
+
+	@Override
+	public String conflicto_iris_optifine_html() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Обнаружен конфликт между <b>OptiFine</b> и <b>Iris/Oculus</b>.</b>" + "<ul>"
+				+ "<li>OptiFine изменяет рендеринг Minecraft несовместимым образом с Iris или Oculus.</li>"
+				+ "<li>Ошибка <code>MixinLevelRenderer failed injection check</code> исходит из <code>mixins.iris.json</code> или <code>mixins.oculus.json</code>.</li>"
+				+ "</ul>"
+				+ "<p>Эти моды нельзя использовать одновременно. Удалите OptiFine, чтобы использовать шейдеры с Iris или Oculus.</p>";
+	}
+
+	@Override
+	public String nombre_conflicto_iris_optifine() {
+		return "Конфликт между OptiFine и Iris/Oculus";
+	}
+
+	@Override
+	public String solucion_eliminar_optifine() {
+		return "Удалите файл OptiFine из папки 'mods'.";
+	}
+
+	@Override
+	public String solucion_usar_iris_sin_optifine() {
+		return "Используйте Iris или Oculus без OptiFine для современных шейдеров.";
+	}
+
+	@Override
+	public String conflicto_modernfix_optifine_html() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Обнаружен конфликт между <b>ModernFix</b> и <b>OptiFine</b>.</b>" + "<ul>"
+				+ "<li>ModernFix несовместим с OptiFine, так как ломает функциональность Forge и замедляет запуск.</li>"
+				+ "<li>Сам ModernFix предупреждает: <i>\"Use of ModernFix with OptiFine is not supported\"</i>.</li>"
+				+ "</ul>" + "<p>Вы должны удалить один из двух модов, чтобы игра работала корректно.</p>";
+	}
+
+	@Override
+	public String nombre_conflicto_modernfix_optifine() {
+		return "Конфликт между ModernFix и OptiFine";
+	}
+
+	@Override
+	public String solucion_eliminar_optifine_o_modernfix() {
+		return "Удалите OptiFine или ModernFix из папки 'mods'. Их нельзя использовать одновременно.";
+	}
+
+	@Override
+	public String solucion_usar_alternativa_modernfix() {
+		return "Если вам нужны оптимизации, рассмотрите использование только OptiFine или замените ModernFix на более лёгкие моды, такие как FerriteCore или EntityCulling.";
+	}
+
+	@Override
+	public String error_clave_registro_mayusculas_html(String clave) {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Ошибка: недопустимый ключ реестра с запрещёнными символами.</b>" + "<ul>"
+				+ "<li><b>Обнаруженный ключ:</b> <code>" + escapeHtml(clave) + "</code></li>"
+				+ "<li>В Minecraft все ключи реестра (теги, рецепты, достижения и т. д.) должны быть <b>строчными</b> и содержать только буквы, цифры, подчёркивания, дефисы и слэши.</li>"
+				+ "<li>Эта ошибка обычно вызвана некачественно написанным модом или неисправным datapack'ом.</li>"
+				+ "</ul>"
+				+ "<p><b>Важный совет:</b> используйте инструмент <b>grepr</b> или <b>fgrepr</b> на боковой панели и включите опцию <b>«Искать в JAR-файлах»</b>, чтобы найти мод, содержащий этот недопустимый ключ.</p>";
+	}
+
+	@Override
+	public String nombre_error_clave_registro_mayusculas() {
+		return "Ключ реестра с заглавными или недопустимыми символами";
+	}
+
+	@Override
+	public String solucion_buscar_clave_en_archivos() {
+		return "Используйте 'grepr' или 'fgrepr' с опцией «Искать в JAR-файлах», чтобы найти виновный мод.";
+	}
+
+	@Override
+	public String solucion_eliminar_mod_reciente() {
+		return "Если не удаётся определить мод, удалите недавно установленные моды, особенно те, что добавляют блоки, предметы или инструменты.";
+	}
+
 }

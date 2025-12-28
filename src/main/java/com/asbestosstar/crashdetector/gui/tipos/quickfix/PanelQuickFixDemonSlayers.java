@@ -123,11 +123,11 @@ public class PanelQuickFixDemonSlayers extends TodosQuickFixesGUI {
 
 	@Override
 	public List<ElementoConfig> obtenerElementosConfigs() {
-	    List<ElementoConfig> elementos = new ArrayList<>();
+		List<ElementoConfig> elementos = new ArrayList<>();
 
-	    colorSeparador.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorSeparador());
-	    elementos.add(colorSeparador);
+		colorSeparador.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorSeparador());
+		elementos.add(colorSeparador);
 
-	    return elementos;
+		return elementos;
 	}
 }

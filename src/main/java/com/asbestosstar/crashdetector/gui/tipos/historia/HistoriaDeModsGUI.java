@@ -395,5 +395,4 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 	@Override
 	public abstract String id();
 
-
 }

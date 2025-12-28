@@ -123,18 +123,18 @@ public class CDModsEstiloTL extends PanelAPIBase {
 
 	@Override
 	public List<ElementoConfig> obtenerElementosConfigs() {
-	    List<ElementoConfig> artics = new ArrayList<>();
+		List<ElementoConfig> artics = new ArrayList<>();
 
-	    colorBoton.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBoton());
-	    colorFondo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondo());
-	    colorTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTexto());
-	    colorCajaTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorCajaTexto());
+		colorBoton.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBoton());
+		colorFondo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondo());
+		colorTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTexto());
+		colorCajaTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorCajaTexto());
 
-	    artics.add(colorBoton);
-	    artics.add(colorFondo);
-	    artics.add(colorTexto);
-	    artics.add(colorCajaTexto);
+		artics.add(colorBoton);
+		artics.add(colorFondo);
+		artics.add(colorTexto);
+		artics.add(colorCajaTexto);
 
-	    return artics;
+		return artics;
 	}
 }

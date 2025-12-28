@@ -214,5 +214,4 @@ public abstract class EditorGUI extends JFrame implements CrashDetectorGUI {
 	@Override
 	public abstract void recargarApariencia();
 
-	
 }

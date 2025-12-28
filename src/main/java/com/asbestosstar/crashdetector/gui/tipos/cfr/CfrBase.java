@@ -78,10 +78,8 @@ public abstract class CfrBase implements CrashDetectorGUI {
 		}
 		CrashDetectorLogger.log("Tienese CFR");
 
-	return DescompilarCFR.descompilar(nombreClase);
+		return DescompilarCFR.descompilar(nombreClase);
 	}
-
-
 
 	/**
 	 * Muestra un diálogo personalizado con dos botones: "Descargar CFR" y "Abrir

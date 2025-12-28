@@ -28,23 +28,23 @@ public class EditorCodiceGUIIronMouse extends EditorFirmasGUI {
 
 	@Override
 	public List<ElementoConfig> obtenerElementosConfigs() {
-	    List<ElementoConfig> elementos = new ArrayList<>();
+		List<ElementoConfig> elementos = new ArrayList<>();
 
-	    rosaFondo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.rosaFondo());
-	    rosaSuave.establecerNombreParaMostrar(() -> MonitorDePID.idioma.rosaSuave());
-	    moradoAcento.establecerNombreParaMostrar(() -> MonitorDePID.idioma.moradoAcento());
-	    textoOscuro.establecerNombreParaMostrar(() -> MonitorDePID.idioma.textoOscuro());
-	    bordeSuave.establecerNombreParaMostrar(() -> MonitorDePID.idioma.bordeSuave());
-	    fondoCampo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.fondoCampo());
+		rosaFondo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.rosaFondo());
+		rosaSuave.establecerNombreParaMostrar(() -> MonitorDePID.idioma.rosaSuave());
+		moradoAcento.establecerNombreParaMostrar(() -> MonitorDePID.idioma.moradoAcento());
+		textoOscuro.establecerNombreParaMostrar(() -> MonitorDePID.idioma.textoOscuro());
+		bordeSuave.establecerNombreParaMostrar(() -> MonitorDePID.idioma.bordeSuave());
+		fondoCampo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.fondoCampo());
 
-	    elementos.add(rosaFondo);
-	    elementos.add(rosaSuave);
-	    elementos.add(moradoAcento);
-	    elementos.add(textoOscuro);
-	    elementos.add(bordeSuave);
-	    elementos.add(fondoCampo);
+		elementos.add(rosaFondo);
+		elementos.add(rosaSuave);
+		elementos.add(moradoAcento);
+		elementos.add(textoOscuro);
+		elementos.add(bordeSuave);
+		elementos.add(fondoCampo);
 
-	    return elementos;
+		return elementos;
 	}
 
 	@Override

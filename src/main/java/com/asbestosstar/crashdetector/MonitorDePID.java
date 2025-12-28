@@ -207,8 +207,6 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/sakura_riddle.png",
 				Statics.carpeta.resolve("imagenes/sakura_riddle.png").toFile());
 
-		
-		
 //		new File(viajo_ultima_mods.toString()).delete();
 //		try {
 //			new File(viajo_ultima_mods.toString()).createNewFile();
@@ -329,31 +327,30 @@ public class MonitorDePID {
 	}
 
 	public static String obtenerClassPath(String jar) {
-	    // ClassPath base de la JVM actual
-	    StringBuilder classPath = new StringBuilder(System.getProperty("java.class.path"));
+		// ClassPath base de la JVM actual
+		StringBuilder classPath = new StringBuilder(System.getProperty("java.class.path"));
 
-	    // Añadir el JAR proporcionado si no es null/vacío
-	    if (jar != null && !jar.isEmpty()) {
-	        classPath.append(File.pathSeparator).append(jar);
-	    }
+		// Añadir el JAR proporcionado si no es null/vacío
+		if (jar != null && !jar.isEmpty()) {
+			classPath.append(File.pathSeparator).append(jar);
+		}
 
-	    // Intentar añadir CFR si está instalado
-	    try {
-	        File cfrJar = BuscarParaCFR.encontrarCfr();  // Usando BuscarParaCFR para obtener el JAR de CFR
-	        if (cfrJar != null && cfrJar.exists()) {
-	            String rutaCfr = cfrJar.getAbsolutePath();
-	            // Evitar duplicarlo en el classpath
-	            if (!classPath.toString().contains(rutaCfr)) {
-	                classPath.append(File.pathSeparator).append(rutaCfr);
-	            }
-	        }
-	    } catch (Throwable t) {
-	        // En caso de error con la búsqueda del JAR de CFR, se ignora
-	    }
+		// Intentar añadir CFR si está instalado
+		try {
+			File cfrJar = BuscarParaCFR.encontrarCfr(); // Usando BuscarParaCFR para obtener el JAR de CFR
+			if (cfrJar != null && cfrJar.exists()) {
+				String rutaCfr = cfrJar.getAbsolutePath();
+				// Evitar duplicarlo en el classpath
+				if (!classPath.toString().contains(rutaCfr)) {
+					classPath.append(File.pathSeparator).append(rutaCfr);
+				}
+			}
+		} catch (Throwable t) {
+			// En caso de error con la búsqueda del JAR de CFR, se ignora
+		}
 
-	    return classPath.toString();
+		return classPath.toString();
 	}
-
 
 	public static void registrarGUISPredeterminado() {
 		// TODO Auto-generated method stub

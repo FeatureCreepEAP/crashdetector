@@ -359,39 +359,39 @@ public class ClioOfficeGUI extends HistoriaDeModsGUI {
 
 	@Override
 	public List<ElementoConfig> obtenerElementosConfigs() {
-	    List<ElementoConfig> l = new ArrayList<>();
+		List<ElementoConfig> l = new ArrayList<>();
 
-	    colorEstadoExito.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorEstadoExito());
-	    colorEstadoFallo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorEstadoFallo());
-	    colorEstadoInstantanea.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorEstadoInstantanea());
-	    colorResultadoAnadido.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorResultadoAnadido());
-	    colorResultadoEliminado.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorResultadoEliminado());
-	    colorBordeScroll.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBordeScroll());
-	    colorFondoPanel.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondoPanel());
-	    colorBeigeListas.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBeigeListas());
-	    colorTextoListas.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTextoListas());
-	    colorBordeListas.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBordeListas());
-	    colorBotonFondo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBotonFondo());
-	    colorBotonTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBotonTexto());
-	    colorBordeBoton.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBordeBoton());
-	    colorDoradoTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorDoradoTexto());
+		colorEstadoExito.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorEstadoExito());
+		colorEstadoFallo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorEstadoFallo());
+		colorEstadoInstantanea.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorEstadoInstantanea());
+		colorResultadoAnadido.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorResultadoAnadido());
+		colorResultadoEliminado.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorResultadoEliminado());
+		colorBordeScroll.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBordeScroll());
+		colorFondoPanel.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondoPanel());
+		colorBeigeListas.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBeigeListas());
+		colorTextoListas.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTextoListas());
+		colorBordeListas.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBordeListas());
+		colorBotonFondo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBotonFondo());
+		colorBotonTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBotonTexto());
+		colorBordeBoton.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBordeBoton());
+		colorDoradoTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorDoradoTexto());
 
-	    l.add(colorEstadoExito);
-	    l.add(colorEstadoFallo);
-	    l.add(colorEstadoInstantanea);
-	    l.add(colorResultadoAnadido);
-	    l.add(colorResultadoEliminado);
-	    l.add(colorBordeScroll);
-	    l.add(colorFondoPanel);
-	    l.add(colorBeigeListas);
-	    l.add(colorTextoListas);
-	    l.add(colorBordeListas);
-	    l.add(colorBotonFondo);
-	    l.add(colorBotonTexto);
-	    l.add(colorBordeBoton);
-	    l.add(colorDoradoTexto);
+		l.add(colorEstadoExito);
+		l.add(colorEstadoFallo);
+		l.add(colorEstadoInstantanea);
+		l.add(colorResultadoAnadido);
+		l.add(colorResultadoEliminado);
+		l.add(colorBordeScroll);
+		l.add(colorFondoPanel);
+		l.add(colorBeigeListas);
+		l.add(colorTextoListas);
+		l.add(colorBordeListas);
+		l.add(colorBotonFondo);
+		l.add(colorBotonTexto);
+		l.add(colorBordeBoton);
+		l.add(colorDoradoTexto);
 
-	    return l;
+		return l;
 	}
 
 	/**

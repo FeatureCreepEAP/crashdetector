@@ -1182,8 +1182,8 @@ public class Persa implements Idioma {
 
 	@Override
 	public String mensajeCargaChunk() {
-	    return "<b style='color:#" + config.obtenerColorError()
-	            + "'>هنگام بارگذاری چنک‌ها (chunks) توسط دنیا، یک استثنا رخ داد. اگر برای پلتفرم شما موجود باشد، ممکن است FeatureRecycler بتواند این مشکل را حل کند. https://www.curseforge.com/minecraft/mc-mods/feature-recycler</b>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>هنگام بارگذاری چنک‌ها (chunks) توسط دنیا، یک استثنا رخ داد. اگر برای پلتفرم شما موجود باشد، ممکن است FeatureRecycler بتواند این مشکل را حل کند. https://www.curseforge.com/minecraft/mc-mods/feature-recycler</b>";
 	}
 
 	@Override
@@ -4756,340 +4756,461 @@ public class Persa implements Idioma {
 	public String pasoErrorFallingAttackVersion() {
 		return "مطمئن شوید که از نسخهٔ درست Falling Attack که با نسخهٔ Minecraft شما سازگار است، استفاده می‌کنید.";
 	}
-	
+
 	@Override
 	public String necesitasInstalarCfr() {
-	    String sistema = System.getProperty("os.name").toLowerCase();
-	    StringBuilder mensaje = new StringBuilder();
-	    mensaje.append("<html>")
-	           .append("برای استفاده از این قابلیت، باید CFR (Class File Reader) را نصب کنید.<br><br>");
+		String sistema = System.getProperty("os.name").toLowerCase();
+		StringBuilder mensaje = new StringBuilder();
+		mensaje.append("<html>")
+				.append("برای استفاده از این قابلیت، باید CFR (Class File Reader) را نصب کنید.<br><br>");
 
-	    if (sistema.contains("linux") || sistema.contains("netbsd") || sistema.contains("freebsd")) {
-	        mensaje.append("در سیستم‌های Linux، NetBSD یا FreeBSD، می‌توانید CFR را از طریق مدیر بسته نصب کنید.<br>")
-	               .append("بسته را در اینجا جستجو کنید: <a href=\"https://pkgs.org/search/?q=cfr\">https://pkgs.org/search/?q=cfr</a><br><br>");
-	    }
+		if (sistema.contains("linux") || sistema.contains("netbsd") || sistema.contains("freebsd")) {
+			mensaje.append("در سیستم‌های Linux، NetBSD یا FreeBSD، می‌توانید CFR را از طریق مدیر بسته نصب کنید.<br>")
+					.append("بسته را در اینجا جستجو کنید: <a href=\"https://pkgs.org/search/?q=cfr\">https://pkgs.org/search/?q=cfr</a><br><br>");
+		}
 
-	    mensaje.append("در غیر این صورت، می‌توانید نسخهٔ اصلاح‌شده‌ای که FabricMC از آن استفاده می‌کند را از اینجا دانلود کنید:<br>")
-	           .append("<a href=\"https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar\">")
-	           .append("https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar</a><br><br>")
-	           .append("آن را در پوشهٔ زیر ذخیره کنید:<br>")
-	           .append("<b>")
-	           .append(new java.io.File(System.getProperty("user.home"), "crash_detector/cfr/").getAbsolutePath())
-	           .append("</b><br><br>")
-	           .append("⚠️ <b>مهم:</b> پس از نصب CFR، باید mod را مجدداً راه‌اندازی کنید تا به درستی شناسایی شود.")
-	           .append("</html>");
-	    return mensaje.toString();
+		mensaje.append(
+				"در غیر این صورت، می‌توانید نسخهٔ اصلاح‌شده‌ای که FabricMC از آن استفاده می‌کند را از اینجا دانلود کنید:<br>")
+				.append("<a href=\"https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar\">")
+				.append("https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar</a><br><br>")
+				.append("آن را در پوشهٔ زیر ذخیره کنید:<br>").append("<b>")
+				.append(new java.io.File(System.getProperty("user.home"), "crash_detector/cfr/").getAbsolutePath())
+				.append("</b><br><br>")
+				.append("⚠️ <b>مهم:</b> پس از نصب CFR، باید mod را مجدداً راه‌اندازی کنید تا به درستی شناسایی شود.")
+				.append("</html>");
+		return mensaje.toString();
 	}
 
 	@Override
 	public String cfrNoHayRetrato() {
-	    return "پرتره‌ای در دسترس نیست";
+		return "پرتره‌ای در دسترس نیست";
 	}
 
 	@Override
 	public String cfrClaseNoEncontrada(String nombreClase) {
-	    return "کلاس یافت نشد: " + nombreClase;
+		return "کلاس یافت نشد: " + nombreClase;
 	}
 
 	@Override
 	public String tituloCfrSakura() {
-	    return "دیکامپایلر CFR – Sakura Riddle (غیررسمی)";
+		return "دیکامپایلر CFR – Sakura Riddle (غیررسمی)";
 	}
 
 	@Override
 	public String cfrClaseActual() {
-	    return "کلاس فعلی";
+		return "کلاس فعلی";
 	}
 
 	@Override
 	public String cfrRetratoDeSakura() {
-	    return "پرترهٔ Sakura Riddle";
+		return "پرترهٔ Sakura Riddle";
 	}
 
 	@Override
 	public String cfrErrorCargarRetrato() {
-	    return "خطا در بارگذاری پرتره";
+		return "خطا در بارگذاری پرتره";
 	}
 
 	public String noticiaLegalCFR() {
-	    return "این رابط کاربری گرافیکی (GUI) برای دیکامپایل افزونه‌ها به منظور کمک به کاربران در شناسایی علت خرابی‌های نرم‌افزاری طراحی شده است. "
-	            + "با این حال، گاهی دیکامپایل افزونه‌ها ضروری است، اما کاربران باید مراقب باشند که از کد تولیدشده برای نقض قانون حق تکثیر استفاده نکنند. "
-	            + "قبل از استفاده از هر کدی، بررسی مجوز افزونهٔ مربوطه توصیه می‌شود. علاوه بر این، بسیاری از افزونه‌ها کد منبع خود را به صورت رسمی ارائه می‌دهند، "
-	            + "که معمولاً تمیزتر و قابل‌درک‌تر از کد دیکامپایل‌شده است. رعایت مالکیت فکری و مجوزهای استفاده، اصلی‌ترین ارزش در جامعهٔ توسعه‌دهندگان افزونه است. "
-	            + "می‌توانید قانون فدرال حق تکثیر مکزیک را در این لینک مشاهده کنید: "
-	            + "<a href=\"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf\" target=\"_blank\">Ley Federal de Derechos de Autor (اسپانیایی)</a> "
-	            + "و نسخهٔ انگلیسی آن را اینجا ببینید: <a href=\"https://www.indautor.gob.mx/documentos/marco-juridico/L_Fed_Derecho_de_Autor_(English).pdf\" target=\"_blank\">Copyright Law (English)</a>. "
-	            + "با توجه به اینکه شما در CurseForge هستید، لینک قانون حق تکثیر ایالات متحده را نیز فراهم کرده‌ایم: "
-	            + "<a href=\"https://www.copyright.gov/title17/title17.pdf\" target=\"_blank\">U.S. Copyright Law</a>. "
-	            + "همچنین توصیه می‌شود کاربران قوانین جاری در کشور خود را بررسی کنند. "
-	            + "این GUI فقط برای بررسی‌های ساده است؛ برای تحلیل پیشرفته، از انشعاب Enigma توسط FabricMC در "
-	            + "<a href=\"https://github.com/FabricMC/Enigma\" target=\"_blank\">GitHub</a> استفاده کنید. اگر نیاز به ویرایش مستقیم فایل‌های JAR برای ایجاد پچ دارید (در صورت عدم دسترسی به کد منبع)، می‌توانید از Recaf در "
-	            + "<a href=\"https://recaf.coley.software/home.html\" target=\"_blank\">وب‌سایتش</a> استفاده کنید.";
+		return "این رابط کاربری گرافیکی (GUI) برای دیکامپایل افزونه‌ها به منظور کمک به کاربران در شناسایی علت خرابی‌های نرم‌افزاری طراحی شده است. "
+				+ "با این حال، گاهی دیکامپایل افزونه‌ها ضروری است، اما کاربران باید مراقب باشند که از کد تولیدشده برای نقض قانون حق تکثیر استفاده نکنند. "
+				+ "قبل از استفاده از هر کدی، بررسی مجوز افزونهٔ مربوطه توصیه می‌شود. علاوه بر این، بسیاری از افزونه‌ها کد منبع خود را به صورت رسمی ارائه می‌دهند، "
+				+ "که معمولاً تمیزتر و قابل‌درک‌تر از کد دیکامپایل‌شده است. رعایت مالکیت فکری و مجوزهای استفاده، اصلی‌ترین ارزش در جامعهٔ توسعه‌دهندگان افزونه است. "
+				+ "می‌توانید قانون فدرال حق تکثیر مکزیک را در این لینک مشاهده کنید: "
+				+ "<a href=\"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf\" target=\"_blank\">Ley Federal de Derechos de Autor (اسپانیایی)</a> "
+				+ "و نسخهٔ انگلیسی آن را اینجا ببینید: <a href=\"https://www.indautor.gob.mx/documentos/marco-juridico/L_Fed_Derecho_de_Autor_(English).pdf\" target=\"_blank\">Copyright Law (English)</a>. "
+				+ "با توجه به اینکه شما در CurseForge هستید، لینک قانون حق تکثیر ایالات متحده را نیز فراهم کرده‌ایم: "
+				+ "<a href=\"https://www.copyright.gov/title17/title17.pdf\" target=\"_blank\">U.S. Copyright Law</a>. "
+				+ "همچنین توصیه می‌شود کاربران قوانین جاری در کشور خود را بررسی کنند. "
+				+ "این GUI فقط برای بررسی‌های ساده است؛ برای تحلیل پیشرفته، از انشعاب Enigma توسط FabricMC در "
+				+ "<a href=\"https://github.com/FabricMC/Enigma\" target=\"_blank\">GitHub</a> استفاده کنید. اگر نیاز به ویرایش مستقیم فایل‌های JAR برای ایجاد پچ دارید (در صورت عدم دسترسی به کد منبع)، می‌توانید از Recaf در "
+				+ "<a href=\"https://recaf.coley.software/home.html\" target=\"_blank\">وب‌سایتش</a> استفاده کنید.";
 	}
-	
+
 	@Override
 	public String botonDescargarCfr() {
-	    return "دانلود CFR";
+		return "دانلود CFR";
 	}
 
 	@Override
 	public String botonAbrirCarpetaCfr() {
-	    return "باز کردن پوشهٔ نصب";
+		return "باز کردن پوشهٔ نصب";
 	}
+
 	@Override
 	public String colorFondoPrincipal() {
-	    return "رنگ پس‌زمینهٔ اصلی";
+		return "رنگ پس‌زمینهٔ اصلی";
 	}
 
 	@Override
 	public String colorTextoBotonReset() {
-	    return "رنگ متن دکمهٔ بازنشانی";
+		return "رنگ متن دکمهٔ بازنشانی";
 	}
 
 	@Override
 	public String colorTextoCampoBuscar() {
-	    return "رنگ متن فیلد جستجو";
+		return "رنگ متن فیلد جستجو";
 	}
 
 	@Override
 	public String colorTextoComboFiltro() {
-	    return "رنگ متن منوی کشویی فیلتر";
+		return "رنگ متن منوی کشویی فیلتر";
 	}
 
 	@Override
 	public String colorTextoRenderer() {
-	    return "رنگ متن رندرکننده";
+		return "رنگ متن رندرکننده";
 	}
 
 	@Override
 	public String colorTextoOverlayCarga() {
-	    return "رنگ متن پوشش بارگذاری";
+		return "رنگ متن پوشش بارگذاری";
 	}
 
 	@Override
 	public String colorBorde() {
-	    return "رنگ حاشیه";
+		return "رنگ حاشیه";
 	}
-	
+
 	@Override
 	public String colorFondoRetrato() {
-	    return "رنگ پس‌زمینه در حالت پرتره";
+		return "رنگ پس‌زمینه در حالت پرتره";
 	}
 
 	@Override
 	public String colorEnlaceCompartir() {
-	    return "رنگ پیوند اشتراک‌گذاری";
+		return "رنگ پیوند اشتراک‌گذاری";
 	}
 
 	@Override
 	public String colorFondoCampoCompartir() {
-	    return "رنگ پس‌زمینهٔ فیلد اشتراک‌گذاری";
+		return "رنگ پس‌زمینهٔ فیلد اشتراک‌گذاری";
 	}
 
 	@Override
 	public String rosaFondo() {
-	    return "صورتی پس‌زمینه";
+		return "صورتی پس‌زمینه";
 	}
 
 	@Override
 	public String rosaSuave() {
-	    return "صورتی ملایم";
+		return "صورتی ملایم";
 	}
 
 	@Override
 	public String moradoAcento() {
-	    return "بنفش برجسته";
+		return "بنفش برجسته";
 	}
 
 	@Override
 	public String textoOscuro() {
-	    return "متن تیره";
+		return "متن تیره";
 	}
 
 	@Override
 	public String bordeSuave() {
-	    return "حاشیهٔ ملایم";
+		return "حاشیهٔ ملایم";
 	}
 
 	@Override
 	public String fondoCampo() {
-	    return "پس‌زمینهٔ فیلد";
+		return "پس‌زمینهٔ فیلد";
 	}
 
 	@Override
 	public String fondoVistaPrevia() {
-	    return "پس‌زمینهٔ پیش‌نمایش";
+		return "پس‌زمینهٔ پیش‌نمایش";
 	}
-	
+
 	@Override
 	public String sintaxisConstructor() {
-	    return "رنگ نحو: سازنده";
+		return "رنگ نحو: سازنده";
 	}
 
 	@Override
 	public String sintaxisMensajeAyudar() {
-	    return "رنگ نحو: پیام راهنما";
+		return "رنگ نحو: پیام راهنما";
 	}
 
 	@Override
 	public String sintaxisEtiquetasHtml() {
-	    return "رنگ نحو: برچسب‌های HTML";
+		return "رنگ نحو: برچسب‌های HTML";
 	}
 
 	@Override
 	public String colorFondoVentana() {
-	    return "رنگ پس‌زمینهٔ پنجره";
+		return "رنگ پس‌زمینهٔ پنجره";
 	}
 
 	@Override
 	public String colorPanel() {
-	    return "رنگ پانل";
+		return "رنگ پانل";
 	}
 
 	@Override
 	public String colorBotonTexto() {
-	    return "رنگ متن دکمه";
+		return "رنگ متن دکمه";
 	}
 
 	@Override
 	public String colorCampo() {
-	    return "رنگ فیلد";
+		return "رنگ فیلد";
 	}
 
 	@Override
 	public String colorBordeDestacado() {
-	    return "رنگ حاشیهٔ برجسته";
+		return "رنگ حاشیهٔ برجسته";
 	}
 
 	@Override
 	public String colorSeleccionTexto() {
-	    return "رنگ پس‌زمینهٔ انتخاب متن";
+		return "رنگ پس‌زمینهٔ انتخاب متن";
 	}
-	
+
 	@Override
 	public String colorTextoSeleccionado() {
-	    return "رنگ متن انتخاب‌شده";
+		return "رنگ متن انتخاب‌شده";
 	}
 
 	@Override
 	public String colorEstadoExito() {
-	    return "رنگ وضعیت: موفقیت";
+		return "رنگ وضعیت: موفقیت";
 	}
 
 	@Override
 	public String colorEstadoFallo() {
-	    return "رنگ وضعیت: شکست";
+		return "رنگ وضعیت: شکست";
 	}
 
 	@Override
 	public String colorEstadoInstantanea() {
-	    return "رنگ وضعیت: لحظه‌ای";
+		return "رنگ وضعیت: لحظه‌ای";
 	}
 
 	@Override
 	public String colorResultadoAnadido() {
-	    return "رنگ نتیجهٔ اضافه‌شده";
+		return "رنگ نتیجهٔ اضافه‌شده";
 	}
 
 	@Override
 	public String colorResultadoEliminado() {
-	    return "رنگ نتیجهٔ حذف‌شده";
+		return "رنگ نتیجهٔ حذف‌شده";
 	}
 
 	@Override
 	public String colorBordeScroll() {
-	    return "رنگ حاشیهٔ نوار پیمایش";
+		return "رنگ حاشیهٔ نوار پیمایش";
 	}
 
 	@Override
 	public String colorFondoPanel() {
-	    return "رنگ پس‌زمینهٔ پانل";
+		return "رنگ پس‌زمینهٔ پانل";
 	}
 
 	@Override
 	public String colorBeigeListas() {
-	    return "بیژ فهرست‌ها";
+		return "بیژ فهرست‌ها";
 	}
 
 	@Override
 	public String colorTextoListas() {
-	    return "رنگ متن فهرست‌ها";
+		return "رنگ متن فهرست‌ها";
 	}
 
 	@Override
 	public String colorBordeListas() {
-	    return "رنگ حاشیهٔ فهرست‌ها";
+		return "رنگ حاشیهٔ فهرست‌ها";
 	}
 
 	@Override
 	public String colorBotonFondo() {
-	    return "رنگ پس‌زمینهٔ دکمه";
+		return "رنگ پس‌زمینهٔ دکمه";
 	}
 
 	@Override
 	public String colorBordeBoton() {
-	    return "رنگ حاشیهٔ دکمه";
+		return "رنگ حاشیهٔ دکمه";
 	}
 
 	@Override
 	public String colorDoradoTexto() {
-	    return "رنگ طلایی متن";
+		return "رنگ طلایی متن";
 	}
-	
+
 	@Override
 	public String colorPila() {
-	    return "رنگ ردیابی پشته (stack trace)";
+		return "رنگ ردیابی پشته (stack trace)";
 	}
 
 	@Override
 	public String colorTextoPanel() {
-	    return "رنگ متن پانل";
+		return "رنگ متن پانل";
 	}
 
 	@Override
 	public String colorTextoNegro() {
-	    return "رنگ متن سیاه";
+		return "رنگ متن سیاه";
 	}
 
 	@Override
 	public String colorTextoPrincipal() {
-	    return "رنگ متن اصلی";
+		return "رنگ متن اصلی";
 	}
 
 	@Override
 	public String colorFondoResultados() {
-	    return "رنگ پس‌زمینهٔ نتایج";
+		return "رنگ پس‌زمینهٔ نتایج";
 	}
 
 	@Override
 	public String colorEstado() {
-	    return "رنگ وضعیت";
+		return "رنگ وضعیت";
 	}
 
 	@Override
 	public String colorTextoDescripcion() {
-	    return "رنگ متن توضیحات";
+		return "رنگ متن توضیحات";
 	}
 
 	@Override
 	public String colorTextoEstado() {
-	    return "رنگ متن وضعیت";
+		return "رنگ متن وضعیت";
 	}
 
 	@Override
 	public String colorTextoExtra() {
-	    return "رنگ متن اضافی";
+		return "رنگ متن اضافی";
 	}
 
 	@Override
 	public String colorSeparador() {
-	    return "رنگ جداکننده";
+		return "رنگ جداکننده";
 	}
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public String problema_safe_fetch32_jdk17() {
+		return "خطای بومی <code>StubRoutines::SafeFetch32</code> شناسایی شد. "
+				+ "این مشکل در macOS با JDK 17.0.9 رخ می‌دهد و در JDK 17.0.10 یا جدیدتر رفع شده است. https://github.com/async-profiler/async-profiler/issues/747 https://www.minecraftforum.net/forums/support/java-edition-support/3192465-issues-with-jre-17-0-9-in-macos-sonoma-14-2-1";
+	}
+
+	@Override
+	public String nombre_problema_safe_fetch32_jdk17() {
+		return "خطای بومی SafeFetch32 در JDK 17.0.9 (macOS)";
+	}
+
+	@Override
+	public String solucion_actualizar_jdk_macos() {
+		return "JDK خود را به نسخهٔ 17.0.10 یا بالاتر (مثلاً 17.0.15) به‌روزرسانی کنید.";
+	}
+
+	@Override
+	public String solucion_usar_lanzador_con_jdk_actualizado() {
+		return "اگر از راه‌اندازی مانند MultiMC، Prism Launcher یا TLauncher استفاده می‌کنید، آن را طوری پیکربندی کنید که از JDK جدیدتری استفاده کند. "
+				+ "برخی از آن‌ها از پیش JDK 17.0.15 را دارند.";
+	}
+
+	@Override
+	public String solucion_desactivar_spark_mod() {
+		return "افزونهٔ Spark نیز ممکن است به این خطا کمک کند. غیرفعال کردن موقت آن را در نظر بگیرید. https://www.reddit.com/r/fabricmc/comments/17snlol/game_crashing_when_creating_world/";
+	}
+
+	@Override
+	public String problema_mcef_inicializacion_html() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "افزونهٔ MCEF (Chromium Embedded Framework) باعث قفل خاموش می‌شود.</b>" + "<ul>"
+				+ "<li>MCEF در انتهای لاگ‌ها در حال راه‌اندازی است که معمولاً نشان‌دهندهٔ هَنگ شدن بازی در حین بارگذاری است.</li>"
+				+ "<li>این افزونه به دلیل ایجاد crash در سیستم‌های Linux، macOS یا با نسخه‌های خاصی از Java شناخته شده است.</li>"
+				+ "<li>همیشه خطای صریحی ظاهر نمی‌شود، اما بازی هرگز به منوی اصلی نمی‌رسد.</li>" + "</ul>"
+				+ "<p>اگر به قابلیت مرورگر درون‌بازی (مثل نقشه‌های وب یا صفحات جاسازی‌شده) نیاز ندارید، این افزونه را حذف کنید.</p>";
+	}
+
+	@Override
+	public String nombre_problema_mcef_inicializacion() {
+		return "مشکل راه‌اندازی MCEF (افزونهٔ مرورگر جاسازی‌شده)";
+	}
+
+	@Override
+	public String solucion_eliminar_mod_mcef() {
+		return "فایل افزونهٔ MCEF (فایلی که نامش شامل 'mcef' است) را از پوشهٔ 'mods' حذف کنید.";
+	}
+
+	@Override
+	public String solucion_verificar_compatibilidad_mcef() {
+		return "اگر واقعاً به آن نیاز دارید، مطمئن شوید که از نسخه‌ای استفاده می‌کنید که با سیستم‌عامل و نسخهٔ Minecraft شما سازگار است.";
+	}
+
+	@Override
+	public String conflicto_iris_optifine_html() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "تعارضی بین <b>OptiFine</b> و <b>Iris/Oculus</b> شناسایی شده است.</b>" + "<ul>"
+				+ "<li>OptiFine رندرینگ Minecraft را به شیوه‌ای تغییر می‌دهد که با Iris یا Oculus ناسازگار است.</li>"
+				+ "<li>خطای <code>MixinLevelRenderer failed injection check</code> از <code>mixins.iris.json</code> یا <code>mixins.oculus.json</code> نشأت می‌گیرد.</li>"
+				+ "</ul>"
+				+ "<p>این افزونه‌ها نمی‌توانند همزمان استفاده شوند. برای استفاده از shaders با Iris یا Oculus، OptiFine را حذف کنید.</p>";
+	}
+
+	@Override
+	public String nombre_conflicto_iris_optifine() {
+		return "تعارض بین OptiFine و Iris/Oculus";
+	}
+
+	@Override
+	public String solucion_eliminar_optifine() {
+		return "فایل OptiFine را از پوشهٔ 'mods' حذف کنید.";
+	}
+
+	@Override
+	public String solucion_usar_iris_sin_optifine() {
+		return "برای shaders مدرن، Iris یا Oculus را بدون OptiFine استفاده کنید.";
+	}
+
+	@Override
+	public String conflicto_modernfix_optifine_html() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "تعارضی بین <b>ModernFix</b> و <b>OptiFine</b> شناسایی شده است.</b>" + "<ul>"
+				+ "<li>ModernFix با OptiFine سازگار نیست، زیرا عملکردهای Forge را خراب کرده و راه‌اندازی را کند می‌کند.</li>"
+				+ "<li>خود ModernFix هشدار می‌دهد: <i>\"Use of ModernFix with OptiFine is not supported\"</i>.</li>"
+				+ "</ul>" + "<p>برای کارکرد صحیح بازی، باید یکی از این دو افزونه را حذف کنید.</p>";
+	}
+
+	@Override
+	public String nombre_conflicto_modernfix_optifine() {
+		return "تعارض بین ModernFix و OptiFine";
+	}
+
+	@Override
+	public String solucion_eliminar_optifine_o_modernfix() {
+		return "OptiFine یا ModernFix را از پوشهٔ 'mods' حذف کنید. این دو را نمی‌توان همزمان استفاده کرد.";
+	}
+
+	@Override
+	public String solucion_usar_alternativa_modernfix() {
+		return "اگر به بهینه‌سازی نیاز دارید، فقط از OptiFine استفاده کنید، یا ModernFix را با افزونه‌های سبک‌تری مانند FerriteCore یا EntityCulling جایگزین کنید.";
+	}
+
+	@Override
+	public String error_clave_registro_mayusculas_html(String clave) {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "خطا: کلید ثبت نامعتبر با نویسه‌های غیرمجاز.</b>" + "<ul>" + "<li><b>کلید شناسایی‌شده:</b> <code>"
+				+ escapeHtml(clave) + "</code></li>"
+				+ "<li>در Minecraft، تمام کلیدهای ثبت (برچسب‌ها، دستورها، پیشرفت‌ها و غیره) باید <b>کوچک‌شده</b> باشند و تنها از حروف، اعداد، زیرخط، خط‌تیره و اسلش استفاده کنند.</li>"
+				+ "<li>این خطا معمولاً به دلیل یک افزونهٔ بدکدنویسی‌شده یا یک datapack معیوب رخ می‌دهد.</li>" + "</ul>"
+				+ "<p><b>نکتهٔ مهم:</b> از ابزار <b>grepr</b> یا <b>fgrepr</b> در نوار کناری استفاده کنید و گزینهٔ <b>«جستجو در فایل‌های JAR»</b> را فعال کنید تا متوجه شوید کدام افزونه این کلید نامعتبر را دارد.</p>";
+	}
+
+	@Override
+	public String nombre_error_clave_registro_mayusculas() {
+		return "کلید ثبت با حروف بزرگ یا نویسه‌های نامعتبر";
+	}
+
+	@Override
+	public String solucion_buscar_clave_en_archivos() {
+		return "از 'grepr' یا 'fgrepr' همراه با «جستجو در فایل‌های JAR» برای یافتن افزونهٔ مقصر استفاده کنید.";
+	}
+
+	@Override
+	public String solucion_eliminar_mod_reciente() {
+		return "اگر نتوانستید افزونه را شناسایی کنید، افزونه‌های اخیر را حذف کنید، به‌ویژه آن‌هایی که بلوک، آیتم یا ابزار اضافه می‌کنند.";
+	}
 
 }

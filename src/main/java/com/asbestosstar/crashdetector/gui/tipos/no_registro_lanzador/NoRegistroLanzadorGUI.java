@@ -503,5 +503,4 @@ public abstract class NoRegistroLanzadorGUI extends JDialog implements CrashDete
 	@Override
 	public abstract void init();
 
-
 }

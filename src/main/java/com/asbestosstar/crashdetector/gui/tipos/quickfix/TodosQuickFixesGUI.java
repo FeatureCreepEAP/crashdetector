@@ -150,5 +150,4 @@ public abstract class TodosQuickFixesGUI extends JScrollPane implements CrashDet
 	@Override
 	public abstract void init();
 
-	
 }

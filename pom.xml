@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.asbestosstar</groupId>
 	<artifactId>crashdetector</artifactId>
-	<version>0.3.6.6</version>
+	<version>0.3.6.7</version>
 	
 	
 	<!-- Add necessary metadata for Maven Central -->
@@ -252,15 +252,19 @@
 
 	</dependencies>
 	<repositories>
+	
+	
+	
+	
+		<repository>
+			<id>central</id>
+			<url>https://repo1.maven.org/maven2/</url>
+		</repository>
 		<repository>
 			<id>jitpack.io</id>
 			<url>https://www.jitpack.io</url>
 		</repository>
-		<repository>
-			<id>velocity</id>
-			<name>velocity</name>
-			<url>https://nexus.velocitypowered.com/repository/maven-public/</url>
-		</repository>
+	
 		<repository>
 			<id>cursemaven</id>
 			<name>cursemaven</name>
@@ -276,7 +280,11 @@
 			<name>mangorage</name>
 			<url>https://maven.mangorage.org/releases/</url>
 		</repository>
-	
+		<repository>
+			<id>velocity</id>
+			<name>velocity</name>
+			<url>https://nexus.velocitypowered.com/repository/maven-public/</url>
+		</repository>
 		
 	</repositories>
 	<properties>

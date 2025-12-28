@@ -37,8 +37,8 @@ public class DescompilarCFR {
 			if (b2 == null) {
 				CrashDetectorLogger.log("no b2 CFR " + clase);
 				return null;
-		}
 			}
+		}
 
 		final StringBuilder salida = new StringBuilder();
 
@@ -139,9 +139,7 @@ public class DescompilarCFR {
 			return null;
 		}
 	}
-	
-	
-	
+
 	/**
 	 * Normaliza un nombre de clase a formato interno ASM: a/b/C Soporta: -
 	 * com.ejemplo.Clase - com/ejemplo/Clase - com/ejemplo/Clase.class -
@@ -163,10 +161,5 @@ public class DescompilarCFR {
 		s = s.replace('.', '/');
 		return s;
 	}
-	
-	
-	
-	
-	
-	
+
 }

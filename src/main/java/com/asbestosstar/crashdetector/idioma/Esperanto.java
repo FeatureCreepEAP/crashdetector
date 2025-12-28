@@ -1185,8 +1185,8 @@ public class Esperanto implements Idioma {
 
 	@Override
 	public String mensajeCargaChunk() {
-	    return "<b style='color:#" + config.obtenerColorError()
-	            + "'>Okazis escepto dum la mondo ŝargis chunk-ojn. Se ĝi ekzistas por via platformo, eble FeatureRecycler povas solvi la problemon. https://www.curseforge.com/minecraft/mc-mods/feature-recycler</b>";
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>Okazis escepto dum la mondo ŝargis chunk-ojn. Se ĝi ekzistas por via platformo, eble FeatureRecycler povas solvi la problemon. https://www.curseforge.com/minecraft/mc-mods/feature-recycler</b>";
 	}
 
 	@Override
@@ -4771,335 +4771,456 @@ public class Esperanto implements Idioma {
 
 	@Override
 	public String necesitasInstalarCfr() {
-	    String sistema = System.getProperty("os.name").toLowerCase();
-	    StringBuilder mensaje = new StringBuilder();
-	    mensaje.append("<html>")
-	           .append("Vi devas instali CFR (Class File Reader) por uzi tiun ĉi funkcion.<br><br>");
+		String sistema = System.getProperty("os.name").toLowerCase();
+		StringBuilder mensaje = new StringBuilder();
+		mensaje.append("<html>").append("Vi devas instali CFR (Class File Reader) por uzi tiun ĉi funkcion.<br><br>");
 
-	    if (sistema.contains("linux") || sistema.contains("netbsd") || sistema.contains("freebsd")) {
-	        mensaje.append("En sistemoj Linux, NetBSD aŭ FreeBSD, vi povas instali CFR per via pakaĵadministrilo.<br>")
-	               .append("Serĉu la pakaĵon ĉe: <a href=\"https://pkgs.org/search/?q=cfr\">https://pkgs.org/search/?q=cfr</a><br><br>");
-	    }
+		if (sistema.contains("linux") || sistema.contains("netbsd") || sistema.contains("freebsd")) {
+			mensaje.append("En sistemoj Linux, NetBSD aŭ FreeBSD, vi povas instali CFR per via pakaĵadministrilo.<br>")
+					.append("Serĉu la pakaĵon ĉe: <a href=\"https://pkgs.org/search/?q=cfr\">https://pkgs.org/search/?q=cfr</a><br><br>");
+		}
 
-	    mensaje.append("Alternative, vi povas elŝuti la modifitan version uzatan de FabricMC de:<br>")
-	           .append("<a href=\"https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar\">")
-	           .append("https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar</a><br><br>")
-	           .append("Konservu ĝin en la sekva dosierujo:<br>")
-	           .append("<b>")
-	           .append(new java.io.File(System.getProperty("user.home"), "crash_detector/cfr/").getAbsolutePath())
-	           .append("</b><br><br>")
-	           .append("⚠️ <b>Grava:</b> post instali CFR, vi devas restartigi la modon por ke ĝi ĝuste rekonu ĝin.")
-	           .append("</html>");
-	    return mensaje.toString();
+		mensaje.append("Alternative, vi povas elŝuti la modifitan version uzatan de FabricMC de:<br>")
+				.append("<a href=\"https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar\">")
+				.append("https://maven.fabricmc.net/net/fabricmc/cfr/0.2.2/cfr-0.2.2.jar</a><br><br>")
+				.append("Konservu ĝin en la sekva dosierujo:<br>").append("<b>")
+				.append(new java.io.File(System.getProperty("user.home"), "crash_detector/cfr/").getAbsolutePath())
+				.append("</b><br><br>")
+				.append("⚠️ <b>Grava:</b> post instali CFR, vi devas restartigi la modon por ke ĝi ĝuste rekonu ĝin.")
+				.append("</html>");
+		return mensaje.toString();
 	}
 
 	@Override
 	public String cfrNoHayRetrato() {
-	    return "Neniu portreto disponebla";
+		return "Neniu portreto disponebla";
 	}
 
 	@Override
 	public String cfrClaseNoEncontrada(String nombreClase) {
-	    return "Ne eblis trovi la klason: " + nombreClase;
+		return "Ne eblis trovi la klason: " + nombreClase;
 	}
 
 	@Override
 	public String tituloCfrSakura() {
-	    return "Malfasilaĵilo CFR – Sakura Riddle (Neoficiala)";
+		return "Malfasilaĵilo CFR – Sakura Riddle (Neoficiala)";
 	}
 
 	@Override
 	public String cfrClaseActual() {
-	    return "Nuna klaso";
+		return "Nuna klaso";
 	}
 
 	@Override
 	public String cfrRetratoDeSakura() {
-	    return "Portreto de Sakura Riddle";
+		return "Portreto de Sakura Riddle";
 	}
 
 	@Override
 	public String cfrErrorCargarRetrato() {
-	    return "Eraro dum ŝargado de la portreto";
+		return "Eraro dum ŝargado de la portreto";
 	}
-	
+
 	public String noticiaLegalCFR() {
-	    return "Ĉi tiu grafika uzantinterfaco (GUI) por malfasili modojn estas dizajnita por helpi uzantojn identigi la kialojn de programeraroj. "
-	            + "Tamen, malfasilo de modoj povas esti necesa, kaj uzantoj devas zorgi ne uzi la generitan kodon por transpasi la Federan Leĝon pri Aŭtorrajtoj. "
-	            + "Oni rekomendas kontroli la permesilon de la rilata mod antaŭ ol uzi ajnan akiritan kodon. Plie, ofte modoj ofertas sian fontkodon oficiale, "
-	            + "kiu kutime estas pli klara kaj pli facile komprenebla ol malfasilita kodo. Memorindas ke respekto al intelekta propraĵo kaj uzpermesiloj estas fundamenta por "
-	            + "la mod-elsvolva komunumo. Vi povas konsulti la Federan Leĝon pri Aŭtorrajtoj ĉe: "
-	            + "<a href=\"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf\" target=\"_blank\">Ley Federal de Derechos de Autor (Hispane)</a> "
-	            + "kaj la anglan version ĉi tie: <a href=\"https://www.indautor.gob.mx/documentos/marco-juridico/L_Fed_Derecho_de_Autor_(English).pdf\" target=\"_blank\">Copyright Law (Angle)</a>. "
-	            + "Ĉar ni estas en CurseForge, ni ankaŭ donas ligilon al la Usona Leĝo pri Aŭtorrajto: "
-	            + "<a href=\"https://www.copyright.gov/title17/title17.pdf\" target=\"_blank\">U.S. Copyright Law</a>. "
-	            + "Krome, rekomendiĝas ke uzantoj esploru la leĝojn aplikeblajn en sia propra loko. "
-	            + "Nia GUI estas nur por simplaj kontroloj; por pli progresinta analizo, oni devus uzi la Forkon Enigma de FabricMC ĉe "
-	            + "<a href=\"https://github.com/FabricMC/Enigma\" target=\"_blank\">GitHub</a>. Se oni deziras redakti JAR-dosierojn por flikado sen disponebla fontkodo, oni povas uzi Recaf ĉe "
-	            + "<a href=\"https://recaf.coley.software/home.html\" target=\"_blank\">ĝia retejo</a>.";
+		return "Ĉi tiu grafika uzantinterfaco (GUI) por malfasili modojn estas dizajnita por helpi uzantojn identigi la kialojn de programeraroj. "
+				+ "Tamen, malfasilo de modoj povas esti necesa, kaj uzantoj devas zorgi ne uzi la generitan kodon por transpasi la Federan Leĝon pri Aŭtorrajtoj. "
+				+ "Oni rekomendas kontroli la permesilon de la rilata mod antaŭ ol uzi ajnan akiritan kodon. Plie, ofte modoj ofertas sian fontkodon oficiale, "
+				+ "kiu kutime estas pli klara kaj pli facile komprenebla ol malfasilita kodo. Memorindas ke respekto al intelekta propraĵo kaj uzpermesiloj estas fundamenta por "
+				+ "la mod-elsvolva komunumo. Vi povas konsulti la Federan Leĝon pri Aŭtorrajtoj ĉe: "
+				+ "<a href=\"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFDA.pdf\" target=\"_blank\">Ley Federal de Derechos de Autor (Hispane)</a> "
+				+ "kaj la anglan version ĉi tie: <a href=\"https://www.indautor.gob.mx/documentos/marco-juridico/L_Fed_Derecho_de_Autor_(English).pdf\" target=\"_blank\">Copyright Law (Angle)</a>. "
+				+ "Ĉar ni estas en CurseForge, ni ankaŭ donas ligilon al la Usona Leĝo pri Aŭtorrajto: "
+				+ "<a href=\"https://www.copyright.gov/title17/title17.pdf\" target=\"_blank\">U.S. Copyright Law</a>. "
+				+ "Krome, rekomendiĝas ke uzantoj esploru la leĝojn aplikeblajn en sia propra loko. "
+				+ "Nia GUI estas nur por simplaj kontroloj; por pli progresinta analizo, oni devus uzi la Forkon Enigma de FabricMC ĉe "
+				+ "<a href=\"https://github.com/FabricMC/Enigma\" target=\"_blank\">GitHub</a>. Se oni deziras redakti JAR-dosierojn por flikado sen disponebla fontkodo, oni povas uzi Recaf ĉe "
+				+ "<a href=\"https://recaf.coley.software/home.html\" target=\"_blank\">ĝia retejo</a>.";
 	}
-	
+
 	@Override
 	public String botonDescargarCfr() {
-	    return "Elŝuti CFR";
+		return "Elŝuti CFR";
 	}
 
 	@Override
 	public String botonAbrirCarpetaCfr() {
-	    return "Malfermi instalan dosierujon";
+		return "Malfermi instalan dosierujon";
 	}
+
 	@Override
 	public String colorFondoPrincipal() {
-	    return "Ĉefa fona koloro";
+		return "Ĉefa fona koloro";
 	}
 
 	@Override
 	public String colorTextoBotonReset() {
-	    return "Koloro de la teksto de la restar-butono";
+		return "Koloro de la teksto de la restar-butono";
 	}
 
 	@Override
 	public String colorTextoCampoBuscar() {
-	    return "Koloro de la serĉkampa teksto";
+		return "Koloro de la serĉkampa teksto";
 	}
 
 	@Override
 	public String colorTextoComboFiltro() {
-	    return "Koloro de la teksto de la falmenuo de filtrado";
+		return "Koloro de la teksto de la falmenuo de filtrado";
 	}
 
 	@Override
 	public String colorTextoRenderer() {
-	    return "Koloro de la teksto de la bildigilo (renderilo)";
+		return "Koloro de la teksto de la bildigilo (renderilo)";
 	}
 
 	@Override
 	public String colorTextoOverlayCarga() {
-	    return "Koloro de la teksto de la ŝarĝa supermeto (overlay)";
+		return "Koloro de la teksto de la ŝarĝa supermeto (overlay)";
 	}
 
 	@Override
 	public String colorBorde() {
-	    return "Koloro de la bordero";
+		return "Koloro de la bordero";
 	}
-	
+
 	@Override
 	public String colorFondoRetrato() {
-	    return "Fona koloro en portreta reĝimo";
+		return "Fona koloro en portreta reĝimo";
 	}
 
 	@Override
 	public String colorEnlaceCompartir() {
-	    return "Koloro de la ligilo por kunhavigi";
+		return "Koloro de la ligilo por kunhavigi";
 	}
 
 	@Override
 	public String colorFondoCampoCompartir() {
-	    return "Fona koloro de la kunhaviga kampo";
+		return "Fona koloro de la kunhaviga kampo";
 	}
 
 	@Override
 	public String rosaFondo() {
-	    return "Rozkolora fono";
+		return "Rozkolora fono";
 	}
 
 	@Override
 	public String rosaSuave() {
-	    return "Milda rozo";
+		return "Milda rozo";
 	}
 
 	@Override
 	public String moradoAcento() {
-	    return "Akkentpurpuro";
+		return "Akkentpurpuro";
 	}
 
 	@Override
 	public String textoOscuro() {
-	    return "Malhela teksto";
+		return "Malhela teksto";
 	}
 
 	@Override
 	public String bordeSuave() {
-	    return "Milda bordero";
+		return "Milda bordero";
 	}
 
 	@Override
 	public String fondoCampo() {
-	    return "Kampa fono";
+		return "Kampa fono";
 	}
 
 	@Override
 	public String fondoVistaPrevia() {
-	    return "Antaŭrigarda fono";
+		return "Antaŭrigarda fono";
 	}
-	
+
 	@Override
 	public String sintaxisConstructor() {
-	    return "Sintaksa koloro: konstruilo";
+		return "Sintaksa koloro: konstruilo";
 	}
 
 	@Override
 	public String sintaxisMensajeAyudar() {
-	    return "Sintaksa koloro: helpmesaĝo";
+		return "Sintaksa koloro: helpmesaĝo";
 	}
 
 	@Override
 	public String sintaxisEtiquetasHtml() {
-	    return "Sintaksa koloro: HTML-etikedoj";
+		return "Sintaksa koloro: HTML-etikedoj";
 	}
 
 	@Override
 	public String colorFondoVentana() {
-	    return "Fena fona koloro";
+		return "Fena fona koloro";
 	}
 
 	@Override
 	public String colorPanel() {
-	    return "Panela koloro";
+		return "Panela koloro";
 	}
 
 	@Override
 	public String colorBotonTexto() {
-	    return "Butona teksta koloro";
+		return "Butona teksta koloro";
 	}
 
 	@Override
 	public String colorCampo() {
-	    return "Kampa koloro";
+		return "Kampa koloro";
 	}
 
 	@Override
 	public String colorBordeDestacado() {
-	    return "Elstara bordera koloro";
+		return "Elstara bordera koloro";
 	}
 
 	@Override
 	public String colorSeleccionTexto() {
-	    return "Teksta elekta fona koloro";
+		return "Teksta elekta fona koloro";
 	}
+
 	@Override
 	public String colorTextoSeleccionado() {
-	    return "Koloro de la elektita teksto";
+		return "Koloro de la elektita teksto";
 	}
 
 	@Override
 	public String colorEstadoExito() {
-	    return "Koloro de stato: sukceso";
+		return "Koloro de stato: sukceso";
 	}
 
 	@Override
 	public String colorEstadoFallo() {
-	    return "Koloro de stato: malsukceso";
+		return "Koloro de stato: malsukceso";
 	}
 
 	@Override
 	public String colorEstadoInstantanea() {
-	    return "Koloro de stato: tujtempa";
+		return "Koloro de stato: tujtempa";
 	}
 
 	@Override
 	public String colorResultadoAnadido() {
-	    return "Koloro de aldonita rezulto";
+		return "Koloro de aldonita rezulto";
 	}
 
 	@Override
 	public String colorResultadoEliminado() {
-	    return "Koloro de forigita rezulto";
+		return "Koloro de forigita rezulto";
 	}
 
 	@Override
 	public String colorBordeScroll() {
-	    return "Koloro de la rul-streka bordero";
+		return "Koloro de la rul-streka bordero";
 	}
 
 	@Override
 	public String colorFondoPanel() {
-	    return "Fona koloro de la panelo";
+		return "Fona koloro de la panelo";
 	}
 
 	@Override
 	public String colorBeigeListas() {
-	    return "Beĝa koloro de listoj";
+		return "Beĝa koloro de listoj";
 	}
 
 	@Override
 	public String colorTextoListas() {
-	    return "Teksta koloro en listoj";
+		return "Teksta koloro en listoj";
 	}
 
 	@Override
 	public String colorBordeListas() {
-	    return "Bordera koloro de listoj";
+		return "Bordera koloro de listoj";
 	}
 
 	@Override
 	public String colorBotonFondo() {
-	    return "Fona koloro de la butono";
+		return "Fona koloro de la butono";
 	}
 
 	@Override
 	public String colorBordeBoton() {
-	    return "Bordera koloro de la butono";
+		return "Bordera koloro de la butono";
 	}
 
 	@Override
 	public String colorDoradoTexto() {
-	    return "Orkolora teksto";
+		return "Orkolora teksto";
 	}
-	
+
 	@Override
 	public String colorPila() {
-	    return "Koloro de la stakspuro (stack trace)";
+		return "Koloro de la stakspuro (stack trace)";
 	}
 
 	@Override
 	public String colorTextoPanel() {
-	    return "Panea teksta koloro";
+		return "Panea teksta koloro";
 	}
 
 	@Override
 	public String colorTextoNegro() {
-	    return "Nigra teksta koloro";
+		return "Nigra teksta koloro";
 	}
 
 	@Override
 	public String colorTextoPrincipal() {
-	    return "Ĉefa teksta koloro";
+		return "Ĉefa teksta koloro";
 	}
 
 	@Override
 	public String colorFondoResultados() {
-	    return "Fona koloro de la rezultoj";
+		return "Fona koloro de la rezultoj";
 	}
 
 	@Override
 	public String colorEstado() {
-	    return "Koloro de stato";
+		return "Koloro de stato";
 	}
 
 	@Override
 	public String colorTextoDescripcion() {
-	    return "Priskriba teksta koloro";
+		return "Priskriba teksta koloro";
 	}
 
 	@Override
 	public String colorTextoEstado() {
-	    return "Stata teksta koloro";
+		return "Stata teksta koloro";
 	}
 
 	@Override
 	public String colorTextoExtra() {
-	    return "Kroma teksta koloro";
+		return "Kroma teksta koloro";
 	}
 
 	@Override
 	public String colorSeparador() {
-	    return "Koloro de la dividilo";
+		return "Koloro de la dividilo";
 	}
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public String problema_safe_fetch32_jdk17() {
+		return "Detektita indiĝena eraro <code>StubRoutines::SafeFetch32</code>. "
+				+ "Ĉi tiu problemo okazas en macOS kun JDK 17.0.9 kaj estas riparita en JDK 17.0.10 aŭ pli nova. https://github.com/async-profiler/async-profiler/issues/747 https://www.minecraftforum.net/forums/support/java-edition-support/3192465-issues-with-jre-17-0-9-in-macos-sonoma-14-2-1";
+	}
+
+	@Override
+	public String nombre_problema_safe_fetch32_jdk17() {
+		return "Indiĝena eraro SafeFetch32 en JDK 17.0.9 (macOS)";
+	}
+
+	@Override
+	public String solucion_actualizar_jdk_macos() {
+		return "Ĝisdatigu vian JDK al versio 17.0.10 aŭ pli nova (ekz. 17.0.15).";
+	}
+
+	@Override
+	public String solucion_usar_lanzador_con_jdk_actualizado() {
+		return "Se vi uzas lanĉilon kiel MultiMC, Prism Launcher aŭ TLauncher, agordu ĝin por uzi pli novan JDK. "
+				+ "Iuj jam inkluzivas JDK 17.0.15 integrite.";
+	}
+
+	@Override
+	public String solucion_desactivar_spark_mod() {
+		return "La mod Spark ankaŭ povas kontribui al ĉi tiu eraro. Konsideru ĝin provizore malŝalti. https://www.reddit.com/r/fabricmc/comments/17snlol/game_crashing_when_creating_world/";
+	}
+
+	@Override
+	public String problema_mcef_inicializacion_html() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "La mod MCEF (Chromium Embedded Framework) kaŭzas silentan ĉeson.</b>" + "<ul>"
+				+ "<li>MCEF estas iniciatigata ĉe la fino de la protokolo, kio normale signifas ke la ludo haltis dum ŝargado.</li>"
+				+ "<li>Ĉi tiu mod estas konata pro kaŭzi kraŝojn en Linux, macOS aŭ kun certaj versioj de Java.</li>"
+				+ "<li>Ne ĉiam aperas klara eraro, sed la ludo neniam atingas la ĉefmenuon.</li>" + "</ul>"
+				+ "<p>Se vi ne bezonas retumilan funkcion en la ludo (kiel retaj mapoj aŭ enigitaj paĝoj), forigu la modon.</p>";
+	}
+
+	@Override
+	public String nombre_problema_mcef_inicializacion() {
+		return "Problemo de iniciatigo de MCEF (mod de enigita retumilo)";
+	}
+
+	@Override
+	public String solucion_eliminar_mod_mcef() {
+		return "Forigu la dosieron de la mod MCEF (serĉu 'mcef' en la dosiernomo) el la dosierujo 'mods'.";
+	}
+
+	@Override
+	public String solucion_verificar_compatibilidad_mcef() {
+		return "Se vi vere bezonas ĝin, certigu, ke vi uzas version kongruan kun via operaciumo kaj Minecraft-versio.";
+	}
+
+	@Override
+	public String conflicto_iris_optifine_html() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Konflikto estis trovita inter <b>OptiFine</b> kaj <b>Iris/Oculus</b>.</b>" + "<ul>"
+				+ "<li>OptiFine modifas la bildigon de Minecraft nekongrue kun Iris aŭ Oculus.</li>"
+				+ "<li>La eraro <code>MixinLevelRenderer failed injection check</code> devenas el <code>mixins.iris.json</code> aŭ <code>mixins.oculus.json</code>.</li>"
+				+ "</ul>" + "<p>Ĉi tiuj modoj ne uzeblas kune. Forigu OptiFine por uzi shaders kun Iris aŭ Oculus.</p>";
+	}
+
+	@Override
+	public String nombre_conflicto_iris_optifine() {
+		return "Konflikto inter OptiFine kaj Iris/Oculus";
+	}
+
+	@Override
+	public String solucion_eliminar_optifine() {
+		return "Forigu la dosieron de OptiFine el la dosierujo 'mods'.";
+	}
+
+	@Override
+	public String solucion_usar_iris_sin_optifine() {
+		return "Uzu Iris aŭ Oculus sen OptiFine por modernaj shaders.";
+	}
+
+	@Override
+	public String conflicto_modernfix_optifine_html() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Konflikto estis trovita inter <b>ModernFix</b> kaj <b>OptiFine</b>.</b>" + "<ul>"
+				+ "<li>ModernFix ne estas kongrua kun OptiFine ĉar ĝi rompas funkciojn de Forge kaj malrapidigas lanĉon.</li>"
+				+ "<li>ModernFix mem avertas: <i>\"Use of ModernFix with OptiFine is not supported\"</i>.</li>"
+				+ "</ul>" + "<p>Vi devas forigi unu el la du modoj por ke la ludo funkciu ĝuste.</p>";
+	}
+
+	@Override
+	public String nombre_conflicto_modernfix_optifine() {
+		return "Konflikto inter ModernFix kaj OptiFine";
+	}
+
+	@Override
+	public String solucion_eliminar_optifine_o_modernfix() {
+		return "Forigu OptiFine aŭ ModernFix el la dosierujo 'mods'. Ili ne uzeblas kune.";
+	}
+
+	@Override
+	public String solucion_usar_alternativa_modernfix() {
+		return "Se vi bezonas optimumigojn, konsideru uzi nur OptiFine, aŭ anstataŭigi ModernFix per pli malpezaĵaj modoj kiel FerriteCore aŭ EntityCulling.";
+	}
+
+	@Override
+	public String error_clave_registro_mayusculas_html(String clave) {
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Eraro: nevalida registra ŝlosilo kun nepermesitaj signoj.</b>" + "<ul>"
+				+ "<li><b>Detektita ŝlosilo:</b> <code>" + escapeHtml(clave) + "</code></li>"
+				+ "<li>En Minecraft, ĉiuj registraj ŝlosiloj (etikedoj, receptoj, atingoj, ktp.) devas esti <b>minusklaj</b> kaj enhavi nur literojn, ciferojn, substrekojn, strekojn kaj oblikvajn strekojn.</li>"
+				+ "<li>Ĉi tiu eraro kutime estas kaŭzita de malbone programita mod aŭ difektita datapack.</li>"
+				+ "</ul>"
+				+ "<p><b>Grava konsilo:</b> Uzu la ilon <b>grepr</b> aŭ <b>fgrepr</b> en la flankpanelo kaj aktivigu la opcion <b>\"Serĉi en JAR-dosieroj\"</b> por trovi, kiu mod enhavas ĉi tiun neĝustan ŝlosilon.</p>";
+	}
+
+	@Override
+	public String nombre_error_clave_registro_mayusculas() {
+		return "Registra ŝlosilo kun majuskloj aŭ nevalidaj signoj";
+	}
+
+	@Override
+	public String solucion_buscar_clave_en_archivos() {
+		return "Uzu 'grepr' aŭ 'fgrepr' kun \"Serĉi en JAR-dosieroj\" por lokalizi la kulpan modon.";
+	}
+
+	@Override
+	public String solucion_eliminar_mod_reciente() {
+		return "Se vi ne povas identigi la modon, forigu ĵusajn modojn, precipe tiujn, kiuj aldonas blokojn, objektojn aŭ ilojn.";
+	}
+
 }

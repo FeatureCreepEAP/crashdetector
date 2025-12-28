@@ -266,38 +266,35 @@ public class Buscardor {
 		}
 	}
 
-
 	public static List<ArchivoDeMod> obtenerTodosLosModsYSubmodsRecursivos() {
-	    List<ArchivoDeMod> modsYSubmods = new ArrayList<>();
+		List<ArchivoDeMod> modsYSubmods = new ArrayList<>();
 
-	    // Recorrer todos los mods cargados
-	    for (ArchivoDeMod mod : mods) {
-	        // Añadir el mod principal
-	        modsYSubmods.add(mod);
-	        
-	        // Si el mod tiene submods, añadirlos de forma recursiva
-	        agregarSubmodsRecursivos(mod, modsYSubmods);
-	    }
+		// Recorrer todos los mods cargados
+		for (ArchivoDeMod mod : mods) {
+			// Añadir el mod principal
+			modsYSubmods.add(mod);
 
-	    return modsYSubmods;
+			// Si el mod tiene submods, añadirlos de forma recursiva
+			agregarSubmodsRecursivos(mod, modsYSubmods);
+		}
+
+		return modsYSubmods;
 	}
 
 	/**
 	 * Método recursivo que añade todos los submods de un mod dado.
 	 */
 	public static void agregarSubmodsRecursivos(ArchivoDeMod mod, List<ArchivoDeMod> modsYSubmods) {
-	    // Si el mod tiene submods, los obtenemos y los añadimos recursivamente
-	    List<ArchivoDeMod> submods = mod.mods_en_mods();  // Asegúrate de que esta función exista o sea creada
+		// Si el mod tiene submods, los obtenemos y los añadimos recursivamente
+		List<ArchivoDeMod> submods = mod.mods_en_mods(); // Asegúrate de que esta función exista o sea creada
 
-	    for (ArchivoDeMod submod : submods) {
-	        modsYSubmods.add(submod);
-	        // Llamada recursiva para explorar submods del submod
-	        agregarSubmodsRecursivos(submod, modsYSubmods);
-	    }
+		for (ArchivoDeMod submod : submods) {
+			modsYSubmods.add(submod);
+			// Llamada recursiva para explorar submods del submod
+			agregarSubmodsRecursivos(submod, modsYSubmods);
+		}
 	}
 
-	
-	
 	/**
 	 * Prepara una ruta para publicación, anonimizando si es necesario.
 	 *
@@ -342,17 +339,13 @@ public class Buscardor {
 		}
 		return resultados;
 	}
-	
+
 	/**
 	 * Obtiene los bytes de una clase desde cualquier mod cargado.
 	 * <p>
-	 * - Acepta nombres en formato:
-	 *   - com.ejemplo.Clase
-	 *   - com/ejemplo/Clase
-	 *   - com/ejemplo/Clase.class
-	 *   - Lcom/ejemplo/Clase;
-	 * - Devuelve SIEMPRE null si la clase no existe.
-	 * - Llama automáticamente a cargarYPrecargarClasesEnCache().
+	 * - Acepta nombres en formato: - com.ejemplo.Clase - com/ejemplo/Clase -
+	 * com/ejemplo/Clase.class - Lcom/ejemplo/Clase; - Devuelve SIEMPRE null si la
+	 * clase no existe. - Llama automáticamente a cargarYPrecargarClasesEnCache().
 	 *
 	 * @param nombreClase nombre de la clase
 	 * @return byte[] de la clase o null si no existe
@@ -368,7 +361,8 @@ public class Buscardor {
 		for (ArchivoDeMod mod : obtenerTodosLosModsYSubmodsRecursivos()) {
 			try {
 				if (mod.existeClase(claseInterna)) {
-					CrashDetectorLogger.log("tenemos clase " + claseInterna + " en mod " + mod.ubicacion_para_publicar());
+					CrashDetectorLogger
+							.log("tenemos clase " + claseInterna + " en mod " + mod.ubicacion_para_publicar());
 					byte[] bytes = mod.obtenerBytesClase(claseInterna);
 					if (bytes != null) {
 						return bytes;
@@ -376,8 +370,8 @@ public class Buscardor {
 					CrashDetectorLogger.log("no bytes");
 				}
 			} catch (Throwable t) {
-				CrashDetectorLogger.log(
-						"Error obteniendo bytes de " + claseInterna + " en " + mod.ubicacion_para_publicar());
+				CrashDetectorLogger
+						.log("Error obteniendo bytes de " + claseInterna + " en " + mod.ubicacion_para_publicar());
 				CrashDetectorLogger.logException(t);
 			}
 		}
@@ -385,16 +379,10 @@ public class Buscardor {
 		return null;
 	}
 
-	
-	
-	
 	/**
-	 * Normaliza un nombre de clase al formato interno de ASM: a/b/C
-	 * Soporta:
-	 *  - com.ejemplo.Clase
-	 *  - com/ejemplo/Clase
-	 *  - com/ejemplo/Clase.class
-	 *  - Lcom/ejemplo/Clase;
+	 * Normaliza un nombre de clase al formato interno de ASM: a/b/C Soporta: -
+	 * com.ejemplo.Clase - com/ejemplo/Clase - com/ejemplo/Clase.class -
+	 * Lcom/ejemplo/Clase;
 	 */
 	private static String normalizarNombreClaseInterno(String nombre) {
 		if (nombre == null) {
@@ -421,8 +409,6 @@ public class Buscardor {
 
 		return s;
 	}
-
-	
 
 	/**
 	 * Convierte una lista de mods a sus ubicaciones para publicación.
