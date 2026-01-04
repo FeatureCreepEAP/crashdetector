@@ -105,7 +105,8 @@ public class FaltasClases implements Verificaciones {
 
 			if (numero_linea_consola > 0) {
 				String linea_menos1 = cont.split(nl)[numero_linea_consola - 1];
-				if (linea_menos1.toLowerCase().contains("catching")) {
+				if (linea_menos1.toLowerCase().contains("catching")
+						|| linea_menos1.toLowerCase().contains("rhino.CachedClassInfo")) {
 					continue; // Skip catching errors
 				}
 			}
@@ -200,11 +201,17 @@ public class FaltasClases implements Verificaciones {
 		if (numero_de_linea > 0) {
 			String linea_menos1 = consola.contenido_verificar.split(nl)[numero_de_linea - 1];
 			// CrashDetectorLogger.log(linea_menos1+ " linea menos 1");
-			if (linea_menos1.toLowerCase().contains("catching")) {// A veces lineas tiene esta
+			if (linea_menos1.toLowerCase().contains("catching")
+					|| linea_menos1.toLowerCase().contains("rhino.CachedClassInfo")) {// A veces lineas tiene esta
 				return;// TODO apender a Advertencia faltas clases
 			}
 		}
-
+		// [28Dec2025 00:14:05.843] [modloading-worker-0/INFO] [STDERR/]:
+		// [dev.latvian.mods.rhino.CachedClassInfo:getDeclaredMethods:194]: [Rhino]
+		// Failed to get declared methods for
+		// com.momosoftworks.coldsweat.compat.kubejs.KubeBindings:
+		// java.lang.NoClassDefFoundError:
+		// dev/latvian/mods/kubejs/level/BlockContainerJS
 		String claseFormateada = formatearClase(claseCruda);
 		if (!esNombreClaseValido(claseFormateada)) {
 			return;
@@ -515,8 +522,24 @@ public class FaltasClases implements Verificaciones {
 		if (clasesFiltradas == null || clasesFiltradas.isEmpty())
 			return "";
 
-		StringBuilder html = new StringBuilder("<ul>");
+		// Copia filtrada para evitar modificar clasesFiltradas
+		Map<String, String> clasesParaMostrar = new LinkedHashMap<>(clasesFiltradas);
+
+		// eliminar voxy + org/sqlite/JDBC del mensaje final
 		for (Map.Entry<String, String> entry : clasesFiltradas.entrySet()) {
+			String clase = entry.getKey();
+			String origen = entry.getValue();
+			if ("org/sqlite/JDBC".equals(clase) && origen != null && origen.toLowerCase().contains("voxy")) {
+				clasesParaMostrar.remove(clase);
+			}
+		}
+
+		if (clasesParaMostrar.isEmpty()) {
+			return "";
+		}
+
+		StringBuilder html = new StringBuilder("<ul>");
+		for (Map.Entry<String, String> entry : clasesParaMostrar.entrySet()) {
 			String claseFormateada = entry.getKey();
 			String valor = !entry.getValue().isEmpty() ? " (" + entry.getValue() + ")" : "";
 			String enlace = enlacesPorClase.getOrDefault(claseFormateada, "");
@@ -550,9 +573,7 @@ public class FaltasClases implements Verificaciones {
 
 			if (claseFormateada.trim().startsWith("net/minecraft/") || claseFormateada.trim().startsWith("game/")
 					|| claseFormateada.trim().startsWith("juego/")
-					|| claseFormateada.trim().startsWith("obf/class_unknown")) {// TODO OBF y Seperar FCI porque no es
-																				// activo en MC no mas pero es activo en
-																				// Live2d Cubism
+					|| claseFormateada.trim().startsWith("obf/class_unknown")) {
 				if (!claseFormateada.trim().startsWith("net/minecraftforge/")) {
 					minecraft = true;
 				}

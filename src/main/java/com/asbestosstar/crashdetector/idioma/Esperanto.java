@@ -5222,5 +5222,258 @@ public class Esperanto implements Idioma {
 	public String solucion_eliminar_mod_reciente() {
 		return "Se vi ne povas identigi la modon, forigu ĵusajn modojn, precipe tiujn, kiuj aldonas blokojn, objektojn aŭ ilojn.";
 	}
+	@Override
+	public String error_entrypoint_fabric_html(String modNombre) {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Eraro dum ŝargado de la mod <b>" + escapeHtml(modNombre) + "</b>.</b>"
+	            + "<ul>"
+	            + "<li>La mod malsukcesis je la iniciatigo de unu el ĝiaj komponantoj (ekz. agordmenuo).</li>"
+	            + "<li>Tio kutime okazas pro nekongrueco kun la versio de Minecraft, Fabric aŭ aliaj modoj.</li>"
+	            + "</ul>"
+	            + "<p>Se la eraro persistas, forigu aŭ ĝisdatigu la mod <b>" + escapeHtml(modNombre) + "</b>.</p>";
+	}
+
+	@Override
+	public String nombre_error_entrypoint_fabric() {
+	    return "Eraro de iniciatigo de mod (Fabric Entrypoint)";
+	}
+
+	@Override
+	public String solucion_eliminar_mod(String modNombre) {
+	    return "Forigu la modon '" + modNombre + "' el la dosierujo 'mods'.";
+	}
+
+	@Override
+	public String solucion_actualizar_mod(String modNombre) {
+	    return "Ĝisdatigu la modon '" + modNombre + "' al versio kongrua kun via instalaĵo.";
+	}
+	@Override
+	public String error_en_garde_html() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Eraro rilata al la mod <b>En Garde!</b> estis trovita.</b>"
+	            + "<ul>"
+	            + "<li>Ĉi tiu mod aldonas proksimumkomatajn mekanikojn (parado, blokado, ktp.).</li>"
+	            + "<li>La eraro kutime okazas pro nekongrueco kun aliaj kombataj modoj (kiel Epic Fight, DualRiders, ktp.) aŭ pro uzo de malĝusta versio por via Minecraft.</li>"
+	            + "</ul>"
+	            + "<p>Se vi ne uzas altnivelan kombaton, konsideru forigi En Garde! por eviti konfliktojn.</p>";
+	}
+
+	@Override
+	public String nombre_error_en_garde() {
+	    return "Eraro en la mod En Garde!";
+	}
+
+	@Override
+	public String solucion_actualizar_en_garde() {
+	    return "Certigu, ke vi uzas la version de En Garde! kongruan kun via Minecraft-versio kaj ŝargilo (Fabric/Forge).";
+	}
+
+	@Override
+	public String solucion_eliminar_conflicto_mod_combate() {
+	    return "Se vi uzas aliajn kombatajn modojn (Epic Fight, Caelus, ktp.), malaktivigu ilin aŭ forigu En Garde! por eviti konfliktojn.";
+	}
+	
+	@Override
+	public String error_idletweaks_html() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Eraro kaŭzita de la mod <b>IdleTweaks</b> estis trovita.</b>"
+	            + "<ul>"
+	            + "<li>IdleTweaks provis liberigi neekzistantan retkanalon (<code>Tried to release unknown channel</code>).</li>"
+	            + "<li>Ĉi tiu eraro kutime okazas en malnovaj versioj de la mod aŭ kiam ĝi estas uzata sur misagorditaj serviloj.</li>"
+	            + "</ul>"
+	            + "<p>IdleTweaks estas mod por plibonigi vivkvaliton, sed ĝi povas kaŭzi malstabilecon. Konsideru ĝisdatigi aŭ forigi ĝin.</p>";
+	}
+
+	@Override
+	public String nombre_error_idletweaks() {
+	    return "Eraro en IdleTweaks (nekonata retkanalo)";
+	}
+
+	@Override
+	public String solucion_actualizar_idletweaks() {
+	    return "Ĝisdatigu IdleTweaks al la plej nova versio kongrua kun via Minecraft.";
+	}
+
+	@Override
+	public String solucion_eliminar_idletweaks() {
+	    return "Forigu IdleTweaks el la dosierujo 'mods' se vi ne bezonas ĝin.";
+	}
+	
+	@Override
+	public String mensagjePirataMC() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Aŭtentiga eraro (HTTP 401) estis trovita dum provo ensaluti en Minecraft.</b>"
+	            + "<p>Ĉi tiu eraro <b>malofte estas la rekta kialo de kraŝo</b>, sed ĝi indikas, ke vi uzas nevalidigitan konton (pirata kopio).</p>"
+	            + "<p>Oficialaj subtenkanaloj (korporaciaj projektoj, VTubers, kreadintoj de modpakaĵoj, ktp.) <b>ne povas helpi vin</b> se vi uzas piratan kopion, "
+	            + "pro limigoj en iliaj babilejaj reguloj, kontraktoj, interkonsentoj kun Mojang/Microsoft, aŭ reputaciaj politikoj.</p>"
+	            + "<p>Ĉi tiu kontrolo povas esti <b>malŝaltita en la korporaciaj agordoj</b> de la detektilo. "
+	            + "Averto: la kontraŭpirata detekto <b>ne estas perfekta</b> kaj povas aktiviĝi en programaj medioj, kun malstabila interreto, aŭ kun modifitaj lanĉiloj.</p>";
+	}
+
+	@Override
+	public String infoDeDerechosMiranda() {
+	    return "<b>Miranda-j rajtoj se vi tamen provas aliĝi al la subteno:</b>";
+	}
+
+	@Override
+	public String nombrePirataMC() {
+	    return "Pirata Minecraft";
+	}
+
+	@Override
+	public String desactivarVerificacionPirata() {
+	    return "Malŝalti kontraŭpiratan kontrolon";
+	}
+
+	@Override
+	public String comprarMC() {
+	    return "Aĉeti Minecraft";
+	}
+	
+	// --- LanzerNoAnimado ---
+	@Override
+	public String lanzer_no_animado_titulo(String id) {
+	    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+	        + "Vi uzas la lanĉilon <code>" + id + "</code>, kiu <b>ne estas en la listo de rekomenditaj lanĉiloj</b>.</b>";
+	}
+
+	@Override
+	public String lanzer_no_animado_problemas_comunes() {
+	    return "<p>Ĉiuj povas funkcii, sed nerekomenditaj lanĉiloj kutime kaŭzas:</p>"
+	        + "<ul>"
+	        + "<li>Difektitan instalaĵon de modoj aŭ la Aplikaĵo.</li>"
+	        + "<li>Ludo ne lanĉiĝas aŭ haltas sen klara eraro.</li>"
+	        + "<li>Nenormalan dosierujan strukturon (malfacilas diagnozon).</li>"
+	        + "<li>Neprevideblan konduton kun Java, memoro aŭ modoj.</li>"
+	        + "</ul>";
+	}
+
+	@Override
+	public String lanzer_no_animado_usar_animados() {
+	    return "Por pli bona sperto, uzu unu el la sekvaj rekomenditaj lanĉiloj:";
+	}
+
+	@Override
+	public String nombre_lanzer_no_animado() {
+	    return "Nerekomendita lanĉilo";
+	}
+
+	@Override
+	public String lanzer_no_animado_cambiar_a_animado() {
+	    return "Ŝanĝu al lanĉilo el la rekomendita listo.";
+	}
+
+	// --- LanzerDesAnimado ---
+	@Override
+	public String lanzer_desanimado_titulo(String id) {
+	    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+	        + "Vi uzas <b>malrekomenditan lanĉilon</b>: <code>" + id + "</code>.</b>";
+	}
+
+	@Override
+	public String lanzer_desanimado_problemas_comunes() {
+	    return "<p>Malrekomenditaj lanĉiloj povas kaŭzi:</p>"
+	        + "<ul>"
+	        + "<li>Difektitan instalaĵon de la Aplikaĵo aŭ modoj.</li>"
+	        + "<li>Ludo ne lanĉiĝas aŭ fiaskas sen bruo.</li>"
+	        + "<li>Nenormalan aranĝon de dosieroj (malfacilas depuradon).</li>"
+	        + "<li>Necerton pri kiel ĝi administras modojn, Java-n aŭ memoron.</li>"
+	        + "</ul>";
+	}
+
+	@Override
+	public String lanzer_desanimado_usar_animados() {
+	    return "Tre rekomendiĝas uzi unu el la jenaj lanĉiloj:";
+	}
+
+	@Override
+	public String nombre_lanzer_desanimado() {
+	    return "Malrekomendita lanĉilo";
+	}
+
+	@Override
+	public String lanzer_desanimado_cambiar_lanzer() {
+	    return "Ŝanĝu al rekomendita lanĉilo por ricevi subtenon.";
+	}
+	
+	// --- FaltaModAnimado ---
+	@Override
+	public String falta_mod_animado_titulo() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	        + "Mankas rekomenditaj modoj por ĉi tiu medio.</b>";
+	}
+	@Override
+	public String nombre_falta_mod_animado() {
+	    return "Mankantaj rekomenditaj modoj";
+	}
+	@Override
+	public String falta_mod_animado_instalar() {
+	    return "Instalu la rekomenditajn modojn por optimuma sperto.";
+	}
+
+	// --- TienesModDesAnimado ---
+	@Override
+	public String tienes_mod_desanimado_titulo() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	        + "Detektita nerekomenditaj modoj en via instalaĵo.</b>";
+	}
+	@Override
+	public String nombre_tienes_mod_desanimado() {
+	    return "Detektitaj nerekomenditaj modoj";
+	}
+	@Override
+	public String tienes_mod_desanimado_eliminar() {
+	    return "Forigu la nerekomenditajn modojn por eviti problemojn.";
+	}
+	
+	@Override
+	public String antimanipulacion_titulo() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	        + "Maldolĉa manipulado estis trovita en kritikaj dosieroj. Vi aŭ modifis la dosierojn aŭ uzas malfidindan lanĉilon.</b>";
+	}
+
+	@Override
+	public String nombre_antimanipulacion() {
+	    return "Manipulado detektita";
+	}
+
+	@Override
+	public String antimanipulacion_reinstalar() {
+	    return "Reinstalu la originalajn dosierojn por restaŭri la integrecon.";
+	}
+	
+	@Override public String configuracionCorporativa() { return "Korporaciaj Agordoj"; }
+	@Override public String idiomaRespaldo() { return "Rezerva Lingvo"; }
+	@Override public String buscardorHabilitado() { return "Ŝalti Serĉilon"; }
+	@Override public String nombreHerramienta() { return "Nomo de la Ilo"; }
+	@Override public String condenarPirateria() { return "Kondamni Piratadon"; }
+	@Override public String lanzadoresRecomendados() { return "Rekomenditaj Lanĉiloj"; }
+	@Override public String lanzadoresDesaconsejados() { return "Nerekomenditaj Lanĉiloj"; }
+	@Override public String modsRecomendados() { return "Rekomenditaj Modoj"; }
+	@Override public String modsDesaconsejados() { return "Nerekomenditaj Modoj"; }
+	@Override public String antiTamper() { return "KontraŭManiplado"; }
+	@Override public String proximamente() { return "Baldaŭ"; }
+	@Override public String informacion() { return "Informo"; }
+	@Override public String errorCargandoImagen() { return "Eraro dum ŝargado de bildo"; }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

@@ -5064,5 +5064,249 @@ public class Japones implements Idioma {
 	public String solucion_eliminar_mod_reciente() {
 		return "mod を特定できない場合は、特にブロック、アイテム、ツールを追加する最近導入した mod を削除してみてください。";
 	}
+	
+	@Override
+	public String error_entrypoint_fabric_html(String modNombre) {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "mod <b>" + escapeHtml(modNombre) + "</b> の読み込み中にエラーが発生しました。</b>"
+	            + "<ul>"
+	            + "<li>この mod はコンポーネント（例: 設定メニュー）の初期化に失敗しました。</li>"
+	            + "<li>これは通常、Minecraft や Fabric、または他の mod とのバージョン不整合によって発生します。</li>"
+	            + "</ul>"
+	            + "<p>エラーが続く場合は、mod <b>" + escapeHtml(modNombre) + "</b> を削除または更新してください。</p>";
+	}
+
+	@Override
+	public String nombre_error_entrypoint_fabric() {
+	    return "mod 初期化エラー (Fabric Entrypoint)";
+	}
+
+	@Override
+	public String solucion_eliminar_mod(String modNombre) {
+	    return "'mods' フォルダから mod '" + modNombre + "' を削除してください。";
+	}
+
+	@Override
+	public String solucion_actualizar_mod(String modNombre) {
+	    return "mod '" + modNombre + "' を現在の環境と互換性のあるバージョンに更新してください。";
+	}
+	@Override
+	public String error_en_garde_html() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "<b>En Garde!</b> モッドに関連するエラーが検出されました。</b>"
+	            + "<ul>"
+	            + "<li>この mod は白兵戦のメカニクス（パリィ、ブロッキングなど）を追加します。</li>"
+	            + "<li>このエラーは、通常、他の戦闘 mod（Epic Fight、DualRiders など）との非互換、または Minecraft に合わないバージョンの使用によって発生します。</li>"
+	            + "</ul>"
+	            + "<p>高度な戦闘システムを使用しない場合は、競合を避けるために En Garde! を削除することを検討してください。</p>";
+	}
+
+	@Override
+	public String nombre_error_en_garde() {
+	    return "En Garde! モッドエラー";
+	}
+
+	@Override
+	public String solucion_actualizar_en_garde() {
+	    return "使用中の Minecraft バージョンおよびローダー（Fabric/Forge）と互換性のある En Garde! のバージョンを使用していることを確認してください。";
+	}
+
+	@Override
+	public String solucion_eliminar_conflicto_mod_combate() {
+	    return "他の戦闘 mod（Epic Fight、Caelus など）を使用している場合は、それらを無効化するか、En Garde! を削除して競合を回避してください。";
+	}
+	
+	@Override
+	public String error_idletweaks_html() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "<b>IdleTweaks</b> モッドによって引き起こされたエラーが検出されました。</b>"
+	            + "<ul>"
+	            + "<li>IdleTweaks は、もはや存在しないネットワークチャネルの解放を試みました (<code>Tried to release unknown channel</code>)。</li>"
+	            + "<li>このエラーは通常、モッドの古いバージョンや、設定が不適切なサーバーで発生します。</li>"
+	            + "</ul>"
+	            + "<p>IdleTweaks はクオリティ・オブ・ライフ系 mod ですが、不安定さを引き起こすことがあります。更新または削除を検討してください。</p>";
+	}
+
+	@Override
+	public String nombre_error_idletweaks() {
+	    return "IdleTweaks エラー（不明なネットワークチャネル）";
+	}
+
+	@Override
+	public String solucion_actualizar_idletweaks() {
+	    return "IdleTweaks を、使用中の Minecraft と互換性のある最新バージョンに更新してください。";
+	}
+
+	@Override
+	public String solucion_eliminar_idletweaks() {
+	    return "不要であれば、'mods' フォルダから IdleTweaks を削除してください。";
+	}
+	@Override
+	public String mensagjePirataMC() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Minecraft へのログイン中に認証エラー (HTTP 401) が検出されました。</b>"
+	            + "<p>このエラーは<b>クラッシュの直接的原因となることは稀</b>ですが、認証されていないアカウント（海賊版）を使用していることを示しています。</p>"
+	            + "<p>公式サポートチャンネル（企業プロジェクト、VTuber、modpack 作成者など）は、海賊版を使用している場合、<b>サポートできません</b>。"
+	            + "これはチャットルール、契約、Mojang/Microsoft との協定、または評判ポリシーによる制限のためです。</p>"
+	            + "<p>このチェックは検出器の<b>企業向け設定で無効化</b>できます。"
+	            + "警告：海賊版検出機能は<b>完璧ではありません</b>。開発環境、不安定なインターネット接続、改造ランチャー使用時に誤検出されることがあります。</p>";
+	}
+
+	@Override
+	public String infoDeDerechosMiranda() {
+	    return "<b>それでもサポートに参加しようとする場合のミランダ警告:</b>";
+	}
+
+	@Override
+	public String nombrePirataMC() {
+	    return "海賊版 Minecraft";
+	}
+
+	@Override
+	public String desactivarVerificacionPirata() {
+	    return "海賊版検出を無効化";
+	}
+
+	@Override
+	public String comprarMC() {
+	    return "Minecraft を購入";
+	}
+	
+	// --- LanzerNoAnimado ---
+	@Override
+	public String lanzer_no_animado_titulo(String id) {
+	    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+	        + "あなたは推奨リストに<b>含まれていない</b>ランチャー <code>" + id + "</code> を使用しています。</b>";
+	}
+
+	@Override
+	public String lanzer_no_animado_problemas_comunes() {
+	    return "<p>動作する場合もありますが、非推奨ランチャーは次のような問題を引き起こすことがあります:</p>"
+	        + "<ul>"
+	        + "<li>mod やアプリの破損したインストール。</li>"
+	        + "<li>ゲームが起動しない、または明確なエラーなしにフリーズ。</li>"
+	        + "<li>異常なフォルダ構成（診断が困難）。</li>"
+	        + "<li>Java、メモリ、mod に関する予測不能な動作。</li>"
+	        + "</ul>";
+	}
+
+	@Override
+	public String lanzer_no_animado_usar_animados() {
+	    return "より良い体験のために、以下の推奨ランチャーのいずれかをご利用ください:";
+	}
+
+	@Override
+	public String nombre_lanzer_no_animado() {
+	    return "非推奨ランチャー";
+	}
+
+	@Override
+	public String lanzer_no_animado_cambiar_a_animado() {
+	    return "推奨リストにあるランチャーに切り替えてください。";
+	}
+
+	// --- LanzerDesAnimado ---
+	@Override
+	public String lanzer_desanimado_titulo(String id) {
+	    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+	        + "あなたは<b>使用が推奨されないランチャー</b>を使用しています: <code>" + id + "</code>.</b>";
+	}
+
+	@Override
+	public String lanzer_desanimado_problemas_comunes() {
+	    return "<p>使用が推奨されないランチャーは、次のような問題を引き起こす可能性があります:</p>"
+	        + "<ul>"
+	        + "<li>アプリや mod のインストールが破損。</li>"
+	        + "<li>ゲームが起動しない、またはサイレントクラッシュ。</li>"
+	        + "<li>異常なファイル構成（デバッグが困難）。</li>"
+	        + "<li>mod や Java、メモリの管理方法が不明確。</li>"
+	        + "</ul>";
+	}
+
+	@Override
+	public String lanzer_desanimado_usar_animados() {
+	    return "以下のランチャーのいずれかの使用を強く推奨します:";
+	}
+
+	@Override
+	public String nombre_lanzer_desanimado() {
+	    return "使用が推奨されないランチャー";
+	}
+
+	@Override
+	public String lanzer_desanimado_cambiar_lanzer() {
+	    return "サポートを受けるには、推奨ランチャーに切り替えてください。";
+	}
+	
+	// --- FaltaModAnimado ---
+	@Override
+	public String falta_mod_animado_titulo() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	        + "この環境に推奨される mod が不足しています。</b>";
+	}
+	@Override
+	public String nombre_falta_mod_animado() {
+	    return "推奨 mod が不足";
+	}
+	@Override
+	public String falta_mod_animado_instalar() {
+	    return "最適な体験のために、推奨 mod をインストールしてください。";
+	}
+
+	// --- TienesModDesAnimado ---
+	@Override
+	public String tienes_mod_desanimado_titulo() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	        + "インストールに推奨されない mod が検出されました。</b>";
+	}
+	@Override
+	public String nombre_tienes_mod_desanimado() {
+	    return "推奨されない mod が検出されました";
+	}
+	@Override
+	public String tienes_mod_desanimado_eliminar() {
+	    return "問題を回避するには、推奨されない mod を削除してください。";
+	}
+	
+	@Override
+	public String antimanipulacion_titulo() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	        + "重要なファイルに不正な改変が検出されました。手動でファイルを編集したか、信頼できないランチャーを使用している可能性があります。</b>";
+	}
+
+	@Override
+	public String nombre_antimanipulacion() {
+	    return "改変を検出";
+	}
+
+	@Override
+	public String antimanipulacion_reinstalar() {
+	    return "整合性を回復するには、元のファイルを再インストールしてください。";
+	}
+	
+	@Override public String configuracionCorporativa() { return "企業向け設定"; }
+	@Override public String idiomaRespaldo() { return "フォールバック言語"; }
+	@Override public String buscardorHabilitado() { return "検索機能を有効化"; }
+	@Override public String nombreHerramienta() { return "ツール名"; }
+	@Override public String condenarPirateria() { return "海賊版を非難"; }
+	@Override public String lanzadoresRecomendados() { return "推奨ランチャー"; }
+	@Override public String lanzadoresDesaconsejados() { return "非推奨ランチャー"; }
+	@Override public String modsRecomendados() { return "推奨 mod"; }
+	@Override public String modsDesaconsejados() { return "非推奨 mod"; }
+	@Override public String antiTamper() { return "改ざん防止"; }
+	@Override public String proximamente() { return "近日公開"; }
+	@Override public String informacion() { return "情報"; }
+	@Override public String errorCargandoImagen() { return "画像の読み込みエラー"; }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

@@ -5,6 +5,8 @@ import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.asbestosstar.crashdetector.detectorlanzer.LanzerOtra;
+
 public class Statics {
 
 	public static boolean cargador;
@@ -16,13 +18,16 @@ public class Statics {
 
 	public static File carpeta_como_archivo = new File("crash_detector/");
 	public static Path carpeta = carpeta_como_archivo.toPath();
-
+	public static String lanzer_del_app =LanzerOtra.ID;
+	
+	
 	static {
 		App.APPS.add(App.MINECRAFT);
 		App.APPS.add(App.DANGERZONE);
 		App.APPS.add(App.UNCIV);
 		App.APPS.add(App.NXOPEN);
 		App.APPS.add(App.TEAMCENTER);
+		App.APPS.add(App.LIVE2D_CUBISM);
 	}
 
 }

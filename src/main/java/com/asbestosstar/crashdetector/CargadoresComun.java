@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 
 import com.asbestosstar.crashdetector.divisor.HolaMundoConsolaDivisidor;
+import com.asbestosstar.crashdetector.parches.minecraft.ParcheSoyPirata;
 
 public class CargadoresComun {
 
@@ -35,6 +36,7 @@ public class CargadoresComun {
 			if (!origin.equals(CDOrigin.FEATURECREEP)) {
 				Statics.carpetas_de_mods.addAll(CrashDetectorFCMC.obtenerPathsDeMods());
 			}
+			//ParcheSoyPirata.SOY_PIRATA.delete();//Eliminar cuando reiniciar.
 			MonitorDePID.main(new String[] {});
 
 		}

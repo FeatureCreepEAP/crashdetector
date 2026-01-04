@@ -18,6 +18,7 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.*;
 import com.asbestosstar.crashdetector.analizador.firmas.CargadorDeCodice;
 import com.asbestosstar.crashdetector.analizador.general.AdvertenciaFaltasClases;
+import com.asbestosstar.crashdetector.analizador.general.AntiManipulacion;
 import com.asbestosstar.crashdetector.analizador.general.ContentoDeTraces;
 import com.asbestosstar.crashdetector.analizador.general.DifDeMods;
 import com.asbestosstar.crashdetector.analizador.general.Drivers;
@@ -28,15 +29,19 @@ import com.asbestosstar.crashdetector.analizador.general.ErrorClaseFinalExtendid
 import com.asbestosstar.crashdetector.analizador.general.ErrorContextoOpenGL;
 import com.asbestosstar.crashdetector.analizador.general.ErrorDeEnlaceInsatisfecho;
 import com.asbestosstar.crashdetector.analizador.general.ErrorDeMonitorLWJGL;
+import com.asbestosstar.crashdetector.analizador.general.ErrorEntrypointFabric;
 import com.asbestosstar.crashdetector.analizador.general.ErrorJarCorruptoConNombre;
 import com.asbestosstar.crashdetector.analizador.general.ErrorMetodoAbstractoNoImplementado;
 import com.asbestosstar.crashdetector.analizador.general.ErrorMetodoInexistente;
 import com.asbestosstar.crashdetector.analizador.general.ErrorStackSmashingDetected;
 import com.asbestosstar.crashdetector.analizador.general.ErrorVersionInvalidaModMaven;
 import com.asbestosstar.crashdetector.analizador.general.FallosEjecucionTareas;
+import com.asbestosstar.crashdetector.analizador.general.FaltaModAnimado;
 import com.asbestosstar.crashdetector.analizador.general.FaltaModuleJPMS;
 import com.asbestosstar.crashdetector.analizador.general.FaltasClases;
 import com.asbestosstar.crashdetector.analizador.general.JavaVersiones;
+import com.asbestosstar.crashdetector.analizador.general.LanzerDesAnimado;
+import com.asbestosstar.crashdetector.analizador.general.LanzerNoAnimado;
 import com.asbestosstar.crashdetector.analizador.general.ModIncompatibleConCargadorActivo;
 import com.asbestosstar.crashdetector.analizador.general.ModulesDuplicadosJavaModulePlatform;
 import com.asbestosstar.crashdetector.analizador.general.NoTieneMemoria;
@@ -45,6 +50,7 @@ import com.asbestosstar.crashdetector.analizador.general.OpcionesJavaGCInvalidas
 import com.asbestosstar.crashdetector.analizador.general.PreferIPV4Trace;
 import com.asbestosstar.crashdetector.analizador.general.ProblemaSafeFetch32JDK17;
 import com.asbestosstar.crashdetector.analizador.general.SpongeMixinConfigsProblematicos;
+import com.asbestosstar.crashdetector.analizador.general.TienesModDesAnimado;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.config.ConfigStringArray;
 
@@ -244,7 +250,22 @@ public class Analizador {
 		verificaciones.add(new ConflictoIrisOptifine());
 		verificaciones.add(new ConflictoModernFixOptifine());
 		verificaciones.add(new ErrorClaveRegistroMayusculas());
+		verificaciones.add(new ErrorEntrypointFabric());
+		verificaciones.add(new ErrorEnGarde());
+		verificaciones.add(new ErrorIdleTweaks());
 
+		verificaciones.add(new PirataMC());
+		verificaciones.add(new LanzerNoAnimado());
+		verificaciones.add(new LanzerDesAnimado());
+		verificaciones.add(new FaltaModAnimado());
+		verificaciones.add(new TienesModDesAnimado());
+		verificaciones.add(new AntiManipulacion());
+
+		
+		
+		
+		
+		
 		verificaciones.addAll(CargadorDeCodice.cargarVerificaciones());
 
 		CrashDetectorLogger.log("Número de códices " + String.valueOf(CargadorDeCodice.cargarVerificaciones().size()));

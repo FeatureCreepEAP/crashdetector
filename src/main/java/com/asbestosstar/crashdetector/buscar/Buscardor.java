@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.BlockingQueue;
@@ -28,19 +27,22 @@ import com.asbestosstar.crashdetector.cargador.CargadorFeatureCreep;
 import com.asbestosstar.crashdetector.cargador.CargadorMCForge;
 import com.asbestosstar.crashdetector.cargador.CargadorNXOpen;
 import com.asbestosstar.crashdetector.cargador.CargadorNeoForge;
+import com.asbestosstar.crashdetector.config.ConfigBoolean;
 
 public class Buscardor {
 
 	public static Set<ArchivoDeMod> mods = java.util.Collections
 			.newSetFromMap(new java.util.concurrent.ConcurrentHashMap<>());
 
+	public static ConfigBoolean hablicar =ConfigBoolean.de("hablicar_buscardor", true);
+	
 	public static boolean cargado = false;
 
 	/** Evita precargar varias veces todas las clases en todos los mods. */
 	public static volatile boolean cargadotodos = false;
 
 	public static void cargar() {
-		if (!cargado) {
+		if (!cargado&&hablicar.obtener()) {
 			try {
 				String[] rutasMods = MonitorDePID.leer_archivo(MonitorDePID.ultimo_mods).split(MonitorDePID.nl);
 

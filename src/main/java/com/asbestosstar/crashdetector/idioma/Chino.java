@@ -4967,5 +4967,258 @@ public class Chino implements Idioma {
 	public String solucion_eliminar_mod_reciente() {
 		return "如果无法确定具体模组，请移除最近安装的模组，尤其是那些添加方块、物品或工具的模组。";
 	}
+	
+	@Override
+	public String error_entrypoint_fabric_html(String modNombre) {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "加载模组 <b>" + escapeHtml(modNombre) + "</b> 时出错。</b>"
+	            + "<ul>"
+	            + "<li>该模组在初始化某个组件（例如配置菜单）时失败。</li>"
+	            + "<li>这通常是因为与 Minecraft、Fabric 或其他模组的版本不兼容。</li>"
+	            + "</ul>"
+	            + "<p>如果错误持续存在，请删除或更新模组 <b>" + escapeHtml(modNombre) + "</b>。</p>";
+	}
+
+	@Override
+	public String nombre_error_entrypoint_fabric() {
+	    return "模组初始化错误（Fabric Entrypoint）";
+	}
+
+	@Override
+	public String solucion_eliminar_mod(String modNombre) {
+	    return "从 'mods' 文件夹中删除模组 '" + modNombre + "'。";
+	}
+
+	@Override
+	public String solucion_actualizar_mod(String modNombre) {
+	    return "将模组 '" + modNombre + "' 更新为与你当前安装兼容的版本。";
+	}
+	
+	@Override
+	public String error_en_garde_html() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "检测到与模组 <b>En Garde!</b> 相关的错误。</b>"
+	            + "<ul>"
+	            + "<li>此模组添加了近战机制（如格挡、招架等）。</li>"
+	            + "<li>该错误通常由与其他战斗模组（如 Epic Fight、DualRiders 等）不兼容，或使用了与你的 Minecraft 不匹配的版本引起。</li>"
+	            + "</ul>"
+	            + "<p>如果你不使用高级战斗系统，建议移除 En Garde! 以避免冲突。</p>";
+	}
+
+	@Override
+	public String nombre_error_en_garde() {
+	    return "En Garde! 模组错误";
+	}
+
+	@Override
+	public String solucion_actualizar_en_garde() {
+	    return "请确保你使用的 En Garde! 版本与你的 Minecraft 版本及加载器（Fabric/Forge）兼容。";
+	}
+
+	@Override
+	public String solucion_eliminar_conflicto_mod_combate() {
+	    return "如果你使用了其他战斗模组（如 Epic Fight、Caelus 等），请禁用它们，或移除 En Garde! 以避免冲突。";
+	}
+	@Override
+	public String error_idletweaks_html() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "检测到由模组 <b>IdleTweaks</b> 引起的错误。</b>"
+	            + "<ul>"
+	            + "<li>IdleTweaks 尝试释放一个已不存在的网络通道（<code>Tried to release unknown channel</code>）。</li>"
+	            + "<li>此错误通常出现在该模组的旧版本中，或在配置不当的服务器上使用时。</li>"
+	            + "</ul>"
+	            + "<p>IdleTweaks 是一个生活质量模组，但可能导致不稳定。建议更新或移除它。</p>";
+	}
+
+	@Override
+	public String nombre_error_idletweaks() {
+	    return "IdleTweaks 错误（未知网络通道）";
+	}
+
+	@Override
+	public String solucion_actualizar_idletweaks() {
+	    return "将 IdleTweaks 更新至与你的 Minecraft 兼容的最新版本。";
+	}
+
+	@Override
+	public String solucion_eliminar_idletweaks() {
+	    return "如果不需要，从 'mods' 文件夹中删除 IdleTweaks。";
+	}
+	
+	@Override
+	public String mensagjePirataMC() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "尝试登录 Minecraft 时检测到身份验证错误 (HTTP 401)。</b>"
+	            + "<p>此错误<b>极少直接导致崩溃</b>，但它表明你正在使用未验证的账户（盗版）。</p>"
+	            + "<p>官方支持渠道（企业项目、VTuber、整合包作者等）<b>无法为你提供帮助</b>，"
+	            + "因为受其聊天规则、合同、与 Mojang/Microsoft 的协议或声誉政策的限制。</p>"
+	            + "<p>此检查可在检测器的<b>企业设置中禁用</b>。"
+	            + "警告：反盗版检测<b>并非完美</b>，可能在开发环境、网络不稳定或使用修改版启动器时被触发。</p>";
+	}
+
+	@Override
+	public String infoDeDerechosMiranda() {
+	    return "<b>如果你仍尝试加入支持频道，请注意以下权利告知：</b>";
+	}
+
+	@Override
+	public String nombrePirataMC() {
+	    return "Minecraft 盗版";
+	}
+
+	@Override
+	public String desactivarVerificacionPirata() {
+	    return "禁用反盗版验证";
+	}
+
+	@Override
+	public String comprarMC() {
+	    return "购买 Minecraft";
+	}
+	
+	// --- LanzerNoAnimado ---
+	@Override
+	public String lanzer_no_animado_titulo(String id) {
+	    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+	        + "你正在使用启动器 <code>" + id + "</code>，该启动器<b>不在推荐列表中</b>。</b>";
+	}
+
+	@Override
+	public String lanzer_no_animado_problemas_comunes() {
+	    return "<p>尽管它可能可以运行，但非推荐启动器通常会导致：</p>"
+	        + "<ul>"
+	        + "<li>模组或 App 安装损坏。</li>"
+	        + "<li>游戏无法启动或无明确错误地卡死。</li>"
+	        + "<li>文件夹结构异常（难以诊断）。</li>"
+	        + "<li>Java、内存或模组行为不可预测。</li>"
+	        + "</ul>";
+	}
+
+	@Override
+	public String lanzer_no_animado_usar_animados() {
+	    return "为获得更好的体验，请使用以下推荐启动器之一：";
+	}
+
+	@Override
+	public String nombre_lanzer_no_animado() {
+	    return "非推荐启动器";
+	}
+
+	@Override
+	public String lanzer_no_animado_cambiar_a_animado() {
+	    return "切换到推荐列表中的启动器。";
+	}
+
+	// --- LanzerDesAnimado ---
+	@Override
+	public String lanzer_desanimado_titulo(String id) {
+	    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+	        + "你正在使用一个<b>不建议使用的启动器</b>：<code>" + id + "</code>。</b>";
+	}
+
+	@Override
+	public String lanzer_desanimado_problemas_comunes() {
+	    return "<p>不建议使用的启动器可能导致：</p>"
+	        + "<ul>"
+	        + "<li>App 或模组安装损坏。</li>"
+	        + "<li>游戏无法启动或静默崩溃。</li>"
+	        + "<li>文件组织异常（难以调试）。</li>"
+	        + "<li>无法确定其如何管理模组、Java 或内存。</li>"
+	        + "</ul>";
+	}
+
+	@Override
+	public String lanzer_desanimado_usar_animados() {
+	    return "强烈建议使用以下启动器之一：";
+	}
+
+	@Override
+	public String nombre_lanzer_desanimado() {
+	    return "不建议使用的启动器";
+	}
+
+	@Override
+	public String lanzer_desanimado_cambiar_lanzer() {
+	    return "切换到推荐启动器以获得支持。";
+	}
+	
+	// --- FaltaModAnimado ---
+	@Override
+	public String falta_mod_animado_titulo() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	        + "当前环境缺少推荐的模组。</b>";
+	}
+	@Override
+	public String nombre_falta_mod_animado() {
+	    return "缺少推荐模组";
+	}
+	@Override
+	public String falta_mod_animado_instalar() {
+	    return "安装推荐模组以获得最佳体验。";
+	}
+
+	// --- TienesModDesAnimado ---
+	@Override
+	public String tienes_mod_desanimado_titulo() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	        + "在你的安装中检测到不建议使用的模组。</b>";
+	}
+	@Override
+	public String nombre_tienes_mod_desanimado() {
+	    return "检测到不建议使用的模组";
+	}
+	@Override
+	public String tienes_mod_desanimado_eliminar() {
+	    return "移除不建议使用的模组以避免问题。";
+	}
+	
+	@Override
+	public String antimanipulacion_titulo() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	        + "检测到对关键文件的未授权修改。你可能已手动编辑文件，或正在使用不可靠的启动器。</b>";
+	}
+
+	@Override
+	public String nombre_antimanipulacion() {
+	    return "检测到篡改";
+	}
+
+	@Override
+	public String antimanipulacion_reinstalar() {
+	    return "重新安装原始文件以恢复完整性。";
+	}
+	
+	@Override public String configuracionCorporativa() { return "企业设置"; }
+	@Override public String idiomaRespaldo() { return "备用语言"; }
+	@Override public String buscardorHabilitado() { return "启用搜索器"; }
+	@Override public String nombreHerramienta() { return "工具名称"; }
+	@Override public String condenarPirateria() { return "谴责盗版"; }
+	@Override public String lanzadoresRecomendados() { return "推荐启动器"; }
+	@Override public String lanzadoresDesaconsejados() { return "不建议的启动器"; }
+	@Override public String modsRecomendados() { return "推荐模组"; }
+	@Override public String modsDesaconsejados() { return "不建议的模组"; }
+	@Override public String antiTamper() { return "防篡改"; }
+	@Override public String proximamente() { return "即将推出"; }
+	@Override public String informacion() { return "信息"; }
+	@Override public String errorCargandoImagen() { return "加载图像时出错"; }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

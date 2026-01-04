@@ -82,94 +82,105 @@ public class ErrorCampoInexistente implements Verificaciones {
 		this.posibleNoSuchField = contenido != null && contenido.contains("java.lang.NoSuchFieldError:");
 	}
 
-	@Override
-	public void verificar(Consola consola, String linea, int numero_de_linea) {
-		// Si ya estamos activados, o ni siquiera hay rastro de NoSuchFieldError en
-		// todo el log, no hacemos más trabajo.
-		if (activado && !esperandoLineaStack) {
-			return;
-		}
-		if (!posibleNoSuchField || linea == null) {
-			return;
+@Override
+public void verificar(Consola consola, String linea, int numero_de_linea) {
+	// Si ya estamos activados y ya obtuvimos el stacktrace, no hacer nada más
+	if (activado && !esperandoLineaStack) {
+		return;
+	}
+	// Si ni siquiera hay rastro del error en todo el log, salir inmediatamente
+	if (!posibleNoSuchField || linea == null) {
+		return;
+	}
+
+	String l = linea;
+
+	// Si todavía no se ha detectado el error principal, buscarlo
+	if (!activado && l.contains("java.lang.NoSuchFieldError:")) {
+		// Intentar patrón extendido primero (con comillas)
+		String nombreCampo = null;
+		Matcher mExt = PATRON_ERROR_MIEMBRO.matcher(l);
+		if (mExt.find()) {
+			String crudo = mExt.group(1).trim();
+			int idxEspacio = crudo.lastIndexOf(' ');
+			nombreCampo = (idxEspacio >= 0 && idxEspacio < crudo.length() - 1)
+					? crudo.substring(idxEspacio + 1)
+					: crudo;
+		} else {
+			// Fallback: patrón simple
+			Matcher mSimple = PATRON_ERROR_SIMPLE.matcher(l);
+			if (mSimple.find()) {
+				nombreCampo = mSimple.group(1);
+			}
 		}
 
-		String l = linea;
+		if (nombreCampo != null && !nombreCampo.isEmpty()) {
+			this.nombreCampoDetectado = nombreCampo;
+			this.lineaError = l.trim();
+			this.enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
-		// Si todavía no se ha detectado el error principal, buscarlo en esta línea
-		if (!activado && l.contains("java.lang.NoSuchFieldError:")) {
-			// Intentar patrón extendido primero
-			String nombreCampo = null;
-			Matcher mExt = PATRON_ERROR_MIEMBRO.matcher(l);
-			if (mExt.find()) {
-				// Dentro de la comilla simple puede venir "paquete.Clase$Tipo nombreCampo"
-				// Nos quedamos con el último token después del espacio, si existe.
-				String crudo = mExt.group(1).trim();
-				int idxEspacio = crudo.lastIndexOf(' ');
-				nombreCampo = (idxEspacio >= 0 && idxEspacio < crudo.length() - 1) ? crudo.substring(idxEspacio + 1)
-						: crudo;
-			} else {
-				// Fallback: patrón simple clásico
-				Matcher mSimple = PATRON_ERROR_SIMPLE.matcher(l);
-				if (mSimple.find()) {
-					nombreCampo = mSimple.group(1);
+			// 🔥 CORRECCIÓN: solo analizar la PRIMERA línea del stacktrace, no ±10 líneas
+			String[] lineas = consola.contenido_verificar.split(Verificaciones.nl);
+			String primeraLineaStack = "";
+			for (int i = numero_de_linea + 1; i < lineas.length; i++) {
+				String s = lineas[i].trim();
+				if (s.startsWith("at ")) {
+					primeraLineaStack = s;
+					break;
 				}
 			}
 
-			if (nombreCampo != null && !nombreCampo.isEmpty()) {
-				this.nombreCampoDetectado = nombreCampo;
-				this.lineaError = l.trim();
-				this.enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+			// Resetear todas las banderas
+			this.create = false;
+			this.epicfight = false;
+			this.azurelib = false;
+			this.minecraft = false;
+			this.dangerzone = false;
+			this.featurecreep = false;
+			this.modlauncher = false;
+			this.minecraftforge = false;
+			this.neoforged = false;
+			this.fabricloader = false;
+			this.pillowmc = false;
 
-				// Detectar mods específicos en el stacktrace
-				String[] lineas = consola.contenido_verificar.split(Verificaciones.nl);
-				for (int i = Math.max(0, numero_de_linea - 10); i < Math.min(lineas.length,
-						numero_de_linea + 10); i++) {
-					String stackLine = lineas[i];
-					// Check for both / and . versions of the package names
-					if (stackLine.contains("com/simibubi/create") || stackLine.contains("com.simibubi.create")) {
-						create = true;
-					} else if (stackLine.contains("yesman/epicfight") || stackLine.contains("yesman.epicfight")) {
-						epicfight = true;
-					} else if (stackLine.contains("mod/azure/azurelib") || stackLine.contains("mod.azure.azurelib")) {
-						azurelib = true;
-					} else if (stackLine.contains("net/minecraftforge") || stackLine.contains("net.minecraftforge")) {
-						minecraftforge = true;
-					} else if (stackLine.contains("featurecreep/") || stackLine.contains("featurecreep.")
-							|| stackLine.contains("asbestosstar/") || stackLine.contains("asbestosstar.")) {
-						featurecreep = true;
-					} else if (stackLine.contains("net/fabricmc/") || stackLine.contains("net.fabricmc.")) {
-						fabricloader = true;
-					} else if (stackLine.contains("net/neoforged/") || stackLine.contains("net.neoforged.")) {
-						neoforged = true;
-					} else if (stackLine.contains("net/pillowmc/") || stackLine.contains("net.pillowmc.")) {
-						pillowmc = true;
-					} else if ((stackLine.contains("net/minecraft/") || stackLine.contains("net.minecraft."))
-							&& !stackLine.contains("net/minecraftforge/")
-							&& !stackLine.contains("net.minecraftforge.")) {
-						minecraft = true;
-					} else if (stackLine.contains("dangerzone/") || stackLine.contains("dangerzone.")) {
-						dangerzone = true;
-					}
-				}
+			// Analizar SOLO la primera línea del stacktrace
+			String target = primeraLineaStack;
 
-				this.activado = true;
-				this.esperandoLineaStack = true;
-				// No construimos el mensaje todavía; se hará en mensaje() para poder incluir
-				// la primera línea "at ..." que encontremos después.
-				return;
+			if (target.contains("com/simibubi/create") || target.contains("com.simibubi.create")) {
+				create = true;
+			} else if (target.contains("yesman/epicfight") || target.contains("yesman.epicfight")) {
+				epicfight = true;
+			} else if (target.contains("mod/azure/azurelib") || target.contains("mod.azure.azurelib")) {
+				azurelib = true;
+			} else if (target.contains("asbestosstar/") || target.contains("asbestosstar.")) {
+				featurecreep = true;
+			} else if (target.contains("dangerzone/") || target.contains("dangerzone.")) {
+				dangerzone = true;
+			} else if (target.contains("net/fabricmc/") || target.contains("net.fabricmc.")) {
+				fabricloader = true;
+			} else if (target.contains("net/neoforged/") || target.contains("net.neoforged.")) {
+				neoforged = true;
+			} else if (target.contains("net/pillowmc/") || target.contains("net.pillowmc.")) {
+				pillowmc = true;
+			} else if (target.contains("cpw/mods/modlauncher") || target.contains("cpw.mods.modlauncher")) {
+				modlauncher = true;
+			} else if (target.contains("net/minecraftforge") || target.contains("net.minecraftforge")) {
+				minecraftforge = true;
+			} else if ((target.contains("net/minecraft/") || target.contains("net.minecraft."))
+					&& !target.contains("net/minecraftforge/")
+					&& !target.contains("net.minecraftforge.")) {
+				minecraft = true;
 			}
-		}
+			// ⚠️ Si no coincide con ninguno, NO se marca ningún mod (incluido Forge)
 
-		// Si ya se detectó la línea del error y estamos esperando la primera línea
-		// de stack que comience por "at ", la capturamos aquí.
-		if (activado && esperandoLineaStack) {
-			String trim = l.trim();
-			if (trim.startsWith("at ")) {
-				this.lineaStack = trim;
-				this.esperandoLineaStack = false;
-			}
+			this.activado = true;
+			this.esperandoLineaStack = true;
+			this.lineaStack = primeraLineaStack; // ya la tenemos
+			this.esperandoLineaStack = false;
+			return;
 		}
 	}
+}
 
 	// Utilidad para escapar HTML básico
 	private String escapeHtml(String s) {

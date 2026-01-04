@@ -5236,5 +5236,241 @@ public class Ruso implements Idioma {
 	public String solucion_eliminar_mod_reciente() {
 		return "Если не удаётся определить мод, удалите недавно установленные моды, особенно те, что добавляют блоки, предметы или инструменты.";
 	}
+	
+	@Override
+	public String error_entrypoint_fabric_html(String modNombre) {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Ошибка при загрузке мода <b>" + escapeHtml(modNombre) + "</b>.</b>"
+	            + "<ul>"
+	            + "<li>Мод не смог инициализировать один из своих компонентов (например, меню настроек).</li>"
+	            + "<li>Это обычно происходит из-за несовместимости с версией Minecraft, Fabric или другими модами.</li>"
+	            + "</ul>"
+	            + "<p>Если ошибка сохраняется, удалите или обновите мод <b>" + escapeHtml(modNombre) + "</b>.</p>";
+	}
+
+	@Override
+	public String nombre_error_entrypoint_fabric() {
+	    return "Ошибка инициализации мода (Fabric Entrypoint)";
+	}
+
+	@Override
+	public String solucion_eliminar_mod(String modNombre) {
+	    return "Удалите мод '" + modNombre + "' из папки 'mods'.";
+	}
+
+	@Override
+	public String solucion_actualizar_mod(String modNombre) {
+	    return "Обновите мод '" + modNombre + "' до версии, совместимой с вашей установкой.";
+	}
+	@Override
+	public String error_en_garde_html() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Обнаружена ошибка, связанная с модом <b>En Garde!</b>.</b>"
+	            + "<ul>"
+	            + "<li>Этот мод добавляет механики ближнего боя (парирование, блокировка и т. д.).</li>"
+	            + "<li>Ошибка обычно возникает из-за несовместимости с другими боевыми модами (например, Epic Fight, DualRiders и др.) или из-за использования неподходящей версии для вашего Minecraft.</li>"
+	            + "</ul>"
+	            + "<p>Если вы не используете продвинутый бой, рекомендуем удалить En Garde!, чтобы избежать конфликтов.</p>";
+	}
+
+	@Override
+	public String nombre_error_en_garde() {
+	    return "Ошибка в моде En Garde!";
+	}
+
+	@Override
+	public String solucion_actualizar_en_garde() {
+	    return "Убедитесь, что используете версию En Garde!, совместимую с вашей версией Minecraft и загрузчиком (Fabric/Forge).";
+	}
+
+	@Override
+	public String solucion_eliminar_conflicto_mod_combate() {
+	    return "Если вы используете другие боевые моды (Epic Fight, Caelus и др.), отключите их или удалите En Garde!, чтобы избежать конфликтов.";
+	}
+	@Override
+	public String error_idletweaks_html() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Обнаружена ошибка, вызванная модом <b>IdleTweaks</b>.</b>"
+	            + "<ul>"
+	            + "<li>IdleTweaks попытался освободить сетевой канал, который больше не существует (<code>Tried to release unknown channel</code>).</li>"
+	            + "<li>Эта ошибка обычно возникает в старых версиях мода или при использовании на неправильно настроенных серверах.</li>"
+	            + "</ul>"
+	            + "<p>IdleTweaks — это мод для улучшения качества жизни, но он может вызывать нестабильность. Рассмотрите возможность его обновления или удаления.</p>";
+	}
+
+	@Override
+	public String nombre_error_idletweaks() {
+	    return "Ошибка IdleTweaks (неизвестный сетевой канал)";
+	}
+
+	@Override
+	public String solucion_actualizar_idletweaks() {
+	    return "Обновите IdleTweaks до последней версии, совместимой с вашим Minecraft.";
+	}
+
+	@Override
+	public String solucion_eliminar_idletweaks() {
+	    return "Удалите IdleTweaks из папки 'mods', если он вам не нужен.";
+	}
+	
+	@Override
+	public String mensagjePirataMC() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Foi detectado um erro de autenticação (HTTP 401) ao tentar fazer login no Minecraft.</b>"
+	            + "<p>Esse erro <b>raramente é a causa direta da falha</b>, mas indica que você está usando uma conta não autenticada (pirata).</p>"
+	            + "<p>Canais oficiais de suporte (projetos corporativos, VTubers, criadores de modpacks, etc.) <b>não podem ajudá-lo</b> se você usar uma cópia pirata, "
+	            + "devido a restrições em suas regras de chat, contratos, acordos com Mojang/Microsoft ou políticas de reputação.</p>"
+	            + "<p>Essa verificação pode ser <b>desativada nas configurações corporativas</b> do detector. "
+	            + "Aviso: a detecção antipirataria <b>não é perfeita</b> e pode ser acionada em ambientes de desenvolvimento, com internet instável ou ao usar launchers modificados.</p>";
+	}
+
+	@Override
+	public String infoDeDerechosMiranda() {
+	    return "<b>Direitos Miranda se você tentar entrar no suporte mesmo assim:</b>";
+	}
+
+	@Override
+	public String nombrePirataMC() {
+	    return "Minecraft pirata";
+	}
+
+	@Override
+	public String desactivarVerificacionPirata() {
+	    return "Desativar verificação antipirataria";
+	}
+
+	@Override
+	public String comprarMC() {
+	    return "Comprar Minecraft";
+	}
+	
+	// --- LanzerNoAnimado ---
+	@Override
+	public String lanzer_no_animado_titulo(String id) {
+	    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+	        + "Вы используете лаунчер <code>" + id + "</code>, который <b>отсутствует в списке рекомендованных</b>.</b>";
+	}
+
+	@Override
+	public String lanzer_no_animado_problemas_comunes() {
+	    return "<p>Хотя он может работать, нерекомендуемые лаунчеры часто вызывают:</p>"
+	        + "<ul>"
+	        + "<li>Повреждённые установки модов или приложения.</li>"
+	        + "<li>Игра не запускается или зависает без понятной ошибки.</li>"
+	        + "<li>Нестандартную структуру папок (затрудняет диагностику).</li>"
+	        + "<li>Непредсказуемое поведение с Java, памятью или модами.</li>"
+	        + "</ul>";
+	}
+
+	@Override
+	public String lanzer_no_animado_usar_animados() {
+	    return "Для лучшего опыта используйте один из следующих рекомендованных лаунчеров:";
+	}
+
+	@Override
+	public String nombre_lanzer_no_animado() {
+	    return "Нерекомендуемый лаунчер";
+	}
+
+	@Override
+	public String lanzer_no_animado_cambiar_a_animado() {
+	    return "Переключитесь на лаунчер из рекомендованного списка.";
+	}
+
+	// --- LanzerDesAnimado ---
+	@Override
+	public String lanzer_desanimado_titulo(String id) {
+	    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+	        + "Вы используете <b>не рекомендуемый лаунчер</b>: <code>" + id + "</code>.</b>";
+	}
+
+	@Override
+	public String lanzer_desanimado_problemas_comunes() {
+	    return "<p>Не рекомендуемые лаунчеры могут вызывать:</p>"
+	        + "<ul>"
+	        + "<li>Повреждённые установки приложения или модов.</li>"
+	        + "<li>Игра не запускается или завершается без ошибки.</li>"
+	        + "<li>Нестандартную организацию файлов (сложно отлаживать).</li>"
+	        + "<li>Неопределённость в том, как он управляет модами, Java или памятью.</li>"
+	        + "</ul>";
+	}
+
+	@Override
+	public String lanzer_desanimado_usar_animados() {
+	    return "Настоятельно рекомендуется использовать один из следующих лаунчеров:";
+	}
+
+	@Override
+	public String nombre_lanzer_desanimado() {
+	    return "Не рекомендуемый лаунчер";
+	}
+
+	@Override
+	public String lanzer_desanimado_cambiar_lanzer() {
+	    return "Переключитесь на рекомендуемый лаунчер, чтобы получить поддержку.";
+	}
+	
+	// --- FaltaModAnimado ---
+	@Override
+	public String falta_mod_animado_titulo() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	        + "Для этой среды отсутствуют рекомендуемые моды.</b>";
+	}
+	@Override
+	public String nombre_falta_mod_animado() {
+	    return "Отсутствуют рекомендуемые моды";
+	}
+	@Override
+	public String falta_mod_animado_instalar() {
+	    return "Установите рекомендуемые моды для оптимального опыта.";
+	}
+
+	// --- TienesModDesAnimado ---
+	@Override
+	public String tienes_mod_desanimado_titulo() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	        + "В вашей установке обнаружены нерекомендуемые моды.</b>";
+	}
+	@Override
+	public String nombre_tienes_mod_desanimado() {
+	    return "Обнаружены нерекомендуемые моды";
+	}
+	@Override
+	public String tienes_mod_desanimado_eliminar() {
+	    return "Удалите нерекомендуемые моды, чтобы избежать проблем.";
+	}
+	
+	@Override
+	public String antimanipulacion_titulo() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	        + "Обнаружено несанкционированное вмешательство в критические файлы. Вы либо вручную редактировали файлы, либо используете ненадёжный лаунчер.</b>";
+	}
+
+	@Override
+	public String nombre_antimanipulacion() {
+	    return "Обнаружено вмешательство";
+	}
+
+	@Override
+	public String antimanipulacion_reinstalar() {
+	    return "Переустановите оригинальные файлы, чтобы восстановить целостность.";
+	}
+	
+	@Override public String configuracionCorporativa() { return "Configurações Corporativas"; } @Override public String idiomaRespaldo() { return "Idioma de Fallback"; } @Override public String buscardorHabilitado() { return "Habilitar Buscador"; } @Override public String nombreHerramienta() { return "Nome da Ferramenta"; } @Override public String condenarPirateria() { return "Condenar Pirataria"; } @Override public String lanzadoresRecomendados() { return "Launchers Recomendados"; } @Override public String lanzadoresDesaconsejados() { return "Launchers Desaconselhados"; } @Override public String modsRecomendados() { return "Mods Recomendados"; } @Override public String modsDesaconsejados() { return "Mods Desaconselhados"; } @Override public String antiTamper() { return "AntiManipulação"; } @Override public String proximamente() { return "Em breve"; } @Override public String informacion() { return "Informação"; } @Override public String errorCargandoImagen() { return "Erro ao carregar imagem"; }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

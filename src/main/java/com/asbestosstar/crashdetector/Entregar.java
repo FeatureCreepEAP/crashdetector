@@ -9,8 +9,9 @@ import java.util.List;
 
 import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.cargador.Cargador;
+import com.asbestosstar.crashdetector.detectorlanzer.DetectorLanzer;
 
-//Handover
+// Handover
 public class Entregar {
 
 	public static File archivo = Statics.carpeta.resolve("entregar").toFile();
@@ -23,11 +24,11 @@ public class Entregar {
 		String idApp = app_detecta != null ? app_detecta.id() : "";
 		Buscardor.cargadoresPredetermindado();
 		// se detectan cargadores activos sin tocar la lista global
-		List<Cargador> activos = new ArrayList<Cargador>();
+		List<Cargador> activos_cargadores = new ArrayList<Cargador>();
 		for (Cargador c : Cargador.cargadores) {
 			try {
 				if (c.cargadorEsActivado()) {
-					activos.add(c);
+					activos_cargadores.add(c);
 				}
 			} catch (Throwable ignored) {
 			}
@@ -39,9 +40,12 @@ public class Entregar {
 			args = eliminarTokenDeAcceso(args); // ahora enmascara en lugar de borrar
 		}
 
+		String lanzer = DetectorLanzer.detectarLanzer(app_detecta, args);
+		Statics.lanzer_del_app = lanzer;
+
 		// no fijar Statics.ARGS_DE_APP aqui
 		// escribir archivo
-		String contenido = construirContenidoArchivo(idApp, args, activos);
+		String contenido = construirContenidoArchivo(idApp, args, activos_cargadores, lanzer);
 		escribirArchivo(contenido);
 	}
 
@@ -55,6 +59,7 @@ public class Entregar {
 			String idApp = "";
 			String args = "";
 			String idsCargadores = "";
+			String lanzer = "";
 
 			for (String l : lineas) {
 				int p = l.indexOf(':');
@@ -68,11 +73,16 @@ public class Entregar {
 					args = v;
 				else if ("cargadores".equals(k))
 					idsCargadores = v;
+				else if ("lanzer".equals(k))
+					lanzer = v;
 			}
 
 			// restaurar app
 			app_detecta = buscarAppPorId(idApp);
 			Statics.APP = app_detecta;
+
+			// restaurar launcher
+			Statics.lanzer_del_app = lanzer != null ? lanzer : "";
 
 			// fijar ARGS_DE_APP solo aqui
 			Statics.ARGS_DE_APP = args != null ? args : "";
@@ -98,7 +108,7 @@ public class Entregar {
 
 	// utilidades
 
-	private static String construirContenidoArchivo(String idApp, String args, List<Cargador> activos) {
+	private static String construirContenidoArchivo(String idApp, String args, List<Cargador> activos, String lanzer) {
 		StringBuilder ids = new StringBuilder();
 		if (activos != null && !activos.isEmpty()) {
 			for (Cargador c : activos) {
@@ -116,6 +126,7 @@ public class Entregar {
 		StringBuilder out = new StringBuilder();
 		out.append("app: ").append(idApp == null ? "" : idApp).append('\n');
 		out.append("args: ").append(args == null ? "" : args).append('\n');
+		out.append("lanzer: ").append(lanzer == null ? "" : lanzer).append('\n');
 		out.append("cargadores: ").append(ids.toString()).append('\n');
 		return out.toString();
 	}

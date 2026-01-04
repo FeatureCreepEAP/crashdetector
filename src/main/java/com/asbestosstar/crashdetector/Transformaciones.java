@@ -10,6 +10,7 @@ import java.security.ProtectionDomain;
 
 import com.asbestosstar.crashdetector.parches.Parche;
 import com.asbestosstar.crashdetector.parches.TransASM;
+import com.asbestosstar.crashdetector.parches.minecraft.ParcheSoyPirata;
 import com.asbestosstar.crashdetector.parches.minecraft.ParcheWaterMediaTL;
 import com.asbestosstar.crashdetector.parches.minecraft.PreferIPv4StackParch;
 import com.asbestosstar.crashdetector.parches.minecraft.TransformacionDeMinecraftCodigo0;
@@ -22,6 +23,9 @@ public class Transformaciones implements ClassFileTransformer {
 			Parche.parches.add(new TransformacionDeMinecraftCodigo0());// TODO detecion para app/juego
 			Parche.parches.add(new ParcheWaterMediaTL());
 			Parche.parches.add(new PreferIPv4StackParch());
+			//Parche.parches.add(new ParcheSoyPirata());
+
+			
 		}
 	}
 

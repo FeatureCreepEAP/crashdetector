@@ -5212,5 +5212,252 @@ public class Persa implements Idioma {
 	public String solucion_eliminar_mod_reciente() {
 		return "اگر نتوانستید افزونه را شناسایی کنید، افزونه‌های اخیر را حذف کنید، به‌ویژه آن‌هایی که بلوک، آیتم یا ابزار اضافه می‌کنند.";
 	}
+	
+	@Override
+	public String error_entrypoint_fabric_html(String modNombre) {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "خطا در بارگذاری افزونهٔ <b>" + escapeHtml(modNombre) + "</b>.</b>"
+	            + "<ul>"
+	            + "<li>این افزونه در راه‌اندازی یکی از مؤلفه‌هایش (مثل منوی پیکربندی) شکست خورد.</li>"
+	            + "<li>این معمولاً به دلیل ناسازگاری با نسخهٔ Minecraft، Fabric یا سایر افزونه‌ها رخ می‌دهد.</li>"
+	            + "</ul>"
+	            + "<p>اگر خطا ادامه یافت، افزونهٔ <b>" + escapeHtml(modNombre) + "</b> را حذف یا به‌روزرسانی کنید.</p>";
+	}
+
+	@Override
+	public String nombre_error_entrypoint_fabric() {
+	    return "خطای راه‌اندازی افزونه (Fabric Entrypoint)";
+	}
+
+	@Override
+	public String solucion_eliminar_mod(String modNombre) {
+	    return "افزونهٔ '" + modNombre + "' را از پوشهٔ 'mods' حذف کنید.";
+	}
+
+	@Override
+	public String solucion_actualizar_mod(String modNombre) {
+	    return "افزونهٔ '" + modNombre + "' را به نسخه‌ای سازگار با نصب شما به‌روزرسانی کنید.";
+	}
+	@Override
+	public String error_en_garde_html() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "خطایی مرتبط با افزونهٔ <b>En Garde!</b> شناسایی شد.</b>"
+	            + "<ul>"
+	            + "<li>این افزونه مکانیک‌های رزم نزدیک (مثل پری، بلاک و غیره) را اضافه می‌کند.</li>"
+	            + "<li>این خطا معمولاً به دلیل ناسازگاری با سایر افزونه‌های رزم (مثل Epic Fight، DualRiders و غیره) یا استفاده از نسخهٔ نامناسب برای Minecraft شما رخ می‌دهد.</li>"
+	            + "</ul>"
+	            + "<p>اگر از سیستم رزم پیشرفته استفاده نمی‌کنید، برای جلوگیری از تداخل، En Garde! را حذف کنید.</p>";
+	}
+
+	@Override
+	public String nombre_error_en_garde() {
+	    return "خطا در افزونهٔ En Garde!";
+	}
+
+	@Override
+	public String solucion_actualizar_en_garde() {
+	    return "مطمئن شوید که از نسخهٔ En Garde! سازگار با نسخهٔ Minecraft و بارگذار شما (Fabric/Forge) استفاده می‌کنید.";
+	}
+
+	@Override
+	public String solucion_eliminar_conflicto_mod_combate() {
+	    return "اگر از افزونه‌های رزم دیگری (مثل Epic Fight، Caelus و غیره) استفاده می‌کنید، آن‌ها را غیرفعال کنید یا En Garde! را حذف نمایید تا از تداخل جلوگیری شود.";
+	}
+	
+	@Override
+	public String error_idletweaks_html() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "خطایی ناشی از افزونهٔ <b>IdleTweaks</b> شناسایی شد.</b>"
+	            + "<ul>"
+	            + "<li>IdleTweaks سعی کرد کانال شبکه‌ای را آزاد کند که دیگر وجود ندارد (<code>Tried to release unknown channel</code>).</li>"
+	            + "<li>این خطا معمولاً در نسخه‌های قدیمی افزونه یا هنگام استفاده در سرورهای بدپیکربندی‌شده رخ می‌دهد.</li>"
+	            + "</ul>"
+	            + "<p>IdleTweaks یک افزونهٔ رفاهی است، اما ممکن است باعث ناپایداری شود. به‌روزرسانی یا حذف آن را در نظر بگیرید.</p>";
+	}
+
+	@Override
+	public String nombre_error_idletweaks() {
+	    return "خطای IdleTweaks (کانال شبکهٔ ناشناخته)";
+	}
+
+	@Override
+	public String solucion_actualizar_idletweaks() {
+	    return "IdleTweaks را به جدیدترین نسخه‌ای که با Minecraft شما سازگار است، به‌روزرسانی کنید.";
+	}
+
+	@Override
+	public String solucion_eliminar_idletweaks() {
+	    return "اگر به آن نیازی ندارید، IdleTweaks را از پوشهٔ 'mods' حذف کنید.";
+	}
+	
+	@Override
+	public String mensagjePirataMC() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "خطای احراز هویت (HTTP 401) هنگام تلاش برای ورود به Minecraft شناسایی شد.</b>"
+	            + "<p>این خطا <b>به ندرت علت مستقیم crash است</b>، اما نشان می‌دهد که از یک حساب غیرمجاز (نسخهٔ غیرقانونی) استفاده می‌کنید.</p>"
+	            + "<p>کانال‌های پشتیبانی رسمی (پروژه‌های شرکتی، VTuberها، سازندگان modpack و غیره) <b>نمی‌توانند به شما کمک کنند</b> اگر از نسخهٔ غیرقانونی استفاده کنید، "
+	            + "به دلیل محدودیت‌های قوانین چت، قراردادها، توافقات با Mojang/Microsoft یا سیاست‌های اعتبار.</p>"
+	            + "<p>این بررسی را می‌توان در <b>تنظیمات شرکتی</b> تشخیص‌دهنده غیرفعال کرد. "
+	            + "اخطار: سیستم تشخیص غیرقانونی بودن <b>کامل نیست</b> و ممکن است در محیط‌های توسعه، با اینترنت ناپایدار یا استفاده از راه‌اندازهای اصلاح‌شده فعال شود.</p>";
+	}
+
+	@Override
+	public String infoDeDerechosMiranda() {
+	    return "<b>حقوق میراندا در صورت تلاش برای پیوستن به پشتیبانی با وجود این هشدار:</b>";
+	}
+
+	@Override
+	public String nombrePirataMC() {
+	    return "Minecraft غیرقانونی";
+	}
+
+	@Override
+	public String desactivarVerificacionPirata() {
+	    return "غیرفعال‌سازی بررسی غیرقانونی بودن";
+	}
+
+	@Override
+	public String comprarMC() {
+	    return "خرید Minecraft";
+	}
+	
+	// --- LanzerNoAnimado ---
+	@Override
+	public String lanzer_no_animado_titulo(String id) {
+	    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+	        + "شما از راه‌انداز <code>" + id + "</code> استفاده می‌کنید که <b>در لیست راه‌اندازهای توصیه‌شده نیست</b>.</b>";
+	}
+
+	@Override
+	public String lanzer_no_animado_problemas_comunes() {
+	    return "<p>اگرچه ممکن است کار کند، اما راه‌اندازهای غیرتوصیه‌شده معمولاً باعث می‌شوند:</p>"
+	        + "<ul>"
+	        + "<li>نصب‌های خراب‌شدهٔ افزونه‌ها یا اپلیکیشن.</li>"
+	        + "<li>بازی شروع نشود یا بدون خطای مشخص هَنگ کند.</li>"
+	        + "<li>ساختار غیرمعمول پوشه‌ها (تشخیص را دشوار می‌کند).</li>"
+	        + "<li>رفتار غیرقابل‌پیش‌بینی با جاوا، حافظه یا افزونه‌ها.</li>"
+	        + "</ul>";
+	}
+
+	@Override
+	public String lanzer_no_animado_usar_animados() {
+	    return "برای تجربهٔ بهتر، یکی از راه‌اندازهای توصیه‌شدهٔ زیر را استفاده کنید:";
+	}
+
+	@Override
+	public String nombre_lanzer_no_animado() {
+	    return "راه‌انداز غیرتوصیه‌شده";
+	}
+
+	@Override
+	public String lanzer_no_animado_cambiar_a_animado() {
+	    return "به راه‌اندازی از لیست توصیه‌شده تغییر دهید.";
+	}
+
+	// --- LanzerDesAnimado ---
+	@Override
+	public String lanzer_desanimado_titulo(String id) {
+	    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+	        + "شما از یک <b>راه‌انداز نامناسب</b> استفاده می‌کنید: <code>" + id + "</code>.</b>";
+	}
+
+	@Override
+	public String lanzer_desanimado_problemas_comunes() {
+	    return "<p>راه‌اندازهای نامناسب ممکن است باعث شوند:</p>"
+	        + "<ul>"
+	        + "<li>نصب‌های خراب‌شدهٔ اپلیکیشن یا افزونه‌ها.</li>"
+	        + "<li>بازی شروع نشود یا به‌صورت ساکت شکست بخورد.</li>"
+	        + "<li>سازمان‌دهی غیرمعمول فایل‌ها (اشکال‌زدایی را دشوار می‌کند).</li>"
+	        + "<li>عدم اطمینان از نحوهٔ مدیریت افزونه‌ها، جاوا یا حافظه توسط آن.</li>"
+	        + "</ul>";
+	}
+
+	@Override
+	public String lanzer_desanimado_usar_animados() {
+	    return "استفاده از یکی از راه‌اندازهای زیر به‌شدت توصیه می‌شود:";
+	}
+
+	@Override
+	public String nombre_lanzer_desanimado() {
+	    return "راه‌انداز نامناسب";
+	}
+
+	@Override
+	public String lanzer_desanimado_cambiar_lanzer() {
+	    return "برای دریافت پشتیبانی، به راه‌انداز توصیه‌شده تغییر دهید.";
+	}
+	
+	// --- FaltaModAnimado ---
+	@Override
+	public String falta_mod_animado_titulo() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	        + "برای این محیط، افزونه‌های توصیه‌شده وجود ندارند.</b>";
+	}
+	@Override
+	public String nombre_falta_mod_animado() {
+	    return "افزونه‌های توصیه‌شده گم شده‌اند";
+	}
+	@Override
+	public String falta_mod_animado_instalar() {
+	    return "برای تجربهٔ بهینه، افزونه‌های توصیه‌شده را نصب کنید.";
+	}
+
+	// --- TienesModDesAnimado ---
+	@Override
+	public String tienes_mod_desanimado_titulo() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	        + "افزونه‌های نامناسب در نصب شما شناسایی شدند.</b>";
+	}
+	@Override
+	public String nombre_tienes_mod_desanimado() {
+	    return "افزونه‌های نامناسب شناسایی شدند";
+	}
+	@Override
+	public String tienes_mod_desanimado_eliminar() {
+	    return "برای جلوگیری از مشکلات، افزونه‌های نامناسب را حذف کنید.";
+	}
+	
+	@Override
+	public String antimanipulacion_titulo() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	        + "دستکاری غیرمجاز در فایل‌های حیاتی شناسایی شد. یا فایل‌ها را دستی ویرایش کرده‌اید یا از یک راه‌انداز نامعتبر استفاده می‌کنید.</b>";
+	}
+
+	@Override
+	public String nombre_antimanipulacion() {
+	    return "دستکاری شناسایی شد";
+	}
+
+	@Override
+	public String antimanipulacion_reinstalar() {
+	    return "برای بازگرداندن یکپارچگی، فایل‌های اصلی را مجدداً نصب کنید.";
+	}
+	
+	@Override public String configuracionCorporativa() { return "تنظیمات شرکتی"; }
+	@Override public String idiomaRespaldo() { return "زبان پشتیبان"; }
+	@Override public String buscardorHabilitado() { return "فعال‌سازی جستجوگر"; }
+	@Override public String nombreHerramienta() { return "نام ابزار"; }
+	@Override public String condenarPirateria() { return "محکومیت دزدی نرم‌افزاری"; }
+	@Override public String lanzadoresRecomendados() { return "راه‌اندازهای توصیه‌شده"; }
+	@Override public String lanzadoresDesaconsejados() { return "راه‌اندازهای نامناسب"; }
+	@Override public String modsRecomendados() { return "افزونه‌های توصیه‌شده"; }
+	@Override public String modsDesaconsejados() { return "افزونه‌های نامناسب"; }
+	@Override public String antiTamper() { return "ضد دستکاری"; }
+	@Override public String proximamente() { return "به زودی"; }
+	@Override public String informacion() { return "اطلاعات"; }
+	@Override public String errorCargandoImagen() { return "خطا در بارگذاری تصویر"; }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

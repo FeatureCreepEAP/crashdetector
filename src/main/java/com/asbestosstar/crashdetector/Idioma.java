@@ -14,6 +14,7 @@ import java.util.Set;
 
 import javax.swing.Icon;
 
+import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.idioma.Arabe;
 import com.asbestosstar.crashdetector.idioma.Chino;
 import com.asbestosstar.crashdetector.idioma.Coreano;
@@ -29,6 +30,8 @@ public interface Idioma {
 
 	Config config = Config.obtenerInstancia();
 	public static File archivo = new File(System.getProperty("user.home"), "crash_detector/idioma");
+
+	public static ConfigString idioma_respaldo = ConfigString.de("idioma_respaldo", "es");
 
 	public static Idioma espanol = new Espanol();
 	public static Idioma ingles = new Ingles();
@@ -48,7 +51,22 @@ public interface Idioma {
 			id = Locale.getDefault().getLanguage().toLowerCase();
 		}
 
-		switch (id) {
+		if (id == null || !tenemosIdiomaCodigo(id)) {
+			id = idioma_respaldo.obtener();
+			if (id == null || !tenemosIdiomaCodigo(id)) {
+				return espanol;
+			} else {
+				return desdeCodigo(id);
+			}
+
+		} else {
+			return desdeCodigo(id);
+		}
+
+	}
+
+	public static Idioma desdeCodigo(String codigo) {// TODO una sistema dinamica de registrando idiomas
+		switch (codigo) {
 		case "es":
 			return espanol;
 		case "en":
@@ -75,6 +93,45 @@ public interface Idioma {
 			return espanol;
 		}
 	}
+	
+	public static String nombreDeIdiomaDesdeCondigo(String codigo) {
+	    switch (codigo) {
+	        case "es":
+	            return "Español"; // espanol
+	        case "en":
+	            return "English"; // ingles
+	        case "ar":
+	            return "العربية"; // arabe
+	        case "pt":
+	            return "Português"; // portuges
+	        case "fa":
+	            return "فارسی"; // persa
+	        case "ru":
+	            return "Русский"; // ruso
+	        case "zh":
+	            return "中文"; // chino
+	        case "eo":
+	            return "Esperanto"; // Esperanto
+	        case "ja":
+	            return "日本語"; // japones
+	        case "ko":
+	            return "한국어"; // coreono
+	        case "uk":
+	            return "Русский"; // Ucraniano usa configuración rusa (same as Russian)
+	        default:
+	            return "Español"; // Idioma por defecto
+	    }
+	}
+
+
+	
+	
+
+	public static boolean tenemosIdiomaCodigo(String codigo) {
+		Set<String> CODIGOS_IDIOMA = new HashSet<>(
+				Arrays.asList("es", "en", "ar", "pt", "fa", "ru", "zh", "eo", "ja", "ko"));
+		return CODIGOS_IDIOMA.contains(codigo);
+	}// TODO crerar una sistema de registrando idiomas dinamicos
 
 	public static String leerIdiomaDesdeArchivo() {
 		if (!archivo.exists() || !archivo.canRead()) {
@@ -2013,5 +2070,103 @@ public interface Idioma {
 	public String solucion_buscar_clave_en_archivos();
 
 	public String solucion_eliminar_mod_reciente();
+
+	public String error_entrypoint_fabric_html(String modNombre);
+
+	public String nombre_error_entrypoint_fabric();
+
+	public String solucion_eliminar_mod(String modNombre);
+
+	public String solucion_actualizar_mod(String modNombre);
+
+	public String error_en_garde_html();
+
+	public String nombre_error_en_garde();
+
+	public String solucion_actualizar_en_garde();
+
+	public String solucion_eliminar_conflicto_mod_combate();
+
+	public String error_idletweaks_html();
+
+	public String nombre_error_idletweaks();
+
+	public String solucion_actualizar_idletweaks();
+
+	public String solucion_eliminar_idletweaks();
+
+	public String mensagjePirataMC();
+
+	public String infoDeDerechosMiranda();
+
+	public String nombrePirataMC();
+
+	public String desactivarVerificacionPirata();
+
+	public String comprarMC();
+
+	public String lanzer_no_animado_cambiar_a_animado();
+
+	public String nombre_lanzer_no_animado();
+
+	public String lanzer_no_animado_titulo(String lanzadorActual);
+
+	public String lanzer_no_animado_problemas_comunes();
+
+	public String lanzer_no_animado_usar_animados();
+
+	public String lanzer_desanimado_titulo(String lanzadorActual);
+
+	public String lanzer_desanimado_problemas_comunes();
+
+	public String lanzer_desanimado_usar_animados();
+
+	public String nombre_lanzer_desanimado();
+
+	public String lanzer_desanimado_cambiar_lanzer();
+
+	public String falta_mod_animado_titulo();
+
+	public String nombre_falta_mod_animado();
+
+	public String falta_mod_animado_instalar();
+
+	public String tienes_mod_desanimado_titulo();
+
+	public String nombre_tienes_mod_desanimado();
+
+	public String tienes_mod_desanimado_eliminar();
+
+	public String antimanipulacion_titulo();
+
+	public String nombre_antimanipulacion();
+
+	public String antimanipulacion_reinstalar();
+
+	public String configuracionCorporativa();
+
+	public String idiomaRespaldo();
+
+	public String buscardorHabilitado();
+
+	public String nombreHerramienta();
+
+	public String condenarPirateria();
+
+	public String lanzadoresRecomendados();
+
+	public String lanzadoresDesaconsejados();
+
+	public String modsRecomendados();
+
+	public String modsDesaconsejados();
+
+	public String errorCargandoImagen();
+
+	public String proximamente();
+
+	public String informacion();
+
+	public String antiTamper();
 
 }

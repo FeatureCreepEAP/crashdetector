@@ -27,6 +27,7 @@ import com.asbestosstar.crashdetector.analizador.Analizador;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.detectorlanzer.DetectorLanzer;
 import com.asbestosstar.crashdetector.grepr.BusquedaArchivos;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.arbol.ArbolDeModsGUIHamu;
@@ -34,6 +35,7 @@ import com.asbestosstar.crashdetector.gui.tipos.cfr.BuscarParaCFR;
 import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrSakuraRiddle;
 import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartirLegacy;
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanelEstiloTL;
+import com.asbestosstar.crashdetector.gui.tipos.corpo.CorpoSAO;
 import com.asbestosstar.crashdetector.gui.tipos.editor.EditorCodiceGUIIronMouse;
 import com.asbestosstar.crashdetector.gui.tipos.editor_plantilla.EditorPlantillaModioNoche;
 import com.asbestosstar.crashdetector.gui.tipos.editor_plantilla.EditorPlantillaPredeterminado;
@@ -75,6 +77,7 @@ public class MonitorDePID {
 
 	public static void main(String[] args) {
 		registrarGUISPredeterminado();
+		DetectorLanzer.registrarLanzeresDefectos();
 		if (args.length > 0 && args[0].equals("--monitor")) {
 			long pid = Long.parseLong(args[1]);
 			monitor_proceso(pid);
@@ -207,6 +210,10 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/sakura_riddle.png",
 				Statics.carpeta.resolve("imagenes/sakura_riddle.png").toFile());
 
+		
+		copiarACarpetaDesdeJar("/imagenes/sao.png", Statics.carpeta.resolve("imagenes/sao.png").toFile());
+
+		
 //		new File(viajo_ultima_mods.toString()).delete();
 //		try {
 //			new File(viajo_ultima_mods.toString()).createNewFile();
@@ -377,6 +384,7 @@ public class MonitorDePID {
 		TipoGUI.EDITOR_GUI.registrarGUI(CDSkinCape.ID, () -> new CDSkinCape());
 		TipoGUI.MOD_API_PANEL.registrarGUI(CDModsEstiloTL.ID, () -> new CDModsEstiloTL());
 		TipoGUI.CFR.registrarGUI(CfrSakuraRiddle.ID, () -> new CfrSakuraRiddle());
+		TipoGUI.CORPO.registrarGUI(CorpoSAO.ID, () -> new CorpoSAO());
 
 	}
 

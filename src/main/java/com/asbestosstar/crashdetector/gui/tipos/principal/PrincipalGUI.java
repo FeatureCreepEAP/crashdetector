@@ -48,6 +48,7 @@ import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.arbol.ArbolDeModsGUIHamu;
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanel;
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanelEstiloTL;
+import com.asbestosstar.crashdetector.gui.tipos.corpo.CorpoSAO;
 import com.asbestosstar.crashdetector.gui.tipos.editor.EditorCodiceGUIIronMouse;
 import com.asbestosstar.crashdetector.gui.tipos.grepr.BusquedaGUISaliorMoon;
 import com.asbestosstar.crashdetector.gui.tipos.historia.ClioOfficeGUI;
@@ -118,6 +119,8 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 				() -> new LectadorDeConsolasHoloTalk());
 		registrarBotonDeBarraLateralDerecha(TipoGUI.EDITOR_FIRMAS, EditorCodiceGUIIronMouse.ID,
 				() -> new EditorCodiceGUIIronMouse());
+		registrarBotonDeBarraLateralDerecha(TipoGUI.CORPO, CorpoSAO.ID,
+				() -> new CorpoSAO());
 	}
 
 	public PrincipalGUI() {

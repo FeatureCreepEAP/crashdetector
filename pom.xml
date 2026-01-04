@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.asbestosstar</groupId>
 	<artifactId>crashdetector</artifactId>
-	<version>0.3.6.7</version>
+	<version>0.3.6.8</version>
 	
 	
 	<!-- Add necessary metadata for Maven Central -->
@@ -283,7 +283,7 @@
 		<repository>
 			<id>velocity</id>
 			<name>velocity</name>
-			<url>https://nexus.velocitypowered.com/repository/maven-public/</url>
+			<url>https://repo.papermc.io/repository/maven-public/</url>
 		</repository>
 		
 	</repositories>
