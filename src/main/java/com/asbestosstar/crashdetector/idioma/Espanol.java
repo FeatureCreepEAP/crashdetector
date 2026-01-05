@@ -6176,21 +6176,56 @@ public class Espanol implements Idioma {
 	@Override
 	public String errorCargandoImagen() { return "Error cargando imagen"; }
 
+	@Override public String configuracionBasica() { return "Configuración Básica"; }
+	@Override public String funcionalidades() { return "Funcionalidades"; }
+	@Override public String derechosMiranda() { return "Derechos Miranda (MUY recomendados)"; }
 	
 
+	
+	
+	
+	@Override public String gestionVerificaciones() { return "Gestión de Verificaciones"; }
+	@Override public String idVerificacion() { return "ID"; }
+	@Override public String nombreVerificacion() { return "Nombre"; }
+	@Override public String codigoVerificacion() { return "Código"; }
+	@Override public String documentacionVerificacion() { return "Documentación"; }
+	@Override public String verificacionesHabilitadas() { return "Verificaciones Habilitadas:"; }
+	@Override public String verificacionesDeshabilitadas() { return "Verificaciones Deshabilitadas:"; }
+	@Override public String deshabilitarNoCorporativas() { return "Deshabilitar todas no corporativas"; }
+	@Override public String verCodigo() { return "Ver Código"; }
+	@Override public String verDocumentacion() { return "Ver Documentación"; }
+	@Override public String seleccionaVerificacionDeshabilitar() { return "Seleccione una verificación para deshabilitar."; }
+	@Override public String seleccionaVerificacionHabilitar() { return "Seleccione una verificación para habilitar."; }
+	@Override public String verificacionesNoCorporativasDeshabilitadas() { return "Se deshabilitaron %d verificaciones no recomendadas para uso corporativo."; }
+	@Override public String noVerificacionesNoCorporativas() { return "No hay verificaciones no corporativas para deshabilitar."; }
+	@Override public String operacionCompletada() { return "Operación completada"; }
+	@Override public String mensajeAmaneKanata() { return "Te extrañamos Amane Kanata"; }
+	@Override public String colorVerificacionCorporativa() { return "Color de Verificación Corporativa"; }
+	
+	
+	
+	
+	// Métodos para la gestión de lanzadores
+	@Override public String nombreLanzador() { return "Nombre del Lanzador"; }
+	@Override public String motivo() { return "Motivo"; }
+	@Override public String lanzadoresNoRecomendados() { return "Lanzadores Desaconsejados"; }
+	@Override public String moverADesaconsejados() { return "Desaconsejar"; }
+	@Override public String moverARecomendados() { return "Recomendar"; }
+	@Override public String guardarCambios() { return "Guardar Cambios"; }
+	@Override public String cancelar() { return "Cancelar"; }
+	@Override public String seleccionaLanzadorMover() { return "Por favor selecciona un lanzador para mover."; }
+	@Override public String cambiosGuardadosExitosamente() { return "¡Los cambios han sido guardados exitosamente!"; }
+	@Override public String motivoDesaconsejoPredeterminadoEs(String nombreLanzador) { 
+	    return "Este lanzador no es recomendado debido a problemas de seguridad y estabilidad conocidos."; 
+	}
+	@Override public String motivoDesaconsejoPredeterminadoEn(String nombreLanzador) { 
+	    return "This launcher is not recommended due to known security and stability issues."; 
+	}
+	@Override public String motivoDesaconsejoPredeterminadoPt(String nombreLanzador) { 
+	    return "Este lançador não é recomendado devido a problemas conhecidos de segurança e estabilidade."; 
+	}
 
-	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

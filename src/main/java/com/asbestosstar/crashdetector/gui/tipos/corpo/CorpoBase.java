@@ -13,6 +13,9 @@ import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
+import com.asbestosstar.crashdetector.gui.tipos.deshablicarverificaciones.DeshabilitarVerificacionesAmaneKanata;
+import com.asbestosstar.crashdetector.gui.tipos.editor.EditorCodiceGUIIronMouse;
+import com.asbestosstar.crashdetector.gui.tipos.lanzeresmalos.LanzerMaloGUISylentBell;
 
 public abstract class CorpoBase extends JDialog implements CrashDetectorGUI,BotonDeBarraLateralDerecha {
     public static Map<String, Supplier<CorpoBase>> GUIS = new HashMap<String, Supplier<CorpoBase>>();
@@ -49,6 +52,19 @@ public abstract class CorpoBase extends JDialog implements CrashDetectorGUI,Boto
         return PirataMC.config.obtener();
     }
     
+    public static void abrirEditorCodice() {
+    	TipoGUI.EDITOR_FIRMAS.obtenerGUIPredeterminado(EditorCodiceGUIIronMouse.ID,
+    			() -> new EditorCodiceGUIIronMouse()).init();
+    }
+    public static void abrirVerificaciones() {
+    	TipoGUI.DESHABLICAR_VERIFICACIONES.obtenerGUIPredeterminado(DeshabilitarVerificacionesAmaneKanata.ID,
+    			() -> new DeshabilitarVerificacionesAmaneKanata()).init();
+    }
+    public static void abrirLanzeresMalos() {
+    	TipoGUI.LANZER_MALO.obtenerGUIPredeterminado(LanzerMaloGUISylentBell.ID,
+    			() -> new LanzerMaloGUISylentBell()).init();
+    }
+    
     @Override
     public TipoGUI tipo() {
         return TipoGUI.CORPO;
@@ -63,4 +79,9 @@ public abstract class CorpoBase extends JDialog implements CrashDetectorGUI,Boto
      * Aplica la apariencia a todos los componentes de la GUI
      */
     public abstract void aplicarApariencia();
+    
+    
+    
+    
+    
 }

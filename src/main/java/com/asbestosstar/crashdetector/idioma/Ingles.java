@@ -5500,10 +5500,38 @@ public class Ingles implements Idioma {
 	@Override public String proximamente() { return "Coming Soon"; }
 	@Override public String informacion() { return "Information"; }
 	@Override public String errorCargandoImagen() { return "Error loading image"; }
-	
-	
-	
-	
+	@Override public String configuracionBasica() { return "Basic Settings"; }
+	@Override public String funcionalidades() { return "Features"; }
+	@Override public String derechosMiranda() { return "Miranda Rights (HIGHLY recommended)"; }
+	@Override public String gestionVerificaciones() { return "Verification Management"; }
+	@Override public String idVerificacion() { return "ID"; }
+	@Override public String nombreVerificacion() { return "Name"; }
+	@Override public String codigoVerificacion() { return "Code"; }
+	@Override public String documentacionVerificacion() { return "Documentation"; }
+	@Override public String verificacionesHabilitadas() { return "Enabled Verifications:"; }
+	@Override public String verificacionesDeshabilitadas() { return "Disabled Verifications:"; }
+	@Override public String deshabilitarNoCorporativas() { return "Disable all non-corporate"; }
+	@Override public String verCodigo() { return "View Code"; }
+	@Override public String verDocumentacion() { return "View Documentation"; }
+	@Override public String seleccionaVerificacionDeshabilitar() { return "Select a verification to disable."; }
+	@Override public String seleccionaVerificacionHabilitar() { return "Select a verification to enable."; }
+	@Override public String verificacionesNoCorporativasDeshabilitadas() { return "%d verifications not recommended for corporate use have been disabled."; }
+	@Override public String noVerificacionesNoCorporativas() { return "No non-corporate verifications to disable."; }
+	@Override public String operacionCompletada() { return "Operation completed"; }
+	@Override public String mensajeAmaneKanata() { return "We miss you, Amane Kanata"; }
+	@Override public String colorVerificacionCorporativa() { return "Corporate Verification Colour"; }
+	@Override public String nombreLanzador() { return "Launcher Name"; }
+	@Override public String motivo() { return "Reason"; }
+	@Override public String lanzadoresNoRecomendados() { return "Discouraged Launchers"; }
+	@Override public String moverADesaconsejados() { return "Discourage"; }
+	@Override public String moverARecomendados() { return "Recommend"; }
+	@Override public String guardarCambios() { return "Save Changes"; }
+	@Override public String cancelar() { return "Cancel"; }
+	@Override public String seleccionaLanzadorMover() { return "Please select a launcher to move."; }
+	@Override public String cambiosGuardadosExitosamente() { return "Changes have been saved successfully!"; }
+	@Override public String motivoDesaconsejoPredeterminadoEs(String nombreLanzador) { return "Este lanzador no es recomendado debido a problemas de seguridad y estabilidad conocidos."; }
+	@Override public String motivoDesaconsejoPredeterminadoEn(String nombreLanzador) { return "This launcher is not recommended due to known security and stability issues."; }
+	@Override public String motivoDesaconsejoPredeterminadoPt(String nombreLanzador) { return "Este lançador não é recomendado devido a problemas conhecidos de segurança e estabilidade."; }
 	
 	
 	

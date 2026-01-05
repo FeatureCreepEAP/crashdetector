@@ -5448,9 +5448,38 @@ public class Persa implements Idioma {
 	@Override public String errorCargandoImagen() { return "خطا در بارگذاری تصویر"; }
 	
 	
-	
-	
-	
+	@Override public String configuracionBasica() { return "تنظیمات پایه"; }
+	@Override public String funcionalidades() { return "امکانات"; }
+	@Override public String derechosMiranda() { return "حقوق میراندا (به‌شدت توصیه می‌شود)"; }
+	@Override public String gestionVerificaciones() { return "مدیریت تأییدها"; }
+	@Override public String idVerificacion() { return "شناسه"; }
+	@Override public String nombreVerificacion() { return "نام"; }
+	@Override public String codigoVerificacion() { return "کد"; }
+	@Override public String documentacionVerificacion() { return "مستندات"; }
+	@Override public String verificacionesHabilitadas() { return "تأییدهای فعال‌شده:"; }
+	@Override public String verificacionesDeshabilitadas() { return "تأییدهای غیرفعال‌شده:"; }
+	@Override public String deshabilitarNoCorporativas() { return "غیرفعال‌سازی همهٔ موارد غیرشرکتی"; }
+	@Override public String verCodigo() { return "مشاهدهٔ کد"; }
+	@Override public String verDocumentacion() { return "مشاهدهٔ مستندات"; }
+	@Override public String seleccionaVerificacionDeshabilitar() { return "تأییدی را برای غیرفعال‌سازی انتخاب کنید."; }
+	@Override public String seleccionaVerificacionHabilitar() { return "تأییدی را برای فعال‌سازی انتخاب کنید."; }
+	@Override public String verificacionesNoCorporativasDeshabilitadas() { return "%d تأیید که برای استفادهٔ شرکتی توصیه نمی‌شوند، غیرفعال شدند."; }
+	@Override public String noVerificacionesNoCorporativas() { return "تأیید غیرشرکتی برای غیرفعال‌سازی وجود ندارد."; }
+	@Override public String operacionCompletada() { return "عملیات کامل شد"; }
+	@Override public String mensajeAmaneKanata() { return "ما تو را دوست داریم، Amane Kanata"; }
+	@Override public String colorVerificacionCorporativa() { return "رنگ تأیید شرکتی"; }
+	@Override public String nombreLanzador() { return "نام راه‌انداز"; }
+	@Override public String motivo() { return "دلیل"; }
+	@Override public String lanzadoresNoRecomendados() { return "راه‌اندازهای نامناسب"; }
+	@Override public String moverADesaconsejados() { return "غیرتوصیه‌شده کردن"; }
+	@Override public String moverARecomendados() { return "توصیه‌شده کردن"; }
+	@Override public String guardarCambios() { return "ذخیرهٔ تغییرات"; }
+	@Override public String cancelar() { return "لغو"; }
+	@Override public String seleccionaLanzadorMover() { return "لطفاً راه‌اندازی را برای جابه‌جایی انتخاب کنید."; }
+	@Override public String cambiosGuardadosExitosamente() { return "تغییرات با موفقیت ذخیره شد!"; }
+	@Override public String motivoDesaconsejoPredeterminadoEs(String nombreLanzador) { return "Este lanzador no es recomendado debido a problemas de seguridad y estabilidad conocidos."; }
+	@Override public String motivoDesaconsejoPredeterminadoEn(String nombreLanzador) { return "This launcher is not recommended due to known security and stability issues."; }
+	@Override public String motivoDesaconsejoPredeterminadoPt(String nombreLanzador) { return "Este lançador não é recomendado devido a problemas conhecidos de segurança e estabilidade."; }
 	
 	
 	

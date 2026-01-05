@@ -16,11 +16,13 @@ import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrBase;
 import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartir;
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanel;
 import com.asbestosstar.crashdetector.gui.tipos.corpo.CorpoBase;
+import com.asbestosstar.crashdetector.gui.tipos.deshablicarverificaciones.DeshablicarVerificaciones;
 import com.asbestosstar.crashdetector.gui.tipos.editor.EditorFirmasGUI;
 import com.asbestosstar.crashdetector.gui.tipos.editor_plantilla.EditorPlantilla;
 import com.asbestosstar.crashdetector.gui.tipos.editorgui.EditorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.grepr.GrepRGUI;
 import com.asbestosstar.crashdetector.gui.tipos.historia.HistoriaDeModsGUI;
+import com.asbestosstar.crashdetector.gui.tipos.lanzeresmalos.LanzerMaloGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasGUI;
 import com.asbestosstar.crashdetector.gui.tipos.mcreator.EscanerMCreatorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.modapi.PanelAPIBase;
@@ -473,7 +475,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 	
 	
 	/**
-	 * Editor de GUIs
+	 * Editor de CORPO CONFIG
 	 */
 	public static TipoGUI<CorpoBase> CORPO = new TipoGUI<CorpoBase>() {
 		@Override
@@ -496,6 +498,56 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 			return CorpoBase.GUIS;
 		}
 	};
+	
+	/**
+	 * Editor de Verificaciones
+	 */
+	public static TipoGUI<DeshablicarVerificaciones> DESHABLICAR_VERIFICACIONES = new TipoGUI<DeshablicarVerificaciones>() {
+		@Override
+		public String id() {
+			return "deshablicar_verificaciones";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.gestionVerificaciones();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<DeshablicarVerificaciones> gui) {
+			DeshablicarVerificaciones.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<DeshablicarVerificaciones>> obtenerGUIs() {
+			return DeshablicarVerificaciones.GUIS;
+		}
+	};
+
+	public static TipoGUI<LanzerMaloGUI> LANZER_MALO = new TipoGUI<LanzerMaloGUI>() {
+		@Override
+		public String id() {
+			return "lanzer_malo";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.lanzadoresDesaconsejados();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<LanzerMaloGUI> gui) {
+			LanzerMaloGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<LanzerMaloGUI>> obtenerGUIs() {
+			return LanzerMaloGUI.GUIS;
+		}
+	};
+	
+	
+
 	
 	
 	
@@ -522,6 +574,9 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		TIPOS_DE_GUI.add(MOD_API_PANEL);
 		TIPOS_DE_GUI.add(CFR);
 		TIPOS_DE_GUI.add(CORPO);
+		TIPOS_DE_GUI.add(DESHABLICAR_VERIFICACIONES);
+		TIPOS_DE_GUI.add(LANZER_MALO);
 
+		
 	}
 }

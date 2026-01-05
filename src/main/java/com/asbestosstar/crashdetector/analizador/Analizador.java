@@ -84,7 +84,7 @@ public class Analizador {
 	 * Elemento de configuración que maneja la lista de denegación (por defecto
 	 * vacío).
 	 */
-	private static final ConfigStringArray CONFIG_LISTA_DENEGACION = ConfigStringArray.de(CONFIG_CLAVE_LISTA_DENEGACION,
+	public static final ConfigStringArray CONFIG_LISTA_DENEGACION = ConfigStringArray.de(CONFIG_CLAVE_LISTA_DENEGACION,
 			new ArrayList<>());
 
 	/**

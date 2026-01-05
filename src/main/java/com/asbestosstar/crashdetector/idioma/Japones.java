@@ -5298,9 +5298,38 @@ public class Japones implements Idioma {
 	@Override public String informacion() { return "情報"; }
 	@Override public String errorCargandoImagen() { return "画像の読み込みエラー"; }
 	
-	
-	
-	
+	@Override public String configuracionBasica() { return "基本設定"; }
+	@Override public String funcionalidades() { return "機能"; }
+	@Override public String derechosMiranda() { return "ミランダ警告（強く推奨）"; }
+	@Override public String gestionVerificaciones() { return "検証管理"; }
+	@Override public String idVerificacion() { return "ID"; }
+	@Override public String nombreVerificacion() { return "名前"; }
+	@Override public String codigoVerificacion() { return "コード"; }
+	@Override public String documentacionVerificacion() { return "ドキュメント"; }
+	@Override public String verificacionesHabilitadas() { return "有効な検証:"; }
+	@Override public String verificacionesDeshabilitadas() { return "無効な検証:"; }
+	@Override public String deshabilitarNoCorporativas() { return "非企業向け検証をすべて無効化"; }
+	@Override public String verCodigo() { return "コードを表示"; }
+	@Override public String verDocumentacion() { return "ドキュメントを表示"; }
+	@Override public String seleccionaVerificacionDeshabilitar() { return "無効化する検証を選択してください。"; }
+	@Override public String seleccionaVerificacionHabilitar() { return "有効化する検証を選択してください。"; }
+	@Override public String verificacionesNoCorporativasDeshabilitadas() { return "企業利用に推奨されない検証 %d 件が無効化されました。"; }
+	@Override public String noVerificacionesNoCorporativas() { return "無効化可能な非企業向け検証はありません。"; }
+	@Override public String operacionCompletada() { return "操作が完了しました"; }
+	@Override public String mensajeAmaneKanata() { return "Amane Kanata、会いたいよ"; }
+	@Override public String colorVerificacionCorporativa() { return "企業検証の色"; }
+	@Override public String nombreLanzador() { return "ランチャー名"; }
+	@Override public String motivo() { return "理由"; }
+	@Override public String lanzadoresNoRecomendados() { return "非推奨ランチャー"; }
+	@Override public String moverADesaconsejados() { return "非推奨に設定"; }
+	@Override public String moverARecomendados() { return "推奨に設定"; }
+	@Override public String guardarCambios() { return "変更を保存"; }
+	@Override public String cancelar() { return "キャンセル"; }
+	@Override public String seleccionaLanzadorMover() { return "移動するランチャーを選択してください。"; }
+	@Override public String cambiosGuardadosExitosamente() { return "変更が正常に保存されました！"; }
+	@Override public String motivoDesaconsejoPredeterminadoEs(String nombreLanzador) { return "Este lanzador no es recomendado debido a problemas de seguridad y estabilidad conocidos."; }
+	@Override public String motivoDesaconsejoPredeterminadoEn(String nombreLanzador) { return "This launcher is not recommended due to known security and stability issues."; }
+	@Override public String motivoDesaconsejoPredeterminadoPt(String nombreLanzador) { return "Este lançador não é recomendado devido a problemas conhecidos de segurança e estabilidade."; }
 	
 	
 	

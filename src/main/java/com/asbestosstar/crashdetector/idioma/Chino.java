@@ -5202,9 +5202,38 @@ public class Chino implements Idioma {
 	@Override public String informacion() { return "信息"; }
 	@Override public String errorCargandoImagen() { return "加载图像时出错"; }
 	
-	
-	
-	
+	@Override public String configuracionBasica() { return "基本设置"; }
+	@Override public String funcionalidades() { return "功能"; }
+	@Override public String derechosMiranda() { return "米兰达权利（强烈推荐）"; }
+	@Override public String gestionVerificaciones() { return "验证管理"; }
+	@Override public String idVerificacion() { return "ID"; }
+	@Override public String nombreVerificacion() { return "名称"; }
+	@Override public String codigoVerificacion() { return "代码"; }
+	@Override public String documentacionVerificacion() { return "文档"; }
+	@Override public String verificacionesHabilitadas() { return "已启用的验证："; }
+	@Override public String verificacionesDeshabilitadas() { return "已禁用的验证："; }
+	@Override public String deshabilitarNoCorporativas() { return "禁用所有非企业级验证"; }
+	@Override public String verCodigo() { return "查看代码"; }
+	@Override public String verDocumentacion() { return "查看文档"; }
+	@Override public String seleccionaVerificacionDeshabilitar() { return "请选择一个验证以禁用。"; }
+	@Override public String seleccionaVerificacionHabilitar() { return "请选择一个验证以启用。"; }
+	@Override public String verificacionesNoCorporativasDeshabilitadas() { return "已禁用 %d 项不推荐用于企业环境的验证。"; }
+	@Override public String noVerificacionesNoCorporativas() { return "没有可禁用的非企业级验证。"; }
+	@Override public String operacionCompletada() { return "操作完成"; }
+	@Override public String mensajeAmaneKanata() { return "我们想念你，Amane Kanata"; }
+	@Override public String colorVerificacionCorporativa() { return "企业验证颜色"; }
+	@Override public String nombreLanzador() { return "启动器名称"; }
+	@Override public String motivo() { return "原因"; }
+	@Override public String lanzadoresNoRecomendados() { return "不建议的启动器"; }
+	@Override public String moverADesaconsejados() { return "设为不建议"; }
+	@Override public String moverARecomendados() { return "设为推荐"; }
+	@Override public String guardarCambios() { return "保存更改"; }
+	@Override public String cancelar() { return "取消"; }
+	@Override public String seleccionaLanzadorMover() { return "请选择一个启动器进行移动。"; }
+	@Override public String cambiosGuardadosExitosamente() { return "更改已成功保存！"; }
+	@Override public String motivoDesaconsejoPredeterminadoEs(String nombreLanzador) { return "Este lanzador no es recomendado debido a problemas de seguridad y estabilidad conocidos."; }
+	@Override public String motivoDesaconsejoPredeterminadoEn(String nombreLanzador) { return "This launcher is not recommended due to known security and stability issues."; }
+	@Override public String motivoDesaconsejoPredeterminadoPt(String nombreLanzador) { return "Este lançador não é recomendado devido a problemas conhecidos de segurança e estabilidade."; }
 	
 	
 	

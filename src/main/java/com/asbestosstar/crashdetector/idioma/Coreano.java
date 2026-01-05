@@ -5287,9 +5287,38 @@ public class Coreano implements Idioma {
 	@Override public String proximamente() { return "출시 예정"; }
 	@Override public String informacion() { return "정보"; }
 	@Override public String errorCargandoImagen() { return "이미지 불러오기 오류"; }
-	
-	
-	
+	@Override public String configuracionBasica() { return "기본 설정"; }
+	@Override public String funcionalidades() { return "기능"; }
+	@Override public String derechosMiranda() { return "미란다 권리 (매우 권장됨)"; }
+	@Override public String gestionVerificaciones() { return "검증 관리"; }
+	@Override public String idVerificacion() { return "ID"; }
+	@Override public String nombreVerificacion() { return "이름"; }
+	@Override public String codigoVerificacion() { return "코드"; }
+	@Override public String documentacionVerificacion() { return "문서"; }
+	@Override public String verificacionesHabilitadas() { return "활성화된 검증:"; }
+	@Override public String verificacionesDeshabilitadas() { return "비활성화된 검증:"; }
+	@Override public String deshabilitarNoCorporativas() { return "모든 비기업용 검증 비활성화"; }
+	@Override public String verCodigo() { return "코드 보기"; }
+	@Override public String verDocumentacion() { return "문서 보기"; }
+	@Override public String seleccionaVerificacionDeshabilitar() { return "비활성화할 검증을 선택하세요."; }
+	@Override public String seleccionaVerificacionHabilitar() { return "활성화할 검증을 선택하세요."; }
+	@Override public String verificacionesNoCorporativasDeshabilitadas() { return "기업용으로 권장되지 않는 검증 %d개가 비활성화되었습니다."; }
+	@Override public String noVerificacionesNoCorporativas() { return "비활성화할 비기업용 검증이 없습니다."; }
+	@Override public String operacionCompletada() { return "작업 완료"; }
+	@Override public String mensajeAmaneKanata() { return "우리는 Amane Kanata를 그리워합니다"; }
+	@Override public String colorVerificacionCorporativa() { return "기업 검증 색상"; }
+	@Override public String nombreLanzador() { return "런처 이름"; }
+	@Override public String motivo() { return "사유"; }
+	@Override public String lanzadoresNoRecomendados() { return "비추천 런처"; }
+	@Override public String moverADesaconsejados() { return "비추천으로 설정"; }
+	@Override public String moverARecomendados() { return "추천으로 설정"; }
+	@Override public String guardarCambios() { return "변경 사항 저장"; }
+	@Override public String cancelar() { return "취소"; }
+	@Override public String seleccionaLanzadorMover() { return "이동할 런처를 선택하세요."; }
+	@Override public String cambiosGuardadosExitosamente() { return "변경 사항이 성공적으로 저장되었습니다!"; }
+	@Override public String motivoDesaconsejoPredeterminadoEs(String nombreLanzador) { return "Este lanzador no es recomendado debido a problemas de seguridad y estabilidad conocidos."; }
+	@Override public String motivoDesaconsejoPredeterminadoEn(String nombreLanzador) { return "This launcher is not recommended due to known security and stability issues."; }
+	@Override public String motivoDesaconsejoPredeterminadoPt(String nombreLanzador) { return "Este lançador não é recomendado devido a problemas conhecidos de segurança e estabilidade."; }
 	
 	
 	

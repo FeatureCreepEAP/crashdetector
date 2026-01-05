@@ -5458,9 +5458,38 @@ public class Ruso implements Idioma {
 	
 	@Override public String configuracionCorporativa() { return "Configurações Corporativas"; } @Override public String idiomaRespaldo() { return "Idioma de Fallback"; } @Override public String buscardorHabilitado() { return "Habilitar Buscador"; } @Override public String nombreHerramienta() { return "Nome da Ferramenta"; } @Override public String condenarPirateria() { return "Condenar Pirataria"; } @Override public String lanzadoresRecomendados() { return "Launchers Recomendados"; } @Override public String lanzadoresDesaconsejados() { return "Launchers Desaconselhados"; } @Override public String modsRecomendados() { return "Mods Recomendados"; } @Override public String modsDesaconsejados() { return "Mods Desaconselhados"; } @Override public String antiTamper() { return "AntiManipulação"; } @Override public String proximamente() { return "Em breve"; } @Override public String informacion() { return "Informação"; } @Override public String errorCargandoImagen() { return "Erro ao carregar imagem"; }
 	
-	
-	
-	
+	@Override public String configuracionBasica() { return "Базовые настройки"; }
+	@Override public String funcionalidades() { return "Функции"; }
+	@Override public String derechosMiranda() { return "Права Миранды (НАСТОЯТЕЛЬНО рекомендуется)"; }
+	@Override public String gestionVerificaciones() { return "Управление проверками"; }
+	@Override public String idVerificacion() { return "ID"; }
+	@Override public String nombreVerificacion() { return "Название"; }
+	@Override public String codigoVerificacion() { return "Код"; }
+	@Override public String documentacionVerificacion() { return "Документация"; }
+	@Override public String verificacionesHabilitadas() { return "Включённые проверки:"; }
+	@Override public String verificacionesDeshabilitadas() { return "Отключённые проверки:"; }
+	@Override public String deshabilitarNoCorporativas() { return "Отключить все некорпоративные"; }
+	@Override public String verCodigo() { return "Просмотреть код"; }
+	@Override public String verDocumentacion() { return "Просмотреть документацию"; }
+	@Override public String seleccionaVerificacionDeshabilitar() { return "Выберите проверку для отключения."; }
+	@Override public String seleccionaVerificacionHabilitar() { return "Выберите проверку для включения."; }
+	@Override public String verificacionesNoCorporativasDeshabilitadas() { return "Отключено %d проверок, не рекомендуемых для корпоративного использования."; }
+	@Override public String noVerificacionesNoCorporativas() { return "Нет некорпоративных проверок для отключения."; }
+	@Override public String operacionCompletada() { return "Операция завершена"; }
+	@Override public String mensajeAmaneKanata() { return "Мы скучаем по тебе, Amane Kanata"; }
+	@Override public String colorVerificacionCorporativa() { return "Цвет корпоративной проверки"; }
+	@Override public String nombreLanzador() { return "Название лаунчера"; }
+	@Override public String motivo() { return "Причина"; }
+	@Override public String lanzadoresNoRecomendados() { return "Не рекомендуемые лаунчеры"; }
+	@Override public String moverADesaconsejados() { return "Отметить как нерекомендуемый"; }
+	@Override public String moverARecomendados() { return "Отметить как рекомендуемый"; }
+	@Override public String guardarCambios() { return "Сохранить изменения"; }
+	@Override public String cancelar() { return "Отмена"; }
+	@Override public String seleccionaLanzadorMover() { return "Пожалуйста, выберите лаунчер для перемещения."; }
+	@Override public String cambiosGuardadosExitosamente() { return "Изменения успешно сохранены!"; }
+	@Override public String motivoDesaconsejoPredeterminadoEs(String nombreLanzador) { return "Este lanzador no es recomendado debido a problemas de seguridad y estabilidad conocidos."; }
+	@Override public String motivoDesaconsejoPredeterminadoEn(String nombreLanzador) { return "This launcher is not recommended due to known security and stability issues."; }
+	@Override public String motivoDesaconsejoPredeterminadoPt(String nombreLanzador) { return "Este lançador não é recomendado devido a problemas conhecidos de segurança e estabilidade."; }
 	
 	
 	

@@ -2169,4 +2169,68 @@ public interface Idioma {
 
 	public String antiTamper();
 
+	public String configuracionBasica();
+
+	public String derechosMiranda();
+
+	public String funcionalidades();
+
+	public String gestionVerificaciones();
+
+	public String idVerificacion();
+
+	public String nombreVerificacion();
+
+	public String codigoVerificacion();
+
+	public String documentacionVerificacion();
+
+	public String mensajeAmaneKanata();
+
+	public String verificacionesHabilitadas();
+
+	public String verificacionesDeshabilitadas();
+
+	public String deshabilitarNoCorporativas();
+
+	public String verCodigo();
+
+	public String verDocumentacion();
+
+	public String seleccionaVerificacionDeshabilitar();
+
+	public String seleccionaVerificacionHabilitar();
+
+	public String verificacionesNoCorporativasDeshabilitadas();
+
+	public String operacionCompletada();
+
+	public String noVerificacionesNoCorporativas();
+
+	public String colorVerificacionCorporativa();
+
+	public String nombreLanzador();
+
+	public String motivo();
+
+	public String moverADesaconsejados();
+
+	public String moverARecomendados();
+
+	public String guardarCambios();
+
+	public String cancelar();
+
+	public String lanzadoresNoRecomendados();
+
+	public String seleccionaLanzadorMover();
+
+	public String cambiosGuardadosExitosamente();
+
+	public String motivoDesaconsejoPredeterminadoEn(String id);
+
+	public String motivoDesaconsejoPredeterminadoEs(String id);
+
+	public String motivoDesaconsejoPredeterminadoPt(String id);
+
 }

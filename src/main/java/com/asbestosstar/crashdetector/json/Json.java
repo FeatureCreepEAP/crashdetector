@@ -63,7 +63,7 @@ public class Json {
 	 * arreglo o valor
 	 */
 	public static class Nodo {
-		Object interno;
+		public Object interno;
 		final Motor motorRef;
 
 		// contexto para operaciones del tipo obtener y agregar

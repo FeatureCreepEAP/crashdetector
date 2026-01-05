@@ -36,6 +36,7 @@ import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrSakuraRiddle;
 import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartirLegacy;
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanelEstiloTL;
 import com.asbestosstar.crashdetector.gui.tipos.corpo.CorpoSAO;
+import com.asbestosstar.crashdetector.gui.tipos.deshablicarverificaciones.DeshabilitarVerificacionesAmaneKanata;
 import com.asbestosstar.crashdetector.gui.tipos.editor.EditorCodiceGUIIronMouse;
 import com.asbestosstar.crashdetector.gui.tipos.editor_plantilla.EditorPlantillaModioNoche;
 import com.asbestosstar.crashdetector.gui.tipos.editor_plantilla.EditorPlantillaPredeterminado;
@@ -43,6 +44,7 @@ import com.asbestosstar.crashdetector.gui.tipos.editorgui.CDSkinCape;
 import com.asbestosstar.crashdetector.gui.tipos.grepr.BusquedaGUISaliorMoon;
 import com.asbestosstar.crashdetector.gui.tipos.historia.ClioOfficeGUI;
 import com.asbestosstar.crashdetector.gui.tipos.historia.HistoriaModsGUILegacy;
+import com.asbestosstar.crashdetector.gui.tipos.lanzeresmalos.LanzerMaloGUISylentBell;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasHoloTalk;
 import com.asbestosstar.crashdetector.gui.tipos.mcreator.EscanerMCreatorGUIRosemiLoveLock;
 import com.asbestosstar.crashdetector.gui.tipos.modapi.CDModsEstiloTL;
@@ -212,7 +214,16 @@ public class MonitorDePID {
 
 		
 		copiarACarpetaDesdeJar("/imagenes/sao.png", Statics.carpeta.resolve("imagenes/sao.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/amane_kanata.png", Statics.carpeta.resolve("imagenes/amane_kanata.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/rima_evenstar.png", Statics.carpeta.resolve("imagenes/rima_evenstar.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/maid_mint.png", Statics.carpeta.resolve("imagenes/maid_mint.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/sylent_bell.png", Statics.carpeta.resolve("imagenes/sylent_bell.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/onepeice.png", Statics.carpeta.resolve("imagenes/onepeice.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/rei_bubbles.png", Statics.carpeta.resolve("imagenes/rei_bubbles.png").toFile());
 
+		
+				
+		
 		
 //		new File(viajo_ultima_mods.toString()).delete();
 //		try {
@@ -385,7 +396,11 @@ public class MonitorDePID {
 		TipoGUI.MOD_API_PANEL.registrarGUI(CDModsEstiloTL.ID, () -> new CDModsEstiloTL());
 		TipoGUI.CFR.registrarGUI(CfrSakuraRiddle.ID, () -> new CfrSakuraRiddle());
 		TipoGUI.CORPO.registrarGUI(CorpoSAO.ID, () -> new CorpoSAO());
+		TipoGUI.DESHABLICAR_VERIFICACIONES.registrarGUI(DeshabilitarVerificacionesAmaneKanata.ID, () -> new DeshabilitarVerificacionesAmaneKanata());
+		TipoGUI.LANZER_MALO.registrarGUI(LanzerMaloGUISylentBell.ID, () -> new LanzerMaloGUISylentBell());
 
+		
+		
 	}
 
 	private static void monitor_proceso(long pid) {

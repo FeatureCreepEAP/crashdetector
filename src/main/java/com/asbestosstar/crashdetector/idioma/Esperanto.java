@@ -5455,10 +5455,38 @@ public class Esperanto implements Idioma {
 	@Override public String proximamente() { return "Baldaŭ"; }
 	@Override public String informacion() { return "Informo"; }
 	@Override public String errorCargandoImagen() { return "Eraro dum ŝargado de bildo"; }
-	
-	
-	
-	
+	@Override public String configuracionBasica() { return "Bazaj Agordoj"; }
+	@Override public String funcionalidades() { return "Funkcioj"; }
+	@Override public String derechosMiranda() { return "Miranda-j Rajtoj (TRE rekomenditaj)"; }
+	@Override public String gestionVerificaciones() { return "Administri Kontrolojn"; }
+	@Override public String idVerificacion() { return "ID"; }
+	@Override public String nombreVerificacion() { return "Nomo"; }
+	@Override public String codigoVerificacion() { return "Kodo"; }
+	@Override public String documentacionVerificacion() { return "Dokumentaro"; }
+	@Override public String verificacionesHabilitadas() { return "Ebligitaj Kontroloj:"; }
+	@Override public String verificacionesDeshabilitadas() { return "Malebligitaj Kontroloj:"; }
+	@Override public String deshabilitarNoCorporativas() { return "Malebligi ĉiujn ne-korporaciajn"; }
+	@Override public String verCodigo() { return "Vidi Kodon"; }
+	@Override public String verDocumentacion() { return "Vidi Dokumentaron"; }
+	@Override public String seleccionaVerificacionDeshabilitar() { return "Elektu kontrolo por malebligi."; }
+	@Override public String seleccionaVerificacionHabilitar() { return "Elektu kontrolo por ebligi."; }
+	@Override public String verificacionesNoCorporativasDeshabilitadas() { return "Malebligitaj %d kontroloj ne rekomenditaj por korporacia uzo."; }
+	@Override public String noVerificacionesNoCorporativas() { return "Neniu ne-korporacia kontrolo por malebligi."; }
+	@Override public String operacionCompletada() { return "Operacio finita"; }
+	@Override public String mensajeAmaneKanata() { return "Ni sopiras vin, Amane Kanata"; }
+	@Override public String colorVerificacionCorporativa() { return "Koloro de Korporacia Kontrolo"; }
+	@Override public String nombreLanzador() { return "Nomo de la Lanĉilo"; }
+	@Override public String motivo() { return "Kialo"; }
+	@Override public String lanzadoresNoRecomendados() { return "Nerekomenditaj Lanĉiloj"; }
+	@Override public String moverADesaconsejados() { return "Malebligi Rekomendon"; }
+	@Override public String moverARecomendados() { return "Ebligi Rekomendon"; }
+	@Override public String guardarCambios() { return "Konservi Ŝanĝojn"; }
+	@Override public String cancelar() { return "Nuligi"; }
+	@Override public String seleccionaLanzadorMover() { return "Bonvolu elekti lanĉilon por movi."; }
+	@Override public String cambiosGuardadosExitosamente() { return "Ŝanĝoj estis sukcese konservitaj!"; }
+	@Override public String motivoDesaconsejoPredeterminadoEs(String nombreLanzador) { return "Este lanzador no es recomendado debido a problemas de seguridad y estabilidad conocidos."; }
+	@Override public String motivoDesaconsejoPredeterminadoEn(String nombreLanzador) { return "This launcher is not recommended due to known security and stability issues."; }
+	@Override public String motivoDesaconsejoPredeterminadoPt(String nombreLanzador) { return "Este lançador não é recomendado devido a problemas conhecidos de segurança e estabilidade."; }
 	
 	
 	

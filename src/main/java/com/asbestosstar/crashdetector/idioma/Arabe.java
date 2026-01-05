@@ -5413,9 +5413,39 @@ public class Arabe implements Idioma {
 	@Override public String informacion() { return "معلومات"; }
 	@Override public String errorCargandoImagen() { return "خطأ أثناء تحميل الصورة"; }
 	
+	@Override public String configuracionBasica() { return "الإعدادات الأساسية"; }
+	@Override public String funcionalidades() { return "الميزات"; }
+	@Override public String derechosMiranda() { return "حقوق ميراندا (مطلوبة بشدة)"; }
+	@Override public String gestionVerificaciones() { return "إدارة التحقق"; }
+	@Override public String idVerificacion() { return "المعرّف"; }
+	@Override public String nombreVerificacion() { return "الاسم"; }
+	@Override public String codigoVerificacion() { return "الكود"; }
+	@Override public String documentacionVerificacion() { return "الوثائق"; }
+	@Override public String verificacionesHabilitadas() { return "العمليات المفعّلة:"; }
+	@Override public String verificacionesDeshabilitadas() { return "العمليات المعطّلة:"; }
+	@Override public String deshabilitarNoCorporativas() { return "تعطيل جميع غير المؤسسية"; }
+	@Override public String verCodigo() { return "عرض الكود"; }
+	@Override public String verDocumentacion() { return "عرض الوثائق"; }
+	@Override public String seleccionaVerificacionDeshabilitar() { return "اختر عملية تحقق لتعطيلها."; }
+	@Override public String seleccionaVerificacionHabilitar() { return "اختر عملية تحقق لتفعيلها."; }
+	@Override public String verificacionesNoCorporativasDeshabilitadas() { return "تم تعطيل %d عمليات تحقق غير موصى بها للاستخدام المؤسسي."; }
+	@Override public String noVerificacionesNoCorporativas() { return "لا توجد عمليات تحقق غير مؤسسية للتعطيل."; }
+	@Override public String operacionCompletada() { return "اكتملت العملية"; }
+	@Override public String mensajeAmaneKanata() { return "نفتقِدك يا Amane Kanata"; }
+	@Override public String colorVerificacionCorporativa() { return "لون التحقق المؤسسي"; }
 	
-	
-	
+	@Override public String nombreLanzador() { return "اسم المشغّل"; }
+	@Override public String motivo() { return "السبب"; }
+	@Override public String lanzadoresNoRecomendados() { return "المشغلات غير الموصى بها"; }
+	@Override public String moverADesaconsejados() { return "إبطال التوصية"; }
+	@Override public String moverARecomendados() { return "التوصية"; }
+	@Override public String guardarCambios() { return "حفظ التغييرات"; }
+	@Override public String cancelar() { return "إلغاء"; }
+	@Override public String seleccionaLanzadorMover() { return "يرجى اختيار مشغّل للنقل."; }
+	@Override public String cambiosGuardadosExitosamente() { return "تم حفظ التغييرات بنجاح!"; }
+	@Override public String motivoDesaconsejoPredeterminadoEs(String nombreLanzador) { return "Este lanzador no es recomendado debido a problemas de seguridad y estabilidad conocidos."; }
+	@Override public String motivoDesaconsejoPredeterminadoEn(String nombreLanzador) { return "This launcher is not recommended due to known security and stability issues."; }
+	@Override public String motivoDesaconsejoPredeterminadoPt(String nombreLanzador) { return "Este lançador não é recomendado devido a problemas conhecidos de segurança e estabilidade."; }
 	
 	
 	
