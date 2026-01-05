@@ -10,6 +10,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 /**
@@ -126,5 +127,21 @@ public class ProblemaEjecucionPlugin implements Verificaciones {
 		// TODO Auto-generated method stub
 		return false;// TODO
 	}
+	
+	@Override
+	public Documento docs() {
+		// TODO Auto-generated method stub
+		return Documento.NINGUN;
+	}
+	@Override
+	public String enlaceACodigo() {
+		// TODO Auto-generated method stub
+		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"+this.getClass().getSimpleName()+".java";
+	}
+	
+	
+	
+	
+	
 
 }

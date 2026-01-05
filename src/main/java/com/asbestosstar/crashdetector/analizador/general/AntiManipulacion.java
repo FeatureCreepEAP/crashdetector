@@ -19,6 +19,7 @@ import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.json.Json;
 import com.asbestosstar.crashdetector.json.Json.Nodo;
@@ -33,12 +34,15 @@ public class AntiManipulacion implements Verificaciones {
     public static final Path ARCHIVO_ANTIMANIPULACION = Statics.carpeta.resolve("antimanipulacion.json");
     private boolean activado = false;
     private String mensaje = "";
-
+boolean completa=true;
+    
     @Override
     public void verificar(Consola consola) {
-        this.activado = false;
-        this.mensaje = "";
-
+    	if(completa) {
+    		return;
+    	}
+    	this.completa=true;
+    	
         if (!ARCHIVO_ANTIMANIPULACION.toFile().exists()) {
             return;
         }
@@ -315,4 +319,21 @@ public class AntiManipulacion implements Verificaciones {
     public boolean anularNormal() {
         return activado; // Si hay manipulación, forzar apertura de CrashDetector
     }
+	@Override
+	public Documento docs() {
+		// TODO Auto-generated method stub
+		return Documento.NINGUN;
+	}
+	@Override
+	public String enlaceACodigo() {
+		// TODO Auto-generated method stub
+		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/general/"+this.getClass().getSimpleName()+".java";
+	}
+	
+	
+	
+	
+	
+    
+    
 }

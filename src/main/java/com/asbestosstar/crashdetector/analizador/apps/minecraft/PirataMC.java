@@ -15,6 +15,7 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.config.ConfigBoolean;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.json.Json;
 import com.asbestosstar.crashdetector.json.Json.Nodo;
 
@@ -24,10 +25,18 @@ public class PirataMC implements Verificaciones {
 	public static Path archivo_derechos_piratas= Statics.carpeta.resolve("derechos_piratas.json");
 	boolean activado = false;
 	String mensaje ="";
+	boolean completa=true;
 
 	@Override
 	public void verificar(Consola consola) {
 		// TODO Auto-generated method stub
+		
+    	if(completa) {
+    		return;
+    	}
+    	this.completa=true;
+		
+		
 		if (config.obtener()) {
 			if (consola.contenido_verificar
 					.contains("Caused by: com.mojang.authlib.exceptions.MinecraftClientHttpException: Status: 401")) {
@@ -159,4 +168,16 @@ public class PirataMC implements Verificaciones {
 		return "pirata_minecraft";
 	}
 
+	@Override
+	public Documento docs() {
+		// TODO Auto-generated method stub
+		return Documento.NINGUN;
+	}
+	
+	@Override
+	public String enlaceACodigo() {
+		// TODO Auto-generated method stub
+		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"+this.getClass().getSimpleName()+".java";
+	}
+	
 }

@@ -5,6 +5,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta errores de especificación de versión inválida en mods donde la
@@ -114,4 +115,21 @@ public class ErrorVersionInvalidaModMaven implements Verificaciones {
 		return t.contains("org.apache.maven.artifact.versioning.InvalidVersionSpecificationException")
 				&& t.contains("Single version must be surrounded by []:");
 	}
+	
+	@Override
+	public Documento docs() {
+		// TODO Auto-generated method stub
+		return Documento.NINGUN;
+	}
+	@Override
+	public String enlaceACodigo() {
+		// TODO Auto-generated method stub
+		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/general/"+this.getClass().getSimpleName()+".java";
+	}
+	
+	
+	
+	
+	
+	
 }

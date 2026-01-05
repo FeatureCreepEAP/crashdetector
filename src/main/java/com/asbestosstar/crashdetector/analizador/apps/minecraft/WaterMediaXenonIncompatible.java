@@ -11,6 +11,7 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta el fallo de inicio de WaterMedia en Forge por incompatibilidad con
@@ -182,5 +183,22 @@ public class WaterMediaXenonIncompatible implements Verificaciones {
 		// Fallback: solo patrón base
 		return true;
 	}
+	
+	@Override
+	public Documento docs() {
+		// TODO Auto-generated method stub
+		return Documento.NINGUN;
+	}
+	
+	@Override
+	public String enlaceACodigo() {
+		// TODO Auto-generated method stub
+		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"+this.getClass().getSimpleName()+".java";
+	}
+	
+	
+	
+	
+	
 
 }

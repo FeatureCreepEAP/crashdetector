@@ -487,7 +487,10 @@ public class Analizador {
 
 		for (Verificaciones ver : organizar(union)) {
 			if (ver.activado()) {
+				
+			if(ver.solucion()!=null && !ver.solucion().equals(QuickFix.NINGUN)) {
 				soluciones.add(ver.solucion());
+				}
 			}
 		}
 		return soluciones;

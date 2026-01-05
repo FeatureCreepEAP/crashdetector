@@ -1,11 +1,8 @@
 package com.asbestosstar.crashdetector.analizador;
 
-import java.awt.Color;
-
-import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Consola;
-import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 public interface Verificaciones {
 
@@ -82,5 +79,33 @@ public interface Verificaciones {
 	 * @return
 	 */
 	public String id();
+
+	/**
+	 * La documentacion de la
+	 * 
+	 * @return
+	 */
+	public Documento docs();
+
+	/**
+	 * Enlace a el codigo de esta archivo
+	 * 
+	 * @return
+	 */
+	public String enlaceACodigo();
+
+	/**
+	 * Si esta verificacion para usarios Corperatas, VTuber Fan Proyectos, y
+	 * ModPacks.La mayoría no lo son, pero algunos ejemplos incluyen problemas
+	 * relacionados con los controladores, errores de la máquina virtual de Java
+	 * (JVM), instalaciones de la JVM y problemas con instalaciones de aplicaciones
+	 * o modificaciones corruptas,mudos corruptas, o problemas específicos de determinados
+	 * ordenadores.
+	 * 
+	 * @return
+	 */
+	public default boolean recomendadoParaCorperata() {
+		return false;
+	}
 
 }

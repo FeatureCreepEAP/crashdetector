@@ -5,6 +5,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta problemas de compatibilidad entre Iris/Oculus y Distant Horizons
@@ -108,4 +109,19 @@ public class ErrorCompatibilidadIrisDH implements Verificaciones {
 				&& (t.contains("Iris requires DH") || t.contains("DH API version"))
 				&& (t.contains("or newer") || t.contains("[2.0.4]") || t.contains("[1.1.0]"));
 	}
+	
+	@Override
+	public Documento docs() {
+		// TODO Auto-generated method stub
+		return Documento.NINGUN;
+	}
+	@Override
+	public String enlaceACodigo() {
+		// TODO Auto-generated method stub
+		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"+this.getClass().getSimpleName()+".java";
+	}
+	
+	
+	
+	
 }

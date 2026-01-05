@@ -5,6 +5,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -145,4 +146,19 @@ public class ErrorCaracteresInvalidosEnNombre implements Verificaciones {
 		String t = trazo.trace;
 		return t.contains("Invalid module name:") && t.contains("is not a Java identifier");
 	}
+	
+	@Override
+	public Documento docs() {
+		// TODO Auto-generated method stub
+		return Documento.NINGUN;
+	}
+	@Override
+	public String enlaceACodigo() {
+		// TODO Auto-generated method stub
+		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/general/"+this.getClass().getSimpleName()+".java";
+	}
+	
+	
+	
+	
 }

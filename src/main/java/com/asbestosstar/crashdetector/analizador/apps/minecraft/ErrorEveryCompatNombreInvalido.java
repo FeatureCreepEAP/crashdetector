@@ -5,6 +5,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta errores de Every Compat (Etc) donde hay bloques de madera con nombres
@@ -107,4 +108,18 @@ public class ErrorEveryCompatNombreInvalido implements Verificaciones {
 		return t.contains("java.lang.UnsupportedOperationException") && t.contains("has an invalid item name")
 				&& (t.contains("every_compat") || t.contains("Every Compat") || t.contains("SimpleEntrySet"));
 	}
+	
+	@Override
+	public Documento docs() {
+		// TODO Auto-generated method stub
+		return Documento.NINGUN;
+	}
+	@Override
+	public String enlaceACodigo() {
+		// TODO Auto-generated method stub
+		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"+this.getClass().getSimpleName()+".java";
+	}
+	
+	
+	
 }

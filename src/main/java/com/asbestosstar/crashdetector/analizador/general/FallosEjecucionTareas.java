@@ -15,6 +15,7 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 public class FallosEjecucionTareas implements Verificaciones {
 
@@ -215,4 +216,21 @@ public class FallosEjecucionTareas implements Verificaciones {
 		return contenido.contains("failed to execute task") && contenido.contains("class")
 				&& contenido.contains("executionexception");
 	}
+	
+	@Override
+	public Documento docs() {
+		// TODO Auto-generated method stub
+		return Documento.NINGUN;
+	}
+	@Override
+	public String enlaceACodigo() {
+		// TODO Auto-generated method stub
+		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/general/"+this.getClass().getSimpleName()+".java";
+	}
+	
+	
+	
+	
+	
+	
 }

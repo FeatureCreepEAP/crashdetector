@@ -12,6 +12,7 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 public class FaltaModuleJPMS implements Verificaciones {
 
@@ -136,4 +137,22 @@ public class FaltaModuleJPMS implements Verificaciones {
 		return t.contains("java.lang.module.FindException: Module ") && t.contains(" not found, required by ");
 	}
 
+	@Override
+	public Documento docs() {
+		// TODO Auto-generated method stub
+		return Documento.NINGUN;
+	}
+	@Override
+	public String enlaceACodigo() {
+		// TODO Auto-generated method stub
+		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/general/"+this.getClass().getSimpleName()+".java";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 }

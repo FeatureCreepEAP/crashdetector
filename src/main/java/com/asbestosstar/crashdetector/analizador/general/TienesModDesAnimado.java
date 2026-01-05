@@ -18,6 +18,7 @@ import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceI
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.json.Json;
 import com.asbestosstar.crashdetector.json.Json.Nodo;
 
@@ -31,10 +32,16 @@ public class TienesModDesAnimado implements Verificaciones {
     private boolean activado = false;
     private String mensaje = "";
     private boolean activarCD = false;
+    boolean completa=true;
 
     @Override
     public void verificar(Consola consola) {
 
+    	if(completa) {
+    		return;
+    	}
+    	this.completa=true;
+    	
         if (!ARCHIVO_DESANIMADOS.toFile().exists()) {
             return;
         }
@@ -248,4 +255,26 @@ public class TienesModDesAnimado implements Verificaciones {
     public boolean anularNormal() {
         return activarCD;
     }
+	@Override
+	public Documento docs() {
+		// TODO Auto-generated method stub
+		return Documento.NINGUN;
+	}
+	@Override
+	public String enlaceACodigo() {
+		// TODO Auto-generated method stub
+		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/general/"+this.getClass().getSimpleName()+".java";
+	}
+	@Override
+	public boolean recomendadoParaCorperata() {
+		return true;
+	}
+	
+	
+	
+	
+	
+    
+    
+    
 }

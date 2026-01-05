@@ -6,12 +6,14 @@ import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.Criticalidad;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.firmas.FiltrodeCodice;
 import com.asbestosstar.crashdetector.analizador.firmas.TipoDeFiltrodeCodice;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.idioma.Arabe;
 import com.asbestosstar.crashdetector.idioma.Chino;
 import com.asbestosstar.crashdetector.idioma.Coreano;
@@ -241,8 +243,7 @@ public class VerificacionFirmasV0 implements Verificaciones {
 
 	@Override
 	public QuickFix solucion() {
-		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
-				.construir();// TODO
+		return QuickFix.NINGUN;// TODO
 	}
 
 	@Override
@@ -277,5 +278,28 @@ public class VerificacionFirmasV0 implements Verificaciones {
 				&& Objects.equals(nombre_jp, v.nombre_jp) && Objects.equals(resultado_jp, v.resultado_jp)
 				&& Objects.equals(nombre_kp, v.nombre_kp) && Objects.equals(resultado_kp, v.resultado_kp);
 	}
+	
+	@Override
+	public Documento docs() {
+		// TODO Auto-generated method stub
+		return Documento.NINGUN;
+	}
+	
+	
+	@Override
+	public String enlaceACodigo() {
+		// TODO Auto-generated method stub
+		return Statics.carpeta.resolve(FirmasV0.NOMBRE_ARCHIVO).toUri().toString();
+	}
+	
+	@Override
+	public boolean recomendadoParaCorperata() {
+		return true;
+	}
+	
+	
+	
+	
+	
 
 }

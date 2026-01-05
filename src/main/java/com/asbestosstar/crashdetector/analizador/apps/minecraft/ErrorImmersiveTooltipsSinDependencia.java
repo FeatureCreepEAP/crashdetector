@@ -5,6 +5,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta que Immersive Tooltips necesita Immersive Messages como dependencia
@@ -113,4 +114,19 @@ public class ErrorImmersiveTooltipsSinDependencia implements Verificaciones {
 				&& t.contains("toni/immersivemessages/renderers/ITooltipRenderer")
 				&& (t.toLowerCase().contains("immersivetips") || t.toLowerCase().contains("immersive tooltips"));
 	}
+	
+	@Override
+	public Documento docs() {
+		// TODO Auto-generated method stub
+		return Documento.NINGUN;
+	}
+	@Override
+	public String enlaceACodigo() {
+		// TODO Auto-generated method stub
+		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"+this.getClass().getSimpleName()+".java";
+	}
+	
+	
+	
+	
 }
