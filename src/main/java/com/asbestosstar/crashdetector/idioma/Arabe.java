@@ -5448,10 +5448,20 @@ public class Arabe implements Idioma {
 	@Override public String motivoDesaconsejoPredeterminadoPt(String nombreLanzador) { return "Este lançador não é recomendado devido a problemas conhecidos de segurança e estabilidade."; }
 	
 	
+	@Override public String razones() { return "الأسباب"; }
+	@Override public String agregarLanzador() { return "إضافة مشغّل"; }
+	@Override public String quitarLanzador() { return "إزالة المشغّل"; }
+	@Override public String editarRazones() { return "تعديل الأسباب"; }
+	@Override public String seleccionaLanzadorQuitar() { return "اختر مشغّلاً لإزالته."; }
+	@Override public String seleccionaLanzadorEditar() { return "اختر مشغّلاً لتعديله."; }
+	@Override public String editarRazonesPara(String idLanzador) { return "تعديل الأسباب لـ " + idLanzador; }
+	@Override public String agregarNuevoIdioma() { return "إضافة لغة جديدة"; }
+	@Override public String aceptar() { return "موافق"; }
+	@Override public String seleccionaCodigoIdioma() { return "اختر اللغة"; }
 	
 	
-	
-	
+	@Override public String lanzadoresRecomendadosAviso() { return "هذه المشغّلات هي التي يقترحها CrashDetector كخيار جيد."; }
+	@Override public String colorResultadoCorrecto() { return "النتيجة صحيحة"; }
 	
 	
 	

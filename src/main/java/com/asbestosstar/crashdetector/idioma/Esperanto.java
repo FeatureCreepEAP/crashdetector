@@ -5488,8 +5488,18 @@ public class Esperanto implements Idioma {
 	@Override public String motivoDesaconsejoPredeterminadoEn(String nombreLanzador) { return "This launcher is not recommended due to known security and stability issues."; }
 	@Override public String motivoDesaconsejoPredeterminadoPt(String nombreLanzador) { return "Este lançador não é recomendado devido a problemas conhecidos de segurança e estabilidade."; }
 	
-	
-	
+	@Override public String razones() { return "Kialoj"; }
+	@Override public String agregarLanzador() { return "Aldoni lanĉilon"; }
+	@Override public String quitarLanzador() { return "Forigi lanĉilon"; }
+	@Override public String editarRazones() { return "Redakti kialojn"; }
+	@Override public String seleccionaLanzadorQuitar() { return "Elektu lanĉilon por forigi."; }
+	@Override public String seleccionaLanzadorEditar() { return "Elektu lanĉilon por redakti."; }
+	@Override public String editarRazonesPara(String idLanzador) { return "Redakti kialojn por " + idLanzador; }
+	@Override public String agregarNuevoIdioma() { return "Aldoni novan lingvon"; }
+	@Override public String aceptar() { return "Akcepti"; }
+	@Override public String seleccionaCodigoIdioma() { return "Elektu la lingvon"; }
+	@Override public String lanzadoresRecomendadosAviso() { return "Ĉi tiuj lanĉiloj estas tiuj, kiujn CrashDetector sugestas kiel bonaj."; }
+	@Override public String colorResultadoCorrecto() { return "Ĝusta rezulto"; }
 	
 	
 	

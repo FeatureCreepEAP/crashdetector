@@ -5331,9 +5331,19 @@ public class Japones implements Idioma {
 	@Override public String motivoDesaconsejoPredeterminadoEn(String nombreLanzador) { return "This launcher is not recommended due to known security and stability issues."; }
 	@Override public String motivoDesaconsejoPredeterminadoPt(String nombreLanzador) { return "Este lançador não é recomendado devido a problemas conhecidos de segurança e estabilidade."; }
 	
+	@Override public String razones() { return "理由"; }
+	@Override public String agregarLanzador() { return "ランチャーを追加"; }
+	@Override public String quitarLanzador() { return "ランチャーを削除"; }
+	@Override public String editarRazones() { return "理由を編集"; }
+	@Override public String seleccionaLanzadorQuitar() { return "削除するランチャーを選択してください。"; }
+	@Override public String seleccionaLanzadorEditar() { return "編集するランチャーを選択してください。"; }
+	@Override public String editarRazonesPara(String idLanzador) { return idLanzador + " の理由を編集"; }
+	@Override public String agregarNuevoIdioma() { return "新しい言語を追加"; }
+	@Override public String aceptar() { return "OK"; }
+	@Override public String seleccionaCodigoIdioma() { return "言語を選択"; }
 	
-	
-	
+	@Override public String lanzadoresRecomendadosAviso() { return "これらのランチャーは、CrashDetector が良好と推奨するものです。"; }
+	@Override public String colorResultadoCorrecto() { return "正常な結果"; }
 	
 	
 	

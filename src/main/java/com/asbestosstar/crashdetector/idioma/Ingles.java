@@ -5533,9 +5533,19 @@ public class Ingles implements Idioma {
 	@Override public String motivoDesaconsejoPredeterminadoEn(String nombreLanzador) { return "This launcher is not recommended due to known security and stability issues."; }
 	@Override public String motivoDesaconsejoPredeterminadoPt(String nombreLanzador) { return "Este lançador não é recomendado devido a problemas conhecidos de segurança e estabilidade."; }
 	
+	@Override public String razones() { return "Reasons"; }
+	@Override public String agregarLanzador() { return "Add launcher"; }
+	@Override public String quitarLanzador() { return "Remove launcher"; }
+	@Override public String editarRazones() { return "Edit reasons"; }
+	@Override public String seleccionaLanzadorQuitar() { return "Select a launcher to remove."; }
+	@Override public String seleccionaLanzadorEditar() { return "Select a launcher to edit."; }
+	@Override public String editarRazonesPara(String idLanzador) { return "Edit reasons for " + idLanzador; }
+	@Override public String agregarNuevoIdioma() { return "Add new language"; }
+	@Override public String aceptar() { return "Accept"; }
+	@Override public String seleccionaCodigoIdioma() { return "Select language"; }
 	
-	
-	
+	@Override public String lanzadoresRecomendadosAviso() { return "These are the launchers that CrashDetector recommends as good."; }
+	@Override public String colorResultadoCorrecto() { return "Correct result"; }
 	
 	
 	

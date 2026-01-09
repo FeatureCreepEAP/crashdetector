@@ -22,6 +22,7 @@ import com.asbestosstar.crashdetector.gui.tipos.editor_plantilla.EditorPlantilla
 import com.asbestosstar.crashdetector.gui.tipos.editorgui.EditorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.grepr.GrepRGUI;
 import com.asbestosstar.crashdetector.gui.tipos.historia.HistoriaDeModsGUI;
+import com.asbestosstar.crashdetector.gui.tipos.lanzeresbuenos.LanzerBuenoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lanzeresmalos.LanzerMaloGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasGUI;
 import com.asbestosstar.crashdetector.gui.tipos.mcreator.EscanerMCreatorGUI;
@@ -32,6 +33,7 @@ import com.asbestosstar.crashdetector.gui.tipos.quickfix.QuickFixGUI;
 import com.asbestosstar.crashdetector.gui.tipos.quickfix.TodosQuickFixesGUI;
 
 public abstract class TipoGUI<T extends CrashDetectorGUI> {
+
 
 	/**
 	 * Para todos GUIS por favor registrar un tipo
@@ -546,9 +548,29 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		}
 	};
 	
-	
+	public static TipoGUI<LanzerBuenoGUI> LANZER_BUENO = new TipoGUI<LanzerBuenoGUI>() {
+		@Override
+		public String id() {
+			return "lanzer_bueno";
+		}
 
-	
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.lanzadoresRecomendados();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<LanzerBuenoGUI> gui) {
+			LanzerBuenoGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<LanzerBuenoGUI>> obtenerGUIs() {
+			return LanzerBuenoGUI.GUIS;
+		}
+	};
+
+
 	
 	
 	
@@ -576,6 +598,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		TIPOS_DE_GUI.add(CORPO);
 		TIPOS_DE_GUI.add(DESHABLICAR_VERIFICACIONES);
 		TIPOS_DE_GUI.add(LANZER_MALO);
+		TIPOS_DE_GUI.add(LANZER_BUENO);
 
 		
 	}

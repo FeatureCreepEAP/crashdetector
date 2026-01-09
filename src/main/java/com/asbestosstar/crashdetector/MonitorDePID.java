@@ -44,6 +44,7 @@ import com.asbestosstar.crashdetector.gui.tipos.editorgui.CDSkinCape;
 import com.asbestosstar.crashdetector.gui.tipos.grepr.BusquedaGUISaliorMoon;
 import com.asbestosstar.crashdetector.gui.tipos.historia.ClioOfficeGUI;
 import com.asbestosstar.crashdetector.gui.tipos.historia.HistoriaModsGUILegacy;
+import com.asbestosstar.crashdetector.gui.tipos.lanzeresbuenos.LanzerBuenoGUIMaidMint;
 import com.asbestosstar.crashdetector.gui.tipos.lanzeresmalos.LanzerMaloGUISylentBell;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasHoloTalk;
 import com.asbestosstar.crashdetector.gui.tipos.mcreator.EscanerMCreatorGUIRosemiLoveLock;
@@ -398,6 +399,7 @@ public class MonitorDePID {
 		TipoGUI.CORPO.registrarGUI(CorpoSAO.ID, () -> new CorpoSAO());
 		TipoGUI.DESHABLICAR_VERIFICACIONES.registrarGUI(DeshabilitarVerificacionesAmaneKanata.ID, () -> new DeshabilitarVerificacionesAmaneKanata());
 		TipoGUI.LANZER_MALO.registrarGUI(LanzerMaloGUISylentBell.ID, () -> new LanzerMaloGUISylentBell());
+		TipoGUI.LANZER_BUENO.registrarGUI(LanzerBuenoGUIMaidMint.ID, () -> new LanzerBuenoGUIMaidMint());
 
 		
 		

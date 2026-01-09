@@ -6228,7 +6228,72 @@ public class Espanol implements Idioma {
 
 	
 	
-	
+
+
+	@Override
+	public String razones() {
+		return "Razones";
+	}
+
+	@Override
+	public String agregarLanzador() {
+		return "Agregar lanzador";
+	}
+
+	@Override
+	public String quitarLanzador() {
+		return "Quitar lanzador";
+	}
+
+	@Override
+	public String editarRazones() {
+		return "Editar razones";
+	}
+
+
+
+	@Override
+	public String seleccionaLanzadorQuitar() {
+		return "Selecciona un lanzador para quitar.";
+	}
+
+	@Override
+	public String seleccionaLanzadorEditar() {
+		return "Selecciona un lanzador para editar.";
+	}
+
+
+
+	@Override
+	public String editarRazonesPara(String idLanzador) {
+		return "Editar razones para " + idLanzador;
+	}
+
+	@Override
+	public String agregarNuevoIdioma() {
+		return "Agregar nuevo idioma";
+	}
+
+	@Override
+	public String aceptar() {
+		return "Aceptar";
+	}
+
+	@Override
+	public String seleccionaCodigoIdioma() {
+		return "Selecciona el idioma";
+	}
+
+
+	@Override
+	public String lanzadoresRecomendadosAviso() {
+		return "Estos lanzadores son los que CrashDetector sugiere como buenos.";
+	}
+
+	@Override
+	public String colorResultadoCorrecto() {
+		return "Resultado correcto";
+	}
 	
 
 }

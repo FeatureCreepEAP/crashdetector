@@ -2233,4 +2233,29 @@ public interface Idioma {
 
 	public String motivoDesaconsejoPredeterminadoPt(String id);
 
+	public String razones();
+
+	public String agregarLanzador();
+
+	public String quitarLanzador();
+
+	public String editarRazones();
+
+	public String seleccionaLanzadorQuitar();
+
+	public String seleccionaLanzadorEditar();
+
+	public String editarRazonesPara(String idLanzador);
+
+	public String agregarNuevoIdioma();
+
+	public String aceptar();
+
+	public String seleccionaCodigoIdioma();
+
+	public String lanzadoresRecomendadosAviso();
+
+	public String colorResultadoCorrecto();
+
+
 }

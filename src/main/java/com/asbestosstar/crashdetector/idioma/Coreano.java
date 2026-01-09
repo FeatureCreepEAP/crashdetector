@@ -5319,6 +5319,24 @@ public class Coreano implements Idioma {
 	@Override public String motivoDesaconsejoPredeterminadoEs(String nombreLanzador) { return "Este lanzador no es recomendado debido a problemas de seguridad y estabilidad conocidos."; }
 	@Override public String motivoDesaconsejoPredeterminadoEn(String nombreLanzador) { return "This launcher is not recommended due to known security and stability issues."; }
 	@Override public String motivoDesaconsejoPredeterminadoPt(String nombreLanzador) { return "Este lançador não é recomendado devido a problemas conhecidos de segurança e estabilidade."; }
+	@Override public String razones() { return "사유"; }
+	@Override public String agregarLanzador() { return "런처 추가"; }
+	@Override public String quitarLanzador() { return "런처 제거"; }
+	@Override public String editarRazones() { return "사유 편집"; }
+	@Override public String seleccionaLanzadorQuitar() { return "제거할 런처를 선택하세요."; }
+	@Override public String seleccionaLanzadorEditar() { return "편집할 런처를 선택하세요."; }
+	@Override public String editarRazonesPara(String idLanzador) { return idLanzador + "의 사유 편집"; }
+	@Override public String agregarNuevoIdioma() { return "새 언어 추가"; }
+	@Override public String aceptar() { return "확인"; }
+	@Override public String seleccionaCodigoIdioma() { return "언어 선택"; }
+	@Override public String lanzadoresRecomendadosAviso() { return "이 런처들은 CrashDetector가 좋은 선택으로 제안하는 것들입니다."; }
+	@Override public String colorResultadoCorrecto() { return "정상 결과"; }
+	
+	
+	
+	
+	
+	
 	
 	
 	

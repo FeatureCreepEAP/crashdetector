@@ -1,9 +1,13 @@
 package com.asbestosstar.crashdetector.json;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gson.*;
 
 /**
- * Motor basado en Gson Nodos con contexto para operar como DMR
+ * Motor basado en Gson.
+ * Nodos con contexto para operar como DMR.
  */
 public class JsonGson implements Json.Motor {
 
@@ -40,6 +44,19 @@ public class JsonGson implements Json.Motor {
 	}
 
 	@Override
+	public List<String> claves(Json.Nodo objeto) {
+		JsonElement base = (JsonElement) objeto.interno;
+		if (base.isJsonNull()) {
+			return new ArrayList<>();
+		}
+		if (!base.isJsonObject()) {
+			return new ArrayList<>();
+		}
+		JsonObject obj = base.getAsJsonObject();
+		return new ArrayList<>(obj.keySet());
+	}
+
+	@Override
 	public Json.Nodo obtener(Json.Nodo actual, String nombre) {
 		JsonElement base = (JsonElement) actual.interno;
 
@@ -66,6 +83,23 @@ public class JsonGson implements Json.Motor {
 	}
 
 	@Override
+	public boolean eliminar(Json.Nodo actual, String nombre) {
+		JsonElement base = (JsonElement) actual.interno;
+
+		if (base.isJsonNull()) {
+			// Un objeto nulo no tiene propiedades para eliminar
+			return false;
+		}
+		if (!base.isJsonObject()) {
+			throw new IllegalStateException("No es objeto");
+		}
+		JsonObject obj = base.getAsJsonObject();
+		boolean existia = obj.has(nombre);
+		obj.remove(nombre);
+		return existia;
+	}
+
+	@Override
 	public Json.Nodo poner(Json.Nodo actual, Object valor) {
 		if (actual.padre instanceof JsonObject && actual.claveEnPadre != null) {
 			JsonElement e = aElemento(valor);
@@ -85,8 +119,7 @@ public class JsonGson implements Json.Motor {
 			return actual;
 		}
 
-		if (actual.interno instanceof JsonObject || actual.interno instanceof JsonArray
-				|| actual.interno instanceof JsonNull) {
+		if (actual.interno instanceof JsonObject || actual.interno instanceof JsonArray || actual.interno instanceof JsonNull) {
 			JsonElement e = aElemento(valor);
 			actual.interno = e;
 			return actual;

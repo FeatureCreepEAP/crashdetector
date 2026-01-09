@@ -414,7 +414,9 @@ public class CorpoSAO extends CorpoBase {
                 MonitorDePID.idioma.informacion(), JOptionPane.INFORMATION_MESSAGE);
         };
         
-        botonLanzadoresRecomendados.addActionListener(proximamenteListener);
+        botonLanzadoresRecomendados.addActionListener(e -> {
+        	abrirLanzeresBuenos();
+        });
         botonLanzadoresDesaconsejados.addActionListener(e -> {
         	abrirLanzeresMalos();
         });

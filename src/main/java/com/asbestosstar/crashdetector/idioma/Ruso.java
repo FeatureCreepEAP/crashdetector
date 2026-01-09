@@ -5490,9 +5490,19 @@ public class Ruso implements Idioma {
 	@Override public String motivoDesaconsejoPredeterminadoEs(String nombreLanzador) { return "Este lanzador no es recomendado debido a problemas de seguridad y estabilidad conocidos."; }
 	@Override public String motivoDesaconsejoPredeterminadoEn(String nombreLanzador) { return "This launcher is not recommended due to known security and stability issues."; }
 	@Override public String motivoDesaconsejoPredeterminadoPt(String nombreLanzador) { return "Este lançador não é recomendado devido a problemas conhecidos de segurança e estabilidade."; }
+	@Override public String razones() { return "Причины"; }
+	@Override public String agregarLanzador() { return "Добавить лаунчер"; }
+	@Override public String quitarLanzador() { return "Удалить лаунчер"; }
+	@Override public String editarRazones() { return "Редактировать причины"; }
+	@Override public String seleccionaLanzadorQuitar() { return "Выберите лаунчер для удаления."; }
+	@Override public String seleccionaLanzadorEditar() { return "Выберите лаунчер для редактирования."; }
+	@Override public String editarRazonesPara(String idLanzador) { return "Редактировать причины для " + idLanzador; }
+	@Override public String agregarNuevoIdioma() { return "Добавить новый язык"; }
+	@Override public String aceptar() { return "Принять"; }
+	@Override public String seleccionaCodigoIdioma() { return "Выберите язык"; }
 	
-	
-	
+	@Override public String lanzadoresRecomendadosAviso() { return "Эти лаунчеры рекомендованы CrashDetector как надёжные."; }
+	@Override public String colorResultadoCorrecto() { return "Правильный результат"; }
 	
 	
 	

@@ -1,10 +1,14 @@
 package com.asbestosstar.crashdetector.json;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jboss.dmr.ModelNode;
 import org.jboss.dmr.ModelType;
 
 /**
- * Motor basado en JBoss DMR Estilo de ModelNode con nombres en español
+ * Motor basado en JBoss DMR.
+ * Estilo de ModelNode con nombres en español.
  */
 public class JsonDMR implements Json.Motor {
 
@@ -44,12 +48,39 @@ public class JsonDMR implements Json.Motor {
 	}
 
 	@Override
+	public List<String> claves(Json.Nodo objeto) {
+		ModelNode n = (ModelNode) objeto.interno;
+		if (n.getType() == ModelType.UNDEFINED) {
+			return new ArrayList<>();
+		}
+		if (n.getType() != ModelType.OBJECT) {
+			return new ArrayList<>();
+		}
+		return new ArrayList<>(n.keys());
+	}
+
+	@Override
 	public Json.Nodo obtener(Json.Nodo actual, String nombre) {
 		ModelNode n = (ModelNode) actual.interno;
 		if (n.getType() == ModelType.UNDEFINED)
 			n.setEmptyObject();
 		ModelNode hijo = n.get(nombre);
 		return new Json.Nodo(hijo, this, n, nombre, null);
+	}
+
+	@Override
+	public boolean eliminar(Json.Nodo actual, String nombre) {
+		ModelNode n = (ModelNode) actual.interno;
+		if (n.getType() == ModelType.UNDEFINED) {
+			// Un objeto indefinido no tiene propiedades para eliminar
+			return false;
+		}
+		if (n.getType() != ModelType.OBJECT) {
+			throw new IllegalStateException("No es objeto");
+		}
+		boolean existia = n.hasDefined(nombre) || n.has(nombre);
+		n.remove(nombre);
+		return existia;
 	}
 
 	@Override

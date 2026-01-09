@@ -5,9 +5,9 @@ import java.nio.charset.StandardCharsets;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 
 /**
- * Punto de entrada para leer y escribir datos tipo JSON Detecta Gson o JBoss
- * DMR por clases disponibles expone una API estilo ModelNode con nombres en
- * español
+ * Punto de entrada para leer y escribir datos tipo JSON.
+ * Detecta Gson o JBoss DMR por clases disponibles.
+ * Expone una API estilo ModelNode con nombres en español.
  */
 public class Json {
 
@@ -59,11 +59,17 @@ public class Json {
 	}
 
 	/**
-	 * Nodo inspirado en ModelNode con nombres en español Puede representar objeto,
-	 * arreglo o valor
+	 * Nodo inspirado en ModelNode con nombres en español.
+	 * Puede representar objeto, arreglo o valor.
 	 */
 	public static class Nodo {
+		/**
+		 * Referencia interna del motor (Gson / DMR).
+		 * Nota: se mantiene publico por compatibilidad, pero se recomienda NO usarlo
+		 * directamente fuera de este paquete. Use los metodos de Nodo/Motor.
+		 */
 		public Object interno;
+
 		final Motor motorRef;
 
 		// contexto para operaciones del tipo obtener y agregar
@@ -93,9 +99,25 @@ public class Json {
 			return motorRef.esArreglo(this);
 		}
 
+		/**
+		 * Devuelve las claves de un objeto JSON sin exponer clases internas (Gson/DMR).
+		 * Si el nodo no es objeto, devuelve una lista vacia.
+		 */
+		public java.util.List<String> claves() {
+			return motorRef.claves(this);
+		}
+
 		// objeto
 		public Nodo obtener(String nombre) {
 			return motorRef.obtener(this, nombre);
+		}
+
+		/**
+		 * Elimina una propiedad del objeto.
+		 * Si el nodo no es objeto, lanza IllegalStateException.
+		 */
+		public boolean eliminar(String nombre) {
+			return motorRef.eliminar(this, nombre);
 		}
 
 		// poner sobre el nodo actual
@@ -188,7 +210,7 @@ public class Json {
 	}
 
 	/**
-	 * Contrato de motores
+	 * Contrato de motores.
 	 */
 	public interface Motor {
 		String nombre();
@@ -203,7 +225,19 @@ public class Json {
 
 		boolean esArreglo(Nodo nodo);
 
+		/**
+		 * Devuelve claves de un objeto JSON.
+		 * Para nodos que no son objeto, debe devolver lista vacia.
+		 */
+		java.util.List<String> claves(Nodo objeto);
+
 		Nodo obtener(Nodo actual, String nombre);
+
+		/**
+		 * Elimina una propiedad de un objeto JSON.
+		 * Devuelve true si existia y fue eliminada, false si no existia.
+		 */
+		boolean eliminar(Nodo actual, String nombre);
 
 		// poner actua sobre el nodo actual
 		Nodo poner(Nodo actual, Object valor);

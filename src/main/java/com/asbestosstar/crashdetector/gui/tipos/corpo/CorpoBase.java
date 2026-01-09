@@ -15,6 +15,7 @@ import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.deshablicarverificaciones.DeshabilitarVerificacionesAmaneKanata;
 import com.asbestosstar.crashdetector.gui.tipos.editor.EditorCodiceGUIIronMouse;
+import com.asbestosstar.crashdetector.gui.tipos.lanzeresbuenos.LanzerBuenoGUIMaidMint;
 import com.asbestosstar.crashdetector.gui.tipos.lanzeresmalos.LanzerMaloGUISylentBell;
 
 public abstract class CorpoBase extends JDialog implements CrashDetectorGUI,BotonDeBarraLateralDerecha {
@@ -63,6 +64,10 @@ public abstract class CorpoBase extends JDialog implements CrashDetectorGUI,Boto
     public static void abrirLanzeresMalos() {
     	TipoGUI.LANZER_MALO.obtenerGUIPredeterminado(LanzerMaloGUISylentBell.ID,
     			() -> new LanzerMaloGUISylentBell()).init();
+    }
+    public static void abrirLanzeresBuenos() {
+    	TipoGUI.LANZER_BUENO.obtenerGUIPredeterminado(LanzerBuenoGUIMaidMint.ID,
+    			() -> new LanzerBuenoGUIMaidMint()).init();
     }
     
     @Override

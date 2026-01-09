@@ -5506,6 +5506,20 @@ public class Portuges implements Idioma {
 	@Override public String motivoDesaconsejoPredeterminadoEs(String nombreLanzador) { return "Este lanzador no es recomendado debido a problemas de seguridad y estabilidad conocidos."; }
 	@Override public String motivoDesaconsejoPredeterminadoEn(String nombreLanzador) { return "This launcher is not recommended due to known security and stability issues."; }
 	@Override public String motivoDesaconsejoPredeterminadoPt(String nombreLanzador) { return "Este lançador não é recomendado devido a problemas conhecidos de segurança e estabilidade."; }
+	@Override public String razones() { return "Motivos"; }
+	@Override public String agregarLanzador() { return "Adicionar launcher"; }
+	@Override public String quitarLanzador() { return "Remover launcher"; }
+	@Override public String editarRazones() { return "Editar motivos"; }
+	@Override public String seleccionaLanzadorQuitar() { return "Selecione um launcher para remover."; }
+	@Override public String seleccionaLanzadorEditar() { return "Selecione um launcher para editar."; }
+	@Override public String editarRazonesPara(String idLanzador) { return "Editar motivos para " + idLanzador; }
+	@Override public String agregarNuevoIdioma() { return "Adicionar novo idioma"; }
+	@Override public String aceptar() { return "Aceitar"; }
+	@Override public String seleccionaCodigoIdioma() { return "Selecione o idioma"; }
+	@Override public String lanzadoresRecomendadosAviso() { return "Esses são os launchers que o CrashDetector recomenda como bons."; }
+	@Override public String colorResultadoCorrecto() { return "Resultado correto"; }
+	
+	
 	
 	
 	

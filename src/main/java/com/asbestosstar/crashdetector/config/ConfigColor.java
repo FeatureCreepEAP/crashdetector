@@ -84,4 +84,5 @@ public class ConfigColor implements ElementoConfig<Color> {
 		// TODO Auto-generated method stub
 		this.nombre = nombre;
 	}
+
 }

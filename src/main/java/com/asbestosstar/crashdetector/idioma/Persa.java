@@ -5482,6 +5482,22 @@ public class Persa implements Idioma {
 	@Override public String motivoDesaconsejoPredeterminadoPt(String nombreLanzador) { return "Este lançador não é recomendado devido a problemas conhecidos de segurança e estabilidade."; }
 	
 	
+	@Override public String razones() { return "دلایل"; }
+	@Override public String agregarLanzador() { return "افزودن راه‌انداز"; }
+	@Override public String quitarLanzador() { return "حذف راه‌انداز"; }
+	@Override public String editarRazones() { return "ویرایش دلایل"; }
+	@Override public String seleccionaLanzadorQuitar() { return "راه‌اندازی را برای حذف انتخاب کنید."; }
+	@Override public String seleccionaLanzadorEditar() { return "راه‌اندازی را برای ویرایش انتخاب کنید."; }
+	@Override public String editarRazonesPara(String idLanzador) { return "ویرایش دلایل برای " + idLanzador; }
+	@Override public String agregarNuevoIdioma() { return "افزودن زبان جدید"; }
+	@Override public String aceptar() { return "تأیید"; }
+	@Override public String seleccionaCodigoIdioma() { return "زبان را انتخاب کنید"; }
+	
+	@Override public String lanzadoresRecomendadosAviso() { return "این راه‌اندازها همان‌هایی هستند که CrashDetector به عنوان گزینه‌های خوب پیشنهاد می‌کند."; }
+	@Override public String colorResultadoCorrecto() { return "نتیجهٔ صحیح"; }
+	
+	
+	
 	
 	
 	

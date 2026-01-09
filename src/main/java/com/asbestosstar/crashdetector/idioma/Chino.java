@@ -5234,9 +5234,19 @@ public class Chino implements Idioma {
 	@Override public String motivoDesaconsejoPredeterminadoEs(String nombreLanzador) { return "Este lanzador no es recomendado debido a problemas de seguridad y estabilidad conocidos."; }
 	@Override public String motivoDesaconsejoPredeterminadoEn(String nombreLanzador) { return "This launcher is not recommended due to known security and stability issues."; }
 	@Override public String motivoDesaconsejoPredeterminadoPt(String nombreLanzador) { return "Este lançador não é recomendado devido a problemas conhecidos de segurança e estabilidade."; }
+	@Override public String razones() { return "原因"; }
+	@Override public String agregarLanzador() { return "添加启动器"; }
+	@Override public String quitarLanzador() { return "移除启动器"; }
+	@Override public String editarRazones() { return "编辑原因"; }
+	@Override public String seleccionaLanzadorQuitar() { return "请选择一个启动器以移除。"; }
+	@Override public String seleccionaLanzadorEditar() { return "请选择一个启动器以编辑。"; }
+	@Override public String editarRazonesPara(String idLanzador) { return "编辑 " + idLanzador + " 的原因"; }
+	@Override public String agregarNuevoIdioma() { return "添加新语言"; }
+	@Override public String aceptar() { return "确定"; }
+	@Override public String seleccionaCodigoIdioma() { return "选择语言"; }
 	
-	
-	
+	@Override public String lanzadoresRecomendadosAviso() { return "这些启动器是 CrashDetector 推荐的优质选择。"; }
+	@Override public String colorResultadoCorrecto() { return "结果正确"; }
 	
 	
 	
