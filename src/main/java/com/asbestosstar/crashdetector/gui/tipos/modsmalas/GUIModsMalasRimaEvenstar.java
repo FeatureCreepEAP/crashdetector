@@ -68,7 +68,6 @@ public class GUIModsMalasRimaEvenstar extends GUIModsMalas {
 
 		cargarDatos();
 
-		// ===== PANEL IZQUIERDO (IMAGEN + TEXTO) =====
 		JPanel panelIzquierdo = new JPanel(new BorderLayout());
 		panelIzquierdo.setPreferredSize(new Dimension(220, 0));
 		panelIzquierdo.setBorder(BorderFactory.createEmptyBorder(6, 6, 6, 6));
@@ -82,7 +81,7 @@ public class GUIModsMalasRimaEvenstar extends GUIModsMalas {
 
 		cargarImagenEnLabel(imagenLabel);
 
-		JLabel aviso = new JLabel("<html><div style='width:200px; text-align:center;'>"
+		JLabel aviso = new JLabel("<html><div style='width:160px; text-align:center;'>"
 				+ MonitorDePID.idioma.modsNoRecomendadosAviso() + "</div></html>");
 		aviso.setForeground(colorTexto.obtener());
 		aviso.setFont(new Font("Segoe UI", Font.ITALIC, 11));
@@ -274,10 +273,6 @@ public class GUIModsMalasRimaEvenstar extends GUIModsMalas {
 		if (botonEditarRazones != null)
 			botonEditarRazones.setEnabled(hay);
 	}
-
-	// =====================
-	// INTERFAZ
-	// =====================
 
 	@Override
 	public String id() {

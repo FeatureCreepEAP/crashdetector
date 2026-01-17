@@ -5624,4 +5624,40 @@ public class Japones implements Idioma {
 		return "編集";
 	}
 
+	@Override
+	public String advertenciaHashLento() {
+		return "警告: 大きなファイルを多数追加すると、検証に数分かかることがあります。CrashDetector は続行前に各ファイルのハッシュを計算する必要があります。厳密に必要なファイルのみを保護することをお勧めします。";
+	}
+
+	@Override
+	public String agregarArchivo() {
+		return "ファイルを追加";
+	}
+
+	@Override
+	public String agregarCarpeta() {
+		return "フォルダを追加";
+	}
+
+	@Override
+	public String quitar() {
+		return "削除";
+	}
+
+	@Override
+	public String rutaArchivo() {
+		return "ファイルパス";
+	}
+
+	@Override
+	public String errorRutaFueraDirectorio() {
+		return "選択されたパスは現在のゲームディレクトリの外にあります。現在のディレクトリまたはそのサブディレクトリ内のファイルおよびフォルダのみが許可されています。";
+	}
+
+	@Override
+	public String mensajeDeSylentBell() {
+		return "<html><div style='width:150px; text-align:center;'>" + "Sylent Bell の意見やコメントは必ずしも私たちの見解と一致するわけではありません；"
+				+ "ただ、ここに置いたら面白いと思ったのです。CrashDetector は世俗的です。" + "</div></html>";
+	}
+
 }

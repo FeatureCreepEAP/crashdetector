@@ -69,7 +69,7 @@ public class ModsBuenasGUIReiBubbles extends ModsBuenasGUI {
 
 		cargarDatos();
 
-		// ===== PANEL IZQUIERDO (IMAGEN + TEXTO) =====
+		// PANEL IZQUIERDO (IMAGEN + TEXTO)
 		JPanel panelIzquierdo = new JPanel(new BorderLayout());
 		panelIzquierdo.setPreferredSize(new Dimension(240, 0));
 		panelIzquierdo.setBorder(BorderFactory.createEmptyBorder(6, 6, 6, 6));
@@ -83,7 +83,7 @@ public class ModsBuenasGUIReiBubbles extends ModsBuenasGUI {
 
 		cargarImagenEnLabel(imagenLabel);
 
-		JLabel aviso = new JLabel("<html><div style='width:220px; text-align:center;'>"
+		JLabel aviso = new JLabel("<html><div style='width:200px; text-align:center;'>"
 				+ MonitorDePID.idioma.modsRecomendadosAviso() + "</div></html>");
 		aviso.setForeground(colorTexto.obtener());
 		aviso.setFont(new Font("Segoe UI", Font.ITALIC, 11));
@@ -93,7 +93,7 @@ public class ModsBuenasGUIReiBubbles extends ModsBuenasGUI {
 		panelIzquierdo.add(aviso, BorderLayout.SOUTH);
 		add(panelIzquierdo, BorderLayout.WEST);
 
-		// ===== PANEL DERECHO (TÍTULO + TABLA + BOTONES) =====
+		// PANEL DERECHO (TÍTULO + TABLA + BOTONES)
 		JPanel panelDerecho = new JPanel(new BorderLayout(6, 6));
 		panelDerecho.setBorder(BorderFactory.createEmptyBorder(6, 6, 6, 6));
 		forzarFondoEnPanel(panelDerecho, colorFondo.obtener());

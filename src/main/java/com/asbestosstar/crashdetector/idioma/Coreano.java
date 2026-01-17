@@ -5612,7 +5612,43 @@ public class Coreano implements Idioma {
 
 	@Override
 	public String editar() {
-		return "编辑";
+		return "편집";
+	}
+
+	@Override
+	public String advertenciaHashLento() {
+		return "경고: 큰 파일을 많이 추가하면 검증에 수 분이 걸릴 수 있습니다. CrashDetector는 계속하기 전에 각 파일의 해시를 계산해야 합니다. 반드시 필요한 파일만 보호하는 것이 좋습니다.";
+	}
+
+	@Override
+	public String agregarArchivo() {
+		return "파일 추가";
+	}
+
+	@Override
+	public String agregarCarpeta() {
+		return "폴더 추가";
+	}
+
+	@Override
+	public String quitar() {
+		return "제거";
+	}
+
+	@Override
+	public String rutaArchivo() {
+		return "파일 경로";
+	}
+
+	@Override
+	public String errorRutaFueraDirectorio() {
+		return "선택한 경로가 현재 게임 디렉터리 외부에 있습니다. 현재 디렉터리 또는 그 하위 디렉터리 내의 파일과 폴더만 허용됩니다.";
+	}
+
+	@Override
+	public String mensajeDeSylentBell() {
+		return "<html><div style='width:150px; text-align:center;'>" + "Sylent Bell의 의견과 언급은 반드시 우리와 일치하지 않습니다; "
+				+ "여기에 넣는 것이 재미있을 것 같아서입니다. CrashDetector는 세속적입니다." + "</div></html>";
 	}
 
 }

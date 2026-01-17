@@ -5844,4 +5844,41 @@ public class Ingles implements Idioma {
 		return "Edit";
 	}
 
+	@Override
+	public String advertenciaHashLento() {
+		return "Warning: adding many large files may cause verification to take several minutes. CrashDetector will need to calculate the hash of each file before continuing. It is recommended to protect only strictly necessary files.";
+	}
+
+	@Override
+	public String agregarArchivo() {
+		return "Add file";
+	}
+
+	@Override
+	public String agregarCarpeta() {
+		return "Add folder";
+	}
+
+	@Override
+	public String quitar() {
+		return "Remove";
+	}
+
+	@Override
+	public String rutaArchivo() {
+		return "File path";
+	}
+
+	@Override
+	public String errorRutaFueraDirectorio() {
+		return "The selected path is outside the current game directory. Only files and folders within the current directory or its subdirectories are allowed.";
+	}
+
+	@Override
+	public String mensajeDeSylentBell() {
+		return "<html><div style='width:150px; text-align:center;'>"
+				+ "The opinions and comments of Sylent Bell do not necessarily reflect our own; "
+				+ "we just thought it would be funny to put her here. CrashDetector is secular." + "</div></html>";
+	}
+
 }

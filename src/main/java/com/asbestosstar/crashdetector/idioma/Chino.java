@@ -5515,7 +5515,43 @@ public class Chino implements Idioma {
 
 	@Override
 	public String editar() {
-		return "편집";
+		return "编辑";
+	}
+
+	@Override
+	public String advertenciaHashLento() {
+		return "警告：添加大量大文件可能导致验证耗时数分钟。CrashDetector 需要先为每个文件计算哈希值才能继续。建议仅保护严格必需的文件。";
+	}
+
+	@Override
+	public String agregarArchivo() {
+		return "添加文件";
+	}
+
+	@Override
+	public String agregarCarpeta() {
+		return "添加文件夹";
+	}
+
+	@Override
+	public String quitar() {
+		return "移除";
+	}
+
+	@Override
+	public String rutaArchivo() {
+		return "文件路径";
+	}
+
+	@Override
+	public String errorRutaFueraDirectorio() {
+		return "所选路径位于当前游戏目录之外。仅允许使用当前目录或其子目录中的文件和文件夹。";
+	}
+
+	@Override
+	public String mensajeDeSylentBell() {
+		return "<html><div style='width:150px; text-align:center;'>" + "Sylent Bell 的观点和评论不一定代表我们的立场；"
+				+ "我们只是觉得放在这里挺有趣的。CrashDetector 是世俗的（非宗教的）。" + "</div></html>";
 	}
 
 }

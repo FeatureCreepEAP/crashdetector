@@ -674,9 +674,7 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 	 * ancho es reducido para ajustarse al panel izquierdo.
 	 */
 	private JLabel crearEtiquetaDisclaimerSylentBellLadoIzquierdo() {
-		JLabel lbl = new JLabel("<html><div style='width:180px; text-align:center;'>"
-				+ "Las opiniones y comentarios de Sylent Bell no necesariamente coinciden con los nuestros; "
-				+ "solo pensamos que sería gracioso ponerla aquí." + "</div></html>");
+		JLabel lbl = new JLabel(MonitorDePID.idioma.mensajeDeSylentBell());
 		lbl.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		lbl.setForeground(colorTexto.obtener());
 		lbl.setHorizontalAlignment(SwingConstants.CENTER);

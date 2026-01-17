@@ -11,6 +11,7 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
+import com.asbestosstar.crashdetector.gui.tipos.antimanipulacion.AntiManipulacionGUI;
 import com.asbestosstar.crashdetector.gui.tipos.arbol.ArbolDeModsGUI;
 import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrBase;
 import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartir;
@@ -579,7 +580,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 
 		@Override
 		public String etiquetaDelBoton() {
-			return MonitorDePID.idioma.lanzadoresDesaconsejados();
+			return MonitorDePID.idioma.modsNoRecomendados();
 		}
 
 		@Override
@@ -601,7 +602,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 
 		@Override
 		public String etiquetaDelBoton() {
-			return MonitorDePID.idioma.lanzadoresRecomendados();
+			return MonitorDePID.idioma.modsRecomendados();
 		}
 
 		@Override
@@ -623,7 +624,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 
 		@Override
 		public String etiquetaDelBoton() {
-			return MonitorDePID.idioma.lanzadoresRecomendados();
+			return MonitorDePID.idioma.derechosMiranda();
 		}
 
 		@Override
@@ -634,6 +635,28 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		@Override
 		public Map<String, Supplier<DerechosPiratasGUI>> obtenerGUIs() {
 			return DerechosPiratasGUI.GUIS;
+		}
+	};
+
+	public static TipoGUI<AntiManipulacionGUI> ANTI_MANIPULACION = new TipoGUI<AntiManipulacionGUI>() {
+		@Override
+		public String id() {
+			return "antimanipulacion";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.antiTamper();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<AntiManipulacionGUI> gui) {
+			AntiManipulacionGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<AntiManipulacionGUI>> obtenerGUIs() {
+			return AntiManipulacionGUI.GUIS;
 		}
 	};
 
@@ -664,6 +687,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		TIPOS_DE_GUI.add(MODS_MALAS);
 		TIPOS_DE_GUI.add(MODS_BUENAS);
 		TIPOS_DE_GUI.add(MIRANDA);
+		TIPOS_DE_GUI.add(ANTI_MANIPULACION);
 
 	}
 }

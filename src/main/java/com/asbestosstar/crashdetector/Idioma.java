@@ -2277,4 +2277,18 @@ public interface Idioma {
 
 	public String editar();
 
+	public String rutaArchivo();
+
+	public String errorRutaFueraDirectorio();
+
+	public String advertenciaHashLento();
+
+	public String agregarArchivo();
+
+	public String agregarCarpeta();
+
+	public String quitar();
+
+	public String mensajeDeSylentBell();
+
 }

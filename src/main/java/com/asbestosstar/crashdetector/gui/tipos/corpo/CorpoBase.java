@@ -13,6 +13,7 @@ import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
+import com.asbestosstar.crashdetector.gui.tipos.antimanipulacion.AntiManipulacionGUIPanko;
 import com.asbestosstar.crashdetector.gui.tipos.deshablicarverificaciones.DeshabilitarVerificacionesAmaneKanata;
 import com.asbestosstar.crashdetector.gui.tipos.editor.EditorCodiceGUIIronMouse;
 import com.asbestosstar.crashdetector.gui.tipos.lanzeresbuenos.LanzerBuenoGUIMaidMint;
@@ -89,6 +90,11 @@ public abstract class CorpoBase extends JDialog implements CrashDetectorGUI, Bot
 	public static void abrirMiranda() {
 		TipoGUI.MIRANDA.obtenerGUIPredeterminado(DerechosPiratasGUIOnePiece.ID, () -> new DerechosPiratasGUIOnePiece())
 				.init();
+	}
+
+	public static void abrirAntiManipulacion() {
+		TipoGUI.ANTI_MANIPULACION
+				.obtenerGUIPredeterminado(AntiManipulacionGUIPanko.ID, () -> new AntiManipulacionGUIPanko()).init();
 	}
 
 	@Override

@@ -5820,4 +5820,41 @@ public class Portuges implements Idioma {
 		return "Editar";
 	}
 
+	@Override
+	public String advertenciaHashLento() {
+		return "Aviso: adicionar muitos arquivos grandes pode fazer com que a verificação leve vários minutos. O CrashDetector precisará calcular o hash de cada arquivo antes de continuar. Recomenda-se proteger apenas os arquivos estritamente necessários.";
+	}
+
+	@Override
+	public String agregarArchivo() {
+		return "Adicionar arquivo";
+	}
+
+	@Override
+	public String agregarCarpeta() {
+		return "Adicionar pasta";
+	}
+
+	@Override
+	public String quitar() {
+		return "Remover";
+	}
+
+	@Override
+	public String rutaArchivo() {
+		return "Caminho do arquivo";
+	}
+
+	@Override
+	public String errorRutaFueraDirectorio() {
+		return "O caminho selecionado está fora do diretório atual do jogo. Apenas arquivos e pastas dentro do diretório atual ou seus subdiretórios são permitidos.";
+	}
+
+	@Override
+	public String mensajeDeSylentBell() {
+		return "<html><div style='width:150px; text-align:center;'>"
+				+ "As opiniões e comentários de Sylent Bell não refletem necessariamente as nossas; "
+				+ "achamos apenas que seria engraçado colocá-la aqui. CrashDetector é secular." + "</div></html>";
+	}
+
 }

@@ -5815,4 +5815,42 @@ public class Ruso implements Idioma {
 		return "Редактировать";
 	}
 
+	@Override
+	public String advertenciaHashLento() {
+		return "Предупреждение: добавление множества больших файлов может привести к тому, что проверка займёт несколько минут. CrashDetector должен вычислить хеш каждого файла перед продолжением. Рекомендуется защищать только строго необходимые файлы.";
+	}
+
+	@Override
+	public String agregarArchivo() {
+		return "Добавить файл";
+	}
+
+	@Override
+	public String agregarCarpeta() {
+		return "Добавить папку";
+	}
+
+	@Override
+	public String quitar() {
+		return "Удалить";
+	}
+
+	@Override
+	public String rutaArchivo() {
+		return "Путь к файлу";
+	}
+
+	@Override
+	public String errorRutaFueraDirectorio() {
+		return "Выбранный путь находится вне текущей директории игры. Разрешены только файлы и папки внутри текущей директории или её подкаталогов.";
+	}
+
+	@Override
+	public String mensajeDeSylentBell() {
+		return "<html><div style='width:150px; text-align:center;'>"
+				+ "Мнения и комментарии Sylent Bell не обязательно совпадают с нашими; "
+				+ "мы просто подумали, что будет забавно разместить её здесь. CrashDetector является светским."
+				+ "</div></html>";
+	}
+
 }

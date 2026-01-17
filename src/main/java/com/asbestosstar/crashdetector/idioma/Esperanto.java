@@ -5801,4 +5801,41 @@ public class Esperanto implements Idioma {
 		return "Redakti";
 	}
 
+	@Override
+	public String advertenciaHashLento() {
+		return "Averto: aldoni multajn grandajn dosierojn povas igi la kontrolon daŭri plurajn minutojn. CrashDetector devos kalkuli la haketon de ĉiu dosiero antaŭ ol daŭrigi. Rekomendiĝas protekti nur strikte necesajn dosierojn.";
+	}
+
+	@Override
+	public String agregarArchivo() {
+		return "Aldoni dosieron";
+	}
+
+	@Override
+	public String agregarCarpeta() {
+		return "Aldoni dosierujon";
+	}
+
+	@Override
+	public String quitar() {
+		return "Forigi";
+	}
+
+	@Override
+	public String rutaArchivo() {
+		return "Vojo de la dosiero";
+	}
+
+	@Override
+	public String errorRutaFueraDirectorio() {
+		return "La elektita vojo estas ekster la nuna lud-dosierujo. Nur dosieroj kaj dosierujoj ene de la nuna dosierujo aŭ ĝiaj subdosierujoj estas permesitaj.";
+	}
+
+	@Override
+	public String mensajeDeSylentBell() {
+		return "<html><div style='width:150px; text-align:center;'>"
+				+ "La opinioj kaj komentoj de Sylent Bell ne nepre kongruas kun niaj; "
+				+ "ni simple pensis, ke estus amuze meti ŝin ĉi tie. CrashDetector estas laika." + "</div></html>";
+	}
+
 }

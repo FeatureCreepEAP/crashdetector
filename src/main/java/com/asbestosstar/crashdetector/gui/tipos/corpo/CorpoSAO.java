@@ -431,7 +431,10 @@ public class CorpoSAO extends CorpoBase {
 		botonModsDesaconsejados.addActionListener(e -> {
 			abrirModsMalas();
 		});
-		botonAntiTamper.addActionListener(proximamenteListener);
+		botonAntiTamper.addActionListener(e -> {
+			abrirAntiManipulacion();
+		});
+
 		botonFirmas.addActionListener(e -> {
 			abrirEditorCodice();
 		});

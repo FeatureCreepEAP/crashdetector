@@ -30,6 +30,7 @@ import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.detectorlanzer.DetectorLanzer;
 import com.asbestosstar.crashdetector.grepr.BusquedaArchivos;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
+import com.asbestosstar.crashdetector.gui.tipos.antimanipulacion.AntiManipulacionGUIPanko;
 import com.asbestosstar.crashdetector.gui.tipos.arbol.ArbolDeModsGUIHamu;
 import com.asbestosstar.crashdetector.gui.tipos.cfr.BuscarParaCFR;
 import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrSakuraRiddle;
@@ -227,6 +228,7 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/onepeice.png", Statics.carpeta.resolve("imagenes/onepeice.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/rei_bubbles.png",
 				Statics.carpeta.resolve("imagenes/rei_bubbles.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/panko.png", Statics.carpeta.resolve("imagenes/panko.png").toFile());
 
 //		new File(viajo_ultima_mods.toString()).delete();
 //		try {
@@ -406,6 +408,7 @@ public class MonitorDePID {
 		TipoGUI.MODS_MALAS.registrarGUI(GUIModsMalasRimaEvenstar.ID, () -> new GUIModsMalasRimaEvenstar());
 		TipoGUI.MODS_BUENAS.registrarGUI(ModsBuenasGUIReiBubbles.ID, () -> new ModsBuenasGUIReiBubbles());
 		TipoGUI.MIRANDA.registrarGUI(DerechosPiratasGUIOnePiece.ID, () -> new DerechosPiratasGUIOnePiece());
+		TipoGUI.ANTI_MANIPULACION.registrarGUI(AntiManipulacionGUIPanko.ID, () -> new AntiManipulacionGUIPanko());
 
 	}
 

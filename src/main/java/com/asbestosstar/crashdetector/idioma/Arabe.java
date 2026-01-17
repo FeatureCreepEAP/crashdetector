@@ -5747,7 +5747,44 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String editar() {
-		return "编辑";
+		return "تعديل";
+	}
+
+	@Override
+	public String advertenciaHashLento() {
+		return "تحذير: إضافة العديد من الملفات الكبيرة قد يجعل التحقق يستغرق عدة دقائق. سيتعين على CrashDetector حساب الهاش لكل ملف قبل المتابعة. يُوصى بحماية الملفات الضرورية فقط.";
+	}
+
+	@Override
+	public String agregarArchivo() {
+		return "إضافة ملف";
+	}
+
+	@Override
+	public String agregarCarpeta() {
+		return "إضافة مجلد";
+	}
+
+	@Override
+	public String quitar() {
+		return "إزالة";
+	}
+
+	@Override
+	public String rutaArchivo() {
+		return "مسار الملف";
+	}
+
+	@Override
+	public String errorRutaFueraDirectorio() {
+		return "المسار المحدد خارج دليل اللعبة الحالي. يُسمح فقط بالملفات والمجلدات داخل الدليل الحالي أو مجلداته الفرعية.";
+	}
+
+	@Override
+	public String mensajeDeSylentBell() {
+		return "<html><div style='width:150px; text-align:center;'>"
+				+ "آراء وتعليقات Sylent Bell لا تتطابق بالضرورة مع آرائنا؛ "
+				+ "فقط اعتقدنا أنه سيكون مضحكًا وضعها هنا. CrashDetector علماني." + "</div></html>";
 	}
 
 }

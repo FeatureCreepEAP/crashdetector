@@ -5789,4 +5789,41 @@ public class Persa implements Idioma {
 		return "ویرایش";
 	}
 
+	@Override
+	public String advertenciaHashLento() {
+		return "هشدار: افزودن تعداد زیادی فایل بزرگ ممکن است باعث شود بررسی چند دقیقه طول بکشد. CrashDetector باید قبل از ادامه، هش هر فایل را محاسبه کند. توصیه می‌شود تنها فایل‌های ضروری را محافظت کنید.";
+	}
+
+	@Override
+	public String agregarArchivo() {
+		return "افزودن فایل";
+	}
+
+	@Override
+	public String agregarCarpeta() {
+		return "افزودن پوشه";
+	}
+
+	@Override
+	public String quitar() {
+		return "حذف";
+	}
+
+	@Override
+	public String rutaArchivo() {
+		return "مسیر فایل";
+	}
+
+	@Override
+	public String errorRutaFueraDirectorio() {
+		return "مسیر انتخاب‌شده خارج از دایرکتوری فعلی بازی است. تنها فایل‌ها و پوشه‌هایی که در دایرکتوری فعلی یا زیرپوشه‌های آن قرار دارند، مجاز هستند.";
+	}
+
+	@Override
+	public String mensajeDeSylentBell() {
+		return "<html><div style='width:150px; text-align:center;'>"
+				+ "نظرات و توضیحات Sylent Bell لزوماً با ما هم‌خوانی ندارد؛ "
+				+ "فقط فکر کردیم جالب باشد که او را اینجا بگذاریم. CrashDetector سکولار است." + "</div></html>";
+	}
+
 }
