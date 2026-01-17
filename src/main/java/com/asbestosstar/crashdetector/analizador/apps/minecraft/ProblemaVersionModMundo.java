@@ -118,7 +118,6 @@ public class ProblemaVersionModMundo implements Verificaciones {
 			builder.agregarEtiqueta(MonitorDePID.idioma.solucionInstalarModConVersion(nombreMod, versionEsperada));
 		}
 
-
 		return builder.construir();
 	}
 
@@ -144,16 +143,17 @@ public class ProblemaVersionModMundo implements Verificaciones {
 		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
+
 	@Override
 	public String enlaceACodigo() {
 		// TODO Auto-generated method stub
-		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"+this.getClass().getSimpleName()+".java";
+		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
+				+ this.getClass().getSimpleName() + ".java";
 	}
+
 	@Override
 	public boolean recomendadoParaCorperata() {
 		return true;
 	}
-	
-	
-	
+
 }

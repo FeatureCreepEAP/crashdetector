@@ -69,12 +69,22 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 	@Override
 	public void init() {
 		// Inicializar configuraciones de color
-		colorFondoVentana = ConfigColor.de("tema.sylent_bell.color.fondo.ventana", new Color(30, 30, 30));
-		colorTexto = ConfigColor.de("tema.sylent_bell.color.texto", new Color(220, 220, 220));
-		colorBoton = ConfigColor.de("tema.sylent_bell.color.boton", new Color(50, 60, 150));
-		colorTabla = ConfigColor.de("tema.sylent_bell.color.tabla", new Color(40, 40, 40));
-		colorResaltoDesaconsejado = ConfigColor.de("tema.sylent_bell.color.resalto.desaconsejado", new Color(180, 50, 50));
-		colorBordePanel = ConfigColor.de("tema.sylent_bell.color.borde.panel", new Color(70, 70, 70));
+		// Inicializar configuraciones de color (paleta inspirada en la imagen de Sylent
+		// Bell)
+		colorFondoVentana = ConfigColor.de("tema.sylent_bell.color.fondo.ventana", new Color(15, 18, 28)); // azul noche
+																											// casi
+																											// negro
+		colorTexto = ConfigColor.de("tema.sylent_bell.color.texto", new Color(236, 232, 235)); // blanco frío
+																								// (cabello/luz)
+		colorBoton = ConfigColor.de("tema.sylent_bell.color.boton", new Color(61, 72, 93)); // azul grafito
+																							// (ropa/sombras)
+		colorTabla = ConfigColor.de("tema.sylent_bell.color.tabla", new Color(23, 24, 36)); // fondo más profundo para
+																							// listas
+		colorResaltoDesaconsejado = ConfigColor.de("tema.sylent_bell.color.resalto.desaconsejado",
+				new Color(255, 92, 120)); // rosado/rojo (acento)
+		colorBordePanel = ConfigColor.de("tema.sylent_bell.color.borde.panel", new Color(108, 117, 142)); // gris
+																											// azulado
+																											// (contornos)
 
 		setTitle(MonitorDePID.idioma.lanzadoresNoRecomendados());
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -87,7 +97,15 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 		cargarDatos();
 
 		// Crear modelo de tabla
-		modeloNoRecomendados = new DefaultTableModel(new Object[] { MonitorDePID.idioma.nombreLanzador(), MonitorDePID.idioma.razones() }, 0);
+		modeloNoRecomendados = new DefaultTableModel(
+				new Object[] { MonitorDePID.idioma.nombreLanzador(), MonitorDePID.idioma.razones() }, 0) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false; // ninguna celda editable
+			}
+		};
 
 		// Crear tabla
 		tablaNoRecomendados = new JTable(modeloNoRecomendados);
@@ -133,11 +151,6 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 		gbc.weighty = 1.0;
 		panelPrincipal.add(panelIzquierdo, gbc);
 
-
-		
-		
-		
-		
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.gridheight = 7; // hay una fila extra por el disclaimer
@@ -227,8 +240,9 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 	}
 
 	/**
-	 * Convierte nombres (los que se muestran en UI) a codigos ISO usados internamente.
-	 * Este mapeo debe coincidir con los codigos que se guardan como claves en el JSON.
+	 * Convierte nombres (los que se muestran en UI) a codigos ISO usados
+	 * internamente. Este mapeo debe coincidir con los codigos que se guardan como
+	 * claves en el JSON.
 	 */
 	public static String obtenerCodigoIdioma(String nombreIdioma) {
 		switch (nombreIdioma) {
@@ -281,15 +295,13 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 		}
 	}
 
-
 	/**
 	 * Crea la etiqueta de aviso sobre Sylent Bell.
 	 */
 	private JLabel crearEtiquetaDisclaimerSylentBell() {
 		JLabel lbl = new JLabel("<html><div style='width:520px;'>"
 				+ "Las opiniones y comentarios de Sylent Bell no necesariamente coinciden con los nuestros; "
-				+ "solo pensamos que sería gracioso ponerla aquí."
-				+ "</div></html>");
+				+ "solo pensamos que sería gracioso ponerla aquí." + "</div></html>");
 		lbl.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lbl.setForeground(colorTexto.obtener());
 		lbl.setOpaque(false);
@@ -310,8 +322,8 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 
 		tabla.setDefaultRenderer(Object.class, new TableCellRenderer() {
 			@Override
-			public java.awt.Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-					int row, int column) {
+			public java.awt.Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+					boolean hasFocus, int row, int column) {
 
 				JLabel label = new JLabel(value != null ? value.toString() : "");
 				label.setOpaque(true);
@@ -371,19 +383,44 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 	}
 
 	/**
-	 * Carga los lanzadores disponibles en el combo.
-	 * Si el lanzador ya está en "noRecomendados", no aparece en el combo.
+	 * Carga los lanzadores disponibles en el combo. - Los lanzadores desaconsejados
+	 * por CrashDetector aparecen PRIMERO. - Los lanzadores ya presentes en
+	 * "noRecomendados" no se muestran.
 	 */
 	private void cargarComboLanzadores() {
 		comboLanzadores.removeAllItems();
 
-		List<String> todosLanzadores = obtenerNombresLanzadores();
-		for (String id : todosLanzadores) {
-			if (!noRecomendados.containsKey(id)) {
-				comboLanzadores.addItem(id);
+		// Listas separadas para ordenar correctamente
+		List<String> desaconsejados = new ArrayList<>();
+		List<String> normales = new ArrayList<>();
+
+		// Obtener todos los lanzadores detectados
+		for (String id : obtenerNombresLanzadores()) {
+
+			// Si ya está en la lista de no recomendados, no se muestra en el combo
+			if (noRecomendados.containsKey(id)) {
+				continue;
+			}
+
+			// Clasificar según CrashDetector
+			if (esDesaconsejadoPorCrashDetectorConNosotrosDice(id)) {
+				desaconsejados.add(id);
+			} else {
+				normales.add(id);
 			}
 		}
 
+		// Añadir primero los desaconsejados (rojos)
+		for (String id : desaconsejados) {
+			comboLanzadores.addItem(id);
+		}
+
+		// Añadir después los normales
+		for (String id : normales) {
+			comboLanzadores.addItem(id);
+		}
+
+		// Habilitar / deshabilitar botón agregar según contenido
 		if (botonAgregar != null) {
 			botonAgregar.setEnabled(comboLanzadores.getItemCount() > 0);
 		}
@@ -437,10 +474,8 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 				cargarComboLanzadores();
 				cargarDatosEnTabla();
 			} else {
-				JOptionPane.showMessageDialog(this,
-						MonitorDePID.idioma.seleccionaLanzadorQuitar(),
-						MonitorDePID.idioma.informacion(),
-						JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this, MonitorDePID.idioma.seleccionaLanzadorQuitar(),
+						MonitorDePID.idioma.informacion(), JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 
@@ -450,29 +485,25 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 				String id = (String) modeloNoRecomendados.getValueAt(filaSeleccionada, 0);
 				editarRazonesParaLanzador(id);
 			} else {
-				JOptionPane.showMessageDialog(this,
-						MonitorDePID.idioma.seleccionaLanzadorEditar(),
-						MonitorDePID.idioma.informacion(),
-						JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this, MonitorDePID.idioma.seleccionaLanzadorEditar(),
+						MonitorDePID.idioma.informacion(), JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 
 		botonGuardar.addActionListener(e -> {
 			guardarDatos();
-			JOptionPane.showMessageDialog(this,
-					MonitorDePID.idioma.cambiosGuardadosExitosamente(),
-					MonitorDePID.idioma.informacion(),
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.cambiosGuardadosExitosamente(),
+					MonitorDePID.idioma.informacion(), JOptionPane.INFORMATION_MESSAGE);
 		});
 
 		botonCancelar.addActionListener(e -> dispose());
 	}
 
 	/**
-	 * Edita las razones para un lanzador específico.
-	 * - Muestra TODOS los idiomas (los del mapaParaComboBoxIdiomas()).
-	 * - No hay botón de "agregar idioma".
-	 * - Se muestran banderas junto al CÓDIGO (es/en/ar/...) y se guardan usando esas claves.
+	 * Edita las razones para un lanzador específico. - Muestra TODOS los idiomas
+	 * (los del mapaParaComboBoxIdiomas()). - No hay botón de "agregar idioma". - Se
+	 * muestran banderas junto al CÓDIGO (es/en/ar/...) y se guardan usando esas
+	 * claves.
 	 */
 	private void editarRazonesParaLanzador(String idLanzador) {
 		JDialog dialogo = new JDialog(this, MonitorDePID.idioma.editarRazonesPara(idLanzador), true);
@@ -637,19 +668,15 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 	public String id() {
 		return ID;
 	}
-	
-	
+
 	/**
-	 * Crea la etiqueta de aviso para mostrar DEBAJO de la imagen de Sylent Bell.
-	 * El ancho es reducido para ajustarse al panel izquierdo.
+	 * Crea la etiqueta de aviso para mostrar DEBAJO de la imagen de Sylent Bell. El
+	 * ancho es reducido para ajustarse al panel izquierdo.
 	 */
 	private JLabel crearEtiquetaDisclaimerSylentBellLadoIzquierdo() {
-		JLabel lbl = new JLabel(
-			"<html><div style='width:180px; text-align:center;'>"
-			+ "Las opiniones y comentarios de Sylent Bell no necesariamente coinciden con los nuestros; "
-			+ "solo pensamos que sería gracioso ponerla aquí."
-			+ "</div></html>"
-		);
+		JLabel lbl = new JLabel("<html><div style='width:180px; text-align:center;'>"
+				+ "Las opiniones y comentarios de Sylent Bell no necesariamente coinciden con los nuestros; "
+				+ "solo pensamos que sería gracioso ponerla aquí." + "</div></html>");
 		lbl.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		lbl.setForeground(colorTexto.obtener());
 		lbl.setHorizontalAlignment(SwingConstants.CENTER);
@@ -658,8 +685,8 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 	}
 
 	/**
-	 * Aplica el color de fondo corporativo al panel izquierdo y a la imagen
-	 * para evitar espacios blancos por el Look&Feel.
+	 * Aplica el color de fondo corporativo al panel izquierdo y a la imagen para
+	 * evitar espacios blancos por el Look&Feel.
 	 */
 	private void aplicarFondoPanelIzquierdo(JPanel panelIzquierdo) {
 		if (panelIzquierdo != null) {
@@ -671,9 +698,6 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 			imagenLabel.setBackground(colorFondoVentana.obtener());
 		}
 	}
-
-	
-	
 
 	@Override
 	public List<ElementoConfig> obtenerElementosConfigs() {

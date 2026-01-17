@@ -5236,280 +5236,583 @@ public class Ruso implements Idioma {
 	public String solucion_eliminar_mod_reciente() {
 		return "Если не удаётся определить мод, удалите недавно установленные моды, особенно те, что добавляют блоки, предметы или инструменты.";
 	}
-	
+
 	@Override
 	public String error_entrypoint_fabric_html(String modNombre) {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Ошибка при загрузке мода <b>" + escapeHtml(modNombre) + "</b>.</b>"
-	            + "<ul>"
-	            + "<li>Мод не смог инициализировать один из своих компонентов (например, меню настроек).</li>"
-	            + "<li>Это обычно происходит из-за несовместимости с версией Minecraft, Fabric или другими модами.</li>"
-	            + "</ul>"
-	            + "<p>Если ошибка сохраняется, удалите или обновите мод <b>" + escapeHtml(modNombre) + "</b>.</p>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "Ошибка при загрузке мода <b>"
+				+ escapeHtml(modNombre) + "</b>.</b>" + "<ul>"
+				+ "<li>Мод не смог инициализировать один из своих компонентов (например, меню настроек).</li>"
+				+ "<li>Это обычно происходит из-за несовместимости с версией Minecraft, Fabric или другими модами.</li>"
+				+ "</ul>" + "<p>Если ошибка сохраняется, удалите или обновите мод <b>" + escapeHtml(modNombre)
+				+ "</b>.</p>";
 	}
 
 	@Override
 	public String nombre_error_entrypoint_fabric() {
-	    return "Ошибка инициализации мода (Fabric Entrypoint)";
+		return "Ошибка инициализации мода (Fabric Entrypoint)";
 	}
 
 	@Override
 	public String solucion_eliminar_mod(String modNombre) {
-	    return "Удалите мод '" + modNombre + "' из папки 'mods'.";
+		return "Удалите мод '" + modNombre + "' из папки 'mods'.";
 	}
 
 	@Override
 	public String solucion_actualizar_mod(String modNombre) {
-	    return "Обновите мод '" + modNombre + "' до версии, совместимой с вашей установкой.";
+		return "Обновите мод '" + modNombre + "' до версии, совместимой с вашей установкой.";
 	}
+
 	@Override
 	public String error_en_garde_html() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Обнаружена ошибка, связанная с модом <b>En Garde!</b>.</b>"
-	            + "<ul>"
-	            + "<li>Этот мод добавляет механики ближнего боя (парирование, блокировка и т. д.).</li>"
-	            + "<li>Ошибка обычно возникает из-за несовместимости с другими боевыми модами (например, Epic Fight, DualRiders и др.) или из-за использования неподходящей версии для вашего Minecraft.</li>"
-	            + "</ul>"
-	            + "<p>Если вы не используете продвинутый бой, рекомендуем удалить En Garde!, чтобы избежать конфликтов.</p>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Обнаружена ошибка, связанная с модом <b>En Garde!</b>.</b>" + "<ul>"
+				+ "<li>Этот мод добавляет механики ближнего боя (парирование, блокировка и т. д.).</li>"
+				+ "<li>Ошибка обычно возникает из-за несовместимости с другими боевыми модами (например, Epic Fight, DualRiders и др.) или из-за использования неподходящей версии для вашего Minecraft.</li>"
+				+ "</ul>"
+				+ "<p>Если вы не используете продвинутый бой, рекомендуем удалить En Garde!, чтобы избежать конфликтов.</p>";
 	}
 
 	@Override
 	public String nombre_error_en_garde() {
-	    return "Ошибка в моде En Garde!";
+		return "Ошибка в моде En Garde!";
 	}
 
 	@Override
 	public String solucion_actualizar_en_garde() {
-	    return "Убедитесь, что используете версию En Garde!, совместимую с вашей версией Minecraft и загрузчиком (Fabric/Forge).";
+		return "Убедитесь, что используете версию En Garde!, совместимую с вашей версией Minecraft и загрузчиком (Fabric/Forge).";
 	}
 
 	@Override
 	public String solucion_eliminar_conflicto_mod_combate() {
-	    return "Если вы используете другие боевые моды (Epic Fight, Caelus и др.), отключите их или удалите En Garde!, чтобы избежать конфликтов.";
+		return "Если вы используете другие боевые моды (Epic Fight, Caelus и др.), отключите их или удалите En Garde!, чтобы избежать конфликтов.";
 	}
+
 	@Override
 	public String error_idletweaks_html() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Обнаружена ошибка, вызванная модом <b>IdleTweaks</b>.</b>"
-	            + "<ul>"
-	            + "<li>IdleTweaks попытался освободить сетевой канал, который больше не существует (<code>Tried to release unknown channel</code>).</li>"
-	            + "<li>Эта ошибка обычно возникает в старых версиях мода или при использовании на неправильно настроенных серверах.</li>"
-	            + "</ul>"
-	            + "<p>IdleTweaks — это мод для улучшения качества жизни, но он может вызывать нестабильность. Рассмотрите возможность его обновления или удаления.</p>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Обнаружена ошибка, вызванная модом <b>IdleTweaks</b>.</b>" + "<ul>"
+				+ "<li>IdleTweaks попытался освободить сетевой канал, который больше не существует (<code>Tried to release unknown channel</code>).</li>"
+				+ "<li>Эта ошибка обычно возникает в старых версиях мода или при использовании на неправильно настроенных серверах.</li>"
+				+ "</ul>"
+				+ "<p>IdleTweaks — это мод для улучшения качества жизни, но он может вызывать нестабильность. Рассмотрите возможность его обновления или удаления.</p>";
 	}
 
 	@Override
 	public String nombre_error_idletweaks() {
-	    return "Ошибка IdleTweaks (неизвестный сетевой канал)";
+		return "Ошибка IdleTweaks (неизвестный сетевой канал)";
 	}
 
 	@Override
 	public String solucion_actualizar_idletweaks() {
-	    return "Обновите IdleTweaks до последней версии, совместимой с вашим Minecraft.";
+		return "Обновите IdleTweaks до последней версии, совместимой с вашим Minecraft.";
 	}
 
 	@Override
 	public String solucion_eliminar_idletweaks() {
-	    return "Удалите IdleTweaks из папки 'mods', если он вам не нужен.";
+		return "Удалите IdleTweaks из папки 'mods', если он вам не нужен.";
 	}
-	
+
 	@Override
 	public String mensagjePirataMC() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Foi detectado um erro de autenticação (HTTP 401) ao tentar fazer login no Minecraft.</b>"
-	            + "<p>Esse erro <b>raramente é a causa direta da falha</b>, mas indica que você está usando uma conta não autenticada (pirata).</p>"
-	            + "<p>Canais oficiais de suporte (projetos corporativos, VTubers, criadores de modpacks, etc.) <b>não podem ajudá-lo</b> se você usar uma cópia pirata, "
-	            + "devido a restrições em suas regras de chat, contratos, acordos com Mojang/Microsoft ou políticas de reputação.</p>"
-	            + "<p>Essa verificação pode ser <b>desativada nas configurações corporativas</b> do detector. "
-	            + "Aviso: a detecção antipirataria <b>não é perfeita</b> e pode ser acionada em ambientes de desenvolvimento, com internet instável ou ao usar launchers modificados.</p>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Foi detectado um erro de autenticação (HTTP 401) ao tentar fazer login no Minecraft.</b>"
+				+ "<p>Esse erro <b>raramente é a causa direta da falha</b>, mas indica que você está usando uma conta não autenticada (pirata).</p>"
+				+ "<p>Canais oficiais de suporte (projetos corporativos, VTubers, criadores de modpacks, etc.) <b>não podem ajudá-lo</b> se você usar uma cópia pirata, "
+				+ "devido a restrições em suas regras de chat, contratos, acordos com Mojang/Microsoft ou políticas de reputação.</p>"
+				+ "<p>Essa verificação pode ser <b>desativada nas configurações corporativas</b> do detector. "
+				+ "Aviso: a detecção antipirataria <b>não é perfeita</b> e pode ser acionada em ambientes de desenvolvimento, com internet instável ou ao usar launchers modificados.</p>";
 	}
 
 	@Override
 	public String infoDeDerechosMiranda() {
-	    return "<b>Direitos Miranda se você tentar entrar no suporte mesmo assim:</b>";
+		return "<b>Direitos Miranda se você tentar entrar no suporte mesmo assim:</b>";
 	}
 
 	@Override
 	public String nombrePirataMC() {
-	    return "Minecraft pirata";
+		return "Minecraft pirata";
 	}
 
 	@Override
 	public String desactivarVerificacionPirata() {
-	    return "Desativar verificação antipirataria";
+		return "Desativar verificação antipirataria";
 	}
 
 	@Override
 	public String comprarMC() {
-	    return "Comprar Minecraft";
+		return "Comprar Minecraft";
 	}
-	
+
 	// --- LanzerNoAnimado ---
 	@Override
 	public String lanzer_no_animado_titulo(String id) {
-	    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
-	        + "Вы используете лаунчер <code>" + id + "</code>, который <b>отсутствует в списке рекомендованных</b>.</b>";
+		return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>" + "Вы используете лаунчер <code>" + id
+				+ "</code>, который <b>отсутствует в списке рекомендованных</b>.</b>";
 	}
 
 	@Override
 	public String lanzer_no_animado_problemas_comunes() {
-	    return "<p>Хотя он может работать, нерекомендуемые лаунчеры часто вызывают:</p>"
-	        + "<ul>"
-	        + "<li>Повреждённые установки модов или приложения.</li>"
-	        + "<li>Игра не запускается или зависает без понятной ошибки.</li>"
-	        + "<li>Нестандартную структуру папок (затрудняет диагностику).</li>"
-	        + "<li>Непредсказуемое поведение с Java, памятью или модами.</li>"
-	        + "</ul>";
+		return "<p>Хотя он может работать, нерекомендуемые лаунчеры часто вызывают:</p>" + "<ul>"
+				+ "<li>Повреждённые установки модов или приложения.</li>"
+				+ "<li>Игра не запускается или зависает без понятной ошибки.</li>"
+				+ "<li>Нестандартную структуру папок (затрудняет диагностику).</li>"
+				+ "<li>Непредсказуемое поведение с Java, памятью или модами.</li>" + "</ul>";
 	}
 
 	@Override
 	public String lanzer_no_animado_usar_animados() {
-	    return "Для лучшего опыта используйте один из следующих рекомендованных лаунчеров:";
+		return "Для лучшего опыта используйте один из следующих рекомендованных лаунчеров:";
 	}
 
 	@Override
 	public String nombre_lanzer_no_animado() {
-	    return "Нерекомендуемый лаунчер";
+		return "Нерекомендуемый лаунчер";
 	}
 
 	@Override
 	public String lanzer_no_animado_cambiar_a_animado() {
-	    return "Переключитесь на лаунчер из рекомендованного списка.";
+		return "Переключитесь на лаунчер из рекомендованного списка.";
 	}
 
 	// --- LanzerDesAnimado ---
 	@Override
 	public String lanzer_desanimado_titulo(String id) {
-	    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
-	        + "Вы используете <b>не рекомендуемый лаунчер</b>: <code>" + id + "</code>.</b>";
+		return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+				+ "Вы используете <b>не рекомендуемый лаунчер</b>: <code>" + id + "</code>.</b>";
 	}
 
 	@Override
 	public String lanzer_desanimado_problemas_comunes() {
-	    return "<p>Не рекомендуемые лаунчеры могут вызывать:</p>"
-	        + "<ul>"
-	        + "<li>Повреждённые установки приложения или модов.</li>"
-	        + "<li>Игра не запускается или завершается без ошибки.</li>"
-	        + "<li>Нестандартную организацию файлов (сложно отлаживать).</li>"
-	        + "<li>Неопределённость в том, как он управляет модами, Java или памятью.</li>"
-	        + "</ul>";
+		return "<p>Не рекомендуемые лаунчеры могут вызывать:</p>" + "<ul>"
+				+ "<li>Повреждённые установки приложения или модов.</li>"
+				+ "<li>Игра не запускается или завершается без ошибки.</li>"
+				+ "<li>Нестандартную организацию файлов (сложно отлаживать).</li>"
+				+ "<li>Неопределённость в том, как он управляет модами, Java или памятью.</li>" + "</ul>";
 	}
 
 	@Override
 	public String lanzer_desanimado_usar_animados() {
-	    return "Настоятельно рекомендуется использовать один из следующих лаунчеров:";
+		return "Настоятельно рекомендуется использовать один из следующих лаунчеров:";
 	}
 
 	@Override
 	public String nombre_lanzer_desanimado() {
-	    return "Не рекомендуемый лаунчер";
+		return "Не рекомендуемый лаунчер";
 	}
 
 	@Override
 	public String lanzer_desanimado_cambiar_lanzer() {
-	    return "Переключитесь на рекомендуемый лаунчер, чтобы получить поддержку.";
+		return "Переключитесь на рекомендуемый лаунчер, чтобы получить поддержку.";
 	}
-	
+
 	// --- FaltaModAnimado ---
 	@Override
 	public String falta_mod_animado_titulo() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	        + "Для этой среды отсутствуют рекомендуемые моды.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Для этой среды отсутствуют рекомендуемые моды.</b>";
 	}
+
 	@Override
 	public String nombre_falta_mod_animado() {
-	    return "Отсутствуют рекомендуемые моды";
+		return "Отсутствуют рекомендуемые моды";
 	}
+
 	@Override
 	public String falta_mod_animado_instalar() {
-	    return "Установите рекомендуемые моды для оптимального опыта.";
+		return "Установите рекомендуемые моды для оптимального опыта.";
 	}
 
 	// --- TienesModDesAnimado ---
 	@Override
 	public String tienes_mod_desanimado_titulo() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	        + "В вашей установке обнаружены нерекомендуемые моды.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "В вашей установке обнаружены нерекомендуемые моды.</b>";
 	}
+
 	@Override
 	public String nombre_tienes_mod_desanimado() {
-	    return "Обнаружены нерекомендуемые моды";
+		return "Обнаружены нерекомендуемые моды";
 	}
+
 	@Override
 	public String tienes_mod_desanimado_eliminar() {
-	    return "Удалите нерекомендуемые моды, чтобы избежать проблем.";
+		return "Удалите нерекомендуемые моды, чтобы избежать проблем.";
 	}
-	
+
 	@Override
 	public String antimanipulacion_titulo() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	        + "Обнаружено несанкционированное вмешательство в критические файлы. Вы либо вручную редактировали файлы, либо используете ненадёжный лаунчер.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Обнаружено несанкционированное вмешательство в критические файлы. Вы либо вручную редактировали файлы, либо используете ненадёжный лаунчер.</b>";
 	}
 
 	@Override
 	public String nombre_antimanipulacion() {
-	    return "Обнаружено вмешательство";
+		return "Обнаружено вмешательство";
 	}
 
 	@Override
 	public String antimanipulacion_reinstalar() {
-	    return "Переустановите оригинальные файлы, чтобы восстановить целостность.";
+		return "Переустановите оригинальные файлы, чтобы восстановить целостность.";
 	}
-	
-	@Override public String configuracionCorporativa() { return "Configurações Corporativas"; } @Override public String idiomaRespaldo() { return "Idioma de Fallback"; } @Override public String buscardorHabilitado() { return "Habilitar Buscador"; } @Override public String nombreHerramienta() { return "Nome da Ferramenta"; } @Override public String condenarPirateria() { return "Condenar Pirataria"; } @Override public String lanzadoresRecomendados() { return "Launchers Recomendados"; } @Override public String lanzadoresDesaconsejados() { return "Launchers Desaconselhados"; } @Override public String modsRecomendados() { return "Mods Recomendados"; } @Override public String modsDesaconsejados() { return "Mods Desaconselhados"; } @Override public String antiTamper() { return "AntiManipulação"; } @Override public String proximamente() { return "Em breve"; } @Override public String informacion() { return "Informação"; } @Override public String errorCargandoImagen() { return "Erro ao carregar imagem"; }
-	
-	@Override public String configuracionBasica() { return "Базовые настройки"; }
-	@Override public String funcionalidades() { return "Функции"; }
-	@Override public String derechosMiranda() { return "Права Миранды (НАСТОЯТЕЛЬНО рекомендуется)"; }
-	@Override public String gestionVerificaciones() { return "Управление проверками"; }
-	@Override public String idVerificacion() { return "ID"; }
-	@Override public String nombreVerificacion() { return "Название"; }
-	@Override public String codigoVerificacion() { return "Код"; }
-	@Override public String documentacionVerificacion() { return "Документация"; }
-	@Override public String verificacionesHabilitadas() { return "Включённые проверки:"; }
-	@Override public String verificacionesDeshabilitadas() { return "Отключённые проверки:"; }
-	@Override public String deshabilitarNoCorporativas() { return "Отключить все некорпоративные"; }
-	@Override public String verCodigo() { return "Просмотреть код"; }
-	@Override public String verDocumentacion() { return "Просмотреть документацию"; }
-	@Override public String seleccionaVerificacionDeshabilitar() { return "Выберите проверку для отключения."; }
-	@Override public String seleccionaVerificacionHabilitar() { return "Выберите проверку для включения."; }
-	@Override public String verificacionesNoCorporativasDeshabilitadas() { return "Отключено %d проверок, не рекомендуемых для корпоративного использования."; }
-	@Override public String noVerificacionesNoCorporativas() { return "Нет некорпоративных проверок для отключения."; }
-	@Override public String operacionCompletada() { return "Операция завершена"; }
-	@Override public String mensajeAmaneKanata() { return "Мы скучаем по тебе, Amane Kanata"; }
-	@Override public String colorVerificacionCorporativa() { return "Цвет корпоративной проверки"; }
-	@Override public String nombreLanzador() { return "Название лаунчера"; }
-	@Override public String motivo() { return "Причина"; }
-	@Override public String lanzadoresNoRecomendados() { return "Не рекомендуемые лаунчеры"; }
-	@Override public String moverADesaconsejados() { return "Отметить как нерекомендуемый"; }
-	@Override public String moverARecomendados() { return "Отметить как рекомендуемый"; }
-	@Override public String guardarCambios() { return "Сохранить изменения"; }
-	@Override public String cancelar() { return "Отмена"; }
-	@Override public String seleccionaLanzadorMover() { return "Пожалуйста, выберите лаунчер для перемещения."; }
-	@Override public String cambiosGuardadosExitosamente() { return "Изменения успешно сохранены!"; }
-	@Override public String motivoDesaconsejoPredeterminadoEs(String nombreLanzador) { return "Este lanzador no es recomendado debido a problemas de seguridad y estabilidad conocidos."; }
-	@Override public String motivoDesaconsejoPredeterminadoEn(String nombreLanzador) { return "This launcher is not recommended due to known security and stability issues."; }
-	@Override public String motivoDesaconsejoPredeterminadoPt(String nombreLanzador) { return "Este lançador não é recomendado devido a problemas conhecidos de segurança e estabilidade."; }
-	@Override public String razones() { return "Причины"; }
-	@Override public String agregarLanzador() { return "Добавить лаунчер"; }
-	@Override public String quitarLanzador() { return "Удалить лаунчер"; }
-	@Override public String editarRazones() { return "Редактировать причины"; }
-	@Override public String seleccionaLanzadorQuitar() { return "Выберите лаунчер для удаления."; }
-	@Override public String seleccionaLanzadorEditar() { return "Выберите лаунчер для редактирования."; }
-	@Override public String editarRazonesPara(String idLanzador) { return "Редактировать причины для " + idLanzador; }
-	@Override public String agregarNuevoIdioma() { return "Добавить новый язык"; }
-	@Override public String aceptar() { return "Принять"; }
-	@Override public String seleccionaCodigoIdioma() { return "Выберите язык"; }
-	
-	@Override public String lanzadoresRecomendadosAviso() { return "Эти лаунчеры рекомендованы CrashDetector как надёжные."; }
-	@Override public String colorResultadoCorrecto() { return "Правильный результат"; }
-	
-	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public String configuracionCorporativa() {
+		return "Configurações Corporativas";
+	}
+
+	@Override
+	public String idiomaRespaldo() {
+		return "Idioma de Fallback";
+	}
+
+	@Override
+	public String buscardorHabilitado() {
+		return "Habilitar Buscador";
+	}
+
+	@Override
+	public String nombreHerramienta() {
+		return "Nome da Ferramenta";
+	}
+
+	@Override
+	public String condenarPirateria() {
+		return "Condenar Pirataria";
+	}
+
+	@Override
+	public String lanzadoresRecomendados() {
+		return "Launchers Recomendados";
+	}
+
+	@Override
+	public String lanzadoresDesaconsejados() {
+		return "Launchers Desaconselhados";
+	}
+
+	@Override
+	public String modsRecomendados() {
+		return "Mods Recomendados";
+	}
+
+	@Override
+	public String modsDesaconsejados() {
+		return "Mods Desaconselhados";
+	}
+
+	@Override
+	public String antiTamper() {
+		return "AntiManipulação";
+	}
+
+	@Override
+	public String proximamente() {
+		return "Em breve";
+	}
+
+	@Override
+	public String informacion() {
+		return "Informação";
+	}
+
+	@Override
+	public String errorCargandoImagen() {
+		return "Erro ao carregar imagem";
+	}
+
+	@Override
+	public String configuracionBasica() {
+		return "Базовые настройки";
+	}
+
+	@Override
+	public String funcionalidades() {
+		return "Функции";
+	}
+
+	@Override
+	public String derechosMiranda() {
+		return "Права Миранды (НАСТОЯТЕЛЬНО рекомендуется)";
+	}
+
+	@Override
+	public String gestionVerificaciones() {
+		return "Управление проверками";
+	}
+
+	@Override
+	public String idVerificacion() {
+		return "ID";
+	}
+
+	@Override
+	public String nombreVerificacion() {
+		return "Название";
+	}
+
+	@Override
+	public String codigoVerificacion() {
+		return "Код";
+	}
+
+	@Override
+	public String documentacionVerificacion() {
+		return "Документация";
+	}
+
+	@Override
+	public String verificacionesHabilitadas() {
+		return "Включённые проверки:";
+	}
+
+	@Override
+	public String verificacionesDeshabilitadas() {
+		return "Отключённые проверки:";
+	}
+
+	@Override
+	public String deshabilitarNoCorporativas() {
+		return "Отключить все некорпоративные";
+	}
+
+	@Override
+	public String verCodigo() {
+		return "Просмотреть код";
+	}
+
+	@Override
+	public String verDocumentacion() {
+		return "Просмотреть документацию";
+	}
+
+	@Override
+	public String seleccionaVerificacionDeshabilitar() {
+		return "Выберите проверку для отключения.";
+	}
+
+	@Override
+	public String seleccionaVerificacionHabilitar() {
+		return "Выберите проверку для включения.";
+	}
+
+	@Override
+	public String verificacionesNoCorporativasDeshabilitadas() {
+		return "Отключено %d проверок, не рекомендуемых для корпоративного использования.";
+	}
+
+	@Override
+	public String noVerificacionesNoCorporativas() {
+		return "Нет некорпоративных проверок для отключения.";
+	}
+
+	@Override
+	public String operacionCompletada() {
+		return "Операция завершена";
+	}
+
+	@Override
+	public String mensajeAmaneKanata() {
+		return "Мы скучаем по тебе, Amane Kanata";
+	}
+
+	@Override
+	public String colorVerificacionCorporativa() {
+		return "Цвет корпоративной проверки";
+	}
+
+	@Override
+	public String nombreLanzador() {
+		return "Название лаунчера";
+	}
+
+	@Override
+	public String motivo() {
+		return "Причина";
+	}
+
+	@Override
+	public String lanzadoresNoRecomendados() {
+		return "Не рекомендуемые лаунчеры";
+	}
+
+	@Override
+	public String moverADesaconsejados() {
+		return "Отметить как нерекомендуемый";
+	}
+
+	@Override
+	public String moverARecomendados() {
+		return "Отметить как рекомендуемый";
+	}
+
+	@Override
+	public String guardarCambios() {
+		return "Сохранить изменения";
+	}
+
+	@Override
+	public String cancelar() {
+		return "Отмена";
+	}
+
+	@Override
+	public String seleccionaLanzadorMover() {
+		return "Пожалуйста, выберите лаунчер для перемещения.";
+	}
+
+	@Override
+	public String cambiosGuardadosExitosamente() {
+		return "Изменения успешно сохранены!";
+	}
+
+	@Override
+	public String motivoDesaconsejoPredeterminadoEs(String nombreLanzador) {
+		return "Este lanzador no es recomendado debido a problemas de seguridad y estabilidad conocidos.";
+	}
+
+	@Override
+	public String motivoDesaconsejoPredeterminadoEn(String nombreLanzador) {
+		return "This launcher is not recommended due to known security and stability issues.";
+	}
+
+	@Override
+	public String motivoDesaconsejoPredeterminadoPt(String nombreLanzador) {
+		return "Este lançador não é recomendado devido a problemas conhecidos de segurança e estabilidade.";
+	}
+
+	@Override
+	public String razones() {
+		return "Причины";
+	}
+
+	@Override
+	public String agregarLanzador() {
+		return "Добавить лаунчер";
+	}
+
+	@Override
+	public String quitarLanzador() {
+		return "Удалить лаунчер";
+	}
+
+	@Override
+	public String editarRazones() {
+		return "Редактировать причины";
+	}
+
+	@Override
+	public String seleccionaLanzadorQuitar() {
+		return "Выберите лаунчер для удаления.";
+	}
+
+	@Override
+	public String seleccionaLanzadorEditar() {
+		return "Выберите лаунчер для редактирования.";
+	}
+
+	@Override
+	public String editarRazonesPara(String idLanzador) {
+		return "Редактировать причины для " + idLanzador;
+	}
+
+	@Override
+	public String agregarNuevoIdioma() {
+		return "Добавить новый язык";
+	}
+
+	@Override
+	public String aceptar() {
+		return "Принять";
+	}
+
+	@Override
+	public String seleccionaCodigoIdioma() {
+		return "Выберите язык";
+	}
+
+	@Override
+	public String lanzadoresRecomendadosAviso() {
+		return "Эти лаунчеры рекомендованы CrashDetector как надёжные.";
+	}
+
+	@Override
+	public String colorResultadoCorrecto() {
+		return "Правильный результат";
+	}
+
+	public String modsNoRecomendados() {
+		return "Не рекомендуемые моды";
+	}
+
+	public String agregarMod() {
+		return "Добавить мод";
+	}
+
+	public String quitarMod() {
+		return "Удалить мод";
+	}
+
+	public String modId() {
+		return "ID мода / Имя JBoss Modules";
+	}
+
+	public String rutaMod() {
+		return "Путь / файл мода";
+	}
+
+	public String errorDebeIndicarMod() {
+		return "Необходимо указать хотя бы modid или путь к моду.";
+	}
+
+	public String modsNoRecomendadosAviso() {
+		return "Здесь вы можете зарегистрировать нерекомендуемые моды, чтобы CrashDetector обнаруживал их при установке.";
+	}
+
+	@Override
+	public String anularNormal() {
+		return "Отключить обычный режим";
+	}
+
+	@Override
+	public String anularNormalDescripcion() {
+		return "CrashDetector должен предупреждать, даже если сбой не произошёл.";
+	}
+
+	@Override
+	public String modsRecomendadosAviso() {
+		return "Зарегистрируйте моды, рекомендованные CrashDetector. Если они отсутствуют, CrashDetector может предупредить вас.";
+	}
+
+	@Override
+	public String descripcionDerechosPirateria() {
+		return "" + "Если вы решите включить предупреждение о пиратстве, рекомендуется определить здесь "
+				+ "права лица, запрашивающего поддержку, в качестве превентивной меры.\n\n"
+
+				+ "Вопреки распространённому мнению, многие популярные сообщества и каналы поддержки "
+				+ "НЕ требуют включения антипиратских предупреждений для оказания помощи. Однако "
+				+ "фиксация этих прав может быть полезна, если пользователь всё же обратится в канал поддержки.\n\n"
+
+				+ "Вы можете ориентироваться на официальные документы, такие как «Памятка основных прав задержанного» "
+				+ "в Мексике:\n"
+				+ "https://www.gob.mx/cms/uploads/attachment/file/342687/Cartilla_Derechos_b_sicos_del_detenido.pdf\n\n"
+
+				+ "А также на сопоставимые правовые принципы, применяемые в других странах, включая "
+				+ "США, Российскую Федерацию, Китайскую Народную Республику, Исламскую Республику "
+				+ "Иран и Корейскую Народно-Демократическую Республику.\n\n"
+
+				+ "Примеры прав, которые можно включить:\n"
+				+ "• Право не предоставлять ненужную информацию для поддержки, такую как используемый лаунчер, "
+				+ "имя пользователя или UUID.\n" + "• Право не свидетельствовать против себя.\n"
+				+ "• Право отказаться отвечать на вопросы, не относящиеся к решению проблемы.\n"
+				+ "• Право получать руководство внутри чата.\n"
+				+ "• Право использовать встроенную в CrashDetector функцию анонимизации логов.\n\n"
+
+				+ "Этот текст поддерживает HTML-контент.";
+	}
+
+	@Override
+	public String editar() {
+		return "Редактировать";
+	}
 
 }

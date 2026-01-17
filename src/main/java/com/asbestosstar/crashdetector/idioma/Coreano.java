@@ -5055,296 +5055,564 @@ public class Coreano implements Idioma {
 	public String solucion_eliminar_mod_reciente() {
 		return "如果无法确定具体模组，请移除最近安装的模组，尤其是那些添加方块、物品或工具的模组。";
 	}
+
 	@Override
 	public String error_entrypoint_fabric_html(String modNombre) {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "<b>" + escapeHtml(modNombre) + "</b> 모드를 로드하는 중 오류가 발생했습니다.</b>"
-	            + "<ul>"
-	            + "<li>해당 모드가 구성 요소(예: 설정 메뉴)를 초기화하는 데 실패했습니다.</li>"
-	            + "<li>이는 일반적으로 Minecraft, Fabric 또는 다른 모드와의 버전 불일치로 인해 발생합니다.</li>"
-	            + "</ul>"
-	            + "<p>오류가 지속되면 <b>" + escapeHtml(modNombre) + "</b> 모드를 삭제하거나 업데이트하세요.</p>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "<b>" + escapeHtml(modNombre)
+				+ "</b> 모드를 로드하는 중 오류가 발생했습니다.</b>" + "<ul>" + "<li>해당 모드가 구성 요소(예: 설정 메뉴)를 초기화하는 데 실패했습니다.</li>"
+				+ "<li>이는 일반적으로 Minecraft, Fabric 또는 다른 모드와의 버전 불일치로 인해 발생합니다.</li>" + "</ul>" + "<p>오류가 지속되면 <b>"
+				+ escapeHtml(modNombre) + "</b> 모드를 삭제하거나 업데이트하세요.</p>";
 	}
 
 	@Override
 	public String nombre_error_entrypoint_fabric() {
-	    return "모드 초기화 오류(Fabric Entrypoint)";
+		return "모드 초기화 오류(Fabric Entrypoint)";
 	}
 
 	@Override
 	public String solucion_eliminar_mod(String modNombre) {
-	    return "'mods' 폴더에서 '" + modNombre + "' 모드를 삭제하세요.";
+		return "'mods' 폴더에서 '" + modNombre + "' 모드를 삭제하세요.";
 	}
 
 	@Override
 	public String solucion_actualizar_mod(String modNombre) {
-	    return "'" + modNombre + "' 모드를 현재 설치와 호환되는 버전으로 업데이트하세요.";
+		return "'" + modNombre + "' 모드를 현재 설치와 호환되는 버전으로 업데이트하세요.";
 	}
+
 	@Override
 	public String error_en_garde_html() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "<b>En Garde!</b> 모드와 관련된 오류가 감지되었습니다.</b>"
-	            + "<ul>"
-	            + "<li>이 모드는 근접 전투 메커니즘(패리, 블로킹 등)을 추가합니다.</li>"
-	            + "<li>이 오류는 일반적으로 다른 전투 모드(Epic Fight, DualRiders 등)와의 호환성 문제나 Minecraft에 맞지 않는 버전 사용으로 발생합니다.</li>"
-	            + "</ul>"
-	            + "<p>고급 전투를 사용하지 않는다면 충돌을 방지하기 위해 En Garde!를 제거하는 것을 고려해 보세요.</p>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "<b>En Garde!</b> 모드와 관련된 오류가 감지되었습니다.</b>"
+				+ "<ul>" + "<li>이 모드는 근접 전투 메커니즘(패리, 블로킹 등)을 추가합니다.</li>"
+				+ "<li>이 오류는 일반적으로 다른 전투 모드(Epic Fight, DualRiders 등)와의 호환성 문제나 Minecraft에 맞지 않는 버전 사용으로 발생합니다.</li>"
+				+ "</ul>" + "<p>고급 전투를 사용하지 않는다면 충돌을 방지하기 위해 En Garde!를 제거하는 것을 고려해 보세요.</p>";
 	}
 
 	@Override
 	public String nombre_error_en_garde() {
-	    return "En Garde! 모드 오류";
+		return "En Garde! 모드 오류";
 	}
 
 	@Override
 	public String solucion_actualizar_en_garde() {
-	    return "En Garde!의 버전이 사용 중인 Minecraft 및 로더(Fabric/Forge)와 호환되는지 확인하세요.";
+		return "En Garde!의 버전이 사용 중인 Minecraft 및 로더(Fabric/Forge)와 호환되는지 확인하세요.";
 	}
 
 	@Override
 	public String solucion_eliminar_conflicto_mod_combate() {
-	    return "다른 전투 모드(Epic Fight, Caelus 등)를 사용 중이라면 비활성화하거나 En Garde!를 제거하여 충돌을 방지하세요.";
+		return "다른 전투 모드(Epic Fight, Caelus 등)를 사용 중이라면 비활성화하거나 En Garde!를 제거하여 충돌을 방지하세요.";
 	}
+
 	@Override
 	public String error_idletweaks_html() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "<b>IdleTweaks</b> 모드로 인한 오류가 감지되었습니다.</b>"
-	            + "<ul>"
-	            + "<li>IdleTweaks가 이미 존재하지 않는 네트워크 채널을 해제하려 시도했습니다 (<code>Tried to release unknown channel</code>).</li>"
-	            + "<li>이 오류는 일반적으로 모드의 이전 버전이나 잘못 구성된 서버에서 발생합니다.</li>"
-	            + "</ul>"
-	            + "<p>IdleTweaks는 편의성 모드이지만 불안정을 유발할 수 있습니다. 업데이트하거나 제거하는 것을 고려하세요.</p>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "<b>IdleTweaks</b> 모드로 인한 오류가 감지되었습니다.</b>"
+				+ "<ul>"
+				+ "<li>IdleTweaks가 이미 존재하지 않는 네트워크 채널을 해제하려 시도했습니다 (<code>Tried to release unknown channel</code>).</li>"
+				+ "<li>이 오류는 일반적으로 모드의 이전 버전이나 잘못 구성된 서버에서 발생합니다.</li>" + "</ul>"
+				+ "<p>IdleTweaks는 편의성 모드이지만 불안정을 유발할 수 있습니다. 업데이트하거나 제거하는 것을 고려하세요.</p>";
 	}
 
 	@Override
 	public String nombre_error_idletweaks() {
-	    return "IdleTweaks 오류 (알 수 없는 네트워크 채널)";
+		return "IdleTweaks 오류 (알 수 없는 네트워크 채널)";
 	}
 
 	@Override
 	public String solucion_actualizar_idletweaks() {
-	    return "IdleTweaks를 사용 중인 Minecraft와 호환되는 최신 버전으로 업데이트하세요.";
+		return "IdleTweaks를 사용 중인 Minecraft와 호환되는 최신 버전으로 업데이트하세요.";
 	}
 
 	@Override
 	public String solucion_eliminar_idletweaks() {
-	    return "필요하지 않다면 'mods' 폴더에서 IdleTweaks를 삭제하세요.";
+		return "필요하지 않다면 'mods' 폴더에서 IdleTweaks를 삭제하세요.";
 	}
-	
+
 	@Override
 	public String mensagjePirataMC() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Minecraft에 로그인 시도 중 인증 오류(HTTP 401)가 감지되었습니다.</b>"
-	            + "<p>이 오류는 <b>크래시의 직접적 원인이 드물지만</b>, 인증되지 않은 계정(불법 복제판)을 사용 중임을 나타냅니다.</p>"
-	            + "<p>공식 지원 채널(기업 프로젝트, VTuber, 모드팩 제작자 등)은 복제판을 사용할 경우 <b>도움을 줄 수 없습니다</b>. "
-	            + "이는 채팅 규정, 계약, Mojang/Microsoft와의 협약, 또는 명성 정책상의 제한 때문입니다.</p>"
-	            + "<p>이 확인은 검출기의 <b>기업 설정에서 비활성화할 수 있습니다</b>. "
-	            + "경고: 불법 복제 감지는 <b>완벽하지 않으며</b>, 개발 환경, 불안정한 인터넷, 수정된 런처 사용 시 잘못 작동할 수 있습니다.</p>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Minecraft에 로그인 시도 중 인증 오류(HTTP 401)가 감지되었습니다.</b>"
+				+ "<p>이 오류는 <b>크래시의 직접적 원인이 드물지만</b>, 인증되지 않은 계정(불법 복제판)을 사용 중임을 나타냅니다.</p>"
+				+ "<p>공식 지원 채널(기업 프로젝트, VTuber, 모드팩 제작자 등)은 복제판을 사용할 경우 <b>도움을 줄 수 없습니다</b>. "
+				+ "이는 채팅 규정, 계약, Mojang/Microsoft와의 협약, 또는 명성 정책상의 제한 때문입니다.</p>"
+				+ "<p>이 확인은 검출기의 <b>기업 설정에서 비활성화할 수 있습니다</b>. "
+				+ "경고: 불법 복제 감지는 <b>완벽하지 않으며</b>, 개발 환경, 불안정한 인터넷, 수정된 런처 사용 시 잘못 작동할 수 있습니다.</p>";
 	}
 
 	@Override
 	public String infoDeDerechosMiranda() {
-	    return "<b>그래도 지원에 참여하려 한다면, 다음 권리 안내를 숙지하시기 바랍니다:</b>";
+		return "<b>그래도 지원에 참여하려 한다면, 다음 권리 안내를 숙지하시기 바랍니다:</b>";
 	}
 
 	@Override
 	public String nombrePirataMC() {
-	    return "불법 복제된 Minecraft";
+		return "불법 복제된 Minecraft";
 	}
 
 	@Override
 	public String desactivarVerificacionPirata() {
-	    return "불법 복제 확인 비활성화";
+		return "불법 복제 확인 비활성화";
 	}
 
 	@Override
 	public String comprarMC() {
-	    return "Minecraft 구매";
+		return "Minecraft 구매";
 	}
-	
+
 	// --- LanzerNoAnimado ---
 	@Override
 	public String lanzer_no_animado_titulo(String id) {
-	    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
-	        + "당신은 추천 목록에 없는 런처 <code>" + id + "</code>를 사용하고 있습니다.</b>";
+		return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>" + "당신은 추천 목록에 없는 런처 <code>" + id
+				+ "</code>를 사용하고 있습니다.</b>";
 	}
 
 	@Override
 	public String lanzer_no_animado_problemas_comunes() {
-	    return "<p>작동할 수도 있지만, 비추천 런처는 흔히 다음을 일으킵니다:</p>"
-	        + "<ul>"
-	        + "<li>모드 또는 앱의 손상된 설치.</li>"
-	        + "<li>게임이 시작되지 않거나 명확한 오류 없이 멈춤.</li>"
-	        + "<li>비정상적인 폴더 구조(진단을 어렵게 함).</li>"
-	        + "<li>Java, 메모리 또는 모드에 대한 예측 불가한 동작.</li>"
-	        + "</ul>";
+		return "<p>작동할 수도 있지만, 비추천 런처는 흔히 다음을 일으킵니다:</p>" + "<ul>" + "<li>모드 또는 앱의 손상된 설치.</li>"
+				+ "<li>게임이 시작되지 않거나 명확한 오류 없이 멈춤.</li>" + "<li>비정상적인 폴더 구조(진단을 어렵게 함).</li>"
+				+ "<li>Java, 메모리 또는 모드에 대한 예측 불가한 동작.</li>" + "</ul>";
 	}
 
 	@Override
 	public String lanzer_no_animado_usar_animados() {
-	    return "더 나은 경험을 위해 다음 추천 런처 중 하나를 사용하세요:";
+		return "더 나은 경험을 위해 다음 추천 런처 중 하나를 사용하세요:";
 	}
 
 	@Override
 	public String nombre_lanzer_no_animado() {
-	    return "비추천 런처";
+		return "비추천 런처";
 	}
 
 	@Override
 	public String lanzer_no_animado_cambiar_a_animado() {
-	    return "추천 목록의 런처로 변경하세요.";
+		return "추천 목록의 런처로 변경하세요.";
 	}
 
 	// --- LanzerDesAnimado ---
 	@Override
 	public String lanzer_desanimado_titulo(String id) {
-	    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
-	        + "당신은 <b>사용을 권장하지 않는 런처</b>를 사용 중입니다: <code>" + id + "</code>.</b>";
+		return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+				+ "당신은 <b>사용을 권장하지 않는 런처</b>를 사용 중입니다: <code>" + id + "</code>.</b>";
 	}
 
 	@Override
 	public String lanzer_desanimado_problemas_comunes() {
-	    return "<p>권장하지 않는 런처는 다음을 야기할 수 있습니다:</p>"
-	        + "<ul>"
-	        + "<li>앱 또는 모드의 손상된 설치.</li>"
-	        + "<li>게임이 시작되지 않거나 조용히 실패.</li>"
-	        + "<li>비정상적인 파일 구조(디버그 곤란).</li>"
-	        + "<li>모드, Java, 메모리를 어떻게 관리하는지 불확실.</li>"
-	        + "</ul>";
+		return "<p>권장하지 않는 런처는 다음을 야기할 수 있습니다:</p>" + "<ul>" + "<li>앱 또는 모드의 손상된 설치.</li>"
+				+ "<li>게임이 시작되지 않거나 조용히 실패.</li>" + "<li>비정상적인 파일 구조(디버그 곤란).</li>"
+				+ "<li>모드, Java, 메모리를 어떻게 관리하는지 불확실.</li>" + "</ul>";
 	}
 
 	@Override
 	public String lanzer_desanimado_usar_animados() {
-	    return "다음 런처 중 하나를 사용하는 것을 강력히 권장합니다:";
+		return "다음 런처 중 하나를 사용하는 것을 강력히 권장합니다:";
 	}
 
 	@Override
 	public String nombre_lanzer_desanimado() {
-	    return "권장하지 않는 런처";
+		return "권장하지 않는 런처";
 	}
 
 	@Override
 	public String lanzer_desanimado_cambiar_lanzer() {
-	    return "지원을 받으려면 추천 런처로 변경하세요.";
+		return "지원을 받으려면 추천 런처로 변경하세요.";
 	}
-	
+
 	// --- FaltaModAnimado ---
 	@Override
 	public String falta_mod_animado_titulo() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	        + "이 환경에 권장되는 모드가 누락되었습니다.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "이 환경에 권장되는 모드가 누락되었습니다.</b>";
 	}
+
 	@Override
 	public String nombre_falta_mod_animado() {
-	    return "권장 모드 누락";
+		return "권장 모드 누락";
 	}
+
 	@Override
 	public String falta_mod_animado_instalar() {
-	    return "최적의 경험을 위해 권장 모드를 설치하세요.";
+		return "최적의 경험을 위해 권장 모드를 설치하세요.";
 	}
 
 	// --- TienesModDesAnimado ---
 	@Override
 	public String tienes_mod_desanimado_titulo() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	        + "설치본에서 권장하지 않는 모드가 감지되었습니다.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "설치본에서 권장하지 않는 모드가 감지되었습니다.</b>";
 	}
+
 	@Override
 	public String nombre_tienes_mod_desanimado() {
-	    return "권장하지 않는 모드 감지됨";
+		return "권장하지 않는 모드 감지됨";
 	}
+
 	@Override
 	public String tienes_mod_desanimado_eliminar() {
-	    return "문제를 방지하려면 권장하지 않는 모드를 제거하세요.";
+		return "문제를 방지하려면 권장하지 않는 모드를 제거하세요.";
 	}
-	
+
 	@Override
 	public String antimanipulacion_titulo() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	        + "핵심 파일에 무단 조작이 감지되었습니다. 파일을 직접 수정했거나 신뢰할 수 없는 런처를 사용 중일 수 있습니다.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "핵심 파일에 무단 조작이 감지되었습니다. 파일을 직접 수정했거나 신뢰할 수 없는 런처를 사용 중일 수 있습니다.</b>";
 	}
 
 	@Override
 	public String nombre_antimanipulacion() {
-	    return "조작 감지됨";
+		return "조작 감지됨";
 	}
 
 	@Override
 	public String antimanipulacion_reinstalar() {
-	    return "무결성을 복원하려면 원본 파일을 다시 설치하세요.";
+		return "무결성을 복원하려면 원본 파일을 다시 설치하세요.";
 	}
-	
-	@Override public String configuracionCorporativa() { return "기업 설정"; }
-	@Override public String idiomaRespaldo() { return "백업 언어"; }
-	@Override public String buscardorHabilitado() { return "검색기 활성화"; }
-	@Override public String nombreHerramienta() { return "도구 이름"; }
-	@Override public String condenarPirateria() { return "해적판 비난"; }
-	@Override public String lanzadoresRecomendados() { return "추천 런처"; }
-	@Override public String lanzadoresDesaconsejados() { return "비추천 런처"; }
-	@Override public String modsRecomendados() { return "추천 모드"; }
-	@Override public String modsDesaconsejados() { return "비추천 모드"; }
-	@Override public String antiTamper() { return "무결성 보호"; }
-	@Override public String proximamente() { return "출시 예정"; }
-	@Override public String informacion() { return "정보"; }
-	@Override public String errorCargandoImagen() { return "이미지 불러오기 오류"; }
-	@Override public String configuracionBasica() { return "기본 설정"; }
-	@Override public String funcionalidades() { return "기능"; }
-	@Override public String derechosMiranda() { return "미란다 권리 (매우 권장됨)"; }
-	@Override public String gestionVerificaciones() { return "검증 관리"; }
-	@Override public String idVerificacion() { return "ID"; }
-	@Override public String nombreVerificacion() { return "이름"; }
-	@Override public String codigoVerificacion() { return "코드"; }
-	@Override public String documentacionVerificacion() { return "문서"; }
-	@Override public String verificacionesHabilitadas() { return "활성화된 검증:"; }
-	@Override public String verificacionesDeshabilitadas() { return "비활성화된 검증:"; }
-	@Override public String deshabilitarNoCorporativas() { return "모든 비기업용 검증 비활성화"; }
-	@Override public String verCodigo() { return "코드 보기"; }
-	@Override public String verDocumentacion() { return "문서 보기"; }
-	@Override public String seleccionaVerificacionDeshabilitar() { return "비활성화할 검증을 선택하세요."; }
-	@Override public String seleccionaVerificacionHabilitar() { return "활성화할 검증을 선택하세요."; }
-	@Override public String verificacionesNoCorporativasDeshabilitadas() { return "기업용으로 권장되지 않는 검증 %d개가 비활성화되었습니다."; }
-	@Override public String noVerificacionesNoCorporativas() { return "비활성화할 비기업용 검증이 없습니다."; }
-	@Override public String operacionCompletada() { return "작업 완료"; }
-	@Override public String mensajeAmaneKanata() { return "우리는 Amane Kanata를 그리워합니다"; }
-	@Override public String colorVerificacionCorporativa() { return "기업 검증 색상"; }
-	@Override public String nombreLanzador() { return "런처 이름"; }
-	@Override public String motivo() { return "사유"; }
-	@Override public String lanzadoresNoRecomendados() { return "비추천 런처"; }
-	@Override public String moverADesaconsejados() { return "비추천으로 설정"; }
-	@Override public String moverARecomendados() { return "추천으로 설정"; }
-	@Override public String guardarCambios() { return "변경 사항 저장"; }
-	@Override public String cancelar() { return "취소"; }
-	@Override public String seleccionaLanzadorMover() { return "이동할 런처를 선택하세요."; }
-	@Override public String cambiosGuardadosExitosamente() { return "변경 사항이 성공적으로 저장되었습니다!"; }
-	@Override public String motivoDesaconsejoPredeterminadoEs(String nombreLanzador) { return "Este lanzador no es recomendado debido a problemas de seguridad y estabilidad conocidos."; }
-	@Override public String motivoDesaconsejoPredeterminadoEn(String nombreLanzador) { return "This launcher is not recommended due to known security and stability issues."; }
-	@Override public String motivoDesaconsejoPredeterminadoPt(String nombreLanzador) { return "Este lançador não é recomendado devido a problemas conhecidos de segurança e estabilidade."; }
-	@Override public String razones() { return "사유"; }
-	@Override public String agregarLanzador() { return "런처 추가"; }
-	@Override public String quitarLanzador() { return "런처 제거"; }
-	@Override public String editarRazones() { return "사유 편집"; }
-	@Override public String seleccionaLanzadorQuitar() { return "제거할 런처를 선택하세요."; }
-	@Override public String seleccionaLanzadorEditar() { return "편집할 런처를 선택하세요."; }
-	@Override public String editarRazonesPara(String idLanzador) { return idLanzador + "의 사유 편집"; }
-	@Override public String agregarNuevoIdioma() { return "새 언어 추가"; }
-	@Override public String aceptar() { return "확인"; }
-	@Override public String seleccionaCodigoIdioma() { return "언어 선택"; }
-	@Override public String lanzadoresRecomendadosAviso() { return "이 런처들은 CrashDetector가 좋은 선택으로 제안하는 것들입니다."; }
-	@Override public String colorResultadoCorrecto() { return "정상 결과"; }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public String configuracionCorporativa() {
+		return "기업 설정";
+	}
+
+	@Override
+	public String idiomaRespaldo() {
+		return "백업 언어";
+	}
+
+	@Override
+	public String buscardorHabilitado() {
+		return "검색기 활성화";
+	}
+
+	@Override
+	public String nombreHerramienta() {
+		return "도구 이름";
+	}
+
+	@Override
+	public String condenarPirateria() {
+		return "해적판 비난";
+	}
+
+	@Override
+	public String lanzadoresRecomendados() {
+		return "추천 런처";
+	}
+
+	@Override
+	public String lanzadoresDesaconsejados() {
+		return "비추천 런처";
+	}
+
+	@Override
+	public String modsRecomendados() {
+		return "추천 모드";
+	}
+
+	@Override
+	public String modsDesaconsejados() {
+		return "비추천 모드";
+	}
+
+	@Override
+	public String antiTamper() {
+		return "무결성 보호";
+	}
+
+	@Override
+	public String proximamente() {
+		return "출시 예정";
+	}
+
+	@Override
+	public String informacion() {
+		return "정보";
+	}
+
+	@Override
+	public String errorCargandoImagen() {
+		return "이미지 불러오기 오류";
+	}
+
+	@Override
+	public String configuracionBasica() {
+		return "기본 설정";
+	}
+
+	@Override
+	public String funcionalidades() {
+		return "기능";
+	}
+
+	@Override
+	public String derechosMiranda() {
+		return "미란다 권리 (매우 권장됨)";
+	}
+
+	@Override
+	public String gestionVerificaciones() {
+		return "검증 관리";
+	}
+
+	@Override
+	public String idVerificacion() {
+		return "ID";
+	}
+
+	@Override
+	public String nombreVerificacion() {
+		return "이름";
+	}
+
+	@Override
+	public String codigoVerificacion() {
+		return "코드";
+	}
+
+	@Override
+	public String documentacionVerificacion() {
+		return "문서";
+	}
+
+	@Override
+	public String verificacionesHabilitadas() {
+		return "활성화된 검증:";
+	}
+
+	@Override
+	public String verificacionesDeshabilitadas() {
+		return "비활성화된 검증:";
+	}
+
+	@Override
+	public String deshabilitarNoCorporativas() {
+		return "모든 비기업용 검증 비활성화";
+	}
+
+	@Override
+	public String verCodigo() {
+		return "코드 보기";
+	}
+
+	@Override
+	public String verDocumentacion() {
+		return "문서 보기";
+	}
+
+	@Override
+	public String seleccionaVerificacionDeshabilitar() {
+		return "비활성화할 검증을 선택하세요.";
+	}
+
+	@Override
+	public String seleccionaVerificacionHabilitar() {
+		return "활성화할 검증을 선택하세요.";
+	}
+
+	@Override
+	public String verificacionesNoCorporativasDeshabilitadas() {
+		return "기업용으로 권장되지 않는 검증 %d개가 비활성화되었습니다.";
+	}
+
+	@Override
+	public String noVerificacionesNoCorporativas() {
+		return "비활성화할 비기업용 검증이 없습니다.";
+	}
+
+	@Override
+	public String operacionCompletada() {
+		return "작업 완료";
+	}
+
+	@Override
+	public String mensajeAmaneKanata() {
+		return "우리는 Amane Kanata를 그리워합니다";
+	}
+
+	@Override
+	public String colorVerificacionCorporativa() {
+		return "기업 검증 색상";
+	}
+
+	@Override
+	public String nombreLanzador() {
+		return "런처 이름";
+	}
+
+	@Override
+	public String motivo() {
+		return "사유";
+	}
+
+	@Override
+	public String lanzadoresNoRecomendados() {
+		return "비추천 런처";
+	}
+
+	@Override
+	public String moverADesaconsejados() {
+		return "비추천으로 설정";
+	}
+
+	@Override
+	public String moverARecomendados() {
+		return "추천으로 설정";
+	}
+
+	@Override
+	public String guardarCambios() {
+		return "변경 사항 저장";
+	}
+
+	@Override
+	public String cancelar() {
+		return "취소";
+	}
+
+	@Override
+	public String seleccionaLanzadorMover() {
+		return "이동할 런처를 선택하세요.";
+	}
+
+	@Override
+	public String cambiosGuardadosExitosamente() {
+		return "변경 사항이 성공적으로 저장되었습니다!";
+	}
+
+	@Override
+	public String motivoDesaconsejoPredeterminadoEs(String nombreLanzador) {
+		return "Este lanzador no es recomendado debido a problemas de seguridad y estabilidad conocidos.";
+	}
+
+	@Override
+	public String motivoDesaconsejoPredeterminadoEn(String nombreLanzador) {
+		return "This launcher is not recommended due to known security and stability issues.";
+	}
+
+	@Override
+	public String motivoDesaconsejoPredeterminadoPt(String nombreLanzador) {
+		return "Este lançador não é recomendado devido a problemas conhecidos de segurança e estabilidade.";
+	}
+
+	@Override
+	public String razones() {
+		return "사유";
+	}
+
+	@Override
+	public String agregarLanzador() {
+		return "런처 추가";
+	}
+
+	@Override
+	public String quitarLanzador() {
+		return "런처 제거";
+	}
+
+	@Override
+	public String editarRazones() {
+		return "사유 편집";
+	}
+
+	@Override
+	public String seleccionaLanzadorQuitar() {
+		return "제거할 런처를 선택하세요.";
+	}
+
+	@Override
+	public String seleccionaLanzadorEditar() {
+		return "편집할 런처를 선택하세요.";
+	}
+
+	@Override
+	public String editarRazonesPara(String idLanzador) {
+		return idLanzador + "의 사유 편집";
+	}
+
+	@Override
+	public String agregarNuevoIdioma() {
+		return "새 언어 추가";
+	}
+
+	@Override
+	public String aceptar() {
+		return "확인";
+	}
+
+	@Override
+	public String seleccionaCodigoIdioma() {
+		return "언어 선택";
+	}
+
+	@Override
+	public String lanzadoresRecomendadosAviso() {
+		return "이 런처들은 CrashDetector가 좋은 선택으로 제안하는 것들입니다.";
+	}
+
+	@Override
+	public String colorResultadoCorrecto() {
+		return "정상 결과";
+	}
+
+	public String modsNoRecomendados() {
+		return "비추천 모드";
+	}
+
+	public String agregarMod() {
+		return "모드 추가";
+	}
+
+	public String quitarMod() {
+		return "모드 제거";
+	}
+
+	public String modId() {
+		return "모드 ID / JBoss Modules 이름";
+	}
+
+	public String rutaMod() {
+		return "모드 경로 / 파일";
+	}
+
+	public String errorDebeIndicarMod() {
+		return "최소한 modid 또는 모드 경로를 지정해야 합니다.";
+	}
+
+	public String modsNoRecomendadosAviso() {
+		return "여기에 비추천 모드를 등록하여 설치된 경우 CrashDetector가 감지하도록 할 수 있습니다.";
+	}
+
+	@Override
+	public String anularNormal() {
+		return "일반 모드 해제";
+	}
+
+	@Override
+	public String anularNormalDescripcion() {
+		return "크래시가 발생하지 않더라도 CrashDetector가 경고해야 합니다.";
+	}
+
+	@Override
+	public String modsRecomendadosAviso() {
+		return "CrashDetector가 추천하는 모드를 등록하세요. 누락된 경우 CrashDetector가 경고할 수 있습니다.";
+	}
+
+	@Override
+	public String descripcionDerechosPirateria() {
+		return "" + "반도용 경고를 활성화하기로 결정한 경우, 예방 조치로서 지원을 요청하는 사람의 권리를 여기에 정의하는 것이 좋습니다.\n\n"
+
+				+ "흔한 오해와 달리, 많은 인기 커뮤니티 및 지원 채널은 도움을 제공하기 위해 반도용 경고를 요구하지 않습니다. 그러나 "
+				+ "사용자가 어쨌든 지원 채널에 접근할 경우 이러한 권리를 문서화하는 것이 유용할 수 있습니다.\n\n"
+
+				+ "멕시코의 「구금자 기본권 안내서」와 같은 공식 문서를 참고할 수 있습니다:\n"
+				+ "https://www.gob.mx/cms/uploads/attachment/file/342687/Cartilla_Derechos_b_sicos_del_detenido.pdf\n\n"
+
+				+ "또한 미국, 러시아 연방, 중화인민공화국, 이란 이슬람 공화국, 조선민주주의인민공화국 등 다른 국가에서 사용되는 유사한 법적 원칙도 참고할 수 있습니다.\n\n"
+
+				+ "포함할 수 있는 권리의 예:\n" + "• 지원에 불필요한 정보(예: 사용 중인 런처, 사용자 이름, UUID)를 제공하지 않을 권리.\n"
+				+ "• 자기 자신을 고발하지 않을 권리.\n" + "• 문제 해결에 불필요한 질문에 답하지 않을 권리.\n" + "• 채팅 내에서 안내를 받을 권리.\n"
+				+ "• CrashDetector에 내장된 로그 익명화 기능을 사용할 권리.\n\n"
+
+				+ "이 텍스트는 HTML 콘텐츠를 지원합니다.";
+	}
+
+	@Override
+	public String editar() {
+		return "编辑";
+	}
 
 }

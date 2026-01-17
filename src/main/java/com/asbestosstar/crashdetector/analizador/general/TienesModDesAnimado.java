@@ -23,258 +23,259 @@ import com.asbestosstar.crashdetector.json.Json;
 import com.asbestosstar.crashdetector.json.Json.Nodo;
 
 /**
- * Detecta mods que están en la lista de mods desaconsejados ("desanimados") y que sí están instalados.
- * Usa los 3 métodos disponibles para encontrar mods instalados y elimina duplicados.
+ * Detecta mods que están en la lista de mods desaconsejados ("desanimados") y
+ * que sí están instalados. Usa los 3 métodos disponibles para encontrar mods
+ * instalados y elimina duplicados.
  */
 public class TienesModDesAnimado implements Verificaciones {
 
-    public static final Path ARCHIVO_DESANIMADOS = Statics.carpeta.resolve("mods_desanimados.json");
-    private boolean activado = false;
-    private String mensaje = "";
-    private boolean activarCD = false;
-    boolean completa=true;
+	public static final Path ARCHIVO_DESANIMADOS = Statics.carpeta.resolve("mods_desanimados.json");
+	private boolean activado = false;
+	private String mensaje = "";
+	private boolean activarCD = false;
+	boolean completa = true;
 
-    @Override
-    public void verificar(Consola consola) {
+	@Override
+	public void verificar(Consola consola) {
 
-    	if(completa) {
-    		return;
-    	}
-    	this.completa=true;
-    	
-        if (!ARCHIVO_DESANIMADOS.toFile().exists()) {
-            return;
-        }
+		if (completa) {
+			return;
+		}
+		this.completa = true;
 
-        String contenido;
-        try {
-            contenido = new String(Files.readAllBytes(ARCHIVO_DESANIMADOS), java.nio.charset.StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            return;
-        }
-        if (contenido == null || contenido.trim().isEmpty()) {
-            return;
-        }
+		if (!ARCHIVO_DESANIMADOS.toFile().exists()) {
+			return;
+		}
 
-        Nodo raiz;
-        try {
-            raiz = Json.leer(contenido);
-        } catch (Exception e) {
-            return;
-        }
-        if (!raiz.esArreglo()) {
-            return;
-        }
+		String contenido;
+		try {
+			contenido = new String(Files.readAllBytes(ARCHIVO_DESANIMADOS), java.nio.charset.StandardCharsets.UTF_8);
+		} catch (IOException e) {
+			return;
+		}
+		if (contenido == null || contenido.trim().isEmpty()) {
+			return;
+		}
 
-        // === Recopilar ubicaciones y modids instalados ===
-        Set<String> rutasInstaladas = new HashSet<>();
-        Set<String> modidsInstalados = new HashSet<>();
+		Nodo raiz;
+		try {
+			raiz = Json.leer(contenido);
+		} catch (Exception e) {
+			return;
+		}
+		if (!raiz.esArreglo()) {
+			return;
+		}
 
-        // 1. Desde archivo de mods
-        try {
-            if (MonitorDePID.ultimo_mods != null && Files.exists(MonitorDePID.ultimo_mods)) {
-                Set<String> desdeArchivo = obtenerMods(MonitorDePID.ultimo_mods);
-                rutasInstaladas.addAll(desdeArchivo);
-            }
-        } catch (Exception ignored) {}
+		// === Recopilar ubicaciones y modids instalados ===
+		Set<String> rutasInstaladas = new HashSet<>();
+		Set<String> modidsInstalados = new HashSet<>();
 
-        // 2. Desde escaneo recursivo
-        try {
-            List<ArchivoDeMod> desdeRecursivo = Buscardor.obtenerTodosLosModsYSubmodsRecursivos();
-            if (desdeRecursivo != null) {
-                for (ArchivoDeMod mod : desdeRecursivo) {
-                    if (!mod.nombre().isEmpty()) {
-                        modidsInstalados.addAll(mod.nombre());
-                    }
-                    String ubic = mod.ubicacion_para_publicar();
-                    if (ubic != null && !ubic.isEmpty()) {
-                        String rel = ubic.replace(MonitorDePID.ultimo_mods.toString(), ".");
-                        rutasInstaladas.add(rel);
-                    }
-                }
-            }
-        } catch (Exception ignored) {}
+		// 1. Desde archivo de mods
+		try {
+			if (MonitorDePID.ultimo_mods != null && Files.exists(MonitorDePID.ultimo_mods)) {
+				Set<String> desdeArchivo = obtenerMods(MonitorDePID.ultimo_mods);
+				rutasInstaladas.addAll(desdeArchivo);
+			}
+		} catch (Exception ignored) {
+		}
 
-        // === Buscar coincidencias ===
-        Set<String> ubicacionesCoincidentes = new HashSet<>();
-        int tam = raiz.tamano();
-        for (int i = 0; i < tam; i++) {
-            Nodo item = raiz.en(i);
-            if (item == null || !item.esObjeto()) continue;
+		// 2. Desde escaneo recursivo
+		try {
+			List<ArchivoDeMod> desdeRecursivo = Buscardor.obtenerTodosLosModsYSubmodsRecursivos();
+			if (desdeRecursivo != null) {
+				for (ArchivoDeMod mod : desdeRecursivo) {
+					if (!mod.nombre().isEmpty()) {
+						modidsInstalados.addAll(mod.nombre());
+					}
+					String ubic = mod.ubicacion_para_publicar();
+					if (ubic != null && !ubic.isEmpty()) {
+						String rel = ubic.replace(MonitorDePID.ultimo_mods.toString(), ".");
+						rutasInstaladas.add(rel);
+					}
+				}
+			}
+		} catch (Exception ignored) {
+		}
 
-            String modid = null;
-            String ruta = null;
-            boolean abrirCD = false;
+		// === Buscar coincidencias ===
+		Set<String> ubicacionesCoincidentes = new HashSet<>();
+		int tam = raiz.tamano();
+		for (int i = 0; i < tam; i++) {
+			Nodo item = raiz.en(i);
+			if (item == null || !item.esObjeto())
+				continue;
 
-            Nodo nodoModid = item.obtener("modid");
-            if (nodoModid != null && !nodoModid.esObjeto() && !nodoModid.esArreglo()) {
-                modid = nodoModid.comoCadena();
-            }
+			String modid = null;
+			String ruta = null;
+			boolean abrirCD = false;
 
-            Nodo nodoRuta = item.obtener("ruta");
-            if (nodoRuta != null && !nodoRuta.esObjeto() && !nodoRuta.esArreglo()) {
-                ruta = nodoRuta.comoCadena();
-            }
+			Nodo nodoModid = item.obtener("modid");
+			if (nodoModid != null && !nodoModid.esObjeto() && !nodoModid.esArreglo()) {
+				modid = nodoModid.comoCadena();
+			}
 
-            if (modid == null && ruta == null) {
-                continue;
-            }
+			Nodo nodoRuta = item.obtener("ruta");
+			if (nodoRuta != null && !nodoRuta.esObjeto() && !nodoRuta.esArreglo()) {
+				ruta = nodoRuta.comoCadena();
+			}
 
-            Nodo nodoAbrir = item.obtener("abrir_cd_si_coincide");
-            if (nodoAbrir != null) {
-                try {
-                    abrirCD = nodoAbrir.comoBooleano();
-                } catch (Exception ignored) {
-                    abrirCD = false;
-                }
-            }
+			if (modid == null && ruta == null) {
+				continue;
+			}
 
-            boolean encontrado = false;
+			Nodo nodoAbrir = item.obtener("abrir_cd_si_coincide");
+			if (nodoAbrir != null) {
+				try {
+					abrirCD = nodoAbrir.comoBooleano();
+				} catch (Exception ignored) {
+					abrirCD = false;
+				}
+			}
 
-            // Coincidir por modid (si está presente)
-            if (modid != null && !modid.trim().isEmpty()) {
-                try {
-                    List<String> rutasPorModid = Buscardor.obtenerModsConNombre(modid);
-                    if (rutasPorModid != null) {
-                        for (String rutaAbs : rutasPorModid) {
-                            String rel = rutaAbs.replace(MonitorDePID.ultimo_mods.toString(), ".");
-                            if (rutasInstaladas.contains(rel)) {
-                                ubicacionesCoincidentes.add(rel);
-                                encontrado = true;
-                            }
-                        }
-                    }
-                } catch (Exception ignored) {}
-            }
+			boolean encontrado = false;
 
-            // Coincidir por ruta (si está presente)
-            if (!encontrado && ruta != null && !ruta.trim().isEmpty()) {
-                for (String ubic : rutasInstaladas) {
-                    if (ubic.contains(ruta)) {
-                        ubicacionesCoincidentes.add(ubic);
-                        encontrado = true;
-                        break;
-                    }
-                }
-            }
+			// Coincidir por modid (si está presente)
+			if (modid != null && !modid.trim().isEmpty()) {
+				try {
+					List<String> rutasPorModid = Buscardor.obtenerModsConNombre(modid);
+					if (rutasPorModid != null) {
+						for (String rutaAbs : rutasPorModid) {
+							String rel = rutaAbs.replace(MonitorDePID.ultimo_mods.toString(), ".");
+							if (rutasInstaladas.contains(rel)) {
+								ubicacionesCoincidentes.add(rel);
+								encontrado = true;
+							}
+						}
+					}
+				} catch (Exception ignored) {
+				}
+			}
 
-            if (encontrado && abrirCD) {
-                this.activarCD = true;
-            }
-        }
+			// Coincidir por ruta (si está presente)
+			if (!encontrado && ruta != null && !ruta.trim().isEmpty()) {
+				for (String ubic : rutasInstaladas) {
+					if (ubic.contains(ruta)) {
+						ubicacionesCoincidentes.add(ubic);
+						encontrado = true;
+						break;
+					}
+				}
+			}
 
-        if (!ubicacionesCoincidentes.isEmpty()) {
-            StringBuilder sb = new StringBuilder();
-            sb.append(MonitorDePID.idioma.tienes_mod_desanimado_titulo());
-            sb.append("<ul>");
-            for (String ubic : ubicacionesCoincidentes) {
-                sb.append("<li><code>").append(ubic).append("</code></li>");
-            }
-            sb.append("</ul>");
+			if (encontrado && abrirCD) {
+				this.activarCD = true;
+			}
+		}
 
-            // Agregar razones si existen
-            for (int i = 0; i < tam; i++) {
-                Nodo item = raiz.en(i);
-                if (item == null || !item.esObjeto()) continue;
+		if (!ubicacionesCoincidentes.isEmpty()) {
+			StringBuilder sb = new StringBuilder();
+			sb.append(MonitorDePID.idioma.tienes_mod_desanimado_titulo());
+			sb.append("<ul>");
+			for (String ubic : ubicacionesCoincidentes) {
+				sb.append("<li><code>").append(ubic).append("</code></li>");
+			}
+			sb.append("</ul>");
 
-                Nodo nodoRazon = item.obtener("razon");
-                if (nodoRazon != null && nodoRazon.esObjeto()) {
-                    String langActual = MonitorDePID.idioma.codigo();
-                    String langRespaldo = Idioma.idioma_respaldo.obtener();
-                    String[] orden = { langActual, langRespaldo, "es" };
-                    for (String lang : orden) {
-                        if (lang != null && !lang.isEmpty()) {
-                            Nodo nodoTxt = nodoRazon.obtener(lang);
-                            if (nodoTxt != null && !nodoTxt.esObjeto() && !nodoTxt.esArreglo()) {
-                                String txt = nodoTxt.comoCadena();
-                                if (txt != null && !txt.trim().isEmpty()) {
-                                    sb.append("<p>").append(txt).append("</p>");
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+			// Agregar razones si existen
+			for (int i = 0; i < tam; i++) {
+				Nodo item = raiz.en(i);
+				if (item == null || !item.esObjeto())
+					continue;
 
-            this.mensaje = sb.toString();
-            this.activado = true;
-        }
-    }
+				Nodo nodoRazon = item.obtener("razon");
+				if (nodoRazon != null && nodoRazon.esObjeto()) {
+					String langActual = MonitorDePID.idioma.codigo();
+					String langRespaldo = Idioma.idioma_respaldo.obtener();
+					String[] orden = { langActual, langRespaldo, "es" };
+					for (String lang : orden) {
+						if (lang != null && !lang.isEmpty()) {
+							Nodo nodoTxt = nodoRazon.obtener(lang);
+							if (nodoTxt != null && !nodoTxt.esObjeto() && !nodoTxt.esArreglo()) {
+								String txt = nodoTxt.comoCadena();
+								if (txt != null && !txt.trim().isEmpty()) {
+									sb.append("<p>").append(txt).append("</p>");
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
 
-    private static Set<String> obtenerMods(Path archivo) throws IOException {
-        return Files.readAllLines(archivo).stream()
-            .filter(line -> !line.trim().isEmpty())
-            .map(line -> line.replace(MonitorDePID.ultimo_mods.toString(), "."))
-            .collect(Collectors.toSet());
-    }
+			this.mensaje = sb.toString();
+			this.activado = true;
+		}
+	}
 
-    @Override
-    public Verificaciones nueva() {
-        return new TienesModDesAnimado();
-    }
+	private static Set<String> obtenerMods(Path archivo) throws IOException {
+		return Files.readAllLines(archivo).stream().filter(line -> !line.trim().isEmpty())
+				.map(line -> line.replace(MonitorDePID.ultimo_mods.toString(), ".")).collect(Collectors.toSet());
+	}
 
-    @Override
-    public boolean activado() {
-        return activado;
-    }
+	@Override
+	public Verificaciones nueva() {
+		return new TienesModDesAnimado();
+	}
 
-    @Override
-    public float prioridad() {
-        return 1250.0f;
-    }
+	@Override
+	public boolean activado() {
+		return activado;
+	}
 
-    @Override
-    public String mensaje() {
-        return mensaje;
-    }
+	@Override
+	public float prioridad() {
+		return 1250.0f;
+	}
 
-    @Override
-    public String nombre() {
-        return MonitorDePID.idioma.nombre_tienes_mod_desanimado();
-    }
+	@Override
+	public String mensaje() {
+		return mensaje;
+	}
 
-    @Override
-    public QuickFix solucion() {
-        Builder builder = new Builder(nombre());
-        builder.agregarEtiqueta(MonitorDePID.idioma.tienes_mod_desanimado_eliminar());
-        return builder.construir();
-    }
+	@Override
+	public String nombre() {
+		return MonitorDePID.idioma.nombre_tienes_mod_desanimado();
+	}
 
-    @Override
-    public boolean ocupaTrazo(TraceInfo trazo) {
-        return false;
-    }
+	@Override
+	public QuickFix solucion() {
+		Builder builder = new Builder(nombre());
+		builder.agregarEtiqueta(MonitorDePID.idioma.tienes_mod_desanimado_eliminar());
+		return builder.construir();
+	}
 
-    @Override
-    public String id() {
-        return "tienes_mod_desanimado";
-    }
+	@Override
+	public boolean ocupaTrazo(TraceInfo trazo) {
+		return false;
+	}
 
-    @Override
-    public boolean anularNormal() {
-        return activarCD;
-    }
+	@Override
+	public String id() {
+		return "tienes_mod_desanimado";
+	}
+
+	@Override
+	public boolean anularNormal() {
+		return activarCD;
+	}
+
 	@Override
 	public Documento docs() {
 		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
+
 	@Override
 	public String enlaceACodigo() {
 		// TODO Auto-generated method stub
-		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/general/"+this.getClass().getSimpleName()+".java";
+		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/general/"
+				+ this.getClass().getSimpleName() + ".java";
 	}
+
 	@Override
 	public boolean recomendadoParaCorperata() {
 		return true;
 	}
-	
-	
-	
-	
-	
-    
-    
-    
+
 }

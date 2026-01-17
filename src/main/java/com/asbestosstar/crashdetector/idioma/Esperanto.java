@@ -5222,296 +5222,583 @@ public class Esperanto implements Idioma {
 	public String solucion_eliminar_mod_reciente() {
 		return "Se vi ne povas identigi la modon, forigu ĵusajn modojn, precipe tiujn, kiuj aldonas blokojn, objektojn aŭ ilojn.";
 	}
+
 	@Override
 	public String error_entrypoint_fabric_html(String modNombre) {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Eraro dum ŝargado de la mod <b>" + escapeHtml(modNombre) + "</b>.</b>"
-	            + "<ul>"
-	            + "<li>La mod malsukcesis je la iniciatigo de unu el ĝiaj komponantoj (ekz. agordmenuo).</li>"
-	            + "<li>Tio kutime okazas pro nekongrueco kun la versio de Minecraft, Fabric aŭ aliaj modoj.</li>"
-	            + "</ul>"
-	            + "<p>Se la eraro persistas, forigu aŭ ĝisdatigu la mod <b>" + escapeHtml(modNombre) + "</b>.</p>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "Eraro dum ŝargado de la mod <b>"
+				+ escapeHtml(modNombre) + "</b>.</b>" + "<ul>"
+				+ "<li>La mod malsukcesis je la iniciatigo de unu el ĝiaj komponantoj (ekz. agordmenuo).</li>"
+				+ "<li>Tio kutime okazas pro nekongrueco kun la versio de Minecraft, Fabric aŭ aliaj modoj.</li>"
+				+ "</ul>" + "<p>Se la eraro persistas, forigu aŭ ĝisdatigu la mod <b>" + escapeHtml(modNombre)
+				+ "</b>.</p>";
 	}
 
 	@Override
 	public String nombre_error_entrypoint_fabric() {
-	    return "Eraro de iniciatigo de mod (Fabric Entrypoint)";
+		return "Eraro de iniciatigo de mod (Fabric Entrypoint)";
 	}
 
 	@Override
 	public String solucion_eliminar_mod(String modNombre) {
-	    return "Forigu la modon '" + modNombre + "' el la dosierujo 'mods'.";
+		return "Forigu la modon '" + modNombre + "' el la dosierujo 'mods'.";
 	}
 
 	@Override
 	public String solucion_actualizar_mod(String modNombre) {
-	    return "Ĝisdatigu la modon '" + modNombre + "' al versio kongrua kun via instalaĵo.";
+		return "Ĝisdatigu la modon '" + modNombre + "' al versio kongrua kun via instalaĵo.";
 	}
+
 	@Override
 	public String error_en_garde_html() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Eraro rilata al la mod <b>En Garde!</b> estis trovita.</b>"
-	            + "<ul>"
-	            + "<li>Ĉi tiu mod aldonas proksimumkomatajn mekanikojn (parado, blokado, ktp.).</li>"
-	            + "<li>La eraro kutime okazas pro nekongrueco kun aliaj kombataj modoj (kiel Epic Fight, DualRiders, ktp.) aŭ pro uzo de malĝusta versio por via Minecraft.</li>"
-	            + "</ul>"
-	            + "<p>Se vi ne uzas altnivelan kombaton, konsideru forigi En Garde! por eviti konfliktojn.</p>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Eraro rilata al la mod <b>En Garde!</b> estis trovita.</b>" + "<ul>"
+				+ "<li>Ĉi tiu mod aldonas proksimumkomatajn mekanikojn (parado, blokado, ktp.).</li>"
+				+ "<li>La eraro kutime okazas pro nekongrueco kun aliaj kombataj modoj (kiel Epic Fight, DualRiders, ktp.) aŭ pro uzo de malĝusta versio por via Minecraft.</li>"
+				+ "</ul>"
+				+ "<p>Se vi ne uzas altnivelan kombaton, konsideru forigi En Garde! por eviti konfliktojn.</p>";
 	}
 
 	@Override
 	public String nombre_error_en_garde() {
-	    return "Eraro en la mod En Garde!";
+		return "Eraro en la mod En Garde!";
 	}
 
 	@Override
 	public String solucion_actualizar_en_garde() {
-	    return "Certigu, ke vi uzas la version de En Garde! kongruan kun via Minecraft-versio kaj ŝargilo (Fabric/Forge).";
+		return "Certigu, ke vi uzas la version de En Garde! kongruan kun via Minecraft-versio kaj ŝargilo (Fabric/Forge).";
 	}
 
 	@Override
 	public String solucion_eliminar_conflicto_mod_combate() {
-	    return "Se vi uzas aliajn kombatajn modojn (Epic Fight, Caelus, ktp.), malaktivigu ilin aŭ forigu En Garde! por eviti konfliktojn.";
+		return "Se vi uzas aliajn kombatajn modojn (Epic Fight, Caelus, ktp.), malaktivigu ilin aŭ forigu En Garde! por eviti konfliktojn.";
 	}
-	
+
 	@Override
 	public String error_idletweaks_html() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Eraro kaŭzita de la mod <b>IdleTweaks</b> estis trovita.</b>"
-	            + "<ul>"
-	            + "<li>IdleTweaks provis liberigi neekzistantan retkanalon (<code>Tried to release unknown channel</code>).</li>"
-	            + "<li>Ĉi tiu eraro kutime okazas en malnovaj versioj de la mod aŭ kiam ĝi estas uzata sur misagorditaj serviloj.</li>"
-	            + "</ul>"
-	            + "<p>IdleTweaks estas mod por plibonigi vivkvaliton, sed ĝi povas kaŭzi malstabilecon. Konsideru ĝisdatigi aŭ forigi ĝin.</p>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Eraro kaŭzita de la mod <b>IdleTweaks</b> estis trovita.</b>" + "<ul>"
+				+ "<li>IdleTweaks provis liberigi neekzistantan retkanalon (<code>Tried to release unknown channel</code>).</li>"
+				+ "<li>Ĉi tiu eraro kutime okazas en malnovaj versioj de la mod aŭ kiam ĝi estas uzata sur misagorditaj serviloj.</li>"
+				+ "</ul>"
+				+ "<p>IdleTweaks estas mod por plibonigi vivkvaliton, sed ĝi povas kaŭzi malstabilecon. Konsideru ĝisdatigi aŭ forigi ĝin.</p>";
 	}
 
 	@Override
 	public String nombre_error_idletweaks() {
-	    return "Eraro en IdleTweaks (nekonata retkanalo)";
+		return "Eraro en IdleTweaks (nekonata retkanalo)";
 	}
 
 	@Override
 	public String solucion_actualizar_idletweaks() {
-	    return "Ĝisdatigu IdleTweaks al la plej nova versio kongrua kun via Minecraft.";
+		return "Ĝisdatigu IdleTweaks al la plej nova versio kongrua kun via Minecraft.";
 	}
 
 	@Override
 	public String solucion_eliminar_idletweaks() {
-	    return "Forigu IdleTweaks el la dosierujo 'mods' se vi ne bezonas ĝin.";
+		return "Forigu IdleTweaks el la dosierujo 'mods' se vi ne bezonas ĝin.";
 	}
-	
+
 	@Override
 	public String mensagjePirataMC() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Aŭtentiga eraro (HTTP 401) estis trovita dum provo ensaluti en Minecraft.</b>"
-	            + "<p>Ĉi tiu eraro <b>malofte estas la rekta kialo de kraŝo</b>, sed ĝi indikas, ke vi uzas nevalidigitan konton (pirata kopio).</p>"
-	            + "<p>Oficialaj subtenkanaloj (korporaciaj projektoj, VTubers, kreadintoj de modpakaĵoj, ktp.) <b>ne povas helpi vin</b> se vi uzas piratan kopion, "
-	            + "pro limigoj en iliaj babilejaj reguloj, kontraktoj, interkonsentoj kun Mojang/Microsoft, aŭ reputaciaj politikoj.</p>"
-	            + "<p>Ĉi tiu kontrolo povas esti <b>malŝaltita en la korporaciaj agordoj</b> de la detektilo. "
-	            + "Averto: la kontraŭpirata detekto <b>ne estas perfekta</b> kaj povas aktiviĝi en programaj medioj, kun malstabila interreto, aŭ kun modifitaj lanĉiloj.</p>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Aŭtentiga eraro (HTTP 401) estis trovita dum provo ensaluti en Minecraft.</b>"
+				+ "<p>Ĉi tiu eraro <b>malofte estas la rekta kialo de kraŝo</b>, sed ĝi indikas, ke vi uzas nevalidigitan konton (pirata kopio).</p>"
+				+ "<p>Oficialaj subtenkanaloj (korporaciaj projektoj, VTubers, kreadintoj de modpakaĵoj, ktp.) <b>ne povas helpi vin</b> se vi uzas piratan kopion, "
+				+ "pro limigoj en iliaj babilejaj reguloj, kontraktoj, interkonsentoj kun Mojang/Microsoft, aŭ reputaciaj politikoj.</p>"
+				+ "<p>Ĉi tiu kontrolo povas esti <b>malŝaltita en la korporaciaj agordoj</b> de la detektilo. "
+				+ "Averto: la kontraŭpirata detekto <b>ne estas perfekta</b> kaj povas aktiviĝi en programaj medioj, kun malstabila interreto, aŭ kun modifitaj lanĉiloj.</p>";
 	}
 
 	@Override
 	public String infoDeDerechosMiranda() {
-	    return "<b>Miranda-j rajtoj se vi tamen provas aliĝi al la subteno:</b>";
+		return "<b>Miranda-j rajtoj se vi tamen provas aliĝi al la subteno:</b>";
 	}
 
 	@Override
 	public String nombrePirataMC() {
-	    return "Pirata Minecraft";
+		return "Pirata Minecraft";
 	}
 
 	@Override
 	public String desactivarVerificacionPirata() {
-	    return "Malŝalti kontraŭpiratan kontrolon";
+		return "Malŝalti kontraŭpiratan kontrolon";
 	}
 
 	@Override
 	public String comprarMC() {
-	    return "Aĉeti Minecraft";
+		return "Aĉeti Minecraft";
 	}
-	
+
 	// --- LanzerNoAnimado ---
 	@Override
 	public String lanzer_no_animado_titulo(String id) {
-	    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
-	        + "Vi uzas la lanĉilon <code>" + id + "</code>, kiu <b>ne estas en la listo de rekomenditaj lanĉiloj</b>.</b>";
+		return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>" + "Vi uzas la lanĉilon <code>" + id
+				+ "</code>, kiu <b>ne estas en la listo de rekomenditaj lanĉiloj</b>.</b>";
 	}
 
 	@Override
 	public String lanzer_no_animado_problemas_comunes() {
-	    return "<p>Ĉiuj povas funkcii, sed nerekomenditaj lanĉiloj kutime kaŭzas:</p>"
-	        + "<ul>"
-	        + "<li>Difektitan instalaĵon de modoj aŭ la Aplikaĵo.</li>"
-	        + "<li>Ludo ne lanĉiĝas aŭ haltas sen klara eraro.</li>"
-	        + "<li>Nenormalan dosierujan strukturon (malfacilas diagnozon).</li>"
-	        + "<li>Neprevideblan konduton kun Java, memoro aŭ modoj.</li>"
-	        + "</ul>";
+		return "<p>Ĉiuj povas funkcii, sed nerekomenditaj lanĉiloj kutime kaŭzas:</p>" + "<ul>"
+				+ "<li>Difektitan instalaĵon de modoj aŭ la Aplikaĵo.</li>"
+				+ "<li>Ludo ne lanĉiĝas aŭ haltas sen klara eraro.</li>"
+				+ "<li>Nenormalan dosierujan strukturon (malfacilas diagnozon).</li>"
+				+ "<li>Neprevideblan konduton kun Java, memoro aŭ modoj.</li>" + "</ul>";
 	}
 
 	@Override
 	public String lanzer_no_animado_usar_animados() {
-	    return "Por pli bona sperto, uzu unu el la sekvaj rekomenditaj lanĉiloj:";
+		return "Por pli bona sperto, uzu unu el la sekvaj rekomenditaj lanĉiloj:";
 	}
 
 	@Override
 	public String nombre_lanzer_no_animado() {
-	    return "Nerekomendita lanĉilo";
+		return "Nerekomendita lanĉilo";
 	}
 
 	@Override
 	public String lanzer_no_animado_cambiar_a_animado() {
-	    return "Ŝanĝu al lanĉilo el la rekomendita listo.";
+		return "Ŝanĝu al lanĉilo el la rekomendita listo.";
 	}
 
 	// --- LanzerDesAnimado ---
 	@Override
 	public String lanzer_desanimado_titulo(String id) {
-	    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
-	        + "Vi uzas <b>malrekomenditan lanĉilon</b>: <code>" + id + "</code>.</b>";
+		return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+				+ "Vi uzas <b>malrekomenditan lanĉilon</b>: <code>" + id + "</code>.</b>";
 	}
 
 	@Override
 	public String lanzer_desanimado_problemas_comunes() {
-	    return "<p>Malrekomenditaj lanĉiloj povas kaŭzi:</p>"
-	        + "<ul>"
-	        + "<li>Difektitan instalaĵon de la Aplikaĵo aŭ modoj.</li>"
-	        + "<li>Ludo ne lanĉiĝas aŭ fiaskas sen bruo.</li>"
-	        + "<li>Nenormalan aranĝon de dosieroj (malfacilas depuradon).</li>"
-	        + "<li>Necerton pri kiel ĝi administras modojn, Java-n aŭ memoron.</li>"
-	        + "</ul>";
+		return "<p>Malrekomenditaj lanĉiloj povas kaŭzi:</p>" + "<ul>"
+				+ "<li>Difektitan instalaĵon de la Aplikaĵo aŭ modoj.</li>"
+				+ "<li>Ludo ne lanĉiĝas aŭ fiaskas sen bruo.</li>"
+				+ "<li>Nenormalan aranĝon de dosieroj (malfacilas depuradon).</li>"
+				+ "<li>Necerton pri kiel ĝi administras modojn, Java-n aŭ memoron.</li>" + "</ul>";
 	}
 
 	@Override
 	public String lanzer_desanimado_usar_animados() {
-	    return "Tre rekomendiĝas uzi unu el la jenaj lanĉiloj:";
+		return "Tre rekomendiĝas uzi unu el la jenaj lanĉiloj:";
 	}
 
 	@Override
 	public String nombre_lanzer_desanimado() {
-	    return "Malrekomendita lanĉilo";
+		return "Malrekomendita lanĉilo";
 	}
 
 	@Override
 	public String lanzer_desanimado_cambiar_lanzer() {
-	    return "Ŝanĝu al rekomendita lanĉilo por ricevi subtenon.";
+		return "Ŝanĝu al rekomendita lanĉilo por ricevi subtenon.";
 	}
-	
+
 	// --- FaltaModAnimado ---
 	@Override
 	public String falta_mod_animado_titulo() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	        + "Mankas rekomenditaj modoj por ĉi tiu medio.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Mankas rekomenditaj modoj por ĉi tiu medio.</b>";
 	}
+
 	@Override
 	public String nombre_falta_mod_animado() {
-	    return "Mankantaj rekomenditaj modoj";
+		return "Mankantaj rekomenditaj modoj";
 	}
+
 	@Override
 	public String falta_mod_animado_instalar() {
-	    return "Instalu la rekomenditajn modojn por optimuma sperto.";
+		return "Instalu la rekomenditajn modojn por optimuma sperto.";
 	}
 
 	// --- TienesModDesAnimado ---
 	@Override
 	public String tienes_mod_desanimado_titulo() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	        + "Detektita nerekomenditaj modoj en via instalaĵo.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Detektita nerekomenditaj modoj en via instalaĵo.</b>";
 	}
+
 	@Override
 	public String nombre_tienes_mod_desanimado() {
-	    return "Detektitaj nerekomenditaj modoj";
+		return "Detektitaj nerekomenditaj modoj";
 	}
+
 	@Override
 	public String tienes_mod_desanimado_eliminar() {
-	    return "Forigu la nerekomenditajn modojn por eviti problemojn.";
+		return "Forigu la nerekomenditajn modojn por eviti problemojn.";
 	}
-	
+
 	@Override
 	public String antimanipulacion_titulo() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	        + "Maldolĉa manipulado estis trovita en kritikaj dosieroj. Vi aŭ modifis la dosierojn aŭ uzas malfidindan lanĉilon.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Maldolĉa manipulado estis trovita en kritikaj dosieroj. Vi aŭ modifis la dosierojn aŭ uzas malfidindan lanĉilon.</b>";
 	}
 
 	@Override
 	public String nombre_antimanipulacion() {
-	    return "Manipulado detektita";
+		return "Manipulado detektita";
 	}
 
 	@Override
 	public String antimanipulacion_reinstalar() {
-	    return "Reinstalu la originalajn dosierojn por restaŭri la integrecon.";
+		return "Reinstalu la originalajn dosierojn por restaŭri la integrecon.";
 	}
-	
-	@Override public String configuracionCorporativa() { return "Korporaciaj Agordoj"; }
-	@Override public String idiomaRespaldo() { return "Rezerva Lingvo"; }
-	@Override public String buscardorHabilitado() { return "Ŝalti Serĉilon"; }
-	@Override public String nombreHerramienta() { return "Nomo de la Ilo"; }
-	@Override public String condenarPirateria() { return "Kondamni Piratadon"; }
-	@Override public String lanzadoresRecomendados() { return "Rekomenditaj Lanĉiloj"; }
-	@Override public String lanzadoresDesaconsejados() { return "Nerekomenditaj Lanĉiloj"; }
-	@Override public String modsRecomendados() { return "Rekomenditaj Modoj"; }
-	@Override public String modsDesaconsejados() { return "Nerekomenditaj Modoj"; }
-	@Override public String antiTamper() { return "KontraŭManiplado"; }
-	@Override public String proximamente() { return "Baldaŭ"; }
-	@Override public String informacion() { return "Informo"; }
-	@Override public String errorCargandoImagen() { return "Eraro dum ŝargado de bildo"; }
-	@Override public String configuracionBasica() { return "Bazaj Agordoj"; }
-	@Override public String funcionalidades() { return "Funkcioj"; }
-	@Override public String derechosMiranda() { return "Miranda-j Rajtoj (TRE rekomenditaj)"; }
-	@Override public String gestionVerificaciones() { return "Administri Kontrolojn"; }
-	@Override public String idVerificacion() { return "ID"; }
-	@Override public String nombreVerificacion() { return "Nomo"; }
-	@Override public String codigoVerificacion() { return "Kodo"; }
-	@Override public String documentacionVerificacion() { return "Dokumentaro"; }
-	@Override public String verificacionesHabilitadas() { return "Ebligitaj Kontroloj:"; }
-	@Override public String verificacionesDeshabilitadas() { return "Malebligitaj Kontroloj:"; }
-	@Override public String deshabilitarNoCorporativas() { return "Malebligi ĉiujn ne-korporaciajn"; }
-	@Override public String verCodigo() { return "Vidi Kodon"; }
-	@Override public String verDocumentacion() { return "Vidi Dokumentaron"; }
-	@Override public String seleccionaVerificacionDeshabilitar() { return "Elektu kontrolo por malebligi."; }
-	@Override public String seleccionaVerificacionHabilitar() { return "Elektu kontrolo por ebligi."; }
-	@Override public String verificacionesNoCorporativasDeshabilitadas() { return "Malebligitaj %d kontroloj ne rekomenditaj por korporacia uzo."; }
-	@Override public String noVerificacionesNoCorporativas() { return "Neniu ne-korporacia kontrolo por malebligi."; }
-	@Override public String operacionCompletada() { return "Operacio finita"; }
-	@Override public String mensajeAmaneKanata() { return "Ni sopiras vin, Amane Kanata"; }
-	@Override public String colorVerificacionCorporativa() { return "Koloro de Korporacia Kontrolo"; }
-	@Override public String nombreLanzador() { return "Nomo de la Lanĉilo"; }
-	@Override public String motivo() { return "Kialo"; }
-	@Override public String lanzadoresNoRecomendados() { return "Nerekomenditaj Lanĉiloj"; }
-	@Override public String moverADesaconsejados() { return "Malebligi Rekomendon"; }
-	@Override public String moverARecomendados() { return "Ebligi Rekomendon"; }
-	@Override public String guardarCambios() { return "Konservi Ŝanĝojn"; }
-	@Override public String cancelar() { return "Nuligi"; }
-	@Override public String seleccionaLanzadorMover() { return "Bonvolu elekti lanĉilon por movi."; }
-	@Override public String cambiosGuardadosExitosamente() { return "Ŝanĝoj estis sukcese konservitaj!"; }
-	@Override public String motivoDesaconsejoPredeterminadoEs(String nombreLanzador) { return "Este lanzador no es recomendado debido a problemas de seguridad y estabilidad conocidos."; }
-	@Override public String motivoDesaconsejoPredeterminadoEn(String nombreLanzador) { return "This launcher is not recommended due to known security and stability issues."; }
-	@Override public String motivoDesaconsejoPredeterminadoPt(String nombreLanzador) { return "Este lançador não é recomendado devido a problemas conhecidos de segurança e estabilidade."; }
-	
-	@Override public String razones() { return "Kialoj"; }
-	@Override public String agregarLanzador() { return "Aldoni lanĉilon"; }
-	@Override public String quitarLanzador() { return "Forigi lanĉilon"; }
-	@Override public String editarRazones() { return "Redakti kialojn"; }
-	@Override public String seleccionaLanzadorQuitar() { return "Elektu lanĉilon por forigi."; }
-	@Override public String seleccionaLanzadorEditar() { return "Elektu lanĉilon por redakti."; }
-	@Override public String editarRazonesPara(String idLanzador) { return "Redakti kialojn por " + idLanzador; }
-	@Override public String agregarNuevoIdioma() { return "Aldoni novan lingvon"; }
-	@Override public String aceptar() { return "Akcepti"; }
-	@Override public String seleccionaCodigoIdioma() { return "Elektu la lingvon"; }
-	@Override public String lanzadoresRecomendadosAviso() { return "Ĉi tiuj lanĉiloj estas tiuj, kiujn CrashDetector sugestas kiel bonaj."; }
-	@Override public String colorResultadoCorrecto() { return "Ĝusta rezulto"; }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public String configuracionCorporativa() {
+		return "Korporaciaj Agordoj";
+	}
+
+	@Override
+	public String idiomaRespaldo() {
+		return "Rezerva Lingvo";
+	}
+
+	@Override
+	public String buscardorHabilitado() {
+		return "Ŝalti Serĉilon";
+	}
+
+	@Override
+	public String nombreHerramienta() {
+		return "Nomo de la Ilo";
+	}
+
+	@Override
+	public String condenarPirateria() {
+		return "Kondamni Piratadon";
+	}
+
+	@Override
+	public String lanzadoresRecomendados() {
+		return "Rekomenditaj Lanĉiloj";
+	}
+
+	@Override
+	public String lanzadoresDesaconsejados() {
+		return "Nerekomenditaj Lanĉiloj";
+	}
+
+	@Override
+	public String modsRecomendados() {
+		return "Rekomenditaj Modoj";
+	}
+
+	@Override
+	public String modsDesaconsejados() {
+		return "Nerekomenditaj Modoj";
+	}
+
+	@Override
+	public String antiTamper() {
+		return "KontraŭManiplado";
+	}
+
+	@Override
+	public String proximamente() {
+		return "Baldaŭ";
+	}
+
+	@Override
+	public String informacion() {
+		return "Informo";
+	}
+
+	@Override
+	public String errorCargandoImagen() {
+		return "Eraro dum ŝargado de bildo";
+	}
+
+	@Override
+	public String configuracionBasica() {
+		return "Bazaj Agordoj";
+	}
+
+	@Override
+	public String funcionalidades() {
+		return "Funkcioj";
+	}
+
+	@Override
+	public String derechosMiranda() {
+		return "Miranda-j Rajtoj (TRE rekomenditaj)";
+	}
+
+	@Override
+	public String gestionVerificaciones() {
+		return "Administri Kontrolojn";
+	}
+
+	@Override
+	public String idVerificacion() {
+		return "ID";
+	}
+
+	@Override
+	public String nombreVerificacion() {
+		return "Nomo";
+	}
+
+	@Override
+	public String codigoVerificacion() {
+		return "Kodo";
+	}
+
+	@Override
+	public String documentacionVerificacion() {
+		return "Dokumentaro";
+	}
+
+	@Override
+	public String verificacionesHabilitadas() {
+		return "Ebligitaj Kontroloj:";
+	}
+
+	@Override
+	public String verificacionesDeshabilitadas() {
+		return "Malebligitaj Kontroloj:";
+	}
+
+	@Override
+	public String deshabilitarNoCorporativas() {
+		return "Malebligi ĉiujn ne-korporaciajn";
+	}
+
+	@Override
+	public String verCodigo() {
+		return "Vidi Kodon";
+	}
+
+	@Override
+	public String verDocumentacion() {
+		return "Vidi Dokumentaron";
+	}
+
+	@Override
+	public String seleccionaVerificacionDeshabilitar() {
+		return "Elektu kontrolo por malebligi.";
+	}
+
+	@Override
+	public String seleccionaVerificacionHabilitar() {
+		return "Elektu kontrolo por ebligi.";
+	}
+
+	@Override
+	public String verificacionesNoCorporativasDeshabilitadas() {
+		return "Malebligitaj %d kontroloj ne rekomenditaj por korporacia uzo.";
+	}
+
+	@Override
+	public String noVerificacionesNoCorporativas() {
+		return "Neniu ne-korporacia kontrolo por malebligi.";
+	}
+
+	@Override
+	public String operacionCompletada() {
+		return "Operacio finita";
+	}
+
+	@Override
+	public String mensajeAmaneKanata() {
+		return "Ni sopiras vin, Amane Kanata";
+	}
+
+	@Override
+	public String colorVerificacionCorporativa() {
+		return "Koloro de Korporacia Kontrolo";
+	}
+
+	@Override
+	public String nombreLanzador() {
+		return "Nomo de la Lanĉilo";
+	}
+
+	@Override
+	public String motivo() {
+		return "Kialo";
+	}
+
+	@Override
+	public String lanzadoresNoRecomendados() {
+		return "Nerekomenditaj Lanĉiloj";
+	}
+
+	@Override
+	public String moverADesaconsejados() {
+		return "Malebligi Rekomendon";
+	}
+
+	@Override
+	public String moverARecomendados() {
+		return "Ebligi Rekomendon";
+	}
+
+	@Override
+	public String guardarCambios() {
+		return "Konservi Ŝanĝojn";
+	}
+
+	@Override
+	public String cancelar() {
+		return "Nuligi";
+	}
+
+	@Override
+	public String seleccionaLanzadorMover() {
+		return "Bonvolu elekti lanĉilon por movi.";
+	}
+
+	@Override
+	public String cambiosGuardadosExitosamente() {
+		return "Ŝanĝoj estis sukcese konservitaj!";
+	}
+
+	@Override
+	public String motivoDesaconsejoPredeterminadoEs(String nombreLanzador) {
+		return "Este lanzador no es recomendado debido a problemas de seguridad y estabilidad conocidos.";
+	}
+
+	@Override
+	public String motivoDesaconsejoPredeterminadoEn(String nombreLanzador) {
+		return "This launcher is not recommended due to known security and stability issues.";
+	}
+
+	@Override
+	public String motivoDesaconsejoPredeterminadoPt(String nombreLanzador) {
+		return "Este lançador não é recomendado devido a problemas conhecidos de segurança e estabilidade.";
+	}
+
+	@Override
+	public String razones() {
+		return "Kialoj";
+	}
+
+	@Override
+	public String agregarLanzador() {
+		return "Aldoni lanĉilon";
+	}
+
+	@Override
+	public String quitarLanzador() {
+		return "Forigi lanĉilon";
+	}
+
+	@Override
+	public String editarRazones() {
+		return "Redakti kialojn";
+	}
+
+	@Override
+	public String seleccionaLanzadorQuitar() {
+		return "Elektu lanĉilon por forigi.";
+	}
+
+	@Override
+	public String seleccionaLanzadorEditar() {
+		return "Elektu lanĉilon por redakti.";
+	}
+
+	@Override
+	public String editarRazonesPara(String idLanzador) {
+		return "Redakti kialojn por " + idLanzador;
+	}
+
+	@Override
+	public String agregarNuevoIdioma() {
+		return "Aldoni novan lingvon";
+	}
+
+	@Override
+	public String aceptar() {
+		return "Akcepti";
+	}
+
+	@Override
+	public String seleccionaCodigoIdioma() {
+		return "Elektu la lingvon";
+	}
+
+	@Override
+	public String lanzadoresRecomendadosAviso() {
+		return "Ĉi tiuj lanĉiloj estas tiuj, kiujn CrashDetector sugestas kiel bonaj.";
+	}
+
+	@Override
+	public String colorResultadoCorrecto() {
+		return "Ĝusta rezulto";
+	}
+
+	public String modsNoRecomendados() {
+		return "Nerekomenditaj modoj";
+	}
+
+	public String agregarMod() {
+		return "Aldoni modon";
+	}
+
+	public String quitarMod() {
+		return "Forigi modon";
+	}
+
+	public String modId() {
+		return "Mod-ID / Nomo de JBoss Modules";
+	}
+
+	public String rutaMod() {
+		return "Vojo / dosiero de la modo";
+	}
+
+	public String errorDebeIndicarMod() {
+		return "Vi devas indiki almenaŭ la modid aŭ la vojon de la modo.";
+	}
+
+	public String modsNoRecomendadosAviso() {
+		return "Ĉi tie vi povas registri nerekomenditajn modojn por ke CrashDetector detektu ilin, se ili estas instalitaj.";
+	}
+
+	@Override
+	public String anularNormal() {
+		return "Malebligi Normalan";
+	}
+
+	@Override
+	public String anularNormalDescripcion() {
+		return "CrashDetector devus averti eĉ se ne okazas kraŝo.";
+	}
+
+	@Override
+	public String modsRecomendadosAviso() {
+		return "Registru la modojn, kiujn CrashDetector rekomendas. Se ili mankas, CrashDetector povas averti.";
+	}
+
+	@Override
+	public String descripcionDerechosPirateria() {
+		return "" + "Se vi decidis ebligi la kontraŭpirata averto, rekomendiĝas difini ĉi tie "
+				+ "la rajtojn de la persono petanta subtenon, kiel preventa mezuro.\n\n"
+
+				+ "Kontraŭe al komuna kredo, multaj popularaj komunumoj kaj subtenkanaloj "
+				+ "NE postulas ebligi kontraŭpiratajn avertojn por doni helpon. Tamen, "
+				+ "dokumenti tiujn rajtojn povas esti utila se iu tamen aliĝas al la subtenkanalo.\n\n"
+
+				+ "Vi povas bazi vin sur oficialaj dokumentoj kiel la Folieto de Bazaj Rajtoj de Arestito "
+				+ "en Meksiko:\n"
+				+ "https://www.gob.mx/cms/uploads/attachment/file/342687/Cartilla_Derechos_b_sicos_del_detenido.pdf\n\n"
+
+				+ "Same kiel sur kompareblaj juraj principoj uzataj en aliaj landoj, inkluzive "
+				+ "Usono, Rusia Federacio, Popola Respubliko Ĉinio, Islama Respubliko "
+				+ "Iran kaj Demokratia Popola Respubliko Koreio.\n\n"
+
+				+ "Kelkaj ekzemploj de rajtoj kiujn oni povas inkluzivi estas:\n"
+				+ "• La rajto ne liveri nenecesajn informojn por subteno, kiel la uzata lanĉilo, "
+				+ "uzantnomo aŭ UUID.\n" + "• La rajto ne memakuzi sin.\n"
+				+ "• La rajto rifuzi respondi demandojn ne necesajn por solvi la problemon.\n"
+				+ "• La rajto ricevi gvidadon en la babilejo.\n"
+				+ "• La rajto uzi la integritan anonimigilon de protokoloj (logs) en CrashDetector.\n\n"
+
+				+ "Ĉi tiu teksto akceptas HTML-enhavon.";
+	}
+
+	@Override
+	public String editar() {
+		return "Redakti";
+	}
 
 }

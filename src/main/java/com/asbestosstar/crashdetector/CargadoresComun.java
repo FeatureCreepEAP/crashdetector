@@ -36,7 +36,7 @@ public class CargadoresComun {
 			if (!origin.equals(CDOrigin.FEATURECREEP)) {
 				Statics.carpetas_de_mods.addAll(CrashDetectorFCMC.obtenerPathsDeMods());
 			}
-			//ParcheSoyPirata.SOY_PIRATA.delete();//Eliminar cuando reiniciar.
+			// ParcheSoyPirata.SOY_PIRATA.delete();//Eliminar cuando reiniciar.
 			MonitorDePID.main(new String[] {});
 
 		}

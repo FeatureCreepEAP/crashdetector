@@ -33,9 +33,8 @@ import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
 
 /**
- * GUI para "lanzadores buenos" (alentados).
- * - JSON: arreglo de strings (IDs).
- * - En el combo, los IDs que CrashDetector considera "buenos" aparecen en verde.
+ * GUI para "lanzadores buenos" (alentados). - JSON: arreglo de strings (IDs). -
+ * En el combo, los IDs que CrashDetector considera "buenos" aparecen en verde.
  * - Paleta por defecto inspirada en la imagen MaidMint.
  */
 public class LanzerBuenoGUIMaidMint extends LanzerBuenoGUI {
@@ -58,12 +57,12 @@ public class LanzerBuenoGUIMaidMint extends LanzerBuenoGUI {
 	private JComboBox<String> comboLanzadores;
 
 	// Colores (defaults similares a MaidMint)
-	private ConfigColor colorFondoVentana;          // menta muy clara
-	private ConfigColor colorTexto;                // gris oscuro
-	private ConfigColor colorBoton;                // menta/teal
-	private ConfigColor colorTabla;                // casi blanco cálido
-	private ConfigColor colorResaltoRecomendado;   // verde (recomendado por CD)
-	private ConfigColor colorBordePanel;           // gris/teal suave
+	private ConfigColor colorFondoVentana; // menta muy clara
+	private ConfigColor colorTexto; // gris oscuro
+	private ConfigColor colorBoton; // menta/teal
+	private ConfigColor colorTabla; // casi blanco cálido
+	private ConfigColor colorResaltoRecomendado; // verde (recomendado por CD)
+	private ConfigColor colorBordePanel; // gris/teal suave
 
 	@Override
 	public void init() {
@@ -86,9 +85,7 @@ public class LanzerBuenoGUIMaidMint extends LanzerBuenoGUI {
 		cargarDatos();
 
 		// Modelo/tabla
-		modeloRecomendados = new DefaultTableModel(new Object[] {
-				MonitorDePID.idioma.nombreLanzador()
-		}, 0);
+		modeloRecomendados = new DefaultTableModel(new Object[] { MonitorDePID.idioma.nombreLanzador() }, 0);
 
 		tablaRecomendados = new JTable(modeloRecomendados);
 		configurarTabla(tablaRecomendados);
@@ -199,8 +196,7 @@ public class LanzerBuenoGUIMaidMint extends LanzerBuenoGUI {
 	 */
 	private JLabel crearEtiquetaAvisoBajoImagen() {
 		JLabel lbl = new JLabel("<html><div style='width:200px; text-align:center;'>"
-				+ MonitorDePID.idioma.lanzadoresRecomendadosAviso()
-				+ "</div></html>");
+				+ MonitorDePID.idioma.lanzadoresRecomendadosAviso() + "</div></html>");
 		lbl.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		lbl.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl.setForeground(colorTexto.obtener());
@@ -299,18 +295,48 @@ public class LanzerBuenoGUIMaidMint extends LanzerBuenoGUI {
 	}
 
 	/**
-	 * Combo: muestra solo lanzadores que NO estén ya en recomendados.
+	 * Carga los lanzadores disponibles en el combo. - Los lanzadores que
+	 * CrashDetector considera "buenos" aparecen PRIMERO (verdes). - Los lanzadores
+	 * ya presentes en "recomendados" NO se muestran.
 	 */
 	private void cargarComboLanzadores() {
 		comboLanzadores.removeAllItems();
 
+		// Listas separadas para controlar el orden
+		List<String> recomendadosPorCD = new ArrayList<>();
+		List<String> normales = new ArrayList<>();
+
+		// Obtener todos los lanzadores conocidos
 		List<String> todos = obtenerNombresLanzadores();
 		for (String id : todos) {
-			if (id != null && !recomendados.contains(id)) {
-				comboLanzadores.addItem(id);
+
+			if (id == null)
+				continue;
+
+			// Si ya está en el conjunto de recomendados, no aparece en el combo
+			if (recomendados.contains(id)) {
+				continue;
+			}
+
+			// Clasificar según CrashDetector
+			if (esRecomendadoPorCrashDetector(id)) {
+				recomendadosPorCD.add(id);
+			} else {
+				normales.add(id);
 			}
 		}
 
+		// Añadir primero los recomendados por CrashDetector (verdes)
+		for (String id : recomendadosPorCD) {
+			comboLanzadores.addItem(id);
+		}
+
+		// Añadir después los normales
+		for (String id : normales) {
+			comboLanzadores.addItem(id);
+		}
+
+		// Habilitar / deshabilitar botón agregar
 		if (botonAgregar != null) {
 			botonAgregar.setEnabled(comboLanzadores.getItemCount() > 0);
 		}
@@ -346,19 +372,15 @@ public class LanzerBuenoGUIMaidMint extends LanzerBuenoGUI {
 				cargarComboLanzadores();
 				cargarDatosEnTabla();
 			} else {
-				JOptionPane.showMessageDialog(this,
-						MonitorDePID.idioma.seleccionaLanzadorQuitar(),
-						MonitorDePID.idioma.informacion(),
-						JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this, MonitorDePID.idioma.seleccionaLanzadorQuitar(),
+						MonitorDePID.idioma.informacion(), JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 
 		botonGuardar.addActionListener(e -> {
 			guardarDatos();
-			JOptionPane.showMessageDialog(this,
-					MonitorDePID.idioma.cambiosGuardadosExitosamente(),
-					MonitorDePID.idioma.informacion(),
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.cambiosGuardadosExitosamente(),
+					MonitorDePID.idioma.informacion(), JOptionPane.INFORMATION_MESSAGE);
 		});
 
 		botonCancelar.addActionListener(e -> dispose());

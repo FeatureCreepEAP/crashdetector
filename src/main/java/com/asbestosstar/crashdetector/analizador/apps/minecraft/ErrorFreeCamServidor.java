@@ -114,19 +114,18 @@ public class ErrorFreeCamServidor implements Verificaciones {
 				&& t.contains("net.xolt.freecam.Freecam") && t.contains(
 						"Attempted to load class net/minecraft/client/player/LocalPlayer for invalid dist DEDICATED_SERVER");
 	}
+
 	@Override
 	public Documento docs() {
 		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
+
 	@Override
 	public String enlaceACodigo() {
 		// TODO Auto-generated method stub
-		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"+this.getClass().getSimpleName()+".java";
+		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
+				+ this.getClass().getSimpleName() + ".java";
 	}
-	
-	
-	
-	
-	
+
 }

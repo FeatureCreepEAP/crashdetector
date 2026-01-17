@@ -261,11 +261,6 @@ public class Analizador {
 		verificaciones.add(new TienesModDesAnimado());
 		verificaciones.add(new AntiManipulacion());
 
-		
-		
-		
-		
-		
 		verificaciones.addAll(CargadorDeCodice.cargarVerificaciones());
 
 		CrashDetectorLogger.log("Número de códices " + String.valueOf(CargadorDeCodice.cargarVerificaciones().size()));
@@ -487,9 +482,9 @@ public class Analizador {
 
 		for (Verificaciones ver : organizar(union)) {
 			if (ver.activado()) {
-				
-			if(ver.solucion()!=null && !ver.solucion().equals(QuickFix.NINGUN)) {
-				soluciones.add(ver.solucion());
+
+				if (ver.solucion() != null && !ver.solucion().equals(QuickFix.NINGUN)) {
+					soluciones.add(ver.solucion());
 				}
 			}
 		}

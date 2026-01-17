@@ -99,8 +99,8 @@ public interface Verificaciones {
 	 * ModPacks.La mayoría no lo son, pero algunos ejemplos incluyen problemas
 	 * relacionados con los controladores, errores de la máquina virtual de Java
 	 * (JVM), instalaciones de la JVM y problemas con instalaciones de aplicaciones
-	 * o modificaciones corruptas,mudos corruptas, o problemas específicos de determinados
-	 * ordenadores.
+	 * o modificaciones corruptas,mudos corruptas, o problemas específicos de
+	 * determinados ordenadores.
 	 * 
 	 * @return
 	 */

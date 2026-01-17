@@ -169,19 +169,18 @@ public class ErrorMetodoAbstractoNoImplementado implements Verificaciones {
 	public String nombre() {
 		return MonitorDePID.idioma.nombreErrorMetodoAbstractoNoImplementado();
 	}
+
 	@Override
 	public Documento docs() {
 		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
+
 	@Override
 	public String enlaceACodigo() {
 		// TODO Auto-generated method stub
-		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/general/"+this.getClass().getSimpleName()+".java";
+		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/general/"
+				+ this.getClass().getSimpleName() + ".java";
 	}
-	
-	
-	
-	
-	
+
 }

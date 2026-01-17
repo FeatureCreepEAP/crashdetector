@@ -43,6 +43,7 @@ public abstract class LanzerBuenoGUI extends JDialog implements CrashDetectorGUI
 
 	/**
 	 * NOSOTROS dice es bueno.
+	 * 
 	 * @return true si CrashDetector alienta este lanzador
 	 */
 	public static boolean nosotrosDiceEsBueno(DetectorLanzer lanzer) {
@@ -67,7 +68,8 @@ public abstract class LanzerBuenoGUI extends JDialog implements CrashDetectorGUI
 	 * Lee el archivo JSON (arreglo de strings) y llena el conjunto.
 	 */
 	private void cargarRecomendadosDesdeArchivo() {
-		if (archivoRecomendados == null || !archivoRecomendados.toFile().exists() || archivoRecomendados.toFile().length() <= 0) {
+		if (archivoRecomendados == null || !archivoRecomendados.toFile().exists()
+				|| archivoRecomendados.toFile().length() <= 0) {
 			return;
 		}
 
@@ -136,7 +138,8 @@ public abstract class LanzerBuenoGUI extends JDialog implements CrashDetectorGUI
 	 * Agrega un ID al conjunto de recomendados.
 	 */
 	public void agregarARecomendados(String id) {
-		if (id == null) return;
+		if (id == null)
+			return;
 		String limpio = id.trim();
 		if (!limpio.isEmpty()) {
 			recomendados.add(limpio);
@@ -147,7 +150,8 @@ public abstract class LanzerBuenoGUI extends JDialog implements CrashDetectorGUI
 	 * Quita un ID del conjunto de recomendados.
 	 */
 	public void quitarDeRecomendados(String id) {
-		if (id == null) return;
+		if (id == null)
+			return;
 		recomendados.remove(id.trim());
 	}
 
@@ -156,7 +160,8 @@ public abstract class LanzerBuenoGUI extends JDialog implements CrashDetectorGUI
 	 * usando LanzerBuenoGUI.nosotrosDiceEsBueno(lanzer).
 	 */
 	public boolean esRecomendadoPorCrashDetector(String id) {
-		if (id == null) return false;
+		if (id == null)
+			return false;
 		for (DetectorLanzer lanzador : lanzadores) {
 			if (lanzador != null && id.equals(lanzador.id())) {
 				return nosotrosDiceEsBueno(lanzador);

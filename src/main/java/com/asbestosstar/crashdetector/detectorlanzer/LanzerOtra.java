@@ -4,8 +4,8 @@ import com.asbestosstar.crashdetector.App;
 
 public class LanzerOtra implements DetectorLanzer {
 
-	public static String ID="otra";
-	
+	public static String ID = "otra";
+
 	@Override
 	public String id() {
 		// TODO Auto-generated method stub

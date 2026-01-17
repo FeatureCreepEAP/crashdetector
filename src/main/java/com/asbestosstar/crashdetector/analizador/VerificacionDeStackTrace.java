@@ -81,7 +81,8 @@ public class VerificacionDeStackTrace {
 			"it.unimi", "com.mojang.", "cpw.", "featurecreep.", "jdk.", "sun.", "com.sun.", "org.lwjgl.", "org.apache.",
 			"io.netty", "org.prismlauncher", "io.github.zekerzhayard", "org.multimc", "org.polymc", "org.tlauncher",
 			"net.fabricmc", "org.objectweb.asm", "datafixerupper", "org.slf4j", "com.asbestosstar", "srg",
-			"asbestosstar.", "org.openjdk", "com.google", "cpw.mods.modlauncher.", "com.modrinth.theseus.","net.neoforged."
+			"asbestosstar.", "org.openjdk", "com.google", "cpw.mods.modlauncher.", "com.modrinth.theseus.",
+			"net.neoforged."
 
 	};
 
@@ -866,8 +867,8 @@ public class VerificacionDeStackTrace {
 		}
 
 		String[] ids = { "java", "minecraft", "minecraftforge", "net.minecraftforge", "eventbus", "cpw", "coremods",
-				"featurecreep", "mixin", "accesstransformer", "forge", "neoforge","authlib", "sun", "jdk", "java", "fmlloader",
-				"fmlcore", "org.spongepowered.mixin", "fmlearlydisplay", "com.sun.jna", "text2speech",
+				"featurecreep", "mixin", "accesstransformer", "forge", "neoforge", "authlib", "sun", "jdk", "java",
+				"fmlloader", "fmlcore", "org.spongepowered.mixin", "fmlearlydisplay", "com.sun.jna", "text2speech",
 				"xf:crashdetector:default", "crashdetector", "srg", "org.objectweb.asm", "it.unimi", "datafixerupper",
 				"com.google.gson", "org.openjdk", "launchwrapper" };
 
@@ -1057,7 +1058,7 @@ public class VerificacionDeStackTrace {
 		if (jarName.startsWith("neoforge-")) {
 			return true;
 		}
-		
+
 		if (jarName.startsWith("bootstrap-")) {
 			return true;
 		}

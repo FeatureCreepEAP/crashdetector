@@ -25,10 +25,9 @@ public class QuickFix {
 	public final String etiqueta;
 	public boolean tieneCheckbox = false;
 	public java.util.List<ComponenteGUI> componentes = new java.util.ArrayList<>();
-	public static QuickFix NINGUN = new QuickFix.Builder("NINGUN").agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible())
-			.construir();
-	
-	
+	public static QuickFix NINGUN = new QuickFix.Builder("NINGUN")
+			.agregarEtiqueta(MonitorDePID.idioma.noHaySolucionDisponible()).construir();
+
 	private QuickFix(Builder builder) {
 		this.etiqueta = builder.etiqueta;
 		this.tieneCheckbox = builder.tieneCheckbox;

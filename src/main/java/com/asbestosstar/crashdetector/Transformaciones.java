@@ -23,9 +23,8 @@ public class Transformaciones implements ClassFileTransformer {
 			Parche.parches.add(new TransformacionDeMinecraftCodigo0());// TODO detecion para app/juego
 			Parche.parches.add(new ParcheWaterMediaTL());
 			Parche.parches.add(new PreferIPv4StackParch());
-			//Parche.parches.add(new ParcheSoyPirata());
+			// Parche.parches.add(new ParcheSoyPirata());
 
-			
 		}
 	}
 

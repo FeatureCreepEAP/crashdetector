@@ -109,15 +109,11 @@ public class lithostictchctov implements Verificaciones {
 		return MonitorDePID.idioma.nombre_de_faltar_de_liyhostictchctov();
 	}
 
-	
-	
 	@Override
 	public QuickFix solucion() {
-		return QuickFix.NINGUN;//TODO
+		return QuickFix.NINGUN;// TODO
 	}
-	
-	
-	
+
 	@Override
 	public String id() {
 		// TODO Auto-generated method stub
@@ -155,17 +151,12 @@ public class lithostictchctov implements Verificaciones {
 		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
+
 	@Override
 	public String enlaceACodigo() {
 		// TODO Auto-generated method stub
-		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"+this.getClass().getSimpleName()+".java";
+		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
+				+ this.getClass().getSimpleName() + ".java";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

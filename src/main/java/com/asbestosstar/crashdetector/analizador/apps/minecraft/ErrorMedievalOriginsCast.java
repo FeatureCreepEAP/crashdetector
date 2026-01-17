@@ -116,19 +116,18 @@ public class ErrorMedievalOriginsCast implements Verificaciones {
 				&& t.contains("io.github.apace100.apoli.access.EntityLinkedItemStack")
 				&& t.toLowerCase().contains("medievalorigins");
 	}
+
 	@Override
 	public Documento docs() {
 		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
+
 	@Override
 	public String enlaceACodigo() {
 		// TODO Auto-generated method stub
-		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"+this.getClass().getSimpleName()+".java";
+		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
+				+ this.getClass().getSimpleName() + ".java";
 	}
-	
-	
-	
-	
-	
+
 }

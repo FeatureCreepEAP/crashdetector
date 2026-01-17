@@ -109,19 +109,18 @@ public class ErrorCompatibilidadIrisDH implements Verificaciones {
 				&& (t.contains("Iris requires DH") || t.contains("DH API version"))
 				&& (t.contains("or newer") || t.contains("[2.0.4]") || t.contains("[1.1.0]"));
 	}
-	
+
 	@Override
 	public Documento docs() {
 		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
+
 	@Override
 	public String enlaceACodigo() {
 		// TODO Auto-generated method stub
-		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"+this.getClass().getSimpleName()+".java";
+		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
+				+ this.getClass().getSimpleName() + ".java";
 	}
-	
-	
-	
-	
+
 }

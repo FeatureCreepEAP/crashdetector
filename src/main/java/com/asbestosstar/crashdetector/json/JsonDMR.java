@@ -7,8 +7,7 @@ import org.jboss.dmr.ModelNode;
 import org.jboss.dmr.ModelType;
 
 /**
- * Motor basado en JBoss DMR.
- * Estilo de ModelNode con nombres en español.
+ * Motor basado en JBoss DMR. Estilo de ModelNode con nombres en español.
  */
 public class JsonDMR implements Json.Motor {
 

@@ -5,9 +5,9 @@ import java.nio.charset.StandardCharsets;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 
 /**
- * Punto de entrada para leer y escribir datos tipo JSON.
- * Detecta Gson o JBoss DMR por clases disponibles.
- * Expone una API estilo ModelNode con nombres en español.
+ * Punto de entrada para leer y escribir datos tipo JSON. Detecta Gson o JBoss
+ * DMR por clases disponibles. Expone una API estilo ModelNode con nombres en
+ * español.
  */
 public class Json {
 
@@ -59,14 +59,14 @@ public class Json {
 	}
 
 	/**
-	 * Nodo inspirado en ModelNode con nombres en español.
-	 * Puede representar objeto, arreglo o valor.
+	 * Nodo inspirado en ModelNode con nombres en español. Puede representar objeto,
+	 * arreglo o valor.
 	 */
 	public static class Nodo {
 		/**
-		 * Referencia interna del motor (Gson / DMR).
-		 * Nota: se mantiene publico por compatibilidad, pero se recomienda NO usarlo
-		 * directamente fuera de este paquete. Use los metodos de Nodo/Motor.
+		 * Referencia interna del motor (Gson / DMR). Nota: se mantiene publico por
+		 * compatibilidad, pero se recomienda NO usarlo directamente fuera de este
+		 * paquete. Use los metodos de Nodo/Motor.
 		 */
 		public Object interno;
 
@@ -113,8 +113,8 @@ public class Json {
 		}
 
 		/**
-		 * Elimina una propiedad del objeto.
-		 * Si el nodo no es objeto, lanza IllegalStateException.
+		 * Elimina una propiedad del objeto. Si el nodo no es objeto, lanza
+		 * IllegalStateException.
 		 */
 		public boolean eliminar(String nombre) {
 			return motorRef.eliminar(this, nombre);
@@ -226,16 +226,16 @@ public class Json {
 		boolean esArreglo(Nodo nodo);
 
 		/**
-		 * Devuelve claves de un objeto JSON.
-		 * Para nodos que no son objeto, debe devolver lista vacia.
+		 * Devuelve claves de un objeto JSON. Para nodos que no son objeto, debe
+		 * devolver lista vacia.
 		 */
 		java.util.List<String> claves(Nodo objeto);
 
 		Nodo obtener(Nodo actual, String nombre);
 
 		/**
-		 * Elimina una propiedad de un objeto JSON.
-		 * Devuelve true si existia y fue eliminada, false si no existia.
+		 * Elimina una propiedad de un objeto JSON. Devuelve true si existia y fue
+		 * eliminada, false si no existia.
 		 */
 		boolean eliminar(Nodo actual, String nombre);
 

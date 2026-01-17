@@ -3,12 +3,23 @@ package com.asbestosstar.crashdetector.detectorlanzer;
 import com.asbestosstar.crashdetector.App;
 
 public class DetectorGDL implements DetectorLanzer {
-    @Override public String id() { return "gdlauncher"; }
-    @Override public boolean animado() { return false; }
-    @Override public boolean desanimado() { return false; }
+	@Override
+	public String id() {
+		return "gdlauncher";
+	}
 
-    @Override
-    public boolean detectar(App app, String cmd) {
-        return app.equals(App.MINECRAFT) && cmd.contains("-Dminecraft.launcher.brand=GDLauncher");
-    }
+	@Override
+	public boolean animado() {
+		return false;
+	}
+
+	@Override
+	public boolean desanimado() {
+		return false;
+	}
+
+	@Override
+	public boolean detectar(App app, String cmd) {
+		return app.equals(App.MINECRAFT) && cmd.contains("-Dminecraft.launcher.brand=GDLauncher");
+	}
 }

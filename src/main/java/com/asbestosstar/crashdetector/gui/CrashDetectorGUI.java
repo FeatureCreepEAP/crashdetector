@@ -149,24 +149,28 @@ public interface CrashDetectorGUI {
 
 	public default void enlanceEvento(HyperlinkEvent e) {
 		if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-			try {
-				String url = e.getDescription();
-				if (url != null && url.startsWith("lectador://")) {
-					CrashDetectorLogger.log(url + " (lectador url)");
-					LectadorDeConsolasGUI lectador = TipoGUI.LECTADOR_DE_CONSOLAS.obtenerGUIPredeterminado(
-							LectadorDeConsolasHoloTalk.ID, () -> new LectadorDeConsolasHoloTalk());
-					lectador.procesarHipervinculo(url);
-				} else if (url.startsWith("cfr://")) {
-					CrashDetectorLogger.log(url + " (cfr url)");
-					CfrBase gui = TipoGUI.CFR.obtenerGUIPredeterminado(CfrSakuraRiddle.ID, CfrSakuraRiddle::new);
-					gui.procesarHipervinculo(url);
-				} else if (url != null) {
-					Desktop.getDesktop().browse(new java.net.URI(url));
-				}
-			} catch (Exception ex) {
-				CrashDetectorLogger.logException(ex);
-			}
+			abrirURL(e.getDescription());
 		}
+	}
+
+	public default void abrirURL(String url) {
+		try {
+			if (url != null && url.startsWith("lectador://")) {
+				CrashDetectorLogger.log(url + " (lectador url)");
+				LectadorDeConsolasGUI lectador = TipoGUI.LECTADOR_DE_CONSOLAS.obtenerGUIPredeterminado(
+						LectadorDeConsolasHoloTalk.ID, () -> new LectadorDeConsolasHoloTalk());
+				lectador.procesarHipervinculo(url);
+			} else if (url.startsWith("cfr://")) {
+				CrashDetectorLogger.log(url + " (cfr url)");
+				CfrBase gui = TipoGUI.CFR.obtenerGUIPredeterminado(CfrSakuraRiddle.ID, CfrSakuraRiddle::new);
+				gui.procesarHipervinculo(url);
+			} else if (url != null) {
+				Desktop.getDesktop().browse(new java.net.URI(url));
+			}
+		} catch (Exception ex) {
+			CrashDetectorLogger.logException(ex);
+		}
+
 	}
 
 	/**

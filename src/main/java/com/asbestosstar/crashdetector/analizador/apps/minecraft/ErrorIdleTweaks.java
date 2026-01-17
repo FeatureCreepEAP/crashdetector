@@ -9,7 +9,8 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 /**
- * Detecta errores de IdleTweaks: "Tried to release unknown channel" + stacktrace con idletweaks.
+ * Detecta errores de IdleTweaks: "Tried to release unknown channel" +
+ * stacktrace con idletweaks.
  */
 public class ErrorIdleTweaks implements Verificaciones {
 
@@ -21,18 +22,21 @@ public class ErrorIdleTweaks implements Verificaciones {
 	public void verificar(Consola consola) {
 		// Solo verificamos si el mensaje de error está en el log
 		boolean tiene = consola.contenido_verificar.contains("Tried to release unknown channel");
-	if(tiene) {
-		this.logContieneErrorDeCanal=true;
-	}
-	
+		if (tiene) {
+			this.logContieneErrorDeCanal = true;
+		}
+
 	}
 
 	@Override
 	public void verificar(Consola consola, String linea, int numero_de_linea) {
-		if (activado) return;
-		if (linea == null) return;
+		if (activado)
+			return;
+		if (linea == null)
+			return;
 
-		// Si el log contiene el error de canal Y esta línea contiene el paquete de idletweaks → activar
+		// Si el log contiene el error de canal Y esta línea contiene el paquete de
+		// idletweaks → activar
 		if (logContieneErrorDeCanal && linea.contains("io.armandukx.idletweaks.utils.GameSettingsModifier")) {
 			this.activado = true;
 			this.enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
@@ -56,7 +60,8 @@ public class ErrorIdleTweaks implements Verificaciones {
 
 	@Override
 	public String mensaje() {
-		if (!activado) return "";
+		if (!activado)
+			return "";
 		return MonitorDePID.idioma.error_idletweaks_html() + (enlaceHtml.isEmpty() ? "" : " " + enlaceHtml);
 	}
 
@@ -82,19 +87,18 @@ public class ErrorIdleTweaks implements Verificaciones {
 	public boolean ocupaTrazo(TraceInfo trazo) {
 		return false;
 	}
-	
+
 	@Override
 	public Documento docs() {
 		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
+
 	@Override
 	public String enlaceACodigo() {
 		// TODO Auto-generated method stub
-		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"+this.getClass().getSimpleName()+".java";
+		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
+				+ this.getClass().getSimpleName() + ".java";
 	}
-	
-	
-	
-	
+
 }

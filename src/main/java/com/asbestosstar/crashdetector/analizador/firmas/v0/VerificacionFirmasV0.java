@@ -278,28 +278,22 @@ public class VerificacionFirmasV0 implements Verificaciones {
 				&& Objects.equals(nombre_jp, v.nombre_jp) && Objects.equals(resultado_jp, v.resultado_jp)
 				&& Objects.equals(nombre_kp, v.nombre_kp) && Objects.equals(resultado_kp, v.resultado_kp);
 	}
-	
+
 	@Override
 	public Documento docs() {
 		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
-	
-	
+
 	@Override
 	public String enlaceACodigo() {
 		// TODO Auto-generated method stub
 		return Statics.carpeta.resolve(FirmasV0.NOMBRE_ARCHIVO).toUri().toString();
 	}
-	
+
 	@Override
 	public boolean recomendadoParaCorperata() {
 		return true;
 	}
-	
-	
-	
-	
-	
 
 }

@@ -5178,295 +5178,576 @@ public class Arabe implements Idioma {
 	public String solucion_eliminar_mod_reciente() {
 		return "Si no puedes identificar el mod, elimina mods recientes, especialmente los que añaden bloques, items o herramientas.";
 	}
+
 	@Override
 	public String error_entrypoint_fabric_html(String modNombre) {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "خطأ أثناء تحميل الوحدة <b>" + escapeHtml(modNombre) + "</b>.</b>"
-	            + "<ul>"
-	            + "<li>فشلت الوحدة في تهيئة أحد مكوناتها (مثل قائمة الإعدادات).</li>"
-	            + "<li>يحدث هذا عادةً بسبب عدم التوافق مع إصدار Minecraft أو Fabric أو مع وحدات أخرى.</li>"
-	            + "</ul>"
-	            + "<p>إذا استمر الخطأ، احذف أو حدّث الوحدة <b>" + escapeHtml(modNombre) + "</b>.</p>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "خطأ أثناء تحميل الوحدة <b>"
+				+ escapeHtml(modNombre) + "</b>.</b>" + "<ul>"
+				+ "<li>فشلت الوحدة في تهيئة أحد مكوناتها (مثل قائمة الإعدادات).</li>"
+				+ "<li>يحدث هذا عادةً بسبب عدم التوافق مع إصدار Minecraft أو Fabric أو مع وحدات أخرى.</li>" + "</ul>"
+				+ "<p>إذا استمر الخطأ، احذف أو حدّث الوحدة <b>" + escapeHtml(modNombre) + "</b>.</p>";
 	}
 
 	@Override
 	public String nombre_error_entrypoint_fabric() {
-	    return "خطأ تهيئة الوحدة (Fabric Entrypoint)";
+		return "خطأ تهيئة الوحدة (Fabric Entrypoint)";
 	}
 
 	@Override
 	public String solucion_eliminar_mod(String modNombre) {
-	    return "احذف الوحدة '" + modNombre + "' من مجلد 'mods'.";
+		return "احذف الوحدة '" + modNombre + "' من مجلد 'mods'.";
 	}
 
 	@Override
 	public String solucion_actualizar_mod(String modNombre) {
-	    return "حدّث الوحدة '" + modNombre + "' إلى إصدار متوافق مع تثبيتك.";
+		return "حدّث الوحدة '" + modNombre + "' إلى إصدار متوافق مع تثبيتك.";
 	}
-	
+
 	@Override
 	public String error_en_garde_html() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "تم اكتشاف خطأ مرتبط بالوحدة <b>En Garde!</b>.</b>"
-	            + "<ul>"
-	            + "<li>تضيف هذه الوحدة آليات قتال قريب (مثل التصدى والحماية، إلخ).</li>"
-	            + "<li>يحدث الخطأ عادةً بسبب عدم التوافق مع وحدات قتال أخرى (مثل Epic Fight، DualRiders، إلخ) أو استخدام إصدار غير مناسب لـ Minecraft الخاص بك.</li>"
-	            + "</ul>"
-	            + "<p>إذا لم تستخدم قتالاً متقدمًا، ففكّر في إزالة En Garde! لتجنب التعارضات.</p>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "تم اكتشاف خطأ مرتبط بالوحدة <b>En Garde!</b>.</b>" + "<ul>"
+				+ "<li>تضيف هذه الوحدة آليات قتال قريب (مثل التصدى والحماية، إلخ).</li>"
+				+ "<li>يحدث الخطأ عادةً بسبب عدم التوافق مع وحدات قتال أخرى (مثل Epic Fight، DualRiders، إلخ) أو استخدام إصدار غير مناسب لـ Minecraft الخاص بك.</li>"
+				+ "</ul>" + "<p>إذا لم تستخدم قتالاً متقدمًا، ففكّر في إزالة En Garde! لتجنب التعارضات.</p>";
 	}
 
 	@Override
 	public String nombre_error_en_garde() {
-	    return "خطأ في الوحدة En Garde!";
+		return "خطأ في الوحدة En Garde!";
 	}
 
 	@Override
 	public String solucion_actualizar_en_garde() {
-	    return "تأكد من استخدام إصدار En Garde! المتوافق مع إصدار Minecraft والمحمل (Fabric/Forge) الخاصين بك.";
+		return "تأكد من استخدام إصدار En Garde! المتوافق مع إصدار Minecraft والمحمل (Fabric/Forge) الخاصين بك.";
 	}
 
 	@Override
 	public String solucion_eliminar_conflicto_mod_combate() {
-	    return "إذا كنت تستخدم وحدات قتال أخرى (مثل Epic Fight، Caelus، إلخ)، فعطّلها أو احذف En Garde! لتجنب التعارضات.";
+		return "إذا كنت تستخدم وحدات قتال أخرى (مثل Epic Fight، Caelus، إلخ)، فعطّلها أو احذف En Garde! لتجنب التعارضات.";
 	}
-	
+
 	@Override
 	public String error_idletweaks_html() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "تم اكتشاف خطأ ناتج عن الوحدة <b>IdleTweaks</b>.</b>"
-	            + "<ul>"
-	            + "<li>حاول IdleTweaks تحرير قناة شبكة غير موجودة (<code>Tried to release unknown channel</code>).</li>"
-	            + "<li>يحدث هذا الخطأ عادةً في إصدارات قديمة من الوحدة أو عند استخدامها على خوادم غير مضبوطة بشكل صحيح.</li>"
-	            + "</ul>"
-	            + "<p>IdleTweaks هو وحدة لتحسين جودة الحياة، لكنه قد يسبب عدم استقرار. فكّر في تحديثه أو إزالته.</p>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "تم اكتشاف خطأ ناتج عن الوحدة <b>IdleTweaks</b>.</b>" + "<ul>"
+				+ "<li>حاول IdleTweaks تحرير قناة شبكة غير موجودة (<code>Tried to release unknown channel</code>).</li>"
+				+ "<li>يحدث هذا الخطأ عادةً في إصدارات قديمة من الوحدة أو عند استخدامها على خوادم غير مضبوطة بشكل صحيح.</li>"
+				+ "</ul>"
+				+ "<p>IdleTweaks هو وحدة لتحسين جودة الحياة، لكنه قد يسبب عدم استقرار. فكّر في تحديثه أو إزالته.</p>";
 	}
 
 	@Override
 	public String nombre_error_idletweaks() {
-	    return "خطأ في IdleTweaks (قناة شبكة غير معروفة)";
+		return "خطأ في IdleTweaks (قناة شبكة غير معروفة)";
 	}
 
 	@Override
 	public String solucion_actualizar_idletweaks() {
-	    return "حدّث IdleTweaks إلى أحدث إصدار متوافق مع Minecraft الخاص بك.";
+		return "حدّث IdleTweaks إلى أحدث إصدار متوافق مع Minecraft الخاص بك.";
 	}
 
 	@Override
 	public String solucion_eliminar_idletweaks() {
-	    return "احذف IdleTweaks من مجلد 'mods' إذا لم تكن بحاجة إليه.";
+		return "احذف IdleTweaks من مجلد 'mods' إذا لم تكن بحاجة إليه.";
 	}
-	
+
 	@Override
 	public String mensagjePirataMC() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "تم اكتشاف خطأ مصادقة (HTTP 401) أثناء محاولة تسجيل الدخول إلى Minecraft.</b>"
-	            + "<p>نادرًا ما يكون هذا الخطأ <b>السبب المباشر للتحطيم</b>، لكنه يشير إلى أنك تستخدم حسابًا غير مصرح به (نسخة مقرصنة).</p>"
-	            + "<p>قنوات الدعم الرسمية (المشاريع المؤسسية، VTubers، منشئو حزم التعديلات، إلخ) <b>لا يمكنها مساعدتك</b> إذا كنت تستخدم نسخة مقرصنة، "
-	            + "بسبب قيود قواعد الدردشة الخاصة بهم، أو العقود، أو الاتفاقيات مع Mojang/Microsoft، أو سياسات السمعة.</p>"
-	            + "<p>يمكنك <b>تعطيل هذا التحقق في الإعدادات المؤسسية</b> لكاشف الأخطاء. "
-	            + "تحذير: إن كشف النسخ المقرصنة <b>ليس مثاليًا</b> وقد يُفعّل في بيئات التطوير، أو مع اتصال إنترنت غير مستقر، أو عند استخدام مشغّلات معدلة.</p>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "تم اكتشاف خطأ مصادقة (HTTP 401) أثناء محاولة تسجيل الدخول إلى Minecraft.</b>"
+				+ "<p>نادرًا ما يكون هذا الخطأ <b>السبب المباشر للتحطيم</b>، لكنه يشير إلى أنك تستخدم حسابًا غير مصرح به (نسخة مقرصنة).</p>"
+				+ "<p>قنوات الدعم الرسمية (المشاريع المؤسسية، VTubers، منشئو حزم التعديلات، إلخ) <b>لا يمكنها مساعدتك</b> إذا كنت تستخدم نسخة مقرصنة، "
+				+ "بسبب قيود قواعد الدردشة الخاصة بهم، أو العقود، أو الاتفاقيات مع Mojang/Microsoft، أو سياسات السمعة.</p>"
+				+ "<p>يمكنك <b>تعطيل هذا التحقق في الإعدادات المؤسسية</b> لكاشف الأخطاء. "
+				+ "تحذير: إن كشف النسخ المقرصنة <b>ليس مثاليًا</b> وقد يُفعّل في بيئات التطوير، أو مع اتصال إنترنت غير مستقر، أو عند استخدام مشغّلات معدلة.</p>";
 	}
 
 	@Override
 	public String infoDeDerechosMiranda() {
-	    return "<b>حقوق ميراندا إذا حاولت الانضمام للدعم رغم ذلك:</b>";
+		return "<b>حقوق ميراندا إذا حاولت الانضمام للدعم رغم ذلك:</b>";
 	}
 
 	@Override
 	public String nombrePirataMC() {
-	    return "ماينكرافت مقرصن";
+		return "ماينكرافت مقرصن";
 	}
 
 	@Override
 	public String desactivarVerificacionPirata() {
-	    return "تعطيل التحقق من القرصنة";
+		return "تعطيل التحقق من القرصنة";
 	}
 
 	@Override
 	public String comprarMC() {
-	    return "شراء Minecraft";
+		return "شراء Minecraft";
 	}
-	
+
 	// --- LanzerNoAnimado ---
 	@Override
 	public String lanzer_no_animado_titulo(String id) {
-	    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
-	        + "أنت تستخدم المشغّل <code>" + id + "</code>، الذي <b>ليس في قائمة المشغّلات الموصى بها</b>.</b>";
+		return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>" + "أنت تستخدم المشغّل <code>" + id
+				+ "</code>، الذي <b>ليس في قائمة المشغّلات الموصى بها</b>.</b>";
 	}
 
 	@Override
 	public String lanzer_no_animado_problemas_comunes() {
-	    return "<p>رغم أنه قد يعمل، إلا أن المشغّلات غير الموصى بها عادةً تسبب:</p>"
-	        + "<ul>"
-	        + "<li>تثبيتات تالفة للوحدات أو التطبيق.</li>"
-	        + "<li>فشل اللعبة في التشغيل أو تجمدها دون خطأ واضح.</li>"
-	        + "<li>هيكل مجلدات غير معتاد (يُصعّب التشخيص).</li>"
-	        + "<li>سلوك غير متوقع مع Java أو الذاكرة أو الوحدات.</li>"
-	        + "</ul>";
+		return "<p>رغم أنه قد يعمل، إلا أن المشغّلات غير الموصى بها عادةً تسبب:</p>" + "<ul>"
+				+ "<li>تثبيتات تالفة للوحدات أو التطبيق.</li>"
+				+ "<li>فشل اللعبة في التشغيل أو تجمدها دون خطأ واضح.</li>"
+				+ "<li>هيكل مجلدات غير معتاد (يُصعّب التشخيص).</li>"
+				+ "<li>سلوك غير متوقع مع Java أو الذاكرة أو الوحدات.</li>" + "</ul>";
 	}
 
 	@Override
 	public String lanzer_no_animado_usar_animados() {
-	    return "لتجربة أفضل، استخدم أحد المشغّلات الموصى بها التالية:";
+		return "لتجربة أفضل، استخدم أحد المشغّلات الموصى بها التالية:";
 	}
 
 	@Override
 	public String nombre_lanzer_no_animado() {
-	    return "مشغّل غير موصى به";
+		return "مشغّل غير موصى به";
 	}
 
 	@Override
 	public String lanzer_no_animado_cambiar_a_animado() {
-	    return "انتقل إلى مشغّل من القائمة الموصى بها.";
+		return "انتقل إلى مشغّل من القائمة الموصى بها.";
 	}
 
 	// --- LanzerDesAnimado ---
 	@Override
 	public String lanzer_desanimado_titulo(String id) {
-	    return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
-	        + "أنت تستخدم <b>مشغّلًا مُنفَرَضًا ضده</b>: <code>" + id + "</code>.</b>";
+		return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>"
+				+ "أنت تستخدم <b>مشغّلًا مُنفَرَضًا ضده</b>: <code>" + id + "</code>.</b>";
 	}
 
 	@Override
 	public String lanzer_desanimado_problemas_comunes() {
-	    return "<p>يمكن أن تسبب المشغّلات المُنفَرَضَة ضدها:</p>"
-	        + "<ul>"
-	        + "<li>تثبيتات تالفة للتطبيق أو الوحدات.</li>"
-	        + "<li>فشل اللعبة في التشغيل أو تعطلها بصمت.</li>"
-	        + "<li>تنظيم غير معتاد للملفات (صعب التصحيح).</li>"
-	        + "<li>عدم وضوح في كيفية إدارتها للوحدات أو Java أو الذاكرة.</li>"
-	        + "</ul>";
+		return "<p>يمكن أن تسبب المشغّلات المُنفَرَضَة ضدها:</p>" + "<ul>"
+				+ "<li>تثبيتات تالفة للتطبيق أو الوحدات.</li>" + "<li>فشل اللعبة في التشغيل أو تعطلها بصمت.</li>"
+				+ "<li>تنظيم غير معتاد للملفات (صعب التصحيح).</li>"
+				+ "<li>عدم وضوح في كيفية إدارتها للوحدات أو Java أو الذاكرة.</li>" + "</ul>";
 	}
 
 	@Override
 	public String lanzer_desanimado_usar_animados() {
-	    return "يُوصى بشدة باستخدام أحد المشغّلات التالية:";
+		return "يُوصى بشدة باستخدام أحد المشغّلات التالية:";
 	}
 
 	@Override
 	public String nombre_lanzer_desanimado() {
-	    return "مشغّل مُنفَرَضٌ ضده";
+		return "مشغّل مُنفَرَضٌ ضده";
 	}
 
 	@Override
 	public String lanzer_desanimado_cambiar_lanzer() {
-	    return "انتقل إلى مشغّل موصى به لتلقّي الدعم.";
+		return "انتقل إلى مشغّل موصى به لتلقّي الدعم.";
 	}
-	
+
 	// --- FaltaModAnimado ---
 	@Override
 	public String falta_mod_animado_titulo() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	        + "تَنْصُر وحدات موصى بها لهذا البيئة.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "تَنْصُر وحدات موصى بها لهذا البيئة.</b>";
 	}
+
 	@Override
 	public String nombre_falta_mod_animado() {
-	    return "وحدات موصى بها مفقودة";
+		return "وحدات موصى بها مفقودة";
 	}
+
 	@Override
 	public String falta_mod_animado_instalar() {
-	    return "ثبّت الوحدات الموصى بها لتجربة مثالية.";
+		return "ثبّت الوحدات الموصى بها لتجربة مثالية.";
 	}
 
 	// --- TienesModDesAnimado ---
 	@Override
 	public String tienes_mod_desanimado_titulo() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	        + "تم اكتشاف وحدات غير موصى بها في تثبيتك.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "تم اكتشاف وحدات غير موصى بها في تثبيتك.</b>";
 	}
+
 	@Override
 	public String nombre_tienes_mod_desanimado() {
-	    return "تم اكتشاف وحدات غير موصى بها";
+		return "تم اكتشاف وحدات غير موصى بها";
 	}
+
 	@Override
 	public String tienes_mod_desanimado_eliminar() {
-	    return "احذف الوحدات غير الموصى بها لتجنب المشاكل.";
+		return "احذف الوحدات غير الموصى بها لتجنب المشاكل.";
 	}
-	
+
 	@Override
 	public String antimanipulacion_titulo() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	        + "تم اكتشاف تعديل غير مصرح به في ملفات حرجة. إما أنك عدّلت الملفات أو أنك تستخدم مشغّلًا غير موثوق.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "تم اكتشاف تعديل غير مصرح به في ملفات حرجة. إما أنك عدّلت الملفات أو أنك تستخدم مشغّلًا غير موثوق.</b>";
 	}
 
 	@Override
 	public String nombre_antimanipulacion() {
-	    return "تم اكتشاف تعديل";
+		return "تم اكتشاف تعديل";
 	}
 
 	@Override
 	public String antimanipulacion_reinstalar() {
-	    return "أعِد تثبيت الملفات الأصلية لاستعادة السلامة.";
+		return "أعِد تثبيت الملفات الأصلية لاستعادة السلامة.";
 	}
-	
-	@Override public String configuracionCorporativa() { return "الإعدادات المؤسسية"; }
-	@Override public String idiomaRespaldo() { return "لغة النسخة الاحتياطية"; }
-	@Override public String buscardorHabilitado() { return "تمكين أداة البحث"; }
-	@Override public String nombreHerramienta() { return "اسم الأداة"; }
-	@Override public String condenarPirateria() { return "إدانة القرصنة"; }
-	@Override public String lanzadoresRecomendados() { return "المشغلات الموصى بها"; }
-	@Override public String lanzadoresDesaconsejados() { return "المشغلات غير الموصى بها"; }
-	@Override public String modsRecomendados() { return "الوحدات الموصى بها"; }
-	@Override public String modsDesaconsejados() { return "الوحدات غير الموصى بها"; }
-	@Override public String antiTamper() { return "مكافحة التلاعب"; }
-	@Override public String proximamente() { return "قريباً"; }
-	@Override public String informacion() { return "معلومات"; }
-	@Override public String errorCargandoImagen() { return "خطأ أثناء تحميل الصورة"; }
-	
-	@Override public String configuracionBasica() { return "الإعدادات الأساسية"; }
-	@Override public String funcionalidades() { return "الميزات"; }
-	@Override public String derechosMiranda() { return "حقوق ميراندا (مطلوبة بشدة)"; }
-	@Override public String gestionVerificaciones() { return "إدارة التحقق"; }
-	@Override public String idVerificacion() { return "المعرّف"; }
-	@Override public String nombreVerificacion() { return "الاسم"; }
-	@Override public String codigoVerificacion() { return "الكود"; }
-	@Override public String documentacionVerificacion() { return "الوثائق"; }
-	@Override public String verificacionesHabilitadas() { return "العمليات المفعّلة:"; }
-	@Override public String verificacionesDeshabilitadas() { return "العمليات المعطّلة:"; }
-	@Override public String deshabilitarNoCorporativas() { return "تعطيل جميع غير المؤسسية"; }
-	@Override public String verCodigo() { return "عرض الكود"; }
-	@Override public String verDocumentacion() { return "عرض الوثائق"; }
-	@Override public String seleccionaVerificacionDeshabilitar() { return "اختر عملية تحقق لتعطيلها."; }
-	@Override public String seleccionaVerificacionHabilitar() { return "اختر عملية تحقق لتفعيلها."; }
-	@Override public String verificacionesNoCorporativasDeshabilitadas() { return "تم تعطيل %d عمليات تحقق غير موصى بها للاستخدام المؤسسي."; }
-	@Override public String noVerificacionesNoCorporativas() { return "لا توجد عمليات تحقق غير مؤسسية للتعطيل."; }
-	@Override public String operacionCompletada() { return "اكتملت العملية"; }
-	@Override public String mensajeAmaneKanata() { return "نفتقِدك يا Amane Kanata"; }
-	@Override public String colorVerificacionCorporativa() { return "لون التحقق المؤسسي"; }
-	
-	@Override public String nombreLanzador() { return "اسم المشغّل"; }
-	@Override public String motivo() { return "السبب"; }
-	@Override public String lanzadoresNoRecomendados() { return "المشغلات غير الموصى بها"; }
-	@Override public String moverADesaconsejados() { return "إبطال التوصية"; }
-	@Override public String moverARecomendados() { return "التوصية"; }
-	@Override public String guardarCambios() { return "حفظ التغييرات"; }
-	@Override public String cancelar() { return "إلغاء"; }
-	@Override public String seleccionaLanzadorMover() { return "يرجى اختيار مشغّل للنقل."; }
-	@Override public String cambiosGuardadosExitosamente() { return "تم حفظ التغييرات بنجاح!"; }
-	@Override public String motivoDesaconsejoPredeterminadoEs(String nombreLanzador) { return "Este lanzador no es recomendado debido a problemas de seguridad y estabilidad conocidos."; }
-	@Override public String motivoDesaconsejoPredeterminadoEn(String nombreLanzador) { return "This launcher is not recommended due to known security and stability issues."; }
-	@Override public String motivoDesaconsejoPredeterminadoPt(String nombreLanzador) { return "Este lançador não é recomendado devido a problemas conhecidos de segurança e estabilidade."; }
-	
-	
-	@Override public String razones() { return "الأسباب"; }
-	@Override public String agregarLanzador() { return "إضافة مشغّل"; }
-	@Override public String quitarLanzador() { return "إزالة المشغّل"; }
-	@Override public String editarRazones() { return "تعديل الأسباب"; }
-	@Override public String seleccionaLanzadorQuitar() { return "اختر مشغّلاً لإزالته."; }
-	@Override public String seleccionaLanzadorEditar() { return "اختر مشغّلاً لتعديله."; }
-	@Override public String editarRazonesPara(String idLanzador) { return "تعديل الأسباب لـ " + idLanzador; }
-	@Override public String agregarNuevoIdioma() { return "إضافة لغة جديدة"; }
-	@Override public String aceptar() { return "موافق"; }
-	@Override public String seleccionaCodigoIdioma() { return "اختر اللغة"; }
-	
-	
-	@Override public String lanzadoresRecomendadosAviso() { return "هذه المشغّلات هي التي يقترحها CrashDetector كخيار جيد."; }
-	@Override public String colorResultadoCorrecto() { return "النتيجة صحيحة"; }
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public String configuracionCorporativa() {
+		return "الإعدادات المؤسسية";
+	}
+
+	@Override
+	public String idiomaRespaldo() {
+		return "لغة النسخة الاحتياطية";
+	}
+
+	@Override
+	public String buscardorHabilitado() {
+		return "تمكين أداة البحث";
+	}
+
+	@Override
+	public String nombreHerramienta() {
+		return "اسم الأداة";
+	}
+
+	@Override
+	public String condenarPirateria() {
+		return "إدانة القرصنة";
+	}
+
+	@Override
+	public String lanzadoresRecomendados() {
+		return "المشغلات الموصى بها";
+	}
+
+	@Override
+	public String lanzadoresDesaconsejados() {
+		return "المشغلات غير الموصى بها";
+	}
+
+	@Override
+	public String modsRecomendados() {
+		return "الوحدات الموصى بها";
+	}
+
+	@Override
+	public String modsDesaconsejados() {
+		return "الوحدات غير الموصى بها";
+	}
+
+	@Override
+	public String antiTamper() {
+		return "مكافحة التلاعب";
+	}
+
+	@Override
+	public String proximamente() {
+		return "قريباً";
+	}
+
+	@Override
+	public String informacion() {
+		return "معلومات";
+	}
+
+	@Override
+	public String errorCargandoImagen() {
+		return "خطأ أثناء تحميل الصورة";
+	}
+
+	@Override
+	public String configuracionBasica() {
+		return "الإعدادات الأساسية";
+	}
+
+	@Override
+	public String funcionalidades() {
+		return "الميزات";
+	}
+
+	@Override
+	public String derechosMiranda() {
+		return "حقوق ميراندا (مطلوبة بشدة)";
+	}
+
+	@Override
+	public String gestionVerificaciones() {
+		return "إدارة التحقق";
+	}
+
+	@Override
+	public String idVerificacion() {
+		return "المعرّف";
+	}
+
+	@Override
+	public String nombreVerificacion() {
+		return "الاسم";
+	}
+
+	@Override
+	public String codigoVerificacion() {
+		return "الكود";
+	}
+
+	@Override
+	public String documentacionVerificacion() {
+		return "الوثائق";
+	}
+
+	@Override
+	public String verificacionesHabilitadas() {
+		return "العمليات المفعّلة:";
+	}
+
+	@Override
+	public String verificacionesDeshabilitadas() {
+		return "العمليات المعطّلة:";
+	}
+
+	@Override
+	public String deshabilitarNoCorporativas() {
+		return "تعطيل جميع غير المؤسسية";
+	}
+
+	@Override
+	public String verCodigo() {
+		return "عرض الكود";
+	}
+
+	@Override
+	public String verDocumentacion() {
+		return "عرض الوثائق";
+	}
+
+	@Override
+	public String seleccionaVerificacionDeshabilitar() {
+		return "اختر عملية تحقق لتعطيلها.";
+	}
+
+	@Override
+	public String seleccionaVerificacionHabilitar() {
+		return "اختر عملية تحقق لتفعيلها.";
+	}
+
+	@Override
+	public String verificacionesNoCorporativasDeshabilitadas() {
+		return "تم تعطيل %d عمليات تحقق غير موصى بها للاستخدام المؤسسي.";
+	}
+
+	@Override
+	public String noVerificacionesNoCorporativas() {
+		return "لا توجد عمليات تحقق غير مؤسسية للتعطيل.";
+	}
+
+	@Override
+	public String operacionCompletada() {
+		return "اكتملت العملية";
+	}
+
+	@Override
+	public String mensajeAmaneKanata() {
+		return "نفتقِدك يا Amane Kanata";
+	}
+
+	@Override
+	public String colorVerificacionCorporativa() {
+		return "لون التحقق المؤسسي";
+	}
+
+	@Override
+	public String nombreLanzador() {
+		return "اسم المشغّل";
+	}
+
+	@Override
+	public String motivo() {
+		return "السبب";
+	}
+
+	@Override
+	public String lanzadoresNoRecomendados() {
+		return "المشغلات غير الموصى بها";
+	}
+
+	@Override
+	public String moverADesaconsejados() {
+		return "إبطال التوصية";
+	}
+
+	@Override
+	public String moverARecomendados() {
+		return "التوصية";
+	}
+
+	@Override
+	public String guardarCambios() {
+		return "حفظ التغييرات";
+	}
+
+	@Override
+	public String cancelar() {
+		return "إلغاء";
+	}
+
+	@Override
+	public String seleccionaLanzadorMover() {
+		return "يرجى اختيار مشغّل للنقل.";
+	}
+
+	@Override
+	public String cambiosGuardadosExitosamente() {
+		return "تم حفظ التغييرات بنجاح!";
+	}
+
+	@Override
+	public String motivoDesaconsejoPredeterminadoEs(String nombreLanzador) {
+		return "Este lanzador no es recomendado debido a problemas de seguridad y estabilidad conocidos.";
+	}
+
+	@Override
+	public String motivoDesaconsejoPredeterminadoEn(String nombreLanzador) {
+		return "This launcher is not recommended due to known security and stability issues.";
+	}
+
+	@Override
+	public String motivoDesaconsejoPredeterminadoPt(String nombreLanzador) {
+		return "Este lançador não é recomendado devido a problemas conhecidos de segurança e estabilidade.";
+	}
+
+	@Override
+	public String razones() {
+		return "الأسباب";
+	}
+
+	@Override
+	public String agregarLanzador() {
+		return "إضافة مشغّل";
+	}
+
+	@Override
+	public String quitarLanzador() {
+		return "إزالة المشغّل";
+	}
+
+	@Override
+	public String editarRazones() {
+		return "تعديل الأسباب";
+	}
+
+	@Override
+	public String seleccionaLanzadorQuitar() {
+		return "اختر مشغّلاً لإزالته.";
+	}
+
+	@Override
+	public String seleccionaLanzadorEditar() {
+		return "اختر مشغّلاً لتعديله.";
+	}
+
+	@Override
+	public String editarRazonesPara(String idLanzador) {
+		return "تعديل الأسباب لـ " + idLanzador;
+	}
+
+	@Override
+	public String agregarNuevoIdioma() {
+		return "إضافة لغة جديدة";
+	}
+
+	@Override
+	public String aceptar() {
+		return "موافق";
+	}
+
+	@Override
+	public String seleccionaCodigoIdioma() {
+		return "اختر اللغة";
+	}
+
+	@Override
+	public String lanzadoresRecomendadosAviso() {
+		return "هذه المشغّلات هي التي يقترحها CrashDetector كخيار جيد.";
+	}
+
+	@Override
+	public String colorResultadoCorrecto() {
+		return "النتيجة صحيحة";
+	}
+
+	public String modsNoRecomendados() {
+		return "الوحدات غير الموصى بها";
+	}
+
+	public String agregarMod() {
+		return "إضافة وحدة";
+	}
+
+	public String quitarMod() {
+		return "إزالة وحدة";
+	}
+
+	public String modId() {
+		return "معرّف الوحدة / اسم JBoss Modules";
+	}
+
+	public String rutaMod() {
+		return "مسار / ملف الوحدة";
+	}
+
+	public String errorDebeIndicarMod() {
+		return "يجب أن تُدخل معرّف الوحدة أو مسار الملف على الأقل.";
+	}
+
+	public String modsNoRecomendadosAviso() {
+		return "هنا يمكنك تسجيل الوحدات غير الموصى بها ليكتشفها CrashDetector إذا كانت مثبتة.";
+	}
+
+	@Override
+	public String anularNormal() {
+		return "إلغاء الوضع العادي";
+	}
+
+	@Override
+	public String anularNormalDescripcion() {
+		return "يجب أن يُحذّر CrashDetector حتى لو لم يحدث تحطيم.";
+	}
+
+	@Override
+	public String modsRecomendadosAviso() {
+		return "سجّل الوحدات التي يوصي بها CrashDetector. إذا كانت مفقودة، فقد يُحذّرك CrashDetector.";
+	}
+
+	@Override
+	public String descripcionDerechosPirateria() {
+		return ""
+				+ "إذا قررت تفعيل تحذير مكافحة القرصنة، يُوصى بتحديد حقوق الشخص الذي يطلب الدعم هنا، كإجراء وقائي.\n\n"
+
+				+ "خلافًا لاعتقاد شائع، فإن العديد من المجتمعات وقنوات الدعم الشهيرة "
+				+ "لا تتطلب تفعيل تحذيرات مكافحة القرصنة لتقديم المساعدة. ومع ذلك، "
+				+ "قد يكون توثيق هذه الحقوق مفيدًا في حال وصول شخص ما إلى قناة الدعم على أي حال.\n\n"
+
+				+ "يمكنك الاعتماد على وثائق رسمية مثل كتيب الحقوق الأساسية للمعتقل " + "في المكسيك:\n"
+				+ "https://www.gob.mx/cms/uploads/attachment/file/342687/Cartilla_Derechos_b_sicos_del_detenido.pdf\n\n"
+
+				+ "وكذلك على مبادئ قانونية مماثلة مستخدمة في دول أخرى، بما في ذلك "
+				+ "الولايات المتحدة، واتحاد روسيا، وجمهورية الصين الشعبية، والجمهورية الإسلامية "
+				+ "الإيرانية، وجمهورية كوريا الشعبية الديمقراطية.\n\n"
+
+				+ "ومن أمثلة الحقوق التي يمكن تضمينها:\n"
+				+ "• الحق في عدم تقديم معلومات غير ضرورية للدعم، مثل المشغّل المستخدم، " + "أو اسم المستخدم أو UUID.\n"
+				+ "• الحق في عدم التشهير بنفسك.\n" + "• الحق في رفض الإجابة عن أسئلة غير ضرورية لحل المشكلة.\n"
+				+ "• الحق في تلقي التوجيه داخل الدردشة.\n"
+				+ "• الحق في استخدام أداة إخفاء الهوية المدمجة في CrashDetector للسجلات (logs).\n\n"
+
+				+ "يقبل هذا النص محتوى HTML.";
+	}
+
+	@Override
+	public String editar() {
+		return "编辑";
+	}
 
 }

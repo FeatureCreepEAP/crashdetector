@@ -93,39 +93,35 @@ public interface Idioma {
 			return espanol;
 		}
 	}
-	
+
 	public static String nombreDeIdiomaDesdeCondigo(String codigo) {
-	    switch (codigo) {
-	        case "es":
-	            return "Español"; // espanol
-	        case "en":
-	            return "English"; // ingles
-	        case "ar":
-	            return "العربية"; // arabe
-	        case "pt":
-	            return "Português"; // portuges
-	        case "fa":
-	            return "فارسی"; // persa
-	        case "ru":
-	            return "Русский"; // ruso
-	        case "zh":
-	            return "中文"; // chino
-	        case "eo":
-	            return "Esperanto"; // Esperanto
-	        case "ja":
-	            return "日本語"; // japones
-	        case "ko":
-	            return "한국어"; // coreono
-	        case "uk":
-	            return "Русский"; // Ucraniano usa configuración rusa (same as Russian)
-	        default:
-	            return "Español"; // Idioma por defecto
-	    }
+		switch (codigo) {
+		case "es":
+			return "Español"; // espanol
+		case "en":
+			return "English"; // ingles
+		case "ar":
+			return "العربية"; // arabe
+		case "pt":
+			return "Português"; // portuges
+		case "fa":
+			return "فارسی"; // persa
+		case "ru":
+			return "Русский"; // ruso
+		case "zh":
+			return "中文"; // chino
+		case "eo":
+			return "Esperanto"; // Esperanto
+		case "ja":
+			return "日本語"; // japones
+		case "ko":
+			return "한국어"; // coreono
+		case "uk":
+			return "Русский"; // Ucraniano usa configuración rusa (same as Russian)
+		default:
+			return "Español"; // Idioma por defecto
+		}
 	}
-
-
-	
-	
 
 	public static boolean tenemosIdiomaCodigo(String codigo) {
 		Set<String> CODIGOS_IDIOMA = new HashSet<>(
@@ -2257,5 +2253,28 @@ public interface Idioma {
 
 	public String colorResultadoCorrecto();
 
+	public String modsNoRecomendados();
+
+	public String modId();
+
+	public String rutaMod();
+
+	public String agregarMod();
+
+	public String quitarMod();
+
+	public String errorDebeIndicarMod();
+
+	public String modsNoRecomendadosAviso();
+
+	public String anularNormal();
+
+	public String anularNormalDescripcion();
+
+	public String modsRecomendadosAviso();
+
+	public String descripcionDerechosPirateria();
+
+	public String editar();
 
 }

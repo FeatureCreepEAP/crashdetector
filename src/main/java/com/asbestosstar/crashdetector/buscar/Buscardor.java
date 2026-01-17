@@ -34,15 +34,15 @@ public class Buscardor {
 	public static Set<ArchivoDeMod> mods = java.util.Collections
 			.newSetFromMap(new java.util.concurrent.ConcurrentHashMap<>());
 
-	public static ConfigBoolean hablicar =ConfigBoolean.de("hablicar_buscardor", true);
-	
+	public static ConfigBoolean hablicar = ConfigBoolean.de("hablicar_buscardor", true);
+
 	public static boolean cargado = false;
 
 	/** Evita precargar varias veces todas las clases en todos los mods. */
 	public static volatile boolean cargadotodos = false;
 
 	public static void cargar() {
-		if (!cargado&&hablicar.obtener()) {
+		if (!cargado && hablicar.obtener()) {
 			try {
 				String[] rutasMods = MonitorDePID.leer_archivo(MonitorDePID.ultimo_mods).split(MonitorDePID.nl);
 

@@ -48,7 +48,10 @@ import com.asbestosstar.crashdetector.gui.tipos.lanzeresbuenos.LanzerBuenoGUIMai
 import com.asbestosstar.crashdetector.gui.tipos.lanzeresmalos.LanzerMaloGUISylentBell;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasHoloTalk;
 import com.asbestosstar.crashdetector.gui.tipos.mcreator.EscanerMCreatorGUIRosemiLoveLock;
+import com.asbestosstar.crashdetector.gui.tipos.miranda.DerechosPiratasGUIOnePiece;
 import com.asbestosstar.crashdetector.gui.tipos.modapi.CDModsEstiloTL;
+import com.asbestosstar.crashdetector.gui.tipos.modsbuenas.ModsBuenasGUIReiBubbles;
+import com.asbestosstar.crashdetector.gui.tipos.modsmalas.GUIModsMalasRimaEvenstar;
 import com.asbestosstar.crashdetector.gui.tipos.no_registro_lanzador.NoRegistroDeLauncherVShojo;
 import com.asbestosstar.crashdetector.gui.tipos.no_registro_lanzador.NoRegistroLanzadorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUI;
@@ -213,19 +216,18 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/sakura_riddle.png",
 				Statics.carpeta.resolve("imagenes/sakura_riddle.png").toFile());
 
-		
 		copiarACarpetaDesdeJar("/imagenes/sao.png", Statics.carpeta.resolve("imagenes/sao.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/amane_kanata.png", Statics.carpeta.resolve("imagenes/amane_kanata.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/rima_evenstar.png", Statics.carpeta.resolve("imagenes/rima_evenstar.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/amane_kanata.png",
+				Statics.carpeta.resolve("imagenes/amane_kanata.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/rima_evenstar.png",
+				Statics.carpeta.resolve("imagenes/rima_evenstar.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/maid_mint.png", Statics.carpeta.resolve("imagenes/maid_mint.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/sylent_bell.png", Statics.carpeta.resolve("imagenes/sylent_bell.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/sylent_bell.png",
+				Statics.carpeta.resolve("imagenes/sylent_bell.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/onepeice.png", Statics.carpeta.resolve("imagenes/onepeice.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/rei_bubbles.png", Statics.carpeta.resolve("imagenes/rei_bubbles.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/rei_bubbles.png",
+				Statics.carpeta.resolve("imagenes/rei_bubbles.png").toFile());
 
-		
-				
-		
-		
 //		new File(viajo_ultima_mods.toString()).delete();
 //		try {
 //			new File(viajo_ultima_mods.toString()).createNewFile();
@@ -397,12 +399,14 @@ public class MonitorDePID {
 		TipoGUI.MOD_API_PANEL.registrarGUI(CDModsEstiloTL.ID, () -> new CDModsEstiloTL());
 		TipoGUI.CFR.registrarGUI(CfrSakuraRiddle.ID, () -> new CfrSakuraRiddle());
 		TipoGUI.CORPO.registrarGUI(CorpoSAO.ID, () -> new CorpoSAO());
-		TipoGUI.DESHABLICAR_VERIFICACIONES.registrarGUI(DeshabilitarVerificacionesAmaneKanata.ID, () -> new DeshabilitarVerificacionesAmaneKanata());
+		TipoGUI.DESHABLICAR_VERIFICACIONES.registrarGUI(DeshabilitarVerificacionesAmaneKanata.ID,
+				() -> new DeshabilitarVerificacionesAmaneKanata());
 		TipoGUI.LANZER_MALO.registrarGUI(LanzerMaloGUISylentBell.ID, () -> new LanzerMaloGUISylentBell());
 		TipoGUI.LANZER_BUENO.registrarGUI(LanzerBuenoGUIMaidMint.ID, () -> new LanzerBuenoGUIMaidMint());
+		TipoGUI.MODS_MALAS.registrarGUI(GUIModsMalasRimaEvenstar.ID, () -> new GUIModsMalasRimaEvenstar());
+		TipoGUI.MODS_BUENAS.registrarGUI(ModsBuenasGUIReiBubbles.ID, () -> new ModsBuenasGUIReiBubbles());
+		TipoGUI.MIRANDA.registrarGUI(DerechosPiratasGUIOnePiece.ID, () -> new DerechosPiratasGUIOnePiece());
 
-		
-		
 	}
 
 	private static void monitor_proceso(long pid) {

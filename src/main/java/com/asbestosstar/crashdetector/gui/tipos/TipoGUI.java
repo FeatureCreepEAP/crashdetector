@@ -26,14 +26,16 @@ import com.asbestosstar.crashdetector.gui.tipos.lanzeresbuenos.LanzerBuenoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lanzeresmalos.LanzerMaloGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasGUI;
 import com.asbestosstar.crashdetector.gui.tipos.mcreator.EscanerMCreatorGUI;
+import com.asbestosstar.crashdetector.gui.tipos.miranda.DerechosPiratasGUI;
 import com.asbestosstar.crashdetector.gui.tipos.modapi.PanelAPIBase;
+import com.asbestosstar.crashdetector.gui.tipos.modsbuenas.ModsBuenasGUI;
+import com.asbestosstar.crashdetector.gui.tipos.modsmalas.GUIModsMalas;
 import com.asbestosstar.crashdetector.gui.tipos.no_registro_lanzador.NoRegistroLanzadorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUI;
 import com.asbestosstar.crashdetector.gui.tipos.quickfix.QuickFixGUI;
 import com.asbestosstar.crashdetector.gui.tipos.quickfix.TodosQuickFixesGUI;
 
 public abstract class TipoGUI<T extends CrashDetectorGUI> {
-
 
 	/**
 	 * Para todos GUIS por favor registrar un tipo
@@ -474,8 +476,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 			return CfrBase.GUIS;
 		}
 	};
-	
-	
+
 	/**
 	 * Editor de CORPO CONFIG
 	 */
@@ -500,7 +501,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 			return CorpoBase.GUIS;
 		}
 	};
-	
+
 	/**
 	 * Editor de Verificaciones
 	 */
@@ -547,7 +548,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 			return LanzerMaloGUI.GUIS;
 		}
 	};
-	
+
 	public static TipoGUI<LanzerBuenoGUI> LANZER_BUENO = new TipoGUI<LanzerBuenoGUI>() {
 		@Override
 		public String id() {
@@ -570,10 +571,71 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		}
 	};
 
+	public static TipoGUI<GUIModsMalas> MODS_MALAS = new TipoGUI<GUIModsMalas>() {
+		@Override
+		public String id() {
+			return "mods_malas";
+		}
 
-	
-	
-	
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.lanzadoresDesaconsejados();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<GUIModsMalas> gui) {
+			GUIModsMalas.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<GUIModsMalas>> obtenerGUIs() {
+			return GUIModsMalas.GUIS;
+		}
+	};
+
+	public static TipoGUI<ModsBuenasGUI> MODS_BUENAS = new TipoGUI<ModsBuenasGUI>() {
+		@Override
+		public String id() {
+			return "mods_buenas";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.lanzadoresRecomendados();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<ModsBuenasGUI> gui) {
+			ModsBuenasGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<ModsBuenasGUI>> obtenerGUIs() {
+			return ModsBuenasGUI.GUIS;
+		}
+	};
+
+	public static TipoGUI<DerechosPiratasGUI> MIRANDA = new TipoGUI<DerechosPiratasGUI>() {
+		@Override
+		public String id() {
+			return "miranda";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.lanzadoresRecomendados();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<DerechosPiratasGUI> gui) {
+			DerechosPiratasGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<DerechosPiratasGUI>> obtenerGUIs() {
+			return DerechosPiratasGUI.GUIS;
+		}
+	};
 
 	/**
 	 * Registro estático de todos los tipos de GUI en la lista global.
@@ -599,7 +661,9 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		TIPOS_DE_GUI.add(DESHABLICAR_VERIFICACIONES);
 		TIPOS_DE_GUI.add(LANZER_MALO);
 		TIPOS_DE_GUI.add(LANZER_BUENO);
+		TIPOS_DE_GUI.add(MODS_MALAS);
+		TIPOS_DE_GUI.add(MODS_BUENAS);
+		TIPOS_DE_GUI.add(MIRANDA);
 
-		
 	}
 }

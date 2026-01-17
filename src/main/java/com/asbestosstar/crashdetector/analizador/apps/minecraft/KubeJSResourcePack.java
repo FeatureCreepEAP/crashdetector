@@ -99,14 +99,11 @@ public class KubeJSResourcePack implements Verificaciones {
 	public String nombre() {
 		return MonitorDePID.idioma.nombre_de_faltar_de_kubejs_resourcepack();
 	}
+
 	@Override
 	public QuickFix solucion() {
-		return QuickFix.NINGUN;//TODO
+		return QuickFix.NINGUN;// TODO
 	}
-
-
-	
-	
 
 	@Override
 	public String id() {
@@ -139,28 +136,23 @@ public class KubeJSResourcePack implements Verificaciones {
 		String t = trazo.trace;
 		return t.contains("from pack KubeJS Resource Pack [data]") && t.contains("Failed to parse ");
 	}
-	
+
 	@Override
 	public Documento docs() {
 		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
+
 	@Override
 	public String enlaceACodigo() {
 		// TODO Auto-generated method stub
-		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"+this.getClass().getSimpleName()+".java";
+		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
+				+ this.getClass().getSimpleName() + ".java";
 	}
-	
+
 	@Override
 	public boolean recomendadoParaCorperata() {
-		return true;//Intalacion corrupta
+		return true;// Intalacion corrupta
 	}
-	
-	
-	
-	
-	
-	
-	
 
 }

@@ -6,8 +6,7 @@ import java.util.List;
 import com.google.gson.*;
 
 /**
- * Motor basado en Gson.
- * Nodos con contexto para operar como DMR.
+ * Motor basado en Gson. Nodos con contexto para operar como DMR.
  */
 public class JsonGson implements Json.Motor {
 
@@ -119,7 +118,8 @@ public class JsonGson implements Json.Motor {
 			return actual;
 		}
 
-		if (actual.interno instanceof JsonObject || actual.interno instanceof JsonArray || actual.interno instanceof JsonNull) {
+		if (actual.interno instanceof JsonObject || actual.interno instanceof JsonArray
+				|| actual.interno instanceof JsonNull) {
 			JsonElement e = aElemento(valor);
 			actual.interno = e;
 			return actual;

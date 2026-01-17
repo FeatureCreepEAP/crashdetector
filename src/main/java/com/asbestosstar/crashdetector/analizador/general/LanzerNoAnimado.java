@@ -23,148 +23,146 @@ import com.asbestosstar.crashdetector.json.Json.Nodo;
  */
 public class LanzerNoAnimado implements Verificaciones {
 
-    public static final Path ARCHIVO_ANIMADOS = Statics.carpeta.resolve("lanzeres_animados.json");
-    public static final String LANZADOR_ACTUAL = Statics.lanzer_del_app;
+	public static final Path ARCHIVO_ANIMADOS = Statics.carpeta.resolve("lanzeres_animados.json");
+	public static final String LANZADOR_ACTUAL = Statics.lanzer_del_app;
 
-    private boolean activado = false;
-    private String mensaje = "";
-    boolean completa=true;
+	private boolean activado = false;
+	private String mensaje = "";
+	boolean completa = true;
 
-    @Override
-    public void verificar(Consola consola) {
-    	if(completa) {
-    		return;
-    	}
-    	this.completa=true;
-        if (LANZADOR_ACTUAL == null || LANZADOR_ACTUAL.trim().isEmpty()) {
-            return;
-        }
+	@Override
+	public void verificar(Consola consola) {
+		if (completa) {
+			return;
+		}
+		this.completa = true;
+		if (LANZADOR_ACTUAL == null || LANZADOR_ACTUAL.trim().isEmpty()) {
+			return;
+		}
 
-        // Si el archivo de launchers animados no existe o está vacío, no hacer nada
-        if (!ARCHIVO_ANIMADOS.toFile().exists()) {
-            return;
-        }
+		// Si el archivo de launchers animados no existe o está vacío, no hacer nada
+		if (!ARCHIVO_ANIMADOS.toFile().exists()) {
+			return;
+		}
 
-        String contenido;
-        try {
-            contenido = new String(Files.readAllBytes(ARCHIVO_ANIMADOS), java.nio.charset.StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            return;
-        }
+		String contenido;
+		try {
+			contenido = new String(Files.readAllBytes(ARCHIVO_ANIMADOS), java.nio.charset.StandardCharsets.UTF_8);
+		} catch (IOException e) {
+			return;
+		}
 
-        if (contenido == null || contenido.trim().isEmpty()) {
-            return;
-        }
+		if (contenido == null || contenido.trim().isEmpty()) {
+			return;
+		}
 
-        // Parsear lista de launchers recomendados
-        Nodo raiz;
-        try {
-            raiz = Json.leer(contenido);
-        } catch (Exception e) {
-            return;
-        }
+		// Parsear lista de launchers recomendados
+		Nodo raiz;
+		try {
+			raiz = Json.leer(contenido);
+		} catch (Exception e) {
+			return;
+		}
 
-        if (!raiz.esArreglo()) {
-            return;
-        }
+		if (!raiz.esArreglo()) {
+			return;
+		}
 
-        Set<String> launchersAnimados = new HashSet<>();
-        int tam = raiz.tamano();
-        for (int i = 0; i < tam; i++) {
-            Nodo item = raiz.en(i);
-            if (item != null && !item.esObjeto() && !item.esArreglo()) {
-                String id = item.comoCadena();
-                if (id != null && !id.trim().isEmpty()) {
-                    launchersAnimados.add(id.trim());
-                }
-            }
-        }
+		Set<String> launchersAnimados = new HashSet<>();
+		int tam = raiz.tamano();
+		for (int i = 0; i < tam; i++) {
+			Nodo item = raiz.en(i);
+			if (item != null && !item.esObjeto() && !item.esArreglo()) {
+				String id = item.comoCadena();
+				if (id != null && !id.trim().isEmpty()) {
+					launchersAnimados.add(id.trim());
+				}
+			}
+		}
 
-        if (launchersAnimados.isEmpty()) {
-            return;
-        }
+		if (launchersAnimados.isEmpty()) {
+			return;
+		}
 
-        // Si el launcher actual NO está en la lista de recomendados → advertir
-        if (!launchersAnimados.contains(LANZADOR_ACTUAL.trim())) {
-            StringBuilder sb = new StringBuilder();
-            sb.append(MonitorDePID.idioma.lanzer_no_animado_titulo(LANZADOR_ACTUAL));
-            sb.append(nl_html)
-              .append(MonitorDePID.idioma.lanzer_no_animado_problemas_comunes());
-            sb.append(nl_html)
-              .append(MonitorDePID.idioma.lanzer_no_animado_usar_animados());
+		// Si el launcher actual NO está en la lista de recomendados → advertir
+		if (!launchersAnimados.contains(LANZADOR_ACTUAL.trim())) {
+			StringBuilder sb = new StringBuilder();
+			sb.append(MonitorDePID.idioma.lanzer_no_animado_titulo(LANZADOR_ACTUAL));
+			sb.append(nl_html).append(MonitorDePID.idioma.lanzer_no_animado_problemas_comunes());
+			sb.append(nl_html).append(MonitorDePID.idioma.lanzer_no_animado_usar_animados());
 
-            sb.append(" ");
-            boolean primero = true;
-            for (String id : launchersAnimados) {
-                if (!primero) sb.append(", ");
-                sb.append("<code>").append(id).append("</code>");
-                primero = false;
-            }
+			sb.append(" ");
+			boolean primero = true;
+			for (String id : launchersAnimados) {
+				if (!primero)
+					sb.append(", ");
+				sb.append("<code>").append(id).append("</code>");
+				primero = false;
+			}
 
-            this.mensaje = sb.toString();
-            this.activado = true;
-        }
-    }
+			this.mensaje = sb.toString();
+			this.activado = true;
+		}
+	}
 
-    @Override
-    public Verificaciones nueva() {
-        return new LanzerNoAnimado();
-    }
+	@Override
+	public Verificaciones nueva() {
+		return new LanzerNoAnimado();
+	}
 
-    @Override
-    public boolean activado() {
-        return activado;
-    }
+	@Override
+	public boolean activado() {
+		return activado;
+	}
 
-    @Override
-    public float prioridad() {
-        return 1300.0f;
-    }
+	@Override
+	public float prioridad() {
+		return 1300.0f;
+	}
 
-    @Override
-    public String mensaje() {
-        return mensaje;
-    }
+	@Override
+	public String mensaje() {
+		return mensaje;
+	}
 
-    @Override
-    public String nombre() {
-        return MonitorDePID.idioma.nombre_lanzer_no_animado();
-    }
+	@Override
+	public String nombre() {
+		return MonitorDePID.idioma.nombre_lanzer_no_animado();
+	}
 
-    @Override
-    public QuickFix solucion() {
-        Builder builder = new Builder(nombre());
-        builder.agregarEtiqueta(MonitorDePID.idioma.lanzer_no_animado_cambiar_a_animado());
-        return builder.construir();
-    }
+	@Override
+	public QuickFix solucion() {
+		Builder builder = new Builder(nombre());
+		builder.agregarEtiqueta(MonitorDePID.idioma.lanzer_no_animado_cambiar_a_animado());
+		return builder.construir();
+	}
 
-    @Override
-    public boolean ocupaTrazo(TraceInfo trazo) {
-        return false;
-    }
+	@Override
+	public boolean ocupaTrazo(TraceInfo trazo) {
+		return false;
+	}
 
-    @Override
-    public String id() {
-        return "lanzer_no_animado";
-    }
-    
+	@Override
+	public String id() {
+		return "lanzer_no_animado";
+	}
+
 	@Override
 	public Documento docs() {
 		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
+
 	@Override
 	public String enlaceACodigo() {
 		// TODO Auto-generated method stub
-		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/general/"+this.getClass().getSimpleName()+".java";
+		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/general/"
+				+ this.getClass().getSimpleName() + ".java";
 	}
-	
+
 	@Override
 	public boolean recomendadoParaCorperata() {
 		return true;
 	}
-	
-	
-	
-    
+
 }

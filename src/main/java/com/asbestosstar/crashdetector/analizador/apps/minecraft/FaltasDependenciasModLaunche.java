@@ -1003,7 +1003,7 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 
 	@Override
 	public QuickFix solucion() {
-		return QuickFix.NINGUN;//TODO
+		return QuickFix.NINGUN;// TODO
 	}
 
 	/**
@@ -1100,22 +1100,18 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 		return false;
 
 	}
-	
+
 	@Override
 	public Documento docs() {
 		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
-	
+
 	@Override
 	public String enlaceACodigo() {
 		// TODO Auto-generated method stub
-		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"+this.getClass().getSimpleName()+".java";
+		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
+				+ this.getClass().getSimpleName() + ".java";
 	}
-	
-	
-	
-	
-	
 
 }
