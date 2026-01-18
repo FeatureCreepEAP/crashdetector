@@ -259,8 +259,9 @@ public class Esperanto implements Idioma {
 
 	@Override
 	public String noTieneConsolaDeLauncherCursedForge() {
-		return "<b style='color:#" + config.obtenerColorAdvertencia()
-				+ "'>Vi ne havas la dosieron launcher_log.txt. Ni bezonas ĉi tiun dosieron por serĉi erarojn. Tio okazas pro la opcio \"Preterpasi lanĉilan startigon\". Malŝaltu ĝin.</b>";
+	    return "<b style='color:#" + config.obtenerColorAdvertencia()
+	        + "'>Vi uzas \"Preterlasi lanĉilon\" (CurseForge App). Foje tio kaŭzas malfacile detekteblajn problemojn. Tio devenas de la opcio \"Preterlasi lanĉilon\" en malnovaj versioj de la CurseForge App aŭ en la nova versio. Malŝaltu ĝin kaj uzu la opcion \"Mojang Launcher\" en la agordoj de CurseForge. Vi povas rigardi tiun anglalingvan videon de Claws of Berk (iru al 1:11) "
+	        + "<a href='https://youtu.be/g847O_2LjoE?si=8Y_oj3zyyhYTrSkv&t=71' style='color: inherit;'>ĉi tie</a>.</b>";
 	}
 
 	@Override
@@ -5860,6 +5861,15 @@ public class Esperanto implements Idioma {
 	public String nombreFloralEnchantments() {
 	    return "Eraro de Floral Enchantments";
 	}
+	@Override
+	public String mixinExtrasDuplicados() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
+	        + "Vi havas kaj la NeoForge-version kaj la norman version de MixinExtras. Se vi uzas MinecraftForge, vi povas instali <a href='https://www.curseforge.com/minecraft/mc-mods/mixin-extras-neoforge-on-forge-fix' style='color: inherit;'>ĉi tiun ligilon</a> por solvi la problemon.</b>";
+	}
+	
+	
+	
+	
 	
 	
 	

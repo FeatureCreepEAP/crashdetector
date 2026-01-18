@@ -239,11 +239,7 @@ public class Japones implements Idioma {
 				+ "'>Theseusには、削除を試みてもMODを削除できないなどの追加の問題があります。mrpackファイルを使用する必要がある場合は、Prism Launcher（modrinth.com専用）、ATLauncher（modrinth.com専用）、Hello Minecraft Launcher（modrinth.comおよびbbsmc.net対応）などの他のランチャーをご利用ください。</b>";
 	}
 
-	@Override
-	public String noTieneConsolaDeLauncherCursedForge() {
-		return "<b style='color:#" + config.obtenerColorAdvertencia()
-				+ "'>launcher_log.txtがありません。エラーを検索するためにこのファイルが必要です。これは「ランチャースタートを省略」オプションによるものです。無効にしてください。</b>";
-	}
+	@Override public String noTieneConsolaDeLauncherCursedForge() { return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>「ランチャー起動をスキップ」（CurseForgeアプリ）を使用しています。これにより、検出が難しい問題が発生することがあります。これは、古いバージョンまたは新しいバージョンのCurseForgeアプリにある「ランチャー起動をスキップ」オプションによるものです。これを無効化し、CurseForge設定で「Mojang Launcher」を使用してください。Claws of Berkの英語動画（1分11秒から）を" + "<a href='https://youtu.be/g847O_2LjoE?si=8Y_oj3zyyhYTrSkv&t=71' style='color: inherit;'>こちら</a>で確認できます。</b>"; }
 
 	@Override
 	public String faltar_de_clases_advertencia() {
@@ -5712,6 +5708,14 @@ public class Japones implements Idioma {
 	public String nombreFloralEnchantments() {
 	    return "Floral Enchantments エラー";
 	}
+	@Override
+	public String mixinExtrasDuplicados() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
+	        + "MixinExtras の NeoForge 版と通常版の両方がインストールされています。MinecraftForge を使用している場合、<a href='https://www.curseforge.com/minecraft/mc-mods/mixin-extras-neoforge-on-forge-fix' style='color: inherit;'>このリンク</a>から修正 mod をインストールできます。</b>";
+	}
+	
+	
+	
 	
 	
 	

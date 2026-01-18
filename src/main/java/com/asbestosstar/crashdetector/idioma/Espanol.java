@@ -266,8 +266,9 @@ public class Espanol implements Idioma {
 
 	@Override
 	public String noTieneConsolaDeLauncherCursedForge() {
-		return "<b style='color:#" + config.obtenerColorAdvertencia()
-				+ "'>No tienes launcher_log.txt. Necesitamos este archivo para buscar errores. Esto se debe a la opción \"Omitir inicio Launcher\". Desactívala.</b>";
+	    return "<b style='color:#" + config.obtenerColorAdvertencia()
+	        + "'>Estás usando \"Omitir inicio Launcher\" (CurseForge App). A veces esto causa problemas difíciles de detectar. Esto se debe a la opción \"Omitir inicio Launcher\" en versiones antiguas de la App CurseForge o en la versión nueva. Desactívala y usa la opción \"Mojang Launcher\" en la configuración de CurseForge. Puedes ver este video en inglés de Claws of Berk (ir a 1:11) "
+	        + "<a href='https://youtu.be/g847O_2LjoE?si=8Y_oj3zyyhYTrSkv&t=71' style='color: inherit;'>aquí</a>.</b>";
 	}
 
 	@Override
@@ -6602,8 +6603,14 @@ public class Espanol implements Idioma {
 		return "Error de Floral Enchantments";
 	}
 
-	
-	
+	@Override
+	public String mixinExtrasDuplicados() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
+	        + "Tienes la versión NeoForge de MixinExtras y la versión normal. Si estás en MinecraftForge, puedes instalar <a href='https://www.curseforge.com/minecraft/mc-mods/mixin-extras-neoforge-on-forge-fix' style='color: inherit;'>este enlace</a> para la solución.</b>";
+	}
+
+
+
 	
 	
 	

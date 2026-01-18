@@ -242,8 +242,9 @@ public class Coreano implements Idioma {
 
 	@Override
 	public String noTieneConsolaDeLauncherCursedForge() {
-		return "<b style='color:#" + config.obtenerColorAdvertencia()
-				+ "'>launcher_log.txt 파일이 없습니다. 오류를 검색하려면 이 파일이 필요합니다. 이는 \"런처 시작 건너뛰기\" 옵션 때문입니다. 비활성화하세요.</b>";
+	    return "<b style='color:#" + config.obtenerColorAdvertencia()
+	        + "'>\"런처 시작 건너뛰기\"(CurseForge 앱)를 사용 중입니다. 이로 인해 감지하기 어려운 문제가 발생할 수 있습니다. 이는 구형 CurseForge 앱이나 최신 버전의 \"런처 시작 건너뛰기\" 옵션 때문입니다. 이를 비활성화하고 CurseForge 설정에서 \"Mojang 런처\"를 사용하세요. Claws of Berk의 영문 영상(1분 11초 부분)을 "
+	        + "<a href='https://youtu.be/g847O_2LjoE?si=8Y_oj3zyyhYTrSkv&t=71' style='color: inherit;'>여기서</a> 확인할 수 있습니다.</b>";
 	}
 
 	@Override
@@ -5701,6 +5702,15 @@ public class Coreano implements Idioma {
 	public String nombreFloralEnchantments() {
 	    return "Floral Enchantments 오류";
 	}
+	@Override
+	public String mixinExtrasDuplicados() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
+	        + "NeoForge 버전의 MixinExtras와 일반 버전을 모두 설치했습니다. MinecraftForge를 사용 중이라면, 해결을 위해 <a href='https://www.curseforge.com/minecraft/mc-mods/mixin-extras-neoforge-on-forge-fix' style='color: inherit;'>이 링크</a>에서 모드를 설치할 수 있습니다.</b>";
+	}
+	
+	
+	
+	
 	
 	
 	

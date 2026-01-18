@@ -2301,4 +2301,6 @@ public interface Idioma {
 
 	public String nombreFloralEnchantments();
 
+	public String mixinExtrasDuplicados();
+
 }

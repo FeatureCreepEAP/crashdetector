@@ -255,8 +255,9 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String noTieneConsolaDeLauncherCursedForge() {
-		return "<b style='color:#" + config.obtenerColorAdvertencia()
-				+ "'>ليس لديك ملف launcher_log.txt. نحن بحاجة إلى هذا الملف للبحث عن الأخطاء. وهذا بسبب خيار \"تخطي بدء تشغيل المشغل\". قم بتعطيله.</b>";
+	    return "<b style='color:#" + config.obtenerColorAdvertencia()
+	        + "'>أنت تستخدم خيار \"تخطي تشغيل المشغّل\" (تطبيق CurseForge). أحيانًا يسبب هذا مشاكل يصعب اكتشافها. يعود ذلك إلى خيار \"تخطي تشغيل المشغّل\" في إصدارات قديمة من تطبيق CurseForge أو في الإصدار الجديد. قم بتعطيله واستخدم خيار \"Mojang Launcher\" في إعدادات CurseForge. يمكنك مشاهدة هذا الفيديو باللغة الإنجليزية من Claws of Berk (انتقل إلى 1:11) "
+	        + "<a href='https://youtu.be/g847O_2LjoE?si=8Y_oj3zyyhYTrSkv&t=71' style='color: inherit;'>هنا</a>.</b>";
 	}
 
 	@Override
@@ -5839,6 +5840,12 @@ public class Arabe implements Idioma {
 	@Override
 	public String nombreFloralEnchantments() {
 	    return "خطأ في Floral Enchantments";
+	}
+	
+	@Override
+	public String mixinExtrasDuplicados() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
+	        + "لديك إصدار NeoForge من MixinExtras والإصدار العادي. إذا كنت تستخدم MinecraftForge، يمكنك تثبيت <a href='https://www.curseforge.com/minecraft/mc-mods/mixin-extras-neoforge-on-forge-fix' style='color: inherit;'>هذا الرابط</a> للحل.</b>";
 	}
 	
 	

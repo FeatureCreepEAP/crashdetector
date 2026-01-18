@@ -258,8 +258,9 @@ public class Persa implements Idioma {
 
 	@Override
 	public String noTieneConsolaDeLauncherCursedForge() {
-		return "<b style='color:#" + config.obtenerColorAdvertencia()
-				+ "'>شما فایل launcher_log.txt را ندارید. ما به این فایل برای جستجوی خطاها نیاز داریم. این به دلیل گزینه \"رد کردن شروع برنامه‌ریز\" است. آن را غیرفعال کنید.</b>";
+	    return "<b style='color:#" + config.obtenerColorAdvertencia()
+	        + "'>شما از گزینهٔ «رد کردن شروع راه‌انداز» (برنامهٔ CurseForge) استفاده می‌کنید. گاهی این باعث مشکلاتی می‌شود که تشخیص آن‌ها دشوار است. این به دلیل گزینهٔ «رد کردن شروع راه‌انداز» در نسخه‌های قدیمی یا جدید برنامهٔ CurseForge است. آن را غیرفعال کنید و در تنظیمات CurseForge از گزینهٔ «Mojang Launcher» استفاده نمایید. می‌توانید این ویدیوی انگلیسی از Claws of Berk (در 1:11) را "
+	        + "<a href='https://youtu.be/g847O_2LjoE?si=8Y_oj3zyyhYTrSkv&t=71' style='color: inherit;'>اینجا</a> ببینید.</b>";
 	}
 
 	@Override
@@ -5877,6 +5878,15 @@ public class Persa implements Idioma {
 	public String nombreFloralEnchantments() {
 	    return "خطای Floral Enchantments";
 	}
+	
+	@Override
+	public String mixinExtrasDuplicados() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
+	        + "شما هم نسخهٔ NeoForge و هم نسخهٔ معمولی MixinExtras را دارید. اگر از MinecraftForge استفاده می‌کنید، می‌توانید با نصب <a href='https://www.curseforge.com/minecraft/mc-mods/mixin-extras-neoforge-on-forge-fix' style='color: inherit;'>این لینک</a> مشکل را حل کنید.</b>";
+	}
+	
+	
+	
 	
 	
 	

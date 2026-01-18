@@ -257,8 +257,9 @@ public class Ruso implements Idioma {
 
 	@Override
 	public String noTieneConsolaDeLauncherCursedForge() {
-		return "<b style='color:#" + config.obtenerColorAdvertencia()
-				+ "'>У вас нет файла launcher_log.txt. Нам нужен этот файл для поиска ошибок. Это связано с опцией \"Пропустить запуск лаунчера\". Отключите её.</b>";
+	    return "<b style='color:#" + config.obtenerColorAdvertencia()
+	        + "'>Вы используете опцию «Пропустить запуск лаунчера» (приложение CurseForge). Иногда это вызывает трудноуловимые проблемы. Это связано с опцией «Пропустить запуск лаунчера» в старых или новых версиях приложения CurseForge. Отключите её и выберите «Mojang Launcher» в настройках CurseForge. Вы можете посмотреть это видео на английском от Claws of Berk (перейдите к 1:11) "
+	        + "<a href='https://youtu.be/g847O_2LjoE?si=8Y_oj3zyyhYTrSkv&t=71' style='color: inherit;'>здесь</a>.</b>";
 	}
 
 	@Override
@@ -5905,6 +5906,15 @@ public class Ruso implements Idioma {
 	public String nombreFloralEnchantments() {
 	    return "Erro do Floral Enchantments";
 	}
+	@Override
+	public String mixinExtrasDuplicados() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
+	        + "У вас установлены обе версии MixinExtras: NeoForge и обычная. Если вы используете MinecraftForge, вы можете установить исправление по <a href='https://www.curseforge.com/minecraft/mc-mods/mixin-extras-neoforge-on-forge-fix' style='color: inherit;'>этой ссылке</a>.</b>";
+	}
+	
+	
+	
+	
 	
 	
 	

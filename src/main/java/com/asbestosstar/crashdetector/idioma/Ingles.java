@@ -265,8 +265,9 @@ public class Ingles implements Idioma {
 
 	@Override
 	public String noTieneConsolaDeLauncherCursedForge() {
-		return "<b style='color:#" + config.obtenerColorAdvertencia()
-				+ "'>You don't have launcher_log.txt. We need this file to search for errors. This is due to the \"Skip Launcher Startup\" option. Disable it.</b>";
+	    return "<b style='color:#" + config.obtenerColorAdvertencia()
+	        + "'>You are using \"Skip Launcher Start\" (CurseForge App). This can sometimes cause hard-to-detect issues. This is due to the \"Skip Launcher Start\" option in older versions of the CurseForge App or in the new version. Disable it and use the \"Mojang Launcher\" option in CurseForge settings. You can watch this English video by Claws of Berk (go to 1:11) "
+	        + "<a href='https://youtu.be/g847O_2LjoE?si=8Y_oj3zyyhYTrSkv&t=71' style='color: inherit;'>here</a>.</b>";
 	}
 
 	@Override
@@ -5932,6 +5933,15 @@ public class Ingles implements Idioma {
 	public String nombreFloralEnchantments() {
 	    return "Floral Enchantments Error";
 	}
+	@Override
+	public String mixinExtrasDuplicados() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
+	        + "You have both the NeoForge and standard versions of MixinExtras installed. If you are using MinecraftForge, you can install the fix from <a href='https://www.curseforge.com/minecraft/mc-mods/mixin-extras-neoforge-on-forge-fix' style='color: inherit;'>this link</a>.</b>";
+	}
+	
+	
+	
+	
 	
 	
 	

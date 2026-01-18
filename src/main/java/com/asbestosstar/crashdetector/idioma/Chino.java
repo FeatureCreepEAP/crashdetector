@@ -232,8 +232,9 @@ public class Chino implements Idioma {
 
 	@Override
 	public String noTieneConsolaDeLauncherCursedForge() {
-		return "<b style='color:#" + config.obtenerColorAdvertencia()
-				+ "'>您没有launcher_log.txt文件。我们需要这个文件来查找错误。这是由于启用了“跳过启动器启动”选项。请禁用它。</b>";
+	    return "<b style='color:#" + config.obtenerColorAdvertencia()
+	        + "'>你正在使用“跳过启动器启动”（CurseForge 应用）。这有时会导致难以检测的问题。此选项存在于旧版 CurseForge 应用或新版中。请禁用它，并在 CurseForge 设置中改用“Mojang 启动器”。你可以在 Claws of Berk 的英文视频中查看说明（跳转至 1:11）"
+	        + "<a href='https://youtu.be/g847O_2LjoE?si=8Y_oj3zyyhYTrSkv&t=71' style='color: inherit;'>点击此处</a>.</b>";
 	}
 
 	@Override
@@ -5601,6 +5602,15 @@ public class Chino implements Idioma {
 	public String nombreFloralEnchantments() {
 	    return "Floral Enchantments 错误";
 	}
+	
+	@Override
+	public String mixinExtrasDuplicados() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
+	        + "你同时安装了 MixinExtras 的 NeoForge 版本和普通版本。如果你使用的是 MinecraftForge，可以安装 <a href='https://www.curseforge.com/minecraft/mc-mods/mixin-extras-neoforge-on-forge-fix' style='color: inherit;'>此链接</a>中的修复模组。</b>";
+	}
+	
+	
+	
 	
 	
 	

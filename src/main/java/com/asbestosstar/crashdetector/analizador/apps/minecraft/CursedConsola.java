@@ -6,11 +6,13 @@ import java.nio.file.Paths;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.Criticalidad;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.detectorlanzer.DetectorCurseForgeApp;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Verificador que detecta la ausencia del archivo launcher_log.txt en entornos
@@ -33,7 +35,7 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 public class CursedConsola implements Verificaciones {
 
 	private boolean activado = false;
-	private String mensaje = "";
+	private String mensaje =  MonitorDePID.idioma.noTieneConsolaDeLauncherCursedForge();
 	private static final String CURSEFORGE_MARKER = "curseforge";
 	private static final String INSTANCE_MARKER = "instances";
 	private static final String LAUNCHER_LOG = "launcher_log";
@@ -55,23 +57,13 @@ public class CursedConsola implements Verificaciones {
 //			CrashDetectorLogger.logException(e);
 //			activado = false;
 //		} Ahora no usemos laucnher log pero CurseForge launcher tiene otras problemas
+	
+	
+	
+	if(Statics.lanzer_del_app!=null&&Statics.lanzer_del_app.equals(DetectorCurseForgeApp.ID)) {
+		activado=true;
 	}
-
-	private boolean esEntornoCurseForge() {
-		try {
-			Path currentPath = Paths.get("").toAbsolutePath();
-			String ruta = currentPath.toString().toLowerCase();
-			return ruta.contains(CURSEFORGE_MARKER) && ruta.contains(INSTANCE_MARKER);
-		} catch (Exception e) {
-			CrashDetectorLogger.logException(e);
-			return false;
-		}
-	}
-
-	private boolean tieneLogLauncher() {
-		// Verificación mejorada con múltiples puntos de control
-		return MonitorDePID.consolas.stream().filter(consola -> consola.archivo != null)
-				.anyMatch(consola -> consola.archivo.toString().toLowerCase().contains(LAUNCHER_LOG));
+	
 	}
 
 	@Override
