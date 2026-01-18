@@ -2291,4 +2291,14 @@ public interface Idioma {
 
 	public String mensajeDeSylentBell();
 
+	public String gmlIPV6();
+
+	public String mensajeIndependenteFlywheel(Set<String> mods);
+
+	public String nombreIndependenteFlywheel();
+
+	public String mensajeFloralEnchantments();
+
+	public String nombreFloralEnchantments();
+
 }

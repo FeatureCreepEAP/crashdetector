@@ -1,6 +1,7 @@
 package com.asbestosstar.crashdetector.idioma;
 
 import java.util.List;
+import java.util.Set;
 
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
@@ -5650,5 +5651,64 @@ public class Coreano implements Idioma {
 		return "<html><div style='width:150px; text-align:center;'>" + "Sylent Bell의 의견과 언급은 반드시 우리와 일치하지 않습니다; "
 				+ "여기에 넣는 것이 재미있을 것 같아서입니다. CrashDetector는 세속적입니다." + "</div></html>";
 	}
+	@Override
+	public String gmlIPV6() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "GML(Groovy ModLoader) 모드는 이러한 변경이 필요하며, 이 문제가 발생하는 가장 흔한 원인입니다.</b>";
+	}
+	
+	@Override
+	public String mensajeIndependenteFlywheel(Set<String> mods) {
+	    StringBuilder listaMods = new StringBuilder();
+	    if (!mods.isEmpty()) {
+	        for (String mod : mods) {
+	            listaMods.append("<li>").append(mod).append("</li>");
+	        }
+	    }
+
+	    String mensaje = "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "<i> Flywheel</i> 사용이 감지되었습니다.</b>"
+	            + "<p><b> Flywheel은 더 이상 사용되지 않음(deprecated)</b>이며 최신 버전에서는 사용해서는 안 됩니다.</p>"
+	            + "<p>현재 <b>Create</b> 버전은 <b>Flywheel을 이미 포함</b>하고 있으므로 별도로 설치하면 "
+	            + "호환성 충돌과 로딩 오류가 발생합니다.</p>"
+	            + "<p> Flywheel에 명시적으로 의존하는 일부 모드는 "
+	            + "<b>작동하지 않거나</b> <b>불안정하게 작동</b>할 수 있습니다. "
+	            + "특정 고급 상황에서는 <b><code>mods.toml</code> 파일을 수동으로 편집</b>하여 버전 범위를 조정하면 "
+	            + "작동할 수도 있지만, 이는 <b>권장되지 않습니다</b>.</p>"
+	            + (mods.isEmpty() ? ""
+	                : "<p><b>Flywheel을 참조하는 감지된 모드:</b></p>"
+	                + "<ul>" + listaMods.toString() + "</ul>")
+	            + "<p>권장되는 해결책은 <b>Flywheel을 제거</b>하고 Create에 내장된 버전만 사용하는 것입니다.</p>";
+
+	    return mensaje;
+	}
+
+	@Override
+	public String nombreIndependenteFlywheel() {
+	    return "독립형 Flywheel";
+	}
+	
+	@Override
+	public String mensajeFloralEnchantments() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	        + "<i>Floral Enchantments</i> 모드와 관련된 오류가 감지되었습니다.</b>"
+	        + "<p>크래시는 게임 데이터를 처리하는 도중 모드 내부 오류로 인해 발생하며, "
+	        + "실행 중 <b>NullPointerException</b>을 유발합니다.</p>"
+	        + "<p>이 문제는 일반적으로 모드를 업데이트하거나 제거하여 해결됩니다.</p>";
+	}
+
+	@Override
+	public String nombreFloralEnchantments() {
+	    return "Floral Enchantments 오류";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

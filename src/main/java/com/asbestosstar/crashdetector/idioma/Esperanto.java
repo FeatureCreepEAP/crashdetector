@@ -1,6 +1,7 @@
 package com.asbestosstar.crashdetector.idioma;
 
 import java.util.List;
+import java.util.Set;
 
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
@@ -5837,5 +5838,33 @@ public class Esperanto implements Idioma {
 				+ "La opinioj kaj komentoj de Sylent Bell ne nepre kongruas kun niaj; "
 				+ "ni simple pensis, ke estus amuze meti ŝin ĉi tie. CrashDetector estas laika." + "</div></html>";
 	}
+	@Override
+	public String gmlIPV6() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "La mod GML (Groovy ModLoader) postulas tiujn ŝanĝojn kaj estas la plej komuna kaŭzo de ĉi tiu problemo.</b>";
+	}
+	
+	@Override public String mensajeIndependenteFlywheel(Set<String> mods) { StringBuilder listaMods = new StringBuilder(); if (!mods.isEmpty()) { for (String mod : mods) { listaMods.append("<li>").append(mod).append("</li>"); } } String mensaje = "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "Oni detektis la uzon de <i>Independent Flywheel</i>.</b>" + "<p><b>Independent Flywheel estas eksmoda (malrekomendata)</b> kaj ne uzebla en modernaj versioj.</p>" + "<p>Aktualaj versioj de <b>Create</b> <b>jam inkluzivas Flywheel</b>, do aparta instalo " + "kaŭzas nekongruecojn kaj ŝargajn erarojn.</p>" + "<p>Iuj modoj kiuj eksplicite dependas de Independent Flywheel povas " + "<b>ne funkcii</b> aŭ <b>funkcii malstabile</b>. " + "En iuj progresintaj kazoj, ili eble funkcios se oni " + "<b>mane redaktas la dosieron <code>mods.toml</code></b> por ĝustigi versiajn intervalojn, " + "kvankam tio <b>ne rekomendiĝas</b>.</p>" + (mods.isEmpty() ? "" : "<p><b>Detektitaj modoj referencantaj Flywheel:</b></p>" + "<ul>" + listaMods.toString() + "</ul>") + "<p>La rekomendita solvo estas <b>forigi Independent Flywheel</b> kaj uzi nur " + "la version inkluzivitan en Create.</p>"; return mensaje; } @Override
+	public String nombreIndependenteFlywheel() { return "Sendependa Flywheel"; }
+	
+	@Override
+	public String mensajeFloralEnchantments() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	        + "Eraro rilata al la mod <i>Floral Enchantments</i> estis trovita.</b>"
+	        + "<p>La kraŝo estas kaŭzita de interna eraro de la mod dum traktado de ludadaj datumoj, "
+	        + "kio kaŭzas <b>NullPointerException</b> dum ekzekuto.</p>"
+	        + "<p>Ĉi tiu problemo kutime solviĝas per ĝisdatigo aŭ forigo de la mod.</p>";
+	}
+
+	@Override
+	public String nombreFloralEnchantments() {
+	    return "Eraro de Floral Enchantments";
+	}
+	
+	
+	
+	
+	
+	
 
 }

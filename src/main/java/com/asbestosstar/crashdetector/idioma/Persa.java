@@ -1,6 +1,7 @@
 package com.asbestosstar.crashdetector.idioma;
 
 import java.util.List;
+import java.util.Set;
 
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
@@ -5825,5 +5826,68 @@ public class Persa implements Idioma {
 				+ "نظرات و توضیحات Sylent Bell لزوماً با ما هم‌خوانی ندارد؛ "
 				+ "فقط فکر کردیم جالب باشد که او را اینجا بگذاریم. CrashDetector سکولار است." + "</div></html>";
 	}
+	@Override
+	public String gmlIPV6() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "افزونهٔ GML (Groovy ModLoader) به این تغییرات نیاز دارد و رایج‌ترین منشأ این مشکل است.</b>";
+	}
+	
+	
+	
+	@Override
+	public String mensajeIndependenteFlywheel(Set<String> mods) {
+	    StringBuilder listaMods = new StringBuilder();
+	    if (!mods.isEmpty()) {
+	        for (String mod : mods) {
+	            listaMods.append("<li>").append(mod).append("</li>");
+	        }
+	    }
+
+	    String mensaje = "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "استفاده از <i>Flywheel</i> شناسایی شد.</b>"
+	            + "<p><b>Flywheel منسوخ‌شده (deprecated) است</b> و نباید در نسخه‌های مدرن استفاده شود.</p>"
+	            + "<p>نسخه‌های فعلی <b>Create</b> <b>از پیش Flywheel را شامل می‌شوند</b>، بنابراین نصب جداگانهٔ آن "
+	            + "باعث تداخل سازگاری و خطاهای بارگذاری می‌شود.</p>"
+	            + "<p>برخی افزونه‌هایی که به‌صورت صریح به Flywheel وابسته‌اند ممکن است "
+	            + "<b>کار نکنند</b> یا <b>ناپایدار عمل کنند</b>. "
+	            + "در برخی موارد پیشرفته، این افزونه‌ها ممکن است با <b>ویرایش دستی فایل <code>mods.toml</code></b> "
+	            + "برای تنظیم محدودهٔ نسخه‌ها کار کنند، هرچند این کار <b>توصیه نمی‌شود</b>.</p>"
+	            + (mods.isEmpty() ? ""
+	                : "<p><b>افزونه‌های شناسایی‌شده که به Flywheel ارجاع می‌دهند:</b></p>"
+	                + "<ul>" + listaMods.toString() + "</ul>")
+	            + "<p>راه‌حل پیشنهادی، <b>حذف Flywheel</b> و استفادهٔ انحصاری از نسخهٔ داخلی Create است.</p>";
+
+	    return mensaje;
+	}
+
+	@Override
+	public String nombreIndependenteFlywheel() {
+	    return "Flywheel مستقل";
+	}
+	@Override
+	public String mensajeFloralEnchantments() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	        + "خطایی مرتبط با افزونهٔ <i>Floral Enchantments</i> شناسایی شد.</b>"
+	        + "<p>این crash به دلیل خطا در داخل افزونه هنگام پردازش داده‌های بازی رخ داده و "
+	        + "در حین اجرا باعث <b>NullPointerException</b> می‌شود.</p>"
+	        + "<p>این مشکل معمولاً با به‌روزرسانی یا حذف افزونه برطرف می‌شود.</p>";
+	}
+
+	@Override
+	public String nombreFloralEnchantments() {
+	    return "خطای Floral Enchantments";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

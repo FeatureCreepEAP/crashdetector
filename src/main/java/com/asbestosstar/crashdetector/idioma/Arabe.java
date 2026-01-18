@@ -1,6 +1,7 @@
 package com.asbestosstar.crashdetector.idioma;
 
 import java.util.List;
+import java.util.Set;
 
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
@@ -5786,5 +5787,67 @@ public class Arabe implements Idioma {
 				+ "آراء وتعليقات Sylent Bell لا تتطابق بالضرورة مع آرائنا؛ "
 				+ "فقط اعتقدنا أنه سيكون مضحكًا وضعها هنا. CrashDetector علماني." + "</div></html>";
 	}
+	
+	@Override
+	public String gmlIPV6() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "الوحدة GML (Groovy ModLoader) تتطلب هذه التغييرات، وهي السبب الأكثر شيوعًا لهذه المشكلة.</b>";
+	}
+	
+	@Override
+	public String mensajeIndependenteFlywheel(Set<String> mods) {
+	    StringBuilder listaMods = new StringBuilder();
+	    if (!mods.isEmpty()) {
+	        for (String mod : mods) {
+	            listaMods.append("<li>").append(mod).append("</li>");
+	        }
+	    }
+
+	    String mensaje = "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "تم اكتشاف استخدام <i> Flywheel</i>.</b>"
+	            + "<p><b> Flywheel قديم (مُهمَل)</b> ولا يجب استخدامه في الإصدارات الحديثة.</p>"
+	            + "<p>الإصدارات الحالية من <b>Create</b> <b>تتضمن Flywheel بالفعل</b>، لذا فإن تثبيته بشكل منفصل "
+	            + "يؤدي إلى تعارضات توافقية وأخطاء تحميل.</p>"
+	            + "<p>بعض الوحدات التي تعتمد صراحةً على  Flywheel قد "
+	            + "<b>لا تعمل</b> أو <b>تعمل بشكل غير مستقر</b>. "
+	            + "في حالات متقدمة معينة، قد تعمل هذه الوحدات إذا تم "
+	            + "<b>تعديل ملف <code>mods.toml</code> يدويًا</b> لضبط نطاقات الإصدار، "
+	            + "رغم أن هذا <b>غير موصى به</b>.</p>"
+	            + (mods.isEmpty() ? ""
+	                : "<p><b>الوحدات المكتشفة التي تشير إلى Flywheel:</b></p>"
+	                + "<ul>" + listaMods.toString() + "</ul>")
+	            + "<p>الحل الموصى به هو <b>إزالة  Flywheel</b> واستخدام "
+	            + "الإصدار المدمج مع Create فقط.</p>";
+
+	    return mensaje;
+	}
+
+	@Override
+	public String nombreIndependenteFlywheel() {
+	    return "Flywheel المستقل";
+	}
+	
+	@Override
+	public String mensajeFloralEnchantments() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	        + "تم اكتشاف خطأ مرتبط بالوحدة <i>Floral Enchantments</i>.</b>"
+	        + "<p>التحطيم ناتج عن عطل داخلي في الوحدة أثناء معالجة بيانات اللعبة، "
+	        + "مما يسبب <b>NullPointerException</b> أثناء التنفيذ.</p>"
+	        + "<p>عادةً ما يُحل هذا المشكل بتحديث الوحدة أو إزالتها.</p>";
+	}
+
+	@Override
+	public String nombreFloralEnchantments() {
+	    return "خطأ في Floral Enchantments";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

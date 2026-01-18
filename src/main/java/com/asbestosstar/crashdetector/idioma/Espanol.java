@@ -1,9 +1,11 @@
 package com.asbestosstar.crashdetector.idioma;
 
 import java.util.List;
+import java.util.Set;
 
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
+import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
@@ -6547,4 +6549,74 @@ public class Espanol implements Idioma {
 				+ "solo pensamos que sería gracioso ponerla aquí. CrashDetector es secular." + "</div></html>";
 	}
 
+	@Override
+	public String gmlIPV6() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "El mod GML (Groovy ModLoader) requiere estos cambios y es el origen más común de este problema.</b>";
+	}
+
+	@Override
+	public String mensajeIndependenteFlywheel(Set<String> mods) {
+	    StringBuilder listaMods = new StringBuilder();
+	    if (!mods.isEmpty()) {
+	        for (String mod : mods) {
+	            listaMods.append("<li>").append(mod).append("</li>");
+	        }
+	    }
+
+	    String mensaje = "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "Se ha detectado el uso de <i>Independiente Flywheel</i>.</b>"
+	            + "<p><b>Independiente Flywheel está obsoleto (deprecated)</b> y no debe utilizarse en versiones modernas.</p>"
+	            + "<p>Las versiones actuales de <b>Create</b> <b>ya incluyen Flywheel</b>, por lo que instalarlo de forma independiente "
+	            + "provoca conflictos de compatibilidad y errores de carga.</p>"
+	            + "<p>Algunos mods que dependen explícitamente de Independiente Flywheel pueden "
+	            + "<b>no funcionar</b> o <b>funcionar de forma inestable</b>. "
+	            + "En ciertos casos avanzados, estos mods pueden llegar a funcionar si se "
+	            + "<b>edita manualmente el archivo <code>mods.toml</code></b> para ajustar los rangos de versión, "
+	            + "aunque esto <b>no es recomendado</b>.</p>"
+	            + (mods.isEmpty() ? ""
+	                : "<p><b>Mods detectados que hacen referencia a Flywheel:</b></p>"
+	                + "<ul>" + listaMods.toString() + "</ul>")
+	            + "<p>La solución recomendada es <b>eliminar Independiente Flywheel</b> y utilizar únicamente "
+	            + "la versión incluida con Create.</p>";
+
+	    return mensaje;
+	}
+
+	@Override
+	public String nombreIndependenteFlywheel() {
+	    return "Flywheel Independiente";
+	}
+	
+	@Override
+	public String mensajeFloralEnchantments() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+			+ "Se ha detectado un error relacionado con el mod <i>Floral Enchantments</i>.</b>"
+			+ "<p>El crash está causado por un fallo interno del mod al manejar datos del juego, "
+			+ "lo que provoca una <b>NullPointerException</b> durante la ejecución.</p>"
+			+ "<p>Este problema suele resolverse actualizando el mod o eliminándolo .</p>";
+	}
+
+	@Override
+	public String nombreFloralEnchantments() {
+		return "Error de Floral Enchantments";
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+	
+	
+	
 }

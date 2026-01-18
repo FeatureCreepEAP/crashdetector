@@ -1,6 +1,7 @@
 package com.asbestosstar.crashdetector.idioma;
 
 import java.util.List;
+import java.util.Set;
 
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
@@ -5553,5 +5554,63 @@ public class Chino implements Idioma {
 		return "<html><div style='width:150px; text-align:center;'>" + "Sylent Bell 的观点和评论不一定代表我们的立场；"
 				+ "我们只是觉得放在这里挺有趣的。CrashDetector 是世俗的（非宗教的）。" + "</div></html>";
 	}
+	@Override
+	public String gmlIPV6() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "GML 模组（Groovy ModLoader）需要这些更改，且这是该问题最常见的根源。</b>";
+	}
+	
+	@Override
+	public String mensajeIndependenteFlywheel(Set<String> mods) {
+	    StringBuilder listaMods = new StringBuilder();
+	    if (!mods.isEmpty()) {
+	        for (String mod : mods) {
+	            listaMods.append("<li>").append(mod).append("</li>");
+	        }
+	    }
+
+	    String mensaje = "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "检测到正在使用 <i> Flywheel</i>。</b>"
+	            + "<p><b> Flywheel 已过时（deprecated）</b>，不应在现代版本中使用。</p>"
+	            + "<p>当前版本的 <b>Create</b> <b>已内置 Flywheel</b>，因此单独安装会导致兼容性冲突和加载错误。</p>"
+	            + "<p>某些明确依赖  Flywheel 的模组可能<b>无法运行</b>或<b>运行不稳定</b>。"
+	            + "在某些高级情况下，若<b>手动编辑 <code>mods.toml</code> 文件</b>以调整版本范围，这些模组或许能工作，"
+	            + "但<b>不建议这样做</b>。</p>"
+	            + (mods.isEmpty() ? ""
+	                : "<p><b>检测到引用 Flywheel 的模组：</b></p>"
+	                + "<ul>" + listaMods.toString() + "</ul>")
+	            + "<p>推荐的解决方案是<b>移除  Flywheel</b>，仅使用 Create 内置的版本。</p>";
+
+	    return mensaje;
+	}
+
+	@Override
+	public String nombreIndependenteFlywheel() {
+	    return "独立 Flywheel";
+	}
+	@Override
+	public String mensajeFloralEnchantments() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	        + "检测到与模组 <i>Floral Enchantments</i> 相关的错误。</b>"
+	        + "<p>崩溃是由该模组在处理游戏数据时的内部故障引起的，"
+	        + "导致执行过程中出现 <b>NullPointerException</b>。</p>"
+	        + "<p>此问题通常可通过更新或移除该模组解决。</p>";
+	}
+
+	@Override
+	public String nombreFloralEnchantments() {
+	    return "Floral Enchantments 错误";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

@@ -1,6 +1,7 @@
 package com.asbestosstar.crashdetector.idioma;
 
 import java.util.List;
+import java.util.Set;
 
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
@@ -5880,5 +5881,60 @@ public class Ingles implements Idioma {
 				+ "The opinions and comments of Sylent Bell do not necessarily reflect our own; "
 				+ "we just thought it would be funny to put her here. CrashDetector is secular." + "</div></html>";
 	}
+	@Override
+	public String gmlIPV6() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "The GML (Groovy ModLoader) mod requires these changes and is the most common cause of this issue.</b>";
+	}
+	@Override
+	public String mensajeIndependenteFlywheel(Set<String> mods) {
+	    StringBuilder listaMods = new StringBuilder();
+	    if (!mods.isEmpty()) {
+	        for (String mod : mods) {
+	            listaMods.append("<li>").append(mod).append("</li>");
+	        }
+	    }
+
+	    String mensaje = "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "The use of <i>Independent Flywheel</i> has been detected.</b>"
+	            + "<p><b>Independent Flywheel is obsolete (deprecated)</b> and should not be used in modern versions.</p>"
+	            + "<p>Current versions of <b>Create</b> <b>already include Flywheel</b>, so installing it separately "
+	            + "causes compatibility conflicts and loading errors.</p>"
+	            + "<p>Some mods that explicitly depend on Independent Flywheel may "
+	            + "<b>fail to work</b> or <b>behave unstably</b>. "
+	            + "In certain advanced cases, these mods might work if you "
+	            + "<b>manually edit the <code>mods.toml</code> file</b> to adjust version ranges, "
+	            + "though this is <b>not recommended</b>.</p>"
+	            + (mods.isEmpty() ? ""
+	                : "<p><b>Detected mods referencing Flywheel:</b></p>"
+	                + "<ul>" + listaMods.toString() + "</ul>")
+	            + "<p>The recommended solution is to <b>remove Independent Flywheel</b> and use only "
+	            + "the version included with Create.</p>";
+
+	    return mensaje;
+	}
+
+	@Override
+	public String nombreIndependenteFlywheel() {
+	    return "Independent Flywheel";
+	}
+	
+	@Override
+	public String mensajeFloralEnchantments() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	        + "An error related to the <i>Floral Enchantments</i> mod has been detected.</b>"
+	        + "<p>The crash is caused by an internal failure in the mod while handling game data, "
+	        + "which triggers a <b>NullPointerException</b> during execution.</p>"
+	        + "<p>This issue is usually resolved by updating or removing the mod.</p>";
+	}
+
+	@Override
+	public String nombreFloralEnchantments() {
+	    return "Floral Enchantments Error";
+	}
+	
+	
+	
+	
 
 }

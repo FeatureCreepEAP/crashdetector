@@ -101,6 +101,7 @@ public abstract class DerechosPiratasGUI extends JDialog implements CrashDetecto
 			Files.write(archivo, raiz.aBytesUtf8());
 		} catch (IOException ignored) {
 		}
+		dispose();
 	}
 
 	@Override

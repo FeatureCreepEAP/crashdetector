@@ -25,16 +25,12 @@ public class PirataMC implements Verificaciones {
 	public static Path archivo_derechos_piratas = Statics.carpeta.resolve("derechos_piratas.json");
 	boolean activado = false;
 	String mensaje = "";
-	boolean completa = true;
 
 	@Override
 	public void verificar(Consola consola) {
 		// TODO Auto-generated method stub
 
-		if (completa) {
-			return;
-		}
-		this.completa = true;
+
 
 		if (config.obtener()) {
 			if (consola.contenido_verificar

@@ -1,6 +1,7 @@
 package com.asbestosstar.crashdetector.idioma;
 
 import java.util.List;
+import java.util.Set;
 
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
@@ -5852,5 +5853,64 @@ public class Ruso implements Idioma {
 				+ "мы просто подумали, что будет забавно разместить её здесь. CrashDetector является светским."
 				+ "</div></html>";
 	}
+	@Override
+	public String gmlIPV6() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "Мод GML (Groovy ModLoader) требует этих изменений и является наиболее частой причиной данной проблемы.</b>";
+	}
+	
+	@Override
+	public String mensajeIndependenteFlywheel(Set<String> mods) {
+	    StringBuilder listaMods = new StringBuilder();
+	    if (!mods.isEmpty()) {
+	        for (String mod : mods) {
+	            listaMods.append("<li>").append(mod).append("</li>");
+	        }
+	    }
+
+	    String mensaje = "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "Обнаружено использование <i> Flywheel</i>.</b>"
+	            + "<p><b>Independent Flywheel устарел (deprecated)</b> и не должен использоваться в современных версиях.</p>"
+	            + "<p>Текущие версии <b>Create</b> <b>уже включают Flywheel</b>, поэтому его отдельная установка "
+	            + "вызывает конфликты совместимости и ошибки загрузки.</p>"
+	            + "<p>Некоторые моды, явно зависящие от  Flywheel, могут "
+	            + "<b>не работать</b> или <b>работать нестабильно</b>. "
+	            + "В некоторых продвинутых случаях они могут заработать, если вы "
+	            + "<b>вручную отредактируете файл <code>mods.toml</code></b>, чтобы настроить диапазоны версий, "
+	            + "хотя это <b>не рекомендуется</b>.</p>"
+	            + (mods.isEmpty() ? ""
+	                : "<p><b>Обнаруженные моды, ссылающиеся на Flywheel:</b></p>"
+	                + "<ul>" + listaMods.toString() + "</ul>")
+	            + "<p>Рекомендуемое решение — <b>удалить  Flywheel</b> и использовать только "
+	            + "версию, встроенную в Create.</p>";
+
+	    return mensaje;
+	}
+
+	@Override
+	public String nombreIndependenteFlywheel() {
+	    return "Независимый Flywheel";
+	}
+	
+	@Override
+	public String mensajeFloralEnchantments() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	        + "Foi detectado um erro relacionado ao mod <i>Floral Enchantments</i>.</b>"
+	        + "<p>O crash é causado por uma falha interna do mod ao manipular dados do jogo, "
+	        + "o que gera uma <b>NullPointerException</b> durante a execução.</p>"
+	        + "<p>Esse problema geralmente é resolvido atualizando ou removendo o mod.</p>";
+	}
+
+	@Override
+	public String nombreFloralEnchantments() {
+	    return "Erro do Floral Enchantments";
+	}
+	
+	
+	
+	
+	
+	
+	
 
 }

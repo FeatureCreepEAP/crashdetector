@@ -22,22 +22,23 @@ public class PreferIPV4Trace implements Verificaciones {
 	private boolean seenHttpClientFacadeSend = false;
 	private boolean argIpv4Encontrado = false;
 	private int firstExceptionLine = -1;
+	public boolean gml = false;
 
 	@Override
 	public void verificar(Consola consola) {
 		activado = false;
-		enlaceHtml = "";
-		seenConnectException = false;
-		seenClosedChannelException = false;
-		seenHttpClientImplSend = false;
-		seenHttpClientFacadeSend = false;
-		firstExceptionLine = -1;
+
+		if(consola.contenido_verificar.contains("gml")) {
+			gml=true;
+		}
 
 		// Verificar errores de conexión relacionados con IPv6
 		// Buscar argumento JVM en el contenido del reporte
 		// Si no se encontraron flags JVM, verificar propiedad del sistema actual
 		String propiedadIpv4 = System.getProperty("java.net.preferIPv4Stack");
-		argIpv4Encontrado = "true".equalsIgnoreCase(propiedadIpv4);
+		  if("true".equalsIgnoreCase(propiedadIpv4)) {
+			 argIpv4Encontrado=true;
+		}
 	}
 
 	@Override
@@ -62,6 +63,13 @@ public class PreferIPV4Trace implements Verificaciones {
 
 		boolean errorIpv6 = seenConnectException && seenClosedChannelException && seenHttpClientImplSend
 				&& seenHttpClientFacadeSend;
+		
+		if(linea.contains("org.groovymc.gml.mappings.MappingsProvider.loadLayeredMappings")) {
+			errorIpv6=true;//gml error
+			argIpv4Encontrado=false;
+			
+		}
+		
 
 		if (!activado && errorIpv6 && !argIpv4Encontrado) {
 			activado = true;
@@ -95,7 +103,14 @@ public class PreferIPV4Trace implements Verificaciones {
 	public String mensaje() {
 		if (!activado)
 			return "";
-		return MonitorDePID.idioma.tieneErrorIPV6() + " " + enlaceHtml;
+		StringBuilder cons= new StringBuilder(MonitorDePID.idioma.tieneErrorIPV6());
+		
+		if(gml) {
+			cons.append(nl_html).append(MonitorDePID.idioma.gmlIPV6());
+		}
+		
+		cons.append(" ").append(enlaceHtml);
+		return  cons.toString();
 	}
 
 	@Override

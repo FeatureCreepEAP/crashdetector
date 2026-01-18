@@ -1,6 +1,7 @@
 package com.asbestosstar.crashdetector.idioma;
 
 import java.util.List;
+import java.util.Set;
 
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
@@ -5659,5 +5660,63 @@ public class Japones implements Idioma {
 		return "<html><div style='width:150px; text-align:center;'>" + "Sylent Bell の意見やコメントは必ずしも私たちの見解と一致するわけではありません；"
 				+ "ただ、ここに置いたら面白いと思ったのです。CrashDetector は世俗的です。" + "</div></html>";
 	}
+	@Override
+	public String gmlIPV6() {
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	            + "GML（Groovy ModLoader）mod はこれらの変更を必要とし、この問題の最も一般的な原因です。</b>";
+	}
+	
+	
+	@Override
+	public String mensajeIndependenteFlywheel(Set<String> mods) {
+	    StringBuilder listaMods = new StringBuilder();
+	    if (!mods.isEmpty()) {
+	        for (String mod : mods) {
+	            listaMods.append("<li>").append(mod).append("</li>");
+	        }
+	    }
+
+	    String mensaje = "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "<i> Flywheel</i> の使用が検出されました。</b>"
+	            + "<p><b> Flywheel は非推奨（deprecated）</b>であり、最新バージョンでは使用すべきではありません。</p>"
+	            + "<p>現在の <b>Create</b> バージョンは<b>Flywheel を既に内蔵</b>しているため、別途インストールすると "
+	            + "互換性の衝突や読み込みエラーが発生します。</p>"
+	            + "<p> Flywheel に明示的に依存する一部の mod は "
+	            + "<b>動作しない</b>か<b>不安定に動作</b>する可能性があります。"
+	            + "特定の高度なケースでは、<b><code>mods.toml</code> ファイルを手動で編集</b>してバージョン範囲を調整すれば "
+	            + "動作するかもしれませんが、これは<b>推奨されません</b>。</p>"
+	            + (mods.isEmpty() ? ""
+	                : "<p><b>Flywheel を参照している検出済み mod:</b></p>"
+	                + "<ul>" + listaMods.toString() + "</ul>")
+	            + "<p>推奨される解決策は、<b> Flywheel を削除</b>し、Create に同梱されているバージョンのみを使用することです。</p>";
+
+	    return mensaje;
+	}
+
+	@Override
+	public String nombreIndependenteFlywheel() {
+	    return "独立型 Flywheel";
+	}
+	
+	
+	@Override
+	public String mensajeFloralEnchantments() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	        + "<i>Floral Enchantments</i> モッドに関連するエラーが検出されました。</b>"
+	        + "<p>クラッシュは、ゲームデータを処理中にモッド内で発生した内部障害によって引き起こされ、"
+	        + "実行中に <b>NullPointerException</b> を発生させます。</p>"
+	        + "<p>この問題は通常、モッドを更新または削除することで解決します。</p>";
+	}
+
+	@Override
+	public String nombreFloralEnchantments() {
+	    return "Floral Enchantments エラー";
+	}
+	
+	
+	
+	
+	
+	
 
 }
