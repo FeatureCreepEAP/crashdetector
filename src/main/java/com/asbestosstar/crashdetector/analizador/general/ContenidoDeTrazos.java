@@ -35,7 +35,7 @@ import com.asbestosstar.crashdetector.mapas.TriMap;
  * primero). El bloque de configuraciones de llaves "{}" se mantiene separado
  * como antes.
  */
-public class ContentoDeTraces implements Verificaciones {
+public class ContenidoDeTrazos implements Verificaciones {
 
 	public boolean activado = false;
 
@@ -440,7 +440,7 @@ public class ContentoDeTraces implements Verificaciones {
 
 	@Override
 	public Verificaciones nueva() {
-		return new ContentoDeTraces();
+		return new ContenidoDeTrazos();
 	}
 
 	@Override

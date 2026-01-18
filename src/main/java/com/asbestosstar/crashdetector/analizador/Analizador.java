@@ -19,7 +19,7 @@ import com.asbestosstar.crashdetector.analizador.apps.minecraft.*;
 import com.asbestosstar.crashdetector.analizador.firmas.CargadorDeCodice;
 import com.asbestosstar.crashdetector.analizador.general.AdvertenciaFaltasClases;
 import com.asbestosstar.crashdetector.analizador.general.AntiManipulacion;
-import com.asbestosstar.crashdetector.analizador.general.ContentoDeTraces;
+import com.asbestosstar.crashdetector.analizador.general.ContenidoDeTrazos;
 import com.asbestosstar.crashdetector.analizador.general.DifDeMods;
 import com.asbestosstar.crashdetector.analizador.general.Drivers;
 import com.asbestosstar.crashdetector.analizador.general.ErrorArchivoBloqueadoPorOtroProceso;
@@ -98,7 +98,7 @@ public class Analizador {
 
 	static {
 		// Registrar por defecto las que deben ser tardías usando la API en-código:
-		registrarVerificacionTardia(ContentoDeTraces.class);
+		registrarVerificacionTardia(ContenidoDeTrazos.class);
 		registrarVerificacionTardia(AdvertenciaFaltasClases.class);
 
 		CrashDetectorLogger.log(Criticalidad.ADVERTENCIA.toString() + " buscando para advertencias ");
@@ -135,7 +135,7 @@ public class Analizador {
 		verificaciones.add(new Theseus());
 		verificaciones.add(new CursedConsola());
 		verificaciones.add(new NullPointer());
-		verificaciones.add(new ContentoDeTraces());
+		verificaciones.add(new ContenidoDeTrazos());
 		verificaciones.add(new AuditorTransformer());
 		verificaciones.add(new AdvertenciaFaltasClases());
 		verificaciones.add(new MalwareFalsoCrashAssistant());
