@@ -8,7 +8,6 @@ import java.util.Set;
 
 import javax.swing.JOptionPane;
 
-import com.asbestosstar.crashdetector.BiMap;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
@@ -20,6 +19,7 @@ import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.mapas.BiMap;
 
 public class SpongeMixinConfigsProblematicos implements Verificaciones {
 

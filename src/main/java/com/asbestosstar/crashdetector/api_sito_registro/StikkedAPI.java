@@ -12,8 +12,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.asbestosstar.crashdetector.BiMap;
 import com.asbestosstar.crashdetector.Consola;
+import com.asbestosstar.crashdetector.mapas.BiMap;
 
 public class StikkedAPI implements APIdeSitioDeRegistro {
 

@@ -34,7 +34,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import com.asbestosstar.crashdetector.BiMap;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
@@ -58,6 +57,7 @@ import com.asbestosstar.crashdetector.gui.tipos.modapi.CDModsEstiloTL;
 import com.asbestosstar.crashdetector.gui.tipos.modapi.PanelAPIBase;
 import com.asbestosstar.crashdetector.gui.tipos.quickfix.PanelQuickFixDemonSlayers;
 import com.asbestosstar.crashdetector.gui.tipos.quickfix.TodosQuickFixesGUI;
+import com.asbestosstar.crashdetector.mapas.BiMap;
 
 /**
  * Base técnica: - Crea y configura el visor (JEditorPane/JScrollPane) y

@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
-import com.asbestosstar.crashdetector.BiMap;
-import com.asbestosstar.crashdetector.BiMap.DoubleKey;
 import com.asbestosstar.crashdetector.api_sito_registro.APIdeSitioDeRegistro.ParteInfo;
+import com.asbestosstar.crashdetector.mapas.BiMap;
+import com.asbestosstar.crashdetector.mapas.BiMap.DoubleKey;
 import com.asbestosstar.crashdetector.Consola;
 
 public interface APIdeSitioDeRegistro {

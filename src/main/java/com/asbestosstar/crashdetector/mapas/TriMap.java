@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetector;
+package com.asbestosstar.crashdetector.mapas;
 
 import java.util.*;
 

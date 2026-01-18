@@ -33,7 +33,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import com.asbestosstar.crashdetector.App;
-import com.asbestosstar.crashdetector.BiMap;
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.Entregar;
@@ -48,6 +47,7 @@ import com.asbestosstar.crashdetector.gui.elementos.ComboIdiomasConIcono;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartir;
 import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartirLegacy;
+import com.asbestosstar.crashdetector.mapas.BiMap;
 
 public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 
