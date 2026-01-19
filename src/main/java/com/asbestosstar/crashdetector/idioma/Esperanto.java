@@ -591,7 +591,7 @@ public class Esperanto implements Idioma {
 
 	@Override
 	public String errorConfigMCForge() {
-		return "<b style='color:#" + config.obtenerColorError() + "'>" + "Kritika eraro de agordo de Forge: "
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "Kritika eraro de agordo de NightConfig/Forge: "
 				+ "Difektita aŭ nekompleta agorda dosiero. "
 				+ "Forigu la dosierujon 'config' kaj restartigu la ludon</b>";
 	}

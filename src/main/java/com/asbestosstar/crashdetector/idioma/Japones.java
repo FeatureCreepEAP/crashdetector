@@ -560,7 +560,7 @@ public class Japones implements Idioma {
 
 	@Override
 	public String errorConfigMCForge() {
-		return "<b style='color:#" + config.obtenerColorError() + "'>" + "Forge設定の重大なエラー: " + "設定ファイルが破損または不完全です。 "
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "NightConfig/Forge設定の重大なエラー: " + "設定ファイルが破損または不完全です。 "
 				+ "'config'フォルダを削除してゲームを再起動してください</b>";
 	}
 

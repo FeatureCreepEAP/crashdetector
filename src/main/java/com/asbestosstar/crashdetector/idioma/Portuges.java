@@ -595,7 +595,7 @@ public class Portuges implements Idioma {
 
 	@Override
 	public String errorConfigMCForge() {
-		return "<b style='color:#" + config.obtenerColorError() + "'>" + "Erro crítico de configuração do Forge: "
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "Erro crítico de configuração do NightConfig/Forge: "
 				+ "Arquivo de configuração corrompido ou incompleto. "
 				+ "Exclua a pasta 'config' e reinicie o jogo</b>";
 	}

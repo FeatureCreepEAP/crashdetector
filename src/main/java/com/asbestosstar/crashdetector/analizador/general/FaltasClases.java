@@ -22,6 +22,7 @@ import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.mapas.QuadMap.QuadrupleKey;
 import com.asbestosstar.crashdetector.mapas.TriMap;
 import com.asbestosstar.crashdetector.waifu.RespuestaWaifu;
 import com.asbestosstar.crashdetector.waifu.VersionWaifu;
@@ -680,7 +681,7 @@ public class FaltasClases implements Verificaciones {
 
 		// 1) Packs: escoger el más específico permitido
 		String mejorPack = "";
-		for (TriMap.TripleKey<String, Integer, Integer> k : vdst.packs.keySet()) {
+		for (QuadrupleKey<String, Integer, Integer, String> k : vdst.packs.keySet()) {
 			String packDot = k.key1; // "com.ejemplo"
 			if (packDot == null || packDot.isEmpty())
 				continue;
@@ -700,7 +701,7 @@ public class FaltasClases implements Verificaciones {
 
 		// 2) Modids: solo permitidos
 		// 2) Modids: solo permitidos y no sospechosos
-		for (TriMap.TripleKey<String, Integer, Integer> k : vdst.modids.keySet()) {
+		for (QuadrupleKey<String, Integer, Integer, String> k : vdst.modids.keySet()) {
 			String modid = k.key1;
 			if (modid == null || modid.isEmpty())
 				continue;

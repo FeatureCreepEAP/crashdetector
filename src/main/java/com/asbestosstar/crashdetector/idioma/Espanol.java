@@ -639,7 +639,7 @@ public class Espanol implements Idioma {
 	@Override
 	public String errorConfigMCForge() {
 		// TODO Auto-generated method stub
-		return "<b style='color:#" + config.obtenerColorError() + "'>" + "Error crítico de configuración Forge: "
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "Error crítico de configuración NightConfig/Forge: "
 				+ "Archivo de configuración corrupto o incompleto. "
 				+ "Elimina la carpeta 'config' y reinicia el juego</b>";
 	}

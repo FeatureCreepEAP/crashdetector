@@ -541,7 +541,7 @@ public class Chino implements Idioma {
 
 	@Override
 	public String errorConfigMCForge() {
-		return "<b style='color:#" + config.obtenerColorError() + "'>" + "Forge配置严重错误: " + "配置文件损坏或不完整。 "
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "NightConfig/Forge配置严重错误: " + "配置文件损坏或不完整。 "
 				+ "删除'config'文件夹并重新启动游戏</b>";
 	}
 

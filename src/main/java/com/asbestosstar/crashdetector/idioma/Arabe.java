@@ -595,7 +595,7 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String errorConfigMCForge() {
-		return "<b style='color:#" + config.obtenerColorError() + "'>" + "خطأ حرج في تكوين Forge: "
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "خطأ حرج في تكوين NightConfig/Forge: "
 				+ "ملف التكوين تالف أو غير مكتمل. " + "احذف مجلد 'config' وأعد تشغيل اللعبة</b>";
 	}
 

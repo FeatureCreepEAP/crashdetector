@@ -590,7 +590,7 @@ public class Persa implements Idioma {
 
 	@Override
 	public String errorConfigMCForge() {
-		return "<b style='color:#" + config.obtenerColorError() + "'>" + "خطای بحرانی تنظیمات Forge: "
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "خطای بحرانی تنظیمات NightConfig/Forge: "
 				+ "فایل تنظیمات خراب یا ناقص است. " + "پوشه 'config' را حذف کرده و بازی را دوباره راه‌اندازی کنید</b>";
 	}
 

@@ -84,7 +84,7 @@ public class FabricMCRuntimeErrorProvidedBy implements Verificaciones {
 
 	@Override
 	public float prioridad() {
-		return 900.0f; // Prioridad media-alta para errores de inicialización
+		return 1300.0f; // Prioridad media-alta para errores de inicialización
 	}
 
 	@Override

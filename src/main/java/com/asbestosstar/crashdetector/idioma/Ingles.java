@@ -598,7 +598,7 @@ public class Ingles implements Idioma {
 
 	@Override
 	public String errorConfigMCForge() {
-		return "<b style='color:#" + config.obtenerColorError() + "'>" + "Critical Forge configuration error: "
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "Critical NightConfig/Forge configuration error: "
 				+ "Corrupted or incomplete configuration file. "
 				+ "Delete the 'config' folder and restart the game</b>";
 	}

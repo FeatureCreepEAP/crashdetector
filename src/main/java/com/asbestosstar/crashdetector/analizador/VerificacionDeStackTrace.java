@@ -18,6 +18,7 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.StackTracesDenegadosDeMinecraftPorDefecto;
 import com.asbestosstar.crashdetector.mapas.BiMap;
+import com.asbestosstar.crashdetector.mapas.QuadMap;
 import com.asbestosstar.crashdetector.mapas.TriMap;
 
 public class VerificacionDeStackTrace {
@@ -57,11 +58,12 @@ public class VerificacionDeStackTrace {
 	public BiMap<String, Integer, Boolean> sm_config = new BiMap<>(); // (nombre JSON, línea_consola, es fatal)
 
 	public Map<String, Boolean> jars = new LinkedHashMap<>();// FATAL
-	public TriMap<String, Integer, Integer, Boolean> modids = new TriMap<>();// FATAL (modid, nivel_prioridad,
+	
+	public QuadMap<String, Integer, Integer, String, Boolean> modids = new QuadMap<>();// FATAL (modid, nivel_prioridad,
 																				// línea_consola, es fatal)
-	public TriMap<String, Integer, Integer, Boolean> packs = new TriMap<>();// FATAL (paquete, nivel_prioridad,
+	public QuadMap<String, Integer, Integer, String, Boolean> packs = new QuadMap<>();// FATAL (paquete, nivel_prioridad,
 																			// línea_consola, es fatal)
-	public TriMap<String, Integer, Integer, Boolean> braces = new TriMap<>();// FATAL (contenido llaves,
+	public QuadMap<String, Integer, Integer, String, Boolean> braces = new QuadMap<>();// FATAL (contenido llaves,
 																				// nivel_prioridad, línea_consola, es
 																				// fatal)
 	public TriMap<String, Integer, Integer, String> clases_fatales_no_existentes = new TriMap<>();// (clase,
@@ -139,6 +141,29 @@ public class VerificacionDeStackTrace {
 		}
 	}
 
+	
+	
+	
+	public static String extraerClaseDeLinea(String linea) {
+		if (linea == null)
+			return "";
+
+		int idx = linea.indexOf("at ");
+		if (idx >= 0)
+			linea = linea.substring(idx + 3);
+
+		int par = linea.indexOf('(');
+		if (par >= 0)
+			linea = linea.substring(0, par);
+
+		int lambda = linea.indexOf("$$");
+		if (lambda >= 0)
+			linea = linea.substring(0, lambda);
+
+		return linea.replace('.', '/').trim();
+	}
+
+	
 	/**
 	 * Obtiene stack traces fatales junto con su línea inicial en la consola
 	 */
@@ -283,7 +308,9 @@ public class VerificacionDeStackTrace {
 								&& !esModNoPermite(modid) && lineaTrim.startsWith("at")) {
 							modid_malo.add(modid);
 							// Ahora usamos TriMap con nivel de prioridad y número de línea en la consola
-							modids.put(modid, nivel_prioridad, consolaNumLinea, fatal);
+							String clase = extraerClaseDeLinea(lineaTrim);
+							modids.put(modid, nivel_prioridad, consolaNumLinea, clase, fatal);
+
 						}
 					}
 				}
@@ -293,7 +320,8 @@ public class VerificacionDeStackTrace {
 					if (pack != null) {
 						if (!package_malo.contains(pack) && !packNoEsPermite(pack, dec, fatal)) {
 							// Ahora usamos TriMap con nivel de prioridad y número de línea en la consola
-							packs.put(pack, nivel_prioridad, consolaNumLinea, fatal);
+							String clase = extraerClaseDeLinea(lineaTrim);
+							packs.put(pack, nivel_prioridad, consolaNumLinea,clase, fatal);
 							package_malo.add(pack);
 						}
 					}
@@ -333,7 +361,8 @@ public class VerificacionDeStackTrace {
 				for (String content : llavesEncontradas) {
 					if (!brace_malo.contains(content)) {
 						// Ahora usamos TriMap con nivel de prioridad y número de línea en la consola
-						braces.put(content, nivel_prioridad, consolaNumLinea, fatal);
+						String clase = extraerClaseDeLinea(lineaTrim);
+						braces.put(content, nivel_prioridad, consolaNumLinea,clase, fatal);
 						brace_malo.add(content);
 
 						// Heurística adicional: proponer modid desde "mixins.<mod>.json" dentro de las
@@ -343,7 +372,7 @@ public class VerificacionDeStackTrace {
 							String cand = mm.group(1);
 							if (esModIdPlausible(cand) && !esModNoPermite(cand) && !modid_malo.contains(cand)) {
 								modid_malo.add(cand);
-								modids.put(cand, nivel_prioridad, consolaNumLinea, fatal);
+								modids.put(cand, nivel_prioridad, consolaNumLinea,clase, fatal);
 							}
 						}
 					}
@@ -831,7 +860,7 @@ public class VerificacionDeStackTrace {
 				String[] lvlLinea = dec.split(",");
 				int nivel_prioridad = Integer.parseInt(lvlLinea[0]);
 				int consoleLineNumber = Integer.parseInt(lvlLinea[1]);
-				modids.put(candidato, nivel_prioridad, consoleLineNumber, fatal);
+				modids.put(candidato, nivel_prioridad, consoleLineNumber,extraerClaseDeLinea(dec) ,fatal);
 				CrashDetectorLogger.log("Mod ID por handler detectado: " + candidato);
 			}
 		} catch (Exception ex) {

@@ -1,6 +1,7 @@
 package com.asbestosstar.crashdetector.analizador.general;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.Collections;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -23,10 +23,11 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
+import com.asbestosstar.crashdetector.mapas.QuadMap;
 import com.asbestosstar.crashdetector.mapas.TriMap;
 
 /**
@@ -287,37 +288,55 @@ public class ContenidoDeTrazos implements Verificaciones {
 		// Procesar modids
 		if (!vdst.modids.isEmpty()) {
 			Buscardor.cargar();
-			for (TriMap.TripleKey<String, Integer, Integer> llave : vdst.modids.keySet()) {
-				String identificador = llave.key1; // modid
-				int nivel = llave.key2; // nivel
-				int linea = llave.key3; // número de línea en consola
-				boolean fatal = vdst.modids.get(identificador, nivel, linea);
+			for (QuadMap.QuadrupleKey<String, Integer, Integer, String> llave : vdst.modids.keySet()) {
 
-				// Saltar si el nivel pertenece a un trazo ocupado
-				if (esTrazoOcupado(niveles_ocupados, nivel)) {
+				String modid = llave.key1;
+				int nivel = llave.key2;
+				int linea = llave.key3;
+				String clase = llave.key4;
+				boolean fatal = vdst.modids.get(modid, nivel, linea, clase);
+
+				if (esTrazoOcupado(niveles_ocupados, nivel))
 					continue;
-				}
 
 				String texto_nivel = MonitorDePID.idioma.nivel() + nivel + "," + linea;
-				String enlace = consola.agregarErrorALectador(linea, this);
+				String enlaceLinea = consola.agregarErrorALectador(linea, this);
 
-				List<String> jars_mod = Buscardor.obtenerModsConNombre(identificador);
-				String nombre_mostrar = jars_mod.isEmpty() ? identificador : String.join(", ", jars_mod);
+				// 1 Buscar JARs por clase
+				List<String> jars = Buscardor.obtenerModsConNombre(clase);
 
-				if (nombres_vistos.add(nombre_mostrar)) {
-					problemas.add(new Problema(nombre_mostrar, texto_nivel, fatal, enlace));
+				// 2Si no hay, buscar por modid
+				if (jars.isEmpty()) {
+					jars = Buscardor.obtenerModsConNombre(modid);
 				}
+
+				String nombreMostrar;
+				if (!jars.isEmpty()) {
+					nombreMostrar = String.join(", ", jars);
+				} else if (modid != null && !modid.isEmpty()) {
+					nombreMostrar = modid;
+				} else {
+					nombreMostrar = clase;
+				}
+
+				// 🔗 CFR link
+				String enlaceCfr = "<a href=\"cfr://" + clase + "\">[CFR]</a>";
+
+				problemas.add(new Problema(nombreMostrar, texto_nivel, fatal, enlaceLinea + " " + enlaceCfr));
 			}
+
 		}
 
 		// Procesar paquetes
 		if (!vdst.packs.isEmpty()) {
 			Buscardor.cargar();
-			for (TriMap.TripleKey<String, Integer, Integer> llave : vdst.packs.keySet()) {
-				String identificador = llave.key1; // paquete
+			for (QuadMap.QuadrupleKey<String, Integer, Integer, String> llave : vdst.packs.keySet()) {
+
+				String paquete = llave.key1; // paquete
 				int nivel = llave.key2; // nivel
-				int linea = llave.key3; // número de línea en consola
-				boolean fatal = vdst.packs.get(identificador, nivel, linea);
+				int linea = llave.key3; // línea en consola
+				String clase = llave.key4; // clase asociada
+				boolean fatal = vdst.packs.get(paquete, nivel, linea, clase);
 
 				// Saltar si el nivel pertenece a un trazo ocupado
 				if (esTrazoOcupado(niveles_ocupados, nivel)) {
@@ -325,16 +344,35 @@ public class ContenidoDeTrazos implements Verificaciones {
 				}
 
 				String texto_nivel = MonitorDePID.idioma.nivel() + nivel + "," + linea;
-				String enlace = consola.agregarErrorALectador(linea, this);
+				String enlaceLinea = consola.agregarErrorALectador(linea, this);
 
-				String ruta_paquete = obtenerRutaDePaquete(identificador);
-				List<String> jars_paquete = Buscardor.obtenerUbicaciones(Buscardor.buscarModsConTermino(ruta_paquete));
-				String nombre_mostrar = jars_paquete.isEmpty() ? identificador : String.join(", ", jars_paquete);
+				// Intentar resolver JARs usando la clase
+				List<String> jars = Buscardor.obtenerModsConNombre(clase);
+
+				// Si no hay resultados, intentar usando el paquete
+				if (jars.isEmpty()) {
+					String ruta_paquete = obtenerRutaDePaquete(paquete);
+					jars = Buscardor.obtenerUbicaciones(Buscardor.buscarModsConTermino(ruta_paquete));
+				}
+
+				// Fallbacks finales
+				String nombre_mostrar;
+				if (!jars.isEmpty()) {
+					nombre_mostrar = String.join(", ", jars);
+				} else if (paquete != null && !paquete.isEmpty()) {
+					nombre_mostrar = paquete;
+				} else {
+					nombre_mostrar = clase;
+				}
+
+				// 🔗 Enlace CFR siempre basado en la clase
+				String enlaceCfr = "<a href=\"cfr://" + clase + "\">[CFR]</a>";
 
 				if (nombres_vistos.add(nombre_mostrar)) {
-					problemas.add(new Problema(nombre_mostrar, texto_nivel, fatal, enlace));
+					problemas.add(new Problema(nombre_mostrar, texto_nivel, fatal, enlaceLinea + " " + enlaceCfr));
 				}
 			}
+
 		}
 
 		if (!problemas.isEmpty()) {
@@ -358,26 +396,41 @@ public class ContenidoDeTrazos implements Verificaciones {
 			constructor.append("</ul>");
 		}
 
+		Set<String> braces_procesadas = new HashSet<>();
+
 		// Procesar configuraciones en llaves "{}"
 		TriMap<String, Integer, Integer, Boolean> configs_inyectadas = new TriMap<>();
-		for (TriMap.TripleKey<String, Integer, Integer> llave : vdst.braces.keySet()) {
+		for (QuadMap.QuadrupleKey<String, Integer, Integer, String> llave : vdst.braces.keySet()) {
+
 			String contenido = llave.key1;
+
+			if (!braces_procesadas.add(contenido)) {
+				continue;
+			}
+
 			int nivel = llave.key2;
 			int linea = llave.key3;
-			boolean fatal = vdst.braces.get(contenido, nivel, linea);
+			boolean fatal = vdst.braces.get(contenido, nivel, linea, llave.key4);
 
 			for (String ind : VerificacionDeStackTrace.eliminarDuplicados(contenido.split(","))) {
-				String limpiado = ind.replace("pl:runtimedistcleaner:A", "").replace("re:classloading", "")
-						.replace("pl:mixin:APP:", "").replace("re:computing_frames", "")
-						.replace("pl:accesstransformer:B", "").replace("pl:mixin:A", "").replace("xf:fml", "")
-						.replace("featurecreep", "").replace("re:mixin", "").replace("xf:crashdetector:default", "");
 
-				// No añadir si el nivel pertenece a un trazo ocupado
+				String limpiado = ind.replace("pl:runtimedistcleaner:A", "")
+						.replace("re:classloading", "")
+						.replace("pl:mixin:APP:", "")
+						.replace("re:computing_frames", "")
+						.replace("pl:accesstransformer:B", "")
+						.replace("pl:mixin:A", "")
+						.replace("xf:fml", "")
+						.replace("featurecreep", "")
+						.replace("re:mixin", "")
+						.replace("xf:crashdetector:default", "");
+
 				if (!limpiado.isEmpty() && !esTrazoOcupado(niveles_ocupados, nivel)) {
 					configs_inyectadas.put(limpiado, nivel, linea, fatal);
 				}
 			}
 		}
+
 
 		TriMap<String, Integer, Integer, Boolean> configs_filtradas = new TriMap<>();
 		if (!configs_inyectadas.isEmpty()) {

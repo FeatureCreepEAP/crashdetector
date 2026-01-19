@@ -590,7 +590,7 @@ public class Ruso implements Idioma {
 
 	@Override
 	public String errorConfigMCForge() {
-		return "<b style='color:#" + config.obtenerColorError() + "'>" + "Критическая ошибка конфигурации Forge: "
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "Критическая ошибка конфигурации NightConfig/Forge: "
 				+ "Файл конфигурации поврежден или неполон. " + "Удалите папку 'config' и перезапустите игру</b>";
 	}
 

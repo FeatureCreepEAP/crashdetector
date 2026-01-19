@@ -562,7 +562,7 @@ public class Coreano implements Idioma {
 
 	@Override
 	public String errorConfigMCForge() {
-		return "<b style='color:#" + config.obtenerColorError() + "'>" + "Forge 설정의 치명적인 오류: " + "설정 파일이 손상되거나 불완전합니다. "
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "NightConfig/Forge 설정의 치명적인 오류: " + "설정 파일이 손상되거나 불완전합니다. "
 				+ "'config' 폴더를 삭제하고 게임을 재시작하세요</b>";
 	}
 
