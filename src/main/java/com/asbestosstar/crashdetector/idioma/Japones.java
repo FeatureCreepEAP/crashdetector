@@ -5714,6 +5714,37 @@ public class Japones implements Idioma {
 	        + "MixinExtras の NeoForge 版と通常版の両方がインストールされています。MinecraftForge を使用している場合、<a href='https://www.curseforge.com/minecraft/mc-mods/mixin-extras-neoforge-on-forge-fix' style='color: inherit;'>このリンク</a>から修正 mod をインストールできます。</b>";
 	}
 	
+	@Override
+	public String mensajeIrisSombrasTerreno() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	        + "Iris のシェーダー使用時に地形の影にエラーが検出されました。</b>"
+	        + "<p>この問題は地形のレンダリング中に発生します。</p>"
+	        + "<p><b>シェーダーを無効にしてゲームを試す</b>か、グラフィック品質を下げることを推奨します。"
+	        + "特に<b>Ultra</b>設定時です。</p>";
+	}
+
+	@Override
+	public String nombreIrisSombrasTerreno() {
+	    return "地形の影 (Iris)";
+	}
+	
+	@Override
+	public String mensajeTickLargoServidor() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	        + "サーバーのティックが異常に長くなっています。</b>"
+	        + "<p>これは、ゲームが1ティック内で長時間フリーズしたことを示しています。</p>"
+	        + "<p>原因を特定するため、ログに生成された<b>スレッドダンプ(thread dump)を確認</b>することをお勧めします。</p>"
+	        + "<p><b>スタックトレース分析(Stack Trace Analysis)</b>により、フリーズの原因を特定できます。</p>"
+	        + "<p>また、<b>ログで表示</b>ボタンは、問題の原因となりうるmodを赤色で強調表示し、"
+	        + "<code>$modid$</code>で囲まれたエントリも表示します（これらは通常、問題の発生源を示します）。リアルタイムでの解析には、VisualVM の CPU サンプラーの使用を推奨します。すべてのmodが正常に動作していても、数が多すぎるとこの問題が発生する可能性があるため、サーバーやPCの性能が使用中のmodを十分に処理できるか確認してください。</p>";
+	}
+
+	@Override
+	public String nombreTickLargoServidor() {
+	    return "サーバーティックの長時間停止";
+	}
+	
+	
 	
 	
 	

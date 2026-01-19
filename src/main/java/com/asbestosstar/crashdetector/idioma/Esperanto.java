@@ -5866,7 +5866,35 @@ public class Esperanto implements Idioma {
 	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
 	        + "Vi havas kaj la NeoForge-version kaj la norman version de MixinExtras. Se vi uzas MinecraftForge, vi povas instali <a href='https://www.curseforge.com/minecraft/mc-mods/mixin-extras-neoforge-on-forge-fix' style='color: inherit;'>ĉi tiun ligilon</a> por solvi la problemon.</b>";
 	}
+	@Override
+	public String mensajeIrisSombrasTerreno() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	        + "Eraro estis trovita en terensombroj kun shaders (Iris).</b>"
+	        + "<p>La problemo okazas dum bildigo de la tereno.</p>"
+	        + "<p>Oni rekomendas <b>provu ludi sen shaders</b> aŭ malaltigi grafikan kvaliton, "
+	        + "precipe ĉe agordoj <b>Ultra</b>.</p>";
+	}
+
+	@Override
+	public String nombreIrisSombrasTerreno() {
+	    return "Terensombroj (Iris)";
+	}
 	
+	@Override
+	public String mensajeTickLargoServidor() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	        + "Tro longa servila tiko estis detektita.</b>"
+	        + "<p>Tio indikas ke la ludo haltis tro longe dum unu tiko.</p>"
+	        + "<p>Oni rekomendas <b>kontroli la thread dump</b> generitan en la protokolo por identigi la kialon.</p>"
+	        + "<p>La <b>Analizo de Stack Trace</b> povas helpi vin trovi la fonton de la blokado.</p>"
+	        + "<p>Krome tio, la butono <b>Vidi en protokolo</b> markos per ruĝa koloro eblajn kulpajn modojn, "
+	        + "same kiel enirojn ĉirkaŭitajn de <code>$modid$</code>, kiuj kutime indikas la probleman fonton. Por realtempa skanado, ni rekomendas uzi la CPU-provanton en VisualVM. Certigu, ke via servilo aŭ komputilo estas sufiĉe pova por pritrakti viajn modojn — eĉ se ĉiuj funkcias ĝuste, tro multaj povas kaŭzi tiun problemon.</p>";
+	}
+
+	@Override
+	public String nombreTickLargoServidor() {
+	    return "Longa servila tiko";
+	}
 	
 	
 	

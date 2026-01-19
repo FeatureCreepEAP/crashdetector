@@ -256,6 +256,8 @@ public class Analizador {
 		
 		verificaciones.add(new IndependenteFlywheel());
 		verificaciones.add(new FloralEnchantmentsTagKeyNull());
+		verificaciones.add(new IrisSombrasTerreno());
+		verificaciones.add(new TickLargoServidorMinecraft());
 
 		
 		

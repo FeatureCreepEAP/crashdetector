@@ -5608,6 +5608,38 @@ public class Chino implements Idioma {
 	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
 	        + "你同时安装了 MixinExtras 的 NeoForge 版本和普通版本。如果你使用的是 MinecraftForge，可以安装 <a href='https://www.curseforge.com/minecraft/mc-mods/mixin-extras-neoforge-on-forge-fix' style='color: inherit;'>此链接</a>中的修复模组。</b>";
 	}
+	@Override
+	public String mensajeIrisSombrasTerreno() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	        + "检测到使用 Iris 的光影（shaders）时地形阴影出现错误。</b>"
+	        + "<p>该问题发生在地形渲染期间。</p>"
+	        + "<p>建议<b>尝试关闭光影运行游戏</b>，或降低图形质量，"
+	        + "尤其是在<b>Ultra</b>画质设置下。</p>";
+	}
+
+	@Override
+	public String nombreIrisSombrasTerreno() {
+	    return "地形阴影（Iris）";
+	}
+	
+	@Override
+	public String mensajeTickLargoServidor() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	        + "检测到服务器 tick 过长。</b>"
+	        + "<p>这表示游戏在单个 tick 中卡住的时间过长。</p>"
+	        + "<p>建议<b>检查日志中生成的 thread dump</b>以确定原因。</p>"
+	        + "<p><b>Stack Trace 分析</b>可帮助你定位卡顿源头。</p>"
+	        + "<p>此外，<b>在日志中查看</b>按钮会将可能的问题模组标红，"
+	        + "以及被 <code>$modid$</code> 包围的条目（通常指示问题来源）。对于实时分析，建议使用 VisualVM 的 CPU 采样器。请确保你的服务器或电脑性能足够运行你所使用的模组——即使所有模组都正常工作，数量过多也可能导致此问题。</p>";
+	}
+
+	@Override
+	public String nombreTickLargoServidor() {
+	    return "服务器 Tick 过长";
+	}
+	
+	
+	
 	
 	
 	

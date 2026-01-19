@@ -5848,6 +5848,39 @@ public class Arabe implements Idioma {
 	        + "لديك إصدار NeoForge من MixinExtras والإصدار العادي. إذا كنت تستخدم MinecraftForge، يمكنك تثبيت <a href='https://www.curseforge.com/minecraft/mc-mods/mixin-extras-neoforge-on-forge-fix' style='color: inherit;'>هذا الرابط</a> للحل.</b>";
 	}
 	
+	@Override
+	public String mensajeIrisSombrasTerreno() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	        + "تم اكتشاف خطأ في ظلال التضاريس مع الظلال (shaders) عبر Iris.</b>"
+	        + "<p>يحدث المشكل أثناء عرض التضاريس.</p>"
+	        + "<p>يُوصى بـ <b>تجربة اللعبة بدون shaders</b> أو خفض جودة الرسوميات، "
+	        + "خاصةً في الإعدادات <b>Ultra</b>.</p>";
+	}
+
+	@Override
+	public String nombreIrisSombrasTerreno() {
+	    return "ظلال التضاريس (Iris)";
+	}
+	
+	@Override
+	public String mensajeTickLargoServidor() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	        + "تم اكتشاف تيك (tick) خادم مفرط في الطول.</b>"
+	        + "<p>هذا يشير إلى أن اللعبة توقفت لفترة طويلة جدًّا في تيك واحد.</p>"
+	        + "<p>يُوصى بـ <b>مراجعة thread dump</b> المُنشأ في السجل (log) لتحديد السبب.</p>"
+	        + "<p>يمكن أن يساعدك <b>تحليل Stack Trace</b> في تحديد مصدر التوقف.</p>"
+	        + "<p>بالإضافة إلى ذلك، سيُبرز زر <b>عرض في السجل</b> باللون الأحمر الوحدات المحتملة المسؤولة، "
+	        + "وكذلك الإدخالات المحاطة بـ <code>$modid$</code>، التي غالبًا ما تشير إلى مصدر المشكلة. وللمسح في الوقت الفعلي، نوصي باستخدام عيّن CPU في VisualVM. تأكد من أن خادمك أو جهازك قوي بما يكفي للتعامل مع الوحدات التي تستخدمها، فقد تعمل جميع وحداتك بشكل صحيح، لكنك قد تكون تستخدم عددًا كبيرًا منها.</p>";
+	}
+
+	@Override
+	public String nombreTickLargoServidor() {
+	    return "تيك خادم طويل";
+	}
+	
+	
+	
+	
 	
 	
 	

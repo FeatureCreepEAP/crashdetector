@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -23,36 +22,42 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
+import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.LineaTrazo;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
-import com.asbestosstar.crashdetector.mapas.QuadMap;
-import com.asbestosstar.crashdetector.mapas.TriMap;
 
 /**
- * Para el contenido en "at" en Traces. Ahora las listas de jars, modids y
- * paquetes se combinan en una sola lista ordenada por nivel (el nivel más bajo
- * primero). El bloque de configuraciones de llaves "{}" se mantiene separado
- * como antes.
+ * Renderiza contenido basado en "at ..." de los stacktraces.
+ *
+ * Reglas: - No mostrar trazos ocupados por otras verificaciones (ocupaTrazo). -
+ * No duplicar trazos que aparecen en mas de 1 log: se muestran solo una vez
+ * (global). - No duplicar items dentro del mismo log. - CFR siempre basado en
+ * la clase de la linea.
  */
 public class ContenidoDeTrazos implements Verificaciones {
 
 	public boolean activado = false;
 
-	// Conjuntos para evitar duplicados
-	public Set<String> todos_identificadores = new HashSet<>(); // incluye jars / modids / paquetes
-	public Set<String> todos_sm_configs = new HashSet<>();
+	// Dedupe global de items mostrados (persistente entre consolas)
+	// Clave: (origen_normalizado | clase | nivel | lineaConsola)
+	public final Set<String> todos_identificadores = new HashSet<>();
 
-	public Map<String, StringBuilder> contento = new HashMap<>();
+	public final Set<String> todos_sm_configs = new HashSet<>();
+	public final Map<String, StringBuilder> contento = new HashMap<>();
 
 	private static final int MULTIPLICADOR_HILOS = 2;
 
+	// Dedupe global de lineas de trace (persistente entre consolas)
+	// Si la misma linea (clase+linea) aparece en multiples logs, solo se muestra
+	// una vez.
+	private static final Set<String> TRAZOS_GLOBALES_VISTOS = Collections.synchronizedSet(new HashSet<>());
+
 	private static class Problema {
-		String nombre;
-		String nivel;
+		String nombre; // jar/modid/pack/clase (posiblemente combinado)
+		String nivel; // "nivelX,Y"
 		boolean fatal;
-		String enlace;
+		String enlace; // enlaceLinea + [CFR]
 
 		Problema(String nombre, String nivel, boolean fatal, String enlace) {
 			this.nombre = nombre;
@@ -62,29 +67,6 @@ public class ContenidoDeTrazos implements Verificaciones {
 		}
 	}
 
-	private static List<Double> parsearNivelNumerico(String texto) {
-		List<Double> numeros = new ArrayList<>();
-		if (texto == null)
-			return numeros;
-
-		Pattern patron = Pattern.compile("\\b(\\d+[\\.,]?\\d*)\\b");
-		Matcher emparejador = patron.matcher(texto);
-
-		while (emparejador.find()) {
-			String grupo = emparejador.group(1).replace(',', '.');
-			try {
-				numeros.add(Double.parseDouble(grupo));
-			} catch (NumberFormatException ignorado) {
-			}
-		}
-		return numeros;
-	}
-
-	/**
-	 * Extrae los números [nivel, línea, …] a partir de la sub-cadena posterior al
-	 * último espacio (donde se encuentra «nivelX,Y»). No interpreta comas como
-	 * decimales, sino como separador.
-	 */
 	private static List<Integer> extraerNumerosDeNivel(String texto) {
 		List<Integer> numeros = new ArrayList<>();
 		if (texto == null)
@@ -118,8 +100,7 @@ public class ContenidoDeTrazos implements Verificaciones {
 
 	/**
 	 * Precalcula, de forma multi-hilo, todos los niveles de trazos ocupados usando
-	 * ocupaTrazo(TraceInfo) de las otras verificaciones activadas. El resultado es
-	 * independiente por cada Consola (usa solo el vdst de esa consola).
+	 * ocupaTrazo(TraceInfo) de las otras verificaciones activadas.
 	 */
 	private static Set<Integer> calcularNivelesOcupados(VerificacionDeStackTrace vdst) {
 		if (vdst == null || vdst.nivel_trazo == null || vdst.nivel_trazo.isEmpty() || MonitorDePID.analizador == null
@@ -134,14 +115,11 @@ public class ContenidoDeTrazos implements Verificaciones {
 
 		final int total = entradas_nivel_trazo.size();
 		int numero_hilos = Runtime.getRuntime().availableProcessors() * MULTIPLICADOR_HILOS;
-		if (numero_hilos < 1) {
+		if (numero_hilos < 1)
 			numero_hilos = 1;
-		}
-		if (numero_hilos > total) {
+		if (numero_hilos > total)
 			numero_hilos = total;
-		}
 
-		// Versión de un solo hilo (lista pequeña o 1 hilo calculado)
 		if (numero_hilos <= 1) {
 			Set<Integer> niveles_ocupados = new HashSet<>();
 			for (Map.Entry<Integer, TraceInfo> entrada : entradas_nivel_trazo) {
@@ -166,9 +144,8 @@ public class ContenidoDeTrazos implements Verificaciones {
 
 		for (int indice_hilo = 0; indice_hilo < numero_hilos; indice_hilo++) {
 			final int desde = indice_hilo * tamano_bloque;
-			if (desde >= total) {
+			if (desde >= total)
 				break;
-			}
 			final int hasta = Math.min(total, desde + tamano_bloque);
 
 			Callable<Set<Integer>> tarea = () -> {
@@ -208,287 +185,173 @@ public class ContenidoDeTrazos implements Verificaciones {
 		return niveles_ocupados;
 	}
 
-	/**
-	 * Comprueba si el nivel indicado pertenece a un trazo que ya está ocupado por
-	 * otra verificación (usando el conjunto precalculado).
-	 */
 	private static boolean esTrazoOcupado(Set<Integer> niveles_ocupados, int nivel) {
-		if (niveles_ocupados == null || niveles_ocupados.isEmpty()) {
-			return false;
-		}
-		return niveles_ocupados.contains(Integer.valueOf(nivel));
+		return niveles_ocupados != null && !niveles_ocupados.isEmpty()
+				&& niveles_ocupados.contains(Integer.valueOf(nivel));
+	}
+
+	private static String normalizarOrigen(String origen) {
+		if (origen == null)
+			return "";
+		String t = origen.trim();
+		// Para dedupe: jar/modid/pack suelen venir iguales; solo normalizamos espacios
+		t = t.replaceAll("\\s+", " ");
+		return t;
+	}
+
+	private static String claveGlobalLinea(LineaTrazo lt) {
+		// Global dedupe por "misma linea" en logs distintos.
+		// No incluye 'nivel' para que el mismo frame en otro trace/log se dedupe.
+		// Si quieres mas agresivo, deja asi. Si quieres mas laxo, anade lt.origen.
+		return (lt.clase == null ? "" : lt.clase) + "|" + lt.lineaConsola;
+	}
+
+	private static String claveItemGlobal(LineaTrazo lt) {
+		// Global dedupe de item mostrado: evita repetir en diferentes logs
+		// Incluye nivel y linea para mantener contexto.
+		String origen = normalizarOrigen(lt.origen);
+		String clase = lt.clase == null ? "" : lt.clase;
+		return origen + "|" + clase + "|" + lt.nivel + "|" + lt.lineaConsola;
+	}
+
+	private static String construirEnlaceCfr(String clase) {
+		if (clase == null || clase.trim().isEmpty())
+			return "";
+		return "<a href=\"cfr://" + clase + "\">[CFR]</a>";
 	}
 
 	@Override
 	public void verificar(Consola consola) {
-		VerificacionDeStackTrace vdst = consola.verificacion_de_stacktrace;
 
-		// Precálculo por consola de todos los niveles ocupados (multi-hilo)
+		VerificacionDeStackTrace vdst = consola.verificacion_de_stacktrace;
+		if (vdst == null)
+			return;
+
+		// Niveles ocupados por otras verificaciones
 		final Set<Integer> niveles_ocupados = calcularNivelesOcupados(vdst);
 
-		StringBuilder constructor = new StringBuilder();
-		String mensaje_fatal = consola.obtainerMensajeFatalUltimaTrace();
-		if (mensaje_fatal != null && !mensaje_fatal.trim().isEmpty()) {
-			constructor.append(nl_html).append("<strong>")
-					.append(MonitorDePID.idioma.mensaje_de_trace_fatal_ultima_no_traductado()).append("</strong> ")
-					.append(mensaje_fatal).append(nl_html);
-		}
-
-		String mensaje_normal = consola.obtenerMensajeUltimaTrace();
-		if (mensaje_normal != null && !mensaje_normal.trim().isEmpty() && !mensaje_normal.equals(mensaje_fatal)) {
-			constructor.append(nl_html).append("<strong>")
-					.append(MonitorDePID.idioma.mensaje_de_trace_ultima_no_traductado()).append("</strong> ")
-					.append(mensaje_normal).append(nl_html);
-		}
-
-		List<Problema> problemas = new ArrayList<>();
-		Set<String> nombres_vistos = new HashSet<>();
-
-		// Procesar jars
-		if (!vdst.jars.isEmpty()) {
-			for (Entry<String, Boolean> jar : vdst.jars.entrySet()) {
-				String[] arreglo_nivel = jar.getKey().split(Pattern.quote(MonitorDePID.idioma.nivel()));
-				String texto_nivel = "";
-				String enlace = "";
-				int numero_linea_consola = -1;
-				int numero_nivel = -1;
-
-				if (arreglo_nivel.length > 1) {
-					texto_nivel = MonitorDePID.idioma.nivel() + arreglo_nivel[1];
-					// Extraer nivel y número de línea de la consola (formato "nivel,linea")
-					String[] partes_nivel = arreglo_nivel[1].split(",");
-					if (partes_nivel.length > 0) {
-						try {
-							numero_nivel = Integer.parseInt(partes_nivel[0]);
-						} catch (NumberFormatException ignorado) {
-						}
-					}
-					if (partes_nivel.length > 1) {
-						try {
-							numero_linea_consola = Integer.parseInt(partes_nivel[1]);
-							enlace = consola.agregarErrorALectador(numero_linea_consola, this);
-						} catch (NumberFormatException ignorado) {
-						}
-					}
-				}
-
-				// Si el nivel corresponde a un trazo ocupado, no se muestra este jar
-				if (numero_nivel != -1 && esTrazoOcupado(niveles_ocupados, numero_nivel)) {
-					continue;
-				}
-
-				String nombre_jar = jar.getKey().split("\\.jar")[0] + ".jar";
-
-				if (nombres_vistos.add(nombre_jar)) {
-					problemas.add(new Problema(nombre_jar, texto_nivel, jar.getValue(), enlace));
-				}
+		// Obtener trazos (preferir contenedor nuevo)
+		List<TraceInfo> traces = vdst.trazos_completos;
+		if (traces == null || traces.isEmpty()) {
+			traces = new ArrayList<>();
+			if (vdst.nivel_trazo != null) {
+				traces.addAll(vdst.nivel_trazo.values());
 			}
 		}
 
-		// Procesar modids
-		if (!vdst.modids.isEmpty()) {
-			Buscardor.cargar();
-			for (QuadMap.QuadrupleKey<String, Integer, Integer, String> llave : vdst.modids.keySet()) {
+		if (traces.isEmpty())
+			return;
 
-				String modid = llave.key1;
-				int nivel = llave.key2;
-				int linea = llave.key3;
-				String clase = llave.key4;
-				boolean fatal = vdst.modids.get(modid, nivel, linea, clase);
+		// =====================================================
+		// AGRUPAR POR ORIGEN Y QUEDARSE CON EL MAS CRITICO
+		// =====================================================
 
-				if (esTrazoOcupado(niveles_ocupados, nivel))
-					continue;
+		Map<String, Problema> mejorPorOrigen = new HashMap<>();
 
-				String texto_nivel = MonitorDePID.idioma.nivel() + nivel + "," + linea;
-				String enlaceLinea = consola.agregarErrorALectador(linea, this);
+		for (TraceInfo info : traces) {
 
-				// 1 Buscar JARs por clase
-				List<String> jars = Buscardor.obtenerModsConNombre(clase);
+			if (info == null)
+				continue;
 
-				// 2Si no hay, buscar por modid
-				if (jars.isEmpty()) {
-					jars = Buscardor.obtenerModsConNombre(modid);
-				}
-
-				String nombreMostrar;
-				if (!jars.isEmpty()) {
-					nombreMostrar = String.join(", ", jars);
-				} else if (modid != null && !modid.isEmpty()) {
-					nombreMostrar = modid;
-				} else {
-					nombreMostrar = clase;
-				}
-
-				// 🔗 CFR link
-				String enlaceCfr = "<a href=\"cfr://" + clase + "\">[CFR]</a>";
-
-				problemas.add(new Problema(nombreMostrar, texto_nivel, fatal, enlaceLinea + " " + enlaceCfr));
-			}
-
-		}
-
-		// Procesar paquetes
-		if (!vdst.packs.isEmpty()) {
-			Buscardor.cargar();
-			for (QuadMap.QuadrupleKey<String, Integer, Integer, String> llave : vdst.packs.keySet()) {
-
-				String paquete = llave.key1; // paquete
-				int nivel = llave.key2; // nivel
-				int linea = llave.key3; // línea en consola
-				String clase = llave.key4; // clase asociada
-				boolean fatal = vdst.packs.get(paquete, nivel, linea, clase);
-
-				// Saltar si el nivel pertenece a un trazo ocupado
-				if (esTrazoOcupado(niveles_ocupados, nivel)) {
-					continue;
-				}
-
-				String texto_nivel = MonitorDePID.idioma.nivel() + nivel + "," + linea;
-				String enlaceLinea = consola.agregarErrorALectador(linea, this);
-
-				// Intentar resolver JARs usando la clase
-				List<String> jars = Buscardor.obtenerModsConNombre(clase);
-
-				// Si no hay resultados, intentar usando el paquete
-				if (jars.isEmpty()) {
-					String ruta_paquete = obtenerRutaDePaquete(paquete);
-					jars = Buscardor.obtenerUbicaciones(Buscardor.buscarModsConTermino(ruta_paquete));
-				}
-
-				// Fallbacks finales
-				String nombre_mostrar;
-				if (!jars.isEmpty()) {
-					nombre_mostrar = String.join(", ", jars);
-				} else if (paquete != null && !paquete.isEmpty()) {
-					nombre_mostrar = paquete;
-				} else {
-					nombre_mostrar = clase;
-				}
-
-				// 🔗 Enlace CFR siempre basado en la clase
-				String enlaceCfr = "<a href=\"cfr://" + clase + "\">[CFR]</a>";
-
-				if (nombres_vistos.add(nombre_mostrar)) {
-					problemas.add(new Problema(nombre_mostrar, texto_nivel, fatal, enlaceLinea + " " + enlaceCfr));
-				}
-			}
-
-		}
-
-		if (!problemas.isEmpty()) {
-			activado = true;
-			constructor.append(nl_html).append(MonitorDePID.idioma.problematico_jar()).append(nl_html).append("<ul>");
-
-			// Ordenar usando el comparador numérico existente
-			problemas.sort(comparadorNumerico((Problema p) -> p.nivel));
-
-			for (Problema p : problemas) {
-				constructor.append("<li>");
-				if (p.fatal) {
-					constructor.append(MonitorDePID.idioma.posibilidad_fatal());
-				}
-				constructor.append(p.nombre).append(" ").append(p.nivel);
-				if (p.enlace != null && !p.enlace.isEmpty()) {
-					constructor.append(" ").append(p.enlace);
-				}
-				constructor.append("</li>");
-			}
-			constructor.append("</ul>");
-		}
-
-		Set<String> braces_procesadas = new HashSet<>();
-
-		// Procesar configuraciones en llaves "{}"
-		TriMap<String, Integer, Integer, Boolean> configs_inyectadas = new TriMap<>();
-		for (QuadMap.QuadrupleKey<String, Integer, Integer, String> llave : vdst.braces.keySet()) {
-
-			String contenido = llave.key1;
-
-			if (!braces_procesadas.add(contenido)) {
+			int nivelTrace = info.nivel > 0 ? info.nivel : -1;
+			if (nivelTrace > 0 && esTrazoOcupado(niveles_ocupados, nivelTrace)) {
 				continue;
 			}
 
-			int nivel = llave.key2;
-			int linea = llave.key3;
-			boolean fatal = vdst.braces.get(contenido, nivel, linea, llave.key4);
+			List<LineaTrazo> lineas = (info.lineas == null) ? Collections.<LineaTrazo>emptyList() : info.lineas;
 
-			for (String ind : VerificacionDeStackTrace.eliminarDuplicados(contenido.split(","))) {
+			for (LineaTrazo lt : lineas) {
 
-				String limpiado = ind.replace("pl:runtimedistcleaner:A", "")
-						.replace("re:classloading", "")
-						.replace("pl:mixin:APP:", "")
-						.replace("re:computing_frames", "")
-						.replace("pl:accesstransformer:B", "")
-						.replace("pl:mixin:A", "")
-						.replace("xf:fml", "")
-						.replace("featurecreep", "")
-						.replace("re:mixin", "")
-						.replace("xf:crashdetector:default", "");
+				if (lt == null)
+					continue;
 
-				if (!limpiado.isEmpty() && !esTrazoOcupado(niveles_ocupados, nivel)) {
-					configs_inyectadas.put(limpiado, nivel, linea, fatal);
+				if (lt.nivel > 0 && esTrazoOcupado(niveles_ocupados, lt.nivel)) {
+					continue;
 				}
-			}
-		}
 
+				// Dedupe global por linea (cross-log)
+				String claveLineaGlobal = claveGlobalLinea(lt);
+				if (!TRAZOS_GLOBALES_VISTOS.add(claveLineaGlobal)) {
+					continue;
+				}
 
-		TriMap<String, Integer, Integer, Boolean> configs_filtradas = new TriMap<>();
-		if (!configs_inyectadas.isEmpty()) {
-			activado = true;
-			int contador = 0;
-			for (TriMap.TripleKey<String, Integer, Integer> llave : configs_inyectadas.keySet()) {
-				String nombre = llave.key1;
-				int nivel = llave.key2;
-				int linea = llave.key3;
-				boolean fatal = configs_inyectadas.get(nombre, nivel, linea);
+				// Normalizar origen
+				String origenNorm = normalizarOrigen(lt.origen);
+				if (origenNorm.isEmpty()) {
+					origenNorm = (lt.clase == null ? "" : lt.clase);
+				}
+				if (origenNorm.isEmpty())
+					continue;
 
-				if (!todos_sm_configs.contains(nombre)) {
-					todos_sm_configs.add(nombre);
-					if (contador < 20) {
-						configs_filtradas.put(nombre, nivel, linea, fatal);
-						contador++;
+				String textoNivel = MonitorDePID.idioma.nivel() + lt.nivel + "," + lt.lineaConsola;
+
+				String enlaceLinea = consola.agregarErrorALectador(lt.lineaConsola, this);
+
+				String enlaceCfr = construirEnlaceCfr(lt.clase);
+				String enlace = enlaceLinea + (enlaceCfr.isEmpty() ? "" : " " + enlaceCfr);
+
+				Problema nuevo = new Problema(origenNorm, textoNivel, lt.fatal, enlace);
+
+				Problema actual = mejorPorOrigen.get(origenNorm);
+				if (actual == null) {
+					mejorPorOrigen.put(origenNorm, nuevo);
+					continue;
+				}
+
+				// Comparar criticidad
+				List<Integer> nNuevo = extraerNumerosDeNivel(nuevo.nivel);
+				List<Integer> nActual = extraerNumerosDeNivel(actual.nivel);
+
+				int nivelNuevo = nNuevo.isEmpty() ? Integer.MAX_VALUE : nNuevo.get(0);
+				int nivelActual = nActual.isEmpty() ? Integer.MAX_VALUE : nActual.get(0);
+
+				if (nivelNuevo < nivelActual) {
+					mejorPorOrigen.put(origenNorm, nuevo);
+					continue;
+				}
+
+				if (nivelNuevo == nivelActual) {
+					int lineaNuevo = nNuevo.size() > 1 ? nNuevo.get(1) : Integer.MAX_VALUE;
+					int lineaActual = nActual.size() > 1 ? nActual.get(1) : Integer.MAX_VALUE;
+
+					if (lineaNuevo < lineaActual) {
+						mejorPorOrigen.put(origenNorm, nuevo);
 					}
 				}
 			}
 		}
 
-		if (!configs_filtradas.isEmpty()) {
-			constructor.append(nl_html).append(MonitorDePID.idioma.corchetes_ondulados()).append(nl_html)
-					.append("<ul>");
+		if (mejorPorOrigen.isEmpty())
+			return;
 
-			List<TriMap.TripleKey<String, Integer, Integer>> llaves_ordenadas = new ArrayList<>(
-					configs_filtradas.keySet());
-			llaves_ordenadas
-					.sort(Comparator.comparingInt((TriMap.TripleKey<String, Integer, Integer> llave) -> llave.key2)
-							.thenComparingInt(llave -> llave.key3));
+		activado = true;
 
-			for (TriMap.TripleKey<String, Integer, Integer> llave : llaves_ordenadas) {
-				String nombre = llave.key1;
-				int nivel = llave.key2;
-				int linea = llave.key3;
-				boolean fatal = configs_filtradas.get(nombre, nivel, linea);
-				String enlace = consola.agregarErrorALectador(linea, this);
+		// Convertir a lista y ordenar
+		List<Problema> problemas = new ArrayList<>(mejorPorOrigen.values());
+		problemas.sort(comparadorNumerico((Problema p) -> p.nivel));
 
-				String nombre_limpio = nombre.split("\\.json")[0].replace(".mixins", "").replace(".mixin", "")
-						.replace("mixins.", "").replace("mixin.", "");
+		// =====================================================
+		// RENDER HTML
+		// =====================================================
 
-				constructor.append("<li>");
-				if (fatal) {
-					constructor.append(MonitorDePID.idioma.posibilidad_fatal());
-				}
-				constructor.append(nombre_limpio).append(" ").append(MonitorDePID.idioma.nivel()).append(nivel)
-						.append(",").append(linea);
-				if (enlace != null && !enlace.isEmpty()) {
-					constructor.append(" ").append(enlace);
-				}
-				constructor.append("</li>");
+		StringBuilder sb = new StringBuilder();
+		sb.append(nl_html).append(MonitorDePID.idioma.problematico_jar()).append(nl_html).append("<ul>");
+
+		for (Problema p : problemas) {
+			sb.append("<li>");
+			if (p.fatal) {
+				sb.append(MonitorDePID.idioma.posibilidad_fatal());
 			}
-			constructor.append("</ul>");
+			sb.append(p.nombre).append(" ").append(p.nivel);
+			if (p.enlace != null && !p.enlace.isEmpty()) {
+				sb.append(" ").append(p.enlace);
+			}
+			sb.append("</li>");
 		}
 
-		if (!constructor.toString().isEmpty()) {
-			contento.put(consola.archivo.getFileName().toString(), new StringBuilder(constructor.toString().trim()));
-		}
+		sb.append("</ul>");
+
+		contento.put(consola.archivo.getFileName().toString(), new StringBuilder(sb.toString().trim()));
 	}
 
 	@Override
@@ -524,34 +387,9 @@ public class ContenidoDeTrazos implements Verificaciones {
 		return MonitorDePID.idioma.nombre_de_contenido_de_stacktrace();
 	}
 
-	/**
-	 * Convierte una referencia completa de método a la ruta del paquete.
-	 */
-	private static String obtenerRutaDePaquete(String entrada) {
-		if (entrada == null || entrada.trim().isEmpty()) {
-			return "";
-		}
-		String antes_del_parentesis = entrada.split("\\(", 2)[0].trim();
-		antes_del_parentesis = antes_del_parentesis.replaceAll("\\$[^\\.]*", "");
-		int ultimo_indice_punto = antes_del_parentesis.lastIndexOf('.');
-		if (ultimo_indice_punto <= 0) {
-			return "";
-		}
-		String nombre_completo_clase = antes_del_parentesis.substring(0, ultimo_indice_punto);
-		String[] partes_paquete = nombre_completo_clase.split("\\.");
-		StringBuilder ruta_paquete = new StringBuilder();
-		for (int i = 0; i < partes_paquete.length; i++) {
-			if (i > 0) {
-				ruta_paquete.append("/");
-			}
-			ruta_paquete.append(partes_paquete[i]);
-		}
-		return ruta_paquete.toString();
-	}
-
 	@Override
 	public QuickFix solucion() {
-		return QuickFix.NINGUN;// TODO
+		return QuickFix.NINGUN;
 	}
 
 	@Override
@@ -561,21 +399,17 @@ public class ContenidoDeTrazos implements Verificaciones {
 
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// Esta verificación no ocupa ningún trazo
 		return false;
 	}
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 
 	@Override
 	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/general/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
-
 }

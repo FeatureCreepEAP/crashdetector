@@ -5707,6 +5707,38 @@ public class Coreano implements Idioma {
 	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
 	        + "NeoForge 버전의 MixinExtras와 일반 버전을 모두 설치했습니다. MinecraftForge를 사용 중이라면, 해결을 위해 <a href='https://www.curseforge.com/minecraft/mc-mods/mixin-extras-neoforge-on-forge-fix' style='color: inherit;'>이 링크</a>에서 모드를 설치할 수 있습니다.</b>";
 	}
+	@Override
+	public String mensajeIrisSombrasTerreno() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	        + "Iris에서 쉐이더(shaders)를 사용할 때 지형 그림자 오류가 감지되었습니다.</b>"
+	        + "<p>이 문제는 지형 렌더링 중 발생합니다.</p>"
+	        + "<p><b>쉐이더 없이 게임을 실행해 보거나</b> 그래픽 품질을 낮추는 것이 좋습니다, "
+	        + "특히 <b>Ultra</b> 설정에서요.</p>";
+	}
+
+	@Override
+	public String nombreIrisSombrasTerreno() {
+	    return "지형 그림자 (Iris)";
+	}
+	
+	@Override
+	public String mensajeTickLargoServidor() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	        + "서버 틱이 지나치게 길게 감지되었습니다.</b>"
+	        + "<p>이는 게임이 한 번의 틱 동안 너무 오래 멈춰 있었다는 것을 의미합니다.</p>"
+	        + "<p>원인을 파악하기 위해 로그에 생성된 <b>thread dump를 확인</b>하는 것이 좋습니다.</p>"
+	        + "<p><b>Stack Trace 분석</b>은 멈춤의 근원을 찾는 데 도움이 될 수 있습니다.</p>"
+	        + "<p>또한 <b>로그에서 보기</b> 버튼은 문제의 원인일 수 있는 모드를 빨간색으로 강조 표시하며, "
+	        + "<code>$modid$</code>로 둘러싸인 항목도 함께 표시합니다(이는 일반적으로 문제의 출처를 나타냅니다). 실시간 스캔의 경우 VisualVM의 CPU 샘플러 사용을 권장합니다. 모든 모드가 정상적으로 작동하더라도 너무 많이 설치했을 수 있으므로, 서버나 컴퓨터 성능이 사용 중인 모드를 감당할 만큼 충분한지 확인하세요.</p>";
+	}
+
+	@Override
+	public String nombreTickLargoServidor() {
+	    return "서버 틱 지연";
+	}
+	
+	
+	
 	
 	
 	

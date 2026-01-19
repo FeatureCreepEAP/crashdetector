@@ -661,80 +661,117 @@ public class FaltasClases implements Verificaciones {
 	}
 
 	/**
-	 * Intenta inferir un origen plausible a partir de packs, modids y jars
-	 * detectados en otros stacktraces.
+	 * Intenta inferir un origen plausible (jar / modid / paquete) para una clase
+	 * faltante usando los TraceInfo ya construidos.
 	 *
-	 * Reglas: 1) Elegir el pack PERMITIDO más largo que sea prefijo del paquete de
-	 * la clase. 2) Si no, elegir un modid permitido que aparezca en la ruta o
-	 * prefijos. 3) Si no, elegir un jar permitido cuyo nombre contenga el prefijo
-	 * del paquete.
+	 * Orden de preferencia:
+	 * 1) Línea cuya clase coincida exactamente
+	 * 2) Línea cuyo paquete sea prefijo más largo
+	 * 3) Modid plausible visto en trazos relacionados
+	 * 4) Jar permitido visto en trazos relacionados
 	 */
 	private String inferirOrigenParaClase(String claseSlash, VerificacionDeStackTrace vdst) {
-		if (claseSlash == null || claseSlash.isEmpty())
+		if (claseSlash == null || claseSlash.isEmpty() || vdst == null) {
 			return "";
+		}
 
-		String pkgSlash = claseSlash.contains("/") ? claseSlash.substring(0, claseSlash.lastIndexOf('/')) : claseSlash;
+		// Seguridad: usar solo el nuevo contenedor canónico
+		List<TraceInfo> trazos;
+		try {
+			trazos = vdst.trazos_completos;
+		} catch (Throwable t) {
+			return "";
+		}
 
-		String[] seg = pkgSlash.split("/");
-		String pref1 = seg.length >= 1 ? seg[0] : "";
-		String pref2 = seg.length >= 2 ? (seg[0] + "/" + seg[1]) : pref1;
+		if (trazos == null || trazos.isEmpty()) {
+			return "";
+		}
 
-		// 1) Packs: escoger el más específico permitido
-		String mejorPack = "";
-		for (QuadrupleKey<String, Integer, Integer, String> k : vdst.packs.keySet()) {
-			String packDot = k.key1; // "com.ejemplo"
-			if (packDot == null || packDot.isEmpty())
+		String paqueteClase = claseSlash.contains("/")
+				? claseSlash.substring(0, claseSlash.lastIndexOf('/'))
+				: claseSlash;
+
+		String mejorPaquete = "";
+		String mejorModid = "";
+		String mejorJar = "";
+
+		for (TraceInfo trace : trazos) {
+			if (trace == null || trace.lineas == null) {
 				continue;
-			if (esPaqueteNoPermitido(packDot))
-				continue;
+			}
 
-			String packSlash = packDot.replace('.', '/');
-			if (pkgSlash.startsWith(packSlash)) {
-				// Nos quedamos con el pack más largo (más específico)
-				if (packSlash.length() > mejorPack.length()) {
-					mejorPack = packDot;
+			for (VerificacionDeStackTrace.LineaTrazo lt : trace.lineas) {
+				if (lt == null) {
+					continue;
+				}
+
+				String origen = lt.origen;
+				String claseLinea = lt.clase;
+
+				if (origen == null || origen.isEmpty()) {
+					continue;
+				}
+
+				// 1) Coincidencia EXACTA de clase → máxima prioridad
+				if (claseLinea != null && claseLinea.equals(claseSlash)) {
+					String limpio = limpiarOrigen(origen);
+					if (!limpio.isEmpty()) {
+						return limpio;
+					}
+				}
+
+				// 2) Paquete más específico permitido
+				if (claseLinea != null && claseLinea.startsWith(paqueteClase)) {
+					String paqueteLinea = claseLinea.contains("/")
+							? claseLinea.substring(0, claseLinea.lastIndexOf('/'))
+							: "";
+
+					if (!paqueteLinea.isEmpty()
+							&& paqueteClase.startsWith(paqueteLinea)
+							&& paqueteLinea.length() > mejorPaquete.length()
+							&& !esPaqueteNoPermitido(paqueteLinea)) {
+
+						mejorPaquete = paqueteLinea;
+					}
+				}
+
+				// 3) Modid plausible
+				if (mejorModid.isEmpty()
+						&& !origen.contains("/")
+						&& !origen.endsWith(".jar")
+						&& !VerificacionDeStackTrace.esModNoPermite(origen)
+						&& !esModidSospechoso(origen)) {
+
+					// heurística: el modid aparece en el paquete
+					if (paqueteClase.contains(origen)) {
+						mejorModid = origen;
+					}
+				}
+
+				// 4) Jar permitido
+				if (mejorJar.isEmpty()
+						&& origen.endsWith(".jar")
+						&& !VerificacionDeStackTrace.isJarNoPermite(origen)) {
+
+					mejorJar = origen;
 				}
 			}
 		}
-		if (!mejorPack.isEmpty())
-			return mejorPack;
 
-		// 2) Modids: solo permitidos
-		// 2) Modids: solo permitidos y no sospechosos
-		for (QuadrupleKey<String, Integer, Integer, String> k : vdst.modids.keySet()) {
-			String modid = k.key1;
-			if (modid == null || modid.isEmpty())
-				continue;
-			if (VerificacionDeStackTrace.esModNoPermite(modid))
-				continue;
-			if (esModidSospechoso(modid))
-				continue; // <-- NUEVO filtro anti "hld000"
-
-			if (claseSlash.contains(modid) || pref1.equals(modid) || pref2.contains(modid)) {
-				return modid;
-			}
+		// Resolver por prioridad
+		if (!mejorPaquete.isEmpty()) {
+			return mejorPaquete.replace('/', '.');
 		}
-
-		// 3) Jars: solo permitidos
-		String[] candidatos = { pref1, seg.length >= 2 ? seg[1] : "" };
-		for (Map.Entry<String, Boolean> ent : vdst.jars.entrySet()) {
-			String clave = ent.getKey();
-			String jar = extraerJarDesdeClaveJars(clave);
-			if (jar == null || jar.isEmpty())
-				continue;
-			if (VerificacionDeStackTrace.isJarNoPermite(jar))
-				continue;
-
-			String low = jar.toLowerCase();
-			for (String c : candidatos) {
-				if (c != null && !c.isEmpty() && low.contains(c.toLowerCase())) {
-					return jar;
-				}
-			}
+		if (!mejorModid.isEmpty()) {
+			return mejorModid;
+		}
+		if (!mejorJar.isEmpty()) {
+			return mejorJar;
 		}
 
 		return "";
 	}
+
 
 	/**
 	 * Extrae el "xxx.jar" de la clave usada en vdst.jars (que es "xxx.jar" +

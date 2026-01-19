@@ -2303,4 +2303,12 @@ public interface Idioma {
 
 	public String mixinExtrasDuplicados();
 
+	public String mensajeIrisSombrasTerreno();
+
+	public String nombreIrisSombrasTerreno();
+
+	public String mensajeTickLargoServidor();
+
+	public String nombreTickLargoServidor();
+
 }

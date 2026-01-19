@@ -5911,6 +5911,45 @@ public class Ruso implements Idioma {
 	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
 	        + "У вас установлены обе версии MixinExtras: NeoForge и обычная. Если вы используете MinecraftForge, вы можете установить исправление по <a href='https://www.curseforge.com/minecraft/mc-mods/mixin-extras-neoforge-on-forge-fix' style='color: inherit;'>этой ссылке</a>.</b>";
 	}
+	@Override
+	public String mensajeIrisSombrasTerreno() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	        + "Обнаружена ошибка в тенях ландшафта при использовании шейдеров (Iris).</b>"
+	        + "<p>Проблема возникает во время рендеринга ландшафта.</p>"
+	        + "<p>Рекомендуется <b>попробовать запустить игру без шейдеров</b> или снизить графическое качество, "
+	        + "особенно в настройках <b>Ultra</b>.</p>";
+	}
+
+	@Override
+	public String nombreIrisSombrasTerreno() {
+	    return "Тени ландшафта (Iris)";
+	}
+	@Override
+	public String mensajeTickLargoServidor() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	        + "Обнаружен чрезмерно долгий тик сервера.</b>"
+	        + "<p>Это означает, что игра зависла на слишком долгое время в одном тике.</p>"
+	        + "<p>Рекомендуется <b>проверить thread dump</b>, сгенерированный в логе, чтобы определить причину.</p>"
+	        + "<p><b>Анализ стека вызовов (Stack Trace)</b> поможет вам найти источник зависания.</p>"
+	        + "<p>Кроме того, кнопка <b>Просмотр в логе</b> выделит красным цветом возможные проблемные моды, "
+	        + "а также записи, окружённые <code>$modid$</code>, которые обычно указывают на источник проблемы. Для анализа в реальном времени рекомендуем использовать CPU-сэмплер в VisualVM. Убедитесь, что ваш сервер или компьютер достаточно мощный для запуска используемых модов — возможно, все они работают корректно, но их просто слишком много.</p>";
+	}
+
+	@Override
+	public String nombreTickLargoServidor() {
+	    return "Долгий тик сервера";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

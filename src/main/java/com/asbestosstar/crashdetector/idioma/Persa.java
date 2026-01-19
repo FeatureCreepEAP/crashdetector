@@ -5885,6 +5885,38 @@ public class Persa implements Idioma {
 	        + "شما هم نسخهٔ NeoForge و هم نسخهٔ معمولی MixinExtras را دارید. اگر از MinecraftForge استفاده می‌کنید، می‌توانید با نصب <a href='https://www.curseforge.com/minecraft/mc-mods/mixin-extras-neoforge-on-forge-fix' style='color: inherit;'>این لینک</a> مشکل را حل کنید.</b>";
 	}
 	
+	@Override
+	public String mensajeIrisSombrasTerreno() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	        + "خطایی در سایه‌های زمین هنگام استفاده از شیدرها (shaders) با Iris شناسایی شد.</b>"
+	        + "<p>این مشکل در حین رندر زمین رخ می‌دهد.</p>"
+	        + "<p>توصیه می‌شود <b>بازی را بدون شیدر امتحان کنید</b> یا کیفیت گرافیکی را کاهش دهید، "
+	        + "به‌ویژه در تنظیمات <b>Ultra</b>.</p>";
+	}
+
+	@Override
+	public String nombreIrisSombrasTerreno() {
+	    return "سایه‌های زمین (Iris)";
+	}
+	
+	@Override
+	public String mensajeTickLargoServidor() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	        + "یک تیک سرور بسیار طولانی شناسایی شد.</b>"
+	        + "<p>این نشان می‌دهد که بازی برای مدت طولانی در یک تیک گیر کرده است.</p>"
+	        + "<p>توصیه می‌شود <b>thread dump</b> ایجادشده در لاگ را برای شناسایی علت بررسی کنید.</p>"
+	        + "<p><b>تحلیل Stack Trace</b> می‌تواند به شما در یافتن منشأ گیر کمک کند.</p>"
+	        + "<p>همچنین، دکمهٔ <b>مشاهده در لاگ</b> مودهای احتمالی مسئول را به رنگ قرمز برجسته می‌کند، "
+	        + "و همچنین ورودی‌هایی که با <code>$modid$</code> احاطه شده‌اند (که معمولاً منشأ مشکل را نشان می‌دهند). برای اسکن بلادرنگ، استفاده از نمونه‌بردار CPU در VisualVM توصیه می‌شود. مطمئن شوید سرور یا رایانهٔ شما قدرت کافی برای مدیریت مودهایی که استفاده می‌کنید دارد — ممکن است همهٔ مودها به‌درستی کار کنند، اما تعدادشان بیش از حد باشد.</p>";
+	}
+
+	@Override
+	public String nombreTickLargoServidor() {
+	    return "تیک طولانی سرور";
+	}
+	
+	
+	
 	
 	
 	

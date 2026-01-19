@@ -144,5 +144,18 @@ public class StackTracesDenegadosDeMinecraftPorDefecto {
 				.add(contentido -> contentido.contains("com.sonicether.soundphysics.SoundPhysicsMod.CONFIG"));// Tenemos
 																												// ErrorSistemaSonido
 
+		
+		
+		// Kotlin de Essential Mod: infraestructura de coroutines
+		VerificacionDeStackTrace.denegados.add(c ->
+				c.contains("java.lang.ClassNotFoundException: kotlin")||c.contains("java.lang.ClassNotFoundException: gg.essential")
+				
+				||c.contains("java.nio.file.NoSuchFileException: C:\\Windows\\System32\\etc\\hosts")||c.contains("Missing elements in vertex:")&&c.contains("gg.essential")
+				
+				
+		);
+		
+		
+		
 	}
 }

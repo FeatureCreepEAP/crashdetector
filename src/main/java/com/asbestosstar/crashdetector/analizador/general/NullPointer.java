@@ -76,64 +76,56 @@ public class NullPointer implements Verificaciones {
 
 	@Override
 	public void verificar(Consola consola) {
-		// Limpiar resultados anteriores
+
 		errores.clear();
+		enlacesPorLinea.clear();
 		activado = false;
+
 		VerificacionDeStackTrace vdst = consola.verificacion_de_stacktrace;
+		if (vdst == null || vdst.trazos_completos == null) {
+			return;
+		}
 
-		// Colección de trazos (fatales y no fatales)
-		List<VerificacionDeStackTrace.TraceInfo> trazosInfo = new ArrayList<>();
-		trazosInfo.addAll(VerificacionDeStackTrace.obtenerTracesConLinea(consola.contenido_verificar));
-		trazosInfo.addAll(VerificacionDeStackTrace.obtenerTracesFatalConLinea(consola.contenido_verificar));
+		for (TraceInfo trace : vdst.trazos_completos) {
 
-		// Analizar cada trazo
-		for (VerificacionDeStackTrace.TraceInfo traceInfo : trazosInfo) {
-			String trazo = traceInfo.trace;
-			if (!trazo.contains("NullPointerException")) {
+			if (trace == null || trace.trace == null) {
 				continue;
 			}
 
+			if (!trace.trace.contains("NullPointerException")) {
+				continue;
+			}
+
+			// === Extraer mensaje NPE ===
 			String metodo = "método desconocido";
 			String objeto = "objeto";
-			String origen = "";
 
-			Matcher mCannot = FORMATO_CANNOT.matcher(trazo);
-			Matcher mCabecera = CABECERA_NPE.matcher(trazo);
-			Matcher mJson = ERROR_JSON.matcher(trazo);
+			Matcher mCannot = FORMATO_CANNOT.matcher(trace.trace);
+			Matcher mJson = ERROR_JSON.matcher(trace.trace);
+			Matcher mCabecera = CABECERA_NPE.matcher(trace.trace);
 
-			// Caso 1: Mensaje moderno "Cannot invoke X because Y is null"
 			if (mCannot.find()) {
 				metodo = mCannot.group(2);
 				objeto = mCannot.group(3);
-			}
-			// Caso 2: Gson específico: "JsonObject.entrySet() because 'jsonobject' is null"
-			else if (mJson.find()) {
+			} else if (mJson.find()) {
 				metodo = "JsonObject.*()";
 				objeto = mJson.group(1);
-			}
-			// Caso 3: Encabezado con descripción adicional
-			else if (mCabecera.find()) {
+			} else if (mCabecera.find()) {
 				String detalle = mCabecera.group(1).trim();
 				if (!detalle.isEmpty()) {
 					metodo = detalle;
 				}
 			} else {
-				// No se pudo extraer información útil
 				continue;
 			}
 
-			// Buscar origen SOLO en este trazo (evita falsos positivos)
-			origen = detectarOrigenEnTraza(trazo, vdst, traceInfo.consolaLineaComenzar);
+			// === Inferir origen SOLO desde este TraceInfo ===
+			String origen = inferirOrigenDesdeTrace(trace);
 
-			// Construir mensaje base (sin el origen)
 			String mensajeBase = MonitorDePID.idioma.null_pointer_error(metodo, objeto);
 
-			// NUEVO: registrar enlace también para NPEs provenientes de un trazo
-			// (usamos la línea inicial del trazo en la consola)
-			enlacesPorLinea.putIfAbsent(mensajeBase,
-					consola.agregarErrorALectador(traceInfo.consolaLineaComenzar, this));
+			enlacesPorLinea.putIfAbsent(mensajeBase, consola.agregarErrorALectador(trace.consolaLineaComenzar, this));
 
-			// Agregar el error al mapa, agrupando por mensaje base
 			errores.computeIfAbsent(mensajeBase, k -> new HashSet<>());
 			if (!origen.isEmpty()) {
 				errores.get(mensajeBase).add(origen);
@@ -249,21 +241,64 @@ public class NullPointer implements Verificaciones {
 	}
 
 	/**
-	 * Determina un posible origen usando datos globales (último recurso). Solo
-	 * usado si el error no tiene trazo.
+	 * Infiere el origen de una NPE usando EXCLUSIVAMENTE las líneas del TraceInfo
+	 * actual. No usa datos globales ni otros trazos.
 	 */
-	private static String detectarOrigen(VerificacionDeStackTrace vdst) {
-		if (!vdst.jars.isEmpty()) {
-			String clave = vdst.jars.keySet().iterator().next();
-			int idx = clave.indexOf(MonitorDePID.idioma.nivel());
-			return idx == -1 ? clave : clave.substring(0, idx);
+	private String inferirOrigenDesdeTrace(TraceInfo trace) {
+
+		if (trace == null || trace.lineas == null) {
+			return "";
 		}
-		if (!vdst.modids.isEmpty()) {
-			return vdst.modids.keySet().iterator().next().key1; // key1 es el modid
+
+		String mejorJar = "";
+		String mejorModid = "";
+		String mejorPaquete = "";
+
+		for (VerificacionDeStackTrace.LineaTrazo lt : trace.lineas) {
+
+			if (lt == null || lt.origen == null || lt.origen.isEmpty()) {
+				continue;
+			}
+
+			String origen = lt.origen;
+
+			// 1) JAR permitido (máxima prioridad)
+			if (origen.endsWith(".jar") && !VerificacionDeStackTrace.isJarNoPermite(origen)) {
+				return origen;
+			}
+
+			// 2) Modid permitido
+			if (!origen.contains("/") && !origen.endsWith(".jar") && !VerificacionDeStackTrace.esModNoPermite(origen)) {
+
+				if (mejorModid.isEmpty()) {
+					mejorModid = origen;
+				}
+			}
+
+			// 3) Paquete permitido
+			if (origen.contains("/")) {
+
+				boolean permitido = true;
+				for (String prefijo : VerificacionDeStackTrace.package_no_permite) {
+					if (origen.startsWith(prefijo)) {
+						permitido = false;
+						break;
+					}
+				}
+
+				if (permitido && origen.length() > mejorPaquete.length()) {
+					mejorPaquete = origen;
+				}
+			}
 		}
-		if (!vdst.packs.isEmpty()) {
-			return vdst.packs.keySet().iterator().next().key1; // key1 es el paquete
+
+		if (!mejorModid.isEmpty()) {
+			return mejorModid;
 		}
+		if (!mejorPaquete.isEmpty()) {
+			return mejorPaquete;
+		}
+
 		return "";
 	}
 

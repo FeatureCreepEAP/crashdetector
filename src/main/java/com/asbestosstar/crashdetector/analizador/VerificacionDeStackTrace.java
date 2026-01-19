@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -15,10 +14,8 @@ import java.util.regex.Pattern;
 
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
-import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.StackTracesDenegadosDeMinecraftPorDefecto;
 import com.asbestosstar.crashdetector.mapas.BiMap;
-import com.asbestosstar.crashdetector.mapas.QuadMap;
 import com.asbestosstar.crashdetector.mapas.TriMap;
 
 public class VerificacionDeStackTrace {
@@ -57,15 +54,6 @@ public class VerificacionDeStackTrace {
 	// Ahora es un BiMap que asocia (nombre JSON, línea_consola) con si es fatal
 	public BiMap<String, Integer, Boolean> sm_config = new BiMap<>(); // (nombre JSON, línea_consola, es fatal)
 
-	public Map<String, Boolean> jars = new LinkedHashMap<>();// FATAL
-	
-	public QuadMap<String, Integer, Integer, String, Boolean> modids = new QuadMap<>();// FATAL (modid, nivel_prioridad,
-																				// línea_consola, es fatal)
-	public QuadMap<String, Integer, Integer, String, Boolean> packs = new QuadMap<>();// FATAL (paquete, nivel_prioridad,
-																			// línea_consola, es fatal)
-	public QuadMap<String, Integer, Integer, String, Boolean> braces = new QuadMap<>();// FATAL (contenido llaves,
-																				// nivel_prioridad, línea_consola, es
-																				// fatal)
 	public TriMap<String, Integer, Integer, String> clases_fatales_no_existentes = new TriMap<>();// (clase,
 																									// nivel_prioridad,
 
@@ -88,6 +76,13 @@ public class VerificacionDeStackTrace {
 
 	};
 
+	/**
+	 * Lista canónica de todos los TraceInfo completos del último reiniciar().
+	 * Ordenados por prioridad (nivel ascendente). ESTA es la fuente que debe usar
+	 * ContenidoDeTrazos.
+	 */
+	public List<TraceInfo> trazos_completos = new ArrayList<>();
+
 	static {
 		StackTracesDenegadosDeMinecraftPorDefecto.init();
 	}
@@ -98,33 +93,252 @@ public class VerificacionDeStackTrace {
 
 	public void reiniciar() {
 
+		// === Reset estado ===
 		sm_config.clear();
-		jars.clear();
-		modids.clear();
-		packs.clear();
 		clases_fatales_no_existentes.clear();
 
 		jar_malo.clear();
 		modid_malo.clear();
 		package_malo.clear();
+		brace_malo.clear();
+
+		nivel_trazo.clear();
+		trazos_completos.clear();
+
 		int nivel_prioridad = 0;
 		String contenido = consola.contenido_verificar;
+
+		// === FATALES ===
 		List<TraceInfo> tracesFatal = obtenerTracesFatalConLinea(contenido);
-		Collections.reverse(tracesFatal); // Las últimas son las más importantes
-		for (TraceInfo traceInfo : tracesFatal) {
+		Collections.reverse(tracesFatal); // últimos = mayor prioridad
+
+		for (TraceInfo base : tracesFatal) {
 			nivel_prioridad++;
-			nivel_trazo.put(nivel_prioridad, traceInfo);
-			this.procesarTrace(traceInfo.trace, true, nivel_prioridad, traceInfo.consolaLineaComenzar);
+
+			TraceInfo info = construirTraceInfo(base.trace, base.consolaLineaComenzar, nivel_prioridad, true);
+
+			// Registro canónico
+			trazos_completos.add(info);
+
+			// Registro legacy / lookup
+			nivel_trazo.put(nivel_prioridad, info);
+
+			// Compatibilidad antigua (JSON / clases faltantes)
+			procesarTrace(base.trace, true, nivel_prioridad, base.consolaLineaComenzar);
 		}
 
+		// === NORMALES ===
 		List<TraceInfo> tracesNormales = obtenerTracesConLinea(contenido);
-		Collections.reverse(tracesNormales); // Las últimas son las más importantes
-		for (TraceInfo traceInfo : tracesNormales) {
+		Collections.reverse(tracesNormales); // últimos = mayor prioridad
+
+		for (TraceInfo base : tracesNormales) {
 			nivel_prioridad++;
-			nivel_trazo.put(nivel_prioridad, traceInfo);
-			this.procesarTrace(traceInfo.trace, false, nivel_prioridad, traceInfo.consolaLineaComenzar);
+
+			TraceInfo info = construirTraceInfo(base.trace, base.consolaLineaComenzar, nivel_prioridad, false);
+
+			// Registro canónico
+			trazos_completos.add(info);
+
+			// Registro legacy / lookup
+			nivel_trazo.put(nivel_prioridad, info);
+
+			// Compatibilidad antigua
+			procesarTrace(base.trace, false, nivel_prioridad, base.consolaLineaComenzar);
+		}
+	}
+
+private TraceInfo construirTraceInfo(
+		String trace,
+		int consolaLineaInicio,
+		int nivel,
+		boolean fatal
+) {
+
+	TraceInfo info = new TraceInfo(trace, consolaLineaInicio, nivel, fatal);
+
+	String[] lineas = trace.split(nl);
+
+	for (int i = 0; i < lineas.length; i++) {
+
+		String normalizada = normalizarLineaStack(lineas[i]);
+		if (normalizada == null) {
+			continue;
 		}
 
+		normalizada = normalizada.trim();
+		if (!normalizada.startsWith("at ")) {
+			continue;
+		}
+
+		int lineaConsola = consolaLineaInicio + i;
+
+		// === EXTRAER CLASE REAL ===
+		String clase = extraerClaseDeLinea(normalizada);
+		if (clase == null || clase.isEmpty()) {
+			continue;
+		}
+
+		// =========================================================
+		// 1️⃣ RESOLVER ORIGEN (ANTES DE CUALQUIER DENY)
+		// =========================================================
+		String origen = null;
+
+		// ---- JAR ----
+		List<String> jars = extraerJarsDeLinea(normalizada);
+		if (!jars.isEmpty()) {
+			String jar = jars.get(0);
+			if (!isJarNoPermite(jar)) {
+				origen = jar;
+			}
+		}
+
+		// ---- MODID ----
+		if (origen == null) {
+			String modid = extraerModidDeLinea(normalizada);
+			if (modid != null && !esModNoPermite(modid)) {
+				origen = modid;
+			}
+		}
+
+		// ---- PAQUETE ----
+		if (origen == null) {
+			String paquete = extraerPaqueteDeLinea(normalizada);
+			if (paquete != null) {
+				String dec = nivel + "," + lineaConsola;
+				if (!packNoEsPermite(paquete, dec, fatal)) {
+					origen = paquete;
+				}
+			}
+		}
+
+		// =========================================================
+		// 2️⃣ DENYLIST DE PAQUETES SOLO SI NO HAY ORIGEN
+		// =========================================================
+		if (origen == null) {
+			boolean denegado = false;
+			for (String pref : package_no_permite) {
+				if (pref == null || pref.isEmpty()) {
+					continue;
+				}
+				String prefSlash = pref.replace('.', '/');
+				if (clase.startsWith(prefSlash)) {
+					denegado = true;
+					break;
+				}
+			}
+			if (denegado) {
+				continue;
+			}
+		}
+
+		// =========================================================
+		// 3️⃣ FALLBACK FINAL
+		// =========================================================
+		if (origen == null) {
+			origen = clase;
+		}
+
+		// =========================================================
+		// 4️⃣ REGISTRAR LÍNEA DE TRAZO
+		// =========================================================
+		LineaTrazo lt = new LineaTrazo();
+		lt.origen = origen;
+		lt.clase = clase;
+		lt.nivel = nivel;
+		lt.lineaConsola = lineaConsola;
+		lt.fatal = fatal;
+
+		// Llaves tipo {re:classloading}
+		lt.llaves = extraerLlavesDeLinea(normalizada);
+
+		info.lineas.add(lt);
+	}
+
+	return info;
+}
+
+
+	/**
+	 * Extrae todas las líneas de stacktrace de forma unificada. No separa jars /
+	 * modids / paquetes. Cada línea representa una causa potencial real.
+	 */
+	public List<LineaTrazo> extraerLineasDeTrazoUnificadas() {
+
+		List<LineaTrazo> resultado = new ArrayList<>();
+
+		if (nivel_trazo == null || nivel_trazo.isEmpty()) {
+			return resultado;
+		}
+
+		for (Map.Entry<Integer, TraceInfo> entrada : nivel_trazo.entrySet()) {
+
+			int nivel = entrada.getKey();
+			TraceInfo info = entrada.getValue();
+
+			boolean fatal = info.trace.contains("/FATAL]");
+			String[] lineas = info.trace.split(nl);
+
+			for (int i = 0; i < lineas.length; i++) {
+
+				String normalizada = normalizarLineaStack(lineas[i]);
+				if (normalizada == null)
+					continue;
+
+				normalizada = normalizada.trim();
+				if (!normalizada.startsWith("at "))
+					continue;
+
+				int lineaConsola = info.consolaLineaComenzar + i;
+
+				String clase = extraerClaseDeLinea(normalizada);
+				if (clase == null || clase.isEmpty())
+					continue;
+
+				// === Resolver origen ===
+				String origen = null;
+
+				// JAR
+				List<String> jars = extraerJarsDeLinea(normalizada);
+				if (!jars.isEmpty()) {
+					String jar = jars.get(0);
+					if (!isJarNoPermite(jar)) {
+						origen = jar;
+					}
+				}
+
+				// MODID
+				if (origen == null) {
+					String modid = extraerModidDeLinea(normalizada);
+					if (modid != null && !esModNoPermite(modid)) {
+						origen = modid;
+					}
+				}
+
+				// PAQUETE
+				if (origen == null) {
+					String pack = extraerPaqueteDeLinea(normalizada);
+					if (pack != null && !packNoEsPermite(pack, nivel + "," + lineaConsola, fatal)) {
+						origen = pack;
+					}
+				}
+
+				// FALLBACK A CLASE
+				if (origen == null) {
+					origen = clase;
+				}
+
+				LineaTrazo lt = new LineaTrazo();
+				lt.origen = origen;
+				lt.clase = clase;
+				lt.nivel = nivel;
+				lt.lineaConsola = lineaConsola;
+				lt.fatal = fatal;
+
+				resultado.add(lt);
+			}
+		}
+
+		return resultado;
 	}
 
 	/**
@@ -132,107 +346,244 @@ public class VerificacionDeStackTrace {
 	 * en la consola
 	 */
 	public static class TraceInfo {
-		public String trace;
-		public int consolaLineaComenzar;
 
-		TraceInfo(String trace, int consolaLineaComenzar) {
+		public final String trace;
+		public final int consolaLineaComenzar;
+
+		public final int nivel;
+		public final boolean fatal;
+
+		// Todas las líneas "at ..." normalizadas y procesadas
+		public final List<LineaTrazo> lineas = new ArrayList<>();
+
+		TraceInfo(String trace, int consolaLineaComenzar, int nivel, boolean fatal) {
 			this.trace = trace;
 			this.consolaLineaComenzar = consolaLineaComenzar;
+			this.nivel = nivel;
+			this.fatal = fatal;
 		}
 	}
 
-	
-	
-	
 	public static String extraerClaseDeLinea(String linea) {
-		if (linea == null)
+		if (linea == null) {
 			return "";
+		}
 
-		int idx = linea.indexOf("at ");
-		if (idx >= 0)
-			linea = linea.substring(idx + 3);
+		String texto = linea.trim();
 
-		int par = linea.indexOf('(');
-		if (par >= 0)
-			linea = linea.substring(0, par);
+		// Quitar comentarios tipo "// at ..."
+		if (texto.startsWith("//")) {
+			texto = texto.substring(2).trim();
+		}
 
-		int lambda = linea.indexOf("$$");
-		if (lambda >= 0)
-			linea = linea.substring(0, lambda);
+		// Quitar prefijo "at "
+		if (texto.startsWith("at ")) {
+			texto = texto.substring(3).trim();
+		}
 
-		return linea.replace('.', '/').trim();
+		// Quitar prefijos de cargador (pueden venir anidados: knot//MC//...)
+		texto = limpiarPrefijosYCargadores(texto);
+
+		// Cortar "(Clase.java:123)"
+		int idxPar = texto.indexOf('(');
+		if (idxPar >= 0) {
+			texto = texto.substring(0, idxPar).trim();
+		}
+
+		// Eliminar sufijos sintéticos ($$Lambda, $$Enhancer, etc.)
+		int idxDoble = texto.indexOf("$$");
+		if (idxDoble >= 0) {
+			texto = texto.substring(0, idxDoble).trim();
+		}
+
+		// Quitar el nombre del método (si existe)
+		// Ej: net.minecraft.client.MinecraftClient.render -> net.minecraft.client.MinecraftClient
+		// Ej: net.minecraft.class_156.method_654 -> net.minecraft.class_156
+		int ultimoPunto = texto.lastIndexOf('.');
+		if (ultimoPunto > 0) {
+			texto = texto.substring(0, ultimoPunto).trim();
+		}
+
+		// Normalizar a formato interno con '/'
+		texto = texto.replace('.', '/').trim();
+
+		// Limpieza defensiva de barras iniciales
+		while (texto.startsWith("/")) {
+			texto = texto.substring(1);
+		}
+
+		return texto;
 	}
 
-	
+	/**
+	 * Elimina prefijos de cargador y metadata sin destruir la ruta real del paquete.
+	 * Soporta prefijos anidados como: knot//MC//net.minecraft...
+	 *
+	 * Prefijos soportados:
+	 * - knot//, knott//, app//, MC// (pueden repetirse)
+	 * - jdk/ (puede repetirse)
+	 * - TRANSFORMER/, MC-BOOTSTRAP/, LAYER PLUGIN/ (con metadata)
+	 */
+	private static String limpiarPrefijosYCargadores(String texto) {
+		if (texto == null || texto.isEmpty()) {
+			return "";
+		}
+
+		String t = texto.trim();
+
+		// Quitar prefijos simples anidados (con //)
+		boolean cambio;
+		do {
+			cambio = false;
+
+			if (t.startsWith("knot//")) {
+				t = t.substring("knot//".length()).trim();
+				cambio = true;
+			}
+			if (t.startsWith("knott//")) {
+				t = t.substring("knott//".length()).trim();
+				cambio = true;
+			}
+			if (t.startsWith("app//")) {
+				t = t.substring("app//".length()).trim();
+				cambio = true;
+			}
+			if (t.startsWith("MC//")) {
+				t = t.substring("MC//".length()).trim();
+				cambio = true;
+			}
+
+			// Quitar prefijos simples con /
+			if (t.startsWith("jdk/")) {
+				t = t.substring("jdk/".length()).trim();
+				cambio = true;
+			}
+
+		} while (cambio);
+
+		// Quitar prefijos con metadata del estilo:
+		// TRANSFORMER/<modid>@<ver>/ruta.clase.metodo
+		// MC-BOOTSTRAP/<modulo>@<ver>/ruta.clase.metodo
+		// LAYER PLUGIN/<plugin>@<ver>/ruta.clase.metodo
+		String[] prefijosMetadata = { "TRANSFORMER/", "MC-BOOTSTRAP/", "LAYER PLUGIN/" };
+
+		for (String pref : prefijosMetadata) {
+			if (t.startsWith(pref)) {
+				t = t.substring(pref.length()).trim();
+
+				// Saltar el primer segmento (modulo/modid + version) hasta la siguiente '/'
+				int idx = t.indexOf('/');
+				if (idx >= 0 && idx + 1 < t.length()) {
+					t = t.substring(idx + 1).trim();
+				}
+				break;
+			}
+		}
+
+		// Por si tras quitar metadata quedaron prefijos simples otra vez
+		do {
+			cambio = false;
+
+			if (t.startsWith("knot//MC//")) {
+				t = t.substring("knot//MC//".length()).trim();
+				cambio = true;
+			}
+			if (t.startsWith("knott//")) {
+				t = t.substring("knott//".length()).trim();
+				cambio = true;
+			}
+			if (t.startsWith("app//")) {
+				t = t.substring("app//".length()).trim();
+				cambio = true;
+			}
+			if (t.startsWith("MC//")) {
+				t = t.substring("MC//".length()).trim();
+				cambio = true;
+			}
+			if (t.startsWith("jdk/")) {
+				t = t.substring("jdk/".length()).trim();
+				cambio = true;
+			}
+
+		} while (cambio);
+
+		return t;
+	}
+
+
+
+
+
+
+
 	/**
 	 * Obtiene stack traces fatales junto con su línea inicial en la consola
 	 */
 	public static List<TraceInfo> obtenerTracesFatalConLinea(String log) {
-		List<TraceInfo> ret = new ArrayList<>();
+
+		List<TraceInfo> resultado = new ArrayList<>();
 		String[] lineas = log.split(nl);
 
 		for (int i = 0; i < lineas.length; i++) {
-			String linea = lineas[i];
-			if (linea.contains("/FATAL]")) {
-				StringBuilder trace = new StringBuilder();
-				trace.append(linea);
-				int j = i + 1;
 
-				while (j < lineas.length && esParteDeStack(lineas[j])) {
-					trace.append(nl).append(lineas[j]);
-					j++;
-				}
-
-				if (tracePermite(trace.toString())) {
-					ret.add(new TraceInfo(trace.toString(), i));
-				}
+			String header = lineas[i];
+			if (header == null || !header.contains("/FATAL]")) {
+				continue;
 			}
+
+			StringBuilder traza = new StringBuilder(header);
+			int j = i + 1;
+
+			while (j < lineas.length && esParteDeStack(lineas[j])) {
+				traza.append(nl).append(lineas[j]);
+				j++;
+			}
+
+			String traceStr = traza.toString();
+			if (!tracePermite(traceStr)) {
+				continue;
+			}
+
+			// nivel y fatal se asignan después
+			resultado.add(new TraceInfo(traceStr, i, -1, true));
+
+			i = j - 1;
 		}
-		return ret;
+
+		return resultado;
 	}
 
 	/**
 	 * Obtiene stack traces normales junto con su línea inicial en la consola
 	 */
 	public static List<TraceInfo> obtenerTracesConLinea(String log) {
+
 		List<TraceInfo> resultado = new ArrayList<>();
 		String[] lineas = log.split(nl);
 
 		int i = 0;
-		while (i < lineas.length - 1) { // -1 porque siempre vemos at i+1
+		while (i < lineas.length - 1) {
+
 			String header = lineas[i];
 			if (header == null || header.isEmpty()) {
 				i++;
 				continue;
 			}
 
-			// Emular ^\S.* → primera columna NO es espacio/tab
-			char c0 = header.charAt(0);
-			if (Character.isWhitespace(c0)) {
+			if (Character.isWhitespace(header.charAt(0))) {
 				i++;
 				continue;
 			}
 
-			// La regex exige que la siguiente línea sea algo como:
-			// [spaces][//]at ...
 			String next = normalizarLineaStack(lineas[i + 1]);
-			if (next == null) {
-				i++;
-				continue;
-			}
-			next = next.trim();
-			if (!next.startsWith("at ")) {
-				// No cumple la parte "(?://\\s*)?at\\s+..."
+			if (next == null || !next.trim().startsWith("at ")) {
 				i++;
 				continue;
 			}
 
-			// En este punto, tenemos el mismo "inicio de stacktrace" que encontraba la
-			// regex
-			int startLine = i;
 			StringBuilder traza = new StringBuilder(header);
-
 			int j = i + 1;
+
 			while (j < lineas.length && esParteDeStack(lineas[j])) {
 				traza.append(nl).append(lineas[j]);
 				j++;
@@ -240,142 +591,57 @@ public class VerificacionDeStackTrace {
 
 			String traceStr = traza.toString();
 			if (tracePermite(traceStr)) {
-				resultado.add(new TraceInfo(traceStr, startLine));
+				resultado.add(new TraceInfo(traceStr, i, -1, false));
 			}
 
-			// Saltar todo este trazo; el siguiente potencial comienzo es después del final
 			i = j;
 		}
 
 		return resultado;
 	}
 
-	public void procesarTrace(String trace, boolean fatal, int nivel_prioridad, int consolaLineaPrimera) {
-		String idiomaNivel = MonitorDePID.idioma.nivel();
-		List<String> archivos_json = obtenerArchivosJsonEnMixinExceptions(trace);
-		if (!archivos_json.isEmpty()) {
-			for (String jsonFile : archivos_json) {
-				// Cambiado: ahora usamos BiMap con el número de línea
-				if (// !jsonFile.endsWith(".refmap.json") && Existe errores solo con refmap,
-					// necesitemos encontar una solucion luego
+	public void procesarTrace(String trace, boolean fatal, int nivel, int consolaLineaInicio) {
 
-				!sm_config.containsKey0(jsonFile)) {
-					// Almacenamos el número de línea actual en la consola
-					int consolaNumLinea = consolaLineaPrimera;
-					sm_config.put(jsonFile, consolaNumLinea, fatal);
-					// build.append(MonitorDePID.idioma.config_spongemixin_problematico(jsonFile)).append(nl_html);
+		// === SpongeMixin JSON ===
+		List<String> jsons = obtenerArchivosJsonEnMixinExceptions(trace);
+		for (String json : jsons) {
+			if (!sm_config.containsKey0(json)) {
+				sm_config.put(json, consolaLineaInicio, fatal);
+			}
+		}
+
+		// === ClassNotFound / NoClassDef ===
+		String[] arr = trace.split(nl);
+
+		for (int i = 0; i < arr.length; i++) {
+
+			String linea = normalizarLineaStack(arr[i]);
+			if (linea == null) {
+				continue;
+			}
+
+			String t = linea.trim();
+			if (t.isEmpty()) {
+				continue;
+			}
+
+			int consolaLinea = consolaLineaInicio + i;
+
+			if ((t.contains("ClassNotFoundException") || t.contains("NoClassDefFoundError"))
+					&& !esLineaDeAdvertenciaEstandar(t)) {
+
+				Map.Entry<String, String> res = procesarErrorClaseNoEncontrada(t, arr, consolaLinea, nivel);
+
+				if (res != null) {
+					clases_fatales_no_existentes.put(res.getKey(), nivel, consolaLinea, res.getValue());
 				}
 			}
-		} else {
-			String[] arr = trace.split(nl);
-			for (int i = 0; i < arr.length; i++) {
-				String untrimmed = arr[i];
 
-				// Normalizamos aquí una sola vez (quita // y prefijos knot//, knott//, app//)
-				String linea = normalizarLineaStack(untrimmed);
+			if (t.contains("org.spongepowered.asm.mixin.throwables.ClassMetadataNotFoundException:")) {
 
-				// Calcular la línea real en la consola
-				int consolaNumLinea = consolaLineaPrimera + i;
-				String dec = Integer.toString(nivel_prioridad) + "," + Integer.toString(consolaNumLinea);
-
-				if (linea == null)
-					continue;
-				String lineaTrim = linea.trim();
-
-				// No siempre hay un Jar
-				if (lineaTrim.contains("[")) {
-					List<String> jarsEncontrados = extraerJarsDeLinea(lineaTrim);
-					for (String jar : jarsEncontrados) {
-						if (jar.contains(".jar") && !isJarNoPermite(jar)) {
-							if (!jar_malo.contains(jar)) {
-								jar_malo.add(jar);
-								jars.put(jar + idiomaNivel + dec, fatal);
-							}
-						}
-					}
-				}
-				// Algunos entornos de desarrollo como ForgeGradle o lanzadores orientados a
-				// desarrollo
-				// como TLauncher muestran el modID y la capa, esto es útil
-				// especialmente cuando no se puede encontrar el Jar
-				else if (lineaTrim.startsWith("at TRANSFORMER/") || (lineaTrim.contains("/")
-						&& !lineaTrim.contains("NoClassDefFoundError") && !lineaTrim.contains("@"))
-						&& !lineaTrim.contains("$$Lambda") && !lineaTrim.matches(".*?/0x[0-9a-fA-F]+.*")) {
-
-					String modid = extraerModidDeLinea(lineaTrim);
-					if (modid != null) {
-						if (!modid_malo.contains(modid) && !lineaTrim.split("/")[0].startsWith("java.")
-								&& !esModNoPermite(modid) && lineaTrim.startsWith("at")) {
-							modid_malo.add(modid);
-							// Ahora usamos TriMap con nivel de prioridad y número de línea en la consola
-							String clase = extraerClaseDeLinea(lineaTrim);
-							modids.put(modid, nivel_prioridad, consolaNumLinea, clase, fatal);
-
-						}
-					}
-				}
-				// A veces necesitamos usar paquetes
-				else if (lineaTrim.startsWith("at")) {
-					String pack = extraerPaqueteDeLinea(lineaTrim);
-					if (pack != null) {
-						if (!package_malo.contains(pack) && !packNoEsPermite(pack, dec, fatal)) {
-							// Ahora usamos TriMap con nivel de prioridad y número de línea en la consola
-							String clase = extraerClaseDeLinea(lineaTrim);
-							packs.put(pack, nivel_prioridad, consolaNumLinea,clase, fatal);
-							package_malo.add(pack);
-						}
-					}
-				}
-
-				// Procesar línea que contiene ClassNotFoundException
-				// No necesitamos fatal para FabricMC o FeatureCreep y en casos en ModLauncher
-				// en launcher_log
-				else if ((lineaTrim.contains("ClassNotFoundException") || lineaTrim.contains("NoClassDefFoundError"))
-						&& !lineaTrim.contains("The specified mixin") && !lineaTrim.contains("WARN/]")
-						&& !lineaTrim.contains("/WARN]") && !esLineaDeAdvertenciaEstandar(lineaTrim)) {
-
-					Map.Entry<String, String> resultado = procesarErrorClaseNoEncontrada(lineaTrim, arr,
-							consolaNumLinea, nivel_prioridad);
-					if (resultado != null) {
-						String claseFaltante = resultado.getKey();
-						String sospechoso = resultado.getValue();
-
-						// Almacenar con nivel de prioridad y número de línea en la consola
-						clases_fatales_no_existentes.put(claseFaltante, nivel_prioridad, consolaNumLinea, sospechoso);
-					}
-				} else if (lineaTrim
-						.contains("org.spongepowered.asm.mixin.throwables.ClassMetadataNotFoundException:")) {
-					// Otra forma de "clase faltante" desde SpongeMixin:
-					// org.spongepowered.asm.mixin.throwables.ClassMetadataNotFoundException:
-					// <clase>
-					// Ver referencia en mcforge discord:
-					// https://discord.com/channels/1129059589325852724/1129069799545241703/1427526571622928384
-					String clase = extraerClaseDeMetadataNoEncontrada(lineaTrim);
-					if (clase != null && !clase.isEmpty()) {
-						clases_fatales_no_existentes.put(clase, nivel_prioridad, consolaNumLinea, "");
-					}
-				}
-
-				// Extraer contenido entre llaves
-				List<String> llavesEncontradas = extraerLlavesDeLinea(lineaTrim);
-				for (String content : llavesEncontradas) {
-					if (!brace_malo.contains(content)) {
-						// Ahora usamos TriMap con nivel de prioridad y número de línea en la consola
-						String clase = extraerClaseDeLinea(lineaTrim);
-						braces.put(content, nivel_prioridad, consolaNumLinea,clase, fatal);
-						brace_malo.add(content);
-
-						// Heurística adicional: proponer modid desde "mixins.<mod>.json" dentro de las
-						// llaves
-						Matcher mm = Pattern.compile("\\bmixins\\.([a-z0-9_\\-]+)\\b").matcher(content);
-						while (mm.find()) {
-							String cand = mm.group(1);
-							if (esModIdPlausible(cand) && !esModNoPermite(cand) && !modid_malo.contains(cand)) {
-								modid_malo.add(cand);
-								modids.put(cand, nivel_prioridad, consolaNumLinea,clase, fatal);
-							}
-						}
-					}
+				String clase = extraerClaseDeMetadataNoEncontrada(t);
+				if (clase != null && !clase.isEmpty()) {
+					clases_fatales_no_existentes.put(clase, nivel, consolaLinea, "");
 				}
 			}
 		}
@@ -860,7 +1126,8 @@ public class VerificacionDeStackTrace {
 				String[] lvlLinea = dec.split(",");
 				int nivel_prioridad = Integer.parseInt(lvlLinea[0]);
 				int consoleLineNumber = Integer.parseInt(lvlLinea[1]);
-				modids.put(candidato, nivel_prioridad, consoleLineNumber,extraerClaseDeLinea(dec) ,fatal);
+				// modids.put(candidato, nivel_prioridad,
+				// consoleLineNumber,extraerClaseDeLinea(dec) ,fatal);
 				CrashDetectorLogger.log("Mod ID por handler detectado: " + candidato);
 			}
 		} catch (Exception ex) {
@@ -882,6 +1149,17 @@ public class VerificacionDeStackTrace {
 		if (dot >= 0)
 			s = s.substring(0, dot);
 		return s;
+	}
+
+	public static class LineaTrazo {
+		public String origen; // jar | modid | paquete | clase
+		public String clase;
+		public int nivel;
+		public int lineaConsola;
+		public boolean fatal;
+
+		// NUEVO
+		public List<String> llaves = Collections.emptyList();
 	}
 
 	/**
@@ -926,8 +1204,13 @@ public class VerificacionDeStackTrace {
 		}
 
 		// Verificar contra la lista de prefijos no permitidos
+		String packSlash = pack.replace('.', '/');
+
 		for (String prefix : package_no_permite) {
-			if (pack.startsWith(prefix)) {
+
+			String prefSlash = prefix.replace('.', '/');
+
+			if (packSlash.startsWith(prefSlash)) {
 				return true;
 			}
 		}
@@ -1164,10 +1447,10 @@ public class VerificacionDeStackTrace {
 		return false;
 	}
 
-	// 🧹 Normalizador de líneas de stack: quita // y prefijos de cargador conocidos
-	private static final String[] PREFIJOS_CARGADOR = { "knot//", "knott//", "app//" };
+	//  Normalizador de líneas de stack: quita // y prefijos de cargador conocidos
+	private static final String[] PREFIJOS_CARGADOR = { "knot//MC//","knot//", "knott//", "app//" };
 
-	private static String normalizarLineaStack(String l) {
+	public static String normalizarLineaStack(String l) {
 		if (l == null)
 			return null;
 		String t = l.trim();

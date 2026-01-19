@@ -5938,6 +5938,41 @@ public class Ingles implements Idioma {
 	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
 	        + "You have both the NeoForge and standard versions of MixinExtras installed. If you are using MinecraftForge, you can install the fix from <a href='https://www.curseforge.com/minecraft/mc-mods/mixin-extras-neoforge-on-forge-fix' style='color: inherit;'>this link</a>.</b>";
 	}
+	@Override
+	public String mensajeIrisSombrasTerreno() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	        + "An error has been detected in terrain shadows with shaders (Iris).</b>"
+	        + "<p>The issue occurs during terrain rendering.</p>"
+	        + "<p>It is recommended to <b>try running the game without shaders</b> or lower graphical quality, "
+	        + "especially on <b>Ultra</b> settings.</p>";
+	}
+
+	@Override
+	public String nombreIrisSombrasTerreno() {
+	    return "Terrain Shadows (Iris)";
+	}
+	
+	@Override
+	public String mensajeTickLargoServidor() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	        + "An excessively long server tick has been detected.</b>"
+	        + "<p>This indicates the game was stuck for too long in a single tick.</p>"
+	        + "<p>It is recommended to <b>review the thread dump</b> generated in the log to identify the cause.</p>"
+	        + "<p>The <b>Stack Trace Analysis</b> can help you locate the source of the freeze.</p>"
+	        + "<p>Additionally, the <b>View in Log</b> button will highlight in red the possible responsible mods, "
+	        + "as well as entries surrounded by <code>$modid$</code>, which often indicate the origin of the issue. For real-time scanning, we recommend using the CPU sampler in VisualVM. Ensure your server or computer is powerful enough to handle the mods you are using — it is possible that all your mods work correctly, but you simply have too many.</p>";
+	}
+
+	@Override
+	public String nombreTickLargoServidor() {
+	    return "Long Server Tick";
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 	

@@ -6609,8 +6609,42 @@ public class Espanol implements Idioma {
 	        + "Tienes la versión NeoForge de MixinExtras y la versión normal. Si estás en MinecraftForge, puedes instalar <a href='https://www.curseforge.com/minecraft/mc-mods/mixin-extras-neoforge-on-forge-fix' style='color: inherit;'>este enlace</a> para la solución.</b>";
 	}
 
+	@Override
+	public String mensajeIrisSombrasTerreno() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+			+ "Se ha detectado un error en las sombras del terreno con shaders (Iris).</b>"
+			+ "<p>El problema ocurre durante el renderizado del terreno.</p>"
+			+ "<p>Se recomienda <b>probar el juego sin shaders</b> o reducir la calidad gráfica, "
+			+ "especialmente en configuraciones <b>Ultra</b>.</p>";
+	}
 
+	@Override
+	public String nombreIrisSombrasTerreno() {
+		return "Sombras del terreno (Iris)";
+	}
 
+	@Override
+	public String mensajeTickLargoServidor() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	        + "Se ha detectado un tick del servidor excesivamente largo.</b>"
+	        + "<p>Esto indica que el juego se ha quedado bloqueado durante demasiado tiempo en un solo tick.</p>"
+	        + "<p>Se recomienda <b>revisar el thread dump</b> generado en el log para identificar la causa.</p>"
+	        + "<p>El <b>Análisis de Stack Trace</b> puede ayudarte a localizar el origen del bloqueo.</p>"
+	        + "<p>Además, el botón <b>Ver en log</b> resaltará en rojo los posibles mods responsables, "
+	        + "así como entradas rodeadas por <code>$modid$</code>, que suelen indicar el origen del problema. Para el escaneo en tiempo real, recomendamos usar el muestreador de CPU en VisualVM. Asegúrate de que tu servidor o computadora sea lo suficientemente potente como para manejar los mods que estás usando, ya que es posible que todos tus mods funcionen correctamente, pero que tengas demasiados.</p>";
+	}
+
+	@Override
+	public String nombreTickLargoServidor() {
+	    return "Tick largo del servidor";
+	}
+	
+	
+	
+	
+
+	
+	
 	
 	
 	

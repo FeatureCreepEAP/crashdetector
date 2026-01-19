@@ -5915,6 +5915,41 @@ public class Portuges implements Idioma {
 	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
 	        + "Você tem a versão NeoForge e a versão normal do MixinExtras instaladas. Se estiver usando MinecraftForge, pode instalar a correção em <a href='https://www.curseforge.com/minecraft/mc-mods/mixin-extras-neoforge-on-forge-fix' style='color: inherit;'>este link</a>.</b>";
 	}
+	@Override
+	public String mensajeIrisSombrasTerreno() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	        + "Foi detectado um erro nas sombras do terreno com shaders (Iris).</b>"
+	        + "<p>O problema ocorre durante a renderização do terreno.</p>"
+	        + "<p>Recomenda-se <b>tentar jogar sem shaders</b> ou reduzir a qualidade gráfica, "
+	        + "especialmente em configurações <b>Ultra</b>.</p>";
+	}
+
+	@Override
+	public String nombreIrisSombrasTerreno() {
+	    return "Sombras do terreno (Iris)";
+	}
+	@Override
+	public String mensajeTickLargoServidor() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	        + "Um tick do servidor excessivamente longo foi detectado.</b>"
+	        + "<p>Isso indica que o jogo ficou travado por muito tempo em um único tick.</p>"
+	        + "<p>Recomenda-se <b>verificar o thread dump</b> gerado no log para identificar a causa.</p>"
+	        + "<p>A <b>Análise de Stack Trace</b> pode ajudá-lo a localizar a origem do travamento.</p>"
+	        + "<p>Além disso, o botão <b>Ver no log</b> destacará em vermelho os mods possivelmente responsáveis, "
+	        + "bem como entradas cercadas por <code>$modid$</code>, que geralmente indicam a origem do problema. Para análise em tempo real, recomendamos usar o amostrador de CPU no VisualVM. Certifique-se de que seu servidor ou computador seja potente o suficiente para lidar com os mods que você está usando — é possível que todos os seus mods funcionem corretamente, mas você tenha muitos deles.</p>";
+	}
+
+	@Override
+	public String nombreTickLargoServidor() {
+	    return "Tick longo do servidor";
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
