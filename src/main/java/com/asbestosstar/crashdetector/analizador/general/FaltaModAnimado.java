@@ -34,7 +34,7 @@ public class FaltaModAnimado implements Verificaciones {
 	private boolean activado = false;
 	private String mensaje = "";
 	private boolean activarCD = false;
-	boolean completa = true;
+	boolean completa = false;
 
 	@Override
 	public void verificar(Consola consola) {

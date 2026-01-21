@@ -26,11 +26,10 @@ public class LanzerDesAnimado implements Verificaciones {
 
 	public static final Path ARCHIVO_DESANIMADOS = Statics.carpeta.resolve("lanzeres_desanimados.json");
 	public static final Path ARCHIVO_ANIMADOS = Statics.carpeta.resolve("lanzeres_animados.json");
-	public static final String LANZADOR_ACTUAL = Statics.lanzer_del_app;
 
 	private boolean activado = false;
 	private String mensaje = "";
-	boolean completa = true;
+	boolean completa = false;
 
 	@Override
 	public void verificar(Consola consola) {
@@ -38,6 +37,8 @@ public class LanzerDesAnimado implements Verificaciones {
 			return;
 		}
 		this.completa = true;
+		String LANZADOR_ACTUAL = Statics.lanzer_del_app;
+
 		if (LANZADOR_ACTUAL == null || LANZADOR_ACTUAL.trim().isEmpty()) {
 			return;
 		}

@@ -591,9 +591,13 @@ public class Esperanto implements Idioma {
 
 	@Override
 	public String errorConfigMCForge() {
-		return "<b style='color:#" + config.obtenerColorError() + "'>" + "Kritika eraro de agordo de NightConfig/Forge: "
-				+ "Difektita aŭ nekompleta agorda dosiero. "
-				+ "Forigu la dosierujon 'config' kaj restartigu la ludon</b>";
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	           + "Grava eraro de agordo de NightConfig/Forge: "
+	           + "Agorda dosiero difektita aŭ nekompleta. "
+	           + "Tio povas esti kaŭzita de malplenaj agorddosieroj (ofte 0 bajtoj) en la dosierujo 'config' en pli malnovaj aŭ modifitaj versioj de NightConfig. "
+	           + "Por la plej multaj versioj, Night Config Fixes solvos la problemon, sed se vi uzas nekongruan aŭ propran versioon de NightConfig, vi devos forigi la agorddosierojn mane. "
+	           + "Ĉi tiu problemo estas pli komuna en malnovaj versioj de MC Forge (kiuj inkluzivas NightConfig) kaj en malnovaj modoj de FabricMC kiuj pakas NightConfig, sed ĝi ankaŭ povas ekzisti en iuj propraj versioj de NightConfig. "
+	           + "Pli da informo pri solvoj haveblas ĉe <a href='https://www.curseforge.com/minecraft/mc-mods/night-config-fixes'>Night Config Fixes</a>.</b>";
 	}
 
 	@Override

@@ -590,8 +590,13 @@ public class Ruso implements Idioma {
 
 	@Override
 	public String errorConfigMCForge() {
-		return "<b style='color:#" + config.obtenerColorError() + "'>" + "Критическая ошибка конфигурации NightConfig/Forge: "
-				+ "Файл конфигурации поврежден или неполон. " + "Удалите папку 'config' и перезапустите игру</b>";
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	           + "Критическая ошибка конфигурации NightConfig/Forge: "
+	           + "Файл конфигурации повреждён или неполон. "
+	           + "Это может быть вызвано пустыми файлами конфигурации (часто размером 0 байт) в папке 'config' в старых или кастомных версиях NightConfig. "
+	           + "В большинстве случаев проблема решается модом Night Config Fixes, но если вы используете несовместимую или кастомную версию NightConfig, вам нужно будет удалить файлы конфигурации вручную. "
+	           + "Эта проблема чаще встречается в старых версиях MC Forge (в которых уже есть NightConfig) и в старых модах FabricMC, включающих NightConfig, но также может возникать в некоторых кастомных сборках NightConfig. "
+	           + "Больше информации о решениях доступно на странице <a href='https://www.curseforge.com/minecraft/mc-mods/night-config-fixes'>Night Config Fixes</a>.</b>";
 	}
 
 	@Override

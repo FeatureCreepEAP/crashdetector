@@ -22,11 +22,8 @@ public class DetectorFeather implements DetectorLanzer {
 	public boolean detectar(App app, String cmd) {
 		if (!app.equals(App.MINECRAFT))
 			return false;
-		try {
-			Class.forName("net.digitalingot.rustextension.ProxiedStart", false, this.getClass().getClassLoader());
-			return true;
-		} catch (ClassNotFoundException e) {
-			return false;
-		}
+	
+		return 	buscarClase("net.digitalingot.rustextension.ProxiedStart");
+
 	}
 }

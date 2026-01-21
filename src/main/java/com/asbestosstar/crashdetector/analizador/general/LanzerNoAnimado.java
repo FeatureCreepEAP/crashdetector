@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.asbestosstar.crashdetector.Consola;
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
@@ -24,11 +25,10 @@ import com.asbestosstar.crashdetector.json.Json.Nodo;
 public class LanzerNoAnimado implements Verificaciones {
 
 	public static final Path ARCHIVO_ANIMADOS = Statics.carpeta.resolve("lanzeres_animados.json");
-	public static final String LANZADOR_ACTUAL = Statics.lanzer_del_app;
 
 	private boolean activado = false;
 	private String mensaje = "";
-	boolean completa = true;
+	boolean completa = false;
 
 	@Override
 	public void verificar(Consola consola) {
@@ -36,10 +36,11 @@ public class LanzerNoAnimado implements Verificaciones {
 			return;
 		}
 		this.completa = true;
+		String LANZADOR_ACTUAL = Statics.lanzer_del_app;
 		if (LANZADOR_ACTUAL == null || LANZADOR_ACTUAL.trim().isEmpty()) {
 			return;
 		}
-
+CrashDetectorLogger.log("Lanzer Actual "+LANZADOR_ACTUAL );
 		// Si el archivo de launchers animados no existe o está vacío, no hacer nada
 		if (!ARCHIVO_ANIMADOS.toFile().exists()) {
 			return;

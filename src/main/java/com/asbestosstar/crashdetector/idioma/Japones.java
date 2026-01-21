@@ -560,8 +560,13 @@ public class Japones implements Idioma {
 
 	@Override
 	public String errorConfigMCForge() {
-		return "<b style='color:#" + config.obtenerColorError() + "'>" + "NightConfig/Forge設定の重大なエラー: " + "設定ファイルが破損または不完全です。 "
-				+ "'config'フォルダを削除してゲームを再起動してください</b>";
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	           + "NightConfig/Forge 設定の致命的エラー: "
+	           + "設定ファイルが破損または不完全です。"
+	           + "これは、古いバージョンやカスタム版の NightConfig において、'config' フォルダ内の空の設定ファイル（多くの場合 0 バイト）によって引き起こされることがあります。"
+	           + "ほとんどのバージョンでは Night Config Fixes で問題を解決できますが、非互換またはカスタム版の NightConfig を使用している場合は、手動で設定ファイルを削除する必要があります。"
+	           + "この問題は、NightConfig を内蔵する古い MC Forge バージョンや、NightConfig を同梱する古い FabricMC モッドでより一般的ですが、一部のカスタム NightConfig ビルドでも発生する可能性があります。"
+	           + "解決策の詳細は <a href='https://www.curseforge.com/minecraft/mc-mods/night-config-fixes'>Night Config Fixes</a> でご確認ください。</b>";
 	}
 
 	@Override

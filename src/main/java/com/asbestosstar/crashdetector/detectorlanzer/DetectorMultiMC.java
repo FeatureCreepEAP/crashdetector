@@ -23,11 +23,7 @@ public class DetectorMultiMC implements DetectorLanzer {
 	public boolean detectar(App app, String cmd) {
 		if (!app.equals(App.MINECRAFT))
 			return false;
-		try {
-			Class.forName("org.multimc.onesix.OneSixLauncher", false, this.getClass().getClassLoader());
-			return true;
-		} catch (ClassNotFoundException e) {
-			return false;
-		}
+		
+		return buscarClase("org.multimc.onesix.OneSixLauncher");
 	}
 }

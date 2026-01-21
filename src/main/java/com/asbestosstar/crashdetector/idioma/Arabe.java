@@ -595,8 +595,13 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String errorConfigMCForge() {
-		return "<b style='color:#" + config.obtenerColorError() + "'>" + "خطأ حرج في تكوين NightConfig/Forge: "
-				+ "ملف التكوين تالف أو غير مكتمل. " + "احذف مجلد 'config' وأعد تشغيل اللعبة</b>";
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	           + "خطأ تكوين NightConfig/Forge حرج: "
+	           + "ملف التكوين تالف أو غير مكتمل. "
+	           + "قد يكون هذا ناتجًا عن ملفات تكوين فارغة (غالبًا بحجم 0 بايت) في مجلد 'config' في إصدارات قديمة أو معدلة من NightConfig. "
+	           + "في معظم الإصدارات، سيحلّ Night Config Fixes المشكلة، لكن إذا كنت تستخدم إصدارًا غير متوافق أو إصدارًا معدلًا من NightConfig، فستحتاج إلى حذف ملفات التكوين يدويًّا. "
+	           + "هذا المشكل شائع أكثر في إصدارات MC Forge القديمة (التي تتضمن NightConfig) وفي وحدات FabricMC القديمة التي تحزم NightConfig، لكنه قد يظهر أيضًا في بعض الإصدارات المخصصة من NightConfig. "
+	           + "مزيد من المعلومات حول الحلول متاح في <a href='https://www.curseforge.com/minecraft/mc-mods/night-config-fixes'>Night Config Fixes</a>.</b>";
 	}
 
 	@Override

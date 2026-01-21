@@ -598,9 +598,13 @@ public class Ingles implements Idioma {
 
 	@Override
 	public String errorConfigMCForge() {
-		return "<b style='color:#" + config.obtenerColorError() + "'>" + "Critical NightConfig/Forge configuration error: "
-				+ "Corrupted or incomplete configuration file. "
-				+ "Delete the 'config' folder and restart the game</b>";
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	           + "Critical NightConfig/Forge configuration error: "
+	           + "Configuration file is corrupted or incomplete. "
+	           + "This can be caused by empty configuration files (often 0 bytes) in the 'config' folder in older or custom versions of NightConfig. "
+	           + "For most versions, Night Config Fixes will resolve the issue, but if you are using an incompatible or custom version of NightConfig, you will need to delete the configuration files manually. "
+	           + "This issue is more common in older MC Forge versions (which include NightConfig) and in older FabricMC mods that bundle NightConfig, but it can also occur in some custom NightConfig builds. "
+	           + "More information about solutions is available at <a href='https://www.curseforge.com/minecraft/mc-mods/night-config-fixes'>Night Config Fixes</a>.</b>";
 	}
 
 	@Override

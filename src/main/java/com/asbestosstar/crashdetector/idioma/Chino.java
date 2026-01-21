@@ -541,8 +541,13 @@ public class Chino implements Idioma {
 
 	@Override
 	public String errorConfigMCForge() {
-		return "<b style='color:#" + config.obtenerColorError() + "'>" + "NightConfig/Forge配置严重错误: " + "配置文件损坏或不完整。 "
-				+ "删除'config'文件夹并重新启动游戏</b>";
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	           + "NightConfig/Forge 配置严重错误："
+	           + "配置文件已损坏或不完整。"
+	           + "这通常由 'config' 文件夹中的空配置文件（常为 0 字节）引起，多见于旧版或自定义版 NightConfig。"
+	           + "对于大多数版本，Night Config Fixes 可解决此问题；但若你使用的是不兼容或自定义的 NightConfig 版本，则需手动删除配置文件。"
+	           + "此问题在旧版 MC Forge（自带 NightConfig）和打包了 NightConfig 的旧版 FabricMC 模组中尤为常见，但也可能出现在某些自定义 NightConfig 版本中。"
+	           + "更多解决方案详见 <a href='https://www.curseforge.com/minecraft/mc-mods/night-config-fixes'>Night Config Fixes</a>。</b>";
 	}
 
 	@Override

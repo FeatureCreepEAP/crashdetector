@@ -34,7 +34,7 @@ public class AntiManipulacion implements Verificaciones {
 	public static final Path ARCHIVO_ANTIMANIPULACION = Statics.carpeta.resolve("antimanipulacion.json");
 	private boolean activado = false;
 	private String mensaje = "";
-	boolean completa = true;
+	boolean completa = false;
 
 	@Override
 	public void verificar(Consola consola) {

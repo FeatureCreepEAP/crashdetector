@@ -23,21 +23,13 @@ public class DetectorMinecraftServer implements DetectorLanzer {
 		if (!app.equals(App.MINECRAFT))
 			return false;
 
-		boolean tieneServer;
+		boolean tieneServer = false;
 		boolean tieneClient = false;
+//Necesito un otra solucion
 
-		try {
-			Class.forName("net.minecraft.server.MinecraftServer", false, this.getClass().getClassLoader());
-			tieneServer = true;
-		} catch (ClassNotFoundException e) {
-			tieneServer = false;
-		}
+		tieneServer = buscarClase("net.minecraft.server.MinecraftServer");
 
-		try {
-			Class.forName("net.minecraft.client.main.Main", false, this.getClass().getClassLoader());
-			tieneClient = true;
-		} catch (ClassNotFoundException ignored) {
-		}
+		tieneClient = buscarClase("net.minecraft.client.main.Main");
 
 		return tieneServer && !tieneClient;
 	}

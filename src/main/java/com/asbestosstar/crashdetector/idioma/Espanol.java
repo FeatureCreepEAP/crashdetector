@@ -638,10 +638,13 @@ public class Espanol implements Idioma {
 
 	@Override
 	public String errorConfigMCForge() {
-		// TODO Auto-generated method stub
-		return "<b style='color:#" + config.obtenerColorError() + "'>" + "Error crítico de configuración NightConfig/Forge: "
-				+ "Archivo de configuración corrupto o incompleto. "
-				+ "Elimina la carpeta 'config' y reinicia el juego</b>";
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	           + "Error crítico de configuración NightConfig/Forge: "
+	           + "Archivo de configuración corrupto o incompleto. "
+	           + "Esto puede ser causado por archivos de configuración vacíos (a menudo de 0 bytes) en la carpeta 'config' en versiones anteriores o personalizadas de NightConfig. "
+	           + "Para la mayoría de las versiones, Night Config Fixes resolverá el problema, pero si estás utilizando una versión no compatible o una versión personalizada de NightConfig, deberás eliminar los archivos de configuración manualmente. "
+	           + "Este problema es más común en versiones antiguas de MC Forge (que viene con NightConfig) y en mods de FabricMC antiguos que empaquetan NightConfig, pero también puede existir en algunas versiones personalizadas de NightConfig. "
+	           + "Más información sobre las soluciones está disponible en <a href='https://www.curseforge.com/minecraft/mc-mods/night-config-fixes'>Night Config Fixes</a>.</b>";
 	}
 
 	@Override

@@ -43,6 +43,7 @@ public class Entregar {
 		String lanzer = DetectorLanzer.detectarLanzer(app_detecta, args);
 		Statics.lanzer_del_app = lanzer;
 
+		
 		// no fijar Statics.ARGS_DE_APP aqui
 		// escribir archivo
 		String contenido = construirContenidoArchivo(idApp, args, activos_cargadores, lanzer);
@@ -52,6 +53,7 @@ public class Entregar {
 	// lector
 	public static void recibir() {
 		if (!archivo.exists() || !archivo.isFile()) {
+			CrashDetectorLogger.log("Archivo inexiste");
 			return;
 		}
 		try {
@@ -77,6 +79,9 @@ public class Entregar {
 					lanzer = v;
 			}
 
+			
+
+			
 			// restaurar app
 			app_detecta = buscarAppPorId(idApp);
 			Statics.APP = app_detecta;
@@ -84,6 +89,9 @@ public class Entregar {
 			// restaurar launcher
 			Statics.lanzer_del_app = lanzer != null ? lanzer : "";
 
+			
+			
+			
 			// fijar ARGS_DE_APP solo aqui
 			Statics.ARGS_DE_APP = args != null ? args : "";
 
@@ -127,6 +135,7 @@ public class Entregar {
 		out.append("app: ").append(idApp == null ? "" : idApp).append('\n');
 		out.append("args: ").append(args == null ? "" : args).append('\n');
 		out.append("lanzer: ").append(lanzer == null ? "" : lanzer).append('\n');
+		CrashDetectorLogger.log("CD Antes Entregar lanzer "+lanzer);
 		out.append("cargadores: ").append(ids.toString()).append('\n');
 		return out.toString();
 	}

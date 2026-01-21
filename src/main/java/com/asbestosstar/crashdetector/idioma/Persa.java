@@ -590,8 +590,13 @@ public class Persa implements Idioma {
 
 	@Override
 	public String errorConfigMCForge() {
-		return "<b style='color:#" + config.obtenerColorError() + "'>" + "خطای بحرانی تنظیمات NightConfig/Forge: "
-				+ "فایل تنظیمات خراب یا ناقص است. " + "پوشه 'config' را حذف کرده و بازی را دوباره راه‌اندازی کنید</b>";
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	           + "خطای بحرانی پیکربندی NightConfig/Forge: "
+	           + "فایل پیکربندی خراب یا ناقص است. "
+	           + "این ممکن است به دلیل فایل‌های پیکربندی خالی (اغلب ۰ بایت) در پوشهٔ 'config' در نسخه‌های قدیمی یا سفارشی NightConfig رخ دهد. "
+	           + "برای اکثر نسخه‌ها، Night Config Fixes این مشکل را حل می‌کند، اما اگر از نسخهٔ ناسازگار یا سفارشی NightConfig استفاده می‌کنید، باید فایل‌های پیکربندی را به صورت دستی حذف کنید. "
+	           + "این مشکل در نسخه‌های قدیمی MC Forge (که شامل NightConfig هستند) و در افزونه‌های قدیمی FabricMC که NightConfig را همراه دارند، رایج‌تر است، اما ممکن است در برخی نسخه‌های سفارشی NightConfig نیز وجود داشته باشد. "
+	           + "اطلاعات بیشتر دربارهٔ راه‌حل‌ها در <a href='https://www.curseforge.com/minecraft/mc-mods/night-config-fixes'>Night Config Fixes</a> موجود است.</b>";
 	}
 
 	@Override

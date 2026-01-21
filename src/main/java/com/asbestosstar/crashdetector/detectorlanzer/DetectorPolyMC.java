@@ -22,12 +22,9 @@ public class DetectorPolyMC implements DetectorLanzer {
 	public boolean detectar(App app, String cmd) {
 		if (!app.equals(App.MINECRAFT))
 			return false;
-		try {
-			Class.forName("org.polymc.impl.OneSixLauncher", false, this.getClass().getClassLoader());
-			return true;
-		} catch (ClassNotFoundException e) {
-			return false;
-		}
+
+			return buscarClase("org.polymc.impl.OneSixLauncher");
+
 	}
 
 }

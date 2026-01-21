@@ -28,12 +28,9 @@ public class DetectorLunar implements DetectorLanzer {
 			return true;
 		}
 
+		
 		// Verificar clase sin inicializar
-		try {
-			Class.forName("com.moonsworth.lunar.genesis.Genesis", false, this.getClass().getClassLoader());
-			return true;
-		} catch (ClassNotFoundException ignored) {
-			return false;
-		}
+		
+	return buscarClase("com.moonsworth.lunar.genesis.Genesis");
 	}
 }

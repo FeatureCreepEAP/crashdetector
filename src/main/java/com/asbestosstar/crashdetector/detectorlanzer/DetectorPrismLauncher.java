@@ -20,13 +20,13 @@ public class DetectorPrismLauncher implements DetectorLanzer {
 
 	@Override
 	public boolean detectar(App app, String cmd) {
-		if (!app.equals(App.MINECRAFT))
-			return false;
-		try {
-			Class.forName("org.prismlauncher.launcher.Launcher", false, this.getClass().getClassLoader());
-			return true;
-		} catch (ClassNotFoundException e) {
-			return false;
-		}
+	    // Verifica si la aplicación es Minecraft
+	    if (!app.equals(App.MINECRAFT)) {
+	        return false;
+	    }
+
+	    // Llama al nuevo método para buscar la clase en múltiples class loaders
+	    return buscarClase("org.prismlauncher.EntryPoint");
 	}
+
 }

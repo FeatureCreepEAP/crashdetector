@@ -425,9 +425,11 @@ public class MonitorDePID {
 		if (ultimo_mods.toFile().exists()) {
 			CargadorExtensiones.cargarExtensionesProcesoMonitor(ultimo_mods.toFile());
 		}
-		Entregar.recibir();
 
 		System.out.println(idioma.buscando_para_pid(pid));
+		Entregar.recibir();
+
+		
 		CountDownLatch latch = new CountDownLatch(1); // Necesito por que sin esta preceso esta muerte
 
 		while (true) {

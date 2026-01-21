@@ -562,8 +562,13 @@ public class Coreano implements Idioma {
 
 	@Override
 	public String errorConfigMCForge() {
-		return "<b style='color:#" + config.obtenerColorError() + "'>" + "NightConfig/Forge 설정의 치명적인 오류: " + "설정 파일이 손상되거나 불완전합니다. "
-				+ "'config' 폴더를 삭제하고 게임을 재시작하세요</b>";
+	    return "<b style='color:#" + config.obtenerColorError() + "'>"
+	           + "NightConfig/Forge 구성 치명적 오류: "
+	           + "구성 파일이 손상되었거나 불완전합니다. "
+	           + "이는 'config' 폴더에 있는 빈 구성 파일(종종 0바이트)로 인해 발생할 수 있으며, 이는 이전 버전이나 사용자 정의 NightConfig에서 흔합니다. "
+	           + "대부분의 버전에서는 Night Config Fixes가 문제를 해결하지만, 호환되지 않거나 사용자 정의 NightConfig를 사용 중이라면 구성 파일을 수동으로 삭제해야 합니다. "
+	           + "이 문제는 NightConfig가 포함된 이전 MC Forge 버전과 NightConfig를 번들로 제공하는 구형 FabricMC 모드에서 더 흔하지만, 일부 사용자 정의 NightConfig 버전에서도 발생할 수 있습니다. "
+	           + "해결 방법에 대한 자세한 내용은 <a href='https://www.curseforge.com/minecraft/mc-mods/night-config-fixes'>Night Config Fixes</a>에서 확인할 수 있습니다.</b>";
 	}
 
 	@Override
