@@ -40,7 +40,7 @@ public class LanzerNoAnimado implements Verificaciones {
 		if (LANZADOR_ACTUAL == null || LANZADOR_ACTUAL.trim().isEmpty()) {
 			return;
 		}
-CrashDetectorLogger.log("Lanzer Actual "+LANZADOR_ACTUAL );
+		CrashDetectorLogger.log("Lanzer Actual " + LANZADOR_ACTUAL);
 		// Si el archivo de launchers animados no existe o está vacío, no hacer nada
 		if (!ARCHIVO_ANIMADOS.toFile().exists()) {
 			return;

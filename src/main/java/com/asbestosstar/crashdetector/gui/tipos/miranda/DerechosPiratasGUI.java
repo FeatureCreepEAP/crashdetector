@@ -237,6 +237,14 @@ public abstract class DerechosPiratasGUI extends JDialog implements CrashDetecto
 				if (!v.isEmpty())
 					derechos.put(c.getKey(), v);
 			}
+
+			// Verificación pasiva: si hay texto en coreano ("ko"), verificar jerga sureña
+			String textoCoreano = derechos.get("ko");
+			if (textoCoreano != null && !textoCoreano.isEmpty()) {
+				com.asbestosstar.crashdetector.idioma.cumplimiento.ActaDeProteccionDelIdiomaCulturalDePyongyang
+						.contieneJergaSur(textoCoreano);
+			}
+
 			dialogo.dispose();
 		});
 

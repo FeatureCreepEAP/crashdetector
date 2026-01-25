@@ -3,6 +3,8 @@ package com.asbestosstar.crashdetector.idioma;
 import java.util.List;
 import java.util.Set;
 
+import javax.swing.Icon;
+
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
@@ -266,9 +268,9 @@ public class Espanol implements Idioma {
 
 	@Override
 	public String noTieneConsolaDeLauncherCursedForge() {
-	    return "<b style='color:#" + config.obtenerColorAdvertencia()
-	        + "'>Estás usando \"Omitir inicio Launcher\" (CurseForge App). A veces esto causa problemas difíciles de detectar. Esto se debe a la opción \"Omitir inicio Launcher\" en versiones antiguas de la App CurseForge o en la versión nueva. Desactívala y usa la opción \"Mojang Launcher\" en la configuración de CurseForge. Puedes ver este video en inglés de Claws of Berk (ir a 1:11) "
-	        + "<a href='https://youtu.be/g847O_2LjoE?si=8Y_oj3zyyhYTrSkv&t=71' style='color: inherit;'>aquí</a>.</b>";
+		return "<b style='color:#" + config.obtenerColorAdvertencia()
+				+ "'>Estás usando \"Omitir inicio Launcher\" (CurseForge App). A veces esto causa problemas difíciles de detectar. Esto se debe a la opción \"Omitir inicio Launcher\" en versiones antiguas de la App CurseForge o en la versión nueva. Desactívala y usa la opción \"Mojang Launcher\" en la configuración de CurseForge. Puedes ver este video en inglés de Claws of Berk (ir a 1:11) "
+				+ "<a href='https://youtu.be/g847O_2LjoE?si=8Y_oj3zyyhYTrSkv&t=71' style='color: inherit;'>aquí</a>.</b>";
 	}
 
 	@Override
@@ -456,12 +458,26 @@ public class Espanol implements Idioma {
 	@Override
 	public String arco() {
 		return "Este diálogo te permite compartir registros utilizando la API de SecureLogger "
-				+ "en securelogger.net. Al presionar el botón para compartir el informe, tu informe se envía al "
-				+ "punto final seleccionado (por defecto asbestosstar.egoism.jp) (Se puede cambiar en la parte inferior). Puedes compartir todos los registros seleccionados "
-				+ "junto con el informe. Si no deseas subir, ¡no uses este diálogo! No procesamos tu informe en el punto final oficial (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb); solo eliminamos enlaces no permitidos. El código está aquí: https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb. Esto se utiliza únicamente para mostrar información sobre tu fallo y el enlace a los registros. Sin embargo, es posible usar un punto final personalizado que podría no tener los mismos métodos. Estás usando el sitio de informes "
-				+ Config.obtenerInstancia().obtenerSitoDeInformes() + " y el sitio de registros "
-				+ Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado()
-				+ ". También puedes compartir registros individuales sin un informe presionando los botones de compartir junto a los nombres de los registros individuales; los registros irán al sitio de registros seleccionado. CrashDetector tiene una anonimización de registros predeterminada, que intenta eliminar nombres de usuario, UUID, tokens de acceso, IDs de sesión, direcciones IP y otros datos. Sin embargo, no es perfecta. Aún así, el autor del modpack puede desactivarla. Se puede activar o desactivar con la casilla de verificación en la parte inferior de esta pantalla. Eres el controlador de tus propios datos; tú decides dónde subes tus datos. Los sitios de registro son propiedad de terceros cuya propiedad a menudo está oculta por privacidad. Asumes toda la responsabilidad de gestionar tus datos y los riesgos involucrados. El Diálogo de Compartir de CrashDetector es simplemente una interfaz que te permite gestionar eso. Es importante que estés al tanto del RGPD y ARCO.";
+				+ "en <a href=\"https://securelogger.net\">securelogger.net</a>. Al presionar el botón para compartir el informe, "
+				+ "tu informe se envía al punto final seleccionado (por defecto asbestosstar.egoism.jp) (se puede cambiar en la parte inferior). "
+				+ "Puedes compartir todos los registros seleccionados junto con el informe. Si no deseas subir, ¡no uses este diálogo! "
+				+ "No procesamos tu informe en el punto final oficial (<a href=\"https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb\">https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb</a>); "
+				+ "solo eliminamos enlaces no permitidos. El código está aquí: <a href=\"https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb\">código fuente</a>. "
+				+ "Esto se utiliza únicamente para mostrar información sobre tu fallo y el enlace a los registros. Sin embargo, es posible usar un punto final personalizado que podría no tener los mismos métodos. "
+				+ "Estás usando el sitio de informes " + Config.obtenerInstancia().obtenerSitoDeInformes()
+				+ " y el sitio de registros " + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + ". "
+				+ "También puedes compartir registros individuales sin un informe presionando los botones de compartir junto a los nombres de los registros individuales; "
+				+ "los registros irán al sitio de registros seleccionado. CrashDetector tiene una anonimización de registros predeterminada, que intenta eliminar nombres de usuario, UUID, "
+				+ "tokens de acceso, IDs de sesión, direcciones IP y otros datos. Sin embargo, no es perfecta. Aún así, el autor del modpack puede desactivarla. "
+				+ "Se puede activar o desactivar con la casilla de verificación en la parte inferior de esta pantalla. Eres el controlador de tus propios datos; tú decides dónde subes tus datos. "
+				+ "Los sitios de registro son propiedad de terceros cuya propiedad a menudo está oculta por privacidad. Asumes toda la responsabilidad de gestionar tus datos y los riesgos involucrados. "
+				+ "El Diálogo de Compartir de CrashDetector es simplemente una interfaz que te permite gestionar eso. "
+				+ "Es importante que estés al tanto del RGPD y ARCO. "
+				+ "Si estás en Europa, puedes usar <a href=\"https://securelogger.top\">securelogger.top</a> alojado en Alemania por Hetzner. "
+				+ "Para más información legal, consulta los siguientes enlaces: "
+				+ "<a href=\"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPDPPP.pdf\">LFPDPPP</a>, "
+				+ "<a href=\"https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32016R0679\">RGPD</a>, "
+				+ "<a href=\"https://www.ppc.go.jp/files/pdf/20220401_personal_basicpolicy.pdf\">Política Básica de Protección de Datos en Japón</a>.";
 	}
 
 	@Override
@@ -638,13 +654,13 @@ public class Espanol implements Idioma {
 
 	@Override
 	public String errorConfigMCForge() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	           + "Error crítico de configuración NightConfig/Forge: "
-	           + "Archivo de configuración corrupto o incompleto. "
-	           + "Esto puede ser causado por archivos de configuración vacíos (a menudo de 0 bytes) en la carpeta 'config' en versiones anteriores o personalizadas de NightConfig. "
-	           + "Para la mayoría de las versiones, Night Config Fixes resolverá el problema, pero si estás utilizando una versión no compatible o una versión personalizada de NightConfig, deberás eliminar los archivos de configuración manualmente. "
-	           + "Este problema es más común en versiones antiguas de MC Forge (que viene con NightConfig) y en mods de FabricMC antiguos que empaquetan NightConfig, pero también puede existir en algunas versiones personalizadas de NightConfig. "
-	           + "Más información sobre las soluciones está disponible en <a href='https://www.curseforge.com/minecraft/mc-mods/night-config-fixes'>Night Config Fixes</a>.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Error crítico de configuración NightConfig/Forge: "
+				+ "Archivo de configuración corrupto o incompleto. "
+				+ "Esto puede ser causado por archivos de configuración vacíos (a menudo de 0 bytes) en la carpeta 'config' en versiones anteriores o personalizadas de NightConfig. "
+				+ "Para la mayoría de las versiones, Night Config Fixes resolverá el problema, pero si estás utilizando una versión no compatible o una versión personalizada de NightConfig, deberás eliminar los archivos de configuración manualmente. "
+				+ "Este problema es más común en versiones antiguas de MC Forge (que viene con NightConfig) y en mods de FabricMC antiguos que empaquetan NightConfig, pero también puede existir en algunas versiones personalizadas de NightConfig. "
+				+ "Más información sobre las soluciones está disponible en <a href='https://www.curseforge.com/minecraft/mc-mods/night-config-fixes'>Night Config Fixes</a>.</b>";
 	}
 
 	@Override
@@ -6555,50 +6571,50 @@ public class Espanol implements Idioma {
 
 	@Override
 	public String gmlIPV6() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "El mod GML (Groovy ModLoader) requiere estos cambios y es el origen más común de este problema.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "El mod GML (Groovy ModLoader) requiere estos cambios y es el origen más común de este problema.</b>";
 	}
 
 	@Override
 	public String mensajeIndependenteFlywheel(Set<String> mods) {
-	    StringBuilder listaMods = new StringBuilder();
-	    if (!mods.isEmpty()) {
-	        for (String mod : mods) {
-	            listaMods.append("<li>").append(mod).append("</li>");
-	        }
-	    }
+		StringBuilder listaMods = new StringBuilder();
+		if (!mods.isEmpty()) {
+			for (String mod : mods) {
+				listaMods.append("<li>").append(mod).append("</li>");
+			}
+		}
 
-	    String mensaje = "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "Se ha detectado el uso de <i>Independiente Flywheel</i>.</b>"
-	            + "<p><b>Independiente Flywheel está obsoleto (deprecated)</b> y no debe utilizarse en versiones modernas.</p>"
-	            + "<p>Las versiones actuales de <b>Create</b> <b>ya incluyen Flywheel</b>, por lo que instalarlo de forma independiente "
-	            + "provoca conflictos de compatibilidad y errores de carga.</p>"
-	            + "<p>Algunos mods que dependen explícitamente de Independiente Flywheel pueden "
-	            + "<b>no funcionar</b> o <b>funcionar de forma inestable</b>. "
-	            + "En ciertos casos avanzados, estos mods pueden llegar a funcionar si se "
-	            + "<b>edita manualmente el archivo <code>mods.toml</code></b> para ajustar los rangos de versión, "
-	            + "aunque esto <b>no es recomendado</b>.</p>"
-	            + (mods.isEmpty() ? ""
-	                : "<p><b>Mods detectados que hacen referencia a Flywheel:</b></p>"
-	                + "<ul>" + listaMods.toString() + "</ul>")
-	            + "<p>La solución recomendada es <b>eliminar Independiente Flywheel</b> y utilizar únicamente "
-	            + "la versión incluida con Create.</p>";
+		String mensaje = "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Se ha detectado el uso de <i>Independiente Flywheel</i>.</b>"
+				+ "<p><b>Independiente Flywheel está obsoleto (deprecated)</b> y no debe utilizarse en versiones modernas.</p>"
+				+ "<p>Las versiones actuales de <b>Create</b> <b>ya incluyen Flywheel</b>, por lo que instalarlo de forma independiente "
+				+ "provoca conflictos de compatibilidad y errores de carga.</p>"
+				+ "<p>Algunos mods que dependen explícitamente de Independiente Flywheel pueden "
+				+ "<b>no funcionar</b> o <b>funcionar de forma inestable</b>. "
+				+ "En ciertos casos avanzados, estos mods pueden llegar a funcionar si se "
+				+ "<b>edita manualmente el archivo <code>mods.toml</code></b> para ajustar los rangos de versión, "
+				+ "aunque esto <b>no es recomendado</b>.</p>"
+				+ (mods.isEmpty() ? ""
+						: "<p><b>Mods detectados que hacen referencia a Flywheel:</b></p>" + "<ul>"
+								+ listaMods.toString() + "</ul>")
+				+ "<p>La solución recomendada es <b>eliminar Independiente Flywheel</b> y utilizar únicamente "
+				+ "la versión incluida con Create.</p>";
 
-	    return mensaje;
+		return mensaje;
 	}
 
 	@Override
 	public String nombreIndependenteFlywheel() {
-	    return "Flywheel Independiente";
+		return "Flywheel Independiente";
 	}
-	
+
 	@Override
 	public String mensajeFloralEnchantments() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-			+ "Se ha detectado un error relacionado con el mod <i>Floral Enchantments</i>.</b>"
-			+ "<p>El crash está causado por un fallo interno del mod al manejar datos del juego, "
-			+ "lo que provoca una <b>NullPointerException</b> durante la ejecución.</p>"
-			+ "<p>Este problema suele resolverse actualizando el mod o eliminándolo .</p>";
+				+ "Se ha detectado un error relacionado con el mod <i>Floral Enchantments</i>.</b>"
+				+ "<p>El crash está causado por un fallo interno del mod al manejar datos del juego, "
+				+ "lo que provoca una <b>NullPointerException</b> durante la ejecución.</p>"
+				+ "<p>Este problema suele resolverse actualizando el mod o eliminándolo .</p>";
 	}
 
 	@Override
@@ -6608,17 +6624,17 @@ public class Espanol implements Idioma {
 
 	@Override
 	public String mixinExtrasDuplicados() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
-	        + "Tienes la versión NeoForge de MixinExtras y la versión normal. Si estás en MinecraftForge, puedes instalar <a href='https://www.curseforge.com/minecraft/mc-mods/mixin-extras-neoforge-on-forge-fix' style='color: inherit;'>este enlace</a> para la solución.</b>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
+				+ "Tienes la versión NeoForge de MixinExtras y la versión normal. Si estás en MinecraftForge, puedes instalar <a href='https://www.curseforge.com/minecraft/mc-mods/mixin-extras-neoforge-on-forge-fix' style='color: inherit;'>este enlace</a> para la solución.</b>";
 	}
 
 	@Override
 	public String mensajeIrisSombrasTerreno() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-			+ "Se ha detectado un error en las sombras del terreno con shaders (Iris).</b>"
-			+ "<p>El problema ocurre durante el renderizado del terreno.</p>"
-			+ "<p>Se recomienda <b>probar el juego sin shaders</b> o reducir la calidad gráfica, "
-			+ "especialmente en configuraciones <b>Ultra</b>.</p>";
+				+ "Se ha detectado un error en las sombras del terreno con shaders (Iris).</b>"
+				+ "<p>El problema ocurre durante el renderizado del terreno.</p>"
+				+ "<p>Se recomienda <b>probar el juego sin shaders</b> o reducir la calidad gráfica, "
+				+ "especialmente en configuraciones <b>Ultra</b>.</p>";
 	}
 
 	@Override
@@ -6628,39 +6644,167 @@ public class Espanol implements Idioma {
 
 	@Override
 	public String mensajeTickLargoServidor() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	        + "Se ha detectado un tick del servidor excesivamente largo.</b>"
-	        + "<p>Esto indica que el juego se ha quedado bloqueado durante demasiado tiempo en un solo tick.</p>"
-	        + "<p>Se recomienda <b>revisar el thread dump</b> generado en el log para identificar la causa.</p>"
-	        + "<p>El <b>Análisis de Stack Trace</b> puede ayudarte a localizar el origen del bloqueo.</p>"
-	        + "<p>Además, el botón <b>Ver en log</b> resaltará en rojo los posibles mods responsables, "
-	        + "así como entradas rodeadas por <code>$modid$</code>, que suelen indicar el origen del problema. Para el escaneo en tiempo real, recomendamos usar el muestreador de CPU en VisualVM. Asegúrate de que tu servidor o computadora sea lo suficientemente potente como para manejar los mods que estás usando, ya que es posible que todos tus mods funcionen correctamente, pero que tengas demasiados.</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Se ha detectado un tick del servidor excesivamente largo.</b>"
+				+ "<p>Esto indica que el juego se ha quedado bloqueado durante demasiado tiempo en un solo tick.</p>"
+				+ "<p>Se recomienda <b>revisar el thread dump</b> generado en el log para identificar la causa.</p>"
+				+ "<p>El <b>Análisis de Stack Trace</b> puede ayudarte a localizar el origen del bloqueo.</p>"
+				+ "<p>Además, el botón <b>Ver en log</b> resaltará en rojo los posibles mods responsables, "
+				+ "así como entradas rodeadas por <code>$modid$</code>, que suelen indicar el origen del problema. Para el escaneo en tiempo real, recomendamos usar el muestreador de CPU en VisualVM. Asegúrate de que tu servidor o computadora sea lo suficientemente potente como para manejar los mods que estás usando, ya que es posible que todos tus mods funcionen correctamente, pero que tengas demasiados.</p>";
 	}
 
 	@Override
 	public String nombreTickLargoServidor() {
-	    return "Tick largo del servidor";
+		return "Tick largo del servidor";
 	}
-	
-	
-	
-	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@Override
+	public String tituloLFPDPPP() {
+		return "LEY FEDERAL DE PROTECCIÓN DE DATOS PERSONALES EN POSESIÓN DE LOS PARTICULARES";
+	}
 
-	
-	
-	
-	
+	@Override
+	public String aceptarPermanentemente() {
+		return "Aceptar permanentemente";
+	}
+
+	// Métodos para la Acta de Protección del Idioma Cultural de Pyongyang
+	public String actaProteccionIdiomaCultural() {
+		return "Acta de Protección del Idioma Cultural de Pyongyang";
+	}
+
+	public String mensajeAdvertenciaIdiomaCoreano() {
+		return "La traducción coreana contiene términos de slang del sur que deben evitarse para cumplir con la ley. "
+				+ "El uso de lenguaje extranjero, especialmente proveniente  del Sur, está estrictamente prohibido "
+				+ "según el Acta de Protección del Idioma Cultural de Pyongyang.";
+	}
+
+	public String enlaceDocumentacionIdiomaCoreano() {
+		return "Para más información, consulte el documento oficial de la ley: "
+				+ "<a href='https://www.dailynk.com/english/wp-content/uploads/sites/2/2023/03/Pyongyang-Cultural-Language-Protection-Act_English-and-Korean-Versions_Daily-NK.pdf'>Acta de Protección del Idioma Cultural de Pyongyang</a>";
+	}
+
+	public String leerLeyCompleta() {
+		return "Leer Ley Completa";
+	}
+
+	public String errorAbriendoEnlace() {
+		return "Error al abrir el enlace";
+	}
+
+	@Override
+	public String canarioTitulo() {
+		return "Canario de Orden Judicial";
+	}
+
+	@Override
+	public String canario1984Titulo() {
+		return "1984 — Monitor de Vigilancia";
+	}
+
+	@Override
+	public String revisar() {
+		return "Revisar";
+	}
+
+	@Override
+	public String cerrar() {
+		return "Cerrar";
+	}
+
+	@Override
+	public String canarioTodoSeguro() {
+		return "Todos los servicios reportan estado seguro.";
+	}
+
+	@Override
+	public String canarioComprometido(int c) {
+		return "ALERTA: " + c + " servicio(s) reportan estado inseguro.";
+	}
+
+	@Override
+	public String colorAlerta() {
+		return "Color de alerta";
+	}
+
+	public String opcionesMunidiales() {
+		return "Opciones munidiales";
+	}
+
+	public String consentimientoLFPDPPP() {
+		return "Consentimiento LFPDPPP";
+	}
+
+	public String habilitarTokenAcceso() {
+		return "Habilitar token de acceso";
+	}
+
+	public String consolaDesarrollo() {
+		return "Consola de desarrollo";
+	}
+
+	public String munidial() {
+		return "Munidial";
+	}
+
+	public String ningun() {
+		return "Ningún";
+	}
+
+	// Consola del desarrollador
+	public String consolaDesarrollador() {
+		return "Consola del desarrollador";
+	}
+
+	public String bajar() {
+		return "Bajar";
+	}
+
+	public String logsSoporte() {
+		return "Logs para soporte";
+	}
+
+	public String detenerProceso() {
+		return "Detener proceso";
+	}
+
+	// Menú contextual
+	public String copiarSeleccion() {
+		return "Copiar selección";
+	}
+
+	public String seleccionarTodo() {
+		return "Seleccionar todo";
+	}
+
+	public String copiarTodo() {
+		return "Copiar todo";
+	}
+
+	public String guardarTodoComoArchivo() {
+		return "Guardar todo como archivo";
+	}
+
+	public String obtenerEnlaceSoporte() {
+		return "Obtener enlace de soporte";
+	}
+
+	public String borrarTodo() {
+		return "Borrar todo";
+	}
+
+	// Colores configurables
+	public String colorFondoConsola() {
+		return "Color de fondo de la consola";
+	}
+
+	public String colorTextoConsola() {
+		return "Color del texto de la consola";
+	}
+
+	// Consentimiento / logs
+	public String consentimientoConfirmadoPendienteImplementacion() {
+		return "Consentimiento confirmado.\nLa integración de compartir logs se implementará aquí.";
+	}
+
 }

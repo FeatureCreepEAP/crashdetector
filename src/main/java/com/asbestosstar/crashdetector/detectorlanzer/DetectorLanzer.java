@@ -66,55 +66,48 @@ public interface DetectorLanzer {
 	public boolean desanimado();
 
 	public boolean detectar(App app, String cmd);
-	
-	
-	
-	
-	
-	
+
 	public default boolean buscarClase(String className) {
-	    // Intenta cargar la clase desde el class loader actual
-	    if (cargarClase(className, this.getClass().getClassLoader())) {
-	        return true;
-	    }
+		// Intenta cargar la clase desde el class loader actual
+		if (cargarClase(className, this.getClass().getClassLoader())) {
+			return true;
+		}
 
-	    // Intenta cargar la clase desde el class loader padre
-	    ClassLoader parentLoader = this.getClass().getClassLoader().getParent();
-	    if (cargarClase(className, parentLoader)) {
-	        return true;
-	    }
+		// Intenta cargar la clase desde el class loader padre
+		ClassLoader parentLoader = this.getClass().getClassLoader().getParent();
+		if (cargarClase(className, parentLoader)) {
+			return true;
+		}
 
-	    // Buscar en todos los class loaders del sistema
-	    return buscarEnTodosLosClassLoaders(className);
+		// Buscar en todos los class loaders del sistema
+		return buscarEnTodosLosClassLoaders(className);
 	}
 
-	public default  boolean cargarClase(String className, ClassLoader classLoader) {
-	    try {
-	        // Intenta cargar la clase usando el class loader proporcionado
-	        Class.forName(className, false, classLoader);
-	        return true;
-	    } catch (ClassNotFoundException e) {
-	        // La clase no fue encontrada en este class loader
-	        return false;
-	    }
+	public default boolean cargarClase(String className, ClassLoader classLoader) {
+		try {
+			// Intenta cargar la clase usando el class loader proporcionado
+			Class.forName(className, false, classLoader);
+			return true;
+		} catch (ClassNotFoundException e) {
+			// La clase no fue encontrada en este class loader
+			return false;
+		}
 	}
 
-	public default  boolean buscarEnTodosLosClassLoaders(String className) {
-	    // Inicia desde el class loader del sistema
-	    ClassLoader loader = ClassLoader.getSystemClassLoader();
-	    while (loader != null) {
-	        // Intenta cargar la clase en cada class loader
-	        if (cargarClase(className, loader)) {
-	            return true;
-	        }
-	        // Mueve al class loader padre
-	        loader = loader.getParent();
-	    }
-	    
-	    // Imprime mensaje si la clase no se encuentra en ningún class loader
-	    return false;
+	public default boolean buscarEnTodosLosClassLoaders(String className) {
+		// Inicia desde el class loader del sistema
+		ClassLoader loader = ClassLoader.getSystemClassLoader();
+		while (loader != null) {
+			// Intenta cargar la clase en cada class loader
+			if (cargarClase(className, loader)) {
+				return true;
+			}
+			// Mueve al class loader padre
+			loader = loader.getParent();
+		}
+
+		// Imprime mensaje si la clase no se encuentra en ningún class loader
+		return false;
 	}
 
-	
-	
 }

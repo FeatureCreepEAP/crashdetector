@@ -232,9 +232,9 @@ public class Chino implements Idioma {
 
 	@Override
 	public String noTieneConsolaDeLauncherCursedForge() {
-	    return "<b style='color:#" + config.obtenerColorAdvertencia()
-	        + "'>你正在使用“跳过启动器启动”（CurseForge 应用）。这有时会导致难以检测的问题。此选项存在于旧版 CurseForge 应用或新版中。请禁用它，并在 CurseForge 设置中改用“Mojang 启动器”。你可以在 Claws of Berk 的英文视频中查看说明（跳转至 1:11）"
-	        + "<a href='https://youtu.be/g847O_2LjoE?si=8Y_oj3zyyhYTrSkv&t=71' style='color: inherit;'>点击此处</a>.</b>";
+		return "<b style='color:#" + config.obtenerColorAdvertencia()
+				+ "'>你正在使用“跳过启动器启动”（CurseForge 应用）。这有时会导致难以检测的问题。此选项存在于旧版 CurseForge 应用或新版中。请禁用它，并在 CurseForge 设置中改用“Mojang 启动器”。你可以在 Claws of Berk 的英文视频中查看说明（跳转至 1:11）"
+				+ "<a href='https://youtu.be/g847O_2LjoE?si=8Y_oj3zyyhYTrSkv&t=71' style='color: inherit;'>点击此处</a>.</b>";
 	}
 
 	@Override
@@ -389,12 +389,23 @@ public class Chino implements Idioma {
 
 	@Override
 	public String arco() {
-		return "此对话框允许您使用 SecureLogger API 在 securelogger.net 上共享日志。"
-				+ "按下共享报告按钮时，您的报告将被发送到选定的端点（默认为 asbestosstar.egoism.jp）（可在底部更改）。您可以共享所有选定的日志以及报告。"
-				+ "如果您不想上传，请不要使用此对话框！我们不会在官方端点（https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb）处理您的报告；我们只会删除不允许的链接。代码在这里：https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb。这仅用于显示有关崩溃的信息和日志链接。然而，可以使用可能没有相同方法的自定义端点。您当前正在使用的报告站点是 "
-				+ Config.obtenerInstancia().obtenerSitoDeInformes() + "，日志站点是 "
-				+ Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado()
-				+ "。您还可以通过单击单个日志名称旁边的共享按钮来共享单个日志而无需报告；日志将发送到选定的日志站点。CrashDetector 具有默认的日志匿名化功能，该功能会尝试删除用户名、UUID、访问令牌、会话 ID、IP 地址和其他数据。然而，它并不完美。此外，模组包作者可以禁用它。可以通过屏幕底部的复选框启用或禁用它。您是自己的数据控制者；您决定将数据上传到哪里。日志站点由第三方拥有，其所有权通常因隐私原因而隐藏。您需要对管理您的数据及相关的风险负全责。CrashDetector 共享对话框只是一个允许您管理这些内容的界面。了解 GDPR 和 ARCO 非常重要。";
+		return "此对话框允许你通过 SecureLogger API "
+				+ "在 <a href=\"https://securelogger.net\">securelogger.net</a> 分享日志。点击“分享报告”按钮后，"
+				+ "你的报告将发送至所选端点（默认为 asbestosstar.egoism.jp）（可在底部更改）。" + "你可以将所有选中的日志与报告一并分享。如果你不想上传，请勿使用此对话框！"
+				+ "我们不会在官方端点处理你的报告（<a href=\"https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb\">https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb</a>）；"
+				+ "仅会移除不允许的链接。源代码在此：<a href=\"https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb\">源代码</a>。"
+				+ "此功能仅用于显示你的崩溃信息及日志链接。但你也可以使用自定义端点，其处理方式可能不同。" + "你当前使用的报告站点为 "
+				+ Config.obtenerInstancia().obtenerSitoDeInformes() + "，日志站点为 "
+				+ Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + "。"
+				+ "你也可以点击单个日志名称旁的分享按钮来单独分享日志（无需报告）；" + "日志将上传至所选日志站点。CrashDetector 默认启用日志匿名化功能，会尝试移除用户名、UUID、"
+				+ "访问令牌、会话 ID、IP 地址等数据。但该功能并非完美，且整合包作者可将其禁用。" + "你可通过本页面底部的复选框启用或禁用该功能。你是自身数据的控制者，由你决定上传位置。"
+				+ "日志站点由第三方运营，其所有权常因隐私原因而隐藏。你需自行承担数据管理及相关风险的全部责任。" + "CrashDetector 的分享对话框仅是一个供你管理这些操作的界面。"
+				+ "请务必了解 GDPR 和 ARCO 的相关规定。"
+				+ "如果你位于欧洲，可使用由 Hetzner 在德国托管的 <a href=\"https://securelogger.top\">securelogger.top</a>。"
+				+ "更多法律信息，请参阅以下链接："
+				+ "<a href=\"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPDPPP.pdf\">LFPDPPP</a>、"
+				+ "<a href=\"https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32016R0679\">GDPR</a>、"
+				+ "<a href=\"https://www.ppc.go.jp/files/pdf/20220401_personal_basicpolicy.pdf\">日本个人数据保护基本政策</a>。";
 	}
 
 	@Override
@@ -541,13 +552,11 @@ public class Chino implements Idioma {
 
 	@Override
 	public String errorConfigMCForge() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	           + "NightConfig/Forge 配置严重错误："
-	           + "配置文件已损坏或不完整。"
-	           + "这通常由 'config' 文件夹中的空配置文件（常为 0 字节）引起，多见于旧版或自定义版 NightConfig。"
-	           + "对于大多数版本，Night Config Fixes 可解决此问题；但若你使用的是不兼容或自定义的 NightConfig 版本，则需手动删除配置文件。"
-	           + "此问题在旧版 MC Forge（自带 NightConfig）和打包了 NightConfig 的旧版 FabricMC 模组中尤为常见，但也可能出现在某些自定义 NightConfig 版本中。"
-	           + "更多解决方案详见 <a href='https://www.curseforge.com/minecraft/mc-mods/night-config-fixes'>Night Config Fixes</a>。</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "NightConfig/Forge 配置严重错误：" + "配置文件已损坏或不完整。"
+				+ "这通常由 'config' 文件夹中的空配置文件（常为 0 字节）引起，多见于旧版或自定义版 NightConfig。"
+				+ "对于大多数版本，Night Config Fixes 可解决此问题；但若你使用的是不兼容或自定义的 NightConfig 版本，则需手动删除配置文件。"
+				+ "此问题在旧版 MC Forge（自带 NightConfig）和打包了 NightConfig 的旧版 FabricMC 模组中尤为常见，但也可能出现在某些自定义 NightConfig 版本中。"
+				+ "更多解决方案详见 <a href='https://www.curseforge.com/minecraft/mc-mods/night-config-fixes'>Night Config Fixes</a>。</b>";
 	}
 
 	@Override
@@ -5560,104 +5569,225 @@ public class Chino implements Idioma {
 		return "<html><div style='width:150px; text-align:center;'>" + "Sylent Bell 的观点和评论不一定代表我们的立场；"
 				+ "我们只是觉得放在这里挺有趣的。CrashDetector 是世俗的（非宗教的）。" + "</div></html>";
 	}
+
 	@Override
 	public String gmlIPV6() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "GML 模组（Groovy ModLoader）需要这些更改，且这是该问题最常见的根源。</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "GML 模组（Groovy ModLoader）需要这些更改，且这是该问题最常见的根源。</b>";
 	}
-	
+
 	@Override
 	public String mensajeIndependenteFlywheel(Set<String> mods) {
-	    StringBuilder listaMods = new StringBuilder();
-	    if (!mods.isEmpty()) {
-	        for (String mod : mods) {
-	            listaMods.append("<li>").append(mod).append("</li>");
-	        }
-	    }
+		StringBuilder listaMods = new StringBuilder();
+		if (!mods.isEmpty()) {
+			for (String mod : mods) {
+				listaMods.append("<li>").append(mod).append("</li>");
+			}
+		}
 
-	    String mensaje = "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "检测到正在使用 <i> Flywheel</i>。</b>"
-	            + "<p><b> Flywheel 已过时（deprecated）</b>，不应在现代版本中使用。</p>"
-	            + "<p>当前版本的 <b>Create</b> <b>已内置 Flywheel</b>，因此单独安装会导致兼容性冲突和加载错误。</p>"
-	            + "<p>某些明确依赖  Flywheel 的模组可能<b>无法运行</b>或<b>运行不稳定</b>。"
-	            + "在某些高级情况下，若<b>手动编辑 <code>mods.toml</code> 文件</b>以调整版本范围，这些模组或许能工作，"
-	            + "但<b>不建议这样做</b>。</p>"
-	            + (mods.isEmpty() ? ""
-	                : "<p><b>检测到引用 Flywheel 的模组：</b></p>"
-	                + "<ul>" + listaMods.toString() + "</ul>")
-	            + "<p>推荐的解决方案是<b>移除  Flywheel</b>，仅使用 Create 内置的版本。</p>";
+		String mensaje = "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "检测到正在使用 <i> Flywheel</i>。</b>" + "<p><b> Flywheel 已过时（deprecated）</b>，不应在现代版本中使用。</p>"
+				+ "<p>当前版本的 <b>Create</b> <b>已内置 Flywheel</b>，因此单独安装会导致兼容性冲突和加载错误。</p>"
+				+ "<p>某些明确依赖  Flywheel 的模组可能<b>无法运行</b>或<b>运行不稳定</b>。"
+				+ "在某些高级情况下，若<b>手动编辑 <code>mods.toml</code> 文件</b>以调整版本范围，这些模组或许能工作，" + "但<b>不建议这样做</b>。</p>"
+				+ (mods.isEmpty() ? "" : "<p><b>检测到引用 Flywheel 的模组：</b></p>" + "<ul>" + listaMods.toString() + "</ul>")
+				+ "<p>推荐的解决方案是<b>移除  Flywheel</b>，仅使用 Create 内置的版本。</p>";
 
-	    return mensaje;
+		return mensaje;
 	}
 
 	@Override
 	public String nombreIndependenteFlywheel() {
-	    return "独立 Flywheel";
+		return "独立 Flywheel";
 	}
+
 	@Override
 	public String mensajeFloralEnchantments() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	        + "检测到与模组 <i>Floral Enchantments</i> 相关的错误。</b>"
-	        + "<p>崩溃是由该模组在处理游戏数据时的内部故障引起的，"
-	        + "导致执行过程中出现 <b>NullPointerException</b>。</p>"
-	        + "<p>此问题通常可通过更新或移除该模组解决。</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "检测到与模组 <i>Floral Enchantments</i> 相关的错误。</b>" + "<p>崩溃是由该模组在处理游戏数据时的内部故障引起的，"
+				+ "导致执行过程中出现 <b>NullPointerException</b>。</p>" + "<p>此问题通常可通过更新或移除该模组解决。</p>";
 	}
 
 	@Override
 	public String nombreFloralEnchantments() {
-	    return "Floral Enchantments 错误";
+		return "Floral Enchantments 错误";
 	}
-	
+
 	@Override
 	public String mixinExtrasDuplicados() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
-	        + "你同时安装了 MixinExtras 的 NeoForge 版本和普通版本。如果你使用的是 MinecraftForge，可以安装 <a href='https://www.curseforge.com/minecraft/mc-mods/mixin-extras-neoforge-on-forge-fix' style='color: inherit;'>此链接</a>中的修复模组。</b>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
+				+ "你同时安装了 MixinExtras 的 NeoForge 版本和普通版本。如果你使用的是 MinecraftForge，可以安装 <a href='https://www.curseforge.com/minecraft/mc-mods/mixin-extras-neoforge-on-forge-fix' style='color: inherit;'>此链接</a>中的修复模组。</b>";
 	}
+
 	@Override
 	public String mensajeIrisSombrasTerreno() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	        + "检测到使用 Iris 的光影（shaders）时地形阴影出现错误。</b>"
-	        + "<p>该问题发生在地形渲染期间。</p>"
-	        + "<p>建议<b>尝试关闭光影运行游戏</b>，或降低图形质量，"
-	        + "尤其是在<b>Ultra</b>画质设置下。</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "检测到使用 Iris 的光影（shaders）时地形阴影出现错误。</b>" + "<p>该问题发生在地形渲染期间。</p>" + "<p>建议<b>尝试关闭光影运行游戏</b>，或降低图形质量，"
+				+ "尤其是在<b>Ultra</b>画质设置下。</p>";
 	}
 
 	@Override
 	public String nombreIrisSombrasTerreno() {
-	    return "地形阴影（Iris）";
+		return "地形阴影（Iris）";
 	}
-	
+
 	@Override
 	public String mensajeTickLargoServidor() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	        + "检测到服务器 tick 过长。</b>"
-	        + "<p>这表示游戏在单个 tick 中卡住的时间过长。</p>"
-	        + "<p>建议<b>检查日志中生成的 thread dump</b>以确定原因。</p>"
-	        + "<p><b>Stack Trace 分析</b>可帮助你定位卡顿源头。</p>"
-	        + "<p>此外，<b>在日志中查看</b>按钮会将可能的问题模组标红，"
-	        + "以及被 <code>$modid$</code> 包围的条目（通常指示问题来源）。对于实时分析，建议使用 VisualVM 的 CPU 采样器。请确保你的服务器或电脑性能足够运行你所使用的模组——即使所有模组都正常工作，数量过多也可能导致此问题。</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "检测到服务器 tick 过长。</b>"
+				+ "<p>这表示游戏在单个 tick 中卡住的时间过长。</p>" + "<p>建议<b>检查日志中生成的 thread dump</b>以确定原因。</p>"
+				+ "<p><b>Stack Trace 分析</b>可帮助你定位卡顿源头。</p>" + "<p>此外，<b>在日志中查看</b>按钮会将可能的问题模组标红，"
+				+ "以及被 <code>$modid$</code> 包围的条目（通常指示问题来源）。对于实时分析，建议使用 VisualVM 的 CPU 采样器。请确保你的服务器或电脑性能足够运行你所使用的模组——即使所有模组都正常工作，数量过多也可能导致此问题。</p>";
 	}
 
 	@Override
 	public String nombreTickLargoServidor() {
-	    return "服务器 Tick 过长";
+		return "服务器 Tick 过长";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public String tituloLFPDPPP() {
+		return "个人持有个人信息联邦保护法";
+	}
+
+	@Override
+	public String aceptarPermanentemente() {
+		return "永久接受";
+	}
+
+	public String mensajeAdvertenciaIdiomaCoreano() {
+		return "韩语翻译包含来自南方的俚语，为遵守法律必须避免使用。" + "根据《平壤文化语言保护法》，严格禁止使用外语，尤其是来自南方的语言。";
+	}
+
+	public String enlaceDocumentacionIdiomaCoreano() {
+		return "更多信息，请参阅该法律的官方文件："
+				+ "<a href='https://www.dailynk.com/english/wp-content/uploads/sites/2/2023/03/Pyongyang-Cultural-Language-Protection-Act_English-and-Korean-Versions_Daily-NK.pdf'>平壤文化语言保护法</a>";
+	}
+
+	public String leerLeyCompleta() {
+		return "阅读全文";
+	}
+
+	public String errorAbriendoEnlace() {
+		return "打开链接时出错";
+	}
+
+	public String actaProteccionIdiomaCultural() {
+		return "قانون حماية اللغة الثقافية في بيونغ يانغ";
+	}
+
+	@Override
+	public String canarioTitulo() {
+		return "司法命令金丝雀";
+	}
+
+	@Override
+	public String canario1984Titulo() {
+		return "1984 — 监控监视器";
+	}
+
+	@Override
+	public String revisar() {
+		return "检查";
+	}
+
+	@Override
+	public String cerrar() {
+		return "关闭";
+	}
+
+	@Override
+	public String canarioTodoSeguro() {
+		return "所有服务均报告安全状态。";
+	}
+
+	@Override
+	public String canarioComprometido(int c) {
+		return "警报：" + c + " 个服务报告不安全状态。";
+	}
+
+	@Override
+	public String colorAlerta() {
+		return "警报颜色";
+	}
+
+	public String opcionesMunidiales() {
+		return "Munidial 选项";
+	}
+
+	public String consentimientoLFPDPPP() {
+		return "LFPDPPP 同意";
+	}
+
+	public String habilitarTokenAcceso() {
+		return "启用访问令牌";
+	}
+
+	public String consolaDesarrollo() {
+		return "开发控制台";
+	}
+
+	public String munidial() {
+		return "Munidial";
+	}
+
+	public String ningun() {
+		return "无";
+	}
+
+	// Consola del desarrollador
+	public String consolaDesarrollador() {
+		return "开发者控制台";
+	}
+
+	public String bajar() {
+		return "下载";
+	}
+
+	public String logsSoporte() {
+		return "支持日志";
+	}
+
+	public String detenerProceso() {
+		return "终止进程";
+	}
+
+	// Menú contextual
+	public String copiarSeleccion() {
+		return "复制选中内容";
+	}
+
+	public String seleccionarTodo() {
+		return "全选";
+	}
+
+	public String copiarTodo() {
+		return "复制全部";
+	}
+
+	public String guardarTodoComoArchivo() {
+		return "另存为文件";
+	}
+
+	public String obtenerEnlaceSoporte() {
+		return "获取支持链接";
+	}
+
+	public String borrarTodo() {
+		return "清空全部";
+	}
+
+	// Colores configurables
+	public String colorFondoConsola() {
+		return "控制台背景色";
+	}
+
+	public String colorTextoConsola() {
+		return "控制台文字颜色";
+	}
+
+	// Consentimiento / logs
+	public String consentimientoConfirmadoPendienteImplementacion() {
+		return "已确认同意。\n日志分享功能将在此处实现。";
+	}
 
 }

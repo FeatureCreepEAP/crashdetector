@@ -23,7 +23,8 @@ public class TickLargoServidorMinecraft implements Verificaciones {
 
 	@Override
 	public void verificar(Consola consola, String linea, int num) {
-		if (!posibleTickLargo) return;
+		if (!posibleTickLargo)
+			return;
 
 		if (linea.contains("A single server tick has taken")) {
 			this.enlace = consola.agregarErrorALectador(num, this);

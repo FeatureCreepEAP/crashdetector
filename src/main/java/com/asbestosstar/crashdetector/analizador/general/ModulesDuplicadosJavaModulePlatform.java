@@ -31,15 +31,12 @@ public class ModulesDuplicadosJavaModulePlatform implements Verificaciones {
 	private int indiceUltimaNoStack = -1;
 	// Nuevo: almacenar consola para finalización
 	private Consola consolaRef = null;
-boolean mixinextras = false;
-	
-	
+	boolean mixinextras = false;
+
 	@Override
 	public void verificar(Consola consola) {
-		String cont = consola.contenido_verificar;		
-		
-		
-		
+		String cont = consola.contenido_verificar;
+
 		// Finalizar cualquier bloque pendiente al final del procesamiento
 		if (recolectando && consolaRef != null) {
 			CrashDetectorLogger.log("Finalizando bloque pendiente al final del procesamiento");
@@ -154,14 +151,13 @@ boolean mixinextras = false;
 				}
 				mensajeFinal.append("</ul>");
 
-				if(modulosCombinados.contains("MixinExtras")||modulosCombinados.contains("mixinextras.neoforge")) {
-				mixinextras=true;	
-				
-				mensajeFinal.append(nl_html).append(MonitorDePID.idioma.mixinExtrasDuplicados()).append(nl_html);
+				if (modulosCombinados.contains("MixinExtras") || modulosCombinados.contains("mixinextras.neoforge")) {
+					mixinextras = true;
 
-				
+					mensajeFinal.append(nl_html).append(MonitorDePID.idioma.mixinExtrasDuplicados()).append(nl_html);
+
 				}
-				
+
 				mensajeFinal.append("<b>").append(MonitorDePID.idioma.paquete()).append(":</b><br>").append("<code>")
 						.append(paquete.replace(".", "/")).append("</code>");
 

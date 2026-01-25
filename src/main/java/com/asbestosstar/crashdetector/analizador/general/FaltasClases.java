@@ -664,10 +664,8 @@ public class FaltasClases implements Verificaciones {
 	 * Intenta inferir un origen plausible (jar / modid / paquete) para una clase
 	 * faltante usando los TraceInfo ya construidos.
 	 *
-	 * Orden de preferencia:
-	 * 1) Línea cuya clase coincida exactamente
-	 * 2) Línea cuyo paquete sea prefijo más largo
-	 * 3) Modid plausible visto en trazos relacionados
+	 * Orden de preferencia: 1) Línea cuya clase coincida exactamente 2) Línea cuyo
+	 * paquete sea prefijo más largo 3) Modid plausible visto en trazos relacionados
 	 * 4) Jar permitido visto en trazos relacionados
 	 */
 	private String inferirOrigenParaClase(String claseSlash, VerificacionDeStackTrace vdst) {
@@ -687,8 +685,7 @@ public class FaltasClases implements Verificaciones {
 			return "";
 		}
 
-		String paqueteClase = claseSlash.contains("/")
-				? claseSlash.substring(0, claseSlash.lastIndexOf('/'))
+		String paqueteClase = claseSlash.contains("/") ? claseSlash.substring(0, claseSlash.lastIndexOf('/'))
 				: claseSlash;
 
 		String mejorPaquete = "";
@@ -726,21 +723,16 @@ public class FaltasClases implements Verificaciones {
 							? claseLinea.substring(0, claseLinea.lastIndexOf('/'))
 							: "";
 
-					if (!paqueteLinea.isEmpty()
-							&& paqueteClase.startsWith(paqueteLinea)
-							&& paqueteLinea.length() > mejorPaquete.length()
-							&& !esPaqueteNoPermitido(paqueteLinea)) {
+					if (!paqueteLinea.isEmpty() && paqueteClase.startsWith(paqueteLinea)
+							&& paqueteLinea.length() > mejorPaquete.length() && !esPaqueteNoPermitido(paqueteLinea)) {
 
 						mejorPaquete = paqueteLinea;
 					}
 				}
 
 				// 3) Modid plausible
-				if (mejorModid.isEmpty()
-						&& !origen.contains("/")
-						&& !origen.endsWith(".jar")
-						&& !VerificacionDeStackTrace.esModNoPermite(origen)
-						&& !esModidSospechoso(origen)) {
+				if (mejorModid.isEmpty() && !origen.contains("/") && !origen.endsWith(".jar")
+						&& !VerificacionDeStackTrace.esModNoPermite(origen) && !esModidSospechoso(origen)) {
 
 					// heurística: el modid aparece en el paquete
 					if (paqueteClase.contains(origen)) {
@@ -749,9 +741,7 @@ public class FaltasClases implements Verificaciones {
 				}
 
 				// 4) Jar permitido
-				if (mejorJar.isEmpty()
-						&& origen.endsWith(".jar")
-						&& !VerificacionDeStackTrace.isJarNoPermite(origen)) {
+				if (mejorJar.isEmpty() && origen.endsWith(".jar") && !VerificacionDeStackTrace.isJarNoPermite(origen)) {
 
 					mejorJar = origen;
 				}
@@ -771,7 +761,6 @@ public class FaltasClases implements Verificaciones {
 
 		return "";
 	}
-
 
 	/**
 	 * Extrae el "xxx.jar" de la clave usada en vdst.jars (que es "xxx.jar" +

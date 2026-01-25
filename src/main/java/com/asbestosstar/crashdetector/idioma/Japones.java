@@ -239,7 +239,12 @@ public class Japones implements Idioma {
 				+ "'>Theseusには、削除を試みてもMODを削除できないなどの追加の問題があります。mrpackファイルを使用する必要がある場合は、Prism Launcher（modrinth.com専用）、ATLauncher（modrinth.com専用）、Hello Minecraft Launcher（modrinth.comおよびbbsmc.net対応）などの他のランチャーをご利用ください。</b>";
 	}
 
-	@Override public String noTieneConsolaDeLauncherCursedForge() { return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>「ランチャー起動をスキップ」（CurseForgeアプリ）を使用しています。これにより、検出が難しい問題が発生することがあります。これは、古いバージョンまたは新しいバージョンのCurseForgeアプリにある「ランチャー起動をスキップ」オプションによるものです。これを無効化し、CurseForge設定で「Mojang Launcher」を使用してください。Claws of Berkの英語動画（1分11秒から）を" + "<a href='https://youtu.be/g847O_2LjoE?si=8Y_oj3zyyhYTrSkv&t=71' style='color: inherit;'>こちら</a>で確認できます。</b>"; }
+	@Override
+	public String noTieneConsolaDeLauncherCursedForge() {
+		return "<b style='color:#" + config.obtenerColorAdvertencia()
+				+ "'>「ランチャー起動をスキップ」（CurseForgeアプリ）を使用しています。これにより、検出が難しい問題が発生することがあります。これは、古いバージョンまたは新しいバージョンのCurseForgeアプリにある「ランチャー起動をスキップ」オプションによるものです。これを無効化し、CurseForge設定で「Mojang Launcher」を使用してください。Claws of Berkの英語動画（1分11秒から）を"
+				+ "<a href='https://youtu.be/g847O_2LjoE?si=8Y_oj3zyyhYTrSkv&t=71' style='color: inherit;'>こちら</a>で確認できます。</b>";
+	}
 
 	@Override
 	public String faltar_de_clases_advertencia() {
@@ -398,12 +403,27 @@ public class Japones implements Idioma {
 
 	@Override
 	public String arco() {
-		return "このダイアログでは、SecureLogger API を使用して securelogger.net にログを共有できます。"
-				+ "レポート共有ボタンを押すと、レポートは選択されたエンドポイント（デフォルトは asbestosstar.egoism.jp）に送信されます（下部で変更可能）。選択したすべてのログをレポートと一緒に共有できます。"
-				+ "アップロードしたくない場合は、このダイアログを使用しないでください！公式エンドポイント（https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb）ではレポートを処理せず、許可されていないリンクのみ削除します。コードはこちらにあります: https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb。これはクラッシュに関する情報とログへのリンクを表示するためにのみ使用されます。ただし、同じメソッドを持たないカスタムエンドポイントを使用することも可能です。現在、あなたはレポートサイト "
-				+ Config.obtenerInstancia().obtenerSitoDeInformes() + " とログサイト "
-				+ Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado()
-				+ " を使用しています。個別のログ名の隣にある共有ボタンを押すことで、レポートなしで個々のログを共有することもできます。ログは選択されたログサイトに送られます。CrashDetector には、ユーザー名、UUID、アクセストークン、セッションID、IPアドレス、その他のデータを削除しようとするデフォルトのログ匿名化機能がありますが、完全ではありません。また、Modpackの作者が無効にすることもできます。この機能は画面下部のチェックボックスで有効または無効にできます。あなた自身がデータ管理者であり、どこにデータをアップロードするかを決定します。ログサイトは所有者がプライバシーのためにしばしば隠されている第三者によって運営されています。あなたは自分のデータの管理とそれに伴うリスクについて完全な責任を負います。CrashDetector の共有ダイアログは、それを管理するためのインターフェースに過ぎません。GDPR および ARCO について理解しておくことが重要です。";
+		return "This dialogue allows you to share logs using the SecureLogger API "
+				+ "at <a href=\"https://securelogger.net\">securelogger.net</a>. When you press the button to share the report, "
+				+ "your report is sent to the selected endpoint (default: asbestosstar.egoism.jp) (changeable at the bottom). "
+				+ "You can share all selected logs together with the report. If you do not wish to upload, do not use this dialogue! "
+				+ "We do not process your report on the official endpoint (<a href=\"https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb\">https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb</a>); "
+				+ "we only remove disallowed links. The code is here: <a href=\"https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb\">source code</a>. "
+				+ "This is used solely to display information about your crash and the link to the logs. However, you may use a custom endpoint that might not use the same methods. "
+				+ "You are using the report site " + Config.obtenerInstancia().obtenerSitoDeInformes()
+				+ " and the log site " + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + ". "
+				+ "You can also share individual logs without a report by pressing the share buttons next to individual log names; "
+				+ "the logs will go to the selected log site. CrashDetector has default log anonymisation, which attempts to remove usernames, UUIDs, "
+				+ "access tokens, session IDs, IP addresses, and other data. However, it is not perfect. Nevertheless, the modpack author can disable it. "
+				+ "It can be enabled or disabled via the checkbox at the bottom of this screen. You are the controller of your own data; you decide where to upload your data. "
+				+ "Log sites are owned by third parties whose ownership is often hidden for privacy reasons. You assume full responsibility for managing your data and the associated risks. "
+				+ "CrashDetector’s Share Dialogue is merely an interface that allows you to manage this. "
+				+ "It is important that you are aware of GDPR and ARCO. "
+				+ "If you are in Europe, you can use <a href=\"https://securelogger.top\">securelogger.top</a> hosted in Germany by Hetzner. "
+				+ "For more legal information, consult the following links: "
+				+ "<a href=\"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPDPPP.pdf\">LFPDPPP</a>, "
+				+ "<a href=\"https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32016R0679\">GDPR</a>, "
+				+ "<a href=\"https://www.ppc.go.jp/files/pdf/20220401_personal_basicpolicy.pdf\">Japan’s Basic Policy on Personal Information Protection</a>.";
 	}
 
 	@Override
@@ -560,13 +580,12 @@ public class Japones implements Idioma {
 
 	@Override
 	public String errorConfigMCForge() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	           + "NightConfig/Forge 設定の致命的エラー: "
-	           + "設定ファイルが破損または不完全です。"
-	           + "これは、古いバージョンやカスタム版の NightConfig において、'config' フォルダ内の空の設定ファイル（多くの場合 0 バイト）によって引き起こされることがあります。"
-	           + "ほとんどのバージョンでは Night Config Fixes で問題を解決できますが、非互換またはカスタム版の NightConfig を使用している場合は、手動で設定ファイルを削除する必要があります。"
-	           + "この問題は、NightConfig を内蔵する古い MC Forge バージョンや、NightConfig を同梱する古い FabricMC モッドでより一般的ですが、一部のカスタム NightConfig ビルドでも発生する可能性があります。"
-	           + "解決策の詳細は <a href='https://www.curseforge.com/minecraft/mc-mods/night-config-fixes'>Night Config Fixes</a> でご確認ください。</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "NightConfig/Forge 設定の致命的エラー: "
+				+ "設定ファイルが破損または不完全です。"
+				+ "これは、古いバージョンやカスタム版の NightConfig において、'config' フォルダ内の空の設定ファイル（多くの場合 0 バイト）によって引き起こされることがあります。"
+				+ "ほとんどのバージョンでは Night Config Fixes で問題を解決できますが、非互換またはカスタム版の NightConfig を使用している場合は、手動で設定ファイルを削除する必要があります。"
+				+ "この問題は、NightConfig を内蔵する古い MC Forge バージョンや、NightConfig を同梱する古い FabricMC モッドでより一般的ですが、一部のカスタム NightConfig ビルドでも発生する可能性があります。"
+				+ "解決策の詳細は <a href='https://www.curseforge.com/minecraft/mc-mods/night-config-fixes'>Night Config Fixes</a> でご確認ください。</b>";
 	}
 
 	@Override
@@ -5661,102 +5680,231 @@ public class Japones implements Idioma {
 		return "<html><div style='width:150px; text-align:center;'>" + "Sylent Bell の意見やコメントは必ずしも私たちの見解と一致するわけではありません；"
 				+ "ただ、ここに置いたら面白いと思ったのです。CrashDetector は世俗的です。" + "</div></html>";
 	}
+
 	@Override
 	public String gmlIPV6() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "GML（Groovy ModLoader）mod はこれらの変更を必要とし、この問題の最も一般的な原因です。</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "GML（Groovy ModLoader）mod はこれらの変更を必要とし、この問題の最も一般的な原因です。</b>";
 	}
-	
-	
+
 	@Override
 	public String mensajeIndependenteFlywheel(Set<String> mods) {
-	    StringBuilder listaMods = new StringBuilder();
-	    if (!mods.isEmpty()) {
-	        for (String mod : mods) {
-	            listaMods.append("<li>").append(mod).append("</li>");
-	        }
-	    }
+		StringBuilder listaMods = new StringBuilder();
+		if (!mods.isEmpty()) {
+			for (String mod : mods) {
+				listaMods.append("<li>").append(mod).append("</li>");
+			}
+		}
 
-	    String mensaje = "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "<i> Flywheel</i> の使用が検出されました。</b>"
-	            + "<p><b> Flywheel は非推奨（deprecated）</b>であり、最新バージョンでは使用すべきではありません。</p>"
-	            + "<p>現在の <b>Create</b> バージョンは<b>Flywheel を既に内蔵</b>しているため、別途インストールすると "
-	            + "互換性の衝突や読み込みエラーが発生します。</p>"
-	            + "<p> Flywheel に明示的に依存する一部の mod は "
-	            + "<b>動作しない</b>か<b>不安定に動作</b>する可能性があります。"
-	            + "特定の高度なケースでは、<b><code>mods.toml</code> ファイルを手動で編集</b>してバージョン範囲を調整すれば "
-	            + "動作するかもしれませんが、これは<b>推奨されません</b>。</p>"
-	            + (mods.isEmpty() ? ""
-	                : "<p><b>Flywheel を参照している検出済み mod:</b></p>"
-	                + "<ul>" + listaMods.toString() + "</ul>")
-	            + "<p>推奨される解決策は、<b> Flywheel を削除</b>し、Create に同梱されているバージョンのみを使用することです。</p>";
+		String mensaje = "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "<i> Flywheel</i> の使用が検出されました。</b>"
+				+ "<p><b> Flywheel は非推奨（deprecated）</b>であり、最新バージョンでは使用すべきではありません。</p>"
+				+ "<p>現在の <b>Create</b> バージョンは<b>Flywheel を既に内蔵</b>しているため、別途インストールすると " + "互換性の衝突や読み込みエラーが発生します。</p>"
+				+ "<p> Flywheel に明示的に依存する一部の mod は " + "<b>動作しない</b>か<b>不安定に動作</b>する可能性があります。"
+				+ "特定の高度なケースでは、<b><code>mods.toml</code> ファイルを手動で編集</b>してバージョン範囲を調整すれば "
+				+ "動作するかもしれませんが、これは<b>推奨されません</b>。</p>"
+				+ (mods.isEmpty() ? ""
+						: "<p><b>Flywheel を参照している検出済み mod:</b></p>" + "<ul>" + listaMods.toString() + "</ul>")
+				+ "<p>推奨される解決策は、<b> Flywheel を削除</b>し、Create に同梱されているバージョンのみを使用することです。</p>";
 
-	    return mensaje;
+		return mensaje;
 	}
 
 	@Override
 	public String nombreIndependenteFlywheel() {
-	    return "独立型 Flywheel";
+		return "独立型 Flywheel";
 	}
-	
-	
+
 	@Override
 	public String mensajeFloralEnchantments() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	        + "<i>Floral Enchantments</i> モッドに関連するエラーが検出されました。</b>"
-	        + "<p>クラッシュは、ゲームデータを処理中にモッド内で発生した内部障害によって引き起こされ、"
-	        + "実行中に <b>NullPointerException</b> を発生させます。</p>"
-	        + "<p>この問題は通常、モッドを更新または削除することで解決します。</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "<i>Floral Enchantments</i> モッドに関連するエラーが検出されました。</b>"
+				+ "<p>クラッシュは、ゲームデータを処理中にモッド内で発生した内部障害によって引き起こされ、" + "実行中に <b>NullPointerException</b> を発生させます。</p>"
+				+ "<p>この問題は通常、モッドを更新または削除することで解決します。</p>";
 	}
 
 	@Override
 	public String nombreFloralEnchantments() {
-	    return "Floral Enchantments エラー";
+		return "Floral Enchantments エラー";
 	}
+
 	@Override
 	public String mixinExtrasDuplicados() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
-	        + "MixinExtras の NeoForge 版と通常版の両方がインストールされています。MinecraftForge を使用している場合、<a href='https://www.curseforge.com/minecraft/mc-mods/mixin-extras-neoforge-on-forge-fix' style='color: inherit;'>このリンク</a>から修正 mod をインストールできます。</b>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
+				+ "MixinExtras の NeoForge 版と通常版の両方がインストールされています。MinecraftForge を使用している場合、<a href='https://www.curseforge.com/minecraft/mc-mods/mixin-extras-neoforge-on-forge-fix' style='color: inherit;'>このリンク</a>から修正 mod をインストールできます。</b>";
 	}
-	
+
 	@Override
 	public String mensajeIrisSombrasTerreno() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	        + "Iris のシェーダー使用時に地形の影にエラーが検出されました。</b>"
-	        + "<p>この問題は地形のレンダリング中に発生します。</p>"
-	        + "<p><b>シェーダーを無効にしてゲームを試す</b>か、グラフィック品質を下げることを推奨します。"
-	        + "特に<b>Ultra</b>設定時です。</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Iris のシェーダー使用時に地形の影にエラーが検出されました。</b>" + "<p>この問題は地形のレンダリング中に発生します。</p>"
+				+ "<p><b>シェーダーを無効にしてゲームを試す</b>か、グラフィック品質を下げることを推奨します。" + "特に<b>Ultra</b>設定時です。</p>";
 	}
 
 	@Override
 	public String nombreIrisSombrasTerreno() {
-	    return "地形の影 (Iris)";
+		return "地形の影 (Iris)";
 	}
-	
+
 	@Override
 	public String mensajeTickLargoServidor() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	        + "サーバーのティックが異常に長くなっています。</b>"
-	        + "<p>これは、ゲームが1ティック内で長時間フリーズしたことを示しています。</p>"
-	        + "<p>原因を特定するため、ログに生成された<b>スレッドダンプ(thread dump)を確認</b>することをお勧めします。</p>"
-	        + "<p><b>スタックトレース分析(Stack Trace Analysis)</b>により、フリーズの原因を特定できます。</p>"
-	        + "<p>また、<b>ログで表示</b>ボタンは、問題の原因となりうるmodを赤色で強調表示し、"
-	        + "<code>$modid$</code>で囲まれたエントリも表示します（これらは通常、問題の発生源を示します）。リアルタイムでの解析には、VisualVM の CPU サンプラーの使用を推奨します。すべてのmodが正常に動作していても、数が多すぎるとこの問題が発生する可能性があるため、サーバーやPCの性能が使用中のmodを十分に処理できるか確認してください。</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "サーバーのティックが異常に長くなっています。</b>"
+				+ "<p>これは、ゲームが1ティック内で長時間フリーズしたことを示しています。</p>"
+				+ "<p>原因を特定するため、ログに生成された<b>スレッドダンプ(thread dump)を確認</b>することをお勧めします。</p>"
+				+ "<p><b>スタックトレース分析(Stack Trace Analysis)</b>により、フリーズの原因を特定できます。</p>"
+				+ "<p>また、<b>ログで表示</b>ボタンは、問題の原因となりうるmodを赤色で強調表示し、"
+				+ "<code>$modid$</code>で囲まれたエントリも表示します（これらは通常、問題の発生源を示します）。リアルタイムでの解析には、VisualVM の CPU サンプラーの使用を推奨します。すべてのmodが正常に動作していても、数が多すぎるとこの問題が発生する可能性があるため、サーバーやPCの性能が使用中のmodを十分に処理できるか確認してください。</p>";
 	}
 
 	@Override
 	public String nombreTickLargoServidor() {
-	    return "サーバーティックの長時間停止";
+		return "サーバーティックの長時間停止";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public String tituloLFPDPPP() {
+		return "個人が保有する個人情報の保護に関する連邦法";
+	}
+
+	@Override
+	public String aceptarPermanentemente() {
+		return "永続的に同意";
+	}
+
+	public String mensajeAdvertenciaIdiomaCoreano() {
+		return "韓国語翻訳には、法律を遵守するために避けるべき南部のスラング用語が含まれています。" + "外国語、特に南側由来の言葉の使用は、「平壌文化語保護法」により厳しく禁止されています。";
+	}
+
+	public String enlaceDocumentacionIdiomaCoreano() {
+		return "詳細については、法令の公式文書をご参照ください："
+				+ "<a href='https://www.dailynk.com/english/wp-content/uploads/sites/2/2023/03/Pyongyang-Cultural-Language-Protection-Act_English-and-Korean-Versions_Daily-NK.pdf'>平壌文化語保護法</a>";
+	}
+
+	public String leerLeyCompleta() {
+		return "全文を読む";
+	}
+
+	public String errorAbriendoEnlace() {
+		return "リンクを開く際にエラーが発生しました";
+	}
+
+	public String actaProteccionIdiomaCultural() {
+		return "平壌文化語保護法";
+	}
+
+	@Override
+	public String canarioTitulo() {
+		return "司法命令カナリア";
+	}
+
+	@Override
+	public String canario1984Titulo() {
+		return "1984 — 監視モニター";
+	}
+
+	@Override
+	public String revisar() {
+		return "確認";
+	}
+
+	@Override
+	public String cerrar() {
+		return "閉じる";
+	}
+
+	@Override
+	public String canarioTodoSeguro() {
+		return "すべてのサービスが安全な状態を報告しています。";
+	}
+
+	@Override
+	public String canarioComprometido(int c) {
+		return "警告: " + c + " 個のサービスが安全でない状態を報告しています。";
+	}
+
+	@Override
+	public String colorAlerta() {
+		return "警告色";
+	}
+
+	public String opcionesMunidiales() {
+		return "Munidial Options";
+	}
+
+	public String consentimientoLFPDPPP() {
+		return "LFPDPPP Consent";
+	}
+
+	public String habilitarTokenAcceso() {
+		return "Enable Access Token";
+	}
+
+	public String consolaDesarrollo() {
+		return "Development Console";
+	}
+
+	public String munidial() {
+		return "Munidial";
+	}
+
+	public String ningun() {
+		return "None";
+	}
+
+	// Consola del desarrollador
+	public String consolaDesarrollador() {
+		return "開発者コンソール";
+	}
+
+	public String bajar() {
+		return "ダウンロード";
+	}
+
+	public String logsSoporte() {
+		return "サポート用ログ";
+	}
+
+	public String detenerProceso() {
+		return "プロセスを停止";
+	}
+
+	// Menú contextual
+	public String copiarSeleccion() {
+		return "選択範囲をコピー";
+	}
+
+	public String seleccionarTodo() {
+		return "すべて選択";
+	}
+
+	public String copiarTodo() {
+		return "すべてコピー";
+	}
+
+	public String guardarTodoComoArchivo() {
+		return "すべてをファイルとして保存";
+	}
+
+	public String obtenerEnlaceSoporte() {
+		return "サポートリンクを取得";
+	}
+
+	public String borrarTodo() {
+		return "すべてクリア";
+	}
+
+	// Colores configurables
+	public String colorFondoConsola() {
+		return "コンソールの背景色";
+	}
+
+	public String colorTextoConsola() {
+		return "コンソールの文字色";
+	}
+
+	// Consentimiento / logs
+	public String consentimientoConfirmadoPendienteImplementacion() {
+		return "同意が確認されました。\nログ共有機能はここに実装されます。";
+	}
 
 }

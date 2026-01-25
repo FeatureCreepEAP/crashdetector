@@ -3,9 +3,9 @@ package com.asbestosstar.crashdetector.mapas;
 import java.util.*;
 
 /**
- * Una estructura de datos que mapea un valor a una combinación de cuatro claves.
- * Similar a un mapa multiclave donde se requiere el conjunto completo de cuatro
- * claves para acceder al valor.
+ * Una estructura de datos que mapea un valor a una combinación de cuatro
+ * claves. Similar a un mapa multiclave donde se requiere el conjunto completo
+ * de cuatro claves para acceder al valor.
  *
  * @param <K1> Primer tipo de clave.
  * @param <K2> Segundo tipo de clave.
@@ -38,10 +38,8 @@ public class QuadMap<K1, K2, K3, K4, V> {
 
 			QuadrupleKey<?, ?, ?, ?> other = (QuadrupleKey<?, ?, ?, ?>) o;
 
-			return Objects.equals(key1, other.key1)
-					&& Objects.equals(key2, other.key2)
-					&& Objects.equals(key3, other.key3)
-					&& Objects.equals(key4, other.key4);
+			return Objects.equals(key1, other.key1) && Objects.equals(key2, other.key2)
+					&& Objects.equals(key3, other.key3) && Objects.equals(key4, other.key4);
 		}
 
 		@Override
@@ -51,12 +49,7 @@ public class QuadMap<K1, K2, K3, K4, V> {
 
 		@Override
 		public String toString() {
-			return "QuadrupleKey{" +
-					"k1=" + key1 +
-					", k2=" + key2 +
-					", k3=" + key3 +
-					", k4=" + key4 +
-					'}';
+			return "QuadrupleKey{" + "k1=" + key1 + ", k2=" + key2 + ", k3=" + key3 + ", k4=" + key4 + '}';
 		}
 	}
 
@@ -73,8 +66,7 @@ public class QuadMap<K1, K2, K3, K4, V> {
 	 * @param value Valor a almacenar.
 	 */
 	public void put(K1 key1, K2 key2, K3 key3, K4 key4, V value) {
-		QuadrupleKey<K1, K2, K3, K4> quadKey =
-				new QuadrupleKey<>(key1, key2, key3, key4);
+		QuadrupleKey<K1, K2, K3, K4> quadKey = new QuadrupleKey<>(key1, key2, key3, key4);
 		map.put(quadKey, value);
 	}
 
@@ -88,8 +80,7 @@ public class QuadMap<K1, K2, K3, K4, V> {
 	 * @return El valor si existe, null en caso contrario.
 	 */
 	public V get(K1 key1, K2 key2, K3 key3, K4 key4) {
-		QuadrupleKey<K1, K2, K3, K4> quadKey =
-				new QuadrupleKey<>(key1, key2, key3, key4);
+		QuadrupleKey<K1, K2, K3, K4> quadKey = new QuadrupleKey<>(key1, key2, key3, key4);
 		return map.get(quadKey);
 	}
 
@@ -103,8 +94,7 @@ public class QuadMap<K1, K2, K3, K4, V> {
 	 * @return true si se eliminó un valor, false en caso contrario.
 	 */
 	public boolean remove(K1 key1, K2 key2, K3 key3, K4 key4) {
-		QuadrupleKey<K1, K2, K3, K4> quadKey =
-				new QuadrupleKey<>(key1, key2, key3, key4);
+		QuadrupleKey<K1, K2, K3, K4> quadKey = new QuadrupleKey<>(key1, key2, key3, key4);
 		return map.remove(quadKey) != null;
 	}
 

@@ -369,6 +369,15 @@ public abstract class GUIModsMalas extends JDialog implements CrashDetectorGUI, 
 				if (v != null && !v.isEmpty())
 					nuevas.put(c.getKey(), v);
 			}
+
+			// Verificación pasiva de jerga sureña en coreano (solo abre GUI si hay
+			// violación)
+			String textoKo = nuevas.get("ko");
+			if (textoKo != null && !textoKo.isEmpty()) {
+				com.asbestosstar.crashdetector.idioma.cumplimiento.ActaDeProteccionDelIdiomaCulturalDePyongyang
+						.contieneJergaSur(textoKo);
+			}
+
 			razonesReferencia.clear();
 			razonesReferencia.putAll(nuevas);
 			dialogo.dispose();

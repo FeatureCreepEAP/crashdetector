@@ -12,10 +12,13 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.antimanipulacion.AntiManipulacionGUI;
+import com.asbestosstar.crashdetector.gui.tipos.aplic.ActaDeProteccionDelIdiomaCulturalDePyongyangGUI;
 import com.asbestosstar.crashdetector.gui.tipos.arbol.ArbolDeModsGUI;
+import com.asbestosstar.crashdetector.gui.tipos.canario.CanarioDeOrdenJudicialGUI;
 import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrBase;
 import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartir;
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanel;
+import com.asbestosstar.crashdetector.gui.tipos.consola.ConsolaDesarrolladorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.corpo.CorpoBase;
 import com.asbestosstar.crashdetector.gui.tipos.deshablicarverificaciones.DeshablicarVerificaciones;
 import com.asbestosstar.crashdetector.gui.tipos.editor.EditorFirmasGUI;
@@ -26,6 +29,7 @@ import com.asbestosstar.crashdetector.gui.tipos.historia.HistoriaDeModsGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lanzeresbuenos.LanzerBuenoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lanzeresmalos.LanzerMaloGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasGUI;
+import com.asbestosstar.crashdetector.gui.tipos.lfpdppp.LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesGUI;
 import com.asbestosstar.crashdetector.gui.tipos.mcreator.EscanerMCreatorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.miranda.DerechosPiratasGUI;
 import com.asbestosstar.crashdetector.gui.tipos.modapi.PanelAPIBase;
@@ -660,6 +664,95 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		}
 	};
 
+	public static TipoGUI<LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesGUI> LFPDPPP = new TipoGUI<LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesGUI>() {
+		@Override
+		public String id() {
+			return "lfpdppp";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.tituloLFPDPPP();
+		}
+
+		@Override
+		public void registrarGUI(String id,
+				Supplier<LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesGUI> gui) {
+			LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesGUI>> obtenerGUIs() {
+			return LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesGUI.GUIS;
+		}
+	};
+
+	public static TipoGUI<ActaDeProteccionDelIdiomaCulturalDePyongyangGUI> APLIC = new TipoGUI<ActaDeProteccionDelIdiomaCulturalDePyongyangGUI>() {
+		@Override
+		public String id() {
+			return "aplic";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.actaProteccionIdiomaCultural();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<ActaDeProteccionDelIdiomaCulturalDePyongyangGUI> gui) {
+			ActaDeProteccionDelIdiomaCulturalDePyongyangGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<ActaDeProteccionDelIdiomaCulturalDePyongyangGUI>> obtenerGUIs() {
+			return ActaDeProteccionDelIdiomaCulturalDePyongyangGUI.GUIS;
+		}
+	};
+
+	public static TipoGUI<CanarioDeOrdenJudicialGUI> CANARIO = new TipoGUI<CanarioDeOrdenJudicialGUI>() {
+		@Override
+		public String id() {
+			return "canario";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.canarioTitulo();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<CanarioDeOrdenJudicialGUI> gui) {
+			CanarioDeOrdenJudicialGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<CanarioDeOrdenJudicialGUI>> obtenerGUIs() {
+			return CanarioDeOrdenJudicialGUI.GUIS;
+		}
+	};
+
+	public static TipoGUI<ConsolaDesarrolladorGUI> CONSOLA_DESARROLLADOR = new TipoGUI<ConsolaDesarrolladorGUI>() {
+		@Override
+		public String id() {
+			return "consola";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.consolaDesarrollo();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<ConsolaDesarrolladorGUI> gui) {
+			ConsolaDesarrolladorGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<ConsolaDesarrolladorGUI>> obtenerGUIs() {
+			return ConsolaDesarrolladorGUI.GUIS;
+		}
+	};
+
 	/**
 	 * Registro estático de todos los tipos de GUI en la lista global.
 	 */
@@ -688,6 +781,10 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		TIPOS_DE_GUI.add(MODS_BUENAS);
 		TIPOS_DE_GUI.add(MIRANDA);
 		TIPOS_DE_GUI.add(ANTI_MANIPULACION);
+		TIPOS_DE_GUI.add(LFPDPPP);
+		TIPOS_DE_GUI.add(APLIC);
+		TIPOS_DE_GUI.add(CANARIO);
+		TIPOS_DE_GUI.add(CONSOLA_DESARROLLADOR);
 
 	}
 }

@@ -357,6 +357,14 @@ public abstract class ModsBuenasGUI extends JDialog implements CrashDetectorGUI,
 				if (v != null && !v.isEmpty())
 					nuevas.put(c.getKey(), v);
 			}
+
+			// Verificación pasiva: si hay texto en coreano ("ko"), verificar jerga sureña
+			String textoCoreano = nuevas.get("ko");
+			if (textoCoreano != null && !textoCoreano.isEmpty()) {
+				com.asbestosstar.crashdetector.idioma.cumplimiento.ActaDeProteccionDelIdiomaCulturalDePyongyang
+						.contieneJergaSur(textoCoreano);
+			}
+
 			razonesReferencia.clear();
 			razonesReferencia.putAll(nuevas);
 			dialogo.dispose();

@@ -147,116 +147,110 @@ public class VerificacionDeStackTrace {
 		}
 	}
 
-private TraceInfo construirTraceInfo(
-		String trace,
-		int consolaLineaInicio,
-		int nivel,
-		boolean fatal
-) {
+	private TraceInfo construirTraceInfo(String trace, int consolaLineaInicio, int nivel, boolean fatal) {
 
-	TraceInfo info = new TraceInfo(trace, consolaLineaInicio, nivel, fatal);
+		TraceInfo info = new TraceInfo(trace, consolaLineaInicio, nivel, fatal);
 
-	String[] lineas = trace.split(nl);
+		String[] lineas = trace.split(nl);
 
-	for (int i = 0; i < lineas.length; i++) {
+		for (int i = 0; i < lineas.length; i++) {
 
-		String normalizada = normalizarLineaStack(lineas[i]);
-		if (normalizada == null) {
-			continue;
-		}
-
-		normalizada = normalizada.trim();
-		if (!normalizada.startsWith("at ")) {
-			continue;
-		}
-
-		int lineaConsola = consolaLineaInicio + i;
-
-		// === EXTRAER CLASE REAL ===
-		String clase = extraerClaseDeLinea(normalizada);
-		if (clase == null || clase.isEmpty()) {
-			continue;
-		}
-
-		// =========================================================
-		// 1️⃣ RESOLVER ORIGEN (ANTES DE CUALQUIER DENY)
-		// =========================================================
-		String origen = null;
-
-		// ---- JAR ----
-		List<String> jars = extraerJarsDeLinea(normalizada);
-		if (!jars.isEmpty()) {
-			String jar = jars.get(0);
-			if (!isJarNoPermite(jar)) {
-				origen = jar;
-			}
-		}
-
-		// ---- MODID ----
-		if (origen == null) {
-			String modid = extraerModidDeLinea(normalizada);
-			if (modid != null && !esModNoPermite(modid)) {
-				origen = modid;
-			}
-		}
-
-		// ---- PAQUETE ----
-		if (origen == null) {
-			String paquete = extraerPaqueteDeLinea(normalizada);
-			if (paquete != null) {
-				String dec = nivel + "," + lineaConsola;
-				if (!packNoEsPermite(paquete, dec, fatal)) {
-					origen = paquete;
-				}
-			}
-		}
-
-		// =========================================================
-		// 2️⃣ DENYLIST DE PAQUETES SOLO SI NO HAY ORIGEN
-		// =========================================================
-		if (origen == null) {
-			boolean denegado = false;
-			for (String pref : package_no_permite) {
-				if (pref == null || pref.isEmpty()) {
-					continue;
-				}
-				String prefSlash = pref.replace('.', '/');
-				if (clase.startsWith(prefSlash)) {
-					denegado = true;
-					break;
-				}
-			}
-			if (denegado) {
+			String normalizada = normalizarLineaStack(lineas[i]);
+			if (normalizada == null) {
 				continue;
 			}
+
+			normalizada = normalizada.trim();
+			if (!normalizada.startsWith("at ")) {
+				continue;
+			}
+
+			int lineaConsola = consolaLineaInicio + i;
+
+			// === EXTRAER CLASE REAL ===
+			String clase = extraerClaseDeLinea(normalizada);
+			if (clase == null || clase.isEmpty()) {
+				continue;
+			}
+
+			// =========================================================
+			// 1️⃣ RESOLVER ORIGEN (ANTES DE CUALQUIER DENY)
+			// =========================================================
+			String origen = null;
+
+			// ---- JAR ----
+			List<String> jars = extraerJarsDeLinea(normalizada);
+			if (!jars.isEmpty()) {
+				String jar = jars.get(0);
+				if (!isJarNoPermite(jar)) {
+					origen = jar;
+				}
+			}
+
+			// ---- MODID ----
+			if (origen == null) {
+				String modid = extraerModidDeLinea(normalizada);
+				if (modid != null && !esModNoPermite(modid)) {
+					origen = modid;
+				}
+			}
+
+			// ---- PAQUETE ----
+			if (origen == null) {
+				String paquete = extraerPaqueteDeLinea(normalizada);
+				if (paquete != null) {
+					String dec = nivel + "," + lineaConsola;
+					if (!packNoEsPermite(paquete, dec, fatal)) {
+						origen = paquete;
+					}
+				}
+			}
+
+			// =========================================================
+			// 2️⃣ DENYLIST DE PAQUETES SOLO SI NO HAY ORIGEN
+			// =========================================================
+			if (origen == null) {
+				boolean denegado = false;
+				for (String pref : package_no_permite) {
+					if (pref == null || pref.isEmpty()) {
+						continue;
+					}
+					String prefSlash = pref.replace('.', '/');
+					if (clase.startsWith(prefSlash)) {
+						denegado = true;
+						break;
+					}
+				}
+				if (denegado) {
+					continue;
+				}
+			}
+
+			// =========================================================
+			// 3️⃣ FALLBACK FINAL
+			// =========================================================
+			if (origen == null) {
+				origen = clase;
+			}
+
+			// =========================================================
+			// 4️⃣ REGISTRAR LÍNEA DE TRAZO
+			// =========================================================
+			LineaTrazo lt = new LineaTrazo();
+			lt.origen = origen;
+			lt.clase = clase;
+			lt.nivel = nivel;
+			lt.lineaConsola = lineaConsola;
+			lt.fatal = fatal;
+
+			// Llaves tipo {re:classloading}
+			lt.llaves = extraerLlavesDeLinea(normalizada);
+
+			info.lineas.add(lt);
 		}
 
-		// =========================================================
-		// 3️⃣ FALLBACK FINAL
-		// =========================================================
-		if (origen == null) {
-			origen = clase;
-		}
-
-		// =========================================================
-		// 4️⃣ REGISTRAR LÍNEA DE TRAZO
-		// =========================================================
-		LineaTrazo lt = new LineaTrazo();
-		lt.origen = origen;
-		lt.clase = clase;
-		lt.nivel = nivel;
-		lt.lineaConsola = lineaConsola;
-		lt.fatal = fatal;
-
-		// Llaves tipo {re:classloading}
-		lt.llaves = extraerLlavesDeLinea(normalizada);
-
-		info.lineas.add(lt);
+		return info;
 	}
-
-	return info;
-}
-
 
 	/**
 	 * Extrae todas las líneas de stacktrace de forma unificada. No separa jars /
@@ -397,7 +391,8 @@ private TraceInfo construirTraceInfo(
 		}
 
 		// Quitar el nombre del método (si existe)
-		// Ej: net.minecraft.client.MinecraftClient.render -> net.minecraft.client.MinecraftClient
+		// Ej: net.minecraft.client.MinecraftClient.render ->
+		// net.minecraft.client.MinecraftClient
 		// Ej: net.minecraft.class_156.method_654 -> net.minecraft.class_156
 		int ultimoPunto = texto.lastIndexOf('.');
 		if (ultimoPunto > 0) {
@@ -416,13 +411,11 @@ private TraceInfo construirTraceInfo(
 	}
 
 	/**
-	 * Elimina prefijos de cargador y metadata sin destruir la ruta real del paquete.
-	 * Soporta prefijos anidados como: knot//MC//net.minecraft...
+	 * Elimina prefijos de cargador y metadata sin destruir la ruta real del
+	 * paquete. Soporta prefijos anidados como: knot//MC//net.minecraft...
 	 *
-	 * Prefijos soportados:
-	 * - knot//, knott//, app//, MC// (pueden repetirse)
-	 * - jdk/ (puede repetirse)
-	 * - TRANSFORMER/, MC-BOOTSTRAP/, LAYER PLUGIN/ (con metadata)
+	 * Prefijos soportados: - knot//, knott//, app//, MC// (pueden repetirse) - jdk/
+	 * (puede repetirse) - TRANSFORMER/, MC-BOOTSTRAP/, LAYER PLUGIN/ (con metadata)
 	 */
 	private static String limpiarPrefijosYCargadores(String texto) {
 		if (texto == null || texto.isEmpty()) {
@@ -509,12 +502,6 @@ private TraceInfo construirTraceInfo(
 
 		return t;
 	}
-
-
-
-
-
-
 
 	/**
 	 * Obtiene stack traces fatales junto con su línea inicial en la consola
@@ -1447,8 +1434,8 @@ private TraceInfo construirTraceInfo(
 		return false;
 	}
 
-	//  Normalizador de líneas de stack: quita // y prefijos de cargador conocidos
-	private static final String[] PREFIJOS_CARGADOR = { "knot//MC//","knot//", "knott//", "app//" };
+	// Normalizador de líneas de stack: quita // y prefijos de cargador conocidos
+	private static final String[] PREFIJOS_CARGADOR = { "knot//MC//", "knot//", "knott//", "app//" };
 
 	public static String normalizarLineaStack(String l) {
 		if (l == null)

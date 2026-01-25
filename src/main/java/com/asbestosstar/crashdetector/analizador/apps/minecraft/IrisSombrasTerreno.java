@@ -23,7 +23,8 @@ public class IrisSombrasTerreno implements Verificaciones {
 
 	@Override
 	public void verificar(Consola consola, String linea, int num) {
-		if (!posibleErrorIris) return;
+		if (!posibleErrorIris)
+			return;
 
 		if (linea.contains("$iris$renderTerrainShadows")) {
 			this.enlace = consola.agregarErrorALectador(num, this);

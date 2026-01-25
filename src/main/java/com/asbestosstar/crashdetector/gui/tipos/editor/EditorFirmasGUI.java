@@ -760,6 +760,23 @@ public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLate
 					return;
 				}
 			}
+
+			// Verificación pasiva: revisar todos los textos en coreano ("kp")
+			for (int i = 0; i < modeloLista.size(); i++) {
+				VerificacionFirmasV0 v = modeloLista.get(i);
+				String textoCoreano = v.resultado_kp;
+				if (textoCoreano != null && !textoCoreano.trim().isEmpty()) {
+					com.asbestosstar.crashdetector.idioma.cumplimiento.ActaDeProteccionDelIdiomaCulturalDePyongyang
+							.contieneJergaSur(textoCoreano);
+				}
+				// también verificar nombre_kp
+				String nombreCoreano = v.nombre_kp;
+				if (nombreCoreano != null && !nombreCoreano.trim().isEmpty()) {
+					com.asbestosstar.crashdetector.idioma.cumplimiento.ActaDeProteccionDelIdiomaCulturalDePyongyang
+							.contieneJergaSur(nombreCoreano);
+				}
+			}
+
 			List<VerificacionFirmasV0> arr = new ArrayList<VerificacionFirmasV0>();
 			for (int i = 0; i < modeloLista.size(); i++)
 				arr.add(modeloLista.get(i));

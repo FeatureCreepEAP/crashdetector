@@ -259,9 +259,9 @@ public class Esperanto implements Idioma {
 
 	@Override
 	public String noTieneConsolaDeLauncherCursedForge() {
-	    return "<b style='color:#" + config.obtenerColorAdvertencia()
-	        + "'>Vi uzas \"Preterlasi lanĉilon\" (CurseForge App). Foje tio kaŭzas malfacile detekteblajn problemojn. Tio devenas de la opcio \"Preterlasi lanĉilon\" en malnovaj versioj de la CurseForge App aŭ en la nova versio. Malŝaltu ĝin kaj uzu la opcion \"Mojang Launcher\" en la agordoj de CurseForge. Vi povas rigardi tiun anglalingvan videon de Claws of Berk (iru al 1:11) "
-	        + "<a href='https://youtu.be/g847O_2LjoE?si=8Y_oj3zyyhYTrSkv&t=71' style='color: inherit;'>ĉi tie</a>.</b>";
+		return "<b style='color:#" + config.obtenerColorAdvertencia()
+				+ "'>Vi uzas \"Preterlasi lanĉilon\" (CurseForge App). Foje tio kaŭzas malfacile detekteblajn problemojn. Tio devenas de la opcio \"Preterlasi lanĉilon\" en malnovaj versioj de la CurseForge App aŭ en la nova versio. Malŝaltu ĝin kaj uzu la opcion \"Mojang Launcher\" en la agordoj de CurseForge. Vi povas rigardi tiun anglalingvan videon de Claws of Berk (iru al 1:11) "
+				+ "<a href='https://youtu.be/g847O_2LjoE?si=8Y_oj3zyyhYTrSkv&t=71' style='color: inherit;'>ĉi tie</a>.</b>";
 	}
 
 	@Override
@@ -418,13 +418,27 @@ public class Esperanto implements Idioma {
 
 	@Override
 	public String arco() {
-		return "Ĉi tiu dialogo ebligas vin kunhavigi protokolojn uzante la API-on de SecureLogger "
-				+ "ĉe securelogger.net. Kiam vi premas la butonon por kunhavigi raporton, via raporto estas sendata al "
-				+ "la elektita raporto-punkto (defaŭlte asbestosstar.egoism.jp) (Povas esti ŝanĝita malsupre). Vi povas kunhavigi ĉiujn elektitajn protokolojn "
-				+ "kune kun la raporto. Se vi ne volas alŝuti, ne uzu ĉi tiun dialogon! Ni ne prilaboras vian raporton ĉe la oficiala finpunkto (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb); ni nur forigas malpermesitajn ligilojn. La kodo troviĝas ĉi tie: https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb. Ĉi tio estas uzata nur por montri informojn pri via kraŝo kaj la ligilon al la protokoloj. Tamen, eblas uzi propran finpunkton, kiu eble ne havas la samajn metodojn. Vi uzas la raportan retejon "
-				+ Config.obtenerInstancia().obtenerSitoDeInformes() + " kaj la protokolan retejon "
-				+ Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado()
-				+ ". Vi ankaŭ povas kunhavigi individuajn protokolojn sen raporto per premo de la kunhavigaj butonoj apud la nomoj de la protokoloj; la protokoloj iras al la elektita protokola retejo. CrashDetector havas defaŭltan protokolan anonimigon, kiu provas forigi uzantnomojn, UUIDjn, alirajn ĵetonojn, sesiajn identigilojn, IP-adresojn kaj aliajn datumojn. Tamen, ĝi ne estas perfekta. Tamen, la aŭtoro de la modpakaĵo povas malaktivigi ĝin. Ĝi povas esti aktivigita aŭ malaktivigita per la markobutono ĉe la malsupra parto de ĉi tiu ekrano. Vi estas la posedanto de viaj datumoj; vi decidas kie alŝuti viajn datumojn. Protokolaj retejoj estas posedataj de triaj partioj, kies posedeco ofte estas kaŝita pro privateco. Vi plene respondas pri la mastrumado de viaj datumoj kaj la riskoj ligitaj al ili. La Kunhaviga Dialogo de CrashDetector estas nur interfaco, kiu ebligas vin administri tion. Gravas, ke vi estu konscia pri GDPR kaj ARCO.";
+		return "Ĉi tiu dialogo permesas al vi kunhavigi protokolojn uzante la API de SecureLogger "
+				+ "ĉe <a href=\"https://securelogger.net\">securelogger.net</a>. Premante la butonon por kunhavigi la raporton, "
+				+ "via raporto sendiĝas al la elektita finpunkto (defaŭlte asbestosstar.egoism.jp) (ŝanĝebla malsupre). "
+				+ "Vi povas kunhavigi ĉiujn elektitajn protokolojn kune kun la raporto. Se vi ne volas alŝuti, ne uzu ĉi tiun dialogon! "
+				+ "Ni ne prilaboras vian raporton ĉe la oficala finpunkto (<a href=\"https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb\">https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb</a>); "
+				+ "ni nur forigas malpermesitajn ligilojn. La kodo estas ĉi tie: <a href=\"https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb\">fontkodo</a>. "
+				+ "Ĉi tio estas uzata sole por montri informojn pri via kraŝo kaj ligilon al la protokoloj. Tamen, eblas uzi propran finpunkton, kiu eble ne havas la samajn metodojn. "
+				+ "Vi uzas la raport-siton " + Config.obtenerInstancia().obtenerSitoDeInformes()
+				+ " kaj la protokol-siton " + Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + ". "
+				+ "Vi ankaŭ povas kunhavigi unuopajn protokolojn sen raporto per premado de la kunhavig-butonoj apud la nomoj de la unuopaj protokoloj; "
+				+ "la protokoloj iros al la elektita protokol-sito. CrashDetector havas defaŭltan anonimigon de protokoloj, kiu provas forigi uzantnomojn, UUID-ojn, "
+				+ "alirkodojn, seanco-ID-ojn, IP-adresojn kaj aliajn datumojn. Tamen, ĝi ne estas perfekta. Tamen, la kreinto de la modpakaĵo povas malŝalti ĝin. "
+				+ "Ĝi povas esti ŝaltita aŭ malŝaltita per la markobutono malsupre en ĉi tiu ekrano. Vi estas la reganto de viaj propraj datumoj; vi decidu kien vi alŝutas viajn datumojn. "
+				+ "La protokol-sitoj estas posedataj de triaj partioj, kies posedeco ofte kaŝiĝas pro privateco. Vi prenas tutan respondecon pri administrado de viaj datumoj kaj la implikitaj riskoj. "
+				+ "La Kunhavig-Dialogo de CrashDetector estas simple interfaco, kiu permesas al vi administri tion. "
+				+ "Estas grava, ke vi sciu pri GDPR kaj ARCO. "
+				+ "Se vi estas en Eŭropo, vi povas uzi <a href=\"https://securelogger.top\">securelogger.top</a> gastigatan en Germanio de Hetzner. "
+				+ "Por pli da jura informo, vidu la jenajn ligilojn: "
+				+ "<a href=\"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPDPPP.pdf\">LFPDPPP</a>, "
+				+ "<a href=\"https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32016R0679\">GDPR</a>, "
+				+ "<a href=\"https://www.ppc.go.jp/files/pdf/20220401_personal_basicpolicy.pdf\">Baza Politiko pri Datumprotekto en Japanio</a>.";
 	}
 
 	@Override
@@ -591,13 +605,12 @@ public class Esperanto implements Idioma {
 
 	@Override
 	public String errorConfigMCForge() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	           + "Grava eraro de agordo de NightConfig/Forge: "
-	           + "Agorda dosiero difektita aŭ nekompleta. "
-	           + "Tio povas esti kaŭzita de malplenaj agorddosieroj (ofte 0 bajtoj) en la dosierujo 'config' en pli malnovaj aŭ modifitaj versioj de NightConfig. "
-	           + "Por la plej multaj versioj, Night Config Fixes solvos la problemon, sed se vi uzas nekongruan aŭ propran versioon de NightConfig, vi devos forigi la agorddosierojn mane. "
-	           + "Ĉi tiu problemo estas pli komuna en malnovaj versioj de MC Forge (kiuj inkluzivas NightConfig) kaj en malnovaj modoj de FabricMC kiuj pakas NightConfig, sed ĝi ankaŭ povas ekzisti en iuj propraj versioj de NightConfig. "
-	           + "Pli da informo pri solvoj haveblas ĉe <a href='https://www.curseforge.com/minecraft/mc-mods/night-config-fixes'>Night Config Fixes</a>.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "Grava eraro de agordo de NightConfig/Forge: "
+				+ "Agorda dosiero difektita aŭ nekompleta. "
+				+ "Tio povas esti kaŭzita de malplenaj agorddosieroj (ofte 0 bajtoj) en la dosierujo 'config' en pli malnovaj aŭ modifitaj versioj de NightConfig. "
+				+ "Por la plej multaj versioj, Night Config Fixes solvos la problemon, sed se vi uzas nekongruan aŭ propran versioon de NightConfig, vi devos forigi la agorddosierojn mane. "
+				+ "Ĉi tiu problemo estas pli komuna en malnovaj versioj de MC Forge (kiuj inkluzivas NightConfig) kaj en malnovaj modoj de FabricMC kiuj pakas NightConfig, sed ĝi ankaŭ povas ekzisti en iuj propraj versioj de NightConfig. "
+				+ "Pli da informo pri solvoj haveblas ĉe <a href='https://www.curseforge.com/minecraft/mc-mods/night-config-fixes'>Night Config Fixes</a>.</b>";
 	}
 
 	@Override
@@ -5843,70 +5856,240 @@ public class Esperanto implements Idioma {
 				+ "La opinioj kaj komentoj de Sylent Bell ne nepre kongruas kun niaj; "
 				+ "ni simple pensis, ke estus amuze meti ŝin ĉi tie. CrashDetector estas laika." + "</div></html>";
 	}
+
 	@Override
 	public String gmlIPV6() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "La mod GML (Groovy ModLoader) postulas tiujn ŝanĝojn kaj estas la plej komuna kaŭzo de ĉi tiu problemo.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "La mod GML (Groovy ModLoader) postulas tiujn ŝanĝojn kaj estas la plej komuna kaŭzo de ĉi tiu problemo.</b>";
 	}
-	
-	@Override public String mensajeIndependenteFlywheel(Set<String> mods) { StringBuilder listaMods = new StringBuilder(); if (!mods.isEmpty()) { for (String mod : mods) { listaMods.append("<li>").append(mod).append("</li>"); } } String mensaje = "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "Oni detektis la uzon de <i>Independent Flywheel</i>.</b>" + "<p><b>Independent Flywheel estas eksmoda (malrekomendata)</b> kaj ne uzebla en modernaj versioj.</p>" + "<p>Aktualaj versioj de <b>Create</b> <b>jam inkluzivas Flywheel</b>, do aparta instalo " + "kaŭzas nekongruecojn kaj ŝargajn erarojn.</p>" + "<p>Iuj modoj kiuj eksplicite dependas de Independent Flywheel povas " + "<b>ne funkcii</b> aŭ <b>funkcii malstabile</b>. " + "En iuj progresintaj kazoj, ili eble funkcios se oni " + "<b>mane redaktas la dosieron <code>mods.toml</code></b> por ĝustigi versiajn intervalojn, " + "kvankam tio <b>ne rekomendiĝas</b>.</p>" + (mods.isEmpty() ? "" : "<p><b>Detektitaj modoj referencantaj Flywheel:</b></p>" + "<ul>" + listaMods.toString() + "</ul>") + "<p>La rekomendita solvo estas <b>forigi Independent Flywheel</b> kaj uzi nur " + "la version inkluzivitan en Create.</p>"; return mensaje; } @Override
-	public String nombreIndependenteFlywheel() { return "Sendependa Flywheel"; }
-	
+
+	@Override
+	public String mensajeIndependenteFlywheel(Set<String> mods) {
+		StringBuilder listaMods = new StringBuilder();
+		if (!mods.isEmpty()) {
+			for (String mod : mods) {
+				listaMods.append("<li>").append(mod).append("</li>");
+			}
+		}
+		String mensaje = "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Oni detektis la uzon de <i>Independent Flywheel</i>.</b>"
+				+ "<p><b>Independent Flywheel estas eksmoda (malrekomendata)</b> kaj ne uzebla en modernaj versioj.</p>"
+				+ "<p>Aktualaj versioj de <b>Create</b> <b>jam inkluzivas Flywheel</b>, do aparta instalo "
+				+ "kaŭzas nekongruecojn kaj ŝargajn erarojn.</p>"
+				+ "<p>Iuj modoj kiuj eksplicite dependas de Independent Flywheel povas "
+				+ "<b>ne funkcii</b> aŭ <b>funkcii malstabile</b>. "
+				+ "En iuj progresintaj kazoj, ili eble funkcios se oni "
+				+ "<b>mane redaktas la dosieron <code>mods.toml</code></b> por ĝustigi versiajn intervalojn, "
+				+ "kvankam tio <b>ne rekomendiĝas</b>.</p>"
+				+ (mods.isEmpty() ? ""
+						: "<p><b>Detektitaj modoj referencantaj Flywheel:</b></p>" + "<ul>" + listaMods.toString()
+								+ "</ul>")
+				+ "<p>La rekomendita solvo estas <b>forigi Independent Flywheel</b> kaj uzi nur "
+				+ "la version inkluzivitan en Create.</p>";
+		return mensaje;
+	}
+
+	@Override
+	public String nombreIndependenteFlywheel() {
+		return "Sendependa Flywheel";
+	}
+
 	@Override
 	public String mensajeFloralEnchantments() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	        + "Eraro rilata al la mod <i>Floral Enchantments</i> estis trovita.</b>"
-	        + "<p>La kraŝo estas kaŭzita de interna eraro de la mod dum traktado de ludadaj datumoj, "
-	        + "kio kaŭzas <b>NullPointerException</b> dum ekzekuto.</p>"
-	        + "<p>Ĉi tiu problemo kutime solviĝas per ĝisdatigo aŭ forigo de la mod.</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Eraro rilata al la mod <i>Floral Enchantments</i> estis trovita.</b>"
+				+ "<p>La kraŝo estas kaŭzita de interna eraro de la mod dum traktado de ludadaj datumoj, "
+				+ "kio kaŭzas <b>NullPointerException</b> dum ekzekuto.</p>"
+				+ "<p>Ĉi tiu problemo kutime solviĝas per ĝisdatigo aŭ forigo de la mod.</p>";
 	}
 
 	@Override
 	public String nombreFloralEnchantments() {
-	    return "Eraro de Floral Enchantments";
+		return "Eraro de Floral Enchantments";
 	}
+
 	@Override
 	public String mixinExtrasDuplicados() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
-	        + "Vi havas kaj la NeoForge-version kaj la norman version de MixinExtras. Se vi uzas MinecraftForge, vi povas instali <a href='https://www.curseforge.com/minecraft/mc-mods/mixin-extras-neoforge-on-forge-fix' style='color: inherit;'>ĉi tiun ligilon</a> por solvi la problemon.</b>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
+				+ "Vi havas kaj la NeoForge-version kaj la norman version de MixinExtras. Se vi uzas MinecraftForge, vi povas instali <a href='https://www.curseforge.com/minecraft/mc-mods/mixin-extras-neoforge-on-forge-fix' style='color: inherit;'>ĉi tiun ligilon</a> por solvi la problemon.</b>";
 	}
+
 	@Override
 	public String mensajeIrisSombrasTerreno() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	        + "Eraro estis trovita en terensombroj kun shaders (Iris).</b>"
-	        + "<p>La problemo okazas dum bildigo de la tereno.</p>"
-	        + "<p>Oni rekomendas <b>provu ludi sen shaders</b> aŭ malaltigi grafikan kvaliton, "
-	        + "precipe ĉe agordoj <b>Ultra</b>.</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Eraro estis trovita en terensombroj kun shaders (Iris).</b>"
+				+ "<p>La problemo okazas dum bildigo de la tereno.</p>"
+				+ "<p>Oni rekomendas <b>provu ludi sen shaders</b> aŭ malaltigi grafikan kvaliton, "
+				+ "precipe ĉe agordoj <b>Ultra</b>.</p>";
 	}
 
 	@Override
 	public String nombreIrisSombrasTerreno() {
-	    return "Terensombroj (Iris)";
+		return "Terensombroj (Iris)";
 	}
-	
+
 	@Override
 	public String mensajeTickLargoServidor() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	        + "Tro longa servila tiko estis detektita.</b>"
-	        + "<p>Tio indikas ke la ludo haltis tro longe dum unu tiko.</p>"
-	        + "<p>Oni rekomendas <b>kontroli la thread dump</b> generitan en la protokolo por identigi la kialon.</p>"
-	        + "<p>La <b>Analizo de Stack Trace</b> povas helpi vin trovi la fonton de la blokado.</p>"
-	        + "<p>Krome tio, la butono <b>Vidi en protokolo</b> markos per ruĝa koloro eblajn kulpajn modojn, "
-	        + "same kiel enirojn ĉirkaŭitajn de <code>$modid$</code>, kiuj kutime indikas la probleman fonton. Por realtempa skanado, ni rekomendas uzi la CPU-provanton en VisualVM. Certigu, ke via servilo aŭ komputilo estas sufiĉe pova por pritrakti viajn modojn — eĉ se ĉiuj funkcias ĝuste, tro multaj povas kaŭzi tiun problemon.</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Tro longa servila tiko estis detektita.</b>"
+				+ "<p>Tio indikas ke la ludo haltis tro longe dum unu tiko.</p>"
+				+ "<p>Oni rekomendas <b>kontroli la thread dump</b> generitan en la protokolo por identigi la kialon.</p>"
+				+ "<p>La <b>Analizo de Stack Trace</b> povas helpi vin trovi la fonton de la blokado.</p>"
+				+ "<p>Krome tio, la butono <b>Vidi en protokolo</b> markos per ruĝa koloro eblajn kulpajn modojn, "
+				+ "same kiel enirojn ĉirkaŭitajn de <code>$modid$</code>, kiuj kutime indikas la probleman fonton. Por realtempa skanado, ni rekomendas uzi la CPU-provanton en VisualVM. Certigu, ke via servilo aŭ komputilo estas sufiĉe pova por pritrakti viajn modojn — eĉ se ĉiuj funkcias ĝuste, tro multaj povas kaŭzi tiun problemon.</p>";
 	}
 
 	@Override
 	public String nombreTickLargoServidor() {
-	    return "Longa servila tiko";
+		return "Longa servila tiko";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public String tituloLFPDPPP() {
+		return "FEDERA LEĜO PRI PROTEKTO DE PERSONAJ DATUMOJ EN POSIDO DE PRIVATULOJ";
+	}
+
+	@Override
+	public String aceptarPermanentemente() {
+		return "Akcepti permanente";
+	}
+
+	public String mensajeAdvertenciaIdiomaCoreano() {
+		return "La korea traduko enhavas sudajn ĝargonvortojn, kiujn oni devas eviti por obei la leĝon. "
+				+ "La uzo de fremdlingvaĵoj, precipe tiuj devenantaj el la Sudo, estas strikte malpermesita "
+				+ "laŭ la Leĝo pri Protekto de la Kultura Lingvo de Pjongjango.";
+	}
+
+	public String enlaceDocumentacionIdiomaCoreano() {
+		return "Por pli da informo, vidu la oficialan dokumenton de la leĝo: "
+				+ "<a href='https://www.dailynk.com/english/wp-content/uploads/sites/2/2023/03/Pyongyang-Cultural-Language-Protection-Act_English-and-Korean-Versions_Daily-NK.pdf'>Leĝo pri Protekto de la Kultura Lingvo de Pjongjango</a>";
+	}
+
+	public String leerLeyCompleta() {
+		return "Legi la tutan leĝon";
+	}
+
+	public String errorAbriendoEnlace() {
+		return "Eraro dum malfermo de la ligilo";
+	}
+
+	public String actaProteccionIdiomaCultural() {
+		return "Leĝo pri Protekto de la Kultura Lingvo de Pjongjango";
+	}
+
+	@Override
+	public String canarioTitulo() {
+		return "Kanario de Juĝa Ordo";
+	}
+
+	@Override
+	public String canario1984Titulo() {
+		return "1984 — Videbla Monitoro";
+	}
+
+	@Override
+	public String revisar() {
+		return "Revizii";
+	}
+
+	@Override
+	public String cerrar() {
+		return "Fermi";
+	}
+
+	@Override
+	public String canarioTodoSeguro() {
+		return "Ĉiuj servoj raportas sekuran staton.";
+	}
+
+	@Override
+	public String canarioComprometido(int c) {
+		return "AVERTO: " + c + " servo(j) raportas nesekuran staton.";
+	}
+
+	@Override
+	public String colorAlerta() {
+		return "Averto-koloro";
+	}
+
+	public String opcionesMunidiales() {
+		return "Munidialaj Opcioj";
+	}
+
+	public String consentimientoLFPDPPP() {
+		return "Konsento LFPDPPP";
+	}
+
+	public String habilitarTokenAcceso() {
+		return "Ebligi alirkodon";
+	}
+
+	public String consolaDesarrollo() {
+		return "Programista Konzolo";
+	}
+
+	public String munidial() {
+		return "Munidial";
+	}
+
+	public String ningun() {
+		return "Neniu";
+	}
+
+	// Consola del desarrollador
+	public String consolaDesarrollador() {
+		return "Programista Konzolo";
+	}
+
+	public String bajar() {
+		return "Elŝuti";
+	}
+
+	public String logsSoporte() {
+		return "Protokoloj por subteno";
+	}
+
+	public String detenerProceso() {
+		return "Haltigi procezon";
+	}
+
+	// Menú contextual
+	public String copiarSeleccion() {
+		return "Kopii elektaĵon";
+	}
+
+	public String seleccionarTodo() {
+		return "Elekti ĉion";
+	}
+
+	public String copiarTodo() {
+		return "Kopii ĉion";
+	}
+
+	public String guardarTodoComoArchivo() {
+		return "Konservi ĉion kiel dosieron";
+	}
+
+	public String obtenerEnlaceSoporte() {
+		return "Akiri ligilon por subteno";
+	}
+
+	public String borrarTodo() {
+		return "Forigi ĉion";
+	}
+
+	// Colores configurables
+	public String colorFondoConsola() {
+		return "Fona koloro de la konzolo";
+	}
+
+	public String colorTextoConsola() {
+		return "Teksta koloro de la konzolo";
+	}
+
+	// Consentimiento / logs
+	public String consentimientoConfirmadoPendienteImplementacion() {
+		return "Konsento konfirmiĝis.\nLa integrigo por kunhavigi protokolojn estos efektivigita ĉi tie.";
+	}
 
 }

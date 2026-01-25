@@ -18,6 +18,7 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -26,6 +27,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import com.asbestosstar.crashdetector.Config;
+import com.asbestosstar.crashdetector.ConfigMunidial;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
@@ -222,6 +224,8 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 		panel.setLayout(new GridLayout(0, 2, 5, 5));
 
 		Config config = Config.obtenerInstancia();
+		ConfigMunidial munidial = ConfigMunidial.obtenerInstancia();
+
 		boolean esMac = CrashDetectorGUI.esMac();
 		Color colorDeTextoDeGui = colorTexto.obtener();
 
@@ -229,6 +233,7 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 		JLabel labelSitio = new JLabel(MonitorDePID.idioma.sitoDeLogging());
 		labelSitio.setForeground(colorDeTextoDeGui);
 		panel.add(labelSitio);
+
 		JTextField sitioDeInformesField = crearCampoTextoConfig(config.obtenerSitoDeInformes(),
 				config::guardarSitioDeInformes);
 		if (!esMac) {
@@ -241,6 +246,7 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 		JLabel labelHMCL = new JLabel(MonitorDePID.idioma.carpetaHMCL());
 		labelHMCL.setForeground(colorDeTextoDeGui);
 		panel.add(labelHMCL);
+
 		JTextField carpetaHMCL = crearCampoTextoConfig(config.obtenerCarpetaHMCL(), config::guardarCarpetaHMCL);
 		if (!esMac) {
 			carpetaHMCL.setBackground(colorCajaTexto.obtener());
@@ -248,6 +254,7 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 		}
 		panel.add(carpetaHMCL);
 
+		// Editor HTML
 		JLabel labelEditarColores = new JLabel("HTML WYSIWYG PLANTILLA:");
 		labelEditarColores.setForeground(colorDeTextoDeGui);
 		panel.add(labelEditarColores);
@@ -256,23 +263,23 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 		if (!esMac) {
 			botonEditarColores.setForeground(colorTexto.obtener());
 			botonEditarColores.setBackground(colorBoton.obtener());
-			botonEditarColores.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 			botonEditarColores.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 		}
 		botonEditarColores.setFocusPainted(false);
 		botonEditarColores.addActionListener(e -> {
 			JDialog dialogo = new JDialog(SwingUtilities.getWindowAncestor(this), "HTML WYSIWYG PLANTILLA");
 			dialogo.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			EditorPlantilla editor_plantilla = TipoGUI.EDITOR_PLANTILLA.obtenerGUIPredeterminado(
-					EditorPlantillaPredeterminado.ID, () -> new EditorPlantillaPredeterminado());
-			editor_plantilla.init();
-			dialogo.setContentPane(editor_plantilla);
+			EditorPlantilla editor = TipoGUI.EDITOR_PLANTILLA.obtenerGUIPredeterminado(EditorPlantillaPredeterminado.ID,
+					() -> new EditorPlantillaPredeterminado());
+			editor.init();
+			dialogo.setContentPane(editor);
 			dialogo.pack();
 			dialogo.setLocationRelativeTo(SwingUtilities.getWindowAncestor(this));
 			dialogo.setVisible(true);
 		});
 		panel.add(botonEditarColores);
 
+		// Editor GUIs
 		JLabel labelEditarGUI = new JLabel("Editar GUIs:");
 		labelEditarGUI.setForeground(colorDeTextoDeGui);
 		panel.add(labelEditarGUI);
@@ -281,7 +288,6 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 		if (!esMac) {
 			botonEditarGUIs.setForeground(colorTexto.obtener());
 			botonEditarGUIs.setBackground(colorBoton.obtener());
-			botonEditarGUIs.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 			botonEditarGUIs.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 		}
 		botonEditarGUIs.setFocusPainted(false);
@@ -291,30 +297,22 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 		});
 		panel.add(botonEditarGUIs);
 
-		// MENÚS DESPLEGABLES PARA SELECCIONAR GUIs POR DEFECTO
+		// Dropdown GUIs por defecto
 		JLabel labelGuiDefault = new JLabel("GUIs por defecto:");
 		labelGuiDefault.setForeground(colorDeTextoDeGui);
 		panel.add(labelGuiDefault);
-
-		// Crear un espacio vacío para alinear los elementos
 		panel.add(new JLabel());
 
-		// Iterar sobre todos los tipos de GUI configurables
 		for (TipoGUI<?> tipo : TipoGUI.TIPOS_DE_GUI) {
 			Map<String, ?> guis = tipo.obtenerGUIs();
-			CrashDetectorLogger.log("tipo " + tipo.id() + " tiene " + guis.size() + " implementaciones");
-
-			// Solo agregar dropdown si hay múltiples implementaciones
 			if (guis.size() > 1) {
 				JLabel label = new JLabel(tipo.etiquetaDelBoton() + ":");
 				label.setForeground(colorDeTextoDeGui);
 				panel.add(label);
 
 				JComboBox<String> dropdown = new JComboBox<>(guis.keySet().toArray(new String[0]));
-
 				String valorActual = ConfigString.de("guitipo_" + tipo.id(), "ningun").obtener();
 				dropdown.setSelectedItem(valorActual);
-				CrashDetectorLogger.log("tipo " + tipo.id() + " valor actual: " + valorActual);
 
 				dropdown.addActionListener(e -> {
 					String seleccionado = (String) dropdown.getSelectedItem();
@@ -324,36 +322,56 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 				if (!esMac) {
 					dropdown.setBackground(colorCajaTexto.obtener());
 					dropdown.setForeground(colorDeTextoDeGui);
-					dropdown.setOpaque(true);
 				}
 
 				panel.add(dropdown);
-			} else {
-				CrashDetectorLogger.log("No se muestra dropdown para " + tipo.id() + " porque solo tiene " + guis.size()
-						+ " implementaciones");
 			}
 		}
 
-		// Campo: ¿Usar proxy para System.out y System.err?
+		// Proxy SysOut/SysErr
 		JLabel labelProxy = new JLabel("proxySysOutSysErr");
 		labelProxy.setForeground(colorDeTextoDeGui);
 		panel.add(labelProxy);
+
 		JCheckBox proxySysOutSysErrCheckBox = new JCheckBox();
 		proxySysOutSysErrCheckBox.setBackground(colorFondo.obtener());
-		proxySysOutSysErrCheckBox.setForeground(colorDeTextoDeGui);
 		proxySysOutSysErrCheckBox.setSelected(config.obtenerProxySysOutSysErr());
 		proxySysOutSysErrCheckBox
 				.addItemListener(e -> config.guardarProxySysOutSysErr(proxySysOutSysErrCheckBox.isSelected()));
 		panel.add(proxySysOutSysErrCheckBox);
 
-		// Asegurar que el panel tenga suficiente tamaño
-		panel.setPreferredSize(new Dimension(600, 400));
+		// ===== Consola de desarrollo (Munidial / Ningun) =====
+		JLabel labelDev = new JLabel(MonitorDePID.idioma.consolaDesarrollo());
+		labelDev.setForeground(colorDeTextoDeGui);
+		panel.add(labelDev);
 
+		JComboBox<String> comboDev = new JComboBox<>(
+				new String[] { MonitorDePID.idioma.munidial(), MonitorDePID.idioma.ningun() });
+
+		comboDev.setSelectedItem(
+				munidial.obtenerConsolaDesarrollo() ? MonitorDePID.idioma.munidial() : MonitorDePID.idioma.ningun());
+
+		comboDev.addActionListener(e -> {
+			boolean valor = comboDev.getSelectedItem().equals(MonitorDePID.idioma.munidial());
+			munidial.guardarConsolaDesarrollo(valor);
+		});
+
+		if (!esMac) {
+			comboDev.setBackground(colorCajaTexto.obtener());
+			comboDev.setForeground(colorDeTextoDeGui);
+		}
+
+		panel.add(comboDev);
+
+		panel.setPreferredSize(new Dimension(600, 400));
 		return panel;
 	}
 
 	public JPanel tabConfidentialidad() {
-		JPanel panel = new JPanel(new BorderLayout());
+
+		ConfigMunidial munidial = ConfigMunidial.obtenerInstancia();
+
+		JPanel panel = new JPanel(new BorderLayout(10, 10));
 		panel.setBackground(colorFondo.obtener());
 
 		JTextArea areaTexto = new JTextArea(MonitorDePID.idioma.arco());
@@ -361,25 +379,54 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 		areaTexto.setWrapStyleWord(true);
 		areaTexto.setEditable(false);
 		areaTexto.setOpaque(false);
-		areaTexto.setBackground(colorFondo.obtener());
 		areaTexto.setForeground(colorTexto.obtener());
 
-		if (!CrashDetectorGUI.esMac()) {
-			areaTexto.setForeground(colorTexto.obtener());
-		}
+		JScrollPane scroll = new JScrollPane(areaTexto);
+		scroll.setPreferredSize(new Dimension(10, 180));
+		panel.add(scroll, BorderLayout.NORTH);
 
-		JPanel panelTexto = new JPanel(new BorderLayout());
-		panelTexto.setBackground(colorFondo.obtener());
-		panelTexto.add(areaTexto, BorderLayout.CENTER);
+		JPanel panelOpciones = new JPanel(new GridLayout(0, 2, 8, 8));
+		panelOpciones.setBackground(colorFondo.obtener());
+		panelOpciones.setBorder(BorderFactory.createTitledBorder(MonitorDePID.idioma.opcionesMunidiales()));
 
-		panelTexto.setMaximumSize(new Dimension(600, Short.MAX_VALUE));
-		panelTexto.setAlignmentX(Component.CENTER_ALIGNMENT);
+		// Anonimizar
+		JLabel labelAnon = new JLabel(MonitorDePID.idioma.anonimizarRegistros());
+		labelAnon.setForeground(colorTexto.obtener());
+		panelOpciones.add(labelAnon);
 
-		panel.add(panelTexto, BorderLayout.CENTER);
+		JCheckBox checkAnon = new JCheckBox();
+		checkAnon.setBackground(colorFondo.obtener());
+		checkAnon.setSelected(munidial.esAnonimizarRegistros());
+		checkAnon.addActionListener(e -> munidial.guardarAnonimizarRegistros(checkAnon.isSelected()));
+		panelOpciones.add(checkAnon);
+
+		// Consentimiento LFPDPPP
+		JLabel labelConsent = new JLabel(MonitorDePID.idioma.consentimientoLFPDPPP());
+		labelConsent.setForeground(colorTexto.obtener());
+		panelOpciones.add(labelConsent);
+
+		JCheckBox checkConsent = new JCheckBox();
+		checkConsent.setBackground(colorFondo.obtener());
+		checkConsent.setSelected(munidial.obtenerConsentimientoLFPDPPP());
+		checkConsent.addActionListener(e -> munidial.guardarConsentimientoLFPDPPP(checkConsent.isSelected()));
+		panelOpciones.add(checkConsent);
+
+		// Token de acceso
+		JLabel labelToken = new JLabel(MonitorDePID.idioma.habilitarTokenAcceso());
+		labelToken.setForeground(colorTexto.obtener());
+		panelOpciones.add(labelToken);
+
+		JCheckBox checkToken = new JCheckBox();
+		checkToken.setBackground(colorFondo.obtener());
+		checkToken.setSelected(munidial.obtenerHabilitarTokenDeAccesoEnLaEntregaDelMonitorDePID());
+		checkToken.addActionListener(
+				e -> munidial.guardarHabilitarTokenDeAccesoEnLaEntregaDelMonitorDePID(checkToken.isSelected()));
+		panelOpciones.add(checkToken);
+
+		panel.add(panelOpciones, BorderLayout.CENTER);
 
 		JPanel placeholderImagen = new JPanel();
 		placeholderImagen.setBackground(colorFondo.obtener());
-		placeholderImagen.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
 
 		JLabel etiquetaImagen = new JLabel();
 		etiquetaImagen.setHorizontalAlignment(JLabel.CENTER);
@@ -388,14 +435,13 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 			ImageIcon iconoImagen = new ImageIcon(Statics.carpeta.resolve("imagenes/profeco.jpg").toString());
 			etiquetaImagen.setIcon(iconoImagen);
 		} catch (Exception e) {
-			etiquetaImagen.setText("Error al cargar la imagen");
-			if (!CrashDetectorGUI.esMac()) {
-				etiquetaImagen.setForeground(colorTexto.obtener());
-			}
+			etiquetaImagen.setText(MonitorDePID.idioma.errorCargandoImagen());
+			etiquetaImagen.setForeground(colorTexto.obtener());
 		}
 
 		placeholderImagen.add(etiquetaImagen);
 		panel.add(placeholderImagen, BorderLayout.SOUTH);
+
 		return panel;
 	}
 

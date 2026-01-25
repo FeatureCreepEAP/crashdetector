@@ -34,6 +34,7 @@ import javax.swing.border.EmptyBorder;
 
 import com.asbestosstar.crashdetector.App;
 import com.asbestosstar.crashdetector.Config;
+import com.asbestosstar.crashdetector.ConfigMunidial;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.Entregar;
 import com.asbestosstar.crashdetector.Idioma;
@@ -222,10 +223,10 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 			String seleccion = (String) comboIdioma.getSelectedItem();
 			String codigo = obtenerCodigoIdioma(seleccion);
 			if (codigo != null) {
-				try (BufferedWriter w = Files.newBufferedWriter(Idioma.archivo.toPath(), StandardOpenOption.CREATE,
-						StandardOpenOption.TRUNCATE_EXISTING)) {
-					w.write(codigo);
-				} catch (IOException ex) {
+				try {
+					// Guardar el idioma en la configuración munidial
+					ConfigMunidial.obtenerInstancia().guardarIdioma(codigo);
+				} catch (Exception ex) {
 					CrashDetectorLogger.logException(ex);
 				}
 				// Re-detectar idioma y recargar la UI
@@ -241,7 +242,12 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 			if (usarSistema) {
 				// Borrar preferencia guardada para forzar el uso del idioma del sistema
 				try {
+					// Borrar archivo legacy
 					Files.deleteIfExists(Idioma.archivo.toPath());
+
+					// Borrar idioma de la configuración munidial
+					ConfigMunidial.obtenerInstancia().borrarIdioma();
+
 				} catch (IOException ex) {
 					CrashDetectorLogger.logException(ex);
 				}
@@ -252,12 +258,13 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 				String seleccion = (String) comboIdioma.getSelectedItem();
 				String codigo = obtenerCodigoIdioma(seleccion);
 				if (codigo != null) {
-					try (BufferedWriter w = Files.newBufferedWriter(Idioma.archivo.toPath(), StandardOpenOption.CREATE,
-							StandardOpenOption.TRUNCATE_EXISTING)) {
-						w.write(codigo);
-					} catch (IOException ex) {
+					try {
+						// Guardar el idioma en la configuración munidial
+						ConfigMunidial.obtenerInstancia().guardarIdioma(codigo);
+					} catch (Exception ex) {
 						CrashDetectorLogger.logException(ex);
 					}
+
 					MonitorDePID.idioma = Idioma.detectar();
 					recargar();
 				}

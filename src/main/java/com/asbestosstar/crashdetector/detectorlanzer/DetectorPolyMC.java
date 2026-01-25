@@ -23,7 +23,7 @@ public class DetectorPolyMC implements DetectorLanzer {
 		if (!app.equals(App.MINECRAFT))
 			return false;
 
-			return buscarClase("org.polymc.impl.OneSixLauncher");
+		return buscarClase("org.polymc.impl.OneSixLauncher");
 
 	}
 

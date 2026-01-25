@@ -1,6 +1,5 @@
 package com.asbestosstar.crashdetector;
 
-import java.awt.GraphicsConfiguration;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -29,6 +28,7 @@ import com.asbestosstar.crashdetector.idioma.Ruso;
 public interface Idioma {
 
 	Config config = Config.obtenerInstancia();
+	@Deprecated
 	public static File archivo = new File(System.getProperty("user.home"), "crash_detector/idioma");
 
 	public static ConfigString idioma_respaldo = ConfigString.de("idioma_respaldo", "es");
@@ -45,24 +45,33 @@ public interface Idioma {
 	public static Idioma coreano = new Coreano();
 
 	public static Idioma detectar() {
-		String id = leerIdiomaDesdeArchivo(); // Primero intenta leer del archivo
 
-		if (id == null) {
-			id = Locale.getDefault().getLanguage().toLowerCase();
-		}
-
-		if (id == null || !tenemosIdiomaCodigo(id)) {
-			id = idioma_respaldo.obtener();
-			if (id == null || !tenemosIdiomaCodigo(id)) {
-				return espanol;
-			} else {
-				return desdeCodigo(id);
-			}
-
-		} else {
+		// 1. Configuración munidial
+		String id = ConfigMunidial.obtenerInstancia().obtenerIdioma();
+		if (id != null && tenemosIdiomaCodigo(id)) {
 			return desdeCodigo(id);
 		}
 
+		// 2. Archivo antiguo (compatibilidad)
+		id = leerIdiomaDesdeArchivo();
+		if (id != null && tenemosIdiomaCodigo(id)) {
+			return desdeCodigo(id);
+		}
+
+		// 3. Idioma del sistema
+		id = Locale.getDefault().getLanguage().toLowerCase();
+		if (tenemosIdiomaCodigo(id)) {
+			return desdeCodigo(id);
+		}
+
+		// 4. Idioma de respaldo
+		id = idioma_respaldo.obtener();
+		if (id != null && tenemosIdiomaCodigo(id)) {
+			return desdeCodigo(id);
+		}
+
+		// 5. Español como último recurso
+		return espanol;
 	}
 
 	public static Idioma desdeCodigo(String codigo) {// TODO una sistema dinamica de registrando idiomas
@@ -140,14 +149,21 @@ public interface Idioma {
 			Set<String> soportados = new HashSet<>(
 					Arrays.asList("es", "en", "ar", "pt", "fa", "ru", "zh", "eo", "ja", "ko"));
 
-			return soportados.contains(codigo) ? codigo : null;
+			if (soportados.contains(codigo)) {
+
+				// Guardar el idioma en la configuración munidial para futuras ejecuciones
+				ConfigMunidial.obtenerInstancia().guardarIdioma(codigo);
+
+				return codigo;
+			}
+
+			return null;
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			CrashDetectorLogger.logException(e);
 			return null;
 		}
-
 	}
 
 	public static String leer_archivo(Path path) throws IOException {
@@ -2310,5 +2326,65 @@ public interface Idioma {
 	public String mensajeTickLargoServidor();
 
 	public String nombreTickLargoServidor();
+
+	public String tituloLFPDPPP();
+
+	public String aceptarPermanentemente();
+
+	public String actaProteccionIdiomaCultural();
+
+	public String leerLeyCompleta();
+
+	public String errorAbriendoEnlace();
+
+	public String enlaceDocumentacionIdiomaCoreano();
+
+	public String mensajeAdvertenciaIdiomaCoreano();
+
+	public String canarioTitulo();
+
+	public String canario1984Titulo();
+
+	public String revisar();
+
+	public String cerrar();
+
+	public String canarioTodoSeguro();
+
+	public String canarioComprometido(int inseguros);
+
+	public String colorAlerta();
+
+	public String consolaDesarrollo();
+
+	public String munidial();
+
+	public String ningun();
+
+	public String opcionesMunidiales();
+
+	public String consentimientoLFPDPPP();
+
+	public String habilitarTokenAcceso();
+
+	public String bajar();
+
+	public String logsSoporte();
+
+	public String detenerProceso();
+
+	public String copiarSeleccion();
+
+	public String seleccionarTodo();
+
+	public String copiarTodo();
+
+	public String guardarTodoComoArchivo();
+
+	public String obtenerEnlaceSoporte();
+
+	public String borrarTodo();
+
+	public String consentimientoConfirmadoPendienteImplementacion();
 
 }

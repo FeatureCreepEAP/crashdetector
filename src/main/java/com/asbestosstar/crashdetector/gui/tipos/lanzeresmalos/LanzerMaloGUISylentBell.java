@@ -593,6 +593,13 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 				}
 			}
 
+			// Verificación pasiva: si hay texto en coreano ("ko"), verificar jerga sureña
+			String textoCoreano = nuevosMotivos.get("ko");
+			if (textoCoreano != null && !textoCoreano.isEmpty()) {
+				com.asbestosstar.crashdetector.idioma.cumplimiento.ActaDeProteccionDelIdiomaCulturalDePyongyang
+						.contieneJergaSur(textoCoreano);
+			}
+
 			noRecomendados.put(idLanzador, nuevosMotivos);
 			cargarDatosEnTabla();
 			dialogo.dispose();

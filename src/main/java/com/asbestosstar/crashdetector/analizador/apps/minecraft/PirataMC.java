@@ -30,8 +30,6 @@ public class PirataMC implements Verificaciones {
 	public void verificar(Consola consola) {
 		// TODO Auto-generated method stub
 
-
-
 		if (config.obtener()) {
 			if (consola.contenido_verificar
 					.contains("Caused by: com.mojang.authlib.exceptions.MinecraftClientHttpException: Status: 401")) {

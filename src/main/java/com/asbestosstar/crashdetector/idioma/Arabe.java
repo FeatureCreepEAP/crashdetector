@@ -255,9 +255,9 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String noTieneConsolaDeLauncherCursedForge() {
-	    return "<b style='color:#" + config.obtenerColorAdvertencia()
-	        + "'>أنت تستخدم خيار \"تخطي تشغيل المشغّل\" (تطبيق CurseForge). أحيانًا يسبب هذا مشاكل يصعب اكتشافها. يعود ذلك إلى خيار \"تخطي تشغيل المشغّل\" في إصدارات قديمة من تطبيق CurseForge أو في الإصدار الجديد. قم بتعطيله واستخدم خيار \"Mojang Launcher\" في إعدادات CurseForge. يمكنك مشاهدة هذا الفيديو باللغة الإنجليزية من Claws of Berk (انتقل إلى 1:11) "
-	        + "<a href='https://youtu.be/g847O_2LjoE?si=8Y_oj3zyyhYTrSkv&t=71' style='color: inherit;'>هنا</a>.</b>";
+		return "<b style='color:#" + config.obtenerColorAdvertencia()
+				+ "'>أنت تستخدم خيار \"تخطي تشغيل المشغّل\" (تطبيق CurseForge). أحيانًا يسبب هذا مشاكل يصعب اكتشافها. يعود ذلك إلى خيار \"تخطي تشغيل المشغّل\" في إصدارات قديمة من تطبيق CurseForge أو في الإصدار الجديد. قم بتعطيله واستخدم خيار \"Mojang Launcher\" في إعدادات CurseForge. يمكنك مشاهدة هذا الفيديو باللغة الإنجليزية من Claws of Berk (انتقل إلى 1:11) "
+				+ "<a href='https://youtu.be/g847O_2LjoE?si=8Y_oj3zyyhYTrSkv&t=71' style='color: inherit;'>هنا</a>.</b>";
 	}
 
 	@Override
@@ -424,13 +424,27 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String arco() {
-		return "يتيح لك هذا الحوار مشاركة السجلات باستخدام واجهة برمجة تطبيقات SecureLogger "
-				+ "على securelogger.net. عند الضغط على زر مشاركة التقرير، يتم إرسال تقريرك إلى "
-				+ "نقطة النهاية المحددة (افتراضيًا asbestosstar.egoism.jp) (يمكن تغييرها في الأسفل). يمكنك مشاركة جميع السجلات المحددة "
-				+ "مع التقرير. إذا كنت لا ترغب في الرفع، فلا تستخدم هذا الحوار! لا نقوم بمعالجة تقريرك في نقطة النهاية الرسمية (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb)؛ نحن فقط نزيل الروابط غير المصرح بها. الكود موجود هنا: https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb. يُستخدم هذا فقط لعرض معلومات حول تعطل نظامك والرابط إلى السجلات. ومع ذلك، من الممكن استخدام نقطة نهاية مخصصة قد لا تحتوي على نفس الطرق. أنت تستخدم موقع التقارير "
-				+ Config.obtenerInstancia().obtenerSitoDeInformes() + " وموقع السجلات "
-				+ Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado()
-				+ ". يمكنك أيضًا مشاركة السجلات الفردية بدون تقرير عن طريق الضغط على أزرار المشاركة بجانب أسماء السجلات الفردية؛ سيتم إرسال السجلات إلى موقع السجلات المحدد. يحتوي CrashDetector على تجهيل افتراضي للسجلات، والذي يحاول إزالة أسماء المستخدمين، UUIDs، رموز الوصول، معرّفات الجلسة، عناوين IP، وغيرها من البيانات. ومع ذلك، فهو ليس مثاليًا. ومع ذلك، يمكن للمؤلف الحزمة تعطيله. يمكن تمكينه أو تعطيله باستخدام خانة الاختيار في الجزء السفلي من هذه الشاشة. أنت المتحكم في بياناتك الخاصة؛ أنت تقرر أين تقوم بتحميل بياناتك. مواقع السجلات مملوكة لأطراف ثالثة غالبًا ما تكون ملكيتها مخفية لأسباب تتعلق بالخصوصية. أنت تتحمل المسؤولية الكاملة لإدارة بياناتك والمخاطر المتعلقة بها. حوار مشاركة CrashDetector هو مجرد واجهة تتيح لك إدارة ذلك. من المهم أن تكون على دراية بـ GDPR وARCO.";
+		return "يسمح لك هذا الحوار بمشاركة السجلات باستخدام واجهة برمجة تطبيقات SecureLogger "
+				+ "على <a href=\"https://securelogger.net\">securelogger.net</a>. عند الضغط على زر مشاركة التقرير، "
+				+ "يُرسَل تقريرك إلى نقطة النهاية المحددة (افتراضيًا: asbestosstar.egoism.jp) (يمكن تغييرها في الأسفل). "
+				+ "يمكنك مشاركة جميع السجلات المحددة مع التقرير. إذا كنت لا ترغب في الرفع، فلا تستخدم هذا الحوار! "
+				+ "نحن لا نعالج تقريرك على نقطة النهاية الرسمية (<a href=\"https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb\">https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb</a>); "
+				+ "نقوم فقط بإزالة الروابط غير المسموح بها. الكود متاح هنا: <a href=\"https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb\">الكود المصدري</a>. "
+				+ "يُستخدم هذا فقط لعرض معلومات عن عطلك ورابط السجلات. ومع ذلك، يمكنك استخدام نقطة نهاية مخصصة قد لا تتبع نفس الأساليب. "
+				+ "أنت تستخدم موقع التقارير " + Config.obtenerInstancia().obtenerSitoDeInformes() + " وموقع السجلات "
+				+ Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + ". "
+				+ "يمكنك أيضًا مشاركة سجلات فردية دون تقرير بالضغط على أزرار المشاركة بجانب أسماء السجلات الفردية؛ "
+				+ "ستُرسَل السجلات إلى موقع السجلات المحدد. يحتوي CrashDetector على إخفاء هوية السجلات افتراضيًا، الذي يحاول إزالة أسماء المستخدمين، UUID، "
+				+ "رموز الوصول، معرّفات الجلسة، عناوين IP والبيانات الأخرى. لكنه ليس مثاليًا. ومع ذلك، يمكن لمُنشئ حزمة التعديلات تعطيله. "
+				+ "يمكنك تفعيله أو تعطيله عبر خانة الاختيار في أسفل هذه الشاشة. أنت متحكم في بياناتك؛ القرار لك أين ترفع بياناتك. "
+				+ "مواقع السجلات مملوكة لأطراف ثالثة غالبًا ما تكون ملكيتها مخفية لأسباب تتعلق بالخصوصية. أنت تتحمل المسؤولية الكاملة عن إدارة بياناتك والمخاطر المرتبطة بها. "
+				+ "حوار المشاركة في CrashDetector هو مجرد واجهة تتيح لك إدارة ذلك. "
+				+ "من المهم أن تكون على دراية بـ GDPR و ARCO. "
+				+ "إذا كنت في أوروبا، يمكنك استخدام <a href=\"https://securelogger.top\">securelogger.top</a> المستضاف في ألمانيا بواسطة Hetzner. "
+				+ "لمزيد من المعلومات القانونية، راجع الروابط التالية: "
+				+ "<a href=\"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPDPPP.pdf\">LFPDPPP</a>, "
+				+ "<a href=\"https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32016R0679\">GDPR</a>, "
+				+ "<a href=\"https://www.ppc.go.jp/files/pdf/20220401_personal_basicpolicy.pdf\">السياسة الأساسية لحماية البيانات في اليابان</a>.";
 	}
 
 	@Override
@@ -595,13 +609,12 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String errorConfigMCForge() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	           + "خطأ تكوين NightConfig/Forge حرج: "
-	           + "ملف التكوين تالف أو غير مكتمل. "
-	           + "قد يكون هذا ناتجًا عن ملفات تكوين فارغة (غالبًا بحجم 0 بايت) في مجلد 'config' في إصدارات قديمة أو معدلة من NightConfig. "
-	           + "في معظم الإصدارات، سيحلّ Night Config Fixes المشكلة، لكن إذا كنت تستخدم إصدارًا غير متوافق أو إصدارًا معدلًا من NightConfig، فستحتاج إلى حذف ملفات التكوين يدويًّا. "
-	           + "هذا المشكل شائع أكثر في إصدارات MC Forge القديمة (التي تتضمن NightConfig) وفي وحدات FabricMC القديمة التي تحزم NightConfig، لكنه قد يظهر أيضًا في بعض الإصدارات المخصصة من NightConfig. "
-	           + "مزيد من المعلومات حول الحلول متاح في <a href='https://www.curseforge.com/minecraft/mc-mods/night-config-fixes'>Night Config Fixes</a>.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "خطأ تكوين NightConfig/Forge حرج: "
+				+ "ملف التكوين تالف أو غير مكتمل. "
+				+ "قد يكون هذا ناتجًا عن ملفات تكوين فارغة (غالبًا بحجم 0 بايت) في مجلد 'config' في إصدارات قديمة أو معدلة من NightConfig. "
+				+ "في معظم الإصدارات، سيحلّ Night Config Fixes المشكلة، لكن إذا كنت تستخدم إصدارًا غير متوافق أو إصدارًا معدلًا من NightConfig، فستحتاج إلى حذف ملفات التكوين يدويًّا. "
+				+ "هذا المشكل شائع أكثر في إصدارات MC Forge القديمة (التي تتضمن NightConfig) وفي وحدات FabricMC القديمة التي تحزم NightConfig، لكنه قد يظهر أيضًا في بعض الإصدارات المخصصة من NightConfig. "
+				+ "مزيد من المعلومات حول الحلول متاح في <a href='https://www.curseforge.com/minecraft/mc-mods/night-config-fixes'>Night Config Fixes</a>.</b>";
 	}
 
 	@Override
@@ -5793,106 +5806,240 @@ public class Arabe implements Idioma {
 				+ "آراء وتعليقات Sylent Bell لا تتطابق بالضرورة مع آرائنا؛ "
 				+ "فقط اعتقدنا أنه سيكون مضحكًا وضعها هنا. CrashDetector علماني." + "</div></html>";
 	}
-	
+
 	@Override
 	public String gmlIPV6() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "الوحدة GML (Groovy ModLoader) تتطلب هذه التغييرات، وهي السبب الأكثر شيوعًا لهذه المشكلة.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "الوحدة GML (Groovy ModLoader) تتطلب هذه التغييرات، وهي السبب الأكثر شيوعًا لهذه المشكلة.</b>";
 	}
-	
+
 	@Override
 	public String mensajeIndependenteFlywheel(Set<String> mods) {
-	    StringBuilder listaMods = new StringBuilder();
-	    if (!mods.isEmpty()) {
-	        for (String mod : mods) {
-	            listaMods.append("<li>").append(mod).append("</li>");
-	        }
-	    }
+		StringBuilder listaMods = new StringBuilder();
+		if (!mods.isEmpty()) {
+			for (String mod : mods) {
+				listaMods.append("<li>").append(mod).append("</li>");
+			}
+		}
 
-	    String mensaje = "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "تم اكتشاف استخدام <i> Flywheel</i>.</b>"
-	            + "<p><b> Flywheel قديم (مُهمَل)</b> ولا يجب استخدامه في الإصدارات الحديثة.</p>"
-	            + "<p>الإصدارات الحالية من <b>Create</b> <b>تتضمن Flywheel بالفعل</b>، لذا فإن تثبيته بشكل منفصل "
-	            + "يؤدي إلى تعارضات توافقية وأخطاء تحميل.</p>"
-	            + "<p>بعض الوحدات التي تعتمد صراحةً على  Flywheel قد "
-	            + "<b>لا تعمل</b> أو <b>تعمل بشكل غير مستقر</b>. "
-	            + "في حالات متقدمة معينة، قد تعمل هذه الوحدات إذا تم "
-	            + "<b>تعديل ملف <code>mods.toml</code> يدويًا</b> لضبط نطاقات الإصدار، "
-	            + "رغم أن هذا <b>غير موصى به</b>.</p>"
-	            + (mods.isEmpty() ? ""
-	                : "<p><b>الوحدات المكتشفة التي تشير إلى Flywheel:</b></p>"
-	                + "<ul>" + listaMods.toString() + "</ul>")
-	            + "<p>الحل الموصى به هو <b>إزالة  Flywheel</b> واستخدام "
-	            + "الإصدار المدمج مع Create فقط.</p>";
+		String mensaje = "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تم اكتشاف استخدام <i> Flywheel</i>.</b>"
+				+ "<p><b> Flywheel قديم (مُهمَل)</b> ولا يجب استخدامه في الإصدارات الحديثة.</p>"
+				+ "<p>الإصدارات الحالية من <b>Create</b> <b>تتضمن Flywheel بالفعل</b>، لذا فإن تثبيته بشكل منفصل "
+				+ "يؤدي إلى تعارضات توافقية وأخطاء تحميل.</p>" + "<p>بعض الوحدات التي تعتمد صراحةً على  Flywheel قد "
+				+ "<b>لا تعمل</b> أو <b>تعمل بشكل غير مستقر</b>. "
+				+ "في حالات متقدمة معينة، قد تعمل هذه الوحدات إذا تم "
+				+ "<b>تعديل ملف <code>mods.toml</code> يدويًا</b> لضبط نطاقات الإصدار، "
+				+ "رغم أن هذا <b>غير موصى به</b>.</p>"
+				+ (mods.isEmpty() ? ""
+						: "<p><b>الوحدات المكتشفة التي تشير إلى Flywheel:</b></p>" + "<ul>" + listaMods.toString()
+								+ "</ul>")
+				+ "<p>الحل الموصى به هو <b>إزالة  Flywheel</b> واستخدام " + "الإصدار المدمج مع Create فقط.</p>";
 
-	    return mensaje;
+		return mensaje;
 	}
 
 	@Override
 	public String nombreIndependenteFlywheel() {
-	    return "Flywheel المستقل";
+		return "Flywheel المستقل";
 	}
-	
+
 	@Override
 	public String mensajeFloralEnchantments() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	        + "تم اكتشاف خطأ مرتبط بالوحدة <i>Floral Enchantments</i>.</b>"
-	        + "<p>التحطيم ناتج عن عطل داخلي في الوحدة أثناء معالجة بيانات اللعبة، "
-	        + "مما يسبب <b>NullPointerException</b> أثناء التنفيذ.</p>"
-	        + "<p>عادةً ما يُحل هذا المشكل بتحديث الوحدة أو إزالتها.</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تم اكتشاف خطأ مرتبط بالوحدة <i>Floral Enchantments</i>.</b>"
+				+ "<p>التحطيم ناتج عن عطل داخلي في الوحدة أثناء معالجة بيانات اللعبة، "
+				+ "مما يسبب <b>NullPointerException</b> أثناء التنفيذ.</p>"
+				+ "<p>عادةً ما يُحل هذا المشكل بتحديث الوحدة أو إزالتها.</p>";
 	}
 
 	@Override
 	public String nombreFloralEnchantments() {
-	    return "خطأ في Floral Enchantments";
+		return "خطأ في Floral Enchantments";
 	}
-	
+
 	@Override
 	public String mixinExtrasDuplicados() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
-	        + "لديك إصدار NeoForge من MixinExtras والإصدار العادي. إذا كنت تستخدم MinecraftForge، يمكنك تثبيت <a href='https://www.curseforge.com/minecraft/mc-mods/mixin-extras-neoforge-on-forge-fix' style='color: inherit;'>هذا الرابط</a> للحل.</b>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
+				+ "لديك إصدار NeoForge من MixinExtras والإصدار العادي. إذا كنت تستخدم MinecraftForge، يمكنك تثبيت <a href='https://www.curseforge.com/minecraft/mc-mods/mixin-extras-neoforge-on-forge-fix' style='color: inherit;'>هذا الرابط</a> للحل.</b>";
 	}
-	
+
 	@Override
 	public String mensajeIrisSombrasTerreno() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	        + "تم اكتشاف خطأ في ظلال التضاريس مع الظلال (shaders) عبر Iris.</b>"
-	        + "<p>يحدث المشكل أثناء عرض التضاريس.</p>"
-	        + "<p>يُوصى بـ <b>تجربة اللعبة بدون shaders</b> أو خفض جودة الرسوميات، "
-	        + "خاصةً في الإعدادات <b>Ultra</b>.</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تم اكتشاف خطأ في ظلال التضاريس مع الظلال (shaders) عبر Iris.</b>"
+				+ "<p>يحدث المشكل أثناء عرض التضاريس.</p>"
+				+ "<p>يُوصى بـ <b>تجربة اللعبة بدون shaders</b> أو خفض جودة الرسوميات، "
+				+ "خاصةً في الإعدادات <b>Ultra</b>.</p>";
 	}
 
 	@Override
 	public String nombreIrisSombrasTerreno() {
-	    return "ظلال التضاريس (Iris)";
+		return "ظلال التضاريس (Iris)";
 	}
-	
+
 	@Override
 	public String mensajeTickLargoServidor() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	        + "تم اكتشاف تيك (tick) خادم مفرط في الطول.</b>"
-	        + "<p>هذا يشير إلى أن اللعبة توقفت لفترة طويلة جدًّا في تيك واحد.</p>"
-	        + "<p>يُوصى بـ <b>مراجعة thread dump</b> المُنشأ في السجل (log) لتحديد السبب.</p>"
-	        + "<p>يمكن أن يساعدك <b>تحليل Stack Trace</b> في تحديد مصدر التوقف.</p>"
-	        + "<p>بالإضافة إلى ذلك، سيُبرز زر <b>عرض في السجل</b> باللون الأحمر الوحدات المحتملة المسؤولة، "
-	        + "وكذلك الإدخالات المحاطة بـ <code>$modid$</code>، التي غالبًا ما تشير إلى مصدر المشكلة. وللمسح في الوقت الفعلي، نوصي باستخدام عيّن CPU في VisualVM. تأكد من أن خادمك أو جهازك قوي بما يكفي للتعامل مع الوحدات التي تستخدمها، فقد تعمل جميع وحداتك بشكل صحيح، لكنك قد تكون تستخدم عددًا كبيرًا منها.</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تم اكتشاف تيك (tick) خادم مفرط في الطول.</b>"
+				+ "<p>هذا يشير إلى أن اللعبة توقفت لفترة طويلة جدًّا في تيك واحد.</p>"
+				+ "<p>يُوصى بـ <b>مراجعة thread dump</b> المُنشأ في السجل (log) لتحديد السبب.</p>"
+				+ "<p>يمكن أن يساعدك <b>تحليل Stack Trace</b> في تحديد مصدر التوقف.</p>"
+				+ "<p>بالإضافة إلى ذلك، سيُبرز زر <b>عرض في السجل</b> باللون الأحمر الوحدات المحتملة المسؤولة، "
+				+ "وكذلك الإدخالات المحاطة بـ <code>$modid$</code>، التي غالبًا ما تشير إلى مصدر المشكلة. وللمسح في الوقت الفعلي، نوصي باستخدام عيّن CPU في VisualVM. تأكد من أن خادمك أو جهازك قوي بما يكفي للتعامل مع الوحدات التي تستخدمها، فقد تعمل جميع وحداتك بشكل صحيح، لكنك قد تكون تستخدم عددًا كبيرًا منها.</p>";
 	}
 
 	@Override
 	public String nombreTickLargoServidor() {
-	    return "تيك خادم طويل";
+		return "تيك خادم طويل";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public String tituloLFPDPPP() {
+		return "القانون الفيدرالي لحماية البيانات الشخصية لدى الأفراد";
+	}
+
+	@Override
+	public String aceptarPermanentemente() {
+		return "الموافقة بشكل دائم";
+	}
+
+	public String mensajeAdvertenciaIdiomaCoreano() {
+		return "تحتوي الترجمة الكورية على مصطلحات عامية من الجنوب يجب تجنبها للامتثال للقانون. "
+				+ "يُحظَر استخدام اللغة الأجنبية، وخاصة القادمة من الجنوب، بشكل صارم "
+				+ "وفقًا لقانون حماية اللغة الثقافية في بيونغ يانغ.";
+	}
+
+	public String enlaceDocumentacionIdiomaCoreano() {
+		return "لمزيد من المعلومات، راجع الوثيقة الرسمية للقانون: "
+				+ "<a href='https://www.dailynk.com/english/wp-content/uploads/sites/2/2023/03/Pyongyang-Cultural-Language-Protection-Act_English-and-Korean-Versions_Daily-NK.pdf'>قانون حماية اللغة الثقافية في بيونغ يانغ</a>";
+	}
+
+	public String leerLeyCompleta() {
+		return "قراءة القانون الكامل";
+	}
+
+	public String errorAbriendoEnlace() {
+		return "خطأ عند فتح الرابط";
+	}
+
+	public String actaProteccionIdiomaCultural() {
+		return "قانون حماية اللغة الثقافية في بيونغ يانغ";
+	}
+
+	@Override
+	public String canarioTitulo() {
+		return "كناري أمر قضائي";
+	}
+
+	@Override
+	public String canario1984Titulo() {
+		return "1984 — جهاز مراقبة";
+	}
+
+	@Override
+	public String revisar() {
+		return "مراجعة";
+	}
+
+	@Override
+	public String cerrar() {
+		return "إغلاق";
+	}
+
+	@Override
+	public String canarioTodoSeguro() {
+		return "جميع الخدمات تُبلغ بحالة آمنة.";
+	}
+
+	@Override
+	public String canarioComprometido(int c) {
+		return "تنبيه: " + c + " خدمة(خدمات) تُبلغ بحالة غير آمنة.";
+	}
+
+	@Override
+	public String colorAlerta() {
+		return "لون التنبيه";
+	}
+
+	public String opcionesMunidiales() {
+		return "خيارات منيدية";
+	}
+
+	public String consentimientoLFPDPPP() {
+		return "موافقة LFPDPPP";
+	}
+
+	public String habilitarTokenAcceso() {
+		return "تمكين رمز الوصول";
+	}
+
+	public String consolaDesarrollo() {
+		return "وحدة تحكم التطوير";
+	}
+
+	public String munidial() {
+		return "منيديال";
+	}
+
+	public String ningun() {
+		return "لا شيء";
+	}
+
+	// Consola del desarrollador
+	public String consolaDesarrollador() {
+		return "وحدة تحكم المطور";
+	}
+
+	public String bajar() {
+		return "تنزيل";
+	}
+
+	public String logsSoporte() {
+		return "سجلات الدعم";
+	}
+
+	public String detenerProceso() {
+		return "إيقاف العملية";
+	}
+
+	// Menú contextual
+	public String copiarSeleccion() {
+		return "نسخ التحديد";
+	}
+
+	public String seleccionarTodo() {
+		return "تحديد الكل";
+	}
+
+	public String copiarTodo() {
+		return "نسخ الكل";
+	}
+
+	public String guardarTodoComoArchivo() {
+		return "حفظ الكل كملف";
+	}
+
+	public String obtenerEnlaceSoporte() {
+		return "الحصول على رابط الدعم";
+	}
+
+	public String borrarTodo() {
+		return "حذف الكل";
+	}
+
+	// Colores configurables
+	public String colorFondoConsola() {
+		return "لون خلفية وحدة التحكم";
+	}
+
+	public String colorTextoConsola() {
+		return "لون نص وحدة التحكم";
+	}
+
+	// Consentimiento / logs
+	public String consentimientoConfirmadoPendienteImplementacion() {
+		return "تم تأكيد الموافقة.\nسيتم تنفيذ ميزة مشاركة السجلات هنا.";
+	}
 
 }

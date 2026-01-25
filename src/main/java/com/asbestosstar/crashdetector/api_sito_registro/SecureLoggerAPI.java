@@ -41,6 +41,7 @@ public class SecureLoggerAPI implements APIdeSitioDeRegistro {
 		// Nota: mantener '?' porque esta API trabaja con querystring + POST
 		sitios.add("https://securelogger.net/save/log?");
 		sitios.add("https://securelogger.top/save/log?");
+		sitios.add("https://ruzone.securelogger.net/save/log?");
 		return sitios;
 	}
 

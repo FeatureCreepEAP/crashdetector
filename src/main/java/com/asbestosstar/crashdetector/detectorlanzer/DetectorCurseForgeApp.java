@@ -3,9 +3,9 @@ package com.asbestosstar.crashdetector.detectorlanzer;
 import com.asbestosstar.crashdetector.App;
 
 public class DetectorCurseForgeApp implements DetectorLanzer {
-	
-	public static String ID ="cursedforge_app";
-	
+
+	public static String ID = "cursedforge_app";
+
 	@Override
 	public String id() {
 		return ID;

@@ -35,7 +35,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 public class CursedConsola implements Verificaciones {
 
 	private boolean activado = false;
-	private String mensaje =  MonitorDePID.idioma.noTieneConsolaDeLauncherCursedForge();
+	private String mensaje = MonitorDePID.idioma.noTieneConsolaDeLauncherCursedForge();
 	private static final String CURSEFORGE_MARKER = "curseforge";
 	private static final String INSTANCE_MARKER = "instances";
 	private static final String LAUNCHER_LOG = "launcher_log";
@@ -57,13 +57,11 @@ public class CursedConsola implements Verificaciones {
 //			CrashDetectorLogger.logException(e);
 //			activado = false;
 //		} Ahora no usemos laucnher log pero CurseForge launcher tiene otras problemas
-	
-	
-	
-	if(Statics.lanzer_del_app!=null&&Statics.lanzer_del_app.equals(DetectorCurseForgeApp.ID)) {
-		activado=true;
-	}
-	
+
+		if (Statics.lanzer_del_app != null && Statics.lanzer_del_app.equals(DetectorCurseForgeApp.ID)) {
+			activado = true;
+		}
+
 	}
 
 	@Override

@@ -25,6 +25,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import com.asbestosstar.crashdetector.Config;
+import com.asbestosstar.crashdetector.ConfigMunidial;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
@@ -205,12 +206,9 @@ public class NoRegistroDeLauncherVShojo extends NoRegistroLanzadorGUI {
 				String codigo = CrashDetectorGUI.obtenerCodigoIdioma(sel);
 				if (codigo != null) {
 					try {
-						java.io.File parent = Idioma.archivo.getParentFile();
-						if (parent != null)
-							parent.mkdirs();
-						java.nio.file.Files.write(Idioma.archivo.toPath(),
-								codigo.getBytes(java.nio.charset.StandardCharsets.UTF_8));
-					} catch (java.io.IOException ex) {
+						// Guardar el idioma en la configuración munidial
+						ConfigMunidial.obtenerInstancia().guardarIdioma(codigo);
+					} catch (Exception ex) {
 						CrashDetectorLogger.logException(ex);
 					}
 					MonitorDePID.idioma = Idioma.detectar();

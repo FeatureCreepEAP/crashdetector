@@ -16,7 +16,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.asbestosstar.crashdetector.Config;
+import com.asbestosstar.crashdetector.ConfigMunidial;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.anon.AnonimizadorDeRuta;
@@ -304,7 +304,7 @@ public class Buscardor {
 	 * @return Ruta anonimizada o original según configuración
 	 */
 	public static String rutaParaPublicar(String ruta) {
-		boolean anonimo = Config.obtenerInstancia().esAnonimizarRegistros();
+		boolean anonimo = ConfigMunidial.obtenerInstancia().esAnonimizarRegistros();
 		if (anonimo) {
 			return AnonimizadorDeRuta.anonimizarNombreDeUsuario(ruta.toString());
 		}

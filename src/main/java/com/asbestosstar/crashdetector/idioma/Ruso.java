@@ -257,9 +257,9 @@ public class Ruso implements Idioma {
 
 	@Override
 	public String noTieneConsolaDeLauncherCursedForge() {
-	    return "<b style='color:#" + config.obtenerColorAdvertencia()
-	        + "'>Вы используете опцию «Пропустить запуск лаунчера» (приложение CurseForge). Иногда это вызывает трудноуловимые проблемы. Это связано с опцией «Пропустить запуск лаунчера» в старых или новых версиях приложения CurseForge. Отключите её и выберите «Mojang Launcher» в настройках CurseForge. Вы можете посмотреть это видео на английском от Claws of Berk (перейдите к 1:11) "
-	        + "<a href='https://youtu.be/g847O_2LjoE?si=8Y_oj3zyyhYTrSkv&t=71' style='color: inherit;'>здесь</a>.</b>";
+		return "<b style='color:#" + config.obtenerColorAdvertencia()
+				+ "'>Вы используете опцию «Пропустить запуск лаунчера» (приложение CurseForge). Иногда это вызывает трудноуловимые проблемы. Это связано с опцией «Пропустить запуск лаунчера» в старых или новых версиях приложения CurseForge. Отключите её и выберите «Mojang Launcher» в настройках CurseForge. Вы можете посмотреть это видео на английском от Claws of Berk (перейдите к 1:11) "
+				+ "<a href='https://youtu.be/g847O_2LjoE?si=8Y_oj3zyyhYTrSkv&t=71' style='color: inherit;'>здесь</a>.</b>";
 	}
 
 	@Override
@@ -416,13 +416,27 @@ public class Ruso implements Idioma {
 
 	@Override
 	public String arco() {
-		return "Этот диалог позволяет вам делиться логами с использованием API SecureLogger "
-				+ "на securelogger.net. При нажатии на кнопку отправки отчета ваш отчет отправляется на "
-				+ "выбранный конечный пункт (по умолчанию asbestosstar.egoism.jp) (можно изменить внизу). Вы можете поделиться всеми выбранными логами "
-				+ "вместе с отчетом. Если вы не хотите загружать данные, не используйте этот диалог! Мы не обрабатываем ваш отчет на официальном конечном пункте (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb); мы только удаляем запрещенные ссылки. Код находится здесь: https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb. Это используется исключительно для отображения информации о вашем сбое и ссылки на логи. Однако можно использовать пользовательский конечный пункт, который может не иметь тех же методов. Вы используете сайт отчетов "
-				+ Config.obtenerInstancia().obtenerSitoDeInformes() + " и сайт логов "
-				+ Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado()
-				+ ". Вы также можете делиться отдельными логами без отчета, нажимая кнопки «Поделиться» рядом с названиями логов; логи будут отправлены на выбранный сайт логов. CrashDetector имеет функцию анонимизации логов по умолчанию, которая пытается удалить имена пользователей, UUID, токены доступа, идентификаторы сессий, IP-адреса и другие данные. Однако она не идеальна. Тем не менее, автор модпака может её отключить. Её можно включить или отключить с помощью флажка в нижней части этого экрана. Вы являетесь контроллером своих данных; вы решаете, куда загружать свои данные. Сайты логов принадлежат третьим сторонам, чье владение часто скрыто из соображений конфиденциальности. Вы полностью отвечаете за управление своими данными и связанными с этим рисками. Диалог обмена CrashDetector — это просто интерфейс, позволяющий вам управлять этим. Важно, чтобы вы были осведомлены о GDPR и ARCO.";
+		return "Этот диалог позволяет вам делиться логами с помощью API SecureLogger "
+				+ "на <a href=\"https://securelogger.net\">securelogger.net</a>. При нажатии кнопки отправки отчёта "
+				+ "ваш отчёт отправляется на выбранный эндпоинт (по умолчанию: asbestosstar.egoism.jp) (можно изменить внизу). "
+				+ "Вы можете отправить все выбранные логи вместе с отчётом. Если вы не хотите загружать данные, не используйте этот диалог! "
+				+ "Мы не обрабатываем ваш отчёт на официальном эндпоинте (<a href=\"https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb\">https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb</a>); "
+				+ "мы лишь удаляем запрещённые ссылки. Исходный код доступен здесь: <a href=\"https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb\">исходный код</a>. "
+				+ "Это используется исключительно для отображения информации о вашем сбое и ссылки на логи. Однако вы можете использовать кастомный эндпоинт, который может работать иначе. "
+				+ "Вы используете сайт отчётов " + Config.obtenerInstancia().obtenerSitoDeInformes() + " и сайт логов "
+				+ Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + ". "
+				+ "Вы также можете делиться отдельными логами без отчёта, нажав кнопки «Поделиться» рядом с именами отдельных логов; "
+				+ "логи будут отправлены на выбранный сайт логов. CrashDetector по умолчанию анонимизирует логи, пытаясь удалить имена пользователей, UUID, "
+				+ "токены доступа, ID сессий, IP-адреса и другие данные. Однако эта функция не идеальна. Кроме того, автор модпака может её отключить. "
+				+ "Её можно включить или отключить с помощью флажка внизу этого окна. Вы — контролёр своих данных; именно вы решаете, куда их загружать. "
+				+ "Сайты логов принадлежат третьим лицам, чья собственность часто скрыта из соображений приватности. Вы несёте полную ответственность за управление своими данными и связанные с этим риски. "
+				+ "Диалог отправки CrashDetector — это просто интерфейс, позволяющий вам управлять этим процессом. "
+				+ "Важно, чтобы вы знали о GDPR и ARCO. "
+				+ "Если вы находитесь в Европе, вы можете использовать <a href=\"https://securelogger.top\">securelogger.top</a>, размещённый в Германии компанией Hetzner. "
+				+ "Для дополнительной юридической информации см. следующие ссылки: "
+				+ "<a href=\"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPDPPP.pdf\">LFPDPPP</a>, "
+				+ "<a href=\"https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32016R0679\">GDPR</a>, "
+				+ "<a href=\"https://www.ppc.go.jp/files/pdf/20220401_personal_basicpolicy.pdf\">Базовая политика защиты персональных данных в Японии</a>.";
 	}
 
 	@Override
@@ -590,13 +604,12 @@ public class Ruso implements Idioma {
 
 	@Override
 	public String errorConfigMCForge() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	           + "Критическая ошибка конфигурации NightConfig/Forge: "
-	           + "Файл конфигурации повреждён или неполон. "
-	           + "Это может быть вызвано пустыми файлами конфигурации (часто размером 0 байт) в папке 'config' в старых или кастомных версиях NightConfig. "
-	           + "В большинстве случаев проблема решается модом Night Config Fixes, но если вы используете несовместимую или кастомную версию NightConfig, вам нужно будет удалить файлы конфигурации вручную. "
-	           + "Эта проблема чаще встречается в старых версиях MC Forge (в которых уже есть NightConfig) и в старых модах FabricMC, включающих NightConfig, но также может возникать в некоторых кастомных сборках NightConfig. "
-	           + "Больше информации о решениях доступно на странице <a href='https://www.curseforge.com/minecraft/mc-mods/night-config-fixes'>Night Config Fixes</a>.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Критическая ошибка конфигурации NightConfig/Forge: " + "Файл конфигурации повреждён или неполон. "
+				+ "Это может быть вызвано пустыми файлами конфигурации (часто размером 0 байт) в папке 'config' в старых или кастомных версиях NightConfig. "
+				+ "В большинстве случаев проблема решается модом Night Config Fixes, но если вы используете несовместимую или кастомную версию NightConfig, вам нужно будет удалить файлы конфигурации вручную. "
+				+ "Эта проблема чаще встречается в старых версиях MC Forge (в которых уже есть NightConfig) и в старых модах FabricMC, включающих NightConfig, но также может возникать в некоторых кастомных сборках NightConfig. "
+				+ "Больше информации о решениях доступно на странице <a href='https://www.curseforge.com/minecraft/mc-mods/night-config-fixes'>Night Config Fixes</a>.</b>";
 	}
 
 	@Override
@@ -5859,112 +5872,242 @@ public class Ruso implements Idioma {
 				+ "мы просто подумали, что будет забавно разместить её здесь. CrashDetector является светским."
 				+ "</div></html>";
 	}
+
 	@Override
 	public String gmlIPV6() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "Мод GML (Groovy ModLoader) требует этих изменений и является наиболее частой причиной данной проблемы.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "Мод GML (Groovy ModLoader) требует этих изменений и является наиболее частой причиной данной проблемы.</b>";
 	}
-	
+
 	@Override
 	public String mensajeIndependenteFlywheel(Set<String> mods) {
-	    StringBuilder listaMods = new StringBuilder();
-	    if (!mods.isEmpty()) {
-	        for (String mod : mods) {
-	            listaMods.append("<li>").append(mod).append("</li>");
-	        }
-	    }
+		StringBuilder listaMods = new StringBuilder();
+		if (!mods.isEmpty()) {
+			for (String mod : mods) {
+				listaMods.append("<li>").append(mod).append("</li>");
+			}
+		}
 
-	    String mensaje = "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "Обнаружено использование <i> Flywheel</i>.</b>"
-	            + "<p><b>Independent Flywheel устарел (deprecated)</b> и не должен использоваться в современных версиях.</p>"
-	            + "<p>Текущие версии <b>Create</b> <b>уже включают Flywheel</b>, поэтому его отдельная установка "
-	            + "вызывает конфликты совместимости и ошибки загрузки.</p>"
-	            + "<p>Некоторые моды, явно зависящие от  Flywheel, могут "
-	            + "<b>не работать</b> или <b>работать нестабильно</b>. "
-	            + "В некоторых продвинутых случаях они могут заработать, если вы "
-	            + "<b>вручную отредактируете файл <code>mods.toml</code></b>, чтобы настроить диапазоны версий, "
-	            + "хотя это <b>не рекомендуется</b>.</p>"
-	            + (mods.isEmpty() ? ""
-	                : "<p><b>Обнаруженные моды, ссылающиеся на Flywheel:</b></p>"
-	                + "<ul>" + listaMods.toString() + "</ul>")
-	            + "<p>Рекомендуемое решение — <b>удалить  Flywheel</b> и использовать только "
-	            + "версию, встроенную в Create.</p>";
+		String mensaje = "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Обнаружено использование <i> Flywheel</i>.</b>"
+				+ "<p><b>Independent Flywheel устарел (deprecated)</b> и не должен использоваться в современных версиях.</p>"
+				+ "<p>Текущие версии <b>Create</b> <b>уже включают Flywheel</b>, поэтому его отдельная установка "
+				+ "вызывает конфликты совместимости и ошибки загрузки.</p>"
+				+ "<p>Некоторые моды, явно зависящие от  Flywheel, могут "
+				+ "<b>не работать</b> или <b>работать нестабильно</b>. "
+				+ "В некоторых продвинутых случаях они могут заработать, если вы "
+				+ "<b>вручную отредактируете файл <code>mods.toml</code></b>, чтобы настроить диапазоны версий, "
+				+ "хотя это <b>не рекомендуется</b>.</p>"
+				+ (mods.isEmpty() ? ""
+						: "<p><b>Обнаруженные моды, ссылающиеся на Flywheel:</b></p>" + "<ul>" + listaMods.toString()
+								+ "</ul>")
+				+ "<p>Рекомендуемое решение — <b>удалить  Flywheel</b> и использовать только "
+				+ "версию, встроенную в Create.</p>";
 
-	    return mensaje;
+		return mensaje;
 	}
 
 	@Override
 	public String nombreIndependenteFlywheel() {
-	    return "Независимый Flywheel";
+		return "Независимый Flywheel";
 	}
-	
+
 	@Override
 	public String mensajeFloralEnchantments() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	        + "Foi detectado um erro relacionado ao mod <i>Floral Enchantments</i>.</b>"
-	        + "<p>O crash é causado por uma falha interna do mod ao manipular dados do jogo, "
-	        + "o que gera uma <b>NullPointerException</b> durante a execução.</p>"
-	        + "<p>Esse problema geralmente é resolvido atualizando ou removendo o mod.</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Foi detectado um erro relacionado ao mod <i>Floral Enchantments</i>.</b>"
+				+ "<p>O crash é causado por uma falha interna do mod ao manipular dados do jogo, "
+				+ "o que gera uma <b>NullPointerException</b> durante a execução.</p>"
+				+ "<p>Esse problema geralmente é resolvido atualizando ou removendo o mod.</p>";
 	}
 
 	@Override
 	public String nombreFloralEnchantments() {
-	    return "Erro do Floral Enchantments";
+		return "Erro do Floral Enchantments";
 	}
+
 	@Override
 	public String mixinExtrasDuplicados() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
-	        + "У вас установлены обе версии MixinExtras: NeoForge и обычная. Если вы используете MinecraftForge, вы можете установить исправление по <a href='https://www.curseforge.com/minecraft/mc-mods/mixin-extras-neoforge-on-forge-fix' style='color: inherit;'>этой ссылке</a>.</b>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
+				+ "У вас установлены обе версии MixinExtras: NeoForge и обычная. Если вы используете MinecraftForge, вы можете установить исправление по <a href='https://www.curseforge.com/minecraft/mc-mods/mixin-extras-neoforge-on-forge-fix' style='color: inherit;'>этой ссылке</a>.</b>";
 	}
+
 	@Override
 	public String mensajeIrisSombrasTerreno() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	        + "Обнаружена ошибка в тенях ландшафта при использовании шейдеров (Iris).</b>"
-	        + "<p>Проблема возникает во время рендеринга ландшафта.</p>"
-	        + "<p>Рекомендуется <b>попробовать запустить игру без шейдеров</b> или снизить графическое качество, "
-	        + "особенно в настройках <b>Ultra</b>.</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Обнаружена ошибка в тенях ландшафта при использовании шейдеров (Iris).</b>"
+				+ "<p>Проблема возникает во время рендеринга ландшафта.</p>"
+				+ "<p>Рекомендуется <b>попробовать запустить игру без шейдеров</b> или снизить графическое качество, "
+				+ "особенно в настройках <b>Ultra</b>.</p>";
 	}
 
 	@Override
 	public String nombreIrisSombrasTerreno() {
-	    return "Тени ландшафта (Iris)";
+		return "Тени ландшафта (Iris)";
 	}
+
 	@Override
 	public String mensajeTickLargoServidor() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	        + "Обнаружен чрезмерно долгий тик сервера.</b>"
-	        + "<p>Это означает, что игра зависла на слишком долгое время в одном тике.</p>"
-	        + "<p>Рекомендуется <b>проверить thread dump</b>, сгенерированный в логе, чтобы определить причину.</p>"
-	        + "<p><b>Анализ стека вызовов (Stack Trace)</b> поможет вам найти источник зависания.</p>"
-	        + "<p>Кроме того, кнопка <b>Просмотр в логе</b> выделит красным цветом возможные проблемные моды, "
-	        + "а также записи, окружённые <code>$modid$</code>, которые обычно указывают на источник проблемы. Для анализа в реальном времени рекомендуем использовать CPU-сэмплер в VisualVM. Убедитесь, что ваш сервер или компьютер достаточно мощный для запуска используемых модов — возможно, все они работают корректно, но их просто слишком много.</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Обнаружен чрезмерно долгий тик сервера.</b>"
+				+ "<p>Это означает, что игра зависла на слишком долгое время в одном тике.</p>"
+				+ "<p>Рекомендуется <b>проверить thread dump</b>, сгенерированный в логе, чтобы определить причину.</p>"
+				+ "<p><b>Анализ стека вызовов (Stack Trace)</b> поможет вам найти источник зависания.</p>"
+				+ "<p>Кроме того, кнопка <b>Просмотр в логе</b> выделит красным цветом возможные проблемные моды, "
+				+ "а также записи, окружённые <code>$modid$</code>, которые обычно указывают на источник проблемы. Для анализа в реальном времени рекомендуем использовать CPU-сэмплер в VisualVM. Убедитесь, что ваш сервер или компьютер достаточно мощный для запуска используемых модов — возможно, все они работают корректно, но их просто слишком много.</p>";
 	}
 
 	@Override
 	public String nombreTickLargoServidor() {
-	    return "Долгий тик сервера";
+		return "Долгий тик сервера";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public String tituloLFPDPPP() {
+		return "Федеральный закон о защите персональных данных, находящихся в распоряжении частных лиц";
+	}
+
+	@Override
+	public String aceptarPermanentemente() {
+		return "Принять навсегда";
+	}
+
+	public String mensajeAdvertenciaIdiomaCoreano() {
+		return "Корейский перевод содержит южнокорейский сленг, который необходимо избегать в соответствии с законом. "
+				+ "Использование иностранной лексики, особенно из Юга, строго запрещено "
+				+ "в соответствии с Законом о защите культурного языка Пхеньяна.";
+	}
+
+	public String enlaceDocumentacionIdiomaCoreano() {
+		return "Для получения дополнительной информации ознакомьтесь с официальным текстом закона: "
+				+ "<a href='https://www.dailynk.com/english/wp-content/uploads/sites/2/2023/03/Pyongyang-Cultural-Language-Protection-Act_English-and-Korean-Versions_Daily-NK.pdf'>Закон о защите культурного языка Пхеньяна</a>";
+	}
+
+	public String leerLeyCompleta() {
+		return "Прочитать полный текст закона";
+	}
+
+	public String errorAbriendoEnlace() {
+		return "Ошибка при открытии ссылки";
+	}
+
+	public String actaProteccionIdiomaCultural() {
+		return "Закон о защите культурного языка Пхеньяна";
+	}
+
+	@Override
+	public String canarioTitulo() {
+		return "Канарейка судебного приказа";
+	}
+
+	@Override
+	public String canario1984Titulo() {
+		return "1984 — Монитор наблюдения";
+	}
+
+	@Override
+	public String revisar() {
+		return "Проверить";
+	}
+
+	@Override
+	public String cerrar() {
+		return "Закрыть";
+	}
+
+	@Override
+	public String canarioTodoSeguro() {
+		return "Все службы сообщают о безопасном состоянии.";
+	}
+
+	@Override
+	public String canarioComprometido(int c) {
+		return "ВНИМАНИЕ: " + c + " служб(а/ы) сообщают о небезопасном состоянии.";
+	}
+
+	@Override
+	public String colorAlerta() {
+		return "Цвет оповещения";
+	}
+
+	public String opcionesMunidiales() {
+		return "Opções Munidial";
+	}
+
+	public String consentimientoLFPDPPP() {
+		return "Consentimento LFPDPPP";
+	}
+
+	public String habilitarTokenAcceso() {
+		return "Habilitar token de acesso";
+	}
+
+	public String consolaDesarrollo() {
+		return "Console de desenvolvimento";
+	}
+
+	public String munidial() {
+		return "Munidial";
+	}
+
+	public String ningun() {
+		return "Nenhum";
+	}
+
+	// Consola del desarrollador
+	public String consolaDesarrollador() {
+		return "Консоль разработчика";
+	}
+
+	public String bajar() {
+		return "Скачать";
+	}
+
+	public String logsSoporte() {
+		return "Логи поддержки";
+	}
+
+	public String detenerProceso() {
+		return "Остановить процесс";
+	}
+
+	// Menú contextual
+	public String copiarSeleccion() {
+		return "Копировать выделенное";
+	}
+
+	public String seleccionarTodo() {
+		return "Выделить всё";
+	}
+
+	public String copiarTodo() {
+		return "Копировать всё";
+	}
+
+	public String guardarTodoComoArchivo() {
+		return "Сохранить всё как файл";
+	}
+
+	public String obtenerEnlaceSoporte() {
+		return "Получить ссылку поддержки";
+	}
+
+	public String borrarTodo() {
+		return "Очистить всё";
+	}
+
+	// Colores configurables
+	public String colorFondoConsola() {
+		return "Цвет фона консоли";
+	}
+
+	public String colorTextoConsola() {
+		return "Цвет текста консоли";
+	}
+
+	// Consentimiento / logs
+	public String consentimientoConfirmadoPendienteImplementacion() {
+		return "Согласие подтверждено.\nИнтеграция для обмена логами будет реализована здесь.";
+	}
 
 }

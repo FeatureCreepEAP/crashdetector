@@ -258,9 +258,9 @@ public class Persa implements Idioma {
 
 	@Override
 	public String noTieneConsolaDeLauncherCursedForge() {
-	    return "<b style='color:#" + config.obtenerColorAdvertencia()
-	        + "'>شما از گزینهٔ «رد کردن شروع راه‌انداز» (برنامهٔ CurseForge) استفاده می‌کنید. گاهی این باعث مشکلاتی می‌شود که تشخیص آن‌ها دشوار است. این به دلیل گزینهٔ «رد کردن شروع راه‌انداز» در نسخه‌های قدیمی یا جدید برنامهٔ CurseForge است. آن را غیرفعال کنید و در تنظیمات CurseForge از گزینهٔ «Mojang Launcher» استفاده نمایید. می‌توانید این ویدیوی انگلیسی از Claws of Berk (در 1:11) را "
-	        + "<a href='https://youtu.be/g847O_2LjoE?si=8Y_oj3zyyhYTrSkv&t=71' style='color: inherit;'>اینجا</a> ببینید.</b>";
+		return "<b style='color:#" + config.obtenerColorAdvertencia()
+				+ "'>شما از گزینهٔ «رد کردن شروع راه‌انداز» (برنامهٔ CurseForge) استفاده می‌کنید. گاهی این باعث مشکلاتی می‌شود که تشخیص آن‌ها دشوار است. این به دلیل گزینهٔ «رد کردن شروع راه‌انداز» در نسخه‌های قدیمی یا جدید برنامهٔ CurseForge است. آن را غیرفعال کنید و در تنظیمات CurseForge از گزینهٔ «Mojang Launcher» استفاده نمایید. می‌توانید این ویدیوی انگلیسی از Claws of Berk (در 1:11) را "
+				+ "<a href='https://youtu.be/g847O_2LjoE?si=8Y_oj3zyyhYTrSkv&t=71' style='color: inherit;'>اینجا</a> ببینید.</b>";
 	}
 
 	@Override
@@ -417,13 +417,27 @@ public class Persa implements Idioma {
 
 	@Override
 	public String arco() {
-		return "این گفتگو به شما امکان می‌دهد که با استفاده از API SecureLogger "
-				+ "در securelogger.net لاگ‌ها را به اشتراک بگذارید. هنگام فشار دادن دکمه اشتراک‌گذاری گزارش، گزارش شما به "
-				+ "اپتاین پایانی انتخاب‌شده (پیش‌فرض asbestosstar.egoism.jp) (قابل تغییر در پایین) ارسال می‌شود. می‌توانید تمام لاگ‌های انتخاب‌شده را "
-				+ "همراه با گزارش به اشتراک بگذارید. اگر نمی‌خواهید آپلود کنید، از این گفتگو استفاده نکنید! ما گزارش شما را در اپتاین پایانی رسمی (https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb) پردازش نمی‌کنیم؛ فقط لینک‌های غیرمجاز را حذف می‌کنیم. کد اینجا قرار دارد: https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb. این تنها برای نمایش اطلاعات درباره خرابی شما و لینک به لاگ‌ها استفاده می‌شود. با این حال، ممکن است از اپتاین پایانی سفارشی استفاده کنید که ممکن است روش‌های مشابهی نداشته باشد. شما از وبسایت گزارش‌دهی "
-				+ Config.obtenerInstancia().obtenerSitoDeInformes() + " و وبسایت لاگ‌ها "
-				+ Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado()
-				+ " استفاده می‌کنید. همچنین می‌توانید لاگ‌های انفرادی را بدون گزارش با فشار دادن دکمه‌های اشتراک‌گذاری کنار نام‌های لاگ‌ها به اشتراک بگذارید؛ لاگ‌ها به وبسایت لاگ‌های انتخاب‌شده ارسال می‌شوند. CrashDetector دارای ناشناس‌سازی پیش‌فرض لاگ‌ها است که سعی می‌کند نام‌های کاربری، UUIDها، توکن‌های دسترسی، شناسه‌های جلسه، آدرس‌های IP و دیگر داده‌ها را حذف کند. با این حال، این عملکرد کامل نیست. با این حال، نویسنده مجموعه مودها می‌تواند آن را غیرفعال کند. می‌توان آن را با جعبه‌ای در پایین این صفحه فعال یا غیرفعال کرد. شما کنترل‌کننده داده‌های خود هستید؛ شما تصمیم می‌گیرید که داده‌هایتان را کجا آپلود کنید. وبسایت‌های لاگ‌ها متعلق به طرف‌های ثالث هستند که مالکیت آن‌ها اغلب به دلایل حریم خصوصی مخفی است. شما مسئولیت کامل مدیریت داده‌های خود و ریسک‌های مرتبط با آن را بر عهده دارید. گفتگوی اشتراک‌گذاری CrashDetector تنها یک رابط است که به شما اجازه می‌دهد آن را مدیریت کنید. مهم است که از GDPR و ARCO آگاه باشید.";
+		return "این دیالوگ به شما امکان می‌دهد با استفاده از API SecureLogger "
+				+ "در <a href=\"https://securelogger.net\">securelogger.net</a> لاگ‌ها را به اشتراک بگذارید. با فشردن دکمهٔ اشتراک‌گذاری گزارش، "
+				+ "گزارش شما به نقطهٔ پایانی انتخاب‌شده (پیش‌فرض: asbestosstar.egoism.jp) ارسال می‌شود (قابل تغییر در پایین). "
+				+ "می‌توانید تمام لاگ‌های انتخاب‌شده را همراه با گزارش به اشتراک بگذارید. اگر نمی‌خواهید آپلود کنید، از این دیالوگ استفاده نکنید! "
+				+ "ما گزارش شما را در نقطهٔ پایانی رسمی پردازش نمی‌کنیم (<a href=\"https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb\">https://asbestosstar.egoism.jp/crash_detector/crash_detector_servidor.rb</a>)؛ "
+				+ "فقط لینک‌های غیرمجاز را حذف می‌کنیم. کد منبع اینجا است: <a href=\"https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/crash_detector_servidor.rb\">کد منبع</a>. "
+				+ "این فقط برای نمایش اطلاعات مربوط به crash شما و لینک لاگ‌ها استفاده می‌شود. با این حال، می‌توانید از یک نقطهٔ پایانی سفارشی استفاده کنید که ممکن است همان روش‌ها را نداشته باشد. "
+				+ "شما از سایت گزارش " + Config.obtenerInstancia().obtenerSitoDeInformes() + " و سایت لاگ "
+				+ Config.obtenerInstancia().obtenerSitioDeRegistrosSeleccionado() + " استفاده می‌کنید. "
+				+ "همچنین می‌توانید با فشردن دکمه‌های اشتراک‌گذاری کنار نام لاگ‌های فردی، لاگ‌های جداگانه را بدون گزارش به اشتراک بگذارید؛ "
+				+ "لاگ‌ها به سایت لاگ انتخاب‌شده ارسال می‌شوند. CrashDetector دارای ناشناس‌سازی پیش‌فرض لاگ است که سعی می‌کند نام کاربری، UUID، "
+				+ "توکن‌های دسترسی، IDهای نشست، آدرس‌های IP و سایر داده‌ها را حذف کند. با این حال، کامل نیست. با این وجود، سازندهٔ modpack می‌تواند آن را غیرفعال کند. "
+				+ "این قابلیت را می‌توان با کادر علامت‌گذاری در پایین این صفحه فعال یا غیرفعال کرد. شما کنترل‌کنندهٔ داده‌های خود هستید؛ شما تصمیم می‌گیرید داده‌هایتان را کجا آپلود کنید. "
+				+ "سایت‌های لاگ متعلق به شخص ثالث هستند که مالکیت آن‌ها اغلب به دلایل حریم خصوصی پنهان است. شما مسئولیت کامل مدیریت داده‌های خود و ریسک‌های مرتبط را بر عهده دارید. "
+				+ "دیالوگ اشتراک‌گذاری CrashDetector تنها یک رابط است که به شما امکان مدیریت این موارد را می‌دهد. "
+				+ "آگاهی از GDPR و ARCO بسیار مهم است. "
+				+ "اگر در اروپا هستید، می‌توانید از <a href=\"https://securelogger.top\">securelogger.top</a> که توسط Hetzner در آلمان میزبانی می‌شود، استفاده کنید. "
+				+ "برای اطلاعات حقوقی بیشتر، لینک‌های زیر را مشاهده کنید: "
+				+ "<a href=\"https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPDPPP.pdf\">LFPDPPP</a>، "
+				+ "<a href=\"https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32016R0679\">GDPR</a>، "
+				+ "<a href=\"https://www.ppc.go.jp/files/pdf/20220401_personal_basicpolicy.pdf\">سیاست اساسی حفاظت از داده‌های شخصی در ژاپن</a>.";
 	}
 
 	@Override
@@ -590,13 +604,12 @@ public class Persa implements Idioma {
 
 	@Override
 	public String errorConfigMCForge() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	           + "خطای بحرانی پیکربندی NightConfig/Forge: "
-	           + "فایل پیکربندی خراب یا ناقص است. "
-	           + "این ممکن است به دلیل فایل‌های پیکربندی خالی (اغلب ۰ بایت) در پوشهٔ 'config' در نسخه‌های قدیمی یا سفارشی NightConfig رخ دهد. "
-	           + "برای اکثر نسخه‌ها، Night Config Fixes این مشکل را حل می‌کند، اما اگر از نسخهٔ ناسازگار یا سفارشی NightConfig استفاده می‌کنید، باید فایل‌های پیکربندی را به صورت دستی حذف کنید. "
-	           + "این مشکل در نسخه‌های قدیمی MC Forge (که شامل NightConfig هستند) و در افزونه‌های قدیمی FabricMC که NightConfig را همراه دارند، رایج‌تر است، اما ممکن است در برخی نسخه‌های سفارشی NightConfig نیز وجود داشته باشد. "
-	           + "اطلاعات بیشتر دربارهٔ راه‌حل‌ها در <a href='https://www.curseforge.com/minecraft/mc-mods/night-config-fixes'>Night Config Fixes</a> موجود است.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>" + "خطای بحرانی پیکربندی NightConfig/Forge: "
+				+ "فایل پیکربندی خراب یا ناقص است. "
+				+ "این ممکن است به دلیل فایل‌های پیکربندی خالی (اغلب ۰ بایت) در پوشهٔ 'config' در نسخه‌های قدیمی یا سفارشی NightConfig رخ دهد. "
+				+ "برای اکثر نسخه‌ها، Night Config Fixes این مشکل را حل می‌کند، اما اگر از نسخهٔ ناسازگار یا سفارشی NightConfig استفاده می‌کنید، باید فایل‌های پیکربندی را به صورت دستی حذف کنید. "
+				+ "این مشکل در نسخه‌های قدیمی MC Forge (که شامل NightConfig هستند) و در افزونه‌های قدیمی FabricMC که NightConfig را همراه دارند، رایج‌تر است، اما ممکن است در برخی نسخه‌های سفارشی NightConfig نیز وجود داشته باشد. "
+				+ "اطلاعات بیشتر دربارهٔ راه‌حل‌ها در <a href='https://www.curseforge.com/minecraft/mc-mods/night-config-fixes'>Night Config Fixes</a> موجود است.</b>";
 	}
 
 	@Override
@@ -5832,109 +5845,238 @@ public class Persa implements Idioma {
 				+ "نظرات و توضیحات Sylent Bell لزوماً با ما هم‌خوانی ندارد؛ "
 				+ "فقط فکر کردیم جالب باشد که او را اینجا بگذاریم. CrashDetector سکولار است." + "</div></html>";
 	}
+
 	@Override
 	public String gmlIPV6() {
-	    return "<b style='color:#" + config.obtenerColorError() + "'>"
-	            + "افزونهٔ GML (Groovy ModLoader) به این تغییرات نیاز دارد و رایج‌ترین منشأ این مشکل است.</b>";
+		return "<b style='color:#" + config.obtenerColorError() + "'>"
+				+ "افزونهٔ GML (Groovy ModLoader) به این تغییرات نیاز دارد و رایج‌ترین منشأ این مشکل است.</b>";
 	}
-	
-	
-	
+
 	@Override
 	public String mensajeIndependenteFlywheel(Set<String> mods) {
-	    StringBuilder listaMods = new StringBuilder();
-	    if (!mods.isEmpty()) {
-	        for (String mod : mods) {
-	            listaMods.append("<li>").append(mod).append("</li>");
-	        }
-	    }
+		StringBuilder listaMods = new StringBuilder();
+		if (!mods.isEmpty()) {
+			for (String mod : mods) {
+				listaMods.append("<li>").append(mod).append("</li>");
+			}
+		}
 
-	    String mensaje = "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "استفاده از <i>Flywheel</i> شناسایی شد.</b>"
-	            + "<p><b>Flywheel منسوخ‌شده (deprecated) است</b> و نباید در نسخه‌های مدرن استفاده شود.</p>"
-	            + "<p>نسخه‌های فعلی <b>Create</b> <b>از پیش Flywheel را شامل می‌شوند</b>، بنابراین نصب جداگانهٔ آن "
-	            + "باعث تداخل سازگاری و خطاهای بارگذاری می‌شود.</p>"
-	            + "<p>برخی افزونه‌هایی که به‌صورت صریح به Flywheel وابسته‌اند ممکن است "
-	            + "<b>کار نکنند</b> یا <b>ناپایدار عمل کنند</b>. "
-	            + "در برخی موارد پیشرفته، این افزونه‌ها ممکن است با <b>ویرایش دستی فایل <code>mods.toml</code></b> "
-	            + "برای تنظیم محدودهٔ نسخه‌ها کار کنند، هرچند این کار <b>توصیه نمی‌شود</b>.</p>"
-	            + (mods.isEmpty() ? ""
-	                : "<p><b>افزونه‌های شناسایی‌شده که به Flywheel ارجاع می‌دهند:</b></p>"
-	                + "<ul>" + listaMods.toString() + "</ul>")
-	            + "<p>راه‌حل پیشنهادی، <b>حذف Flywheel</b> و استفادهٔ انحصاری از نسخهٔ داخلی Create است.</p>";
+		String mensaje = "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "استفاده از <i>Flywheel</i> شناسایی شد.</b>"
+				+ "<p><b>Flywheel منسوخ‌شده (deprecated) است</b> و نباید در نسخه‌های مدرن استفاده شود.</p>"
+				+ "<p>نسخه‌های فعلی <b>Create</b> <b>از پیش Flywheel را شامل می‌شوند</b>، بنابراین نصب جداگانهٔ آن "
+				+ "باعث تداخل سازگاری و خطاهای بارگذاری می‌شود.</p>"
+				+ "<p>برخی افزونه‌هایی که به‌صورت صریح به Flywheel وابسته‌اند ممکن است "
+				+ "<b>کار نکنند</b> یا <b>ناپایدار عمل کنند</b>. "
+				+ "در برخی موارد پیشرفته، این افزونه‌ها ممکن است با <b>ویرایش دستی فایل <code>mods.toml</code></b> "
+				+ "برای تنظیم محدودهٔ نسخه‌ها کار کنند، هرچند این کار <b>توصیه نمی‌شود</b>.</p>"
+				+ (mods.isEmpty() ? ""
+						: "<p><b>افزونه‌های شناسایی‌شده که به Flywheel ارجاع می‌دهند:</b></p>" + "<ul>"
+								+ listaMods.toString() + "</ul>")
+				+ "<p>راه‌حل پیشنهادی، <b>حذف Flywheel</b> و استفادهٔ انحصاری از نسخهٔ داخلی Create است.</p>";
 
-	    return mensaje;
+		return mensaje;
 	}
 
 	@Override
 	public String nombreIndependenteFlywheel() {
-	    return "Flywheel مستقل";
+		return "Flywheel مستقل";
 	}
+
 	@Override
 	public String mensajeFloralEnchantments() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	        + "خطایی مرتبط با افزونهٔ <i>Floral Enchantments</i> شناسایی شد.</b>"
-	        + "<p>این crash به دلیل خطا در داخل افزونه هنگام پردازش داده‌های بازی رخ داده و "
-	        + "در حین اجرا باعث <b>NullPointerException</b> می‌شود.</p>"
-	        + "<p>این مشکل معمولاً با به‌روزرسانی یا حذف افزونه برطرف می‌شود.</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "خطایی مرتبط با افزونهٔ <i>Floral Enchantments</i> شناسایی شد.</b>"
+				+ "<p>این crash به دلیل خطا در داخل افزونه هنگام پردازش داده‌های بازی رخ داده و "
+				+ "در حین اجرا باعث <b>NullPointerException</b> می‌شود.</p>"
+				+ "<p>این مشکل معمولاً با به‌روزرسانی یا حذف افزونه برطرف می‌شود.</p>";
 	}
 
 	@Override
 	public String nombreFloralEnchantments() {
-	    return "خطای Floral Enchantments";
+		return "خطای Floral Enchantments";
 	}
-	
+
 	@Override
 	public String mixinExtrasDuplicados() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
-	        + "شما هم نسخهٔ NeoForge و هم نسخهٔ معمولی MixinExtras را دارید. اگر از MinecraftForge استفاده می‌کنید، می‌توانید با نصب <a href='https://www.curseforge.com/minecraft/mc-mods/mixin-extras-neoforge-on-forge-fix' style='color: inherit;'>این لینک</a> مشکل را حل کنید.</b>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
+				+ "شما هم نسخهٔ NeoForge و هم نسخهٔ معمولی MixinExtras را دارید. اگر از MinecraftForge استفاده می‌کنید، می‌توانید با نصب <a href='https://www.curseforge.com/minecraft/mc-mods/mixin-extras-neoforge-on-forge-fix' style='color: inherit;'>این لینک</a> مشکل را حل کنید.</b>";
 	}
-	
+
 	@Override
 	public String mensajeIrisSombrasTerreno() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	        + "خطایی در سایه‌های زمین هنگام استفاده از شیدرها (shaders) با Iris شناسایی شد.</b>"
-	        + "<p>این مشکل در حین رندر زمین رخ می‌دهد.</p>"
-	        + "<p>توصیه می‌شود <b>بازی را بدون شیدر امتحان کنید</b> یا کیفیت گرافیکی را کاهش دهید، "
-	        + "به‌ویژه در تنظیمات <b>Ultra</b>.</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "خطایی در سایه‌های زمین هنگام استفاده از شیدرها (shaders) با Iris شناسایی شد.</b>"
+				+ "<p>این مشکل در حین رندر زمین رخ می‌دهد.</p>"
+				+ "<p>توصیه می‌شود <b>بازی را بدون شیدر امتحان کنید</b> یا کیفیت گرافیکی را کاهش دهید، "
+				+ "به‌ویژه در تنظیمات <b>Ultra</b>.</p>";
 	}
 
 	@Override
 	public String nombreIrisSombrasTerreno() {
-	    return "سایه‌های زمین (Iris)";
+		return "سایه‌های زمین (Iris)";
 	}
-	
+
 	@Override
 	public String mensajeTickLargoServidor() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	        + "یک تیک سرور بسیار طولانی شناسایی شد.</b>"
-	        + "<p>این نشان می‌دهد که بازی برای مدت طولانی در یک تیک گیر کرده است.</p>"
-	        + "<p>توصیه می‌شود <b>thread dump</b> ایجادشده در لاگ را برای شناسایی علت بررسی کنید.</p>"
-	        + "<p><b>تحلیل Stack Trace</b> می‌تواند به شما در یافتن منشأ گیر کمک کند.</p>"
-	        + "<p>همچنین، دکمهٔ <b>مشاهده در لاگ</b> مودهای احتمالی مسئول را به رنگ قرمز برجسته می‌کند، "
-	        + "و همچنین ورودی‌هایی که با <code>$modid$</code> احاطه شده‌اند (که معمولاً منشأ مشکل را نشان می‌دهند). برای اسکن بلادرنگ، استفاده از نمونه‌بردار CPU در VisualVM توصیه می‌شود. مطمئن شوید سرور یا رایانهٔ شما قدرت کافی برای مدیریت مودهایی که استفاده می‌کنید دارد — ممکن است همهٔ مودها به‌درستی کار کنند، اما تعدادشان بیش از حد باشد.</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "یک تیک سرور بسیار طولانی شناسایی شد.</b>"
+				+ "<p>این نشان می‌دهد که بازی برای مدت طولانی در یک تیک گیر کرده است.</p>"
+				+ "<p>توصیه می‌شود <b>thread dump</b> ایجادشده در لاگ را برای شناسایی علت بررسی کنید.</p>"
+				+ "<p><b>تحلیل Stack Trace</b> می‌تواند به شما در یافتن منشأ گیر کمک کند.</p>"
+				+ "<p>همچنین، دکمهٔ <b>مشاهده در لاگ</b> مودهای احتمالی مسئول را به رنگ قرمز برجسته می‌کند، "
+				+ "و همچنین ورودی‌هایی که با <code>$modid$</code> احاطه شده‌اند (که معمولاً منشأ مشکل را نشان می‌دهند). برای اسکن بلادرنگ، استفاده از نمونه‌بردار CPU در VisualVM توصیه می‌شود. مطمئن شوید سرور یا رایانهٔ شما قدرت کافی برای مدیریت مودهایی که استفاده می‌کنید دارد — ممکن است همهٔ مودها به‌درستی کار کنند، اما تعدادشان بیش از حد باشد.</p>";
 	}
 
 	@Override
 	public String nombreTickLargoServidor() {
-	    return "تیک طولانی سرور";
+		return "تیک طولانی سرور";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public String tituloLFPDPPP() {
+		return "個人が保有する個人情報の保護に関する連邦法";
+	}
+
+	@Override
+	public String aceptarPermanentemente() {
+		return "永続的に同意";
+	}
+
+	public String mensajeAdvertenciaIdiomaCoreano() {
+		return "韓国語翻訳には、法律を遵守するために避けるべき南部のスラング用語が含まれています。" + "外国語、特に南側由来の言葉の使用は、「平壌文化語保護法」により厳しく禁止されています。";
+	}
+
+	public String enlaceDocumentacionIdiomaCoreano() {
+		return "詳細については、法令の公式文書をご参照ください："
+				+ "<a href='https://www.dailynk.com/english/wp-content/uploads/sites/2/2023/03/Pyongyang-Cultural-Language-Protection-Act_English-and-Korean-Versions_Daily-NK.pdf'>平壌文化語保護法</a>";
+	}
+
+	public String leerLeyCompleta() {
+		return "全文を読む";
+	}
+
+	public String errorAbriendoEnlace() {
+		return "リンクを開く際にエラーが発生しました";
+	}
+
+	public String actaProteccionIdiomaCultural() {
+		return "قانون حمایت از زبان فرهنگی پیونگ‌یانگ";
+	}
+
+	@Override
+	public String canarioTitulo() {
+		return "قناری دستور قضایی";
+	}
+
+	@Override
+	public String canario1984Titulo() {
+		return "۱۹۸۴ — نظارت‌گر نظارتی";
+	}
+
+	@Override
+	public String revisar() {
+		return "بررسی";
+	}
+
+	@Override
+	public String cerrar() {
+		return "بستن";
+	}
+
+	@Override
+	public String canarioTodoSeguro() {
+		return "همهٔ سرویس‌ها وضعیت امن را گزارش کرده‌اند.";
+	}
+
+	@Override
+	public String canarioComprometido(int c) {
+		return "هشدار: " + c + " سرویس، وضعیت ناامن را گزارش کرده‌اند.";
+	}
+
+	@Override
+	public String colorAlerta() {
+		return "رنگ هشدار";
+	}
+
+	public String opcionesMunidiales() {
+		return "گزینه‌های مونیدیال";
+	}
+
+	public String consentimientoLFPDPPP() {
+		return "رضایت‌نامهٔ LFPDPPP";
+	}
+
+	public String habilitarTokenAcceso() {
+		return "فعال‌سازی توکن دسترسی";
+	}
+
+	public String consolaDesarrollo() {
+		return "کنسول توسعه";
+	}
+
+	public String munidial() {
+		return "مونیدیال";
+	}
+
+	public String ningun() {
+		return "هیچ‌کدام";
+	}
+
+	// Consola del desarrollador
+	public String consolaDesarrollador() {
+		return "کنسول توسعه‌دهنده";
+	}
+
+	public String bajar() {
+		return "دانلود";
+	}
+
+	public String logsSoporte() {
+		return "لاگ‌های پشتیبانی";
+	}
+
+	public String detenerProceso() {
+		return "توقف فرآیند";
+	}
+
+	// Menú contextual
+	public String copiarSeleccion() {
+		return "کپی انتخاب‌شده";
+	}
+
+	public String seleccionarTodo() {
+		return "انتخاب همه";
+	}
+
+	public String copiarTodo() {
+		return "کپی همه";
+	}
+
+	public String guardarTodoComoArchivo() {
+		return "ذخیرهٔ همه به عنوان فایل";
+	}
+
+	public String obtenerEnlaceSoporte() {
+		return "دریافت لینک پشتیبانی";
+	}
+
+	public String borrarTodo() {
+		return "پاک‌سازی همه";
+	}
+
+	// Colores configurables
+	public String colorFondoConsola() {
+		return "رنگ پس‌زمینهٔ کنسول";
+	}
+
+	public String colorTextoConsola() {
+		return "رنگ متن کنسول";
+	}
+
+	// Consentimiento / logs
+	public String consentimientoConfirmadoPendienteImplementacion() {
+		return "رضایت تأیید شد.\nامکان اشتراک‌گذاری لاگ‌ها در اینجا پیاده‌سازی خواهد شد.";
+	}
 
 }

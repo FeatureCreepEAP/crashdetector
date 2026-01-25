@@ -664,7 +664,7 @@ public class Consola {
 	}
 
 	public String obtenerRutaParaPublicar() {
-		boolean anon = Config.obtenerInstancia().esAnonimizarRegistros();
+		boolean anon = ConfigMunidial.obtenerInstancia().esAnonimizarRegistros();
 		if (anon) {
 			return AnonimizadorDeRuta.anonimizarNombreDeUsuario(archivo.toString());
 		}
@@ -672,7 +672,7 @@ public class Consola {
 	}
 
 	public String obtainerContenidoParaPublicar() {
-		boolean anon = Config.obtenerInstancia().esAnonimizarRegistros();
+		boolean anon = ConfigMunidial.obtenerInstancia().esAnonimizarRegistros();
 		if (anon) {
 			return AnonimizadordeRegistros.anonimizar(this.contenido_verificar);
 		}

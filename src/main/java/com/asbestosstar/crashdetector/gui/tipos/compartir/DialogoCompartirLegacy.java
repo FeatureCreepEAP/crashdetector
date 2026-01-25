@@ -21,7 +21,6 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -33,6 +32,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import com.asbestosstar.crashdetector.Config;
+import com.asbestosstar.crashdetector.ConfigMunidial;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
@@ -43,6 +43,8 @@ import com.asbestosstar.crashdetector.api_sito_registro.LimteDeTasa;
 import com.asbestosstar.crashdetector.api_sito_registro.NoAPIdeRegistro;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
+import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
+import com.asbestosstar.crashdetector.gui.tipos.canario.CanarioDeOrdenJudicialGUI1984;
 
 /**
  * Implementación concreta del diálogo de compartir con apariencia legada. Esta
@@ -68,12 +70,25 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		panelSuperior = new JPanel(new BorderLayout(0, 10));
 		panelSuperior.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-		// Texto de explicación
-		textoExplicacion = new JTextArea(MonitorDePID.idioma.arco());
+		// Texto de explicación (HTML con scroll independiente)
+		textoExplicacion = new javax.swing.JEditorPane("text/html", MonitorDePID.idioma.arco());
 		textoExplicacion.setEditable(false);
-		textoExplicacion.setLineWrap(true);
-		textoExplicacion.setWrapStyleWord(true);
-		textoExplicacion.setBackground(panelSuperior.getBackground());
+		textoExplicacion.setOpaque(false);
+
+		// Habilitar enlaces clicables
+		textoExplicacion.addHyperlinkListener(e -> {
+			if (e.getEventType() == javax.swing.event.HyperlinkEvent.EventType.ACTIVATED) {
+				try {
+					java.awt.Desktop.getDesktop().browse(e.getURL().toURI());
+				} catch (Exception ex) {
+					CrashDetectorLogger.logException(ex);
+				}
+			}
+		});
+
+		JScrollPane scrollTexto = new JScrollPane(textoExplicacion);
+		scrollTexto.setPreferredSize(new Dimension(10, 180));
+		scrollTexto.setMaximumSize(new Dimension(Integer.MAX_VALUE, 180));
 
 		// Panel de controles (botones + campo de enlace)
 		panelControles = new JPanel();
@@ -85,53 +100,35 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 			setEnviando(true);
 			try {
 				compartirSeleccionados(e);
-			} catch (DemasiadoGrande e0) {
-				mostrarError(MonitorDePID.idioma.registroDemasiadoGrande(), e0);
-			} catch (ErrorConPublicar e1) {
-				mostrarError(MonitorDePID.idioma.errorConPublicarRegistro(e1.problema), e1);
-			} catch (NoAPIdeRegistro e2) {
-				mostrarError(MonitorDePID.idioma.apiDeRegistroNoExiste(), e2);
 			} catch (Throwable t) {
-				// Mantener el comentario existente, solo se reemplaza el literal
 				mostrarError(MonitorDePID.idioma.error_inesperado_al_compartir(), t);
 			} finally {
 				setEnviando(false);
 			}
 		});
 
-		// Ajustar tamaño para ocupar todo el ancho
 		int h1 = botonCompartirTodos.getPreferredSize().height;
 		botonCompartirTodos.setMaximumSize(new Dimension(Integer.MAX_VALUE, h1));
-		botonCompartirTodos.setMinimumSize(new Dimension(0, h1));
 		botonCompartirTodos.setAlignmentX(Component.LEFT_ALIGNMENT);
 		panelControles.add(botonCompartirTodos);
 
 		panelControles.add(javax.swing.Box.createVerticalStrut(8));
 
-		// ---------- Botón: Obtener enlaces Markdown ----------
+		// ---------- Botón: Markdown ----------
 		botonCompartirMarkdown = new JButton(MonitorDePID.idioma.texto_de_boton_compartir_markdown());
 		botonCompartirMarkdown.addActionListener(e -> {
 			setEnviando(true);
 			try {
 				compartirSoloEnlacesMarkdown(e);
-			} catch (DemasiadoGrande e0) {
-				mostrarError(MonitorDePID.idioma.registroDemasiadoGrande(), e0);
-			} catch (ErrorConPublicar e1) {
-				mostrarError(MonitorDePID.idioma.errorConPublicarRegistro(e1.problema), e1);
-			} catch (NoAPIdeRegistro e2) {
-				mostrarError(MonitorDePID.idioma.apiDeRegistroNoExiste(), e2);
 			} catch (Throwable t) {
-				// Mantener el comentario existente, solo se reemplaza el literal
 				mostrarError(MonitorDePID.idioma.error_inesperado_al_generar_enlaces(), t);
 			} finally {
 				setEnviando(false);
 			}
 		});
 
-		// Ajustar tamaño para ocupar todo el ancho
 		int h2 = botonCompartirMarkdown.getPreferredSize().height;
 		botonCompartirMarkdown.setMaximumSize(new Dimension(Integer.MAX_VALUE, h2));
-		botonCompartirMarkdown.setMinimumSize(new Dimension(0, h2));
 		botonCompartirMarkdown.setAlignmentX(Component.LEFT_ALIGNMENT);
 		panelControles.add(botonCompartirMarkdown);
 
@@ -140,30 +137,23 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		// ---------- Campo de enlace ----------
 		campoEnlaceReporte = new JTextField();
 		campoEnlaceReporte.setEditable(false);
-		campoEnlaceReporte.addMouseListener(new java.awt.event.MouseAdapter() {
-			@Override
-			public void mouseClicked(java.awt.event.MouseEvent e) {
-				if (SwingUtilities.isRightMouseButton(e)) {
-					copiarAlPortapapeles(campoEnlaceReporte.getText());
-				}
-			}
-		});
 		int hf = 28;
 		campoEnlaceReporte.setMaximumSize(new Dimension(Integer.MAX_VALUE, hf));
-		campoEnlaceReporte.setMinimumSize(new Dimension(0, hf));
 		campoEnlaceReporte.setAlignmentX(Component.LEFT_ALIGNMENT);
 		panelControles.add(campoEnlaceReporte);
 
-		// Agregar texto y controles al panel superior
-		panelSuperior.add(new JScrollPane(textoExplicacion), BorderLayout.CENTER);
+		// Agregar texto y controles
+		panelSuperior.add(scrollTexto, BorderLayout.CENTER);
 		panelSuperior.add(panelControles, BorderLayout.SOUTH);
 
-		// ---------- Resto de la estructura ----------
+		// ---------- Resto ----------
 		inicializarTabla();
 		inicializarPanelConfiguracion();
+
 		panelPrincipal.add(panelSuperior, BorderLayout.NORTH);
 		panelPrincipal.add(new JScrollPane(tabla), BorderLayout.CENTER);
 		panelPrincipal.add(panelConfig, BorderLayout.SOUTH);
+
 		add(panelPrincipal);
 
 		cargarConsolas();
@@ -288,7 +278,7 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		gbc.gridy++;
 		gbc.gridwidth = 2;
 		checkAnonimizar = new JCheckBox(MonitorDePID.idioma.anonimizarRegistros());
-		checkAnonimizar.setSelected(Config.obtenerInstancia().esAnonimizarRegistros());
+		checkAnonimizar.setSelected(ConfigMunidial.obtenerInstancia().esAnonimizarRegistros());
 		panelConfig.add(checkAnonimizar, gbc);
 
 		// Guardar config
@@ -307,12 +297,10 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		gbc.anchor = GridBagConstraints.WEST;
 		JButton botonCanario = new JButton(MonitorDePID.idioma.buscador_canario_de_orden_label());
 		botonCanario.addActionListener(e -> {
-			SwingUtilities.invokeLater(() -> {
-				JOptionPane.showMessageDialog(DialogoCompartirLegacy.this,
-						MonitorDePID.idioma.buscador_canario_de_orden_mensaje_proximamente(),
-						MonitorDePID.idioma.buscador_canario_de_orden_titulo_proximamente(),
-						JOptionPane.INFORMATION_MESSAGE);
-			});
+
+			TipoGUI.CANARIO.obtenerGUIPredeterminado(CanarioDeOrdenJudicialGUI1984.ID,
+					() -> new CanarioDeOrdenJudicialGUI1984()).init();
+
 		});
 		panelConfig.add(botonCanario, gbc);
 	}

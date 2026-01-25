@@ -253,18 +253,11 @@ public class Analizador {
 		verificaciones.add(new ErrorEntrypointFabric());
 		verificaciones.add(new ErrorEnGarde());
 		verificaciones.add(new ErrorIdleTweaks());
-		
+
 		verificaciones.add(new IndependenteFlywheel());
 		verificaciones.add(new FloralEnchantmentsTagKeyNull());
 		verificaciones.add(new IrisSombrasTerreno());
 		verificaciones.add(new TickLargoServidorMinecraft());
-
-		
-		
-		
-		
-		
-		
 
 		verificaciones.add(new PirataMC());
 		verificaciones.add(new LanzerNoAnimado());

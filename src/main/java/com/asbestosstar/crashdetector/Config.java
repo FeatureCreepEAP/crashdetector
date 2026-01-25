@@ -27,9 +27,7 @@ public class Config {
 	// Valores predeterminados para las nuevas propiedades
 	public static final String VALOR_POR_DEFECTO_API_DE_REGISTROS_SELECCIONADA = "SecureLogger";
 	public static final String VALOR_POR_DEFECTO_SITIO_DE_REGISTROS_SELECCIONADO = "https://securelogger.net/save/log?";
-	private static final boolean VALOR_POR_DEFECTO_ANONIMIZAR_REGISTROS = true;
 	private static final boolean PROXY_SYSOUT_SYSERR = true;
-	private static final boolean EXTREGAR_TOKEN_DE_ACCESO = false;
 	public static final String NOMBRE_CD = "CrashDetector";
 
 	// Ruta al archivo de configuración
@@ -79,11 +77,7 @@ public class Config {
 					VALOR_POR_DEFECTO_API_DE_REGISTROS_SELECCIONADA);
 			propiedadesConfig.setProperty("sitio_de_registros_seleccionado",
 					VALOR_POR_DEFECTO_SITIO_DE_REGISTROS_SELECCIONADO);
-			propiedadesConfig.setProperty("anonimizar_registros",
-					String.valueOf(VALOR_POR_DEFECTO_ANONIMIZAR_REGISTROS));
 			propiedadesConfig.setProperty("proxy_sysout_syserr", String.valueOf(PROXY_SYSOUT_SYSERR));
-			propiedadesConfig.setProperty("habilitar_token_de_acceso_en_la_entrega_del_MonitorDePID",
-					String.valueOf(EXTREGAR_TOKEN_DE_ACCESO));
 
 			propiedadesConfig.setProperty("nombre_cd", NOMBRE_CD);
 
@@ -279,16 +273,6 @@ public class Config {
 	}
 
 	/**
-	 * Verifica si los registros deben anonimizarse.
-	 *
-	 * @return true si se debe anonimizar, false en caso contrario.
-	 */
-	public boolean esAnonimizarRegistros() {
-		return Boolean.parseBoolean(propiedadesConfig.getProperty("anonimizar_registros",
-				String.valueOf(VALOR_POR_DEFECTO_ANONIMIZAR_REGISTROS)));
-	}
-
-	/**
 	 * Guarda el valor de api_seleccionada en la configuración.
 	 *
 	 * @param valor El nuevo valor para api_seleccionada.
@@ -305,16 +289,6 @@ public class Config {
 	 */
 	public void guardarSitioRegistrosSeleccionado(String valor) {
 		propiedadesConfig.setProperty("sitio_de_registros_seleccionado", valor);
-		this.guardar();
-	}
-
-	/**
-	 * Guarda el estado de anonimizar_registros en la configuración.
-	 *
-	 * @param valor true para activar la anonimización, false para desactivarla.
-	 */
-	public void guardarAnonimizarRegistros(boolean valor) {
-		propiedadesConfig.setProperty("anonimizar_registros", String.valueOf(valor));
 		this.guardar();
 	}
 
@@ -395,33 +369,6 @@ public class Config {
 	public void guardarProxySysOutSysErr(boolean valor) {
 		// TODO Auto-generated method stub
 		propiedadesConfig.setProperty("proxy_sysout_syserr", String.valueOf(valor));
-	}
-
-	/**
-	 * No es recomendado , solo existe para CDLauncher si necesitas servidores en
-	 * modio enlinea pero activado es menos seguro. TODO mover a una config solo
-	 * para usarios fin
-	 * 
-	 * @return
-	 */
-	public boolean obtenerHabilitarTokenDeAccesoEnLaEntregaDelMonitorDePID() {
-		// TODO Auto-generated method stub
-		return Boolean.parseBoolean(propiedadesConfig.getProperty(
-				"habilitar_token_de_acceso_en_la_entrega_del_MonitorDePID", String.valueOf(EXTREGAR_TOKEN_DE_ACCESO)));
-
-	}
-
-	/**
-	 * No es recomendado , solo existe para CDLauncher si necesitas servidores en
-	 * modio enlinea pero activado es menos seguro. TODO mover a una config solo
-	 * para usarios fin
-	 * 
-	 * @return
-	 */
-	public void guardarHabilitarTokenDeAccesoEnLaEntregaDelMonitorDePID(boolean valor) {
-		// TODO Auto-generated method stub
-		propiedadesConfig.setProperty("habilitar_token_de_acceso_en_la_entrega_del_MonitorDePID",
-				String.valueOf(valor));
 	}
 
 	/**

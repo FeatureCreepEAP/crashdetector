@@ -7,9 +7,12 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import javax.annotation.Nullable;
+
+import com.asbestosstar.crashdetector.gui.tipos.consola.ConsolaDesarrolladorGUI;
 
 public class CrashDetectorLogger {
 
@@ -57,6 +60,10 @@ public class CrashDetectorLogger {
 	private static String getTimestamp() {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return dateFormat.format(new Date());
+	}
+
+	public @Nullable ConsolaDesarrolladorGUI consola() {
+		return (ConsolaDesarrolladorGUI) MonitorDePID.consola_des;
 	}
 
 }

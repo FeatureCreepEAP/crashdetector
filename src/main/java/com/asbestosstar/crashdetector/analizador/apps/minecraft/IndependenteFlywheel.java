@@ -15,17 +15,17 @@ public class IndependenteFlywheel implements Verificaciones {
 
 	boolean tiene_uno = false;
 	public Set<String> mods = new HashSet<>();
-boolean activado=false;
-String enlace="";	
+	boolean activado = false;
+	String enlace = "";
 
 	@Override
 	public void verificar(Consola consola) {
 		// TODO Auto-generated method stub
 		if (consola.contenido_verificar.contains("flywheel is 1")) {
 			tiene_uno = true;
-	
-	mods.addAll(Buscardor.obtenerModsConNombre("flywheel"));
-			
+
+			mods.addAll(Buscardor.obtenerModsConNombre("flywheel"));
+
 		}
 
 	}
@@ -36,8 +36,8 @@ String enlace="";
 		if (tiene_uno) {
 
 			if (linea.contains("requires flywheel") && linea.contains("and below 0.")) {
-				this.enlace=consola.agregarErrorALectador(num,this);
-				this.activado=true;
+				this.enlace = consola.agregarErrorALectador(num, this);
+				this.activado = true;
 			}
 
 		}
@@ -64,11 +64,10 @@ String enlace="";
 
 	@Override
 	public String mensaje() {
-	    String mensajeBase = MonitorDePID.idioma.mensajeIndependenteFlywheel(mods);
+		String mensajeBase = MonitorDePID.idioma.mensajeIndependenteFlywheel(mods);
 
-	    return mensajeBase + this.enlace;
+		return mensajeBase + this.enlace;
 	}
-
 
 	@Override
 	public String nombre() {
@@ -104,7 +103,7 @@ String enlace="";
 	public String enlaceACodigo() {
 		// TODO Auto-generated method stub
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
-		+ this.getClass().getSimpleName() + ".java";
+				+ this.getClass().getSimpleName() + ".java";
 	}
 
 }

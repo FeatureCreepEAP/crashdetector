@@ -27,15 +27,22 @@ import com.asbestosstar.crashdetector.analizador.Analizador;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.canario.CanarioDeOrdenJudicial;
+import com.asbestosstar.crashdetector.canario.pordefecto.CDInformesAsbestosstarEgoismJPCanario;
+import com.asbestosstar.crashdetector.canario.pordefecto.CDPasteAsbestosstarEgoismJPCanario;
 import com.asbestosstar.crashdetector.detectorlanzer.DetectorLanzer;
 import com.asbestosstar.crashdetector.grepr.BusquedaArchivos;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.antimanipulacion.AntiManipulacionGUIPanko;
+import com.asbestosstar.crashdetector.gui.tipos.aplic.ActaDeProteccionDelIdiomaCulturalDePyongyangGUIKimJongUn;
 import com.asbestosstar.crashdetector.gui.tipos.arbol.ArbolDeModsGUIHamu;
+import com.asbestosstar.crashdetector.gui.tipos.canario.CanarioDeOrdenJudicialGUI1984;
 import com.asbestosstar.crashdetector.gui.tipos.cfr.BuscarParaCFR;
 import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrSakuraRiddle;
 import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartirLegacy;
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanelEstiloTL;
+import com.asbestosstar.crashdetector.gui.tipos.consola.ConsolaDesarrolladorGUI;
+import com.asbestosstar.crashdetector.gui.tipos.consola.ConsolaDesarrolladorGUITL;
 import com.asbestosstar.crashdetector.gui.tipos.corpo.CorpoSAO;
 import com.asbestosstar.crashdetector.gui.tipos.deshablicarverificaciones.DeshabilitarVerificacionesAmaneKanata;
 import com.asbestosstar.crashdetector.gui.tipos.editor.EditorCodiceGUIIronMouse;
@@ -48,6 +55,7 @@ import com.asbestosstar.crashdetector.gui.tipos.historia.HistoriaModsGUILegacy;
 import com.asbestosstar.crashdetector.gui.tipos.lanzeresbuenos.LanzerBuenoGUIMaidMint;
 import com.asbestosstar.crashdetector.gui.tipos.lanzeresmalos.LanzerMaloGUISylentBell;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasHoloTalk;
+import com.asbestosstar.crashdetector.gui.tipos.lfpdppp.LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesGUIConLogos;
 import com.asbestosstar.crashdetector.gui.tipos.mcreator.EscanerMCreatorGUIRosemiLoveLock;
 import com.asbestosstar.crashdetector.gui.tipos.miranda.DerechosPiratasGUIOnePiece;
 import com.asbestosstar.crashdetector.gui.tipos.modapi.CDModsEstiloTL;
@@ -76,6 +84,7 @@ public class MonitorDePID {
 	public static boolean consola_de_launcher_inyectado = false;
 	public static StringBuilder contenidoInforme;
 	public static Analizador analizador = new Analizador();
+	public static Object consola_des = null;
 
 	/**
 	 * Es diferente en el process diferente
@@ -177,6 +186,10 @@ public class MonitorDePID {
 
 		copiarACarpetaDesdeJar("/imagenes/cd_logo.png", Statics.carpeta.resolve("imagenes/cd_logo.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/profeco.jpg", Statics.carpeta.resolve("imagenes/profeco.jpg").toFile());
+		copiarACarpetaDesdeJar("/imagenes/edps.png", Statics.carpeta.resolve("imagenes/edps.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/ppc_jp.jpg", Statics.carpeta.resolve("imagenes/ppc_jp.jpg").toFile());
+		copiarACarpetaDesdeJar("/imagenes/dprk.png", Statics.carpeta.resolve("imagenes/dprk.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/kimjongun.png", Statics.carpeta.resolve("imagenes/kimjongun.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/saliormoongrep.png",
 				Statics.carpeta.resolve("imagenes/saliormoongrep.png").toFile());
 
@@ -409,11 +422,18 @@ public class MonitorDePID {
 		TipoGUI.MODS_BUENAS.registrarGUI(ModsBuenasGUIReiBubbles.ID, () -> new ModsBuenasGUIReiBubbles());
 		TipoGUI.MIRANDA.registrarGUI(DerechosPiratasGUIOnePiece.ID, () -> new DerechosPiratasGUIOnePiece());
 		TipoGUI.ANTI_MANIPULACION.registrarGUI(AntiManipulacionGUIPanko.ID, () -> new AntiManipulacionGUIPanko());
+		TipoGUI.LFPDPPP.registrarGUI(LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesGUIConLogos.ID,
+				() -> new LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesGUIConLogos());
+		TipoGUI.APLIC.registrarGUI(ActaDeProteccionDelIdiomaCulturalDePyongyangGUIKimJongUn.ID,
+				() -> new ActaDeProteccionDelIdiomaCulturalDePyongyangGUIKimJongUn());
+		TipoGUI.CANARIO.registrarGUI(CanarioDeOrdenJudicialGUI1984.ID, () -> new CanarioDeOrdenJudicialGUI1984());
+		TipoGUI.CONSOLA_DESARROLLADOR.registrarGUI(ConsolaDesarrolladorGUITL.ID, () -> new ConsolaDesarrolladorGUITL());
 
 	}
 
 	private static void monitor_proceso(long pid) {
 		// List<Consola> consolas_sin_processando = Consola.obtenerConsolas();
+		abrirConsola();
 		ProxySysOutSysErrCDProceso.init();
 		MonitorDePID.pid = pid;
 		try {
@@ -429,7 +449,6 @@ public class MonitorDePID {
 		System.out.println(idioma.buscando_para_pid(pid));
 		Entregar.recibir();
 
-		
 		CountDownLatch latch = new CountDownLatch(1); // Necesito por que sin esta preceso esta muerte
 
 		while (true) {
@@ -489,6 +508,8 @@ public class MonitorDePID {
 						fin(latch);
 
 					} else {
+						registrarCanariosPorDefecto();
+
 						CrashDetectorLogger.log("no headless ");
 
 						final PrincipalGUI gui = TipoGUI.PRINCIPAL.obtenerGUIPredeterminado(PrincipalGUIEstiloLanzer.ID,
@@ -541,6 +562,27 @@ public class MonitorDePID {
 //			dialog.setVisible(true);
 //		});
 //	}
+
+	public static void abrirConsola() {
+		// Check if the environment is not headless
+		if (!GraphicsEnvironment.isHeadless()) {
+			if (ConfigMunidial.obtenerInstancia().obtenerConsolaDesarrollo()) {
+				ConsolaDesarrolladorGUI cons = TipoGUI.CONSOLA_DESARROLLADOR
+						.obtenerGUIPredeterminado(ConsolaDesarrolladorGUITL.ID, () -> new ConsolaDesarrolladorGUITL());
+
+				consola_des = cons;
+				cons.init();
+			}
+		} else {
+			System.out.println("Cannot open console: headless environment detected.");
+		}
+	}
+
+	private static void registrarCanariosPorDefecto() {
+		// TODO Auto-generated method stub
+		CanarioDeOrdenJudicial.canarios.add(new CDPasteAsbestosstarEgoismJPCanario());
+		CanarioDeOrdenJudicial.canarios.add(new CDInformesAsbestosstarEgoismJPCanario());
+	}
 
 	public static void fin(CountDownLatch latch) {
 		// TODO Auto-generated method stub

@@ -23,10 +23,10 @@ public class FloralEnchantmentsTagKeyNull implements Verificaciones {
 
 	@Override
 	public void verificar(Consola consola, String linea, int num) {
-		if (!encontradoFloral) return;
+		if (!encontradoFloral)
+			return;
 
-		if (linea.contains("java.lang.NullPointerException")
-				&& linea.contains("TagKey.location")
+		if (linea.contains("java.lang.NullPointerException") && linea.contains("TagKey.location")
 				&& linea.contains("Map$Entry.getKey()")) {
 
 			this.enlace = consola.agregarErrorALectador(num, this);
