@@ -6042,16 +6042,16 @@ public class Portuges implements Idioma {
 		return "Consentimento LFPDPPP";
 	}
 
-	public String habilitarTokenAcceso() {
-		return "Habilitar token de acesso";
+	public String habilitarTokenAccesoEnEntregar() {
+		return "Habilitar handoff do token de acesso em Handoff para ReLauncher (desaconselhado).";
 	}
 
 	public String consolaDesarrollo() {
 		return "Console de desenvolvimento";
 	}
 
-	public String munidial() {
-		return "Munidial";
+	public String mundial() {
+		return "Global";
 	}
 
 	public String ningun() {
@@ -6112,6 +6112,23 @@ public class Portuges implements Idioma {
 	// Consentimiento / logs
 	public String consentimientoConfirmadoPendienteImplementacion() {
 		return "Consentimento confirmado.\nA integração para compartilhar logs será implementada aqui.";
+	}
+
+	@Override
+	public String usarSakuraOriginal() {
+		return "Usar a imagem original do Sakura Riddle";
+	}
+
+	@Override
+	public String canario1984Descripcion() {
+		return "" + "Um \"warrant canary\" é um mecanismo de transparência.\n\n"
+				+ "Enquanto esta mensagem existir e os serviços aparecerem como seguros, "
+				+ "significa que o projeto NÃO recebeu ordens judiciais secretas, "
+				+ "solicitações de censura nem pedidos legais de vigilância.\n\n"
+				+ "Se algum canário desaparecer ou for marcado como inseguro, "
+				+ "isso indica que houve uma mudança legal.\n\n"
+				+ "Este painel verifica todos os canários registrados no sistema e exibe " + "seu estado atual.\n\n"
+				+ "Clique em \"Verificar\" para atualizar os estados.";
 	}
 
 }

@@ -31,16 +31,18 @@ public class ActaDeProteccionDelIdiomaCulturalDePyongyangGUIKimJongUn
 	private static final long serialVersionUID = 1L;
 	public static String ID = "kimjongun";
 
+	// Configuraciones de color
+	// Inicializar configuraciones de color
+	protected ConfigColor colorFondoVentana = ConfigColor.de("tema.pyongyang.color.fondo.ventana",
+			new Color(25, 25, 25));
+	protected ConfigColor colorTexto = ConfigColor.de("tema.pyongyang.color.texto", new Color(220, 220, 220));
+	protected ConfigColor colorBoton = ConfigColor.de("tema.pyongyang.color.boton", new Color(50, 60, 150));
+	protected ConfigColor colorCajaTexto = ConfigColor.de("tema.pyongyang.color.caja_texto", new Color(40, 40, 40));
+	protected ConfigColor colorEnlace = ConfigColor.de("tema.pyongyang.color.enlace", new Color(100, 150, 255));
+	protected ConfigColor colorBordePanel = ConfigColor.de("tema.pyongyang.color.borde_panel", new Color(60, 60, 60));
+
 	@Override
 	public void init() {
-
-		// Inicializar configuraciones de color
-		colorFondoVentana = ConfigColor.de("tema.pyongyang.color.fondo.ventana", new Color(25, 25, 25));
-		colorTexto = ConfigColor.de("tema.pyongyang.color.texto", new Color(220, 220, 220));
-		colorBoton = ConfigColor.de("tema.pyongyang.color.boton", new Color(50, 60, 150));
-		colorCajaTexto = ConfigColor.de("tema.pyongyang.color.caja_texto", new Color(40, 40, 40));
-		colorEnlace = ConfigColor.de("tema.pyongyang.color.enlace", new Color(100, 150, 255));
-		colorBordePanel = ConfigColor.de("tema.pyongyang.color.borde_panel", new Color(60, 60, 60));
 
 		// Construir la interfaz
 		setTitle(MonitorDePID.idioma.actaProteccionIdiomaCultural());
@@ -192,14 +194,6 @@ public class ActaDeProteccionDelIdiomaCulturalDePyongyangGUIKimJongUn
 	public String id() {
 		return ID;
 	}
-
-	// Configuraciones de color
-	protected ConfigColor colorFondoVentana;
-	protected ConfigColor colorTexto;
-	protected ConfigColor colorBoton;
-	protected ConfigColor colorCajaTexto;
-	protected ConfigColor colorEnlace;
-	protected ConfigColor colorBordePanel;
 
 	// Componentes de la interfaz
 	protected JPanel raizPanel;

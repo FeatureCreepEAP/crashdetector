@@ -51,6 +51,10 @@ public class EditorPlantillaModioNoche extends EditorPlantilla {
 	// Mapa de colores específicos para el tema oscuro
 	private Map<String, ConfigColor> coloresEditor = new HashMap<>();
 
+	public EditorPlantillaModioNoche() {
+		inicializarColoresEditor();
+	}
+
 	@Override
 	public String id() {
 		return ID;

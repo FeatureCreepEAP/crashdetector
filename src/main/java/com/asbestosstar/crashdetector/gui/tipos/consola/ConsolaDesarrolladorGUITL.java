@@ -1,20 +1,46 @@
 package com.asbestosstar.crashdetector.gui.tipos.consola;
 
 import java.awt.BorderLayout;
+import java.awt.Desktop;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.net.URL;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingUtilities;
 
-import com.asbestosstar.crashdetector.ConfigMunidial;
+import com.asbestosstar.crashdetector.ConfigMundial;
+import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.api_sito_registro.APIdeSitioDeRegistro;
+import com.asbestosstar.crashdetector.api_sito_registro.DemasiadoGrande;
+import com.asbestosstar.crashdetector.api_sito_registro.ErrorConPublicar;
+import com.asbestosstar.crashdetector.api_sito_registro.LimteDeTasa;
+import com.asbestosstar.crashdetector.api_sito_registro.NoAPIdeRegistro;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
+import com.asbestosstar.crashdetector.gui.tipos.lfpdppp.LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lfpdppp.LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesGUIConLogos;
 
 /**
@@ -26,9 +52,18 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 
 	private JTextArea area;
 	private JScrollPane scroll;
+	private JPanel barra;
+
+	private JButton bajar;
+	private JButton logs;
+	private JButton stop;
+
+	private boolean autoScroll = true;
+	private boolean consentimientoTemporal = false;
 
 	private ConfigColor fondo = ConfigColor.de("consola.dev.fondo", java.awt.Color.BLACK);
-	private ConfigColor texto = ConfigColor.de("consola.dev.texto", java.awt.Color.GREEN);
+	private ConfigColor texto = ConfigColor.de("consola.dev.texto", java.awt.Color.WHITE);
+	private ConfigColor barraInferior = ConfigColor.de("consola.dev.barra", java.awt.Color.decode("#404040"));
 
 	@Override
 	public String id() {
@@ -43,53 +78,101 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 		setLayout(new BorderLayout());
 		setLocationRelativeTo(null);
 
+		// Si el usuario cierra la consola, deshabilitarla automáticamente
+		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+		addWindowListener(new java.awt.event.WindowAdapter() {
+			@Override
+			public void windowClosed(java.awt.event.WindowEvent e) {
+
+				// apagar consola munidial al cerrar
+				ConfigMundial.obtenerInstancia().guardarConsolaDesarrollo(false);
+
+				// limpiar referencia runtime si existe
+				// if (MonitorDePID.consola_des == ConsolaDesarrolladorGUITL.this) {
+				MonitorDePID.consola_des = null;
+				// }
+			}
+		});
+
+		// Área principal (más grande como TL)
 		area = new JTextArea();
 		area.setEditable(false);
 		area.setBackground(fondo.obtener());
 		area.setForeground(texto.obtener());
+		area.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
 
 		scroll = new JScrollPane(area);
+		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		add(scroll, BorderLayout.CENTER);
 
-		// Barra inferior
-		JPanel barra = new JPanel(new BorderLayout());
+		// Detectar si el usuario se aleja del fondo
+		scroll.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
+			@Override
+			public void adjustmentValueChanged(AdjustmentEvent e) {
+				JScrollBar sb = scroll.getVerticalScrollBar();
+				int max = sb.getMaximum();
+				int extent = sb.getModel().getExtent();
+				int value = sb.getValue();
 
-		JButton bajar = new JButton("⬇ " + MonitorDePID.idioma.bajar());
-		JButton logs = new JButton("📎 " + MonitorDePID.idioma.logsSoporte());
-		JButton stop = new JButton("⛔ " + MonitorDePID.idioma.detenerProceso());
+				// margen pequeño
+				autoScroll = value + extent + 4 >= max;
+			}
+		});
 
-		barra.add(bajar, BorderLayout.WEST);
-		barra.add(logs, BorderLayout.CENTER);
-		barra.add(stop, BorderLayout.EAST);
+		// Barra inferior TL
+		barra = new JPanel();
+		barra.setLayout(new BoxLayout(barra, BoxLayout.X_AXIS));
+		barra.setBackground(barraInferior.obtener());
+		barra.setPreferredSize(new Dimension(10, 46));
+
+		bajar = new JButton("⬇");
+		logs = new JButton("§");
+		stop = new JButton("■");
+
+		for (JButton b : new JButton[] { bajar, logs, stop }) {
+			b.setFocusPainted(false);
+			b.setBackground(barraInferior.obtener());
+			b.setForeground(texto.obtener());
+			b.setBorder(BorderFactory.createEmptyBorder(8, 16, 8, 16));
+			b.setOpaque(true);
+			b.setContentAreaFilled(true);
+			b.setBorderPainted(false);
+		}
+
+		barra.add(Box.createHorizontalGlue());
+		barra.add(bajar);
+		barra.add(Box.createHorizontalStrut(8));
+		barra.add(logs);
+		barra.add(Box.createHorizontalStrut(8));
+		barra.add(stop);
+		barra.add(Box.createHorizontalStrut(8));
 
 		add(barra, BorderLayout.SOUTH);
 
-		// Scroll al fondo
-		bajar.addActionListener(e -> area.setCaretPosition(area.getDocument().getLength()));
+		// Scroll manual al fondo
+		bajar.addActionListener(e -> {
+			autoScroll = true;
+			area.setCaretPosition(area.getDocument().getLength());
+		});
 
 		// Compartir logs
 		logs.addActionListener(e -> compartirLogs());
 
-		// Matar PID (MonitorDePID.pid es long)
+		// Matar PID (Java 8 compatible)
 		stop.addActionListener(e -> {
 
 			long pid = MonitorDePID.pid;
-
 			if (pid <= 0)
 				return;
 
 			try {
-
 				String os = System.getProperty("os.name").toLowerCase();
-
 				if (os.contains("win")) {
-					// Windows
 					Runtime.getRuntime().exec("taskkill /PID " + pid + " /F");
 				} else {
-					// Linux / macOS / Unix
 					Runtime.getRuntime().exec("kill -9 " + pid);
 				}
-
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
@@ -104,7 +187,6 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 			area.selectAll();
 			area.copy();
 		}));
-
 		menu.add(crearItem(MonitorDePID.idioma.guardarTodoComoArchivo(), this::guardarComoArchivo));
 		menu.add(crearItem(MonitorDePID.idioma.obtenerEnlaceSoporte(), this::compartirLogs));
 		menu.add(crearItem(MonitorDePID.idioma.borrarTodo(), () -> area.setText("")));
@@ -131,29 +213,92 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 	public void agregarLinea(String linea) {
 		if (area != null) {
 			area.append(linea + "\n");
+			if (autoScroll) {
+				area.setCaretPosition(area.getDocument().getLength());
+			}
 		}
 	}
 
-	/**
-	 * Comparte logs para soporte (requiere consentimiento LFPDPPP).
-	 */
 	private void compartirLogs() {
 
-		ConfigMunidial cfg = ConfigMunidial.obtenerInstancia();
+		try {
 
-		if (!cfg.obtenerConsentimientoLFPDPPP()) {
+			ConfigMundial cfg = ConfigMundial.obtenerInstancia();
 
-			TipoGUI.LFPDPPP
-					.obtenerGUIPredeterminado(
-							LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesGUIConLogos.ID,
-							() -> new LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesGUIConLogos())
-					.init();
+			if (!cfg.obtenerConsentimientoLFPDPPP() && !consentimientoTemporal) {
 
-			return;
+				LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesGUI gui = TipoGUI.LFPDPPP
+						.obtenerGUIPredeterminado(
+								LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesGUIConLogos.ID,
+								() -> new LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesGUIConLogos());
+
+				gui.setDespuesDeAceptar(() -> {
+
+					// permanente ya fue guardado por el dialogo si marcaron checkbox
+					consentimientoTemporal = true;
+
+					SwingUtilities.invokeLater(() -> compartirLogs());
+				});
+
+				gui.init();
+				return;
+			}
+
+			if (area == null)
+				return;
+
+			String contenido = area.getText();
+			if (contenido == null || contenido.trim().isEmpty())
+				return;
+
+			// Consola virtual temporal
+			java.nio.file.Path tmp = Files.createTempFile("devconsole-", ".log");
+
+			Consola consola = new Consola(tmp);
+			consola.finalizarContenidoInyectado(contenido);
+
+			APIdeSitioDeRegistro api = APIdeSitioDeRegistro.obtenerAPIdeConfig();
+
+			List<String> urls = api.publicarRegistroEnPartes(consola);
+
+			if (urls == null || urls.isEmpty())
+				return;
+
+			String enlace = urls.get(0);
+			MonitorDePID.enlace = enlace;
+
+			// abrir o copiar
+			try {
+				if (Desktop.isDesktopSupported()) {
+					Desktop.getDesktop().browse(new URL(enlace).toURI());
+				} else {
+					copiar(enlace);
+					JOptionPane.showMessageDialog(this, MonitorDePID.idioma.copiadoAlPortapapeles());
+				}
+			} catch (Exception ex) {
+				copiar(enlace);
+				JOptionPane.showMessageDialog(this, MonitorDePID.idioma.copiadoAlPortapapeles());
+			}
+
+		} catch (DemasiadoGrande e) {
+
+			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.registroDemasiadoGrande());
+
+		} catch (ErrorConPublicar e) {
+
+			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.errorConPublicarRegistro(e.problema));
+
+		} catch (NoAPIdeRegistro e) {
+
+			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.apiDeRegistroNoExiste());
+
+		} catch (LimteDeTasa e) {
+
+			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.limite_de_solicitudes());
+
+		} catch (Throwable t) {
+			t.printStackTrace();
 		}
-
-		JOptionPane.showMessageDialog(this, MonitorDePID.idioma.consentimientoConfirmadoPendienteImplementacion(),
-				MonitorDePID.idioma.logsSoporte(), JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	private void guardarComoArchivo() {
@@ -180,6 +325,17 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 			scroll.getViewport().setBackground(fondo.obtener());
 		}
 
+		if (barra != null) {
+			barra.setBackground(barraInferior.obtener());
+		}
+
+		for (JButton b : new JButton[] { bajar, logs, stop }) {
+			if (b != null) {
+				b.setBackground(barraInferior.obtener());
+				b.setForeground(texto.obtener());
+			}
+		}
+
 		revalidate();
 		repaint();
 	}
@@ -191,9 +347,11 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 
 		fondo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondo());
 		texto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTexto());
+		barraInferior.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorPanel());
 
 		ret.add(fondo);
 		ret.add(texto);
+		ret.add(barraInferior);
 
 		return ret;
 	}

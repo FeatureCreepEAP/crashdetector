@@ -34,7 +34,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 import com.asbestosstar.crashdetector.Config;
-import com.asbestosstar.crashdetector.ConfigMunidial;
+import com.asbestosstar.crashdetector.ConfigMundial;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.GeneradorDeInformacion;
@@ -222,7 +222,7 @@ public abstract class DialogoCompartir extends JFrame implements CrashDetectorGU
 		}
 		if (checkAnonimizar != null) {
 			boolean anonimizar = checkAnonimizar.isSelected();
-			ConfigMunidial.obtenerInstancia().guardarAnonimizarRegistros(anonimizar);
+			ConfigMundial.obtenerInstancia().guardarAnonimizarRegistros(anonimizar);
 		}
 		CrashDetectorLogger.log("Configuration saved.");
 	}

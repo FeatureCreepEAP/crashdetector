@@ -6020,16 +6020,16 @@ public class Esperanto implements Idioma {
 		return "Konsento LFPDPPP";
 	}
 
-	public String habilitarTokenAcceso() {
-		return "Ebligi alirkodon";
+	public String habilitarTokenAccesoEnEntregar() {
+		return "Ebligi transdonon de alirkodo en Handoff por ReLauncher (malebligita).";
 	}
 
 	public String consolaDesarrollo() {
 		return "Programista Konzolo";
 	}
 
-	public String munidial() {
-		return "Munidial";
+	public String mundial() {
+		return "Tutmonda";
 	}
 
 	public String ningun() {
@@ -6090,6 +6090,22 @@ public class Esperanto implements Idioma {
 	// Consentimiento / logs
 	public String consentimientoConfirmadoPendienteImplementacion() {
 		return "Konsento konfirmiĝis.\nLa integrigo por kunhavigi protokolojn estos efektivigita ĉi tie.";
+	}
+
+	@Override
+	public String usarSakuraOriginal() {
+		return "Uzi la originan bildon de Sakura Riddle";
+	}
+
+	@Override
+	public String canario1984Descripcion() {
+		return "" + "\"Warrant canary\" estas travidebleca mekanismo.\n\n"
+				+ "Dum ĉi tiu mesaĝo ekzistas kaj la servoj aperas kiel sekuraj, "
+				+ "tio signifas ke la projekto NE ricevis sekretajn juĝajn ordonojn, "
+				+ "cenzurpostulojn, nek leĝajn petojn pri surveilado.\n\n"
+				+ "Se iu kanario malaperas aŭ markiĝas kiel nesekura, " + "tio indikas ke io ŝanĝiĝis laŭleĝe.\n\n"
+				+ "Ĉi tiu panelo kontrolas ĉiujn registritajn kanariojn en la sistemo kaj montras "
+				+ "iliajn aktualajn statojn.\n\n" + "Premu \"Revizii\" por ĝisdatigi la statojn.";
 	}
 
 }

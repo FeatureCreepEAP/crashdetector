@@ -39,10 +39,10 @@ public class DerechosPiratasGUIOnePiece extends DerechosPiratasGUI {
 
 	public static File imagen = Statics.carpeta.resolve("imagenes/onepeice.png").toFile(); // downscaled
 
-	private ConfigColor fondo;
-	private ConfigColor texto;
-	private ConfigColor caja;
-	private ConfigColor borde;
+	private ConfigColor fondo = ConfigColor.de("tema.onepiece.fondo", new Color(20, 20, 20));
+	private ConfigColor texto = ConfigColor.de("tema.onepiece.texto", Color.WHITE);
+	private ConfigColor caja = ConfigColor.de("tema.onepiece.caja", new Color(35, 35, 35));
+	private ConfigColor borde = ConfigColor.de("tema.onepiece.borde", new Color(200, 180, 40));
 
 	// Referencias UI (para recargarApariencia)
 	private JTextArea areaDescripcion;
@@ -52,10 +52,6 @@ public class DerechosPiratasGUIOnePiece extends DerechosPiratasGUI {
 
 	@Override
 	public void init() {
-		fondo = ConfigColor.de("tema.onepiece.fondo", new Color(20, 20, 20));
-		texto = ConfigColor.de("tema.onepiece.texto", Color.WHITE);
-		caja = ConfigColor.de("tema.onepiece.caja", new Color(35, 35, 35));
-		borde = ConfigColor.de("tema.onepiece.borde", new Color(200, 180, 40));
 
 		setTitle(MonitorDePID.idioma.infoDeDerechosMiranda());
 		setSize(920, 680);

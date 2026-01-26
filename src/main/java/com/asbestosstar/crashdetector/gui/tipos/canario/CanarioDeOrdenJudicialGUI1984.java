@@ -25,24 +25,20 @@ public class CanarioDeOrdenJudicialGUI1984 extends CanarioDeOrdenJudicialGUI {
 
 	public static String ID = "1984";
 
-	private ConfigColor colorFondo;
-	private ConfigColor colorTexto;
-	private ConfigColor colorBoton;
-	private ConfigColor colorAlerta;
+	private ConfigColor colorFondo = ConfigColor.de("tema.canario1984.color.fondo", new Color(15, 15, 15));
+	private ConfigColor colorTexto = ConfigColor.de("tema.canario1984.color.texto", new Color(220, 220, 220));
+	private ConfigColor colorBoton = ConfigColor.de("tema.canario1984.color.boton", new Color(110, 0, 0));
+	private ConfigColor colorAlerta = ConfigColor.de("tema.canario1984.color.alerta", new Color(200, 40, 40));
 
 	private JPanel panelRaiz;
 	private JLabel titulo;
+	private JTextArea descripcion;
 	private JTextArea resultado;
 	private JButton botonRevisar;
 	private JButton botonCerrar;
 
 	@Override
 	public void init() {
-
-		colorFondo = ConfigColor.de("tema.canario1984.color.fondo", new Color(15, 15, 15));
-		colorTexto = ConfigColor.de("tema.canario1984.color.texto", new Color(220, 220, 220));
-		colorBoton = ConfigColor.de("tema.canario1984.color.boton", new Color(110, 0, 0));
-		colorAlerta = ConfigColor.de("tema.canario1984.color.alerta", new Color(200, 40, 40));
 
 		setTitle(MonitorDePID.idioma.canarioTitulo());
 		setModal(true);
@@ -57,12 +53,27 @@ public class CanarioDeOrdenJudicialGUI1984 extends CanarioDeOrdenJudicialGUI {
 		titulo.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		panelRaiz.add(titulo, BorderLayout.NORTH);
 
+		// Descripción del sistema de canarios
+		descripcion = new JTextArea(MonitorDePID.idioma.canario1984Descripcion());
+		descripcion.setEditable(false);
+		descripcion.setLineWrap(true);
+		descripcion.setWrapStyleWord(true);
+		descripcion.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		descripcion.setOpaque(false);
+		descripcion.setBorder(BorderFactory.createEmptyBorder(4, 0, 8, 0));
+
 		resultado = new JTextArea();
 		resultado.setEditable(false);
 		resultado.setLineWrap(true);
 		resultado.setWrapStyleWord(true);
 		resultado.setFont(new Font("Consolas", Font.PLAIN, 13));
-		panelRaiz.add(resultado, BorderLayout.CENTER);
+
+		JPanel panelCentro = new JPanel(new BorderLayout(6, 6));
+		panelCentro.setOpaque(false);
+		panelCentro.add(descripcion, BorderLayout.NORTH);
+		panelCentro.add(resultado, BorderLayout.CENTER);
+
+		panelRaiz.add(panelCentro, BorderLayout.CENTER);
 
 		JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		botonRevisar = new JButton(MonitorDePID.idioma.revisar());
@@ -75,7 +86,6 @@ public class CanarioDeOrdenJudicialGUI1984 extends CanarioDeOrdenJudicialGUI {
 
 		aplicarApariencia();
 		agregarListeners();
-		// revisarCanarios();
 
 		pack();
 		setLocationRelativeTo(null);
@@ -83,9 +93,7 @@ public class CanarioDeOrdenJudicialGUI1984 extends CanarioDeOrdenJudicialGUI {
 	}
 
 	private void agregarListeners() {
-
 		botonRevisar.addActionListener(e -> revisarCanarios());
-
 		botonCerrar.addActionListener(e -> dispose());
 	}
 
@@ -128,6 +136,7 @@ public class CanarioDeOrdenJudicialGUI1984 extends CanarioDeOrdenJudicialGUI {
 
 		titulo.setForeground(colorTexto.obtener());
 		resultado.setForeground(colorTexto.obtener());
+		descripcion.setForeground(colorTexto.obtener());
 
 		botonRevisar.setBackground(colorBoton.obtener());
 		botonCerrar.setBackground(colorBoton.obtener());

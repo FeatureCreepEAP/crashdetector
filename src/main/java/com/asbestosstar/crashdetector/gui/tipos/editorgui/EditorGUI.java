@@ -9,6 +9,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 
@@ -50,21 +51,52 @@ public abstract class EditorGUI extends JFrame implements CrashDetectorGUI {
 		panelEdicion.setLayout(new java.awt.BorderLayout());
 	}
 
-	/**
-	 * Actualiza el combo de GUIs según el tipo seleccionado.
-	 */
 	protected void actualizarComboGUI() {
+
+		long inicioTotal = System.currentTimeMillis();
+
 		String tipoSeleccionado = (String) comboTipoGUI.getSelectedItem();
 		if (tipoSeleccionado == null) {
 			return;
 		}
+
+		CrashDetectorLogger.log("EditorGUI: cambiando tipo de GUI a: " + tipoSeleccionado);
+
 		comboGUI.removeAllItems();
+
+		long t0 = System.currentTimeMillis();
 		TipoGUI<?> tipo = obtenerTipoGUI(tipoSeleccionado);
+		long t1 = System.currentTimeMillis();
+
+		CrashDetectorLogger.log("EditorGUI: obtenerTipoGUI tardó " + (t1 - t0) + " ms");
+
 		if (tipo != null) {
-			for (String id : tipo.obtenerGUIs().keySet()) {
+
+			long t2 = System.currentTimeMillis();
+			Map<String, ?> guis = tipo.obtenerGUIs();
+			long t3 = System.currentTimeMillis();
+
+			CrashDetectorLogger.log("EditorGUI: tipo.obtenerGUIs() tardó " + (t3 - t2) + " ms");
+			CrashDetectorLogger.log("EditorGUI: cantidad de GUIs encontradas: " + guis.size());
+
+			for (String id : guis.keySet()) {
+
+				long ti = System.currentTimeMillis();
+
+				CrashDetectorLogger.log("EditorGUI: agregando GUI: " + id);
+
 				comboGUI.addItem(id);
+
+				long tf = System.currentTimeMillis();
+
+				if (tf - ti > 50) {
+					CrashDetectorLogger.log("EditorGUI: agregar GUI '" + id + "' tardó " + (tf - ti) + " ms");
+				}
 			}
 		}
+
+		long finTotal = System.currentTimeMillis();
+		CrashDetectorLogger.log("EditorGUI: actualización completa del combo en " + (finTotal - inicioTotal) + " ms");
 	}
 
 	/**
@@ -120,6 +152,7 @@ public abstract class EditorGUI extends JFrame implements CrashDetectorGUI {
 	 * @return El TipoGUI correspondiente o null si no se encuentra.
 	 */
 	protected TipoGUI<?> obtenerTipoGUI(String nombre) {
+		CrashDetectorLogger.log("EditorGUI: buscando TipoGUI: " + nombre);
 		for (TipoGUI<?> tipo : TipoGUI.TIPOS_DE_GUI) {
 			if (tipo.id().equals(nombre)) {
 				return tipo;
@@ -174,12 +207,14 @@ public abstract class EditorGUI extends JFrame implements CrashDetectorGUI {
 								.obtenerElementosConfigs();
 						// Filtrar elementos nulos
 						if (elementos != null) {
+							CrashDetectorLogger.log("No Null listo de elementos " + String.valueOf(elementos.size()));
 							java.util.List<com.asbestosstar.crashdetector.config.ElementoConfig> elementosFiltrados = new java.util.ArrayList<>();
 							for (com.asbestosstar.crashdetector.config.ElementoConfig elem : elementos) {
 								if (elem != null) {
 									elementosFiltrados.add(elem);
 								}
 							}
+							CrashDetectorLogger.log("filtrados " + String.valueOf(elementosFiltrados.size()));
 							return elementosFiltrados;
 						}
 					} catch (Exception e) {

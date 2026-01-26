@@ -24,10 +24,10 @@ import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
  */
 public class CDModsEstiloTL extends PanelAPIBase {
 
-	private ConfigColor colorFondo;
-	private ConfigColor colorTexto;
-	private ConfigColor colorBoton;
-	private ConfigColor colorCajaTexto;
+	private ConfigColor colorFondo = ConfigColor.de("cdmods.color.fondo", Config.convertirAColor("#1e1e1e"));;
+	private ConfigColor colorTexto = ConfigColor.de("cdmods.color.texto", Config.convertirAColor("#ffffff"));;
+	private ConfigColor colorBoton = ConfigColor.de("cdmods.color.boton", Config.convertirAColor("#007acc"));;
+	private ConfigColor colorCajaTexto = ConfigColor.de("cdmods.color.cajaTexto", Config.convertirAColor("#333333"));
 	public static String ID = "cdmodsestilotl";
 
 	// Constructor sin lógica
@@ -36,10 +36,7 @@ public class CDModsEstiloTL extends PanelAPIBase {
 
 	@Override
 	protected void inicializarColores() {
-		colorFondo = ConfigColor.de("modapi.color.fondo", Config.convertirAColor("#1e1e1e"));
-		colorTexto = ConfigColor.de("modapi.color.texto", Config.convertirAColor("#ffffff"));
-		colorBoton = ConfigColor.de("modapi.color.boton", Config.convertirAColor("#007acc"));
-		colorCajaTexto = ConfigColor.de("modapi.color.cajaTexto", Config.convertirAColor("#333333"));
+
 	}
 
 	@Override

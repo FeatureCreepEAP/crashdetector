@@ -5828,27 +5828,27 @@ public class Japones implements Idioma {
 	}
 
 	public String opcionesMunidiales() {
-		return "Munidial Options";
+		return "ムニダルオプション";
 	}
 
 	public String consentimientoLFPDPPP() {
-		return "LFPDPPP Consent";
+		return "LFPDPPP同意";
 	}
 
-	public String habilitarTokenAcceso() {
-		return "Enable Access Token";
+	public String habilitarTokenAccesoEnEntregar() {
+		return "ReLauncher向けにHandoffでアクセストークンのハンドオフを有効化（非推奨）";
 	}
 
 	public String consolaDesarrollo() {
-		return "Development Console";
+		return "開発コンソール";
 	}
 
-	public String munidial() {
-		return "Munidial";
+	public String mundial() {
+		return "グローバル";
 	}
 
 	public String ningun() {
-		return "None";
+		return "なし";
 	}
 
 	// Consola del desarrollador
@@ -5905,6 +5905,19 @@ public class Japones implements Idioma {
 	// Consentimiento / logs
 	public String consentimientoConfirmadoPendienteImplementacion() {
 		return "同意が確認されました。\nログ共有機能はここに実装されます。";
+	}
+
+	@Override
+	public String usarSakuraOriginal() {
+		return "オリジナルの Sakura Riddle 画像を使用";
+	}
+
+	@Override
+	public String canario1984Descripcion() {
+		return "" + "「ワラントカナリア（warrant canary）」は透明性を確保する仕組みです。\n\n" + "このメッセージが存在し、サービスが安全と表示されている限り、"
+				+ "プロジェクトは秘密の司法命令や検閲要求、" + "合法的な監視要請を受けていないことを意味します。\n\n" + "いずれかのカナリアが消えたり、非安全とマークされた場合、"
+				+ "それは法的状況に変化があったことを示します。\n\n" + "このパネルはシステムに登録されたすべてのカナリアを確認し、" + "現在の状態を表示します。\n\n"
+				+ "「確認」を押して状態を更新してください。";
 	}
 
 }

@@ -10,7 +10,7 @@ import java.util.Properties;
  * Configuración munidial (global) de CrashDetector. Aplica a todas las
  * instancias del programa.
  */
-public class ConfigMunidial {
+public class ConfigMundial {
 
 	private static final boolean VALOR_POR_DEFECTO_TOKEN_DE_ACCESO = false;
 
@@ -21,18 +21,18 @@ public class ConfigMunidial {
 	private static final File ARCHIVO_CONFIG_MUNIDIAL = new File(System.getProperty("user.home"),
 			"crash_detector/config_munidial.properties");
 
-	private static ConfigMunidial instancia;
+	private static ConfigMundial instancia;
 
 	private final Properties propiedades;
 
-	private ConfigMunidial() {
+	private ConfigMundial() {
 		propiedades = new Properties();
 
 		if (ARCHIVO_CONFIG_MUNIDIAL.exists()) {
 			try (FileReader lector = new FileReader(ARCHIVO_CONFIG_MUNIDIAL)) {
 				propiedades.load(lector);
 			} catch (IOException e) {
-				System.err.println("Error al leer la configuración munidial: " + e.getMessage());
+				System.err.println("Error al leer la configuración mundial: " + e.getMessage());
 			}
 		} else {
 			propiedades.setProperty("habilitar_token_de_acceso_en_la_entrega_del_MonitorDePID",
@@ -48,9 +48,9 @@ public class ConfigMunidial {
 		}
 	}
 
-	public static synchronized ConfigMunidial obtenerInstancia() {
+	public static synchronized ConfigMundial obtenerInstancia() {
 		if (instancia == null) {
-			instancia = new ConfigMunidial();
+			instancia = new ConfigMundial();
 		}
 		return instancia;
 	}

@@ -187,7 +187,7 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/cd_logo.png", Statics.carpeta.resolve("imagenes/cd_logo.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/profeco.jpg", Statics.carpeta.resolve("imagenes/profeco.jpg").toFile());
 		copiarACarpetaDesdeJar("/imagenes/edps.png", Statics.carpeta.resolve("imagenes/edps.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/ppc_jp.jpg", Statics.carpeta.resolve("imagenes/ppc_jp.jpg").toFile());
+		copiarACarpetaDesdeJar("/imagenes/ppc_jp.png", Statics.carpeta.resolve("imagenes/ppc_jp.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/dprk.png", Statics.carpeta.resolve("imagenes/dprk.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/kimjongun.png", Statics.carpeta.resolve("imagenes/kimjongun.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/saliormoongrep.png",
@@ -565,8 +565,8 @@ public class MonitorDePID {
 
 	public static void abrirConsola() {
 		// Check if the environment is not headless
-		if (!GraphicsEnvironment.isHeadless()) {
-			if (ConfigMunidial.obtenerInstancia().obtenerConsolaDesarrollo()) {
+		if (!GraphicsEnvironment.isHeadless() && consola_des == null) {
+			if (ConfigMundial.obtenerInstancia().obtenerConsolaDesarrollo()) {
 				ConsolaDesarrolladorGUI cons = TipoGUI.CONSOLA_DESARROLLADOR
 						.obtenerGUIPredeterminado(ConsolaDesarrolladorGUITL.ID, () -> new ConsolaDesarrolladorGUITL());
 
@@ -574,7 +574,7 @@ public class MonitorDePID {
 				cons.init();
 			}
 		} else {
-			System.out.println("Cannot open console: headless environment detected.");
+			System.out.println("No se puede abrir la consola: se ha detectado un entorno sin interfaz gráfica.");
 		}
 	}
 

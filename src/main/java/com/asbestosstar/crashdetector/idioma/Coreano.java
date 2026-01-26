@@ -5825,16 +5825,16 @@ public class Coreano implements Idioma {
 		return "LFPDPPP 동의";
 	}
 
-	public String habilitarTokenAcceso() {
-		return "액세스 토큰 활성화";
+	public String habilitarTokenAccesoEnEntregar() {
+		return "ReLauncher용 Handoff에서 액세스 토큰 전송을 활성화 (비추천).";
 	}
 
 	public String consolaDesarrollo() {
 		return "개발 콘솔";
 	}
 
-	public String munidial() {
-		return "무니디알";
+	public String mundial() {
+		return "세계적";
 	}
 
 	public String ningun() {
@@ -5895,6 +5895,19 @@ public class Coreano implements Idioma {
 	// Consentimiento / logs
 	public String consentimientoConfirmadoPendienteImplementacion() {
 		return "동의가 확인되었습니다.\n로그 공유 기능은 여기에 구현될 예정입니다.";
+	}
+
+	@Override
+	public String usarSakuraOriginal() {
+		return "원본 Sakura Riddle 이미지 사용";
+	}
+
+	@Override
+	public String canario1984Descripcion() {
+		return "" + "「영장 카나리아(warrant canary)」는 투명성 메커니즘입니다.\n\n" + "이 메시지가 존재하고 서비스들이 안전하게 표시되는 한, "
+				+ "해당 프로젝트는 비밀 사법 명령, " + "검열 요청, 합법적 감시 요구를 받지 않았음을 의미합니다.\n\n" + "어떤 카나리아가 사라지거나 비안전 상태로 표시되면, "
+				+ "이는 법적 상황에 변화가 있음을 나타냅니다.\n\n" + "이 패널은 시스템에 등록된 모든 카나리아를 점검하여 " + "현재 상태를 표시합니다.\n\n"
+				+ "「확인」을 눌러 상태를 갱신하세요.";
 	}
 
 }

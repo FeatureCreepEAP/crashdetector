@@ -47,7 +47,7 @@ public interface Idioma {
 	public static Idioma detectar() {
 
 		// 1. Configuración munidial
-		String id = ConfigMunidial.obtenerInstancia().obtenerIdioma();
+		String id = ConfigMundial.obtenerInstancia().obtenerIdioma();
 		if (id != null && tenemosIdiomaCodigo(id)) {
 			return desdeCodigo(id);
 		}
@@ -152,7 +152,7 @@ public interface Idioma {
 			if (soportados.contains(codigo)) {
 
 				// Guardar el idioma en la configuración munidial para futuras ejecuciones
-				ConfigMunidial.obtenerInstancia().guardarIdioma(codigo);
+				ConfigMundial.obtenerInstancia().guardarIdioma(codigo);
 
 				return codigo;
 			}
@@ -2357,7 +2357,7 @@ public interface Idioma {
 
 	public String consolaDesarrollo();
 
-	public String munidial();
+	public String mundial();
 
 	public String ningun();
 
@@ -2365,7 +2365,7 @@ public interface Idioma {
 
 	public String consentimientoLFPDPPP();
 
-	public String habilitarTokenAcceso();
+	public String habilitarTokenAccesoEnEntregar();
 
 	public String bajar();
 
@@ -2386,5 +2386,9 @@ public interface Idioma {
 	public String borrarTodo();
 
 	public String consentimientoConfirmadoPendienteImplementacion();
+
+	public String usarSakuraOriginal();
+
+	public String canario1984Descripcion();
 
 }

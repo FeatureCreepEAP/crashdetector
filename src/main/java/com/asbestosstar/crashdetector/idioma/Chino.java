@@ -5718,16 +5718,16 @@ public class Chino implements Idioma {
 		return "LFPDPPP 同意";
 	}
 
-	public String habilitarTokenAcceso() {
-		return "启用访问令牌";
+	public String habilitarTokenAccesoEnEntregar() {
+		return "在 Handoff 中启用 ReLauncher 的访问令牌传输（不建议）。";
 	}
 
 	public String consolaDesarrollo() {
 		return "开发控制台";
 	}
 
-	public String munidial() {
-		return "Munidial";
+	public String mundial() {
+		return "全球";
 	}
 
 	public String ningun() {
@@ -5788,6 +5788,18 @@ public class Chino implements Idioma {
 	// Consentimiento / logs
 	public String consentimientoConfirmadoPendienteImplementacion() {
 		return "已确认同意。\n日志分享功能将在此处实现。";
+	}
+
+	@Override
+	public String usarSakuraOriginal() {
+		return "使用原始 Sakura Riddle 图像";
+	}
+
+	@Override
+	public String canario1984Descripcion() {
+		return "" + "“法律传票金丝雀”（warrant canary）是一种透明度机制。\n\n" + "只要此消息存在且所有服务显示为安全，" + "即表示该项目未收到任何秘密司法命令、"
+				+ "审查要求或合法监控请求。\n\n" + "如果某个金丝雀消失或标记为不安全，" + "则表明法律状况已发生变化。\n\n" + "本面板会检查系统中所有已注册的金丝雀，并显示"
+				+ "其当前状态。\n\n" + "点击“检查”以更新状态。";
 	}
 
 }

@@ -16,6 +16,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JEditorPane;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
@@ -28,7 +29,7 @@ import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
  * funcionalidad común, incluyendo el manejo de URLs cfr:// y métodos estáticos
  * de utilidad.
  */
-public abstract class CfrBase implements CrashDetectorGUI {
+public abstract class CfrBase extends JFrame implements CrashDetectorGUI {
 
 	/**
 	 * Registro global de tipos de GUI CFR por identificador.
@@ -128,6 +129,7 @@ public abstract class CfrBase implements CrashDetectorGUI {
 				} catch (Exception ex2) {
 					CrashDetectorLogger.logException(ex2);
 				}
+
 			} catch (Exception ex) {
 				CrashDetectorLogger.logException(ex);
 			}

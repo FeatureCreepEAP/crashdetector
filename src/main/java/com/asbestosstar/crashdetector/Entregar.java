@@ -36,7 +36,7 @@ public class Entregar {
 
 		// args actuales sin usar ARGS_DE_APP
 		String args = obtenerArgsDelPrograma();
-		if (!ConfigMunidial.obtenerInstancia().obtenerHabilitarTokenDeAccesoEnLaEntregaDelMonitorDePID()) {
+		if (!ConfigMundial.obtenerInstancia().obtenerHabilitarTokenDeAccesoEnLaEntregaDelMonitorDePID()) {
 			args = eliminarTokenDeAcceso(args); // ahora enmascara en lugar de borrar
 		}
 

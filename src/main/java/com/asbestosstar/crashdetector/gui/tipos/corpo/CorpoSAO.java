@@ -39,12 +39,23 @@ public class CorpoSAO extends CorpoBase {
 	public static String ID = "sao";
 
 	// Configuraciones de color
-	private ConfigColor colorFondoVentana;
-	private ConfigColor colorTexto;
-	private ConfigColor colorBoton;
-	private ConfigColor colorCajaTexto;
-	private ConfigColor colorEnlace;
-	private ConfigColor colorBordePanel;
+
+	// Inicializar configuraciones de color con valores por defecto que coincidan
+	// con la imagen
+	/*
+	 * Paleta por defecto inspirada en la imagen: - Fondo: pared clara/beige
+	 * (dominante). - Texto: casi negro (carpeta). - Botones: gris traje (con texto
+	 * claro). - Caja de texto: claro (papel/pared) con borde gris. - Enlace/acento:
+	 * tono morado del texto de la imagen. - Bordes: gris piedra del muro.
+	 */
+
+	private ConfigColor colorFondoVentana = ConfigColor.de("tema.corpo.sao.color.fondo.ventana",
+			new Color(212, 204, 198));
+	private ConfigColor colorTexto = ConfigColor.de("tema.corpo.sao.color.texto", new Color(29, 30, 35));
+	private ConfigColor colorBoton = ConfigColor.de("tema.corpo.sao.color.boton", new Color(124, 119, 119));
+	private ConfigColor colorCajaTexto = ConfigColor.de("tema.corpo.sao.color.caja_texto", new Color(236, 230, 226));
+	private ConfigColor colorEnlace = ConfigColor.de("tema.corpo.sao.color.enlace", new Color(89, 72, 84));
+	private ConfigColor colorBordePanel = ConfigColor.de("tema.corpo.sao.color.borde_panel", new Color(188, 179, 173));
 
 	// Componentes de la interfaz
 	private JPanel raizPanel;
@@ -69,20 +80,6 @@ public class CorpoSAO extends CorpoBase {
 
 	@Override
 	public void init() {
-		// Inicializar configuraciones de color con valores por defecto que coincidan
-		// con la imagen
-		/*
-		 * Paleta por defecto inspirada en la imagen: - Fondo: pared clara/beige
-		 * (dominante). - Texto: casi negro (carpeta). - Botones: gris traje (con texto
-		 * claro). - Caja de texto: claro (papel/pared) con borde gris. - Enlace/acento:
-		 * tono morado del texto de la imagen. - Bordes: gris piedra del muro.
-		 */
-		colorFondoVentana = ConfigColor.de("tema.corpo.sao.color.fondo.ventana", new Color(212, 204, 198));
-		colorTexto = ConfigColor.de("tema.corpo.sao.color.texto", new Color(29, 30, 35));
-		colorBoton = ConfigColor.de("tema.corpo.sao.color.boton", new Color(124, 119, 119));
-		colorCajaTexto = ConfigColor.de("tema.corpo.sao.color.caja_texto", new Color(236, 230, 226));
-		colorEnlace = ConfigColor.de("tema.corpo.sao.color.enlace", new Color(89, 72, 84));
-		colorBordePanel = ConfigColor.de("tema.corpo.sao.color.borde_panel", new Color(188, 179, 173));
 
 		// Construir la interfaz
 		setTitle(MonitorDePID.idioma.configuracionCorporativa());

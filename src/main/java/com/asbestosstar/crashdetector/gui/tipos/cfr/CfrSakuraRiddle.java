@@ -27,6 +27,7 @@ import javax.swing.border.TitledBorder;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
+import com.asbestosstar.crashdetector.config.ConfigBoolean;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
@@ -41,24 +42,17 @@ public class CfrSakuraRiddle extends CfrBase {
 	private static final long serialVersionUID = 1L;
 
 	// Colores temáticos
-	public ConfigColor colorFondo;
-	public ConfigColor colorTexto;
-	public ConfigColor colorBorde;
-	public ConfigColor colorFondoRetrato;
+	public ConfigColor colorFondo = ConfigColor.de("tema.sakura.cfr.fondo", new Color(20, 20, 30));
+	public ConfigColor colorTexto = ConfigColor.de("tema.sakura.cfr.texto", Color.WHITE);;
+	public ConfigColor colorBorde = ConfigColor.de("tema.sakura.cfr.borde", new Color(100, 50, 100));;
+	public ConfigColor colorFondoRetrato = ConfigColor.de("tema.sakura.cfr.fondo.retrato", new Color(30, 20, 40));
+	public ConfigBoolean usarSakuraOriginal = ConfigBoolean.de("tema.sakura.cfr.usaroriginal", false);
 
 	// Componentes UI
-	private JFrame ventana;
 	private JEditorPane editorCodigo;
 	private JPanel panelRetrato;
 	private JLabel etiquetaRetrato;
 	private JTextField campoClase;
-
-	public CfrSakuraRiddle() {
-		colorFondo = ConfigColor.de("tema.sakura.cfr.fondo", new Color(20, 20, 30));
-		colorTexto = ConfigColor.de("tema.sakura.cfr.texto", Color.WHITE);
-		colorBorde = ConfigColor.de("tema.sakura.cfr.borde", new Color(100, 50, 100));
-		colorFondoRetrato = ConfigColor.de("tema.sakura.cfr.fondo.retrato", new Color(30, 20, 40));
-	}
 
 	@Override
 	public void procesarHipervinculo(String url) {
@@ -84,28 +78,27 @@ public class CfrSakuraRiddle extends CfrBase {
 			});
 		}).start();
 
-		ventana.setVisible(true);
+		setVisible(true);
 	}
 
 	private void inicializarVentana() {
-		if (ventana != null)
+
+		if (isDisplayable())
 			return;
 
-		ventana = new JFrame();
-		ventana.setTitle(MonitorDePID.idioma.tituloCfrSakura());
-		ventana.setSize(1000, 600);
-		ventana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		ventana.setLayout(new BorderLayout());
+		setTitle(MonitorDePID.idioma.tituloCfrSakura());
+		setSize(1000, 600);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setLayout(new BorderLayout());
 
-		// Panel izquierdo: código
 		editorCodigo = new JEditorPane();
 		editorCodigo.setEditable(false);
 		editorCodigo.setContentType("text/plain");
 		editorCodigo.setBackground(colorFondo.obtener());
 		editorCodigo.setForeground(colorTexto.obtener());
+
 		JScrollPane scrollCodigo = new JScrollPane(editorCodigo);
 
-		// Panel superior: campo de entrada
 		campoClase = new JTextField();
 		campoClase.setEditable(false);
 		campoClase.setBackground(colorFondo.obtener().darker());
@@ -113,7 +106,6 @@ public class CfrSakuraRiddle extends CfrBase {
 		campoClase.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(colorBorde.obtener()),
 				MonitorDePID.idioma.cfrClaseActual()));
 
-		// Panel derecho: retrato
 		panelRetrato = new JPanel() {
 			@Override
 			protected void paintComponent(Graphics g) {
@@ -122,6 +114,7 @@ public class CfrSakuraRiddle extends CfrBase {
 				g.fillRect(0, 0, getWidth(), getHeight());
 			}
 		};
+
 		panelRetrato.setLayout(new BorderLayout());
 		panelRetrato.setPreferredSize(new Dimension(220, 0));
 		panelRetrato.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(colorBorde.obtener()),
@@ -133,28 +126,32 @@ public class CfrSakuraRiddle extends CfrBase {
 
 		cargarRetrato();
 
-		// Ensamblar
 		JPanel panelCentral = new JPanel(new BorderLayout());
 		panelCentral.add(campoClase, BorderLayout.NORTH);
 		panelCentral.add(scrollCodigo, BorderLayout.CENTER);
 
-		ventana.add(panelCentral, BorderLayout.CENTER);
-		ventana.add(panelRetrato, BorderLayout.EAST);
+		add(panelCentral, BorderLayout.CENTER);
+		add(panelRetrato, BorderLayout.EAST);
 
-		ventana.addWindowListener(new WindowAdapter() {
+		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {
-				ventana = null;
+				dispose();
 			}
 		});
 
-		ventana.setLocationRelativeTo(null);
+		setLocationRelativeTo(null);
 	}
 
 	private void cargarRetrato() {
 		new Thread(() -> {
 			try {
-				File archivo = Statics.carpeta.resolve("imagenes/sakura_riddle.png").toFile();
+				File archivo;
+				if (this.usarSakuraOriginal.obtener()) {
+					archivo = Statics.carpeta.resolve("imagenes/sakura_riddle_original.png").toFile();
+				} else {
+					archivo = Statics.carpeta.resolve("imagenes/sakura_riddle.png").toFile();
+				}
 				if (archivo.exists()) {
 					Image img = ImageIO.read(archivo);
 					SwingUtilities.invokeLater(() -> {
@@ -195,8 +192,6 @@ public class CfrSakuraRiddle extends CfrBase {
 
 	@Override
 	public void recargarApariencia() {
-		if (ventana != null && !ventana.isDisplayable())
-			return;
 		editorCodigo.setBackground(colorFondo.obtener());
 		editorCodigo.setForeground(colorTexto.obtener());
 		campoClase.setBackground(colorFondo.obtener().darker());
@@ -206,11 +201,19 @@ public class CfrSakuraRiddle extends CfrBase {
 
 	@Override
 	public List<ElementoConfig> obtenerElementosConfigs() {
+		List<ElementoConfig> ret = new ArrayList<>();
 		colorFondo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondo());
 		colorTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTexto());
 		colorBorde.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBorde());
 		colorFondoRetrato.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondoRetrato());
+		usarSakuraOriginal.establecerNombreParaMostrar(() -> MonitorDePID.idioma.usarSakuraOriginal());
 
-		return new ArrayList<>(Arrays.asList(colorFondo, colorTexto, colorBorde, colorFondoRetrato));
+		ret.add(colorFondo);
+		ret.add(colorTexto);
+		ret.add(colorBorde);
+		ret.add(colorFondoRetrato);
+		ret.add(usarSakuraOriginal);
+
+		return ret;
 	}
 }

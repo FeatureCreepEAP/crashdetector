@@ -45,21 +45,17 @@ public class ModsBuenasGUIReiBubbles extends ModsBuenasGUI {
 	private JButton botonGuardar;
 	private JButton botonCancelar;
 
-	// Colores (defaults inspirados en Rei Bubbles)
-	private ConfigColor colorFondo;
-	private ConfigColor colorTexto;
-	private ConfigColor colorBoton;
-	private ConfigColor colorTabla;
-	private ConfigColor colorBorde;
+	// Colores (defaults inspirados en Rei Bubbles)Paleta suave (azules claros +
+	// detalles oscuros)
+	private ConfigColor colorFondo = ConfigColor.de("tema.rei_bubbles.fondo", new Color(232, 246, 255));
+	private ConfigColor colorTexto = ConfigColor.de("tema.rei_bubbles.texto", new Color(22, 32, 52));
+	private ConfigColor colorBoton = ConfigColor.de("tema.rei_bubbles.boton", new Color(92, 164, 225));
+	private ConfigColor colorTabla = ConfigColor.de("tema.rei_bubbles.tabla", new Color(245, 252, 255));
+	private ConfigColor colorBorde = ConfigColor.de("tema.rei_bubbles.borde", new Color(146, 188, 222));
 
 	@Override
 	public void init() {
-		// Paleta suave (azules claros + detalles oscuros)
-		colorFondo = ConfigColor.de("tema.rei_bubbles.fondo", new Color(232, 246, 255));
-		colorTexto = ConfigColor.de("tema.rei_bubbles.texto", new Color(22, 32, 52));
-		colorBoton = ConfigColor.de("tema.rei_bubbles.boton", new Color(92, 164, 225));
-		colorTabla = ConfigColor.de("tema.rei_bubbles.tabla", new Color(245, 252, 255));
-		colorBorde = ConfigColor.de("tema.rei_bubbles.borde", new Color(146, 188, 222));
+		//
 
 		setTitle(MonitorDePID.idioma.modsRecomendados());
 		setSize(900, 650);

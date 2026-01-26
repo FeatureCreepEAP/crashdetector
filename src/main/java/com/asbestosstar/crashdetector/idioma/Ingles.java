@@ -6064,16 +6064,16 @@ public class Ingles implements Idioma {
 		return "LFPDPPP Consent";
 	}
 
-	public String habilitarTokenAcceso() {
-		return "Enable Access Token";
+	public String habilitarTokenAccesoEnEntregar() {
+		return "Enable access token handoff in Handoff for ReLauncher (discouraged).";
 	}
 
 	public String consolaDesarrollo() {
 		return "Development Console";
 	}
 
-	public String munidial() {
-		return "Munidial";
+	public String mundial() {
+		return "Global";
 	}
 
 	public String ningun() {
@@ -6134,6 +6134,23 @@ public class Ingles implements Idioma {
 	// Consentimiento / logs
 	public String consentimientoConfirmadoPendienteImplementacion() {
 		return "Consent confirmed.\nThe log sharing integration will be implemented here.";
+	}
+
+	@Override
+	public String usarSakuraOriginal() {
+		return "Use original Sakura Riddle image";
+	}
+
+	@Override
+	public String canario1984Descripcion() {
+		return "" + "A \"warrant canary\" is a transparency mechanism.\n\n"
+				+ "As long as this message exists and services appear secure, "
+				+ "it means the project has NOT received secret judicial orders, "
+				+ "censorship demands, or lawful surveillance requests.\n\n"
+				+ "If any canary disappears or is marked as insecure, "
+				+ "that indicates a legal change has occurred.\n\n"
+				+ "This panel checks all canaries registered in the system and displays " + "their current status.\n\n"
+				+ "Press \"Review\" to update statuses.";
 	}
 
 }

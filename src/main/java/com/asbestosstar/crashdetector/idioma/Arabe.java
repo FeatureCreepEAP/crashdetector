@@ -5970,16 +5970,16 @@ public class Arabe implements Idioma {
 		return "موافقة LFPDPPP";
 	}
 
-	public String habilitarTokenAcceso() {
-		return "تمكين رمز الوصول";
+	public String habilitarTokenAccesoEnEntregar() {
+		return "تمكين نقل رمز الوصول في Handoff لـ ReLauncher (غير موصى به).";
 	}
 
 	public String consolaDesarrollo() {
 		return "وحدة تحكم التطوير";
 	}
 
-	public String munidial() {
-		return "منيديال";
+	public String mundial() {
+		return "عالمي";
 	}
 
 	public String ningun() {
@@ -6040,6 +6040,22 @@ public class Arabe implements Idioma {
 	// Consentimiento / logs
 	public String consentimientoConfirmadoPendienteImplementacion() {
 		return "تم تأكيد الموافقة.\nسيتم تنفيذ ميزة مشاركة السجلات هنا.";
+	}
+
+	@Override
+	public String usarSakuraOriginal() {
+		return "استخدام صورة Sakura Riddle الأصلية";
+	}
+
+	@Override
+	public String canario1984Descripcion() {
+		return "" + "«كناري أمر قضائي» هو آلية شفافية.\n\n"
+				+ "طالما أن هذه الرسالة موجودة وتظهر الخدمات على أنها آمنة، "
+				+ "فهذا يعني أن المشروع لم يتلقَّ أي أوامر قضائية سرية، "
+				+ "ولا طلبات رقابة، ولا طلبات قانونية للمراقبة.\n\n" + "إذا اختفى أحد الكناريّات أو ظهر كغير آمن، "
+				+ "فذلك يشير إلى حدوث تغيير قانوني.\n\n"
+				+ "تقوم هذه اللوحة بمراجعة جميع الكناريّات المسجّلة في النظام وعرض " + "حالتها الحالية.\n\n"
+				+ "اضغط «مراجعة» لتحديث الحالات.";
 	}
 
 }

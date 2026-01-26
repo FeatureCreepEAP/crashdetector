@@ -32,6 +32,10 @@ public class AntiManipulacionGUIPanko extends AntiManipulacionGUI {
 	private ConfigColor colorCaja;
 	private ConfigColor colorBorde;
 
+	public AntiManipulacionGUIPanko() {
+		crearColoresTema();
+	}
+
 	@Override
 	public void init() {
 		crearColoresTema();

@@ -27,9 +27,9 @@ public class LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesG
 
 	public static String ID = "lfpdppp_con_logos";
 
-	private ConfigColor colorFondo;
-	private ConfigColor colorTexto;
-	private ConfigColor colorBoton;
+	private ConfigColor colorFondo = ConfigColor.de("tema.lfpdppp.color.fondo", new java.awt.Color(240, 240, 240));
+	private ConfigColor colorTexto = ConfigColor.de("tema.lfpdppp.color.texto", new java.awt.Color(30, 30, 30));
+	private ConfigColor colorBoton = ConfigColor.de("tema.lfpdppp.color.boton", new java.awt.Color(120, 120, 120));
 
 	private JLabel textoPrincipal;
 	private JCheckBox checkPermanente;
@@ -41,10 +41,6 @@ public class LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesG
 
 	@Override
 	public void init() {
-
-		colorFondo = ConfigColor.de("tema.lfpdppp.color.fondo", new java.awt.Color(240, 240, 240));
-		colorTexto = ConfigColor.de("tema.lfpdppp.color.texto", new java.awt.Color(30, 30, 30));
-		colorBoton = ConfigColor.de("tema.lfpdppp.color.boton", new java.awt.Color(120, 120, 120));
 
 		setTitle(MonitorDePID.idioma.tituloLFPDPPP());
 		setModal(true);
@@ -61,7 +57,7 @@ public class LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesG
 
 		panelLogos.add(crearLogo("imagenes/profeco.jpg"));
 		panelLogos.add(crearLogo("imagenes/edps.png"));
-		panelLogos.add(crearLogo("imagenes/ppc_jp.jpg"));
+		panelLogos.add(crearLogo("imagenes/ppc_jp.png"));
 
 		panelRaiz.add(panelLogos, BorderLayout.NORTH);
 
@@ -120,6 +116,14 @@ public class LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesG
 
 			if (checkPermanente.isSelected()) {
 				guardarConsentimiento();
+			}
+
+			if (despuesDeAceptar != null) {
+				try {
+					despuesDeAceptar.run();
+				} catch (Throwable t) {
+					CrashDetectorLogger.logException(t);
+				}
 			}
 
 			dispose();

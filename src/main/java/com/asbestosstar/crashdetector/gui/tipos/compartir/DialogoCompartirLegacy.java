@@ -32,7 +32,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import com.asbestosstar.crashdetector.Config;
-import com.asbestosstar.crashdetector.ConfigMunidial;
+import com.asbestosstar.crashdetector.ConfigMundial;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
@@ -278,7 +278,7 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		gbc.gridy++;
 		gbc.gridwidth = 2;
 		checkAnonimizar = new JCheckBox(MonitorDePID.idioma.anonimizarRegistros());
-		checkAnonimizar.setSelected(ConfigMunidial.obtenerInstancia().esAnonimizarRegistros());
+		checkAnonimizar.setSelected(ConfigMundial.obtenerInstancia().esAnonimizarRegistros());
 		panelConfig.add(checkAnonimizar, gbc);
 
 		// Guardar config

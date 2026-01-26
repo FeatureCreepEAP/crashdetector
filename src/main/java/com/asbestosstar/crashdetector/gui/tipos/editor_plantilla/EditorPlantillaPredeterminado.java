@@ -40,6 +40,10 @@ public class EditorPlantillaPredeterminado extends EditorPlantilla {
 	// Mapa de colores específico para esta implementación
 	private Map<String, ConfigColor> coloresEditor = new HashMap<>();
 
+	public EditorPlantillaPredeterminado() {
+		inicializarColoresEditor();
+	}
+
 	@Override
 	public String id() {
 		return ID;

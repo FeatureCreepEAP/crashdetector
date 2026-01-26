@@ -6007,16 +6007,16 @@ public class Persa implements Idioma {
 		return "رضایت‌نامهٔ LFPDPPP";
 	}
 
-	public String habilitarTokenAcceso() {
-		return "فعال‌سازی توکن دسترسی";
+	public String habilitarTokenAccesoEnEntregar() {
+		return "فعال‌سازی انتقال توکن دسترسی در Handoff برای ReLauncher (توصیه نمی‌شود).";
 	}
 
 	public String consolaDesarrollo() {
 		return "کنسول توسعه";
 	}
 
-	public String munidial() {
-		return "مونیدیال";
+	public String mundial() {
+		return "جهانی";
 	}
 
 	public String ningun() {
@@ -6077,6 +6077,22 @@ public class Persa implements Idioma {
 	// Consentimiento / logs
 	public String consentimientoConfirmadoPendienteImplementacion() {
 		return "رضایت تأیید شد.\nامکان اشتراک‌گذاری لاگ‌ها در اینجا پیاده‌سازی خواهد شد.";
+	}
+
+	@Override
+	public String usarSakuraOriginal() {
+		return "استفاده از تصویر اصلی Sakura Riddle";
+	}
+
+	@Override
+	public String canario1984Descripcion() {
+		return "" + "«قناری دستور قضایی» (warrant canary) یک مکانیزم شفافیت است.\n\n"
+				+ "تا زمانی که این پیام وجود دارد و سرویس‌ها به عنوان امن نمایش داده می‌شوند، "
+				+ "به این معناست که پروژه دستور قضایی محرمانه، "
+				+ "درخواست سانسور یا درخواست قانونی نظارتی دریافت نکرده است.\n\n"
+				+ "اگر هر یک از قناری‌ها ناپدید شود یا به عنوان ناامن علامت‌گذاری شود، "
+				+ "این نشان‌دهندهٔ تغییری قانونی است.\n\n" + "این پنل تمام قناری‌های ثبت‌شده در سیستم را بررسی کرده و "
+				+ "وضعیت فعلی آن‌ها را نمایش می‌دهد.\n\n" + "برای به‌روزرسانی وضعیت‌ها، «بررسی» را فشار دهید.";
 	}
 
 }

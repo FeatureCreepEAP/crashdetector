@@ -6038,16 +6038,16 @@ public class Ruso implements Idioma {
 		return "Consentimento LFPDPPP";
 	}
 
-	public String habilitarTokenAcceso() {
-		return "Habilitar token de acesso";
+	public String habilitarTokenAccesoEnEntregar() {
+		return "Включить передачу токена доступа в Handoff для ReLauncher (не рекомендуется).";
 	}
 
 	public String consolaDesarrollo() {
 		return "Console de desenvolvimento";
 	}
 
-	public String munidial() {
-		return "Munidial";
+	public String mundial() {
+		return "Глобальный";
 	}
 
 	public String ningun() {
@@ -6108,6 +6108,23 @@ public class Ruso implements Idioma {
 	// Consentimiento / logs
 	public String consentimientoConfirmadoPendienteImplementacion() {
 		return "Согласие подтверждено.\nИнтеграция для обмена логами будет реализована здесь.";
+	}
+
+	@Override
+	public String usarSakuraOriginal() {
+		return "Использовать оригинальное изображение Sakura Riddle";
+	}
+
+	@Override
+	public String canario1984Descripcion() {
+		return "" + "«Канарейка судебного ордера» (warrant canary) — это механизм прозрачности.\n\n"
+				+ "Пока это сообщение существует и службы отображаются как безопасные, "
+				+ "это означает, что проект НЕ получал секретных судебных постановлений, "
+				+ "требований о цензуре или законных запросов на наблюдение.\n\n"
+				+ "Если какая-либо канарейка исчезнет или будет помечена как небезопасная, "
+				+ "это укажет на изменение правового статуса.\n\n"
+				+ "Эта панель проверяет все зарегистрированные в системе канарейки и отображает "
+				+ "их текущий статус.\n\n" + "Нажмите «Проверить», чтобы обновить статусы.";
 	}
 
 }

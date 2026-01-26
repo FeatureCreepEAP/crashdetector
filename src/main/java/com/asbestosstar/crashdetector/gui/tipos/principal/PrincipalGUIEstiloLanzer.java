@@ -34,7 +34,7 @@ import javax.swing.border.EmptyBorder;
 
 import com.asbestosstar.crashdetector.App;
 import com.asbestosstar.crashdetector.Config;
-import com.asbestosstar.crashdetector.ConfigMunidial;
+import com.asbestosstar.crashdetector.ConfigMundial;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.Entregar;
 import com.asbestosstar.crashdetector.Idioma;
@@ -225,7 +225,7 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 			if (codigo != null) {
 				try {
 					// Guardar el idioma en la configuración munidial
-					ConfigMunidial.obtenerInstancia().guardarIdioma(codigo);
+					ConfigMundial.obtenerInstancia().guardarIdioma(codigo);
 				} catch (Exception ex) {
 					CrashDetectorLogger.logException(ex);
 				}
@@ -246,7 +246,7 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 					Files.deleteIfExists(Idioma.archivo.toPath());
 
 					// Borrar idioma de la configuración munidial
-					ConfigMunidial.obtenerInstancia().borrarIdioma();
+					ConfigMundial.obtenerInstancia().borrarIdioma();
 
 				} catch (IOException ex) {
 					CrashDetectorLogger.logException(ex);
@@ -260,7 +260,7 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 				if (codigo != null) {
 					try {
 						// Guardar el idioma en la configuración munidial
-						ConfigMunidial.obtenerInstancia().guardarIdioma(codigo);
+						ConfigMundial.obtenerInstancia().guardarIdioma(codigo);
 					} catch (Exception ex) {
 						CrashDetectorLogger.logException(ex);
 					}

@@ -64,15 +64,18 @@ public class LanzerBuenoGUIMaidMint extends LanzerBuenoGUI {
 	private ConfigColor colorResaltoRecomendado; // verde (recomendado por CD)
 	private ConfigColor colorBordePanel; // gris/teal suave
 
-	@Override
-	public void init() {
-		// Defaults aproximados a la imagen (paleta suave menta)
+	public LanzerBuenoGUIMaidMint() {
 		colorFondoVentana = ConfigColor.de("tema.maid_mint.color.fondo.ventana", new Color(218, 253, 249));
 		colorTexto = ConfigColor.de("tema.maid_mint.color.texto", new Color(98, 101, 105));
 		colorBoton = ConfigColor.de("tema.maid_mint.color.boton", new Color(161, 220, 215));
 		colorTabla = ConfigColor.de("tema.maid_mint.color.tabla", new Color(252, 245, 238));
 		colorResaltoRecomendado = ConfigColor.de("tema.maid_mint.color.resalto.recomendado", new Color(110, 210, 160));
 		colorBordePanel = ConfigColor.de("tema.maid_mint.color.borde.panel", new Color(153, 183, 184));
+	}
+
+	@Override
+	public void init() {
+		// Defaults aproximados a la imagen (paleta suave menta)
 
 		setTitle(MonitorDePID.idioma.lanzadoresRecomendados()); // requiere método en Idioma
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);

@@ -45,20 +45,15 @@ public class GUIModsMalasRimaEvenstar extends GUIModsMalas {
 	private JButton botonCancelar;
 
 	// Colores
-	private ConfigColor colorFondo;
-	private ConfigColor colorTexto;
-	private ConfigColor colorBoton;
-	private ConfigColor colorTabla;
-	private ConfigColor colorBorde;
+	private ConfigColor colorFondo = ConfigColor.de("tema.rima_evenstar.fondo", new Color(46, 32, 64));
+	private ConfigColor colorTexto = ConfigColor.de("tema.rima_evenstar.texto", new Color(240, 230, 255));
+	private ConfigColor colorBoton = ConfigColor.de("tema.rima_evenstar.boton", new Color(168, 90, 200));
+	private ConfigColor colorTabla = ConfigColor.de("tema.rima_evenstar.tabla", new Color(33, 23, 48));
+	private ConfigColor colorBorde = ConfigColor.de("tema.rima_evenstar.borde", new Color(110, 84, 140));
 
 	@Override
 	public void init() {
 		// Paleta base (puedes ajustarla luego con el panel de configs)
-		colorFondo = ConfigColor.de("tema.rima_evenstar.fondo", new Color(46, 32, 64));
-		colorTexto = ConfigColor.de("tema.rima_evenstar.texto", new Color(240, 230, 255));
-		colorBoton = ConfigColor.de("tema.rima_evenstar.boton", new Color(168, 90, 200));
-		colorTabla = ConfigColor.de("tema.rima_evenstar.tabla", new Color(33, 23, 48));
-		colorBorde = ConfigColor.de("tema.rima_evenstar.borde", new Color(110, 84, 140));
 
 		setTitle(MonitorDePID.idioma.modsNoRecomendados());
 		setSize(900, 650);

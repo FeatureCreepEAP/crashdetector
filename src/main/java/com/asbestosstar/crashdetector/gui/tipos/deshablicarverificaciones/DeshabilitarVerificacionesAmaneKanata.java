@@ -40,12 +40,15 @@ public class DeshabilitarVerificacionesAmaneKanata extends DeshablicarVerificaci
 	public static File imagen = Statics.carpeta.resolve("imagenes/amane_kanata.png").toFile(); // 124 × 268 píxeles
 
 	// Configuraciones de color
-	private ConfigColor colorFondoVentana;
-	private ConfigColor colorTexto;
-	private ConfigColor colorBoton;
-	private ConfigColor colorCajaTexto;
-	private ConfigColor colorBordePanel;
-	private ConfigColor colorVerificacionCorporativa;
+	private ConfigColor colorFondoVentana = ConfigColor.de("tema.amane_kanata.color.fondo.ventana",
+			new Color(245, 252, 255));
+	private ConfigColor colorTexto = ConfigColor.de("tema.amane_kanata.color.texto", new Color(45, 56, 72));
+	private ConfigColor colorBoton = ConfigColor.de("tema.amane_kanata.color.boton", new Color(95, 170, 230));
+	private ConfigColor colorCajaTexto = ConfigColor.de("tema.amane_kanata.color.caja_texto", new Color(255, 255, 255));
+	private ConfigColor colorBordePanel = ConfigColor.de("tema.amane_kanata.color.borde_panel",
+			new Color(204, 220, 235));
+	private ConfigColor colorVerificacionCorporativa = ConfigColor
+			.de("tema.amane_kanata.color.verificacion_corporativa", new Color(120, 210, 170));
 
 	// Componentes de la interfaz
 	private JTable tablaHabilitadas;
@@ -63,15 +66,6 @@ public class DeshabilitarVerificacionesAmaneKanata extends DeshablicarVerificaci
 
 	@Override
 	public void init() {
-
-		// ====== COLORES DEL TEMA ======
-		colorFondoVentana = ConfigColor.de("tema.amane_kanata.color.fondo.ventana", new Color(245, 252, 255));
-		colorTexto = ConfigColor.de("tema.amane_kanata.color.texto", new Color(45, 56, 72));
-		colorBoton = ConfigColor.de("tema.amane_kanata.color.boton", new Color(95, 170, 230));
-		colorCajaTexto = ConfigColor.de("tema.amane_kanata.color.caja_texto", new Color(255, 255, 255));
-		colorBordePanel = ConfigColor.de("tema.amane_kanata.color.borde_panel", new Color(204, 220, 235));
-		colorVerificacionCorporativa = ConfigColor.de("tema.amane_kanata.color.verificacion_corporativa",
-				new Color(120, 210, 170));
 
 		setTitle(MonitorDePID.idioma.gestionVerificaciones());
 		setModal(true);

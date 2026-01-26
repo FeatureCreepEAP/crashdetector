@@ -24,6 +24,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.config.ConfigBoolean;
 import com.asbestosstar.crashdetector.config.ConfigColor;
@@ -202,6 +203,7 @@ public class CDSkinCape extends EditorGUI {
 	public void cargarGUISeleccionada() {
 		super.cargarGUISeleccionada(); // Llama al método padre para cargar la GUI
 		actualizarPanelConfiguracionGUI(); // Actualiza el panel de configuración
+		CrashDetectorLogger.log("cargar GUI seleccionada completa");
 	}
 
 	private void actualizarPanelConfiguracionGUI() {
@@ -211,11 +213,22 @@ public class CDSkinCape extends EditorGUI {
 		// Obtener los elementos de configuración de la GUI seleccionada
 		java.util.List<ElementoConfig> elementosConfig = obtenerElementosConfigSeleccionados();
 
+		if (elementosConfig != null) {
+			CrashDetectorLogger.log("elemenhtos config no null");
+			if (!elementosConfig.isEmpty()) {
+				CrashDetectorLogger.log("tiene elementos");
+			}
+		}
+
 		if (elementosConfig != null && !elementosConfig.isEmpty()) {
 			// Crear un panel para contener los componentes de configuración
+			CrashDetectorLogger.log("tiene elementos no null");
+
 			JPanel panelContenidoConfig = new JPanel();
 			panelContenidoConfig.setLayout(new BoxLayout(panelContenidoConfig, BoxLayout.Y_AXIS));
 			panelContenidoConfig.setBackground(colorCajaTexto.obtener());
+
+			CrashDetectorLogger.log("panelContenidoConfig");
 
 			for (ElementoConfig<?> elemento : elementosConfig) {
 				// Verificar si el elemento es nulo antes de usarlo
@@ -248,10 +261,13 @@ public class CDSkinCape extends EditorGUI {
 				panelContenidoConfig.add(Box.createVerticalStrut(5)); // Espacio entre elementos
 			}
 
+			CrashDetectorLogger.log("elementos completa");
+
 			// Añadir el panel de contenido al JScrollPane del panel de configuración
 			JScrollPane scrollConfig = new JScrollPane(panelContenidoConfig);
 			scrollConfig.setBorder(BorderFactory.createEmptyBorder());
 			panelConfiguracionGUI.add(scrollConfig, BorderLayout.CENTER);
+			CrashDetectorLogger.log("scroll config completa");
 		} else {
 			// Si no hay elementos de configuración, mostrar un mensaje
 			JLabel labelMensaje = new JLabel("No hay opciones de configuración disponibles para esta GUI.");
@@ -262,7 +278,9 @@ public class CDSkinCape extends EditorGUI {
 
 		// Repintar el panel de configuración
 		panelConfiguracionGUI.revalidate();
+		CrashDetectorLogger.log("revalidate");
 		panelConfiguracionGUI.repaint();
+		CrashDetectorLogger.log("repaint");
 	}
 
 	/**
@@ -479,6 +497,8 @@ public class CDSkinCape extends EditorGUI {
 
 			// Actualizar la interfaz para reflejar los cambios
 			actualizarPanelConfiguracionGUI();
+			CrashDetectorLogger.log("editar elemento completa");
+
 		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(this, "Error al parsear el nuevo valor: debe ser un número válido.", "Error",
 					JOptionPane.ERROR_MESSAGE);

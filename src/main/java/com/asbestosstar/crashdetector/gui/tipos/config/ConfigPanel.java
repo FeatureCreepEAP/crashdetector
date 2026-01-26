@@ -16,18 +16,18 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import com.asbestosstar.crashdetector.Config;
-import com.asbestosstar.crashdetector.ConfigMunidial;
+import com.asbestosstar.crashdetector.ConfigMundial;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
@@ -224,13 +224,41 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 		panel.setLayout(new GridLayout(0, 2, 5, 5));
 
 		Config config = Config.obtenerInstancia();
-		ConfigMunidial munidial = ConfigMunidial.obtenerInstancia();
+		ConfigMundial munidial = ConfigMundial.obtenerInstancia();
 
 		boolean esMac = CrashDetectorGUI.esMac();
 		Color colorDeTextoDeGui = colorTexto.obtener();
 
+		// ===== Consola de desarrollo (Munidial / Ningun) =====
+		JLabel labelDev = new JLabel(MonitorDePID.idioma.consolaDesarrollo());
+		labelDev.setForeground(colorDeTextoDeGui);
+		panel.add(labelDev);
+
+		JComboBox<String> comboDev = new JComboBox<>(
+				new String[] { MonitorDePID.idioma.mundial(), MonitorDePID.idioma.ningun() });
+
+		comboDev.setSelectedItem(
+				munidial.obtenerConsolaDesarrollo() ? MonitorDePID.idioma.mundial() : MonitorDePID.idioma.ningun());
+
+		comboDev.addActionListener(e -> {
+			boolean valor = comboDev.getSelectedItem().equals(MonitorDePID.idioma.mundial());
+			munidial.guardarConsolaDesarrollo(valor);
+
+			if (valor) {
+				// abrir consola inmediatamente
+				MonitorDePID.abrirConsola();
+			}
+		});
+
+		if (!esMac) {
+			comboDev.setBackground(colorCajaTexto.obtener());
+			comboDev.setForeground(colorDeTextoDeGui);
+		}
+
+		panel.add(comboDev);
+
 		// Campo: Sitio de informes
-		JLabel labelSitio = new JLabel(MonitorDePID.idioma.sitoDeLogging());
+		JLabel labelSitio = new JLabel(MonitorDePID.idioma.endpointDeInforme());
 		labelSitio.setForeground(colorDeTextoDeGui);
 		panel.add(labelSitio);
 
@@ -340,46 +368,33 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 				.addItemListener(e -> config.guardarProxySysOutSysErr(proxySysOutSysErrCheckBox.isSelected()));
 		panel.add(proxySysOutSysErrCheckBox);
 
-		// ===== Consola de desarrollo (Munidial / Ningun) =====
-		JLabel labelDev = new JLabel(MonitorDePID.idioma.consolaDesarrollo());
-		labelDev.setForeground(colorDeTextoDeGui);
-		panel.add(labelDev);
-
-		JComboBox<String> comboDev = new JComboBox<>(
-				new String[] { MonitorDePID.idioma.munidial(), MonitorDePID.idioma.ningun() });
-
-		comboDev.setSelectedItem(
-				munidial.obtenerConsolaDesarrollo() ? MonitorDePID.idioma.munidial() : MonitorDePID.idioma.ningun());
-
-		comboDev.addActionListener(e -> {
-			boolean valor = comboDev.getSelectedItem().equals(MonitorDePID.idioma.munidial());
-			munidial.guardarConsolaDesarrollo(valor);
-		});
-
-		if (!esMac) {
-			comboDev.setBackground(colorCajaTexto.obtener());
-			comboDev.setForeground(colorDeTextoDeGui);
-		}
-
-		panel.add(comboDev);
-
 		panel.setPreferredSize(new Dimension(600, 400));
 		return panel;
 	}
 
 	public JPanel tabConfidentialidad() {
 
-		ConfigMunidial munidial = ConfigMunidial.obtenerInstancia();
+		ConfigMundial munidial = ConfigMundial.obtenerInstancia();
 
 		JPanel panel = new JPanel(new BorderLayout(10, 10));
 		panel.setBackground(colorFondo.obtener());
 
-		JTextArea areaTexto = new JTextArea(MonitorDePID.idioma.arco());
-		areaTexto.setLineWrap(true);
-		areaTexto.setWrapStyleWord(true);
+		JEditorPane areaTexto = new JEditorPane();
+		areaTexto.setContentType("text/html");
+		areaTexto.setText(MonitorDePID.idioma.arco());
 		areaTexto.setEditable(false);
-		areaTexto.setOpaque(false);
+		areaTexto.setOpaque(true);
+		areaTexto.setBackground(colorFondo.obtener());
 		areaTexto.setForeground(colorTexto.obtener());
+
+		// Asegurar que respete el color del texto en HTML
+		areaTexto.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
+
+		// Fuente similar al resto del TL
+		areaTexto.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 13));
+
+		// Padding interno
+		areaTexto.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
 
 		JScrollPane scroll = new JScrollPane(areaTexto);
 		scroll.setPreferredSize(new Dimension(10, 180));
@@ -412,7 +427,7 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 		panelOpciones.add(checkConsent);
 
 		// Token de acceso
-		JLabel labelToken = new JLabel(MonitorDePID.idioma.habilitarTokenAcceso());
+		JLabel labelToken = new JLabel(MonitorDePID.idioma.habilitarTokenAccesoEnEntregar());
 		labelToken.setForeground(colorTexto.obtener());
 		panelOpciones.add(labelToken);
 

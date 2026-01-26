@@ -31,7 +31,6 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
-import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.ConfigColor;
@@ -58,33 +57,31 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 	private JLabel etiquetaDisclaimer;
 	private JComboBox<String> comboLanzadores;
 
-	// Configuraciones de color
-	private ConfigColor colorFondoVentana;
-	private ConfigColor colorTexto;
-	private ConfigColor colorBoton;
-	private ConfigColor colorTabla;
-	private ConfigColor colorResaltoDesaconsejado;
-	private ConfigColor colorBordePanel;
+	// Inicializar configuraciones de color (paleta inspirada en la imagen de Sylent
+	// Bell)
+	private ConfigColor colorFondoVentana = ConfigColor.de("tema.sylent_bell.color.fondo.ventana",
+			new Color(15, 18, 28)); // azul noche
+	// casi
+	// negro
+	private ConfigColor colorTexto = ConfigColor.de("tema.sylent_bell.color.texto", new Color(236, 232, 235)); // blanco
+																												// frío
+	// (cabello/luz)
+	private ConfigColor colorBoton = ConfigColor.de("tema.sylent_bell.color.boton", new Color(61, 72, 93)); // azul
+																											// grafito
+	// (ropa/sombras)
+	private ConfigColor colorTabla = ConfigColor.de("tema.sylent_bell.color.tabla", new Color(23, 24, 36)); // fondo más
+																											// profundo
+																											// para
+	// listas
+	private ConfigColor colorResaltoDesaconsejado = ConfigColor.de("tema.sylent_bell.color.resalto.desaconsejado",
+			new Color(255, 92, 120)); // rosado/rojo (acento)
+	private ConfigColor colorBordePanel = ConfigColor.de("tema.sylent_bell.color.borde.panel",
+			new Color(108, 117, 142)); // gris
+	// azulado
+	// (contornos)
 
 	@Override
 	public void init() {
-		// Inicializar configuraciones de color
-		// Inicializar configuraciones de color (paleta inspirada en la imagen de Sylent
-		// Bell)
-		colorFondoVentana = ConfigColor.de("tema.sylent_bell.color.fondo.ventana", new Color(15, 18, 28)); // azul noche
-																											// casi
-																											// negro
-		colorTexto = ConfigColor.de("tema.sylent_bell.color.texto", new Color(236, 232, 235)); // blanco frío
-																								// (cabello/luz)
-		colorBoton = ConfigColor.de("tema.sylent_bell.color.boton", new Color(61, 72, 93)); // azul grafito
-																							// (ropa/sombras)
-		colorTabla = ConfigColor.de("tema.sylent_bell.color.tabla", new Color(23, 24, 36)); // fondo más profundo para
-																							// listas
-		colorResaltoDesaconsejado = ConfigColor.de("tema.sylent_bell.color.resalto.desaconsejado",
-				new Color(255, 92, 120)); // rosado/rojo (acento)
-		colorBordePanel = ConfigColor.de("tema.sylent_bell.color.borde.panel", new Color(108, 117, 142)); // gris
-																											// azulado
-																											// (contornos)
 
 		setTitle(MonitorDePID.idioma.lanzadoresNoRecomendados());
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
