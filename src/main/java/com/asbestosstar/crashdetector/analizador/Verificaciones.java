@@ -1,5 +1,6 @@
 package com.asbestosstar.crashdetector.analizador;
 
+import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -108,4 +109,19 @@ public interface Verificaciones {
 		return false;
 	}
 
+	
+	//@Override
+	public default String comoString() {//no puedemos usar toString en interfaz
+		StringBuilder constructor= new StringBuilder();
+		String tituloColor = Config.obtenerInstancia().obtenerColorDeTitulosDeConsolas();
+		constructor.append("<span style='color: #").append(tituloColor).append("; font-weight: bold;'>")
+				.append(nombre()).append("</span>");
+		constructor.append("<br>").append(mensaje()).append("<hr style='border: 0; border-top: 1px solid #")
+				.append(tituloColor).append("; margin: 8px 0;' />");
+		return constructor.toString();
+				
+	}
+	
+	
+	
 }

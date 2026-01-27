@@ -449,28 +449,46 @@ public class Analizador {
 		return new LinkedHashSet<>(ret);
 	}
 
+	/**
+	 * Todos los verificaciones en toString y obtenerSoluciones
+	 * 
+	 * @return
+	 */
+	public Set<Verificaciones> obtenerVerificacionesUnion() {
+		// Unir ambas listas y ordenar por prioridad
+		HashSet<Verificaciones> union = new LinkedHashSet<>();
+		union.addAll(this.verificaciones_normales_activadas);
+		union.addAll(this.verificaciones_tardias_activadas);
+		return organizar(union);
+	}
+
+	/**
+	 * Todos los activados
+	 * 
+	 * @return
+	 */
+	public Set<Verificaciones> obtenerActivados() {
+		HashSet<Verificaciones> act = new LinkedHashSet<>();
+		for (Verificaciones ver : obtenerVerificacionesUnion()) {
+			if (ver.activado()) {
+				act.add(ver);
+			}
+		}
+		return act;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder constructor = new StringBuilder();
 		constructor.append("<ol>");
 
-		// Unir ambas listas y ordenar por prioridad
-		HashSet<Verificaciones> union = new LinkedHashSet<>();
-		union.addAll(this.verificaciones_normales_activadas);
-		union.addAll(this.verificaciones_tardias_activadas);
+		for (Verificaciones ver : obtenerActivados()) {
+			constructor.append("<li>").append(ver.comoString())
 
-		for (Verificaciones ver : organizar(union)) {
-			if (ver.activado()) {
-				constructor.append("<li>");
+					.append("</li>");
 
-				String tituloColor = Config.obtenerInstancia().obtenerColorDeTitulosDeConsolas();
-				constructor.append("<span style='color: #").append(tituloColor).append("; font-weight: bold;'>")
-						.append(ver.nombre()).append("</span>");
-				constructor.append("<br>").append(ver.mensaje()).append("<hr style='border: 0; border-top: 1px solid #")
-						.append(tituloColor).append("; margin: 8px 0;' />").append("</li>");
+			CrashDetectorLogger.log("razon " + ver.mensaje());
 
-				CrashDetectorLogger.log("razon " + ver.mensaje());
-			}
 		}
 
 		constructor.append("</ol>");
@@ -480,19 +498,13 @@ public class Analizador {
 	public List<QuickFix> obtenerSoluciones() {
 		List<QuickFix> soluciones = new ArrayList<>();
 
-		// Unir ambas listas y ordenar por prioridad
-		HashSet<Verificaciones> union = new LinkedHashSet<>();
-		union.addAll(this.verificaciones_normales_activadas);
-		union.addAll(this.verificaciones_tardias_activadas);
+		for (Verificaciones ver : obtenerActivados()) {
 
-		for (Verificaciones ver : organizar(union)) {
-			if (ver.activado()) {
-
-				if (ver.solucion() != null && !ver.solucion().equals(QuickFix.NINGUN)) {
-					soluciones.add(ver.solucion());
-				}
+			if (ver.solucion() != null && !ver.solucion().equals(QuickFix.NINGUN)) {
+				soluciones.add(ver.solucion());
 			}
 		}
+
 		return soluciones;
 	}
 }
