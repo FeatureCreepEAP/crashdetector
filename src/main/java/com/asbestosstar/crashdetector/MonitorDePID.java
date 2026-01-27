@@ -65,6 +65,7 @@ import com.asbestosstar.crashdetector.gui.tipos.no_registro_lanzador.NoRegistroD
 import com.asbestosstar.crashdetector.gui.tipos.no_registro_lanzador.NoRegistroLanzadorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUI;
 import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUIEstiloLanzer;
+import com.asbestosstar.crashdetector.gui.tipos.quickfix.ElementoQuickFixDemonSlayers;
 import com.asbestosstar.crashdetector.gui.tipos.quickfix.PanelQuickFixDemonSlayers;
 
 public class MonitorDePID {
@@ -428,7 +429,12 @@ public class MonitorDePID {
 				() -> new ActaDeProteccionDelIdiomaCulturalDePyongyangGUIKimJongUn());
 		TipoGUI.CANARIO.registrarGUI(CanarioDeOrdenJudicialGUI1984.ID, () -> new CanarioDeOrdenJudicialGUI1984());
 		TipoGUI.CONSOLA_DESARROLLADOR.registrarGUI(ConsolaDesarrolladorGUITL.ID, () -> new ConsolaDesarrolladorGUITL());
+		TipoGUI.QUICKFIX.registrarGUI(ElementoQuickFixDemonSlayers.ID, () -> new ElementoQuickFixDemonSlayers());
 
+	
+	
+	
+		
 	}
 
 	private static void monitor_proceso(long pid) {

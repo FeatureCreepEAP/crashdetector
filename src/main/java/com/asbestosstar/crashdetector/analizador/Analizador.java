@@ -12,7 +12,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
-import com.asbestosstar.crashdetector.Config;
+import javax.annotation.Nullable;
+
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.*;
@@ -507,4 +508,19 @@ public class Analizador {
 
 		return soluciones;
 	}
+
+	/**
+	 * Obtener una solucion con enlace
+	 * 
+	 * @return
+	 */
+	public @Nullable QuickFix obtenerQuickFixConEnlace(String enlace) {
+		for (QuickFix sol : obtenerSoluciones()) {
+			if (sol.obtenerEnlace().equals(enlace)) {
+				return sol;
+			}
+		}
+		return null;
+	}
+
 }

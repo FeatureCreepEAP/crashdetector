@@ -109,19 +109,29 @@ public interface Verificaciones {
 		return false;
 	}
 
-	
-	//@Override
-	public default String comoString() {//no puedemos usar toString en interfaz
-		StringBuilder constructor= new StringBuilder();
+	// @Override
+	public default String comoString() {// no puedemos usar toString en interfaz
+		StringBuilder constructor = new StringBuilder();
 		String tituloColor = Config.obtenerInstancia().obtenerColorDeTitulosDeConsolas();
 		constructor.append("<span style='color: #").append(tituloColor).append("; font-weight: bold;'>")
 				.append(nombre()).append("</span>");
-		constructor.append("<br>").append(mensaje()).append("<hr style='border: 0; border-top: 1px solid #")
-				.append(tituloColor).append("; margin: 8px 0;' />");
+		constructor.append("<br>").append(mensaje());
+
+		String colorenlace = Config.obtenerInstancia().obtenerColorEnlace();
+
+		if (this.solucion() != null && this.solucion() != QuickFix.NINGUN) {
+			String enlaceHtml = "<a href=\"" + this.solucion().obtenerEnlace() + "\" style=\"color:" + colorenlace + ";\">QuickFix</a>";
+			if (!constructor.toString().endsWith(nl_html) && !constructor.toString().endsWith(nl)) {
+				constructor.append(nl_html);
+			}
+			constructor.append(enlaceHtml);
+		}
+
+		constructor.append("<hr style='border: 0; border-top: 1px solid #").append(tituloColor)
+				.append("; margin: 8px 0;' />");
+
 		return constructor.toString();
-				
+
 	}
-	
-	
-	
+
 }

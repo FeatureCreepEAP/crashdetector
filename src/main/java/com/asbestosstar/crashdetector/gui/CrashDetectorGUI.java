@@ -16,6 +16,8 @@ import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrBase;
 import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrSakuraRiddle;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasHoloTalk;
+import com.asbestosstar.crashdetector.gui.tipos.quickfix.ElementoQuickFixDemonSlayers;
+import com.asbestosstar.crashdetector.gui.tipos.quickfix.QuickFixGUI;
 
 public interface CrashDetectorGUI {
 
@@ -164,7 +166,19 @@ public interface CrashDetectorGUI {
 				CrashDetectorLogger.log(url + " (cfr url)");
 				CfrBase gui = TipoGUI.CFR.obtenerGUIPredeterminado(CfrSakuraRiddle.ID, CfrSakuraRiddle::new);
 				gui.procesarHipervinculo(url);
-			} else if (url != null) {
+
+			}
+
+			else if (url.startsWith("quickfix://")) {
+				CrashDetectorLogger.log(url + " (quickfix url)");
+				QuickFixGUI gui = TipoGUI.QUICKFIX.obtenerGUIPredeterminado(ElementoQuickFixDemonSlayers.ID,
+						ElementoQuickFixDemonSlayers::new);
+				gui.constructir(MonitorDePID.analizador.obtenerQuickFixConEnlace(url));
+
+			}
+
+			else if (url != null) {
+				CrashDetectorLogger.log(url);
 				Desktop.getDesktop().browse(new java.net.URI(url));
 			}
 		} catch (Exception ex) {

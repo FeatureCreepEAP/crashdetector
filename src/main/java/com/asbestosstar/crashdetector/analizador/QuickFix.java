@@ -33,6 +33,14 @@ public class QuickFix {
 		this.tieneCheckbox = builder.tieneCheckbox;
 		componentes = builder.componentes;
 	}
+	
+	/**
+	 * Enlace de QuickFix
+	 * @return
+	 */
+	public String obtenerEnlace() {
+		return "quickfix://"+etiqueta+"/";
+	}
 
 	public static class Builder {
 		private final String etiqueta;
