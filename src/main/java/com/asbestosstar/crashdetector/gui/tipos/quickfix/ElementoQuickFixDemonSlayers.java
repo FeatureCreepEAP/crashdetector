@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -16,6 +17,13 @@ import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
 
+/**
+ * Implementación "DemonSlayers" como ventana independiente (JFrame).
+ * 
+ * Estilo visual coherente con PanelQuickFixDemonSlayers: - Fondo negro
+ * (#000000) - Texto blanco - Separador rojo - Imagen centrada al final (como en
+ * el "pie")
+ */
 public class ElementoQuickFixDemonSlayers extends QuickFixGUI {
 
 	private static final long serialVersionUID = 1L;
@@ -31,25 +39,29 @@ public class ElementoQuickFixDemonSlayers extends QuickFixGUI {
 
 	public ElementoQuickFixDemonSlayers() {
 		super();
-		this.setTitle("DemonSlayers - QuickFix"); // opcional
+		this.setTitle("DemonSlayers - QuickFix");
 	}
 
 	@Override
 	protected Component crearContenido(QuickFix fix) {
 		if (fix == null) {
-			return new JLabel("(QuickFix nulo)");
+			return crearEtiquetaFallback("(QuickFix nulo)");
 		}
 
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		panel.setOpaque(false);
+		panel.setOpaque(true);
+		panel.setBackground(colorFondoDemon.obtener());
 		panel.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
 
-		JLabel titulo = new JLabel("<html><b>" + formatearTexto(fix.etiqueta) + "</b></html>");
+		// === Etiqueta (título) ===
+		JLabel titulo = new JLabel(fix.etiqueta); // sin HTML
 		titulo.setAlignmentX(Component.LEFT_ALIGNMENT);
 		titulo.setForeground(colorTextoDemon.obtener());
+		titulo.setFont(titulo.getFont().deriveFont(14f).deriveFont(java.awt.Font.BOLD));
 		panel.add(titulo);
 
+		// === Separador rojo ===
 		JPanel separador = new JPanel();
 		separador.setMaximumSize(new java.awt.Dimension(Integer.MAX_VALUE, 2));
 		separador.setOpaque(true);
@@ -57,33 +69,27 @@ public class ElementoQuickFixDemonSlayers extends QuickFixGUI {
 		separador.setAlignmentX(Component.LEFT_ALIGNMENT);
 		panel.add(separador);
 
-		String descripcionTexto = fix.etiqueta != null && !fix.etiqueta.isEmpty()
-			? fix.etiqueta
-			: "Sin descripción adicional";
+		// === Componentes adicionales (botones, etiquetas, etc.) ===
+		for (QuickFix.ComponenteGUI comp : fix.componentes) {
+			JComponent jcomp = comp.crearComponente(() -> fix.tieneMantener);
+			jcomp.setAlignmentX(Component.LEFT_ALIGNMENT);
+			if (jcomp instanceof JLabel) {
+				((JLabel) jcomp).setForeground(colorTextoDemon.obtener());
+			}
+			panel.add(jcomp);
+		}
 
-		JLabel descripcion = new JLabel(
-			"<html><span style='color:#" +
-			String.format("%06x", colorTextoDemon.obtener().getRGB() & 0xFFFFFF) +
-			";'>" + formatearTexto(descripcionTexto) + "</span></html>"
-		);
-		descripcion.setAlignmentX(Component.LEFT_ALIGNMENT);
-		descripcion.setBorder(BorderFactory.createEmptyBorder(8, 0, 0, 0));
-		panel.add(descripcion);
-
+		// === Imagen decorativa (centrada al final, como en el scrollable) ===
 		int[] dims = dimensionesImagenDecorativa();
 		etiquetaImagenDecorativa = crearEtiquetaImagenEscalada(rutaImagenDecorativa(), dims[0], dims[1]);
 		if (etiquetaImagenDecorativa != null) {
 			JPanel panelImagen = new JPanel();
-			panelImagen.setLayout(new BoxLayout(panelImagen, BoxLayout.X_AXIS));
+			panelImagen.setLayout(new BoxLayout(panelImagen, BoxLayout.Y_AXIS));
 			panelImagen.setOpaque(true);
 			panelImagen.setBackground(colorImagenFondo.obtener());
 			panelImagen.setBorder(BorderFactory.createEmptyBorder(12, 0, 0, 0));
 
-			JPanel espaciador = new JPanel();
-			espaciador.setLayout(new BoxLayout(espaciador, BoxLayout.X_AXIS));
-			espaciador.setOpaque(false);
-			espaciador.setMaximumSize(new java.awt.Dimension(Short.MAX_VALUE, Short.MAX_VALUE));
-			panelImagen.add(espaciador);
+			etiquetaImagenDecorativa.setAlignmentX(Component.CENTER_ALIGNMENT);
 			panelImagen.add(etiquetaImagenDecorativa);
 			panel.add(panelImagen);
 		}
@@ -91,19 +97,26 @@ public class ElementoQuickFixDemonSlayers extends QuickFixGUI {
 		return panel;
 	}
 
+	private JLabel crearEtiquetaFallback(String texto) {
+		JLabel lbl = new JLabel(texto);
+		lbl.setForeground(Color.WHITE);
+		lbl.setOpaque(true);
+		lbl.setBackground(Color.BLACK);
+		lbl.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
+		return lbl;
+	}
+
 	@Override
 	protected void aplicarApariencia() {
-		// El fondo del JFrame se puede dejar por defecto; el contenido está en panelContenido
-		this.panelContenido.setBackground(colorFondoDemon.obtener());
-		this.getContentPane().setBackground(colorFondoDemon.obtener()); // opcional
+		// El fondo lo maneja el panel interno; no se necesita más
 		this.revalidate();
 		this.repaint();
 	}
 
 	@Override
 	protected void aplicarAparienciaBase() {
-		// Ya se maneja en la clase base → no sobrescribir innecesariamente
 		super.aplicarAparienciaBase();
+		this.panelContenido.setOpaque(true);
 		this.panelContenido.setBackground(colorFondoDemon.obtener());
 	}
 
@@ -114,8 +127,10 @@ public class ElementoQuickFixDemonSlayers extends QuickFixGUI {
 
 	@Override
 	protected int[] dimensionesImagenDecorativa() {
-		return new int[] { 64, 64 };
+		return new int[] { 128, 128 }; // igual que en el scrollable para coherencia
 	}
+
+	// ====== CrashDetectorGUI ======
 
 	@Override
 	public String id() {
