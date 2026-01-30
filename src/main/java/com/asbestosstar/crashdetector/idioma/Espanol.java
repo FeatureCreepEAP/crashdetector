@@ -6825,4 +6825,43 @@ public class Espanol implements Idioma {
 				+ "Pulsa \"Revisar\" para actualizar los estados.";
 	}
 
+	@Override
+	public String confirmacionReEstablarTodos() {
+		// TODO Auto-generated method stub
+		return "¿Restablecer todas las opciones a sus valores por defecto?";
+	}
+
+	@Override
+	public String gui() {
+		// TODO Auto-generated method stub
+		return "GUI";
+	}
+
+	@Override
+	public String sinOpciones() {
+		// TODO Auto-generated method stub
+		return "Sin Opciones";
+	}
+
+	@Override
+	public String seleccionaColor() {
+		// TODO Auto-generated method stub
+		return "Seleccionar color";
+	}
+
+	@Override
+	public String botonMostrarGUI() {
+		return "Mostrar GUI";
+	}
+
+	@Override
+	public String botonGuardarTodo() {
+		return "Guardar todo";
+	}
+
+	@Override
+	public String botonRestablecerTodo() {
+		return "Restablecer todo";
+	}
+
 }

@@ -6058,4 +6058,39 @@ public class Arabe implements Idioma {
 				+ "اضغط «مراجعة» لتحديث الحالات.";
 	}
 
+	@Override
+	public String confirmacionReEstablarTodos() {
+		return "هل تريد إعادة تعيين جميع الخيارات إلى قيمها الافتراضية؟";
+	}
+
+	@Override
+	public String gui() {
+		return "واجهة المستخدم الرسومية (GUI)";
+	}
+
+	@Override
+	public String sinOpciones() {
+		return "بدون خيارات";
+	}
+
+	@Override
+	public String seleccionaColor() {
+		return "اختيار اللون";
+	}
+
+	@Override
+	public String botonMostrarGUI() {
+		return "عرض واجهة المستخدم الرسومية";
+	}
+
+	@Override
+	public String botonGuardarTodo() {
+		return "حفظ الكل";
+	}
+
+	@Override
+	public String botonRestablecerTodo() {
+		return "إعادة تعيين الكل";
+	}
+
 }

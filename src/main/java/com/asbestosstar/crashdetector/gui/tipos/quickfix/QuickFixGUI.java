@@ -92,8 +92,11 @@ public abstract class QuickFixGUI extends JFrame implements CrashDetectorGUI {
 	// ====== Métodos abstractos (igual que antes) ======
 
 	protected abstract Component crearContenido(QuickFix fix);
+
 	protected abstract void aplicarApariencia();
+
 	protected abstract String rutaImagenDecorativa();
+
 	protected abstract int[] dimensionesImagenDecorativa();
 
 	/**
@@ -106,12 +109,15 @@ public abstract class QuickFixGUI extends JFrame implements CrashDetectorGUI {
 	}
 
 	protected JLabel crearEtiquetaImagenEscalada(String ruta, int ancho, int alto) {
-		if (ruta == null || ruta.isEmpty()) return null;
+		if (ruta == null || ruta.isEmpty())
+			return null;
 		try {
 			File archivo = new File(ruta);
-			if (!archivo.exists() || !archivo.isFile()) return null;
+			if (!archivo.exists() || !archivo.isFile())
+				return null;
 			Image imagenOriginal = ImageIO.read(archivo);
-			if (imagenOriginal == null) return null;
+			if (imagenOriginal == null)
+				return null;
 			Image imagenEscalada = imagenOriginal.getScaledInstance(ancho, alto, Image.SCALE_SMOOTH);
 			JLabel etiqueta = new JLabel(new ImageIcon(imagenEscalada));
 			etiqueta.setBorder(new EmptyBorder(4, 0, 4, 0));
@@ -123,7 +129,8 @@ public abstract class QuickFixGUI extends JFrame implements CrashDetectorGUI {
 	}
 
 	protected String formatearTexto(String texto) {
-		if (texto == null || texto.trim().isEmpty()) return "";
+		if (texto == null || texto.trim().isEmpty())
+			return "";
 		return texto; // HTML ya se maneja en las subclases si se desea
 	}
 

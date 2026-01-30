@@ -6108,4 +6108,39 @@ public class Esperanto implements Idioma {
 				+ "iliajn aktualajn statojn.\n\n" + "Premu \"Revizii\" por ĝisdatigi la statojn.";
 	}
 
+	@Override
+	public String confirmacionReEstablarTodos() {
+		return "Ĉu restarigi ĉiujn opciojn al iliaj defaŭltaj valoroj?";
+	}
+
+	@Override
+	public String gui() {
+		return "GUI";
+	}
+
+	@Override
+	public String sinOpciones() {
+		return "Sen opcioj";
+	}
+
+	@Override
+	public String seleccionaColor() {
+		return "Elekti koloron";
+	}
+
+	@Override
+	public String botonMostrarGUI() {
+		return "Montri GUI";
+	}
+
+	@Override
+	public String botonGuardarTodo() {
+		return "Konservi ĉion";
+	}
+
+	@Override
+	public String botonRestablecerTodo() {
+		return "Restarigi ĉion";
+	}
+
 }

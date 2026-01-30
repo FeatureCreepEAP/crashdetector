@@ -6127,4 +6127,39 @@ public class Ruso implements Idioma {
 				+ "их текущий статус.\n\n" + "Нажмите «Проверить», чтобы обновить статусы.";
 	}
 
+	@Override
+	public String confirmacionReEstablarTodos() {
+		return "Сбросить все параметры к значениям по умолчанию?";
+	}
+
+	@Override
+	public String gui() {
+		return "GUI";
+	}
+
+	@Override
+	public String sinOpciones() {
+		return "Нет настроек";
+	}
+
+	@Override
+	public String seleccionaColor() {
+		return "Выбрать цвет";
+	}
+
+	@Override
+	public String botonMostrarGUI() {
+		return "Показать GUI";
+	}
+
+	@Override
+	public String botonGuardarTodo() {
+		return "Сохранить всё";
+	}
+
+	@Override
+	public String botonRestablecerTodo() {
+		return "Сбросить всё";
+	}
+
 }

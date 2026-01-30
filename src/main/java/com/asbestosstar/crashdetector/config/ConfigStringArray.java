@@ -14,9 +14,11 @@ public class ConfigStringArray implements ElementoConfig<List<String>> {
 
 	private final String clave;
 	public Supplier<String> nombre;
+	public List<String> def;
 
-	private ConfigStringArray(String clave) {
+	private ConfigStringArray(String clave, List<String> def) {
 		this.clave = clave;
+		this.def = def;
 	}
 
 	@Override
@@ -57,7 +59,7 @@ public class ConfigStringArray implements ElementoConfig<List<String>> {
 			config.propiedadesConfig.setProperty(clave, joined);
 			config.guardar();
 		}
-		return new ConfigStringArray(clave);
+		return new ConfigStringArray(clave, valoresPorDefecto);
 	}
 
 	@Override
@@ -128,5 +130,11 @@ public class ConfigStringArray implements ElementoConfig<List<String>> {
 			}
 		}
 		return out.toString();
+	}
+
+	@Override
+	public List<String> obtenerValorPorDefecto() {
+		// TODO Auto-generated method stub
+		return def;
 	}
 }

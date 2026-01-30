@@ -431,10 +431,6 @@ public class MonitorDePID {
 		TipoGUI.CONSOLA_DESARROLLADOR.registrarGUI(ConsolaDesarrolladorGUITL.ID, () -> new ConsolaDesarrolladorGUITL());
 		TipoGUI.QUICKFIX.registrarGUI(ElementoQuickFixDemonSlayers.ID, () -> new ElementoQuickFixDemonSlayers());
 
-	
-	
-	
-		
 	}
 
 	private static void monitor_proceso(long pid) {

@@ -9,9 +9,11 @@ public class ConfigColor implements ElementoConfig<Color> {
 
 	private final String clave;
 	public Supplier<String> nombre;
+	public Color def;
 
-	private ConfigColor(String clave) {
+	private ConfigColor(String clave, Color def) {
 		this.clave = clave;
+		this.def = def;
 	}
 
 	@Override
@@ -56,7 +58,7 @@ public class ConfigColor implements ElementoConfig<Color> {
 			// Crear con el valor por defecto y guardar
 			config.propiedadesConfig.setProperty(clave, Config.colorAHexHtml(valorPorDefecto));
 			config.guardar();
-			return new ConfigColor(clave);
+			return new ConfigColor(clave, valorPorDefecto);
 		}
 
 		// Verificar que el valor existente sea un color válido
@@ -66,7 +68,7 @@ public class ConfigColor implements ElementoConfig<Color> {
 			throw new IllegalStateException("El valor de la clave no representa un color válido: " + valor, e);
 		}
 
-		return new ConfigColor(clave);
+		return new ConfigColor(clave, valorPorDefecto);
 	}
 
 	@Override
@@ -83,6 +85,12 @@ public class ConfigColor implements ElementoConfig<Color> {
 	public void establecerNombreParaMostrar(Supplier<String> nombre) {
 		// TODO Auto-generated method stub
 		this.nombre = nombre;
+	}
+
+	@Override
+	public Color obtenerValorPorDefecto() {
+		// TODO Auto-generated method stub
+		return def;
 	}
 
 }

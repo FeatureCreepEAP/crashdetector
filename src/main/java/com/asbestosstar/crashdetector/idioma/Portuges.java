@@ -6131,4 +6131,39 @@ public class Portuges implements Idioma {
 				+ "Clique em \"Verificar\" para atualizar os estados.";
 	}
 
+	@Override
+	public String confirmacionReEstablarTodos() {
+		return "Redefinir todas as opções para os valores padrão?";
+	}
+
+	@Override
+	public String gui() {
+		return "GUI";
+	}
+
+	@Override
+	public String sinOpciones() {
+		return "Sem opções";
+	}
+
+	@Override
+	public String seleccionaColor() {
+		return "Selecionar cor";
+	}
+
+	@Override
+	public String botonMostrarGUI() {
+		return "Mostrar GUI";
+	}
+
+	@Override
+	public String botonGuardarTodo() {
+		return "Salvar tudo";
+	}
+
+	@Override
+	public String botonRestablecerTodo() {
+		return "Redefinir tudo";
+	}
+
 }

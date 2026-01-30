@@ -8,9 +8,11 @@ public class ConfigDouble implements ElementoConfig<Double> {
 
 	private final String clave;
 	public Supplier<String> nombre;
+	public double def;
 
-	private ConfigDouble(String clave) {
+	private ConfigDouble(String clave, double def) {
 		this.clave = clave;
+		this.def = def;
 	}
 
 	@Override
@@ -55,7 +57,7 @@ public class ConfigDouble implements ElementoConfig<Double> {
 			// Crear la clave con valor por defecto
 			config.propiedadesConfig.setProperty(clave, Double.toString(valorPorDefecto));
 			config.guardar();
-			return new ConfigDouble(clave);
+			return new ConfigDouble(clave, valorPorDefecto);
 		}
 
 		// Verificar que el valor existente sea un número válido
@@ -65,7 +67,7 @@ public class ConfigDouble implements ElementoConfig<Double> {
 			throw new IllegalStateException("El valor de la clave no representa un número válido: " + valor, e);
 		}
 
-		return new ConfigDouble(clave);
+		return new ConfigDouble(clave, valorPorDefecto);
 	}
 
 	@Override
@@ -82,5 +84,11 @@ public class ConfigDouble implements ElementoConfig<Double> {
 	public void establecerNombreParaMostrar(Supplier<String> nombre) {
 		// TODO Auto-generated method stub
 		this.nombre = nombre;
+	}
+
+	@Override
+	public Double obtenerValorPorDefecto() {
+		// TODO Auto-generated method stub
+		return def;
 	}
 }

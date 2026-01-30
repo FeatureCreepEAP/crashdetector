@@ -4,10 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +17,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 
-import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.config.ConfigBoolean;
 import com.asbestosstar.crashdetector.config.ConfigColor;
@@ -32,23 +26,34 @@ import com.asbestosstar.crashdetector.config.ConfigDouble;
 import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
+import com.asbestosstar.crashdetector.gui.tipos.editor.BotonRedondeadoTL;
 
-/**
- * Implementación concreta del editor de GUIs con apariencia CDSkinCape. Define
- * completamente el layout, la apariencia y la gestión de `ConfigColor`.
- */
 public class CDSkinCape extends EditorGUI {
 
 	public static String ID = "cdskincape";
 
-	public ConfigColor colorFondo = ConfigColor.de("tema.cdskincape.editor.color.fondo", new Color(240, 245, 250));
-	public ConfigColor colorTexto = ConfigColor.de("tema.cdskincape.editor.color.texto", new Color(50, 50, 50));
-	public ConfigColor colorBoton = ConfigColor.de("tema.cdskincape.editor.color.boton", new Color(66, 133, 244));
-	public ConfigColor colorCajaTexto = ConfigColor.de("tema.cdskincape.editor.color.caja_texto",
-			new Color(255, 255, 255));
-	public ConfigColor colorBorde = ConfigColor.de("tema.cdskincape.editor.color.borde", new Color(200, 200, 200));
+	// Colores base (ajustados a TL Skin / Cape)
+	private static final Color TL_FONDO_IZQ = new Color(245, 249, 253);
+	private static final Color TL_TEXTO = new Color(40, 40, 40);
+	private static final Color TL_BOTON_PRIMARIO = new Color(76, 175, 80);
+	private static final Color TL_BOTON_SECUNDARIO = new Color(220, 228, 236);
+	private static final Color TL_BORDE = new Color(190, 200, 210);
 
-	// Panel para mostrar las opciones de configuración de la GUI seleccionada
+	// Colores TL configurables
+	public ConfigColor tlBlanco = ConfigColor.de("tema.tl.color.blanco", Color.WHITE);
+
+	public ConfigColor tlAzul = ConfigColor.de("tema.tl.color.azul", new Color(66, 133, 244));
+
+	public ConfigColor tlRojo = ConfigColor.de("tema.tl.color.rojo", new Color(220, 53, 69));
+
+	public ConfigColor tlFondoIzquierdo = ConfigColor.de("tema.tl.color.fondo_izquierdo", new Color(245, 248, 251));
+
+	public ConfigColor colorFondo = ConfigColor.de("tema.cdskincape.editor.color.fondo", TL_FONDO_IZQ);
+	public ConfigColor colorTexto = ConfigColor.de("tema.cdskincape.editor.color.texto", TL_TEXTO);
+	public ConfigColor colorBoton = ConfigColor.de("tema.cdskincape.editor.color.boton", TL_BOTON_PRIMARIO);
+	public ConfigColor colorCajaTexto = ConfigColor.de("tema.cdskincape.editor.color.caja_texto", Color.WHITE);
+	public ConfigColor colorBorde = ConfigColor.de("tema.cdskincape.editor.color.borde", TL_BORDE);
+
 	private JPanel panelConfiguracionGUI;
 
 	@Override
@@ -58,107 +63,315 @@ public class CDSkinCape extends EditorGUI {
 
 	@Override
 	public void init() {
-		// Inicializar colores PRIMERO
-
-		// AHORA llamamos al init del padre
 		inicializarInterfaz();
-		this.setVisible(true);
+		setVisible(true);
 	}
 
 	private void inicializarInterfaz() {
-		setLayout(new BorderLayout(10, 10));
-		// Establecer tamaño preferido y mínimo
-		setPreferredSize(new Dimension(1000, 700));
-		setMinimumSize(new Dimension(800, 500));
 
-		// Panel superior con título y botones
-		JPanel panelSuperior = new JPanel(new BorderLayout(10, 10));
-		panelSuperior.setBackground(colorFondo.obtener());
-		JLabel titulo = new JLabel("Editor de GUIs - CDSkinCape");
-		titulo.setFont(new Font("Segoe UI", Font.BOLD, 18));
-		titulo.setForeground(colorTexto.obtener());
-		panelSuperior.add(titulo, BorderLayout.WEST);
+		setTitle("CDSkinCape");
+		setLayout(new BorderLayout());
+		setPreferredSize(new Dimension(1000, 650));
+		setMinimumSize(new Dimension(900, 550));
 
-		JButton botonMostrar = new JButton("Mostrar GUI");
-		botonMostrar.setForeground(Color.WHITE);
-		botonMostrar.setBackground(colorBoton.obtener());
-		botonMostrar.setFocusPainted(false);
-		botonMostrar.addActionListener(e -> mostrarGUI());
-		panelSuperior.add(botonMostrar, BorderLayout.EAST);
+		// ================= IZQUIERDA =================
 
-		add(panelSuperior, BorderLayout.NORTH);
+		JPanel panelIzquierdo = new JPanel();
+		panelIzquierdo.setLayout(new BoxLayout(panelIzquierdo, BoxLayout.Y_AXIS));
+		panelIzquierdo.setPreferredSize(new Dimension(260, 0));
+		panelIzquierdo.setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
+		panelIzquierdo.setBackground(new Color(245, 248, 251)); // TL-like fondo
 
-		// Panel central con combos y panel de edición
-		JPanel panelCentral = new JPanel(new GridBagLayout());
-		panelCentral.setBackground(colorFondo.obtener());
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.insets = new Insets(5, 5, 5, 5);
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-
-		// Combo para seleccionar el tipo de GUI
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		panelCentral.add(new JLabel("Tipo de GUI:"), gbc);
-		gbc.gridx = 1;
-		comboTipoGUI = new JComboBox<>();
-		comboTipoGUI.setPreferredSize(new Dimension(200, 30));
-		comboTipoGUI.setBackground(colorCajaTexto.obtener());
-		comboTipoGUI.setForeground(colorTexto.obtener());
-		comboTipoGUI.addActionListener(e -> actualizarComboGUI());
-		panelCentral.add(comboTipoGUI, gbc);
-
-		// Combo para seleccionar la GUI específica
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-		panelCentral.add(new JLabel("GUI:"), gbc);
-		gbc.gridx = 1;
-		comboGUI = new JComboBox<>();
-		comboGUI.setPreferredSize(new Dimension(200, 30));
-		comboGUI.setBackground(colorCajaTexto.obtener());
-		comboGUI.setForeground(colorTexto.obtener());
-		comboGUI.addActionListener(e -> cargarGUISeleccionada());
-		panelCentral.add(comboGUI, gbc);
-
-		// Panel de edición principal
-		gbc.gridx = 0;
-		gbc.gridy = 2;
-		gbc.gridwidth = 2;
-		gbc.weightx = 1.0;
-		gbc.weighty = 1.0;
-		gbc.fill = GridBagConstraints.BOTH;
 		panelEdicion = new JPanel(new BorderLayout());
+		panelEdicion.setPreferredSize(new Dimension(220, 260));
+		panelEdicion.setMaximumSize(new Dimension(220, 260));
 		panelEdicion.setBorder(BorderFactory.createLineBorder(colorBorde.obtener()));
-		panelEdicion.setBackground(colorCajaTexto.obtener());
-		JScrollPane scrollPanelEdicion = new JScrollPane(panelEdicion);
-		panelCentral.add(scrollPanelEdicion, gbc);
+		panelEdicion.setBackground(Color.WHITE);
 
-		// Panel para mostrar la configuración de la GUI seleccionada
+		panelIzquierdo.add(panelEdicion);
+		panelIzquierdo.add(Box.createVerticalStrut(12));
+
+		JLabel lblTipo = new JLabel(MonitorDePID.idioma.tipo());
+		panelIzquierdo.add(lblTipo);
+
+		comboTipoGUI = new JComboBox<>();
+		comboTipoGUI.setMaximumSize(new Dimension(Integer.MAX_VALUE, 28));
+		comboTipoGUI.addActionListener(e -> actualizarComboGUI());
+		panelIzquierdo.add(comboTipoGUI);
+
+		panelIzquierdo.add(Box.createVerticalStrut(8));
+
+		JLabel lblGui = new JLabel(MonitorDePID.idioma.gui());
+		panelIzquierdo.add(lblGui);
+
+		comboGUI = new JComboBox<>();
+		comboGUI.setMaximumSize(new Dimension(Integer.MAX_VALUE, 28));
+		comboGUI.addActionListener(e -> cargarGUISeleccionada());
+		panelIzquierdo.add(comboGUI);
+
+		panelIzquierdo.add(Box.createVerticalStrut(14));
+
+		JButton botonMostrar = new BotonRedondeadoTL(MonitorDePID.idioma.botonMostrarGUI(), tlBlanco.obtener(),
+				tlRojo.obtener(), tlRojo.obtener(), false);
+
+		botonMostrar.setAlignmentX(Component.CENTER_ALIGNMENT);
+		botonMostrar.addActionListener(e -> mostrarGUI());
+		panelIzquierdo.add(botonMostrar);
+
+		panelIzquierdo.add(Box.createVerticalStrut(8));
+
+		JButton guardarTodo = new BotonRedondeadoTL(MonitorDePID.idioma.botonGuardarTodo(), tlBlanco.obtener(),
+				tlAzul.obtener(), tlAzul.obtener(), false);
+
+		guardarTodo.setAlignmentX(Component.CENTER_ALIGNMENT);
+		guardarTodo.addActionListener(e -> guardarTodo());
+		panelIzquierdo.add(guardarTodo);
+
+		panelIzquierdo.add(Box.createVerticalStrut(8));
+
+		JButton resetearTodo = new BotonRedondeadoTL(MonitorDePID.idioma.botonRestablecerTodo(), tlBlanco.obtener(),
+				tlAzul.obtener(), tlAzul.obtener(), false);
+
+		resetearTodo.setAlignmentX(Component.CENTER_ALIGNMENT);
+		resetearTodo.addActionListener(e -> resetearTodo());
+		panelIzquierdo.add(resetearTodo);
+
+		add(panelIzquierdo, BorderLayout.WEST);
+
+		// ================= DERECHA =================
+
 		panelConfiguracionGUI = new JPanel(new BorderLayout());
-		panelConfiguracionGUI.setBorder(BorderFactory.createTitledBorder("Configuración de la GUI Seleccionada"));
-		panelConfiguracionGUI.setBackground(colorCajaTexto.obtener());
+		panelConfiguracionGUI.setBorder(BorderFactory.createTitledBorder("Configuración"));
+		panelConfiguracionGUI.setBackground(Color.WHITE);
+		add(panelConfiguracionGUI, BorderLayout.CENTER);
 
-		// JSplitPane para dividir panelEdicion y panelConfiguracionGUI
-		JSplitPane splitPanePrincipal = new JSplitPane(JSplitPane.VERTICAL_SPLIT, scrollPanelEdicion,
-				panelConfiguracionGUI);
-		splitPanePrincipal.setDividerLocation(0.7); // Ajusta el tamaño inicial
-		splitPanePrincipal.setResizeWeight(0.7); // Ajusta cómo se reparte el espacio al redimensionar
-		splitPanePrincipal.setDividerSize(5); // Ajusta el tamaño del divisor
-		splitPanePrincipal.setBackground(colorFondo.obtener());
-
-		// Añadir el splitPane al panel central en lugar del scrollPanelEdicion
-		// directamente
-		gbc.gridy = 2; // Mantener la misma fila
-		panelCentral.add(splitPanePrincipal, gbc);
-
-		add(panelCentral, BorderLayout.CENTER);
-
-		// Cargar tipos de GUI
 		for (TipoGUI<?> tipo : TipoGUI.TIPOS_DE_GUI) {
 			comboTipoGUI.addItem(tipo.id());
 		}
+	}
 
-		// Aplicar apariencia inicial
-		aplicarApariencia();
+	private Object guardarTodo() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private JButton crearBotonTL(String texto, Color fondo, Color textoColor) {
+		JButton b = new JButton(texto);
+
+		b.setBackground(fondo);
+		b.setForeground(textoColor);
+		b.setFocusPainted(false);
+		b.setBorderPainted(false);
+		b.setOpaque(true);
+
+		b.setPreferredSize(new Dimension(180, 34));
+		b.setMaximumSize(new Dimension(Integer.MAX_VALUE, 34));
+
+		b.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(fondo.darker(), 1, true),
+				BorderFactory.createEmptyBorder(6, 18, 6, 18)));
+
+		return b;
+	}
+
+	@Override
+	public void cargarGUISeleccionada() {
+		super.cargarGUISeleccionada();
+		actualizarPanelConfiguracionGUI();
+	}
+
+	private void actualizarPanelConfiguracionGUI() {
+
+		panelConfiguracionGUI.removeAll();
+
+		List<ElementoConfig> elementos = obtenerElementosConfigSeleccionados();
+
+		if (elementos != null && !elementos.isEmpty()) {
+
+			JPanel contenido = new JPanel();
+			contenido.setLayout(new BoxLayout(contenido, BoxLayout.Y_AXIS));
+			contenido.setBackground(Color.WHITE);
+
+			for (ElementoConfig<?> e : elementos) {
+
+				JPanel fila = new JPanel(new BorderLayout(8, 0));
+				fila.setBackground(Color.WHITE);
+
+				JLabel nombre = new JLabel(e.obtenerNombreParaMostrar());
+				fila.add(nombre, BorderLayout.WEST);
+
+				Component editor = crearComponenteEditable(e);
+				if (editor != null)
+					fila.add(editor, BorderLayout.CENTER);
+
+				JPanel acciones = new JPanel();
+				acciones.setBackground(Color.WHITE);
+
+				JButton reset = new BotonRedondeadoTL(MonitorDePID.idioma.restablecer(), tlAzul.obtener(),
+						tlAzul.obtener(), Color.WHITE, true // sólido
+				);
+				reset.addActionListener(x -> {
+					e.resetearAPorDefecto();
+					actualizarPanelConfiguracionGUI();
+				});
+				acciones.add(reset);
+
+				fila.add(acciones, BorderLayout.EAST);
+
+				contenido.add(fila);
+				contenido.add(Box.createVerticalStrut(6));
+			}
+
+			panelConfiguracionGUI.add(new JScrollPane(contenido), BorderLayout.CENTER);
+
+		} else {
+			panelConfiguracionGUI.add(new JLabel(MonitorDePID.idioma.sinOpciones()), BorderLayout.CENTER);
+		}
+
+		panelConfiguracionGUI.revalidate();
+		panelConfiguracionGUI.repaint();
+	}
+
+	private void resetearTodo() {
+		if (JOptionPane.showConfirmDialog(this, MonitorDePID.idioma.confirmacionReEstablarTodos(),
+				MonitorDePID.idioma.aceptar(), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)
+			return;
+
+		List<ElementoConfig> elementos = obtenerElementosConfigSeleccionados();
+		if (elementos == null)
+			return;
+
+		for (ElementoConfig<?> e : elementos) {
+			e.resetearAPorDefecto();
+		}
+		actualizarPanelConfiguracionGUI();
+	}
+
+	private Component crearComponenteEditable(ElementoConfig<?> elemento) {
+
+		if (elemento instanceof ConfigBoolean) {
+			JCheckBox cb = new JCheckBox();
+			cb.setSelected((Boolean) elemento.obtener());
+			cb.addActionListener(e -> ((ConfigBoolean) elemento).escribir(cb.isSelected()));
+			return cb;
+		}
+
+		if (elemento instanceof ConfigColor) {
+
+			JPanel p = new JPanel(new BorderLayout(6, 0));
+
+			JTextField tf = new JTextField(
+					"#" + Integer.toHexString(((ConfigColor) elemento).obtener().getRGB()).substring(2));
+
+			JPanel preview = new JPanel();
+			preview.setPreferredSize(new Dimension(18, 18));
+			preview.setBackground(((ConfigColor) elemento).obtener());
+			preview.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+
+			preview.addMouseListener(new java.awt.event.MouseAdapter() {
+				@Override
+				public void mouseClicked(java.awt.event.MouseEvent e) {
+					Color nuevo = javax.swing.JColorChooser.showDialog(CDSkinCape.this,
+							MonitorDePID.idioma.seleccionaColor(), ((ConfigColor) elemento).obtener());
+					if (nuevo != null) {
+						((ConfigColor) elemento).escribir(nuevo);
+						preview.setBackground(nuevo);
+						tf.setText("#" + Integer.toHexString(nuevo.getRGB()).substring(2));
+					}
+				}
+			});
+
+			tf.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+				public void insertUpdate(javax.swing.event.DocumentEvent e) {
+					aplicar();
+				}
+
+				public void removeUpdate(javax.swing.event.DocumentEvent e) {
+					aplicar();
+				}
+
+				public void changedUpdate(javax.swing.event.DocumentEvent e) {
+					aplicar();
+				}
+
+				private void aplicar() {
+					try {
+						Color c = Color.decode(tf.getText());
+						((ConfigColor) elemento).escribir(c);
+						preview.setBackground(c);
+					} catch (Exception ignored) {
+					}
+				}
+			});
+
+			p.add(preview, BorderLayout.WEST);
+			p.add(tf, BorderLayout.CENTER);
+			return p;
+		}
+
+		if (elemento instanceof ConfigDouble) {
+			JTextField tf = new JTextField(elemento.obtener().toString());
+			tf.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+				public void insertUpdate(javax.swing.event.DocumentEvent e) {
+					aplicar();
+				}
+
+				public void removeUpdate(javax.swing.event.DocumentEvent e) {
+					aplicar();
+				}
+
+				public void changedUpdate(javax.swing.event.DocumentEvent e) {
+					aplicar();
+				}
+
+				private void aplicar() {
+					try {
+						((ConfigDouble) elemento).escribir(Double.parseDouble(tf.getText()));
+					} catch (Exception ignored) {
+					}
+				}
+			});
+			return tf;
+		}
+
+		if (elemento instanceof ConfigString) {
+			JTextField tf = new JTextField((String) elemento.obtener());
+			tf.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+				public void insertUpdate(javax.swing.event.DocumentEvent e) {
+					((ConfigString) elemento).escribir(tf.getText());
+				}
+
+				public void removeUpdate(javax.swing.event.DocumentEvent e) {
+					((ConfigString) elemento).escribir(tf.getText());
+				}
+
+				public void changedUpdate(javax.swing.event.DocumentEvent e) {
+					((ConfigString) elemento).escribir(tf.getText());
+				}
+			});
+			return tf;
+		}
+
+		return new JLabel(String.valueOf(elemento.obtener()));
+	}
+
+	@Override
+	public List<ElementoConfig> obtenerElementosConfigs() {
+
+		List<ElementoConfig> l = new ArrayList<>();
+
+		colorFondo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondo());
+		colorTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTexto());
+		colorBoton.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBoton());
+		colorCajaTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorCajaTexto());
+		colorBorde.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBorde());
+
+		l.add(colorFondo);
+		l.add(colorTexto);
+		l.add(colorBoton);
+		l.add(colorCajaTexto);
+		l.add(colorBorde);
+
+		return l;
 	}
 
 	@Override
@@ -167,345 +380,13 @@ public class CDSkinCape extends EditorGUI {
 	}
 
 	private void aplicarApariencia() {
-		// Actualizar colores de todos los componentes
-		setBackground(colorFondo.obtener());
-		if (getComponents().length > 0) {
-			Component panelSuperior = getComponents()[0];
-			if (panelSuperior instanceof JPanel) {
-				((JPanel) panelSuperior).setBackground(colorFondo.obtener());
-			}
-		}
-		if (getComponents().length > 1) {
-			Component panelCentral = getComponents()[1];
-			if (panelCentral instanceof JPanel) {
-				((JPanel) panelCentral).setBackground(colorFondo.obtener());
-			}
-		}
-		if (comboTipoGUI != null) {
-			comboTipoGUI.setBackground(colorCajaTexto.obtener());
-			comboTipoGUI.setForeground(colorTexto.obtener());
-		}
-		if (comboGUI != null) {
-			comboGUI.setBackground(colorCajaTexto.obtener());
-			comboGUI.setForeground(colorTexto.obtener());
-		}
-		if (panelEdicion != null) {
-			panelEdicion.setBackground(colorCajaTexto.obtener());
-		}
-		if (panelConfiguracionGUI != null) {
-			panelConfiguracionGUI.setBackground(colorCajaTexto.obtener());
-		}
+		getContentPane().setBackground(colorFondo.obtener());
 		revalidate();
 		repaint();
 	}
 
 	@Override
-	public void cargarGUISeleccionada() {
-		super.cargarGUISeleccionada(); // Llama al método padre para cargar la GUI
-		actualizarPanelConfiguracionGUI(); // Actualiza el panel de configuración
-		CrashDetectorLogger.log("cargar GUI seleccionada completa");
-	}
-
-	private void actualizarPanelConfiguracionGUI() {
-		// Limpiar el panel de configuración
-		panelConfiguracionGUI.removeAll();
-
-		// Obtener los elementos de configuración de la GUI seleccionada
-		java.util.List<ElementoConfig> elementosConfig = obtenerElementosConfigSeleccionados();
-
-		if (elementosConfig != null) {
-			CrashDetectorLogger.log("elemenhtos config no null");
-			if (!elementosConfig.isEmpty()) {
-				CrashDetectorLogger.log("tiene elementos");
-			}
-		}
-
-		if (elementosConfig != null && !elementosConfig.isEmpty()) {
-			// Crear un panel para contener los componentes de configuración
-			CrashDetectorLogger.log("tiene elementos no null");
-
-			JPanel panelContenidoConfig = new JPanel();
-			panelContenidoConfig.setLayout(new BoxLayout(panelContenidoConfig, BoxLayout.Y_AXIS));
-			panelContenidoConfig.setBackground(colorCajaTexto.obtener());
-
-			CrashDetectorLogger.log("panelContenidoConfig");
-
-			for (ElementoConfig<?> elemento : elementosConfig) {
-				// Verificar si el elemento es nulo antes de usarlo
-				if (elemento == null) {
-					continue; // Saltar elementos nulos
-				}
-				// Crear un panel para cada elemento de configuración
-				JPanel panelElemento = new JPanel(new BorderLayout(5, 5));
-				panelElemento.setBackground(colorCajaTexto.obtener());
-				panelElemento.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
-
-				JLabel labelNombre = new JLabel(elemento.obtenerNombreParaMostrar() + " (" + elemento.clave() + "):");
-				labelNombre.setForeground(colorTexto.obtener());
-				panelElemento.add(labelNombre, BorderLayout.WEST);
-
-				// Crear un componente editable según el tipo del elemento
-				Component componenteEditable = crearComponenteEditable(elemento);
-				if (componenteEditable != null) {
-					panelElemento.add(componenteEditable, BorderLayout.CENTER);
-				}
-
-				// Solo añadir el botón "Editar" si NO es un ConfigColor
-				if (!(elemento instanceof com.asbestosstar.crashdetector.config.ConfigColor)) {
-					JButton botonEditar = new JButton("Editar");
-					botonEditar.addActionListener(e -> editarElemento(elemento));
-					panelElemento.add(botonEditar, BorderLayout.EAST);
-				}
-
-				panelContenidoConfig.add(panelElemento);
-				panelContenidoConfig.add(Box.createVerticalStrut(5)); // Espacio entre elementos
-			}
-
-			CrashDetectorLogger.log("elementos completa");
-
-			// Añadir el panel de contenido al JScrollPane del panel de configuración
-			JScrollPane scrollConfig = new JScrollPane(panelContenidoConfig);
-			scrollConfig.setBorder(BorderFactory.createEmptyBorder());
-			panelConfiguracionGUI.add(scrollConfig, BorderLayout.CENTER);
-			CrashDetectorLogger.log("scroll config completa");
-		} else {
-			// Si no hay elementos de configuración, mostrar un mensaje
-			JLabel labelMensaje = new JLabel("No hay opciones de configuración disponibles para esta GUI.");
-			labelMensaje.setHorizontalAlignment(JLabel.CENTER);
-			labelMensaje.setForeground(colorTexto.obtener());
-			panelConfiguracionGUI.add(labelMensaje, BorderLayout.CENTER);
-		}
-
-		// Repintar el panel de configuración
-		panelConfiguracionGUI.revalidate();
-		CrashDetectorLogger.log("revalidate");
-		panelConfiguracionGUI.repaint();
-		CrashDetectorLogger.log("repaint");
-	}
-
-	/**
-	 * Crea un componente editable adecuado para el tipo de ElementoConfig.
-	 *
-	 * @param elemento El elemento de configuración.
-	 * @return Un componente editable o null si no se puede crear.
-	 */
-	private Component crearComponenteEditable(ElementoConfig<?> elemento) {
-		if (elemento instanceof com.asbestosstar.crashdetector.config.ConfigBoolean) {
-			JCheckBox checkBox = new JCheckBox();
-			checkBox.setSelected((Boolean) elemento.obtener());
-			checkBox.addActionListener(e -> {
-				boolean nuevoValor = checkBox.isSelected();
-				((ConfigBoolean) elemento).escribir(nuevoValor);
-			});
-			return checkBox;
-		} else if (elemento instanceof com.asbestosstar.crashdetector.config.ConfigColor) {
-			// Para colores, usar un panel con un cuadrado de previsualización y un campo de
-			// texto
-			JPanel panelColor = new JPanel(new BorderLayout(5, 0));
-			JTextField textField = new JTextField("#" + Integer
-					.toHexString(((com.asbestosstar.crashdetector.config.ConfigColor) elemento).obtener().getRGB())
-					.substring(2));
-			textField.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
-				@Override
-				public void insertUpdate(javax.swing.event.DocumentEvent e) {
-					actualizarColor(textField, (com.asbestosstar.crashdetector.config.ConfigColor) elemento);
-				}
-
-				@Override
-				public void removeUpdate(javax.swing.event.DocumentEvent e) {
-					actualizarColor(textField, (com.asbestosstar.crashdetector.config.ConfigColor) elemento);
-				}
-
-				@Override
-				public void changedUpdate(javax.swing.event.DocumentEvent e) {
-					actualizarColor(textField, (com.asbestosstar.crashdetector.config.ConfigColor) elemento);
-				}
-
-				private void actualizarColor(JTextField field,
-						com.asbestosstar.crashdetector.config.ConfigColor configColor) {
-					String texto = field.getText();
-					if (texto == null || texto.isEmpty())
-						return;
-					try {
-						if (texto.startsWith("#")) {
-							texto = texto.substring(1);
-						}
-						if (texto.length() == 6) {
-							if (texto.matches("[0-9A-Fa-f]+")) {
-								Color color = Color.decode("#" + texto);
-								configColor.escribir(color);
-							}
-						}
-					} catch (Exception ex) {
-						// Ignorar durante la edición
-					}
-				}
-			});
-			// Crear el cuadrado de previsualización
-			JPanel cuadradoColor = new JPanel();
-			cuadradoColor.setPreferredSize(new Dimension(20, 20));
-			cuadradoColor.setBackground(((com.asbestosstar.crashdetector.config.ConfigColor) elemento).obtener());
-			cuadradoColor.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
-			// Añadir listener al cuadrado para abrir el selector de color
-			cuadradoColor.addMouseListener(new java.awt.event.MouseAdapter() {
-				@Override
-				public void mouseClicked(java.awt.event.MouseEvent e) {
-					Color nuevoColor = javax.swing.JColorChooser.showDialog(CDSkinCape.this, "Seleccionar Color",
-							((com.asbestosstar.crashdetector.config.ConfigColor) elemento).obtener());
-					if (nuevoColor != null) {
-						((com.asbestosstar.crashdetector.config.ConfigColor) elemento).escribir(nuevoColor);
-						cuadradoColor.setBackground(nuevoColor);
-						textField.setText("#" + Integer.toHexString(nuevoColor.getRGB()).substring(2));
-					}
-				}
-			});
-			// Añadir el cuadrado y el campo de texto al panel
-			JPanel panelInterno = new JPanel(new BorderLayout(5, 0));
-			panelInterno.add(cuadradoColor, BorderLayout.WEST);
-			panelInterno.add(textField, BorderLayout.CENTER);
-			panelColor.add(panelInterno, BorderLayout.CENTER);
-			return panelColor;
-		} else if (elemento instanceof com.asbestosstar.crashdetector.config.ConfigDouble) {
-			// Ahora usa un JTextField para ConfigDouble
-			JTextField textField = new JTextField(elemento.obtener().toString());
-			textField.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
-				@Override
-				public void insertUpdate(javax.swing.event.DocumentEvent e) {
-					actualizarTexto(textField, (com.asbestosstar.crashdetector.config.ConfigDouble) elemento);
-				}
-
-				@Override
-				public void removeUpdate(javax.swing.event.DocumentEvent e) {
-					actualizarTexto(textField, (com.asbestosstar.crashdetector.config.ConfigDouble) elemento);
-				}
-
-				@Override
-				public void changedUpdate(javax.swing.event.DocumentEvent e) {
-					actualizarTexto(textField, (com.asbestosstar.crashdetector.config.ConfigDouble) elemento);
-				}
-
-				private void actualizarTexto(JTextField field,
-						com.asbestosstar.crashdetector.config.ConfigDouble configDouble) {
-					String texto = field.getText();
-					if (texto == null || texto.isEmpty())
-						return;
-					try {
-						double valor = Double.parseDouble(texto);
-						configDouble.escribir(valor);
-					} catch (NumberFormatException ex) {
-						// Ignorar durante la edición si no es un número válido
-					}
-				}
-			});
-			return textField;
-		} else if (elemento instanceof com.asbestosstar.crashdetector.config.ConfigString) {
-			JTextField textField = new JTextField((String) elemento.obtener());
-			textField.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
-				@Override
-				public void insertUpdate(javax.swing.event.DocumentEvent e) {
-					actualizarTexto(textField, (com.asbestosstar.crashdetector.config.ConfigString) elemento);
-				}
-
-				@Override
-				public void removeUpdate(javax.swing.event.DocumentEvent e) {
-					actualizarTexto(textField, (com.asbestosstar.crashdetector.config.ConfigString) elemento);
-				}
-
-				@Override
-				public void changedUpdate(javax.swing.event.DocumentEvent e) {
-					actualizarTexto(textField, (com.asbestosstar.crashdetector.config.ConfigString) elemento);
-				}
-
-				private void actualizarTexto(JTextField field,
-						com.asbestosstar.crashdetector.config.ConfigString configString) {
-					String texto = field.getText();
-					configString.escribir(texto);
-				}
-			});
-			return textField;
-		}
-		// Para otros tipos, devolver un JLabel con el valor como texto
-		JLabel labelValor = new JLabel(elemento.obtener().toString());
-		labelValor.setForeground(colorTexto.obtener());
-		return labelValor;
-	}
-
-	@Override
-	public List<ElementoConfig> obtenerElementosConfigs() {
-		List<ElementoConfig> elementos = new ArrayList<>();
-
-		colorFondo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondo());
-		colorTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTexto());
-		colorBoton.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBoton());
-		colorCajaTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorCajaTexto());
-		colorBorde.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBorde());
-
-		elementos.add(colorFondo);
-		elementos.add(colorTexto);
-		elementos.add(colorBoton);
-		elementos.add(colorCajaTexto);
-		elementos.add(colorBorde);
-
-		return elementos;
-	}
-
-	/**
-	 * Edita el elemento de configuración proporcionado.
-	 * 
-	 * @param elemento El elemento de configuración a editar.
-	 */
 	public void editarElemento(ElementoConfig<?> elemento) {
-		if (elemento == null) {
-			return;
-		}
-
-		String titulo = "Editar: " + elemento.obtenerNombreParaMostrar() + " (" + elemento.clave() + ")";
-		String valorActual = elemento.obtener().toString();
-
-		// Crear un JTextField para la entrada del usuario
-		JTextField campoTexto = new JTextField(valorActual);
-		Object[] mensaje = { "Nuevo valor:", campoTexto };
-
-		// Mostrar el cuadro de diálogo de entrada con JTextField
-		int opcion = JOptionPane.showConfirmDialog(this, mensaje, titulo, JOptionPane.OK_CANCEL_OPTION,
-				JOptionPane.PLAIN_MESSAGE);
-
-		// Si el usuario cancela el cuadro de entrada
-		if (opcion == JOptionPane.CANCEL_OPTION) {
-			return; // Salir si no se proporciona un nuevo valor
-		}
-
-		String nuevoValor = campoTexto.getText(); // Obtener el String del campo de texto
-
-		try {
-			// Manejar según tipos específicos de configuración
-			if (elemento instanceof ConfigBoolean) {
-				Boolean nuevoBoolean = Boolean.valueOf(nuevoValor.trim());
-				((ConfigBoolean) elemento).escribir(nuevoBoolean);
-			} else if (elemento instanceof ConfigColor) {
-				Color nuevoColor = Color.decode(nuevoValor.trim());
-				((ConfigColor) elemento).escribir(nuevoColor);
-			} else if (elemento instanceof ConfigDouble) {
-				double nuevoDouble = Double.parseDouble(nuevoValor.trim());
-				((ConfigDouble) elemento).escribir(nuevoDouble);
-			} else if (elemento instanceof ConfigString) {
-				((ConfigString) elemento).escribir(nuevoValor.trim());
-			} else {
-				throw new IllegalArgumentException(
-						"Tipo de ElementoConfig no soportado: " + elemento.getClass().getName());
-			}
-
-			// Actualizar la interfaz para reflejar los cambios
-			actualizarPanelConfiguracionGUI();
-			CrashDetectorLogger.log("editar elemento completa");
-
-		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, "Error al parsear el nuevo valor: debe ser un número válido.", "Error",
-					JOptionPane.ERROR_MESSAGE);
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(this, "Error al procesar el nuevo valor: " + e.getMessage(), "Error",
-					JOptionPane.ERROR_MESSAGE);
-		}
+		// No usado: todos los editores son inline
 	}
-
 }

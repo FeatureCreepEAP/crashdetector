@@ -5,41 +5,57 @@ import java.util.function.Supplier;
 public interface ElementoConfig<T> {
 
 	/**
-	 * Clave en Archivo Config
-	 * 
-	 * @return
+	 * Clave en el archivo de configuración.
+	 *
+	 * @return clave única del elemento
 	 */
 	public String clave();
 
 	/**
-	 * Valor de Elemento
-	 * 
-	 * @param por_defecto un valor si no hay un valor
-	 * @return
+	 * Obtiene el valor actual del elemento.
+	 *
+	 * @return valor actual
 	 */
 	public T obtener();
 
 	/**
-	 * Escribir un valor nuevo
-	 * 
-	 * @param valor
+	 * Escribe un nuevo valor para el elemento.
+	 *
+	 * @param valor nuevo valor a guardar
 	 */
 	public void escribir(T valor);
 
 	/**
-	 * el nombre para el publico en la editor de configuraciones. Si no hay un valor
-	 * devuelve la clave
-	 * 
-	 * @return
+	 * Obtiene el nombre que se muestra al público en el editor de configuración. Si
+	 * no hay un nombre definido, se debe devolver la clave.
+	 *
+	 * @return nombre visible para el usuario
 	 */
 	public String obtenerNombreParaMostrar();
 
 	/**
-	 * el nombre para el publico en la editor de configuraciones. preferemos un
-	 * valor localizado e.g. () -> MonitorDePID.idioma.miNombreParaMostrar();
-	 * 
-	 * @param nombre
+	 * Establece el nombre visible para el público en el editor de configuración.
+	 * Normalmente se usa un valor localizado, por ejemplo: () ->
+	 * MonitorDePID.idioma.miNombreParaMostrar()
+	 *
+	 * @param nombre proveedor del nombre a mostrar
 	 */
 	public void establecerNombreParaMostrar(Supplier<String> nombre);
 
+	/**
+	 * Devuelve el valor por defecto de este elemento de configuración. Este valor
+	 * se utiliza cuando el usuario desea restablecer la configuración a su estado
+	 * original.
+	 *
+	 * @return valor por defecto
+	 */
+	public T obtenerValorPorDefecto();
+
+	/**
+	 * Restablece el valor del elemento a su valor por defecto. Implementación por
+	 * defecto que reutiliza {@link #obtenerValorPorDefecto()}.
+	 */
+	public default void resetearAPorDefecto() {
+		escribir(obtenerValorPorDefecto());
+	}
 }

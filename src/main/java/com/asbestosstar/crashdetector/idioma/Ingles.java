@@ -6153,4 +6153,39 @@ public class Ingles implements Idioma {
 				+ "Press \"Review\" to update statuses.";
 	}
 
+	@Override
+	public String confirmacionReEstablarTodos() {
+		return "Reset all options to their default values?";
+	}
+
+	@Override
+	public String gui() {
+		return "GUI";
+	}
+
+	@Override
+	public String sinOpciones() {
+		return "No options";
+	}
+
+	@Override
+	public String seleccionaColor() {
+		return "Select colour";
+	}
+
+	@Override
+	public String botonMostrarGUI() {
+		return "Show GUI";
+	}
+
+	@Override
+	public String botonGuardarTodo() {
+		return "Save all";
+	}
+
+	@Override
+	public String botonRestablecerTodo() {
+		return "Reset all";
+	}
+
 }

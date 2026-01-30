@@ -5920,4 +5920,39 @@ public class Japones implements Idioma {
 				+ "「確認」を押して状態を更新してください。";
 	}
 
+	@Override
+	public String confirmacionReEstablarTodos() {
+		return "すべてのオプションをデフォルト値にリセットしますか？";
+	}
+
+	@Override
+	public String gui() {
+		return "GUI";
+	}
+
+	@Override
+	public String sinOpciones() {
+		return "オプションなし";
+	}
+
+	@Override
+	public String seleccionaColor() {
+		return "色を選択";
+	}
+
+	@Override
+	public String botonMostrarGUI() {
+		return "GUIを表示";
+	}
+
+	@Override
+	public String botonGuardarTodo() {
+		return "すべて保存";
+	}
+
+	@Override
+	public String botonRestablecerTodo() {
+		return "すべてリセット";
+	}
+
 }

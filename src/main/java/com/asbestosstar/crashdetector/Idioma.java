@@ -2391,4 +2391,18 @@ public interface Idioma {
 
 	public String canario1984Descripcion();
 
+	public String gui();
+
+	public String sinOpciones();
+
+	public String confirmacionReEstablarTodos();
+
+	public String seleccionaColor();
+
+	public String botonRestablecerTodo();
+
+	public String botonGuardarTodo();
+
+	public String botonMostrarGUI();
+
 }

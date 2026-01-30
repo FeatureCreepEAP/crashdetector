@@ -120,7 +120,8 @@ public interface Verificaciones {
 		String colorenlace = Config.obtenerInstancia().obtenerColorEnlace();
 
 		if (this.solucion() != null && this.solucion() != QuickFix.NINGUN) {
-			String enlaceHtml = "<a href=\"" + this.solucion().obtenerEnlace() + "\" style=\"color:" + colorenlace + ";\">QuickFix</a>";
+			String enlaceHtml = "<a href=\"" + this.solucion().obtenerEnlace() + "\" style=\"color:" + colorenlace
+					+ ";\">QuickFix</a>";
 			if (!constructor.toString().endsWith(nl_html) && !constructor.toString().endsWith(nl)) {
 				constructor.append(nl_html);
 			}

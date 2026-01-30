@@ -5910,4 +5910,39 @@ public class Coreano implements Idioma {
 				+ "「확인」을 눌러 상태를 갱신하세요.";
 	}
 
+	@Override
+	public String confirmacionReEstablarTodos() {
+		return "모든 옵션을 기본값으로 재설정하시겠습니까?";
+	}
+
+	@Override
+	public String gui() {
+		return "GUI";
+	}
+
+	@Override
+	public String sinOpciones() {
+		return "옵션 없음";
+	}
+
+	@Override
+	public String seleccionaColor() {
+		return "색상 선택";
+	}
+
+	@Override
+	public String botonMostrarGUI() {
+		return "GUI 표시";
+	}
+
+	@Override
+	public String botonGuardarTodo() {
+		return "모두 저장";
+	}
+
+	@Override
+	public String botonRestablecerTodo() {
+		return "모두 재설정";
+	}
+
 }

@@ -8,9 +8,11 @@ public class ConfigString implements ElementoConfig<String> {
 
 	private final String clave;
 	public Supplier<String> nombre;
+	public String def;
 
-	private ConfigString(String clave) {
+	private ConfigString(String clave, String def) {
 		this.clave = clave;
+		this.def = def;
 	}
 
 	@Override
@@ -50,10 +52,10 @@ public class ConfigString implements ElementoConfig<String> {
 			// Crear con valor por defecto y guardar
 			config.propiedadesConfig.setProperty(clave, valorPorDefecto);
 			config.guardar();
-			return new ConfigString(clave);
+			return new ConfigString(clave, valorPorDefecto);
 		}
 
-		return new ConfigString(clave);
+		return new ConfigString(clave, valorPorDefecto);
 	}
 
 	@Override
@@ -70,5 +72,11 @@ public class ConfigString implements ElementoConfig<String> {
 	public void establecerNombreParaMostrar(Supplier<String> nombre) {
 		// TODO Auto-generated method stub
 		this.nombre = nombre;
+	}
+
+	@Override
+	public String obtenerValorPorDefecto() {
+		// TODO Auto-generated method stub
+		return def;
 	}
 }

@@ -5802,4 +5802,39 @@ public class Chino implements Idioma {
 				+ "其当前状态。\n\n" + "点击“检查”以更新状态。";
 	}
 
+	@Override
+	public String confirmacionReEstablarTodos() {
+		return "是否将所有选项重置为默认值？";
+	}
+
+	@Override
+	public String gui() {
+		return "GUI";
+	}
+
+	@Override
+	public String sinOpciones() {
+		return "无选项";
+	}
+
+	@Override
+	public String seleccionaColor() {
+		return "选择颜色";
+	}
+
+	@Override
+	public String botonMostrarGUI() {
+		return "显示 GUI";
+	}
+
+	@Override
+	public String botonGuardarTodo() {
+		return "保存全部";
+	}
+
+	@Override
+	public String botonRestablecerTodo() {
+		return "全部重置";
+	}
+
 }

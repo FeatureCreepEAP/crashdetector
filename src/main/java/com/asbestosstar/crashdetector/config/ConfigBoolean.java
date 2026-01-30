@@ -8,9 +8,11 @@ public class ConfigBoolean implements ElementoConfig<Boolean> {
 
 	private final String clave;
 	public Supplier<String> nombre;
+	public boolean def;
 
-	private ConfigBoolean(String clave) {
+	private ConfigBoolean(String clave, boolean def) {
 		this.clave = clave;
+		this.def = def;
 	}
 
 	@Override
@@ -58,7 +60,7 @@ public class ConfigBoolean implements ElementoConfig<Boolean> {
 			// Crear con el valor por defecto y guardar
 			config.propiedadesConfig.setProperty(clave, Boolean.toString(valorPorDefecto));
 			config.guardar();
-			return new ConfigBoolean(clave);
+			return new ConfigBoolean(clave, valorPorDefecto);
 		}
 
 		// Validar que el valor existente sea un booleano válido
@@ -67,7 +69,7 @@ public class ConfigBoolean implements ElementoConfig<Boolean> {
 			throw new IllegalStateException("El valor de la clave no representa un booleano válido: " + valor);
 		}
 
-		return new ConfigBoolean(clave);
+		return new ConfigBoolean(clave, valorPorDefecto);
 	}
 
 	@Override
@@ -84,5 +86,11 @@ public class ConfigBoolean implements ElementoConfig<Boolean> {
 	public void establecerNombreParaMostrar(Supplier<String> nombre) {
 		// TODO Auto-generated method stub
 		this.nombre = nombre;
+	}
+
+	@Override
+	public Boolean obtenerValorPorDefecto() {
+		// TODO Auto-generated method stub
+		return def;
 	}
 }

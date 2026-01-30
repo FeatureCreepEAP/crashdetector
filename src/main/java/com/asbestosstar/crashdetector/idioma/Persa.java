@@ -6095,4 +6095,39 @@ public class Persa implements Idioma {
 				+ "وضعیت فعلی آن‌ها را نمایش می‌دهد.\n\n" + "برای به‌روزرسانی وضعیت‌ها، «بررسی» را فشار دهید.";
 	}
 
+	@Override
+	public String confirmacionReEstablarTodos() {
+		return "همهٔ گزینه‌ها به مقادیر پیش‌فرض بازنشانی شوند؟";
+	}
+
+	@Override
+	public String gui() {
+		return "GUI";
+	}
+
+	@Override
+	public String sinOpciones() {
+		return "بدون گزینه";
+	}
+
+	@Override
+	public String seleccionaColor() {
+		return "انتخاب رنگ";
+	}
+
+	@Override
+	public String botonMostrarGUI() {
+		return "نمایش GUI";
+	}
+
+	@Override
+	public String botonGuardarTodo() {
+		return "ذخیرهٔ همه";
+	}
+
+	@Override
+	public String botonRestablecerTodo() {
+		return "بازنشانی همه";
+	}
+
 }
