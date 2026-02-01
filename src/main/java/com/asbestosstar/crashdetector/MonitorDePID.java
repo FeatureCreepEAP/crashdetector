@@ -451,6 +451,18 @@ public class MonitorDePID {
 		System.out.println(idioma.buscando_para_pid(pid));
 		Entregar.recibir();
 
+		// ajustar utc usando el inicio real de la app si fue entregado
+		if (Statics.INICIO_DE_LA_APP > 0) {
+			try {
+				utc = Instant.ofEpochMilli(Statics.INICIO_DE_LA_APP);
+			} catch (Throwable t) {
+				// utc = Instant.now();
+			}
+		}
+//		else {
+//		    utc = Instant.now();
+//		}
+
 		CountDownLatch latch = new CountDownLatch(1); // Necesito por que sin esta preceso esta muerte
 
 		while (true) {

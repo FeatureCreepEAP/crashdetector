@@ -25,4 +25,6 @@ public abstract class InternetMod {
 	public abstract boolean esDisponible();
 
 	public abstract boolean esAnalizable();
+
+	public abstract String urlIcon();
 }

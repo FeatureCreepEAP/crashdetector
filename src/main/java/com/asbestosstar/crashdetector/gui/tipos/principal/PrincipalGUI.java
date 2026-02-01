@@ -120,7 +120,8 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 //		registrarBotonDeBarraLateralDerecha(TipoGUI.EDITOR_FIRMAS, EditorCodiceGUIIronMouse.ID,
 //				() -> new EditorCodiceGUIIronMouse());
 		registrarBotonDeBarraLateralDerecha(TipoGUI.CORPO, CorpoSAO.ID, () -> new CorpoSAO());
-		registrarBotonDeBarraLateralDerecha(TipoGUI.TODOS_QUICKFIXES, CorpoSAO.ID, () -> new CorpoSAO());
+		registrarBotonDeBarraLateralDerecha(TipoGUI.TODOS_QUICKFIXES, PanelQuickFixDemonSlayers.ID,
+				() -> new PanelQuickFixDemonSlayers());
 
 	}
 

@@ -5945,4 +5945,71 @@ public class Coreano implements Idioma {
 		return "모두 재설정";
 	}
 
+	@Override
+	public String nombreLuckPermsNoCargado() {
+		return "LuckPerms가 적재되지 않음";
+	}
+
+	@Override
+	public String mensajeLuckPermsNoCargado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "LuckPerms API에 접근하는 도중 오류가 감지되였습니다.</b>"
+				+ "<p>이 메시지는 다른 플러그인이 사용하려 할 때 <b>LuckPerms가 아직 적재되지 않았다</b>는 것을 가리킵니다.</p>" + "<p><b>가능한 원인:</b></p>"
+				+ "<ul>" + "<li><b>LuckPerms 플러그인이 설치되지 않았거나</b>, <b>시작 과정에서 실패하였을 수 있습니다.</b></li>"
+				+ "<li>다른 플러그인이 LuckPerms에 <b>너무 일찍</b> 또는 <b>잘못된 방식으로</b> 접근하고 있을 수 있습니다.</li>" + "</ul>"
+				+ "<p>링크를 통해 <b>콘솔을 검토하여</b> " + "LuckPerms를 호출하는 플러그인을 확인하고 호환성을 검증하시기 바랍니다.</p>";
+	}
+
+	@Override
+	public String nombreIrisShaderpackNoEncontrado() {
+		return "Iris 셰이더팩이 적재되지 않음";
+	}
+
+	@Override
+	public String mensajeIrisShaderpackNoEncontrado(String shaderpack) {
+		String nombre = shaderpack == null || shaderpack.isEmpty() ? "알 수 없음" : shaderpack;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Iris/Oculus로 셰이더팩을 불러들이는 도중 오류가 감지되였습니다.</b>" + "<p><b>영향 받은 셰이더팩:</b> " + nombre + "</p>"
+				+ "<p>마인크래프트가 셰이더팩 파일을 열지 못 하였습니다 (FileSystemNotFoundException).</p>" + "<p><b>가능한 해결 방법:</b></p>"
+				+ "<ul>" + "<li><b>shaderpacks</b> 폴더에 셰이더팩이 올바르게 설치되였는지 확인하십시오.</li>"
+				+ "<li>파일이 손상되였을 수 있으므로 셰이더팩을 다시 내려받으십시오.</li>"
+				+ "<li>문제가 계속되면 Iris 설정을 초기화하기 위해 <b>config/iris.properties</b> 파일을 삭제하십시오.</li>" + "</ul>"
+				+ "<p>변경사항을 적용한 후 게임을 다시 시작하십시오.</p>";
+	}
+
+	@Override
+	public String nombreNightConfigNoSePuedeEscribir() {
+		return "설정 파일을 쓸 수 없음";
+	}
+
+	@Override
+	public String mensajeNightConfigNoSePuedeEscribir(String ruta) {
+		String archivo = ruta == null || ruta.isEmpty() ? "알 수 없음" : ruta;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "설정 파일을 저장하는 도중 오류가 발생하였습니다.</b>" + "<p><b>영향 받은 파일:</b> " + archivo + "</p>"
+				+ "<p>마인크래프트가 원자적 쓰기(REPLACE_ATOMIC) 방식으로 파일을 쓰지 못 하였습니다.</p>" + "<p><b>이는 보통 다음 원인으로 일어납니다:</b></p>"
+				+ "<ul>" + "<li>폴더 또는 파일에 대한 권한이 올바르지 않음.</li>" + "<li>파일이 읽기 전용으로 표시되여 있음.</li>"
+				+ "<li>다른 프로그람(바이러스 백신, 백업 소프트웨어, 편집기 등)이 파일을 점유하고 있음.</li>" + "</ul>" + "<p><b>권장 조치:</b></p>" + "<ul>"
+				+ "<li>폴더에 쓰기 권한이 있는지 확인하십시오.</li>" + "<li>파일의 읽기 전용 속성을 해제하십시오.</li>"
+				+ "<li>해당 파일을 사용하고 있을 수 있는 프로그람들을 종료하십시오.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreAccesoDenegadoBackupConfig() {
+		return "백업 생성 시 접근 거부됨";
+	}
+
+	@Override
+	public String mensajeAccesoDenegadoBackupConfig(String origen, String backup) {
+		String src = origen == null || origen.isEmpty() ? "알 수 없음" : origen;
+		String dst = backup == null || backup.isEmpty() ? "알 수 없음" : backup;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "설정 파일의 백업을 만드는 도중 권한 오류가 발생하였습니다.</b>" + "<p><b>원본 파일:</b> " + src + "</p>" + "<p><b>백업 파일:</b> "
+				+ dst + "</p>" + "<p>운영체계가 파일 저장 과정에서 접근을 차단하였습니다.</p>" + "<p><b>이는 보통 다음 원인으로 일어납니다:</b></p>" + "<ul>"
+				+ "<li>폴더에 대한 권한이 부족함.</li>" + "<li>파일이 읽기 전용으로 표시되여 있음.</li>"
+				+ "<li>다른 프로그람(바이러스 백신, 동기화 소프트웨어, 편집기 등)이 파일을 사용하고 있음.</li>" + "</ul>" + "<p><b>권장 조치:</b></p>"
+				+ "<ul>" + "<li><b>config</b> 폴더의 권한을 확인하십시오.</li>" + "<li>해당 파일에 접근하고 있을 수 있는 프로그람들을 종료하십시오.</li>"
+				+ "<li>런처 또는 마인크래프트를 관리자 권한으로 실행해 보십시오.</li>" + "</ul>";
+	}
+
 }

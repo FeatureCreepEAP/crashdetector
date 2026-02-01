@@ -5837,4 +5837,66 @@ public class Chino implements Idioma {
 		return "全部重置";
 	}
 
+	@Override
+	public String nombreLuckPermsNoCargado() {
+		return "LuckPerms 未加载";
+	}
+
+	@Override
+	public String mensajeLuckPermsNoCargado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "检测到访问 LuckPerms API 时出错。</b>" + "<p>消息表明，当另一个插件尝试使用 LuckPerms 时，<b>LuckPerms 尚未加载</b>。</p>"
+				+ "<p><b>可能原因：</b></p>" + "<ul>" + "<li><b>LuckPerms 插件未安装</b>，或 <b>启动失败</b>。</li>"
+				+ "<li>另一个插件在 <b>过早</b> 或 <b>不正确</b> 的时机尝试访问 LuckPerms。</li>" + "</ul>"
+				+ "<p>建议通过链接 <b>查看控制台日志</b>，以识别 " + "调用 LuckPerms 的插件并验证其兼容性。</p>";
+	}
+
+	@Override
+	public String nombreIrisShaderpackNoEncontrado() {
+		return "Iris 着色器包未加载";
+	}
+
+	@Override
+	public String mensajeIrisShaderpackNoEncontrado(String shaderpack) {
+		String nombre = shaderpack == null || shaderpack.isEmpty() ? "未知" : shaderpack;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "检测到使用 Iris/Oculus 加载着色器包时出错。</b>" + "<p><b>受影响的着色器包：</b> " + nombre + "</p>"
+				+ "<p>Minecraft 无法打开着色器包文件（FileSystemNotFoundException）。</p>" + "<p><b>可能的解决方案：</b></p>" + "<ul>"
+				+ "<li>请确认着色器包已正确安装至 <b>shaderpacks</b> 文件夹中。</li>" + "<li>重新下载该着色器包，因为文件可能已损坏。</li>"
+				+ "<li>如果问题仍然存在，请删除 <b>config/iris.properties</b> 文件以重置 Iris 配置。</li>" + "</ul>"
+				+ "<p>应用更改后，请重新启动游戏。</p>";
+	}
+
+	@Override
+	public String nombreNightConfigNoSePuedeEscribir() {
+		return "无法写入配置文件";
+	}
+
+	@Override
+	public String mensajeNightConfigNoSePuedeEscribir(String ruta) {
+		String archivo = ruta == null || ruta.isEmpty() ? "未知" : ruta;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "保存配置文件时发生错误。</b>"
+				+ "<p><b>受影响的文件：</b> " + archivo + "</p>" + "<p>Minecraft 无法使用原子写入（REPLACE_ATOMIC）写入该文件。</p>"
+				+ "<p><b>通常原因包括：</b></p>" + "<ul>" + "<li>文件夹或文件的权限不正确。</li>" + "<li>文件被标记为只读。</li>"
+				+ "<li>其他程序（杀毒软件、备份工具、编辑器）正在锁定该文件。</li>" + "</ul>" + "<p><b>建议操作：</b></p>" + "<ul>"
+				+ "<li>确认你对文件夹拥有写入权限。</li>" + "<li>移除文件的只读属性。</li>" + "<li>关闭可能正在使用该文件的程序。</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreAccesoDenegadoBackupConfig() {
+		return "创建备份时访问被拒绝";
+	}
+
+	@Override
+	public String mensajeAccesoDenegadoBackupConfig(String origen, String backup) {
+		String src = origen == null || origen.isEmpty() ? "未知" : origen;
+		String dst = backup == null || backup.isEmpty() ? "未知" : backup;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "创建配置文件备份时发生权限错误。</b>"
+				+ "<p><b>原始文件：</b> " + src + "</p>" + "<p><b>备份文件：</b> " + dst + "</p>" + "<p>操作系统在保存文件期间阻止了访问。</p>"
+				+ "<p><b>通常原因包括：</b></p>" + "<ul>" + "<li>文件夹权限不足。</li>" + "<li>文件被标记为只读。</li>"
+				+ "<li>其他程序（杀毒软件、同步工具、编辑器）正在使用该文件。</li>" + "</ul>" + "<p><b>建议操作：</b></p>" + "<ul>"
+				+ "<li>检查 <b>config</b> 文件夹的权限。</li>" + "<li>关闭可能正在访问该文件的程序。</li>"
+				+ "<li>尝试以管理员身份启动启动器或 Minecraft。</li>" + "</ul>";
+	}
+
 }

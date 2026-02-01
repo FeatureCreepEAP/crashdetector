@@ -18,6 +18,7 @@ import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.*;
 import com.asbestosstar.crashdetector.analizador.firmas.CargadorDeCodice;
+import com.asbestosstar.crashdetector.analizador.general.AccesoDenegadoBackupConfig;
 import com.asbestosstar.crashdetector.analizador.general.AdvertenciaFaltasClases;
 import com.asbestosstar.crashdetector.analizador.general.AntiManipulacion;
 import com.asbestosstar.crashdetector.analizador.general.ContenidoDeTrazos;
@@ -259,6 +260,11 @@ public class Analizador {
 		verificaciones.add(new FloralEnchantmentsTagKeyNull());
 		verificaciones.add(new IrisSombrasTerreno());
 		verificaciones.add(new TickLargoServidorMinecraft());
+
+		verificaciones.add(new LuckPermsNoCargado());
+		verificaciones.add(new IrisShaderpackNoEncontrado());
+		verificaciones.add(new NightConfigNoSePuedeEscribir());
+		verificaciones.add(new AccesoDenegadoBackupConfig());
 
 		verificaciones.add(new PirataMC());
 		verificaciones.add(new LanzerNoAnimado());

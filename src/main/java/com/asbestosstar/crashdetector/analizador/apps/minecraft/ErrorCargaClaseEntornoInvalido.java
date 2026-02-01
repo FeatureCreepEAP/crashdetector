@@ -82,7 +82,7 @@ public class ErrorCargaClaseEntornoInvalido implements Verificaciones {
 
 	@Override
 	public float prioridad() {
-		return 850.0f; // Prioridad alta - error que impide iniciar el juego
+		return 1400.0f; // Prioridad alta - error que impide iniciar el juego
 	}
 
 	@Override

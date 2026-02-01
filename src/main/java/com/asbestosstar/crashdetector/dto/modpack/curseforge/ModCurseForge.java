@@ -19,12 +19,15 @@ public class ModCurseForge extends InternetMod {
 	private final boolean disponible;
 	private final boolean analizable; // no usado, pero necesario
 
+	private final String urlIcono;
+
 	public ModCurseForge(Json.Nodo nodo) {
+
 		this.identificador = nodo.obtener("id").comoLargo();
 		this.nombre = nodo.obtener("name").comoCadena();
 		this.descripcionCorta = nodo.obtener("summary").comoCadena();
 
-		// Autor: tomar el primero si existe
+		// Autor
 		String autorTmp = "";
 		Json.Nodo autores = nodo.obtener("authors");
 		if (autores.esArreglo() && autores.tamano() > 0) {
@@ -32,10 +35,10 @@ public class ModCurseForge extends InternetMod {
 		}
 		this.autor = autorTmp;
 
-		// Enlace principal
+		// Enlace del proyecto
 		this.enlaceProyecto = nodo.obtener("links").obtener("websiteUrl").comoCadena();
 
-		// Fecha actualizada
+		// Fecha de actualización
 		String fechaStr = nodo.obtener("dateModified").comoCadena();
 		this.actualizado = fechaStr.isEmpty() ? 0L : java.time.Instant.parse(fechaStr).toEpochMilli();
 
@@ -44,6 +47,21 @@ public class ModCurseForge extends InternetMod {
 
 		// Disponible
 		this.disponible = nodo.obtener("isAvailable").comoBooleano();
+
+		// Icono del mod
+		String iconoTmp = null;
+		Json.Nodo logo = nodo.obtener("logo");
+		if (logo != null) {
+			String thumb = logo.obtener("thumbnailUrl").comoCadena();
+			if (thumb != null && !thumb.isEmpty()) {
+				iconoTmp = thumb;
+			} else {
+				String url = logo.obtener("url").comoCadena();
+				if (url != null && !url.isEmpty()) {
+					iconoTmp = url;
+				}
+			}
+		}
 
 		// Última versión de juego (tomar la primera si existe)
 		VersionJuegoCurseForge ultimaTmp = null;
@@ -56,6 +74,7 @@ public class ModCurseForge extends InternetMod {
 				ultimaTmp = new VersionJuegoCurseForge(nombreVersion);
 			}
 		}
+		this.urlIcono = iconoTmp;
 		this.ultimaVersionJuego = ultimaTmp;
 
 		this.favorito = false;
@@ -121,5 +140,10 @@ public class ModCurseForge extends InternetMod {
 	@Override
 	public boolean esAnalizable() {
 		return analizable;
+	}
+
+	@Override
+	public String urlIcon() {
+		return urlIcono;
 	}
 }

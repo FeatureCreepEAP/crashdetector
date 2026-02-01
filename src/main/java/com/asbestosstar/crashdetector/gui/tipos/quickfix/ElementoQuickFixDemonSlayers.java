@@ -48,6 +48,8 @@ public class ElementoQuickFixDemonSlayers extends QuickFixGUI {
 			return crearEtiquetaFallback("(QuickFix nulo)");
 		}
 
+		final int WRAP_WIDTH = 350;
+
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		panel.setOpaque(true);
@@ -55,7 +57,7 @@ public class ElementoQuickFixDemonSlayers extends QuickFixGUI {
 		panel.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
 
 		// === Etiqueta (título) ===
-		JLabel titulo = new JLabel(fix.etiqueta); // sin HTML
+		JLabel titulo = new JLabel(wrapHtml(fix.etiqueta, WRAP_WIDTH));
 		titulo.setAlignmentX(Component.LEFT_ALIGNMENT);
 		titulo.setForeground(colorTextoDemon.obtener());
 		titulo.setFont(titulo.getFont().deriveFont(14f).deriveFont(java.awt.Font.BOLD));
@@ -73,13 +75,17 @@ public class ElementoQuickFixDemonSlayers extends QuickFixGUI {
 		for (QuickFix.ComponenteGUI comp : fix.componentes) {
 			JComponent jcomp = comp.crearComponente(() -> fix.tieneMantener);
 			jcomp.setAlignmentX(Component.LEFT_ALIGNMENT);
+
 			if (jcomp instanceof JLabel) {
-				((JLabel) jcomp).setForeground(colorTextoDemon.obtener());
+				JLabel lbl = (JLabel) jcomp;
+				lbl.setForeground(colorTextoDemon.obtener());
+				lbl.setText(wrapHtml(lbl.getText(), WRAP_WIDTH));
 			}
+
 			panel.add(jcomp);
 		}
 
-		// === Imagen decorativa (centrada al final, como en el scrollable) ===
+		// === Imagen decorativa ===
 		int[] dims = dimensionesImagenDecorativa();
 		etiquetaImagenDecorativa = crearEtiquetaImagenEscalada(rutaImagenDecorativa(), dims[0], dims[1]);
 		if (etiquetaImagenDecorativa != null) {
@@ -97,8 +103,14 @@ public class ElementoQuickFixDemonSlayers extends QuickFixGUI {
 		return panel;
 	}
 
+	private static String wrapHtml(String text, int widthPx) {
+		if (text == null)
+			return "";
+		return "<html><body style='width:" + widthPx + "px'>" + text + "</body></html>";
+	}
+
 	private JLabel crearEtiquetaFallback(String texto) {
-		JLabel lbl = new JLabel(texto);
+		JLabel lbl = new JLabel(wrapHtml(texto, 350));
 		lbl.setForeground(Color.WHITE);
 		lbl.setOpaque(true);
 		lbl.setBackground(Color.BLACK);

@@ -24,10 +24,24 @@ import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
  */
 public class CDModsEstiloTL extends PanelAPIBase {
 
-	private ConfigColor colorFondo = ConfigColor.de("cdmods.color.fondo", Config.convertirAColor("#1e1e1e"));;
-	private ConfigColor colorTexto = ConfigColor.de("cdmods.color.texto", Config.convertirAColor("#ffffff"));;
-	private ConfigColor colorBoton = ConfigColor.de("cdmods.color.boton", Config.convertirAColor("#007acc"));;
-	private ConfigColor colorCajaTexto = ConfigColor.de("cdmods.color.cajaTexto", Config.convertirAColor("#333333"));
+	private ConfigColor colorFondo = ConfigColor.de("cdmods.color.fondo", Config.convertirAColor("#232a34")); // azul
+																												// gris
+																												// oscuro
+																												// TL
+
+	private ConfigColor colorTexto = ConfigColor.de("cdmods.color.texto", Config.convertirAColor("#e6edf3")); // blanco
+																												// suave
+																												// (no
+																												// puro)
+
+	private ConfigColor colorBoton = ConfigColor.de("cdmods.color.boton", Config.convertirAColor("#2ecc71")); // verde
+																												// TL
+																												// (instalar)
+
+	private ConfigColor colorCajaTexto = ConfigColor.de("cdmods.color.cajaTexto", Config.convertirAColor("#1b222b")); // input
+																														// más
+																														// oscuro
+
 	public static String ID = "cdmodsestilotl";
 
 	// Constructor sin lógica

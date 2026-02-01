@@ -6093,4 +6093,78 @@ public class Arabe implements Idioma {
 		return "إعادة تعيين الكل";
 	}
 
+	@Override
+	public String nombreLuckPermsNoCargado() {
+		return "لم يتم تحميل LuckPerms";
+	}
+
+	@Override
+	public String mensajeLuckPermsNoCargado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تم اكتشاف خطأ أثناء محاولة الوصول إلى واجهة برمجة تطبيقات LuckPerms.</b>"
+				+ "<p>تشير الرسالة إلى أن <b>LuckPerms لم يكن محملًا</b> في اللحظة التي حاول فيها إضافةٌ أخرى استخدامه.</p>"
+				+ "<p><b>الأسباب المحتملة:</b></p>" + "<ul>"
+				+ "<li>إمّا أن الإضافة <b>LuckPerms غير مثبتة</b> أو <b>فشلت عند بدء التشغيل</b>.</li>"
+				+ "<li>أو أن إضافةً أخرى تحاول الوصول إلى LuckPerms <b>مبكرًا جدًّا</b> أو <b>بطريقة غير صحيحة</b>.</li>"
+				+ "</ul>" + "<p>نوصي بـ<b>مراجعة سجلّ الخادم (الكونسول)</b> عبر الرابط لتحديد "
+				+ "الإضافة التي تستدعي LuckPerms والتحقق من توافقها.</p>";
+	}
+
+	@Override
+	public String nombreIrisShaderpackNoEncontrado() {
+		return "حزمة الظلال (Shaderpack) الخاصة بـ Iris غير محملة";
+	}
+
+	@Override
+	public String mensajeIrisShaderpackNoEncontrado(String shaderpack) {
+		String nombre = shaderpack == null || shaderpack.isEmpty() ? "غير معروف" : shaderpack;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تم اكتشاف خطأ أثناء تحميل حزمة ظلال باستخدام Iris/Oculus.</b>" + "<p><b>حزمة الظلال المتأثرة:</b> "
+				+ nombre + "</p>" + "<p>لم يتمكن ماينكرافت من فتح ملف حزمة الظلال (FileSystemNotFoundException).</p>"
+				+ "<p><b>حلول ممكنة:</b></p>" + "<ul>"
+				+ "<li>تأكد من أن حزمة الظلال مثبتة بشكل صحيح في مجلد <b>shaderpacks</b>.</li>"
+				+ "<li>أعد تنزيل حزمة الظلال، فقد يكون الملف تالفًا.</li>"
+				+ "<li>إذا استمرت المشكلة، احذف الملف <b>config/iris.properties</b> لإعادة تعيين إعدادات Iris.</li>"
+				+ "</ul>" + "<p>بعد تطبيق التغييرات، أعد تشغيل اللعبة.</p>";
+	}
+
+	@Override
+	public String nombreNightConfigNoSePuedeEscribir() {
+		return "تعذّر كتابة ملف الإعدادات";
+	}
+
+	@Override
+	public String mensajeNightConfigNoSePuedeEscribir(String ruta) {
+		String archivo = ruta == null || ruta.isEmpty() ? "غير معروف" : ruta;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "حدث خطأ أثناء حفظ ملف الإعدادات.</b>" + "<p><b>الملف المتأثر:</b> " + archivo + "</p>"
+				+ "<p>لم يتمكن ماينكرافت من كتابة الملف باستخدام الكتابة الذرية (REPLACE_ATOMIC).</p>"
+				+ "<p><b>هذا يحدث عادةً بسبب:</b></p>" + "<ul>" + "<li>أذونات غير صحيحة على المجلد أو الملف.</li>"
+				+ "<li>الملف مُعلَّم كـ\"للقراءة فقط\".</li>"
+				+ "<li>برنامج آخر (مضاد فيروسات، نسخ احتياطي، محرر) يمنع الوصول إلى الملف.</li>" + "</ul>"
+				+ "<p><b>التوصيات:</b></p>" + "<ul>" + "<li>تأكد من أن لديك أذونات الكتابة في المجلد.</li>"
+				+ "<li>أزل خاصية \"القراءة فقط\" من الملف.</li>"
+				+ "<li>أغلق البرامج التي قد تكون تستخدم هذا الملف.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreAccesoDenegadoBackupConfig() {
+		return "تم رفض الوصول عند إنشاء نسخة احتياطية";
+	}
+
+	@Override
+	public String mensajeAccesoDenegadoBackupConfig(String origen, String backup) {
+		String src = origen == null || origen.isEmpty() ? "غير معروف" : origen;
+		String dst = backup == null || backup.isEmpty() ? "غير معروف" : backup;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "حدث خطأ في الأذونات أثناء إنشاء نسخة احتياطية من ملف الإعدادات.</b>" + "<p><b>الملف الأصلي:</b> "
+				+ src + "</p>" + "<p><b>ملف النسخة الاحتياطية:</b> " + dst + "</p>"
+				+ "<p>لقد قام نظام التشغيل بحظر الوصول أثناء حفظ الملف.</p>" + "<p><b>هذا يحدث عادةً بسبب:</b></p>"
+				+ "<ul>" + "<li>أذونات غير كافية في المجلد.</li>" + "<li>الملف مُعلَّم كـ\"للقراءة فقط\".</li>"
+				+ "<li>برنامج آخر (مضاد فيروسات، مزامنة، محرر) يستخدم الملف حاليًا.</li>" + "</ul>"
+				+ "<p><b>التوصيات:</b></p>" + "<ul>" + "<li>تحقق من أذونات المجلد <b>config</b>.</li>"
+				+ "<li>أغلق البرامج التي قد تكون تصل إلى الملف.</li>"
+				+ "<li>حاول تشغيل المشغّل أو ماينكرافت كمسؤول (administrator).</li>" + "</ul>";
+	}
+
 }

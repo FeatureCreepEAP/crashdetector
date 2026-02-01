@@ -18,6 +18,7 @@ public class ModTlmods extends InternetMod {
 	private final long descargasTotales;
 	private final boolean disponible;
 	private final boolean analizable;
+	private long imagenPrincipal;
 
 	public ModTlmods(Json.Nodo nodo) {
 		this.identificador = nodo.obtener("id").comoLargo();
@@ -27,7 +28,7 @@ public class ModTlmods extends InternetMod {
 		this.descripcionCorta = nodo.obtener("shortDescription").comoCadena();
 		this.favorito = nodo.obtener("favorite").comoBooleano();
 		this.nombreLocalizado = nodo.obtener("lanName").comoCadena();
-
+		this.imagenPrincipal = nodo.obtener("picture").comoLargo();
 		Json.Nodo nodoVersion = nodo.obtener("lastGameVersion");
 		this.ultimaVersionJuego = !"null".equals(nodoVersion.escribir()) ? new VersionJuegoTlmods(nodoVersion) : null;
 
@@ -95,5 +96,10 @@ public class ModTlmods extends InternetMod {
 	@Override
 	public boolean esAnalizable() {
 		return analizable;
+	}
+
+	@Override
+	public String urlIcon() {
+		return "https://tlmods.org/files/pictures/compress/" + String.valueOf(imagenPrincipal) + ".png";
 	}
 }

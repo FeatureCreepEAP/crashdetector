@@ -480,7 +480,7 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 		// luego el botón de ícono CDMods (deshabilitado), a la derecha
 		JButton boton_CDMods = añadirBotonImagen(panelBotonesDerecha,
 				Statics.carpeta.resolve("imagenes/boton_cdmods.png").toString(), "CD Mods");
-		boton_CDMods.setEnabled(false);
+		// boton_CDMods.setEnabled(false);
 		JButton btnAgregar = añadirBotonImagen(panelBotonesDerecha,
 				Statics.carpeta.resolve("imagenes/boton_agregar.png").toString(), MonitorDePID.idioma.anadirRegistro());
 		JButton btnCompartir = añadirBotonImagen(panelBotonesDerecha,

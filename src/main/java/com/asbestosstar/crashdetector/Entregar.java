@@ -22,7 +22,9 @@ public class Entregar {
 	public static void comenzarEntregar() {
 		app_detecta = App.obtenerApp();
 		String idApp = app_detecta != null ? app_detecta.id() : "";
+
 		Buscardor.cargadoresPredetermindado();
+
 		// se detectan cargadores activos sin tocar la lista global
 		List<Cargador> activos_cargadores = new ArrayList<Cargador>();
 		for (Cargador c : Cargador.cargadores) {
@@ -37,15 +39,19 @@ public class Entregar {
 		// args actuales sin usar ARGS_DE_APP
 		String args = obtenerArgsDelPrograma();
 		if (!ConfigMundial.obtenerInstancia().obtenerHabilitarTokenDeAccesoEnLaEntregaDelMonitorDePID()) {
-			args = eliminarTokenDeAcceso(args); // ahora enmascara en lugar de borrar
+			args = eliminarTokenDeAcceso(args);
 		}
 
 		String lanzer = DetectorLanzer.detectarLanzer(app_detecta, args);
 		Statics.lanzer_del_app = lanzer;
 
-		// no fijar Statics.ARGS_DE_APP aqui
+		// obtener inicio real de la JVM usando RuntimeMXBean
+		long inicioApp = obtenerInicioDeLaApp();
+		Statics.INICIO_DE_LA_APP = inicioApp;
+
 		// escribir archivo
-		String contenido = construirContenidoArchivo(idApp, args, activos_cargadores, lanzer);
+		String contenido = construirContenidoArchivo(idApp, args, activos_cargadores, lanzer, inicioApp);
+
 		escribirArchivo(contenido);
 	}
 
@@ -55,19 +61,24 @@ public class Entregar {
 			CrashDetectorLogger.log("Archivo inexiste");
 			return;
 		}
+
 		try {
 			List<String> lineas = java.nio.file.Files.readAllLines(archivo.toPath(), StandardCharsets.UTF_8);
+
 			String idApp = "";
 			String args = "";
 			String idsCargadores = "";
 			String lanzer = "";
+			long inicioApp = 0L;
 
 			for (String l : lineas) {
 				int p = l.indexOf(':');
 				if (p <= 0)
 					continue;
+
 				String k = l.substring(0, p).trim();
 				String v = l.substring(p + 1).trim();
+
 				if ("app".equals(k))
 					idApp = v;
 				else if ("args".equals(k))
@@ -76,6 +87,12 @@ public class Entregar {
 					idsCargadores = v;
 				else if ("lanzer".equals(k))
 					lanzer = v;
+				else if ("inicio".equals(k)) {
+					try {
+						inicioApp = Long.parseLong(v);
+					} catch (NumberFormatException ignored) {
+					}
+				}
 			}
 
 			// restaurar app
@@ -88,29 +105,38 @@ public class Entregar {
 			// fijar ARGS_DE_APP solo aqui
 			Statics.ARGS_DE_APP = args != null ? args : "";
 
+			// restaurar inicio de la app
+			Statics.INICIO_DE_LA_APP = inicioApp;
+
 			Buscardor.cargadoresPredetermindado();
-			// agregar cargadores activos segun archivo sin limpiar la lista global
+
+			// agregar cargadores activos segun archivo sin limpiar lista global
 			if (idsCargadores != null && !idsCargadores.isEmpty()) {
 				String[] parts = idsCargadores.split(",");
 				for (String id : parts) {
 					String t = id.trim();
 					if (t.isEmpty())
 						continue;
+
 					Cargador inst = buscarCargadorPorId(t);
 					if (inst != null && !Cargador.cargadores_activados.contains(inst)) {
 						Cargador.cargadores_activados.add(inst);
 					}
 				}
 			}
+
 		} catch (IOException ignored) {
 		}
+
 		archivo.delete();
 	}
 
 	// utilidades
 
-	private static String construirContenidoArchivo(String idApp, String args, List<Cargador> activos, String lanzer) {
+	private static String construirContenidoArchivo(String idApp, String args, List<Cargador> activos, String lanzer,
+			long inicioApp) {
 		StringBuilder ids = new StringBuilder();
+
 		if (activos != null && !activos.isEmpty()) {
 			for (Cargador c : activos) {
 				try {
@@ -124,12 +150,14 @@ public class Entregar {
 				}
 			}
 		}
+
 		StringBuilder out = new StringBuilder();
 		out.append("app: ").append(idApp == null ? "" : idApp).append('\n');
 		out.append("args: ").append(args == null ? "" : args).append('\n');
 		out.append("lanzer: ").append(lanzer == null ? "" : lanzer).append('\n');
-		CrashDetectorLogger.log("CD Antes Entregar lanzer " + lanzer);
+		out.append("inicio: ").append(inicioApp).append('\n');
 		out.append("cargadores: ").append(ids.toString()).append('\n');
+
 		return out.toString();
 	}
 
@@ -141,6 +169,14 @@ public class Entregar {
 			}
 			java.nio.file.Files.write(archivo.toPath(), contenido.getBytes(StandardCharsets.UTF_8));
 		} catch (IOException ignored) {
+		}
+	}
+
+	private static long obtenerInicioDeLaApp() {
+		try {
+			return ManagementFactory.getRuntimeMXBean().getStartTime();
+		} catch (Throwable t) {
+			return 0L;
 		}
 	}
 

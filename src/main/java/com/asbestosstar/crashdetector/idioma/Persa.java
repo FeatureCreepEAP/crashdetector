@@ -6130,4 +6130,80 @@ public class Persa implements Idioma {
 		return "بازنشانی همه";
 	}
 
+	@Override
+	public String nombreLuckPermsNoCargado() {
+		return "LuckPerms بارگذاری نشده است";
+	}
+
+	@Override
+	public String mensajeLuckPermsNoCargado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "خطایی هنگام دسترسی به رابط برنامه‌نویسی LuckPerms شناسایی شد.</b>"
+				+ "<p>این پیام نشان می‌دهد که <b>LuckPerms در زمانی که یک افزونهٔ دیگر سعی در استفاده از آن کرد، بارگذاری نشده بود</b>.</p>"
+				+ "<p><b>دلایل احتمالی:</b></p>" + "<ul>"
+				+ "<li>افزونهٔ <b>LuckPerms نصب نشده است</b> یا <b>در هنگام راه‌اندازی با شکست مواجه شده است</b>.</li>"
+				+ "<li>افزونهٔ دیگری در حال دسترسی به LuckPerms <b>خیلی زود</b> یا <b>به‌صورت نادرست</b> است.</li>"
+				+ "</ul>" + "<p>توصیه می‌شود با استفاده از پیوند، <b>کنسول را بررسی کنید</b> تا "
+				+ "افزونه‌ای که LuckPerms را فراخوانی می‌کند را شناسایی کرده و سازگاری آن را تأیید نمایید.</p>";
+	}
+
+	@Override
+	public String nombreIrisShaderpackNoEncontrado() {
+		return "بستهٔ سایه‌پرداز Iris بارگذاری نشده است";
+	}
+
+	@Override
+	public String mensajeIrisShaderpackNoEncontrado(String shaderpack) {
+		String nombre = shaderpack == null || shaderpack.isEmpty() ? "ناشناخته" : shaderpack;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "خطایی هنگام بارگیری بستهٔ سایه‌پرداز با Iris/Oculus شناسایی شد.</b>"
+				+ "<p><b>بستهٔ سایه‌پرداز تحت تأثیر:</b> " + nombre + "</p>"
+				+ "<p>ماینکرفت نتوانست فایل بستهٔ سایه‌پرداز را باز کند (FileSystemNotFoundException).</p>"
+				+ "<p><b>راه‌حل‌های احتمالی:</b></p>" + "<ul>"
+				+ "<li>بررسی کنید که بستهٔ سایه‌پرداز به‌درستی در پوشهٔ <b>shaderpacks</b> نصب شده باشد.</li>"
+				+ "<li>بستهٔ سایه‌پرداز را دوباره بارگیری کنید، زیرا ممکن است فایل خراب شده باشد.</li>"
+				+ "<li>اگر مشکل ادامه یافت، برای بازنشانی پیکربندی Iris، فایل <b>config/iris.properties</b> را حذف کنید.</li>"
+				+ "</ul>" + "<p>پس از اعمال تغییرات، بازی را دوباره راه‌اندازی کنید.</p>";
+	}
+
+	@Override
+	public String nombreNightConfigNoSePuedeEscribir() {
+		return "امکان نوشتن فایل پیکربندی وجود ندارد";
+	}
+
+	@Override
+	public String mensajeNightConfigNoSePuedeEscribir(String ruta) {
+		String archivo = ruta == null || ruta.isEmpty() ? "ناشناخته" : ruta;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "هنگام ذخیرهٔ فایل پیکربندی خطایی رخ داد.</b>" + "<p><b>فایل تحت تأثیر:</b> " + archivo + "</p>"
+				+ "<p>ماینکرفت نتوانست فایل را با استفاده از نوشتن اتمی (REPLACE_ATOMIC) بنویسد.</p>"
+				+ "<p><b>این معمولاً به دلایل زیر رخ می‌دهد:</b></p>" + "<ul>"
+				+ "<li>مجوزهای نادرست روی پوشه یا فایل.</li>" + "<li>فایل به‌صورت فقط‌خواندنی علامت‌گذاری شده است.</li>"
+				+ "<li>برنامهٔ دیگری (آنتی‌ویروس، پشتیبان‌گیری، ویرایشگر) در حال قفل کردن فایل است.</li>" + "</ul>"
+				+ "<p><b>توصیه‌ها:</b></p>" + "<ul>" + "<li>بررسی کنید که مجوز نوشتن در پوشه را دارید.</li>"
+				+ "<li>ویژگی فقط‌خواندنی را از فایل بردارید.</li>"
+				+ "<li>برنامه‌هایی را که ممکن است از این فایل استفاده کنند، ببندید.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreAccesoDenegadoBackupConfig() {
+		return "دسترسی هنگام ایجاد پشتیبان رد شد";
+	}
+
+	@Override
+	public String mensajeAccesoDenegadoBackupConfig(String origen, String backup) {
+		String src = origen == null || origen.isEmpty() ? "ناشناخته" : origen;
+		String dst = backup == null || backup.isEmpty() ? "ناشناخته" : backup;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "خطای مجوز هنگام ایجاد پشتیبان از فایل پیکربندی رخ داد.</b>" + "<p><b>فایل اصلی:</b> " + src + "</p>"
+				+ "<p><b>فایل پشتیبان:</b> " + dst + "</p>"
+				+ "<p>سیستم‌عامل در حین ذخیرهٔ فایل، دسترسی را مسدود کرد.</p>"
+				+ "<p><b>این معمولاً به دلایل زیر رخ می‌دهد:</b></p>" + "<ul>" + "<li>مجوزهای ناکافی روی پوشه.</li>"
+				+ "<li>فایل به‌صورت فقط‌خواندنی علامت‌گذاری شده است.</li>"
+				+ "<li>برنامهٔ دیگری (آنتی‌ویروس، ابزار همگام‌سازی، ویرایشگر) در حال استفاده از فایل است.</li>"
+				+ "</ul>" + "<p><b>توصیه‌ها:</b></p>" + "<ul>" + "<li>مجوزهای پوشهٔ <b>config</b> را بررسی کنید.</li>"
+				+ "<li>برنامه‌هایی را که ممکن است به فایل دسترسی داشته باشند، ببندید.</li>"
+				+ "<li>سعی کنید لانچر یا ماینکرفت را به‌عنوان مدیر اجرا کنید.</li>" + "</ul>";
+	}
+
 }

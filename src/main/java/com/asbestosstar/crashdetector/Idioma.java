@@ -2405,4 +2405,20 @@ public interface Idioma {
 
 	public String botonMostrarGUI();
 
+	public String mensajeLuckPermsNoCargado();
+
+	public String nombreLuckPermsNoCargado();
+
+	public String mensajeIrisShaderpackNoEncontrado(String shaderpack);
+
+	public String nombreIrisShaderpackNoEncontrado();
+
+	public String mensajeNightConfigNoSePuedeEscribir(String rutaConfig);
+
+	public String nombreNightConfigNoSePuedeEscribir();
+
+	public String mensajeAccesoDenegadoBackupConfig(String archivoOrigen, String archivoBackup);
+
+	public String nombreAccesoDenegadoBackupConfig();
+
 }

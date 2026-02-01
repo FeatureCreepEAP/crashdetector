@@ -6188,4 +6188,82 @@ public class Ingles implements Idioma {
 		return "Reset all";
 	}
 
+	@Override
+	public String nombreLuckPermsNoCargado() {
+		return "LuckPerms not loaded";
+	}
+
+	@Override
+	public String mensajeLuckPermsNoCargado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "An error was detected while accessing the LuckPerms API.</b>"
+				+ "<p>The message indicates that <b>LuckPerms was not loaded</b> when another plugin attempted to use it.</p>"
+				+ "<p><b>Possible causes:</b></p>" + "<ul>"
+				+ "<li>The <b>LuckPerms plugin is not installed</b> or <b>failed to start up</b>.</li>"
+				+ "<li>Another plugin is attempting to access LuckPerms <b>too early</b> or <b>incorrectly</b>.</li>"
+				+ "</ul>" + "<p>It is recommended to <b>check the console</b> using the link to identify "
+				+ "the plugin calling LuckPerms and verify its compatibility.</p>";
+	}
+
+	@Override
+	public String nombreIrisShaderpackNoEncontrado() {
+		return "Iris shaderpack not loaded";
+	}
+
+	@Override
+	public String mensajeIrisShaderpackNoEncontrado(String shaderpack) {
+		String nombre = shaderpack == null || shaderpack.isEmpty() ? "unknown" : shaderpack;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "An error was detected while loading a shaderpack with Iris/Oculus.</b>"
+				+ "<p><b>Affected shaderpack:</b> " + nombre + "</p>"
+				+ "<p>Minecraft could not open the shaderpack file (FileSystemNotFoundException).</p>"
+				+ "<p><b>Possible solutions:</b></p>" + "<ul>"
+				+ "<li>Verify that the shaderpack is correctly installed in the <b>shaderpacks</b> folder.</li>"
+				+ "<li>Re-download the shaderpack, as the file may be corrupted.</li>"
+				+ "<li>If the issue persists, delete the <b>config/iris.properties</b> file to reset Iris configuration.</li>"
+				+ "</ul>" + "<p>After applying the changes, restart the game.</p>";
+	}
+
+	@Override
+	public String nombreNightConfigNoSePuedeEscribir() {
+		return "Failed to write configuration file";
+	}
+
+	@Override
+	public String mensajeNightConfigNoSePuedeEscribir(String ruta) {
+		String archivo = ruta == null || ruta.isEmpty() ? "unknown" : ruta;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "An error occurred while saving a configuration file.</b>" + "<p><b>Affected file:</b> " + archivo
+				+ "</p>" + "<p>Minecraft could not write the file using atomic writing (REPLACE_ATOMIC).</p>"
+				+ "<p><b>This usually happens due to:</b></p>" + "<ul>"
+				+ "<li>Incorrect permissions on the folder or file.</li>" + "<li>The file is marked as read-only.</li>"
+				+ "<li>Another program (antivirus, backup, editor) is locking the file.</li>" + "</ul>"
+				+ "<p><b>Recommendations:</b></p>" + "<ul>"
+				+ "<li>Verify that you have write permissions in the folder.</li>"
+				+ "<li>Remove the read-only attribute from the file.</li>"
+				+ "<li>Close programs that might be using this file.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreAccesoDenegadoBackupConfig() {
+		return "Access denied when creating backup";
+	}
+
+	@Override
+	public String mensajeAccesoDenegadoBackupConfig(String origen, String backup) {
+		String src = origen == null || origen.isEmpty() ? "unknown" : origen;
+		String dst = backup == null || backup.isEmpty() ? "unknown" : backup;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "A permissions error occurred while creating a backup of the configuration file.</b>"
+				+ "<p><b>Original file:</b> " + src + "</p>" + "<p><b>Backup file:</b> " + dst + "</p>"
+				+ "<p>The operating system blocked access during file saving.</p>"
+				+ "<p><b>This usually happens due to:</b></p>" + "<ul>"
+				+ "<li>Insufficient permissions on the folder.</li>" + "<li>The file is marked as read-only.</li>"
+				+ "<li>Another program (antivirus, sync tool, editor) is using the file.</li>" + "</ul>"
+				+ "<p><b>Recommendations:</b></p>" + "<ul>"
+				+ "<li>Check the permissions of the <b>config</b> folder.</li>"
+				+ "<li>Close programs that might be accessing the file.</li>"
+				+ "<li>Try launching the launcher or Minecraft as administrator.</li>" + "</ul>";
+	}
+
 }

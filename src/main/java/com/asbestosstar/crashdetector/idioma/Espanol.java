@@ -6864,4 +6864,87 @@ public class Espanol implements Idioma {
 		return "Restablecer todo";
 	}
 
+	@Override
+	public String nombreLuckPermsNoCargado() {
+		return "LuckPerms no cargado";
+	}
+
+	@Override
+	public String mensajeLuckPermsNoCargado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Se ha detectado un error al acceder a la API de LuckPerms.</b>"
+				+ "<p>El mensaje indica que <b>LuckPerms no estaba cargado</b> en el momento en que otro plugin intentó usarlo.</p>"
+				+ "<p><b>Posibles causas:</b></p>" + "<ul>"
+				+ "<li>El plugin <b>LuckPerms no está instalado</b> o <b>falló al iniciarse</b>.</li>"
+				+ "<li>Otro plugin está intentando acceder a LuckPerms demasiado pronto o de forma incorrecta.</li>"
+				+ "</ul>" + "<p>Se recomienda <b>revisar la consola</b> usando el enlace para identificar "
+				+ "el plugin que está llamando a LuckPerms y verificar su compatibilidad.</p>";
+	}
+
+	@Override
+	public String nombreIrisShaderpackNoEncontrado() {
+		return "Shaderpack de Iris no cargado";
+	}
+
+	@Override
+	public String mensajeIrisShaderpackNoEncontrado(String shaderpack) {
+		String nombre = shaderpack == null || shaderpack.isEmpty() ? "desconocido" : shaderpack;
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Se ha detectado un error al cargar un shaderpack con Iris/Oculus.</b>"
+				+ "<p><b>Shaderpack afectado:</b> " + nombre + "</p>"
+				+ "<p>Minecraft no pudo abrir el archivo del shaderpack (FileSystemNotFoundException).</p>"
+				+ "<p><b>Posibles soluciones:</b></p>" + "<ul>"
+				+ "<li>Verifica que el shaderpack esté correctamente instalado en la carpeta <b>shaderpacks</b>.</li>"
+				+ "<li>Vuelve a descargar el shaderpack, ya que el archivo podría estar corrupto.</li>"
+				+ "<li>Si el problema persiste, elimina el archivo <b>config/iris.properties</b> para reiniciar la configuración de Iris.</li>"
+				+ "</ul>" + "<p>Después de aplicar los cambios, inicia el juego nuevamente.</p>";
+	}
+
+	@Override
+	public String nombreNightConfigNoSePuedeEscribir() {
+		return "No se pudo escribir el archivo de configuración";
+	}
+
+	@Override
+	public String mensajeNightConfigNoSePuedeEscribir(String ruta) {
+		String archivo = ruta == null || ruta.isEmpty() ? "desconocido" : ruta;
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Se ha producido un error al guardar un archivo de configuración.</b>"
+				+ "<p><b>Archivo afectado:</b> " + archivo + "</p>"
+				+ "<p>Minecraft no pudo escribir el archivo usando escritura atómica (REPLACE_ATOMIC).</p>"
+				+ "<p><b>Esto suele ocurrir por:</b></p>" + "<ul>"
+				+ "<li>Permisos incorrectos en la carpeta o el archivo.</li>"
+				+ "<li>El archivo está marcado como solo lectura.</li>"
+				+ "<li>Otro programa (antivirus, backup, editor) está bloqueando el archivo.</li>" + "</ul>"
+				+ "<p><b>Recomendaciones:</b></p>" + "<ul>"
+				+ "<li>Verifica que tienes permisos de escritura en la carpeta.</li>"
+				+ "<li>Quita el atributo de solo lectura del archivo.</li>"
+				+ "<li>Cierra programas que puedan estar usando ese archivo.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreAccesoDenegadoBackupConfig() {
+		return "Acceso denegado al crear copia de seguridad";
+	}
+
+	@Override
+	public String mensajeAccesoDenegadoBackupConfig(String origen, String backup) {
+		String src = origen == null || origen.isEmpty() ? "desconocido" : origen;
+		String dst = backup == null || backup.isEmpty() ? "desconocido" : backup;
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Se ha producido un error de permisos al crear una copia de seguridad del archivo de configuración.</b>"
+				+ "<p><b>Archivo original:</b> " + src + "</p>" + "<p><b>Archivo de respaldo:</b> " + dst + "</p>"
+				+ "<p>El sistema operativo ha bloqueado el acceso durante el guardado del archivo.</p>"
+				+ "<p><b>Esto suele ocurrir por:</b></p>" + "<ul>" + "<li>Permisos insuficientes en la carpeta.</li>"
+				+ "<li>El archivo está marcado como solo lectura.</li>"
+				+ "<li>Otro programa (antivirus, sincronización, editor) está usando el archivo.</li>" + "</ul>"
+				+ "<p><b>Recomendaciones:</b></p>" + "<ul>"
+				+ "<li>Verifica los permisos de la carpeta <b>config</b>.</li>"
+				+ "<li>Cierra programas que puedan estar accediendo al archivo.</li>"
+				+ "<li>Intenta iniciar el launcher o Minecraft como administrador.</li>" + "</ul>";
+	}
+
 }

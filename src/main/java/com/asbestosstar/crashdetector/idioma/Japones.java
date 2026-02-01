@@ -5955,4 +5955,72 @@ public class Japones implements Idioma {
 		return "すべてリセット";
 	}
 
+	@Override
+	public String nombreLuckPermsNoCargado() {
+		return "LuckPerms が読み込まれていません";
+	}
+
+	@Override
+	public String mensajeLuckPermsNoCargado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "LuckPerms API へのアクセス中にエラーが検出されました。</b>"
+				+ "<p>このメッセージは、別のプラグインが LuckPerms を使用しようとした際に、<b>LuckPerms がまだ読み込まれていなかった</b>ことを示しています。</p>"
+				+ "<p><b>考えられる原因:</b></p>" + "<ul>"
+				+ "<li><b>LuckPerms プラグインがインストールされていない</b>か、<b>起動に失敗した</b>可能性があります。</li>"
+				+ "<li>別のプラグインが LuckPerms に <b>早すぎるタイミング</b> または <b>不適切な方法</b> でアクセスしている可能性があります。</li>" + "</ul>"
+				+ "<p>リンクから<b>コンソールを確認し</b>、" + "LuckPerms を呼び出しているプラグインを特定し、互換性を検証することをお勧めします。</p>";
+	}
+
+	@Override
+	public String nombreIrisShaderpackNoEncontrado() {
+		return "Iris シェーダーパックが読み込まれていません";
+	}
+
+	@Override
+	public String mensajeIrisShaderpackNoEncontrado(String shaderpack) {
+		String nombre = shaderpack == null || shaderpack.isEmpty() ? "不明" : shaderpack;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Iris/Oculus でシェーダーパックを読み込む際にエラーが検出されました。</b>" + "<p><b>影響を受けたシェーダーパック:</b> " + nombre + "</p>"
+				+ "<p>Minecraft はシェーダーパックのファイルを開けませんでした（FileSystemNotFoundException）。</p>" + "<p><b>考えられる解決策:</b></p>"
+				+ "<ul>" + "<li>シェーダーパックが <b>shaderpacks</b> フォルダーに正しくインストールされているか確認してください。</li>"
+				+ "<li>ファイルが破損している可能性があるため、シェーダーパックを再ダウンロードしてください。</li>"
+				+ "<li>問題が続く場合は、Iris の設定をリセットするため <b>config/iris.properties</b> ファイルを削除してください。</li>" + "</ul>"
+				+ "<p>変更を適用した後、ゲームを再起動してください。</p>";
+	}
+
+	@Override
+	public String nombreNightConfigNoSePuedeEscribir() {
+		return "設定ファイルを書き込めませんでした";
+	}
+
+	@Override
+	public String mensajeNightConfigNoSePuedeEscribir(String ruta) {
+		String archivo = ruta == null || ruta.isEmpty() ? "不明" : ruta;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "設定ファイルの保存中にエラーが発生しました。</b>"
+				+ "<p><b>影響を受けたファイル:</b> " + archivo + "</p>"
+				+ "<p>Minecraft はアトミック書き込み（REPLACE_ATOMIC）でファイルを書き込むことができませんでした。</p>"
+				+ "<p><b>これは通常、以下の原因で発生します:</b></p>" + "<ul>" + "<li>フォルダーやファイルの権限が正しくない。</li>"
+				+ "<li>ファイルが読み取り専用としてマークされている。</li>" + "<li>他のプログラム（ウイルス対策ソフト、バックアップツール、エディタなど）がファイルをロックしている。</li>"
+				+ "</ul>" + "<p><b>推奨対応:</b></p>" + "<ul>" + "<li>フォルダーに書き込み権限があるか確認してください。</li>"
+				+ "<li>ファイルの読み取り専用属性を解除してください。</li>" + "<li>このファイルを使用している可能性のあるプログラムを終了してください。</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreAccesoDenegadoBackupConfig() {
+		return "バックアップ作成時にアクセスが拒否されました";
+	}
+
+	@Override
+	public String mensajeAccesoDenegadoBackupConfig(String origen, String backup) {
+		String src = origen == null || origen.isEmpty() ? "不明" : origen;
+		String dst = backup == null || backup.isEmpty() ? "不明" : backup;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "設定ファイルのバックアップ作成中に権限エラーが発生しました。</b>" + "<p><b>元のファイル:</b> " + src + "</p>" + "<p><b>バックアップファイル:</b> "
+				+ dst + "</p>" + "<p>ファイル保存中にオペレーティングシステムがアクセスをブロックしました。</p>" + "<p><b>これは通常、以下の原因で発生します:</b></p>"
+				+ "<ul>" + "<li>フォルダーの権限が不十分です。</li>" + "<li>ファイルが読み取り専用としてマークされています。</li>"
+				+ "<li>他のプログラム（ウイルス対策ソフト、同期ツール、エディタ）がファイルを使用中です。</li>" + "</ul>" + "<p><b>推奨対応:</b></p>" + "<ul>"
+				+ "<li><b>config</b> フォルダーの権限を確認してください。</li>" + "<li>このファイルにアクセスしている可能性のあるプログラムを終了してください。</li>"
+				+ "<li>ランチャーや Minecraft を管理者として実行してみてください。</li>" + "</ul>";
+	}
+
 }

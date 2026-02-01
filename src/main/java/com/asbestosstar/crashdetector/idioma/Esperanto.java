@@ -6143,4 +6143,78 @@ public class Esperanto implements Idioma {
 		return "Restarigi ĉion";
 	}
 
+	@Override
+	public String nombreLuckPermsNoCargado() {
+		return "LuckPerms ne ŝargita";
+	}
+
+	@Override
+	public String mensajeLuckPermsNoCargado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Eraro estis detektita dum aliro al la API de LuckPerms.</b>"
+				+ "<p>La mesaĝo indikas ke <b>LuckPerms ne estis ŝargita</b> kiam alia kromaĵo provis uzi ĝin.</p>"
+				+ "<p><b>Eblaj kialoj:</b></p>" + "<ul>"
+				+ "<li>La kromaĵo <b>LuckPerms ne estas instalita</b> aŭ <b>malsukcesis lanĉiĝi</b>.</li>"
+				+ "<li>Alia kromaĵo provas aliri LuckPerms <b>tropre mature</b> aŭ <b>malĝuste</b>.</li>" + "</ul>"
+				+ "<p>Rekomendiĝas <b>kontroli la konzolon</b> per la ligilo por identigi "
+				+ "la kromaĵon, kiu alvokas LuckPerms, kaj kontroli ĝian kongruecon.</p>";
+	}
+
+	@Override
+	public String nombreIrisShaderpackNoEncontrado() {
+		return "Shaderpack de Iris ne ŝargita";
+	}
+
+	@Override
+	public String mensajeIrisShaderpackNoEncontrado(String shaderpack) {
+		String nombre = shaderpack == null || shaderpack.isEmpty() ? "nekonata" : shaderpack;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Eraro estis detektita dum ŝargado de shaderpack per Iris/Oculus.</b>"
+				+ "<p><b>Afektita shaderpack:</b> " + nombre + "</p>"
+				+ "<p>Minecraft ne povis malfermi la dosieron de la shaderpack (FileSystemNotFoundException).</p>"
+				+ "<p><b>Eblaj solvoj:</b></p>" + "<ul>"
+				+ "<li>Kontrolu ke la shaderpack estas ĝuste instalita en la dosierujo <b>shaderpacks</b>.</li>"
+				+ "<li>Elŝutu la shaderpack denove, ĉar la dosiero eble estas difektita.</li>"
+				+ "<li>Se la problemo daŭras, forigu la dosieron <b>config/iris.properties</b> por rekomenci la agordojn de Iris.</li>"
+				+ "</ul>" + "<p>Post apliki la ŝanĝojn, restartigu la ludon.</p>";
+	}
+
+	@Override
+	public String nombreNightConfigNoSePuedeEscribir() {
+		return "Ne eblis skribi la agorddosieron";
+	}
+
+	@Override
+	public String mensajeNightConfigNoSePuedeEscribir(String ruta) {
+		String archivo = ruta == null || ruta.isEmpty() ? "nekonata" : ruta;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Eraro okazis dum konservado de agorddosiero.</b>" + "<p><b>Afektita dosiero:</b> " + archivo + "</p>"
+				+ "<p>Minecraft ne povis skribi la dosieron per atoma skribmaniero (REPLACE_ATOMIC).</p>"
+				+ "<p><b>Tio kutime okazas pro:</b></p>" + "<ul>"
+				+ "<li>Malĝustaj permesoj sur la dosierujo aŭ dosiero.</li>"
+				+ "<li>La dosiero estas markita kiel nurlegebla.</li>"
+				+ "<li>Alia programo (antiviruso, savkopio, redaktilo) blokas la dosieron.</li>" + "</ul>"
+				+ "<p><b>Rekomendoj:</b></p>" + "<ul>" + "<li>Kontrolu ke vi havas skribpermeson en la dosierujo.</li>"
+				+ "<li>Forigu la nurlegeblan atributon de la dosiero.</li>"
+				+ "<li>Fermu programojn kiuj eble uzas tiun dosieron.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreAccesoDenegadoBackupConfig() {
+		return "백업 생성 시 접근 거부됨";
+	}
+
+	@Override
+	public String mensajeAccesoDenegadoBackupConfig(String origen, String backup) {
+		String src = origen == null || origen.isEmpty() ? "알 수 없음" : origen;
+		String dst = backup == null || backup.isEmpty() ? "알 수 없음" : backup;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "설정 파일의 백업을 만드는 도중 권한 오류가 발생하였습니다.</b>" + "<p><b>원본 파일:</b> " + src + "</p>" + "<p><b>백업 파일:</b> "
+				+ dst + "</p>" + "<p>운영체계가 파일 저장 과정에서 접근을 차단하였습니다.</p>" + "<p><b>이는 보통 다음 원인으로 일어납니다:</b></p>" + "<ul>"
+				+ "<li>폴더에 대한 권한이 부족함.</li>" + "<li>파일이 읽기 전용으로 표시되여 있음.</li>"
+				+ "<li>다른 프로그람(바이러스 백신, 동기화 소프트웨어, 편집기 등)이 파일을 사용하고 있음.</li>" + "</ul>" + "<p><b>권장 조치:</b></p>"
+				+ "<ul>" + "<li><b>config</b> 폴더의 권한을 확인하십시오.</li>" + "<li>해당 파일에 접근하고 있을 수 있는 프로그람들을 종료하십시오.</li>"
+				+ "<li>런처 또는 마인크래프트를 관리자 권한으로 실행해 보십시오.</li>" + "</ul>";
+	}
+
 }

@@ -6162,4 +6162,82 @@ public class Ruso implements Idioma {
 		return "Сбросить всё";
 	}
 
+	@Override
+	public String nombreLuckPermsNoCargado() {
+		return "LuckPerms не загружен";
+	}
+
+	@Override
+	public String mensajeLuckPermsNoCargado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Обнаружена ошибка при обращении к API LuckPerms.</b>"
+				+ "<p>Сообщение указывает, что <b>LuckPerms не был загружен</b> в момент, когда другой плагин попытался его использовать.</p>"
+				+ "<p><b>Возможные причины:</b></p>" + "<ul>"
+				+ "<li>Плагин <b>LuckPerms не установлен</b> или <b>не смог запуститься</b>.</li>"
+				+ "<li>Другой плагин пытается получить доступ к LuckPerms <b>слишком рано</b> или <b>некорректно</b>.</li>"
+				+ "</ul>" + "<p>Рекомендуется <b>проверить консоль</b> по ссылке, чтобы определить "
+				+ "плагин, вызывающий LuckPerms, и убедиться в его совместимости.</p>";
+	}
+
+	@Override
+	public String nombreIrisShaderpackNoEncontrado() {
+		return "Шейдерпак Iris не загружен";
+	}
+
+	@Override
+	public String mensajeIrisShaderpackNoEncontrado(String shaderpack) {
+		String nombre = shaderpack == null || shaderpack.isEmpty() ? "неизвестен" : shaderpack;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Обнаружена ошибка при загрузке шейдерпака через Iris/Oculus.</b>"
+				+ "<p><b>Затронутый шейдерпак:</b> " + nombre + "</p>"
+				+ "<p>Minecraft не смог открыть файл шейдерпака (FileSystemNotFoundException).</p>"
+				+ "<p><b>Возможные решения:</b></p>" + "<ul>"
+				+ "<li>Убедитесь, что шейдерпак правильно установлен в папку <b>shaderpacks</b>.</li>"
+				+ "<li>Повторно скачайте шейдерпак — файл может быть повреждён.</li>"
+				+ "<li>Если проблема сохраняется, удалите файл <b>config/iris.properties</b>, чтобы сбросить настройки Iris.</li>"
+				+ "</ul>" + "<p>После внесения изменений перезапустите игру.</p>";
+	}
+
+	@Override
+	public String nombreNightConfigNoSePuedeEscribir() {
+		return "Не удалось записать файл конфигурации";
+	}
+
+	@Override
+	public String mensajeNightConfigNoSePuedeEscribir(String ruta) {
+		String archivo = ruta == null || ruta.isEmpty() ? "неизвестен" : ruta;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Произошла ошибка при сохранении файла конфигурации.</b>" + "<p><b>Затронутый файл:</b> " + archivo
+				+ "</p>"
+				+ "<p>Minecraft не смог записать файл с использованием атомической записи (REPLACE_ATOMIC).</p>"
+				+ "<p><b>Это обычно происходит из-за:</b></p>" + "<ul>"
+				+ "<li>Неправильных прав доступа к папке или файлу.</li>"
+				+ "<li>Файл помечен как «только для чтения».</li>"
+				+ "<li>Другая программа (антивирус, резервное копирование, редактор) блокирует файл.</li>" + "</ul>"
+				+ "<p><b>Рекомендации:</b></p>" + "<ul>" + "<li>Убедитесь, что у вас есть права на запись в папку.</li>"
+				+ "<li>Снимите атрибут «только для чтения» с файла.</li>"
+				+ "<li>Закройте программы, которые могут использовать этот файл.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreAccesoDenegadoBackupConfig() {
+		return "Доступ запрещён при создании резервной копии";
+	}
+
+	@Override
+	public String mensajeAccesoDenegadoBackupConfig(String origen, String backup) {
+		String src = origen == null || origen.isEmpty() ? "неизвестен" : origen;
+		String dst = backup == null || backup.isEmpty() ? "неизвестен" : backup;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Произошла ошибка прав доступа при создании резервной копии файла конфигурации.</b>"
+				+ "<p><b>Исходный файл:</b> " + src + "</p>" + "<p><b>Резервный файл:</b> " + dst + "</p>"
+				+ "<p>Операционная система заблокировала доступ во время сохранения файла.</p>"
+				+ "<p><b>Это обычно происходит из-за:</b></p>" + "<ul>" + "<li>Недостаточных прав доступа к папке.</li>"
+				+ "<li>Файл помечен как «только для чтения».</li>"
+				+ "<li>Другая программа (антивирус, инструмент синхронизации, редактор) использует файл.</li>" + "</ul>"
+				+ "<p><b>Рекомендации:</b></p>" + "<ul>" + "<li>Проверьте права доступа к папке <b>config</b>.</li>"
+				+ "<li>Закройте программы, которые могут использовать этот файл.</li>"
+				+ "<li>Попробуйте запустить лаунчер или Minecraft от имени администратора.</li>" + "</ul>";
+	}
+
 }
