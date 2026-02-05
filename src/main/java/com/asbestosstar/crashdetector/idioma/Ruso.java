@@ -6239,5 +6239,41 @@ public class Ruso implements Idioma {
 				+ "<li>Закройте программы, которые могут использовать этот файл.</li>"
 				+ "<li>Попробуйте запустить лаунчер или Minecraft от имени администратора.</li>" + "</ul>";
 	}
+	
+	@Override
+	public String cdlauncherHabilitarConsola() {
+	    return "Включить консоль";
+	}
+
+	@Override
+	public String cdlauncherDescripcionCompleta() {
+	    return ""
+	        + "<b>Инструменты отладки</b><br><br>"
+	        + "Здесь вы можете включить расширенные функции для отладки CrashDetector и ваших игр.<br><br>"
+	        + "Рекомендуется включить консоль разработчика, чтобы получать подробную информацию, трассировки и диагностику во время анализа.<br><br>"
+	        + "Если вам нужно протестировать многопользовательский сервер в онлайн-режиме, может потребоваться разрешить передачу токена доступа процессу CrashDetector через настройки конфиденциальности. "
+	        + "Это, как правило, <b>не рекомендуется</b> в других случаях.<br><br>"
+	        + "Полная инструкция: <a href='https://example.com'>Ссылка!</a>";
+	}
+	
+	@Override
+	public String nombreSimpleCloudsIncompatibilidadShaders() {
+	    return "Несовместимость: Simple Clouds и шейдеры";
+	}
+
+	@Override
+	public String mensajeSimpleCloudsIncompatibilidadShaders() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "Обнаружена несовместимость между Simple Clouds и шейдерами.</b>"
+	            + "<p>Simple Clouds несовместим с модами теней (Iris/Oculus), если установлен Distant Horizons.</p>"
+	            + "<p><b>Рекомендуемые варианты:</b></p>"
+	            + "<ul>"
+	            + "<li>Удалите <b>Simple Clouds</b>, если хотите использовать шейдеры.</li>"
+	            + "<li>Либо удалите <b>Iris или Oculus</b>, если предпочитаете оставить Simple Clouds.</li>"
+	            + "</ul>"
+	            + "<p>Это ограничение исходит от самого мода Simple Clouds и не может быть устранено без изменения его кода.</p>";
+	}
+	
+	
 
 }

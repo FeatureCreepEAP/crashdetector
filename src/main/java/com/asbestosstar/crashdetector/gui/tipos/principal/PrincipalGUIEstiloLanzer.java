@@ -54,21 +54,76 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 
 	public static String ID = "estilo_lanzer";
 
-	public ConfigColor colorFondo = ConfigColor.de("gui.principal.lanzer.color.fondo",
+	public ConfigColor analizadorColorFondo = ConfigColor.de(
+			"gui.principal.color.fondo",
 			Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()));
-	public ConfigColor colorTexto = ConfigColor.de("gui.principal.lanzer.color.texto",
+
+	public ConfigColor analizadorColorTexto = ConfigColor.de(
+			"gui.principal.color.texto",
 			Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
-	public ConfigColor colorBoton = ConfigColor.de("gui.principal.lanzer.color.boton",
+
+	public ConfigColor analizadorColorBoton = ConfigColor.de(
+			"gui.principal.color.boton",
 			Config.convertirAColor(Config.obtenerInstancia().obtenerColorBoton()));
-	public ConfigColor colorCajaTexto = ConfigColor.de("gui.principal.lanzer.color.cajaTexto",
+
+	public ConfigColor analizadorColorCajaTexto = ConfigColor.de(
+			"gui.principal.color.cajaTexto",
 			Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
-	public ConfigColor colorEnlace = ConfigColor.de("gui.principal.lanzer.color.enlace",
+
+	public ConfigColor analizadorColorEnlace = ConfigColor.de(
+			"gui.principal.color.enlace",
 			Config.convertirAColor(Config.obtenerInstancia().obtenerColorEnlace()));
+
+
+	// =====================================================
+	// Colores por defecto
+	// (simplemente apuntan al Analizador)
+	// =====================================================
+
+	public ConfigColor colorFondo = analizadorColorFondo;
+	public ConfigColor colorTexto = analizadorColorTexto;
+	public ConfigColor colorBoton = analizadorColorBoton;
+	public ConfigColor colorCajaTexto = analizadorColorCajaTexto;
+	public ConfigColor colorEnlace = analizadorColorEnlace;
+
+
+	// =====================================================
+	// Colores del modo Launcher / Lanzer (estilo TLauncher)
+	// Claves separadas
+	// =====================================================
+
+	// Fondo principal / barra lateral derecha (azul oscuro)
+	public ConfigColor lanzerColorFondo = ConfigColor.de(
+			"gui.principal.launcher.color.fondo",
+			new Color(36, 96, 155));
+
+	// Texto principal (blanco)
+	public ConfigColor lanzerColorTexto = ConfigColor.de(
+			"gui.principal.launcher.color.texto",
+			new Color(255, 255, 255));
+
+	// Botón principal inferior “Entrar al juego” (amarillo)
+	public ConfigColor lanzerColorBoton = ConfigColor.de(
+			"gui.principal.launcher.color.boton",
+			new Color(246, 196, 64));
+
+	// Barra inferior completa (verde claro)
+	public ConfigColor lanzerColorCajaTexto = ConfigColor.de(
+			"gui.principal.launcher.color.cajaTexto",
+			new Color(170, 210, 120));
+
+	// Enlaces y acentos (azul claro)
+	public ConfigColor lanzerColorEnlace = ConfigColor.de(
+			"gui.principal.launcher.color.enlace",
+			new Color(80, 170, 230));
+
+	
+	
+	
 
 	@Override
 	public void init() {
-		// Inicializar colores PRIMERO
-
+		cambiarAModoAnalizador();
 		// AHORA llamamos al init del padre
 		this.setVisible(true);
 	}
@@ -455,22 +510,22 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 
 		// --- Botón QuickFix (centrado)
 		// ------------------------------------------------------------
-		JButton botonQuickFix = new JButton("QuickFix");
-		botonQuickFix.setEnabled(MonitorDePID.analizador.obtenerSoluciones().size() > 0);
-		botonQuickFix.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-		botonQuickFix.setMinimumSize(new Dimension(120, 30));
-		botonQuickFix.setMaximumSize(new Dimension(180, 40));
-		botonQuickFix.setPreferredSize(new Dimension(150, 30));
+		JButton botonCDLauncher = new JButton("CDLauncher");
+		//botonCDLauncher.setEnabled(MonitorDePID.analizador.obtenerSoluciones().size() > 0); //TODO hablicar solo si la aplicacion y lanzer suporte
+		botonCDLauncher.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+		botonCDLauncher.setMinimumSize(new Dimension(120, 30));
+		botonCDLauncher.setMaximumSize(new Dimension(180, 40));
+		botonCDLauncher.setPreferredSize(new Dimension(150, 30));
 		if (CrashDetectorGUI.esMac()) {
-			botonQuickFix.setContentAreaFilled(false);
+			botonCDLauncher.setContentAreaFilled(false);
 		} else {
-			botonQuickFix.setFont(botonQuickFix.getFont().deriveFont(Font.BOLD, 16f));
-			botonQuickFix.setBackground(colorBoton.obtener());
-			botonQuickFix.setForeground(colorTexto.obtener());
-			botonQuickFix.setContentAreaFilled(true);
-			botonQuickFix.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+			botonCDLauncher.setFont(botonCDLauncher.getFont().deriveFont(Font.BOLD, 16f));
+			botonCDLauncher.setBackground(colorBoton.obtener());
+			botonCDLauncher.setForeground(colorTexto.obtener());
+			botonCDLauncher.setContentAreaFilled(true);
+			botonCDLauncher.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 		}
-		botonQuickFix.addActionListener(e -> mostrarVentanaQuickFix());
+		botonCDLauncher.addActionListener(e -> botonCDLauncher(botonCDLauncher));
 
 		// --- Botones de acción (derecha)
 		// ----------------------------------------------------------
@@ -519,7 +574,7 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 
 		// Colocar secciones en el panel inferior
 		panelInferior.add(seccionConfiguracion, BorderLayout.WEST);
-		panelInferior.add(botonQuickFix, BorderLayout.CENTER);
+		panelInferior.add(botonCDLauncher, BorderLayout.CENTER);
 		panelInferior.add(panelBotonesDerecha, BorderLayout.EAST);
 
 		// --- Barra lateral derecha
@@ -668,6 +723,69 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 		this.revalidate();
 		this.repaint();
 	}
+	
+	
+	@Override
+	public void aplicarColoresAnalizador() {
+		// Colores configurables normales del CrashDetector
+		this.colorFondo = ConfigColor.de("gui.principal.color.fondo",
+				Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()));
+		this.colorTexto = ConfigColor.de("gui.principal.color.texto",
+				Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
+		this.colorBoton = ConfigColor.de("gui.principal.color.boton",
+				Config.convertirAColor(Config.obtenerInstancia().obtenerColorBoton()));
+		this.colorCajaTexto = ConfigColor.de("gui.principal.color.cajaTexto",
+				Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
+		this.colorEnlace = ConfigColor.de("gui.principal.color.enlace",
+				Config.convertirAColor(Config.obtenerInstancia().obtenerColorEnlace()));
+
+		// Refrescar inmediatamente la interfaz
+	}
+
+
+	@Override
+	public void aplicarColoresLanzer() {
+		this.colorFondo = lanzerColorFondo;
+		this.colorTexto = lanzerColorTexto;
+		this.colorBoton = lanzerColorBoton;
+		this.colorCajaTexto = lanzerColorCajaTexto;
+		this.colorEnlace = lanzerColorEnlace;
+
+		
+	}
+
+
+	
+	@Override
+	public void aplicarContenidoDeLaPantallaAnalizador() {
+		try {
+			pantalla.setContentType("text/html");
+			pantalla.setText(new String(Files.readAllBytes(Paths.get(MonitorDePID.local))));
+			pantalla.setCaretPosition(0);
+		} catch (IOException e) {
+			pantalla.setText("<html><body>Error cargando informe: " + e.getMessage() + "</body></html>");
+		}
+
+		// Asegurar refresco visual
+		pantalla.revalidate();
+		pantalla.repaint();
+	}
+
+
+	@Override
+	public void aplicarContenidoDeLaPantallaLanzer() {
+		pantalla.setContentType("text/html");
+		pantalla.setText(com.asbestosstar.crashdetector.lanzer.PaginaDeActualizacionesMinecraft.obtenerHTML());
+		pantalla.setCaretPosition(0);
+
+		// Asegurar refresco visual
+		pantalla.revalidate();
+		pantalla.repaint();
+	}
+
+
+	
+	
 
 	/**
 	 * Obtiene los elementos de configuración relacionados con los colores de la
@@ -683,18 +801,33 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 	public List<ElementoConfig> obtenerElementosConfigs() {
 		List<ElementoConfig> elementos = new ArrayList<>();
 
-		colorFondo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondo());
-		colorTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTexto());
-		colorBoton.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBoton());
-		colorCajaTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorCajaTexto());
-		colorEnlace.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorEnlace());
 
-		elementos.add(colorFondo);
-		elementos.add(colorTexto);
-		elementos.add(colorBoton);
-		elementos.add(colorCajaTexto);
-		elementos.add(colorEnlace);
+		analizadorColorFondo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondo());
+		analizadorColorTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTexto());
+		analizadorColorBoton.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBoton());
+		analizadorColorCajaTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorCajaTexto());
+		analizadorColorEnlace.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorEnlace());
+
+		elementos.add(analizadorColorFondo);
+		elementos.add(analizadorColorTexto);
+		elementos.add(analizadorColorBoton);
+		elementos.add(analizadorColorCajaTexto);
+		elementos.add(analizadorColorEnlace);
+
+
+		lanzerColorFondo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondo() + " (CDLauncher)");
+		lanzerColorTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTexto() + " (CDLauncher)");
+		lanzerColorBoton.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBoton() + " (CDLauncher)");
+		lanzerColorCajaTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorCajaTexto() + " (CDLauncher)");
+		lanzerColorEnlace.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorEnlace() + " (CDLauncher)");
+
+		elementos.add(lanzerColorFondo);
+		elementos.add(lanzerColorTexto);
+		elementos.add(lanzerColorBoton);
+		elementos.add(lanzerColorCajaTexto);
+		elementos.add(lanzerColorEnlace);
 
 		return elementos;
 	}
+
 }

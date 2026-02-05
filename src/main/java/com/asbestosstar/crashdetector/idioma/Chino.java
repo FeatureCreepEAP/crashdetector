@@ -5898,5 +5898,47 @@ public class Chino implements Idioma {
 				+ "<li>检查 <b>config</b> 文件夹的权限。</li>" + "<li>关闭可能正在访问该文件的程序。</li>"
 				+ "<li>尝试以管理员身份启动启动器或 Minecraft。</li>" + "</ul>";
 	}
+	@Override
+	public String cdlauncherHabilitarConsola() {
+	    return "启用控制台";
+	}
+
+	@Override
+	public String cdlauncherDescripcionCompleta() {
+	    return ""
+	        + "<b>调试工具</b><br><br>"
+	        + "在此处，你可以启用高级功能来调试 CrashDetector 和你的游戏。<br><br>"
+	        + "建议启用开发控制台，以便在分析过程中获取详细信息、堆栈跟踪和诊断数据。<br><br>"
+	        + "如果你需要在在线模式下测试多人服务器，可能需要从隐私设置中允许将访问令牌（token de acceso）传递给 CrashDetector 进程。"
+	        + "在其他情况下，这通常<b>不建议</b>。<br><br>"
+	        + "完整说明：<a href='https://example.com'>链接！</a>";
+	}
+	
+	@Override
+	public String nombreSimpleCloudsIncompatibilidadShaders() {
+	    return "不兼容：Simple Clouds 与着色器（Shaders）";
+	}
+
+	@Override
+	public String mensajeSimpleCloudsIncompatibilidadShaders() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "检测到 Simple Clouds 与着色器（shaders）之间存在不兼容问题。</b>"
+	            + "<p>当安装了 Distant Horizons 时，Simple Clouds 与光影模组（Iris/Oculus）不兼容。</p>"
+	            + "<p><b>推荐选项：</b></p>"
+	            + "<ul>"
+	            + "<li>若要使用着色器，请移除 <b>Simple Clouds</b>。</li>"
+	            + "<li>或者，若希望保留 Simple Clouds，请卸载 <b>Iris 或 Oculus</b>。</li>"
+	            + "</ul>"
+	            + "<p>此限制源于 Simple Clouds 模组本身，若不修改其代码则无法解决。</p>";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

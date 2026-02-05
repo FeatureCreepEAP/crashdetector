@@ -45,10 +45,11 @@ import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.arbol.ArbolDeModsGUIHamu;
+import com.asbestosstar.crashdetector.gui.tipos.cdlauncher.CDLauncherGUI;
+import com.asbestosstar.crashdetector.gui.tipos.cdlauncher.CDLauncherGUISaliorMoon;
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanel;
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanelEstiloTL;
 import com.asbestosstar.crashdetector.gui.tipos.corpo.CorpoSAO;
-import com.asbestosstar.crashdetector.gui.tipos.editor.EditorCodiceGUIIronMouse;
 import com.asbestosstar.crashdetector.gui.tipos.grepr.BusquedaGUISaliorMoon;
 import com.asbestosstar.crashdetector.gui.tipos.historia.ClioOfficeGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasHoloTalk;
@@ -92,11 +93,18 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 
 	public PanelAPIBase panelCDMods = TipoGUI.MOD_API_PANEL.obtenerGUIPredeterminado(CDModsEstiloTL.ID,
 			() -> new CDModsEstiloTL());
+	public CDLauncherGUI panelCDLauncher = TipoGUI.CDLAUNCHER.obtenerGUIPredeterminado(CDLauncherGUISaliorMoon.ID,
+			() -> new CDLauncherGUISaliorMoon());
 
 	public JButton botonVolver = new JButton(MonitorDePID.idioma.volver());
 	public JButton botonConfiguracion;
 	public JPanel contenidoPrincipal = new JPanel(new BorderLayout());
 
+	
+	
+	
+	public boolean modolanzer = false;
+	
 	/**
 	 * Botons de la barra lateral
 	 */
@@ -156,13 +164,16 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 	public abstract void inicializarInterfaz();
 
 	public void volver() {
-		// TODO Auto-generated method stub
 		contenidoPrincipal.removeAll();
 		contenidoPrincipal.add(scrollPane, BorderLayout.CENTER);
 		contenidoPrincipal.revalidate();
 		contenidoPrincipal.repaint();
 		botonVolver.setEnabled(false);
+
+		// Volver siempre al modo Analizador
+		cambiarAModoAnalizador();
 	}
+
 
 	public String obtenerCodigoIdioma(String nombreIdioma) {
 		switch (nombreIdioma) {
@@ -329,6 +340,18 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		panel.add(boton);
 		return boton;
 	}
+	
+	public void botonCDLauncher(JButton botonCDLauncher) {
+		
+		if(this.modolanzer) {
+			botonCDLauncher.setText("Cancelar");
+		}else {
+			botonCDLauncher.setText("Entrar al Juego");
+			this.panelCDLauncher.construir(this);
+		}
+		
+		
+	}
 
 	public void mostrarVentanaQuickFix() {
 		// Crear el diálogo emergente
@@ -375,4 +398,58 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 
 	@Override
 	public abstract void init();
+	
+	
+	
+	
+	/**
+	 * Cambia completamente al modo Analizador.
+	 * La implementación concreta se encarga de refrescar la apariencia.
+	 */
+	public void cambiarAModoAnalizador() {
+		aplicarColoresAnalizador();
+		aplicarContenidoDeLaPantallaAnalizador();
+		recargarApariencia();
+		modolanzer=false;
+	}
+
+	/**
+	 * Cambia completamente al modo Lanzer.
+	 * La implementación concreta se encarga de refrescar la apariencia.
+	 */
+	public void cambiarAModoLanzer() {
+		aplicarColoresLanzer();
+		aplicarContenidoDeLaPantallaLanzer();
+		recargarApariencia();
+		modolanzer=true;
+	}
+
+	
+	
+	
+	/**
+	 * Aplica la paleta de colores del Analizador (CrashDetector).
+	 */
+	public abstract void aplicarColoresAnalizador();
+
+
+	/**
+	 * Aplica la paleta de colores del modo Lanzer (CDLauncher).
+	 */
+	public abstract void aplicarColoresLanzer();
+
+	
+	/**
+	 * Aplica el contenido de la pantalla del Analizador (CrashDetector).
+	 */
+	public abstract void aplicarContenidoDeLaPantallaAnalizador();
+
+
+	/**
+	 * Aplica el contenido de la pantalla del modo Lanzer (estilo TLauncher).
+	 */
+	public abstract void aplicarContenidoDeLaPantallaLanzer();
+
+
+	
 }

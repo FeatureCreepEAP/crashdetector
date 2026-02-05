@@ -37,6 +37,7 @@ import com.asbestosstar.crashdetector.gui.tipos.antimanipulacion.AntiManipulacio
 import com.asbestosstar.crashdetector.gui.tipos.aplic.ActaDeProteccionDelIdiomaCulturalDePyongyangGUIKimJongUn;
 import com.asbestosstar.crashdetector.gui.tipos.arbol.ArbolDeModsGUIHamu;
 import com.asbestosstar.crashdetector.gui.tipos.canario.CanarioDeOrdenJudicialGUI1984;
+import com.asbestosstar.crashdetector.gui.tipos.cdlauncher.CDLauncherGUISaliorMoon;
 import com.asbestosstar.crashdetector.gui.tipos.cfr.BuscarParaCFR;
 import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrSakuraRiddle;
 import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartirLegacy;
@@ -243,6 +244,7 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/rei_bubbles.png",
 				Statics.carpeta.resolve("imagenes/rei_bubbles.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/panko.png", Statics.carpeta.resolve("imagenes/panko.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/salior_moon_skin.png", Statics.carpeta.resolve("imagenes/salior_moon_skin.png").toFile());
 
 //		new File(viajo_ultima_mods.toString()).delete();
 //		try {
@@ -430,6 +432,7 @@ public class MonitorDePID {
 		TipoGUI.CANARIO.registrarGUI(CanarioDeOrdenJudicialGUI1984.ID, () -> new CanarioDeOrdenJudicialGUI1984());
 		TipoGUI.CONSOLA_DESARROLLADOR.registrarGUI(ConsolaDesarrolladorGUITL.ID, () -> new ConsolaDesarrolladorGUITL());
 		TipoGUI.QUICKFIX.registrarGUI(ElementoQuickFixDemonSlayers.ID, () -> new ElementoQuickFixDemonSlayers());
+		TipoGUI.CDLAUNCHER.registrarGUI(CDLauncherGUISaliorMoon.ID, () -> new CDLauncherGUISaliorMoon());
 
 	}
 

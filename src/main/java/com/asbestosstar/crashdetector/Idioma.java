@@ -2421,4 +2421,12 @@ public interface Idioma {
 
 	public String nombreAccesoDenegadoBackupConfig();
 
+	public String cdlauncherHabilitarConsola();
+
+	public String cdlauncherDescripcionCompleta();
+
+	public String mensajeSimpleCloudsIncompatibilidadShaders();
+
+	public String nombreSimpleCloudsIncompatibilidadShaders();
+
 }

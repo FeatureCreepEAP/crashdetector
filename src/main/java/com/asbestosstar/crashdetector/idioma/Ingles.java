@@ -6266,4 +6266,47 @@ public class Ingles implements Idioma {
 				+ "<li>Try launching the launcher or Minecraft as administrator.</li>" + "</ul>";
 	}
 
+	@Override
+	public String cdlauncherHabilitarConsola() {
+	    return "Enable Console";
+	}
+
+	@Override
+	public String cdlauncherDescripcionCompleta() {
+	    return ""
+	        + "<b>Debugging Tools</b><br><br>"
+	        + "Here you can enable advanced features to debug CrashDetector and your games.<br><br>"
+	        + "It is recommended to enable the development console to obtain detailed information, traces, and diagnostics during analysis.<br><br>"
+	        + "If you need to test a multiplayer server in online mode, it may be necessary to allow the transfer of the access token to the CrashDetector process from privacy settings. "
+	        + "This is generally <b>not recommended</b> in other cases.<br><br>"
+	        + "Full instructions: <a href='https://example.com'>Link!</a>";
+	}
+	
+	@Override
+	public String nombreSimpleCloudsIncompatibilidadShaders() {
+	    return "Incompatibility: Simple Clouds vs Shaders";
+	}
+
+	@Override
+	public String mensajeSimpleCloudsIncompatibilidadShaders() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "Incompatibility detected between Simple Clouds and shaders.</b>"
+	            + "<p>Simple Clouds is incompatible with shadow mods (Iris/Oculus) when Distant Horizons is installed.</p>"
+	            + "<p><b>Recommended options:</b></p>"
+	            + "<ul>"
+	            + "<li>Remove <b>Simple Clouds</b> if you wish to use shaders.</li>"
+	            + "<li>Alternatively, uninstall <b>Iris or Oculus</b> if you prefer to keep Simple Clouds.</li>"
+	            + "</ul>"
+	            + "<p>This limitation originates from the Simple Clouds mod itself and cannot be resolved without modifying its code.</p>";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

@@ -6011,5 +6011,46 @@ public class Coreano implements Idioma {
 				+ "<ul>" + "<li><b>config</b> 폴더의 권한을 확인하십시오.</li>" + "<li>해당 파일에 접근하고 있을 수 있는 프로그람들을 종료하십시오.</li>"
 				+ "<li>런처 또는 마인크래프트를 관리자 권한으로 실행해 보십시오.</li>" + "</ul>";
 	}
+	
+	@Override
+	public String cdlauncherHabilitarConsola() {
+	    return "콘솔 활성화";
+	}
+
+	@Override
+	public String cdlauncherDescripcionCompleta() {
+	    return ""
+	        + "<b>디버그 도구</b><br><br>"
+	        + "여기서 CrashDetector와 당신의 게임을 디버그하기 위한 고급 기능들을 활성화할 수 있습니다.<br><br>"
+	        + "분석 과정에서 상세 정보, 추적 기록, 진단 자료를 얻기 위해 개발 콘솔을 활성화하는 것을 권장합니다.<br><br>"
+	        + "온라인 모드에서 다인용 서버를 시험해야 할 경우, 프라이버시 설정으로부터 CrashDetector 프로세스에 접근 토큰(token de acceso) 전송을 허용해야 할 수도 있습니다. "
+	        + "이것은 일반적으로 다른 경우에 <b>권장되지 않습니다</b>.<br><br>"
+	        + "전체 안내: <a href='https://example.com'>링크!</a>";
+	}
+	@Override
+	public String nombreSimpleCloudsIncompatibilidadShaders() {
+	    return "비호환: Simple Clouds 대 셰이더";
+	}
+
+	@Override
+	public String mensajeSimpleCloudsIncompatibilidadShaders() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "Simple Clouds와 셰이더 사이에 비호환성이 감지되였습니다.</b>"
+	            + "<p>Distant Horizons가 설치되여 있을 경우, Simple Clouds는 그림자 모드(Iris/Oculus)와 호환되지 않습니다.</p>"
+	            + "<p><b>권장 선택사항:</b></p>"
+	            + "<ul>"
+	            + "<li>셰이더를 사용하려면 <b>Simple Clouds</b>를 삭제하십시오.</li>"
+	            + "<li>아니면 Simple Clouds를 유지하려면 <b>Iris 또는 Oculus</b>를 제거하십시오.</li>"
+	            + "</ul>"
+	            + "<p>이 제한은 Simple Clouds 모드 자체에서 비롯되며, 코드를 수정하지 않고는 해결할 수 없습니다.</p>";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

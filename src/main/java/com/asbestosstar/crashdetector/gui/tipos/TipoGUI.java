@@ -15,6 +15,7 @@ import com.asbestosstar.crashdetector.gui.tipos.antimanipulacion.AntiManipulacio
 import com.asbestosstar.crashdetector.gui.tipos.aplic.ActaDeProteccionDelIdiomaCulturalDePyongyangGUI;
 import com.asbestosstar.crashdetector.gui.tipos.arbol.ArbolDeModsGUI;
 import com.asbestosstar.crashdetector.gui.tipos.canario.CanarioDeOrdenJudicialGUI;
+import com.asbestosstar.crashdetector.gui.tipos.cdlauncher.CDLauncherGUI;
 import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrBase;
 import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartir;
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanel;
@@ -752,6 +753,33 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 			return ConsolaDesarrolladorGUI.GUIS;
 		}
 	};
+	
+	
+	
+	public static TipoGUI<CDLauncherGUI> CDLAUNCHER = new TipoGUI<CDLauncherGUI>() {
+		@Override
+		public String id() {
+			return "relanzer";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return "CDLauncher";
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<CDLauncherGUI> gui) {
+			CDLauncherGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<CDLauncherGUI>> obtenerGUIs() {
+			return CDLauncherGUI.GUIS;
+		}
+	};
+	
+	
+	
 
 	/**
 	 * Registro estático de todos los tipos de GUI en la lista global.
@@ -785,6 +813,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		TIPOS_DE_GUI.add(APLIC);
 		TIPOS_DE_GUI.add(CANARIO);
 		TIPOS_DE_GUI.add(CONSOLA_DESARROLLADOR);
+		TIPOS_DE_GUI.add(CDLAUNCHER);
 
 	}
 }
