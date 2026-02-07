@@ -6205,48 +6205,41 @@ public class Persa implements Idioma {
 				+ "<li>برنامه‌هایی را که ممکن است به فایل دسترسی داشته باشند، ببندید.</li>"
 				+ "<li>سعی کنید لانچر یا ماینکرفت را به‌عنوان مدیر اجرا کنید.</li>" + "</ul>";
 	}
-	
+
 	@Override
 	public String cdlauncherHabilitarConsola() {
-	    return "فعال‌سازی کنسول";
+		return "فعال‌سازی کنسول";
 	}
 
 	@Override
 	public String cdlauncherDescripcionCompleta() {
-	    return ""
-	        + "<b>ابزارهای اشکال‌زدایی</b><br><br>"
-	        + "در اینجا می‌توانید ویژگی‌های پیشرفته‌ای را برای اشکال‌زدایی CrashDetector و بازی‌های خود فعال کنید.<br><br>"
-	        + "برای دریافت اطلاعات دقیق، ردیابی‌ها و تشخیص‌های لازم در حین تحلیل، فعال‌سازی کنسول توسعه توصیه می‌شود.<br><br>"
-	        + "اگر نیاز دارید سرور چندنفره را در حالت آنلاین آزمایش کنید، ممکن است لازم باشد انتقال توکن دسترسی (token de acceso) به فرآیند CrashDetector را از تنظیمات حریم خصوصی مجاز کنید. "
-	        + "این کار معمولاً در موارد دیگر <b>توصیه نمی‌شود</b>.<br><br>"
-	        + "دستورالعمل کامل: <a href='https://example.com'>پیوند!</a>";
+		return "" + "<b>ابزارهای اشکال‌زدایی</b><br><br>"
+				+ "در اینجا می‌توانید ویژگی‌های پیشرفته‌ای را برای اشکال‌زدایی CrashDetector و بازی‌های خود فعال کنید.<br><br>"
+				+ "برای دریافت اطلاعات دقیق، ردیابی‌ها و تشخیص‌های لازم در حین تحلیل، فعال‌سازی کنسول توسعه توصیه می‌شود.<br><br>"
+				+ "اگر نیاز دارید سرور چندنفره را در حالت آنلاین آزمایش کنید، ممکن است لازم باشد انتقال توکن دسترسی (token de acceso) به فرآیند CrashDetector را از تنظیمات حریم خصوصی مجاز کنید. "
+				+ "این کار معمولاً در موارد دیگر <b>توصیه نمی‌شود</b>.<br><br>"
+				+ "دستورالعمل کامل: <a href='https://example.com'>پیوند!</a>";
 	}
-	
+
 	@Override
 	public String nombreSimpleCloudsIncompatibilidadShaders() {
-	    return "ناسازگاری: Simple Clouds در برابر شیدرها";
+		return "ناسازگاری: Simple Clouds در برابر شیدرها";
 	}
 
 	@Override
 	public String mensajeSimpleCloudsIncompatibilidadShaders() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "ناسازگاری بین Simple Clouds و شیدرها شناسایی شد.</b>"
-	            + "<p>هنگامی که Distant Horizons نصب باشد، Simple Clouds با مودهای سایه (Iris/Oculus) سازگار نیست.</p>"
-	            + "<p><b>گزینه‌های پیشنهادی:</b></p>"
-	            + "<ul>"
-	            + "<li>اگر می‌خواهید از شیدرها استفاده کنید، <b>Simple Clouds</b> را حذف کنید.</li>"
-	            + "<li>یا اگر ترجیح می‌دهید Simple Clouds را نگه دارید، <b>Iris یا Oculus</b> را حذف نصب کنید.</li>"
-	            + "</ul>"
-	            + "<p>این محدودیت از خود مود Simple Clouds نشأت می‌گیرد و بدون تغییر کد آن قابل حل نیست.</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "ناسازگاری بین Simple Clouds و شیدرها شناسایی شد.</b>"
+				+ "<p>هنگامی که Distant Horizons نصب باشد، Simple Clouds با مودهای سایه (Iris/Oculus) سازگار نیست.</p>"
+				+ "<p><b>گزینه‌های پیشنهادی:</b></p>" + "<ul>"
+				+ "<li>اگر می‌خواهید از شیدرها استفاده کنید، <b>Simple Clouds</b> را حذف کنید.</li>"
+				+ "<li>یا اگر ترجیح می‌دهید Simple Clouds را نگه دارید، <b>Iris یا Oculus</b> را حذف نصب کنید.</li>"
+				+ "</ul>" + "<p>این محدودیت از خود مود Simple Clouds نشأت می‌گیرد و بدون تغییر کد آن قابل حل نیست.</p>";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public String colorBotonBaraLateral() {
+		return "رنگ دکمه نوار کناری";
+	}
 
 }

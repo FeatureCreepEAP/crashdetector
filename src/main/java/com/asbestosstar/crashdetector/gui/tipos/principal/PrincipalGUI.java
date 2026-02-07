@@ -72,8 +72,8 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 	public static Map<String, Supplier<PrincipalGUI>> GUIS = new HashMap<>();
 	public Instant tiempoFallo;
 
-	public ConfigColor colorFondo = ConfigColor.de("gui.principal.color.fondo",
-			Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()));
+//	public ConfigColor colorFondo = ConfigColor.de("gui.principal.color.fondo",
+//			Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()));
 	public ConfigColor colorTexto = ConfigColor.de("gui.principal.color.texto",
 			Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
 	public ConfigColor colorBoton = ConfigColor.de("gui.principal.color.boton",
@@ -100,11 +100,8 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 	public JButton botonConfiguracion;
 	public JPanel contenidoPrincipal = new JPanel(new BorderLayout());
 
-	
-	
-	
 	public boolean modolanzer = false;
-	
+
 	/**
 	 * Botons de la barra lateral
 	 */
@@ -174,7 +171,6 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		cambiarAModoAnalizador();
 	}
 
-
 	public String obtenerCodigoIdioma(String nombreIdioma) {
 		switch (nombreIdioma) {
 		case "Español":
@@ -224,48 +220,6 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		}
 	}
 
-	public JButton añadirBotonEmoji(JPanel panel, String emoji, String tooltip) {
-		JButton boton = new JButton(emoji);
-		boton.setToolTipText(tooltip);
-		boton.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 20));
-		boton.setRolloverEnabled(true);
-		boton.setContentAreaFilled(false);
-		boton.setBorderPainted(false);
-		boton.setFocusPainted(false);
-		boton.setPreferredSize(new Dimension(40, 40));
-		boton.setMaximumSize(new Dimension(40, 40));
-		boton.setMinimumSize(new Dimension(40, 40));
-		boton.setForeground(colorTexto.obtener());
-		boton.addMouseListener(new MouseAdapter() {
-			public void mouseEntered(MouseEvent evt) {
-				boton.setBackground(colorBoton.obtener().brighter());
-				boton.setForeground(Color.BLACK);
-			}
-
-			public void mouseExited(MouseEvent evt) {
-				boton.setBackground(colorFondo.obtener());
-				boton.setForeground(colorTexto.obtener());
-			}
-		});
-		panel.add(boton);
-		return boton;
-	}
-
-	public void añadirBotonBarraLateral(JPanel panel, String texto) {
-		JButton boton = new JButton(texto);
-		boton.setBackground(colorBoton.obtener().darker());
-		boton.setForeground(colorTexto.obtener());
-		boton.setFont(boton.getFont().deriveFont(Font.BOLD, 14f));
-		boton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-		boton.setMargin(new Insets(10, 20, 10, 20));
-		boton.setMaximumSize(new Dimension(130, 40));
-		boton.setMinimumSize(new Dimension(130, 40));
-		boton.setPreferredSize(new Dimension(130, 40));
-		boton.setContentAreaFilled(true);
-		boton.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-		panel.add(boton);
-	}
-
 	public void estilizarBoton(JButton boton) {
 		if (!CrashDetectorGUI.esMac()) {
 			boton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -311,77 +265,28 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		}
 	}
 
-	public JButton añadirBotonImagen(JPanel panel, String imagePath, String tooltip) {
-		JButton boton = new JButton();
-		boton.setToolTipText(tooltip);
-		ImageIcon originalIcon = new ImageIcon(imagePath);
-		Image image = originalIcon.getImage();
-		int BUTTON_SIZE = 40;
-		Image scaledImage = image.getScaledInstance(BUTTON_SIZE - 10, BUTTON_SIZE - 10, Image.SCALE_SMOOTH);
-		ImageIcon icon = new ImageIcon(scaledImage);
-		boton.setIcon(icon);
-		boton.setText("");
-		boton.setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
-		boton.setBackground(colorFondo.obtener());
-		boton.setBorder(BorderFactory.createLineBorder(colorFondo.obtener(), 1));
-		boton.setFocusPainted(false);
-		boton.setMargin(new Insets(0, 0, 0, 0)); // Reduced margin
-		boton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				boton.setBackground(colorBoton.obtener().brighter());
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				boton.setBackground(colorFondo.obtener());
-			}
-		});
-		panel.add(boton);
-		return boton;
-	}
-	
 	public void botonCDLauncher(JButton botonCDLauncher) {
-		
-		if(this.modolanzer) {
+
+		if (this.modolanzer) {
 			botonCDLauncher.setText("Cancelar");
-		}else {
+		} else {
 			botonCDLauncher.setText("Entrar al Juego");
 			this.panelCDLauncher.construir(this);
 		}
-		
-		
+
 	}
 
 	public void mostrarVentanaQuickFix() {
-		// Crear el diálogo emergente
-		JDialog dialogo = new JDialog(this, "QuickFix", true);
-		dialogo.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		dialogo.setSize(600, 400);
-		dialogo.setLocationRelativeTo(this);
-		// Crear el panel QuickFix
-		JPanel panelQuickFix = new JPanel(new BorderLayout());
-		if (!CrashDetectorGUI.esMac()) {
-			panelQuickFix.setBackground(colorFondo.obtener());
-		}
-		// Crear el scrollable QuickFix panel
-		TodosQuickFixesGUI panelContenido = TipoGUI.TODOS_QUICKFIXES
-				.obtenerGUIPredeterminado(PanelQuickFixDemonSlayers.ID, () -> {
-					return new PanelQuickFixDemonSlayers();
-				});
+		TodosQuickFixesGUI gui = TipoGUI.TODOS_QUICKFIXES.obtenerGUIPredeterminado(PanelQuickFixDemonSlayers.ID,
+				() -> new PanelQuickFixDemonSlayers());
+
+		gui.limpiar();
+
 		for (QuickFix solucion : MonitorDePID.analizador.obtenerSoluciones()) {
-			panelContenido.agregarQuickFix(solucion);
+			gui.agregarQuickFix(solucion);
 		}
-		JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		panelInferior.setBackground(colorFondo.obtener());
-		JButton botonCerrar = new JButton(MonitorDePID.idioma.volver());
-		estilizarBoton(botonCerrar);
-		botonCerrar.addActionListener(e -> dialogo.dispose());
-		panelInferior.add(botonCerrar);
-		panelQuickFix.add(panelContenido, BorderLayout.CENTER);
-		panelQuickFix.add(panelInferior, BorderLayout.SOUTH);
-		dialogo.getContentPane().add(panelQuickFix);
-		dialogo.setVisible(true);
+
+		gui.init();
 	}
 
 	@Override
@@ -398,58 +303,47 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 
 	@Override
 	public abstract void init();
-	
-	
-	
-	
+
 	/**
-	 * Cambia completamente al modo Analizador.
-	 * La implementación concreta se encarga de refrescar la apariencia.
+	 * Cambia completamente al modo Analizador. La implementación concreta se
+	 * encarga de refrescar la apariencia.
 	 */
 	public void cambiarAModoAnalizador() {
+		modolanzer = false;
 		aplicarColoresAnalizador();
 		aplicarContenidoDeLaPantallaAnalizador();
 		recargarApariencia();
-		modolanzer=false;
 	}
 
 	/**
-	 * Cambia completamente al modo Lanzer.
-	 * La implementación concreta se encarga de refrescar la apariencia.
+	 * Cambia completamente al modo Lanzer. La implementación concreta se encarga de
+	 * refrescar la apariencia.
 	 */
 	public void cambiarAModoLanzer() {
+		modolanzer = true;
 		aplicarColoresLanzer();
 		aplicarContenidoDeLaPantallaLanzer();
 		recargarApariencia();
-		modolanzer=true;
 	}
 
-	
-	
-	
 	/**
 	 * Aplica la paleta de colores del Analizador (CrashDetector).
 	 */
 	public abstract void aplicarColoresAnalizador();
-
 
 	/**
 	 * Aplica la paleta de colores del modo Lanzer (CDLauncher).
 	 */
 	public abstract void aplicarColoresLanzer();
 
-	
 	/**
 	 * Aplica el contenido de la pantalla del Analizador (CrashDetector).
 	 */
 	public abstract void aplicarContenidoDeLaPantallaAnalizador();
-
 
 	/**
 	 * Aplica el contenido de la pantalla del modo Lanzer (estilo TLauncher).
 	 */
 	public abstract void aplicarContenidoDeLaPantallaLanzer();
 
-
-	
 }

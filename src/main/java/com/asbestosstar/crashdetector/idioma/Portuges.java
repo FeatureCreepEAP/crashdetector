@@ -6244,45 +6244,41 @@ public class Portuges implements Idioma {
 				+ "<li>Feche programas que possam estar acessando o arquivo.</li>"
 				+ "<li>Tente iniciar o launcher ou o Minecraft como administrador.</li>" + "</ul>";
 	}
-	
+
 	@Override
 	public String cdlauncherHabilitarConsola() {
-	    return "Habilitar Console";
+		return "Habilitar Console";
 	}
 
 	@Override
 	public String cdlauncherDescripcionCompleta() {
-	    return ""
-	        + "<b>Ferramentas de Depuração</b><br><br>"
-	        + "Aqui você pode ativar recursos avançados para depurar o CrashDetector e seus jogos.<br><br>"
-	        + "Recomenda-se habilitar o console de desenvolvimento para obter informações detalhadas, rastros e diagnósticos durante a análise.<br><br>"
-	        + "Se você precisar testar um servidor multiplayer no modo online, pode ser necessário permitir a transferência do token de acesso ao processo do CrashDetector nas configurações de privacidade. "
-	        + "Isso geralmente <b>não é recomendado</b> em outros casos.<br><br>"
-	        + "Instruções completas: <a href='https://example.com'>Link!</a>";
+		return "" + "<b>Ferramentas de Depuração</b><br><br>"
+				+ "Aqui você pode ativar recursos avançados para depurar o CrashDetector e seus jogos.<br><br>"
+				+ "Recomenda-se habilitar o console de desenvolvimento para obter informações detalhadas, rastros e diagnósticos durante a análise.<br><br>"
+				+ "Se você precisar testar um servidor multiplayer no modo online, pode ser necessário permitir a transferência do token de acesso ao processo do CrashDetector nas configurações de privacidade. "
+				+ "Isso geralmente <b>não é recomendado</b> em outros casos.<br><br>"
+				+ "Instruções completas: <a href='https://example.com'>Link!</a>";
 	}
+
 	@Override
 	public String nombreSimpleCloudsIncompatibilidadShaders() {
-	    return "Incompatibilidade: Simple Clouds vs Shaders";
+		return "Incompatibilidade: Simple Clouds vs Shaders";
 	}
 
 	@Override
 	public String mensajeSimpleCloudsIncompatibilidadShaders() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "Incompatibilidade detectada entre Simple Clouds e os shaders.</b>"
-	            + "<p>O Simple Clouds não é compatível com mods de sombra (Iris/Oculus) quando o Distant Horizons está instalado.</p>"
-	            + "<p><b>Opções recomendadas:</b></p>"
-	            + "<ul>"
-	            + "<li>Remova o <b>Simple Clouds</b> se quiser usar shaders.</li>"
-	            + "<li>Ou então, desinstale o <b>Iris ou Oculus</b> se preferir manter o Simple Clouds.</li>"
-	            + "</ul>"
-	            + "<p>Essa limitação vem do próprio mod Simple Clouds e não pode ser resolvida sem modificar seu código.</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Incompatibilidade detectada entre Simple Clouds e os shaders.</b>"
+				+ "<p>O Simple Clouds não é compatível com mods de sombra (Iris/Oculus) quando o Distant Horizons está instalado.</p>"
+				+ "<p><b>Opções recomendadas:</b></p>" + "<ul>"
+				+ "<li>Remova o <b>Simple Clouds</b> se quiser usar shaders.</li>"
+				+ "<li>Ou então, desinstale o <b>Iris ou Oculus</b> se preferir manter o Simple Clouds.</li>" + "</ul>"
+				+ "<p>Essa limitação vem do próprio mod Simple Clouds e não pode ser resolvida sem modificar seu código.</p>";
 	}
-	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public String colorBotonBaraLateral() {
+		return "Cor do botão da barra lateral";
+	}
 
 }

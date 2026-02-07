@@ -6022,42 +6022,38 @@ public class Japones implements Idioma {
 				+ "<li><b>config</b> フォルダーの権限を確認してください。</li>" + "<li>このファイルにアクセスしている可能性のあるプログラムを終了してください。</li>"
 				+ "<li>ランチャーや Minecraft を管理者として実行してみてください。</li>" + "</ul>";
 	}
-	
+
 	@Override
 	public String cdlauncherHabilitarConsola() {
-	    return "コンソールを有効化";
+		return "コンソールを有効化";
 	}
 
 	@Override
 	public String cdlauncherDescripcionCompleta() {
-	    return ""
-	        + "<b>デバッグツール</b><br><br>"
-	        + "ここでは、CrashDetector やゲームのデバッグに役立つ高度な機能を有効化できます。<br><br>"
-	        + "分析中に詳細な情報、トレース、診断データを得るため、開発用コンソールの有効化を推奨します。<br><br>"
-	        + "オンラインモードでマルチプレイヤーサーバーをテストする必要がある場合、プライバシー設定から CrashDetector プロセスへアクセストークン（token de acceso）の転送を許可する必要があるかもしれません。"
-	        + "ただし、これは通常、他のケースでは<b>推奨されません</b>。<br><br>"
-	        + "詳細な手順: <a href='https://example.com'>リンク！</a>";
+		return "" + "<b>デバッグツール</b><br><br>" + "ここでは、CrashDetector やゲームのデバッグに役立つ高度な機能を有効化できます。<br><br>"
+				+ "分析中に詳細な情報、トレース、診断データを得るため、開発用コンソールの有効化を推奨します。<br><br>"
+				+ "オンラインモードでマルチプレイヤーサーバーをテストする必要がある場合、プライバシー設定から CrashDetector プロセスへアクセストークン（token de acceso）の転送を許可する必要があるかもしれません。"
+				+ "ただし、これは通常、他のケースでは<b>推奨されません</b>。<br><br>" + "詳細な手順: <a href='https://example.com'>リンク！</a>";
 	}
-	
-	
+
 	@Override
 	public String nombreSimpleCloudsIncompatibilidadShaders() {
-	    return "非互換性：Simple Clouds とシェーダー";
+		return "非互換性：Simple Clouds とシェーダー";
 	}
 
 	@Override
 	public String mensajeSimpleCloudsIncompatibilidadShaders() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "Simple Clouds とシェーダーの間に非互換性が検出されました。</b>"
-	            + "<p>Distant Horizons がインストールされている場合、Simple Clouds は影モッド（Iris/Oculus）と互換性がありません。</p>"
-	            + "<p><b>推奨される選択肢：</b></p>"
-	            + "<ul>"
-	            + "<li>シェーダーを使用したい場合は、<b>Simple Clouds</b> を削除してください。</li>"
-	            + "<li>または、Simple Clouds を維持したい場合は、<b>Iris または Oculus</b> をアンインストールしてください。</li>"
-	            + "</ul>"
-	            + "<p>この制限は Simple Clouds モッド自体に由来しており、コードを修正せずに解決することはできません。</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Simple Clouds とシェーダーの間に非互換性が検出されました。</b>"
+				+ "<p>Distant Horizons がインストールされている場合、Simple Clouds は影モッド（Iris/Oculus）と互換性がありません。</p>"
+				+ "<p><b>推奨される選択肢：</b></p>" + "<ul>" + "<li>シェーダーを使用したい場合は、<b>Simple Clouds</b> を削除してください。</li>"
+				+ "<li>または、Simple Clouds を維持したい場合は、<b>Iris または Oculus</b> をアンインストールしてください。</li>" + "</ul>"
+				+ "<p>この制限は Simple Clouds モッド自体に由来しており、コードを修正せずに解決することはできません。</p>";
 	}
-	
-	
+
+	@Override
+	public String colorBotonBaraLateral() {
+		return "サイドバーのボタン色";
+	}
 
 }

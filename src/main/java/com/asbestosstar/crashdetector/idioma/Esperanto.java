@@ -6216,45 +6216,41 @@ public class Esperanto implements Idioma {
 				+ "<ul>" + "<li><b>config</b> 폴더의 권한을 확인하십시오.</li>" + "<li>해당 파일에 접근하고 있을 수 있는 프로그람들을 종료하십시오.</li>"
 				+ "<li>런처 또는 마인크래프트를 관리자 권한으로 실행해 보십시오.</li>" + "</ul>";
 	}
+
 	@Override
 	public String cdlauncherHabilitarConsola() {
-	    return "Ebligi Konzolon";
+		return "Ebligi Konzolon";
 	}
 
 	@Override
 	public String cdlauncherDescripcionCompleta() {
-	    return ""
-	        + "<b>Debugaj Iloj</b><br><br>"
-	        + "Ĉi tie vi povas aktivigi altnivelajn funkciojn por pritrakti CrashDetector kaj viajn ludojn.<br><br>"
-	        + "Oni rekomendas ebligi la programistan konzolon por akiri detalajn informojn, spuradojn kaj diagnozojn dum analizado.<br><br>"
-	        + "Se vi bezonas testi multludantan servilon en reta reĝimo, eble necesos permesi transdonon de la alirkodo (token de acceso) al la CrashDetector-procezo el la privatecaj agordoj. "
-	        + "Tio ĝenerale <b>ne estas rekomendata</b> en aliaj okazoj.<br><br>"
-	        + "Plenaj instrukcioj: <a href='https://example.com'>Ligu!</a>";
+		return "" + "<b>Debugaj Iloj</b><br><br>"
+				+ "Ĉi tie vi povas aktivigi altnivelajn funkciojn por pritrakti CrashDetector kaj viajn ludojn.<br><br>"
+				+ "Oni rekomendas ebligi la programistan konzolon por akiri detalajn informojn, spuradojn kaj diagnozojn dum analizado.<br><br>"
+				+ "Se vi bezonas testi multludantan servilon en reta reĝimo, eble necesos permesi transdonon de la alirkodo (token de acceso) al la CrashDetector-procezo el la privatecaj agordoj. "
+				+ "Tio ĝenerale <b>ne estas rekomendata</b> en aliaj okazoj.<br><br>"
+				+ "Plenaj instrukcioj: <a href='https://example.com'>Ligu!</a>";
 	}
-	
+
 	@Override
 	public String nombreSimpleCloudsIncompatibilidadShaders() {
-	    return "Malkongruo: Simple Clouds kontraŭ Shaders";
+		return "Malkongruo: Simple Clouds kontraŭ Shaders";
 	}
 
 	@Override
 	public String mensajeSimpleCloudsIncompatibilidadShaders() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "Malkongruo estis detektita inter Simple Clouds kaj la shaderoj.</b>"
-	            + "<p>Simple Clouds ne estas kongrua kun ombraj modoj (Iris/Oculus) kiam Distant Horizons estas instalita.</p>"
-	            + "<p><b>Rekomenditaj opcioj:</b></p>"
-	            + "<ul>"
-	            + "<li>Forigu <b>Simple Clouds</b> se vi volas uzi shaderojn.</li>"
-	            + "<li>Aŭ malinstalu <b>Iris aŭ Oculus</b> se vi preferas konservi Simple Clouds.</li>"
-	            + "</ul>"
-	            + "<p>Tiu limigo devenas de la mod Simple Clouds mem kaj ne solveblas sen modifi ĝian kodon.</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Malkongruo estis detektita inter Simple Clouds kaj la shaderoj.</b>"
+				+ "<p>Simple Clouds ne estas kongrua kun ombraj modoj (Iris/Oculus) kiam Distant Horizons estas instalita.</p>"
+				+ "<p><b>Rekomenditaj opcioj:</b></p>" + "<ul>"
+				+ "<li>Forigu <b>Simple Clouds</b> se vi volas uzi shaderojn.</li>"
+				+ "<li>Aŭ malinstalu <b>Iris aŭ Oculus</b> se vi preferas konservi Simple Clouds.</li>" + "</ul>"
+				+ "<p>Tiu limigo devenas de la mod Simple Clouds mem kaj ne solveblas sen modifi ĝian kodon.</p>";
 	}
-	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public String colorBotonBaraLateral() {
+		return "Koloro de la flankpanela butono";
+	}
 
 }

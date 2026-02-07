@@ -6955,35 +6955,33 @@ public class Espanol implements Idioma {
 
 	@Override
 	public String cdlauncherDescripcionCompleta() {
-		return ""
-		+ "<b>Herramientas de depuración</b><br><br>"
-		+ "Aquí puedes activar funciones avanzadas para depurar CrashDetector y tus juegos.<br><br>"
-		+ "Se recomienda habilitar la consola de desarrollo para obtener información detallada, trazas y diagnósticos durante el análisis.<br><br>"
-		+ "Si necesitas probar un servidor multijugador en modo online, puede ser necesario permitir la transferencia del token de acceso al proceso de CrashDetector desde los ajustes de privacidad. "
-		+ "Esto generalmente <b>no se recomienda</b> en otros casos.<br><br>"
-		+ "Instrucciones completas: <a href='https://example.com'>¡Enlace!</a>";//TODO
+		return "" + "<b>Herramientas de depuración</b><br><br>"
+				+ "Aquí puedes activar funciones avanzadas para depurar CrashDetector y tus juegos.<br><br>"
+				+ "Se recomienda habilitar la consola de desarrollo para obtener información detallada, trazas y diagnósticos durante el análisis.<br><br>"
+				+ "Si necesitas probar un servidor multijugador en modo online, puede ser necesario permitir la transferencia del token de acceso al proceso de CrashDetector desde los ajustes de privacidad. "
+				+ "Esto generalmente <b>no se recomienda</b> en otros casos.<br><br>"
+				+ "Instrucciones completas: <a href='https://example.com'>¡Enlace!</a>";// TODO
 	}
 
-	
 	@Override
 	public String mensajeSimpleCloudsIncompatibilidadShaders() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "Incompatibilidad detectada entre Simple Clouds y los shaders.</b>"
-	            + "<p>Simple Clouds no es compatible con mods de sombras (Iris/Oculus) cuando está instalado Distant Horizons.</p>"
-	            + "<p><b>Opciones recomendadas:</b></p>"
-	            + "<ul>"
-	            + "<li>Elimina <b>Simple Clouds</b> si deseas usar shaders.</li>"
-	            + "<li>O bien, desinstala <b>Iris u Oculus</b> si prefieres mantener Simple Clouds.</li>"
-	            + "</ul>"
-	            + "<p>Esta limitación proviene del propio mod Simple Clouds y no puede resolverse sin modificar su código.</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Incompatibilidad detectada entre Simple Clouds y los shaders.</b>"
+				+ "<p>Simple Clouds no es compatible con mods de sombras (Iris/Oculus) cuando está instalado Distant Horizons.</p>"
+				+ "<p><b>Opciones recomendadas:</b></p>" + "<ul>"
+				+ "<li>Elimina <b>Simple Clouds</b> si deseas usar shaders.</li>"
+				+ "<li>O bien, desinstala <b>Iris u Oculus</b> si prefieres mantener Simple Clouds.</li>" + "</ul>"
+				+ "<p>Esta limitación proviene del propio mod Simple Clouds y no puede resolverse sin modificar su código.</p>";
 	}
 
 	@Override
 	public String nombreSimpleCloudsIncompatibilidadShaders() {
-	    return "Incompatibilidad: Simple Clouds vs Shaders";
+		return "Incompatibilidad: Simple Clouds vs Shaders";
 	}
-	
-	
-	
+
+	@Override
+	public String colorBotonBaraLateral() {
+		return "Color del botón de la barra lateral";
+	}
 
 }

@@ -7,11 +7,12 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.io.BufferedWriter;
+import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -54,26 +55,23 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 
 	public static String ID = "estilo_lanzer";
 
-	public ConfigColor analizadorColorFondo = ConfigColor.de(
-			"gui.principal.color.fondo",
+	public ConfigColor analizadorColorFondo = ConfigColor.de("gui.principal.color.fondo",
 			Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()));
 
-	public ConfigColor analizadorColorTexto = ConfigColor.de(
-			"gui.principal.color.texto",
+	public ConfigColor analizadorColorTexto = ConfigColor.de("gui.principal.color.texto",
 			Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
 
-	public ConfigColor analizadorColorBoton = ConfigColor.de(
-			"gui.principal.color.boton",
+	public ConfigColor analizadorColorBoton = ConfigColor.de("gui.principal.color.boton",
 			Config.convertirAColor(Config.obtenerInstancia().obtenerColorBoton()));
 
-	public ConfigColor analizadorColorCajaTexto = ConfigColor.de(
-			"gui.principal.color.cajaTexto",
+	public ConfigColor analizadorColorCajaTexto = ConfigColor.de("gui.principal.color.cajaTexto",
 			Config.convertirAColor(Config.obtenerInstancia().obtenerColorCajaTexto()));
 
-	public ConfigColor analizadorColorEnlace = ConfigColor.de(
-			"gui.principal.color.enlace",
+	public ConfigColor analizadorColorEnlace = ConfigColor.de("gui.principal.color.enlace",
 			Config.convertirAColor(Config.obtenerInstancia().obtenerColorEnlace()));
 
+	public ConfigColor analizadorColorBotonBaraLateral = ConfigColor.de("gui.principal.color.boton.bara.lateral",
+			Config.convertirAColor(Config.obtenerInstancia().obtenerColorBoton()));
 
 	// =====================================================
 	// Colores por defecto
@@ -85,7 +83,7 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 	public ConfigColor colorBoton = analizadorColorBoton;
 	public ConfigColor colorCajaTexto = analizadorColorCajaTexto;
 	public ConfigColor colorEnlace = analizadorColorEnlace;
-
+	public ConfigColor colorBotonBaraLateral = analizadorColorBotonBaraLateral;
 
 	// =====================================================
 	// Colores del modo Launcher / Lanzer (estilo TLauncher)
@@ -93,33 +91,41 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 	// =====================================================
 
 	// Fondo principal / barra lateral derecha (azul oscuro)
-	public ConfigColor lanzerColorFondo = ConfigColor.de(
-			"gui.principal.launcher.color.fondo",
-			new Color(36, 96, 155));
+//	public ConfigColor lanzerColorFondo = ConfigColor.de("gui.principal.launcher.color.fondo", new Color(36, 96, 155));
+	public ConfigColor lanzerColorFondo = ConfigColor.de("gui.principal.launcher.color.fondo",
+			new Color(170, 210, 120));
 
 	// Texto principal (blanco)
-	public ConfigColor lanzerColorTexto = ConfigColor.de(
-			"gui.principal.launcher.color.texto",
+	public ConfigColor lanzerColorTexto = ConfigColor.de("gui.principal.launcher.color.texto",
 			new Color(255, 255, 255));
 
 	// Botón principal inferior “Entrar al juego” (amarillo)
-	public ConfigColor lanzerColorBoton = ConfigColor.de(
-			"gui.principal.launcher.color.boton",
-			new Color(246, 196, 64));
+	public ConfigColor lanzerColorBoton = ConfigColor.de("gui.principal.launcher.color.boton", new Color(246, 196, 64));
 
 	// Barra inferior completa (verde claro)
-	public ConfigColor lanzerColorCajaTexto = ConfigColor.de(
-			"gui.principal.launcher.color.cajaTexto",
+	public ConfigColor lanzerColorCajaTexto = ConfigColor.de("gui.principal.launcher.color.cajaTexto",
 			new Color(170, 210, 120));
 
 	// Enlaces y acentos (azul claro)
-	public ConfigColor lanzerColorEnlace = ConfigColor.de(
-			"gui.principal.launcher.color.enlace",
+	public ConfigColor lanzerColorEnlace = ConfigColor.de("gui.principal.launcher.color.enlace",
 			new Color(80, 170, 230));
 
-	
-	
-	
+	// Botón de la barra lateral (estilo CDLauncher – azul claro tipo “Cómo jugar”)
+	public ConfigColor lanzerColorBotonBaraLateral = ConfigColor.de("gui.principal.launcher.color.boton.bara.lateral",
+			new Color(90, 170, 215));
+
+	/**
+	 * Color especial del botón QuickFix en la barra lateral. Por defecto usa el
+	 * amarillo del estilo Launcher.
+	 */
+	public ConfigColor lanzerColorBotonQuickFix = ConfigColor.de("gui.principal.launcher.color.boton.quickfix",
+			new Color(246, 196, 64));
+
+	private JPanel panelBotonesDerechaRef;
+	private JButton botonCDLauncherRef;
+	private JPanel panelInferiorRef;
+	private JPanel seccionConfiguracionRef;
+	private JPanel barraLateralDerechaRef;
 
 	@Override
 	public void init() {
@@ -165,13 +171,15 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 
 		// --- Panel inferior principal (configuración + botón QuickFix + botones de
 		// acción) --------
-		JPanel panelInferior = new JPanel(new BorderLayout(5, 5));
+		panelInferiorRef = new JPanel(new BorderLayout(5, 5));
+		JPanel panelInferior = panelInferiorRef;
 		panelInferior.setBackground(colorFondo.obtener());
 		panelInferior.setBorder(new EmptyBorder(10, 20, 10, 20));
 
 		// Sección de configuración (dos columnas: izquierda = idioma, derecha =
 		// aplicación)
-		JPanel seccionConfiguracion = new JPanel();
+		seccionConfiguracionRef = new JPanel();
+		JPanel seccionConfiguracion = seccionConfiguracionRef;
 		seccionConfiguracion.setLayout(new BoxLayout(seccionConfiguracion, BoxLayout.Y_AXIS));
 		seccionConfiguracion.setBackground(colorFondo.obtener());
 
@@ -510,8 +518,12 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 
 		// --- Botón QuickFix (centrado)
 		// ------------------------------------------------------------
-		JButton botonCDLauncher = new JButton("CDLauncher");
-		//botonCDLauncher.setEnabled(MonitorDePID.analizador.obtenerSoluciones().size() > 0); //TODO hablicar solo si la aplicacion y lanzer suporte
+
+		botonCDLauncherRef = new JButton("CDLauncher");
+		JButton botonCDLauncher = botonCDLauncherRef;
+
+		// botonCDLauncher.setEnabled(MonitorDePID.analizador.obtenerSoluciones().size()
+		// > 0); //TODO hablicar solo si la aplicacion y lanzer suporte
 		botonCDLauncher.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		botonCDLauncher.setMinimumSize(new Dimension(120, 30));
 		botonCDLauncher.setMaximumSize(new Dimension(180, 40));
@@ -529,7 +541,10 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 
 		// --- Botones de acción (derecha)
 		// ----------------------------------------------------------
-		JPanel panelBotonesDerecha = new JPanel(new GridLayout(1, 5, 10, 10));
+
+		panelBotonesDerechaRef = new JPanel(new GridLayout(1, 5, 10, 10));
+		JPanel panelBotonesDerecha = panelBotonesDerechaRef;
+
 		panelBotonesDerecha.setBackground(colorFondo.obtener());
 
 		// luego el botón de ícono CDMods (deshabilitado), a la derecha
@@ -579,7 +594,8 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 
 		// --- Barra lateral derecha
 		// ---------------------------------------------------------------
-		JPanel barraLateralDerecha = new JPanel();
+		barraLateralDerechaRef = new JPanel();
+		JPanel barraLateralDerecha = barraLateralDerechaRef;
 		barraLateralDerecha.setLayout(new BoxLayout(barraLateralDerecha, BoxLayout.Y_AXIS));
 		barraLateralDerecha.setBackground(colorBoton.obtener().darker());
 		barraLateralDerecha.setPreferredSize(new Dimension(230, 0)); // más ancho para evitar cortes
@@ -601,29 +617,40 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 		barraLateralDerecha.add(Box.createVerticalStrut(10));
 
 		// Botones dinámicos registrados
-		for (Entry<BiMap.DoubleKey<TipoGUI<? extends BotonDeBarraLateralDerecha>, String>, Supplier<BotonDeBarraLateralDerecha>> sup : PrincipalGUI.botons_de_barra_lateral_derecha
+		for (Entry<BiMap.DoubleKey<TipoGUI<? extends BotonDeBarraLateralDerecha>, String>, Supplier<BotonDeBarraLateralDerecha>> entrada : botons_de_barra_lateral_derecha
 				.entrySet()) {
-			CrashDetectorLogger.log("registrando boton");
-			String id_predeterminado = sup.getKey().key1;
-			CrashDetectorLogger.log(id_predeterminado + "pre");
-			TipoGUI tipo = sup.getKey().key0;
-			Supplier gui_predeterminado = sup.getValue();
-			BotonDeBarraLateralDerecha b = (BotonDeBarraLateralDerecha) tipo.obtenerGUIPredeterminado(id_predeterminado,
-					gui_predeterminado);
-			CrashDetectorLogger.log(b.id() + "obtene");
-			JButton btn = new JButton(tipo.etiquetaDelBoton());
-			if (tipo.icon() != null) {
-				btn.setIcon(tipo.icon());
+
+			TipoGUI tipo = entrada.getKey().key0;
+			String idPredeterminado = entrada.getKey().key1;
+			Supplier<BotonDeBarraLateralDerecha> proveedor = entrada.getValue();
+
+			BotonDeBarraLateralDerecha gui = (BotonDeBarraLateralDerecha) tipo
+					.obtenerGUIPredeterminado(idPredeterminado, proveedor);
+
+			JButton boton = new JButton(tipo.etiquetaDelBoton());
+			estilizarBoton(boton);
+			boton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+
+			// -------------------------------------------------
+			// CASO ESPECIAL: QUICKFIX
+			// -------------------------------------------------
+			if (tipo == TipoGUI.TODOS_QUICKFIXES) {
+
+				// Color especial configurable (válido en ambos modos)
+				boton.setBackground(lanzerColorBotonQuickFix.obtener());
+				boton.setForeground(colorTexto.obtener());
+
+				boton.addActionListener(e -> mostrarVentanaQuickFix());
+
+			} else {
+				// Comportamiento normal
+				boton.addActionListener(e -> gui.init());
 			}
-			CrashDetectorLogger.log(b.id() + "icon y txt");
-			botons_de_barra_lateral_derecha_initalizado.put(b, btn);
-			CrashDetectorLogger.log(b.id() + "init boton");
-			estilizarBoton(btn);
-			btn.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-			btn.addActionListener(e -> b.init());
-			barraLateralDerecha.add(btn);
-			CrashDetectorLogger.log(b.id() + "agrearboton");
+
+			botons_de_barra_lateral_derecha_initalizado.put(gui, boton);
+			barraLateralDerecha.add(boton);
 		}
+
 		CrashDetectorLogger.log("Completa con botones");
 
 		// --- Layout principal de la ventana
@@ -640,6 +667,78 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 		setLocationRelativeTo(null);
 	}
 
+	public void añadirBotonBarraLateral(JPanel panel, String texto) {
+		JButton boton = new JButton(texto);
+		boton.setBackground(colorBotonBaraLateral.obtener().darker());
+		boton.setForeground(colorTexto.obtener());
+		boton.setFont(boton.getFont().deriveFont(Font.BOLD, 14f));
+		boton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+		boton.setMargin(new Insets(10, 20, 10, 20));
+		boton.setMaximumSize(new Dimension(130, 40));
+		boton.setMinimumSize(new Dimension(130, 40));
+		boton.setPreferredSize(new Dimension(130, 40));
+		boton.setContentAreaFilled(true);
+		boton.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+		panel.add(boton);
+	}
+
+	public JButton añadirBotonImagen(JPanel panel, String imagePath, String tooltip) {
+		JButton boton = new JButton();
+		boton.setToolTipText(tooltip);
+		ImageIcon originalIcon = new ImageIcon(imagePath);
+		Image image = originalIcon.getImage();
+		int BUTTON_SIZE = 40;
+		Image scaledImage = image.getScaledInstance(BUTTON_SIZE - 10, BUTTON_SIZE - 10, Image.SCALE_SMOOTH);
+		ImageIcon icon = new ImageIcon(scaledImage);
+		boton.setIcon(icon);
+		boton.setText("");
+		boton.setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
+		boton.setBackground(colorFondo.obtener());
+		boton.setBorder(BorderFactory.createLineBorder(colorFondo.obtener(), 1));
+		boton.setFocusPainted(false);
+		boton.setMargin(new Insets(0, 0, 0, 0)); // Reduced margin
+		boton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				boton.setBackground(colorBoton.obtener().brighter());
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				boton.setBackground(colorFondo.obtener());
+			}
+		});
+		panel.add(boton);
+		return boton;
+	}
+
+	public JButton añadirBotonEmoji(JPanel panel, String emoji, String tooltip) {
+		JButton boton = new JButton(emoji);
+		boton.setToolTipText(tooltip);
+		boton.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 20));
+		boton.setRolloverEnabled(true);
+		boton.setContentAreaFilled(false);
+		boton.setBorderPainted(false);
+		boton.setFocusPainted(false);
+		boton.setPreferredSize(new Dimension(40, 40));
+		boton.setMaximumSize(new Dimension(40, 40));
+		boton.setMinimumSize(new Dimension(40, 40));
+		boton.setForeground(colorTexto.obtener());
+		boton.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent evt) {
+				boton.setBackground(colorBoton.obtener().brighter());
+				boton.setForeground(Color.BLACK);
+			}
+
+			public void mouseExited(MouseEvent evt) {
+				boton.setBackground(colorFondo.obtener());
+				boton.setForeground(colorTexto.obtener());
+			}
+		});
+		panel.add(boton);
+		return boton;
+	}
+
 	/**
 	 * Recarga la apariencia de la interfaz de usuario aplicando los colores
 	 * configurados.
@@ -650,81 +749,142 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 	 */
 	@Override
 	public void recargarApariencia() {
-		// Obtener los colores actuales de la configuración
+
+		// =========================
+		// Colores activos
+		// =========================
 		Color fondo = colorFondo.obtener();
 		Color texto = colorTexto.obtener();
 		Color boton = colorBoton.obtener();
 		Color cajaTexto = colorCajaTexto.obtener();
-		Color enlace = colorEnlace.obtener();
 
-		// Actualizar el color de fondo de la ventana principal
-		this.getContentPane().setBackground(fondo);
-		// Actualizar el color de fondo del contenido principal
+		Color botonBarra = modolanzer ? lanzerColorBotonBaraLateral.obtener() : colorBotonBaraLateral.obtener();
+
+		Color fondoBarra = modolanzer ? lanzerColorFondo.obtener() : botonBarra.darker();
+
+		Color fondoInferior = modolanzer ? lanzerColorCajaTexto.obtener() : fondo;
+
+		// =========================
+		// Ventana y contenido central
+		// =========================
+		getContentPane().setBackground(fondo);
 		contenidoPrincipal.setBackground(fondo);
-		// Actualizar el color del texto en el visor HTML
+
 		pantalla.setForeground(texto);
 		pantalla.setCaretColor(texto);
-		// Actualizar los colores de los botones
-		botonVolver.setForeground(texto);
-		botonVolver.setBackground(boton);
-		// Actualizar los colores de los botones en la barra lateral derecha
-		// for (JButton btn : botons_de_barra_lateral_derecha_initalizado.values()) {
-		// btn.setForeground(texto);
-		// btn.setBackground(boton);
-		// }TODO
-		// Actualizar el color de fondo del scroll pane
 		scrollPane.getViewport().setBackground(cajaTexto);
-		// Actualizar el color de los enlaces en el visor HTML
-		pantalla.setForeground(enlace);
-		// Actualizar el color de fondo de los paneles inferiores
-		Component[] components = this.getContentPane().getComponents();
-		if (components.length > 1) {
-			Component panelInferior = components[1];
-			if (panelInferior instanceof JPanel) {
-				panelInferior.setBackground(fondo);
-				// Actualizar componentes dentro del panel inferior
-				for (Component comp : ((JPanel) panelInferior).getComponents()) {
-					if (comp instanceof JComponent) {
-						((JComponent) comp).setBackground(fondo);
-					}
-					if (comp instanceof JPanel) {
-						for (Component innerComp : ((JPanel) comp).getComponents()) {
-							if (innerComp instanceof JComponent) {
-								((JComponent) innerComp).setBackground(fondo);
-							}
-						}
-					}
+
+		// =========================
+		// Botón Volver
+		// =========================
+		botonVolver.setOpaque(true);
+		botonVolver.setContentAreaFilled(true);
+		botonVolver.setBackground(botonBarra);
+		botonVolver.setForeground(texto);
+
+		// =========================
+		// Barra inferior
+		// =========================
+		if (panelInferiorRef != null) {
+			panelInferiorRef.setBackground(fondoInferior);
+			aplicarColorRecursivo(panelInferiorRef, fondoInferior, texto);
+		}
+
+		if (seccionConfiguracionRef != null) {
+			aplicarColorRecursivo(seccionConfiguracionRef, fondoInferior, texto);
+		}
+
+		// =========================
+		// Botón central CDLauncher
+		// =========================
+		if (botonCDLauncherRef != null && !CrashDetectorGUI.esMac()) {
+			botonCDLauncherRef.setOpaque(true);
+			botonCDLauncherRef.setContentAreaFilled(true);
+			botonCDLauncherRef.setBackground(boton);
+			botonCDLauncherRef.setForeground(texto);
+		}
+
+		// =========================
+		// Botones inferiores derechos
+		// =========================
+		if (panelBotonesDerechaRef != null) {
+			panelBotonesDerechaRef.setBackground(fondoInferior);
+
+			for (Component c : panelBotonesDerechaRef.getComponents()) {
+				if (c instanceof JButton) {
+					JButton b = (JButton) c;
+					b.setOpaque(true);
+					b.setContentAreaFilled(true);
+					b.setBackground(fondoInferior);
+					b.setForeground(modolanzer ? Color.BLACK : texto);
 				}
 			}
 		}
-		// Actualizar el color de fondo de la barra lateral derecha
-		if (components.length > 2) {
-			Component barraLateral = components[2];
-			if (barraLateral instanceof JPanel) {
-				barraLateral.setBackground(boton.darker());
+
+		// =========================
+		// Barra lateral derecha (panel)
+		// =========================
+		if (barraLateralDerechaRef != null) {
+			barraLateralDerechaRef.setBackground(botonBarra.darker());
+			barraLateralDerechaRef.setOpaque(true);
+		}
+
+		for (Entry<BotonDeBarraLateralDerecha, JButton> entry : botons_de_barra_lateral_derecha_initalizado
+				.entrySet()) {
+
+			BotonDeBarraLateralDerecha gui = entry.getKey();
+			JButton btn = entry.getValue();
+
+			btn.setOpaque(true);
+			btn.setContentAreaFilled(true);
+
+			// QuickFix tiene color propio
+			if (gui.tipo() == TipoGUI.TODOS_QUICKFIXES) {
+				btn.setBackground(lanzerColorBotonQuickFix.obtener());
+				btn.setForeground(texto);
+			} else {
+				btn.setBackground(botonBarra);
+				btn.setForeground(texto);
 			}
 		}
-		// Actualizar el color de los botones en el panel de botones derecho
-		if (components.length > 1 && components[1] instanceof JPanel) {
-			JPanel panelInferior = (JPanel) components[1];
-			Component[] subComponents = panelInferior.getComponents();
-			if (subComponents.length > 2 && subComponents[2] instanceof JPanel) {
-				JPanel panelBotonesDerecha = (JPanel) subComponents[2];
-				for (Component comp : panelBotonesDerecha.getComponents()) {
-					if (comp instanceof JButton) {
-						JButton btn = (JButton) comp;
-						btn.setBackground(fondo);
-						btn.setForeground(texto);
-					}
-				}
-			}
-		}
-		// Repintar la interfaz para aplicar los cambios
-		this.revalidate();
-		this.repaint();
+
+		// =========================
+		// Forzar refresco
+		// =========================
+		revalidate();
+		repaint();
 	}
-	
-	
+
+	private void aplicarColorRecursivo(Component c, Color fondo, Color texto) {
+
+		if (c instanceof JCheckBox) {
+			JCheckBox chk = (JCheckBox) c;
+			chk.setOpaque(true);
+			chk.setBackground(fondo);
+			chk.setForeground(texto);
+			return;
+		}
+
+		if (c instanceof JButton) {
+			JButton btn = (JButton) c;
+			btn.setOpaque(true);
+			btn.setContentAreaFilled(true);
+			btn.setBackground(fondo);
+			btn.setForeground(texto);
+		}
+
+		if (c instanceof JComponent) {
+			((JComponent) c).setBackground(fondo);
+			((JComponent) c).setForeground(texto);
+		}
+
+		if (c instanceof JPanel) {
+			for (Component inner : ((JPanel) c).getComponents()) {
+				aplicarColorRecursivo(inner, fondo, texto);
+			}
+		}
+	}
+
 	@Override
 	public void aplicarColoresAnalizador() {
 		// Colores configurables normales del CrashDetector
@@ -742,7 +902,6 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 		// Refrescar inmediatamente la interfaz
 	}
 
-
 	@Override
 	public void aplicarColoresLanzer() {
 		this.colorFondo = lanzerColorFondo;
@@ -751,11 +910,8 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 		this.colorCajaTexto = lanzerColorCajaTexto;
 		this.colorEnlace = lanzerColorEnlace;
 
-		
 	}
 
-
-	
 	@Override
 	public void aplicarContenidoDeLaPantallaAnalizador() {
 		try {
@@ -771,7 +927,6 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 		pantalla.repaint();
 	}
 
-
 	@Override
 	public void aplicarContenidoDeLaPantallaLanzer() {
 		pantalla.setContentType("text/html");
@@ -782,10 +937,6 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 		pantalla.revalidate();
 		pantalla.repaint();
 	}
-
-
-	
-	
 
 	/**
 	 * Obtiene los elementos de configuración relacionados con los colores de la
@@ -801,31 +952,37 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 	public List<ElementoConfig> obtenerElementosConfigs() {
 		List<ElementoConfig> elementos = new ArrayList<>();
 
-
 		analizadorColorFondo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondo());
 		analizadorColorTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTexto());
 		analizadorColorBoton.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBoton());
 		analizadorColorCajaTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorCajaTexto());
 		analizadorColorEnlace.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorEnlace());
+		analizadorColorBotonBaraLateral.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBotonBaraLateral());
 
 		elementos.add(analizadorColorFondo);
 		elementos.add(analizadorColorTexto);
 		elementos.add(analizadorColorBoton);
 		elementos.add(analizadorColorCajaTexto);
 		elementos.add(analizadorColorEnlace);
+		elementos.add(analizadorColorBotonBaraLateral);
 
+		lanzerColorBotonQuickFix.establecerNombreParaMostrar(() -> "QuickFix");
+
+		elementos.add(lanzerColorBotonQuickFix);
 
 		lanzerColorFondo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondo() + " (CDLauncher)");
 		lanzerColorTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTexto() + " (CDLauncher)");
 		lanzerColorBoton.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBoton() + " (CDLauncher)");
 		lanzerColorCajaTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorCajaTexto() + " (CDLauncher)");
 		lanzerColorEnlace.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorEnlace() + " (CDLauncher)");
+		lanzerColorBotonBaraLateral.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBotonBaraLateral());
 
 		elementos.add(lanzerColorFondo);
 		elementos.add(lanzerColorTexto);
 		elementos.add(lanzerColorBoton);
 		elementos.add(lanzerColorCajaTexto);
 		elementos.add(lanzerColorEnlace);
+		elementos.add(lanzerColorBotonBaraLateral);
 
 		return elementos;
 	}

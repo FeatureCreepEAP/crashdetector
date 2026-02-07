@@ -244,7 +244,8 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/rei_bubbles.png",
 				Statics.carpeta.resolve("imagenes/rei_bubbles.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/panko.png", Statics.carpeta.resolve("imagenes/panko.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/salior_moon_skin.png", Statics.carpeta.resolve("imagenes/salior_moon_skin.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/salior_moon_skin.png",
+				Statics.carpeta.resolve("imagenes/salior_moon_skin.png").toFile());
 
 //		new File(viajo_ultima_mods.toString()).delete();
 //		try {

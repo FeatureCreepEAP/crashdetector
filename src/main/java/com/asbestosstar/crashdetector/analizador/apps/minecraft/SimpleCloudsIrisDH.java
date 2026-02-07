@@ -9,7 +9,8 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 public class SimpleCloudsIrisDH implements Verificaciones {
 
-	// Indica si el log contiene indicios globales del error (optimización de rendimiento)
+	// Indica si el log contiene indicios globales del error (optimización de
+	// rendimiento)
 	private boolean posibleIncompatibilidad = false;
 
 	// Indica si esta verificación fue activada
@@ -20,7 +21,8 @@ public class SimpleCloudsIrisDH implements Verificaciones {
 
 	@Override
 	public void verificar(Consola consola) {
-		// Detección global ligera: solo buscar subcadenas clave sin regex ni operaciones costosas
+		// Detección global ligera: solo buscar subcadenas clave sin regex ni
+		// operaciones costosas
 		if (consola.contenido_verificar.contains("Simple Clouds renderer could not initialize")
 				&& consola.contenido_verificar.contains("does not currently support shaders with Distant Horizons")) {
 			posibleIncompatibilidad = true;

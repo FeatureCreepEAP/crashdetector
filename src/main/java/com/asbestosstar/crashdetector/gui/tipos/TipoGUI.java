@@ -753,9 +753,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 			return ConsolaDesarrolladorGUI.GUIS;
 		}
 	};
-	
-	
-	
+
 	public static TipoGUI<CDLauncherGUI> CDLAUNCHER = new TipoGUI<CDLauncherGUI>() {
 		@Override
 		public String id() {
@@ -777,9 +775,6 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 			return CDLauncherGUI.GUIS;
 		}
 	};
-	
-	
-	
 
 	/**
 	 * Registro estático de todos los tipos de GUI en la lista global.

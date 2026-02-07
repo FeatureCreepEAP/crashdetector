@@ -2429,4 +2429,6 @@ public interface Idioma {
 
 	public String nombreSimpleCloudsIncompatibilidadShaders();
 
+	public String colorBotonBaraLateral();
+
 }

@@ -1,6 +1,7 @@
 package com.asbestosstar.crashdetector.gui.tipos.cdlauncher;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -21,7 +22,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
@@ -37,15 +37,21 @@ public class CDLauncherGUISaliorMoon extends CDLauncherGUI {
 
 	public static final String ID = "cdlauncher_saliormoon";
 
-	/* Colores configurables */
-	public ConfigColor colorFondo = ConfigColor.de("gui.cdlauncher.color.fondo",
-			Config.convertirAColor(Config.obtenerInstancia().obtenerColorFondo()));
+	/** Fondo principal claro (blanco/gris muy claro) */
+	public ConfigColor colorFondo = ConfigColor.de("gui.cdlauncher.color.fondo", new Color(245, 245, 245) // fondo claro
+																											// tipo
+																											// diálogo
+	);
 
-	public ConfigColor colorTexto = ConfigColor.de("gui.cdlauncher.color.texto",
-			Config.convertirAColor(Config.obtenerInstancia().obtenerColorTexto()));
+	/** Texto principal oscuro */
+	public ConfigColor colorTexto = ConfigColor.de("gui.cdlauncher.color.texto", new Color(40, 40, 40) // gris oscuro,
+																										// no negro puro
+	);
 
-	public ConfigColor colorBoton = ConfigColor.de("gui.cdlauncher.color.boton",
-			Config.convertirAColor(Config.obtenerInstancia().obtenerColorBoton()));
+	/** Botón principal (verde tipo “OK”) */
+	public ConfigColor colorBoton = ConfigColor.de("gui.cdlauncher.color.boton", new Color(120, 200, 60) // verde
+																											// CDLauncher
+	);
 
 	private final Map<String, JCheckBox> checkboxes = new HashMap<>();
 
@@ -61,13 +67,11 @@ public class CDLauncherGUISaliorMoon extends CDLauncherGUI {
 		inicializarDialogo(principal);
 		CrashDetectorLogger.log("init dialogo");
 
-		
 		cambiarAparienciaDeGUIPrincipal(principal);
 
 		CrashDetectorLogger.log("cambiar principal");
 
-		
-		setSize(520, 320);
+		setSize(640, 420);
 		setLayout(new BorderLayout());
 
 		JPanel raiz = new JPanel(new BorderLayout(10, 10));
@@ -85,8 +89,6 @@ public class CDLauncherGUISaliorMoon extends CDLauncherGUI {
 
 		CrashDetectorLogger.log("imiegen");
 
-		
-		
 		/* Panel central */
 		JPanel centro = new JPanel();
 		centro.setLayout(new BoxLayout(centro, BoxLayout.Y_AXIS));
@@ -117,6 +119,7 @@ public class CDLauncherGUISaliorMoon extends CDLauncherGUI {
 			JCheckBox chk = new JCheckBox(clave, valor);
 			chk.setOpaque(false);
 			chk.setForeground(colorTexto.obtener());
+			chk.setFont(chk.getFont().deriveFont(11f));
 
 			chk.addActionListener(e -> ConfigCDLauncher.opciones.put(clave, chk.isSelected()));
 
@@ -129,7 +132,7 @@ public class CDLauncherGUISaliorMoon extends CDLauncherGUI {
 
 		/* Botón grande consola */
 		JButton botonConsola = new JButton(MonitorDePID.idioma.cdlauncherHabilitarConsola());
-		botonConsola.setFont(botonConsola.getFont().deriveFont(Font.BOLD, 14f));
+		botonConsola.setFont(botonConsola.getFont().deriveFont(Font.BOLD, 12f));
 		botonConsola.setBackground(colorBoton.obtener());
 		botonConsola.setForeground(colorTexto.obtener());
 		botonConsola.addActionListener(e -> habilitarConsola());
@@ -161,9 +164,7 @@ public class CDLauncherGUISaliorMoon extends CDLauncherGUI {
 	private String construirHTMLDescripcion() {
 		String texto = MonitorDePID.idioma.cdlauncherDescripcionCompleta();
 
-		return "<html><body><div style='font-size:12px; line-height:1.35;'>"
-				+ texto
-				+ "</div></body></html>";
+		return "<html><body>" + "<div style='font-size:11px; line-height:1.3;'>" + texto + "</div>" + "</body></html>";
 	}
 
 	@Override

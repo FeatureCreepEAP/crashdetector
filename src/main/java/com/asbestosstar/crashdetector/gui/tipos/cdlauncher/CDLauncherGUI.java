@@ -19,11 +19,8 @@ import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUI;
 /**
  * GUI base de CDLauncher.
  *
- * Esta clase:
- * - Es directamente un JDialog.
- * - No define colores.
- * - No define layout.
- * - Solo contiene lógica común.
+ * Esta clase: - Es directamente un JDialog. - No define colores. - No define
+ * layout. - Solo contiene lógica común.
  *
  * La apariencia completa se implementa en las subclases.
  */
@@ -57,7 +54,7 @@ public abstract class CDLauncherGUI extends JFrame implements CrashDetectorGUI {
 		this.principal = principal;
 
 		Window owner = SwingUtilities.getWindowAncestor(principal.getRootPane());
-	//	setModal(true);
+		// setModal(true);
 		setTitle("CDLauncher");
 		setLocationRelativeTo(owner);
 	}

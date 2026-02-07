@@ -6,6 +6,10 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
 
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
@@ -13,59 +17,92 @@ import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
 
 /**
- * Implementación "DemonSlayers" centrada en APARIENCIA y LAYOUT.
+ * Implementación DemonSlayers de la ventana QuickFix.
  *
- * - Define ruta/tamaño de la imagen del pie. - Ajusta el color del separador. -
- * Ajusta opacidades para mantener look transparente. - `id()` propio (codename
- * en español).
+ * RESPONSABILIDADES: - Define layout completo - Define colores temáticos
+ * (DemonSlayers) - Define imagen del pie - Gestiona estado "sin soluciones"
  */
 public class PanelQuickFixDemonSlayers extends TodosQuickFixesGUI {
 
 	private static final long serialVersionUID = 1L;
-	public static String ID = "demonslayers";
+	public static final String ID = "demonslayers";
 
-	ConfigColor colorSeparador = ConfigColor.de("quickfix_demonslayers_separador", Color.LIGHT_GRAY);
+	// =====================================================
+	// COLORES TEMÁTICOS DEMONSLAYERS
+	// =====================================================
+
+	/** Fondo general */
+	private ConfigColor colorFondo = ConfigColor.de("quickfix.demonslayers.color.fondo", new Color(18, 18, 18)); // negro
+																													// carbón
+
+	/** Separadores */
+	private ConfigColor colorSeparador = ConfigColor.de("quickfix.demonslayers.color.separador",
+			new Color(120, 30, 30)); // rojo oscuro
+
+	/** Texto informativo */
+	private ConfigColor colorTextoInfo = ConfigColor.de("quickfix.demonslayers.color.textoInfo",
+			new Color(210, 210, 210)); // gris claro
+
+	// =====================================================
+	// COMPONENTES DE ESTADO
+	// =====================================================
+
+	private JLabel etiquetaSinSoluciones;
 
 	public PanelQuickFixDemonSlayers() {
 		super();
-		// Inicializar campos de color específicos para esta implementación
-		// Crear la interfaz de usuario
+		configurarVentanaBase();
 		inicializarUI();
 	}
 
+	/**
+	 * Construye toda la interfaz visual.
+	 */
 	private void inicializarUI() {
-		// Contenedor principal
-		panelContenedor = new javax.swing.JPanel();
+
+		// Fondo de la ventana
+		getContentPane().setBackground(colorFondo.obtener());
+
+		panelContenedor = new JPanel();
 		panelContenedor.setLayout(new BoxLayout(panelContenedor, BoxLayout.Y_AXIS));
-		panelContenedor.setOpaque(false);
-		panelContenedor.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		panelContenedor.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+		panelContenedor.setBackground(colorFondo.obtener());
+		panelContenedor.setOpaque(true);
 
-		// Scroll (configuración básica, apariencia se aplica en aplicarApariencia)
-		getViewport().setOpaque(false);
-		setOpaque(false);
-		setViewportView(panelContenedor);
-		getVerticalScrollBar().setUnitIncrement(16);
+		scroll = new javax.swing.JScrollPane(panelContenedor);
+		scroll.setBorder(null);
+		scroll.getVerticalScrollBar().setUnitIncrement(16);
+		scroll.setBackground(colorFondo.obtener());
+		scroll.getViewport().setBackground(colorFondo.obtener());
+		scroll.setOpaque(true);
+		scroll.getViewport().setOpaque(true);
 
-		// Pie con UNA imagen (apariencia definida por esta clase)
-		piePanel = new javax.swing.JPanel();
-		piePanel.setOpaque(false);
+		add(scroll, java.awt.BorderLayout.CENTER);
+
+		// Etiqueta "sin soluciones"
+		etiquetaSinSoluciones = new JLabel(MonitorDePID.idioma.noHaySolucionDisponible());
+		etiquetaSinSoluciones.setForeground(colorTextoInfo.obtener());
+		etiquetaSinSoluciones.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+		etiquetaSinSoluciones.setBorder(BorderFactory.createEmptyBorder(40, 10, 40, 10));
+
+		panelContenedor.add(etiquetaSinSoluciones);
+
+		// Pie decorativo
+		piePanel = new JPanel();
 		piePanel.setLayout(new BoxLayout(piePanel, BoxLayout.Y_AXIS));
-		piePanel.setBorder(BorderFactory.createEmptyBorder(12, 0, 0, 0));
+		piePanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
+		piePanel.setBackground(colorFondo.obtener());
+		piePanel.setOpaque(true);
 
-		javax.swing.JLabel imagen = crearEtiquetaImagenEscalada(rutaImagenPie(), anchoImagenPie(), altoImagenPie());
-		if (imagen != null) {
-			imagen.setAlignmentX(javax.swing.JComponent.CENTER_ALIGNMENT);
-			piePanel.add(imagen);
-		} else {
-			javax.swing.JLabel placeholder = new javax.swing.JLabel(textoFallbackImagen());
-			placeholder.setAlignmentX(javax.swing.JComponent.CENTER_ALIGNMENT);
-			piePanel.add(placeholder);
+		JLabel img = crearEtiquetaImagenEscalada(rutaImagenPie(), anchoImagenPie(), altoImagenPie());
+
+		if (img != null) {
+			img.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+			piePanel.add(img);
 		}
 
-		// Añadir el pie UNA sola vez
 		panelContenedor.add(piePanel);
 
-		// Aplicar apariencia inicial
 		aplicarApariencia();
 	}
 
@@ -74,60 +111,69 @@ public class PanelQuickFixDemonSlayers extends TodosQuickFixesGUI {
 		return Statics.carpeta.resolve("imagenes/demonslayers.png").toString();
 	}
 
-	// Si quieres que sea 1024x1024 como decía el comentario original, cambia a
-	// 1024.
-	@Override
-	protected int anchoImagenPie() {
-		return 128;
-	}
-
-	@Override
-	protected int altoImagenPie() {
-		return 128;
-	}
-
-	@Override
-	protected String textoFallbackImagen() {
-		return "(No se pudo cargar demonslayers.png)";
-	}
-
+	/**
+	 * Aplica la apariencia DemonSlayers.
+	 */
 	@Override
 	protected void aplicarApariencia() {
-		// Mantener transparencia (como tu versión inicial):
-		getViewport().setOpaque(false);
-		setOpaque(false);
-		if (panelContenedor != null)
-			panelContenedor.setOpaque(false);
-		if (piePanel != null)
-			piePanel.setOpaque(false);
 
-		// Si quisieras agregar colores o bordes, hazlo aquí (NO localizado)
-		// panelContenedor.setBorder(BorderFactory.createEmptyBorder(10,10,10,10)); //
-		// ya se define en base
+		getContentPane().setBackground(colorFondo.obtener());
+		panelContenedor.setBackground(colorFondo.obtener());
+		piePanel.setBackground(colorFondo.obtener());
+
+		for (java.awt.Component c : panelContenedor.getComponents()) {
+			if (c instanceof JSeparator) {
+				c.setForeground(colorSeparador.obtener());
+			}
+		}
+
 		revalidate();
 		repaint();
 	}
 
-	// ====== CrashDetectorGUI ======
+	/**
+	 * Se llama automáticamente al agregar QuickFix. Elimina el mensaje "sin
+	 * soluciones" si existe.
+	 */
+	@Override
+	public void agregarQuickFix(com.asbestosstar.crashdetector.analizador.QuickFix qf) {
+		panelContenedor.remove(etiquetaSinSoluciones);
+		super.agregarQuickFix(qf);
+	}
+
+	@Override
+	public void limpiar() {
+		super.limpiar();
+		panelContenedor.add(etiquetaSinSoluciones, 0);
+		panelContenedor.revalidate();
+		panelContenedor.repaint();
+	}
 
 	@Override
 	public String id() {
-		// Codename simple en español
 		return ID;
 	}
 
 	@Override
 	public void init() {
-		this.setVisible(true);
+		setVisible(true);
 	}
 
+	/**
+	 * Configuración expuesta.
+	 */
 	@Override
 	public List<ElementoConfig> obtenerElementosConfigs() {
-		List<ElementoConfig> elementos = new ArrayList<>();
+		List<ElementoConfig> lista = new ArrayList<>();
 
+		colorFondo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondo());
 		colorSeparador.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorSeparador());
-		elementos.add(colorSeparador);
+		colorTextoInfo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTexto());
 
-		return elementos;
+		lista.add(colorFondo);
+		lista.add(colorSeparador);
+		lista.add(colorTextoInfo);
+
+		return lista;
 	}
 }

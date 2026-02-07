@@ -6169,41 +6169,38 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String cdlauncherHabilitarConsola() {
-	    return "تمكين وحدة التحكم";
+		return "تمكين وحدة التحكم";
 	}
 
 	@Override
 	public String cdlauncherDescripcionCompleta() {
-	    return ""
-	        + "<b>أدوات التصحيح</b><br><br>"
-	        + "هنا يمكنك تفعيل وظائف متقدمة لتصحيح CrashDetector وألعابك.<br><br>"
-	        + "يُوصى بتمكين وحدة تحكم التطوير للحصول على معلومات مفصلة، وتتبعات، وتشخيصات أثناء التحليل.<br><br>"
-	        + "إذا كنت بحاجة إلى اختبار خادم متعدد اللاعبين في الوضع عبر الإنترنت، فقد يكون من الضروري السماح بنقل رمز الوصول (token de acceso) إلى عملية CrashDetector من إعدادات الخصوصية. "
-	        + "وهذا عادةً <b>غير موصى به</b> في الحالات الأخرى.<br><br>"
-	        + "تعليمات كاملة: <a href='https://example.com'>رابط!</a>";
+		return "" + "<b>أدوات التصحيح</b><br><br>"
+				+ "هنا يمكنك تفعيل وظائف متقدمة لتصحيح CrashDetector وألعابك.<br><br>"
+				+ "يُوصى بتمكين وحدة تحكم التطوير للحصول على معلومات مفصلة، وتتبعات، وتشخيصات أثناء التحليل.<br><br>"
+				+ "إذا كنت بحاجة إلى اختبار خادم متعدد اللاعبين في الوضع عبر الإنترنت، فقد يكون من الضروري السماح بنقل رمز الوصول (token de acceso) إلى عملية CrashDetector من إعدادات الخصوصية. "
+				+ "وهذا عادةً <b>غير موصى به</b> في الحالات الأخرى.<br><br>"
+				+ "تعليمات كاملة: <a href='https://example.com'>رابط!</a>";
 	}
-	
+
 	@Override
 	public String nombreSimpleCloudsIncompatibilidadShaders() {
-	    return "عدم التوافق: Simple Clouds مقابل الظلال (Shaders)";
+		return "عدم التوافق: Simple Clouds مقابل الظلال (Shaders)";
 	}
 
 	@Override
 	public String mensajeSimpleCloudsIncompatibilidadShaders() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "تم اكتشاف عدم توافق بين Simple Clouds وحزم الظلال (shaders).</b>"
-	            + "<p>Simple Clouds غير متوافق مع إضافات الظلال (Iris/Oculus) عند تثبيت Distant Horizons.</p>"
-	            + "<p><b>الخيارات الموصى بها:</b></p>"
-	            + "<ul>"
-	            + "<li>احذف <b>Simple Clouds</b> إذا كنت ترغب في استخدام الظلال.</li>"
-	            + "<li>أو قم بإلغاء تثبيت <b>Iris أو Oculus</b> إذا كنت تفضل الاحتفاظ بـ Simple Clouds.</li>"
-	            + "</ul>"
-	            + "<p>هذا القيد ناتج عن إضافة Simple Clouds نفسها ولا يمكن حله دون تعديل كودها.</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تم اكتشاف عدم توافق بين Simple Clouds وحزم الظلال (shaders).</b>"
+				+ "<p>Simple Clouds غير متوافق مع إضافات الظلال (Iris/Oculus) عند تثبيت Distant Horizons.</p>"
+				+ "<p><b>الخيارات الموصى بها:</b></p>" + "<ul>"
+				+ "<li>احذف <b>Simple Clouds</b> إذا كنت ترغب في استخدام الظلال.</li>"
+				+ "<li>أو قم بإلغاء تثبيت <b>Iris أو Oculus</b> إذا كنت تفضل الاحتفاظ بـ Simple Clouds.</li>" + "</ul>"
+				+ "<p>هذا القيد ناتج عن إضافة Simple Clouds نفسها ولا يمكن حله دون تعديل كودها.</p>";
 	}
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public String colorBotonBaraLateral() {
+		return "لون زر الشريط الجانبي";
+	}
+
 }
