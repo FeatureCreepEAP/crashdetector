@@ -66,8 +66,10 @@ import com.asbestosstar.crashdetector.gui.tipos.no_registro_lanzador.NoRegistroD
 import com.asbestosstar.crashdetector.gui.tipos.no_registro_lanzador.NoRegistroLanzadorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUI;
 import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUIEstiloLanzer;
+import com.asbestosstar.crashdetector.gui.tipos.profiler.ProfilerGUIMinaly;
 import com.asbestosstar.crashdetector.gui.tipos.quickfix.ElementoQuickFixDemonSlayers;
 import com.asbestosstar.crashdetector.gui.tipos.quickfix.PanelQuickFixDemonSlayers;
+import com.asbestosstar.crashdetector.gui.tipos.sampler.SamplerGUIEineLotta;
 
 public class MonitorDePID {
 
@@ -92,6 +94,7 @@ public class MonitorDePID {
 	 * Es diferente en el process diferente
 	 */
 	public static Instant utc = Instant.now();
+	public static PrincipalGUI gui_principal_activo;
 
 	public static void main(String[] args) {
 		registrarGUISPredeterminado();
@@ -246,6 +249,9 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/panko.png", Statics.carpeta.resolve("imagenes/panko.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/salior_moon_skin.png",
 				Statics.carpeta.resolve("imagenes/salior_moon_skin.png").toFile());
+
+		copiarACarpetaDesdeJar("/imagenes/minaly_xo.png", Statics.carpeta.resolve("imagenes/minaly_xo.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/einelotta.png", Statics.carpeta.resolve("imagenes/einelotta.png").toFile());
 
 //		new File(viajo_ultima_mods.toString()).delete();
 //		try {
@@ -434,6 +440,8 @@ public class MonitorDePID {
 		TipoGUI.CONSOLA_DESARROLLADOR.registrarGUI(ConsolaDesarrolladorGUITL.ID, () -> new ConsolaDesarrolladorGUITL());
 		TipoGUI.QUICKFIX.registrarGUI(ElementoQuickFixDemonSlayers.ID, () -> new ElementoQuickFixDemonSlayers());
 		TipoGUI.CDLAUNCHER.registrarGUI(CDLauncherGUISaliorMoon.ID, () -> new CDLauncherGUISaliorMoon());
+		TipoGUI.PROFILER.registrarGUI(ProfilerGUIMinaly.ID, () -> new ProfilerGUIMinaly());
+		TipoGUI.SAMPLER.registrarGUI(SamplerGUIEineLotta.ID, () -> new SamplerGUIEineLotta());
 
 	}
 
@@ -563,6 +571,142 @@ public class MonitorDePID {
 //				Thread.currentThread().interrupt();
 //				break;
 //			}
+		}
+	}
+
+	/**
+	 * Obtiene la ruta absoluta del JAR que contiene CrashDetector. Reusa la misma
+	 * lógica que ya existe en main() para resolver "union:" y "jar:".
+	 */
+	public static String obtenerRutaJarCrashDetector() {
+		try {
+			URI uriJar = MonitorDePID.class.getProtectionDomain().getCodeSource().getLocation().toURI();
+			String uriJarString = uriJar.toString();
+
+			if (uriJarString.startsWith("union:")) { // Para Modlauncher
+				uriJarString = uriJarString.replace("union:", "file://");
+			}
+			if (uriJarString.startsWith("jar:")) { // Quitar prefijo jar:
+				uriJarString = uriJarString.substring(4);
+			}
+
+			URI cdUri = new URI(uriJarString);
+			String cdPath = cdUri.getPath();
+
+			// Mantener compatibilidad con tu patrón actual
+			return new File(cdPath).getAbsolutePath().split(".jar")[0] + ".jar";
+
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	/**
+	 * CDLauncher: monitorea el proceso relanzado SIN PID.
+	 *
+	 * Responsabilidades EXCLUSIVAS: - Esperar terminación del proceso - Registrar
+	 * exitCode - Disparar pipeline de análisis al final
+	 *
+	 * NO debe: - Bombear stdout/stderr - Tocar InputStream / ErrorStream - Usar
+	 * inheritIO()
+	 */
+	public static void monitor_cdlauncher(final Process procesoJuego) {
+
+		if (procesoJuego == null) {
+			System.err.println("[CDLauncher] Proceso nulo");
+			CrashDetectorLogger.enviarALaConsola("[CDLauncher] Proceso nulo");
+			return;
+		}
+
+		/* Consola dev (si existe entorno gráfico) */
+		try {
+			abrirConsola();
+		} catch (Throwable ignored) {
+		}
+
+		System.out.println("[CDLauncher] Monitoreando proceso relanzado (sin PID)...");
+		CrashDetectorLogger.enviarALaConsola("[CDLauncher] Monitoreando proceso relanzado (sin PID)...");
+
+		int exitCode = -1;
+
+		try {
+			/*
+			 * waitFor() NO bloquea stdout/stderr porque esos streams ya están siendo
+			 * drenados por CDLauncher
+			 */
+			exitCode = procesoJuego.waitFor();
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
+
+		String fin = "[CDLauncher] Proceso finalizó. exitCode=" + exitCode;
+		System.out.println(fin);
+		CrashDetectorLogger.enviarALaConsola(fin);
+
+		/* ===================================================== */
+		/* Pipeline normal de análisis (POST-GAME) */
+		/* ===================================================== */
+
+		try {
+
+			Instant inicio = null;
+			if (Statics.INICIO_DE_LA_APP > 0) {
+				try {
+					inicio = Instant.ofEpochMilli(Statics.INICIO_DE_LA_APP);
+				} catch (Throwable ignored) {
+				}
+			}
+
+			List<Consola> consolasFinales = Consola.obtenerConsolas();
+			for (Consola c : consolasFinales) {
+				try {
+					c.finalizarContenido(inicio, false);
+					if (c.nueva) {
+						consolas.add(c);
+					}
+				} catch (Throwable ignored) {
+				}
+			}
+
+			Instant ahora = Instant.now();
+			recargar(true, ahora);
+
+			/* GUI: SOLO si no es headless */
+			if (!java.awt.GraphicsEnvironment.isHeadless()) {
+				if (gui_principal_activo != null) {
+					javax.swing.SwingUtilities.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							try {
+								gui_principal_activo.cambiarAModoAnalizador();
+								gui_principal_activo.recargar();
+								gui_principal_activo.toFront();
+								gui_principal_activo.requestFocus();
+							} catch (Throwable t) {
+								t.printStackTrace();
+							}
+						}
+					});
+				}
+			}
+
+		} catch (Throwable t) {
+			t.printStackTrace();
+		}
+	}
+
+	private static int esperarExitCode(Process p) {
+		// Preferir waitFor() para evitar IllegalThreadStateException con exitValue()
+		try {
+			return p.waitFor();
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+			// Si interrumpen, intentar leer exitValue si ya terminó
+			try {
+				return p.exitValue();
+			} catch (Throwable ignored) {
+			}
+			return -1;
 		}
 	}
 

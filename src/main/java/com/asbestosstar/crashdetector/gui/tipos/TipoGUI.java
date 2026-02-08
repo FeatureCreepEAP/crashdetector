@@ -38,8 +38,10 @@ import com.asbestosstar.crashdetector.gui.tipos.modsbuenas.ModsBuenasGUI;
 import com.asbestosstar.crashdetector.gui.tipos.modsmalas.GUIModsMalas;
 import com.asbestosstar.crashdetector.gui.tipos.no_registro_lanzador.NoRegistroLanzadorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUI;
+import com.asbestosstar.crashdetector.gui.tipos.profiler.ProfilerGUI;
 import com.asbestosstar.crashdetector.gui.tipos.quickfix.QuickFixGUI;
 import com.asbestosstar.crashdetector.gui.tipos.quickfix.TodosQuickFixesGUI;
+import com.asbestosstar.crashdetector.gui.tipos.sampler.SamplerGUI;
 
 public abstract class TipoGUI<T extends CrashDetectorGUI> {
 
@@ -775,6 +777,52 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 			return CDLauncherGUI.GUIS;
 		}
 	};
+	
+	
+	public static TipoGUI<ProfilerGUI> PROFILER = new TipoGUI<ProfilerGUI>() {
+		@Override
+		public String id() {
+			return "profiler";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return "Profiler";
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<ProfilerGUI> gui) {
+			ProfilerGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<ProfilerGUI>> obtenerGUIs() {
+			return ProfilerGUI.GUIS;
+		}
+	};
+	
+	
+	public static TipoGUI<SamplerGUI> SAMPLER = new TipoGUI<SamplerGUI>() {
+		@Override
+		public String id() {
+			return "sampler";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return "Sampler";
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<SamplerGUI> gui) {
+			SamplerGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<SamplerGUI>> obtenerGUIs() {
+			return SamplerGUI.GUIS;
+		}
+	};
 
 	/**
 	 * Registro estático de todos los tipos de GUI en la lista global.
@@ -809,6 +857,9 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		TIPOS_DE_GUI.add(CANARIO);
 		TIPOS_DE_GUI.add(CONSOLA_DESARROLLADOR);
 		TIPOS_DE_GUI.add(CDLAUNCHER);
+		TIPOS_DE_GUI.add(PROFILER);
+		TIPOS_DE_GUI.add(SAMPLER);
+
 
 	}
 }

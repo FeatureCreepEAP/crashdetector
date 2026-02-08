@@ -420,7 +420,7 @@ public class AnalizadorBytecodeASM {
 	 * 
 	 * @return Versión compatible de ASM
 	 */
-	static int obtenerVersionMaximaASM() {
+	public static int obtenerVersionMaximaASM() {
 		try {
 			Class<?> clase = Opcodes.class;
 

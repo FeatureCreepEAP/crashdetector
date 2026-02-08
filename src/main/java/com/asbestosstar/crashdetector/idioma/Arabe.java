@@ -6203,4 +6203,22 @@ public class Arabe implements Idioma {
 		return "لون زر الشريط الجانبي";
 	}
 
+	@Override public String profilerTitulo() { return "مُحلِّل الأداء (Profiler)"; }
+	@Override public String profilerDescripcion() { return "أداة تحليل الأداء مبنية على التلاؤم والعينة."; }
+	@Override public String profilerIniciar() { return "ابدأ"; }
+	@Override public String profilerDetener() { return "أوقف"; }
+	@Override public String profilerLimpiar() { return "امسح"; }
+	@Override public String profilerEstadoIniciado() { return "تم تشغيل مُحلِّل الأداء."; }
+	@Override public String profilerEstadoDetenido() { return "تم إيقاف مُحلِّل الأداء."; }
+	@Override public String profilerMuestraHilo(String nombreHilo) { return "تم استلام عينة من الخيط: " + nombreHilo; }
+	
+	@Override
+	public String samplerDescripcion() {
+	    return "أخذ عيّنات دورية من المكدسات (stacks) للكشف عن الاختناقات وحالات القفل.";
+	}
+	
+	
+	
+	
+	
 }

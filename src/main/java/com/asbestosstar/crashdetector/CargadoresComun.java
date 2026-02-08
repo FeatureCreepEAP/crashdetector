@@ -1,15 +1,17 @@
 package com.asbestosstar.crashdetector;
 
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 
 import com.asbestosstar.crashdetector.divisor.HolaMundoConsolaDivisidor;
-import com.asbestosstar.crashdetector.parches.minecraft.ParcheSoyPirata;
 
 public class CargadoresComun {
 
@@ -23,22 +25,50 @@ public class CargadoresComun {
 
 	public static void init(Collection<Path> carpetas_de_mods, CDOrigin origin) {
 		// TODO Auto-generated method stub
+
+		// Asegurar detección correcta de CDLauncher en ESTE layer
+		detectarCdLauncherPorArgs();
+
 		Statics.carpetas_de_mods.addAll(carpetas_de_mods);
 		if (!Statics.cargador) {
 			Statics.cargador = true;
-			ProxySysOutSysErr.init();
-			if (ProxyLog4j2.log4j2existe()) {
-				ProxyLog4j2.init();
-				LogManager.getLogger(HolaMundoConsolaDivisidor.class).log(Level.ERROR,
-						HolaMundoConsolaDivisidor.HOLA_MUNDO);
+			if (!Statics.app_en_cdlauncher) {
+				ProxySysOutSysErr.init();
+				if (ProxyLog4j2.log4j2existe()) {
+					ProxyLog4j2.init();
+					LogManager.getLogger(HolaMundoConsolaDivisidor.class).log(Level.ERROR,
+							HolaMundoConsolaDivisidor.HOLA_MUNDO);
+				}
+			}
+			if (!origin.equals(CDOrigin.FEATURECREEP) && CrashDetectorFCMC.existeFeatureCreep()) {
+				Statics.carpetas_de_mods.addAll(CrashDetectorFeatureCreepJBoss.obtenerPathsDeMods());
 			}
 
-			if (!origin.equals(CDOrigin.FEATURECREEP)) {
-				Statics.carpetas_de_mods.addAll(CrashDetectorFCMC.obtenerPathsDeMods());
+			if (!Statics.app_en_cdlauncher) {
+				// ParcheSoyPirata.SOY_PIRATA.delete();//Eliminar cuando reiniciar.
+				MonitorDePID.main(new String[] {});
 			}
-			// ParcheSoyPirata.SOY_PIRATA.delete();//Eliminar cuando reiniciar.
-			MonitorDePID.main(new String[] {});
 
+		}
+	}
+
+	private static void detectarCdLauncherPorArgs() {
+
+		// Si ya fue seteado en este classloader, no repetir
+		if (Statics.app_en_cdlauncher)
+			return;
+
+		RuntimeMXBean mxBean = ManagementFactory.getRuntimeMXBean();
+		List<String> args = mxBean.getInputArguments();
+
+		for (String arg : args) {
+			// Ejemplo:
+			// -javaagent:/ruta/crashdetector.jar=cdlauncher
+			if (arg.startsWith("-javaagent:") && arg.contains("crashdetector") && arg.contains("cdlauncher")) {
+
+				Statics.app_en_cdlauncher = true;
+				return;
+			}
 		}
 	}
 

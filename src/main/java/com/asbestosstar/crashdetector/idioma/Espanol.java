@@ -6983,5 +6983,57 @@ public class Espanol implements Idioma {
 	public String colorBotonBaraLateral() {
 		return "Color del botón de la barra lateral";
 	}
+	
+	
+	@Override
+	public String profilerTitulo() {
+		return "Profiler";
+	}
+
+	@Override
+	public String profilerDescripcion() {
+		return "Herramienta de análisis de rendimiento basada en instrumentación y muestreo.";
+	}
+
+	@Override
+	public String profilerIniciar() {
+		return "Iniciar";
+	}
+
+	@Override
+	public String profilerDetener() {
+		return "Detener";
+	}
+
+	@Override
+	public String profilerLimpiar() {
+		return "Limpiar";
+	}
+
+	@Override
+	public String profilerEstadoIniciado() {
+		return "Profiler iniciado.";
+	}
+
+	@Override
+	public String profilerEstadoDetenido() {
+		return "Profiler detenido.";
+	}
+
+	@Override
+	public String profilerMuestraHilo(String nombreHilo) {
+		return "Muestra recibida del hilo: " + nombreHilo;
+	}
+
+	
+	@Override
+	public String samplerDescripcion() {
+		return "Muestreo periódico de stacks para detectar cuellos de botella y bloqueos.";
+	}
+	
+	
+	
+	
+	
 
 }

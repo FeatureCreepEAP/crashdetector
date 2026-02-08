@@ -11,65 +11,103 @@ import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.cargador.Cargador;
 import com.asbestosstar.crashdetector.detectorlanzer.DetectorLanzer;
 
-// Handover
+/**
+ * Entregar
+ *
+ * RESPONSABILIDAD REAL: - JVM_ARGS: SOLO desde RuntimeMXBean (classpath,
+ * module-path, flags) - APP_ARGS: SOLO desde sun.java.command (main class +
+ * game args)
+ *
+ * Nunca reconstruye JVM args desde strings. Nunca vuelve a parsear JVM flags.
+ */
 public class Entregar {
 
 	public static File archivo = Statics.carpeta.resolve("entregar").toFile();
+
 	private static final String MASK = "*********************************";
 	public static App app_detecta;
 
-	// escritor
+	/* ========================================================= */
+	/* ======================= ESCRITOR ======================== */
+	/* ========================================================= */
+
 	public static void comenzarEntregar() {
+
 		app_detecta = App.obtenerApp();
 		String idApp = app_detecta != null ? app_detecta.id() : "";
 
 		Buscardor.cargadoresPredetermindado();
 
-		// se detectan cargadores activos sin tocar la lista global
-		List<Cargador> activos_cargadores = new ArrayList<Cargador>();
+		List<Cargador> activos = new ArrayList<Cargador>();
 		for (Cargador c : Cargador.cargadores) {
 			try {
-				if (c.cargadorEsActivado()) {
-					activos_cargadores.add(c);
-				}
+				if (c.cargadorEsActivado())
+					activos.add(c);
 			} catch (Throwable ignored) {
 			}
 		}
 
-		// args actuales sin usar ARGS_DE_APP
-		String args = obtenerArgsDelPrograma();
-		if (!ConfigMundial.obtenerInstancia().obtenerHabilitarTokenDeAccesoEnLaEntregaDelMonitorDePID()) {
-			args = eliminarTokenDeAcceso(args);
+		/* ===================================================== */
+		/* 1) JVM ARGS (FUENTE CORRECTA) */
+		/* ===================================================== */
+
+		List<String> jvmArgs = new ArrayList<String>();
+		try {
+			jvmArgs.addAll(ManagementFactory.getRuntimeMXBean().getInputArguments());
+		} catch (Throwable ignored) {
 		}
 
-		String lanzer = DetectorLanzer.detectarLanzer(app_detecta, args);
+		Statics.JVM_ARGS = jvmArgs;
+
+		/* ===================================================== */
+		/* 2) APP ARGS (MAIN CLASS + GAME ARGS) */
+		/* ===================================================== */
+
+		String rawCmd = System.getProperty("sun.java.command", "");
+		List<String> appArgs = parsearArgsInicial(rawCmd);
+
+		if (!ConfigMundial.obtenerInstancia().obtenerHabilitarTokenDeAccesoEnLaEntregaDelMonitorDePID()) {
+			appArgs = ocultarAccessToken(appArgs);
+		}
+
+		Statics.APP_ARGS = appArgs;
+
+		/* ===================================================== */
+		/* 3) DETECCIÓN DE LAUNCHER (STRING SOLO PARA DETECTAR) */
+		/* ===================================================== */
+
+		String appCmdDetectar = construirStringDetectar(appArgs);
+
+		String lanzer = DetectorLanzer.detectarLanzer(app_detecta, appCmdDetectar);
+
 		Statics.lanzer_del_app = lanzer;
 
-		// obtener inicio real de la JVM usando RuntimeMXBean
 		long inicioApp = obtenerInicioDeLaApp();
 		Statics.INICIO_DE_LA_APP = inicioApp;
 
-		// escribir archivo
-		String contenido = construirContenidoArchivo(idApp, args, activos_cargadores, lanzer, inicioApp);
+		String contenido = construirContenidoArchivo(idApp, jvmArgs, appArgs, activos, lanzer, inicioApp);
 
 		escribirArchivo(contenido);
 	}
 
-	// lector
+	/* ========================================================= */
+	/* ======================== LECTOR ========================= */
+	/* ========================================================= */
+
 	public static void recibir() {
-		if (!archivo.exists() || !archivo.isFile()) {
-			CrashDetectorLogger.log("Archivo inexiste");
+
+		if (!archivo.exists())
 			return;
-		}
+
+		List<String> jvmArgs = new ArrayList<String>();
+		List<String> appArgs = new ArrayList<String>();
+		String idApp = "";
+		String lanzer = "";
+		long inicioApp = 0L;
+		String idsCargadores = "";
 
 		try {
 			List<String> lineas = java.nio.file.Files.readAllLines(archivo.toPath(), StandardCharsets.UTF_8);
-
-			String idApp = "";
-			String args = "";
-			String idsCargadores = "";
-			String lanzer = "";
-			long inicioApp = 0L;
 
 			for (String l : lineas) {
 				int p = l.indexOf(':');
@@ -81,95 +119,83 @@ public class Entregar {
 
 				if ("app".equals(k))
 					idApp = v;
-				else if ("args".equals(k))
-					args = v;
-				else if ("cargadores".equals(k))
-					idsCargadores = v;
 				else if ("lanzer".equals(k))
 					lanzer = v;
 				else if ("inicio".equals(k)) {
 					try {
 						inicioApp = Long.parseLong(v);
-					} catch (NumberFormatException ignored) {
+					} catch (Throwable ignored) {
 					}
-				}
-			}
-
-			// restaurar app
-			app_detecta = buscarAppPorId(idApp);
-			Statics.APP = app_detecta;
-
-			// restaurar launcher
-			Statics.lanzer_del_app = lanzer != null ? lanzer : "";
-
-			// fijar ARGS_DE_APP solo aqui
-			Statics.ARGS_DE_APP = args != null ? args : "";
-
-			// restaurar inicio de la app
-			Statics.INICIO_DE_LA_APP = inicioApp;
-
-			Buscardor.cargadoresPredetermindado();
-
-			// agregar cargadores activos segun archivo sin limpiar lista global
-			if (idsCargadores != null && !idsCargadores.isEmpty()) {
-				String[] parts = idsCargadores.split(",");
-				for (String id : parts) {
-					String t = id.trim();
-					if (t.isEmpty())
-						continue;
-
-					Cargador inst = buscarCargadorPorId(t);
-					if (inst != null && !Cargador.cargadores_activados.contains(inst)) {
-						Cargador.cargadores_activados.add(inst);
-					}
-				}
+				} else if ("jvm-arg".equals(k))
+					jvmArgs.add(v);
+				else if ("app-arg".equals(k))
+					appArgs.add(v);
+				else if ("cargadores".equals(k))
+					idsCargadores = v;
 			}
 
 		} catch (IOException ignored) {
+		}
+
+		Statics.APP = buscarAppPorId(idApp);
+		Statics.lanzer_del_app = lanzer != null ? lanzer : "";
+		Statics.JVM_ARGS = jvmArgs;
+		Statics.APP_ARGS = appArgs;
+		Statics.INICIO_DE_LA_APP = inicioApp;
+
+		Buscardor.cargadoresPredetermindado();
+
+		if (!idsCargadores.isEmpty()) {
+			for (String id : idsCargadores.split(",")) {
+				Cargador c = buscarCargadorPorId(id.trim());
+				if (c != null && !Cargador.cargadores_activados.contains(c)) {
+					Cargador.cargadores_activados.add(c);
+				}
+			}
 		}
 
 		archivo.delete();
 	}
 
-	// utilidades
+	/* ========================================================= */
+	/* ========================= UTIL ========================== */
+	/* ========================================================= */
 
-	private static String construirContenidoArchivo(String idApp, String args, List<Cargador> activos, String lanzer,
-			long inicioApp) {
-		StringBuilder ids = new StringBuilder();
+	/**
+	 * Parseo SIMPLE para sun.java.command. SOLO se usa aquí.
+	 */
+	private static List<String> parsearArgsInicial(String raw) {
 
-		if (activos != null && !activos.isEmpty()) {
-			for (Cargador c : activos) {
-				try {
-					String id = c.id();
-					if (id != null && !id.isEmpty()) {
-						if (ids.length() > 0)
-							ids.append(',');
-						ids.append(id);
-					}
-				} catch (Throwable ignored) {
+		List<String> out = new ArrayList<String>();
+		StringBuilder cur = new StringBuilder();
+		boolean d = false, s = false;
+
+		for (int i = 0; i < raw.length(); i++) {
+			char c = raw.charAt(i);
+
+			if (c == '"' && !s) {
+				d = !d;
+				continue;
+			}
+			if (c == '\'' && !d) {
+				s = !s;
+				continue;
+			}
+
+			if (Character.isWhitespace(c) && !d && !s) {
+				if (cur.length() > 0) {
+					out.add(cur.toString());
+					cur.setLength(0);
 				}
+				continue;
 			}
+			cur.append(c);
 		}
 
-		StringBuilder out = new StringBuilder();
-		out.append("app: ").append(idApp == null ? "" : idApp).append('\n');
-		out.append("args: ").append(args == null ? "" : args).append('\n');
-		out.append("lanzer: ").append(lanzer == null ? "" : lanzer).append('\n');
-		out.append("inicio: ").append(inicioApp).append('\n');
-		out.append("cargadores: ").append(ids.toString()).append('\n');
+		if (cur.length() > 0)
+			out.add(cur.toString());
 
-		return out.toString();
-	}
-
-	private static void escribirArchivo(String contenido) {
-		try {
-			File dir = archivo.getParentFile();
-			if (dir != null && !dir.exists()) {
-				dir.mkdirs();
-			}
-			java.nio.file.Files.write(archivo.toPath(), contenido.getBytes(StandardCharsets.UTF_8));
-		} catch (IOException ignored) {
-		}
+		return out;
 	}
 
 	private static long obtenerInicioDeLaApp() {
@@ -181,21 +207,9 @@ public class Entregar {
 	}
 
 	private static App buscarAppPorId(String id) {
-		if (id == null || id.isEmpty())
-			return null;
-		try {
-			if (App.APPS instanceof java.util.Map) {
-				@SuppressWarnings("unchecked")
-				java.util.Map<String, App> mapa = (java.util.Map<String, App>) App.APPS;
-				return mapa.get(id);
-			}
-			if (App.APPS instanceof java.lang.Iterable) {
-				for (Object o : (Iterable<?>) App.APPS) {
-					if (o instanceof App && id.equals(((App) o).id()))
-						return (App) o;
-				}
-			}
-		} catch (Throwable ignored) {
+		for (Object o : App.APPS) {
+			if (o instanceof App && id.equals(((App) o).id()))
+				return (App) o;
 		}
 		return null;
 	}
@@ -211,52 +225,67 @@ public class Entregar {
 		return null;
 	}
 
-	/**
-	 * Enmascara el valor del access token, preservando el campo/clave y (si
-	 * existían) las comillas. Soporta variantes: --accessToken <valor>
-	 * --accessToken="<valor>" --accessToken='<valor>' --accessToken=<valor>
-	 * "accessToken":"valor" (JSON) 'accessToken':'valor' (JSON con comillas
-	 * simples)
-	 */
-	private static String eliminarTokenDeAcceso(String args) {
-		if (args == null || args.isEmpty())
-			return "";
+	private static String construirStringDetectar(List<String> appArgs) {
+		StringBuilder sb = new StringBuilder();
+		for (String a : appArgs) {
+			if (sb.length() > 0)
+				sb.append(' ');
+			sb.append(a);
+		}
+		return sb.toString();
+	}
 
-		String out = args;
-
-		// Formatos con '=' y comillas
-		out = out.replaceAll("(?i)(--accessToken\\s*=\\s*\")([^\"]*)(\")", "$1" + MASK + "$3");
-		out = out.replaceAll("(?i)(--accessToken\\s*=\\s*')([^']*)(')", "$1" + MASK + "$3");
-		// Formato con '=' sin comillas
-		out = out.replaceAll("(?i)(--accessToken\\s*=\\s*)(\\S+)", "$1" + MASK);
-
-		// Formatos con espacio y comillas
-		out = out.replaceAll("(?i)(--accessToken\\s+\")([^\"]*)(\")", "$1" + MASK + "$3");
-		out = out.replaceAll("(?i)(--accessToken\\s+')([^']*)(')", "$1" + MASK + "$3");
-		// Formato con espacio sin comillas
-		out = out.replaceAll("(?i)(--accessToken\\s+)(\\S+)", "$1" + MASK);
-
-		// Estilo JSON (dobles y simples comillas)
-		out = out.replaceAll("(?i)(\"accessToken\"\\s*:\\s*\")([^\"]*)(\")", "$1" + MASK + "$3");
-		out = out.replaceAll("(?i)('accessToken'\\s*:\\s*')([^']*)(')", "$1" + MASK + "$3");
-
+	private static List<String> ocultarAccessToken(List<String> args) {
+		List<String> out = new ArrayList<String>();
+		for (int i = 0; i < args.size(); i++) {
+			String a = args.get(i);
+			if ("--accessToken".equalsIgnoreCase(a) && i + 1 < args.size()) {
+				out.add(a);
+				out.add(MASK);
+				i++;
+			} else {
+				out.add(a);
+			}
+		}
 		return out;
 	}
 
-	// intenta obtener args del programa desde sun.java.command
-	private static String obtenerArgsDelPrograma() {
-		try {
-			String cmd = System.getProperty("sun.java.command", "");
-			if (cmd == null || cmd.isEmpty()) {
-				// intento alterno con RuntimeMXBean (nota: trae args de la JVM, no siempre los
-				// del programa)
-				cmd = String.join(" ", ManagementFactory.getRuntimeMXBean().getInputArguments());
-				return cmd != null ? cmd : "";
+	private static String construirContenidoArchivo(String idApp, List<String> jvmArgs, List<String> appArgs,
+			List<Cargador> activos, String lanzer, long inicioApp) {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("app: ").append(idApp).append('\n');
+		sb.append("lanzer: ").append(lanzer).append('\n');
+		sb.append("inicio: ").append(inicioApp).append('\n');
+
+		for (String a : jvmArgs)
+			sb.append("jvm-arg: ").append(a).append('\n');
+
+		for (String a : appArgs)
+			sb.append("app-arg: ").append(a).append('\n');
+
+		StringBuilder ids = new StringBuilder();
+		for (Cargador c : activos) {
+			try {
+				if (ids.length() > 0)
+					ids.append(',');
+				ids.append(c.id());
+			} catch (Throwable ignored) {
 			}
-			// Devolver tal cual (incluye clase/jar + args)
-			return cmd;
-		} catch (Throwable t) {
-			return "";
+		}
+
+		sb.append("cargadores: ").append(ids).append('\n');
+		return sb.toString();
+	}
+
+	private static void escribirArchivo(String contenido) {
+		try {
+			File dir = archivo.getParentFile();
+			if (dir != null && !dir.exists())
+				dir.mkdirs();
+			java.nio.file.Files.write(archivo.toPath(), contenido.getBytes(StandardCharsets.UTF_8));
+		} catch (IOException ignored) {
 		}
 	}
 }

@@ -62,7 +62,7 @@ public class CrashDetectorLogger {
 	/**
 	 * Intenta enviar una línea a la consola. Si no existe aún, queda en buffer.
 	 */
-	private static synchronized void enviarALaConsola(String linea) {
+	public static synchronized void enviarALaConsola(String linea) {
 
 		// ¿Está habilitada la consola dev?
 		if (!ConfigMundial.obtenerInstancia().obtenerConsolaDesarrollo()) {

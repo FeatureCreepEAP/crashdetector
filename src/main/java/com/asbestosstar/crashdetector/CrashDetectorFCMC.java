@@ -1,100 +1,110 @@
 package com.asbestosstar.crashdetector;
 
-import java.io.File;
 import java.lang.instrument.Instrumentation;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Nullable;
+import com.asbestosstar.crashdetector.lanzer.servicio.CDProfiler;
+import com.asbestosstar.crashdetector.lanzer.servicio.CDSampler;
+import com.asbestosstar.crashdetector.lanzer.servicio.CDTracer;
+import com.asbestosstar.crashdetector.lanzer.servicio.ServicioCDLauncher;
 
-import org.jboss.modules.ModuleClassLoader;
-import org.jboss.modules.ModuleLoader;
-
-import com.asbestosstar.crashdetector.divisor.HolaMundoConsolaDivisidor;
-
-import featurecreep.loader.FCLoaderBasic;
-
+/**
+ * CrashDetectorFCMC
+ *
+ * Entrada principal del javaagent. - Verifica explícitamente FeatureCreep +
+ * JBoss - SOLO entonces carga e invoca CrashDetectorFeatureCreepJBoss - Nunca
+ * referencia esa clase si no existen las dependencias
+ */
 public class CrashDetectorFCMC {
 
+	public static List<ServicioCDLauncher> servicios_cdlauncher = new ArrayList<>();
+
+	/* Clases que DEBEN existir */
+	private static final String FC_CLASS = "featurecreep.loader.FCLoaderBasic";
+
+	private static final String JBOSS_CLASS = "org.jboss.modules.ModuleClassLoader";
+
+	/* Bridge (NO se toca si las anteriores no existen) */
+	private static final String BRIDGE_CLASS = "com.asbestosstar.crashdetector.CrashDetectorFeatureCreepJBoss";
+
 	public static void premain(String args, Instrumentation instrument) {
-		// Buscar para archivos de mods si es FC
-		if (FCExiste()) {
-			if (clase_existe("dangerzone.BaseMod")) {
-				Statics.APP = App.DANGERZONE;
-			} // TODO para otras applicaciones
+
+		/* ================= CDLauncher ================= */
+
+		if (esModoCDLauncher(args)) {
+			Statics.app_en_cdlauncher = true;
+			MonitorDePID.registrarGUISPredeterminado();
+			CargadorExtensiones.cargarExtensionesProcesoApp(MonitorDePID.ultimo_mods.toFile());// TODO improver
+
+			servicios_cdlauncher.add(new CDTracer());
+			servicios_cdlauncher.add(new CDProfiler());
+			servicios_cdlauncher.add(new CDSampler());
+
+			for (ServicioCDLauncher serv : servicios_cdlauncher) {
+				String id = serv.id();
+				boolean activo = Boolean.getBoolean("crashdetector." + id);
+				if (activo) {
+					serv.activar(instrument);
+				}
+
+			}
 
 			Transformaciones.init();
+			instrument.addTransformer(new Transformaciones());
+			return;
+		}
 
-			CargadoresComun.init(obtenerPathsDeMods(), CargadoresComun.CDOrigin.FEATURECREEP);
+		/* ========== FeatureCreep + JBoss (estricto) ========== */
+
+		if (existeFeatureCreep() && existeJBossModules()) {
+			inicializarFeatureCreepJBoss();
 		}
 
 		instrument.addTransformer(new Transformaciones());
-
 	}
 
-	public static boolean FCExiste() {// TODO improver
-		return clase_existe("featurecreep.loader.FCLoaderBasic");
-	}
+	/* ===================================================== */
+	/* ==================== INTEGRACIÓN ==================== */
+	/* ===================================================== */
 
-	/**
-	 * 
-	 * @return FCLoaderBasic. Si Es FeatureCreep y cargando de FeatureCreep puedemos
-	 *         obener FCLoaderBasic. Null si no es FCLoaderBasic
-	 */
-	public static @Nullable FCLoaderBasic obtenerFCLoaderBasic() {
-		if (!FCExiste()) {
-			return null;
-		}
+	private static void inicializarFeatureCreepJBoss() {
 
-		ClassLoader cl = CrashDetectorFCMC.class.getClassLoader();
-		if (cl instanceof ModuleClassLoader) {
-			ModuleClassLoader mcl = (ModuleClassLoader) cl;
-			ModuleLoader ml = mcl.getModule().getModuleLoader();
-
-			if (ml instanceof FCLoaderBasic) {
-				return (FCLoaderBasic) ml;
-			} else {
-				// UN OTRA JBOSS MODULES O JBOSS FORGE
-				return null;
-			}
-
-		} else {
-			// NO EJECTIR DESDE FEATURECREEP
-			return null;
-		}
-	}
-
-	public static List<Path> obtenerPathsDeMods() {
-		ArrayList<Path> paths = new ArrayList<Path>();// TODO obtener desde GameProviders cuando no ejecutir desde FC
-
-		FCLoaderBasic fc = obtenerFCLoaderBasic();
-
-		// TODO mas
-
-		if (fc != null) {
-			for (Path path : fc.getCombindedModulePKZipLocations()) {
-				paths.add(path);
-			}
-
-		}
-
-		if (paths.isEmpty()) {
-			paths.add(new File("mods/").toPath());
-		} // La carpeta de mods es de la superloader
-
-		return paths;
-	}
-
-	public static boolean clase_existe(String clase) {
 		try {
-			Class.forName(clase);
+
+			List<Path> paths = CrashDetectorFeatureCreepJBoss.obtenerPathsDeMods();
+
+			Transformaciones.init();
+			CargadoresComun.init(paths, CargadoresComun.CDOrigin.FEATURECREEP);
+
+		} catch (Throwable t) {
+			// Fallo silencioso: nunca romper el arranque
+		}
+	}
+
+	/* ===================================================== */
+	/* ===================== CHEQUEOS ====================== */
+	/* ===================================================== */
+
+	public static boolean existeFeatureCreep() {
+		return claseExiste(FC_CLASS);
+	}
+
+	public static boolean existeJBossModules() {
+		return claseExiste(JBOSS_CLASS);
+	}
+
+	private static boolean claseExiste(String name) {
+		try {
+			Class.forName(name, false, CrashDetectorFCMC.class.getClassLoader());
 			return true;
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
+		} catch (Throwable t) {
 			return false;
 		}
 	}
 
+	private static boolean esModoCDLauncher(String args) {
+		return args != null && args.toLowerCase().contains("cdlauncher");
+	}
 }

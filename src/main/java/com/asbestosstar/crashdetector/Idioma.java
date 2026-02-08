@@ -2431,4 +2431,24 @@ public interface Idioma {
 
 	public String colorBotonBaraLateral();
 
+	public String profilerTitulo();
+
+	public String profilerIniciar();
+
+	public String profilerDetener();
+
+	public String profilerLimpiar();
+
+	public String profilerDescripcion();
+
+	public String profilerEstadoIniciado();
+
+	public String profilerEstadoDetenido();
+
+	public String profilerMuestraHilo(String hilo);
+
+	// public String samplerTitulo();
+
+	public String samplerDescripcion();
+
 }

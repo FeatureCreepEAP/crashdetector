@@ -6253,4 +6253,24 @@ public class Esperanto implements Idioma {
 		return "Koloro de la flankpanela butono";
 	}
 
+	@Override public String profilerTitulo() { return "Analizilo de Rendimento"; }
+	@Override public String profilerDescripcion() { return "Ilo por analizi rendimenton, bazita sur instrumentado kaj specimenado."; }
+	@Override public String profilerIniciar() { return "Ek"; }
+	@Override public String profilerDetener() { return "Haltu"; }
+	@Override public String profilerLimpiar() { return "Vakigi"; }
+	@Override public String profilerEstadoIniciado() { return "Analizilo de rendimento ekfunkciis."; }
+	@Override public String profilerEstadoDetenido() { return "Analizilo de rendimento haltis."; }
+	@Override public String profilerMuestraHilo(String nombreHilo) { return "Specimeno ricevita de fadeno: " + nombreHilo; }
+	
+	@Override
+	public String samplerDescripcion() {
+	    return "Perioda specimenado de stakoj por detekti trangulokojn kaj blokadojn.";
+	}
+	
+	
+	
+	
+	
+	
+	
 }

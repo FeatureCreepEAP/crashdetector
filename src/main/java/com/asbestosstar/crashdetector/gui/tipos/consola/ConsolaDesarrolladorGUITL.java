@@ -31,6 +31,7 @@ import javax.swing.SwingUtilities;
 
 import com.asbestosstar.crashdetector.ConfigMundial;
 import com.asbestosstar.crashdetector.Consola;
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.api_sito_registro.APIdeSitioDeRegistro;
 import com.asbestosstar.crashdetector.api_sito_registro.DemasiadoGrande;
@@ -42,6 +43,7 @@ import com.asbestosstar.crashdetector.config.ElementoConfig;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lfpdppp.LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lfpdppp.LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesGUIConLogos;
+import com.asbestosstar.crashdetector.lanzer.CDLauncher;
 
 /**
  * Consola del desarrollador estilo TL.
@@ -162,9 +164,26 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 		// Matar PID (Java 8 compatible)
 		stop.addActionListener(e -> {
 
+			// 1) Prefer CDLauncher process if present
+			Process p = CDLauncher.proceso_cdlauncher;
+			if (p != null) {
+				try {
+					if (p.isAlive()) {
+						p.destroy();
+						CrashDetectorLogger.enviarALaConsola("[ConsolaDev] Proceso CDLauncher terminado");
+						return;
+					}
+				} catch (Throwable t) {
+					t.printStackTrace();
+				}
+			}
+
+			// 2) Fallback: matar por PID (si existe)
 			long pid = MonitorDePID.pid;
-			if (pid <= 0)
+			if (pid <= 0) {
+				CrashDetectorLogger.enviarALaConsola("[ConsolaDev] No hay proceso activo para detener");
 				return;
+			}
 
 			try {
 				String os = System.getProperty("os.name").toLowerCase();
@@ -173,6 +192,7 @@ public class ConsolaDesarrolladorGUITL extends ConsolaDesarrolladorGUI {
 				} else {
 					Runtime.getRuntime().exec("kill -9 " + pid);
 				}
+				CrashDetectorLogger.enviarALaConsola("[ConsolaDev] Proceso PID " + pid + " terminado");
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}

@@ -6055,5 +6055,25 @@ public class Japones implements Idioma {
 	public String colorBotonBaraLateral() {
 		return "サイドバーのボタン色";
 	}
+	
+	@Override public String profilerTitulo() { return "プロファイラー"; }
+	@Override public String profilerDescripcion() { return "インストルメンテーションとサンプリングに基づくパフォーマンス分析ツールです。"; }
+	@Override public String profilerIniciar() { return "開始"; }
+	@Override public String profilerDetener() { return "停止"; }
+	@Override public String profilerLimpiar() { return "クリア"; }
+	@Override public String profilerEstadoIniciado() { return "プロファイラーを開始しました。"; }
+	@Override public String profilerEstadoDetenido() { return "プロファイラーを停止しました。"; }
+	@Override public String profilerMuestraHilo(String nombreHilo) { return "スレッドからサンプルを受信しました: " + nombreHilo; }
+	
+	@Override
+	public String samplerDescripcion() {
+	    return "ボトルネックやデッドロックを検出するための、スタックの定期的なサンプリング。";
+	}
+	
+	
+	
+	
+	
+	
 
 }

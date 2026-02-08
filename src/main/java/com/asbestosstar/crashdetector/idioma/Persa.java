@@ -6242,4 +6242,18 @@ public class Persa implements Idioma {
 		return "رنگ دکمه نوار کناری";
 	}
 
+	@Override public String profilerTitulo() { return "تحلیلگر عملکرد"; }
+	@Override public String profilerDescripcion() { return "ابزار تحلیل عملکرد مبتنی بر ابزار دقیق‌سازی و نمونه‌برداری."; }
+	@Override public String profilerIniciar() { return "شروع"; }
+	@Override public String profilerDetener() { return "توقف"; }
+	@Override public String profilerLimpiar() { return "پاک‌سازی"; }
+	@Override public String profilerEstadoIniciado() { return "تحلیلگر عملکرد شروع شد."; }
+	@Override public String profilerEstadoDetenido() { return "تحلیلگر عملکرد متوقف شد."; }
+	@Override public String profilerMuestraHilo(String nombreHilo) { return "نمونه از رشته دریافت شد: " + nombreHilo; }
+	@Override
+	public String samplerDescripcion() {
+	    return "نمونه‌برداری دوره‌ای از پشته‌ها برای شناسایی گلوگاه‌ها و قفل‌ها.";
+	}
+	
+	
 }

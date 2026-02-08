@@ -58,6 +58,7 @@ import com.asbestosstar.crashdetector.gui.tipos.modapi.CDModsEstiloTL;
 import com.asbestosstar.crashdetector.gui.tipos.modapi.PanelAPIBase;
 import com.asbestosstar.crashdetector.gui.tipos.quickfix.PanelQuickFixDemonSlayers;
 import com.asbestosstar.crashdetector.gui.tipos.quickfix.TodosQuickFixesGUI;
+import com.asbestosstar.crashdetector.lanzer.CDLauncher;
 import com.asbestosstar.crashdetector.mapas.BiMap;
 
 /**
@@ -140,6 +141,7 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		this.cerrojo = latch;
 		// Inicializar los colores de configuración con valores por defecto
 		// Serán sobrescritos por la implementación concreta en init()
+        MonitorDePID.gui_principal_activo = this;
 		ManagerDiscord.comenzar();
 		CrashDetectorLogger.log("en constructir");
 		inicializarInterfaz();
@@ -269,6 +271,7 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 
 		if (this.modolanzer) {
 			botonCDLauncher.setText("Cancelar");
+			CDLauncher.lanzer();
 		} else {
 			botonCDLauncher.setText("Entrar al Juego");
 			this.panelCDLauncher.construir(this);
