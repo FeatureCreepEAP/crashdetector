@@ -25,6 +25,11 @@ public class CrashDetectorModLauncher implements ITransformationService {
 	@Override
 	public String name() {
 		// TODO Auto-generated method stub
+		
+		if(Statics.app_en_cdlauncher) {
+			return "cdmod";
+		}
+		
 		return "crashdetector";
 	}
 

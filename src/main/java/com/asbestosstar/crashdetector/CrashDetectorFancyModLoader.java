@@ -21,6 +21,11 @@ public class CrashDetectorFancyModLoader implements ClassProcessor {
 	@Override
 	public ProcessorName name() {
 		// TODO Auto-generated method stub
+		
+		if(Statics.app_en_cdlauncher) {
+			return new ProcessorName("cdmod", "fancymodloader");
+		}
+		
 		return new ProcessorName("crashdetector", "fancymodloader");
 	}
 

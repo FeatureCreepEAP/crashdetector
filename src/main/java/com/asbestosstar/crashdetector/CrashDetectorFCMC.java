@@ -8,6 +8,7 @@ import java.util.List;
 import com.asbestosstar.crashdetector.lanzer.servicio.CDProfiler;
 import com.asbestosstar.crashdetector.lanzer.servicio.CDSampler;
 import com.asbestosstar.crashdetector.lanzer.servicio.CDTracer;
+import com.asbestosstar.crashdetector.lanzer.servicio.LibreMods;
 import com.asbestosstar.crashdetector.lanzer.servicio.ServicioCDLauncher;
 
 /**
@@ -34,6 +35,7 @@ public class CrashDetectorFCMC {
 		/* ================= CDLauncher ================= */
 
 		if (esModoCDLauncher(args)) {
+			//LibreMods.librar(instrument);			
 			Statics.app_en_cdlauncher = true;
 			MonitorDePID.registrarGUISPredeterminado();
 			CargadorExtensiones.cargarExtensionesProcesoApp(MonitorDePID.ultimo_mods.toFile());// TODO improver
@@ -104,7 +106,7 @@ public class CrashDetectorFCMC {
 		}
 	}
 
-	private static boolean esModoCDLauncher(String args) {
+	public static boolean esModoCDLauncher(String args) {
 		return args != null && args.toLowerCase().contains("cdlauncher");
 	}
 }
