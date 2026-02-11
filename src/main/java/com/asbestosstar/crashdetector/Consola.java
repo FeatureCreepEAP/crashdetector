@@ -309,6 +309,7 @@ public class Consola {
 		try {
 			Instant epoc = Instant.ofEpochMilli(archivo.toFile().lastModified());
 
+			
 			if (epoc.isAfter(tiempo) || ignorar_necesita_estar_despues_de_tiempo || nueva) {
 				nueva = true;
 				contenido = MonitorDePID.leer_archivo(archivo);

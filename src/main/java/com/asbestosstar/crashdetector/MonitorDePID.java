@@ -649,10 +649,9 @@ public class MonitorDePID {
 
 		try {
 
-			Instant inicio = null;
 			if (Statics.INICIO_DE_LA_APP > 0) {
 				try {
-					inicio = Instant.ofEpochMilli(Statics.INICIO_DE_LA_APP);
+					utc = Instant.ofEpochMilli(Statics.INICIO_DE_LA_APP);
 				} catch (Throwable ignored) {
 				}
 			}
@@ -660,7 +659,7 @@ public class MonitorDePID {
 			List<Consola> consolasFinales = Consola.obtenerConsolas();
 			for (Consola c : consolasFinales) {
 				try {
-					c.finalizarContenido(inicio, false);
+					c.finalizarContenido(utc, false);
 					if (c.nueva) {
 						consolas.add(c);
 					}
