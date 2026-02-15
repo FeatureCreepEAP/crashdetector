@@ -71,8 +71,6 @@ public class CDLauncher {
 		inyectarOpcionesCDLauncher(comando);
 		forzarLog4jPatternLayout(comando);
 		inyectarProteccionesConsola(comando); // ← flags JVM correctos
-		inyectarProteccionesJPMS(comando);
-		eliminarCrashDetectorDelModulePath(comando);
 
 		CrashDetectorLogger.enviarALaConsola("[CDLauncher] CMD:");
 		CrashDetectorLogger.enviarALaConsola(construirStringLogCensurado(comando));
@@ -136,13 +134,6 @@ public class CDLauncher {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
 
 	/**
 	 * Inyecta argumentos JVM para cada opción habilitada en ConfigCDLauncher.
@@ -174,7 +165,6 @@ public class CDLauncher {
 		}
 	}
 
-
 	/* ========================================================= */
 	/* ================= BOMBA DE STREAM ====================== */
 	/* ========================================================= */
@@ -188,10 +178,9 @@ public class CDLauncher {
 		Thread t = new Thread(() -> {
 
 			File log = NoRegistroDeLauncherVShojo.cd_launcherlog;
-log.delete();
+			log.delete();
 //log.createNewFile();
-			
-			
+
 			// Tamaño de buffer grande para minimizar I/O
 			final int BUFFER_SIZE = 64 * 1024; // 64 KB
 
@@ -365,33 +354,37 @@ log.delete();
 		cmd.add(pos, "-cp");
 		cmd.add(pos + 1, cp);
 	}
+
+	/**
+	 * Elimina CrashDetector del classpath para evitar doble carga.
+	 */
 	private static void eliminarCrashDetectorDelClasspath(List<String> cmd) {
 
-		/* En Java 9+ NO eliminar: el agente debe ser visible */
-		if (esJava9OMayor()) {
-			return;
-		}
-
 		String jar = MonitorDePID.obtenerRutaJarCrashDetector();
-		if (jar == null) return;
-
 		String sep = System.getProperty("path.separator");
-		String jarLower = jar.toLowerCase();
+		String jarLower = jar != null ? jar.toLowerCase() : null;
 
 		for (int i = 0; i < cmd.size(); i++) {
 			if (!"-cp".equals(cmd.get(i)) && !"--class-path".equals(cmd.get(i)))
 				continue;
-
-			if (i + 1 >= cmd.size()) return;
+			if (i + 1 >= cmd.size())
+				return;
 
 			String[] partes = cmd.get(i + 1).split(java.util.regex.Pattern.quote(sep));
 			StringBuilder limpio = new StringBuilder();
 
 			for (String p : partes) {
-				if (p == null || p.isEmpty()) continue;
-				if (p.toLowerCase().equals(jarLower)) continue;
+				if (p == null || p.isEmpty())
+					continue;
 
-				if (limpio.length() > 0) limpio.append(sep);
+				String pl = p.toLowerCase();
+				if (jarLower != null && pl.equals(jarLower))
+					continue;
+				if (pl.contains("crashdetector") && pl.endsWith(".jar"))
+					continue;
+
+				if (limpio.length() > 0)
+					limpio.append(sep);
 				limpio.append(p);
 			}
 
@@ -399,107 +392,6 @@ log.delete();
 			return;
 		}
 	}
-
-	private static boolean esJava9OMayor() {
-		String v = System.getProperty("java.specification.version");
-		try {
-			return Integer.parseInt(v) >= 9;
-		} catch (NumberFormatException e) {
-			return false;
-		}
-	}
-
-	private static void inyectarProteccionesJPMS(List<String> cmd) {
-
-		int v = versionJavaMayor();
-		if (v < 9) return;
-
-		/* Mantener todo en el unnamed module */
-		//cmd.add(1, "--add-modules=ALL-UNNAMED");
-
-		/* Java 9–16: acceso ilegal legacy (EXISTE) */
-		if (v <= 16) {
-			cmd.add(1, "--illegal-access=permit");
-		}
-
-		/* Java 17+:
-		   - NO illegal-access
-		   - NO patch-module
-		   - Todo se resuelve vía javaagent (correcto)
-		 */
-	}
-
-
-	
-	
-	
-	
-	
-	
-
-	private static int versionJavaMayor() {
-		String v = System.getProperty("java.specification.version");
-		try {
-			if (v.startsWith("1.")) {
-				return Integer.parseInt(v.substring(2));
-			}
-			return Integer.parseInt(v);
-		} catch (Throwable t) {
-			return 8; // fallback conservador
-		}
-	}
-
-	
-	
-	
-	
-	private static void eliminarCrashDetectorDelModulePath(List<String> cmd) {
-
-		String jar = MonitorDePID.obtenerRutaJarCrashDetector();
-		if (jar == null) return;
-
-		for (int i = 0; i < cmd.size(); i++) {
-
-			String s = cmd.get(i);
-
-			if (s != null && s.startsWith("--module-path")) {
-
-				String sep = System.getProperty("path.separator");
-
-				String valor;
-				if (s.contains("=")) {
-					valor = s.substring(s.indexOf('=') + 1);
-				} else if (i + 1 < cmd.size()) {
-					valor = cmd.get(i + 1);
-				} else {
-					continue;
-				}
-
-				String[] partes = valor.split(java.util.regex.Pattern.quote(sep));
-				StringBuilder limpio = new StringBuilder();
-
-				for (String p : partes) {
-					if (p == null || p.isEmpty()) continue;
-					if (p.equals(jar)) continue;
-
-					if (limpio.length() > 0) limpio.append(sep);
-					limpio.append(p);
-				}
-
-				if (s.contains("=")) {
-					cmd.set(i, "--module-path=" + limpio.toString());
-				} else {
-					cmd.set(i + 1, limpio.toString());
-				}
-
-				return;
-			}
-		}
-	}
-
-	
-	
-	
 
 	/**
 	 * Inyecta CrashDetector como javaagent si no está presente.
@@ -560,4 +452,18 @@ log.delete();
 
 		return sb.toString();
 	}
+
+	public File carpetaCDLauncher() {
+		String home = System.getProperty("user.home");
+		String soporteAplicaciones = home + "/Library/Application Support/";
+		String appdata = System.getenv("APPDATA");
+		if (appdata != null) {
+			return new File(appdata + "/.cdlauncher/");
+		} else if (new File(soporteAplicaciones).exists()) {
+			return new File(soporteAplicaciones + "/cdlauncher/");
+		} else {
+			return new File(home + "/.tlauncher/");
+		}
+	}
+
 }

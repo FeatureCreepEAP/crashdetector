@@ -113,6 +113,7 @@ public class CDProfiler implements ServicioCDLauncher {
 					|| nombreClase.startsWith("org/objectweb/asm/")
 					|| nombreClase.startsWith("org/apache/logging/")
 					|| nombreClase.startsWith("org/slf4j/")
+					|| nombreClase.startsWith("cpw/mods/")
 
 					|| nombreClase.startsWith("com/asbestosstar/crashdetector/")
 
