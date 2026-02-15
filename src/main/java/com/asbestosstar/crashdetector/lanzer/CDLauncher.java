@@ -329,30 +329,106 @@ public class CDLauncher {
 	}
 
 	/**
-	 * Inserta el classpath actual si no fue definido.
+	 * Inserta un classpath limpio que excluye completamente CrashDetector.
+	 *
+	 * Esto evita que el jar exista simultáneamente como:
+	 *
+	 * - javaagent - classpath
+	 *
+	 * lo que causa conflictos JPMS y ResolutionException.
 	 */
 	private static void asegurarClassPath(List<String> cmd) {
-		for (String s : cmd) {
-			if ("-cp".equals(s) || "--class-path".equals(s))
+
+		/* Si el usuario ya definió classpath, limpiarlo */
+		for (int i = 0; i < cmd.size(); i++) {
+
+			String s = cmd.get(i);
+
+			if ("-cp".equals(s) || "--class-path".equals(s)) {
+
+				if (i + 1 >= cmd.size())
+					return;
+
+				String limpio = construirClasspathLimpio(cmd.get(i + 1));
+				cmd.set(i + 1, limpio);
+
 				return;
+			}
+
+			if (s.startsWith("-cp=") || s.startsWith("--class-path=")) {
+
+				int idx = s.indexOf('=');
+				String valor = s.substring(idx + 1);
+
+				String limpio = construirClasspathLimpio(valor);
+
+				cmd.set(i, s.substring(0, idx + 1) + limpio);
+
+				return;
+			}
 		}
 
-		String cp = System.getProperty("java.class.path");
-		if (cp == null || cp.isEmpty())
+		/* Si no existe classpath, crear uno limpio desde el actual */
+		String actual = System.getProperty("java.class.path");
+
+		if (actual == null || actual.isEmpty())
 			return;
 
+		String limpio = construirClasspathLimpio(actual);
+
 		int pos = 1;
+
 		while (pos < cmd.size()) {
+
 			String a = cmd.get(pos);
+
 			if (a != null && a.startsWith("-javaagent:")) {
 				pos++;
 				continue;
 			}
+
 			break;
 		}
 
 		cmd.add(pos, "-cp");
-		cmd.add(pos + 1, cp);
+		cmd.add(pos + 1, limpio);
+	}
+
+	/**
+	 * Construye un classpath excluyendo completamente CrashDetector.
+	 */
+	private static String construirClasspathLimpio(String original) {
+
+		String jarCrashDetector = MonitorDePID.obtenerRutaJarCrashDetector();
+
+		String sep = System.getProperty("path.separator");
+
+		String[] partes = original.split(java.util.regex.Pattern.quote(sep));
+
+		StringBuilder limpio = new StringBuilder();
+
+		for (String p : partes) {
+
+			if (p == null || p.isEmpty())
+				continue;
+
+			String pl = p.toLowerCase();
+
+			/* excluir crashdetector por ruta exacta */
+			if (jarCrashDetector != null && pl.equals(jarCrashDetector.toLowerCase()))
+				continue;
+
+			/* excluir cualquier jar crashdetector */
+			if (pl.contains("crashdetector") && pl.endsWith(".jar"))
+				continue;
+
+			if (limpio.length() > 0)
+				limpio.append(sep);
+
+			limpio.append(p);
+		}
+
+		return limpio.toString();
 	}
 
 	/**
