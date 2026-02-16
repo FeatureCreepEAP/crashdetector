@@ -14,10 +14,8 @@ import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 /**
  * GUI base del Profiler.
  *
- * Esta clase:
- * - Contiene TODA la lógica del profiler
- * - Gestiona el estado (activo / detenido)
- * - Recibe datos del backend (instrumentación / sampling)
+ * Esta clase: - Contiene TODA la lógica del profiler - Gestiona el estado
+ * (activo / detenido) - Recibe datos del backend (instrumentación / sampling)
  *
  * La apariencia se implementa en las subclases.
  */
@@ -48,9 +46,9 @@ public abstract class ProfilerGUI extends JFrame implements CrashDetectorGUI {
 		setLocationByPlatform(true);
 	}
 
-	/* ==========================================================
-	 *  Control del profiler
-	 * ==========================================================
+	/*
+	 * ========================================================== Control del
+	 * profiler ==========================================================
 	 */
 
 	/**
@@ -82,51 +80,38 @@ public abstract class ProfilerGUI extends JFrame implements CrashDetectorGUI {
 		return profilerActivo;
 	}
 
-	/* ==========================================================
-	 *  Alimentación de datos del profiler
-	 * ==========================================================
+	/*
+	 * ========================================================== Alimentación de
+	 * datos del profiler ==========================================================
 	 */
 
 	/**
 	 * Recibe una muestra (sampling) de stack.
 	 *
-	 * @param hilo     Nombre o id del hilo
-	 * @param stack    Stack trace capturado
-	 * @param nanos    Tiempo estimado (opcional)
+	 * @param hilo  Nombre o id del hilo
+	 * @param stack Stack trace capturado
+	 * @param nanos Tiempo estimado (opcional)
 	 */
-	public final void agregarMuestra(
-			String hilo,
-			StackTraceElement[] stack,
-			long nanos
-	) {
+	public final void agregarMuestra(String hilo, StackTraceElement[] stack, long nanos) {
 		if (!profilerActivo)
 			return;
 
-		SwingUtilities.invokeLater(() ->
-				onMuestraRecibida(hilo, stack, nanos)
-		);
+		SwingUtilities.invokeLater(() -> onMuestraRecibida(hilo, stack, nanos));
 	}
 
 	/**
 	 * Registra una llamada instrumentada a método.
 	 *
-	 * @param clase       Clase completa
-	 * @param metodo      Nombre del método
-	 * @param descriptor  Descriptor JVM
-	 * @param duracionNs  Duración estimada
+	 * @param clase      Clase completa
+	 * @param metodo     Nombre del método
+	 * @param descriptor Descriptor JVM
+	 * @param duracionNs Duración estimada
 	 */
-	public final void agregarLlamadaMetodo(
-			String clase,
-			String metodo,
-			String descriptor,
-			long duracionNs
-	) {
+	public final void agregarLlamadaMetodo(String clase, String metodo, String descriptor, long duracionNs) {
 		if (!profilerActivo)
 			return;
 
-		SwingUtilities.invokeLater(() ->
-				onLlamadaMetodo(clase, metodo, descriptor, duracionNs)
-		);
+		SwingUtilities.invokeLater(() -> onLlamadaMetodo(clase, metodo, descriptor, duracionNs));
 	}
 
 	/**
@@ -136,8 +121,9 @@ public abstract class ProfilerGUI extends JFrame implements CrashDetectorGUI {
 		SwingUtilities.invokeLater(this::onLimpiarDatos);
 	}
 
-	/* ==========================================================
-	 *  Hooks para la implementación visual
+	/*
+	 * ========================================================== Hooks para la
+	 * implementación visual
 	 * ==========================================================
 	 */
 
@@ -154,21 +140,12 @@ public abstract class ProfilerGUI extends JFrame implements CrashDetectorGUI {
 	/**
 	 * Se llama cuando se recibe una muestra de sampling.
 	 */
-	protected abstract void onMuestraRecibida(
-			String hilo,
-			StackTraceElement[] stack,
-			long nanos
-	);
+	protected abstract void onMuestraRecibida(String hilo, StackTraceElement[] stack, long nanos);
 
 	/**
 	 * Se llama cuando se recibe una llamada instrumentada.
 	 */
-	protected abstract void onLlamadaMetodo(
-			String clase,
-			String metodo,
-			String descriptor,
-			long duracionNs
-	);
+	protected abstract void onLlamadaMetodo(String clase, String metodo, String descriptor, long duracionNs);
 
 	/**
 	 * Se llama cuando se solicita limpiar los datos.

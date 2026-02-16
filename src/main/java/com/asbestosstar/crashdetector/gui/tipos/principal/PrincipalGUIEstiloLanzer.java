@@ -126,6 +126,7 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 	private JPanel panelInferiorRef;
 	private JPanel seccionConfiguracionRef;
 	private JPanel barraLateralDerechaRef;
+	private JLabel logoLabelRef;
 
 	@Override
 	public void init() {
@@ -599,20 +600,26 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 		barraLateralDerecha.setLayout(new BoxLayout(barraLateralDerecha, BoxLayout.Y_AXIS));
 		barraLateralDerecha.setBackground(colorBoton.obtener().darker());
 		barraLateralDerecha.setPreferredSize(new Dimension(230, 0)); // más ancho para evitar cortes
-		JLabel logoLabel = new JLabel();
-		logoLabel.setBackground(colorBoton.obtener().darker());
-		logoLabel.setOpaque(true);
+		logoLabelRef = new JLabel();
+
+		logoLabelRef.setOpaque(true);
+
+		// color inicial correcto
+		Color botonBarra = modolanzer ? lanzerColorBotonBaraLateral.obtener() : colorBotonBaraLateral.obtener();
+
+		logoLabelRef.setBackground(botonBarra.darker());
+
 		ImageIcon logoIcon = new ImageIcon(Statics.carpeta.resolve("imagenes/cd_logo.png").toString());
 		Image logoImg = logoIcon.getImage();
 		Image logoEscalado = logoImg.getScaledInstance(120, -1, Image.SCALE_SMOOTH);
-		logoLabel.setIcon(new ImageIcon(logoEscalado));
-		logoLabel.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-		logoLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		logoLabelRef.setIcon(new ImageIcon(logoEscalado));
+		logoLabelRef.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+		logoLabelRef.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		estilizarBoton(botonVolver);
 		botonVolver.setEnabled(false);
 		botonVolver.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		botonVolver.addActionListener(e -> volver());
-		barraLateralDerecha.add(logoLabel);
+		barraLateralDerecha.add(logoLabelRef);
 		barraLateralDerecha.add(botonVolver);
 		barraLateralDerecha.add(Box.createVerticalStrut(10));
 
@@ -846,6 +853,17 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 				btn.setBackground(botonBarra);
 				btn.setForeground(texto);
 			}
+		}
+
+		// =========================
+		// Actualizar fondo del logo
+		// =========================
+
+		if (logoLabelRef != null) {
+
+			logoLabelRef.setBackground(botonBarra.darker());
+
+			logoLabelRef.repaint();
 		}
 
 		// =========================

@@ -6280,25 +6280,55 @@ public class Portuges implements Idioma {
 	public String colorBotonBaraLateral() {
 		return "Cor do botão da barra lateral";
 	}
-	
-	@Override public String profilerTitulo() { return "Analisador de Desempenho"; }
-	@Override public String profilerDescripcion() { return "Ferramenta de análise de desempenho baseada em instrumentação e amostragem."; }
-	@Override public String profilerIniciar() { return "Iniciar"; }
-	@Override public String profilerDetener() { return "Parar"; }
-	@Override public String profilerLimpiar() { return "Limpar"; }
-	@Override public String profilerEstadoIniciado() { return "Analisador de desempenho iniciado."; }
-	@Override public String profilerEstadoDetenido() { return "Analisador de desempenho parado."; }
-	@Override public String profilerMuestraHilo(String nombreHilo) { return "Amostra recebida da thread: " + nombreHilo; }
-	
+
+	@Override
+	public String profilerTitulo() {
+		return "Analisador de Desempenho";
+	}
+
+	@Override
+	public String profilerDescripcion() {
+		return "Ferramenta de análise de desempenho baseada em instrumentação e amostragem.";
+	}
+
+	@Override
+	public String profilerIniciar() {
+		return "Iniciar";
+	}
+
+	@Override
+	public String profilerDetener() {
+		return "Parar";
+	}
+
+	@Override
+	public String profilerLimpiar() {
+		return "Limpar";
+	}
+
+	@Override
+	public String profilerEstadoIniciado() {
+		return "Analisador de desempenho iniciado.";
+	}
+
+	@Override
+	public String profilerEstadoDetenido() {
+		return "Analisador de desempenho parado.";
+	}
+
+	@Override
+	public String profilerMuestraHilo(String nombreHilo) {
+		return "Amostra recebida da thread: " + nombreHilo;
+	}
+
 	@Override
 	public String samplerDescripcion() {
-	    return "Amostragem periódica de pilhas para detectar gargalos e travamentos.";
+		return "Amostragem periódica de pilhas para detectar gargalos e travamentos.";
 	}
-	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public String entrarAlJuego() {
+		return "Entrar no Jogo";
+	}
+
 }

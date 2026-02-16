@@ -33,8 +33,8 @@ import com.asbestosstar.crashdetector.gui.tipos.sampler.SamplerGUIEineLotta;
 /**
  * Sampler basado en ASM.
  *
- * Instrumenta métodos de forma ligera y acumula tiempo
- * para detectar qué métodos consumen más tiempo total.
+ * Instrumenta métodos de forma ligera y acumula tiempo para detectar qué
+ * métodos consumen más tiempo total.
  */
 public class CDSampler implements ServicioCDLauncher {
 
@@ -55,25 +55,20 @@ public class CDSampler implements ServicioCDLauncher {
 		inst.addTransformer(new TransformadorSampler(), true);
 
 	}
-	
-	
+
 	public static void iniciarGUI() {
-		SamplerGUI gui = TipoGUI.SAMPLER.obtenerGUIPredeterminado(
-				SamplerGUIEineLotta.ID,
-				() -> new SamplerGUIEineLotta()
-		);
+		SamplerGUI gui = TipoGUI.SAMPLER.obtenerGUIPredeterminado(SamplerGUIEineLotta.ID,
+				() -> new SamplerGUIEineLotta());
 
 		guiActiva = gui;
 		gui.init();
 
 		samplerActivo = true;
-		
+
 		iniciarPublicador();
 
 	}
-	
-	
-	
+
 	/**
 	 * Instrumenta un ClassNode usando ASM Tree API para el sampler.
 	 *
@@ -91,11 +86,8 @@ public class CDSampler implements ServicioCDLauncher {
 		System.out.println("Nombre Clase " + nombreClase);
 
 		// Filtrado básico
-		if (nombreClase.startsWith("java/")
-				|| nombreClase.startsWith("javax/")
-				|| nombreClase.startsWith("sun/")
-				|| nombreClase.startsWith("jdk/")
-				|| nombreClase.startsWith("org/objectweb/asm/")
+		if (nombreClase.startsWith("java/") || nombreClase.startsWith("javax/") || nombreClase.startsWith("sun/")
+				|| nombreClase.startsWith("jdk/") || nombreClase.startsWith("org/objectweb/asm/")
 				|| nombreClase.startsWith("com/asbestosstar/crashdetector/gui/")) {
 			return;
 		}
@@ -104,8 +96,7 @@ public class CDSampler implements ServicioCDLauncher {
 
 		for (MethodNode mn : cn.methods) {
 
-			if ((mn.access & Opcodes.ACC_ABSTRACT) != 0
-					|| (mn.access & Opcodes.ACC_NATIVE) != 0
+			if ((mn.access & Opcodes.ACC_ABSTRACT) != 0 || (mn.access & Opcodes.ACC_NATIVE) != 0
 					|| "<clinit>".equals(mn.name)) {
 				continue;
 			}
@@ -114,11 +105,7 @@ public class CDSampler implements ServicioCDLauncher {
 		}
 	}
 
-	
-	private static void instrumentarMetodoSampler(
-			ClassNode cn,
-			MethodNode mn,
-			String claseDot) {
+	private static void instrumentarMetodoSampler(ClassNode cn, MethodNode mn, String claseDot) {
 
 		String idMetodo = claseDot + "." + mn.name + mn.desc;
 
@@ -129,18 +116,9 @@ public class CDSampler implements ServicioCDLauncher {
 
 		// long inicio = System.nanoTime()
 
-		inicio.add(new MethodInsnNode(
-				Opcodes.INVOKESTATIC,
-				"java/lang/System",
-				"nanoTime",
-				"()J",
-				false
-		));
+		inicio.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "java/lang/System", "nanoTime", "()J", false));
 
-		inicio.add(new VarInsnNode(
-				Opcodes.LSTORE,
-				localInicio
-		));
+		inicio.add(new VarInsnNode(Opcodes.LSTORE, localInicio));
 
 		mn.instructions.insert(inicio);
 
@@ -156,18 +134,9 @@ public class CDSampler implements ServicioCDLauncher {
 
 				// long dur = System.nanoTime() - inicio
 
-				hook.add(new MethodInsnNode(
-						Opcodes.INVOKESTATIC,
-						"java/lang/System",
-						"nanoTime",
-						"()J",
-						false
-				));
+				hook.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "java/lang/System", "nanoTime", "()J", false));
 
-				hook.add(new VarInsnNode(
-						Opcodes.LLOAD,
-						localInicio
-				));
+				hook.add(new VarInsnNode(Opcodes.LLOAD, localInicio));
 
 				hook.add(new InsnNode(Opcodes.LSUB));
 
@@ -182,29 +151,24 @@ public class CDSampler implements ServicioCDLauncher {
 
 				// Hooks.acumularTiempo(String, long)
 
-				hook.add(new MethodInsnNode(
-						Opcodes.INVOKESTATIC,
-						Type.getInternalName(Hooks.class),
-						"acumularTiempo",
-						"(Ljava/lang/String;J)V",
-						false
-				));
+				hook.add(new MethodInsnNode(Opcodes.INVOKESTATIC, Type.getInternalName(Hooks.class), "acumularTiempo",
+						"(Ljava/lang/String;J)V", false));
 
 				mn.instructions.insertBefore(insn, hook);
 			}
 		}
 	}
 
-	
-
 	@Override
 	public String id() {
 		return ID;
 	}
 
-	/* ==========================================================
-	 * Publicador periódico hacia la GUI
-	 * ========================================================== */
+	/*
+	 * ========================================================== Publicador
+	 * periódico hacia la GUI
+	 * ==========================================================
+	 */
 
 	private static void iniciarPublicador() {
 		Thread t = new Thread(() -> {
@@ -219,10 +183,7 @@ public class CDSampler implements ServicioCDLauncher {
 					for (Map.Entry<String, AtomicLong> e : tiempos.entrySet()) {
 						long ns = e.getValue().getAndSet(0);
 						if (ns > 0) {
-							gui.agregarMuestra(
-									e.getKey(),
-									new StackTraceElement[0]
-							);
+							gui.agregarMuestra(e.getKey(), new StackTraceElement[0]);
 						}
 					}
 				} catch (InterruptedException ignored) {
@@ -235,44 +196,38 @@ public class CDSampler implements ServicioCDLauncher {
 		t.start();
 	}
 
-	/* ==========================================================
-	 * Hook estático llamado desde bytecode
-	 * ========================================================== */
+	/*
+	 * ========================================================== Hook estático
+	 * llamado desde bytecode
+	 * ==========================================================
+	 */
 
 	public static final class Hooks {
 
-		private Hooks() {}
+		private Hooks() {
+		}
 
 		public static void acumularTiempo(String metodo, long duracionNs) {
 			if (!samplerActivo)
 				return;
 
-			tiempos
-				.computeIfAbsent(metodo, k -> new AtomicLong())
-				.addAndGet(duracionNs);
+			tiempos.computeIfAbsent(metodo, k -> new AtomicLong()).addAndGet(duracionNs);
 		}
 	}
 
-	/* ==========================================================
-	 * Transformer ASM
-	 * ========================================================== */
+	/*
+	 * ========================================================== Transformer ASM
+	 * ==========================================================
+	 */
 
 	static final class TransformadorSampler implements ClassFileTransformer {
 
 		@Override
-		public byte[] transform(
-				ClassLoader loader,
-				String nombreClase,
-				Class<?> claseRedefinida,
-				ProtectionDomain dominio,
-				byte[] bytecode
-		) throws IllegalClassFormatException {
+		public byte[] transform(ClassLoader loader, String nombreClase, Class<?> claseRedefinida,
+				ProtectionDomain dominio, byte[] bytecode) throws IllegalClassFormatException {
 
-			if (nombreClase == null
-					|| nombreClase.startsWith("java/")
-					|| nombreClase.startsWith("javax/")
-					|| nombreClase.startsWith("sun/")
-					|| nombreClase.startsWith("jdk/")
+			if (nombreClase == null || nombreClase.startsWith("java/") || nombreClase.startsWith("javax/")
+					|| nombreClase.startsWith("sun/") || nombreClase.startsWith("jdk/")
 					|| nombreClase.startsWith("org/objectweb/asm/")
 					|| nombreClase.startsWith("com/asbestosstar/crashdetector/gui/")) {
 				return null;
@@ -304,27 +259,14 @@ public class CDSampler implements ServicioCDLauncher {
 		}
 
 		@Override
-		public MethodVisitor visitMethod(
-				int access,
-				String name,
-				String desc,
-				String sig,
-				String[] ex
-		) {
+		public MethodVisitor visitMethod(int access, String name, String desc, String sig, String[] ex) {
 			MethodVisitor mv = super.visitMethod(access, name, desc, sig, ex);
 
-			if ((access & Opcodes.ACC_ABSTRACT) != 0
-					|| (access & Opcodes.ACC_NATIVE) != 0
-					|| "<clinit>".equals(name)) {
+			if ((access & Opcodes.ACC_ABSTRACT) != 0 || (access & Opcodes.ACC_NATIVE) != 0 || "<clinit>".equals(name)) {
 				return mv;
 			}
 
-			return new VisitadorMetodoSampler(
-					api,
-					mv,
-					access,
-					clase + "." + name + desc
-			);
+			return new VisitadorMetodoSampler(api, mv, access, clase + "." + name + desc);
 		}
 	}
 
@@ -333,12 +275,7 @@ public class CDSampler implements ServicioCDLauncher {
 		private final String idMetodo;
 		private int inicioNs;
 
-		protected VisitadorMetodoSampler(
-				int api,
-				MethodVisitor mv,
-				int access,
-				String idMetodo
-		) {
+		protected VisitadorMetodoSampler(int api, MethodVisitor mv, int access, String idMetodo) {
 			super(api, mv, access, "<init>", "()V");
 			this.idMetodo = idMetodo;
 		}
@@ -346,27 +283,19 @@ public class CDSampler implements ServicioCDLauncher {
 		@Override
 		protected void onMethodEnter() {
 			inicioNs = newLocal(Type.LONG_TYPE);
-			invokeStatic(Type.getType(System.class),
-					new Method("nanoTime", "()J"));
+			invokeStatic(Type.getType(System.class), new Method("nanoTime", "()J"));
 			storeLocal(inicioNs);
 		}
 
 		@Override
 		protected void onMethodExit(int opcode) {
-			invokeStatic(Type.getType(System.class),
-					new Method("nanoTime", "()J"));
+			invokeStatic(Type.getType(System.class), new Method("nanoTime", "()J"));
 			loadLocal(inicioNs);
 			math(SUB, Type.LONG_TYPE);
 
 			visitLdcInsn(idMetodo);
 			swap();
-			invokeStatic(
-					Type.getType(Hooks.class),
-					new Method(
-							"acumularTiempo",
-							"(Ljava/lang/String;J)V"
-					)
-			);
+			invokeStatic(Type.getType(Hooks.class), new Method("acumularTiempo", "(Ljava/lang/String;J)V"));
 		}
 	}
 }

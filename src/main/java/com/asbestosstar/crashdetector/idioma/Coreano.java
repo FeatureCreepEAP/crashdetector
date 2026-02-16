@@ -6045,26 +6045,54 @@ public class Coreano implements Idioma {
 		return "측면 막대 단추 색상";
 	}
 
-	@Override public String profilerTitulo() { return "성능 분석기"; }
-	@Override public String profilerDescripcion() { return "계측과 샘플링에 기반한 성능 분석 도구입니다."; }
-	@Override public String profilerIniciar() { return "시작"; }
-	@Override public String profilerDetener() { return "중지"; }
-	@Override public String profilerLimpiar() { return "지우기"; }
-	@Override public String profilerEstadoIniciado() { return "성능 분석기가 시작되였습니다."; }
-	@Override public String profilerEstadoDetenido() { return "성능 분석기가 중지되였습니다."; }
-	@Override public String profilerMuestraHilo(String nombreHilo) { return "스레드로부터 받은 샘플: " + nombreHilo; }
+	@Override
+	public String profilerTitulo() {
+		return "성능 분석기";
+	}
+
+	@Override
+	public String profilerDescripcion() {
+		return "계측과 샘플링에 기반한 성능 분석 도구입니다.";
+	}
+
+	@Override
+	public String profilerIniciar() {
+		return "시작";
+	}
+
+	@Override
+	public String profilerDetener() {
+		return "중지";
+	}
+
+	@Override
+	public String profilerLimpiar() {
+		return "지우기";
+	}
+
+	@Override
+	public String profilerEstadoIniciado() {
+		return "성능 분석기가 시작되였습니다.";
+	}
+
+	@Override
+	public String profilerEstadoDetenido() {
+		return "성능 분석기가 중지되였습니다.";
+	}
+
+	@Override
+	public String profilerMuestraHilo(String nombreHilo) {
+		return "스레드로부터 받은 샘플: " + nombreHilo;
+	}
+
 	@Override
 	public String samplerDescripcion() {
-	    return "병목 현상과 교착 상태를 탐지하기 위해 스택들을 주기적으로 샘플링합니다.";
+		return "병목 현상과 교착 상태를 탐지하기 위해 스택들을 주기적으로 샘플링합니다.";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public String entrarAlJuego() {
+		return "게임에 들어가기";
+	}
+
 }

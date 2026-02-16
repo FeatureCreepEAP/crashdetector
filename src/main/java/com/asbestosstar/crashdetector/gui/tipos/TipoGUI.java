@@ -777,8 +777,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 			return CDLauncherGUI.GUIS;
 		}
 	};
-	
-	
+
 	public static TipoGUI<ProfilerGUI> PROFILER = new TipoGUI<ProfilerGUI>() {
 		@Override
 		public String id() {
@@ -800,8 +799,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 			return ProfilerGUI.GUIS;
 		}
 	};
-	
-	
+
 	public static TipoGUI<SamplerGUI> SAMPLER = new TipoGUI<SamplerGUI>() {
 		@Override
 		public String id() {
@@ -859,7 +857,6 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		TIPOS_DE_GUI.add(CDLAUNCHER);
 		TIPOS_DE_GUI.add(PROFILER);
 		TIPOS_DE_GUI.add(SAMPLER);
-
 
 	}
 }

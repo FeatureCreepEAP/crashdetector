@@ -25,35 +25,28 @@ import com.asbestosstar.crashdetector.config.ElementoConfig;
 /**
  * Implementación visual del Profiler con estilo Minaly XO.
  *
- * Esta clase SOLO define la apariencia y cómo se muestran los datos.
- * No contiene lógica de profiler.
+ * Esta clase SOLO define la apariencia y cómo se muestran los datos. No
+ * contiene lógica de profiler.
  */
 public class ProfilerGUIMinaly extends ProfilerGUI {
 
 	public static final String ID = "minaly_xo";
 
-	/* =======================
-	 * Colores configurables
-	 * ======================= */
+	/*
+	 * ======================= Colores configurables =======================
+	 */
 
-	public ConfigColor colorFondo = ConfigColor.de(
-			"gui.profiler.minaly.color.fondo",
-			new java.awt.Color(245, 242, 250)
-	);
+	public ConfigColor colorFondo = ConfigColor.de("gui.profiler.minaly.color.fondo",
+			new java.awt.Color(245, 242, 250));
 
-	public ConfigColor colorTexto = ConfigColor.de(
-			"gui.profiler.minaly.color.texto",
-			new java.awt.Color(55, 50, 65)
-	);
+	public ConfigColor colorTexto = ConfigColor.de("gui.profiler.minaly.color.texto", new java.awt.Color(55, 50, 65));
 
-	public ConfigColor colorBoton = ConfigColor.de(
-			"gui.profiler.minaly.color.boton",
-			new java.awt.Color(185, 145, 205)
-	);
+	public ConfigColor colorBoton = ConfigColor.de("gui.profiler.minaly.color.boton",
+			new java.awt.Color(185, 145, 205));
 
-	/* =======================
-	 * Componentes visuales
-	 * ======================= */
+	/*
+	 * ======================= Componentes visuales =======================
+	 */
 
 	private JButton botonIniciar;
 	private JButton botonDetener;
@@ -80,20 +73,18 @@ public class ProfilerGUIMinaly extends ProfilerGUI {
 		raiz.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		raiz.setBackground(colorFondo.obtener());
 
-		/* =======================
-		 * Imagen decorativa
-		 * ======================= */
+		/*
+		 * ======================= Imagen decorativa =======================
+		 */
 		JLabel imagen = new JLabel();
-		ImageIcon icon = new ImageIcon(
-				Statics.carpeta.resolve("imagenes/minaly_xo.png").toString()
-		);
+		ImageIcon icon = new ImageIcon(Statics.carpeta.resolve("imagenes/minaly_xo.png").toString());
 		Image esc = icon.getImage().getScaledInstance(150, 245, Image.SCALE_SMOOTH);
 		imagen.setIcon(new ImageIcon(esc));
 		raiz.add(imagen, BorderLayout.EAST);
 
-		/* =======================
-		 * Panel central
-		 * ======================= */
+		/*
+		 * ======================= Panel central =======================
+		 */
 		JPanel centro = new JPanel();
 		centro.setLayout(new BoxLayout(centro, BoxLayout.Y_AXIS));
 		centro.setBackground(colorFondo.obtener());
@@ -127,9 +118,9 @@ public class ProfilerGUIMinaly extends ProfilerGUI {
 		centro.add(scrollDatos);
 		centro.add(Box.createVerticalStrut(8));
 
-		/* =======================
-		 * Botones
-		 * ======================= */
+		/*
+		 * ======================= Botones =======================
+		 */
 		JPanel botones = new JPanel();
 		botones.setOpaque(false);
 
@@ -165,15 +156,13 @@ public class ProfilerGUIMinaly extends ProfilerGUI {
 	private String construirHTMLDescripcion() {
 		String texto = MonitorDePID.idioma.profilerDescripcion();
 
-		return "<html><body>"
-				+ "<div style='font-size:11px; line-height:1.4;'>"
-				+ texto
-				+ "</div></body></html>";
+		return "<html><body>" + "<div style='font-size:11px; line-height:1.4;'>" + texto + "</div></body></html>";
 	}
 
-	/* ==========================================================
-	 * Hooks visuales del ProfilerGUI
-	 * ========================================================== */
+	/*
+	 * ========================================================== Hooks visuales del
+	 * ProfilerGUI ==========================================================
+	 */
 
 	@Override
 	protected void onProfilerIniciado() {
@@ -191,22 +180,12 @@ public class ProfilerGUIMinaly extends ProfilerGUI {
 
 	@Override
 	protected void onMuestraRecibida(String hilo, StackTraceElement[] stack, long nanos) {
-		areaDatos.append(
-				MonitorDePID.idioma.profilerMuestraHilo(hilo) + "\n"
-		);
+		areaDatos.append(MonitorDePID.idioma.profilerMuestraHilo(hilo) + "\n");
 	}
 
 	@Override
-	protected void onLlamadaMetodo(
-			String clase,
-			String metodo,
-			String descriptor,
-			long duracionNs
-	) {
-		areaDatos.append(
-				clase + "." + metodo + " " + descriptor
-				+ " (" + duracionNs + " ns)\n"
-		);
+	protected void onLlamadaMetodo(String clase, String metodo, String descriptor, long duracionNs) {
+		areaDatos.append(clase + "." + metodo + " " + descriptor + " (" + duracionNs + " ns)\n");
 	}
 
 	@Override
@@ -223,15 +202,9 @@ public class ProfilerGUIMinaly extends ProfilerGUI {
 	public List<ElementoConfig> obtenerElementosConfigs() {
 		List<ElementoConfig> lista = new ArrayList<>();
 
-		colorFondo.establecerNombreParaMostrar(
-				() -> MonitorDePID.idioma.colorFondo()
-		);
-		colorTexto.establecerNombreParaMostrar(
-				() -> MonitorDePID.idioma.colorTexto()
-		);
-		colorBoton.establecerNombreParaMostrar(
-				() -> MonitorDePID.idioma.colorBoton()
-		);
+		colorFondo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondo());
+		colorTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTexto());
+		colorBoton.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBoton());
 
 		lista.add(colorFondo);
 		lista.add(colorTexto);

@@ -141,7 +141,7 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		this.cerrojo = latch;
 		// Inicializar los colores de configuración con valores por defecto
 		// Serán sobrescritos por la implementación concreta en init()
-        MonitorDePID.gui_principal_activo = this;
+		MonitorDePID.gui_principal_activo = this;
 		ManagerDiscord.comenzar();
 		CrashDetectorLogger.log("en constructir");
 		inicializarInterfaz();
@@ -270,10 +270,10 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 	public void botonCDLauncher(JButton botonCDLauncher) {
 
 		if (this.modolanzer) {
-			botonCDLauncher.setText("Cancelar");
+			botonCDLauncher.setText(MonitorDePID.idioma.cancelar());
 			CDLauncher.lanzer();
 		} else {
-			botonCDLauncher.setText("Entrar al Juego");
+			botonCDLauncher.setText(MonitorDePID.idioma.entrarAlJuego());
 			this.panelCDLauncher.construir(this);
 		}
 
@@ -329,10 +329,8 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		aplicarContenidoDeLaPantallaLanzer();
 		recargarApariencia();
 	}
-	
-	
-	public abstract void actualizarTextoBotonLauncherParaCDLauncher();
 
+	public abstract void actualizarTextoBotonLauncherParaCDLauncher();
 
 	/**
 	 * Aplica la paleta de colores del Analizador (CrashDetector).

@@ -2451,4 +2451,6 @@ public interface Idioma {
 
 	public String samplerDescripcion();
 
+	public String entrarAlJuego();
+
 }

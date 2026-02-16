@@ -6303,25 +6303,54 @@ public class Ingles implements Idioma {
 		return "Sidebar button colour";
 	}
 
-	
-	@Override public String profilerTitulo() { return "Profiler"; }
-	@Override public String profilerDescripcion() { return "Performance analysis tool based on instrumentation and sampling."; }
-	@Override public String profilerIniciar() { return "Start"; }
-	@Override public String profilerDetener() { return "Stop"; }
-	@Override public String profilerLimpiar() { return "Clear"; }
-	@Override public String profilerEstadoIniciado() { return "Profiler started."; }
-	@Override public String profilerEstadoDetenido() { return "Profiler stopped."; }
-	@Override public String profilerMuestraHilo(String nombreHilo) { return "Sample received from thread: " + nombreHilo; }
-	
+	@Override
+	public String profilerTitulo() {
+		return "Profiler";
+	}
+
+	@Override
+	public String profilerDescripcion() {
+		return "Performance analysis tool based on instrumentation and sampling.";
+	}
+
+	@Override
+	public String profilerIniciar() {
+		return "Start";
+	}
+
+	@Override
+	public String profilerDetener() {
+		return "Stop";
+	}
+
+	@Override
+	public String profilerLimpiar() {
+		return "Clear";
+	}
+
+	@Override
+	public String profilerEstadoIniciado() {
+		return "Profiler started.";
+	}
+
+	@Override
+	public String profilerEstadoDetenido() {
+		return "Profiler stopped.";
+	}
+
+	@Override
+	public String profilerMuestraHilo(String nombreHilo) {
+		return "Sample received from thread: " + nombreHilo;
+	}
+
 	@Override
 	public String samplerDescripcion() {
-	    return "Periodic sampling of stacks to detect bottlenecks and deadlocks.";
+		return "Periodic sampling of stacks to detect bottlenecks and deadlocks.";
 	}
-	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public String entrarAlJuego() {
+		return "Enter Game";
+	}
+
 }

@@ -9,12 +9,12 @@ public interface ServicioCDLauncher {
 	 * @param inst
 	 */
 	public void activar(Instrumentation inst);
-	
+
 	/**
 	 * Mimo ID de ConfigCDLauncher
+	 * 
 	 * @return
 	 */
-public String id();	
-	
-	
+	public String id();
+
 }

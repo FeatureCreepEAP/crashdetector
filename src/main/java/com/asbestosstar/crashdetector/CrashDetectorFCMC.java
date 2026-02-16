@@ -17,12 +17,12 @@ import com.asbestosstar.crashdetector.lanzer.servicio.ServicioCDLauncher;
  *
  * Entrada principal del javaagent.
  *
- * - Verifica explícitamente FeatureCreep + JBoss
- * - SOLO entonces carga e invoca CrashDetectorFeatureCreepJBoss
- * - Nunca referencia esa clase si no existen las dependencias
+ * - Verifica explícitamente FeatureCreep + JBoss - SOLO entonces carga e invoca
+ * CrashDetectorFeatureCreepJBoss - Nunca referencia esa clase si no existen las
+ * dependencias
  *
- * Modificación:
- * - CDProfiler y CDSampler solo se registran si NO hay argumentos JPMS
+ * Modificación: - CDProfiler y CDSampler solo se registran si NO hay argumentos
+ * JPMS
  */
 public class CrashDetectorFCMC {
 
@@ -42,7 +42,7 @@ public class CrashDetectorFCMC {
 
 		if (esModoCDLauncher(args)) {
 
-			//LibreMods.librar(instrument);
+			// LibreMods.librar(instrument);
 
 			Statics.app_en_cdlauncher = true;
 			MonitorDePID.registrarGUISPredeterminado();
@@ -141,14 +141,10 @@ public class CrashDetectorFCMC {
 
 			String lower = arg.toLowerCase();
 
-			if (lower.startsWith("--module-path")
-					|| lower.startsWith("--add-opens")
-					|| lower.startsWith("--add-exports")
-					|| lower.startsWith("--add-reads")
-					|| lower.startsWith("--patch-module")
-					|| lower.startsWith("--limit-modules")
-					|| lower.startsWith("--upgrade-module-path")
-					|| lower.startsWith("--add-modules")) {
+			if (lower.startsWith("--module-path") || lower.startsWith("--add-opens")
+					|| lower.startsWith("--add-exports") || lower.startsWith("--add-reads")
+					|| lower.startsWith("--patch-module") || lower.startsWith("--limit-modules")
+					|| lower.startsWith("--upgrade-module-path") || lower.startsWith("--add-modules")) {
 
 				return true;
 			}

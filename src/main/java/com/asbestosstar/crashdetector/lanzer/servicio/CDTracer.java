@@ -10,171 +10,120 @@ import org.objectweb.asm.*;
 import com.asbestosstar.crashdetector.buscar.AnalizadorBytecodeASM;
 
 /**
- * Servicio que instrumenta el bytecode para imprimir por consola
- * cada entrada a método (no abstracto y no nativo).
+ * Servicio que instrumenta el bytecode para imprimir por consola cada entrada a
+ * método (no abstracto y no nativo).
  */
 public class CDTracer implements ServicioCDLauncher {
 
-	public static String ID="cdtracer_wip";
-	
-    /**
-     * Activa el tracer registrando un transformer en la Instrumentation.
-     */
-    @Override
-    public void activar(Instrumentation inst) {
-        inst.addTransformer(new TransformadorTrazasMetodos(), true);
-    }
+	public static String ID = "cdtracer_wip";
 
-    /**
-     * Identificador del servicio.
-     */
-    @Override
-    public String id() {
-        return ID;
-    }
+	/**
+	 * Activa el tracer registrando un transformer en la Instrumentation.
+	 */
+	@Override
+	public void activar(Instrumentation inst) {
+		inst.addTransformer(new TransformadorTrazasMetodos(), true);
+	}
 
-    /**
-     * Transformer que modifica las clases cargadas por la JVM.
-     */
-    static class TransformadorTrazasMetodos implements ClassFileTransformer {
+	/**
+	 * Identificador del servicio.
+	 */
+	@Override
+	public String id() {
+		return ID;
+	}
 
-        @Override
-        public byte[] transform(
-                ClassLoader loader,
-                String nombreClase,
-                Class<?> claseRedefinida,
-                ProtectionDomain dominioProteccion,
-                byte[] bytecodeClase
-        ) throws IllegalClassFormatException {
+	/**
+	 * Transformer que modifica las clases cargadas por la JVM.
+	 */
+	static class TransformadorTrazasMetodos implements ClassFileTransformer {
 
-            // Ignorar clases del JDK para evitar recursión infinita
-            if (nombreClase == null || nombreClase.startsWith("java/")) {
-                return null;
-            }
+		@Override
+		public byte[] transform(ClassLoader loader, String nombreClase, Class<?> claseRedefinida,
+				ProtectionDomain dominioProteccion, byte[] bytecodeClase) throws IllegalClassFormatException {
 
-            try {
-                int versionASM = AnalizadorBytecodeASM.obtenerVersionMaximaASM();
+			// Ignorar clases del JDK para evitar recursión infinita
+			if (nombreClase == null || nombreClase.startsWith("java/")) {
+				return null;
+			}
 
-                ClassReader lector = new ClassReader(bytecodeClase);
-                ClassWriter escritor = new ClassWriter(
-                        lector,
-                        ClassWriter.COMPUTE_FRAMES
-                );
+			try {
+				int versionASM = AnalizadorBytecodeASM.obtenerVersionMaximaASM();
 
-                ClassVisitor visitante =
-                        new VisitadorClaseTrazas(
-                                versionASM,
-                                escritor,
-                                nombreClase
-                        );
+				ClassReader lector = new ClassReader(bytecodeClase);
+				ClassWriter escritor = new ClassWriter(lector, ClassWriter.COMPUTE_FRAMES);
 
-                lector.accept(visitante, ClassReader.EXPAND_FRAMES);
-                return escritor.toByteArray();
+				ClassVisitor visitante = new VisitadorClaseTrazas(versionASM, escritor, nombreClase);
 
-            } catch (Throwable t) {
-                t.printStackTrace();
-                return null;
-            }
-        }
-    }
+				lector.accept(visitante, ClassReader.EXPAND_FRAMES);
+				return escritor.toByteArray();
 
-    /**
-     * Visitador de clases que envuelve los métodos.
-     */
-    static class VisitadorClaseTrazas extends ClassVisitor {
+			} catch (Throwable t) {
+				t.printStackTrace();
+				return null;
+			}
+		}
+	}
 
-        private final String nombreClase;
+	/**
+	 * Visitador de clases que envuelve los métodos.
+	 */
+	static class VisitadorClaseTrazas extends ClassVisitor {
 
-        VisitadorClaseTrazas(int api, ClassVisitor cv, String nombreClase) {
-            super(api, cv);
-            this.nombreClase = nombreClase.replace('/', '.');
-        }
+		private final String nombreClase;
 
-        @Override
-        public MethodVisitor visitMethod(
-                int access,
-                String nombreMetodo,
-                String descriptor,
-                String signature,
-                String[] exceptions
-        ) {
-            MethodVisitor mv =
-                    super.visitMethod(
-                            access,
-                            nombreMetodo,
-                            descriptor,
-                            signature,
-                            exceptions
-                    );
+		VisitadorClaseTrazas(int api, ClassVisitor cv, String nombreClase) {
+			super(api, cv);
+			this.nombreClase = nombreClase.replace('/', '.');
+		}
 
-            // Ignorar métodos abstractos o nativos
-            if ((access & Opcodes.ACC_ABSTRACT) != 0 ||
-                (access & Opcodes.ACC_NATIVE) != 0) {
-                return mv;
-            }
+		@Override
+		public MethodVisitor visitMethod(int access, String nombreMetodo, String descriptor, String signature,
+				String[] exceptions) {
+			MethodVisitor mv = super.visitMethod(access, nombreMetodo, descriptor, signature, exceptions);
 
-            return new VisitadorMetodoTraza(
-                    api,
-                    mv,
-                    nombreClase,
-                    nombreMetodo,
-                    descriptor
-            );
-        }
-    }
+			// Ignorar métodos abstractos o nativos
+			if ((access & Opcodes.ACC_ABSTRACT) != 0 || (access & Opcodes.ACC_NATIVE) != 0) {
+				return mv;
+			}
 
-    /**
-     * Visitador de métodos que inyecta el println al inicio del método.
-     */
-    static class VisitadorMetodoTraza extends MethodVisitor {
+			return new VisitadorMetodoTraza(api, mv, nombreClase, nombreMetodo, descriptor);
+		}
+	}
 
-        private final String nombreClase;
-        private final String nombreMetodo;
-        private final String descriptorMetodo;
+	/**
+	 * Visitador de métodos que inyecta el println al inicio del método.
+	 */
+	static class VisitadorMetodoTraza extends MethodVisitor {
 
-        VisitadorMetodoTraza(
-                int api,
-                MethodVisitor mv,
-                String nombreClase,
-                String nombreMetodo,
-                String descriptorMetodo
-        ) {
-            super(api, mv);
-            this.nombreClase = nombreClase;
-            this.nombreMetodo = nombreMetodo;
-            this.descriptorMetodo = descriptorMetodo;
-        }
+		private final String nombreClase;
+		private final String nombreMetodo;
+		private final String descriptorMetodo;
 
-        /**
-         * Se ejecuta al comienzo del método.
-         * Inserta:
-         * System.out.println("paquete.Clase.metodo(descriptor)");
-         */
-        @Override
-        public void visitCode() {
-            super.visitCode();
+		VisitadorMetodoTraza(int api, MethodVisitor mv, String nombreClase, String nombreMetodo,
+				String descriptorMetodo) {
+			super(api, mv);
+			this.nombreClase = nombreClase;
+			this.nombreMetodo = nombreMetodo;
+			this.descriptorMetodo = descriptorMetodo;
+		}
 
-            // System.out
-            mv.visitFieldInsn(
-                    Opcodes.GETSTATIC,
-                    "java/lang/System",
-                    "out",
-                    "Ljava/io/PrintStream;"
-            );
+		/**
+		 * Se ejecuta al comienzo del método. Inserta:
+		 * System.out.println("paquete.Clase.metodo(descriptor)");
+		 */
+		@Override
+		public void visitCode() {
+			super.visitCode();
 
-            // Texto con ruta completa + descriptor JVM
-            mv.visitLdcInsn(
-                    nombreClase + "." + nombreMetodo + descriptorMetodo
-            );
+			// System.out
+			mv.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
 
-            // println(String)
-            mv.visitMethodInsn(
-                    Opcodes.INVOKEVIRTUAL,
-                    "java/io/PrintStream",
-                    "println",
-                    "(Ljava/lang/String;)V",
-                    false
-            );
-        }
-    }
+			// Texto con ruta completa + descriptor JVM
+			mv.visitLdcInsn(nombreClase + "." + nombreMetodo + descriptorMetodo);
+
+			// println(String)
+			mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
+		}
+	}
 }

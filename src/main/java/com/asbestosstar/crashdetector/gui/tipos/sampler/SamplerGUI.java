@@ -14,9 +14,7 @@ import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 /**
  * GUI base del Sampler.
  *
- * Contiene TODA la lógica:
- * - control de estado
- * - recepción de muestras
+ * Contiene TODA la lógica: - control de estado - recepción de muestras
  *
  * La apariencia se implementa en subclases.
  */
@@ -38,8 +36,7 @@ public abstract class SamplerGUI extends JFrame implements CrashDetectorGUI {
 	}
 
 	/**
-	 * Inicializa la ventana del sampler.
-	 * Ventana independiente (sin owner).
+	 * Inicializa la ventana del sampler. Ventana independiente (sin owner).
 	 */
 	protected void inicializarVentana() {
 //		setTitle(MonitorDePID.idioma.samplerTitulo());
@@ -48,9 +45,10 @@ public abstract class SamplerGUI extends JFrame implements CrashDetectorGUI {
 		setLocationByPlatform(true);
 	}
 
-	/* ==========================================================
-	 * Control del sampler
-	 * ========================================================== */
+	/*
+	 * ========================================================== Control del
+	 * sampler ==========================================================
+	 */
 
 	public final void iniciarSampler() {
 		if (samplerActivo)
@@ -72,23 +70,22 @@ public abstract class SamplerGUI extends JFrame implements CrashDetectorGUI {
 		return samplerActivo;
 	}
 
-	/* ==========================================================
-	 * Alimentación de datos
-	 * ========================================================== */
+	/*
+	 * ========================================================== Alimentación de
+	 * datos ==========================================================
+	 */
 
 	/**
 	 * Agrega una muestra de stack al sampler.
 	 *
-	 * @param hilo   nombre del hilo
-	 * @param stack  stack trace capturado
+	 * @param hilo  nombre del hilo
+	 * @param stack stack trace capturado
 	 */
 	public final void agregarMuestra(String hilo, StackTraceElement[] stack) {
 		if (!samplerActivo)
 			return;
 
-		SwingUtilities.invokeLater(() ->
-				onMuestraRecibida(hilo, stack)
-		);
+		SwingUtilities.invokeLater(() -> onMuestraRecibida(hilo, stack));
 	}
 
 	/**
@@ -98,9 +95,11 @@ public abstract class SamplerGUI extends JFrame implements CrashDetectorGUI {
 		SwingUtilities.invokeLater(this::onLimpiarDatos);
 	}
 
-	/* ==========================================================
-	 * Hooks para la implementación visual
-	 * ========================================================== */
+	/*
+	 * ========================================================== Hooks para la
+	 * implementación visual
+	 * ==========================================================
+	 */
 
 	protected abstract void onSamplerIniciado();
 

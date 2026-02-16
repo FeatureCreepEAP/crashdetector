@@ -5932,25 +5932,54 @@ public class Chino implements Idioma {
 		return "侧边栏按钮颜色";
 	}
 
-	@Override public String profilerTitulo() { return "性能分析器"; }
-	@Override public String profilerDescripcion() { return "基于插桩和采样的性能分析工具。"; }
-	@Override public String profilerIniciar() { return "启动"; }
-	@Override public String profilerDetener() { return "停止"; }
-	@Override public String profilerLimpiar() { return "清除"; }
-	@Override public String profilerEstadoIniciado() { return "性能分析器已启动。"; }
-	@Override public String profilerEstadoDetenido() { return "性能分析器已停止。"; }
-	@Override public String profilerMuestraHilo(String nombreHilo) { return "已收到来自线程的样本：" + nombreHilo; }
-	
-	
+	@Override
+	public String profilerTitulo() {
+		return "性能分析器";
+	}
+
+	@Override
+	public String profilerDescripcion() {
+		return "基于插桩和采样的性能分析工具。";
+	}
+
+	@Override
+	public String profilerIniciar() {
+		return "启动";
+	}
+
+	@Override
+	public String profilerDetener() {
+		return "停止";
+	}
+
+	@Override
+	public String profilerLimpiar() {
+		return "清除";
+	}
+
+	@Override
+	public String profilerEstadoIniciado() {
+		return "性能分析器已启动。";
+	}
+
+	@Override
+	public String profilerEstadoDetenido() {
+		return "性能分析器已停止。";
+	}
+
+	@Override
+	public String profilerMuestraHilo(String nombreHilo) {
+		return "已收到来自线程的样本：" + nombreHilo;
+	}
+
 	@Override
 	public String samplerDescripcion() {
-	    return "定期对调用栈进行采样，以检测性能瓶颈和死锁。";
+		return "定期对调用栈进行采样，以检测性能瓶颈和死锁。";
 	}
-	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public String entrarAlJuego() {
+		return "进入游戏";
+	}
+
 }

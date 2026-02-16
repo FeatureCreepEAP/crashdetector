@@ -31,28 +31,21 @@ public class SamplerGUIEineLotta extends SamplerGUI {
 
 	public static final String ID = "eine_lotta";
 
-	/* =======================
-	 * Colores configurables
-	 * ======================= */
+	/*
+	 * ======================= Colores configurables =======================
+	 */
 
-	public ConfigColor colorFondo = ConfigColor.de(
-			"gui.sampler.einelotta.color.fondo",
-			new java.awt.Color(248, 244, 250)
-	);
+	public ConfigColor colorFondo = ConfigColor.de("gui.sampler.einelotta.color.fondo",
+			new java.awt.Color(248, 244, 250));
 
-	public ConfigColor colorTexto = ConfigColor.de(
-			"gui.sampler.einelotta.color.texto",
-			new java.awt.Color(60, 55, 70)
-	);
+	public ConfigColor colorTexto = ConfigColor.de("gui.sampler.einelotta.color.texto", new java.awt.Color(60, 55, 70));
 
-	public ConfigColor colorBoton = ConfigColor.de(
-			"gui.sampler.einelotta.color.boton",
-			new java.awt.Color(190, 150, 210)
-	);
+	public ConfigColor colorBoton = ConfigColor.de("gui.sampler.einelotta.color.boton",
+			new java.awt.Color(190, 150, 210));
 
-	/* =======================
-	 * Componentes visuales
-	 * ======================= */
+	/*
+	 * ======================= Componentes visuales =======================
+	 */
 
 	private JButton botonIniciar;
 	private JButton botonDetener;
@@ -64,7 +57,6 @@ public class SamplerGUIEineLotta extends SamplerGUI {
 	public String id() {
 		return ID;
 	}
-
 
 	/**
 	 * Construye la ventana del sampler.
@@ -82,9 +74,7 @@ public class SamplerGUIEineLotta extends SamplerGUI {
 
 		/* Imagen decorativa */
 		JLabel imagen = new JLabel();
-		ImageIcon icon = new ImageIcon(
-				Statics.carpeta.resolve("imagenes/einelotta.png").toString()
-		);
+		ImageIcon icon = new ImageIcon(Statics.carpeta.resolve("imagenes/einelotta.png").toString());
 		Image esc = icon.getImage().getScaledInstance(145, 250, Image.SCALE_SMOOTH);
 		imagen.setIcon(new ImageIcon(esc));
 		raiz.add(imagen, BorderLayout.EAST);
@@ -159,15 +149,13 @@ public class SamplerGUIEineLotta extends SamplerGUI {
 	private String construirHTMLDescripcion() {
 		String texto = MonitorDePID.idioma.samplerDescripcion();
 
-		return "<html><body>"
-				+ "<div style='font-size:11px; line-height:1.4;'>"
-				+ texto
-				+ "</div></body></html>";
+		return "<html><body>" + "<div style='font-size:11px; line-height:1.4;'>" + texto + "</div></body></html>";
 	}
 
-	/* ==========================================================
-	 * Hooks visuales
-	 * ========================================================== */
+	/*
+	 * ========================================================== Hooks visuales
+	 * ==========================================================
+	 */
 
 	@Override
 	protected void onSamplerIniciado() {
@@ -185,9 +173,7 @@ public class SamplerGUIEineLotta extends SamplerGUI {
 
 	@Override
 	protected void onMuestraRecibida(String hilo, StackTraceElement[] stack) {
-		areaDatos.append(
-				MonitorDePID.idioma.profilerMuestraHilo(hilo) + "\n"
-		);
+		areaDatos.append(MonitorDePID.idioma.profilerMuestraHilo(hilo) + "\n");
 	}
 
 	@Override
@@ -204,15 +190,9 @@ public class SamplerGUIEineLotta extends SamplerGUI {
 	public List<ElementoConfig> obtenerElementosConfigs() {
 		List<ElementoConfig> lista = new ArrayList<>();
 
-		colorFondo.establecerNombreParaMostrar(
-				() -> MonitorDePID.idioma.colorFondo()
-		);
-		colorTexto.establecerNombreParaMostrar(
-				() -> MonitorDePID.idioma.colorTexto()
-		);
-		colorBoton.establecerNombreParaMostrar(
-				() -> MonitorDePID.idioma.colorBoton()
-		);
+		colorFondo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondo());
+		colorTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTexto());
+		colorBoton.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBoton());
 
 		lista.add(colorFondo);
 		lista.add(colorTexto);

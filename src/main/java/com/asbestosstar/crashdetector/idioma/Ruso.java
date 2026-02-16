@@ -6275,28 +6275,55 @@ public class Ruso implements Idioma {
 	public String colorBotonBaraLateral() {
 		return "Цвет кнопки боковой панели";
 	}
-	@Override public String profilerTitulo() { return "Профайлер"; }
-	@Override public String profilerDescripcion() { return "Инструмент анализа производительности на основе инструментирования и сэмплирования."; }
-	@Override public String profilerIniciar() { return "Запустить"; }
-	@Override public String profilerDetener() { return "Остановить"; }
-	@Override public String profilerLimpiar() { return "Очистить"; }
-	@Override public String profilerEstadoIniciado() { return "Профайлер запущен."; }
-	@Override public String profilerEstadoDetenido() { return "Профайлер остановлен."; }
-	@Override public String profilerMuestraHilo(String nombreHilo) { return "Получена выборка из потока: " + nombreHilo; }
-	
+
+	@Override
+	public String profilerTitulo() {
+		return "Профайлер";
+	}
+
+	@Override
+	public String profilerDescripcion() {
+		return "Инструмент анализа производительности на основе инструментирования и сэмплирования.";
+	}
+
+	@Override
+	public String profilerIniciar() {
+		return "Запустить";
+	}
+
+	@Override
+	public String profilerDetener() {
+		return "Остановить";
+	}
+
+	@Override
+	public String profilerLimpiar() {
+		return "Очистить";
+	}
+
+	@Override
+	public String profilerEstadoIniciado() {
+		return "Профайлер запущен.";
+	}
+
+	@Override
+	public String profilerEstadoDetenido() {
+		return "Профайлер остановлен.";
+	}
+
+	@Override
+	public String profilerMuestraHilo(String nombreHilo) {
+		return "Получена выборка из потока: " + nombreHilo;
+	}
+
 	@Override
 	public String samplerDescripcion() {
-	    return "Периодическая выборка стеков для обнаружения узких мест и взаимоблокировок.";
+		return "Периодическая выборка стеков для обнаружения узких мест и взаимоблокировок.";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public String entrarAlJuego() {
+		return "Войти в игру";
+	}
 
 }

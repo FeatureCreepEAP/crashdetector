@@ -6983,8 +6983,7 @@ public class Espanol implements Idioma {
 	public String colorBotonBaraLateral() {
 		return "Color del botón de la barra lateral";
 	}
-	
-	
+
 	@Override
 	public String profilerTitulo() {
 		return "Profiler";
@@ -7025,15 +7024,15 @@ public class Espanol implements Idioma {
 		return "Muestra recibida del hilo: " + nombreHilo;
 	}
 
-	
 	@Override
 	public String samplerDescripcion() {
 		return "Muestreo periódico de stacks para detectar cuellos de botella y bloqueos.";
 	}
-	
-	
-	
-	
-	
+
+	@Override
+	public String entrarAlJuego() {
+		// TODO Auto-generated method stub
+		return "Entrar al Juego";
+	}
 
 }
