@@ -191,111 +191,118 @@ public class CrashDetectorPasteAPI implements APIdeSitioDeRegistro {
 			throws DemasiadoGrande, ErrorConPublicar, NoAPIdeRegistro, LimteDeTasa {
 
 		String contenido = registro.obtainerContenidoParaPublicar();
+
 		if (contenido == null)
 			contenido = "";
 
-		final int LIMITE_GZIP = 20 * 1024 * 1024; // límite del servidor (20 MB)
-		final int PRESUPUESTO_RAW = 22 * 1024 * 1024; // margen antes de comprimir
-		byte[] sinComprimir = contenido.getBytes(StandardCharsets.UTF_8);
+		final int LIMITE_GZIP = 20 * 1024 * 1024;
 
-		// ---- Caso simple: ≤ 20 MB sin comprimir → publicar sin dividir ----
-		if (sinComprimir.length <= LIMITE_GZIP) {
-			String base = (registro.archivo != null) ? registro.archivo.getFileName().toString() : "log.txt";
+		final int PRESUPUESTO_RAW = 22 * 1024 * 1024;
+
+		byte[] raw = contenido.getBytes(StandardCharsets.UTF_8);
+
+		/*
+		 * VIA RAPIDA usando estimador real
+		 */
+		if (EstimadorGZIP.cabeDentroLimite(raw, LIMITE_GZIP)) {
+
+			String base = registro.archivo != null ? registro.archivo.getFileName().toString() : "log.txt";
+
 			String url = publicarTexto(base, contenido);
+
 			List<String> unica = new ArrayList<>();
+
 			unica.add(url);
 
 			String gid = grupoActual().get();
+
 			if (gid != null) {
+
 				int totalLineas = contenido.isEmpty() ? 0 : contenido.split("\n", -1).length;
+
 				registrarParte(gid, 1, url, 1, Math.max(1, totalLineas));
 			}
+
 			return unica;
 		}
 
-		// ---- Caso avanzado: > 20 MB → dividir en partes ----
+		/*
+		 * DIVISION usando estimador GZIP
+		 */
 		List<String> urls = new ArrayList<>();
+
 		String[] lineas = contenido.split("\n", -1);
 
 		StringBuilder parte = new StringBuilder();
+
 		int bytesParte = 0;
+
 		int lineaDesde = 1;
+
 		int acumuladas = 0;
+
 		int indiceParte = 1;
+
 		String gid = grupoActual().get();
 
 		for (int i = 0; i < lineas.length; i++) {
-			String l = lineas[i];
-			String candidata = (parte.length() == 0) ? l : ("\n" + l);
-			int bytesCand = candidata.getBytes(StandardCharsets.UTF_8).length;
 
-			if (bytesParte + bytesCand <= PRESUPUESTO_RAW) {
+			String l = lineas[i];
+
+			String candidata = parte.length() == 0 ? l : "\n" + l;
+
+			byte[] candidataBytes = candidata.getBytes(StandardCharsets.UTF_8);
+
+			if (bytesParte + candidataBytes.length <= PRESUPUESTO_RAW) {
+
 				parte.append(candidata);
-				bytesParte += bytesCand;
+
+				bytesParte += candidataBytes.length;
+
 				acumuladas++;
+
 				continue;
 			}
 
-			// Alcanzado el presupuesto → comprimir una sola vez
-			try {
-				byte[] gz = comprimirGZIP(parte.toString().getBytes(StandardCharsets.UTF_8));
-				if (gz.length <= LIMITE_GZIP) {
-					String u = publicarParte(registro, indiceParte, parte.toString());
-					urls.add(u);
-					if (gid != null) {
-						registrarParte(gid, indiceParte++, u, lineaDesde, lineaDesde + acumuladas - 1);
-						lineaDesde += acumuladas;
-					}
-					parte.setLength(0);
-					bytesParte = 0;
-					acumuladas = 0;
-					i--; // repetir esta línea en la nueva parte
-				} else {
-					// Si aún excede → dividir a la mitad (o menos)
-					int mid = parte.length() / 2;
-					int split = parte.lastIndexOf("\n", mid);
-					if (split <= 0)
-						split = mid;
-					String izquierda = parte.substring(0, split);
-					byte[] gzIzq = comprimirGZIP(izquierda.getBytes(StandardCharsets.UTF_8));
+			byte[] rawParte = parte.toString().getBytes(StandardCharsets.UTF_8);
 
-					if (gzIzq.length > LIMITE_GZIP) {
-						int q = parte.length() / 4;
-						int s2 = parte.lastIndexOf("\n", q);
-						if (s2 > 0)
-							split = s2;
-						izquierda = parte.substring(0, split);
-						gzIzq = comprimirGZIP(izquierda.getBytes(StandardCharsets.UTF_8));
-					}
+			if (!EstimadorGZIP.cabeDentroLimite(rawParte, LIMITE_GZIP)) {
 
-					String u = publicarParte(registro, indiceParte, izquierda);
-					urls.add(u);
-					if (gid != null) {
-						int lineasIzq = izquierda.isEmpty() ? 0 : izquierda.split("\n", -1).length;
-						registrarParte(gid, indiceParte++, u, lineaDesde, lineaDesde + lineasIzq - 1);
-						lineaDesde += lineasIzq;
-					}
-
-					String derecha = parte.substring(split);
-					parte.setLength(0);
-					parte.append(derecha);
-					bytesParte = derecha.getBytes(StandardCharsets.UTF_8).length;
-					acumuladas = derecha.isEmpty() ? 0 : derecha.split("\n", -1).length;
-					i--;
-				}
-			} catch (Exception ex) {
-				throw new ErrorConPublicar(ex.getMessage());
+				throw new ErrorConPublicar("Parte excede limite GZIP");
 			}
-		}
 
-		// Última parte pendiente
-		if (parte.length() > 0) {
-			String u = publicarParte(registro, indiceParte, parte.toString());
-			urls.add(u);
+			String url = publicarParte(registro, indiceParte, parte.toString());
+
+			urls.add(url);
+
 			if (gid != null) {
-				registrarParte(gid, indiceParte, u, lineaDesde, lineaDesde + acumuladas - 1);
+
+				registrarParte(gid, indiceParte++, url, lineaDesde, lineaDesde + acumuladas - 1);
+
+				lineaDesde += acumuladas;
+			}
+
+			parte.setLength(0);
+
+			bytesParte = 0;
+
+			acumuladas = 0;
+
+			i--;
+		}
+
+		if (parte.length() > 0) {
+
+			String url = publicarParte(registro, indiceParte, parte.toString());
+
+			urls.add(url);
+
+			if (gid != null) {
+
+				registrarParte(gid, indiceParte, url, lineaDesde, lineaDesde + acumuladas - 1);
 			}
 		}
+
 		return urls;
 	}
 
