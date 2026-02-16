@@ -28,6 +28,14 @@ public class Statics {
 	public static String lanzer_del_app = LanzerOtra.ID;
 
 	public static boolean app_en_cdlauncher = false; // Si la app es en modo relanzer
+	
+	
+	
+	/**
+	 * PARA JPMS
+	 */
+	public static boolean jpms_forzar_profiler=false;
+	public static boolean jpms_forzar_sampler=false;
 
 	static {
 		App.APPS.add(App.MINECRAFT);

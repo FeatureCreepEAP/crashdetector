@@ -316,6 +316,7 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		aplicarColoresAnalizador();
 		aplicarContenidoDeLaPantallaAnalizador();
 		recargarApariencia();
+		actualizarTextoBotonLauncherParaCDLauncher();
 	}
 
 	/**
@@ -328,6 +329,10 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		aplicarContenidoDeLaPantallaLanzer();
 		recargarApariencia();
 	}
+	
+	
+	public abstract void actualizarTextoBotonLauncherParaCDLauncher();
+
 
 	/**
 	 * Aplica la paleta de colores del Analizador (CrashDetector).

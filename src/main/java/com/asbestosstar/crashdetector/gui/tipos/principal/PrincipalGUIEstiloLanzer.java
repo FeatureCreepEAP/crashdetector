@@ -987,4 +987,10 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 		return elementos;
 	}
 
+	@Override
+	public void actualizarTextoBotonLauncherParaCDLauncher() {
+		// TODO Auto-generated method stub
+		botonCDLauncherRef.setText("CDLauncher");
+	}
+
 }

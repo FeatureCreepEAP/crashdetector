@@ -1,6 +1,8 @@
 package com.asbestosstar.crashdetector;
 
 import java.lang.instrument.Instrumentation;
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,15 +10,19 @@ import java.util.List;
 import com.asbestosstar.crashdetector.lanzer.servicio.CDProfiler;
 import com.asbestosstar.crashdetector.lanzer.servicio.CDSampler;
 import com.asbestosstar.crashdetector.lanzer.servicio.CDTracer;
-import com.asbestosstar.crashdetector.lanzer.servicio.LibreMods;
 import com.asbestosstar.crashdetector.lanzer.servicio.ServicioCDLauncher;
 
 /**
  * CrashDetectorFCMC
  *
- * Entrada principal del javaagent. - Verifica explícitamente FeatureCreep +
- * JBoss - SOLO entonces carga e invoca CrashDetectorFeatureCreepJBoss - Nunca
- * referencia esa clase si no existen las dependencias
+ * Entrada principal del javaagent.
+ *
+ * - Verifica explícitamente FeatureCreep + JBoss
+ * - SOLO entonces carga e invoca CrashDetectorFeatureCreepJBoss
+ * - Nunca referencia esa clase si no existen las dependencias
+ *
+ * Modificación:
+ * - CDProfiler y CDSampler solo se registran si NO hay argumentos JPMS
  */
 public class CrashDetectorFCMC {
 
@@ -35,26 +41,39 @@ public class CrashDetectorFCMC {
 		/* ================= CDLauncher ================= */
 
 		if (esModoCDLauncher(args)) {
-			//LibreMods.librar(instrument);			
+
+			//LibreMods.librar(instrument);
+
 			Statics.app_en_cdlauncher = true;
 			MonitorDePID.registrarGUISPredeterminado();
-			CargadorExtensiones.cargarExtensionesProcesoApp(MonitorDePID.ultimo_mods.toFile());// TODO improver
+			CargadorExtensiones.cargarExtensionesProcesoApp(MonitorDePID.ultimo_mods.toFile());
 
+			boolean hayJPMS = contieneArgumentosJPMS();
+
+			// Siempre permitido
 			servicios_cdlauncher.add(new CDTracer());
-			servicios_cdlauncher.add(new CDProfiler());
-			servicios_cdlauncher.add(new CDSampler());
+
+			// SOLO si no hay JPMS
+			if (!hayJPMS) {
+				servicios_cdlauncher.add(new CDProfiler());
+				servicios_cdlauncher.add(new CDSampler());
+			}
 
 			for (ServicioCDLauncher serv : servicios_cdlauncher) {
+
 				String id = serv.id();
+
 				boolean activo = Boolean.getBoolean("crashdetector." + id);
+
 				if (activo) {
 					serv.activar(instrument);
 				}
-
 			}
 
 			Transformaciones.init();
+
 			instrument.addTransformer(new Transformaciones());
+
 			return;
 		}
 
@@ -78,6 +97,7 @@ public class CrashDetectorFCMC {
 			List<Path> paths = CrashDetectorFeatureCreepJBoss.obtenerPathsDeMods();
 
 			Transformaciones.init();
+
 			CargadoresComun.init(paths, CargadoresComun.CDOrigin.FEATURECREEP);
 
 		} catch (Throwable t) {
@@ -98,6 +118,7 @@ public class CrashDetectorFCMC {
 	}
 
 	private static boolean claseExiste(String name) {
+
 		try {
 			Class.forName(name, false, CrashDetectorFCMC.class.getClassLoader());
 			return true;
@@ -109,4 +130,31 @@ public class CrashDetectorFCMC {
 	public static boolean esModoCDLauncher(String args) {
 		return args != null && args.toLowerCase().contains("cdlauncher");
 	}
+
+	public static boolean contieneArgumentosJPMS() {
+
+		RuntimeMXBean mxBean = ManagementFactory.getRuntimeMXBean();
+
+		List<String> inputArgs = mxBean.getInputArguments();
+
+		for (String arg : inputArgs) {
+
+			String lower = arg.toLowerCase();
+
+			if (lower.startsWith("--module-path")
+					|| lower.startsWith("--add-opens")
+					|| lower.startsWith("--add-exports")
+					|| lower.startsWith("--add-reads")
+					|| lower.startsWith("--patch-module")
+					|| lower.startsWith("--limit-modules")
+					|| lower.startsWith("--upgrade-module-path")
+					|| lower.startsWith("--add-modules")) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 }
