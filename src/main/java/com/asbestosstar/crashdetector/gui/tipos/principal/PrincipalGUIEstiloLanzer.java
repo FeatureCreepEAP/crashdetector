@@ -644,9 +644,10 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 			if (tipo == TipoGUI.TODOS_QUICKFIXES) {
 
 				// Color especial configurable (válido en ambos modos)
+				if(!CrashDetectorGUI.esMac()) {
 				boton.setBackground(lanzerColorBotonQuickFix.obtener());
 				boton.setForeground(colorTexto.obtener());
-
+				}
 				boton.addActionListener(e -> mostrarVentanaQuickFix());
 
 			} else {

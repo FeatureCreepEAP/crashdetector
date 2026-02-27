@@ -25,6 +25,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
+import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 
 public class EscanerMCreatorGUIRosemiLoveLock extends EscanerMCreatorGUI {
 
@@ -246,11 +247,11 @@ public class EscanerMCreatorGUIRosemiLoveLock extends EscanerMCreatorGUI {
 
 		// Botón
 		// En macOS, no cambiamos el fondo del botón para mantener el estilo nativo
-		if (!System.getProperty("os.name").toLowerCase().contains("mac")) {
+		if(!CrashDetectorGUI.esMac()) {
 			botonEscanear.setBackground(colorBotonFondo.obtener());
-		}
+		
 		botonEscanear.setForeground(colorBotonTexto.obtener());
-
+		}
 		// Título
 		String titulo = tituloVentanaNoLocalizado();
 		if (titulo != null && !titulo.isEmpty()) {

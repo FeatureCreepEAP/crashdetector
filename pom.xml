@@ -1,9 +1,9 @@
 <project
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	xsi:schemaLocation="https://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.asbestosstar</groupId>
 	<artifactId>crashdetector</artifactId>
-	<version>0.4.0</version>
+	<version>0.4.1</version>
 	
 	
 	<!-- Add necessary metadata for Maven Central -->
@@ -124,7 +124,7 @@
 <dependency>
     <groupId>cpw.mods</groupId>
     <artifactId>modlauncher</artifactId>
-    <version>11.0.1</version>
+    <version>11.0.5</version>
 </dependency>
 	
  	 	 <dependency>
@@ -285,6 +285,14 @@
 			<name>velocity</name>
 			<url>https://repo.papermc.io/repository/maven-public/</url>
 		</repository>
+		
+		
+				<repository>
+			<id>nf</id>
+			<name>nf</name>
+			<url>https://maven.neoforged.net/releases/</url>
+		</repository>
+		
 		
 	</repositories>
 	<properties>

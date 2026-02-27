@@ -54,6 +54,7 @@ public class GeneradorDeInformacion {
 					.replace("{constructor}",
 							cons.toString() + "<br>" + MonitorDePID.idioma.infoDeVerificaciones() + "<br>"
 									+ MonitorDePID.contenidoInforme.toString() + imagenesLocales())
+					.replace("{nombre_cd}", Config.obtenerInstancia().obtenerNombreCD())
 					.replace("{mensaje_ayudar}", MonitorDePID.idioma.mensajeAyudar()));
 			escribidor.close();
 			return ret;
@@ -182,7 +183,8 @@ public class GeneradorDeInformacion {
 			constructorHtml = postProcesarLinks(constructorHtml, instant);
 
 			String ret = enviarInforme(
-					plantilla.replace("{constructor}", constructorHtml).replace("{mensaje_ayudar}", ""));
+					plantilla.replace("{constructor}", constructorHtml).replace("{mensaje_ayudar}", "")
+							.replace("{nombre_cd}", Config.obtenerInstancia().obtenerNombreCD()));
 			CrashDetectorLogger.log(ret);
 			return ret;
 
