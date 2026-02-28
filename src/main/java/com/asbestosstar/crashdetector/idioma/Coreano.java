@@ -6094,5 +6094,27 @@ public class Coreano implements Idioma {
 	public String entrarAlJuego() {
 		return "게임에 들어가기";
 	}
+	@Override
+	public String nombreRutaCaracteresInvalidos() {
+	    return "경로 무효: 허용되지 않는 문자 포함";
+	}
+
+	@Override
+	public String mensajeRutaCaracteresInvalidos() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "체계 경로 오류가 감지되였습니다.</b>"
+	            + "<p>폴더 이름에 불법 문자가 있어 마인크래프트를 시작할 수 없습니다.</p>"
+	            + "<p>체계가 경로에서 무효한 문자를 발견하였습니다 (예: ':' 또는 기타 특수 기호).</p>"
+	            + "<p><b>권장 해결 방법:</b></p>"
+	            + "<ul>"
+	            + "<li>인스턴스 또는 프로필 폴더 이름을 변경하십시오.</li>"
+	            + "<li>기본 ASCII 문자(A-Z, a-z, 0-9)만 사용하십시오.</li>"
+	            + "<li>억양 부호, 특수 기호, 문제되는 공백, 이모지 등을 사용하지 마십시오.</li>"
+	            + "</ul>"
+	            + "<p>허용되는 예: <b>MiInstancia1</b></p>"
+	            + "<p>허용되지 않는 예: <b>Instancia🔥</b> 또는 <b>Instancia:Mod</b></p>";
+	}
+	
+	
 
 }

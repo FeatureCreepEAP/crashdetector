@@ -6330,5 +6330,27 @@ public class Portuges implements Idioma {
 	public String entrarAlJuego() {
 		return "Entrar no Jogo";
 	}
+	
+	@Override
+	public String nombreRutaCaracteresInvalidos() {
+	    return "Caminho inválido: caracteres não permitidos";
+	}
+
+	@Override
+	public String mensajeRutaCaracteresInvalidos() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "Erro no caminho do sistema detectado.</b>"
+	            + "<p>O Minecraft não pôde iniciar devido a caracteres ilegais no nome de uma pasta.</p>"
+	            + "<p>O sistema detectou um caractere inválido no caminho (por exemplo: ':' ou outros símbolos especiais).</p>"
+	            + "<p><b>Solução recomendada:</b></p>"
+	            + "<ul>"
+	            + "<li>Renomeie a pasta da instância ou do perfil.</li>"
+	            + "<li>Use apenas caracteres ASCII básicos (A-Z, a-z, 0-9).</li>"
+	            + "<li>Não use acentos, símbolos especiais, espaços problemáticos nem emojis.</li>"
+	            + "</ul>"
+	            + "<p>Exemplo válido: <b>MiInstancia1</b></p>"
+	            + "<p>Exemplo inválido: <b>Instancia🔥</b> ou <b>Instancia:Mod</b></p>";
+	}
+	
 
 }

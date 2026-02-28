@@ -6324,5 +6324,27 @@ public class Ruso implements Idioma {
 	public String entrarAlJuego() {
 		return "Войти в игру";
 	}
+	
+	@Override
+	public String nombreRutaCaracteresInvalidos() {
+	    return "Недопустимый путь: запрещённые символы";
+	}
+
+	@Override
+	public String mensajeRutaCaracteresInvalidos() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "Обнаружена ошибка в системном пути.</b>"
+	            + "<p>Minecraft не удалось запустить из-за недопустимых символов в имени папки.</p>"
+	            + "<p>Система обнаружила недопустимый символ в пути (например: «:» или другие специальные символы).</p>"
+	            + "<p><b>Рекомендуемое решение:</b></p>"
+	            + "<ul>"
+	            + "<li>Переименуйте папку экземпляра или профиля.</li>"
+	            + "<li>Используйте только базовые ASCII-символы (A–Z, a–z, 0–9).</li>"
+	            + "<li>Не используйте диакритические знаки, специальные символы, проблемные пробелы и эмодзи.</li>"
+	            + "</ul>"
+	            + "<p>Допустимый пример: <b>MiInstancia1</b></p>"
+	            + "<p>Недопустимый пример: <b>Instancia🔥</b> или <b>Instancia:Mod</b></p>";
+	}
+	
 
 }

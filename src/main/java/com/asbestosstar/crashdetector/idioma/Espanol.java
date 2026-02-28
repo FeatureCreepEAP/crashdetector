@@ -7034,5 +7034,29 @@ public class Espanol implements Idioma {
 		// TODO Auto-generated method stub
 		return "Entrar al Juego";
 	}
+	
+	@Override
+	public String mensajeRutaCaracteresInvalidos() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Error en la ruta del sistema detectado.</b>"
+				+ "<p>Minecraft no pudo iniciar debido a caracteres ilegales en el nombre de una carpeta.</p>"
+				+ "<p>El sistema detectó un carácter no válido en la ruta (por ejemplo: ':' u otros símbolos especiales).</p>"
+				+ "<p><b>Solución recomendada:</b></p>"
+				+ "<ul>"
+				+ "<li>Renombra la carpeta de la instancia o del perfil.</li>"
+				+ "<li>Usa únicamente caracteres ASCII básicos (A-Z, a-z, 0-9).</li>"
+				+ "<li>No utilices tildes, símbolos especiales, espacios problemáticos ni emojis.</li>"
+				+ "</ul>"
+				+ "<p>Ejemplo válido: <b>MiInstancia1</b></p>"
+				+ "<p>Ejemplo inválido: <b>Instancia🔥</b> o <b>Instancia:Mod</b></p>";
+	}
+
+	@Override
+	public String nombreRutaCaracteresInvalidos() {
+		return "Ruta inválida: caracteres no permitidos";
+	}
+	
+	
+	
 
 }

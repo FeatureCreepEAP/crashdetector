@@ -6105,5 +6105,28 @@ public class Japones implements Idioma {
 	public String entrarAlJuego() {
 		return "ゲームに入る";
 	}
+	
+	@Override
+	public String nombreRutaCaracteresInvalidos() {
+	    return "無効なパス：使用不可の文字が含まれています";
+	}
+
+	@Override
+	public String mensajeRutaCaracteresInvalidos() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "システムパスエラーを検出しました。</b>"
+	            + "<p>フォルダー名に不正な文字が含まれているため、Minecraft を起動できませんでした。</p>"
+	            + "<p>パス内に無効な文字（例：「:」やその他の特殊記号）が検出されました。</p>"
+	            + "<p><b>推奨される解決策：</b></p>"
+	            + "<ul>"
+	            + "<li>インスタンスまたはプロファイルのフォルダー名を変更してください。</li>"
+	            + "<li>基本 ASCII 文字（A–Z、a–z、0–9）のみを使用してください。</li>"
+	            + "<li>アクセント記号、特殊記号、問題のあるスペース、絵文字（emoji）は使用しないでください。</li>"
+	            + "</ul>"
+	            + "<p>有効な例: <b>MiInstancia1</b></p>"
+	            + "<p>無効な例: <b>Instancia🔥</b> または <b>Instancia:Mod</b></p>";
+	}
+	
+	
 
 }

@@ -5981,5 +5981,30 @@ public class Chino implements Idioma {
 	public String entrarAlJuego() {
 		return "进入游戏";
 	}
+	@Override
+	public String nombreRutaCaracteresInvalidos() {
+	    return "路径无效：包含非法字符";
+	}
+
+	@Override
+	public String mensajeRutaCaracteresInvalidos() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "检测到系统路径错误。</b>"
+	            + "<p>Minecraft 无法启动，因为文件夹名称中包含非法字符。</p>"
+	            + "<p>系统在路径中检测到无效字符（例如：“:”或其他特殊符号）。</p>"
+	            + "<p><b>推荐解决方案：</b></p>"
+	            + "<ul>"
+	            + "<li>重命名实例或配置文件夹。</li>"
+	            + "<li>仅使用基本 ASCII 字符（A-Z、a-z、0-9）。</li>"
+	            + "<li>不要使用重音符号、特殊符号、问题空格或表情符号。</li>"
+	            + "</ul>"
+	            + "<p>有效示例：<b>MiInstancia1</b></p>"
+	            + "<p>无效示例：<b>Instancia🔥</b> 或 <b>Instancia:Mod</b></p>";
+	}
+	
+	
+	
+	
+	
 
 }

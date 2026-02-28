@@ -2453,4 +2453,8 @@ public interface Idioma {
 
 	public String entrarAlJuego();
 
+	public String mensajeRutaCaracteresInvalidos();
+
+	public String nombreRutaCaracteresInvalidos();
+
 }

@@ -6292,4 +6292,26 @@ public class Persa implements Idioma {
 		return "ورود به بازی";
 	}
 
+	@Override
+	public String nombreRutaCaracteresInvalidos() {
+	    return "مسیر نامعتبر: شامل کاراکترهای غیرمجاز";
+	}
+
+	@Override
+	public String mensajeRutaCaracteresInvalidos() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "خطای مسیر سیستم شناسایی شد.</b>"
+	            + "<p>ماينکرفت به دلیل وجود کاراکترهای غیرقانونی در نام یک پوشه، اجرا نشد.</p>"
+	            + "<p>سیستم یک کاراکتر نامعتبر در مسیر شناسایی کرد (مثلاً «:» یا سایر نمادهای ویژه).</p>"
+	            + "<p><b>راه‌حل پیشنهادی:</b></p>"
+	            + "<ul>"
+	            + "<li>نام پوشهٔ نمونه یا پروفایل را تغییر دهید.</li>"
+	            + "<li>فقط از کاراکترهای پایهٔ ASCII (A-Z، a-z، 0-9) استفاده کنید.</li>"
+	            + "<li>از علائم تشدید، نمادهای ویژه، فاصله‌های مشکل‌ساز و ایموجی‌ها استفاده نکنید.</li>"
+	            + "</ul>"
+	            + "<p>مثال معتبر: <b>MiInstancia1</b></p>"
+	            + "<p>مثال نامعتبر: <b>Instancia🔥</b> یا <b>Instancia:Mod</b></p>";
+	}
+	
+	
 }

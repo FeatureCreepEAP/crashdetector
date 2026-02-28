@@ -6252,5 +6252,30 @@ public class Arabe implements Idioma {
 	public String entrarAlJuego() {
 		return "الدخول إلى اللعبة";
 	}
+	@Override
+	public String nombreRutaCaracteresInvalidos() {
+	    return "مسار غير صالح: أحرف غير مسموح بها";
+	}
 
+	@Override
+	public String mensajeRutaCaracteresInvalidos() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "تم اكتشاف خطأ في مسار النظام.</b>"
+	            + "<p>تعذّر تشغيل ماينكرافت بسبب وجود أحرف غير قانونية في اسم مجلد.</p>"
+	            + "<p>اكتشف النظام حرفًا غير صالح في المسار (مثل: ':' أو رموز خاصة أخرى).</p>"
+	            + "<p><b>الحل الموصى به:</b></p>"
+	            + "<ul>"
+	            + "<li>غيّر اسم مجلد المثيل أو الملف الشخصي.</li>"
+	            + "<li>استخدم فقط أحرف ASCII الأساسية (A-Z، a-z، 0-9).</li>"
+	            + "<li>لا تستخدم علامات التشكيل، الرموز الخاصة، المسافات المشكوك فيها، أو الرموز التعبيرية (emojis).</li>"
+	            + "</ul>"
+	            + "<p>مثال صحيح: <b>MiInstancia1</b></p>"
+	            + "<p>مثال خاطئ: <b>Instancia🔥</b> أو <b>Instancia:Mod</b></p>";
+	}
+	
+	
+	
+	
+	
+	
 }

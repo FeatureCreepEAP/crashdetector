@@ -6353,4 +6353,27 @@ public class Ingles implements Idioma {
 		return "Enter Game";
 	}
 
+	
+	@Override
+	public String nombreRutaCaracteresInvalidos() {
+	    return "Invalid path: disallowed characters";
+	}
+
+	@Override
+	public String mensajeRutaCaracteresInvalidos() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "System path error detected.</b>"
+	            + "<p>Minecraft failed to start due to illegal characters in a folder name.</p>"
+	            + "<p>The system detected an invalid character in the path (e.g.: ':' or other special symbols).</p>"
+	            + "<p><b>Recommended solution:</b></p>"
+	            + "<ul>"
+	            + "<li>Rename the instance or profile folder.</li>"
+	            + "<li>Use only basic ASCII characters (A-Z, a-z, 0-9).</li>"
+	            + "<li>Avoid accented letters, special symbols, problematic spaces, and emojis.</li>"
+	            + "</ul>"
+	            + "<p>Valid example: <b>MiInstancia1</b></p>"
+	            + "<p>Invalid example: <b>Instancia🔥</b> or <b>Instancia:Mod</b></p>";
+	}
+	
+	
 }

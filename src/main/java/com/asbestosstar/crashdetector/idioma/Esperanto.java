@@ -6303,4 +6303,28 @@ public class Esperanto implements Idioma {
 		return "Eniri la Ludon";
 	}
 
+	@Override
+	public String nombreRutaCaracteresInvalidos() {
+	    return "Nevalida vojo: nepermesitaj signoj";
+	}
+
+	@Override
+	public String mensajeRutaCaracteresInvalidos() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "Eraro en la sistemvojo estis detektita.</b>"
+	            + "<p>Minecraft ne povis lanĉiĝi pro neleĝaj signoj en la dosierujo-nomo.</p>"
+	            + "<p>La sistemo detektis nevalidan signon en la vojo (ekzemple: ':' aŭ aliaj specialaj simboloj).</p>"
+	            + "<p><b>Rekomendita solvo:</b></p>"
+	            + "<ul>"
+	            + "<li>Alinomu la dosierujon de la ekzemplero aŭ profilo.</li>"
+	            + "<li>Uzu nur bazajn ASCII-signojn (A-Z, a-z, 0-9).</li>"
+	            + "<li>Ne uzu supersignojn, specialajn simbolojn, problemdonajn spacetojn aŭ emojn.</li>"
+	            + "</ul>"
+	            + "<p>Valida ekzemplo: <b>MiInstancia1</b></p>"
+	            + "<p>Nevalida ekzemplo: <b>Instancia🔥</b> aŭ <b>Instancia:Mod</b></p>";
+	}
+	
+	
+	
+	
 }

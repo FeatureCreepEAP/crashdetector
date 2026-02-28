@@ -51,6 +51,7 @@ import com.asbestosstar.crashdetector.analizador.general.NullPointer;
 import com.asbestosstar.crashdetector.analizador.general.OpcionesJavaGCInvalidas;
 import com.asbestosstar.crashdetector.analizador.general.PreferIPV4Trace;
 import com.asbestosstar.crashdetector.analizador.general.ProblemaSafeFetch32JDK17;
+import com.asbestosstar.crashdetector.analizador.general.RutaCaracteresInvalidos;
 import com.asbestosstar.crashdetector.analizador.general.SpongeMixinConfigsProblematicos;
 import com.asbestosstar.crashdetector.analizador.general.TienesModDesAnimado;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
@@ -267,6 +268,16 @@ public class Analizador {
 		verificaciones.add(new AccesoDenegadoBackupConfig());
 		verificaciones.add(new SimpleCloudsIrisDH());
 
+		verificaciones.add(new RutaCaracteresInvalidos());
+
+		
+		
+		
+		
+		
+		
+		
+		
 		verificaciones.add(new PirataMC());
 		verificaciones.add(new LanzerNoAnimado());
 		verificaciones.add(new LanzerDesAnimado());
