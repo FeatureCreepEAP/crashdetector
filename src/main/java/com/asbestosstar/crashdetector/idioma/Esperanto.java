@@ -4338,7 +4338,7 @@ public class Esperanto implements Idioma {
 
 	@Override
 	public String pasoErrorOptiFineServidor() {
-		return "Forigu OptiFine de la dediĉita servilo, ĉar ĝi devas esti instalita nur sur la kliento.";
+		return "Forigu OptiFine el la dediĉita servilo, ĉar ĝi devas esti instalita nur sur la kliento. Tiu problemo ankaŭ ofte rezultas el instalo de OptiFine-versio por malĝusta versio de Minecraft aŭ el konflikto inter alia mod kaj OptiFine.";
 	}
 
 	@Override

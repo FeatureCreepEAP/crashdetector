@@ -4354,7 +4354,7 @@ public class Portuges implements Idioma {
 
 	@Override
 	public String pasoErrorOptiFineServidor() {
-		return "Remova OptiFine do servidor dedicado, pois ele deve ser instalado apenas no cliente.";
+		return "Remova o OptiFine do servidor dedicado, pois ele deve ser instalado apenas no cliente. Esse problema também costuma ocorrer devido à instalação de uma versão do OptiFine para a versão incorreta do Minecraft ou a um conflito entre outro mod e o OptiFine.";
 	}
 
 	@Override

@@ -29,6 +29,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.JViewport;
 
+import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
@@ -336,7 +337,7 @@ public class ClioOfficeGUI extends HistoriaDeModsGUI {
 	// -------------------------------------------------------------
 
 	@Override
-	protected void estilizarRadioArchivo(JRadioButton radio) {
+	public void estilizarRadioArchivo(JRadioButton radio) {
 		radio.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
 		radio.setOpaque(true);
 		radio.setBackground(colorBeigeListas.obtener());
@@ -344,17 +345,66 @@ public class ClioOfficeGUI extends HistoriaDeModsGUI {
 	}
 
 	@Override
-	protected void estilizarEstadoArchivo(JLabel estado) {
+	public void estilizarEstadoArchivo(JLabel estado) {
 		estado.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 11));
 		estado.setOpaque(false);
 	}
 
 	@Override
-	protected void aplicarApariencia() {
+	public void aplicarApariencia() {
 		if (descripcionHTML != null)
 			descripcionHTML.setMargin(new Insets(2, 6, 2, 6));
 		revalidate();
 		repaint();
+	}
+
+	@Override
+	public void generarHTMLResultado(String archivo1, String archivo2, List<String> diferencias) {
+
+		// Convertimos los colores configurables del tema a formato HTML
+		String colorAnadido = Config.colorAHexHtml(colorResultadoAnadido.obtener());
+		String colorEliminado = Config.colorAHexHtml(colorResultadoEliminado.obtener());
+		String colorTextoNormal = Config.colorAHexHtml(colorTextoListas.obtener());
+
+		StringBuilder html = new StringBuilder();
+
+		html.append("<html>");
+		html.append("<body style='font-family:sans-serif;font-size:12px;color:").append(colorTextoNormal).append(";'>");
+
+		html.append("<div style='margin:4px 0;'>");
+
+		// Cabecera de comparación
+		html.append("<h3 style='margin-bottom:8px;'>").append(MonitorDePID.idioma.comparando()).append(" ")
+				.append(archivo1).append(" ").append(MonitorDePID.idioma.con()).append(" ").append(archivo2)
+				.append(":</h3>");
+
+		if (diferencias.isEmpty()) {
+
+			html.append("<p style='color:").append(colorAnadido).append(";'>")
+					.append(MonitorDePID.idioma.noHayCambios()).append("</p>");
+
+		} else {
+
+			html.append("<ul style='list-style-type:none;padding-left:6px;'>");
+
+			for (String linea : diferencias) {
+
+				boolean esAnadido = linea.startsWith("+");
+				String color = esAnadido ? colorAnadido : colorEliminado;
+
+				html.append("<li style='color:").append(color).append(";margin-bottom:3px;'>").append(escapeHtml(linea))
+						.append("</li>");
+			}
+
+			html.append("</ul>");
+		}
+
+		html.append("</div>");
+		html.append("</body></html>");
+
+		if (resultadoPanel != null) {
+			resultadoPanel.setText(html.toString());
+		}
 	}
 
 	@Override

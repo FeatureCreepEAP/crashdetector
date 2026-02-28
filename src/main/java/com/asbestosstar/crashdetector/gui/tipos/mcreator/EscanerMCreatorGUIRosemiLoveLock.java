@@ -247,10 +247,10 @@ public class EscanerMCreatorGUIRosemiLoveLock extends EscanerMCreatorGUI {
 
 		// Botón
 		// En macOS, no cambiamos el fondo del botón para mantener el estilo nativo
-		if(!CrashDetectorGUI.esMac()) {
+		if (!CrashDetectorGUI.esMac()) {
 			botonEscanear.setBackground(colorBotonFondo.obtener());
-		
-		botonEscanear.setForeground(colorBotonTexto.obtener());
+
+			botonEscanear.setForeground(colorBotonTexto.obtener());
 		}
 		// Título
 		String titulo = tituloVentanaNoLocalizado();

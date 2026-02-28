@@ -70,7 +70,7 @@ public class ErrorOptiFineServidor implements Verificaciones {
 
 	@Override
 	public float prioridad() {
-		return 1000.0f; // Prioridad máxima: rompe la carga del servidor
+		return 1500.0f; // Prioridad máxima: rompe la carga del servidor
 	}
 
 	@Override

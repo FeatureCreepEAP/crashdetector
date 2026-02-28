@@ -4328,7 +4328,7 @@ public class Persa implements Idioma {
 
 	@Override
 	public String pasoErrorOptiFineServidor() {
-		return "OptiFine را از سرور اختصاصی حذف کنید، زیرا باید فقط در کلاینت نصب شود.";
+		return "OptiFine را از سرور اختصاصی حذف کنید، زیرا تنها باید در سمت کلاینت نصب شود. این مشکل همچنین اغلب به دلیل نصب نسخه‌ای از OptiFine برای نسخهٔ اشتباه ماينکرفت یا تداخل آن با مود دیگری رخ می‌دهد.";
 	}
 
 	@Override

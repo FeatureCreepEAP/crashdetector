@@ -4350,8 +4350,7 @@ public class Ruso implements Idioma {
 
 	@Override
 	public String pasoErrorOptiFineServidor() {
-
-		return "Удалите OptiFine с выделенного сервера, так как он должен быть установлен только на клиенте.";
+		return "Удалите OptiFine с выделенного сервера, так как он должен быть установлен только на клиенте. Эта проблема также часто возникает из-за установки версии OptiFine, предназначенной для неправильной версии Minecraft, или из-за конфликта между другим модом и OptiFine.";
 	}
 
 	@Override

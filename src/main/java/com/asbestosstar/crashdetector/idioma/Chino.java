@@ -4131,7 +4131,7 @@ public class Chino implements Idioma {
 
 	@Override
 	public String pasoErrorOptiFineServidor() {
-		return "请从专用服务器中移除 OptiFine，因为它只能安装在客户端上。";
+		return "请从专用服务器中移除 OptiFine，因为它仅应安装在客户端。此问题通常也源于安装了与 Minecraft 版本不匹配的 OptiFine 版本，或 OptiFine 与其他模组发生冲突。";
 	}
 
 	@Override

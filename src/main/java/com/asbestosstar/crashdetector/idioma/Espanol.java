@@ -5036,7 +5036,7 @@ public class Espanol implements Idioma {
 
 	@Override
 	public String pasoErrorOptiFineServidor() {
-		return "Elimina OptiFine del servidor dedicado, ya que solo debe estar instalado en el cliente.";
+		return "Elimina OptiFine del servidor dedicado, ya que solo debe estar instalado en el cliente. Este problema también suele deberse a la instalación de una versión de Optifine para la versión incorrecta de Minecraft o a un conflicto con otro mod y Optifine.";
 	}
 
 	@Override

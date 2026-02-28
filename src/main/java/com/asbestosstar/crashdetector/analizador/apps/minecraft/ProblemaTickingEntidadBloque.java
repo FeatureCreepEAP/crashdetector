@@ -5,141 +5,220 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
- * Clase que detecta errores causados por entidades de bloques al ser
- * actualizadas. Gracias a Aternos por que esta es una implementacion de su
- * codex https://github.com/aternosorg/codex-minecraft
+ * Detecta crashes por "Ticking block entity" y también "Ticking entity".
+ * Diseñado para ser tolerante a: - prefijos tipo "[Server thread/ERROR]" -
+ * mayúsculas/minúsculas - secciones de detalles lejos de la línea "Description"
+ *
+ * Formatos soportados (entre otros): - "Description: Ticking block entity" -
+ * "Description: Ticking entity" - "-- Entity being ticked --" + "Entity Type:"
+ * + "Entity Name:" + "Entity's Block location: World: (x,y,z)"
  */
 public class ProblemaTickingEntidadBloque implements Verificaciones {
 
+	// Estado final
 	private boolean activado = false;
 	private String mensaje = "";
 	private String nombreEntidad = "";
 	private String tipoEntidad = "";
-	private int[] coordenadas = new int[3]; // [x, y, z]
-	private boolean coordenadasValidas = false; // indica si las coordenadas fueron parseadas correctamente
+	private int[] coordenadas = new int[] { 0, 0, 0 }; // [x,y,z]
+	private boolean coordenadasValidas = false;
 	private String enlaceHtml = "";
 
-	// Estado para el análisis por línea
-	private boolean hayTickingBlockEntityEnLog = false;
-	private boolean bloqueActivo = false;
-	private int lineaInicioBloque = -1;
+	// Flags globales
+	private boolean hayTickingEnLog = false;
 
-	/**
-	 * Verifica si el log contiene un problema de ticking en una entidad de bloque.
-	 * <p>
-	 * En esta versión solo se hace una comprobación global rápida para detectar si
-	 * existe el texto "Description: Ticking block entity". El análisis detallado se
-	 * realiza línea a línea en {@link #verificar(Consola, String, int)}.
-	 * </p>
-	 */
+	// Control de activación al ver "Description"
+	private int lineaDescription = -1;
+	private boolean descriptionDetectada = false;
+
+	// Secciones modernas (Forge 1.16+ suele traer estas secciones)
+	private boolean seccionEntidadTickeadaActiva = false;
+	private int lineaInicioSeccionEntidad = -1;
+
+	private boolean seccionEntidadBloqueTickeadaActiva = false;
+	private int lineaInicioSeccionBloque = -1;
+
+	// Ventanas de parseo (conservadoras pero amplias)
+	private static final int VENTANA_DESDE_DESCRIPTION = 600; // para cubrir casos donde los detalles están lejos
+	private static final int VENTANA_SECCION_DETALLES = 120; // líneas a partir del encabezado de sección
+
 	@Override
 	public void verificar(Consola consola) {
 		String contenido = consola.contenido_verificar;
-		hayTickingBlockEntityEnLog = contenido.contains("Description: Ticking block entity");
+		if (contenido == null) {
+			hayTickingEnLog = false;
+			return;
+		}
+		String lower = contenido.toLowerCase();
+		hayTickingEnLog = lower.contains("description: ticking block entity")
+				|| lower.contains("description: ticking entity");
 	}
 
-	/**
-	 * Análisis por línea del log.
-	 * <p>
-	 * - Cuando se detecta la línea "Description: Ticking block entity" se marca el
-	 * inicio de un bloque y se registra el enlace HTML. - Durante las siguientes
-	 * ~20 líneas se buscan:
-	 * <ul>
-	 * <li>Nombre de la entidad (línea que empieza por "Name: ")</li>
-	 * <li>Tipo de entidad (línea que empieza por "Block: " o contiene "Block entity
-	 * being ticked")</li>
-	 * <li>Coordenadas ("Block location: World: (x,y,z)")</li>
-	 * </ul>
-	 * Cada vez que se obtiene información suficiente se actualiza el mensaje final.
-	 * </p>
-	 */
 	@Override
 	public void verificar(Consola consola, String linea, int numero_de_linea) {
-		// Si globalmente no hay indicios de este tipo de crash, no hacemos nada
-		if (!hayTickingBlockEntityEnLog || linea == null) {
+		if (!hayTickingEnLog || linea == null) {
 			return;
 		}
 
 		String l = linea.trim();
+		String lower = l.toLowerCase();
 
-		// Inicio del bloque de "Ticking block entity"
-		if (l.equals("Description: Ticking block entity")) {
-			bloqueActivo = true;
-			lineaInicioBloque = numero_de_linea;
-			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this); // Registrar la línea del error
-			// No activamos aún el verificador hasta tener más datos útiles
+		// 1) Detectar la "Description" (acepta ticking entity y ticking block entity,
+		// con prefijos)
+		if (lower.contains("description: ticking block entity") || lower.contains("description: ticking entity")) {
+			descriptionDetectada = true;
+			lineaDescription = numero_de_linea;
+
+			// Registrar la línea del error SOLO una vez (la primera description encontrada)
+			if (enlaceHtml == null || enlaceHtml.isEmpty()) {
+				enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+			}
+			// No retornamos: a veces la misma línea ya trae más info en otros formatos
+		}
+
+		// Si nunca vimos la description, evitamos falsos positivos
+		if (!descriptionDetectada) {
 			return;
 		}
 
-		// Si no estamos dentro de un bloque relevante, ignoramos
-		if (!bloqueActivo) {
+		// Si estamos demasiado lejos de la description y no estamos dentro de
+		// secciones, cortamos.
+		// (Aun así, si se detectan encabezados de sección, se reactivará el parseo.)
+		int deltaDesc = numero_de_linea - lineaDescription;
+		if (deltaDesc > VENTANA_DESDE_DESCRIPTION && !seccionEntidadTickeadaActiva
+				&& !seccionEntidadBloqueTickeadaActiva) {
 			return;
 		}
 
-		// Limitar la búsqueda a unas pocas líneas después de la descripción
-		int delta = numero_de_linea - lineaInicioBloque;
-		if (delta <= 0 || delta > 20) {
-			bloqueActivo = false;
-			return;
+		// 2) Activar secciones modernas (aparecen lejos de "Description" en muchos
+		// crash reports)
+		// Ejemplo del log: "-- Entity being ticked --"
+		if (lower.contains("-- entity being ticked --")) {
+			seccionEntidadTickeadaActiva = true;
+			lineaInicioSeccionEntidad = numero_de_linea;
+			// No retornamos: el contenido relevante empieza a continuación
 		}
 
-		// Extrae el nombre de la entidad
-		if (l.startsWith("Name: ")) {
-			this.nombreEntidad = l.substring("Name: ".length()).trim();
-			actualizarMensajeSiCorresponde();
+		// Algunas versiones/reportes usan variaciones; esta cubre casos típicos de
+		// block entity
+		if (lower.contains("-- block entity being ticked --") || lower.contains("-- blockentity being ticked --")) {
+			seccionEntidadBloqueTickeadaActiva = true;
+			lineaInicioSeccionBloque = numero_de_linea;
 		}
 
-		// Extrae el tipo de la entidad
-		if (l.startsWith("Block: ") || l.contains("Block entity being ticked")) {
-			// Formato típico: "Block: modid:tipo"
-			int indiceMod = l.indexOf(":");
-			if (indiceMod > 0 && l.contains(":")) {
-				String[] partes = l.split(":");
-				if (partes.length >= 2) {
-					this.tipoEntidad = partes[0].trim() + ":" + partes[1].trim();
+		// 3) Desactivar secciones cuando se sale de la ventana
+		if (seccionEntidadTickeadaActiva) {
+			int d = numero_de_linea - lineaInicioSeccionEntidad;
+			if (d > VENTANA_SECCION_DETALLES) {
+				seccionEntidadTickeadaActiva = false;
+			}
+		}
+		if (seccionEntidadBloqueTickeadaActiva) {
+			int d = numero_de_linea - lineaInicioSeccionBloque;
+			if (d > VENTANA_SECCION_DETALLES) {
+				seccionEntidadBloqueTickeadaActiva = false;
+			}
+		}
+
+		// 4) Parseo "clásico" (cerca de la description) para ticking block entity (y
+		// algunos entity)
+		// - Name:
+		// - Block:
+		// - Block location: World: (x,y,z)
+		// Lo ejecutamos si estamos relativamente cerca de la description o si estamos
+		// dentro de la sección de bloque.
+		boolean dentroVentanaCercaDescription = deltaDesc >= 0 && deltaDesc <= VENTANA_DESDE_DESCRIPTION;
+		if (dentroVentanaCercaDescription || seccionEntidadBloqueTickeadaActiva) {
+
+			// Nombre de entidad de bloque (formato clásico)
+			if (l.startsWith("Name: ")) {
+				this.nombreEntidad = l.substring("Name: ".length()).trim();
+				actualizarMensajeSiCorresponde();
+			}
+
+			// Tipo de bloque: usar substring y NO split(":"), porque rompe
+			// "minecraft:chest"
+			if (l.startsWith("Block: ")) {
+				this.tipoEntidad = l.substring("Block: ".length()).trim();
+				actualizarMensajeSiCorresponde();
+			}
+
+			// Variante común en algunos reportes
+			// "Block entity being ticked: <tipo>@..."
+			if (lower.contains("block entity being ticked")) {
+				String extraido = extraerDespuesDeDosPuntos(l);
+				if (!extraido.isEmpty()) {
+					// muchas veces viene "modid:bloque@..." -> nos quedamos con lo de antes del @
+					int arroba = extraido.indexOf('@');
+					this.tipoEntidad = (arroba > 0 ? extraido.substring(0, arroba).trim() : extraido.trim());
+					actualizarMensajeSiCorresponde();
+				}
+			}
+
+			// Coordenadas block entity (formato clásico)
+			if (lower.startsWith("block location: world: (")) {
+				if (parsearWorldXYZPrimeraTupla(l)) {
 					actualizarMensajeSiCorresponde();
 				}
 			}
 		}
 
-		// Extrae las coordenadas del bloque
-		if (l.startsWith("Block location: World: (")) {
-			// Formato: "Block location: World: (x,y,z)"
-			int inicio = l.indexOf("(") + 1;
-			int fin = l.indexOf(")");
-			if (inicio > 0 && fin > inicio) {
-				String coordsTexto = l.substring(inicio, fin);
-				String[] coords = coordsTexto.split(",");
-				if (coords.length == 3) {
-					try {
-						this.coordenadas[0] = Integer.parseInt(coords[0].trim());
-						this.coordenadas[1] = Integer.parseInt(coords[1].trim());
-						this.coordenadas[2] = Integer.parseInt(coords[2].trim());
-						this.coordenadasValidas = true;
-						actualizarMensajeSiCorresponde();
-					} catch (NumberFormatException e) {
-						// Ignora errores de formato
-					}
+		// 5) Parseo moderno "Ticking entity" (esto es lo que tu log tiene)
+		// En el log de ejemplo:
+		// - "Entity Type: minecraft:drowned (....)"
+		// - "Entity Name: Drowned"
+		// - "Entity's Block location: World: (157,50,-642), ..."
+		if (seccionEntidadTickeadaActiva || dentroVentanaCercaDescription) {
+
+			if (lower.startsWith("entity type:")) {
+				// Nos quedamos con "minecraft:drowned" si existe (antes del primer espacio o
+				// antes de "(")
+				String val = l.substring("Entity Type:".length()).trim();
+				int paren = val.indexOf('(');
+				if (paren > 0)
+					val = val.substring(0, paren).trim();
+				int espacio = val.indexOf(' ');
+				if (espacio > 0)
+					val = val.substring(0, espacio).trim();
+				if (!val.isEmpty()) {
+					this.tipoEntidad = val;
+					actualizarMensajeSiCorresponde();
+				}
+			}
+
+			if (lower.startsWith("entity name:")) {
+				String val = l.substring("Entity Name:".length()).trim();
+				if (!val.isEmpty()) {
+					this.nombreEntidad = val;
+					actualizarMensajeSiCorresponde();
+				}
+			}
+
+			// Preferimos Block location (int) si existe
+			if (lower.startsWith("entity's block location: world: (")) {
+				if (parsearWorldXYZPrimeraTupla(l)) {
+					actualizarMensajeSiCorresponde();
+				}
+			}
+
+			// Fallback: si solo existe exact location con decimales, intentamos convertir a
+			// int (floor)
+			if (!coordenadasValidas && lower.startsWith("entity's exact location:")) {
+				if (parsearExactLocationADesdeDecimales(l)) {
+					actualizarMensajeSiCorresponde();
 				}
 			}
 		}
 	}
 
-	/**
-	 * Actualiza el mensaje final si ya tenemos al menos algún dato útil del bloque
-	 * (nombre, tipo o coordenadas válidas).
-	 */
 	private void actualizarMensajeSiCorresponde() {
-		if (enlaceHtml == null) {
+		if (enlaceHtml == null || enlaceHtml.isEmpty()) {
 			return;
 		}
-
-		// Reutilizamos la misma lógica básica que la implementación original:
-		// si hay algún campo con información, construimos el mensaje.
 		if (!nombreEntidad.isEmpty() || !tipoEntidad.isEmpty() || coordenadasValidas) {
 			this.mensaje = MonitorDePID.idioma.mensajeTickingEntidadBloque(nombreEntidad, tipoEntidad, coordenadas)
 					+ " " + enlaceHtml;
@@ -148,50 +227,112 @@ public class ProblemaTickingEntidadBloque implements Verificaciones {
 	}
 
 	/**
-	 * Crea una nueva instancia del verificador.
+	 * Extrae lo que venga después del primer ':' de una línea. Ej: "Entity Type:
+	 * minecraft:drowned (...)" -> "minecraft:drowned (...)"
 	 */
+	private static String extraerDespuesDeDosPuntos(String linea) {
+		if (linea == null)
+			return "";
+		int idx = linea.indexOf(':');
+		if (idx < 0 || idx + 1 >= linea.length())
+			return "";
+		return linea.substring(idx + 1).trim();
+	}
+
+	/**
+	 * Parsea la primera tupla World: (x,y,z) que aparezca en la línea. Funciona
+	 * con: - "Block location: World: (x,y,z)" - "Entity's Block location: World:
+	 * (x,y,z), Section: ..."
+	 */
+	private boolean parsearWorldXYZPrimeraTupla(String linea) {
+		if (linea == null)
+			return false;
+
+		int idxWorld = linea.indexOf("World:");
+		if (idxWorld < 0)
+			return false;
+
+		int inicioParen = linea.indexOf('(', idxWorld);
+		int finParen = linea.indexOf(')', inicioParen);
+		if (inicioParen < 0 || finParen < 0 || finParen <= inicioParen)
+			return false;
+
+		String dentro = linea.substring(inicioParen + 1, finParen);
+		String[] partes = dentro.split(",");
+		if (partes.length != 3)
+			return false;
+
+		try {
+			coordenadas[0] = Integer.parseInt(partes[0].trim());
+			coordenadas[1] = Integer.parseInt(partes[1].trim());
+			coordenadas[2] = Integer.parseInt(partes[2].trim());
+			coordenadasValidas = true;
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+
+	/**
+	 * Parsea "Entity's Exact location: 157.50, 50.00, -641.50" y lo convierte a
+	 * enteros (floor) como fallback.
+	 */
+	private boolean parsearExactLocationADesdeDecimales(String linea) {
+		if (linea == null)
+			return false;
+
+		String val = extraerDespuesDeDosPuntos(linea);
+		if (val.isEmpty())
+			return false;
+
+		String[] partes = val.split(",");
+		if (partes.length != 3)
+			return false;
+
+		try {
+			double x = Double.parseDouble(partes[0].trim());
+			double y = Double.parseDouble(partes[1].trim());
+			double z = Double.parseDouble(partes[2].trim());
+			coordenadas[0] = (int) Math.floor(x);
+			coordenadas[1] = (int) Math.floor(y);
+			coordenadas[2] = (int) Math.floor(z);
+			coordenadasValidas = true;
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+
 	@Override
 	public Verificaciones nueva() {
 		return new ProblemaTickingEntidadBloque();
 	}
 
-	/**
-	 * Indica si el problema fue detectado.
-	 */
 	@Override
 	public boolean activado() {
 		return activado;
 	}
 
-	/**
-	 * Prioridad del problema (alta).
-	 */
 	@Override
 	public float prioridad() {
-		return 800.0f;
+		return 1500.0f;
 	}
 
-	/**
-	 * Devuelve el mensaje de error almacenado.
-	 */
 	@Override
 	public String mensaje() {
 		return mensaje;
 	}
 
-	/**
-	 * Devuelve el nombre del problema para mostrar en la interfaz.
-	 */
 	@Override
 	public String nombre() {
 		return MonitorDePID.idioma.nombreProblemaTickingEntidadBloque();
 	}
 
-	/**
-	 * Devuelve las soluciones posibles para este problema.
-	 */
 	@Override
 	public QuickFix solucion() {
+		// Nota: este quickfix originalmente es para block entity, pero aquí lo
+		// reutilizamos
+		// para ticking entity también (mismo concepto: borrar lo que está crasheando).
 		return new Builder(nombre())
 				.agregarEtiqueta(MonitorDePID.idioma.solucionEliminarEntidadBloque(nombreEntidad, coordenadas))
 				.construir();
@@ -199,25 +340,9 @@ public class ProblemaTickingEntidadBloque implements Verificaciones {
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
 		return "problema_ticking_entidad_bloque";
 	}
 
-	/**
-	 * Indica si este verificador debe "ocupar" un trazo concreto del stack trace.
-	 * <p>
-	 * La intención es asociar únicamente los trazos que claramente pertenecen a un
-	 * crash de "Ticking block entity". Para evitar falsos positivos:
-	 * <ul>
-	 * <li>Primero comprobamos que el verificador ya se ha activado.</li>
-	 * <li>Buscamos la cadena genérica del problema ("Description: Ticking block
-	 * entity").</li>
-	 * <li>Si hay información más específica (tipo de entidad, nombre o
-	 * coordenadas), intentamos utilizarla para afinar la coincidencia.</li>
-	 * </ul>
-	 * Es deliberadamente conservador: se prefiere un falso negativo antes que
-	 * marcar un trazo que no pertenezca realmente a este error.
-	 */
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
 		if (!activado || trazo == null || trazo.trace == null) {
@@ -225,28 +350,31 @@ public class ProblemaTickingEntidadBloque implements Verificaciones {
 		}
 
 		String t = trazo.trace;
+		String lower = t.toLowerCase();
 
-		// Comprobación genérica del tipo de crash
-		if (t.contains("Description: Ticking block entity")) {
+		// Coincidencia genérica (entity o block entity)
+		if (lower.contains("description: ticking block entity") || lower.contains("description: ticking entity")) {
 			return true;
 		}
 
-		// Si conocemos el tipo de entidad, muchos crash reports incluyen algo como:
-		// "Block entity being ticked: <tipoEntidad>@..."
-		if (!tipoEntidad.isEmpty() && t.contains("Block entity being ticked") && t.contains(tipoEntidad)) {
+		// Sección moderna (por si el stacktrace incluye el header)
+		if (lower.contains("-- entity being ticked --") || lower.contains("-- block entity being ticked --")) {
 			return true;
 		}
 
-		// En algunos casos el nombre de la entidad aparece tal cual en el trazo
-		if (!nombreEntidad.isEmpty() && t.contains(nombreEntidad)) {
+		// Afinar por tipo/nombre
+		if (!tipoEntidad.isEmpty() && lower.contains(tipoEntidad.toLowerCase())) {
+			return true;
+		}
+		if (!nombreEntidad.isEmpty() && lower.contains(nombreEntidad.toLowerCase())) {
 			return true;
 		}
 
-		// Coincidencia con la línea de ubicación del bloque si las coordenadas son
-		// válidas
+		// Afinar por coordenadas (variante típica en reportes)
 		if (coordenadasValidas) {
-			String coordsTexto = "World: (" + coordenadas[0] + "," + coordenadas[1] + "," + coordenadas[2] + ")";
-			if (t.contains(coordsTexto)) {
+			String coords1 = "world: (" + coordenadas[0] + "," + coordenadas[1] + "," + coordenadas[2] + ")";
+			String coords2 = "world: (" + coordenadas[0] + ", " + coordenadas[1] + ", " + coordenadas[2] + ")";
+			if (lower.contains(coords1) || lower.contains(coords2)) {
 				return true;
 			}
 		}
@@ -256,13 +384,11 @@ public class ProblemaTickingEntidadBloque implements Verificaciones {
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 
 	@Override
 	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
@@ -271,5 +397,4 @@ public class ProblemaTickingEntidadBloque implements Verificaciones {
 	public boolean recomendadoParaCorperata() {
 		return true;
 	}
-
 }

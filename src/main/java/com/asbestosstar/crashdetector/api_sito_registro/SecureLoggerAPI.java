@@ -31,12 +31,10 @@ public class SecureLoggerAPI implements APIdeSitioDeRegistro {
 
 	private static final int PRESUPUESTO_RAW = 11 * 1024 * 1024;
 
-
 	@Override
 	public String nombre() {
 		return "SecureLogger";
 	}
-
 
 	@Override
 	public List<String> sitiosPorDefecto() {
@@ -50,16 +48,12 @@ public class SecureLoggerAPI implements APIdeSitioDeRegistro {
 		return sitios;
 	}
 
-
 	@Override
 	public String publicarRegistro(Consola registro) throws ErrorConPublicar {
 
 		try {
 
-			String req = logRequest(
-				"USER_CODE",
-				registro.obtainerContenidoParaPublicar()
-			);
+			String req = logRequest("USER_CODE", registro.obtainerContenidoParaPublicar());
 
 			String link = extraerEnlace(req);
 
@@ -68,21 +62,16 @@ public class SecureLoggerAPI implements APIdeSitioDeRegistro {
 
 			return link;
 
-		}
-		catch (LimteDeTasa lt) {
+		} catch (LimteDeTasa lt) {
 
-			throw new ErrorConPublicar(
-				MonitorDePID.idioma.limite_de_solicitudes()
-			);
+			throw new ErrorConPublicar(MonitorDePID.idioma.limite_de_solicitudes());
 
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 
 			throw new ErrorConPublicar(e.getMessage());
 
 		}
 	}
-
 
 	public static String extraerEnlace(String jsonString) {
 
@@ -103,12 +92,10 @@ public class SecureLoggerAPI implements APIdeSitioDeRegistro {
 
 		valueStart++;
 
-		while (valueStart < jsonString.length()
-			&& Character.isWhitespace(jsonString.charAt(valueStart)))
+		while (valueStart < jsonString.length() && Character.isWhitespace(jsonString.charAt(valueStart)))
 			valueStart++;
 
-		if (valueStart >= jsonString.length()
-			|| jsonString.charAt(valueStart) != '"')
+		if (valueStart >= jsonString.length() || jsonString.charAt(valueStart) != '"')
 			return null;
 
 		int valueEnd = jsonString.indexOf('"', valueStart + 1);
@@ -119,41 +106,24 @@ public class SecureLoggerAPI implements APIdeSitioDeRegistro {
 		return jsonString.substring(valueStart + 1, valueEnd);
 	}
 
-
-	public String logRequest(
-		String tipoCliente,
-		String contenidoLog
-	)
-		throws LimteDeTasa {
+	public String logRequest(String tipoCliente, String contenidoLog) throws LimteDeTasa {
 
 		try {
 
-			String parametros =
-				"version="
-				+ URLEncoder.encode("2.923", "UTF-8")
-				+ "&clientType="
-				+ URLEncoder.encode(tipoCliente, "UTF-8");
+			String parametros = "version=" + URLEncoder.encode("2.923", "UTF-8") + "&clientType="
+					+ URLEncoder.encode(tipoCliente, "UTF-8");
 
-			String urlCompleta =
-				APIdeSitioDeRegistro.sitioDeConfig()
-				+ parametros;
+			String urlCompleta = APIdeSitioDeRegistro.sitioDeConfig() + parametros;
 
-			byte[] cuerpo =
-				(contenidoLog == null ? "" : contenidoLog)
-					.getBytes(CHARSET);
+			byte[] cuerpo = (contenidoLog == null ? "" : contenidoLog).getBytes(CHARSET);
 
-			return enviarPost(
-				new URL(urlCompleta),
-				cuerpo
-			);
+			return enviarPost(new URL(urlCompleta), cuerpo);
 
-		}
-		catch (LimteDeTasa e) {
+		} catch (LimteDeTasa e) {
 
 			throw e;
 
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 
 			CrashDetectorLogger.logException(e);
 
@@ -162,20 +132,12 @@ public class SecureLoggerAPI implements APIdeSitioDeRegistro {
 		}
 	}
 
-
 	/**
 	 * Envía POST usando compresión real SOLO cuando es necesario.
 	 */
-	private String enviarPost(
-		URL url,
-		byte[] cuerpo
-	)
-		throws IOException, LimteDeTasa {
+	private String enviarPost(URL url, byte[] cuerpo) throws IOException, LimteDeTasa {
 
-		HttpURLConnection conexion =
-			(HttpURLConnection) url.openConnection(
-				Proxy.NO_PROXY
-			);
+		HttpURLConnection conexion = (HttpURLConnection) url.openConnection(Proxy.NO_PROXY);
 
 		conexion.setRequestMethod("POST");
 
@@ -183,225 +145,128 @@ public class SecureLoggerAPI implements APIdeSitioDeRegistro {
 
 		conexion.setReadTimeout(TIMEOUT_MS);
 
-		conexion.setRequestProperty(
-			"Content-Type",
-			"text/plain; charset=" + CHARSET_BODY
-		);
+		conexion.setRequestProperty("Content-Type", "text/plain; charset=" + CHARSET_BODY);
 
-		conexion.setRequestProperty(
-			"Content-Encoding",
-			"gzip"
-		);
+		conexion.setRequestProperty("Content-Encoding", "gzip");
 
 		conexion.setDoOutput(true);
 
+		byte[] gz = EstimadorGZIP.comprimir(cuerpo);
 
-		byte[] gz =
-			EstimadorGZIP.comprimir(cuerpo);
+		conexion.setFixedLengthStreamingMode(gz.length);
 
-
-		conexion.setFixedLengthStreamingMode(
-			gz.length
-		);
-
-
-		try (OutputStream os =
-			conexion.getOutputStream()) {
+		try (OutputStream os = conexion.getOutputStream()) {
 
 			os.write(gz);
 
 		}
 
-
 		int code = conexion.getResponseCode();
-
 
 		if (code == 429) {
 
-			throw new LimteDeTasa(
-				MonitorDePID.idioma
-					.limite_de_solicitudes()
-			);
+			throw new LimteDeTasa(MonitorDePID.idioma.limite_de_solicitudes());
 
 		}
 
-
 		if (code < 200 || code >= 300)
-			throw new IOException(
-				"HTTP " + code
-			);
+			throw new IOException("HTTP " + code);
 
+		try (InputStream is = conexion.getInputStream();
 
-		try (
-			InputStream is =
-				conexion.getInputStream();
+				BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
 
-			BufferedReader reader =
-				new BufferedReader(
-					new InputStreamReader(is)
-				)
-		) {
-
-			return reader.lines()
-				.collect(Collectors.joining("\n"));
+			return reader.lines().collect(Collectors.joining("\n"));
 
 		}
 	}
 
-
 	@Override
-	public String publicarTexto(
-		String nombreSugerido,
-		String contenido
-	)
-		throws ErrorConPublicar, LimteDeTasa {
+	public String publicarTexto(String nombreSugerido, String contenido) throws ErrorConPublicar, LimteDeTasa {
 
 		try {
 
-			String req =
-				logRequest(
-					"USER_CODE",
-					contenido
-				);
+			String req = logRequest("USER_CODE", contenido);
 
-			String link =
-				extraerEnlace(req);
+			String link = extraerEnlace(req);
 
 			if (link == null)
-				throw new ErrorConPublicar(
-					"Respuesta inválida"
-				);
+				throw new ErrorConPublicar("Respuesta inválida");
 
 			return link;
 
-		}
-		catch (LimteDeTasa rl) {
+		} catch (LimteDeTasa rl) {
 
 			throw rl;
 
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 
-			throw new ErrorConPublicar(
-				e.getMessage()
-			);
+			throw new ErrorConPublicar(e.getMessage());
 
 		}
 	}
 
+	private final BiMap<String, Integer, ParteInfo> indicePartes = new BiMap<>();
 
-	private final BiMap<String, Integer, ParteInfo>
-		indicePartes = new BiMap<>();
-
-	private final ThreadLocal<String>
-		grupoActual = new ThreadLocal<>();
-
+	private final ThreadLocal<String> grupoActual = new ThreadLocal<>();
 
 	@Override
-	public ThreadLocal<String>
-		grupoActual() {
+	public ThreadLocal<String> grupoActual() {
 
 		return grupoActual;
 
 	}
 
-
 	@Override
-	public BiMap<String, Integer, ParteInfo>
-		indicePartes() {
+	public BiMap<String, Integer, ParteInfo> indicePartes() {
 
 		return indicePartes;
 
 	}
 
-
 	/**
 	 * Publicación en partes usando estimación rápida GZIP.
 	 */
 	@Override
-	public List<String>
-		publicarRegistroEnPartes(
-			Consola registro
-		)
-		throws ErrorConPublicar, LimteDeTasa {
+	public List<String> publicarRegistroEnPartes(Consola registro) throws ErrorConPublicar, LimteDeTasa {
 
-		String contenido =
-			registro.obtainerContenidoParaPublicar();
+		String contenido = registro.obtainerContenidoParaPublicar();
 
-		byte[] raw =
-			contenido.getBytes(CHARSET);
-
+		byte[] raw = contenido.getBytes(CHARSET);
 
 		/*
 		 * vía rápida usando estimador
 		 */
-		if (EstimadorGZIP.cabeDentroLimite(
-			raw,
-			LIMITE_GZIP
-		)) {
+		if (EstimadorGZIP.cabeDentroLimite(raw, LIMITE_GZIP)) {
 
-			List<String> unica =
-				new ArrayList<>();
+			List<String> unica = new ArrayList<>();
 
-			unica.add(
-				publicarTexto(
-					"log.txt",
-					contenido
-				)
-			);
+			unica.add(publicarTexto("log.txt", contenido));
 
 			return unica;
 
 		}
 
+		List<String> urls = new ArrayList<>();
 
-		List<String> urls =
-			new ArrayList<>();
-
-
-		StringBuilder parte =
-			new StringBuilder();
-
+		StringBuilder parte = new StringBuilder();
 
 		int bytesParte = 0;
 
-
-		String[] lineas =
-			contenido.split("\n", -1);
-
+		String[] lineas = contenido.split("\n", -1);
 
 		for (String linea : lineas) {
 
-			byte[] bytesLinea =
-				(linea + "\n")
-					.getBytes(CHARSET);
+			byte[] bytesLinea = (linea + "\n").getBytes(CHARSET);
 
+			if (bytesParte + bytesLinea.length > PRESUPUESTO_RAW) {
 
-			if (bytesParte + bytesLinea.length
-				> PRESUPUESTO_RAW) {
+				byte[] rawParte = parte.toString().getBytes(CHARSET);
 
-				byte[] rawParte =
-					parte.toString()
-						.getBytes(CHARSET);
+				if (!EstimadorGZIP.cabeDentroLimite(rawParte, LIMITE_GZIP))
+					throw new ErrorConPublicar("Parte excede límite");
 
-
-				if (!EstimadorGZIP
-					.cabeDentroLimite(
-						rawParte,
-						LIMITE_GZIP
-					))
-					throw new ErrorConPublicar(
-						"Parte excede límite"
-					);
-
-
-				urls.add(
-					publicarTexto(
-						"log.txt",
-						parte.toString()
-					)
-				);
-
+				urls.add(publicarTexto("log.txt", parte.toString()));
 
 				parte.setLength(0);
 
@@ -409,44 +274,24 @@ public class SecureLoggerAPI implements APIdeSitioDeRegistro {
 
 			}
 
+			parte.append(linea).append('\n');
 
-			parte.append(linea)
-				.append('\n');
-
-			bytesParte +=
-				bytesLinea.length;
+			bytesParte += bytesLinea.length;
 
 		}
 
-
 		if (parte.length() > 0)
-			urls.add(
-				publicarTexto(
-					"log.txt",
-					parte.toString()
-				)
-			);
-
+			urls.add(publicarTexto("log.txt", parte.toString()));
 
 		return urls;
 
 	}
 
+	private String publicarParte(String base, int indiceParte, String texto) throws ErrorConPublicar, LimteDeTasa {
 
-	private String publicarParte(
-		String base,
-		int indiceParte,
-		String texto
-	)
-		throws ErrorConPublicar, LimteDeTasa {
-
-		return publicarTexto(
-			base + " (parte " + indiceParte + ")",
-			texto
-		);
+		return publicarTexto(base + " (parte " + indiceParte + ")", texto);
 
 	}
-
 
 	@Override
 	public boolean soporteEnlacesALinea() {

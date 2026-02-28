@@ -4215,7 +4215,7 @@ public class Japones implements Idioma {
 
 	@Override
 	public String pasoErrorOptiFineServidor() {
-		return "OptiFine はクライアントにのみインストールする必要がありますので、専用サーバーから削除してください。";
+		return "OptiFine を専用サーバーから削除してください。OptiFine はクライアント側にのみインストールされるべきです。この問題は、間違った Minecraft バージョン向けの OptiFine をインストールしていたり、他の Mod と OptiFine が競合している場合にもよく発生します。";
 	}
 
 	@Override

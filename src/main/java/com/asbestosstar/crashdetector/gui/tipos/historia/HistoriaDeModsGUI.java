@@ -292,17 +292,39 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 	}
 
 	protected Map<String, String> leerModsNormalizados(Path rutaArchivo) throws IOException {
+
 		Map<String, String> mods = new HashMap<>();
+
+		// Directorio actual donde se está ejecutando la aplicación
+		Path directorioActual = Path.of("").toAbsolutePath().normalize();
+
 		try (BufferedReader lector = new BufferedReader(
 				new InputStreamReader(Files.newInputStream(rutaArchivo), StandardCharsets.UTF_8))) {
+
 			String linea;
+
 			while ((linea = lector.readLine()) != null) {
+
 				if (!linea.trim().isEmpty()) {
-					String nombreNormalizado = normalizarNombreMod(linea.trim());
-					mods.put(nombreNormalizado, linea.trim());
+
+					Path rutaOriginal = Path.of(linea.trim()).toAbsolutePath().normalize();
+					String rutaRelativa;
+
+					try {
+						// Convertimos la ruta absoluta en relativa al directorio actual
+						rutaRelativa = directorioActual.relativize(rutaOriginal).toString().replace("\\", "/");
+					} catch (Exception e) {
+						// Si no se puede relativizar (ej. distinto root en Windows),
+						// usamos al menos el nombre del archivo
+						rutaRelativa = rutaOriginal.getFileName().toString();
+					}
+
+					String nombreNormalizado = normalizarNombreMod(rutaRelativa);
+					mods.put(nombreNormalizado, rutaRelativa);
 				}
 			}
 		}
+
 		return mods;
 	}
 
@@ -333,7 +355,7 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 		return difs;
 	}
 
-	protected void generarHTMLResultado(String archivo1, String archivo2, List<String> diferencias) {
+	public void generarHTMLResultado(String archivo1, String archivo2, List<String> diferencias) {
 		StringBuilder html = new StringBuilder();
 		html.append("<html><body>");
 		html.append("<div style='margin:10px 0;padding:10px;border:1px solid #ccc'>").append("<h3>")
@@ -358,7 +380,15 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 		}
 	}
 
-	protected void scrollHastaFinal(JScrollPane sp) {
+	/**
+	 * Escapa caracteres especiales para evitar que el HTML del JTextPane se rompa
+	 * si una ruta contiene símbolos especiales.
+	 */
+	public String escapeHtml(String texto) {
+		return texto.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;");
+	}
+
+	public void scrollHastaFinal(JScrollPane sp) {
 		if (sp != null && sp.getVerticalScrollBar() != null) {
 			sp.getVerticalScrollBar().setValue(sp.getVerticalScrollBar().getMaximum());
 		}
@@ -366,11 +396,11 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 
 	// ====== Hooks de apariencia (a implementar/ajustar en la impl) ======
 
-	protected abstract void estilizarRadioArchivo(JRadioButton radio);
+	public abstract void estilizarRadioArchivo(JRadioButton radio);
 
-	protected abstract void estilizarEstadoArchivo(JLabel estado);
+	public abstract void estilizarEstadoArchivo(JLabel estado);
 
-	protected abstract void aplicarApariencia();
+	public abstract void aplicarApariencia();
 
 	// ====== CrashDetectorGUI ======
 

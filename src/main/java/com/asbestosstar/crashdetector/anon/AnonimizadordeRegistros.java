@@ -1,5 +1,8 @@
 package com.asbestosstar.crashdetector.anon;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -67,6 +70,9 @@ public class AnonimizadordeRegistros {
 	private static final Pattern PATRON_XUID = Pattern.compile("--xuid,\\s*([^,]+)");
 
 	public static String anonimizar(String contenido) {
+
+		contenido = convertirRutasAReletivas(contenido);
+
 		Set<String> nombres_de_usario = obtenerNombresUsarios(contenido);
 
 		contenido = anonimizarIP(contenido);
@@ -76,14 +82,14 @@ public class AnonimizadordeRegistros {
 		contenido = anonimizarUUID(contenido);
 		contenido = anonimizarIPServidor(contenido);
 
-		for (String usario : nombres_de_usario) {
-			contenido = contenido.replaceAll("(?i)" + Pattern.quote(usario), "anon");
+		for (String usuario : nombres_de_usario) {
+			contenido = contenido.replaceAll("(?i)" + Pattern.quote(usuario), "anon");
 		}
 
 		return contenido;
 	}
 
-	private static Set<String> obtenerNombresUsarios(String contenido) {
+	public static Set<String> obtenerNombresUsarios(String contenido) {
 		Set<String> usuarios = new HashSet<>();
 
 		for (Pattern p : PATRONES_USUARIO_WINDOWS) {
@@ -134,7 +140,7 @@ public class AnonimizadordeRegistros {
 		return usuarios;
 	}
 
-	private static String anonimizarIP(String linea) {
+	public static String anonimizarIP(String linea) {
 		/* IPv4 */
 		Matcher m4 = PATRON_IPV4.matcher(linea);
 		if (m4.find()) {
@@ -162,7 +168,7 @@ public class AnonimizadordeRegistros {
 		return linea;
 	}
 
-	private static String anonimizarNombreDeUsuarioEnRutas(String linea) {
+	public static String anonimizarNombreDeUsuarioEnRutas(String linea) {
 		// Windows
 		for (Pattern p : PATRONES_USUARIO_WINDOWS) {
 			Matcher m = p.matcher(linea);
@@ -194,7 +200,7 @@ public class AnonimizadordeRegistros {
 		return linea;
 	}
 
-	private static String anonimizarUsuariosGenericos(String linea) {
+	public static String anonimizarUsuariosGenericos(String linea) {
 		linea = PATRON_USUARIO_GENERIC.matcher(linea).replaceAll("username: anon");
 
 		linea = PATRON_USER_LINE.matcher(linea).replaceAll("User anon");
@@ -210,7 +216,7 @@ public class AnonimizadordeRegistros {
 		return linea;
 	}
 
-	private static String anonimizarTokens(String linea) {
+	public static String anonimizarTokens(String linea) {
 		linea = PATRON_ID_SESION.matcher(linea).replaceAll("Session ID is token:anon:anon");
 		linea = PATRON_TOKEN_ACCESO_PARAM.matcher(linea).replaceAll("--accessToken anon:anon");
 		linea = PATRON_TOKEN_BEARER.matcher(linea).replaceAll("Bearer anon:anon");
@@ -228,8 +234,38 @@ public class AnonimizadordeRegistros {
 		return linea;
 	}
 
-	private static String anonimizarIPServidor(String linea) {
+	public static String anonimizarIPServidor(String linea) {
 		return PATRON_IP_SERVIDOR.matcher(linea).replaceAll("connect 'anon:****'");
+	}
+
+	public static String convertirRutasAReletivas(String contenido) {
+
+		// Obtener directorio base real
+		Path basePath = Path.of(System.getProperty("user.dir")).toAbsolutePath().normalize();
+
+		String base = basePath.toString();
+
+		// Normalizar separadores
+		base = base.replace("\\", "/");
+		contenido = contenido.replace("\\", "/");
+
+		// Decodificar posibles %20 u otros caracteres URL-encoded
+		base = URLDecoder.decode(base, StandardCharsets.UTF_8);
+		contenido = URLDecoder.decode(contenido, StandardCharsets.UTF_8);
+
+		// Eliminar posible slash final del base
+		if (base.endsWith("/")) {
+			base = base.substring(0, base.length() - 1);
+		}
+
+		/*
+		 * Reemplazar: - Si aparece exactamente el base - O base seguido de "/"
+		 */
+
+		contenido = contenido.replace(base + "/", "./");
+		contenido = contenido.replace(base, ".");
+
+		return contenido;
 	}
 
 	public static void main(String[] args) {

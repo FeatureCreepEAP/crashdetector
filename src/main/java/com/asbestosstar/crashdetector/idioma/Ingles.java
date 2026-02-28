@@ -4381,7 +4381,7 @@ public class Ingles implements Idioma {
 
 	@Override
 	public String pasoErrorOptiFineServidor() {
-		return "Remove OptiFine from the dedicated server, as it should only be installed on the client.";
+		return "Remove OptiFine from the dedicated server, as it should only be installed on the client. This issue is also often caused by installing an OptiFine version for the wrong Minecraft version or by a conflict between another mod and OptiFine.";
 	}
 
 	@Override

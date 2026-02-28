@@ -205,17 +205,17 @@ public class HistoriaModsGUILegacy extends HistoriaDeModsGUI {
 	}
 
 	@Override
-	protected void estilizarRadioArchivo(javax.swing.JRadioButton radio) {
+	public void estilizarRadioArchivo(javax.swing.JRadioButton radio) {
 		radio.setFont(fuenteRadio);
 	}
 
 	@Override
-	protected void estilizarEstadoArchivo(javax.swing.JLabel estado) {
+	public void estilizarEstadoArchivo(javax.swing.JLabel estado) {
 		estado.setFont(fuenteEstado);
 	}
 
 	@Override
-	protected void aplicarApariencia() {
+	public void aplicarApariencia() {
 		// Bordes/paddings base
 		if (panelPrincipal != null) {
 			panelPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));

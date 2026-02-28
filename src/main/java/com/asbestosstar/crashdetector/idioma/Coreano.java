@@ -4208,7 +4208,7 @@ public class Coreano implements Idioma {
 
 	@Override
 	public String pasoErrorOptiFineServidor() {
-		return "OptiFine은 클라이언트에만 설치해야 하므로 전용 서버에서 제거하세요.";
+		return "전용 서버에서 OptiFine을 삭제하십시오. OptiFine은 오직 클라이언트에만 설치되여야 합니다. 이 문제는 또한 Minecraft의 잘못된 버전에 맞는 OptiFine 버전을 설치하였거나, 다른 모드와 OptiFine 사이에 충돌이 발생하였기 때문일 수도 있습니다.";
 	}
 
 	@Override

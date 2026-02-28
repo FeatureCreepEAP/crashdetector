@@ -54,14 +54,17 @@ public class Drivers implements Verificaciones {
 		if (esProblemaSodiumDrivers(log)) {
 			procesarProblemaSodiumDrivers();
 			activado = true;
+			CrashDetectorLogger.log("Sodium Driver Error");
 			return;
 		}
 
 		// 2) Nouveau
 		if (contienePatronNouveau(log)) {
 			procesarProblemaNouveau();
+			CrashDetectorLogger.log("Nouveau Driver Error");
 
 			if (contienePatronOpenAL(log)) {
+				CrashDetectorLogger.log("OpenAL Driver Error");
 				procesarProblemaOpenAL();
 			}
 
@@ -72,14 +75,18 @@ public class Drivers implements Verificaciones {
 		// "# C [atio6axx.dll+...]" o "# C [atioglxx.dll+...]"
 		if (log.contains("EXCEPTION_ACCESS_VIOLATION") && log.contains("[atio6axx.dll")) {
 			procesarProblemaAMD();
+			CrashDetectorLogger.log("Driver atio6axx error");
 			return;
 		}
 		if (log.contains("EXCEPTION_ACCESS_VIOLATION") && log.contains("[atioglxx.dll")) {
 			procesarProblemaAMD();
+			CrashDetectorLogger.log("Sodium Driver Error");
+
 			return;
 		}
 		if (contieneLineaNativaAmd(log)) {
 			procesarProblemaAMD();
+			CrashDetectorLogger.log("Nativa AMD Driver Error");
 			return;
 		}
 
@@ -87,6 +94,7 @@ public class Drivers implements Verificaciones {
 		if (contienePatron(log, new String[] { "[PhysX_64.dll", "[glfw.dll" })
 				&& log.contains("EXCEPTION_ACCESS_VIOLATION")) {
 			procesarProblemaGraficos();
+			CrashDetectorLogger.log("PhysX o glfw error Drivers");
 			return;
 		}
 
@@ -98,11 +106,13 @@ public class Drivers implements Verificaciones {
 		// 6) GPU no compatible
 		if (contienePatron(log, UNSUPPORTED_GPU_PATTERNS)) {
 			procesarGpuNoCompatible();
+			CrashDetectorLogger.log("Driver GPU No Compat");
 			return;
 		}
 
 		// 7) Patrones genéricos
 		if (contienePatron(log, DRIVER_PATTERNS)) {
+			CrashDetectorLogger.log("DRIVER PATTERNS Driver Error");
 			procesarProblemaGraficos();
 			return;
 		}
@@ -147,6 +157,7 @@ public class Drivers implements Verificaciones {
 	private boolean contieneLineaNativaAmd(String log) {
 		String low = log.toLowerCase();
 		// Permite espacios variables antes del corchete
+
 		return (low.contains("c  [atio6axx.dll+") || low.contains("c  [atioglxx.dll+")
 				|| low.contains("# c  [atio6axx.dll+") || low.contains("# c  [atioglxx.dll+"));
 	}
@@ -332,6 +343,7 @@ public class Drivers implements Verificaciones {
 		for (String dll : dllsIntel) {
 			if (log.contains(dll) && log.contains("EXCEPTION_ACCESS_VIOLATION")) {
 				procesarProblemaIntel();
+				CrashDetectorLogger.log(dll + " Driver Error");
 				return;
 			}
 		}

@@ -4302,7 +4302,7 @@ public class Arabe implements Idioma {
 
 	@Override
 	public String pasoErrorOptiFineServidor() {
-		return "أزل OptiFine من الخادم المخصص، لأنه يجب تثبيته فقط على العميل.";
+		return "أزل OptiFine من الخادم المخصص، إذ يجب تثبيته فقط على العميل. غالبًا ما ينتج هذا المشكل أيضًا عن تثبيت إصدار من OptiFine غير متوافق مع إصدار ماينكرافت، أو عن تعارض بين OptiFine وإضافة أخرى.";
 	}
 
 	@Override

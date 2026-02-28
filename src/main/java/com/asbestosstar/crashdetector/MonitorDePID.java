@@ -283,6 +283,14 @@ public class MonitorDePID {
 
 			for (File archivoMod : archivosMods) {
 				if (archivoMod.isFile()) {
+
+					String nombre = archivoMod.getName();
+
+					// Ignorar archivos ocultos del sistema (ej. .DS_Store en macOS)
+					if (nombre.equalsIgnoreCase(".DS_Store")) {
+						continue;
+					}
+
 					if (primera) {
 						primera = false;
 					} else {
