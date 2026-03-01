@@ -6410,6 +6410,50 @@ public class Persa implements Idioma {
 	            + "</ul>";
 	}
 	
+	@Override
+	public String nombreJPMSIllegalAccess() {
+	    return "JPMS: دسترسی غیرمجاز بین ماژول‌ها";
+	}
+
+	@Override
+	public String mensajeJPMSIllegalAccess(String claseOrigen, String moduloOrigen, String claseDestino, String moduloDestino) {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "دسترسی غیرمجاز بین ماژول‌ها (JPMS) شناسایی شد.</b>"
+	            + "<p>سیستم ماژول جاوا (JPMS) دسترسی بین کلاس‌ها را مسدود کرد.</p>"
+	            + "<p><b>کلاس در حال تلاش برای دسترسی:</b><br>"
+	            + claseOrigen + " (ماژول: " + moduloOrigen + ")</p>"
+	            + "<p><b>کلاس مسدودشده:</b><br>"
+	            + claseDestino + " (ماژول: " + moduloDestino + ")</p>"
+	            + "<p>این خطا هنگامی رخ می‌دهد که یک مود، exports یا opens را "
+	            + "در فایل module-info.java خود به‌درستی اعلام نکرده باشد.</p>"
+	            + "<p><b>علل احتمالی:</b></p>"
+	            + "<ul>"
+	            + "<li>ماژول بستهٔ مورد نیاز را export نمی‌کند.</li>"
+	            + "<li>دستور <b>opens</b> برای انعکاس (reflection) وجود ندارد.</li>"
+	            + "<li>مود به‌درستی برای JPMS پیکربندی نشده است.</li>"
+	            + "</ul>"
+	            + "<p>این مشکل باید توسط توسعه‌دهندهٔ مود رفع شود.</p>";
+	}
+	
+	@Override
+	public String nombreMixinClaseMalUbicada() {
+	    return "Mixin: کلاس در بستهٔ mixin به‌صورت نادرست قرار گرفته است";
+	}
+
+	@Override
+	public String mensajeMixinClaseMalUbicada(String clase, String paquete, String archivoMixin) {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "کلاسی به‌صورت نادرست در بستهٔ Mixin قرار گرفته است.</b>"
+	            + "<p>یک کلاس معمولی درون بسته‌ای قرار گرفته که به‌عنوان mixin اعلام شده است.</p>"
+	            + "<p><b>کلاس در تعارض:</b><br>" + clase + "</p>"
+	            + "<p><b>بستهٔ mixin اعلام‌شده:</b><br>" + paquete + "</p>"
+	            + "<p><b>فایل mixins مسئول:</b><br>" + archivoMixin + "</p>"
+	            + "<p>کلاس‌های معمولی نباید در بسته‌ای باشند که در mixins.json تعریف شده‌اند.</p>"
+	            + "<p>فقط کلاس‌هایی که به‌عنوان mixin نشان‌گذاری شده‌اند باید در آن بسته وجود داشته باشند.</p>"
+	            + "<p><b>راه‌حل برای توسعه‌دهنده:</b> کلاس‌های معمولی را از بستهٔ mixin خارج کنید "
+	            + "یا پیکربندی فایل mixins.json را اصلاح کنید.</p>";
+	}
+	
 	
 	
 

@@ -6451,6 +6451,50 @@ public class Portuges implements Idioma {
 	            + "</ul>";
 	}
 	
+	@Override
+	public String nombreJPMSIllegalAccess() {
+	    return "JPMS: Acesso ilegal entre módulos";
+	}
+
+	@Override
+	public String mensajeJPMSIllegalAccess(String claseOrigen, String moduloOrigen, String claseDestino, String moduloDestino) {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "Acesso ilegal entre módulos (JPMS) detectado.</b>"
+	            + "<p>O Sistema de Módulos do Java (JPMS) bloqueou um acesso entre classes.</p>"
+	            + "<p><b>Classe que tentou acessar:</b><br>"
+	            + claseOrigen + " (módulo: " + moduloOrigen + ")</p>"
+	            + "<p><b>Classe bloqueada:</b><br>"
+	            + claseDestino + " (módulo: " + moduloDestino + ")</p>"
+	            + "<p>Esse erro ocorre quando um mod não declara corretamente "
+	            + "exports ou opens em seu module-info.java.</p>"
+	            + "<p><b>Causas possíveis:</b></p>"
+	            + "<ul>"
+	            + "<li>O módulo não exporta o pacote necessário.</li>"
+	            + "<li>Falta a diretiva <b>opens</b> para reflexão.</li>"
+	            + "<li>O mod não está configurado corretamente para o JPMS.</li>"
+	            + "</ul>"
+	            + "<p>Esse problema deve ser corrigido pelo desenvolvedor do mod.</p>";
+	}
+	
+	@Override
+	public String nombreMixinClaseMalUbicada() {
+	    return "Mixin: classe mal posicionada no pacote mixin";
+	}
+
+	@Override
+	public String mensajeMixinClaseMalUbicada(String clase, String paquete, String archivoMixin) {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "Classe incorretamente localizada no pacote Mixin.</b>"
+	            + "<p>Uma classe comum foi colocada dentro de um pacote declarado como mixin.</p>"
+	            + "<p><b>Classe conflitante:</b><br>" + clase + "</p>"
+	            + "<p><b>Pacote mixin declarado:</b><br>" + paquete + "</p>"
+	            + "<p><b>Arquivo mixins responsável:</b><br>" + archivoMixin + "</p>"
+	            + "<p>Classes comuns não devem estar dentro do pacote definido em mixins.json.</p>"
+	            + "<p>Apenas classes anotadas como mixin devem existir nesse pacote.</p>"
+	            + "<p><b>Solução para devs:</b> Mova as classes comuns para fora do pacote mixin "
+	            + "ou corrija a configuração do arquivo mixins.json.</p>";
+	}
+	
 	
 	
 	

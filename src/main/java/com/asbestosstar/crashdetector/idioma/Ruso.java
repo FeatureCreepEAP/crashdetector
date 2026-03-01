@@ -6447,5 +6447,49 @@ public class Ruso implements Idioma {
 	            + "<li>Обновите мод до исправленной версии.</li>"
 	            + "</ul>";
 	}
+	
+	@Override
+	public String nombreJPMSIllegalAccess() {
+	    return "JPMS: Недопустимый доступ между модулями";
+	}
+
+	@Override
+	public String mensajeJPMSIllegalAccess(String claseOrigen, String moduloOrigen, String claseDestino, String moduloDestino) {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "Обнаружен недопустимый доступ между модулями (JPMS).</b>"
+	            + "<p>Система модулей Java (JPMS) заблокировала доступ между классами.</p>"
+	            + "<p><b>Класс, попытавшийся получить доступ:</b><br>"
+	            + claseOrigen + " (модуль: " + moduloOrigen + ")</p>"
+	            + "<p><b>Заблокированный класс:</b><br>"
+	            + claseDestino + " (модуль: " + moduloDestino + ")</p>"
+	            + "<p>Эта ошибка возникает, когда мод не объявляет корректно "
+	            + "exports или opens в своём module-info.java.</p>"
+	            + "<p><b>Возможные причины:</b></p>"
+	            + "<ul>"
+	            + "<li>Модуль не экспортирует требуемый пакет.</li>"
+	            + "<li>Отсутствует директива <b>opens</b> для рефлексии.</li>"
+	            + "<li>Мод неправильно настроен для JPMS.</li>"
+	            + "</ul>"
+	            + "<p>Эту проблему должен исправить разработчик мода.</p>";
+	}
+	
+	@Override
+	public String nombreMixinClaseMalUbicada() {
+	    return "Mixin: класс неправильно размещен в пакете mixin";
+	}
+
+	@Override
+	public String mensajeMixinClaseMalUbicada(String clase, String paquete, String archivoMixin) {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "Класс некорректно размещен в пакете Mixin.</b>"
+	            + "<p>Обычный класс был помещён в пакет, объявленный как mixin.</p>"
+	            + "<p><b>Конфликтующий класс:</b><br>" + clase + "</p>"
+	            + "<p><b>Объявленный пакет mixin:</b><br>" + paquete + "</p>"
+	            + "<p><b>Ответственный файл mixins:</b><br>" + archivoMixin + "</p>"
+	            + "<p>Обычные классы не должны находиться в пакете, определённом в mixins.json.</p>"
+	            + "<p>В этом пакете должны присутствовать только классы, аннотированные как mixin.</p>"
+	            + "<p><b>Решение для разработчиков:</b> Переместите обычные классы за пределы пакета mixin "
+	            + "или исправьте конфигурацию в файле mixins.json.</p>";
+	}
 
 }

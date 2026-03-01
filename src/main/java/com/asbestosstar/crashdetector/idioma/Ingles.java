@@ -6471,6 +6471,50 @@ public class Ingles implements Idioma {
 	            + "</ul>";
 	}
 	
+	@Override
+	public String nombreJPMSIllegalAccess() {
+	    return "JPMS: Illegal access between modules";
+	}
+
+	@Override
+	public String mensajeJPMSIllegalAccess(String claseOrigen, String moduloOrigen, String claseDestino, String moduloDestino) {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "Illegal access between modules (JPMS) detected.</b>"
+	            + "<p>The Java Module System (JPMS) blocked access between classes.</p>"
+	            + "<p><b>Class attempting access:</b><br>"
+	            + claseOrigen + " (module: " + moduloOrigen + ")</p>"
+	            + "<p><b>Blocked class:</b><br>"
+	            + claseDestino + " (module: " + moduloDestino + ")</p>"
+	            + "<p>This error occurs when a mod does not correctly declare "
+	            + "exports or opens in its module-info.java.</p>"
+	            + "<p><b>Possible causes:</b></p>"
+	            + "<ul>"
+	            + "<li>The module does not export the required package.</li>"
+	            + "<li>The <b>opens</b> directive for reflection is missing.</li>"
+	            + "<li>The mod is not properly configured for JPMS.</li>"
+	            + "</ul>"
+	            + "<p>This issue must be fixed by the mod developer.</p>";
+	}
+	
+	@Override
+	public String nombreMixinClaseMalUbicada() {
+	    return "Mixin: class misplaced in mixin package";
+	}
+
+	@Override
+	public String mensajeMixinClaseMalUbicada(String clase, String paquete, String archivoMixin) {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "Class incorrectly placed in Mixin package.</b>"
+	            + "<p>A regular class was placed inside a package declared as a mixin.</p>"
+	            + "<p><b>Conflicting class:</b><br>" + clase + "</p>"
+	            + "<p><b>Declared mixin package:</b><br>" + paquete + "</p>"
+	            + "<p><b>Responsible mixins file:</b><br>" + archivoMixin + "</p>"
+	            + "<p>Regular classes must not reside within the package defined in mixins.json.</p>"
+	            + "<p>Only classes annotated as mixins should exist in that package.</p>"
+	            + "<p><b>Solution for devs:</b> Move regular classes out of the mixin package "
+	            + "or correct the configuration in mixins.json.</p>";
+	}
+	
 	
 	
 	

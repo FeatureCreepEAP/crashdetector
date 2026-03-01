@@ -6212,6 +6212,50 @@ public class Japones implements Idioma {
 	            + "</ul>";
 	}
 	
+	@Override
+	public String nombreJPMSIllegalAccess() {
+	    return "JPMS：モジュール間の不正アクセス";
+	}
+
+	@Override
+	public String mensajeJPMSIllegalAccess(String claseOrigen, String moduloOrigen, String claseDestino, String moduloDestino) {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "モジュール間の不正アクセス（JPMS）を検出しました。</b>"
+	            + "<p>Java モジュールシステム（JPMS）がクラス間のアクセスをブロックしました。</p>"
+	            + "<p><b>アクセスを試みたクラス：</b><br>"
+	            + claseOrigen + "（モジュール：" + moduloOrigen + "）</p>"
+	            + "<p><b>ブロックされたクラス：</b><br>"
+	            + claseDestino + "（モジュール：" + moduloDestino + "）</p>"
+	            + "<p>このエラーは、Mod が module-info.java で "
+	            + "exports または opens を正しく宣言していない場合に発生します。</p>"
+	            + "<p><b>考えられる原因：</b></p>"
+	            + "<ul>"
+	            + "<li>モジュールが必要なパッケージをエクスポートしていない。</li>"
+	            + "<li>リフレクション用の <b>opens</b> ディレクティブが不足している。</li>"
+	            + "<li>Mod が JPMS 用に適切に設定されていない。</li>"
+	            + "</ul>"
+	            + "<p>この問題は Mod 開発者が修正する必要があります。</p>";
+	}
+	
+	@Override
+	public String nombreMixinClaseMalUbicada() {
+	    return "Mixin：クラスが mixin パッケージ内に誤って配置されています";
+	}
+
+	@Override
+	public String mensajeMixinClaseMalUbicada(String clase, String paquete, String archivoMixin) {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "クラスが Mixin パッケージ内に誤って配置されました。</b>"
+	            + "<p>通常のクラスが、mixin として宣言されたパッケージ内に置かれています。</p>"
+	            + "<p><b>競合しているクラス：</b><br>" + clase + "</p>"
+	            + "<p><b>宣言された mixin パッケージ：</b><br>" + paquete + "</p>"
+	            + "<p><b>関連する mixins ファイル：</b><br>" + archivoMixin + "</p>"
+	            + "<p>通常のクラスは mixins.json で定義されたパッケージ内に置いてはいけません。</p>"
+	            + "<p>そのパッケージには、mixin としてアノテーションされたクラスのみを置くべきです。</p>"
+	            + "<p><b>開発者向け解決策：</b>通常のクラスを mixin パッケージの外に移動するか、"
+	            + "mixins.json の設定を修正してください。</p>";
+	}
+	
 	
 
 }

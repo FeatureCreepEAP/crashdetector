@@ -6366,6 +6366,56 @@ public class Arabe implements Idioma {
 	            + "</ul>";
 	}
 	
+	@Override
+	public String nombreJPMSIllegalAccess() {
+	    return "JPMS: وصول غير مصرّح به بين الوحدات";
+	}
+
+	@Override
+	public String mensajeJPMSIllegalAccess(String claseOrigen, String moduloOrigen, String claseDestino, String moduloDestino) {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "تم اكتشاف وصول غير مصرّح به بين الوحدات (JPMS).</b>"
+	            + "<p>قام نظام وحدات جافا (JPMS) بحظر وصول بين صنفين.</p>"
+	            + "<p><b>الصنف الذي حاول الوصول:</b><br>"
+	            + claseOrigen + " (وحدة: " + moduloOrigen + ")</p>"
+	            + "<p><b>الصنف المحظور:</b><br>"
+	            + claseDestino + " (وحدة: " + moduloDestino + ")</p>"
+	            + "<p>يحدث هذا الخطأ عادةً عندما لا يُصرّح التعديل بشكل صحيح عن "
+	            + "(exports أو opens) في ملفه module-info.java.</p>"
+	            + "<p><b>الأسباب المحتملة:</b></p>"
+	            + "<ul>"
+	            + "<li>الوحدة لا تصدّر الحزمة المطلوبة.</li>"
+	            + "<li>تفتقر التوجيهات إلى <b>opens</b> اللازمة للانعكاس (reflection).</li>"
+	            + "<li>التعديل غير مهيأ بشكل صحيح لنظام JPMS.</li>"
+	            + "</ul>"
+	            + "<p>يجب على مطوّر التعديل معالجة هذه المشكلة.</p>";
+	}
+	@Override
+	public String nombreMixinClaseMalUbicada() {
+	    return "Mixin: صنف موضوع في حزمة mixin بشكل خاطئ";
+	}
+
+	@Override
+	public String mensajeMixinClaseMalUbicada(String clase, String paquete, String archivoMixin) {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "تم وضع صنف بشكل غير صحيح داخل حزمة Mixin.</b>"
+	            + "<p>وُضعت صنف عادي داخل حزمة مُعلَنة كـ mixin.</p>"
+	            + "<p><b>الصنف المتعارض:</b><br>" + clase + "</p>"
+	            + "<p><b>حزمة الـ mixin المعلَنة:</b><br>" + paquete + "</p>"
+	            + "<p><b>ملف الـ mixins المسؤول:</b><br>" + archivoMixin + "</p>"
+	            + "<p>لا يجوز أن تكون الصنوف العادية داخل الحزمة المعرّفة في mixins.json.</p>"
+	            + "<p>فقط الصنوف المُعلَّمة كـ mixin يجب أن توجد في تلك الحزمة.</p>"
+	            + "<p><b>الحل للمطوّر:</b> انقل الصنوف العادية خارج حزمة الـ mixin "
+	            + "أو صحّح إعدادات ملف mixins.json.</p>";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

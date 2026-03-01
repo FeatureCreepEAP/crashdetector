@@ -6422,6 +6422,50 @@ public class Esperanto implements Idioma {
 	            + "</ul>";
 	}
 	
+	@Override
+	public String nombreJPMSIllegalAccess() {
+	    return "JPMS: Nepermesita aliro inter moduloj";
+	}
+
+	@Override
+	public String mensajeJPMSIllegalAccess(String claseOrigen, String moduloOrigen, String claseDestino, String moduloDestino) {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "Nepermesita aliro inter moduloj (JPMS) estis detektita.</b>"
+	            + "<p>La Java Modula Sistema (JPMS) blokis aliron inter klasoj.</p>"
+	            + "<p><b>Klaso kiu provis aliri:</b><br>"
+	            + claseOrigen + " (modulo: " + moduloOrigen + ")</p>"
+	            + "<p><b>Blokita klaso:</b><br>"
+	            + claseDestino + " (modulo: " + moduloDestino + ")</p>"
+	            + "<p>Tiu eraro okazas kiam mod ne deklaras ĝuste "
+	            + "exports aŭ opens en sia module-info.java.</p>"
+	            + "<p><b>Eblaj kaŭzoj:</b></p>"
+	            + "<ul>"
+	            + "<li>La modulo ne eksportas la bezonatan pakaĵon.</li>"
+	            + "<li>Mankas la direktivo <b>opens</b> por reflekto.</li>"
+	            + "<li>La mod ne estas ĝuste agordita por JPMS.</li>"
+	            + "</ul>"
+	            + "<p>Tiun problemon devas ripari la programisto de la mod.</p>";
+	}
+	
+	@Override
+	public String nombreMixinClaseMalUbicada() {
+	    return "Mixin: klaso malĝuste metita en pakaĵon de mixin";
+	}
+
+	@Override
+	public String mensajeMixinClaseMalUbicada(String clase, String paquete, String archivoMixin) {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "Klaso estis malĝuste metita en Mixin-pakaĵon.</b>"
+	            + "<p>Ordinara klaso estis metita ene de pakaĵo deklarita kiel mixin.</p>"
+	            + "<p><b>Problema klaso:</b><br>" + clase + "</p>"
+	            + "<p><b>Deklarita mixin-pakaĵo:</b><br>" + paquete + "</p>"
+	            + "<p><b>Responda mixins-dosiero:</b><br>" + archivoMixin + "</p>"
+	            + "<p>Ordinaraj klasoj ne devas esti en la pakaĵo difinita en mixins.json.</p>"
+	            + "<p>Nur klasoj markitaj kiel mixin rajtas ekzisti en tiu pakaĵo.</p>"
+	            + "<p><b>Solvo por programisto:</b> Movu la ordinarajn klasojn ekster la mixin-pakaĵon "
+	            + "aŭ ĝustigu la agordon en la dosiero mixins.json.</p>";
+	}
+	
 	
 	
 

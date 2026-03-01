@@ -452,6 +452,16 @@ public class VerificacionDeStackTrace {
 				cambio = true;
 			}
 
+			// Agregar este bloque junto con los otros prefijos con metadata
+			if (t.startsWith("SECURE-BOOTSTRAP/")) {
+				t = t.substring("SECURE-BOOTSTRAP/".length()).trim();
+				// Saltar el primer segmento (modulo/modid + version) hasta la siguiente '/'
+				int idx = t.indexOf('/');
+				if (idx >= 0 && idx + 1 < t.length()) {
+					t = t.substring(idx + 1).trim();
+				}
+			}
+
 		} while (cambio);
 
 		// Quitar prefijos con metadata del estilo:
@@ -1435,7 +1445,8 @@ public class VerificacionDeStackTrace {
 	}
 
 	// Normalizador de líneas de stack: quita // y prefijos de cargador conocidos
-	private static final String[] PREFIJOS_CARGADOR = { "knot//MC//", "knot//", "knott//", "app//" };
+	private static final String[] PREFIJOS_CARGADOR = { "knot//MC//", "knot//", "knott//", "app//",
+			"SECURE-BOOTSTRAP/" };
 
 	public static String normalizarLineaStack(String l) {
 		if (l == null)

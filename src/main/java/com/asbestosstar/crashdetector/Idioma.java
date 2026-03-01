@@ -2477,4 +2477,13 @@ public interface Idioma {
 
 	public String nombreVersionInvalida();
 
+	public String mensajeJPMSIllegalAccess(String claseOrigen, String moduloOrigen, String claseDestino,
+			String moduloDestino);
+
+	public String nombreJPMSIllegalAccess();
+
+	public String mensajeMixinClaseMalUbicada(String claseConflictiva, String paqueteMixin, String archivoMixin);
+
+	public String nombreMixinClaseMalUbicada();
+
 }

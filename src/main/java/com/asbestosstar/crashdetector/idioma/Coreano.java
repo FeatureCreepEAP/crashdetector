@@ -6198,6 +6198,54 @@ public class Coreano implements Idioma {
 	            + "<li>모드를 수정된 버전으로 갱신하십시오.</li>"
 	            + "</ul>";
 	}
+	@Override
+	public String nombreJPMSIllegalAccess() {
+	    return "JPMS: 모듈 간 불법 접근";
+	}
+
+	@Override
+	public String mensajeJPMSIllegalAccess(String claseOrigen, String moduloOrigen, String claseDestino, String moduloDestino) {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "모듈 간 불법 접근(JPMS)이 감지되였습니다.</b>"
+	            + "<p>자바 모듈 체계(JPMS)가 클래스들 사이의 접근을 차단하였습니다.</p>"
+	            + "<p><b>접근을 시도한 클래스:</b><br>"
+	            + claseOrigen + " (모듈: " + moduloOrigen + ")</p>"
+	            + "<p><b>차단된 클래스:</b><br>"
+	            + claseDestino + " (모듈: " + moduloDestino + ")</p>"
+	            + "<p>이러한 오류는 모드가 module-info.java 파일에서 "
+	            + "exports 또는 opens를 올바르게 선언하지 않았을 때 발생합니다.</p>"
+	            + "<p><b>가능한 원인:</b></p>"
+	            + "<ul>"
+	            + "<li>모듈이 필요한 패키지를 내보내지 않음.</li>"
+	            + "<li>리플렉션을 위한 <b>opens</b> 지시자가 누락됨.</li>"
+	            + "<li>모드가 JPMS에 대해 올바르게 설정되지 않음.</li>"
+	            + "</ul>"
+	            + "<p>이 문제는 모드 개발자가 수정해야 합니다.</p>";
+	}
+	@Override
+	public String nombreMixinClaseMalUbicada() {
+	    return "Mixin: 믹신 꾸러미에 클래스를 잘못 배치함";
+	}
+
+	@Override
+	public String mensajeMixinClaseMalUbicada(String clase, String paquete, String archivoMixin) {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "클래스가 믹신(Mixin) 꾸러미에 잘못 배치되였습니다.</b>"
+	            + "<p>일반 클래스가 믹신으로 선언된 꾸러미 안에 놓이였습니다.</p>"
+	            + "<p><b>충돌 클래스:</b><br>" + clase + "</p>"
+	            + "<p><b>선언된 믹신 꾸러미:</b><br>" + paquete + "</p>"
+	            + "<p><b>책임 있는 믹신 파일:</b><br>" + archivoMixin + "</p>"
+	            + "<p>일반 클래스는 mixins.json에 정의된 꾸러미 안에 있어서는 안 됩니다.</p>"
+	            + "<p>해당 꾸러미에는 믹신으로 주석된 클래스만 존재해야 합니다.</p>"
+	            + "<p><b>개발자용 해결 방법:</b> 일반 클래스를 믹신 꾸러미 밖으로 옮기거나 "
+	            + "mixins.json 파일의 설정을 수정하십시오.</p>";
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 	

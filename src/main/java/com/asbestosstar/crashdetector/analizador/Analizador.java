@@ -41,9 +41,11 @@ import com.asbestosstar.crashdetector.analizador.general.FallosEjecucionTareas;
 import com.asbestosstar.crashdetector.analizador.general.FaltaModAnimado;
 import com.asbestosstar.crashdetector.analizador.general.FaltaModuleJPMS;
 import com.asbestosstar.crashdetector.analizador.general.FaltasClases;
+import com.asbestosstar.crashdetector.analizador.general.JPMSIllegalAccess;
 import com.asbestosstar.crashdetector.analizador.general.JavaVersiones;
 import com.asbestosstar.crashdetector.analizador.general.LanzerDesAnimado;
 import com.asbestosstar.crashdetector.analizador.general.LanzerNoAnimado;
+import com.asbestosstar.crashdetector.analizador.general.SpongeMixinClaseMalUbicada;
 import com.asbestosstar.crashdetector.analizador.general.ModIncompatibleConCargadorActivo;
 import com.asbestosstar.crashdetector.analizador.general.ModulesDuplicadosJavaModulePlatform;
 import com.asbestosstar.crashdetector.analizador.general.NoTieneMemoria;
@@ -275,6 +277,8 @@ public class Analizador {
 		verificaciones.add(new LetsDoCompatInterceptApply());
 		verificaciones.add(new JEIItemGroupCrash());
 		verificaciones.add(new VersionInvalidaSemver());
+		verificaciones.add(new JPMSIllegalAccess());
+		verificaciones.add(new SpongeMixinClaseMalUbicada());
 
 		
 		

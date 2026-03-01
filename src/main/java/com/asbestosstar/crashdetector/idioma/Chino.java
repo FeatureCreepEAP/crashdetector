@@ -6081,5 +6081,49 @@ public class Chino implements Idioma {
 	            + "<li>将模组更新至已修复的版本。</li>"
 	            + "</ul>";
 	}
+	
+	@Override
+	public String nombreJPMSIllegalAccess() {
+	    return "JPMS：模块间非法访问";
+	}
+
+	@Override
+	public String mensajeJPMSIllegalAccess(String claseOrigen, String moduloOrigen, String claseDestino, String moduloDestino) {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "检测到模块间非法访问（JPMS）。</b>"
+	            + "<p>Java 模块系统（JPMS）阻止了类之间的访问。</p>"
+	            + "<p><b>尝试访问的类：</b><br>"
+	            + claseOrigen + "（模块：" + moduloOrigen + "）</p>"
+	            + "<p><b>被阻止的类：</b><br>"
+	            + claseDestino + "（模块：" + moduloDestino + "）</p>"
+	            + "<p>此类错误通常发生在模组未在其 module-info.java 中正确声明 "
+	            + "exports 或 opens 时。</p>"
+	            + "<p><b>可能原因：</b></p>"
+	            + "<ul>"
+	            + "<li>模块未导出所需包。</li>"
+	            + "<li>缺少用于反射的 <b>opens</b> 指令。</li>"
+	            + "<li>模组未针对 JPMS 正确配置。</li>"
+	            + "</ul>"
+	            + "<p>此问题需由模组开发者修复。</p>";
+	}
+	
+	@Override
+	public String nombreMixinClaseMalUbicada() {
+	    return "Mixin：类被错误放置在 mixin 包中";
+	}
+
+	@Override
+	public String mensajeMixinClaseMalUbicada(String clase, String paquete, String archivoMixin) {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "类被错误地放置在 Mixin 包中。</b>"
+	            + "<p>一个普通类被放入了声明为 mixin 的包中。</p>"
+	            + "<p><b>冲突类：</b><br>" + clase + "</p>"
+	            + "<p><b>声明的 mixin 包：</b><br>" + paquete + "</p>"
+	            + "<p><b>相关的 mixins 配置文件：</b><br>" + archivoMixin + "</p>"
+	            + "<p>普通类不应位于 mixins.json 中定义的包内。</p>"
+	            + "<p>只有标注为 mixin 的类才应存在于该包中。</p>"
+	            + "<p><b>开发者解决方案：</b>将普通类移出 mixin 包，"
+	            + "或修正 mixins.json 文件的配置。</p>";
+	}
 
 }
