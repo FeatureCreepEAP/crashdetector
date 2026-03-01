@@ -6305,26 +6305,124 @@ public class Esperanto implements Idioma {
 
 	@Override
 	public String nombreRutaCaracteresInvalidos() {
-	    return "Nevalida vojo: nepermesitaj signoj";
+		return "Nevalida vojo: nepermesitaj signoj";
 	}
 
 	@Override
 	public String mensajeRutaCaracteresInvalidos() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Eraro en la sistemvojo estis detektita.</b>"
+				+ "<p>Minecraft ne povis lanĉiĝi pro neleĝaj signoj en la dosierujo-nomo.</p>"
+				+ "<p>La sistemo detektis nevalidan signon en la vojo (ekzemple: ':' aŭ aliaj specialaj simboloj).</p>"
+				+ "<p><b>Rekomendita solvo:</b></p>" + "<ul>"
+				+ "<li>Alinomu la dosierujon de la ekzemplero aŭ profilo.</li>"
+				+ "<li>Uzu nur bazajn ASCII-signojn (A-Z, a-z, 0-9).</li>"
+				+ "<li>Ne uzu supersignojn, specialajn simbolojn, problemdonajn spacetojn aŭ emojn.</li>" + "</ul>"
+				+ "<p>Valida ekzemplo: <b>MiInstancia1</b></p>"
+				+ "<p>Nevalida ekzemplo: <b>Instancia🔥</b> aŭ <b>Instancia:Mod</b></p>";
+	}
+
+	@Override
+	public String nombreTwilightForestIntelShaders() {
+		return "Krako: Twilight Forest + Intelaj Stiriloj";
+	}
+
+	@Override
+	public String mensajeTwilightForestIntelShaders() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Eraro detektita en la shaderoj de Twilight Forest kun Intel GPU.</b>"
+				+ "<p>Tiu eraro rilatas al la grafikaj stiriloj de Intel dum ŝargado de la shaderoj de la mod Twilight Forest.</p>"
+				+ "<p>La malsukceso okazas ene de la stirilo (igxelpicd64) kaj ne estas rekta problemo de la mod aŭ Minecraft.</p>"
+				+ "<p><b>Rekomenditaj solvoj:</b></p>" + "<ul>"
+				+ "<li>Ĝisdatigu la Intel-stirilojn al la plej nova disponebla versio.</li>"
+				+ "<li>Provuzu specife la versiojn 31.0.101.8331 aŭ 31.0.101.8247 WHQL, kiuj laŭ raportoj ne havas tiun problemon.</li>"
+				+ "</ul>" + "<p>Oficiala trakado de la problemo:</p>"
+				+ "<p><a href='https://github.com/IGCIT/Intel-GPU-Community-Issue-Tracker-IGCIT/issues/1273'>"
+				+ "https://github.com/IGCIT/Intel-GPU-Community-Issue-Tracker-IGCIT/issues/1273</a></p>"
+				+ "<p><b>Noto:</b> Kelkaj pli malnovaj Intel GPU-oj eble ne ricevos ĝisdatigojn, kiuj solvas tiun problemon.</p>";
+	}
+
+	@Override
+	public String nombreForgeLanguageProviderNoCarga() {
+		return "Forge: lingva provizanto ne ŝargiĝis";
+	}
+
+	@Override
+	public String mensajeForgeLanguageProviderNoCarga(String provider) {
+		String providerTexto = (provider == null || provider.isEmpty()) ? "Nekonata provizanto" : provider;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Forge ne povis ŝargi lingvan provizanton.</b>"
+				+ "<p>Eraro okazis dum inicialigo de IModLanguageProvider.</p>" + "<p><b>Malsukcesa provizanto:</b> "
+				+ providerTexto + "</p>" + "<p>Tiu problemo kutime okazas kiam:</p>" + "<ul>"
+				+ "<li>Mankas postulata dependaĵo (ekz. Kotlin for Forge).</li>"
+				+ "<li>La mod-versio ne estas kongrua kun via Forge-versio.</li>"
+				+ "<li>La mod-dosiero estas difektita.</li>" + "</ul>" + "<p><b>Rekomenditaj solvoj:</b></p>" + "<ul>"
+				+ "<li>Reinstalu la koncernan modon.</li>" + "<li>Kontrolu ke ĉiuj dependaĵoj estu instalitaj.</li>"
+				+ "<li>Bv. certigi ke vi uzas versiojn kongruajn kun via nuna Forge.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreLetsDoCompatInterceptApply() {
+		return "Krako: Lets Do Compat (intercepto de RecipeManager)";
+	}
+
+	@Override
+	public String mensajeLetsDoCompatInterceptApply() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Krako detektita en Lets Do Compat (interceptApply).</b>"
+				+ "<p>La eraro okazas ene de transformo de la metodo "
+				+ "<b>RecipeManager.interceptApply</b> farita de Lets Do Compat.</p>" + "<p>Tio kutime indikas:</p>"
+				+ "<ul>" + "<li>Malkongruon inter Lets Do Compat kaj alia mod kiu modifas receptojn.</li>"
+				+ "<li>Malĝustan version por via Minecraft-versio.</li>"
+				+ "<li>Konflikton inter transformiloj (mixin/coremod).</li>" + "</ul>"
+				+ "<p><b>Rekomenditaj solvoj:</b></p>" + "<ul>"
+				+ "<li>Provu provizore forigi Lets Do Compat por konfirmi la konflikton.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreJEIItemGroupCrash() {
+		return "JEI: malsukceso en Item Group (nekompatibla kromaĵo)";
+	}
+
+	@Override
+	public String mensajeJEIItemGroupCrash(java.util.Set<String> plugins) {
+		String listaPlugins = (plugins == null || plugins.isEmpty()) ? "Nekonata kromaĵo" : String.join(", ", plugins);
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "JEI detektis eraron dum konstruado de item-grupo.</b>"
+				+ "<p>Unu aŭ pli da kromaĵoj kaŭzis eraron dum JEI generis la liston de ingrediencoj.</p>"
+				+ "<p><b>Afektitaj grupoj/kromaĵoj:</b> " + listaPlugins + "</p>"
+				+ "<p>Tiu problemo estas komuna kiam:</p>" + "<ul>"
+				+ "<li>Kromaĵo de JEI estas misrealigita aŭ malaktuala.</li>"
+				+ "<li>Ekzistas nekongruo kun la nuna versio de JEI.</li>"
+				+ "<li>Fabric API estas uzata kaj iu mod neĝuste registras sian Item Group.</li>" + "</ul>"
+				+ "<p><b>Rekomenditaj solvoj:</b></p>" + "<ul>" + "<li>Ĝisdatigu JEI kaj la listigitajn modojn.</li>"
+				+ "<li>Provizore forigu la afektitajn kromaĵojn por konfirmi la konflikton.</li>"
+				+ "<li>Raportu la eraron al la programisto de la koncerna mod.</li>" + "</ul>"
+				+ "<p>La eroj de tiuj grupoj ne aperos en la ingredienc-listo ĝis la problemo estas riparita.</p>";
+	}
+	@Override
+	public String nombreVersionInvalida() {
+	    return "Nevalida versio de mod (SemVer)";
+	}
+
+	@Override
+	public String mensajeVersionInvalida(String version, String ubicacion) {
+	    String v = (version == null || version.isEmpty()) ? "Nekonata" : version;
+	    String u = (ubicacion == null || ubicacion.isEmpty()) ? "Ne eblis lokalizi la modon" : ubicacion;
 	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "Eraro en la sistemvojo estis detektita.</b>"
-	            + "<p>Minecraft ne povis lanĉiĝi pro neleĝaj signoj en la dosierujo-nomo.</p>"
-	            + "<p>La sistemo detektis nevalidan signon en la vojo (ekzemple: ':' aŭ aliaj specialaj simboloj).</p>"
+	            + "Nevalida mod-versio detektita.</b>"
+	            + "<p>La versio <b>" + v + "</b> ne konformas al valida SemVer-formo.</p>"
+	            + "<p>La eraro indikas malplenan antaŭeldon (finiĝas per '+').</p>"
+	            + "<p><b>Kulpula mod:</b><br>" + u + "</p>"
 	            + "<p><b>Rekomendita solvo:</b></p>"
 	            + "<ul>"
-	            + "<li>Alinomu la dosierujon de la ekzemplero aŭ profilo.</li>"
-	            + "<li>Uzu nur bazajn ASCII-signojn (A-Z, a-z, 0-9).</li>"
-	            + "<li>Ne uzu supersignojn, specialajn simbolojn, problemdonajn spacetojn aŭ emojn.</li>"
-	            + "</ul>"
-	            + "<p>Valida ekzemplo: <b>MiInstancia1</b></p>"
-	            + "<p>Nevalida ekzemplo: <b>Instancia🔥</b> aŭ <b>Instancia:Mod</b></p>";
+	            + "<li>Redaktu la mod-dosieron kaj ĝustigu la version.</li>"
+	            + "<li>Forigu la finan '+' se ne estas posta metadatumo.</li>"
+	            + "<li>Ĝisdatigu la modon al ĝustigita versio.</li>"
+	            + "</ul>";
 	}
 	
 	
 	
-	
+
 }

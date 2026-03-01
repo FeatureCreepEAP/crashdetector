@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetector.analizador.general;
+package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
@@ -7,11 +7,11 @@ import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceI
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class RutaCaracteresInvalidos implements Verificaciones {
+public class LetsDoCompatInterceptApply implements Verificaciones {
 
 	// Indica si el log contiene indicios globales del error (optimización de
 	// rendimiento)
-	private boolean posibleRutaInvalida = false;
+	private boolean posibleLetsDoCompat = false;
 
 	// Indica si esta verificación fue activada
 	private boolean activado = false;
@@ -23,24 +23,25 @@ public class RutaCaracteresInvalidos implements Verificaciones {
 	public void verificar(Consola consola) {
 
 		// Detección global ligera:
-		// Solo buscamos la excepción principal sin usar regex ni operaciones costosas.
-		if (consola.contenido_verificar.contains("java.nio.file.InvalidPathException")
-				&& consola.contenido_verificar.contains("Illegal char <:>")) {
+		// Solo se buscan fragmentos estables del método transformado
+		if (consola.contenido_verificar.contains("RecipeManager")
+				&& consola.contenido_verificar.contains("interceptApply")
+				&& consola.contenido_verificar.contains("$letsdocompat$")) {
 
-			posibleRutaInvalida = true;
+			posibleLetsDoCompat = true;
 		}
 	}
 
 	@Override
 	public void verificar(Consola consola, String linea, int num) {
 
-		// Salir temprano si no hay indicios globales
-		if (!posibleRutaInvalida) {
+		// Salida temprana si no hay indicios globales
+		if (!posibleLetsDoCompat) {
 			return;
 		}
 
 		// Verificación precisa en la línea específica
-		if (linea.contains("java.nio.file.InvalidPathException") && linea.contains("Illegal char <:>")) {
+		if (linea.contains("RecipeManager") && linea.contains("interceptApply") && linea.contains("$letsdocompat$")) {
 
 			this.enlace = consola.agregarErrorALectador(num, this);
 			this.activado = true;
@@ -49,7 +50,7 @@ public class RutaCaracteresInvalidos implements Verificaciones {
 
 	@Override
 	public Verificaciones nueva() {
-		return new RutaCaracteresInvalidos();
+		return new LetsDoCompatInterceptApply();
 	}
 
 	@Override
@@ -59,17 +60,17 @@ public class RutaCaracteresInvalidos implements Verificaciones {
 
 	@Override
 	public float prioridad() {
-		return 1200;
+		return 1450;
 	}
 
 	@Override
 	public String mensaje() {
-		return MonitorDePID.idioma.mensajeRutaCaracteresInvalidos() + this.enlace;
+		return MonitorDePID.idioma.mensajeLetsDoCompatInterceptApply() + this.enlace;
 	}
 
 	@Override
 	public String nombre() {
-		return MonitorDePID.idioma.nombreRutaCaracteresInvalidos();
+		return MonitorDePID.idioma.nombreLetsDoCompatInterceptApply();
 	}
 
 	@Override
@@ -84,7 +85,7 @@ public class RutaCaracteresInvalidos implements Verificaciones {
 
 	@Override
 	public String id() {
-		return "ruta_caracteres_invalidos";
+		return "lets_do_compat_intercept_apply";
 	}
 
 	@Override

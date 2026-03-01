@@ -2457,4 +2457,24 @@ public interface Idioma {
 
 	public String nombreRutaCaracteresInvalidos();
 
+	public String mensajeTwilightForestIntelShaders();
+
+	public String nombreTwilightForestIntelShaders();
+
+	public String mensajeForgeLanguageProviderNoCarga(String providerFallido);
+
+	public String nombreForgeLanguageProviderNoCarga();
+
+	public String mensajeLetsDoCompatInterceptApply();
+
+	public String nombreLetsDoCompatInterceptApply();
+
+	public String mensajeJEIItemGroupCrash(Set<String> pluginsAfectados);
+
+	public String nombreJEIItemGroupCrash();
+
+	public String mensajeVersionInvalida(String versionInvalida, String ubicacionMod);
+
+	public String nombreVersionInvalida();
+
 }

@@ -15,6 +15,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
+import com.asbestosstar.crashdetector.cargador.AnalizadorModsTomlForge;
 import com.asbestosstar.crashdetector.cargador.Cargador;
 import com.asbestosstar.crashdetector.cargador.CargadorFabric;
 import com.asbestosstar.crashdetector.cargador.CargadorFeatureCreep;
@@ -48,6 +49,7 @@ public class ModPKZip implements ArchivoDeMod {
 
 	public List<Cargador> cargadores_de_mod = new ArrayList<Cargador>();
 	public boolean meta_tiene_referencia_de_mcreator = false;
+	public String version = "";
 
 	/**
 	 * Constructor principal que procesa un archivo ZIP/JAR. Indexa nombres y clases
@@ -126,11 +128,23 @@ public class ModPKZip implements ArchivoDeMod {
 					byte[] content = leerEntrada(nombreArchivo);
 					if (content != null) {
 						nombres.addAll(CargadorFeatureCreep.parsearNombreModuloJBoss(content));
+
+						// VERSION
+						if (this.version.isEmpty()) {
+							this.version = CargadorFeatureCreep.parsearVersionModuloJBoss(content);
+						}
+
 					}
 				} else if (nombreArchivo.endsWith(".mod")) {
 					byte[] content = leerEntrada(nombreArchivo);
 					if (content != null) {
 						nombres.addAll(CargadorFeatureCreep.parsearNombreModHOI4(content));
+
+						// VERSION
+						if (this.version.isEmpty()) {
+							this.version = CargadorFeatureCreep.parsearVersionModuloJBoss(content);
+						}
+
 					}
 				}
 
@@ -138,7 +152,14 @@ public class ModPKZip implements ArchivoDeMod {
 					byte[] content = leerEntrada(nombreArchivo);
 					if (content != null) {
 						String texto = new String(content, StandardCharsets.UTF_8);
+
 						nombres.addAll(CargadorFabric.parsearIdModFabric(texto));
+
+						// VERSION
+						if (this.version.isEmpty()) {
+							this.version = CargadorFabric.parsearVersionModFabric(texto);
+						}
+
 						if (texto.toLowerCase().contains("mcreator")) {
 							meta_tiene_referencia_de_mcreator = true;
 						}
@@ -148,6 +169,12 @@ public class ModPKZip implements ArchivoDeMod {
 					if (content != null) {
 						String toml = new String(content, StandardCharsets.UTF_8);
 						nombres.addAll(CargadorMCForge.parsearIdModMCForge(toml));
+
+						// VERSION
+						if (this.version.isEmpty()) {
+							this.version = AnalizadorModsTomlForge.extraerVersionPrincipal(toml);
+						}
+
 						if (toml.toLowerCase().contains("mcreator")) {
 							meta_tiene_referencia_de_mcreator = true;
 						}
@@ -461,5 +488,11 @@ public class ModPKZip implements ArchivoDeMod {
 		// si viene con puntos, convertir a slashes
 		n = n.replace('.', '/');
 		return n;
+	}
+
+	@Override
+	public String version() {
+		// TODO Auto-generated method stub
+		return "version";
 	}
 }

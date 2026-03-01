@@ -6105,26 +6105,111 @@ public class Japones implements Idioma {
 	public String entrarAlJuego() {
 		return "ゲームに入る";
 	}
-	
+
 	@Override
 	public String nombreRutaCaracteresInvalidos() {
-	    return "無効なパス：使用不可の文字が含まれています";
+		return "無効なパス：使用不可の文字が含まれています";
 	}
 
 	@Override
 	public String mensajeRutaCaracteresInvalidos() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "システムパスエラーを検出しました。</b>"
+				+ "<p>フォルダー名に不正な文字が含まれているため、Minecraft を起動できませんでした。</p>" + "<p>パス内に無効な文字（例：「:」やその他の特殊記号）が検出されました。</p>"
+				+ "<p><b>推奨される解決策：</b></p>" + "<ul>" + "<li>インスタンスまたはプロファイルのフォルダー名を変更してください。</li>"
+				+ "<li>基本 ASCII 文字（A–Z、a–z、0–9）のみを使用してください。</li>"
+				+ "<li>アクセント記号、特殊記号、問題のあるスペース、絵文字（emoji）は使用しないでください。</li>" + "</ul>"
+				+ "<p>有効な例: <b>MiInstancia1</b></p>" + "<p>無効な例: <b>Instancia🔥</b> または <b>Instancia:Mod</b></p>";
+	}
+
+	@Override
+	public String nombreTwilightForestIntelShaders() {
+		return "クラッシュ: Twilight Forest + インテルドライバー";
+	}
+
+	@Override
+	public String mensajeTwilightForestIntelShaders() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Intel GPU で Twilight Forest のシェーダーに障害が検出されました。</b>"
+				+ "<p>このエラーは、Twilight Forest モッドのシェーダーを読み込む際の Intel グラフィックスドライバーに関連しています。</p>"
+				+ "<p>クラッシュはドライバー内部（igxelpicd64）で発生しており、モッドや Minecraft 自体の直接的な問題ではありません。</p>"
+				+ "<p><b>推奨される解決策：</b></p>" + "<ul>" + "<li>Intel ドライバーを最新の利用可能バージョンに更新してください。</li>"
+				+ "<li>特に、この問題が報告されていないバージョン 31.0.101.8331 または 31.0.101.8247 WHQL を試してください。</li>" + "</ul>"
+				+ "<p>公式の問題追跡ページ：</p>"
+				+ "<p><a href='https://github.com/IGCIT/Intel-GPU-Community-Issue-Tracker-IGCIT/issues/1273'>"
+				+ "https://github.com/IGCIT/Intel-GPU-Community-Issue-Tracker-IGCIT/issues/1273</a></p>"
+				+ "<p><b>注:</b> 一部の古い Intel GPU は、この問題を修正する更新を受け取らない可能性があります。</p>";
+	}
+
+	@Override
+	public String nombreForgeLanguageProviderNoCarga() {
+		return "Forge: 言語プロバイダーの読み込みに失敗しました";
+	}
+
+	@Override
+	public String mensajeForgeLanguageProviderNoCarga(String provider) {
+		String providerTexto = (provider == null || provider.isEmpty()) ? "不明なプロバイダー" : provider;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Forge が言語プロバイダーを読み込めませんでした。</b>" + "<p>IModLanguageProvider の初期化中にエラーが発生しました。</p>"
+				+ "<p><b>失敗したプロバイダー:</b> " + providerTexto + "</p>" + "<p>この問題は通常、以下の状況で発生します:</p>" + "<ul>"
+				+ "<li>必要な依存関係（例: Kotlin for Forge）が不足している。</li>" + "<li>Mod のバージョンがお使いの Forge バージョンと互換性がない。</li>"
+				+ "<li>Mod ファイルが破損している。</li>" + "</ul>" + "<p><b>推奨される解決策:</b></p>" + "<ul>"
+				+ "<li>該当する Mod を再インストールしてください。</li>" + "<li>すべての依存関係がインストールされているか確認してください。</li>"
+				+ "<li>現在の Forge と互換性のあるバージョンを使用していることを確認してください。</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreLetsDoCompatInterceptApply() {
+		return "クラッシュ: Lets Do Compat（RecipeManager インターセプト）";
+	}
+
+	@Override
+	public String mensajeLetsDoCompatInterceptApply() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Lets Do Compat (interceptApply) でクラッシュを検出しました。</b>" + "<p>このエラーは、Lets Do Compat が実行したメソッド "
+				+ "<b>RecipeManager.interceptApply</b> の変換中に発生しています。</p>" + "<p>これは通常、以下を示しています:</p>" + "<ul>"
+				+ "<li>Lets Do Compat とレシピを変更する他の Mod 間の非互換性。</li>"
+				+ "<li>Minecraft のバージョンに合わない Mod バージョンを使用していること。</li>" + "<li>トランスフォーマー（mixin/coremod）間の競合。</li>"
+				+ "</ul>" + "<p><b>推奨される解決策:</b></p>" + "<ul>" + "<li>競合を確認するため、Lets Do Compat を一時的に削除してみてください。</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreJEIItemGroupCrash() {
+		return "JEI: アイテムグループクラッシュ（非互換プラグイン）";
+	}
+
+	@Override
+	public String mensajeJEIItemGroupCrash(java.util.Set<String> plugins) {
+		String listaPlugins = (plugins == null || plugins.isEmpty()) ? "不明なプラグイン" : String.join(", ", plugins);
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "JEI がアイテムグループの構築中にクラッシュを検出しました。</b>" + "<p>JEI が材料リストを生成している際に、1つ以上のプラグインがエラーを引き起こしました。</p>"
+				+ "<p><b>影響を受けたグループ／プラグイン:</b> " + listaPlugins + "</p>" + "<p>この問題は以下の状況でよく発生します:</p>" + "<ul>"
+				+ "<li>JEI プラグインが不適切に実装されている、または古くなっている。</li>" + "<li>現在の JEI バージョンと互換性がない。</li>"
+				+ "<li>Fabric API を使用しており、Mod が Item Group を誤って登録している。</li>" + "</ul>" + "<p><b>推奨される解決策:</b></p>"
+				+ "<ul>" + "<li>JEI および該当 Mod を更新してください。</li>" + "<li>競合を確認するため、影響を受けたプラグインを一時的に削除してください。</li>"
+				+ "<li>関連 Mod の開発者にこのエラーを報告してください。</li>" + "</ul>" + "<p>この問題が修正されるまで、これらのグループのアイテムは材料リストに表示されません。</p>";
+	}
+	
+	@Override
+	public String nombreVersionInvalida() {
+	    return "無効なModバージョン（SemVer）";
+	}
+
+	@Override
+	public String mensajeVersionInvalida(String version, String ubicacion) {
+	    String v = (version == null || version.isEmpty()) ? "不明" : version;
+	    String u = (ubicacion == null || ubicacion.isEmpty()) ? "Modの場所を特定できませんでした" : ubicacion;
 	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "システムパスエラーを検出しました。</b>"
-	            + "<p>フォルダー名に不正な文字が含まれているため、Minecraft を起動できませんでした。</p>"
-	            + "<p>パス内に無効な文字（例：「:」やその他の特殊記号）が検出されました。</p>"
+	            + "無効なModバージョンが検出されました。</b>"
+	            + "<p>バージョン <b>" + v + "</b> は有効なSemVer形式に準拠していません。</p>"
+	            + "<p>このエラーは、空のプレリリース（末尾が「+」）を示しています。</p>"
+	            + "<p><b>問題のあるMod：</b><br>" + u + "</p>"
 	            + "<p><b>推奨される解決策：</b></p>"
 	            + "<ul>"
-	            + "<li>インスタンスまたはプロファイルのフォルダー名を変更してください。</li>"
-	            + "<li>基本 ASCII 文字（A–Z、a–z、0–9）のみを使用してください。</li>"
-	            + "<li>アクセント記号、特殊記号、問題のあるスペース、絵文字（emoji）は使用しないでください。</li>"
-	            + "</ul>"
-	            + "<p>有効な例: <b>MiInstancia1</b></p>"
-	            + "<p>無効な例: <b>Instancia🔥</b> または <b>Instancia:Mod</b></p>";
+	            + "<li>Modファイルを編集し、バージョンを修正してください。</li>"
+	            + "<li>後続のメタデータがない場合は、末尾の「+」を削除してください。</li>"
+	            + "<li>Modを修正済みのバージョンに更新してください。</li>"
+	            + "</ul>";
 	}
 	
 	

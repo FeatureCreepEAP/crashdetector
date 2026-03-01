@@ -61,4 +61,52 @@ public class AnalizadorModsTomlForge {
 		}
 		return nombres;
 	}
+
+	/**
+	 * Devuelve la version del mod principal.
+	 */
+	public static String extraerVersionPrincipal(String toml) {
+		if (electronwillDisponible()) {
+			try {
+				String v = AnalizadorModsTomlForgeElectronwill.extraerVersionPrincipal(toml);
+				if (v != null && !v.isEmpty())
+					return v;
+			} catch (Throwable ignored) {
+			}
+		}
+		return extraerVersionPrincipalPorRegex(toml);
+	}
+
+	// Respaldo por regex simple para versión principal
+	private static String extraerVersionPrincipalPorRegex(String toml) {
+
+		String version = null;
+
+		// Captura el bloque completo del primer [[mods]]
+		java.util.regex.Pattern pBloque = java.util.regex.Pattern.compile("\\[\\[mods\\]\\](.*?)(?=\\[\\[|\\Z)",
+				java.util.regex.Pattern.DOTALL);
+
+		java.util.regex.Matcher mBloque = pBloque.matcher(toml);
+
+		if (mBloque.find()) {
+
+			String bloque = mBloque.group(1);
+
+			// Extraer version dentro del bloque
+			java.util.regex.Pattern pVersion = java.util.regex.Pattern.compile("version\\s*=\\s*\"([^\"]+)\"");
+
+			java.util.regex.Matcher mVersion = pVersion.matcher(bloque);
+
+			if (mVersion.find()) {
+				version = mVersion.group(1).trim();
+			}
+		}
+
+		if (version == null || version.isEmpty()) {
+			return "";
+		}
+
+		return version;
+	}
+
 }

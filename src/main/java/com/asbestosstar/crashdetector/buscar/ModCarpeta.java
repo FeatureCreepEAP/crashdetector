@@ -49,6 +49,8 @@ public class ModCarpeta implements ArchivoDeMod {
 	private final Path rutaRaiz;
 	public List<Cargador> cargadores_de_mod = new ArrayList<Cargador>();
 
+	public String version = "";
+
 	/**
 	 * Constructor principal que procesa una carpeta de mods. Detecta
 	 * automáticamente si es un mod de HOI4 o un módulo de JBoss.
@@ -97,9 +99,17 @@ public class ModCarpeta implements ArchivoDeMod {
 						contieneDefinicionMod = true;
 
 						if (nombre.endsWith("modules.xml")) {
-							nombres.addAll(CargadorFeatureCreep.parsearNombreModuloJBoss(Files.readAllBytes(entrada)));
+							byte[] mxmlbytes = Files.readAllBytes(entrada);
+							nombres.addAll(CargadorFeatureCreep.parsearNombreModuloJBoss(mxmlbytes));
+							if (this.version.isEmpty()) {
+								this.version = CargadorFeatureCreep.parsearVersionModuloJBoss(mxmlbytes);
+							}
 						} else if (nombre.endsWith(".mod")) {
-							nombres.addAll(CargadorFeatureCreep.parsearNombreModHOI4(Files.readAllBytes(entrada)));
+							byte[] archivomodbytes = Files.readAllBytes(entrada);
+							nombres.addAll(CargadorFeatureCreep.parsearNombreModHOI4(archivomodbytes));
+							if (this.version.isEmpty()) {
+								this.version = CargadorFeatureCreep.parsearVersionModuloJBoss(archivomodbytes);
+							}
 						}
 					} else if (nombre.endsWith(".class")) {
 						procesarClase(entrada);
@@ -437,5 +447,11 @@ public class ModCarpeta implements ArchivoDeMod {
 		// si viene con puntos, convertir a slashes
 		n = n.replace('.', '/');
 		return n;
+	}
+
+	@Override
+	public String version() {
+		// TODO Auto-generated method stub
+		return version;
 	}
 }

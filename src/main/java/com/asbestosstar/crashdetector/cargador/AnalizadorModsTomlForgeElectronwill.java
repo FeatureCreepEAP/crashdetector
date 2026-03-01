@@ -47,4 +47,31 @@ public class AnalizadorModsTomlForgeElectronwill {
 		if (!lista.contains(v))
 			lista.add(v);
 	}
+
+	public static String extraerVersionPrincipal(String tomlTexto) {
+
+		TomlParser parser = new TomlParser();
+		UnmodifiableConfig root = parser.parse(new StringReader(tomlTexto));
+
+		Object modsVal = root.get("mods");
+
+		if (modsVal instanceof List<?>) {
+
+			List<?> mods = (List<?>) modsVal;
+
+			if (!mods.isEmpty() && mods.get(0) instanceof UnmodifiableConfig) {
+
+				Object version = ((UnmodifiableConfig) mods.get(0)).get("version");
+
+				if (version != null) {
+					String v = version.toString().trim();
+					if (!v.isEmpty())
+						return v;
+				}
+			}
+		}
+
+		return "";
+	}
+
 }

@@ -6252,30 +6252,123 @@ public class Arabe implements Idioma {
 	public String entrarAlJuego() {
 		return "الدخول إلى اللعبة";
 	}
+
 	@Override
 	public String nombreRutaCaracteresInvalidos() {
-	    return "مسار غير صالح: أحرف غير مسموح بها";
+		return "مسار غير صالح: أحرف غير مسموح بها";
 	}
 
 	@Override
 	public String mensajeRutaCaracteresInvalidos() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تم اكتشاف خطأ في مسار النظام.</b>"
+				+ "<p>تعذّر تشغيل ماينكرافت بسبب وجود أحرف غير قانونية في اسم مجلد.</p>"
+				+ "<p>اكتشف النظام حرفًا غير صالح في المسار (مثل: ':' أو رموز خاصة أخرى).</p>"
+				+ "<p><b>الحل الموصى به:</b></p>" + "<ul>" + "<li>غيّر اسم مجلد المثيل أو الملف الشخصي.</li>"
+				+ "<li>استخدم فقط أحرف ASCII الأساسية (A-Z، a-z، 0-9).</li>"
+				+ "<li>لا تستخدم علامات التشكيل، الرموز الخاصة، المسافات المشكوك فيها، أو الرموز التعبيرية (emojis).</li>"
+				+ "</ul>" + "<p>مثال صحيح: <b>MiInstancia1</b></p>"
+				+ "<p>مثال خاطئ: <b>Instancia🔥</b> أو <b>Instancia:Mod</b></p>";
+	}
+
+	@Override
+	public String nombreTwilightForestIntelShaders() {
+		return "تعطل: Twilight Forest + سواقات إنتل";
+	}
+
+	@Override
+	public String mensajeTwilightForestIntelShaders() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تم اكتشاف خلل في الظلال (shaders) الخاصة بـ Twilight Forest مع وحدات معالجة الرسومات من إنتل.</b>"
+				+ "<p>يرتبط هذا الخطأ بسواقات الرسوميات من إنتل أثناء تحميل ظلال تعديل Twilight Forest.</p>"
+				+ "<p>يحدث العطل داخل السواق (igxelpicd64) وليس مشكلة مباشرة في التعديل أو ماينكرافت.</p>"
+				+ "<p><b>الحلول الموصى بها:</b></p>" + "<ul>" + "<li>قم بتحديث سواقات إنتل إلى أحدث إصدار متاح.</li>"
+				+ "<li>جرّب تحديدًا الإصدارات 31.0.101.8331 أو 31.0.101.8247 WHQL، التي ذُكر أنها لا تعاني من هذه المشكلة.</li>"
+				+ "</ul>" + "<p>المتابعة الرسمية للمشكلة:</p>"
+				+ "<p><a href='https://github.com/IGCIT/Intel-GPU-Community-Issue-Tracker-IGCIT/issues/1273'>"
+				+ "https://github.com/IGCIT/Intel-GPU-Community-Issue-Tracker-IGCIT/issues/1273</a></p>"
+				+ "<p><b>ملاحظة:</b> قد لا تتلقى بعض وحدات معالجة الرسومات القديمة من إنتل تحديثات تحل هذه المشكلة.</p>";
+	}
+
+	@Override
+	public String nombreForgeLanguageProviderNoCarga() {
+		return "فورج: تعذّر تحميل مزوّد اللغة";
+	}
+
+	@Override
+	public String mensajeForgeLanguageProviderNoCarga(String provider) {
+		String providerTexto = (provider == null || provider.isEmpty()) ? "مزوّد غير معروف" : provider;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تعذّر على Forge تحميل مزوّد لغة.</b>" + "<p>حدث خطأ أثناء تهيئة IModLanguageProvider.</p>"
+				+ "<p><b>المزوّد الذي فشل:</b> " + providerTexto + "</p>" + "<p>يحدث هذا المشكل عادةً عندما:</p>"
+				+ "<ul>" + "<li>تنقص مكتبة مطلوبة (مثل Kotlin for Forge).</li>"
+				+ "<li>لا تكون نسخة الإضافة متوافقة مع نسختك من Forge.</li>" + "<li>يكون ملف الإضافة تالفًا.</li>"
+				+ "</ul>" + "<p><b>الحلول الموصى بها:</b></p>" + "<ul>" + "<li>أعد تثبيت الإضافة ذات الصلة.</li>"
+				+ "<li>تأكد من تثبيت جميع التبعيات المطلوبة.</li>"
+				+ "<li>تحقق من استخدام نسخ متوافقة مع إصدار Forge الحالي لديك.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreLetsDoCompatInterceptApply() {
+		return "تعطل: Lets Do Compat (اعتراض RecipeManager)";
+	}
+
+	@Override
+	public String mensajeLetsDoCompatInterceptApply() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تم اكتشاف تعطل في Lets Do Compat (interceptApply).</b>" + "<p>يحدث الخطأ داخل تحويل طريقة "
+				+ "<b>RecipeManager.interceptApply</b> الذي ينفذه Lets Do Compat.</p>" + "<p>هذا عادةً ما يشير إلى:</p>"
+				+ "<ul>" + "<li>عدم توافق بين Lets Do Compat وإضافة أخرى تُعدّل الوصفات.</li>"
+				+ "<li>استخدام إصدار غير متوافق مع نسخة ماينكرافت الخاصة بك.</li>"
+				+ "<li>صراع بين المحولات (mixin/coremod).</li>" + "</ul>" + "<p><b>الحلول الموصى بها:</b></p>" + "<ul>"
+				+ "<li>جرّب إزالة Lets Do Compat مؤقتًا لتأكيد وجود التعارض.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreJEIItemGroupCrash() {
+		return "JEI: خلل في مجموعة العناصر (إضافة غير متوافقة)";
+	}
+
+	@Override
+	public String mensajeJEIItemGroupCrash(java.util.Set<String> plugins) {
+		String listaPlugins = (plugins == null || plugins.isEmpty()) ? "إضافة غير معروفة" : String.join(", ", plugins);
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "اكتشف JEI خللًا أثناء بناء مجموعة عناصر.</b>"
+				+ "<p>تسبب أحد الإضافات أو أكثر في خطأ أثناء قيام JEI بإنشاء قائمة المكونات.</p>"
+				+ "<p><b>المجموعات/الإضافات المتأثرة:</b> " + listaPlugins + "</p>" + "<p>هذا المشكل شائع عندما:</p>"
+				+ "<ul>" + "<li>تكون إضافة JEI منفذة بشكل خاطئ أو قديمة.</li>"
+				+ "<li>يوجد عدم توافق مع الإصدار الحالي من JEI.</li>"
+				+ "<li>يتم استخدام Fabric API ويقوم أحد التعديلات بتسجيل Item Group الخاص به بشكل غير صحيح.</li>"
+				+ "</ul>" + "<p><b>الحلول الموصى بها:</b></p>" + "<ul>" + "<li>قم بتحديث JEI والتعديلات المذكورة.</li>"
+				+ "<li>احذف مؤقتًا الإضافات المتأثرة لتأكيد وجود التعارض.</li>"
+				+ "<li>أبلغ مطوّر التعديل المعني عن الخطأ.</li>" + "</ul>"
+				+ "<p>لن تظهر عناصر هذه المجموعات في قائمة المكونات حتى يتم حل المشكلة.</p>";
+	}
+	@Override
+	public String nombreVersionInvalida() {
+	    return "نسخة تعديل غير صالحة (SemVer)";
+	}
+
+	@Override
+	public String mensajeVersionInvalida(String version, String ubicacion) {
+	    String v = (version == null || version.isEmpty()) ? "غير معروفة" : version;
+	    String u = (ubicacion == null || ubicacion.isEmpty()) ? "تعذّر تحديد موقع التعديل" : ubicacion;
 	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "تم اكتشاف خطأ في مسار النظام.</b>"
-	            + "<p>تعذّر تشغيل ماينكرافت بسبب وجود أحرف غير قانونية في اسم مجلد.</p>"
-	            + "<p>اكتشف النظام حرفًا غير صالح في المسار (مثل: ':' أو رموز خاصة أخرى).</p>"
+	            + "تم اكتشاف نسخة غير صالحة من التعديل.</b>"
+	            + "<p>النسخة <b>" + v + "</b> لا تتوافق مع تنسيق SemVer الصحيح.</p>"
+	            + "<p>يشير الخطأ إلى إصدار تجريبي فارغ (ينتهي بـ '+').</p>"
+	            + "<p><b>التعديل المسؤول:</b><br>" + u + "</p>"
 	            + "<p><b>الحل الموصى به:</b></p>"
 	            + "<ul>"
-	            + "<li>غيّر اسم مجلد المثيل أو الملف الشخصي.</li>"
-	            + "<li>استخدم فقط أحرف ASCII الأساسية (A-Z، a-z، 0-9).</li>"
-	            + "<li>لا تستخدم علامات التشكيل، الرموز الخاصة، المسافات المشكوك فيها، أو الرموز التعبيرية (emojis).</li>"
-	            + "</ul>"
-	            + "<p>مثال صحيح: <b>MiInstancia1</b></p>"
-	            + "<p>مثال خاطئ: <b>Instancia🔥</b> أو <b>Instancia:Mod</b></p>";
+	            + "<li>عدّل ملف التعديل وصحّح النسخة.</li>"
+	            + "<li>احذف الرمز '+' النهائي إذا لم تكن هناك بيانات لاحقة.</li>"
+	            + "<li>حدّث التعديل إلى نسخة مُصلَحة.</li>"
+	            + "</ul>";
 	}
 	
 	
 	
 	
 	
-	
+
 }

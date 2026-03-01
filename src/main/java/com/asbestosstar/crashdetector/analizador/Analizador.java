@@ -54,6 +54,7 @@ import com.asbestosstar.crashdetector.analizador.general.ProblemaSafeFetch32JDK1
 import com.asbestosstar.crashdetector.analizador.general.RutaCaracteresInvalidos;
 import com.asbestosstar.crashdetector.analizador.general.SpongeMixinConfigsProblematicos;
 import com.asbestosstar.crashdetector.analizador.general.TienesModDesAnimado;
+import com.asbestosstar.crashdetector.analizador.general.VersionInvalidaSemver;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.config.ConfigStringArray;
 
@@ -269,10 +270,12 @@ public class Analizador {
 		verificaciones.add(new SimpleCloudsIrisDH());
 
 		verificaciones.add(new RutaCaracteresInvalidos());
+		verificaciones.add(new TwilightForestIntelShaders());
+		verificaciones.add(new ForgeLanguageProviderNoCarga());
+		verificaciones.add(new LetsDoCompatInterceptApply());
+		verificaciones.add(new JEIItemGroupCrash());
+		verificaciones.add(new VersionInvalidaSemver());
 
-		
-		
-		
 		
 		
 		

@@ -96,4 +96,10 @@ public class ArchivoDeModFake implements ArchivoDeMod {
 	public int precargarTodasLasClasesRecursivo() {
 		return 0;
 	}
+
+	@Override
+	public String version() {
+		// TODO Auto-generated method stub
+		return "";
+	}
 }

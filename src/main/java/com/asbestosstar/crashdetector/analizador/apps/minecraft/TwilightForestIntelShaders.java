@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetector.analizador.general;
+package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
@@ -7,11 +7,11 @@ import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceI
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class RutaCaracteresInvalidos implements Verificaciones {
+public class TwilightForestIntelShaders implements Verificaciones {
 
 	// Indica si el log contiene indicios globales del error (optimización de
 	// rendimiento)
-	private boolean posibleRutaInvalida = false;
+	private boolean posibleFalloIntelShaders = false;
 
 	// Indica si esta verificación fue activada
 	private boolean activado = false;
@@ -23,11 +23,12 @@ public class RutaCaracteresInvalidos implements Verificaciones {
 	public void verificar(Consola consola) {
 
 		// Detección global ligera:
-		// Solo buscamos la excepción principal sin usar regex ni operaciones costosas.
-		if (consola.contenido_verificar.contains("java.nio.file.InvalidPathException")
-				&& consola.contenido_verificar.contains("Illegal char <:>")) {
+		// Se comprueba que existan las tres pistas clave del error
+		if (consola.contenido_verificar.contains("Problematic frame:")
+				&& consola.contenido_verificar.contains("igxelpicd64")
+				&& consola.contenido_verificar.contains("twilightforest.client.TFShaders$BindableShaderInstance")) {
 
-			posibleRutaInvalida = true;
+			posibleFalloIntelShaders = true;
 		}
 	}
 
@@ -35,12 +36,12 @@ public class RutaCaracteresInvalidos implements Verificaciones {
 	public void verificar(Consola consola, String linea, int num) {
 
 		// Salir temprano si no hay indicios globales
-		if (!posibleRutaInvalida) {
+		if (!posibleFalloIntelShaders) {
 			return;
 		}
 
-		// Verificación precisa en la línea específica
-		if (linea.contains("java.nio.file.InvalidPathException") && linea.contains("Illegal char <:>")) {
+		// Verificación precisa en línea
+		if (linea.contains("TFShaders$BindableShaderInstance")) {
 
 			this.enlace = consola.agregarErrorALectador(num, this);
 			this.activado = true;
@@ -49,7 +50,7 @@ public class RutaCaracteresInvalidos implements Verificaciones {
 
 	@Override
 	public Verificaciones nueva() {
-		return new RutaCaracteresInvalidos();
+		return new TwilightForestIntelShaders();
 	}
 
 	@Override
@@ -59,17 +60,17 @@ public class RutaCaracteresInvalidos implements Verificaciones {
 
 	@Override
 	public float prioridad() {
-		return 1200;
+		return 1500;
 	}
 
 	@Override
 	public String mensaje() {
-		return MonitorDePID.idioma.mensajeRutaCaracteresInvalidos() + this.enlace;
+		return MonitorDePID.idioma.mensajeTwilightForestIntelShaders() + this.enlace;
 	}
 
 	@Override
 	public String nombre() {
-		return MonitorDePID.idioma.nombreRutaCaracteresInvalidos();
+		return MonitorDePID.idioma.nombreTwilightForestIntelShaders();
 	}
 
 	@Override
@@ -84,7 +85,7 @@ public class RutaCaracteresInvalidos implements Verificaciones {
 
 	@Override
 	public String id() {
-		return "ruta_caracteres_invalidos";
+		return "twilight_forest_intel_shaders";
 	}
 
 	@Override

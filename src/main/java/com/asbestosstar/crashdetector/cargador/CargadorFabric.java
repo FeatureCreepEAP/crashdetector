@@ -97,4 +97,45 @@ public class CargadorFabric implements Cargador {
 		}
 	}
 
+	/**
+	 * Extrae la version desde fabric.mod.json. Devuelve cadena vacia si no existe.
+	 * Usa la clase Json y si falla usa respaldo por regex.
+	 */
+	public static String parsearVersionModFabric(String texto) {
+
+		try {
+			// intento con la capa Json
+			Json.Nodo raiz = Json.leer(texto);
+
+			String version = raiz.obtener("version").comoCadena();
+
+			if (version != null) {
+				version = version.trim();
+				if (!version.isEmpty()) {
+					return version;
+				}
+			}
+
+		} catch (Throwable t) {
+			// si falla Json, continuar con regex
+		}
+
+		// ==========================
+		// RESPALDO POR REGEX
+		// ==========================
+
+		java.util.regex.Pattern pver = java.util.regex.Pattern.compile("\"version\"\\s*:\\s*\"([^\"]+)\"");
+
+		java.util.regex.Matcher mver = pver.matcher(texto);
+
+		if (mver.find()) {
+			String version = mver.group(1).trim();
+			if (!version.isEmpty()) {
+				return version;
+			}
+		}
+
+		return "";
+	}
+
 }

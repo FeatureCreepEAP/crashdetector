@@ -38,6 +38,13 @@ public interface ArchivoDeMod {
 	public List<String> nombre();
 
 	/**
+	 * La version de la mod
+	 * 
+	 * @return
+	 */
+	public String version();
+
+	/**
 	 * Obtiene la ubicación física del archivo de mod.
 	 * 
 	 * @return Ruta del archivo
@@ -459,6 +466,12 @@ public interface ArchivoDeMod {
 		public int precargarTodasLasClasesRecursivo() {
 			// TODO Auto-generated method stub
 			return 0;
+		}
+
+		@Override
+		public String version() {
+			// TODO Auto-generated method stub
+			return "";
 		}
 	}
 

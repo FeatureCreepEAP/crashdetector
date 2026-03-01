@@ -6094,26 +6094,112 @@ public class Coreano implements Idioma {
 	public String entrarAlJuego() {
 		return "게임에 들어가기";
 	}
+
 	@Override
 	public String nombreRutaCaracteresInvalidos() {
-	    return "경로 무효: 허용되지 않는 문자 포함";
+		return "경로 무효: 허용되지 않는 문자 포함";
 	}
 
 	@Override
 	public String mensajeRutaCaracteresInvalidos() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "체계 경로 오류가 감지되였습니다.</b>"
+				+ "<p>폴더 이름에 불법 문자가 있어 마인크래프트를 시작할 수 없습니다.</p>"
+				+ "<p>체계가 경로에서 무효한 문자를 발견하였습니다 (예: ':' 또는 기타 특수 기호).</p>" + "<p><b>권장 해결 방법:</b></p>" + "<ul>"
+				+ "<li>인스턴스 또는 프로필 폴더 이름을 변경하십시오.</li>" + "<li>기본 ASCII 문자(A-Z, a-z, 0-9)만 사용하십시오.</li>"
+				+ "<li>억양 부호, 특수 기호, 문제되는 공백, 이모지 등을 사용하지 마십시오.</li>" + "</ul>" + "<p>허용되는 예: <b>MiInstancia1</b></p>"
+				+ "<p>허용되지 않는 예: <b>Instancia🔥</b> 또는 <b>Instancia:Mod</b></p>";
+	}
+
+	@Override
+	public String nombreTwilightForestIntelShaders() {
+		return "크래시: Twilight Forest + 인텔 드라이버";
+	}
+
+	@Override
+	public String mensajeTwilightForestIntelShaders() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "인텔 GPU에서 Twilight Forest 셰이더에 오류가 감지되였습니다.</b>"
+				+ "<p>이 오류는 Twilight Forest 모드의 셰이더를 불러들이는 과정에서 인텔 그래픽 드라이버와 관련되여 있습니다.</p>"
+				+ "<p>오류는 드라이버 내부(igxelpicd64)에서 발생하며, 모드나 마인크래프트 자체의 직접적인 문제가 아닙니다.</p>" + "<p><b>권장 해결 방법:</b></p>"
+				+ "<ul>" + "<li>인텔 드라이버를 사용 가능한 최신 버전으로 갱신하십시오.</li>"
+				+ "<li>특히 31.0.101.8331 또는 31.0.101.8247 WHQL 버전을 시험해 보십시오. 이들 버전은 해당 문제를 일으키지 않는다고 보고되였습니다.</li>"
+				+ "</ul>" + "<p>문제 공식 추적 링크:</p>"
+				+ "<p><a href='https://github.com/IGCIT/Intel-GPU-Community-Issue-Tracker-IGCIT/issues/1273'>"
+				+ "https://github.com/IGCIT/Intel-GPU-Community-Issue-Tracker-IGCIT/issues/1273</a></p>"
+				+ "<p><b>참고:</b> 일부 구형 인텔 GPU는 이 문제를 해결하는 갱신을 받지 못 할 수도 있습니다.</p>";
+	}
+
+	@Override
+	public String nombreForgeLanguageProviderNoCarga() {
+		return "포지: 언어 공급자 적재 불가";
+	}
+
+	@Override
+	public String mensajeForgeLanguageProviderNoCarga(String provider) {
+		String providerTexto = (provider == null || provider.isEmpty()) ? "알 수 없는 공급자" : provider;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "포지가 언어 공급자를 적재하지 못 하였습니다.</b>" + "<p>IModLanguageProvider를 초기화하는 도중 오류가 발생하였습니다.</p>"
+				+ "<p><b>실패한 공급자:</b> " + providerTexto + "</p>" + "<p>이 문제는 보통 다음 경우에 발생합니다:</p>" + "<ul>"
+				+ "<li>필수 종속성(예: Kotlin for Forge)이 누락되여 있음.</li>" + "<li>모드 버전이 당신의 포지 버전과 호환되지 않음.</li>"
+				+ "<li>모드 파일이 손상되여 있음.</li>" + "</ul>" + "<p><b>권장 해결 방법:</b></p>" + "<ul>"
+				+ "<li>관련 모드를 다시 설치하십시오.</li>" + "<li>모든 종속성이 설치되였는지 확인하십시오.</li>"
+				+ "<li>현재 사용 중인 포지와 호환되는 버전을 사용하고 있는지 확보하십시오.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreLetsDoCompatInterceptApply() {
+		return "크래시: Lets Do Compat (RecipeManager 가로채기)";
+	}
+
+	@Override
+	public String mensajeLetsDoCompatInterceptApply() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Lets Do Compat(interceptApply)에서 크래시가 감지되였습니다.</b>" + "<p>오류는 Lets Do Compat이 수행한 "
+				+ "<b>RecipeManager.interceptApply</b> 방법 변환 내부에서 발생합니다.</p>" + "<p>이는 보통 다음을 가리킵니다:</p>" + "<ul>"
+				+ "<li>Lets Do Compat과 레시피를 수정하는 다른 모드 사이의 비호환성.</li>" + "<li>당신의 마인크래프트 버전에 맞지 않는 버전 사용.</li>"
+				+ "<li>변환기들(mixin/coremod) 사이의 충돌.</li>" + "</ul>" + "<p><b>권장 해결 방법:</b></p>" + "<ul>"
+				+ "<li>충돌을 확인하기 위해 Lets Do Compat을 임시로 제거해 보십시오.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreJEIItemGroupCrash() {
+		return "JEI: 아이템 그룹 오류 (비호환 플러그인)";
+	}
+
+	@Override
+	public String mensajeJEIItemGroupCrash(java.util.Set<String> plugins) {
+		String listaPlugins = (plugins == null || plugins.isEmpty()) ? "알 수 없는 플러그인" : String.join(", ", plugins);
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "JEI가 아이템 그룹을 구성하는 도중 오류를 감지하였습니다.</b>" + "<p>JEI가 재료 목록을 생성하는 과정에서 하나 이상의 플러그인이 오류를 일으켰습니다.</p>"
+				+ "<p><b>영향 받은 그룹/플러그인:</b> " + listaPlugins + "</p>" + "<p>이 문제는 보통 다음 경우에 발생합니다:</p>" + "<ul>"
+				+ "<li>JEI 플러그인이 잘못 구현되였거나 오래되였음.</li>" + "<li>현재 JEI 버전과 호환되지 않음.</li>"
+				+ "<li>Fabric API를 사용할 때 어떤 모드가 자기의 Item Group을 잘못 등록함.</li>" + "</ul>" + "<p><b>권장 해결 방법:</b></p>"
+				+ "<ul>" + "<li>JEI와 해당 모드들을 갱신하십시오.</li>" + "<li>충돌을 확인하기 위해 영향 받은 플러그인들을 임시로 제거하십시오.</li>"
+				+ "<li>해당 모드 개발자에게 이 오류를 보고하십시오.</li>" + "</ul>" + "<p>문제가 해결되기 전까지 이 그룹의 아이템들은 재료 목록에 나타나지 않습니다.</p>";
+	}
+	@Override
+	public String nombreVersionInvalida() {
+	    return "무효한 모드 버전(SemVer)";
+	}
+
+	@Override
+	public String mensajeVersionInvalida(String version, String ubicacion) {
+	    String v = (version == null || version.isEmpty()) ? "알 수 없음" : version;
+	    String u = (ubicacion == null || ubicacion.isEmpty()) ? "모드를 찾을 수 없음" : ubicacion;
 	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "체계 경로 오류가 감지되였습니다.</b>"
-	            + "<p>폴더 이름에 불법 문자가 있어 마인크래프트를 시작할 수 없습니다.</p>"
-	            + "<p>체계가 경로에서 무효한 문자를 발견하였습니다 (예: ':' 또는 기타 특수 기호).</p>"
+	            + "무효한 모드 버전이 감지되였습니다.</b>"
+	            + "<p>버전 <b>" + v + "</b>은(는) 올바른 SemVer 형식에 부합하지 않습니다.</p>"
+	            + "<p>오류는 빈 프리릴리즈(끝이 '+'로 끝남)를 가리킵니다.</p>"
+	            + "<p><b>책임 모드:</b><br>" + u + "</p>"
 	            + "<p><b>권장 해결 방법:</b></p>"
 	            + "<ul>"
-	            + "<li>인스턴스 또는 프로필 폴더 이름을 변경하십시오.</li>"
-	            + "<li>기본 ASCII 문자(A-Z, a-z, 0-9)만 사용하십시오.</li>"
-	            + "<li>억양 부호, 특수 기호, 문제되는 공백, 이모지 등을 사용하지 마십시오.</li>"
-	            + "</ul>"
-	            + "<p>허용되는 예: <b>MiInstancia1</b></p>"
-	            + "<p>허용되지 않는 예: <b>Instancia🔥</b> 또는 <b>Instancia:Mod</b></p>";
+	            + "<li>모드 파일을 편집하여 버전을 수정하십시오.</li>"
+	            + "<li>후속 메타데이터가 없다면 끝의 '+'를 제거하십시오.</li>"
+	            + "<li>모드를 수정된 버전으로 갱신하십시오.</li>"
+	            + "</ul>";
 	}
+	
+	
 	
 	
 

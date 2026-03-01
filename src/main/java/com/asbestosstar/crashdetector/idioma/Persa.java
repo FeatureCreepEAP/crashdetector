@@ -6294,24 +6294,123 @@ public class Persa implements Idioma {
 
 	@Override
 	public String nombreRutaCaracteresInvalidos() {
-	    return "مسیر نامعتبر: شامل کاراکترهای غیرمجاز";
+		return "مسیر نامعتبر: شامل کاراکترهای غیرمجاز";
 	}
 
 	@Override
 	public String mensajeRutaCaracteresInvalidos() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "خطای مسیر سیستم شناسایی شد.</b>"
+				+ "<p>ماينکرفت به دلیل وجود کاراکترهای غیرقانونی در نام یک پوشه، اجرا نشد.</p>"
+				+ "<p>سیستم یک کاراکتر نامعتبر در مسیر شناسایی کرد (مثلاً «:» یا سایر نمادهای ویژه).</p>"
+				+ "<p><b>راه‌حل پیشنهادی:</b></p>" + "<ul>" + "<li>نام پوشهٔ نمونه یا پروفایل را تغییر دهید.</li>"
+				+ "<li>فقط از کاراکترهای پایهٔ ASCII (A-Z، a-z، 0-9) استفاده کنید.</li>"
+				+ "<li>از علائم تشدید، نمادهای ویژه، فاصله‌های مشکل‌ساز و ایموجی‌ها استفاده نکنید.</li>" + "</ul>"
+				+ "<p>مثال معتبر: <b>MiInstancia1</b></p>"
+				+ "<p>مثال نامعتبر: <b>Instancia🔥</b> یا <b>Instancia:Mod</b></p>";
+	}
+
+	@Override
+	public String nombreTwilightForestIntelShaders() {
+		return "خرابی: Twilight Forest + درایورهای اینتل";
+	}
+
+	@Override
+	public String mensajeTwilightForestIntelShaders() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "خطای سایه‌پرداز Twilight Forest با GPU اینتل شناسایی شد.</b>"
+				+ "<p>این خطا مربوط به درایورهای گرافیکی اینتل هنگام بارگیری سایه‌پردازهای مود Twilight Forest است.</p>"
+				+ "<p>این خرابی درون درایور (igxelpicd64) رخ می‌دهد و مشکل مستقیم مود یا ماینکرفت نیست.</p>"
+				+ "<p><b>راه‌حل‌های پیشنهادی:</b></p>" + "<ul>"
+				+ "<li>درایورهای اینتل را به آخرین نسخهٔ موجود به‌روزرسانی کنید.</li>"
+				+ "<li>به‌طور خاص نسخه‌های 31.0.101.8331 یا 31.0.101.8247 WHQL را امتحان کنید که طبق گزارش‌ها این مشکل را ندارند.</li>"
+				+ "</ul>" + "<p>پیگیری رسمی مشکل:</p>"
+				+ "<p><a href='https://github.com/IGCIT/Intel-GPU-Community-Issue-Tracker-IGCIT/issues/1273'>"
+				+ "https://github.com/IGCIT/Intel-GPU-Community-Issue-Tracker-IGCIT/issues/1273</a></p>"
+				+ "<p><b>نکته:</b> برخی GPUهای قدیمی‌تر اینتل ممکن است به‌روزرسانی‌هایی برای رفع این مشکل دریافت نکنند.</p>";
+	}
+
+	@Override
+	public String nombreForgeLanguageProviderNoCarga() {
+		return "فورج: ارائه‌دهندهٔ زبان بارگیری نشد";
+	}
+
+	@Override
+	public String mensajeForgeLanguageProviderNoCarga(String provider) {
+		String providerTexto = (provider == null || provider.isEmpty()) ? "ارائه‌دهندهٔ ناشناخته" : provider;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "فورج نتوانست یک ارائه‌دهندهٔ زبان را بارگیری کند.</b>"
+				+ "<p>هنگام مقداردهی اولیهٔ IModLanguageProvider خطایی رخ داد.</p>" + "<p><b>ارائه‌دهندهٔ ناموفق:</b> "
+				+ providerTexto + "</p>" + "<p>این مشکل معمولاً در موارد زیر رخ می‌دهد:</p>" + "<ul>"
+				+ "<li>وابستگی مورد نیاز وجود ندارد (مثلاً Kotlin for Forge).</li>"
+				+ "<li>نسخهٔ مود با نسخهٔ فورج شما سازگار نیست.</li>" + "<li>فایل مود خراب است.</li>" + "</ul>"
+				+ "<p><b>راه‌حل‌های پیشنهادی:</b></p>" + "<ul>" + "<li>مود مربوطه را دوباره نصب کنید.</li>"
+				+ "<li>بررسی کنید که همهٔ وابستگی‌های آن نصب شده باشند.</li>"
+				+ "<li>مطمئن شوید که از نسخه‌های سازگار با فورج فعلی خود استفاده می‌کنید.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreLetsDoCompatInterceptApply() {
+		return "خرابی: Lets Do Compat (اعتراض RecipeManager)";
+	}
+
+	@Override
+	public String mensajeLetsDoCompatInterceptApply() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "خرابی در Lets Do Compat (interceptApply) شناسایی شد.</b>" + "<p>این خطا درون تبدیلی از متد "
+				+ "<b>RecipeManager.interceptApply</b> که توسط Lets Do Compat انجام شده، رخ می‌دهد.</p>"
+				+ "<p>این معمولاً نشان‌دهندهٔ موارد زیر است:</p>" + "<ul>"
+				+ "<li>ناسازگاری بین Lets Do Compat و مود دیگری که دستورها (recipes) را تغییر می‌دهد.</li>"
+				+ "<li>نسخهٔ نامناسب برای نسخهٔ ماينکرفت شما.</li>" + "<li>تضاد بین مبدل‌ها (mixin/coremod).</li>"
+				+ "</ul>" + "<p><b>راه‌حل‌های پیشنهادی:</b></p>" + "<ul>"
+				+ "<li>برای تأیید تداخل، Lets Do Compat را به‌صورت موقت حذف کنید.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreJEIItemGroupCrash() {
+		return "JEI: خرابی در گروه آیتم (پلاگین ناسازگار)";
+	}
+
+	@Override
+	public String mensajeJEIItemGroupCrash(java.util.Set<String> plugins) {
+		String listaPlugins = (plugins == null || plugins.isEmpty()) ? "پلاگین ناشناخته" : String.join(", ", plugins);
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "JEI هنگام ساخت یک گروه آیتم، خرابی را شناسایی کرد.</b>"
+				+ "<p>یک یا چند پلاگین هنگام تولید لیست مواد توسط JEI باعث خطا شدند.</p>"
+				+ "<p><b>گروه‌ها/پلاگین‌های تحت تأثیر:</b> " + listaPlugins + "</p>"
+				+ "<p>این مشکل معمولاً در موارد زیر رخ می‌دهد:</p>" + "<ul>"
+				+ "<li>پلاگین JEI به‌درستی پیاده‌سازی نشده یا قدیمی است.</li>"
+				+ "<li>ناسازگاری با نسخهٔ فعلی JEI وجود دارد.</li>"
+				+ "<li>از Fabric API استفاده می‌شود و یک مود، Item Group خود را به‌صورت نادرست ثبت کرده است.</li>"
+				+ "</ul>" + "<p><b>راه‌حل‌های پیشنهادی:</b></p>" + "<ul>"
+				+ "<li>JEI و مودهای ذکرشده را به‌روزرسانی کنید.</li>"
+				+ "<li>برای تأیید تداخل، پلاگین‌های تحت تأثیر را به‌صورت موقت حذف کنید.</li>"
+				+ "<li>خطا را به توسعه‌دهندهٔ مود مربوطه گزارش دهید.</li>" + "</ul>"
+				+ "<p>آیتم‌های این گروه‌ها تا زمان رفع مشکل در لیست مواد ظاهر نخواهند شد.</p>";
+	}
+	@Override
+	public String nombreVersionInvalida() {
+	    return "نسخهٔ نامعتبر مود (SemVer)";
+	}
+
+	@Override
+	public String mensajeVersionInvalida(String version, String ubicacion) {
+	    String v = (version == null || version.isEmpty()) ? "ناشناخته" : version;
+	    String u = (ubicacion == null || ubicacion.isEmpty()) ? "مود یافت نشد" : ubicacion;
 	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "خطای مسیر سیستم شناسایی شد.</b>"
-	            + "<p>ماينکرفت به دلیل وجود کاراکترهای غیرقانونی در نام یک پوشه، اجرا نشد.</p>"
-	            + "<p>سیستم یک کاراکتر نامعتبر در مسیر شناسایی کرد (مثلاً «:» یا سایر نمادهای ویژه).</p>"
+	            + "نسخهٔ نامعتبر مود شناسایی شد.</b>"
+	            + "<p>نسخهٔ <b>" + v + "</b> با قالب معتبر SemVer سازگار نیست.</p>"
+	            + "<p>این خطا نشان‌دهندهٔ پیش‌انتشار خالی است (با '+' تمام می‌شود).</p>"
+	            + "<p><b>مود مسئول:</b><br>" + u + "</p>"
 	            + "<p><b>راه‌حل پیشنهادی:</b></p>"
 	            + "<ul>"
-	            + "<li>نام پوشهٔ نمونه یا پروفایل را تغییر دهید.</li>"
-	            + "<li>فقط از کاراکترهای پایهٔ ASCII (A-Z، a-z، 0-9) استفاده کنید.</li>"
-	            + "<li>از علائم تشدید، نمادهای ویژه، فاصله‌های مشکل‌ساز و ایموجی‌ها استفاده نکنید.</li>"
-	            + "</ul>"
-	            + "<p>مثال معتبر: <b>MiInstancia1</b></p>"
-	            + "<p>مثال نامعتبر: <b>Instancia🔥</b> یا <b>Instancia:Mod</b></p>";
+	            + "<li>فایل مود را ویرایش کرده و نسخه را اصلاح کنید.</li>"
+	            + "<li>اگر متادیتای بعدی وجود ندارد، '+' پایانی را حذف کنید.</li>"
+	            + "<li>مود را به نسخهٔ اصلاح‌شده به‌روزرسانی کنید.</li>"
+	            + "</ul>";
 	}
 	
 	
+	
+
 }

@@ -5981,30 +5981,105 @@ public class Chino implements Idioma {
 	public String entrarAlJuego() {
 		return "进入游戏";
 	}
+
 	@Override
 	public String nombreRutaCaracteresInvalidos() {
-	    return "路径无效：包含非法字符";
+		return "路径无效：包含非法字符";
 	}
 
 	@Override
 	public String mensajeRutaCaracteresInvalidos() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "检测到系统路径错误。</b>"
-	            + "<p>Minecraft 无法启动，因为文件夹名称中包含非法字符。</p>"
-	            + "<p>系统在路径中检测到无效字符（例如：“:”或其他特殊符号）。</p>"
-	            + "<p><b>推荐解决方案：</b></p>"
-	            + "<ul>"
-	            + "<li>重命名实例或配置文件夹。</li>"
-	            + "<li>仅使用基本 ASCII 字符（A-Z、a-z、0-9）。</li>"
-	            + "<li>不要使用重音符号、特殊符号、问题空格或表情符号。</li>"
-	            + "</ul>"
-	            + "<p>有效示例：<b>MiInstancia1</b></p>"
-	            + "<p>无效示例：<b>Instancia🔥</b> 或 <b>Instancia:Mod</b></p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "检测到系统路径错误。</b>"
+				+ "<p>Minecraft 无法启动，因为文件夹名称中包含非法字符。</p>" + "<p>系统在路径中检测到无效字符（例如：“:”或其他特殊符号）。</p>"
+				+ "<p><b>推荐解决方案：</b></p>" + "<ul>" + "<li>重命名实例或配置文件夹。</li>" + "<li>仅使用基本 ASCII 字符（A-Z、a-z、0-9）。</li>"
+				+ "<li>不要使用重音符号、特殊符号、问题空格或表情符号。</li>" + "</ul>" + "<p>有效示例：<b>MiInstancia1</b></p>"
+				+ "<p>无效示例：<b>Instancia🔥</b> 或 <b>Instancia:Mod</b></p>";
+	}
+
+	@Override
+	public String nombreTwilightForestIntelShaders() {
+		return "崩溃：Twilight Forest + 英特尔驱动程序";
+	}
+
+	@Override
+	public String mensajeTwilightForestIntelShaders() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "检测到 Twilight Forest 的着色器在英特尔 GPU 上出现故障。</b>" + "<p>此错误与英特尔显卡驱动程序加载 Twilight Forest 模组的着色器有关。</p>"
+				+ "<p>故障发生在驱动内部（igxelpicd64），并非模组或 Minecraft 本身的直接问题。</p>" + "<p><b>推荐解决方案：</b></p>" + "<ul>"
+				+ "<li>将英特尔驱动程序更新至最新可用版本。</li>" + "<li>特别尝试版本 31.0.101.8331 或 31.0.101.8247 WHQL，据反馈这些版本不存在此问题。</li>"
+				+ "</ul>" + "<p>问题官方跟踪链接：</p>"
+				+ "<p><a href='https://github.com/IGCIT/Intel-GPU-Community-Issue-Tracker-IGCIT/issues/1273'>"
+				+ "https://github.com/IGCIT/Intel-GPU-Community-Issue-Tracker-IGCIT/issues/1273</a></p>"
+				+ "<p><b>注意：</b>部分较旧的英特尔 GPU 可能不会收到修复此问题的更新。</p>";
+	}
+
+	@Override
+	public String nombreForgeLanguageProviderNoCarga() {
+		return "Forge：语言提供程序未能加载";
+	}
+
+	@Override
+	public String mensajeForgeLanguageProviderNoCarga(String provider) {
+		String providerTexto = (provider == null || provider.isEmpty()) ? "未知提供程序" : provider;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "Forge 无法加载语言提供程序。</b>"
+				+ "<p>初始化 IModLanguageProvider 时发生错误。</p>" + "<p><b>失败的提供程序：</b> " + providerTexto + "</p>"
+				+ "<p>此问题通常发生在以下情况：</p>" + "<ul>" + "<li>缺少必需的依赖项（例如 Kotlin for Forge）。</li>"
+				+ "<li>模组版本与你的 Forge 版本不兼容。</li>" + "<li>模组文件已损坏。</li>" + "</ul>" + "<p><b>推荐解决方案：</b></p>" + "<ul>"
+				+ "<li>重新安装相关模组。</li>" + "<li>确认所有依赖项均已安装。</li>" + "<li>确保使用的版本与当前 Forge 兼容。</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreLetsDoCompatInterceptApply() {
+		return "崩溃：Lets Do Compat（RecipeManager 拦截）";
+	}
+
+	@Override
+	public String mensajeLetsDoCompatInterceptApply() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "在 Lets Do Compat (interceptApply) 中检测到崩溃。</b>" + "<p>错误发生在 Lets Do Compat 对方法 "
+				+ "<b>RecipeManager.interceptApply</b> 所做的转换中。</p>" + "<p>这通常表明：</p>" + "<ul>"
+				+ "<li>Lets Do Compat 与另一个修改配方的模组不兼容。</li>" + "<li>使用的版本与你的 Minecraft 版本不匹配。</li>"
+				+ "<li>转换器之间存在冲突（mixin/coremod）。</li>" + "</ul>" + "<p><b>推荐解决方案：</b></p>" + "<ul>"
+				+ "<li>尝试临时移除 Lets Do Compat 以确认冲突。</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreJEIItemGroupCrash() {
+		return "JEI：物品组崩溃（插件不兼容）";
+	}
+
+	@Override
+	public String mensajeJEIItemGroupCrash(java.util.Set<String> plugins) {
+		String listaPlugins = (plugins == null || plugins.isEmpty()) ? "未知插件" : String.join(", ", plugins);
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "JEI 在构建物品组时检测到故障。</b>"
+				+ "<p>一个或多个插件在 JEI 生成物品列表时引发了错误。</p>" + "<p><b>受影响的物品组/插件：</b> " + listaPlugins + "</p>"
+				+ "<p>此问题通常出现在以下情况：</p>" + "<ul>" + "<li>JEI 插件实现有误或已过时。</li>" + "<li>与当前 JEI 版本不兼容。</li>"
+				+ "<li>使用了 Fabric API，但某个模组错误地注册了其 Item Group。</li>" + "</ul>" + "<p><b>推荐解决方案：</b></p>" + "<ul>"
+				+ "<li>更新 JEI 及所列模组。</li>" + "<li>临时移除受影响的插件以确认冲突。</li>" + "<li>向相关模组开发者报告此错误。</li>" + "</ul>"
+				+ "<p>在问题修复前，这些物品组中的物品将不会出现在物品列表中。</p>";
 	}
 	
 	
-	
-	
-	
+	@Override
+	public String nombreVersionInvalida() {
+	    return "模组版本无效（SemVer）";
+	}
+
+	@Override
+	public String mensajeVersionInvalida(String version, String ubicacion) {
+	    String v = (version == null || version.isEmpty()) ? "未知" : version;
+	    String u = (ubicacion == null || ubicacion.isEmpty()) ? "无法定位模组" : ubicacion;
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "检测到无效的模组版本。</b>"
+	            + "<p>版本 <b>" + v + "</b> 不符合有效的 SemVer 格式。</p>"
+	            + "<p>错误表明预发布部分为空（以 '+' 结尾）。</p>"
+	            + "<p><b>问题模组：</b><br>" + u + "</p>"
+	            + "<p><b>推荐解决方案：</b></p>"
+	            + "<ul>"
+	            + "<li>编辑模组文件并修正版本号。</li>"
+	            + "<li>如果后面没有元数据，请删除末尾的 '+'。</li>"
+	            + "<li>将模组更新至已修复的版本。</li>"
+	            + "</ul>";
+	}
 
 }

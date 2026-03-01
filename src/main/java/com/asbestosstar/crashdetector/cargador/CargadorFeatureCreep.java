@@ -67,4 +67,54 @@ public class CargadorFeatureCreep implements Cargador {
 		return java.util.Collections.singletonList(nombre);
 	}
 
+	/**
+	 * Extrae la version (slot) de un archivo modules.xml de JBoss. Devuelve cadena
+	 * vacia si no existe.
+	 */
+	public static String parsearVersionModuloJBoss(byte[] contenido) throws IOException {
+
+		String xml = new String(contenido, java.nio.charset.StandardCharsets.UTF_8);
+
+		String clave = "slot=\"";
+		int pos = xml.indexOf(clave);
+
+		if (pos < 0)
+			return "";
+
+		int inicio = pos + clave.length();
+		int fin = xml.indexOf("\"", inicio);
+
+		if (fin < 0)
+			return "";
+
+		String version = xml.substring(inicio, fin).trim();
+
+		return version.isEmpty() ? "" : version;
+	}
+
+	/**
+	 * Extrae la version de un archivo HOI4 (.mod). Devuelve cadena vacia si no
+	 * existe.
+	 */
+	public static String parsearVersionModHOI4(byte[] contenido) throws IOException {
+
+		String texto = new String(contenido, java.nio.charset.StandardCharsets.UTF_8);
+
+		String clave = "version=\"";
+		int pos = texto.indexOf(clave);
+
+		if (pos < 0)
+			return "";
+
+		int inicio = pos + clave.length();
+		int fin = texto.indexOf("\"", inicio);
+
+		if (fin < 0)
+			return "";
+
+		String version = texto.substring(inicio, fin).trim();
+
+		return version.isEmpty() ? "" : version;
+	}
+
 }

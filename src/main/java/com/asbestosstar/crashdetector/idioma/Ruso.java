@@ -6324,27 +6324,128 @@ public class Ruso implements Idioma {
 	public String entrarAlJuego() {
 		return "Войти в игру";
 	}
-	
+
 	@Override
 	public String nombreRutaCaracteresInvalidos() {
-	    return "Недопустимый путь: запрещённые символы";
+		return "Недопустимый путь: запрещённые символы";
 	}
 
 	@Override
 	public String mensajeRutaCaracteresInvalidos() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "Обнаружена ошибка в системном пути.</b>"
-	            + "<p>Minecraft не удалось запустить из-за недопустимых символов в имени папки.</p>"
-	            + "<p>Система обнаружила недопустимый символ в пути (например: «:» или другие специальные символы).</p>"
-	            + "<p><b>Рекомендуемое решение:</b></p>"
-	            + "<ul>"
-	            + "<li>Переименуйте папку экземпляра или профиля.</li>"
-	            + "<li>Используйте только базовые ASCII-символы (A–Z, a–z, 0–9).</li>"
-	            + "<li>Не используйте диакритические знаки, специальные символы, проблемные пробелы и эмодзи.</li>"
-	            + "</ul>"
-	            + "<p>Допустимый пример: <b>MiInstancia1</b></p>"
-	            + "<p>Недопустимый пример: <b>Instancia🔥</b> или <b>Instancia:Mod</b></p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Обнаружена ошибка в системном пути.</b>"
+				+ "<p>Minecraft не удалось запустить из-за недопустимых символов в имени папки.</p>"
+				+ "<p>Система обнаружила недопустимый символ в пути (например: «:» или другие специальные символы).</p>"
+				+ "<p><b>Рекомендуемое решение:</b></p>" + "<ul>"
+				+ "<li>Переименуйте папку экземпляра или профиля.</li>"
+				+ "<li>Используйте только базовые ASCII-символы (A–Z, a–z, 0–9).</li>"
+				+ "<li>Не используйте диакритические знаки, специальные символы, проблемные пробелы и эмодзи.</li>"
+				+ "</ul>" + "<p>Допустимый пример: <b>MiInstancia1</b></p>"
+				+ "<p>Недопустимый пример: <b>Instancia🔥</b> или <b>Instancia:Mod</b></p>";
+	}
+
+	@Override
+	public String nombreTwilightForestIntelShaders() {
+		return "Сбой: Twilight Forest + драйверы Intel";
+	}
+
+	@Override
+	public String mensajeTwilightForestIntelShaders() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Обнаружена ошибка шейдеров Twilight Forest на GPU Intel.</b>"
+				+ "<p>Эта ошибка связана с графическими драйверами Intel при загрузке шейдеров мода Twilight Forest.</p>"
+				+ "<p>Сбой происходит внутри драйвера (igxelpicd64) и не является прямой проблемой мода или Minecraft.</p>"
+				+ "<p><b>Рекомендуемые решения:</b></p>" + "<ul>"
+				+ "<li>Обновите драйверы Intel до последней доступной версии.</li>"
+				+ "<li>Попробуйте конкретно версии 31.0.101.8331 или 31.0.101.8247 WHQL, которые, согласно отзывам, не вызывают эту проблему.</li>"
+				+ "</ul>" + "<p>Официальное отслеживание проблемы:</p>"
+				+ "<p><a href='https://github.com/IGCIT/Intel-GPU-Community-Issue-Tracker-IGCIT/issues/1273'>"
+				+ "https://github.com/IGCIT/Intel-GPU-Community-Issue-Tracker-IGCIT/issues/1273</a></p>"
+				+ "<p><b>Примечание:</b> Некоторые старые GPU Intel могут не получать обновления, исправляющие эту проблему.</p>";
+	}
+
+	@Override
+	public String nombreForgeLanguageProviderNoCarga() {
+		return "Forge: не удалось загрузить поставщика языка";
+	}
+
+	@Override
+	public String mensajeForgeLanguageProviderNoCarga(String provider) {
+		String providerTexto = (provider == null || provider.isEmpty()) ? "Неизвестный поставщик" : provider;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Forge не удалось загрузить поставщика языка.</b>"
+				+ "<p>Произошла ошибка при инициализации IModLanguageProvider.</p>"
+				+ "<p><b>Неудавшийся поставщик:</b> " + providerTexto + "</p>"
+				+ "<p>Эта проблема обычно возникает, когда:</p>" + "<ul>"
+				+ "<li>Отсутствует требуемая зависимость (например, Kotlin for Forge).</li>"
+				+ "<li>Версия мода несовместима с вашей версией Forge.</li>" + "<li>Файл мода повреждён.</li>" + "</ul>"
+				+ "<p><b>Рекомендуемые решения:</b></p>" + "<ul>" + "<li>Переустановите соответствующий мод.</li>"
+				+ "<li>Убедитесь, что все его зависимости установлены.</li>"
+				+ "<li>Проверьте, что используете версии, совместимые с вашим текущим Forge.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreLetsDoCompatInterceptApply() {
+		return "Сбой: Lets Do Compat (перехват RecipeManager)";
+	}
+
+	@Override
+	public String mensajeLetsDoCompatInterceptApply() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Обнаружен сбой в Lets Do Compat (interceptApply).</b>"
+				+ "<p>Ошибка возникает внутри преобразования метода "
+				+ "<b>RecipeManager.interceptApply</b>, выполненного Lets Do Compat.</p>"
+				+ "<p>Это обычно указывает на:</p>" + "<ul>"
+				+ "<li>Несовместимость между Lets Do Compat и другим модом, изменяющим рецепты.</li>"
+				+ "<li>Неправильную версию для вашей версии Minecraft.</li>"
+				+ "<li>Конфликт между трансформерами (mixin/coremod).</li>" + "</ul>"
+				+ "<p><b>Рекомендуемые решения:</b></p>" + "<ul>"
+				+ "<li>Попробуйте временно удалить Lets Do Compat, чтобы подтвердить конфликт.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreJEIItemGroupCrash() {
+		return "JEI: сбой в Item Group (несовместимый плагин)";
+	}
+
+	@Override
+	public String mensajeJEIItemGroupCrash(java.util.Set<String> plugins) {
+		String listaPlugins = (plugins == null || plugins.isEmpty()) ? "Неизвестный плагин"
+				: String.join(", ", plugins);
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "JEI обнаружил сбой при построении группы предметов.</b>"
+				+ "<p>Один или несколько плагинов вызвали ошибку во время генерации списка ингредиентов JEI.</p>"
+				+ "<p><b>Затронутые группы/плагины:</b> " + listaPlugins + "</p>"
+				+ "<p>Эта проблема часто возникает, когда:</p>" + "<ul>"
+				+ "<li>Плагин JEI реализован некорректно или устарел.</li>"
+				+ "<li>Существует несовместимость с текущей версией JEI.</li>"
+				+ "<li>Используется Fabric API, и какой-то мод неправильно регистрирует свой Item Group.</li>" + "</ul>"
+				+ "<p><b>Рекомендуемые решения:</b></p>" + "<ul>" + "<li>Обновите JEI и перечисленные моды.</li>"
+				+ "<li>Временно удалите затронутые плагины, чтобы подтвердить конфликт.</li>"
+				+ "<li>Сообщите об ошибке разработчику соответствующего мода.</li>" + "</ul>"
+				+ "<p>Предметы из этих групп не будут отображаться в списке ингредиентов до устранения проблемы.</p>";
 	}
 	
+	@Override
+	public String nombreVersionInvalida() {
+	    return "Недопустимая версия мода (SemVer)";
+	}
+
+	@Override
+	public String mensajeVersionInvalida(String version, String ubicacion) {
+	    String v = (version == null || version.isEmpty()) ? "Неизвестна" : version;
+	    String u = (ubicacion == null || ubicacion.isEmpty()) ? "Не удалось найти мод" : ubicacion;
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "Обнаружена недопустимая версия мода.</b>"
+	            + "<p>Версия <b>" + v + "</b> не соответствует допустимому формату SemVer.</p>"
+	            + "<p>Ошибка указывает на пустой предрелиз (оканчивается на '+').</p>"
+	            + "<p><b>Ответственный мод:</b><br>" + u + "</p>"
+	            + "<p><b>Рекомендуемое решение:</b></p>"
+	            + "<ul>"
+	            + "<li>Отредактируйте файл мода и исправьте версию.</li>"
+	            + "<li>Удалите завершающий '+', если за ним не следует метаданных.</li>"
+	            + "<li>Обновите мод до исправленной версии.</li>"
+	            + "</ul>";
+	}
 
 }

@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetector.analizador.general;
+package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
@@ -7,11 +7,14 @@ import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceI
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
-public class RutaCaracteresInvalidos implements Verificaciones {
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+public class JEIItemGroupCrash implements Verificaciones {
 
 	// Indica si el log contiene indicios globales del error (optimización de
 	// rendimiento)
-	private boolean posibleRutaInvalida = false;
+	private boolean posibleJEIPlugin = false;
 
 	// Indica si esta verificación fue activada
 	private boolean activado = false;
@@ -19,37 +22,57 @@ public class RutaCaracteresInvalidos implements Verificaciones {
 	// Enlace a la línea del log donde ocurre el error
 	private String enlace = "";
 
+	// Lista de grupos/plugins que fallaron
+	private final Set<String> pluginsAfectados = new LinkedHashSet<>();
+
 	@Override
 	public void verificar(Consola consola) {
 
 		// Detección global ligera:
-		// Solo buscamos la excepción principal sin usar regex ni operaciones costosas.
-		if (consola.contenido_verificar.contains("java.nio.file.InvalidPathException")
-				&& consola.contenido_verificar.contains("Illegal char <:>")) {
+		// Se buscan subcadenas clave sin usar regex
+		if (consola.contenido_verificar.contains("Item Group crashed while building contents")
+				&& consola.contenido_verificar.contains("JEI ingredient list")) {
 
-			posibleRutaInvalida = true;
+			posibleJEIPlugin = true;
 		}
 	}
 
 	@Override
 	public void verificar(Consola consola, String linea, int num) {
 
-		// Salir temprano si no hay indicios globales
-		if (!posibleRutaInvalida) {
+		// Salida temprana si no hay indicios globales
+		if (!posibleJEIPlugin) {
 			return;
 		}
 
-		// Verificación precisa en la línea específica
-		if (linea.contains("java.nio.file.InvalidPathException") && linea.contains("Illegal char <:>")) {
+		// Verificación precisa de la línea
+		if (linea.contains("Item Group crashed while building contents") && linea.contains("JEI ingredient list")) {
 
-			this.enlace = consola.agregarErrorALectador(num, this);
-			this.activado = true;
+			// Extraer únicamente el nombre del grupo/plugin usando el último ':'
+			int indice = linea.lastIndexOf(":");
+
+			if (indice != -1 && indice + 1 < linea.length()) {
+
+				String nombre = linea.substring(indice + 1).trim();
+
+				// Evitar capturar líneas completas del log o texto inválido
+				if (!nombre.isEmpty()) {
+
+					pluginsAfectados.add(nombre);
+				}
+			}
+
+			// Registrar el error solo una vez
+			if (!activado) {
+				this.enlace = consola.agregarErrorALectador(num, this);
+				this.activado = true;
+			}
 		}
 	}
 
 	@Override
 	public Verificaciones nueva() {
-		return new RutaCaracteresInvalidos();
+		return new JEIItemGroupCrash();
 	}
 
 	@Override
@@ -59,17 +82,17 @@ public class RutaCaracteresInvalidos implements Verificaciones {
 
 	@Override
 	public float prioridad() {
-		return 1200;
+		return 1250;
 	}
 
 	@Override
 	public String mensaje() {
-		return MonitorDePID.idioma.mensajeRutaCaracteresInvalidos() + this.enlace;
+		return MonitorDePID.idioma.mensajeJEIItemGroupCrash(pluginsAfectados) + this.enlace;
 	}
 
 	@Override
 	public String nombre() {
-		return MonitorDePID.idioma.nombreRutaCaracteresInvalidos();
+		return MonitorDePID.idioma.nombreJEIItemGroupCrash();
 	}
 
 	@Override
@@ -84,7 +107,7 @@ public class RutaCaracteresInvalidos implements Verificaciones {
 
 	@Override
 	public String id() {
-		return "ruta_caracteres_invalidos";
+		return "jei_item_group_crash";
 	}
 
 	@Override

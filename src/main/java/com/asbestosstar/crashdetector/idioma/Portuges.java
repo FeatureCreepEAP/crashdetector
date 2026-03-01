@@ -6330,27 +6330,129 @@ public class Portuges implements Idioma {
 	public String entrarAlJuego() {
 		return "Entrar no Jogo";
 	}
-	
+
 	@Override
 	public String nombreRutaCaracteresInvalidos() {
-	    return "Caminho inválido: caracteres não permitidos";
+		return "Caminho inválido: caracteres não permitidos";
 	}
 
 	@Override
 	public String mensajeRutaCaracteresInvalidos() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Erro no caminho do sistema detectado.</b>"
+				+ "<p>O Minecraft não pôde iniciar devido a caracteres ilegais no nome de uma pasta.</p>"
+				+ "<p>O sistema detectou um caractere inválido no caminho (por exemplo: ':' ou outros símbolos especiais).</p>"
+				+ "<p><b>Solução recomendada:</b></p>" + "<ul>" + "<li>Renomeie a pasta da instância ou do perfil.</li>"
+				+ "<li>Use apenas caracteres ASCII básicos (A-Z, a-z, 0-9).</li>"
+				+ "<li>Não use acentos, símbolos especiais, espaços problemáticos nem emojis.</li>" + "</ul>"
+				+ "<p>Exemplo válido: <b>MiInstancia1</b></p>"
+				+ "<p>Exemplo inválido: <b>Instancia🔥</b> ou <b>Instancia:Mod</b></p>";
+	}
+
+	@Override
+	public String nombreTwilightForestIntelShaders() {
+		return "Travamento: Twilight Forest + Drivers da Intel";
+	}
+
+	@Override
+	public String mensajeTwilightForestIntelShaders() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Falha detectada nos shaders do Twilight Forest com GPU Intel.</b>"
+				+ "<p>Esse erro está relacionado aos drivers gráficos da Intel ao carregar os shaders do mod Twilight Forest.</p>"
+				+ "<p>A falha ocorre dentro do driver (igxelpicd64) e não é um problema direto do mod nem do Minecraft.</p>"
+				+ "<p><b>Soluções recomendadas:</b></p>" + "<ul>"
+				+ "<li>Atualize os drivers da Intel para a versão mais recente disponível.</li>"
+				+ "<li>Teste especificamente as versões 31.0.101.8331 ou 31.0.101.8247 WHQL, que segundo relatos não apresentam esse problema.</li>"
+				+ "</ul>" + "<p>Acompanhamento oficial do problema:</p>"
+				+ "<p><a href='https://github.com/IGCIT/Intel-GPU-Community-Issue-Tracker-IGCIT/issues/1273'>"
+				+ "https://github.com/IGCIT/Intel-GPU-Community-Issue-Tracker-IGCIT/issues/1273</a></p>"
+				+ "<p><b>Observação:</b> Algumas GPUs Intel mais antigas podem não receber atualizações que resolvam esse problema.</p>";
+	}
+
+	@Override
+	public String nombreForgeLanguageProviderNoCarga() {
+		return "Forge: provedor de idioma não pôde ser carregado";
+	}
+
+	@Override
+	public String mensajeForgeLanguageProviderNoCarga(String provider) {
+		String providerTexto = (provider == null || provider.isEmpty()) ? "Provedor desconhecido" : provider;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "O Forge não conseguiu carregar um provedor de idioma.</b>"
+				+ "<p>Ocorreu um erro ao inicializar um IModLanguageProvider.</p>" + "<p><b>Provedor que falhou:</b> "
+				+ providerTexto + "</p>" + "<p>Esse problema geralmente ocorre quando:</p>" + "<ul>"
+				+ "<li>Falta uma dependência necessária (por exemplo, Kotlin for Forge).</li>"
+				+ "<li>A versão do mod não é compatível com sua versão do Forge.</li>"
+				+ "<li>O arquivo do mod está corrompido.</li>" + "</ul>" + "<p><b>Soluções recomendadas:</b></p>"
+				+ "<ul>" + "<li>Reinstale o mod correspondente.</li>"
+				+ "<li>Verifique se todas as suas dependências estão instaladas.</li>"
+				+ "<li>Certifique-se de usar versões compatíveis com seu Forge atual.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreLetsDoCompatInterceptApply() {
+		return "Travamento: Lets Do Compat (interceptação do RecipeManager)";
+	}
+
+	@Override
+	public String mensajeLetsDoCompatInterceptApply() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Travamento detectado no Lets Do Compat (interceptApply).</b>"
+				+ "<p>O erro ocorre dentro de uma transformação do método "
+				+ "<b>RecipeManager.interceptApply</b> realizada pelo Lets Do Compat.</p>"
+				+ "<p>Isso geralmente indica:</p>" + "<ul>"
+				+ "<li>Incompatibilidade entre o Lets Do Compat e outro mod que modifica receitas.</li>"
+				+ "<li>Versão incorreta para sua versão do Minecraft.</li>"
+				+ "<li>Conflito entre transformadores (mixin/coremod).</li>" + "</ul>"
+				+ "<p><b>Soluções recomendadas:</b></p>" + "<ul>"
+				+ "<li>Tente remover temporariamente o Lets Do Compat para confirmar o conflito.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreJEIItemGroupCrash() {
+		return "JEI: falha em Item Group (plugin incompatível)";
+	}
+
+	@Override
+	public String mensajeJEIItemGroupCrash(java.util.Set<String> plugins) {
+		String listaPlugins = (plugins == null || plugins.isEmpty()) ? "Plugin desconhecido"
+				: String.join(", ", plugins);
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "O JEI detectou uma falha ao construir um grupo de itens.</b>"
+				+ "<p>Um ou mais plugins causaram um erro enquanto o JEI gerava a lista de ingredientes.</p>"
+				+ "<p><b>Grupos/Plugins afetados:</b> " + listaPlugins + "</p>" + "<p>Esse problema é comum quando:</p>"
+				+ "<ul>" + "<li>Um plugin do JEI está mal implementado ou desatualizado.</li>"
+				+ "<li>Há incompatibilidade com a versão atual do JEI.</li>"
+				+ "<li>O Fabric API está sendo usado e algum mod registra incorretamente seu Item Group.</li>" + "</ul>"
+				+ "<p><b>Soluções recomendadas:</b></p>" + "<ul>" + "<li>Atualize o JEI e os mods listados.</li>"
+				+ "<li>Remova temporariamente os plugins afetados para confirmar o conflito.</li>"
+				+ "<li>Relate o erro ao desenvolvedor do mod correspondente.</li>" + "</ul>"
+				+ "<p>Os itens desses grupos não aparecerão na lista de ingredientes até que o problema seja corrigido.</p>";
+	}
+	@Override
+	public String nombreVersionInvalida() {
+	    return "Versão inválida do mod (SemVer)";
+	}
+
+	@Override
+	public String mensajeVersionInvalida(String version, String ubicacion) {
+	    String v = (version == null || version.isEmpty()) ? "Desconhecida" : version;
+	    String u = (ubicacion == null || ubicacion.isEmpty()) ? "Não foi possível localizar o mod" : ubicacion;
 	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "Erro no caminho do sistema detectado.</b>"
-	            + "<p>O Minecraft não pôde iniciar devido a caracteres ilegais no nome de uma pasta.</p>"
-	            + "<p>O sistema detectou um caractere inválido no caminho (por exemplo: ':' ou outros símbolos especiais).</p>"
+	            + "Versão inválida do mod detectada.</b>"
+	            + "<p>A versão <b>" + v + "</b> não está em conformidade com o formato SemVer válido.</p>"
+	            + "<p>O erro indica um pré-lançamento vazio (termina com '+').</p>"
+	            + "<p><b>Mod responsável:</b><br>" + u + "</p>"
 	            + "<p><b>Solução recomendada:</b></p>"
 	            + "<ul>"
-	            + "<li>Renomeie a pasta da instância ou do perfil.</li>"
-	            + "<li>Use apenas caracteres ASCII básicos (A-Z, a-z, 0-9).</li>"
-	            + "<li>Não use acentos, símbolos especiais, espaços problemáticos nem emojis.</li>"
-	            + "</ul>"
-	            + "<p>Exemplo válido: <b>MiInstancia1</b></p>"
-	            + "<p>Exemplo inválido: <b>Instancia🔥</b> ou <b>Instancia:Mod</b></p>";
+	            + "<li>Edite o arquivo do mod e corrija a versão.</li>"
+	            + "<li>Remova o '+' final se não houver metadados subsequentes.</li>"
+	            + "<li>Atualize o mod para uma versão corrigida.</li>"
+	            + "</ul>";
 	}
+	
+	
+	
 	
 
 }

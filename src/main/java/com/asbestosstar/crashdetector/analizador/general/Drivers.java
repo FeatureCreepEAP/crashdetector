@@ -338,8 +338,8 @@ public class Drivers implements Verificaciones {
 	}
 
 	private void verificarProblemasIntel(String log) {
-		String[] dllsIntel = { "[ig7icd32.dll]", "[ig7icd64.dll]", "[ig75icd32.dll]", "[ig75icd64.dll]",
-				"[ig8icd64.dll]", "[ig9icd32.dll]", "[ig9icd64.dll]" };
+		String[] dllsIntel = { "[ig7icd32.dll", "[ig7icd64.dll", "[ig75icd32.dll", "[ig75icd64.dll", "[ig8icd64.dll",
+				"[ig9icd32.dll", "[ig9icd64.dll", "[igxelpicd64" };
 		for (String dll : dllsIntel) {
 			if (log.contains(dll) && log.contains("EXCEPTION_ACCESS_VIOLATION")) {
 				procesarProblemaIntel();
