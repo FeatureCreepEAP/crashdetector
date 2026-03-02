@@ -6474,4 +6474,142 @@ public class Arabe implements Idioma {
 				+ "<p>يوصى أيضًا بتحديث DivineRPG إذا كانت هناك نسخة أحدث متاحة.</p>";
 	}
 
+	@Override
+	public String nombreRenderPassNoCerrado() {
+		return "تعارض في Render Pass";
+	}
+
+	@Override
+	public String mensajeRenderPassNoCerrado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تم اكتشاف تعارض في نظام العرض المرئي.</b>" + "<p>أطلق اللعبة الخطأ التالي:</p>"
+				+ "<code>Close the existing render pass before performing additional commands</code>"
+				+ "<p>يرتبط هذا الخطأ عادةً بتعارض بين إضافات العرض مثل "
+				+ "Iris وOptiFine وVulkanMod أو غيرها التي تُعدّل مسار معالجة الرسوميات (graphics pipeline).</p>";
+	}
+
+	@Override
+	public String nombreProblemaFeatherClient() {
+		return "عطل داخلي في Feather Client";
+	}
+
+	@Override
+	public String mensajeProblemaFeatherClientSodium() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تم اكتشاف عطل داخلي في Feather Client.</b>" + "<p>أطلق اللعبة الخطأ التالي:</p>"
+				+ "<code>NoClassDefFoundError: feather/lib/sentry/Sentry</code>"
+				+ "<p>هذا الخطأ ناتج عن Feather Client.</p>" + "<p>لا يُوصى باستخدام Feather للأسباب التالية:</p>"
+				+ "<ul>" + "<li>يستخدم إصدارات مملوكة ومعدّلة من إضافات شهيرة.</li>"
+				+ "<li>يُفسد التوافق مع Fabric القياسي.</li>"
+				+ "<li>يعمل كحزمة إضافات جاهزة تحتوي على تعديلات داخلية.</li>"
+				+ "<li>غالبًا ما يسبب تعارضات مع Sodium وتعديلات الأداء الأخرى.</li>" + "</ul>"
+				+ "<p>يُوصى باستخدام تثبيت Fabric قياسي بدلًا من Feather.</p>";
+	}
+
+	@Override
+	public String nombreConflictoIrisFlywheelCreate() {
+		return "تعارض Iris + Flywheel (Create 6)";
+	}
+
+	@Override
+	public String mensajeConflictoIrisFlywheelCreate() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تم اكتشاف تعارض بين Iris وFlywheel في Create 6.</b>" + "<p>أطلق اللعبة الخطأ التالي:</p>"
+				+ "<code>NoSuchFieldError: TESSELATION_SHADERS</code>"
+				+ "<p>تم اكتشاف مراجع داخلية <code>$irisflw$</code>، " + "مما يشير إلى تعارض بين Iris وFlywheel.</p>"
+				+ "<p>إن Iris Flywheel 2.0 لـ Create 6 متوافق رسميًا فقط مع NeoForge.</p>"
+				+ "<p>إذا كنت تستخدم Forge أو Fabric، فقد تسبب هذه المجموعة هذا الخطأ.</p>";
+	}
+
+	@Override
+	public String nombreModeloGeckoNoEncontrado() {
+		return "نموذج GeckoLib غير موجود";
+	}
+
+	@Override
+	public String mensajeModeloGeckoNoEncontrado(String modelo) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "لم يتمكن أحد التعديلات من العثور على نموذج GeckoLib.</b>" + "<p>النموذج المتأثر:</p>" + "<code>"
+				+ modelo + "</code>" + "<p>يحدث هذا الخطأ عندما لا يوجد ملف <code>.geo.json</code> "
+				+ "أو كان مهيأً بشكل خاطئ داخل التعديل.</p>" + "<p>الأسباب المحتملة:</p>" + "<ul>"
+				+ "<li>تم حذف النموذج لكنه لا يزال مُشارًا إليه.</li>" + "<li>خطأ في مسار الملف.</li>"
+				+ "<li>الملف مفقود من داخل الـ JAR.</li>" + "<li>نسخة غير متوافقة من التعديل.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreProblemaAnimacionCobblemon() {
+		return "Cobblemon – تحريك غير موجود";
+	}
+
+	@Override
+	public String mensajeAnimacionCobblemon(String animacion, String grupo) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "حاول Cobblemon تشغيل تحريك غير موجود.</b>" + "<p>التحريك:</p>" + "<code>" + animacion + "</code>"
+				+ "<p>المجموعة:</p>" + "<code>" + grupo + "</code>" + "<p>يحدث هذا الخطأ عادةً عندما:</p>" + "<ul>"
+				+ "<li>تُمزج إصدارات غير متوافقة من Cobblemon.</li>"
+				+ "<li>لا يتطابق الملحق (addon) مع الإصدار المثبّت.</li>" + "<li>تنقص موارد أو تحركات داخلية.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreProblemaLunarClient() {
+		return "عطل داخلي في Lunar Client";
+	}
+
+	@Override
+	public String mensajeProblemaLunarClient() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تم اكتشاف عطل داخلي في Lunar Client.</b>"
+				+ "<p>الخطأ ناتج عن العميل Lunar نفسه، وليس من اللعبة الأساسية ولا من الإضافات.</p>"
+				+ "<p>يستخدم Lunar Client تعديلات داخلية ومخصصة قد تسبب "
+				+ "عدم توافق مع الإضافات أو التهيئة المحددة.</p>" + "<p>يُوصى بتجربة تثبيت قياسي لماينكرافت "
+				+ "لاستبعاد المشاكل الناتجة عن العميل نفسه.</p>";
+	}
+
+	@Override
+	public String nombreAccesoIlegalMod() {
+		return "وصول غير مصرّح به إلى طريقة أو حقل";
+	}
+
+	@Override
+	public String mensajeAccesoIlegalMod(String clase, String miembro) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "حاول أحد التعديلات الوصول إلى طريقة أو حقل محمي/خاص.</b>" + "<p>الصنف المسؤول:</p>" + "<code>"
+				+ clase + "</code>" + "<p>العضو الذي تم الوصول إليه:</p>" + "<code>" + miembro + "</code>"
+				+ "<p>يحدث هذا الخطأ عادةً عندما:</p>" + "<ul>" + "<li>تم تجميع التعديل لإصدار آخر من ماينكرافت.</li>"
+				+ "<li>يوجد خلط بين mappings غير متوافقة.</li>" + "<li>التعديل قديم.</li>"
+				+ "<li>يتم استخدام محمل غير صحيح (Fabric/Forge/NeoForge).</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreErrorParseoDataPack() {
+		return "خطأ في تحميل datapack/resourcepack";
+	}
+
+	@Override
+	public String mensajeErrorParseoDataPack(String archivo, String pack) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "فشل تحميل حزمة بيانات (datapack) أو حزمة موارد (resourcepack).</b>" + "<p>الملف المتعارض:</p>"
+				+ "<code>" + archivo + "</code>" + "<p>الحزمة:</p>" + "<code>" + pack + "</code>"
+				+ "<p>لم يتمكن اللعبة من تحليل هذا الملف، مما تسبب في أخطاء تحميل السجل (registry).</p>"
+				+ "<p>يرجع هذا المشكل عادةً إلى:</p>" + "<ul>" + "<li>JSON غير صحيح التنسيق.</li>"
+				+ "<li>نسخة الحزمة غير متوافقة.</li>" + "<li>الحزمة قديمة بالنسبة لإصدار اللعبة الحالي.</li>"
+				+ "<li>تعارض بين حزم البيانات (datapacks).</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreErrorCompilacionShader() {
+		return "خطأ في تجميع الظلال (shader)";
+	}
+
+	@Override
+	public String mensajeErrorCompilacionShader() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "فشل تجميع أحد الظلال (shader).</b>" + "<p>لم يتمكن اللعبة من تجميع أحد الظلال النشطة.</p>"
+				+ "<p>يرتبط هذا المشكل عادةً بـ Sodium أو Iris أو حزم ظلال غير متوافقة.</p>" + "<p>التوصيات:</p>"
+				+ "<ul>" + "<li>جرّب ظلًا مختلفًا.</li>" + "<li>عطّل الظلال مؤقتًا.</li>"
+				+ "<li>حدّث سواقات وحدة معالجة الرسومات (GPU).</li>"
+				+ "<li>إذا استمر المشكل، جرّب تشغيل اللعبة بدون Sodium.</li>" + "</ul>";
+	}
+
 }

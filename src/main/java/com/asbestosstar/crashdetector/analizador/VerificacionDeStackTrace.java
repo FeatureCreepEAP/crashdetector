@@ -472,13 +472,23 @@ public class VerificacionDeStackTrace {
 				}
 			}
 
+			// Agregar este bloque junto con los otros prefijos con metadata
+			if (t.startsWith("MC/")) {
+				t = t.substring("MC/".length()).trim();
+				// Saltar el primer segmento (modulo/modid + version) hasta la siguiente '/'
+				int idx = t.indexOf('/');
+				if (idx >= 0 && idx + 1 < t.length()) {
+					t = t.substring(idx + 1).trim();
+				}
+			}
+
 		} while (cambio);
 
 		// Quitar prefijos con metadata del estilo:
 		// TRANSFORMER/<modid>@<ver>/ruta.clase.metodo
 		// MC-BOOTSTRAP/<modulo>@<ver>/ruta.clase.metodo
 		// LAYER PLUGIN/<plugin>@<ver>/ruta.clase.metodo
-		String[] prefijosMetadata = { "TRANSFORMER/", "MC-BOOTSTRAP/", "LAYER PLUGIN/" };
+		String[] prefijosMetadata = { "TRANSFORMER/", "MC-BOOTSTRAP/", "LAYER PLUGIN/", "MC/" };
 
 		for (String pref : prefijosMetadata) {
 			if (t.startsWith(pref)) {
@@ -1461,7 +1471,7 @@ public class VerificacionDeStackTrace {
 
 	// Normalizador de líneas de stack: quita // y prefijos de cargador conocidos
 	private static final String[] PREFIJOS_CARGADOR = { "knot//MC//", "knot//", "knott//", "app//", "SECURE-BOOTSTRAP/",
-			"MC-BOOTSTRAP/" };
+			"MC-BOOTSTRAP/", "MC/" };
 
 	public static String normalizarLineaStack(String l) {
 		if (l == null)

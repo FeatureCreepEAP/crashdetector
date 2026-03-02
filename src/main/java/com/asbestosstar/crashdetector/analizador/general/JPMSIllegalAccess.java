@@ -39,6 +39,15 @@ public class JPMSIllegalAccess implements Verificaciones {
 		if (linea.contains("IllegalAccessException") && linea.contains("in module")
 				&& linea.contains("cannot access")) {
 
+			// FILTRO FALSO POSITIVO NETTY + Unsafe
+			if (linea.contains("io.netty") && linea.contains("jdk.internal.misc.Unsafe")
+					&& linea.contains("module java.base")) {
+
+				// Es el falso positivo clásico de Netty en Java 17+ comun con ModernFix y
+				// PhysicsMod
+				return;
+			}
+
 			// Ejemplo:
 			// class A (in module X) cannot access a member of class B (in module Y)
 

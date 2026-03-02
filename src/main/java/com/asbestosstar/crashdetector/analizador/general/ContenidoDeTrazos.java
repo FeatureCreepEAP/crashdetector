@@ -283,6 +283,11 @@ public class ContenidoDeTrazos implements Verificaciones {
 				if (origenNorm.isEmpty())
 					continue;
 
+				// === FILTRO: modids generados tipo dgd000 ===
+				if (esModidFalsoGenerado(origenNorm)) {
+					continue;
+				}
+
 				String textoNivel = MonitorDePID.idioma.nivel() + lt.nivel + "," + lt.lineaConsola;
 
 				String enlaceLinea = consola.agregarErrorALectador(lt.lineaConsola, this);
@@ -352,6 +357,12 @@ public class ContenidoDeTrazos implements Verificaciones {
 		sb.append("</ul>");
 
 		contento.put(consola.archivo.getFileName().toString(), new StringBuilder(sb.toString().trim()));
+	}
+
+	private static boolean esModidFalsoGenerado(String origen) {
+		if (origen == null)
+			return false;
+		return origen.matches("^[a-z]{3}\\d{3}$");
 	}
 
 	@Override

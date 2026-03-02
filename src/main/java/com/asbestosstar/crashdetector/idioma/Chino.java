@@ -6167,4 +6167,124 @@ public class Chino implements Idioma {
 				+ "<li>保存并重启游戏。</li>" + "</ul>" + "<p>如果存在更新版本，也建议更新 DivineRPG。</p>";
 	}
 
+	@Override
+	public String nombreRenderPassNoCerrado() {
+		return "Render Pass 冲突";
+	}
+
+	@Override
+	public String mensajeRenderPassNoCerrado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "检测到渲染系统冲突。</b>"
+				+ "<p>游戏抛出以下错误：</p>"
+				+ "<code>Close the existing render pass before performing additional commands</code>"
+				+ "<p>此错误通常与 Iris、OptiFine、VulkanMod 等修改图形渲染管线的模组之间存在冲突有关。</p>";
+	}
+
+	@Override
+	public String nombreProblemaFeatherClient() {
+		return "Feather Client 内部故障";
+	}
+
+	@Override
+	public String mensajeProblemaFeatherClientSodium() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "检测到 Feather Client 内部故障。</b>" + "<p>游戏抛出以下错误：</p>"
+				+ "<code>NoClassDefFoundError: feather/lib/sentry/Sentry</code>" + "<p>此错误由 Feather Client 引起。</p>"
+				+ "<p>不推荐使用 Feather，原因如下：</p>" + "<ul>" + "<li>它使用流行模组的私有修改版本。</li>" + "<li>破坏与标准 Fabric 的兼容性。</li>"
+				+ "<li>本质上是一个预配置的模组包，包含内部修改。</li>" + "<li>常与 Sodium 及其他性能模组发生冲突。</li>" + "</ul>"
+				+ "<p>建议使用标准 Fabric 安装，而非 Feather。</p>";
+	}
+
+	@Override
+	public String nombreConflictoIrisFlywheelCreate() {
+		return "Iris + Flywheel 冲突（Create 6）";
+	}
+
+	@Override
+	public String mensajeConflictoIrisFlywheelCreate() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "在 Create 6 中检测到 Iris 与 Flywheel 之间的冲突。</b>" + "<p>游戏抛出以下错误：</p>"
+				+ "<code>NoSuchFieldError: TESSELATION_SHADERS</code>" + "<p>检测到内部引用 <code>$irisflw$</code>，"
+				+ "表明 Iris 与 Flywheel 存在冲突。</p>" + "<p>Create 6 的 Iris Flywheel 2.0 仅官方支持 NeoForge。</p>"
+				+ "<p>如果你使用的是 Forge 或 Fabric，此组合可能引发该错误。</p>";
+	}
+
+	@Override
+	public String nombreModeloGeckoNoEncontrado() {
+		return "未找到 GeckoLib 模型";
+	}
+
+	@Override
+	public String mensajeModeloGeckoNoEncontrado(String modelo) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "某个模组未能找到 GeckoLib 模型。</b>"
+				+ "<p>受影响的模型：</p>" + "<code>" + modelo + "</code>" + "<p>此错误发生在 <code>.geo.json</code> 文件不存在 "
+				+ "或在模组内配置错误时。</p>" + "<p>可能原因：</p>" + "<ul>" + "<li>模型已被删除，但仍被引用。</li>" + "<li>文件路径错误。</li>"
+				+ "<li>JAR 内缺少该文件。</li>" + "<li>模组版本不兼容。</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreProblemaAnimacionCobblemon() {
+		return "Cobblemon – 动画不存在";
+	}
+
+	@Override
+	public String mensajeAnimacionCobblemon(String animacion, String grupo) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Cobblemon 尝试播放一个不存在的动画。</b>" + "<p>动画：</p>" + "<code>" + animacion + "</code>" + "<p>组：</p>"
+				+ "<code>" + grupo + "</code>" + "<p>此错误通常发生在以下情况：</p>" + "<ul>" + "<li>混用了不兼容的 Cobblemon 版本。</li>"
+				+ "<li>附加模组（addon）与已安装版本不匹配。</li>" + "<li>缺少内部资源或动画文件。</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreProblemaLunarClient() {
+		return "Lunar Client 内部故障";
+	}
+
+	@Override
+	public String mensajeProblemaLunarClient() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "检测到 Lunar Client 内部故障。</b>"
+				+ "<p>此错误源自 Lunar Client 本身，而非原版游戏或模组。</p>" + "<p>Lunar Client 使用了内部定制的修改，可能会与某些模组或特定配置产生不兼容。</p>"
+				+ "<p>建议使用标准版 Minecraft 进行测试，以排除客户端自身的问题。</p>";
+	}
+
+	@Override
+	public String nombreAccesoIlegalMod() {
+		return "非法访问方法或字段";
+	}
+
+	@Override
+	public String mensajeAccesoIlegalMod(String clase, String miembro) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "某个模组尝试访问受保护/私有方法或字段。</b>"
+				+ "<p>责任类：</p>" + "<code>" + clase + "</code>" + "<p>被访问的成员：</p>" + "<code>" + miembro + "</code>"
+				+ "<p>此错误通常发生在以下情况：</p>" + "<ul>" + "<li>该模组是为其他版本的 Minecraft 编译的。</li>" + "<li>混用了不兼容的 mappings。</li>"
+				+ "<li>模组已过时。</li>" + "<li>使用了错误的加载器（Fabric/Forge/NeoForge）。</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreErrorParseoDataPack() {
+		return "加载 datapack/resourcepack 时出错";
+	}
+
+	@Override
+	public String mensajeErrorParseoDataPack(String archivo, String pack) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "某个数据包（datapack）或资源包（resourcepack）加载失败。</b>" + "<p>问题文件：</p>" + "<code>" + archivo + "</code>"
+				+ "<p>包：</p>" + "<code>" + pack + "</code>" + "<p>游戏无法解析此文件，导致注册表（registry）加载错误。</p>"
+				+ "<p>此问题通常由以下原因引起：</p>" + "<ul>" + "<li>JSON 格式不正确。</li>" + "<li>包的版本不兼容。</li>"
+				+ "<li>包未适配当前游戏版本。</li>" + "<li>多个数据包之间存在冲突。</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreErrorCompilacionShader() {
+		return "着色器编译错误";
+	}
+
+	@Override
+	public String mensajeErrorCompilacionShader() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "着色器编译失败。</b>"
+				+ "<p>游戏无法编译当前启用的某个着色器。</p>" + "<p>此问题通常与 Sodium、Iris 或不兼容的着色器包有关。</p>" + "<p>建议操作：</p>" + "<ul>"
+				+ "<li>尝试使用其他着色器。</li>" + "<li>暂时禁用着色器。</li>" + "<li>更新 GPU 驱动程序。</li>"
+				+ "<li>如果问题持续，尝试在不使用 Sodium 的情况下启动游戏。</li>" + "</ul>";
+	}
+
 }

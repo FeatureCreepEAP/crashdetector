@@ -7271,4 +7271,149 @@ public class Espanol implements Idioma {
 				+ "<p>También se recomienda actualizar DivineRPG si hay una versión más reciente disponible.</p>";
 	}
 
+	@Override
+	public String nombreRenderPassNoCerrado() {
+		return "Conflicto en Render Pass";
+	}
+
+	@Override
+	public String mensajeRenderPassNoCerrado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Se detectó un conflicto en el sistema de renderizado.</b>" + "<p>El juego lanzó:</p>"
+				+ "<code>Close the existing render pass before performing additional commands</code>"
+				+ "<p>Este error suele estar relacionado con conflictos entre mods de render "
+				+ "como Iris, OptiFine, VulkanMod u otros que modifican el pipeline gráfico.</p>";
+	}
+
+	@Override
+	public String nombreProblemaFeatherClient() {
+		return "Fallo interno de Feather Client";
+	}
+
+	@Override
+	public String mensajeProblemaFeatherClientSodium() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Se detectó un fallo interno del Feather Client.</b>" + "<p>El juego lanzó:</p>"
+				+ "<code>NoClassDefFoundError: feather/lib/sentry/Sentry</code>"
+				+ "<p>Este error es causado por Feather Client.</p>" + "<p>Feather no es recomendado porque:</p>"
+				+ "<ul>" + "<li>Usa versiones propietarias y modificadas de mods populares.</li>"
+				+ "<li>Rompe compatibilidad con Fabric estándar.</li>"
+				+ "<li>Funciona como un modpack prearmado con modificaciones internas.</li>"
+				+ "<li>Suele causar conflictos con Sodium y otros mods de rendimiento.</li>" + "</ul>"
+				+ "<p>Se recomienda usar una instalación estándar de Fabric en lugar de Feather.</p>";
+	}
+
+	@Override
+	public String nombreConflictoIrisFlywheelCreate() {
+		return "Conflicto Iris + Flywheel (Create 6)";
+	}
+
+	@Override
+	public String mensajeConflictoIrisFlywheelCreate() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Conflicto detectado entre Iris y Flywheel en Create 6.</b>" + "<p>El juego lanzó:</p>"
+				+ "<code>NoSuchFieldError: TESSELATION_SHADERS</code>"
+				+ "<p>Se detectaron referencias internas <code>$irisflw$</code>, "
+				+ "lo que indica un conflicto entre Iris y Flywheel.</p>"
+				+ "<p>Iris Flywheel 2.0 para Create 6 solo es compatible oficialmente con NeoForge.</p>"
+				+ "<p>Si estás usando Forge o Fabric, esta combinación puede causar este error.</p>";
+	}
+
+	@Override
+	public String nombreModeloGeckoNoEncontrado() {
+		return "Modelo GeckoLib no encontrado";
+	}
+
+	@Override
+	public String mensajeModeloGeckoNoEncontrado(String modelo) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Un mod no pudo encontrar un modelo de GeckoLib.</b>" + "<p>Modelo afectado:</p>" + "<code>" + modelo
+				+ "</code>" + "<p>Este error ocurre cuando un archivo <code>.geo.json</code> no existe "
+				+ "o está mal configurado dentro del mod.</p>" + "<p>Posibles causas:</p>" + "<ul>"
+				+ "<li>El modelo fue eliminado pero aún es referenciado.</li>"
+				+ "<li>Error en la ruta del archivo.</li>" + "<li>Archivo faltante dentro del JAR.</li>"
+				+ "<li>Versión incompatible del mod.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreProblemaAnimacionCobblemon() {
+		return "Cobblemon – Animación inexistente";
+	}
+
+	@Override
+	public String mensajeAnimacionCobblemon(String animacion, String grupo) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Cobblemon intentó reproducir una animación inexistente.</b>" + "<p>Animación:</p>" + "<code>"
+				+ animacion + "</code>" + "<p>Grupo:</p>" + "<code>" + grupo + "</code>"
+				+ "<p>Este error suele ocurrir cuando:</p>" + "<ul>"
+				+ "<li>Se mezclan versiones incompatibles de Cobblemon.</li>"
+				+ "<li>Un addon no coincide con la versión instalada.</li>"
+				+ "<li>Faltan recursos o animaciones internas.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreProblemaLunarClient() {
+		return "Fallo interno de Lunar Client";
+	}
+
+	@Override
+	public String mensajeProblemaLunarClient() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Se detectó un fallo interno del Lunar Client.</b>"
+				+ "<p>El error proviene del propio cliente Lunar y no del juego base ni de los mods.</p>"
+				+ "<p>Lunar Client usa modificaciones internas y personalizadas que pueden "
+				+ "causar incompatibilidades con mods o configuraciones específicas.</p>"
+				+ "<p>Se recomienda probar con una instalación estándar de Minecraft "
+				+ "para descartar problemas propios del cliente.</p>";
+	}
+
+	@Override
+	public String nombreAccesoIlegalMod() {
+		return "Acceso ilegal a método o campo";
+	}
+
+	@Override
+	public String mensajeAccesoIlegalMod(String clase, String miembro) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Un mod intentó acceder a un método o campo protegido/privado.</b>" + "<p>Clase responsable:</p>"
+				+ "<code>" + clase + "</code>" + "<p>Miembro accedido:</p>" + "<code>" + miembro + "</code>"
+				+ "<p>Este error suele ocurrir cuando:</p>" + "<ul>"
+				+ "<li>El mod fue compilado para otra versión de Minecraft.</li>"
+				+ "<li>Hay mezcla de mappings incompatibles.</li>" + "<li>El mod está desactualizado.</li>"
+				+ "<li>Se usa el cargador incorrecto (Fabric/Forge/NeoForge).</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreErrorParseoDataPack() {
+		return "Error al cargar datapack/resourcepack";
+	}
+
+	@Override
+	public String mensajeErrorParseoDataPack(String archivo, String pack) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Un datapack o resourcepack falló al cargarse.</b>" + "<p>Archivo problemático:</p>" + "<code>"
+				+ archivo + "</code>" + "<p>Pack:</p>" + "<code>" + pack + "</code>"
+				+ "<p>El juego no pudo parsear este archivo y eso provocó errores de carga del registry.</p>"
+				+ "<p>Este problema suele deberse a:</p>" + "<ul>" + "<li>JSON mal formado.</li>"
+				+ "<li>Versión incompatible del pack.</li>"
+				+ "<li>Pack desactualizado para la versión actual del juego.</li>"
+				+ "<li>Conflicto entre datapacks.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreErrorCompilacionShader() {
+		return "Error de compilación de shader";
+	}
+
+	@Override
+	public String mensajeErrorCompilacionShader() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Falló la compilación de un shader.</b>"
+				+ "<p>El juego no pudo compilar uno de los shaders activos.</p>"
+				+ "<p>Este problema suele estar relacionado con Sodium, Iris o shaderpacks incompatibles.</p>"
+				+ "<p>Recomendaciones:</p>" + "<ul>" + "<li>Probar un shader diferente.</li>"
+				+ "<li>Desactivar temporalmente los shaders.</li>" + "<li>Actualizar los drivers de la GPU.</li>"
+				+ "<li>Si el problema continúa, probar iniciar el juego sin Sodium.</li>" + "</ul>";
+	}
+
 }

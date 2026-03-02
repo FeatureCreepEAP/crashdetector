@@ -6309,4 +6309,130 @@ public class Japones implements Idioma {
 				+ "<li>保存してゲームを再起動してください。</li>" + "</ul>" + "<p>より新しいバージョンが利用可能であれば、DivineRPG の更新も推奨します。</p>";
 	}
 
+	@Override
+	public String nombreRenderPassNoCerrado() {
+		return "レンダーパスの競合";
+	}
+
+	@Override
+	public String mensajeRenderPassNoCerrado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "レンダリングシステムで競合が検出されました。</b>"
+				+ "<p>ゲームが以下のエラーをスローしました:</p>"
+				+ "<code>Close the existing render pass before performing additional commands</code>"
+				+ "<p>このエラーは通常、Iris や OptiFine、VulkanMod など、グラフィックスパイプラインを変更する Mod 間の競合に関連しています。</p>";
+	}
+
+	@Override
+	public String nombreProblemaFeatherClient() {
+		return "Feather Client 内部クラッシュ";
+	}
+
+	@Override
+	public String mensajeProblemaFeatherClientSodium() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Feather Client の内部クラッシュが検出されました。</b>" + "<p>ゲームが以下のエラーをスローしました:</p>"
+				+ "<code>NoClassDefFoundError: feather/lib/sentry/Sentry</code>"
+				+ "<p>このエラーは Feather Client によって引き起こされています。</p>" + "<p>Feather は以下の理由から推奨されません:</p>" + "<ul>"
+				+ "<li>人気 Mod の独自改変版を使用している。</li>" + "<li>標準的な Fabric との互換性を損なう。</li>"
+				+ "<li>内部で改変されたプリインストール型 Modpack として動作する。</li>" + "<li>Sodium や他のパフォーマンス Mod と競合することが多い。</li>" + "</ul>"
+				+ "<p>Feather の代わりに、標準の Fabric インストールを使用することを推奨します。</p>";
+	}
+
+	@Override
+	public String nombreConflictoIrisFlywheelCreate() {
+		return "Iris + Flywheel の競合（Create 6）";
+	}
+
+	@Override
+	public String mensajeConflictoIrisFlywheelCreate() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Create 6 で Iris と Flywheel の間の競合が検出されました。</b>" + "<p>ゲームが以下のエラーをスローしました:</p>"
+				+ "<code>NoSuchFieldError: TESSELATION_SHADERS</code>" + "<p>内部参照 <code>$irisflw$</code> が検出され、"
+				+ "これは Iris と Flywheel の競合を示しています。</p>"
+				+ "<p>Create 6 向けの Iris Flywheel 2.0 は、公式に NeoForge のみに対応しています。</p>"
+				+ "<p>Forge や Fabric を使用している場合、この組み合わせがこのエラーを引き起こす可能性があります。</p>";
+	}
+
+	@Override
+	public String nombreModeloGeckoNoEncontrado() {
+		return "GeckoLib モデルが見つかりません";
+	}
+
+	@Override
+	public String mensajeModeloGeckoNoEncontrado(String modelo) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Mod が GeckoLib モデルを見つけられませんでした。</b>" + "<p>影響を受けたモデル:</p>" + "<code>" + modelo + "</code>"
+				+ "<p>このエラーは、<code>.geo.json</code> ファイルが存在しないか、" + "Mod 内で誤って設定されている場合に発生します。</p>" + "<p>考えられる原因:</p>"
+				+ "<ul>" + "<li>モデルが削除されたが、まだ参照されている。</li>" + "<li>ファイルパスのエラー。</li>" + "<li>JAR 内にファイルが含まれていない。</li>"
+				+ "<li>Mod のバージョンが非互換。</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreProblemaAnimacionCobblemon() {
+		return "Cobblemon – 存在しないアニメーション";
+	}
+
+	@Override
+	public String mensajeAnimacionCobblemon(String animacion, String grupo) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Cobblemon が存在しないアニメーションを再生しようとしました。</b>" + "<p>アニメーション:</p>" + "<code>" + animacion + "</code>"
+				+ "<p>グループ:</p>" + "<code>" + grupo + "</code>" + "<p>このエラーは通常、以下の状況で発生します:</p>" + "<ul>"
+				+ "<li>Cobblemon の非互換バージョンが混在している。</li>" + "<li>アドオンがインストール済みのバージョンと一致していない。</li>"
+				+ "<li>内部リソースやアニメーションが不足している。</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreProblemaLunarClient() {
+		return "Lunar Client 内部クラッシュ";
+	}
+
+	@Override
+	public String mensajeProblemaLunarClient() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Lunar Client の内部クラッシュが検出されました。</b>" + "<p>このエラーは Lunar Client 自体に起因しており、ベースゲームや Mod とは無関係です。</p>"
+				+ "<p>Lunar Client は内部的にカスタム改造を施しており、これが " + "Mod や特定の設定との非互換性を引き起こす可能性があります。</p>"
+				+ "<p>クライアント自体に起因する問題を除外するため、標準の Minecraft インストールでテストすることを推奨します。</p>";
+	}
+
+	@Override
+	public String nombreAccesoIlegalMod() {
+		return "メソッドまたはフィールドへの不正アクセス";
+	}
+
+	@Override
+	public String mensajeAccesoIlegalMod(String clase, String miembro) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Mod が protected/private メソッドまたはフィールドにアクセスしようとしました。</b>" + "<p>問題のクラス:</p>" + "<code>" + clase
+				+ "</code>" + "<p>アクセスされたメンバー:</p>" + "<code>" + miembro + "</code>" + "<p>このエラーは通常、以下の状況で発生します:</p>"
+				+ "<ul>" + "<li>Mod が別の Minecraft バージョン向けにコンパイルされている。</li>" + "<li>非互換な mappings が混在している。</li>"
+				+ "<li>Mod が古くなっている。</li>" + "<li>誤ったローダー（Fabric/Forge/NeoForge）を使用している。</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreErrorParseoDataPack() {
+		return "datapack/resourcepack の読み込みエラー";
+	}
+
+	@Override
+	public String mensajeErrorParseoDataPack(String archivo, String pack) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "データパックまたはリソースパックの読み込みに失敗しました。</b>" + "<p>問題のあるファイル:</p>" + "<code>" + archivo + "</code>"
+				+ "<p>パック:</p>" + "<code>" + pack + "</code>" + "<p>ゲームがこのファイルを解析できず、レジストリの読み込みエラーが発生しました。</p>"
+				+ "<p>この問題は通常、以下の原因で発生します:</p>" + "<ul>" + "<li>不正な JSON 形式。</li>" + "<li>パックのバージョンが非互換。</li>"
+				+ "<li>現在のゲームバージョンに対してパックが古くなっている。</li>" + "<li>複数のデータパック間の競合。</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreErrorCompilacionShader() {
+		return "シェーダーのコンパイルエラー";
+	}
+
+	@Override
+	public String mensajeErrorCompilacionShader() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "シェーダーのコンパイルに失敗しました。</b>"
+				+ "<p>ゲームが有効なシェーダーのいずれかをコンパイルできませんでした。</p>" + "<p>この問題は通常、Sodium や Iris、または非互換のシェーダーパックに関連しています。</p>"
+				+ "<p>推奨対応:</p>" + "<ul>" + "<li>別のシェーダーを試してください。</li>" + "<li>一時的にシェーダーを無効にしてください。</li>"
+				+ "<li>GPU ドライバーを更新してください。</li>" + "<li>問題が続く場合は、Sodium を使わずにゲームを起動してみてください。</li>" + "</ul>";
+	}
+
 }

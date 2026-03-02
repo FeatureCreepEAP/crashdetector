@@ -19,6 +19,7 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.analizador.apps.minecraft.*;
 import com.asbestosstar.crashdetector.analizador.firmas.CargadorDeCodice;
 import com.asbestosstar.crashdetector.analizador.general.AccesoDenegadoBackupConfig;
+import com.asbestosstar.crashdetector.analizador.general.AccesoIlegalMod;
 import com.asbestosstar.crashdetector.analizador.general.AdvertenciaFaltasClases;
 import com.asbestosstar.crashdetector.analizador.general.AntiManipulacion;
 import com.asbestosstar.crashdetector.analizador.general.ContenidoDeTrazos;
@@ -45,7 +46,6 @@ import com.asbestosstar.crashdetector.analizador.general.JPMSIllegalAccess;
 import com.asbestosstar.crashdetector.analizador.general.JavaVersiones;
 import com.asbestosstar.crashdetector.analizador.general.LanzerDesAnimado;
 import com.asbestosstar.crashdetector.analizador.general.LanzerNoAnimado;
-import com.asbestosstar.crashdetector.analizador.general.SpongeMixinClaseMalUbicada;
 import com.asbestosstar.crashdetector.analizador.general.ModIncompatibleConCargadorActivo;
 import com.asbestosstar.crashdetector.analizador.general.ModulesDuplicadosJavaModulePlatform;
 import com.asbestosstar.crashdetector.analizador.general.NoTieneMemoria;
@@ -54,6 +54,7 @@ import com.asbestosstar.crashdetector.analizador.general.OpcionesJavaGCInvalidas
 import com.asbestosstar.crashdetector.analizador.general.PreferIPV4Trace;
 import com.asbestosstar.crashdetector.analizador.general.ProblemaSafeFetch32JDK17;
 import com.asbestosstar.crashdetector.analizador.general.RutaCaracteresInvalidos;
+import com.asbestosstar.crashdetector.analizador.general.SpongeMixinClaseMalUbicada;
 import com.asbestosstar.crashdetector.analizador.general.SpongeMixinConfigsProblematicos;
 import com.asbestosstar.crashdetector.analizador.general.TienesModDesAnimado;
 import com.asbestosstar.crashdetector.analizador.general.VersionInvalidaSemver;
@@ -282,6 +283,15 @@ public class Analizador {
 		verificaciones.add(new VulkanModGPUIncompatible());
 		verificaciones.add(new RenderOutlineRendertypeInvalidoBetterEnchants());
 		verificaciones.add(new DivineRPGDimensionalInventoryNPE());
+		verificaciones.add(new RenderPassNoCerrado());
+		verificaciones.add(new ProblemaFeatherClient());
+		verificaciones.add(new ConflictoIrisFlywheelCreate());
+		verificaciones.add(new ModeloGeckoLibNoEncontrado());
+		verificaciones.add(new ProblemaAnimacionCobblemon());
+		verificaciones.add(new ProblemaLunarClient());
+		verificaciones.add(new AccesoIlegalMod());
+		verificaciones.add(new ErrorParseoDataPack());
+		verificaciones.add(new ErrorCompilacionShader());
 
 		verificaciones.add(new PirataMC());
 		verificaciones.add(new LanzerNoAnimado());
@@ -507,12 +517,16 @@ public class Analizador {
 		constructor.append("<ol>");
 
 		for (Verificaciones ver : obtenerActivados()) {
-			constructor.append("<li>").append(ver.comoString())
+			String str = ver.comoString();
+			if (!str.isEmpty()) {
+				constructor.append("<li>").append(str)
 
-					.append("</li>");
+						.append("</li>");
 
-			CrashDetectorLogger.log("razon " + ver.mensaje());
-
+				CrashDetectorLogger.log("razon " + ver.mensaje());
+			} else {
+				CrashDetectorLogger.log("razon es blanco " + ver.nombre());
+			}
 		}
 
 		constructor.append("</ol>");

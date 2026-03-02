@@ -6534,4 +6534,146 @@ public class Esperanto implements Idioma {
 				+ "<p>Ankaŭ rekomendiĝas ĝisdatigi DivineRPG se pli nova versio haveblas.</p>";
 	}
 
+	@Override
+	public String nombreRenderPassNoCerrado() {
+		return "Konflikto en Render Pass";
+	}
+
+	@Override
+	public String mensajeRenderPassNoCerrado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Konflikto estis detektita en la bildiga sistemo.</b>" + "<p>La ludo eligis:</p>"
+				+ "<code>Close the existing render pass before performing additional commands</code>"
+				+ "<p>Tiu eraro kutime rilatas al konfliktoj inter bildigaj modoj kiel "
+				+ "Iris, OptiFine, VulkanMod aŭ aliaj kiuj modifas la grafikan pipo-linion.</p>";
+	}
+
+	@Override
+	public String nombreProblemaFeatherClient() {
+		return "Interna eraro de Feather Client";
+	}
+
+	@Override
+	public String mensajeProblemaFeatherClientSodium() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Interna eraro de Feather Client estis detektita.</b>" + "<p>La ludo eligis:</p>"
+				+ "<code>NoClassDefFoundError: feather/lib/sentry/Sentry</code>"
+				+ "<p>Tiu eraro estas kaŭzita de Feather Client.</p>" + "<p>Feather ne estas rekomendata ĉar:</p>"
+				+ "<ul>" + "<li>Ĝi uzas proprajn, modifitajn versiojn de popularaj modoj.</li>"
+				+ "<li>Ĝi rompas kongruon kun norma Fabric.</li>"
+				+ "<li>Ĝi funkcias kiel antaŭkunmetita modpako kun internaj modifoj.</li>"
+				+ "<li>Ĝi ofte kaŭzas konfliktojn kun Sodium kaj aliaj rendimentaj modoj.</li>" + "</ul>"
+				+ "<p>Oni rekomendas uzi norman instalaĵon de Fabric anstataŭ Feather.</p>";
+	}
+
+	@Override
+	public String nombreConflictoIrisFlywheelCreate() {
+		return "Konflikto Iris + Flywheel (Create 6)";
+	}
+
+	@Override
+	public String mensajeConflictoIrisFlywheelCreate() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Konflikto estis detektita inter Iris kaj Flywheel en Create 6.</b>" + "<p>La ludo eligis:</p>"
+				+ "<code>NoSuchFieldError: TESSELATION_SHADERS</code>"
+				+ "<p>Internaj referencoj <code>$irisflw$</code> estis trovitaj, "
+				+ "kio indikas konflikton inter Iris kaj Flywheel.</p>"
+				+ "<p>Iris Flywheel 2.0 por Create 6 oficiale kongruas nur kun NeoForge.</p>"
+				+ "<p>Se vi uzas Forge aŭ Fabric, tiu kombinaĵo povas kaŭzi tiun eraron.</p>";
+	}
+
+	@Override
+	public String nombreModeloGeckoNoEncontrado() {
+		return "GeckoLib-modelo ne trovita";
+	}
+
+	@Override
+	public String mensajeModeloGeckoNoEncontrado(String modelo) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Mod ne povis trovi modelon de GeckoLib.</b>" + "<p>Afektita modelo:</p>" + "<code>" + modelo
+				+ "</code>" + "<p>Tiu eraro okazas kiam dosiero <code>.geo.json</code> ne ekzistas "
+				+ "aŭ estas misagordita ene de la mod.</p>" + "<p>Eblaj kaŭzoj:</p>" + "<ul>"
+				+ "<li>La modelo estis forigita sed ankoraŭ estas referencata.</li>"
+				+ "<li>Eraro en la dosiervojo.</li>" + "<li>Mankanta dosiero en la JAR.</li>"
+				+ "<li>Nekongrua versio de la mod.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreProblemaAnimacionCobblemon() {
+		return "Cobblemon – Neekzistanta animacio";
+	}
+
+	@Override
+	public String mensajeAnimacionCobblemon(String animacion, String grupo) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Cobblemon provis ludi neekzistantan animacion.</b>" + "<p>Animacio:</p>" + "<code>" + animacion
+				+ "</code>" + "<p>Grupo:</p>" + "<code>" + grupo + "</code>" + "<p>Tiu eraro kutime okazas kiam:</p>"
+				+ "<ul>" + "<li>Miksiĝas nekongruaj versioj de Cobblemon.</li>"
+				+ "<li>Kromaĵo ne kongruas kun la instalita versio.</li>"
+				+ "<li>Mankas internaj rimedoj aŭ animacioj.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreProblemaLunarClient() {
+		return "Interna eraro de Lunar Client";
+	}
+
+	@Override
+	public String mensajeProblemaLunarClient() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Interna eraro de Lunar Client estis detektita.</b>"
+				+ "<p>La eraro devenas de la Lunar Client mem, ne de la baza ludo nek de modoj.</p>"
+				+ "<p>Lunar Client uzas internajn kaj proprajn modifojn, kiuj povas "
+				+ "kaŭzi nekongruon kun modoj aŭ specifaj agordoj.</p>"
+				+ "<p>Oni rekomendas testi per norma instalaĵo de Minecraft "
+				+ "por ekskludi problemojn kaŭzitajn de la kliento mem.</p>";
+	}
+
+	@Override
+	public String nombreAccesoIlegalMod() {
+		return "Nepermesita aliro al metodo aŭ kampo";
+	}
+
+	@Override
+	public String mensajeAccesoIlegalMod(String clase, String miembro) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Mod provis aliri protektitan/privatan metodon aŭ kampon.</b>" + "<p>Responda klaso:</p>" + "<code>"
+				+ clase + "</code>" + "<p>Akcesita membro:</p>" + "<code>" + miembro + "</code>"
+				+ "<p>Tiu eraro kutime okazas kiam:</p>" + "<ul>"
+				+ "<li>La mod estis kompilita por alia versio de Minecraft.</li>"
+				+ "<li>Miksiĝis nekongruaj mappings.</li>" + "<li>La mod estas malaktuala.</li>"
+				+ "<li>Malĝusta ŝargilo estas uzata (Fabric/Forge/NeoForge).</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreErrorParseoDataPack() {
+		return "Eraro dum ŝargado de datapack/resourcepack";
+	}
+
+	@Override
+	public String mensajeErrorParseoDataPack(String archivo, String pack) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Datapack aŭ resourcepack malsukcesis ŝargiĝi.</b>" + "<p>Problema dosiero:</p>" + "<code>" + archivo
+				+ "</code>" + "<p>Pako:</p>" + "<code>" + pack + "</code>"
+				+ "<p>La ludo ne povis analizi tiun dosieron, kio kaŭzis erarojn dum ŝargado de la registro (registry).</p>"
+				+ "<p>Tiu problemo kutime devenas de:</p>" + "<ul>" + "<li>Malĝuste formatita JSON.</li>"
+				+ "<li>Nekongrua versio de la pako.</li>" + "<li>Pako ne ĝisdatigita por la nuna ludversio.</li>"
+				+ "<li>Konflikto inter datapakoj.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreErrorCompilacionShader() {
+		return "Eraro de kompilado de shader";
+	}
+
+	@Override
+	public String mensajeErrorCompilacionShader() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Malsukcesis kompilado de shader.</b>" + "<p>La ludo ne povis kompili unu el la aktivaj shaderoj.</p>"
+				+ "<p>Tiu problemo kutime rilatas al Sodium, Iris aŭ nekongruaj shaderpakaĵoj.</p>"
+				+ "<p>Rekomendoj:</p>" + "<ul>" + "<li>Provu alian shaderon.</li>"
+				+ "<li>Provize malaktivigu la shaderojn.</li>" + "<li>Ĝisdatigu la GPU-stirilojn.</li>"
+				+ "<li>Se la problemo daŭras, provu lanĉi la ludon sen Sodium.</li>" + "</ul>";
+	}
+
 }

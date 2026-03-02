@@ -6295,4 +6295,131 @@ public class Coreano implements Idioma {
 				+ "<li>저장하고 게임을 다시 시작하십시오.</li>" + "</ul>" + "<p>더 새 버전이 있으면 DivineRPG도 갱신하는 것을 권장합니다.</p>";
 	}
 
+	@Override
+	public String nombreRenderPassNoCerrado() {
+		return "렌더 패스 충돌";
+	}
+
+	@Override
+	public String mensajeRenderPassNoCerrado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "렌더링 체계에서 충돌이 감지되였습니다.</b>"
+				+ "<p>게임에서 다음 오류를 발생시켰습니다:</p>"
+				+ "<code>Close the existing render pass before performing additional commands</code>"
+				+ "<p>이 오류는 보통 Iris, OptiFine, VulkanMod 등 그래픽 파이프라인을 수정하는 모드들 사이의 충돌과 관련되여 있습니다.</p>";
+	}
+
+	@Override
+	public String nombreProblemaFeatherClient() {
+		return "Feather Client 내부 오류";
+	}
+
+	@Override
+	public String mensajeProblemaFeatherClientSodium() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Feather Client의 내부 오류가 감지되였습니다.</b>" + "<p>게임에서 다음 오류를 발생시켰습니다:</p>"
+				+ "<code>NoClassDefFoundError: feather/lib/sentry/Sentry</code>"
+				+ "<p>이 오류는 Feather Client에 의해 야기됩니다.</p>" + "<p>Feather는 다음 이유로 권장되지 않습니다:</p>" + "<ul>"
+				+ "<li>인기 있는 모드들의 사설적이고 수정된 버전을 사용함.</li>" + "<li>표준 Fabric과의 호환성을 깨뜨림.</li>"
+				+ "<li>내부적으로 수정된 미리 조립된 모드팩으로 작동함.</li>" + "<li>Sodium 및 기타 성능 모드들과 충돌을 일으키는 경우가 많음.</li>" + "</ul>"
+				+ "<p>Feather 대신 표준 Fabric 설치를 사용할 것을 권장합니다.</p>";
+	}
+
+	@Override
+	public String nombreConflictoIrisFlywheelCreate() {
+		return "Iris + Flywheel 충돌 (Create 6)";
+	}
+
+	@Override
+	public String mensajeConflictoIrisFlywheelCreate() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Create 6에서 Iris와 Flywheel 사이의 충돌이 감지되였습니다.</b>" + "<p>게임에서 다음 오류를 발생시켰습니다:</p>"
+				+ "<code>NoSuchFieldError: TESSELATION_SHADERS</code>" + "<p>내부 참조 <code>$irisflw$</code>가 감지되였으며, "
+				+ "이는 Iris와 Flywheel 사이의 충돌을 가리킵니다.</p>" + "<p>Create 6용 Iris Flywheel 2.0은 공식적으로 NeoForge와만 호환됩니다.</p>"
+				+ "<p>Forge 또는 Fabric을 사용 중이라면, 이 조합이 해당 오류를 일으킬 수 있습니다.</p>";
+	}
+
+	@Override
+	public String nombreModeloGeckoNoEncontrado() {
+		return "GeckoLib 모델을 찾을 수 없음";
+	}
+
+	@Override
+	public String mensajeModeloGeckoNoEncontrado(String modelo) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "모드가 GeckoLib 모델을 찾지 못 하였습니다.</b>" + "<p>영향 받은 모델:</p>" + "<code>" + modelo + "</code>"
+				+ "<p>이 오류는 <code>.geo.json</code> 파일이 존재하지 않거나 " + "모드 내에서 잘못 설정되였을 때 발생합니다.</p>" + "<p>가능한 원인:</p>"
+				+ "<ul>" + "<li>모델이 삭제되였지만 여전히 참조되고 있음.</li>" + "<li>파일 경로 오류.</li>" + "<li>JAR 내부에 파일이 누락되여 있음.</li>"
+				+ "<li>호환되지 않는 모드 버전.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreProblemaAnimacionCobblemon() {
+		return "Cobblemon – 존재하지 않는 애니메이션";
+	}
+
+	@Override
+	public String mensajeAnimacionCobblemon(String animacion, String grupo) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Cobblemon이 존재하지 않는 애니메이션을 재생하려 하였습니다.</b>" + "<p>애니메이션:</p>" + "<code>" + animacion + "</code>"
+				+ "<p>그룹:</p>" + "<code>" + grupo + "</code>" + "<p>이 오류는 보통 다음 경우에 발생합니다:</p>" + "<ul>"
+				+ "<li>Cobblemon의 호환되지 않는 버전들을 혼용하였음.</li>" + "<li>애드온이 설치된 버전과 일치하지 않음.</li>"
+				+ "<li>내부 자원 또는 애니메이션이 누락되였음.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreProblemaLunarClient() {
+		return "Lunar Client 내부 오류";
+	}
+
+	@Override
+	public String mensajeProblemaLunarClient() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Lunar Client의 내부 오류가 감지되였습니다.</b>" + "<p>이 오류는 Lunar 클라이언트 자체에서 비롯되였으며, 기본 게임이나 모드와는 무관합니다.</p>"
+				+ "<p>Lunar Client는 내부적으로 맞춤형 수정을 사용하며, 이는 " + "모드나 특정 설정과의 비호환성을 일으킬 수 있습니다.</p>"
+				+ "<p>클라이언트 자체 문제를 배제하기 위해 표준 마인크래프트 설치로 시험해 보는 것을 권장합니다.</p>";
+	}
+
+	@Override
+	public String nombreAccesoIlegalMod() {
+		return "메서드 또는 필드에 대한 불법 접근";
+	}
+
+	@Override
+	public String mensajeAccesoIlegalMod(String clase, String miembro) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "모드가 보호되거나 비공개된 메서드 또는 필드에 접근하려 하였습니다.</b>" + "<p>책임 클래스:</p>" + "<code>" + clase + "</code>"
+				+ "<p>접근된 멤버:</p>" + "<code>" + miembro + "</code>" + "<p>이 오류는 보통 다음 경우에 발생합니다:</p>" + "<ul>"
+				+ "<li>모드가 다른 버전의 마인크래프트용으로 컴파일되였음.</li>" + "<li>호환되지 않는 매핑(mappings)이 혼합되였음.</li>"
+				+ "<li>모드가 오래되였음.</li>" + "<li>잘못된 로더(Fabric/Forge/NeoForge)를 사용하고 있음.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreErrorParseoDataPack() {
+		return "데이터팩/리소스팩 로드 오류";
+	}
+
+	@Override
+	public String mensajeErrorParseoDataPack(String archivo, String pack) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "데이터팩(datapack) 또는 리소스팩(resourcepack)을 불러들이는 데 실패하였습니다.</b>" + "<p>문제 있는 파일:</p>" + "<code>" + archivo
+				+ "</code>" + "<p>팩:</p>" + "<code>" + pack + "</code>"
+				+ "<p>게임이 이 파일을 분석하지 못 하여 레지스트리(registry) 로드 오류가 발생하였습니다.</p>" + "<p>이 문제는 보통 다음 원인으로 일어납니다:</p>"
+				+ "<ul>" + "<li>잘못된 JSON 형식.</li>" + "<li>호환되지 않는 팩 버전.</li>" + "<li>현재 게임 버전에 맞지 않는 오래된 팩.</li>"
+				+ "<li>데이터팩들 사이의 충돌.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreErrorCompilacionShader() {
+		return "셰이더 컴파일 오류";
+	}
+
+	@Override
+	public String mensajeErrorCompilacionShader() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "셰이더 컴파일에 실패하였습니다.</b>"
+				+ "<p>게임이 활성화된 셰이더 중 하나를 컴파일하지 못 하였습니다.</p>"
+				+ "<p>이 문제는 보통 Sodium, Iris 또는 호환되지 않는 셰이더팩과 관련되여 있습니다.</p>" + "<p>권장 조치:</p>" + "<ul>"
+				+ "<li>다른 셰이더를 시험해 보십시오.</li>" + "<li>셰이더를 임시로 비활성화하십시오.</li>" + "<li>GPU 드라이버를 갱신하십시오.</li>"
+				+ "<li>문제가 지속되면 Sodium 없이 게임을 시작해 보십시오.</li>" + "</ul>";
+	}
+
 }

@@ -6524,4 +6524,145 @@ public class Persa implements Idioma {
 				+ "<p>در صورت وجود نسخهٔ جدیدتر، به‌روزرسانی DivineRPG نیز توصیه می‌شود.</p>";
 	}
 
+	@Override
+	public String nombreRenderPassNoCerrado() {
+		return "تضاد در Render Pass";
+	}
+
+	@Override
+	public String mensajeRenderPassNoCerrado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تضادی در سیستم رندر شناسایی شد.</b>" + "<p>بازی خطای زیر را پرتاب کرد:</p>"
+				+ "<code>Close the existing render pass before performing additional commands</code>"
+				+ "<p>این خطا معمولاً به دلیل تداخل بین مودهای رندر مانند "
+				+ "Iris، OptiFine، VulkanMod یا سایر مودهایی است که خط لولهٔ گرافیکی را تغییر می‌دهند.</p>";
+	}
+
+	@Override
+	public String nombreProblemaFeatherClient() {
+		return "خرابی داخلی Feather Client";
+	}
+
+	@Override
+	public String mensajeProblemaFeatherClientSodium() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "خرابی داخلی در Feather Client شناسایی شد.</b>" + "<p>بازی خطای زیر را پرتاب کرد:</p>"
+				+ "<code>NoClassDefFoundError: feather/lib/sentry/Sentry</code>"
+				+ "<p>این خطا توسط Feather Client ایجاد شده است.</p>" + "<p>Feather به دلایل زیر توصیه نمی‌شود:</p>"
+				+ "<ul>" + "<li>از نسخه‌های اختصاصی و اصلاح‌شدهٔ مودهای محبوب استفاده می‌کند.</li>"
+				+ "<li>سازگاری با Fabric استاندارد را مختل می‌کند.</li>"
+				+ "<li>به‌عنوان یک مودپک از پیش ساخته‌شده با تغییرات داخلی عمل می‌کند.</li>"
+				+ "<li>معمولاً با Sodium و سایر مودهای عملکرد تداخل ایجاد می‌کند.</li>" + "</ul>"
+				+ "<p>استفاده از نصب استاندارد Fabric به‌جای Feather توصیه می‌شود.</p>";
+	}
+
+	@Override
+	public String nombreConflictoIrisFlywheelCreate() {
+		return "تضاد Iris + Flywheel (Create 6)";
+	}
+
+	@Override
+	public String mensajeConflictoIrisFlywheelCreate() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تضادی بین Iris و Flywheel در Create 6 شناسایی شد.</b>" + "<p>بازی خطای زیر را پرتاب کرد:</p>"
+				+ "<code>NoSuchFieldError: TESSELATION_SHADERS</code>"
+				+ "<p>مرجع‌های داخلی <code>$irisflw$</code> شناسایی شدند که "
+				+ "نشان‌دهندهٔ تداخل بین Iris و Flywheel است.</p>"
+				+ "<p>Iris Flywheel 2.0 برای Create 6 فقط به‌صورت رسمی با NeoForge سازگار است.</p>"
+				+ "<p>اگر از Forge یا Fabric استفاده می‌کنید، این ترکیب ممکن است این خطا را ایجاد کند.</p>";
+	}
+
+	@Override
+	public String nombreModeloGeckoNoEncontrado() {
+		return "مدل GeckoLib یافت نشد";
+	}
+
+	@Override
+	public String mensajeModeloGeckoNoEncontrado(String modelo) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "یک مود نتوانست مدل GeckoLib را پیدا کند.</b>" + "<p>مدل تحت تأثیر:</p>" + "<code>" + modelo
+				+ "</code>" + "<p>این خطا هنگامی رخ می‌دهد که فایل <code>.geo.json</code> وجود نداشته باشد "
+				+ "یا درون مود به‌درستی پیکربندی نشده باشد.</p>" + "<p>علل احتمالی:</p>" + "<ul>"
+				+ "<li>مدل حذف شده اما هنوز به آن ارجاع داده می‌شود.</li>" + "<li>خطا در مسیر فایل.</li>"
+				+ "<li>فایل درون JAR وجود ندارد.</li>" + "<li>نسخهٔ ناسازگار مود.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreProblemaAnimacionCobblemon() {
+		return "Cobblemon – انیمیشن وجود ندارد";
+	}
+
+	@Override
+	public String mensajeAnimacionCobblemon(String animacion, String grupo) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Cobblemon سعی کرد انیمیشنی را پخش کند که وجود ندارد.</b>" + "<p>انیمیشن:</p>" + "<code>" + animacion
+				+ "</code>" + "<p>گروه:</p>" + "<code>" + grupo + "</code>"
+				+ "<p>این خطا معمولاً در موارد زیر رخ می‌دهد:</p>" + "<ul>"
+				+ "<li>نسخه‌های ناسازگار Cobblemon با هم ترکیب شده‌اند.</li>"
+				+ "<li>افزونه با نسخهٔ نصب‌شده هماهنگ نیست.</li>" + "<li>منابع یا انیمیشن‌های داخلی وجود ندارند.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreProblemaLunarClient() {
+		return "خرابی داخلی Lunar Client";
+	}
+
+	@Override
+	public String mensajeProblemaLunarClient() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "خرابی داخلی در Lunar Client شناسایی شد.</b>"
+				+ "<p>این خطا از خود Lunar Client نشأت می‌گیرد و مربوط به بازی پایه یا مودها نیست.</p>"
+				+ "<p>Lunar Client از تغییرات داخلی و سفارشی استفاده می‌کند که ممکن است "
+				+ "با مودها یا پیکربندی‌های خاص ناسازگاری ایجاد کند.</p>"
+				+ "<p>برای رد کردن مشکلات ناشی از خود کلاینت، توصیه می‌شود با نصب استاندارد ماينکرفت آزمایش کنید.</p>";
+	}
+
+	@Override
+	public String nombreAccesoIlegalMod() {
+		return "دسترسی غیرمجاز به متد یا فیلد";
+	}
+
+	@Override
+	public String mensajeAccesoIlegalMod(String clase, String miembro) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "یک مود سعی کرد به یک متد یا فیلد protected/private دسترسی پیدا کند.</b>" + "<p>کلاس مسئول:</p>"
+				+ "<code>" + clase + "</code>" + "<p>عضو دسترسی‌شده:</p>" + "<code>" + miembro + "</code>"
+				+ "<p>این خطا معمولاً در موارد زیر رخ می‌دهد:</p>" + "<ul>"
+				+ "<li>مود برای نسخهٔ دیگری از ماينکرفت کامپایل شده است.</li>"
+				+ "<li>ترکیبی از mappings ناسازگار وجود دارد.</li>" + "<li>مود قدیمی است.</li>"
+				+ "<li>از لودر اشتباه استفاده شده است (Fabric/Forge/NeoForge).</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreErrorParseoDataPack() {
+		return "خطا در بارگیری datapack/resourcepack";
+	}
+
+	@Override
+	public String mensajeErrorParseoDataPack(String archivo, String pack) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "بارگیری یک datapack یا resourcepack با شکست مواجه شد.</b>" + "<p>فایل مشکل‌دار:</p>" + "<code>"
+				+ archivo + "</code>" + "<p>پک:</p>" + "<code>" + pack + "</code>"
+				+ "<p>بازی نتوانست این فایل را تجزیه کند و این امر باعث خطاهای بارگیری registry شد.</p>"
+				+ "<p>این مشکل معمولاً به دلایل زیر رخ می‌دهد:</p>" + "<ul>" + "<li>JSON بدفرمت.</li>"
+				+ "<li>نسخهٔ ناسازگار پک.</li>" + "<li>پک برای نسخهٔ فعلی بازی قدیمی است.</li>"
+				+ "<li>تضاد بین datapackها.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreErrorCompilacionShader() {
+		return "خطای کامپایل شیدر";
+	}
+
+	@Override
+	public String mensajeErrorCompilacionShader() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "کامپایل شیدر شکست خورد.</b>" + "<p>بازی نتوانست یکی از شیدرهای فعال را کامپایل کند.</p>"
+				+ "<p>این مشکل معمولاً مربوط به Sodium، Iris یا شیدرپک‌های ناسازگار است.</p>"
+				+ "<p>راه‌حل‌های پیشنهادی:</p>" + "<ul>" + "<li>شیدر دیگری را امتحان کنید.</li>"
+				+ "<li>به‌صورت موقت شیدرها را غیرفعال کنید.</li>" + "<li>درایورهای GPU خود را به‌روزرسانی کنید.</li>"
+				+ "<li>اگر مشکل ادامه یافت، بازی را بدون Sodium اجرا کنید.</li>" + "</ul>";
+	}
+
 }

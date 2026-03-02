@@ -2500,4 +2500,40 @@ public interface Idioma {
 
 	public String nombreDivineRPGDimensionalInventoryNPE();
 
+	public String mensajeRenderPassNoCerrado();
+
+	public String nombreRenderPassNoCerrado();
+
+	public String mensajeProblemaFeatherClientSodium();
+
+	public String nombreProblemaFeatherClient();
+
+	public String mensajeConflictoIrisFlywheelCreate();
+
+	public String nombreConflictoIrisFlywheelCreate();
+
+	public String nombreModeloGeckoNoEncontrado();
+
+	public String mensajeModeloGeckoNoEncontrado(String modelo);
+
+	public String mensajeAnimacionCobblemon(String animacion, String grupo);
+
+	public String nombreProblemaAnimacionCobblemon();
+
+	public String mensajeProblemaLunarClient();
+
+	public String nombreProblemaLunarClient();
+
+	public String mensajeAccesoIlegalMod(String claseOrigen, String miembroAccedido);
+
+	public String nombreAccesoIlegalMod();
+
+	public String mensajeErrorParseoDataPack(String archivo2, String pack);
+
+	public String nombreErrorParseoDataPack();
+
+	public String mensajeErrorCompilacionShader();
+
+	public String nombreErrorCompilacionShader();
+
 }

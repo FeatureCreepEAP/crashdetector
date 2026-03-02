@@ -19,7 +19,6 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 public class ProblemaSpongeMixinFabric implements Verificaciones {
 
 	private boolean activado = false;
-	private boolean viErrorMixin = false;
 	private boolean analizarLineas = false;
 
 	// mod -> enlace
@@ -33,9 +32,9 @@ public class ProblemaSpongeMixinFabric implements Verificaciones {
 		if (log == null)
 			return;
 
-		// Pre-check global rápido (solo contains)
-		if (log.contains("MixinTransformerError: An unexpected critical error was encountered")
-				&& log.contains("from mod ")) {
+		if (log.contains("MixinTransformerError") || log.contains("InvalidMixinException")
+				|| log.contains("MixinApplyError") || log.contains("Critical injection failure")
+				|| log.contains("MixinInitialisationError")) {
 
 			analizarLineas = true;
 		}
@@ -47,17 +46,18 @@ public class ProblemaSpongeMixinFabric implements Verificaciones {
 		if (!analizarLineas || linea == null)
 			return;
 
-		boolean linea_vi_error_mixin = false;
-		// Esperar explícitamente la línea del error crítico
+		boolean lineaEsErrorFatal = false;
+
+		// Errores fatales conocidos
 		if (linea.contains("MixinTransformerError") || linea.contains("InvalidMixinException")
-				|| linea.contains("MixinApplyError") || linea.contains("Critical injection failure")) {
-			linea_vi_error_mixin = true;
-			this.viErrorMixin = true;
-			return;
+				|| linea.contains("MixinApplyError") || linea.contains("Critical injection failure")
+				|| linea.contains("MixinInitialisationError")) {
+
+			lineaEsErrorFatal = true;
 		}
 
-		// Solo después de haber detectado el error fatal
-		if (linea_vi_error_mixin && linea.contains("from mod ")) {
+		// Caso clásico: "... from mod X"
+		if (lineaEsErrorFatal && linea.contains("from mod ")) {
 
 			int indice = linea.indexOf("from mod ");
 			if (indice == -1)
@@ -77,6 +77,34 @@ public class ProblemaSpongeMixinFabric implements Verificaciones {
 				modsConEnlace.put(nombreMod, enlace);
 
 				this.activado = true;
+			}
+		}
+
+		// Nuevo caso: MixinInitialisationError con mixins.json
+		if (linea.contains("MixinInitialisationError") && linea.contains(".mixins.json")) {
+
+			String enlace = consola.agregarErrorALectador(numero_de_linea, this);
+
+			// Extraer nombre del config mixin
+			int inicio = linea.indexOf("config ");
+			if (inicio != -1) {
+
+				String restante = linea.substring(inicio + "config ".length()).trim();
+
+				int fin = restante.indexOf(' ');
+				if (fin == -1)
+					fin = restante.length();
+
+				String mixinConfig = restante.substring(0, fin).trim();
+
+				// Obtener modId aproximado (antes de ".mixins.json")
+				int punto = mixinConfig.indexOf(".mixins.json");
+				String nombreMod = punto > 0 ? mixinConfig.substring(0, punto) : mixinConfig;
+
+				if (!modsConEnlace.containsKey(nombreMod)) {
+					modsConEnlace.put(nombreMod, enlace);
+					this.activado = true;
+				}
 			}
 		}
 	}

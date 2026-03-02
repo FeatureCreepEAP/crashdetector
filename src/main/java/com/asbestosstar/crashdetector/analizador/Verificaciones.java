@@ -113,6 +113,11 @@ public interface Verificaciones {
 	public default String comoString() {// no puedemos usar toString en interfaz
 		StringBuilder constructor = new StringBuilder();
 		String tituloColor = Config.obtenerInstancia().obtenerColorDeTitulosDeConsolas();
+
+		if (mensaje().isEmpty()) {
+			return "";
+		}
+
 		constructor.append("<span style='color: #").append(tituloColor).append("; font-weight: bold;'>")
 				.append(nombre()).append("</span>");
 		constructor.append("<br>").append(mensaje());
