@@ -279,12 +279,10 @@ public class Analizador {
 		verificaciones.add(new VersionInvalidaSemver());
 		verificaciones.add(new JPMSIllegalAccess());
 		verificaciones.add(new SpongeMixinClaseMalUbicada());
+		verificaciones.add(new VulkanModGPUIncompatible());
+		verificaciones.add(new RenderOutlineRendertypeInvalidoBetterEnchants());
+		verificaciones.add(new DivineRPGDimensionalInventoryNPE());
 
-		
-		
-		
-		
-		
 		verificaciones.add(new PirataMC());
 		verificaciones.add(new LanzerNoAnimado());
 		verificaciones.add(new LanzerDesAnimado());

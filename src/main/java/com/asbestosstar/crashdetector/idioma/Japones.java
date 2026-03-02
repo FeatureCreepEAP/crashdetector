@@ -6189,73 +6189,124 @@ public class Japones implements Idioma {
 				+ "<ul>" + "<li>JEI および該当 Mod を更新してください。</li>" + "<li>競合を確認するため、影響を受けたプラグインを一時的に削除してください。</li>"
 				+ "<li>関連 Mod の開発者にこのエラーを報告してください。</li>" + "</ul>" + "<p>この問題が修正されるまで、これらのグループのアイテムは材料リストに表示されません。</p>";
 	}
-	
+
 	@Override
 	public String nombreVersionInvalida() {
-	    return "無効なModバージョン（SemVer）";
+		return "無効なModバージョン（SemVer）";
 	}
 
 	@Override
 	public String mensajeVersionInvalida(String version, String ubicacion) {
-	    String v = (version == null || version.isEmpty()) ? "不明" : version;
-	    String u = (ubicacion == null || ubicacion.isEmpty()) ? "Modの場所を特定できませんでした" : ubicacion;
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "無効なModバージョンが検出されました。</b>"
-	            + "<p>バージョン <b>" + v + "</b> は有効なSemVer形式に準拠していません。</p>"
-	            + "<p>このエラーは、空のプレリリース（末尾が「+」）を示しています。</p>"
-	            + "<p><b>問題のあるMod：</b><br>" + u + "</p>"
-	            + "<p><b>推奨される解決策：</b></p>"
-	            + "<ul>"
-	            + "<li>Modファイルを編集し、バージョンを修正してください。</li>"
-	            + "<li>後続のメタデータがない場合は、末尾の「+」を削除してください。</li>"
-	            + "<li>Modを修正済みのバージョンに更新してください。</li>"
-	            + "</ul>";
-	}
-	
-	@Override
-	public String nombreJPMSIllegalAccess() {
-	    return "JPMS：モジュール間の不正アクセス";
+		String v = (version == null || version.isEmpty()) ? "不明" : version;
+		String u = (ubicacion == null || ubicacion.isEmpty()) ? "Modの場所を特定できませんでした" : ubicacion;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "無効なModバージョンが検出されました。</b>"
+				+ "<p>バージョン <b>" + v + "</b> は有効なSemVer形式に準拠していません。</p>" + "<p>このエラーは、空のプレリリース（末尾が「+」）を示しています。</p>"
+				+ "<p><b>問題のあるMod：</b><br>" + u + "</p>" + "<p><b>推奨される解決策：</b></p>" + "<ul>"
+				+ "<li>Modファイルを編集し、バージョンを修正してください。</li>" + "<li>後続のメタデータがない場合は、末尾の「+」を削除してください。</li>"
+				+ "<li>Modを修正済みのバージョンに更新してください。</li>" + "</ul>";
 	}
 
 	@Override
-	public String mensajeJPMSIllegalAccess(String claseOrigen, String moduloOrigen, String claseDestino, String moduloDestino) {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "モジュール間の不正アクセス（JPMS）を検出しました。</b>"
-	            + "<p>Java モジュールシステム（JPMS）がクラス間のアクセスをブロックしました。</p>"
-	            + "<p><b>アクセスを試みたクラス：</b><br>"
-	            + claseOrigen + "（モジュール：" + moduloOrigen + "）</p>"
-	            + "<p><b>ブロックされたクラス：</b><br>"
-	            + claseDestino + "（モジュール：" + moduloDestino + "）</p>"
-	            + "<p>このエラーは、Mod が module-info.java で "
-	            + "exports または opens を正しく宣言していない場合に発生します。</p>"
-	            + "<p><b>考えられる原因：</b></p>"
-	            + "<ul>"
-	            + "<li>モジュールが必要なパッケージをエクスポートしていない。</li>"
-	            + "<li>リフレクション用の <b>opens</b> ディレクティブが不足している。</li>"
-	            + "<li>Mod が JPMS 用に適切に設定されていない。</li>"
-	            + "</ul>"
-	            + "<p>この問題は Mod 開発者が修正する必要があります。</p>";
+	public String nombreJPMSIllegalAccess() {
+		return "JPMS：モジュール間の不正アクセス";
 	}
-	
+
+	@Override
+	public String mensajeJPMSIllegalAccess(String claseOrigen, String moduloOrigen, String claseDestino,
+			String moduloDestino) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "モジュール間の不正アクセス（JPMS）を検出しました。</b>" + "<p>Java モジュールシステム（JPMS）がクラス間のアクセスをブロックしました。</p>"
+				+ "<p><b>アクセスを試みたクラス：</b><br>" + claseOrigen + "（モジュール：" + moduloOrigen + "）</p>"
+				+ "<p><b>ブロックされたクラス：</b><br>" + claseDestino + "（モジュール：" + moduloDestino + "）</p>"
+				+ "<p>このエラーは、Mod が module-info.java で " + "exports または opens を正しく宣言していない場合に発生します。</p>"
+				+ "<p><b>考えられる原因：</b></p>" + "<ul>" + "<li>モジュールが必要なパッケージをエクスポートしていない。</li>"
+				+ "<li>リフレクション用の <b>opens</b> ディレクティブが不足している。</li>" + "<li>Mod が JPMS 用に適切に設定されていない。</li>" + "</ul>"
+				+ "<p>この問題は Mod 開発者が修正する必要があります。</p>";
+	}
+
 	@Override
 	public String nombreMixinClaseMalUbicada() {
-	    return "Mixin：クラスが mixin パッケージ内に誤って配置されています";
+		return "Mixin：クラスが mixin パッケージ内に誤って配置されています";
 	}
 
 	@Override
 	public String mensajeMixinClaseMalUbicada(String clase, String paquete, String archivoMixin) {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "クラスが Mixin パッケージ内に誤って配置されました。</b>"
-	            + "<p>通常のクラスが、mixin として宣言されたパッケージ内に置かれています。</p>"
-	            + "<p><b>競合しているクラス：</b><br>" + clase + "</p>"
-	            + "<p><b>宣言された mixin パッケージ：</b><br>" + paquete + "</p>"
-	            + "<p><b>関連する mixins ファイル：</b><br>" + archivoMixin + "</p>"
-	            + "<p>通常のクラスは mixins.json で定義されたパッケージ内に置いてはいけません。</p>"
-	            + "<p>そのパッケージには、mixin としてアノテーションされたクラスのみを置くべきです。</p>"
-	            + "<p><b>開発者向け解決策：</b>通常のクラスを mixin パッケージの外に移動するか、"
-	            + "mixins.json の設定を修正してください。</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "クラスが Mixin パッケージ内に誤って配置されました。</b>" + "<p>通常のクラスが、mixin として宣言されたパッケージ内に置かれています。</p>"
+				+ "<p><b>競合しているクラス：</b><br>" + clase + "</p>" + "<p><b>宣言された mixin パッケージ：</b><br>" + paquete + "</p>"
+				+ "<p><b>関連する mixins ファイル：</b><br>" + archivoMixin + "</p>"
+				+ "<p>通常のクラスは mixins.json で定義されたパッケージ内に置いてはいけません。</p>"
+				+ "<p>そのパッケージには、mixin としてアノテーションされたクラスのみを置くべきです。</p>"
+				+ "<p><b>開発者向け解決策：</b>通常のクラスを mixin パッケージの外に移動するか、" + "mixins.json の設定を修正してください。</p>";
 	}
-	
-	
+
+	@Override
+	public String problema_con_graficas_matrox() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Matrox GPUドライバーに問題を検出しました。</b>" + "<p>ログによると、クラッシュはMatroxドライバーのライブラリ内で発生しています。</p>"
+				+ "<p>Matrox GPU（特にサーバーで使われるG200/G400モデル）は、"
+				+ "現代的な3Dレンダリング向けに設計されておらず、Minecraftが要求するOpenGLバージョンをサポートしていない可能性があります。</p>" + "<p><b>推奨される解決策：</b></p>"
+				+ "<ul>" + "<li>Matroxドライバーを最新の利用可能バージョンに更新してください。</li>"
+				+ "<li>汎用的なシステムドライバーではなく、公式ドライバーをインストールしてください。</li>"
+				+ "<li>ハードウェアが古い場合は、OpenGL 3.2以上に対応したGPUを使用してください。</li>" + "</ul>"
+				+ "<p>サーバーでは、これらのGPUは通常、基本的なビデオ出力専用であり、" + "Minecraftのような3Dアプリケーションには適していません。</p>";
+	}
+
+	@Override
+	public String nombreVulkanModNoEncuentraGPU() {
+		return "VulkanMod: 非対応GPU";
+	}
+
+	@Override
+	public String mensajeVulkanModNoEncuentraGPU() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "VulkanMod が互換性のある GPU を検出できませんでした。</b>"
+				+ "<p>Mod <b>VulkanMod</b> は Vulkan を使用して起動しようとしましたが、適切に Vulkan をサポートする GPU が見つかりませんでした。</p>"
+				+ "<p>これは通常、以下の状況で発生します:</p>" + "<ul>" + "<li>GPU が Vulkan をサポートしていない。</li>"
+				+ "<li>GPU ドライバーが古いか、インストールされていない。</li>" + "<li>誤ったグラフィックアダプターを使用している（例：専用 GPU ではなく統合 GPU）。</li>"
+				+ "</ul>" + "<p><b>推奨される解決策:</b></p>" + "<ul>" + "<li>GPU ドライバーを最新バージョンに更新してください。</li>"
+				+ "<li>お使いの GPU が Vulkan をサポートしているか確認してください。</li>"
+				+ "<li>GPU が2台ある場合、Minecraft で専用 GPU を強制的に使用してください。</li>"
+				+ "<li>GPU が Vulkan をサポートしていない場合は、VulkanMod をアンインストールしてください。</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreRenderOutlineRendertypeInvalido() {
+		return "アウトラインに無効な RenderType が使用されました";
+	}
+
+	@Override
+	public String mensajeRenderOutlineRendertypeInvalido(boolean enchantDetectado) {
+		String base = "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Mod が非互換の RenderType にアウトラインを適用しようとしました。</b>" + "<p>エラー内容:</p>"
+				+ "<code>Can't render an outline for this rendertype!</code>";
+
+		if (enchantDetectado) {
+			base += "<p><b>レポート内で enchant-outline / better-enchants Mod が検出されました。</b></p>"
+					+ "<p>この Mod は、最近の Minecraft バージョンでこの問題を引き起こすことが知られています。</p>"
+					+ "<p><b>推奨される解決策:</b> enchant-outline を削除または更新してください。</p>";
+		} else {
+			base += "<p>この問題は通常、レンダリングを変更する Mod "
+					+ "（Entity Model Features、Entity Texture Features、Visuality、または Sodium との競合）に関連しています。</p>"
+					+ "<p><b>推奨される解決策:</b> レンダリング Mod を1つずつ更新または無効化して確認してください。</p>";
+		}
+
+		return base;
+	}
+
+	@Override
+	public String nombreDivineRPGDimensionalInventoryNPE() {
+		return "DivineRPG – DimensionalInventory が null";
+	}
+
+	@Override
+	public String mensajeDivineRPGDimensionalInventoryNPE() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "DivineRPG が null の DimensionalInventory を保存しようとしました。</b>" + "<p>ゲームが以下のエラーをスローしました:</p>"
+				+ "<code>Cannot invoke DimensionalInventory.saveInventory(...) because \"d\" is null</code>"
+				+ "<p>これは Vethean インベントリシステムに関連する DivineRPG の既知のバグです。</p>" + "<p><b>推奨される解決策:</b></p>" + "<ul>"
+				+ "<li>DivineRPG の設定ファイルを開いてください。</li>" + "<li><code>saferVetheanInventory=true</code> に設定してください。</li>"
+				+ "<li>保存してゲームを再起動してください。</li>" + "</ul>" + "<p>より新しいバージョンが利用可能であれば、DivineRPG の更新も推奨します。</p>";
+	}
 
 }

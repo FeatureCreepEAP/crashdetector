@@ -66,6 +66,7 @@ public class NoTieneMemoria implements Verificaciones {
 				|| contenidoConsola.contains("The specified size exceeds the maximum representable size")
 				|| contenidoConsola.contains("Invalid maximum heap size") || contenidoConsola
 						.contains("There is insufficient memory for the Java Runtime Environment to continue")) {
+
 			return false;
 		}
 
@@ -74,6 +75,7 @@ public class NoTieneMemoria implements Verificaciones {
 				|| contenidoConsola.contains("Direct buffer memory")
 				|| contenidoConsola.contains("unable to create new native thread")
 				|| contenidoConsola.contains("Out of Memory Error")
+				|| contenidoConsola.contains("Caused by: java.lang.OutOfMemoryError")
 				|| contenidoConsola.contains("Too small maximum heap")
 				|| contenidoConsola.contains("Insufficient memory") || contenidoConsola.contains("Problem with RAM");
 	}

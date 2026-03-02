@@ -32,7 +32,18 @@ public class Drivers implements Verificaciones {
 			"Your video card does not meet the requirements", "need to purchase a newer video card",
 			"videocard is too old", "does not support OpenGL 3", "OpenGL unsupported by videocard",
 			"The game failed to start because the currently installed" // Sodium a veces muestra esto
-	};
+			, };
+
+	// ==========================
+	// NVIDIA (Windows + Linux)
+	// ==========================
+
+	private static final String[] DLLS_NVIDIA_WINDOWS = { "[nvapi64.dll", "[nvapi.dll", "[nvoglv64.dll",
+			"[nvoglv32.dll", "[nvd3dumx.dll", "[nvd3dum.dll", "[nvwgf2umx.dll", "[nvwgf2um.dll", "[nvlddmkm.sys" };
+
+	private static final String[] SOS_NVIDIA_UNIX = { "[libnvidia-glcore.so", "[libnvidia-glsi.so", "[libnvidia-tls.so",
+			"[libGLX_nvidia.so", "[libnvidia-eglcore.so", "[libnvidia-rtcore.so", "[libnvidia-compiler.so",
+			"[libnvidia-vulkan.so", "[libnvidia-gpucomp.so" };
 
 	/**
 	 * Patrones de nouveau precompilados para evitar recompilar en cada
@@ -87,6 +98,21 @@ public class Drivers implements Verificaciones {
 		if (contieneLineaNativaAmd(log)) {
 			procesarProblemaAMD();
 			CrashDetectorLogger.log("Nativa AMD Driver Error");
+			return;
+		}
+
+		// NVIDIA (Windows + Linux)
+		if (log.contains("EXCEPTION_ACCESS_VIOLATION") && contienePatronNvidia(log)) {
+			procesarProblemaGraficos();
+			CrashDetectorLogger.log("NVIDIA Driver Error");
+			return;
+		}
+
+		// Matrox (Windows + Unix): suele implicar GPU no compatible o driver
+		// extremadamente antiguo
+		if (log.contains("EXCEPTION_ACCESS_VIOLATION") && contienePatronMatrox(log)) {
+			mensajes.append(MonitorDePID.idioma.problema_con_graficas_matrox());
+			CrashDetectorLogger.log("Matrox Driver Error");
 			return;
 		}
 
@@ -192,6 +218,23 @@ public class Drivers implements Verificaciones {
 		return contienePatronOpenAL(log);
 	}
 
+	private boolean contienePatronNvidia(String log) {
+
+		for (String dll : DLLS_NVIDIA_WINDOWS) {
+			if (log.contains(dll)) {
+				return true;
+			}
+		}
+
+		for (String so : SOS_NVIDIA_UNIX) {
+			if (log.contains(so)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private boolean contienePatronOpenAL(String log) {
 		// Verificamos si "libopenal.so" está presente dentro de los corchetes
 		if (log.contains("[libopenal.so+")) {
@@ -229,6 +272,39 @@ public class Drivers implements Verificaciones {
 	private void procesarProblemaAMD() {
 		mensajes.append(MonitorDePID.idioma.problema_con_graficas_ati());
 		activado = true;
+	}
+
+	// ==========================
+	// Matrox (Windows + Unix)
+	// ==========================
+
+	// DLLs típicas de Matrox en Windows (muy común en servidores: G200)
+	private static final String[] DLLS_MATROX_WINDOWS = { "[mgag200.dll", "[mgag400.dll", "[matrox.dll" };
+
+	// .so típicos de Matrox en Linux/Unix (driver mga)
+	private static final String[] SOS_MATROX_UNIX = { "[mga_dri.so", "[mga_drv.so", "[libdrm_mga.so", "[libmga.so" };
+
+	/**
+	 * Detecta indicios de drivers Matrox tanto en Windows (.dll) como en Unix
+	 * (.so). Se usa contains() para ser rápido y evitar regex.
+	 */
+	private boolean contienePatronMatrox(String log) {
+
+		// Búsqueda directa sin lowercase para mantener costo bajo (como el resto del
+		// verificador)
+		for (String dll : DLLS_MATROX_WINDOWS) {
+			if (log.contains(dll)) {
+				return true;
+			}
+		}
+
+		for (String so : SOS_MATROX_UNIX) {
+			if (log.contains(so)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private void procesarProblemaNouveau() {

@@ -6425,71 +6425,139 @@ public class Ruso implements Idioma {
 				+ "<li>Сообщите об ошибке разработчику соответствующего мода.</li>" + "</ul>"
 				+ "<p>Предметы из этих групп не будут отображаться в списке ингредиентов до устранения проблемы.</p>";
 	}
-	
+
 	@Override
 	public String nombreVersionInvalida() {
-	    return "Недопустимая версия мода (SemVer)";
+		return "Недопустимая версия мода (SemVer)";
 	}
 
 	@Override
 	public String mensajeVersionInvalida(String version, String ubicacion) {
-	    String v = (version == null || version.isEmpty()) ? "Неизвестна" : version;
-	    String u = (ubicacion == null || ubicacion.isEmpty()) ? "Не удалось найти мод" : ubicacion;
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "Обнаружена недопустимая версия мода.</b>"
-	            + "<p>Версия <b>" + v + "</b> не соответствует допустимому формату SemVer.</p>"
-	            + "<p>Ошибка указывает на пустой предрелиз (оканчивается на '+').</p>"
-	            + "<p><b>Ответственный мод:</b><br>" + u + "</p>"
-	            + "<p><b>Рекомендуемое решение:</b></p>"
-	            + "<ul>"
-	            + "<li>Отредактируйте файл мода и исправьте версию.</li>"
-	            + "<li>Удалите завершающий '+', если за ним не следует метаданных.</li>"
-	            + "<li>Обновите мод до исправленной версии.</li>"
-	            + "</ul>";
-	}
-	
-	@Override
-	public String nombreJPMSIllegalAccess() {
-	    return "JPMS: Недопустимый доступ между модулями";
+		String v = (version == null || version.isEmpty()) ? "Неизвестна" : version;
+		String u = (ubicacion == null || ubicacion.isEmpty()) ? "Не удалось найти мод" : ubicacion;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Обнаружена недопустимая версия мода.</b>" + "<p>Версия <b>" + v
+				+ "</b> не соответствует допустимому формату SemVer.</p>"
+				+ "<p>Ошибка указывает на пустой предрелиз (оканчивается на '+').</p>"
+				+ "<p><b>Ответственный мод:</b><br>" + u + "</p>" + "<p><b>Рекомендуемое решение:</b></p>" + "<ul>"
+				+ "<li>Отредактируйте файл мода и исправьте версию.</li>"
+				+ "<li>Удалите завершающий '+', если за ним не следует метаданных.</li>"
+				+ "<li>Обновите мод до исправленной версии.</li>" + "</ul>";
 	}
 
 	@Override
-	public String mensajeJPMSIllegalAccess(String claseOrigen, String moduloOrigen, String claseDestino, String moduloDestino) {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "Обнаружен недопустимый доступ между модулями (JPMS).</b>"
-	            + "<p>Система модулей Java (JPMS) заблокировала доступ между классами.</p>"
-	            + "<p><b>Класс, попытавшийся получить доступ:</b><br>"
-	            + claseOrigen + " (модуль: " + moduloOrigen + ")</p>"
-	            + "<p><b>Заблокированный класс:</b><br>"
-	            + claseDestino + " (модуль: " + moduloDestino + ")</p>"
-	            + "<p>Эта ошибка возникает, когда мод не объявляет корректно "
-	            + "exports или opens в своём module-info.java.</p>"
-	            + "<p><b>Возможные причины:</b></p>"
-	            + "<ul>"
-	            + "<li>Модуль не экспортирует требуемый пакет.</li>"
-	            + "<li>Отсутствует директива <b>opens</b> для рефлексии.</li>"
-	            + "<li>Мод неправильно настроен для JPMS.</li>"
-	            + "</ul>"
-	            + "<p>Эту проблему должен исправить разработчик мода.</p>";
+	public String nombreJPMSIllegalAccess() {
+		return "JPMS: Недопустимый доступ между модулями";
 	}
-	
+
+	@Override
+	public String mensajeJPMSIllegalAccess(String claseOrigen, String moduloOrigen, String claseDestino,
+			String moduloDestino) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Обнаружен недопустимый доступ между модулями (JPMS).</b>"
+				+ "<p>Система модулей Java (JPMS) заблокировала доступ между классами.</p>"
+				+ "<p><b>Класс, попытавшийся получить доступ:</b><br>" + claseOrigen + " (модуль: " + moduloOrigen
+				+ ")</p>" + "<p><b>Заблокированный класс:</b><br>" + claseDestino + " (модуль: " + moduloDestino
+				+ ")</p>" + "<p>Эта ошибка возникает, когда мод не объявляет корректно "
+				+ "exports или opens в своём module-info.java.</p>" + "<p><b>Возможные причины:</b></p>" + "<ul>"
+				+ "<li>Модуль не экспортирует требуемый пакет.</li>"
+				+ "<li>Отсутствует директива <b>opens</b> для рефлексии.</li>"
+				+ "<li>Мод неправильно настроен для JPMS.</li>" + "</ul>"
+				+ "<p>Эту проблему должен исправить разработчик мода.</p>";
+	}
+
 	@Override
 	public String nombreMixinClaseMalUbicada() {
-	    return "Mixin: класс неправильно размещен в пакете mixin";
+		return "Mixin: класс неправильно размещен в пакете mixin";
 	}
 
 	@Override
 	public String mensajeMixinClaseMalUbicada(String clase, String paquete, String archivoMixin) {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "Класс некорректно размещен в пакете Mixin.</b>"
-	            + "<p>Обычный класс был помещён в пакет, объявленный как mixin.</p>"
-	            + "<p><b>Конфликтующий класс:</b><br>" + clase + "</p>"
-	            + "<p><b>Объявленный пакет mixin:</b><br>" + paquete + "</p>"
-	            + "<p><b>Ответственный файл mixins:</b><br>" + archivoMixin + "</p>"
-	            + "<p>Обычные классы не должны находиться в пакете, определённом в mixins.json.</p>"
-	            + "<p>В этом пакете должны присутствовать только классы, аннотированные как mixin.</p>"
-	            + "<p><b>Решение для разработчиков:</b> Переместите обычные классы за пределы пакета mixin "
-	            + "или исправьте конфигурацию в файле mixins.json.</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Класс некорректно размещен в пакете Mixin.</b>"
+				+ "<p>Обычный класс был помещён в пакет, объявленный как mixin.</p>"
+				+ "<p><b>Конфликтующий класс:</b><br>" + clase + "</p>" + "<p><b>Объявленный пакет mixin:</b><br>"
+				+ paquete + "</p>" + "<p><b>Ответственный файл mixins:</b><br>" + archivoMixin + "</p>"
+				+ "<p>Обычные классы не должны находиться в пакете, определённом в mixins.json.</p>"
+				+ "<p>В этом пакете должны присутствовать только классы, аннотированные как mixin.</p>"
+				+ "<p><b>Решение для разработчиков:</b> Переместите обычные классы за пределы пакета mixin "
+				+ "или исправьте конфигурацию в файле mixins.json.</p>";
+	}
+
+	@Override
+	public String problema_con_graficas_matrox() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Обнаружена проблема с драйверами GPU Matrox.</b>"
+				+ "<p>Журнал указывает, что сбой произошёл внутри библиотеки драйвера Matrox.</p>"
+				+ "<p>Видеокарты Matrox (особенно модели G200/G400, используемые на серверах) "
+				+ "не предназначены для современного 3D-рендеринга и могут не поддерживать "
+				+ "версии OpenGL, требуемые Minecraft.</p>" + "<p><b>Рекомендуемые решения:</b></p>" + "<ul>"
+				+ "<li>Обновите драйвер Matrox до последней доступной версии.</li>"
+				+ "<li>Установите официальные драйверы вместо универсальных системных.</li>"
+				+ "<li>Если оборудование устарело, используйте видеокарту, совместимую с OpenGL 3.2 или выше.</li>"
+				+ "</ul>" + "<p>На серверах такие GPU обычно предназначены только для базового вывода видео "
+				+ "и не подходят для 3D-приложений, таких как Minecraft.</p>";
+	}
+
+	@Override
+	public String nombreVulkanModNoEncuentraGPU() {
+		return "VulkanMod: несовместимая видеокарта";
+	}
+
+	@Override
+	public String mensajeVulkanModNoEncuentraGPU() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "VulkanMod не удалось обнаружить совместимую видеокарту.</b>"
+				+ "<p>Мод <b>VulkanMod</b> попытался запуститься через Vulkan, но не нашёл видеокарту с надлежащей поддержкой Vulkan.</p>"
+				+ "<p>Это обычно происходит, когда:</p>" + "<ul>" + "<li>Видеокарта не поддерживает Vulkan.</li>"
+				+ "<li>Драйверы видеокарты устарели или отсутствуют.</li>"
+				+ "<li>Используется неправильный графический адаптер (например, интегрированная вместо дискретной видеокарты).</li>"
+				+ "</ul>" + "<p><b>Рекомендуемые решения:</b></p>" + "<ul>"
+				+ "<li>Обновите драйверы видеокарты до последней версии.</li>"
+				+ "<li>Убедитесь, что ваша видеокарта поддерживает Vulkan.</li>"
+				+ "<li>Если у вас две видеокарты, принудительно используйте дискретную для Minecraft.</li>"
+				+ "<li>Если ваша видеокарта не поддерживает Vulkan, удалите VulkanMod.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreRenderOutlineRendertypeInvalido() {
+		return "Недопустимый RenderType для контура";
+	}
+
+	@Override
+	public String mensajeRenderOutlineRendertypeInvalido(boolean enchantDetectado) {
+		String base = "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Мод попытался применить контур к несовместимому RenderType.</b>" + "<p>Ошибка:</p>"
+				+ "<code>Can't render an outline for this rendertype!</code>";
+
+		if (enchantDetectado) {
+			base += "<p><b>В отчёте обнаружен мод enchant-outline / better-enchants.</b></p>"
+					+ "<p>Известно, что этот мод вызывает данную проблему в последних версиях Minecraft.</p>"
+					+ "<p><b>Рекомендуемое решение:</b> удалите или обновите enchant-outline.</p>";
+		} else {
+			base += "<p>Эта проблема обычно связана с модами, изменяющими рендеринг "
+					+ "(Entity Model Features, Entity Texture Features, Visuality или конфликты с Sodium).</p>"
+					+ "<p><b>Рекомендуемое решение:</b> обновляйте или отключайте моды рендеринга по одному.</p>";
+		}
+
+		return base;
+	}
+
+	@Override
+	public String nombreDivineRPGDimensionalInventoryNPE() {
+		return "DivineRPG – пустой DimensionalInventory";
+	}
+
+	@Override
+	public String mensajeDivineRPGDimensionalInventoryNPE() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "DivineRPG попытался сохранить пустой DimensionalInventory.</b>" + "<p>Игра выдала ошибку:</p>"
+				+ "<code>Cannot invoke DimensionalInventory.saveInventory(...) because \"d\" is null</code>"
+				+ "<p>Это известная ошибка в DivineRPG, связанная с системой инвентаря Vethean.</p>"
+				+ "<p><b>Рекомендуемое решение:</b></p>" + "<ul>" + "<li>Откройте файл конфигурации DivineRPG.</li>"
+				+ "<li>Установите <code>saferVetheanInventory=true</code></li>"
+				+ "<li>Сохраните и перезапустите игру.</li>" + "</ul>"
+				+ "<p>Также рекомендуется обновить DivineRPG, если доступна более новая версия.</p>";
 	}
 
 }

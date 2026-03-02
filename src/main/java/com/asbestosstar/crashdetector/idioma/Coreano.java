@@ -6177,78 +6177,122 @@ public class Coreano implements Idioma {
 				+ "<ul>" + "<li>JEI와 해당 모드들을 갱신하십시오.</li>" + "<li>충돌을 확인하기 위해 영향 받은 플러그인들을 임시로 제거하십시오.</li>"
 				+ "<li>해당 모드 개발자에게 이 오류를 보고하십시오.</li>" + "</ul>" + "<p>문제가 해결되기 전까지 이 그룹의 아이템들은 재료 목록에 나타나지 않습니다.</p>";
 	}
+
 	@Override
 	public String nombreVersionInvalida() {
-	    return "무효한 모드 버전(SemVer)";
+		return "무효한 모드 버전(SemVer)";
 	}
 
 	@Override
 	public String mensajeVersionInvalida(String version, String ubicacion) {
-	    String v = (version == null || version.isEmpty()) ? "알 수 없음" : version;
-	    String u = (ubicacion == null || ubicacion.isEmpty()) ? "모드를 찾을 수 없음" : ubicacion;
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "무효한 모드 버전이 감지되였습니다.</b>"
-	            + "<p>버전 <b>" + v + "</b>은(는) 올바른 SemVer 형식에 부합하지 않습니다.</p>"
-	            + "<p>오류는 빈 프리릴리즈(끝이 '+'로 끝남)를 가리킵니다.</p>"
-	            + "<p><b>책임 모드:</b><br>" + u + "</p>"
-	            + "<p><b>권장 해결 방법:</b></p>"
-	            + "<ul>"
-	            + "<li>모드 파일을 편집하여 버전을 수정하십시오.</li>"
-	            + "<li>후속 메타데이터가 없다면 끝의 '+'를 제거하십시오.</li>"
-	            + "<li>모드를 수정된 버전으로 갱신하십시오.</li>"
-	            + "</ul>";
-	}
-	@Override
-	public String nombreJPMSIllegalAccess() {
-	    return "JPMS: 모듈 간 불법 접근";
+		String v = (version == null || version.isEmpty()) ? "알 수 없음" : version;
+		String u = (ubicacion == null || ubicacion.isEmpty()) ? "모드를 찾을 수 없음" : ubicacion;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "무효한 모드 버전이 감지되였습니다.</b>"
+				+ "<p>버전 <b>" + v + "</b>은(는) 올바른 SemVer 형식에 부합하지 않습니다.</p>" + "<p>오류는 빈 프리릴리즈(끝이 '+'로 끝남)를 가리킵니다.</p>"
+				+ "<p><b>책임 모드:</b><br>" + u + "</p>" + "<p><b>권장 해결 방법:</b></p>" + "<ul>"
+				+ "<li>모드 파일을 편집하여 버전을 수정하십시오.</li>" + "<li>후속 메타데이터가 없다면 끝의 '+'를 제거하십시오.</li>"
+				+ "<li>모드를 수정된 버전으로 갱신하십시오.</li>" + "</ul>";
 	}
 
 	@Override
-	public String mensajeJPMSIllegalAccess(String claseOrigen, String moduloOrigen, String claseDestino, String moduloDestino) {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "모듈 간 불법 접근(JPMS)이 감지되였습니다.</b>"
-	            + "<p>자바 모듈 체계(JPMS)가 클래스들 사이의 접근을 차단하였습니다.</p>"
-	            + "<p><b>접근을 시도한 클래스:</b><br>"
-	            + claseOrigen + " (모듈: " + moduloOrigen + ")</p>"
-	            + "<p><b>차단된 클래스:</b><br>"
-	            + claseDestino + " (모듈: " + moduloDestino + ")</p>"
-	            + "<p>이러한 오류는 모드가 module-info.java 파일에서 "
-	            + "exports 또는 opens를 올바르게 선언하지 않았을 때 발생합니다.</p>"
-	            + "<p><b>가능한 원인:</b></p>"
-	            + "<ul>"
-	            + "<li>모듈이 필요한 패키지를 내보내지 않음.</li>"
-	            + "<li>리플렉션을 위한 <b>opens</b> 지시자가 누락됨.</li>"
-	            + "<li>모드가 JPMS에 대해 올바르게 설정되지 않음.</li>"
-	            + "</ul>"
-	            + "<p>이 문제는 모드 개발자가 수정해야 합니다.</p>";
+	public String nombreJPMSIllegalAccess() {
+		return "JPMS: 모듈 간 불법 접근";
 	}
+
+	@Override
+	public String mensajeJPMSIllegalAccess(String claseOrigen, String moduloOrigen, String claseDestino,
+			String moduloDestino) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "모듈 간 불법 접근(JPMS)이 감지되였습니다.</b>" + "<p>자바 모듈 체계(JPMS)가 클래스들 사이의 접근을 차단하였습니다.</p>"
+				+ "<p><b>접근을 시도한 클래스:</b><br>" + claseOrigen + " (모듈: " + moduloOrigen + ")</p>"
+				+ "<p><b>차단된 클래스:</b><br>" + claseDestino + " (모듈: " + moduloDestino + ")</p>"
+				+ "<p>이러한 오류는 모드가 module-info.java 파일에서 " + "exports 또는 opens를 올바르게 선언하지 않았을 때 발생합니다.</p>"
+				+ "<p><b>가능한 원인:</b></p>" + "<ul>" + "<li>모듈이 필요한 패키지를 내보내지 않음.</li>"
+				+ "<li>리플렉션을 위한 <b>opens</b> 지시자가 누락됨.</li>" + "<li>모드가 JPMS에 대해 올바르게 설정되지 않음.</li>" + "</ul>"
+				+ "<p>이 문제는 모드 개발자가 수정해야 합니다.</p>";
+	}
+
 	@Override
 	public String nombreMixinClaseMalUbicada() {
-	    return "Mixin: 믹신 꾸러미에 클래스를 잘못 배치함";
+		return "Mixin: 믹신 꾸러미에 클래스를 잘못 배치함";
 	}
 
 	@Override
 	public String mensajeMixinClaseMalUbicada(String clase, String paquete, String archivoMixin) {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "클래스가 믹신(Mixin) 꾸러미에 잘못 배치되였습니다.</b>"
-	            + "<p>일반 클래스가 믹신으로 선언된 꾸러미 안에 놓이였습니다.</p>"
-	            + "<p><b>충돌 클래스:</b><br>" + clase + "</p>"
-	            + "<p><b>선언된 믹신 꾸러미:</b><br>" + paquete + "</p>"
-	            + "<p><b>책임 있는 믹신 파일:</b><br>" + archivoMixin + "</p>"
-	            + "<p>일반 클래스는 mixins.json에 정의된 꾸러미 안에 있어서는 안 됩니다.</p>"
-	            + "<p>해당 꾸러미에는 믹신으로 주석된 클래스만 존재해야 합니다.</p>"
-	            + "<p><b>개발자용 해결 방법:</b> 일반 클래스를 믹신 꾸러미 밖으로 옮기거나 "
-	            + "mixins.json 파일의 설정을 수정하십시오.</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "클래스가 믹신(Mixin) 꾸러미에 잘못 배치되였습니다.</b>" + "<p>일반 클래스가 믹신으로 선언된 꾸러미 안에 놓이였습니다.</p>"
+				+ "<p><b>충돌 클래스:</b><br>" + clase + "</p>" + "<p><b>선언된 믹신 꾸러미:</b><br>" + paquete + "</p>"
+				+ "<p><b>책임 있는 믹신 파일:</b><br>" + archivoMixin + "</p>"
+				+ "<p>일반 클래스는 mixins.json에 정의된 꾸러미 안에 있어서는 안 됩니다.</p>" + "<p>해당 꾸러미에는 믹신으로 주석된 클래스만 존재해야 합니다.</p>"
+				+ "<p><b>개발자용 해결 방법:</b> 일반 클래스를 믹신 꾸러미 밖으로 옮기거나 " + "mixins.json 파일의 설정을 수정하십시오.</p>";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public String problema_con_graficas_matrox() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Matrox GPU 드라이버에서 문제를 감지했습니다.</b>" + "<p>로그는 오류가 Matrox 드라이버의 라이브러리 내부에서 발생하였음을 가리킵니다.</p>"
+				+ "<p>Matrox GPU(특히 서버에서 사용되는 G200/G400 모델)는 "
+				+ "현대적인 3D 렌더링을 위해 설계되지 않았으며, 마인크래프트가 요구하는 OpenGL 버전을 지원하지 않을 수 있습니다.</p>" + "<p><b>권장 해결 방법:</b></p>"
+				+ "<ul>" + "<li>Matrox 드라이버를 사용 가능한 최신 버전으로 갱신하십시오.</li>" + "<li>체계의 일반 드라이버 대신 공식 드라이버를 설치하십시오.</li>"
+				+ "<li>하드웨어가 오래된 경우, OpenGL 3.2 이상을 지원하는 GPU를 사용하십시오.</li>" + "</ul>"
+				+ "<p>서버에서는 이들 GPU가 보통 기본 비디오 출력만을 위한 것이며, " + "마인크래프트와 같은 3D 응용 프로그람에는 적합하지 않습니다.</p>";
+	}
+
+	@Override
+	public String nombreVulkanModNoEncuentraGPU() {
+		return "VulkanMod: 호환되지 않는 GPU";
+	}
+
+	@Override
+	public String mensajeVulkanModNoEncuentraGPU() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "VulkanMod가 호환되는 GPU를 탐지하지 못 하였습니다.</b>"
+				+ "<p><b>VulkanMod</b> 모드가 Vulkan을 사용하여 시작하려 하였으나, Vulkan을 제대로 지원하는 GPU를 찾지 못 하였습니다.</p>"
+				+ "<p>이는 보통 다음 경우에 발생합니다:</p>" + "<ul>" + "<li>GPU가 Vulkan을 지원하지 않음.</li>"
+				+ "<li>GPU 드라이버가 오래되였거나 누락되여 있음.</li>" + "<li>잘못된 그래픽 어댑터를 사용하고 있음(예: 전용 GPU 대신 내장 GPU 사용).</li>"
+				+ "</ul>" + "<p><b>권장 해결 방법:</b></p>" + "<ul>" + "<li>GPU 드라이버를 최신 버전으로 갱신하십시오.</li>"
+				+ "<li>당신의 GPU가 Vulkan을 지원하는지 확인하십시오.</li>"
+				+ "<li>GPU가 두 개인 경우, 마인크래프트에서 전용 GPU를 강제로 사용하도록 설정하십시오.</li>"
+				+ "<li>GPU가 Vulkan을 지원하지 않으면 VulkanMod를 제거하십시오.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreRenderOutlineRendertypeInvalido() {
+		return "아웃라인에 무효한 RenderType 사용";
+	}
+
+	@Override
+	public String mensajeRenderOutlineRendertypeInvalido(boolean enchantDetectado) {
+		String base = "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "어떤 모드가 호환되지 않는 RenderType에 아웃라인을 적용하려 하였습니다.</b>" + "<p>오류 내용:</p>"
+				+ "<code>Can't render an outline for this rendertype!</code>";
+
+		if (enchantDetectado) {
+			base += "<p><b>보고서에서 enchant-outline / better-enchants 모드가 감지되였습니다.</b></p>"
+					+ "<p>이 모드는 최근 마인크래프트 버전에서 이 문제를 일으키기로 알려져 있습니다.</p>"
+					+ "<p><b>권장 해결 방법:</b> enchant-outline을 삭제하거나 갱신하십시오.</p>";
+		} else {
+			base += "<p>이 문제는 보통 렌더링을 수정하는 모드들과 관련되여 있습니다 "
+					+ "(Entity Model Features, Entity Texture Features, Visuality 또는 Sodium과의 충돌).</p>"
+					+ "<p><b>권장 해결 방법:</b> 렌더 모드를 하나씩 갱신하거나 비활성화하여 확인하십시오.</p>";
+		}
+
+		return base;
+	}
+
+	@Override
+	public String nombreDivineRPGDimensionalInventoryNPE() {
+		return "DivineRPG – DimensionalInventory 널";
+	}
+
+	@Override
+	public String mensajeDivineRPGDimensionalInventoryNPE() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "DivineRPG가 빈 DimensionalInventory를 저장하려 하였습니다.</b>" + "<p>게임에서 다음 오류를 발생시켰습니다:</p>"
+				+ "<code>Cannot invoke DimensionalInventory.saveInventory(...) because \"d\" is null</code>"
+				+ "<p>이는 Vethean 인벤토리 체계와 관련된 DivineRPG의 알려진 버그입니다.</p>" + "<p><b>권장 해결 방법:</b></p>" + "<ul>"
+				+ "<li>DivineRPG 설정 파일로 이동하십시오.</li>" + "<li><code>saferVetheanInventory=true</code>로 설정하십시오.</li>"
+				+ "<li>저장하고 게임을 다시 시작하십시오.</li>" + "</ul>" + "<p>더 새 버전이 있으면 DivineRPG도 갱신하는 것을 권장합니다.</p>";
+	}
 
 }

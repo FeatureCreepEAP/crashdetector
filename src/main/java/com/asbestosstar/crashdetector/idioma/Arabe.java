@@ -6344,81 +6344,134 @@ public class Arabe implements Idioma {
 				+ "<li>أبلغ مطوّر التعديل المعني عن الخطأ.</li>" + "</ul>"
 				+ "<p>لن تظهر عناصر هذه المجموعات في قائمة المكونات حتى يتم حل المشكلة.</p>";
 	}
+
 	@Override
 	public String nombreVersionInvalida() {
-	    return "نسخة تعديل غير صالحة (SemVer)";
+		return "نسخة تعديل غير صالحة (SemVer)";
 	}
 
 	@Override
 	public String mensajeVersionInvalida(String version, String ubicacion) {
-	    String v = (version == null || version.isEmpty()) ? "غير معروفة" : version;
-	    String u = (ubicacion == null || ubicacion.isEmpty()) ? "تعذّر تحديد موقع التعديل" : ubicacion;
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "تم اكتشاف نسخة غير صالحة من التعديل.</b>"
-	            + "<p>النسخة <b>" + v + "</b> لا تتوافق مع تنسيق SemVer الصحيح.</p>"
-	            + "<p>يشير الخطأ إلى إصدار تجريبي فارغ (ينتهي بـ '+').</p>"
-	            + "<p><b>التعديل المسؤول:</b><br>" + u + "</p>"
-	            + "<p><b>الحل الموصى به:</b></p>"
-	            + "<ul>"
-	            + "<li>عدّل ملف التعديل وصحّح النسخة.</li>"
-	            + "<li>احذف الرمز '+' النهائي إذا لم تكن هناك بيانات لاحقة.</li>"
-	            + "<li>حدّث التعديل إلى نسخة مُصلَحة.</li>"
-	            + "</ul>";
-	}
-	
-	@Override
-	public String nombreJPMSIllegalAccess() {
-	    return "JPMS: وصول غير مصرّح به بين الوحدات";
+		String v = (version == null || version.isEmpty()) ? "غير معروفة" : version;
+		String u = (ubicacion == null || ubicacion.isEmpty()) ? "تعذّر تحديد موقع التعديل" : ubicacion;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تم اكتشاف نسخة غير صالحة من التعديل.</b>" + "<p>النسخة <b>" + v
+				+ "</b> لا تتوافق مع تنسيق SemVer الصحيح.</p>"
+				+ "<p>يشير الخطأ إلى إصدار تجريبي فارغ (ينتهي بـ '+').</p>" + "<p><b>التعديل المسؤول:</b><br>" + u
+				+ "</p>" + "<p><b>الحل الموصى به:</b></p>" + "<ul>" + "<li>عدّل ملف التعديل وصحّح النسخة.</li>"
+				+ "<li>احذف الرمز '+' النهائي إذا لم تكن هناك بيانات لاحقة.</li>"
+				+ "<li>حدّث التعديل إلى نسخة مُصلَحة.</li>" + "</ul>";
 	}
 
 	@Override
-	public String mensajeJPMSIllegalAccess(String claseOrigen, String moduloOrigen, String claseDestino, String moduloDestino) {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "تم اكتشاف وصول غير مصرّح به بين الوحدات (JPMS).</b>"
-	            + "<p>قام نظام وحدات جافا (JPMS) بحظر وصول بين صنفين.</p>"
-	            + "<p><b>الصنف الذي حاول الوصول:</b><br>"
-	            + claseOrigen + " (وحدة: " + moduloOrigen + ")</p>"
-	            + "<p><b>الصنف المحظور:</b><br>"
-	            + claseDestino + " (وحدة: " + moduloDestino + ")</p>"
-	            + "<p>يحدث هذا الخطأ عادةً عندما لا يُصرّح التعديل بشكل صحيح عن "
-	            + "(exports أو opens) في ملفه module-info.java.</p>"
-	            + "<p><b>الأسباب المحتملة:</b></p>"
-	            + "<ul>"
-	            + "<li>الوحدة لا تصدّر الحزمة المطلوبة.</li>"
-	            + "<li>تفتقر التوجيهات إلى <b>opens</b> اللازمة للانعكاس (reflection).</li>"
-	            + "<li>التعديل غير مهيأ بشكل صحيح لنظام JPMS.</li>"
-	            + "</ul>"
-	            + "<p>يجب على مطوّر التعديل معالجة هذه المشكلة.</p>";
+	public String nombreJPMSIllegalAccess() {
+		return "JPMS: وصول غير مصرّح به بين الوحدات";
 	}
+
+	@Override
+	public String mensajeJPMSIllegalAccess(String claseOrigen, String moduloOrigen, String claseDestino,
+			String moduloDestino) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تم اكتشاف وصول غير مصرّح به بين الوحدات (JPMS).</b>"
+				+ "<p>قام نظام وحدات جافا (JPMS) بحظر وصول بين صنفين.</p>" + "<p><b>الصنف الذي حاول الوصول:</b><br>"
+				+ claseOrigen + " (وحدة: " + moduloOrigen + ")</p>" + "<p><b>الصنف المحظور:</b><br>" + claseDestino
+				+ " (وحدة: " + moduloDestino + ")</p>" + "<p>يحدث هذا الخطأ عادةً عندما لا يُصرّح التعديل بشكل صحيح عن "
+				+ "(exports أو opens) في ملفه module-info.java.</p>" + "<p><b>الأسباب المحتملة:</b></p>" + "<ul>"
+				+ "<li>الوحدة لا تصدّر الحزمة المطلوبة.</li>"
+				+ "<li>تفتقر التوجيهات إلى <b>opens</b> اللازمة للانعكاس (reflection).</li>"
+				+ "<li>التعديل غير مهيأ بشكل صحيح لنظام JPMS.</li>" + "</ul>"
+				+ "<p>يجب على مطوّر التعديل معالجة هذه المشكلة.</p>";
+	}
+
 	@Override
 	public String nombreMixinClaseMalUbicada() {
-	    return "Mixin: صنف موضوع في حزمة mixin بشكل خاطئ";
+		return "Mixin: صنف موضوع في حزمة mixin بشكل خاطئ";
 	}
 
 	@Override
 	public String mensajeMixinClaseMalUbicada(String clase, String paquete, String archivoMixin) {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "تم وضع صنف بشكل غير صحيح داخل حزمة Mixin.</b>"
-	            + "<p>وُضعت صنف عادي داخل حزمة مُعلَنة كـ mixin.</p>"
-	            + "<p><b>الصنف المتعارض:</b><br>" + clase + "</p>"
-	            + "<p><b>حزمة الـ mixin المعلَنة:</b><br>" + paquete + "</p>"
-	            + "<p><b>ملف الـ mixins المسؤول:</b><br>" + archivoMixin + "</p>"
-	            + "<p>لا يجوز أن تكون الصنوف العادية داخل الحزمة المعرّفة في mixins.json.</p>"
-	            + "<p>فقط الصنوف المُعلَّمة كـ mixin يجب أن توجد في تلك الحزمة.</p>"
-	            + "<p><b>الحل للمطوّر:</b> انقل الصنوف العادية خارج حزمة الـ mixin "
-	            + "أو صحّح إعدادات ملف mixins.json.</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تم وضع صنف بشكل غير صحيح داخل حزمة Mixin.</b>" + "<p>وُضعت صنف عادي داخل حزمة مُعلَنة كـ mixin.</p>"
+				+ "<p><b>الصنف المتعارض:</b><br>" + clase + "</p>" + "<p><b>حزمة الـ mixin المعلَنة:</b><br>" + paquete
+				+ "</p>" + "<p><b>ملف الـ mixins المسؤول:</b><br>" + archivoMixin + "</p>"
+				+ "<p>لا يجوز أن تكون الصنوف العادية داخل الحزمة المعرّفة في mixins.json.</p>"
+				+ "<p>فقط الصنوف المُعلَّمة كـ mixin يجب أن توجد في تلك الحزمة.</p>"
+				+ "<p><b>الحل للمطوّر:</b> انقل الصنوف العادية خارج حزمة الـ mixin "
+				+ "أو صحّح إعدادات ملف mixins.json.</p>";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public String problema_con_graficas_matrox() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تم اكتشاف مشكلة مع سواقات GPU Matrox.</b>"
+				+ "<p>يشير السجل إلى أن العطل حدث داخل مكتبة سواق Matrox.</p>"
+				+ "<p>وحدات معالجة الرسومات Matrox (خاصة طرازي G200/G400 المستخدمين في الخوادم) "
+				+ "ليست مصممة للعرض ثلاثي الأبعاد الحديث وقد لا تدعم إصدارات OpenGL المطلوبة من قبل ماينكرافت.</p>"
+				+ "<p><b>الحلول الموصى بها:</b></p>" + "<ul>" + "<li>قم بتحديث سواق Matrox إلى أحدث إصدار متاح.</li>"
+				+ "<li>ثبّت سواقات رسمية بدلًا من السواقات العامة التي يوفرها النظام.</li>"
+				+ "<li>إذا كان الجهاز قديمًا، فاستخدم وحدة رسومات متوافقة مع OpenGL 3.2 أو أعلى.</li>" + "</ul>"
+				+ "<p>في الخوادم، تُستخدم هذه الوحدات عادةً فقط لإخراج فيديو أساسي "
+				+ "وليست للتطبيقات ثلاثية الأبعاد مثل ماينكرافت.</p>";
+	}
+
+	@Override
+	public String nombreVulkanModNoEncuentraGPU() {
+		return "VulkanMod: وحدة معالجة رسومات غير متوافقة";
+	}
+
+	@Override
+	public String mensajeVulkanModNoEncuentraGPU() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "لم يتمكن VulkanMod من اكتشاف وحدة معالجة رسومات (GPU) متوافقة.</b>"
+				+ "<p>حاول التعديل <b>VulkanMod</b> البدء باستخدام Vulkan، لكنه لم يعثر على وحدة رسومات تدعم Vulkan بشكل كافٍ.</p>"
+				+ "<p>يحدث هذا عادةً عندما:</p>" + "<ul>" + "<li>لا تدعم وحدة الرسومات Vulkan.</li>"
+				+ "<li>سواقات وحدة الرسومات قديمة أو مفقودة.</li>"
+				+ "<li>يتم استخدام محول رسومات غير صحيح (مثل استخدام GPU مدمجة بدلًا من مخصصة).</li>" + "</ul>"
+				+ "<p><b>الحلول الموصى بها:</b></p>" + "<ul>"
+				+ "<li>قم بتحديث سواقات وحدة الرسومات إلى أحدث إصدار.</li>"
+				+ "<li>تحقق من أن وحدة الرسومات الخاصة بك تدعم Vulkan.</li>"
+				+ "<li>إذا كانت لديك وحدتا رسومات، فاجبر النظام على استخدام الوحدة المخصصة لتشغيل ماينكرافت.</li>"
+				+ "<li>إذا كانت وحدتك لا تدعم Vulkan، فاحذف تعديل VulkanMod.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreRenderOutlineRendertypeInvalido() {
+		return "نوع عرض غير صالح للإطار الخارجي (outline)";
+	}
+
+	@Override
+	public String mensajeRenderOutlineRendertypeInvalido(boolean enchantDetectado) {
+		String base = "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "حاول أحد التعديلات تطبيق إطار خارجي (outline) على نوع عرض (RenderType) غير متوافق.</b>"
+				+ "<p>الخطأ كان:</p>" + "<code>Can't render an outline for this rendertype!</code>";
+
+		if (enchantDetectado) {
+			base += "<p><b>تم اكتشاف تعديل enchant-outline / better-enchants في التقرير.</b></p>"
+					+ "<p>يُعرف هذا التعديل بأنه سبب لهذا المشكل في إصدارات ماينكرافت الحديثة.</p>"
+					+ "<p><b>الحل الموصى به:</b> إزالة أو تحديث enchant-outline.</p>";
+		} else {
+			base += "<p>يرتبط هذا المشكل عادةً بالتعديلات التي تُعدّل العرض المرئي "
+					+ "(مثل Entity Model Features، Entity Texture Features، Visuality أو تعارض مع Sodium).</p>"
+					+ "<p><b>الحل الموصى به:</b> تحديث أو تعطيل تعديلات العرض واحدًا تلو الآخر.</p>";
+		}
+
+		return base;
+	}
+
+	@Override
+	public String nombreDivineRPGDimensionalInventoryNPE() {
+		return "DivineRPG – DimensionalInventory فارغ";
+	}
+
+	@Override
+	public String mensajeDivineRPGDimensionalInventoryNPE() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "حاول DivineRPG حفظ كائن DimensionalInventory فارغ.</b>" + "<p>أطلق اللعبة الخطأ التالي:</p>"
+				+ "<code>Cannot invoke DimensionalInventory.saveInventory(...) because \"d\" is null</code>"
+				+ "<p>هذا عبارة عن خلل معروف في DivineRPG مرتبط بنظام VetheanInventory.</p>"
+				+ "<p><b>الحل الموصى به:</b></p>" + "<ul>" + "<li>انتقل إلى ملف إعدادات DivineRPG.</li>"
+				+ "<li>عيّن <code>saferVetheanInventory=true</code></li>" + "<li>احفظ وأعد تشغيل اللعبة.</li>" + "</ul>"
+				+ "<p>يوصى أيضًا بتحديث DivineRPG إذا كانت هناك نسخة أحدث متاحة.</p>";
+	}
 
 }

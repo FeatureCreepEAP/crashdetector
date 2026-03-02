@@ -41,8 +41,7 @@ public class SpongeMixinClaseMalUbicada implements Verificaciones {
 		if (!posibleErrorMixin)
 			return;
 
-		if (linea.contains("IllegalClassLoadError")
-				&& linea.contains("defined mixin package")
+		if (linea.contains("IllegalClassLoadError") && linea.contains("defined mixin package")
 				&& linea.contains("cannot be referenced directly")) {
 
 			try {
@@ -59,8 +58,7 @@ public class SpongeMixinClaseMalUbicada implements Verificaciones {
 				int idxOwned = linea.indexOf(" owned by");
 
 				if (idxPaquete != -1 && idxOwned != -1) {
-					paqueteMixin = linea.substring(idxPaquete + "defined mixin package".length(), idxOwned)
-							.trim();
+					paqueteMixin = linea.substring(idxPaquete + "defined mixin package".length(), idxOwned).trim();
 				}
 
 				// Extraer archivo mixins.json
@@ -68,8 +66,7 @@ public class SpongeMixinClaseMalUbicada implements Verificaciones {
 				int idxCannot = linea.indexOf(" and cannot");
 
 				if (idxOwnedBy != -1 && idxCannot != -1) {
-					archivoMixin = linea.substring(idxOwnedBy + "owned by".length(), idxCannot)
-							.trim();
+					archivoMixin = linea.substring(idxOwnedBy + "owned by".length(), idxCannot).trim();
 				}
 
 			} catch (Throwable ignorado) {
@@ -97,8 +94,8 @@ public class SpongeMixinClaseMalUbicada implements Verificaciones {
 
 	@Override
 	public String mensaje() {
-		return MonitorDePID.idioma.mensajeMixinClaseMalUbicada(
-				claseConflictiva, paqueteMixin, archivoMixin) + this.enlace;
+		return MonitorDePID.idioma.mensajeMixinClaseMalUbicada(claseConflictiva, paqueteMixin, archivoMixin)
+				+ this.enlace;
 	}
 
 	@Override

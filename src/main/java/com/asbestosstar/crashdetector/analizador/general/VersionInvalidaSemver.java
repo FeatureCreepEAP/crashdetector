@@ -36,8 +36,7 @@ public class VersionInvalidaSemver implements Verificaciones {
 		if (!posibleErrorVersion)
 			return;
 
-		if (linea.contains("IllegalArgumentException")
-				&& linea.contains("Empty pre-release")) {
+		if (linea.contains("IllegalArgumentException") && linea.contains("Empty pre-release")) {
 
 			// Extraer la version invalida (antes de ": Empty pre-release")
 			int idx = linea.indexOf(":");

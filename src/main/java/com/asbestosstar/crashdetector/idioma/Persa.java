@@ -6388,73 +6388,140 @@ public class Persa implements Idioma {
 				+ "<li>خطا را به توسعه‌دهندهٔ مود مربوطه گزارش دهید.</li>" + "</ul>"
 				+ "<p>آیتم‌های این گروه‌ها تا زمان رفع مشکل در لیست مواد ظاهر نخواهند شد.</p>";
 	}
+
 	@Override
 	public String nombreVersionInvalida() {
-	    return "نسخهٔ نامعتبر مود (SemVer)";
+		return "نسخهٔ نامعتبر مود (SemVer)";
 	}
 
 	@Override
 	public String mensajeVersionInvalida(String version, String ubicacion) {
-	    String v = (version == null || version.isEmpty()) ? "ناشناخته" : version;
-	    String u = (ubicacion == null || ubicacion.isEmpty()) ? "مود یافت نشد" : ubicacion;
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "نسخهٔ نامعتبر مود شناسایی شد.</b>"
-	            + "<p>نسخهٔ <b>" + v + "</b> با قالب معتبر SemVer سازگار نیست.</p>"
-	            + "<p>این خطا نشان‌دهندهٔ پیش‌انتشار خالی است (با '+' تمام می‌شود).</p>"
-	            + "<p><b>مود مسئول:</b><br>" + u + "</p>"
-	            + "<p><b>راه‌حل پیشنهادی:</b></p>"
-	            + "<ul>"
-	            + "<li>فایل مود را ویرایش کرده و نسخه را اصلاح کنید.</li>"
-	            + "<li>اگر متادیتای بعدی وجود ندارد، '+' پایانی را حذف کنید.</li>"
-	            + "<li>مود را به نسخهٔ اصلاح‌شده به‌روزرسانی کنید.</li>"
-	            + "</ul>";
-	}
-	
-	@Override
-	public String nombreJPMSIllegalAccess() {
-	    return "JPMS: دسترسی غیرمجاز بین ماژول‌ها";
+		String v = (version == null || version.isEmpty()) ? "ناشناخته" : version;
+		String u = (ubicacion == null || ubicacion.isEmpty()) ? "مود یافت نشد" : ubicacion;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "نسخهٔ نامعتبر مود شناسایی شد.</b>" + "<p>نسخهٔ <b>" + v
+				+ "</b> با قالب معتبر SemVer سازگار نیست.</p>"
+				+ "<p>این خطا نشان‌دهندهٔ پیش‌انتشار خالی است (با '+' تمام می‌شود).</p>" + "<p><b>مود مسئول:</b><br>"
+				+ u + "</p>" + "<p><b>راه‌حل پیشنهادی:</b></p>" + "<ul>"
+				+ "<li>فایل مود را ویرایش کرده و نسخه را اصلاح کنید.</li>"
+				+ "<li>اگر متادیتای بعدی وجود ندارد، '+' پایانی را حذف کنید.</li>"
+				+ "<li>مود را به نسخهٔ اصلاح‌شده به‌روزرسانی کنید.</li>" + "</ul>";
 	}
 
 	@Override
-	public String mensajeJPMSIllegalAccess(String claseOrigen, String moduloOrigen, String claseDestino, String moduloDestino) {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "دسترسی غیرمجاز بین ماژول‌ها (JPMS) شناسایی شد.</b>"
-	            + "<p>سیستم ماژول جاوا (JPMS) دسترسی بین کلاس‌ها را مسدود کرد.</p>"
-	            + "<p><b>کلاس در حال تلاش برای دسترسی:</b><br>"
-	            + claseOrigen + " (ماژول: " + moduloOrigen + ")</p>"
-	            + "<p><b>کلاس مسدودشده:</b><br>"
-	            + claseDestino + " (ماژول: " + moduloDestino + ")</p>"
-	            + "<p>این خطا هنگامی رخ می‌دهد که یک مود، exports یا opens را "
-	            + "در فایل module-info.java خود به‌درستی اعلام نکرده باشد.</p>"
-	            + "<p><b>علل احتمالی:</b></p>"
-	            + "<ul>"
-	            + "<li>ماژول بستهٔ مورد نیاز را export نمی‌کند.</li>"
-	            + "<li>دستور <b>opens</b> برای انعکاس (reflection) وجود ندارد.</li>"
-	            + "<li>مود به‌درستی برای JPMS پیکربندی نشده است.</li>"
-	            + "</ul>"
-	            + "<p>این مشکل باید توسط توسعه‌دهندهٔ مود رفع شود.</p>";
+	public String nombreJPMSIllegalAccess() {
+		return "JPMS: دسترسی غیرمجاز بین ماژول‌ها";
 	}
-	
+
+	@Override
+	public String mensajeJPMSIllegalAccess(String claseOrigen, String moduloOrigen, String claseDestino,
+			String moduloDestino) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "دسترسی غیرمجاز بین ماژول‌ها (JPMS) شناسایی شد.</b>"
+				+ "<p>سیستم ماژول جاوا (JPMS) دسترسی بین کلاس‌ها را مسدود کرد.</p>"
+				+ "<p><b>کلاس در حال تلاش برای دسترسی:</b><br>" + claseOrigen + " (ماژول: " + moduloOrigen + ")</p>"
+				+ "<p><b>کلاس مسدودشده:</b><br>" + claseDestino + " (ماژول: " + moduloDestino + ")</p>"
+				+ "<p>این خطا هنگامی رخ می‌دهد که یک مود، exports یا opens را "
+				+ "در فایل module-info.java خود به‌درستی اعلام نکرده باشد.</p>" + "<p><b>علل احتمالی:</b></p>" + "<ul>"
+				+ "<li>ماژول بستهٔ مورد نیاز را export نمی‌کند.</li>"
+				+ "<li>دستور <b>opens</b> برای انعکاس (reflection) وجود ندارد.</li>"
+				+ "<li>مود به‌درستی برای JPMS پیکربندی نشده است.</li>" + "</ul>"
+				+ "<p>این مشکل باید توسط توسعه‌دهندهٔ مود رفع شود.</p>";
+	}
+
 	@Override
 	public String nombreMixinClaseMalUbicada() {
-	    return "Mixin: کلاس در بستهٔ mixin به‌صورت نادرست قرار گرفته است";
+		return "Mixin: کلاس در بستهٔ mixin به‌صورت نادرست قرار گرفته است";
 	}
 
 	@Override
 	public String mensajeMixinClaseMalUbicada(String clase, String paquete, String archivoMixin) {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "کلاسی به‌صورت نادرست در بستهٔ Mixin قرار گرفته است.</b>"
-	            + "<p>یک کلاس معمولی درون بسته‌ای قرار گرفته که به‌عنوان mixin اعلام شده است.</p>"
-	            + "<p><b>کلاس در تعارض:</b><br>" + clase + "</p>"
-	            + "<p><b>بستهٔ mixin اعلام‌شده:</b><br>" + paquete + "</p>"
-	            + "<p><b>فایل mixins مسئول:</b><br>" + archivoMixin + "</p>"
-	            + "<p>کلاس‌های معمولی نباید در بسته‌ای باشند که در mixins.json تعریف شده‌اند.</p>"
-	            + "<p>فقط کلاس‌هایی که به‌عنوان mixin نشان‌گذاری شده‌اند باید در آن بسته وجود داشته باشند.</p>"
-	            + "<p><b>راه‌حل برای توسعه‌دهنده:</b> کلاس‌های معمولی را از بستهٔ mixin خارج کنید "
-	            + "یا پیکربندی فایل mixins.json را اصلاح کنید.</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "کلاسی به‌صورت نادرست در بستهٔ Mixin قرار گرفته است.</b>"
+				+ "<p>یک کلاس معمولی درون بسته‌ای قرار گرفته که به‌عنوان mixin اعلام شده است.</p>"
+				+ "<p><b>کلاس در تعارض:</b><br>" + clase + "</p>" + "<p><b>بستهٔ mixin اعلام‌شده:</b><br>" + paquete
+				+ "</p>" + "<p><b>فایل mixins مسئول:</b><br>" + archivoMixin + "</p>"
+				+ "<p>کلاس‌های معمولی نباید در بسته‌ای باشند که در mixins.json تعریف شده‌اند.</p>"
+				+ "<p>فقط کلاس‌هایی که به‌عنوان mixin نشان‌گذاری شده‌اند باید در آن بسته وجود داشته باشند.</p>"
+				+ "<p><b>راه‌حل برای توسعه‌دهنده:</b> کلاس‌های معمولی را از بستهٔ mixin خارج کنید "
+				+ "یا پیکربندی فایل mixins.json را اصلاح کنید.</p>";
 	}
-	
-	
-	
+
+	@Override
+	public String problema_con_graficas_matrox() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "مشکلی با درایورهای GPU Matrox شناسایی شد.</b>"
+				+ "<p>لاگ نشان می‌دهد که خرابی درون یک کتابخانهٔ درایور Matrox رخ داده است.</p>"
+				+ "<p>GPUهای Matrox (به‌ویژه مدل‌های G200/G400 که در سرورها استفاده می‌شوند) "
+				+ "برای رندرینگ سه‌بعدی مدرن طراحی نشده‌اند و ممکن است از نسخه‌های OpenGL مورد نیاز ماينکرفت پشتیبانی نکنند.</p>"
+				+ "<p><b>راه‌حل‌های پیشنهادی:</b></p>" + "<ul>"
+				+ "<li>درایور Matrox را به آخرین نسخهٔ موجود به‌روزرسانی کنید.</li>"
+				+ "<li>به‌جای درایورهای عمومی سیستم، درایورهای رسمی را نصب کنید.</li>"
+				+ "<li>اگر سخت‌افزار قدیمی است، از GPUای استفاده کنید که با OpenGL 3.2 یا بالاتر سازگار باشد.</li>"
+				+ "</ul>" + "<p>در سرورها، این GPUها معمولاً فقط برای خروجی ویدیویی پایه طراحی شده‌اند "
+				+ "و برای برنامه‌های سه‌بعدی مانند ماينکرفت مناسب نیستند.</p>";
+	}
+
+	@Override
+	public String nombreVulkanModNoEncuentraGPU() {
+		return "VulkanMod: GPU ناسازگار";
+	}
+
+	@Override
+	public String mensajeVulkanModNoEncuentraGPU() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "VulkanMod نتوانست GPU سازگاری را شناسایی کند.</b>"
+				+ "<p>مود <b>VulkanMod</b> تلاش کرد با استفاده از Vulkan شروع به کار کند، اما GPUای با پشتیبانی مناسب از Vulkan پیدا نکرد.</p>"
+				+ "<p>این معمولاً در موارد زیر رخ می‌دهد:</p>" + "<ul>" + "<li>GPU از Vulkan پشتیبانی نمی‌کند.</li>"
+				+ "<li>درایورهای GPU قدیمی یا ناقص هستند.</li>"
+				+ "<li>از آداپتور گرافیکی نادرست استفاده می‌شود (مثلاً GPU مجتمع به‌جای اختصاصی).</li>" + "</ul>"
+				+ "<p><b>راه‌حل‌های پیشنهادی:</b></p>" + "<ul>"
+				+ "<li>درایورهای GPU را به آخرین نسخه به‌روزرسانی کنید.</li>"
+				+ "<li>بررسی کنید که GPU شما از Vulkan پشتیبانی می‌کند.</li>"
+				+ "<li>اگر دو GPU دارید، استفاده از GPU اختصاصی را برای ماينکرفت اجباری کنید.</li>"
+				+ "<li>اگر GPU شما از Vulkan پشتیبانی نمی‌کند، VulkanMod را حذف نصب کنید.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreRenderOutlineRendertypeInvalido() {
+		return "RenderType نامعتبر برای outline";
+	}
+
+	@Override
+	public String mensajeRenderOutlineRendertypeInvalido(boolean enchantDetectado) {
+		String base = "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "یک مود سعی کرد outline را روی RenderType ناسازگار اعمال کند.</b>" + "<p>خطا این بود:</p>"
+				+ "<code>Can't render an outline for this rendertype!</code>";
+
+		if (enchantDetectado) {
+			base += "<p><b>مود enchant-outline / better-enchants در گزارش شناسایی شد.</b></p>"
+					+ "<p>این مود به‌دلیل ایجاد این مشکل در نسخه‌های اخیر ماينکرفت شناخته شده است.</p>"
+					+ "<p><b>راه‌حل پیشنهادی:</b> enchant-outline را حذف یا به‌روزرسانی کنید.</p>";
+		} else {
+			base += "<p>این مشکل معمولاً مربوط به مودهایی است که رندر را تغییر می‌دهند "
+					+ "(مانند Entity Model Features، Entity Texture Features، Visuality یا تداخل با Sodium).</p>"
+					+ "<p><b>راه‌حل پیشنهادی:</b> مودهای رندر را یکی‌یکی به‌روزرسانی یا غیرفعال کنید.</p>";
+		}
+
+		return base;
+	}
+
+	@Override
+	public String nombreDivineRPGDimensionalInventoryNPE() {
+		return "DivineRPG – DimensionalInventory خالی";
+	}
+
+	@Override
+	public String mensajeDivineRPGDimensionalInventoryNPE() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "DivineRPG سعی کرد یک DimensionalInventory خالی را ذخیره کند.</b>"
+				+ "<p>بازی خطای زیر را پرتاب کرد:</p>"
+				+ "<code>Cannot invoke DimensionalInventory.saveInventory(...) because \"d\" is null</code>"
+				+ "<p>این یک باگ شناخته‌شده در DivineRPG است که با سیستم انبار Vethean مرتبط است.</p>"
+				+ "<p><b>راه‌حل پیشنهادی:</b></p>" + "<ul>" + "<li>به فایل پیکربندی DivineRPG بروید.</li>"
+				+ "<li><code>saferVetheanInventory=true</code> را تنظیم کنید.</li>"
+				+ "<li>ذخیره کرده و بازی را دوباره راه‌اندازی کنید.</li>" + "</ul>"
+				+ "<p>در صورت وجود نسخهٔ جدیدتر، به‌روزرسانی DivineRPG نیز توصیه می‌شود.</p>";
+	}
 
 }

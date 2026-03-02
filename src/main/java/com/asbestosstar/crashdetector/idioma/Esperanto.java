@@ -6400,73 +6400,138 @@ public class Esperanto implements Idioma {
 				+ "<li>Raportu la eraron al la programisto de la koncerna mod.</li>" + "</ul>"
 				+ "<p>La eroj de tiuj grupoj ne aperos en la ingredienc-listo ĝis la problemo estas riparita.</p>";
 	}
+
 	@Override
 	public String nombreVersionInvalida() {
-	    return "Nevalida versio de mod (SemVer)";
+		return "Nevalida versio de mod (SemVer)";
 	}
 
 	@Override
 	public String mensajeVersionInvalida(String version, String ubicacion) {
-	    String v = (version == null || version.isEmpty()) ? "Nekonata" : version;
-	    String u = (ubicacion == null || ubicacion.isEmpty()) ? "Ne eblis lokalizi la modon" : ubicacion;
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "Nevalida mod-versio detektita.</b>"
-	            + "<p>La versio <b>" + v + "</b> ne konformas al valida SemVer-formo.</p>"
-	            + "<p>La eraro indikas malplenan antaŭeldon (finiĝas per '+').</p>"
-	            + "<p><b>Kulpula mod:</b><br>" + u + "</p>"
-	            + "<p><b>Rekomendita solvo:</b></p>"
-	            + "<ul>"
-	            + "<li>Redaktu la mod-dosieron kaj ĝustigu la version.</li>"
-	            + "<li>Forigu la finan '+' se ne estas posta metadatumo.</li>"
-	            + "<li>Ĝisdatigu la modon al ĝustigita versio.</li>"
-	            + "</ul>";
-	}
-	
-	@Override
-	public String nombreJPMSIllegalAccess() {
-	    return "JPMS: Nepermesita aliro inter moduloj";
+		String v = (version == null || version.isEmpty()) ? "Nekonata" : version;
+		String u = (ubicacion == null || ubicacion.isEmpty()) ? "Ne eblis lokalizi la modon" : ubicacion;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Nevalida mod-versio detektita.</b>" + "<p>La versio <b>" + v
+				+ "</b> ne konformas al valida SemVer-formo.</p>"
+				+ "<p>La eraro indikas malplenan antaŭeldon (finiĝas per '+').</p>" + "<p><b>Kulpula mod:</b><br>" + u
+				+ "</p>" + "<p><b>Rekomendita solvo:</b></p>" + "<ul>"
+				+ "<li>Redaktu la mod-dosieron kaj ĝustigu la version.</li>"
+				+ "<li>Forigu la finan '+' se ne estas posta metadatumo.</li>"
+				+ "<li>Ĝisdatigu la modon al ĝustigita versio.</li>" + "</ul>";
 	}
 
 	@Override
-	public String mensajeJPMSIllegalAccess(String claseOrigen, String moduloOrigen, String claseDestino, String moduloDestino) {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "Nepermesita aliro inter moduloj (JPMS) estis detektita.</b>"
-	            + "<p>La Java Modula Sistema (JPMS) blokis aliron inter klasoj.</p>"
-	            + "<p><b>Klaso kiu provis aliri:</b><br>"
-	            + claseOrigen + " (modulo: " + moduloOrigen + ")</p>"
-	            + "<p><b>Blokita klaso:</b><br>"
-	            + claseDestino + " (modulo: " + moduloDestino + ")</p>"
-	            + "<p>Tiu eraro okazas kiam mod ne deklaras ĝuste "
-	            + "exports aŭ opens en sia module-info.java.</p>"
-	            + "<p><b>Eblaj kaŭzoj:</b></p>"
-	            + "<ul>"
-	            + "<li>La modulo ne eksportas la bezonatan pakaĵon.</li>"
-	            + "<li>Mankas la direktivo <b>opens</b> por reflekto.</li>"
-	            + "<li>La mod ne estas ĝuste agordita por JPMS.</li>"
-	            + "</ul>"
-	            + "<p>Tiun problemon devas ripari la programisto de la mod.</p>";
+	public String nombreJPMSIllegalAccess() {
+		return "JPMS: Nepermesita aliro inter moduloj";
 	}
-	
+
+	@Override
+	public String mensajeJPMSIllegalAccess(String claseOrigen, String moduloOrigen, String claseDestino,
+			String moduloDestino) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Nepermesita aliro inter moduloj (JPMS) estis detektita.</b>"
+				+ "<p>La Java Modula Sistema (JPMS) blokis aliron inter klasoj.</p>"
+				+ "<p><b>Klaso kiu provis aliri:</b><br>" + claseOrigen + " (modulo: " + moduloOrigen + ")</p>"
+				+ "<p><b>Blokita klaso:</b><br>" + claseDestino + " (modulo: " + moduloDestino + ")</p>"
+				+ "<p>Tiu eraro okazas kiam mod ne deklaras ĝuste " + "exports aŭ opens en sia module-info.java.</p>"
+				+ "<p><b>Eblaj kaŭzoj:</b></p>" + "<ul>" + "<li>La modulo ne eksportas la bezonatan pakaĵon.</li>"
+				+ "<li>Mankas la direktivo <b>opens</b> por reflekto.</li>"
+				+ "<li>La mod ne estas ĝuste agordita por JPMS.</li>" + "</ul>"
+				+ "<p>Tiun problemon devas ripari la programisto de la mod.</p>";
+	}
+
 	@Override
 	public String nombreMixinClaseMalUbicada() {
-	    return "Mixin: klaso malĝuste metita en pakaĵon de mixin";
+		return "Mixin: klaso malĝuste metita en pakaĵon de mixin";
 	}
 
 	@Override
 	public String mensajeMixinClaseMalUbicada(String clase, String paquete, String archivoMixin) {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "Klaso estis malĝuste metita en Mixin-pakaĵon.</b>"
-	            + "<p>Ordinara klaso estis metita ene de pakaĵo deklarita kiel mixin.</p>"
-	            + "<p><b>Problema klaso:</b><br>" + clase + "</p>"
-	            + "<p><b>Deklarita mixin-pakaĵo:</b><br>" + paquete + "</p>"
-	            + "<p><b>Responda mixins-dosiero:</b><br>" + archivoMixin + "</p>"
-	            + "<p>Ordinaraj klasoj ne devas esti en la pakaĵo difinita en mixins.json.</p>"
-	            + "<p>Nur klasoj markitaj kiel mixin rajtas ekzisti en tiu pakaĵo.</p>"
-	            + "<p><b>Solvo por programisto:</b> Movu la ordinarajn klasojn ekster la mixin-pakaĵon "
-	            + "aŭ ĝustigu la agordon en la dosiero mixins.json.</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Klaso estis malĝuste metita en Mixin-pakaĵon.</b>"
+				+ "<p>Ordinara klaso estis metita ene de pakaĵo deklarita kiel mixin.</p>"
+				+ "<p><b>Problema klaso:</b><br>" + clase + "</p>" + "<p><b>Deklarita mixin-pakaĵo:</b><br>" + paquete
+				+ "</p>" + "<p><b>Responda mixins-dosiero:</b><br>" + archivoMixin + "</p>"
+				+ "<p>Ordinaraj klasoj ne devas esti en la pakaĵo difinita en mixins.json.</p>"
+				+ "<p>Nur klasoj markitaj kiel mixin rajtas ekzisti en tiu pakaĵo.</p>"
+				+ "<p><b>Solvo por programisto:</b> Movu la ordinarajn klasojn ekster la mixin-pakaĵon "
+				+ "aŭ ĝustigu la agordon en la dosiero mixins.json.</p>";
 	}
-	
-	
-	
+
+	@Override
+	public String problema_con_graficas_matrox() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Problemo detektita kun stiriloj de GPU Matrox.</b>"
+				+ "<p>La protokolo indikas ke la malsukceso okazis ene de biblioteko de la stirilo de Matrox.</p>"
+				+ "<p>GPU-oj de Matrox (specife modeloj G200/G400 uzataj en serviloj) "
+				+ "ne estas dizajnitaj por moderna 3D-bildigado kaj eble ne subtenas "
+				+ "la versiojn de OpenGL postulatajn de Minecraft.</p>" + "<p><b>Rekomenditaj solvoj:</b></p>" + "<ul>"
+				+ "<li>Ĝisdatigu la stirilon de Matrox al la plej nova disponebla versio.</li>"
+				+ "<li>Instalu oficialajn stirilojn anstataŭ ĝeneralaj sistemaj stiriloj.</li>"
+				+ "<li>Se la aparataro estas malnova, uzu GPU-on kongruan kun OpenGL 3.2 aŭ pli alta.</li>" + "</ul>"
+				+ "<p>En serviloj, tiuj GPU-oj kutime estas nur por baza videa eligo "
+				+ "kaj ne por 3D-aplikoj kiel Minecraft.</p>";
+	}
+
+	@Override
+	public String nombreVulkanModNoEncuentraGPU() {
+		return "VulkanMod: nekongrua GPU";
+	}
+
+	@Override
+	public String mensajeVulkanModNoEncuentraGPU() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "VulkanMod ne povis detekti kongruan GPU-on.</b>"
+				+ "<p>La mod <b>VulkanMod</b> provis lanĉiĝi per Vulkan, sed ne trovis GPU-on, kiu sufiĉe subtenas Vulkan.</p>"
+				+ "<p>Tio kutime okazas kiam:</p>" + "<ul>" + "<li>La GPU ne subtenas Vulkan.</li>"
+				+ "<li>La stiriloj de la GPU estas malnovaj aŭ mankas.</li>"
+				+ "<li>Malĝusta grafika adaptilo estas uzata (ekz. integrita GPU anstataŭ diskreta).</li>" + "</ul>"
+				+ "<p><b>Rekomenditaj solvoj:</b></p>" + "<ul>"
+				+ "<li>Ĝisdatigu la GPU-stirilojn al la plej nova versio.</li>"
+				+ "<li>Kontrolu ke via GPU subtenas Vulkan.</li>"
+				+ "<li>Se vi havas du GPU-ojn, devigu la diskretan por Minecraft.</li>"
+				+ "<li>Se via GPU ne subtenas Vulkan, malinstalu VulkanMod.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreRenderOutlineRendertypeInvalido() {
+		return "Nevalida RenderType por konturo";
+	}
+
+	@Override
+	public String mensajeRenderOutlineRendertypeInvalido(boolean enchantDetectado) {
+		String base = "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Mod provis apliki konturon al nekongrua RenderType.</b>" + "<p>La eraro estis:</p>"
+				+ "<code>Can't render an outline for this rendertype!</code>";
+
+		if (enchantDetectado) {
+			base += "<p><b>La mod enchant-outline / better-enchants estis trovita en la raporto.</b></p>"
+					+ "<p>Tiu mod estas konata pro kaŭzi tiun problemon en lastaj versioj de Minecraft.</p>"
+					+ "<p><b>Rekomendita solvo:</b> forigu aŭ ĝisdatigu enchant-outline.</p>";
+		} else {
+			base += "<p>Tiu problemo kutime rilatas al modoj kiuj modifas bildigon "
+					+ "(Entity Model Features, Entity Texture Features, Visuality aŭ konfliktoj kun Sodium).</p>"
+					+ "<p><b>Rekomendita solvo:</b> ĝisdatigu aŭ malaktivigu bildigajn modojn po unu.</p>";
+		}
+
+		return base;
+	}
+
+	@Override
+	public String nombreDivineRPGDimensionalInventoryNPE() {
+		return "DivineRPG – Nulla DimensionalInventory";
+	}
+
+	@Override
+	public String mensajeDivineRPGDimensionalInventoryNPE() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "DivineRPG provis konservi nulan DimensionalInventory-on.</b>" + "<p>La ludo eligis:</p>"
+				+ "<code>Cannot invoke DimensionalInventory.saveInventory(...) because \"d\" is null</code>"
+				+ "<p>Tio estas konata cimo en DivineRPG rilata al la Vethean-inventarsistemo.</p>"
+				+ "<p><b>Rekomendita solvo:</b></p>" + "<ul>" + "<li>Iru al la agorddosiero de DivineRPG.</li>"
+				+ "<li>Agordu <code>saferVetheanInventory=true</code></li>"
+				+ "<li>Konservu kaj restartigu la ludon.</li>" + "</ul>"
+				+ "<p>Ankaŭ rekomendiĝas ĝisdatigi DivineRPG se pli nova versio haveblas.</p>";
+	}
 
 }

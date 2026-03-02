@@ -2486,4 +2486,18 @@ public interface Idioma {
 
 	public String nombreMixinClaseMalUbicada();
 
+	public String problema_con_graficas_matrox();
+
+	public String mensajeVulkanModNoEncuentraGPU();
+
+	public String nombreVulkanModNoEncuentraGPU();
+
+	public String mensajeRenderOutlineRendertypeInvalido(boolean modEnchantOutlineDetectado);
+
+	public String nombreRenderOutlineRendertypeInvalido();
+
+	public String mensajeDivineRPGDimensionalInventoryNPE();
+
+	public String nombreDivineRPGDimensionalInventoryNPE();
+
 }

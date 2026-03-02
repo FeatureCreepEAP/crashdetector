@@ -6058,72 +6058,113 @@ public class Chino implements Idioma {
 				+ "<li>更新 JEI 及所列模组。</li>" + "<li>临时移除受影响的插件以确认冲突。</li>" + "<li>向相关模组开发者报告此错误。</li>" + "</ul>"
 				+ "<p>在问题修复前，这些物品组中的物品将不会出现在物品列表中。</p>";
 	}
-	
-	
+
 	@Override
 	public String nombreVersionInvalida() {
-	    return "模组版本无效（SemVer）";
+		return "模组版本无效（SemVer）";
 	}
 
 	@Override
 	public String mensajeVersionInvalida(String version, String ubicacion) {
-	    String v = (version == null || version.isEmpty()) ? "未知" : version;
-	    String u = (ubicacion == null || ubicacion.isEmpty()) ? "无法定位模组" : ubicacion;
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "检测到无效的模组版本。</b>"
-	            + "<p>版本 <b>" + v + "</b> 不符合有效的 SemVer 格式。</p>"
-	            + "<p>错误表明预发布部分为空（以 '+' 结尾）。</p>"
-	            + "<p><b>问题模组：</b><br>" + u + "</p>"
-	            + "<p><b>推荐解决方案：</b></p>"
-	            + "<ul>"
-	            + "<li>编辑模组文件并修正版本号。</li>"
-	            + "<li>如果后面没有元数据，请删除末尾的 '+'。</li>"
-	            + "<li>将模组更新至已修复的版本。</li>"
-	            + "</ul>";
-	}
-	
-	@Override
-	public String nombreJPMSIllegalAccess() {
-	    return "JPMS：模块间非法访问";
+		String v = (version == null || version.isEmpty()) ? "未知" : version;
+		String u = (ubicacion == null || ubicacion.isEmpty()) ? "无法定位模组" : ubicacion;
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "检测到无效的模组版本。</b>"
+				+ "<p>版本 <b>" + v + "</b> 不符合有效的 SemVer 格式。</p>" + "<p>错误表明预发布部分为空（以 '+' 结尾）。</p>"
+				+ "<p><b>问题模组：</b><br>" + u + "</p>" + "<p><b>推荐解决方案：</b></p>" + "<ul>" + "<li>编辑模组文件并修正版本号。</li>"
+				+ "<li>如果后面没有元数据，请删除末尾的 '+'。</li>" + "<li>将模组更新至已修复的版本。</li>" + "</ul>";
 	}
 
 	@Override
-	public String mensajeJPMSIllegalAccess(String claseOrigen, String moduloOrigen, String claseDestino, String moduloDestino) {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "检测到模块间非法访问（JPMS）。</b>"
-	            + "<p>Java 模块系统（JPMS）阻止了类之间的访问。</p>"
-	            + "<p><b>尝试访问的类：</b><br>"
-	            + claseOrigen + "（模块：" + moduloOrigen + "）</p>"
-	            + "<p><b>被阻止的类：</b><br>"
-	            + claseDestino + "（模块：" + moduloDestino + "）</p>"
-	            + "<p>此类错误通常发生在模组未在其 module-info.java 中正确声明 "
-	            + "exports 或 opens 时。</p>"
-	            + "<p><b>可能原因：</b></p>"
-	            + "<ul>"
-	            + "<li>模块未导出所需包。</li>"
-	            + "<li>缺少用于反射的 <b>opens</b> 指令。</li>"
-	            + "<li>模组未针对 JPMS 正确配置。</li>"
-	            + "</ul>"
-	            + "<p>此问题需由模组开发者修复。</p>";
+	public String nombreJPMSIllegalAccess() {
+		return "JPMS：模块间非法访问";
 	}
-	
+
+	@Override
+	public String mensajeJPMSIllegalAccess(String claseOrigen, String moduloOrigen, String claseDestino,
+			String moduloDestino) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "检测到模块间非法访问（JPMS）。</b>"
+				+ "<p>Java 模块系统（JPMS）阻止了类之间的访问。</p>" + "<p><b>尝试访问的类：</b><br>" + claseOrigen + "（模块：" + moduloOrigen
+				+ "）</p>" + "<p><b>被阻止的类：</b><br>" + claseDestino + "（模块：" + moduloDestino + "）</p>"
+				+ "<p>此类错误通常发生在模组未在其 module-info.java 中正确声明 " + "exports 或 opens 时。</p>" + "<p><b>可能原因：</b></p>"
+				+ "<ul>" + "<li>模块未导出所需包。</li>" + "<li>缺少用于反射的 <b>opens</b> 指令。</li>" + "<li>模组未针对 JPMS 正确配置。</li>"
+				+ "</ul>" + "<p>此问题需由模组开发者修复。</p>";
+	}
+
 	@Override
 	public String nombreMixinClaseMalUbicada() {
-	    return "Mixin：类被错误放置在 mixin 包中";
+		return "Mixin：类被错误放置在 mixin 包中";
 	}
 
 	@Override
 	public String mensajeMixinClaseMalUbicada(String clase, String paquete, String archivoMixin) {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "类被错误地放置在 Mixin 包中。</b>"
-	            + "<p>一个普通类被放入了声明为 mixin 的包中。</p>"
-	            + "<p><b>冲突类：</b><br>" + clase + "</p>"
-	            + "<p><b>声明的 mixin 包：</b><br>" + paquete + "</p>"
-	            + "<p><b>相关的 mixins 配置文件：</b><br>" + archivoMixin + "</p>"
-	            + "<p>普通类不应位于 mixins.json 中定义的包内。</p>"
-	            + "<p>只有标注为 mixin 的类才应存在于该包中。</p>"
-	            + "<p><b>开发者解决方案：</b>将普通类移出 mixin 包，"
-	            + "或修正 mixins.json 文件的配置。</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "类被错误地放置在 Mixin 包中。</b>"
+				+ "<p>一个普通类被放入了声明为 mixin 的包中。</p>" + "<p><b>冲突类：</b><br>" + clase + "</p>"
+				+ "<p><b>声明的 mixin 包：</b><br>" + paquete + "</p>" + "<p><b>相关的 mixins 配置文件：</b><br>" + archivoMixin
+				+ "</p>" + "<p>普通类不应位于 mixins.json 中定义的包内。</p>" + "<p>只有标注为 mixin 的类才应存在于该包中。</p>"
+				+ "<p><b>开发者解决方案：</b>将普通类移出 mixin 包，" + "或修正 mixins.json 文件的配置。</p>";
+	}
+
+	@Override
+	public String problema_con_graficas_matrox() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "检测到 Matrox GPU 驱动程序问题。</b>"
+				+ "<p>日志表明，故障发生在 Matrox 驱动程序的某个库中。</p>" + "<p>Matrox 显卡（尤其是服务器中使用的 G200/G400 型号）"
+				+ "并非为现代 3D 渲染而设计，可能不支持 Minecraft 所需的 OpenGL 版本。</p>" + "<p><b>推荐解决方案：</b></p>" + "<ul>"
+				+ "<li>将 Matrox 驱动程序更新至最新可用版本。</li>" + "<li>安装官方驱动程序，而非系统自带的通用驱动。</li>"
+				+ "<li>如果硬件较旧，请使用支持 OpenGL 3.2 或更高版本的 GPU。</li>" + "</ul>" + "<p>在服务器上，此类 GPU 通常仅用于基本视频输出，"
+				+ "并不适用于 Minecraft 等 3D 应用程序。</p>";
+	}
+
+	@Override
+	public String nombreVulkanModNoEncuentraGPU() {
+		return "VulkanMod：GPU 不兼容";
+	}
+
+	@Override
+	public String mensajeVulkanModNoEncuentraGPU() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "VulkanMod 未能检测到兼容的 GPU。</b>" + "<p>模组 <b>VulkanMod</b> 尝试使用 Vulkan 启动，但未找到能正确支持 Vulkan 的 GPU。</p>"
+				+ "<p>这通常发生在以下情况：</p>" + "<ul>" + "<li>GPU 不支持 Vulkan。</li>" + "<li>GPU 驱动程序已过时或缺失。</li>"
+				+ "<li>使用了错误的图形适配器（例如，使用了集成显卡而非独立显卡）。</li>" + "</ul>" + "<p><b>推荐解决方案：</b></p>" + "<ul>"
+				+ "<li>将 GPU 驱动程序更新至最新版本。</li>" + "<li>确认你的 GPU 支持 Vulkan。</li>"
+				+ "<li>如果你有两块 GPU，请强制 Minecraft 使用独立显卡。</li>" + "<li>如果你的 GPU 不支持 Vulkan，请卸载 VulkanMod。</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreRenderOutlineRendertypeInvalido() {
+		return "轮廓渲染使用了无效的 RenderType";
+	}
+
+	@Override
+	public String mensajeRenderOutlineRendertypeInvalido(boolean enchantDetectado) {
+		String base = "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "某个模组尝试对不兼容的 RenderType 应用轮廓（outline）。</b>" + "<p>错误信息为：</p>"
+				+ "<code>Can't render an outline for this rendertype!</code>";
+
+		if (enchantDetectado) {
+			base += "<p><b>报告中检测到 enchant-outline / better-enchants 模组。</b></p>"
+					+ "<p>该模组在较新版本的 Minecraft 中已知会引发此问题。</p>" + "<p><b>推荐解决方案：</b>移除或更新 enchant-outline。</p>";
+		} else {
+			base += "<p>此问题通常与修改渲染的模组有关 "
+					+ "（如 Entity Model Features、Entity Texture Features、Visuality，或与 Sodium 的冲突）。</p>"
+					+ "<p><b>推荐解决方案：</b>逐一更新或禁用渲染类模组以排查问题。</p>";
+		}
+
+		return base;
+	}
+
+	@Override
+	public String nombreDivineRPGDimensionalInventoryNPE() {
+		return "DivineRPG – DimensionalInventory 为空";
+	}
+
+	@Override
+	public String mensajeDivineRPGDimensionalInventoryNPE() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "DivineRPG 尝试保存一个空的 DimensionalInventory。</b>" + "<p>游戏抛出以下错误：</p>"
+				+ "<code>Cannot invoke DimensionalInventory.saveInventory(...) because \"d\" is null</code>"
+				+ "<p>这是 DivineRPG 中一个已知的与 Vethean 库存系统相关的 bug。</p>" + "<p><b>推荐解决方案：</b></p>" + "<ul>"
+				+ "<li>打开 DivineRPG 的配置文件。</li>" + "<li>设置 <code>saferVetheanInventory=true</code></li>"
+				+ "<li>保存并重启游戏。</li>" + "</ul>" + "<p>如果存在更新版本，也建议更新 DivineRPG。</p>";
 	}
 
 }

@@ -36,8 +36,7 @@ public class JPMSIllegalAccess implements Verificaciones {
 		if (!posibleJPMS)
 			return;
 
-		if (linea.contains("IllegalAccessException")
-				&& linea.contains("in module")
+		if (linea.contains("IllegalAccessException") && linea.contains("in module")
 				&& linea.contains("cannot access")) {
 
 			// Ejemplo:
@@ -88,9 +87,8 @@ public class JPMSIllegalAccess implements Verificaciones {
 
 	@Override
 	public String mensaje() {
-		return MonitorDePID.idioma.mensajeJPMSIllegalAccess(
-				claseOrigen, moduloOrigen,
-				claseDestino, moduloDestino) + this.enlace;
+		return MonitorDePID.idioma.mensajeJPMSIllegalAccess(claseOrigen, moduloOrigen, claseDestino, moduloDestino)
+				+ this.enlace;
 	}
 
 	@Override
