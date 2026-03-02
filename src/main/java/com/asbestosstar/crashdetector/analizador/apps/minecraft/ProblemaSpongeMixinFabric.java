@@ -1,60 +1,82 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
- * Detecta errores fatales de Mixin en mods de Fabric sin usar regex costosos.
- * Basado en la implementación de Codex de Aternos.
+ * Detecta errores fatales de SpongeMixin en Fabric. Mantiene la lógica original
+ * por línea pero añade pre-check global para mejorar rendimiento en logs
+ * grandes.
  */
 public class ProblemaSpongeMixinFabric implements Verificaciones {
 
 	private boolean activado = false;
-	private String mensaje = "";
-	private String nombreMod = "";
 	private boolean viErrorMixin = false;
+	private boolean analizarLineas = false;
+
+	// mod -> enlace
+	private final Map<String, String> modsConEnlace = new LinkedHashMap<>();
 
 	@Override
 	public void verificar(Consola consola) {
-		this.activado = false;
-		this.mensaje = "";
-		this.nombreMod = "";
-		this.viErrorMixin = false;
+
+		String log = consola.contenido_verificar;
+
+		if (log == null)
+			return;
+
+		// Pre-check global rápido (solo contains)
+		if (log.contains("MixinTransformerError: An unexpected critical error was encountered")
+				&& log.contains("from mod ")) {
+
+			analizarLineas = true;
+		}
 	}
 
 	@Override
 	public void verificar(Consola consola, String linea, int numero_de_linea) {
-		if (activado)
+
+		if (!analizarLineas || linea == null)
 			return;
 
-		if (linea == null)
-			return;
-
-		// Detectar la línea inicial del error fatal de Mixin
-		if (linea.contains("MixinTransformerError: An unexpected critical error was encountered")) {
+		boolean linea_vi_error_mixin = false;
+		// Esperar explícitamente la línea del error crítico
+		if (linea.contains("MixinTransformerError") || linea.contains("InvalidMixinException")
+				|| linea.contains("MixinApplyError") || linea.contains("Critical injection failure")) {
+			linea_vi_error_mixin = true;
 			this.viErrorMixin = true;
 			return;
 		}
 
-		// Si ya vimos el error, buscar la línea que contiene "from mod"
-		if (viErrorMixin && linea.contains("from mod ")) {
-			// Extraer el nombre del mod: todo después de "from mod "
+		// Solo después de haber detectado el error fatal
+		if (linea_vi_error_mixin && linea.contains("from mod ")) {
+
 			int indice = linea.indexOf("from mod ");
-			if (indice != -1) {
-				String candidato = linea.substring(indice + "from mod ".length()).trim();
-				// El nombre del mod suele estar al inicio y puede terminar en espacio, coma,
-				// etc.
-				int fin = candidato.indexOf(' ');
-				if (fin == -1)
-					fin = candidato.length();
-				this.nombreMod = candidato.substring(0, fin);
+			if (indice == -1)
+				return;
+
+			String candidato = linea.substring(indice + "from mod ".length()).trim();
+
+			int fin = candidato.indexOf(' ');
+			if (fin == -1)
+				fin = candidato.length();
+
+			String nombreMod = candidato.substring(0, fin).trim();
+
+			if (!nombreMod.isEmpty() && !modsConEnlace.containsKey(nombreMod)) {
+
+				String enlace = consola.agregarErrorALectador(numero_de_linea, this);
+				modsConEnlace.put(nombreMod, enlace);
+
 				this.activado = true;
-				this.mensaje = MonitorDePID.idioma.mensajeModFatal(nombreMod) + Verificaciones.nl_html;
 			}
 		}
 	}
@@ -76,7 +98,19 @@ public class ProblemaSpongeMixinFabric implements Verificaciones {
 
 	@Override
 	public String mensaje() {
-		return mensaje;
+
+		if (!activado)
+			return "";
+
+		StringBuilder sb = new StringBuilder();
+
+		for (Map.Entry<String, String> entry : modsConEnlace.entrySet()) {
+
+			sb.append(MonitorDePID.idioma.mensajeModFatal(entry.getKey())).append(entry.getValue())
+					.append(Verificaciones.nl_html);
+		}
+
+		return sb.toString();
 	}
 
 	@Override
@@ -86,12 +120,19 @@ public class ProblemaSpongeMixinFabric implements Verificaciones {
 
 	@Override
 	public QuickFix solucion() {
-		return new Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.solucionEliminarMod(nombreMod)).construir();
+
+		Builder builder = new Builder(nombre());
+
+		for (String mod : modsConEnlace.keySet()) {
+			builder.agregarEtiqueta(MonitorDePID.idioma.solucionEliminarMod(mod) + Verificaciones.nl_html);
+		}
+
+		return builder.construir();
 	}
 
 	@Override
 	public String id() {
-		return "problema_spongemixin_fabric";
+		return "problema_spongemixin_fabric_multiple";
 	}
 
 	@Override
@@ -101,15 +142,12 @@ public class ProblemaSpongeMixinFabric implements Verificaciones {
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 
 	@Override
 	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
-
 }

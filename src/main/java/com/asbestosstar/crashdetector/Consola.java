@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,13 +31,13 @@ import com.asbestosstar.crashdetector.api_sito_registro.StikkedAPI;
 import com.asbestosstar.crashdetector.divisor.DivisorDeArchivos;
 import com.asbestosstar.crashdetector.divisor.HolaMundoConsolaDivisidor;
 import com.asbestosstar.crashdetector.divisor.TLauncherConsolaDivisor;
-import com.asbestosstar.crashdetector.divisor.VainillaConsolaDivisor;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasGUI.ErrorDeLectador;
 import com.asbestosstar.crashdetector.gui.tipos.no_registro_lanzador.NoRegistroDeLauncherVShojo;
 import com.asbestosstar.crashdetector.limpiador.LimpiadorDeRegistro;
 import com.asbestosstar.crashdetector.limpiador.LimpiadorNingun;
 import com.asbestosstar.crashdetector.limpiador.LimpiadorRegistroDeLauncherVainilla;
 import com.asbestosstar.crashdetector.limpiador.LimpiadorRegistroLatestLog;
+import com.asbestosstar.crashdetector.limpiador.LimpiadorRegistroStderrStreamCrashAssistant;
 
 public class Consola {
 
@@ -110,6 +109,7 @@ public class Consola {
 		tipos_de_registros_de_launcher.add(NoRegistroDeLauncherVShojo.cd_launcherlog.getName());
 		limpiadores.add(new LimpiadorRegistroDeLauncherVainilla());
 		limpiadores.add(new LimpiadorRegistroLatestLog());
+		limpiadores.add(new LimpiadorRegistroStderrStreamCrashAssistant());
 		archivos_para_mapa.addAll(obtenerArchivosDeConsolas());// TODO crearar una mapa antes del processo de CD
 		inutilesArchivoStrsPredetermindados();
 	}

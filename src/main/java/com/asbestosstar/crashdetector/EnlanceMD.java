@@ -144,7 +144,7 @@ public class EnlanceMD {
 	 */
 	private static boolean contieneNombreLog(String texto) {
 		String[] patrones = { "latest\\.log", "launcher_log\\.txt", "debug\\.log", "tlauncher.*\\.log",
-				"sklauncher_logs\\.txt", "hs_err_pid.*\\.log", "crash-.*\\.(?:log|txt)" };
+				"stderr_stream\\.log", "hs_err_pid.*\\.log", "crash-.*\\.(?:log|txt)" };
 		for (String p : patrones) {
 			if (texto.matches(".*" + p + ".*"))
 				return true;
@@ -158,7 +158,7 @@ public class EnlanceMD {
 	 */
 	private static String extraerNombreLog(String texto) {
 		String[] patrones = { "(latest\\.log)", "(launcher_log\\.txt)", "(debug\\.log)", "(tlauncher.*\\.log)",
-				"(sklauncher_logs\\.txt)", "(hs_err_pid.*\\.log)", "(crash-.*\\.(?:log|txt))" };
+				"(stderr_stream\\.log)", "(hs_err_pid.*\\.log)", "(crash-.*\\.(?:log|txt))" };
 		for (String p : patrones) {
 			Matcher m = Pattern.compile(p).matcher(texto);
 			if (m.find()) {

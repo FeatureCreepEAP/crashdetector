@@ -66,7 +66,12 @@ public class LimpiadorRegistroLatestLog implements LimpiadorDeRegistro {
 			}
 
 			// 2) Decidir si es traza (tanto con como sin prefijo)
-			if (esLineaTraza(cuerpo)) {
+
+			// Eliminar bloques tipo [Clase:metodo:linea]: antes de decidir
+			String cuerpoSinBloques = BLOQUE_CLASE_METODO_LINEA.matcher(cuerpo).replaceAll("");
+
+			if (esLineaTraza(cuerpoSinBloques)) {
+
 				// 3) Limpiar SOLO el cuerpo de la traza
 				String limpio = limpiarCuerpoTraza(cuerpo);
 
@@ -82,6 +87,10 @@ public class LimpiadorRegistroLatestLog implements LimpiadorDeRegistro {
 		return out.toString();
 	}
 
+	/** Detecta cabeceras de excepción tipo "Caused by:" o "Suppressed:" */
+	private static final Pattern CABECERA_EXCEPCION = Pattern
+			.compile("^(Caused by:|Suppressed:|Exception in thread|[\\w.$]+(?:Exception|Error):).*");
+
 	/**
 	 * Regla de detección de traza: - Comienza (tras prefijo) con "at " permitiendo
 	 * tabs/espacios. - O, tras quitar bloques [Clase:metodo:linea]: contiene "at ".
@@ -91,22 +100,25 @@ public class LimpiadorRegistroLatestLog implements LimpiadorDeRegistro {
 		if (cuerpo == null || cuerpo.isEmpty())
 			return false;
 
-		// Caso directo: " at ..."
-		if (AT_CON_TABS.matcher(cuerpo).find())
-			return true;
-
-		// Quitar bloques molestos y volver a comprobar "at ..."
 		String sinBloques = BLOQUE_CLASE_METODO_LINEA.matcher(cuerpo).replaceAll("");
+
+		// 1) at ...
 		if (AT_CON_TABS.matcher(sinBloques).find())
 			return true;
 
-		// Heurísticas por transformadores
-		if (cuerpo.contains(" at TRANSFORMER/") || cuerpo.contains(" at mixin/") || cuerpo.contains(" at MODULE/"))
+		// 2) Cabeceras de excepción
+		if (CABECERA_EXCEPCION.matcher(sinBloques).matches())
 			return true;
-		if (cuerpo.startsWith("TRANSFORMER/") || cuerpo.startsWith("mixin/") || cuerpo.startsWith("MODULE/")) {
-			if (cuerpo.contains(".java:") && cuerpo.contains("(") && cuerpo.contains(")"))
-				return true;
-		}
+
+		// 3) Heurísticas transformadores
+		if (sinBloques.contains(" at TRANSFORMER/") || sinBloques.contains(" at mixin/")
+				|| sinBloques.contains(" at MODULE/"))
+			return true;
+
+		if ((sinBloques.startsWith("TRANSFORMER/") || sinBloques.startsWith("mixin/")
+				|| sinBloques.startsWith("MODULE/")) && sinBloques.contains(".java:") && sinBloques.contains("(")
+				&& sinBloques.contains(")"))
+			return true;
 
 		return false;
 	}
@@ -145,6 +157,7 @@ public class LimpiadorRegistroLatestLog implements LimpiadorDeRegistro {
 	@Override
 	public boolean predicado(Path archivo) {
 		// Solo archivos latest.log
-		return archivo != null && archivo.toString().endsWith("latest.log");
+		return archivo != null && archivo.toString().endsWith("latest.log")
+				|| archivo.toString().endsWith("cd_launcherlog");
 	}
 }

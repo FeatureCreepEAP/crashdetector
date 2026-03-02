@@ -30,9 +30,9 @@ public class SpongeMixinConfigsProblematicos implements Verificaciones {
 
 	@Override
 	public void verificar(Consola consola) {
-		sm_config_con_linea.clear();
-		sm_config_es_fatal.clear();
-		enlacesPorConfig.clear();
+//		sm_config_con_linea.clear();
+//		sm_config_es_fatal.clear();
+//		enlacesPorConfig.clear();
 
 		// Origen existente: parser de stacktrace
 		BiMap<String, Integer, Boolean> configs = consola.verificacion_de_stacktrace.sm_config;
@@ -40,13 +40,14 @@ public class SpongeMixinConfigsProblematicos implements Verificaciones {
 			String nombreArchivo = clave.key0;
 			int linea = clave.key1;
 			boolean esFatal = configs.get(nombreArchivo, linea);
-
+			CrashDetectorLogger.log("JSON in SM Problematico " + nombreArchivo);
 			sm_config_con_linea.put(nombreArchivo, linea);
 			sm_config_es_fatal.put(nombreArchivo, esFatal);
 			enlacesPorConfig.put(nombreArchivo, consola.agregarErrorALectador(linea, this));
+			this.activado = true;
 		}
 
-		activado = !sm_config_con_linea.isEmpty();
+		// activado = !sm_config_con_linea.isEmpty();
 	}
 
 	@Override
@@ -84,9 +85,11 @@ public class SpongeMixinConfigsProblematicos implements Verificaciones {
 
 	@Override
 	public String mensaje() {
-		if (sm_config_con_linea.isEmpty())
+		CrashDetectorLogger.log("Agregando Mensaje de SM Problematicos");
+		if (sm_config_con_linea.isEmpty()) {
+			CrashDetectorLogger.log("sm_config_con_linea no tiene nada");
 			return "";
-		Buscardor.cargar();
+		}
 
 		StringBuilder html = new StringBuilder();
 		html.append("<span style='color: #").append(Config.obtenerInstancia().obtenerColorDeTitulosDeConsolas())
@@ -96,6 +99,8 @@ public class SpongeMixinConfigsProblematicos implements Verificaciones {
 		List<String> listItems = new ArrayList<>();
 		for (Map.Entry<String, Integer> entry : sm_config_con_linea.entrySet()) {
 			String sm = entry.getKey();
+
+			CrashDetectorLogger.log(" SM en mensaje " + sm);
 			int lineNumber = entry.getValue();
 			boolean isFatal = sm_config_es_fatal.getOrDefault(sm, false);
 

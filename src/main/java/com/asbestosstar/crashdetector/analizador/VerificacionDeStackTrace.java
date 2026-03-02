@@ -462,6 +462,16 @@ public class VerificacionDeStackTrace {
 				}
 			}
 
+			// Agregar este bloque junto con los otros prefijos con metadata
+			if (t.startsWith("MC-BOOTSTRAP/")) {
+				t = t.substring("MC-BOOTSTRAP/".length()).trim();
+				// Saltar el primer segmento (modulo/modid + version) hasta la siguiente '/'
+				int idx = t.indexOf('/');
+				if (idx >= 0 && idx + 1 < t.length()) {
+					t = t.substring(idx + 1).trim();
+				}
+			}
+
 		} while (cambio);
 
 		// Quitar prefijos con metadata del estilo:
@@ -604,6 +614,7 @@ public class VerificacionDeStackTrace {
 		for (String json : jsons) {
 			if (!sm_config.containsKey0(json)) {
 				sm_config.put(json, consolaLineaInicio, fatal);
+				CrashDetectorLogger.log("Agregando JSON " + json);
 			}
 		}
 
@@ -1268,10 +1279,12 @@ public class VerificacionDeStackTrace {
 		String[] lineas = contenido_de_logs.split("\r?\n");
 		for (String linea : lineas) {
 			if (linea.contains("org.spongepowered.asm.mixin")) {
+				CrashDetectorLogger.log(linea + "tiene error SM");
 				Matcher matcher = JSON_PATTERN.matcher(linea.trim());
 				while (matcher.find()) {
 					if (matcher.group(1) != null) {
 						String nombreJson = matcher.group(1).trim();
+						CrashDetectorLogger.log(nombreJson + " json tiene error SM");
 
 						// a veces tiene [
 						if (nombreJson.startsWith("[")) {
@@ -1279,6 +1292,8 @@ public class VerificacionDeStackTrace {
 						}
 
 						archivos_json.add(nombreJson);
+					} else {
+						CrashDetectorLogger.log(linea + "nil 1");
 					}
 				}
 			}
@@ -1445,8 +1460,8 @@ public class VerificacionDeStackTrace {
 	}
 
 	// Normalizador de líneas de stack: quita // y prefijos de cargador conocidos
-	private static final String[] PREFIJOS_CARGADOR = { "knot//MC//", "knot//", "knott//", "app//",
-			"SECURE-BOOTSTRAP/" };
+	private static final String[] PREFIJOS_CARGADOR = { "knot//MC//", "knot//", "knott//", "app//", "SECURE-BOOTSTRAP/",
+			"MC-BOOTSTRAP/" };
 
 	public static String normalizarLineaStack(String l) {
 		if (l == null)

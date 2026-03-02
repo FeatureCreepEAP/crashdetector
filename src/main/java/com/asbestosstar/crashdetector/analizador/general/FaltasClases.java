@@ -208,6 +208,11 @@ public class FaltasClases implements Verificaciones {
 				return;// TODO apender a Advertencia faltas clases
 			}
 		}
+
+		if (linea.contains("Valkyrian skies compatibility disabled")) {// A veces lineas tiene esta
+			return;// TODO apender a Advertencia faltas clases
+		}
+
 		// [28Dec2025 00:14:05.843] [modloading-worker-0/INFO] [STDERR/]:
 		// [dev.latvian.mods.rhino.CachedClassInfo:getDeclaredMethods:194]: [Rhino]
 		// Failed to get declared methods for
