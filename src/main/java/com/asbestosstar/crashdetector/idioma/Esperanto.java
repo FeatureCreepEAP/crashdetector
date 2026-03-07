@@ -6676,4 +6676,119 @@ public class Esperanto implements Idioma {
 				+ "<li>Se la problemo daŭras, provu lanĉi la ludon sen Sodium.</li>" + "</ul>";
 	}
 
+	public String nombreErrorCreacionModelo() {
+		return "Eraro dum kreado aŭ ŝargado de modelo";
+	}
+
+	public String mensajeErrorCreacionModelo(String modelo) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("<p>Eraro okazis dum provo krei aŭ ŝargi modelon de Minecraft.</p>");
+		if (modelo != null && !modelo.isEmpty()) {
+			sb.append("<p>Afektita modelo: <code>").append(modelo).append("</code></p>");
+		}
+		sb.append("<p>Tiu tipo de eraro kutime okazas kiam:</p>");
+		sb.append("<ul>");
+		sb.append("<li>Mod havas misagorditan modelon.</li>");
+		sb.append("<li>JSON-modelo estas difektita aŭ nekompleta.</li>");
+		sb.append("<li>Ekzistas konflikto inter modoj kiuj modifas modelojn aŭ bildigon.</li>");
+		sb.append("<li>Resourcepack aŭ datapack enhavas nekongruajn modelojn.</li>");
+		sb.append("</ul>");
+		sb.append("<p>Provu identigi kiun modon aŭ resurso-pakon provizas la indikitan modelon.</p>");
+		return sb.toString();
+	}
+
+	public String posibleConflictoCoolerAnimations() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("<p><b>Ebla kaŭzo detektita:</b></p>");
+		sb.append("<p>Aktiveco de la mod <b>Cooler Animations</b> estis trovita en la protokolo.</p>");
+		sb.append(
+				"<p>Tiu mod modifas la animacian kaj modelan sistemon kaj en kelkaj kazoj povas kaŭzi model-ŝargajn erarojn.</p>");
+		sb.append(
+				"<p>Se la problemo daŭras, provu lanĉi la ludon sen Cooler Animations por kontroli ĉu la eraro malaperas.</p>");
+		return sb.toString();
+	}
+
+	@Override
+	public String nombreProblemaStarlight() {
+		return "Problemo kun Starlight";
+	}
+
+	@Override
+	public String problemaBlockStarlightEngineDetectado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Eraro rilata al Starlight estis detektita.</b>"
+				+ "<p>La eraro okazis ene de <code>BlockStarLightEngine.initNibble</code>.</p>"
+				+ "<p>Tio indikas fiaskon en la lumiga motoro de la mod <b>Starlight</b>.</p>"
+				+ "<p>Starlight estas mod kiu tute modifas la lumigan sistemon de Minecraft kaj estas konata pro kaŭzi diversajn problemojn en kelkaj mod-medioj.</p>"
+				+ "<p>Tio estas nur unu el pluraj konataj eraroj asociitaj kun Starlight.</p>"
+				+ "<p>Se la problemo daŭras, provu lanĉi la ludon sen Starlight.</p>";
+	}
+
+	@Override
+	public String nombreProblemaAAAParticlesEffekseer() {
+		return "Problemo kun AAAParticles / Effekseer";
+	}
+
+	@Override
+	public String problemaAAAParticlesEffekseer() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Nativa kraŝo rilata al Effekseer estis detektita.</b>"
+				+ "<p>La eraro okazis ene de la nativa biblioteko <code>EffekseerNativeForJava</code>.</p>"
+				+ "<p>Tiu biblioteko estas uzata de la mod <b>AAAParticles</b> kreita de ChloePrime.</p>"
+				+ "<p>Kraŝoj en nativaj bibliotekoj kutime indikas problemojn en la mod mem aŭ ĝiaj nativaj dependaĵoj.</p>"
+				+ "<p>Se la problemo daŭras, provu lanĉi la ludon sen AAAParticles.</p>";
+	}
+
+	@Override
+	public String javaProblematica() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Nativa kraŝo de la Java Virtual Machine (JVM) estis detektita.</b>"
+				+ "<p>Tiu eraro okazas ene de la JVM mem (ekz. <code>jvm.dll</code>, <code>libjvm.so</code>, ktp.), "
+				+ "kaj ne nepre estas kaŭzita de mod.</p>"
+				+ "<p>Kvankam malofte ĝi povas deveni de modoj uzantaj nekongruajn nativajn bibliotekojn, "
+				+ "<b>ĝi plej verŝajne rezultas el difektita, korupta aŭ malaktuala JVM-versio</b>.</p>"
+				+ "<p>Tio estas aparte komuna se vi uzas malnovan aŭ neoficialan Java-konstruaĵon (ekz. senapogaj komunumaj versioj).</p>"
+				+ "<p><b>Ni rekomendas uzi fidindan kaj prizorgatan JVM:</b></p>" + "<ul>"
+				+ "<li><b>Red Hat Build of OpenJDK</b> (stabila, bone testita, ideala por Windows/Linux)</li>"
+				+ "<li><b>OpenLogic OpenJDK</b> (plursistema subteno, inkluzive de macOS Intel)</li>"
+				+ "<li><b>Azul Zulu</b> (atestita, kun senpaga LTS-apogo)</li>"
+				+ "<li><b>Oracle JDK</b> (oficiala, kun regulaj ĝisdatigoj)</li>" + "</ul>"
+				+ "<p>Evitu nekonatajn, proprajn aŭ tre malnovajn konstruaĵojn, ĉar ili povas enhavi kritikajn erarojn en la JVM-motoro.</p>"
+				+ "<p><b>Ĉu vi uzas Prism Launcher aŭ TLauncher?</b> Estas tre facile agordi propran JVM: "
+				+ "en Prism Launcher, iru al <i>Instaloj</i> → <i>Redakti instalaĵon</i> → <i>Java-agordoj</i>; "
+				+ "en TLauncher, iru al <i>Settings</i> → <i>Java Settings</i> kaj elektu la vojon al via elŝutita JDK/JRE. "
+				+ "Vi ne bezonas ŝanĝi la sistem-JVM!</p>";
+	}
+
+	@Override
+	public String nombreProblemaParanoiaC2ME() {
+		return "Konflikto inter Paranoia kaj C2ME";
+	}
+
+	@Override
+	public String problemaParanoiaC2ME() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Konflikto estis detektita inter la modoj Paranoia kaj C2ME.</b>"
+				+ "<p>La eraro indikas ke <code>ThreadLocalRandom</code> estis alirita el malĝusta fadeno.</p>"
+				+ "<p>Tio kutime okazas kiam la mod <b>Paranoia</b> rulas kodon kiu ne estas faden-sekura dum <b>C2ME</b> faras multfadajn optimumigojn.</p>"
+				+ "<p>Tiu tipo de konflikto estas komuna ĉe modoj kreitaj per MCreator.</p>"
+				+ "<p>Se la problemo daŭras, provu lanĉi la ludon sen Paranoia aŭ malaktivigu C2ME.</p>";
+	}
+
+	@Override
+	public String nombreProblemaAssetsDirFaltante() {
+		return "Mankas la dosierujo de assets de Minecraft";
+	}
+
+	@Override
+	public String problemaAssetsDirFaltante() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft ne povis trovi la dosierujon de assets.</b>"
+				+ "<p>La lanĉilo provis startigi la ludon per nevalida vojo al assets.</p>"
+				+ "<p>Tio signifas ke la rimedaj dosieroj de la ludo (assets) mankas aŭ ne estis ĝuste instalitaj.</p>"
+				+ "<p>Tiu problemo kutime okazas pro malĝustaj instalaĵoj de Minecraft aŭ misagorditaj lanĉiloj.</p>"
+				+ "<p>Ĝi ankaŭ povas okazi kiam oni uzas neoficialajn lanĉilojn kiuj misadministras assets, kiel FreshCraft.</p>"
+				+ "<p>Se la problemo daŭras, provu reinstali la modpakaĵon aŭ lanĉi la ludon per oficiala aŭ fidinda lanĉilo.</p>";
+	}
+
 }

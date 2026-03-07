@@ -6709,4 +6709,119 @@ public class Portuges implements Idioma {
 				+ "<li>Se o problema persistir, tente iniciar o jogo sem o Sodium.</li>" + "</ul>";
 	}
 
+	public String nombreErrorCreacionModelo() {
+		return "Erro ao criar ou carregar um modelo";
+	}
+
+	public String mensajeErrorCreacionModelo(String modelo) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("<p>Ocorreu um erro ao tentar criar ou carregar um modelo do Minecraft.</p>");
+		if (modelo != null && !modelo.isEmpty()) {
+			sb.append("<p>Modelo afetado: <code>").append(modelo).append("</code></p>");
+		}
+		sb.append("<p>Esse tipo de erro geralmente ocorre quando:</p>");
+		sb.append("<ul>");
+		sb.append("<li>Um mod tem um modelo mal configurado.</li>");
+		sb.append("<li>Um modelo JSON está corrompido ou incompleto.</li>");
+		sb.append("<li>Há um conflito entre mods que modificam modelos ou renderização.</li>");
+		sb.append("<li>Um resource pack ou datapack contém modelos incompatíveis.</li>");
+		sb.append("</ul>");
+		sb.append("<p>Tente identificar qual mod ou pacote de recursos fornece o modelo indicado.</p>");
+		return sb.toString();
+	}
+
+	public String posibleConflictoCoolerAnimations() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("<p><b>Causa possível detectada:</b></p>");
+		sb.append("<p>Foi detectada atividade do mod <b>Cooler Animations</b> no registro.</p>");
+		sb.append(
+				"<p>Esse mod modifica o sistema de animações e modelos e, em alguns casos, pode causar erros de carregamento de modelos.</p>");
+		sb.append(
+				"<p>Se o problema persistir, tente iniciar o jogo sem o Cooler Animations para verificar se o erro desaparece.</p>");
+		return sb.toString();
+	}
+
+	@Override
+	public String nombreProblemaStarlight() {
+		return "Problema com Starlight";
+	}
+
+	@Override
+	public String problemaBlockStarlightEngineDetectado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Foi detectado um erro relacionado ao Starlight.</b>"
+				+ "<p>O erro ocorreu dentro de <code>BlockStarLightEngine.initNibble</code>.</p>"
+				+ "<p>Isso indica uma falha no mecanismo de iluminação do mod <b>Starlight</b>.</p>"
+				+ "<p>Starlight é um mod que modifica completamente o sistema de iluminação do Minecraft e é conhecido por causar diversos problemas em certos ambientes de mods.</p>"
+				+ "<p>Este é apenas um dos vários erros conhecidos associados ao Starlight.</p>"
+				+ "<p>Se o problema persistir, tente iniciar o jogo sem o Starlight.</p>";
+	}
+
+	@Override
+	public String nombreProblemaAAAParticlesEffekseer() {
+		return "Problema com AAAParticles / Effekseer";
+	}
+
+	@Override
+	public String problemaAAAParticlesEffekseer() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Foi detectado um travamento nativo relacionado ao Effekseer.</b>"
+				+ "<p>O erro ocorreu dentro da biblioteca nativa <code>EffekseerNativeForJava</code>.</p>"
+				+ "<p>Essa biblioteca é usada pelo mod <b>AAAParticles</b>, desenvolvido por ChloePrime.</p>"
+				+ "<p>Travamentos em bibliotecas nativas geralmente indicam problemas no próprio mod ou em suas dependências nativas.</p>"
+				+ "<p>Se o problema persistir, tente iniciar o jogo sem o AAAParticles.</p>";
+	}
+
+	@Override
+	public String javaProblematica() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Foi detectado um travamento nativo no ambiente de execução do Java (JVM).</b>"
+				+ "<p>Esse tipo de erro ocorre dentro da própria Máquina Virtual Java (por exemplo, em <code>jvm.dll</code>, <code>libjvm.so</code>, etc.), "
+				+ "e não é necessariamente causado por um mod.</p>"
+				+ "<p>Embora raramente possa vir de mods que usam bibliotecas nativas incompatíveis, "
+				+ "<b>é muito mais provável que seja devido a uma JVM defeituosa, corrompida ou desatualizada</b>.</p>"
+				+ "<p>Isso é especialmente comum se você estiver usando uma compilação antiga ou não oficial do Java (por exemplo, builds comunitárias sem suporte).</p>"
+				+ "<p><b>Recomendamos usar uma JVM confiável e mantida:</b></p>" + "<ul>"
+				+ "<li><b>Red Hat Build of OpenJDK</b> (estável, bem testada, ideal para Windows/Linux)</li>"
+				+ "<li><b>OpenLogic OpenJDK</b> (suporte multiplataforma, incluindo macOS Intel)</li>"
+				+ "<li><b>Azul Zulu</b> (certificada, com suporte LTS gratuito)</li>"
+				+ "<li><b>Oracle JDK</b> (oficial, com atualizações regulares)</li>" + "</ul>"
+				+ "<p>Evite builds desconhecidas, personalizadas ou muito antigas, pois podem conter erros críticos no mecanismo da JVM.</p>"
+				+ "<p><b>Você usa Prism Launcher ou TLauncher?</b> É muito fácil configurar uma JVM personalizada: "
+				+ "no Prism Launcher, vá em <i>Instalações</i> → <i>Editar Instância</i> → <i>Configurações do Java</i>; "
+				+ "no TLauncher, vá em <i>Settings</i> → <i>Java Settings</i> e defina o caminho para seu JDK/JRE baixado. "
+				+ "Você não precisa alterar a JVM do sistema!</p>";
+	}
+
+	@Override
+	public String nombreProblemaParanoiaC2ME() {
+		return "Conflito entre Paranoia e C2ME";
+	}
+
+	@Override
+	public String problemaParanoiaC2ME() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Foi detectado um conflito entre os mods Paranoia e C2ME.</b>"
+				+ "<p>O erro indica que <code>ThreadLocalRandom</code> foi acessado a partir de uma thread incorreta.</p>"
+				+ "<p>Isso geralmente ocorre quando o mod <b>Paranoia</b> executa código não seguro para threads enquanto o <b>C2ME</b> realiza otimizações de multithreading.</p>"
+				+ "<p>Esse tipo de conflito é comum em mods criados com o MCreator.</p>"
+				+ "<p>Se o problema persistir, tente iniciar o jogo sem o Paranoia ou desative o C2ME.</p>";
+	}
+
+	@Override
+	public String nombreProblemaAssetsDirFaltante() {
+		return "Diretório de assets do Minecraft ausente";
+	}
+
+	@Override
+	public String problemaAssetsDirFaltante() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "O Minecraft não conseguiu localizar o diretório de assets.</b>"
+				+ "<p>O launcher tentou iniciar o jogo com um caminho de assets inválido.</p>"
+				+ "<p>Isso significa que os arquivos de recursos do jogo (assets) estão ausentes ou não foram instalados corretamente.</p>"
+				+ "<p>Esse problema geralmente ocorre com instalações incorretas do Minecraft ou launchers mal configurados.</p>"
+				+ "<p>Também pode ocorrer ao usar launchers não oficiais que manipulam incorretamente os assets, como o FreshCraft.</p>"
+				+ "<p>Se o problema persistir, tente reinstalar o modpack ou iniciar o jogo por meio de um launcher oficial ou confiável.</p>";
+	}
+
 }

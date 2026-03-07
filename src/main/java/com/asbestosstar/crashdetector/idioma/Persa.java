@@ -6665,4 +6665,119 @@ public class Persa implements Idioma {
 				+ "<li>اگر مشکل ادامه یافت، بازی را بدون Sodium اجرا کنید.</li>" + "</ul>";
 	}
 
+	public String nombreErrorCreacionModelo() {
+		return "خطا در ایجاد یا بارگیری مدل";
+	}
+
+	public String mensajeErrorCreacionModelo(String modelo) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("<p>هنگام تلاش برای ایجاد یا بارگیری یک مدل ماينکرفت خطایی رخ داد.</p>");
+		if (modelo != null && !modelo.isEmpty()) {
+			sb.append("<p>مدل تحت تأثیر: <code>").append(modelo).append("</code></p>");
+		}
+		sb.append("<p>این نوع خطا معمولاً در موارد زیر رخ می‌دهد:</p>");
+		sb.append("<ul>");
+		sb.append("<li>یک مود دارای مدلی با پیکربندی نادرست است.</li>");
+		sb.append("<li>مدل JSON خراب یا ناقص است.</li>");
+		sb.append("<li>تضادی بین مودهایی که مدل‌ها یا رندر را تغییر می‌دهند وجود دارد.</li>");
+		sb.append("<li>یک resource pack یا datapack حاوی مدل‌های ناسازگار است.</li>");
+		sb.append("</ul>");
+		sb.append("<p>سعی کنید تشخیص دهید کدام مود یا بستهٔ منابع، مدل ذکرشده را فراهم می‌کند.</p>");
+		return sb.toString();
+	}
+
+	public String posibleConflictoCoolerAnimations() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("<p><b>علت احتمالی شناسایی شد:</b></p>");
+		sb.append("<p>فعالیت مود <b>Cooler Animations</b> در لاگ شناسایی شد.</p>");
+		sb.append(
+				"<p>این مود سیستم انیمیشن و مدل را تغییر می‌دهد و در برخی موارد ممکن است باعث خطاهای بارگیری مدل شود.</p>");
+		sb.append(
+				"<p>اگر مشکل ادامه یافت، بازی را بدون Cooler Animations اجرا کنید تا بررسی کنید آیا خطا برطرف می‌شود.</p>");
+		return sb.toString();
+	}
+
+	@Override
+	public String nombreProblemaStarlight() {
+		return "مشکل با Starlight";
+	}
+
+	@Override
+	public String problemaBlockStarlightEngineDetectado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "خطایی مرتبط با Starlight شناسایی شد.</b>"
+				+ "<p>این خطا درون <code>BlockStarLightEngine.initNibble</code> رخ داده است.</p>"
+				+ "<p>این نشان‌دهندهٔ شکست در موتور نورپردازی مود <b>Starlight</b> است.</p>"
+				+ "<p>Starlight مودی است که سیستم نورپردازی ماينکرفت را کاملاً تغییر می‌دهد و به‌دلیل ایجاد انواع مشکلات در برخی محیط‌های مود شناخته شده است.</p>"
+				+ "<p>این تنها یکی از چندین خطا‌ی شناخته‌شدهٔ مرتبط با Starlight است.</p>"
+				+ "<p>اگر مشکل ادامه یافت، بازی را بدون Starlight اجرا کنید.</p>";
+	}
+
+	@Override
+	public String nombreProblemaAAAParticlesEffekseer() {
+		return "مشکل با AAAParticles / Effekseer";
+	}
+
+	@Override
+	public String problemaAAAParticlesEffekseer() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "خرابی بومی مرتبط با Effekseer شناسایی شد.</b>"
+				+ "<p>این خطا درون کتابخانهٔ بومی <code>EffekseerNativeForJava</code> رخ داده است.</p>"
+				+ "<p>این کتابخانه توسط مود <b>AAAParticles</b> توسعه‌یافته توسط ChloePrime استفاده می‌شود.</p>"
+				+ "<p>خرابی‌های کتابخانه‌های بومی معمولاً نشان‌دهندهٔ مشکلاتی در خود مود یا وابستگی‌های بومی آن هستند.</p>"
+				+ "<p>اگر مشکل ادامه یافت، بازی را بدون AAAParticles اجرا کنید.</p>";
+	}
+
+	@Override
+	public String javaProblematica() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "خرابی بومی در محیط اجرای جاوا (JVM) شناسایی شد.</b>"
+				+ "<p>این نوع خطا درون خود ماشین مجازی جاوا رخ می‌دهد (مثلاً در <code>jvm.dll</code> یا <code>libjvm.so</code>)، "
+				+ "و لزوماً به‌دلیل یک مود نیست.</p>"
+				+ "<p>هرچند گاهی ممکن است از مودهایی با کتابخانه‌های بومی ناسازگار ناشی شود، "
+				+ "<b>اما بسیار احتمال‌تر است که ناشی از نسخه‌ای معیوب، خراب یا قدیمی از JVM باشد</b>.</p>"
+				+ "<p>این موضوع به‌ویژه زمانی رایج است که از نسخه‌های قدیمی یا غیررسمی جاوا استفاده می‌کنید (مثل نسخه‌های جامعه بدون پشتیبانی).</p>"
+				+ "<p><b>توصیه می‌کنیم از JVM معتبر و پشتیبانی‌شده استفاده کنید:</b></p>" + "<ul>"
+				+ "<li><b>Red Hat Build of OpenJDK</b> (پایدار، خوب آزمایش‌شده، ایده‌آل برای ویندوز/لینوکس)</li>"
+				+ "<li><b>OpenLogic OpenJDK</b> (پشتیبانی چندسکویی، شامل macOS Intel)</li>"
+				+ "<li><b>Azul Zulu</b> (مجوزدار، با پشتیبانی رایگان LTS)</li>"
+				+ "<li><b>Oracle JDK</b> (رسمی، با به‌روزرسانی‌های منظم)</li>" + "</ul>"
+				+ "<p>از نسخه‌های ناشناخته، سفارشی یا بسیار قدیمی اجتناب کنید، زیرا ممکن است حاوی خطاهای بحرانی در موتور JVM باشند.</p>"
+				+ "<p><b>آیا از Prism Launcher یا TLauncher استفاده می‌کنید؟</b> پیکربندی JVM سفارشی بسیار آسان است: "
+				+ "در Prism Launcher، به <i>نصب‌ها</i> ← <i>ویرایش نمونه</i> ← <i>تنظیمات جاوا</i> بروید؛ "
+				+ "در TLauncher، به <i>Settings</i> ← <i>Java Settings</i> رفته و مسیر JDK/JRE دانلودشده خود را مشخص کنید. "
+				+ "نیازی به تغییر JVM سیستم نیست!</p>";
+	}
+
+	@Override
+	public String nombreProblemaParanoiaC2ME() {
+		return "تضاد بین Paranoia و C2ME";
+	}
+
+	@Override
+	public String problemaParanoiaC2ME() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تضادی بین مودهای Paranoia و C2ME شناسایی شد.</b>"
+				+ "<p>خطا نشان می‌دهد که <code>ThreadLocalRandom</code> از یک رشتهٔ نادرست دسترسی شده است.</p>"
+				+ "<p>این معمولاً زمانی رخ می‌دهد که مود <b>Paranoia</b> کدی را اجرا می‌کند که برای چند رشته ایمن نیست، در حالی که <b>C2ME</b> در حال انجام بهینه‌سازی‌های چندرشته‌ای است.</p>"
+				+ "<p>این نوع تداخل در مودهای ساخته‌شده با MCreator رایج است.</p>"
+				+ "<p>اگر مشکل ادامه یافت، بازی را بدون Paranoia اجرا کنید یا C2ME را غیرفعال کنید.</p>";
+	}
+
+	@Override
+	public String nombreProblemaAssetsDirFaltante() {
+		return "دایرکتوری assets ماينکرفت یافت نشد";
+	}
+
+	@Override
+	public String problemaAssetsDirFaltante() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "ماينکرفت نتوانست دایرکتوری assets را پیدا کند.</b>"
+				+ "<p>لانچر سعی کرد با مسیر assets نامعتبر، بازی را شروع کند.</p>"
+				+ "<p>این بدان معناست که فایل‌های منابع بازی (assets) وجود ندارند یا به‌درستی نصب نشده‌اند.</p>"
+				+ "<p>این مشکل معمولاً در نصب‌های نادرست ماينکرفت یا لانچرهای بدپیکربندی‌شده رخ می‌دهد.</p>"
+				+ "<p>همچنین ممکن است هنگام استفاده از لانچرهای غیررسمی که assets را به‌درستی مدیریت نمی‌کنند (مانند FreshCraft) اتفاق بیفتد.</p>"
+				+ "<p>اگر مشکل ادامه یافت، مودپک را دوباره نصب کنید یا بازی را از طریق لانچر رسمی یا قابل‌اعتماد اجرا کنید.</p>";
+	}
+
 }

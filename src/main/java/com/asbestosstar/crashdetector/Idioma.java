@@ -2536,4 +2536,28 @@ public interface Idioma {
 
 	public String nombreErrorCompilacionShader();
 
+	public String mensajeErrorCreacionModelo(String modelo);
+
+	public String posibleConflictoCoolerAnimations();
+
+	public String nombreErrorCreacionModelo();
+
+	public String nombreProblemaStarlight();
+
+	public String problemaBlockStarlightEngineDetectado();
+
+	public String problemaAAAParticlesEffekseer();
+
+	public String nombreProblemaAAAParticlesEffekseer();
+
+	public String javaProblematica();
+
+	public String problemaParanoiaC2ME();
+
+	public String nombreProblemaParanoiaC2ME();
+
+	public String problemaAssetsDirFaltante();
+
+	public String nombreProblemaAssetsDirFaltante();
+
 }

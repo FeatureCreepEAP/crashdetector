@@ -138,6 +138,52 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 
 		String lineaActual = linea.trim();
 
+		// NUEVO: formato moderno de dependencia faltante con "which is missing!"
+		// Ejemplo:
+		// - §Emod Something (modid)§r 1.0.0 requires any version of §6dependency§r,
+		// which is missing!
+
+		if (lineaActual.contains("requires any version of") && lineaActual.contains("which is missing")) {
+
+			try {
+
+				String limpia = limpiarFormato(lineaActual);
+
+				// Extraer mod principal entre paréntesis
+				int inicioMod = limpia.indexOf("(");
+				int finMod = limpia.indexOf(")", inicioMod);
+
+				String modId = "desconocido";
+
+				if (inicioMod != -1 && finMod != -1) {
+					modId = limpia.substring(inicioMod + 1, finMod).trim();
+				}
+
+				// Extraer dependencia requerida
+				int inicioDep = limpia.indexOf("requires any version of") + "requires any version of".length();
+				int finDep = limpia.indexOf(",", inicioDep);
+
+				String dependencia = limpia.substring(inicioDep, finDep).trim();
+
+				String mensaje = MonitorDePID.idioma.errorDependenciaNoInstalada(modId, dependencia, "any");
+
+				if (errores.add(mensaje)) {
+
+					String enlace = consola.agregarErrorALectador(numero_de_linea, this);
+					enlacesPorError.put(mensaje, enlace);
+					activado = true;
+
+				}
+
+			} catch (Exception e) {
+
+				consola.agregarErrorALectador(numero_de_linea, this);
+
+			}
+
+			return;
+		}
+
 		// NUEVO: Detectar el formato especial con versión larga y texto adicional
 
 		// Ejemplo: "Mod 'examplemod' only supports version 1.2.0 or above. Remove
@@ -929,44 +975,30 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 	public String mensaje() {
 
 		if (errores.isEmpty())
-
 			return "";
 
 		CDStringBuilder html = new CDStringBuilder();
 
-		// Añade el título de la sección de errores.
-
+		// Título del mensaje
 		html.append(MonitorDePID.idioma.no_tienes_las_dependencias_necesarias());
 
-		// Inicia la lista no ordenada (unordered list).
-
-		// Itera sobre los errores y añade cada uno como un elemento de lista (<li>).
+		// Iniciar lista HTML
+		html.append("<ul>");
 
 		for (String error : errores) {
 
-			String cleanError = error;// .trim().replace("\t", " ").replaceAll("\\s+", " ");
+			if (error == null || error.isEmpty())
+				continue;
 
-			// Evita añadir el mismo error varias veces si aparece en diferentes formatos.
+			String enlace = enlacesPorError.getOrDefault(error, "");
 
-			if (!html.toString().contains(cleanError)) {
-
-				String enlace = enlacesPorError.getOrDefault(cleanError, "");
-
-				// Inicia un nuevo elemento de lista, añade el texto del error y el enlace.
-
-				// El navegador o la interfaz de usuario se encargará de formatear el salto de
-				// línea.
-
-				html.append("•").append(cleanError).append(" ").append(enlace);
-				if (!html.toString().endsWith(nl_html)) {
-					html.append(nl_html);
-				}
-			}
-
+			html.append("<li>").append(error).append(" ").append(enlace).append("</li>");
 		}
 
-		return html.toString();
+		// Cerrar lista
+		html.append("</ul>");
 
+		return html.toString();
 	}
 
 	/**

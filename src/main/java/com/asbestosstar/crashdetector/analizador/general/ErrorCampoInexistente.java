@@ -200,7 +200,7 @@ public class ErrorCampoInexistente implements Verificaciones {
 
 	@Override
 	public float prioridad() {
-		return 850.0f;
+		return 1100.0f;
 	}
 
 	@Override

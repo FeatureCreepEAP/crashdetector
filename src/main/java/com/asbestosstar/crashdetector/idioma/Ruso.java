@@ -6703,4 +6703,119 @@ public class Ruso implements Idioma {
 				+ "<li>Если проблема сохраняется, попробуйте запустить игру без Sodium.</li>" + "</ul>";
 	}
 
+	public String nombreErrorCreacionModelo() {
+		return "Ошибка создания или загрузки модели";
+	}
+
+	public String mensajeErrorCreacionModelo(String modelo) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("<p>Произошла ошибка при попытке создать или загрузить модель Minecraft.</p>");
+		if (modelo != null && !modelo.isEmpty()) {
+			sb.append("<p>Затронутая модель: <code>").append(modelo).append("</code></p>");
+		}
+		sb.append("<p>Эта ошибка обычно возникает, когда:</p>");
+		sb.append("<ul>");
+		sb.append("<li>Мод содержит неправильно настроенную модель.</li>");
+		sb.append("<li>Файл JSON модели повреждён или неполон.</li>");
+		sb.append("<li>Возникает конфликт между модами, изменяющими модели или рендеринг.</li>");
+		sb.append("<li>В ресурспаке или датапаке содержатся несовместимые модели.</li>");
+		sb.append("</ul>");
+		sb.append("<p>Попробуйте определить, какой мод или ресурспак предоставляет указанную модель.</p>");
+		return sb.toString();
+	}
+
+	public String posibleConflictoCoolerAnimations() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("<p><b>Обнаружена возможная причина:</b></p>");
+		sb.append("<p>В журнале обнаружена активность мода <b>Cooler Animations</b>.</p>");
+		sb.append(
+				"<p>Этот мод изменяет систему анимаций и моделей и в некоторых случаях может вызывать ошибки загрузки моделей.</p>");
+		sb.append(
+				"<p>Если проблема сохраняется, попробуйте запустить игру без Cooler Animations, чтобы проверить, исчезает ли ошибка.</p>");
+		return sb.toString();
+	}
+
+	@Override
+	public String nombreProblemaStarlight() {
+		return "Проблема со Starlight";
+	}
+
+	@Override
+	public String problemaBlockStarlightEngineDetectado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Обнаружена ошибка, связанная со Starlight.</b>"
+				+ "<p>Ошибка произошла внутри <code>BlockStarLightEngine.initNibble</code>.</p>"
+				+ "<p>Это указывает на сбой в движке освещения мода <b>Starlight</b>.</p>"
+				+ "<p>Starlight — это мод, полностью перерабатывающий систему освещения Minecraft, и известно, что он вызывает различные проблемы в определённых модовых средах.</p>"
+				+ "<p>Это лишь одна из нескольких известных ошибок, связанных со Starlight.</p>"
+				+ "<p>Если проблема сохраняется, попробуйте запустить игру без Starlight.</p>";
+	}
+
+	@Override
+	public String nombreProblemaAAAParticlesEffekseer() {
+		return "Проблема с AAAParticles / Effekseer";
+	}
+
+	@Override
+	public String problemaAAAParticlesEffekseer() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Обнаружен нативный сбой, связанный с Effekseer.</b>"
+				+ "<p>Ошибка произошла внутри нативной библиотеки <code>EffekseerNativeForJava</code>.</p>"
+				+ "<p>Эта библиотека используется модом <b>AAAParticles</b>, разработанным ChloePrime.</p>"
+				+ "<p>Сбои в нативных библиотеках обычно указывают на проблемы в самом моде или его нативных зависимостях.</p>"
+				+ "<p>Если проблема сохраняется, попробуйте запустить игру без AAAParticles.</p>";
+	}
+
+	@Override
+	public String javaProblematica() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Обнаружен нативный сбой в среде выполнения Java (JVM).</b>"
+				+ "<p>Эта ошибка возникает внутри самой виртуальной машины Java (например, в <code>jvm.dll</code>, <code>libjvm.so</code> и т.д.) "
+				+ "и не обязательно вызвана модом.</p>"
+				+ "<p>Хотя в редких случаях она может быть связана с модами, использующими несовместимые нативные библиотеки, "
+				+ "<b>гораздо вероятнее, что причина — повреждённая, устаревшая или дефектная JVM</b>.</p>"
+				+ "<p>Это особенно часто происходит при использовании старых или неофициальных сборок Java (например, community-сборок без поддержки).</p>"
+				+ "<p><b>Мы рекомендуем использовать надёжную и поддерживаемую JVM:</b></p>" + "<ul>"
+				+ "<li><b>Red Hat Build of OpenJDK</b> (стабильная, хорошо протестированная, идеальна для Windows/Linux)</li>"
+				+ "<li><b>OpenLogic OpenJDK</b> (поддержка мультиплатформенности, включая macOS Intel)</li>"
+				+ "<li><b>Azul Zulu</b> (сертифицированная, с бесплатной поддержкой LTS)</li>"
+				+ "<li><b>Oracle JDK</b> (официальная, с регулярными обновлениями)</li>" + "</ul>"
+				+ "<p>Избегайте неизвестных, кастомных или очень старых сборок — они могут содержать критические ошибки в движке JVM.</p>"
+				+ "<p><b>Вы используете Prism Launcher или TLauncher?</b> Настроить собственную JVM очень просто: "
+				+ "в Prism Launcher перейдите в <i>Установки</i> → <i>Редактировать экземпляр</i> → <i>Настройки Java</i>; "
+				+ "в TLauncher откройте <i>Settings</i> → <i>Java Settings</i> и укажите путь к скачанному JDK/JRE. "
+				+ "Вам не нужно менять системную JVM!</p>";
+	}
+
+	@Override
+	public String nombreProblemaParanoiaC2ME() {
+		return "Конфликт между Paranoia и C2ME";
+	}
+
+	@Override
+	public String problemaParanoiaC2ME() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Обнаружен конфликт между модами Paranoia и C2ME.</b>"
+				+ "<p>Ошибка указывает, что <code>ThreadLocalRandom</code> был вызван из неправильного потока.</p>"
+				+ "<p>Это обычно происходит, когда мод <b>Paranoia</b> выполняет код, не являющийся потокобезопасным, в то время как <b>C2ME</b> проводит многопоточные оптимизации.</p>"
+				+ "<p>Такой конфликт часто встречается в модах, созданных с помощью MCreator.</p>"
+				+ "<p>Если проблема сохраняется, попробуйте запустить игру без Paranoia или отключите C2ME.</p>";
+	}
+
+	@Override
+	public String nombreProblemaAssetsDirFaltante() {
+		return "Отсутствует директория assets Minecraft";
+	}
+
+	@Override
+	public String problemaAssetsDirFaltante() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft не удалось найти директорию assets.</b>"
+				+ "<p>Лаунчер попытался запустить игру с недопустимым путём к assets.</p>"
+				+ "<p>Это означает, что файлы ресурсов игры (assets) отсутствуют или были установлены некорректно.</p>"
+				+ "<p>Эта проблема обычно возникает при неправильной установке Minecraft или из-за ошибочной настройки лаунчера.</p>"
+				+ "<p>Она также может возникнуть при использовании неофициальных лаунчеров, которые некорректно обрабатывают assets, например FreshCraft.</p>"
+				+ "<p>Если проблема сохраняется, попробуйте переустановить модпак или запустите игру через официальный или проверенный лаунчер.</p>";
+	}
+
 }

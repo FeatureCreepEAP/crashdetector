@@ -6422,4 +6422,112 @@ public class Coreano implements Idioma {
 				+ "<li>문제가 지속되면 Sodium 없이 게임을 시작해 보십시오.</li>" + "</ul>";
 	}
 
+	public String nombreErrorCreacionModelo() {
+		return "모델 생성 또는 로드 오류";
+	}
+
+	public String mensajeErrorCreacionModelo(String modelo) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("<p>마인크래프트 모델을 생성하거나 불러들이는 도중 오류가 발생하였습니다.</p>");
+		if (modelo != null && !modelo.isEmpty()) {
+			sb.append("<p>영향 받은 모델: <code>").append(modelo).append("</code></p>");
+		}
+		sb.append("<p>이러한 오류는 보통 다음 경우에 발생합니다:</p>");
+		sb.append("<ul>");
+		sb.append("<li>모드에 잘못 설정된 모델이 있음.</li>");
+		sb.append("<li>JSON 모델이 손상되였거나 불완전함.</li>");
+		sb.append("<li>모델이나 렌더링을 수정하는 모드들 사이에 충돌이 있음.</li>");
+		sb.append("<li>리소스팩 또는 데이터팩에 호환되지 않는 모델이 포함되여 있음.</li>");
+		sb.append("</ul>");
+		sb.append("<p>해당 모델을 제공하는 모드나 리소스 팩을 확인하십시오.</p>");
+		return sb.toString();
+	}
+
+	public String posibleConflictoCoolerAnimations() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("<p><b>가능한 원인 감지됨:</b></p>");
+		sb.append("<p>로그에서 <b>Cooler Animations</b> 모드의 활동이 감지되였습니다.</p>");
+		sb.append("<p>이 모드는 애니메이션 및 모델 체계를 수정하며, 일부 경우 모델 로드 오류를 일으킬 수 있습니다.</p>");
+		sb.append("<p>문제가 지속되면 Cooler Animations 없이 게임을 시작하여 오류가 사라지는지 확인하십시오.</p>");
+		return sb.toString();
+	}
+
+	@Override
+	public String nombreProblemaStarlight() {
+		return "Starlight 문제";
+	}
+
+	@Override
+	public String problemaBlockStarlightEngineDetectado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Starlight와 관련된 오류가 감지되였습니다.</b>"
+				+ "<p>오류는 <code>BlockStarLightEngine.initNibble</code> 내부에서 발생하였습니다.</p>"
+				+ "<p>이는 <b>Starlight</b> 모드의 조명 엔진에 결함이 있음을 가리킵니다.</p>"
+				+ "<p>Starlight는 마인크래프트의 조명 체계를 완전히 수정하는 모드이며, 일부 모드 환경에서 다양한 문제를 일으키기로 알려져 있습니다.</p>"
+				+ "<p>이것은 Starlight와 관련된 여러 알려진 오류들 중 하나일 뿐입니다.</p>" + "<p>문제가 지속되면 Starlight 없이 게임을 시작해 보십시오.</p>";
+	}
+
+	@Override
+	public String nombreProblemaAAAParticlesEffekseer() {
+		return "AAAParticles / Effekseer 문제";
+	}
+
+	@Override
+	public String problemaAAAParticlesEffekseer() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Effekseer와 관련된 네이티브 크래시가 감지되였습니다.</b>"
+				+ "<p>오류는 네이티브 라이브러리 <code>EffekseerNativeForJava</code> 내부에서 발생하였습니다.</p>"
+				+ "<p>이 라이브러리는 ChloePrime이 개발한 <b>AAAParticles</b> 모드에서 사용됩니다.</p>"
+				+ "<p>네이티브 라이브러리에서의 크래시는 보통 모드 자체나 그 네이티브 종속성에 문제가 있음을 가리킵니다.</p>"
+				+ "<p>문제가 지속되면 AAAParticles 없이 게임을 시작해 보십시오.</p>";
+	}
+
+	@Override
+	public String javaProblematica() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "자바 가상 머신(JVM)의 네이티브 크래시가 감지되였습니다.</b>"
+				+ "<p>이러한 오류는 자바 가상 머신 자체 내부(예: <code>jvm.dll</code>, <code>libjvm.so</code> 등)에서 발생하며, "
+				+ "반드시 모드 때문인 것은 아닙니다.</p>" + "<p>드물게는 호환되지 않는 네이티브 라이브러리를 사용하는 모드로 인해 발생할 수 있지만, "
+				+ "<b>JVM 자체가 결함 있거나 손상되였거나 오래되였을 가능성이 훨씬 큽니다</b>.</p>"
+				+ "<p>이는 특히 지원되지 않는 커뮤니티 빌드와 같이 공식적이지 않거나 오래된 자바 빌드를 사용할 때 흔합니다.</p>"
+				+ "<p><b>다음과 같이 신뢰할 수 있고 유지보수되는 JVM 사용을 권장합니다:</b></p>" + "<ul>"
+				+ "<li><b>Red Hat Build of OpenJDK</b> (안정적이고 검증됨, Windows/Linux에 적합)</li>"
+				+ "<li><b>OpenLogic OpenJDK</b> (다중 플랫폼 지원, macOS Intel 포함)</li>"
+				+ "<li><b>Azul Zulu</b> (인증됨, 무료 LTS 지원 제공)</li>" + "<li><b>Oracle JDK</b> (공식, 정기 갱신)</li>" + "</ul>"
+				+ "<p>알 수 없는, 맞춤형, 또는 매우 오래된 빌드는 JVM 엔진에 심각한 오류를 포함할 수 있으므로 피하십시오.</p>"
+				+ "<p><b>Prism Launcher 또는 TLauncher를 사용합니까?</b> 맞춤 JVM 설정은 매우 쉽습니다: "
+				+ "Prism Launcher에서는 <i>인스턴스</i> → <i>편집</i> → <i>자바 설정</i>으로 이동하고, "
+				+ "TLauncher에서는 <i>Settings</i> → <i>Java Settings</i>에서 다운로드한 JDK/JRE 경로를 지정하십시오. "
+				+ "체계 JVM을 변경할 필요 없습니다!</p>";
+	}
+
+	@Override
+	public String nombreProblemaParanoiaC2ME() {
+		return "Paranoia와 C2ME 사이의 충돌";
+	}
+
+	@Override
+	public String problemaParanoiaC2ME() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Paranoia 모드와 C2ME 모드 사이의 충돌이 감지되였습니다.</b>"
+				+ "<p>오류는 <code>ThreadLocalRandom</code>이 잘못된 스레드에서 접근되였음을 가리킵니다.</p>"
+				+ "<p>이는 보통 <b>Paranoia</b>가 스레드에 안전하지 않은 코드를 실행하는 동안 <b>C2ME</b>가 다중 스레드 최적화를 수행할 때 발생합니다.</p>"
+				+ "<p>이러한 충돌은 MCreator로 제작된 모드에서 흔합니다.</p>" + "<p>문제가 지속되면 Paranoia 없이 게임을 시작하거나 C2ME를 비활성화하십시오.</p>";
+	}
+
+	@Override
+	public String nombreProblemaAssetsDirFaltante() {
+		return "마인크래프트 assets 디렉토리 누락";
+	}
+
+	@Override
+	public String problemaAssetsDirFaltante() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "마인크래프트가 assets 디렉토리를 찾지 못 하였습니다.</b>" + "<p>런처가 무효한 assets 경로로 게임을 시작하려 하였습니다.</p>"
+				+ "<p>이는 게임 자원 파일(assets)이 존재하지 않거나 올바르게 설치되지 않았음을 뜻합니다.</p>"
+				+ "<p>이 문제는 보통 마인크래프트의 잘못된 설치나 런처의 잘못된 설정으로 발생합니다.</p>"
+				+ "<p>FreshCraft와 같이 assets를 부정확하게 처리하는 비공식 런처를 사용할 때에도 발생할 수 있습니다.</p>"
+				+ "<p>문제가 지속되면 모드팩을 다시 설치하거나 공식적이거나 신뢰할 수 있는 런처에서 게임을 시작하십시오.</p>";
+	}
+
 }

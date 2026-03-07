@@ -6287,4 +6287,102 @@ public class Chino implements Idioma {
 				+ "<li>如果问题持续，尝试在不使用 Sodium 的情况下启动游戏。</li>" + "</ul>";
 	}
 
+	public String nombreErrorCreacionModelo() {
+		return "创建或加载模型时出错";
+	}
+
+	public String mensajeErrorCreacionModelo(String modelo) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("<p>尝试创建或加载 Minecraft 模型时发生错误。</p>");
+		if (modelo != null && !modelo.isEmpty()) {
+			sb.append("<p>受影响的模型：<code>").append(modelo).append("</code></p>");
+		}
+		sb.append("<p>此类错误通常发生在以下情况：</p>");
+		sb.append("<ul>");
+		sb.append("<li>某个模组的模型配置错误。</li>");
+		sb.append("<li>JSON 模型文件已损坏或不完整。</li>");
+		sb.append("<li>多个修改模型或渲染的模组之间存在冲突。</li>");
+		sb.append("<li>资源包或数据包包含不兼容的模型。</li>");
+		sb.append("</ul>");
+		sb.append("<p>请尝试确定是哪个模组或资源包提供了所提示的模型。</p>");
+		return sb.toString();
+	}
+
+	public String posibleConflictoCoolerAnimations() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("<p><b>检测到可能原因：</b></p>");
+		sb.append("<p>日志中检测到 <b>Cooler Animations</b> 模组的活动。</p>");
+		sb.append("<p>该模组会修改动画和模型系统，在某些情况下可能导致模型加载错误。</p>");
+		sb.append("<p>如果问题持续，请尝试在不使用 Cooler Animations 的情况下启动游戏，以确认错误是否消失。</p>");
+		return sb.toString();
+	}
+
+	@Override
+	public String nombreProblemaStarlight() {
+		return "Starlight 相关问题";
+	}
+
+	@Override
+	public String problemaBlockStarlightEngineDetectado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "检测到与 Starlight 相关的错误。</b>"
+				+ "<p>错误发生在 <code>BlockStarLightEngine.initNibble</code> 内部。</p>"
+				+ "<p>这表明模组 <b>Starlight</b> 的光照引擎出现故障。</p>"
+				+ "<p>Starlight 是一个完全修改 Minecraft 光照系统的模组，在某些模组环境中已知会引发各种问题。</p>" + "<p>这只是与 Starlight 相关的多个已知错误之一。</p>"
+				+ "<p>如果问题持续，请尝试在不使用 Starlight 的情况下启动游戏。</p>";
+	}
+
+	@Override
+	public String nombreProblemaAAAParticlesEffekseer() {
+		return "AAAParticles / Effekseer 相关问题";
+	}
+
+	@Override
+	public String problemaAAAParticlesEffekseer() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "检测到与 Effekseer 相关的原生崩溃。</b>" + "<p>错误发生在原生库 <code>EffekseerNativeForJava</code> 内部。</p>"
+				+ "<p>该库由 ChloePrime 开发的模组 <b>AAAParticles</b> 使用。</p>" + "<p>原生库中的崩溃通常表明模组本身或其原生依赖项存在问题。</p>"
+				+ "<p>如果问题持续，请尝试在不使用 AAAParticles 的情况下启动游戏。</p>";
+	}
+
+	@Override
+	public String javaProblematica() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "检测到 Java 虚拟机（JVM）原生崩溃。</b>"
+				+ "<p>此类错误发生在 Java 虚拟机内部（例如 <code>jvm.dll</code>、<code>libjvm.so</code> 等），" + "并不一定由模组引起。</p>"
+				+ "<p>虽然极少数情况可能源于使用了不兼容原生库的模组，" + "<b>但更可能是因为你使用的 JVM 版本存在缺陷、损坏或已过时</b>。</p>"
+				+ "<p>如果你使用的是非官方或较旧的 Java 构建（例如无支持的社区版本），这种情况尤为常见。</p>" + "<p><b>我们推荐使用可靠且维护良好的 JVM：</b></p>" + "<ul>"
+				+ "<li><b>Red Hat Build of OpenJDK</b>（稳定、经过充分测试，适用于 Windows/Linux）</li>"
+				+ "<li><b>OpenLogic OpenJDK</b>（跨平台支持，包括 macOS Intel）</li>"
+				+ "<li><b>Azul Zulu</b>（经过认证，提供免费 LTS 支持）</li>" + "<li><b>Oracle JDK</b>（官方版本，定期更新）</li>" + "</ul>"
+				+ "<p>请避免使用未知、自定义或非常老旧的构建，它们可能包含 JVM 引擎中的严重错误。</p>"
+				+ "<p><b>你使用的是 Prism Launcher 或 TLauncher 吗？</b> 配置自定义 JVM 非常简单："
+				+ "在 Prism Launcher 中，进入 <i>安装</i> → <i>编辑实例</i> → <i>Java 设置</i>；"
+				+ "在 TLauncher 中，进入 <i>Settings</i> → <i>Java Settings</i> 并指定你下载的 JDK/JRE 路径。" + "无需更改系统 JVM！</p>";
+	}
+
+	@Override
+	public String nombreProblemaParanoiaC2ME() {
+		return "Paranoia 与 C2ME 冲突";
+	}
+
+	@Override
+	public String problemaParanoiaC2ME() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "检测到 Paranoia 与 C2ME 模组之间的冲突。</b>" + "<p>错误表明 <code>ThreadLocalRandom</code> 被从错误的线程访问。</p>"
+				+ "<p>这通常发生在 <b>Paranoia</b> 执行非线程安全代码的同时，<b>C2ME</b> 正在进行多线程优化。</p>"
+				+ "<p>此类冲突在使用 MCreator 创建的模组中很常见。</p>" + "<p>如果问题持续，请尝试在不启用 Paranoia 的情况下启动游戏，或禁用 C2ME。</p>";
+	}
+
+	@Override
+	public String nombreProblemaAssetsDirFaltante() {
+		return "Minecraft 资源目录缺失";
+	}
+
+	@Override
+	public String problemaAssetsDirFaltante() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft 无法找到资源（assets）目录。</b>" + "<p>启动器尝试使用无效的资源路径启动游戏。</p>"
+				+ "<p>这意味着游戏的资源文件（assets）不存在或未正确安装。</p>" + "<p>此问题通常由 Minecraft 安装不完整或启动器配置错误引起。</p>"
+				+ "<p>使用非官方启动器（如 FreshCraft）时也可能发生，因其对 assets 处理不当。</p>" + "<p>如果问题持续，请尝试重新安装整合包，或使用官方/可靠的启动器启动游戏。</p>";
+	}
+
 }

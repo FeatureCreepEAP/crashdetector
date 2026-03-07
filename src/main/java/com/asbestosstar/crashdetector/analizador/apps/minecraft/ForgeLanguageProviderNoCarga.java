@@ -73,7 +73,7 @@ public class ForgeLanguageProviderNoCarga implements Verificaciones {
 
 	@Override
 	public float prioridad() {
-		return 800;
+		return 1450;
 	}
 
 	@Override

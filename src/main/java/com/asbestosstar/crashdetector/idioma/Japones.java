@@ -6435,4 +6435,113 @@ public class Japones implements Idioma {
 				+ "<li>GPU ドライバーを更新してください。</li>" + "<li>問題が続く場合は、Sodium を使わずにゲームを起動してみてください。</li>" + "</ul>";
 	}
 
+	public String nombreErrorCreacionModelo() {
+		return "モデルの作成または読み込みエラー";
+	}
+
+	public String mensajeErrorCreacionModelo(String modelo) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("<p>Minecraft モデルの作成または読み込み中にエラーが発生しました。</p>");
+		if (modelo != null && !modelo.isEmpty()) {
+			sb.append("<p>影響を受けたモデル：<code>").append(modelo).append("</code></p>");
+		}
+		sb.append("<p>この種のエラーは通常、以下の状況で発生します:</p>");
+		sb.append("<ul>");
+		sb.append("<li>Mod に誤って設定されたモデルが含まれている。</li>");
+		sb.append("<li>JSON モデルが破損している、または不完全である。</li>");
+		sb.append("<li>モデルやレンダリングを変更する Mod 間で競合が発生している。</li>");
+		sb.append("<li>リソースパックまたはデータパックに非互換なモデルが含まれている。</li>");
+		sb.append("</ul>");
+		sb.append("<p>指定されたモデルを提供している Mod またはリソースパックを特定してください。</p>");
+		return sb.toString();
+	}
+
+	public String posibleConflictoCoolerAnimations() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("<p><b>検出された可能性のある原因:</b></p>");
+		sb.append("<p>ログ内で <b>Cooler Animations</b> Mod の活動が検出されました。</p>");
+		sb.append("<p>この Mod はアニメーションおよびモデルシステムを変更し、場合によってはモデル読み込みエラーを引き起こすことがあります。</p>");
+		sb.append("<p>問題が続く場合は、Cooler Animations を無効にしてゲームを起動し、エラーが解消するか確認してください。</p>");
+		return sb.toString();
+	}
+
+	@Override
+	public String nombreProblemaStarlight() {
+		return "Starlight の問題";
+	}
+
+	@Override
+	public String problemaBlockStarlightEngineDetectado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Starlight に関連するエラーが検出されました。</b>"
+				+ "<p>エラーは <code>BlockStarLightEngine.initNibble</code> 内で発生しました。</p>"
+				+ "<p>これは <b>Starlight</b> Mod の照明エンジンに障害が発生したことを示しています。</p>"
+				+ "<p>Starlight は Minecraft の照明システムを完全に変更する Mod であり、特定の Mod 環境でさまざまな問題を引き起こすことが知られています。</p>"
+				+ "<p>これは Starlight に関連する複数の既知のエラーのうちの1つにすぎません。</p>"
+				+ "<p>問題が続く場合は、Starlight を無効にしてゲームを起動してみてください。</p>";
+	}
+
+	@Override
+	public String nombreProblemaAAAParticlesEffekseer() {
+		return "AAAParticles / Effekseer の問題";
+	}
+
+	@Override
+	public String problemaAAAParticlesEffekseer() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Effekseer に関連するネイティブクラッシュが検出されました。</b>"
+				+ "<p>エラーはネイティブライブラリ <code>EffekseerNativeForJava</code> 内で発生しました。</p>"
+				+ "<p>このライブラリは、ChloePrime 氏が開発した <b>AAAParticles</b> Mod によって使用されています。</p>"
+				+ "<p>ネイティブライブラリでのクラッシュは、通常、Mod 自体またはそのネイティブ依存関係に問題があることを示します。</p>"
+				+ "<p>問題が続く場合は、AAAParticles を無効にしてゲームを起動してみてください。</p>";
+	}
+
+	@Override
+	public String javaProblematica() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Java 仮想マシン（JVM）のネイティブクラッシュが検出されました。</b>"
+				+ "<p>このエラーは JVM 内部（例：<code>jvm.dll</code>、<code>libjvm.so</code> など）で発生し、" + "必ずしも Mod が原因とは限りません。</p>"
+				+ "<p>まれに非互換なネイティブライブラリを使用する Mod が原因となることもありますが、" + "<b>ほとんどの場合、欠陥あり・破損・古くなった JVM が原因です</b>。</p>"
+				+ "<p>これは、非公式または古い Java ビルド（サポートされていないコミュニティビルドなど）を使用している場合に特に起こりやすいです。</p>"
+				+ "<p><b>信頼性が高くメンテナンスされている JVM の使用を推奨します：</b></p>" + "<ul>"
+				+ "<li><b>Red Hat Build of OpenJDK</b>（安定・十分にテスト済み、Windows/Linux 向け最適）</li>"
+				+ "<li><b>OpenLogic OpenJDK</b>（マルチプラットフォーム対応、macOS Intel 含む）</li>"
+				+ "<li><b>Azul Zulu</b>（認定済み、無料 LTS サポート付き）</li>" + "<li><b>Oracle JDK</b>（公式、定期的なアップデートあり）</li>"
+				+ "</ul>" + "<p>未知・カスタム・非常に古いビルドは、JVM エンジンに重大なバグを含む可能性があるため避けてください。</p>"
+				+ "<p><b>Prism Launcher または TLauncher を使用していますか？</b> カスタム JVM の設定は簡単です："
+				+ "Prism Launcher では <i>インストール</i> → <i>インスタンス編集</i> → <i>Java 設定</i> へ進み、"
+				+ "TLauncher では <i>Settings</i> → <i>Java Settings</i> でダウンロードした JDK/JRE のパスを指定してください。"
+				+ "システムの JVM を変更する必要はありません！</p>";
+	}
+
+	@Override
+	public String nombreProblemaParanoiaC2ME() {
+		return "Paranoia と C2ME の競合";
+	}
+
+	@Override
+	public String problemaParanoiaC2ME() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Paranoia Mod と C2ME Mod の間に競合が検出されました。</b>"
+				+ "<p>エラーは、<code>ThreadLocalRandom</code> が不適切なスレッドからアクセスされたことを示しています。</p>"
+				+ "<p>これは通常、<b>Paranoia</b> がスレッドセーフでないコードを実行している間に、<b>C2ME</b> がマルチスレッド最適化を行っている場合に発生します。</p>"
+				+ "<p>このような競合は、MCreator で作成された Mod でよく見られます。</p>"
+				+ "<p>問題が続く場合は、Paranoia を無効にしてゲームを起動するか、C2ME を無効にしてください。</p>";
+	}
+
+	@Override
+	public String nombreProblemaAssetsDirFaltante() {
+		return "Minecraft の assets ディレクトリが見つかりません";
+	}
+
+	@Override
+	public String problemaAssetsDirFaltante() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft が assets ディレクトリを見つけられませんでした。</b>" + "<p>ランチャーが無効な assets パスでゲームを起動しようとしました。</p>"
+				+ "<p>これは、ゲームのリソースファイル（assets）が存在しないか、正しくインストールされていないことを意味します。</p>"
+				+ "<p>この問題は、通常、Minecraft の不完全なインストールやランチャーの誤設定によって発生します。</p>"
+				+ "<p>FreshCraft のように assets を誤って処理する非公式ランチャーを使用している場合にも発生することがあります。</p>"
+				+ "<p>問題が続く場合は、Modpack を再インストールするか、公式または信頼できるランチャーからゲームを起動してください。</p>";
+	}
+
 }

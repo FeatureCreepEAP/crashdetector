@@ -99,6 +99,18 @@ public class JavaVersiones implements Verificaciones {
 			mensajes.add(MonitorDePID.idioma.necesitasJDK11());
 			activado = true;
 		}
+
+		// Detect JVM native crashes (HotSpot fatal errors) using only String.contains
+		if (contenidoConsola.contains("Problematic frame:")) {
+			// Check for known JVM library patterns with [ prefix and .dll/.so/.dylib suffix
+			if ((contenidoConsola.contains("[jvm.dll")) || (contenidoConsola.contains("[libjvm.so"))
+					|| (contenidoConsola.contains("[libjvm.dylib"))) {
+
+				mensajes.add(MonitorDePID.idioma.javaProblematica());
+				activado = true;
+			}
+		}
+
 	}
 
 	// Nuevo: método para determinar la versión de Java a partir del número de clase

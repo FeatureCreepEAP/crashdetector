@@ -114,7 +114,7 @@ public class LenguajeProveedorCheck implements Verificaciones {
 
 	@Override
 	public float prioridad() {
-		return 1000.0f;
+		return 1450.0f;
 	}
 
 	@Override

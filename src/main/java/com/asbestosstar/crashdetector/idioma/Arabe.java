@@ -6612,4 +6612,118 @@ public class Arabe implements Idioma {
 				+ "<li>إذا استمر المشكل، جرّب تشغيل اللعبة بدون Sodium.</li>" + "</ul>";
 	}
 
+	public String nombreErrorCreacionModelo() {
+		return "خطأ في إنشاء أو تحميل نموذج";
+	}
+
+	public String mensajeErrorCreacionModelo(String modelo) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("<p>حدث خطأ أثناء محاولة إنشاء أو تحميل نموذج من ماينكرافت.</p>");
+		if (modelo != null && !modelo.isEmpty()) {
+			sb.append("<p>النموذج المتأثر: <code>").append(modelo).append("</code></p>");
+		}
+		sb.append("<p>يحدث هذا النوع من الأخطاء عادةً عندما:</p>");
+		sb.append("<ul>");
+		sb.append("<li>يحتوي أحد التعديلات على نموذج مهيأ بشكل خاطئ.</li>");
+		sb.append("<li>يكون نموذج JSON تالفًا أو غير مكتمل.</li>");
+		sb.append("<li>يوجد تعارض بين تعديلات تُعدّل النماذج أو العرض المرئي.</li>");
+		sb.append("<li>يحتوي حزمة موارد أو حزمة بيانات على نماذج غير متوافقة.</li>");
+		sb.append("</ul>");
+		sb.append("<p>حاول تحديد التعديل أو حزمة الموارد التي توفر النموذج المشار إليه.</p>");
+		return sb.toString();
+	}
+
+	public String posibleConflictoCoolerAnimations() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("<p><b>سبب محتمل تم اكتشافه:</b></p>");
+		sb.append("<p>تم اكتشاف نشاط التعديل <b>Cooler Animations</b> في السجل.</p>");
+		sb.append(
+				"<p>يُعدّل هذا التعديل نظام الرسوم المتحركة والنماذج، وقد يسبب في بعض الحالات أخطاء في تحميل النماذج.</p>");
+		sb.append("<p>إذا استمر المشكل، جرّب تشغيل اللعبة بدون Cooler Animations للتحقق مما إذا اختفى الخطأ.</p>");
+		return sb.toString();
+	}
+
+	@Override
+	public String nombreProblemaStarlight() {
+		return "مشكلة مع Starlight";
+	}
+
+	@Override
+	public String problemaBlockStarlightEngineDetectado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تم اكتشاف خطأ مرتبط بـ Starlight.</b>"
+				+ "<p>حدث الخطأ داخل <code>BlockStarLightEngine.initNibble</code>.</p>"
+				+ "<p>هذا يشير إلى خلل في محرك الإضاءة الخاص بالتعديل <b>Starlight</b>.</p>"
+				+ "<p>Starlight هو تعديل يُعدّل نظام الإضاءة في ماينكرافت بالكامل، وهو معروف بأنه يسبب مشاكل متنوعة في بعض بيئات التعديلات.</p>"
+				+ "<p>هذا مجرد واحد من عدة أخطاء معروفة مرتبطة بـ Starlight.</p>"
+				+ "<p>إذا استمر المشكل، جرّب تشغيل اللعبة بدون Starlight.</p>";
+	}
+
+	@Override
+	public String nombreProblemaAAAParticlesEffekseer() {
+		return "مشكلة مع AAAParticles / Effekseer";
+	}
+
+	@Override
+	public String problemaAAAParticlesEffekseer() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تم اكتشاف تعطل أصلي مرتبط بـ Effekseer.</b>"
+				+ "<p>حدث الخطأ داخل المكتبة الأصلية <code>EffekseerNativeForJava</code>.</p>"
+				+ "<p>تُستخدم هذه المكتبة بواسطة التعديل <b>AAAParticles</b> المطور من قبل ChloePrime.</p>"
+				+ "<p>عادةً ما تشير الأعطال في المكتبات الأصلية إلى مشاكل داخل التعديل نفسه أو في تبعياته الأصلية.</p>"
+				+ "<p>إذا استمر المشكل، جرّب تشغيل اللعبة بدون AAAParticles.</p>";
+	}
+
+	@Override
+	public String javaProblematica() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تم اكتشاف تعطل أصلي في بيئة تشغيل جافا (JVM).</b>"
+				+ "<p>يحدث هذا النوع من الأخطاء داخل ماكينة جافا الافتراضية نفسها (مثل <code>jvm.dll</code> أو <code>libjvm.so</code>)، "
+				+ "ولا يُعزى بالضرورة إلى إضافة.</p>"
+				+ "<p>رغم أنّه نادرًا ما ينتج عن إضافات تستخدم مكتبات أصلية غير متوافقة، "
+				+ "<b>فمن المرجّح جدًّا أن يكون السبب إصدارًا معطوبًا أو قديمًا أو تالفًا من JVM</b>.</p>"
+				+ "<p>وهذا شائع خصوصًا عند استخدام إصدارات قديمة أو غير رسمية من جافا (مثل إصدارات مجتمعية بلا دعم).</p>"
+				+ "<p><b>نوصي باستخدام JVM موثوقة ومحفوظة:</b></p>" + "<ul>"
+				+ "<li><b>Red Hat Build of OpenJDK</b> (مستقرة، مختبرة جيدًا، مثالية لـ Windows/Linux)</li>"
+				+ "<li><b>OpenLogic OpenJDK</b> (دعم متعدد المنصات، بما في ذلك macOS Intel)</li>"
+				+ "<li><b>Azul Zulu</b> (معتمدة، مع دعم LTS مجاني)</li>"
+				+ "<li><b>Oracle JDK</b> (رسمية، مع تحديثات منتظمة)</li>" + "</ul>"
+				+ "<p>تجنب الإصدارات المجهولة أو المخصصة أو القديمة جدًّا، فهي قد تحتوي على أخطاء حرجة في محرك JVM.</p>"
+				+ "<p><b>هل تستخدم Prism Launcher أو TLauncher؟</b> من السهل جدًّا تكوين JVM مخصص: "
+				+ "في Prism Launcher، اذهب إلى <i>التنصيبات</i> ← <i>تعديل التنصيب</i> ← <i>إعدادات جافا</i>؛ "
+				+ "في TLauncher، اذهب إلى <i>Settings</i> ← <i>Java Settings</i> واختر مسار JDK/JRE الذي قمت بتنزيله. "
+				+ "لا حاجة لتغيير JVM النظام!</p>";
+	}
+
+	@Override
+	public String nombreProblemaParanoiaC2ME() {
+		return "تعارض بين Paranoia وC2ME";
+	}
+
+	@Override
+	public String problemaParanoiaC2ME() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تم اكتشاف تعارض بين تعديلي Paranoia وC2ME.</b>"
+				+ "<p>يشير الخطأ إلى أن <code>ThreadLocalRandom</code> تم الوصول إليه من خيط غير صحيح.</p>"
+				+ "<p>يحدث هذا عادةً عندما يُنفّذ التعديل <b>Paranoia</b> كودًا غير آمن للخيوط المتعددة، بينما يقوم <b>C2ME</b> بتحسينات متعددة الخيوط.</p>"
+				+ "<p>هذا النوع من التعارض شائع مع التعديلات المصنوعة بـ MCreator.</p>"
+				+ "<p>إذا استمر المشكل، جرّب تشغيل اللعبة بدون Paranoia أو عطّل C2ME.</p>";
+	}
+
+	@Override
+	public String nombreProblemaAssetsDirFaltante() {
+		return "مجلد assets الخاص بـ ماينكرافت مفقود";
+	}
+
+	@Override
+	public String problemaAssetsDirFaltante() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "لم يتمكن ماينكرافت من تحديد موقع مجلد assets.</b>"
+				+ "<p>حاول المشغّل بدء اللعبة باستخدام مسار assets غير صالح.</p>"
+				+ "<p>يعني ذلك أن ملفات موارد اللعبة (assets) غير موجودة أو لم تُثبّت بشكل صحيح.</p>"
+				+ "<p>يحدث هذا المشكل عادةً مع تنصيبات خاطئة لماينكرافت أو مشغّلات سيئة التهيئة.</p>"
+				+ "<p>قد يحدث أيضًا عند استخدام مشغّلات غير رسمية تتعامل مع assets بشكل خاطئ، مثل FreshCraft.</p>"
+				+ "<p>إذا استمر المشكل، جرّب إعادة تثبيت حزمة التعديلات أو ابدأ اللعبة من خلال مشغّل رسمي أو موثوق.</p>";
+	}
+
 }
