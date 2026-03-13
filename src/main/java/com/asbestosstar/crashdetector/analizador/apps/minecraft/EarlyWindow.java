@@ -65,9 +65,7 @@ public class EarlyWindow implements Verificaciones {
 			enlaceHtml = consola.agregarErrorALectador(indiceUltimaLinea, this);
 			activado = true;
 		}
-		// Si no se activó por la última línea, comprobar el mensaje alternativo
-		// Aquí NO intentamos obtener número de línea ni generar enlace HTML, tal como
-		// indicaste: solo activamos el error con un mensaje genérico.
+
 		else if (contenidoConsola.contains(falloInicializacion) || contenidoConsola.contains(falloInicializacionActual)
 				|| limitacionOpenGLMacOSDetectada) {
 			mensaje = construirMensaje();
@@ -117,7 +115,7 @@ public class EarlyWindow implements Verificaciones {
 
 	@Override
 	public float prioridad() {
-		return 800.0f; // Prioridad media para advertencias de inicialización
+		return 1500.0f; // Prioridad media para advertencias de inicialización
 	}
 
 	@Override

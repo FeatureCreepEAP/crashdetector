@@ -72,7 +72,7 @@ public class VerificacionDeStackTrace {
 			"io.netty", "org.prismlauncher", "io.github.zekerzhayard", "org.multimc", "org.polymc", "org.tlauncher",
 			"net.fabricmc", "org.objectweb.asm", "datafixerupper", "org.slf4j", "com.asbestosstar", "srg",
 			"asbestosstar.", "org.openjdk", "com.google", "cpw.mods.modlauncher.", "com.modrinth.theseus.",
-			"net.neoforged."
+			"net.neoforged.","fmlloader","fmlearlydisplay"
 
 	};
 

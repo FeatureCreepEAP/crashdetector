@@ -100,14 +100,28 @@ public class JavaVersiones implements Verificaciones {
 			activado = true;
 		}
 
-		// Detect JVM native crashes (HotSpot fatal errors) using only String.contains
-		if (contenidoConsola.contains("Problematic frame:")) {
-			// Check for known JVM library patterns with [ prefix and .dll/.so/.dylib suffix
-			if ((contenidoConsola.contains("[jvm.dll")) || (contenidoConsola.contains("[libjvm.so"))
-					|| (contenidoConsola.contains("[libjvm.dylib"))) {
+		int idxFrame = contenidoConsola.indexOf("Problematic frame:");
 
-				mensajes.add(MonitorDePID.idioma.javaProblematica());
-				activado = true;
+		if (idxFrame != -1) {
+
+			// Buscar la línea inmediatamente después del encabezado
+			int inicioLinea = contenidoConsola.indexOf('\n', idxFrame);
+			if (inicioLinea != -1) {
+
+				int finLinea = contenidoConsola.indexOf('\n', inicioLinea + 1);
+				if (finLinea == -1) {
+					finLinea = contenidoConsola.length();
+				}
+
+				String lineaFrame = contenidoConsola.substring(inicioLinea, finLinea).toLowerCase();
+
+				// Solo activar si el frame realmente pertenece a la JVM
+				if (lineaFrame.contains("[jvm.dll") || lineaFrame.contains("[libjvm.so")
+						|| lineaFrame.contains("[libjvm.dylib")) {
+
+					mensajes.add(MonitorDePID.idioma.javaProblematica());
+					activado = true;
+				}
 			}
 		}
 
