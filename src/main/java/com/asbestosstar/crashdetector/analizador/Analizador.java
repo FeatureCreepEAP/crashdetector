@@ -298,7 +298,17 @@ public class Analizador {
 		verificaciones.add(new ProblemaAAAParticlesEffekseer());
 		verificaciones.add(new ProblemaParanoiaC2ME());
 		verificaciones.add(new ProblemaAssetsDirFaltante());
+		verificaciones.add(new ProblemaCupboardVersion());
 
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		verificaciones.add(new PirataMC());
 		verificaciones.add(new LanzerNoAnimado());
 		verificaciones.add(new LanzerDesAnimado());

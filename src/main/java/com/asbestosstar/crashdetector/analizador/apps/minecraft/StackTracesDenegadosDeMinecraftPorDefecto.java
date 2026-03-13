@@ -143,6 +143,26 @@ public class StackTracesDenegadosDeMinecraftPorDefecto {
 		VerificacionDeStackTrace.denegados
 				.add(contentido -> contentido.contains("com.sonicether.soundphysics.SoundPhysicsMod.CONFIG"));// Tenemos
 																												// ErrorSistemaSonido
+		VerificacionDeStackTrace.denegados
+		.add(contentido -> contentido.contains("umpaz.farmersrespite.common.crafting.KettlePouringRecipe$Serializer"));// Tenemos
+		
+		
+		
+		
+		
+		VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains(
+				"java.lang.NullPointerException: Cannot invoke \"net.mehvahdjukaar.polytone.utils.CompoundReloader.earlyProcess(net.minecraft.server.packs.resources.ResourceManager)\" because \"net.mehvahdjukaar.polytone.Polytone.COMPOUND_RELOADER\" is null"));// nada
+
+		VerificacionDeStackTrace.denegados.add(contentido -> contentido
+				.contains("vectorwing.farmersdelight.common.crafting.CuttingBoardRecipe$Serializer.fromJson")
+				
+				||
+				contentido.contains("vectorwing.farmersdelight.common.crafting.CookingPotRecipe$Serializer.readIngredients")
+				
+				);// nada
+
+//		VerificacionDeStackTrace.denegados.add(c -> c.contains("Could not find any mod for modid 'rechiseled'!")
+//				&& c.contains("com.supermartijn642.rechiseled.registration.RechiseledRegistrationImpl"));
 
 		// Kotlin de Essential Mod: infraestructura de coroutines
 		VerificacionDeStackTrace.denegados.add(c -> c.contains("java.lang.ClassNotFoundException: kotlin")

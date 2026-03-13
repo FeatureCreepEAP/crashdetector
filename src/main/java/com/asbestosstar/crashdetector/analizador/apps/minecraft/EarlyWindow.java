@@ -1,7 +1,6 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
 import com.asbestosstar.crashdetector.Consola;
-import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
@@ -17,9 +16,13 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  */
 public class EarlyWindow implements Verificaciones {
 
+	private static final String APPLE_METAL_OPENGL_RENDERER = "AppleMetalOpenGLRenderer";
+	private static final String EARLY_FRAMEBUFFER_DRAW = "net.minecraftforge.fml.earlydisplay.EarlyFramebuffer.draw";
+
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
+	private boolean limitacionOpenGLMacOSDetectada = false;
 
 	/**
 	 * Verificación basada en el contenido completo de la consola.
@@ -33,6 +36,7 @@ public class EarlyWindow implements Verificaciones {
 	public void verificar(Consola consola) {
 		String contenidoConsola = consola.contenido_verificar;
 		String[] lineas = contenidoConsola.split(Verificaciones.nl);
+		limitacionOpenGLMacOSDetectada = contieneFirmaMacOSOpenGL(contenidoConsola);
 
 		if (lineas.length == 0)
 			return;
@@ -56,20 +60,33 @@ public class EarlyWindow implements Verificaciones {
 
 		// Solo activar si la última línea no vacía contiene el mensaje principal
 		if (ultimaLinea != null && ultimaLinea.contains("Loading ImmediateWindowProvider fmlearlywindow")) {
-			mensaje = MonitorDePID.idioma.fmlEarlyWindow() + Verificaciones.nl_html;
+			mensaje = construirMensaje();
 			// En este caso sí tenemos una línea concreta que queremos enlazar.
 			enlaceHtml = consola.agregarErrorALectador(indiceUltimaLinea, this);
 			activado = true;
 		}
-
 		// Si no se activó por la última línea, comprobar el mensaje alternativo
 		// Aquí NO intentamos obtener número de línea ni generar enlace HTML, tal como
 		// indicaste: solo activamos el error con un mensaje genérico.
 		else if (contenidoConsola.contains(falloInicializacion)
-				|| contenidoConsola.contains(falloInicializacionActual)) {
-			mensaje = MonitorDePID.idioma.fmlEarlyWindow() + Verificaciones.nl_html;
+				|| contenidoConsola.contains(falloInicializacionActual)
+				|| limitacionOpenGLMacOSDetectada) {
+			mensaje = construirMensaje();
 			activado = true;
 		}
+	}
+
+	private boolean contieneFirmaMacOSOpenGL(String contenidoConsola) {
+		return contenidoConsola != null && contenidoConsola.contains(APPLE_METAL_OPENGL_RENDERER)
+				&& contenidoConsola.contains(EARLY_FRAMEBUFFER_DRAW);
+	}
+
+	private String construirMensaje() {
+		String base = MonitorDePID.idioma.fmlEarlyWindow() + Verificaciones.nl_html;
+		if (limitacionOpenGLMacOSDetectada) {
+			return base + MonitorDePID.idioma.fmlEarlyWindowMacOSOpenGL();
+		}
+		return base;
 	}
 
 	/**
@@ -156,6 +173,10 @@ public class EarlyWindow implements Verificaciones {
 		}
 
 		if (t.contains("Failed to initialize the mod loading system and display.")) {
+			return true;
+		}
+
+		if (t.contains(EARLY_FRAMEBUFFER_DRAW) || t.contains(APPLE_METAL_OPENGL_RENDERER)) {
 			return true;
 		}
 
