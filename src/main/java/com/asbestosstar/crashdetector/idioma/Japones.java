@@ -6544,4 +6544,52 @@ public class Japones implements Idioma {
 				+ "<p>問題が続く場合は、Modpack を再インストールするか、公式または信頼できるランチャーからゲームを起動してください。</p>";
 	}
 
+	@Override
+	public String dependenciaInstalar(String dependencia, String version) {
+		return dependencia + " のバージョン " + version + " 以降をインストールしてください";
+	}
+
+	@Override
+	public String dependenciaReemplazarRango(String dependencia, String min, String max) {
+		return dependencia + " を " + min + " から " + max + " の間のバージョンに置き換えてください";
+	}
+
+	@Override
+	public String dependenciaFaltanteMinima(String mod, String dependencia, String version) {
+		return "Mod " + mod + " は " + dependencia + " の最低バージョン " + version + " が必要です";
+	}
+
+	@Override
+	public String dependenciaFaltanteWildcard(String mod, String dependencia, String version) {
+		return "Mod " + mod + " は " + dependencia + " のバージョン " + version + " が必要です";
+	}
+
+	@Override
+	public String dependenciaVersionIncorrecta(String mod, String dependencia, String min, String max, String actual) {
+
+		return "Mod " + mod + " は " + dependencia + " のバージョンが " + min + " から " + max + " の間である必要があります" + " (現在："
+				+ actual + ")";
+	}
+
+	@Override
+	public String nombreProblemaCupboardVersion() {
+		return "Cupboard の互換性のないバージョン";
+	}
+
+	@Override
+	public String problemaCupboardVersion() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "古い Cupboard バージョンが原因のクラッシュが検出されました。</b>"
+				+ "<p>エラーは <code>ClientConfigCompat.setupNeoforge</code> 内部で発生しており、"
+				+ "<code>ModList.get()</code> が <code>null</code> を返すことが原因です。</p>"
+				+ "<p>これは古い <b>Cupboard</b> モッドの既知の問題です。</p>" + "<p><b>3.2</b> などの古いバージョンにはこのバグが含まれています。</p>"
+				+ "<p><b>解決策：</b>Cupboard をバージョン <b>3.5</b> 以降に更新してください。</p>";
+	}
+
+	@Override
+	public String fmlEarlyWindowMacOSOpenGL() {
+		return "これは、macOS を使用しており、ゲームが OpenGL を使用しようとしているためです。しかし、最新の macOS バージョンでは OpenGL はサポートされていません。"
+				+ "Metal をサポートする Minecraft のバージョンを使用するか、Intel、M1、または M2 チュップを搭載した Mac（M3+ または Neo を除く）を使用している場合は、Linux を使用する必要があります。";
+	}
+
 }

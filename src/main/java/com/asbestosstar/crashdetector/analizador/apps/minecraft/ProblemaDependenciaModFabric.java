@@ -29,8 +29,7 @@ public class ProblemaDependenciaModFabric implements Verificaciones {
 	private static final Pattern P_RANGO_PRESENTE_INCORRECTO = Pattern.compile(
 			"^-\\s*mod\\s+.+?\\(([^\\)]+)\\).*?requires\\s+any\\s+version\\s+between\\s+([^\\s]+)\\s*\\(inclusive\\)\\s*and\\s*([^\\s]+)\\s*\\(exclusive\\)\\s+of\\s+mod\\s+.+?\\(([^\\)]+)\\).*?wrong\\s+version\\s+is\\s+present:\\s*([^!\\s]+)!",
 			Pattern.CASE_INSENSITIVE);
-	private static final Pattern P_FALTANTE_WILDCARD =
-			Pattern.compile(
+	private static final Pattern P_FALTANTE_WILDCARD = Pattern.compile(
 			"^-\\s*mod\\s+.+?\\(([^\\)]+)\\).*?requires\\s+any\\s+([0-9\\.x]+)\\s+version\\s+of\\s+([a-z0-9_\\-]+)\\s*,\\s*which\\s+is\\s+missing",
 			Pattern.CASE_INSENSITIVE);
 
@@ -43,136 +42,114 @@ public class ProblemaDependenciaModFabric implements Verificaciones {
 
 	}
 
-@Override
-public void verificar(Consola consola, String linea, int numero_de_linea) {
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
 
-    // Limpiar códigos de color y caracteres problemáticos
-    String lineaLimpia = limpiarLinea(linea);
+		// Limpiar códigos de color y caracteres problemáticos
+		String lineaLimpia = limpiarLinea(linea);
 
-    // -------------------------------------------------
-    // Caso: sugerencia de instalación de dependencia
-    // Ejemplo:
-    // - Install fabric-api, version 0.92.0 or later.
-    // -------------------------------------------------
-    Matcher mInst = P_INSTALAR.matcher(lineaLimpia);
-    if (mInst.find()) {
+		// -------------------------------------------------
+		// Caso: sugerencia de instalación de dependencia
+		// Ejemplo:
+		// - Install fabric-api, version 0.92.0 or later.
+		// -------------------------------------------------
+		Matcher mInst = P_INSTALAR.matcher(lineaLimpia);
+		if (mInst.find()) {
 
-        String dependencia = mInst.group(1).trim();
-        String version = normalizarVersion(mInst.group(2));
+			String dependencia = mInst.group(1).trim();
+			String version = normalizarVersion(mInst.group(2));
 
-        String problema = MonitorDePID.idioma.dependenciaInstalar(
-                dependencia,
-                version
-        );
+			String problema = MonitorDePID.idioma.dependenciaInstalar(dependencia, version);
 
-        registrarProblema(consola, numero_de_linea, problema);
-        return;
-    }
+			registrarProblema(consola, numero_de_linea, problema);
+			return;
+		}
 
-    // -------------------------------------------------
-    // Caso: sugerencia de reemplazar versión
-    // Ejemplo:
-    // - Replace mod (fabric-api) with any version between X and Y
-    // -------------------------------------------------
-    Matcher mReemp = P_REEMPLAZO_RANGO.matcher(lineaLimpia);
-    if (mReemp.find()) {
+		// -------------------------------------------------
+		// Caso: sugerencia de reemplazar versión
+		// Ejemplo:
+		// - Replace mod (fabric-api) with any version between X and Y
+		// -------------------------------------------------
+		Matcher mReemp = P_REEMPLAZO_RANGO.matcher(lineaLimpia);
+		if (mReemp.find()) {
 
-        String dependencia = mReemp.group(1).toLowerCase();
-        String vMin = normalizarVersion(mReemp.group(2));
-        String vMax = normalizarVersion(mReemp.group(3));
+			String dependencia = mReemp.group(1).toLowerCase();
+			String vMin = normalizarVersion(mReemp.group(2));
+			String vMax = normalizarVersion(mReemp.group(3));
 
-        String problema = MonitorDePID.idioma.dependenciaReemplazarRango(
-                dependencia,
-                vMin,
-                vMax
-        );
+			String problema = MonitorDePID.idioma.dependenciaReemplazarRango(dependencia, vMin, vMax);
 
-        registrarProblema(consola, numero_de_linea, problema);
-        return;
-    }
+			registrarProblema(consola, numero_de_linea, problema);
+			return;
+		}
 
-    // -------------------------------------------------
-    // Caso: dependencia faltante con versión mínima
-    // Ejemplo:
-    // requires version 1.0 or later of fabric-api
-    // -------------------------------------------------
-    Matcher mFalta = P_FALTANTE_MINIMO.matcher(lineaLimpia);
-    if (mFalta.find()) {
+		// -------------------------------------------------
+		// Caso: dependencia faltante con versión mínima
+		// Ejemplo:
+		// requires version 1.0 or later of fabric-api
+		// -------------------------------------------------
+		Matcher mFalta = P_FALTANTE_MINIMO.matcher(lineaLimpia);
+		if (mFalta.find()) {
 
-        String mod = mFalta.group(1);
-        String version = normalizarVersion(mFalta.group(2));
-        String dependencia = mFalta.group(3).toLowerCase();
+			String mod = mFalta.group(1);
+			String version = normalizarVersion(mFalta.group(2));
+			String dependencia = mFalta.group(3).toLowerCase();
 
-        String problema = MonitorDePID.idioma.dependenciaFaltanteMinima(
-                mod,
-                dependencia,
-                version
-        );
+			String problema = MonitorDePID.idioma.dependenciaFaltanteMinima(mod, dependencia, version);
 
-        registrarProblema(consola, numero_de_linea, problema);
-        return;
-    }
+			registrarProblema(consola, numero_de_linea, problema);
+			return;
+		}
 
-    // -------------------------------------------------
-    // Caso: dependencia faltante con comodín
-    // Ejemplo:
-    // requires any 3.0.x version of bclib
-    // -------------------------------------------------
-    Matcher mWildcard = P_FALTANTE_WILDCARD.matcher(lineaLimpia);
-    if (mWildcard.find()) {
+		// -------------------------------------------------
+		// Caso: dependencia faltante con comodín
+		// Ejemplo:
+		// requires any 3.0.x version of bclib
+		// -------------------------------------------------
+		Matcher mWildcard = P_FALTANTE_WILDCARD.matcher(lineaLimpia);
+		if (mWildcard.find()) {
 
-        String mod = mWildcard.group(1);
-        String version = normalizarVersion(mWildcard.group(2));
-        String dependencia = mWildcard.group(3).toLowerCase();
+			String mod = mWildcard.group(1);
+			String version = normalizarVersion(mWildcard.group(2));
+			String dependencia = mWildcard.group(3).toLowerCase();
 
-        String problema = MonitorDePID.idioma.dependenciaFaltanteWildcard(
-                mod,
-                dependencia,
-                version
-        );
+			String problema = MonitorDePID.idioma.dependenciaFaltanteWildcard(mod, dependencia, version);
 
-        registrarProblema(consola, numero_de_linea, problema);
-        return;
-    }
+			registrarProblema(consola, numero_de_linea, problema);
+			return;
+		}
 
-    // -------------------------------------------------
-    // Caso: versión incorrecta presente
-    // -------------------------------------------------
-    Matcher mRango = P_RANGO_PRESENTE_INCORRECTO.matcher(lineaLimpia);
-    if (mRango.find()) {
+		// -------------------------------------------------
+		// Caso: versión incorrecta presente
+		// -------------------------------------------------
+		Matcher mRango = P_RANGO_PRESENTE_INCORRECTO.matcher(lineaLimpia);
+		if (mRango.find()) {
 
-        String mod = mRango.group(1);
-        String vMin = normalizarVersion(mRango.group(2));
-        String vMax = normalizarVersion(mRango.group(3));
-        String dependencia = mRango.group(4).toLowerCase();
-        String actual = normalizarVersion(mRango.group(5));
+			String mod = mRango.group(1);
+			String vMin = normalizarVersion(mRango.group(2));
+			String vMax = normalizarVersion(mRango.group(3));
+			String dependencia = mRango.group(4).toLowerCase();
+			String actual = normalizarVersion(mRango.group(5));
 
-        String problema = MonitorDePID.idioma.dependenciaVersionIncorrecta(
-                mod,
-                dependencia,
-                vMin,
-                vMax,
-                actual
-        );
+			String problema = MonitorDePID.idioma.dependenciaVersionIncorrecta(mod, dependencia, vMin, vMax, actual);
 
-        registrarProblema(consola, numero_de_linea, problema);
-    }
-}
+			registrarProblema(consola, numero_de_linea, problema);
+		}
+	}
 
+	private void registrarProblema(Consola consola, int linea, String problema) {
 
-private void registrarProblema(Consola consola, int linea, String problema) {
+		// deduplicate using the logical problem only
+		if (!problemasDetectados.add(problema)) {
+			return;
+		}
 
-    // deduplicate using the logical problem only
-    if (!problemasDetectados.add(problema)) {
-        return;
-    }
+		activado = true;
 
-    activado = true;
+		String enlace = consola.agregarErrorALectador(linea, this);
 
-    String enlace = consola.agregarErrorALectador(linea, this);
-
-    problemasSalida.add(problema + " " + enlace);
-}
+		problemasSalida.add(problema + " " + enlace);
+	}
 
 	// Helper function to clean up log lines (remove color codes, special
 	// characters)
@@ -211,20 +188,18 @@ private void registrarProblema(Consola consola, int linea, String problema) {
 	@Override
 	public String mensaje() {
 
-	    if (problemasSalida.isEmpty()) {
-	        CrashDetectorLogger.log("No problemas");
-	        return "";
-	    }
+		if (problemasSalida.isEmpty()) {
+			CrashDetectorLogger.log("No problemas");
+			return "";
+		}
 
-	    StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder();
 
-	    for (String p : problemasSalida) {
-	        sb.append(" - ")
-	          .append(p)
-	          .append(Verificaciones.nl_html);
-	    }
+		for (String p : problemasSalida) {
+			sb.append(" - ").append(p).append(Verificaciones.nl_html);
+		}
 
-	    return sb.toString().trim();
+		return sb.toString().trim();
 	}
 
 	@Override
@@ -235,13 +210,13 @@ private void registrarProblema(Consola consola, int linea, String problema) {
 	@Override
 	public QuickFix solucion() {
 
-	    Builder builder = new QuickFix.Builder(nombre());
+		Builder builder = new QuickFix.Builder(nombre());
 
-	    for (String problema : problemasDetectados) {
-	        builder.agregarEtiqueta(problema);
-	    }
+		for (String problema : problemasDetectados) {
+			builder.agregarEtiqueta(problema);
+		}
 
-	    return builder.construir();
+		return builder.construir();
 	}
 
 	@Override

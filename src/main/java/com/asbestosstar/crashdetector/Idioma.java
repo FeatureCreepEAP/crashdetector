@@ -2560,4 +2560,20 @@ public interface Idioma {
 
 	public String nombreProblemaAssetsDirFaltante();
 
+	public String dependenciaInstalar(String dependencia, String version);
+
+	public String dependenciaReemplazarRango(String dependencia, String vMin, String vMax);
+
+	public String dependenciaFaltanteMinima(String mod, String dependencia, String version);
+
+	public String dependenciaFaltanteWildcard(String mod, String dependencia, String version);
+
+	public String dependenciaVersionIncorrecta(String mod, String dependencia, String vMin, String vMax, String actual);
+
+	public String problemaCupboardVersion();
+
+	public String nombreProblemaCupboardVersion();
+
+	public String fmlEarlyWindowMacOSOpenGL();
+
 }

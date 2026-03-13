@@ -12,9 +12,9 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  *
  * Ejemplo:
  *
- * Caused by: java.lang.NullPointerException:
- * Cannot invoke "net.minecraftforge.fml.ModList.forEachModInOrder(...)"
- * because the return value of "net.minecraftforge.fml.ModList.get()" is null
+ * Caused by: java.lang.NullPointerException: Cannot invoke
+ * "net.minecraftforge.fml.ModList.forEachModInOrder(...)" because the return
+ * value of "net.minecraftforge.fml.ModList.get()" is null
  *
  * at com.cupboard.compat.ClientConfigCompat.setupNeoforge(...)
  */
@@ -109,8 +109,7 @@ public class ProblemaCupboardVersion implements Verificaciones {
 
 		String t = trazo.trace;
 
-		return t.contains("ClientConfigCompat.setupNeoforge")
-				&& t.contains("ModList.get()");
+		return t.contains("ClientConfigCompat.setupNeoforge") && t.contains("ModList.get()");
 	}
 
 	@Override

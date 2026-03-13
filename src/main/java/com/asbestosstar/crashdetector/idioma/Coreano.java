@@ -6530,4 +6530,52 @@ public class Coreano implements Idioma {
 				+ "<p>문제가 지속되면 모드팩을 다시 설치하거나 공식적이거나 신뢰할 수 있는 런처에서 게임을 시작하십시오.</p>";
 	}
 
+	@Override
+	public String dependenciaInstalar(String dependencia, String version) {
+		return dependencia + " 판본 " + version + " 또는 그 이후 설치";
+	}
+
+	@Override
+	public String dependenciaReemplazarRango(String dependencia, String min, String max) {
+		return dependencia + " 를 " + min + " 에서 " + max + " 사이의 판본으로 교체";
+	}
+
+	@Override
+	public String dependenciaFaltanteMinima(String mod, String dependencia, String version) {
+		return "확장기능 " + mod + " 은 " + dependencia + " 의 최소 판본 " + version + " 이 필요함";
+	}
+
+	@Override
+	public String dependenciaFaltanteWildcard(String mod, String dependencia, String version) {
+		return "확장기능 " + mod + " 은 " + dependencia + " 판본 " + version + " 이 필요함";
+	}
+
+	@Override
+	public String dependenciaVersionIncorrecta(String mod, String dependencia, String min, String max, String actual) {
+
+		return "확장기능 " + mod + " 은 " + dependencia + " 의 판본이 " + min + " 에서 " + max + " 사이여야 함" + " (현재: " + actual
+				+ ")";
+	}
+
+	@Override
+	public String nombreProblemaCupboardVersion() {
+		return "Cupboard 호환되지 않는 판본";
+	}
+
+	@Override
+	public String problemaCupboardVersion() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "오래된 Cupboard 판본으로 인한 충돌이 감지되었습니다.</b>"
+				+ "<p><code>ClientConfigCompat.setupNeoforge</code> 내부에서 오류가 발생하였으며, 이는 "
+				+ "<code>ModList.get()</code> 이 <code>null</code> 을 반환하기 때문입니다.</p>"
+				+ "<p>이는 오래된 <b>Cupboard</b> 모드의 알려진 문제입니다.</p>" + "<p><b>3.2</b> 와 같은 오래된 판본에는 이 결함이 포함되어 있습니다.</p>"
+				+ "<p><b>해결책:</b> Cupboard 를 <b>3.5</b> 버전 또는 그 이후로 업데이트하십시오.</p>";
+	}
+
+	@Override
+	public String fmlEarlyWindowMacOSOpenGL() {
+		return "이는 사용자가 macOS 를 사용 중이며 게임이 OpenGL 을 사용하려 하기 때문입니다. 그러나 최신 macOS 판본에서는 OpenGL 을 지원하지 않습니다. "
+				+ "Metal 을 지원하는 Minecraft 판본을 사용하거나, Intel, M1 또는 M2 칩을 가진 Mac(M3+ 또는 Neo 제외) 을 사용 중이라면 Linux 를 사용해야 합니다.";
+	}
+
 }

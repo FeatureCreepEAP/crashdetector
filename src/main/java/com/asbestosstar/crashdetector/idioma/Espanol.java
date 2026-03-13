@@ -7531,4 +7531,54 @@ public class Espanol implements Idioma {
 				+ "<p>Si el problema continúa, intenta reinstalar el modpack o iniciar el juego desde un launcher oficial o confiable.</p>";
 	}
 
+	@Override
+	public String dependenciaInstalar(String dependencia, String version) {
+		return "Instalar " + dependencia + " versión " + version + " o posterior";
+	}
+
+	@Override
+	public String dependenciaReemplazarRango(String dependencia, String min, String max) {
+		return "Reemplazar " + dependencia + " por una versión entre " + min + " y " + max;
+	}
+
+	@Override
+	public String dependenciaFaltanteMinima(String mod, String dependencia, String version) {
+		return "El mod " + mod + " requiere " + dependencia + " versión mínima " + version;
+	}
+
+	@Override
+	public String dependenciaFaltanteWildcard(String mod, String dependencia, String version) {
+		return "El mod " + mod + " requiere " + dependencia + " versión " + version;
+	}
+
+	@Override
+	public String dependenciaVersionIncorrecta(String mod, String dependencia, String min, String max, String actual) {
+
+		return "El mod " + mod + " requiere " + dependencia + " entre " + min + " y " + max + " (actual: " + actual
+				+ ")";
+	}
+
+	@Override
+	public String nombreProblemaCupboardVersion() {
+		return "Versión incompatible de Cupboard";
+	}
+
+	@Override
+	public String problemaCupboardVersion() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Se detectó un crash causado por una versión antigua de Cupboard.</b>"
+				+ "<p>El error ocurre dentro de <code>ClientConfigCompat.setupNeoforge</code> debido a que "
+				+ "<code>ModList.get()</code> devuelve <code>null</code>.</p>"
+				+ "<p>Este es un problema conocido en versiones antiguas del mod <b>Cupboard</b>.</p>"
+				+ "<p>Las versiones antiguas como <b>3.2</b> contienen este bug.</p>"
+				+ "<p><b>Solución:</b> actualiza Cupboard a la versión <b>3.5</b> o posterior.</p>";
+	}
+
+	@Override
+	public String fmlEarlyWindowMacOSOpenGL() {
+		// TODO Auto-generated method stub
+		return "Es porque estás en macOS y el juego está intentando usar OpenGL, lo cual no es compatible con las últimas versiones de macOS. "
+				+ "Necesitas usar una versión de Minecraft que soporte Metal o usar Linux si tienes un Mac Intel o M1 o M2 pero no M3+ o Neo.";
+	}
+
 }

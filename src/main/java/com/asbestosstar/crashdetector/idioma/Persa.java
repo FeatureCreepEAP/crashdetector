@@ -6780,4 +6780,53 @@ public class Persa implements Idioma {
 				+ "<p>اگر مشکل ادامه یافت، مودپک را دوباره نصب کنید یا بازی را از طریق لانچر رسمی یا قابل‌اعتماد اجرا کنید.</p>";
 	}
 
+	@Override
+	public String dependenciaInstalar(String dependencia, String version) {
+		return "نصب " + dependencia + " نسخه " + version + " یا جدیدتر";
+	}
+
+	@Override
+	public String dependenciaReemplazarRango(String dependencia, String min, String max) {
+		return "جایگزینی " + dependencia + " با نسخه‌ای بین " + min + " و " + max;
+	}
+
+	@Override
+	public String dependenciaFaltanteMinima(String mod, String dependencia, String version) {
+		return "مود " + mod + " به " + dependencia + " با حداقل نسخه " + version + " نیاز دارد";
+	}
+
+	@Override
+	public String dependenciaFaltanteWildcard(String mod, String dependencia, String version) {
+		return "مود " + mod + " به " + dependencia + " نسخه " + version + " نیاز دارد";
+	}
+
+	@Override
+	public String dependenciaVersionIncorrecta(String mod, String dependencia, String min, String max, String actual) {
+
+		return "مود " + mod + " به " + dependencia + " بین نسخه‌های " + min + " و " + max + " نیاز دارد"
+				+ " (نسخه فعلی: " + actual + ")";
+	}
+
+	@Override
+	public String nombreProblemaCupboardVersion() {
+		return "نسخه ناسازگار Cupboard";
+	}
+
+	@Override
+	public String problemaCupboardVersion() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "یک خرابی ناشی از نسخه قدیمی Cupboard تشخیص داده شد.</b>"
+				+ "<p>خطا در داخل <code>ClientConfigCompat.setupNeoforge</code> رخ می‌دهد زیرا "
+				+ "<code>ModList.get()</code> مقدار <code>null</code> را برمی‌گرداند.</p>"
+				+ "<p>این یک مشکل شناخته شده در نسخه‌های قدیمی ماد <b>Cupboard</b> است.</p>"
+				+ "<p>نسخه‌های قدیمی مانند <b>3.2</b> دارای این اشکال هستند.</p>"
+				+ "<p><b>راه حل:</b> Cupboard را به نسخه <b>3.5</b> یا جدیدتر به‌روزرسانی کنید.</p>";
+	}
+
+	@Override
+	public String fmlEarlyWindowMacOSOpenGL() {
+		return "زیرا شما در macOS هستید و بازی سعی می‌کند از OpenGL استفاده کند، که با نسخه‌های اخیر macOS سازگار نیست. "
+				+ "باید از نسخه‌ای از Minecraft که از Metal پشتیبانی می‌کند استفاده کنید، یا اگر مک اینتل، M1 یا M2 دارید (نه M3+ یا Neo)، از لینوکس استفاده نمایید.";
+	}
+
 }

@@ -6726,4 +6726,52 @@ public class Arabe implements Idioma {
 				+ "<p>إذا استمر المشكل، جرّب إعادة تثبيت حزمة التعديلات أو ابدأ اللعبة من خلال مشغّل رسمي أو موثوق.</p>";
 	}
 
+	@Override
+	public String dependenciaInstalar(String dependencia, String version) {
+		return "تثبيت " + dependencia + " الإصدار " + version + " أو أحدث";
+	}
+
+	@Override
+	public String dependenciaReemplazarRango(String dependencia, String min, String max) {
+		return "استبدال " + dependencia + " بإصدار بين " + min + " و " + max;
+	}
+
+	@Override
+	public String dependenciaFaltanteMinima(String mod, String dependencia, String version) {
+		return "تعديل " + mod + " يتطلب " + dependencia + " الحد الأدنى للإصدار " + version;
+	}
+
+	@Override
+	public String dependenciaFaltanteWildcard(String mod, String dependencia, String version) {
+		return "تعديل " + mod + " يتطلب " + dependencia + " الإصدار " + version;
+	}
+
+	@Override
+	public String dependenciaVersionIncorrecta(String mod, String dependencia, String min, String max, String actual) {
+
+		return "تعديل " + mod + " يتطلب " + dependencia + " بين " + min + " و " + max + " (الحالي: " + actual + ")";
+	}
+
+	@Override
+	public String nombreProblemaCupboardVersion() {
+		return "إصدار غير متوافق من Cupboard";
+	}
+
+	@Override
+	public String problemaCupboardVersion() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تم اكتشاف تعطل ناتج عن إصدار قديم من Cupboard.</b>"
+				+ "<p>يحدث الخطأ داخل <code>ClientConfigCompat.setupNeoforge</code> لأن "
+				+ "<code>ModList.get()</code> ترجع <code>null</code>.</p>"
+				+ "<p>هذه مشكلة معروفة في الإصدارات القديمة من مود <b>Cupboard</b>.</p>"
+				+ "<p>الإصدارات القديمة مثل <b>3.2</b> تحتوي على هذا الخلل.</p>"
+				+ "<p><b>الحل:</b> قم بتحديث Cupboard إلى الإصدار <b>3.5</b> أو أحدث.</p>";
+	}
+
+	@Override
+	public String fmlEarlyWindowMacOSOpenGL() {
+		return "السبب هو أنك تستخدم macOS واللعبة تحاول استخدام OpenGL، وهو غير مدعوم في إصدارات macOS الحديثة. "
+				+ "تحتاج إلى استخدام إصدار من Minecraft يدعم Metal أو استخدام Linux إذا كان لديك MacIntel أو M1 أو M2 ولكن ليس M3+ أو Neo.";
+	}
+
 }

@@ -6791,4 +6791,53 @@ public class Esperanto implements Idioma {
 				+ "<p>Se la problemo daŭras, provu reinstali la modpakaĵon aŭ lanĉi la ludon per oficiala aŭ fidinda lanĉilo.</p>";
 	}
 
+	@Override
+	public String dependenciaInstalar(String dependencia, String version) {
+		return "Instali " + dependencia + " version " + version + " aŭ pli novan";
+	}
+
+	@Override
+	public String dependenciaReemplazarRango(String dependencia, String min, String max) {
+		return "Anstataŭigi " + dependencia + " per versio inter " + min + " kaj " + max;
+	}
+
+	@Override
+	public String dependenciaFaltanteMinima(String mod, String dependencia, String version) {
+		return "La modulo " + mod + " postulas " + dependencia + " minimuman version " + version;
+	}
+
+	@Override
+	public String dependenciaFaltanteWildcard(String mod, String dependencia, String version) {
+		return "La modulo " + mod + " postulas " + dependencia + " version " + version;
+	}
+
+	@Override
+	public String dependenciaVersionIncorrecta(String mod, String dependencia, String min, String max, String actual) {
+
+		return "La modulo " + mod + " postulas " + dependencia + " inter " + min + " kaj " + max + " (aktuala: "
+				+ actual + ")";
+	}
+
+	@Override
+	public String nombreProblemaCupboardVersion() {
+		return "Nekongrua versio de Cupboard";
+	}
+
+	@Override
+	public String problemaCupboardVersion() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Detektis kraŝon kaŭzitan de malnova versio de Cupboard.</b>"
+				+ "<p>La eraro okazas interne de <code>ClientConfigCompat.setupNeoforge</code> ĉar "
+				+ "<code>ModList.get()</code> redonas <code>null</code>.</p>"
+				+ "<p>Tio estas konata problemo en malnovaj versioj de la modulo <b>Cupboard</b>.</p>"
+				+ "<p>Malnovaj versioj kiel <b>3.2</b> enhavas ĉi tiun cimon.</p>"
+				+ "<p><b>Solvo:</b> ĝisdatigu Cupboard al versio <b>3.5</b> aŭ pli nova.</p>";
+	}
+
+	@Override
+	public String fmlEarlyWindowMacOSOpenGL() {
+		return "Ĝi estas ĉar vi estas en macOS kaj la ludo provas uzi OpenGL, kio ne estas kongrua kun la plej novaj versioj de macOS. "
+				+ "Vi devas uzi version de Minecraft, kiu subtenas Metal, aŭ uzi Linux, se vi havas Mac Intel aŭ M1 aŭ M2, sed ne M3+ aŭ Neo.";
+	}
+
 }

@@ -6818,4 +6818,53 @@ public class Ruso implements Idioma {
 				+ "<p>Если проблема сохраняется, попробуйте переустановить модпак или запустите игру через официальный или проверенный лаунчер.</p>";
 	}
 
+	@Override
+	public String dependenciaInstalar(String dependencia, String version) {
+		return "Установить " + dependencia + " версии " + version + " или новее";
+	}
+
+	@Override
+	public String dependenciaReemplazarRango(String dependencia, String min, String max) {
+		return "Заменить " + dependencia + " на версию от " + min + " до " + max;
+	}
+
+	@Override
+	public String dependenciaFaltanteMinima(String mod, String dependencia, String version) {
+		return "Мод " + mod + " требует " + dependencia + " минимальной версии " + version;
+	}
+
+	@Override
+	public String dependenciaFaltanteWildcard(String mod, String dependencia, String version) {
+		return "Мод " + mod + " требует " + dependencia + " версии " + version;
+	}
+
+	@Override
+	public String dependenciaVersionIncorrecta(String mod, String dependencia, String min, String max, String actual) {
+
+		return "Мод " + mod + " требует " + dependencia + " версии от " + min + " до " + max + " (текущая: " + actual
+				+ ")";
+	}
+
+	@Override
+	public String nombreProblemaCupboardVersion() {
+		return "Несовместимая версия Cupboard";
+	}
+
+	@Override
+	public String problemaCupboardVersion() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Обнаружен сбой, вызванный старой версией Cupboard.</b>"
+				+ "<p>Ошибка возникает внутри <code>ClientConfigCompat.setupNeoforge</code>, так как "
+				+ "<code>ModList.get()</code> возвращает <code>null</code>.</p>"
+				+ "<p>Это известная проблема в старых версиях мода <b>Cupboard</b>.</p>"
+				+ "<p>Старые версии, такие как <b>3.2</b>, содержат эту ошибку.</p>"
+				+ "<p><b>Решение:</b> обновите Cupboard до версии <b>3.5</b> или новее.</p>";
+	}
+
+	@Override
+	public String fmlEarlyWindowMacOSOpenGL() {
+		return "Это потому, что вы используете macOS, и игра пытается использовать OpenGL, который не совместим с последними версиями macOS. "
+				+ "Вам нужно использовать версию Minecraft, поддерживающую Metal, или использовать Linux, если у вас Mac на Intel, M1 или M2, но не на M3+ или Neo.";
+	}
+
 }

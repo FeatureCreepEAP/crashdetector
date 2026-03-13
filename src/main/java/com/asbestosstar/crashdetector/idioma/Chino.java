@@ -6385,4 +6385,49 @@ public class Chino implements Idioma {
 				+ "<p>使用非官方启动器（如 FreshCraft）时也可能发生，因其对 assets 处理不当。</p>" + "<p>如果问题持续，请尝试重新安装整合包，或使用官方/可靠的启动器启动游戏。</p>";
 	}
 
+	@Override
+	public String dependenciaInstalar(String dependencia, String version) {
+		return "安装 " + dependencia + " 版本 " + version + " 或更高";
+	}
+
+	@Override
+	public String dependenciaReemplazarRango(String dependencia, String min, String max) {
+		return "将 " + dependencia + " 替换为 " + min + " 到 " + max + " 之间的版本";
+	}
+
+	@Override
+	public String dependenciaFaltanteMinima(String mod, String dependencia, String version) {
+		return "模组 " + mod + " 需要 " + dependencia + " 最低版本 " + version;
+	}
+
+	@Override
+	public String dependenciaFaltanteWildcard(String mod, String dependencia, String version) {
+		return "模组 " + mod + " 需要 " + dependencia + " 版本 " + version;
+	}
+
+	@Override
+	public String dependenciaVersionIncorrecta(String mod, String dependencia, String min, String max, String actual) {
+
+		return "模组 " + mod + " 需要 " + dependencia + " 版本在 " + min + " 到 " + max + " 之间" + " (当前：" + actual + ")";
+	}
+
+	@Override
+	public String nombreProblemaCupboardVersion() {
+		return "Cupboard 版本不兼容";
+	}
+
+	@Override
+	public String problemaCupboardVersion() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "检测到由旧版 Cupboard 引起的崩溃。</b>"
+				+ "<p>错误发生在 <code>ClientConfigCompat.setupNeoforge</code> 内部，原因是 "
+				+ "<code>ModList.get()</code> 返回了 <code>null</code>。</p>" + "<p>这是旧版 <b>Cupboard</b> 模组的一个已知问题。</p>"
+				+ "<p>像 <b>3.2</b> 这样的旧版本包含此缺陷。</p>" + "<p><b>解决方案：</b>请将 Cupboard 更新至 <b>3.5</b> 或更高版本。</p>";
+	}
+
+	@Override
+	public String fmlEarlyWindowMacOSOpenGL() {
+		return "这是因为您正在使用 macOS，而游戏试图使用 OpenGL，这在最新版本的 macOS 上已不再支持。"
+				+ "您需要使用支持 Metal 的 Minecraft 版本，或者如果您使用的是 Intel、M1 或 M2 芯片的 Mac（但不包括 M3+ 或 Neo），请改用 Linux。";
+	}
+
 }

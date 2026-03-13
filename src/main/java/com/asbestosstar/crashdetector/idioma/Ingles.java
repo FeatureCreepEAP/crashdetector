@@ -6840,4 +6840,53 @@ public class Ingles implements Idioma {
 				+ "< p>If the issue persists, try reinstalling the modpack or launching the game from an official or trusted launcher.</p>";
 	}
 
+	@Override
+	public String dependenciaInstalar(String dependencia, String version) {
+		return "Install " + dependencia + " version " + version + " or later";
+	}
+
+	@Override
+	public String dependenciaReemplazarRango(String dependencia, String min, String max) {
+		return "Replace " + dependencia + " with a version between " + min + " and " + max;
+	}
+
+	@Override
+	public String dependenciaFaltanteMinima(String mod, String dependencia, String version) {
+		return "The mod " + mod + " requires " + dependencia + " minimum version " + version;
+	}
+
+	@Override
+	public String dependenciaFaltanteWildcard(String mod, String dependencia, String version) {
+		return "The mod " + mod + " requires " + dependencia + " version " + version;
+	}
+
+	@Override
+	public String dependenciaVersionIncorrecta(String mod, String dependencia, String min, String max, String actual) {
+
+		return "The mod " + mod + " requires " + dependencia + " between " + min + " and " + max + " (current: "
+				+ actual + ")";
+	}
+
+	@Override
+	public String nombreProblemaCupboardVersion() {
+		return "Incompatible Cupboard version";
+	}
+
+	@Override
+	public String problemaCupboardVersion() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "A crash caused by an old version of Cupboard has been detected.</b>"
+				+ "<p>The error occurs within <code>ClientConfigCompat.setupNeoforge</code> because "
+				+ "<code>ModList.get()</code> returns <code>null</code>.</p>"
+				+ "<p>This is a known issue in older versions of the <b>Cupboard</b> mod.</p>"
+				+ "<p>Older versions such as <b>3.2</b> contain this bug.</p>"
+				+ "<p><b>Solution:</b> update Cupboard to version <b>3.5</b> or later.</p>";
+	}
+
+	@Override
+	public String fmlEarlyWindowMacOSOpenGL() {
+		return "It is because you are on macOS and the game is attempting to use OpenGL, which is not compatible with the latest versions of macOS. "
+				+ "You need to use a version of Minecraft that supports Metal or use Linux if you have an Intel, M1, or M2 Mac, but not M3+ or Neo.";
+	}
+
 }

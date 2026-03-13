@@ -68,8 +68,7 @@ public class EarlyWindow implements Verificaciones {
 		// Si no se activó por la última línea, comprobar el mensaje alternativo
 		// Aquí NO intentamos obtener número de línea ni generar enlace HTML, tal como
 		// indicaste: solo activamos el error con un mensaje genérico.
-		else if (contenidoConsola.contains(falloInicializacion)
-				|| contenidoConsola.contains(falloInicializacionActual)
+		else if (contenidoConsola.contains(falloInicializacion) || contenidoConsola.contains(falloInicializacionActual)
 				|| limitacionOpenGLMacOSDetectada) {
 			mensaje = construirMensaje();
 			activado = true;
