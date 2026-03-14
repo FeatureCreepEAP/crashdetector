@@ -42,7 +42,7 @@ public class LimpiadorRegistroLatestLog implements LimpiadorDeRegistro {
 	 * Quita bloques "[paquete.Clase:metodo:linea]: " en el CUERPO de la traza. Ej:
 	 * [software.bernie.geckolib.loading.json.typeadapter.BakedAnimationsAdapter:deserialize:43]:
 	 */
-	private static final Pattern BLOQUE_CLASE_METODO_LINEA = Pattern.compile("\\[[\\w.$]+:[\\w$<>]+:\\d+\\]:\\s*");
+	private static final Pattern BLOQUE_CLASE_METODO_LINEA = Pattern.compile("\\[[\\w.$]+:[\\w$<>]+:-?\\d+\\]:\\s*");
 
 	/** Elimina ": " inicial residual en el cuerpo tras limpiezas. */
 	private static final Pattern DOS_PUNTOS_INICIALES = Pattern.compile("^:\\s+");
@@ -120,6 +120,10 @@ public class LimpiadorRegistroLatestLog implements LimpiadorDeRegistro {
 				&& sinBloques.contains(")"))
 			return true;
 
+		if (sinBloques.endsWith("more")) {
+			return true;// verdad para la limpiador
+		}
+
 		return false;
 	}
 
@@ -135,20 +139,26 @@ public class LimpiadorRegistroLatestLog implements LimpiadorDeRegistro {
 		// a) Quitar bloques "[Clase:metodo:linea]: "
 		trabajado = BLOQUE_CLASE_METODO_LINEA.matcher(trabajado).replaceAll("");
 
-		// b) Quitar rutas de transformador delante del nombre de clase (si existen)
+		// b) Quitar basura de stacktrace inyectada común (Throwable, ThreadGroup, etc.)
+		// Esto limpia líneas como: "[java.lang.Throwable:printStackTrace:-1]: at ..."
+		// o "[java.lang.ThreadGroup:uncaughtException:-1]: at ..."
+		trabajado = trabajado.replace("[java.lang.Throwable:printStackTrace:-1]: ", "");
+		trabajado = trabajado.replace("[java.lang.ThreadGroup:uncaughtException:-1]: ", "");
+
+		// c) Quitar rutas de transformador delante del nombre de clase (si existen)
 		Matcher mTrans = AT_CON_TRANSFORMADOR.matcher(trabajado);
 		if (mTrans.matches()) {
 			trabajado = mTrans.group(1) + "at " + mTrans.group(2) + mTrans.group(3);
 		}
 
-		// c) Normalizar "at ..." -> " at ..."
+		// d) Normalizar "at ..." -> " at ..."
 		if (AT_CON_TABS.matcher(trabajado).find()) {
 			trabajado = "  at " + trabajado.replaceFirst("^[\\t ]*at\\s+", "");
 		} else if (trabajado.startsWith("at ")) {
 			trabajado = "  " + trabajado;
 		}
 
-		// d) Quitar ": " inicial residual
+		// e) Quitar ": " inicial residual
 		trabajado = DOS_PUNTOS_INICIALES.matcher(trabajado).replaceFirst("");
 
 		return trabajado;

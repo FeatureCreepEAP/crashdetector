@@ -6592,4 +6592,19 @@ public class Japones implements Idioma {
 				+ "Metal をサポートする Minecraft のバージョンを使用するか、Intel、M1、または M2 チュップを搭載した Mac（M3+ または Neo を除く）を使用している場合は、Linux を使用する必要があります。";
 	}
 
+	@Override
+	public String nombreAnimacionGeckoNoEncontrada() {
+		return "GeckoLib アニメーションが見つかりません";
+	}
+
+	@Override
+	public String mensajeAnimacionGeckoNoEncontrada(String archivo) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "ある Mod が GeckoLib のアニメーションファイルを読み込めませんでした。</b>" + "<p>影響を受けたファイル：</p>" + "<code>" + archivo
+				+ "</code>" + "<p>このエラーは、アニメーション用の <code>.json</code> ファイルが存在しないか、"
+				+ "構文エラーがある、またはパスが正しくない場合に発生します。</p>" + "<p>考えられる原因：</p>" + "<ul>"
+				+ "<li>ファイルは削除されましたが、コード内でまだ参照されています。</li>" + "<li>JSON ファイル内に構文エラーがあります。</li>"
+				+ "<li>Mod レジストリで定義されたパスが正しくありません。</li>" + "<li>依存関係の競合または互換性のないバージョン。</li>" + "</ul>";
+	}
+
 }

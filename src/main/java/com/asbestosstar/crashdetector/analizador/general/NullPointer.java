@@ -74,6 +74,23 @@ public class NullPointer implements Verificaciones {
 	 */
 	private final Map<String, String> enlacesPorLinea = new HashMap<>();
 
+	public static List<String> lineas_ignorar = new ArrayList<>();
+
+	static {
+		// Ejemplo de línea a ignorar (puedes añadir más patrones específicos aquí)
+		lineas_ignorar.add("Cannot invoke \"java.util.Map.get(Object)\" because \"promos\" is null");// MCForge
+																										// VersionChecker,
+																										// no es fatal
+		lineas_ignorar.add("com.github.alexthe666.citadel.web.WebHelper:getURLContent");// Comun con citadel pero no es
+																						// malo
+
+		lineas_ignorar.add(
+				"Cannot invoke \"org.spongepowered.asm.mixin.transformer.ClassInfo.isMixin()\" because \"superClass\" is null");// Generalmente
+																																// esta
+																																// bien
+
+	}
+
 	@Override
 	public void verificar(Consola consola) {
 
@@ -147,6 +164,11 @@ public class NullPointer implements Verificaciones {
 	 * Procesa una línea con NPE que no tiene stack trace completo
 	 */
 	private void procesarLineaSinTraza(String linea, VerificacionDeStackTrace vdst, int numeroLinea, Consola consola) {
+
+		if (lineas_ignorar.stream().anyMatch(patron -> linea.contains(patron))) {
+			return; // Ignorar esta línea específica
+		}
+
 		String metodo = "desconocido";
 		String objeto = "desconocido";
 

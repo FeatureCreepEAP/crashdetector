@@ -6872,4 +6872,22 @@ public class Portuges implements Idioma {
 				+ "Você precisa usar uma versão do Minecraft que suporte Metal ou usar Linux se tiver um Mac Intel, M1 ou M2, mas não M3+ ou Neo.";
 	}
 
+	@Override
+	public String nombreAnimacionGeckoNoEncontrada() {
+		return "Animação GeckoLib não encontrada";
+	}
+
+	@Override
+	public String mensajeAnimacionGeckoNoEncontrada(String archivo) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Um mod não conseguiu carregar um arquivo de animação do GeckoLib.</b>" + "<p>Arquivo afetado:</p>"
+				+ "<code>" + archivo + "</code>"
+				+ "<p>Este erro ocorre quando um arquivo de animação <code>.json</code> não existe, "
+				+ "possui erros de sintaxe ou o caminho está incorreto.</p>" + "<p>Causas possíveis:</p>" + "<ul>"
+				+ "<li>O arquivo foi excluído, mas ainda é referenciado no código.</li>"
+				+ "<li>Erro de sintaxe dentro do arquivo JSON.</li>"
+				+ "<li>Caminho incorreto definido no registro do mod.</li>"
+				+ "<li>Conflitos de dependências ou versão incompatível.</li>" + "</ul>";
+	}
+
 }

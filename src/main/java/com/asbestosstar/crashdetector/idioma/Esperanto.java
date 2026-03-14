@@ -6840,4 +6840,22 @@ public class Esperanto implements Idioma {
 				+ "Vi devas uzi version de Minecraft, kiu subtenas Metal, aŭ uzi Linux, se vi havas Mac Intel aŭ M1 aŭ M2, sed ne M3+ aŭ Neo.";
 	}
 
+	@Override
+	public String nombreAnimacionGeckoNoEncontrada() {
+		return "Animacio de GeckoLib ne trovita";
+	}
+
+	@Override
+	public String mensajeAnimacionGeckoNoEncontrada(String archivo) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Modulo ne povis ŝargi dosieron de animacio de GeckoLib.</b>" + "<p>Afektita dosiero:</p>" + "<code>"
+				+ archivo + "</code>"
+				+ "<p>Ĉi tiu eraro okazas kiam la animacia dosiero <code>.json</code> ne ekzistas, "
+				+ "havas sintaksajn erarojn aŭ la vojo estas malĝusta.</p>" + "<p>Eblaj kaŭzoj:</p>" + "<ul>"
+				+ "<li>La dosiero estis forigita sed ankoraŭ estas referencata en la kodo.</li>"
+				+ "<li>Sintaksa eraro ene de la dosiero JSON.</li>"
+				+ "<li>Malĝusta vojo difinita en la registro de la modulo.</li>"
+				+ "<li>Konfliktoj de dependecoj aŭ nekongrua versio.</li>" + "</ul>";
+	}
+
 }

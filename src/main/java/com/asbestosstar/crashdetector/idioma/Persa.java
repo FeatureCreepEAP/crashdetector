@@ -6829,4 +6829,21 @@ public class Persa implements Idioma {
 				+ "باید از نسخه‌ای از Minecraft که از Metal پشتیبانی می‌کند استفاده کنید، یا اگر مک اینتل، M1 یا M2 دارید (نه M3+ یا Neo)، از لینوکس استفاده نمایید.";
 	}
 
+	@Override
+	public String nombreAnimacionGeckoNoEncontrada() {
+		return "انیمیشن GeckoLib یافت نشد";
+	}
+
+	@Override
+	public String mensajeAnimacionGeckoNoEncontrada(String archivo) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "یک ماد نتوانست فایل انیمیشن GeckoLib را بارگذاری کند.</b>" + "<p>فایل آسیب‌دیده:</p>" + "<code>"
+				+ archivo + "</code>"
+				+ "<p>این خطا زمانی رخ می‌دهد که فایل انیمیشن <code>.json</code> وجود نداشته باشد، "
+				+ "دارای خطای نحو (سینتکس) باشد یا مسیر آن نادرست باشد.</p>" + "<p>علل احتمالی:</p>" + "<ul>"
+				+ "<li>فایل حذف شده است اما هنوز در کد مرجع داده شده است.</li>" + "<li>خطای نحو در داخل فایل JSON.</li>"
+				+ "<li>مسیر نادرست در ثبت ماد تعریف شده است.</li>" + "<li>تضاد وابستگی‌ها یا نسخه ناسازگار.</li>"
+				+ "</ul>";
+	}
+
 }

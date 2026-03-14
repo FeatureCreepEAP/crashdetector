@@ -6578,4 +6578,19 @@ public class Coreano implements Idioma {
 				+ "Metal 을 지원하는 Minecraft 판본을 사용하거나, Intel, M1 또는 M2 칩을 가진 Mac(M3+ 또는 Neo 제외) 을 사용 중이라면 Linux 를 사용해야 합니다.";
 	}
 
+	@Override
+	public String nombreAnimacionGeckoNoEncontrada() {
+		return "GeckoLib 동작을 찾을 수 없음";
+	}
+
+	@Override
+	public String mensajeAnimacionGeckoNoEncontrada(String archivo) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "한 모드가 GeckoLib 동작 파일을 적재하지 못했습니다.</b>" + "<p>영향을 받은 파일:</p>" + "<code>" + archivo + "</code>"
+				+ "<p>이 오류는 동작 <code>.json</code> 파일이 존재하지 않거나, " + "문법 오류가 있거나 경로가 잘못되었을 때 발생합니다.</p>"
+				+ "<p>가능한 원인:</p>" + "<ul>" + "<li>파일이 삭제되었으나 코드에서 여전히 참조되고 있습니다.</li>"
+				+ "<li>JSON 파일 내부에 문법 오류가 있습니다.</li>" + "<li>모드 등록부에 정의된 경로가 잘못되었습니다.</li>"
+				+ "<li>의존성 충돌 또는 호환되지 않는 판본입니다.</li>" + "</ul>";
+	}
+
 }

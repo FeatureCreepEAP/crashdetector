@@ -90,6 +90,8 @@ public class FaltasClases implements Verificaciones {
 
 	static {
 		ignorar.add("avaritia");// Positiva falsa comun con KubJS y avaritia TODO agregar a advertencia
+		ignorar.add("DeadKingMusicManager");// Positiva falsa comun con IronSpellbooker y alltheleaks pero necesitemos
+											// considerar otras casos por que all the leaks a veces tiene problemas
 	}
 
 	@Override

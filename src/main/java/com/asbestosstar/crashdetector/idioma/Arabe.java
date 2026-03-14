@@ -6774,4 +6774,20 @@ public class Arabe implements Idioma {
 				+ "تحتاج إلى استخدام إصدار من Minecraft يدعم Metal أو استخدام Linux إذا كان لديك MacIntel أو M1 أو M2 ولكن ليس M3+ أو Neo.";
 	}
 
+	@Override
+	public String nombreAnimacionGeckoNoEncontrada() {
+		return "لم يتم العثور على حركة GeckoLib";
+	}
+
+	@Override
+	public String mensajeAnimacionGeckoNoEncontrada(String archivo) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "فشل مود في تحميل ملف حركة لـ GeckoLib.</b>" + "<p>الملف المتأثر:</p>" + "<code>" + archivo
+				+ "</code>" + "<p>يحدث هذا الخطأ عندما لا يوجد ملف الحركة <code>.json</code>، "
+				+ "أو يحتوي على أخطاء في الصياغة، أو أن المسار غير صحيح.</p>" + "<p>الأسباب المحتملة:</p>" + "<ul>"
+				+ "<li>تم حذف الملف لكنه لا يزال مُشاراً إليه في الكود.</li>" + "<li>خطأ في الصياغة داخل ملف JSON.</li>"
+				+ "<li>مسار غير صحيح مُعرّف في سجل المود.</li>" + "<li>تضارب في التبعيات أو إصدار غير متوافق.</li>"
+				+ "</ul>";
+	}
+
 }

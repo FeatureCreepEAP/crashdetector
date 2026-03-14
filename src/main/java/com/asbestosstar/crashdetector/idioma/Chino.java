@@ -6430,4 +6430,18 @@ public class Chino implements Idioma {
 				+ "您需要使用支持 Metal 的 Minecraft 版本，或者如果您使用的是 Intel、M1 或 M2 芯片的 Mac（但不包括 M3+ 或 Neo），请改用 Linux。";
 	}
 
+	@Override
+	public String nombreAnimacionGeckoNoEncontrada() {
+		return "未找到 GeckoLib 动画";
+	}
+
+	@Override
+	public String mensajeAnimacionGeckoNoEncontrada(String archivo) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "某个模组无法加载 GeckoLib 动画文件。</b>" + "<p>受影响的文件：</p>" + "<code>" + archivo + "</code>"
+				+ "<p>当动画 <code>.json</code> 文件不存在、" + "包含语法错误或路径不正确时，会发生此错误。</p>" + "<p>可能的原因：</p>" + "<ul>"
+				+ "<li>文件已被删除，但代码中仍在引用它。</li>" + "<li>JSON 文件内部存在语法错误。</li>" + "<li>模组注册中定义的路径不正确。</li>"
+				+ "<li>依赖冲突或版本不兼容。</li>" + "</ul>";
+	}
+
 }

@@ -155,7 +155,116 @@ public class StackTracesDenegadosDeMinecraftPorDefecto {
 				|| contentido.contains(
 						"vectorwing.farmersdelight.common.crafting.CookingPotRecipe$Serializer.readIngredients")
 
-		);// nada
+		);
+
+		// Calio MultiJsonDataLoader errores de carga de datos (Data loaders)
+		VerificacionDeStackTrace.denegados
+				.add(contentido -> contentido.contains("io.github.apace100.calio.data.MultiJsonDataLoader"));
+
+		// Errores de sintaxis JSON por items desconocidos (recetas/loottables de mods
+		// quitados) (¿posible eliminar?)
+		VerificacionDeStackTrace.denegados
+				.add(contentido -> contentido.contains("com.google.gson.JsonSyntaxException: Unknown item"));
+
+		// Errores de recetas con tipos inválidos o no soportados (ej. mods de datos
+		// quitados)(¿posible eliminar?)
+		VerificacionDeStackTrace.denegados.add(contentido -> contentido
+				.contains("com.google.gson.JsonSyntaxException: Invalid or unsupported recipe type"));
+
+		// Errores de parseo de archivos de datos de TACZ (no suelen ser fatales o son
+		// de recursos)
+		VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains("tacz")
+				&& contentido.contains("Couldn't parse data file") && contentido.contains("from"));
+
+		// Errores de parseo matemático/sintaxis de mclib (común en animaciones/modelos,
+		// usualmente no fatal)
+		VerificacionDeStackTrace.denegados
+				.add(contentido -> contentido.contains("com.eliotlash.mclib.math.MathBuilder.parseSymbols"));
+
+		// Ignorar errores internos de carga y caché de GeckoLib
+		VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains("software.bernie.geckolib.cache.")
+				|| contentido.contains("software.bernie.geckolib.loading."));
+
+		// Ignorar errores de escaneo y preparación de datos de TACZ (usualmente no
+		// fatales)
+		VerificacionDeStackTrace.denegados
+				.add(contentido -> contentido.contains("com.tacz.guns.util.ResourceScanner.scanDirectory")
+						&& contentido.contains("com.tacz.guns.resource.manager.JsonDataManager.prepare"));
+
+		// Ignorar errores de AllTheLeaks relacionados con Iron's Spellbooks (problema
+		// conocido y controlado)
+		VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains(
+				"java.lang.NoClassDefFoundError: io/redspace/ironsspellbooks/entity/mobs/dead_king_boss/DeadKingMusicManager")
+				&& contentido.contains("alltheleaks"));
+
+		// Ignorar errores de carga de clase genéricos para Iron's Spellbooks
+		// (DeadKingMusicManager)
+		VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains(
+				"java.lang.ClassNotFoundException: io.redspace.ironsspellbooks.entity.mobs.dead_king_boss.DeadKingMusicManager")
+				&& contentido.contains("cpw.mods.cl.ModuleClassLoader.loadClass")
+				&& contentido.contains("java.lang.ClassLoader.loadClass"));
+
+		// Ignorar NPE de ServerLevel donde la instancia es null (error de estado
+		// interno)
+		VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains(
+				"java.lang.NullPointerException: Cannot invoke \"net.minecraft.server.level.ServerLevel.m_6857_()\" because \"serverlevel2\" is null"));
+
+		// Ignorar referencias internas de Connector/Authlib
+		VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains("connector$authlib"));
+
+		// Ignorar errores de inicialización relacionados con AllTheLeaks
+		VerificacionDeStackTrace.denegados
+				.add(contentido -> contentido.contains("java.lang.ExceptionInInitializerError")
+						&& contentido.contains("dev.uncandango.alltheleaks.leaks.IssueManager"));
+
+		// Ignorar errores de VarHandler nulo causados por AllTheLeaks (reflexión)
+		VerificacionDeStackTrace.denegados
+				.add(contentido -> contentido.contains("java.lang.RuntimeException: VarHandler is null")
+						&& contentido.contains("dev.uncandango.alltheleaks.utils.ReflectionHelper.getFieldFromClass"));
+
+		// Ignorar errores de conexión de Citadel (WebHelper) al intentar acceder a URLs
+		VerificacionDeStackTrace.denegados
+				.add(contentido -> contentido.contains("com.github.alexthe666.citadel.web.WebHelper.getURLContents")
+						&& contentido.contains("java.net.SocketTimeoutException"));
+
+		// Ignorar errores de conexión al cargar la lista de contribuidores de Quark
+		VerificacionDeStackTrace.denegados.add(contentido -> contentido
+				.contains("org.violetmoon.quark.base.handler.ContributorRewardHandler$ThreadContributorListLoader.run")
+				&& contentido.contains("java.net.SocketTimeoutException"));
+
+		// Ignorar errores de conexión de Conjurer Illager al buscar contribuidores
+		VerificacionDeStackTrace.denegados.add(
+				contentido -> contentido.contains("com.legacy.conjurer_illager.MLSupporter$GetSupportersThread.run")
+						&& contentido.contains("java.net.ConnectException: Connection timed out"));
+
+		// Ignorar errores de red de Essential al conectar con los servidores de Mojang
+		VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains("gg.essential.lib.okhttp3")
+				&& contentido.contains("java.net.UnknownHostException:"));
+
+		// Ignorar errores de red de Essential al conectar con los servidores de Mojang
+		VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains("gg.essential.lib.okhttp3")
+				&& contentido.contains("java.net.SocketException: Network is unreachable: getsockopt"));
+
+		// Ignorar errores de red de Essential al conectar con los servidores de Mojang
+		VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains("gg.essential.lib.okhttp3")
+				&& contentido.contains("java.net.SocketTimeoutException"));
+
+		VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains("gg.essential")
+				&& contentido.contains("AuthenticationUnavailableException"));
+
+		// Ignorar NPE de Mixin causado por Connector (Sinytra Connector)
+		VerificacionDeStackTrace.denegados.add(contentido ->
+		// contentido.contains("java.lang.NullPointerException: Cannot invoke
+		// \"org.spongepowered.asm.mixin.transformer.ClassInfo.isMixin()\" because
+		// \"superClass\" is null")&&
+		contentido.contains("org.sinytra.connector.service.ConnectorLoaderService"));
+
+		// Ignorar errores de reflexión interna de LibJF Unsafe
+		VerificacionDeStackTrace.denegados
+				.add(contentido -> contentido.contains("java.lang.NoSuchFieldException: delegate")
+						&& contentido.contains("io.gitlab.jfronny.libjf.unsafe.MixinPlugin"));
+
+		// nada
 
 //		VerificacionDeStackTrace.denegados.add(c -> c.contains("Could not find any mod for modid 'rechiseled'!")
 //				&& c.contains("com.supermartijn642.rechiseled.registration.RechiseledRegistrationImpl"));

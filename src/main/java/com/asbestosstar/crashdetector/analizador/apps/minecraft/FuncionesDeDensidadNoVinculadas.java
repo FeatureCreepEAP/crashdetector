@@ -27,47 +27,95 @@ public class FuncionesDeDensidadNoVinculadas implements Verificaciones {
 	public void verificar(Consola consola) {
 		String contenido = consola.contenido_verificar;
 
-		// Buscar la frase clave en todo el texto, sin distinguir mayúsculas
-		int pos = indexOfIgnoreCase(contenido, "unbound values in registry");
-		if (pos < 0)
-			return;
+		// Buscar la frase clave para el formato de lista
+		int posLista = indexOfIgnoreCase(contenido, "unbound values in registry");
+		boolean foundList = posLista >= 0;
 
-		// Encontrar la lista que viene tras "]: ["
-		int marker = contenido.indexOf("]: [", pos);
-		if (marker < 0)
-			return;
+		// Buscar la frase clave para el formato individual (ej. Tectonic)
+		// Se usa "Trying to access unbound value" que es único y rápido de encontrar
+		int posIndividual = indexOfIgnoreCase(contenido, "Trying to access unbound value");
+		boolean foundIndividual = posIndividual >= 0;
 
-		int start = marker + 4; // justo después de "]: ["
-		int end = contenido.indexOf(']', start);
-		if (end < 0)
+		if (!foundList && !foundIndividual)
 			return;
-
-		String lista = contenido.substring(start, end);
-		String[] partes = lista.split(",");
 
 		clavesFaltantes.clear();
 		Set<String> namespaces = new HashSet<>();
 
-		for (String p : partes) {
-			String k = p.trim();
-			if (k.isEmpty())
-				continue;
-			int c = k.indexOf(':');
-			if (c <= 0)
-				continue;
-			String ns = k.substring(0, c).trim();
-			// quedarse solo con terceros (p.ej. tectonic), no minecraft
-			if (!"minecraft".equals(ns)) {
-				clavesFaltantes.add(k);
-				namespaces.add(ns);
+		// Procesar formato lista: "unbound values in registry ...: [namespace:key,
+		// ...]"
+		if (foundList) {
+			int marker = contenido.indexOf("]: [", posLista);
+			if (marker >= 0) {
+				int start = marker + 4;
+				int end = contenido.indexOf(']', start);
+				if (end >= 0) {
+					String lista = contenido.substring(start, end);
+					String[] partes = lista.split(",");
+
+					for (String p : partes) {
+						String k = p.trim();
+						if (k.isEmpty())
+							continue;
+						int c = k.indexOf(':');
+						if (c <= 0)
+							continue;
+						String ns = k.substring(0, c).trim();
+						if (!"minecraft".equals(ns)) {
+							clavesFaltantes.add(k);
+							namespaces.add(ns);
+						}
+					}
+				}
+			}
+		}
+
+		// Procesar formato individual: "Trying to access unbound value 'ResourceKey[...
+		// / namespace:key]'"
+		// Implementación SIN Regex para mejor rendimiento
+		if (foundIndividual) {
+			int searchFrom = posIndividual;
+			String target = "ResourceKey[";
+			String endMarker = "]'";
+
+			// Buscar hacia adelante desde el mensaje de error
+			int keyStart = contenido.indexOf(target, searchFrom);
+
+			// Buscar un poco hacia adelante también por si acaso (hasta 100 chars)
+			if (keyStart == -1 && searchFrom > 100) {
+				keyStart = contenido.indexOf(target, searchFrom - 100);
+			}
+
+			if (keyStart != -1) {
+				// Encontrar el cierre del ResourceKey
+				int keyEnd = contenido.indexOf(endMarker, keyStart);
+				if (keyEnd != -1) {
+					// Extraer el contenido: "minecraft:worldgen/density_function /
+					// tectonic:overworld/depth"
+					String inner = contenido.substring(keyStart + target.length(), keyEnd);
+
+					// Buscar el último separador " / " que divide el tipo de la clave real
+					int lastSeparator = inner.lastIndexOf(" / ");
+					if (lastSeparator != -1) {
+						String valorClave = inner.substring(lastSeparator + 3).trim(); // "tectonic:overworld/depth"
+
+						int colonIdx = valorClave.indexOf(':');
+						if (colonIdx > 0) {
+							String ns = valorClave.substring(0, colonIdx);
+							if (!"minecraft".equals(ns)) {
+								clavesFaltantes.add(valorClave);
+								namespaces.add(ns);
+							}
+						}
+					}
+				}
 			}
 		}
 
 		if (clavesFaltantes.isEmpty())
 			return;
 
-		// Intentar localizar posibles proveedores por namespace (sin meterlos en
-		// idioma)
+		// Intentar localizar posibles proveedores por namespace
 		modsUbicacion.clear();
 		Buscardor.cargar();
 		for (String ns : namespaces) {
@@ -98,8 +146,9 @@ public class FuncionesDeDensidadNoVinculadas implements Verificaciones {
 			mensaje += sb.toString();
 		}
 
-		// Calcular número de línea para el enlace
-		int linea = contarSaltosDeLinea(contenido, pos);
+		// Calcular número de línea para el enlace (usar la primera ocurrencia
+		// encontrada)
+		int linea = contarSaltosDeLinea(contenido, foundList ? posLista : posIndividual);
 		enlaceHtml = consola.agregarErrorALectador(linea, this);
 
 		activado = true;
@@ -156,25 +205,21 @@ public class FuncionesDeDensidadNoVinculadas implements Verificaciones {
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
 		return "funciones_de_densidad_no_vinculadas";
 	}
 
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+		return false;
 	}
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 
 	@Override
 	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
 				+ this.getClass().getSimpleName() + ".java";
 	}

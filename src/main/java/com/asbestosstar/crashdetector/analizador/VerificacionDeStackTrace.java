@@ -72,7 +72,7 @@ public class VerificacionDeStackTrace {
 			"io.netty", "org.prismlauncher", "io.github.zekerzhayard", "org.multimc", "org.polymc", "org.tlauncher",
 			"net.fabricmc", "org.objectweb.asm", "datafixerupper", "org.slf4j", "com.asbestosstar", "srg",
 			"asbestosstar.", "org.openjdk", "com.google", "cpw.mods.modlauncher.", "com.modrinth.theseus.",
-			"net.neoforged.","fmlloader","fmlearlydisplay"
+			"net.neoforged.", "fmlloader", "fmlearlydisplay", "org.lwjgl"
 
 	};
 
@@ -173,69 +173,66 @@ public class VerificacionDeStackTrace {
 				continue;
 			}
 
-			// =========================================================
-			// 1️⃣ RESOLVER ORIGEN (ANTES DE CUALQUIER DENY)
-			// =========================================================
 			String origen = null;
 
-			// ---- JAR ----
+			// ---- 1. VERIFICAR MODID (Para denegar o usar) ----
+			String modid = extraerModidDeLinea(normalizada);
+			if (modid != null) {
+				// Si el ModID está prohibido, saltamos la línea inmediatamente
+				if (esModNoPermite(modid)) {
+					continue;
+				}
+				// Lo guardamos como candidato temporal
+				origen = modid;
+			}
+
+			// ---- 2. VERIFICAR PAQUETE (Para denegar o usar) ----
+			String paquete = extraerPaqueteDeLinea(normalizada);
+			if (paquete != null) {
+				String dec = nivel + "," + lineaConsola;
+				// Si el paquete está prohibido (ej. net.minecraft), saltamos la línea
+				if (packNoEsPermite(paquete, dec, fatal)) {
+					continue;
+				}
+				// Si no teníamos ModID, usamos el paquete como candidato
+				if (origen == null) {
+					origen = paquete;
+				}
+			}
+
+			// ---- 3. VERIFICAR JAR (PRIORIDAD MÁXIMA SI EXISTE) ----
 			List<String> jars = extraerJarsDeLinea(normalizada);
 			if (!jars.isEmpty()) {
 				String jar = jars.get(0);
-				if (!isJarNoPermite(jar)) {
-					origen = jar;
+				// Si el JAR está prohibido, saltamos la línea
+				if (isJarNoPermite(jar)) {
+					continue;
 				}
+				// Si el JAR es válido, SOBRESCRIBIMOS el origen anterior.
+				// El JAR tiene prioridad sobre el ModID y el Paquete.
+				origen = jar;
 			}
 
-			// ---- MODID ----
+			// ---- 4. VERIFICAR CLASE (FALLBACK FINAL) ----
+			// Si después de todo no hay origen, verificamos la clase
 			if (origen == null) {
-				String modid = extraerModidDeLinea(normalizada);
-				if (modid != null && !esModNoPermite(modid)) {
-					origen = modid;
-				}
-			}
-
-			// ---- PAQUETE ----
-			if (origen == null) {
-				String paquete = extraerPaqueteDeLinea(normalizada);
-				if (paquete != null) {
-					String dec = nivel + "," + lineaConsola;
-					if (!packNoEsPermite(paquete, dec, fatal)) {
-						origen = paquete;
-					}
-				}
-			}
-
-			// =========================================================
-			// 2️⃣ DENYLIST DE PAQUETES SOLO SI NO HAY ORIGEN
-			// =========================================================
-			if (origen == null) {
-				boolean denegado = false;
+				boolean claseDenegada = false;
 				for (String pref : package_no_permite) {
-					if (pref == null || pref.isEmpty()) {
+					if (pref == null || pref.isEmpty())
 						continue;
-					}
 					String prefSlash = pref.replace('.', '/');
 					if (clase.startsWith(prefSlash)) {
-						denegado = true;
+						claseDenegada = true;
 						break;
 					}
 				}
-				if (denegado) {
+				if (claseDenegada) {
 					continue;
 				}
-			}
-
-			// =========================================================
-			// 3️⃣ FALLBACK FINAL
-			// =========================================================
-			if (origen == null) {
+				// Si pasó los filtros, usamos la clase como origen
 				origen = clase;
 			}
 
-			// =========================================================
-			// 4️⃣ REGISTRAR LÍNEA DE TRAZO
-			// =========================================================
 			LineaTrazo lt = new LineaTrazo();
 			lt.origen = origen;
 			lt.clase = clase;

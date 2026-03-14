@@ -299,6 +299,7 @@ public class Analizador {
 		verificaciones.add(new ProblemaParanoiaC2ME());
 		verificaciones.add(new ProblemaAssetsDirFaltante());
 		verificaciones.add(new ProblemaCupboardVersion());
+		verificaciones.add(new AnimacionGeckoLibNoEncontrada());
 
 		verificaciones.add(new PirataMC());
 		verificaciones.add(new LanzerNoAnimado());

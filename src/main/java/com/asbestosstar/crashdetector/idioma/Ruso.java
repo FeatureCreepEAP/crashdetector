@@ -6867,4 +6867,21 @@ public class Ruso implements Idioma {
 				+ "Вам нужно использовать версию Minecraft, поддерживающую Metal, или использовать Linux, если у вас Mac на Intel, M1 или M2, но не на M3+ или Neo.";
 	}
 
+	@Override
+	public String nombreAnimacionGeckoNoEncontrada() {
+		return "Анимация GeckoLib не найдена";
+	}
+
+	@Override
+	public String mensajeAnimacionGeckoNoEncontrada(String archivo) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Мод не смог загрузить файл анимации GeckoLib.</b>" + "<p>Затронутый файл:</p>" + "<code>" + archivo
+				+ "</code>" + "<p>Эта ошибка возникает, когда файл анимации <code>.json</code> не существует, "
+				+ "содержит синтаксические ошибки или путь указан неверно.</p>" + "<p>Возможные причины:</p>" + "<ul>"
+				+ "<li>Файл был удален, но все еще ссылается в коде.</li>"
+				+ "<li>Синтаксическая ошибка внутри файла JSON.</li>"
+				+ "<li>Неверный путь, определенный в реестре мода.</li>"
+				+ "<li>Конфликты зависимостей или несовместимая версия.</li>" + "</ul>";
+	}
+
 }

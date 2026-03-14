@@ -2576,4 +2576,8 @@ public interface Idioma {
 
 	public String fmlEarlyWindowMacOSOpenGL();
 
+	public String mensajeAnimacionGeckoNoEncontrada(String archivo2);
+
+	public String nombreAnimacionGeckoNoEncontrada();
+
 }

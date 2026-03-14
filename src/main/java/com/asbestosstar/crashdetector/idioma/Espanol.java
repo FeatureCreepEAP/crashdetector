@@ -7581,4 +7581,22 @@ public class Espanol implements Idioma {
 				+ "Necesitas usar una versión de Minecraft que soporte Metal o usar Linux si tienes un Mac Intel o M1 o M2 pero no M3+ o Neo.";
 	}
 
+	@Override
+	public String nombreAnimacionGeckoNoEncontrada() {
+		return "Animación GeckoLib no encontrada";
+	}
+
+	@Override
+	public String mensajeAnimacionGeckoNoEncontrada(String archivo) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Un mod no pudo cargar un archivo de animación de GeckoLib.</b>" + "<p>Archivo afectado:</p>"
+				+ "<code>" + archivo + "</code>"
+				+ "<p>Este error ocurre cuando un archivo <code>.json</code> de animación no existe, "
+				+ "tiene errores de sintaxis o la ruta es incorrecta.</p>" + "<p>Posibles causas:</p>" + "<ul>"
+				+ "<li>El archivo fue eliminado pero aún es referenciado en el código.</li>"
+				+ "<li>Error de sintaxis dentro del archivo JSON.</li>"
+				+ "<li>Ruta incorrecta definida en el registro del mod.</li>"
+				+ "<li>Conflictos de dependencias o versión incompatible.</li>" + "</ul>";
+	}
+
 }
