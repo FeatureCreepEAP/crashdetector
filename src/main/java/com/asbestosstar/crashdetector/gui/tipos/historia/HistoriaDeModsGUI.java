@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -296,7 +297,7 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 		Map<String, String> mods = new HashMap<>();
 
 		// Directorio actual donde se está ejecutando la aplicación
-		Path directorioActual = Path.of("").toAbsolutePath().normalize();
+		Path directorioActual = Paths.get("").toAbsolutePath().normalize();
 
 		try (BufferedReader lector = new BufferedReader(
 				new InputStreamReader(Files.newInputStream(rutaArchivo), StandardCharsets.UTF_8))) {
@@ -307,7 +308,7 @@ public abstract class HistoriaDeModsGUI extends JFrame implements CrashDetectorG
 
 				if (!linea.trim().isEmpty()) {
 
-					Path rutaOriginal = Path.of(linea.trim()).toAbsolutePath().normalize();
+					Path rutaOriginal = Paths.get(linea.trim()).toAbsolutePath().normalize();
 					String rutaRelativa;
 
 					try {

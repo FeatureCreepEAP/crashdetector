@@ -1,8 +1,8 @@
 package com.asbestosstar.crashdetector.anon;
 
 import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -241,7 +241,7 @@ public class AnonimizadordeRegistros {
 	public static String convertirRutasAReletivas(String contenido) {
 
 		// Obtener directorio base real
-		Path basePath = Path.of(System.getProperty("user.dir")).toAbsolutePath().normalize();
+		Path basePath = Paths.get(System.getProperty("user.dir")).toAbsolutePath().normalize();
 
 		String base = basePath.toString();
 
@@ -250,8 +250,8 @@ public class AnonimizadordeRegistros {
 		contenido = contenido.replace("\\", "/");
 
 		// Decodificar posibles %20 u otros caracteres URL-encoded
-		base = URLDecoder.decode(base, StandardCharsets.UTF_8);
-		contenido = URLDecoder.decode(contenido, StandardCharsets.UTF_8);
+		base = URLDecoder.decode(base);
+		contenido = URLDecoder.decode(contenido);
 
 		// Eliminar posible slash final del base
 		if (base.endsWith("/")) {
