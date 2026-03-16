@@ -127,6 +127,16 @@ public class StackTracesDenegadosDeMinecraftPorDefecto {
 				.add(contentido -> contentido.contains("net.minecraftforge.fml.VersionChecker"));// Si hay una problema
 																									// puedo eliminar
 
+		
+		
+		VerificacionDeStackTrace.denegados
+		.add(contentido -> contentido.contains("net.minecraftforge.fml.VersionChecker"));// Si hay una problema
+																							// puedo eliminar
+		
+		VerificacionDeStackTrace.denegados.add(contentido ->
+        contentido.contains("net.neoforged.fml.VersionChecker"));
+		
+		
 		VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains("No bonuses were provided"));// apotheosis
 																												// Si
 																												// hay
@@ -277,6 +287,15 @@ public class StackTracesDenegadosDeMinecraftPorDefecto {
 				|| c.contains("Missing elements in vertex:") && c.contains("gg.essential")
 
 		);
+		
+		// Ignorar compatibilidad JMI ↔ FTB Chunks (no suele ser fatal)
+		VerificacionDeStackTrace.denegados.add(contentido ->
+		        contentido.contains("me.frankv.jmi.compat.ftbchunks.FTBChunksCompat"));
+		
+		// Ignorar JMI ModCompatFactory (compatibilidad de mods, usualmente no fatal)
+		VerificacionDeStackTrace.denegados.add(contentido ->
+		        contentido.contains("me.frankv.jmi.api.ModCompatFactory"));
+		
 
 	}
 }
