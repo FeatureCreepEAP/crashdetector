@@ -1305,11 +1305,34 @@ public class Ruso implements Idioma {
 		return "Удалите папку мира '" + nombreMundo + "'";
 	}
 
+	/**
+	 * Возвращает сообщение об ошибке для проблемных сущностей или блочных сущностей,
+	 * подробно описывая шаги восстановления в зависимости от платформы.
+	 */
 	@Override
 	public String mensajeTickingEntidadBloque(String nombre, String tipo, int[] coordenadas) {
 		String coords = "(" + coordenadas[0] + ", " + coordenadas[1] + ", " + coordenadas[2] + ")";
-		return "<b style='color:#" + config.obtenerColorError() + "'>Блочная сущность '" + nombre + "' типа '" + tipo
-				+ "' по координатам " + coords + " вызывает ошибки при тиках.</b> ";
+		String color = config.obtenerColorError();
+		
+		// Основное сообщение: Только описательный текст имеет цвет ошибки
+		String mensajeBase = "<span style='color:#" + color + "'>Сущность или блочная сущность '</span>" 
+				+ nombre + "<span style='color:#" + color + "'>' типа '</span>" 
+				+ tipo + "<span style='color:#" + color + "'>' в местоположении </span>" 
+				+ coords + "<span style='color:#" + color + "'> вызывает ошибки ticking.</span><br><br>";
+
+		// Инструкции по исправлению
+		String instrucciones = "<span style='color:#" + color + "'>"
+				+ "Инструкции по восстановлению:<br>"
+				+ "1. **MCForge**: Перейдите в '[nombre_del_mundo]/serverconfig/forge-server.toml'.<br>"
+				+ "2. **NeoForge**: Перейдите в 'config/neoforge-server.toml'.<br>"
+				+ "   *(Примечание: В локальных играх/Singleplayer миры находятся в папке 'saves')*.<br>"
+				+ "3. Измените **removeErroringBlockEntities** и **removeErroringEntities** на **true**.<br><br>"
+				+ "Другие варианты:<br>"
+				+ "- **MCEdit**: Используйте для ручного удаления сущности по указанным координатам.<br>"
+				+ "- **Neruina (Mod)**: Может предотвратить вылет, но не всегда работает и может усложнить отладку при установке."
+				+ "</span>";
+
+		return mensajeBase + instrucciones;
 	}
 
 	@Override
@@ -6884,4 +6907,92 @@ public class Ruso implements Idioma {
 				+ "<li>Конфликты зависимостей или несовместимая версия.</li>" + "</ul>";
 	}
 
+    @Override
+    public String nombreAnimacionGeckoInexiste() {
+        return "Анимация GeckoLib не найдена";
+    }
+
+    @Override
+    public String mensajeAnimacionGeckoInexiste(String archivo) {
+        return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+                + "Мод не смог найти файл анимации GeckoLib.</b>" + "<p>Затронутый файл:</p>"
+                + "<code>" + archivo + "</code>"
+                + "<p>Эта ошибка возникает, когда GeckoLib пытается загрузить анимацию, которая не существует по указанному пути. "
+                + "В отличие от ошибки загрузки (синтаксис), эта ошибка указывает на то, что файл физически отсутствует или путь неверен.</p>"
+                + "<p>Возможные причины:</p>" + "<ul>"
+                + "<li>Файл <code>.json</code> был удалён или не включён в итоговый JAR модификации.</li>"
+                + "<li>Опечатка в пути, определённом в коде (например: 'animations' против 'animaciones').</li>"
+                + "<li>Несоответствие регистра (операционная система сервера — Linux (чувствительна), а разработка велась на Windows (нечувствительна)).</li>"
+                + "<li>Модификация обновлена не полностью или её зависимости нарушены.</li>" + "</ul>";
+    }
+    @Override
+    public String nombreRegistroDuplicadoObjeto() {
+        return "Конфликт дублирующей регистрации";
+    }
+
+    @Override
+    public String mensajeRegistroDuplicadoObjeto(String mod1, String mod2, String objeto) {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // Основное сообщение: Только описательный текст имеет цвет ошибки
+        String mensajeBase = "<span style='color:#" + color + "'>Критический конфликт: Предпринята попытка зарегистрировать объект дважды. "
+                + "Модификации </span>" + mod1 + "<span style='color:#" + color + "'> и </span>" 
+                + mod2 + "<span style='color:#" + color + "'> пытаются зарегистрировать один и тот же объект. "
+                + "Конфликтующий объект: </span>" + objeto + "<br><br>";
+
+        // Инструкции по исправлению
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "Это обычно происходит, когда две разные модификации добавляют объект с одинаковым именем "
+                + "в одном и том же namespace, или когда в коде одной из модификаций есть ошибка.<br><br>"
+                + "<b>Рекомендуемое решение:</b><br>"
+                + "<ul>"
+                + "<li>Проверьте, является ли одна из модификаций обновлением или форком другой.</li>"
+                + "<li>Попробуйте удалить одну из двух конфликтующих модификаций.</li>"
+                + "<li>Просмотрите файлы конфигурации обеих модификаций, чтобы узнать, можно ли изменить идентификатор (ID) объекта.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + instrucciones;
+    }
+    @Override
+    public String nombreFalloFabricRenderingAPI() {
+        return "Отсутствует Fabric Rendering API";
+    }
+
+    @Override
+    public String mensajeFalloFabricRenderingAPI() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // Основное сообщение
+        String mensajeBase = "<span style='color:#" + color + "'>Модификация (обычно Porting Lib или её зависимости) не работает, потому что </span>"
+                + "Fabric Rendering API<span style='color:#" + color + "'> недоступна.</span><br><br>";
+
+        // Инструкции по исправлению (Обновлено для современных версий, где Indium устарел)
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "<b>Рекомендуемое решение:</b><br>"
+                + "Сообщение предлагает установить Indium, но эта модификация устарела в современных версиях игры.<br>"
+                + "<ul>"
+                + "<li><b>Обновите Sodium</b> до версии <b>0.6.0</b> или выше (эта версия включает необходимую поддержку).</li>"
+                + "<li>Убедитесь, что у вас установлен <b>Fabric API</b>, если его ещё нет.</li>"
+                + "<li>Если вы используете старую версию игры (1.20.6 или ниже), тогда установите Indium.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + instrucciones;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+	
+	
+	
+	
+	
+	
 }

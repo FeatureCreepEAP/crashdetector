@@ -1302,11 +1302,34 @@ public class Arabe implements Idioma {
 		return "احذف مجلد العالم '" + nombreMundo + "'";
 	}
 
+	/**
+	 * يُرجع رسالة الخطأ للكيانات أو كيانات الكتل المُشكِلة،
+	 * مع تفصيل خطوات الاسترداد حسب المنصة.
+	 */
 	@Override
 	public String mensajeTickingEntidadBloque(String nombre, String tipo, int[] coordenadas) {
 		String coords = "(" + coordenadas[0] + ", " + coordenadas[1] + ", " + coordenadas[2] + ")";
-		return "<b style='color:#" + config.obtenerColorError() + "'>الكيان الكتلي '" + nombre + "' من النوع '" + tipo
-				+ "' في الموقع " + coords + " يسبب أخطاء أثناء التحديثات.</b> ";
+		String color = config.obtenerColorError();
+		
+		// الرسالة الرئيسية: النص الوصفي فقط يحمل لون الخطأ
+		String mensajeBase = "<span style='color:#" + color + "'>الكيان أو كيان الكتلة '</span>" 
+				+ nombre + "<span style='color:#" + color + "'>' من النوع '</span>" 
+				+ tipo + "<span style='color:#" + color + "'>' في الموقع </span>" 
+				+ coords + "<span style='color:#" + color + "'> يُسبب أخطاء ticking.</span><br><br>";
+
+		// تعليمات الإصلاح
+		String instrucciones = "<span style='color:#" + color + "'>"
+				+ "تعليمات الاسترداد:<br>"
+				+ "1. **MCForge**: انتقل إلى '[nombre_del_mundo]/serverconfig/forge-server.toml'.<br>"
+				+ "2. **NeoForge**: انتقل إلى 'config/neoforge-server.toml'.<br>"
+				+ "   *(ملاحظة: في الألعاب المحلية/Singleplayer، توجد العوالم في مجلد 'saves')*.<br>"
+				+ "3. غيّر **removeErroringBlockEntities** و **removeErroringEntities** إلى **true**.<br><br>"
+				+ "خيارات أخرى:<br>"
+				+ "- **MCEdit**: استخدمه لحذف الكيان يدويًا عند الإحداثيات المُشار إليها.<br>"
+				+ "- **Neruina (Mod)**: قد يمنع التعطّل، لكنه لا يعمل دائمًا وقد يُصعّب عملية التصحيح عند تثبيته."
+				+ "</span>";
+
+		return mensajeBase + instrucciones;
 	}
 
 	@Override
@@ -6789,5 +6812,93 @@ public class Arabe implements Idioma {
 				+ "<li>مسار غير صحيح مُعرّف في سجل المود.</li>" + "<li>تضارب في التبعيات أو إصدار غير متوافق.</li>"
 				+ "</ul>";
 	}
+    @Override
+    public String nombreAnimacionGeckoInexiste() {
+        return "لم يتم العثور على حركة GeckoLib";
+    }
+
+    @Override
+    public String mensajeAnimacionGeckoInexiste(String archivo) {
+        return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+                + "لم تتمكن إضافة من العثور على ملف حركة GeckoLib.</b>" + "<p>الملف المتأثر:</p>"
+                + "<code>" + archivo + "</code>"
+                + "<p>يحدث هذا الخطأ عندما يحاول GeckoLib تحميل حركة غير موجودة في المسار المحدد. "
+                + "على عكس خطأ التحميل (بناء الجملة)، يشير هذا الخطأ إلى أن الملف مفقود فعليًا أو أن المسار خاطئ.</p>"
+                + "<p>الأسباب المحتملة:</p>" + "<ul>"
+                + "<li>تم حذف ملف <code>.json</code> أو لم يتم تضمينه في ملف JAR النهائي للإضافة.</li>"
+                + "<li>خطأ مطبعي في المسار المحدد في الكود (على سبيل المثال: 'animations' مقابل 'animaciones').</li>"
+                + "<li>تناقض بين الأحرف الكبيرة والصغيرة (نظام تشغيل الخادم هو Linux (حساس) والتطوير كان على Windows (غير حساس)).</li>"
+                + "<li>الإضافة غير محدثة بالكامل أو اعتمادياتها تالفة.</li>" + "</ul>";
+    }
+    @Override
+    public String nombreRegistroDuplicadoObjeto() {
+        return "تعارض في التسجيل المكرر";
+    }
+
+    @Override
+    public String mensajeRegistroDuplicadoObjeto(String mod1, String mod2, String objeto) {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // الرسالة الرئيسية: النص الوصفي فقط يحمل لون الخطأ
+        String mensajeBase = "<span style='color:#" + color + "'>تعارض حرج: تمت محاولة تسجيل كائن مرتين. "
+                + "الإضافتان </span>" + mod1 + "<span style='color:#" + color + "'> و </span>" 
+                + mod2 + "<span style='color:#" + color + "'> تحاولان تسجيل نفس الكائن. "
+                + "الكائن المتعارض: </span>" + objeto + "<br><br>";
+
+        // تعليمات الإصلاح
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "يحدث هذا عادةً عندما تضيف إضافتان مختلفتان كائنًا بنفس الاسم "
+                + "في نفس namespace، أو عندما يكون هناك خطأ في كود إحدى الإضافات.<br><br>"
+                + "<b>الحل الموصى به:</b><br>"
+                + "<ul>"
+                + "<li>تحقق مما إذا كانت إحدى الإضافات تحديثًا أو فرعًا للأخرى.</li>"
+                + "<li>حاول حذف إحدى الإضافتين المتعارضتين.</li>"
+                + "<li>راجع ملفات تكوين كلتا الإضافتين لمعرفة ما إذا كان يمكنك تغيير معرف الكائن (ID).</li>"
+                + "</ul></span>";
+
+        return mensajeBase + instrucciones;
+    }
+    
+    @Override
+    public String nombreFalloFabricRenderingAPI() {
+        return "وحدة واجهة تقديم Fabric Rendering API مفقودة";
+    }
+
+    @Override
+    public String mensajeFalloFabricRenderingAPI() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // الرسالة الرئيسية
+        String mensajeBase = "<span style='color:#" + color + "'>فشِل أحد الإضافات (عادةً Porting Lib أو الإضافات المعتمدة عليه) لأن </span>"
+                + "Fabric Rendering API<span style='color:#" + color + "'> غير متوفرة.</span><br><br>";
+
+        // تعليمات الإصلاح (محدثة للإصدارات الحديثة حيث أصبح Indium قديماً)
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "<b>الحل الموصى به:</b><br>"
+                + "تقترح الرسالة تثبيت Indium، لكن هذه الإضافة أصبحت قديمة في الإصدارات الحديثة من اللعبة.<br>"
+                + "<ul>"
+                + "<li><b>حدّث Sodium</b> إلى الإصدار <b>0.6.0</b> أو أحدث (هذا الإصدار يتضمن الدعم اللازم).</li>"
+                + "<li>تأكد من تثبيت <b>Fabric API</b> إذا لم يكن مثبتًا بعد.</li>"
+                + "<li>إذا كنت تستخدم إصدارًا قديمًا من اللعبة (1.20.6 أو أقدم)، فقم بتثبيت Indium.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + instrucciones;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+	
+	
+	
+	
 
 }

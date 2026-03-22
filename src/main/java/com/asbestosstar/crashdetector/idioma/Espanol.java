@@ -1462,13 +1462,33 @@ public class Espanol implements Idioma {
 	}
 
 	/**
-	 * Devuelve el mensaje de error para entidades de bloque problemáticas.
+	 * Devuelve el mensaje de error para entidades o entidades de bloque problemáticas,
+	 * detallando los pasos de recuperación según la plataforma.
 	 */
 	@Override
 	public String mensajeTickingEntidadBloque(String nombre, String tipo, int[] coordenadas) {
 		String coords = "(" + coordenadas[0] + ", " + coordenadas[1] + ", " + coordenadas[2] + ")";
-		return "<b style='color:#" + config.obtenerColorError() + "'>La entidad de bloque '" + nombre + "' del tipo '"
-				+ tipo + "' en la ubicación " + coords + " está causando errores durante el ticking.</b> ";
+		String color = config.obtenerColorError();
+		
+		// Mensaje principal: Solo el texto descriptivo lleva el color de error
+		String mensajeBase = "<span style='color:#" + color + "'>La Entidad o Entidad de Bloque '</span>" 
+				+ nombre + "<span style='color:#" + color + "'>' del tipo '</span>" 
+				+ tipo + "<span style='color:#" + color + "'>' en la ubicación </span>" 
+				+ coords + "<span style='color:#" + color + "'> está causando errores de ticking.</span><br><br>";
+
+		// Instrucciones de reparación
+		String instrucciones = "<span style='color:#" + color + "'>"
+				+ "Instrucciones de recuperación:<br>"
+				+ "1. **MCForge**: Ve a '[nombre_del_mundo]/serverconfig/forge-server.toml'.<br>"
+				+ "2. **NeoForge**: Ve a 'config/neoforge-server.toml'.<br>"
+				+ "   *(Nota: En partidas locales/Singleplayer, los mundos están en la carpeta 'saves')*.<br>"
+				+ "3. Cambia **removeErroringBlockEntities** y **removeErroringEntities** a **true**.<br><br>"
+				+ "Otras opciones:<br>"
+				+ "- **MCEdit**: Úsalo para eliminar manualmente la entidad en las coordenadas indicadas.<br>"
+				+ "- **Neruina (Mod)**: Puede evitar el crash, pero no siempre funciona y puede dificultar el debug al estar instalado."
+				+ "</span>";
+
+		return mensajeBase + instrucciones;
 	}
 
 	/**
@@ -7598,5 +7618,86 @@ public class Espanol implements Idioma {
 				+ "<li>Ruta incorrecta definida en el registro del mod.</li>"
 				+ "<li>Conflictos de dependencias o versión incompatible.</li>" + "</ul>";
 	}
+	
+    @Override
+    public String nombreAnimacionGeckoInexiste() {
+        return "Animación GeckoLib no encontrada";
+    }
+
+    @Override
+    public String mensajeAnimacionGeckoInexiste(String archivo) {
+        return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+                + "Un mod no pudo encontrar un archivo de animación de GeckoLib.</b>" + "<p>Archivo afectado:</p>"
+                + "<code>" + archivo + "</code>"
+                + "<p>Este error ocurre cuando GeckoLib intenta cargar una animación que no existe en la ruta especificada. "
+                + "A diferencia de un error de carga (sintaxis), este error indica que el archivo falta físicamente o la ruta es errónea.</p>"
+                + "<p>Posibles causas:</p>" + "<ul>"
+                + "<li>El archivo <code>.json</code> fue eliminado o no se incluyó en el JAR final del mod.</li>"
+                + "<li>Error tipográfico en la ruta definida en el código (por ejemplo: 'animations' vs 'animaciones').</li>"
+                + "<li>Discrepancia entre mayúsculas y minúsculas (el sistema operativo del servidor es Linux (sensible) y el desarrollo fue en Windows (insensible)).</li>"
+                + "<li>El mod no está completamente actualizado o sus dependencias están rotas.</li>" + "</ul>";
+    }
+    @Override
+    public String nombreRegistroDuplicadoObjeto() {
+        return "Conflicto de Registro Duplicado";
+    }
+
+    @Override
+    public String mensajeRegistroDuplicadoObjeto(String mod1, String mod2, String objeto) {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // Mensaje principal: Solo el texto descriptivo lleva el color de error
+        String mensajeBase = "<span style='color:#" + color + "'>Conflicto crítico: Se ha intentado registrar un objeto dos veces. "
+                + "Los mods </span>" + mod1 + "<span style='color:#" + color + "'> y </span>" 
+                + mod2 + "<span style='color:#" + color + "'> están intentando registrar el mismo objeto. "
+                + "Objeto en conflicto: </span>" + objeto + "<br><br>";
+
+        // Instrucciones de reparación
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "Esto generalmente ocurre cuando dos mods diferentes añaden un objeto con el mismo nombre "
+                + "en el mismo namespace, o cuando hay un error en el código de uno de los mods.<br><br>"
+                + "<b>Solución recomendada:</b><br>"
+                + "<ul>"
+                + "<li>Verifica si uno de los mods es una actualización o bifurcación del otro.</li>"
+                + "<li>Intenta eliminar uno de los dos mods conflictivos.</li>"
+                + "<li>Revisa los archivos de configuración de ambos mods para ver si puedes cambiar el ID del objeto.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + instrucciones;
+    }
+    @Override
+    public String nombreFalloFabricRenderingAPI() {
+        return "Falta Fabric Rendering API";
+    }
+
+    @Override
+    public String mensajeFalloFabricRenderingAPI() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // Mensaje principal
+        String mensajeBase = "<span style='color:#" + color + "'>Un mod (generalmente Porting Lib o sus dependientes) ha fallado porque la </span>"
+                + "Fabric Rendering API<span style='color:#" + color + "'> no está disponible.</span><br><br>";
+
+        // Instrucciones de reparación (Actualizadas para versiones modernas donde Indium es obsoleto)
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "<b>Solución recomendada:</b><br>"
+                + "El mensaje sugiere instalar Indium, pero este mod está obsoleto en versiones modernas del juego.<br>"
+                + "<ul>"
+                + "<li><b>Actualiza Sodium</b> a la versión <b>0.6.0</b> o superior (esta versión incluye el soporte necesario).</li>"
+                + "<li>Asegúrate de tener instalado <b>Fabric API</b> si aún no lo tienes.</li>"
+                + "<li>Si usas una versión antigua del juego (1.20.6 o inferior), entonces instala Indium.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + instrucciones;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 }

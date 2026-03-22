@@ -1270,11 +1270,34 @@ public class Japones implements Idioma {
 		return "'" + nombreMundo + "' ワールドフォルダを削除してください。";
 	}
 
+	/**
+	 * 問題のあるエンティティまたはブロックエンティティのエラーメッセージを返し、
+	 * プラットフォームに応じた復旧手順を詳細に説明します。
+	 */
 	@Override
 	public String mensajeTickingEntidadBloque(String nombre, String tipo, int[] coordenadas) {
 		String coords = "(" + coordenadas[0] + ", " + coordenadas[1] + ", " + coordenadas[2] + ")";
-		return "<b style='color:#" + config.obtenerColorError() + "'>座標 " + coords + " のブロックエンティティ '" + nombre
-				+ "'（タイプ: '" + tipo + "'）がティッキング中にエラーを引き起こしています。</b> ";
+		String color = config.obtenerColorError();
+		
+		// メインメッセージ：説明テキストのみエラー色を適用
+		String mensajeBase = "<span style='color:#" + color + "'>エンティティまたはブロックエンティティ '</span>" 
+				+ nombre + "<span style='color:#" + color + "'>' タイプ '</span>" 
+				+ tipo + "<span style='color:#" + color + "'>' 位置 </span>" 
+				+ coords + "<span style='color:#" + color + "'> で ticking エラーを引き起こしています。</span><br><br>";
+
+		// 修復手順
+		String instrucciones = "<span style='color:#" + color + "'>"
+				+ "復旧手順:<br>"
+				+ "1. **MCForge**: '[nombre_del_mundo]/serverconfig/forge-server.toml' に移動します。<br>"
+				+ "2. **NeoForge**: 'config/neoforge-server.toml' に移動します。<br>"
+				+ "   *（注：ローカルゲーム/Singleplayer では、ワールドは 'saves' フォルダ内にあります）*。<br>"
+				+ "3. **removeErroringBlockEntities** と **removeErroringEntities** を **true** に変更します。<br><br>"
+				+ "その他のオプション:<br>"
+				+ "- **MCEdit**: 指定された座標でエンティティを手動で削除するために使用します。<br>"
+				+ "- **Neruina (Mod)**: クラッシュを防ぐ可能性がありますが、常に機能するとは限らず、インストールするとデバッグが困難になる場合があります。"
+				+ "</span>";
+
+		return mensajeBase + instrucciones;
 	}
 
 	@Override
@@ -6606,5 +6629,84 @@ public class Japones implements Idioma {
 				+ "<li>ファイルは削除されましたが、コード内でまだ参照されています。</li>" + "<li>JSON ファイル内に構文エラーがあります。</li>"
 				+ "<li>Mod レジストリで定義されたパスが正しくありません。</li>" + "<li>依存関係の競合または互換性のないバージョン。</li>" + "</ul>";
 	}
+    @Override
+    public String nombreAnimacionGeckoInexiste() {
+        return "GeckoLib アニメーションが見つかりません";
+    }
+
+    @Override
+    public String mensajeAnimacionGeckoInexiste(String archivo) {
+        return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+                + "Mod が GeckoLib のアニメーションファイルを見つけられませんでした。</b>" + "<p>影響を受けたファイル:</p>"
+                + "<code>" + archivo + "</code>"
+                + "<p>このエラーは、GeckoLib が指定されたパスに存在しないアニメーションを読み込もうとした場合に発生します。 "
+                + "読み込みエラー（構文）とは異なり、このエラーはファイルが物理的に欠落しているか、パスが誤っていることを示します。</p>"
+                + "<p>考えられる原因:</p>" + "<ul>"
+                + "<li><code>.json</code> ファイルが削除されたか、Mod の最終 JAR に含まれていません。</li>"
+                + "<li>コードで定義されたパスのタイポ（例：'animations' 対 'animaciones'）。</li>"
+                + "<li>大文字と小文字の不一致（サーバーの OS は Linux（区別する）で、開発は Windows（区別しない）でした）。</li>"
+                + "<li>Mod が完全に更新されていないか、依存関係が壊れています。</li>" + "</ul>";
+    }
+    @Override
+    public String nombreRegistroDuplicadoObjeto() {
+        return "重複登録の競合";
+    }
+
+    @Override
+    public String mensajeRegistroDuplicadoObjeto(String mod1, String mod2, String objeto) {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // メインメッセージ：説明テキストのみエラー色を適用
+        String mensajeBase = "<span style='color:#" + color + "'>重大な競合：オブジェクトの登録が二重に試みられました。 "
+                + "Mod </span>" + mod1 + "<span style='color:#" + color + "'> と </span>" 
+                + mod2 + "<span style='color:#" + color + "'> が同じオブジェクトを登録しようとしています。 "
+                + "競合オブジェクト： </span>" + objeto + "<br><br>";
+
+        // 修復手順
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "これは通常、異なる 2 つの Mod が同じ namespace 内に同名のオブジェクトを追加した場合、 "
+                + "またはどちらかの Mod のコードにエラーがある場合に発生します。<br><br>"
+                + "<b>推奨される解決策：</b><br>"
+                + "<ul>"
+                + "<li>一方の Mod がもう一方の更新版またはフォークかどうか確認してください。</li>"
+                + "<li>競合する 2 つの Mod のうち一方を削除してみてください。</li>"
+                + "<li>両方の Mod の設定ファイルを確認し、オブジェクトの ID を変更できるか検討してください。</li>"
+                + "</ul></span>";
+
+        return mensajeBase + instrucciones;
+    }
+    @Override
+    public String nombreFalloFabricRenderingAPI() {
+        return "Fabric Rendering API が見つかりません";
+    }
+
+    @Override
+    public String mensajeFalloFabricRenderingAPI() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // メインメッセージ
+        String mensajeBase = "<span style='color:#" + color + "'>Mod（通常は Porting Lib またはその依存関係）が失敗しました。理由は </span>"
+                + "Fabric Rendering API<span style='color:#" + color + "'> が利用できないためです。</span><br><br>";
+
+        // 修復手順（現代バージョンでは Indium が廃れているため更新済み）
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "<b>推奨される解決策：</b><br>"
+                + "メッセージは Indium のインストールを提案していますが、この Mod は現代のゲームバージョンでは廃れています。<br>"
+                + "<ul>"
+                + "<li><b>Sodium</b> をバージョン <b>0.6.0</b> 以上に更新してください（このバージョンには必要なサポートが含まれています）。</li>"
+                + "<li>まだインストールしていない場合は、<b>Fabric API</b> がインストールされていることを確認してください。</li>"
+                + "<li>古いゲームバージョン（1.20.6 以下）を使用している場合は、Indium をインストールしてください。</li>"
+                + "</ul></span>";
+
+        return mensajeBase + instrucciones;
+    }
+	
+	
+    
+    
+    
+    
+	
+	
 
 }

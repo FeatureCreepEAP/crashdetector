@@ -300,7 +300,16 @@ public class Analizador {
 		verificaciones.add(new ProblemaAssetsDirFaltante());
 		verificaciones.add(new ProblemaCupboardVersion());
 		verificaciones.add(new AnimacionGeckoLibNoEncontrada());
+		verificaciones.add(new AnimacionGeckoLibInExiste());
+		verificaciones.add(new RegistroDuplicadoObjeto());
+		verificaciones.add(new FalloFabricRenderingAPI());
 
+		
+		
+		
+		
+		
+		
 		verificaciones.add(new PirataMC());
 		verificaciones.add(new LanzerNoAnimado());
 		verificaciones.add(new LanzerDesAnimado());

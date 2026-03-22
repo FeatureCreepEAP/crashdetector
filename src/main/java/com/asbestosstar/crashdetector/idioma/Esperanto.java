@@ -1299,11 +1299,34 @@ public class Esperanto implements Idioma {
 		return "Forigu la mondodossieron '" + nombreMundo + "'";
 	}
 
+	/**
+	 * Redonas la erarmesaĝon por problemaj entoj aŭ blokontoj,
+	 * detale priskribante la riparo-paŝojn laŭ la platformo.
+	 */
 	@Override
 	public String mensajeTickingEntidadBloque(String nombre, String tipo, int[] coordenadas) {
 		String coords = "(" + coordenadas[0] + ", " + coordenadas[1] + ", " + coordenadas[2] + ")";
-		return "<b style='color:#" + config.obtenerColorError() + "'>La bloka ento '" + nombre + "' de tipo '" + tipo
-				+ "' je la koordinatoj " + coords + " kaŭzas erarojn dum takto.</b> ";
+		String color = config.obtenerColorError();
+		
+		// Ĉefa mesaĝo: Nur la priskriba teksto havas la erarkoloron
+		String mensajeBase = "<span style='color:#" + color + "'>La Ento aŭ Blokento '</span>" 
+				+ nombre + "<span style='color:#" + color + "'>' de la tipo '</span>" 
+				+ tipo + "<span style='color:#" + color + "'>' ĉe la loko </span>" 
+				+ coords + "<span style='color:#" + color + "'> kaŭzas ticking-erarojn.</span><br><br>";
+
+		// Ripar-instrukcioj
+		String instrucciones = "<span style='color:#" + color + "'>"
+				+ "Ripar-instrukcioj:<br>"
+				+ "1. **MCForge**: Iru al '[nombre_del_mundo]/serverconfig/forge-server.toml'.<br>"
+				+ "2. **NeoForge**: Iru al 'config/neoforge-server.toml'.<br>"
+				+ "   *(Noto: En lokaj ludoj/Singleplayer, la mondoj estas en la dosierujo 'saves')*.<br>"
+				+ "3. Ŝanĝu **removeErroringBlockEntities** kaj **removeErroringEntities** al **true**.<br><br>"
+				+ "Aliaj ebloj:<br>"
+				+ "- **MCEdit**: Uzu ĝin por mane forigi la enton ĉe la indikitaj koordinatoj.<br>"
+				+ "- **Neruina (Mod)**: Povas eviti la kraŝon, sed ne ĉiam funkcias kaj povas malfaciligi la debug-adon kiam instalite."
+				+ "</span>";
+
+		return mensajeBase + instrucciones;
 	}
 
 	@Override
@@ -6858,4 +6881,86 @@ public class Esperanto implements Idioma {
 				+ "<li>Konfliktoj de dependecoj aŭ nekongrua versio.</li>" + "</ul>";
 	}
 
+	
+    @Override
+    public String nombreAnimacionGeckoInexiste() {
+        return "Animacio GeckoLib ne trovita";
+    }
+
+    @Override
+    public String mensajeAnimacionGeckoInexiste(String archivo) {
+        return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+                + "Modo ne povis trovi animacian dosieron de GeckoLib.</b>" + "<p>Afektita dosiero:</p>"
+                + "<code>" + archivo + "</code>"
+                + "<p>Ĉi tiu eraro okazas kiam GeckoLib provas ŝargi animacion, kiu ne ekzistas ĉe la specifita vojo. "
+                + "Malsame al ŝargeraro (sintakso), ĉi tiu eraro indikas, ke la dosiero fizike mankas aŭ la vojo estas malĝusta.</p>"
+                + "<p>Eblaj kaŭzoj:</p>" + "<ul>"
+                + "<li>La dosiero <code>.json</code> estis forigita aŭ ne inkluzivita en la fina JAR de la modo.</li>"
+                + "<li>Tajperaro en la vojo difinita en la kodo (ekzemple: 'animations' vs 'animaciones').</li>"
+                + "<li>Malakordo inter majuskloj kaj minuskloj (la operaciumo de la servilo estas Linux (sentema) kaj la disvolviĝo estis en Windows (nesentema)).</li>"
+                + "<li>La modo ne estas plene ĝisdatigita aŭ ĝiaj dependaĵoj estas rompitaj.</li>" + "</ul>";
+    }
+    @Override
+    public String nombreRegistroDuplicadoObjeto() {
+        return "Konflikto de Duobla Registro";
+    }
+
+    @Override
+    public String mensajeRegistroDuplicadoObjeto(String mod1, String mod2, String objeto) {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // Ĉefa mesaĝo: Nur la priskriba teksto havas la erarkoloron
+        String mensajeBase = "<span style='color:#" + color + "'>Kritika konflikto: Oni provis registri objekton dufoje. "
+                + "La modoj </span>" + mod1 + "<span style='color:#" + color + "'> kaj </span>" 
+                + mod2 + "<span style='color:#" + color + "'> provas registri la saman objekton. "
+                + "Konflikta objekto: </span>" + objeto + "<br><br>";
+
+        // Ripar-instrukcioj
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "Ĉi tio ĝenerale okazas kiam du malsamaj modoj aldonas objekton kun la sama nomo "
+                + "en la sama namespace, aŭ kiam estas eraro en la kodo de unu el la modoj.<br><br>"
+                + "<b>Rekomendita solvo:</b><br>"
+                + "<ul>"
+                + "<li>Kontrolu ĉu unu el la modoj estas ĝisdatigo aŭ branĉo de la alia.</li>"
+                + "<li>Provu forigi unu el la du konfliktaj modoj.</li>"
+                + "<li>Reviziu la agordajn dosierojn de ambaŭ modoj por vidi ĉu vi povas ŝanĝi la ID de la objekto.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + instrucciones;
+    }
+    
+    @Override
+    public String nombreFalloFabricRenderingAPI() {
+        return "Mankas Fabric Rendering API";
+    }
+
+    @Override
+    public String mensajeFalloFabricRenderingAPI() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // Ĉefa mesaĝo
+        String mensajeBase = "<span style='color:#" + color + "'>Modo (ĝenerale Porting Lib aŭ ĝiaj dependaĵoj) malsukcesis ĉar la </span>"
+                + "Fabric Rendering API<span style='color:#" + color + "'> ne disponeblas.</span><br><br>";
+
+        // Ripar-instrukcioj (Ĝisdatigitaj por modernaj versioj kie Indium estas malnova)
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "<b>Rekomendita solvo:</b><br>"
+                + "La mesaĝo sugestas instali Indium, sed ĉi tiu modo estas malnova en modernaj versioj de la ludo.<br>"
+                + "<ul>"
+                + "<li><b>Ĝisdatigu Sodium</b> al versio <b>0.6.0</b> aŭ pli nova (ĉi tiu versio inkluzivas la necesan subtenon).</li>"
+                + "<li>Certigu, ke vi havas instalitan <b>Fabric API</b> se vi ankoraŭ ne havas ĝin.</li>"
+                + "<li>Se vi uzas malnovan version de la ludo (1.20.6 aŭ pli malnova), tiam instalu Indium.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + instrucciones;
+    }
+    
+    
+    
+    
+    
+	
+	
+	
+	
 }

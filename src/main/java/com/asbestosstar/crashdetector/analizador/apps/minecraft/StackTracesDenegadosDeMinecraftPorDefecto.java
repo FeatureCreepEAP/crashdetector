@@ -264,6 +264,13 @@ public class StackTracesDenegadosDeMinecraftPorDefecto {
 				.add(contentido -> contentido.contains("java.lang.NoSuchFieldException: delegate")
 						&& contentido.contains("io.gitlab.jfronny.libjf.unsafe.MixinPlugin"));
 
+		
+		
+		
+		VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains("com.tiviacz.travelersbackpack.TravelersBackpack.readOldCommonConfig"));
+
+		
+		
 		// nada
 
 //		VerificacionDeStackTrace.denegados.add(c -> c.contains("Could not find any mod for modid 'rechiseled'!")

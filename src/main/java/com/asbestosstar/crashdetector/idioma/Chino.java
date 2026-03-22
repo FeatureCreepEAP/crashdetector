@@ -1239,12 +1239,64 @@ public class Chino implements Idioma {
 		return "删除世界文件夹 '" + nombreMundo + "'";
 	}
 
+	/**
+	 * 返回有关问题实体或方块实体的错误消息，
+	 * 并根据平台详细说明恢复步骤。
+	 */
 	@Override
 	public String mensajeTickingEntidadBloque(String nombre, String tipo, int[] coordenadas) {
 		String coords = "(" + coordenadas[0] + ", " + coordenadas[1] + ", " + coordenadas[2] + ")";
-		return "<b style='color:#" + config.obtenerColorError() + "'>位于 " + coords + " 的区块实体 '" + nombre + "'（类型为 '"
-				+ tipo + "'）在tick时发生错误。</b> ";
+		String color = config.obtenerColorError();
+		
+		// 主要消息：仅描述性文本使用错误颜色
+		String mensajeBase = "<span style='color:#" + color + "'>实体或方块实体 '</span>" 
+				+ nombre + "<span style='color:#" + color + "'>' 类型 '</span>" 
+				+ tipo + "<span style='color:#" + color + "'>' 位于位置 </span>" 
+				+ coords + "<span style='color:#" + color + "'> 正在导致 ticking 错误。</span><br><br>";
+
+		// 修复说明
+		String instrucciones = "<span style='color:#" + color + "'>"
+				+ "恢复说明:<br>"
+				+ "1. **MCForge**: 前往 '[nombre_del_mundo]/serverconfig/forge-server.toml'。<br>"
+				+ "2. **NeoForge**: 前往 'config/neoforge-server.toml'。<br>"
+				+ "   *（注意：在本地游戏/Singleplayer 中，世界文件位于 'saves' 文件夹内）*。<br>"
+				+ "3. 将 **removeErroringBlockEntities** 和 **removeErroringEntities** 设置为 **true**。<br><br>"
+				+ "其他选项:<br>"
+				+ "- **MCEdit**: 用于手动删除指定坐标处的实体。<br>"
+				+ "- **Neruina (Mod)**: 可能避免崩溃，但并不总是有效，且安装后可能增加调试难度。"
+				+ "</span>";
+
+		return mensajeBase + instrucciones;
 	}
+    @Override
+    public String nombreRegistroDuplicadoObjeto() {
+        return "重复注册冲突";
+    }
+
+    @Override
+    public String mensajeRegistroDuplicadoObjeto(String mod1, String mod2, String objeto) {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // 主要消息：仅描述性文本使用错误颜色
+        String mensajeBase = "<span style='color:#" + color + "'>严重冲突：尝试重复注册同一对象。 "
+                + "模组 </span>" + mod1 + "<span style='color:#" + color + "'> 和 </span>" 
+                + mod2 + "<span style='color:#" + color + "'> 正在尝试注册相同的对象。 "
+                + "冲突对象： </span>" + objeto + "<br><br>";
+
+        // 修复说明
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "这通常发生在两个不同的模组在同一个 namespace 中添加了同名的对象， "
+                + "或者其中一个模组的代码存在错误时。<br><br>"
+                + "<b>推荐解决方案：</b><br>"
+                + "<ul>"
+                + "<li>检查其中一个模组是否为另一个模组的更新版本或分支。</li>"
+                + "<li>尝试移除两个冲突模组中的一个。</li>"
+                + "<li>检查两个模组的配置文件，查看是否可以更改对象的 ID。</li>"
+                + "</ul></span>";
+
+        return mensajeBase + instrucciones;
+    }
+    
 
 	@Override
 	public String nombreProblemaTickingEntidadBloque() {
@@ -6443,5 +6495,52 @@ public class Chino implements Idioma {
 				+ "<li>文件已被删除，但代码中仍在引用它。</li>" + "<li>JSON 文件内部存在语法错误。</li>" + "<li>模组注册中定义的路径不正确。</li>"
 				+ "<li>依赖冲突或版本不兼容。</li>" + "</ul>";
 	}
+    @Override
+    public String nombreAnimacionGeckoInexiste() {
+        return "未找到 GeckoLib 动画";
+    }
 
+    @Override
+    public String mensajeAnimacionGeckoInexiste(String archivo) {
+        return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+                + "某个模组无法找到 GeckoLib 动画文件。</b>" + "<p>受影响文件:</p>"
+                + "<code>" + archivo + "</code>"
+                + "<p>当 GeckoLib 尝试加载指定路径中不存在的动画时，会发生此错误。 "
+                + "与加载错误（语法）不同，此错误表明文件物理缺失或路径错误。</p>"
+                + "<p>可能的原因:</p>" + "<ul>"
+                + "<li><code>.json</code> 文件已被删除或未包含在模组的最终 JAR 文件中。</li>"
+                + "<li>代码中定义的路径存在拼写错误（例如：'animations' 与 'animaciones'）。</li>"
+                + "<li>大小写不一致（服务器操作系统为 Linux（区分大小写），而开发环境为 Windows（不区分））。</li>"
+                + "<li>模组未完全更新或其依赖项已损坏。</li>" + "</ul>";
+    }
+    @Override
+    public String nombreFalloFabricRenderingAPI() {
+        return "缺少 Fabric Rendering API";
+    }
+
+    @Override
+    public String mensajeFalloFabricRenderingAPI() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // 主要消息
+        String mensajeBase = "<span style='color:#" + color + "'>某个模组（通常是 Porting Lib 或其依赖项）失败，因为 </span>"
+                + "Fabric Rendering API<span style='color:#" + color + "'> 不可用。</span><br><br>";
+
+        // 修复说明（针对现代版本更新，Indium 已过时）
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "<b>推荐解决方案：</b><br>"
+                + "消息建议安装 Indium，但该模组在现代游戏版本中已过时。<br>"
+                + "<ul>"
+                + "<li>将 <b>Sodium</b> 更新至 <b>0.6.0</b> 或更高版本（此版本包含所需支持）。</li>"
+                + "<li>如果尚未安装，请确保已安装 <b>Fabric API</b>。</li>"
+                + "<li>如果您使用的是旧版游戏（1.20.6 或更低版本），则安装 Indium。</li>"
+                + "</ul></span>";
+
+        return mensajeBase + instrucciones;
+    }
+	
+	
+	
+	
+	
 }

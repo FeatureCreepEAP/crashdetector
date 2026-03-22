@@ -1266,11 +1266,34 @@ public class Coreano implements Idioma {
 		return "'" + nombreMundo + "' 세계 폴더 삭제";
 	}
 
+	/**
+	 * 문제되는 개체 또는 블럭개체에 대한 오류 메시지를 반환하며,
+	 * 플랫폼별 복구 단계를 상세히 설명합니다.
+	 */
 	@Override
 	public String mensajeTickingEntidadBloque(String nombre, String tipo, int[] coordenadas) {
 		String coords = "(" + coordenadas[0] + ", " + coordenadas[1] + ", " + coordenadas[2] + ")";
-		return "<b style='color:#" + config.obtenerColorError() + "'>" + coords + " 위치의 블록 엔티티 '" + nombre + "'(유형: '"
-				+ tipo + "')가 틱 중에 오류를 일으키고 있습니다.</b> ";
+		String color = config.obtenerColorError();
+		
+		// 주요 메시지: 설명 텍스트만 오류 색상을 적용
+		String mensajeBase = "<span style='color:#" + color + "'>개체 또는 블럭개체 '</span>" 
+				+ nombre + "<span style='color:#" + color + "'>' 의 유형 '</span>" 
+				+ tipo + "<span style='color:#" + color + "'>' 이 위치 </span>" 
+				+ coords + "<span style='color:#" + color + "'> 에서 ticking 오류를 일으키고 있습니다.</span><br><br>";
+
+		// 복구 지침
+		String instrucciones = "<span style='color:#" + color + "'>"
+				+ "복구 지침:<br>"
+				+ "1. **MCForge**: '[nombre_del_mundo]/serverconfig/forge-server.toml' 로 이동하십시오.<br>"
+				+ "2. **NeoForge**: 'config/neoforge-server.toml' 로 이동하십시오.<br>"
+				+ "   *(참고: 로컬 게임/Singleplayer 에서 세계파일은 'saves' 폴더에 있습니다)*.<br>"
+				+ "3. **removeErroringBlockEntities** 와 **removeErroringEntities** 를 **true** 로 변경하십시오.<br><br>"
+				+ "기타 옵션:<br>"
+				+ "- **MCEdit**: 지정된 좌표에서 개체를 수동으로 삭제하는 데 사용하십시오.<br>"
+				+ "- **Neruina (Mod)**: 충돌을 방지할 수 있지만 항상 작동하는 것은 아니며 설치 시 디버그가 어려울 수 있습니다."
+				+ "</span>";
+
+		return mensajeBase + instrucciones;
 	}
 
 	@Override
@@ -6592,5 +6615,86 @@ public class Coreano implements Idioma {
 				+ "<li>JSON 파일 내부에 문법 오류가 있습니다.</li>" + "<li>모드 등록부에 정의된 경로가 잘못되었습니다.</li>"
 				+ "<li>의존성 충돌 또는 호환되지 않는 판본입니다.</li>" + "</ul>";
 	}
+    @Override
+    public String nombreAnimacionGeckoInexiste() {
+        return "GeckoLib 움직임파일을 찾을수 없음";
+    }
 
+    @Override
+    public String mensajeAnimacionGeckoInexiste(String archivo) {
+        return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+                + "한 모드가 GeckoLib 움직임파일을 찾지 못하였습니다.</b>" + "<p>영향을 받은 파일:</p>"
+                + "<code>" + archivo + "</code>"
+                + "<p>이 오류는 GeckoLib 가 지정된 로정에 존재하지 않는 움직임을 적재하려 할 때 발생합니다. "
+                + "적재 오류 (문법) 와 달리, 이 오류는 파일이 물리적으로 없거나 로정이 틀렸음을 나타냅니다.</p>"
+                + "<p>가능한 원인:</p>" + "<ul>"
+                + "<li><code>.json</code> 파일이 삭제되거나 모드의 최종 JAR 에 포함되지 않았습니다.</li>"
+                + "<li>코드에 정의된 로정의 타이포오류 (례: 'animations' 대 'animaciones').</li>"
+                + "<li>대소문자 불일치 (봉사기의 운영체계는 Linux (구분함) 이고 개발은 Windows (구분 안함) 에서 진행됨).</li>"
+                + "<li>모드가 완전히 갱신되지 않았거나 의존관계가 깨졌습니다.</li>" + "</ul>";
+    }
+    @Override
+    public String nombreRegistroDuplicadoObjeto() {
+        return "중복등록 충돌";
+    }
+
+    @Override
+    public String mensajeRegistroDuplicadoObjeto(String mod1, String mod2, String objeto) {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // 주요 메시지: 설명 텍스트만 오류 색상을 적용
+        String mensajeBase = "<span style='color:#" + color + "'>중요 충돌: 개체를 두 번 등록하려 하였습니다. "
+                + "모드 </span>" + mod1 + "<span style='color:#" + color + "'> 와 </span>" 
+                + mod2 + "<span style='color:#" + color + "'> 가 동일한 개체를 등록하려 하고 있습니다. "
+                + "충돌 개체: </span>" + objeto + "<br><br>";
+
+        // 복구 지침
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "이는 일반적으로 두 개의 서로 다른 모드가 동일한 namespace 에 같은 이름을 가진 개체를 추가하거나, "
+                + "모드 코드 중 하나에 오류가 있을 때 발생합니다.<br><br>"
+                + "<b>권장 해결 방법:</b><br>"
+                + "<ul>"
+                + "<li>한 모드가 다른 모드의 갱신 버전이거나 분기인지 확인하십시오.</li>"
+                + "<li>충돌하는 두 모드 중 하나를 제거해 보십시오.</li>"
+                + "<li>두 모드의 구성 파일을 검토하여 개체의 ID 를 변경할 수 있는지 확인하십시오.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + instrucciones;
+    }
+    
+    @Override
+    public String nombreFalloFabricRenderingAPI() {
+        return "Fabric Rendering API 없음";
+    }
+
+    @Override
+    public String mensajeFalloFabricRenderingAPI() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // 주요 메시지
+        String mensajeBase = "<span style='color:#" + color + "'>한 모드 (일반적으로 Porting Lib 또는 그에 의존하는 모드) 가 </span>"
+                + "Fabric Rendering API<span style='color:#" + color + "'> 를 사용할수 없어 실패하였습니다.</span><br><br>";
+
+        // 복구 지침 (현대 버전에서는 Indium 이 구식이므로 갱신됨)
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "<b>권장 해결 방법:</b><br>"
+                + "메시지는 Indium 설치를 제안하지만, 이 모드는 현대 게임 버전에서 구식이 되었습니다.<br>"
+                + "<ul>"
+                + "<li><b>Sodium</b> 을 <b>0.6.0</b> 또는 그 이상 버전으로 갱신하십시오 (이 버전에는 필요한 지지가 포함됨).</li>"
+                + "<li>아직 설치하지 않았다면 <b>Fabric API</b> 가 설치되여 있는지 확인하십시오.</li>"
+                + "<li>오래된 게임 버전 (1.20.6 이하) 을 사용중이라면 Indium 을 설치하십시오.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + instrucciones;
+    }
+    
+    
+    
+    
+    
+    
+	
+	
+	
+	
 }

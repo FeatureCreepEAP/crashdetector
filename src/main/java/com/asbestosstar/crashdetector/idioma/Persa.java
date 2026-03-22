@@ -1297,11 +1297,34 @@ public class Persa implements Idioma {
 		return "پوشه جهان '" + nombreMundo + "' را حذف کنید.";
 	}
 
+	/**
+	 * پیام خطا برای موجودیت‌ها یا موجودیت‌های بلوکی مشکل‌دار را برمی‌گرداند،
+	 * و مراحل بازیابی را بسته به پلتفرم به تفصیل شرح می‌دهد.
+	 */
 	@Override
 	public String mensajeTickingEntidadBloque(String nombre, String tipo, int[] coordenadas) {
 		String coords = "(" + coordenadas[0] + ", " + coordenadas[1] + ", " + coordenadas[2] + ")";
-		return "<b style='color:#" + config.obtenerColorError() + "'>نمونه بلوکی '" + nombre + "' از نوع '" + tipo
-				+ "' در موقعیت " + coords + " باعث ایجاد خطا در ticking شده است.</b> ";
+		String color = config.obtenerColorError();
+		
+		// پیام اصلی: فقط متن توصیفی رنگ خطا را دارد
+		String mensajeBase = "<span style='color:#" + color + "'>موجودیت یا موجودیت بلوکی '</span>" 
+				+ nombre + "<span style='color:#" + color + "'>' از نوع '</span>" 
+				+ tipo + "<span style='color:#" + color + "'>' در موقعیت </span>" 
+				+ coords + "<span style='color:#" + color + "'> در حال ایجاد خطاهای ticking است.</span><br><br>";
+
+		// دستورالعمل‌های تعمیر
+		String instrucciones = "<span style='color:#" + color + "'>"
+				+ "دستورالعمل‌های بازیابی:<br>"
+				+ "1. **MCForge**: به '[nombre_del_mundo]/serverconfig/forge-server.toml' بروید.<br>"
+				+ "2. **NeoForge**: به 'config/neoforge-server.toml' بروید.<br>"
+				+ "   *(توجه: در بازی‌های محلی/Singleplayer، دنیاها در پوشه 'saves' قرار دارند)*.<br>"
+				+ "3. مقدار **removeErroringBlockEntities** و **removeErroringEntities** را به **true** تغییر دهید.<br><br>"
+				+ "گزینه‌های دیگر:<br>"
+				+ "- **MCEdit**: از آن برای حذف دستی موجودیت در مختصات مشخص‌شده استفاده کنید.<br>"
+				+ "- **Neruina (Mod)**: ممکن است از کرش جلوگیری کند، اما همیشه کار نمی‌کند و ممکن است هنگام نصب، دیباگ را دشوارتر کند."
+				+ "</span>";
+
+		return mensajeBase + instrucciones;
 	}
 
 	@Override
@@ -6845,5 +6868,90 @@ public class Persa implements Idioma {
 				+ "<li>مسیر نادرست در ثبت ماد تعریف شده است.</li>" + "<li>تضاد وابستگی‌ها یا نسخه ناسازگار.</li>"
 				+ "</ul>";
 	}
+	
+    @Override
+    public String nombreAnimacionGeckoInexiste() {
+        return "انیمیشن GeckoLib یافت نشد";
+    }
+
+    @Override
+    public String mensajeAnimacionGeckoInexiste(String archivo) {
+        return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+                + "یک مود نتوانست فایل انیمیشن GeckoLib را پیدا کند.</b>" + "<p>فایل تحت تأثیر:</p>"
+                + "<code>" + archivo + "</code>"
+                + "<p>این خطا زمانی رخ می‌دهد که GeckoLib سعی می‌کند انیمیشنی را بارگذاری کند که در مسیر مشخص شده وجود ندارد. "
+                + "برخلاف خطای بارگذاری (نحو)، این خطا نشان می‌دهد که فایل به صورت فیزیکی وجود ندارد یا مسیر اشتباه است.</p>"
+                + "<p>علل احتمالی:</p>" + "<ul>"
+                + "<li>فایل <code>.json</code> حذف شده یا در JAR نهایی مود گنجانده نشده است.</li>"
+                + "<li>خطای تایپی در مسیر تعریف شده در کد (مثلاً: 'animations' در مقابل 'animaciones').</li>"
+                + "<li>عدم تطابق حروف بزرگ و کوچک (سیستم عامل سرور لینوکس است (حساس) و توسعه در ویندوز انجام شده (غیرحساس)).</li>"
+                + "<li>مود به طور کامل به‌روزرسانی نشده یا وابستگی‌های آن خراب است.</li>" + "</ul>";
+    }
+    @Override
+    public String nombreRegistroDuplicadoObjeto() {
+        return "تعارض ثبت تکراری";
+    }
+
+    @Override
+    public String mensajeRegistroDuplicadoObjeto(String mod1, String mod2, String objeto) {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // پیام اصلی: فقط متن توصیفی رنگ خطا را دارد
+        String mensajeBase = "<span style='color:#" + color + "'>تعارض حیاتی: تلاش شده است یک شیء دو بار ثبت شود. "
+                + "مودهای </span>" + mod1 + "<span style='color:#" + color + "'> و </span>" 
+                + mod2 + "<span style='color:#" + color + "'> در حال تلاش برای ثبت همان شیء هستند. "
+                + "شیء متعارض: </span>" + objeto + "<br><br>";
+
+        // دستورالعمل‌های تعمیر
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "این معمولاً زمانی رخ می‌دهد که دو مود مختلف شیئی با همان نام را "
+                + "در همان namespace اضافه کنند، یا زمانی که خطایی در کد یکی از مودها وجود داشته باشد.<br><br>"
+                + "<b>راه‌حل توصیه‌شده:</b><br>"
+                + "<ul>"
+                + "<li>بررسی کنید که آیا یکی از مودها به‌روزرسانی یا انشعابی از دیگری است.</li>"
+                + "<li>سعی کنید یکی از دو مود متعارض را حذف کنید.</li>"
+                + "<li>فایل‌های پیکربندی هر دو مود را بررسی کنید تا ببینید آیا می‌توانید شناسه (ID) شیء را تغییر دهید.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + instrucciones;
+    }
+    @Override
+    public String nombreFalloFabricRenderingAPI() {
+        return "Fabric Rendering API یافت نشد";
+    }
+
+    @Override
+    public String mensajeFalloFabricRenderingAPI() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // پیام اصلی
+        String mensajeBase = "<span style='color:#" + color + "'>یک مود (معمولاً Porting Lib یا وابستگی‌های آن) به دلیل در دسترس نبودن </span>"
+                + "Fabric Rendering API<span style='color:#" + color + "'> با شکست مواجه شده است.</span><br><br>";
+
+        // دستورالعمل‌های تعمیر (به‌روزرسانی شده برای نسخه‌های مدرن که در آن‌ها Indium منسوخ است)
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "<b>راه‌حل توصیه‌شده:</b><br>"
+                + "پیام پیشنهاد نصب Indium را می‌دهد، اما این مود در نسخه‌های مدرن بازی منسوخ شده است.<br>"
+                + "<ul>"
+                + "<li><b>Sodium</b> را به نسخه <b>0.6.0</b> یا بالاتر به‌روزرسانی کنید (این نسخه شامل پشتیبانی لازم است).</li>"
+                + "<li>اگر هنوز نصب نکرده‌اید، مطمئن شوید که <b>Fabric API</b> نصب شده باشد.</li>"
+                + "<li>اگر از نسخه قدیمی بازی (1.20.6 یا پایین‌تر) استفاده می‌کنید، آنگاه Indium را نصب کنید.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + instrucciones;
+    }
+    
+    
+	
+	
+	
+    
+    
+    
+    
+    
+    
+	
+	
 
 }

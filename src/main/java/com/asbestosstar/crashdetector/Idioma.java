@@ -2580,4 +2580,16 @@ public interface Idioma {
 
 	public String nombreAnimacionGeckoNoEncontrada();
 
+	public String mensajeAnimacionGeckoInexiste(String archivo2);
+
+	public String nombreAnimacionGeckoInexiste();
+
+	public String mensajeRegistroDuplicadoObjeto(String mod1, String mod2, String objeto);
+
+	public String nombreRegistroDuplicadoObjeto();
+
+	public String mensajeFalloFabricRenderingAPI();
+
+	public String nombreFalloFabricRenderingAPI();
+
 }
