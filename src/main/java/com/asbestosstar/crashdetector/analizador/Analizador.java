@@ -303,6 +303,7 @@ public class Analizador {
 		verificaciones.add(new AnimacionGeckoLibInExiste());
 		verificaciones.add(new RegistroDuplicadoObjeto());
 		verificaciones.add(new FalloFabricRenderingAPI());
+		verificaciones.add(new RestriccionesDependenciaNoCumplidas());
 
 		
 		

@@ -1,6 +1,7 @@
 package com.asbestosstar.crashdetector.idioma;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.asbestosstar.crashdetector.Config;
@@ -6978,6 +6979,98 @@ public class Ruso implements Idioma {
 
         return mensajeBase + instrucciones;
     }
+    
+    @Override
+    public String nombreRestriccionesDependenciaNoCumplidas() {
+        return "Невыполненные ограничения зависимостей";
+    }
+
+    @Override
+    public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad, List<String[]> conflictos) {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // Основное сообщение
+        String mensajeBase = "<span style='color:#" + color + "'>Найдено </span>" 
+                + cantidad + "<span style='color:#" + color + "'> невыполненных ограничений зависимостей.</span><br><br>";
+
+        // Построение списка конфликтов
+        StringBuilder listaDetalle = new StringBuilder();
+        if (conflictos != null && !conflictos.isEmpty()) {
+            listaDetalle.append("<span style='color:#").append(color).append("'>Конфликты обнаружены в следующих файлах:</span><br><ul>");
+            for (String[] par : conflictos) {
+                String dep = par[0]; // Зависимость
+                String jar = par[1];  // Файл JAR
+                // Переменная в цвете по умолчанию, фиксированный текст в цвете ошибки
+                listaDetalle.append("<li>")
+                            .append("<span style='color:#").append(color).append("'>Файл: </span>")
+                            .append(jar)
+                            .append("<br><span style='color:#").append(color).append("'>Требуется: </span>")
+                            .append(dep)
+                            .append("</li>");
+            }
+            listaDetalle.append("</ul><br>");
+        }
+
+        // Инструкции по исправлению
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "Это происходит, когда две или более модификации требуют разные и несовместимые версии одной и той же внутренней библиотеки.<br><br>"
+                + "<b>Рекомендуемое решение:</b><br>"
+                + "<ul>"
+                + "<li>Попробуйте обновить или удалить модификации, перечисленные выше, чтобы устранить несовместимость.</li>"
+                + "<li>Если вы не можете найти совместимую версию, можно попробовать вручную отредактировать файл <code>mods.toml</code> внутри JAR-файла модификации (используя архиватор, такой как WinRAR или 7-Zip), чтобы изменить или удалить ограничение версии, хотя это может привести к нестабильности.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + listaDetalle.toString() + instrucciones;
+    }
+
+
+    @Override
+    public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad, Map<String, List<String>> conflictosPorMod) {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // Основное сообщение
+        String mensajeBase = "<span style='color:#" + color + "'>Найдено </span>" 
+                + cantidad + "<span style='color:#" + color + "'> невыполненных ограничений зависимостей.</span><br><br>";
+
+        // Построение списка, сгруппированного по модификации
+        StringBuilder listaDetalle = new StringBuilder();
+        if (conflictosPorMod != null && !conflictosPorMod.isEmpty()) {
+            listaDetalle.append("<span style='color:#").append(color).append("'>Задействованные модификации и запрошенные зависимости:</span><br><ul>");
+            
+            for (Map.Entry<String, List<String>> entry : conflictosPorMod.entrySet()) {
+                String archivo = entry.getKey();
+                List<String> dependencias = entry.getValue();
+
+                // Название модификации (цвет по умолчанию)
+                listaDetalle.append("<li><b>").append(archivo).append("</b>");
+                
+                // Список зависимостей для этой модификации
+                listaDetalle.append("<ul>");
+                for (String dep : dependencias) {
+                    // Зависимость (цвет по умолчанию)
+                    listaDetalle.append("<li>").append(dep).append("</li>");
+                }
+                listaDetalle.append("</ul></li>");
+            }
+            listaDetalle.append("</ul><br>");
+        } else {
+            listaDetalle.append("<span style='color:#").append(color).append("'>Не удалось определить конкретные файлы из лога.</span><br>");
+        }
+
+        // Инструкции по исправлению
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "Эта ошибка возникает, когда модификации включают внутренние версии библиотек (JarInJar), которые несовместимы друг с другом.<br><br>"
+                + "<b>Рекомендуемое решение:</b><br>"
+                + "<ul>"
+                + "<li>Просмотрите список выше, чтобы определить, какие модификации запрашивают разные версии одной и той же библиотеки.</li>"
+                + "<li>Попробуйте обновить обе модификации до их последних версий.</li>"
+                + "<li>В крайнем случае, вы можете открыть файл <code>.jar</code> модификации с помощью архиватора (например, WinRAR), отредактировать <code>META-INF/mods.toml</code> и вручную изменить диапазон версий зависимости, хотя это рискованно и может сломать модификацию.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + listaDetalle.toString() + instrucciones;
+    }
+    
+    
     
     
     

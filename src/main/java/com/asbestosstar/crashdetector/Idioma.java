@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 import javax.swing.Icon;
@@ -2591,5 +2592,12 @@ public interface Idioma {
 	public String mensajeFalloFabricRenderingAPI();
 
 	public String nombreFalloFabricRenderingAPI();
+
+	public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad, List<String[]> conflictos);
+
+	public String nombreRestriccionesDependenciaNoCumplidas();
+
+	public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad,
+			Map<String, List<String>> conflictosPorMod);
 
 }

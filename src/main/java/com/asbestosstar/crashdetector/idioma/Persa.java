@@ -1,6 +1,7 @@
 package com.asbestosstar.crashdetector.idioma;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.asbestosstar.crashdetector.Config;
@@ -6940,6 +6941,99 @@ public class Persa implements Idioma {
 
         return mensajeBase + instrucciones;
     }
+    @Override
+    public String nombreRestriccionesDependenciaNoCumplidas() {
+        return "محدودیت‌های وابستگی برآورده نشده";
+    }
+
+    @Override
+    public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad, List<String[]> conflictos) {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // پیام اصلی
+        String mensajeBase = "<span style='color:#" + color + "'>تعداد </span>" 
+                + cantidad + "<span style='color:#" + color + "'> محدودیت وابستگی برآورده نشده یافت شد.</span><br><br>";
+
+        // ساخت لیست تعارضات
+        StringBuilder listaDetalle = new StringBuilder();
+        if (conflictos != null && !conflictos.isEmpty()) {
+            listaDetalle.append("<span style='color:#").append(color).append("'>تعارضات در فایل‌های زیر شناسایی شد:</span><br><ul>");
+            for (String[] par : conflictos) {
+                String dep = par[0]; // وابستگی
+                String jar = par[1];  // فایل JAR
+                // متغیر با رنگ پیش‌فرض، متن ثابت با رنگ خطا
+                listaDetalle.append("<li>")
+                            .append("<span style='color:#").append(color).append("'>فایل: </span>")
+                            .append(jar)
+                            .append("<br><span style='color:#").append(color).append("'>نیازمند: </span>")
+                            .append(dep)
+                            .append("</li>");
+            }
+            listaDetalle.append("</ul><br>");
+        }
+
+        // دستورالعمل‌های تعمیر
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "این اتفاق زمانی رخ می‌دهد که دو یا چند مود به نسخه‌های مختلف و ناسازگار از یک کتابخانه داخلی یکسان نیاز داشته باشند.<br><br>"
+                + "<b>راه‌حل توصیه‌شده:</b><br>"
+                + "<ul>"
+                + "<li>سعی کنید مودهای فهرست‌شده در بالا را به‌روزرسانی یا حذف کنید تا ناسازگاری برطرف شود.</li>"
+                + "<li>اگر نسخه سازگاری پیدا نکردید، می‌توانید سعی کنید فایل <code>mods.toml</code> را در داخل فایل JAR مود به صورت دستی ویرایش کنید (با استفاده از نرم‌افزار فشرده‌سازی مانند WinRAR یا 7-Zip) تا محدودیت نسخه را تغییر دهید یا حذف کنید، هرچند این کار ممکن است باعث ناپایداری شود.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + listaDetalle.toString() + instrucciones;
+    }
+    
+ 
+
+    @Override
+    public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad, Map<String, List<String>> conflictosPorMod) {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // پیام اصلی
+        String mensajeBase = "<span style='color:#" + color + "'>تعداد </span>" 
+                + cantidad + "<span style='color:#" + color + "'> محدودیت وابستگی برآورده نشده یافت شد.</span><br><br>";
+
+        // ساخت لیست گروه‌بندی شده بر اساس مود
+        StringBuilder listaDetalle = new StringBuilder();
+        if (conflictosPorMod != null && !conflictosPorMod.isEmpty()) {
+            listaDetalle.append("<span style='color:#").append(color).append("'>مودهای درگیر و وابستگی‌های درخواستی:</span><br><ul>");
+            
+            for (Map.Entry<String, List<String>> entry : conflictosPorMod.entrySet()) {
+                String archivo = entry.getKey();
+                List<String> dependencias = entry.getValue();
+
+                // نام مود (رنگ پیش‌فرض)
+                listaDetalle.append("<li><b>").append(archivo).append("</b>");
+                
+                // لیست وابستگی‌ها برای این مود
+                listaDetalle.append("<ul>");
+                for (String dep : dependencias) {
+                    // وابستگی (رنگ پیش‌فرض)
+                    listaDetalle.append("<li>").append(dep).append("</li>");
+                }
+                listaDetalle.append("</ul></li>");
+            }
+            listaDetalle.append("</ul><br>");
+        } else {
+            listaDetalle.append("<span style='color:#").append(color).append("'>فایل‌های خاص از لاگ قابل تشخیص نبودند.</span><br>");
+        }
+
+        // دستورالعمل‌های تعمیر
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "این خطا زمانی رخ می‌دهد که مودها نسخه‌های داخلی از کتابخانه‌ها (JarInJar) را شامل شوند که با یکدیگر ناسازگار هستند.<br><br>"
+                + "<b>راه‌حل توصیه‌شده:</b><br>"
+                + "<ul>"
+                + "<li>لیست بالا را بررسی کنید تا مشخص شود کدام مودها نسخه‌های مختلفی از همان کتابخانه را درخواست می‌کنند.</li>"
+                + "<li>سعی کنید هر دو مود را به آخرین نسخه‌هایشان به‌روزرسانی کنید.</li>"
+                + "<li>به عنوان آخرین راه‌حل، می‌توانید فایل <code>.jar</code> مود را با یک نرم‌افزار فشرده‌سازی (مانند WinRAR) باز کنید، <code>META-INF/mods.toml</code> را ویرایش کرده و محدوده نسخه وابستگی را به صورت دستی تغییر دهید، هرچند این کار پرخطر است و ممکن است مود را خراب کند.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + listaDetalle.toString() + instrucciones;
+    }
+    
+    
+    
     
     
 	

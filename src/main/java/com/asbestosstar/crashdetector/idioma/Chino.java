@@ -1,6 +1,7 @@
 package com.asbestosstar.crashdetector.idioma;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.asbestosstar.crashdetector.Config;
@@ -6538,6 +6539,101 @@ public class Chino implements Idioma {
 
         return mensajeBase + instrucciones;
     }
+    @Override
+    public String nombreRestriccionesDependenciaNoCumplidas() {
+        return "依赖项限制未满足";
+    }
+
+    @Override
+    public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad, List<String[]> conflictos) {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // 主要消息
+        String mensajeBase = "<span style='color:#" + color + "'>发现 </span>" 
+                + cantidad + "<span style='color:#" + color + "'> 个未满足的依赖项限制。</span><br><br>";
+
+        // 构建冲突列表
+        StringBuilder listaDetalle = new StringBuilder();
+        if (conflictos != null && !conflictos.isEmpty()) {
+            listaDetalle.append("<span style='color:#").append(color).append("'>在以下文件中检测到冲突:</span><br><ul>");
+            for (String[] par : conflictos) {
+                String dep = par[0]; // 依赖项
+                String jar = par[1];  // JAR 文件
+                // 变量使用默认颜色，固定文本使用错误颜色
+                listaDetalle.append("<li>")
+                            .append("<span style='color:#").append(color).append("'>文件: </span>")
+                            .append(jar)
+                            .append("<br><span style='color:#").append(color).append("'>需要: </span>")
+                            .append(dep)
+                            .append("</li>");
+            }
+            listaDetalle.append("</ul><br>");
+        }
+
+        // 修复说明
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "当两个或更多模组需要同一内部库的不同且不兼容的版本时，会发生这种情况。<br><br>"
+                + "<b>推荐解决方案：</b><br>"
+                + "<ul>"
+                + "<li>尝试更新或删除上面列出的模组以解决不兼容问题。</li>"
+                + "<li>如果找不到兼容版本，您可以尝试手动编辑模组 JAR 文件内的 <code>mods.toml</code> 文件（使用 WinRAR 或 7-Zip 等压缩软件）来更改或删除版本限制，但这可能会导致不稳定。</li>"
+                + "</ul></span>";
+
+        return mensajeBase + listaDetalle.toString() + instrucciones;
+    }
+    
+  
+
+    @Override
+    public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad, Map<String, List<String>> conflictosPorMod) {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // 主要消息
+        String mensajeBase = "<span style='color:#" + color + "'>发现 </span>" 
+                + cantidad + "<span style='color:#" + color + "'> 个未满足的依赖项限制。</span><br><br>";
+
+        // 按模组构建分组列表
+        StringBuilder listaDetalle = new StringBuilder();
+        if (conflictosPorMod != null && !conflictosPorMod.isEmpty()) {
+            listaDetalle.append("<span style='color:#").append(color).append("'>涉及的模组及请求的依赖项:</span><br><ul>");
+            
+            for (Map.Entry<String, List<String>> entry : conflictosPorMod.entrySet()) {
+                String archivo = entry.getKey();
+                List<String> dependencias = entry.getValue();
+
+                // 模组名称（默认颜色）
+                listaDetalle.append("<li><b>").append(archivo).append("</b>");
+                
+                // 该模组的依赖项列表
+                listaDetalle.append("<ul>");
+                for (String dep : dependencias) {
+                    // 依赖项（默认颜色）
+                    listaDetalle.append("<li>").append(dep).append("</li>");
+                }
+                listaDetalle.append("</ul></li>");
+            }
+            listaDetalle.append("</ul><br>");
+        } else {
+            listaDetalle.append("<span style='color:#").append(color).append("'>无法从日志中确定具体文件。</span><br>");
+        }
+
+        // 修复说明
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "当模组包含彼此不兼容的内部库版本（JarInJar）时，会发生此错误。<br><br>"
+                + "<b>推荐解决方案：</b><br>"
+                + "<ul>"
+                + "<li>查看上方列表以识别哪些模组请求同一库的不同版本。</li>"
+                + "<li>尝试将两个模组都更新到最新版本。</li>"
+                + "<li>作为最后的手段，您可以使用压缩软件（如 WinRAR）打开模组的 <code>.jar</code> 文件，编辑 <code>META-INF/mods.toml</code> 并手动修改依赖项的版本范围，但这有风险且可能破坏模组。</li>"
+                + "</ul></span>";
+
+        return mensajeBase + listaDetalle.toString() + instrucciones;
+    }
+    
+    
+    
+    
+    
 	
 	
 	

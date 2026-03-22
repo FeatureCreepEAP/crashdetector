@@ -1,6 +1,7 @@
 package com.asbestosstar.crashdetector.idioma;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.asbestosstar.crashdetector.Config;
@@ -6998,6 +6999,101 @@ public class Ingles implements Idioma {
 
         return mensajeBase + instrucciones;
     }
+    @Override
+    public String nombreRestriccionesDependenciaNoCumplidas() {
+        return "Unmet Dependency Restrictions";
+    }
+
+    @Override
+    public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad, List<String[]> conflictos) {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // Main message
+        String mensajeBase = "<span style='color:#" + color + "'>Found </span>" 
+                + cantidad + "<span style='color:#" + color + "'> unmet dependency restrictions.</span><br><br>";
+
+        // Building the conflict list
+        StringBuilder listaDetalle = new StringBuilder();
+        if (conflictos != null && !conflictos.isEmpty()) {
+            listaDetalle.append("<span style='color:#").append(color).append("'>Conflicts detected in the following files:</span><br><ul>");
+            for (String[] par : conflictos) {
+                String dep = par[0]; // Dependency
+                String jar = par[1];  // JAR file
+                // Variable in default colour, fixed text in error colour
+                listaDetalle.append("<li>")
+                            .append("<span style='color:#").append(color).append("'>File: </span>")
+                            .append(jar)
+                            .append("<br><span style='color:#").append(color).append("'>Requires: </span>")
+                            .append(dep)
+                            .append("</li>");
+            }
+            listaDetalle.append("</ul><br>");
+        }
+
+        // Repair instructions
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "This occurs when two or more mods require different and incompatible versions of the same internal library.<br><br>"
+                + "<b>Recommended solution:</b><br>"
+                + "<ul>"
+                + "<li>Try updating or removing the mods listed above to resolve the incompatibility.</li>"
+                + "<li>If you cannot find a compatible version, you can try manually editing the <code>mods.toml</code> file inside the mod's JAR file (using a compressor like WinRAR or 7-Zip) to change or remove the version restriction, although this may cause instability.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + listaDetalle.toString() + instrucciones;
+    }
+    
+
+
+    @Override
+    public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad, Map<String, List<String>> conflictosPorMod) {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // Main message
+        String mensajeBase = "<span style='color:#" + color + "'>Found </span>" 
+                + cantidad + "<span style='color:#" + color + "'> unmet dependency restrictions.</span><br><br>";
+
+        // Building the list grouped by Mod
+        StringBuilder listaDetalle = new StringBuilder();
+        if (conflictosPorMod != null && !conflictosPorMod.isEmpty()) {
+            listaDetalle.append("<span style='color:#").append(color).append("'>Mods involved and requested dependencies:</span><br><ul>");
+            
+            for (Map.Entry<String, List<String>> entry : conflictosPorMod.entrySet()) {
+                String archivo = entry.getKey();
+                List<String> dependencias = entry.getValue();
+
+                // Mod name (default colour)
+                listaDetalle.append("<li><b>").append(archivo).append("</b>");
+                
+                // List of dependencies for this mod
+                listaDetalle.append("<ul>");
+                for (String dep : dependencias) {
+                    // Dependency (default colour)
+                    listaDetalle.append("<li>").append(dep).append("</li>");
+                }
+                listaDetalle.append("</ul></li>");
+            }
+            listaDetalle.append("</ul><br>");
+        } else {
+            listaDetalle.append("<span style='color:#").append(color).append("'>Specific files could not be determined from the log.</span><br>");
+        }
+
+        // Repair instructions
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "This error occurs when mods include internal versions of libraries (JarInJar) that are incompatible with each other.<br><br>"
+                + "<b>Recommended solution:</b><br>"
+                + "<ul>"
+                + "<li>Review the list above to identify which mods request different versions of the same library.</li>"
+                + "<li>Try updating both mods to their latest versions.</li>"
+                + "<li>As a last resort, you can open the mod's <code>.jar</code> file with a compressor (such as WinRAR), edit <code>META-INF/mods.toml</code> and manually modify the dependency's version range, although this is risky and may break the mod.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + listaDetalle.toString() + instrucciones;
+    }
+    
+    
+    
+    
+    
 	
 	
 	

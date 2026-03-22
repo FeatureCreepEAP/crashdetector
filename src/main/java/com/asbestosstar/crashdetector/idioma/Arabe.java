@@ -1,6 +1,7 @@
 package com.asbestosstar.crashdetector.idioma;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.asbestosstar.crashdetector.Config;
@@ -6884,6 +6885,102 @@ public class Arabe implements Idioma {
 
         return mensajeBase + instrucciones;
     }
+    @Override
+    public String nombreRestriccionesDependenciaNoCumplidas() {
+        return "قيود الاعتماديات غير مُستوفاة";
+    }
+
+    @Override
+    public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad, List<String[]> conflictos) {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // الرسالة الرئيسية
+        String mensajeBase = "<span style='color:#" + color + "'>تم العثور على </span>" 
+                + cantidad + "<span style='color:#" + color + "'> قيود اعتماديات غير مُستوفاة.</span><br><br>";
+
+        // بناء قائمة التعارضات
+        StringBuilder listaDetalle = new StringBuilder();
+        if (conflictos != null && !conflictos.isEmpty()) {
+            listaDetalle.append("<span style='color:#").append(color).append("'>تم اكتشاف تعارضات في الملفات التالية:</span><br><ul>");
+            for (String[] par : conflictos) {
+                String dep = par[0]; // الاعتمادية
+                String jar = par[1];  // ملف JAR
+                // المتغير باللون الافتراضي، النص الثابت بلون الخطأ
+                listaDetalle.append("<li>")
+                            .append("<span style='color:#").append(color).append("'>الملف: </span>")
+                            .append(jar)
+                            .append("<br><span style='color:#").append(color).append("'>يتطلب: </span>")
+                            .append(dep)
+                            .append("</li>");
+            }
+            listaDetalle.append("</ul><br>");
+        }
+
+        // تعليمات الإصلاح
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "يحدث هذا عندما تتطلب إضافتان أو أكثر إصدارات مختلفة وغير متوافقة من نفس المكتبة الداخلية.<br><br>"
+                + "<b>الحل الموصى به:</b><br>"
+                + "<ul>"
+                + "<li>حاول تحديث أو حذف الإضافات المدرجة أعلاه لحل عدم التوافق.</li>"
+                + "<li>إذا لم تجد إصدارًا متوافقًا، يمكنك محاولة تحرير ملف <code>mods.toml</code> يدويًا داخل ملف JAR للإضافة (باستخدام برنامج ضغط مثل WinRAR أو 7-Zip) لتغيير أو إزالة قيد الإصدار، على الرغم من أن هذا قد يتسبب في عدم الاستقرار.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + listaDetalle.toString() + instrucciones;
+    }
+    
+    
+    
+
+
+    @Override
+    public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad, Map<String, List<String>> conflictosPorMod) {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // الرسالة الرئيسية
+        String mensajeBase = "<span style='color:#" + color + "'>تم العثور على </span>" 
+                + cantidad + "<span style='color:#" + color + "'> قيود اعتماديات غير مُستوفاة.</span><br><br>";
+
+        // بناء القائمة المجمعة حسب الإضافة
+        StringBuilder listaDetalle = new StringBuilder();
+        if (conflictosPorMod != null && !conflictosPorMod.isEmpty()) {
+            listaDetalle.append("<span style='color:#").append(color).append("'>الإضافات المتورطة والاعتماديات المطلوبة:</span><br><ul>");
+            
+            for (Map.Entry<String, List<String>> entry : conflictosPorMod.entrySet()) {
+                String archivo = entry.getKey();
+                List<String> dependencias = entry.getValue();
+
+                // اسم الإضافة (اللون الافتراضي)
+                listaDetalle.append("<li><b>").append(archivo).append("</b>");
+                
+                // قائمة الاعتماديات لهذه الإضافة
+                listaDetalle.append("<ul>");
+                for (String dep : dependencias) {
+                    // الاعتمادية (اللون الافتراضي)
+                    listaDetalle.append("<li>").append(dep).append("</li>");
+                }
+                listaDetalle.append("</ul></li>");
+            }
+            listaDetalle.append("</ul><br>");
+        } else {
+            listaDetalle.append("<span style='color:#").append(color).append("'>تعذر تحديد الملفات المحددة من السجل.</span><br>");
+        }
+
+        // تعليمات الإصلاح
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "يحدث هذا الخطأ عندما تتضمن الإضافات إصدارات داخلية من المكتبات (JarInJar) غير متوافقة مع بعضها البعض.<br><br>"
+                + "<b>الحل الموصى به:</b><br>"
+                + "<ul>"
+                + "<li>راجع القائمة أعلاه لتحديد الإضافات التي تطلب إصدارات مختلفة من نفس المكتبة.</li>"
+                + "<li>حاول تحديث كلتا الإضافتين إلى أحدث إصداراتهما.</li>"
+                + "<li>كملاذ أخير، يمكنك فتح ملف <code>.jar</code> للإضافة باستخدام برنامج ضغط (مثل WinRAR)، وتحرير <code>META-INF/mods.toml</code> وتعديل نطاق إصدار الاعتمادية يدويًا، على الرغم من أن هذا محفوف بالمخاطر وقد يُعطل الإضافة.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + listaDetalle.toString() + instrucciones;
+    }
+    
+    
+    
+    
     
     
     

@@ -1,6 +1,7 @@
 package com.asbestosstar.crashdetector.idioma;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.asbestosstar.crashdetector.Config;
@@ -6700,6 +6701,100 @@ public class Japones implements Idioma {
 
         return mensajeBase + instrucciones;
     }
+    @Override
+    public String nombreRestriccionesDependenciaNoCumplidas() {
+        return "依存関係の制限が満たされていません";
+    }
+
+    @Override
+    public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad, List<String[]> conflictos) {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // メインメッセージ
+        String mensajeBase = "<span style='color:#" + color + "'>満たされていない依存関係の制限が </span>" 
+                + cantidad + "<span style='color:#" + color + "'> 件見つかりました。</span><br><br>";
+
+        // 競合リストの構築
+        StringBuilder listaDetalle = new StringBuilder();
+        if (conflictos != null && !conflictos.isEmpty()) {
+            listaDetalle.append("<span style='color:#").append(color).append("'>以下のファイルで競合が検出されました:</span><br><ul>");
+            for (String[] par : conflictos) {
+                String dep = par[0]; // 依存関係
+                String jar = par[1];  // JAR ファイル
+                // 変数はデフォルト色、固定テキストはエラー色
+                listaDetalle.append("<li>")
+                            .append("<span style='color:#").append(color).append("'>ファイル: </span>")
+                            .append(jar)
+                            .append("<br><span style='color:#").append(color).append("'>必要要件: </span>")
+                            .append(dep)
+                            .append("</li>");
+            }
+            listaDetalle.append("</ul><br>");
+        }
+
+        // 修復手順
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "これは、2 つ以上の Mod が同じ内部ライブラリの異なる非互換バージョンを必要とする場合に発生します。<br><br>"
+                + "<b>推奨される解決策：</b><br>"
+                + "<ul>"
+                + "<li>上記にリストされた Mod を更新または削除して、非互換性を解決してみてください。</li>"
+                + "<li>互換バージョンが見つからない場合は、Mod の JAR ファイル内の <code>mods.toml</code> ファイルを手動で編集（WinRAR や 7-Zip などの圧縮ツールを使用）してバージョン制限を変更または削除できますが、これにより不安定になる可能性があります。</li>"
+                + "</ul></span>";
+
+        return mensajeBase + listaDetalle.toString() + instrucciones;
+    }
+    
+
+
+    @Override
+    public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad, Map<String, List<String>> conflictosPorMod) {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // メインメッセージ
+        String mensajeBase = "<span style='color:#" + color + "'>満たされていない依存関係の制限が </span>" 
+                + cantidad + "<span style='color:#" + color + "'> 件見つかりました。</span><br><br>";
+
+        // Mod 別にグループ化されたリストの構築
+        StringBuilder listaDetalle = new StringBuilder();
+        if (conflictosPorMod != null && !conflictosPorMod.isEmpty()) {
+            listaDetalle.append("<span style='color:#").append(color).append("'>関連する Mod と要求された依存関係:</span><br><ul>");
+            
+            for (Map.Entry<String, List<String>> entry : conflictosPorMod.entrySet()) {
+                String archivo = entry.getKey();
+                List<String> dependencias = entry.getValue();
+
+                // Mod 名（デフォルト色）
+                listaDetalle.append("<li><b>").append(archivo).append("</b>");
+                
+                // この Mod の依存関係リスト
+                listaDetalle.append("<ul>");
+                for (String dep : dependencias) {
+                    // 依存関係（デフォルト色）
+                    listaDetalle.append("<li>").append(dep).append("</li>");
+                }
+                listaDetalle.append("</ul></li>");
+            }
+            listaDetalle.append("</ul><br>");
+        } else {
+            listaDetalle.append("<span style='color:#").append(color).append("'>ログから特定のファイルを特定できませんでした。</span><br>");
+        }
+
+        // 修復手順
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "このエラーは、Mod がお互いに非互換なライブラリの内部バージョン（JarInJar）を含んでいる場合に発生します。<br><br>"
+                + "<b>推奨される解決策：</b><br>"
+                + "<ul>"
+                + "<li>上記のリストを確認し、どの Mod が同じライブラリの異なるバージョンを要求しているかを特定してください。</li>"
+                + "<li>両方の Mod を最新バージョンに更新してみてください。</li>"
+                + "<li>最後の手段として、圧縮ツール（WinRAR など）を使用して Mod の <code>.jar</code> ファイルを開き、<code>META-INF/mods.toml</code> を編集して依存関係のバージョン範囲を手動で変更できますが、これは危険であり Mod を壊す可能性があります。</li>"
+                + "</ul></span>";
+
+        return mensajeBase + listaDetalle.toString() + instrucciones;
+    }
+    
+    
+    
+    
 	
 	
     

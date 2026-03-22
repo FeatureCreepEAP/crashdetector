@@ -1,6 +1,7 @@
 package com.asbestosstar.crashdetector.idioma;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.asbestosstar.crashdetector.Config;
@@ -6954,6 +6955,101 @@ public class Esperanto implements Idioma {
 
         return mensajeBase + instrucciones;
     }
+    @Override
+    public String nombreRestriccionesDependenciaNoCumplidas() {
+        return "Restriktoj de dependaĵoj ne plenumitaj";
+    }
+
+    @Override
+    public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad, List<String[]> conflictos) {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // Ĉefa mesaĝo
+        String mensajeBase = "<span style='color:#" + color + "'>Troviĝis </span>" 
+                + cantidad + "<span style='color:#" + color + "'> restriktoj de dependaĵoj kiuj ne plenumiĝas.</span><br><br>";
+
+        // Konstruo de la listo de konfliktoj
+        StringBuilder listaDetalle = new StringBuilder();
+        if (conflictos != null && !conflictos.isEmpty()) {
+            listaDetalle.append("<span style='color:#").append(color).append("'>Konfliktoj detektiĝis en la jenaj dosieroj:</span><br><ul>");
+            for (String[] par : conflictos) {
+                String dep = par[0]; // Dependaĵo
+                String jar = par[1];  // Dosiero JAR
+                // Variablo en defaŭlta koloro, fiksa teksto en erarkoloro
+                listaDetalle.append("<li>")
+                            .append("<span style='color:#").append(color).append("'>Dosiero: </span>")
+                            .append(jar)
+                            .append("<br><span style='color:#").append(color).append("'>Postulas: </span>")
+                            .append(dep)
+                            .append("</li>");
+            }
+            listaDetalle.append("</ul><br>");
+        }
+
+        // Ripar-instrukcioj
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "Ĉi tio okazas kiam du aŭ pli da modoj postulas malsamajn kaj nekongruajn versiojn de la sama interna biblioteko.<br><br>"
+                + "<b>Rekomendita solvo:</b><br>"
+                + "<ul>"
+                + "<li>Provu ĝisdatigi aŭ forigi la modojn listigitajn supre por solvi la nekongruecon.</li>"
+                + "<li>Se vi ne trovas kongruan version, vi povas provi mane redakti la dosieron <code>mods.toml</code> ene de la JAR-dosiero de la modo (uzante kunpremilan programon kiel WinRAR aŭ 7-Zip) por ŝanĝi aŭ forigi la version-restrikton, kvankam ĉi tio povas kaŭzi malstabilecon.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + listaDetalle.toString() + instrucciones;
+    }
+    
+
+
+    @Override
+    public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad, Map<String, List<String>> conflictosPorMod) {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // Ĉefa mesaĝo
+        String mensajeBase = "<span style='color:#" + color + "'>Troviĝis </span>" 
+                + cantidad + "<span style='color:#" + color + "'> restriktoj de dependaĵoj kiuj ne plenumiĝas.</span><br><br>";
+
+        // Konstruo de la listo grupigita laŭ Modo
+        StringBuilder listaDetalle = new StringBuilder();
+        if (conflictosPorMod != null && !conflictosPorMod.isEmpty()) {
+            listaDetalle.append("<span style='color:#").append(color).append("'>Modoj implikitaj kaj postulataj dependaĵoj:</span><br><ul>");
+            
+            for (Map.Entry<String, List<String>> entry : conflictosPorMod.entrySet()) {
+                String archivo = entry.getKey();
+                List<String> dependencias = entry.getValue();
+
+                // Nomo de la Modo (defaŭlta koloro)
+                listaDetalle.append("<li><b>").append(archivo).append("</b>");
+                
+                // Listo de dependaĵoj por ĉi tiu modo
+                listaDetalle.append("<ul>");
+                for (String dep : dependencias) {
+                    // Dependaĵo (defaŭlta koloro)
+                    listaDetalle.append("<li>").append(dep).append("</li>");
+                }
+                listaDetalle.append("</ul></li>");
+            }
+            listaDetalle.append("</ul><br>");
+        } else {
+            listaDetalle.append("<span style='color:#").append(color).append("'>Ne eblis determini la specifajn dosierojn el la protokolo.</span><br>");
+        }
+
+        // Ripar-instrukcioj
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "Ĉi tiu eraro okazas kiam la modoj inkluzivas internajn versiojn de bibliotekoj (JarInJar) kiuj estas nekongruaj inter si.<br><br>"
+                + "<b>Rekomendita solvo:</b><br>"
+                + "<ul>"
+                + "<li>Reviziu la supran liston por identigi kiuj modoj postulas malsamajn versiojn de la sama biblioteko.</li>"
+                + "<li>Provu ĝisdatigi ambaŭ modojn al iliaj plej novaj versioj.</li>"
+                + "<li>Kiel lasta rimedo, vi povas malfermi la dosieron <code>.jar</code> de la modo per kunpremilo (kiel WinRAR), redakti <code>META-INF/mods.toml</code> kaj mane modifi la version-rangon de la dependaĵo, kvankam ĉi tio estas riska kaj povas rompi la modon.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + listaDetalle.toString() + instrucciones;
+    }
+    
+    
+    
+    
+    
     
     
     

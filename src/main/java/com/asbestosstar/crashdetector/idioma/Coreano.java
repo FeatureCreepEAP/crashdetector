@@ -1,6 +1,7 @@
 package com.asbestosstar.crashdetector.idioma;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.asbestosstar.crashdetector.Config;
@@ -6686,6 +6687,96 @@ public class Coreano implements Idioma {
                 + "</ul></span>";
 
         return mensajeBase + instrucciones;
+    }
+    @Override
+    public String nombreRestriccionesDependenciaNoCumplidas() {
+        return "의존관계 제한조건 미충족";
+    }
+
+    @Override
+    public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad, List<String[]> conflictos) {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // 주요 메시지
+        String mensajeBase = "<span style='color:#" + color + "'>총 </span>" 
+                + cantidad + "<span style='color:#" + color + "'> 개의 충족되지 않은 의존관계 제한조건이 발견되였습니다.</span><br><br>";
+
+        // 충돌 목록 작성
+        StringBuilder listaDetalle = new StringBuilder();
+        if (conflictos != null && !conflictos.isEmpty()) {
+            listaDetalle.append("<span style='color:#").append(color).append("'>다음 파일들에서 충돌이 감지되였습니다:</span><br><ul>");
+            for (String[] par : conflictos) {
+                String dep = par[0]; // 의존관계
+                String jar = par[1];  // JAR 파일
+                // 변수는 기본 색상, 고정 텍스트는 오류 색상
+                listaDetalle.append("<li>")
+                            .append("<span style='color:#").append(color).append("'>파일: </span>")
+                            .append(jar)
+                            .append("<br><span style='color:#").append(color).append("'>필요조건: </span>")
+                            .append(dep)
+                            .append("</li>");
+            }
+            listaDetalle.append("</ul><br>");
+        }
+
+        // 복구 지침
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "이는 두 개 이상의 모드가 동일한 내부 라이브러리의 서로 다르고 호환되지 않는 버전을 요구할 때 발생합니다.<br><br>"
+                + "<b>권장 해결 방법:</b><br>"
+                + "<ul>"
+                + "<li>위에 나열된 모드들을 갱신하거나 제거하여 호환성 문제를 해결해 보십시오.</li>"
+                + "<li>호환되는 버전을 찾을수 없다면, 모드 JAR 파일 내부의 <code>mods.toml</code> 파일을 수동으로 편집 (WinRAR 또는 7-Zip 같은 압축프로그램 사용) 하여 버전 제한을 변경하거나 제거할수 있지만, 이는 불안정성을 초래할수 있습니다.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + listaDetalle.toString() + instrucciones;
+    }
+    
+
+
+    @Override
+    public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad, Map<String, List<String>> conflictosPorMod) {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // 주요 메시지
+        String mensajeBase = "<span style='color:#" + color + "'>총 </span>" 
+                + cantidad + "<span style='color:#" + color + "'> 개의 충족되지 않은 의존관계 제한조건이 발견되였습니다.</span><br><br>";
+
+        // 모드별 그룹화된 목록 작성
+        StringBuilder listaDetalle = new StringBuilder();
+        if (conflictosPorMod != null && !conflictosPorMod.isEmpty()) {
+            listaDetalle.append("<span style='color:#").append(color).append("'>관련된 모드들과 요청된 의존관계들:</span><br><ul>");
+            
+            for (Map.Entry<String, List<String>> entry : conflictosPorMod.entrySet()) {
+                String archivo = entry.getKey();
+                List<String> dependencias = entry.getValue();
+
+                // 모드 이름 (기본 색상)
+                listaDetalle.append("<li><b>").append(archivo).append("</b>");
+                
+                // 이 모드의 의존관계 목록
+                listaDetalle.append("<ul>");
+                for (String dep : dependencias) {
+                    // 의존관계 (기본 색상)
+                    listaDetalle.append("<li>").append(dep).append("</li>");
+                }
+                listaDetalle.append("</ul></li>");
+            }
+            listaDetalle.append("</ul><br>");
+        } else {
+            listaDetalle.append("<span style='color:#").append(color).append("'>로그에서 특정 파일들을 확정할수 없었습니다.</span><br>");
+        }
+
+        // 복구 지침
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "이 오류는 모드들이 서로 호환되지 않는 내부 라이브러리 버전 (JarInJar) 을 포함할 때 발생합니다.<br><br>"
+                + "<b>권장 해결 방법:</b><br>"
+                + "<ul>"
+                + "<li>위 목록을 검토하여 어떤 모드들이 동일한 라이브러리의 다른 버전을 요청하는지 식별하십시오.</li>"
+                + "<li>두 모드 모두를 최신 버전으로 갱신해 보십시오.</li>"
+                + "<li>최후의 수단으로, 압축프로그램 (예: WinRAR) 을 사용하여 모드의 <code>.jar</code> 파일을 열고 <code>META-INF/mods.toml</code> 을 편집하여 의존관계의 버전 범위를 수동으로 수정할수 있지만, 이는 위험하며 모드를 손상시킬수 있습니다.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + listaDetalle.toString() + instrucciones;
     }
     
     

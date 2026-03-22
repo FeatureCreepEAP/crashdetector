@@ -1,13 +1,11 @@
 package com.asbestosstar.crashdetector.idioma;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
-
-import javax.swing.Icon;
 
 import com.asbestosstar.crashdetector.Config;
 import com.asbestosstar.crashdetector.Idioma;
-import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
@@ -7690,6 +7688,101 @@ public class Espanol implements Idioma {
 
         return mensajeBase + instrucciones;
     }
+    
+    @Override
+    public String nombreRestriccionesDependenciaNoCumplidas() {
+        return "Restricciones de dependencias no cumplidas";
+    }
+
+    @Override
+    public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad, List<String[]> conflictos) {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // Mensaje principal
+        String mensajeBase = "<span style='color:#" + color + "'>Se encontraron </span>" 
+                + cantidad + "<span style='color:#" + color + "'> restricciones de dependencias que no se cumplen.</span><br><br>";
+
+        // Construcción de la lista de conflictos
+        StringBuilder listaDetalle = new StringBuilder();
+        if (conflictos != null && !conflictos.isEmpty()) {
+            listaDetalle.append("<span style='color:#").append(color).append("'>Se detectaron conflictos en los siguientes archivos:</span><br><ul>");
+            for (String[] par : conflictos) {
+                String dep = par[0]; // Dependencia
+                String jar = par[1];  // Archivo JAR
+                // Variable en color por defecto, texto fijo en color error
+                listaDetalle.append("<li>")
+                            .append("<span style='color:#").append(color).append("'>Archivo: </span>")
+                            .append(jar)
+                            .append("<br><span style='color:#").append(color).append("'>Requiere: </span>")
+                            .append(dep)
+                            .append("</li>");
+            }
+            listaDetalle.append("</ul><br>");
+        }
+
+        // Instrucciones de reparación
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "Esto ocurre cuando dos o más mods requieren versiones diferentes e incompatibles de una misma librería interna.<br><br>"
+                + "<b>Solución recomendada:</b><br>"
+                + "<ul>"
+                + "<li>Intenta actualizar o eliminar los mods listados arriba para resolver la incompatibilidad.</li>"
+                + "<li>Si no encuentras una versión compatible, puedes intentar editar manualmente el archivo <code>mods.toml</code> dentro del archivo JAR del mod (usando un compresor como WinRAR o 7-Zip) para cambiar o eliminar la restricción de versión, aunque esto puede causar inestabilidad.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + listaDetalle.toString() + instrucciones;
+    }
+
+
+    @Override
+    public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad, Map<String, List<String>> conflictosPorMod) {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // Mensaje principal
+        String mensajeBase = "<span style='color:#" + color + "'>Se encontraron </span>" 
+                + cantidad + "<span style='color:#" + color + "'> restricciones de dependencias que no se cumplen.</span><br><br>";
+
+        // Construcción de la lista agrupada por Mod
+        StringBuilder listaDetalle = new StringBuilder();
+        if (conflictosPorMod != null && !conflictosPorMod.isEmpty()) {
+            listaDetalle.append("<span style='color:#").append(color).append("'>Mods involucrados y dependencias solicitadas:</span><br><ul>");
+            
+            for (Map.Entry<String, List<String>> entry : conflictosPorMod.entrySet()) {
+                String archivo = entry.getKey();
+                List<String> dependencias = entry.getValue();
+
+                // Nombre del Mod (color por defecto)
+                listaDetalle.append("<li><b>").append(archivo).append("</b>");
+                
+                // Lista de dependencias para este mod
+                listaDetalle.append("<ul>");
+                for (String dep : dependencias) {
+                    // Dependencia (color por defecto)
+                    listaDetalle.append("<li>").append(dep).append("</li>");
+                }
+                listaDetalle.append("</ul></li>");
+            }
+            listaDetalle.append("</ul><br>");
+        } else {
+            listaDetalle.append("<span style='color:#").append(color).append("'>No se pudieron determinar los archivos específicos desde el log.</span><br>");
+        }
+
+        // Instrucciones de reparación
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "Este error ocurre cuando los mods incluyen versiones internas de librerías (JarInJar) que son incompatibles entre sí.<br><br>"
+                + "<b>Solución recomendada:</b><br>"
+                + "<ul>"
+                + "<li>Revisa la lista superior para identificar qué mods solicitan versiones diferentes de la misma librería.</li>"
+                + "<li>Intenta actualizar ambos mods a sus últimas versiones.</li>"
+                + "<li>Como último recurso, puedes abrir el archivo <code>.jar</code> del mod con un compresor (como WinRAR), editar <code>META-INF/mods.toml</code> y modificar manualmente el rango de versión de la dependencia, aunque esto es arriesgado y puede romper el mod.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + listaDetalle.toString() + instrucciones;
+    }
+    
+    
+    
+    
+    
     
     
     
