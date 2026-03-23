@@ -2600,4 +2600,28 @@ public interface Idioma {
 	public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad,
 			Map<String, List<String>> conflictosPorMod);
 
+	public String mensajeNeruinaOcultaAdvertencia();
+
+	public String nombreNeruinaOcultaAdvertencia();
+
+	public String mensajeApothicAttributeSinDueño(boolean chestCavityPresente);
+
+	public String nombreApothicAttributeSinDueño();
+
+	public String mensajeErrorPotBlockEntity();
+
+	public String nombreErrorPotBlockEntity();
+
+	public String mensajeErrorPreloadingTricks();
+
+	public String nombreErrorPreloadingTricks();
+
+	public String mensajeErrorSimpleRadioLexiconfig();
+
+	public String nombreErrorSimpleRadioLexiconfig();
+
+	public String nombreErrorMobAITweaks();
+
+	public String mensajeErrorMobAITweaks();
+
 }

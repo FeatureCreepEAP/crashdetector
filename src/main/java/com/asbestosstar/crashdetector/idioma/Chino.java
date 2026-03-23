@@ -6629,6 +6629,192 @@ public class Chino implements Idioma {
 
         return mensajeBase + listaDetalle.toString() + instrucciones;
     }
+    @Override
+    public String nombreNeruinaOcultaAdvertencia() {
+        return "Neruina 阻碍调试";
+    }
+
+    @Override
+    public String mensajeNeruinaOcultaAdvertencia() {
+        String color = Config.obtenerInstancia().obtenerColorAdvertencia();
+        
+        // 主要警告
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "<b>警告：</b>模组 <b>Neruina</b> 在处理错误时失败，从而隐藏了崩溃的真正原因。</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "Neruina 通常并非必需，且会阻碍确定实际故障所在。建议将其移除以便调试。</span><br><br>";
+
+        // 恢复说明
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "<b>恢复说明:</b><br>"
+                + "1. **MCForge**: 前往 '[nombre_del_mundo]/serverconfig/forge-server.toml'。<br>"
+                + "2. **NeoForge**: 前往 'config/neoforge-server.toml'。<br>"
+                + "   *（注意：在本地游戏/Singleplayer 中，世界文件位于 'saves' 文件夹内）*。<br>"
+                + "3. 将 **removeErroringBlockEntities** 和 **removeErroringEntities** 设置为 **true**。<br><br>"
+                + "<b>其他选项:</b><br>"
+                + "- **MCEdit**: 用于手动删除指定坐标处的实体。<br>"
+                + "- 如果此错误持续存在，Neruina 可能未正常工作，而只是在生成新的错误。"
+                + "</span>";
+
+        return mensajeBase + instrucciones;
+    }
+    
+    
+    
+    @Override
+    public String nombreApothicAttributeSinDueño() {
+        return "Apothic Attributes 错误";
+    }
+
+    @Override
+    public String mensajeApothicAttributeSinDueño(boolean chestCavityDetectado) {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // 主要消息
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "<b>Apothic Attributes</b> 检测到冲突：<b>AttributeMap</b> 在未分配所有者的情况下被修改。</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "这通常发生在模组尝试在不适当的时间或以不正确的方式修改实体属性（如生命值、伤害、速度）时。</span><br><br>";
+
+        // 关于 Chest Cavity 的特定说明
+        String notaChestCavity = "";
+        if (chestCavityDetectado) {
+            notaChestCavity = "<span style='color:#" + color + "'>"
+                    + "<b>日志中检测到模组 Chest Cavity。</b> "
+                    + "由于其处理实体属性的方式，该模组是导致此特定错误的常见原因。</span><br><br>";
+        }
+
+        // 修复说明
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "<b>推荐解决方案：</b><br>"
+                + "<ul>"
+                + "<li>如果已安装 Chest Cavity，请尝试更新或临时移除它以验证是否为原因所在。</li>"
+                + "<li>检查是否有其他修改生物属性的模组，并尝试禁用它们。</li>"
+                + "<li>查找 <b>Apothic Attributes</b> 的更新，因为此错误可能已在近期版本中修复。</li>"
+                + "</ul></span>";
+
+        return mensajeBase + notaChestCavity + instrucciones;
+    }
+    @Override
+    public String nombreErrorPotBlockEntity() {
+        return "DecoratedPot 错误 (Cataclysm)";
+    }
+
+    @Override
+    public String mensajeErrorPotBlockEntity() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // 主要消息
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "与 <b>DecoratedPotBlockEntity</b> 发生了兼容性错误。</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "这是模组 <b>L_Enders_Cataclysm</b> 在 1.19.2 版本中的已知问题，"
+                + "缺少游戏所需的实现。</span><br><br>";
+
+        // 解决方案
+        String solucion = "<span style='color:#" + color + "'>"
+                + "<b>推荐解决方案：</b><br>"
+                + "安装模组 <b>PotFix (Cataclysm Patch)</b> 以修复此错误。<br>"
+                + "您可以在此下载：<a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch  '>CurseForge - PotFix</a>"
+                + "</span>";
+
+        return mensajeBase + solucion;
+    }
+    @Override
+    public String nombreErrorPreloadingTricks() {
+        return "Preloading Tricks 错误";
+    }
+
+    @Override
+    public String mensajeErrorPreloadingTricks() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // 主要消息
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "检测到由 <b>Preloading Tricks</b> 引起的冲突。</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "错误 <i>ClassCastException: String cannot be cast to ModuleDescriptor</i> "
+                + "表明该模组正在以不正确的方式操作 Java 模块系统的类。</span><br><br>";
+
+        // 解释和解决方案
+        String explicacion = "<span style='color:#" + color + "'>"
+                + "<b>Preloading Tricks</b> 是一个主要为 <b>开发者</b> 设计的模组。 "
+                + "它在游戏加载的极早期阶段执行复杂的类修改操作（mixins）， "
+                + "如果存在其他交互，很容易破坏稳定性。</span><br><br>"
+                + "<span style='color:#" + color + "'><b>推荐解决方案：</b><br>"
+                + "<ul>"
+                + "<li>移除模组 <b>Preloading Tricks</b>。通常在公共服务器或稳定整合包中游玩时不需要它。</li>"
+                + "<li>如果您是开发者且需要它进行测试，请检查您的环境配置。</li>"
+                + "</ul></span>";
+
+        return mensajeBase + explicacion;
+    }
+    @Override
+    public String nombreErrorSimpleRadioLexiconfig() {
+        return "Simple Radio / Lexiconfig 不兼容";
+    }
+
+    @Override
+    public String mensajeErrorSimpleRadioLexiconfig() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // 主要消息
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "检测到 <b>Simple Radio</b> 与 <b>Lexiconfig</b> 之间存在冲突。</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "错误发生在 'shelveLexicons' 过程中，表明这两个库之间存在二进制不兼容性。</span><br><br>";
+
+        // 特定解决方案
+        String solucion = "<span style='color:#" + color + "'>"
+                + "<b>已知原因：</b><br>"
+                + "Simple Radio 通常是为旧版 Lexiconfig 设计的，而您安装的是较新版本。</span><br><br>"
+                + "<span style='color:#" + color + "'><b>推荐解决方案：</b><br>"
+                + "<ul>"
+                + "<li>尝试使用较旧版本的 <b>Lexiconfig</b>。</li>"
+                + "<li>建议尝试版本 <b>1.3.11</b> 或更早版本，这些版本通常与 Simple Radio 兼容。</li>"
+                + "<li>如果问题仍然存在，请检查是否有 Simple Radio 的可用更新。</li>"
+                + "</ul></span>";
+
+        return mensajeBase + solucion;
+    }
+    @Override
+    public String nombreErrorMobAITweaks() {
+        return "Mob AI Tweaks 错误";
+    }
+
+    @Override
+    public String mensajeErrorMobAITweaks() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // 主要消息
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "检测到与 <b>Mob AI Tweaks</b> 相关的错误。</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "该错误源自一个 Mixin（<code>$mob-ai-tweaks$onSpawned</code>），它在实体生成（spawnea）时介入。 "
+                + "这通常表明与另一个同样修改生物生成行为的模组存在冲突。</span><br><br>";
+
+        // 解决方案
+        String solucion = "<span style='color:#" + color + "'><b>推荐解决方案：</b><br>"
+                + "<ul>"
+                + "<li>尝试移除 <b>Mob AI Tweaks</b> 以验证不稳定问题是否消失。</li>"
+                + "</ul></span>";
+
+        return mensajeBase + solucion;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     

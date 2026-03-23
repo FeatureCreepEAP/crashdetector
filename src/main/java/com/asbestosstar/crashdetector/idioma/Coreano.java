@@ -6778,6 +6778,195 @@ public class Coreano implements Idioma {
 
         return mensajeBase + listaDetalle.toString() + instrucciones;
     }
+    @Override
+    public String nombreNeruinaOcultaAdvertencia() {
+        return "Neruina 가 디버그를 방해함";
+    }
+
+    @Override
+    public String mensajeNeruinaOcultaAdvertencia() {
+        String color = Config.obtenerInstancia().obtenerColorAdvertencia();
+        
+        // 주요 경고
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "<b>경고:</b> <b>Neruina</b> 모드가 오류를 처리하려다 실패하여 충돌의 진정한 원인을 가리고 있습니다.</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "Neruina 는 종종 불필요하며 실제로 무엇이 실패하는지 알기 어렵게 만듭니다. 디버그를 위해 제거하는 것이 권장됩니다.</span><br><br>";
+
+        // 복구 지침
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "<b>복구 지침:</b><br>"
+                + "1. **MCForge**: '[nombre_del_mundo]/serverconfig/forge-server.toml' 로 이동하십시오.<br>"
+                + "2. **NeoForge**: 'config/neoforge-server.toml' 로 이동하십시오.<br>"
+                + "   *(참고: 로컬 게임/Singleplayer 에서 세계파일은 'saves' 폴더에 있습니다)*.<br>"
+                + "3. **removeErroringBlockEntities** 와 **removeErroringEntities** 를 **true** 로 변경하십시오.<br><br>"
+                + "<b>기타 옵션:</b><br>"
+                + "- **MCEdit**: 지정된 좌표에서 개체를 수동으로 삭제하는 데 사용하십시오.<br>"
+                + "- 이 오류가 지속된다면, Neruina 가 올바르게 작동하지 않고 단순히 새로운 오류를 생성하고 있을수 있습니다."
+                + "</span>";
+
+        return mensajeBase + instrucciones;
+    }
+    @Override
+    public String nombreApothicAttributeSinDueño() {
+        return "Apothic Attributes 오류";
+    }
+
+    @Override
+    public String mensajeApothicAttributeSinDueño(boolean chestCavityDetectado) {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // 주요 메시지
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "<b>Apothic Attributes</b> 가 충돌을 감지하였습니다: <b>AttributeMap</b> 이 소유자 지정 없이 수정되였습니다.</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "이는 일반적으로 모드가 개체의 속성 (생명력, 피해, 속도 등) 을 부적절한 시점이나 잘못된 방식으로 "
+                + "수정하려 할 때 발생합니다.</span><br><br>";
+
+        // Chest Cavity 에 대한 특정 참고사항
+        String notaChestCavity = "";
+        if (chestCavityDetectado) {
+            notaChestCavity = "<span style='color:#" + color + "'>"
+                    + "<b>로그에서 Chest Cavity 모드가 감지되였습니다.</b> "
+                    + "이 모드는 개체 속성을 처리하는 방식 때문에 이 특정 오류의 흔한 원인입니다.</span><br><br>";
+        }
+
+        // 복구 지침
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "<b>권장 해결 방법:</b><br>"
+                + "<ul>"
+                + "<li>Chest Cavity 가 설치되여 있다면, 원인인지 확인하기 위해 갱신하거나 일시적으로 제거해 보십시오.</li>"
+                + "<li>몹의 속성을 수정하는 다른 모드들이 있는지 검토하고 비활성화하여 테스트해 보십시오.</li>"
+                + "<li><b>Apothic Attributes</b> 의 갱신 버전을 찾아보십시오. 최근 버전에서 수정된 오류일수 있습니다.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + notaChestCavity + instrucciones;
+    }
+    @Override
+    public String nombreErrorPotBlockEntity() {
+        return "DecoratedPot 오류 (Cataclysm)";
+    }
+
+    @Override
+    public String mensajeErrorPotBlockEntity() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // 주요 메시지
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "<b>DecoratedPotBlockEntity</b> 와 호환성 오류가 발생하였습니다.</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "이는 <b>L_Enders_Cataclysm</b> 모드의 1.19.2 버전에서 알려진 문제로, "
+                + "게임에서 요구하는 구현이 누락되여 있습니다.</span><br><br>";
+
+        // 해결 방법
+        String solucion = "<span style='color:#" + color + "'>"
+                + "<b>권장 해결 방법:</b><br>"
+                + "이 오류를 수정하려면 <b>PotFix (Cataclysm Patch)</b> 모드를 설치하십시오.<br>"
+                + "여기에서 다운로드할수 있습니다: <a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch  '>CurseForge - PotFix</a>"
+                + "</span>";
+
+        return mensajeBase + solucion;
+    }
+    @Override
+    public String nombreErrorPreloadingTricks() {
+        return "Preloading Tricks 오류";
+    }
+
+    @Override
+    public String mensajeErrorPreloadingTricks() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // 주요 메시지
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "<b>Preloading Tricks</b> 에 의해 발생한 충돌이 감지되였습니다.</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "오류 <i>ClassCastException: String cannot be cast to ModuleDescriptor</i> "
+                + "는 모드가 Java 모듈 체계의 류들을 올바르지 않게 조작하고 있음을 나타냅니다.</span><br><br>";
+
+        // 설명과 해결 방법
+        String explicacion = "<span style='color:#" + color + "'>"
+                + "<b>Preloading Tricks</b> 는 주로 <b>개발자</b> 를 위해 설계된 모드입니다. "
+                + "이 모드는 게임 적재의 매우 초기 단계에서 류 수정 작업 (mixins) 을 수행하므로, "
+                + "다른 상호작용이 있을 경우 안정성을 쉽게 깨뜨릴수 있습니다.</span><br><br>"
+                + "<span style='color:#" + color + "'><b>권장 해결 방법:</b><br>"
+                + "<ul>"
+                + "<li><b>Preloading Tricks</b> 모드를 제거하십시오. 일반적으로 공용 봉사기나 안정된 팩에서 플레이할 때 필요하지 않습니다.</li>"
+                + "<li>개발자로서 테스트가 필요하다면 환경 구성을 검토하십시오.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + explicacion;
+    }
+    
+    @Override
+    public String nombreErrorSimpleRadioLexiconfig() {
+        return "Simple Radio / Lexiconfig 호환성 문제";
+    }
+
+    @Override
+    public String mensajeErrorSimpleRadioLexiconfig() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // 주요 메시지
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "<b>Simple Radio</b> 와 <b>Lexiconfig</b> 사이에 충돌이 감지되였습니다.</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "'shelveLexicons' 처리 과정에서 오류가 발생하였으며, 이는 두 라이브러리 사이에 이진 호환성 문제가 있음을 나타냅니다.</span><br><br>";
+
+        // 특정 해결 방법
+        String solucion = "<span style='color:#" + color + "'>"
+                + "<b>알려진 원인:</b><br>"
+                + "Simple Radio 는 일반적으로 이전 버전의 Lexiconfig 을 위해 설계되였으나, 현재 더 최신 버전이 설치되여 있습니다.</span><br><br>"
+                + "<span style='color:#" + color + "'><b>권장 해결 방법:</b><br>"
+                + "<ul>"
+                + "<li><b>Lexiconfig</b> 의 이전 버전을 사용해 보십시오.</li>"
+                + "<li>버전 <b>1.3.11</b> 또는 그 이전 버전을 시험해 보는 것이 권장되며, 이들은 일반적으로 Simple Radio 와 호환됩니다.</li>"
+                + "<li>문제가 지속된다면 Simple Radio 의 갱신 버전이 있는지 확인하십시오.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + solucion;
+    }
+    @Override
+    public String nombreErrorMobAITweaks() {
+        return "Mob AI Tweaks 오류";
+    }
+
+    @Override
+    public String mensajeErrorMobAITweaks() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // 주요 메시지
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "<b>Mob AI Tweaks</b> 와 관련된 오류가 감지되였습니다.</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "오류는 Mixin (<code>$mob-ai-tweaks$onSpawned</code>) 에서 발생하며, "
+                + "개체가 생성 (spawnea) 될 때 개입합니다. 이는 일반적으로 몹의 생성 행위를 "
+                + "수정하는 다른 모드와의 충돌을 나타냅니다.</span><br><br>";
+
+        // 해결 방법
+        String solucion = "<span style='color:#" + color + "'><b>권장 해결 방법:</b><br>"
+                + "<ul>"
+                + "<li>불안정성이 사라지는지 확인하기 위해 <b>Mob AI Tweaks</b> 를 제거해 보십시오.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + solucion;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     

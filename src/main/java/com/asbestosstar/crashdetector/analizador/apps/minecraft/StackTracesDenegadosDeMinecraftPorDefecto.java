@@ -304,5 +304,16 @@ public class StackTracesDenegadosDeMinecraftPorDefecto {
 		        contentido.contains("me.frankv.jmi.api.ModCompatFactory"));
 		
 
+		
+		VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains("Interface mixin contains a non-public method"));//Comun positiva falsa con SpongeMixin, no es fatal y no se puede arreglar
+		
+		VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains("WaterMediaBinaries"));//https://github.com/WaterMediaTeam/watermedia-v3/blob/77d7f4635d417b9b8e35907d966029fcd249c6fa/src/main/java/org/watermedia/api/media/players/FFMediaPlayer.java#L1341
+
+		
+		VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains("Reflective setAccessible(true) disabled") && contentido.contains("io.netty.util.internal.ReflectionUtil.trySetAccessible"));// Común en Java 9+ con módulos, no es fatal y no se puede arreglar sin modificar el entorno de ejecución (ej. agregar --add-opens)
+
+		
+		
+		
 	}
 }

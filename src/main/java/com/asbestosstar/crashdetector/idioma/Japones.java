@@ -6791,6 +6791,187 @@ public class Japones implements Idioma {
 
         return mensajeBase + listaDetalle.toString() + instrucciones;
     }
+    @Override
+    public String nombreNeruinaOcultaAdvertencia() {
+        return "Neruina がデバッグを妨げています";
+    }
+
+    @Override
+    public String mensajeNeruinaOcultaAdvertencia() {
+        String color = Config.obtenerInstancia().obtenerColorAdvertencia();
+        
+        // 主要警告
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "<b>警告：</b><b>Neruina</b> Mod がエラーの処理を試みて失敗し、クラッシュの真の原因を隠しています。</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "Neruina は多くの場合不要であり、実際に何が失敗しているのかを把握しにくくします。デバッグのために削除することを推奨します。</span><br><br>";
+
+        // 復旧手順
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "<b>復旧手順:</b><br>"
+                + "1. **MCForge**: '[nombre_del_mundo]/serverconfig/forge-server.toml' に移動します。<br>"
+                + "2. **NeoForge**: 'config/neoforge-server.toml' に移動します。<br>"
+                + "   *（注：ローカルゲーム/Singleplayer では、ワールドは 'saves' フォルダ内にあります）*。<br>"
+                + "3. **removeErroringBlockEntities** と **removeErroringEntities** を **true** に変更します。<br><br>"
+                + "<b>その他のオプション:</b><br>"
+                + "- **MCEdit**: 指定された座標でエンティティを手動で削除するために使用します。<br>"
+                + "- このエラーが持続する場合、Neruina が正しく機能しておらず、単に新しいエラーを生成している可能性があります。"
+                + "</span>";
+
+        return mensajeBase + instrucciones;
+    }
+    @Override
+    public String nombreApothicAttributeSinDueño() {
+        return "Apothic Attributes エラー";
+    }
+
+    @Override
+    public String mensajeApothicAttributeSinDueño(boolean chestCavityDetectado) {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // メインメッセージ
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "<b>Apothic Attributes</b> が競合を検出しました：<b>AttributeMap</b> が割り当てられた所有者なしで変更されました。</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "これは通常、Mod がエンティティの属性（体力、ダメージ、速度など）を不適切なタイミングまたは誤った方法で "
+                + "変更しようとした場合に発生します。</span><br><br>";
+
+        // Chest Cavity に関する特定の注記
+        String notaChestCavity = "";
+        if (chestCavityDetectado) {
+            notaChestCavity = "<span style='color:#" + color + "'>"
+                    + "<b>ログで Chest Cavity Mod が検出されました。</b> "
+                    + "この Mod はエンティティ属性の処理方法により、この特定のエラーの一般的な原因です。</span><br><br>";
+        }
+
+        // 修復手順
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "<b>推奨される解決策：</b><br>"
+                + "<ul>"
+                + "<li>Chest Cavity がインストールされている場合は、原因かどうかを確認するために更新するか一時的に削除してみてください。</li>"
+                + "<li>モブの属性を変更する他の Mod がないか確認し、無効化してテストしてみてください。</li>"
+                + "<li><b>Apothic Attributes</b> の更新がないか確認してください。このエラーは最近のバージョンで修正されている可能性があります。</li>"
+                + "</ul></span>";
+
+        return mensajeBase + notaChestCavity + instrucciones;
+    }
+    @Override
+    public String nombreErrorPotBlockEntity() {
+        return "DecoratedPot エラー (Cataclysm)";
+    }
+
+    @Override
+    public String mensajeErrorPotBlockEntity() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // メインメッセージ
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "<b>DecoratedPotBlockEntity</b> に関連する互換性エラーが発生しました。</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "これは Mod <b>L_Enders_Cataclysm</b> のバージョン 1.19.2 における既知の問題であり、"
+                + "ゲームが必要とする実装が欠落しています。</span><br><br>";
+
+        // 解決策
+        String solucion = "<span style='color:#" + color + "'>"
+                + "<b>推奨される解決策：</b><br>"
+                + "このエラーを修正するには、<b>PotFix (Cataclysm Patch)</b> Mod をインストールしてください。<br>"
+                + "ここからダウンロードできます：<a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch  '>CurseForge - PotFix</a>"
+                + "</span>";
+
+        return mensajeBase + solucion;
+    }
+    
+    @Override
+    public String nombreErrorPreloadingTricks() {
+        return "Preloading Tricks エラー";
+    }
+
+    @Override
+    public String mensajeErrorPreloadingTricks() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // メインメッセージ
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "<b>Preloading Tricks</b> による競合が検出されました。</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "エラー <i>ClassCastException: String cannot be cast to ModuleDescriptor</i> "
+                + "は、Mod が Java モジュールシステムのクラスを誤って操作していることを示しています。</span><br><br>";
+
+        // 説明と解決策
+        String explicacion = "<span style='color:#" + color + "'>"
+                + "<b>Preloading Tricks</b> は主に <b>開発者</b> 向けに設計された Mod です。 "
+                + "ゲーム読み込みの非常に早い段階で複雑なクラス変更操作（mixins）を実行するため、 "
+                + "他の相互作用がある場合、簡単に安定性を損なう可能性があります。</span><br><br>"
+                + "<span style='color:#" + color + "'><b>推奨される解決策：</b><br>"
+                + "<ul>"
+                + "<li><b>Preloading Tricks</b> Mod を削除してください。通常、公開サーバーや安定したパックでプレイする際には不要です。</li>"
+                + "<li>開発者としてテストに必要である場合は、環境設定を確認してください。</li>"
+                + "</ul></span>";
+
+        return mensajeBase + explicacion;
+    }
+    
+    @Override
+    public String nombreErrorSimpleRadioLexiconfig() {
+        return "Simple Radio / Lexiconfig 互換性エラー";
+    }
+
+    @Override
+    public String mensajeErrorSimpleRadioLexiconfig() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // メインメッセージ
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "<b>Simple Radio</b> と <b>Lexiconfig</b> の間に競合が検出されました。</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "エラーは 'shelveLexicons' プロセス中に発生しており、両ライブラリ間にバイナリ非互換性があることを示しています。</span><br><br>";
+
+        // 特定の解決策
+        String solucion = "<span style='color:#" + color + "'>"
+                + "<b>既知の原因：</b><br>"
+                + "Simple Radio は通常、Lexiconfig の旧バージョン向けに設計されていますが、より新しいバージョンがインストールされています。</span><br><br>"
+                + "<span style='color:#" + color + "'><b>推奨される解決策：</b><br>"
+                + "<ul>"
+                + "<li><b>Lexiconfig</b> の古いバージョンを使用してみてください。</li>"
+                + "<li>バージョン <b>1.3.11</b> 以前を試すことを推奨します。これらは通常、Simple Radio と互換性があります。</li>"
+                + "<li>問題が持続する場合は、Simple Radio の利用可能な更新がないか確認してください。</li>"
+                + "</ul></span>";
+
+        return mensajeBase + solucion;
+    }
+    @Override
+    public String nombreErrorMobAITweaks() {
+        return "Mob AI Tweaks エラー";
+    }
+
+    @Override
+    public String mensajeErrorMobAITweaks() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // メインメッセージ
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "<b>Mob AI Tweaks</b> に関連するエラーが検出されました。</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "このエラーは Mixin（<code>$mob-ai-tweaks$onSpawned</code>）から発生しており、 "
+                + "エンティティがスポーンする際に介入します。これは通常、 "
+                + "モブのスポーン行動も変更する別の Mod との競合を示しています。</span><br><br>";
+
+        // 解決策
+        String solucion = "<span style='color:#" + color + "'><b>推奨される解決策：</b><br>"
+                + "<ul>"
+                + "<li><b>Mob AI Tweaks</b> を削除して、不安定性が解消されるか確認してみてください。</li>"
+                + "</ul></span>";
+
+        return mensajeBase + solucion;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     

@@ -6978,6 +6978,187 @@ public class Arabe implements Idioma {
         return mensajeBase + listaDetalle.toString() + instrucciones;
     }
     
+    @Override
+    public String nombreNeruinaOcultaAdvertencia() {
+        return "Neruina يمنع التصحيح";
+    }
+
+    @Override
+    public String mensajeNeruinaOcultaAdvertencia() {
+        String color = Config.obtenerInstancia().obtenerColorAdvertencia();
+        
+        // التحذير الرئيسي
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "<b>تحذير:</b> الإضافة <b>Neruina</b> تفشل في محاولة التعامل مع خطأ، مما يخفي السبب الحقيقي للتعطّل.</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "غالبًا لا يكون Neruina ضروريًا ويُصعّب معرفة ما الذي يفشل حقًا. يُوصى بإزالته لأغراض التصحيح.</span><br><br>";
+
+        // تعليمات الاسترداد
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "<b>تعليمات الاسترداد:</b><br>"
+                + "1. **MCForge**: انتقل إلى '[nombre_del_mundo]/serverconfig/forge-server.toml'.<br>"
+                + "2. **NeoForge**: انتقل إلى 'config/neoforge-server.toml'.<br>"
+                + "   *(ملاحظة: في الألعاب المحلية/Singleplayer، توجد العوالم في مجلد 'saves')*.<br>"
+                + "3. غيّر **removeErroringBlockEntities** و **removeErroringEntities** إلى **true**.<br><br>"
+                + "<b>خيارات أخرى:</b><br>"
+                + "- **MCEdit**: استخدمه لحذف الكيان يدويًا عند الإحداثيات المُشار إليها.<br>"
+                + "- إذا استمر هذا الخطأ، فمن الممكن أن Neruina لا يعمل بشكل صحيح ويُنتج أخطاءً جديدة فحسب."
+                + "</span>";
+
+        return mensajeBase + instrucciones;
+    }
+    @Override
+    public String nombreApothicAttributeSinDueño() {
+        return "خطأ في Apothic Attributes";
+    }
+
+    @Override
+    public String mensajeApothicAttributeSinDueño(boolean chestCavityDetectado) {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // الرسالة الرئيسية
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "اكتشف <b>Apothic Attributes</b> تعارضًا: تم تعديل <b>AttributeMap</b> دون تعيين مالك له.</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "يحدث هذا عادةً عندما تحاول إضافة تعديل سمات كيان (مثل الصحة، الضرر، السرعة) "
+                + "في وقت غير مناسب أو بطريقة غير صحيحة.</span><br><br>";
+
+        // ملاحظة محددة حول Chest Cavity
+        String notaChestCavity = "";
+        if (chestCavityDetectado) {
+            notaChestCavity = "<span style='color:#" + color + "'>"
+                    + "<b>تم اكتشاف إضافة Chest Cavity في السجل.</b> "
+                    + "هذه الإضافة سبب شائع لهذا الخطأ المحدد بسبب طريقة تعاملها مع سمات الكيانات.</span><br><br>";
+        }
+
+        // تعليمات الإصلاح
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "<b>الحل الموصى به:</b><br>"
+                + "<ul>"
+                + "<li>إذا كانت Chest Cavity مثبتة، حاول تحديثها أو إزالتها مؤقتًا للتحقق مما إذا كانت هي السبب.</li>"
+                + "<li>راجع ما إذا كانت هناك إضافات أخرى تعدّل سمات الكائنات وحاول تعطيلها.</li>"
+                + "<li>ابحث عن تحديثات لـ <b>Apothic Attributes</b> حيث قد يكون هذا خطأً تم إصلاحه في الإصدارات الحديثة.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + notaChestCavity + instrucciones;
+    }
+    
+    @Override
+    public String nombreErrorPotBlockEntity() {
+        return "خطأ في DecoratedPot (Cataclysm)";
+    }
+
+    @Override
+    public String mensajeErrorPotBlockEntity() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // الرسالة الرئيسية
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "حدث خطأ عدم توافق مع <b>DecoratedPotBlockEntity</b>.</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "هذه مشكلة معروفة في الإصدار 1.19.2 من إضافة <b>L_Enders_Cataclysm</b>, "
+                + "حيث ينقص تنفيذ مطلوب من قبل اللعبة.</span><br><br>";
+
+        // الحل
+        String solucion = "<span style='color:#" + color + "'>"
+                + "<b>الحل الموصى به:</b><br>"
+                + "قم بتثبيت إضافة <b>PotFix (Cataclysm Patch)</b> لإصلاح هذا الخطأ.<br>"
+                + "يمكنك تنزيله من هنا: <a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch  '>CurseForge - PotFix</a>"
+                + "</span>";
+
+        return mensajeBase + solucion;
+    }
+    
+    @Override
+    public String nombreErrorPreloadingTricks() {
+        return "خطأ في Preloading Tricks";
+    }
+
+    @Override
+    public String mensajeErrorPreloadingTricks() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // الرسالة الرئيسية
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "تم اكتشاف تعارض سببه <b>Preloading Tricks</b>.</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "الخطأ <i>ClassCastException: String cannot be cast to ModuleDescriptor</i> "
+                + "يشير إلى أن الإضافة تتلاعب بفئات نظام وحدات Java بشكل غير صحيح.</span><br><br>";
+
+        // الشرح والحل
+        String explicacion = "<span style='color:#" + color + "'>"
+                + "<b>Preloading Tricks</b> هي إضافة مصممة أساسًا لـ <b>المطورين</b>. "
+                + "تقوم بإجراء عمليات معقدة لتعديل الفئات (mixins) في مرحلة مبكرة جدًا من تحميل اللعبة، "
+                + "مما قد يكسر الاستقرار بسهولة إذا كانت هناك تفاعلات أخرى.</span><br><br>"
+                + "<span style='color:#" + color + "'><b>الحل الموصى به:</b><br>"
+                + "<ul>"
+                + "<li>أزل إضافة <b>Preloading Tricks</b>. عادةً لا تكون ضرورية للعب على الخوادم العامة أو الحزم المستقرة.</li>"
+                + "<li>إذا كنت مطورًا وتحتاجها للاختبار، راجع إعدادات بيئتك.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + explicacion;
+    }
+    @Override
+    public String nombreErrorSimpleRadioLexiconfig() {
+        return "عدم توافق Simple Radio / Lexiconfig";
+    }
+
+    @Override
+    public String mensajeErrorSimpleRadioLexiconfig() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // الرسالة الرئيسية
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "تم اكتشاف تعارض بين <b>Simple Radio</b> و <b>Lexiconfig</b>.</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "يحدث الخطأ أثناء عملية 'shelveLexicons'، مما يشير إلى عدم توافق ثنائي بين المكتبتين.</span><br><br>";
+
+        // الحل المحدد
+        String solucion = "<span style='color:#" + color + "'>"
+                + "<b>سبب معروف:</b><br>"
+                + "عادةً ما يكون Simple Radio مصممًا لإصدارات قديمة من Lexiconfig، بينما لديك إصدار أحدث مثبت.</span><br><br>"
+                + "<span style='color:#" + color + "'><b>الحل الموصى به:</b><br>"
+                + "<ul>"
+                + "<li>حاول استخدام إصدار أقدم من <b>Lexiconfig</b>.</li>"
+                + "<li>يُوصى بتجربة الإصدار <b>1.3.11</b> أو الأقدم، والتي تكون متوافقة عادةً مع Simple Radio.</li>"
+                + "<li>إذا استمرت المشكلة، تحقق مما إذا كان هناك تحديث متاح لـ Simple Radio.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + solucion;
+    }
+    @Override
+    public String nombreErrorMobAITweaks() {
+        return "خطأ في Mob AI Tweaks";
+    }
+
+    @Override
+    public String mensajeErrorMobAITweaks() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // الرسالة الرئيسية
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "تم اكتشاف خطأ مرتبط بـ <b>Mob AI Tweaks</b>.</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "ينشأ الخطأ من Mixin (<code>$mob-ai-tweaks$onSpawned</code>) يتدخل "
+                + "عندما تظهر كيان (spawnea). يشير هذا عادةً إلى تعارض مع إضافة أخرى "
+                + "تعدّل أيضًا سلوك ظهور الكائنات.</span><br><br>";
+
+        // الحل
+        String solucion = "<span style='color:#" + color + "'><b>الحل الموصى به:</b><br>"
+                + "<ul>"
+                + "<li>حاول إزالة <b>Mob AI Tweaks</b> للتحقق مما إذا كانت عدم الاستقرار تختفي.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + solucion;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     

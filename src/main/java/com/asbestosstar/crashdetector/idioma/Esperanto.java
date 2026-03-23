@@ -7045,6 +7045,186 @@ public class Esperanto implements Idioma {
 
         return mensajeBase + listaDetalle.toString() + instrucciones;
     }
+    @Override
+    public String nombreNeruinaOcultaAdvertencia() {
+        return "Neruina malhelpas la sencimigon";
+    }
+
+    @Override
+    public String mensajeNeruinaOcultaAdvertencia() {
+        String color = Config.obtenerInstancia().obtenerColorAdvertencia();
+        
+        // Ĉefa averto
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "<b>Averto:</b> La modo <b>Neruina</b> malsukcesas kiam ĝi provas trakti eraron, kaŝante la veran kaŭzon de la kraŝo.</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "Neruina ofte ne estas necesa kaj malfaciligas scii, kio reale malsukcesas. Oni rekomendas forigi ĝin por sencimigi.</span><br><br>";
+
+        // Ripar-instrukcioj
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "<b>Instrukcioj de rehavo:</b><br>"
+                + "1. **MCForge**: Iru al '[nombre_del_mundo]/serverconfig/forge-server.toml'.<br>"
+                + "2. **NeoForge**: Iru al 'config/neoforge-server.toml'.<br>"
+                + "   *(Noto: En lokaj ludoj/Singleplayer, la mondoj estas en la dosierujo 'saves')*.<br>"
+                + "3. Ŝanĝu **removeErroringBlockEntities** kaj **removeErroringEntities** al **true**.<br><br>"
+                + "<b>Aliaj ebloj:</b><br>"
+                + "- **MCEdit**: Uzu ĝin por mane forigi la enton ĉe la indikitaj koordinatoj.<br>"
+                + "- Se ĉi tiu eraro daŭras, eble Neruina ne funkcias ĝuste kaj simple generas novajn erarojn."
+                + "</span>";
+
+        return mensajeBase + instrucciones;
+    }
+    @Override
+    public String nombreApothicAttributeSinDueño() {
+        return "Eraro de Apothic Attributes";
+    }
+
+    @Override
+    public String mensajeApothicAttributeSinDueño(boolean chestCavityDetectado) {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // Ĉefa mesaĝo
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "<b>Apothic Attributes</b> detektis konflikton: <b>AttributeMap</b> estis modifita sen asignita posedanto.</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "Ĉi tio ĝenerale okazas kiam modo provas modifi atributojn de ento (kiel vivo, damaĝo, rapido) "
+                + "en nekonvena momento aŭ malĝuste.</span><br><br>";
+
+        // Specifa noto pri Chest Cavity
+        String notaChestCavity = "";
+        if (chestCavityDetectado) {
+            notaChestCavity = "<span style='color:#" + color + "'>"
+                    + "<b>La modo Chest Cavity estis detektita en la protokolo.</b> "
+                    + "Ĉi tiu modo estas ofta kaŭzo de ĉi tiu specifa eraro pro kiel ĝi traktas la atributojn de entoj.</span><br><br>";
+        }
+
+        // Ripar-instrukcioj
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "<b>Rekomendita solvo:</b><br>"
+                + "<ul>"
+                + "<li>Se Chest Cavity estas instalita, provu ĝisdatigi ĝin aŭ provizore forigi ĝin por kontroli ĉu ĝi estas la kaŭzo.</li>"
+                + "<li>Kontrolu ĉu estas aliaj modoj kiuj modifas atributojn de estaĵoj kaj provu malŝalti ilin.</li>"
+                + "<li>Serĉu ĝisdatigojn de <b>Apothic Attributes</b> ĉar ĝi povus esti eraro korektita en lastatempaj versioj.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + notaChestCavity + instrucciones;
+    }
+    @Override
+    public String nombreErrorPotBlockEntity() {
+        return "Eraro de DecoratedPot (Cataclysm)";
+    }
+
+    @Override
+    public String mensajeErrorPotBlockEntity() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // Ĉefa mesaĝo
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "Okazis nekongrua eraro kun <b>DecoratedPotBlockEntity</b>.</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "Ĉi tio estas konata problemo en versio 1.19.2 de la modo <b>L_Enders_Cataclysm</b>, "
+                + "kie mankas implemento postulata de la ludo.</span><br><br>";
+
+        // Solvo
+        String solucion = "<span style='color:#" + color + "'>"
+                + "<b>Rekomendita solvo:</b><br>"
+                + "Instalu la modon <b>PotFix (Cataclysm Patch)</b> por korekti ĉi tiun eraron.<br>"
+                + "Vi povas elŝuti ĝin ĉi tie: <a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch  '>CurseForge - PotFix</a>"
+                + "</span>";
+
+        return mensajeBase + solucion;
+    }
+    @Override
+    public String nombreErrorPreloadingTricks() {
+        return "Eraro de Preloading Tricks";
+    }
+
+    @Override
+    public String mensajeErrorPreloadingTricks() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // Ĉefa mesaĝo
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "Detektiĝis konflikto kaŭzita de <b>Preloading Tricks</b>.</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "La eraro <i>ClassCastException: String cannot be cast to ModuleDescriptor</i> "
+                + "indikas, ke la modo manipulas klasojn de la modula sistemo de Java malĝuste.</span><br><br>";
+
+        // Klarigo kaj Solvo
+        String explicacion = "<span style='color:#" + color + "'>"
+                + "<b>Preloading Tricks</b> estas modo desegnita ĉefe por <b>programistoj</b>. "
+                + "Ĝi plenumas kompleksajn operaciojn de klasmodifo (mixins) en tre frua etapo de ŝargo de la ludo, "
+                + "kio povas facile rompi la stabilecon se estas aliaj interagoj.</span><br><br>"
+                + "<span style='color:#" + color + "'><b>Rekomendita solvo:</b><br>"
+                + "<ul>"
+                + "<li>Forigu la modon <b>Preloading Tricks</b>. Ĝenerale ĝi ne estas necesa por ludi en publikaj serviloj aŭ stabilaj pakoj.</li>"
+                + "<li>Se vi estas programisto kaj bezonas ĝin por testoj, reviziu vian median agordon.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + explicacion;
+    }
+    
+    @Override
+    public String nombreErrorSimpleRadioLexiconfig() {
+        return "Nekongruo Simple Radio / Lexiconfig";
+    }
+
+    @Override
+    public String mensajeErrorSimpleRadioLexiconfig() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // Ĉefa mesaĝo
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "Detektiĝis konflikto inter <b>Simple Radio</b> kaj <b>Lexiconfig</b>.</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "La eraro okazas dum la procezo 'shelveLexicons', kio indikas binaran nekongruecon inter ambaŭ bibliotekoj.</span><br><br>";
+
+        // Specifa solvo
+        String solucion = "<span style='color:#" + color + "'>"
+                + "<b>Konata kaŭzo:</b><br>"
+                + "Simple Radio kutime estas desegnita por malnovaj versioj de Lexiconfig, dum vi havas instalitan pli novan version.</span><br><br>"
+                + "<span style='color:#" + color + "'><b>Rekomendita solvo:</b><br>"
+                + "<ul>"
+                + "<li>Provu uzi pli malnovan version de <b>Lexiconfig</b>.</li>"
+                + "<li>Oni rekomendas provi la version <b>1.3.11</b> aŭ pli malnovajn, kiuj kutime kongruas kun Simple Radio.</li>"
+                + "<li>Se la problemo daŭras, kontrolu ĉu disponeblas ĝisdatigo de Simple Radio.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + solucion;
+    }
+    @Override
+    public String nombreErrorMobAITweaks() {
+        return "Eraro de Mob AI Tweaks";
+    }
+
+    @Override
+    public String mensajeErrorMobAITweaks() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // Ĉefa mesaĝo
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "Detektiĝis eraro rilata al <b>Mob AI Tweaks</b>.</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "La eraro devenas de Mixin (<code>$mob-ai-tweaks$onSpawned</code>) kiu intervenas "
+                + "kiam ento aperas (spawnea). Ĉi tio kutime indikas konflikton kun alia modo "
+                + "kiu ankaŭ modifas la konduton de apero de estaĵoj.</span><br><br>";
+
+        // Solvo
+        String solucion = "<span style='color:#" + color + "'><b>Rekomendita solvo:</b><br>"
+                + "<ul>"
+                + "<li>Provu forigi <b>Mob AI Tweaks</b> por kontroli ĉu la malstabileco malaperas.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + solucion;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     

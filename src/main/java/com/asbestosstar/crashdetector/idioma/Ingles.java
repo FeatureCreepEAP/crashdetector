@@ -7089,6 +7089,187 @@ public class Ingles implements Idioma {
 
         return mensajeBase + listaDetalle.toString() + instrucciones;
     }
+    @Override
+    public String nombreNeruinaOcultaAdvertencia() {
+        return "Neruina Prevents Debugging";
+    }
+
+    @Override
+    public String mensajeNeruinaOcultaAdvertencia() {
+        String color = Config.obtenerInstancia().obtenerColorAdvertencia();
+        
+        // Main warning
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "<b>Warning:</b> The <b>Neruina</b> mod is failing while attempting to handle an error, which hides the true cause of the crash.</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "Neruina is often unnecessary and makes it difficult to know what is actually failing. It is recommended to remove it for debugging.</span><br><br>";
+
+        // Recovery instructions
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "<b>Recovery instructions:</b><br>"
+                + "1. **MCForge**: Go to '[nombre_del_mundo]/serverconfig/forge-server.toml'.<br>"
+                + "2. **NeoForge**: Go to 'config/neoforge-server.toml'.<br>"
+                + "   *(Note: In local games/Singleplayer, worlds are in the 'saves' folder)*.<br>"
+                + "3. Change **removeErroringBlockEntities** and **removeErroringEntities** to **true**.<br><br>"
+                + "<b>Other options:</b><br>"
+                + "- **MCEdit**: Use it to manually delete the entity at the indicated coordinates.<br>"
+                + "- If this error persists, Neruina may not be functioning correctly and may simply be generating new errors."
+                + "</span>";
+
+        return mensajeBase + instrucciones;
+    }
+    @Override
+    public String nombreApothicAttributeSinDueño() {
+        return "Apothic Attributes Error";
+    }
+
+    @Override
+    public String mensajeApothicAttributeSinDueño(boolean chestCavityDetectado) {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // Main message
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "<b>Apothic Attributes</b> has detected a conflict: A <b>AttributeMap</b> was modified without having an assigned owner.</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "This generally occurs when a mod attempts to modify entity attributes (such as health, damage, speed) "
+                + "at an inappropriate time or in an incorrect manner.</span><br><br>";
+
+        // Specific note about Chest Cavity
+        String notaChestCavity = "";
+        if (chestCavityDetectado) {
+            notaChestCavity = "<span style='color:#" + color + "'>"
+                    + "<b>The Chest Cavity mod has been detected in the log.</b> "
+                    + "This mod is a common cause of this specific error due to how it handles entity attributes.</span><br><br>";
+        }
+
+        // Repair instructions
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "<b>Recommended solution:</b><br>"
+                + "<ul>"
+                + "<li>If Chest Cavity is installed, try updating it or temporarily removing it to verify if it is the cause.</li>"
+                + "<li>Check if there are other mods that modify mob attributes and try disabling them.</li>"
+                + "<li>Look for updates to <b>Apothic Attributes</b> as this could be an error fixed in recent versions.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + notaChestCavity + instrucciones;
+    }
+    
+    @Override
+    public String nombreErrorPotBlockEntity() {
+        return "DecoratedPot Error (Cataclysm)";
+    }
+
+    @Override
+    public String mensajeErrorPotBlockEntity() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // Main message
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "An incompatibility error has occurred with <b>DecoratedPotBlockEntity</b>.</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "This is a known issue in version 1.19.2 of the <b>L_Enders_Cataclysm</b> mod, "
+                + "where a required implementation by the game is missing.</span><br><br>";
+
+        // Solution
+        String solucion = "<span style='color:#" + color + "'>"
+                + "<b>Recommended solution:</b><br>"
+                + "Install the <b>PotFix (Cataclysm Patch)</b> mod to fix this error.<br>"
+                + "You can download it here: <a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch  '>CurseForge - PotFix</a>"
+                + "</span>";
+
+        return mensajeBase + solucion;
+    }
+    
+    @Override
+    public String nombreErrorPreloadingTricks() {
+        return "Preloading Tricks Error";
+    }
+
+    @Override
+    public String mensajeErrorPreloadingTricks() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // Main message
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "A conflict caused by <b>Preloading Tricks</b> has been detected.</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "The error <i>ClassCastException: String cannot be cast to ModuleDescriptor</i> "
+                + "indicates that the mod is manipulating classes of the Java module system incorrectly.</span><br><br>";
+
+        // Explanation and Solution
+        String explicacion = "<span style='color:#" + color + "'>"
+                + "<b>Preloading Tricks</b> is a mod designed primarily for <b>developers</b>. "
+                + "It performs complex class modification operations (mixins) at a very early stage of game loading, "
+                + "which can easily break stability if there are other interactions.</span><br><br>"
+                + "<span style='color:#" + color + "'><b>Recommended solution:</b><br>"
+                + "<ul>"
+                + "<li>Remove the <b>Preloading Tricks</b> mod. It is generally not necessary for playing on public servers or stable packs.</li>"
+                + "<li>If you are a developer and need it for testing, review your environment configuration.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + explicacion;
+    }
+    
+    @Override
+    public String nombreErrorSimpleRadioLexiconfig() {
+        return "Simple Radio / Lexiconfig Incompatibility";
+    }
+
+    @Override
+    public String mensajeErrorSimpleRadioLexiconfig() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // Main message
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "A conflict between <b>Simple Radio</b> and <b>Lexiconfig</b> has been detected.</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "The error occurs during the 'shelveLexicons' process, indicating a binary incompatibility between both libraries.</span><br><br>";
+
+        // Specific solution
+        String solucion = "<span style='color:#" + color + "'>"
+                + "<b>Known cause:</b><br>"
+                + "Simple Radio is usually designed for older versions of Lexiconfig, while you have a more recent version installed.</span><br><br>"
+                + "<span style='color:#" + color + "'><b>Recommended solution:</b><br>"
+                + "<ul>"
+                + "<li>Try using an older version of <b>Lexiconfig</b>.</li>"
+                + "<li>It is recommended to try version <b>1.3.11</b> or earlier, which are usually compatible with Simple Radio.</li>"
+                + "<li>If the problem persists, check if there is an update available for Simple Radio.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + solucion;
+    }
+    
+    @Override
+    public String nombreErrorMobAITweaks() {
+        return "Mob AI Tweaks Error";
+    }
+
+    @Override
+    public String mensajeErrorMobAITweaks() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // Main message
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "An error related to <b>Mob AI Tweaks</b> has been detected.</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "The error originates from a Mixin (<code>$mob-ai-tweaks$onSpawned</code>) that intervenes "
+                + "when an entity spawns. This usually indicates a conflict with another mod "
+                + "that also modifies mob spawning behaviour.</span><br><br>";
+
+        // Solution
+        String solucion = "<span style='color:#" + color + "'><b>Recommended solution:</b><br>"
+                + "<ul>"
+                + "<li>Try removing <b>Mob AI Tweaks</b> to verify if the instability disappears.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + solucion;
+    }
+    
+    
+    
+    
+    
+    
     
     
     

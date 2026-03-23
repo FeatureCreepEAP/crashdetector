@@ -955,7 +955,7 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 
 	public float prioridad() {
 
-		return 1100f;
+		return 1500f;
 
 	}
 

@@ -95,6 +95,10 @@ public class FaltasClases implements Verificaciones {
 		
 		
 		ignorar.add("TeamProperty");
+		ignorar.add("WaterMediaBinaries");
+
+		
+		
 		
 	}
 

@@ -7031,6 +7031,184 @@ public class Persa implements Idioma {
 
         return mensajeBase + listaDetalle.toString() + instrucciones;
     }
+    @Override
+    public String nombreNeruinaOcultaAdvertencia() {
+        return "Neruina مانع دیباگ می‌شود";
+    }
+
+    @Override
+    public String mensajeNeruinaOcultaAdvertencia() {
+        String color = Config.obtenerInstancia().obtenerColorAdvertencia();
+        
+        // هشدار اصلی
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "<b>هشدار:</b> مود <b>Neruina</b> در هنگام تلاش برای مدیریت یک خطا با شکست مواجه می‌شود که باعث پنهان ماندن علت واقعی کرش می‌گردد.</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "Neruina اغلب غیرضروری است و تشخیص اینکه واقعاً چه چیزی دچار مشکل شده را دشوار می‌کند. برای دیباگ، حذف آن توصیه می‌شود.</span><br><br>";
+
+        // دستورالعمل‌های بازیابی
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "<b>دستورالعمل‌های بازیابی:</b><br>"
+                + "1. **MCForge**: به '[nombre_del_mundo]/serverconfig/forge-server.toml' بروید.<br>"
+                + "2. **NeoForge**: به 'config/neoforge-server.toml' بروید.<br>"
+                + "   *(توجه: در بازی‌های محلی/Singleplayer، دنیاها در پوشه 'saves' قرار دارند)*.<br>"
+                + "3. مقدار **removeErroringBlockEntities** و **removeErroringEntities** را به **true** تغییر دهید.<br><br>"
+                + "<b>گزینه‌های دیگر:</b><br>"
+                + "- **MCEdit**: از آن برای حذف دستی موجودیت در مختصات مشخص‌شده استفاده کنید.<br>"
+                + "- اگر این خطا ادامه یابد، ممکن است Neruina به درستی کار نکند و صرفاً در حال تولید خطاهای جدید باشد."
+                + "</span>";
+
+        return mensajeBase + instrucciones;
+    }
+    @Override
+    public String nombreApothicAttributeSinDueño() {
+        return "خطای Apothic Attributes";
+    }
+
+    @Override
+    public String mensajeApothicAttributeSinDueño(boolean chestCavityDetectado) {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // پیام اصلی
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "<b>Apothic Attributes</b> یک تعارض را تشخیص داده است: یک <b>AttributeMap</b> بدون داشتن مالک اختصاص‌یافته تغییر یافته است.</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "این معمولاً زمانی رخ می‌دهد که یک مود سعی می‌کند ویژگی‌های یک موجودیت (مانند سلامت، آسیب، سرعت) را "
+                + "در زمان نامناسب یا به روش نادرست تغییر دهد.</span><br><br>";
+
+        // نکته خاص درباره Chest Cavity
+        String notaChestCavity = "";
+        if (chestCavityDetectado) {
+            notaChestCavity = "<span style='color:#" + color + "'>"
+                    + "<b>مود Chest Cavity در لاگ شناسایی شده است.</b> "
+                    + "این مود به دلیل نحوه مدیریت ویژگی‌های موجودیت‌ها، علت رایج این خطای خاص است.</span><br><br>";
+        }
+
+        // دستورالعمل‌های تعمیر
+        String instrucciones = "<span style='color:#" + color + "'>"
+                + "<b>راه‌حل توصیه‌شده:</b><br>"
+                + "<ul>"
+                + "<li>اگر Chest Cavity نصب است، سعی کنید آن را به‌روزرسانی کنید یا به طور موقت حذف کنید تا بررسی شود آیا علت آن است.</li>"
+                + "<li>بررسی کنید آیا مودهای دیگری وجود دارند که ویژگی‌های ماب‌ها را تغییر می‌دهند و سعی کنید آن‌ها را غیرفعال کنید.</li>"
+                + "<li>به‌روزرسانی‌های <b>Apothic Attributes</b> را جستجو کنید زیرا ممکن است این خطا در نسخه‌های اخیر اصلاح شده باشد.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + notaChestCavity + instrucciones;
+    }
+    @Override
+    public String nombreErrorPotBlockEntity() {
+        return "خطای DecoratedPot (Cataclysm)";
+    }
+
+    @Override
+    public String mensajeErrorPotBlockEntity() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // پیام اصلی
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "یک خطای ناسازگاری با <b>DecoratedPotBlockEntity</b> رخ داده است.</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "این یک مشکل شناخته‌شده در نسخه 1.19.2 مود <b>L_Enders_Cataclysm</b> است، "
+                + "که در آن پیاده‌سازی مورد نیاز بازی وجود ندارد.</span><br><br>";
+
+        // راه‌حل
+        String solucion = "<span style='color:#" + color + "'>"
+                + "<b>راه‌حل توصیه‌شده:</b><br>"
+                + "مود <b>PotFix (Cataclysm Patch)</b> را نصب کنید تا این خطا برطرف شود.<br>"
+                + "می‌توانید آن را از اینجا دانلود کنید: <a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch  '>CurseForge - PotFix</a>"
+                + "</span>";
+
+        return mensajeBase + solucion;
+    }
+    @Override
+    public String nombreErrorPreloadingTricks() {
+        return "خطای Preloading Tricks";
+    }
+
+    @Override
+    public String mensajeErrorPreloadingTricks() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // پیام اصلی
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "یک تعارض ناشی از <b>Preloading Tricks</b> شناسایی شده است.</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "خطای <i>ClassCastException: String cannot be cast to ModuleDescriptor</i> "
+                + "نشان می‌دهد که مود در حال دستکاری نادرست کلاس‌های سیستم ماژول جاوا است.</span><br><br>";
+
+        // توضیح و راه‌حل
+        String explicacion = "<span style='color:#" + color + "'>"
+                + "<b>Preloading Tricks</b> مودی است که عمدتاً برای <b>توسعه‌دهندگان</b> طراحی شده است. "
+                + "این مود عملیات پیچیده تغییر کلاس (mixins) را در مرحله بسیار اولیه بارگذاری بازی انجام می‌دهد، "
+                + "که در صورت وجود تعاملات دیگر، می‌تواند به راحتی پایداری را مختل کند.</span><br><br>"
+                + "<span style='color:#" + color + "'><b>راه‌حل توصیه‌شده:</b><br>"
+                + "<ul>"
+                + "<li>مود <b>Preloading Tricks</b> را حذف کنید. معمولاً برای بازی در سرورهای عمومی یا پک‌های پایدار ضروری نیست.</li>"
+                + "<li>اگر توسعه‌دهنده هستید و برای تست به آن نیاز دارید، پیکربندی محیط خود را بررسی کنید.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + explicacion;
+    }
+    @Override
+    public String nombreErrorSimpleRadioLexiconfig() {
+        return "ناسازگاری Simple Radio / Lexiconfig";
+    }
+
+    @Override
+    public String mensajeErrorSimpleRadioLexiconfig() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // پیام اصلی
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "یک تعارض بین <b>Simple Radio</b> و <b>Lexiconfig</b> شناسایی شده است.</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "این خطا در طی فرآیند 'shelveLexicons' رخ می‌دهد که نشان‌دهنده ناسازگاری باینری بین هر دو کتابخانه است.</span><br><br>";
+
+        // راه‌حل خاص
+        String solucion = "<span style='color:#" + color + "'>"
+                + "<b>علت شناخته‌شده:</b><br>"
+                + "Simple Radio معمولاً برای نسخه‌های قدیمی‌تر Lexiconfig طراحی شده است، در حالی که شما نسخه جدیدتری نصب کرده‌اید.</span><br><br>"
+                + "<span style='color:#" + color + "'><b>راه‌حل توصیه‌شده:</b><br>"
+                + "<ul>"
+                + "<li>سعی کنید از نسخه قدیمی‌تری از <b>Lexiconfig</b> استفاده کنید.</li>"
+                + "<li>توصیه می‌شود نسخه <b>1.3.11</b> یا نسخه‌های قبلی را امتحان کنید، که معمولاً با Simple Radio سازگار هستند.</li>"
+                + "<li>اگر مشکل ادامه یافت، بررسی کنید که آیا به‌روزرسانی برای Simple Radio موجود است یا خیر.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + solucion;
+    }
+    @Override
+    public String nombreErrorMobAITweaks() {
+        return "خطای Mob AI Tweaks";
+    }
+
+    @Override
+    public String mensajeErrorMobAITweaks() {
+        String color = Config.obtenerInstancia().obtenerColorError();
+        
+        // پیام اصلی
+        String mensajeBase = "<span style='color:#" + color + "'>"
+                + "خطایی مرتبط با <b>Mob AI Tweaks</b> شناسایی شده است.</span><br><br>"
+                + "<span style='color:#" + color + "'>"
+                + "این خطا از یک Mixin (<code>$mob-ai-tweaks$onSpawned</code>) سرچشمه می‌گیرد که "
+                + "هنگام اسپاون شدن یک موجودیت مداخله می‌کند. این معمولاً نشان‌دهنده تعارض با مود دیگری است "
+                + "که رفتار اسپاون ماب‌ها را نیز تغییر می‌دهد.</span><br><br>";
+
+        // راه‌حل
+        String solucion = "<span style='color:#" + color + "'><b>راه‌حل توصیه‌شده:</b><br>"
+                + "<ul>"
+                + "<li>سعی کنید <b>Mob AI Tweaks</b> را حذف کنید تا بررسی شود آیا ناپایداری برطرف می‌شود.</li>"
+                + "</ul></span>";
+
+        return mensajeBase + solucion;
+    }
+    
+    
+    
+    
+    
+    
+    
     
     
     
