@@ -7275,6 +7275,40 @@ public class Esperanto implements Idioma {
     public String gpu_parche_info() {
         return "Vi povas malŝalti ĉi tiun kontrolon uzante la butonon de rapida solvo.";
     }
+    @Override
+    public String nombreVerificacionRaptorLake() {
+        return "Averto pri stabileco de CPU Intel 13/14-a gen.";
+    }
+
+    @Override
+    public String advertenciaRaptorLakeTitulo() {
+        return "Ebla malstabileco en procesoro Intel Raptor Lake";
+    }
+
+    @Override
+    public String advertenciaRaptorLakeDetalle(String cpu, String microcode, String targetMicrocode) {
+        return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>" +
+               "Detektiĝis procesoro " + cpu + " kun mikrokodekso " + microcode + "." +
+               "</b> " +
+               "Procesoroj Intel de la 13-a kaj 14-a generacioj spertis problemojn de malstabileco pro troa petita tensio, " +
+               "kio povas mallongigi la vivodaŭron de la procesoro.<br><br>" +
+               "Oni rekomendas ĝisdatigi la mikrokodekson aŭ la BIOS-on de via ĉefplato al versio kiu inkluzivas la mikrokodekson <b>" + targetMicrocode + "</b> aŭ pli novan. " +
+               "<b>Averto:</b> Ĝisdatigi la BIOS-on enhavas riskojn se ne farite ĝuste.<br><br>" +
+               "<i>Noto: Tio preskaŭ certe NE estas la kaŭzo de via nuna kraŝo, ĝi estas nur informa averto pri la sano de la hardvaro.</i>";
+    }
+
+    @Override
+    public String desactivarVerificacionRaptorLake() {
+        return "Ne reaverti min pri ĉi tio";
+    }
+
+    @Override
+    public String verArticuloRaptorLake(String fuente) {
+        return "Legi artikolon ĉe " + fuente;
+    }
+    
+    
+    
     
     
     

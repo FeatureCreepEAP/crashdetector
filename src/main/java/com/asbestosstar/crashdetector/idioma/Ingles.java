@@ -7323,6 +7323,42 @@ public class Ingles implements Idioma {
         return "You can disable this verification using the quick fix button.";
     }
     
+    @Override
+    public String nombreVerificacionRaptorLake() {
+        return "Intel 13th/14th Gen CPU Stability Warning";
+    }
+
+    @Override
+    public String advertenciaRaptorLakeTitulo() {
+        return "Possible instability in Intel Raptor Lake processor";
+    }
+
+    @Override
+    public String advertenciaRaptorLakeDetalle(String cpu, String microcode, String targetMicrocode) {
+        return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>" +
+               "Detected a " + cpu + " processor with microcode " + microcode + "." +
+               "</b> " +
+               "Intel 13th and 14th generation processors have experienced instability issues due to excessive voltage requests, " +
+               "which may shorten the processor's lifespan.<br><br>" +
+               "It is recommended to update the microcode or your motherboard's BIOS to a version that includes microcode <b>" + targetMicrocode + "</b> or newer. " +
+               "<b>Warning:</b> Updating the BIOS carries risks if not done correctly.<br><br>" +
+               "<i>Note: This is almost certainly NOT the cause of your current crash, it is merely an informational notice about hardware health.</i>";
+    }
+
+    @Override
+    public String desactivarVerificacionRaptorLake() {
+        return "Do not warn me about this again";
+    }
+
+    @Override
+    public String verArticuloRaptorLake(String fuente) {
+        return "Read article on " + fuente;
+    }
+    
+    
+    
+    
+    
     
     
     

@@ -7211,7 +7211,37 @@ public class Arabe implements Idioma {
         return "يمكنك تعطيل هذا الفحص باستخدام زر الحل السريع.";
     }
     
-    
+    @Override
+    public String nombreVerificacionRaptorLake() {
+        return "تحذير استقرار وحدة المعالجة المركزية Intel الجيل 13/14";
+    }
+
+    @Override
+    public String advertenciaRaptorLakeTitulo() {
+        return "عدم استقرار محتمل في معالج Intel Raptor Lake";
+    }
+
+    @Override
+    public String advertenciaRaptorLakeDetalle(String cpu, String microcode, String targetMicrocode) {
+        return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>" +
+               "تم اكتشاف معالج " + cpu + " برمز ميكروي " + microcode + "." +
+               "</b> " +
+               "عانت معالجات Intel من الجيلين 13 و 14 من مشاكل عدم استقرار بسبب طلب جهد زائد، " +
+               "مما قد يقصر من العمر الافتراضي للمعالج.<br><br>" +
+               "يُوصى بتحديث الرمز الميكروي أو الـ BIOS للوحة الأم إلى إصدار يتضمن الرمز الميكروي <b>" + targetMicrocode + "</b> أو أحدث. " +
+               "<b>تحذير:</b> تحديث الـ BIOS ينطوي على مخاطر إذا لم يتم بشكل صحيح.<br><br>" +
+               "<i>ملاحظة: من شبه المؤكد أن هذا ليس سبب تعطلك الحالي، إنه مجرد تنبيه إعلامي حول صحة العتاد.</i>";
+    }
+
+    @Override
+    public String desactivarVerificacionRaptorLake() {
+        return "لا تذكرني بهذا مرة أخرى";
+    }
+
+    @Override
+    public String verArticuloRaptorLake(String fuente) {
+        return "اقرأ المقال على " + fuente;
+    }
     
     
     

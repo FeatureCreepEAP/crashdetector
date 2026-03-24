@@ -8013,7 +8013,37 @@ public class Espanol implements Idioma {
         return "Puedes desactivar esta verificación usando el botón de solución rápida.";
     }    
     
-    
+    @Override
+    public String nombreVerificacionRaptorLake() {
+        return "Advertencia de Estabilidad CPU Intel 13/14 Gen";
+    }
+
+    @Override
+    public String advertenciaRaptorLakeTitulo() {
+        return "Posible inestabilidad en procesador Intel Raptor Lake";
+    }
+
+    @Override
+    public String advertenciaRaptorLakeDetalle(String cpu, String microcode, String targetMicrocode) {
+        return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>" +
+               "Se ha detectado un procesador " + cpu + " con microcódigo " + microcode + "." +
+               "</b> " +
+               "Los procesadores Intel de 13ª y 14ª generación han presentado problemas de inestabilidad debido a un exceso de voltaje solicitado, " +
+               "lo que puede acortar la vida útil del procesador.<br><br>" +
+               "Se recomienda actualizar el microcódigo o la BIOS de tu placa madre a una versión que incluya el microcódigo <b>" + targetMicrocode + "</b> o superior. " +
+               "<b>Advertencia:</b> Actualizar la BIOS conlleva riesgos si no se hace correctamente.<br><br>" +
+               "<i>Nota: Esto casi con seguridad NO es la causa de tu crash actual, es solo un aviso informativo de salud del hardware.</i>";
+    }
+
+    @Override
+    public String desactivarVerificacionRaptorLake() {
+        return "No volver a advertirme sobre esto";
+    }
+
+    @Override
+    public String verArticuloRaptorLake(String fuente) {
+        return "Leer artículo en " + fuente;
+    }
     
     
     

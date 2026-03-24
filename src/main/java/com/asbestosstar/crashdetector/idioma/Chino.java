@@ -6860,6 +6860,40 @@ public class Chino implements Idioma {
     public String gpu_parche_info() {
         return "您可以使用快速解决按钮禁用此验证。";
     }
+    @Override
+    public String nombreVerificacionRaptorLake() {
+        return "Intel 第 13/14 代 CPU 稳定性警告";
+    }
+
+    @Override
+    public String advertenciaRaptorLakeTitulo() {
+        return "Intel Raptor Lake 处理器可能存在不稳定性";
+    }
+
+    @Override
+    public String advertenciaRaptorLakeDetalle(String cpu, String microcode, String targetMicrocode) {
+        return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>" +
+               "检测到处理器 " + cpu + "，微码版本为 " + microcode + "。" +
+               "</b> " +
+               "Intel 第 13 代和第 14 代处理器因请求电压过高而出现稳定性问题，" +
+               "这可能会缩短处理器的使用寿命。<br><br>" +
+               "建议将主板的微码或 BIOS 更新至包含微码 <b>" + targetMicrocode + "</b> 或更高版本的版本。" +
+               "<b>警告：</b>如果操作不当，更新 BIOS 存在风险。<br><br>" +
+               "<i>注意：这几乎肯定不是您当前崩溃的原因，这仅是关于硬件健康的资讯性提醒。</i>";
+    }
+
+    @Override
+    public String desactivarVerificacionRaptorLake() {
+        return "不再就此向我发出警告";
+    }
+
+    @Override
+    public String verArticuloRaptorLake(String fuente) {
+        return "在 " + fuente + " 上阅读文章";
+    }
+    
+    
+    
     
     
     

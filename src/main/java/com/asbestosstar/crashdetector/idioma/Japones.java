@@ -7022,6 +7022,40 @@ public class Japones implements Idioma {
     public String gpu_parche_info() {
         return "クイックフィックスボタンを使用して、この検証を無効にできます。";
     }
+    @Override
+    public String nombreVerificacionRaptorLake() {
+        return "Intel 第 13/14 世代 CPU 安定性警告";
+    }
+
+    @Override
+    public String advertenciaRaptorLakeTitulo() {
+        return "Intel Raptor Lake プロセッサに不安定性の可能性";
+    }
+
+    @Override
+    public String advertenciaRaptorLakeDetalle(String cpu, String microcode, String targetMicrocode) {
+        return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>" +
+               "プロセッサ " + cpu + "、マイクロコード " + microcode + " が検出されました。" +
+               "</b> " +
+               "Intel 第 13 世代および第 14 世代プロセッサは、過剰な電圧要求により不安定性の問題を経験しており、" +
+               "これがプロセッサの寿命を短縮する可能性があります。<br><br>" +
+               "マイクロコードまたはマザーボードの BIOS を、マイクロコード <b>" + targetMicrocode + "</b> 以降を含むバージョンに更新することを推奨します。" +
+               "<b>警告：</b>BIOS の更新は、正しく行われない場合リスクを伴います。<br><br>" +
+               "<i>注記：これは現在のクラッシュの原因である可能性はほぼありません。ハードウェアの健康状態に関する情報提供のお知らせです。</i>";
+    }
+
+    @Override
+    public String desactivarVerificacionRaptorLake() {
+        return "これについて再度警告しない";
+    }
+
+    @Override
+    public String verArticuloRaptorLake(String fuente) {
+        return fuente + " で記事を読む";
+    }
+    
+    
+    
     
     
     

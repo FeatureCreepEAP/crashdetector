@@ -125,7 +125,7 @@ public class PirataMC implements Verificaciones {
 	public QuickFix solucion() {
 		return new QuickFix.Builder(MonitorDePID.idioma.nombrePirataMC())
 				.agregarBoton(MonitorDePID.idioma.desactivarVerificacionPirata(), retener -> {
-					PirataMC.config.escribir(true);
+					PirataMC.config.escribir(false);
 				}, true).agregarBoton(MonitorDePID.idioma.comprarMC(), retener -> {
 
 					abrirEnNavegador(

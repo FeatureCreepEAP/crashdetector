@@ -8,31 +8,24 @@ import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.MethodInsnNode;
+import org.objectweb.asm.tree.MethodNode;
 
-import com.asbestosstar.crashdetector.hw.gpu.HacerVerificacionGPU;
 import com.asbestosstar.crashdetector.parches.Parche;
 import com.asbestosstar.crashdetector.parches.ParcheClassNode;
 
 /**
- * Parche que inyecta una llamada al verificador de GPU al final de los constructores
- * de las clases principales del cliente de Minecraft.
- * 
- * Clases objetivo (múltiples nombres debido a diferentes mappings):
- * - game.Client (FCI Inglés)
- * - net.minecraft.class_310 (FAIN)
- * - net.minecraft.client.Minecraft (SugarCane/Oficial)
- * 
- * El parche se activa una sola vez para evitar inyecciones duplicadas.
+ * Parche que inyecta una llamada segura al verificador de GPU (HacerVerificacionGPU)
+ * al final de los constructores de Minecraft.
  */
 public class TransformacionDeMinecraftCodigoGPU implements ParcheClassNode {
 
-    // Bandera para asegurar que el parche se aplica solo una vez.
+    // Bandera para asegurar que el parche se aplica solo una vez por ejecución.
     private static boolean completa_cliente = false;
 
     @Override
     public Set<String> clases() {
         Set<String> clases = new HashSet<>();
-        // Añadimos todas las posibles clases del cliente de Minecraft
+        // Nombres posibles de la clase principal del cliente según distintos mappings
         clases.add("game.Client");
         clases.add("net.minecraft.class_310");
         clases.add("net.minecraft.client.Minecraft");
@@ -41,50 +34,44 @@ public class TransformacionDeMinecraftCodigoGPU implements ParcheClassNode {
 
     @Override
     public void parchClassNode(ClassNode node, String nombre_de_clase) {
-        // Solo aplicamos el parche si aún no se ha completado y es una clase cliente
+        // Solo aplicamos si no se ha completado ya
         if (!completa_cliente) {
-            
+
             System.out.println("CD: Parche de verificación de GPU encontrado para la clase: " + nombre_de_clase);
 
-            // Iteramos sobre todos los métodos de la clase para encontrar los constructores
-            node.methods.forEach(method -> {
-                // Un constructor en bytecode siempre se llama "<init>" y su descriptor termina en "V" (void)
-                // aunque técnicamente no devuelve nada, el descriptor describe los parámetros.
-                // El descriptor más común es "()V" para un constructor sin argumentos.
+            // Iteramos sobre los métodos para encontrar el constructor
+            for (MethodNode method : node.methods) {
+                // Buscamos el constructor (<init>)
                 if (method.name.equals("<init>")) {
                     
-                    System.out.println("CD: Inyectando verificación de GPU en el constructor de: " + nombre_de_clase);
+                    System.out.println("CD: Inyectando llamada a HacerVerificacionGPU.hacer() en el constructor.");
 
-                    // Creamos la lista de instrucciones a inyectar
-                    InsnList insnList = new InsnList();
-                    
-                    // Añadimos la llamada al método estático 'hacer()' de nuestra clase de verificación
-                    insnList.add(new MethodInsnNode(Opcodes.INVOKESTATIC,
-                            HacerVerificacionGPU.class.getCanonicalName().replace('.', '/'),
-                            "hacer",
-                            "()V", // Descriptor del método: no recibe argumentos, no devuelve nada
-                            false));
+                    // Creamos la instrucción: INVOKESTATIC HacerVerificacionGPU.hacer()V
+                    InsnList toInject = new InsnList();
+                    toInject.add(new MethodInsnNode(
+                            Opcodes.INVOKESTATIC,
+                            "com/asbestosstar/crashdetector/hw/gpu/HacerVerificacionGPU", // Ruta interna de la clase (con /)
+                            "hacer",                                                 // Nombre del método
+                            "()V",                                                   // Descriptor (void)
+                            false                                                    // No es interfaz
+                    ));
 
-                    // --- Lógica para insertar al final del constructor ---
-                    // Buscamos la última instrucción, que suele ser un 'return' (Opcodes.RETURN).
-                    // Insertamos nuestro código justo antes de esa instrucción de retorno.
-                    
-                        AbstractInsnNode ultimaInstruccion = method.instructions.getLast();
-                        
-                        // Verificamos si la última instrucción es un retorno para insertar antes de él.
-                        // Esto es más seguro que insertar al final, ya que el bytecode debe terminar con un return.
-                        if (ultimaInstruccion.getOpcode() >= Opcodes.IRETURN && ultimaInstruccion.getOpcode() <= Opcodes.RETURN) {
-                             method.instructions.insertBefore(ultimaInstruccion, insnList);
-                        } else {
-                            // Caso de seguridad: si no hay un 'return' explícito (raro en constructores),
-                            // lo añadimos al final.
-                            method.instructions.add(insnList);
+                    // --- LÓGICA DE INSERCIÓN CORREGIDA ---
+                    // Buscamos la instrucción RETURN dentro del método.
+                    // Es vital insertar ANTES del return, no después.
+                    // Usamos toArray() para evitar ConcurrentModificationException si modificamos la lista mientras iteramos.
+                    for (AbstractInsnNode insn : method.instructions.toArray()) {
+                        // En constructores normalmente solo hay RETURN (void return)
+                        if (insn.getOpcode() == Opcodes.RETURN) {
+                            method.instructions.insertBefore(insn, toInject);
+                            // Nota: Si hubiera múltiples returns (raro en constructores simples), 
+                            // esto inyectaría antes de cada uno. Para este caso es aceptable.
                         }
-            
+                    }
                 }
-            });
+            }
 
-            // Marcamos el parche como completado para no volver a procesarlo
+            // Marcamos como completado para no procesar otras clases objetivo
             completa_cliente = true;
         }
     }
@@ -101,14 +88,11 @@ public class TransformacionDeMinecraftCodigoGPU implements ParcheClassNode {
 
     @Override
     public String nombre_de_gui() {
-        // Asumimos que MonitorDePID.idioma tiene un método para obtener el nombre
-        // return MonitorDePID.idioma.transformacionDeMinecraftCodigoGPU();
         return "Verificación de GPU al iniciar el cliente";
     }
 
     @Override
     public boolean predeterminado() {
-        // Se recomienda activar este parche por defecto
         return true;
     }
 }

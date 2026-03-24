@@ -7261,6 +7261,44 @@ public class Persa implements Idioma {
         return "می‌توانید این بررسی را با استفاده از دکمه راه‌حل سریع غیرفعال کنید.";
     }
     
+    @Override
+    public String nombreVerificacionRaptorLake() {
+        return "هشدار پایداری CPU نسل 13/14 اینتل";
+    }
+
+    @Override
+    public String advertenciaRaptorLakeTitulo() {
+        return "عدم پایداری احتمالی در پردازنده Intel Raptor Lake";
+    }
+
+    @Override
+    public String advertenciaRaptorLakeDetalle(String cpu, String microcode, String targetMicrocode) {
+        return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>" +
+               "پردازنده " + cpu + " با میکروکد " + microcode + " شناسایی شد." +
+               "</b> " +
+               "پردازنده‌های نسل 13 و 14 اینتل به دلیل درخواست ولتاژ بیش از حد، با مشکلات ناپایداری مواجه شده‌اند، " +
+               "که ممکن است عمر مفید پردازنده را کاهش دهد.<br><br>" +
+               "توصیه می‌شود میکروکد یا BIOS مادربرد خود را به نسخه‌ای که شامل میکروکد <b>" + targetMicrocode + "</b> یا جدیدتر است به‌روزرسانی کنید. " +
+               "<b>هشدار:</b> به‌روزرسانی BIOS در صورت عدم انجام صحیح، خطراتی به همراه دارد.<br><br>" +
+               "<i>توجه: این مورد تقریباً مطمئناً علت کرش فعلی شما نیست، این تنها یک اطلاع‌رسانی درباره سلامت سخت‌افزار است.</i>";
+    }
+
+    @Override
+    public String desactivarVerificacionRaptorLake() {
+        return "دیگر درباره این موضوع به من هشدار نده";
+    }
+
+    @Override
+    public String verArticuloRaptorLake(String fuente) {
+        return "مقاله را در " + fuente + " بخوانید";
+    }
+    
+    
+    
+    
+    
+    
+    
     
     
     

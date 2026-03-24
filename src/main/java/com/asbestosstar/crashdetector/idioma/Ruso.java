@@ -7300,6 +7300,42 @@ public class Ruso implements Idioma {
     public String gpu_parche_info() {
         return "Вы можете отключить эту проверку с помощью кнопки быстрого решения.";
     }
+    @Override
+    public String nombreVerificacionRaptorLake() {
+        return "Предупреждение о стабильности CPU Intel 13/14 поколения";
+    }
+
+    @Override
+    public String advertenciaRaptorLakeTitulo() {
+        return "Возможная нестабильность процессора Intel Raptor Lake";
+    }
+
+    @Override
+    public String advertenciaRaptorLakeDetalle(String cpu, String microcode, String targetMicrocode) {
+        return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>" +
+               "Обнаружен процессор " + cpu + " с микрокодом " + microcode + "." +
+               "</b> " +
+               "Процессоры Intel 13-го и 14-го поколений сталкивались с проблемами нестабильности из-за запроса избыточного напряжения, " +
+               "что может сократить срок службы процессора.<br><br>" +
+               "Рекомендуется обновить микрокод или BIOS вашей материнской платы до версии, включающей микрокод <b>" + targetMicrocode + "</b> или новее. " +
+               "<b>Предупреждение:</b> Обновление BIOS сопряжено с рисками, если выполняется неправильно.<br><br>" +
+               "<i>Примечание: Это почти наверняка НЕ является причиной вашего текущего вылета, это всего лишь информационное уведомление о состоянии оборудования.</i>";
+    }
+
+    @Override
+    public String desactivarVerificacionRaptorLake() {
+        return "Больше не предупреждать меня об этом";
+    }
+
+    @Override
+    public String verArticuloRaptorLake(String fuente) {
+        return "Читать статью на " + fuente;
+    }
+    
+    
+    
+    
+    
     
     
     

@@ -2646,4 +2646,14 @@ public interface Idioma {
 
 	public String desactivar_parche_gpu();
 
+	public String advertenciaRaptorLakeTitulo();
+
+	public String advertenciaRaptorLakeDetalle(String cpu, String microcode, String string);
+
+	public String nombreVerificacionRaptorLake();
+
+	public String verArticuloRaptorLake(String string);
+
+	public String desactivarVerificacionRaptorLake();
+
 }

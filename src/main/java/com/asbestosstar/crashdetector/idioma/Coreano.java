@@ -7008,6 +7008,41 @@ public class Coreano implements Idioma {
     public String gpu_parche_info() {
         return "빠른 해결 단추를 사용하여 이 검증을 비활성화할수 있습니다.";
     }
+    @Override
+    public String nombreVerificacionRaptorLake() {
+        return "Intel 13/14 세대 CPU 안정성 경고";
+    }
+
+    @Override
+    public String advertenciaRaptorLakeTitulo() {
+        return "Intel Raptor Lake 처리기에서 불안정성 가능성";
+    }
+
+    @Override
+    public String advertenciaRaptorLakeDetalle(String cpu, String microcode, String targetMicrocode) {
+        return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>" +
+               "처리기 " + cpu + " 이 (가) 마이크로코드 " + microcode + " 로 감지되였습니다." +
+               "</b> " +
+               "Intel 13 세대 및 14 세대 처리기들은 과다한 전압 요청으로 인한 불안정성 문제를 겪었으며，" +
+               "이는 처리기의 수명을 단축시킬수 있습니다.<br><br>" +
+               "마이크로코드 또는 메인보드의 BIOS 를 마이크로코드 <b>" + targetMicrocode + "</b> 이상이 포함된 버전으로 갱신하는 것이 권장됩니다. " +
+               "<b>경고:</b> BIOS 갱신은 올바르게 수행되지 않을 경우 위험을 동반합니다.<br><br>" +
+               "<i>참고: 이는 현재 충돌의 원인이 아닐 가능성이 매우 높으며，단순히 하드웨어 건강 상태에 대한 정보성 알림입니다.</i>";
+    }
+
+    @Override
+    public String desactivarVerificacionRaptorLake() {
+        return "이것에 대해 다시 알려주지 마십시오";
+    }
+
+    @Override
+    public String verArticuloRaptorLake(String fuente) {
+        return fuente + " 에서 기사 읽기";
+    }
+    
+    
+    
+    
     
     
     

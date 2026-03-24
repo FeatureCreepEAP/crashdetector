@@ -53,6 +53,7 @@ import com.asbestosstar.crashdetector.analizador.general.NullPointer;
 import com.asbestosstar.crashdetector.analizador.general.OpcionesJavaGCInvalidas;
 import com.asbestosstar.crashdetector.analizador.general.PreferIPV4Trace;
 import com.asbestosstar.crashdetector.analizador.general.ProblemaSafeFetch32JDK17;
+import com.asbestosstar.crashdetector.analizador.general.RaptorLakeInestable;
 import com.asbestosstar.crashdetector.analizador.general.RutaCaracteresInvalidos;
 import com.asbestosstar.crashdetector.analizador.general.SpongeMixinClaseMalUbicada;
 import com.asbestosstar.crashdetector.analizador.general.SpongeMixinConfigsProblematicos;
@@ -312,6 +313,7 @@ public class Analizador {
 		verificaciones.add(new ErrorSimpleRadioLexiconfig());
 		verificaciones.add(new ErrorMobAITweaks());
 		verificaciones.add(new VerificacionGPU());
+		verificaciones.add(new RaptorLakeInestable());
 
 		
 		
