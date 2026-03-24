@@ -6964,6 +6964,69 @@ public class Japones implements Idioma {
 
         return mensajeBase + solucion;
     }
+    public String nombre_verificacion_gpu() {
+        return "GPU 検証（OpenGL / GPU 選択）";
+    }
+
+    public String desactivar_parche_gpu() {
+        return "GPU 検証を無効にする";
+    }
+
+    // ==================== CRASH ====================
+
+    public String gpu_crash_posible() {
+        return "<b style='color:#" + config.obtenerColorError() + "'>GPU 検証ツールがゲームの終了を引き起こした可能性があります。</b>";
+    }
+
+    public String gpu_crash_causas() {
+        return "検証は開始されましたが完了しませんでした。これは通常、OpenGL またはグラフィックスドライバーの障害を示しています。<br><br>"
+             + "考えられる原因:<br>"
+             + "- 古いまたは不安定なドライバー<br>"
+             + "- OpenGL に関する問題<br>"
+             + "- 古い GPU またはハイブリッド構成";
+    }
+
+    public String gpu_crash_recomendaciones() {
+        return "推奨事項:<br>"
+             + "- GPU ドライバーを更新する<br>"
+             + "- 専用 GPU の使用を強制する<br>"
+             + "- 遠隔または仮想化環境を避ける";
+    }
+
+    // ==================== NO ÓPTIMA ====================
+
+    public String gpu_no_optima() {
+        return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>ゲームが利用可能な最適な GPU を使用していません。</b>";
+    }
+
+    public String gpu_no_optima_detalles() {
+        return "これによりパフォーマンスが低下する（低フレームレート）可能性がありますが、通常、単独ではクラッシュの原因にはなりません。";
+    }
+
+    public String gpu_recomendaciones_rendimiento() {
+        return "推奨事項:<br>"
+             + "- コントロールパネルで専用 GPU の使用を強制する<br>"
+             + "- Java/Minecraft を高性能モードに設定する";
+    }
+
+    // ==================== GENERALES ====================
+
+    public String gpu_nota_precision() {
+        return "<b>注記：</b>この検出システムは 100% 完璧ではありません。";
+    }
+
+    public String gpu_consumo_energia() {
+        return "より強力な GPU はより多くの電力を消費し、ノートパソコンではバッテリー持続時間を短縮させる可能性があります。";
+    }
+
+    public String gpu_parche_info() {
+        return "クイックフィックスボタンを使用して、この検証を無効にできます。";
+    }
+    
+    
+    
+    
+    
     
     
     

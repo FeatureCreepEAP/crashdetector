@@ -6950,6 +6950,68 @@ public class Coreano implements Idioma {
 
         return mensajeBase + solucion;
     }
+    public String nombre_verificacion_gpu() {
+        return "GPU 검증 (OpenGL / GPU 선택)";
+    }
+
+    public String desactivar_parche_gpu() {
+        return "GPU 검증 비활성화";
+    }
+
+    // ==================== CRASH ====================
+
+    public String gpu_crash_posible() {
+        return "<b style='color:#" + config.obtenerColorError() + "'>GPU 검증기가 게임 종료를 일으켰을 가능성이 있습니다.</b>";
+    }
+
+    public String gpu_crash_causas() {
+        return "검증이 시작되였으나 완료되지 않았습니다. 이는 일반적으로 OpenGL 또는 그래픽스 드라이버의 고장을 나타냅니다.<br><br>"
+             + "가능한 원인:<br>"
+             + "- 오래되거나 불안정한 드라이버<br>"
+             + "- OpenGL 관련 문제<br>"
+             + "- 오래된 GPU 또는 혼합 구성";
+    }
+
+    public String gpu_crash_recomendaciones() {
+        return "권장 사항:<br>"
+             + "- GPU 드라이버 갱신<br>"
+             + "- 전용 GPU 사용 강제<br>"
+             + "- 원격 또는 가상화 환경 피하기";
+    }
+
+    // ==================== NO ÓPTIMA ====================
+
+    public String gpu_no_optima() {
+        return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>게임이 사용 가능한 최적의 GPU 를 사용하고 있지 않습니다.</b>";
+    }
+
+    public String gpu_no_optima_detalles() {
+        return "이는 성능 저하 (낮은 FPS) 를 초래할수 있지만, 일반적으로 단독으로 충돌을 일으키지는 않습니다.";
+    }
+
+    public String gpu_recomendaciones_rendimiento() {
+        return "권장 사항:<br>"
+             + "- 제어판에서 전용 GPU 사용 강제<br>"
+             + "- Java/Minecraft 를 고성능 모드로 구성";
+    }
+
+    // ==================== GENERALES ====================
+
+    public String gpu_nota_precision() {
+        return "<b>참고:</b> 이 탐지 체계는 100% 정확하지 않습니다.";
+    }
+
+    public String gpu_consumo_energia() {
+        return "더 강력한 GPU 는 더 많은 전력을 소비하며 랩톱에서 배터리 지속 시간을 단축시킬수 있습니다.";
+    }
+
+    public String gpu_parche_info() {
+        return "빠른 해결 단추를 사용하여 이 검증을 비활성화할수 있습니다.";
+    }
+    
+    
+    
+    
     
     
     

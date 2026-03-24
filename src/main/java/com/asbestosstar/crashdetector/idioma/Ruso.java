@@ -7242,6 +7242,65 @@ public class Ruso implements Idioma {
         return mensajeBase + solucion;
     }
     
+    public String nombre_verificacion_gpu() {
+        return "Проверка GPU (OpenGL / Выбор GPU)";
+    }
+
+    public String desactivar_parche_gpu() {
+        return "Отключить проверку GPU";
+    }
+
+    // ==================== CRASH ====================
+
+    public String gpu_crash_posible() {
+        return "<b style='color:#" + config.obtenerColorError() + "'>Верификатор GPU мог стать причиной закрытия игры.</b>";
+    }
+
+    public String gpu_crash_causas() {
+        return "Проверка началась, но не завершилась. Это обычно указывает на сбой в OpenGL или в графических драйверах.<br><br>"
+             + "Возможные причины:<br>"
+             + "- Устаревшие или нестабильные драйверы<br>"
+             + "- Проблемы с OpenGL<br>"
+             + "- Старые GPU или гибридные конфигурации";
+    }
+
+    public String gpu_crash_recomendaciones() {
+        return "Рекомендации:<br>"
+             + "- Обновить драйверы GPU<br>"
+             + "- Принудительно использовать дискретную видеокарту<br>"
+             + "- Избегать удалённых или виртуализированных сред";
+    }
+
+    // ==================== NO ÓPTIMA ====================
+
+    public String gpu_no_optima() {
+        return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>Игра не использует лучшую доступную видеокарту.</b>";
+    }
+
+    public String gpu_no_optima_detalles() {
+        return "Это может снизить производительность (низкий FPS), но обычно само по себе не вызывает вылетов.";
+    }
+
+    public String gpu_recomendaciones_rendimiento() {
+        return "Рекомендации:<br>"
+             + "- Принудительно использовать дискретную видеокарту в панели управления<br>"
+             + "- Настроить Java/Minecraft в режиме высокой производительности";
+    }
+
+    // ==================== GENERALES ====================
+
+    public String gpu_nota_precision() {
+        return "<b>Примечание:</b> Данная система обнаружения не является 100% точной.";
+    }
+
+    public String gpu_consumo_energia() {
+        return "Более мощные видеокарты потребляют больше энергии и могут сокращать время работы от батареи на ноутбуках.";
+    }
+
+    public String gpu_parche_info() {
+        return "Вы можете отключить эту проверку с помощью кнопки быстрого решения.";
+    }
+    
     
     
     

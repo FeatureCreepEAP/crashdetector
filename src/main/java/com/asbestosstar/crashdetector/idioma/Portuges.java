@@ -7246,6 +7246,70 @@ public class Portuges implements Idioma {
 
         return mensajeBase + solucion;
     }
+    public String nombre_verificacion_gpu() {
+        return "Verificação de GPU (OpenGL / Seleção de GPU)";
+    }
+
+    public String desactivar_parche_gpu() {
+        return "Desativar verificação de GPU";
+    }
+
+    // ==================== CRASH ====================
+
+    public String gpu_crash_posible() {
+        return "<b style='color:#" + config.obtenerColorError() + "'>O verificador de GPU pode ter causado o fechamento do jogo.</b>";
+    }
+
+    public String gpu_crash_causas() {
+        return "A verificação começou mas não terminou. Isso geralmente indica uma falha no OpenGL ou nos drivers gráficos.<br><br>"
+             + "Causas possíveis:<br>"
+             + "- Drivers desatualizados ou instáveis<br>"
+             + "- Problemas com OpenGL<br>"
+             + "- GPUs antigas ou configurações híbridas";
+    }
+
+    public String gpu_crash_recomendaciones() {
+        return "Recomendações:<br>"
+             + "- Atualizar drivers da GPU<br>"
+             + "- Forçar uso de GPU dedicada<br>"
+             + "- Evitar ambientes remotos ou virtualizados";
+    }
+
+    // ==================== NO ÓPTIMA ====================
+
+    public String gpu_no_optima() {
+        return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>O jogo não está usando a melhor GPU disponível.</b>";
+    }
+
+    public String gpu_no_optima_detalles() {
+        return "Isso pode reduzir o desempenho (FPS baixos), mas normalmente não causa crashes por si só.";
+    }
+
+    public String gpu_recomendaciones_rendimiento() {
+        return "Recomendações:<br>"
+             + "- Forçar GPU dedicada no painel de controle<br>"
+             + "- Configurar Java/Minecraft em modo de alto desempenho";
+    }
+
+    // ==================== GENERALES ====================
+
+    public String gpu_nota_precision() {
+        return "<b>Nota:</b> Este sistema de detecção não é 100% perfeito.";
+    }
+
+    public String gpu_consumo_energia() {
+        return "GPUs mais potentes consomem mais energia e podem reduzir a duração da bateria em laptops.";
+    }
+
+    public String gpu_parche_info() {
+        return "Você pode desativar esta verificação usando o botão de solução rápida.";
+    }
+    
+    
+    
+    
+    
+    
     
     
     

@@ -7264,6 +7264,70 @@ public class Ingles implements Idioma {
 
         return mensajeBase + solucion;
     }
+    public String nombre_verificacion_gpu() {
+        return "GPU Verification (OpenGL / GPU Selection)";
+    }
+
+    public String desactivar_parche_gpu() {
+        return "Disable GPU verification";
+    }
+
+    // ==================== CRASH ====================
+
+    public String gpu_crash_posible() {
+        return "<b style='color:#" + config.obtenerColorError() + "'>The GPU verifier may have caused the game to close.</b>";
+    }
+
+    public String gpu_crash_causas() {
+        return "The verification started but did not finish. This usually indicates a failure in OpenGL or in the graphics drivers.<br><br>"
+             + "Possible causes:<br>"
+             + "- Outdated or unstable drivers<br>"
+             + "- Problems with OpenGL<br>"
+             + "- Old GPUs or hybrid configurations";
+    }
+
+    public String gpu_crash_recomendaciones() {
+        return "Recommendations:<br>"
+             + "- Update GPU drivers<br>"
+             + "- Force use of dedicated GPU<br>"
+             + "- Avoid remote or virtualised environments";
+    }
+
+    // ==================== NO ÓPTIMA ====================
+
+    public String gpu_no_optima() {
+        return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>The game is not using the best available GPU.</b>";
+    }
+
+    public String gpu_no_optima_detalles() {
+        return "This may reduce performance (low FPS), but normally does not cause crashes on its own.";
+    }
+
+    public String gpu_recomendaciones_rendimiento() {
+        return "Recommendations:<br>"
+             + "- Force dedicated GPU in the control panel<br>"
+             + "- Configure Java/Minecraft in high performance mode";
+    }
+
+    // ==================== GENERALES ====================
+
+    public String gpu_nota_precision() {
+        return "<b>Note:</b> This detection system is not 100% perfect.";
+    }
+
+    public String gpu_consumo_energia() {
+        return "More powerful GPUs consume more energy and may reduce battery life on laptops.";
+    }
+
+    public String gpu_parche_info() {
+        return "You can disable this verification using the quick fix button.";
+    }
+    
+    
+    
+    
+    
+    
     
     
     

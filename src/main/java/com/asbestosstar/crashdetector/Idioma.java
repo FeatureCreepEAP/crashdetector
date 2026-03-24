@@ -2624,4 +2624,26 @@ public interface Idioma {
 
 	public String mensajeErrorMobAITweaks();
 
+	public String gpu_crash_posible();
+
+	public String gpu_crash_causas();
+
+	public String gpu_crash_recomendaciones();
+
+	public String gpu_nota_precision();
+
+	public String gpu_parche_info();
+
+	public String gpu_no_optima();
+
+	public String gpu_no_optima_detalles();
+
+	public String gpu_consumo_energia();
+
+	public String gpu_recomendaciones_rendimiento();
+
+	public String nombre_verificacion_gpu();
+
+	public String desactivar_parche_gpu();
+
 }

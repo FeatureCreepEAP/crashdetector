@@ -6802,6 +6802,65 @@ public class Chino implements Idioma {
         return mensajeBase + solucion;
     }
     
+    public String nombre_verificacion_gpu() {
+        return "GPU 验证（OpenGL / GPU 选择）";
+    }
+
+    public String desactivar_parche_gpu() {
+        return "禁用 GPU 验证";
+    }
+
+    // ==================== CRASH ====================
+
+    public String gpu_crash_posible() {
+        return "<b style='color:#" + config.obtenerColorError() + "'>GPU 验证器可能已导致游戏关闭。</b>";
+    }
+
+    public String gpu_crash_causas() {
+        return "验证已开始但未完成。这通常表明 OpenGL 或显卡驱动程序出现故障。<br><br>"
+             + "可能的原因:<br>"
+             + "- 驱动程序过时或不稳定<br>"
+             + "- OpenGL 问题<br>"
+             + "- 旧款 GPU 或混合配置";
+    }
+
+    public String gpu_crash_recomendaciones() {
+        return "建议:<br>"
+             + "- 更新 GPU 驱动程序<br>"
+             + "- 强制使用独立显卡<br>"
+             + "- 避免远程或虚拟化环境";
+    }
+
+    // ==================== NO ÓPTIMA ====================
+
+    public String gpu_no_optima() {
+        return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>游戏未使用可用的最佳 GPU。</b>";
+    }
+
+    public String gpu_no_optima_detalles() {
+        return "这可能会降低性能（低帧率），但通常本身不会导致崩溃。";
+    }
+
+    public String gpu_recomendaciones_rendimiento() {
+        return "建议:<br>"
+             + "- 在控制面板中强制使用独立显卡<br>"
+             + "- 将 Java/Minecraft 配置为高性能模式";
+    }
+
+    // ==================== GENERALES ====================
+
+    public String gpu_nota_precision() {
+        return "<b>注意：</b>此检测系统并非 100% 精确。";
+    }
+
+    public String gpu_consumo_energia() {
+        return "更强大的 GPU 消耗更多电量，可能会缩短笔记本电脑的电池续航时间。";
+    }
+
+    public String gpu_parche_info() {
+        return "您可以使用快速解决按钮禁用此验证。";
+    }
+    
     
     
     

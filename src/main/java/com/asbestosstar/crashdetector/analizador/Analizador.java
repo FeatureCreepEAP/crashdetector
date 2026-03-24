@@ -57,6 +57,7 @@ import com.asbestosstar.crashdetector.analizador.general.RutaCaracteresInvalidos
 import com.asbestosstar.crashdetector.analizador.general.SpongeMixinClaseMalUbicada;
 import com.asbestosstar.crashdetector.analizador.general.SpongeMixinConfigsProblematicos;
 import com.asbestosstar.crashdetector.analizador.general.TienesModDesAnimado;
+import com.asbestosstar.crashdetector.analizador.general.VerificacionGPU;
 import com.asbestosstar.crashdetector.analizador.general.VersionInvalidaSemver;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.config.ConfigStringArray;
@@ -310,6 +311,7 @@ public class Analizador {
 		verificaciones.add(new ErrorPreloadingTricks());
 		verificaciones.add(new ErrorSimpleRadioLexiconfig());
 		verificaciones.add(new ErrorMobAITweaks());
+		verificaciones.add(new VerificacionGPU());
 
 		
 		

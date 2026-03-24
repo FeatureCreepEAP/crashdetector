@@ -7217,6 +7217,70 @@ public class Esperanto implements Idioma {
 
         return mensajeBase + solucion;
     }
+    public String nombre_verificacion_gpu() {
+        return "Kontrolo de GPU (OpenGL / Elekto de GPU)";
+    }
+
+    public String desactivar_parche_gpu() {
+        return "Malŝalti kontrolon de GPU";
+    }
+
+    // ==================== CRASH ====================
+
+    public String gpu_crash_posible() {
+        return "<b style='color:#" + config.obtenerColorError() + "'>La kontrolilo de GPU eble kaŭzis la fermon de la ludo.</b>";
+    }
+
+    public String gpu_crash_causas() {
+        return "La kontrolo komenciĝis sed ne finiĝis. Ĉi tio kutime indikas paneon en OpenGL aŭ en la grafikaj peliloj.<br><br>"
+             + "Eblaj kaŭzoj:<br>"
+             + "- Malnovaj aŭ nestabilaj peliloj<br>"
+             + "- Problemoj kun OpenGL<br>"
+             + "- Malnovaj GPU-oj aŭ hibridaj agordoj";
+    }
+
+    public String gpu_crash_recomendaciones() {
+        return "Rekomendoj:<br>"
+             + "- Ĝisdatigi pelilojn de la GPU<br>"
+             + "- Devigi uzon de dedikita GPU<br>"
+             + "- Eviti malproksimajn aŭ virtualigitajn mediojn";
+    }
+
+    // ==================== NO ÓPTIMA ====================
+
+    public String gpu_no_optima() {
+        return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>La ludo ne uzas la plej bonan disponeblan GPU.</b>";
+    }
+
+    public String gpu_no_optima_detalles() {
+        return "Ĉi tio povas malpliigi la rendimenton (malaltaj FPS), sed kutime ne kaŭzas kraŝojn sole.";
+    }
+
+    public String gpu_recomendaciones_rendimiento() {
+        return "Rekomendoj:<br>"
+             + "- Devigi dedikitan GPU en la kontrolpanelo<br>"
+             + "- Agordi Java/Minecraft en altrendimenta modo";
+    }
+
+    // ==================== GENERALES ====================
+
+    public String gpu_nota_precision() {
+        return "<b>Noto:</b> Ĉi tiu detekta sistemo ne estas 100% perfekta.";
+    }
+
+    public String gpu_consumo_energia() {
+        return "La pli potencaj GPU-oj konsumas pli da energio kaj povas redukti la daŭron de la baterio en porteblaj komputiloj.";
+    }
+
+    public String gpu_parche_info() {
+        return "Vi povas malŝalti ĉi tiun kontrolon uzante la butonon de rapida solvo.";
+    }
+    
+    
+    
+    
+    
+    
     
     
     

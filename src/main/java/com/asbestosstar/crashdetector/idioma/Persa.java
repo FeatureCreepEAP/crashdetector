@@ -7202,6 +7202,69 @@ public class Persa implements Idioma {
 
         return mensajeBase + solucion;
     }
+    public String nombre_verificacion_gpu() {
+        return "بررسی GPU (OpenGL / انتخاب GPU)";
+    }
+
+    public String desactivar_parche_gpu() {
+        return "غیرفعال کردن بررسی GPU";
+    }
+
+    // ==================== CRASH ====================
+
+    public String gpu_crash_posible() {
+        return "<b style='color:#" + config.obtenerColorError() + "'>ممکن است بررسی‌کننده GPU باعث بسته شدن بازی شده باشد.</b>";
+    }
+
+    public String gpu_crash_causas() {
+        return "بررسی شروع شد اما به پایان نرسید. این معمولاً نشان‌دهنده خرابی در OpenGL یا درایورهای گرافیکی است.<br><br>"
+             + "علل احتمالی:<br>"
+             + "- درایورهای قدیمی یا ناپایدار<br>"
+             + "- مشکلات مربوط به OpenGL<br>"
+             + "- GPU های قدیمی یا پیکربندی‌های ترکیبی";
+    }
+
+    public String gpu_crash_recomendaciones() {
+        return "توصیه‌ها:<br>"
+             + "- به‌روزرسانی درایورهای GPU<br>"
+             + "- اجبار به استفاده از GPU اختصاصی<br>"
+             + "- پرهیز از محیط‌های راه دور یا مجازی‌سازی شده";
+    }
+
+    // ==================== NO ÓPTIMA ====================
+
+    public String gpu_no_optima() {
+        return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>بازی از بهترین GPU موجود استفاده نمی‌کند.</b>";
+    }
+
+    public String gpu_no_optima_detalles() {
+        return "این ممکن است عملکرد را کاهش دهد (نرخ فریم پایین)، اما معمولاً به تنهایی باعث کرش نمی‌شود.";
+    }
+
+    public String gpu_recomendaciones_rendimiento() {
+        return "توصیه‌ها:<br>"
+             + "- اجبار به استفاده از GPU اختصاصی در پنل کنترل<br>"
+             + "- پیکربندی Java/Minecraft در حالت عملکرد بالا";
+    }
+
+    // ==================== GENERALES ====================
+
+    public String gpu_nota_precision() {
+        return "<b>توجه:</b> این سیستم تشخیص 100% دقیق نیست.";
+    }
+
+    public String gpu_consumo_energia() {
+        return "GPU های قدرتمندتر انرژی بیشتری مصرف می‌کنند و ممکن است عمر باتری لپ‌تاپ‌ها را کاهش دهند.";
+    }
+
+    public String gpu_parche_info() {
+        return "می‌توانید این بررسی را با استفاده از دکمه راه‌حل سریع غیرفعال کنید.";
+    }
+    
+    
+    
+    
+    
     
     
     

@@ -7152,6 +7152,69 @@ public class Arabe implements Idioma {
         return mensajeBase + solucion;
     }
     
+    public String nombre_verificacion_gpu() {
+        return "فحص وحدة معالجة الرسومات (OpenGL / اختيار وحدة معالجة الرسومات)";
+    }
+
+    public String desactivar_parche_gpu() {
+        return "تعطيل فحص وحدة معالجة الرسومات";
+    }
+
+    // ==================== CRASH ====================
+
+    public String gpu_crash_posible() {
+        return "<b style='color:#" + config.obtenerColorError() + "'>من الممكن أن يكون فحص وحدة معالجة الرسومات قد تسبب في إغلاق اللعبة.</b>";
+    }
+
+    public String gpu_crash_causas() {
+        return "بدأ الفحص لكنه لم ينتهِ. يشير هذا عادةً إلى عطل في OpenGL أو في تعريفات الرسوميات.<br><br>"
+             + "الأسباب المحتملة:<br>"
+             + "- تعريفات قديمة أو غير مستقرة<br>"
+             + "- مشاكل مع OpenGL<br>"
+             + "- وحدات معالجة رسومات قديمة أو تكوينات هجينة";
+    }
+
+    public String gpu_crash_recomendaciones() {
+        return "التوصيات:<br>"
+             + "- تحديث تعريفات وحدة معالجة الرسومات<br>"
+             + "- فرض استخدام وحدة معالجة الرسومات المخصصة<br>"
+             + "- تجنب البيئات عن بُعد أو الافتراضية";
+    }
+
+    // ==================== NO ÓPTIMA ====================
+
+    public String gpu_no_optima() {
+        return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>اللعبة لا تستخدم أفضل وحدة معالجة رسومات متوفرة.</b>";
+    }
+
+    public String gpu_no_optima_detalles() {
+        return "قد يقلل هذا من الأداء (انخفاض معدل الإطارات في الثانية)، لكنه عادةً لا يتسبب في تعطل اللعبة بمفرده.";
+    }
+
+    public String gpu_recomendaciones_rendimiento() {
+        return "التوصيات:<br>"
+             + "- فرض وحدة معالجة الرسومات المخصصة في لوحة التحكم<br>"
+             + "- تهيئة Java/Minecraft في وضع الأداء العالي";
+    }
+
+    // ==================== GENERALES ====================
+
+    public String gpu_nota_precision() {
+        return "<b>ملاحظة:</b> نظام الكشف هذا ليس دقيقًا بنسبة 100%.";
+    }
+
+    public String gpu_consumo_energia() {
+        return "وحدات معالجة الرسومات الأقوى تستهلك طاقة أكثر وقد تقلل من عمر البطارية في أجهزة الكمبيوتر المحمولة.";
+    }
+
+    public String gpu_parche_info() {
+        return "يمكنك تعطيل هذا الفحص باستخدام زر الحل السريع.";
+    }
+    
+    
+    
+    
+    
     
     
     
