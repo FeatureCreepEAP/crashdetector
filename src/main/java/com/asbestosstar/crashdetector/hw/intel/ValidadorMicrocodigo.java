@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Locale;
 
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
+
 public class ValidadorMicrocodigo {
 
     // ==========================================================
@@ -25,7 +27,7 @@ public class ValidadorMicrocodigo {
     public static String obtenerReporte() {
         StringBuilder sb = new StringBuilder();
         sb.append("\n--- Validador de Microcódigo Intel ---\n");
-        
+        CrashDetectorLogger.log("Iniciando validación de microcódigo Intel...");
         // 1. Verificar Arquitectura
         String arq = System.getProperty("os.arch").toLowerCase(Locale.ENGLISH);
         boolean esX64 = arq.contains("amd64") || arq.contains("x86_64");
@@ -35,11 +37,13 @@ public class ValidadorMicrocodigo {
             sb.append("❌ Arquitectura no compatible: ").append(arq).append(". Se requiere Intel x64 o Itanium.\n");
             return sb.toString();
         }
+        CrashDetectorLogger.log("Es Intel...");
 
         // 2. Verificar Fabricante
         String fabricante = obtenerFabricanteCPU();
         sb.append("Arquitectura: ").append(esItanium ? "Itanium (IA-64)" : "x64 (Intel/AMD)").append("\n");
         sb.append("Fabricante detectado: ").append(fabricante).append("\n");
+        CrashDetectorLogger.log("tenemos ...");
 
         if (!fabricante.toLowerCase(Locale.ENGLISH).contains("intel")) {
             sb.append("❌ Microcódigo no aplicable: El procesador no es Intel.\n");
@@ -88,8 +92,11 @@ public class ValidadorMicrocodigo {
 
         try {
             if (so.contains("win")) {
-                // Windows: wmic path win32_processor get Revision
-                return ejecutarComando("wmic", "path", "win32_processor", "get", "Revision");
+
+                String mc = obtenerMicrocodigoWindowsDesdeRegistro();
+                if (!mc.isEmpty()) return mc;
+                return "Desconocido";
+
             } else if (so.contains("linux") || so.contains("nix") || so.contains("nux")) {
                 // Linux: microcode en /proc/cpuinfo
                 String mc = parsearProcCpuinfo("microcode");
@@ -112,6 +119,75 @@ public class ValidadorMicrocodigo {
         }
         return "Desconocido";
     }
+    
+    
+    private static String obtenerMicrocodigoWindowsDesdeRegistro() {
+        try {
+            ProcessBuilder pb = new ProcessBuilder(
+                "reg", "query",
+                "HKLM\\HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0",
+                "/v", "Update Revision"
+            );//https://www.tenforums.com/drivers-hardware/106331-powershell-script-cpu-information-incl-cpuid.html
+            pb.redirectErrorStream(true);
+            Process p = pb.start();
+
+            try (BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(p.getInputStream()))) {
+
+                String linea;
+                while ((linea = reader.readLine()) != null) {
+                    linea = linea.trim();
+CrashDetectorLogger.log("Registro Windows: " + linea);
+                    if (linea.startsWith("Update Revision")) {
+                        String[] partes = linea.split("\\s+");
+                        if (partes.length >= 3) {
+                            String hexLittleEndian = partes[partes.length - 1].trim();
+                            return convertirRegBinaryMicrocodigo(hexLittleEndian);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            CrashDetectorLogger.log("Error leyendo registro de Windows: " + e.getMessage());
+        }
+CrashDetectorLogger.log("No se encontró la clave 'Update Revision' en el registro.");
+        return "";
+    }
+    private static String convertirRegBinaryMicrocodigo(String hexLittleEndian) {
+        if (hexLittleEndian == null) return "";
+
+        hexLittleEndian = hexLittleEndian.trim().replaceAll("[^0-9A-Fa-f]", "");
+        if (hexLittleEndian.length() == 0 || (hexLittleEndian.length() % 2) != 0) {
+            return "";
+        }
+
+        StringBuilder bigEndian = new StringBuilder();
+        for (int i = hexLittleEndian.length(); i > 0; i -= 2) {
+            bigEndian.append(hexLittleEndian, i - 2, i);
+        }
+
+        try {
+            long valor = Long.parseUnsignedLong(bigEndian.toString(), 16);
+            return "0x" + Long.toHexString(valor).toUpperCase(Locale.ENGLISH);
+        } catch (NumberFormatException e) {
+            return "";
+        }
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     // ==========================================================
     // HELPERS DE EJECUCIÓN

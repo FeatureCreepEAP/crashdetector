@@ -70,6 +70,8 @@ import com.asbestosstar.crashdetector.gui.tipos.profiler.ProfilerGUIMinaly;
 import com.asbestosstar.crashdetector.gui.tipos.quickfix.ElementoQuickFixDemonSlayers;
 import com.asbestosstar.crashdetector.gui.tipos.quickfix.PanelQuickFixDemonSlayers;
 import com.asbestosstar.crashdetector.gui.tipos.sampler.SamplerGUIEineLotta;
+import com.asbestosstar.crashdetector.hw.gpu.ValidadorGPU;
+import com.asbestosstar.crashdetector.hw.intel.ValidadorMicrocodigo;
 
 public class MonitorDePID {
 
@@ -471,6 +473,15 @@ public class MonitorDePID {
 		System.out.println(idioma.buscando_para_pid(pid));
 		Entregar.recibir();
 
+		
+//CrashDetectorLogger.log(ValidadorMicrocodigo.obtenerReporte());
+//System.out.println(ValidadorMicrocodigo.obtenerReporte());
+//
+//ValidadorGPU.main();
+
+
+
+		
 		// ajustar utc usando el inicio real de la app si fue entregado
 		if (Statics.INICIO_DE_LA_APP > 0) {
 			try {

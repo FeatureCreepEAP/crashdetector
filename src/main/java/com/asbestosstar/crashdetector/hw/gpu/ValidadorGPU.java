@@ -209,42 +209,38 @@ public class ValidadorGPU {
     }
 
     // WINDOWS: Usa wmic
-    private static List<InfoGPU> obtenerGPUsWindows() {
-        List<InfoGPU> gpus = new ArrayList<>();
-        try {
-            ProcessBuilder pb = new ProcessBuilder("wmic", "path", "win32_VideoController", "get", "name,AdapterRAM");
-            pb.redirectErrorStream(true);
-            Process p = pb.start();
-            p.waitFor(5, TimeUnit.SECONDS);
+private static List<InfoGPU> obtenerGPUsWindows() {
+    List<InfoGPU> gpus = new ArrayList<>();
+    try {
+        ProcessBuilder pb = new ProcessBuilder("wmic", "path", "win32_VideoController", "get", "name");
+        pb.redirectErrorStream(true);
+        Process p = pb.start();
+        p.waitFor(5, TimeUnit.SECONDS);
 
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()))) {
-                String linea;
-                reader.readLine(); // Saltar cabecera
-                while ((linea = reader.readLine()) != null) {
-                    if (linea.trim().isEmpty()) continue;
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()))) {
+            String linea;
+            reader.readLine();  // Skip header line
 
-                    String[] partes = linea.trim().split("\\s{2,}");
-                    if (partes.length > 0) {
-                        InfoGPU info = new InfoGPU();
-                        info.nombre = partes[0].trim();
-                        
-                        if (partes.length > 1) {
-                            try {
-                                long bytes = Long.parseLong(partes[1].trim());
-                                info.memoriaMB = bytes / (1024 * 1024);
-                            } catch (NumberFormatException e) { /* Ignorar */ }
-                        }
-                        
-                        clasificarGPU(info);
-                        gpus.add(info);
-                    }
+            while ((linea = reader.readLine()) != null) {
+                if (linea.trim().isEmpty()) continue;
+
+                // Only split the name, no need to handle RAM
+                String[] partes = linea.trim().split("\\s+");
+                if (partes.length > 0) {
+                    InfoGPU info = new InfoGPU();
+                    info.nombre = partes[0].trim();  // GPU Name
+
+                    // Classify the GPU based on its name
+                    clasificarGPU(info);  
+                    gpus.add(info);
                 }
             }
-        } catch (Exception e) {
-            System.err.println("Error ejecutando wmic en Windows: " + e.getMessage());
         }
-        return gpus;
+    } catch (Exception e) {
+        System.err.println("Error ejecutando wmic en Windows: " + e.getMessage());
     }
+    return gpus;
+}
 
     // MACOS: Usa system_profiler
     private static List<InfoGPU> obtenerGPUsMacOS() {
@@ -408,76 +404,78 @@ public class ValidadorGPU {
         return gpus;
     }
 
-    // ==========================================================
-    // CLASIFICACIÓN AVANZADA
-    // ==========================================================
-    private static void clasificarGPU(InfoGPU info) {
-        if (info == null || info.nombre == null) return;
-        String lower = info.nombre.toLowerCase(Locale.ENGLISH);
+// ==========================================================
+// CLASIFICACIÓN AVANZADA
+// ==========================================================
+private static void clasificarGPU(InfoGPU info) {
+    if (info == null || info.nombre == null) return;
+    String lower = info.nombre.toLowerCase(Locale.ENGLISH);
 
-        // 1. Aceleradores Gráficos (Tesla, Quadro, etc.)
-        if (lower.contains("tesla") || lower.contains("quadro") || lower.contains("rtx a")) {
-            info.tipo = "Acelerador Gráfico";
-            info.nombre = info.nombre.replace("NVIDIA", "Nvidia");
-            return;
-        }
-
-        // 2. Marcas de Alto Rendimiento (Discretas)
-        if (lower.contains("nvidia") || lower.contains("geforce") || lower.contains("rtx") || lower.contains("gtx")) {
-            info.tipo = "Discreta (Alto Rendimiento)";
-            info.nombre = info.nombre.replace("NVIDIA", "Nvidia");
-            return;
-        }
-        
-        if (lower.contains("radeon") || lower.contains("amd") || lower.contains("firepro")) {
-            info.tipo = "Discreta (Alto Rendimiento)";
-            return;
-        }
-
-        // 3. Intel
-        if (lower.contains("intel")) {
-            if (lower.contains("arc")) {
-                info.tipo = "Discreta (Alto Rendimiento)";
-            } else {
-                info.tipo = "Integrada";
-            }
-            return;
-        }
-
-        // 4. Apple Silicon
-        if (lower.contains("apple m")) {
-            info.tipo = "Integrada (Alto Rendimiento)";
-            return;
-        }
-        
-        // 5. Caso Especial Matrox
-        if (lower.contains("matrox")) {
-            boolean esDedicada = lower.contains("parhelia") || lower.contains("millennium") || 
-                                 lower.contains("m912") || lower.contains("orion") || 
-                                 lower.contains("apvi") || lower.contains("m-series");
-
-            if (esDedicada) {
-                info.tipo = "Matrox_Dedicada";
-            } else {
-                info.tipo = "Matrox_Embebida";
-            }
-            return;
-        }
-
-        // 6. Marcas Chinas y Nuevas Entradas
-        if (lower.contains("mthreads") || lower.contains("moore threads")) {
-            info.tipo = "Discreta (Nueva Generación)";
-            return;
-        }
-        if (lower.contains("jingjia") || lower.contains("jm5")) {
-            info.tipo = "Integrada";
-            return;
-        }
-        if (lower.contains("zhaoxin") || lower.contains("glenfly")) {
-            info.tipo = "Discreta (Nueva Generación)";
-            return;
-        }
+    // 1. Aceleradores Gráficos (Tesla, Quadro, etc.)
+    if (lower.contains("tesla") || lower.contains("quadro") || lower.contains("rtx a")) {
+        info.tipo = "Acelerador Gráfico";
+        info.nombre = info.nombre.replace("NVIDIA", "Nvidia");
+        return;
     }
+
+    // 2. NVIDIA (Discretas de Alto Rendimiento)
+    if (lower.contains("nvidia") || lower.contains("geforce") || lower.contains("rtx") || lower.contains("gtx")) {
+        info.tipo = "Discreta (Alto Rendimiento)";
+        info.nombre = info.nombre.replace("NVIDIA", "Nvidia");
+        return;
+    }
+
+    // 3. AMD (Clasificado un poco más bajo que NVIDIA)
+    if (lower.contains("radeon") || lower.contains("amd") || lower.contains("firepro")) {
+        // Si la GPU de AMD es una iGPU (integrada), darle menor prioridad
+        if (lower.contains("apu") || lower.contains("integrada")) {
+            info.tipo = "Integrada (AMD)";
+        } else {
+            info.tipo = "Discreta (Alto Rendimiento AMD)";
+        }
+        return;
+    }
+
+    // 4. Intel (posibles iGPUs o discretas)
+    if (lower.contains("intel")) {
+        info.tipo = lower.contains("arc") ? "Discreta (Alto Rendimiento)" : "Integrada";
+        return;
+    }
+
+    // 5. Apple Silicon
+    if (lower.contains("apple m")) {
+        info.tipo = "Integrada (Alto Rendimiento)";
+        return;
+    }
+
+    // 6. Caso Especial Matrox
+    if (lower.contains("matrox")) {
+        boolean esDedicada = lower.contains("parhelia") || lower.contains("millennium") || 
+                             lower.contains("m912") || lower.contains("orion") || 
+                             lower.contains("apvi") || lower.contains("m-series");
+
+        if (esDedicada) {
+            info.tipo = "Matrox_Dedicada";
+        } else {
+            info.tipo = "Matrox_Embebida";
+        }
+        return;
+    }
+
+    // 7. Marcas Chinas y Nuevas Entradas
+    if (lower.contains("mthreads") || lower.contains("moore threads")) {
+        info.tipo = "Discreta (Nueva Generación)";
+        return;
+    }
+    if (lower.contains("jingjia") || lower.contains("jm5")) {
+        info.tipo = "Integrada";
+        return;
+    }
+    if (lower.contains("zhaoxin") || lower.contains("glenfly")) {
+        info.tipo = "Discreta (Nueva Generación)";
+        return;
+    }
+}
 
     // ==========================================================
     // ANÁLISIS FINAL
