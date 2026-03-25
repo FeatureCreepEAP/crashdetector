@@ -26,7 +26,6 @@ public class Transformaciones implements ClassFileTransformer {
 			// Parche.parches.add(new ParcheSoyPirata());
 			Parche.parches.add(new TransformacionDeMinecraftCodigoGPU());
 
-			
 		}
 	}
 

@@ -1241,63 +1241,51 @@ public class Chino implements Idioma {
 	}
 
 	/**
-	 * 返回有关问题实体或方块实体的错误消息，
-	 * 并根据平台详细说明恢复步骤。
+	 * 返回有关问题实体或方块实体的错误消息， 并根据平台详细说明恢复步骤。
 	 */
 	@Override
 	public String mensajeTickingEntidadBloque(String nombre, String tipo, int[] coordenadas) {
 		String coords = "(" + coordenadas[0] + ", " + coordenadas[1] + ", " + coordenadas[2] + ")";
 		String color = config.obtenerColorError();
-		
+
 		// 主要消息：仅描述性文本使用错误颜色
-		String mensajeBase = "<span style='color:#" + color + "'>实体或方块实体 '</span>" 
-				+ nombre + "<span style='color:#" + color + "'>' 类型 '</span>" 
-				+ tipo + "<span style='color:#" + color + "'>' 位于位置 </span>" 
-				+ coords + "<span style='color:#" + color + "'> 正在导致 ticking 错误。</span><br><br>";
+		String mensajeBase = "<span style='color:#" + color + "'>实体或方块实体 '</span>" + nombre + "<span style='color:#"
+				+ color + "'>' 类型 '</span>" + tipo + "<span style='color:#" + color + "'>' 位于位置 </span>" + coords
+				+ "<span style='color:#" + color + "'> 正在导致 ticking 错误。</span><br><br>";
 
 		// 修复说明
-		String instrucciones = "<span style='color:#" + color + "'>"
-				+ "恢复说明:<br>"
+		String instrucciones = "<span style='color:#" + color + "'>" + "恢复说明:<br>"
 				+ "1. **MCForge**: 前往 '[nombre_del_mundo]/serverconfig/forge-server.toml'。<br>"
 				+ "2. **NeoForge**: 前往 'config/neoforge-server.toml'。<br>"
 				+ "   *（注意：在本地游戏/Singleplayer 中，世界文件位于 'saves' 文件夹内）*。<br>"
 				+ "3. 将 **removeErroringBlockEntities** 和 **removeErroringEntities** 设置为 **true**。<br><br>"
-				+ "其他选项:<br>"
-				+ "- **MCEdit**: 用于手动删除指定坐标处的实体。<br>"
-				+ "- **Neruina (Mod)**: 可能避免崩溃，但并不总是有效，且安装后可能增加调试难度。"
-				+ "</span>";
+				+ "其他选项:<br>" + "- **MCEdit**: 用于手动删除指定坐标处的实体。<br>"
+				+ "- **Neruina (Mod)**: 可能避免崩溃，但并不总是有效，且安装后可能增加调试难度。" + "</span>";
 
 		return mensajeBase + instrucciones;
 	}
-    @Override
-    public String nombreRegistroDuplicadoObjeto() {
-        return "重复注册冲突";
-    }
 
-    @Override
-    public String mensajeRegistroDuplicadoObjeto(String mod1, String mod2, String objeto) {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // 主要消息：仅描述性文本使用错误颜色
-        String mensajeBase = "<span style='color:#" + color + "'>严重冲突：尝试重复注册同一对象。 "
-                + "模组 </span>" + mod1 + "<span style='color:#" + color + "'> 和 </span>" 
-                + mod2 + "<span style='color:#" + color + "'> 正在尝试注册相同的对象。 "
-                + "冲突对象： </span>" + objeto + "<br><br>";
+	@Override
+	public String nombreRegistroDuplicadoObjeto() {
+		return "重复注册冲突";
+	}
 
-        // 修复说明
-        String instrucciones = "<span style='color:#" + color + "'>"
-                + "这通常发生在两个不同的模组在同一个 namespace 中添加了同名的对象， "
-                + "或者其中一个模组的代码存在错误时。<br><br>"
-                + "<b>推荐解决方案：</b><br>"
-                + "<ul>"
-                + "<li>检查其中一个模组是否为另一个模组的更新版本或分支。</li>"
-                + "<li>尝试移除两个冲突模组中的一个。</li>"
-                + "<li>检查两个模组的配置文件，查看是否可以更改对象的 ID。</li>"
-                + "</ul></span>";
+	@Override
+	public String mensajeRegistroDuplicadoObjeto(String mod1, String mod2, String objeto) {
+		String color = Config.obtenerInstancia().obtenerColorError();
 
-        return mensajeBase + instrucciones;
-    }
-    
+		// 主要消息：仅描述性文本使用错误颜色
+		String mensajeBase = "<span style='color:#" + color + "'>严重冲突：尝试重复注册同一对象。 " + "模组 </span>" + mod1
+				+ "<span style='color:#" + color + "'> 和 </span>" + mod2 + "<span style='color:#" + color
+				+ "'> 正在尝试注册相同的对象。 " + "冲突对象： </span>" + objeto + "<br><br>";
+
+		// 修复说明
+		String instrucciones = "<span style='color:#" + color + "'>" + "这通常发生在两个不同的模组在同一个 namespace 中添加了同名的对象， "
+				+ "或者其中一个模组的代码存在错误时。<br><br>" + "<b>推荐解决方案：</b><br>" + "<ul>" + "<li>检查其中一个模组是否为另一个模组的更新版本或分支。</li>"
+				+ "<li>尝试移除两个冲突模组中的一个。</li>" + "<li>检查两个模组的配置文件，查看是否可以更改对象的 ID。</li>" + "</ul></span>";
+
+		return mensajeBase + instrucciones;
+	}
 
 	@Override
 	public String nombreProblemaTickingEntidadBloque() {
@@ -6496,426 +6484,352 @@ public class Chino implements Idioma {
 				+ "<li>文件已被删除，但代码中仍在引用它。</li>" + "<li>JSON 文件内部存在语法错误。</li>" + "<li>模组注册中定义的路径不正确。</li>"
 				+ "<li>依赖冲突或版本不兼容。</li>" + "</ul>";
 	}
-    @Override
-    public String nombreAnimacionGeckoInexiste() {
-        return "未找到 GeckoLib 动画";
-    }
 
-    @Override
-    public String mensajeAnimacionGeckoInexiste(String archivo) {
-        return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-                + "某个模组无法找到 GeckoLib 动画文件。</b>" + "<p>受影响文件:</p>"
-                + "<code>" + archivo + "</code>"
-                + "<p>当 GeckoLib 尝试加载指定路径中不存在的动画时，会发生此错误。 "
-                + "与加载错误（语法）不同，此错误表明文件物理缺失或路径错误。</p>"
-                + "<p>可能的原因:</p>" + "<ul>"
-                + "<li><code>.json</code> 文件已被删除或未包含在模组的最终 JAR 文件中。</li>"
-                + "<li>代码中定义的路径存在拼写错误（例如：'animations' 与 'animaciones'）。</li>"
-                + "<li>大小写不一致（服务器操作系统为 Linux（区分大小写），而开发环境为 Windows（不区分））。</li>"
-                + "<li>模组未完全更新或其依赖项已损坏。</li>" + "</ul>";
-    }
-    @Override
-    public String nombreFalloFabricRenderingAPI() {
-        return "缺少 Fabric Rendering API";
-    }
+	@Override
+	public String nombreAnimacionGeckoInexiste() {
+		return "未找到 GeckoLib 动画";
+	}
 
-    @Override
-    public String mensajeFalloFabricRenderingAPI() {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // 主要消息
-        String mensajeBase = "<span style='color:#" + color + "'>某个模组（通常是 Porting Lib 或其依赖项）失败，因为 </span>"
-                + "Fabric Rendering API<span style='color:#" + color + "'> 不可用。</span><br><br>";
+	@Override
+	public String mensajeAnimacionGeckoInexiste(String archivo) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "某个模组无法找到 GeckoLib 动画文件。</b>" + "<p>受影响文件:</p>" + "<code>" + archivo + "</code>"
+				+ "<p>当 GeckoLib 尝试加载指定路径中不存在的动画时，会发生此错误。 " + "与加载错误（语法）不同，此错误表明文件物理缺失或路径错误。</p>" + "<p>可能的原因:</p>"
+				+ "<ul>" + "<li><code>.json</code> 文件已被删除或未包含在模组的最终 JAR 文件中。</li>"
+				+ "<li>代码中定义的路径存在拼写错误（例如：'animations' 与 'animaciones'）。</li>"
+				+ "<li>大小写不一致（服务器操作系统为 Linux（区分大小写），而开发环境为 Windows（不区分））。</li>" + "<li>模组未完全更新或其依赖项已损坏。</li>" + "</ul>";
+	}
 
-        // 修复说明（针对现代版本更新，Indium 已过时）
-        String instrucciones = "<span style='color:#" + color + "'>"
-                + "<b>推荐解决方案：</b><br>"
-                + "消息建议安装 Indium，但该模组在现代游戏版本中已过时。<br>"
-                + "<ul>"
-                + "<li>将 <b>Sodium</b> 更新至 <b>0.6.0</b> 或更高版本（此版本包含所需支持）。</li>"
-                + "<li>如果尚未安装，请确保已安装 <b>Fabric API</b>。</li>"
-                + "<li>如果您使用的是旧版游戏（1.20.6 或更低版本），则安装 Indium。</li>"
-                + "</ul></span>";
+	@Override
+	public String nombreFalloFabricRenderingAPI() {
+		return "缺少 Fabric Rendering API";
+	}
 
-        return mensajeBase + instrucciones;
-    }
-    @Override
-    public String nombreRestriccionesDependenciaNoCumplidas() {
-        return "依赖项限制未满足";
-    }
+	@Override
+	public String mensajeFalloFabricRenderingAPI() {
+		String color = Config.obtenerInstancia().obtenerColorError();
 
-    @Override
-    public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad, List<String[]> conflictos) {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // 主要消息
-        String mensajeBase = "<span style='color:#" + color + "'>发现 </span>" 
-                + cantidad + "<span style='color:#" + color + "'> 个未满足的依赖项限制。</span><br><br>";
+		// 主要消息
+		String mensajeBase = "<span style='color:#" + color + "'>某个模组（通常是 Porting Lib 或其依赖项）失败，因为 </span>"
+				+ "Fabric Rendering API<span style='color:#" + color + "'> 不可用。</span><br><br>";
 
-        // 构建冲突列表
-        StringBuilder listaDetalle = new StringBuilder();
-        if (conflictos != null && !conflictos.isEmpty()) {
-            listaDetalle.append("<span style='color:#").append(color).append("'>在以下文件中检测到冲突:</span><br><ul>");
-            for (String[] par : conflictos) {
-                String dep = par[0]; // 依赖项
-                String jar = par[1];  // JAR 文件
-                // 变量使用默认颜色，固定文本使用错误颜色
-                listaDetalle.append("<li>")
-                            .append("<span style='color:#").append(color).append("'>文件: </span>")
-                            .append(jar)
-                            .append("<br><span style='color:#").append(color).append("'>需要: </span>")
-                            .append(dep)
-                            .append("</li>");
-            }
-            listaDetalle.append("</ul><br>");
-        }
+		// 修复说明（针对现代版本更新，Indium 已过时）
+		String instrucciones = "<span style='color:#" + color + "'>" + "<b>推荐解决方案：</b><br>"
+				+ "消息建议安装 Indium，但该模组在现代游戏版本中已过时。<br>" + "<ul>"
+				+ "<li>将 <b>Sodium</b> 更新至 <b>0.6.0</b> 或更高版本（此版本包含所需支持）。</li>"
+				+ "<li>如果尚未安装，请确保已安装 <b>Fabric API</b>。</li>" + "<li>如果您使用的是旧版游戏（1.20.6 或更低版本），则安装 Indium。</li>"
+				+ "</ul></span>";
 
-        // 修复说明
-        String instrucciones = "<span style='color:#" + color + "'>"
-                + "当两个或更多模组需要同一内部库的不同且不兼容的版本时，会发生这种情况。<br><br>"
-                + "<b>推荐解决方案：</b><br>"
-                + "<ul>"
-                + "<li>尝试更新或删除上面列出的模组以解决不兼容问题。</li>"
-                + "<li>如果找不到兼容版本，您可以尝试手动编辑模组 JAR 文件内的 <code>mods.toml</code> 文件（使用 WinRAR 或 7-Zip 等压缩软件）来更改或删除版本限制，但这可能会导致不稳定。</li>"
-                + "</ul></span>";
+		return mensajeBase + instrucciones;
+	}
 
-        return mensajeBase + listaDetalle.toString() + instrucciones;
-    }
-    
-  
+	@Override
+	public String nombreRestriccionesDependenciaNoCumplidas() {
+		return "依赖项限制未满足";
+	}
 
-    @Override
-    public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad, Map<String, List<String>> conflictosPorMod) {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // 主要消息
-        String mensajeBase = "<span style='color:#" + color + "'>发现 </span>" 
-                + cantidad + "<span style='color:#" + color + "'> 个未满足的依赖项限制。</span><br><br>";
+	@Override
+	public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad, List<String[]> conflictos) {
+		String color = Config.obtenerInstancia().obtenerColorError();
 
-        // 按模组构建分组列表
-        StringBuilder listaDetalle = new StringBuilder();
-        if (conflictosPorMod != null && !conflictosPorMod.isEmpty()) {
-            listaDetalle.append("<span style='color:#").append(color).append("'>涉及的模组及请求的依赖项:</span><br><ul>");
-            
-            for (Map.Entry<String, List<String>> entry : conflictosPorMod.entrySet()) {
-                String archivo = entry.getKey();
-                List<String> dependencias = entry.getValue();
+		// 主要消息
+		String mensajeBase = "<span style='color:#" + color + "'>发现 </span>" + cantidad + "<span style='color:#" + color
+				+ "'> 个未满足的依赖项限制。</span><br><br>";
 
-                // 模组名称（默认颜色）
-                listaDetalle.append("<li><b>").append(archivo).append("</b>");
-                
-                // 该模组的依赖项列表
-                listaDetalle.append("<ul>");
-                for (String dep : dependencias) {
-                    // 依赖项（默认颜色）
-                    listaDetalle.append("<li>").append(dep).append("</li>");
-                }
-                listaDetalle.append("</ul></li>");
-            }
-            listaDetalle.append("</ul><br>");
-        } else {
-            listaDetalle.append("<span style='color:#").append(color).append("'>无法从日志中确定具体文件。</span><br>");
-        }
+		// 构建冲突列表
+		StringBuilder listaDetalle = new StringBuilder();
+		if (conflictos != null && !conflictos.isEmpty()) {
+			listaDetalle.append("<span style='color:#").append(color).append("'>在以下文件中检测到冲突:</span><br><ul>");
+			for (String[] par : conflictos) {
+				String dep = par[0]; // 依赖项
+				String jar = par[1]; // JAR 文件
+				// 变量使用默认颜色，固定文本使用错误颜色
+				listaDetalle.append("<li>").append("<span style='color:#").append(color).append("'>文件: </span>")
+						.append(jar).append("<br><span style='color:#").append(color).append("'>需要: </span>")
+						.append(dep).append("</li>");
+			}
+			listaDetalle.append("</ul><br>");
+		}
 
-        // 修复说明
-        String instrucciones = "<span style='color:#" + color + "'>"
-                + "当模组包含彼此不兼容的内部库版本（JarInJar）时，会发生此错误。<br><br>"
-                + "<b>推荐解决方案：</b><br>"
-                + "<ul>"
-                + "<li>查看上方列表以识别哪些模组请求同一库的不同版本。</li>"
-                + "<li>尝试将两个模组都更新到最新版本。</li>"
-                + "<li>作为最后的手段，您可以使用压缩软件（如 WinRAR）打开模组的 <code>.jar</code> 文件，编辑 <code>META-INF/mods.toml</code> 并手动修改依赖项的版本范围，但这有风险且可能破坏模组。</li>"
-                + "</ul></span>";
+		// 修复说明
+		String instrucciones = "<span style='color:#" + color + "'>" + "当两个或更多模组需要同一内部库的不同且不兼容的版本时，会发生这种情况。<br><br>"
+				+ "<b>推荐解决方案：</b><br>" + "<ul>" + "<li>尝试更新或删除上面列出的模组以解决不兼容问题。</li>"
+				+ "<li>如果找不到兼容版本，您可以尝试手动编辑模组 JAR 文件内的 <code>mods.toml</code> 文件（使用 WinRAR 或 7-Zip 等压缩软件）来更改或删除版本限制，但这可能会导致不稳定。</li>"
+				+ "</ul></span>";
 
-        return mensajeBase + listaDetalle.toString() + instrucciones;
-    }
-    @Override
-    public String nombreNeruinaOcultaAdvertencia() {
-        return "Neruina 阻碍调试";
-    }
+		return mensajeBase + listaDetalle.toString() + instrucciones;
+	}
 
-    @Override
-    public String mensajeNeruinaOcultaAdvertencia() {
-        String color = Config.obtenerInstancia().obtenerColorAdvertencia();
-        
-        // 主要警告
-        String mensajeBase = "<span style='color:#" + color + "'>"
-                + "<b>警告：</b>模组 <b>Neruina</b> 在处理错误时失败，从而隐藏了崩溃的真正原因。</span><br><br>"
-                + "<span style='color:#" + color + "'>"
-                + "Neruina 通常并非必需，且会阻碍确定实际故障所在。建议将其移除以便调试。</span><br><br>";
+	@Override
+	public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad,
+			Map<String, List<String>> conflictosPorMod) {
+		String color = Config.obtenerInstancia().obtenerColorError();
 
-        // 恢复说明
-        String instrucciones = "<span style='color:#" + color + "'>"
-                + "<b>恢复说明:</b><br>"
-                + "1. **MCForge**: 前往 '[nombre_del_mundo]/serverconfig/forge-server.toml'。<br>"
-                + "2. **NeoForge**: 前往 'config/neoforge-server.toml'。<br>"
-                + "   *（注意：在本地游戏/Singleplayer 中，世界文件位于 'saves' 文件夹内）*。<br>"
-                + "3. 将 **removeErroringBlockEntities** 和 **removeErroringEntities** 设置为 **true**。<br><br>"
-                + "<b>其他选项:</b><br>"
-                + "- **MCEdit**: 用于手动删除指定坐标处的实体。<br>"
-                + "- 如果此错误持续存在，Neruina 可能未正常工作，而只是在生成新的错误。"
-                + "</span>";
+		// 主要消息
+		String mensajeBase = "<span style='color:#" + color + "'>发现 </span>" + cantidad + "<span style='color:#" + color
+				+ "'> 个未满足的依赖项限制。</span><br><br>";
 
-        return mensajeBase + instrucciones;
-    }
-    
-    
-    
-    @Override
-    public String nombreApothicAttributeSinDueño() {
-        return "Apothic Attributes 错误";
-    }
+		// 按模组构建分组列表
+		StringBuilder listaDetalle = new StringBuilder();
+		if (conflictosPorMod != null && !conflictosPorMod.isEmpty()) {
+			listaDetalle.append("<span style='color:#").append(color).append("'>涉及的模组及请求的依赖项:</span><br><ul>");
 
-    @Override
-    public String mensajeApothicAttributeSinDueño(boolean chestCavityDetectado) {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // 主要消息
-        String mensajeBase = "<span style='color:#" + color + "'>"
-                + "<b>Apothic Attributes</b> 检测到冲突：<b>AttributeMap</b> 在未分配所有者的情况下被修改。</span><br><br>"
-                + "<span style='color:#" + color + "'>"
-                + "这通常发生在模组尝试在不适当的时间或以不正确的方式修改实体属性（如生命值、伤害、速度）时。</span><br><br>";
+			for (Map.Entry<String, List<String>> entry : conflictosPorMod.entrySet()) {
+				String archivo = entry.getKey();
+				List<String> dependencias = entry.getValue();
 
-        // 关于 Chest Cavity 的特定说明
-        String notaChestCavity = "";
-        if (chestCavityDetectado) {
-            notaChestCavity = "<span style='color:#" + color + "'>"
-                    + "<b>日志中检测到模组 Chest Cavity。</b> "
-                    + "由于其处理实体属性的方式，该模组是导致此特定错误的常见原因。</span><br><br>";
-        }
+				// 模组名称（默认颜色）
+				listaDetalle.append("<li><b>").append(archivo).append("</b>");
 
-        // 修复说明
-        String instrucciones = "<span style='color:#" + color + "'>"
-                + "<b>推荐解决方案：</b><br>"
-                + "<ul>"
-                + "<li>如果已安装 Chest Cavity，请尝试更新或临时移除它以验证是否为原因所在。</li>"
-                + "<li>检查是否有其他修改生物属性的模组，并尝试禁用它们。</li>"
-                + "<li>查找 <b>Apothic Attributes</b> 的更新，因为此错误可能已在近期版本中修复。</li>"
-                + "</ul></span>";
+				// 该模组的依赖项列表
+				listaDetalle.append("<ul>");
+				for (String dep : dependencias) {
+					// 依赖项（默认颜色）
+					listaDetalle.append("<li>").append(dep).append("</li>");
+				}
+				listaDetalle.append("</ul></li>");
+			}
+			listaDetalle.append("</ul><br>");
+		} else {
+			listaDetalle.append("<span style='color:#").append(color).append("'>无法从日志中确定具体文件。</span><br>");
+		}
 
-        return mensajeBase + notaChestCavity + instrucciones;
-    }
-    @Override
-    public String nombreErrorPotBlockEntity() {
-        return "DecoratedPot 错误 (Cataclysm)";
-    }
+		// 修复说明
+		String instrucciones = "<span style='color:#" + color + "'>" + "当模组包含彼此不兼容的内部库版本（JarInJar）时，会发生此错误。<br><br>"
+				+ "<b>推荐解决方案：</b><br>" + "<ul>" + "<li>查看上方列表以识别哪些模组请求同一库的不同版本。</li>" + "<li>尝试将两个模组都更新到最新版本。</li>"
+				+ "<li>作为最后的手段，您可以使用压缩软件（如 WinRAR）打开模组的 <code>.jar</code> 文件，编辑 <code>META-INF/mods.toml</code> 并手动修改依赖项的版本范围，但这有风险且可能破坏模组。</li>"
+				+ "</ul></span>";
 
-    @Override
-    public String mensajeErrorPotBlockEntity() {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // 主要消息
-        String mensajeBase = "<span style='color:#" + color + "'>"
-                + "与 <b>DecoratedPotBlockEntity</b> 发生了兼容性错误。</span><br><br>"
-                + "<span style='color:#" + color + "'>"
-                + "这是模组 <b>L_Enders_Cataclysm</b> 在 1.19.2 版本中的已知问题，"
-                + "缺少游戏所需的实现。</span><br><br>";
+		return mensajeBase + listaDetalle.toString() + instrucciones;
+	}
 
-        // 解决方案
-        String solucion = "<span style='color:#" + color + "'>"
-                + "<b>推荐解决方案：</b><br>"
-                + "安装模组 <b>PotFix (Cataclysm Patch)</b> 以修复此错误。<br>"
-                + "您可以在此下载：<a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch  '>CurseForge - PotFix</a>"
-                + "</span>";
+	@Override
+	public String nombreNeruinaOcultaAdvertencia() {
+		return "Neruina 阻碍调试";
+	}
 
-        return mensajeBase + solucion;
-    }
-    @Override
-    public String nombreErrorPreloadingTricks() {
-        return "Preloading Tricks 错误";
-    }
+	@Override
+	public String mensajeNeruinaOcultaAdvertencia() {
+		String color = Config.obtenerInstancia().obtenerColorAdvertencia();
 
-    @Override
-    public String mensajeErrorPreloadingTricks() {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // 主要消息
-        String mensajeBase = "<span style='color:#" + color + "'>"
-                + "检测到由 <b>Preloading Tricks</b> 引起的冲突。</span><br><br>"
-                + "<span style='color:#" + color + "'>"
-                + "错误 <i>ClassCastException: String cannot be cast to ModuleDescriptor</i> "
-                + "表明该模组正在以不正确的方式操作 Java 模块系统的类。</span><br><br>";
+		// 主要警告
+		String mensajeBase = "<span style='color:#" + color + "'>"
+				+ "<b>警告：</b>模组 <b>Neruina</b> 在处理错误时失败，从而隐藏了崩溃的真正原因。</span><br><br>" + "<span style='color:#" + color
+				+ "'>" + "Neruina 通常并非必需，且会阻碍确定实际故障所在。建议将其移除以便调试。</span><br><br>";
 
-        // 解释和解决方案
-        String explicacion = "<span style='color:#" + color + "'>"
-                + "<b>Preloading Tricks</b> 是一个主要为 <b>开发者</b> 设计的模组。 "
-                + "它在游戏加载的极早期阶段执行复杂的类修改操作（mixins）， "
-                + "如果存在其他交互，很容易破坏稳定性。</span><br><br>"
-                + "<span style='color:#" + color + "'><b>推荐解决方案：</b><br>"
-                + "<ul>"
-                + "<li>移除模组 <b>Preloading Tricks</b>。通常在公共服务器或稳定整合包中游玩时不需要它。</li>"
-                + "<li>如果您是开发者且需要它进行测试，请检查您的环境配置。</li>"
-                + "</ul></span>";
+		// 恢复说明
+		String instrucciones = "<span style='color:#" + color + "'>" + "<b>恢复说明:</b><br>"
+				+ "1. **MCForge**: 前往 '[nombre_del_mundo]/serverconfig/forge-server.toml'。<br>"
+				+ "2. **NeoForge**: 前往 'config/neoforge-server.toml'。<br>"
+				+ "   *（注意：在本地游戏/Singleplayer 中，世界文件位于 'saves' 文件夹内）*。<br>"
+				+ "3. 将 **removeErroringBlockEntities** 和 **removeErroringEntities** 设置为 **true**。<br><br>"
+				+ "<b>其他选项:</b><br>" + "- **MCEdit**: 用于手动删除指定坐标处的实体。<br>" + "- 如果此错误持续存在，Neruina 可能未正常工作，而只是在生成新的错误。"
+				+ "</span>";
 
-        return mensajeBase + explicacion;
-    }
-    @Override
-    public String nombreErrorSimpleRadioLexiconfig() {
-        return "Simple Radio / Lexiconfig 不兼容";
-    }
+		return mensajeBase + instrucciones;
+	}
 
-    @Override
-    public String mensajeErrorSimpleRadioLexiconfig() {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // 主要消息
-        String mensajeBase = "<span style='color:#" + color + "'>"
-                + "检测到 <b>Simple Radio</b> 与 <b>Lexiconfig</b> 之间存在冲突。</span><br><br>"
-                + "<span style='color:#" + color + "'>"
-                + "错误发生在 'shelveLexicons' 过程中，表明这两个库之间存在二进制不兼容性。</span><br><br>";
+	@Override
+	public String nombreApothicAttributeSinDueño() {
+		return "Apothic Attributes 错误";
+	}
 
-        // 特定解决方案
-        String solucion = "<span style='color:#" + color + "'>"
-                + "<b>已知原因：</b><br>"
-                + "Simple Radio 通常是为旧版 Lexiconfig 设计的，而您安装的是较新版本。</span><br><br>"
-                + "<span style='color:#" + color + "'><b>推荐解决方案：</b><br>"
-                + "<ul>"
-                + "<li>尝试使用较旧版本的 <b>Lexiconfig</b>。</li>"
-                + "<li>建议尝试版本 <b>1.3.11</b> 或更早版本，这些版本通常与 Simple Radio 兼容。</li>"
-                + "<li>如果问题仍然存在，请检查是否有 Simple Radio 的可用更新。</li>"
-                + "</ul></span>";
+	@Override
+	public String mensajeApothicAttributeSinDueño(boolean chestCavityDetectado) {
+		String color = Config.obtenerInstancia().obtenerColorError();
 
-        return mensajeBase + solucion;
-    }
-    @Override
-    public String nombreErrorMobAITweaks() {
-        return "Mob AI Tweaks 错误";
-    }
+		// 主要消息
+		String mensajeBase = "<span style='color:#" + color + "'>"
+				+ "<b>Apothic Attributes</b> 检测到冲突：<b>AttributeMap</b> 在未分配所有者的情况下被修改。</span><br><br>"
+				+ "<span style='color:#" + color + "'>"
+				+ "这通常发生在模组尝试在不适当的时间或以不正确的方式修改实体属性（如生命值、伤害、速度）时。</span><br><br>";
 
-    @Override
-    public String mensajeErrorMobAITweaks() {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // 主要消息
-        String mensajeBase = "<span style='color:#" + color + "'>"
-                + "检测到与 <b>Mob AI Tweaks</b> 相关的错误。</span><br><br>"
-                + "<span style='color:#" + color + "'>"
-                + "该错误源自一个 Mixin（<code>$mob-ai-tweaks$onSpawned</code>），它在实体生成（spawnea）时介入。 "
-                + "这通常表明与另一个同样修改生物生成行为的模组存在冲突。</span><br><br>";
+		// 关于 Chest Cavity 的特定说明
+		String notaChestCavity = "";
+		if (chestCavityDetectado) {
+			notaChestCavity = "<span style='color:#" + color + "'>" + "<b>日志中检测到模组 Chest Cavity。</b> "
+					+ "由于其处理实体属性的方式，该模组是导致此特定错误的常见原因。</span><br><br>";
+		}
 
-        // 解决方案
-        String solucion = "<span style='color:#" + color + "'><b>推荐解决方案：</b><br>"
-                + "<ul>"
-                + "<li>尝试移除 <b>Mob AI Tweaks</b> 以验证不稳定问题是否消失。</li>"
-                + "</ul></span>";
+		// 修复说明
+		String instrucciones = "<span style='color:#" + color + "'>" + "<b>推荐解决方案：</b><br>" + "<ul>"
+				+ "<li>如果已安装 Chest Cavity，请尝试更新或临时移除它以验证是否为原因所在。</li>" + "<li>检查是否有其他修改生物属性的模组，并尝试禁用它们。</li>"
+				+ "<li>查找 <b>Apothic Attributes</b> 的更新，因为此错误可能已在近期版本中修复。</li>" + "</ul></span>";
 
-        return mensajeBase + solucion;
-    }
-    
-    public String nombre_verificacion_gpu() {
-        return "GPU 验证（OpenGL / GPU 选择）";
-    }
+		return mensajeBase + notaChestCavity + instrucciones;
+	}
 
-    public String desactivar_parche_gpu() {
-        return "禁用 GPU 验证";
-    }
+	@Override
+	public String nombreErrorPotBlockEntity() {
+		return "DecoratedPot 错误 (Cataclysm)";
+	}
 
-    // ==================== CRASH ====================
+	@Override
+	public String mensajeErrorPotBlockEntity() {
+		String color = Config.obtenerInstancia().obtenerColorError();
 
-    public String gpu_crash_posible() {
-        return "<b style='color:#" + config.obtenerColorError() + "'>GPU 验证器可能已导致游戏关闭。</b>";
-    }
+		// 主要消息
+		String mensajeBase = "<span style='color:#" + color + "'>"
+				+ "与 <b>DecoratedPotBlockEntity</b> 发生了兼容性错误。</span><br><br>" + "<span style='color:#" + color + "'>"
+				+ "这是模组 <b>L_Enders_Cataclysm</b> 在 1.19.2 版本中的已知问题，" + "缺少游戏所需的实现。</span><br><br>";
 
-    public String gpu_crash_causas() {
-        return "验证已开始但未完成。这通常表明 OpenGL 或显卡驱动程序出现故障。<br><br>"
-             + "可能的原因:<br>"
-             + "- 驱动程序过时或不稳定<br>"
-             + "- OpenGL 问题<br>"
-             + "- 旧款 GPU 或混合配置";
-    }
+		// 解决方案
+		String solucion = "<span style='color:#" + color + "'>" + "<b>推荐解决方案：</b><br>"
+				+ "安装模组 <b>PotFix (Cataclysm Patch)</b> 以修复此错误。<br>"
+				+ "您可以在此下载：<a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch  '>CurseForge - PotFix</a>"
+				+ "</span>";
 
-    public String gpu_crash_recomendaciones() {
-        return "建议:<br>"
-             + "- 更新 GPU 驱动程序<br>"
-             + "- 强制使用独立显卡<br>"
-             + "- 避免远程或虚拟化环境";
-    }
+		return mensajeBase + solucion;
+	}
 
-    // ==================== NO ÓPTIMA ====================
+	@Override
+	public String nombreErrorPreloadingTricks() {
+		return "Preloading Tricks 错误";
+	}
 
-    public String gpu_no_optima() {
-        return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>游戏未使用可用的最佳 GPU。</b>";
-    }
+	@Override
+	public String mensajeErrorPreloadingTricks() {
+		String color = Config.obtenerInstancia().obtenerColorError();
 
-    public String gpu_no_optima_detalles() {
-        return "这可能会降低性能（低帧率），但通常本身不会导致崩溃。";
-    }
+		// 主要消息
+		String mensajeBase = "<span style='color:#" + color + "'>"
+				+ "检测到由 <b>Preloading Tricks</b> 引起的冲突。</span><br><br>" + "<span style='color:#" + color + "'>"
+				+ "错误 <i>ClassCastException: String cannot be cast to ModuleDescriptor</i> "
+				+ "表明该模组正在以不正确的方式操作 Java 模块系统的类。</span><br><br>";
 
-    public String gpu_recomendaciones_rendimiento() {
-        return "建议:<br>"
-             + "- 在控制面板中强制使用独立显卡<br>"
-             + "- 将 Java/Minecraft 配置为高性能模式";
-    }
+		// 解释和解决方案
+		String explicacion = "<span style='color:#" + color + "'>"
+				+ "<b>Preloading Tricks</b> 是一个主要为 <b>开发者</b> 设计的模组。 " + "它在游戏加载的极早期阶段执行复杂的类修改操作（mixins）， "
+				+ "如果存在其他交互，很容易破坏稳定性。</span><br><br>" + "<span style='color:#" + color + "'><b>推荐解决方案：</b><br>" + "<ul>"
+				+ "<li>移除模组 <b>Preloading Tricks</b>。通常在公共服务器或稳定整合包中游玩时不需要它。</li>"
+				+ "<li>如果您是开发者且需要它进行测试，请检查您的环境配置。</li>" + "</ul></span>";
 
-    // ==================== GENERALES ====================
+		return mensajeBase + explicacion;
+	}
 
-    public String gpu_nota_precision() {
-        return "<b>注意：</b>此检测系统并非 100% 精确。";
-    }
+	@Override
+	public String nombreErrorSimpleRadioLexiconfig() {
+		return "Simple Radio / Lexiconfig 不兼容";
+	}
 
-    public String gpu_consumo_energia() {
-        return "更强大的 GPU 消耗更多电量，可能会缩短笔记本电脑的电池续航时间。";
-    }
+	@Override
+	public String mensajeErrorSimpleRadioLexiconfig() {
+		String color = Config.obtenerInstancia().obtenerColorError();
 
-    public String gpu_parche_info() {
-        return "您可以使用快速解决按钮禁用此验证。";
-    }
-    @Override
-    public String nombreVerificacionRaptorLake() {
-        return "Intel 第 13/14 代 CPU 稳定性警告";
-    }
+		// 主要消息
+		String mensajeBase = "<span style='color:#" + color + "'>"
+				+ "检测到 <b>Simple Radio</b> 与 <b>Lexiconfig</b> 之间存在冲突。</span><br><br>" + "<span style='color:#" + color
+				+ "'>" + "错误发生在 'shelveLexicons' 过程中，表明这两个库之间存在二进制不兼容性。</span><br><br>";
 
-    @Override
-    public String advertenciaRaptorLakeTitulo() {
-        return "Intel Raptor Lake 处理器可能存在不稳定性";
-    }
+		// 特定解决方案
+		String solucion = "<span style='color:#" + color + "'>" + "<b>已知原因：</b><br>"
+				+ "Simple Radio 通常是为旧版 Lexiconfig 设计的，而您安装的是较新版本。</span><br><br>" + "<span style='color:#" + color
+				+ "'><b>推荐解决方案：</b><br>" + "<ul>" + "<li>尝试使用较旧版本的 <b>Lexiconfig</b>。</li>"
+				+ "<li>建议尝试版本 <b>1.3.11</b> 或更早版本，这些版本通常与 Simple Radio 兼容。</li>"
+				+ "<li>如果问题仍然存在，请检查是否有 Simple Radio 的可用更新。</li>" + "</ul></span>";
 
-    @Override
-    public String advertenciaRaptorLakeDetalle(String cpu, String microcode, String targetMicrocode) {
-        return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>" +
-               "检测到处理器 " + cpu + "，微码版本为 " + microcode + "。" +
-               "</b> " +
-               "Intel 第 13 代和第 14 代处理器因请求电压过高而出现稳定性问题，" +
-               "这可能会缩短处理器的使用寿命。<br><br>" +
-               "建议将主板的微码或 BIOS 更新至包含微码 <b>" + targetMicrocode + "</b> 或更高版本的版本。" +
-               "<b>警告：</b>如果操作不当，更新 BIOS 存在风险。<br><br>" +
-               "<i>注意：这几乎肯定不是您当前崩溃的原因，这仅是关于硬件健康的资讯性提醒。</i>";
-    }
+		return mensajeBase + solucion;
+	}
 
-    @Override
-    public String desactivarVerificacionRaptorLake() {
-        return "不再就此向我发出警告";
-    }
+	@Override
+	public String nombreErrorMobAITweaks() {
+		return "Mob AI Tweaks 错误";
+	}
 
-    @Override
-    public String verArticuloRaptorLake(String fuente) {
-        return "在 " + fuente + " 上阅读文章";
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-	
-	
-	
-	
-	
+	@Override
+	public String mensajeErrorMobAITweaks() {
+		String color = Config.obtenerInstancia().obtenerColorError();
+
+		// 主要消息
+		String mensajeBase = "<span style='color:#" + color + "'>" + "检测到与 <b>Mob AI Tweaks</b> 相关的错误。</span><br><br>"
+				+ "<span style='color:#" + color + "'>"
+				+ "该错误源自一个 Mixin（<code>$mob-ai-tweaks$onSpawned</code>），它在实体生成（spawnea）时介入。 "
+				+ "这通常表明与另一个同样修改生物生成行为的模组存在冲突。</span><br><br>";
+
+		// 解决方案
+		String solucion = "<span style='color:#" + color + "'><b>推荐解决方案：</b><br>" + "<ul>"
+				+ "<li>尝试移除 <b>Mob AI Tweaks</b> 以验证不稳定问题是否消失。</li>" + "</ul></span>";
+
+		return mensajeBase + solucion;
+	}
+
+	public String nombre_verificacion_gpu() {
+		return "GPU 验证（OpenGL / GPU 选择）";
+	}
+
+	public String desactivar_parche_gpu() {
+		return "禁用 GPU 验证";
+	}
+
+	// ==================== CRASH ====================
+
+	public String gpu_crash_posible() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>GPU 验证器可能已导致游戏关闭。</b>";
+	}
+
+	public String gpu_crash_causas() {
+		return "验证已开始但未完成。这通常表明 OpenGL 或显卡驱动程序出现故障。<br><br>" + "可能的原因:<br>" + "- 驱动程序过时或不稳定<br>" + "- OpenGL 问题<br>"
+				+ "- 旧款 GPU 或混合配置";
+	}
+
+	public String gpu_crash_recomendaciones() {
+		return "建议:<br>" + "- 更新 GPU 驱动程序<br>" + "- 强制使用独立显卡<br>" + "- 避免远程或虚拟化环境";
+	}
+
+	// ==================== NO ÓPTIMA ====================
+
+	public String gpu_no_optima() {
+		return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>游戏未使用可用的最佳 GPU。</b>";
+	}
+
+	public String gpu_no_optima_detalles() {
+		return "这可能会降低性能（低帧率），但通常本身不会导致崩溃。";
+	}
+
+	public String gpu_recomendaciones_rendimiento() {
+		return "建议:<br>" + "- 在控制面板中强制使用独立显卡<br>" + "- 将 Java/Minecraft 配置为高性能模式";
+	}
+
+	// ==================== GENERALES ====================
+
+	public String gpu_nota_precision() {
+		return "<b>注意：</b>此检测系统并非 100% 精确。";
+	}
+
+	public String gpu_consumo_energia() {
+		return "更强大的 GPU 消耗更多电量，可能会缩短笔记本电脑的电池续航时间。";
+	}
+
+	public String gpu_parche_info() {
+		return "您可以使用快速解决按钮禁用此验证。";
+	}
+
+	@Override
+	public String nombreVerificacionRaptorLake() {
+		return "Intel 第 13/14 代 CPU 稳定性警告";
+	}
+
+	@Override
+	public String advertenciaRaptorLakeTitulo() {
+		return "Intel Raptor Lake 处理器可能存在不稳定性";
+	}
+
+	@Override
+	public String advertenciaRaptorLakeDetalle(String cpu, String microcode, String targetMicrocode) {
+		return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>" + "检测到处理器 " + cpu + "，微码版本为 " + microcode
+				+ "。" + "</b> " + "Intel 第 13 代和第 14 代处理器因请求电压过高而出现稳定性问题，" + "这可能会缩短处理器的使用寿命。<br><br>"
+				+ "建议将主板的微码或 BIOS 更新至包含微码 <b>" + targetMicrocode + "</b> 或更高版本的版本。"
+				+ "<b>警告：</b>如果操作不当，更新 BIOS 存在风险。<br><br>" + "<i>注意：这几乎肯定不是您当前崩溃的原因，这仅是关于硬件健康的资讯性提醒。</i>";
+	}
+
+	@Override
+	public String desactivarVerificacionRaptorLake() {
+		return "不再就此向我发出警告";
+	}
+
+	@Override
+	public String verArticuloRaptorLake(String fuente) {
+		return "在 " + fuente + " 上阅读文章";
+	}
+
 }

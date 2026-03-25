@@ -127,16 +127,12 @@ public class StackTracesDenegadosDeMinecraftPorDefecto {
 				.add(contentido -> contentido.contains("net.minecraftforge.fml.VersionChecker"));// Si hay una problema
 																									// puedo eliminar
 
-		
-		
 		VerificacionDeStackTrace.denegados
-		.add(contentido -> contentido.contains("net.minecraftforge.fml.VersionChecker"));// Si hay una problema
-																							// puedo eliminar
-		
-		VerificacionDeStackTrace.denegados.add(contentido ->
-        contentido.contains("net.neoforged.fml.VersionChecker"));
-		
-		
+				.add(contentido -> contentido.contains("net.minecraftforge.fml.VersionChecker"));// Si hay una problema
+																									// puedo eliminar
+
+		VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains("net.neoforged.fml.VersionChecker"));
+
 		VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains("No bonuses were provided"));// apotheosis
 																												// Si
 																												// hay
@@ -274,13 +270,9 @@ public class StackTracesDenegadosDeMinecraftPorDefecto {
 				.add(contentido -> contentido.contains("java.lang.NoSuchFieldException: delegate")
 						&& contentido.contains("io.gitlab.jfronny.libjf.unsafe.MixinPlugin"));
 
-		
-		
-		
-		VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains("com.tiviacz.travelersbackpack.TravelersBackpack.readOldCommonConfig"));
+		VerificacionDeStackTrace.denegados.add(contentido -> contentido
+				.contains("com.tiviacz.travelersbackpack.TravelersBackpack.readOldCommonConfig"));
 
-		
-		
 		// nada
 
 //		VerificacionDeStackTrace.denegados.add(c -> c.contains("Could not find any mod for modid 'rechiseled'!")
@@ -294,26 +286,45 @@ public class StackTracesDenegadosDeMinecraftPorDefecto {
 				|| c.contains("Missing elements in vertex:") && c.contains("gg.essential")
 
 		);
-		
+
 		// Ignorar compatibilidad JMI ↔ FTB Chunks (no suele ser fatal)
-		VerificacionDeStackTrace.denegados.add(contentido ->
-		        contentido.contains("me.frankv.jmi.compat.ftbchunks.FTBChunksCompat"));
-		
+		VerificacionDeStackTrace.denegados
+				.add(contentido -> contentido.contains("me.frankv.jmi.compat.ftbchunks.FTBChunksCompat"));
+
 		// Ignorar JMI ModCompatFactory (compatibilidad de mods, usualmente no fatal)
-		VerificacionDeStackTrace.denegados.add(contentido ->
-		        contentido.contains("me.frankv.jmi.api.ModCompatFactory"));
-		
+		VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains("me.frankv.jmi.api.ModCompatFactory"));
 
-		
-		VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains("Interface mixin contains a non-public method"));//Comun positiva falsa con SpongeMixin, no es fatal y no se puede arreglar
-		
-		VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains("WaterMediaBinaries"));//https://github.com/WaterMediaTeam/watermedia-v3/blob/77d7f4635d417b9b8e35907d966029fcd249c6fa/src/main/java/org/watermedia/api/media/players/FFMediaPlayer.java#L1341
+		VerificacionDeStackTrace.denegados
+				.add(contentido -> contentido.contains("Interface mixin contains a non-public method"));// Comun
+																										// positiva
+																										// falsa con
+																										// SpongeMixin,
+																										// no es fatal y
+																										// no se puede
+																										// arreglar
 
-		
-		VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains("Reflective setAccessible(true) disabled") && contentido.contains("io.netty.util.internal.ReflectionUtil.trySetAccessible"));// Común en Java 9+ con módulos, no es fatal y no se puede arreglar sin modificar el entorno de ejecución (ej. agregar --add-opens)
+		VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains("WaterMediaBinaries"));// https://github.com/WaterMediaTeam/watermedia-v3/blob/77d7f4635d417b9b8e35907d966029fcd249c6fa/src/main/java/org/watermedia/api/media/players/FFMediaPlayer.java#L1341
 
-		
-		
-		
+		VerificacionDeStackTrace.denegados
+				.add(contentido -> contentido.contains("Reflective setAccessible(true) disabled")
+						&& contentido.contains("io.netty.util.internal.ReflectionUtil.trySetAccessible"));// Común en
+																											// Java 9+
+																											// con
+																											// módulos,
+																											// no es
+																											// fatal y
+																											// no se
+																											// puede
+																											// arreglar
+																											// sin
+																											// modificar
+																											// el
+																											// entorno
+																											// de
+																											// ejecución
+																											// (ej.
+																											// agregar
+																											// --add-opens)
+
 	}
 }

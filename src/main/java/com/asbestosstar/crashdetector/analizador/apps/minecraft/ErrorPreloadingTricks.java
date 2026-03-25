@@ -18,94 +18,94 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  */
 public class ErrorPreloadingTricks implements Verificaciones {
 
-    private boolean activado = false;
-    private boolean analizarLineas = false;
-    private String enlace = "";
-	private boolean tienePreLoading=false;
+	private boolean activado = false;
+	private boolean analizarLineas = false;
+	private String enlace = "";
+	private boolean tienePreLoading = false;
 
-    @Override
-    public void verificar(Consola consola) {
+	@Override
+	public void verificar(Consola consola) {
 
-        String log = consola.contenido_verificar;
+		String log = consola.contenido_verificar;
 
-        if (log == null)
-            return;
+		if (log == null)
+			return;
 
-        // Pre-check global: Debemos encontrar tanto el error de casting como la mención del mod
-        if (log.contains("Preloading Tricks Installed") 
-               ) {
+		// Pre-check global: Debemos encontrar tanto el error de casting como la mención
+		// del mod
+		if (log.contains("Preloading Tricks Installed")) {
 
-            tienePreLoading = true;
-        }
-        if (log.contains("cannot be cast to class java.lang.module.ModuleDescriptor")) {
+			tienePreLoading = true;
+		}
+		if (log.contains("cannot be cast to class java.lang.module.ModuleDescriptor")) {
 			analizarLineas = true;
 		}
-        
-        
-    }
 
-    @Override
-    public void verificar(Consola consola, String linea, int numero_de_linea) {
+	}
 
-        if (!tienePreLoading||!analizarLineas || linea == null || activado)
-            return;
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
 
-        // Marcamos el error en la línea donde aparece el ClassCastException
-        if (linea.contains("ClassCastException") && linea.contains("cannot be cast to class java.lang.module.ModuleDescriptor")) {
+		if (!tienePreLoading || !analizarLineas || linea == null || activado)
+			return;
 
-            this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
-            activado = true;
-        }
-    }
+		// Marcamos el error en la línea donde aparece el ClassCastException
+		if (linea.contains("ClassCastException")
+				&& linea.contains("cannot be cast to class java.lang.module.ModuleDescriptor")) {
 
-    @Override
-    public Verificaciones nueva() {
-        return new ErrorPreloadingTricks();
-    }
+			this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
+			activado = true;
+		}
+	}
 
-    @Override
-    public boolean activado() {
-        return activado;
-    }
+	@Override
+	public Verificaciones nueva() {
+		return new ErrorPreloadingTricks();
+	}
 
-    @Override
-    public float prioridad() {
-        return 1300.0f;
-    }
+	@Override
+	public boolean activado() {
+		return activado;
+	}
 
-    @Override
-    public String mensaje() {
-        return MonitorDePID.idioma.mensajeErrorPreloadingTricks() + this.enlace;
-    }
+	@Override
+	public float prioridad() {
+		return 1300.0f;
+	}
 
-    @Override
-    public String nombre() {
-        return MonitorDePID.idioma.nombreErrorPreloadingTricks();
-    }
+	@Override
+	public String mensaje() {
+		return MonitorDePID.idioma.mensajeErrorPreloadingTricks() + this.enlace;
+	}
 
-    @Override
-    public QuickFix solucion() {
-        return QuickFix.NINGUN;
-    }
+	@Override
+	public String nombre() {
+		return MonitorDePID.idioma.nombreErrorPreloadingTricks();
+	}
 
-    @Override
-    public String id() {
-        return "error_preloading_tricks";
-    }
+	@Override
+	public QuickFix solucion() {
+		return QuickFix.NINGUN;
+	}
 
-    @Override
-    public boolean ocupaTrazo(TraceInfo trazo) {
-        return false;
-    }
+	@Override
+	public String id() {
+		return "error_preloading_tricks";
+	}
 
-    @Override
-    public Documento docs() {
-        return Documento.NINGUN;
-    }
+	@Override
+	public boolean ocupaTrazo(TraceInfo trazo) {
+		return false;
+	}
 
-    @Override
-    public String enlaceACodigo() {
-        return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
-                + this.getClass().getSimpleName() + ".java";
-    }
+	@Override
+	public Documento docs() {
+		return Documento.NINGUN;
+	}
+
+	@Override
+	public String enlaceACodigo() {
+		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
+				+ this.getClass().getSimpleName() + ".java";
+	}
 }

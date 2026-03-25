@@ -1304,29 +1304,27 @@ public class Arabe implements Idioma {
 	}
 
 	/**
-	 * يُرجع رسالة الخطأ للكيانات أو كيانات الكتل المُشكِلة،
-	 * مع تفصيل خطوات الاسترداد حسب المنصة.
+	 * يُرجع رسالة الخطأ للكيانات أو كيانات الكتل المُشكِلة، مع تفصيل خطوات
+	 * الاسترداد حسب المنصة.
 	 */
 	@Override
 	public String mensajeTickingEntidadBloque(String nombre, String tipo, int[] coordenadas) {
 		String coords = "(" + coordenadas[0] + ", " + coordenadas[1] + ", " + coordenadas[2] + ")";
 		String color = config.obtenerColorError();
-		
+
 		// الرسالة الرئيسية: النص الوصفي فقط يحمل لون الخطأ
-		String mensajeBase = "<span style='color:#" + color + "'>الكيان أو كيان الكتلة '</span>" 
-				+ nombre + "<span style='color:#" + color + "'>' من النوع '</span>" 
-				+ tipo + "<span style='color:#" + color + "'>' في الموقع </span>" 
-				+ coords + "<span style='color:#" + color + "'> يُسبب أخطاء ticking.</span><br><br>";
+		String mensajeBase = "<span style='color:#" + color + "'>الكيان أو كيان الكتلة '</span>" + nombre
+				+ "<span style='color:#" + color + "'>' من النوع '</span>" + tipo + "<span style='color:#" + color
+				+ "'>' في الموقع </span>" + coords + "<span style='color:#" + color
+				+ "'> يُسبب أخطاء ticking.</span><br><br>";
 
 		// تعليمات الإصلاح
-		String instrucciones = "<span style='color:#" + color + "'>"
-				+ "تعليمات الاسترداد:<br>"
+		String instrucciones = "<span style='color:#" + color + "'>" + "تعليمات الاسترداد:<br>"
 				+ "1. **MCForge**: انتقل إلى '[nombre_del_mundo]/serverconfig/forge-server.toml'.<br>"
 				+ "2. **NeoForge**: انتقل إلى 'config/neoforge-server.toml'.<br>"
 				+ "   *(ملاحظة: في الألعاب المحلية/Singleplayer، توجد العوالم في مجلد 'saves')*.<br>"
 				+ "3. غيّر **removeErroringBlockEntities** و **removeErroringEntities** إلى **true**.<br><br>"
-				+ "خيارات أخرى:<br>"
-				+ "- **MCEdit**: استخدمه لحذف الكيان يدويًا عند الإحداثيات المُشار إليها.<br>"
+				+ "خيارات أخرى:<br>" + "- **MCEdit**: استخدمه لحذف الكيان يدويًا عند الإحداثيات المُشار إليها.<br>"
 				+ "- **Neruina (Mod)**: قد يمنع التعطّل، لكنه لا يعمل دائمًا وقد يُصعّب عملية التصحيح عند تثبيته."
 				+ "</span>";
 
@@ -6813,463 +6811,414 @@ public class Arabe implements Idioma {
 				+ "<li>مسار غير صحيح مُعرّف في سجل المود.</li>" + "<li>تضارب في التبعيات أو إصدار غير متوافق.</li>"
 				+ "</ul>";
 	}
-    @Override
-    public String nombreAnimacionGeckoInexiste() {
-        return "لم يتم العثور على حركة GeckoLib";
-    }
 
-    @Override
-    public String mensajeAnimacionGeckoInexiste(String archivo) {
-        return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-                + "لم تتمكن إضافة من العثور على ملف حركة GeckoLib.</b>" + "<p>الملف المتأثر:</p>"
-                + "<code>" + archivo + "</code>"
-                + "<p>يحدث هذا الخطأ عندما يحاول GeckoLib تحميل حركة غير موجودة في المسار المحدد. "
-                + "على عكس خطأ التحميل (بناء الجملة)، يشير هذا الخطأ إلى أن الملف مفقود فعليًا أو أن المسار خاطئ.</p>"
-                + "<p>الأسباب المحتملة:</p>" + "<ul>"
-                + "<li>تم حذف ملف <code>.json</code> أو لم يتم تضمينه في ملف JAR النهائي للإضافة.</li>"
-                + "<li>خطأ مطبعي في المسار المحدد في الكود (على سبيل المثال: 'animations' مقابل 'animaciones').</li>"
-                + "<li>تناقض بين الأحرف الكبيرة والصغيرة (نظام تشغيل الخادم هو Linux (حساس) والتطوير كان على Windows (غير حساس)).</li>"
-                + "<li>الإضافة غير محدثة بالكامل أو اعتمادياتها تالفة.</li>" + "</ul>";
-    }
-    @Override
-    public String nombreRegistroDuplicadoObjeto() {
-        return "تعارض في التسجيل المكرر";
-    }
+	@Override
+	public String nombreAnimacionGeckoInexiste() {
+		return "لم يتم العثور على حركة GeckoLib";
+	}
 
-    @Override
-    public String mensajeRegistroDuplicadoObjeto(String mod1, String mod2, String objeto) {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // الرسالة الرئيسية: النص الوصفي فقط يحمل لون الخطأ
-        String mensajeBase = "<span style='color:#" + color + "'>تعارض حرج: تمت محاولة تسجيل كائن مرتين. "
-                + "الإضافتان </span>" + mod1 + "<span style='color:#" + color + "'> و </span>" 
-                + mod2 + "<span style='color:#" + color + "'> تحاولان تسجيل نفس الكائن. "
-                + "الكائن المتعارض: </span>" + objeto + "<br><br>";
+	@Override
+	public String mensajeAnimacionGeckoInexiste(String archivo) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "لم تتمكن إضافة من العثور على ملف حركة GeckoLib.</b>" + "<p>الملف المتأثر:</p>" + "<code>" + archivo
+				+ "</code>" + "<p>يحدث هذا الخطأ عندما يحاول GeckoLib تحميل حركة غير موجودة في المسار المحدد. "
+				+ "على عكس خطأ التحميل (بناء الجملة)، يشير هذا الخطأ إلى أن الملف مفقود فعليًا أو أن المسار خاطئ.</p>"
+				+ "<p>الأسباب المحتملة:</p>" + "<ul>"
+				+ "<li>تم حذف ملف <code>.json</code> أو لم يتم تضمينه في ملف JAR النهائي للإضافة.</li>"
+				+ "<li>خطأ مطبعي في المسار المحدد في الكود (على سبيل المثال: 'animations' مقابل 'animaciones').</li>"
+				+ "<li>تناقض بين الأحرف الكبيرة والصغيرة (نظام تشغيل الخادم هو Linux (حساس) والتطوير كان على Windows (غير حساس)).</li>"
+				+ "<li>الإضافة غير محدثة بالكامل أو اعتمادياتها تالفة.</li>" + "</ul>";
+	}
 
-        // تعليمات الإصلاح
-        String instrucciones = "<span style='color:#" + color + "'>"
-                + "يحدث هذا عادةً عندما تضيف إضافتان مختلفتان كائنًا بنفس الاسم "
-                + "في نفس namespace، أو عندما يكون هناك خطأ في كود إحدى الإضافات.<br><br>"
-                + "<b>الحل الموصى به:</b><br>"
-                + "<ul>"
-                + "<li>تحقق مما إذا كانت إحدى الإضافات تحديثًا أو فرعًا للأخرى.</li>"
-                + "<li>حاول حذف إحدى الإضافتين المتعارضتين.</li>"
-                + "<li>راجع ملفات تكوين كلتا الإضافتين لمعرفة ما إذا كان يمكنك تغيير معرف الكائن (ID).</li>"
-                + "</ul></span>";
+	@Override
+	public String nombreRegistroDuplicadoObjeto() {
+		return "تعارض في التسجيل المكرر";
+	}
 
-        return mensajeBase + instrucciones;
-    }
-    
-    @Override
-    public String nombreFalloFabricRenderingAPI() {
-        return "وحدة واجهة تقديم Fabric Rendering API مفقودة";
-    }
+	@Override
+	public String mensajeRegistroDuplicadoObjeto(String mod1, String mod2, String objeto) {
+		String color = Config.obtenerInstancia().obtenerColorError();
 
-    @Override
-    public String mensajeFalloFabricRenderingAPI() {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // الرسالة الرئيسية
-        String mensajeBase = "<span style='color:#" + color + "'>فشِل أحد الإضافات (عادةً Porting Lib أو الإضافات المعتمدة عليه) لأن </span>"
-                + "Fabric Rendering API<span style='color:#" + color + "'> غير متوفرة.</span><br><br>";
+		// الرسالة الرئيسية: النص الوصفي فقط يحمل لون الخطأ
+		String mensajeBase = "<span style='color:#" + color + "'>تعارض حرج: تمت محاولة تسجيل كائن مرتين. "
+				+ "الإضافتان </span>" + mod1 + "<span style='color:#" + color + "'> و </span>" + mod2
+				+ "<span style='color:#" + color + "'> تحاولان تسجيل نفس الكائن. " + "الكائن المتعارض: </span>" + objeto
+				+ "<br><br>";
 
-        // تعليمات الإصلاح (محدثة للإصدارات الحديثة حيث أصبح Indium قديماً)
-        String instrucciones = "<span style='color:#" + color + "'>"
-                + "<b>الحل الموصى به:</b><br>"
-                + "تقترح الرسالة تثبيت Indium، لكن هذه الإضافة أصبحت قديمة في الإصدارات الحديثة من اللعبة.<br>"
-                + "<ul>"
-                + "<li><b>حدّث Sodium</b> إلى الإصدار <b>0.6.0</b> أو أحدث (هذا الإصدار يتضمن الدعم اللازم).</li>"
-                + "<li>تأكد من تثبيت <b>Fabric API</b> إذا لم يكن مثبتًا بعد.</li>"
-                + "<li>إذا كنت تستخدم إصدارًا قديمًا من اللعبة (1.20.6 أو أقدم)، فقم بتثبيت Indium.</li>"
-                + "</ul></span>";
+		// تعليمات الإصلاح
+		String instrucciones = "<span style='color:#" + color + "'>"
+				+ "يحدث هذا عادةً عندما تضيف إضافتان مختلفتان كائنًا بنفس الاسم "
+				+ "في نفس namespace، أو عندما يكون هناك خطأ في كود إحدى الإضافات.<br><br>"
+				+ "<b>الحل الموصى به:</b><br>" + "<ul>"
+				+ "<li>تحقق مما إذا كانت إحدى الإضافات تحديثًا أو فرعًا للأخرى.</li>"
+				+ "<li>حاول حذف إحدى الإضافتين المتعارضتين.</li>"
+				+ "<li>راجع ملفات تكوين كلتا الإضافتين لمعرفة ما إذا كان يمكنك تغيير معرف الكائن (ID).</li>"
+				+ "</ul></span>";
 
-        return mensajeBase + instrucciones;
-    }
-    @Override
-    public String nombreRestriccionesDependenciaNoCumplidas() {
-        return "قيود الاعتماديات غير مُستوفاة";
-    }
+		return mensajeBase + instrucciones;
+	}
 
-    @Override
-    public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad, List<String[]> conflictos) {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // الرسالة الرئيسية
-        String mensajeBase = "<span style='color:#" + color + "'>تم العثور على </span>" 
-                + cantidad + "<span style='color:#" + color + "'> قيود اعتماديات غير مُستوفاة.</span><br><br>";
+	@Override
+	public String nombreFalloFabricRenderingAPI() {
+		return "وحدة واجهة تقديم Fabric Rendering API مفقودة";
+	}
 
-        // بناء قائمة التعارضات
-        StringBuilder listaDetalle = new StringBuilder();
-        if (conflictos != null && !conflictos.isEmpty()) {
-            listaDetalle.append("<span style='color:#").append(color).append("'>تم اكتشاف تعارضات في الملفات التالية:</span><br><ul>");
-            for (String[] par : conflictos) {
-                String dep = par[0]; // الاعتمادية
-                String jar = par[1];  // ملف JAR
-                // المتغير باللون الافتراضي، النص الثابت بلون الخطأ
-                listaDetalle.append("<li>")
-                            .append("<span style='color:#").append(color).append("'>الملف: </span>")
-                            .append(jar)
-                            .append("<br><span style='color:#").append(color).append("'>يتطلب: </span>")
-                            .append(dep)
-                            .append("</li>");
-            }
-            listaDetalle.append("</ul><br>");
-        }
+	@Override
+	public String mensajeFalloFabricRenderingAPI() {
+		String color = Config.obtenerInstancia().obtenerColorError();
 
-        // تعليمات الإصلاح
-        String instrucciones = "<span style='color:#" + color + "'>"
-                + "يحدث هذا عندما تتطلب إضافتان أو أكثر إصدارات مختلفة وغير متوافقة من نفس المكتبة الداخلية.<br><br>"
-                + "<b>الحل الموصى به:</b><br>"
-                + "<ul>"
-                + "<li>حاول تحديث أو حذف الإضافات المدرجة أعلاه لحل عدم التوافق.</li>"
-                + "<li>إذا لم تجد إصدارًا متوافقًا، يمكنك محاولة تحرير ملف <code>mods.toml</code> يدويًا داخل ملف JAR للإضافة (باستخدام برنامج ضغط مثل WinRAR أو 7-Zip) لتغيير أو إزالة قيد الإصدار، على الرغم من أن هذا قد يتسبب في عدم الاستقرار.</li>"
-                + "</ul></span>";
+		// الرسالة الرئيسية
+		String mensajeBase = "<span style='color:#" + color
+				+ "'>فشِل أحد الإضافات (عادةً Porting Lib أو الإضافات المعتمدة عليه) لأن </span>"
+				+ "Fabric Rendering API<span style='color:#" + color + "'> غير متوفرة.</span><br><br>";
 
-        return mensajeBase + listaDetalle.toString() + instrucciones;
-    }
-    
-    
-    
+		// تعليمات الإصلاح (محدثة للإصدارات الحديثة حيث أصبح Indium قديماً)
+		String instrucciones = "<span style='color:#" + color + "'>" + "<b>الحل الموصى به:</b><br>"
+				+ "تقترح الرسالة تثبيت Indium، لكن هذه الإضافة أصبحت قديمة في الإصدارات الحديثة من اللعبة.<br>" + "<ul>"
+				+ "<li><b>حدّث Sodium</b> إلى الإصدار <b>0.6.0</b> أو أحدث (هذا الإصدار يتضمن الدعم اللازم).</li>"
+				+ "<li>تأكد من تثبيت <b>Fabric API</b> إذا لم يكن مثبتًا بعد.</li>"
+				+ "<li>إذا كنت تستخدم إصدارًا قديمًا من اللعبة (1.20.6 أو أقدم)، فقم بتثبيت Indium.</li>"
+				+ "</ul></span>";
 
+		return mensajeBase + instrucciones;
+	}
 
-    @Override
-    public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad, Map<String, List<String>> conflictosPorMod) {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // الرسالة الرئيسية
-        String mensajeBase = "<span style='color:#" + color + "'>تم العثور على </span>" 
-                + cantidad + "<span style='color:#" + color + "'> قيود اعتماديات غير مُستوفاة.</span><br><br>";
+	@Override
+	public String nombreRestriccionesDependenciaNoCumplidas() {
+		return "قيود الاعتماديات غير مُستوفاة";
+	}
 
-        // بناء القائمة المجمعة حسب الإضافة
-        StringBuilder listaDetalle = new StringBuilder();
-        if (conflictosPorMod != null && !conflictosPorMod.isEmpty()) {
-            listaDetalle.append("<span style='color:#").append(color).append("'>الإضافات المتورطة والاعتماديات المطلوبة:</span><br><ul>");
-            
-            for (Map.Entry<String, List<String>> entry : conflictosPorMod.entrySet()) {
-                String archivo = entry.getKey();
-                List<String> dependencias = entry.getValue();
+	@Override
+	public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad, List<String[]> conflictos) {
+		String color = Config.obtenerInstancia().obtenerColorError();
 
-                // اسم الإضافة (اللون الافتراضي)
-                listaDetalle.append("<li><b>").append(archivo).append("</b>");
-                
-                // قائمة الاعتماديات لهذه الإضافة
-                listaDetalle.append("<ul>");
-                for (String dep : dependencias) {
-                    // الاعتمادية (اللون الافتراضي)
-                    listaDetalle.append("<li>").append(dep).append("</li>");
-                }
-                listaDetalle.append("</ul></li>");
-            }
-            listaDetalle.append("</ul><br>");
-        } else {
-            listaDetalle.append("<span style='color:#").append(color).append("'>تعذر تحديد الملفات المحددة من السجل.</span><br>");
-        }
+		// الرسالة الرئيسية
+		String mensajeBase = "<span style='color:#" + color + "'>تم العثور على </span>" + cantidad
+				+ "<span style='color:#" + color + "'> قيود اعتماديات غير مُستوفاة.</span><br><br>";
 
-        // تعليمات الإصلاح
-        String instrucciones = "<span style='color:#" + color + "'>"
-                + "يحدث هذا الخطأ عندما تتضمن الإضافات إصدارات داخلية من المكتبات (JarInJar) غير متوافقة مع بعضها البعض.<br><br>"
-                + "<b>الحل الموصى به:</b><br>"
-                + "<ul>"
-                + "<li>راجع القائمة أعلاه لتحديد الإضافات التي تطلب إصدارات مختلفة من نفس المكتبة.</li>"
-                + "<li>حاول تحديث كلتا الإضافتين إلى أحدث إصداراتهما.</li>"
-                + "<li>كملاذ أخير، يمكنك فتح ملف <code>.jar</code> للإضافة باستخدام برنامج ضغط (مثل WinRAR)، وتحرير <code>META-INF/mods.toml</code> وتعديل نطاق إصدار الاعتمادية يدويًا، على الرغم من أن هذا محفوف بالمخاطر وقد يُعطل الإضافة.</li>"
-                + "</ul></span>";
+		// بناء قائمة التعارضات
+		StringBuilder listaDetalle = new StringBuilder();
+		if (conflictos != null && !conflictos.isEmpty()) {
+			listaDetalle.append("<span style='color:#").append(color)
+					.append("'>تم اكتشاف تعارضات في الملفات التالية:</span><br><ul>");
+			for (String[] par : conflictos) {
+				String dep = par[0]; // الاعتمادية
+				String jar = par[1]; // ملف JAR
+				// المتغير باللون الافتراضي، النص الثابت بلون الخطأ
+				listaDetalle.append("<li>").append("<span style='color:#").append(color).append("'>الملف: </span>")
+						.append(jar).append("<br><span style='color:#").append(color).append("'>يتطلب: </span>")
+						.append(dep).append("</li>");
+			}
+			listaDetalle.append("</ul><br>");
+		}
 
-        return mensajeBase + listaDetalle.toString() + instrucciones;
-    }
-    
-    @Override
-    public String nombreNeruinaOcultaAdvertencia() {
-        return "Neruina يمنع التصحيح";
-    }
+		// تعليمات الإصلاح
+		String instrucciones = "<span style='color:#" + color + "'>"
+				+ "يحدث هذا عندما تتطلب إضافتان أو أكثر إصدارات مختلفة وغير متوافقة من نفس المكتبة الداخلية.<br><br>"
+				+ "<b>الحل الموصى به:</b><br>" + "<ul>"
+				+ "<li>حاول تحديث أو حذف الإضافات المدرجة أعلاه لحل عدم التوافق.</li>"
+				+ "<li>إذا لم تجد إصدارًا متوافقًا، يمكنك محاولة تحرير ملف <code>mods.toml</code> يدويًا داخل ملف JAR للإضافة (باستخدام برنامج ضغط مثل WinRAR أو 7-Zip) لتغيير أو إزالة قيد الإصدار، على الرغم من أن هذا قد يتسبب في عدم الاستقرار.</li>"
+				+ "</ul></span>";
 
-    @Override
-    public String mensajeNeruinaOcultaAdvertencia() {
-        String color = Config.obtenerInstancia().obtenerColorAdvertencia();
-        
-        // التحذير الرئيسي
-        String mensajeBase = "<span style='color:#" + color + "'>"
-                + "<b>تحذير:</b> الإضافة <b>Neruina</b> تفشل في محاولة التعامل مع خطأ، مما يخفي السبب الحقيقي للتعطّل.</span><br><br>"
-                + "<span style='color:#" + color + "'>"
-                + "غالبًا لا يكون Neruina ضروريًا ويُصعّب معرفة ما الذي يفشل حقًا. يُوصى بإزالته لأغراض التصحيح.</span><br><br>";
+		return mensajeBase + listaDetalle.toString() + instrucciones;
+	}
 
-        // تعليمات الاسترداد
-        String instrucciones = "<span style='color:#" + color + "'>"
-                + "<b>تعليمات الاسترداد:</b><br>"
-                + "1. **MCForge**: انتقل إلى '[nombre_del_mundo]/serverconfig/forge-server.toml'.<br>"
-                + "2. **NeoForge**: انتقل إلى 'config/neoforge-server.toml'.<br>"
-                + "   *(ملاحظة: في الألعاب المحلية/Singleplayer، توجد العوالم في مجلد 'saves')*.<br>"
-                + "3. غيّر **removeErroringBlockEntities** و **removeErroringEntities** إلى **true**.<br><br>"
-                + "<b>خيارات أخرى:</b><br>"
-                + "- **MCEdit**: استخدمه لحذف الكيان يدويًا عند الإحداثيات المُشار إليها.<br>"
-                + "- إذا استمر هذا الخطأ، فمن الممكن أن Neruina لا يعمل بشكل صحيح ويُنتج أخطاءً جديدة فحسب."
-                + "</span>";
+	@Override
+	public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad,
+			Map<String, List<String>> conflictosPorMod) {
+		String color = Config.obtenerInstancia().obtenerColorError();
 
-        return mensajeBase + instrucciones;
-    }
-    @Override
-    public String nombreApothicAttributeSinDueño() {
-        return "خطأ في Apothic Attributes";
-    }
+		// الرسالة الرئيسية
+		String mensajeBase = "<span style='color:#" + color + "'>تم العثور على </span>" + cantidad
+				+ "<span style='color:#" + color + "'> قيود اعتماديات غير مُستوفاة.</span><br><br>";
 
-    @Override
-    public String mensajeApothicAttributeSinDueño(boolean chestCavityDetectado) {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // الرسالة الرئيسية
-        String mensajeBase = "<span style='color:#" + color + "'>"
-                + "اكتشف <b>Apothic Attributes</b> تعارضًا: تم تعديل <b>AttributeMap</b> دون تعيين مالك له.</span><br><br>"
-                + "<span style='color:#" + color + "'>"
-                + "يحدث هذا عادةً عندما تحاول إضافة تعديل سمات كيان (مثل الصحة، الضرر، السرعة) "
-                + "في وقت غير مناسب أو بطريقة غير صحيحة.</span><br><br>";
+		// بناء القائمة المجمعة حسب الإضافة
+		StringBuilder listaDetalle = new StringBuilder();
+		if (conflictosPorMod != null && !conflictosPorMod.isEmpty()) {
+			listaDetalle.append("<span style='color:#").append(color)
+					.append("'>الإضافات المتورطة والاعتماديات المطلوبة:</span><br><ul>");
 
-        // ملاحظة محددة حول Chest Cavity
-        String notaChestCavity = "";
-        if (chestCavityDetectado) {
-            notaChestCavity = "<span style='color:#" + color + "'>"
-                    + "<b>تم اكتشاف إضافة Chest Cavity في السجل.</b> "
-                    + "هذه الإضافة سبب شائع لهذا الخطأ المحدد بسبب طريقة تعاملها مع سمات الكيانات.</span><br><br>";
-        }
+			for (Map.Entry<String, List<String>> entry : conflictosPorMod.entrySet()) {
+				String archivo = entry.getKey();
+				List<String> dependencias = entry.getValue();
 
-        // تعليمات الإصلاح
-        String instrucciones = "<span style='color:#" + color + "'>"
-                + "<b>الحل الموصى به:</b><br>"
-                + "<ul>"
-                + "<li>إذا كانت Chest Cavity مثبتة، حاول تحديثها أو إزالتها مؤقتًا للتحقق مما إذا كانت هي السبب.</li>"
-                + "<li>راجع ما إذا كانت هناك إضافات أخرى تعدّل سمات الكائنات وحاول تعطيلها.</li>"
-                + "<li>ابحث عن تحديثات لـ <b>Apothic Attributes</b> حيث قد يكون هذا خطأً تم إصلاحه في الإصدارات الحديثة.</li>"
-                + "</ul></span>";
+				// اسم الإضافة (اللون الافتراضي)
+				listaDetalle.append("<li><b>").append(archivo).append("</b>");
 
-        return mensajeBase + notaChestCavity + instrucciones;
-    }
-    
-    @Override
-    public String nombreErrorPotBlockEntity() {
-        return "خطأ في DecoratedPot (Cataclysm)";
-    }
+				// قائمة الاعتماديات لهذه الإضافة
+				listaDetalle.append("<ul>");
+				for (String dep : dependencias) {
+					// الاعتمادية (اللون الافتراضي)
+					listaDetalle.append("<li>").append(dep).append("</li>");
+				}
+				listaDetalle.append("</ul></li>");
+			}
+			listaDetalle.append("</ul><br>");
+		} else {
+			listaDetalle.append("<span style='color:#").append(color)
+					.append("'>تعذر تحديد الملفات المحددة من السجل.</span><br>");
+		}
 
-    @Override
-    public String mensajeErrorPotBlockEntity() {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // الرسالة الرئيسية
-        String mensajeBase = "<span style='color:#" + color + "'>"
-                + "حدث خطأ عدم توافق مع <b>DecoratedPotBlockEntity</b>.</span><br><br>"
-                + "<span style='color:#" + color + "'>"
-                + "هذه مشكلة معروفة في الإصدار 1.19.2 من إضافة <b>L_Enders_Cataclysm</b>, "
-                + "حيث ينقص تنفيذ مطلوب من قبل اللعبة.</span><br><br>";
+		// تعليمات الإصلاح
+		String instrucciones = "<span style='color:#" + color + "'>"
+				+ "يحدث هذا الخطأ عندما تتضمن الإضافات إصدارات داخلية من المكتبات (JarInJar) غير متوافقة مع بعضها البعض.<br><br>"
+				+ "<b>الحل الموصى به:</b><br>" + "<ul>"
+				+ "<li>راجع القائمة أعلاه لتحديد الإضافات التي تطلب إصدارات مختلفة من نفس المكتبة.</li>"
+				+ "<li>حاول تحديث كلتا الإضافتين إلى أحدث إصداراتهما.</li>"
+				+ "<li>كملاذ أخير، يمكنك فتح ملف <code>.jar</code> للإضافة باستخدام برنامج ضغط (مثل WinRAR)، وتحرير <code>META-INF/mods.toml</code> وتعديل نطاق إصدار الاعتمادية يدويًا، على الرغم من أن هذا محفوف بالمخاطر وقد يُعطل الإضافة.</li>"
+				+ "</ul></span>";
 
-        // الحل
-        String solucion = "<span style='color:#" + color + "'>"
-                + "<b>الحل الموصى به:</b><br>"
-                + "قم بتثبيت إضافة <b>PotFix (Cataclysm Patch)</b> لإصلاح هذا الخطأ.<br>"
-                + "يمكنك تنزيله من هنا: <a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch  '>CurseForge - PotFix</a>"
-                + "</span>";
+		return mensajeBase + listaDetalle.toString() + instrucciones;
+	}
 
-        return mensajeBase + solucion;
-    }
-    
-    @Override
-    public String nombreErrorPreloadingTricks() {
-        return "خطأ في Preloading Tricks";
-    }
+	@Override
+	public String nombreNeruinaOcultaAdvertencia() {
+		return "Neruina يمنع التصحيح";
+	}
 
-    @Override
-    public String mensajeErrorPreloadingTricks() {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // الرسالة الرئيسية
-        String mensajeBase = "<span style='color:#" + color + "'>"
-                + "تم اكتشاف تعارض سببه <b>Preloading Tricks</b>.</span><br><br>"
-                + "<span style='color:#" + color + "'>"
-                + "الخطأ <i>ClassCastException: String cannot be cast to ModuleDescriptor</i> "
-                + "يشير إلى أن الإضافة تتلاعب بفئات نظام وحدات Java بشكل غير صحيح.</span><br><br>";
+	@Override
+	public String mensajeNeruinaOcultaAdvertencia() {
+		String color = Config.obtenerInstancia().obtenerColorAdvertencia();
 
-        // الشرح والحل
-        String explicacion = "<span style='color:#" + color + "'>"
-                + "<b>Preloading Tricks</b> هي إضافة مصممة أساسًا لـ <b>المطورين</b>. "
-                + "تقوم بإجراء عمليات معقدة لتعديل الفئات (mixins) في مرحلة مبكرة جدًا من تحميل اللعبة، "
-                + "مما قد يكسر الاستقرار بسهولة إذا كانت هناك تفاعلات أخرى.</span><br><br>"
-                + "<span style='color:#" + color + "'><b>الحل الموصى به:</b><br>"
-                + "<ul>"
-                + "<li>أزل إضافة <b>Preloading Tricks</b>. عادةً لا تكون ضرورية للعب على الخوادم العامة أو الحزم المستقرة.</li>"
-                + "<li>إذا كنت مطورًا وتحتاجها للاختبار، راجع إعدادات بيئتك.</li>"
-                + "</ul></span>";
+		// التحذير الرئيسي
+		String mensajeBase = "<span style='color:#" + color + "'>"
+				+ "<b>تحذير:</b> الإضافة <b>Neruina</b> تفشل في محاولة التعامل مع خطأ، مما يخفي السبب الحقيقي للتعطّل.</span><br><br>"
+				+ "<span style='color:#" + color + "'>"
+				+ "غالبًا لا يكون Neruina ضروريًا ويُصعّب معرفة ما الذي يفشل حقًا. يُوصى بإزالته لأغراض التصحيح.</span><br><br>";
 
-        return mensajeBase + explicacion;
-    }
-    @Override
-    public String nombreErrorSimpleRadioLexiconfig() {
-        return "عدم توافق Simple Radio / Lexiconfig";
-    }
+		// تعليمات الاسترداد
+		String instrucciones = "<span style='color:#" + color + "'>" + "<b>تعليمات الاسترداد:</b><br>"
+				+ "1. **MCForge**: انتقل إلى '[nombre_del_mundo]/serverconfig/forge-server.toml'.<br>"
+				+ "2. **NeoForge**: انتقل إلى 'config/neoforge-server.toml'.<br>"
+				+ "   *(ملاحظة: في الألعاب المحلية/Singleplayer، توجد العوالم في مجلد 'saves')*.<br>"
+				+ "3. غيّر **removeErroringBlockEntities** و **removeErroringEntities** إلى **true**.<br><br>"
+				+ "<b>خيارات أخرى:</b><br>"
+				+ "- **MCEdit**: استخدمه لحذف الكيان يدويًا عند الإحداثيات المُشار إليها.<br>"
+				+ "- إذا استمر هذا الخطأ، فمن الممكن أن Neruina لا يعمل بشكل صحيح ويُنتج أخطاءً جديدة فحسب."
+				+ "</span>";
 
-    @Override
-    public String mensajeErrorSimpleRadioLexiconfig() {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // الرسالة الرئيسية
-        String mensajeBase = "<span style='color:#" + color + "'>"
-                + "تم اكتشاف تعارض بين <b>Simple Radio</b> و <b>Lexiconfig</b>.</span><br><br>"
-                + "<span style='color:#" + color + "'>"
-                + "يحدث الخطأ أثناء عملية 'shelveLexicons'، مما يشير إلى عدم توافق ثنائي بين المكتبتين.</span><br><br>";
+		return mensajeBase + instrucciones;
+	}
 
-        // الحل المحدد
-        String solucion = "<span style='color:#" + color + "'>"
-                + "<b>سبب معروف:</b><br>"
-                + "عادةً ما يكون Simple Radio مصممًا لإصدارات قديمة من Lexiconfig، بينما لديك إصدار أحدث مثبت.</span><br><br>"
-                + "<span style='color:#" + color + "'><b>الحل الموصى به:</b><br>"
-                + "<ul>"
-                + "<li>حاول استخدام إصدار أقدم من <b>Lexiconfig</b>.</li>"
-                + "<li>يُوصى بتجربة الإصدار <b>1.3.11</b> أو الأقدم، والتي تكون متوافقة عادةً مع Simple Radio.</li>"
-                + "<li>إذا استمرت المشكلة، تحقق مما إذا كان هناك تحديث متاح لـ Simple Radio.</li>"
-                + "</ul></span>";
+	@Override
+	public String nombreApothicAttributeSinDueño() {
+		return "خطأ في Apothic Attributes";
+	}
 
-        return mensajeBase + solucion;
-    }
-    @Override
-    public String nombreErrorMobAITweaks() {
-        return "خطأ في Mob AI Tweaks";
-    }
+	@Override
+	public String mensajeApothicAttributeSinDueño(boolean chestCavityDetectado) {
+		String color = Config.obtenerInstancia().obtenerColorError();
 
-    @Override
-    public String mensajeErrorMobAITweaks() {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // الرسالة الرئيسية
-        String mensajeBase = "<span style='color:#" + color + "'>"
-                + "تم اكتشاف خطأ مرتبط بـ <b>Mob AI Tweaks</b>.</span><br><br>"
-                + "<span style='color:#" + color + "'>"
-                + "ينشأ الخطأ من Mixin (<code>$mob-ai-tweaks$onSpawned</code>) يتدخل "
-                + "عندما تظهر كيان (spawnea). يشير هذا عادةً إلى تعارض مع إضافة أخرى "
-                + "تعدّل أيضًا سلوك ظهور الكائنات.</span><br><br>";
+		// الرسالة الرئيسية
+		String mensajeBase = "<span style='color:#" + color + "'>"
+				+ "اكتشف <b>Apothic Attributes</b> تعارضًا: تم تعديل <b>AttributeMap</b> دون تعيين مالك له.</span><br><br>"
+				+ "<span style='color:#" + color + "'>"
+				+ "يحدث هذا عادةً عندما تحاول إضافة تعديل سمات كيان (مثل الصحة، الضرر، السرعة) "
+				+ "في وقت غير مناسب أو بطريقة غير صحيحة.</span><br><br>";
 
-        // الحل
-        String solucion = "<span style='color:#" + color + "'><b>الحل الموصى به:</b><br>"
-                + "<ul>"
-                + "<li>حاول إزالة <b>Mob AI Tweaks</b> للتحقق مما إذا كانت عدم الاستقرار تختفي.</li>"
-                + "</ul></span>";
+		// ملاحظة محددة حول Chest Cavity
+		String notaChestCavity = "";
+		if (chestCavityDetectado) {
+			notaChestCavity = "<span style='color:#" + color + "'>" + "<b>تم اكتشاف إضافة Chest Cavity في السجل.</b> "
+					+ "هذه الإضافة سبب شائع لهذا الخطأ المحدد بسبب طريقة تعاملها مع سمات الكيانات.</span><br><br>";
+		}
 
-        return mensajeBase + solucion;
-    }
-    
-    public String nombre_verificacion_gpu() {
-        return "فحص وحدة معالجة الرسومات (OpenGL / اختيار وحدة معالجة الرسومات)";
-    }
+		// تعليمات الإصلاح
+		String instrucciones = "<span style='color:#" + color + "'>" + "<b>الحل الموصى به:</b><br>" + "<ul>"
+				+ "<li>إذا كانت Chest Cavity مثبتة، حاول تحديثها أو إزالتها مؤقتًا للتحقق مما إذا كانت هي السبب.</li>"
+				+ "<li>راجع ما إذا كانت هناك إضافات أخرى تعدّل سمات الكائنات وحاول تعطيلها.</li>"
+				+ "<li>ابحث عن تحديثات لـ <b>Apothic Attributes</b> حيث قد يكون هذا خطأً تم إصلاحه في الإصدارات الحديثة.</li>"
+				+ "</ul></span>";
 
-    public String desactivar_parche_gpu() {
-        return "تعطيل فحص وحدة معالجة الرسومات";
-    }
+		return mensajeBase + notaChestCavity + instrucciones;
+	}
 
-    // ==================== CRASH ====================
+	@Override
+	public String nombreErrorPotBlockEntity() {
+		return "خطأ في DecoratedPot (Cataclysm)";
+	}
 
-    public String gpu_crash_posible() {
-        return "<b style='color:#" + config.obtenerColorError() + "'>من الممكن أن يكون فحص وحدة معالجة الرسومات قد تسبب في إغلاق اللعبة.</b>";
-    }
+	@Override
+	public String mensajeErrorPotBlockEntity() {
+		String color = Config.obtenerInstancia().obtenerColorError();
 
-    public String gpu_crash_causas() {
-        return "بدأ الفحص لكنه لم ينتهِ. يشير هذا عادةً إلى عطل في OpenGL أو في تعريفات الرسوميات.<br><br>"
-             + "الأسباب المحتملة:<br>"
-             + "- تعريفات قديمة أو غير مستقرة<br>"
-             + "- مشاكل مع OpenGL<br>"
-             + "- وحدات معالجة رسومات قديمة أو تكوينات هجينة";
-    }
+		// الرسالة الرئيسية
+		String mensajeBase = "<span style='color:#" + color + "'>"
+				+ "حدث خطأ عدم توافق مع <b>DecoratedPotBlockEntity</b>.</span><br><br>" + "<span style='color:#" + color
+				+ "'>" + "هذه مشكلة معروفة في الإصدار 1.19.2 من إضافة <b>L_Enders_Cataclysm</b>, "
+				+ "حيث ينقص تنفيذ مطلوب من قبل اللعبة.</span><br><br>";
 
-    public String gpu_crash_recomendaciones() {
-        return "التوصيات:<br>"
-             + "- تحديث تعريفات وحدة معالجة الرسومات<br>"
-             + "- فرض استخدام وحدة معالجة الرسومات المخصصة<br>"
-             + "- تجنب البيئات عن بُعد أو الافتراضية";
-    }
+		// الحل
+		String solucion = "<span style='color:#" + color + "'>" + "<b>الحل الموصى به:</b><br>"
+				+ "قم بتثبيت إضافة <b>PotFix (Cataclysm Patch)</b> لإصلاح هذا الخطأ.<br>"
+				+ "يمكنك تنزيله من هنا: <a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch  '>CurseForge - PotFix</a>"
+				+ "</span>";
 
-    // ==================== NO ÓPTIMA ====================
+		return mensajeBase + solucion;
+	}
 
-    public String gpu_no_optima() {
-        return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>اللعبة لا تستخدم أفضل وحدة معالجة رسومات متوفرة.</b>";
-    }
+	@Override
+	public String nombreErrorPreloadingTricks() {
+		return "خطأ في Preloading Tricks";
+	}
 
-    public String gpu_no_optima_detalles() {
-        return "قد يقلل هذا من الأداء (انخفاض معدل الإطارات في الثانية)، لكنه عادةً لا يتسبب في تعطل اللعبة بمفرده.";
-    }
+	@Override
+	public String mensajeErrorPreloadingTricks() {
+		String color = Config.obtenerInstancia().obtenerColorError();
 
-    public String gpu_recomendaciones_rendimiento() {
-        return "التوصيات:<br>"
-             + "- فرض وحدة معالجة الرسومات المخصصة في لوحة التحكم<br>"
-             + "- تهيئة Java/Minecraft في وضع الأداء العالي";
-    }
+		// الرسالة الرئيسية
+		String mensajeBase = "<span style='color:#" + color + "'>"
+				+ "تم اكتشاف تعارض سببه <b>Preloading Tricks</b>.</span><br><br>" + "<span style='color:#" + color
+				+ "'>" + "الخطأ <i>ClassCastException: String cannot be cast to ModuleDescriptor</i> "
+				+ "يشير إلى أن الإضافة تتلاعب بفئات نظام وحدات Java بشكل غير صحيح.</span><br><br>";
 
-    // ==================== GENERALES ====================
+		// الشرح والحل
+		String explicacion = "<span style='color:#" + color + "'>"
+				+ "<b>Preloading Tricks</b> هي إضافة مصممة أساسًا لـ <b>المطورين</b>. "
+				+ "تقوم بإجراء عمليات معقدة لتعديل الفئات (mixins) في مرحلة مبكرة جدًا من تحميل اللعبة، "
+				+ "مما قد يكسر الاستقرار بسهولة إذا كانت هناك تفاعلات أخرى.</span><br><br>" + "<span style='color:#"
+				+ color + "'><b>الحل الموصى به:</b><br>" + "<ul>"
+				+ "<li>أزل إضافة <b>Preloading Tricks</b>. عادةً لا تكون ضرورية للعب على الخوادم العامة أو الحزم المستقرة.</li>"
+				+ "<li>إذا كنت مطورًا وتحتاجها للاختبار، راجع إعدادات بيئتك.</li>" + "</ul></span>";
 
-    public String gpu_nota_precision() {
-        return "<b>ملاحظة:</b> نظام الكشف هذا ليس دقيقًا بنسبة 100%.";
-    }
+		return mensajeBase + explicacion;
+	}
 
-    public String gpu_consumo_energia() {
-        return "وحدات معالجة الرسومات الأقوى تستهلك طاقة أكثر وقد تقلل من عمر البطارية في أجهزة الكمبيوتر المحمولة.";
-    }
+	@Override
+	public String nombreErrorSimpleRadioLexiconfig() {
+		return "عدم توافق Simple Radio / Lexiconfig";
+	}
 
-    public String gpu_parche_info() {
-        return "يمكنك تعطيل هذا الفحص باستخدام زر الحل السريع.";
-    }
-    
-    @Override
-    public String nombreVerificacionRaptorLake() {
-        return "تحذير استقرار وحدة المعالجة المركزية Intel الجيل 13/14";
-    }
+	@Override
+	public String mensajeErrorSimpleRadioLexiconfig() {
+		String color = Config.obtenerInstancia().obtenerColorError();
 
-    @Override
-    public String advertenciaRaptorLakeTitulo() {
-        return "عدم استقرار محتمل في معالج Intel Raptor Lake";
-    }
+		// الرسالة الرئيسية
+		String mensajeBase = "<span style='color:#" + color + "'>"
+				+ "تم اكتشاف تعارض بين <b>Simple Radio</b> و <b>Lexiconfig</b>.</span><br><br>" + "<span style='color:#"
+				+ color + "'>"
+				+ "يحدث الخطأ أثناء عملية 'shelveLexicons'، مما يشير إلى عدم توافق ثنائي بين المكتبتين.</span><br><br>";
 
-    @Override
-    public String advertenciaRaptorLakeDetalle(String cpu, String microcode, String targetMicrocode) {
-        return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>" +
-               "تم اكتشاف معالج " + cpu + " برمز ميكروي " + microcode + "." +
-               "</b> " +
-               "عانت معالجات Intel من الجيلين 13 و 14 من مشاكل عدم استقرار بسبب طلب جهد زائد، " +
-               "مما قد يقصر من العمر الافتراضي للمعالج.<br><br>" +
-               "يُوصى بتحديث الرمز الميكروي أو الـ BIOS للوحة الأم إلى إصدار يتضمن الرمز الميكروي <b>" + targetMicrocode + "</b> أو أحدث. " +
-               "<b>تحذير:</b> تحديث الـ BIOS ينطوي على مخاطر إذا لم يتم بشكل صحيح.<br><br>" +
-               "<i>ملاحظة: من شبه المؤكد أن هذا ليس سبب تعطلك الحالي، إنه مجرد تنبيه إعلامي حول صحة العتاد.</i>";
-    }
+		// الحل المحدد
+		String solucion = "<span style='color:#" + color + "'>" + "<b>سبب معروف:</b><br>"
+				+ "عادةً ما يكون Simple Radio مصممًا لإصدارات قديمة من Lexiconfig، بينما لديك إصدار أحدث مثبت.</span><br><br>"
+				+ "<span style='color:#" + color + "'><b>الحل الموصى به:</b><br>" + "<ul>"
+				+ "<li>حاول استخدام إصدار أقدم من <b>Lexiconfig</b>.</li>"
+				+ "<li>يُوصى بتجربة الإصدار <b>1.3.11</b> أو الأقدم، والتي تكون متوافقة عادةً مع Simple Radio.</li>"
+				+ "<li>إذا استمرت المشكلة، تحقق مما إذا كان هناك تحديث متاح لـ Simple Radio.</li>" + "</ul></span>";
 
-    @Override
-    public String desactivarVerificacionRaptorLake() {
-        return "لا تذكرني بهذا مرة أخرى";
-    }
+		return mensajeBase + solucion;
+	}
 
-    @Override
-    public String verArticuloRaptorLake(String fuente) {
-        return "اقرأ المقال على " + fuente;
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-	
-	
-	
-	
+	@Override
+	public String nombreErrorMobAITweaks() {
+		return "خطأ في Mob AI Tweaks";
+	}
+
+	@Override
+	public String mensajeErrorMobAITweaks() {
+		String color = Config.obtenerInstancia().obtenerColorError();
+
+		// الرسالة الرئيسية
+		String mensajeBase = "<span style='color:#" + color + "'>"
+				+ "تم اكتشاف خطأ مرتبط بـ <b>Mob AI Tweaks</b>.</span><br><br>" + "<span style='color:#" + color + "'>"
+				+ "ينشأ الخطأ من Mixin (<code>$mob-ai-tweaks$onSpawned</code>) يتدخل "
+				+ "عندما تظهر كيان (spawnea). يشير هذا عادةً إلى تعارض مع إضافة أخرى "
+				+ "تعدّل أيضًا سلوك ظهور الكائنات.</span><br><br>";
+
+		// الحل
+		String solucion = "<span style='color:#" + color + "'><b>الحل الموصى به:</b><br>" + "<ul>"
+				+ "<li>حاول إزالة <b>Mob AI Tweaks</b> للتحقق مما إذا كانت عدم الاستقرار تختفي.</li>" + "</ul></span>";
+
+		return mensajeBase + solucion;
+	}
+
+	public String nombre_verificacion_gpu() {
+		return "فحص وحدة معالجة الرسومات (OpenGL / اختيار وحدة معالجة الرسومات)";
+	}
+
+	public String desactivar_parche_gpu() {
+		return "تعطيل فحص وحدة معالجة الرسومات";
+	}
+
+	// ==================== CRASH ====================
+
+	public String gpu_crash_posible() {
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>من الممكن أن يكون فحص وحدة معالجة الرسومات قد تسبب في إغلاق اللعبة.</b>";
+	}
+
+	public String gpu_crash_causas() {
+		return "بدأ الفحص لكنه لم ينتهِ. يشير هذا عادةً إلى عطل في OpenGL أو في تعريفات الرسوميات.<br><br>"
+				+ "الأسباب المحتملة:<br>" + "- تعريفات قديمة أو غير مستقرة<br>" + "- مشاكل مع OpenGL<br>"
+				+ "- وحدات معالجة رسومات قديمة أو تكوينات هجينة";
+	}
+
+	public String gpu_crash_recomendaciones() {
+		return "التوصيات:<br>" + "- تحديث تعريفات وحدة معالجة الرسومات<br>"
+				+ "- فرض استخدام وحدة معالجة الرسومات المخصصة<br>" + "- تجنب البيئات عن بُعد أو الافتراضية";
+	}
+
+	// ==================== NO ÓPTIMA ====================
+
+	public String gpu_no_optima() {
+		return "<b style='color:#" + config.obtenerColorAdvertencia()
+				+ "'>اللعبة لا تستخدم أفضل وحدة معالجة رسومات متوفرة.</b>";
+	}
+
+	public String gpu_no_optima_detalles() {
+		return "قد يقلل هذا من الأداء (انخفاض معدل الإطارات في الثانية)، لكنه عادةً لا يتسبب في تعطل اللعبة بمفرده.";
+	}
+
+	public String gpu_recomendaciones_rendimiento() {
+		return "التوصيات:<br>" + "- فرض وحدة معالجة الرسومات المخصصة في لوحة التحكم<br>"
+				+ "- تهيئة Java/Minecraft في وضع الأداء العالي";
+	}
+
+	// ==================== GENERALES ====================
+
+	public String gpu_nota_precision() {
+		return "<b>ملاحظة:</b> نظام الكشف هذا ليس دقيقًا بنسبة 100%.";
+	}
+
+	public String gpu_consumo_energia() {
+		return "وحدات معالجة الرسومات الأقوى تستهلك طاقة أكثر وقد تقلل من عمر البطارية في أجهزة الكمبيوتر المحمولة.";
+	}
+
+	public String gpu_parche_info() {
+		return "يمكنك تعطيل هذا الفحص باستخدام زر الحل السريع.";
+	}
+
+	@Override
+	public String nombreVerificacionRaptorLake() {
+		return "تحذير استقرار وحدة المعالجة المركزية Intel الجيل 13/14";
+	}
+
+	@Override
+	public String advertenciaRaptorLakeTitulo() {
+		return "عدم استقرار محتمل في معالج Intel Raptor Lake";
+	}
+
+	@Override
+	public String advertenciaRaptorLakeDetalle(String cpu, String microcode, String targetMicrocode) {
+		return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>" + "تم اكتشاف معالج " + cpu
+				+ " برمز ميكروي " + microcode + "." + "</b> "
+				+ "عانت معالجات Intel من الجيلين 13 و 14 من مشاكل عدم استقرار بسبب طلب جهد زائد، "
+				+ "مما قد يقصر من العمر الافتراضي للمعالج.<br><br>"
+				+ "يُوصى بتحديث الرمز الميكروي أو الـ BIOS للوحة الأم إلى إصدار يتضمن الرمز الميكروي <b>"
+				+ targetMicrocode + "</b> أو أحدث. "
+				+ "<b>تحذير:</b> تحديث الـ BIOS ينطوي على مخاطر إذا لم يتم بشكل صحيح.<br><br>"
+				+ "<i>ملاحظة: من شبه المؤكد أن هذا ليس سبب تعطلك الحالي، إنه مجرد تنبيه إعلامي حول صحة العتاد.</i>";
+	}
+
+	@Override
+	public String desactivarVerificacionRaptorLake() {
+		return "لا تذكرني بهذا مرة أخرى";
+	}
+
+	@Override
+	public String verArticuloRaptorLake(String fuente) {
+		return "اقرأ المقال على " + fuente;
+	}
 
 }

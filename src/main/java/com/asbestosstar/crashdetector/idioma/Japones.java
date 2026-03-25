@@ -1272,31 +1272,27 @@ public class Japones implements Idioma {
 	}
 
 	/**
-	 * 問題のあるエンティティまたはブロックエンティティのエラーメッセージを返し、
-	 * プラットフォームに応じた復旧手順を詳細に説明します。
+	 * 問題のあるエンティティまたはブロックエンティティのエラーメッセージを返し、 プラットフォームに応じた復旧手順を詳細に説明します。
 	 */
 	@Override
 	public String mensajeTickingEntidadBloque(String nombre, String tipo, int[] coordenadas) {
 		String coords = "(" + coordenadas[0] + ", " + coordenadas[1] + ", " + coordenadas[2] + ")";
 		String color = config.obtenerColorError();
-		
+
 		// メインメッセージ：説明テキストのみエラー色を適用
-		String mensajeBase = "<span style='color:#" + color + "'>エンティティまたはブロックエンティティ '</span>" 
-				+ nombre + "<span style='color:#" + color + "'>' タイプ '</span>" 
-				+ tipo + "<span style='color:#" + color + "'>' 位置 </span>" 
-				+ coords + "<span style='color:#" + color + "'> で ticking エラーを引き起こしています。</span><br><br>";
+		String mensajeBase = "<span style='color:#" + color + "'>エンティティまたはブロックエンティティ '</span>" + nombre
+				+ "<span style='color:#" + color + "'>' タイプ '</span>" + tipo + "<span style='color:#" + color
+				+ "'>' 位置 </span>" + coords + "<span style='color:#" + color
+				+ "'> で ticking エラーを引き起こしています。</span><br><br>";
 
 		// 修復手順
-		String instrucciones = "<span style='color:#" + color + "'>"
-				+ "復旧手順:<br>"
+		String instrucciones = "<span style='color:#" + color + "'>" + "復旧手順:<br>"
 				+ "1. **MCForge**: '[nombre_del_mundo]/serverconfig/forge-server.toml' に移動します。<br>"
 				+ "2. **NeoForge**: 'config/neoforge-server.toml' に移動します。<br>"
 				+ "   *（注：ローカルゲーム/Singleplayer では、ワールドは 'saves' フォルダ内にあります）*。<br>"
 				+ "3. **removeErroringBlockEntities** と **removeErroringEntities** を **true** に変更します。<br><br>"
-				+ "その他のオプション:<br>"
-				+ "- **MCEdit**: 指定された座標でエンティティを手動で削除するために使用します。<br>"
-				+ "- **Neruina (Mod)**: クラッシュを防ぐ可能性がありますが、常に機能するとは限らず、インストールするとデバッグが困難になる場合があります。"
-				+ "</span>";
+				+ "その他のオプション:<br>" + "- **MCEdit**: 指定された座標でエンティティを手動で削除するために使用します。<br>"
+				+ "- **Neruina (Mod)**: クラッシュを防ぐ可能性がありますが、常に機能するとは限らず、インストールするとデバッグが困難になる場合があります。" + "</span>";
 
 		return mensajeBase + instrucciones;
 	}
@@ -6630,456 +6626,387 @@ public class Japones implements Idioma {
 				+ "<li>ファイルは削除されましたが、コード内でまだ参照されています。</li>" + "<li>JSON ファイル内に構文エラーがあります。</li>"
 				+ "<li>Mod レジストリで定義されたパスが正しくありません。</li>" + "<li>依存関係の競合または互換性のないバージョン。</li>" + "</ul>";
 	}
-    @Override
-    public String nombreAnimacionGeckoInexiste() {
-        return "GeckoLib アニメーションが見つかりません";
-    }
 
-    @Override
-    public String mensajeAnimacionGeckoInexiste(String archivo) {
-        return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-                + "Mod が GeckoLib のアニメーションファイルを見つけられませんでした。</b>" + "<p>影響を受けたファイル:</p>"
-                + "<code>" + archivo + "</code>"
-                + "<p>このエラーは、GeckoLib が指定されたパスに存在しないアニメーションを読み込もうとした場合に発生します。 "
-                + "読み込みエラー（構文）とは異なり、このエラーはファイルが物理的に欠落しているか、パスが誤っていることを示します。</p>"
-                + "<p>考えられる原因:</p>" + "<ul>"
-                + "<li><code>.json</code> ファイルが削除されたか、Mod の最終 JAR に含まれていません。</li>"
-                + "<li>コードで定義されたパスのタイポ（例：'animations' 対 'animaciones'）。</li>"
-                + "<li>大文字と小文字の不一致（サーバーの OS は Linux（区別する）で、開発は Windows（区別しない）でした）。</li>"
-                + "<li>Mod が完全に更新されていないか、依存関係が壊れています。</li>" + "</ul>";
-    }
-    @Override
-    public String nombreRegistroDuplicadoObjeto() {
-        return "重複登録の競合";
-    }
+	@Override
+	public String nombreAnimacionGeckoInexiste() {
+		return "GeckoLib アニメーションが見つかりません";
+	}
 
-    @Override
-    public String mensajeRegistroDuplicadoObjeto(String mod1, String mod2, String objeto) {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // メインメッセージ：説明テキストのみエラー色を適用
-        String mensajeBase = "<span style='color:#" + color + "'>重大な競合：オブジェクトの登録が二重に試みられました。 "
-                + "Mod </span>" + mod1 + "<span style='color:#" + color + "'> と </span>" 
-                + mod2 + "<span style='color:#" + color + "'> が同じオブジェクトを登録しようとしています。 "
-                + "競合オブジェクト： </span>" + objeto + "<br><br>";
+	@Override
+	public String mensajeAnimacionGeckoInexiste(String archivo) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Mod が GeckoLib のアニメーションファイルを見つけられませんでした。</b>" + "<p>影響を受けたファイル:</p>" + "<code>" + archivo + "</code>"
+				+ "<p>このエラーは、GeckoLib が指定されたパスに存在しないアニメーションを読み込もうとした場合に発生します。 "
+				+ "読み込みエラー（構文）とは異なり、このエラーはファイルが物理的に欠落しているか、パスが誤っていることを示します。</p>" + "<p>考えられる原因:</p>" + "<ul>"
+				+ "<li><code>.json</code> ファイルが削除されたか、Mod の最終 JAR に含まれていません。</li>"
+				+ "<li>コードで定義されたパスのタイポ（例：'animations' 対 'animaciones'）。</li>"
+				+ "<li>大文字と小文字の不一致（サーバーの OS は Linux（区別する）で、開発は Windows（区別しない）でした）。</li>"
+				+ "<li>Mod が完全に更新されていないか、依存関係が壊れています。</li>" + "</ul>";
+	}
 
-        // 修復手順
-        String instrucciones = "<span style='color:#" + color + "'>"
-                + "これは通常、異なる 2 つの Mod が同じ namespace 内に同名のオブジェクトを追加した場合、 "
-                + "またはどちらかの Mod のコードにエラーがある場合に発生します。<br><br>"
-                + "<b>推奨される解決策：</b><br>"
-                + "<ul>"
-                + "<li>一方の Mod がもう一方の更新版またはフォークかどうか確認してください。</li>"
-                + "<li>競合する 2 つの Mod のうち一方を削除してみてください。</li>"
-                + "<li>両方の Mod の設定ファイルを確認し、オブジェクトの ID を変更できるか検討してください。</li>"
-                + "</ul></span>";
+	@Override
+	public String nombreRegistroDuplicadoObjeto() {
+		return "重複登録の競合";
+	}
 
-        return mensajeBase + instrucciones;
-    }
-    @Override
-    public String nombreFalloFabricRenderingAPI() {
-        return "Fabric Rendering API が見つかりません";
-    }
+	@Override
+	public String mensajeRegistroDuplicadoObjeto(String mod1, String mod2, String objeto) {
+		String color = Config.obtenerInstancia().obtenerColorError();
 
-    @Override
-    public String mensajeFalloFabricRenderingAPI() {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // メインメッセージ
-        String mensajeBase = "<span style='color:#" + color + "'>Mod（通常は Porting Lib またはその依存関係）が失敗しました。理由は </span>"
-                + "Fabric Rendering API<span style='color:#" + color + "'> が利用できないためです。</span><br><br>";
+		// メインメッセージ：説明テキストのみエラー色を適用
+		String mensajeBase = "<span style='color:#" + color + "'>重大な競合：オブジェクトの登録が二重に試みられました。 " + "Mod </span>" + mod1
+				+ "<span style='color:#" + color + "'> と </span>" + mod2 + "<span style='color:#" + color
+				+ "'> が同じオブジェクトを登録しようとしています。 " + "競合オブジェクト： </span>" + objeto + "<br><br>";
 
-        // 修復手順（現代バージョンでは Indium が廃れているため更新済み）
-        String instrucciones = "<span style='color:#" + color + "'>"
-                + "<b>推奨される解決策：</b><br>"
-                + "メッセージは Indium のインストールを提案していますが、この Mod は現代のゲームバージョンでは廃れています。<br>"
-                + "<ul>"
-                + "<li><b>Sodium</b> をバージョン <b>0.6.0</b> 以上に更新してください（このバージョンには必要なサポートが含まれています）。</li>"
-                + "<li>まだインストールしていない場合は、<b>Fabric API</b> がインストールされていることを確認してください。</li>"
-                + "<li>古いゲームバージョン（1.20.6 以下）を使用している場合は、Indium をインストールしてください。</li>"
-                + "</ul></span>";
+		// 修復手順
+		String instrucciones = "<span style='color:#" + color + "'>"
+				+ "これは通常、異なる 2 つの Mod が同じ namespace 内に同名のオブジェクトを追加した場合、 " + "またはどちらかの Mod のコードにエラーがある場合に発生します。<br><br>"
+				+ "<b>推奨される解決策：</b><br>" + "<ul>" + "<li>一方の Mod がもう一方の更新版またはフォークかどうか確認してください。</li>"
+				+ "<li>競合する 2 つの Mod のうち一方を削除してみてください。</li>"
+				+ "<li>両方の Mod の設定ファイルを確認し、オブジェクトの ID を変更できるか検討してください。</li>" + "</ul></span>";
 
-        return mensajeBase + instrucciones;
-    }
-    @Override
-    public String nombreRestriccionesDependenciaNoCumplidas() {
-        return "依存関係の制限が満たされていません";
-    }
+		return mensajeBase + instrucciones;
+	}
 
-    @Override
-    public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad, List<String[]> conflictos) {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // メインメッセージ
-        String mensajeBase = "<span style='color:#" + color + "'>満たされていない依存関係の制限が </span>" 
-                + cantidad + "<span style='color:#" + color + "'> 件見つかりました。</span><br><br>";
+	@Override
+	public String nombreFalloFabricRenderingAPI() {
+		return "Fabric Rendering API が見つかりません";
+	}
 
-        // 競合リストの構築
-        StringBuilder listaDetalle = new StringBuilder();
-        if (conflictos != null && !conflictos.isEmpty()) {
-            listaDetalle.append("<span style='color:#").append(color).append("'>以下のファイルで競合が検出されました:</span><br><ul>");
-            for (String[] par : conflictos) {
-                String dep = par[0]; // 依存関係
-                String jar = par[1];  // JAR ファイル
-                // 変数はデフォルト色、固定テキストはエラー色
-                listaDetalle.append("<li>")
-                            .append("<span style='color:#").append(color).append("'>ファイル: </span>")
-                            .append(jar)
-                            .append("<br><span style='color:#").append(color).append("'>必要要件: </span>")
-                            .append(dep)
-                            .append("</li>");
-            }
-            listaDetalle.append("</ul><br>");
-        }
+	@Override
+	public String mensajeFalloFabricRenderingAPI() {
+		String color = Config.obtenerInstancia().obtenerColorError();
 
-        // 修復手順
-        String instrucciones = "<span style='color:#" + color + "'>"
-                + "これは、2 つ以上の Mod が同じ内部ライブラリの異なる非互換バージョンを必要とする場合に発生します。<br><br>"
-                + "<b>推奨される解決策：</b><br>"
-                + "<ul>"
-                + "<li>上記にリストされた Mod を更新または削除して、非互換性を解決してみてください。</li>"
-                + "<li>互換バージョンが見つからない場合は、Mod の JAR ファイル内の <code>mods.toml</code> ファイルを手動で編集（WinRAR や 7-Zip などの圧縮ツールを使用）してバージョン制限を変更または削除できますが、これにより不安定になる可能性があります。</li>"
-                + "</ul></span>";
+		// メインメッセージ
+		String mensajeBase = "<span style='color:#" + color + "'>Mod（通常は Porting Lib またはその依存関係）が失敗しました。理由は </span>"
+				+ "Fabric Rendering API<span style='color:#" + color + "'> が利用できないためです。</span><br><br>";
 
-        return mensajeBase + listaDetalle.toString() + instrucciones;
-    }
-    
+		// 修復手順（現代バージョンでは Indium が廃れているため更新済み）
+		String instrucciones = "<span style='color:#" + color + "'>" + "<b>推奨される解決策：</b><br>"
+				+ "メッセージは Indium のインストールを提案していますが、この Mod は現代のゲームバージョンでは廃れています。<br>" + "<ul>"
+				+ "<li><b>Sodium</b> をバージョン <b>0.6.0</b> 以上に更新してください（このバージョンには必要なサポートが含まれています）。</li>"
+				+ "<li>まだインストールしていない場合は、<b>Fabric API</b> がインストールされていることを確認してください。</li>"
+				+ "<li>古いゲームバージョン（1.20.6 以下）を使用している場合は、Indium をインストールしてください。</li>" + "</ul></span>";
 
+		return mensajeBase + instrucciones;
+	}
 
-    @Override
-    public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad, Map<String, List<String>> conflictosPorMod) {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // メインメッセージ
-        String mensajeBase = "<span style='color:#" + color + "'>満たされていない依存関係の制限が </span>" 
-                + cantidad + "<span style='color:#" + color + "'> 件見つかりました。</span><br><br>";
+	@Override
+	public String nombreRestriccionesDependenciaNoCumplidas() {
+		return "依存関係の制限が満たされていません";
+	}
 
-        // Mod 別にグループ化されたリストの構築
-        StringBuilder listaDetalle = new StringBuilder();
-        if (conflictosPorMod != null && !conflictosPorMod.isEmpty()) {
-            listaDetalle.append("<span style='color:#").append(color).append("'>関連する Mod と要求された依存関係:</span><br><ul>");
-            
-            for (Map.Entry<String, List<String>> entry : conflictosPorMod.entrySet()) {
-                String archivo = entry.getKey();
-                List<String> dependencias = entry.getValue();
+	@Override
+	public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad, List<String[]> conflictos) {
+		String color = Config.obtenerInstancia().obtenerColorError();
 
-                // Mod 名（デフォルト色）
-                listaDetalle.append("<li><b>").append(archivo).append("</b>");
-                
-                // この Mod の依存関係リスト
-                listaDetalle.append("<ul>");
-                for (String dep : dependencias) {
-                    // 依存関係（デフォルト色）
-                    listaDetalle.append("<li>").append(dep).append("</li>");
-                }
-                listaDetalle.append("</ul></li>");
-            }
-            listaDetalle.append("</ul><br>");
-        } else {
-            listaDetalle.append("<span style='color:#").append(color).append("'>ログから特定のファイルを特定できませんでした。</span><br>");
-        }
+		// メインメッセージ
+		String mensajeBase = "<span style='color:#" + color + "'>満たされていない依存関係の制限が </span>" + cantidad
+				+ "<span style='color:#" + color + "'> 件見つかりました。</span><br><br>";
 
-        // 修復手順
-        String instrucciones = "<span style='color:#" + color + "'>"
-                + "このエラーは、Mod がお互いに非互換なライブラリの内部バージョン（JarInJar）を含んでいる場合に発生します。<br><br>"
-                + "<b>推奨される解決策：</b><br>"
-                + "<ul>"
-                + "<li>上記のリストを確認し、どの Mod が同じライブラリの異なるバージョンを要求しているかを特定してください。</li>"
-                + "<li>両方の Mod を最新バージョンに更新してみてください。</li>"
-                + "<li>最後の手段として、圧縮ツール（WinRAR など）を使用して Mod の <code>.jar</code> ファイルを開き、<code>META-INF/mods.toml</code> を編集して依存関係のバージョン範囲を手動で変更できますが、これは危険であり Mod を壊す可能性があります。</li>"
-                + "</ul></span>";
+		// 競合リストの構築
+		StringBuilder listaDetalle = new StringBuilder();
+		if (conflictos != null && !conflictos.isEmpty()) {
+			listaDetalle.append("<span style='color:#").append(color).append("'>以下のファイルで競合が検出されました:</span><br><ul>");
+			for (String[] par : conflictos) {
+				String dep = par[0]; // 依存関係
+				String jar = par[1]; // JAR ファイル
+				// 変数はデフォルト色、固定テキストはエラー色
+				listaDetalle.append("<li>").append("<span style='color:#").append(color).append("'>ファイル: </span>")
+						.append(jar).append("<br><span style='color:#").append(color).append("'>必要要件: </span>")
+						.append(dep).append("</li>");
+			}
+			listaDetalle.append("</ul><br>");
+		}
 
-        return mensajeBase + listaDetalle.toString() + instrucciones;
-    }
-    @Override
-    public String nombreNeruinaOcultaAdvertencia() {
-        return "Neruina がデバッグを妨げています";
-    }
+		// 修復手順
+		String instrucciones = "<span style='color:#" + color + "'>"
+				+ "これは、2 つ以上の Mod が同じ内部ライブラリの異なる非互換バージョンを必要とする場合に発生します。<br><br>" + "<b>推奨される解決策：</b><br>" + "<ul>"
+				+ "<li>上記にリストされた Mod を更新または削除して、非互換性を解決してみてください。</li>"
+				+ "<li>互換バージョンが見つからない場合は、Mod の JAR ファイル内の <code>mods.toml</code> ファイルを手動で編集（WinRAR や 7-Zip などの圧縮ツールを使用）してバージョン制限を変更または削除できますが、これにより不安定になる可能性があります。</li>"
+				+ "</ul></span>";
 
-    @Override
-    public String mensajeNeruinaOcultaAdvertencia() {
-        String color = Config.obtenerInstancia().obtenerColorAdvertencia();
-        
-        // 主要警告
-        String mensajeBase = "<span style='color:#" + color + "'>"
-                + "<b>警告：</b><b>Neruina</b> Mod がエラーの処理を試みて失敗し、クラッシュの真の原因を隠しています。</span><br><br>"
-                + "<span style='color:#" + color + "'>"
-                + "Neruina は多くの場合不要であり、実際に何が失敗しているのかを把握しにくくします。デバッグのために削除することを推奨します。</span><br><br>";
+		return mensajeBase + listaDetalle.toString() + instrucciones;
+	}
 
-        // 復旧手順
-        String instrucciones = "<span style='color:#" + color + "'>"
-                + "<b>復旧手順:</b><br>"
-                + "1. **MCForge**: '[nombre_del_mundo]/serverconfig/forge-server.toml' に移動します。<br>"
-                + "2. **NeoForge**: 'config/neoforge-server.toml' に移動します。<br>"
-                + "   *（注：ローカルゲーム/Singleplayer では、ワールドは 'saves' フォルダ内にあります）*。<br>"
-                + "3. **removeErroringBlockEntities** と **removeErroringEntities** を **true** に変更します。<br><br>"
-                + "<b>その他のオプション:</b><br>"
-                + "- **MCEdit**: 指定された座標でエンティティを手動で削除するために使用します。<br>"
-                + "- このエラーが持続する場合、Neruina が正しく機能しておらず、単に新しいエラーを生成している可能性があります。"
-                + "</span>";
+	@Override
+	public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad,
+			Map<String, List<String>> conflictosPorMod) {
+		String color = Config.obtenerInstancia().obtenerColorError();
 
-        return mensajeBase + instrucciones;
-    }
-    @Override
-    public String nombreApothicAttributeSinDueño() {
-        return "Apothic Attributes エラー";
-    }
+		// メインメッセージ
+		String mensajeBase = "<span style='color:#" + color + "'>満たされていない依存関係の制限が </span>" + cantidad
+				+ "<span style='color:#" + color + "'> 件見つかりました。</span><br><br>";
 
-    @Override
-    public String mensajeApothicAttributeSinDueño(boolean chestCavityDetectado) {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // メインメッセージ
-        String mensajeBase = "<span style='color:#" + color + "'>"
-                + "<b>Apothic Attributes</b> が競合を検出しました：<b>AttributeMap</b> が割り当てられた所有者なしで変更されました。</span><br><br>"
-                + "<span style='color:#" + color + "'>"
-                + "これは通常、Mod がエンティティの属性（体力、ダメージ、速度など）を不適切なタイミングまたは誤った方法で "
-                + "変更しようとした場合に発生します。</span><br><br>";
+		// Mod 別にグループ化されたリストの構築
+		StringBuilder listaDetalle = new StringBuilder();
+		if (conflictosPorMod != null && !conflictosPorMod.isEmpty()) {
+			listaDetalle.append("<span style='color:#").append(color).append("'>関連する Mod と要求された依存関係:</span><br><ul>");
 
-        // Chest Cavity に関する特定の注記
-        String notaChestCavity = "";
-        if (chestCavityDetectado) {
-            notaChestCavity = "<span style='color:#" + color + "'>"
-                    + "<b>ログで Chest Cavity Mod が検出されました。</b> "
-                    + "この Mod はエンティティ属性の処理方法により、この特定のエラーの一般的な原因です。</span><br><br>";
-        }
+			for (Map.Entry<String, List<String>> entry : conflictosPorMod.entrySet()) {
+				String archivo = entry.getKey();
+				List<String> dependencias = entry.getValue();
 
-        // 修復手順
-        String instrucciones = "<span style='color:#" + color + "'>"
-                + "<b>推奨される解決策：</b><br>"
-                + "<ul>"
-                + "<li>Chest Cavity がインストールされている場合は、原因かどうかを確認するために更新するか一時的に削除してみてください。</li>"
-                + "<li>モブの属性を変更する他の Mod がないか確認し、無効化してテストしてみてください。</li>"
-                + "<li><b>Apothic Attributes</b> の更新がないか確認してください。このエラーは最近のバージョンで修正されている可能性があります。</li>"
-                + "</ul></span>";
+				// Mod 名（デフォルト色）
+				listaDetalle.append("<li><b>").append(archivo).append("</b>");
 
-        return mensajeBase + notaChestCavity + instrucciones;
-    }
-    @Override
-    public String nombreErrorPotBlockEntity() {
-        return "DecoratedPot エラー (Cataclysm)";
-    }
+				// この Mod の依存関係リスト
+				listaDetalle.append("<ul>");
+				for (String dep : dependencias) {
+					// 依存関係（デフォルト色）
+					listaDetalle.append("<li>").append(dep).append("</li>");
+				}
+				listaDetalle.append("</ul></li>");
+			}
+			listaDetalle.append("</ul><br>");
+		} else {
+			listaDetalle.append("<span style='color:#").append(color).append("'>ログから特定のファイルを特定できませんでした。</span><br>");
+		}
 
-    @Override
-    public String mensajeErrorPotBlockEntity() {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // メインメッセージ
-        String mensajeBase = "<span style='color:#" + color + "'>"
-                + "<b>DecoratedPotBlockEntity</b> に関連する互換性エラーが発生しました。</span><br><br>"
-                + "<span style='color:#" + color + "'>"
-                + "これは Mod <b>L_Enders_Cataclysm</b> のバージョン 1.19.2 における既知の問題であり、"
-                + "ゲームが必要とする実装が欠落しています。</span><br><br>";
+		// 修復手順
+		String instrucciones = "<span style='color:#" + color + "'>"
+				+ "このエラーは、Mod がお互いに非互換なライブラリの内部バージョン（JarInJar）を含んでいる場合に発生します。<br><br>" + "<b>推奨される解決策：</b><br>" + "<ul>"
+				+ "<li>上記のリストを確認し、どの Mod が同じライブラリの異なるバージョンを要求しているかを特定してください。</li>"
+				+ "<li>両方の Mod を最新バージョンに更新してみてください。</li>"
+				+ "<li>最後の手段として、圧縮ツール（WinRAR など）を使用して Mod の <code>.jar</code> ファイルを開き、<code>META-INF/mods.toml</code> を編集して依存関係のバージョン範囲を手動で変更できますが、これは危険であり Mod を壊す可能性があります。</li>"
+				+ "</ul></span>";
 
-        // 解決策
-        String solucion = "<span style='color:#" + color + "'>"
-                + "<b>推奨される解決策：</b><br>"
-                + "このエラーを修正するには、<b>PotFix (Cataclysm Patch)</b> Mod をインストールしてください。<br>"
-                + "ここからダウンロードできます：<a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch  '>CurseForge - PotFix</a>"
-                + "</span>";
+		return mensajeBase + listaDetalle.toString() + instrucciones;
+	}
 
-        return mensajeBase + solucion;
-    }
-    
-    @Override
-    public String nombreErrorPreloadingTricks() {
-        return "Preloading Tricks エラー";
-    }
+	@Override
+	public String nombreNeruinaOcultaAdvertencia() {
+		return "Neruina がデバッグを妨げています";
+	}
 
-    @Override
-    public String mensajeErrorPreloadingTricks() {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // メインメッセージ
-        String mensajeBase = "<span style='color:#" + color + "'>"
-                + "<b>Preloading Tricks</b> による競合が検出されました。</span><br><br>"
-                + "<span style='color:#" + color + "'>"
-                + "エラー <i>ClassCastException: String cannot be cast to ModuleDescriptor</i> "
-                + "は、Mod が Java モジュールシステムのクラスを誤って操作していることを示しています。</span><br><br>";
+	@Override
+	public String mensajeNeruinaOcultaAdvertencia() {
+		String color = Config.obtenerInstancia().obtenerColorAdvertencia();
 
-        // 説明と解決策
-        String explicacion = "<span style='color:#" + color + "'>"
-                + "<b>Preloading Tricks</b> は主に <b>開発者</b> 向けに設計された Mod です。 "
-                + "ゲーム読み込みの非常に早い段階で複雑なクラス変更操作（mixins）を実行するため、 "
-                + "他の相互作用がある場合、簡単に安定性を損なう可能性があります。</span><br><br>"
-                + "<span style='color:#" + color + "'><b>推奨される解決策：</b><br>"
-                + "<ul>"
-                + "<li><b>Preloading Tricks</b> Mod を削除してください。通常、公開サーバーや安定したパックでプレイする際には不要です。</li>"
-                + "<li>開発者としてテストに必要である場合は、環境設定を確認してください。</li>"
-                + "</ul></span>";
+		// 主要警告
+		String mensajeBase = "<span style='color:#" + color + "'>"
+				+ "<b>警告：</b><b>Neruina</b> Mod がエラーの処理を試みて失敗し、クラッシュの真の原因を隠しています。</span><br><br>"
+				+ "<span style='color:#" + color + "'>"
+				+ "Neruina は多くの場合不要であり、実際に何が失敗しているのかを把握しにくくします。デバッグのために削除することを推奨します。</span><br><br>";
 
-        return mensajeBase + explicacion;
-    }
-    
-    @Override
-    public String nombreErrorSimpleRadioLexiconfig() {
-        return "Simple Radio / Lexiconfig 互換性エラー";
-    }
+		// 復旧手順
+		String instrucciones = "<span style='color:#" + color + "'>" + "<b>復旧手順:</b><br>"
+				+ "1. **MCForge**: '[nombre_del_mundo]/serverconfig/forge-server.toml' に移動します。<br>"
+				+ "2. **NeoForge**: 'config/neoforge-server.toml' に移動します。<br>"
+				+ "   *（注：ローカルゲーム/Singleplayer では、ワールドは 'saves' フォルダ内にあります）*。<br>"
+				+ "3. **removeErroringBlockEntities** と **removeErroringEntities** を **true** に変更します。<br><br>"
+				+ "<b>その他のオプション:</b><br>" + "- **MCEdit**: 指定された座標でエンティティを手動で削除するために使用します。<br>"
+				+ "- このエラーが持続する場合、Neruina が正しく機能しておらず、単に新しいエラーを生成している可能性があります。" + "</span>";
 
-    @Override
-    public String mensajeErrorSimpleRadioLexiconfig() {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // メインメッセージ
-        String mensajeBase = "<span style='color:#" + color + "'>"
-                + "<b>Simple Radio</b> と <b>Lexiconfig</b> の間に競合が検出されました。</span><br><br>"
-                + "<span style='color:#" + color + "'>"
-                + "エラーは 'shelveLexicons' プロセス中に発生しており、両ライブラリ間にバイナリ非互換性があることを示しています。</span><br><br>";
+		return mensajeBase + instrucciones;
+	}
 
-        // 特定の解決策
-        String solucion = "<span style='color:#" + color + "'>"
-                + "<b>既知の原因：</b><br>"
-                + "Simple Radio は通常、Lexiconfig の旧バージョン向けに設計されていますが、より新しいバージョンがインストールされています。</span><br><br>"
-                + "<span style='color:#" + color + "'><b>推奨される解決策：</b><br>"
-                + "<ul>"
-                + "<li><b>Lexiconfig</b> の古いバージョンを使用してみてください。</li>"
-                + "<li>バージョン <b>1.3.11</b> 以前を試すことを推奨します。これらは通常、Simple Radio と互換性があります。</li>"
-                + "<li>問題が持続する場合は、Simple Radio の利用可能な更新がないか確認してください。</li>"
-                + "</ul></span>";
+	@Override
+	public String nombreApothicAttributeSinDueño() {
+		return "Apothic Attributes エラー";
+	}
 
-        return mensajeBase + solucion;
-    }
-    @Override
-    public String nombreErrorMobAITweaks() {
-        return "Mob AI Tweaks エラー";
-    }
+	@Override
+	public String mensajeApothicAttributeSinDueño(boolean chestCavityDetectado) {
+		String color = Config.obtenerInstancia().obtenerColorError();
 
-    @Override
-    public String mensajeErrorMobAITweaks() {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // メインメッセージ
-        String mensajeBase = "<span style='color:#" + color + "'>"
-                + "<b>Mob AI Tweaks</b> に関連するエラーが検出されました。</span><br><br>"
-                + "<span style='color:#" + color + "'>"
-                + "このエラーは Mixin（<code>$mob-ai-tweaks$onSpawned</code>）から発生しており、 "
-                + "エンティティがスポーンする際に介入します。これは通常、 "
-                + "モブのスポーン行動も変更する別の Mod との競合を示しています。</span><br><br>";
+		// メインメッセージ
+		String mensajeBase = "<span style='color:#" + color + "'>"
+				+ "<b>Apothic Attributes</b> が競合を検出しました：<b>AttributeMap</b> が割り当てられた所有者なしで変更されました。</span><br><br>"
+				+ "<span style='color:#" + color + "'>" + "これは通常、Mod がエンティティの属性（体力、ダメージ、速度など）を不適切なタイミングまたは誤った方法で "
+				+ "変更しようとした場合に発生します。</span><br><br>";
 
-        // 解決策
-        String solucion = "<span style='color:#" + color + "'><b>推奨される解決策：</b><br>"
-                + "<ul>"
-                + "<li><b>Mob AI Tweaks</b> を削除して、不安定性が解消されるか確認してみてください。</li>"
-                + "</ul></span>";
+		// Chest Cavity に関する特定の注記
+		String notaChestCavity = "";
+		if (chestCavityDetectado) {
+			notaChestCavity = "<span style='color:#" + color + "'>" + "<b>ログで Chest Cavity Mod が検出されました。</b> "
+					+ "この Mod はエンティティ属性の処理方法により、この特定のエラーの一般的な原因です。</span><br><br>";
+		}
 
-        return mensajeBase + solucion;
-    }
-    public String nombre_verificacion_gpu() {
-        return "GPU 検証（OpenGL / GPU 選択）";
-    }
+		// 修復手順
+		String instrucciones = "<span style='color:#" + color + "'>" + "<b>推奨される解決策：</b><br>" + "<ul>"
+				+ "<li>Chest Cavity がインストールされている場合は、原因かどうかを確認するために更新するか一時的に削除してみてください。</li>"
+				+ "<li>モブの属性を変更する他の Mod がないか確認し、無効化してテストしてみてください。</li>"
+				+ "<li><b>Apothic Attributes</b> の更新がないか確認してください。このエラーは最近のバージョンで修正されている可能性があります。</li>" + "</ul></span>";
 
-    public String desactivar_parche_gpu() {
-        return "GPU 検証を無効にする";
-    }
+		return mensajeBase + notaChestCavity + instrucciones;
+	}
 
-    // ==================== CRASH ====================
+	@Override
+	public String nombreErrorPotBlockEntity() {
+		return "DecoratedPot エラー (Cataclysm)";
+	}
 
-    public String gpu_crash_posible() {
-        return "<b style='color:#" + config.obtenerColorError() + "'>GPU 検証ツールがゲームの終了を引き起こした可能性があります。</b>";
-    }
+	@Override
+	public String mensajeErrorPotBlockEntity() {
+		String color = Config.obtenerInstancia().obtenerColorError();
 
-    public String gpu_crash_causas() {
-        return "検証は開始されましたが完了しませんでした。これは通常、OpenGL またはグラフィックスドライバーの障害を示しています。<br><br>"
-             + "考えられる原因:<br>"
-             + "- 古いまたは不安定なドライバー<br>"
-             + "- OpenGL に関する問題<br>"
-             + "- 古い GPU またはハイブリッド構成";
-    }
+		// メインメッセージ
+		String mensajeBase = "<span style='color:#" + color + "'>"
+				+ "<b>DecoratedPotBlockEntity</b> に関連する互換性エラーが発生しました。</span><br><br>" + "<span style='color:#" + color
+				+ "'>" + "これは Mod <b>L_Enders_Cataclysm</b> のバージョン 1.19.2 における既知の問題であり、"
+				+ "ゲームが必要とする実装が欠落しています。</span><br><br>";
 
-    public String gpu_crash_recomendaciones() {
-        return "推奨事項:<br>"
-             + "- GPU ドライバーを更新する<br>"
-             + "- 専用 GPU の使用を強制する<br>"
-             + "- 遠隔または仮想化環境を避ける";
-    }
+		// 解決策
+		String solucion = "<span style='color:#" + color + "'>" + "<b>推奨される解決策：</b><br>"
+				+ "このエラーを修正するには、<b>PotFix (Cataclysm Patch)</b> Mod をインストールしてください。<br>"
+				+ "ここからダウンロードできます：<a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch  '>CurseForge - PotFix</a>"
+				+ "</span>";
 
-    // ==================== NO ÓPTIMA ====================
+		return mensajeBase + solucion;
+	}
 
-    public String gpu_no_optima() {
-        return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>ゲームが利用可能な最適な GPU を使用していません。</b>";
-    }
+	@Override
+	public String nombreErrorPreloadingTricks() {
+		return "Preloading Tricks エラー";
+	}
 
-    public String gpu_no_optima_detalles() {
-        return "これによりパフォーマンスが低下する（低フレームレート）可能性がありますが、通常、単独ではクラッシュの原因にはなりません。";
-    }
+	@Override
+	public String mensajeErrorPreloadingTricks() {
+		String color = Config.obtenerInstancia().obtenerColorError();
 
-    public String gpu_recomendaciones_rendimiento() {
-        return "推奨事項:<br>"
-             + "- コントロールパネルで専用 GPU の使用を強制する<br>"
-             + "- Java/Minecraft を高性能モードに設定する";
-    }
+		// メインメッセージ
+		String mensajeBase = "<span style='color:#" + color + "'>"
+				+ "<b>Preloading Tricks</b> による競合が検出されました。</span><br><br>" + "<span style='color:#" + color + "'>"
+				+ "エラー <i>ClassCastException: String cannot be cast to ModuleDescriptor</i> "
+				+ "は、Mod が Java モジュールシステムのクラスを誤って操作していることを示しています。</span><br><br>";
 
-    // ==================== GENERALES ====================
+		// 説明と解決策
+		String explicacion = "<span style='color:#" + color + "'>"
+				+ "<b>Preloading Tricks</b> は主に <b>開発者</b> 向けに設計された Mod です。 "
+				+ "ゲーム読み込みの非常に早い段階で複雑なクラス変更操作（mixins）を実行するため、 " + "他の相互作用がある場合、簡単に安定性を損なう可能性があります。</span><br><br>"
+				+ "<span style='color:#" + color + "'><b>推奨される解決策：</b><br>" + "<ul>"
+				+ "<li><b>Preloading Tricks</b> Mod を削除してください。通常、公開サーバーや安定したパックでプレイする際には不要です。</li>"
+				+ "<li>開発者としてテストに必要である場合は、環境設定を確認してください。</li>" + "</ul></span>";
 
-    public String gpu_nota_precision() {
-        return "<b>注記：</b>この検出システムは 100% 完璧ではありません。";
-    }
+		return mensajeBase + explicacion;
+	}
 
-    public String gpu_consumo_energia() {
-        return "より強力な GPU はより多くの電力を消費し、ノートパソコンではバッテリー持続時間を短縮させる可能性があります。";
-    }
+	@Override
+	public String nombreErrorSimpleRadioLexiconfig() {
+		return "Simple Radio / Lexiconfig 互換性エラー";
+	}
 
-    public String gpu_parche_info() {
-        return "クイックフィックスボタンを使用して、この検証を無効にできます。";
-    }
-    @Override
-    public String nombreVerificacionRaptorLake() {
-        return "Intel 第 13/14 世代 CPU 安定性警告";
-    }
+	@Override
+	public String mensajeErrorSimpleRadioLexiconfig() {
+		String color = Config.obtenerInstancia().obtenerColorError();
 
-    @Override
-    public String advertenciaRaptorLakeTitulo() {
-        return "Intel Raptor Lake プロセッサに不安定性の可能性";
-    }
+		// メインメッセージ
+		String mensajeBase = "<span style='color:#" + color + "'>"
+				+ "<b>Simple Radio</b> と <b>Lexiconfig</b> の間に競合が検出されました。</span><br><br>" + "<span style='color:#"
+				+ color + "'>" + "エラーは 'shelveLexicons' プロセス中に発生しており、両ライブラリ間にバイナリ非互換性があることを示しています。</span><br><br>";
 
-    @Override
-    public String advertenciaRaptorLakeDetalle(String cpu, String microcode, String targetMicrocode) {
-        return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>" +
-               "プロセッサ " + cpu + "、マイクロコード " + microcode + " が検出されました。" +
-               "</b> " +
-               "Intel 第 13 世代および第 14 世代プロセッサは、過剰な電圧要求により不安定性の問題を経験しており、" +
-               "これがプロセッサの寿命を短縮する可能性があります。<br><br>" +
-               "マイクロコードまたはマザーボードの BIOS を、マイクロコード <b>" + targetMicrocode + "</b> 以降を含むバージョンに更新することを推奨します。" +
-               "<b>警告：</b>BIOS の更新は、正しく行われない場合リスクを伴います。<br><br>" +
-               "<i>注記：これは現在のクラッシュの原因である可能性はほぼありません。ハードウェアの健康状態に関する情報提供のお知らせです。</i>";
-    }
+		// 特定の解決策
+		String solucion = "<span style='color:#" + color + "'>" + "<b>既知の原因：</b><br>"
+				+ "Simple Radio は通常、Lexiconfig の旧バージョン向けに設計されていますが、より新しいバージョンがインストールされています。</span><br><br>"
+				+ "<span style='color:#" + color + "'><b>推奨される解決策：</b><br>" + "<ul>"
+				+ "<li><b>Lexiconfig</b> の古いバージョンを使用してみてください。</li>"
+				+ "<li>バージョン <b>1.3.11</b> 以前を試すことを推奨します。これらは通常、Simple Radio と互換性があります。</li>"
+				+ "<li>問題が持続する場合は、Simple Radio の利用可能な更新がないか確認してください。</li>" + "</ul></span>";
 
-    @Override
-    public String desactivarVerificacionRaptorLake() {
-        return "これについて再度警告しない";
-    }
+		return mensajeBase + solucion;
+	}
 
-    @Override
-    public String verArticuloRaptorLake(String fuente) {
-        return fuente + " で記事を読む";
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-	
-	
-    
-    
-    
-    
-	
-	
+	@Override
+	public String nombreErrorMobAITweaks() {
+		return "Mob AI Tweaks エラー";
+	}
+
+	@Override
+	public String mensajeErrorMobAITweaks() {
+		String color = Config.obtenerInstancia().obtenerColorError();
+
+		// メインメッセージ
+		String mensajeBase = "<span style='color:#" + color + "'>"
+				+ "<b>Mob AI Tweaks</b> に関連するエラーが検出されました。</span><br><br>" + "<span style='color:#" + color + "'>"
+				+ "このエラーは Mixin（<code>$mob-ai-tweaks$onSpawned</code>）から発生しており、 " + "エンティティがスポーンする際に介入します。これは通常、 "
+				+ "モブのスポーン行動も変更する別の Mod との競合を示しています。</span><br><br>";
+
+		// 解決策
+		String solucion = "<span style='color:#" + color + "'><b>推奨される解決策：</b><br>" + "<ul>"
+				+ "<li><b>Mob AI Tweaks</b> を削除して、不安定性が解消されるか確認してみてください。</li>" + "</ul></span>";
+
+		return mensajeBase + solucion;
+	}
+
+	public String nombre_verificacion_gpu() {
+		return "GPU 検証（OpenGL / GPU 選択）";
+	}
+
+	public String desactivar_parche_gpu() {
+		return "GPU 検証を無効にする";
+	}
+
+	// ==================== CRASH ====================
+
+	public String gpu_crash_posible() {
+		return "<b style='color:#" + config.obtenerColorError() + "'>GPU 検証ツールがゲームの終了を引き起こした可能性があります。</b>";
+	}
+
+	public String gpu_crash_causas() {
+		return "検証は開始されましたが完了しませんでした。これは通常、OpenGL またはグラフィックスドライバーの障害を示しています。<br><br>" + "考えられる原因:<br>"
+				+ "- 古いまたは不安定なドライバー<br>" + "- OpenGL に関する問題<br>" + "- 古い GPU またはハイブリッド構成";
+	}
+
+	public String gpu_crash_recomendaciones() {
+		return "推奨事項:<br>" + "- GPU ドライバーを更新する<br>" + "- 専用 GPU の使用を強制する<br>" + "- 遠隔または仮想化環境を避ける";
+	}
+
+	// ==================== NO ÓPTIMA ====================
+
+	public String gpu_no_optima() {
+		return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>ゲームが利用可能な最適な GPU を使用していません。</b>";
+	}
+
+	public String gpu_no_optima_detalles() {
+		return "これによりパフォーマンスが低下する（低フレームレート）可能性がありますが、通常、単独ではクラッシュの原因にはなりません。";
+	}
+
+	public String gpu_recomendaciones_rendimiento() {
+		return "推奨事項:<br>" + "- コントロールパネルで専用 GPU の使用を強制する<br>" + "- Java/Minecraft を高性能モードに設定する";
+	}
+
+	// ==================== GENERALES ====================
+
+	public String gpu_nota_precision() {
+		return "<b>注記：</b>この検出システムは 100% 完璧ではありません。";
+	}
+
+	public String gpu_consumo_energia() {
+		return "より強力な GPU はより多くの電力を消費し、ノートパソコンではバッテリー持続時間を短縮させる可能性があります。";
+	}
+
+	public String gpu_parche_info() {
+		return "クイックフィックスボタンを使用して、この検証を無効にできます。";
+	}
+
+	@Override
+	public String nombreVerificacionRaptorLake() {
+		return "Intel 第 13/14 世代 CPU 安定性警告";
+	}
+
+	@Override
+	public String advertenciaRaptorLakeTitulo() {
+		return "Intel Raptor Lake プロセッサに不安定性の可能性";
+	}
+
+	@Override
+	public String advertenciaRaptorLakeDetalle(String cpu, String microcode, String targetMicrocode) {
+		return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>" + "プロセッサ " + cpu + "、マイクロコード " + microcode
+				+ " が検出されました。" + "</b> " + "Intel 第 13 世代および第 14 世代プロセッサは、過剰な電圧要求により不安定性の問題を経験しており、"
+				+ "これがプロセッサの寿命を短縮する可能性があります。<br><br>" + "マイクロコードまたはマザーボードの BIOS を、マイクロコード <b>" + targetMicrocode
+				+ "</b> 以降を含むバージョンに更新することを推奨します。" + "<b>警告：</b>BIOS の更新は、正しく行われない場合リスクを伴います。<br><br>"
+				+ "<i>注記：これは現在のクラッシュの原因である可能性はほぼありません。ハードウェアの健康状態に関する情報提供のお知らせです。</i>";
+	}
+
+	@Override
+	public String desactivarVerificacionRaptorLake() {
+		return "これについて再度警告しない";
+	}
+
+	@Override
+	public String verArticuloRaptorLake(String fuente) {
+		return fuente + " で記事を読む";
+	}
 
 }

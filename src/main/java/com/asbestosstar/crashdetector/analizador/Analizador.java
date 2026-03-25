@@ -313,13 +313,8 @@ public class Analizador {
 		verificaciones.add(new ErrorSimpleRadioLexiconfig());
 		verificaciones.add(new ErrorMobAITweaks());
 		verificaciones.add(new VerificacionGPU());
-		verificaciones.add(new RaptorLakeInestable());//TODO Spectre y Meltdown
+		verificaciones.add(new RaptorLakeInestable());// TODO Spectre y Meltdown
 
-		
-		
-		
-		
-		
 		verificaciones.add(new PirataMC());
 		verificaciones.add(new LanzerNoAnimado());
 		verificaciones.add(new LanzerDesAnimado());

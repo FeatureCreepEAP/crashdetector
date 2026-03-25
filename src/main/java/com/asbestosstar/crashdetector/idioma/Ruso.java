@@ -1307,23 +1307,22 @@ public class Ruso implements Idioma {
 	}
 
 	/**
-	 * Возвращает сообщение об ошибке для проблемных сущностей или блочных сущностей,
-	 * подробно описывая шаги восстановления в зависимости от платформы.
+	 * Возвращает сообщение об ошибке для проблемных сущностей или блочных
+	 * сущностей, подробно описывая шаги восстановления в зависимости от платформы.
 	 */
 	@Override
 	public String mensajeTickingEntidadBloque(String nombre, String tipo, int[] coordenadas) {
 		String coords = "(" + coordenadas[0] + ", " + coordenadas[1] + ", " + coordenadas[2] + ")";
 		String color = config.obtenerColorError();
-		
+
 		// Основное сообщение: Только описательный текст имеет цвет ошибки
-		String mensajeBase = "<span style='color:#" + color + "'>Сущность или блочная сущность '</span>" 
-				+ nombre + "<span style='color:#" + color + "'>' типа '</span>" 
-				+ tipo + "<span style='color:#" + color + "'>' в местоположении </span>" 
-				+ coords + "<span style='color:#" + color + "'> вызывает ошибки ticking.</span><br><br>";
+		String mensajeBase = "<span style='color:#" + color + "'>Сущность или блочная сущность '</span>" + nombre
+				+ "<span style='color:#" + color + "'>' типа '</span>" + tipo + "<span style='color:#" + color
+				+ "'>' в местоположении </span>" + coords + "<span style='color:#" + color
+				+ "'> вызывает ошибки ticking.</span><br><br>";
 
 		// Инструкции по исправлению
-		String instrucciones = "<span style='color:#" + color + "'>"
-				+ "Инструкции по восстановлению:<br>"
+		String instrucciones = "<span style='color:#" + color + "'>" + "Инструкции по восстановлению:<br>"
 				+ "1. **MCForge**: Перейдите в '[nombre_del_mundo]/serverconfig/forge-server.toml'.<br>"
 				+ "2. **NeoForge**: Перейдите в 'config/neoforge-server.toml'.<br>"
 				+ "   *(Примечание: В локальных играх/Singleplayer миры находятся в папке 'saves')*.<br>"
@@ -6908,457 +6907,423 @@ public class Ruso implements Idioma {
 				+ "<li>Конфликты зависимостей или несовместимая версия.</li>" + "</ul>";
 	}
 
-    @Override
-    public String nombreAnimacionGeckoInexiste() {
-        return "Анимация GeckoLib не найдена";
-    }
+	@Override
+	public String nombreAnimacionGeckoInexiste() {
+		return "Анимация GeckoLib не найдена";
+	}
 
-    @Override
-    public String mensajeAnimacionGeckoInexiste(String archivo) {
-        return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-                + "Мод не смог найти файл анимации GeckoLib.</b>" + "<p>Затронутый файл:</p>"
-                + "<code>" + archivo + "</code>"
-                + "<p>Эта ошибка возникает, когда GeckoLib пытается загрузить анимацию, которая не существует по указанному пути. "
-                + "В отличие от ошибки загрузки (синтаксис), эта ошибка указывает на то, что файл физически отсутствует или путь неверен.</p>"
-                + "<p>Возможные причины:</p>" + "<ul>"
-                + "<li>Файл <code>.json</code> был удалён или не включён в итоговый JAR модификации.</li>"
-                + "<li>Опечатка в пути, определённом в коде (например: 'animations' против 'animaciones').</li>"
-                + "<li>Несоответствие регистра (операционная система сервера — Linux (чувствительна), а разработка велась на Windows (нечувствительна)).</li>"
-                + "<li>Модификация обновлена не полностью или её зависимости нарушены.</li>" + "</ul>";
-    }
-    @Override
-    public String nombreRegistroDuplicadoObjeto() {
-        return "Конфликт дублирующей регистрации";
-    }
+	@Override
+	public String mensajeAnimacionGeckoInexiste(String archivo) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Мод не смог найти файл анимации GeckoLib.</b>" + "<p>Затронутый файл:</p>" + "<code>" + archivo
+				+ "</code>"
+				+ "<p>Эта ошибка возникает, когда GeckoLib пытается загрузить анимацию, которая не существует по указанному пути. "
+				+ "В отличие от ошибки загрузки (синтаксис), эта ошибка указывает на то, что файл физически отсутствует или путь неверен.</p>"
+				+ "<p>Возможные причины:</p>" + "<ul>"
+				+ "<li>Файл <code>.json</code> был удалён или не включён в итоговый JAR модификации.</li>"
+				+ "<li>Опечатка в пути, определённом в коде (например: 'animations' против 'animaciones').</li>"
+				+ "<li>Несоответствие регистра (операционная система сервера — Linux (чувствительна), а разработка велась на Windows (нечувствительна)).</li>"
+				+ "<li>Модификация обновлена не полностью или её зависимости нарушены.</li>" + "</ul>";
+	}
 
-    @Override
-    public String mensajeRegistroDuplicadoObjeto(String mod1, String mod2, String objeto) {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // Основное сообщение: Только описательный текст имеет цвет ошибки
-        String mensajeBase = "<span style='color:#" + color + "'>Критический конфликт: Предпринята попытка зарегистрировать объект дважды. "
-                + "Модификации </span>" + mod1 + "<span style='color:#" + color + "'> и </span>" 
-                + mod2 + "<span style='color:#" + color + "'> пытаются зарегистрировать один и тот же объект. "
-                + "Конфликтующий объект: </span>" + objeto + "<br><br>";
+	@Override
+	public String nombreRegistroDuplicadoObjeto() {
+		return "Конфликт дублирующей регистрации";
+	}
 
-        // Инструкции по исправлению
-        String instrucciones = "<span style='color:#" + color + "'>"
-                + "Это обычно происходит, когда две разные модификации добавляют объект с одинаковым именем "
-                + "в одном и том же namespace, или когда в коде одной из модификаций есть ошибка.<br><br>"
-                + "<b>Рекомендуемое решение:</b><br>"
-                + "<ul>"
-                + "<li>Проверьте, является ли одна из модификаций обновлением или форком другой.</li>"
-                + "<li>Попробуйте удалить одну из двух конфликтующих модификаций.</li>"
-                + "<li>Просмотрите файлы конфигурации обеих модификаций, чтобы узнать, можно ли изменить идентификатор (ID) объекта.</li>"
-                + "</ul></span>";
+	@Override
+	public String mensajeRegistroDuplicadoObjeto(String mod1, String mod2, String objeto) {
+		String color = Config.obtenerInstancia().obtenerColorError();
 
-        return mensajeBase + instrucciones;
-    }
-    @Override
-    public String nombreFalloFabricRenderingAPI() {
-        return "Отсутствует Fabric Rendering API";
-    }
+		// Основное сообщение: Только описательный текст имеет цвет ошибки
+		String mensajeBase = "<span style='color:#" + color
+				+ "'>Критический конфликт: Предпринята попытка зарегистрировать объект дважды. " + "Модификации </span>"
+				+ mod1 + "<span style='color:#" + color + "'> и </span>" + mod2 + "<span style='color:#" + color
+				+ "'> пытаются зарегистрировать один и тот же объект. " + "Конфликтующий объект: </span>" + objeto
+				+ "<br><br>";
 
-    @Override
-    public String mensajeFalloFabricRenderingAPI() {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // Основное сообщение
-        String mensajeBase = "<span style='color:#" + color + "'>Модификация (обычно Porting Lib или её зависимости) не работает, потому что </span>"
-                + "Fabric Rendering API<span style='color:#" + color + "'> недоступна.</span><br><br>";
+		// Инструкции по исправлению
+		String instrucciones = "<span style='color:#" + color + "'>"
+				+ "Это обычно происходит, когда две разные модификации добавляют объект с одинаковым именем "
+				+ "в одном и том же namespace, или когда в коде одной из модификаций есть ошибка.<br><br>"
+				+ "<b>Рекомендуемое решение:</b><br>" + "<ul>"
+				+ "<li>Проверьте, является ли одна из модификаций обновлением или форком другой.</li>"
+				+ "<li>Попробуйте удалить одну из двух конфликтующих модификаций.</li>"
+				+ "<li>Просмотрите файлы конфигурации обеих модификаций, чтобы узнать, можно ли изменить идентификатор (ID) объекта.</li>"
+				+ "</ul></span>";
 
-        // Инструкции по исправлению (Обновлено для современных версий, где Indium устарел)
-        String instrucciones = "<span style='color:#" + color + "'>"
-                + "<b>Рекомендуемое решение:</b><br>"
-                + "Сообщение предлагает установить Indium, но эта модификация устарела в современных версиях игры.<br>"
-                + "<ul>"
-                + "<li><b>Обновите Sodium</b> до версии <b>0.6.0</b> или выше (эта версия включает необходимую поддержку).</li>"
-                + "<li>Убедитесь, что у вас установлен <b>Fabric API</b>, если его ещё нет.</li>"
-                + "<li>Если вы используете старую версию игры (1.20.6 или ниже), тогда установите Indium.</li>"
-                + "</ul></span>";
+		return mensajeBase + instrucciones;
+	}
 
-        return mensajeBase + instrucciones;
-    }
-    
-    @Override
-    public String nombreRestriccionesDependenciaNoCumplidas() {
-        return "Невыполненные ограничения зависимостей";
-    }
+	@Override
+	public String nombreFalloFabricRenderingAPI() {
+		return "Отсутствует Fabric Rendering API";
+	}
 
-    @Override
-    public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad, List<String[]> conflictos) {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // Основное сообщение
-        String mensajeBase = "<span style='color:#" + color + "'>Найдено </span>" 
-                + cantidad + "<span style='color:#" + color + "'> невыполненных ограничений зависимостей.</span><br><br>";
+	@Override
+	public String mensajeFalloFabricRenderingAPI() {
+		String color = Config.obtenerInstancia().obtenerColorError();
 
-        // Построение списка конфликтов
-        StringBuilder listaDetalle = new StringBuilder();
-        if (conflictos != null && !conflictos.isEmpty()) {
-            listaDetalle.append("<span style='color:#").append(color).append("'>Конфликты обнаружены в следующих файлах:</span><br><ul>");
-            for (String[] par : conflictos) {
-                String dep = par[0]; // Зависимость
-                String jar = par[1];  // Файл JAR
-                // Переменная в цвете по умолчанию, фиксированный текст в цвете ошибки
-                listaDetalle.append("<li>")
-                            .append("<span style='color:#").append(color).append("'>Файл: </span>")
-                            .append(jar)
-                            .append("<br><span style='color:#").append(color).append("'>Требуется: </span>")
-                            .append(dep)
-                            .append("</li>");
-            }
-            listaDetalle.append("</ul><br>");
-        }
+		// Основное сообщение
+		String mensajeBase = "<span style='color:#" + color
+				+ "'>Модификация (обычно Porting Lib или её зависимости) не работает, потому что </span>"
+				+ "Fabric Rendering API<span style='color:#" + color + "'> недоступна.</span><br><br>";
 
-        // Инструкции по исправлению
-        String instrucciones = "<span style='color:#" + color + "'>"
-                + "Это происходит, когда две или более модификации требуют разные и несовместимые версии одной и той же внутренней библиотеки.<br><br>"
-                + "<b>Рекомендуемое решение:</b><br>"
-                + "<ul>"
-                + "<li>Попробуйте обновить или удалить модификации, перечисленные выше, чтобы устранить несовместимость.</li>"
-                + "<li>Если вы не можете найти совместимую версию, можно попробовать вручную отредактировать файл <code>mods.toml</code> внутри JAR-файла модификации (используя архиватор, такой как WinRAR или 7-Zip), чтобы изменить или удалить ограничение версии, хотя это может привести к нестабильности.</li>"
-                + "</ul></span>";
+		// Инструкции по исправлению (Обновлено для современных версий, где Indium
+		// устарел)
+		String instrucciones = "<span style='color:#" + color + "'>" + "<b>Рекомендуемое решение:</b><br>"
+				+ "Сообщение предлагает установить Indium, но эта модификация устарела в современных версиях игры.<br>"
+				+ "<ul>"
+				+ "<li><b>Обновите Sodium</b> до версии <b>0.6.0</b> или выше (эта версия включает необходимую поддержку).</li>"
+				+ "<li>Убедитесь, что у вас установлен <b>Fabric API</b>, если его ещё нет.</li>"
+				+ "<li>Если вы используете старую версию игры (1.20.6 или ниже), тогда установите Indium.</li>"
+				+ "</ul></span>";
 
-        return mensajeBase + listaDetalle.toString() + instrucciones;
-    }
+		return mensajeBase + instrucciones;
+	}
 
+	@Override
+	public String nombreRestriccionesDependenciaNoCumplidas() {
+		return "Невыполненные ограничения зависимостей";
+	}
 
-    @Override
-    public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad, Map<String, List<String>> conflictosPorMod) {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // Основное сообщение
-        String mensajeBase = "<span style='color:#" + color + "'>Найдено </span>" 
-                + cantidad + "<span style='color:#" + color + "'> невыполненных ограничений зависимостей.</span><br><br>";
+	@Override
+	public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad, List<String[]> conflictos) {
+		String color = Config.obtenerInstancia().obtenerColorError();
 
-        // Построение списка, сгруппированного по модификации
-        StringBuilder listaDetalle = new StringBuilder();
-        if (conflictosPorMod != null && !conflictosPorMod.isEmpty()) {
-            listaDetalle.append("<span style='color:#").append(color).append("'>Задействованные модификации и запрошенные зависимости:</span><br><ul>");
-            
-            for (Map.Entry<String, List<String>> entry : conflictosPorMod.entrySet()) {
-                String archivo = entry.getKey();
-                List<String> dependencias = entry.getValue();
+		// Основное сообщение
+		String mensajeBase = "<span style='color:#" + color + "'>Найдено </span>" + cantidad + "<span style='color:#"
+				+ color + "'> невыполненных ограничений зависимостей.</span><br><br>";
 
-                // Название модификации (цвет по умолчанию)
-                listaDetalle.append("<li><b>").append(archivo).append("</b>");
-                
-                // Список зависимостей для этой модификации
-                listaDetalle.append("<ul>");
-                for (String dep : dependencias) {
-                    // Зависимость (цвет по умолчанию)
-                    listaDetalle.append("<li>").append(dep).append("</li>");
-                }
-                listaDetalle.append("</ul></li>");
-            }
-            listaDetalle.append("</ul><br>");
-        } else {
-            listaDetalle.append("<span style='color:#").append(color).append("'>Не удалось определить конкретные файлы из лога.</span><br>");
-        }
+		// Построение списка конфликтов
+		StringBuilder listaDetalle = new StringBuilder();
+		if (conflictos != null && !conflictos.isEmpty()) {
+			listaDetalle.append("<span style='color:#").append(color)
+					.append("'>Конфликты обнаружены в следующих файлах:</span><br><ul>");
+			for (String[] par : conflictos) {
+				String dep = par[0]; // Зависимость
+				String jar = par[1]; // Файл JAR
+				// Переменная в цвете по умолчанию, фиксированный текст в цвете ошибки
+				listaDetalle.append("<li>").append("<span style='color:#").append(color).append("'>Файл: </span>")
+						.append(jar).append("<br><span style='color:#").append(color).append("'>Требуется: </span>")
+						.append(dep).append("</li>");
+			}
+			listaDetalle.append("</ul><br>");
+		}
 
-        // Инструкции по исправлению
-        String instrucciones = "<span style='color:#" + color + "'>"
-                + "Эта ошибка возникает, когда модификации включают внутренние версии библиотек (JarInJar), которые несовместимы друг с другом.<br><br>"
-                + "<b>Рекомендуемое решение:</b><br>"
-                + "<ul>"
-                + "<li>Просмотрите список выше, чтобы определить, какие модификации запрашивают разные версии одной и той же библиотеки.</li>"
-                + "<li>Попробуйте обновить обе модификации до их последних версий.</li>"
-                + "<li>В крайнем случае, вы можете открыть файл <code>.jar</code> модификации с помощью архиватора (например, WinRAR), отредактировать <code>META-INF/mods.toml</code> и вручную изменить диапазон версий зависимости, хотя это рискованно и может сломать модификацию.</li>"
-                + "</ul></span>";
+		// Инструкции по исправлению
+		String instrucciones = "<span style='color:#" + color + "'>"
+				+ "Это происходит, когда две или более модификации требуют разные и несовместимые версии одной и той же внутренней библиотеки.<br><br>"
+				+ "<b>Рекомендуемое решение:</b><br>" + "<ul>"
+				+ "<li>Попробуйте обновить или удалить модификации, перечисленные выше, чтобы устранить несовместимость.</li>"
+				+ "<li>Если вы не можете найти совместимую версию, можно попробовать вручную отредактировать файл <code>mods.toml</code> внутри JAR-файла модификации (используя архиватор, такой как WinRAR или 7-Zip), чтобы изменить или удалить ограничение версии, хотя это может привести к нестабильности.</li>"
+				+ "</ul></span>";
 
-        return mensajeBase + listaDetalle.toString() + instrucciones;
-    }
-    @Override
-    public String nombreNeruinaOcultaAdvertencia() {
-        return "Neruina препятствует отладке";
-    }
+		return mensajeBase + listaDetalle.toString() + instrucciones;
+	}
 
-    @Override
-    public String mensajeNeruinaOcultaAdvertencia() {
-        String color = Config.obtenerInstancia().obtenerColorAdvertencia();
-        
-        // Основное предупреждение
-        String mensajeBase = "<span style='color:#" + color + "'>"
-                + "<b>Предупреждение:</b> Модификация <b>Neruina</b> не справляется с обработкой ошибки, скрывая истинную причину вылета.</span><br><br>"
-                + "<span style='color:#" + color + "'>"
-                + "Neruina часто не является необходимой и затрудняет понимание того, что именно не работает. Рекомендуется удалить её для отладки.</span><br><br>";
+	@Override
+	public String mensajeRestriccionesDependenciaNoCumplidas(String cantidad,
+			Map<String, List<String>> conflictosPorMod) {
+		String color = Config.obtenerInstancia().obtenerColorError();
 
-        // Инструкции по восстановлению
-        String instrucciones = "<span style='color:#" + color + "'>"
-                + "<b>Инструкции по восстановлению:</b><br>"
-                + "1. **MCForge**: Перейдите в '[nombre_del_mundo]/serverconfig/forge-server.toml'.<br>"
-                + "2. **NeoForge**: Перейдите в 'config/neoforge-server.toml'.<br>"
-                + "   *(Примечание: В локальных играх/Singleplayer миры находятся в папке 'saves')*.<br>"
-                + "3. Измените **removeErroringBlockEntities** и **removeErroringEntities** на **true**.<br><br>"
-                + "<b>Другие варианты:</b><br>"
-                + "- **MCEdit**: Используйте для ручного удаления сущности по указанным координатам.<br>"
-                + "- Если эта ошибка сохраняется, возможно, Neruina работает некорректно и просто генерирует новые ошибки."
-                + "</span>";
+		// Основное сообщение
+		String mensajeBase = "<span style='color:#" + color + "'>Найдено </span>" + cantidad + "<span style='color:#"
+				+ color + "'> невыполненных ограничений зависимостей.</span><br><br>";
 
-        return mensajeBase + instrucciones;
-    }
-    @Override
-    public String nombreApothicAttributeSinDueño() {
-        return "Ошибка Apothic Attributes";
-    }
+		// Построение списка, сгруппированного по модификации
+		StringBuilder listaDetalle = new StringBuilder();
+		if (conflictosPorMod != null && !conflictosPorMod.isEmpty()) {
+			listaDetalle.append("<span style='color:#").append(color)
+					.append("'>Задействованные модификации и запрошенные зависимости:</span><br><ul>");
 
-    @Override
-    public String mensajeApothicAttributeSinDueño(boolean chestCavityDetectado) {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // Основное сообщение
-        String mensajeBase = "<span style='color:#" + color + "'>"
-                + "<b>Apothic Attributes</b> обнаружила конфликт: <b>AttributeMap</b> был изменён без назначенного владельца.</span><br><br>"
-                + "<span style='color:#" + color + "'>"
-                + "Это обычно происходит, когда модификация пытается изменить атрибуты сущности (например, здоровье, урон, скорость) "
-                + "в неподходящий момент или неправильным образом.</span><br><br>";
+			for (Map.Entry<String, List<String>> entry : conflictosPorMod.entrySet()) {
+				String archivo = entry.getKey();
+				List<String> dependencias = entry.getValue();
 
-        // Специфическое примечание о Chest Cavity
-        String notaChestCavity = "";
-        if (chestCavityDetectado) {
-            notaChestCavity = "<span style='color:#" + color + "'>"
-                    + "<b>В логе обнаружена модификация Chest Cavity.</b> "
-                    + "Эта модификация является частой причиной данной конкретной ошибки из-за того, как она обрабатывает атрибуты сущностей.</span><br><br>";
-        }
+				// Название модификации (цвет по умолчанию)
+				listaDetalle.append("<li><b>").append(archivo).append("</b>");
 
-        // Инструкции по исправлению
-        String instrucciones = "<span style='color:#" + color + "'>"
-                + "<b>Рекомендуемое решение:</b><br>"
-                + "<ul>"
-                + "<li>Если Chest Cavity установлена, попробуйте обновить её или временно удалить, чтобы проверить, является ли она причиной.</li>"
-                + "<li>Проверьте, есть ли другие модификации, изменяющие атрибуты мобов, и попробуйте отключить их.</li>"
-                + "<li>Поиските обновления для <b>Apothic Attributes</b>, так как эта ошибка могла быть исправлена в последних версиях.</li>"
-                + "</ul></span>";
+				// Список зависимостей для этой модификации
+				listaDetalle.append("<ul>");
+				for (String dep : dependencias) {
+					// Зависимость (цвет по умолчанию)
+					listaDetalle.append("<li>").append(dep).append("</li>");
+				}
+				listaDetalle.append("</ul></li>");
+			}
+			listaDetalle.append("</ul><br>");
+		} else {
+			listaDetalle.append("<span style='color:#").append(color)
+					.append("'>Не удалось определить конкретные файлы из лога.</span><br>");
+		}
 
-        return mensajeBase + notaChestCavity + instrucciones;
-    }
-    @Override
-    public String nombreErrorPotBlockEntity() {
-        return "Ошибка DecoratedPot (Cataclysm)";
-    }
+		// Инструкции по исправлению
+		String instrucciones = "<span style='color:#" + color + "'>"
+				+ "Эта ошибка возникает, когда модификации включают внутренние версии библиотек (JarInJar), которые несовместимы друг с другом.<br><br>"
+				+ "<b>Рекомендуемое решение:</b><br>" + "<ul>"
+				+ "<li>Просмотрите список выше, чтобы определить, какие модификации запрашивают разные версии одной и той же библиотеки.</li>"
+				+ "<li>Попробуйте обновить обе модификации до их последних версий.</li>"
+				+ "<li>В крайнем случае, вы можете открыть файл <code>.jar</code> модификации с помощью архиватора (например, WinRAR), отредактировать <code>META-INF/mods.toml</code> и вручную изменить диапазон версий зависимости, хотя это рискованно и может сломать модификацию.</li>"
+				+ "</ul></span>";
 
-    @Override
-    public String mensajeErrorPotBlockEntity() {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // Основное сообщение
-        String mensajeBase = "<span style='color:#" + color + "'>"
-                + "Произошла ошибка несовместимости с <b>DecoratedPotBlockEntity</b>.</span><br><br>"
-                + "<span style='color:#" + color + "'>"
-                + "Это известная проблема в версии 1.19.2 модификации <b>L_Enders_Cataclysm</b>, "
-                + "где отсутствует реализация, требуемая игрой.</span><br><br>";
+		return mensajeBase + listaDetalle.toString() + instrucciones;
+	}
 
-        // Решение
-        String solucion = "<span style='color:#" + color + "'>"
-                + "<b>Рекомендуемое решение:</b><br>"
-                + "Установите модификацию <b>PotFix (Cataclysm Patch)</b> для исправления этой ошибки.<br>"
-                + "Вы можете скачать её здесь: <a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch  '>CurseForge - PotFix</a>"
-                + "</span>";
+	@Override
+	public String nombreNeruinaOcultaAdvertencia() {
+		return "Neruina препятствует отладке";
+	}
 
-        return mensajeBase + solucion;
-    }
-    @Override
-    public String nombreErrorPreloadingTricks() {
-        return "Ошибка Preloading Tricks";
-    }
+	@Override
+	public String mensajeNeruinaOcultaAdvertencia() {
+		String color = Config.obtenerInstancia().obtenerColorAdvertencia();
 
-    @Override
-    public String mensajeErrorPreloadingTricks() {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // Основное сообщение
-        String mensajeBase = "<span style='color:#" + color + "'>"
-                + "Обнаружен конфликт, вызванный <b>Preloading Tricks</b>.</span><br><br>"
-                + "<span style='color:#" + color + "'>"
-                + "Ошибка <i>ClassCastException: String cannot be cast to ModuleDescriptor</i> "
-                + "указывает на то, что модификация неправильно манипулирует классами модульной системы Java.</span><br><br>";
+		// Основное предупреждение
+		String mensajeBase = "<span style='color:#" + color + "'>"
+				+ "<b>Предупреждение:</b> Модификация <b>Neruina</b> не справляется с обработкой ошибки, скрывая истинную причину вылета.</span><br><br>"
+				+ "<span style='color:#" + color + "'>"
+				+ "Neruina часто не является необходимой и затрудняет понимание того, что именно не работает. Рекомендуется удалить её для отладки.</span><br><br>";
 
-        // Объяснение и решение
-        String explicacion = "<span style='color:#" + color + "'>"
-                + "<b>Preloading Tricks</b> — это модификация, предназначенная в первую очередь для <b>разработчиков</b>. "
-                + "Она выполняет сложные операции изменения классов (mixins) на очень ранней стадии загрузки игры, "
-                + "что может легко нарушить стабильность при наличии других взаимодействий.</span><br><br>"
-                + "<span style='color:#" + color + "'><b>Рекомендуемое решение:</b><br>"
-                + "<ul>"
-                + "<li>Удалите модификацию <b>Preloading Tricks</b>. Обычно она не требуется для игры на публичных серверах или в стабильных сборках.</li>"
-                + "<li>Если вы разработчик и нуждаетесь в ней для тестирования, проверьте конфигурацию вашей среды.</li>"
-                + "</ul></span>";
+		// Инструкции по восстановлению
+		String instrucciones = "<span style='color:#" + color + "'>" + "<b>Инструкции по восстановлению:</b><br>"
+				+ "1. **MCForge**: Перейдите в '[nombre_del_mundo]/serverconfig/forge-server.toml'.<br>"
+				+ "2. **NeoForge**: Перейдите в 'config/neoforge-server.toml'.<br>"
+				+ "   *(Примечание: В локальных играх/Singleplayer миры находятся в папке 'saves')*.<br>"
+				+ "3. Измените **removeErroringBlockEntities** и **removeErroringEntities** на **true**.<br><br>"
+				+ "<b>Другие варианты:</b><br>"
+				+ "- **MCEdit**: Используйте для ручного удаления сущности по указанным координатам.<br>"
+				+ "- Если эта ошибка сохраняется, возможно, Neruina работает некорректно и просто генерирует новые ошибки."
+				+ "</span>";
 
-        return mensajeBase + explicacion;
-    }
-    
-    @Override
-    public String nombreErrorSimpleRadioLexiconfig() {
-        return "Несовместимость Simple Radio / Lexiconfig";
-    }
+		return mensajeBase + instrucciones;
+	}
 
-    @Override
-    public String mensajeErrorSimpleRadioLexiconfig() {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // Основное сообщение
-        String mensajeBase = "<span style='color:#" + color + "'>"
-                + "Обнаружен конфликт между <b>Simple Radio</b> и <b>Lexiconfig</b>.</span><br><br>"
-                + "<span style='color:#" + color + "'>"
-                + "Ошибка происходит в процессе 'shelveLexicons', что указывает на бинарную несовместимость между обеими библиотеками.</span><br><br>";
+	@Override
+	public String nombreApothicAttributeSinDueño() {
+		return "Ошибка Apothic Attributes";
+	}
 
-        // Специфическое решение
-        String solucion = "<span style='color:#" + color + "'>"
-                + "<b>Известная причина:</b><br>"
-                + "Simple Radio обычно предназначен для старых версий Lexiconfig, тогда как у вас установлена более новая версия.</span><br><br>"
-                + "<span style='color:#" + color + "'><b>Рекомендуемое решение:</b><br>"
-                + "<ul>"
-                + "<li>Попробуйте использовать более старую версию <b>Lexiconfig</b>.</li>"
-                + "<li>Рекомендуется попробовать версию <b>1.3.11</b> или более ранние, которые обычно совместимы с Simple Radio.</li>"
-                + "<li>Если проблема сохраняется, проверьте, доступно ли обновление для Simple Radio.</li>"
-                + "</ul></span>";
+	@Override
+	public String mensajeApothicAttributeSinDueño(boolean chestCavityDetectado) {
+		String color = Config.obtenerInstancia().obtenerColorError();
 
-        return mensajeBase + solucion;
-    }
-    @Override
-    public String nombreErrorMobAITweaks() {
-        return "Ошибка Mob AI Tweaks";
-    }
+		// Основное сообщение
+		String mensajeBase = "<span style='color:#" + color + "'>"
+				+ "<b>Apothic Attributes</b> обнаружила конфликт: <b>AttributeMap</b> был изменён без назначенного владельца.</span><br><br>"
+				+ "<span style='color:#" + color + "'>"
+				+ "Это обычно происходит, когда модификация пытается изменить атрибуты сущности (например, здоровье, урон, скорость) "
+				+ "в неподходящий момент или неправильным образом.</span><br><br>";
 
-    @Override
-    public String mensajeErrorMobAITweaks() {
-        String color = Config.obtenerInstancia().obtenerColorError();
-        
-        // Основное сообщение
-        String mensajeBase = "<span style='color:#" + color + "'>"
-                + "Обнаружена ошибка, связанная с <b>Mob AI Tweaks</b>.</span><br><br>"
-                + "<span style='color:#" + color + "'>"
-                + "Ошибка исходит из Mixin (<code>$mob-ai-tweaks$onSpawned</code>), который вмешивается "
-                + "при появлении сущности (spawnea). Это обычно указывает на конфликт с другой модификацией, "
-                + "которая также изменяет поведение появления мобов.</span><br><br>";
+		// Специфическое примечание о Chest Cavity
+		String notaChestCavity = "";
+		if (chestCavityDetectado) {
+			notaChestCavity = "<span style='color:#" + color + "'>"
+					+ "<b>В логе обнаружена модификация Chest Cavity.</b> "
+					+ "Эта модификация является частой причиной данной конкретной ошибки из-за того, как она обрабатывает атрибуты сущностей.</span><br><br>";
+		}
 
-        // Решение
-        String solucion = "<span style='color:#" + color + "'><b>Рекомендуемое решение:</b><br>"
-                + "<ul>"
-                + "<li>Попробуйте удалить <b>Mob AI Tweaks</b>, чтобы проверить, исчезнет ли нестабильность.</li>"
-                + "</ul></span>";
+		// Инструкции по исправлению
+		String instrucciones = "<span style='color:#" + color + "'>" + "<b>Рекомендуемое решение:</b><br>" + "<ul>"
+				+ "<li>Если Chest Cavity установлена, попробуйте обновить её или временно удалить, чтобы проверить, является ли она причиной.</li>"
+				+ "<li>Проверьте, есть ли другие модификации, изменяющие атрибуты мобов, и попробуйте отключить их.</li>"
+				+ "<li>Поиските обновления для <b>Apothic Attributes</b>, так как эта ошибка могла быть исправлена в последних версиях.</li>"
+				+ "</ul></span>";
 
-        return mensajeBase + solucion;
-    }
-    
-    public String nombre_verificacion_gpu() {
-        return "Проверка GPU (OpenGL / Выбор GPU)";
-    }
+		return mensajeBase + notaChestCavity + instrucciones;
+	}
 
-    public String desactivar_parche_gpu() {
-        return "Отключить проверку GPU";
-    }
+	@Override
+	public String nombreErrorPotBlockEntity() {
+		return "Ошибка DecoratedPot (Cataclysm)";
+	}
 
-    // ==================== CRASH ====================
+	@Override
+	public String mensajeErrorPotBlockEntity() {
+		String color = Config.obtenerInstancia().obtenerColorError();
 
-    public String gpu_crash_posible() {
-        return "<b style='color:#" + config.obtenerColorError() + "'>Верификатор GPU мог стать причиной закрытия игры.</b>";
-    }
+		// Основное сообщение
+		String mensajeBase = "<span style='color:#" + color + "'>"
+				+ "Произошла ошибка несовместимости с <b>DecoratedPotBlockEntity</b>.</span><br><br>"
+				+ "<span style='color:#" + color + "'>"
+				+ "Это известная проблема в версии 1.19.2 модификации <b>L_Enders_Cataclysm</b>, "
+				+ "где отсутствует реализация, требуемая игрой.</span><br><br>";
 
-    public String gpu_crash_causas() {
-        return "Проверка началась, но не завершилась. Это обычно указывает на сбой в OpenGL или в графических драйверах.<br><br>"
-             + "Возможные причины:<br>"
-             + "- Устаревшие или нестабильные драйверы<br>"
-             + "- Проблемы с OpenGL<br>"
-             + "- Старые GPU или гибридные конфигурации";
-    }
+		// Решение
+		String solucion = "<span style='color:#" + color + "'>" + "<b>Рекомендуемое решение:</b><br>"
+				+ "Установите модификацию <b>PotFix (Cataclysm Patch)</b> для исправления этой ошибки.<br>"
+				+ "Вы можете скачать её здесь: <a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch  '>CurseForge - PotFix</a>"
+				+ "</span>";
 
-    public String gpu_crash_recomendaciones() {
-        return "Рекомендации:<br>"
-             + "- Обновить драйверы GPU<br>"
-             + "- Принудительно использовать дискретную видеокарту<br>"
-             + "- Избегать удалённых или виртуализированных сред";
-    }
+		return mensajeBase + solucion;
+	}
 
-    // ==================== NO ÓPTIMA ====================
+	@Override
+	public String nombreErrorPreloadingTricks() {
+		return "Ошибка Preloading Tricks";
+	}
 
-    public String gpu_no_optima() {
-        return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>Игра не использует лучшую доступную видеокарту.</b>";
-    }
+	@Override
+	public String mensajeErrorPreloadingTricks() {
+		String color = Config.obtenerInstancia().obtenerColorError();
 
-    public String gpu_no_optima_detalles() {
-        return "Это может снизить производительность (низкий FPS), но обычно само по себе не вызывает вылетов.";
-    }
+		// Основное сообщение
+		String mensajeBase = "<span style='color:#" + color + "'>"
+				+ "Обнаружен конфликт, вызванный <b>Preloading Tricks</b>.</span><br><br>" + "<span style='color:#"
+				+ color + "'>" + "Ошибка <i>ClassCastException: String cannot be cast to ModuleDescriptor</i> "
+				+ "указывает на то, что модификация неправильно манипулирует классами модульной системы Java.</span><br><br>";
 
-    public String gpu_recomendaciones_rendimiento() {
-        return "Рекомендации:<br>"
-             + "- Принудительно использовать дискретную видеокарту в панели управления<br>"
-             + "- Настроить Java/Minecraft в режиме высокой производительности";
-    }
+		// Объяснение и решение
+		String explicacion = "<span style='color:#" + color + "'>"
+				+ "<b>Preloading Tricks</b> — это модификация, предназначенная в первую очередь для <b>разработчиков</b>. "
+				+ "Она выполняет сложные операции изменения классов (mixins) на очень ранней стадии загрузки игры, "
+				+ "что может легко нарушить стабильность при наличии других взаимодействий.</span><br><br>"
+				+ "<span style='color:#" + color + "'><b>Рекомендуемое решение:</b><br>" + "<ul>"
+				+ "<li>Удалите модификацию <b>Preloading Tricks</b>. Обычно она не требуется для игры на публичных серверах или в стабильных сборках.</li>"
+				+ "<li>Если вы разработчик и нуждаетесь в ней для тестирования, проверьте конфигурацию вашей среды.</li>"
+				+ "</ul></span>";
 
-    // ==================== GENERALES ====================
+		return mensajeBase + explicacion;
+	}
 
-    public String gpu_nota_precision() {
-        return "<b>Примечание:</b> Данная система обнаружения не является 100% точной.";
-    }
+	@Override
+	public String nombreErrorSimpleRadioLexiconfig() {
+		return "Несовместимость Simple Radio / Lexiconfig";
+	}
 
-    public String gpu_consumo_energia() {
-        return "Более мощные видеокарты потребляют больше энергии и могут сокращать время работы от батареи на ноутбуках.";
-    }
+	@Override
+	public String mensajeErrorSimpleRadioLexiconfig() {
+		String color = Config.obtenerInstancia().obtenerColorError();
 
-    public String gpu_parche_info() {
-        return "Вы можете отключить эту проверку с помощью кнопки быстрого решения.";
-    }
-    @Override
-    public String nombreVerificacionRaptorLake() {
-        return "Предупреждение о стабильности CPU Intel 13/14 поколения";
-    }
+		// Основное сообщение
+		String mensajeBase = "<span style='color:#" + color + "'>"
+				+ "Обнаружен конфликт между <b>Simple Radio</b> и <b>Lexiconfig</b>.</span><br><br>"
+				+ "<span style='color:#" + color + "'>"
+				+ "Ошибка происходит в процессе 'shelveLexicons', что указывает на бинарную несовместимость между обеими библиотеками.</span><br><br>";
 
-    @Override
-    public String advertenciaRaptorLakeTitulo() {
-        return "Возможная нестабильность процессора Intel Raptor Lake";
-    }
+		// Специфическое решение
+		String solucion = "<span style='color:#" + color + "'>" + "<b>Известная причина:</b><br>"
+				+ "Simple Radio обычно предназначен для старых версий Lexiconfig, тогда как у вас установлена более новая версия.</span><br><br>"
+				+ "<span style='color:#" + color + "'><b>Рекомендуемое решение:</b><br>" + "<ul>"
+				+ "<li>Попробуйте использовать более старую версию <b>Lexiconfig</b>.</li>"
+				+ "<li>Рекомендуется попробовать версию <b>1.3.11</b> или более ранние, которые обычно совместимы с Simple Radio.</li>"
+				+ "<li>Если проблема сохраняется, проверьте, доступно ли обновление для Simple Radio.</li>"
+				+ "</ul></span>";
 
-    @Override
-    public String advertenciaRaptorLakeDetalle(String cpu, String microcode, String targetMicrocode) {
-        return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>" +
-               "Обнаружен процессор " + cpu + " с микрокодом " + microcode + "." +
-               "</b> " +
-               "Процессоры Intel 13-го и 14-го поколений сталкивались с проблемами нестабильности из-за запроса избыточного напряжения, " +
-               "что может сократить срок службы процессора.<br><br>" +
-               "Рекомендуется обновить микрокод или BIOS вашей материнской платы до версии, включающей микрокод <b>" + targetMicrocode + "</b> или новее. " +
-               "<b>Предупреждение:</b> Обновление BIOS сопряжено с рисками, если выполняется неправильно.<br><br>" +
-               "<i>Примечание: Это почти наверняка НЕ является причиной вашего текущего вылета, это всего лишь информационное уведомление о состоянии оборудования.</i>";
-    }
+		return mensajeBase + solucion;
+	}
 
-    @Override
-    public String desactivarVerificacionRaptorLake() {
-        return "Больше не предупреждать меня об этом";
-    }
+	@Override
+	public String nombreErrorMobAITweaks() {
+		return "Ошибка Mob AI Tweaks";
+	}
 
-    @Override
-    public String verArticuloRaptorLake(String fuente) {
-        return "Читать статью на " + fuente;
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-	
-	
-	
-	
-	
-	
+	@Override
+	public String mensajeErrorMobAITweaks() {
+		String color = Config.obtenerInstancia().obtenerColorError();
+
+		// Основное сообщение
+		String mensajeBase = "<span style='color:#" + color + "'>"
+				+ "Обнаружена ошибка, связанная с <b>Mob AI Tweaks</b>.</span><br><br>" + "<span style='color:#" + color
+				+ "'>" + "Ошибка исходит из Mixin (<code>$mob-ai-tweaks$onSpawned</code>), который вмешивается "
+				+ "при появлении сущности (spawnea). Это обычно указывает на конфликт с другой модификацией, "
+				+ "которая также изменяет поведение появления мобов.</span><br><br>";
+
+		// Решение
+		String solucion = "<span style='color:#" + color + "'><b>Рекомендуемое решение:</b><br>" + "<ul>"
+				+ "<li>Попробуйте удалить <b>Mob AI Tweaks</b>, чтобы проверить, исчезнет ли нестабильность.</li>"
+				+ "</ul></span>";
+
+		return mensajeBase + solucion;
+	}
+
+	public String nombre_verificacion_gpu() {
+		return "Проверка GPU (OpenGL / Выбор GPU)";
+	}
+
+	public String desactivar_parche_gpu() {
+		return "Отключить проверку GPU";
+	}
+
+	// ==================== CRASH ====================
+
+	public String gpu_crash_posible() {
+		return "<b style='color:#" + config.obtenerColorError()
+				+ "'>Верификатор GPU мог стать причиной закрытия игры.</b>";
+	}
+
+	public String gpu_crash_causas() {
+		return "Проверка началась, но не завершилась. Это обычно указывает на сбой в OpenGL или в графических драйверах.<br><br>"
+				+ "Возможные причины:<br>" + "- Устаревшие или нестабильные драйверы<br>" + "- Проблемы с OpenGL<br>"
+				+ "- Старые GPU или гибридные конфигурации";
+	}
+
+	public String gpu_crash_recomendaciones() {
+		return "Рекомендации:<br>" + "- Обновить драйверы GPU<br>"
+				+ "- Принудительно использовать дискретную видеокарту<br>"
+				+ "- Избегать удалённых или виртуализированных сред";
+	}
+
+	// ==================== NO ÓPTIMA ====================
+
+	public String gpu_no_optima() {
+		return "<b style='color:#" + config.obtenerColorAdvertencia()
+				+ "'>Игра не использует лучшую доступную видеокарту.</b>";
+	}
+
+	public String gpu_no_optima_detalles() {
+		return "Это может снизить производительность (низкий FPS), но обычно само по себе не вызывает вылетов.";
+	}
+
+	public String gpu_recomendaciones_rendimiento() {
+		return "Рекомендации:<br>" + "- Принудительно использовать дискретную видеокарту в панели управления<br>"
+				+ "- Настроить Java/Minecraft в режиме высокой производительности";
+	}
+
+	// ==================== GENERALES ====================
+
+	public String gpu_nota_precision() {
+		return "<b>Примечание:</b> Данная система обнаружения не является 100% точной.";
+	}
+
+	public String gpu_consumo_energia() {
+		return "Более мощные видеокарты потребляют больше энергии и могут сокращать время работы от батареи на ноутбуках.";
+	}
+
+	public String gpu_parche_info() {
+		return "Вы можете отключить эту проверку с помощью кнопки быстрого решения.";
+	}
+
+	@Override
+	public String nombreVerificacionRaptorLake() {
+		return "Предупреждение о стабильности CPU Intel 13/14 поколения";
+	}
+
+	@Override
+	public String advertenciaRaptorLakeTitulo() {
+		return "Возможная нестабильность процессора Intel Raptor Lake";
+	}
+
+	@Override
+	public String advertenciaRaptorLakeDetalle(String cpu, String microcode, String targetMicrocode) {
+		return "<b style='color:#" + config.obtenerColorAdvertencia() + "'>" + "Обнаружен процессор " + cpu
+				+ " с микрокодом " + microcode + "." + "</b> "
+				+ "Процессоры Intel 13-го и 14-го поколений сталкивались с проблемами нестабильности из-за запроса избыточного напряжения, "
+				+ "что может сократить срок службы процессора.<br><br>"
+				+ "Рекомендуется обновить микрокод или BIOS вашей материнской платы до версии, включающей микрокод <b>"
+				+ targetMicrocode + "</b> или новее. "
+				+ "<b>Предупреждение:</b> Обновление BIOS сопряжено с рисками, если выполняется неправильно.<br><br>"
+				+ "<i>Примечание: Это почти наверняка НЕ является причиной вашего текущего вылета, это всего лишь информационное уведомление о состоянии оборудования.</i>";
+	}
+
+	@Override
+	public String desactivarVerificacionRaptorLake() {
+		return "Больше не предупреждать меня об этом";
+	}
+
+	@Override
+	public String verArticuloRaptorLake(String fuente) {
+		return "Читать статью на " + fuente;
+	}
+
 }
