@@ -46,7 +46,7 @@ public class HacerVerificacionGPU {
 			// (evita crash si la clase no carga correctamente)
 			// --------------------------------------------------
 			try {
-				Class<?> clazz = Class.forName("com.asbestosstar.crashdetector.hw.gpu.ValidadorGPU");
+				Class<?> clazz = Class.forName("com.asbestosstar.crashdetector.bajo.hw.gpu.ValidadorGPU");
 
 				// Llamar al método main()
 				clazz.getMethod("main").invoke(null);

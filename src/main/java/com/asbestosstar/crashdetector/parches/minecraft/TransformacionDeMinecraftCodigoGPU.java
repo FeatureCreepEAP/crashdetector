@@ -49,7 +49,7 @@ public class TransformacionDeMinecraftCodigoGPU implements ParcheClassNode {
 					// Creamos la instrucción: INVOKESTATIC HacerVerificacionGPU.hacer()V
 					InsnList toInject = new InsnList();
 					toInject.add(new MethodInsnNode(Opcodes.INVOKESTATIC,
-							"com/asbestosstar/crashdetector/hw/gpu/HacerVerificacionGPU", // Ruta interna de la clase
+							"com/asbestosstar/crashdetector/bajo/hw/gpu/HacerVerificacionGPU", // Ruta interna de la clase
 																							// (con /)
 							"hacer", // Nombre del método
 							"()V", // Descriptor (void)
