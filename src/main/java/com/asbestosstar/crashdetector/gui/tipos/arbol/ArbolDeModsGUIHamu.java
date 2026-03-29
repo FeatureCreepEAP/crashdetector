@@ -89,6 +89,13 @@ public class ArbolDeModsGUIHamu extends ArbolDeModsGUI {
 			iconoConstante = crearIcono(Statics.carpeta.resolve("imagenes/referencia_campo.png").toString(), "K");
 		}
 
+		// 🔹 Recargar icono de mixin
+		iconoMixin = crearIcono(Statics.carpeta.resolve("imagenes/mixin.png").toString(), "MX");
+		if (iconoMixin.getIconWidth() <= 0) {
+			// Fallback: crear icono con texto si no hay imagen
+			iconoMixin = crearIcono("", "MX");
+		}
+
 		// 6) Imagen “Hamu” inferior
 		if (imagenHamu != null) {
 			imagenHamu.setIcon(new ImageIcon(Statics.carpeta.resolve("imagenes/hamu.png").toString()));
