@@ -214,71 +214,188 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 	}
 
 	/**
-	 * Indexa recursivamente un mod en el mapa local dado (NO concurrente). Ahora
-	 * incluye indexación de información de mixins.
+	 * Indexa recursivamente un mod en el mapa local dado (NO concurrente).
+	 * 
+	 * Esta versión: - indexa mods embebidos - indexa paquetes, clases, métodos y
+	 * campos - indexa mixins, sus targets, métodos y campos shadow - indexa
+	 * referencias de clase, método y campo - indexa constantes encontradas en
+	 * métodos
 	 */
 	public void indexarModConcurrente(ArchivoDeMod mod, Map<String, List<PathDescriptor>> indiceLocal) {
 		String modUbicacion = mod.ubicacion_para_publicar();
 		String modUbicacionLower = modUbicacion.toLowerCase();
+
+		// El propio mod
 		PathDescriptor descMod = new PathDescriptor(modUbicacion, null, null, null, null, "MOD");
 		indexarTerminoConcurrente(modUbicacionLower, descMod, indiceLocal);
 
-		// 🔹 RECURSIÓN PARA JAR-EN-JAR: indexar mods embebidos
+		// 🔹 Recurre sobre submods (jar-en-jar)
 		for (ArchivoDeMod submod : mod.mods_en_mods()) {
 			indexarModConcurrente(submod, indiceLocal);
 		}
 
-		// Indexar clases y sus elementos
+		// 🔹 Recorre clases del mod
 		for (String clasePuntos : mod.clases()) {
 			String paquete = paqueteDe(clasePuntos);
 			String claseInterna = normalizarNombreClaseInterno(clasePuntos);
 
+			// Paquete
 			if (!paquete.isEmpty()) {
 				PathDescriptor descPaq = new PathDescriptor(modUbicacion, paquete, null, null, null, "PAQUETE");
 				indexarTerminoConcurrente(paquete.toLowerCase(), descPaq, indiceLocal);
 			}
 
+			// Clase
 			PathDescriptor descClase = new PathDescriptor(modUbicacion, paquete, clasePuntos, null, null, "CLASE");
 			indexarTerminoConcurrente(clasePuntos.toLowerCase(), descClase, indiceLocal);
 
-			// 🔹 INDEXAR INFORMACIÓN DE MIXINS
-			if (mod.esClaseMixin(claseInterna)) {
+			// También indexar el nombre interno ASM por si se busca con barras
+			if (claseInterna != null && !claseInterna.isEmpty()) {
+				indexarTerminoConcurrente(claseInterna.toLowerCase(), descClase, indiceLocal);
+			}
+
+			// 🔹 Información de mixin
+			if (claseInterna != null && mod.esClaseMixin(claseInterna)) {
 				ArchivoDeMod.MixinInfo mixinInfo = mod.obtenerInfoMixin(claseInterna);
 				if (mixinInfo != null) {
-					// Indexar targets del mixin (clases objetivo)
+					// Indexar la propia clase mixin como categoría de mixin
+					PathDescriptor descMixin = new PathDescriptor(modUbicacion, paquete, clasePuntos, null, null,
+							"MIXIN");
+					indexarTerminoConcurrente(clasePuntos.toLowerCase(), descMixin, indiceLocal);
+
+					// Targets del mixin
 					for (String target : mixinInfo.obtenerTargets()) {
-						String targetLower = target.toLowerCase();
 						PathDescriptor descMixinTarget = new PathDescriptor(modUbicacion, paquete, clasePuntos,
 								"@Mixin target", target, "MIXIN_TARGET");
-						indexarTerminoConcurrente(targetLower, descMixinTarget, indiceLocal);
+
+						indexarTerminoConcurrente(target.toLowerCase(), descMixinTarget, indiceLocal);
+
+						String targetInterno = normalizarNombreClaseInterno(target);
+						if (targetInterno != null && !targetInterno.isEmpty()) {
+							indexarTerminoConcurrente(targetInterno.toLowerCase(), descMixinTarget, indiceLocal);
+							indexarTerminoConcurrente(convertirFormatoClasePuntos(targetInterno).toLowerCase(),
+									descMixinTarget, indiceLocal);
+						}
 					}
-					// Indexar métodos @Inject/@Overwrite
+
+					// Métodos mixin (@Inject / @Overwrite)
 					for (ArchivoDeMod.MixinMetodoInfo metodoMixin : mixinInfo.obtenerMetodosMixin()) {
 						String firmaMetodo = (metodoMixin.obtenerNombre() + metodoMixin.obtenerDescriptor())
 								.toLowerCase();
+
 						PathDescriptor descMixinMetodo = new PathDescriptor(modUbicacion, paquete, clasePuntos,
 								metodoMixin.obtenerNombre(), metodoMixin.obtenerDescriptor(), "MIXIN_METODO");
+
 						indexarTerminoConcurrente(firmaMetodo, descMixinMetodo, indiceLocal);
-						// Indexar targets específicos del método
+						indexarTerminoConcurrente(metodoMixin.obtenerNombre().toLowerCase(), descMixinMetodo,
+								indiceLocal);
+
 						for (String targetMetodo : metodoMixin.obtenerTargets()) {
 							indexarTerminoConcurrente(targetMetodo.toLowerCase(), descMixinMetodo, indiceLocal);
 						}
 					}
-					// Indexar campos @Shadow
+
+					// Campos mixin (@Shadow)
 					for (ArchivoDeMod.MixinCampoInfo campoMixin : mixinInfo.obtenerCamposMixin()) {
 						String firmaCampo = (campoMixin.obtenerNombre() + " " + campoMixin.obtenerDescriptor())
 								.toLowerCase();
+
 						PathDescriptor descMixinCampo = new PathDescriptor(modUbicacion, paquete, clasePuntos,
 								campoMixin.obtenerNombre(), campoMixin.obtenerDescriptor(), "MIXIN_CAMPO");
+
 						indexarTerminoConcurrente(firmaCampo, descMixinCampo, indiceLocal);
+						indexarTerminoConcurrente(campoMixin.obtenerNombre().toLowerCase(), descMixinCampo,
+								indiceLocal);
 					}
 				}
 			}
 
-			if (!Buscardor.puedeAnalizarElContentidoDeClase() || !mod.existeClase(claseInterna)) {
+			// Si no hay análisis bytecode disponible o la clase no existe realmente, saltar
+			if (!Buscardor.puedeAnalizarElContentidoDeClase() || claseInterna == null
+					|| !mod.existeClase(claseInterna)) {
 				continue;
 			}
-			// ... resto del código original para métodos/campos ...
+
+			// 🔹 Métodos y sus referencias
+			List<ArchivoDeMod.InfoMetodo> metodos = mod.obtenerMetodosConReferencias(claseInterna);
+			for (ArchivoDeMod.InfoMetodo metodo : metodos) {
+				PathDescriptor descMetodo = new PathDescriptor(modUbicacion, paquete, clasePuntos,
+						metodo.obtenerNombre(), metodo.obtenerDescriptor(), "METODO");
+
+				indexarTerminoConcurrente(metodo.obtenerNombre().toLowerCase(), descMetodo, indiceLocal);
+				indexarTerminoConcurrente((metodo.obtenerNombre() + metodo.obtenerDescriptor()).toLowerCase(),
+						descMetodo, indiceLocal);
+
+				// Referencias a métodos
+				for (ArchivoDeMod.Referencia refMetodo : metodo.obtenerReferenciasAMetodos()) {
+					String claseRef = refMetodo.obtenerClase();
+					String claseRefPuntos = convertirFormatoClasePuntos(claseRef);
+
+					PathDescriptor descRefMetodo = new PathDescriptor(modUbicacion, paquete, clasePuntos,
+							metodo.obtenerNombre(), metodo.obtenerDescriptor(), "REFERENCIA_METODO");
+
+					indexarTerminoConcurrente(claseRefPuntos.toLowerCase(), descRefMetodo, indiceLocal);
+					indexarTerminoConcurrente(refMetodo.obtenerNombre().toLowerCase(), descRefMetodo, indiceLocal);
+					indexarTerminoConcurrente(
+							(claseRefPuntos + "." + refMetodo.obtenerNombre() + refMetodo.obtenerDescriptor())
+									.toLowerCase(),
+							descRefMetodo, indiceLocal);
+
+					// También indexar classref derivada de esta referencia
+					PathDescriptor descRefClase = new PathDescriptor(modUbicacion, paquete, clasePuntos,
+							metodo.obtenerNombre(), metodo.obtenerDescriptor(), "REFERENCIA_CLASE");
+					indexarTerminoConcurrente(claseRefPuntos.toLowerCase(), descRefClase, indiceLocal);
+				}
+
+				// Referencias a campos
+				for (ArchivoDeMod.Referencia refCampo : metodo.obtenerReferenciasACampos()) {
+					String claseRef = refCampo.obtenerClase();
+					String claseRefPuntos = convertirFormatoClasePuntos(claseRef);
+
+					PathDescriptor descRefCampo = new PathDescriptor(modUbicacion, paquete, clasePuntos,
+							metodo.obtenerNombre(), metodo.obtenerDescriptor(), "REFERENCIA_CAMPO");
+
+					indexarTerminoConcurrente(claseRefPuntos.toLowerCase(), descRefCampo, indiceLocal);
+					indexarTerminoConcurrente(refCampo.obtenerNombre().toLowerCase(), descRefCampo, indiceLocal);
+					indexarTerminoConcurrente(
+							(claseRefPuntos + "." + refCampo.obtenerNombre() + " " + refCampo.obtenerDescriptor())
+									.toLowerCase(),
+							descRefCampo, indiceLocal);
+
+					// También indexar classref derivada de esta referencia
+					PathDescriptor descRefClase = new PathDescriptor(modUbicacion, paquete, clasePuntos,
+							metodo.obtenerNombre(), metodo.obtenerDescriptor(), "REFERENCIA_CLASE");
+					indexarTerminoConcurrente(claseRefPuntos.toLowerCase(), descRefClase, indiceLocal);
+				}
+
+				// Constantes del método
+				try {
+					List<ArchivoDeMod.Constante> constantes = mod.buscarConstantesEnMetodo(claseInterna,
+							metodo.obtenerNombre(), metodo.obtenerDescriptor());
+
+					for (ArchivoDeMod.Constante k : constantes) {
+						String textoConstante = formatearConstante(k);
+						if (textoConstante != null && !textoConstante.isEmpty()) {
+							PathDescriptor descConst = new PathDescriptor(modUbicacion, paquete, clasePuntos,
+									metodo.obtenerNombre(), metodo.obtenerDescriptor(), "CONSTANTE");
+							indexarTerminoConcurrente(textoConstante.toLowerCase(), descConst, indiceLocal);
+						}
+					}
+				} catch (Throwable t) {
+					CrashDetectorLogger.logException(t);
+				}
+			}
+
+			// 🔹 Campos declarados
+			List<ArchivoDeMod.InfoCampo> campos = mod.obtenerCampos(claseInterna);
+			for (ArchivoDeMod.InfoCampo campo : campos) {
+				PathDescriptor descCampo = new PathDescriptor(modUbicacion, paquete, clasePuntos, campo.obtenerNombre(),
+						campo.obtenerDescriptor(), "CAMPO");
+
+				indexarTerminoConcurrente(campo.obtenerNombre().toLowerCase(), descCampo, indiceLocal);
+				indexarTerminoConcurrente((campo.obtenerNombre() + " " + campo.obtenerDescriptor()).toLowerCase(),
+						descCampo, indiceLocal);
+			}
 		}
 	}
 
@@ -728,14 +845,12 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 	}
 
 	/**
-	 * Muestra los detalles del nodo seleccionado en el área de contenido. Este
-	 * método maneja correctamente el formato de nombres de clases para ASM,
-	 * asegurando que los métodos, campos y referencias se muestren adecuadamente.
+	 * Muestra los detalles del nodo seleccionado en el área de contenido.
 	 * 
-	 * @param nodo El nodo del árbol seleccionado por el usuario
+	 * Esta versión corrige: - el detalle del nodo "Información de Mixin" - el
+	 * detalle de targets específicos del mixin - el detalle de métodos/campos mixin
+	 * - el detalle de classrefs
 	 */
-
-	// Actualizar el método mostrarDetallesNodo para manejar referencias
 	public void mostrarDetallesNodo(Object nodo) {
 		if (nodo == null) {
 			areaContenido.setText("");
@@ -751,6 +866,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 				areaContenido.setText("");
 				return;
 			}
+
 			if (objetoUsuario instanceof NodoConTexto) {
 				objetoReal = ((NodoConTexto) objetoUsuario).objeto();
 			} else {
@@ -758,10 +874,15 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 			}
 		}
 
+		// =========================
+		// Detalle de mod
+		// =========================
 		if (objetoReal instanceof ArchivoDeMod) {
 			ArchivoDeMod mod = (ArchivoDeMod) objetoReal;
-			detalles.append(MonitorDePID.idioma.detalleMod()).append("\n").append(MonitorDePID.idioma.ubicacion())
-					.append(": ").append(mod.ubicacion_para_publicar()).append("\n\n");
+
+			detalles.append(MonitorDePID.idioma.detalleMod()).append("\n");
+			detalles.append(MonitorDePID.idioma.ubicacion()).append(": ").append(mod.ubicacion_para_publicar())
+					.append("\n\n");
 
 			if (!mod.nombre().isEmpty()) {
 				detalles.append(MonitorDePID.idioma.nombres()).append(":\n");
@@ -789,8 +910,17 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 				}
 				detalles.append("\n");
 			}
-		} else if (objetoReal instanceof String) {
+
+			areaContenido.setText(detalles.toString());
+			return;
+		}
+
+		// =========================
+		// Detalle de paquete
+		// =========================
+		if (objetoReal instanceof String) {
 			String paquete = (String) objetoReal;
+
 			detalles.append(MonitorDePID.idioma.paquete()).append(" ").append(paquete).append("\n");
 
 			List<ArchivoDeMod> modsConPaquete = new ArrayList<>();
@@ -798,8 +928,9 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 				for (String clase : mod.clases()) {
 					String paqueteClase = "";
 					int indiceUltimoPunto = clase.lastIndexOf('.');
-					if (indiceUltimoPunto > 0)
+					if (indiceUltimoPunto > 0) {
 						paqueteClase = clase.substring(0, indiceUltimoPunto);
+					}
 					if (paqueteClase.equals(paquete)) {
 						modsConPaquete.add(mod);
 						break;
@@ -818,138 +949,199 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 				for (String clase : mod.clases()) {
 					String paqueteClase = "";
 					int indiceUltimoPunto = clase.lastIndexOf('.');
-					if (indiceUltimoPunto > 0)
+					if (indiceUltimoPunto > 0) {
 						paqueteClase = clase.substring(0, indiceUltimoPunto);
+					}
 					if (paqueteClase.equals(paquete)) {
 						String nombreClase = clase.substring(indiceUltimoPunto + 1);
 						detalles.append("  - ").append(nombreClase).append("\n");
 					}
 				}
 			}
-		} else if (objetoReal instanceof Object[]) {
+
+			areaContenido.setText(detalles.toString());
+			return;
+		}
+
+		// =========================
+		// Detalles basados en Object[]
+		// =========================
+		if (objetoReal instanceof Object[]) {
 			Object[] datos = (Object[]) objetoReal;
+
 			if (datos.length >= 2 && datos[0] instanceof ArchivoDeMod) {
 				ArchivoDeMod mod = (ArchivoDeMod) datos[0];
 				String clase = (datos[1] instanceof String) ? (String) datos[1] : null;
 
-				if (clase != null) {
-					String claseInterna = convertirFormatoClase(clase);
-					boolean claseExiste = mod.existeClase(claseInterna);
+				if (clase == null) {
+					areaContenido.setText("");
+					return;
+				}
 
-					// Detalle de clase
-					if (datos.length == 2) {
-						String nombreClase = clase;
-						String paquete = "";
-						int indicePunto = clase.lastIndexOf('.');
-						if (indicePunto > 0) {
-							paquete = clase.substring(0, indicePunto);
-							nombreClase = clase.substring(indicePunto + 1);
+				String claseInterna = convertirFormatoClase(clase);
+				boolean claseExiste = mod.existeClase(claseInterna);
+
+				// 🔹 Información general del mixin
+				if (datos.length >= 3 && "mixin_info".equals(datos[2])) {
+					ArchivoDeMod.MixinInfo mixinInfo = mod.obtenerInfoMixin(claseInterna);
+
+					if (mixinInfo != null) {
+						detalles.append("Mixin\n");
+						detalles.append("Clase: ").append(clase).append("\n");
+						detalles.append("Jar: ").append(mixinInfo.obtenerJarOrigen()).append("\n\n");
+
+						detalles.append("Targets (").append(mixinInfo.obtenerTargets().size()).append("):\n");
+						for (String target : mixinInfo.obtenerTargets()) {
+							detalles.append("- ").append(target).append("\n");
 						}
+						detalles.append("\n");
 
-						detalles.append(MonitorDePID.idioma.detalleClase()).append(" ").append(nombreClase)
-								.append("\n");
-						if (!paquete.isEmpty()) {
-							detalles.append(MonitorDePID.idioma.paquete()).append(": ").append(paquete).append("\n\n");
-						}
-						detalles.append(MonitorDePID.idioma.modulo()).append(": ").append(mod.ubicacion_para_publicar())
-								.append("\n\n");
-
-						if (Buscardor.puedeAnalizarElContentidoDeClase() && claseExiste) {
-							List<ArchivoDeMod.InfoMetodo> metodos = mod.obtenerMetodosConReferencias(claseInterna);
-							detalles.append(MonitorDePID.idioma.metodos()).append(" (").append(metodos.size())
-									.append("):\n");
-							for (ArchivoDeMod.InfoMetodo metodo : metodos) {
-								detalles.append("- ").append(metodo.obtenerNombre()).append(metodo.obtenerDescriptor())
+						detalles.append("Métodos mixin (").append(mixinInfo.obtenerMetodosMixin().size())
+								.append("):\n");
+						for (ArchivoDeMod.MixinMetodoInfo mm : mixinInfo.obtenerMetodosMixin()) {
+							detalles.append("- ").append(mm.obtenerNombre()).append(mm.obtenerDescriptor())
+									.append(mm.esOverwrite() ? " [@Overwrite]" : " [@Inject]").append("\n");
+							if (!mm.obtenerTargets().isEmpty()) {
+								detalles.append("  Targets: ").append(String.join(", ", mm.obtenerTargets()))
 										.append("\n");
 							}
-							detalles.append("\n");
-
-							List<ArchivoDeMod.InfoCampo> campos = mod.obtenerCampos(claseInterna);
-							detalles.append(MonitorDePID.idioma.campos()).append(" (").append(campos.size())
-									.append("):\n");
-							for (ArchivoDeMod.InfoCampo campo : campos) {
-								detalles.append("- ").append(campo.obtenerNombre()).append(" ")
-										.append(campo.obtenerDescriptor()).append("\n");
-							}
-						}
-					}
-					// Detalle de método
-					else if (datos.length >= 3 && datos[2] instanceof ArchivoDeMod.InfoMetodo) {
-						ArchivoDeMod.InfoMetodo metodo = (ArchivoDeMod.InfoMetodo) datos[2];
-						String nombreClase = ((String) datos[1]);
-						int indicePunto = nombreClase.lastIndexOf('.');
-						if (indicePunto > 0)
-							nombreClase = nombreClase.substring(indicePunto + 1);
-
-						detalles.append(MonitorDePID.idioma.detalleMetodo()).append(" ").append(metodo.obtenerNombre())
-								.append(metodo.obtenerDescriptor()).append("\n");
-						detalles.append(MonitorDePID.idioma.clase()).append(": ").append(nombreClase).append("\n");
-						detalles.append(MonitorDePID.idioma.modulo()).append(": ").append(mod.ubicacion_para_publicar())
-								.append("\n\n");
-
-						// Referencias a métodos
-						detalles.append(MonitorDePID.idioma.referenciasAMetodos()).append(" (")
-								.append(metodo.obtenerReferenciasAMetodos().size()).append("):\n");
-						for (ArchivoDeMod.Referencia ref : metodo.obtenerReferenciasAMetodos()) {
-							String nombreClaseRef = convertirFormatoClasePuntos(ref.obtenerClase());
-							detalles.append("- ").append(nombreClaseRef).append(".").append(ref.obtenerNombre())
-									.append(ref.obtenerDescriptor()).append("\n");
 						}
 						detalles.append("\n");
 
-						// Referencias a campos
-						detalles.append(MonitorDePID.idioma.referenciasACampos()).append(" (")
-								.append(metodo.obtenerReferenciasACampos().size()).append("):\n");
-						for (ArchivoDeMod.Referencia ref : metodo.obtenerReferenciasACampos()) {
-							String nombreClaseRef = convertirFormatoClasePuntos(ref.obtenerClase());
-							detalles.append("- ").append(nombreClaseRef).append(".").append(ref.obtenerNombre())
-									.append(" ").append(ref.obtenerDescriptor()).append("\n");
+						detalles.append("Campos mixin (").append(mixinInfo.obtenerCamposMixin().size()).append("):\n");
+						for (ArchivoDeMod.MixinCampoInfo cm : mixinInfo.obtenerCamposMixin()) {
+							detalles.append("- ").append(cm.obtenerNombre()).append(" ").append(cm.obtenerDescriptor())
+									.append(" [@Shadow]\n");
+						}
+					}
+
+					areaContenido.setText(detalles.toString());
+					return;
+				}
+
+				// 🔹 Target puntual del mixin
+				if (datos.length >= 4 && "target".equals(datos[2]) && datos[3] instanceof String) {
+					String target = (String) datos[3];
+
+					detalles.append("Target de mixin\n");
+					detalles.append("Mixin: ").append(clase).append("\n");
+					detalles.append("Clase objetivo: ").append(target).append("\n");
+
+					areaContenido.setText(detalles.toString());
+					return;
+				}
+
+				// 🔹 Método de mixin
+				if (datos.length >= 4 && "mixin_metodo".equals(datos[3])
+						&& datos[2] instanceof ArchivoDeMod.MixinMetodoInfo) {
+					ArchivoDeMod.MixinMetodoInfo mm = (ArchivoDeMod.MixinMetodoInfo) datos[2];
+
+					detalles.append("Método de mixin\n");
+					detalles.append("Mixin: ").append(clase).append("\n");
+					detalles.append("Nombre: ").append(mm.obtenerNombre()).append("\n");
+					detalles.append("Descriptor: ").append(mm.obtenerDescriptor()).append("\n");
+					detalles.append("Tipo: ").append(mm.esOverwrite() ? "@Overwrite" : "@Inject").append("\n");
+
+					if (!mm.obtenerTargets().isEmpty()) {
+						detalles.append("Targets: ").append(String.join(", ", mm.obtenerTargets())).append("\n");
+					}
+
+					areaContenido.setText(detalles.toString());
+					return;
+				}
+
+				// 🔹 Campo de mixin
+				if (datos.length >= 4 && "mixin_campo".equals(datos[3])
+						&& datos[2] instanceof ArchivoDeMod.MixinCampoInfo) {
+					ArchivoDeMod.MixinCampoInfo cm = (ArchivoDeMod.MixinCampoInfo) datos[2];
+
+					detalles.append("Campo de mixin\n");
+					detalles.append("Mixin: ").append(clase).append("\n");
+					detalles.append("Nombre: ").append(cm.obtenerNombre()).append("\n");
+					detalles.append("Descriptor: ").append(cm.obtenerDescriptor()).append("\n");
+					detalles.append("Tipo: @Shadow\n");
+
+					areaContenido.setText(detalles.toString());
+					return;
+				}
+
+				// 🔹 Detalle de clase
+				if (datos.length == 2) {
+					String nombreClase = clase;
+					String paquete = "";
+					int indicePunto = clase.lastIndexOf('.');
+					if (indicePunto > 0) {
+						paquete = clase.substring(0, indicePunto);
+						nombreClase = clase.substring(indicePunto + 1);
+					}
+
+					detalles.append(MonitorDePID.idioma.detalleClase()).append(" ").append(nombreClase).append("\n");
+					if (!paquete.isEmpty()) {
+						detalles.append(MonitorDePID.idioma.paquete()).append(": ").append(paquete).append("\n\n");
+					}
+					detalles.append(MonitorDePID.idioma.modulo()).append(": ").append(mod.ubicacion_para_publicar())
+							.append("\n\n");
+
+					if (Buscardor.puedeAnalizarElContentidoDeClase() && claseExiste) {
+						List<ArchivoDeMod.InfoMetodo> metodos = mod.obtenerMetodosConReferencias(claseInterna);
+						detalles.append(MonitorDePID.idioma.metodos()).append(" (").append(metodos.size())
+								.append("):\n");
+						for (ArchivoDeMod.InfoMetodo metodo : metodos) {
+							detalles.append("- ").append(metodo.obtenerNombre()).append(metodo.obtenerDescriptor())
+									.append("\n");
 						}
 						detalles.append("\n");
 
-						// === Constantes del método ===
-						List<ArchivoDeMod.Constante> constantes = mod.buscarConstantesEnMetodo(
-								convertirFormatoClase((String) datos[1]), metodo.obtenerNombre(),
-								metodo.obtenerDescriptor());
-						detalles.append("Constantes (").append(String.valueOf(constantes.size())).append("):\n");
-						for (ArchivoDeMod.Constante k : constantes) {
-							detalles.append("- ").append(formatearConstante(k)).append("\n");
+						List<ArchivoDeMod.InfoCampo> campos = mod.obtenerCampos(claseInterna);
+						detalles.append(MonitorDePID.idioma.campos()).append(" (").append(campos.size()).append("):\n");
+						for (ArchivoDeMod.InfoCampo campo : campos) {
+							detalles.append("- ").append(campo.obtenerNombre()).append(" ")
+									.append(campo.obtenerDescriptor()).append("\n");
 						}
 					}
-					// Detalle de campo
-					else if (datos.length >= 3 && datos[2] instanceof ArchivoDeMod.InfoCampo) {
-						ArchivoDeMod.InfoCampo campo = (ArchivoDeMod.InfoCampo) datos[2];
-						String nombreClase = ((String) datos[1]);
-						int indicePunto = nombreClase.lastIndexOf('.');
-						if (indicePunto > 0)
-							nombreClase = nombreClase.substring(indicePunto + 1);
 
-						detalles.append(MonitorDePID.idioma.detalleCampo()).append(" ").append(campo.obtenerNombre())
-								.append("\n");
-						detalles.append(MonitorDePID.idioma.clase()).append(": ").append(nombreClase).append("\n");
-						detalles.append(MonitorDePID.idioma.modulo()).append(": ").append(mod.ubicacion_para_publicar())
-								.append("\n");
-						detalles.append(MonitorDePID.idioma.tipo()).append(": ").append(campo.obtenerDescriptor())
-								.append("\n");
-					}
-					// Detalle de referencia específica
-					else if (datos.length >= 4 && datos[3] instanceof ArchivoDeMod.Referencia) {
-						ArchivoDeMod.InfoMetodo metodo = (ArchivoDeMod.InfoMetodo) datos[2];
+					areaContenido.setText(detalles.toString());
+					return;
+				}
+
+				// 🔹 Detalle de método
+				if (datos.length >= 3 && datos[2] instanceof ArchivoDeMod.InfoMetodo) {
+					ArchivoDeMod.InfoMetodo metodo = (ArchivoDeMod.InfoMetodo) datos[2];
+
+					// Caso especial: classref
+					if (datos.length >= 5 && "classref".equals(datos[4])
+							&& datos[3] instanceof ArchivoDeMod.Referencia) {
 						ArchivoDeMod.Referencia referencia = (ArchivoDeMod.Referencia) datos[3];
-						String nombreClase = ((String) datos[1]);
+
+						detalles.append("Referencia de clase\n");
+						detalles.append("Clase objetivo: ")
+								.append(convertirFormatoClasePuntos(referencia.obtenerClase())).append("\n");
+						detalles.append("Desde método: ").append(metodo.obtenerNombre())
+								.append(metodo.obtenerDescriptor()).append("\n");
+						detalles.append("Clase origen: ").append(clase).append("\n");
+						detalles.append("Módulo: ").append(mod.ubicacion_para_publicar()).append("\n");
+
+						areaContenido.setText(detalles.toString());
+						return;
+					}
+
+					// Caso normal: referencia específica a método/campo
+					if (datos.length >= 4 && datos[3] instanceof ArchivoDeMod.Referencia) {
+						ArchivoDeMod.Referencia referencia = (ArchivoDeMod.Referencia) datos[3];
+						String nombreClase = clase;
 						int indicePunto = nombreClase.lastIndexOf('.');
-						if (indicePunto > 0)
+						if (indicePunto > 0) {
 							nombreClase = nombreClase.substring(indicePunto + 1);
+						}
 
 						String tipoReferencia = referencia.esMetodo() ? MonitorDePID.idioma.metodo()
 								: MonitorDePID.idioma.campo();
 						String claseReferencia = convertirFormatoClasePuntos(referencia.obtenerClase());
 
-						detalles.append(MonitorDePID.idioma.detalleMetodo()).append(" ").append(tipoReferencia)
-								.append("\n");
+						detalles.append("Referencia ").append(tipoReferencia).append("\n");
 						detalles.append(MonitorDePID.idioma.nombres()).append(": ").append(referencia.obtenerNombre())
 								.append("\n");
-						detalles.append("desc").append(": ").append(referencia.obtenerDescriptor()).append("\n");
+						detalles.append("Descriptor: ").append(referencia.obtenerDescriptor()).append("\n");
 						detalles.append(MonitorDePID.idioma.clase()).append(": ").append(claseReferencia)
 								.append("\n\n");
 
@@ -958,77 +1150,90 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 								.append(metodo.obtenerNombre()).append(metodo.obtenerDescriptor()).append("\n");
 						detalles.append(MonitorDePID.idioma.modulo()).append(": ").append(mod.ubicacion_para_publicar())
 								.append("\n");
+
+						areaContenido.setText(detalles.toString());
+						return;
 					}
 
-					if (datos.length >= 3 && "mixin_info".equals(datos[2])) {
-						ArchivoDeMod.MixinInfo mixinInfo = mod.obtenerInfoMixin(claseInterna);
-						if (mixinInfo != null) {
-							detalles.append("🔗 ").append("Mixer").append("\n");
-							detalles.append("Clase Mixin").append(": ").append(clase).append("\n");
-							detalles.append("jar").append(": ").append(mixinInfo.obtenerJarOrigen()).append("\n\n");
+					// Caso normal: detalle de método
+					String nombreClase = clase;
+					int indicePunto = nombreClase.lastIndexOf('.');
+					if (indicePunto > 0) {
+						nombreClase = nombreClase.substring(indicePunto + 1);
+					}
 
-							if (!mixinInfo.obtenerTargets().isEmpty()) {
-								detalles.append("🎯 ").append(":\n");
-								for (String target : mixinInfo.obtenerTargets()) {
-									detalles.append("  → ").append(target).append("\n");
-								}
-								detalles.append("\n");
-							}
+					detalles.append(MonitorDePID.idioma.detalleMetodo()).append(" ").append(metodo.obtenerNombre())
+							.append(metodo.obtenerDescriptor()).append("\n");
+					detalles.append(MonitorDePID.idioma.clase()).append(": ").append(nombreClase).append("\n");
+					detalles.append(MonitorDePID.idioma.modulo()).append(": ").append(mod.ubicacion_para_publicar())
+							.append("\n\n");
 
-							if (!mixinInfo.obtenerMetodosMixin().isEmpty()) {
-								detalles.append("⚙️ ").append("Met mixin").append(":\n");
-								for (ArchivoDeMod.MixinMetodoInfo mm : mixinInfo.obtenerMetodosMixin()) {
-									String tipo = mm.esOverwrite() ? "[@Overwrite]" : "[@Inject]";
-									detalles.append("  • ").append(mm.obtenerNombre()).append(mm.obtenerDescriptor())
-											.append(" ").append(tipo).append("\n");
-									if (!mm.obtenerTargets().isEmpty()) {
-										detalles.append("    Targets: ").append(String.join(", ", mm.obtenerTargets()))
-												.append("\n");
-									}
-								}
-								detalles.append("\n");
-							}
+					detalles.append(MonitorDePID.idioma.referenciasAMetodos()).append(" (")
+							.append(metodo.obtenerReferenciasAMetodos().size()).append("):\n");
+					for (ArchivoDeMod.Referencia ref : metodo.obtenerReferenciasAMetodos()) {
+						String nombreClaseRef = convertirFormatoClasePuntos(ref.obtenerClase());
+						detalles.append("- ").append(nombreClaseRef).append(".").append(ref.obtenerNombre())
+								.append(ref.obtenerDescriptor()).append("\n");
+					}
+					detalles.append("\n");
 
-							if (!mixinInfo.obtenerCamposMixin().isEmpty()) {
-								detalles.append("📦 ").append("Mixin Campo").append(":\n");
-								for (ArchivoDeMod.MixinCampoInfo cm : mixinInfo.obtenerCamposMixin()) {
-									detalles.append("  • ").append(cm.obtenerNombre()).append(" ")
-											.append(cm.obtenerDescriptor()).append(" [@Shadow]\n");
-								}
-								detalles.append("\n");
-							}
+					detalles.append(MonitorDePID.idioma.referenciasACampos()).append(" (")
+							.append(metodo.obtenerReferenciasACampos().size()).append("):\n");
+					for (ArchivoDeMod.Referencia ref : metodo.obtenerReferenciasACampos()) {
+						String nombreClaseRef = convertirFormatoClasePuntos(ref.obtenerClase());
+						detalles.append("- ").append(nombreClaseRef).append(".").append(ref.obtenerNombre()).append(" ")
+								.append(ref.obtenerDescriptor()).append("\n");
+					}
+					detalles.append("\n");
+
+					java.util.LinkedHashSet<String> clasesReferenciadas = new java.util.LinkedHashSet<>();
+					for (ArchivoDeMod.Referencia ref : metodo.obtenerReferenciasAMetodos()) {
+						if (ref.obtenerClase() != null && !ref.obtenerClase().isEmpty()) {
+							clasesReferenciadas.add(convertirFormatoClasePuntos(ref.obtenerClase()));
 						}
 					}
-					// 🔹 Manejar targets específicos de mixin
-					else if (datos.length >= 4 && "target".equals(datos[2])) {
-						String target = (String) datos[3];
-						detalles.append("🎯 ").append("obj").append("\n");
-						detalles.append(MonitorDePID.idioma.clase()).append(": ").append(clase).append("\n");
-						detalles.append("obj").append(": ").append(target).append("\n");
-					}
-					// 🔹 Manejar métodos de mixin
-					else if (datos.length >= 4 && "mixin_metodo".equals(datos[3])) {
-						ArchivoDeMod.MixinMetodoInfo mm = (ArchivoDeMod.MixinMetodoInfo) datos[2];
-						detalles.append("⚙️ ").append(MonitorDePID.idioma.metodo()).append("\n");
-						detalles.append(MonitorDePID.idioma.nombres()).append(": ").append(mm.obtenerNombre())
-								.append("\n");
-						detalles.append("desc").append(": ").append(mm.obtenerDescriptor()).append("\n");
-						detalles.append(MonitorDePID.idioma.tipo()).append(": ")
-								.append(mm.esOverwrite() ? "@Overwrite" : "@Inject").append("\n");
-						if (!mm.obtenerTargets().isEmpty()) {
-							detalles.append("Objs").append(": ").append(String.join(", ", mm.obtenerTargets()))
-									.append("\n");
+					for (ArchivoDeMod.Referencia ref : metodo.obtenerReferenciasACampos()) {
+						if (ref.obtenerClase() != null && !ref.obtenerClase().isEmpty()) {
+							clasesReferenciadas.add(convertirFormatoClasePuntos(ref.obtenerClase()));
 						}
 					}
-					// 🔹 Manejar campos de mixin
-					else if (datos.length >= 4 && "mixin_campo".equals(datos[3])) {
-						ArchivoDeMod.MixinCampoInfo cm = (ArchivoDeMod.MixinCampoInfo) datos[2];
-						detalles.append("📦 ").append(MonitorDePID.idioma.campos()).append("\n");
-						detalles.append(MonitorDePID.idioma.nombres()).append(": ").append(cm.obtenerNombre())
-								.append("\n");
-						detalles.append("Desc").append(": ").append(cm.obtenerDescriptor()).append("\n");
+
+					detalles.append("Referencias de clase (").append(clasesReferenciadas.size()).append("):\n");
+					for (String claseRef : clasesReferenciadas) {
+						detalles.append("- ").append(claseRef).append("\n");
+					}
+					detalles.append("\n");
+
+					List<ArchivoDeMod.Constante> constantes = mod.buscarConstantesEnMetodo(convertirFormatoClase(clase),
+							metodo.obtenerNombre(), metodo.obtenerDescriptor());
+					detalles.append("Constantes (").append(constantes.size()).append("):\n");
+					for (ArchivoDeMod.Constante k : constantes) {
+						detalles.append("- ").append(formatearConstante(k)).append("\n");
 					}
 
+					areaContenido.setText(detalles.toString());
+					return;
+				}
+
+				// 🔹 Detalle de campo
+				if (datos.length >= 3 && datos[2] instanceof ArchivoDeMod.InfoCampo) {
+					ArchivoDeMod.InfoCampo campo = (ArchivoDeMod.InfoCampo) datos[2];
+					String nombreClase = clase;
+					int indicePunto = nombreClase.lastIndexOf('.');
+					if (indicePunto > 0) {
+						nombreClase = nombreClase.substring(indicePunto + 1);
+					}
+
+					detalles.append(MonitorDePID.idioma.detalleCampo()).append(" ").append(campo.obtenerNombre())
+							.append("\n");
+					detalles.append(MonitorDePID.idioma.clase()).append(": ").append(nombreClase).append("\n");
+					detalles.append(MonitorDePID.idioma.modulo()).append(": ").append(mod.ubicacion_para_publicar())
+							.append("\n");
+					detalles.append(MonitorDePID.idioma.tipo()).append(": ").append(campo.obtenerDescriptor())
+							.append("\n");
+
+					areaContenido.setText(detalles.toString());
+					return;
 				}
 			}
 		}
@@ -1510,209 +1715,284 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 		}
 	}
 
-public void cargarContenidoModuloAsync(DefaultMutableTreeNode nodoMod, ArchivoDeMod mod) {
-    setCargando(true);
-    new SwingWorker<List<DefaultMutableTreeNode>, Void>() {
-        @Override
-        protected List<DefaultMutableTreeNode> doInBackground() {
-            List<DefaultMutableTreeNode> hijos = new ArrayList<>();
+	/**
+	 * Carga de forma asíncrona el contenido de un mod dentro del árbol.
+	 * 
+	 * Esta versión: - sigue mostrando paquetes, clases, métodos y campos - añade un
+	 * bloque completo de información de mixin - añade referencias de clase
+	 * ("classrefs") además de referencias a métodos y campos
+	 */
+	public void cargarContenidoModuloAsync(DefaultMutableTreeNode nodoMod, ArchivoDeMod mod) {
+		setCargando(true);
 
-            // 🔹 PROCESAR MODS EMBEBIDOS (JAR-EN-JAR)
-            for (ArchivoDeMod submod : mod.mods_en_mods()) {
-                hijos.add(new DefaultMutableTreeNode(
-                        new NodoConTexto("📦 " + submod.ubicacion_para_publicar(), submod)));
-            }
+		new SwingWorker<List<DefaultMutableTreeNode>, Void>() {
+			@Override
+			protected List<DefaultMutableTreeNode> doInBackground() {
+				List<DefaultMutableTreeNode> hijos = new ArrayList<>();
 
-            if (!mod.clases().isEmpty()) {
-                Map<String, List<String>> clasesPorPaquete = agruparClasesPorPaquete(mod.clases());
-                for (Map.Entry<String, List<String>> entrada : clasesPorPaquete.entrySet()) {
-                    String paquete = entrada.getKey();
-                    List<String> clasesEnPaquete = entrada.getValue();
+				// 🔹 Primero, submods
+				for (ArchivoDeMod submod : mod.mods_en_mods()) {
+					hijos.add(new DefaultMutableTreeNode(
+							new NodoConTexto("📦 " + submod.ubicacion_para_publicar(), submod)));
+				}
 
-                    DefaultMutableTreeNode nodoPaquete;
-                    if (paquete.isEmpty()) {
-                        nodoPaquete = new DefaultMutableTreeNode(new NodoConTexto(
-                                "(paquete por defecto) (" + clasesEnPaquete.size() + " clases)", paquete));
-                    } else {
-                        nodoPaquete = new DefaultMutableTreeNode(
-                                new NodoConTexto(paquete + " (" + clasesEnPaquete.size() + " clases)", paquete));
-                    }
+				// 🔹 Luego, clases agrupadas por paquete
+				if (!mod.clases().isEmpty()) {
+					Map<String, List<String>> clasesPorPaquete = agruparClasesPorPaquete(mod.clases());
 
-                    for (String nombreClase : clasesEnPaquete) {
-                        String clasePuntos = paquete.isEmpty() ? nombreClase : paquete + "." + nombreClase;
-                        String claseInterna = normalizarNombreClaseInterno(clasePuntos);
+					for (Map.Entry<String, List<String>> entrada : clasesPorPaquete.entrySet()) {
+						String paquete = entrada.getKey();
+						List<String> clasesEnPaquete = entrada.getValue();
 
-                        // 🔹 DETECTAR Y MARCAR CLASES MIXIN
-                        boolean esMixin = mod.esClaseMixin(claseInterna);
-                        String etiquetaClase = esMixin ? "✨ " + nombreClase + " [Mixin]" : nombreClase;
+						DefaultMutableTreeNode nodoPaquete;
+						if (paquete.isEmpty()) {
+							nodoPaquete = new DefaultMutableTreeNode(new NodoConTexto(
+									"(paquete por defecto) (" + clasesEnPaquete.size() + " clases)", paquete));
+						} else {
+							nodoPaquete = new DefaultMutableTreeNode(
+									new NodoConTexto(paquete + " (" + clasesEnPaquete.size() + " clases)", paquete));
+						}
 
-                        DefaultMutableTreeNode nodoClase = new DefaultMutableTreeNode(
-                                new NodoConTexto(etiquetaClase, new Object[] { mod, clasePuntos }));
+						for (String nombreClase : clasesEnPaquete) {
+							String clasePuntos = paquete.isEmpty() ? nombreClase : paquete + "." + nombreClase;
+							String claseInterna = normalizarNombreClaseInterno(clasePuntos);
 
-                        // 🔹 AGREGAR NODO DE INFORMACIÓN DE MIXIN SI APLICA
-                        if (esMixin) {
-                            ArchivoDeMod.MixinInfo mixinInfo = mod.obtenerInfoMixin(claseInterna);
-                            if (mixinInfo != null) {
-                                DefaultMutableTreeNode nodoInfoMixin = new DefaultMutableTreeNode(
-                                        new NodoConTexto("🔗 Información de Mixin", "mixin_info"));
+							boolean esMixin = claseInterna != null && mod.esClaseMixin(claseInterna);
+							String etiquetaClase = esMixin ? "✨ " + nombreClase + " [Mixin]" : nombreClase;
 
-                                // Targets del @Mixin
-                                if (!mixinInfo.obtenerTargets().isEmpty()) {
-                                    DefaultMutableTreeNode nodoTargets = new DefaultMutableTreeNode(
-                                            new NodoConTexto("Targets: " + mixinInfo.obtenerTargets().size(),
-                                                    "mixin_targets"));
-                                    for (String target : mixinInfo.obtenerTargets()) {
-                                        nodoTargets.add(new DefaultMutableTreeNode(new NodoConTexto("→ " + target,
-                                                new Object[] { mod, clasePuntos, "target", target })));
-                                    }
-                                    nodoInfoMixin.add(nodoTargets);
-                                }
+							DefaultMutableTreeNode nodoClase = new DefaultMutableTreeNode(
+									new NodoConTexto(etiquetaClase, new Object[] { mod, clasePuntos }));
 
-                                // Métodos @Inject/@Overwrite
-                                if (!mixinInfo.obtenerMetodosMixin().isEmpty()) {
-                                    DefaultMutableTreeNode nodoMetodosMixin = new DefaultMutableTreeNode(
-                                            new NodoConTexto(
-                                                    "Métodos Mixin: " + mixinInfo.obtenerMetodosMixin().size(),
-                                                    "mixin_metodos"));
-                                    for (ArchivoDeMod.MixinMetodoInfo mm : mixinInfo.obtenerMetodosMixin()) {
-                                        String tipo = mm.esOverwrite() ? "[Overwrite]" : "[Inject]";
-                                        nodoMetodosMixin.add(new DefaultMutableTreeNode(new NodoConTexto(
-                                                mm.obtenerNombre() + mm.obtenerDescriptor() + " " + tipo,
-                                                new Object[] { mod, clasePuntos, mm, "mixin_metodo" })));
-                                    }
-                                    nodoInfoMixin.add(nodoMetodosMixin);
-                                }
+							// 🔹 Bloque de información de mixin
+							if (esMixin) {
+								ArchivoDeMod.MixinInfo mixinInfo = mod.obtenerInfoMixin(claseInterna);
+								if (mixinInfo != null) {
+									DefaultMutableTreeNode nodoInfoMixin = new DefaultMutableTreeNode(
+											new NodoConTexto("🔗 Información de Mixin",
+													new Object[] { mod, clasePuntos, "mixin_info" }));
 
-                                // Campos @Shadow
-                                if (!mixinInfo.obtenerCamposMixin().isEmpty()) {
-                                    DefaultMutableTreeNode nodoCamposMixin = new DefaultMutableTreeNode(
-                                            new NodoConTexto(
-                                                    "Campos @Shadow: " + mixinInfo.obtenerCamposMixin().size(),
-                                                    "mixin_campos"));
-                                    for (ArchivoDeMod.MixinCampoInfo cm : mixinInfo.obtenerCamposMixin()) {
-                                        nodoCamposMixin.add(new DefaultMutableTreeNode(
-                                                new NodoConTexto(cm.obtenerNombre() + " " + cm.obtenerDescriptor(),
-                                                        new Object[] { mod, clasePuntos, cm, "mixin_campo" })));
-                                    }
-                                    nodoInfoMixin.add(nodoCamposMixin);
-                                }
+									// Targets
+									if (!mixinInfo.obtenerTargets().isEmpty()) {
+										DefaultMutableTreeNode nodoTargets = new DefaultMutableTreeNode(
+												new NodoConTexto("Targets: " + mixinInfo.obtenerTargets().size(),
+														"mixin_targets"));
 
-                                nodoClase.add(nodoInfoMixin);
-                            }
-                        }
+										for (String target : mixinInfo.obtenerTargets()) {
+											nodoTargets.add(new DefaultMutableTreeNode(new NodoConTexto("→ " + target,
+													new Object[] { mod, clasePuntos, "target", target })));
+										}
 
-                        // 🔹 AGREGAR MÉTODOS Y CAMPOS (CÓDIGO QUE FALTABA)
-                        if (Buscardor.puedeAnalizarElContentidoDeClase() && mod.existeClase(claseInterna)) {
-                            // Métodos
-                            List<ArchivoDeMod.InfoMetodo> metodos = mod.obtenerMetodosConReferencias(claseInterna);
-                            if (!metodos.isEmpty()) {
-                                DefaultMutableTreeNode nodoMetodos = new DefaultMutableTreeNode(new NodoConTexto(
-                                        MonitorDePID.idioma.metodos() + " (" + metodos.size() + ")", "contenedor_metodos"));
-                                
-                                for (ArchivoDeMod.InfoMetodo metodo : metodos) {
-                                    DefaultMutableTreeNode nodoMetodo = new DefaultMutableTreeNode(
-                                            new NodoConTexto(metodo.obtenerNombre() + metodo.obtenerDescriptor(),
-                                                    new Object[] { mod, clasePuntos, metodo }));
+										nodoInfoMixin.add(nodoTargets);
+									}
 
-                                    // Constantes del método
-                                    List<ArchivoDeMod.Constante> constantes = mod.buscarConstantesEnMetodo(
-                                            claseInterna, metodo.obtenerNombre(), metodo.obtenerDescriptor());
-                                    if (!constantes.isEmpty()) {
-                                        DefaultMutableTreeNode nodoConstantes = new DefaultMutableTreeNode(
-                                                new NodoConTexto("Constantes (" + constantes.size() + ")", "contenedor_constantes"));
-                                        for (ArchivoDeMod.Constante k : constantes) {
-                                            nodoConstantes.add(new DefaultMutableTreeNode(
-                                                    new NodoConTexto(formatearConstante(k),
-                                                            new Object[] { mod, clasePuntos, metodo, k })));
-                                        }
-                                        nodoMetodo.add(nodoConstantes);
-                                    }
+									// Métodos mixin
+									if (!mixinInfo.obtenerMetodosMixin().isEmpty()) {
+										DefaultMutableTreeNode nodoMetodosMixin = new DefaultMutableTreeNode(
+												new NodoConTexto(
+														"Métodos Mixin: " + mixinInfo.obtenerMetodosMixin().size(),
+														"mixin_metodos"));
 
-                                    // Referencias del método
-                                    if (!metodo.obtenerReferenciasAMetodos().isEmpty()
-                                            || !metodo.obtenerReferenciasACampos().isEmpty()) {
-                                        DefaultMutableTreeNode nodoReferencias = new DefaultMutableTreeNode(
-                                                new NodoConTexto(
-                                                        MonitorDePID.idioma.referencias() + " ("
-                                                                + (metodo.obtenerReferenciasAMetodos().size()
-                                                                        + metodo.obtenerReferenciasACampos().size())
-                                                                + ")",
-                                                        "contenedor_referencias"));
+										for (ArchivoDeMod.MixinMetodoInfo mm : mixinInfo.obtenerMetodosMixin()) {
+											String tipo = mm.esOverwrite() ? "[@Overwrite]" : "[@Inject]";
+											nodoMetodosMixin.add(new DefaultMutableTreeNode(new NodoConTexto(
+													mm.obtenerNombre() + mm.obtenerDescriptor() + " " + tipo,
+													new Object[] { mod, clasePuntos, mm, "mixin_metodo" })));
+										}
 
-                                        for (ArchivoDeMod.Referencia refMetodo : metodo.obtenerReferenciasAMetodos()) {
-                                            String nombreClaseMostrar = Buscardor
-                                                    .convertirFormatoClasePuntos(refMetodo.obtenerClase());
-                                            DefaultMutableTreeNode nodoRefMetodo = new DefaultMutableTreeNode(
-                                                    new NodoConTexto(
-                                                            MonitorDePID.idioma.metodo() + ": " + nombreClaseMostrar + "."
-                                                                    + refMetodo.obtenerNombre()
-                                                                    + refMetodo.obtenerDescriptor(),
-                                                            new Object[] { mod, clasePuntos, metodo, refMetodo }));
-                                            nodoReferencias.add(nodoRefMetodo);
-                                        }
+										nodoInfoMixin.add(nodoMetodosMixin);
+									}
 
-                                        for (ArchivoDeMod.Referencia refCampo : metodo.obtenerReferenciasACampos()) {
-                                            String nombreClaseMostrar = Buscardor
-                                                    .convertirFormatoClasePuntos(refCampo.obtenerClase());
-                                            DefaultMutableTreeNode nodoRefCampo = new DefaultMutableTreeNode(
-                                                    new NodoConTexto(
-                                                            MonitorDePID.idioma.campo() + ": " + nombreClaseMostrar + "."
-                                                                    + refCampo.obtenerNombre() + " "
-                                                                    + refCampo.obtenerDescriptor(),
-                                                            new Object[] { mod, clasePuntos, metodo, refCampo }));
-                                            nodoReferencias.add(nodoRefCampo);
-                                        }
-                                        nodoMetodo.add(nodoReferencias);
-                                    }
-                                    nodoMetodos.add(nodoMetodo);
-                                }
-                                nodoClase.add(nodoMetodos);
-                            }
+									// Campos mixin
+									if (!mixinInfo.obtenerCamposMixin().isEmpty()) {
+										DefaultMutableTreeNode nodoCamposMixin = new DefaultMutableTreeNode(
+												new NodoConTexto(
+														"Campos Mixin: " + mixinInfo.obtenerCamposMixin().size(),
+														"mixin_campos"));
 
-                            // Campos
-                            List<ArchivoDeMod.InfoCampo> campos = mod.obtenerCampos(claseInterna);
-                            if (!campos.isEmpty()) {
-                                DefaultMutableTreeNode nodoCampos = new DefaultMutableTreeNode(new NodoConTexto(
-                                        MonitorDePID.idioma.campos() + " (" + campos.size() + ")", "contenedor_campos"));
-                                for (ArchivoDeMod.InfoCampo campo : campos) {
-                                    DefaultMutableTreeNode nodoCampo = new DefaultMutableTreeNode(
-                                            new NodoConTexto(campo.obtenerNombre() + " " + campo.obtenerDescriptor(),
-                                                    new Object[] { mod, clasePuntos, campo }));
-                                    nodoCampos.add(nodoCampo);
-                                }
-                                nodoClase.add(nodoCampos);
-                            }
-                        }
-                        
-                        nodoPaquete.add(nodoClase);
-                    }
-                    hijos.add(nodoPaquete);
-                }
-            }
-            return hijos;
-        }
+										for (ArchivoDeMod.MixinCampoInfo cm : mixinInfo.obtenerCamposMixin()) {
+											nodoCamposMixin.add(new DefaultMutableTreeNode(new NodoConTexto(
+													cm.obtenerNombre() + " " + cm.obtenerDescriptor() + " [@Shadow]",
+													new Object[] { mod, clasePuntos, cm, "mixin_campo" })));
+										}
 
-        @Override
-        protected void done() {
-            try {
-                if (!isCancelled()) {
-                    List<DefaultMutableTreeNode> hijos = get();
-                    for (DefaultMutableTreeNode hijo : hijos) {
-                        modeloArbol.insertNodeInto(hijo, nodoMod, nodoMod.getChildCount());
-                    }
-                    modeloArbol.nodeStructureChanged(nodoMod);
-                    arbolModulos.expandPath(new TreePath(nodoMod.getPath()));
-                    com.asbestosstar.crashdetector.CrashDetectorLogger.log("✅ [EXPAND] Contenido cargado...");
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            } finally {
-                setCargando(false);
-            }
-        }
-    }.execute();
-}
+										nodoInfoMixin.add(nodoCamposMixin);
+									}
 
+									nodoClase.add(nodoInfoMixin);
+								}
+							}
+
+							// 🔹 Si no se puede analizar el contenido, dejar solo la clase
+							if (!Buscardor.puedeAnalizarElContentidoDeClase() || claseInterna == null
+									|| !mod.existeClase(claseInterna)) {
+								nodoPaquete.add(nodoClase);
+								continue;
+							}
+
+							// 🔹 Métodos
+							List<ArchivoDeMod.InfoMetodo> metodos = mod.obtenerMetodosConReferencias(claseInterna);
+							if (!metodos.isEmpty()) {
+								DefaultMutableTreeNode nodoMetodos = new DefaultMutableTreeNode(
+										new NodoConTexto(MonitorDePID.idioma.metodos() + " (" + metodos.size() + ")",
+												"contenedor_metodos"));
+
+								for (ArchivoDeMod.InfoMetodo metodo : metodos) {
+									DefaultMutableTreeNode nodoMetodo = new DefaultMutableTreeNode(
+											new NodoConTexto(metodo.obtenerNombre() + metodo.obtenerDescriptor(),
+													new Object[] { mod, clasePuntos, metodo }));
+
+									// Referencias del método
+									boolean tieneRefMetodos = !metodo.obtenerReferenciasAMetodos().isEmpty();
+									boolean tieneRefCampos = !metodo.obtenerReferenciasACampos().isEmpty();
+
+									if (tieneRefMetodos || tieneRefCampos) {
+										DefaultMutableTreeNode nodoReferencias = new DefaultMutableTreeNode(
+												new NodoConTexto(MonitorDePID.idioma.referencias() + " ("
+														+ (metodo.obtenerReferenciasAMetodos().size()
+																+ metodo.obtenerReferenciasACampos().size())
+														+ ")", "contenedor_referencias"));
+
+										// Referencias a métodos
+										for (ArchivoDeMod.Referencia refMetodo : metodo.obtenerReferenciasAMetodos()) {
+											String nombreClaseMostrar = convertirFormatoClasePuntos(
+													refMetodo.obtenerClase());
+
+											DefaultMutableTreeNode nodoRefMetodo = new DefaultMutableTreeNode(
+													new NodoConTexto(
+															MonitorDePID.idioma.metodo() + ": " + nombreClaseMostrar
+																	+ "." + refMetodo.obtenerNombre()
+																	+ refMetodo.obtenerDescriptor(),
+															new Object[] { mod, clasePuntos, metodo, refMetodo }));
+
+											nodoReferencias.add(nodoRefMetodo);
+										}
+
+										// Referencias a campos
+										for (ArchivoDeMod.Referencia refCampo : metodo.obtenerReferenciasACampos()) {
+											String nombreClaseMostrar = convertirFormatoClasePuntos(
+													refCampo.obtenerClase());
+
+											DefaultMutableTreeNode nodoRefCampo = new DefaultMutableTreeNode(
+													new NodoConTexto(
+															MonitorDePID.idioma.campo() + ": " + nombreClaseMostrar
+																	+ "." + refCampo.obtenerNombre() + " "
+																	+ refCampo.obtenerDescriptor(),
+															new Object[] { mod, clasePuntos, metodo, refCampo }));
+
+											nodoReferencias.add(nodoRefCampo);
+										}
+
+										// 🔹 Referencias de clase deduplicadas
+										java.util.LinkedHashSet<String> clasesReferenciadas = new java.util.LinkedHashSet<>();
+
+										for (ArchivoDeMod.Referencia refMetodo : metodo.obtenerReferenciasAMetodos()) {
+											if (refMetodo.obtenerClase() != null
+													&& !refMetodo.obtenerClase().isEmpty()) {
+												clasesReferenciadas.add(refMetodo.obtenerClase());
+											}
+										}
+
+										for (ArchivoDeMod.Referencia refCampo : metodo.obtenerReferenciasACampos()) {
+											if (refCampo.obtenerClase() != null && !refCampo.obtenerClase().isEmpty()) {
+												clasesReferenciadas.add(refCampo.obtenerClase());
+											}
+										}
+
+										if (!clasesReferenciadas.isEmpty()) {
+											DefaultMutableTreeNode nodoClassRefs = new DefaultMutableTreeNode(
+													new NodoConTexto(
+															"Referencias de clase (" + clasesReferenciadas.size() + ")",
+															"contenedor_classrefs"));
+
+											for (String claseRef : clasesReferenciadas) {
+												String nombreClaseMostrar = convertirFormatoClasePuntos(claseRef);
+
+												nodoClassRefs.add(new DefaultMutableTreeNode(new NodoConTexto(
+														"Clase: " + nombreClaseMostrar,
+														new Object[] { mod, clasePuntos, metodo,
+																new ArchivoDeMod.Referencia(claseRef, "", "", true),
+																"classref" })));
+											}
+
+											nodoReferencias.add(nodoClassRefs);
+										}
+
+										nodoMetodo.add(nodoReferencias);
+									}
+
+									// Constantes
+									try {
+										List<ArchivoDeMod.Constante> constantes = mod.buscarConstantesEnMetodo(
+												claseInterna, metodo.obtenerNombre(), metodo.obtenerDescriptor());
+
+										if (!constantes.isEmpty()) {
+											DefaultMutableTreeNode nodoConstantes = new DefaultMutableTreeNode(
+													new NodoConTexto("Constantes (" + constantes.size() + ")",
+															"contenedor_constantes"));
+
+											for (ArchivoDeMod.Constante k : constantes) {
+												nodoConstantes.add(new DefaultMutableTreeNode(new NodoConTexto(
+														formatearConstante(k),
+														new Object[] { mod, clasePuntos, metodo, k, "constante" })));
+											}
+
+											nodoMetodo.add(nodoConstantes);
+										}
+									} catch (Throwable t) {
+										CrashDetectorLogger.logException(t);
+									}
+
+									nodoMetodos.add(nodoMetodo);
+								}
+
+								nodoClase.add(nodoMetodos);
+							}
+
+							// 🔹 Campos
+							List<ArchivoDeMod.InfoCampo> campos = mod.obtenerCampos(claseInterna);
+							if (!campos.isEmpty()) {
+								DefaultMutableTreeNode nodoCampos = new DefaultMutableTreeNode(
+										new NodoConTexto(MonitorDePID.idioma.campos() + " (" + campos.size() + ")",
+												"contenedor_campos"));
+
+								for (ArchivoDeMod.InfoCampo campo : campos) {
+									nodoCampos.add(new DefaultMutableTreeNode(
+											new NodoConTexto(campo.obtenerNombre() + " " + campo.obtenerDescriptor(),
+													new Object[] { mod, clasePuntos, campo })));
+								}
+
+								nodoClase.add(nodoCampos);
+							}
+
+							nodoPaquete.add(nodoClase);
+						}
+
+						hijos.add(nodoPaquete);
+					}
+				}
+
+				return hijos;
+			}
+
+			@Override
+			protected void done() {
+				try {
+					List<DefaultMutableTreeNode> hijos = get();
+
+					nodoMod.removeAllChildren();
+					for (DefaultMutableTreeNode hijo : hijos) {
+						nodoMod.add(hijo);
+					}
+
+					modeloArbol.reload(nodoMod);
+				} catch (Exception e) {
+					CrashDetectorLogger.logException(e);
+				} finally {
+					setCargando(false);
+				}
+			}
+		}.execute();
+	}
 
 	public void iniciarCargaPesada() {
 		setCargando(true);

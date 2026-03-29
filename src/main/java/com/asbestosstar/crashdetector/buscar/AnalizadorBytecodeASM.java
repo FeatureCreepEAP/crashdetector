@@ -84,59 +84,105 @@ public class AnalizadorBytecodeASM {
 
 	/**
 	 * Extrae los targets de la anotación @Mixin.
+	 * 
+	 * Soporta: - @Mixin(targets = { "a.b.C" }) - @Mixin(value = Foo.class)
+	 * - @Mixin({ Foo.class, Bar.class })
 	 */
 	private static List<String> extraerTargetsMixin(ClassNode cn) {
 		List<String> targets = new ArrayList<>();
-		if (cn.visibleAnnotations == null)
+		if (cn.visibleAnnotations == null) {
 			return targets;
+		}
 
 		for (AnnotationNode ann : cn.visibleAnnotations) {
-			if (ann.desc != null && ann.desc.contains("org/spongepowered/asm/mixin/Mixin")) {
-				if (ann.values == null)
-					continue;
-				for (int i = 0; i < ann.values.size(); i += 2) {
-					Object key = ann.values.get(i);
-					Object value = ann.values.get(i + 1);
-					if (!"targets".equals(key) || !(value instanceof List))
-						continue;
-					@SuppressWarnings("unchecked")
-					List<String> stringTargets = (List<String>) value;
-					for (String t : stringTargets) {
-						if (t != null && !targets.contains(t))
-							targets.add(t);
-					}
-					// También manejar value() que puede ser Type o List<Type>
-					if ("value".equals(key)) {
-						extraerTargetsDeValue(value, targets);
-					}
-				}
+			if (ann.desc == null || !ann.desc.contains("org/spongepowered/asm/mixin/Mixin")) {
+				continue;
+			}
+
+			if (ann.values == null) {
 				break;
 			}
+
+			for (int i = 0; i < ann.values.size(); i += 2) {
+				Object key = ann.values.get(i);
+				Object value = ann.values.get(i + 1);
+
+				// Caso: @Mixin(targets = { "a.b.C", "x.y.Z" })
+				if ("targets".equals(key) && value instanceof List) {
+					@SuppressWarnings("unchecked")
+					List<Object> lista = (List<Object>) value;
+
+					for (Object item : lista) {
+						if (item == null) {
+							continue;
+						}
+
+						if (item instanceof String) {
+							String target = ((String) item).trim();
+							if (!target.isEmpty() && !targets.contains(target)) {
+								targets.add(target);
+							}
+						} else if (item instanceof Type) {
+							Type t = (Type) item;
+							if (t.getSort() == Type.OBJECT) {
+								String nombre = t.getClassName();
+								if (nombre != null && !nombre.isEmpty() && !targets.contains(nombre)) {
+									targets.add(nombre);
+								}
+							}
+						}
+					}
+					continue;
+				}
+
+				// Caso: @Mixin(Foo.class) o @Mixin(value = { Foo.class, Bar.class })
+				if ("value".equals(key)) {
+					extraerTargetsDeValue(value, targets);
+				}
+			}
+
+			break;
 		}
+
 		return targets;
 	}
 
 	/**
-	 * Helper para extraer targets desde el atributo value() del @Mixin.
+	 * Extrae targets desde el atributo value() del @Mixin.
 	 */
 	private static void extraerTargetsDeValue(Object value, List<String> targets) {
+		if (value == null) {
+			return;
+		}
+
 		if (value instanceof Type) {
 			Type t = (Type) value;
 			if (t.getSort() == Type.OBJECT) {
 				String nombre = t.getClassName();
-				if (nombre != null && !targets.contains(nombre))
+				if (nombre != null && !nombre.isEmpty() && !targets.contains(nombre)) {
 					targets.add(nombre);
+				}
 			}
-		} else if (value instanceof List) {
+			return;
+		}
+
+		if (value instanceof List) {
 			@SuppressWarnings("unchecked")
 			List<Object> lista = (List<Object>) value;
+
 			for (Object item : lista) {
 				if (item instanceof Type) {
 					Type t = (Type) item;
 					if (t.getSort() == Type.OBJECT) {
 						String nombre = t.getClassName();
-						if (nombre != null && !targets.contains(nombre))
+						if (nombre != null && !nombre.isEmpty() && !targets.contains(nombre)) {
 							targets.add(nombre);
+						}
+					}
+				} else if (item instanceof String) {
+					String nombre = ((String) item).trim();
+					if (!nombre.isEmpty() && !targets.contains(nombre)) {
+						targets.add(nombre);
 					}
 				}
 			}
