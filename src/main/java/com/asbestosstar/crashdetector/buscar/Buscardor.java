@@ -64,11 +64,26 @@ public class Buscardor {
 				// Cerrar el pool de hilos de manera ordenada
 				cerrarThreadPoolExecutor(ejecutor);
 
+				leerMixerLogger();
+
 				cargado = true;
 			} catch (IOException e) {
 				CrashDetectorLogger.logException(e);
 			}
 		}
+	}
+
+	private static void leerMixerLogger() {
+		// 1. Intentar cargar cache desde MixerLogger log en las consolas
+		// Esto busca automáticamente en MonitorDePID.consolas
+		boolean logCargado = ParserMixerLogger.cargarDesdeConsolas();
+
+		if (logCargado) {
+			CrashDetectorLogger.log("[leer] Cache de MixerLogger cargado exitosamente");
+		} else {
+			CrashDetectorLogger.log("[leer] No se encontró MixerLogger.log, continuando sin cache");
+		}
+
 	}
 
 	/**

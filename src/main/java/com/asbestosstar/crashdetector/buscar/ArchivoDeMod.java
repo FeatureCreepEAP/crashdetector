@@ -11,6 +11,11 @@ import com.asbestosstar.crashdetector.cargador.Cargador;
  * Interfaz que representa un archivo de mod (JAR, ZIP, directorio) y sus
  * contenidos. Proporciona métodos para explorar y analizar mods sin depender
  * directamente de ASM o Javassist.
+ * 
+ * <p>
+ * Para análisis de mixins, delega toda la lógica de parsing a
+ * {@link ParserMixerLogger}.
+ * </p>
  */
 public interface ArchivoDeMod {
 
@@ -145,7 +150,26 @@ public interface ArchivoDeMod {
 		return ASM_DISPONIBLE || JAVASSIST_DISPONIBLE;
 	}
 
-	// MÉTODOS DE ANÁLISIS DE BYTECODE
+	// ========================================================================
+	// MÉTODO PRINCIPAL: CARGAR CACHE DESDE MIXERLOGGER (DELEGADO A PARSER)
+	// ========================================================================
+
+	/**
+	 * Busca y carga el cache desde el log de MixerLogger en las consolas.
+	 * 
+	 * <p>
+	 * Este método delega toda la lógica de parsing a {@link ParserMixerLogger}.
+	 * </p>
+	 * 
+	 * @return true si se encontró y procesó un log, false si no hay log disponible
+	 */
+	public default boolean cargarCacheDesdeMixerLogger() {
+		return ParserMixerLogger.cargarDesdeConsolas();
+	}
+
+	// ========================================================================
+	// MÉTODOS DE ANÁLISIS DE BYTECODE (CON CONSULTA A CACHE)
+	// ========================================================================
 
 	/**
 	 * Verifica si una clase existe en el mod.
@@ -158,10 +182,22 @@ public interface ArchivoDeMod {
 	/**
 	 * Obtiene información de métodos de una clase incluyendo referencias internas.
 	 * 
+	 * <p>
+	 * Primero consulta el cache de ParserMixerLogger si está cargado.
+	 * </p>
+	 * 
 	 * @param nombreClase Nombre completo de la clase
 	 * @return Lista con información de métodos y sus referencias
 	 */
 	default List<InfoMetodo> obtenerMetodosConReferencias(String nombreClase) {
+		// Primero intentar obtener desde cache de ParserMixerLogger
+		String nombrePunto = nombreClase.replace('/', '.');
+		List<InfoMetodo> cacheados = ParserMixerLogger.obtenerMetodosDesdeCache(nombrePunto);
+		if (!cacheados.isEmpty()) {
+			return cacheados;
+		}
+
+		// Fallback a análisis de bytecode
 		if (ASM_DISPONIBLE) {
 			return AnalizadorBytecodeASM.analizarMetodos(this, nombreClase);
 		} else if (JAVASSIST_DISPONIBLE) {
@@ -174,10 +210,20 @@ public interface ArchivoDeMod {
 	/**
 	 * Obtiene campos declarados en una clase.
 	 * 
+	 * <p>
+	 * Primero consulta el cache de ParserMixerLogger si está cargado.
+	 * </p>
+	 * 
 	 * @param nombreClase Nombre completo de la clase
 	 * @return Lista con información de campos
 	 */
 	default List<InfoCampo> obtenerCampos(String nombreClase) {
+		String nombrePunto = nombreClase.replace('/', '.');
+		List<InfoCampo> cacheados = ParserMixerLogger.obtenerCamposDesdeCache(nombrePunto);
+		if (!cacheados.isEmpty()) {
+			return cacheados;
+		}
+
 		if (ASM_DISPONIBLE) {
 			return AnalizadorBytecodeASM.analizarCampos(this, nombreClase);
 		} else if (JAVASSIST_DISPONIBLE) {
@@ -190,12 +236,31 @@ public interface ArchivoDeMod {
 	/**
 	 * Busca todas las referencias dentro de un método específico.
 	 * 
+	 * <p>
+	 * Primero consulta el cache de ParserMixerLogger si está cargado.
+	 * </p>
+	 * 
 	 * @param nombreClase  Nombre completo de la clase
 	 * @param nombreMetodo Nombre del método
 	 * @param descriptor   Descriptor del método (ej: "(Ljava/lang/String;)V")
 	 * @return Lista de referencias encontradas en el método
 	 */
 	default List<Referencia> buscarReferenciasEnMetodo(String nombreClase, String nombreMetodo, String descriptor) {
+		String nombrePunto = nombreClase.replace('/', '.');
+		List<Referencia> cacheadas = ParserMixerLogger.obtenerReferenciasDesdeCache(nombrePunto);
+		if (!cacheadas.isEmpty()) {
+			// Filtrar por método específico
+			List<Referencia> filtradas = new ArrayList<>();
+			for (Referencia r : cacheadas) {
+				if (r.esMetodo() && r.obtenerNombre().equals(nombreMetodo)
+						&& r.obtenerDescriptor().equals(descriptor)) {
+					filtradas.add(r);
+				}
+			}
+			if (!filtradas.isEmpty())
+				return filtradas;
+		}
+
 		if (ASM_DISPONIBLE) {
 			return AnalizadorBytecodeASM.analizarReferenciasEnMetodo(this, nombreClase, nombreMetodo, descriptor);
 		} else if (JAVASSIST_DISPONIBLE) {
@@ -227,9 +292,10 @@ public interface ArchivoDeMod {
 	}
 
 	/**
+	 * Obtiene nombres de módulo desde module-info.class.
 	 * 
-	 * @param moduleinfo
-	 * @return
+	 * @param moduleinfo Bytes del archivo module-info.class
+	 * @return Lista de nombres de módulo encontrados
 	 */
 	public default List<String> obtenerNombresDeModuleInfo(byte[] moduleinfo) {
 		if (ASM_DISPONIBLE) {
@@ -239,6 +305,108 @@ public interface ArchivoDeMod {
 		} else {
 			return new ArrayList<>();
 		}
+	}
+
+	// ========================================================================
+	// MÉTODOS PARA ANÁLISIS DE MIXINS (DELEGADOS A PARSER)
+	// ========================================================================
+
+	/**
+	 * Verifica si una clase es un mixin de SpongePowered (tiene @Mixin).
+	 * 
+	 * <p>
+	 * Primero consulta el cache de ParserMixerLogger si está cargado.
+	 * </p>
+	 * 
+	 * @param nombreClase Nombre de la clase en formato interno (ej: "a/b/CMixin")
+	 * @return true si la clase tiene la anotación @Mixin, false en caso contrario
+	 */
+	default boolean esClaseMixin(String nombreClase) {
+		String nombrePunto = nombreClase.replace('/', '.');
+		if (ParserMixerLogger.esCacheCargado() && ParserMixerLogger.obtenerMixinDesdeCache(nombrePunto) != null) {
+			return true;
+		}
+
+		if (ASM_DISPONIBLE) {
+			return AnalizadorBytecodeASM.esClaseMixin(this, nombreClase);
+		} else if (JAVASSIST_DISPONIBLE) {
+			return AnalizadorBytecodeJavassist.esClaseMixin(this, nombreClase);
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Obtiene información detallada de un mixin.
+	 * 
+	 * <p>
+	 * Primero consulta el cache de ParserMixerLogger si está cargado.
+	 * </p>
+	 * 
+	 * @param nombreClase Nombre de la clase mixin en formato interno
+	 * @return Objeto MixinInfo con los datos extraídos, o null si no es mixin o hay
+	 *         error
+	 */
+	default MixinInfo obtenerInfoMixin(String nombreClase) {
+		String nombrePunto = nombreClase.replace('/', '.');
+		MixinInfo cacheado = ParserMixerLogger.obtenerMixinDesdeCache(nombrePunto);
+		if (cacheado != null) {
+			return cacheado;
+		}
+
+		if (ASM_DISPONIBLE) {
+			return AnalizadorBytecodeASM.obtenerInfoMixin(this, nombreClase);
+		} else if (JAVASSIST_DISPONIBLE) {
+			return AnalizadorBytecodeJavassist.obtenerInfoMixin(this, nombreClase);
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * Busca todas las clases mixin en este mod.
+	 * 
+	 * <p>
+	 * Si el cache de ParserMixerLogger está cargado, retorna las clases cacheadas.
+	 * </p>
+	 * 
+	 * @return Lista de nombres de clases que son mixins (formato interno)
+	 */
+	default List<String> buscarClasesMixin() {
+		if (ParserMixerLogger.esCacheCargado()) {
+			List<String> resultados = new ArrayList<>();
+			// Iterar sobre las claves del cache interno de ParserMixerLogger
+			// (usamos reflexión para acceder al mapa privado de forma segura)
+			try {
+				java.lang.reflect.Field fieldCache = ParserMixerLogger.class.getDeclaredField("Cache");
+				fieldCache.setAccessible(true);
+				Object cacheInstance = fieldCache.get(null);
+				java.lang.reflect.Field fieldMap = cacheInstance.getClass().getDeclaredField("mixinsPorClase");
+				fieldMap.setAccessible(true);
+				@SuppressWarnings("unchecked")
+				java.util.Map<String, ?> cacheMap = (java.util.Map<String, ?>) fieldMap.get(cacheInstance);
+				for (String nombrePunto : cacheMap.keySet()) {
+					resultados.add(nombrePunto.replace('.', '/'));
+				}
+			} catch (Exception e) {
+				// Si falla la reflexión, fallback a búsqueda manual
+				for (String nombreClase : obtenerTodosLosNombresDeClases()) {
+					if (esClaseMixin(nombreClase)) {
+						resultados.add(nombreClase);
+					}
+				}
+			}
+			return resultados;
+		}
+
+		// Fallback: búsqueda manual si el cache no está cargado
+		List<String> resultados = new ArrayList<>();
+		for (String nombreClase : obtenerTodosLosNombresDeClases()) {
+			if (esClaseMixin(nombreClase)) {
+				resultados.add(nombreClase);
+			}
+		}
+		return resultados;
 	}
 
 	/**
@@ -266,13 +434,10 @@ public interface ArchivoDeMod {
 
 	public default boolean funcionarConCargadoresActuales() {
 		for (Cargador car : cargadores()) {
-
 			if (Cargador.cargadores_activados.contains(car)) {
 				return true;
 			}
-
 		}
-
 		return false;
 	}
 
@@ -286,7 +451,9 @@ public interface ArchivoDeMod {
 		return false;
 	}
 
+	// ========================================================================
 	// CLASES AUXILIARES PARA ANÁLISIS DE BYTECODE
+	// ========================================================================
 
 	/**
 	 * Información detallada de un método incluyendo sus referencias internas.
@@ -381,10 +548,216 @@ public interface ArchivoDeMod {
 	}
 
 	/**
-	 * Implementación vacía para el origen predeterminado.
+	 * Contiene toda la información extraída de una clase mixin de SpongePowered.
+	 * Incluye targets del @Mixin, métodos con @Inject/@Overwrite, campos @Shadow, y
+	 * mapeos de refmap cuando están disponibles.
 	 */
-	static class Origin implements ArchivoDeMod {
+	public static class MixinInfo {
+		private final String nombreClase;
+		private final String jarOrigen;
+		private final List<String> targets;
+		private final List<MixinMetodoInfo> metodosMixin;
+		private final List<MixinCampoInfo> camposMixin;
+		private final List<String> targetsInject;
+		private final java.util.Map<String, String> refmapMetodos;
+		private final java.util.Map<String, String> refmapCampos;
 
+		public MixinInfo(String nombreClase, String jarOrigen, List<String> targets, List<MixinMetodoInfo> metodosMixin,
+				List<MixinCampoInfo> camposMixin, List<String> targetsInject,
+				java.util.Map<String, String> refmapMetodos, java.util.Map<String, String> refmapCampos) {
+			this.nombreClase = nombreClase;
+			this.jarOrigen = jarOrigen;
+			this.targets = targets != null ? new ArrayList<>(targets) : new ArrayList<>();
+			this.metodosMixin = metodosMixin != null ? new ArrayList<>(metodosMixin) : new ArrayList<>();
+			this.camposMixin = camposMixin != null ? new ArrayList<>(camposMixin) : new ArrayList<>();
+			this.targetsInject = targetsInject != null ? new ArrayList<>(targetsInject) : new ArrayList<>();
+			this.refmapMetodos = refmapMetodos != null ? new java.util.HashMap<>(refmapMetodos)
+					: new java.util.HashMap<>();
+			this.refmapCampos = refmapCampos != null ? new java.util.HashMap<>(refmapCampos)
+					: new java.util.HashMap<>();
+		}
+
+		public String obtenerNombreClase() {
+			return nombreClase;
+		}
+
+		public String obtenerJarOrigen() {
+			return jarOrigen;
+		}
+
+		public List<String> obtenerTargets() {
+			return new ArrayList<>(targets);
+		}
+
+		public List<MixinMetodoInfo> obtenerMetodosMixin() {
+			return new ArrayList<>(metodosMixin);
+		}
+
+		public List<MixinCampoInfo> obtenerCamposMixin() {
+			return new ArrayList<>(camposMixin);
+		}
+
+		public List<String> obtenerTargetsInject() {
+			return new ArrayList<>(targetsInject);
+		}
+
+		public java.util.Map<String, String> obtenerRefmapMetodos() {
+			return new java.util.HashMap<>(refmapMetodos);
+		}
+
+		public java.util.Map<String, String> obtenerRefmapCampos() {
+			return new java.util.HashMap<>(refmapCampos);
+		}
+
+		public String buscarMapeoMetodo(String nombreMetodo, String descriptor) {
+			String clave = nombreMetodo + descriptor;
+			return refmapMetodos.get(clave);
+		}
+
+		public String buscarMapeoCampo(String nombreCampo) {
+			return refmapCampos.get(nombreCampo);
+		}
+
+		@Override
+		public String toString() {
+			return "MixinInfo{clase=" + nombreClase + ", jar=" + jarOrigen + ", targets=" + targets.size()
+					+ ", metodos=" + metodosMixin.size() + ", campos=" + camposMixin.size() + "}";
+		}
+	}
+
+	/**
+	 * Información de un método mixin con @Inject o @Overwrite.
+	 */
+	public static class MixinMetodoInfo {
+		private final String nombre;
+		private final String descriptor;
+		private final List<String> targets;
+		private final boolean esOverwrite;
+
+		public MixinMetodoInfo(String nombre, String descriptor, List<String> targets, boolean esOverwrite) {
+			this.nombre = nombre;
+			this.descriptor = descriptor;
+			this.targets = targets != null ? new ArrayList<>(targets) : new ArrayList<>();
+			this.esOverwrite = esOverwrite;
+		}
+
+		public String obtenerNombre() {
+			return nombre;
+		}
+
+		public String obtenerDescriptor() {
+			return descriptor;
+		}
+
+		public List<String> obtenerTargets() {
+			return new ArrayList<>(targets);
+		}
+
+		public boolean esOverwrite() {
+			return esOverwrite;
+		}
+
+		public boolean esInject() {
+			return !esOverwrite;
+		}
+
+		@Override
+		public String toString() {
+			return nombre + descriptor + (esOverwrite ? " [@Overwrite]" : " [@Inject]")
+					+ (targets.isEmpty() ? "" : " targets:" + targets);
+		}
+	}
+
+	/**
+	 * Información de un campo mixin con @Shadow.
+	 */
+	public static class MixinCampoInfo {
+		private final String nombre;
+		private final String descriptor;
+
+		public MixinCampoInfo(String nombre, String descriptor) {
+			this.nombre = nombre;
+			this.descriptor = descriptor;
+		}
+
+		public String obtenerNombre() {
+			return nombre;
+		}
+
+		public String obtenerDescriptor() {
+			return descriptor;
+		}
+
+		@Override
+		public String toString() {
+			return nombre + ":" + descriptor + " [@Shadow]";
+		}
+	}
+
+	// ========================================================================
+	// MÉTODOS DE UTILIDAD PARA ACCEDER AL CACHE (DELEGADOS A PARSER)
+	// ========================================================================
+
+	/**
+	 * Obtiene un MixinInfo desde el cache si está disponible.
+	 * 
+	 * @param nombreClasePunto Nombre de clase en formato punto (ej:
+	 *                         "net.example.Mixin")
+	 * @return MixinInfo cacheado o null si no está en cache
+	 */
+	public static MixinInfo obtenerMixinDesdeCache(String nombreClasePunto) {
+		return ParserMixerLogger.obtenerMixinDesdeCache(nombreClasePunto);
+	}
+
+	/**
+	 * Obtiene InfoMetodo cacheados para una clase.
+	 * 
+	 * @param nombreClasePunto Nombre de clase en formato punto
+	 * @return Lista de InfoMetodo o lista vacía si no hay cache
+	 */
+	public static List<InfoMetodo> obtenerMetodosDesdeCache(String nombreClasePunto) {
+		return ParserMixerLogger.obtenerMetodosDesdeCache(nombreClasePunto);
+	}
+
+	/**
+	 * Obtiene InfoCampo cacheados para una clase.
+	 * 
+	 * @param nombreClasePunto Nombre de clase en formato punto
+	 * @return Lista de InfoCampo o lista vacía si no hay cache
+	 */
+	public static List<InfoCampo> obtenerCamposDesdeCache(String nombreClasePunto) {
+		return ParserMixerLogger.obtenerCamposDesdeCache(nombreClasePunto);
+	}
+
+	/**
+	 * Obtiene Referencias cacheadas para una clase.
+	 * 
+	 * @param nombreClasePunto Nombre de clase en formato punto
+	 * @return Lista de Referencia o lista vacía si no hay cache
+	 */
+	public static List<Referencia> obtenerReferenciasDesdeCache(String nombreClasePunto) {
+		return ParserMixerLogger.obtenerReferenciasDesdeCache(nombreClasePunto);
+	}
+
+	/**
+	 * Limpia todo el cache de MixerLogger. Útil para recargar datos si el log
+	 * cambia.
+	 */
+	public static void limpiarCacheMixerLogger() {
+		ParserMixerLogger.limpiarCache();
+	}
+
+	/**
+	 * Verifica si el cache de MixerLogger ha sido cargado.
+	 * 
+	 * @return true si el cache está poblado
+	 */
+	public static boolean esCacheMixerLoggerCargado() {
+		return ParserMixerLogger.esCacheCargado();
+	}
+
+	// Implementación vacía para el origen predeterminado.
+	static class Origin implements ArchivoDeMod {
 		@Override
 		public ArchivoDeMod obtenerDesde() {
 			return origin;
@@ -397,7 +770,12 @@ public interface ArchivoDeMod {
 
 		@Override
 		public List<String> nombre() {
-			return new ArrayList<String>();
+			return new ArrayList<>();
+		}
+
+		@Override
+		public String version() {
+			return "";
 		}
 
 		@Override
@@ -407,7 +785,7 @@ public interface ArchivoDeMod {
 
 		@Override
 		public List<String> clases() {
-			return new ArrayList<String>();
+			return new ArrayList<>();
 		}
 
 		@Override
@@ -432,15 +810,14 @@ public interface ArchivoDeMod {
 
 		@Override
 		public List<String> archivos() {
-			return new ArrayList<String>();
+			return new ArrayList<>();
 		}
 
 		@Override
 		public List<ArchivoDeMod> buscarModsCon(String termino) {
-			return new ArrayList<ArchivoDeMod>();
+			return new ArrayList<>();
 		}
 
-		// Implementación para métodos de análisis
 		@Override
 		public boolean existeClase(String nombreClase) {
 			return false;
@@ -458,29 +835,36 @@ public interface ArchivoDeMod {
 
 		@Override
 		public List<Cargador> cargadores() {
-			// TODO Auto-generated method stub
-			return new ArrayList<Cargador>();
+			return new ArrayList<>();
 		}
 
 		@Override
 		public int precargarTodasLasClasesRecursivo() {
-			// TODO Auto-generated method stub
 			return 0;
 		}
 
 		@Override
-		public String version() {
-			// TODO Auto-generated method stub
-			return "";
+		public boolean esClaseMixin(String nombreClase) {
+			return false;
+		}
+
+		@Override
+		public MixinInfo obtenerInfoMixin(String nombreClase) {
+			return null;
+		}
+
+		@Override
+		public boolean cargarCacheDesdeMixerLogger() {
+			return false;
 		}
 	}
 
 	public static class Constante {
-		private final String clase; // clase donde se encontró (formato interno ej. a/b/C)
-		private final String metodo; // nombre del método
-		private final String descriptorMetodo; // descriptor del método
-		private final Object valor; // el valor literal (String, Integer, Float, Long, Double, etc.)
-		private final String tipo; // nombre simple del tipo (String, int, float, long, double, Class, …)
+		private final String clase;
+		private final String metodo;
+		private final String descriptorMetodo;
+		private final Object valor;
+		private final String tipo;
 
 		public Constante(String clase, String metodo, String descriptorMetodo, Object valor, String tipo) {
 			this.clase = clase;
@@ -517,15 +901,8 @@ public interface ArchivoDeMod {
 		}
 	}
 
-	// === NUEVO: API de alto nivel para constantes ===
 	/**
-	 * Busca constantes (LDC, BIPUSH, SIPUSH, ICONST_x, FCONST_x, LCONST_x,
-	 * DCONST_x, etc.) usadas dentro de un método específico.
-	 *
-	 * @param nombreClase      Clase (formato interno ej. "a/b/C")
-	 * @param nombreMetodo     Nombre del método
-	 * @param descriptorMetodo Descriptor del método
-	 * @return Lista de constantes encontradas
+	 * Busca constantes usadas dentro de un método específico.
 	 */
 	default List<Constante> buscarConstantesEnMetodo(String nombreClase, String nombreMetodo, String descriptorMetodo) {
 		if (ASM_DISPONIBLE) {
@@ -539,5 +916,4 @@ public interface ArchivoDeMod {
 	}
 
 	public int precargarTodasLasClasesRecursivo();
-
 }

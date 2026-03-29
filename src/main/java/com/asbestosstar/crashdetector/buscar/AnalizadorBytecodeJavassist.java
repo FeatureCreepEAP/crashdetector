@@ -4,144 +4,320 @@ import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
+import com.asbestosstar.crashdetector.buscar.ArchivoDeMod.MixinCampoInfo;
+import com.asbestosstar.crashdetector.buscar.ArchivoDeMod.MixinInfo;
+import com.asbestosstar.crashdetector.buscar.ArchivoDeMod.MixinMetodoInfo;
 
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtMethod;
 import javassist.bytecode.AccessFlag;
+import javassist.bytecode.AnnotationsAttribute;
 import javassist.bytecode.ClassFile;
-import javassist.bytecode.CodeAttribute;
-import javassist.bytecode.CodeIterator;
 import javassist.bytecode.ConstPool;
-import javassist.bytecode.Opcode;
+import javassist.bytecode.MethodInfo;
+import javassist.bytecode.annotation.Annotation;
+import javassist.bytecode.annotation.ArrayMemberValue;
+import javassist.bytecode.annotation.ClassMemberValue;
+import javassist.bytecode.annotation.MemberValue;
 import javassist.expr.ExprEditor;
 import javassist.expr.FieldAccess;
 import javassist.expr.MethodCall;
 
 /**
  * Analizador de bytecode utilizando la biblioteca Javassist. Proporciona
- * métodos para inspeccionar clases, métodos y referencias sin depender de ASM.
+ * métodos para inspeccionar clases, métodos, referencias y mixins sin depender
+ * de ASM.
  */
 public class AnalizadorBytecodeJavassist {
+
+	/**
+	 * Verifica si una clase es un mixin de SpongePowered usando Javassist.
+	 */
+	public static boolean esClaseMixin(ArchivoDeMod mod, String nombreClase) {
+		byte[] bytes = mod.obtenerBytesClase(nombreClase);
+		if (bytes == null)
+			return false;
+		try {
+			ClassFile cf = new ClassFile(new DataInputStream(new ByteArrayInputStream(bytes)));
+			AnnotationsAttribute attr = (AnnotationsAttribute) cf.getAttribute(AnnotationsAttribute.visibleTag);
+			if (attr == null)
+				attr = (AnnotationsAttribute) cf.getAttribute(AnnotationsAttribute.invisibleTag);
+			if (attr != null) {
+				Annotation ann = attr.getAnnotation("org.spongepowered.asm.mixin.Mixin");
+				if (ann != null)
+					return true;
+			}
+			return false;
+		} catch (Throwable t) {
+			CrashDetectorLogger.logException(t);
+			return false;
+		}
+	}
+
+	/**
+	 * Obtiene información detallada de un mixin usando Javassist.
+	 */
+	public static MixinInfo obtenerInfoMixin(ArchivoDeMod mod, String nombreClase) {
+		byte[] bytes = mod.obtenerBytesClase(nombreClase);
+		if (bytes == null)
+			return null;
+		try {
+			ClassPool pool = new ClassPool();
+			pool.appendSystemPath();
+			ClassFile cf = new ClassFile(new DataInputStream(new ByteArrayInputStream(bytes)));
+			CtClass ct = pool.makeClass(cf, false);
+
+			// Extraer targets del @Mixin
+			List<String> targets = extraerTargetsMixinJavassist(ct, cf);
+
+			// Extraer métodos @Inject/@Overwrite y campos @Shadow
+			List<MixinMetodoInfo> metodos = extraerMetodosMixinJavassist(ct, cf);
+			List<MixinCampoInfo> campos = extraerCamposMixinJavassist(ct, cf);
+			List<String> targetsInject = extraerTargetsInjectJavassist(metodos, campos);
+
+			// Refmaps se cargan externamente
+			Map<String, String> refmapMetodos = new HashMap<>();
+			Map<String, String> refmapCampos = new HashMap<>();
+
+			String nombrePunto = nombreClase.replace('/', '.');
+			return new MixinInfo(nombrePunto, mod.ubicacion(), targets, metodos, campos, targetsInject, refmapMetodos,
+					refmapCampos);
+		} catch (Throwable t) {
+			CrashDetectorLogger.logException(t);
+			return null;
+		}
+	}
+
+	/**
+	 * Extrae targets del @Mixin usando Javassist.
+	 */
+	private static List<String> extraerTargetsMixinJavassist(CtClass ct, ClassFile cf) throws Exception {
+		List<String> targets = new ArrayList<>();
+		AnnotationsAttribute attr = (AnnotationsAttribute) cf.getAttribute(AnnotationsAttribute.visibleTag);
+		if (attr == null)
+			attr = (AnnotationsAttribute) cf.getAttribute(AnnotationsAttribute.invisibleTag);
+		if (attr == null)
+			return targets;
+
+		Annotation mixinAnn = attr.getAnnotation("org.spongepowered.asm.mixin.Mixin");
+		if (mixinAnn == null)
+			return targets;
+
+		// targets() attribute
+		MemberValue targetsVal = mixinAnn.getMemberValue("targets");
+		if (targetsVal instanceof ArrayMemberValue) {
+			for (MemberValue mv : ((ArrayMemberValue) targetsVal).getValue()) {
+				if (mv instanceof javassist.bytecode.annotation.StringMemberValue) {
+					String t = ((javassist.bytecode.annotation.StringMemberValue) mv).getValue();
+					if (t != null && !targets.contains(t))
+						targets.add(t);
+				}
+			}
+		}
+
+		// value() attribute (ClassMemberValue)
+		MemberValue valueVal = mixinAnn.getMemberValue("value");
+		if (valueVal instanceof ArrayMemberValue) {
+			for (MemberValue mv : ((ArrayMemberValue) valueVal).getValue()) {
+				if (mv instanceof ClassMemberValue) {
+					String className = ((ClassMemberValue) mv).getValue();
+					if (className != null) {
+						// Convertir de formato punto a nombre de clase
+						className = className.replace('/', '.');
+						if (!targets.contains(className))
+							targets.add(className);
+					}
+				}
+			}
+		} else if (valueVal instanceof ClassMemberValue) {
+			String className = ((ClassMemberValue) valueVal).getValue();
+			if (className != null) {
+				className = className.replace('/', '.');
+				if (!targets.contains(className))
+					targets.add(className);
+			}
+		}
+		return targets;
+	}
+
+	/**
+	 * Extrae métodos @Inject/@Overwrite usando Javassist.
+	 */
+	private static List<MixinMetodoInfo> extraerMetodosMixinJavassist(CtClass ct, ClassFile cf) throws Exception {
+		List<MixinMetodoInfo> resultados = new ArrayList<>();
+		for (MethodInfo mi : cf.getMethods()) {
+			AnnotationsAttribute attr = (AnnotationsAttribute) mi.getAttribute(AnnotationsAttribute.visibleTag);
+			if (attr == null)
+				continue;
+
+			// @Inject
+			Annotation injectAnn = attr.getAnnotation("org.spongepowered.asm.mixin.injection.Inject");
+			if (injectAnn != null) {
+				MixinMetodoInfo info = new MixinMetodoInfo(mi.getName(), mi.getDescriptor(), new ArrayList<>(), false);
+				MemberValue methodVal = injectAnn.getMemberValue("method");
+				if (methodVal instanceof ArrayMemberValue) {
+					for (MemberValue mv : ((ArrayMemberValue) methodVal).getValue()) {
+						if (mv instanceof javassist.bytecode.annotation.StringMemberValue) {
+							String t = ((javassist.bytecode.annotation.StringMemberValue) mv).getValue();
+							if (t != null && !t.isEmpty() && !info.obtenerTargets().contains(t)) {
+								info.obtenerTargets().add(t);
+							}
+						}
+					}
+				}
+				resultados.add(info);
+			}
+			// @Overwrite
+			else if (attr.getAnnotation("org.spongepowered.asm.mixin.Overwrite") != null) {
+				resultados.add(new MixinMetodoInfo(mi.getName(), mi.getDescriptor(), new ArrayList<>(), true));
+			}
+		}
+		return resultados;
+	}
+
+	/**
+	 * Extrae campos @Shadow usando Javassist.
+	 */
+	private static List<MixinCampoInfo> extraerCamposMixinJavassist(CtClass ct, ClassFile cf) throws Exception {
+		List<MixinCampoInfo> resultados = new ArrayList<>();
+		for (javassist.bytecode.FieldInfo fi : cf.getFields()) {
+			AnnotationsAttribute attr = (AnnotationsAttribute) fi.getAttribute(AnnotationsAttribute.visibleTag);
+			if (attr == null)
+				continue;
+			if (attr.getAnnotation("org.spongepowered.asm.mixin.Shadow") != null) {
+				resultados.add(new MixinCampoInfo(fi.getName(), fi.getDescriptor()));
+			}
+		}
+		return resultados;
+	}
+
+	/**
+	 * Colecta targets de @Inject para refmap.
+	 */
+	private static List<String> extraerTargetsInjectJavassist(List<MixinMetodoInfo> metodos,
+			List<MixinCampoInfo> campos) {
+		List<String> targets = new ArrayList<>();
+		for (MixinMetodoInfo m : metodos) {
+			for (String t : m.obtenerTargets())
+				if (!targets.contains(t))
+					targets.add(t);
+			if (m.esOverwrite()) {
+				String sig = m.obtenerNombre() + m.obtenerDescriptor();
+				if (!targets.contains(sig))
+					targets.add(sig);
+			}
+		}
+		for (MixinCampoInfo f : campos)
+			if (!targets.contains(f.obtenerNombre()))
+				targets.add(f.obtenerNombre());
+		return targets;
+	}
+
+	// ========================================================================
+	// MÉTODOS EXISTENTES (sin cambios funcionales)
+	// ========================================================================
 
 	public static List<ArchivoDeMod.Constante> analizarConstantesEnMetodo(ArchivoDeMod mod, String nombreClase,
 			String nombreMetodo, String descriptor) {
 		byte[] bytesClase = mod.obtenerBytesClase(nombreClase);
 		if (bytesClase == null)
 			return new ArrayList<>();
-
 		try {
 			ClassFile classFile = new ClassFile(new DataInputStream(new ByteArrayInputStream(bytesClase)));
-
-			// localizar el método
-			javassist.bytecode.MethodInfo mi = null;
-			for (javassist.bytecode.MethodInfo m : classFile.getMethods()) {
+			MethodInfo mi = null;
+			for (MethodInfo m : classFile.getMethods()) {
 				if (m.getName().equals(nombreMetodo) && m.getDescriptor().equals(descriptor)) {
 					mi = m;
 					break;
 				}
 			}
-			if (mi == null)
+			if (mi == null || (mi.getAccessFlags() & (AccessFlag.ABSTRACT | AccessFlag.NATIVE)) != 0)
 				return new ArrayList<>();
-			if ((mi.getAccessFlags() & (AccessFlag.ABSTRACT | AccessFlag.NATIVE)) != 0)
-				return new ArrayList<>();
-
-			CodeAttribute ca = mi.getCodeAttribute();
+			javassist.bytecode.CodeAttribute ca = mi.getCodeAttribute();
 			if (ca == null)
 				return new ArrayList<>();
-
 			ConstPool cp = classFile.getConstPool();
-			CodeIterator it = ca.iterator();
-
+			javassist.bytecode.CodeIterator it = ca.iterator();
 			List<ArchivoDeMod.Constante> resultados = new ArrayList<>();
 			while (it.hasNext()) {
 				int index = it.next();
 				int op = it.byteAt(index) & 0xFF;
-
 				switch (op) {
-				// inmediatOS (iconst/…, fconst/…, lconst/…, dconst/…)
-				case Opcode.ICONST_M1:
+				case javassist.bytecode.Opcode.ICONST_M1:
 					agregar(resultados, nombreClase, nombreMetodo, descriptor, Integer.valueOf(-1));
 					break;
-				case Opcode.ICONST_0:
+				case javassist.bytecode.Opcode.ICONST_0:
 					agregar(resultados, nombreClase, nombreMetodo, descriptor, Integer.valueOf(0));
 					break;
-				case Opcode.ICONST_1:
+				case javassist.bytecode.Opcode.ICONST_1:
 					agregar(resultados, nombreClase, nombreMetodo, descriptor, Integer.valueOf(1));
 					break;
-				case Opcode.ICONST_2:
+				case javassist.bytecode.Opcode.ICONST_2:
 					agregar(resultados, nombreClase, nombreMetodo, descriptor, Integer.valueOf(2));
 					break;
-				case Opcode.ICONST_3:
+				case javassist.bytecode.Opcode.ICONST_3:
 					agregar(resultados, nombreClase, nombreMetodo, descriptor, Integer.valueOf(3));
 					break;
-				case Opcode.ICONST_4:
+				case javassist.bytecode.Opcode.ICONST_4:
 					agregar(resultados, nombreClase, nombreMetodo, descriptor, Integer.valueOf(4));
 					break;
-				case Opcode.ICONST_5:
+				case javassist.bytecode.Opcode.ICONST_5:
 					agregar(resultados, nombreClase, nombreMetodo, descriptor, Integer.valueOf(5));
 					break;
-
-				case Opcode.LCONST_0:
+				case javassist.bytecode.Opcode.LCONST_0:
 					agregar(resultados, nombreClase, nombreMetodo, descriptor, Long.valueOf(0L));
 					break;
-				case Opcode.LCONST_1:
+				case javassist.bytecode.Opcode.LCONST_1:
 					agregar(resultados, nombreClase, nombreMetodo, descriptor, Long.valueOf(1L));
 					break;
-
-				case Opcode.FCONST_0:
+				case javassist.bytecode.Opcode.FCONST_0:
 					agregar(resultados, nombreClase, nombreMetodo, descriptor, Float.valueOf(0f));
 					break;
-				case Opcode.FCONST_1:
+				case javassist.bytecode.Opcode.FCONST_1:
 					agregar(resultados, nombreClase, nombreMetodo, descriptor, Float.valueOf(1f));
 					break;
-				case Opcode.FCONST_2:
+				case javassist.bytecode.Opcode.FCONST_2:
 					agregar(resultados, nombreClase, nombreMetodo, descriptor, Float.valueOf(2f));
 					break;
-
-				case Opcode.DCONST_0:
+				case javassist.bytecode.Opcode.DCONST_0:
 					agregar(resultados, nombreClase, nombreMetodo, descriptor, Double.valueOf(0d));
 					break;
-				case Opcode.DCONST_1:
+				case javassist.bytecode.Opcode.DCONST_1:
 					agregar(resultados, nombreClase, nombreMetodo, descriptor, Double.valueOf(1d));
 					break;
-
-				// enteros inmediatos de 8/16 bits
-				case Opcode.BIPUSH: {
-					int val = (byte) it.byteAt(index + 1); // signed
+				case javassist.bytecode.Opcode.BIPUSH: {
+					int val = (byte) it.byteAt(index + 1);
 					agregar(resultados, nombreClase, nombreMetodo, descriptor, Integer.valueOf(val));
 					break;
 				}
-				case Opcode.SIPUSH: {
-					int val = it.s16bitAt(index + 1); // signed short
+				case javassist.bytecode.Opcode.SIPUSH: {
+					int val = it.s16bitAt(index + 1);
 					agregar(resultados, nombreClase, nombreMetodo, descriptor, Integer.valueOf(val));
 					break;
 				}
-
-				// LDC / LDC_W / LDC2_W
-				case Opcode.LDC: {
+				case javassist.bytecode.Opcode.LDC: {
 					int cpIndex = it.byteAt(index + 1) & 0xFF;
 					agregarDesdeConstPool(resultados, nombreClase, nombreMetodo, descriptor, cp, cpIndex);
 					break;
 				}
-				case Opcode.LDC_W: {
+				case javassist.bytecode.Opcode.LDC_W: {
 					int cpIndex = it.u16bitAt(index + 1);
 					agregarDesdeConstPool(resultados, nombreClase, nombreMetodo, descriptor, cp, cpIndex);
 					break;
 				}
-				case Opcode.LDC2_W: {
+				case javassist.bytecode.Opcode.LDC2_W: {
 					int cpIndex = it.u16bitAt(index + 1);
 					agregarDesdeConstPool(resultados, nombreClase, nombreMetodo, descriptor, cp, cpIndex);
 					break;
 				}
-				default:
-					break;
 				}
 			}
-
 			return resultados;
 		} catch (Throwable t) {
 			CrashDetectorLogger.logException(t);
@@ -175,68 +351,47 @@ public class AnalizadorBytecodeJavassist {
 			agregar(out, clase, metodo, desc, Double.valueOf(cp.getDoubleInfo(index)));
 			break;
 		case ConstPool.CONST_Class:
-			// devolver el nombre de clase como String (formato punto)
 			agregar(out, clase, metodo, desc, cp.getClassInfo(index));
 			break;
 		default:
-			// otros tags (MethodHandle, MethodType, Dynamic) se pueden mapear si te
-			// interesan
 			agregar(out, clase, metodo, desc, ("<constpool tag " + tag + ">"));
 			break;
 		}
 	}
 
-	/**
-	 * Analiza los métodos de una clase y sus referencias internas utilizando
-	 * Javassist.
-	 * 
-	 * @param mod         Referencia al mod que contiene la clase
-	 * @param nombreClase Nombre de la clase en formato interno (ej:
-	 *                    "java/lang/Object")
-	 * @return Lista con información detallada de los métodos
-	 */
 	public static List<ArchivoDeMod.InfoMetodo> analizarMetodos(ArchivoDeMod mod, String nombreClase) {
 		byte[] bytesClase = mod.obtenerBytesClase(nombreClase);
 		if (bytesClase == null)
 			return new ArrayList<>();
-
 		try {
 			ClassPool pool = new ClassPool();
 			pool.appendSystemPath();
 			ClassFile classFile = new ClassFile(new DataInputStream(new ByteArrayInputStream(bytesClase)));
-
 			List<ArchivoDeMod.InfoMetodo> resultados = new ArrayList<>();
-			for (javassist.bytecode.MethodInfo methodInfo : classFile.getMethods()) {
+			for (MethodInfo methodInfo : classFile.getMethods()) {
 				String methodName = methodInfo.getName();
 				String descriptor = methodInfo.getDescriptor();
-
-				// Saltar métodos abstractos/nativos (sin bytecode para analizar)
 				if ((methodInfo.getAccessFlags() & (AccessFlag.ABSTRACT | AccessFlag.NATIVE)) != 0) {
 					resultados.add(
 							new ArchivoDeMod.InfoMetodo(methodName, descriptor, new ArrayList<>(), new ArrayList<>()));
 					continue;
 				}
-
-				List<ArchivoDeMod.Referencia> referenciasMetodos = new ArrayList<>();
-				List<ArchivoDeMod.Referencia> referenciasCampos = new ArrayList<>();
-
+				List<ArchivoDeMod.Referencia> refMetodos = new ArrayList<>();
+				List<ArchivoDeMod.Referencia> refCampos = new ArrayList<>();
 				CtClass ctClass = pool.makeClass(classFile, false);
 				CtMethod ctMethod = ctClass.getMethod(methodName, descriptor);
-
 				ctMethod.instrument(new ExprEditor() {
 					@Override
 					public void edit(MethodCall m) {
-						referenciasMetodos.add(convertirAMiReferencia(m));
+						refMetodos.add(convertirAMiReferencia(m));
 					}
 
 					@Override
 					public void edit(FieldAccess f) {
-						referenciasCampos.add(convertirAMiReferencia(f));
+						refCampos.add(convertirAMiReferencia(f));
 					}
 				});
-
-				resultados.add(
-						new ArchivoDeMod.InfoMetodo(methodName, descriptor, referenciasMetodos, referenciasCampos));
+				resultados.add(new ArchivoDeMod.InfoMetodo(methodName, descriptor, refMetodos, refCampos));
 			}
 			return resultados;
 		} catch (Throwable t) {
@@ -245,23 +400,13 @@ public class AnalizadorBytecodeJavassist {
 		}
 	}
 
-	/**
-	 * Analiza los campos declarados en una clase utilizando Javassist.
-	 * 
-	 * @param mod         Referencia al mod que contiene la clase
-	 * @param nombreClase Nombre de la clase en formato interno
-	 * @return Lista con información de los campos declarados
-	 */
 	public static List<ArchivoDeMod.InfoCampo> analizarCampos(ArchivoDeMod mod, String nombreClase) {
 		byte[] bytesClase = mod.obtenerBytesClase(nombreClase);
 		if (bytesClase == null)
 			return new ArrayList<>();
-
 		try {
 			ClassFile classFile = new ClassFile(new DataInputStream(new ByteArrayInputStream(bytesClase)));
 			List<ArchivoDeMod.InfoCampo> resultados = new ArrayList<>();
-
-			// Obtener campos directamente desde ClassFile (más rápido y ligero)
 			for (javassist.bytecode.FieldInfo fieldInfo : classFile.getFields()) {
 				resultados.add(new ArchivoDeMod.InfoCampo(fieldInfo.getName(), fieldInfo.getDescriptor()));
 			}
@@ -272,46 +417,27 @@ public class AnalizadorBytecodeJavassist {
 		}
 	}
 
-	/**
-	 * Analiza las referencias dentro de un método específico utilizando Javassist.
-	 * 
-	 * @param mod          Referencia al mod que contiene la clase
-	 * @param nombreClase  Nombre de la clase en formato interno
-	 * @param nombreMetodo Nombre del método a analizar
-	 * @param descriptor   Descriptor del método
-	 * @return Lista de referencias encontradas en el método
-	 */
 	public static List<ArchivoDeMod.Referencia> analizarReferenciasEnMetodo(ArchivoDeMod mod, String nombreClase,
 			String nombreMetodo, String descriptor) {
 		byte[] bytesClase = mod.obtenerBytesClase(nombreClase);
 		if (bytesClase == null)
 			return new ArrayList<>();
-
 		try {
 			ClassPool pool = new ClassPool();
 			pool.appendSystemPath();
 			ClassFile classFile = new ClassFile(new DataInputStream(new ByteArrayInputStream(bytesClase)));
-
-			// Buscar método específico usando ClassFile
-			javassist.bytecode.MethodInfo methodInfo = null;
-			for (javassist.bytecode.MethodInfo mi : classFile.getMethods()) {
+			MethodInfo methodInfo = null;
+			for (MethodInfo mi : classFile.getMethods()) {
 				if (mi.getName().equals(nombreMetodo) && mi.getDescriptor().equals(descriptor)) {
 					methodInfo = mi;
 					break;
 				}
 			}
-
-			// Validar si el método existe y tiene bytecode analizable
-			if (methodInfo == null || (methodInfo.getAccessFlags() & (AccessFlag.ABSTRACT | AccessFlag.NATIVE)) != 0) {
+			if (methodInfo == null || (methodInfo.getAccessFlags() & (AccessFlag.ABSTRACT | AccessFlag.NATIVE)) != 0)
 				return new ArrayList<>();
-			}
-
-			// Coleccionar referencias del método específico
 			List<ArchivoDeMod.Referencia> resultados = new ArrayList<>();
 			CtClass ctClass = pool.makeClass(classFile, false);
 			CtMethod ctMethod = ctClass.getMethod(nombreMetodo, descriptor);
-
-			// Instrumentar SOLO el método objetivo
 			ctMethod.instrument(new ExprEditor() {
 				@Override
 				public void edit(MethodCall m) {
@@ -323,7 +449,6 @@ public class AnalizadorBytecodeJavassist {
 					resultados.add(convertirAMiReferencia(f));
 				}
 			});
-
 			return resultados;
 		} catch (Throwable t) {
 			CrashDetectorLogger.logException(t);
@@ -331,46 +456,24 @@ public class AnalizadorBytecodeJavassist {
 		}
 	}
 
-	/**
-	 * Busca todas las llamadas a un método específico en todo el mod utilizando
-	 * Javassist.
-	 * 
-	 * @param mod                Referencia al mod que contiene las clases
-	 * @param claseObjetivo      Clase objetivo del método (formato interno)
-	 * @param metodoObjetivo     Nombre del método objetivo
-	 * @param descriptorObjetivo Descriptor del método objetivo
-	 * @return Lista de referencias que llaman al método objetivo
-	 */
 	public static List<ArchivoDeMod.Referencia> analizarReferenciasAMetodo(ArchivoDeMod mod, String claseObjetivo,
 			String metodoObjetivo, String descriptorObjetivo) {
 		List<ArchivoDeMod.Referencia> resultados = new ArrayList<>();
-		List<String> todosNombresClases = mod.obtenerTodosLosNombresDeClases();
-
-		// Reutilizar ClassPool para todas las clases (mejor rendimiento)
 		ClassPool pool = new ClassPool();
 		pool.appendSystemPath();
-
-		for (String className : todosNombresClases) {
+		for (String className : mod.obtenerTodosLosNombresDeClases()) {
 			byte[] bytes = mod.obtenerBytesClase(className);
 			if (bytes == null)
 				continue;
-
 			try {
 				ClassFile classFile = new ClassFile(new DataInputStream(new ByteArrayInputStream(bytes)));
 				CtClass ctClass = pool.makeClass(classFile, false);
-
-				// Recorrer SOLO métodos declarados en esta clase
 				for (CtMethod method : ctClass.getDeclaredMethods()) {
-					// Saltar métodos sin bytecode (abstractos/nativos)
-					if ((method.getMethodInfo().getAccessFlags() & (AccessFlag.ABSTRACT | AccessFlag.NATIVE)) != 0) {
+					if ((method.getMethodInfo().getAccessFlags() & (AccessFlag.ABSTRACT | AccessFlag.NATIVE)) != 0)
 						continue;
-					}
-
-					// Instrumentar SOLO para buscar llamadas específicas
 					method.instrument(new ExprEditor() {
 						@Override
 						public void edit(MethodCall m) {
-							// Convertir a formato interno de nombres (barra invertida → punto)
 							String owner = m.getClassName().replace('.', '/');
 							if (owner.equals(claseObjetivo) && m.getMethodName().equals(metodoObjetivo)
 									&& m.getSignature().equals(descriptorObjetivo)) {
@@ -387,107 +490,31 @@ public class AnalizadorBytecodeJavassist {
 		return resultados;
 	}
 
-	/**
-	 * Convierte una referencia de Javassist (llamada a método) a nuestro formato
-	 * estándar. Maneja la conversión de nombres de clase (punto → barra invertida).
-	 * 
-	 * @param m Referencia a método de Javassist
-	 * @return Referencia en formato interno
-	 */
 	public static ArchivoDeMod.Referencia convertirAMiReferencia(MethodCall m) {
-		return new ArchivoDeMod.Referencia(m.getClassName().replace('.', '/'), // Formato interno de ASM
-				m.getMethodName(), m.getSignature(), true);
+		return new ArchivoDeMod.Referencia(m.getClassName().replace('.', '/'), m.getMethodName(), m.getSignature(),
+				true);
 	}
 
-	/**
-	 * Convierte una referencia de Javassist (acceso a campo) a nuestro formato
-	 * estándar. Maneja la conversión de nombres de clase (punto → barra invertida).
-	 * 
-	 * @param f Referencia a campo de Javassist
-	 * @return Referencia en formato interno
-	 */
 	public static ArchivoDeMod.Referencia convertirAMiReferencia(FieldAccess f) {
-		return new ArchivoDeMod.Referencia(f.getClassName().replace('.', '/'), // Formato interno de ASM
-				f.getFieldName(), f.getSignature(), false);
+		return new ArchivoDeMod.Referencia(f.getClassName().replace('.', '/'), f.getFieldName(), f.getSignature(),
+				false);
 	}
-
-	/**
-	 * 
-	 * Analiza el bytecode de una clase usando la librería Javassist para encontrar
-	 * el nombre del módulo.
-	 * 
-	 * Este método es específico para archivos 'module-info.class'.
-	 *
-	 * 
-	 * 
-	 * @param classBytes El array de bytes que representa el archivo
-	 *                   module-info.class.
-	 * 
-	 * @return Una lista de Strings. Si se encuentra un nombre de módulo, la lista
-	 * 
-	 *         contendrá un único elemento. De lo contrario, la lista estará vacía.
-	 * 
-	 */
 
 	public static List<String> obtenerNombreModuloInfo(byte[] classBytes) {
-
 		List<String> modulos = new ArrayList<>();
-
 		try {
-
-			// Creamos un objeto ClassFile de Javassist a partir del array de bytes.
-
 			ClassFile classFile = new ClassFile(new DataInputStream(new ByteArrayInputStream(classBytes)));
-
-			// Obtenemos la tabla de constantes (ConstPool) del archivo de clase.
-
 			ConstPool constPool = classFile.getConstPool();
-
-			// Recorremos la tabla de constantes para encontrar la entrada de tipo
-			// ModuleInfo.
-
-			// El tag para ModuleInfo es 19 (ConstPool.CONST_Module).
-
-			// El bucle empieza en 1 porque el índice 0 está reservado por la JVM.
-
 			for (int i = 1; i < constPool.getSize(); i++) {
-
-				// Verificamos si el tag de la entrada actual es ModuleInfo.
-
 				if (constPool.getTag(i) == ConstPool.CONST_Module) {
-
-					// Si encontramos una entrada de módulo, extraemos su nombre.
-
-					// El método getModuleInfo() toma el índice de la entrada y devuelve el nombre.
-
 					String moduleName = constPool.getModuleInfo(i);
-
-					if (moduleName != null && !moduleName.isEmpty()) {
-
+					if (moduleName != null && !moduleName.isEmpty())
 						modulos.add(moduleName);
-
-					}
-
-					// Un archivo module-info.class solo debería tener una entrada de módulo.
-
-					// Una vez encontrado, podríamos salir del bucle para ser más eficientes,
-
-					// pero continuar no causa problemas.
-
 				}
-
 			}
-
 		} catch (IOException e) {
-
-			// TODO Auto-generated catch block
-
 			e.printStackTrace();
-
 		}
-
 		return modulos;
-
 	}
-
 }
