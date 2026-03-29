@@ -82,70 +82,149 @@ public class AnalizadorBytecodeASM {
 		}
 	}
 
-	/**
-	 * Extrae los targets de la anotación @Mixin.
-	 * 
-	 * Soporta: - @Mixin(targets = { "a.b.C" }) - @Mixin(value = Foo.class)
-	 * - @Mixin({ Foo.class, Bar.class })
-	 */
-	private static List<String> extraerTargetsMixin(ClassNode cn) {
-		List<String> targets = new ArrayList<>();
-		if (cn.visibleAnnotations == null) {
-			return targets;
+/**
+ * Extrae los targets de la anotación @Mixin.
+ * 
+ * Soporta:
+ * - @Mixin(targets = { "a.b.C", "x.y.Z" })
+ * - @Mixin(value = Foo.class)
+ * - @Mixin(value = { Foo.class, Bar.class })
+ * - mezclas raras donde ASM entregue List<Object> en vez de List<String>/List<Type>
+ */
+private static List<String> extraerTargetsMixin(ClassNode cn) {
+	List<String> targets = new ArrayList<>();
+	if (cn == null || cn.visibleAnnotations == null) {
+		return targets;
+	}
+
+	for (AnnotationNode ann : cn.visibleAnnotations) {
+		if (ann == null || ann.desc == null) {
+			continue;
 		}
 
-		for (AnnotationNode ann : cn.visibleAnnotations) {
-			if (ann.desc == null || !ann.desc.contains("org/spongepowered/asm/mixin/Mixin")) {
-				continue;
-			}
+		if (!ann.desc.contains("org/spongepowered/asm/mixin/Mixin")) {
+			continue;
+		}
 
-			if (ann.values == null) {
-				break;
-			}
-
-			for (int i = 0; i < ann.values.size(); i += 2) {
-				Object key = ann.values.get(i);
-				Object value = ann.values.get(i + 1);
-
-				// Caso: @Mixin(targets = { "a.b.C", "x.y.Z" })
-				if ("targets".equals(key) && value instanceof List) {
-					@SuppressWarnings("unchecked")
-					List<Object> lista = (List<Object>) value;
-
-					for (Object item : lista) {
-						if (item == null) {
-							continue;
-						}
-
-						if (item instanceof String) {
-							String target = ((String) item).trim();
-							if (!target.isEmpty() && !targets.contains(target)) {
-								targets.add(target);
-							}
-						} else if (item instanceof Type) {
-							Type t = (Type) item;
-							if (t.getSort() == Type.OBJECT) {
-								String nombre = t.getClassName();
-								if (nombre != null && !nombre.isEmpty() && !targets.contains(nombre)) {
-									targets.add(nombre);
-								}
-							}
-						}
-					}
-					continue;
-				}
-
-				// Caso: @Mixin(Foo.class) o @Mixin(value = { Foo.class, Bar.class })
-				if ("value".equals(key)) {
-					extraerTargetsDeValue(value, targets);
-				}
-			}
-
+		if (ann.values == null) {
 			break;
 		}
 
-		return targets;
+		for (int i = 0; i + 1 < ann.values.size(); i += 2) {
+			Object keyObj = ann.values.get(i);
+			Object valueObj = ann.values.get(i + 1);
+
+			if (!(keyObj instanceof String)) {
+				continue;
+			}
+
+			String key = (String) keyObj;
+
+			// targets = { "a.b.C", "x.y.Z" }
+			if ("targets".equals(key)) {
+				agregarTargetsDesdeObjeto(valueObj, targets, true);
+			}
+
+			// value = { Foo.class, Bar.class } o value = Foo.class
+			else if ("value".equals(key)) {
+				agregarTargetsDesdeObjeto(valueObj, targets, false);
+			}
+		}
+
+		// Solo debe existir un @Mixin por clase
+		break;
 	}
+
+	return targets;
+}
+
+/**
+ * Agrega targets a la lista a partir del valor crudo que ASM expone
+ * en AnnotationNode.values.
+ * 
+ * @param value         valor asociado a la clave de la anotación
+ * @param targets       lista destino
+ * @param aceptarTexto  true para aceptar Strings como targets directos
+ */
+private static void agregarTargetsDesdeObjeto(Object value, List<String> targets, boolean aceptarTexto) {
+	if (value == null) {
+		return;
+	}
+
+	// Caso directo: un solo Type
+	if (value instanceof Type) {
+		Type t = (Type) value;
+		if (t.getSort() == Type.OBJECT) {
+			agregarTargetNormalizado(t.getClassName(), targets);
+		}
+		return;
+	}
+
+	// Caso directo: un solo String
+	if (aceptarTexto && value instanceof String) {
+		agregarTargetNormalizado((String) value, targets);
+		return;
+	}
+
+	// Caso normal en ASM: List<?>
+	if (value instanceof List) {
+		@SuppressWarnings("unchecked")
+		List<Object> lista = (List<Object>) value;
+
+		for (Object item : lista) {
+			if (item == null) {
+				continue;
+			}
+
+			if (item instanceof Type) {
+				Type t = (Type) item;
+				if (t.getSort() == Type.OBJECT) {
+					agregarTargetNormalizado(t.getClassName(), targets);
+				}
+			} else if (aceptarTexto && item instanceof String) {
+				agregarTargetNormalizado((String) item, targets);
+			}
+		}
+		return;
+	}
+
+	// Fallback extra defensivo por si llega como array real
+	if (value.getClass().isArray()) {
+		int len = java.lang.reflect.Array.getLength(value);
+		for (int i = 0; i < len; i++) {
+			Object item = java.lang.reflect.Array.get(value, i);
+			agregarTargetsDesdeObjeto(item, targets, aceptarTexto);
+		}
+	}
+}
+
+/**
+ * Normaliza e inserta un target evitando duplicados.
+ * 
+ * Conserva formato con puntos para mostrar en UI.
+ */
+private static void agregarTargetNormalizado(String nombre, List<String> targets) {
+	if (nombre == null) {
+		return;
+	}
+
+	String limpio = nombre.trim();
+	if (limpio.isEmpty()) {
+		return;
+	}
+
+	// Si viene en descriptor tipo Lcom/a/B;
+	if (limpio.length() >= 2 && limpio.charAt(0) == 'L' && limpio.endsWith(";")) {
+		limpio = limpio.substring(1, limpio.length() - 1);
+	}
+
+	// Si viene con barras, pasarlo a puntos para la UI
+	limpio = limpio.replace('/', '.');
+
+	if (!targets.contains(limpio)) {
+		targets.add(limpio);
+	}
+}
 
 	/**
 	 * Extrae targets desde el atributo value() del @Mixin.
