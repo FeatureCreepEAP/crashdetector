@@ -7009,4 +7009,204 @@ public class Japones implements Idioma {
 		return fuente + " で記事を読む";
 	}
 
+	@Override
+	public String tituloMixins() {
+		return "Mixins エクスプローラー";
+	}
+
+	@Override
+	public String mixinsBotonLateral() {
+		return "Mixins";
+	}
+
+	@Override
+	public String mixinsRaiz() {
+		return "見つかった Mixins";
+	}
+
+	@Override
+	public String mixinsTodosLosMods() {
+		return "すべて";
+	}
+
+	@Override
+	public String mixinsModConMixin() {
+		return "mixins を含む Mod";
+	}
+
+	@Override
+	public String mixinsTooltipCombo() {
+		return "mixins を含む Mod でフィルタリング";
+	}
+
+	@Override
+	public String mixinsRecargar() {
+		return "再読み込み";
+	}
+
+	@Override
+	public String mixinsDescompilarSeleccion() {
+		return "選択内容を逆コンパイル";
+	}
+
+	@Override
+	public String mixinsTargets() {
+		return "Targets";
+	}
+
+	@Override
+	public String mixinsTarget() {
+		return "Target";
+	}
+
+	@Override
+	public String mixinsTargetsMetodo() {
+		return "メソッドの Targets";
+	}
+
+	@Override
+	public String mixinsMetodos() {
+		return "メソッド";
+	}
+
+	@Override
+	public String mixinsCampos() {
+		return "フィールド";
+	}
+
+	@Override
+	public String mixinsCantidad() {
+		return "Mixins 数";
+	}
+
+	@Override
+	public String mixinsDetalleMixin() {
+		return "Mixin 詳細";
+	}
+
+	@Override
+	public String mixinsDetalleTarget() {
+		return "Target 詳細";
+	}
+
+	@Override
+	public String mixinsDetalleMetodo() {
+		return "Mixin メソッド詳細";
+	}
+
+	@Override
+	public String mixinsDetalleCampo() {
+		return "Mixin フィールド詳細";
+	}
+
+	@Override
+	public String mixinsDetalleConflicto() {
+		return "競合詳細";
+	}
+
+	@Override
+	public String mixinsBuscarConflictos() {
+		return "可能性のある競合を検索";
+	}
+
+	@Override
+	public String mixinsResultadosConflictos() {
+		return "競合結果";
+	}
+
+	@Override
+	public String mixinsConflictosPosibles() {
+		return "可能性のある競合";
+	}
+
+	@Override
+	public String mixinsErrorDescompilar() {
+		return "逆コンパイルエラー";
+	}
+
+	@Override
+	public String mixinsColorPanel() {
+		return "Mixins パネルの色";
+	}
+
+	@Override
+	public String mixinsColorTexto() {
+		return "Mixins テキストの色";
+	}
+
+	@Override
+	public String mixinsColorTextoSuave() {
+		return "Mixins 補助テキストの色";
+	}
+
+	@Override
+	public String mixinsAyudaUso1() {
+		return "このツールは SpongePowered のミックスインを含む Mod を表示し、それらのクラス、targets、メソッド、フィールドを検査できます。";
+	}
+
+	@Override
+	public String mixinsAyudaUso2() {
+		return "上部のセレクターを使用して、特定の Mod でフィルタリングするか、ミックスインを含むすべての Mod を表示します。";
+	}
+
+	@Override
+	public String mixinsAyudaUso3() {
+		return "ツリーを展開して、各 mixin、そのターゲットクラス、注釈付きメソッド、shadow フィールドを表示します。";
+	}
+
+	@Override
+	public String mixinsAyudaUso4() {
+		return "Mod、mixin、target、メソッド、またはフィールドを右クリックして、他の mixins との潜在的な競合を検索します。";
+	}
+
+	@Override
+	public String mixinsAyudaUso5() {
+		return "関連コードを検査するために、現在の選択内容または競合結果を逆コンパイルできます。";
+	}
+
+	@Override
+	public String mixinsColorComboFondo() {
+		return "Mod 選択機の背景色";
+	}
+
+	@Override
+	public String mixinsColorAreaContenidoFondo() {
+		return "詳細パネルの背景色";
+	}
+
+	@Override
+	public String mixinsColorSeleccionTexto() {
+		return "テキスト選択色";
+	}
+
+	@Override
+	public String mixinsColorSeleccionTextoActivo() {
+		return "選択されたテキストの色";
+	}
+
+	@Override
+	public String mixinsColorAyudaTexto() {
+		return "ヘルプテキストの色";
+	}
+
+	@Override
+	public String mixinsColorArbolFondo() {
+		return "ツリーの背景色";
+	}
+
+	@Override
+	public String mixinsColorRendererSeleccionTexto() {
+		return "ツリーの選択されたテキストの色";
+	}
+
+	@Override
+	public String mixinsColorRendererSeleccionFondo() {
+		return "ツリーの選択された背景の色";
+	}
+
+	@Override
+	public String mixinsColorRendererBordeSeleccion() {
+		return "ツリーの選択枠の色";
+	}
+
 }

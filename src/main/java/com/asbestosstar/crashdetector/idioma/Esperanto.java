@@ -7295,4 +7295,204 @@ public class Esperanto implements Idioma {
 		return "Legi artikolon ĉe " + fuente;
 	}
 
+	@Override
+	public String tituloMixins() {
+		return "Esplorilo de Mixins";
+	}
+
+	@Override
+	public String mixinsBotonLateral() {
+		return "Mixins";
+	}
+
+	@Override
+	public String mixinsRaiz() {
+		return "Trovitaj Mixins";
+	}
+
+	@Override
+	public String mixinsTodosLosMods() {
+		return "Ĉiuj";
+	}
+
+	@Override
+	public String mixinsModConMixin() {
+		return "Modo kun mixins";
+	}
+
+	@Override
+	public String mixinsTooltipCombo() {
+		return "Filtru laŭ modo kiu enhavas mixins";
+	}
+
+	@Override
+	public String mixinsRecargar() {
+		return "Reŝargi";
+	}
+
+	@Override
+	public String mixinsDescompilarSeleccion() {
+		return "Malkompili elekton";
+	}
+
+	@Override
+	public String mixinsTargets() {
+		return "Targets";
+	}
+
+	@Override
+	public String mixinsTarget() {
+		return "Target";
+	}
+
+	@Override
+	public String mixinsTargetsMetodo() {
+		return "Targets de la metodo";
+	}
+
+	@Override
+	public String mixinsMetodos() {
+		return "Metodoj";
+	}
+
+	@Override
+	public String mixinsCampos() {
+		return "Kampoj";
+	}
+
+	@Override
+	public String mixinsCantidad() {
+		return "Kvanto de mixins";
+	}
+
+	@Override
+	public String mixinsDetalleMixin() {
+		return "Detaloj de mixin";
+	}
+
+	@Override
+	public String mixinsDetalleTarget() {
+		return "Detaloj de target";
+	}
+
+	@Override
+	public String mixinsDetalleMetodo() {
+		return "Detaloj de mixin-metodo";
+	}
+
+	@Override
+	public String mixinsDetalleCampo() {
+		return "Detaloj de mixin-kampo";
+	}
+
+	@Override
+	public String mixinsDetalleConflicto() {
+		return "Detaloj de konflikto";
+	}
+
+	@Override
+	public String mixinsBuscarConflictos() {
+		return "Serĉi eblajn konfliktojn";
+	}
+
+	@Override
+	public String mixinsResultadosConflictos() {
+		return "Rezultoj de konfliktoj";
+	}
+
+	@Override
+	public String mixinsConflictosPosibles() {
+		return "Eblaj konfliktoj";
+	}
+
+	@Override
+	public String mixinsErrorDescompilar() {
+		return "Eraro dum malkompilado";
+	}
+
+	@Override
+	public String mixinsColorPanel() {
+		return "Koloro de la panelo de mixins";
+	}
+
+	@Override
+	public String mixinsColorTexto() {
+		return "Koloro de teksto de mixins";
+	}
+
+	@Override
+	public String mixinsColorTextoSuave() {
+		return "Koloro de duaranga teksto de mixins";
+	}
+
+	@Override
+	public String mixinsAyudaUso1() {
+		return "Ĉi tiu ilo montras modojn kun mixins de SpongePowered kaj permesas inspekti iliajn klasojn, targets, metodojn kaj kampojn.";
+	}
+
+	@Override
+	public String mixinsAyudaUso2() {
+		return "Uzu la supran selektilon por filtri laŭ specifa modo aŭ montri ĉiujn modojn kun mixins.";
+	}
+
+	@Override
+	public String mixinsAyudaUso3() {
+		return "Vastigu la arbon por vidi ĉiun mixin, ĝiajn celajn klasojn, la anotitajn metodojn kaj la shadow kampojn.";
+	}
+
+	@Override
+	public String mixinsAyudaUso4() {
+		return "Alklaku dekstre sur modo, mixin, target, metodo aŭ kampo por serĉi eblajn konfliktojn kun aliaj mixins.";
+	}
+
+	@Override
+	public String mixinsAyudaUso5() {
+		return "Vi povas malkompili la nunan elekton aŭ konflikton rezultigon por inspekti la rilatan kodon.";
+	}
+
+	@Override
+	public String mixinsColorComboFondo() {
+		return "Koloro de fono de la mod-selektilo";
+	}
+
+	@Override
+	public String mixinsColorAreaContenidoFondo() {
+		return "Koloro de fono de la detala panelo";
+	}
+
+	@Override
+	public String mixinsColorSeleccionTexto() {
+		return "Koloro de teksto-elekto";
+	}
+
+	@Override
+	public String mixinsColorSeleccionTextoActivo() {
+		return "Koloro de elektita teksto";
+	}
+
+	@Override
+	public String mixinsColorAyudaTexto() {
+		return "Koloro de helpa teksto";
+	}
+
+	@Override
+	public String mixinsColorArbolFondo() {
+		return "Koloro de fono de la arbo";
+	}
+
+	@Override
+	public String mixinsColorRendererSeleccionTexto() {
+		return "Koloro de elektita teksto en la arbo";
+	}
+
+	@Override
+	public String mixinsColorRendererSeleccionFondo() {
+		return "Koloro de elektita fono en la arbo";
+	}
+
+	@Override
+	public String mixinsColorRendererBordeSeleccion() {
+		return "Koloro de elekta bordero en la arbo";
+	}
+
 }

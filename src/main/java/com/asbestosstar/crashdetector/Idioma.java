@@ -2656,4 +2656,84 @@ public interface Idioma {
 
 	public String desactivarVerificacionRaptorLake();
 
+	public String tituloMixins();
+
+	public String mixinsModConMixin();
+
+	public String mixinsTooltipCombo();
+
+	public String mixinsRecargar();
+
+	public String mixinsDescompilarSeleccion();
+
+	public String mixinsTodosLosMods();
+
+	public String mixinsRaiz();
+
+	public String mixinsTargets();
+
+	public String mixinsMetodos();
+
+	public String mixinsCampos();
+
+	public String mixinsCantidad();
+
+	public String mixinsDetalleMixin();
+
+	public String mixinsDetalleTarget();
+
+	public String mixinsTarget();
+
+	public String mixinsConflictosPosibles();
+
+	public String mixinsDetalleMetodo();
+
+	public String mixinsTargetsMetodo();
+
+	public String mixinsDetalleCampo();
+
+	public String mixinsDetalleConflicto();
+
+	public String mixinsBuscarConflictos();
+
+	public String mixinsResultadosConflictos();
+
+	public String mixinsErrorDescompilar();
+
+	public String mixinsColorPanel();
+
+	public String mixinsColorTexto();
+
+	public String mixinsColorTextoSuave();
+
+	public String mixinsBotonLateral();
+
+	public String mixinsAyudaUso1();
+
+	public String mixinsAyudaUso2();
+
+	public String mixinsAyudaUso3();
+
+	public String mixinsAyudaUso4();
+
+	public String mixinsAyudaUso5();
+
+	public String mixinsColorComboFondo();
+
+	public String mixinsColorAreaContenidoFondo();
+
+	public String mixinsColorSeleccionTexto();
+
+	public String mixinsColorSeleccionTextoActivo();
+
+	public String mixinsColorAyudaTexto();
+
+	public String mixinsColorArbolFondo();
+
+	public String mixinsColorRendererSeleccionTexto();
+
+	public String mixinsColorRendererSeleccionFondo();
+
+	public String mixinsColorRendererBordeSeleccion();
+
 }

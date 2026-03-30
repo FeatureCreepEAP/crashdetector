@@ -96,104 +96,244 @@ public class AnalizadorBytecodeJavassist {
 
 	/**
 	 * Extrae targets del @Mixin usando Javassist.
+	 * 
+	 * Soporta: - @Mixin(targets = { "a.b.C", "x.y.Z" }) - @Mixin(Foo.class)
+	 * - @Mixin(value = { Foo.class, Bar.class })
+	 * 
+	 * Además tolera tanto anotaciones visibles como invisibles.
 	 */
 	private static List<String> extraerTargetsMixinJavassist(CtClass ct, ClassFile cf) throws Exception {
 		List<String> targets = new ArrayList<>();
-		AnnotationsAttribute attr = (AnnotationsAttribute) cf.getAttribute(AnnotationsAttribute.visibleTag);
-		if (attr == null)
-			attr = (AnnotationsAttribute) cf.getAttribute(AnnotationsAttribute.invisibleTag);
-		if (attr == null)
-			return targets;
 
-		Annotation mixinAnn = attr.getAnnotation("org.spongepowered.asm.mixin.Mixin");
-		if (mixinAnn == null)
+		Annotation mixinAnn = obtenerAnotacionClase(cf, "org.spongepowered.asm.mixin.Mixin");
+		if (mixinAnn == null) {
 			return targets;
+		}
 
-		// targets() attribute
+		// targets() -> String[]
 		MemberValue targetsVal = mixinAnn.getMemberValue("targets");
-		if (targetsVal instanceof ArrayMemberValue) {
-			for (MemberValue mv : ((ArrayMemberValue) targetsVal).getValue()) {
-				if (mv instanceof javassist.bytecode.annotation.StringMemberValue) {
-					String t = ((javassist.bytecode.annotation.StringMemberValue) mv).getValue();
-					if (t != null && !targets.contains(t))
-						targets.add(t);
-				}
-			}
-		}
+		agregarTargetsDesdeMemberValue(targetsVal, targets, true);
 
-		// value() attribute (ClassMemberValue)
+		// value() -> Class<?>[]
 		MemberValue valueVal = mixinAnn.getMemberValue("value");
-		if (valueVal instanceof ArrayMemberValue) {
-			for (MemberValue mv : ((ArrayMemberValue) valueVal).getValue()) {
-				if (mv instanceof ClassMemberValue) {
-					String className = ((ClassMemberValue) mv).getValue();
-					if (className != null) {
-						// Convertir de formato punto a nombre de clase
-						className = className.replace('/', '.');
-						if (!targets.contains(className))
-							targets.add(className);
-					}
-				}
-			}
-		} else if (valueVal instanceof ClassMemberValue) {
-			String className = ((ClassMemberValue) valueVal).getValue();
-			if (className != null) {
-				className = className.replace('/', '.');
-				if (!targets.contains(className))
-					targets.add(className);
-			}
-		}
+		agregarTargetsDesdeMemberValue(valueVal, targets, false);
+
 		return targets;
 	}
 
 	/**
+	 * Busca una anotación de clase primero en visibles y luego en invisibles.
+	 */
+	private static Annotation obtenerAnotacionClase(ClassFile cf, String nombreAnotacion) {
+		AnnotationsAttribute visible = (AnnotationsAttribute) cf.getAttribute(AnnotationsAttribute.visibleTag);
+		if (visible != null) {
+			Annotation ann = visible.getAnnotation(nombreAnotacion);
+			if (ann != null) {
+				return ann;
+			}
+		}
+
+		AnnotationsAttribute invisible = (AnnotationsAttribute) cf.getAttribute(AnnotationsAttribute.invisibleTag);
+		if (invisible != null) {
+			Annotation ann = invisible.getAnnotation(nombreAnotacion);
+			if (ann != null) {
+				return ann;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * Busca una anotación de método primero en visibles y luego en invisibles.
+	 */
+	private static Annotation obtenerAnotacionMetodo(MethodInfo mi, String nombreAnotacion) {
+		AnnotationsAttribute visible = (AnnotationsAttribute) mi.getAttribute(AnnotationsAttribute.visibleTag);
+		if (visible != null) {
+			Annotation ann = visible.getAnnotation(nombreAnotacion);
+			if (ann != null) {
+				return ann;
+			}
+		}
+
+		AnnotationsAttribute invisible = (AnnotationsAttribute) mi.getAttribute(AnnotationsAttribute.invisibleTag);
+		if (invisible != null) {
+			Annotation ann = invisible.getAnnotation(nombreAnotacion);
+			if (ann != null) {
+				return ann;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * Busca una anotación de campo primero en visibles y luego en invisibles.
+	 */
+	private static Annotation obtenerAnotacionCampo(javassist.bytecode.FieldInfo fi, String nombreAnotacion) {
+		AnnotationsAttribute visible = (AnnotationsAttribute) fi.getAttribute(AnnotationsAttribute.visibleTag);
+		if (visible != null) {
+			Annotation ann = visible.getAnnotation(nombreAnotacion);
+			if (ann != null) {
+				return ann;
+			}
+		}
+
+		AnnotationsAttribute invisible = (AnnotationsAttribute) fi.getAttribute(AnnotationsAttribute.invisibleTag);
+		if (invisible != null) {
+			Annotation ann = invisible.getAnnotation(nombreAnotacion);
+			if (ann != null) {
+				return ann;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * Extrae targets desde un MemberValue de Javassist.
+	 * 
+	 * @param memberValue  valor de la anotación
+	 * @param targets      lista destino
+	 * @param aceptarTexto true para targets() que usa String[], false para value()
+	 *                     que usa Class[]
+	 */
+	private static void agregarTargetsDesdeMemberValue(MemberValue memberValue, List<String> targets,
+			boolean aceptarTexto) {
+		if (memberValue == null) {
+			return;
+		}
+
+		// Caso array: String[] o Class<?>[]
+		if (memberValue instanceof ArrayMemberValue) {
+			MemberValue[] valores = ((ArrayMemberValue) memberValue).getValue();
+			if (valores == null) {
+				return;
+			}
+
+			for (MemberValue mv : valores) {
+				agregarTargetsDesdeMemberValue(mv, targets, aceptarTexto);
+			}
+			return;
+		}
+
+		// Caso String individual (targets = "a.b.C")
+		if (aceptarTexto && memberValue instanceof javassist.bytecode.annotation.StringMemberValue) {
+			String t = ((javassist.bytecode.annotation.StringMemberValue) memberValue).getValue();
+			agregarTargetNormalizadoJavassist(t, targets);
+			return;
+		}
+
+		// Caso Class individual (value = Foo.class)
+		if (memberValue instanceof ClassMemberValue) {
+			String className = ((ClassMemberValue) memberValue).getValue();
+			agregarTargetNormalizadoJavassist(className, targets);
+		}
+	}
+
+	/**
+	 * Normaliza el nombre de target para UI y evita duplicados.
+	 */
+	private static void agregarTargetNormalizadoJavassist(String className, List<String> targets) {
+		if (className == null) {
+			return;
+		}
+
+		String limpio = className.trim();
+		if (limpio.isEmpty()) {
+			return;
+		}
+
+		// Por seguridad: convertir formato interno a puntos
+		limpio = limpio.replace('/', '.');
+
+		// Si llegara como descriptor tipo Lcom/x/Y;
+		if (limpio.length() >= 2 && limpio.charAt(0) == 'L' && limpio.endsWith(";")) {
+			limpio = limpio.substring(1, limpio.length() - 1).replace('/', '.');
+		}
+
+		if (!targets.contains(limpio)) {
+			targets.add(limpio);
+		}
+	}
+
+	/**
+	 * Agrega strings desde un MemberValue sin asumir que siempre viene como array.
+	 */
+	private static void agregarStringsDesdeMemberValue(MemberValue memberValue, List<String> destino) {
+		if (memberValue == null) {
+			return;
+		}
+
+		if (memberValue instanceof ArrayMemberValue) {
+			MemberValue[] valores = ((ArrayMemberValue) memberValue).getValue();
+			if (valores == null) {
+				return;
+			}
+
+			for (MemberValue mv : valores) {
+				agregarStringsDesdeMemberValue(mv, destino);
+			}
+			return;
+		}
+
+		if (memberValue instanceof javassist.bytecode.annotation.StringMemberValue) {
+			String s = ((javassist.bytecode.annotation.StringMemberValue) memberValue).getValue();
+			if (s != null) {
+				s = s.trim();
+				if (!s.isEmpty() && !destino.contains(s)) {
+					destino.add(s);
+				}
+			}
+		}
+	}
+
+	/**
 	 * Extrae métodos @Inject/@Overwrite usando Javassist.
+	 * 
+	 * Importante: revisa anotaciones visibles e invisibles.
 	 */
 	private static List<MixinMetodoInfo> extraerMetodosMixinJavassist(CtClass ct, ClassFile cf) throws Exception {
 		List<MixinMetodoInfo> resultados = new ArrayList<>();
-		for (MethodInfo mi : cf.getMethods()) {
-			AnnotationsAttribute attr = (AnnotationsAttribute) mi.getAttribute(AnnotationsAttribute.visibleTag);
-			if (attr == null)
-				continue;
 
+		for (MethodInfo mi : cf.getMethods()) {
 			// @Inject
-			Annotation injectAnn = attr.getAnnotation("org.spongepowered.asm.mixin.injection.Inject");
+			Annotation injectAnn = obtenerAnotacionMetodo(mi, "org.spongepowered.asm.mixin.injection.Inject");
 			if (injectAnn != null) {
 				MixinMetodoInfo info = new MixinMetodoInfo(mi.getName(), mi.getDescriptor(), new ArrayList<>(), false);
+
 				MemberValue methodVal = injectAnn.getMemberValue("method");
-				if (methodVal instanceof ArrayMemberValue) {
-					for (MemberValue mv : ((ArrayMemberValue) methodVal).getValue()) {
-						if (mv instanceof javassist.bytecode.annotation.StringMemberValue) {
-							String t = ((javassist.bytecode.annotation.StringMemberValue) mv).getValue();
-							if (t != null && !t.isEmpty() && !info.obtenerTargets().contains(t)) {
-								info.obtenerTargets().add(t);
-							}
-						}
-					}
-				}
+				agregarStringsDesdeMemberValue(methodVal, info.obtenerTargets());
+
 				resultados.add(info);
+				continue;
 			}
+
 			// @Overwrite
-			else if (attr.getAnnotation("org.spongepowered.asm.mixin.Overwrite") != null) {
+			Annotation overwriteAnn = obtenerAnotacionMetodo(mi, "org.spongepowered.asm.mixin.Overwrite");
+			if (overwriteAnn != null) {
 				resultados.add(new MixinMetodoInfo(mi.getName(), mi.getDescriptor(), new ArrayList<>(), true));
 			}
 		}
+
 		return resultados;
 	}
 
 	/**
 	 * Extrae campos @Shadow usando Javassist.
+	 * 
+	 * Importante: revisa anotaciones visibles e invisibles.
 	 */
 	private static List<MixinCampoInfo> extraerCamposMixinJavassist(CtClass ct, ClassFile cf) throws Exception {
 		List<MixinCampoInfo> resultados = new ArrayList<>();
+
 		for (javassist.bytecode.FieldInfo fi : cf.getFields()) {
-			AnnotationsAttribute attr = (AnnotationsAttribute) fi.getAttribute(AnnotationsAttribute.visibleTag);
-			if (attr == null)
-				continue;
-			if (attr.getAnnotation("org.spongepowered.asm.mixin.Shadow") != null) {
+			Annotation shadowAnn = obtenerAnotacionCampo(fi, "org.spongepowered.asm.mixin.Shadow");
+			if (shadowAnn != null) {
 				resultados.add(new MixinCampoInfo(fi.getName(), fi.getDescriptor()));
 			}
 		}
+
 		return resultados;
 	}
 

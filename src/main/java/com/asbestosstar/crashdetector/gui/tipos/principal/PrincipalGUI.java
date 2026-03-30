@@ -1,16 +1,10 @@
 package com.asbestosstar.crashdetector.gui.tipos.principal;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Desktop;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Image;
-import java.awt.Insets;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -23,10 +17,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.function.Supplier;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
 import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -54,6 +45,7 @@ import com.asbestosstar.crashdetector.gui.tipos.grepr.BusquedaGUISaliorMoon;
 import com.asbestosstar.crashdetector.gui.tipos.historia.ClioOfficeGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasHoloTalk;
 import com.asbestosstar.crashdetector.gui.tipos.mcreator.EscanerMCreatorGUIRosemiLoveLock;
+import com.asbestosstar.crashdetector.gui.tipos.mixins.MixinsGUIChiarru;
 import com.asbestosstar.crashdetector.gui.tipos.modapi.CDModsEstiloTL;
 import com.asbestosstar.crashdetector.gui.tipos.modapi.PanelAPIBase;
 import com.asbestosstar.crashdetector.gui.tipos.quickfix.PanelQuickFixDemonSlayers;
@@ -128,7 +120,7 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		registrarBotonDeBarraLateralDerecha(TipoGUI.CORPO, CorpoSAO.ID, () -> new CorpoSAO());
 		registrarBotonDeBarraLateralDerecha(TipoGUI.TODOS_QUICKFIXES, PanelQuickFixDemonSlayers.ID,
 				() -> new PanelQuickFixDemonSlayers());
-
+		registrarBotonDeBarraLateralDerecha(TipoGUI.MIXINS, MixinsGUIChiarru.ID, () -> new MixinsGUIChiarru());
 	}
 
 	public PrincipalGUI() {

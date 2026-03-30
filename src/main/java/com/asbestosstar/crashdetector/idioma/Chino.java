@@ -6832,4 +6832,204 @@ public class Chino implements Idioma {
 		return "在 " + fuente + " 上阅读文章";
 	}
 
+	@Override
+	public String tituloMixins() {
+		return "Mixins 浏览器";
+	}
+
+	@Override
+	public String mixinsBotonLateral() {
+		return "Mixins";
+	}
+
+	@Override
+	public String mixinsRaiz() {
+		return "已找到的 Mixins";
+	}
+
+	@Override
+	public String mixinsTodosLosMods() {
+		return "全部";
+	}
+
+	@Override
+	public String mixinsModConMixin() {
+		return "包含 mixins 的模组";
+	}
+
+	@Override
+	public String mixinsTooltipCombo() {
+		return "按包含 mixins 的模组筛选";
+	}
+
+	@Override
+	public String mixinsRecargar() {
+		return "重新加载";
+	}
+
+	@Override
+	public String mixinsDescompilarSeleccion() {
+		return "反编译所选内容";
+	}
+
+	@Override
+	public String mixinsTargets() {
+		return "Targets";
+	}
+
+	@Override
+	public String mixinsTarget() {
+		return "Target";
+	}
+
+	@Override
+	public String mixinsTargetsMetodo() {
+		return "方法的 Targets";
+	}
+
+	@Override
+	public String mixinsMetodos() {
+		return "方法";
+	}
+
+	@Override
+	public String mixinsCampos() {
+		return "字段";
+	}
+
+	@Override
+	public String mixinsCantidad() {
+		return "Mixins 数量";
+	}
+
+	@Override
+	public String mixinsDetalleMixin() {
+		return "Mixin 详情";
+	}
+
+	@Override
+	public String mixinsDetalleTarget() {
+		return "Target 详情";
+	}
+
+	@Override
+	public String mixinsDetalleMetodo() {
+		return "Mixin 方法详情";
+	}
+
+	@Override
+	public String mixinsDetalleCampo() {
+		return "Mixin 字段详情";
+	}
+
+	@Override
+	public String mixinsDetalleConflicto() {
+		return "冲突详情";
+	}
+
+	@Override
+	public String mixinsBuscarConflictos() {
+		return "搜索可能的冲突";
+	}
+
+	@Override
+	public String mixinsResultadosConflictos() {
+		return "冲突结果";
+	}
+
+	@Override
+	public String mixinsConflictosPosibles() {
+		return "可能的冲突";
+	}
+
+	@Override
+	public String mixinsErrorDescompilar() {
+		return "反编译错误";
+	}
+
+	@Override
+	public String mixinsColorPanel() {
+		return "Mixins 面板颜色";
+	}
+
+	@Override
+	public String mixinsColorTexto() {
+		return "Mixins 文本颜色";
+	}
+
+	@Override
+	public String mixinsColorTextoSuave() {
+		return "Mixins 次要文本颜色";
+	}
+
+	@Override
+	public String mixinsAyudaUso1() {
+		return "此工具显示带有 SpongePowered mixins 的模组，并允许检查它们的类、targets、方法和字段。";
+	}
+
+	@Override
+	public String mixinsAyudaUso2() {
+		return "使用顶部选择器按特定模组筛选，或显示所有带有 mixins 的模组。";
+	}
+
+	@Override
+	public String mixinsAyudaUso3() {
+		return "展开树形结构以查看每个 mixin、其目标类、注解方法和 shadow 字段。";
+	}
+
+	@Override
+	public String mixinsAyudaUso4() {
+		return "右键单击模组、mixin、target、方法或字段，以搜索与其他 mixins 的可能冲突。";
+	}
+
+	@Override
+	public String mixinsAyudaUso5() {
+		return "你可以反编译当前选择或冲突结果，以检查相关代码。";
+	}
+
+	@Override
+	public String mixinsColorComboFondo() {
+		return "模组选择器背景色";
+	}
+
+	@Override
+	public String mixinsColorAreaContenidoFondo() {
+		return "详情面板背景色";
+	}
+
+	@Override
+	public String mixinsColorSeleccionTexto() {
+		return "文本选择颜色";
+	}
+
+	@Override
+	public String mixinsColorSeleccionTextoActivo() {
+		return "选中文本颜色";
+	}
+
+	@Override
+	public String mixinsColorAyudaTexto() {
+		return "帮助文本颜色";
+	}
+
+	@Override
+	public String mixinsColorArbolFondo() {
+		return "树形视图背景色";
+	}
+
+	@Override
+	public String mixinsColorRendererSeleccionTexto() {
+		return "树形视图选中文本颜色";
+	}
+
+	@Override
+	public String mixinsColorRendererSeleccionFondo() {
+		return "树形视图选中背景颜色";
+	}
+
+	@Override
+	public String mixinsColorRendererBordeSeleccion() {
+		return "树形视图选中边框颜色";
+	}
+
 }

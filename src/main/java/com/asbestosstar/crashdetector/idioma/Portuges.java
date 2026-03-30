@@ -7331,4 +7331,204 @@ public class Portuges implements Idioma {
 		return "Ler artigo em " + fuente;
 	}
 
+	@Override
+	public String tituloMixins() {
+		return "Explorador de Mixins";
+	}
+
+	@Override
+	public String mixinsBotonLateral() {
+		return "Mixins";
+	}
+
+	@Override
+	public String mixinsRaiz() {
+		return "Mixins encontrados";
+	}
+
+	@Override
+	public String mixinsTodosLosMods() {
+		return "Todos";
+	}
+
+	@Override
+	public String mixinsModConMixin() {
+		return "Mod com mixins";
+	}
+
+	@Override
+	public String mixinsTooltipCombo() {
+		return "Filtrar por mod que contenha mixins";
+	}
+
+	@Override
+	public String mixinsRecargar() {
+		return "Recarregar";
+	}
+
+	@Override
+	public String mixinsDescompilarSeleccion() {
+		return "Descompilar seleção";
+	}
+
+	@Override
+	public String mixinsTargets() {
+		return "Targets";
+	}
+
+	@Override
+	public String mixinsTarget() {
+		return "Target";
+	}
+
+	@Override
+	public String mixinsTargetsMetodo() {
+		return "Targets do método";
+	}
+
+	@Override
+	public String mixinsMetodos() {
+		return "Métodos";
+	}
+
+	@Override
+	public String mixinsCampos() {
+		return "Campos";
+	}
+
+	@Override
+	public String mixinsCantidad() {
+		return "Quantidade de mixins";
+	}
+
+	@Override
+	public String mixinsDetalleMixin() {
+		return "Detalhes do mixin";
+	}
+
+	@Override
+	public String mixinsDetalleTarget() {
+		return "Detalhes do target";
+	}
+
+	@Override
+	public String mixinsDetalleMetodo() {
+		return "Detalhes do método mixin";
+	}
+
+	@Override
+	public String mixinsDetalleCampo() {
+		return "Detalhes do campo mixin";
+	}
+
+	@Override
+	public String mixinsDetalleConflicto() {
+		return "Detalhes do conflito";
+	}
+
+	@Override
+	public String mixinsBuscarConflictos() {
+		return "Buscar possíveis conflitos";
+	}
+
+	@Override
+	public String mixinsResultadosConflictos() {
+		return "Resultados de conflitos";
+	}
+
+	@Override
+	public String mixinsConflictosPosibles() {
+		return "Possíveis conflitos";
+	}
+
+	@Override
+	public String mixinsErrorDescompilar() {
+		return "Erro ao descompilar";
+	}
+
+	@Override
+	public String mixinsColorPanel() {
+		return "Cor do painel de mixins";
+	}
+
+	@Override
+	public String mixinsColorTexto() {
+		return "Cor do texto de mixins";
+	}
+
+	@Override
+	public String mixinsColorTextoSuave() {
+		return "Cor do texto secundário de mixins";
+	}
+
+	@Override
+	public String mixinsAyudaUso1() {
+		return "Esta ferramenta mostra mods com mixins do SpongePowered e permite inspecionar suas classes, targets, métodos e campos.";
+	}
+
+	@Override
+	public String mixinsAyudaUso2() {
+		return "Use o seletor superior para filtrar por um mod específico ou mostrar todos os mods com mixins.";
+	}
+
+	@Override
+	public String mixinsAyudaUso3() {
+		return "Expanda a árvore para ver cada mixin, suas classes alvo, os métodos anotados e os campos shadow.";
+	}
+
+	@Override
+	public String mixinsAyudaUso4() {
+		return "Clique com o botão direito em um mod, mixin, target, método ou campo para buscar possíveis conflitos com outros mixins.";
+	}
+
+	@Override
+	public String mixinsAyudaUso5() {
+		return "Você pode descompilar a seleção atual ou um resultado de conflito para inspecionar o código relacionado.";
+	}
+
+	@Override
+	public String mixinsColorComboFondo() {
+		return "Cor de fundo do seletor de mods";
+	}
+
+	@Override
+	public String mixinsColorAreaContenidoFondo() {
+		return "Cor de fundo do painel de detalhes";
+	}
+
+	@Override
+	public String mixinsColorSeleccionTexto() {
+		return "Cor de seleção de texto";
+	}
+
+	@Override
+	public String mixinsColorSeleccionTextoActivo() {
+		return "Cor do texto selecionado";
+	}
+
+	@Override
+	public String mixinsColorAyudaTexto() {
+		return "Cor do texto de ajuda";
+	}
+
+	@Override
+	public String mixinsColorArbolFondo() {
+		return "Cor de fundo da árvore";
+	}
+
+	@Override
+	public String mixinsColorRendererSeleccionTexto() {
+		return "Cor do texto selecionado na árvore";
+	}
+
+	@Override
+	public String mixinsColorRendererSeleccionFondo() {
+		return "Cor de fundo selecionada na árvore";
+	}
+
+	@Override
+	public String mixinsColorRendererBordeSeleccion() {
+		return "Cor da borda de seleção na árvore";
+	}
+
 }

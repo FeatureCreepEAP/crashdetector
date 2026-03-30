@@ -7221,4 +7221,204 @@ public class Arabe implements Idioma {
 		return "اقرأ المقال على " + fuente;
 	}
 
+	@Override
+	public String tituloMixins() {
+		return "مستكشف Mixins";
+	}
+
+	@Override
+	public String mixinsBotonLateral() {
+		return "Mixins";
+	}
+
+	@Override
+	public String mixinsRaiz() {
+		return "Mixins التي تم العثور عليها";
+	}
+
+	@Override
+	public String mixinsTodosLosMods() {
+		return "الكل";
+	}
+
+	@Override
+	public String mixinsModConMixin() {
+		return "إضافة تحتوي على mixins";
+	}
+
+	@Override
+	public String mixinsTooltipCombo() {
+		return "تصفية حسب الإضافة التي تحتوي على mixins";
+	}
+
+	@Override
+	public String mixinsRecargar() {
+		return "إعادة تحميل";
+	}
+
+	@Override
+	public String mixinsDescompilarSeleccion() {
+		return "إلغاء تجميع التحديد";
+	}
+
+	@Override
+	public String mixinsTargets() {
+		return "Targets";
+	}
+
+	@Override
+	public String mixinsTarget() {
+		return "Target";
+	}
+
+	@Override
+	public String mixinsTargetsMetodo() {
+		return "Targets للطريقة";
+	}
+
+	@Override
+	public String mixinsMetodos() {
+		return "الطرق";
+	}
+
+	@Override
+	public String mixinsCampos() {
+		return "الحقول";
+	}
+
+	@Override
+	public String mixinsCantidad() {
+		return "عدد mixins";
+	}
+
+	@Override
+	public String mixinsDetalleMixin() {
+		return "تفاصيل mixin";
+	}
+
+	@Override
+	public String mixinsDetalleTarget() {
+		return "تفاصيل target";
+	}
+
+	@Override
+	public String mixinsDetalleMetodo() {
+		return "تفاصيل طريقة mixin";
+	}
+
+	@Override
+	public String mixinsDetalleCampo() {
+		return "تفاصيل حقل mixin";
+	}
+
+	@Override
+	public String mixinsDetalleConflicto() {
+		return "تفاصيل التعارض";
+	}
+
+	@Override
+	public String mixinsBuscarConflictos() {
+		return "البحث عن تعارضات محتملة";
+	}
+
+	@Override
+	public String mixinsResultadosConflictos() {
+		return "نتائج التعارضات";
+	}
+
+	@Override
+	public String mixinsConflictosPosibles() {
+		return "تعارضات محتملة";
+	}
+
+	@Override
+	public String mixinsErrorDescompilar() {
+		return "خطأ في إلغاء التجميع";
+	}
+
+	@Override
+	public String mixinsColorPanel() {
+		return "لون لوحة mixins";
+	}
+
+	@Override
+	public String mixinsColorTexto() {
+		return "لون نص mixins";
+	}
+
+	@Override
+	public String mixinsColorTextoSuave() {
+		return "لون النص الثانوي لـ mixins";
+	}
+
+	@Override
+	public String mixinsAyudaUso1() {
+		return "تعرض هذه الأداة الإضافات التي تحتوي على mixins من SpongePowered وتسمح بفحص classes و targets و methods و fields الخاصة بها.";
+	}
+
+	@Override
+	public String mixinsAyudaUso2() {
+		return "استخدم المحدد العلوي للتصفية حسب إضافة معينة أو لعرض جميع الإضافات التي تحتوي على mixins.";
+	}
+
+	@Override
+	public String mixinsAyudaUso3() {
+		return "وسع الشجرة لرؤية كل mixin، و classes الهدف، و methods المعلقة، و fields shadow.";
+	}
+
+	@Override
+	public String mixinsAyudaUso4() {
+		return "انقر بزر الماوس الأيمن على إضافة أو mixin أو target أو method أو field للبحث عن تعارضات محتملة مع mixins أخرى.";
+	}
+
+	@Override
+	public String mixinsAyudaUso5() {
+		return "يمكنك إلغاء تجميع التحديد الحالي أو نتيجة تعارض لفحص الكود المرتبط.";
+	}
+
+	@Override
+	public String mixinsColorComboFondo() {
+		return "لون خلفية محدّد الإضافات";
+	}
+
+	@Override
+	public String mixinsColorAreaContenidoFondo() {
+		return "لون خلفية لوحة التفاصيل";
+	}
+
+	@Override
+	public String mixinsColorSeleccionTexto() {
+		return "لون تحديد النص";
+	}
+
+	@Override
+	public String mixinsColorSeleccionTextoActivo() {
+		return "لون النص المحدد";
+	}
+
+	@Override
+	public String mixinsColorAyudaTexto() {
+		return "لون نص المساعدة";
+	}
+
+	@Override
+	public String mixinsColorArbolFondo() {
+		return "لون خلفية الشجرة";
+	}
+
+	@Override
+	public String mixinsColorRendererSeleccionTexto() {
+		return "لون النص المحدد في الشجرة";
+	}
+
+	@Override
+	public String mixinsColorRendererSeleccionFondo() {
+		return "لون الخلفية المحددة في الشجرة";
+	}
+
+	@Override
+	public String mixinsColorRendererBordeSeleccion() {
+		return "لون حدود التحديد في الشجرة";
+	}
+
 }

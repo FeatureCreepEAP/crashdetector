@@ -7347,4 +7347,204 @@ public class Ingles implements Idioma {
 		return "Read article on " + fuente;
 	}
 
+	@Override
+	public String tituloMixins() {
+		return "Mixins Explorer";
+	}
+
+	@Override
+	public String mixinsBotonLateral() {
+		return "Mixins";
+	}
+
+	@Override
+	public String mixinsRaiz() {
+		return "Mixins found";
+	}
+
+	@Override
+	public String mixinsTodosLosMods() {
+		return "All";
+	}
+
+	@Override
+	public String mixinsModConMixin() {
+		return "Mod with mixins";
+	}
+
+	@Override
+	public String mixinsTooltipCombo() {
+		return "Filter by mod containing mixins";
+	}
+
+	@Override
+	public String mixinsRecargar() {
+		return "Reload";
+	}
+
+	@Override
+	public String mixinsDescompilarSeleccion() {
+		return "Decompile selection";
+	}
+
+	@Override
+	public String mixinsTargets() {
+		return "Targets";
+	}
+
+	@Override
+	public String mixinsTarget() {
+		return "Target";
+	}
+
+	@Override
+	public String mixinsTargetsMetodo() {
+		return "Method targets";
+	}
+
+	@Override
+	public String mixinsMetodos() {
+		return "Methods";
+	}
+
+	@Override
+	public String mixinsCampos() {
+		return "Fields";
+	}
+
+	@Override
+	public String mixinsCantidad() {
+		return "Mixins count";
+	}
+
+	@Override
+	public String mixinsDetalleMixin() {
+		return "Mixin details";
+	}
+
+	@Override
+	public String mixinsDetalleTarget() {
+		return "Target details";
+	}
+
+	@Override
+	public String mixinsDetalleMetodo() {
+		return "Mixin method details";
+	}
+
+	@Override
+	public String mixinsDetalleCampo() {
+		return "Mixin field details";
+	}
+
+	@Override
+	public String mixinsDetalleConflicto() {
+		return "Conflict details";
+	}
+
+	@Override
+	public String mixinsBuscarConflictos() {
+		return "Search for possible conflicts";
+	}
+
+	@Override
+	public String mixinsResultadosConflictos() {
+		return "Conflict results";
+	}
+
+	@Override
+	public String mixinsConflictosPosibles() {
+		return "Possible conflicts";
+	}
+
+	@Override
+	public String mixinsErrorDescompilar() {
+		return "Error decompiling";
+	}
+
+	@Override
+	public String mixinsColorPanel() {
+		return "Mixins panel colour";
+	}
+
+	@Override
+	public String mixinsColorTexto() {
+		return "Mixins text colour";
+	}
+
+	@Override
+	public String mixinsColorTextoSuave() {
+		return "Mixins secondary text colour";
+	}
+
+	@Override
+	public String mixinsAyudaUso1() {
+		return "This tool shows mods with SpongePowered mixins and allows inspecting their classes, targets, methods, and fields.";
+	}
+
+	@Override
+	public String mixinsAyudaUso2() {
+		return "Use the top selector to filter by a specific mod or show all mods with mixins.";
+	}
+
+	@Override
+	public String mixinsAyudaUso3() {
+		return "Expand the tree to view each mixin, its target classes, annotated methods, and shadow fields.";
+	}
+
+	@Override
+	public String mixinsAyudaUso4() {
+		return "Right-click on a mod, mixin, target, method, or field to search for possible conflicts with other mixins.";
+	}
+
+	@Override
+	public String mixinsAyudaUso5() {
+		return "You can decompile the current selection or a conflict result to inspect the related code.";
+	}
+
+	@Override
+	public String mixinsColorComboFondo() {
+		return "Mod selector background colour";
+	}
+
+	@Override
+	public String mixinsColorAreaContenidoFondo() {
+		return "Details panel background colour";
+	}
+
+	@Override
+	public String mixinsColorSeleccionTexto() {
+		return "Text selection colour";
+	}
+
+	@Override
+	public String mixinsColorSeleccionTextoActivo() {
+		return "Selected text colour";
+	}
+
+	@Override
+	public String mixinsColorAyudaTexto() {
+		return "Help text colour";
+	}
+
+	@Override
+	public String mixinsColorArbolFondo() {
+		return "Tree background colour";
+	}
+
+	@Override
+	public String mixinsColorRendererSeleccionTexto() {
+		return "Tree selected text colour";
+	}
+
+	@Override
+	public String mixinsColorRendererSeleccionFondo() {
+		return "Tree selected background colour";
+	}
+
+	@Override
+	public String mixinsColorRendererBordeSeleccion() {
+		return "Tree selection border colour";
+	}
+
 }

@@ -7284,4 +7284,204 @@ public class Persa implements Idioma {
 		return "مقاله را در " + fuente + " بخوانید";
 	}
 
+	@Override
+	public String tituloMixins() {
+		return "کاوشگر Mixins";
+	}
+
+	@Override
+	public String mixinsBotonLateral() {
+		return "Mixins";
+	}
+
+	@Override
+	public String mixinsRaiz() {
+		return "Mixins یافت‌شده";
+	}
+
+	@Override
+	public String mixinsTodosLosMods() {
+		return "همه";
+	}
+
+	@Override
+	public String mixinsModConMixin() {
+		return "مود حاوی mixins";
+	}
+
+	@Override
+	public String mixinsTooltipCombo() {
+		return "فیلتر بر اساس مود حاوی mixins";
+	}
+
+	@Override
+	public String mixinsRecargar() {
+		return "بارگذاری مجدد";
+	}
+
+	@Override
+	public String mixinsDescompilarSeleccion() {
+		return "دیکامپایل انتخاب";
+	}
+
+	@Override
+	public String mixinsTargets() {
+		return "Targets";
+	}
+
+	@Override
+	public String mixinsTarget() {
+		return "Target";
+	}
+
+	@Override
+	public String mixinsTargetsMetodo() {
+		return "Targets متد";
+	}
+
+	@Override
+	public String mixinsMetodos() {
+		return "متدها";
+	}
+
+	@Override
+	public String mixinsCampos() {
+		return "فیلدها";
+	}
+
+	@Override
+	public String mixinsCantidad() {
+		return "تعداد mixins";
+	}
+
+	@Override
+	public String mixinsDetalleMixin() {
+		return "جزئیات mixin";
+	}
+
+	@Override
+	public String mixinsDetalleTarget() {
+		return "جزئیات target";
+	}
+
+	@Override
+	public String mixinsDetalleMetodo() {
+		return "جزئیات متد mixin";
+	}
+
+	@Override
+	public String mixinsDetalleCampo() {
+		return "جزئیات فیلد mixin";
+	}
+
+	@Override
+	public String mixinsDetalleConflicto() {
+		return "جزئیات تعارض";
+	}
+
+	@Override
+	public String mixinsBuscarConflictos() {
+		return "جستجوی تعارضات احتمالی";
+	}
+
+	@Override
+	public String mixinsResultadosConflictos() {
+		return "نتایج تعارضات";
+	}
+
+	@Override
+	public String mixinsConflictosPosibles() {
+		return "تعارضات احتمالی";
+	}
+
+	@Override
+	public String mixinsErrorDescompilar() {
+		return "خطا در دیکامپایل";
+	}
+
+	@Override
+	public String mixinsColorPanel() {
+		return "رنگ پنل mixins";
+	}
+
+	@Override
+	public String mixinsColorTexto() {
+		return "رنگ متن mixins";
+	}
+
+	@Override
+	public String mixinsColorTextoSuave() {
+		return "رنگ متن فرعی mixins";
+	}
+
+	@Override
+	public String mixinsAyudaUso1() {
+		return "این ابزار مودهای دارای میکسین‌های SpongePowered را نشان می‌دهد و اجازه می‌دهد کلاس‌ها، targets، متدها و فیلدهای آن‌ها را بررسی کنید.";
+	}
+
+	@Override
+	public String mixinsAyudaUso2() {
+		return "از انتخاب‌گر بالایی برای فیلتر کردن بر اساس یک مود خاص یا نمایش همه مودهای دارای میکسین استفاده کنید.";
+	}
+
+	@Override
+	public String mixinsAyudaUso3() {
+		return "درخت را گسترش دهید تا هر mixin، کلاس‌های هدف آن، متدهای anotated و فیلدهای shadow را ببینید.";
+	}
+
+	@Override
+	public String mixinsAyudaUso4() {
+		return "برای جستجوی تعارضات احتمالی با سایر میکسین‌ها، روی یک مود، mixin، target، متد یا فیلد کلیک راست کنید.";
+	}
+
+	@Override
+	public String mixinsAyudaUso5() {
+		return "می‌توانید انتخاب فعلی یا یک نتیجه تعارض را دیکامپایل کنید تا کد مرتبط را بررسی کنید.";
+	}
+
+	@Override
+	public String mixinsColorComboFondo() {
+		return "رنگ پس‌زمینه انتخاب‌گر مود";
+	}
+
+	@Override
+	public String mixinsColorAreaContenidoFondo() {
+		return "رنگ پس‌زمینه پنل جزئیات";
+	}
+
+	@Override
+	public String mixinsColorSeleccionTexto() {
+		return "رنگ انتخاب متن";
+	}
+
+	@Override
+	public String mixinsColorSeleccionTextoActivo() {
+		return "رنگ متن انتخاب‌شده";
+	}
+
+	@Override
+	public String mixinsColorAyudaTexto() {
+		return "رنگ متن راهنما";
+	}
+
+	@Override
+	public String mixinsColorArbolFondo() {
+		return "رنگ پس‌زمینه درخت";
+	}
+
+	@Override
+	public String mixinsColorRendererSeleccionTexto() {
+		return "رنگ متن انتخاب‌شده در درخت";
+	}
+
+	@Override
+	public String mixinsColorRendererSeleccionFondo() {
+		return "رنگ پس‌زمینه انتخاب‌شده در درخت";
+	}
+
+	@Override
+	public String mixinsColorRendererBordeSeleccion() {
+		return "رنگ حاشیه انتخاب در درخت";
+	}
+
 }

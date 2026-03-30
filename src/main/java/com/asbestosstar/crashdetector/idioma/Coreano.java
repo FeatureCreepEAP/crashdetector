@@ -6996,4 +6996,204 @@ public class Coreano implements Idioma {
 		return fuente + " 에서 기사 읽기";
 	}
 
+	@Override
+	public String tituloMixins() {
+		return "Mixins 탐색기";
+	}
+
+	@Override
+	public String mixinsBotonLateral() {
+		return "Mixins";
+	}
+
+	@Override
+	public String mixinsRaiz() {
+		return "발견된 Mixins";
+	}
+
+	@Override
+	public String mixinsTodosLosMods() {
+		return "전부";
+	}
+
+	@Override
+	public String mixinsModConMixin() {
+		return "mixins 를 포함한 모드";
+	}
+
+	@Override
+	public String mixinsTooltipCombo() {
+		return "mixins 를 포함한 모드로 필터링";
+	}
+
+	@Override
+	public String mixinsRecargar() {
+		return "다시 적재";
+	}
+
+	@Override
+	public String mixinsDescompilarSeleccion() {
+		return "선택항목 역컴파일";
+	}
+
+	@Override
+	public String mixinsTargets() {
+		return "Targets";
+	}
+
+	@Override
+	public String mixinsTarget() {
+		return "Target";
+	}
+
+	@Override
+	public String mixinsTargetsMetodo() {
+		return "방법의 Targets";
+	}
+
+	@Override
+	public String mixinsMetodos() {
+		return "방법들";
+	}
+
+	@Override
+	public String mixinsCampos() {
+		return "란들";
+	}
+
+	@Override
+	public String mixinsCantidad() {
+		return "Mixins 수량";
+	}
+
+	@Override
+	public String mixinsDetalleMixin() {
+		return "Mixin 상세";
+	}
+
+	@Override
+	public String mixinsDetalleTarget() {
+		return "Target 상세";
+	}
+
+	@Override
+	public String mixinsDetalleMetodo() {
+		return "Mixin 방법 상세";
+	}
+
+	@Override
+	public String mixinsDetalleCampo() {
+		return "Mixin 란 상세";
+	}
+
+	@Override
+	public String mixinsDetalleConflicto() {
+		return "충돌 상세";
+	}
+
+	@Override
+	public String mixinsBuscarConflictos() {
+		return "가능한 충돌 검색";
+	}
+
+	@Override
+	public String mixinsResultadosConflictos() {
+		return "충돌 결과";
+	}
+
+	@Override
+	public String mixinsConflictosPosibles() {
+		return "가능한 충돌";
+	}
+
+	@Override
+	public String mixinsErrorDescompilar() {
+		return "역컴파일 오류";
+	}
+
+	@Override
+	public String mixinsColorPanel() {
+		return "Mixins 패널 색";
+	}
+
+	@Override
+	public String mixinsColorTexto() {
+		return "Mixins 텍스트 색";
+	}
+
+	@Override
+	public String mixinsColorTextoSuave() {
+		return "Mixins 보조 텍스트 색";
+	}
+
+	@Override
+	public String mixinsAyudaUso1() {
+		return "이 도구는 SpongePowered 의 mixins 를 포함한 모드들을 보여주며 그들의 류, targets, 방법들과 란들을 검사할수 있게 합니다.";
+	}
+
+	@Override
+	public String mixinsAyudaUso2() {
+		return "상부 선택기를 리용하여 특정 모드를 필터링하거나 mixins 를 포함한 모든 모드들을 보여주십시오.";
+	}
+
+	@Override
+	public String mixinsAyudaUso3() {
+		return "트리를 확장하여 각 mixin, 목표 류들, 주석이 달린 방법들과 shadow 란들을 보십시오.";
+	}
+
+	@Override
+	public String mixinsAyudaUso4() {
+		return "모드, mixin, target, 방법 또는 란에서 오른쪽 클릭하여 다른 mixins 와의 가능한 충돌들을 검색하십시오.";
+	}
+
+	@Override
+	public String mixinsAyudaUso5() {
+		return "관련 코드를 검사하기 위해 현재 선택항목이나 충돌 결과를 역컴파일할수 있습니다.";
+	}
+
+	@Override
+	public String mixinsColorComboFondo() {
+		return "모드 선택기 배경색";
+	}
+
+	@Override
+	public String mixinsColorAreaContenidoFondo() {
+		return "상세 패널 배경색";
+	}
+
+	@Override
+	public String mixinsColorSeleccionTexto() {
+		return "텍스트 선택 색";
+	}
+
+	@Override
+	public String mixinsColorSeleccionTextoActivo() {
+		return "선택된 텍스트 색";
+	}
+
+	@Override
+	public String mixinsColorAyudaTexto() {
+		return "도움말 텍스트 색";
+	}
+
+	@Override
+	public String mixinsColorArbolFondo() {
+		return "트리 배경색";
+	}
+
+	@Override
+	public String mixinsColorRendererSeleccionTexto() {
+		return "트리에서 선택된 텍스트 색";
+	}
+
+	@Override
+	public String mixinsColorRendererSeleccionFondo() {
+		return "트리에서 선택된 배경 색";
+	}
+
+	@Override
+	public String mixinsColorRendererBordeSeleccion() {
+		return "트리에서 선택된 테두리 색";
+	}
+
 }

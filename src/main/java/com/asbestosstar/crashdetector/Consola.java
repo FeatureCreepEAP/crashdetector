@@ -159,6 +159,7 @@ public class Consola {
 												// registros aqui
 		inutiles_archivo_strs.add("latest.log");// no necesitemos latest.log no mas porque tenemos ProxyLog4J2
 		inutiles_archivo_strs.add("debug.log");// no necesitemos latest.log no mas porque tenemos ProxyLog4J2
+		inutiles_archivo_strs.add("stdout-logs.txt");// no necesitemos y causa problemas
 
 	}
 

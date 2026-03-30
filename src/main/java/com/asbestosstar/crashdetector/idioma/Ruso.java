@@ -7326,4 +7326,204 @@ public class Ruso implements Idioma {
 		return "Читать статью на " + fuente;
 	}
 
+	@Override
+	public String tituloMixins() {
+		return "Обозреватель Mixins";
+	}
+
+	@Override
+	public String mixinsBotonLateral() {
+		return "Mixins";
+	}
+
+	@Override
+	public String mixinsRaiz() {
+		return "Найденные Mixins";
+	}
+
+	@Override
+	public String mixinsTodosLosMods() {
+		return "Все";
+	}
+
+	@Override
+	public String mixinsModConMixin() {
+		return "Модификация с mixins";
+	}
+
+	@Override
+	public String mixinsTooltipCombo() {
+		return "Фильтровать по модификации, содержащей mixins";
+	}
+
+	@Override
+	public String mixinsRecargar() {
+		return "Перезагрузить";
+	}
+
+	@Override
+	public String mixinsDescompilarSeleccion() {
+		return "Декомпилировать выделенное";
+	}
+
+	@Override
+	public String mixinsTargets() {
+		return "Targets";
+	}
+
+	@Override
+	public String mixinsTarget() {
+		return "Target";
+	}
+
+	@Override
+	public String mixinsTargetsMetodo() {
+		return "Targets метода";
+	}
+
+	@Override
+	public String mixinsMetodos() {
+		return "Методы";
+	}
+
+	@Override
+	public String mixinsCampos() {
+		return "Поля";
+	}
+
+	@Override
+	public String mixinsCantidad() {
+		return "Количество mixins";
+	}
+
+	@Override
+	public String mixinsDetalleMixin() {
+		return "Детали mixin";
+	}
+
+	@Override
+	public String mixinsDetalleTarget() {
+		return "Детали target";
+	}
+
+	@Override
+	public String mixinsDetalleMetodo() {
+		return "Детали метода mixin";
+	}
+
+	@Override
+	public String mixinsDetalleCampo() {
+		return "Детали поля mixin";
+	}
+
+	@Override
+	public String mixinsDetalleConflicto() {
+		return "Детали конфликта";
+	}
+
+	@Override
+	public String mixinsBuscarConflictos() {
+		return "Поиск возможных конфликтов";
+	}
+
+	@Override
+	public String mixinsResultadosConflictos() {
+		return "Результаты конфликтов";
+	}
+
+	@Override
+	public String mixinsConflictosPosibles() {
+		return "Возможные конфликты";
+	}
+
+	@Override
+	public String mixinsErrorDescompilar() {
+		return "Ошибка декомпиляции";
+	}
+
+	@Override
+	public String mixinsColorPanel() {
+		return "Цвет панели mixins";
+	}
+
+	@Override
+	public String mixinsColorTexto() {
+		return "Цвет текста mixins";
+	}
+
+	@Override
+	public String mixinsColorTextoSuave() {
+		return "Цвет вторичного текста mixins";
+	}
+
+	@Override
+	public String mixinsAyudaUso1() {
+		return "Этот инструмент показывает моды с миксинами от SpongePowered и позволяет inspectовать их классы, targets, методы и поля.";
+	}
+
+	@Override
+	public String mixinsAyudaUso2() {
+		return "Используйте верхний селектор для фильтрации по конкретной модификации или отображения всех модов с миксинами.";
+	}
+
+	@Override
+	public String mixinsAyudaUso3() {
+		return "Разверните дерево, чтобы увидеть каждый mixin, его целевые классы, аннотированные методы и shadow поля.";
+	}
+
+	@Override
+	public String mixinsAyudaUso4() {
+		return "Щёлкните правой кнопкой мыши по моду, mixin, target, методу или полю, чтобы найти возможные конфликты с другими миксинами.";
+	}
+
+	@Override
+	public String mixinsAyudaUso5() {
+		return "Вы можете декомпилировать текущий выбор или результат конфликта, чтобы изучить соответствующий код.";
+	}
+
+	@Override
+	public String mixinsColorComboFondo() {
+		return "Цвет фона селектора модов";
+	}
+
+	@Override
+	public String mixinsColorAreaContenidoFondo() {
+		return "Цвет фона панели деталей";
+	}
+
+	@Override
+	public String mixinsColorSeleccionTexto() {
+		return "Цвет выделения текста";
+	}
+
+	@Override
+	public String mixinsColorSeleccionTextoActivo() {
+		return "Цвет выбранного текста";
+	}
+
+	@Override
+	public String mixinsColorAyudaTexto() {
+		return "Цвет справочного текста";
+	}
+
+	@Override
+	public String mixinsColorArbolFondo() {
+		return "Цвет фона дерева";
+	}
+
+	@Override
+	public String mixinsColorRendererSeleccionTexto() {
+		return "Цвет выбранного текста в дереве";
+	}
+
+	@Override
+	public String mixinsColorRendererSeleccionFondo() {
+		return "Цвет выбранного фона в дереве";
+	}
+
+	@Override
+	public String mixinsColorRendererBordeSeleccion() {
+		return "Цвет рамки выделения в дереве";
+	}
+
 }

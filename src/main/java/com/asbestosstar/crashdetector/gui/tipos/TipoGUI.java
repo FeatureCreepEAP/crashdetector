@@ -33,6 +33,7 @@ import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lfpdppp.LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesGUI;
 import com.asbestosstar.crashdetector.gui.tipos.mcreator.EscanerMCreatorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.miranda.DerechosPiratasGUI;
+import com.asbestosstar.crashdetector.gui.tipos.mixins.MixinsGUI;
 import com.asbestosstar.crashdetector.gui.tipos.modapi.PanelAPIBase;
 import com.asbestosstar.crashdetector.gui.tipos.modsbuenas.ModsBuenasGUI;
 import com.asbestosstar.crashdetector.gui.tipos.modsmalas.GUIModsMalas;
@@ -823,6 +824,31 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 	};
 
 	/**
+	 * GUI de exploración de mixins.
+	 */
+	public static TipoGUI<MixinsGUI> MIXINS = new TipoGUI<MixinsGUI>() {
+		@Override
+		public String id() {
+			return "mixins";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.mixinsBotonLateral();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<MixinsGUI> gui) {
+			MixinsGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<MixinsGUI>> obtenerGUIs() {
+			return MixinsGUI.GUIS;
+		}
+	};
+
+	/**
 	 * Registro estático de todos los tipos de GUI en la lista global.
 	 */
 	static {
@@ -857,6 +883,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		TIPOS_DE_GUI.add(CDLAUNCHER);
 		TIPOS_DE_GUI.add(PROFILER);
 		TIPOS_DE_GUI.add(SAMPLER);
+		TIPOS_DE_GUI.add(MIXINS);
 
 	}
 }

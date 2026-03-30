@@ -26,8 +26,6 @@ import javax.swing.SwingUtilities;
 import com.asbestosstar.crashdetector.analizador.Analizador;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-import com.asbestosstar.crashdetector.bajo.hw.cpu.intel.ValidadorMicrocodigo;
-import com.asbestosstar.crashdetector.bajo.hw.gpu.ValidadorGPU;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.canario.CanarioDeOrdenJudicial;
 import com.asbestosstar.crashdetector.canario.pordefecto.CDInformesAsbestosstarEgoismJPCanario;
@@ -61,6 +59,7 @@ import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasHoloT
 import com.asbestosstar.crashdetector.gui.tipos.lfpdppp.LeyFederalDeProteccionDeDatosPersonalesEnPosesionDeLosParticularesGUIConLogos;
 import com.asbestosstar.crashdetector.gui.tipos.mcreator.EscanerMCreatorGUIRosemiLoveLock;
 import com.asbestosstar.crashdetector.gui.tipos.miranda.DerechosPiratasGUIOnePiece;
+import com.asbestosstar.crashdetector.gui.tipos.mixins.MixinsGUIChiarru;
 import com.asbestosstar.crashdetector.gui.tipos.modapi.CDModsEstiloTL;
 import com.asbestosstar.crashdetector.gui.tipos.modsbuenas.ModsBuenasGUIReiBubbles;
 import com.asbestosstar.crashdetector.gui.tipos.modsmalas.GUIModsMalasRimaEvenstar;
@@ -254,6 +253,9 @@ public class MonitorDePID {
 
 		copiarACarpetaDesdeJar("/imagenes/minaly_xo.png", Statics.carpeta.resolve("imagenes/minaly_xo.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/einelotta.png", Statics.carpeta.resolve("imagenes/einelotta.png").toFile());
+
+		copiarACarpetaDesdeJar("/imagenes/gomix.png", Statics.carpeta.resolve("imagenes/gomix.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/chiiaru.png", Statics.carpeta.resolve("imagenes/chiiaru.png").toFile());
 
 //		new File(viajo_ultima_mods.toString()).delete();
 //		try {
@@ -452,6 +454,7 @@ public class MonitorDePID {
 		TipoGUI.CDLAUNCHER.registrarGUI(CDLauncherGUISaliorMoon.ID, () -> new CDLauncherGUISaliorMoon());
 		TipoGUI.PROFILER.registrarGUI(ProfilerGUIMinaly.ID, () -> new ProfilerGUIMinaly());
 		TipoGUI.SAMPLER.registrarGUI(SamplerGUIEineLotta.ID, () -> new SamplerGUIEineLotta());
+		TipoGUI.MIXINS.registrarGUI(MixinsGUIChiarru.ID, () -> new MixinsGUIChiarru());
 
 	}
 

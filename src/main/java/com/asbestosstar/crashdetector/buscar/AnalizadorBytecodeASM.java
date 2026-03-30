@@ -53,8 +53,10 @@ public class AnalizadorBytecodeASM {
 	 */
 	public static MixinInfo obtenerInfoMixin(ArchivoDeMod mod, String nombreClase) {
 		byte[] bytes = mod.obtenerBytesClase(nombreClase);
-		if (bytes == null)
+		if (bytes == null) {
 			return null;
+		}
+
 		try {
 			ClassReader cr = new ClassReader(bytes);
 			ClassNode cn = new ClassNode(obtenerVersionMaximaASM());
@@ -69,11 +71,14 @@ public class AnalizadorBytecodeASM {
 			List<String> targetsInject = extraerTargetsInject(metodos, campos);
 
 			// Refmaps se cargan externamente desde archivos JSON, no desde bytecode
-			// Aquí retornamos estructuras vacías que pueden llenarse después
 			Map<String, String> refmapMetodos = new HashMap<>();
 			Map<String, String> refmapCampos = new HashMap<>();
 
 			String nombrePunto = nombreClase.replace('/', '.');
+
+			// Log temporal útil para confirmar que ya está entrando
+			CrashDetectorLogger.log("[mixin] " + nombrePunto + " targets=" + targets);
+
 			return new MixinInfo(nombrePunto, mod.ubicacion(), targets, metodos, campos, targetsInject, refmapMetodos,
 					refmapCampos);
 		} catch (Throwable t) {
@@ -82,149 +87,349 @@ public class AnalizadorBytecodeASM {
 		}
 	}
 
-/**
- * Extrae los targets de la anotación @Mixin.
- * 
- * Soporta:
- * - @Mixin(targets = { "a.b.C", "x.y.Z" })
- * - @Mixin(value = Foo.class)
- * - @Mixin(value = { Foo.class, Bar.class })
- * - mezclas raras donde ASM entregue List<Object> en vez de List<String>/List<Type>
- */
-private static List<String> extraerTargetsMixin(ClassNode cn) {
-	List<String> targets = new ArrayList<>();
-	if (cn == null || cn.visibleAnnotations == null) {
-		return targets;
-	}
+	/**
+	 * Extrae los targets de la anotación @Mixin.
+	 *
+	 * Soporta: - @Mixin(targets = { "a.b.C", "x.y.Z" }) - @Mixin(Foo.class)
+	 * - @Mixin(value = { Foo.class, Bar.class })
+	 *
+	 * Importante:
+	 * 
+	 * @Mixin tiene RetentionPolicy.CLASS, así que normalmente aparece en
+	 *        invisibleAnnotations, no en visibleAnnotations.
+	 */
+	private static List<String> extraerTargetsMixin(ClassNode cn) {
+		List<String> targets = new ArrayList<>();
 
-	for (AnnotationNode ann : cn.visibleAnnotations) {
-		if (ann == null || ann.desc == null) {
-			continue;
-		}
+		for (AnnotationNode ann : obtenerTodasLasAnotacionesClase(cn)) {
+			if (ann == null || ann.desc == null) {
+				continue;
+			}
 
-		if (!ann.desc.contains("org/spongepowered/asm/mixin/Mixin")) {
-			continue;
-		}
+			if (!"Lorg/spongepowered/asm/mixin/Mixin;".equals(ann.desc)) {
+				continue;
+			}
 
-		if (ann.values == null) {
+			if (ann.values == null) {
+				break;
+			}
+
+			for (int i = 0; i + 1 < ann.values.size(); i += 2) {
+				Object keyObj = ann.values.get(i);
+				Object valueObj = ann.values.get(i + 1);
+
+				if (!(keyObj instanceof String)) {
+					continue;
+				}
+
+				String key = (String) keyObj;
+
+				// targets = { "net.minecraft.X", ... }
+				if ("targets".equals(key)) {
+					agregarTargetsDesdeValorDeAnotacion(valueObj, targets, true);
+				}
+
+				// value = { Foo.class, Bar.class } o @Mixin(Foo.class)
+				else if ("value".equals(key)) {
+					agregarTargetsDesdeValorDeAnotacion(valueObj, targets, false);
+				}
+			}
+
 			break;
 		}
 
-		for (int i = 0; i + 1 < ann.values.size(); i += 2) {
-			Object keyObj = ann.values.get(i);
-			Object valueObj = ann.values.get(i + 1);
+		return targets;
+	}
 
-			if (!(keyObj instanceof String)) {
-				continue;
-			}
-
-			String key = (String) keyObj;
-
-			// targets = { "a.b.C", "x.y.Z" }
-			if ("targets".equals(key)) {
-				agregarTargetsDesdeObjeto(valueObj, targets, true);
-			}
-
-			// value = { Foo.class, Bar.class } o value = Foo.class
-			else if ("value".equals(key)) {
-				agregarTargetsDesdeObjeto(valueObj, targets, false);
-			}
+	/**
+	 * Extrae métodos con @Inject o @Overwrite.
+	 *
+	 * Importante: Estas anotaciones también pueden estar en invisibleAnnotations.
+	 */
+	private static List<MixinMetodoInfo> extraerMetodosMixin(ClassNode cn) {
+		List<MixinMetodoInfo> resultados = new ArrayList<>();
+		if (cn.methods == null) {
+			return resultados;
 		}
 
-		// Solo debe existir un @Mixin por clase
-		break;
-	}
-
-	return targets;
-}
-
-/**
- * Agrega targets a la lista a partir del valor crudo que ASM expone
- * en AnnotationNode.values.
- * 
- * @param value         valor asociado a la clave de la anotación
- * @param targets       lista destino
- * @param aceptarTexto  true para aceptar Strings como targets directos
- */
-private static void agregarTargetsDesdeObjeto(Object value, List<String> targets, boolean aceptarTexto) {
-	if (value == null) {
-		return;
-	}
-
-	// Caso directo: un solo Type
-	if (value instanceof Type) {
-		Type t = (Type) value;
-		if (t.getSort() == Type.OBJECT) {
-			agregarTargetNormalizado(t.getClassName(), targets);
-		}
-		return;
-	}
-
-	// Caso directo: un solo String
-	if (aceptarTexto && value instanceof String) {
-		agregarTargetNormalizado((String) value, targets);
-		return;
-	}
-
-	// Caso normal en ASM: List<?>
-	if (value instanceof List) {
-		@SuppressWarnings("unchecked")
-		List<Object> lista = (List<Object>) value;
-
-		for (Object item : lista) {
-			if (item == null) {
-				continue;
-			}
-
-			if (item instanceof Type) {
-				Type t = (Type) item;
-				if (t.getSort() == Type.OBJECT) {
-					agregarTargetNormalizado(t.getClassName(), targets);
+		for (MethodNode method : cn.methods) {
+			for (AnnotationNode ann : obtenerTodasLasAnotacionesMetodo(method)) {
+				if (ann == null || ann.desc == null) {
+					continue;
 				}
-			} else if (aceptarTexto && item instanceof String) {
-				agregarTargetNormalizado((String) item, targets);
+
+				// @Inject
+				if ("Lorg/spongepowered/asm/mixin/injection/Inject;".equals(ann.desc)) {
+					MixinMetodoInfo info = new MixinMetodoInfo(method.name, method.desc, new ArrayList<>(), false);
+
+					if (ann.values != null) {
+						for (int i = 0; i + 1 < ann.values.size(); i += 2) {
+							Object key = ann.values.get(i);
+							Object value = ann.values.get(i + 1);
+
+							if ("method".equals(key)) {
+								agregarStringsDesdeValorDeAnotacion(value, info.obtenerTargets());
+							}
+						}
+					}
+
+					resultados.add(info);
+				}
+
+				// @Overwrite
+				else if ("Lorg/spongepowered/asm/mixin/Overwrite;".equals(ann.desc)) {
+					MixinMetodoInfo info = new MixinMetodoInfo(method.name, method.desc, new ArrayList<>(), true);
+					resultados.add(info);
+				}
 			}
 		}
-		return;
+
+		return resultados;
 	}
 
-	// Fallback extra defensivo por si llega como array real
-	if (value.getClass().isArray()) {
-		int len = java.lang.reflect.Array.getLength(value);
-		for (int i = 0; i < len; i++) {
-			Object item = java.lang.reflect.Array.get(value, i);
-			agregarTargetsDesdeObjeto(item, targets, aceptarTexto);
+	/**
+	 * Extrae campos con @Shadow.
+	 *
+	 * Importante:
+	 * 
+	 * @Shadow también puede venir por invisibleAnnotations.
+	 */
+	private static List<MixinCampoInfo> extraerCamposMixin(ClassNode cn) {
+		List<MixinCampoInfo> resultados = new ArrayList<>();
+		if (cn.fields == null) {
+			return resultados;
+		}
+
+		for (FieldNode field : cn.fields) {
+			for (AnnotationNode ann : obtenerTodasLasAnotacionesCampo(field)) {
+				if (ann != null && "Lorg/spongepowered/asm/mixin/Shadow;".equals(ann.desc)) {
+					resultados.add(new MixinCampoInfo(field.name, field.desc));
+					break;
+				}
+			}
+		}
+
+		return resultados;
+	}
+
+	/**
+	 * Devuelve todas las anotaciones de clase: visibles e invisibles.
+	 */
+	private static List<AnnotationNode> obtenerTodasLasAnotacionesClase(ClassNode cn) {
+		List<AnnotationNode> anns = new ArrayList<>();
+		if (cn.visibleAnnotations != null) {
+			anns.addAll(cn.visibleAnnotations);
+		}
+		if (cn.invisibleAnnotations != null) {
+			anns.addAll(cn.invisibleAnnotations);
+		}
+		return anns;
+	}
+
+	/**
+	 * Devuelve todas las anotaciones de método: visibles e invisibles.
+	 */
+	private static List<AnnotationNode> obtenerTodasLasAnotacionesMetodo(MethodNode mn) {
+		List<AnnotationNode> anns = new ArrayList<>();
+		if (mn.visibleAnnotations != null) {
+			anns.addAll(mn.visibleAnnotations);
+		}
+		if (mn.invisibleAnnotations != null) {
+			anns.addAll(mn.invisibleAnnotations);
+		}
+		return anns;
+	}
+
+	/**
+	 * Devuelve todas las anotaciones de campo: visibles e invisibles.
+	 */
+	private static List<AnnotationNode> obtenerTodasLasAnotacionesCampo(FieldNode fn) {
+		List<AnnotationNode> anns = new ArrayList<>();
+		if (fn.visibleAnnotations != null) {
+			anns.addAll(fn.visibleAnnotations);
+		}
+		if (fn.invisibleAnnotations != null) {
+			anns.addAll(fn.invisibleAnnotations);
+		}
+		return anns;
+	}
+
+	/**
+	 * Agrega targets a partir del valor crudo de ASM.
+	 *
+	 * @param value        valor asociado a la clave de la anotación
+	 * @param targets      lista destino
+	 * @param aceptarTexto true si se aceptan Strings (caso targets())
+	 */
+	private static void agregarTargetsDesdeValorDeAnotacion(Object value, List<String> targets, boolean aceptarTexto) {
+		if (value == null) {
+			return;
+		}
+
+		// Caso único: Type
+		if (value instanceof Type) {
+			Type t = (Type) value;
+			if (t.getSort() == Type.OBJECT) {
+				agregarTargetNormalizado(t.getClassName(), targets);
+			}
+			return;
+		}
+
+		// Caso único: String
+		if (aceptarTexto && value instanceof String) {
+			agregarTargetNormalizado((String) value, targets);
+			return;
+		}
+
+		// Caso habitual: List<?>
+		if (value instanceof List) {
+			@SuppressWarnings("unchecked")
+			List<Object> lista = (List<Object>) value;
+
+			for (Object item : lista) {
+				if (item == null) {
+					continue;
+				}
+
+				if (item instanceof Type) {
+					Type t = (Type) item;
+					if (t.getSort() == Type.OBJECT) {
+						agregarTargetNormalizado(t.getClassName(), targets);
+					}
+				} else if (aceptarTexto && item instanceof String) {
+					agregarTargetNormalizado((String) item, targets);
+				}
+			}
+			return;
+		}
+
+		// Fallback defensivo por si llegara como array real
+		if (value.getClass().isArray()) {
+			int len = java.lang.reflect.Array.getLength(value);
+			for (int i = 0; i < len; i++) {
+				Object item = java.lang.reflect.Array.get(value, i);
+				agregarTargetsDesdeValorDeAnotacion(item, targets, aceptarTexto);
+			}
 		}
 	}
-}
 
-/**
- * Normaliza e inserta un target evitando duplicados.
- * 
- * Conserva formato con puntos para mostrar en UI.
- */
-private static void agregarTargetNormalizado(String nombre, List<String> targets) {
-	if (nombre == null) {
-		return;
+	/**
+	 * Agrega strings desde un valor de anotación sin asumir List<String> exacto.
+	 */
+	private static void agregarStringsDesdeValorDeAnotacion(Object value, List<String> destino) {
+		if (value == null) {
+			return;
+		}
+
+		if (value instanceof String) {
+			String s = ((String) value).trim();
+			if (!s.isEmpty() && !destino.contains(s)) {
+				destino.add(s);
+			}
+			return;
+		}
+
+		if (value instanceof List) {
+			@SuppressWarnings("unchecked")
+			List<Object> lista = (List<Object>) value;
+
+			for (Object item : lista) {
+				if (item instanceof String) {
+					String s = ((String) item).trim();
+					if (!s.isEmpty() && !destino.contains(s)) {
+						destino.add(s);
+					}
+				}
+			}
+		}
 	}
 
-	String limpio = nombre.trim();
-	if (limpio.isEmpty()) {
-		return;
+	/**
+	 * Normaliza el nombre y evita duplicados. Deja el formato con puntos para la
+	 * UI.
+	 */
+	private static void agregarTargetNormalizado(String nombre, List<String> targets) {
+		if (nombre == null) {
+			return;
+		}
+
+		String limpio = nombre.trim();
+		if (limpio.isEmpty()) {
+			return;
+		}
+
+		// Descriptor tipo Lcom/x/Y;
+		if (limpio.length() >= 2 && limpio.charAt(0) == 'L' && limpio.endsWith(";")) {
+			limpio = limpio.substring(1, limpio.length() - 1);
+		}
+
+		// Pasar ASM interno a formato punto
+		limpio = limpio.replace('/', '.');
+
+		if (!targets.contains(limpio)) {
+			targets.add(limpio);
+		}
 	}
 
-	// Si viene en descriptor tipo Lcom/a/B;
-	if (limpio.length() >= 2 && limpio.charAt(0) == 'L' && limpio.endsWith(";")) {
-		limpio = limpio.substring(1, limpio.length() - 1);
-	}
+	/**
+	 * Agrega targets a la lista a partir del valor crudo que ASM expone en
+	 * AnnotationNode.values.
+	 * 
+	 * @param value        valor asociado a la clave de la anotación
+	 * @param targets      lista destino
+	 * @param aceptarTexto true para aceptar Strings como targets directos
+	 */
+	private static void agregarTargetsDesdeObjeto(Object value, List<String> targets, boolean aceptarTexto) {
+		if (value == null) {
+			return;
+		}
 
-	// Si viene con barras, pasarlo a puntos para la UI
-	limpio = limpio.replace('/', '.');
+		// Caso directo: un solo Type
+		if (value instanceof Type) {
+			Type t = (Type) value;
+			if (t.getSort() == Type.OBJECT) {
+				agregarTargetNormalizado(t.getClassName(), targets);
+			}
+			return;
+		}
 
-	if (!targets.contains(limpio)) {
-		targets.add(limpio);
+		// Caso directo: un solo String
+		if (aceptarTexto && value instanceof String) {
+			agregarTargetNormalizado((String) value, targets);
+			return;
+		}
+
+		// Caso normal en ASM: List<?>
+		if (value instanceof List) {
+			@SuppressWarnings("unchecked")
+			List<Object> lista = (List<Object>) value;
+
+			for (Object item : lista) {
+				if (item == null) {
+					continue;
+				}
+
+				if (item instanceof Type) {
+					Type t = (Type) item;
+					if (t.getSort() == Type.OBJECT) {
+						agregarTargetNormalizado(t.getClassName(), targets);
+					}
+				} else if (aceptarTexto && item instanceof String) {
+					agregarTargetNormalizado((String) item, targets);
+				}
+			}
+			return;
+		}
+
+		// Fallback extra defensivo por si llega como array real
+		if (value.getClass().isArray()) {
+			int len = java.lang.reflect.Array.getLength(value);
+			for (int i = 0; i < len; i++) {
+				Object item = java.lang.reflect.Array.get(value, i);
+				agregarTargetsDesdeObjeto(item, targets, aceptarTexto);
+			}
+		}
 	}
-}
 
 	/**
 	 * Extrae targets desde el atributo value() del @Mixin.
@@ -266,72 +471,6 @@ private static void agregarTargetNormalizado(String nombre, List<String> targets
 				}
 			}
 		}
-	}
-
-	/**
-	 * Extrae métodos con @Inject o @Overwrite.
-	 */
-	private static List<MixinMetodoInfo> extraerMetodosMixin(ClassNode cn) {
-		List<MixinMetodoInfo> resultados = new ArrayList<>();
-		if (cn.methods == null)
-			return resultados;
-
-		for (MethodNode method : cn.methods) {
-			if (method.visibleAnnotations == null)
-				continue;
-			for (AnnotationNode ann : method.visibleAnnotations) {
-				if (ann.desc == null)
-					continue;
-
-				// @Inject
-				if (ann.desc.contains("org/spongepowered/asm/mixin/injection/Inject")) {
-					MixinMetodoInfo info = new MixinMetodoInfo(method.name, method.desc, new ArrayList<>(), false);
-					if (ann.values != null) {
-						for (int i = 0; i < ann.values.size(); i += 2) {
-							Object key = ann.values.get(i);
-							Object value = ann.values.get(i + 1);
-							if ("method".equals(key) && value instanceof List) {
-								@SuppressWarnings("unchecked")
-								List<String> methodTargets = (List<String>) value;
-								for (String t : methodTargets) {
-									if (t != null && !t.isEmpty() && !info.obtenerTargets().contains(t)) {
-										info.obtenerTargets().add(t);
-									}
-								}
-							}
-						}
-					}
-					resultados.add(info);
-				}
-				// @Overwrite
-				else if (ann.desc.contains("org/spongepowered/asm/mixin/Overwrite")) {
-					MixinMetodoInfo info = new MixinMetodoInfo(method.name, method.desc, new ArrayList<>(), true);
-					resultados.add(info);
-				}
-			}
-		}
-		return resultados;
-	}
-
-	/**
-	 * Extrae campos con @Shadow.
-	 */
-	private static List<MixinCampoInfo> extraerCamposMixin(ClassNode cn) {
-		List<MixinCampoInfo> resultados = new ArrayList<>();
-		if (cn.fields == null)
-			return resultados;
-
-		for (FieldNode field : cn.fields) {
-			if (field.visibleAnnotations == null)
-				continue;
-			for (AnnotationNode ann : field.visibleAnnotations) {
-				if (ann.desc != null && ann.desc.contains("org/spongepowered/asm/mixin/Shadow")) {
-					resultados.add(new MixinCampoInfo(field.name, field.desc));
-					break;
-				}
-			}
-		}
-		return resultados;
 	}
 
 	/**
