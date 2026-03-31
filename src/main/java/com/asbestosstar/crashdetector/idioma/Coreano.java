@@ -7196,4 +7196,234 @@ public class Coreano implements Idioma {
 		return "트리에서 선택된 테두리 색";
 	}
 
+	@Override
+	public String depmapTitulo() {
+		return "의존관계 지도";
+	}
+
+	@Override
+	public String depmapBotonLateral() {
+		return "DepMap";
+	}
+
+	@Override
+	public String depmapPestanaMapa() {
+		return "지도";
+	}
+
+	@Override
+	public String depmapPestanaDependientes() {
+		return "의존자들";
+	}
+
+	@Override
+	public String depmapRecargar() {
+		return "다시 적재";
+	}
+
+	@Override
+	public String depmapDescompilarSeleccion() {
+		return "선택항목 역컴파일";
+	}
+
+	@Override
+	public String depmapVerReferencias() {
+		return "참조 보기";
+	}
+
+	@Override
+	public String depmapDependencias() {
+		return "의존관계들";
+	}
+
+	@Override
+	public String depmapDependientes() {
+		return "의존자들";
+	}
+
+	@Override
+	public String depmapDependiente() {
+		return "의존자";
+	}
+
+	@Override
+	public String depmapSinDependencias() {
+		return "의존자 없음";
+	}
+
+	@Override
+	public String depmapSeleccionarMod() {
+		return "모드 선택";
+	}
+
+	@Override
+	public String depmapSeleccionarModBase() {
+		return "기본 모드";
+	}
+
+	@Override
+	public String depmapSeleccionarDependiente() {
+		return "의존 모드";
+	}
+
+	@Override
+	public String depmapSeleccionarPaquete() {
+		return "꾸러미";
+	}
+
+	@Override
+	public String depmapComprobarNoAlineadas() {
+		return "정렬되지 않음 확인";
+	}
+
+	@Override
+	public String depmapResultadoNoAlineadas() {
+		return "정렬되지 않은 의존관계 결과";
+	}
+
+	@Override
+	public String depmapClaseInexistente() {
+		return "존재하지 않는 류";
+	}
+
+	@Override
+	public String depmapClaseReferenciada() {
+		return "참조된 류";
+	}
+
+	@Override
+	public String depmapOrigen() {
+		return "원천";
+	}
+
+	@Override
+	public String depmapDestino() {
+		return "목적지";
+	}
+
+	@Override
+	public String depmapDependenciaDetalle() {
+		return "의존관계 상세";
+	}
+
+	@Override
+	public String depmapReferenciaDetalle() {
+		return "참조 상세";
+	}
+
+	@Override
+	public String depmapMetodoOrigen() {
+		return "원천 방법";
+	}
+
+	@Override
+	public String depmapModBase() {
+		return "기본 모드";
+	}
+
+	@Override
+	public String depmapTodos() {
+		return "전부";
+	}
+
+	@Override
+	public String depmapSeleccioneUnMod() {
+		return "모드를 선택하십시오";
+	}
+
+	@Override
+	public String depmapSeleccioneParametrosNoAlineadas() {
+		return "기본 모드, 의존 모드, 그리고 꾸러미를 선택하십시오";
+	}
+
+	@Override
+	public String depmapSeleccioneClaseParaDescompilar() {
+		return "역컴파일할 참조나 발견항목을 선택하십시오";
+	}
+
+	@Override
+	public String depmapErrorDescompilar() {
+		return "역컴파일 오류";
+	}
+
+	@Override
+	public String depmapAyuda1() {
+		return "이 도구는 모드들 사이의 류 참조를 리용하여 의존관계 지도를 작성합니다.";
+	}
+
+	@Override
+	public String depmapAyuda2() {
+		return "지도 탭은 각 모드를 그것이 사용하는 의존관계들과 연결한 거품 그래프를 보여줍니다.";
+	}
+
+	@Override
+	public String depmapAyuda3() {
+		return "의존자들 탭은 의존자가 가장 많은 모드부터 없는 모드까지 순서대로 나열합니다.";
+	}
+
+	@Override
+	public String depmapAyuda4() {
+		return "모드와 그 의존관계들 사이의 구체적인 참조들을 검사하고 관련 류들을 역컴파일할수 있습니다.";
+	}
+
+	@Override
+	public String depmapAyuda5() {
+		return "정렬되지 않은 의존관계 확인은 기본 모드의 꾸러미나 하위 꾸러미 안에 존재하지 않는 류들에 대한 참조들을 찾습니다.";
+	}
+
+	@Override
+	public String depmapColorPanel() {
+		return "판넬 색";
+	}
+
+	@Override
+	public String depmapColorTexto() {
+		return "주요 텍스트 색";
+	}
+
+	@Override
+	public String depmapColorTextoSecundario() {
+		return "보조 텍스트 색";
+	}
+
+	@Override
+	public String depmapColorAyudaTexto() {
+		return "도움말 텍스트 색";
+	}
+
+	@Override
+	public String depmapColorGrafoFondo() {
+		return "그래프 배경색";
+	}
+
+	@Override
+	public String depmapColorListaFondo() {
+		return "목록 배경색";
+	}
+
+	@Override
+	public String depmapColorArbolFondo() {
+		return "트리 배경색";
+	}
+
+	@Override
+	public String depmapColorNodo() {
+		return "그래프 마디 색";
+	}
+
+	@Override
+	public String depmapColorEnlace() {
+		return "그래프 링크 색";
+	}
+
+	@Override
+	public String depmapColorSeleccion() {
+		return "선택 색";
+	}
+
+	@Override
+	public String depmapColorSeleccionTexto() {
+		return "선택된 텍스트 색";
+	}
+
 }

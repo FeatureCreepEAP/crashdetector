@@ -2736,4 +2736,96 @@ public interface Idioma {
 
 	public String mixinsColorRendererBordeSeleccion();
 
+	public String depmapTitulo();
+
+	public String depmapBotonLateral();
+
+	public String depmapPestanaMapa();
+
+	public String depmapPestanaDependientes();
+
+	public String depmapRecargar();
+
+	public String depmapDescompilarSeleccion();
+
+	public String depmapVerReferencias();
+
+	public String depmapDependencias();
+
+	public String depmapDependientes();
+
+	public String depmapDependiente();
+
+	public String depmapSinDependencias();
+
+	public String depmapSeleccionarMod();
+
+	public String depmapSeleccionarModBase();
+
+	public String depmapSeleccionarDependiente();
+
+	public String depmapSeleccionarPaquete();
+
+	public String depmapComprobarNoAlineadas();
+
+	public String depmapResultadoNoAlineadas();
+
+	public String depmapClaseInexistente();
+
+	public String depmapClaseReferenciada();
+
+	public String depmapOrigen();
+
+	public String depmapDestino();
+
+	public String depmapDependenciaDetalle();
+
+	public String depmapReferenciaDetalle();
+
+	public String depmapMetodoOrigen();
+
+	public String depmapModBase();
+
+	public String depmapTodos();
+
+	public String depmapSeleccioneUnMod();
+
+	public String depmapSeleccioneParametrosNoAlineadas();
+
+	public String depmapSeleccioneClaseParaDescompilar();
+
+	public String depmapErrorDescompilar();
+
+	public String depmapAyuda1();
+
+	public String depmapAyuda2();
+
+	public String depmapAyuda3();
+
+	public String depmapAyuda4();
+
+	public String depmapAyuda5();
+
+	public String depmapColorPanel();
+
+	public String depmapColorTexto();
+
+	public String depmapColorTextoSecundario();
+
+	public String depmapColorAyudaTexto();
+
+	public String depmapColorGrafoFondo();
+
+	public String depmapColorListaFondo();
+
+	public String depmapColorArbolFondo();
+
+	public String depmapColorNodo();
+
+	public String depmapColorEnlace();
+
+	public String depmapColorSeleccion();
+
+	public String depmapColorSeleccionTexto();
+
 }

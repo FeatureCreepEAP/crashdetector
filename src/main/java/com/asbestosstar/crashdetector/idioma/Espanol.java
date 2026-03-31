@@ -8236,4 +8236,234 @@ public class Espanol implements Idioma {
 		return "Color del borde de selección del árbol";
 	}
 
+	@Override
+	public String depmapTitulo() {
+		return "Mapa de Dependencias";
+	}
+
+	@Override
+	public String depmapBotonLateral() {
+		return "DepMap";
+	}
+
+	@Override
+	public String depmapPestanaMapa() {
+		return "Mapa";
+	}
+
+	@Override
+	public String depmapPestanaDependientes() {
+		return "Dependientes";
+	}
+
+	@Override
+	public String depmapRecargar() {
+		return "Recargar";
+	}
+
+	@Override
+	public String depmapDescompilarSeleccion() {
+		return "Descompilar selección";
+	}
+
+	@Override
+	public String depmapVerReferencias() {
+		return "Ver referencias";
+	}
+
+	@Override
+	public String depmapDependencias() {
+		return "Dependencias";
+	}
+
+	@Override
+	public String depmapDependientes() {
+		return "Dependientes";
+	}
+
+	@Override
+	public String depmapDependiente() {
+		return "Dependiente";
+	}
+
+	@Override
+	public String depmapSinDependencias() {
+		return "Sin dependientes";
+	}
+
+	@Override
+	public String depmapSeleccionarMod() {
+		return "Seleccionar mod";
+	}
+
+	@Override
+	public String depmapSeleccionarModBase() {
+		return "Mod base";
+	}
+
+	@Override
+	public String depmapSeleccionarDependiente() {
+		return "Mod dependiente";
+	}
+
+	@Override
+	public String depmapSeleccionarPaquete() {
+		return "Paquete";
+	}
+
+	@Override
+	public String depmapComprobarNoAlineadas() {
+		return "Comprobar no alineadas";
+	}
+
+	@Override
+	public String depmapResultadoNoAlineadas() {
+		return "Resultados de dependencias no alineadas";
+	}
+
+	@Override
+	public String depmapClaseInexistente() {
+		return "Clase inexistente";
+	}
+
+	@Override
+	public String depmapClaseReferenciada() {
+		return "Clase referenciada";
+	}
+
+	@Override
+	public String depmapOrigen() {
+		return "Origen";
+	}
+
+	@Override
+	public String depmapDestino() {
+		return "Destino";
+	}
+
+	@Override
+	public String depmapDependenciaDetalle() {
+		return "Detalle de la dependencia";
+	}
+
+	@Override
+	public String depmapReferenciaDetalle() {
+		return "Detalle de la referencia";
+	}
+
+	@Override
+	public String depmapMetodoOrigen() {
+		return "Método origen";
+	}
+
+	@Override
+	public String depmapModBase() {
+		return "Mod base";
+	}
+
+	@Override
+	public String depmapTodos() {
+		return "Todos";
+	}
+
+	@Override
+	public String depmapSeleccioneUnMod() {
+		return "Selecciona un mod";
+	}
+
+	@Override
+	public String depmapSeleccioneParametrosNoAlineadas() {
+		return "Selecciona el mod base, el dependiente y el paquete";
+	}
+
+	@Override
+	public String depmapSeleccioneClaseParaDescompilar() {
+		return "Selecciona una referencia o hallazgo para descompilar";
+	}
+
+	@Override
+	public String depmapErrorDescompilar() {
+		return "Error al descompilar";
+	}
+
+	@Override
+	public String depmapAyuda1() {
+		return "Esta herramienta construye un mapa de dependencias entre mods usando referencias de clases entre ellos.";
+	}
+
+	@Override
+	public String depmapAyuda2() {
+		return "La pestaña de mapa muestra un grafo de burbujas con cada mod enlazado a las dependencias que usa.";
+	}
+
+	@Override
+	public String depmapAyuda3() {
+		return "La pestaña de dependientes ordena los mods desde el que más dependientes tiene hasta el que no tiene ninguno.";
+	}
+
+	@Override
+	public String depmapAyuda4() {
+		return "Puedes inspeccionar referencias concretas entre un mod y sus dependencias, así como descompilar clases relacionadas.";
+	}
+
+	@Override
+	public String depmapAyuda5() {
+		return "La comprobación de dependencias no alineadas busca referencias a clases inexistentes dentro de un paquete o subpaquete del mod base.";
+	}
+
+	@Override
+	public String depmapColorPanel() {
+		return "Color de paneles";
+	}
+
+	@Override
+	public String depmapColorTexto() {
+		return "Color de texto principal";
+	}
+
+	@Override
+	public String depmapColorTextoSecundario() {
+		return "Color de texto secundario";
+	}
+
+	@Override
+	public String depmapColorAyudaTexto() {
+		return "Color del texto de ayuda";
+	}
+
+	@Override
+	public String depmapColorGrafoFondo() {
+		return "Color de fondo del grafo";
+	}
+
+	@Override
+	public String depmapColorListaFondo() {
+		return "Color de fondo de listas";
+	}
+
+	@Override
+	public String depmapColorArbolFondo() {
+		return "Color de fondo del árbol";
+	}
+
+	@Override
+	public String depmapColorNodo() {
+		return "Color de nodos del grafo";
+	}
+
+	@Override
+	public String depmapColorEnlace() {
+		return "Color de enlaces del grafo";
+	}
+
+	@Override
+	public String depmapColorSeleccion() {
+		return "Color de selección";
+	}
+
+	@Override
+	public String depmapColorSeleccionTexto() {
+		return "Color del texto seleccionado";
+	}
+
 }

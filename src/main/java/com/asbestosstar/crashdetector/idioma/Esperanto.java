@@ -7495,4 +7495,234 @@ public class Esperanto implements Idioma {
 		return "Koloro de elekta bordero en la arbo";
 	}
 
+	@Override
+	public String depmapTitulo() {
+		return "Mapo de Dependaĵoj";
+	}
+
+	@Override
+	public String depmapBotonLateral() {
+		return "DepMap";
+	}
+
+	@Override
+	public String depmapPestanaMapa() {
+		return "Mapo";
+	}
+
+	@Override
+	public String depmapPestanaDependientes() {
+		return "Dependantoj";
+	}
+
+	@Override
+	public String depmapRecargar() {
+		return "Reŝargi";
+	}
+
+	@Override
+	public String depmapDescompilarSeleccion() {
+		return "Malkompili elekton";
+	}
+
+	@Override
+	public String depmapVerReferencias() {
+		return "Vidi referencojn";
+	}
+
+	@Override
+	public String depmapDependencias() {
+		return "Dependaĵoj";
+	}
+
+	@Override
+	public String depmapDependientes() {
+		return "Dependantoj";
+	}
+
+	@Override
+	public String depmapDependiente() {
+		return "Dependanto";
+	}
+
+	@Override
+	public String depmapSinDependencias() {
+		return "Sen dependantoj";
+	}
+
+	@Override
+	public String depmapSeleccionarMod() {
+		return "Elekti modon";
+	}
+
+	@Override
+	public String depmapSeleccionarModBase() {
+		return "Baza modo";
+	}
+
+	@Override
+	public String depmapSeleccionarDependiente() {
+		return "Dependa modo";
+	}
+
+	@Override
+	public String depmapSeleccionarPaquete() {
+		return "Pako";
+	}
+
+	@Override
+	public String depmapComprobarNoAlineadas() {
+		return "Kontroli nealinigitajn";
+	}
+
+	@Override
+	public String depmapResultadoNoAlineadas() {
+		return "Rezultoj de nealinigitaj dependaĵoj";
+	}
+
+	@Override
+	public String depmapClaseInexistente() {
+		return "Neekzistanta klaso";
+	}
+
+	@Override
+	public String depmapClaseReferenciada() {
+		return "Referencita klaso";
+	}
+
+	@Override
+	public String depmapOrigen() {
+		return "Origino";
+	}
+
+	@Override
+	public String depmapDestino() {
+		return "Destino";
+	}
+
+	@Override
+	public String depmapDependenciaDetalle() {
+		return "Detaloj de la dependaĵo";
+	}
+
+	@Override
+	public String depmapReferenciaDetalle() {
+		return "Detaloj de la referenco";
+	}
+
+	@Override
+	public String depmapMetodoOrigen() {
+		return "Origina metodo";
+	}
+
+	@Override
+	public String depmapModBase() {
+		return "Baza modo";
+	}
+
+	@Override
+	public String depmapTodos() {
+		return "Ĉiuj";
+	}
+
+	@Override
+	public String depmapSeleccioneUnMod() {
+		return "Elektu modon";
+	}
+
+	@Override
+	public String depmapSeleccioneParametrosNoAlineadas() {
+		return "Elektu la bazan modon, la dependanton kaj la pakon";
+	}
+
+	@Override
+	public String depmapSeleccioneClaseParaDescompilar() {
+		return "Elektu referencon aŭ trovon por malkompili";
+	}
+
+	@Override
+	public String depmapErrorDescompilar() {
+		return "Eraro dum malkompilado";
+	}
+
+	@Override
+	public String depmapAyuda1() {
+		return "Ĉi tiu ilo konstruas mapon de dependaĵoj inter modoj uzante klasreferencojn inter ili.";
+	}
+
+	@Override
+	public String depmapAyuda2() {
+		return "La mapa langeto montras vezikgrafon kun ĉiu modo ligita al la dependaĵoj kiujn ĝi uzas.";
+	}
+
+	@Override
+	public String depmapAyuda3() {
+		return "La langeto de dependantoj ordigas la modojn de tiu kun plej multaj dependantoj ĝis tiu sen iuj.";
+	}
+
+	@Override
+	public String depmapAyuda4() {
+		return "Vi povas inspekti konkretajn referencojn inter modo kaj ĝiaj dependaĵoj, same kiel malkompili rilatajn klasojn.";
+	}
+
+	@Override
+	public String depmapAyuda5() {
+		return "La kontrolo de nealinigitaj dependaĵoj serĉas referencojn al neekzistantaj klasoj ene de pako aŭ subpako de la baza modo.";
+	}
+
+	@Override
+	public String depmapColorPanel() {
+		return "Koloro de paneloj";
+	}
+
+	@Override
+	public String depmapColorTexto() {
+		return "Koloro de ĉefa teksto";
+	}
+
+	@Override
+	public String depmapColorTextoSecundario() {
+		return "Koloro de duaranga teksto";
+	}
+
+	@Override
+	public String depmapColorAyudaTexto() {
+		return "Koloro de helpa teksto";
+	}
+
+	@Override
+	public String depmapColorGrafoFondo() {
+		return "Koloro de fono de la grafeo";
+	}
+
+	@Override
+	public String depmapColorListaFondo() {
+		return "Koloro de fono de listoj";
+	}
+
+	@Override
+	public String depmapColorArbolFondo() {
+		return "Koloro de fono de la arbo";
+	}
+
+	@Override
+	public String depmapColorNodo() {
+		return "Koloro de nodoj de la grafeo";
+	}
+
+	@Override
+	public String depmapColorEnlace() {
+		return "Koloro de ligoj de la grafeo";
+	}
+
+	@Override
+	public String depmapColorSeleccion() {
+		return "Koloro de elekto";
+	}
+
+	@Override
+	public String depmapColorSeleccionTexto() {
+		return "Koloro de elektita teksto";
+	}
+
 }

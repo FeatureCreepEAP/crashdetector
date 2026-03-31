@@ -7526,4 +7526,234 @@ public class Ruso implements Idioma {
 		return "Цвет рамки выделения в дереве";
 	}
 
+	@Override
+	public String depmapTitulo() {
+		return "Карта зависимостей";
+	}
+
+	@Override
+	public String depmapBotonLateral() {
+		return "DepMap";
+	}
+
+	@Override
+	public String depmapPestanaMapa() {
+		return "Карта";
+	}
+
+	@Override
+	public String depmapPestanaDependientes() {
+		return "Зависимые";
+	}
+
+	@Override
+	public String depmapRecargar() {
+		return "Перезагрузить";
+	}
+
+	@Override
+	public String depmapDescompilarSeleccion() {
+		return "Декомпилировать выделенное";
+	}
+
+	@Override
+	public String depmapVerReferencias() {
+		return "Просмотреть ссылки";
+	}
+
+	@Override
+	public String depmapDependencias() {
+		return "Зависимости";
+	}
+
+	@Override
+	public String depmapDependientes() {
+		return "Зависимые";
+	}
+
+	@Override
+	public String depmapDependiente() {
+		return "Зависимый";
+	}
+
+	@Override
+	public String depmapSinDependencias() {
+		return "Нет зависимых";
+	}
+
+	@Override
+	public String depmapSeleccionarMod() {
+		return "Выбрать модификацию";
+	}
+
+	@Override
+	public String depmapSeleccionarModBase() {
+		return "Базовая модификация";
+	}
+
+	@Override
+	public String depmapSeleccionarDependiente() {
+		return "Зависимая модификация";
+	}
+
+	@Override
+	public String depmapSeleccionarPaquete() {
+		return "Пакет";
+	}
+
+	@Override
+	public String depmapComprobarNoAlineadas() {
+		return "Проверить несогласованные";
+	}
+
+	@Override
+	public String depmapResultadoNoAlineadas() {
+		return "Результаты несогласованных зависимостей";
+	}
+
+	@Override
+	public String depmapClaseInexistente() {
+		return "Несуществующий класс";
+	}
+
+	@Override
+	public String depmapClaseReferenciada() {
+		return "Ссылочный класс";
+	}
+
+	@Override
+	public String depmapOrigen() {
+		return "Источник";
+	}
+
+	@Override
+	public String depmapDestino() {
+		return "Назначение";
+	}
+
+	@Override
+	public String depmapDependenciaDetalle() {
+		return "Детали зависимости";
+	}
+
+	@Override
+	public String depmapReferenciaDetalle() {
+		return "Детали ссылки";
+	}
+
+	@Override
+	public String depmapMetodoOrigen() {
+		return "Исходный метод";
+	}
+
+	@Override
+	public String depmapModBase() {
+		return "Базовая модификация";
+	}
+
+	@Override
+	public String depmapTodos() {
+		return "Все";
+	}
+
+	@Override
+	public String depmapSeleccioneUnMod() {
+		return "Выберите модификацию";
+	}
+
+	@Override
+	public String depmapSeleccioneParametrosNoAlineadas() {
+		return "Выберите базовую модификацию, зависимую и пакет";
+	}
+
+	@Override
+	public String depmapSeleccioneClaseParaDescompilar() {
+		return "Выберите ссылку или находку для декомпиляции";
+	}
+
+	@Override
+	public String depmapErrorDescompilar() {
+		return "Ошибка декомпиляции";
+	}
+
+	@Override
+	public String depmapAyuda1() {
+		return "Этот инструмент строит карту зависимостей между модификациями, используя ссылки на классы между ними.";
+	}
+
+	@Override
+	public String depmapAyuda2() {
+		return "Вкладка карты показывает пузырьковый график, связывающий каждую модификацию с используемыми ею зависимостями.";
+	}
+
+	@Override
+	public String depmapAyuda3() {
+		return "Вкладка зависимых сортирует модификации от тех, у кого больше всего зависимых, до тех, у кого их нет.";
+	}
+
+	@Override
+	public String depmapAyuda4() {
+		return "Вы можете проверить конкретные ссылки между модификацией и её зависимостями, а также декомпилировать связанные классы.";
+	}
+
+	@Override
+	public String depmapAyuda5() {
+		return "Проверка несогласованных зависимостей ищет ссылки на несуществующие классы внутри пакета или подпакета базовой модификации.";
+	}
+
+	@Override
+	public String depmapColorPanel() {
+		return "Цвет панелей";
+	}
+
+	@Override
+	public String depmapColorTexto() {
+		return "Цвет основного текста";
+	}
+
+	@Override
+	public String depmapColorTextoSecundario() {
+		return "Цвет вторичного текста";
+	}
+
+	@Override
+	public String depmapColorAyudaTexto() {
+		return "Цвет справочного текста";
+	}
+
+	@Override
+	public String depmapColorGrafoFondo() {
+		return "Цвет фона графика";
+	}
+
+	@Override
+	public String depmapColorListaFondo() {
+		return "Цвет фона списков";
+	}
+
+	@Override
+	public String depmapColorArbolFondo() {
+		return "Цвет фона дерева";
+	}
+
+	@Override
+	public String depmapColorNodo() {
+		return "Цвет узлов графика";
+	}
+
+	@Override
+	public String depmapColorEnlace() {
+		return "Цвет связей графика";
+	}
+
+	@Override
+	public String depmapColorSeleccion() {
+		return "Цвет выделения";
+	}
+
+	@Override
+	public String depmapColorSeleccionTexto() {
+		return "Цвет выбранного текста";
+	}
+
 }

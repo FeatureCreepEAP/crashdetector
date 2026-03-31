@@ -7484,4 +7484,234 @@ public class Persa implements Idioma {
 		return "رنگ حاشیه انتخاب در درخت";
 	}
 
+	@Override
+	public String depmapTitulo() {
+		return "نقشه وابستگی‌ها";
+	}
+
+	@Override
+	public String depmapBotonLateral() {
+		return "DepMap";
+	}
+
+	@Override
+	public String depmapPestanaMapa() {
+		return "نقشه";
+	}
+
+	@Override
+	public String depmapPestanaDependientes() {
+		return "وابستگان";
+	}
+
+	@Override
+	public String depmapRecargar() {
+		return "بارگذاری مجدد";
+	}
+
+	@Override
+	public String depmapDescompilarSeleccion() {
+		return "دیکامپایل انتخاب";
+	}
+
+	@Override
+	public String depmapVerReferencias() {
+		return "مشاهده ارجاعات";
+	}
+
+	@Override
+	public String depmapDependencias() {
+		return "وابستگی‌ها";
+	}
+
+	@Override
+	public String depmapDependientes() {
+		return "وابستگان";
+	}
+
+	@Override
+	public String depmapDependiente() {
+		return "وابسته";
+	}
+
+	@Override
+	public String depmapSinDependencias() {
+		return "بدون وابسته";
+	}
+
+	@Override
+	public String depmapSeleccionarMod() {
+		return "انتخاب مود";
+	}
+
+	@Override
+	public String depmapSeleccionarModBase() {
+		return "مود پایه";
+	}
+
+	@Override
+	public String depmapSeleccionarDependiente() {
+		return "مود وابسته";
+	}
+
+	@Override
+	public String depmapSeleccionarPaquete() {
+		return "بسته";
+	}
+
+	@Override
+	public String depmapComprobarNoAlineadas() {
+		return "بررسی عدم هم‌ترازی";
+	}
+
+	@Override
+	public String depmapResultadoNoAlineadas() {
+		return "نتایج وابستگی‌های ناهم‌تراز";
+	}
+
+	@Override
+	public String depmapClaseInexistente() {
+		return "کلاس ناموجود";
+	}
+
+	@Override
+	public String depmapClaseReferenciada() {
+		return "کلاس ارجاع‌شده";
+	}
+
+	@Override
+	public String depmapOrigen() {
+		return "مبدأ";
+	}
+
+	@Override
+	public String depmapDestino() {
+		return "مقصد";
+	}
+
+	@Override
+	public String depmapDependenciaDetalle() {
+		return "جزئیات وابستگی";
+	}
+
+	@Override
+	public String depmapReferenciaDetalle() {
+		return "جزئیات ارجاع";
+	}
+
+	@Override
+	public String depmapMetodoOrigen() {
+		return "متد مبدأ";
+	}
+
+	@Override
+	public String depmapModBase() {
+		return "مود پایه";
+	}
+
+	@Override
+	public String depmapTodos() {
+		return "همه";
+	}
+
+	@Override
+	public String depmapSeleccioneUnMod() {
+		return "یک مود را انتخاب کنید";
+	}
+
+	@Override
+	public String depmapSeleccioneParametrosNoAlineadas() {
+		return "مود پایه، مود وابسته و بسته را انتخاب کنید";
+	}
+
+	@Override
+	public String depmapSeleccioneClaseParaDescompilar() {
+		return "یک ارجاع یا یافته را برای دیکامپایل انتخاب کنید";
+	}
+
+	@Override
+	public String depmapErrorDescompilar() {
+		return "خطا در دیکامپایل";
+	}
+
+	@Override
+	public String depmapAyuda1() {
+		return "این ابزار با استفاده از ارجاعات کلاسی بین مودها، نقشه‌ای از وابستگی‌ها بین آن‌ها می‌سازد.";
+	}
+
+	@Override
+	public String depmapAyuda2() {
+		return "تب نقشه یک نمودار حبابی نشان می‌دهد که هر مود را به وابستگی‌هایی که استفاده می‌کند متصل می‌کند.";
+	}
+
+	@Override
+	public String depmapAyuda3() {
+		return "تب وابستگان، مودها را از بیشترین تعداد وابسته تا بدون هیچ وابسته‌ای مرتب می‌کند.";
+	}
+
+	@Override
+	public String depmapAyuda4() {
+		return "می‌توانید ارجاعات خاص بین یک مود و وابستگی‌های آن را بررسی کرده و کلاس‌های مرتبط را دیکامپایل کنید.";
+	}
+
+	@Override
+	public String depmapAyuda5() {
+		return "بررسی وابستگی‌های ناهم‌تراز به دنبال ارجاعات به کلاس‌های ناموجود در داخل یک بسته یا زیربسته از مود پایه می‌گردد.";
+	}
+
+	@Override
+	public String depmapColorPanel() {
+		return "رنگ پنل‌ها";
+	}
+
+	@Override
+	public String depmapColorTexto() {
+		return "رنگ متن اصلی";
+	}
+
+	@Override
+	public String depmapColorTextoSecundario() {
+		return "رنگ متن ثانویه";
+	}
+
+	@Override
+	public String depmapColorAyudaTexto() {
+		return "رنگ متن راهنما";
+	}
+
+	@Override
+	public String depmapColorGrafoFondo() {
+		return "رنگ پس‌زمینه نمودار";
+	}
+
+	@Override
+	public String depmapColorListaFondo() {
+		return "رنگ پس‌زمینه لیست‌ها";
+	}
+
+	@Override
+	public String depmapColorArbolFondo() {
+		return "رنگ پس‌زمینه درخت";
+	}
+
+	@Override
+	public String depmapColorNodo() {
+		return "رنگ گره‌های نمودار";
+	}
+
+	@Override
+	public String depmapColorEnlace() {
+		return "رنگ پیوندهای نمودار";
+	}
+
+	@Override
+	public String depmapColorSeleccion() {
+		return "رنگ انتخاب";
+	}
+
+	@Override
+	public String depmapColorSeleccionTexto() {
+		return "رنگ متن انتخاب‌شده";
+	}
+
 }

@@ -7421,4 +7421,234 @@ public class Arabe implements Idioma {
 		return "لون حدود التحديد في الشجرة";
 	}
 
+	@Override
+	public String depmapTitulo() {
+		return "خريطة الاعتماديات";
+	}
+
+	@Override
+	public String depmapBotonLateral() {
+		return "DepMap";
+	}
+
+	@Override
+	public String depmapPestanaMapa() {
+		return "الخريطة";
+	}
+
+	@Override
+	public String depmapPestanaDependientes() {
+		return "التبعيات";
+	}
+
+	@Override
+	public String depmapRecargar() {
+		return "إعادة تحميل";
+	}
+
+	@Override
+	public String depmapDescompilarSeleccion() {
+		return "إلغاء تجميع التحديد";
+	}
+
+	@Override
+	public String depmapVerReferencias() {
+		return "عرض المراجع";
+	}
+
+	@Override
+	public String depmapDependencias() {
+		return "الاعتماديات";
+	}
+
+	@Override
+	public String depmapDependientes() {
+		return "التبعيات";
+	}
+
+	@Override
+	public String depmapDependiente() {
+		return "تابع";
+	}
+
+	@Override
+	public String depmapSinDependencias() {
+		return "لا توجد تبعيات";
+	}
+
+	@Override
+	public String depmapSeleccionarMod() {
+		return "اختر الإضافة";
+	}
+
+	@Override
+	public String depmapSeleccionarModBase() {
+		return "الإضافة الأساسية";
+	}
+
+	@Override
+	public String depmapSeleccionarDependiente() {
+		return "الإضافة التابعة";
+	}
+
+	@Override
+	public String depmapSeleccionarPaquete() {
+		return "الحزمة";
+	}
+
+	@Override
+	public String depmapComprobarNoAlineadas() {
+		return "فحص غير المحاذاة";
+	}
+
+	@Override
+	public String depmapResultadoNoAlineadas() {
+		return "نتائج الاعتماديات غير المحاذاة";
+	}
+
+	@Override
+	public String depmapClaseInexistente() {
+		return "فئة غير موجودة";
+	}
+
+	@Override
+	public String depmapClaseReferenciada() {
+		return "فئة مرجعية";
+	}
+
+	@Override
+	public String depmapOrigen() {
+		return "المصدر";
+	}
+
+	@Override
+	public String depmapDestino() {
+		return "الوجهة";
+	}
+
+	@Override
+	public String depmapDependenciaDetalle() {
+		return "تفاصيل الاعتمادية";
+	}
+
+	@Override
+	public String depmapReferenciaDetalle() {
+		return "تفاصيل المرجع";
+	}
+
+	@Override
+	public String depmapMetodoOrigen() {
+		return "طريقة المصدر";
+	}
+
+	@Override
+	public String depmapModBase() {
+		return "الإضافة الأساسية";
+	}
+
+	@Override
+	public String depmapTodos() {
+		return "الكل";
+	}
+
+	@Override
+	public String depmapSeleccioneUnMod() {
+		return "اختر إضافة";
+	}
+
+	@Override
+	public String depmapSeleccioneParametrosNoAlineadas() {
+		return "اختر الإضافة الأساسية، والتابعة، والحزمة";
+	}
+
+	@Override
+	public String depmapSeleccioneClaseParaDescompilar() {
+		return "اختر مرجعًا أو نتيجة لإلغاء التجميع";
+	}
+
+	@Override
+	public String depmapErrorDescompilar() {
+		return "خطأ في إلغاء التجميع";
+	}
+
+	@Override
+	public String depmapAyuda1() {
+		return "تبني هذه الأداة خريطة اعتماديات بين الإضافات باستخدام مراجع الفئات بينها.";
+	}
+
+	@Override
+	public String depmapAyuda2() {
+		return "تعرض تبويب الخريطة رسمًا بيانيًا فقاعيًا يربط كل إضافة بالاعتماديات التي تستخدمها.";
+	}
+
+	@Override
+	public String depmapAyuda3() {
+		return "يرتب تبويب التبعيات الإضافات من الأكثر تبعيات إلى الذي لا يملك أيًا منها.";
+	}
+
+	@Override
+	public String depmapAyuda4() {
+		return "يمكنك فحص مراجع محددة بين إضافة واعتمادياتها، وكذلك إلغاء تجميع الفئات المرتبطة.";
+	}
+
+	@Override
+	public String depmapAyuda5() {
+		return "يفحص فحص الاعتماديات غير المحاذاة المراجع إلى فئات غير موجودة داخل حزمة أو حزمة فرعية للإضافة الأساسية.";
+	}
+
+	@Override
+	public String depmapColorPanel() {
+		return "لون اللوحات";
+	}
+
+	@Override
+	public String depmapColorTexto() {
+		return "لون النص الرئيسي";
+	}
+
+	@Override
+	public String depmapColorTextoSecundario() {
+		return "لون النص الثانوي";
+	}
+
+	@Override
+	public String depmapColorAyudaTexto() {
+		return "لون نص المساعدة";
+	}
+
+	@Override
+	public String depmapColorGrafoFondo() {
+		return "لون خلفية الرسم البياني";
+	}
+
+	@Override
+	public String depmapColorListaFondo() {
+		return "لون خلفية القوائم";
+	}
+
+	@Override
+	public String depmapColorArbolFondo() {
+		return "لون خلفية الشجرة";
+	}
+
+	@Override
+	public String depmapColorNodo() {
+		return "لون عقد الرسم البياني";
+	}
+
+	@Override
+	public String depmapColorEnlace() {
+		return "لون روابط الرسم البياني";
+	}
+
+	@Override
+	public String depmapColorSeleccion() {
+		return "لون التحديد";
+	}
+
+	@Override
+	public String depmapColorSeleccionTexto() {
+		return "لون النص المحدد";
+	}
+
 }

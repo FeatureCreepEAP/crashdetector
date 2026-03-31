@@ -7209,4 +7209,234 @@ public class Japones implements Idioma {
 		return "ツリーの選択枠の色";
 	}
 
+	@Override
+	public String depmapTitulo() {
+		return "依存関係マップ";
+	}
+
+	@Override
+	public String depmapBotonLateral() {
+		return "DepMap";
+	}
+
+	@Override
+	public String depmapPestanaMapa() {
+		return "マップ";
+	}
+
+	@Override
+	public String depmapPestanaDependientes() {
+		return "依存先";
+	}
+
+	@Override
+	public String depmapRecargar() {
+		return "再読み込み";
+	}
+
+	@Override
+	public String depmapDescompilarSeleccion() {
+		return "選択内容を逆コンパイル";
+	}
+
+	@Override
+	public String depmapVerReferencias() {
+		return "参照を表示";
+	}
+
+	@Override
+	public String depmapDependencias() {
+		return "依存関係";
+	}
+
+	@Override
+	public String depmapDependientes() {
+		return "依存先";
+	}
+
+	@Override
+	public String depmapDependiente() {
+		return "依存先";
+	}
+
+	@Override
+	public String depmapSinDependencias() {
+		return "依存先なし";
+	}
+
+	@Override
+	public String depmapSeleccionarMod() {
+		return "Mod を選択";
+	}
+
+	@Override
+	public String depmapSeleccionarModBase() {
+		return "基本 Mod";
+	}
+
+	@Override
+	public String depmapSeleccionarDependiente() {
+		return "依存 Mod";
+	}
+
+	@Override
+	public String depmapSeleccionarPaquete() {
+		return "パッケージ";
+	}
+
+	@Override
+	public String depmapComprobarNoAlineadas() {
+		return "未整合を確認";
+	}
+
+	@Override
+	public String depmapResultadoNoAlineadas() {
+		return "未整合な依存関係の結果";
+	}
+
+	@Override
+	public String depmapClaseInexistente() {
+		return "存在しないクラス";
+	}
+
+	@Override
+	public String depmapClaseReferenciada() {
+		return "参照されたクラス";
+	}
+
+	@Override
+	public String depmapOrigen() {
+		return "元";
+	}
+
+	@Override
+	public String depmapDestino() {
+		return "宛先";
+	}
+
+	@Override
+	public String depmapDependenciaDetalle() {
+		return "依存関係の詳細";
+	}
+
+	@Override
+	public String depmapReferenciaDetalle() {
+		return "参照の詳細";
+	}
+
+	@Override
+	public String depmapMetodoOrigen() {
+		return "元のメソッド";
+	}
+
+	@Override
+	public String depmapModBase() {
+		return "基本 Mod";
+	}
+
+	@Override
+	public String depmapTodos() {
+		return "すべて";
+	}
+
+	@Override
+	public String depmapSeleccioneUnMod() {
+		return "Mod を選択してください";
+	}
+
+	@Override
+	public String depmapSeleccioneParametrosNoAlineadas() {
+		return "基本 Mod、依存 Mod、およびパッケージを選択してください";
+	}
+
+	@Override
+	public String depmapSeleccioneClaseParaDescompilar() {
+		return "逆コンパイルする参照または発見項目を選択してください";
+	}
+
+	@Override
+	public String depmapErrorDescompilar() {
+		return "逆コンパイルエラー";
+	}
+
+	@Override
+	public String depmapAyuda1() {
+		return "このツールは、Mod 間のクラス参照を使用して Mod 間の依存関係マップを構築します。";
+	}
+
+	@Override
+	public String depmapAyuda2() {
+		return "マップタブは、各 Mod をそれが使用する依存関係にリンクしたバブルグラフを表示します。";
+	}
+
+	@Override
+	public String depmapAyuda3() {
+		return "依存先タブは、依存先が最も多い Mod から全くない Mod まで並べ替えます。";
+	}
+
+	@Override
+	public String depmapAyuda4() {
+		return "Mod とその依存関係間の特定の参照を検査し、関連するクラスを逆コンパイルできます。";
+	}
+
+	@Override
+	public String depmapAyuda5() {
+		return "未整合な依存関係のチェックは、基本 Mod のパッケージまたはサブパッケージ内にある存在しないクラスへの参照を探します。";
+	}
+
+	@Override
+	public String depmapColorPanel() {
+		return "パネルの色";
+	}
+
+	@Override
+	public String depmapColorTexto() {
+		return "メインテキストの色";
+	}
+
+	@Override
+	public String depmapColorTextoSecundario() {
+		return "補助テキストの色";
+	}
+
+	@Override
+	public String depmapColorAyudaTexto() {
+		return "ヘルプテキストの色";
+	}
+
+	@Override
+	public String depmapColorGrafoFondo() {
+		return "グラフの背景色";
+	}
+
+	@Override
+	public String depmapColorListaFondo() {
+		return "リストの背景色";
+	}
+
+	@Override
+	public String depmapColorArbolFondo() {
+		return "ツリーの背景色";
+	}
+
+	@Override
+	public String depmapColorNodo() {
+		return "グラフノードの色";
+	}
+
+	@Override
+	public String depmapColorEnlace() {
+		return "グラフリーンの色";
+	}
+
+	@Override
+	public String depmapColorSeleccion() {
+		return "選択色";
+	}
+
+	@Override
+	public String depmapColorSeleccionTexto() {
+		return "選択されたテキストの色";
+	}
+
 }

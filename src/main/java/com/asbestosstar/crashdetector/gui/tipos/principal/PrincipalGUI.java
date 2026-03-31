@@ -41,6 +41,7 @@ import com.asbestosstar.crashdetector.gui.tipos.cdlauncher.CDLauncherGUISaliorMo
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanel;
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanelEstiloTL;
 import com.asbestosstar.crashdetector.gui.tipos.corpo.CorpoSAO;
+import com.asbestosstar.crashdetector.gui.tipos.depmap.MapaDeDependenciasGUINimu;
 import com.asbestosstar.crashdetector.gui.tipos.grepr.BusquedaGUISaliorMoon;
 import com.asbestosstar.crashdetector.gui.tipos.historia.ClioOfficeGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasHoloTalk;
@@ -121,6 +122,8 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		registrarBotonDeBarraLateralDerecha(TipoGUI.TODOS_QUICKFIXES, PanelQuickFixDemonSlayers.ID,
 				() -> new PanelQuickFixDemonSlayers());
 		registrarBotonDeBarraLateralDerecha(TipoGUI.MIXINS, MixinsGUIChiarru.ID, () -> new MixinsGUIChiarru());
+		registrarBotonDeBarraLateralDerecha(TipoGUI.DEPMAP, MapaDeDependenciasGUINimu.ID,
+				() -> new MapaDeDependenciasGUINimu());
 	}
 
 	public PrincipalGUI() {

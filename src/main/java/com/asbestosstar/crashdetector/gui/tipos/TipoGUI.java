@@ -21,6 +21,7 @@ import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartir;
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanel;
 import com.asbestosstar.crashdetector.gui.tipos.consola.ConsolaDesarrolladorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.corpo.CorpoBase;
+import com.asbestosstar.crashdetector.gui.tipos.depmap.MapaDeDependenciasGUI;
 import com.asbestosstar.crashdetector.gui.tipos.deshablicarverificaciones.DeshablicarVerificaciones;
 import com.asbestosstar.crashdetector.gui.tipos.editor.EditorFirmasGUI;
 import com.asbestosstar.crashdetector.gui.tipos.editor_plantilla.EditorPlantilla;
@@ -848,6 +849,28 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		}
 	};
 
+	public static TipoGUI<MapaDeDependenciasGUI> DEPMAP = new TipoGUI<MapaDeDependenciasGUI>() {
+		@Override
+		public String id() {
+			return "depmap";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.depmapBotonLateral();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<MapaDeDependenciasGUI> gui) {
+			MapaDeDependenciasGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<MapaDeDependenciasGUI>> obtenerGUIs() {
+			return MapaDeDependenciasGUI.GUIS;
+		}
+	};
+
 	/**
 	 * Registro estático de todos los tipos de GUI en la lista global.
 	 */
@@ -884,6 +907,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		TIPOS_DE_GUI.add(PROFILER);
 		TIPOS_DE_GUI.add(SAMPLER);
 		TIPOS_DE_GUI.add(MIXINS);
+		TIPOS_DE_GUI.add(DEPMAP);
 
 	}
 }

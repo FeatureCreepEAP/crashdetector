@@ -45,6 +45,7 @@ import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanelEstiloTL;
 import com.asbestosstar.crashdetector.gui.tipos.consola.ConsolaDesarrolladorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.consola.ConsolaDesarrolladorGUITL;
 import com.asbestosstar.crashdetector.gui.tipos.corpo.CorpoSAO;
+import com.asbestosstar.crashdetector.gui.tipos.depmap.MapaDeDependenciasGUINimu;
 import com.asbestosstar.crashdetector.gui.tipos.deshablicarverificaciones.DeshabilitarVerificacionesAmaneKanata;
 import com.asbestosstar.crashdetector.gui.tipos.editor.EditorCodiceGUIIronMouse;
 import com.asbestosstar.crashdetector.gui.tipos.editor_plantilla.EditorPlantillaModioNoche;
@@ -257,10 +258,9 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/gomix.png", Statics.carpeta.resolve("imagenes/gomix.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/chiiaru.png", Statics.carpeta.resolve("imagenes/chiiaru.png").toFile());
 
-		copiarACarpetaDesdeJar("/imagenes/nimuspacecat.png", Statics.carpeta.resolve("imagenes/nimuspacecat.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/nimuspacecat.png",
+				Statics.carpeta.resolve("imagenes/nimuspacecat.png").toFile());
 
-		
-		
 //		new File(viajo_ultima_mods.toString()).delete();
 //		try {
 //			new File(viajo_ultima_mods.toString()).createNewFile();
@@ -459,6 +459,7 @@ public class MonitorDePID {
 		TipoGUI.PROFILER.registrarGUI(ProfilerGUIMinaly.ID, () -> new ProfilerGUIMinaly());
 		TipoGUI.SAMPLER.registrarGUI(SamplerGUIEineLotta.ID, () -> new SamplerGUIEineLotta());
 		TipoGUI.MIXINS.registrarGUI(MixinsGUIChiarru.ID, () -> new MixinsGUIChiarru());
+		TipoGUI.DEPMAP.registrarGUI(MapaDeDependenciasGUINimu.ID, MapaDeDependenciasGUINimu::new);
 
 	}
 

@@ -7032,4 +7032,234 @@ public class Chino implements Idioma {
 		return "树形视图选中边框颜色";
 	}
 
+	@Override
+	public String depmapTitulo() {
+		return "依赖关系图";
+	}
+
+	@Override
+	public String depmapBotonLateral() {
+		return "DepMap";
+	}
+
+	@Override
+	public String depmapPestanaMapa() {
+		return "地图";
+	}
+
+	@Override
+	public String depmapPestanaDependientes() {
+		return "依赖者";
+	}
+
+	@Override
+	public String depmapRecargar() {
+		return "重新加载";
+	}
+
+	@Override
+	public String depmapDescompilarSeleccion() {
+		return "反编译所选内容";
+	}
+
+	@Override
+	public String depmapVerReferencias() {
+		return "查看引用";
+	}
+
+	@Override
+	public String depmapDependencias() {
+		return "依赖项";
+	}
+
+	@Override
+	public String depmapDependientes() {
+		return "依赖者";
+	}
+
+	@Override
+	public String depmapDependiente() {
+		return "依赖者";
+	}
+
+	@Override
+	public String depmapSinDependencias() {
+		return "无依赖者";
+	}
+
+	@Override
+	public String depmapSeleccionarMod() {
+		return "选择模组";
+	}
+
+	@Override
+	public String depmapSeleccionarModBase() {
+		return "基础模组";
+	}
+
+	@Override
+	public String depmapSeleccionarDependiente() {
+		return "依赖模组";
+	}
+
+	@Override
+	public String depmapSeleccionarPaquete() {
+		return "包";
+	}
+
+	@Override
+	public String depmapComprobarNoAlineadas() {
+		return "检查未对齐";
+	}
+
+	@Override
+	public String depmapResultadoNoAlineadas() {
+		return "未对齐依赖项结果";
+	}
+
+	@Override
+	public String depmapClaseInexistente() {
+		return "不存在的类";
+	}
+
+	@Override
+	public String depmapClaseReferenciada() {
+		return "被引用的类";
+	}
+
+	@Override
+	public String depmapOrigen() {
+		return "来源";
+	}
+
+	@Override
+	public String depmapDestino() {
+		return "目标";
+	}
+
+	@Override
+	public String depmapDependenciaDetalle() {
+		return "依赖项详情";
+	}
+
+	@Override
+	public String depmapReferenciaDetalle() {
+		return "引用详情";
+	}
+
+	@Override
+	public String depmapMetodoOrigen() {
+		return "来源方法";
+	}
+
+	@Override
+	public String depmapModBase() {
+		return "基础模组";
+	}
+
+	@Override
+	public String depmapTodos() {
+		return "全部";
+	}
+
+	@Override
+	public String depmapSeleccioneUnMod() {
+		return "请选择一个模组";
+	}
+
+	@Override
+	public String depmapSeleccioneParametrosNoAlineadas() {
+		return "请选择基础模组、依赖模组和包";
+	}
+
+	@Override
+	public String depmapSeleccioneClaseParaDescompilar() {
+		return "请选择一个引用或发现项进行反编译";
+	}
+
+	@Override
+	public String depmapErrorDescompilar() {
+		return "反编译错误";
+	}
+
+	@Override
+	public String depmapAyuda1() {
+		return "此工具使用模组间的类引用构建模组依赖关系图。";
+	}
+
+	@Override
+	public String depmapAyuda2() {
+		return "地图标签页显示一个气泡图，将每个模组与其使用的依赖项连接起来。";
+	}
+
+	@Override
+	public String depmapAyuda3() {
+		return "依赖者标签页按依赖者数量从多到少对模组进行排序。";
+	}
+
+	@Override
+	public String depmapAyuda4() {
+		return "你可以检查模组与其依赖项之间的具体引用，并反编译相关类。";
+	}
+
+	@Override
+	public String depmapAyuda5() {
+		return "未对齐依赖项检查会在基础模组的包或子包中查找对不存在类的引用。";
+	}
+
+	@Override
+	public String depmapColorPanel() {
+		return "面板颜色";
+	}
+
+	@Override
+	public String depmapColorTexto() {
+		return "主文本颜色";
+	}
+
+	@Override
+	public String depmapColorTextoSecundario() {
+		return "次要文本颜色";
+	}
+
+	@Override
+	public String depmapColorAyudaTexto() {
+		return "帮助文本颜色";
+	}
+
+	@Override
+	public String depmapColorGrafoFondo() {
+		return "图表背景色";
+	}
+
+	@Override
+	public String depmapColorListaFondo() {
+		return "列表背景色";
+	}
+
+	@Override
+	public String depmapColorArbolFondo() {
+		return "树形视图背景色";
+	}
+
+	@Override
+	public String depmapColorNodo() {
+		return "图表节点颜色";
+	}
+
+	@Override
+	public String depmapColorEnlace() {
+		return "图表链接颜色";
+	}
+
+	@Override
+	public String depmapColorSeleccion() {
+		return "选择颜色";
+	}
+
+	@Override
+	public String depmapColorSeleccionTexto() {
+		return "选中文本颜色";
+	}
+
 }
