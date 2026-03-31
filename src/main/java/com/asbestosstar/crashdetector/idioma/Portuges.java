@@ -7761,4 +7761,20 @@ public class Portuges implements Idioma {
 		return "Cor do texto selecionado";
 	}
 
+	@Override
+	public String nombreProblemaAzureLibAnimaciones() {
+		return "Problema com um addon do AzureLib";
+	}
+
+	@Override
+	public String mensajeProblemaAzureLibAnimaciones() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Foi detectado um erro do AzureLib ao carregar animações.</b>"
+				+ "<p>O jogo encontrou um JSON de animações com um formato incorreto.</p>"
+				+ "<p>Este problema geralmente é causado por um dos mods ou addons que usam <b>AzureLib</b>.</p>"
+				+ "<p><b>Recomendação:</b></p>" + "<ul>"
+				+ "<li>Use o <b>DepMap</b> na barra lateral para localizar todos os addons que dependem do AzureLib.</li>"
+				+ "<li>Tente iniciar o jogo sem alguns desses addons até encontrar o que está falhando.</li>" + "</ul>";
+	}
+
 }

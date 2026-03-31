@@ -7756,4 +7756,21 @@ public class Ruso implements Idioma {
 		return "Цвет выбранного текста";
 	}
 
+	@Override
+	public String nombreProblemaAzureLibAnimaciones() {
+		return "Проблема с аддоном AzureLib";
+	}
+
+	@Override
+	public String mensajeProblemaAzureLibAnimaciones() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Обнаружена ошибка AzureLib при загрузке анимаций.</b>"
+				+ "<p>Игра обнаружила JSON-файл анимации с неверным форматом.</p>"
+				+ "<p>Эта проблема обычно вызвана одной из модификаций или аддонов, использующих <b>AzureLib</b>.</p>"
+				+ "<p><b>Рекомендация:</b></p>" + "<ul>"
+				+ "<li>Используйте <b>DepMap</b> на боковой панели, чтобы найти все аддоны, зависящие от AzureLib.</li>"
+				+ "<li>Попробуйте запустить игру без некоторых из этих аддонов, пока не найдёте тот, который вызывает ошибку.</li>"
+				+ "</ul>";
+	}
+
 }

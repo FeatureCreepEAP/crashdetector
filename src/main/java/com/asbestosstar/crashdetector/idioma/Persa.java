@@ -7714,4 +7714,21 @@ public class Persa implements Idioma {
 		return "رنگ متن انتخاب‌شده";
 	}
 
+	@Override
+	public String nombreProblemaAzureLibAnimaciones() {
+		return "مشکل با یک افزونه AzureLib";
+	}
+
+	@Override
+	public String mensajeProblemaAzureLibAnimaciones() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "هنگام بارگذاری انیمیشن‌ها، خطای AzureLib شناسایی شد.</b>"
+				+ "<p>بازی یک فایل JSON انیمیشن با فرمت نادرست پیدا کرد.</p>"
+				+ "<p>این مشکل معمولاً توسط یکی از مودها یا افزونه‌هایی که از <b>AzureLib</b> استفاده می‌کنند ایجاد می‌شود.</p>"
+				+ "<p><b>توصیه:</b></p>" + "<ul>"
+				+ "<li>از <b>DepMap</b> در نوار کناری برای یافتن تمام افزونه‌هایی که به AzureLib وابسته هستند استفاده کنید.</li>"
+				+ "<li>سعی کنید بازی را بدون برخی از آن افزونه‌ها شروع کنید تا موردی که باعث خطا می‌شود را پیدا کنید.</li>"
+				+ "</ul>";
+	}
+
 }

@@ -7426,4 +7426,18 @@ public class Coreano implements Idioma {
 		return "선택된 텍스트 색";
 	}
 
+	@Override
+	public String nombreProblemaAzureLibAnimaciones() {
+		return "AzureLib 부가기능 문제";
+	}
+
+	@Override
+	public String mensajeProblemaAzureLibAnimaciones() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "움직임을 적재하는 동안 AzureLib 오류가 감지되였습니다.</b>" + "<p>게임이 형식이 잘못된 움직임 JSON 파일을 발견하였습니다.</p>"
+				+ "<p>이 문제는 일반적으로 <b>AzureLib</b> 를 사용하는 모드나 부가기능 중 하나에 의해 발생합니다.</p>" + "<p><b>권장 사항:</b></p>" + "<ul>"
+				+ "<li>측면바의 <b>DepMap</b> 을 리용하여 AzureLib 에 의존하는 모든 부가기능들을 찾으십시오.</li>"
+				+ "<li>오류를 일으키는 것을 찾을 때까지 그 부가기능들 중 일부 없이 게임을 시작해 보십시오.</li>" + "</ul>";
+	}
+
 }

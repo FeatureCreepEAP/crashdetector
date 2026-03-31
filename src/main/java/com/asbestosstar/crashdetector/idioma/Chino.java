@@ -7262,4 +7262,17 @@ public class Chino implements Idioma {
 		return "选中文本颜色";
 	}
 
+	@Override
+	public String nombreProblemaAzureLibAnimaciones() {
+		return "AzureLib 插件问题";
+	}
+
+	@Override
+	public String mensajeProblemaAzureLibAnimaciones() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "加载动画时检测到 AzureLib 错误。</b>"
+				+ "<p>游戏发现了一个格式错误的动画 JSON 文件。</p>" + "<p>此问题通常由使用 <b>AzureLib</b> 的某个模组或插件引起。</p>" + "<p><b>建议：</b></p>"
+				+ "<ul>" + "<li>使用侧边栏中的 <b>DepMap</b> 查找所有依赖于 AzureLib 的插件。</li>"
+				+ "<li>尝试在不加载部分插件的情况下启动游戏，直到找到出错的那个。</li>" + "</ul>";
+	}
+
 }

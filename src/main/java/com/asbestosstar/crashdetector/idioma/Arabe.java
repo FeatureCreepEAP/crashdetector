@@ -7651,4 +7651,20 @@ public class Arabe implements Idioma {
 		return "لون النص المحدد";
 	}
 
+	@Override
+	public String nombreProblemaAzureLibAnimaciones() {
+		return "مشكلة في إضافة لـ AzureLib";
+	}
+
+	@Override
+	public String mensajeProblemaAzureLibAnimaciones() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تم اكتشاف خطأ في AzureLib أثناء تحميل الحركات.</b>"
+				+ "<p>عثرت اللعبة على ملف JSON للحركات بتنسيق غير صحيح.</p>"
+				+ "<p>عادةً ما يكون سبب هذه المشكلة أحد الإضافات أو الـ addons التي تستخدم <b>AzureLib</b>.</p>"
+				+ "<p><b>التوصية:</b></p>" + "<ul>"
+				+ "<li>استخدم <b>DepMap</b> في الشريط الجانبي لتحديد جميع الإضافات التي تعتمد على AzureLib.</li>"
+				+ "<li>حاول بدء اللعبة بدون بعض من هذه الإضافات حتى تجد التي تسبب الخطأ.</li>" + "</ul>";
+	}
+
 }

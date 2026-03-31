@@ -7725,4 +7725,20 @@ public class Esperanto implements Idioma {
 		return "Koloro de elektita teksto";
 	}
 
+	@Override
+	public String nombreProblemaAzureLibAnimaciones() {
+		return "Problemo kun aldonaĵo de AzureLib";
+	}
+
+	@Override
+	public String mensajeProblemaAzureLibAnimaciones() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Detektiĝis eraro de AzureLib dum ŝargo de animacioj.</b>"
+				+ "<p>La ludo trovis JSON-dosieron de animacioj kun malĝusta formato.</p>"
+				+ "<p>Ĉi tiu problemo kutime estas kaŭzita de unu el la modoj aŭ aldonaĵoj kiuj uzas <b>AzureLib</b>.</p>"
+				+ "<p><b>Rekomendo:</b></p>" + "<ul>"
+				+ "<li>Uzu la <b>DepMap</b>-on en la flanka breto por lokalizi ĉiujn aldonaĵojn kiuj dependas de AzureLib.</li>"
+				+ "<li>Provu startigi la ludon sen kelkaj el tiuj aldonaĵoj ĝis vi trovos la kulpan.</li>" + "</ul>";
+	}
+
 }

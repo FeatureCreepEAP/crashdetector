@@ -294,6 +294,7 @@ public class Analizador {
 		verificaciones.add(new AccesoIlegalMod());
 		verificaciones.add(new ErrorParseoDataPack());
 		verificaciones.add(new ErrorCompilacionShader());
+		verificaciones.add(new ProblemaAzureLibAnimaciones());
 
 		verificaciones.add(new ErrorCreacionModelo());
 		verificaciones.add(new ProblemaBlockStarlightEngine());

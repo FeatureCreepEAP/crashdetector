@@ -2828,4 +2828,8 @@ public interface Idioma {
 
 	public String depmapColorSeleccionTexto();
 
+	public String mensajeProblemaAzureLibAnimaciones();
+
+	public String nombreProblemaAzureLibAnimaciones();
+
 }

@@ -7439,4 +7439,18 @@ public class Japones implements Idioma {
 		return "選択されたテキストの色";
 	}
 
+	@Override
+	public String nombreProblemaAzureLibAnimaciones() {
+		return "AzureLib アドオンの問題";
+	}
+
+	@Override
+	public String mensajeProblemaAzureLibAnimaciones() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "アニメーションの読み込み中に AzureLib エラーが検出されました。</b>" + "<p>ゲームが形式が正しくないアニメーション JSON を見つけました。</p>"
+				+ "<p>この問題は通常、<b>AzureLib</b> を使用している Mod またはアドオンの 1 つが原因です。</p>" + "<p><b>推奨事項：</b></p>" + "<ul>"
+				+ "<li>サイドバーの <b>DepMap</b> を使用して、AzureLib に依存するすべてのアドオンを探してください。</li>"
+				+ "<li>故障しているものを見つけるまで、それらのアドオンの一部を無効にしてゲームを起動してみてください。</li>" + "</ul>";
+	}
+
 }
