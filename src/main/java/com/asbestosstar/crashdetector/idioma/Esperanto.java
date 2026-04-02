@@ -7741,4 +7741,23 @@ public class Esperanto implements Idioma {
 				+ "<li>Provu startigi la ludon sen kelkaj el tiuj aldonaĵoj ĝis vi trovos la kulpan.</li>" + "</ul>";
 	}
 
+	@Override
+	public String nombreProblemaDecocraftNatureEssentialPartnerMod() {
+		return "Problemo kun Decocraft Nature";
+	}
+
+	@Override
+	public String mensajeProblemaDecocraftNatureEssentialPartnerMod() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Detektiĝis problemo kaŭzita de Decocraft Nature.</b>"
+				+ "<p>La eraro okazas dum inicializado de la mixin-agordo "
+				+ "<code>com/razz/essentialpartnermod/mixins.json</code>.</p>"
+				+ "<p>Ĉi tiu problemo povas esti korektita redaktante la JAR-dosieron de la modo.</p>"
+				+ "<p><b>Paŝoj:</b></p>" + "<ul>"
+				+ "<li>Malfermu la JAR-dosieron per arkivilo kiel File Roller, Ark, WinRAR, 7-Zip aŭ WinZip.</li>"
+				+ "<li>Iru al <code>META-INF/MANIFEST.MF</code>.</li>" + "<li>Forigu ĉi tiun linion:</li>" + "</ul>"
+				+ "<code>MixinConfigs: com/razz/essentialpartnermod/mixins.json</code>"
+				+ "<p><b>Grave:</b> konservu la solan malplenan linion ĉe la fino de la dosiero.</p>";
+	}
+
 }

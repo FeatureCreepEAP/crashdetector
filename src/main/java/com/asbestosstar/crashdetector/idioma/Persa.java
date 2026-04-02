@@ -7731,4 +7731,21 @@ public class Persa implements Idioma {
 				+ "</ul>";
 	}
 
+	@Override
+	public String nombreProblemaDecocraftNatureEssentialPartnerMod() {
+		return "مشکل با Decocraft Nature";
+	}
+
+	@Override
+	public String mensajeProblemaDecocraftNatureEssentialPartnerMod() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "مشکلی ناشی از Decocraft Nature شناسایی شد.</b>" + "<p>این خطا هنگام مقداردهی اولیه پیکربندی mixin "
+				+ "<code>com/razz/essentialpartnermod/mixins.json</code> رخ می‌دهد.</p>"
+				+ "<p>این مشکل را می‌توان با ویرایش فایل JAR مود برطرف کرد.</p>" + "<p><b>مراحل:</b></p>" + "<ul>"
+				+ "<li>فایل JAR را با یک نرم‌افزار بایگانی مانند File Roller، Ark، WinRAR، 7-Zip یا WinZip باز کنید.</li>"
+				+ "<li>به <code>META-INF/MANIFEST.MF</code> بروید.</li>" + "<li>این خط را حذف کنید:</li>" + "</ul>"
+				+ "<code>MixinConfigs: com/razz/essentialpartnermod/mixins.json</code>"
+				+ "<p><b>مهم:</b> تنها خط خالی در انتهای فایل را حفظ کنید.</p>";
+	}
+
 }

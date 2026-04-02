@@ -7794,4 +7794,22 @@ public class Ingles implements Idioma {
 				+ "</ul>";
 	}
 
+	@Override
+	public String nombreProblemaDecocraftNatureEssentialPartnerMod() {
+		return "Issue with Decocraft Nature";
+	}
+
+	@Override
+	public String mensajeProblemaDecocraftNatureEssentialPartnerMod() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "An issue caused by Decocraft Nature has been detected.</b>"
+				+ "<p>The error occurs when initialising the mixin config "
+				+ "<code>com/razz/essentialpartnermod/mixins.json</code>.</p>"
+				+ "<p>This issue can be fixed by editing the mod's JAR file.</p>" + "<p><b>Steps:</b></p>" + "<ul>"
+				+ "<li>Open the JAR file with an archiver such as File Roller, Ark, WinRAR, 7-Zip, or WinZip.</li>"
+				+ "<li>Navigate to <code>META-INF/MANIFEST.MF</code>.</li>" + "<li>Delete this line:</li>" + "</ul>"
+				+ "<code>MixinConfigs: com/razz/essentialpartnermod/mixins.json</code>"
+				+ "<p><b>Important:</b> keep the single empty line at the end of the file.</p>";
+	}
+
 }

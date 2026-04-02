@@ -8482,4 +8482,23 @@ public class Espanol implements Idioma {
 				+ "<li>Prueba iniciar el juego sin algunos de esos addons hasta encontrar el que falla.</li>" + "</ul>";
 	}
 
+	@Override
+	public String nombreProblemaDecocraftNatureEssentialPartnerMod() {
+		return "Problema con Decocraft Nature";
+	}
+
+	@Override
+	public String mensajeProblemaDecocraftNatureEssentialPartnerMod() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Se detectó un problema causado por Decocraft Nature.</b>"
+				+ "<p>El error ocurre al inicializar el mixin config "
+				+ "<code>com/razz/essentialpartnermod/mixins.json</code>.</p>"
+				+ "<p>Este problema puede corregirse editando el archivo JAR del mod.</p>" + "<p><b>Pasos:</b></p>"
+				+ "<ul>"
+				+ "<li>Abre el archivo JAR con un archivador como File Roller, Ark, WinRAR, 7-Zip o WinZip.</li>"
+				+ "<li>Entra en <code>META-INF/MANIFEST.MF</code>.</li>" + "<li>Elimina esta línea:</li>" + "</ul>"
+				+ "<code>MixinConfigs: com/razz/essentialpartnermod/mixins.json</code>"
+				+ "<p><b>Importante:</b> conserva la única línea vacía al final del archivo.</p>";
+	}
+
 }

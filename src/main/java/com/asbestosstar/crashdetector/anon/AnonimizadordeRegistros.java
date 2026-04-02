@@ -169,35 +169,19 @@ public class AnonimizadordeRegistros {
 	}
 
 	public static String anonimizarNombreDeUsuarioEnRutas(String linea) {
-		// Windows
-		for (Pattern p : PATRONES_USUARIO_WINDOWS) {
-			Matcher m = p.matcher(linea);
-			StringBuffer sb = new StringBuffer();
-			while (m.find()) {
-				String user = m.group(1);
-				if (USUARIOS_PRIVILEGIADOS.contains(user.toLowerCase()))
-					m.appendReplacement(sb, m.group());
-				else
-					m.appendReplacement(sb, "C\\\\Users\\\\anon\\\\"); // se duplica ‘\’ para regex
-			}
-			m.appendTail(sb);
-			linea = sb.toString();
+		Pattern patronRuta = Pattern.compile("(?i)([A-Za-z]:[\\\\/][^\\s\"'<>|]+|/(?:home|Users)/[^\\s\"'<>|]+)");
+
+		Matcher matcher = patronRuta.matcher(linea);
+		StringBuffer resultado = new StringBuffer();
+
+		while (matcher.find()) {
+			String rutaOriginal = matcher.group(1);
+			String rutaAnonimizada = AnonimizadorDeRuta.anonimizarNombreDeUsuario(rutaOriginal);
+			matcher.appendReplacement(resultado, Matcher.quoteReplacement(rutaAnonimizada));
 		}
-		/* Unix / macOS */
-		for (Pattern p : PATRONES_USUARIO_UNIX) {
-			Matcher m = p.matcher(linea);
-			StringBuffer sb = new StringBuffer();
-			while (m.find()) {
-				String user = m.group(1);
-				if (USUARIOS_PRIVILEGIADOS.contains(user.toLowerCase()))
-					m.appendReplacement(sb, m.group());
-				else
-					m.appendReplacement(sb, m.group(0).replace(user, "anon"));
-			}
-			m.appendTail(sb);
-			linea = sb.toString();
-		}
-		return linea;
+
+		matcher.appendTail(resultado);
+		return resultado.toString();
 	}
 
 	public static String anonimizarUsuariosGenericos(String linea) {

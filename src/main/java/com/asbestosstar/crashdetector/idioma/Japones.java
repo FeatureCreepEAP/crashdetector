@@ -7453,4 +7453,21 @@ public class Japones implements Idioma {
 				+ "<li>故障しているものを見つけるまで、それらのアドオンの一部を無効にしてゲームを起動してみてください。</li>" + "</ul>";
 	}
 
+	@Override
+	public String nombreProblemaDecocraftNatureEssentialPartnerMod() {
+		return "Decocraft Nature の問題";
+	}
+
+	@Override
+	public String mensajeProblemaDecocraftNatureEssentialPartnerMod() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Decocraft Nature による問題が検出されました。</b>" + "<p>このエラーは、mixin 設定 "
+				+ "<code>com/razz/essentialpartnermod/mixins.json</code> の初期化中に発生します。</p>"
+				+ "<p>この問題は、Mod の JAR ファイルを編集することで修正できます。</p>" + "<p><b>手順：</b></p>" + "<ul>"
+				+ "<li>File Roller、Ark、WinRAR、7-Zip、または WinZip などのアーカイバで JAR ファイルを開きます。</li>"
+				+ "<li><code>META-INF/MANIFEST.MF</code> に移動します。</li>" + "<li>この行を削除します：</li>" + "</ul>"
+				+ "<code>MixinConfigs: com/razz/essentialpartnermod/mixins.json</code>"
+				+ "<p><b>重要：</b>ファイル末尾の空行 1 つはそのまま残してください。</p>";
+	}
+
 }

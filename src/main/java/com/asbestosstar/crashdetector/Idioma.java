@@ -2832,4 +2832,8 @@ public interface Idioma {
 
 	public String nombreProblemaAzureLibAnimaciones();
 
+	public String mensajeProblemaDecocraftNatureEssentialPartnerMod();
+
+	public String nombreProblemaDecocraftNatureEssentialPartnerMod();
+
 }

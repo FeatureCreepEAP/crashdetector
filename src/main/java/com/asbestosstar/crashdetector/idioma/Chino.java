@@ -7275,4 +7275,20 @@ public class Chino implements Idioma {
 				+ "<li>尝试在不加载部分插件的情况下启动游戏，直到找到出错的那个。</li>" + "</ul>";
 	}
 
+	@Override
+	public String nombreProblemaDecocraftNatureEssentialPartnerMod() {
+		return "Decocraft Nature 问题";
+	}
+
+	@Override
+	public String mensajeProblemaDecocraftNatureEssentialPartnerMod() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "检测到由 Decocraft Nature 引起的问题。</b>" + "<p>错误发生在初始化 mixin 配置 "
+				+ "<code>com/razz/essentialpartnermod/mixins.json</code> 时。</p>" + "<p>可以通过编辑模组的 JAR 文件来修复此问题。</p>"
+				+ "<p><b>步骤：</b></p>" + "<ul>" + "<li>使用归档工具（如 File Roller、Ark、WinRAR、7-Zip 或 WinZip）打开 JAR 文件。</li>"
+				+ "<li>进入 <code>META-INF/MANIFEST.MF</code>。</li>" + "<li>删除此行：</li>" + "</ul>"
+				+ "<code>MixinConfigs: com/razz/essentialpartnermod/mixins.json</code>"
+				+ "<p><b>重要：</b>请保留文件末尾的唯一空行。</p>";
+	}
+
 }

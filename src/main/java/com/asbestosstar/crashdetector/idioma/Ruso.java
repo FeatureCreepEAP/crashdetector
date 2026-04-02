@@ -7773,4 +7773,23 @@ public class Ruso implements Idioma {
 				+ "</ul>";
 	}
 
+	@Override
+	public String nombreProblemaDecocraftNatureEssentialPartnerMod() {
+		return "Проблема с Decocraft Nature";
+	}
+
+	@Override
+	public String mensajeProblemaDecocraftNatureEssentialPartnerMod() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Обнаружена проблема, вызванная Decocraft Nature.</b>"
+				+ "<p>Ошибка возникает при инициализации конфигурации mixin "
+				+ "<code>com/razz/essentialpartnermod/mixins.json</code>.</p>"
+				+ "<p>Эту проблему можно исправить, отредактировав JAR-файл модификации.</p>" + "<p><b>Шаги:</b></p>"
+				+ "<ul>"
+				+ "<li>Откройте JAR-файл с помощью архиватора, такого как File Roller, Ark, WinRAR, 7-Zip или WinZip.</li>"
+				+ "<li>Перейдите в <code>META-INF/MANIFEST.MF</code>.</li>" + "<li>Удалите эту строку:</li>" + "</ul>"
+				+ "<code>MixinConfigs: com/razz/essentialpartnermod/mixins.json</code>"
+				+ "<p><b>Важно:</b> сохраните единственную пустую строку в конце файла.</p>";
+	}
+
 }

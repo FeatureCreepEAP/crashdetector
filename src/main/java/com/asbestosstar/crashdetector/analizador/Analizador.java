@@ -294,7 +294,6 @@ public class Analizador {
 		verificaciones.add(new AccesoIlegalMod());
 		verificaciones.add(new ErrorParseoDataPack());
 		verificaciones.add(new ErrorCompilacionShader());
-		verificaciones.add(new ProblemaAzureLibAnimaciones());
 
 		verificaciones.add(new ErrorCreacionModelo());
 		verificaciones.add(new ProblemaBlockStarlightEngine());
@@ -315,6 +314,8 @@ public class Analizador {
 		verificaciones.add(new ErrorMobAITweaks());
 		verificaciones.add(new VerificacionGPU());
 		verificaciones.add(new RaptorLakeInestable());// TODO Spectre y Meltdown
+		verificaciones.add(new ProblemaAzureLibAnimaciones());
+		verificaciones.add(new ProblemaDecocraftNatureEssentialPartnerMod());
 
 		verificaciones.add(new PirataMC());
 		verificaciones.add(new LanzerNoAnimado());

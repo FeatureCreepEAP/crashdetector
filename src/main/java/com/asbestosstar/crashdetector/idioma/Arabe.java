@@ -7667,4 +7667,21 @@ public class Arabe implements Idioma {
 				+ "<li>حاول بدء اللعبة بدون بعض من هذه الإضافات حتى تجد التي تسبب الخطأ.</li>" + "</ul>";
 	}
 
+	@Override
+	public String nombreProblemaDecocraftNatureEssentialPartnerMod() {
+		return "مشكلة في Decocraft Nature";
+	}
+
+	@Override
+	public String mensajeProblemaDecocraftNatureEssentialPartnerMod() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تم اكتشاف مشكلة سببها Decocraft Nature.</b>" + "<p>يحدث الخطأ عند تهيئة إعدادات mixin "
+				+ "<code>com/razz/essentialpartnermod/mixins.json</code>.</p>"
+				+ "<p>يمكن تصحيح هذه المشكلة عن طريق تحرير ملف JAR للإضافة.</p>" + "<p><b>الخطوات:</b></p>" + "<ul>"
+				+ "<li>افتح ملف JAR باستخدام أداة أرشفة مثل File Roller أو Ark أو WinRAR أو 7-Zip أو WinZip.</li>"
+				+ "<li>ادخل إلى <code>META-INF/MANIFEST.MF</code>.</li>" + "<li>احذف هذا السطر:</li>" + "</ul>"
+				+ "<code>MixinConfigs: com/razz/essentialpartnermod/mixins.json</code>"
+				+ "<p><b>مهم:</b> احتفظ بالسطر الفارغ الوحيد في نهاية الملف.</p>";
+	}
+
 }

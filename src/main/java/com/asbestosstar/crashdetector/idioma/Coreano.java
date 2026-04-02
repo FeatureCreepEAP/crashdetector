@@ -7440,4 +7440,21 @@ public class Coreano implements Idioma {
 				+ "<li>오류를 일으키는 것을 찾을 때까지 그 부가기능들 중 일부 없이 게임을 시작해 보십시오.</li>" + "</ul>";
 	}
 
+	@Override
+	public String nombreProblemaDecocraftNatureEssentialPartnerMod() {
+		return "Decocraft Nature 문제";
+	}
+
+	@Override
+	public String mensajeProblemaDecocraftNatureEssentialPartnerMod() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Decocraft Nature 에 의해 발생한 문제가 감지되였습니다.</b>" + "<p>오류는 mixin 구성 "
+				+ "<code>com/razz/essentialpartnermod/mixins.json</code> 을 초기화할 때 발생합니다.</p>"
+				+ "<p>이 문제는 모드의 JAR 파일을 편집하여 수정할수 있습니다.</p>" + "<p><b>단계:</b></p>" + "<ul>"
+				+ "<li>File Roller, Ark, WinRAR, 7-Zip 또는 WinZip 같은 압축프로그램으로 JAR 파일을 여십시오.</li>"
+				+ "<li><code>META-INF/MANIFEST.MF</code> 로 들어가십시오.</li>" + "<li>이 줄을 삭제하십시오:</li>" + "</ul>"
+				+ "<code>MixinConfigs: com/razz/essentialpartnermod/mixins.json</code>"
+				+ "<p><b>중요:</b> 파일 끝에 있는 유일한 빈 줄은 보존하십시오.</p>";
+	}
+
 }
