@@ -39,6 +39,13 @@ public class TransformacionDeMinecraftCodigoGPU implements ParcheClassNode {
 
 			System.out.println("CD: Parche de verificación de GPU encontrado para la clase: " + nombre_de_clase);
 
+			for (MethodNode method : node.methods) {
+				if (method.name.startsWith("func_")) {
+					return;// 1.13-1.16.5 mc forge tiene problemas con parches
+				}
+
+			}
+
 			// Iteramos sobre los métodos para encontrar el constructor
 			for (MethodNode method : node.methods) {
 				// Buscamos el constructor (<init>)

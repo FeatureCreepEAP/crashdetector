@@ -78,6 +78,64 @@
 			</plugin>
 
 
+
+
+
+<plugin>
+    <groupId>com.asbestosstar</groupId>
+    <artifactId>bytecode-compat-maven-plugin</artifactId>
+    <version>0.0.1</version>
+    <executions>
+        <execution>
+            <goals>
+                <goal>inject-compat-methods</goal>
+            </goals>
+        </execution>
+    </executions>
+    <configuration>
+        <patches>
+            <patch>
+                <className>com.asbestosstar.crashdetector.CrashDetectorModLauncher</className>
+                <failIfMissingClass>true</failIfMissingClass>
+                <methods>
+                    <method>
+                        <name>beginScanning</name>
+                        <descriptor>(Lcpw/mods/modlauncher/api/IEnvironment;)V</descriptor>
+                        <access>public</access>
+                        <kind>NO_OP_VOID</kind>
+                    </method>
+                </methods>
+            </patch>
+
+            <patch>
+                <className>com.asbestosstar.crashdetector.TransformacionesCPW</className>
+                <failIfMissingClass>true</failIfMissingClass>
+                <methods>
+                    <method>
+                        <name>getTargetType</name>
+                        <descriptor>()Lcpw/mods/modlauncher/api/TargetType;</descriptor>
+                        <access>public</access>
+                        <kind>RETURN_STATIC_FIELD</kind>
+                        <fieldOwner>cpw.mods.modlauncher.api.TargetType</fieldOwner>
+                        <fieldName>CLASS</fieldName>
+                        <fieldDescriptor>Lcpw/mods/modlauncher/api/TargetType;</fieldDescriptor>
+                    </method>
+                </methods>
+            </patch>
+        </patches>
+    </configuration>
+</plugin>
+
+
+
+
+
+
+
+
+
+
+
 			<!-- other plugins omitted -->
 			<plugin>
 				<artifactId>maven-jar-plugin</artifactId>
@@ -272,12 +330,22 @@
 
 
 
-
-
-
-
-
 	</dependencies>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	<repositories>
 	
 	

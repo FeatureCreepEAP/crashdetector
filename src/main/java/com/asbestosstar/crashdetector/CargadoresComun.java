@@ -82,6 +82,11 @@ public class CargadoresComun {
 		public static CDOrigin MODLAUNCHER = new CDOrigin();
 		public static CDOrigin FANCYMODLOADER = new CDOrigin();
 		public static CDOrigin MANGOMODLOADER = new CDOrigin();
+		public static CDOrigin RIFT = new CDOrigin();
+		public static CDOrigin LITELOADER = new CDOrigin();
+		public static CDOrigin NILLOADER = new CDOrigin();
+		public static CDOrigin MEDDLE = new CDOrigin();
+
 	}
 
 }

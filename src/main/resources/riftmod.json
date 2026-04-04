@@ -1,0 +1,10 @@
+{
+	"id": "crashdetector",
+	"name": "CrashDetector",
+	"authors": [
+		""
+	],
+	"listeners": [
+		"com.asbestosstar.crashdetector.CrashDetectorRift"
+	]
+}
