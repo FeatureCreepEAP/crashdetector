@@ -2,22 +2,32 @@ package com.asbestosstar.crashdetector;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Appender;
 import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.logging.log4j.core.appender.OutputStreamAppender;
 import org.apache.logging.log4j.core.config.Configuration;
 import org.apache.logging.log4j.core.config.LoggerConfig;
 import org.apache.logging.log4j.core.layout.PatternLayout;
-import org.apache.logging.log4j.core.appender.OutputStreamAppender;
 
 import com.asbestosstar.crashdetector.cargador.Cargador;
 
 /**
- * Integra Log4j2 con el mismo archivo usado por ProxySysOutSysErr SIN TOCAR
+ * Integra Log4j2 con el mismo archivo usado por ProxySysOutSysErr sin tocar
  * System.out/System.err directamente.
- * 
- * IMPORTANTE: Llamar a ProxyLog4j2.init() SIEMPRE DESPUÉS de
- * ProxySysOutSysErr.init()
+ *
+ * IMPORTANTE: llamar a ProxyLog4j2.init() después de ProxySysOutSysErr.init()
+ *
+ * Esta implementación evita el uso del Builder de OutputStreamAppender porque
+ * algunas versiones viejas de Log4j2 no son compatibles binariamente con builds
+ * compiladas contra versiones más nuevas.
  */
-public class ProxyLog4j2 {
+public final class ProxyLog4j2 {
+
+	private static final String NOMBRE_APPENDER = "CrashDetectorFileAppender";
+
+	private ProxyLog4j2() {
+		// Clase utilitaria
+	}
 
 	public static void init() {
 		if (!log4j2existe()) {
@@ -26,45 +36,70 @@ public class ProxyLog4j2 {
 		}
 
 		try {
-			// CRÍTICO: Esperar a que el proxy esté inicializado
-			while (ProxySysOutSysErr.flujoSincronizadoSeguro == null) {
-				Thread.sleep(10); // Esperar inicialización del proxy
+			esperarProxyListo();
+
+			LoggerContext contexto = (LoggerContext) LogManager.getContext(false);
+			Configuration configuracion = contexto.getConfiguration();
+
+			// Evitar registrar dos veces el mismo appender si init() se llama más de una
+			// vez.
+			Appender existente = configuracion.getAppender(NOMBRE_APPENDER);
+			if (existente != null) {
+				System.err.println("[ProxyLog4j2] Ya estaba inicializado: " + NOMBRE_APPENDER);
+				return;
 			}
 
-			// Obtener contexto y configuración actual de Log4j2
-			LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
-			Configuration config = ctx.getConfiguration();
+			PatternLayout layout = PatternLayout.newBuilder().withConfiguration(configuracion)
+					.withPattern("[%d{HH:mm:ss}] [%t/%level]: %msg%n").build();
 
-			// PATRÓN AL ESTILO MINECRAFT
-			PatternLayout layout = PatternLayout.newBuilder().withConfiguration(config)
-					.withPattern("[%d{HH:mm:ss}] [%t/%level]: %msg%n") // Formato consistente sin espacios extra
-					.build();
+			/*
+			 * Se usa la factoría estática en lugar del Builder para mejorar la
+			 * compatibilidad con versiones viejas de Log4j2.
+			 *
+			 * Parámetros: - layout: formato de salida - filter: null - target: flujo del
+			 * proxy - name: nombre del appender - follow: false - ignore: false para no
+			 * tragar errores silenciosamente
+			 */
+			OutputStreamAppender appender = OutputStreamAppender.createAppender(layout, null,
+					ProxySysOutSysErr.flujoSincronizadoSeguro, NOMBRE_APPENDER, false, false);
 
-			// USAR EL FLUJO SINCRONIZADO DEL PROXY (clave para evitar duplicados)
-			OutputStreamAppender appender = OutputStreamAppender.newBuilder().setName("CrashDetectorFileAppender")
-					.setTarget(ProxySysOutSysErr.flujoSincronizadoSeguro) // <-- CAMBIO CLAVE
-					.setLayout(layout).setIgnoreExceptions(false) // Manejar errores correctamente
-					.build();
+			if (appender == null) {
+				System.err.println("[ProxyLog4j2] No se pudo crear el appender de Log4j2");
+				return;
+			}
 
 			appender.start();
-			config.addAppender(appender);
+			configuracion.addAppender(appender);
 
-			// Eliminar appenders de consola EXISTENTES para evitar duplicados
-			LoggerConfig loggerRaiz = config.getLoggerConfig(LogManager.ROOT_LOGGER_NAME);
-//			loggerRaiz.getAppenders().values().stream()
-//					.filter(a -> a instanceof org.apache.logging.log4j.core.appender.ConsoleAppender)
-//					.forEach(a -> loggerRaiz.removeAppender(a.getName()));
+			LoggerConfig loggerRaiz = configuracion.getLoggerConfig(LogManager.ROOT_LOGGER_NAME);
 
-			// Añadir nuestro appender de archivo
+			// Añadir nuestro appender al logger raíz.
 			loggerRaiz.addAppender(appender, Level.ALL, null);
-			ctx.updateLoggers();
+
+			/*
+			 * Si quieres evitar duplicados de consola, puedes descomentar este bloque para
+			 * eliminar appenders de consola ya existentes.
+			 */
+			/*
+			 * for (Appender a : loggerRaiz.getAppenders().values()) { if (a instanceof
+			 * org.apache.logging.log4j.core.appender.ConsoleAppender) {
+			 * loggerRaiz.removeAppender(a.getName()); } }
+			 */
+
+			contexto.updateLoggers();
 
 			System.err.println(
 					"[ProxyLog4j2] Integrado con archivo de log: " + ProxySysOutSysErr.archivoLog.getAbsolutePath());
 
 		} catch (Throwable t) {
-			System.err.println("[ProxyLog4j2] Falló inicialización: " + t.getMessage());
+			System.err.println("[ProxyLog4j2] Falló inicialización: " + t);
 			t.printStackTrace();
+		}
+	}
+
+	private static void esperarProxyListo() throws InterruptedException {
+		while (ProxySysOutSysErr.flujoSincronizadoSeguro == null) {
+			Thread.sleep(10);
 		}
 	}
 
