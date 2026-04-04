@@ -5,11 +5,13 @@ import java.nio.file.Path;
 
 import org.dimdev.riftloader.listener.InitializationListener;
 
-public class CrashDetectorRift implements InitializationListener{
+import net.minecraft.launchwrapper.Launch;
+
+public class CrashDetectorRift extends LaunchWrapperTransformaciones implements InitializationListener {
 
 	static {
 		CargadoresComun.init(new Path[] { new File("mods/").toPath() }, CargadoresComun.CDOrigin.RIFT);
-		//Launch.classLoader.registerTransformer("featurecreep.unsupported.FCLaunchWrapperTransformer");
+		Launch.classLoader.registerTransformer(CrashDetectorRift.class.getCanonicalName());
 		Transformaciones.init();
 	}
 
@@ -18,10 +20,7 @@ public class CrashDetectorRift implements InitializationListener{
 	@Override
 	public void onInitialization() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
-	
-	
-	
+
 }

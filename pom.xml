@@ -328,6 +328,12 @@
 
 
 
+<dependency>
+    <groupId>net.minecraft</groupId>
+    <artifactId>launchwrapper</artifactId>
+    <version>1.12</version>
+</dependency>
+
 
 
 
@@ -384,13 +390,28 @@
 			<name>velocity</name>
 			<url>https://repo.papermc.io/repository/maven-public/</url>
 		</repository>
-		
-		
-				<repository>
+
+
+		<repository>
 			<id>nf</id>
 			<name>nf</name>
 			<url>https://maven.neoforged.net/releases/</url>
 		</repository>
+		
+		
+		
+		
+			
+		<repository>
+			<id>carm</id>
+			<name>carm</name>
+			<url>https://repo.carm.cc/repository/maven-public/</url>
+		</repository>
+		
+		
+		
+		
+		
 		
 		
 	</repositories>

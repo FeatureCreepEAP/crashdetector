@@ -1,0 +1,7 @@
+{
+	"name": "crashdetector",
+	"version": 0,
+	"mcversion": "1.7.10",
+	"mixinConfigs": [],
+	"classTransformerClasses": "com.asbestosstar.crashdetector.CrashDetectorLiteLoader"
+}
