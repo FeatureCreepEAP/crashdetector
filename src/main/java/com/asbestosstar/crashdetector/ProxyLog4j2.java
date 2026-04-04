@@ -1,13 +1,15 @@
 package com.asbestosstar.crashdetector;
 
+import java.lang.reflect.Method;
+import java.util.Map;
+
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Appender;
+import org.apache.logging.log4j.core.Layout;
 import org.apache.logging.log4j.core.LoggerContext;
-import org.apache.logging.log4j.core.appender.OutputStreamAppender;
 import org.apache.logging.log4j.core.config.Configuration;
 import org.apache.logging.log4j.core.config.LoggerConfig;
-import org.apache.logging.log4j.core.layout.PatternLayout;
 
 import com.asbestosstar.crashdetector.cargador.Cargador;
 
@@ -15,15 +17,16 @@ import com.asbestosstar.crashdetector.cargador.Cargador;
  * Integra Log4j2 con el mismo archivo usado por ProxySysOutSysErr sin tocar
  * System.out/System.err directamente.
  *
- * IMPORTANTE: llamar a ProxyLog4j2.init() después de ProxySysOutSysErr.init()
+ * IMPORTANTE: llamar a ProxyLog4j2.init() siempre después de
+ * ProxySysOutSysErr.init().
  *
- * Esta implementación evita el uso del Builder de OutputStreamAppender porque
- * algunas versiones viejas de Log4j2 no son compatibles binariamente con builds
- * compiladas contra versiones más nuevas.
+ * Esta implementación evita depender de clases y firmas inestables entre
+ * versiones viejas de Log4j2.
  */
 public final class ProxyLog4j2 {
 
 	private static final String NOMBRE_APPENDER = "CrashDetectorFileAppender";
+	private static final String PATRON_LOG = "[%d{HH:mm:ss}] [%t/%level]: %msg%n";
 
 	private ProxyLog4j2() {
 		// Clase utilitaria
@@ -41,51 +44,30 @@ public final class ProxyLog4j2 {
 			LoggerContext contexto = (LoggerContext) LogManager.getContext(false);
 			Configuration configuracion = contexto.getConfiguration();
 
-			// Evitar registrar dos veces el mismo appender si init() se llama más de una
-			// vez.
-			Appender existente = configuracion.getAppender(NOMBRE_APPENDER);
-			if (existente != null) {
+			Map<String, Appender> appenders = configuracion.getAppenders();
+			if (appenders != null && appenders.containsKey(NOMBRE_APPENDER)) {
 				System.err.println("[ProxyLog4j2] Ya estaba inicializado: " + NOMBRE_APPENDER);
 				return;
 			}
 
-			PatternLayout layout = PatternLayout.newBuilder().withConfiguration(configuracion)
-					.withPattern("[%d{HH:mm:ss}] [%t/%level]: %msg%n").build();
-
-			/*
-			 * Se usa la factoría estática en lugar del Builder para mejorar la
-			 * compatibilidad con versiones viejas de Log4j2.
-			 *
-			 * Parámetros: - layout: formato de salida - filter: null - target: flujo del
-			 * proxy - name: nombre del appender - follow: false - ignore: false para no
-			 * tragar errores silenciosamente
-			 */
-			OutputStreamAppender appender = OutputStreamAppender.createAppender(layout, null,
-					ProxySysOutSysErr.flujoSincronizadoSeguro, NOMBRE_APPENDER, false, false);
-
-			if (appender == null) {
-				System.err.println("[ProxyLog4j2] No se pudo crear el appender de Log4j2");
+			Layout<?> layout = crearPatternLayoutCompatible(configuracion, PATRON_LOG);
+			if (layout == null) {
+				System.err.println("[ProxyLog4j2] No se pudo crear un PatternLayout compatible");
 				return;
 			}
 
+			Appender appender = new AppenderFlujoCompatible(NOMBRE_APPENDER, layout, null, false,
+					ProxySysOutSysErr.flujoSincronizadoSeguro, true);
+
 			appender.start();
-			configuracion.addAppender(appender);
 
 			LoggerConfig loggerRaiz = configuracion.getLoggerConfig(LogManager.ROOT_LOGGER_NAME);
+			if (loggerRaiz == null) {
+				System.err.println("[ProxyLog4j2] No se encontró el logger raíz");
+				return;
+			}
 
-			// Añadir nuestro appender al logger raíz.
 			loggerRaiz.addAppender(appender, Level.ALL, null);
-
-			/*
-			 * Si quieres evitar duplicados de consola, puedes descomentar este bloque para
-			 * eliminar appenders de consola ya existentes.
-			 */
-			/*
-			 * for (Appender a : loggerRaiz.getAppenders().values()) { if (a instanceof
-			 * org.apache.logging.log4j.core.appender.ConsoleAppender) {
-			 * loggerRaiz.removeAppender(a.getName()); } }
-			 */
-
 			contexto.updateLoggers();
 
 			System.err.println(
@@ -105,5 +87,89 @@ public final class ProxyLog4j2 {
 
 	public static boolean log4j2existe() {
 		return Cargador.claseExiste("org.apache.logging.log4j.core.LoggerContext");
+	}
+
+	/**
+	 * Crea un PatternLayout compatible probando varias APIs conocidas.
+	 */
+	@SuppressWarnings("unchecked")
+	private static Layout<?> crearPatternLayoutCompatible(Configuration configuracion, String patron) {
+		try {
+			Class<?> clasePatternLayout = Class.forName("org.apache.logging.log4j.core.layout.PatternLayout");
+
+			// Variante moderna con builder
+			try {
+				Method newBuilder = clasePatternLayout.getMethod("newBuilder");
+				Object builder = newBuilder.invoke(null);
+
+				Method withConfiguration = builder.getClass().getMethod("withConfiguration", Configuration.class);
+				Method withPattern = builder.getClass().getMethod("withPattern", String.class);
+				Method build = builder.getClass().getMethod("build");
+
+				withConfiguration.invoke(builder, configuracion);
+				withPattern.invoke(builder, patron);
+
+				Object layout = build.invoke(builder);
+				if (layout instanceof Layout) {
+					return (Layout<?>) layout;
+				}
+			} catch (Throwable ignored) {
+				// Probar otra variante
+			}
+
+			// Variante vieja: createLayout(String, Configuration, RegexReplacement, String,
+			// String)
+			try {
+				Class<?> regexReplacementClass = Class
+						.forName("org.apache.logging.log4j.core.pattern.RegexReplacement");
+
+				Method createLayout = clasePatternLayout.getMethod("createLayout", String.class, Configuration.class,
+						regexReplacementClass, String.class, String.class);
+
+				Object layout = createLayout.invoke(null, patron, configuracion, null, null, null);
+				if (layout instanceof Layout) {
+					return (Layout<?>) layout;
+				}
+			} catch (Throwable ignored) {
+				// Probar otra variante
+			}
+
+			// Variante larga: createLayout(... 9 parámetros ...)
+			try {
+				Class<?> patternSelectorClass = Class.forName("org.apache.logging.log4j.core.layout.PatternSelector");
+				Class<?> regexReplacementClass = Class
+						.forName("org.apache.logging.log4j.core.pattern.RegexReplacement");
+				Class<?> charsetClass = Class.forName("java.nio.charset.Charset");
+
+				Method createLayout = clasePatternLayout.getMethod("createLayout", String.class, patternSelectorClass,
+						Configuration.class, regexReplacementClass, charsetClass, boolean.class, boolean.class,
+						String.class, String.class);
+
+				Object layout = createLayout.invoke(null, patron, null, configuracion, null, null, Boolean.TRUE,
+						Boolean.FALSE, null, null);
+
+				if (layout instanceof Layout) {
+					return (Layout<?>) layout;
+				}
+			} catch (Throwable ignored) {
+				// Probar otra variante
+			}
+
+			// Último recurso
+			try {
+				Method createDefaultLayout = clasePatternLayout.getMethod("createDefaultLayout");
+				Object layout = createDefaultLayout.invoke(null);
+				if (layout instanceof Layout) {
+					return (Layout<?>) layout;
+				}
+			} catch (Throwable ignored) {
+				// Sin más alternativas
+			}
+
+		} catch (Throwable t) {
+			System.err.println("[ProxyLog4j2] Error creando PatternLayout compatible: " + t);
+		}
+
+		return null;
 	}
 }
