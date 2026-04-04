@@ -320,7 +320,11 @@
 </dependency>
 
 
-
+<dependency>
+    <groupId>com.asbestosstar</groupId>
+    <artifactId>rift-init-listener</artifactId>
+    <version>0.0.1</version>
+</dependency>
 
 
 

@@ -3,7 +3,9 @@ package com.asbestosstar.crashdetector;
 import java.io.File;
 import java.nio.file.Path;
 
-public class CrashDetectorRift {
+import org.dimdev.riftloader.listener.InitializationListener;
+
+public class CrashDetectorRift implements InitializationListener{
 
 	static {
 		CargadoresComun.init(new Path[] { new File("mods/").toPath() }, CargadoresComun.CDOrigin.RIFT);
@@ -12,6 +14,12 @@ public class CrashDetectorRift {
 	}
 
 	static Transformaciones trans = new Transformaciones();
+
+	@Override
+	public void onInitialization() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 	
