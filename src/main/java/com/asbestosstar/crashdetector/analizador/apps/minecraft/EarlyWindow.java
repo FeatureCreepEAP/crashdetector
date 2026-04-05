@@ -24,6 +24,11 @@ public class EarlyWindow implements Verificaciones {
 	private String enlaceHtml = "";
 	private boolean limitacionOpenGLMacOSDetectada = false;
 
+	
+	
+	//TODO Wayland: The platform does not provide the window position
+	
+	
 	/**
 	 * Verificación basada en el contenido completo de la consola.
 	 * <p>
