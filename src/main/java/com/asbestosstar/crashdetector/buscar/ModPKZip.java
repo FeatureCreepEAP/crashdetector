@@ -17,6 +17,7 @@ import java.util.zip.ZipInputStream;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.cargador.AnalizadorModsTomlForge;
 import com.asbestosstar.crashdetector.cargador.Cargador;
+import com.asbestosstar.crashdetector.cargador.CargadorBukkit;
 import com.asbestosstar.crashdetector.cargador.CargadorFabric;
 import com.asbestosstar.crashdetector.cargador.CargadorFeatureCreep;
 import com.asbestosstar.crashdetector.cargador.CargadorLiteLoader;
@@ -211,7 +212,26 @@ public class ModPKZip implements ArchivoDeMod {
 							this.version = CargadorFeatureCreep.parsearVersionModFlat(content);
 						}
 					}
-				} else if (nombreArchivo.endsWith("mods.toml")) {
+				}
+
+				else if (nombreArchivo.equals("plugin.yml") || nombreArchivo.equals("paper-plugin.yml")) {
+					byte[] content = leerEntrada(nombreArchivo);
+					if (content != null) {
+						String texto = new String(content, StandardCharsets.UTF_8);
+
+						agregarNombresSinDuplicados(CargadorBukkit.parsearIdModBukkit(texto));
+
+						if (this.version.isEmpty()) {
+							this.version = CargadorBukkit.parsearVersionModBukkit(texto);
+						}
+
+						if (texto.toLowerCase().contains("mcreator")) {
+							meta_tiene_referencia_de_mcreator = true;
+						}
+					}
+				}
+
+				else if (nombreArchivo.endsWith("mods.toml")) {
 					byte[] content = leerEntrada(nombreArchivo);
 					if (content != null) {
 						String toml = new String(content, StandardCharsets.UTF_8);

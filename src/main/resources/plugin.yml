@@ -1,0 +1,4 @@
+name: crashdetector
+version: 0
+main: com.asbestosstar.crashdetector.CrashDetectorBukkit
+api-version: 0.0.0

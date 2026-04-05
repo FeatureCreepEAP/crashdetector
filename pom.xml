@@ -356,7 +356,13 @@
 
 
 
-
+<!-- Source: https://mvnrepository.com/artifact/org.bukkit/bukkit -->
+<dependency>
+    <groupId>org.bukkit</groupId>
+    <artifactId>bukkit</artifactId>
+    <version>1.7.9-R0.2</version>
+    <scope>provided</scope>
+</dependency>
 
 
 
