@@ -7684,4 +7684,58 @@ public class Arabe implements Idioma {
 				+ "<p><b>مهم:</b> احتفظ بالسطر الفارغ الوحيد في نهاية الملف.</p>";
 	}
 
+	@Override
+	public String mensajeTetraDeserializadorModeloEstatico() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تم اكتشاف خطأ في Tetra أو في إحدى الإضافات الخاصة به.</b>"
+				+ "<p>يشير السجل إلى عدم العثور على أداة إلغاء التسلسل (deserializer) لنوع نموذج مستخدم بواسطة <b>Tetra</b> أو أحد ملحقاته.</p>"
+				+ "<p><b>الخطوات الموصى بها:</b></p>" + "<ul>"
+				+ "<li>أولاً، قم بإزالة أو تعطيل <b>إضافات Tetra</b> وحاول مرة أخرى.</li>"
+				+ "<li>إذا استمر الخطأ، حاول إزالة <b>Tetra</b> أيضاً.</li>"
+				+ "<li>يمكنك محاولة تحديد الإضافات المتعلقة بـ Tetra في <b>DepMap</b>، رغم أنها قد لا تظهر دائماً هناك.</li>"
+				+ "</ul>"
+				+ "<p>في بعض الحالات، تنشأ المشكلة من إضافة معينة، وفي حالات أخرى يسببها <b>Tetra</b> نفسه.</p>";
+	}
+
+	@Override
+	public String nombreTetraDeserializadorModeloEstatico() {
+		return "خطأ في إلغاء تسلسل النموذج في Tetra";
+	}
+
+	@Override
+	public String mensajeSimpleEmotesSetupAnimTail() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تم اكتشاف خطأ في Simple Emotes.</b>"
+				+ "<p>يحتوي السجل على السلسلة النصية <b>$simpleemotes$setupAnimTAIL</b>، والتي تشير مباشرة إلى мод <b>Simple Emotes</b>.</p>"
+				+ "<p><b>الخيارات الموصى بها:</b></p>" + "<ul>"
+				+ "<li>أزل أو عطل <b>Simple Emotes</b> وحاول مرة أخرى.</li>"
+				+ "<li>إذا كنت تستخدمMods تغير حركات اللاعب أو النموذج، تحقق من عدم التوافق المحتمل مع <b>Simple Emotes</b>.</li>"
+				+ "<li>قم بتحديث <b>Simple Emotes</b> وأي Mods أخرى متعلقة بالحركات إلى إصدارات متوافقة.</li>" + "</ul>"
+				+ "<p>غالباً ما يشير هذا الخطأ إلى أن <b>Simple Emotes</b> متورط بشكل مباشر في العطل.</p>";
+	}
+
+	@Override
+	public String nombreSimpleEmotesSetupAnimTail() {
+		return "خطأ في Simple Emotes";
+	}
+
+	@Override
+	public String mensajeAdvertenciaSKLauncher() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
+				+ "تحذير بشأن SKLauncher.</b>"
+				+ "<p>خلال الأشهر الماضية، لوحظت عدة حالات من <b>الفساد</b> ومشاكل أخرى مرتبطة بـ <b>SKLauncher</b>.</p>"
+				+ "<p>هذا لا يعني أن SKLauncher هو دائماً سبب الخطأ، لكنه قد يساهم في المشكلة.</p>"
+				+ "<p><b>علامات الفساد المحتمل:</b></p>" + "<ul>"
+				+ "<li>تنغلق اللعبة في مرحلة مبكرة جداً من الإقلاع.</li>"
+				+ "<li>تتعطل اللعبة حتى <b>بدون وجود أي إضافات (mods) مثبتة</b>.</li>" + "</ul>"
+				+ "<p>إذا حدثت أي من هذه الحالات، جرب استخدام <b>مشغل آخر (launcher)</b> للتحقق مما إذا كانت المشكلة ستختفي.</p>"
+				+ "<p>راجع قائمة المشغلات الموصى بها هنا:</p>"
+				+ "<p><a href='https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/docs/ingles/minecraft/Launchers.md'>عرض وثائق المشغلات</a></p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaSKLauncher() {
+		return "تحذير: مشاكل محتملة مع SKLauncher";
+	}
+
 }

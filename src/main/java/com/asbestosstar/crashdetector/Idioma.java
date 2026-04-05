@@ -2836,4 +2836,16 @@ public interface Idioma {
 
 	public String nombreProblemaDecocraftNatureEssentialPartnerMod();
 
+	public String mensajeTetraDeserializadorModeloEstatico();
+
+	public String nombreTetraDeserializadorModeloEstatico();
+
+	public String mensajeSimpleEmotesSetupAnimTail();
+
+	public String nombreSimpleEmotesSetupAnimTail();
+
+	public String nombreAdvertenciaSKLauncher();
+
+	public String mensajeAdvertenciaSKLauncher();
+
 }

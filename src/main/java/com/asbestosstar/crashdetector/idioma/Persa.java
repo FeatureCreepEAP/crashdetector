@@ -7748,4 +7748,58 @@ public class Persa implements Idioma {
 				+ "<p><b>مهم:</b> تنها خط خالی در انتهای فایل را حفظ کنید.</p>";
 	}
 
+	@Override
+	public String mensajeTetraDeserializadorModeloEstatico() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "خطا در Tetra یا یکی از افزونه‌های آن شناسایی شد.</b>"
+				+ "<p>گزارش خطا نشان می‌دهد که یک سریال‌زدای (deserializer) برای نوع مدلی که توسط <b>Tetra</b> یا یکی از مکمل‌های آن استفاده می‌شود، یافت نشده است.</p>"
+				+ "<p><b>مراحل توصیه شده:</b></p>" + "<ul>"
+				+ "<li>ابتدا، <b>افزونه‌های Tetra</b> را حذف یا غیرفعال کنید و دوباره امتحان کنید.</li>"
+				+ "<li>اگر خطا ادامه داشت، سعی کنید <b>Tetra</b> را نیز حذف کنید.</li>"
+				+ "<li>می‌توانید تلاش کنید افزونه‌های مرتبط با Tetra را در <b>DepMap</b> پیدا کنید، اگرچه همیشه در آنجا ظاهر نمی‌شوند.</li>"
+				+ "</ul>"
+				+ "<p>در برخی موارد مشکل از یک افزونه ناشی می‌شود، اما در موارد دیگر توسط خود <b>Tetra</b> ایجاد می‌گردد.</p>";
+	}
+
+	@Override
+	public String nombreTetraDeserializadorModeloEstatico() {
+		return "خطای سریال‌زدایی مدل در Tetra";
+	}
+
+	@Override
+	public String mensajeSimpleEmotesSetupAnimTail() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "خطا در Simple Emotes شناسایی شد.</b>"
+				+ "<p>گزارش خطا شامل رشته <b>$simpleemotes$setupAnimTAIL</b> است که مستقیماً به ماد <b>Simple Emotes</b> اشاره دارد.</p>"
+				+ "<p><b>گزینه‌های توصیه شده:</b></p>" + "<ul>"
+				+ "<li><b>Simple Emotes</b> را حذف یا غیرفعال کنید و دوباره امتحان کنید.</li>"
+				+ "<li>اگر از مادهایی استفاده می‌کنید که انیمیشن‌های بازیکن یا مدل را تغییر می‌دهند، عدم سازگاری احتمالی با <b>Simple Emotes</b> را بررسی کنید.</li>"
+				+ "<li><b>Simple Emotes</b> و هر ماد مرتبط با انیمیشن را به نسخه‌های سازگار به‌روزرسانی کنید.</li>"
+				+ "</ul>" + "<p>این خطا معمولاً نشان می‌دهد که <b>Simple Emotes</b> مستقیماً در خرابی دخیل است.</p>";
+	}
+
+	@Override
+	public String nombreSimpleEmotesSetupAnimTail() {
+		return "خطا در Simple Emotes";
+	}
+
+	@Override
+	public String mensajeAdvertenciaSKLauncher() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
+				+ "هشدار درباره SKLauncher.</b>"
+				+ "<p>در ماه‌های اخیر، چندین مورد <b>خرابی فایل‌ها</b> و مشکلات دیگر مرتبط با <b>SKLauncher</b> مشاهده شده است.</p>"
+				+ "<p>این به آن معنا نیست که SKLauncher همیشه علت خطا است، اما ممکن است در ایجاد مشکل نقش داشته باشد.</p>"
+				+ "<p><b>نشانه‌های خرابی احتمالی:</b></p>" + "<ul>"
+				+ "<li>بازی در مراحل بسیار اولیه راه‌اندازی بسته می‌شود.</li>"
+				+ "<li>بازی حتی <b>بدون نصب هیچ مادی</b> نیز کرش می‌کند.</li>" + "</ul>"
+				+ "<p>اگر هر یک از این موارد رخ داد، از <b>لانچر دیگری</b> استفاده کنید تا بررسی شود آیا مشکل برطرف می‌شود یا خیر.</p>"
+				+ "<p>لیست لانچرهای توصیه شده را اینجا مشاهده کنید:</p>"
+				+ "<p><a href='https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/docs/ingles/minecraft/Launchers.md'>مشاهده مستندات لانچرها</a></p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaSKLauncher() {
+		return "هشدار: مشکلات احتمالی با SKLauncher";
+	}
+
 }

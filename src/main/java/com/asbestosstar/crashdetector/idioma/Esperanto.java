@@ -7760,4 +7760,59 @@ public class Esperanto implements Idioma {
 				+ "<p><b>Grave:</b> konservu la solan malplenan linion ĉe la fino de la dosiero.</p>";
 	}
 
+	@Override
+	public String mensajeTetraDeserializadorModeloEstatico() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Eraro detektita en Tetra aŭ en unu el ĝiaj aldonaĵoj.</b>"
+				+ "<p>La protokolo indikas, ke malsukcesis trovi malserialigilon por modeltipo uzata de <b>Tetra</b> aŭ iu el ĝiaj komplementoj.</p>"
+				+ "<p><b>Rekomenditaj paŝoj:</b></p>" + "<ul>"
+				+ "<li>Unue, forigu aŭ malaktivigu la <b>aldonaĵojn de Tetra</b> kaj provu denove.</li>"
+				+ "<li>Se la eraro daŭras, provu forigi ankaŭ <b>Tetra</b>-n.</li>"
+				+ "<li>Vi povas klopodi lokalizi aldonaĵojn rilatajn al Tetra en <b>DepMap</b>, kvankam ili ne ĉiam aperos tie.</li>"
+				+ "</ul>"
+				+ "<p>En kelkaj kazoj la problemo devenas de aldonaĵo, sed en aliaj ĝin kaŭzas mem <b>Tetra</b>.</p>";
+	}
+
+	@Override
+	public String nombreTetraDeserializadorModeloEstatico() {
+		return "Eraro pri malserialigo de modelo en Tetra";
+	}
+
+	@Override
+	public String mensajeSimpleEmotesSetupAnimTail() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Eraro detektita en Simple Emotes.</b>"
+				+ "<p>La protokolo enhavas la ĉenon <b>$simpleemotes$setupAnimTAIL</b>, kiu rekte indikas la mod-on <b>Simple Emotes</b>.</p>"
+				+ "<p><b>Rekomenditaj opcioj:</b></p>" + "<ul>"
+				+ "<li>Forigu aŭ malaktivigu <b>Simple Emotes</b> kaj provu denove.</li>"
+				+ "<li>Se vi uzas mod-ojn kiuj ŝanĝas animaciojn de la ludanto aŭ de la modelo, kontrolu eblajn malkongruojn kun <b>Simple Emotes</b>.</li>"
+				+ "<li>Ĝisdatigu <b>Simple Emotes</b> kaj ajnan mod-on rilatan al animacioj al kongruaj versioj.</li>"
+				+ "</ul>"
+				+ "<p>Ĉi tiu eraro kutime indikas, ke <b>Simple Emotes</b> estas rekte implikita en la paneo.</p>";
+	}
+
+	@Override
+	public String nombreSimpleEmotesSetupAnimTail() {
+		return "Eraro en Simple Emotes";
+	}
+
+	@Override
+	public String mensajeAdvertenciaSKLauncher() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
+				+ "Averto pri SKLauncher.</b>"
+				+ "<p>Dum la lastaj monatoj, oni observis plurajn kazojn de <b>korupto</b> kaj aliaj problemoj ligitaj al <b>SKLauncher</b>.</p>"
+				+ "<p>Tio ne signifas, ke SKLauncher ĉiam estas la kaŭzo de la eraro, sed ĝi povas kontribui al la problemo.</p>"
+				+ "<p><b>Signoj de ebla korupto:</b></p>" + "<ul>"
+				+ "<li>La ludo fermiĝas tre frue dum la startado.</li>"
+				+ "<li>La ludo ankaŭ kraŝas eĉ <b>sen instalitaj mod-oj</b>.</li>" + "</ul>"
+				+ "<li>Se okazas iu ajn el tiuj kazoj, provu uzi <b>alian lanĉilon</b> por kontroli, ĉu la problemo malaperas.</li>"
+				+ "</ul>" + "<p>Konsultu la liston de rekomenditaj lanĉiloj ĉi tie:</p>"
+				+ "<p><a href='https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/docs/ingles/minecraft/Launchers.md'>Vidi dokumentaron pri lanĉiloj</a></p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaSKLauncher() {
+		return "Averto: eblaj problemoj kun SKLauncher";
+	}
+
 }

@@ -316,6 +316,9 @@ public class Analizador {
 		verificaciones.add(new RaptorLakeInestable());// TODO Spectre y Meltdown
 		verificaciones.add(new ProblemaAzureLibAnimaciones());
 		verificaciones.add(new ProblemaDecocraftNatureEssentialPartnerMod());
+		verificaciones.add(new TetraDeserializadorModeloEstatico());
+		verificaciones.add(new SimpleEmotesSetupAnimTail());
+		verificaciones.add(new SKLauncherAdvertencia());
 
 		verificaciones.add(new PirataMC());
 		verificaciones.add(new LanzerNoAnimado());

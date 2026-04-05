@@ -7812,4 +7812,59 @@ public class Ingles implements Idioma {
 				+ "<p><b>Important:</b> keep the single empty line at the end of the file.</p>";
 	}
 
+	@Override
+	public String mensajeTetraDeserializadorModeloEstatico() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Error detected in Tetra or one of its addons.</b>"
+				+ "<p>The log indicates that a deserialiser was not found for a model type used by <b>Tetra</b> or one of its complements.</p>"
+				+ "<p><b>Recommended steps:</b></p>" + "<ul>"
+				+ "<li>Firstly, remove or disable the <b>Tetra addons</b> and try again.</li>"
+				+ "<li>If the error persists, try removing <b>Tetra</b> as well.</li>"
+				+ "<li>You may attempt to locate addons related to Tetra in <b>DepMap</b>, although they do not always appear there.</li>"
+				+ "</ul>"
+				+ "<p>In some cases the problem stems from an addon, but in others it is caused by <b>Tetra</b> itself.</p>";
+	}
+
+	@Override
+	public String nombreTetraDeserializadorModeloEstatico() {
+		return "Tetra Model Deserialisation Error";
+	}
+
+	@Override
+	public String mensajeSimpleEmotesSetupAnimTail() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Error detected in Simple Emotes.</b>"
+				+ "<p>The log contains the string <b>$simpleemotes$setupAnimTAIL</b>, which points directly to the <b>Simple Emotes</b> mod.</p>"
+				+ "<p><b>Recommended options:</b></p>" + "<ul>"
+				+ "<li>Remove or disable <b>Simple Emotes</b> and try again.</li>"
+				+ "<li>If you use mods that change player or model animations, check for potential incompatibilities with <b>Simple Emotes</b>.</li>"
+				+ "<li>Update <b>Simple Emotes</b> and any animation-related mods to compatible versions.</li>"
+				+ "</ul>"
+				+ "<p>This error usually indicates that <b>Simple Emotes</b> is directly involved in the failure.</p>";
+	}
+
+	@Override
+	public String nombreSimpleEmotesSetupAnimTail() {
+		return "Error in Simple Emotes";
+	}
+
+	@Override
+	public String mensajeAdvertenciaSKLauncher() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
+				+ "Warning regarding SKLauncher.</b>"
+				+ "<p>Over the past few months, several cases of <b>corruption</b> and other issues related to <b>SKLauncher</b> have been observed.</p>"
+				+ "<p>This does not mean that SKLauncher is always the cause of the error, but it may be contributing to the problem.</p>"
+				+ "<p><b>Signs of possible corruption:</b></p>" + "<ul>"
+				+ "<li>The game closes very early during startup.</li>"
+				+ "<li>The game also crashes even <b>with no mods installed</b>.</li>" + "</ul>"
+				+ "<p>If any of these cases occur, try using <b>another launcher</b> to check if the problem disappears.</p>"
+				+ "<p>Consult the list of recommended launchers here:</p>"
+				+ "<p><a href='https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/docs/ingles/minecraft/Launchers.md'>View launcher documentation</a></p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaSKLauncher() {
+		return "Warning: potential issues with SKLauncher";
+	}
+
 }

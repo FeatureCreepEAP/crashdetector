@@ -3,9 +3,12 @@ package com.asbestosstar.crashdetector.detectorlanzer;
 import com.asbestosstar.crashdetector.App;
 
 public class DetectorSKLauncher implements DetectorLanzer {
+
+	public static final String ID = "sklauncher";
+
 	@Override
 	public String id() {
-		return "sk_launcher";
+		return ID;
 	}
 
 	@Override

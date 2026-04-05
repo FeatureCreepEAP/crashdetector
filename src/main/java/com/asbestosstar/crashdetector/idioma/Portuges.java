@@ -7796,4 +7796,59 @@ public class Portuges implements Idioma {
 				+ "<p><b>Importante:</b> mantenha a única linha vazia no final do arquivo.</p>";
 	}
 
+	@Override
+	public String mensajeTetraDeserializadorModeloEstatico() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Erro detectado no Tetra ou em um de seus addons.</b>"
+				+ "<p>O log indica que não foi encontrado um desserializador para um tipo de modelo usado pelo <b>Tetra</b> ou por algum de seus complementos.</p>"
+				+ "<p><b>Passos recomendados:</b></p>" + "<ul>"
+				+ "<li>Primeiro, remova ou desative os <b>addons do Tetra</b> e tente novamente.</li>"
+				+ "<li>Se o erro persistir, tente remover também o <b>Tetra</b>.</li>"
+				+ "<li>Você pode tentar localizar addons relacionados ao Tetra no <b>DepMap</b>, embora nem sempre apareçam lá.</li>"
+				+ "</ul>"
+				+ "<p>Em alguns casos, o problema provém de um addon, mas em outros é causado pelo próprio <b>Tetra</b>.</p>";
+	}
+
+	@Override
+	public String nombreTetraDeserializadorModeloEstatico() {
+		return "Erro de desserialização de modelo no Tetra";
+	}
+
+	@Override
+	public String mensajeSimpleEmotesSetupAnimTail() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Erro detectado no Simple Emotes.</b>"
+				+ "<p>O log contém a string <b>$simpleemotes$setupAnimTAIL</b>, a qual aponta diretamente para o mod <b>Simple Emotes</b>.</p>"
+				+ "<p><b>Opções recomendadas:</b></p>" + "<ul>"
+				+ "<li>Remova ou desative o <b>Simple Emotes</b> e tente novamente.</li>"
+				+ "<li>Se você usa mods que alteram animações do jogador ou do modelo, verifique possíveis incompatibilidades com o <b>Simple Emotes</b>.</li>"
+				+ "<li>Atualize o <b>Simple Emotes</b> e qualquer mod relacionado a animações para versões compatíveis.</li>"
+				+ "</ul>"
+				+ "<p>Este erro geralmente indica que o <b>Simple Emotes</b> está diretamente envolvido na falha.</p>";
+	}
+
+	@Override
+	public String nombreSimpleEmotesSetupAnimTail() {
+		return "Erro no Simple Emotes";
+	}
+
+	@Override
+	public String mensajeAdvertenciaSKLauncher() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
+				+ "Aviso sobre o SKLauncher.</b>"
+				+ "<p>Nos últimos meses, foram observados vários casos de <b>corrupção</b> e outros problemas relacionados ao <b>SKLauncher</b>.</p>"
+				+ "<p>Isso não significa que o SKLauncher seja sempre a causa do erro, mas pode estar contribuindo para o problema.</p>"
+				+ "<p><b>Sinais de possível corrupção:</b></p>" + "<ul>"
+				+ "<li>O jogo fecha muito cedo durante a inicialização.</li>"
+				+ "<li>O jogo também falha mesmo <b>sem mods instalados</b>.</li>" + "</ul>"
+				+ "<p>Se ocorrer algum desses casos, tente usar <b>outro launcher</b> para verificar se o problema desaparece.</p>"
+				+ "<p>Consulte a lista de launchers recomendados aqui:</p>"
+				+ "<p><a href='https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/docs/ingles/minecraft/Launchers.md'>Ver documentação de launchers</a></p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaSKLauncher() {
+		return "Aviso: possíveis problemas com o SKLauncher";
+	}
+
 }

@@ -7457,4 +7457,53 @@ public class Coreano implements Idioma {
 				+ "<p><b>중요:</b> 파일 끝에 있는 유일한 빈 줄은 보존하십시오.</p>";
 	}
 
+	@Override
+	public String mensajeTetraDeserializadorModeloEstatico() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Tetra 또는 그 부속 확장 기능에서 오류가 발견되었습니다.</b>"
+				+ "<p>기록 로그는 <b>Tetra</b> 또는 그 확장 기능 중 하나가 사용하는 모형 유형에 대한 역직렬화기(deserializer)를 찾지 못했음을 나타냅니다.</p>"
+				+ "<p><b>권장 조치 단계:</b></p>" + "<ul>" + "<li>먼저, <b>Tetra의 확장 기능</b>들을 제거하거나 비활성화한 후 다시 시도하십시오.</li>"
+				+ "<li>오류가 계속되면 <b>Tetra</b> 자체도 제거해 보십시오.</li>"
+				+ "<li><b>DepMap</b>에서 Tetra와 관련된 확장 기능을 찾아볼 수 있으나, 항상 그곳에 표시되지는 않을 수 있습니다.</li>" + "</ul>"
+				+ "<p>경우에 따라 문제는 확장 기능에서 비롯되지만, 다른 경우에는 <b>Tetra</b> 자체에서 원인이 발생하기도 합니다.</p>";
+	}
+
+	@Override
+	public String nombreTetraDeserializadorModeloEstatico() {
+		return "Tetra 모형 역직렬화 오류";
+	}
+
+	@Override
+	public String mensajeSimpleEmotesSetupAnimTail() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Simple Emotes에서 오류가 발견되었습니다.</b>"
+				+ "<p>기록 로그에는 문자열 <b>$simpleemotes$setupAnimTAIL</b>이 포함되어 있으며, 이는 직접적으로 <b>Simple Emotes</b> 수정(mod)을 가리킵니다.</p>"
+				+ "<p><b>권장 조치:</b></p>" + "<ul>" + "<li><b>Simple Emotes</b>를 제거하거나 비활성화한 후 다시 시도하십시오.</li>"
+				+ "<li>플레이어 또는 모형의 애니메이션을 변경하는 수정을 사용하는 경우, <b>Simple Emotes</b>와의 잠재적 불호환성을 검토하십시오.</li>"
+				+ "<li><b>Simple Emotes</b>와 애니메이션 관련 모든 수정을 호환되는 버전으로 업데이트하십시오.</li>" + "</ul>"
+				+ "<p>이 오류는 일반적으로 <b>Simple Emotes</b>가 고장에 직접적으로 관여했음을 나타냅니다.</p>";
+	}
+
+	@Override
+	public String nombreSimpleEmotesSetupAnimTail() {
+		return "Simple Emotes 오류";
+	}
+
+	@Override
+	public String mensajeAdvertenciaSKLauncher() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
+				+ "SKLauncher에 대한 경고.</b>"
+				+ "<p>지난 몇 달 동안 <b>SKLauncher</b>와 관련된 여러 건의 <b>데이터 손상</b> 및 기타 문제들이 관찰되었습니다.</p>"
+				+ "<p>이것이 SKLauncher가 항상 오류의 원인임을 의미하는 것은 아니지만, 문제 발생에 기여할 수 있습니다.</p>" + "<p><b>잠재적 손상의 징후:</b></p>"
+				+ "<ul>" + "<li>게임이 시작 단계에서 매우 일찍 종료됩니다.</li>" + "<li><b>어떤 수정(mod)도 설치되지 않은 상태</b>에서도 게임이 충돌합니다.</li>"
+				+ "</ul>" + "<p>이러한 경우 중 하나가 발생하면, 문제가 해결되는지 확인하기 위해 <b>다른 실행기(launcher)</b>를 사용해 보십시오.</p>"
+				+ "<p>추천되는 실행기 목록은 다음을 참조하십시오:</p>"
+				+ "<p><a href='https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/docs/ingles/minecraft/Launchers.md'>실행기 문서 보기</a></p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaSKLauncher() {
+		return "경고: SKLauncher와 관련된 잠재적 문제";
+	}
+
 }

@@ -7470,4 +7470,52 @@ public class Japones implements Idioma {
 				+ "<p><b>重要：</b>ファイル末尾の空行 1 つはそのまま残してください。</p>";
 	}
 
+	@Override
+	public String mensajeTetraDeserializadorModeloEstatico() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Tetra またはそのアドオンでエラーが検出されました。</b>"
+				+ "<p>ログには、<b>Tetra</b> またはその補完機能によって使用されるモデルタイプのデシリアライザが見つからなかったことが示されています。</p>"
+				+ "<p><b>推奨される手順:</b></p>" + "<ul>" + "<li>まず、<b>Tetraのアドオン</b>を削除または無効にして、再度お試しください。</li>"
+				+ "<li>エラーが続く場合は、<b>Tetra</b>自体も削除してみてください。</li>"
+				+ "<li><b>DepMap</b>でTetra関連のアドオンを探してみることができますが、常にそこに表示されるとは限りません。</li>" + "</ul>"
+				+ "<p>場合によっては問題がアドオンに起因することもありますが、他のケースでは<b>Tetra</b>自体が原因となっていることがあります。</p>";
+	}
+
+	@Override
+	public String nombreTetraDeserializadorModeloEstatico() {
+		return "Tetraにおけるモデルのデシリアライズエラー";
+	}
+
+	@Override
+	public String mensajeSimpleEmotesSetupAnimTail() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Simple Emotesでエラーが検出されました。</b>"
+				+ "<p>ログには文字列 <b>$simpleemotes$setupAnimTAIL</b> が含まれており、これは直接 <b>Simple Emotes</b> モッドを指しています。</p>"
+				+ "<p><b>推奨オプション:</b></p>" + "<ul>" + "<li><b>Simple Emotes</b> を削除または無効にして、再度お試しください。</li>"
+				+ "<li>プレイヤーやモデルのアニメーションを変更するモッドを使用している場合は、<b>Simple Emotes</b> との潜在的な非互換性を確認してください。</li>"
+				+ "<li><b>Simple Emotes</b> およびアニメーション関連のすべてのモッドを互換性のあるバージョンに更新してください。</li>" + "</ul>"
+				+ "<p>このエラーは通常、<b>Simple Emotes</b> が障害に直接関与していることを示します。</p>";
+	}
+
+	@Override
+	public String nombreSimpleEmotesSetupAnimTail() {
+		return "Simple Emotesのエラー";
+	}
+
+	@Override
+	public String mensajeAdvertenciaSKLauncher() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
+				+ "SKLauncherに関する警告。</b>" + "<p>過去数ヶ月間、<b>SKLauncher</b>に関連する<b>破損</b>やその他の問題が複数件観察されています。</p>"
+				+ "<p>これは、SKLauncherが常にエラーの原因であるという意味ではありませんが、問題の一因となっている可能性があります。</p>" + "<p><b>破損の兆候:</b></p>"
+				+ "<ul>" + "<li>ゲームが起動過程のごく早期に終了する。</li>" + "<li><b>Modがインストールされていない状態</b>でもゲームがクラッシュする。</li>" + "</ul>"
+				+ "<p>これらのいずれかのケースが発生した場合は、<b>他のランチャー</b>を使用して問題が解消するか確認してください。</p>"
+				+ "<p>推奨されるランチャーのリストは こちら を参照してください:</p>"
+				+ "<p><a href='https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/docs/ingles/minecraft/Launchers.md'>ランチャーのドキュメントを表示</a></p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaSKLauncher() {
+		return "警告: SKLauncherの潜在的な問題";
+	}
+
 }

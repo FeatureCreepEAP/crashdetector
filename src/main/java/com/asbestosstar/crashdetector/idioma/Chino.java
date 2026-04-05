@@ -7291,4 +7291,49 @@ public class Chino implements Idioma {
 				+ "<p><b>重要：</b>请保留文件末尾的唯一空行。</p>";
 	}
 
+	@Override
+	public String mensajeTetraDeserializadorModeloEstatico() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "在 Tetra 或其某个插件中检测到错误。</b>"
+				+ "<p>日志表明，未找到用于 <b>Tetra</b> 或其某个插件所使用的模型类型的反序列化器。</p>" + "<p><b>建议步骤：</b></p>" + "<ul>"
+				+ "<li>首先，移除或禁用 <b>Tetra 插件</b> 并重试。</li>" + "<li>如果错误仍然存在，请尝试也移除 <b>Tetra</b>。</li>"
+				+ "<li>你可以尝试在 <b>DepMap</b> 中查找与 Tetra 相关的插件，尽管它们并不总会出现在那里。</li>" + "</ul>"
+				+ "<p>在某些情况下，问题源于某个插件，但在其他情况下，则是由 <b>Tetra</b> 本身引起的。</p>";
+	}
+
+	@Override
+	public String nombreTetraDeserializadorModeloEstatico() {
+		return "Tetra 模型反序列化错误";
+	}
+
+	@Override
+	public String mensajeSimpleEmotesSetupAnimTail() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "在 Simple Emotes 中检测到错误。</b>"
+				+ "<p>日志包含字符串 <b>$simpleemotes$setupAnimTAIL</b>，这直接指向 <b>Simple Emotes</b> 模组。</p>"
+				+ "<p><b>建议选项：</b></p>" + "<ul>" + "<li>移除或禁用 <b>Simple Emotes</b> 并重试。</li>"
+				+ "<li>如果你使用了更改玩家或模型动画的模组，请检查与 <b>Simple Emotes</b> 的潜在不兼容性。</li>"
+				+ "<li>将 <b>Simple Emotes</b> 和任何与动画相关的模组更新到兼容版本。</li>" + "</ul>"
+				+ "<p>此错误通常表明 <b>Simple Emotes</b> 直接导致了故障。</p>";
+	}
+
+	@Override
+	public String nombreSimpleEmotesSetupAnimTail() {
+		return "Simple Emotes 错误";
+	}
+
+	@Override
+	public String mensajeAdvertenciaSKLauncher() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorAdvertencia() + "'>"
+				+ "关于 SKLauncher 的警告。</b>" + "<p>在过去几个月中，已观察到多起与 <b>SKLauncher</b> 相关的<b>文件损坏</b>及其他问题。</p>"
+				+ "<p>这并不意味着 SKLauncher 总是错误的原因，但它可能会导致问题。</p>" + "<p><b>可能损坏的迹象：</b></p>" + "<ul>"
+				+ "<li>游戏在启动早期阶段就关闭。</li>" + "<li>即使<b>没有安装任何模组</b>，游戏也会崩溃。</li>" + "</ul>"
+				+ "<p>如果发生上述任何一种情况，请尝试使用<b>其他启动器</b>来检查问题是否消失。</p>" + "<p>在此处查看推荐的启动器列表：</p>"
+				+ "<p><a href='https://pagure.io/CrashDetectorMC/blob/main/f/src/main/resources/docs/ingles/minecraft/Launchers.md'>查看启动器文档</a></p>";
+	}
+
+	@Override
+	public String nombreAdvertenciaSKLauncher() {
+		return "警告：SKLauncher 可能存在的问题";
+	}
+
 }
