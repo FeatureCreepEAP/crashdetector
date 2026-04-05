@@ -22,6 +22,8 @@ import com.asbestosstar.crashdetector.cargador.CargadorFabric;
 import com.asbestosstar.crashdetector.cargador.CargadorFeatureCreep;
 import com.asbestosstar.crashdetector.cargador.CargadorLiteLoader;
 import com.asbestosstar.crashdetector.cargador.CargadorMCForge;
+import com.asbestosstar.crashdetector.cargador.CargadorMeddle;
+import com.asbestosstar.crashdetector.cargador.CargadorNilLoader;
 import com.asbestosstar.crashdetector.cargador.CargadorRift;
 
 /**
@@ -95,7 +97,9 @@ public class ModPKZip implements ArchivoDeMod {
 		try (JarInputStream zip = new JarInputStream(new ByteArrayInputStream(bytesZip))) {
 			Manifest man = zip.getManifest();
 			if (man != null) {
-				nombres.addAll(ProcesadorManifiesto.obtenerNombresDeModulo(man));
+
+				procesarManifest(man);
+
 			}
 
 			ZipEntry e;
@@ -231,6 +235,24 @@ public class ModPKZip implements ArchivoDeMod {
 					}
 				}
 
+				else if (nombreArchivo.toLowerCase(java.util.Locale.ROOT).endsWith(".nilmod.css")) {
+					byte[] content = leerEntrada(nombreArchivo);
+					if (content != null) {
+						String texto = new String(content, StandardCharsets.UTF_8);
+
+						agregarNombresSinDuplicados(
+								CargadorNilLoader.parsearIdModNilLoaderDesdeNombreArchivo(nombreArchivo));
+
+						if (this.version.isEmpty()) {
+							this.version = CargadorNilLoader.parsearVersionModNilLoader(texto);
+						}
+
+						if (texto.toLowerCase().contains("mcreator")) {
+							meta_tiene_referencia_de_mcreator = true;
+						}
+					}
+				}
+
 				else if (nombreArchivo.endsWith("mods.toml")) {
 					byte[] content = leerEntrada(nombreArchivo);
 					if (content != null) {
@@ -250,6 +272,70 @@ public class ModPKZip implements ArchivoDeMod {
 
 				zip.closeEntry();
 			}
+		}
+	}
+
+	/**
+	 * Procesa metadata obtenida desde el Manifest del JAR.
+	 *
+	 * Importante: META-INF/MANIFEST.MF no siempre aparece como una entrada normal
+	 * del ZIP, por eso esta logica va separada y usa JarInputStream.getManifest().
+	 */
+	private void procesarManifest(Manifest man) {
+		if (man == null) {
+			return;
+		}
+
+		try {
+			// Mantener la logica general ya existente
+			agregarNombresSinDuplicados(ProcesadorManifiesto.obtenerNombresDeModulo(man));
+		} catch (Throwable t) {
+			CrashDetectorLogger.logException(t);
+		}
+
+		try {
+			// Delegar el parseo especifico de Meddle al propio cargador
+			if (CargadorMeddle.manifestEsDeMeddle(man)) {
+				agregarNombresSinDuplicados(CargadorMeddle.parsearNombresManifestMeddle(man));
+
+				if (this.version.isEmpty()) {
+					String versionMeddle = CargadorMeddle.parsearVersionManifestMeddle(man);
+					if (versionMeddle != null && !versionMeddle.trim().isEmpty()) {
+						this.version = versionMeddle.trim();
+					}
+				}
+			}
+		} catch (Throwable t) {
+			CrashDetectorLogger.logException(t);
+		}
+
+		try {
+			// Version generica de manifest si existe, sin pisar otras ya detectadas
+			if (this.version.isEmpty()) {
+				java.util.jar.Attributes attr = man.getMainAttributes();
+
+				if (attr != null) {
+					String implementationVersion = attr.getValue("Implementation-Version");
+
+					if (implementationVersion != null) {
+						implementationVersion = implementationVersion.trim();
+						if (!implementationVersion.isEmpty()) {
+							this.version = implementationVersion;
+						}
+					}
+				}
+			}
+		} catch (Throwable t) {
+			CrashDetectorLogger.logException(t);
+		}
+
+		try {
+			String textoManifest = man.toString();
+			if (textoManifest != null && textoManifest.toLowerCase().contains("mcreator")) {
+				meta_tiene_referencia_de_mcreator = true;
+			}
+		} catch (Throwable t) {
+			CrashDetectorLogger.logException(t);
 		}
 	}
 

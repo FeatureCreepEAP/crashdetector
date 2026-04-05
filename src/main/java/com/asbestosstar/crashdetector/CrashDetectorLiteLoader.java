@@ -6,7 +6,7 @@ import java.nio.file.Path;
 public class CrashDetectorLiteLoader extends LaunchWrapperTransformaciones {
 //No Necesitemos usar las clases y deps liteloader :)
 	static {
-		CargadoresComun.init(new Path[] { new File("mods/").toPath() }, CargadoresComun.CDOrigin.RIFT);
+		CargadoresComun.init(new Path[] { new File("mods/").toPath() }, CargadoresComun.CDOrigin.LITELOADER);
 		Transformaciones.init();
 	}
 

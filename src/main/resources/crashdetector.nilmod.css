@@ -1,0 +1,10 @@
+@nilmod {
+	name: "CrashDetector";
+	description: ".";
+	authors: "asbestosstar";
+	version: "0";
+}
+
+entrypoints {
+	premain: "com.asbestosstar.crashdetector.CrashDetectorNilLoader";
+}

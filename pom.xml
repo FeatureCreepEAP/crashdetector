@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.asbestosstar</groupId>
 	<artifactId>crashdetector</artifactId>
-	<version>0.4.7</version>
+	<version>0.4.8</version>
 	
 	
 	<!-- Add necessary metadata for Maven Central -->
@@ -155,6 +155,12 @@
 
             <FMLCorePluginContainsFMLMod>true</FMLCorePluginContainsFMLMod>
             <FMLCorePlugin>com.asbestosstar.crashdetector.CrashDetectorMCForge</FMLCorePlugin>
+            
+                        <TransformerClass>com.asbestosstar.crashdetector.CrashDetectorMeddle</TransformerClass>
+
+            
+            
+            
 						</manifestEntries>
 					</archive>
 				</configuration>
@@ -368,6 +374,11 @@
 
 
 
+	<dependency>
+	    <groupId>com.github.FyberOptic</groupId>
+	    <artifactId>Meddle</artifactId>
+	    <version>1.3</version>
+	</dependency>
 
 
 
@@ -375,6 +386,12 @@
 
 
 
+
+	<dependency>
+	    <groupId>com.unascribed</groupId>
+	    <artifactId>nilloader</artifactId>
+	    <version>1.3.5</version>
+	</dependency>
 
 
 
@@ -477,6 +494,16 @@
 			<name>TLauncher</name>
 			<url>http://res.tlauncher.org/unb/libraries/</url>
 		</repository>
+		
+		
+		
+		<repository>
+			<id>SleepingTown</id>
+			<name>SleepingTown</name>
+			<url>https://repo.sleeping.town</url>
+		</repository>
+		
+		
 		
 		
 		
