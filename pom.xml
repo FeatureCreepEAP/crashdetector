@@ -83,7 +83,7 @@
 
 <plugin>
     <groupId>com.asbestosstar</groupId>
-    <artifactId>bytecode-compat-maven-plugin</artifactId>
+    <artifactId>modlauncher-bytecode-compat-maven-plugin</artifactId>
     <version>0.0.1</version>
     <executions>
         <execution>
@@ -486,13 +486,13 @@
 		<repository>
 			<id>MCForge</id>
 			<name>MCForge</name>
-			<url>http://files.minecraftforge.net/maven/</url>
+			<url>https://files.minecraftforge.net/maven/</url>
 		</repository>
 		
 		<repository>
 			<id>TLauncher</id>
 			<name>TLauncher</name>
-			<url>http://res.tlauncher.org/unb/libraries/</url>
+			<url>https://res.tlauncher.org/unb/libraries/</url>
 		</repository>
 		
 		
