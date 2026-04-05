@@ -1,7 +1,6 @@
 package com.asbestosstar.crashdetector.cargador;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -9,29 +8,36 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
+import com.asbestosstar.crashdetector.json.Json;
 
 /**
- * Es para MinecraftForge, no para JBoss Forge
+ * Es para MinecraftForge, no para JBoss Forge.
  */
 public class CargadorMCForge implements Cargador {
 
 	@Override
 	public boolean modEsDeCargador(ArchivoDeMod mod) {
-		// se recorre la lista de rutas internas del mod
+		// Se recorre la lista de rutas internas del mod
 
 		if (mod.ubicacion_para_publicar().contains("kotlinforforge")) {
 			return true;
 		}
+
 		for (String archivo : mod.archivos()) {
 			String norm = archivo.replace('\\', '/');
 			String lower = norm.toLowerCase(Locale.ROOT);
 
-			// deteccion de mods.toml en meta inf
+			// Deteccion de mods.toml en META-INF
 			if (lower.equals("meta-inf/mods.toml")) {
 				return true;
 			}
 
-			// deteccion de servicios bajo meta inf
+			// Deteccion de mcmod.info en raiz o META-INF
+			if (lower.equals("mcmod.info") || lower.equals("meta-inf/mcmod.info")) {
+				return true;
+			}
+
+			// Deteccion de servicios bajo META-INF
 			if (lower.startsWith("meta-inf/services/")) {
 				String servicio = lower.substring("meta-inf/services/".length());
 				if (servicio.startsWith("cpw") || servicio.startsWith("net.minecraftforge")) {
@@ -39,33 +45,172 @@ public class CargadorMCForge implements Cargador {
 				}
 			}
 		}
+
 		return false;
 	}
 
 	@Override
 	public boolean cargadorEsActivado() {
-		// es comun en versiones actuales y 1.13
-		return !Cargador.claseExiste("cpw.mods.modlauncher.api.TargetType")
+
+		// Forge moderno usando ModLauncher propio de MinecraftForge
+		boolean forgeModLauncher = !Cargador.claseExiste("cpw.mods.modlauncher.api.TargetType")
 				&& !Cargador.claseExiste("net.neoforged.neoforgespi.transformation.ClassProcessor")
-				&& Cargador.claseExiste("cpw.mods.modlauncher.api.ITransformationService");// TargetType solo existe en
-																							// ML de CPW en NeoForge y
-																							// Pillow. No creo otra
-																							// cargadores usa esta
-																							// version de ML y ML
-																							// independente es decrecado
+				&& Cargador.claseExiste("cpw.mods.modlauncher.api.ITransformationService");
+
+		// Forge clasico:
+		// - cpw.mods.fml.relauncher.IFMLLoadingPlugin -> Forge viejo
+		// - net.minecraftforge.fml.relauncher.IFMLLoadingPlugin -> Forge mas nuevo
+		// pre-ModLauncher
+		boolean forgeLegacy = Cargador.claseExiste("cpw.mods.fml.relauncher.IFMLLoadingPlugin")
+				|| Cargador.claseExiste("net.minecraftforge.fml.relauncher.IFMLLoadingPlugin");
+
+		return forgeModLauncher || forgeLegacy;
 	}
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
 		return "minecraftforge";
 	}
 
 	/**
-	 * Extrae el modId de un archivo mods.toml (Forge).
+	 * Extrae los modId desde un archivo mods.toml de Forge.
 	 */
 	public static List<String> parsearIdModMCForge(String toml) throws IOException {
 		return AnalizadorModsTomlForge.extraerModIds(toml);
 	}
 
+	/**
+	 * Extrae los modid desde un archivo mcmod.info.
+	 *
+	 * mcmod.info suele ser un arreglo de objetos, aunque a veces puede venir como
+	 * objeto unico. Se devuelve una lista de ids unicos.
+	 */
+	public static List<String> parsearIdModMcmodInfo(String texto) throws IOException {
+		List<String> salida = new ArrayList<>();
+
+		try {
+			Json.Nodo raiz = Json.leer(texto);
+
+			// Caso mas comun: arreglo
+			if (raiz.esArreglo()) {
+				for (int i = 0; i < raiz.tamano(); i++) {
+					Json.Nodo entrada = raiz.en(i);
+					if (entrada == null) {
+						continue;
+					}
+
+					Json.Nodo modidNodo = entrada.obtener("modid");
+					if (modidNodo == null) {
+						continue;
+					}
+
+					String modid = modidNodo.comoCadena();
+					if (modid != null) {
+						modid = modid.trim();
+						if (!modid.isEmpty() && !salida.contains(modid)) {
+							salida.add(modid);
+						}
+					}
+				}
+			} else {
+				// Respaldo: objeto unico
+				Json.Nodo modidNodo = raiz.obtener("modid");
+				if (modidNodo != null) {
+					String modid = modidNodo.comoCadena();
+					if (modid != null) {
+						modid = modid.trim();
+						if (!modid.isEmpty() && !salida.contains(modid)) {
+							salida.add(modid);
+						}
+					}
+				}
+			}
+
+			return salida;
+		} catch (Throwable t) {
+			// Respaldo por regex
+			Pattern pmodid = Pattern.compile("\"modid\"\\s*:\\s*\"([^\"]+)\"");
+			Matcher mmodid = pmodid.matcher(texto);
+
+			while (mmodid.find()) {
+				String modid = mmodid.group(1).trim();
+				if (!modid.isEmpty() && !salida.contains(modid)) {
+					salida.add(modid);
+				}
+			}
+
+			return salida;
+		}
+	}
+
+	/**
+	 * Extrae la version desde un archivo mcmod.info.
+	 *
+	 * Si hay varias entradas, devuelve la primera version no vacia encontrada.
+	 */
+	public static String parsearVersionModMcmodInfo(String texto) {
+		try {
+			Json.Nodo raiz = Json.leer(texto);
+
+			// Caso mas comun: arreglo
+			if (raiz.esArreglo()) {
+				for (int i = 0; i < raiz.tamano(); i++) {
+					Json.Nodo entrada = raiz.en(i);
+					if (entrada == null) {
+						continue;
+					}
+
+					Json.Nodo versionNodo = entrada.obtener("version");
+					if (versionNodo == null) {
+						continue;
+					}
+
+					String version = versionNodo.comoCadena();
+					if (version != null) {
+						version = version.trim();
+						if (!version.isEmpty()) {
+							return version;
+						}
+					}
+				}
+			} else {
+				// Respaldo: objeto unico
+				Json.Nodo versionNodo = raiz.obtener("version");
+				if (versionNodo != null) {
+					String version = versionNodo.comoCadena();
+					if (version != null) {
+						version = version.trim();
+						if (!version.isEmpty()) {
+							return version;
+						}
+					}
+				}
+			}
+		} catch (Throwable t) {
+			// Si falla Json, continuar con regex
+		}
+
+		// Respaldo por regex
+		Pattern pverCadena = Pattern.compile("\"version\"\\s*:\\s*\"([^\"]+)\"");
+		Matcher mverCadena = pverCadena.matcher(texto);
+
+		if (mverCadena.find()) {
+			String version = mverCadena.group(1).trim();
+			if (!version.isEmpty()) {
+				return version;
+			}
+		}
+
+		Pattern pverNumero = Pattern.compile("\"version\"\\s*:\\s*([-+]?[0-9]+(?:\\.[0-9]+)?)");
+		Matcher mverNumero = pverNumero.matcher(texto);
+
+		if (mverNumero.find()) {
+			String version = mverNumero.group(1).trim();
+			if (!version.isEmpty()) {
+				return version;
+			}
+		}
+
+		return "";
+	}
 }

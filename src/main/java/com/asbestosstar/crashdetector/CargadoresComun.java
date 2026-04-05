@@ -86,6 +86,8 @@ public class CargadoresComun {
 		public static CDOrigin LITELOADER = new CDOrigin();
 		public static CDOrigin NILLOADER = new CDOrigin();
 		public static CDOrigin MEDDLE = new CDOrigin();
+		public static CDOrigin MCFORGE_PREMODLAUNCHER = new CDOrigin();
+		public static CDOrigin BUKKIT = new CDOrigin();
 
 	}
 

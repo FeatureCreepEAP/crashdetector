@@ -150,6 +150,11 @@
 							<Can-Retransform-Classes>true</Can-Retransform-Classes>
 							<FMLModType>LIBRARY</FMLModType><!-- para NeoForge 1.21.9 -->
 
+
+
+
+            <FMLCorePluginContainsFMLMod>true</FMLCorePluginContainsFMLMod>
+            <FMLCorePlugin>com.asbestosstar.crashdetector.CrashDetectorMCForge</FMLCorePlugin>
 						</manifestEntries>
 					</archive>
 				</configuration>
@@ -339,6 +344,51 @@
 
 
 
+<dependency>
+    <groupId>net.minecraftforge</groupId>
+    <artifactId>forge</artifactId>
+    <version>1.12-14.21.1.2443</version>
+    <classifier>universal</classifier>
+</dependency>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	</dependencies>
 	
@@ -399,7 +449,8 @@
 		</repository>
 		
 		
-		
+	
+			
 		
 			
 		<repository>
@@ -408,8 +459,18 @@
 			<url>https://repo.carm.cc/repository/maven-public/</url>
 		</repository>
 		
+				
+		<repository>
+			<id>MCForge</id>
+			<name>MCForge</name>
+			<url>http://files.minecraftforge.net/maven/</url>
+		</repository>
 		
-		
+		<repository>
+			<id>TLauncher</id>
+			<name>TLauncher</name>
+			<url>http://res.tlauncher.org/unb/libraries/</url>
+		</repository>
 		
 		
 		

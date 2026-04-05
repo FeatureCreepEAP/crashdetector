@@ -19,7 +19,9 @@ import com.asbestosstar.crashdetector.cargador.AnalizadorModsTomlForge;
 import com.asbestosstar.crashdetector.cargador.Cargador;
 import com.asbestosstar.crashdetector.cargador.CargadorFabric;
 import com.asbestosstar.crashdetector.cargador.CargadorFeatureCreep;
+import com.asbestosstar.crashdetector.cargador.CargadorLiteLoader;
 import com.asbestosstar.crashdetector.cargador.CargadorMCForge;
+import com.asbestosstar.crashdetector.cargador.CargadorRift;
 
 /**
  * Clase que procesa archivos ZIP/JAR para buscar mods y clases dentro de ellos.
@@ -85,9 +87,8 @@ public class ModPKZip implements ArchivoDeMod {
 	}
 
 	/**
-	 * Recorre el ZIP para: - Llenar 'archivos' - Mapear clases (nombre interno ->
-	 * entrada .class) y llenar 'clases' - Detectar y leer SOLO metadatos necesarios
-	 * para extraer 'nombres' y banderas - Construir mods anidados (jar/zip dentro)
+	 * Recorre el ZIP para: - Llenar 'archivos' - Mapear clases - Detectar y leer
+	 * SOLO metadatos necesarios - Construir mods anidados
 	 */
 	private void indexarYProcesarMetadatos() throws IOException {
 		try (JarInputStream zip = new JarInputStream(new ByteArrayInputStream(bytesZip))) {
@@ -95,14 +96,14 @@ public class ModPKZip implements ArchivoDeMod {
 			if (man != null) {
 				nombres.addAll(ProcesadorManifiesto.obtenerNombresDeModulo(man));
 			}
+
 			ZipEntry e;
 			while ((e = zip.getNextEntry()) != null) {
 				final String nombreArchivo = e.getName();
 				archivos.add(nombreArchivo);
 
 				if (esArchivoAnidado(nombreArchivo)) {
-					// Para anidados: crear ModPKZip hijo con bytes del anidado (sin precargar
-					// entradas internas).
+					// Para anidados: crear ModPKZip hijo con bytes del anidado
 					byte[] bytesAnidado = leerEntrada(nombreArchivo);
 					if (bytesAnidado != null) {
 						InputStream nested = new ByteArrayInputStream(bytesAnidado);
@@ -114,7 +115,7 @@ public class ModPKZip implements ArchivoDeMod {
 					String nombreClaseJava = nombreArchivo.replace('/', '.').replace(".class", "");
 					clases.add(nombreClaseJava);
 
-					String nombreInterno = nombreArchivo.substring(0, nombreArchivo.length() - 6); // sin ".class"
+					String nombreInterno = nombreArchivo.substring(0, nombreArchivo.length() - 6);
 					mapaEntradaPorClase.put(nombreInterno, nombreArchivo);
 
 					if (nombreClaseJava.endsWith("module-info")) {
@@ -124,38 +125,30 @@ public class ModPKZip implements ArchivoDeMod {
 						}
 					}
 				} else if (nombreArchivo.endsWith("modules.xml")) {
-					// Sólo leer esta entrada para extraer IDs JBoss
 					byte[] content = leerEntrada(nombreArchivo);
 					if (content != null) {
-						nombres.addAll(CargadorFeatureCreep.parsearNombreModuloJBoss(content));
+						agregarNombresSinDuplicados(CargadorFeatureCreep.parsearNombreModuloJBoss(content));
 
-						// VERSION
 						if (this.version.isEmpty()) {
 							this.version = CargadorFeatureCreep.parsearVersionModuloJBoss(content);
 						}
-
 					}
 				} else if (nombreArchivo.endsWith(".mod")) {
 					byte[] content = leerEntrada(nombreArchivo);
 					if (content != null) {
-						nombres.addAll(CargadorFeatureCreep.parsearNombreModHOI4(content));
+						agregarNombresSinDuplicados(CargadorFeatureCreep.parsearNombreModHOI4(content));
 
-						// VERSION
 						if (this.version.isEmpty()) {
-							this.version = CargadorFeatureCreep.parsearVersionModuloJBoss(content);
+							this.version = CargadorFeatureCreep.parsearVersionModHOI4(content);
 						}
-
 					}
-				}
-
-				else if (nombreArchivo.equals("fabric.mod.json")) {
+				} else if (nombreArchivo.equals("fabric.mod.json")) {
 					byte[] content = leerEntrada(nombreArchivo);
 					if (content != null) {
 						String texto = new String(content, StandardCharsets.UTF_8);
 
-						nombres.addAll(CargadorFabric.parsearIdModFabric(texto));
+						agregarNombresSinDuplicados(CargadorFabric.parsearIdModFabric(texto));
 
-						// VERSION
 						if (this.version.isEmpty()) {
 							this.version = CargadorFabric.parsearVersionModFabric(texto);
 						}
@@ -164,13 +157,67 @@ public class ModPKZip implements ArchivoDeMod {
 							meta_tiene_referencia_de_mcreator = true;
 						}
 					}
+				} else if (nombreArchivo.equals("riftmod.json")) {
+					byte[] content = leerEntrada(nombreArchivo);
+					if (content != null) {
+						String texto = new String(content, StandardCharsets.UTF_8);
+
+						agregarNombresSinDuplicados(CargadorRift.parsearIdModRift(texto));
+
+						if (this.version.isEmpty()) {
+							this.version = CargadorRift.parsearVersionModRift(texto);
+						}
+
+						if (texto.toLowerCase().contains("mcreator")) {
+							meta_tiene_referencia_de_mcreator = true;
+						}
+					}
+				} else if (nombreArchivo.equals("litemod.json")) {
+					byte[] content = leerEntrada(nombreArchivo);
+					if (content != null) {
+						String texto = new String(content, StandardCharsets.UTF_8);
+
+						agregarNombresSinDuplicados(CargadorLiteLoader.parsearIdModLiteLoader(texto));
+
+						if (this.version.isEmpty()) {
+							this.version = CargadorLiteLoader.parsearVersionModLiteLoader(texto);
+						}
+
+						if (texto.toLowerCase().contains("mcreator")) {
+							meta_tiene_referencia_de_mcreator = true;
+						}
+					}
+				} else if (nombreArchivo.equals("mcmod.info") || nombreArchivo.equals("META-INF/mcmod.info")) {
+					byte[] content = leerEntrada(nombreArchivo);
+					if (content != null) {
+						String texto = new String(content, StandardCharsets.UTF_8);
+
+						agregarNombresSinDuplicados(CargadorMCForge.parsearIdModMcmodInfo(texto));
+
+						if (this.version.isEmpty()) {
+							this.version = CargadorMCForge.parsearVersionModMcmodInfo(texto);
+						}
+
+						if (texto.toLowerCase().contains("mcreator")) {
+							meta_tiene_referencia_de_mcreator = true;
+						}
+					}
+				} else if (nombreArchivo.equals("fcflat.properties")) {
+					byte[] content = leerEntrada(nombreArchivo);
+					if (content != null) {
+						agregarNombresSinDuplicados(CargadorFeatureCreep.parsearIdModFlat(content));
+
+						if (this.version.isEmpty()) {
+							this.version = CargadorFeatureCreep.parsearVersionModFlat(content);
+						}
+					}
 				} else if (nombreArchivo.endsWith("mods.toml")) {
 					byte[] content = leerEntrada(nombreArchivo);
 					if (content != null) {
 						String toml = new String(content, StandardCharsets.UTF_8);
-						nombres.addAll(CargadorMCForge.parsearIdModMCForge(toml));
 
-						// VERSION
+						agregarNombresSinDuplicados(CargadorMCForge.parsearIdModMCForge(toml));
+
 						if (this.version.isEmpty()) {
 							this.version = AnalizadorModsTomlForge.extraerVersionPrincipal(toml);
 						}
@@ -180,7 +227,29 @@ public class ModPKZip implements ArchivoDeMod {
 						}
 					}
 				}
+
 				zip.closeEntry();
+			}
+		}
+	}
+
+	/**
+	 * Agrega nombres evitando duplicados y vacios.
+	 */
+	private void agregarNombresSinDuplicados(List<String> nuevos) {
+		if (nuevos == null) {
+			return;
+		}
+
+		for (String nombre : nuevos) {
+			if (nombre == null) {
+				continue;
+			}
+
+			String limpio = nombre.trim();
+
+			if (!limpio.isEmpty() && !this.nombres.contains(limpio)) {
+				this.nombres.add(limpio);
 			}
 		}
 	}

@@ -1,37 +1,75 @@
 package com.asbestosstar.crashdetector.cargador;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Properties;
 
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 
+/**
+ * Cargador de FeatureCreep.
+ *
+ * Soporta: - Loader clasico de FeatureCreep - FlatLoader de FeatureCreep -
+ * Metadata de JBoss modules.xml - Metadata de HOI4 .mod - Metadata de FlatMods
+ * en fcflat.properties
+ */
 public class CargadorFeatureCreep implements Cargador {
 
 	@Override
 	public boolean modEsDeCargador(ArchivoDeMod mod) {
-		// TODO Auto-generated method stub
-		return true;// FeatureCreep puede leer todos para ahora
+
+		// FeatureCreep historicamente puede consumir muchos formatos,
+		// pero ahora tambien detectamos de forma explicita FlatMods.
+		for (String archivo : mod.archivos()) {
+			String norm = archivo.replace('\\', '/');
+			String lower = norm.toLowerCase(Locale.ROOT);
+
+			// FlatMods de FeatureCreep
+			if (lower.equals("fcflat.properties")) {
+				return true;
+			}
+
+			// JBoss modules
+			if (lower.endsWith("modules.xml")) {
+				return true;
+			}
+
+			// Mods tipo HOI4
+			if (lower.endsWith(".mod")) {
+				return true;
+			}
+		}
+
+		// Mantener compatibilidad anterior:
+		// FeatureCreep puede leer casi cualquier mod/archivo por ahora.
+		return true;
 	}
 
 	@Override
 	public boolean cargadorEsActivado() {
-		// TODO Auto-generated method stub
-		return Cargador.claseExiste("featurecreep.loader.FCLoaderBasic");
+
+		// Loader clasico
+		boolean loaderClasico = Cargador.claseExiste("featurecreep.loader.FCLoaderBasic");
+
+		// FlatLoader
+		boolean flatLoader = Cargador.claseExiste("featurecreep.loader.flat.FCLoaderFlat");
+
+		return loaderClasico || flatLoader;
 	}
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
 		return "featurecreep";
 	}
 
-	// TODO crerar una clase specificamente para JBoss Modules
 	/**
-	 * Extrae el nombre del modulo de un archivo modules.xml de JBoss
+	 * Extrae el nombre del modulo de un archivo modules.xml de JBoss.
 	 */
 	public static List<String> parsearNombreModuloJBoss(byte[] contenido) throws IOException {
-		String xml = new String(contenido, java.nio.charset.StandardCharsets.UTF_8);
+		String xml = new String(contenido, StandardCharsets.UTF_8);
 		String clave = "name=\"";
 		int pos = xml.indexOf(clave);
 		if (pos < 0)
@@ -46,13 +84,12 @@ public class CargadorFeatureCreep implements Cargador {
 		return java.util.Collections.singletonList(nombre);
 	}
 
-	// TODO Suporte la parser en FeatureCreep HOI4
 	/**
-	 * Extrae el nombre del mod de un archivo HOI4 con extension .mod
+	 * Extrae el nombre del mod de un archivo HOI4 con extension .mod.
 	 * https://hoi4.paradoxwikis.com/Mod_structure
 	 */
 	public static List<String> parsearNombreModHOI4(byte[] contenido) throws IOException {
-		String texto = new String(contenido, java.nio.charset.StandardCharsets.UTF_8);
+		String texto = new String(contenido, StandardCharsets.UTF_8);
 		String clave = "name=\"";
 		int pos = texto.indexOf(clave);
 		if (pos < 0)
@@ -73,7 +110,7 @@ public class CargadorFeatureCreep implements Cargador {
 	 */
 	public static String parsearVersionModuloJBoss(byte[] contenido) throws IOException {
 
-		String xml = new String(contenido, java.nio.charset.StandardCharsets.UTF_8);
+		String xml = new String(contenido, StandardCharsets.UTF_8);
 
 		String clave = "slot=\"";
 		int pos = xml.indexOf(clave);
@@ -98,7 +135,7 @@ public class CargadorFeatureCreep implements Cargador {
 	 */
 	public static String parsearVersionModHOI4(byte[] contenido) throws IOException {
 
-		String texto = new String(contenido, java.nio.charset.StandardCharsets.UTF_8);
+		String texto = new String(contenido, StandardCharsets.UTF_8);
 
 		String clave = "version=\"";
 		int pos = texto.indexOf(clave);
@@ -117,4 +154,61 @@ public class CargadorFeatureCreep implements Cargador {
 		return version.isEmpty() ? "" : version;
 	}
 
+	/**
+	 * Extrae el modid de un archivo fcflat.properties.
+	 *
+	 * Segun FlatModMetadata, la clave usada es "modid".
+	 */
+	public static List<String> parsearIdModFlat(byte[] contenido) throws IOException {
+
+		Properties props = new Properties();
+
+		try (java.io.ByteArrayInputStream in = new java.io.ByteArrayInputStream(contenido)) {
+			props.load(in);
+		}
+
+		String modid = props.getProperty("modid", "").trim();
+
+		if (modid.isEmpty()) {
+			return java.util.Collections.emptyList();
+		}
+
+		List<String> salida = new ArrayList<>();
+		salida.add(modid);
+		return salida;
+	}
+
+	/**
+	 * Extrae la version de un archivo fcflat.properties.
+	 *
+	 * FlatModMetadata no expone campo de version, asi que por compatibilidad se
+	 * devuelve vacio cuando no exista una clave util.
+	 */
+	public static String parsearVersionModFlat(byte[] contenido) throws IOException {
+
+		Properties props = new Properties();
+
+		try (java.io.ByteArrayInputStream in = new java.io.ByteArrayInputStream(contenido)) {
+			props.load(in);
+		}
+
+		// Por si en el futuro algun flat mod la incluye
+		String version = props.getProperty("version", "").trim();
+
+		return version;
+	}
+
+	/**
+	 * Alias mas descriptivo por si quieres mantener separado el nombre "FlatMod".
+	 */
+	public static List<String> parsearIdFlatMod(byte[] contenido) throws IOException {
+		return parsearIdModFlat(contenido);
+	}
+
+	/**
+	 * Alias mas descriptivo por si quieres mantener separado el nombre "FlatMod".
+	 */
+	public static String parsearVersionFlatMod(byte[] contenido) throws IOException {
+		return parsearVersionModFlat(contenido);
+	}
 }
