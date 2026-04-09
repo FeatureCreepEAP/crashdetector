@@ -7867,4 +7867,204 @@ public class Ingles implements Idioma {
 		return "Warning: potential issues with SKLauncher";
 	}
 
+	@Override
+	public String guardTitulo() {
+		return "CD Guard";
+	}
+
+	@Override
+	public String guardBotonLateral() {
+		return "Guard";
+	}
+
+	@Override
+	public String guardEscanearTodo() {
+		return "Scan servers and malware";
+	}
+
+	@Override
+	public String guardEscanearServidores() {
+		return "Search for servers";
+	}
+
+	@Override
+	public String guardEscanearMalware() {
+		return "Search for malware";
+	}
+
+	@Override
+	public String guardTablaServidores() {
+		return "Problematic servers";
+	}
+
+	@Override
+	public String guardTablaMalware() {
+		return "Malware findings";
+	}
+
+	@Override
+	public String guardColServidor() {
+		return "Server";
+	}
+
+	@Override
+	public String guardColDefinicion() {
+		return "Definition";
+	}
+
+	@Override
+	public String guardColMensaje() {
+		return "Message";
+	}
+
+	@Override
+	public String guardColUbicacion() {
+		return "Location";
+	}
+
+	@Override
+	public String guardColClase() {
+		return "Class";
+	}
+
+	@Override
+	public String guardColCfr() {
+		return "CFR";
+	}
+
+	@Override
+	public String guardCfr() {
+		return "Decompile";
+	}
+
+	@Override
+	public String guardCfrTitulo() {
+		return "Decompiled code";
+	}
+
+	@Override
+	public String guardDescripcion1() {
+		return "This tool allows searching for problematic servers and potential malware findings in mods.";
+	}
+
+	@Override
+	public String guardDescripcion2() {
+		return "There may be false positives, especially when other definitions or malware scanners are aggressive.";
+	}
+
+	@Override
+	public String guardDescripcion3() {
+		return "Server checking uses external definitions. If you have not downloaded them, you will need to download them first.";
+	}
+
+	@Override
+	public String guardDescripcion4() {
+		return "If you already have local definitions, the tool will let you decide whether to reuse them or update them.";
+	}
+
+	@Override
+	public String guardDescripcion5() {
+		return "In the malware table, if a class is available, you can decompile it with CFR to inspect it.";
+	}
+
+	@Override
+	public String guardEstadoEscaneandoTodo() {
+		return "Scanning servers and malware...";
+	}
+
+	@Override
+	public String guardEstadoEscaneandoServidores() {
+		return "Searching for problematic servers...";
+	}
+
+	@Override
+	public String guardEstadoEscaneandoMalware() {
+		return "Searching for malware...";
+	}
+
+	@Override
+	public String guardEstadoListo() {
+		return "Ready";
+	}
+
+	@Override
+	public String guardDefsNoEncontradasTitulo() {
+		return "Definitions not found";
+	}
+
+	@Override
+	public String guardDefsNoEncontradasMensaje() {
+		return "Server definitions not found. Do you want to download them now?";
+	}
+
+	@Override
+	public String guardDefsDescargar() {
+		return "Download";
+	}
+
+	@Override
+	public String guardDefsCancelar() {
+		return "Cancel";
+	}
+
+	@Override
+	public String guardDefsActualizarTitulo() {
+		return "Server definitions";
+	}
+
+	@Override
+	public String guardDefsActualizarMensaje() {
+		return "Local definitions already exist. Do you want to use them as they are or update them?";
+	}
+
+	@Override
+	public String guardDefsUsarLocales() {
+		return "Use local";
+	}
+
+	@Override
+	public String guardDefsActualizar() {
+		return "Update";
+	}
+
+	@Override
+	public String guardFuenteDefinicionesTLauncher() {
+		return "TLauncher list";
+	}
+
+	@Override
+	public String guardErrorDescompilar() {
+		return "Decompilation error";
+	}
+
+	@Override
+	public String guardColorPanel() {
+		return "Panel colour";
+	}
+
+	@Override
+	public String guardColorTexto() {
+		return "Text colour";
+	}
+
+	@Override
+	public String guardColorTextoSecundario() {
+		return "Secondary text colour";
+	}
+
+	@Override
+	public String guardColorTabla() {
+		return "Table colour";
+	}
+
+	@Override
+	public String guardColorSeleccion() {
+		return "Selection colour";
+	}
+
+	@Override
+	public String guardColorSeleccionTexto() {
+		return "Selected text colour";
+	}
+
 }

@@ -7847,4 +7847,204 @@ public class Ruso implements Idioma {
 		return "Предупреждение: возможные проблемы с SKLauncher";
 	}
 
+	@Override
+	public String guardTitulo() {
+		return "CD Guard";
+	}
+
+	@Override
+	public String guardBotonLateral() {
+		return "Защита";
+	}
+
+	@Override
+	public String guardEscanearTodo() {
+		return "Сканировать серверы и вредоносное ПО";
+	}
+
+	@Override
+	public String guardEscanearServidores() {
+		return "Поиск серверов";
+	}
+
+	@Override
+	public String guardEscanearMalware() {
+		return "Поиск вредоносного ПО";
+	}
+
+	@Override
+	public String guardTablaServidores() {
+		return "Проблемные серверы";
+	}
+
+	@Override
+	public String guardTablaMalware() {
+		return "Обнаруженное вредоносное ПО";
+	}
+
+	@Override
+	public String guardColServidor() {
+		return "Сервер";
+	}
+
+	@Override
+	public String guardColDefinicion() {
+		return "Определение";
+	}
+
+	@Override
+	public String guardColMensaje() {
+		return "Сообщение";
+	}
+
+	@Override
+	public String guardColUbicacion() {
+		return "Расположение";
+	}
+
+	@Override
+	public String guardColClase() {
+		return "Класс";
+	}
+
+	@Override
+	public String guardColCfr() {
+		return "CFR";
+	}
+
+	@Override
+	public String guardCfr() {
+		return "Декомпилировать";
+	}
+
+	@Override
+	public String guardCfrTitulo() {
+		return "Декомпилированный код";
+	}
+
+	@Override
+	public String guardDescripcion1() {
+		return "Этот инструмент позволяет искать проблемные серверы и потенциальные обнаружения вредоносного ПО в модах.";
+	}
+
+	@Override
+	public String guardDescripcion2() {
+		return "Возможны ложные срабатывания, особенно когда другие определения или сканеры вредоносного ПО работают агрессивно.";
+	}
+
+	@Override
+	public String guardDescripcion3() {
+		return "Проверка серверов использует внешние определения. Если вы их не скачали, вам нужно сделать это в первую очередь.";
+	}
+
+	@Override
+	public String guardDescripcion4() {
+		return "Если у вас уже есть локальные определения, инструмент позволит вам решить, хотите ли вы использовать их или обновить.";
+	}
+
+	@Override
+	public String guardDescripcion5() {
+		return "В таблице вредоносного ПО, если класс доступен, вы можете декомпилировать его с помощью CFR для инспекции.";
+	}
+
+	@Override
+	public String guardEstadoEscaneandoTodo() {
+		return "Сканирование серверов и вредоносного ПО...";
+	}
+
+	@Override
+	public String guardEstadoEscaneandoServidores() {
+		return "Поиск проблемных серверов...";
+	}
+
+	@Override
+	public String guardEstadoEscaneandoMalware() {
+		return "Поиск вредоносного ПО...";
+	}
+
+	@Override
+	public String guardEstadoListo() {
+		return "Готово";
+	}
+
+	@Override
+	public String guardDefsNoEncontradasTitulo() {
+		return "Определения не найдены";
+	}
+
+	@Override
+	public String guardDefsNoEncontradasMensaje() {
+		return "Определения серверов не найдены. Хотите скачать их сейчас?";
+	}
+
+	@Override
+	public String guardDefsDescargar() {
+		return "Скачать";
+	}
+
+	@Override
+	public String guardDefsCancelar() {
+		return "Отмена";
+	}
+
+	@Override
+	public String guardDefsActualizarTitulo() {
+		return "Определения серверов";
+	}
+
+	@Override
+	public String guardDefsActualizarMensaje() {
+		return "Локальные определения уже существуют. Вы хотите использовать их как есть или обновить?";
+	}
+
+	@Override
+	public String guardDefsUsarLocales() {
+		return "Использовать локальные";
+	}
+
+	@Override
+	public String guardDefsActualizar() {
+		return "Обновить";
+	}
+
+	@Override
+	public String guardFuenteDefinicionesTLauncher() {
+		return "Список TLauncher";
+	}
+
+	@Override
+	public String guardErrorDescompilar() {
+		return "Ошибка декомпиляции";
+	}
+
+	@Override
+	public String guardColorPanel() {
+		return "Цвет панели";
+	}
+
+	@Override
+	public String guardColorTexto() {
+		return "Цвет текста";
+	}
+
+	@Override
+	public String guardColorTextoSecundario() {
+		return "Цвет вторичного текста";
+	}
+
+	@Override
+	public String guardColorTabla() {
+		return "Цвет таблиц";
+	}
+
+	@Override
+	public String guardColorSeleccion() {
+		return "Цвет выделения";
+	}
+
+	@Override
+	public String guardColorSeleccionTexto() {
+		return "Цвет выделенного текста";
+	}
+
 }

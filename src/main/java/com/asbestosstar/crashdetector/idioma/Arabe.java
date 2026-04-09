@@ -7738,4 +7738,204 @@ public class Arabe implements Idioma {
 		return "تحذير: مشاكل محتملة مع SKLauncher";
 	}
 
+	@Override
+	public String guardTitulo() {
+		return "CD Guard";
+	}
+
+	@Override
+	public String guardBotonLateral() {
+		return "الحارس";
+	}
+
+	@Override
+	public String guardEscanearTodo() {
+		return "فحص الخوادم والبرمجيات الخبيثة";
+	}
+
+	@Override
+	public String guardEscanearServidores() {
+		return "البحث عن خوادم";
+	}
+
+	@Override
+	public String guardEscanearMalware() {
+		return "البحث عن برمجيات خبيثة";
+	}
+
+	@Override
+	public String guardTablaServidores() {
+		return "الخوادم المشكوك فيها";
+	}
+
+	@Override
+	public String guardTablaMalware() {
+		return "نتائج البرمجيات الخبيثة";
+	}
+
+	@Override
+	public String guardColServidor() {
+		return "الخادم";
+	}
+
+	@Override
+	public String guardColDefinicion() {
+		return "التعريف";
+	}
+
+	@Override
+	public String guardColMensaje() {
+		return "الرسالة";
+	}
+
+	@Override
+	public String guardColUbicacion() {
+		return "الموقع";
+	}
+
+	@Override
+	public String guardColClase() {
+		return "الفئة (Class)";
+	}
+
+	@Override
+	public String guardColCfr() {
+		return "CFR";
+	}
+
+	@Override
+	public String guardCfr() {
+		return "عكس الهندسة (Decompile)";
+	}
+
+	@Override
+	public String guardCfrTitulo() {
+		return "الكود المعكوس";
+	}
+
+	@Override
+	public String guardDescripcion1() {
+		return "تسمح هذه الأداة بالبحث عن الخوادم المشكوك فيها والاكتشافات المحتملة للبرمجيات الخبيثة في الإضافات (mods).";
+	}
+
+	@Override
+	public String guardDescripcion2() {
+		return "قد تكون هناك إيجابيات كاذبة، خاصة عندما تكون التعريفات الأخرى أو برامج فحص البرمجيات الخبيثة عدوانية.";
+	}
+
+	@Override
+	public String guardDescripcion3() {
+		return "يستخدم فحص الخوادم تعريفات خارجية. إذا لم تكن قد قمت بتنزيلها، فستحتاج إلى تنزيلها أولاً.";
+	}
+
+	@Override
+	public String guardDescripcion4() {
+		return "إذا كانت لديك تعريفات محلية بالفعل، ستتيح لك الأداة اختيار ما إذا كنت تريد إعادة استخدامها أو تحديثها.";
+	}
+
+	@Override
+	public String guardDescripcion5() {
+		return "في جدول البرمجيات الخبيثة، إذا كانت الفئة متاحة، يمكنك عكس هندستها باستخدام CFR لفحصها.";
+	}
+
+	@Override
+	public String guardEstadoEscaneandoTodo() {
+		return "جاري فحص الخوادم والبرمجيات الخبيثة...";
+	}
+
+	@Override
+	public String guardEstadoEscaneandoServidores() {
+		return "جاري البحث عن خوادم مشكوك فيها...";
+	}
+
+	@Override
+	public String guardEstadoEscaneandoMalware() {
+		return "جاري البحث عن برمجيات خبيثة...";
+	}
+
+	@Override
+	public String guardEstadoListo() {
+		return "جاهز";
+	}
+
+	@Override
+	public String guardDefsNoEncontradasTitulo() {
+		return "لم يتم العثور على التعريفات";
+	}
+
+	@Override
+	public String guardDefsNoEncontradasMensaje() {
+		return "لم يتم العثور على تعريفات الخوادم. هل تريد تنزيلها الآن؟";
+	}
+
+	@Override
+	public String guardDefsDescargar() {
+		return "تنزيل";
+	}
+
+	@Override
+	public String guardDefsCancelar() {
+		return "إلغاء";
+	}
+
+	@Override
+	public String guardDefsActualizarTitulo() {
+		return "تعريفات الخوادم";
+	}
+
+	@Override
+	public String guardDefsActualizarMensaje() {
+		return "توجد تعريفات محلية بالفعل. هل تريد استخدامها كما هي أم تحديثها؟";
+	}
+
+	@Override
+	public String guardDefsUsarLocales() {
+		return "استخدام المحلية";
+	}
+
+	@Override
+	public String guardDefsActualizar() {
+		return "تحديث";
+	}
+
+	@Override
+	public String guardFuenteDefinicionesTLauncher() {
+		return "قائمة TLauncher";
+	}
+
+	@Override
+	public String guardErrorDescompilar() {
+		return "خطأ في عكس الهندسة";
+	}
+
+	@Override
+	public String guardColorPanel() {
+		return "لون اللوحة";
+	}
+
+	@Override
+	public String guardColorTexto() {
+		return "لون النص";
+	}
+
+	@Override
+	public String guardColorTextoSecundario() {
+		return "لون النص الثانوي";
+	}
+
+	@Override
+	public String guardColorTabla() {
+		return "لون الجداول";
+	}
+
+	@Override
+	public String guardColorSeleccion() {
+		return "لون التحديد";
+	}
+
+	@Override
+	public String guardColorSeleccionTexto() {
+		return "لون النص المحدد";
+	}
+
 }

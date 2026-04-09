@@ -7506,4 +7506,204 @@ public class Coreano implements Idioma {
 		return "경고: SKLauncher와 관련된 잠재적 문제";
 	}
 
+	@Override
+	public String guardTitulo() {
+		return "CD Guard";
+	}
+
+	@Override
+	public String guardBotonLateral() {
+		return "경비";
+	}
+
+	@Override
+	public String guardEscanearTodo() {
+		return "서버 및 악성코드 검사";
+	}
+
+	@Override
+	public String guardEscanearServidores() {
+		return "서버 검색";
+	}
+
+	@Override
+	public String guardEscanearMalware() {
+		return "악성코드 검색";
+	}
+
+	@Override
+	public String guardTablaServidores() {
+		return "문제 있는 서버";
+	}
+
+	@Override
+	public String guardTablaMalware() {
+		return "악성코드 발견 사항";
+	}
+
+	@Override
+	public String guardColServidor() {
+		return "서버";
+	}
+
+	@Override
+	public String guardColDefinicion() {
+		return "정의";
+	}
+
+	@Override
+	public String guardColMensaje() {
+		return "메시지";
+	}
+
+	@Override
+	public String guardColUbicacion() {
+		return "위치";
+	}
+
+	@Override
+	public String guardColClase() {
+		return "클래스";
+	}
+
+	@Override
+	public String guardColCfr() {
+		return "CFR";
+	}
+
+	@Override
+	public String guardCfr() {
+		return "역컴파일";
+	}
+
+	@Override
+	public String guardCfrTitulo() {
+		return "역컴파일된 코드";
+	}
+
+	@Override
+	public String guardDescripcion1() {
+		return "이 도구는 수정(mods)에서 문제 있는 서버와 잠재적인 악성코드를 검색할 수 있게 합니다.";
+	}
+
+	@Override
+	public String guardDescripcion2() {
+		return "다른 정의나 악성코드 검사기가 공격적인 경우, 특히 잘못된 양성 반응이 있을 수 있습니다.";
+	}
+
+	@Override
+	public String guardDescripcion3() {
+		return "서버 검사는 외부 정의를 사용합니다. 다운로드하지 않은 경우, 먼저 다운로드해야 합니다.";
+	}
+
+	@Override
+	public String guardDescripcion4() {
+		return "이미 로컬 정의가 있는 경우, 도구는 이를 재사용할지 아니면 업데이트할지 결정하도록 허용합니다.";
+	}
+
+	@Override
+	public String guardDescripcion5() {
+		return "악성코드 표에서 클래스를 사용할 수 있는 경우, CFR을 사용하여 역컴파일하고 검사할 수 있습니다.";
+	}
+
+	@Override
+	public String guardEstadoEscaneandoTodo() {
+		return "서버 및 악성코드 검사 중...";
+	}
+
+	@Override
+	public String guardEstadoEscaneandoServidores() {
+		return "문제 있는 서버 검색 중...";
+	}
+
+	@Override
+	public String guardEstadoEscaneandoMalware() {
+		return "악성코드 검색 중...";
+	}
+
+	@Override
+	public String guardEstadoListo() {
+		return "준비 완료";
+	}
+
+	@Override
+	public String guardDefsNoEncontradasTitulo() {
+		return "정의를 찾을 수 없음";
+	}
+
+	@Override
+	public String guardDefsNoEncontradasMensaje() {
+		return "서버 정의를 찾을 수 없습니다. 지금 다운로드하시겠습니까?";
+	}
+
+	@Override
+	public String guardDefsDescargar() {
+		return "다운로드";
+	}
+
+	@Override
+	public String guardDefsCancelar() {
+		return "취소";
+	}
+
+	@Override
+	public String guardDefsActualizarTitulo() {
+		return "서버 정의";
+	}
+
+	@Override
+	public String guardDefsActualizarMensaje() {
+		return "로컬 정의가 이미 존재합니다. 그대로 사용하시겠습니까, 아니면 업데이트하시겠습니까?";
+	}
+
+	@Override
+	public String guardDefsUsarLocales() {
+		return "로컬 사용";
+	}
+
+	@Override
+	public String guardDefsActualizar() {
+		return "업데이트";
+	}
+
+	@Override
+	public String guardFuenteDefinicionesTLauncher() {
+		return "TLauncher 목록";
+	}
+
+	@Override
+	public String guardErrorDescompilar() {
+		return "역컴파일 오류";
+	}
+
+	@Override
+	public String guardColorPanel() {
+		return "판넬 색상";
+	}
+
+	@Override
+	public String guardColorTexto() {
+		return "텍스트 색상";
+	}
+
+	@Override
+	public String guardColorTextoSecundario() {
+		return "보조 텍스트 색상";
+	}
+
+	@Override
+	public String guardColorTabla() {
+		return "표 색상";
+	}
+
+	@Override
+	public String guardColorSeleccion() {
+		return "선택 색상";
+	}
+
+	@Override
+	public String guardColorSeleccionTexto() {
+		return "선택된 텍스트 색상";
+	}
+
 }

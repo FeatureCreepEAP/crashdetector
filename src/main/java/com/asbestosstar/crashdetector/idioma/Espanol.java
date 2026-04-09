@@ -8558,4 +8558,204 @@ public class Espanol implements Idioma {
 		return "Advertencia: posibles problemas con SKLauncher";
 	}
 
+	@Override
+	public String guardTitulo() {
+		return "CD Guard";
+	}
+
+	@Override
+	public String guardBotonLateral() {
+		return "Guard";
+	}
+
+	@Override
+	public String guardEscanearTodo() {
+		return "Escanear servidores y malware";
+	}
+
+	@Override
+	public String guardEscanearServidores() {
+		return "Buscar servidores";
+	}
+
+	@Override
+	public String guardEscanearMalware() {
+		return "Buscar malware";
+	}
+
+	@Override
+	public String guardTablaServidores() {
+		return "Servidores problemáticos";
+	}
+
+	@Override
+	public String guardTablaMalware() {
+		return "Hallazgos de malware";
+	}
+
+	@Override
+	public String guardColServidor() {
+		return "Servidor";
+	}
+
+	@Override
+	public String guardColDefinicion() {
+		return "Definición";
+	}
+
+	@Override
+	public String guardColMensaje() {
+		return "Mensaje";
+	}
+
+	@Override
+	public String guardColUbicacion() {
+		return "Ubicación";
+	}
+
+	@Override
+	public String guardColClase() {
+		return "Clase";
+	}
+
+	@Override
+	public String guardColCfr() {
+		return "CFR";
+	}
+
+	@Override
+	public String guardCfr() {
+		return "Descompilar";
+	}
+
+	@Override
+	public String guardCfrTitulo() {
+		return "Código descompilado";
+	}
+
+	@Override
+	public String guardDescripcion1() {
+		return "Esta herramienta permite buscar servidores problemáticos y posibles hallazgos de malware en mods.";
+	}
+
+	@Override
+	public String guardDescripcion2() {
+		return "Puede haber falsos positivos, especialmente cuando otras definiciones o escáneres de malware son agresivos.";
+	}
+
+	@Override
+	public String guardDescripcion3() {
+		return "La comprobación de servidores usa definiciones externas. Si no las tienes descargadas, primero tendrás que descargarlas.";
+	}
+
+	@Override
+	public String guardDescripcion4() {
+		return "Si ya tienes definiciones locales, la herramienta te dejará decidir si quieres reutilizarlas o actualizarlas.";
+	}
+
+	@Override
+	public String guardDescripcion5() {
+		return "En la tabla de malware, si una clase está disponible, podrás descompilarla con CFR para inspeccionarla.";
+	}
+
+	@Override
+	public String guardEstadoEscaneandoTodo() {
+		return "Escaneando servidores y malware...";
+	}
+
+	@Override
+	public String guardEstadoEscaneandoServidores() {
+		return "Buscando servidores problemáticos...";
+	}
+
+	@Override
+	public String guardEstadoEscaneandoMalware() {
+		return "Buscando malware...";
+	}
+
+	@Override
+	public String guardEstadoListo() {
+		return "Listo";
+	}
+
+	@Override
+	public String guardDefsNoEncontradasTitulo() {
+		return "Definiciones no encontradas";
+	}
+
+	@Override
+	public String guardDefsNoEncontradasMensaje() {
+		return "No se encontraron definiciones de servidores. ¿Quieres descargarlas ahora?";
+	}
+
+	@Override
+	public String guardDefsDescargar() {
+		return "Descargar";
+	}
+
+	@Override
+	public String guardDefsCancelar() {
+		return "Cancelar";
+	}
+
+	@Override
+	public String guardDefsActualizarTitulo() {
+		return "Definiciones de servidores";
+	}
+
+	@Override
+	public String guardDefsActualizarMensaje() {
+		return "Ya existen definiciones locales. ¿Quieres usarlas tal cual o actualizarlas?";
+	}
+
+	@Override
+	public String guardDefsUsarLocales() {
+		return "Usar locales";
+	}
+
+	@Override
+	public String guardDefsActualizar() {
+		return "Actualizar";
+	}
+
+	@Override
+	public String guardFuenteDefinicionesTLauncher() {
+		return "Lista de TLauncher";
+	}
+
+	@Override
+	public String guardErrorDescompilar() {
+		return "Error al descompilar";
+	}
+
+	@Override
+	public String guardColorPanel() {
+		return "Color de panel";
+	}
+
+	@Override
+	public String guardColorTexto() {
+		return "Color de texto";
+	}
+
+	@Override
+	public String guardColorTextoSecundario() {
+		return "Color de texto secundario";
+	}
+
+	@Override
+	public String guardColorTabla() {
+		return "Color de tablas";
+	}
+
+	@Override
+	public String guardColorSeleccion() {
+		return "Color de selección";
+	}
+
+	@Override
+	public String guardColorSeleccionTexto() {
+		return "Color del texto seleccionado";
+	}
+
 }

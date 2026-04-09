@@ -7802,4 +7802,204 @@ public class Persa implements Idioma {
 		return "هشدار: مشکلات احتمالی با SKLauncher";
 	}
 
+	@Override
+	public String guardTitulo() {
+		return "CD Guard";
+	}
+
+	@Override
+	public String guardBotonLateral() {
+		return "محافظ";
+	}
+
+	@Override
+	public String guardEscanearTodo() {
+		return "اسکن سرورها و بدافزارها";
+	}
+
+	@Override
+	public String guardEscanearServidores() {
+		return "جستجوی سرورها";
+	}
+
+	@Override
+	public String guardEscanearMalware() {
+		return "جستجوی بدافزار";
+	}
+
+	@Override
+	public String guardTablaServidores() {
+		return "سرورهای مشکل‌دار";
+	}
+
+	@Override
+	public String guardTablaMalware() {
+		return "یافته‌های بدافزار";
+	}
+
+	@Override
+	public String guardColServidor() {
+		return "سرور";
+	}
+
+	@Override
+	public String guardColDefinicion() {
+		return "تعریف";
+	}
+
+	@Override
+	public String guardColMensaje() {
+		return "پیام";
+	}
+
+	@Override
+	public String guardColUbicacion() {
+		return "موقعیت";
+	}
+
+	@Override
+	public String guardColClase() {
+		return "کلاس";
+	}
+
+	@Override
+	public String guardColCfr() {
+		return "CFR";
+	}
+
+	@Override
+	public String guardCfr() {
+		return "مهندسی معکوس (Decompile)";
+	}
+
+	@Override
+	public String guardCfrTitulo() {
+		return "کد مهندسی معکوس شده";
+	}
+
+	@Override
+	public String guardDescripcion1() {
+		return "این ابزار امکان جستجوی سرورهای مشکل‌دار و یافته‌های احتمالی بدافزار در مادهای را فراهم می‌کند.";
+	}
+
+	@Override
+	public String guardDescripcion2() {
+		return "ممکن است موارد مثبت کاذب وجود داشته باشد، به ویژه زمانی که تعاریف دیگر یا اسکنرهای بدافزار تهاجمی باشند.";
+	}
+
+	@Override
+	public String guardDescripcion3() {
+		return "بررسی سرورها از تعاریف خارجی استفاده می‌کند. اگر آن‌ها را دانلود نکرده‌اید، ابتدا باید دانلود کنید.";
+	}
+
+	@Override
+	public String guardDescripcion4() {
+		return "اگر قبلاً تعاریف محلی دارید، ابزار به شما اجازه می‌دهد تصمیم بگیرید که آیا می‌خواهید از آن‌ها مجدداً استفاده کنید یا به‌روزرسانی نمایید.";
+	}
+
+	@Override
+	public String guardDescripcion5() {
+		return "در جدول بدافزار، اگر کلاسی در دسترس باشد، می‌توانید آن را با CFR مهندسی معکوس کرده و بازرسی کنید.";
+	}
+
+	@Override
+	public String guardEstadoEscaneandoTodo() {
+		return "در حال اسکن سرورها و بدافزارها...";
+	}
+
+	@Override
+	public String guardEstadoEscaneandoServidores() {
+		return "در حال جستجوی سرورهای مشکل‌دار...";
+	}
+
+	@Override
+	public String guardEstadoEscaneandoMalware() {
+		return "در حال جستجوی بدافزار...";
+	}
+
+	@Override
+	public String guardEstadoListo() {
+		return "آماده";
+	}
+
+	@Override
+	public String guardDefsNoEncontradasTitulo() {
+		return "تعاریف یافت نشد";
+	}
+
+	@Override
+	public String guardDefsNoEncontradasMensaje() {
+		return "تعاریف سرور یافت نشد. آیا می‌خواهید اکنون آن‌ها را دانلود کنید؟";
+	}
+
+	@Override
+	public String guardDefsDescargar() {
+		return "دانلود";
+	}
+
+	@Override
+	public String guardDefsCancelar() {
+		return "لغو";
+	}
+
+	@Override
+	public String guardDefsActualizarTitulo() {
+		return "تعاریف سرور";
+	}
+
+	@Override
+	public String guardDefsActualizarMensaje() {
+		return "تعاریف محلی از قبل وجود دارند. آیا می‌خواهید همان‌طور که هستند استفاده کنید یا به‌روزرسانی نمایید؟";
+	}
+
+	@Override
+	public String guardDefsUsarLocales() {
+		return "استفاده از محلی";
+	}
+
+	@Override
+	public String guardDefsActualizar() {
+		return "به‌روزرسانی";
+	}
+
+	@Override
+	public String guardFuenteDefinicionesTLauncher() {
+		return "لیست TLauncher";
+	}
+
+	@Override
+	public String guardErrorDescompilar() {
+		return "خطا در مهندسی معکوس";
+	}
+
+	@Override
+	public String guardColorPanel() {
+		return "رنگ پنل";
+	}
+
+	@Override
+	public String guardColorTexto() {
+		return "رنگ متن";
+	}
+
+	@Override
+	public String guardColorTextoSecundario() {
+		return "رنگ متن ثانویه";
+	}
+
+	@Override
+	public String guardColorTabla() {
+		return "رنگ جداول";
+	}
+
+	@Override
+	public String guardColorSeleccion() {
+		return "رنگ انتخاب";
+	}
+
+	@Override
+	public String guardColorSeleccionTexto() {
+		return "رنگ متن انتخاب شده";
+	}
+
 }

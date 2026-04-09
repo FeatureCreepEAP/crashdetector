@@ -7518,4 +7518,204 @@ public class Japones implements Idioma {
 		return "警告: SKLauncherの潜在的な問題";
 	}
 
+	@Override
+	public String guardTitulo() {
+		return "CD Guard";
+	}
+
+	@Override
+	public String guardBotonLateral() {
+		return "ガード";
+	}
+
+	@Override
+	public String guardEscanearTodo() {
+		return "サーバーとマルウェアをスキャン";
+	}
+
+	@Override
+	public String guardEscanearServidores() {
+		return "サーバーを検索";
+	}
+
+	@Override
+	public String guardEscanearMalware() {
+		return "マルウェアを検索";
+	}
+
+	@Override
+	public String guardTablaServidores() {
+		return "問題のあるサーバー";
+	}
+
+	@Override
+	public String guardTablaMalware() {
+		return "マルウェアの検出結果";
+	}
+
+	@Override
+	public String guardColServidor() {
+		return "サーバー";
+	}
+
+	@Override
+	public String guardColDefinicion() {
+		return "定義";
+	}
+
+	@Override
+	public String guardColMensaje() {
+		return "メッセージ";
+	}
+
+	@Override
+	public String guardColUbicacion() {
+		return "場所";
+	}
+
+	@Override
+	public String guardColClase() {
+		return "クラス";
+	}
+
+	@Override
+	public String guardColCfr() {
+		return "CFR";
+	}
+
+	@Override
+	public String guardCfr() {
+		return "デコンパイル";
+	}
+
+	@Override
+	public String guardCfrTitulo() {
+		return "デコンパイルされたコード";
+	}
+
+	@Override
+	public String guardDescripcion1() {
+		return "このツールは、Mod内の問題のあるサーバーや潜在的なマルウェアの検出結果を検索することができます。";
+	}
+
+	@Override
+	public String guardDescripcion2() {
+		return "他の定義やマルウェアスキャナーが攻撃的な場合、特に誤検知（false positives）が発生する可能性があります。";
+	}
+
+	@Override
+	public String guardDescripcion3() {
+		return "サーバーチェックは外部定義を使用します。ダウンロードしていない場合は、まずダウンロードする必要があります。";
+	}
+
+	@Override
+	public String guardDescripcion4() {
+		return "すでにローカル定義がある場合、ツールはそれを再利用するか更新するかを決定することを許可します。";
+	}
+
+	@Override
+	public String guardDescripcion5() {
+		return "マルウェア表でクラスが利用可能な場合、CFRを使用してデコンパイルし、検査することができます。";
+	}
+
+	@Override
+	public String guardEstadoEscaneandoTodo() {
+		return "サーバーとマルウェアをスキャン中...";
+	}
+
+	@Override
+	public String guardEstadoEscaneandoServidores() {
+		return "問題のあるサーバーを検索中...";
+	}
+
+	@Override
+	public String guardEstadoEscaneandoMalware() {
+		return "マルウェアを検索中...";
+	}
+
+	@Override
+	public String guardEstadoListo() {
+		return "準備完了";
+	}
+
+	@Override
+	public String guardDefsNoEncontradasTitulo() {
+		return "定義が見つかりません";
+	}
+
+	@Override
+	public String guardDefsNoEncontradasMensaje() {
+		return "サーバー定義が見つかりません。今すぐダウンロードしますか？";
+	}
+
+	@Override
+	public String guardDefsDescargar() {
+		return "ダウンロード";
+	}
+
+	@Override
+	public String guardDefsCancelar() {
+		return "キャンセル";
+	}
+
+	@Override
+	public String guardDefsActualizarTitulo() {
+		return "サーバー定義";
+	}
+
+	@Override
+	public String guardDefsActualizarMensaje() {
+		return "ローカル定義が既に存在します。そのまま使用しますか、それとも更新しますか？";
+	}
+
+	@Override
+	public String guardDefsUsarLocales() {
+		return "ローカルを使用";
+	}
+
+	@Override
+	public String guardDefsActualizar() {
+		return "更新";
+	}
+
+	@Override
+	public String guardFuenteDefinicionesTLauncher() {
+		return "TLauncherリスト";
+	}
+
+	@Override
+	public String guardErrorDescompilar() {
+		return "デコンパイルエラー";
+	}
+
+	@Override
+	public String guardColorPanel() {
+		return "パネルの色";
+	}
+
+	@Override
+	public String guardColorTexto() {
+		return "テキストの色";
+	}
+
+	@Override
+	public String guardColorTextoSecundario() {
+		return "補助テキストの色";
+	}
+
+	@Override
+	public String guardColorTabla() {
+		return "テーブルの色";
+	}
+
+	@Override
+	public String guardColorSeleccion() {
+		return "選択色";
+	}
+
+	@Override
+	public String guardColorSeleccionTexto() {
+		return "選択されたテキストの色";
+	}
+
 }

@@ -7815,4 +7815,204 @@ public class Esperanto implements Idioma {
 		return "Averto: eblaj problemoj kun SKLauncher";
 	}
 
+	@Override
+	public String guardTitulo() {
+		return "CD Guard";
+	}
+
+	@Override
+	public String guardBotonLateral() {
+		return "Gardisto";
+	}
+
+	@Override
+	public String guardEscanearTodo() {
+		return "Skani servilojn kaj malican kodon";
+	}
+
+	@Override
+	public String guardEscanearServidores() {
+		return "Serĉi servilojn";
+	}
+
+	@Override
+	public String guardEscanearMalware() {
+		return "Serĉi malican kodon";
+	}
+
+	@Override
+	public String guardTablaServidores() {
+		return "Problemaj serviloj";
+	}
+
+	@Override
+	public String guardTablaMalware() {
+		return "Trovoj de malica kodo";
+	}
+
+	@Override
+	public String guardColServidor() {
+		return "Servilo";
+	}
+
+	@Override
+	public String guardColDefinicion() {
+		return "Difino";
+	}
+
+	@Override
+	public String guardColMensaje() {
+		return "Mesaĝo";
+	}
+
+	@Override
+	public String guardColUbicacion() {
+		return "Loko";
+	}
+
+	@Override
+	public String guardColClase() {
+		return "Klaso";
+	}
+
+	@Override
+	public String guardColCfr() {
+		return "CFR";
+	}
+
+	@Override
+	public String guardCfr() {
+		return "Malkompili";
+	}
+
+	@Override
+	public String guardCfrTitulo() {
+		return "Malkompilita kodo";
+	}
+
+	@Override
+	public String guardDescripcion1() {
+		return "Ĉi tiu ilo permesas serĉi problemajn servilojn kaj eblajn trovaĵojn de malica kodo en mod-oj.";
+	}
+
+	@Override
+	public String guardDescripcion2() {
+		return "Povas esti falsaj pozitivoj, precipe kiam aliaj difinoj aŭ skaniloj de malica kodo estas agresemaj.";
+	}
+
+	@Override
+	public String guardDescripcion3() {
+		return "La kontrolado de serviloj uzas eksterajn difinojn. Se vi ne elŝutis ilin, vi devos unue elŝuti ilin.";
+	}
+
+	@Override
+	public String guardDescripcion4() {
+		return "Se vi jam havas lokajn difinojn, la ilo permesos al vi decidi, ĉu vi volas reuzi ilin aŭ ĝisdatigi ilin.";
+	}
+
+	@Override
+	public String guardDescripcion5() {
+		return "En la tabelo de malica kodo, se klaso estas disponebla, vi povos malkompili ĝin per CFR por inspekti ĝin.";
+	}
+
+	@Override
+	public String guardEstadoEscaneandoTodo() {
+		return "Skanta servilojn kaj malican kodon...";
+	}
+
+	@Override
+	public String guardEstadoEscaneandoServidores() {
+		return "Serĉanta problemajn servilojn...";
+	}
+
+	@Override
+	public String guardEstadoEscaneandoMalware() {
+		return "Serĉanta malican kodon...";
+	}
+
+	@Override
+	public String guardEstadoListo() {
+		return "Preta";
+	}
+
+	@Override
+	public String guardDefsNoEncontradasTitulo() {
+		return "Difinoj ne trovitaj";
+	}
+
+	@Override
+	public String guardDefsNoEncontradasMensaje() {
+		return "Servilaj difinoj ne trovitaj. Ĉu vi volas elŝuti ilin nun?";
+	}
+
+	@Override
+	public String guardDefsDescargar() {
+		return "Elŝuti";
+	}
+
+	@Override
+	public String guardDefsCancelar() {
+		return "Nuligi";
+	}
+
+	@Override
+	public String guardDefsActualizarTitulo() {
+		return "Servilaj difinoj";
+	}
+
+	@Override
+	public String guardDefsActualizarMensaje() {
+		return "Lokaj difinoj jam ekzistas. Ĉu vi volas uzi ilin tiaj, kiaj ili estas, aŭ ĝisdatigi ilin?";
+	}
+
+	@Override
+	public String guardDefsUsarLocales() {
+		return "Uzi lokajn";
+	}
+
+	@Override
+	public String guardDefsActualizar() {
+		return "Ĝisdatigi";
+	}
+
+	@Override
+	public String guardFuenteDefinicionesTLauncher() {
+		return "Listo de TLauncher";
+	}
+
+	@Override
+	public String guardErrorDescompilar() {
+		return "Eraro dum malkompilado";
+	}
+
+	@Override
+	public String guardColorPanel() {
+		return "Koloro de panelo";
+	}
+
+	@Override
+	public String guardColorTexto() {
+		return "Koloro de teksto";
+	}
+
+	@Override
+	public String guardColorTextoSecundario() {
+		return "Koloro de duaranga teksto";
+	}
+
+	@Override
+	public String guardColorTabla() {
+		return "Koloro de tabeloj";
+	}
+
+	@Override
+	public String guardColorSeleccion() {
+		return "Koloro de selekto";
+	}
+
+	@Override
+	public String guardColorSeleccionTexto() {
+		return "Koloro de elektita teksto";
+	}
+
 }

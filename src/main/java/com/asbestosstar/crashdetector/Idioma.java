@@ -2848,4 +2848,84 @@ public interface Idioma {
 
 	public String mensajeAdvertenciaSKLauncher();
 
+	public String guardTitulo();
+
+	public String guardBotonLateral();
+
+	public String guardEscanearTodo();
+
+	public String guardEscanearServidores();
+
+	public String guardEscanearMalware();
+
+	public String guardTablaServidores();
+
+	public String guardTablaMalware();
+
+	public String guardColServidor();
+
+	public String guardColDefinicion();
+
+	public String guardColMensaje();
+
+	public String guardColUbicacion();
+
+	public String guardColClase();
+
+	public String guardColCfr();
+
+	public String guardCfr();
+
+	public String guardCfrTitulo();
+
+	public String guardDescripcion1();
+
+	public String guardDescripcion2();
+
+	public String guardDescripcion3();
+
+	public String guardDescripcion4();
+
+	public String guardDescripcion5();
+
+	public String guardEstadoEscaneandoTodo();
+
+	public String guardEstadoEscaneandoServidores();
+
+	public String guardEstadoEscaneandoMalware();
+
+	public String guardEstadoListo();
+
+	public String guardDefsNoEncontradasTitulo();
+
+	public String guardDefsNoEncontradasMensaje();
+
+	public String guardDefsDescargar();
+
+	public String guardDefsCancelar();
+
+	public String guardDefsActualizarTitulo();
+
+	public String guardDefsActualizarMensaje();
+
+	public String guardDefsUsarLocales();
+
+	public String guardDefsActualizar();
+
+	public String guardFuenteDefinicionesTLauncher();
+
+	public String guardErrorDescompilar();
+
+	public String guardColorPanel();
+
+	public String guardColorTexto();
+
+	public String guardColorTextoSecundario();
+
+	public String guardColorTabla();
+
+	public String guardColorSeleccion();
+
+	public String guardColorSeleccionTexto();
+
 }

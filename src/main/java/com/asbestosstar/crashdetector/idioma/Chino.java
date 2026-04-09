@@ -7336,4 +7336,204 @@ public class Chino implements Idioma {
 		return "警告：SKLauncher 可能存在的问题";
 	}
 
+	@Override
+	public String guardTitulo() {
+		return "CD Guard";
+	}
+
+	@Override
+	public String guardBotonLateral() {
+		return "防护";
+	}
+
+	@Override
+	public String guardEscanearTodo() {
+		return "扫描服务器和恶意软件";
+	}
+
+	@Override
+	public String guardEscanearServidores() {
+		return "搜索服务器";
+	}
+
+	@Override
+	public String guardEscanearMalware() {
+		return "搜索恶意软件";
+	}
+
+	@Override
+	public String guardTablaServidores() {
+		return "有问题的服务器";
+	}
+
+	@Override
+	public String guardTablaMalware() {
+		return "恶意软件发现";
+	}
+
+	@Override
+	public String guardColServidor() {
+		return "服务器";
+	}
+
+	@Override
+	public String guardColDefinicion() {
+		return "定义";
+	}
+
+	@Override
+	public String guardColMensaje() {
+		return "消息";
+	}
+
+	@Override
+	public String guardColUbicacion() {
+		return "位置";
+	}
+
+	@Override
+	public String guardColClase() {
+		return "类";
+	}
+
+	@Override
+	public String guardColCfr() {
+		return "CFR";
+	}
+
+	@Override
+	public String guardCfr() {
+		return "反编译";
+	}
+
+	@Override
+	public String guardCfrTitulo() {
+		return "反编译代码";
+	}
+
+	@Override
+	public String guardDescripcion1() {
+		return "此工具允许搜索模组中有问题的服务器和潜在的恶意软件发现。";
+	}
+
+	@Override
+	public String guardDescripcion2() {
+		return "可能会出现误报，特别是当其他定义或恶意软件扫描程序过于激进时。";
+	}
+
+	@Override
+	public String guardDescripcion3() {
+		return "服务器检查使用外部定义。如果你尚未下载它们，则需要先进行下载。";
+	}
+
+	@Override
+	public String guardDescripcion4() {
+		return "如果你已有本地定义，工具将允许你决定是重用它们还是进行更新。";
+	}
+
+	@Override
+	public String guardDescripcion5() {
+		return "在恶意软件表中，如果某个类可用，你可以使用 CFR 对其进行反编译以进行检查。";
+	}
+
+	@Override
+	public String guardEstadoEscaneandoTodo() {
+		return "正在扫描服务器和恶意软件...";
+	}
+
+	@Override
+	public String guardEstadoEscaneandoServidores() {
+		return "正在搜索有问题的服务器...";
+	}
+
+	@Override
+	public String guardEstadoEscaneandoMalware() {
+		return "正在搜索恶意软件...";
+	}
+
+	@Override
+	public String guardEstadoListo() {
+		return "就绪";
+	}
+
+	@Override
+	public String guardDefsNoEncontradasTitulo() {
+		return "未找到定义";
+	}
+
+	@Override
+	public String guardDefsNoEncontradasMensaje() {
+		return "未找到服务器定义。是否现在下载？";
+	}
+
+	@Override
+	public String guardDefsDescargar() {
+		return "下载";
+	}
+
+	@Override
+	public String guardDefsCancelar() {
+		return "取消";
+	}
+
+	@Override
+	public String guardDefsActualizarTitulo() {
+		return "服务器定义";
+	}
+
+	@Override
+	public String guardDefsActualizarMensaje() {
+		return "已存在本地定义。你是想直接使用它们还是进行更新？";
+	}
+
+	@Override
+	public String guardDefsUsarLocales() {
+		return "使用本地定义";
+	}
+
+	@Override
+	public String guardDefsActualizar() {
+		return "更新";
+	}
+
+	@Override
+	public String guardFuenteDefinicionesTLauncher() {
+		return "TLauncher 列表";
+	}
+
+	@Override
+	public String guardErrorDescompilar() {
+		return "反编译错误";
+	}
+
+	@Override
+	public String guardColorPanel() {
+		return "面板颜色";
+	}
+
+	@Override
+	public String guardColorTexto() {
+		return "文本颜色";
+	}
+
+	@Override
+	public String guardColorTextoSecundario() {
+		return "次要文本颜色";
+	}
+
+	@Override
+	public String guardColorTabla() {
+		return "表格颜色";
+	}
+
+	@Override
+	public String guardColorSeleccion() {
+		return "选中颜色";
+	}
+
+	@Override
+	public String guardColorSeleccionTexto() {
+		return "选中文本颜色";
+	}
+
 }

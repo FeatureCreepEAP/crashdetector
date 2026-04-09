@@ -43,6 +43,7 @@ import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanelEstiloTL;
 import com.asbestosstar.crashdetector.gui.tipos.corpo.CorpoSAO;
 import com.asbestosstar.crashdetector.gui.tipos.depmap.MapaDeDependenciasGUINimu;
 import com.asbestosstar.crashdetector.gui.tipos.grepr.BusquedaGUISaliorMoon;
+import com.asbestosstar.crashdetector.gui.tipos.guard.GuardiaSketchyVT;
 import com.asbestosstar.crashdetector.gui.tipos.historia.ClioOfficeGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasHoloTalk;
 import com.asbestosstar.crashdetector.gui.tipos.mcreator.EscanerMCreatorGUIRosemiLoveLock;
@@ -124,6 +125,9 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		registrarBotonDeBarraLateralDerecha(TipoGUI.MIXINS, MixinsGUIChiarru.ID, () -> new MixinsGUIChiarru());
 		registrarBotonDeBarraLateralDerecha(TipoGUI.DEPMAP, MapaDeDependenciasGUINimu.ID,
 				() -> new MapaDeDependenciasGUINimu());
+
+		registrarBotonDeBarraLateralDerecha(TipoGUI.GUARD, GuardiaSketchyVT.ID, () -> new GuardiaSketchyVT());
+
 	}
 
 	public PrincipalGUI() {

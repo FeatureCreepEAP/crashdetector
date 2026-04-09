@@ -52,6 +52,7 @@ import com.asbestosstar.crashdetector.gui.tipos.editor_plantilla.EditorPlantilla
 import com.asbestosstar.crashdetector.gui.tipos.editor_plantilla.EditorPlantillaPredeterminado;
 import com.asbestosstar.crashdetector.gui.tipos.editorgui.CDSkinCape;
 import com.asbestosstar.crashdetector.gui.tipos.grepr.BusquedaGUISaliorMoon;
+import com.asbestosstar.crashdetector.gui.tipos.guard.GuardiaSketchyVT;
 import com.asbestosstar.crashdetector.gui.tipos.historia.ClioOfficeGUI;
 import com.asbestosstar.crashdetector.gui.tipos.historia.HistoriaModsGUILegacy;
 import com.asbestosstar.crashdetector.gui.tipos.lanzeresbuenos.LanzerBuenoGUIMaidMint;
@@ -261,6 +262,10 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/nimuspacecat.png",
 				Statics.carpeta.resolve("imagenes/nimuspacecat.png").toFile());
 
+		copiarACarpetaDesdeJar("/imagenes/tlguard.png", Statics.carpeta.resolve("imagenes/tlguard.png").toFile());
+
+		copiarACarpetaDesdeJar("/imagenes/sketchyvt.png", Statics.carpeta.resolve("imagenes/sketchyvt.png").toFile());
+
 //		new File(viajo_ultima_mods.toString()).delete();
 //		try {
 //			new File(viajo_ultima_mods.toString()).createNewFile();
@@ -460,6 +465,7 @@ public class MonitorDePID {
 		TipoGUI.SAMPLER.registrarGUI(SamplerGUIEineLotta.ID, () -> new SamplerGUIEineLotta());
 		TipoGUI.MIXINS.registrarGUI(MixinsGUIChiarru.ID, () -> new MixinsGUIChiarru());
 		TipoGUI.DEPMAP.registrarGUI(MapaDeDependenciasGUINimu.ID, MapaDeDependenciasGUINimu::new);
+		TipoGUI.GUARD.registrarGUI(GuardiaSketchyVT.ID, GuardiaSketchyVT::new);
 
 	}
 

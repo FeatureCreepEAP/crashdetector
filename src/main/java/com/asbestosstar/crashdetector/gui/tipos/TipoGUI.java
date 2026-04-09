@@ -27,6 +27,7 @@ import com.asbestosstar.crashdetector.gui.tipos.editor.EditorFirmasGUI;
 import com.asbestosstar.crashdetector.gui.tipos.editor_plantilla.EditorPlantilla;
 import com.asbestosstar.crashdetector.gui.tipos.editorgui.EditorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.grepr.GrepRGUI;
+import com.asbestosstar.crashdetector.gui.tipos.guard.GuardiaGUI;
 import com.asbestosstar.crashdetector.gui.tipos.historia.HistoriaDeModsGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lanzeresbuenos.LanzerBuenoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lanzeresmalos.LanzerMaloGUI;
@@ -871,6 +872,28 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		}
 	};
 
+	public static TipoGUI<GuardiaGUI> GUARD = new TipoGUI<GuardiaGUI>() {
+		@Override
+		public String id() {
+			return "guard";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.guardBotonLateral();
+		}
+
+		@Override
+		public void registrarGUI(String id, java.util.function.Supplier<GuardiaGUI> gui) {
+			GuardiaGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public java.util.Map<String, java.util.function.Supplier<GuardiaGUI>> obtenerGUIs() {
+			return GuardiaGUI.GUIS;
+		}
+	};
+
 	/**
 	 * Registro estático de todos los tipos de GUI en la lista global.
 	 */
@@ -908,6 +931,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		TIPOS_DE_GUI.add(SAMPLER);
 		TIPOS_DE_GUI.add(MIXINS);
 		TIPOS_DE_GUI.add(DEPMAP);
+		TIPOS_DE_GUI.add(GUARD);
 
 	}
 }
