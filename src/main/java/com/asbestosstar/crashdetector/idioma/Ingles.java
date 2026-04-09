@@ -8066,5 +8066,171 @@ public class Ingles implements Idioma {
 	public String guardColorSeleccionTexto() {
 		return "Selected text colour";
 	}
+	
+	@Override
+	public String texto_de_boton_compartir_instancia_modpack() {
+	    return "Share instance/modpack";
+	}
+
+	@Override
+	public String popup_compartir_instancia_modpack() {
+	    return "The function to share the instance or modpack is not yet implemented.";
+	}
+
+	@Override
+	public String colorBotonCompartirVerdeOscuro() {
+	    return "Main share button colour";
+	}
+
+	@Override
+	public String colorBotonCompartirVerdeClaro() {
+	    return "Link share button colour";
+	}
+
+	@Override
+	public String colorTextoBotonesCompartir() {
+	    return "Share buttons text colour";
+	}
+	
+	@Override
+	public String compartirInstanciaTitulo() {
+	    return "Share instance";
+	}
+
+	@Override
+	public String compartirInstanciaBotonLateral() {
+	    return "Share instance";
+	}
+
+	@Override
+	public String compartirInstanciaFormato() {
+	    return "Format";
+	}
+
+	@Override
+	public String compartirInstanciaServicio() {
+	    return "Upload service";
+	}
+
+	@Override
+	public String compartirInstanciaBotonCompartir() {
+	    return "Package and share";
+	}
+
+	@Override
+	public String compartirInstanciaBotonRefrescar() {
+	    return "Refresh";
+	}
+
+	@Override
+	public String compartirInstanciaEstadoListo() {
+	    return "Ready";
+	}
+
+	@Override
+	public String compartirInstanciaEstadoEmpaquetando() {
+	    return "Packaging selection...";
+	}
+
+	@Override
+	public String compartirInstanciaEstadoSubiendo() {
+	    return "Uploading file...";
+	}
+
+	@Override
+	public String compartirInstanciaEstadoError() {
+	    return "Error";
+	}
+
+	@Override
+	public String compartirInstanciaCodigo() {
+	    return "Code";
+	}
+
+	@Override
+	public String compartirInstanciaEnlace() {
+	    return "Link";
+	}
+
+	@Override
+	public String compartirInstanciaMantenerAbierto() {
+	    return "You must keep the application open for the transfer to remain available.";
+	}
+
+	@Override
+	public String compartirInstanciaSinSeleccion() {
+	    return "No folders or files selected.";
+	}
+
+	@Override
+	public String compartirInstanciaFormatoNoSoportado() {
+	    return "That format is not yet supported.";
+	}
+
+	@Override
+	public String compartirInstanciaServicioNoDisponible() {
+	    return "The selected service is not available.";
+	}
+
+	@Override
+	public String compartirInstanciaSubidaCompleta() {
+	    return "Transfer started successfully.";
+	}
+
+	@Override
+	public String compartirInstanciaErrorSubir() {
+	    return "Could not upload the selected file.";
+	}
+
+	@Override
+	public String compartirInstanciaColorPanel() {
+	    return "Panel colour";
+	}
+
+	@Override
+	public String compartirInstanciaColorTexto() {
+	    return "Text colour";
+	}
+
+	@Override
+	public String compartirInstanciaPolitica1() {
+	    return "Recommended types: mods, configs, saves, worlds, datapacks, resource packs and option files. Avoid including unnecessary private material.";
+	}
+
+	@Override
+	public String compartirInstanciaPolitica2() {
+	    return "Extensions can add their own upload services. Default integrated services should be shown here.";
+	}
+
+	@Override
+	public String compartirInstanciaPolitica3() {
+	    return "wormhole.app: up to 5 GiB as normal upload; between 5 and 10 GiB requires keeping the sender open. In the current project implementation, actual integration is still pending.";
+	}
+
+	@Override
+	public String compartirInstanciaPolitica4() {
+	    return "limewire.com: intended as a service with temporary retention. Not yet supported by this implementation.";
+	}
+
+	@Override
+	public String compartirInstanciaPolitica5() {
+	    return "bittorrent: safest mode as it is direct P2P distribution, without central hosting. Not yet supported by this implementation.";
+	}
+
+	@Override
+	public String compartirInstanciaPolitica6() {
+	    return "By default, the most common folders and files of an instance are selected to facilitate technical support.";
+	}
+
+	@Override
+	public String compartirInstanciaPolitica7() {
+	    return "If you include the internal CrashDetector folder, configurations, logs and auxiliary data will also travel, so you can deselect it if not needed.";
+	}
+	
+	
+	
+	
+	
+	
 
 }

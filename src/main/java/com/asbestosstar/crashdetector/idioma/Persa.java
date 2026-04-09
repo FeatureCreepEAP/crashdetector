@@ -8001,5 +8001,178 @@ public class Persa implements Idioma {
 	public String guardColorSeleccionTexto() {
 		return "رنگ متن انتخاب شده";
 	}
+	@Override
+	public String texto_de_boton_compartir_instancia_modpack() {
+	    return "اشتراک‌گذاری نمونه/بسته ماد";
+	}
+
+	@Override
+	public String popup_compartir_instancia_modpack() {
+	    return "قابلیت اشتراک‌گذاری نمونه یا بسته ماد هنوز پیاده‌سازی نشده است.";
+	}
+
+	@Override
+	public String colorBotonCompartirVerdeOscuro() {
+	    return "رنگ دکمه اصلی اشتراک‌گذاری";
+	}
+
+	@Override
+	public String colorBotonCompartirVerdeClaro() {
+	    return "رنگ دکمه اشتراک‌گذاری لینک‌ها";
+	}
+
+	@Override
+	public String colorTextoBotonesCompartir() {
+	    return "رنگ متن دکمه‌های اشتراک‌گذاری";
+	}
+	
+	@Override
+	public String compartirInstanciaTitulo() {
+	    return "اشتراک‌گذاری نمونه";
+	}
+
+	@Override
+	public String compartirInstanciaBotonLateral() {
+	    return "اشتراک‌گذاری نمونه";
+	}
+
+	@Override
+	public String compartirInstanciaFormato() {
+	    return "فرمت";
+	}
+
+	@Override
+	public String compartirInstanciaServicio() {
+	    return "سرویس آپلود";
+	}
+
+	@Override
+	public String compartirInstanciaBotonCompartir() {
+	    return "بسته‌بندی و اشتراک‌گذاری";
+	}
+
+	@Override
+	public String compartirInstanciaBotonRefrescar() {
+	    return "بازنشانی";
+	}
+
+	@Override
+	public String compartirInstanciaEstadoListo() {
+	    return "آماده";
+	}
+
+	@Override
+	public String compartirInstanciaEstadoEmpaquetando() {
+	    return "در حال بسته‌بندی انتخاب...";
+	}
+
+	@Override
+	public String compartirInstanciaEstadoSubiendo() {
+	    return "در حال آپلود فایل...";
+	}
+
+	@Override
+	public String compartirInstanciaEstadoError() {
+	    return "خطا";
+	}
+
+	@Override
+	public String compartirInstanciaCodigo() {
+	    return "کد";
+	}
+
+	@Override
+	public String compartirInstanciaEnlace() {
+	    return "لینک";
+	}
+
+	@Override
+	public String compartirInstanciaMantenerAbierto() {
+	    return "برای در دسترس ماندن انتقال، باید برنامه را باز نگه دارید.";
+	}
+
+	@Override
+	public String compartirInstanciaSinSeleccion() {
+	    return "هیچ پوشه یا فایلی انتخاب نشده است.";
+	}
+
+	@Override
+	public String compartirInstanciaFormatoNoSoportado() {
+	    return "این فرمت هنوز پشتیبانی نمی‌شود.";
+	}
+
+	@Override
+	public String compartirInstanciaServicioNoDisponible() {
+	    return "سرویس انتخاب شده در دسترس نیست.";
+	}
+
+	@Override
+	public String compartirInstanciaSubidaCompleta() {
+	    return "انتقال با موفقیت آغاز شد.";
+	}
+
+	@Override
+	public String compartirInstanciaErrorSubir() {
+	    return "آپلود فایل انتخاب شده امکان‌پذیر نبود.";
+	}
+
+	@Override
+	public String compartirInstanciaColorPanel() {
+	    return "رنگ پنل";
+	}
+
+	@Override
+	public String compartirInstanciaColorTexto() {
+	    return "رنگ متن";
+	}
+
+	@Override
+	public String compartirInstanciaPolitica1() {
+	    return "انواع توصیه شده: mods، configs، saves، worlds، datapacks، بسته‌های منابع و فایل‌های گزینه‌ها. از گنجاندن مواد خصوصی غیرضروری خودداری کنید.";
+	}
+
+	@Override
+	public String compartirInstanciaPolitica2() {
+	    return "افزونه‌ها می‌توانند سرویس‌های آپلود خود را اضافه کنند. سرویس‌های پیش‌فرض یکپارچه باید در اینجا نمایش داده شوند.";
+	}
+
+	@Override
+	public String compartirInstanciaPolitica3() {
+	    return "wormhole.app: تا 5 گیگابایت به عنوان آپلود عادی؛ بین 5 تا 10 گیگابایت نیازمند باز نگه داشتن فرستنده است. در پیاده‌سازی فعلی پروژه، یکپارچه‌سازی واقعی هنوز در انتظار است.";
+	}
+
+	@Override
+	public String compartirInstanciaPolitica4() {
+	    return "limewire.com: به عنوان سرویسی با نگهداری موقت طراحی شده است. هنوز توسط این پیاده‌سازی پشتیبانی نمی‌شود.";
+	}
+
+	@Override
+	public String compartirInstanciaPolitica5() {
+	    return "bittorrent: ایمن‌ترین حالت به دلیل توزیع مستقیم همتا به همتا (P2P) بدون میزبانی مرکزی. هنوز توسط این پیاده‌سازی پشتیبانی نمی‌شود.";
+	}
+
+	@Override
+	public String compartirInstanciaPolitica6() {
+	    return "به طور پیش‌فرض، رایج‌ترین پوشه‌ها و فایل‌های یک نمونه برای تسهیل پشتیبانی فنی انتخاب می‌شوند.";
+	}
+
+	@Override
+	public String compartirInstanciaPolitica7() {
+	    return "اگر پوشه داخلی CrashDetector را شامل کنید، پیکربندی‌ها، گزارش‌ها و داده‌های کمکی نیز منتقل می‌شوند، بنابراین اگر لازم نیست می‌توانید انتخاب آن را لغو کنید.";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

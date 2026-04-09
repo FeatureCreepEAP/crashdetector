@@ -47,8 +47,7 @@ import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.canario.CanarioDeOrdenJudicialGUI1984;
 
 /**
- * Implementación concreta del diálogo de compartir con apariencia legada. Esta
- * clase maneja específicamente el layout y la apariencia del diálogo.
+ * Implementación concreta del diálogo de compartir con apariencia legada.
  */
 public class DialogoCompartirLegacy extends DialogoCompartir {
 
@@ -65,17 +64,14 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.instant = instant;
 
-		// Panel principal y superior
 		panelPrincipal = new JPanel(new BorderLayout(10, 10));
 		panelSuperior = new JPanel(new BorderLayout(0, 10));
 		panelSuperior.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-		// Texto de explicación (HTML con scroll independiente)
 		textoExplicacion = new javax.swing.JEditorPane("text/html", MonitorDePID.idioma.arco());
 		textoExplicacion.setEditable(false);
 		textoExplicacion.setOpaque(false);
 
-		// Habilitar enlaces clicables
 		textoExplicacion.addHyperlinkListener(e -> {
 			if (e.getEventType() == javax.swing.event.HyperlinkEvent.EventType.ACTIVATED) {
 				try {
@@ -90,11 +86,10 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		scrollTexto.setPreferredSize(new Dimension(10, 180));
 		scrollTexto.setMaximumSize(new Dimension(Integer.MAX_VALUE, 180));
 
-		// Panel de controles (botones + campo de enlace)
 		panelControles = new JPanel();
 		panelControles.setLayout(new javax.swing.BoxLayout(panelControles, javax.swing.BoxLayout.Y_AXIS));
 
-		// ---------- Botón: Compartir informe ----------
+		// Botón: compartir informe con reporte
 		botonCompartirTodos = new JButton(MonitorDePID.idioma.botonDeCompartirInforme());
 		botonCompartirTodos.addActionListener(e -> {
 			setEnviando(true);
@@ -114,7 +109,7 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 
 		panelControles.add(javax.swing.Box.createVerticalStrut(8));
 
-		// ---------- Botón: Markdown ----------
+		// Botón: compartir todos los enlaces sin reporte
 		botonCompartirMarkdown = new JButton(MonitorDePID.idioma.texto_de_boton_compartir_markdown());
 		botonCompartirMarkdown.addActionListener(e -> {
 			setEnviando(true);
@@ -132,9 +127,18 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		botonCompartirMarkdown.setAlignmentX(Component.LEFT_ALIGNMENT);
 		panelControles.add(botonCompartirMarkdown);
 
+		panelControles.add(javax.swing.Box.createVerticalStrut(8));
+
+		// Botón: compartir instancia/modpack
+		botonCompartirInstanciaOModpack = new JButton(MonitorDePID.idioma.texto_de_boton_compartir_instancia_modpack());
+		botonCompartirInstanciaOModpack.addActionListener(e -> compartirInstanciaOModpack(e));
+		int h3 = botonCompartirInstanciaOModpack.getPreferredSize().height;
+		botonCompartirInstanciaOModpack.setMaximumSize(new Dimension(Integer.MAX_VALUE, h3));
+		botonCompartirInstanciaOModpack.setAlignmentX(Component.LEFT_ALIGNMENT);
+		panelControles.add(botonCompartirInstanciaOModpack);
+
 		panelControles.add(javax.swing.Box.createVerticalStrut(10));
 
-		// ---------- Campo de enlace ----------
 		campoEnlaceReporte = new JTextField();
 		campoEnlaceReporte.setEditable(false);
 		int hf = 28;
@@ -142,11 +146,9 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		campoEnlaceReporte.setAlignmentX(Component.LEFT_ALIGNMENT);
 		panelControles.add(campoEnlaceReporte);
 
-		// Agregar texto y controles
 		panelSuperior.add(scrollTexto, BorderLayout.CENTER);
 		panelSuperior.add(panelControles, BorderLayout.SOUTH);
 
-		// ---------- Resto ----------
 		inicializarTabla();
 		inicializarPanelConfiguracion();
 
@@ -157,12 +159,10 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		add(panelPrincipal);
 
 		cargarConsolas();
+		recargarApariencia();
 		this.setVisible(true);
 	}
 
-	/**
-	 * Inicializa la tabla de consolas.
-	 */
 	private void inicializarTabla() {
 		modeloTabla = new DefaultTableModel() {
 			@Override
@@ -179,7 +179,7 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		modeloTabla.addColumn(MonitorDePID.idioma.archivo());
 		modeloTabla.addColumn(MonitorDePID.idioma.abrir());
 		modeloTabla.addColumn(MonitorDePID.idioma.texto_de_boton_compartir_enlace());
-		modeloTabla.addColumn(MonitorDePID.idioma.columna_url()); // <- antes: "URL"
+		modeloTabla.addColumn(MonitorDePID.idioma.columna_url());
 
 		tabla = new JTable(modeloTabla);
 		tabla.setRowHeight(30);
@@ -195,10 +195,6 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		tabla.getColumnModel().getColumn(4).setCellEditor(new URLEditor());
 	}
 
-	/**
-	 * Inicializa el panel de configuración con campos para endpoint, API, sitio y
-	 * anonimización. Incluye botón para el buscador de "canario de orden".
-	 */
 	private void inicializarPanelConfiguracion() {
 		panelConfig = new JPanel(new GridBagLayout());
 		panelConfig.setBorder(BorderFactory.createTitledBorder(MonitorDePID.idioma.titulo_configuracion()));
@@ -208,7 +204,6 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		gbc.gridy = 0;
 		gbc.anchor = GridBagConstraints.WEST;
 
-		// Endpoint
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -220,7 +215,6 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		campoEndpoint.setMinimumSize(new Dimension(400, 25));
 		panelConfig.add(campoEndpoint, gbc);
 
-		// API
 		gbc.gridx = 0;
 		gbc.gridy++;
 		gbc.weightx = 0;
@@ -237,7 +231,7 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		} catch (NoAPIdeRegistro e) {
 			mostrarError(MonitorDePID.idioma.apiDeRegistroNoExiste(), e);
 			api_def = Consola.secure_logger_api;
-			sito_actual = "https://securelogger.net/save/log?"; // se mantiene la compatibilidad de comportamiento
+			sito_actual = "https://securelogger.net/save/log?";
 			error_de_api = true;
 		}
 
@@ -256,7 +250,6 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		comboAPI.setPreferredSize(new Dimension(300, 25));
 		panelConfig.add(comboAPI, gbc);
 
-		// Sitio
 		gbc.gridx = 0;
 		gbc.gridy++;
 		panelConfig.add(new JLabel(MonitorDePID.idioma.sitoDeLogging()), gbc);
@@ -273,7 +266,6 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 			actualizarComboSitios(apiSeleccionada, sitios, null);
 		});
 
-		// Anonimizar
 		gbc.gridx = 0;
 		gbc.gridy++;
 		gbc.gridwidth = 2;
@@ -281,7 +273,6 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		checkAnonimizar.setSelected(ConfigMundial.obtenerInstancia().esAnonimizarRegistros());
 		panelConfig.add(checkAnonimizar, gbc);
 
-		// Guardar config
 		gbc.gridy++;
 		gbc.gridx = 0;
 		gbc.gridwidth = 2;
@@ -290,23 +281,18 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		boton_guardar_de_config.addActionListener(e -> guardarConfig());
 		panelConfig.add(boton_guardar_de_config, gbc);
 
-		// Botón: Buscador de canario de orden (warrant canary)
 		gbc.gridy++;
 		gbc.gridx = 0;
 		gbc.gridwidth = 2;
 		gbc.anchor = GridBagConstraints.WEST;
 		JButton botonCanario = new JButton(MonitorDePID.idioma.buscador_canario_de_orden_label());
 		botonCanario.addActionListener(e -> {
-
 			TipoGUI.CANARIO.obtenerGUIPredeterminado(CanarioDeOrdenJudicialGUI1984.ID,
 					() -> new CanarioDeOrdenJudicialGUI1984()).init();
-
 		});
 		panelConfig.add(botonCanario, gbc);
 	}
 
-	// --- Renderers y Editors para la tabla ---
-	// Renderer para checkboxes
 	private static class CheckBoxRenderer extends JCheckBox implements TableCellRenderer {
 		public CheckBoxRenderer() {
 			setHorizontalAlignment(SwingConstants.CENTER);
@@ -320,7 +306,6 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		}
 	}
 
-	// Renderer para botones
 	private static class ButtonRenderer extends JButton implements TableCellRenderer {
 		public ButtonRenderer(String texto) {
 			setText(texto);
@@ -334,7 +319,6 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		}
 	}
 
-	// Editor para botones (abrir archivo local / compartir enlace por fila)
 	private class ButtonEditor extends DefaultCellEditor {
 		private final String accion;
 		private final JButton button;
@@ -355,16 +339,13 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 					Consola cons = MonitorDePID.consolas.get(currentRow);
 
 					if (accion.equals(MonitorDePID.idioma.abrir())) {
-						// === ABRIR: abrir el archivo local en un editor (NO publicar) ===
 						if (cons == null || cons.archivo == null) {
-							mostrarError(MonitorDePID.idioma.sin_archivo_para_abrir(), null); // <- antes literal
+							mostrarError(MonitorDePID.idioma.sin_archivo_para_abrir(), null);
 							return;
 						}
 						java.io.File f = cons.archivo.toFile();
 						if (!f.exists()) {
-							mostrarError(MonitorDePID.idioma.archivo_no_existe_prefijo() + f.getAbsolutePath(), null); // <-
-																														// antes
-																														// literal
+							mostrarError(MonitorDePID.idioma.archivo_no_existe_prefijo() + f.getAbsolutePath(), null);
 							return;
 						}
 
@@ -372,38 +353,33 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 							java.awt.Desktop d = java.awt.Desktop.getDesktop();
 							try {
 								if (d.isSupported(java.awt.Desktop.Action.EDIT)) {
-									d.edit(f); // preferir editor
+									d.edit(f);
 								} else if (d.isSupported(java.awt.Desktop.Action.OPEN)) {
-									d.open(f); // fallback: abrir con app por defecto
+									d.open(f);
 								} else {
-									// Último recurso: abrir carpeta que lo contiene
 									java.io.File parent = f.getParentFile();
 									if (parent != null && parent.exists()
 											&& d.isSupported(java.awt.Desktop.Action.OPEN)) {
 										d.open(parent);
 									} else {
 										copiarAlPortapapeles(f.getAbsolutePath());
-										mostrarInfo(MonitorDePID.idioma.no_se_pudo_abrir_se_copia_ruta()); // <- antes
-																											// literal
+										mostrarInfo(MonitorDePID.idioma.no_se_pudo_abrir_se_copia_ruta());
 									}
 								}
 							} catch (Exception ex) {
 								CrashDetectorLogger.logException(ex);
-								mostrarError(MonitorDePID.idioma.no_se_pudo_editar_se_copia_ruta(), ex); // <- antes
-																											// literal
+								mostrarError(MonitorDePID.idioma.no_se_pudo_editar_se_copia_ruta(), ex);
 								copiarAlPortapapeles(f.getAbsolutePath());
 							}
 						} else {
 							copiarAlPortapapeles(f.getAbsolutePath());
-							mostrarInfo(MonitorDePID.idioma.escritorio_no_soportado_se_copia_ruta()); // <- antes
-																										// literal
+							mostrarInfo(MonitorDePID.idioma.escritorio_no_soportado_se_copia_ruta());
 						}
 						return;
 					}
 
 					if (accion.equals(MonitorDePID.idioma.texto_de_boton_compartir_enlace())) {
-						// === COMPARTIR ENLACE: publicar y mostrar/guardar enlaces ===
-						java.util.List<String> urls = cons.obtainerEnlaces(); // <- publica si hace falta
+						java.util.List<String> urls = cons.obtainerEnlaces();
 						String celda = (urls == null || urls.isEmpty()) ? "" : String.join("\n", urls);
 						modeloTabla.setValueAt(celda, currentRow, 4);
 
@@ -427,7 +403,7 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 					mostrarError(MonitorDePID.idioma.limite_de_solicitudes(), ex);
 				} catch (Exception ex) {
 					CrashDetectorLogger.logException(ex);
-					mostrarError(MonitorDePID.idioma.error_inesperado_al_procesar_boton(), ex); // <- antes literal
+					mostrarError(MonitorDePID.idioma.error_inesperado_al_procesar_boton(), ex);
 				} finally {
 					try {
 						fireEditingStopped();
@@ -452,7 +428,6 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		}
 	}
 
-	// Editor para URLs con copiado
 	private static class URLEditor extends DefaultCellEditor {
 		private final JTextField textField;
 
@@ -483,11 +458,9 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		}
 	}
 
-	// Renderer para URLs con copiado
 	private static class URLEditorRenderer extends JLabel implements TableCellRenderer {
 		public URLEditorRenderer() {
 			setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.TEXT_CURSOR));
-			// ConfigColor con Color como parámetro predeterminado
 			setForeground(ConfigColor.de("dialogo_compartir_enlace", Color.BLUE.darker()).obtener());
 			addMouseListener(new java.awt.event.MouseAdapter() {
 				@Override
@@ -519,18 +492,56 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		colorFondoCampo.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondoCampoCompartir());
 		ret.add(colorFondoCampo);
 
+		// Verde oscuro para "compartir informe" y "compartir instancia/modpack"
+		ConfigColor colorBotonVerdeOscuro = ConfigColor.de("dialogo_compartir_boton_verde_oscuro", new Color(0, 100, 0));
+		colorBotonVerdeOscuro.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBotonCompartirVerdeOscuro());
+		ret.add(colorBotonVerdeOscuro);
+
+		// Verde más claro para "compartir todos los enlaces sin reporte"
+		ConfigColor colorBotonVerdeClaro = ConfigColor.de("dialogo_compartir_boton_verde_claro", new Color(102, 170, 102));
+		colorBotonVerdeClaro.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBotonCompartirVerdeClaro());
+		ret.add(colorBotonVerdeClaro);
+
+		// Color de texto para los botones verdes
+		ConfigColor colorTextoBotonesCompartir = ConfigColor.de("dialogo_compartir_boton_texto", Color.WHITE);
+		colorTextoBotonesCompartir.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTextoBotonesCompartir());
+		ret.add(colorTextoBotonesCompartir);
+
 		return ret;
 	}
 
 	@Override
 	public void recargarApariencia() {
-		// Cambia el color de fondo del campo de enlace del informe usando ConfigColor
 		if (campoEnlaceReporte != null) {
-			// ConfigColor con Color como parámetro predeterminado
 			campoEnlaceReporte.setBackground(ConfigColor.de("dialogo_compartir_campo_fondo", Color.YELLOW).obtener());
 		}
-		// Aquí se pueden agregar más cambios de apariencia específicos para esta
-		// implementación
-	}
 
+		// En macOS no se fuerzan los colores para respetar mejor el estilo nativo.
+		if (!esMacOS()) {
+			Color verdeOscuro = ConfigColor.de("dialogo_compartir_boton_verde_oscuro", new Color(0, 100, 0)).obtener();
+			Color verdeClaro = ConfigColor.de("dialogo_compartir_boton_verde_claro", new Color(102, 170, 102)).obtener();
+			Color colorTexto = ConfigColor.de("dialogo_compartir_boton_texto", Color.WHITE).obtener();
+
+			if (botonCompartirTodos != null) {
+				botonCompartirTodos.setOpaque(true);
+				botonCompartirTodos.setContentAreaFilled(true);
+				botonCompartirTodos.setBackground(verdeOscuro);
+				botonCompartirTodos.setForeground(colorTexto);
+			}
+
+			if (botonCompartirMarkdown != null) {
+				botonCompartirMarkdown.setOpaque(true);
+				botonCompartirMarkdown.setContentAreaFilled(true);
+				botonCompartirMarkdown.setBackground(verdeClaro);
+				botonCompartirMarkdown.setForeground(colorTexto);
+			}
+
+			if (botonCompartirInstanciaOModpack != null) {
+				botonCompartirInstanciaOModpack.setOpaque(true);
+				botonCompartirInstanciaOModpack.setContentAreaFilled(true);
+				botonCompartirInstanciaOModpack.setBackground(verdeOscuro);
+				botonCompartirInstanciaOModpack.setForeground(colorTexto);
+			}
+		}
+	}
 }

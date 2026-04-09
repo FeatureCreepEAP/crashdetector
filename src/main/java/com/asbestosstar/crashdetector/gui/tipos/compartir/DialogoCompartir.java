@@ -28,7 +28,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
@@ -46,6 +45,7 @@ import com.asbestosstar.crashdetector.api_sito_registro.LimteDeTasa;
 import com.asbestosstar.crashdetector.api_sito_registro.NoAPIdeRegistro;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
+import com.asbestosstar.crashdetector.gui.tipos.compartir_instancia.CompartirInstanciaLegacy;
 
 /**
  * Clase abstracta que define la funcionalidad base para el diálogo de
@@ -54,7 +54,7 @@ import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
  */
 public abstract class DialogoCompartir extends JFrame implements CrashDetectorGUI {
 
-	// Componentes de la interfaz (ahora públicos)
+	// Componentes de la interfaz
 	public DefaultTableModel modeloTabla;
 	public JTextField campoEndpoint;
 	public JComboBox<String> comboAPI;
@@ -64,6 +64,7 @@ public abstract class DialogoCompartir extends JFrame implements CrashDetectorGU
 	public JTextField campoEnlaceReporte;
 	public JButton botonCompartirTodos;
 	public JButton botonCompartirMarkdown;
+	public JButton botonCompartirInstanciaOModpack;
 
 	// Variables internas para la lógica
 	protected JEditorPane textoExplicacion;
@@ -75,18 +76,29 @@ public abstract class DialogoCompartir extends JFrame implements CrashDetectorGU
 
 	/**
 	 * Prepara y muestra el diálogo con la información del instante proporcionado.
-	 * Este método ahora es abstracto para forzar a las implementaciones concretas a
-	 * definir el layout y la apariencia.
 	 *
 	 * @param instant El instante de tiempo para el cual se prepara el informe.
 	 */
 	public abstract void preperar(Instant instant);
 
-	// --- Funcionalidad Lógica ---
+	/**
+	 * Devuelve true si el sistema operativo actual es macOS.
+	 */
+	protected boolean esMacOS() {
+		String nombreSO = System.getProperty("os.name");
+		return nombreSO != null && nombreSO.toLowerCase().contains("mac");
+	}
+
 	protected void setEnviando(boolean enviando) {
 		try {
 			if (botonCompartirTodos != null) {
 				botonCompartirTodos.setEnabled(!enviando);
+			}
+			if (botonCompartirMarkdown != null) {
+				botonCompartirMarkdown.setEnabled(!enviando);
+			}
+			if (botonCompartirInstanciaOModpack != null) {
+				botonCompartirInstanciaOModpack.setEnabled(!enviando);
 			}
 			setCursor(enviando ? Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR) : Cursor.getDefaultCursor());
 		} catch (Throwable ignored) {
@@ -156,8 +168,6 @@ public abstract class DialogoCompartir extends JFrame implements CrashDetectorGU
 			}
 			MonitorDePID.enlace = enlace;
 
-			// Actualizar URLs individuales (todas las partes por fila, separadas por
-			// espacio)
 			if (modeloTabla != null) {
 				for (int j = 0; j < filasSel.size(); j++) {
 					int row = filasSel.get(j);
@@ -166,7 +176,6 @@ public abstract class DialogoCompartir extends JFrame implements CrashDetectorGU
 					try {
 						urls = cons.obtainerEnlaces();
 					} catch (DemasiadoGrande | ErrorConPublicar | NoAPIdeRegistro | LimteDeTasa e1) {
-						// TODO Auto-generated catch block
 						mostrarError(e1.getMessage(), e1);
 						return;
 					}
@@ -175,7 +184,6 @@ public abstract class DialogoCompartir extends JFrame implements CrashDetectorGU
 				}
 			}
 
-			// Intentar abrir en navegador; si falla, copiar al portapapeles
 			try {
 				if (enlace != null && !enlace.isEmpty() && Desktop.isDesktopSupported()) {
 					Desktop.getDesktop().browse(new URL(enlace).toURI());
@@ -191,7 +199,23 @@ public abstract class DialogoCompartir extends JFrame implements CrashDetectorGU
 		}
 	}
 
-	// Actualiza el combo de sitios para la API seleccionada
+	/**
+	 * Acción provisional para compartir la instancia o modpack.
+	 * Por ahora solo muestra un popup informativo.
+	 */
+//	public void compartirInstanciaOModpack(ActionEvent e) {
+//		mostrarInfo(MonitorDePID.idioma.popup_compartir_instancia_modpack());
+//	}
+	
+	public void compartirInstanciaOModpack(ActionEvent e) {
+		TipoGUI.COMPARTIR_INSTANCIA
+				.obtenerGUIPredeterminado(CompartirInstanciaLegacy.ID, CompartirInstanciaLegacy::new)
+				.init();
+	}
+	
+	
+	
+
 	protected void actualizarComboSitios(String apiNombre, Set<String> sitios, String sitioSeleccionado) {
 		if (comboSitioRegistro != null) {
 			comboSitioRegistro.removeAllItems();
@@ -239,37 +263,18 @@ public abstract class DialogoCompartir extends JFrame implements CrashDetectorGU
 
 	@Override
 	public void init() {
-		// TODO ¡NO USAR, usar preperar!
+		// NO USAR, usar preperar
 	}
 
 	public APIdeSitioDeRegistro obtenerAPI() throws NoAPIdeRegistro {
 		try {
 			return APIdeSitioDeRegistro.obtenerAPIdeConfig();
 		} catch (NoAPIdeRegistro e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
 			throw new NoAPIdeRegistro();
 		}
-
 	}
 
-	/**
-	 * Genera Markdown con enlaces directos a los logs seleccionados. AHORA soporta
-	 * múltiples enlaces por cada consola (cuando la API parte el archivo).
-	 *
-	 * - Mantiene la tabla (columna URL) sincronizada con TODAS las partes (una por
-	 * línea). - Copia el Markdown al portapapeles y lo coloca en el campo de
-	 * enlace. - Orden de archivos: latest.log, debug.log, launcher.log, luego el
-	 * resto alfabético. - Si un log se partió en varias URLs, se etiqueta como:
-	 * nombre (parte N).
-	 *
-	 * @throws DemasiadoGrande  si la API reporta que una parte sigue siendo grande
-	 * @throws ErrorConPublicar si ocurre un error específico de publicación
-	 * @throws NoAPIdeRegistro  si no hay API seleccionada/configurada
-	 */
 	public void compartirSoloEnlacesMarkdown(ActionEvent e) throws DemasiadoGrande, ErrorConPublicar, NoAPIdeRegistro {
-
-		// 1) Recolectar filas y consolas seleccionadas
 		final List<Integer> filasSel = new ArrayList<>();
 		final ArrayList<Consola> seleccionados = new ArrayList<>();
 		if (modeloTabla != null) {
@@ -284,7 +289,6 @@ public abstract class DialogoCompartir extends JFrame implements CrashDetectorGU
 			return;
 		}
 
-		// Contenedor de resultado por fila (índice estable)
 		final class Res {
 			final int rowIndex;
 			final String nombreArchivo;
@@ -297,7 +301,6 @@ public abstract class DialogoCompartir extends JFrame implements CrashDetectorGU
 			}
 		}
 
-		// 2) Ejecutar publicaciones/obtención de enlaces en paralelo (máx 6 hilos)
 		final int MAX_HILOS = 6;
 		ExecutorService pool = Executors.newFixedThreadPool(Math.min(MAX_HILOS, Math.max(1, filasSel.size())));
 		List<Future<Res>> tareas = new ArrayList<>(filasSel.size());
@@ -310,7 +313,7 @@ public abstract class DialogoCompartir extends JFrame implements CrashDetectorGU
 				public Res call() throws Exception {
 					List<String> urls;
 					try {
-						urls = cons.obtainerEnlaces(); // puede publicar y devolver varias partes
+						urls = cons.obtainerEnlaces();
 					} catch (Throwable t) {
 						if (t instanceof DemasiadoGrande)
 							throw (DemasiadoGrande) t;
@@ -328,7 +331,6 @@ public abstract class DialogoCompartir extends JFrame implements CrashDetectorGU
 		}
 		pool.shutdown();
 
-		// 3) Recoger resultados en orden estable (por archivo y parte)
 		final class Item {
 			String archivoBase;
 			String etiqueta;
@@ -347,7 +349,6 @@ public abstract class DialogoCompartir extends JFrame implements CrashDetectorGU
 		try {
 			for (Future<Res> f : tareas) {
 				Res r = f.get();
-				// Actualizar la celda URL (columna 4) con todas las partes separadas por \n
 				String celda = (r.urls == null || r.urls.isEmpty()) ? "" : String.join("\n", r.urls);
 				if (modeloTabla != null) {
 					modeloTabla.setValueAt(celda, r.rowIndex, 4);
@@ -383,8 +384,6 @@ public abstract class DialogoCompartir extends JFrame implements CrashDetectorGU
 			return;
 		}
 
-		// 4) Ordenar: latest.log, debug.log, launcher.log, luego alfabético; dentro del
-		// mismo, por parte
 		final java.util.function.Function<String, Integer> peso = nombre -> {
 			String n = (nombre == null ? "" : nombre.toLowerCase());
 			if (n.equals("latest.log"))
@@ -406,7 +405,6 @@ public abstract class DialogoCompartir extends JFrame implements CrashDetectorGU
 			return Integer.compare(a.parteIndex, b.parteIndex);
 		});
 
-		// 5) Construir Markdown en una sola línea (separado por espacios)
 		StringBuilder md = new StringBuilder();
 		for (Item it : items) {
 			if (it.url != null && !it.url.isEmpty()) {
@@ -423,5 +421,4 @@ public abstract class DialogoCompartir extends JFrame implements CrashDetectorGU
 		copiarAlPortapapeles(markdown);
 		mostrarInfo(MonitorDePID.idioma.copiadoAlPortapapeles());
 	}
-
 }

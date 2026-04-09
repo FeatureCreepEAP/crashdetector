@@ -8047,4 +8047,177 @@ public class Ruso implements Idioma {
 		return "Цвет выделенного текста";
 	}
 
+	@Override
+	public String texto_de_boton_compartir_instancia_modpack() {
+	    return "Поделиться экземпляром/модпаком";
+	}
+
+	@Override
+	public String popup_compartir_instancia_modpack() {
+	    return "Функция обмена экземпляром или модпаком еще не реализована.";
+	}
+
+	@Override
+	public String colorBotonCompartirVerdeOscuro() {
+	    return "Цвет основной кнопки «Поделиться»";
+	}
+
+	@Override
+	public String colorBotonCompartirVerdeClaro() {
+	    return "Цвет кнопки «Поделиться ссылкой»";
+	}
+
+	@Override
+	public String colorTextoBotonesCompartir() {
+	    return "Цвет текста кнопок «Поделиться»";
+	}
+	
+	@Override
+	public String compartirInstanciaTitulo() {
+	    return "Поделиться экземпляром";
+	}
+
+	@Override
+	public String compartirInstanciaBotonLateral() {
+	    return "Поделиться экземпляром";
+	}
+
+	@Override
+	public String compartirInstanciaFormato() {
+	    return "Формат";
+	}
+
+	@Override
+	public String compartirInstanciaServicio() {
+	    return "Сервис загрузки";
+	}
+
+	@Override
+	public String compartirInstanciaBotonCompartir() {
+	    return "Упаковать и поделиться";
+	}
+
+	@Override
+	public String compartirInstanciaBotonRefrescar() {
+	    return "Обновить";
+	}
+
+	@Override
+	public String compartirInstanciaEstadoListo() {
+	    return "Готово";
+	}
+
+	@Override
+	public String compartirInstanciaEstadoEmpaquetando() {
+	    return "Упаковка выбранного...";
+	}
+
+	@Override
+	public String compartirInstanciaEstadoSubiendo() {
+	    return "Загрузка файла...";
+	}
+
+	@Override
+	public String compartirInstanciaEstadoError() {
+	    return "Ошибка";
+	}
+
+	@Override
+	public String compartirInstanciaCodigo() {
+	    return "Код";
+	}
+
+	@Override
+	public String compartirInstanciaEnlace() {
+	    return "Ссылка";
+	}
+
+	@Override
+	public String compartirInstanciaMantenerAbierto() {
+	    return "Вы должны держать приложение открытым, чтобы передача оставалась доступной.";
+	}
+
+	@Override
+	public String compartirInstanciaSinSeleccion() {
+	    return "Папки или файлы не выбраны.";
+	}
+
+	@Override
+	public String compartirInstanciaFormatoNoSoportado() {
+	    return "Этот формат пока не поддерживается.";
+	}
+
+	@Override
+	public String compartirInstanciaServicioNoDisponible() {
+	    return "Выбранный сервис недоступен.";
+	}
+
+	@Override
+	public String compartirInstanciaSubidaCompleta() {
+	    return "Передача успешно начата.";
+	}
+
+	@Override
+	public String compartirInstanciaErrorSubir() {
+	    return "Не удалось загрузить выбранный файл.";
+	}
+
+	@Override
+	public String compartirInstanciaColorPanel() {
+	    return "Цвет панели";
+	}
+
+	@Override
+	public String compartirInstanciaColorTexto() {
+	    return "Цвет текста";
+	}
+
+	@Override
+	public String compartirInstanciaPolitica1() {
+	    return "Рекомендуемые типы: mods, configs, saves, worlds, datapacks, пакеты ресурсов и файлы настроек. Избегайте включения ненужных личных материалов.";
+	}
+
+	@Override
+	public String compartirInstanciaPolitica2() {
+	    return "Расширения могут добавлять свои собственные сервисы загрузки. Встроенные по умолчанию сервисы должны отображаться здесь.";
+	}
+
+	@Override
+	public String compartirInstanciaPolitica3() {
+	    return "wormhole.app: до 5 ГиБ как обычная загрузка; от 5 до 10 ГиБ требует держать отправителя открытым. В текущей реализации проекта фактическая интеграция все еще ожидается.";
+	}
+
+	@Override
+	public String compartirInstanciaPolitica4() {
+	    return "limewire.com: предназначен как сервис с временным хранением. Пока не поддерживается этой реализацией.";
+	}
+
+	@Override
+	public String compartirInstanciaPolitica5() {
+	    return "bittorrent: самый безопасный режим, так как это прямое P2P-распределение без центрального хостинга. Пока не поддерживается этой реализацией.";
+	}
+
+	@Override
+	public String compartirInstanciaPolitica6() {
+	    return "По умолчанию выбираются наиболее распространенные папки и файлы экземпляра для облегчения технической поддержки.";
+	}
+
+	@Override
+	public String compartirInstanciaPolitica7() {
+	    return "Если вы включите внутреннюю папку CrashDetector, также будут переданы конфигурации, журналы и вспомогательные данные, поэтому вы можете снять выбор, если это не нужно.";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

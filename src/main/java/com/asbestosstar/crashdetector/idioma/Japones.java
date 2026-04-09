@@ -7717,5 +7717,171 @@ public class Japones implements Idioma {
 	public String guardColorSeleccionTexto() {
 		return "選択されたテキストの色";
 	}
+	@Override
+	public String texto_de_boton_compartir_instancia_modpack() {
+	    return "インスタンス/Modパックを共有";
+	}
+
+	@Override
+	public String popup_compartir_instancia_modpack() {
+	    return "インスタンスまたはModパックを共有する機能はまだ実装されていません。";
+	}
+
+	@Override
+	public String colorBotonCompartirVerdeOscuro() {
+	    return "メイン共有ボタンの色";
+	}
+
+	@Override
+	public String colorBotonCompartirVerdeClaro() {
+	    return "リンク共有ボタンの色";
+	}
+
+	@Override
+	public String colorTextoBotonesCompartir() {
+	    return "共有ボタンのテキスト色";
+	}
+	@Override
+	public String compartirInstanciaTitulo() {
+	    return "インスタンスを共有";
+	}
+
+	@Override
+	public String compartirInstanciaBotonLateral() {
+	    return "インスタンスを共有";
+	}
+
+	@Override
+	public String compartirInstanciaFormato() {
+	    return "形式";
+	}
+
+	@Override
+	public String compartirInstanciaServicio() {
+	    return "アップロードサービス";
+	}
+
+	@Override
+	public String compartirInstanciaBotonCompartir() {
+	    return "パッケージ化して共有";
+	}
+
+	@Override
+	public String compartirInstanciaBotonRefrescar() {
+	    return "更新";
+	}
+
+	@Override
+	public String compartirInstanciaEstadoListo() {
+	    return "準備完了";
+	}
+
+	@Override
+	public String compartirInstanciaEstadoEmpaquetando() {
+	    return "選択内容をパッケージ化中...";
+	}
+
+	@Override
+	public String compartirInstanciaEstadoSubiendo() {
+	    return "ファイルをアップロード中...";
+	}
+
+	@Override
+	public String compartirInstanciaEstadoError() {
+	    return "エラー";
+	}
+
+	@Override
+	public String compartirInstanciaCodigo() {
+	    return "コード";
+	}
+
+	@Override
+	public String compartirInstanciaEnlace() {
+	    return "リンク";
+	}
+
+	@Override
+	public String compartirInstanciaMantenerAbierto() {
+	    return "転送を利用可能にするには、アプリケーションを開いたままにする必要があります。";
+	}
+
+	@Override
+	public String compartirInstanciaSinSeleccion() {
+	    return "フォルダまたはファイルが選択されていません。";
+	}
+
+	@Override
+	public String compartirInstanciaFormatoNoSoportado() {
+	    return "その形式はまだサポートされていません。";
+	}
+
+	@Override
+	public String compartirInstanciaServicioNoDisponible() {
+	    return "選択したサービスは利用できません。";
+	}
+
+	@Override
+	public String compartirInstanciaSubidaCompleta() {
+	    return "転送が正常に開始されました。";
+	}
+
+	@Override
+	public String compartirInstanciaErrorSubir() {
+	    return "選択したファイルをアップロードできませんでした。";
+	}
+
+	@Override
+	public String compartirInstanciaColorPanel() {
+	    return "パネルの色";
+	}
+
+	@Override
+	public String compartirInstanciaColorTexto() {
+	    return "テキストの色";
+	}
+
+	@Override
+	public String compartirInstanciaPolitica1() {
+	    return "推奨されるタイプ: mods、configs、saves、worlds、datapacks、リソースパック、オプションファイル。不要な個人情報は含めないでください。";
+	}
+
+	@Override
+	public String compartirInstanciaPolitica2() {
+	    return "拡張機能は独自のアップロードサービスを追加できます。デフォルトで統合されているサービスはここに表示されます。";
+	}
+
+	@Override
+	public String compartirInstanciaPolitica3() {
+	    return "wormhole.app: 通常のアップロードとして最大 5 GiBまで可能; 5〜10 GiBの場合は送信側を開いたままにする必要があります。現在のプロジェクト実装では、実際の統合はまだ保留中です。";
+	}
+
+	@Override
+	public String compartirInstanciaPolitica4() {
+	    return "limewire.com: 一時保持を目的としたサービスです。この実装ではまだサポートされていません。";
+	}
+
+	@Override
+	public String compartirInstanciaPolitica5() {
+	    return "bittorrent: 中央ホスティングのない直接P2P配布であるため、最も安全なモードです。この実装ではまだサポートされていません。";
+	}
+
+	@Override
+	public String compartirInstanciaPolitica6() {
+	    return "技術サポートを容易にするために、デフォルトでインスタンスの最も一般的なフォルダとファイルが選択されます。";
+	}
+
+	@Override
+	public String compartirInstanciaPolitica7() {
+	    return "CrashDetectorの内部フォルダを含めると、設定、ログ、および補助データも転送されるため、不要であれば選択を解除できます。";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

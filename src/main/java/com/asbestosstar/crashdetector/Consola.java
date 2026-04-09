@@ -22,6 +22,7 @@ import com.asbestosstar.crashdetector.api_sito_registro.APIdeSitioDeRegistro;
 import com.asbestosstar.crashdetector.api_sito_registro.CrashDetectorPasteAPI;
 import com.asbestosstar.crashdetector.api_sito_registro.DemasiadoGrande;
 import com.asbestosstar.crashdetector.api_sito_registro.ErrorConPublicar;
+import com.asbestosstar.crashdetector.api_sito_registro.GnomeBotDevAPI;
 import com.asbestosstar.crashdetector.api_sito_registro.LimteDeTasa;
 import com.asbestosstar.crashdetector.api_sito_registro.MCLogsAPI;
 import com.asbestosstar.crashdetector.api_sito_registro.NoAPIdeRegistro;
@@ -102,6 +103,9 @@ public class Consola {
 		APIdeSitioDeRegistro.APIS.add(new MCLogsAPI());
 		APIdeSitioDeRegistro.APIS.add(new PastesDevAPI());
 		APIdeSitioDeRegistro.APIS.add(new CrashDetectorPasteAPI());
+		APIdeSitioDeRegistro.APIS.add(new  GnomeBotDevAPI());
+
+		
 		divisores.add(new TLauncherConsolaDivisor());
 		divisores.add(new HolaMundoConsolaDivisidor());
 		// divisores.add(new VainillaConsolaDivisor());

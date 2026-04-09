@@ -41,6 +41,7 @@ import com.asbestosstar.crashdetector.gui.tipos.cdlauncher.CDLauncherGUISaliorMo
 import com.asbestosstar.crashdetector.gui.tipos.cfr.BuscarParaCFR;
 import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrSakuraRiddle;
 import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartirLegacy;
+import com.asbestosstar.crashdetector.gui.tipos.compartir_instancia.CompartirInstanciaLegacy;
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanelEstiloTL;
 import com.asbestosstar.crashdetector.gui.tipos.consola.ConsolaDesarrolladorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.consola.ConsolaDesarrolladorGUITL;
@@ -466,7 +467,7 @@ public class MonitorDePID {
 		TipoGUI.MIXINS.registrarGUI(MixinsGUIChiarru.ID, () -> new MixinsGUIChiarru());
 		TipoGUI.DEPMAP.registrarGUI(MapaDeDependenciasGUINimu.ID, MapaDeDependenciasGUINimu::new);
 		TipoGUI.GUARD.registrarGUI(GuardiaSketchyVT.ID, GuardiaSketchyVT::new);
-
+		TipoGUI.COMPARTIR_INSTANCIA.registrarGUI(CompartirInstanciaLegacy.ID, CompartirInstanciaLegacy::new);
 	}
 
 	private static void monitor_proceso(long pid) {

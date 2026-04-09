@@ -18,6 +18,7 @@ import com.asbestosstar.crashdetector.gui.tipos.canario.CanarioDeOrdenJudicialGU
 import com.asbestosstar.crashdetector.gui.tipos.cdlauncher.CDLauncherGUI;
 import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrBase;
 import com.asbestosstar.crashdetector.gui.tipos.compartir.DialogoCompartir;
+import com.asbestosstar.crashdetector.gui.tipos.compartir_instancia.CompartirInstanciaGUI;
 import com.asbestosstar.crashdetector.gui.tipos.config.ConfigPanel;
 import com.asbestosstar.crashdetector.gui.tipos.consola.ConsolaDesarrolladorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.corpo.CorpoBase;
@@ -894,6 +895,45 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		}
 	};
 
+	
+	public static TipoGUI<CompartirInstanciaGUI> COMPARTIR_INSTANCIA = new TipoGUI<CompartirInstanciaGUI>() {
+		@Override
+		public String id() {
+			return "compartir_instancia";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.compartirInstanciaBotonLateral();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<CompartirInstanciaGUI> gui) {
+			CompartirInstanciaGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<CompartirInstanciaGUI>> obtenerGUIs() {
+			return CompartirInstanciaGUI.GUIS;
+		}
+	};
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/**
 	 * Registro estático de todos los tipos de GUI en la lista global.
 	 */
@@ -932,6 +972,13 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		TIPOS_DE_GUI.add(MIXINS);
 		TIPOS_DE_GUI.add(DEPMAP);
 		TIPOS_DE_GUI.add(GUARD);
+		TIPOS_DE_GUI.add(COMPARTIR_INSTANCIA);
 
+		
+		
+		
+		
+		
+		
 	}
 }

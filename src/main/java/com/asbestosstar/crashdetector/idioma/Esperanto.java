@@ -8014,5 +8014,177 @@ public class Esperanto implements Idioma {
 	public String guardColorSeleccionTexto() {
 		return "Koloro de elektita teksto";
 	}
+	@Override
+	public String texto_de_boton_compartir_instancia_modpack() {
+	    return "Kunhavigi instancon/mod-pakon";
+	}
 
+	@Override
+	public String popup_compartir_instancia_modpack() {
+	    return "La funkcio por kunhavigi la instancon aŭ la mod-pakon ankoraŭ ne estas implementita.";
+	}
+
+	@Override
+	public String colorBotonCompartirVerdeOscuro() {
+	    return "Koloro de la ĉefa kunhaviga butono";
+	}
+
+	@Override
+	public String colorBotonCompartirVerdeClaro() {
+	    return "Koloro de la butono por kunhavigi ligilojn";
+	}
+
+	@Override
+	public String colorTextoBotonesCompartir() {
+	    return "Koloro de la teksto de la kunhavigaj butonoj";
+	}
+	@Override
+	public String compartirInstanciaTitulo() {
+	    return "Kunhavigi instancon";
+	}
+
+	@Override
+	public String compartirInstanciaBotonLateral() {
+	    return "Kunhavigi instancon";
+	}
+
+	@Override
+	public String compartirInstanciaFormato() {
+	    return "Formato";
+	}
+
+	@Override
+	public String compartirInstanciaServicio() {
+	    return "Servico de alŝuto";
+	}
+
+	@Override
+	public String compartirInstanciaBotonCompartir() {
+	    return "Paki kaj kunhavigi";
+	}
+
+	@Override
+	public String compartirInstanciaBotonRefrescar() {
+	    return "Aktualigi";
+	}
+
+	@Override
+	public String compartirInstanciaEstadoListo() {
+	    return "Preta";
+	}
+
+	@Override
+	public String compartirInstanciaEstadoEmpaquetando() {
+	    return "Pakante selekton...";
+	}
+
+	@Override
+	public String compartirInstanciaEstadoSubiendo() {
+	    return "Alŝutante dosieron...";
+	}
+
+	@Override
+	public String compartirInstanciaEstadoError() {
+	    return "Eraro";
+	}
+
+	@Override
+	public String compartirInstanciaCodigo() {
+	    return "Kodo";
+	}
+
+	@Override
+	public String compartirInstanciaEnlace() {
+	    return "Ligilo";
+	}
+
+	@Override
+	public String compartirInstanciaMantenerAbierto() {
+	    return "Vi devas teni la aplikaĵon malfermita por ke la transigo restu disponebla.";
+	}
+
+	@Override
+	public String compartirInstanciaSinSeleccion() {
+	    return "Neniu dosierujo aŭ dosiero estas elektita.";
+	}
+
+	@Override
+	public String compartirInstanciaFormatoNoSoportado() {
+	    return "Tiu formato ankoraŭ ne estas subtenata.";
+	}
+
+	@Override
+	public String compartirInstanciaServicioNoDisponible() {
+	    return "La elektita servico ne estas disponebla.";
+	}
+
+	@Override
+	public String compartirInstanciaSubidaCompleta() {
+	    return "Transigo sukcese komencita.";
+	}
+
+	@Override
+	public String compartirInstanciaErrorSubir() {
+	    return "Ne eblis alŝuti la elektitan dosieron.";
+	}
+
+	@Override
+	public String compartirInstanciaColorPanel() {
+	    return "Koloro de panelo";
+	}
+
+	@Override
+	public String compartirInstanciaColorTexto() {
+	    return "Koloro de teksto";
+	}
+
+	@Override
+	public String compartirInstanciaPolitica1() {
+	    return "Rekomenditaj tipoj: mods, configs, saves, worlds, datapacks, risurcpakoj kaj opciodosieroj. Evitu inkluzivi nenecesan privatan materialon.";
+	}
+
+	@Override
+	public String compartirInstanciaPolitica2() {
+	    return "Etendaĵoj povas aldoni siajn proprajn alŝut-servicojn. La defaŭlte integritaj servicoj devas esti montritaj ĉi tie.";
+	}
+
+	@Override
+	public String compartirInstanciaPolitica3() {
+	    return "wormhole.app: ĝis 5 GiB kiel normala alŝuto; inter 5 kaj 10 GiB postulas teni la sendanton malfermita. En la nuna projekta implemento, la fakta integrado ankoraŭ pendadas.";
+	}
+
+	@Override
+	public String compartirInstanciaPolitica4() {
+	    return "limewire.com: celita kiel servico kun provizora reteno. Ankoraŭ ne subtenata de ĉi tiu implemento.";
+	}
+
+	@Override
+	public String compartirInstanciaPolitica5() {
+	    return "bittorrent: plej sekura reĝimo ĉar ĝi estas rekta P2P-distribuo, sen centra gastigado. Ankoraŭ ne subtenata de ĉi tiu implemento.";
+	}
+
+	@Override
+	public String compartirInstanciaPolitica6() {
+	    return "Defaŭlte, la plej oftaj dosierujoj kaj dosieroj de instanco estas elektitaj por faciligi teknikan subtenon.";
+	}
+
+	@Override
+	public String compartirInstanciaPolitica7() {
+	    return "Se vi inkluzivas la internan dosierujon de CrashDetector, agordoj, protokoloj kaj helpaj datumoj ankaŭ vojaĝos, do vi povas malselekti ĝin se ne necese.";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
