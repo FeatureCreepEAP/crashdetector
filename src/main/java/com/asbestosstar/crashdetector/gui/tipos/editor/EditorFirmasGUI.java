@@ -44,6 +44,7 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
 
+import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.Criticalidad;
@@ -210,7 +211,15 @@ public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLate
 		lista = new JList<VerificacionFirmasV0>(modeloLista);
 		lista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		lista.setCellRenderer((list, value, index, isSelected, cellHasFocus) -> {
-			JLabel l = new JLabel(value.id + " · " + nz(value.nombre_es));
+			String nombreVisible = "";
+			if (value != null) {
+				nombreVisible = nz(value.obtenerNombre());
+				if (isEmpty(nombreVisible)) {
+					nombreVisible = nz(value.id);
+				}
+			}
+
+			JLabel l = new JLabel(nz(value != null ? value.id : "") + " · " + nombreVisible);
 			l.setOpaque(true);
 			l.setForeground(isSelected ? Color.WHITE : textoOscuro.obtener());
 			l.setBackground(isSelected ? moradoAcento.obtener() : Color.WHITE);
@@ -218,9 +227,11 @@ public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLate
 			l.setBorder(BorderFactory.createEmptyBorder(4, 8, 4, 8));
 			return l;
 		});
+
 		lista.addListSelectionListener(e -> {
-			if (e.getValueIsAdjusting())
+			if (e.getValueIsAdjusting()) {
 				return;
+			}
 
 			VerificacionFirmasV0 nuevaSeleccion = lista.getSelectedValue();
 
@@ -246,6 +257,7 @@ public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLate
 				}
 			}
 		});
+
 		JScrollPane spLista = new JScrollPane(lista);
 		spLista.setPreferredSize(new Dimension(260, 520));
 		spLista.setBorder(titulo("lista", MonitorDePID.idioma.lista()));
@@ -305,9 +317,9 @@ public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLate
 		GridBagConstraints c2 = (GridBagConstraints) c.clone();
 		c2.gridx = 1;
 		c2.weightx = 1;
-		cbFiltro = new JComboBox<>();
+		cbFiltro = new JComboBox<String>();
 		cbFiltro.addItem(""); // Opción vacía
-		List<String> ids = new ArrayList<>(FiltrodeCodice.filtros.keySet());
+		List<String> ids = new ArrayList<String>(FiltrodeCodice.filtros.keySet());
 		ids.sort(String::compareToIgnoreCase);
 		for (String id : ids) {
 			cbFiltro.addItem(id);
@@ -323,7 +335,7 @@ public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLate
 		c2 = (GridBagConstraints) c.clone();
 		c2.gridx = 1;
 		c2.weightx = 1;
-		cbCriticalidad = new JComboBox<>();
+		cbCriticalidad = new JComboBox<String>();
 		cbCriticalidad.addItem(Criticalidad.ADVERTENCIA.nombre);
 		cbCriticalidad.addItem(Criticalidad.ERROR.nombre);
 		cbCriticalidad.addItem(Criticalidad.FATAL.nombre);
@@ -333,7 +345,7 @@ public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLate
 		c.gridx = 0;
 		c.weightx = 0;
 
-		// prioridad
+		// Prioridad
 		etiqueta(general, c, MonitorDePID.idioma.prioridad());
 		c2 = (GridBagConstraints) c.clone();
 		c2.gridx = 1;
@@ -347,11 +359,10 @@ public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLate
 
 		form.add(general, BorderLayout.NORTH);
 
-		// ---------- Sección Idiomas en REJILLA ----------
+		// ---------- Sección Idiomas dinámica ----------
 		JPanel idiomas = new JPanel(new BorderLayout());
 		idiomas.setOpaque(false);
 
-		// Cabecera de columnas
 		JPanel cab = new JPanel(new GridLayout(1, 3, 8, 8));
 		cab.setBackground(rosaFondo.obtener());
 		cab.add(celdaCabecera(MonitorDePID.idioma.colIdioma()));
@@ -359,34 +370,26 @@ public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLate
 		cab.add(celdaCabecera(MonitorDePID.idioma.colResultado()));
 		idiomas.add(cab, BorderLayout.NORTH);
 
-		// Rejilla de filas (10 idiomas)
-		JPanel grid = new JPanel(new GridLayout(10, 3, 8, 8));
+		reconstruirIdiomasEditor();
+
+		int cantidadIdiomas = Math.max(1, idiomasEditor.size());
+		JPanel grid = new JPanel(new GridLayout(cantidadIdiomas, 3, 8, 8));
 		grid.setBackground(fondoCampo.obtener());
 		grid.setBorder(bordeSuave());
 
-		// orden definido + archivo de bandera
-		String[][] langs = { { "es", "bandera_mexico.png", "Español" }, { "en", "bandera_inglaterra.png", "English" },
-				{ "ar", "bandera_arabia.png", "العربية" }, { "pt", "bandera_brasil.png", "Português" },
-				{ "fa", "bandera_iran.png", "فارسی" }, { "ru", "bandera_rusia.png", "Русский" },
-				{ "zh", "bandera_china.png", "中文" }, { "eo", "bandera_esperanto.png", "Esperanto" },
-				{ "jp", "bandera_japon.png", "日本語" }, { "kp", "bandera_corea.png", "한국어" } };
-
 		camposIdiomas.clear();
-		for (String[] info : langs) {
-			// Columna 1: idioma + bandera
-			grid.add(celdaIdioma(info[2], info[1]));
+		for (InfoIdiomaEditor info : idiomasEditor) {
+			grid.add(celdaIdioma(info.nombreVisible, info.archivoBandera));
 
-			// Columna 2: nombre
 			JTextField tNombre = new JTextField();
 			estilizarCampo(tNombre);
 			grid.add(tNombre);
 
-			// Columna 3: resultado
 			JTextField tResultado = new JTextField();
 			estilizarCampo(tResultado);
 			grid.add(tResultado);
 
-			camposIdiomas.put(info[0], new JTextField[] { tNombre, tResultado });
+			camposIdiomas.put(info.codigo, new JTextField[] { tNombre, tResultado });
 		}
 
 		idiomas.add(grid, BorderLayout.CENTER);
@@ -430,14 +433,24 @@ public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLate
 	}
 
 	public void cargarIconos() {
-		String[] archivos = { "bandera_mexico.png", "bandera_inglaterra.png", "bandera_arabia.png",
-				"bandera_brasil.png", "bandera_iran.png", "bandera_rusia.png", "bandera_china.png",
-				"bandera_esperanto.png", "bandera_japon.png", "bandera_corea.png", "ironmouse.png" };
-		for (String a : archivos) {
-			File f = Statics.carpeta.resolve("imagenes").resolve(a).toFile();
-			if (f.exists()) {
-				iconos.put(a, new ImageIcon(f.getAbsolutePath()));
+		iconos.clear();
+
+		reconstruirIdiomasEditor();
+
+		for (InfoIdiomaEditor info : idiomasEditor) {
+			if (info.archivoBandera == null || info.archivoBandera.trim().isEmpty()) {
+				continue;
 			}
+
+			File f = Statics.carpeta.resolve("imagenes").resolve(info.archivoBandera).toFile();
+			if (f.exists()) {
+				iconos.put(info.archivoBandera, new ImageIcon(f.getAbsolutePath()));
+			}
+		}
+
+		File iron = Statics.carpeta.resolve("imagenes").resolve("ironmouse.png").toFile();
+		if (iron.exists()) {
+			iconos.put("ironmouse.png", new ImageIcon(iron.getAbsolutePath()));
 		}
 	}
 
@@ -571,16 +584,24 @@ public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLate
 
 		spPrioridad.setValue(v.prioridad);
 
-		establecerIdioma("es", v.nombre_es, v.resultado_es);
-		establecerIdioma("en", v.nombre_en, v.resultado_en);
-		establecerIdioma("ar", v.nombre_ar, v.resultado_ar);
-		establecerIdioma("pt", v.nombre_pt, v.resultado_pt);
-		establecerIdioma("fa", v.nombre_fa, v.resultado_fa);
-		establecerIdioma("ru", v.nombre_ru, v.resultado_ru);
-		establecerIdioma("zh", v.nombre_zh, v.resultado_zh);
-		establecerIdioma("eo", v.nombre_eo, v.resultado_eo);
-		establecerIdioma("jp", v.nombre_jp, v.resultado_jp);
-		establecerIdioma("kp", v.nombre_kp, v.resultado_kp);
+		for (JTextField[] arr : camposIdiomas.values()) {
+			arr[0].setText("");
+			arr[1].setText("");
+		}
+
+		for (Map.Entry<String, String> e : v.nombres_por_codigo.entrySet()) {
+			JTextField[] arr = camposIdiomas.get(VerificacionFirmasV0.normalizarCodigoIdioma(e.getKey()));
+			if (arr != null) {
+				arr[0].setText(nz(e.getValue()));
+			}
+		}
+
+		for (Map.Entry<String, String> e : v.resultados_por_codigo.entrySet()) {
+			JTextField[] arr = camposIdiomas.get(VerificacionFirmasV0.normalizarCodigoIdioma(e.getKey()));
+			if (arr != null) {
+				arr[1].setText(nz(e.getValue()));
+			}
+		}
 
 		actualizarVistaJson();
 		this.verificacionCargadaEnFormulario = v;
@@ -588,28 +609,36 @@ public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLate
 
 	public boolean esFormularioModificado() {
 		if (verificacionCargadaEnFormulario == null) {
-			return !isEmpty(fId.getText()) || !isEmpty(fParaBuscar.getText()) || cbFiltro.getSelectedIndex() != 0
+			boolean hayTextoGeneral = !isEmpty(fId.getText()) || !isEmpty(fParaBuscar.getText())
+					|| cbFiltro.getSelectedIndex() != 0
 					|| !Objects.equals(cbCriticalidad.getSelectedItem(), Criticalidad.ADVERTENCIA.nombre)
-					|| (Integer) spPrioridad.getValue() != 0 || camposIdiomas.values().stream()
-							.anyMatch(arr -> !isEmpty(arr[0].getText()) || !isEmpty(arr[1].getText()));
+					|| ((Integer) spPrioridad.getValue()).intValue() != 0;
+
+			if (hayTextoGeneral) {
+				return true;
+			}
+
+			for (JTextField[] arr : camposIdiomas.values()) {
+				if (!isEmpty(arr[0].getText()) || !isEmpty(arr[1].getText())) {
+					return true;
+				}
+			}
+
+			return false;
 		}
 
 		VerificacionFirmasV0 actual = verificacionCargadaEnFormulario;
+
+		Map<String, String> nombresFormulario = construirMapaDesdeFormulario(0);
+		Map<String, String> resultadosFormulario = construirMapaDesdeFormulario(1);
+
 		return !fId.getText().trim().equals(actual.id) || !fParaBuscar.getText().trim().equals(actual.para_buscar)
 				|| !Objects.equals(cbFiltro.getSelectedItem(), actual.filtro != null ? actual.filtro.id : "")
 				|| !Objects.equals(cbCriticalidad.getSelectedItem(),
 						actual.criticalidad != null ? actual.criticalidad.nombre : Criticalidad.ADVERTENCIA.nombre)
-				|| (Integer) spPrioridad.getValue() != actual.prioridad || !val("es", 0).equals(actual.nombre_es)
-				|| !val("es", 1).equals(actual.resultado_es) || !val("en", 0).equals(actual.nombre_en)
-				|| !val("en", 1).equals(actual.resultado_en) || !val("ar", 0).equals(actual.nombre_ar)
-				|| !val("ar", 1).equals(actual.resultado_ar) || !val("pt", 0).equals(actual.nombre_pt)
-				|| !val("pt", 1).equals(actual.resultado_pt) || !val("fa", 0).equals(actual.nombre_fa)
-				|| !val("fa", 1).equals(actual.resultado_fa) || !val("ru", 0).equals(actual.nombre_ru)
-				|| !val("ru", 1).equals(actual.resultado_ru) || !val("zh", 0).equals(actual.nombre_zh)
-				|| !val("zh", 1).equals(actual.resultado_zh) || !val("eo", 0).equals(actual.nombre_eo)
-				|| !val("eo", 1).equals(actual.resultado_eo) || !val("jp", 0).equals(actual.nombre_jp)
-				|| !val("jp", 1).equals(actual.resultado_jp) || !val("kp", 0).equals(actual.nombre_kp)
-				|| !val("kp", 1).equals(actual.resultado_kp);
+				|| ((Integer) spPrioridad.getValue()).intValue() != actual.prioridad
+				|| !Objects.equals(nombresFormulario, actual.nombres_por_codigo)
+				|| !Objects.equals(resultadosFormulario, actual.resultados_por_codigo);
 	}
 
 	public void establecerIdioma(String code, String nombre, String resultado) {
@@ -672,13 +701,31 @@ public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLate
 			return false;
 		}
 
+		boolean hayAlMenosUnIdiomaCompleto = false;
+
 		for (Map.Entry<String, JTextField[]> e : camposIdiomas.entrySet()) {
-			if (vacio(e.getValue()[0]) || vacio(e.getValue()[1])) {
+			boolean nombreVacio = vacio(e.getValue()[0]);
+			boolean resultadoVacio = vacio(e.getValue()[1]);
+
+			if (nombreVacio && resultadoVacio) {
+				continue;
+			}
+
+			if (nombreVacio || resultadoVacio) {
 				JOptionPane.showMessageDialog(this, MonitorDePID.idioma.faltanIdiomas() + " " + e.getKey(),
 						"Validación", JOptionPane.WARNING_MESSAGE);
 				return false;
 			}
+
+			hayAlMenosUnIdiomaCompleto = true;
 		}
+
+		if (!hayAlMenosUnIdiomaCompleto) {
+			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.faltanIdiomas(), "Validación",
+					JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
+
 		return true;
 	}
 
@@ -700,10 +747,10 @@ public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLate
 
 		int prio = ((Number) spPrioridad.getValue()).intValue();
 
-		return new VerificacionFirmasV0(id, val("ar", 0), val("ar", 1), val("zh", 0), val("zh", 1), val("kp", 0),
-				val("kp", 1), val("es", 0), val("es", 1), val("eo", 0), val("eo", 1), val("en", 0), val("en", 1),
-				val("jp", 0), val("jp", 1), val("fa", 0), val("fa", 1), val("pt", 0), val("pt", 1), val("ru", 0),
-				val("ru", 1), criticalidad, prio, paraBuscar, filtro);
+		Map<String, String> nombres = construirMapaDesdeFormulario(0);
+		Map<String, String> resultados = construirMapaDesdeFormulario(1);
+
+		return new VerificacionFirmasV0(id, nombres, resultados, criticalidad, prio, paraBuscar, filtro);
 	}
 
 	public String val(String lang, int idx) {
@@ -761,16 +808,17 @@ public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLate
 				}
 			}
 
-			// Verificación pasiva: revisar todos los textos en coreano ("kp")
+			// Verificación pasiva del coreano ya normalizado como "ko"
 			for (int i = 0; i < modeloLista.size(); i++) {
 				VerificacionFirmasV0 v = modeloLista.get(i);
-				String textoCoreano = v.resultado_kp;
+
+				String textoCoreano = v.resultados_por_codigo.get("ko");
 				if (textoCoreano != null && !textoCoreano.trim().isEmpty()) {
 					com.asbestosstar.crashdetector.idioma.cumplimiento.ActaDeProteccionDelIdiomaCulturalDePyongyang
 							.contieneJergaSur(textoCoreano);
 				}
-				// también verificar nombre_kp
-				String nombreCoreano = v.nombre_kp;
+
+				String nombreCoreano = v.nombres_por_codigo.get("ko");
 				if (nombreCoreano != null && !nombreCoreano.trim().isEmpty()) {
 					com.asbestosstar.crashdetector.idioma.cumplimiento.ActaDeProteccionDelIdiomaCulturalDePyongyang
 							.contieneJergaSur(nombreCoreano);
@@ -778,14 +826,28 @@ public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLate
 			}
 
 			List<VerificacionFirmasV0> arr = new ArrayList<VerificacionFirmasV0>();
-			for (int i = 0; i < modeloLista.size(); i++)
+			for (int i = 0; i < modeloLista.size(); i++) {
 				arr.add(modeloLista.get(i));
+			}
+
 			FirmasV0.guardar(arr);
+
 			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.guardadoOk(), "OK",
 					JOptionPane.INFORMATION_MESSAGE);
+
 			actualizarVistaJson();
+
+			// Al guardar, la verificación cargada en formulario debe reflejar el estado
+			// actual
+			int idx = lista.getSelectedIndex();
+			if (idx >= 0 && idx < modeloLista.size()) {
+				verificacionCargadaEnFormulario = modeloLista.get(idx);
+			} else {
+				verificacionCargadaEnFormulario = null;
+			}
+
 		} catch (Exception ex) {
-			JOptionPane.showMessageDialog(this, "Error al guardar: " + ex.getMessage(), "Error",
+			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.error() + ": " + ex.getMessage(), "Error",
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
@@ -804,22 +866,55 @@ public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLate
 	}
 
 	public boolean validarVerificacion(VerificacionFirmasV0 v) {
-		if (isEmpty(v.id) || isEmpty(v.para_buscar) || v.filtro == null || isEmpty(v.filtro.id))
+		if (v == null) {
 			return false;
-		if (v.criticalidad == null)
+		}
+
+		if (isEmpty(v.id) || isEmpty(v.para_buscar)) {
 			return false;
-		return !(isEmpty(v.nombre_es) || isEmpty(v.resultado_es) || isEmpty(v.nombre_en) || isEmpty(v.resultado_en)
-				|| isEmpty(v.nombre_ar) || isEmpty(v.resultado_ar) || isEmpty(v.nombre_pt) || isEmpty(v.resultado_pt)
-				|| isEmpty(v.nombre_fa) || isEmpty(v.resultado_fa) || isEmpty(v.nombre_ru) || isEmpty(v.resultado_ru)
-				|| isEmpty(v.nombre_zh) || isEmpty(v.resultado_zh) || isEmpty(v.nombre_eo) || isEmpty(v.resultado_eo)
-				|| isEmpty(v.nombre_jp) || isEmpty(v.resultado_jp) || isEmpty(v.nombre_kp) || isEmpty(v.resultado_kp));
+		}
+
+		if (v.filtro == null) {
+			return false;
+		}
+
+		if (v.criticalidad == null) {
+			return false;
+		}
+
+		boolean hayAlMenosUnIdiomaCompleto = false;
+
+		java.util.LinkedHashSet<String> codigos = new java.util.LinkedHashSet<String>();
+		codigos.addAll(v.nombres_por_codigo.keySet());
+		codigos.addAll(v.resultados_por_codigo.keySet());
+
+		for (String codigo : codigos) {
+			String nombre = v.nombres_por_codigo.get(codigo);
+			String resultado = v.resultados_por_codigo.get(codigo);
+
+			boolean nombreVacio = isEmpty(nombre);
+			boolean resultadoVacio = isEmpty(resultado);
+
+			if (nombreVacio && resultadoVacio) {
+				continue;
+			}
+
+			if (nombreVacio || resultadoVacio) {
+				return false;
+			}
+
+			hayAlMenosUnIdiomaCompleto = true;
+		}
+
+		return hayAlMenosUnIdiomaCompleto;
 	}
 
 	public void actualizarVistaJson() {
 		try {
 			List<VerificacionFirmasV0> arr = new ArrayList<VerificacionFirmasV0>();
-			for (int i = 0; i < modeloLista.size(); i++)
+			for (int i = 0; i < modeloLista.size(); i++) {
 				arr.add(modeloLista.get(i));
+			}
 			vistaJson.setText(construirJsonPreview(arr));
 			vistaJson.setCaretPosition(0);
 		} catch (Exception ex) {
@@ -857,11 +952,14 @@ public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLate
 	public String construirJsonPreview(List<VerificacionFirmasV0> arr) {
 		String nl = "\n";
 		StringBuilder sb = new StringBuilder();
+
 		sb.append("{").append(nl);
 		sb.append("  \"schema\": 0,").append(nl);
 		sb.append("  \"verificaciones\": [").append(nl);
+
 		for (int i = 0; i < arr.size(); i++) {
 			VerificacionFirmasV0 v = arr.get(i);
+
 			sb.append("    {").append(nl);
 			w(sb, "id", v.id, 6).append(",").append(nl);
 			w(sb, "para_buscar", v.para_buscar, 6).append(",").append(nl);
@@ -871,38 +969,41 @@ public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLate
 			wnum(sb, "prioridad", v.prioridad, 6).append(",").append(nl);
 
 			sb.append(sp(6)).append("\"nombres\": {").append(nl);
-			nombres(sb, "ar", v.nombre_ar, 8).append(",").append(nl);
-			nombres(sb, "zh", v.nombre_zh, 8).append(",").append(nl);
-			nombres(sb, "kp", v.nombre_kp, 8).append(",").append(nl);
-			nombres(sb, "es", v.nombre_es, 8).append(",").append(nl);
-			nombres(sb, "eo", v.nombre_eo, 8).append(",").append(nl);
-			nombres(sb, "en", v.nombre_en, 8).append(",").append(nl);
-			nombres(sb, "jp", v.nombre_jp, 8).append(",").append(nl);
-			nombres(sb, "fa", v.nombre_fa, 8).append(",").append(nl);
-			nombres(sb, "pt", v.nombre_pt, 8).append(",").append(nl);
-			nombres(sb, "ru", v.nombre_ru, 8).append(nl);
+			List<String> clavesNombres = new ArrayList<String>(v.nombres_por_codigo.keySet());
+			java.util.Collections.sort(clavesNombres);
+			for (int j = 0; j < clavesNombres.size(); j++) {
+				String codigo = clavesNombres.get(j);
+				nombres(sb, codigo, v.nombres_por_codigo.get(codigo), 8);
+				if (j < clavesNombres.size() - 1) {
+					sb.append(",");
+				}
+				sb.append(nl);
+			}
 			sb.append(sp(6)).append("},").append(nl);
 
 			sb.append(sp(6)).append("\"resultados\": {").append(nl);
-			nombres(sb, "ar", v.resultado_ar, 8).append(",").append(nl);
-			nombres(sb, "zh", v.resultado_zh, 8).append(",").append(nl);
-			nombres(sb, "kp", v.resultado_kp, 8).append(",").append(nl);
-			nombres(sb, "es", v.resultado_es, 8).append(",").append(nl);
-			nombres(sb, "eo", v.resultado_eo, 8).append(",").append(nl);
-			nombres(sb, "en", v.resultado_en, 8).append(",").append(nl);
-			nombres(sb, "jp", v.resultado_jp, 8).append(",").append(nl);
-			nombres(sb, "fa", v.resultado_fa, 8).append(",").append(nl);
-			nombres(sb, "pt", v.resultado_pt, 8).append(",").append(nl);
-			nombres(sb, "ru", v.resultado_ru, 8).append(nl);
+			List<String> clavesResultados = new ArrayList<String>(v.resultados_por_codigo.keySet());
+			java.util.Collections.sort(clavesResultados);
+			for (int j = 0; j < clavesResultados.size(); j++) {
+				String codigo = clavesResultados.get(j);
+				nombres(sb, codigo, v.resultados_por_codigo.get(codigo), 8);
+				if (j < clavesResultados.size() - 1) {
+					sb.append(",");
+				}
+				sb.append(nl);
+			}
 			sb.append(sp(6)).append("}").append(nl);
 
 			sb.append("    }");
-			if (i < arr.size() - 1)
+			if (i < arr.size() - 1) {
 				sb.append(",");
+			}
 			sb.append(nl);
 		}
+
 		sb.append("  ]").append(nl);
 		sb.append("}").append(nl);
+
 		return sb.toString();
 	}
 
@@ -1001,4 +1102,65 @@ public abstract class EditorFirmasGUI extends JFrame implements BotonDeBarraLate
 		revalidate();
 		repaint();
 	}
+
+	public static class InfoIdiomaEditor {
+		public final String codigo;
+		public final String nombreVisible;
+		public final String archivoBandera;
+
+		public InfoIdiomaEditor(String codigo, String nombreVisible, String archivoBandera) {
+			this.codigo = codigo;
+			this.nombreVisible = nombreVisible;
+			this.archivoBandera = archivoBandera;
+		}
+	}
+
+	public final List<InfoIdiomaEditor> idiomasEditor = new ArrayList<InfoIdiomaEditor>();
+
+	public void reconstruirIdiomasEditor() {
+		idiomasEditor.clear();
+
+		LinkedHashMap<String, String> mapa = Idioma.mapaParaComboBoxIdiomas();
+		for (Map.Entry<String, String> e : mapa.entrySet()) {
+			String nombreVisible = e.getKey();
+			String ruta = e.getValue();
+
+			String codigo = Idioma.codigoDesdeNombreVisible(nombreVisible);
+			if (codigo == null || codigo.trim().isEmpty()) {
+				continue;
+			}
+
+			String archivoBandera = null;
+			if (ruta != null) {
+				int idx = ruta.lastIndexOf('/');
+				archivoBandera = idx >= 0 ? ruta.substring(idx + 1) : ruta;
+			}
+
+			idiomasEditor.add(new InfoIdiomaEditor(VerificacionFirmasV0.normalizarCodigoIdioma(codigo), nombreVisible,
+					archivoBandera));
+		}
+
+		idiomasEditor.sort((a, b) -> a.codigo.compareToIgnoreCase(b.codigo));
+	}
+
+	public Map<String, String> construirMapaDesdeFormulario(int indiceCampo) {
+		Map<String, String> mapa = new LinkedHashMap<String, String>();
+
+		for (Map.Entry<String, JTextField[]> e : camposIdiomas.entrySet()) {
+			String codigo = VerificacionFirmasV0.normalizarCodigoIdioma(e.getKey());
+			JTextField[] campos = e.getValue();
+
+			if (codigo == null || campos == null || indiceCampo < 0 || indiceCampo >= campos.length) {
+				continue;
+			}
+
+			String valor = nz(campos[indiceCampo].getText());
+			if (!valor.trim().isEmpty()) {
+				mapa.put(codigo, valor);
+			}
+		}
+
+		return mapa;
+	}
+
 }
