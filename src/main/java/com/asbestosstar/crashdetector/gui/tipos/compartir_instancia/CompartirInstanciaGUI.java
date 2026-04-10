@@ -5,6 +5,9 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.nio.file.Files;
@@ -33,9 +36,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTree;
 import javax.swing.JTextArea;
-import javax.swing.SwingConstants;
+import javax.swing.JTree;
 import javax.swing.SwingWorker;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
@@ -45,30 +47,23 @@ import javax.swing.tree.TreePath;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
-import com.asbestosstar.crashdetector.api_sito_archivo.SitioDeArchivoAPI;
-import com.asbestosstar.crashdetector.api_sito_archivo.SitioDeArchivoAPI.ArchivoDemasiadoGrande;
-import com.asbestosstar.crashdetector.api_sito_archivo.SitioDeArchivoAPI.ErrorConPublicar;
-import com.asbestosstar.crashdetector.api_sito_archivo.SitioDeArchivoAPI.ErrorDeArchivo;
-import com.asbestosstar.crashdetector.api_sito_archivo.SitioDeArchivoAPI.ObservadorDeTransferencia;
-import com.asbestosstar.crashdetector.api_sito_archivo.SitioDeArchivoAPI.ServicioNoSoportado;
-import com.asbestosstar.crashdetector.api_sito_archivo.WormHoleApp;
+import com.asbestosstar.crashdetector.api_sitio_archivo.SitioDeArchivoAPI;
+import com.asbestosstar.crashdetector.api_sitio_archivo.SitioDeArchivoAPI.ObservadorDeTransferencia;
+import com.asbestosstar.crashdetector.api_sitio_archivo.WormholeApp;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 
 /**
- * GUI abstracta para compartir la instancia completa o una selección de carpetas.
+ * GUI abstracta para compartir la instancia completa o una selección de
+ * carpetas.
  *
- * Reglas:
- * - Solo se listan rutas dentro de la carpeta actual y sus subrutas.
- * - Se permite además Statics.CARPETA como raíz explícita si existe.
- * - El árbol usa selección triestado:
- *   - check = todo seleccionado
- *   - cuadrado = selección parcial
- *   - vacío = no seleccionado
+ * Reglas: - Solo se listan rutas dentro de la carpeta actual y sus subrutas. -
+ * Se permite además Statics.CARPETA como raíz explícita si existe. - El árbol
+ * usa selección triestado: - check = todo seleccionado - cuadrado = selección
+ * parcial - vacío = no seleccionado
  *
- * Nota:
- * - wormhole.app queda registrado aquí como servicio integrado por defecto.
- * - otros servicios pueden registrarse desde extensiones.
+ * Nota: - wormhole.app queda registrado aquí como servicio integrado por
+ * defecto. - otros servicios pueden registrarse desde extensiones.
  */
 public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetectorGUI {
 
@@ -76,7 +71,7 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 
 	static {
 		// Ojo: la implementación existente en tu código se llama WormHoleApp.
-		SitioDeArchivoAPI.SERVICIOS_REGISTRADOS.put("wormhole.app", new WormHoleApp());
+		SitioDeArchivoAPI.SERVICIOS_REGISTRADOS.put("wormhole.app", new WormholeApp());
 	}
 
 	public JTextArea areaPolitica;
@@ -92,6 +87,11 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 
 	public Path carpetaBase;
 	public Set<Path> seleccionadas = new LinkedHashSet<>();
+
+	public JPanel overlayCarga;
+	public JLabel gifCarga;
+	public JLabel textoCarga;
+	public volatile boolean cargando = false;
 
 	@Override
 	public TipoGUI<CompartirInstanciaGUI> tipo() {
@@ -193,6 +193,8 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 		botonCompartir.addActionListener(e -> compartirSeleccion());
 
 		recargarApariencia();
+		initOverlayCarga();
+		setCargando(false);
 		setVisible(true);
 	}
 
@@ -285,8 +287,7 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 			if (Files.isDirectory(ruta)) {
 				List<Path> hijos = new ArrayList<>();
 				try (java.util.stream.Stream<Path> s = Files.list(ruta)) {
-					s.sorted(Comparator.comparing(p -> p.getFileName().toString().toLowerCase()))
-							.forEach(hijos::add);
+					s.sorted(Comparator.comparing(p -> p.getFileName().toString().toLowerCase())).forEach(hijos::add);
 				}
 
 				for (Path hijo : hijos) {
@@ -321,8 +322,7 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 	protected void establecerSeleccionRecursiva(DefaultMutableTreeNode nodo, boolean seleccionada) {
 		Object user = nodo.getUserObject();
 		if (user instanceof NodoRutaSeleccionable) {
-			((NodoRutaSeleccionable) user).estado = seleccionada
-					? EstadoSeleccion.SELECCIONADO
+			((NodoRutaSeleccionable) user).estado = seleccionada ? EstadoSeleccion.SELECCIONADO
 					: EstadoSeleccion.NO_SELECCIONADO;
 		}
 
@@ -417,10 +417,8 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 	protected void compartirSeleccion() {
 		List<Path> rutas = obtenerSeleccionFinal();
 		if (rutas.isEmpty()) {
-			JOptionPane.showMessageDialog(this,
-					MonitorDePID.idioma.compartirInstanciaSinSeleccion(),
-					MonitorDePID.idioma.error(),
-					JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.compartirInstanciaSinSeleccion(),
+					MonitorDePID.idioma.error(), JOptionPane.WARNING_MESSAGE);
 			return;
 		}
 
@@ -428,21 +426,20 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 		String servicio = (String) comboServicio.getSelectedItem();
 
 		if (!"basico".equalsIgnoreCase(formato)) {
-			JOptionPane.showMessageDialog(this,
-					MonitorDePID.idioma.compartirInstanciaFormatoNoSoportado(),
-					MonitorDePID.idioma.error(),
-					JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.compartirInstanciaFormatoNoSoportado(),
+					MonitorDePID.idioma.error(), JOptionPane.WARNING_MESSAGE);
 			return;
 		}
 
 		SitioDeArchivoAPI api = SitioDeArchivoAPI.SERVICIOS_REGISTRADOS.get(servicio);
 		if (api == null) {
-			JOptionPane.showMessageDialog(this,
-					MonitorDePID.idioma.compartirInstanciaServicioNoDisponible(),
-					MonitorDePID.idioma.error(),
-					JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.compartirInstanciaServicioNoDisponible(),
+					MonitorDePID.idioma.error(), JOptionPane.WARNING_MESSAGE);
 			return;
 		}
+
+		setTextoCarga(MonitorDePID.idioma.compartirInstanciaEstadoEmpaquetando());
+		setCargando(true);
 
 		workerCompartir = new SwingWorker<Void, Void>() {
 			private Path zipCreado;
@@ -454,6 +451,7 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 				zipCreado = crearZipBasico(rutas);
 
 				etiquetaEstado.setText(MonitorDePID.idioma.compartirInstanciaEstadoSubiendo());
+				setTextoCarga(MonitorDePID.idioma.compartirInstanciaEstadoSubiendo());
 
 				sesion = api.publicarArchivoZip(zipCreado, new ObservadorDeTransferencia() {
 					@Override
@@ -465,7 +463,34 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 					public void alRecibirEnlace(String enlace) {
 						etiquetaEstado.setText(MonitorDePID.idioma.compartirInstanciaEnlace() + ": " + enlace);
 					}
+
+					@Override
+					public void alCambiarEstado(SitioDeArchivoAPI.EstadoDeTransferencia estado) {
+						switch (estado) {
+						case CONECTANDO:
+							setTextoCarga("Conectando...");
+							break;
+						case SUBIENDO:
+							setTextoCarga(MonitorDePID.idioma.compartirInstanciaEstadoSubiendo());
+							break;
+						case ESPERANDO_DESCARGA:
+							setTextoCarga("Esperando descarga...");
+							break;
+						case FINALIZADA:
+							setTextoCarga("Finalizado");
+							break;
+						case ERROR:
+							setTextoCarga("Error");
+							break;
+						default:
+							break;
+						}
+					}
 				});
+
+				if (sesion != null) {
+					sesion.esperarFinalizacion();
+				}
 
 				return null;
 			}
@@ -492,21 +517,28 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 						}
 					}
 
-					JOptionPane.showMessageDialog(
-							CompartirInstanciaGUI.this,
-							sb.toString(),
-							MonitorDePID.idioma.informacion(),
+					JTextArea areaResultado = new JTextArea(sb.toString());
+					areaResultado.setEditable(false);
+					areaResultado.setLineWrap(true);
+					areaResultado.setWrapStyleWord(true);
+					areaResultado.setCaretPosition(0);
+
+					JScrollPane scroll = new JScrollPane(areaResultado);
+					scroll.setBorder(null);
+					scroll.setPreferredSize(new Dimension(520, 180));
+
+					JOptionPane.showMessageDialog(CompartirInstanciaGUI.this, scroll, MonitorDePID.idioma.informacion(),
 							JOptionPane.INFORMATION_MESSAGE);
 
 					etiquetaEstado.setText(MonitorDePID.idioma.compartirInstanciaEstadoListo());
 				} catch (Throwable t) {
 					CrashDetectorLogger.logException(t);
-					JOptionPane.showMessageDialog(
-							CompartirInstanciaGUI.this,
+					JOptionPane.showMessageDialog(CompartirInstanciaGUI.this,
 							MonitorDePID.idioma.compartirInstanciaErrorSubir() + "\n" + t.getMessage(),
-							MonitorDePID.idioma.error(),
-							JOptionPane.ERROR_MESSAGE);
+							MonitorDePID.idioma.error(), JOptionPane.ERROR_MESSAGE);
 					etiquetaEstado.setText(MonitorDePID.idioma.compartirInstanciaEstadoError());
+				} finally {
+					setCargando(false);
 				}
 			}
 		};
@@ -567,9 +599,7 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 	}
 
 	public enum EstadoSeleccion {
-		NO_SELECCIONADO,
-		PARCIAL,
-		SELECCIONADO
+		NO_SELECCIONADO, PARCIAL, SELECCIONADO
 	}
 
 	public static class NodoRutaSeleccionable {
@@ -618,4 +648,51 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 			return this;
 		}
 	}
+
+	protected void initOverlayCarga() {
+		overlayCarga = new JPanel(new GridBagLayout());
+		overlayCarga.setOpaque(true);
+		overlayCarga.setBackground(new java.awt.Color(0, 0, 0, 120));
+		overlayCarga.setVisible(false);
+
+		gifCarga = new JLabel();
+		ImageIcon icon = new ImageIcon(Statics.carpeta.resolve("imagenes/padoru.gif").toString());
+		if (icon.getIconWidth() > 0) {
+			gifCarga.setIcon(icon);
+		} else {
+			gifCarga.setText("...");
+		}
+
+		textoCarga = new JLabel(MonitorDePID.idioma.compartirInstanciaEstadoSubiendo());
+		textoCarga.setForeground(java.awt.Color.WHITE);
+
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.insets = new Insets(0, 0, 8, 0);
+		overlayCarga.add(gifCarga, gbc);
+
+		gbc.gridy = 1;
+		gbc.insets = new Insets(0, 0, 0, 0);
+		overlayCarga.add(textoCarga, gbc);
+
+		setGlassPane(overlayCarga);
+	}
+
+	protected void setCargando(boolean nuevoEstado) {
+		cargando = nuevoEstado;
+
+		if (overlayCarga != null) {
+			overlayCarga.setVisible(nuevoEstado);
+			overlayCarga.revalidate();
+			overlayCarga.repaint();
+		}
+	}
+
+	protected void setTextoCarga(String texto) {
+		if (textoCarga != null && texto != null) {
+			textoCarga.setText(texto);
+		}
+	}
+
 }

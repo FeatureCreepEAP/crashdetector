@@ -7705,178 +7705,165 @@ public class Coreano implements Idioma {
 	public String guardColorSeleccionTexto() {
 		return "선택된 텍스트 색상";
 	}
+
 	@Override
 	public String texto_de_boton_compartir_instancia_modpack() {
-	    return "인스턴스/수정 팩 공유";
+		return "인스턴스/수정 팩 공유";
 	}
 
 	@Override
 	public String popup_compartir_instancia_modpack() {
-	    return "인스턴스 또는 수정 팩을 공유하는 기능은 아직 구현되지 않았습니다.";
+		return "인스턴스 또는 수정 팩을 공유하는 기능은 아직 구현되지 않았습니다.";
 	}
 
 	@Override
 	public String colorBotonCompartirVerdeOscuro() {
-	    return "주요 공유 단추 색상";
+		return "주요 공유 단추 색상";
 	}
 
 	@Override
 	public String colorBotonCompartirVerdeClaro() {
-	    return "링크 공유 단추 색상";
+		return "링크 공유 단추 색상";
 	}
 
 	@Override
 	public String colorTextoBotonesCompartir() {
-	    return "공유 단추 텍스트 색상";
+		return "공유 단추 텍스트 색상";
 	}
+
 	@Override
 	public String compartirInstanciaTitulo() {
-	    return "인스턴스 공유";
+		return "인스턴스 공유";
 	}
 
 	@Override
 	public String compartirInstanciaBotonLateral() {
-	    return "인스턴스 공유";
+		return "인스턴스 공유";
 	}
 
 	@Override
 	public String compartirInstanciaFormato() {
-	    return "형식";
+		return "형식";
 	}
 
 	@Override
 	public String compartirInstanciaServicio() {
-	    return "업로드 서비스";
+		return "업로드 서비스";
 	}
 
 	@Override
 	public String compartirInstanciaBotonCompartir() {
-	    return "압축 및 공유";
+		return "압축 및 공유";
 	}
 
 	@Override
 	public String compartirInstanciaBotonRefrescar() {
-	    return "새로 고침";
+		return "새로 고침";
 	}
 
 	@Override
 	public String compartirInstanciaEstadoListo() {
-	    return "준비 완료";
+		return "준비 완료";
 	}
 
 	@Override
 	public String compartirInstanciaEstadoEmpaquetando() {
-	    return "선택 항목 압축 중...";
+		return "선택 항목 압축 중...";
 	}
 
 	@Override
 	public String compartirInstanciaEstadoSubiendo() {
-	    return "파일 업로드 중...";
+		return "파일 업로드 중...";
 	}
 
 	@Override
 	public String compartirInstanciaEstadoError() {
-	    return "오류";
+		return "오류";
 	}
 
 	@Override
 	public String compartirInstanciaCodigo() {
-	    return "코드";
+		return "코드";
 	}
 
 	@Override
 	public String compartirInstanciaEnlace() {
-	    return "링크";
+		return "링크";
 	}
 
 	@Override
 	public String compartirInstanciaMantenerAbierto() {
-	    return "전송이 계속 가능하도록 응용 프로그램을 열어두어야 합니다.";
+		return "전송이 계속 가능하도록 응용 프로그램을 열어두어야 합니다.";
 	}
 
 	@Override
 	public String compartirInstanciaSinSeleccion() {
-	    return "선택된 폴더나 파일이 없습니다.";
+		return "선택된 폴더나 파일이 없습니다.";
 	}
 
 	@Override
 	public String compartirInstanciaFormatoNoSoportado() {
-	    return "해당 형식은 아직 지원되지 않습니다.";
+		return "해당 형식은 아직 지원되지 않습니다.";
 	}
 
 	@Override
 	public String compartirInstanciaServicioNoDisponible() {
-	    return "선택한 서비스를 사용할 수 없습니다.";
+		return "선택한 서비스를 사용할 수 없습니다.";
 	}
 
 	@Override
 	public String compartirInstanciaSubidaCompleta() {
-	    return "전송이 성공적으로 시작되었습니다.";
+		return "전송이 성공적으로 시작되었습니다.";
 	}
 
 	@Override
 	public String compartirInstanciaErrorSubir() {
-	    return "선택한 파일을 업로드할 수 없습니다.";
+		return "선택한 파일을 업로드할 수 없습니다.";
 	}
 
 	@Override
 	public String compartirInstanciaColorPanel() {
-	    return "판넬 색상";
+		return "판넬 색상";
 	}
 
 	@Override
 	public String compartirInstanciaColorTexto() {
-	    return "텍스트 색상";
+		return "텍스트 색상";
 	}
 
 	@Override
 	public String compartirInstanciaPolitica1() {
-	    return "권장 유형: mods, configs, saves, worlds, datapacks, 리소스 팩 및 옵션 파일. 불필요한 개인 자료는 포함하지 마십시오.";
+		return "권장 유형: mods, configs, saves, worlds, datapacks, 리소스 팩 및 옵션 파일. 불필요한 개인 자료는 포함하지 마십시오.";
 	}
 
 	@Override
 	public String compartirInstanciaPolitica2() {
-	    return "확장 기능은 자체 업로드 서비스를 추가할 수 있습니다. 기본 제공되는 서비스는 여기에 표시되어야 합니다.";
+		return "확장 기능은 자체 업로드 서비스를 추가할 수 있습니다. 기본 제공되는 서비스는 여기에 표시되어야 합니다.";
 	}
 
 	@Override
 	public String compartirInstanciaPolitica3() {
-	    return "wormhole.app: 일반 업로드는 최대 5 GiB까지 가능; 5~10 GiB는 송신자를 열어두어야 합니다. 현재 프로젝트 구현에서는 실제 통합이 아직 보류 상태입니다.";
+		return "wormhole.app: 일반 업로드는 최대 5 GiB까지 가능; 5~10 GiB는 송신자를 열어두어야 합니다. 현재 프로젝트 구현에서는 실제 통합이 아직 보류 상태입니다.";
 	}
 
 	@Override
 	public String compartirInstanciaPolitica4() {
-	    return "limewire.com: 임시 보관을 목적으로 하는 서비스입니다. 이 구현에서는 아직 지원되지 않습니다.";
+		return "limewire.com: 임시 보관을 목적으로 하는 서비스입니다. 이 구현에서는 아직 지원되지 않습니다.";
 	}
 
 	@Override
 	public String compartirInstanciaPolitica5() {
-	    return "bittorrent: 중앙 호스팅 없이 직접 P2P 배포이므로 가장 안전한 모드입니다. 이 구현에서는 아직 지원되지 않습니다.";
+		return "bittorrent: 중앙 호스팅 없이 직접 P2P 배포이므로 가장 안전한 모드입니다. 이 구현에서는 아직 지원되지 않습니다.";
 	}
 
 	@Override
 	public String compartirInstanciaPolitica6() {
-	    return "기술 지원을 용이하게 하기 위해 기본적으로 인스턴스의 가장 일반적인 폴더와 파일이 선택됩니다.";
+		return "기술 지원을 용이하게 하기 위해 기본적으로 인스턴스의 가장 일반적인 폴더와 파일이 선택됩니다.";
 	}
 
 	@Override
 	public String compartirInstanciaPolitica7() {
-	    return "CrashDetector의 내부 폴더를 포함하면 구성, 로그 및 보조 데이터도 함께 전송되므로 필요하지 않으면 선택을 해제할 수 있습니다.";
+		return "CrashDetector의 내부 폴더를 포함하면 구성, 로그 및 보조 데이터도 함께 전송되므로 필요하지 않으면 선택을 해제할 수 있습니다.";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

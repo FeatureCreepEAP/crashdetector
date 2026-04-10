@@ -7,6 +7,7 @@ import java.util.List;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
+import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 
 public class CompartirInstanciaLegacy extends CompartirInstanciaGUI {
 
@@ -38,24 +39,32 @@ public class CompartirInstanciaLegacy extends CompartirInstanciaGUI {
 
 		if (comboFormato != null) {
 			comboFormato.setBackground(colorPanel.obtener());
-			comboFormato.setForeground(colorTexto.obtener());
+			if (!CrashDetectorGUI.esMac()) {
+				comboFormato.setForeground(colorTexto.obtener());
+			}
 		}
 
 		if (comboServicio != null) {
 			comboServicio.setBackground(colorPanel.obtener());
-			comboServicio.setForeground(colorTexto.obtener());
+			if (!CrashDetectorGUI.esMac()) {
+				comboServicio.setForeground(colorTexto.obtener());
+			}
 		}
 
 		if (botonCompartir != null) {
 			botonCompartir.setText(MonitorDePID.idioma.compartirInstanciaBotonCompartir());
 			botonCompartir.setBackground(colorPanel.obtener());
-			botonCompartir.setForeground(colorTexto.obtener());
+			if (!CrashDetectorGUI.esMac()) {
+				botonCompartir.setForeground(colorTexto.obtener());
+			}
 		}
 
 		if (botonRefrescar != null) {
 			botonRefrescar.setText(MonitorDePID.idioma.compartirInstanciaBotonRefrescar());
 			botonRefrescar.setBackground(colorPanel.obtener());
-			botonRefrescar.setForeground(colorTexto.obtener());
+			if (!CrashDetectorGUI.esMac()) {
+				botonRefrescar.setForeground(colorTexto.obtener());
+			}
 		}
 
 		if (etiquetaEstado != null) {

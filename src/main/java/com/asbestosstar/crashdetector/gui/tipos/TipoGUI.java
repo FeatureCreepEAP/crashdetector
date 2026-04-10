@@ -895,7 +895,6 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		}
 	};
 
-	
 	public static TipoGUI<CompartirInstanciaGUI> COMPARTIR_INSTANCIA = new TipoGUI<CompartirInstanciaGUI>() {
 		@Override
 		public String id() {
@@ -917,23 +916,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 			return CompartirInstanciaGUI.GUIS;
 		}
 	};
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	/**
 	 * Registro estático de todos los tipos de GUI en la lista global.
 	 */
@@ -974,11 +957,5 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		TIPOS_DE_GUI.add(GUARD);
 		TIPOS_DE_GUI.add(COMPARTIR_INSTANCIA);
 
-		
-		
-		
-		
-		
-		
 	}
 }

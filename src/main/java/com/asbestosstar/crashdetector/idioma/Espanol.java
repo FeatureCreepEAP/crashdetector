@@ -8757,173 +8757,165 @@ public class Espanol implements Idioma {
 	public String guardColorSeleccionTexto() {
 		return "Color del texto seleccionado";
 	}
+
 	@Override
 	public String texto_de_boton_compartir_instancia_modpack() {
-	    return "Compartir instancia/modpack";
+		return "Compartir instancia/modpack";
 	}
 
 	@Override
 	public String popup_compartir_instancia_modpack() {
-	    return "La función para compartir la instancia o el modpack todavía no está implementada.";
+		return "La función para compartir la instancia o el modpack todavía no está implementada.";
 	}
 
 	@Override
 	public String colorBotonCompartirVerdeOscuro() {
-	    return "Color del botón de compartir principal";
+		return "Color del botón de compartir principal";
 	}
 
 	@Override
 	public String colorBotonCompartirVerdeClaro() {
-	    return "Color del botón de compartir enlaces";
+		return "Color del botón de compartir enlaces";
 	}
 
 	@Override
 	public String colorTextoBotonesCompartir() {
-	    return "Color del texto de los botones de compartir";
+		return "Color del texto de los botones de compartir";
 	}
-	
+
 	@Override
 	public String compartirInstanciaTitulo() {
-	    return "Compartir instancia";
+		return "Compartir instancia";
 	}
 
 	@Override
 	public String compartirInstanciaBotonLateral() {
-	    return "Compartir instancia";
+		return "Compartir instancia";
 	}
 
 	@Override
 	public String compartirInstanciaFormato() {
-	    return "Formato";
+		return "Formato";
 	}
 
 	@Override
 	public String compartirInstanciaServicio() {
-	    return "Servicio de subida";
+		return "Servicio de subida";
 	}
 
 	@Override
 	public String compartirInstanciaBotonCompartir() {
-	    return "Empaquetar y compartir";
+		return "Empaquetar y compartir";
 	}
 
 	@Override
 	public String compartirInstanciaBotonRefrescar() {
-	    return "Refrescar";
+		return "Refrescar";
 	}
 
 	@Override
 	public String compartirInstanciaEstadoListo() {
-	    return "Listo";
+		return "Listo";
 	}
 
 	@Override
 	public String compartirInstanciaEstadoEmpaquetando() {
-	    return "Empaquetando selección...";
+		return "Empaquetando selección...";
 	}
 
 	@Override
 	public String compartirInstanciaEstadoSubiendo() {
-	    return "Subiendo archivo...";
+		return "Subiendo archivo...";
 	}
 
 	@Override
 	public String compartirInstanciaEstadoError() {
-	    return "Error";
+		return "Error";
 	}
 
 	@Override
 	public String compartirInstanciaCodigo() {
-	    return "Código";
+		return "Código";
 	}
 
 	@Override
 	public String compartirInstanciaEnlace() {
-	    return "Enlace";
+		return "Enlace";
 	}
 
 	@Override
 	public String compartirInstanciaMantenerAbierto() {
-	    return "Debes mantener la aplicación abierta para que la transferencia siga disponible.";
+		return "Debes mantener la aplicación abierta para que la transferencia siga disponible.";
 	}
 
 	@Override
 	public String compartirInstanciaSinSeleccion() {
-	    return "No hay carpetas o archivos seleccionados.";
+		return "No hay carpetas o archivos seleccionados.";
 	}
 
 	@Override
 	public String compartirInstanciaFormatoNoSoportado() {
-	    return "Ese formato todavía no está soportado.";
+		return "Ese formato todavía no está soportado.";
 	}
 
 	@Override
 	public String compartirInstanciaServicioNoDisponible() {
-	    return "El servicio seleccionado no está disponible.";
+		return "El servicio seleccionado no está disponible.";
 	}
 
 	@Override
 	public String compartirInstanciaSubidaCompleta() {
-	    return "Transferencia iniciada correctamente.";
+		return "Transferencia iniciada correctamente.";
 	}
 
 	@Override
 	public String compartirInstanciaErrorSubir() {
-	    return "No se pudo subir el archivo seleccionado.";
+		return "No se pudo subir el archivo seleccionado.";
 	}
 
 	@Override
 	public String compartirInstanciaColorPanel() {
-	    return "Color de panel";
+		return "Color de panel";
 	}
 
 	@Override
 	public String compartirInstanciaColorTexto() {
-	    return "Color de texto";
+		return "Color de texto";
 	}
 
 	@Override
 	public String compartirInstanciaPolitica1() {
-	    return "Tipos recomendados: mods, configs, saves, worlds, datapacks, resource packs y archivos de opciones. Evita incluir material privado que no sea necesario.";
+		return "Tipos recomendados: mods, configs, saves, worlds, datapacks, resource packs y archivos de opciones. Evita incluir material privado que no sea necesario.";
 	}
 
 	@Override
 	public String compartirInstanciaPolitica2() {
-	    return "Las extensiones pueden añadir sus propios servicios de subida. Los servicios integrados por defecto deben mostrarse aquí.";
+		return "Las extensiones pueden añadir sus propios servicios de subida. Los servicios integrados por defecto deben mostrarse aquí.";
 	}
 
 	@Override
 	public String compartirInstanciaPolitica3() {
-	    return "wormhole.app: hasta 5 GiB como subida normal; entre 5 y 10 GiB requiere mantener el emisor abierto. En la implementación actual del proyecto, la integración real todavía está pendiente.";
+		return "wormhole.app: hasta 5 GiB como subida normal; entre 5 y 10 GiB requiere mantener el emisor abierto. En la implementación actual del proyecto, la integración real todavía está pendiente.";
 	}
 
 	@Override
 	public String compartirInstanciaPolitica4() {
-	    return "limewire.com: pensado como servicio con retención temporal. Todavía no está soportado por esta implementación.";
+		return "limewire.com: pensado como servicio con retención temporal. Todavía no está soportado por esta implementación.";
 	}
 
 	@Override
 	public String compartirInstanciaPolitica5() {
-	    return "bittorrent: modo más seguro al ser distribución P2P directa, sin alojamiento central. Todavía no está soportado por esta implementación.";
+		return "bittorrent: modo más seguro al ser distribución P2P directa, sin alojamiento central. Todavía no está soportado por esta implementación.";
 	}
 
 	@Override
 	public String compartirInstanciaPolitica6() {
-	    return "Por defecto se seleccionan las carpetas y archivos más comunes de una instancia para facilitar soporte técnico.";
+		return "Por defecto se seleccionan las carpetas y archivos más comunes de una instancia para facilitar soporte técnico.";
 	}
 
 	@Override
 	public String compartirInstanciaPolitica7() {
-	    return "Si incluyes la carpeta interna de CrashDetector, también viajarán configuraciones, registros y datos auxiliares, así que puedes deseleccionarla si no hace falta.";
+		return "Si incluyes la carpeta interna de CrashDetector, también viajarán configuraciones, registros y datos auxiliares, así que puedes deseleccionarla si no hace falta.";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

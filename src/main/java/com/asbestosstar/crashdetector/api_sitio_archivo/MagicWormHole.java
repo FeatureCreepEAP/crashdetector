@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetector.api_sito_archivo;
+package com.asbestosstar.crashdetector.api_sitio_archivo;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,6 +11,9 @@ import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
+
+import com.asbestosstar.crashdetector.api_sitio_archivo.SitioDeArchivoAPI.PoliticaDeRetencion;
+import com.asbestosstar.crashdetector.api_sitio_archivo.SitioDeArchivoAPI.SesionDeTransferencia;
 
 /**
  * Implementación inicial para wormhole.app.
@@ -31,7 +34,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * Esto deja preparada la API para modelar correctamente el comportamiento
  * especial de Wormhole frente a otros servicios futuros.
  */
-public class WormHoleApp implements SitioDeArchivoAPI {
+public class MagicWormHole implements SitioDeArchivoAPI {
 
 	private static final long GIB = 1024L * 1024L * 1024L;
 	private static final long LIMITE_SUBIDA_NORMAL = 5L * GIB;

@@ -2937,41 +2937,59 @@ public interface Idioma {
 	public String colorBotonCompartirVerdeClaro();
 
 	public String colorTextoBotonesCompartir();
-	
-	
-	
+
 	public String compartirInstanciaTitulo();
+
 	public String compartirInstanciaBotonLateral();
+
 	public String compartirInstanciaFormato();
+
 	public String compartirInstanciaServicio();
+
 	public String compartirInstanciaBotonCompartir();
+
 	public String compartirInstanciaBotonRefrescar();
+
 	public String compartirInstanciaEstadoListo();
+
 	public String compartirInstanciaEstadoEmpaquetando();
+
 	public String compartirInstanciaEstadoSubiendo();
+
 	public String compartirInstanciaEstadoError();
+
 	public String compartirInstanciaCodigo();
+
 	public String compartirInstanciaEnlace();
+
 	public String compartirInstanciaMantenerAbierto();
+
 	public String compartirInstanciaSinSeleccion();
+
 	public String compartirInstanciaFormatoNoSoportado();
+
 	public String compartirInstanciaServicioNoDisponible();
+
 	public String compartirInstanciaSubidaCompleta();
+
 	public String compartirInstanciaErrorSubir();
+
 	public String compartirInstanciaColorPanel();
+
 	public String compartirInstanciaColorTexto();
 
 	public String compartirInstanciaPolitica1();
+
 	public String compartirInstanciaPolitica2();
+
 	public String compartirInstanciaPolitica3();
+
 	public String compartirInstanciaPolitica4();
+
 	public String compartirInstanciaPolitica5();
+
 	public String compartirInstanciaPolitica6();
+
 	public String compartirInstanciaPolitica7();
-	
-	
-	
-	
-	
 
 }

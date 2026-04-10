@@ -7937,174 +7937,165 @@ public class Arabe implements Idioma {
 	public String guardColorSeleccionTexto() {
 		return "لون النص المحدد";
 	}
+
 	@Override
 	public String texto_de_boton_compartir_instancia_modpack() {
-	    return "مشاركة النسخة/حزمة التعديلات";
+		return "مشاركة النسخة/حزمة التعديلات";
 	}
 
 	@Override
 	public String popup_compartir_instancia_modpack() {
-	    return "خاصية مشاركة النسخة أو حزمة التعديلات لم يتم تنفيذها بعد.";
+		return "خاصية مشاركة النسخة أو حزمة التعديلات لم يتم تنفيذها بعد.";
 	}
 
 	@Override
 	public String colorBotonCompartirVerdeOscuro() {
-	    return "لون زر المشاركة الرئيسي";
+		return "لون زر المشاركة الرئيسي";
 	}
 
 	@Override
 	public String colorBotonCompartirVerdeClaro() {
-	    return "لون زر مشاركة الروابط";
+		return "لون زر مشاركة الروابط";
 	}
 
 	@Override
 	public String colorTextoBotonesCompartir() {
-	    return "لون نص أزرار المشاركة";
+		return "لون نص أزرار المشاركة";
 	}
+
 	@Override
 	public String compartirInstanciaTitulo() {
-	    return "مشاركة النسخة";
+		return "مشاركة النسخة";
 	}
 
 	@Override
 	public String compartirInstanciaBotonLateral() {
-	    return "مشاركة النسخة";
+		return "مشاركة النسخة";
 	}
 
 	@Override
 	public String compartirInstanciaFormato() {
-	    return "التنسيق";
+		return "التنسيق";
 	}
 
 	@Override
 	public String compartirInstanciaServicio() {
-	    return "خدمة الرفع";
+		return "خدمة الرفع";
 	}
 
 	@Override
 	public String compartirInstanciaBotonCompartir() {
-	    return "حزم ومشاركة";
+		return "حزم ومشاركة";
 	}
 
 	@Override
 	public String compartirInstanciaBotonRefrescar() {
-	    return "تحديث";
+		return "تحديث";
 	}
 
 	@Override
 	public String compartirInstanciaEstadoListo() {
-	    return "جاهز";
+		return "جاهز";
 	}
 
 	@Override
 	public String compartirInstanciaEstadoEmpaquetando() {
-	    return "جاري حزم التحديد...";
+		return "جاري حزم التحديد...";
 	}
 
 	@Override
 	public String compartirInstanciaEstadoSubiendo() {
-	    return "جاري رفع الملف...";
+		return "جاري رفع الملف...";
 	}
 
 	@Override
 	public String compartirInstanciaEstadoError() {
-	    return "خطأ";
+		return "خطأ";
 	}
 
 	@Override
 	public String compartirInstanciaCodigo() {
-	    return "الرمز";
+		return "الرمز";
 	}
 
 	@Override
 	public String compartirInstanciaEnlace() {
-	    return "الرابط";
+		return "الرابط";
 	}
 
 	@Override
 	public String compartirInstanciaMantenerAbierto() {
-	    return "يجب إبقاء التطبيق مفتوحاً لكي تبقى عملية النقل متاحة.";
+		return "يجب إبقاء التطبيق مفتوحاً لكي تبقى عملية النقل متاحة.";
 	}
 
 	@Override
 	public String compartirInstanciaSinSeleccion() {
-	    return "لا توجد مجلدات أو ملفات محددة.";
+		return "لا توجد مجلدات أو ملفات محددة.";
 	}
 
 	@Override
 	public String compartirInstanciaFormatoNoSoportado() {
-	    return "هذا التنسيق غير مدعوم حالياً.";
+		return "هذا التنسيق غير مدعوم حالياً.";
 	}
 
 	@Override
 	public String compartirInstanciaServicioNoDisponible() {
-	    return "الخدمة المحددة غير متاحة.";
+		return "الخدمة المحددة غير متاحة.";
 	}
 
 	@Override
 	public String compartirInstanciaSubidaCompleta() {
-	    return "تم بدء عملية النقل بنجاح.";
+		return "تم بدء عملية النقل بنجاح.";
 	}
 
 	@Override
 	public String compartirInstanciaErrorSubir() {
-	    return "تعذر رفع الملف المحدد.";
+		return "تعذر رفع الملف المحدد.";
 	}
 
 	@Override
 	public String compartirInstanciaColorPanel() {
-	    return "لون اللوحة";
+		return "لون اللوحة";
 	}
 
 	@Override
 	public String compartirInstanciaColorTexto() {
-	    return "لون النص";
+		return "لون النص";
 	}
 
 	@Override
 	public String compartirInstanciaPolitica1() {
-	    return "الأنواع الموصى بها: mods، configs، saves، worlds، datapacks، حزم الموارد وملفات الخيارات. تجنب تضمين المواد الخاصة غير الضرورية.";
+		return "الأنواع الموصى بها: mods، configs، saves، worlds، datapacks، حزم الموارد وملفات الخيارات. تجنب تضمين المواد الخاصة غير الضرورية.";
 	}
 
 	@Override
 	public String compartirInstanciaPolitica2() {
-	    return "يمكن للإضافات إضافة خدمات الرفع الخاصة بها. يجب عرض الخدمات المدمجة افتراضياً هنا.";
+		return "يمكن للإضافات إضافة خدمات الرفع الخاصة بها. يجب عرض الخدمات المدمجة افتراضياً هنا.";
 	}
 
 	@Override
 	public String compartirInstanciaPolitica3() {
-	    return "wormhole.app: حتى 5 جيجابايت كرفع عادي؛ بين 5 و 10 جيجابايت يتطلب إبقاء المرسل مفتوحاً. في التنفيذ الحالي للمشروع، التكامل الفعلي لا يزال معلقاً.";
+		return "wormhole.app: حتى 5 جيجابايت كرفع عادي؛ بين 5 و 10 جيجابايت يتطلب إبقاء المرسل مفتوحاً. في التنفيذ الحالي للمشروع، التكامل الفعلي لا يزال معلقاً.";
 	}
 
 	@Override
 	public String compartirInstanciaPolitica4() {
-	    return "limewire.com: مصمم كخدمة ذات احتفاظ مؤقت. لا يزال غير مدعوم من قبل هذا التنفيذ.";
+		return "limewire.com: مصمم كخدمة ذات احتفاظ مؤقت. لا يزال غير مدعوم من قبل هذا التنفيذ.";
 	}
 
 	@Override
 	public String compartirInstanciaPolitica5() {
-	    return "bittorrent: الوضع الأكثر أماناً كونه توزيعاً مباشراً من نظير إلى نظير (P2P)، بدون استضافة مركزية. لا يزال غير مدعوم من قبل هذا التنفيذ.";
+		return "bittorrent: الوضع الأكثر أماناً كونه توزيعاً مباشراً من نظير إلى نظير (P2P)، بدون استضافة مركزية. لا يزال غير مدعوم من قبل هذا التنفيذ.";
 	}
 
 	@Override
 	public String compartirInstanciaPolitica6() {
-	    return "افتراضياً، يتم تحديد المجلدات والملفات الأكثر شيوعاً في النسخة لتسهيل الدعم الفني.";
+		return "افتراضياً، يتم تحديد المجلدات والملفات الأكثر شيوعاً في النسخة لتسهيل الدعم الفني.";
 	}
 
 	@Override
 	public String compartirInstanciaPolitica7() {
-	    return "إذا قمت بتضمين المجلد الداخلي لـ CrashDetector، فستنتقل أيضاً الإعدادات والسجلات والبيانات المساعدة، لذا يمكنك إلغاء تحديدها إذا لم تكن ضرورية.";
+		return "إذا قمت بتضمين المجلد الداخلي لـ CrashDetector، فستنتقل أيضاً الإعدادات والسجلات والبيانات المساعدة، لذا يمكنك إلغاء تحديدها إذا لم تكن ضرورية.";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

@@ -267,6 +267,9 @@ public class MonitorDePID {
 
 		copiarACarpetaDesdeJar("/imagenes/sketchyvt.png", Statics.carpeta.resolve("imagenes/sketchyvt.png").toFile());
 
+		copiarACarpetaDesdeJar("/imagenes/check.png", Statics.carpeta.resolve("imagenes/check.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/square.png", Statics.carpeta.resolve("imagenes/square.png").toFile());
+
 //		new File(viajo_ultima_mods.toString()).delete();
 //		try {
 //			new File(viajo_ultima_mods.toString()).createNewFile();

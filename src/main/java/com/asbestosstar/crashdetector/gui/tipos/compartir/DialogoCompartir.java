@@ -200,21 +200,17 @@ public abstract class DialogoCompartir extends JFrame implements CrashDetectorGU
 	}
 
 	/**
-	 * Acción provisional para compartir la instancia o modpack.
-	 * Por ahora solo muestra un popup informativo.
+	 * Acción provisional para compartir la instancia o modpack. Por ahora solo
+	 * muestra un popup informativo.
 	 */
 //	public void compartirInstanciaOModpack(ActionEvent e) {
 //		mostrarInfo(MonitorDePID.idioma.popup_compartir_instancia_modpack());
 //	}
-	
+
 	public void compartirInstanciaOModpack(ActionEvent e) {
-		TipoGUI.COMPARTIR_INSTANCIA
-				.obtenerGUIPredeterminado(CompartirInstanciaLegacy.ID, CompartirInstanciaLegacy::new)
+		TipoGUI.COMPARTIR_INSTANCIA.obtenerGUIPredeterminado(CompartirInstanciaLegacy.ID, CompartirInstanciaLegacy::new)
 				.init();
 	}
-	
-	
-	
 
 	protected void actualizarComboSitios(String apiNombre, Set<String> sitios, String sitioSeleccionado) {
 		if (comboSitioRegistro != null) {

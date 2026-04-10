@@ -7535,177 +7535,165 @@ public class Chino implements Idioma {
 	public String guardColorSeleccionTexto() {
 		return "选中文本颜色";
 	}
+
 	@Override
 	public String texto_de_boton_compartir_instancia_modpack() {
-	    return "分享实例/整合包";
+		return "分享实例/整合包";
 	}
 
 	@Override
 	public String popup_compartir_instancia_modpack() {
-	    return "分享实例或整合包的功能尚未实现。";
+		return "分享实例或整合包的功能尚未实现。";
 	}
 
 	@Override
 	public String colorBotonCompartirVerdeOscuro() {
-	    return "主分享按钮颜色";
+		return "主分享按钮颜色";
 	}
 
 	@Override
 	public String colorBotonCompartirVerdeClaro() {
-	    return "链接分享按钮颜色";
+		return "链接分享按钮颜色";
 	}
 
 	@Override
 	public String colorTextoBotonesCompartir() {
-	    return "分享按钮文本颜色";
+		return "分享按钮文本颜色";
 	}
-	
+
 	@Override
 	public String compartirInstanciaTitulo() {
-	    return "分享实例";
+		return "分享实例";
 	}
 
 	@Override
 	public String compartirInstanciaBotonLateral() {
-	    return "分享实例";
+		return "分享实例";
 	}
 
 	@Override
 	public String compartirInstanciaFormato() {
-	    return "格式";
+		return "格式";
 	}
 
 	@Override
 	public String compartirInstanciaServicio() {
-	    return "上传服务";
+		return "上传服务";
 	}
 
 	@Override
 	public String compartirInstanciaBotonCompartir() {
-	    return "打包并分享";
+		return "打包并分享";
 	}
 
 	@Override
 	public String compartirInstanciaBotonRefrescar() {
-	    return "刷新";
+		return "刷新";
 	}
 
 	@Override
 	public String compartirInstanciaEstadoListo() {
-	    return "就绪";
+		return "就绪";
 	}
 
 	@Override
 	public String compartirInstanciaEstadoEmpaquetando() {
-	    return "正在打包所选内容...";
+		return "正在打包所选内容...";
 	}
 
 	@Override
 	public String compartirInstanciaEstadoSubiendo() {
-	    return "正在上传文件...";
+		return "正在上传文件...";
 	}
 
 	@Override
 	public String compartirInstanciaEstadoError() {
-	    return "错误";
+		return "错误";
 	}
 
 	@Override
 	public String compartirInstanciaCodigo() {
-	    return "代码";
+		return "代码";
 	}
 
 	@Override
 	public String compartirInstanciaEnlace() {
-	    return "链接";
+		return "链接";
 	}
 
 	@Override
 	public String compartirInstanciaMantenerAbierto() {
-	    return "你必须保持应用程序开启，以便传输继续可用。";
+		return "你必须保持应用程序开启，以便传输继续可用。";
 	}
 
 	@Override
 	public String compartirInstanciaSinSeleccion() {
-	    return "未选择任何文件夹或文件。";
+		return "未选择任何文件夹或文件。";
 	}
 
 	@Override
 	public String compartirInstanciaFormatoNoSoportado() {
-	    return "该格式目前不受支持。";
+		return "该格式目前不受支持。";
 	}
 
 	@Override
 	public String compartirInstanciaServicioNoDisponible() {
-	    return "所选服务不可用。";
+		return "所选服务不可用。";
 	}
 
 	@Override
 	public String compartirInstanciaSubidaCompleta() {
-	    return "传输已成功启动。";
+		return "传输已成功启动。";
 	}
 
 	@Override
 	public String compartirInstanciaErrorSubir() {
-	    return "无法上传所选文件。";
+		return "无法上传所选文件。";
 	}
 
 	@Override
 	public String compartirInstanciaColorPanel() {
-	    return "面板颜色";
+		return "面板颜色";
 	}
 
 	@Override
 	public String compartirInstanciaColorTexto() {
-	    return "文本颜色";
+		return "文本颜色";
 	}
 
 	@Override
 	public String compartirInstanciaPolitica1() {
-	    return "推荐类型：mods、configs、saves、worlds、datapacks、资源包和选项文件。避免包含不必要的私人材料。";
+		return "推荐类型：mods、configs、saves、worlds、datapacks、资源包和选项文件。避免包含不必要的私人材料。";
 	}
 
 	@Override
 	public String compartirInstanciaPolitica2() {
-	    return "扩展可以添加自己的上传服务。默认集成的服务应显示在此处。";
+		return "扩展可以添加自己的上传服务。默认集成的服务应显示在此处。";
 	}
 
 	@Override
 	public String compartirInstanciaPolitica3() {
-	    return "wormhole.app：正常上传可达 5 GiB；5 到 10 GiB 之间需要保持发送端开启。在当前项目实现中，实际集成仍在待定状态。";
+		return "wormhole.app：正常上传可达 5 GiB；5 到 10 GiB 之间需要保持发送端开启。在当前项目实现中，实际集成仍在待定状态。";
 	}
 
 	@Override
 	public String compartirInstanciaPolitica4() {
-	    return "limewire.com：旨在作为临时保留服务。此实现尚不支持。";
+		return "limewire.com：旨在作为临时保留服务。此实现尚不支持。";
 	}
 
 	@Override
 	public String compartirInstanciaPolitica5() {
-	    return "bittorrent：由于是直接 P2P 分发，无中央托管，因此是最安全的模式。此实现尚不支持。";
+		return "bittorrent：由于是直接 P2P 分发，无中央托管，因此是最安全的模式。此实现尚不支持。";
 	}
 
 	@Override
 	public String compartirInstanciaPolitica6() {
-	    return "默认情况下，会选择实例中最常见的文件夹和文件，以方便技术支持。";
+		return "默认情况下，会选择实例中最常见的文件夹和文件，以方便技术支持。";
 	}
 
 	@Override
 	public String compartirInstanciaPolitica7() {
-	    return "如果你包含 CrashDetector 的内部文件夹，配置、日志和辅助数据也将被传输，因此如果不需要，你可以取消选择它。";
+		return "如果你包含 CrashDetector 的内部文件夹，配置、日志和辅助数据也将被传输，因此如果不需要，你可以取消选择它。";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

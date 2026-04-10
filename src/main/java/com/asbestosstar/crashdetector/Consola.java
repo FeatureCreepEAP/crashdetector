@@ -103,9 +103,8 @@ public class Consola {
 		APIdeSitioDeRegistro.APIS.add(new MCLogsAPI());
 		APIdeSitioDeRegistro.APIS.add(new PastesDevAPI());
 		APIdeSitioDeRegistro.APIS.add(new CrashDetectorPasteAPI());
-		APIdeSitioDeRegistro.APIS.add(new  GnomeBotDevAPI());
+		APIdeSitioDeRegistro.APIS.add(new GnomeBotDevAPI());
 
-		
 		divisores.add(new TLauncherConsolaDivisor());
 		divisores.add(new HolaMundoConsolaDivisidor());
 		// divisores.add(new VainillaConsolaDivisor());

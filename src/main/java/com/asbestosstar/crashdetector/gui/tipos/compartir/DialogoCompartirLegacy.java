@@ -493,12 +493,14 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		ret.add(colorFondoCampo);
 
 		// Verde oscuro para "compartir informe" y "compartir instancia/modpack"
-		ConfigColor colorBotonVerdeOscuro = ConfigColor.de("dialogo_compartir_boton_verde_oscuro", new Color(0, 100, 0));
+		ConfigColor colorBotonVerdeOscuro = ConfigColor.de("dialogo_compartir_boton_verde_oscuro",
+				new Color(0, 100, 0));
 		colorBotonVerdeOscuro.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBotonCompartirVerdeOscuro());
 		ret.add(colorBotonVerdeOscuro);
 
 		// Verde más claro para "compartir todos los enlaces sin reporte"
-		ConfigColor colorBotonVerdeClaro = ConfigColor.de("dialogo_compartir_boton_verde_claro", new Color(102, 170, 102));
+		ConfigColor colorBotonVerdeClaro = ConfigColor.de("dialogo_compartir_boton_verde_claro",
+				new Color(102, 170, 102));
 		colorBotonVerdeClaro.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBotonCompartirVerdeClaro());
 		ret.add(colorBotonVerdeClaro);
 
@@ -519,7 +521,8 @@ public class DialogoCompartirLegacy extends DialogoCompartir {
 		// En macOS no se fuerzan los colores para respetar mejor el estilo nativo.
 		if (!esMacOS()) {
 			Color verdeOscuro = ConfigColor.de("dialogo_compartir_boton_verde_oscuro", new Color(0, 100, 0)).obtener();
-			Color verdeClaro = ConfigColor.de("dialogo_compartir_boton_verde_claro", new Color(102, 170, 102)).obtener();
+			Color verdeClaro = ConfigColor.de("dialogo_compartir_boton_verde_claro", new Color(102, 170, 102))
+					.obtener();
 			Color colorTexto = ConfigColor.de("dialogo_compartir_boton_texto", Color.WHITE).obtener();
 
 			if (botonCompartirTodos != null) {

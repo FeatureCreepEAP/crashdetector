@@ -8,8 +8,8 @@ import com.asbestosstar.crashdetector.Consola;
 /**
  * Wrapper de MCLogs que reescribe la URL pública para usar gnomebot.dev.
  *
- * NO se recomienda usar este wrapper.
- * Es preferible usar MCLogs directamente siempre que sea posible.
+ * NO se recomienda usar este wrapper. Es preferible usar MCLogs directamente
+ * siempre que sea posible.
  */
 public class GnomeBotDevAPI extends MCLogsAPI {
 
@@ -19,9 +19,8 @@ public class GnomeBotDevAPI extends MCLogsAPI {
 	}
 
 	/**
-	 * NO se recomienda usar este wrapper.
-	 * La publicación sigue haciéndose contra la API de MCLogs;
-	 * solamente se cambia la URL final devuelta al usuario.
+	 * NO se recomienda usar este wrapper. La publicación sigue haciéndose contra la
+	 * API de MCLogs; solamente se cambia la URL final devuelta al usuario.
 	 */
 	@Override
 	public String publicarRegistro(Consola registro) throws DemasiadoGrande, ErrorConPublicar {
@@ -30,9 +29,8 @@ public class GnomeBotDevAPI extends MCLogsAPI {
 	}
 
 	/**
-	 * NO se recomienda usar este wrapper.
-	 * Este método publica usando MCLogs y luego transforma la URL devuelta
-	 * al formato de gnomebot.dev.
+	 * NO se recomienda usar este wrapper. Este método publica usando MCLogs y luego
+	 * transforma la URL devuelta al formato de gnomebot.dev.
 	 */
 	@Override
 	public String publicarTexto(String nombreSugerido, String contenido) throws DemasiadoGrande, ErrorConPublicar {
@@ -41,8 +39,8 @@ public class GnomeBotDevAPI extends MCLogsAPI {
 	}
 
 	/**
-	 * NO se recomienda usar este wrapper.
-	 * Cada enlace generado por MCLogs se transforma al mirror de gnomebot.dev.
+	 * NO se recomienda usar este wrapper. Cada enlace generado por MCLogs se
+	 * transforma al mirror de gnomebot.dev.
 	 */
 	@Override
 	public List<String> publicarRegistroEnPartes(Consola registro) throws ErrorConPublicar, DemasiadoGrande {
@@ -57,9 +55,8 @@ public class GnomeBotDevAPI extends MCLogsAPI {
 	}
 
 	/**
-	 * Se mantiene la API original de MCLogs.
-	 * NO se recomienda cambiar esto salvo que gnomebot.dev exponga
-	 * una API compatible propia.
+	 * Se mantiene la API original de MCLogs. NO se recomienda cambiar esto salvo
+	 * que gnomebot.dev exponga una API compatible propia.
 	 */
 	@Override
 	public List<String> sitiosPorDefecto() {
@@ -67,15 +64,9 @@ public class GnomeBotDevAPI extends MCLogsAPI {
 	}
 
 	/**
-	 * Convierte:
-	 *   https://mclo.gs/codigo
-	 * o
-	 *   http://mclo.gs/codigo
-	 * o
-	 *   mclo.gs/codigo
+	 * Convierte: https://mclo.gs/codigo o http://mclo.gs/codigo o mclo.gs/codigo
 	 *
-	 * en:
-	 *   https://gnomebot.dev/paste/mclogs/codigo
+	 * en: https://gnomebot.dev/paste/mclogs/codigo
 	 *
 	 * NO se recomienda depender de este comportamiento.
 	 */
@@ -93,9 +84,8 @@ public class GnomeBotDevAPI extends MCLogsAPI {
 	}
 
 	/**
-	 * Extrae el identificador final de una URL de MCLogs.
-	 * Ejemplo:
-	 *   https://mclo.gs/codigo -> codigo
+	 * Extrae el identificador final de una URL de MCLogs. Ejemplo:
+	 * https://mclo.gs/codigo -> codigo
 	 */
 	private String extraerCodigo(String url) {
 		String limpia = url.trim();

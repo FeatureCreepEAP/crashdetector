@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetector.api_sito_archivo;
+package com.asbestosstar.crashdetector.api_sitio_archivo;
 
 import java.nio.file.Path;
 import java.time.Instant;
@@ -26,14 +26,8 @@ import java.util.Map;
  */
 public interface SitioDeArchivoAPI {
 
-	
 	public static final Map<String, SitioDeArchivoAPI> SERVICIOS_REGISTRADOS = new HashMap<>();
-	
-	
 
-	
-	
-	
 	/**
 	 * Nombre corto del servicio.
 	 *
