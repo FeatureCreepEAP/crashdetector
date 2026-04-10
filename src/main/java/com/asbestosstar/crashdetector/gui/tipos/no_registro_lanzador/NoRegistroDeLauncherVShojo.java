@@ -158,60 +158,35 @@ public class NoRegistroDeLauncherVShojo extends NoRegistroLanzadorGUI {
 			}
 		});
 
-		LinkedHashMap<String, String> banderas = new LinkedHashMap<>();
-		banderas.put("Español", "imagenes/bandera_mexico.png");
-		banderas.put("English", "imagenes/bandera_inglaterra.png");
-		banderas.put("العربية", "imagenes/bandera_arabia.png");
-		banderas.put("Português", "imagenes/bandera_brasil.png");
-		banderas.put("فارسی", "imagenes/bandera_iran.png");
-		banderas.put("Русский", "imagenes/bandera_rusia.png");
-		banderas.put("简体中文", "imagenes/bandera_china.png");
-		banderas.put("Esperanto", "imagenes/bandera_esperanto.png");
-		banderas.put("日本語", "imagenes/bandera_japon.png");
-		banderas.put("한국어", "imagenes/bandera_corea.png");
+		LinkedHashMap<String, String> banderas = Idioma.mapaParaComboBoxIdiomas();
 		comboBoxIdioma = new ComboIdiomasConIcono(banderas);
 		estilizarCombo(comboBoxIdioma); // Aplicar estilo
 
-		// Selección por idioma actual
-		String code = MonitorDePID.idioma.codigo();
-		if ("es".equals(code))
-			comboBoxIdioma.setSelectedItem("Español");
-		else if ("en".equals(code))
-			comboBoxIdioma.setSelectedItem("English");
-		else if ("ar".equals(code))
-			comboBoxIdioma.setSelectedItem("العربية");
-		else if ("pt".equals(code))
-			comboBoxIdioma.setSelectedItem("Português");
-		else if ("fa".equals(code))
-			comboBoxIdioma.setSelectedItem("فارسی");
-		else if ("ru".equals(code))
-			comboBoxIdioma.setSelectedItem("Русский");
-		else if ("zh".equals(code))
-			comboBoxIdioma.setSelectedItem("简体中文");
-		else if ("eo".equals(code))
-			comboBoxIdioma.setSelectedItem("Esperanto");
-		else if ("ja".equals(code))
-			comboBoxIdioma.setSelectedItem("日本語");
-		else if ("ko".equals(code))
-			comboBoxIdioma.setSelectedItem("한국어");
-		else
-			comboBoxIdioma.setSelectedItem("Español");
+		// Selección por idioma actual usando el registro dinámico
+		String codigoActual = MonitorDePID.idioma.codigo();
+		String nombreIdiomaActual = Idioma.nombreDeIdiomaDesdeCodigo(codigoActual);
+		comboBoxIdioma.setSelectedItem(nombreIdiomaActual);
 
 		comboBoxIdioma.addActionListener(new java.awt.event.ActionListener() {
 			@Override
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				if (building)
+				if (building) {
 					return;
-				String sel = (String) comboBoxIdioma.getSelectedItem();
-				String codigo = CrashDetectorGUI.obtenerCodigoIdioma(sel);
+				}
+
+				String seleccion = (String) comboBoxIdioma.getSelectedItem();
+				String codigo = Idioma.codigoDesdeNombreVisible(seleccion);
+
 				if (codigo != null) {
 					try {
-						// Guardar el idioma en la configuración munidial
+						// Guardar el idioma seleccionado en la configuración mundial
 						ConfigMundial.obtenerInstancia().guardarIdioma(codigo);
 					} catch (Exception ex) {
 						CrashDetectorLogger.logException(ex);
 					}
-					MonitorDePID.idioma = Idioma.detectar();
+
+					// Recalcular desde el registro dinámico actual del proceso
+					MonitorDePID.recalcularIdioma();
 					actualizarTextos();
 				}
 			}

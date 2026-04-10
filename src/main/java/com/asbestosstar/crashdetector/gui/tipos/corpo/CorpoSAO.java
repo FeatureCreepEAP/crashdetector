@@ -389,9 +389,12 @@ public class CorpoSAO extends CorpoBase {
 	private void agregarListeners() {
 		// Guardar idioma de respaldo al cambiar
 		comboIdiomaRespaldo.addActionListener(e -> {
-			String selected = (String) comboIdiomaRespaldo.getSelectedItem();
-			String codigo = CrashDetectorGUI.obtenerCodigoIdioma(selected);
-			escribirIdiomaRespaldo(codigo);
+			String seleccionado = (String) comboIdiomaRespaldo.getSelectedItem();
+			String codigo = Idioma.codigoDesdeNombreVisible(seleccionado);
+
+			if (codigo != null) {
+				escribirIdiomaRespaldo(codigo);
+			}
 		});
 
 		// Guardar configuración de Buscardor
@@ -472,17 +475,6 @@ public class CorpoSAO extends CorpoBase {
 	}
 
 	private java.util.LinkedHashMap<String, String> getMapaIdiomas() {
-		java.util.LinkedHashMap<String, String> idiomas = new java.util.LinkedHashMap<>();
-		idiomas.put("Español", "imagenes/bandera_mexico.png");
-		idiomas.put("English", "imagenes/bandera_inglaterra.png");
-		idiomas.put("العربية", "imagenes/bandera_arabia.png");
-		idiomas.put("Português", "imagenes/bandera_brasil.png");
-		idiomas.put("فارسی", "imagenes/bandera_iran.png");
-		idiomas.put("Русский", "imagenes/bandera_rusia.png");
-		idiomas.put("简体中文", "imagenes/bandera_china.png");
-		idiomas.put("Esperanto", "imagenes/bandera_esperanto.png");
-		idiomas.put("日本語", "imagenes/bandera_japon.png");
-		idiomas.put("한국어", "imagenes/bandera_corea.png");
-		return idiomas;
+		return Idioma.mapaParaComboBoxIdiomas();
 	}
 }
