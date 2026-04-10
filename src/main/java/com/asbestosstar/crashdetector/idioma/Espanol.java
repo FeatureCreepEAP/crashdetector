@@ -8917,5 +8917,13 @@ public class Espanol implements Idioma {
 	public String compartirInstanciaPolitica7() {
 		return "Si incluyes la carpeta interna de CrashDetector, también viajarán configuraciones, registros y datos auxiliares, así que puedes deseleccionarla si no hace falta.";
 	}
+	@Override
+	public String malware_fracturiser_detectado() {
+	    return "Posible Fracturiser detectado. Evidencias:";
+	}
+	
+	
+	
+	
 
 }

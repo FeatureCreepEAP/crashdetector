@@ -8226,5 +8226,13 @@ public class Ingles implements Idioma {
 	public String compartirInstanciaPolitica7() {
 		return "If you include the internal CrashDetector folder, configurations, logs and auxiliary data will also travel, so you can deselect it if not needed.";
 	}
+	@Override
+	public String malware_fracturiser_detectado() {
+	    return "Possible Fracturiser detected. Evidence:";
+	}
+	
+	
+	
+	
 
 }

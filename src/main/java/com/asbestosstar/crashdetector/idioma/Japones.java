@@ -7877,5 +7877,16 @@ public class Japones implements Idioma {
 	public String compartirInstanciaPolitica7() {
 		return "CrashDetectorの内部フォルダを含めると、設定、ログ、および補助データも転送されるため、不要であれば選択を解除できます。";
 	}
+	@Override
+	public String malware_fracturiser_detectado() {
+	    return "Fracturiserの可能性があります。証拠:";
+	}
+	
+	
+	
+	
+	
+	
+	
 
 }

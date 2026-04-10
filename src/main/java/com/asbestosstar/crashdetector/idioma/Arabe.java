@@ -8097,5 +8097,16 @@ public class Arabe implements Idioma {
 	public String compartirInstanciaPolitica7() {
 		return "إذا قمت بتضمين المجلد الداخلي لـ CrashDetector، فستنتقل أيضاً الإعدادات والسجلات والبيانات المساعدة، لذا يمكنك إلغاء تحديدها إذا لم تكن ضرورية.";
 	}
+	@Override
+	public String malware_fracturiser_detectado() {
+	    return "تم اكتشاف Fracturiser محتمل. الأدلة:";
+	}
+	
+	
+	
+	
+	
+	
+	
 
 }

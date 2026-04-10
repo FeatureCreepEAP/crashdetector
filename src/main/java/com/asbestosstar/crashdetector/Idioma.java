@@ -2992,4 +2992,6 @@ public interface Idioma {
 
 	public String compartirInstanciaPolitica7();
 
+	public String malware_fracturiser_detectado();
+
 }

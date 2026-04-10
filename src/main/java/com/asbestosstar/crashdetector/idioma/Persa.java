@@ -8161,5 +8161,17 @@ public class Persa implements Idioma {
 	public String compartirInstanciaPolitica7() {
 		return "اگر پوشه داخلی CrashDetector را شامل کنید، پیکربندی‌ها، گزارش‌ها و داده‌های کمکی نیز منتقل می‌شوند، بنابراین اگر لازم نیست می‌توانید انتخاب آن را لغو کنید.";
 	}
+	@Override
+	public String malware_fracturiser_detectado() {
+	    return "Fracturiser احتمالی شناسایی شد. شواهد:";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

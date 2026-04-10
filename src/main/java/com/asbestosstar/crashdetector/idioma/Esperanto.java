@@ -8174,5 +8174,14 @@ public class Esperanto implements Idioma {
 	public String compartirInstanciaPolitica7() {
 		return "Se vi inkluzivas la internan dosierujon de CrashDetector, agordoj, protokoloj kaj helpaj datumoj ankaŭ vojaĝos, do vi povas malselekti ĝin se ne necese.";
 	}
+	@Override
+	public String malware_fracturiser_detectado() {
+	    return "Ebla Fracturiser detektita. Indicoj:";
+	}
+	
+	
+	
+	
+	
 
 }

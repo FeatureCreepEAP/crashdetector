@@ -7695,5 +7695,14 @@ public class Chino implements Idioma {
 	public String compartirInstanciaPolitica7() {
 		return "如果你包含 CrashDetector 的内部文件夹，配置、日志和辅助数据也将被传输，因此如果不需要，你可以取消选择它。";
 	}
+	@Override
+	public String malware_fracturiser_detectado() {
+	    return "检测到可能的 Fracturiser。证据：";
+	}
+	
+	
+	
+	
+	
 
 }

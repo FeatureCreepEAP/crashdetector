@@ -8206,5 +8206,17 @@ public class Ruso implements Idioma {
 	public String compartirInstanciaPolitica7() {
 		return "Если вы включите внутреннюю папку CrashDetector, также будут переданы конфигурации, журналы и вспомогательные данные, поэтому вы можете снять выбор, если это не нужно.";
 	}
+	@Override
+	public String malware_fracturiser_detectado() {
+	    return "Обнаружен возможный Fracturiser. Улики:";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
