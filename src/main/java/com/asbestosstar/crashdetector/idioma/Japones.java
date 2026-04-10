@@ -1,5 +1,6 @@
 package com.asbestosstar.crashdetector.idioma;
 
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -11,6 +12,27 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class Japones implements Idioma {
 	private final Config config = Config.obtenerInstancia();
+
+	@Override
+	public String codigo() {
+		// TODO Auto-generated method stub
+		return "ja";
+	}
+
+	@Override
+	public String nombre_del_idioma_espanol_minusculas_ascii() {
+		return "japones";
+	}
+
+	@Override
+	public String nombre_del_idioma() {
+		return "日本語";
+	}
+
+	@Override
+	public Path imagen_bandera() {
+		return Statics.carpeta.resolve("imagenes").resolve("bandera_japon.png");
+	}
 
 	@Override
 	public String carpeta_de_mods_no_valido() {
@@ -745,12 +767,6 @@ public class Japones implements Idioma {
 	@Override
 	public String cargando() {
 		return "読み込み中";
-	}
-
-	@Override
-	public String codigo() {
-		// TODO Auto-generated method stub
-		return "ja";
 	}
 
 	@Override

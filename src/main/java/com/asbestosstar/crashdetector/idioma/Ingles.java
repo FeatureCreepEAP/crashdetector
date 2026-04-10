@@ -1,5 +1,6 @@
 package com.asbestosstar.crashdetector.idioma;
 
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -12,6 +13,27 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 public class Ingles implements Idioma {
 	private final Config config = Config.obtenerInstancia(); // Assuming this is how you get the Config instance, like
 																// in Espanol
+
+	@Override
+	public String codigo() {
+		// TODO Auto-generated method stub
+		return "en";
+	}
+
+	@Override
+	public String nombre_del_idioma_espanol_minusculas_ascii() {
+		return "ingles";
+	}
+
+	@Override
+	public String nombre_del_idioma() {
+		return "English";
+	}
+
+	@Override
+	public Path imagen_bandera() {
+		return Statics.carpeta.resolve("imagenes").resolve("bandera_inglaterra.png");
+	}
 
 	@Override
 	public String carpeta_de_mods_no_valido() {
@@ -782,12 +804,6 @@ public class Ingles implements Idioma {
 	public String cargando() {
 		// TODO Auto-generated method stub
 		return "Loading";
-	}
-
-	@Override
-	public String codigo() {
-		// TODO Auto-generated method stub
-		return "en";
 	}
 
 	@Override

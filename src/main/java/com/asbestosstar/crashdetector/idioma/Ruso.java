@@ -1,5 +1,6 @@
 package com.asbestosstar.crashdetector.idioma;
 
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -11,6 +12,27 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class Ruso implements Idioma {
 	private final Config config = Config.obtenerInstancia();
+
+	@Override
+	public String codigo() {
+		// TODO Auto-generated method stub
+		return "ru";
+	}
+
+	@Override
+	public String nombre_del_idioma_espanol_minusculas_ascii() {
+		return "ruso";
+	}
+
+	@Override
+	public String nombre_del_idioma() {
+		return "Русский";
+	}
+
+	@Override
+	public Path imagen_bandera() {
+		return Statics.carpeta.resolve("imagenes").resolve("bandera_rusia.png");
+	}
 
 	@Override
 	public String carpeta_de_mods_no_valido() {
@@ -776,12 +798,6 @@ public class Ruso implements Idioma {
 	@Override
 	public String cargando() {
 		return "Загрузка";
-	}
-
-	@Override
-	public String codigo() {
-		// TODO Auto-generated method stub
-		return "ru";
 	}
 
 	@Override

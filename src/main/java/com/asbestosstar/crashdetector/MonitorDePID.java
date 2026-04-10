@@ -222,6 +222,8 @@ public class MonitorDePID {
 				Statics.carpeta.resolve("imagenes/bandera_japon.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/bandera_corea.png",
 				Statics.carpeta.resolve("imagenes/bandera_corea.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/bandera_majnovschina.png",
+				Statics.carpeta.resolve("imagenes/bandera_majnovschina.png").toFile());
 
 		copiarACarpetaDesdeJar("/imagenes/mod.png", Statics.carpeta.resolve("imagenes/mod.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/clase.png", Statics.carpeta.resolve("imagenes/clase.png").toFile());

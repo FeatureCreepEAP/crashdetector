@@ -1,5 +1,6 @@
 package com.asbestosstar.crashdetector.idioma;
 
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -11,6 +12,27 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class Portuges implements Idioma {
 	private final Config config = Config.obtenerInstancia();
+
+	@Override
+	public String codigo() {
+		// TODO Auto-generated method stub
+		return "pt";
+	}
+
+	@Override
+	public String nombre_del_idioma_espanol_minusculas_ascii() {
+		return "portugues";
+	}
+
+	@Override
+	public String nombre_del_idioma() {
+		return "Português";
+	}
+
+	@Override
+	public Path imagen_bandera() {
+		return Statics.carpeta.resolve("imagenes").resolve("bandera_brasil.png");
+	}
 
 	@Override
 	public String carpeta_de_mods_no_valido() {
@@ -777,12 +799,6 @@ public class Portuges implements Idioma {
 	@Override
 	public String cargando() {
 		return "Carregando";
-	}
-
-	@Override
-	public String codigo() {
-		// TODO Auto-generated method stub
-		return "pt";
 	}
 
 	@Override

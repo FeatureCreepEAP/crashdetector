@@ -1,5 +1,6 @@
 package com.asbestosstar.crashdetector.idioma;
 
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -11,6 +12,27 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class Arabe implements Idioma {
 	private final Config config = Config.obtenerInstancia();
+
+	@Override
+	public String codigo() {
+		// TODO Auto-generated method stub
+		return "ar";
+	}
+
+	@Override
+	public String nombre_del_idioma_espanol_minusculas_ascii() {
+		return "arabe";
+	}
+
+	@Override
+	public String nombre_del_idioma() {
+		return "العربية";
+	}
+
+	@Override
+	public Path imagen_bandera() {
+		return Statics.carpeta.resolve("imagenes").resolve("bandera_arabia.png");
+	}
 
 	@Override
 	public String carpeta_de_mods_no_valido() {
@@ -776,12 +798,6 @@ public class Arabe implements Idioma {
 	@Override
 	public String cargando() {
 		return "جارٍ التحميل";
-	}
-
-	@Override
-	public String codigo() {
-		// TODO Auto-generated method stub
-		return "ar";
 	}
 
 	@Override

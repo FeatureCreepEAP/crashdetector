@@ -1,5 +1,6 @@
 package com.asbestosstar.crashdetector.idioma;
 
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -11,6 +12,27 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 
 public class Coreano implements Idioma {
 	private final Config config = Config.obtenerInstancia();
+
+	@Override
+	public String codigo() {
+		// TODO Auto-generated method stub
+		return "ko";
+	}
+
+	@Override
+	public String nombre_del_idioma_espanol_minusculas_ascii() {
+		return "coreano";
+	}
+
+	@Override
+	public String nombre_del_idioma() {
+		return "한국어";
+	}
+
+	@Override
+	public Path imagen_bandera() {
+		return Statics.carpeta.resolve("imagenes").resolve("bandera_corea.png");
+	}
 
 	@Override
 	public String carpeta_de_mods_no_valido() {
@@ -741,12 +763,6 @@ public class Coreano implements Idioma {
 	@Override
 	public String cargando() {
 		return "로딩 중";
-	}
-
-	@Override
-	public String codigo() {
-		// TODO Auto-generated method stub
-		return "ko";
 	}
 
 	@Override

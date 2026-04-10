@@ -12,8 +12,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import javax.swing.Icon;
-
 import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.idioma.Arabe;
 import com.asbestosstar.crashdetector.idioma.Chino;
@@ -25,6 +23,7 @@ import com.asbestosstar.crashdetector.idioma.Japones;
 import com.asbestosstar.crashdetector.idioma.Persa;
 import com.asbestosstar.crashdetector.idioma.Portuges;
 import com.asbestosstar.crashdetector.idioma.Ruso;
+import com.asbestosstar.crashdetector.idioma.Ucraniano;
 
 public interface Idioma {
 
@@ -44,6 +43,7 @@ public interface Idioma {
 	public static Idioma esperanto = new Esperanto();
 	public static Idioma japones = new Japones();
 	public static Idioma coreano = new Coreano();
+	public static Idioma ucraniano = new Ucraniano();
 
 	public static Idioma detectar() {
 
@@ -98,7 +98,7 @@ public interface Idioma {
 		case "ko":
 			return coreano;
 		case "uk":
-			return ruso; // Ucraniano usa configuración rusa
+			return ucraniano; // Ucraniano de Majnovschina
 		default:
 			return espanol;
 		}
@@ -170,6 +170,34 @@ public interface Idioma {
 	public static String leer_archivo(Path path) throws IOException {
 		return new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
 	}
+
+	/**
+	 * Codigo de Idioma e.g. es en pt ar ko eo ja fa zh ru
+	 * 
+	 * @return
+	 */
+	public String codigo();
+
+	/**
+	 * Nombre del idioma en español, en minúsculas, sin acentos ni caracteres
+	 * especiales. Ejemplo: "español" -> "espanol"
+	 * 
+	 * @return
+	 */
+	public String nombre_del_idioma_espanol_minusculas_ascii();
+
+	/*
+	 * Nombre del idioma en su propia forma nativa, con acentos y caracteres
+	 * especiales. Ejemplo: "Ingles" -> "English"
+	 */
+	public String nombre_del_idioma();
+
+	/**
+	 * Ubicacion en disco para la bandera del idioma
+	 * 
+	 * @return
+	 */
+	public Path imagen_bandera();
 
 	/**
 	 * no es una carpeta de mods valida
@@ -477,8 +505,6 @@ public interface Idioma {
 	public String escanear();
 
 	public String cargando();
-
-	public String codigo();
 
 	public String inicioApp();
 
