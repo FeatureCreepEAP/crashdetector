@@ -377,7 +377,7 @@ public class CorpoSAO extends CorpoBase {
 
 	private void actualizarValores() {
 		// Establecer valores iniciales desde la configuración
-		comboIdiomaRespaldo.setSelectedItem(Idioma.nombreDeIdiomaDesdeCondigo(obtenerIdiomaRespaldo()));
+		comboIdiomaRespaldo.setSelectedItem(Idioma.nombreDeIdiomaDesdeCodigo(obtenerIdiomaRespaldo()));
 		checkBuscardor.setSelected(obtenerBuscardorHablicar());
 		campoNombreHerramienta.setText(obtenerNombreCD());
 		checkCondenarPirata.setSelected(obtenerCondenarPirata());

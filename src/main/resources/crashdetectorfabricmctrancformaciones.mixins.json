@@ -1,14 +1,13 @@
 {
-  "required": false,
-  "minVersion": "0.7",
-  "package": "com.asbestosstar.crashdetector.fabricmctransformaciones",
-  "compatibilityLevel": "JAVA_8",
-  "plugin": "com.asbestosstar.crashdetector.fabricmctransformaciones.CoreModFabricMC",
-  "mixins": [
- 	 "ClasesParaTransformacionFabricMC"
-  ],
-    "injectors": {
-    "defaultRequire": 1
-  }
+	"required": false,
+	"minVersion": "0.7",
+	"package": "com.asbestosstar.crashdetector.fabricmctransformaciones",
+	"compatibilityLevel": "JAVA_8",
+	"plugin": "com.asbestosstar.crashdetector.fabricmctransformaciones.CoreModFabricMC",
+	"mixins": [
+		"ClasesParaTransformacionFabricMC"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
 }
-

@@ -1,37 +1,29 @@
 {
-  "schemaVersion": 1,
-  "id": "crashdetector",
-  "version": "${version}",
-
-  "name": "CrashDetectorMC",
-  "description": "CrashDetector",
-  "authors": [
-    "Me!"
-  ],
-  "contact": {
-    "homepage": "https://pagure.io/CrashDetectorMC/",
-    "sources": "https://pagure.io/CrashDetectorMC/"
-  },
-
-  "license": "JSharp4Life Licence 1",
-  "icon": "assets/modid/icon.png",
-
-  "environment": "*",
-  "entrypoints": {
-    "preLaunch": [
-      "com.asbestosstar.crashdetector.CrashDetectorFabricMC"
-    ]
-  },
-	
-  "mixins": [
-	
-    "crashdetectorfabricmctrancformaciones.mixins.json"
-	
-  ],
-  
-
-  "depends": {
-    "fabricloader": ">=0.13.3",
-    "java": "*"
-  }
+	"schemaVersion": 1,
+	"id": "crashdetector",
+	"version": "${version}",
+	"name": "CrashDetectorMC",
+	"description": "CrashDetector",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://pagure.io/CrashDetectorMC/",
+		"sources": "https://pagure.io/CrashDetectorMC/"
+	},
+	"license": "JSharp4Life Licence 1",
+	"icon": "assets/modid/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"preLaunch": [
+			"com.asbestosstar.crashdetector.CrashDetectorFabricMC"
+		]
+	},
+	"mixins": [
+		"crashdetectorfabricmctrancformaciones.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.13.3",
+		"java": "*"
+	}
 }

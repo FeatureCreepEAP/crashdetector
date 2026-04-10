@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -26,146 +26,266 @@ import com.asbestosstar.crashdetector.idioma.Ruso;
 import com.asbestosstar.crashdetector.idioma.Ucraniano;
 
 public interface Idioma {
-
 	Config config = Config.obtenerInstancia();
+
 	@Deprecated
 	public static File archivo = new File(System.getProperty("user.home"), "crash_detector/idioma");
 
 	public static ConfigString idioma_respaldo = ConfigString.de("idioma_respaldo", "es");
 
-	public static Idioma espanol = new Espanol();
-	public static Idioma ingles = new Ingles();
-	public static Idioma arabe = new Arabe();
-	public static Idioma portuges = new Portuges();
-	public static Idioma persa = new Persa();
-	public static Idioma ruso = new Ruso();
-	public static Idioma chino = new Chino();
-	public static Idioma esperanto = new Esperanto();
-	public static Idioma japones = new Japones();
-	public static Idioma coreano = new Coreano();
-	public static Idioma ucraniano = new Ucraniano();
+	/**
+	 * Registro dinamico de idiomas.
+	 *
+	 * La clave es el codigo del idioma (es, en, pt, uk, etc). Si se vuelve a
+	 * registrar el mismo codigo, el nuevo objeto sobrescribe al anterior. Esto
+	 * permite que la API de extensiones reemplace traducciones completas o
+	 * parcialmente mediante wrappers/subclases.
+	 */
+	public static final Map<String, Idioma> IDIOMAS_REGISTRADOS = new LinkedHashMap<>();
 
+	/**
+	 * Registra los idiomas base del programa.
+	 *
+	 * Se puede llamar varias veces; limpia y reconstruye el registro base. Despues,
+	 * extensiones/modpacks pueden volver a registrar el mismo codigo para
+	 * sobrescribirlo.
+	 */
+	public static void registrarIdiomasPredeterminados() {
+		IDIOMAS_REGISTRADOS.clear();
+
+		registrarIdioma(new Espanol());
+		registrarIdioma(new Ingles());
+		registrarIdioma(new Arabe());
+		registrarIdioma(new Portuges());
+		registrarIdioma(new Persa());
+		registrarIdioma(new Ruso());
+		registrarIdioma(new Chino());
+		registrarIdioma(new Esperanto());
+		registrarIdioma(new Japones());
+		registrarIdioma(new Coreano());
+		registrarIdioma(new Ucraniano());
+	}
+
+	/**
+	 * Registra o sobrescribe un idioma por codigo.
+	 */
+	public static void registrarIdioma(Idioma idioma) {
+		if (idioma == null) {
+			return;
+		}
+
+		String codigo = normalizarCodigo(idioma.codigo());
+		if (codigo == null) {
+			return;
+		}
+
+		IDIOMAS_REGISTRADOS.put(codigo, idioma);
+	}
+
+	/**
+	 * Registra varios idiomas.
+	 */
+	public static void registrarIdiomas(Iterable<? extends Idioma> idiomas) {
+		if (idiomas == null) {
+			return;
+		}
+		for (Idioma idioma : idiomas) {
+			registrarIdioma(idioma);
+		}
+	}
+
+	/**
+	 * Devuelve una copia ordenada de los codigos registrados.
+	 */
+	public static Set<String> codigosRegistrados() {
+		return new LinkedHashSet<>(IDIOMAS_REGISTRADOS.keySet());
+	}
+
+	/**
+	 * Obtiene el idioma directamente desde el registro.
+	 */
+	public static Idioma desdeCodigo(String codigo) {
+		String codigoNormalizado = normalizarCodigo(codigo);
+		if (codigoNormalizado == null) {
+			return idiomaPorDefecto();
+		}
+
+		Idioma idioma = IDIOMAS_REGISTRADOS.get(codigoNormalizado);
+		return idioma != null ? idioma : idiomaPorDefecto();
+	}
+
+	/**
+	 * Indica si el codigo existe en el registro actual.
+	 */
+	public static boolean tenemosIdiomaCodigo(String codigo) {
+		String codigoNormalizado = normalizarCodigo(codigo);
+		return codigoNormalizado != null && IDIOMAS_REGISTRADOS.containsKey(codigoNormalizado);
+	}
+
+	/**
+	 * Nombre nativo del idioma desde su codigo.
+	 */
+	public static String nombreDeIdiomaDesdeCodigo(String codigo) {
+		Idioma idioma = IDIOMAS_REGISTRADOS.get(normalizarCodigo(codigo));
+		return idioma != null ? idioma.nombre_del_idioma() : idiomaPorDefecto().nombre_del_idioma();
+	}
+
+	/**
+	 * Busca el codigo a partir del nombre visible del idioma.
+	 *
+	 * Primero intenta coincidencia exacta con el nombre nativo, y luego con el
+	 * nombre en espanol ASCII.
+	 */
+	public static String codigoDesdeNombreVisible(String nombreIdioma) {
+		if (nombreIdioma == null) {
+			return "es";
+		}
+
+		for (Idioma idioma : IDIOMAS_REGISTRADOS.values()) {
+			if (nombreIdioma.equals(idioma.nombre_del_idioma())) {
+				return idioma.codigo();
+			}
+		}
+
+		String nombreNormalizado = nombreIdioma.trim().toLowerCase(Locale.ROOT);
+		for (Idioma idioma : IDIOMAS_REGISTRADOS.values()) {
+			if (nombreNormalizado.equals(idioma.nombre_del_idioma_espanol_minusculas_ascii())) {
+				return idioma.codigo();
+			}
+		}
+
+		return "es";
+	}
+
+	/**
+	 * Mapa para combos: etiqueta visible -> ruta relativa de bandera.
+	 */
+	public static LinkedHashMap<String, String> mapaParaComboBoxIdiomas() {
+		LinkedHashMap<String, String> mapa = new LinkedHashMap<>();
+
+		for (Idioma idioma : IDIOMAS_REGISTRADOS.values()) {
+			Path bandera = idioma.imagen_bandera();
+			String rutaRelativa = null;
+
+			if (bandera != null) {
+				try {
+					Path carpetaBase = Statics.carpeta;
+					rutaRelativa = carpetaBase.relativize(bandera).toString().replace('\\', '/');
+				} catch (Exception e) {
+					// Si algo falla, no rompemos la UI; simplemente dejamos el icono nulo.
+					rutaRelativa = null;
+				}
+			}
+
+			mapa.put(idioma.nombre_del_idioma(), rutaRelativa);
+		}
+
+		return mapa;
+	}
+
+	/**
+	 * Detecta el idioma actual usando el registro dinamico.
+	 *
+	 * Orden: 1. Configuracion mundial 2. Archivo antiguo 3. Idioma del sistema 4.
+	 * Idioma de respaldo 5. Espanol
+	 */
 	public static Idioma detectar() {
+		asegurarIdiomasBaseRegistrados();
 
-		// 1. Configuración munidial
+		// 1. Configuracion mundial
 		String id = ConfigMundial.obtenerInstancia().obtenerIdioma();
-		if (id != null && tenemosIdiomaCodigo(id)) {
+		if (tenemosIdiomaCodigo(id)) {
 			return desdeCodigo(id);
 		}
 
-		// 2. Archivo antiguo (compatibilidad)
+		// 2. Archivo antiguo
 		id = leerIdiomaDesdeArchivo();
-		if (id != null && tenemosIdiomaCodigo(id)) {
+		if (tenemosIdiomaCodigo(id)) {
 			return desdeCodigo(id);
 		}
 
 		// 3. Idioma del sistema
-		id = Locale.getDefault().getLanguage().toLowerCase();
+		id = Locale.getDefault().getLanguage().toLowerCase(Locale.ROOT);
 		if (tenemosIdiomaCodigo(id)) {
 			return desdeCodigo(id);
 		}
 
 		// 4. Idioma de respaldo
 		id = idioma_respaldo.obtener();
-		if (id != null && tenemosIdiomaCodigo(id)) {
+		if (tenemosIdiomaCodigo(id)) {
 			return desdeCodigo(id);
 		}
 
-		// 5. Español como último recurso
-		return espanol;
+		// 5. Espanol como ultimo recurso
+		return idiomaPorDefecto();
 	}
 
-	public static Idioma desdeCodigo(String codigo) {// TODO una sistema dinamica de registrando idiomas
-		switch (codigo) {
-		case "es":
-			return espanol;
-		case "en":
-			return ingles;
-		case "ar":
-			return arabe;
-		case "pt":
-			return portuges;
-		case "fa":
-			return persa;
-		case "ru":
-			return ruso;
-		case "zh":
-			return chino;
-		case "eo":
-			return esperanto;
-		case "ja":
-			return japones;
-		case "ko":
-			return coreano;
-		case "uk":
-			return ucraniano; // Ucraniano de Majnovschina
-		default:
-			return espanol;
+	/**
+	 * Fuerza recalculo del idioma efectivo del proceso actual.
+	 */
+	public static Idioma recalcularIdiomaActual() {
+		return detectar();
+	}
+
+	/**
+	 * Asegura que el registro base exista antes de usarlo.
+	 */
+	public static void asegurarIdiomasBaseRegistrados() {
+		if (IDIOMAS_REGISTRADOS.isEmpty()) {
+			registrarIdiomasPredeterminados();
 		}
 	}
 
-	public static String nombreDeIdiomaDesdeCondigo(String codigo) {
-		switch (codigo) {
-		case "es":
-			return "Español"; // espanol
-		case "en":
-			return "English"; // ingles
-		case "ar":
-			return "العربية"; // arabe
-		case "pt":
-			return "Português"; // portuges
-		case "fa":
-			return "فارسی"; // persa
-		case "ru":
-			return "Русский"; // ruso
-		case "zh":
-			return "中文"; // chino
-		case "eo":
-			return "Esperanto"; // Esperanto
-		case "ja":
-			return "日本語"; // japones
-		case "ko":
-			return "한국어"; // coreono
-		case "uk":
-			return "Русский"; // Ucraniano usa configuración rusa (same as Russian)
-		default:
-			return "Español"; // Idioma por defecto
-		}
+	/**
+	 * Idioma por defecto del sistema.
+	 */
+	public static Idioma idiomaPorDefecto() {
+		Idioma idioma = IDIOMAS_REGISTRADOS.get("es");
+		return idioma != null ? idioma : new Espanol();
 	}
 
-	public static boolean tenemosIdiomaCodigo(String codigo) {
-		Set<String> CODIGOS_IDIOMA = new HashSet<>(
-				Arrays.asList("es", "en", "ar", "pt", "fa", "ru", "zh", "eo", "ja", "ko"));
-		return CODIGOS_IDIOMA.contains(codigo);
-	}// TODO crerar una sistema de registrando idiomas dinamicos
+	/**
+	 * Normaliza el codigo.
+	 */
+	public static String normalizarCodigo(String codigo) {
+		if (codigo == null) {
+			return null;
+		}
+
+		String normalizado = codigo.trim().toLowerCase(Locale.ROOT);
+		return normalizado.isEmpty() ? null : normalizado;
+	}
 
 	public static String leerIdiomaDesdeArchivo() {
 		if (!archivo.exists() || !archivo.canRead()) {
 			return null;
 		}
+
 		try {
 			String texto = leer_archivo(archivo.toPath());
+			String codigo = normalizarCodigo(texto);
 
-			String codigo = texto.trim().toLowerCase();
-			Set<String> soportados = new HashSet<>(
-					Arrays.asList("es", "en", "ar", "pt", "fa", "ru", "zh", "eo", "ja", "ko"));
-
-			if (soportados.contains(codigo)) {
-
-				// Guardar el idioma en la configuración munidial para futuras ejecuciones
+			if (tenemosIdiomaCodigo(codigo)) {
+				// Guardar tambien en config mundial para futuras ejecuciones
 				ConfigMundial.obtenerInstancia().guardarIdioma(codigo);
-
 				return codigo;
 			}
 
 			return null;
-
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			CrashDetectorLogger.logException(e);
 			return null;
 		}
 	}
+
+	/**
+	 * Registro dinamico de idiomas.
+	 *
+	 * La clave es el codigo del idioma (es, en, pt, uk, etc). Si se vuelve a
+	 * registrar el mismo codigo, el nuevo objeto sobrescribe al anterior. Esto
+	 * permite que la API de extensiones reemplace traducciones completas o
+	 * parcialmente mediante wrappers/subclases.
+	 */
 
 	public static String leer_archivo(Path path) throws IOException {
 		return new String(Files.readAllBytes(path), StandardCharsets.UTF_8);

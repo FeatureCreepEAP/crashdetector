@@ -202,17 +202,7 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 
 		// --- Datos de idiomas con iconos
 		// ----------------------------------------------------------
-		LinkedHashMap<String, String> idiomas = new LinkedHashMap<>();
-		idiomas.put("Español", "imagenes/bandera_mexico.png");
-		idiomas.put("English", "imagenes/bandera_inglaterra.png");
-		idiomas.put("العربية", "imagenes/bandera_arabia.png");
-		idiomas.put("Português", "imagenes/bandera_brasil.png");
-		idiomas.put("فارسی", "imagenes/bandera_iran.png");
-		idiomas.put("Русский", "imagenes/bandera_rusia.png");
-		idiomas.put("简体中文", "imagenes/bandera_china.png");
-		idiomas.put("Esperanto", "imagenes/bandera_esperanto.png");
-		idiomas.put("日本語", "imagenes/bandera_japon.png");
-		idiomas.put("한국어", "imagenes/bandera_corea.png");
+		LinkedHashMap<String, String> idiomas = Idioma.mapaParaComboBoxIdiomas();
 
 		// --- Selector de idioma
 		// -------------------------------------------------------------------
@@ -226,41 +216,8 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 
 		// Seleccionar por defecto según el código actual de idioma detectado
 		String codigoActual = MonitorDePID.idioma.codigo();
-		switch (codigoActual) {
-		case "es":
-			comboIdioma.setSelectedItem("Español");
-			break;
-		case "en":
-			comboIdioma.setSelectedItem("English");
-			break;
-		case "ar":
-			comboIdioma.setSelectedItem("العربية");
-			break;
-		case "pt":
-			comboIdioma.setSelectedItem("Português");
-			break;
-		case "fa":
-			comboIdioma.setSelectedItem("فارسی");
-			break;
-		case "ru":
-			comboIdioma.setSelectedItem("Русский");
-			break;
-		case "zh":
-			comboIdioma.setSelectedItem("简体中文");
-			break;
-		case "eo":
-			comboIdioma.setSelectedItem("Esperanto");
-			break;
-		case "ja":
-			comboIdioma.setSelectedItem("日本語");
-			break;
-		case "ko":
-			comboIdioma.setSelectedItem("한국어");
-			break;
-		default:
-			comboIdioma.setSelectedItem("Español");
-			break;
-		}
+		String nombreIdiomaActual = Idioma.nombreDeIdiomaDesdeCodigo(codigoActual);
+		comboIdioma.setSelectedItem(nombreIdiomaActual);
 
 		// Checkbox "usar idioma del sistema"
 		JCheckBox chkIdiomaSistema = new JCheckBox(MonitorDePID.idioma.usarIdiomaDelSistema());
@@ -285,7 +242,7 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 			chkIdiomaSistema.setSelected(false);
 			comboIdioma.setEnabled(true);
 			String seleccion = (String) comboIdioma.getSelectedItem();
-			String codigo = obtenerCodigoIdioma(seleccion);
+			String codigo = Idioma.codigoDesdeNombreVisible(seleccion);
 			if (codigo != null) {
 				try {
 					// Guardar el idioma en la configuración munidial
@@ -320,7 +277,7 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 			} else {
 				// Vuelve a habilitar selección manual y persistir lo que esté seleccionado
 				String seleccion = (String) comboIdioma.getSelectedItem();
-				String codigo = obtenerCodigoIdioma(seleccion);
+				String codigo = Idioma.codigoDesdeNombreVisible(seleccion);
 				if (codigo != null) {
 					try {
 						// Guardar el idioma en la configuración munidial

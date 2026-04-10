@@ -84,7 +84,17 @@ public class MonitorDePID {
 	public static List<Consola> consolas = new ArrayList<Consola>();
 
 	public static String nl = System.lineSeparator();
-	public static Idioma idioma = Idioma.detectar();
+
+	/**
+	 * Idioma efectivo actual del proceso.
+	 *
+	 * Ojo: debe recalcularse al menos dos veces: - antes de inicializar la API de
+	 * extensiones - despues de inicializar la API de extensiones
+	 *
+	 * Asi los mensajes tempranos siguen funcionando y luego entran los overrides.
+	 */
+	public static Idioma idioma = inicializarIdiomaTemprano();
+
 	public static String local;
 	public static String enlace;
 	public static long pid;
@@ -336,6 +346,7 @@ public class MonitorDePID {
 
 		// cargardor de extenciones aqui
 		CargadorExtensiones.cargarExtensionesProcesoApp(um_archivo);
+		recalcularIdiomaDespuesDeExtensiones();
 		Entregar.comenzarEntregar();
 		// Consola.escribirMapa(Instant.now());
 
@@ -475,6 +486,47 @@ public class MonitorDePID {
 		TipoGUI.COMPARTIR_INSTANCIA.registrarGUI(CompartirInstanciaLegacy.ID, CompartirInstanciaLegacy::new);
 	}
 
+	/**
+	 * Inicializacion temprana del idioma para mensajes que ocurren antes de que
+	 * exista la API de extensiones.
+	 */
+	public static Idioma inicializarIdiomaTemprano() {
+		registrarIdiomasPredeterminados();
+		return recalcularIdioma();
+	}
+
+	/**
+	 * Registra los idiomas base del proceso actual.
+	 */
+	public static void registrarIdiomasPredeterminados() {
+		Idioma.registrarIdiomasPredeterminados();
+	}
+
+	/**
+	 * Registra o sobrescribe un idioma por codigo.
+	 *
+	 * Si ya existe "es", "en", etc, el nuevo objeto reemplaza al anterior.
+	 */
+	public static void registrarIdioma(Idioma idioma) {
+		Idioma.registrarIdioma(idioma);
+	}
+
+	/**
+	 * Recalcula el idioma efectivo actual del proceso.
+	 */
+	public static Idioma recalcularIdioma() {
+		idioma = Idioma.recalcularIdiomaActual();
+		return idioma;
+	}
+
+	/**
+	 * Metodo pensado para llamarse justo despues de que la API de extensiones
+	 * registre idiomas u overrides.
+	 */
+	public static Idioma recalcularIdiomaDespuesDeExtensiones() {
+		return recalcularIdioma();
+	}
+
 	private static void monitor_proceso(long pid) {
 		// List<Consola> consolas_sin_processando = Consola.obtenerConsolas();
 		abrirConsola();
@@ -488,6 +540,7 @@ public class MonitorDePID {
 		}
 		if (ultimo_mods.toFile().exists()) {
 			CargadorExtensiones.cargarExtensionesProcesoMonitor(ultimo_mods.toFile());
+			recalcularIdiomaDespuesDeExtensiones();
 		}
 
 		System.out.println(idioma.buscando_para_pid(pid));

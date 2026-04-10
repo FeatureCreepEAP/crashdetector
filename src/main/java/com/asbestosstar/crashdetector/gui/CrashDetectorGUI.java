@@ -9,6 +9,7 @@ import java.util.List;
 import javax.swing.event.HyperlinkEvent;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
+import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
@@ -65,72 +66,15 @@ public interface CrashDetectorGUI {
 	}
 
 	public default LinkedHashMap<String, String> mapaParaComboBoxIdiomas() {
-		LinkedHashMap<String, String> idiomas = new java.util.LinkedHashMap<>();
-		idiomas.put("Español", "imagenes/bandera_mexico.png");
-		idiomas.put("English", "imagenes/bandera_inglaterra.png");
-		idiomas.put("العربية", "imagenes/bandera_arabia.png");
-		idiomas.put("Português", "imagenes/bandera_brasil.png");
-		idiomas.put("فارسی", "imagenes/bandera_iran.png");
-		idiomas.put("Русский", "imagenes/bandera_rusia.png");
-		idiomas.put("简体中文", "imagenes/bandera_china.png");
-		idiomas.put("Esperanto", "imagenes/bandera_esperanto.png");
-		idiomas.put("日本語", "imagenes/bandera_japon.png");
-		idiomas.put("한국어", "imagenes/bandera_corea.png");
-		return idiomas;
+		return Idioma.mapaParaComboBoxIdiomas();
 	}
 
 	public static String obtenerCodigoIdioma(String nombreIdioma) {
-		switch (nombreIdioma) {
-		case "Español":
-			return "es";
-		case "English":
-			return "en";
-		case "العربية":
-			return "ar";
-		case "Português":
-			return "pt";
-		case "فارسی":
-			return "fa";
-		case "Русский":
-			return "ru";
-		case "简体中文":
-			return "zh";
-		case "Esperanto":
-			return "eo";
-		case "日本語":
-			return "ja";
-		case "한국어":
-			return "ko";
-		default:
-			return "es";
-		}
+		return Idioma.codigoDesdeNombreVisible(nombreIdioma);
 	}
 
-	public default String nombreDeIdiomaDesdeCondigo(String codigoActual) {
-		switch (codigoActual) {
-		case "es":
-			return "Español";
-		case "en":
-			return "English";
-		case "ar":
-			return "العربية";
-		case "pt":
-			return "Português";
-		case "fa":
-			return "فارسی";
-		case "ru":
-			return "Русский";
-		case "zh":
-			return "简体中文";
-		case "eo":
-			return "Esperanto";
-		case "ja":
-			return "日本語";
-		case "ko":
-			return "한국어";
-		default:
-			return "Español";
-		}
+	public default String nombreDeIdiomaDesdeCodigo(String codigoActual) {
+		return Idioma.nombreDeIdiomaDesdeCodigo(codigoActual);
 	}
 
 	public static void abrirDirectorioEnExplorador() {
