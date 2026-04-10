@@ -7877,16 +7877,35 @@ public class Japones implements Idioma {
 	public String compartirInstanciaPolitica7() {
 		return "CrashDetectorの内部フォルダを含めると、設定、ログ、および補助データも転送されるため、不要であれば選択を解除できます。";
 	}
+
 	@Override
 	public String malware_fracturiser_detectado() {
-	    return "Fracturiserの可能性があります。証拠:";
+		return "Fracturiserの可能性があります。証拠:";
 	}
-	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public String malware_info_stealer_detectado() {
+		return "情報窃取の可能性があります。証拠:";
+	}
+
+	@Override
+	public String malware_evidencia_clase_sospechosa() {
+		return "不審なクラス:";
+	}
+
+	@Override
+	public String malware_evidencia_archivo_sospechoso() {
+		return "不審なファイル:";
+	}
+
+	@Override
+	public String malware_brightsdk_detectado() {
+		return "Bright SDKの可能性があります。証拠:";
+	}
+
+	@Override
+	public String malware_evidencia_paquete_sospechoso() {
+		return "不審なパッケージ:";
+	}
 
 }

@@ -7865,14 +7865,35 @@ public class Coreano implements Idioma {
 	public String compartirInstanciaPolitica7() {
 		return "CrashDetector의 내부 폴더를 포함하면 구성, 로그 및 보조 데이터도 함께 전송되므로 필요하지 않으면 선택을 해제할 수 있습니다.";
 	}
+
 	@Override
 	public String malware_fracturiser_detectado() {
-	    return "잠재적 Fracturiser가 감지되었습니다. 증거:";
+		return "잠재적 Fracturiser가 감지되었습니다. 증거:";
 	}
-	
-	
-	
-	
-	
+
+	@Override
+	public String malware_info_stealer_detectado() {
+		return "잠재적 정보 탈취자가 감지되었습니다. 증거:";
+	}
+
+	@Override
+	public String malware_evidencia_clase_sospechosa() {
+		return "의심스러운 클래스:";
+	}
+
+	@Override
+	public String malware_evidencia_archivo_sospechoso() {
+		return "의심스러운 파일:";
+	}
+
+	@Override
+	public String malware_brightsdk_detectado() {
+		return "잠재적 Bright SDK가 감지되었습니다. 증거:";
+	}
+
+	@Override
+	public String malware_evidencia_paquete_sospechoso() {
+		return "의심스러운 패키지:";
+	}
 
 }

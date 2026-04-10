@@ -8174,14 +8174,35 @@ public class Esperanto implements Idioma {
 	public String compartirInstanciaPolitica7() {
 		return "Se vi inkluzivas la internan dosierujon de CrashDetector, agordoj, protokoloj kaj helpaj datumoj ankaŭ vojaĝos, do vi povas malselekti ĝin se ne necese.";
 	}
+
 	@Override
 	public String malware_fracturiser_detectado() {
-	    return "Ebla Fracturiser detektita. Indicoj:";
+		return "Ebla Fracturiser detektita. Indicoj:";
 	}
-	
-	
-	
-	
-	
+
+	@Override
+	public String malware_info_stealer_detectado() {
+		return "Ebla ŝtelilo de informoj detektita. Indicoj:";
+	}
+
+	@Override
+	public String malware_evidencia_clase_sospechosa() {
+		return "Suspekta klaso:";
+	}
+
+	@Override
+	public String malware_evidencia_archivo_sospechoso() {
+		return "Suspekta dosiero:";
+	}
+
+	@Override
+	public String malware_brightsdk_detectado() {
+		return "Ebla Bright SDK detektita. Indicoj:";
+	}
+
+	@Override
+	public String malware_evidencia_paquete_sospechoso() {
+		return "Suspekta pako:";
+	}
 
 }

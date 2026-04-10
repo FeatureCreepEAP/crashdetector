@@ -2994,4 +2994,14 @@ public interface Idioma {
 
 	public String malware_fracturiser_detectado();
 
+	public String malware_evidencia_clase_sospechosa();
+
+	public String malware_evidencia_paquete_sospechoso();
+
+	public String malware_evidencia_archivo_sospechoso();
+
+	public String malware_brightsdk_detectado();
+
+	public String malware_info_stealer_detectado();
+
 }

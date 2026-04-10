@@ -8210,18 +8210,35 @@ public class Portuges implements Idioma {
 	public String compartirInstanciaPolitica7() {
 		return "Se você incluir a pasta interna do CrashDetector, configurações, logs e dados auxiliares também serão enviados, então você pode desmarcá-la se não for necessário.";
 	}
+
 	@Override
 	public String malware_fracturiser_detectado() {
-	    return "Possível Fracturiser detectado. Evidências:";
+		return "Possível Fracturiser detectado. Evidências:";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public String malware_info_stealer_detectado() {
+		return "Possível ladrão de informações detectado. Evidências:";
+	}
+
+	@Override
+	public String malware_evidencia_clase_sospechosa() {
+		return "Classe suspeita:";
+	}
+
+	@Override
+	public String malware_evidencia_archivo_sospechoso() {
+		return "Arquivo suspeito:";
+	}
+
+	@Override
+	public String malware_brightsdk_detectado() {
+		return "Possível Bright SDK detectado. Evidências:";
+	}
+
+	@Override
+	public String malware_evidencia_paquete_sospechoso() {
+		return "Pacote suspeito:";
+	}
 
 }

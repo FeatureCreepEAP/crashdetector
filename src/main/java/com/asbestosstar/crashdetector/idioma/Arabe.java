@@ -8097,16 +8097,35 @@ public class Arabe implements Idioma {
 	public String compartirInstanciaPolitica7() {
 		return "إذا قمت بتضمين المجلد الداخلي لـ CrashDetector، فستنتقل أيضاً الإعدادات والسجلات والبيانات المساعدة، لذا يمكنك إلغاء تحديدها إذا لم تكن ضرورية.";
 	}
+
 	@Override
 	public String malware_fracturiser_detectado() {
-	    return "تم اكتشاف Fracturiser محتمل. الأدلة:";
+		return "تم اكتشاف Fracturiser محتمل. الأدلة:";
 	}
-	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public String malware_info_stealer_detectado() {
+		return "تم اكتشاف سارق معلومات محتمل. الأدلة:";
+	}
+
+	@Override
+	public String malware_evidencia_clase_sospechosa() {
+		return "فئة مشبوهة:";
+	}
+
+	@Override
+	public String malware_evidencia_archivo_sospechoso() {
+		return "ملف مشبوه:";
+	}
+
+	@Override
+	public String malware_brightsdk_detectado() {
+		return "تم اكتشاف Bright SDK محتمل. الأدلة:";
+	}
+
+	@Override
+	public String malware_evidencia_paquete_sospechoso() {
+		return "حزمة مشبوهة:";
+	}
 
 }
