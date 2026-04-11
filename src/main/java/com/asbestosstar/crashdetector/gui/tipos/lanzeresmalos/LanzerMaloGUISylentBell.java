@@ -31,6 +31,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
+import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.ConfigColor;
@@ -41,9 +42,8 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 	private static final long serialVersionUID = 1L;
 
 	public static String ID = "sylent_bell";
-	public static File imagen = Statics.carpeta.resolve("imagenes/sylent_bell.png").toFile(); // 137 × 207 píxeles
+	public static File imagen = Statics.carpeta.resolve("imagenes/sylent_bell.png").toFile();
 
-	// Componentes de la interfaz
 	private JTable tablaNoRecomendados;
 	private DefaultTableModel modeloNoRecomendados;
 	private JButton botonAgregar;
@@ -57,32 +57,18 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 	private JLabel etiquetaDisclaimer;
 	private JComboBox<String> comboLanzadores;
 
-	// Inicializar configuraciones de color (paleta inspirada en la imagen de Sylent
-	// Bell)
 	private ConfigColor colorFondoVentana = ConfigColor.de("tema.sylent_bell.color.fondo.ventana",
-			new Color(15, 18, 28)); // azul noche
-	// casi
-	// negro
-	private ConfigColor colorTexto = ConfigColor.de("tema.sylent_bell.color.texto", new Color(236, 232, 235)); // blanco
-																												// frío
-	// (cabello/luz)
-	private ConfigColor colorBoton = ConfigColor.de("tema.sylent_bell.color.boton", new Color(61, 72, 93)); // azul
-																											// grafito
-	// (ropa/sombras)
-	private ConfigColor colorTabla = ConfigColor.de("tema.sylent_bell.color.tabla", new Color(23, 24, 36)); // fondo más
-																											// profundo
-																											// para
-	// listas
+			new Color(15, 18, 28));
+	private ConfigColor colorTexto = ConfigColor.de("tema.sylent_bell.color.texto", new Color(236, 232, 235));
+	private ConfigColor colorBoton = ConfigColor.de("tema.sylent_bell.color.boton", new Color(61, 72, 93));
+	private ConfigColor colorTabla = ConfigColor.de("tema.sylent_bell.color.tabla", new Color(23, 24, 36));
 	private ConfigColor colorResaltoDesaconsejado = ConfigColor.de("tema.sylent_bell.color.resalto.desaconsejado",
-			new Color(255, 92, 120)); // rosado/rojo (acento)
+			new Color(255, 92, 120));
 	private ConfigColor colorBordePanel = ConfigColor.de("tema.sylent_bell.color.borde.panel",
-			new Color(108, 117, 142)); // gris
-	// azulado
-	// (contornos)
+			new Color(108, 117, 142));
 
 	@Override
 	public void init() {
-
 		setTitle(MonitorDePID.idioma.lanzadoresNoRecomendados());
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setModal(true);
@@ -90,27 +76,21 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 		setSize(900, 650);
 		setAlwaysOnTop(false);
 
-		// Cargar datos iniciales
 		cargarDatos();
 
-		// Crear modelo de tabla
 		modeloNoRecomendados = new DefaultTableModel(
 				new Object[] { MonitorDePID.idioma.nombreLanzador(), MonitorDePID.idioma.razones() }, 0) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public boolean isCellEditable(int row, int column) {
-				return false; // ninguna celda editable
+				return false;
 			}
 		};
 
-		// Crear tabla
 		tablaNoRecomendados = new JTable(modeloNoRecomendados);
-
-		// Configurar tabla
 		configurarTabla(tablaNoRecomendados);
 
-		// Panel principal
 		panelPrincipal = new JPanel(new GridBagLayout());
 		panelPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		panelPrincipal.setOpaque(true);
@@ -119,28 +99,21 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 		gbc.insets = new java.awt.Insets(5, 5, 5, 5);
 		gbc.fill = GridBagConstraints.BOTH;
 
-		// Panel izquierdo para la imagen y el mensaje
 		JPanel panelIzquierdo = new JPanel(new BorderLayout());
 		panelIzquierdo.setPreferredSize(new Dimension(200, 0));
 		panelIzquierdo.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
 
-		// Imagen
 		imagenLabel = new JLabel();
 		imagenLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		imagenLabel.setVerticalAlignment(SwingConstants.TOP);
 		cargarImagen();
 
-		// Mensaje debajo de la imagen
 		JLabel avisoSylentBell = crearEtiquetaDisclaimerSylentBellLadoIzquierdo();
 
-		// Añadir componentes (IMPORTANTE: NORTH + SOUTH, no CENTER)
 		panelIzquierdo.add(imagenLabel, BorderLayout.NORTH);
 		panelIzquierdo.add(avisoSylentBell, BorderLayout.SOUTH);
-
-		// Aplicar fondo correcto (evita blanco)
 		aplicarFondoPanelIzquierdo(panelIzquierdo);
 
-		// Añadir al panel principal
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.gridheight = 7;
@@ -148,26 +121,15 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 		gbc.weighty = 1.0;
 		panelPrincipal.add(panelIzquierdo, gbc);
 
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.gridheight = 7; // hay una fila extra por el disclaimer
-		gbc.weightx = 0.25;
-		gbc.weighty = 1.0;
-		panelPrincipal.add(panelIzquierdo, gbc);
-
-		// Título
 		etiquetaTitulo = new JLabel(MonitorDePID.idioma.lanzadoresNoRecomendados());
 		etiquetaTitulo.setFont(new Font("Segoe UI", Font.BOLD, 16));
 
-		// Disclaimer (texto fijo; idealmente iría a Idioma, pero se pidió aquí)
 		etiquetaDisclaimer = crearEtiquetaDisclaimerSylentBell();
 
-		// Combo para seleccionar lanzador a agregar
-		comboLanzadores = new JComboBox<>();
+		comboLanzadores = new JComboBox<String>();
 		comboLanzadores.setPreferredSize(new Dimension(250, 30));
 		configurarComboLanzadores();
 
-		// Panel de botones de acción
 		JPanel panelBotonesAccion = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
 		botonAgregar = new JButton(MonitorDePID.idioma.agregarLanzador());
 		botonQuitar = new JButton(MonitorDePID.idioma.quitarLanzador());
@@ -176,20 +138,16 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 		panelBotonesAccion.add(botonQuitar);
 		panelBotonesAccion.add(botonEditarRazones);
 
-		// Cargar lanzadores en el combo (ya existe botonAgregar)
 		cargarComboLanzadores();
 
-		// Scroll pane para la tabla
 		JScrollPane scrollNoRecomendados = new JScrollPane(tablaNoRecomendados);
 
-		// Panel de botones de guardado
 		JPanel panelBotonesGuardado = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		botonGuardar = new JButton(MonitorDePID.idioma.guardarCambios());
 		botonCancelar = new JButton(MonitorDePID.idioma.cancelar());
 		panelBotonesGuardado.add(botonGuardar);
 		panelBotonesGuardado.add(botonCancelar);
 
-		// Añadir componentes al panel principal (lado derecho)
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		gbc.gridheight = 1;
@@ -218,54 +176,14 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 		gbc.weighty = 0.1;
 		panelPrincipal.add(panelBotonesGuardado, gbc);
 
-		// Añadir panel principal al contenido
 		getContentPane().add(panelPrincipal, BorderLayout.CENTER);
 
-		// Cargar datos en la tabla
 		cargarDatosEnTabla();
-
-		// Agregar listeners
 		agregarListeners();
 
-		// Centrar la ventana
 		setLocationRelativeTo(null);
-
-		// Aplicar apariencia
 		recargarApariencia();
-
 		setVisible(true);
-	}
-
-	/**
-	 * Convierte nombres (los que se muestran en UI) a codigos ISO usados
-	 * internamente. Este mapeo debe coincidir con los codigos que se guardan como
-	 * claves en el JSON.
-	 */
-	public static String obtenerCodigoIdioma(String nombreIdioma) {
-		switch (nombreIdioma) {
-		case "Español":
-			return "es";
-		case "English":
-			return "en";
-		case "العربية":
-			return "ar";
-		case "Português":
-			return "pt";
-		case "فارسی":
-			return "fa";
-		case "Русский":
-			return "ru";
-		case "简体中文":
-			return "zh";
-		case "Esperanto":
-			return "eo";
-		case "日本語":
-			return "ja";
-		case "한국어":
-			return "ko";
-		default:
-			return "es";
-		}
 	}
 
 	/**
@@ -292,9 +210,6 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 		}
 	}
 
-	/**
-	 * Crea la etiqueta de aviso sobre Sylent Bell.
-	 */
 	private JLabel crearEtiquetaDisclaimerSylentBell() {
 		JLabel lbl = new JLabel("<html><div style='width:520px;'>"
 				+ "Las opiniones y comentarios de Sylent Bell no necesariamente coinciden con los nuestros; "
@@ -305,9 +220,6 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 		return lbl;
 	}
 
-	/**
-	 * Configura la tabla para mostrar los datos correctamente.
-	 */
 	private void configurarTabla(JTable tabla) {
 		tabla.setFillsViewportHeight(true);
 		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -339,10 +251,6 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 		});
 	}
 
-	/**
-	 * Configura el combo para que los lanzadores desaconsejados por CrashDetector
-	 * se muestren en rojo (usando ConfigColor, sin colores hardcodeados).
-	 */
 	private void configurarComboLanzadores() {
 		comboLanzadores.setRenderer((list, value, index, isSelected, cellHasFocus) -> {
 			String texto = (value == null) ? "" : value.toString();
@@ -364,9 +272,6 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 		});
 	}
 
-	/**
-	 * Implementación explícita usando LanzerMaloGUI.nosotrosDiceEsMalo(lanzer).
-	 */
 	private boolean esDesaconsejadoPorCrashDetectorConNosotrosDice(String id) {
 		if (id == null)
 			return false;
@@ -379,27 +284,17 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 		return false;
 	}
 
-	/**
-	 * Carga los lanzadores disponibles en el combo. - Los lanzadores desaconsejados
-	 * por CrashDetector aparecen PRIMERO. - Los lanzadores ya presentes en
-	 * "noRecomendados" no se muestran.
-	 */
 	private void cargarComboLanzadores() {
 		comboLanzadores.removeAllItems();
 
-		// Listas separadas para ordenar correctamente
-		List<String> desaconsejados = new ArrayList<>();
-		List<String> normales = new ArrayList<>();
+		List<String> desaconsejados = new ArrayList<String>();
+		List<String> normales = new ArrayList<String>();
 
-		// Obtener todos los lanzadores detectados
 		for (String id : obtenerNombresLanzadores()) {
-
-			// Si ya está en la lista de no recomendados, no se muestra en el combo
 			if (noRecomendados.containsKey(id)) {
 				continue;
 			}
 
-			// Clasificar según CrashDetector
 			if (esDesaconsejadoPorCrashDetectorConNosotrosDice(id)) {
 				desaconsejados.add(id);
 			} else {
@@ -407,25 +302,19 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 			}
 		}
 
-		// Añadir primero los desaconsejados (rojos)
 		for (String id : desaconsejados) {
 			comboLanzadores.addItem(id);
 		}
 
-		// Añadir después los normales
 		for (String id : normales) {
 			comboLanzadores.addItem(id);
 		}
 
-		// Habilitar / deshabilitar botón agregar según contenido
 		if (botonAgregar != null) {
 			botonAgregar.setEnabled(comboLanzadores.getItemCount() > 0);
 		}
 	}
 
-	/**
-	 * Carga los datos en la tabla.
-	 */
 	private void cargarDatosEnTabla() {
 		modeloNoRecomendados.setRowCount(0);
 
@@ -436,8 +325,9 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 			StringBuilder razones = new StringBuilder();
 			boolean primero = true;
 			for (Map.Entry<String, String> motivoEntry : motivos.entrySet()) {
-				if (!primero)
+				if (!primero) {
 					razones.append(", ");
+				}
 				razones.append(motivoEntry.getKey()).append(": ").append(motivoEntry.getValue());
 				primero = false;
 			}
@@ -449,14 +339,11 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 		botonEditarRazones.setEnabled(modeloNoRecomendados.getRowCount() > 0);
 	}
 
-	/**
-	 * Agrega los listeners a los componentes interactivos.
-	 */
 	private void agregarListeners() {
 		botonAgregar.addActionListener(e -> {
 			String id = (String) comboLanzadores.getSelectedItem();
 			if (id != null && !id.isEmpty()) {
-				Map<String, String> motivos = new HashMap<>();
+				Map<String, String> motivos = new LinkedHashMap<String, String>();
 				agregarANoRecomendados(id, motivos);
 				cargarComboLanzadores();
 				cargarDatosEnTabla();
@@ -497,10 +384,10 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 	}
 
 	/**
-	 * Edita las razones para un lanzador específico. - Muestra TODOS los idiomas
-	 * (los del mapaParaComboBoxIdiomas()). - No hay botón de "agregar idioma". - Se
-	 * muestran banderas junto al CÓDIGO (es/en/ar/...) y se guardan usando esas
-	 * claves.
+	 * Edita las razones para un lanzador específico.
+	 *
+	 * - Muestra dinámicamente todos los idiomas registrados. - No requiere lista
+	 * fija de 10 idiomas. - Conserva compatibilidad con códigos viejos ya cargados.
 	 */
 	private void editarRazonesParaLanzador(String idLanzador) {
 		JDialog dialogo = new JDialog(this, MonitorDePID.idioma.editarRazonesPara(idLanzador), true);
@@ -516,12 +403,10 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 		gbc.insets = new java.awt.Insets(6, 6, 6, 6);
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 
-		Map<String, String> motivos = noRecomendados.getOrDefault(idLanzador, new HashMap<>());
+		Map<String, String> motivos = noRecomendados.getOrDefault(idLanzador, new LinkedHashMap<String, String>());
 
-		// IMPORTANTE: este método pertenece a CrashDetectorGUI (esta clase lo hereda)
-		LinkedHashMap<String, String> mapaIdiomas = mapaParaComboBoxIdiomas();
-
-		Map<String, JTextField> camposTexto = new HashMap<>();
+		LinkedHashMap<String, String> mapaIdiomas = Idioma.mapaParaComboBoxIdiomas();
+		Map<String, JTextField> camposTexto = new LinkedHashMap<String, JTextField>();
 
 		int fila = 0;
 
@@ -529,7 +414,10 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 			String nombreVisible = entry.getKey();
 			String rutaBandera = entry.getValue();
 
-			String codigo = obtenerCodigoIdioma(nombreVisible);
+			String codigo = obtenerCodigoIdiomaDinamico(nombreVisible);
+			if (codigo == null || codigo.isEmpty()) {
+				continue;
+			}
 
 			JLabel etiqueta = new JLabel(codigo);
 			etiqueta.setFont(new Font("Segoe UI", Font.BOLD, 12));
@@ -537,12 +425,14 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 			etiqueta.setOpaque(false);
 
 			try {
-				File f = Statics.carpeta.resolve(rutaBandera).toFile();
-				if (f.exists()) {
-					ImageIcon icon = new ImageIcon(f.getAbsolutePath());
-					Image img = icon.getImage().getScaledInstance(18, 12, Image.SCALE_SMOOTH);
-					etiqueta.setIcon(new ImageIcon(img));
-					etiqueta.setIconTextGap(8);
+				if (rutaBandera != null) {
+					File f = Statics.carpeta.resolve(rutaBandera).toFile();
+					if (f.exists()) {
+						ImageIcon icon = new ImageIcon(f.getAbsolutePath());
+						Image img = icon.getImage().getScaledInstance(18, 12, Image.SCALE_SMOOTH);
+						etiqueta.setIcon(new ImageIcon(img));
+						etiqueta.setIconTextGap(8);
+					}
 				}
 			} catch (Exception ignored) {
 				// Si falla, se muestra solo el código
@@ -568,6 +458,39 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 			fila++;
 		}
 
+		// También mostrar cualquier idioma legado o no registrado que ya exista en el
+		// JSON
+		for (Map.Entry<String, String> extra : motivos.entrySet()) {
+			String codigo = normalizarCodigoIdioma(extra.getKey());
+			if (codigo == null || camposTexto.containsKey(codigo)) {
+				continue;
+			}
+
+			JLabel etiqueta = new JLabel(codigo);
+			etiqueta.setFont(new Font("Segoe UI", Font.BOLD, 12));
+			etiqueta.setForeground(colorTexto.obtener());
+			etiqueta.setOpaque(false);
+
+			gbc.gridx = 0;
+			gbc.gridy = fila;
+			gbc.weightx = 0.25;
+			panelCampos.add(etiqueta, gbc);
+
+			gbc.gridx = 1;
+			gbc.weightx = 0.75;
+			JTextField campo = new JTextField(36);
+			campo.setText(extra.getValue() != null ? extra.getValue() : "");
+			campo.setBackground(colorTabla.obtener());
+			campo.setForeground(colorTexto.obtener());
+			campo.setCaretColor(colorTexto.obtener());
+			campo.setBorder(BorderFactory.createLineBorder(colorBordePanel.obtener(), 1));
+
+			camposTexto.put(codigo, campo);
+			panelCampos.add(campo, gbc);
+
+			fila++;
+		}
+
 		JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		panelBotones.setOpaque(true);
 		panelBotones.setBackground(colorFondoVentana.obtener());
@@ -580,17 +503,18 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 		panelBotones.add(botonCancelar);
 
 		botonAceptar.addActionListener(e -> {
-			Map<String, String> nuevosMotivos = new HashMap<>();
+			Map<String, String> nuevosMotivos = new LinkedHashMap<String, String>();
+
 			for (Map.Entry<String, JTextField> c : camposTexto.entrySet()) {
 				String valor = c.getValue().getText();
-				if (valor != null)
+				if (valor != null) {
 					valor = valor.trim();
+				}
 				if (valor != null && !valor.isEmpty()) {
-					nuevosMotivos.put(c.getKey(), valor);
+					nuevosMotivos.put(normalizarCodigoIdioma(c.getKey()), valor);
 				}
 			}
 
-			// Verificación pasiva: si hay texto en coreano ("ko"), verificar jerga sureña
 			String textoCoreano = nuevosMotivos.get("ko");
 			if (textoCoreano != null && !textoCoreano.isEmpty()) {
 				com.asbestosstar.crashdetector.idioma.cumplimiento.ActaDeProteccionDelIdiomaCulturalDePyongyang
@@ -620,7 +544,6 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 			etiquetaDisclaimer.setForeground(colorTexto.obtener());
 		}
 
-		// Asegurar que el lado izquierdo no se vea blanco
 		if (imagenLabel != null) {
 			imagenLabel.setBackground(colorFondoVentana.obtener());
 		}
@@ -637,7 +560,6 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 
 		estilizarCombo(comboLanzadores);
 
-		// Paneles internos (para evitar “blancos” por Look&Feel)
 		for (java.awt.Component c : panelPrincipal.getComponents()) {
 			if (c instanceof javax.swing.JComponent) {
 				c.setBackground(colorFondoVentana.obtener());
@@ -648,9 +570,6 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 		repaint();
 	}
 
-	/**
-	 * Estiliza un botón con la apariencia corporativa.
-	 */
 	private void estilizarBoton(JButton btn) {
 		btn.setBackground(colorBoton.obtener());
 		btn.setForeground(Color.WHITE);
@@ -659,9 +578,6 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 		btn.setFont(new Font("Segoe UI", Font.BOLD, 13));
 	}
 
-	/**
-	 * Estiliza un combo box.
-	 */
 	private void estilizarCombo(JComboBox<?> combo) {
 		combo.setBackground(colorTabla.obtener());
 		combo.setForeground(colorTexto.obtener());
@@ -673,10 +589,6 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 		return ID;
 	}
 
-	/**
-	 * Crea la etiqueta de aviso para mostrar DEBAJO de la imagen de Sylent Bell. El
-	 * ancho es reducido para ajustarse al panel izquierdo.
-	 */
 	private JLabel crearEtiquetaDisclaimerSylentBellLadoIzquierdo() {
 		JLabel lbl = new JLabel(MonitorDePID.idioma.mensajeDeSylentBell());
 		lbl.setFont(new Font("Segoe UI", Font.PLAIN, 11));
@@ -686,10 +598,6 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 		return lbl;
 	}
 
-	/**
-	 * Aplica el color de fondo corporativo al panel izquierdo y a la imagen para
-	 * evitar espacios blancos por el Look&Feel.
-	 */
 	private void aplicarFondoPanelIzquierdo(JPanel panelIzquierdo) {
 		if (panelIzquierdo != null) {
 			panelIzquierdo.setOpaque(true);
@@ -703,7 +611,7 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 
 	@Override
 	public List<ElementoConfig> obtenerElementosConfigs() {
-		List<ElementoConfig> ret = new ArrayList<>();
+		List<ElementoConfig> ret = new ArrayList<ElementoConfig>();
 
 		colorFondoVentana.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondo());
 		ret.add(colorFondoVentana);
@@ -725,5 +633,4 @@ public class LanzerMaloGUISylentBell extends LanzerMaloGUI {
 
 		return ret;
 	}
-
 }

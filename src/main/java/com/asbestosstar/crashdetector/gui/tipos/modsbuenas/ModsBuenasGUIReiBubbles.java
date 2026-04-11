@@ -28,6 +28,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
+import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 
 public class ModsBuenasGUIReiBubbles extends ModsBuenasGUI {
 
@@ -321,14 +322,19 @@ public class ModsBuenasGUIReiBubbles extends ModsBuenasGUI {
 			tabla.setGridColor(colorBorde.obtener());
 			tabla.setSelectionBackground(colorBoton.obtener());
 			tabla.setSelectionForeground(Color.WHITE);
-			tabla.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+			tabla.setFont(new Font(CrashDetectorGUI.esMac() ? "SansSerif" : "Segoe UI", Font.PLAIN, 12));
 		}
 
 		JButton[] botones = { botonAgregar, botonQuitar, botonEditarRazones, botonGuardar, botonCancelar };
 		for (JButton b : botones) {
 			estilizarBotonSimple(b, colorBoton.obtener(), Color.WHITE, colorBorde.obtener());
-			if (b != null)
-				b.setBorder(BorderFactory.createEmptyBorder(6, 12, 6, 12));
+
+			if (b != null && CrashDetectorGUI.esMac()) {
+				// Refuerzo extra para Aqua/macOS
+				b.setOpaque(true);
+				b.setContentAreaFilled(true);
+				b.setBorderPainted(true);
+			}
 		}
 
 		revalidate();

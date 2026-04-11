@@ -13,6 +13,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -28,6 +29,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import com.asbestosstar.crashdetector.Idioma;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
@@ -37,69 +39,69 @@ import com.asbestosstar.crashdetector.json.Json;
 import com.asbestosstar.crashdetector.json.Json.Nodo;
 
 /**
- * GUI base para registrar mods desaconsejados. Esta clase ESCRIBE el archivo
- * leído por TienesModDesAnimado.
- *
- * Formato JSON (arreglo de objetos): [ { "modid": "ejemplo", "ruta":
- * "mods/archivo.jar", "abrir_cd_si_coincide": true, "razon": { "es": "texto",
- * "en": "text" } } ]
+ * GUI base para registrar mods desaconsejados. La UI completa vive en las
+ * subclases concretas. Esta clase aporta: - carga/guardado - resumen - editor
+ * multilingüe dinámico
  */
 public abstract class GUIModsMalas extends JDialog implements CrashDetectorGUI, BotonDeBarraLateralDerecha {
 
 	private static final long serialVersionUID = 1L;
 
-	public static Map<String, Supplier<GUIModsMalas>> GUIS = new HashMap<>();
+	public static Map<String, Supplier<GUIModsMalas>> GUIS = new HashMap<String, Supplier<GUIModsMalas>>();
 
-	/** Archivo usado por el verificador */
 	protected final Path archivo = Statics.carpeta.resolve("mods_desanimados.json");
-
-	/** Lista de entradas de mods */
-	protected final List<EntradaMod> mods = new ArrayList<>();
+	protected final List<EntradaMod> mods = new ArrayList<EntradaMod>();
 
 	protected static class EntradaMod {
 		public String modid;
 		public String ruta;
-		/** En JSON: "abrir_cd_si_coincide". En UI: "Override normal". */
 		public boolean abrirCD;
-		public Map<String, String> razones = new HashMap<>();
+		public Map<String, String> razones = new HashMap<String, String>();
 
 		public boolean esValida() {
 			return (modid != null && !modid.trim().isEmpty()) || (ruta != null && !ruta.trim().isEmpty());
 		}
 	}
 
-	/*
-	 * ========================= CARGA / GUARDADO =========================
-	 */
+	@Override
+	public TipoGUI tipo() {
+		return TipoGUI.MODS_MALAS;
+	}
 
 	protected void cargarDatos() {
 		mods.clear();
-		if (!Files.exists(archivo))
+		if (!Files.exists(archivo)) {
 			return;
+		}
 
 		try {
 			String json = new String(Files.readAllBytes(archivo), StandardCharsets.UTF_8);
-			if (json == null || json.trim().isEmpty())
+			if (json == null || json.trim().isEmpty()) {
 				return;
+			}
 
 			Nodo raiz = Json.leer(json);
-			if (raiz == null || !raiz.esArreglo())
+			if (raiz == null || !raiz.esArreglo()) {
 				return;
+			}
 
 			for (int i = 0; i < raiz.tamano(); i++) {
 				Nodo n = raiz.en(i);
-				if (n == null || !n.esObjeto())
+				if (n == null || !n.esObjeto()) {
 					continue;
+				}
 
 				EntradaMod e = new EntradaMod();
 
 				Nodo m = n.obtener("modid");
-				if (m != null && !m.esObjeto() && !m.esArreglo())
+				if (m != null && !m.esObjeto() && !m.esArreglo()) {
 					e.modid = m.comoCadena();
+				}
 
 				Nodo r = n.obtener("ruta");
-				if (r != null && !r.esObjeto() && !r.esArreglo())
+				if (r != null && !r.esObjeto() && !r.esArreglo()) {
 					e.ruta = r.comoCadena();
+				}
 
 				Nodo a = n.obtener("abrir_cd_si_coincide");
 				if (a != null) {
@@ -117,15 +119,17 @@ public abstract class GUIModsMalas extends JDialog implements CrashDetectorGUI, 
 							String v = txt.comoCadena();
 							if (v != null) {
 								v = v.trim();
-								if (!v.isEmpty())
+								if (!v.isEmpty()) {
 									e.razones.put(lang, v);
+								}
 							}
 						}
 					}
 				}
 
-				if (e.esValida())
+				if (e.esValida()) {
 					mods.add(e);
+				}
 			}
 		} catch (Exception ignored) {
 		}
@@ -136,32 +140,40 @@ public abstract class GUIModsMalas extends JDialog implements CrashDetectorGUI, 
 			Nodo raiz = Json.leer("[]");
 
 			for (EntradaMod e : mods) {
-				if (e == null || !e.esValida())
+				if (e == null || !e.esValida()) {
 					continue;
+				}
 
 				Nodo obj = Json.crearObjeto();
 
-				if (e.modid != null && !e.modid.trim().isEmpty())
+				if (e.modid != null && !e.modid.trim().isEmpty()) {
 					obj.obtener("modid").poner(e.modid.trim());
+				}
 
-				if (e.ruta != null && !e.ruta.trim().isEmpty())
+				if (e.ruta != null && !e.ruta.trim().isEmpty()) {
 					obj.obtener("ruta").poner(e.ruta.trim());
+				}
 
-				if (e.abrirCD)
+				if (e.abrirCD) {
 					obj.obtener("abrir_cd_si_coincide").poner(true);
+				}
 
 				if (e.razones != null && !e.razones.isEmpty()) {
 					Nodo r = Json.crearObjeto();
 					for (Map.Entry<String, String> en : e.razones.entrySet()) {
-						if (en.getKey() == null)
+						if (en.getKey() == null) {
 							continue;
+						}
+						String codigo = en.getKey().trim();
 						String v = en.getValue();
-						if (v == null)
+						if (v == null) {
 							continue;
+						}
 						v = v.trim();
-						if (v.isEmpty())
+						if (codigo.isEmpty() || v.isEmpty()) {
 							continue;
-						r.obtener(en.getKey()).poner(v);
+						}
+						r.obtener(codigo).poner(v);
 					}
 					obj.obtener("razon").poner(r);
 				}
@@ -174,90 +186,55 @@ public abstract class GUIModsMalas extends JDialog implements CrashDetectorGUI, 
 		}
 	}
 
-	@Override
-	public TipoGUI tipo() {
-		return TipoGUI.MODS_MALAS;
+	protected String obtenerCodigoIdiomaDinamico(String nombreVisible) {
+		return Idioma.codigoDesdeNombreVisible(nombreVisible);
 	}
 
-	/*
-	 * ========================= UTILIDADES PARA UI =========================
-	 */
-
-	/**
-	 * Convierte nombres (los que se muestran en UI) a códigos ISO usados en JSON.
-	 * Debe coincidir con el resto del proyecto.
-	 */
-	public static String obtenerCodigoIdioma(String nombreIdioma) {
-		if (nombreIdioma == null)
-			return "es";
-		switch (nombreIdioma) {
-		case "Español":
-			return "es";
-		case "English":
-			return "en";
-		case "العربية":
-			return "ar";
-		case "Português":
-			return "pt";
-		case "فارسی":
-			return "fa";
-		case "Русский":
-			return "ru";
-		case "简体中文":
-			return "zh";
-		case "Esperanto":
-			return "eo";
-		case "日本語":
-			return "ja";
-		case "한국어":
-			return "ko";
-		default:
-			return "es";
-		}
-	}
-
-	/**
-	 * Devuelve un texto compacto para mostrar razones en la tabla. Ejemplo: "es:
-	 * ... | en: ..."
-	 */
 	protected String resumenRazones(Map<String, String> razones) {
-		if (razones == null || razones.isEmpty())
+		if (razones == null || razones.isEmpty()) {
 			return "";
+		}
 
 		StringBuilder sb = new StringBuilder();
 		boolean primero = true;
 
-		// Orden preferido: idioma actual, respaldo, es, resto
 		String langActual = MonitorDePID.idioma.codigo();
 		String langRespaldo = null;
 		try {
-			langRespaldo = com.asbestosstar.crashdetector.Idioma.idioma_respaldo.obtener();
+			langRespaldo = Idioma.idioma_respaldo.obtener();
 		} catch (Exception ignored) {
 		}
 
-		List<String> orden = new ArrayList<>();
-		if (langActual != null && !langActual.isEmpty())
+		List<String> orden = new ArrayList<String>();
+		if (langActual != null && !langActual.isEmpty()) {
 			orden.add(langActual);
-		if (langRespaldo != null && !langRespaldo.isEmpty() && !orden.contains(langRespaldo))
+		}
+		if (langRespaldo != null && !langRespaldo.isEmpty() && !orden.contains(langRespaldo)) {
 			orden.add(langRespaldo);
-		if (!orden.contains("es"))
+		}
+		if (!orden.contains("es")) {
 			orden.add("es");
+		}
 
 		for (String k : razones.keySet()) {
-			if (k != null && !orden.contains(k))
+			if (k != null && !orden.contains(k)) {
 				orden.add(k);
+			}
 		}
 
 		for (String lang : orden) {
 			String txt = razones.get(lang);
-			if (txt == null)
+			if (txt == null) {
 				continue;
+			}
 			txt = txt.trim();
-			if (txt.isEmpty())
+			if (txt.isEmpty()) {
 				continue;
+			}
 
-			if (!primero)
+			if (!primero) {
 				sb.append(" | ");
+			}
 			sb.append(lang).append(": ").append(txt);
 			primero = false;
 		}
@@ -265,24 +242,11 @@ public abstract class GUIModsMalas extends JDialog implements CrashDetectorGUI, 
 		return sb.toString();
 	}
 
-	/**
-	 * Diálogo multilingüe para editar razones (formato JSON "razon": { lang: texto
-	 * }). Inspirado en el diálogo de SylentBell (banderas + código).
-	 *
-	 * @param titulo            Título del diálogo (ej: "Editar razones para
-	 *                          <modid/ruta>")
-	 * @param razonesReferencia Mapa a editar (se sobrescribe con el contenido del
-	 *                          diálogo)
-	 * @param fondo             Color de fondo del tema
-	 * @param texto             Color de texto del tema
-	 * @param caja              Color de fondo de las cajas de texto
-	 * @param borde             Color del borde de las cajas de texto
-	 * @param botonFondo        Color de botones del tema
-	 */
 	protected void editarRazonesMultilingue(String titulo, Map<String, String> razonesReferencia, java.awt.Color fondo,
 			java.awt.Color texto, java.awt.Color caja, java.awt.Color borde, java.awt.Color botonFondo) {
-		if (razonesReferencia == null)
+		if (razonesReferencia == null) {
 			return;
+		}
 
 		JDialog dialogo = new JDialog(this, titulo, true);
 		dialogo.setLayout(new BorderLayout(10, 10));
@@ -297,33 +261,68 @@ public abstract class GUIModsMalas extends JDialog implements CrashDetectorGUI, 
 		gbc.insets = new java.awt.Insets(6, 6, 6, 6);
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 
-		// Idiomas disponibles (nombre visible -> ruta bandera)
-		LinkedHashMap<String, String> mapaIdiomas = mapaParaComboBoxIdiomas();
-		Map<String, JTextField> camposTexto = new HashMap<>();
+		LinkedHashMap<String, String> mapaIdiomas = Idioma.mapaParaComboBoxIdiomas();
+		Map<String, JTextField> camposTexto = new LinkedHashMap<String, JTextField>();
 
 		int fila = 0;
+
 		for (Map.Entry<String, String> entry : mapaIdiomas.entrySet()) {
 			String nombreVisible = entry.getKey();
 			String rutaBandera = entry.getValue();
+			String codigo = obtenerCodigoIdiomaDinamico(nombreVisible);
 
-			String codigo = obtenerCodigoIdioma(nombreVisible);
+			if (codigo == null || codigo.trim().isEmpty()) {
+				continue;
+			}
 
 			JLabel etiqueta = new JLabel(codigo);
 			etiqueta.setFont(new Font("Segoe UI", Font.BOLD, 12));
 			etiqueta.setForeground(texto);
 			etiqueta.setOpaque(false);
 
-			// Cargar icono de bandera si existe
 			try {
-				java.io.File f = Statics.carpeta.resolve(rutaBandera).toFile();
-				if (f.exists()) {
-					ImageIcon icon = new ImageIcon(f.getAbsolutePath());
-					Image img = icon.getImage().getScaledInstance(18, 12, Image.SCALE_SMOOTH);
-					etiqueta.setIcon(new ImageIcon(img));
-					etiqueta.setIconTextGap(8);
+				if (rutaBandera != null) {
+					java.io.File f = Statics.carpeta.resolve(rutaBandera).toFile();
+					if (f.exists()) {
+						ImageIcon icon = new ImageIcon(f.getAbsolutePath());
+						Image img = icon.getImage().getScaledInstance(18, 12, Image.SCALE_SMOOTH);
+						etiqueta.setIcon(new ImageIcon(img));
+						etiqueta.setIconTextGap(8);
+					}
 				}
 			} catch (Exception ignored) {
 			}
+
+			gbc.gridx = 0;
+			gbc.gridy = fila;
+			gbc.weightx = 0.20;
+			panelCampos.add(etiqueta, gbc);
+
+			gbc.gridx = 1;
+			gbc.weightx = 0.80;
+
+			JTextField campo = new JTextField(40);
+			campo.setText(razonesReferencia.getOrDefault(codigo, ""));
+			campo.setBackground(caja);
+			campo.setForeground(texto);
+			campo.setCaretColor(texto);
+			campo.setBorder(BorderFactory.createLineBorder(borde, 1));
+
+			camposTexto.put(codigo, campo);
+			panelCampos.add(campo, gbc);
+
+			fila++;
+		}
+
+		for (String codigo : new LinkedHashSet<String>(razonesReferencia.keySet())) {
+			if (codigo == null || codigo.trim().isEmpty() || camposTexto.containsKey(codigo)) {
+				continue;
+			}
+
+			JLabel etiqueta = new JLabel(codigo);
+			etiqueta.setFont(new Font("Segoe UI", Font.BOLD, 12));
+			etiqueta.setForeground(texto);
+			etiqueta.setOpaque(false);
 
 			gbc.gridx = 0;
 			gbc.gridy = fila;
@@ -353,7 +352,6 @@ public abstract class GUIModsMalas extends JDialog implements CrashDetectorGUI, 
 		JButton botonAceptar = new JButton(MonitorDePID.idioma.aceptar());
 		JButton botonCancelar = new JButton(MonitorDePID.idioma.cancelar());
 
-		// Estilo simple de botones
 		estilizarBotonSimple(botonAceptar, botonFondo, java.awt.Color.WHITE, borde);
 		estilizarBotonSimple(botonCancelar, botonFondo, java.awt.Color.WHITE, borde);
 
@@ -361,17 +359,17 @@ public abstract class GUIModsMalas extends JDialog implements CrashDetectorGUI, 
 		panelBotones.add(botonCancelar);
 
 		botonAceptar.addActionListener(e -> {
-			Map<String, String> nuevas = new HashMap<>();
+			Map<String, String> nuevas = new HashMap<String, String>();
 			for (Map.Entry<String, JTextField> c : camposTexto.entrySet()) {
 				String v = c.getValue().getText();
-				if (v != null)
+				if (v != null) {
 					v = v.trim();
-				if (v != null && !v.isEmpty())
+				}
+				if (v != null && !v.isEmpty()) {
 					nuevas.put(c.getKey(), v);
+				}
 			}
 
-			// Verificación pasiva de jerga sureña en coreano (solo abre GUI si hay
-			// violación)
 			String textoKo = nuevas.get("ko");
 			if (textoKo != null && !textoKo.isEmpty()) {
 				com.asbestosstar.crashdetector.idioma.cumplimiento.ActaDeProteccionDelIdiomaCulturalDePyongyang
@@ -392,8 +390,9 @@ public abstract class GUIModsMalas extends JDialog implements CrashDetectorGUI, 
 	}
 
 	protected void estilizarBotonSimple(JButton btn, java.awt.Color fondo, java.awt.Color texto, java.awt.Color borde) {
-		if (btn == null)
+		if (btn == null) {
 			return;
+		}
 		btn.setBackground(fondo);
 		btn.setForeground(texto);
 		btn.setFocusPainted(false);
@@ -402,8 +401,9 @@ public abstract class GUIModsMalas extends JDialog implements CrashDetectorGUI, 
 	}
 
 	protected void forzarFondoEnPanel(JComponent c, java.awt.Color fondo) {
-		if (c == null)
+		if (c == null) {
 			return;
+		}
 		c.setOpaque(true);
 		c.setBackground(fondo);
 	}
