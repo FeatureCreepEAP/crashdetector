@@ -2,13 +2,13 @@ package com.asbestosstar.crashdetector.api_sitio_archivo;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.UncheckedIOException;
 import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.SecureRandom;
@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
@@ -25,6 +26,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
+
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
 
 import com.asbestosstar.crashdetector.api_sitio_archivo.wormholeapp.CifradorDeFlujo;
 import com.asbestosstar.crashdetector.api_sitio_archivo.wormholeapp.CriptoWormhole;
@@ -36,8 +40,10 @@ import com.asbestosstar.crashdetector.json.Json.Nodo;
 /**
  * Implementación real de wormhole.app usando el flujo web del CLI en Rust.
  *
- * Esta versión no usa Jackson. Toda la serialización y lectura JSON se hace
- * mediante la clase Json del proyecto.
+ * Versión compatible con Java 8 y sin dependencias externas.
+ *
+ * No usa java.net.http.*. En su lugar usa un cliente HTTPS mínimo hecho sobre
+ * SSLSocket para poder enviar métodos HTTP reales como PATCH.
  */
 public class WormholeApp implements SitioDeArchivoAPI {
 
@@ -58,8 +64,8 @@ public class WormholeApp implements SitioDeArchivoAPI {
 	/** Cantidad máxima de autorizaciones de subida solicitadas. */
 	private static final int SUBIDAS_PARALELAS = 10;
 
-	private final HttpClient clienteHttp = HttpClient.newBuilder().build();
 	private final SecureRandom aleatorio = new SecureRandom();
+	private final ClienteHttpSimple clienteHttp = new ClienteHttpSimple();
 
 	@Override
 	public String nombre() {
@@ -78,7 +84,6 @@ public class WormholeApp implements SitioDeArchivoAPI {
 
 	@Override
 	public void validarArchivoZip(Path archivoZip) throws ErrorDeArchivo, ArchivoDemasiadoGrande, ServicioNoSoportado {
-
 		Objects.requireNonNull(archivoZip, "archivoZip no puede ser null");
 
 		if (!Files.exists(archivoZip)) {
@@ -358,9 +363,9 @@ public class WormholeApp implements SitioDeArchivoAPI {
 		return "Bearer sync-v1 " + Base64.getEncoder().encodeToString(token);
 	}
 
-	private void verificar2xx(HttpResponse<String> res, String mensaje) throws ErrorConPublicar {
-		if (res.statusCode() < 200 || res.statusCode() >= 300) {
-			throw new ErrorConPublicar(mensaje + ": HTTP " + res.statusCode() + " -> " + res.body());
+	private void verificar2xx(RespuestaHttp res, String mensaje) throws ErrorConPublicar {
+		if (res.codigoEstado < 200 || res.codigoEstado >= 300) {
+			throw new ErrorConPublicar(mensaje + ": HTTP " + res.codigoEstado + " -> " + res.cuerpo);
 		}
 	}
 
@@ -369,14 +374,12 @@ public class WormholeApp implements SitioDeArchivoAPI {
 		req.obtener("readerToken").poner(tokenLectorBase64);
 		req.obtener("salt").poner(salBase64);
 
-		HttpRequest httpReq = HttpRequest.newBuilder().uri(URI.create(API_BASE + "/room"))
-				.header("Content-Type", "application/json").header("User-Agent", USER_AGENT)
-				.POST(HttpRequest.BodyPublishers.ofString(req.escribir())).build();
+		RespuestaHttp res = clienteHttp.enviarJson("POST", API_BASE + "/room",
+				cabeceras("Content-Type", "application/json", "User-Agent", USER_AGENT), req.escribir());
 
-		HttpResponse<String> res = clienteHttp.send(httpReq, HttpResponse.BodyHandlers.ofString());
 		verificar2xx(res, "Falló la creación de la sala");
 
-		Nodo jsonRes = Json.leer(res.body());
+		Nodo jsonRes = Json.leer(res.cuerpo);
 
 		RespuestaCrearSala r = new RespuestaCrearSala();
 		r.id = leerCadena(jsonRes, "id");
@@ -388,11 +391,9 @@ public class WormholeApp implements SitioDeArchivoAPI {
 	}
 
 	private void marcarUploaderEnLinea(String idSala, byte[] tokenEscritor) throws Exception {
-		HttpRequest req = HttpRequest.newBuilder().uri(URI.create(API_BASE + "/room/" + idSala + "/uploader-online"))
-				.header("Authorization", authBearer(tokenEscritor)).header("User-Agent", USER_AGENT)
-				.method("PATCH", HttpRequest.BodyPublishers.noBody()).build();
+		RespuestaHttp res = clienteHttp.enviar("PATCH", API_BASE + "/room/" + idSala + "/uploader-online",
+				cabeceras("Authorization", authBearer(tokenEscritor), "User-Agent", USER_AGENT), new byte[0]);
 
-		HttpResponse<String> res = clienteHttp.send(req, HttpResponse.BodyHandlers.ofString());
 		verificar2xx(res, "Falló marcar uploader-online");
 	}
 
@@ -405,16 +406,15 @@ public class WormholeApp implements SitioDeArchivoAPI {
 		body.obtener("multiFile").poner(multiFile);
 		body.obtener("sizeMb").poner(sizeMb);
 
-		HttpRequest req = HttpRequest.newBuilder().uri(URI.create(API_BASE + "/room/" + idSala))
-				.header("Authorization", authBearer(tokenEscritor)).header("Content-Type", "application/json")
-				.header("Accept", "application/json").header("Origin", "https://wormhole.app")
-				.header("Referer", "https://wormhole.app/").header("User-Agent", USER_AGENT)
-				.method("PATCH", HttpRequest.BodyPublishers.ofString(body.escribir())).build();
+		RespuestaHttp res = clienteHttp.enviarJson("PATCH", API_BASE + "/room/" + idSala,
+				cabeceras("Authorization", authBearer(tokenEscritor), "Content-Type", "application/json", "Accept",
+						"application/json", "Origin", "https://wormhole.app", "Referer", "https://wormhole.app/",
+						"User-Agent", USER_AGENT),
+				body.escribir());
 
-		HttpResponse<String> res = clienteHttp.send(req, HttpResponse.BodyHandlers.ofString());
 		verificar2xx(res, "Falló la actualización de metadata de la sala");
 
-		Nodo jsonRes = Json.leer(res.body());
+		Nodo jsonRes = Json.leer(res.cuerpo);
 
 		RespuestaSala r = new RespuestaSala();
 		r.cloudState = leerCadenaNullable(jsonRes, "cloudState");
@@ -430,15 +430,15 @@ public class WormholeApp implements SitioDeArchivoAPI {
 		Nodo body = Json.crearObjeto();
 		body.obtener("numTokens").poner(cantidadTokens);
 
-		HttpRequest req = HttpRequest.newBuilder().uri(URI.create(API_BASE + "/room/" + idSala + "/b2/auth-upload"))
-				.header("Authorization", authBearer(tokenEscritor)).header("Content-Type", "application/json")
-				.header("User-Agent", USER_AGENT).POST(HttpRequest.BodyPublishers.ofString(body.escribir())).build();
+		RespuestaHttp res = clienteHttp.enviarJson(
+				"POST", API_BASE + "/room/" + idSala + "/b2/auth-upload", cabeceras("Authorization",
+						authBearer(tokenEscritor), "Content-Type", "application/json", "User-Agent", USER_AGENT),
+				body.escribir());
 
-		HttpResponse<String> res = clienteHttp.send(req, HttpResponse.BodyHandlers.ofString());
 		verificar2xx(res, "Falló obtener autorización de subida B2");
 
-		Nodo jsonRes = Json.leer(res.body());
-		List<TokenSubidaB2> ret = new ArrayList<>();
+		Nodo jsonRes = Json.leer(res.cuerpo);
+		List<TokenSubidaB2> ret = new ArrayList<TokenSubidaB2>();
 
 		if (!jsonRes.esArreglo()) {
 			throw new ErrorConPublicar("La respuesta de auth-upload no fue un arreglo JSON");
@@ -450,7 +450,6 @@ public class WormholeApp implements SitioDeArchivoAPI {
 			TokenSubidaB2 token = new TokenSubidaB2();
 			token.uploadUrl = leerCadena(item, "uploadUrl");
 			token.authorizationToken = leerCadena(item, "authorizationToken");
-
 			ret.add(token);
 		}
 
@@ -466,12 +465,12 @@ public class WormholeApp implements SitioDeArchivoAPI {
 
 		String sha1Hex = CriptoWormhole.sha1Hex(data);
 
-		HttpRequest req = HttpRequest.newBuilder().uri(URI.create(token.uploadUrl))
-				.header("Authorization", token.authorizationToken).header("X-Bz-File-Name", idSala + "/" + indiceChunk)
-				.header("X-Bz-Content-Sha1", sha1Hex).header("Content-Type", "application/octet-stream")
-				.header("User-Agent", USER_AGENT).POST(HttpRequest.BodyPublishers.ofByteArray(data)).build();
+		RespuestaHttp res = clienteHttp.enviar("POST", token.uploadUrl,
+				cabeceras("Authorization", token.authorizationToken, "X-Bz-File-Name", idSala + "/" + indiceChunk,
+						"X-Bz-Content-Sha1", sha1Hex, "Content-Type", "application/octet-stream", "User-Agent",
+						USER_AGENT),
+				data);
 
-		HttpResponse<String> res = clienteHttp.send(req, HttpResponse.BodyHandlers.ofString());
 		verificar2xx(res, "Falló la subida del chunk a B2");
 
 		if (callback != null) {
@@ -483,11 +482,11 @@ public class WormholeApp implements SitioDeArchivoAPI {
 		Nodo body = Json.crearObjeto();
 		body.obtener("success").poner(true);
 
-		HttpRequest req = HttpRequest.newBuilder().uri(URI.create(API_BASE + "/room/" + idSala + "/b2/finish-upload"))
-				.header("Authorization", authBearer(tokenEscritor)).header("Content-Type", "application/json")
-				.header("User-Agent", USER_AGENT).POST(HttpRequest.BodyPublishers.ofString(body.escribir())).build();
+		RespuestaHttp res = clienteHttp.enviarJson(
+				"POST", API_BASE + "/room/" + idSala + "/b2/finish-upload", cabeceras("Authorization",
+						authBearer(tokenEscritor), "Content-Type", "application/json", "User-Agent", USER_AGENT),
+				body.escribir());
 
-		HttpResponse<String> res = clienteHttp.send(req, HttpResponse.BodyHandlers.ofString());
 		verificar2xx(res, "Falló finalizar la subida");
 	}
 
@@ -538,6 +537,20 @@ public class WormholeApp implements SitioDeArchivoAPI {
 		}
 	}
 
+	private List<String[]> cabeceras(String... pares) {
+		List<String[]> lista = new ArrayList<String[]>();
+
+		if (pares == null) {
+			return lista;
+		}
+
+		for (int i = 0; i + 1 < pares.length; i += 2) {
+			lista.add(new String[] { pares[i], pares[i + 1] });
+		}
+
+		return lista;
+	}
+
 	@FunctionalInterface
 	private interface CallbackProgreso {
 		void alEnviar(int bytes);
@@ -566,7 +579,7 @@ public class WormholeApp implements SitioDeArchivoAPI {
 				throw new UncheckedIOException(e);
 			}
 
-			List<byte[]> salida = new ArrayList<>();
+			List<byte[]> salida = new ArrayList<byte[]>();
 
 			while (buffer.size() >= tamanoChunk) {
 				byte[] todo = buffer.toByteArray();
@@ -593,6 +606,360 @@ public class WormholeApp implements SitioDeArchivoAPI {
 
 		int siguienteIndiceChunk() {
 			return siguienteIndiceChunk++;
+		}
+	}
+
+	private static final class RespuestaHttp {
+		public final int codigoEstado;
+		public final String cuerpo;
+
+		private RespuestaHttp(int codigoEstado, String cuerpo) {
+			this.codigoEstado = codigoEstado;
+			this.cuerpo = cuerpo;
+		}
+	}
+
+	private static final class CabeceraHttp {
+		public final String nombre;
+		public final String valor;
+
+		private CabeceraHttp(String nombre, String valor) {
+			this.nombre = nombre;
+			this.valor = valor;
+		}
+	}
+
+	/**
+	 * Cliente HTTPS mínimo, suficiente para este flujo.
+	 *
+	 * Soporta: - POST - PATCH real - Content-Length - chunked transfer encoding -
+	 * cierre por EOF
+	 *
+	 * Solo maneja HTTPS.
+	 */
+	private static final class ClienteHttpSimple {
+
+		private static final int TIMEOUT_MS = 30000;
+		private static final String CRLF = "\r\n";
+
+		RespuestaHttp enviarJson(String metodo, String url, List<String[]> cabeceras, String cuerpoJson)
+				throws IOException {
+
+			byte[] cuerpo = cuerpoJson != null ? cuerpoJson.getBytes(StandardCharsets.UTF_8) : null;
+			return enviar(metodo, url, cabeceras, cuerpo);
+		}
+
+		RespuestaHttp enviar(String metodo, String url, List<String[]> cabeceras, byte[] cuerpo) throws IOException {
+
+			URI uri = URI.create(url);
+
+			if (!"https".equalsIgnoreCase(uri.getScheme())) {
+				throw new IOException("Solo se soporta HTTPS: " + url);
+			}
+
+			String host = uri.getHost();
+			int puerto = uri.getPort() > 0 ? uri.getPort() : 443;
+			String ruta = construirRuta(uri);
+
+			SSLSocketFactory fabrica = (SSLSocketFactory) SSLSocketFactory.getDefault();
+
+			try (SSLSocket socket = (SSLSocket) fabrica.createSocket(host, puerto)) {
+				socket.setSoTimeout(TIMEOUT_MS);
+				socket.startHandshake();
+
+				OutputStream out = socket.getOutputStream();
+				InputStream in = socket.getInputStream();
+
+				escribirSolicitud(out, metodo, host, ruta, cabeceras, cuerpo);
+				out.flush();
+
+				return leerRespuesta(in);
+			}
+		}
+
+		private static String construirRuta(URI uri) {
+			String path = uri.getRawPath();
+			if (path == null || path.isEmpty()) {
+				path = "/";
+			}
+
+			String query = uri.getRawQuery();
+			if (query != null && !query.isEmpty()) {
+				path += "?" + query;
+			}
+
+			return path;
+		}
+
+		private void escribirSolicitud(OutputStream out, String metodo, String host, String ruta,
+				List<String[]> cabeceras, byte[] cuerpo) throws IOException {
+
+			StringBuilder sb = new StringBuilder();
+			sb.append(metodo).append(" ").append(ruta).append(" HTTP/1.1").append(CRLF);
+			sb.append("Host: ").append(host).append(CRLF);
+			sb.append("User-Agent: ").append(USER_AGENT).append(CRLF);
+			sb.append("Connection: close").append(CRLF);
+
+			boolean tieneContentLength = false;
+			boolean tieneHost = false;
+			boolean tieneConnection = false;
+			boolean tieneUserAgent = false;
+
+			if (cabeceras != null) {
+				for (String[] cabecera : cabeceras) {
+					if (cabecera == null || cabecera.length < 2) {
+						continue;
+					}
+
+					String nombre = cabecera[0];
+					String valor = cabecera[1];
+
+					if (nombre == null || valor == null) {
+						continue;
+					}
+
+					String nombreNormalizado = nombre.toLowerCase(Locale.ROOT);
+					if ("content-length".equals(nombreNormalizado)) {
+						tieneContentLength = true;
+					} else if ("host".equals(nombreNormalizado)) {
+						tieneHost = true;
+					} else if ("connection".equals(nombreNormalizado)) {
+						tieneConnection = true;
+					} else if ("user-agent".equals(nombreNormalizado)) {
+						tieneUserAgent = true;
+					}
+				}
+			}
+
+			StringBuilder finales = new StringBuilder();
+
+			if (cabeceras != null) {
+				for (String[] cabecera : cabeceras) {
+					if (cabecera == null || cabecera.length < 2) {
+						continue;
+					}
+
+					String nombre = cabecera[0];
+					String valor = cabecera[1];
+
+					if (nombre == null || valor == null) {
+						continue;
+					}
+
+					String nombreNormalizado = nombre.toLowerCase(Locale.ROOT);
+
+					if ("host".equals(nombreNormalizado) || "connection".equals(nombreNormalizado)
+							|| "user-agent".equals(nombreNormalizado)) {
+						continue;
+					}
+
+					finales.append(nombre).append(": ").append(valor).append(CRLF);
+				}
+			}
+
+			StringBuilder solicitud = new StringBuilder();
+			solicitud.append(metodo).append(" ").append(ruta).append(" HTTP/1.1").append(CRLF);
+
+			if (!tieneHost) {
+				solicitud.append("Host: ").append(host).append(CRLF);
+			}
+			if (!tieneUserAgent) {
+				solicitud.append("User-Agent: ").append(USER_AGENT).append(CRLF);
+			}
+			if (!tieneConnection) {
+				solicitud.append("Connection: close").append(CRLF);
+			}
+
+			solicitud.append(finales);
+
+			int longitud = cuerpo != null ? cuerpo.length : 0;
+			if (!tieneContentLength) {
+				solicitud.append("Content-Length: ").append(longitud).append(CRLF);
+			}
+
+			solicitud.append(CRLF);
+
+			out.write(solicitud.toString().getBytes(StandardCharsets.UTF_8));
+
+			if (cuerpo != null && cuerpo.length > 0) {
+				out.write(cuerpo);
+			}
+		}
+
+		private RespuestaHttp leerRespuesta(InputStream in) throws IOException {
+			String lineaEstado = leerLineaAscii(in);
+			if (lineaEstado == null || lineaEstado.isEmpty()) {
+				throw new EOFException("No se recibió línea de estado HTTP");
+			}
+
+			String[] partes = lineaEstado.split(" ", 3);
+			if (partes.length < 2) {
+				throw new IOException("Línea de estado HTTP inválida: " + lineaEstado);
+			}
+
+			int codigoEstado;
+			try {
+				codigoEstado = Integer.parseInt(partes[1]);
+			} catch (NumberFormatException e) {
+				throw new IOException("Código HTTP inválido: " + lineaEstado, e);
+			}
+
+			List<CabeceraHttp> cabeceras = new ArrayList<CabeceraHttp>();
+
+			while (true) {
+				String linea = leerLineaAscii(in);
+				if (linea == null) {
+					throw new EOFException("Fin inesperado al leer cabeceras HTTP");
+				}
+				if (linea.isEmpty()) {
+					break;
+				}
+
+				int idx = linea.indexOf(':');
+				if (idx <= 0) {
+					continue;
+				}
+
+				String nombre = linea.substring(0, idx).trim();
+				String valor = linea.substring(idx + 1).trim();
+				cabeceras.add(new CabeceraHttp(nombre, valor));
+			}
+
+			byte[] cuerpo = leerCuerpoSegunCabeceras(in, cabeceras);
+			String cuerpoTexto = new String(cuerpo, StandardCharsets.UTF_8);
+
+			return new RespuestaHttp(codigoEstado, cuerpoTexto);
+		}
+
+		private byte[] leerCuerpoSegunCabeceras(InputStream in, List<CabeceraHttp> cabeceras) throws IOException {
+			String transferEncoding = obtenerCabecera(cabeceras, "Transfer-Encoding");
+			if (transferEncoding != null && transferEncoding.toLowerCase(Locale.ROOT).contains("chunked")) {
+				return leerChunked(in);
+			}
+
+			String contentLength = obtenerCabecera(cabeceras, "Content-Length");
+			if (contentLength != null) {
+				int longitud;
+				try {
+					longitud = Integer.parseInt(contentLength.trim());
+				} catch (NumberFormatException e) {
+					throw new IOException("Content-Length inválido: " + contentLength, e);
+				}
+
+				return leerBytesExactos(in, longitud);
+			}
+
+			return leerHastaEof(in);
+		}
+
+		private static String obtenerCabecera(List<CabeceraHttp> cabeceras, String nombreBuscado) {
+			for (CabeceraHttp h : cabeceras) {
+				if (h.nombre.equalsIgnoreCase(nombreBuscado)) {
+					return h.valor;
+				}
+			}
+			return null;
+		}
+
+		private byte[] leerChunked(InputStream in) throws IOException {
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+			while (true) {
+				String lineaTamano = leerLineaAscii(in);
+				if (lineaTamano == null) {
+					throw new EOFException("Fin inesperado leyendo chunk size");
+				}
+
+				lineaTamano = lineaTamano.trim();
+				int puntoYComa = lineaTamano.indexOf(';');
+				if (puntoYComa >= 0) {
+					lineaTamano = lineaTamano.substring(0, puntoYComa).trim();
+				}
+
+				int tamanoChunk;
+				try {
+					tamanoChunk = Integer.parseInt(lineaTamano, 16);
+				} catch (NumberFormatException e) {
+					throw new IOException("Chunk size inválido: " + lineaTamano, e);
+				}
+
+				if (tamanoChunk == 0) {
+					/*
+					 * Después del chunk 0 vienen posibles trailing headers y una línea vacía final.
+					 */
+					while (true) {
+						String trailing = leerLineaAscii(in);
+						if (trailing == null || trailing.isEmpty()) {
+							break;
+						}
+					}
+					break;
+				}
+
+				byte[] chunk = leerBytesExactos(in, tamanoChunk);
+				out.write(chunk);
+
+				/*
+				 * Después de cada chunk debe venir CRLF.
+				 */
+				String finChunk = leerLineaAscii(in);
+				if (finChunk == null) {
+					throw new EOFException("Fin inesperado después de chunk");
+				}
+			}
+
+			return out.toByteArray();
+		}
+
+		private byte[] leerHastaEof(InputStream in) throws IOException {
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			byte[] buffer = new byte[8192];
+			int leidos;
+
+			while ((leidos = in.read(buffer)) != -1) {
+				out.write(buffer, 0, leidos);
+			}
+
+			return out.toByteArray();
+		}
+
+		private byte[] leerBytesExactos(InputStream in, int cantidad) throws IOException {
+			byte[] datos = new byte[cantidad];
+			int offset = 0;
+
+			while (offset < cantidad) {
+				int leidos = in.read(datos, offset, cantidad - offset);
+				if (leidos < 0) {
+					throw new EOFException("Fin inesperado al leer " + cantidad + " bytes");
+				}
+				offset += leidos;
+			}
+
+			return datos;
+		}
+
+		private String leerLineaAscii(InputStream in) throws IOException {
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+			while (true) {
+				int b = in.read();
+				if (b < 0) {
+					if (out.size() == 0) {
+						return null;
+					}
+					break;
+				}
+
+				if (b == '\n') {
+					break;
+				}
+
+				if (b != '\r') {
+					out.write(b);
+				}
+			}
+
+			return new String(out.toByteArray(), StandardCharsets.ISO_8859_1);
 		}
 	}
 
@@ -646,10 +1013,10 @@ public class WormholeApp implements SitioDeArchivoAPI {
 
 			this.latchFinalizacion = new CountDownLatch(1);
 			this.cancelada = new AtomicBoolean(false);
-			this.estado = new AtomicReference<>(EstadoDeTransferencia.PENDIENTE);
-			this.enlace = new AtomicReference<>(null);
-			this.codigo = new AtomicReference<>(null);
-			this.errorFinal = new AtomicReference<>(null);
+			this.estado = new AtomicReference<EstadoDeTransferencia>(EstadoDeTransferencia.PENDIENTE);
+			this.enlace = new AtomicReference<String>(null);
+			this.codigo = new AtomicReference<String>(null);
+			this.errorFinal = new AtomicReference<ErrorConPublicar>(null);
 		}
 
 		@Override
