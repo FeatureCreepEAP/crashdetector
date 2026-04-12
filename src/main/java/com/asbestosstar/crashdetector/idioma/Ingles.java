@@ -8347,4 +8347,49 @@ public class Ingles implements Idioma {
 		return "Document background colour";
 	}
 
+	@Override
+	public String iaTituloVentana() {
+		return "AI";
+	}
+
+	@Override
+	public String iaTituloPrincipal() {
+		return "AI Analysis";
+	}
+
+	@Override
+	public String iaDescripcionTitulo() {
+		return "Crash analysis agent";
+	}
+
+	@Override
+	public String iaDescripcionCuerpo() {
+		return "This tool opens an external agent that can help you analyse crashes, errors, and logs related to Minecraft.";
+	}
+
+	@Override
+	public String iaDescripcionUso() {
+		return "To use this system, open the link, sign in with a Baidu account, and then use the agent to review your crash or logs.";
+	}
+
+	@Override
+	public String iaAvisoCuentaBaidu() {
+		return "You will need a Baidu account to access the agent.";
+	}
+
+	@Override
+	public String iaCopiarEnlace() {
+		return "Copy link";
+	}
+
+	@Override
+	public String iaAbrirEnlace() {
+		return "Open link";
+	}
+
+	@Override
+	public String iaImagenNoDisponible() {
+		return "Image not available";
+	}
+
 }

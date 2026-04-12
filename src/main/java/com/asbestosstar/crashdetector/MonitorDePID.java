@@ -57,6 +57,7 @@ import com.asbestosstar.crashdetector.gui.tipos.grepr.BusquedaGUISaliorMoon;
 import com.asbestosstar.crashdetector.gui.tipos.guard.GuardiaSketchyVT;
 import com.asbestosstar.crashdetector.gui.tipos.historia.ClioOfficeGUI;
 import com.asbestosstar.crashdetector.gui.tipos.historia.HistoriaModsGUILegacy;
+import com.asbestosstar.crashdetector.gui.tipos.ia.IAGUILuotianyi;
 import com.asbestosstar.crashdetector.gui.tipos.lanzeresbuenos.LanzerBuenoGUIMaidMint;
 import com.asbestosstar.crashdetector.gui.tipos.lanzeresmalos.LanzerMaloGUISylentBell;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasHoloTalk;
@@ -283,6 +284,7 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/check.png", Statics.carpeta.resolve("imagenes/check.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/square.png", Statics.carpeta.resolve("imagenes/square.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/studyjuche.png", Statics.carpeta.resolve("imagenes/studyjuche.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/luotianyi.png", Statics.carpeta.resolve("imagenes/luotianyi.png").toFile());
 
 //docs		
 		copiarACarpetaDesdeJar("/docs/ingles/minecraft/Launchers.md",
@@ -494,6 +496,7 @@ public class MonitorDePID {
 		TipoGUI.GUARD.registrarGUI(GuardiaSketchyVT.ID, GuardiaSketchyVT::new);
 		TipoGUI.COMPARTIR_INSTANCIA.registrarGUI(CompartirInstanciaLegacy.ID, CompartirInstanciaLegacy::new);
 		TipoGUI.DOCS.registrarGUI(LectadorDeDocumentosStudyJuche.ID, LectadorDeDocumentosStudyJuche::new);
+		TipoGUI.IA.registrarGUI(IAGUILuotianyi.ID, IAGUILuotianyi::new);
 
 	}
 

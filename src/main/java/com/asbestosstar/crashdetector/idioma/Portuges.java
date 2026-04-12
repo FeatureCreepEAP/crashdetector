@@ -8331,4 +8331,49 @@ public class Portuges implements Idioma {
 		return "Cor de fundo do documento";
 	}
 
+	@Override
+	public String iaTituloVentana() {
+		return "IA";
+	}
+
+	@Override
+	public String iaTituloPrincipal() {
+		return "Análise com IA";
+	}
+
+	@Override
+	public String iaDescripcionTitulo() {
+		return "Agente de análise de crashes";
+	}
+
+	@Override
+	public String iaDescripcionCuerpo() {
+		return "Esta ferramenta abre um agente externo que pode ajudar você a analisar crashes, erros e registros relacionados ao Minecraft.";
+	}
+
+	@Override
+	public String iaDescripcionUso() {
+		return "Para usar este sistema, abra o link, faça login com uma conta do Baidu e depois use o agente para revisar seu crash ou seus logs.";
+	}
+
+	@Override
+	public String iaAvisoCuentaBaidu() {
+		return "Você precisará de uma conta do Baidu para acessar o agente.";
+	}
+
+	@Override
+	public String iaCopiarEnlace() {
+		return "Copiar link";
+	}
+
+	@Override
+	public String iaAbrirEnlace() {
+		return "Abrir link";
+	}
+
+	@Override
+	public String iaImagenNoDisponible() {
+		return "Imagem não disponível";
+	}
+
 }

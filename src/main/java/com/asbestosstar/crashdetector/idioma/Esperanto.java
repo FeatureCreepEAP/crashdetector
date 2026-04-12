@@ -8295,4 +8295,49 @@ public class Esperanto implements Idioma {
 		return "Koloro de fono de dokumento";
 	}
 
+	@Override
+	public String iaTituloVentana() {
+		return "Artefarita Inteligento";
+	}
+
+	@Override
+	public String iaTituloPrincipal() {
+		return "Analizo per AI";
+	}
+
+	@Override
+	public String iaDescripcionTitulo() {
+		return "Agento por analizo de kraŝoj";
+	}
+
+	@Override
+	public String iaDescripcionCuerpo() {
+		return "Ĉi tiu ilo malfermas eksteran agenton, kiu povas helpi vin analizi kraŝojn, erarojn kaj protokolojn rilatajn al Minecraft.";
+	}
+
+	@Override
+	public String iaDescripcionUso() {
+		return "Por uzi ĉi tiun sistemon, malfermu la ligilon, ensalutu per Baidu-konto kaj poste uzu la agenton por kontroli vian kraŝraporton aŭ protokolojn.";
+	}
+
+	@Override
+	public String iaAvisoCuentaBaidu() {
+		return "Vi bezonos Baidu-konton por aliri la agenton.";
+	}
+
+	@Override
+	public String iaCopiarEnlace() {
+		return "Kopii ligilon";
+	}
+
+	@Override
+	public String iaAbrirEnlace() {
+		return "Malfermi ligilon";
+	}
+
+	@Override
+	public String iaImagenNoDisponible() {
+		return "Bildo ne disponebla";
+	}
+
 }

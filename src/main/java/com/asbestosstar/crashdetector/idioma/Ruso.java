@@ -8327,4 +8327,49 @@ public class Ruso implements Idioma {
 		return "Цвет фона документа";
 	}
 
+	@Override
+	public String iaTituloVentana() {
+		return "ИИ";
+	}
+
+	@Override
+	public String iaTituloPrincipal() {
+		return "Анализ с помощью ИИ";
+	}
+
+	@Override
+	public String iaDescripcionTitulo() {
+		return "Агент анализа сбоев";
+	}
+
+	@Override
+	public String iaDescripcionCuerpo() {
+		return "Этот инструмент открывает внешнего агента, который может помочь вам проанализировать сбои, ошибки и журналы, связанные с Minecraft.";
+	}
+
+	@Override
+	public String iaDescripcionUso() {
+		return "Чтобы использовать эту систему, откройте ссылку, войдите в аккаунт Baidu, а затем используйте агента для просмотра вашего отчета о сбое или журналов.";
+	}
+
+	@Override
+	public String iaAvisoCuentaBaidu() {
+		return "Для доступа к агенту вам понадобится аккаунт Baidu.";
+	}
+
+	@Override
+	public String iaCopiarEnlace() {
+		return "Копировать ссылку";
+	}
+
+	@Override
+	public String iaAbrirEnlace() {
+		return "Открыть ссылку";
+	}
+
+	@Override
+	public String iaImagenNoDisponible() {
+		return "Изображение недоступно";
+	}
+
 }

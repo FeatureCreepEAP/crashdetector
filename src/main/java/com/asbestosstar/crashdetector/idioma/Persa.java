@@ -8282,4 +8282,49 @@ public class Persa implements Idioma {
 		return "رنگ پس‌زمینه سند";
 	}
 
+	@Override
+	public String iaTituloVentana() {
+		return "هوش مصنوعی";
+	}
+
+	@Override
+	public String iaTituloPrincipal() {
+		return "تحلیل با هوش مصنوعی";
+	}
+
+	@Override
+	public String iaDescripcionTitulo() {
+		return "عامل تحلیل کرش‌ها";
+	}
+
+	@Override
+	public String iaDescripcionCuerpo() {
+		return "این ابزار یک عامل خارجی را باز می‌کند که می‌تواند به شما در تحلیل کرش‌ها، خطاها و گزارش‌های مرتبط با ماینکرفت کمک کند.";
+	}
+
+	@Override
+	public String iaDescripcionUso() {
+		return "برای استفاده از این سیستم، لینک را باز کنید، با حساب Baidu وارد شوید و سپس از عامل برای بررسی کرش یا گزارش‌های خود استفاده کنید.";
+	}
+
+	@Override
+	public String iaAvisoCuentaBaidu() {
+		return "برای دسترسی به عامل، به یک حساب Baidu نیاز خواهید داشت.";
+	}
+
+	@Override
+	public String iaCopiarEnlace() {
+		return "کپی لینک";
+	}
+
+	@Override
+	public String iaAbrirEnlace() {
+		return "باز کردن لینک";
+	}
+
+	@Override
+	public String iaImagenNoDisponible() {
+		return "تصویر در دسترس نیست";
+	}
+
 }

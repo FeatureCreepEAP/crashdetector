@@ -8217,4 +8217,49 @@ public class Arabe implements Idioma {
 		return "لون خلفية المستند";
 	}
 
+	@Override
+	public String iaTituloVentana() {
+		return "الذكاء الاصطناعي";
+	}
+
+	@Override
+	public String iaTituloPrincipal() {
+		return "التحليل بالذكاء الاصطناعي";
+	}
+
+	@Override
+	public String iaDescripcionTitulo() {
+		return "وكيل تحليل الأعطال";
+	}
+
+	@Override
+	public String iaDescripcionCuerpo() {
+		return "تفتح هذه الأداة وكيلاً خارجياً يمكنه مساعدتك في تحليل الأعطال والأخطاء والسجلات المتعلقة بـ Minecraft.";
+	}
+
+	@Override
+	public String iaDescripcionUso() {
+		return "لاستخدام هذا النظام، افتح الرابط، وسجل الدخول بحساب Baidu، ثم استخدم الوكيل لمراجعة تقرير العطل أو السجلات الخاصة بك.";
+	}
+
+	@Override
+	public String iaAvisoCuentaBaidu() {
+		return "ستحتاج إلى حساب Baidu للوصول إلى الوكيل.";
+	}
+
+	@Override
+	public String iaCopiarEnlace() {
+		return "نسخ الرابط";
+	}
+
+	@Override
+	public String iaAbrirEnlace() {
+		return "فتح الرابط";
+	}
+
+	@Override
+	public String iaImagenNoDisponible() {
+		return "الصورة غير متاحة";
+	}
+
 }

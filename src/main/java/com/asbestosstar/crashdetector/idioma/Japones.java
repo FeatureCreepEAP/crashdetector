@@ -7997,4 +7997,49 @@ public class Japones implements Idioma {
 		return "ドキュメントの背景色";
 	}
 
+	@Override
+	public String iaTituloVentana() {
+		return "AI";
+	}
+
+	@Override
+	public String iaTituloPrincipal() {
+		return "AI分析";
+	}
+
+	@Override
+	public String iaDescripcionTitulo() {
+		return "クラッシュ分析エージェント";
+	}
+
+	@Override
+	public String iaDescripcionCuerpo() {
+		return "このツールは、Minecraft関連のクラッシュ、エラー、ログの分析をサポートする外部エージェントを開きます。";
+	}
+
+	@Override
+	public String iaDescripcionUso() {
+		return "このシステムを使用するには、リンクを開き、Baiduアカウントでログインしてから、エージェントを使用してクラッシュレポートやログを確認してください。";
+	}
+
+	@Override
+	public String iaAvisoCuentaBaidu() {
+		return "エージェントにアクセスするにはBaiduアカウントが必要です。";
+	}
+
+	@Override
+	public String iaCopiarEnlace() {
+		return "リンクをコピー";
+	}
+
+	@Override
+	public String iaAbrirEnlace() {
+		return "リンクを開く";
+	}
+
+	@Override
+	public String iaImagenNoDisponible() {
+		return "画像は利用できません";
+	}
+
 }

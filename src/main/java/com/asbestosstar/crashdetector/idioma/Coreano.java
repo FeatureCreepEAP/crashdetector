@@ -7984,4 +7984,49 @@ public class Coreano implements Idioma {
 		return "문서 배경 색상";
 	}
 
+	@Override
+	public String iaTituloVentana() {
+		return "인공 지능";
+	}
+
+	@Override
+	public String iaTituloPrincipal() {
+		return "인공 지능 분석";
+	}
+
+	@Override
+	public String iaDescripcionTitulo() {
+		return "충돌 분석 대리자";
+	}
+
+	@Override
+	public String iaDescripcionCuerpo() {
+		return "이 도구는 Minecraft와 관련된 충돌, 오류 및 기록을 분석하는 데 도움을 줄 수 있는 외부 대리자를 엽니다.";
+	}
+
+	@Override
+	public String iaDescripcionUso() {
+		return "이 시스템을 사용하려면 링크를 열고 Baidu 계정으로 로그인한 후 대리자를 사용하여 충돌 보고서나 기록을 검토하십시오.";
+	}
+
+	@Override
+	public String iaAvisoCuentaBaidu() {
+		return "대리자에 접근하려면 Baidu 계정이 필요합니다.";
+	}
+
+	@Override
+	public String iaCopiarEnlace() {
+		return "링크 복사";
+	}
+
+	@Override
+	public String iaAbrirEnlace() {
+		return "링크 열기";
+	}
+
+	@Override
+	public String iaImagenNoDisponible() {
+		return "이미지를 사용할 수 없음";
+	}
+
 }

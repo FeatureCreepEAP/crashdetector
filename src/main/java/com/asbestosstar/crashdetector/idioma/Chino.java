@@ -7813,4 +7813,49 @@ public class Chino implements Idioma {
 		return "文档背景颜色";
 	}
 
+	@Override
+	public String iaTituloVentana() {
+		return "人工智能";
+	}
+
+	@Override
+	public String iaTituloPrincipal() {
+		return "AI 分析";
+	}
+
+	@Override
+	public String iaDescripcionTitulo() {
+		return "崩溃分析代理";
+	}
+
+	@Override
+	public String iaDescripcionCuerpo() {
+		return "此工具打开一个外部代理，可以帮助你分析与 Minecraft 相关的崩溃、错误和日志。";
+	}
+
+	@Override
+	public String iaDescripcionUso() {
+		return "要使用此系统，请打开链接，使用百度账号登录，然后使用该代理检查你的崩溃报告或日志。";
+	}
+
+	@Override
+	public String iaAvisoCuentaBaidu() {
+		return "你需要一个百度账号才能访问该代理。";
+	}
+
+	@Override
+	public String iaCopiarEnlace() {
+		return "复制链接";
+	}
+
+	@Override
+	public String iaAbrirEnlace() {
+		return "打开链接";
+	}
+
+	@Override
+	public String iaImagenNoDisponible() {
+		return "图片不可用";
+	}
+
 }

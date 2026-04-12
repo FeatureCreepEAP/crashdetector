@@ -12,6 +12,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import javax.swing.Icon;
+
 import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.idioma.Arabe;
 import com.asbestosstar.crashdetector.idioma.Chino;
@@ -3177,5 +3179,23 @@ public interface Idioma {
 	public String docsArbolTitulo();
 
 	public String docsVisorTitulo();
+
+	public String iaTituloPrincipal();
+
+	public String iaAbrirEnlace();
+
+	public String iaCopiarEnlace();
+
+	public String iaAvisoCuentaBaidu();
+
+	public String iaDescripcionTitulo();
+
+	public String iaDescripcionCuerpo();
+
+	public String iaDescripcionUso();
+
+	public String iaTituloVentana();
+
+	public String iaImagenNoDisponible();
 
 }
