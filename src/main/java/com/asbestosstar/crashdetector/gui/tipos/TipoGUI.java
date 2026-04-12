@@ -24,6 +24,7 @@ import com.asbestosstar.crashdetector.gui.tipos.consola.ConsolaDesarrolladorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.corpo.CorpoBase;
 import com.asbestosstar.crashdetector.gui.tipos.depmap.MapaDeDependenciasGUI;
 import com.asbestosstar.crashdetector.gui.tipos.deshablicarverificaciones.DeshablicarVerificaciones;
+import com.asbestosstar.crashdetector.gui.tipos.docs.LectadorDeDocumentosGUI;
 import com.asbestosstar.crashdetector.gui.tipos.editor.EditorFirmasGUI;
 import com.asbestosstar.crashdetector.gui.tipos.editor_plantilla.EditorPlantilla;
 import com.asbestosstar.crashdetector.gui.tipos.editorgui.EditorGUI;
@@ -914,6 +915,28 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		@Override
 		public Map<String, Supplier<CompartirInstanciaGUI>> obtenerGUIs() {
 			return CompartirInstanciaGUI.GUIS;
+		}
+	};
+
+	public static TipoGUI<LectadorDeDocumentosGUI> DOCS = new TipoGUI<LectadorDeDocumentosGUI>() {
+		@Override
+		public String id() {
+			return "docs";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.docsArbolTitulo();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<LectadorDeDocumentosGUI> gui) {
+			LectadorDeDocumentosGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<LectadorDeDocumentosGUI>> obtenerGUIs() {
+			return LectadorDeDocumentosGUI.GUIS;
 		}
 	};
 

@@ -48,6 +48,7 @@ import com.asbestosstar.crashdetector.gui.tipos.consola.ConsolaDesarrolladorGUIT
 import com.asbestosstar.crashdetector.gui.tipos.corpo.CorpoSAO;
 import com.asbestosstar.crashdetector.gui.tipos.depmap.MapaDeDependenciasGUINimu;
 import com.asbestosstar.crashdetector.gui.tipos.deshablicarverificaciones.DeshabilitarVerificacionesAmaneKanata;
+import com.asbestosstar.crashdetector.gui.tipos.docs.LectadorDeDocumentosStudyJuche;
 import com.asbestosstar.crashdetector.gui.tipos.editor.EditorCodiceGUIIronMouse;
 import com.asbestosstar.crashdetector.gui.tipos.editor_plantilla.EditorPlantillaModioNoche;
 import com.asbestosstar.crashdetector.gui.tipos.editor_plantilla.EditorPlantillaPredeterminado;
@@ -281,6 +282,14 @@ public class MonitorDePID {
 
 		copiarACarpetaDesdeJar("/imagenes/check.png", Statics.carpeta.resolve("imagenes/check.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/square.png", Statics.carpeta.resolve("imagenes/square.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/studyjuche.png", Statics.carpeta.resolve("imagenes/studyjuche.png").toFile());
+
+//docs		
+		copiarACarpetaDesdeJar("/docs/ingles/minecraft/Launchers.md",
+				Statics.carpeta.resolve("docs/ingles/minecraft/Launchers.md").toFile());
+
+		copiarACarpetaDesdeJar("/docs/ingles/minecraft/LauncherLogs.md",
+				Statics.carpeta.resolve("docs/ingles/minecraft/LauncherLogs.md").toFile());
 
 //		new File(viajo_ultima_mods.toString()).delete();
 //		try {
@@ -484,6 +493,8 @@ public class MonitorDePID {
 		TipoGUI.DEPMAP.registrarGUI(MapaDeDependenciasGUINimu.ID, MapaDeDependenciasGUINimu::new);
 		TipoGUI.GUARD.registrarGUI(GuardiaSketchyVT.ID, GuardiaSketchyVT::new);
 		TipoGUI.COMPARTIR_INSTANCIA.registrarGUI(CompartirInstanciaLegacy.ID, CompartirInstanciaLegacy::new);
+		TipoGUI.DOCS.registrarGUI(LectadorDeDocumentosStudyJuche.ID, LectadorDeDocumentosStudyJuche::new);
+
 	}
 
 	/**

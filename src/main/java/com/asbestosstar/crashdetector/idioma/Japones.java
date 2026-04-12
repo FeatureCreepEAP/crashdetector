@@ -7924,4 +7924,77 @@ public class Japones implements Idioma {
 		return "不審なパッケージ:";
 	}
 
+	@Override
+	public String docsTituloVentana() {
+		return "ドキュメントリーダー";
+	}
+
+	@Override
+	public String docsAyudaDeUso() {
+		return "<b>このリーダーの使い方</b><br>" + "下部で言語を選択すると、その言語で利用可能なドキュメントが表示されます。<br>"
+				+ "左側のパネルでフォルダやドキュメントをナビゲートできます。<br>" + "ドキュメントをクリックすると、右側にその内容が表示されます。<br>"
+				+ "<b>docs://</b> プロトコルの内部リンクは、このリーダー内で他のドキュメントを開きます。";
+	}
+
+	@Override
+	public String docsArbolTitulo() {
+		return "ドキュメント";
+	}
+
+	@Override
+	public String docsVisorTitulo() {
+		return "コンテンツ";
+	}
+
+	@Override
+	public String docsNoHayDocumentos() {
+		return "この言語のドキュメントはありません。";
+	}
+
+	@Override
+	public String docsNoHayMarkdown() {
+		return "この言語のMarkdownファイルが見つかりません。";
+	}
+
+	@Override
+	public String docsDocumentoNoEncontrado() {
+		return "要求されたドキュメントが見つかりません。";
+	}
+
+	@Override
+	public String docsErrorAlAbrirDocumento() {
+		return "ドキュメントを開く際のエラー：";
+	}
+
+	@Override
+	public String docsCargando() {
+		return "ドキュメントを読み込み中...";
+	}
+
+	@Override
+	public String docsImagenNoDisponible() {
+		return "イラストは利用できません";
+	}
+
+	// Correction for Japanese natural flow
+	@Override
+	public String colorPanelSecundario() {
+		return "補助パネルの色";
+	}
+
+	@Override
+	public String colorTextoSuave() {
+		return "柔らかいテキストの色";
+	}
+
+	@Override
+	public String colorSeleccion() {
+		return "選択色";
+	}
+
+	@Override
+	public String colorFondoDocumento() {
+		return "ドキュメントの背景色";
+	}
+
 }

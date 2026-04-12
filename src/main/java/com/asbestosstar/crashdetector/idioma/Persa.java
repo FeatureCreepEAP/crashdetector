@@ -8208,4 +8208,78 @@ public class Persa implements Idioma {
 		return "بسته مشکوک:";
 	}
 
+	@Override
+	public String docsTituloVentana() {
+		return "خواننده اسناد";
+	}
+
+	@Override
+	public String docsAyudaDeUso() {
+		return "<b>نحوه استفاده از این خواننده</b><br>"
+				+ "زبانی را از پایین انتخاب کنید تا مستندات موجود به آن زبان را مشاهده کنید.<br>"
+				+ "در پنل سمت چپ می‌توانید پوشه‌ها و اسناد را پیمایش کنید.<br>"
+				+ "با کلیک روی یک سند، محتوای آن در سمت راست ظاهر می‌شود.<br>"
+				+ "پیوندهای داخلی با پروتکل <b>docs://</b> اسناد دیگر را در همین خواننده باز می‌کنند.";
+	}
+
+	@Override
+	public String docsArbolTitulo() {
+		return "اسناد";
+	}
+
+	@Override
+	public String docsVisorTitulo() {
+		return "محتوا";
+	}
+
+	@Override
+	public String docsNoHayDocumentos() {
+		return "سندی برای این زبان وجود ندارد.";
+	}
+
+	@Override
+	public String docsNoHayMarkdown() {
+		return "هیچ فایل Markdownی در این زبان یافت نشد.";
+	}
+
+	@Override
+	public String docsDocumentoNoEncontrado() {
+		return "سند درخواستی یافت نشد.";
+	}
+
+	@Override
+	public String docsErrorAlAbrirDocumento() {
+		return "خطا هنگام باز کردن سند:";
+	}
+
+	@Override
+	public String docsCargando() {
+		return "در حال بارگذاری اسناد...";
+	}
+
+	@Override
+	public String docsImagenNoDisponible() {
+		return "تصویرسازی در دسترس نیست";
+	}
+
+	@Override
+	public String colorPanelSecundario() {
+		return "رنگ پنل ثانویه";
+	}
+
+	@Override
+	public String colorTextoSuave() {
+		return "رنگ متن ملایم";
+	}
+
+	@Override
+	public String colorSeleccion() {
+		return "رنگ انتخاب";
+	}
+
+	@Override
+	public String colorFondoDocumento() {
+		return "رنگ پس‌زمینه سند";
+	}
+
 }

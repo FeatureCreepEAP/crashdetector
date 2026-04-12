@@ -15,6 +15,8 @@ import com.asbestosstar.crashdetector.config.ElementoConfig;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrBase;
 import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrSakuraRiddle;
+import com.asbestosstar.crashdetector.gui.tipos.docs.LectadorDeDocumentosGUI;
+import com.asbestosstar.crashdetector.gui.tipos.docs.LectadorDeDocumentosStudyJuche;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasHoloTalk;
 import com.asbestosstar.crashdetector.gui.tipos.quickfix.ElementoQuickFixDemonSlayers;
@@ -119,6 +121,13 @@ public interface CrashDetectorGUI {
 						ElementoQuickFixDemonSlayers::new);
 				gui.constructir(MonitorDePID.analizador.obtenerQuickFixConEnlace(url));
 
+			} else if (url.startsWith("docs://")) {
+				CrashDetectorLogger.log(url + " (docs url)");
+				LectadorDeDocumentosGUI gui = TipoGUI.DOCS.obtenerGUIPredeterminado(LectadorDeDocumentosStudyJuche.ID,
+						() -> new LectadorDeDocumentosStudyJuche());
+				gui.init();
+				gui.setVisible(true);
+				gui.procesarHipervinculo(url);
 			}
 
 			else if (url != null) {

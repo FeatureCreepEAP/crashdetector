@@ -8144,4 +8144,77 @@ public class Arabe implements Idioma {
 		return "حزمة مشبوهة:";
 	}
 
+	@Override
+	public String docsTituloVentana() {
+		return "قارئ المستندات";
+	}
+
+	@Override
+	public String docsAyudaDeUso() {
+		return "<b>كيفية استخدام هذا القارئ</b><br>" + "اختر لغة من الأسفل لعرض الوثائق المتاحة بتلك اللغة.<br>"
+				+ "في اللوحة اليسرى، يمكنك التنقل بين المجلدات والمستندات.<br>"
+				+ "عند النقر على مستند، سيظهر محتواه على اليمين.<br>"
+				+ "الروابط الداخلية ذات البروتوكول <b>docs://</b> تفتح مستندات أخرى داخل نفس القارئ.";
+	}
+
+	@Override
+	public String docsArbolTitulo() {
+		return "المستندات";
+	}
+
+	@Override
+	public String docsVisorTitulo() {
+		return "المحتوى";
+	}
+
+	@Override
+	public String docsNoHayDocumentos() {
+		return "لا توجد مستندات لهذه اللغة.";
+	}
+
+	@Override
+	public String docsNoHayMarkdown() {
+		return "لم يتم العثور على ملفات Markdown في هذه اللغة.";
+	}
+
+	@Override
+	public String docsDocumentoNoEncontrado() {
+		return "لم يتم العثور على المستند المطلوب.";
+	}
+
+	@Override
+	public String docsErrorAlAbrirDocumento() {
+		return "خطأ عند فتح المستند:";
+	}
+
+	@Override
+	public String docsCargando() {
+		return "جاري تحميل المستندات...";
+	}
+
+	@Override
+	public String docsImagenNoDisponible() {
+		return "الصورة غير متاحة";
+	}
+
+	@Override
+	public String colorPanelSecundario() {
+		return "لون اللوحة الثانوية";
+	}
+
+	@Override
+	public String colorTextoSuave() {
+		return "لون النص الهادئ";
+	}
+
+	@Override
+	public String colorSeleccion() {
+		return "لون التحديد";
+	}
+
+	@Override
+	public String colorFondoDocumento() {
+		return "لون خلفية المستند";
+	}
+
 }

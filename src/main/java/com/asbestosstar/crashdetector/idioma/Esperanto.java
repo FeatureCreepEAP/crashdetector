@@ -8221,4 +8221,78 @@ public class Esperanto implements Idioma {
 		return "Suspekta pako:";
 	}
 
+	@Override
+	public String docsTituloVentana() {
+		return "Legilo de dokumentoj";
+	}
+
+	@Override
+	public String docsAyudaDeUso() {
+		return "<b>Kiel uzi ĉi tiun legilon</b><br>"
+				+ "Elektu lingvon malsupre por vidi la disponeblan dokumentaron en tiu lingvo.<br>"
+				+ "En la maldekstra panelo vi povas navigi tra dosierujoj kaj dokumentoj.<br>"
+				+ "Alklakante dokumenton, ĝia enhavo aperos dekstre.<br>"
+				+ "Internaj ligiloj kun protokolo <b>docs://</b> malfermas aliajn dokumentojn ene de ĉi tiu sama legilo.";
+	}
+
+	@Override
+	public String docsArbolTitulo() {
+		return "Dokumentoj";
+	}
+
+	@Override
+	public String docsVisorTitulo() {
+		return "Enhavo";
+	}
+
+	@Override
+	public String docsNoHayDocumentos() {
+		return "Ne estas dokumentoj por ĉi tiu lingvo.";
+	}
+
+	@Override
+	public String docsNoHayMarkdown() {
+		return "Ne troviĝis Markdown-dosieroj en ĉi tiu lingvo.";
+	}
+
+	@Override
+	public String docsDocumentoNoEncontrado() {
+		return "La petita dokumento ne troviĝis.";
+	}
+
+	@Override
+	public String docsErrorAlAbrirDocumento() {
+		return "Eraro dum malfermo de la dokumento:";
+	}
+
+	@Override
+	public String docsCargando() {
+		return "Ŝargante dokumentojn...";
+	}
+
+	@Override
+	public String docsImagenNoDisponible() {
+		return "Ilustraĵo ne disponebla";
+	}
+
+	@Override
+	public String colorPanelSecundario() {
+		return "Koloro de duaranga panelo";
+	}
+
+	@Override
+	public String colorTextoSuave() {
+		return "Koloro de milda teksto";
+	}
+
+	@Override
+	public String colorSeleccion() {
+		return "Koloro de selekto";
+	}
+
+	@Override
+	public String colorFondoDocumento() {
+		return "Koloro de fono de dokumento";
+	}
+
 }

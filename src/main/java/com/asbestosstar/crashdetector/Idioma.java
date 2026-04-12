@@ -3150,4 +3150,32 @@ public interface Idioma {
 
 	public String malware_info_stealer_detectado();
 
+	public String docsTituloVentana();
+
+	public String docsCargando();
+
+	public String docsAyudaDeUso();
+
+	public String docsNoHayDocumentos();
+
+	public String docsNoHayMarkdown();
+
+	public String docsDocumentoNoEncontrado();
+
+	public String docsErrorAlAbrirDocumento();
+
+	public String docsImagenNoDisponible();
+
+	public String colorPanelSecundario();
+
+	public String colorTextoSuave();
+
+	public String colorSeleccion();
+
+	public String colorFondoDocumento();
+
+	public String docsArbolTitulo();
+
+	public String docsVisorTitulo();
+
 }

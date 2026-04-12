@@ -73,7 +73,7 @@ public class Theseus implements Verificaciones {
 	@Override
 	public Documento docs() {
 		// TODO Auto-generated method stub
-		return Documento.NINGUN;
+		return Documento.builder().doc("en", "minecraft/Launchers.md").build();
 	}
 
 	@Override

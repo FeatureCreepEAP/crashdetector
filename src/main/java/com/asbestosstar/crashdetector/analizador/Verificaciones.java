@@ -124,6 +124,21 @@ public interface Verificaciones {
 
 		String colorenlace = Config.obtenerInstancia().obtenerColorEnlace();
 
+		// Enlace a documentación
+		if (this.docs() != null && this.docs() != Documento.NINGUN) {
+			String enlaceDocs = this.docs().enlace();
+
+			if (enlaceDocs != null && !enlaceDocs.isEmpty()) {
+				String enlaceHtmlDocs = "<a href=\"" + enlaceDocs + "\" style=\"color:" + colorenlace + ";\">Docs</a>";
+
+				if (!constructor.toString().endsWith(nl_html) && !constructor.toString().endsWith(nl)) {
+					constructor.append(nl_html);
+				}
+
+				constructor.append(enlaceHtmlDocs);
+			}
+		}
+
 		if (this.solucion() != null && this.solucion() != QuickFix.NINGUN) {
 			String enlaceHtml = "<a href=\"" + this.solucion().obtenerEnlace() + "\" style=\"color:" + colorenlace
 					+ ";\">QuickFix</a>";

@@ -8257,4 +8257,78 @@ public class Portuges implements Idioma {
 		return "Pacote suspeito:";
 	}
 
+	@Override
+	public String docsTituloVentana() {
+		return "Leitor de documentos";
+	}
+
+	@Override
+	public String docsAyudaDeUso() {
+		return "<b>Como usar este leitor</b><br>"
+				+ "Selecione um idioma na parte inferior para ver a documentação disponível nesse idioma.<br>"
+				+ "No painel esquerdo, você pode navegar por pastas e documentos.<br>"
+				+ "Ao clicar em um documento, seu conteúdo aparecerá à direita.<br>"
+				+ "Links internos com o protocolo <b>docs://</b> abrem outros documentos dentro deste mesmo leitor.";
+	}
+
+	@Override
+	public String docsArbolTitulo() {
+		return "Documentos";
+	}
+
+	@Override
+	public String docsVisorTitulo() {
+		return "Conteúdo";
+	}
+
+	@Override
+	public String docsNoHayDocumentos() {
+		return "Não há documentos para este idioma.";
+	}
+
+	@Override
+	public String docsNoHayMarkdown() {
+		return "Nenhum arquivo Markdown encontrado neste idioma.";
+	}
+
+	@Override
+	public String docsDocumentoNoEncontrado() {
+		return "O documento solicitado não foi encontrado.";
+	}
+
+	@Override
+	public String docsErrorAlAbrirDocumento() {
+		return "Erro ao abrir o documento:";
+	}
+
+	@Override
+	public String docsCargando() {
+		return "Carregando documentos...";
+	}
+
+	@Override
+	public String docsImagenNoDisponible() {
+		return "Ilustração não disponível";
+	}
+
+	@Override
+	public String colorPanelSecundario() {
+		return "Cor do painel secundário";
+	}
+
+	@Override
+	public String colorTextoSuave() {
+		return "Cor do texto suave";
+	}
+
+	@Override
+	public String colorSeleccion() {
+		return "Cor da seleção";
+	}
+
+	@Override
+	public String colorFondoDocumento() {
+		return "Cor de fundo do documento";
+	}
+
 }

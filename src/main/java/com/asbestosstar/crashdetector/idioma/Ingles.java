@@ -8273,4 +8273,78 @@ public class Ingles implements Idioma {
 		return "Suspicious package:";
 	}
 
+	@Override
+	public String docsTituloVentana() {
+		return "Document Reader";
+	}
+
+	@Override
+	public String docsAyudaDeUso() {
+		return "<b>How to use this reader</b><br>"
+				+ "Select a language at the bottom to view the documentation available in that language.<br>"
+				+ "In the left panel, you can navigate through folders and documents.<br>"
+				+ "Clicking on a document will display its content on the right.<br>"
+				+ "Internal links with the <b>docs://</b> protocol open other documents within this same reader.";
+	}
+
+	@Override
+	public String docsArbolTitulo() {
+		return "Documents";
+	}
+
+	@Override
+	public String docsVisorTitulo() {
+		return "Content";
+	}
+
+	@Override
+	public String docsNoHayDocumentos() {
+		return "There are no documents for this language.";
+	}
+
+	@Override
+	public String docsNoHayMarkdown() {
+		return "No Markdown files found for this language.";
+	}
+
+	@Override
+	public String docsDocumentoNoEncontrado() {
+		return "The requested document was not found.";
+	}
+
+	@Override
+	public String docsErrorAlAbrirDocumento() {
+		return "Error opening document:";
+	}
+
+	@Override
+	public String docsCargando() {
+		return "Loading documents...";
+	}
+
+	@Override
+	public String docsImagenNoDisponible() {
+		return "Illustration not available";
+	}
+
+	@Override
+	public String colorPanelSecundario() {
+		return "Secondary panel colour";
+	}
+
+	@Override
+	public String colorTextoSuave() {
+		return "Soft text colour";
+	}
+
+	@Override
+	public String colorSeleccion() {
+		return "Selection colour";
+	}
+
+	@Override
+	public String colorFondoDocumento() {
+		return "Document background colour";
+	}
+
 }

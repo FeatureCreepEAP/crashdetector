@@ -7742,4 +7742,75 @@ public class Chino implements Idioma {
 		return "可疑包：";
 	}
 
+	@Override
+	public String docsTituloVentana() {
+		return "文档阅读器";
+	}
+
+	@Override
+	public String docsAyudaDeUso() {
+		return "<b>如何使用此阅读器</b><br>" + "在底部选择一种语言以查看该语言的可用文档。<br>" + "在左侧面板中，您可以浏览文件夹和文档。<br>" + "点击文档后，其内容将显示在右侧。<br>"
+				+ "使用 <b>docs://</b> 协议的内部链接将在本阅读器中打开其他文档。";
+	}
+
+	@Override
+	public String docsArbolTitulo() {
+		return "文档";
+	}
+
+	@Override
+	public String docsVisorTitulo() {
+		return "内容";
+	}
+
+	@Override
+	public String docsNoHayDocumentos() {
+		return "此语言没有文档。";
+	}
+
+	@Override
+	public String docsNoHayMarkdown() {
+		return "在此语言中未找到 Markdown 文件。";
+	}
+
+	@Override
+	public String docsDocumentoNoEncontrado() {
+		return "未找到请求的文档。";
+	}
+
+	@Override
+	public String docsErrorAlAbrirDocumento() {
+		return "打开文档时出错：";
+	}
+
+	@Override
+	public String docsCargando() {
+		return "正在加载文档...";
+	}
+
+	@Override
+	public String docsImagenNoDisponible() {
+		return "插图不可用";
+	}
+
+	@Override
+	public String colorPanelSecundario() {
+		return "次要面板颜色";
+	}
+
+	@Override
+	public String colorTextoSuave() {
+		return "柔和文本颜色";
+	}
+
+	@Override
+	public String colorSeleccion() {
+		return "选中颜色";
+	}
+
+	@Override
+	public String colorFondoDocumento() {
+		return "文档背景颜色";
+	}
+
 }

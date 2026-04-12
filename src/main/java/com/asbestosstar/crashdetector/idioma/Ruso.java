@@ -8253,4 +8253,78 @@ public class Ruso implements Idioma {
 		return "Подозрительный пакет:";
 	}
 
+	@Override
+	public String docsTituloVentana() {
+		return "Просмотр документов";
+	}
+
+	@Override
+	public String docsAyudaDeUso() {
+		return "<b>Как использовать эту программу просмотра</b><br>"
+				+ "Выберите язык внизу, чтобы увидеть документацию, доступную на этом языке.<br>"
+				+ "На левой панели вы можете перемещаться по папкам и документам.<br>"
+				+ "При нажатии на документ его содержимое появится справа.<br>"
+				+ "Внутренние ссылки с протоколом <b>docs://</b> открывают другие документы в этой же программе просмотра.";
+	}
+
+	@Override
+	public String docsArbolTitulo() {
+		return "Документы";
+	}
+
+	@Override
+	public String docsVisorTitulo() {
+		return "Содержимое";
+	}
+
+	@Override
+	public String docsNoHayDocumentos() {
+		return "Нет документов для этого языка.";
+	}
+
+	@Override
+	public String docsNoHayMarkdown() {
+		return "Файлы Markdown на этом языке не найдены.";
+	}
+
+	@Override
+	public String docsDocumentoNoEncontrado() {
+		return "Запрошенный документ не найден.";
+	}
+
+	@Override
+	public String docsErrorAlAbrirDocumento() {
+		return "Ошибка при открытии документа:";
+	}
+
+	@Override
+	public String docsCargando() {
+		return "Загрузка документов...";
+	}
+
+	@Override
+	public String docsImagenNoDisponible() {
+		return "Иллюстрация недоступна";
+	}
+
+	@Override
+	public String colorPanelSecundario() {
+		return "Цвет вторичной панели";
+	}
+
+	@Override
+	public String colorTextoSuave() {
+		return "Цвет мягкого текста";
+	}
+
+	@Override
+	public String colorSeleccion() {
+		return "Цвет выделения";
+	}
+
+	@Override
+	public String colorFondoDocumento() {
+		return "Цвет фона документа";
+	}
+
 }

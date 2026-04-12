@@ -7912,4 +7912,76 @@ public class Coreano implements Idioma {
 		return "의심스러운 패키지:";
 	}
 
+	@Override
+	public String docsTituloVentana() {
+		return "문서 열람기";
+	}
+
+	@Override
+	public String docsAyudaDeUso() {
+		return "<b>이 열람기 사용법</b><br>" + "하단에서 언어를 선택하여 해당 언어로 된 이용 가능한 문서를 보십시오.<br>"
+				+ "왼쪽 판넬에서 폴더와 문서를 탐색할 수 있습니다.<br>" + "문서를 클릭하면 내용이 오른쪽에 표시됩니다.<br>"
+				+ "<b>docs://</b> 프로토콜을 사용하는 내부 링크는 이 열람기 내에서 다른 문서를 엽니다.";
+	}
+
+	@Override
+	public String docsArbolTitulo() {
+		return "문서";
+	}
+
+	@Override
+	public String docsVisorTitulo() {
+		return "내용";
+	}
+
+	@Override
+	public String docsNoHayDocumentos() {
+		return "이 언어에 대한 문서가 없습니다.";
+	}
+
+	@Override
+	public String docsNoHayMarkdown() {
+		return "이 언어에서 Markdown 파일을 찾을 수 없습니다.";
+	}
+
+	@Override
+	public String docsDocumentoNoEncontrado() {
+		return "요청한 문서를 찾을 수 없습니다.";
+	}
+
+	@Override
+	public String docsErrorAlAbrirDocumento() {
+		return "문서를 여는 중 오류 발생:";
+	}
+
+	@Override
+	public String docsCargando() {
+		return "문서 로딩 중...";
+	}
+
+	@Override
+	public String docsImagenNoDisponible() {
+		return "삽화를 사용할 수 없음";
+	}
+
+	@Override
+	public String colorPanelSecundario() {
+		return "보조 판넬 색상";
+	}
+
+	@Override
+	public String colorTextoSuave() {
+		return "부드러운 텍스트 색상";
+	}
+
+	@Override
+	public String colorSeleccion() {
+		return "선택 색상";
+	}
+
+	@Override
+	public String colorFondoDocumento() {
+		return "문서 배경 색상";
+	}
+
 }
