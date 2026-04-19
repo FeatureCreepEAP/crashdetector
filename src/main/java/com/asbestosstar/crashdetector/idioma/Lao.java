@@ -7618,7 +7618,7 @@ public class Lao implements Idioma {
 		// Solución
 		String solucion = "<span style='color:#" + color + "'>" + "<b>ວິທີແກ້ໄຂທີ່ແນະນຳ:</b><br>"
 				+ "ຕິດຕັ້ງ mod <b>PotFix (Cataclysm Patch)</b> ເພື່ອແກ້ໄຂ ຜິດພາດ ນີ້.<br>"
-				+ "ທ່ານສາມາດດາວໂຫຼດໄດ້ທີ່ນີ້: <a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch  '>CurseForge - PotFix</a>"
+				+ "ທ່ານສາມາດດາວໂຫຼດໄດ້ທີ່ນີ້: <a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch'>CurseForge - PotFix</a>"
 				+ "</span>";
 
 		return mensajeBase + solucion;

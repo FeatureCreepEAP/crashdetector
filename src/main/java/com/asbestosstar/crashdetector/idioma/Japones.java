@@ -6866,7 +6866,7 @@ public class Japones implements Idioma {
 		// 解決策
 		String solucion = "<span style='color:#" + color + "'>" + "<b>推奨される解決策：</b><br>"
 				+ "このエラーを修正するには、<b>PotFix (Cataclysm Patch)</b> Mod をインストールしてください。<br>"
-				+ "ここからダウンロードできます：<a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch  '>CurseForge - PotFix</a>"
+				+ "ここからダウンロードできます：<a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch'>CurseForge - PotFix</a>"
 				+ "</span>";
 
 		return mensajeBase + solucion;

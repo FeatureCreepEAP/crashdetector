@@ -7381,7 +7381,7 @@ public class Tailandes implements Idioma {
 		// วิธีแก้ไข
 		String solucion = "<span style='color:#" + color + "'>" + "<b>วิธีแก้ไขที่แนะนำ:</b><br>"
 				+ "ติดตั้งม็อด <b>PotFix (Cataclysm Patch)</b> เพื่อแก้ไขข้อผิดพลาดนี้<br>"
-				+ "คุณสามารถดาวน์โหลดได้ที่นี่: <a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch  '>CurseForge - PotFix</a>"
+				+ "คุณสามารถดาวน์โหลดได้ที่นี่: <a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch'>CurseForge - PotFix</a>"
 				+ "</span>";
 
 		return mensajeBase + solucion;

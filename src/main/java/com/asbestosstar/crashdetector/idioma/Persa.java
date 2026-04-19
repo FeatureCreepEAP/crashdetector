@@ -7127,7 +7127,7 @@ public class Persa implements Idioma {
 		// راه‌حل
 		String solucion = "<span style='color:#" + color + "'>" + "<b>راه‌حل توصیه‌شده:</b><br>"
 				+ "مود <b>PotFix (Cataclysm Patch)</b> را نصب کنید تا این خطا برطرف شود.<br>"
-				+ "می‌توانید آن را از اینجا دانلود کنید: <a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch  '>CurseForge - PotFix</a>"
+				+ "می‌توانید آن را از اینجا دانلود کنید: <a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch'>CurseForge - PotFix</a>"
 				+ "</span>";
 
 		return mensajeBase + solucion;

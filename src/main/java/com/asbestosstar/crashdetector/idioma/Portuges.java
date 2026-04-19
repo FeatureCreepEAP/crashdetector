@@ -7173,7 +7173,7 @@ public class Portuges implements Idioma {
 		// Solução
 		String solucion = "<span style='color:#" + color + "'>" + "<b>Solução recomendada:</b><br>"
 				+ "Instale o mod <b>PotFix (Cataclysm Patch)</b> para corrigir este erro.<br>"
-				+ "Você pode baixá-lo aqui: <a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch  '>CurseForge - PotFix</a>"
+				+ "Você pode baixá-lo aqui: <a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch'>CurseForge - PotFix</a>"
 				+ "</span>";
 
 		return mensajeBase + solucion;

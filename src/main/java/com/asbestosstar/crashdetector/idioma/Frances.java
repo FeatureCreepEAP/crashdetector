@@ -7699,7 +7699,7 @@ public class Frances implements Idioma {
 		// Solución
 		String solucion = "<span style='color:#" + color + "'>" + "<b>Solution recommandée :</b><br>"
 				+ "Installez le mod <b>PotFix (Cataclysm Patch)</b> pour corriger cette erreur.<br>"
-				+ "Vous pouvez le télécharger ici : <a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch  '>CurseForge - PotFix</a>"
+				+ "Vous pouvez le télécharger ici : <a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch'>CurseForge - PotFix</a>"
 				+ "</span>";
 
 		return mensajeBase + solucion;

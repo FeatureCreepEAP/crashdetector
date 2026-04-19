@@ -7168,7 +7168,7 @@ public class Ruso implements Idioma {
 		// Решение
 		String solucion = "<span style='color:#" + color + "'>" + "<b>Рекомендуемое решение:</b><br>"
 				+ "Установите модификацию <b>PotFix (Cataclysm Patch)</b> для исправления этой ошибки.<br>"
-				+ "Вы можете скачать её здесь: <a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch  '>CurseForge - PotFix</a>"
+				+ "Вы можете скачать её здесь: <a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch'>CurseForge - PotFix</a>"
 				+ "</span>";
 
 		return mensajeBase + solucion;

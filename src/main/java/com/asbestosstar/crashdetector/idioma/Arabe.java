@@ -7067,7 +7067,7 @@ public class Arabe implements Idioma {
 		// الحل
 		String solucion = "<span style='color:#" + color + "'>" + "<b>الحل الموصى به:</b><br>"
 				+ "قم بتثبيت إضافة <b>PotFix (Cataclysm Patch)</b> لإصلاح هذا الخطأ.<br>"
-				+ "يمكنك تنزيله من هنا: <a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch  '>CurseForge - PotFix</a>"
+				+ "يمكنك تنزيله من هنا: <a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch'>CurseForge - PotFix</a>"
 				+ "</span>";
 
 		return mensajeBase + solucion;

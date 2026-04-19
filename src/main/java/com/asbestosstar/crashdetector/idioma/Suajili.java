@@ -7609,7 +7609,7 @@ public class Suajili implements Idioma {
 		// Solución
 		String solucion = "<span style='color:#" + color + "'>" + "<b>Suluhisho linalopendekezwa:</b><br>"
 				+ "Sakinisha mod <b>PotFix (Cataclysm Patch)</b> kurekebisha hitilafu hii.<br>"
-				+ "Unaweza kuipakua hapa: <a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch  '>CurseForge - PotFix</a>"
+				+ "Unaweza kuipakua hapa: <a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch'>CurseForge - PotFix</a>"
 				+ "</span>";
 
 		return mensajeBase + solucion;

@@ -6692,7 +6692,7 @@ public class Chino implements Idioma {
 		// 解决方案
 		String solucion = "<span style='color:#" + color + "'>" + "<b>推荐解决方案：</b><br>"
 				+ "安装模组 <b>PotFix (Cataclysm Patch)</b> 以修复此错误。<br>"
-				+ "您可以在此下载：<a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch  '>CurseForge - PotFix</a>"
+				+ "您可以在此下载：<a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch'>CurseForge - PotFix</a>"
 				+ "</span>";
 
 		return mensajeBase + solucion;

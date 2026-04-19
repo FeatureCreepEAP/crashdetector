@@ -7188,7 +7188,7 @@ public class Ingles implements Idioma {
 		// Solution
 		String solucion = "<span style='color:#" + color + "'>" + "<b>Recommended solution:</b><br>"
 				+ "Install the <b>PotFix (Cataclysm Patch)</b> mod to fix this error.<br>"
-				+ "You can download it here: <a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch  '>CurseForge - PotFix</a>"
+				+ "You can download it here: <a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch'>CurseForge - PotFix</a>"
 				+ "</span>";
 
 		return mensajeBase + solucion;

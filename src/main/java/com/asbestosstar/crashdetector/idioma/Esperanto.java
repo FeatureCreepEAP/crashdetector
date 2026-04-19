@@ -7139,7 +7139,7 @@ public class Esperanto implements Idioma {
 		// Solvo
 		String solucion = "<span style='color:#" + color + "'>" + "<b>Rekomendita solvo:</b><br>"
 				+ "Instalu la modon <b>PotFix (Cataclysm Patch)</b> por korekti ĉi tiun eraron.<br>"
-				+ "Vi povas elŝuti ĝin ĉi tie: <a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch  '>CurseForge - PotFix</a>"
+				+ "Vi povas elŝuti ĝin ĉi tie: <a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch'>CurseForge - PotFix</a>"
 				+ "</span>";
 
 		return mensajeBase + solucion;

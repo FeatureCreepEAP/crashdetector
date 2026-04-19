@@ -7288,7 +7288,7 @@ public class Indonesia implements Idioma {
 		// Solusi
 		String solucion = "<span style='color:#" + color + "'>" + "<b>Solusi yang direkomendasikan:</b><br>"
 				+ "Instal mod <b>PotFix (Cataclysm Patch)</b> untuk memperbaiki kesalahan ini.<br>"
-				+ "Anda dapat mengunduhnya di sini: <a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch  '>CurseForge - PotFix</a>"
+				+ "Anda dapat mengunduhnya di sini: <a href='https://www.curseforge.com/minecraft/mc-mods/potfix-cataclysm-patch'>CurseForge - PotFix</a>"
 				+ "</span>";
 
 		return mensajeBase + solucion;
