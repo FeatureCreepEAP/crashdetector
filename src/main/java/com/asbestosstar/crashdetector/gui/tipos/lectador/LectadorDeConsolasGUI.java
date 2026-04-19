@@ -50,12 +50,30 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 	// ====== Registro de GUIs por tipo ======
 	public static Map<String, java.util.function.Supplier<LectadorDeConsolasGUI>> GUIS = new java.util.HashMap<String, java.util.function.Supplier<LectadorDeConsolasGUI>>();
 
+	// ====== Caché y carga diferida ======
+
+	/** Índice/cargador lazy por archivo de consola */
+	protected final Map<String, CargadorDeLogDiferido> cacheCargadoresPorConsola = new ConcurrentHashMap<String, CargadorDeLogDiferido>();
+
+	/** Modelo lazy compartido por la lista */
+	protected ModeloListaDiferida modeloListaDiferida;
+
+	/**
+	 * Errores indexados por línea para evitar filtrar con streams en cada render
+	 */
+	protected final Map<Integer, ErrorDeLectador> erroresPorLinea = new ConcurrentHashMap<Integer, ErrorDeLectador>();
+
+	/** Última consola seleccionada */
+	protected Consola consolaActual;
+
 	// ====== Datos base ======
 	/** Lista de consolas disponible desde MonitorDePID */
 	protected final List<Consola> consolas = MonitorDePID.consolas;
 
-	/** Caché concurrente de líneas por archivo de consola */
-	protected final Map<String, List<String>> cacheLineasPorConsola = new ConcurrentHashMap<String, List<String>>();
+	/**
+	 * Vista lógica actual de líneas. Ya no contiene todo materializado por split().
+	 */
+	protected List<String> lineasActuales = java.util.Collections.emptyList();
 
 	/** Pool de hilos prudente */
 	protected final int CORES = Runtime.getRuntime().availableProcessors();
@@ -77,7 +95,6 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 	}
 
 	// ====== Estado/UI técnico ======
-	protected List<String> lineasActuales = java.util.Collections.emptyList();
 	protected final JList<String> listaRegistros = new JList<String>();
 
 	protected final JComboBox<String> cmbConsolas = new JComboBox<String>();
@@ -107,6 +124,15 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 	protected int indiceBusquedaActual = -1;
 	public final JComboBox<String> cmbModo = new JComboBox<String>(
 			new String[] { MonitorDePID.idioma.limpiado(), MonitorDePID.idioma.original() });
+
+	/** Botón para ir a la coincidencia anterior */
+	protected final javax.swing.JButton btnBuscarAnterior = new javax.swing.JButton("↑");
+
+	/** Botón para ir a la coincidencia siguiente */
+	protected final javax.swing.JButton btnBuscarSiguiente = new javax.swing.JButton("↓");
+
+	/** Panel contenedor del buscador con campo y flechas */
+	protected JPanel pnlBuscador;
 
 	// Descripción a la derecha (HTML)
 	public final JEditorPane txtDescripcionError = new JEditorPane(); // HTML
@@ -160,6 +186,10 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 		final JLayeredPane capa = (JLayeredPane) getContentPane();
 
 		configurarAreaRegistros();
+
+		modeloListaDiferida = new ModeloListaDiferida();
+		listaRegistros.setModel(modeloListaDiferida);
+
 		scrollLogs = new JScrollPane(listaRegistros);
 		scrollLogs.setRowHeaderView(new NumeradorDeLineas(listaRegistros));
 		capa.add(scrollLogs, JLayeredPane.PALETTE_LAYER);
@@ -177,8 +207,56 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 		capa.add(pnlSelector, JLayeredPane.PALETTE_LAYER);
 
 		inicializarBuscador(capa);
+		instalarEscuchaDeScrollParaCargaDiferida();
 
 		recolocarComponentes();
+	}
+
+	/**
+	 * Escucha el scroll para priorizar la zona visible.
+	 */
+	protected void instalarEscuchaDeScrollParaCargaDiferida() {
+		if (scrollLogs == null) {
+			return;
+		}
+
+		scrollLogs.getVerticalScrollBar().addAdjustmentListener(new java.awt.event.AdjustmentListener() {
+			@Override
+			public void adjustmentValueChanged(java.awt.event.AdjustmentEvent e) {
+				priorizarZonaVisibleActual();
+			}
+		});
+	}
+
+	/**
+	 * Calcula qué filas son visibles actualmente y pide su carga prioritaria.
+	 */
+	protected void priorizarZonaVisibleActual() {
+		if (listaRegistros == null || consolaActual == null) {
+			return;
+		}
+
+		CargadorDeLogDiferido cargador = obtenerCargadorDeConsolaActual();
+		if (cargador == null) {
+			return;
+		}
+
+		int indiceInicio = listaRegistros.getFirstVisibleIndex();
+		int indiceFin = listaRegistros.getLastVisibleIndex();
+
+		if (indiceInicio < 0 || indiceFin < 0) {
+			return;
+		}
+
+		cargador.cargarRangoVisible(indiceInicio, indiceFin);
+	}
+
+	protected CargadorDeLogDiferido obtenerCargadorDeConsolaActual() {
+		if (consolaActual == null) {
+			return null;
+		}
+		String nombreArchivo = new File(consolaActual.archivo.toString()).getName();
+		return cacheCargadoresPorConsola.get(nombreArchivo);
 	}
 
 	// ====== Colocación y redimensionado (técnico, relativa a 1280x720) ======
@@ -211,19 +289,27 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 	}
 
 	protected void recolocarBuscador() {
+		int x;
+		int y;
+		int w;
+		int h = 40;
+
 		if (pnlSelector != null) {
 			int margen = 8;
-			int x = pnlSelector.getX();
-			int y = pnlSelector.getY() + pnlSelector.getHeight() + margen;
-			int w = pnlSelector.getWidth();
-			int h = 40;
-			txtBuscar.setBounds(x, y, w, h);
+			x = pnlSelector.getX();
+			y = pnlSelector.getY() + pnlSelector.getHeight() + margen;
+			w = pnlSelector.getWidth();
 		} else {
-			int ancho = 200, alto = 40;
-			txtBuscar.setBounds(getWidth() - ancho - 30, 30, ancho, alto);
+			w = 260;
+			x = getWidth() - w - 30;
+			y = 30;
 		}
-		txtBuscar.revalidate();
-		txtBuscar.repaint();
+
+		if (pnlBuscador != null) {
+			pnlBuscador.setBounds(x, y, w, h);
+			pnlBuscador.revalidate();
+			pnlBuscador.repaint();
+		}
 	}
 
 	// ====== Construcción técnica de subpaneles ======
@@ -283,22 +369,18 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 				lbl.setForeground(colorTexto.obtener());
 				lbl.setBackground(colorFondo.obtener());
 
-				Consola consola = obtenerConsolaSeleccionada();
-				if (consola != null) {
-					List<ErrorDeLectador> errores = consola.errores_de_lectadores.stream()
-							.filter(err -> err.obtenerLinea() == index).collect(Collectors.<ErrorDeLectador>toList());
-
-					if (!errores.isEmpty()) {
-						lbl.setBackground(errores.get(0).obtenerColor());
-						lbl.setForeground(colorTextoNegro.obtener());
-					} else if (value != null && (value.contains("ERROR") || value.contains("EXCEPTION"))) {
-						lbl.setBackground(colorError.obtener());
-						lbl.setForeground(colorTextoNegro.obtener());
-					} else if (value != null && (value.contains("STACKTRACE") || value.contains("at "))) {
-						lbl.setBackground(colorPila.obtener());
-						lbl.setForeground(colorTextoNegro.obtener());
-					}
+				ErrorDeLectador err = erroresPorLinea.get(Integer.valueOf(index));
+				if (err != null) {
+					lbl.setBackground(err.obtenerColor());
+					lbl.setForeground(colorTextoNegro.obtener());
+				} else if (value != null && (value.contains("ERROR") || value.contains("EXCEPTION"))) {
+					lbl.setBackground(colorError.obtener());
+					lbl.setForeground(colorTextoNegro.obtener());
+				} else if (value != null && (value.contains("STACKTRACE") || value.contains("at "))) {
+					lbl.setBackground(colorPila.obtener());
+					lbl.setForeground(colorTextoNegro.obtener());
 				}
+
 				if (isSelected) {
 					lbl.setBackground(lbl.getBackground().darker());
 				}
@@ -316,6 +398,26 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 				}
 			}
 		});
+	}
+
+	/**
+	 * Indexa los errores por número de línea una sola vez por consola seleccionada.
+	 * 
+	 * Así evitamos hacer streams/filter/collect cada vez que Swing repinta una
+	 * fila.
+	 */
+	protected void reconstruirIndiceDeErrores(Consola consola) {
+		erroresPorLinea.clear();
+
+		if (consola == null || consola.errores_de_lectadores == null) {
+			return;
+		}
+
+		for (ErrorDeLectador err : consola.errores_de_lectadores) {
+			if (err != null) {
+				erroresPorLinea.put(Integer.valueOf(err.obtenerLinea()), err);
+			}
+		}
 	}
 
 	protected JPanel crearPanelInformacionErrores() {
@@ -369,13 +471,45 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 	}
 
 	protected void inicializarBuscador(JLayeredPane capa) {
-		txtBuscar.setVisible(false);
+		pnlBuscador = new JPanel(new java.awt.BorderLayout(4, 0));
+		pnlBuscador.setVisible(false);
+		pnlBuscador.setOpaque(true);
+		pnlBuscador.setBackground(colorFondo.obtener());
+		pnlBuscador.setBorder(BorderFactory.createTitledBorder("Buscar"));
+
 		txtBuscar.setBackground(colorFondo.obtener());
 		txtBuscar.setForeground(colorTexto.obtener());
-		txtBuscar.setBorder(BorderFactory.createTitledBorder("Buscar"));
-		capa.add(txtBuscar, JLayeredPane.DRAG_LAYER);
+		txtBuscar.setBorder(javax.swing.BorderFactory.createEmptyBorder(2, 4, 2, 4));
+
+		JPanel pnlBotones = new JPanel(new java.awt.GridLayout(1, 2, 2, 0));
+		pnlBotones.setOpaque(false);
+
+		btnBuscarAnterior.setFocusable(false);
+		btnBuscarSiguiente.setFocusable(false);
+
+		pnlBotones.add(btnBuscarAnterior);
+		pnlBotones.add(btnBuscarSiguiente);
+
+		pnlBuscador.add(txtBuscar, java.awt.BorderLayout.CENTER);
+		pnlBuscador.add(pnlBotones, java.awt.BorderLayout.EAST);
+
+		capa.add(pnlBuscador, JLayeredPane.DRAG_LAYER);
 
 		txtBuscar.addActionListener(new java.awt.event.ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				saltarSiguienteCoincidencia();
+			}
+		});
+
+		btnBuscarAnterior.addActionListener(new java.awt.event.ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				saltarCoincidenciaAnterior();
+			}
+		});
+
+		btnBuscarSiguiente.addActionListener(new java.awt.event.ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				saltarSiguienteCoincidencia();
@@ -390,104 +524,95 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 		getRootPane().getActionMap().put("abrirBuscador", new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				txtBuscar.setVisible(true);
-				txtBuscar.requestFocus();
+				pnlBuscador.setVisible(true);
 				recolocarBuscador();
+				txtBuscar.requestFocus();
+				txtBuscar.selectAll();
 			}
 		});
 	}
 
-	// ====== Técnicas: carga/actualización ======
+	/**
+	 * Va a la coincidencia anterior.
+	 */
+	protected void saltarCoincidenciaAnterior() {
+		String texto = txtBuscar.getText();
+		if (texto == null || texto.isEmpty()) {
+			return;
+		}
+
+		if (posicionesCoincidencias.isEmpty()) {
+			buscarTexto(texto);
+			return;
+		}
+
+		indiceBusquedaActual--;
+		if (indiceBusquedaActual < 0) {
+			indiceBusquedaActual = posicionesCoincidencias.size() - 1;
+		}
+
+		resaltarCoincidenciaActual();
+	}
+
 	protected void cargarConsolas() {
 		for (Consola consola : consolas) {
 			String nombreArchivo = new File(consola.archivo.toString()).getName();
 			cmbConsolas.addItem(nombreArchivo);
 		}
+
 		if (cmbConsolas.getItemCount() > 0) {
 			cmbConsolas.setSelectedIndex(0);
 			actualizarConsola();
 		}
 	}
 
-	protected void precargarLineasEnSegundoPlano() {
-		for (final Consola consola : consolas) {
-			final String nombreArchivo = new File(consola.archivo.toString()).getName();
-			if (cacheLineasPorConsola.containsKey(nombreArchivo))
-				continue;
-
-			pool.submit(new Runnable() {
-				@Override
-				public void run() {
-					try {
-						List<String> lineas = Arrays.asList(consola.contenido_verificar.split(Verificaciones.nl));
-						CrashDetectorLogger
-								.log(consola.archivo.toString() + " linea size " + String.valueOf(lineas.size()));
-						if (lineas.size() == 1) {
-							CrashDetectorLogger.log(String.valueOf(consola.contenido_verificar.length()));
-							CrashDetectorLogger.log(consola.archivo.toString() + " linea 1 " + lineas.get(0));
-						}
-						cacheLineasPorConsola.put(nombreArchivo, lineas);
-						SwingUtilities.invokeLater(new Runnable() {
-							@Override
-							public void run() {
-								if (nombreArchivo.equals(cmbConsolas.getSelectedItem())) {
-									refrescarModeloCon(cacheLineasPorConsola.get(nombreArchivo));
-								}
-							}
-						});
-					} catch (Throwable t) {
-						CrashDetectorLogger.logException(t);
-					}
-				}
-			});
-		}
-	}
-
 	protected void actualizarConsola() {
 		final Consola consola = obtenerConsolaSeleccionada();
-		if (consola == null)
+		if (consola == null) {
 			return;
+		}
+
+		consolaActual = consola;
+		reconstruirIndiceDeErrores(consola);
 
 		final String nombreArchivo = new File(consola.archivo.toString()).getName();
 
-		List<String> cache = cacheLineasPorConsola.get(nombreArchivo);
-		if (cache != null) {
-			refrescarModeloCon(cache);
-			return;
+		CargadorDeLogDiferido cargador = cacheCargadoresPorConsola.get(nombreArchivo);
+		if (cargador == null) {
+			cargador = new CargadorDeLogDiferido(consola.contenido_verificar, 500);
+			cacheCargadoresPorConsola.put(nombreArchivo, cargador);
 		}
 
-		// Mostrar mensaje de carga sin bloquear EDT
-		setLoadingModel("Cargando " + nombreArchivo + " ...");
+		refrescarModeloCon(cargador);
+
 		setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR));
 
-		pool.submit(new Runnable() {
+		// Priorizar apertura arriba del todo si es apertura normal
+		cargador.cargarZonaPrioritaria(0);
+
+		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				try {
-					List<String> lineas = Arrays.asList(consola.contenido_verificar.split(Verificaciones.nl));
-					cacheLineasPorConsola.put(nombreArchivo, lineas);
-					final List<String> lineasFinal = lineas;
+				setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
+				priorizarZonaVisibleActual();
+			}
+		});
+	}
 
-					SwingUtilities.invokeLater(new Runnable() {
-						@Override
-						public void run() {
-							if (nombreArchivo.equals(cmbConsolas.getSelectedItem())) {
-								refrescarModeloCon(lineasFinal);
-							}
-							setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
-						}
-					});
-				} catch (Throwable t) {
-					CrashDetectorLogger.logException(t);
-					SwingUtilities.invokeLater(new Runnable() {
-						@Override
-						public void run() {
-							setLoadingModel("Error al cargar " + nombreArchivo + ": " + t.getMessage());
-							setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
-						}
-					});
-				}
+	protected void setLoadingModel(final String mensaje) {
+		listaRegistros.setModel(new AbstractListModel<String>() {
 
+			private static final long serialVersionUID = 1L;
+			private final List<String> soloMensaje = java.util.Collections.singletonList(mensaje);
+
+			@Override
+			public int getSize() {
+				return soloMensaje.size();
+			}
+
+			@Override
+			public String getElementAt(int index) {
+				return soloMensaje.get(index);
 			}
 		});
 	}
@@ -504,81 +629,126 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 		return null;
 	}
 
-	protected void setLoadingModel(final String mensaje) {
-		final List<String> soloMensaje = java.util.Collections.singletonList(mensaje);
-		lineasActuales = soloMensaje;
-		listaRegistros.setModel(new AbstractListModel<String>() {
-			@Override
-			public int getSize() {
-				return soloMensaje.size();
-			}
+	protected void refrescarModeloCon(final CargadorDeLogDiferido cargador) {
+		if (modeloListaDiferida == null) {
+			modeloListaDiferida = new ModeloListaDiferida();
+			listaRegistros.setModel(modeloListaDiferida);
+		}
 
-			@Override
-			public String getElementAt(int index) {
-				return soloMensaje.get(index);
-			}
-		});
-	}
+		modeloListaDiferida.establecerCargador(cargador);
 
-	protected void refrescarModeloCon(final List<String> lineas) {
-		lineasActuales = (lineas == null) ? java.util.Collections.<String>emptyList() : lineas;
-		listaRegistros.setModel(new AbstractListModel<String>() {
-			@Override
-			public int getSize() {
-				return lineasActuales.size();
-			}
-
-			@Override
-			public String getElementAt(int index) {
-				return lineasActuales.get(index);
-			}
-		});
 		// Reiniciar estado de búsqueda al cambiar de consola
 		posicionesCoincidencias.clear();
 		indiceBusquedaActual = -1;
+
+		// Esta lista ya no representa todo el log en memoria como antes.
+		// Se deja vacía para evitar usos accidentales del flujo viejo.
+		lineasActuales = java.util.Collections.emptyList();
 	}
 
-	// ====== Búsqueda ======
 	protected void saltarSiguienteCoincidencia() {
 		String texto = txtBuscar.getText();
-		if (texto == null || texto.isEmpty())
+		if (texto == null || texto.isEmpty()) {
 			return;
+		}
 
 		if (posicionesCoincidencias.isEmpty()) {
 			buscarTexto(texto);
 			return;
 		}
-		indiceBusquedaActual = (indiceBusquedaActual + 1) % posicionesCoincidencias.size();
+
+		indiceBusquedaActual++;
+		if (indiceBusquedaActual >= posicionesCoincidencias.size()) {
+			indiceBusquedaActual = 0;
+		}
+
 		resaltarCoincidenciaActual();
 	}
 
-	protected void buscarTexto(String texto) {
+	protected void buscarTexto(final String texto) {
 		posicionesCoincidencias.clear();
 		indiceBusquedaActual = -1;
 
-		if (texto == null || texto.isEmpty())
+		if (texto == null || texto.isEmpty()) {
 			return;
+		}
 
-		String t = texto.toLowerCase();
-		for (int i = 0; i < lineasActuales.size(); i++) {
-			String linea = lineasActuales.get(i);
-			if (linea != null && linea.toLowerCase().contains(t)) {
-				posicionesCoincidencias.add(i);
+		final CargadorDeLogDiferido cargador = obtenerCargadorDeConsolaActual();
+		if (cargador == null) {
+			return;
+		}
+
+		final String textoBusqueda = texto.toLowerCase();
+
+		setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR));
+
+		pool.submit(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					final java.util.List<Integer> coincidenciasEncontradas = new java.util.ArrayList<Integer>();
+
+					for (int i = 0; i < cargador.totalLineas(); i++) {
+						String linea = cargador.obtenerLineaSincrona(i);
+						if (linea != null && linea.toLowerCase().contains(textoBusqueda)) {
+							coincidenciasEncontradas.add(Integer.valueOf(i));
+						}
+					}
+
+					SwingUtilities.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							posicionesCoincidencias.clear();
+							posicionesCoincidencias.addAll(coincidenciasEncontradas);
+
+							if (!posicionesCoincidencias.isEmpty()) {
+								indiceBusquedaActual = 0;
+								resaltarCoincidenciaActual();
+							} else {
+								indiceBusquedaActual = -1;
+							}
+
+							listaRegistros.repaint();
+							setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
+						}
+					});
+				} catch (Throwable t) {
+					CrashDetectorLogger.logException(t);
+					SwingUtilities.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
+						}
+					});
+				}
 			}
-		}
-		if (!posicionesCoincidencias.isEmpty()) {
-			indiceBusquedaActual = 0;
-			resaltarCoincidenciaActual();
-		}
-		listaRegistros.repaint();
+		});
 	}
 
 	protected void resaltarCoincidenciaActual() {
-		if (indiceBusquedaActual < 0 || indiceBusquedaActual >= posicionesCoincidencias.size())
+		if (indiceBusquedaActual < 0 || indiceBusquedaActual >= posicionesCoincidencias.size()) {
+			if (pnlBuscador != null) {
+				pnlBuscador.setBorder(BorderFactory.createTitledBorder("Buscar"));
+				pnlBuscador.repaint();
+			}
 			return;
-		int pos = posicionesCoincidencias.get(indiceBusquedaActual);
+		}
+
+		int pos = posicionesCoincidencias.get(indiceBusquedaActual).intValue();
+
+		CargadorDeLogDiferido cargador = obtenerCargadorDeConsolaActual();
+		if (cargador != null) {
+			cargador.cargarZonaPrioritaria(pos);
+		}
+
 		listaRegistros.setSelectedIndex(pos);
 		listaRegistros.ensureIndexIsVisible(pos);
+
+		if (pnlBuscador != null) {
+			String titulo = "Buscar (" + (indiceBusquedaActual + 1) + "/" + posicionesCoincidencias.size() + ")";
+			pnlBuscador.setBorder(BorderFactory.createTitledBorder(titulo));
+			pnlBuscador.repaint();
+		}
 	}
 
 	// ====== Render/Descripción de error ======
@@ -624,12 +794,12 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 				.filter(err -> err.obtenerLinea() == numeroLinea).collect(Collectors.<ErrorDeLectador>toList());
 
 		if (!erroresEnLinea.isEmpty()) {
-			// Izquierda: nombres separados por salto de línea
 			StringBuilder nombres = new StringBuilder();
 
 			for (ErrorDeLectador err : erroresEnLinea) {
-				if (nombres.length() > 0)
+				if (nombres.length() > 0) {
 					nombres.append("\n");
+				}
 				nombres.append(err.verificacion.nombre());
 
 				String tituloPlano = htmlAPlano(err.verificacion.nombre());
@@ -640,24 +810,48 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 				detallePlano.append(mensajePlano).append("\n");
 				detallePlano.append("--------------------------------------------------").append("\n");
 			}
+
 			txtNombreError.setText(nombres.toString());
 			descripcionHtml(detallePlano.toString());
 		} else {
-			if (numeroLinea >= 0 && numeroLinea < lineasActuales.size()) {
-				String textoLinea = lineasActuales.get(numeroLinea);
-				if (textoLinea != null && (textoLinea.contains("ERROR") || textoLinea.contains("EXCEPTION"))) {
-					txtNombreError.setText(MonitorDePID.idioma.obtenerNombreErrorPorDefecto());
-					String porDefectoPlano = htmlAPlano(MonitorDePID.idioma.obtenerDescripcionErrorPorDefecto());
-					descripcionHtml(porDefectoPlano);
-				} else {
-					txtNombreError.setText("");
-					descripcionHtml("");
-				}
+			CargadorDeLogDiferido cargador = obtenerCargadorDeConsolaActual();
+			String textoLinea = "";
+
+			if (cargador != null && numeroLinea >= 0 && numeroLinea < cargador.totalLineas()) {
+				textoLinea = cargador.obtenerLineaSincrona(numeroLinea);
+			}
+
+			if (textoLinea != null && (textoLinea.contains("ERROR") || textoLinea.contains("EXCEPTION"))) {
+				txtNombreError.setText(MonitorDePID.idioma.obtenerNombreErrorPorDefecto());
+				String porDefectoPlano = htmlAPlano(MonitorDePID.idioma.obtenerDescripcionErrorPorDefecto());
+				descripcionHtml(porDefectoPlano);
 			} else {
 				txtNombreError.setText("");
 				descripcionHtml("");
 			}
 		}
+	}
+
+	/**
+	 * Salta directamente a una línea y prioriza su carga antes que el resto.
+	 */
+	protected void saltarDirectamenteALinea(final int numeroLinea) {
+		final CargadorDeLogDiferido cargador = obtenerCargadorDeConsolaActual();
+		if (cargador == null) {
+			return;
+		}
+
+		cargador.cargarZonaPrioritaria(numeroLinea);
+
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				int destino = Math.max(0, Math.min(numeroLinea, Math.max(0, cargador.totalLineas() - 1)));
+				listaRegistros.setSelectedIndex(destino);
+				listaRegistros.ensureIndexIsVisible(destino);
+				listaRegistros.requestFocus();
+			}
+		});
 	}
 
 	// ====== CrashDetectorGUI ======
@@ -679,7 +873,7 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 		configurarVentanaBase();
 		inicializarComponentesBase();
 		cargarConsolas();
-		precargarLineasEnSegundoPlano();
+		// precargarLineasEnSegundoPlano();
 		setVisible(true);
 	}
 
@@ -707,4 +901,289 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 			return numero_de_linea;
 		}
 	}
+
+	/**
+	 * Cargador diferido de logs gigantes.
+	 * 
+	 * No hace split() completo del texto. En su lugar: 1) Construye un índice de
+	 * offsets de línea. 2) Carga bloques/chunks bajo demanda. 3) Permite priorizar
+	 * una línea o una zona visible.
+	 */
+	protected class CargadorDeLogDiferido {
+
+		private final String contenido;
+		private final int tamanoChunk;
+		private final java.util.List<Integer> offsetsDeLinea = new java.util.ArrayList<Integer>();
+		private final Map<Integer, java.util.List<String>> cacheChunks = new ConcurrentHashMap<Integer, java.util.List<String>>();
+		private final java.util.Set<Integer> chunksEnCarga = java.util.Collections
+				.newSetFromMap(new ConcurrentHashMap<Integer, Boolean>());
+
+		public CargadorDeLogDiferido(String contenido, int tamanoChunk) {
+			this.contenido = (contenido == null ? "" : contenido);
+			this.tamanoChunk = Math.max(100, tamanoChunk);
+			construirIndiceDeLineas();
+		}
+
+		/**
+		 * Recorre el texto una sola vez y guarda el offset inicial de cada línea.
+		 * 
+		 * Esto es mucho más barato que hacer split() de todo el log porque no crea
+		 * miles o millones de Strings de inmediato.
+		 */
+		private void construirIndiceDeLineas() {
+			offsetsDeLinea.clear();
+			offsetsDeLinea.add(Integer.valueOf(0));
+
+			for (int i = 0; i < contenido.length(); i++) {
+				char c = contenido.charAt(i);
+				if (c == '\n') {
+					if (i + 1 <= contenido.length()) {
+						offsetsDeLinea.add(Integer.valueOf(i + 1));
+					}
+				}
+			}
+		}
+
+		public int totalLineas() {
+			return offsetsDeLinea.size();
+		}
+
+		public int totalChunks() {
+			return (int) Math.ceil((double) totalLineas() / (double) tamanoChunk);
+		}
+
+		public int obtenerTamanoChunk() {
+			return tamanoChunk;
+		}
+
+		/**
+		 * Devuelve la línea pedida. Si el chunk todavía no está cargado, lanza su carga
+		 * asíncrona y devuelve un placeholder temporal.
+		 */
+		public String obtenerLinea(int indiceLinea) {
+			if (indiceLinea < 0 || indiceLinea >= totalLineas()) {
+				return "";
+			}
+
+			int chunk = indiceLinea / tamanoChunk;
+			java.util.List<String> lineasChunk = cacheChunks.get(Integer.valueOf(chunk));
+
+			if (lineasChunk == null) {
+				cargarChunkAsincrono(chunk, true);
+				return "Cargando...";
+			}
+
+			int indiceLocal = indiceLinea % tamanoChunk;
+			if (indiceLocal >= 0 && indiceLocal < lineasChunk.size()) {
+				return lineasChunk.get(indiceLocal);
+			}
+
+			return "";
+		}
+
+		/**
+		 * Devuelve la línea de forma síncrona, útil para búsquedas en segundo plano.
+		 */
+		public String obtenerLineaSincrona(int indiceLinea) {
+			if (indiceLinea < 0 || indiceLinea >= totalLineas()) {
+				return "";
+			}
+
+			int chunk = indiceLinea / tamanoChunk;
+			java.util.List<String> lineasChunk = cacheChunks.get(Integer.valueOf(chunk));
+
+			if (lineasChunk == null) {
+				lineasChunk = construirChunk(chunk);
+				cacheChunks.put(Integer.valueOf(chunk), lineasChunk);
+			}
+
+			int indiceLocal = indiceLinea % tamanoChunk;
+			if (indiceLocal >= 0 && indiceLocal < lineasChunk.size()) {
+				return lineasChunk.get(indiceLocal);
+			}
+
+			return "";
+		}
+
+		/**
+		 * Prioriza la línea pedida y sus vecinos inmediatos. Después rellena el resto
+		 * en segundo plano.
+		 */
+		public void cargarZonaPrioritaria(final int lineaPrioritaria) {
+			if (totalLineas() <= 0) {
+				return;
+			}
+
+			final int chunkCentral = Math.max(0, Math.min(totalChunks() - 1, lineaPrioritaria / tamanoChunk));
+
+			cargarChunkAsincrono(chunkCentral, true);
+			cargarChunkAsincrono(chunkCentral - 1, false);
+			cargarChunkAsincrono(chunkCentral + 1, false);
+
+			// Relleno gradual hacia afuera
+			pool.submit(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						for (int distancia = 2; distancia < totalChunks(); distancia++) {
+							int izq = chunkCentral - distancia;
+							int der = chunkCentral + distancia;
+
+							if (izq >= 0) {
+								cargarChunkAsincrono(izq, false);
+							}
+							if (der < totalChunks()) {
+								cargarChunkAsincrono(der, false);
+							}
+						}
+					} catch (Throwable t) {
+						CrashDetectorLogger.logException(t);
+					}
+				}
+			});
+		}
+
+		/**
+		 * Prioriza la zona visible de la lista.
+		 */
+		public void cargarRangoVisible(int lineaInicio, int lineaFin) {
+			if (lineaInicio < 0 || lineaFin < 0 || lineaInicio > lineaFin) {
+				return;
+			}
+
+			int chunkInicio = Math.max(0, lineaInicio / tamanoChunk);
+			int chunkFin = Math.min(totalChunks() - 1, lineaFin / tamanoChunk);
+
+			for (int chunk = chunkInicio; chunk <= chunkFin; chunk++) {
+				cargarChunkAsincrono(chunk, true);
+			}
+
+			// Vecinos de seguridad para evitar parpadeos al desplazar
+			cargarChunkAsincrono(chunkInicio - 1, false);
+			cargarChunkAsincrono(chunkFin + 1, false);
+		}
+
+		/**
+		 * Construye el chunk solo cuando hace falta.
+		 */
+		private java.util.List<String> construirChunk(int indiceChunk) {
+			if (indiceChunk < 0 || indiceChunk >= totalChunks()) {
+				return java.util.Collections.emptyList();
+			}
+
+			int lineaInicio = indiceChunk * tamanoChunk;
+			int lineaFin = Math.min(totalLineas(), lineaInicio + tamanoChunk);
+
+			java.util.List<String> resultado = new java.util.ArrayList<String>(lineaFin - lineaInicio);
+
+			for (int i = lineaInicio; i < lineaFin; i++) {
+				int inicio = offsetsDeLinea.get(i).intValue();
+				int fin;
+
+				if (i + 1 < offsetsDeLinea.size()) {
+					fin = offsetsDeLinea.get(i + 1).intValue();
+				} else {
+					fin = contenido.length();
+				}
+
+				// Recorte de salto de línea final para presentación limpia
+				while (fin > inicio) {
+					char c = contenido.charAt(fin - 1);
+					if (c == '\n' || c == '\r') {
+						fin--;
+					} else {
+						break;
+					}
+				}
+
+				resultado.add(contenido.substring(inicio, fin));
+			}
+
+			return resultado;
+		}
+
+		/**
+		 * Carga un chunk asíncronamente una sola vez.
+		 */
+		private void cargarChunkAsincrono(final int indiceChunk, final boolean refrescarUIAlFinal) {
+			if (indiceChunk < 0 || indiceChunk >= totalChunks()) {
+				return;
+			}
+			if (cacheChunks.containsKey(Integer.valueOf(indiceChunk))) {
+				return;
+			}
+			if (!chunksEnCarga.add(Integer.valueOf(indiceChunk))) {
+				return;
+			}
+
+			pool.submit(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						java.util.List<String> chunk = construirChunk(indiceChunk);
+						cacheChunks.put(Integer.valueOf(indiceChunk), chunk);
+
+						if (refrescarUIAlFinal) {
+							SwingUtilities.invokeLater(new Runnable() {
+								@Override
+								public void run() {
+									if (modeloListaDiferida != null) {
+										int inicio = indiceChunk * tamanoChunk;
+										int fin = Math.min(totalLineas() - 1, inicio + tamanoChunk - 1);
+										modeloListaDiferida.notificarCambioDeRango(inicio, fin);
+									}
+								}
+							});
+						}
+					} catch (Throwable t) {
+						CrashDetectorLogger.logException(t);
+					} finally {
+						chunksEnCarga.remove(Integer.valueOf(indiceChunk));
+					}
+				}
+			});
+		}
+	}
+
+	/**
+	 * Modelo lazy para JList.
+	 * 
+	 * No depende de que todo el log ya esté cargado en memoria como lista de
+	 * líneas. Va pidiendo solo lo que necesita pintar.
+	 */
+	protected class ModeloListaDiferida extends AbstractListModel<String> {
+
+		private static final long serialVersionUID = 1L;
+
+		private CargadorDeLogDiferido cargador;
+
+		public void establecerCargador(CargadorDeLogDiferido cargador) {
+			this.cargador = cargador;
+			fireContentsChanged(this, 0, Math.max(0, getSize() - 1));
+		}
+
+		@Override
+		public int getSize() {
+			return cargador == null ? 0 : cargador.totalLineas();
+		}
+
+		@Override
+		public String getElementAt(int index) {
+			if (cargador == null) {
+				return "";
+			}
+			return cargador.obtenerLinea(index);
+		}
+
+		public void notificarCambioDeRango(int inicio, int fin) {
+			if (inicio < 0) {
+				inicio = 0;
+			}
+			if (fin < inicio) {
+				fin = inicio;
+			}
+			fireContentsChanged(this, inicio, fin);
+		}
+	}
+
 }

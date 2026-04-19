@@ -182,34 +182,16 @@ public class LectadorDeConsolasHoloTalk extends LectadorDeConsolasGUI {
 			lector.cmbConsolas.setSelectedItem(nombreArchivo);
 
 			final Consola consolaFinal = consolaSeleccionada;
-			lector.pool.submit(new Runnable() {
+			SwingUtilities.invokeLater(new Runnable() {
 				@Override
 				public void run() {
-					java.util.List<String> lineas = lector.cacheLineasPorConsola.get(nombreArchivo);
-					if (lineas == null) {
-						lineas = java.util.Arrays.asList(consolaFinal.contenido_verificar.split(Verificaciones.nl));
-						lector.cacheLineasPorConsola.put(nombreArchivo, lineas);
+					try {
+						lector.actualizarConsola();
+						lector.saltarDirectamenteALinea(numeroLinea);
+						CrashDetectorLogger.log("línea seleccionada en JList: " + numeroLinea);
+					} catch (Exception ex) {
+						CrashDetectorLogger.logException(ex);
 					}
-
-					final java.util.List<String> lineasFinal = lineas;
-					final int salto = Math.max(0, Math.min(numeroLinea, lineasFinal.size() - 1));
-
-					SwingUtilities.invokeLater(new Runnable() {
-						@Override
-						public void run() {
-							lector.refrescarModeloCon(lineasFinal);
-							try {
-								if (salto >= 0 && salto < lector.lineasActuales.size()) {
-									lector.listaRegistros.setSelectedIndex(salto);
-									lector.listaRegistros.ensureIndexIsVisible(salto);
-									lector.listaRegistros.requestFocus();
-									CrashDetectorLogger.log("línea seleccionada en JList: " + salto);
-								}
-							} catch (Exception ex) {
-								CrashDetectorLogger.logException(ex);
-							}
-						}
-					});
 				}
 			});
 
