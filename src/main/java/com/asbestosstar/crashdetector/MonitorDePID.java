@@ -236,6 +236,22 @@ public class MonitorDePID {
 				Statics.carpeta.resolve("imagenes/bandera_corea.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/bandera_majnovschina.png",
 				Statics.carpeta.resolve("imagenes/bandera_majnovschina.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/bandera_vietnam.png",
+				Statics.carpeta.resolve("imagenes/bandera_vietnam.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/bandera_camboya.png",
+				Statics.carpeta.resolve("imagenes/bandera_camboya.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/bandera_tailandia.png",
+				Statics.carpeta.resolve("imagenes/bandera_tailandia.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/bandera_indonesia.png",
+				Statics.carpeta.resolve("imagenes/bandera_indonesia.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/bandera_malasia.png",
+				Statics.carpeta.resolve("imagenes/bandera_malasia.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/bandera_burkina_faso.png",
+				Statics.carpeta.resolve("imagenes/bandera_burkina_faso.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/bandera_suajili.png",
+				Statics.carpeta.resolve("imagenes/bandera_suajili.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/bandera_laos.png",
+				Statics.carpeta.resolve("imagenes/bandera_laos.png").toFile());
 
 		copiarACarpetaDesdeJar("/imagenes/mod.png", Statics.carpeta.resolve("imagenes/mod.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/clase.png", Statics.carpeta.resolve("imagenes/clase.png").toFile());
@@ -287,6 +303,7 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/luotianyi.png", Statics.carpeta.resolve("imagenes/luotianyi.png").toFile());
 
 //docs		
+
 		copiarACarpetaDesdeJar("/docs/ingles/minecraft/Launchers.md",
 				Statics.carpeta.resolve("docs/ingles/minecraft/Launchers.md").toFile());
 

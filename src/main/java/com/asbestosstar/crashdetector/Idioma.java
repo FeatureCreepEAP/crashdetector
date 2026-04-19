@@ -12,20 +12,26 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import javax.swing.Icon;
-
 import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.idioma.Arabe;
 import com.asbestosstar.crashdetector.idioma.Chino;
 import com.asbestosstar.crashdetector.idioma.Coreano;
 import com.asbestosstar.crashdetector.idioma.Espanol;
 import com.asbestosstar.crashdetector.idioma.Esperanto;
+import com.asbestosstar.crashdetector.idioma.Frances;
+import com.asbestosstar.crashdetector.idioma.Indonesia;
 import com.asbestosstar.crashdetector.idioma.Ingles;
 import com.asbestosstar.crashdetector.idioma.Japones;
+import com.asbestosstar.crashdetector.idioma.Khmer;
+import com.asbestosstar.crashdetector.idioma.Lao;
+import com.asbestosstar.crashdetector.idioma.Malayo;
 import com.asbestosstar.crashdetector.idioma.Persa;
 import com.asbestosstar.crashdetector.idioma.Portuges;
 import com.asbestosstar.crashdetector.idioma.Ruso;
+import com.asbestosstar.crashdetector.idioma.Suajili;
+import com.asbestosstar.crashdetector.idioma.Tailandes;
 import com.asbestosstar.crashdetector.idioma.Ucraniano;
+import com.asbestosstar.crashdetector.idioma.Vietnamita;
 
 public interface Idioma {
 	Config config = Config.obtenerInstancia();
@@ -66,6 +72,15 @@ public interface Idioma {
 		registrarIdioma(new Japones());
 		registrarIdioma(new Coreano());
 		registrarIdioma(new Ucraniano());
+		registrarIdioma(new Vietnamita());
+		registrarIdioma(new Indonesia());
+		registrarIdioma(new Malayo());
+		registrarIdioma(new Khmer());
+		registrarIdioma(new Tailandes());
+		registrarIdioma(new Lao());
+		registrarIdioma(new Frances());
+		registrarIdioma(new Suajili());
+
 	}
 
 	/**
