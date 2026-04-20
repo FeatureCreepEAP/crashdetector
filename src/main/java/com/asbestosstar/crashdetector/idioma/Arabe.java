@@ -8262,55 +8262,47 @@ public class Arabe implements Idioma {
 		return "الصورة غير متاحة";
 	}
 
-	
 	@Override
 	public String mensajeOculusIrisUnknownShaderVariable() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "تم اكتشاف خطأ محتمل في الظلال (Shaders) مع Oculus أو Iris.</b>"
-	            + "<p>يحتوي سجل الأخطاء (Log) على كل من <b>kroppeb.stareval.resolver.ExpressionResolver.resolveExpressionInternal</b> "
-	            + "و <b>java.lang.RuntimeException: Unknown variable:</b>.</p>"
-	            + "<p>غالبًا ما يشير هذا المزيج إلى مشكلة في تقييم متغير داخل ظل (Shader)، "
-	            + "والتي ترتبط عادةً بـ <b>Oculus</b>، أو <b>Iris</b>، أو حزمة الظلال (<b>shader pack</b>) المستخدمة.</p>"
-	            + "<p><b>ترتيب الخطوات الموصى بها للاختبار:</b></p>"
-	            + "<ul>"
-	            + "<li>أولاً، ابدأ اللعبة <b>دون تفعيل الظلال (Shaders)</b>.</li>"
-	            + "<li>إذا استمرت المشكلة، جرب البدء <b>دون Oculus أو Iris</b>.</li>"
-	            + "<li>قم بتحديث <b>Oculus/Iris</b>، وحزمة الظلال (<b>shader pack</b>)، وأي إضافات (mods) رسومية ذات صلة.</li>"
-	            + "<li>إذا كنت تستخدم إضافات أخرى للعرض أو الرسومات، تحقق من وجود تعارضات بينها.</li>"
-	            + "</ul>"
-	            + "<p>عمليًا، ينشأ هذا الخطأ عادةً من <b>حزمة الظلال</b> أو من تفاعلها مع <b>Oculus/Iris</b>.</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تم اكتشاف خطأ محتمل في الظلال (Shaders) مع Oculus أو Iris.</b>"
+				+ "<p>يحتوي سجل الأخطاء (Log) على كل من <b>kroppeb.stareval.resolver.ExpressionResolver.resolveExpressionInternal</b> "
+				+ "و <b>java.lang.RuntimeException: Unknown variable:</b>.</p>"
+				+ "<p>غالبًا ما يشير هذا المزيج إلى مشكلة في تقييم متغير داخل ظل (Shader)، "
+				+ "والتي ترتبط عادةً بـ <b>Oculus</b>، أو <b>Iris</b>، أو حزمة الظلال (<b>shader pack</b>) المستخدمة.</p>"
+				+ "<p><b>ترتيب الخطوات الموصى بها للاختبار:</b></p>" + "<ul>"
+				+ "<li>أولاً، ابدأ اللعبة <b>دون تفعيل الظلال (Shaders)</b>.</li>"
+				+ "<li>إذا استمرت المشكلة، جرب البدء <b>دون Oculus أو Iris</b>.</li>"
+				+ "<li>قم بتحديث <b>Oculus/Iris</b>، وحزمة الظلال (<b>shader pack</b>)، وأي إضافات (mods) رسومية ذات صلة.</li>"
+				+ "<li>إذا كنت تستخدم إضافات أخرى للعرض أو الرسومات، تحقق من وجود تعارضات بينها.</li>" + "</ul>"
+				+ "<p>عمليًا، ينشأ هذا الخطأ عادةً من <b>حزمة الظلال</b> أو من تفاعلها مع <b>Oculus/Iris</b>.</p>";
 	}
 
 	@Override
 	public String nombreOculusIrisUnknownShaderVariable() {
-	    return "خطأ محتمل في الظلال مع Oculus/Iris";
+		return "خطأ محتمل في الظلال مع Oculus/Iris";
 	}
-	
+
 	@Override
 	public String mensajeItemNoExiste(String itemFaltante, String namespace) {
 		String itemHtml = itemFaltante == null || itemFaltante.isEmpty() ? "(غير معروف)" : itemFaltante;
 		String namespaceHtml = namespace == null || namespace.isEmpty() ? "(غير معروف)" : namespace;
 
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-				+ "تمت محاولة استخدام عنصر غير موجود.</b>"
-				+ "<p>يحتوي السجل على السطر <b>Item: " + itemHtml + " does not exist</b>.</p>"
+				+ "تمت محاولة استخدام عنصر غير موجود.</b>" + "<p>يحتوي السجل على السطر <b>Item: " + itemHtml
+				+ " does not exist</b>.</p>"
 				+ "<p>هذا يعني عادةً أن بعض <b>حزم البيانات (datapacks)</b>، أو <b>الإضافات (mods)</b>، أو <b>الإعدادات</b> "
-				+ "تشير إلى عنصر غير موجود في اللعبة.</p>"
-				+ "<p><b>ما يجب التحقق منه:</b></p>"
-				+ "<ul>"
-				+ "<li>تحقق مما إذا كنت قد قمت بتثبيت الإضافة التي من المفترض أن توفر العنصر <b>" + itemHtml + "</b>.</li>"
+				+ "تشير إلى عنصر غير موجود في اللعبة.</p>" + "<p><b>ما يجب التحقق منه:</b></p>" + "<ul>"
+				+ "<li>تحقق مما إذا كنت قد قمت بتثبيت الإضافة التي من المفترض أن توفر العنصر <b>" + itemHtml
+				+ "</b>.</li>"
 				+ "<li>إذا كانت مثبتة، فقد يكون ذلك بسبب <b>نسخة غير صحيحة</b>، أو أن العنصر قد تم تغييره أو حذفه، "
 				+ "أو أن هناك مشكلة في الإضافة وينبغي إزالتها.</li>"
-				+ "<li>إذا لم تكن لديك هذه الإضافة، حاول <b>تثبيتها</b>.</li>"
-				+ "</ul>"
-				+ "<p><b>لمعرفة أي إضافة أو حزمة بيانات تطلب هذا العنصر:</b></p>"
-				+ "<ul>"
-				+ "<li>استخدم أداة <b>grepr</b> في الشريط الجانبي.</li>"
-				+ "<li><b>لا</b> تحدد مجلدًا.</li>"
+				+ "<li>إذا لم تكن لديك هذه الإضافة، حاول <b>تثبيتها</b>.</li>" + "</ul>"
+				+ "<p><b>لمعرفة أي إضافة أو حزمة بيانات تطلب هذا العنصر:</b></p>" + "<ul>"
+				+ "<li>استخدم أداة <b>grepr</b> في الشريط الجانبي.</li>" + "<li><b>لا</b> تحدد مجلدًا.</li>"
 				+ "<li>فعّل خيار <b>search in archives</b>.</li>"
-				+ "<li>في نص البحث، اكتب <b>namespace</b>، أي الجزء قبل النقطتين: "
-				+ "<b>" + namespaceHtml + "</b>.</li>"
-				+ "</ul>"
+				+ "<li>في نص البحث، اكتب <b>namespace</b>، أي الجزء قبل النقطتين: " + "<b>" + namespaceHtml
+				+ "</b>.</li>" + "</ul>"
 				+ "<p>عادةً ما يساعد ذلك في العثور على الملف أو الإضافة أو حزمة البيانات التي تقوم بالإشارة غير الصالحة.</p>";
 	}
 
@@ -8318,10 +8310,7 @@ public class Arabe implements Idioma {
 	public String nombreItemNoExiste() {
 		return "تمت الإشارة إلى عنصر غير موجود";
 	}
-	
-	
-	
-	
+
 	@Override
 	public String mensajeCobblemonPinkanIslandsRhyhornModelo() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
@@ -8329,12 +8318,10 @@ public class Arabe implements Idioma {
 				+ "<p>يحتوي السجل على السطر <b>Unable to load model cobblemon:rhyhorn_male.geo for cobblemon:rhyhorn</b>.</p>"
 				+ "<p>على الرغم من أن النموذج يستخدم نطاق أسماء (namespace) <b>Cobblemon</b>، إلا أن هذا السطر عادةً ما يكون ناتجًا عن الإضافة "
 				+ "<b>Cobblemon: Pinkan Islands</b>، والتي ينتمي إليها هذا الـ <b>Rhyhorn</b>.</p>"
-				+ "<p><b>ما يجب تجربته:</b></p>"
-				+ "<ul>"
+				+ "<p><b>ما يجب تجربته:</b></p>" + "<ul>"
 				+ "<li>قم بإزالة أو تعطيل <b>Cobblemon: Pinkan Islands</b> وحاول مرة أخرى.</li>"
 				+ "<li>قم بتحديث <b>Cobblemon</b> و <b>Cobblemon: Pinkan Islands</b> إلى إصدارات متوافقة مع بعضها البعض.</li>"
-				+ "<li>إذا بدأت المشكلة بعد تحديث إحدى هذه الإضافات، جرب مجموعة مختلفة من الإصدارات.</li>"
-				+ "</ul>"
+				+ "<li>إذا بدأت المشكلة بعد تحديث إحدى هذه الإضافات، جرب مجموعة مختلفة من الإصدارات.</li>" + "</ul>"
 				+ "<p>يشير هذا الخطأ عادةً إلى وجود نموذج مفقود، أو غير مسجل بشكل صحيح، أو غير متوافق داخل "
 				+ "<b>Cobblemon: Pinkan Islands</b>.</p>";
 	}
@@ -8343,24 +8330,20 @@ public class Arabe implements Idioma {
 	public String nombreCobblemonPinkanIslandsRhyhornModelo() {
 		return "خطأ في نموذج Rhyhorn في Cobblemon: Pinkan Islands";
 	}
-	
+
 	@Override
 	public String mensajeColdSweatInitDynamicTags() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-				+ "تم اكتشاف خطأ في Cold Sweat.</b>"
-				+ "<p>يحتوي السجل على مؤشرات مثل <b>$cold_sweat$onBuildStart</b>، "
+				+ "تم اكتشاف خطأ في Cold Sweat.</b>" + "<p>يحتوي السجل على مؤشرات مثل <b>$cold_sweat$onBuildStart</b>، "
 				+ "<b>InitDynamicTagsEvent.fillTag</b> و <b>NullPointerException</b> حيث "
 				+ "يظهر السجل كقيمة خالية (null).</p>"
 				+ "<p>يشير هذا عادةً إلى مشكلة في <b>Cold Sweat</b> أثناء بناء أو ملء "
 				+ "<b>العلامات الديناميكية (dynamic tags)</b>، وغالبًا ما يكون بسبب عدم توافق، أو خطأ داخلي في الإضافة، "
-				+ "أو تركيبة متضاربة مع إضافة أخرى أو حزمة بيانات (datapack).</p>"
-				+ "<p><b>ما يجب تجربته:</b></p>"
-				+ "<ul>"
-				+ "<li>قم بإزالة أو تعطيل <b>Cold Sweat</b> وحاول مرة أخرى.</li>"
+				+ "أو تركيبة متضاربة مع إضافة أخرى أو حزمة بيانات (datapack).</p>" + "<p><b>ما يجب تجربته:</b></p>"
+				+ "<ul>" + "<li>قم بإزالة أو تعطيل <b>Cold Sweat</b> وحاول مرة أخرى.</li>"
 				+ "<li>قم بتحديث <b>Cold Sweat</b> إلى إصدار متوافق مع إصدار Minecraft وأداة التحميل (loader) الخاصة بك.</li>"
 				+ "<li>إذا كنت تستخدم حزم بيانات أو إضافات تعدل <b>العلامات (tags)</b>، <b>المناطق الحيوية (biomes)</b>، <b>درجات الحرارة</b> أو السجلات ذات الصلة، قم بمراجعتها أيضًا.</li>"
-				+ "<li>إذا بدأ الخطأ بعد تحديث الإضافات، جرب مجموعة مختلفة من الإصدارات.</li>"
-				+ "</ul>"
+				+ "<li>إذا بدأ الخطأ بعد تحديث الإضافات، جرب مجموعة مختلفة من الإصدارات.</li>" + "</ul>"
 				+ "<p>في هذه الحالة، <b>Cold Sweat</b> متورط مباشرة في العطل.</p>";
 	}
 
@@ -8368,14 +8351,5 @@ public class Arabe implements Idioma {
 	public String nombreColdSweatInitDynamicTags() {
 		return "خطأ في Cold Sweat فيما يتعلق بالعلامات الديناميكية";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

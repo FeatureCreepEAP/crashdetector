@@ -8340,55 +8340,47 @@ public class Esperanto implements Idioma {
 		return "Bildo ne disponebla";
 	}
 
-	
 	@Override
 	public String mensajeOculusIrisUnknownShaderVariable() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "Ebla eraro de ombroprogrametoj (shaders) kun Oculus aŭ Iris detektita.</b>"
-	            + "<p>La protokolo enhavas kaj <b>kroppeb.stareval.resolver.ExpressionResolver.resolveExpressionInternal</b> "
-	            + "kaj <b>java.lang.RuntimeException: Unknown variable:</b>.</p>"
-	            + "<p>Ĉi tiu kombinaĵo kutime indikas problemon dum taksado de variablo ene de ombroprogrameto，"
-	            + "ofte rilata al <b>Oculus</b>, <b>Iris</b>, aŭ la <b>ombroprogrameta pako</b> uzata.</p>"
-	            + "<p><b>Rekomendita ordo de testado：</b></p>"
-	            + "<ul>"
-	            + "<li>Unue，lanĉu la ludon <b>sen aktivigitaj ombroprogrametoj</b>.</li>"
-	            + "<li>Se la problemo daŭras，provu lanĉi <b>sen Oculus aŭ Iris</b>.</li>"
-	            + "<li>Ĝisdatigu <b>Oculus/Iris</b>, la <b>ombroprogrametan pakon</b> kaj la rilatajn grafikajn modojn.</li>"
-	            + "<li>Se vi uzas aliajn rendorigajn aŭ grafikajn modojn，kontrolu nekompatibilecojn inter ili.</li>"
-	            + "</ul>"
-	            + "<p>En praktiko，ĉi tiu paneo kutime venas de la <b>ombroprogrameta pako</b> aŭ de ĝia interagado kun <b>Oculus/Iris</b>.</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Ebla eraro de ombroprogrametoj (shaders) kun Oculus aŭ Iris detektita.</b>"
+				+ "<p>La protokolo enhavas kaj <b>kroppeb.stareval.resolver.ExpressionResolver.resolveExpressionInternal</b> "
+				+ "kaj <b>java.lang.RuntimeException: Unknown variable:</b>.</p>"
+				+ "<p>Ĉi tiu kombinaĵo kutime indikas problemon dum taksado de variablo ene de ombroprogrameto，"
+				+ "ofte rilata al <b>Oculus</b>, <b>Iris</b>, aŭ la <b>ombroprogrameta pako</b> uzata.</p>"
+				+ "<p><b>Rekomendita ordo de testado：</b></p>" + "<ul>"
+				+ "<li>Unue，lanĉu la ludon <b>sen aktivigitaj ombroprogrametoj</b>.</li>"
+				+ "<li>Se la problemo daŭras，provu lanĉi <b>sen Oculus aŭ Iris</b>.</li>"
+				+ "<li>Ĝisdatigu <b>Oculus/Iris</b>, la <b>ombroprogrametan pakon</b> kaj la rilatajn grafikajn modojn.</li>"
+				+ "<li>Se vi uzas aliajn rendorigajn aŭ grafikajn modojn，kontrolu nekompatibilecojn inter ili.</li>"
+				+ "</ul>"
+				+ "<p>En praktiko，ĉi tiu paneo kutime venas de la <b>ombroprogrameta pako</b> aŭ de ĝia interagado kun <b>Oculus/Iris</b>.</p>";
 	}
 
 	@Override
 	public String nombreOculusIrisUnknownShaderVariable() {
-	    return "Ebla eraro de ombroprogrametoj kun Oculus/Iris";
+		return "Ebla eraro de ombroprogrametoj kun Oculus/Iris";
 	}
-	
+
 	@Override
 	public String mensajeItemNoExiste(String itemFaltante, String namespace) {
 		String itemHtml = itemFaltante == null || itemFaltante.isEmpty() ? "(nekonata)" : itemFaltante;
 		String namespaceHtml = namespace == null || namespace.isEmpty() ? "(nekonata)" : namespace;
 
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-				+ "Oni provis uzi eron, kiu ne ekzistas.</b>"
-				+ "<p>La protokolo enhavas la linion <b>Item: " + itemHtml + " does not exist</b>.</p>"
+				+ "Oni provis uzi eron, kiu ne ekzistas.</b>" + "<p>La protokolo enhavas la linion <b>Item: " + itemHtml
+				+ " does not exist</b>.</p>"
 				+ "<p>Ĝenerale, ĉi tio signifas, ke iu <b>datapack</b>, <b>mod</b> aŭ <b>agordo</b> "
-				+ "referencas al ero, kiu ne ĉeestas en la ludo.</p>"
-				+ "<p><b>Kion kontroli：</b></p>"
-				+ "<ul>"
+				+ "referencas al ero, kiu ne ĉeestas en la ludo.</p>" + "<p><b>Kion kontroli：</b></p>" + "<ul>"
 				+ "<li>Kontrolu, ĉu vi instalitis la mod-on, kiu devus provizi la eron <b>" + itemHtml + "</b>.</li>"
 				+ "<li>Se jes, eble temas pri <b>malĝusta versio</b>, la ero estis ŝanĝita aŭ forigita, "
 				+ "aŭ la mod-o havas problemon kaj estus bone forigi ĝin.</li>"
-				+ "<li>Se vi ne havas tiun mod-on, provu <b>instali ĝin</b>.</li>"
-				+ "</ul>"
-				+ "<p><b>Por scii, kiu mod-o aŭ datapack petas tiun eron：</b></p>"
-				+ "<ul>"
-				+ "<li>Uzu la utilaĵon <b>grepr</b> en la flanka breto.</li>"
-				+ "<li><b>Ne</b> elektu dosierujon.</li>"
+				+ "<li>Se vi ne havas tiun mod-on, provu <b>instali ĝin</b>.</li>" + "</ul>"
+				+ "<p><b>Por scii, kiu mod-o aŭ datapack petas tiun eron：</b></p>" + "<ul>"
+				+ "<li>Uzu la utilaĵon <b>grepr</b> en la flanka breto.</li>" + "<li><b>Ne</b> elektu dosierujon.</li>"
 				+ "<li>Aktivigu la opcion <b>search in archives</b>.</li>"
-				+ "<li>En la serĉteksto, tajpu la <b>namespace</b>, tio estas, la parton antaŭ la dupunktoj： "
-				+ "<b>" + namespaceHtml + "</b>.</li>"
-				+ "</ul>"
+				+ "<li>En la serĉteksto, tajpu la <b>namespace</b>, tio estas, la parton antaŭ la dupunktoj： " + "<b>"
+				+ namespaceHtml + "</b>.</li>" + "</ul>"
 				+ "<p>Tio kutime helpas trovi, kiu dosiero, mod-o aŭ datapack faras la nevalidan referencon.</p>";
 	}
 
@@ -8396,7 +8388,7 @@ public class Esperanto implements Idioma {
 	public String nombreItemNoExiste() {
 		return "Referencita neekzistanta ero";
 	}
-	
+
 	@Override
 	public String mensajeCobblemonPinkanIslandsRhyhornModelo() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
@@ -8404,13 +8396,11 @@ public class Esperanto implements Idioma {
 				+ "<p>La protokolo enhavas la linion <b>Unable to load model cobblemon:rhyhorn_male.geo for cobblemon:rhyhorn</b>.</p>"
 				+ "<p>Kvankam la modelo uzas la nomspacon de <b>Cobblemon</b>, ĉi tiu linio kutime estas kaŭzita de la mod-o "
 				+ "<b>Cobblemon: Pinkan Islands</b>, el kie devenas tiu <b>Rhyhorn</b>.</p>"
-				+ "<p><b>Kion provi：</b></p>"
-				+ "<ul>"
+				+ "<p><b>Kion provi：</b></p>" + "<ul>"
 				+ "<li>Forigu aŭ malaktivigu <b>Cobblemon: Pinkan Islands</b> kaj provu denove.</li>"
 				+ "<li>Ĝisdatigu <b>Cobblemon</b> kaj <b>Cobblemon: Pinkan Islands</b> al versioj kongruaj inter si.</li>"
 				+ "<li>Se la problemo komenciĝis post ĝisdatigo de unu el tiuj mod-oj, provu malsaman kombinaĵon de versioj.</li>"
-				+ "</ul>"
-				+ "<p>Ĉi tiu paneo kutime indikas mankan, malbone registritan aŭ nekongruan modelon ene de "
+				+ "</ul>" + "<p>Ĉi tiu paneo kutime indikas mankan, malbone registritan aŭ nekongruan modelon ene de "
 				+ "<b>Cobblemon: Pinkan Islands</b>.</p>";
 	}
 
@@ -8418,7 +8408,7 @@ public class Esperanto implements Idioma {
 	public String nombreCobblemonPinkanIslandsRhyhornModelo() {
 		return "Eraro de modelo de Rhyhorn en Cobblemon: Pinkan Islands";
 	}
-	
+
 	@Override
 	public String mensajeColdSweatInitDynamicTags() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
@@ -8428,38 +8418,17 @@ public class Esperanto implements Idioma {
 				+ "la registro aperas kiel nula.</p>"
 				+ "<p>Ĝenerale, ĉi tio indikas problemon de <b>Cold Sweat</b> dum konstruado aŭ plenigo de "
 				+ "<b>dinamikaj etikedoj (dynamic tags)</b>, kutime pro nekongrueco, interna eraro de la mod-o "
-				+ "aŭ konflikta kombinaĵo kun alia mod-o aŭ datapack.</p>"
-				+ "<p><b>Kion provi：</b></p>"
-				+ "<ul>"
+				+ "aŭ konflikta kombinaĵo kun alia mod-o aŭ datapack.</p>" + "<p><b>Kion provi：</b></p>" + "<ul>"
 				+ "<li>Forigu aŭ malaktivigu <b>Cold Sweat</b> kaj provu denove.</li>"
 				+ "<li>Ĝisdatigu <b>Cold Sweat</b> al versio kongrua kun via versio de Minecraft kaj via ŝargilo (loader).</li>"
 				+ "<li>Se vi uzas datapack-ojn aŭ mod-ojn kiuj ŝanĝas <b>etikedojn (tags)</b>, <b>biomojn</b>, <b>temperaturojn</b> aŭ rilatajn registrojn, kontrolu ilin ankaŭ.</li>"
 				+ "<li>Se la eraro komenciĝis post ĝisdatigo de mod-oj, provu malsaman kombinaĵon de versioj.</li>"
-				+ "</ul>"
-				+ "<p>En ĉi tiu okazo, <b>Cold Sweat</b> estas rekte implikita en la paneo.</p>";
+				+ "</ul>" + "<p>En ĉi tiu okazo, <b>Cold Sweat</b> estas rekte implikita en la paneo.</p>";
 	}
 
 	@Override
 	public String nombreColdSweatInitDynamicTags() {
 		return "Eraro de Cold Sweat en dinamikaj etikedoj";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

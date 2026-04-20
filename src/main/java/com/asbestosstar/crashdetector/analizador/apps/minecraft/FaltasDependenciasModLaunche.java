@@ -1001,9 +1001,7 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 
 			// Construir cada elemento completo de una sola vez para evitar
 			// que el HTML quede partido o mal anidado.
-			String itemHtml = "<li>" + error
-					+ (enlace.isEmpty() ? "" : " " + enlace)
-					+ "</li>";
+			String itemHtml = "<li>" + error + (enlace.isEmpty() ? "" : " " + enlace) + "</li>";
 
 			html.append(itemHtml);
 		}

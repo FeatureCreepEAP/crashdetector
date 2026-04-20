@@ -22,6 +22,14 @@ public class LectadorDeConsolasHoloTalk extends LectadorDeConsolasGUI {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Última ventana activa del lectador HoloTalk.
+	 * 
+	 * Se reutiliza para evitar abrir una ventana nueva y reconstruir toda la UI
+	 * cada vez que se pulsa un enlace lectador://.
+	 */
+	public static volatile LectadorDeConsolasHoloTalk instanciaActiva;
+
 	public LectadorDeConsolasHoloTalk() {
 
 		super();
@@ -112,11 +120,12 @@ public class LectadorDeConsolasHoloTalk extends LectadorDeConsolasGUI {
 
 	@Override
 	public void init() {
-		// Inicializar todos los colores primero
-
 		// Luego inicializar la interfaz
 		super.init();
 		aplicarApariencia();
+
+		// Registrar esta instancia como la activa para poder reutilizarla
+		instanciaActiva = this;
 	}
 
 	@Override
@@ -147,6 +156,7 @@ public class LectadorDeConsolasHoloTalk extends LectadorDeConsolasGUI {
 		try {
 			String sinPrefijo = url.substring("lectador://".length());
 			CrashDetectorLogger.log("sin prefijo " + sinPrefijo);
+
 			int idx = sinPrefijo.lastIndexOf(":");
 			if (idx == -1) {
 				CrashDetectorLogger.logException(new IllegalArgumentException("URL de lectador inválida: " + url));
@@ -174,21 +184,51 @@ public class LectadorDeConsolasHoloTalk extends LectadorDeConsolasGUI {
 
 			CrashDetectorLogger.log("seleccionada " + consolaSeleccionada.archivo.toString());
 
-			final LectadorDeConsolasHoloTalk lector = new LectadorDeConsolasHoloTalk();
-			lector.init();
-			lector.setVisible(true);
+			final LectadorDeConsolasHoloTalk lector;
+			final boolean nuevaInstancia;
+
+			if (instanciaActiva != null && instanciaActiva.isDisplayable()) {
+				lector = instanciaActiva;
+				nuevaInstancia = false;
+			} else {
+				lector = new LectadorDeConsolasHoloTalk();
+				nuevaInstancia = true;
+			}
 
 			final String nombreArchivo = new File(consolaSeleccionada.archivo.toString()).getName();
-			lector.cmbConsolas.setSelectedItem(nombreArchivo);
+			final int destino = numeroLinea;
 
-			final Consola consolaFinal = consolaSeleccionada;
+			// Registrar el destino antes de cualquier carga de consola.
+			lector.lineaDestinoPendiente = Integer.valueOf(destino);
+
+			if (nuevaInstancia) {
+				lector.init();
+				lector.setVisible(true);
+				instanciaActiva = lector;
+			}
+
 			SwingUtilities.invokeLater(new Runnable() {
 				@Override
 				public void run() {
 					try {
-						lector.actualizarConsola();
-						lector.saltarDirectamenteALinea(numeroLinea);
-						CrashDetectorLogger.log("línea seleccionada en JList: " + numeroLinea);
+						lector.setVisible(true);
+						lector.toFront();
+						lector.requestFocus();
+
+						Object seleccionActual = lector.cmbConsolas.getSelectedItem();
+
+						// Si la consola es distinta, cambiarla y dejar que actualizarConsola()
+						// use lineaDestinoPendiente para abrir directamente en la zona correcta.
+						if (seleccionActual == null || !nombreArchivo.equals(seleccionActual.toString())) {
+							lector.cmbConsolas.setSelectedItem(nombreArchivo);
+							lector.actualizarConsola();
+							return;
+						}
+
+						// Si ya estamos en esa consola, saltar directamente.
+						lector.saltarDirectamenteALinea(destino);
+
+						CrashDetectorLogger.log("línea seleccionada en JList: " + destino);
 					} catch (Exception ex) {
 						CrashDetectorLogger.logException(ex);
 					}
@@ -199,4 +239,5 @@ public class LectadorDeConsolasHoloTalk extends LectadorDeConsolasGUI {
 			CrashDetectorLogger.logException(ex);
 		}
 	}
+
 }

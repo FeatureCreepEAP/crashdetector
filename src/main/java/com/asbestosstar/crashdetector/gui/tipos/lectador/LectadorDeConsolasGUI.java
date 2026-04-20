@@ -138,6 +138,15 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 	public final JEditorPane txtDescripcionError = new JEditorPane(); // HTML
 	public JScrollPane scrollDescripcion;
 
+	/**
+	 * Línea destino pendiente para aperturas directas desde enlaces lectador://.
+	 * 
+	 * Si es null, la apertura normal empieza en la parte superior del log. Si tiene
+	 * valor, la carga inicial prioriza esa zona y evita el salto visual desde la
+	 * línea 0.
+	 */
+	protected Integer lineaDestinoPendiente = null;
+
 	// ====== Constructor ======
 	public LectadorDeConsolasGUI() {
 		super();
@@ -555,6 +564,8 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 	}
 
 	protected void cargarConsolas() {
+		cmbConsolas.removeAllItems();
+
 		for (Consola consola : consolas) {
 			String nombreArchivo = new File(consola.archivo.toString()).getName();
 			cmbConsolas.addItem(nombreArchivo);
@@ -562,7 +573,6 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 
 		if (cmbConsolas.getItemCount() > 0) {
 			cmbConsolas.setSelectedIndex(0);
-			actualizarConsola();
 		}
 	}
 
@@ -587,7 +597,46 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 
 		setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR));
 
-		// Priorizar apertura arriba del todo si es apertura normal
+		// Si hay una línea destino pendiente, priorizar esa zona desde el principio.
+		final Integer destinoPendiente = lineaDestinoPendiente;
+
+		if (destinoPendiente != null) {
+			final int destino = Math.max(0,
+					Math.min(destinoPendiente.intValue(), Math.max(0, cargador.totalLineas() - 1)));
+
+			// Asegurar de inmediato el chunk destino para que la lista pueda mostrarlo
+			// cuanto antes.
+			cargador.asegurarChunkDeLineaSincrono(destino);
+
+			// Priorizar la zona real del salto, no la parte superior.
+			cargador.cargarZonaPrioritaria(destino);
+
+			if (modeloListaDiferida != null) {
+				int tamanoChunk = cargador.obtenerTamanoChunk();
+				int indiceChunk = destino / tamanoChunk;
+				int inicio = indiceChunk * tamanoChunk;
+				int fin = Math.min(cargador.totalLineas() - 1, inicio + tamanoChunk - 1);
+				modeloListaDiferida.notificarCambioDeRango(inicio, fin);
+			}
+
+			SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR));
+					listaRegistros.setSelectedIndex(destino);
+					listaRegistros.ensureIndexIsVisible(destino);
+					listaRegistros.requestFocus();
+					priorizarZonaVisibleActual();
+				}
+			});
+
+			// Consumir la petición para que futuras aperturas normales vuelvan a arrancar
+			// arriba.
+			lineaDestinoPendiente = null;
+			return;
+		}
+
+		// Apertura normal: empezar arriba del todo
 		cargador.cargarZonaPrioritaria(0);
 
 		SwingUtilities.invokeLater(new Runnable() {
@@ -790,50 +839,74 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 
 		StringBuilder detallePlano = new StringBuilder();
 
-		List<ErrorDeLectador> erroresEnLinea = consola.errores_de_lectadores.stream()
-				.filter(err -> err.obtenerLinea() == numeroLinea).collect(Collectors.<ErrorDeLectador>toList());
+		// Usar primero el índice por línea, que es O(1)
+		ErrorDeLectador errorPrincipal = erroresPorLinea.get(Integer.valueOf(numeroLinea));
 
-		if (!erroresEnLinea.isEmpty()) {
+		if (errorPrincipal != null) {
 			StringBuilder nombres = new StringBuilder();
 
-			for (ErrorDeLectador err : erroresEnLinea) {
-				if (nombres.length() > 0) {
-					nombres.append("\n");
+			// Mostrar el error indexado directamente
+			nombres.append(errorPrincipal.verificacion.nombre());
+
+			String tituloPlano = htmlAPlano(errorPrincipal.verificacion.nombre());
+			String mensaje = errorPrincipal.verificacion.mensaje();
+			String mensajePlano = htmlAPlano(mensaje);
+
+			detallePlano.append(tituloPlano).append("\n");
+			detallePlano.append(mensajePlano).append("\n");
+			detallePlano.append("--------------------------------------------------").append("\n");
+
+			// Si existieran múltiples errores en la misma línea, hacer una comprobación
+			// secundaria solo cuando ya sabemos que sí hay al menos uno.
+			if (consola != null && consola.errores_de_lectadores != null) {
+				for (ErrorDeLectador err : consola.errores_de_lectadores) {
+					if (err == null || err == errorPrincipal) {
+						continue;
+					}
+
+					if (err.obtenerLinea() == numeroLinea) {
+						nombres.append("\n").append(err.verificacion.nombre());
+
+						String tituloPlanoExtra = htmlAPlano(err.verificacion.nombre());
+						String mensajePlanoExtra = htmlAPlano(err.verificacion.mensaje());
+
+						detallePlano.append(tituloPlanoExtra).append("\n");
+						detallePlano.append(mensajePlanoExtra).append("\n");
+						detallePlano.append("--------------------------------------------------").append("\n");
+					}
 				}
-				nombres.append(err.verificacion.nombre());
-
-				String tituloPlano = htmlAPlano(err.verificacion.nombre());
-				String mensaje = err.verificacion.mensaje();
-				String mensajePlano = htmlAPlano(mensaje);
-
-				detallePlano.append(tituloPlano).append("\n");
-				detallePlano.append(mensajePlano).append("\n");
-				detallePlano.append("--------------------------------------------------").append("\n");
 			}
 
 			txtNombreError.setText(nombres.toString());
 			descripcionHtml(detallePlano.toString());
+			return;
+		}
+
+		// Si no hay error indexado, revisar el contenido de la línea para el mensaje
+		// genérico.
+		CargadorDeLogDiferido cargador = obtenerCargadorDeConsolaActual();
+		String textoLinea = "";
+
+		if (cargador != null && numeroLinea >= 0 && numeroLinea < cargador.totalLineas()) {
+			textoLinea = cargador.obtenerLineaSincrona(numeroLinea);
+		}
+
+		if (textoLinea != null && (textoLinea.contains("ERROR") || textoLinea.contains("EXCEPTION"))) {
+			txtNombreError.setText(MonitorDePID.idioma.obtenerNombreErrorPorDefecto());
+			String porDefectoPlano = htmlAPlano(MonitorDePID.idioma.obtenerDescripcionErrorPorDefecto());
+			descripcionHtml(porDefectoPlano);
 		} else {
-			CargadorDeLogDiferido cargador = obtenerCargadorDeConsolaActual();
-			String textoLinea = "";
-
-			if (cargador != null && numeroLinea >= 0 && numeroLinea < cargador.totalLineas()) {
-				textoLinea = cargador.obtenerLineaSincrona(numeroLinea);
-			}
-
-			if (textoLinea != null && (textoLinea.contains("ERROR") || textoLinea.contains("EXCEPTION"))) {
-				txtNombreError.setText(MonitorDePID.idioma.obtenerNombreErrorPorDefecto());
-				String porDefectoPlano = htmlAPlano(MonitorDePID.idioma.obtenerDescripcionErrorPorDefecto());
-				descripcionHtml(porDefectoPlano);
-			} else {
-				txtNombreError.setText("");
-				descripcionHtml("");
-			}
+			txtNombreError.setText("");
+			descripcionHtml("");
 		}
 	}
 
 	/**
 	 * Salta directamente a una línea y prioriza su carga antes que el resto.
+	 */
+	/**
+	 * Salta directamente a una línea y garantiza que el chunk destino ya esté
+	 * disponible antes de intentar seleccionarlo en la lista.
 	 */
 	protected void saltarDirectamenteALinea(final int numeroLinea) {
 		final CargadorDeLogDiferido cargador = obtenerCargadorDeConsolaActual();
@@ -841,12 +914,26 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 			return;
 		}
 
-		cargador.cargarZonaPrioritaria(numeroLinea);
+		final int destino = Math.max(0, Math.min(numeroLinea, Math.max(0, cargador.totalLineas() - 1)));
+
+		// Asegurar inmediatamente el chunk del destino para que el salto se sienta
+		// instantáneo.
+		cargador.asegurarChunkDeLineaSincrono(destino);
+
+		// Luego seguir con la estrategia normal de priorización alrededor del destino.
+		cargador.cargarZonaPrioritaria(destino);
+
+		if (modeloListaDiferida != null) {
+			int tamanoChunk = cargador.obtenerTamanoChunk();
+			int indiceChunk = destino / tamanoChunk;
+			int inicio = indiceChunk * tamanoChunk;
+			int fin = Math.min(cargador.totalLineas() - 1, inicio + tamanoChunk - 1);
+			modeloListaDiferida.notificarCambioDeRango(inicio, fin);
+		}
 
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				int destino = Math.max(0, Math.min(numeroLinea, Math.max(0, cargador.totalLineas() - 1)));
 				listaRegistros.setSelectedIndex(destino);
 				listaRegistros.ensureIndexIsVisible(destino);
 				listaRegistros.requestFocus();
@@ -873,8 +960,21 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 		configurarVentanaBase();
 		inicializarComponentesBase();
 		cargarConsolas();
-		// precargarLineasEnSegundoPlano();
+
+		// Mostrar la ventana primero para que Swing pueda pintarla enseguida.
 		setVisible(true);
+
+		// Cargar la consola después del primer pintado.
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					actualizarConsola();
+				} catch (Exception ex) {
+					CrashDetectorLogger.logException(ex);
+				}
+			}
+		});
 	}
 
 	public static class ErrorDeLectador {
@@ -1143,6 +1243,28 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 				}
 			});
 		}
+
+		/**
+		 * Asegura síncronamente que el chunk de una línea específica exista en caché.
+		 * 
+		 * Esto se usa en saltos directos para que la línea destino pueda mostrarse
+		 * inmediatamente, sin depender de que un hilo en segundo plano llegue primero.
+		 */
+		public void asegurarChunkDeLineaSincrono(int indiceLinea) {
+			if (indiceLinea < 0 || indiceLinea >= totalLineas()) {
+				return;
+			}
+
+			int chunk = indiceLinea / tamanoChunk;
+
+			if (cacheChunks.containsKey(Integer.valueOf(chunk))) {
+				return;
+			}
+
+			java.util.List<String> lineasChunk = construirChunk(chunk);
+			cacheChunks.put(Integer.valueOf(chunk), lineasChunk);
+		}
+
 	}
 
 	/**

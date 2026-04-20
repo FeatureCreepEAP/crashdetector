@@ -8,21 +8,25 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
- * Detecta errores donde un datapack, mod o configuración hace referencia
- * a un registro que no existe en el juego.
+ * Detecta errores donde un datapack, mod o configuración hace referencia a un
+ * registro que no existe en el juego.
  *
- * <p>Aunque el mensaje al usuario sigue hablando de "ítem" para mantener
- * la localización existente, esta verificación también acepta patrones como:
+ * <p>
+ * Aunque el mensaje al usuario sigue hablando de "ítem" para mantener la
+ * localización existente, esta verificación también acepta patrones como:
  *
  * <ul>
  * <li>java.lang.IllegalStateException: Item: namespace:cosa does not exist</li>
- * <li>java.lang.IllegalStateException: Block: namespace:cosa does not exist</li>
- * <li>java.lang.IllegalStateException: Fluid: namespace:cosa does not exist</li>
+ * <li>java.lang.IllegalStateException: Block: namespace:cosa does not
+ * exist</li>
+ * <li>java.lang.IllegalStateException: Fluid: namespace:cosa does not
+ * exist</li>
  * </ul>
  *
- * <p>Esto suele significar que en alguna parte se está pidiendo contenido
- * cuyo mod no está instalado, está en una versión incorrecta, o tiene
- * incompatibilidades / contenido removido.
+ * <p>
+ * Esto suele significar que en alguna parte se está pidiendo contenido cuyo mod
+ * no está instalado, está en una versión incorrecta, o tiene incompatibilidades
+ * / contenido removido.
  */
 public class ItemNoExiste implements Verificaciones {
 

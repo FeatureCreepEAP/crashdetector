@@ -8903,56 +8903,50 @@ public class Frances implements Idioma {
 	public String iaImagenNoDisponible() {
 		return "Image non disponible";
 	}
-	
-	
+
 	@Override
 	public String mensajeOculusIrisUnknownShaderVariable() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "Erreur possible des shaders avec Oculus ou Iris détectée.</b>"
-	            + "<p>Le journal contient à la fois <b>kroppeb.stareval.resolver.ExpressionResolver.resolveExpressionInternal</b> "
-	            + "et <b>java.lang.RuntimeException: Unknown variable:</b>.</p>"
-	            + "<p>Cette combinaison indique généralement un problème lors de l'évaluation d'une variable dans un shader，"
-	            + "souvent lié à <b>Oculus</b>, <b>Iris</b>, ou au <b>pack de shaders</b> utilisé.</p>"
-	            + "<p><b>Ordre de test recommandé：</b></p>"
-	            + "<ul>"
-	            + "<li>Tout d'abord，lancez le jeu <b>sans activer les shaders</b>.</li>"
-	            + "<li>Si le problème persiste，essayez de lancer <b>sans Oculus ni Iris</b>.</li>"
-	            + "<li>Mettez à jour <b>Oculus/Iris</b>, le <b>pack de shaders</b> et les mods graphiques associés.</li>"
-	            + "<li>Si vous utilisez d'autres mods de rendu ou graphiques，vérifiez les incompatibilités entre eux.</li>"
-	            + "</ul>"
-	            + "<p>En pratique，cette panne provient souvent du <b>pack de shaders</b> ou de son interaction avec <b>Oculus/Iris</b>.</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Erreur possible des shaders avec Oculus ou Iris détectée.</b>"
+				+ "<p>Le journal contient à la fois <b>kroppeb.stareval.resolver.ExpressionResolver.resolveExpressionInternal</b> "
+				+ "et <b>java.lang.RuntimeException: Unknown variable:</b>.</p>"
+				+ "<p>Cette combinaison indique généralement un problème lors de l'évaluation d'une variable dans un shader，"
+				+ "souvent lié à <b>Oculus</b>, <b>Iris</b>, ou au <b>pack de shaders</b> utilisé.</p>"
+				+ "<p><b>Ordre de test recommandé：</b></p>" + "<ul>"
+				+ "<li>Tout d'abord，lancez le jeu <b>sans activer les shaders</b>.</li>"
+				+ "<li>Si le problème persiste，essayez de lancer <b>sans Oculus ni Iris</b>.</li>"
+				+ "<li>Mettez à jour <b>Oculus/Iris</b>, le <b>pack de shaders</b> et les mods graphiques associés.</li>"
+				+ "<li>Si vous utilisez d'autres mods de rendu ou graphiques，vérifiez les incompatibilités entre eux.</li>"
+				+ "</ul>"
+				+ "<p>En pratique，cette panne provient souvent du <b>pack de shaders</b> ou de son interaction avec <b>Oculus/Iris</b>.</p>";
 	}
 
 	@Override
 	public String nombreOculusIrisUnknownShaderVariable() {
-	    return "Erreur possible des shaders avec Oculus/Iris";
+		return "Erreur possible des shaders avec Oculus/Iris";
 	}
-	
+
 	@Override
 	public String mensajeItemNoExiste(String itemFaltante, String namespace) {
 		String itemHtml = itemFaltante == null || itemFaltante.isEmpty() ? "(inconnu)" : itemFaltante;
 		String namespaceHtml = namespace == null || namespace.isEmpty() ? "(inconnu)" : namespace;
 
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-				+ "Tentative d'utilisation d'un objet inexistant.</b>"
-				+ "<p>Le journal contient la ligne <b>Item: " + itemHtml + " does not exist</b>.</p>"
+				+ "Tentative d'utilisation d'un objet inexistant.</b>" + "<p>Le journal contient la ligne <b>Item: "
+				+ itemHtml + " does not exist</b>.</p>"
 				+ "<p>Cela signifie généralement qu'un <b>datapack</b>, un <b>mod</b> ou une <b>configuration</b> "
-				+ "fait référence à un objet qui n'est pas présent dans le jeu.</p>"
-				+ "<p><b>À vérifier :</b></p>"
-				+ "<ul>"
-				+ "<li>Vérifiez si vous avez installé le mod qui est censé fournir l'objet <b>" + itemHtml + "</b>.</li>"
+				+ "fait référence à un objet qui n'est pas présent dans le jeu.</p>" + "<p><b>À vérifier :</b></p>"
+				+ "<ul>" + "<li>Vérifiez si vous avez installé le mod qui est censé fournir l'objet <b>" + itemHtml
+				+ "</b>.</li>"
 				+ "<li>S'il est installé, il peut s'agir de la <b>mauvaise version</b>, l'objet a pu être modifié ou supprimé, "
 				+ "ou le mod présente un problème et il serait préférable de le retirer.</li>"
-				+ "<li>Si vous n'avez pas ce mod, essayez de <b>l'installer</b>.</li>"
-				+ "</ul>"
-				+ "<p><b>Pour savoir quel mod ou datapack demande cet objet :</b></p>"
-				+ "<ul>"
+				+ "<li>Si vous n'avez pas ce mod, essayez de <b>l'installer</b>.</li>" + "</ul>"
+				+ "<p><b>Pour savoir quel mod ou datapack demande cet objet :</b></p>" + "<ul>"
 				+ "<li>Utilisez l'utilitaire <b>grepr</b> dans la barre latérale.</li>"
 				+ "<li><b>Ne</b> sélectionnez pas de dossier.</li>"
 				+ "<li>Activez l'option <b>search in archives</b>.</li>"
 				+ "<li>Dans le texte de recherche, saisissez le <b>namespace</b>, c'est-à-dire la partie avant les deux-points : "
-				+ "<b>" + namespaceHtml + "</b>.</li>"
-				+ "</ul>"
+				+ "<b>" + namespaceHtml + "</b>.</li>" + "</ul>"
 				+ "<p>Cela aide généralement à trouver quel fichier, mod ou datapack effectue la référence invalide.</p>";
 	}
 
@@ -8960,17 +8954,15 @@ public class Frances implements Idioma {
 	public String nombreItemNoExiste() {
 		return "Objet inexistant référencé";
 	}
-	
+
 	@Override
 	public String mensajeCobblemonPinkanIslandsRhyhornModelo() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
 				+ "Erreur de modèle détectée pour Rhyhorn.</b>"
 				+ "<p>Le journal contient la ligne <b>Unable to load model cobblemon:rhyhorn_male.geo for cobblemon:rhyhorn</b>.</p>"
 				+ "<p>Bien que le modèle utilise l'espace de noms (namespace) de <b>Cobblemon</b>, cette ligne est généralement causée par le mod "
-				+ "<b>Cobblemon: Pinkan Islands</b>, d'où provient ce <b>Rhyhorn</b>.</p>"
-				+ "<p><b>À essayer :</b></p>"
-				+ "<ul>"
-				+ "<li>Supprimez ou désactivez <b>Cobblemon: Pinkan Islands</b> et réessayez.</li>"
+				+ "<b>Cobblemon: Pinkan Islands</b>, d'où provient ce <b>Rhyhorn</b>.</p>" + "<p><b>À essayer :</b></p>"
+				+ "<ul>" + "<li>Supprimez ou désactivez <b>Cobblemon: Pinkan Islands</b> et réessayez.</li>"
 				+ "<li>Mettez à jour <b>Cobblemon</b> et <b>Cobblemon: Pinkan Islands</b> vers des versions compatibles entre elles.</li>"
 				+ "<li>Si le problème a commencé après la mise à jour de l'un de ces mods, essayez une combinaison de versions différente.</li>"
 				+ "</ul>"
@@ -8982,7 +8974,7 @@ public class Frances implements Idioma {
 	public String nombreCobblemonPinkanIslandsRhyhornModelo() {
 		return "Erreur de modèle de Rhyhorn dans Cobblemon: Pinkan Islands";
 	}
-	
+
 	@Override
 	public String mensajeColdSweatInitDynamicTags() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
@@ -8992,37 +8984,17 @@ public class Frances implements Idioma {
 				+ "le registre apparaît comme nul.</p>"
 				+ "<p>Cela indique généralement un problème de <b>Cold Sweat</b> lors de la construction ou du remplissage "
 				+ "des <b>tags dynamiques</b>, souvent dû à une incompatibilité, une erreur interne du mod "
-				+ "ou une combinaison conflictuelle avec un autre mod ou datapack.</p>"
-				+ "<p><b>À essayer :</b></p>"
-				+ "<ul>"
-				+ "<li>Supprimez ou désactivez <b>Cold Sweat</b> et réessayez.</li>"
+				+ "ou une combinaison conflictuelle avec un autre mod ou datapack.</p>" + "<p><b>À essayer :</b></p>"
+				+ "<ul>" + "<li>Supprimez ou désactivez <b>Cold Sweat</b> et réessayez.</li>"
 				+ "<li>Mettez à jour <b>Cold Sweat</b> vers une version compatible avec votre version de Minecraft et votre chargeur (loader).</li>"
 				+ "<li>Si vous utilisez des datapacks ou des mods qui altèrent les <b>tags</b>, les <b>biomes</b>, les <b>températures</b> ou les registres associés, vérifiez-les également.</li>"
 				+ "<li>Si l'erreur a commencé après la mise à jour des mods, essayez une combinaison de versions différente.</li>"
-				+ "</ul>"
-				+ "<p>Dans ce cas, <b>Cold Sweat</b> est directement impliqué dans la panne.</p>";
+				+ "</ul>" + "<p>Dans ce cas, <b>Cold Sweat</b> est directement impliqué dans la panne.</p>";
 	}
 
 	@Override
 	public String nombreColdSweatInitDynamicTags() {
 		return "Erreur de Cold Sweat dans les tags dynamiques";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

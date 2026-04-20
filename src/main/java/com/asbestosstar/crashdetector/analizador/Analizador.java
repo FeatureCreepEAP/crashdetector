@@ -324,11 +324,6 @@ public class Analizador {
 		verificaciones.add(new CobblemonPinkanIslandsRhyhornModelo());
 		verificaciones.add(new ColdSweatInitDynamicTags());
 
-		
-		
-		
-		
-		
 		verificaciones.add(new PirataMC());
 		verificaciones.add(new LanzerNoAnimado());
 		verificaciones.add(new LanzerDesAnimado());

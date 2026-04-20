@@ -8326,56 +8326,50 @@ public class Persa implements Idioma {
 	public String iaImagenNoDisponible() {
 		return "تصویر در دسترس نیست";
 	}
-	
+
 	@Override
 	public String mensajeOculusIrisUnknownShaderVariable() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "خطای احتمالی در شیدرها با Oculus یا Iris شناسایی شد.</b>"
-	            + "<p>گزارش خطا (Log) حاوی هر دو مورد <b>kroppeb.stareval.resolver.ExpressionResolver.resolveExpressionInternal</b> "
-	            + "و <b>java.lang.RuntimeException: Unknown variable:</b> است.</p>"
-	            + "<p>این ترکیب معمولاً نشان‌دهنده مشکلی در ارزیابی یک متغیر در داخل شیدر است، "
-	            + "که اغلب با <b>Oculus</b>، <b>Iris</b>، یا <b>بسته شیدر (shader pack)</b> مورد استفاده مرتبط است.</p>"
-	            + "<p><b>ترتیب پیشنهادی برای عیب‌یابی:</b></p>"
-	            + "<ul>"
-	            + "<li>ابتدا، بازی را <b>بدون فعال بودن شیدرها</b> اجرا کنید.</li>"
-	            + "<li>اگر مشکل ادامه داشت، بازی را <b>بدون Oculus یا Iris</b> اجرا کنید.</li>"
-	            + "<li><b>Oculus/Iris</b>، <b>بسته شیدر</b> و مودهای گرافیکی مرتبط را به‌روزرسانی کنید.</li>"
-	            + "<li>اگر از سایر مودهای رندرینگ یا گرافیکی استفاده می‌کنید، ناسازگاری‌های بین آن‌ها را بررسی کنید.</li>"
-	            + "</ul>"
-	            + "<p>در عمل، این خطا معمولاً از <b>بسته شیدر</b> یا تعامل آن با <b>Oculus/Iris</b> ناشی می‌شود.</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "خطای احتمالی در شیدرها با Oculus یا Iris شناسایی شد.</b>"
+				+ "<p>گزارش خطا (Log) حاوی هر دو مورد <b>kroppeb.stareval.resolver.ExpressionResolver.resolveExpressionInternal</b> "
+				+ "و <b>java.lang.RuntimeException: Unknown variable:</b> است.</p>"
+				+ "<p>این ترکیب معمولاً نشان‌دهنده مشکلی در ارزیابی یک متغیر در داخل شیدر است، "
+				+ "که اغلب با <b>Oculus</b>، <b>Iris</b>، یا <b>بسته شیدر (shader pack)</b> مورد استفاده مرتبط است.</p>"
+				+ "<p><b>ترتیب پیشنهادی برای عیب‌یابی:</b></p>" + "<ul>"
+				+ "<li>ابتدا، بازی را <b>بدون فعال بودن شیدرها</b> اجرا کنید.</li>"
+				+ "<li>اگر مشکل ادامه داشت، بازی را <b>بدون Oculus یا Iris</b> اجرا کنید.</li>"
+				+ "<li><b>Oculus/Iris</b>، <b>بسته شیدر</b> و مودهای گرافیکی مرتبط را به‌روزرسانی کنید.</li>"
+				+ "<li>اگر از سایر مودهای رندرینگ یا گرافیکی استفاده می‌کنید، ناسازگاری‌های بین آن‌ها را بررسی کنید.</li>"
+				+ "</ul>"
+				+ "<p>در عمل، این خطا معمولاً از <b>بسته شیدر</b> یا تعامل آن با <b>Oculus/Iris</b> ناشی می‌شود.</p>";
 	}
 
 	@Override
 	public String nombreOculusIrisUnknownShaderVariable() {
-	    return "خطای احتمالی شیدر با Oculus/Iris";
+		return "خطای احتمالی شیدر با Oculus/Iris";
 	}
-	
-	
+
 	@Override
 	public String mensajeItemNoExiste(String itemFaltante, String namespace) {
 		String itemHtml = itemFaltante == null || itemFaltante.isEmpty() ? "(نامشخص)" : itemFaltante;
 		String namespaceHtml = namespace == null || namespace.isEmpty() ? "(نامشخص)" : namespace;
 
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-				+ "تلاش برای استفاده از آیتمی که وجود ندارد.</b>"
-				+ "<p>گزارش خطا حاوی خط <b>Item: " + itemHtml + " does not exist</b> است.</p>"
+				+ "تلاش برای استفاده از آیتمی که وجود ندارد.</b>" + "<p>گزارش خطا حاوی خط <b>Item: " + itemHtml
+				+ " does not exist</b> است.</p>"
 				+ "<p>این معمولاً به این معنی است که یک <b>datapack</b>، <b>mod</b> یا <b>تنظیمات</b> "
-				+ "به آیتمی ارجاع می‌دهد که در بازی present نیست.</p>"
-				+ "<p><b>مواردی که باید بررسی شوند:</b></p>"
-				+ "<ul>"
-				+ "<li>بررسی کنید آیا مودی که باید آیتم <b>" + itemHtml + "</b> را اضافه کند، نصب شده است یا خیر.</li>"
+				+ "به آیتمی ارجاع می‌دهد که در بازی present نیست.</p>" + "<p><b>مواردی که باید بررسی شوند:</b></p>"
+				+ "<ul>" + "<li>بررسی کنید آیا مودی که باید آیتم <b>" + itemHtml
+				+ "</b> را اضافه کند، نصب شده است یا خیر.</li>"
 				+ "<li>اگر نصب است، ممکن است <b>نسخه نادرست</b> باشد، آیتم تغییر کرده یا حذف شده باشد، "
 				+ "یا mod مشکل داشته باشد و بهتر باشد حذف شود.</li>"
-				+ "<li>اگر آن mod را ندارید، سعی کنید آن را <b>نصب کنید</b>.</li>"
-				+ "</ul>"
-				+ "<p><b>برای یافتن اینکه کدام mod یا datapack آن آیتم را درخواست می‌کند:</b></p>"
-				+ "<ul>"
+				+ "<li>اگر آن mod را ندارید، سعی کنید آن را <b>نصب کنید</b>.</li>" + "</ul>"
+				+ "<p><b>برای یافتن اینکه کدام mod یا datapack آن آیتم را درخواست می‌کند:</b></p>" + "<ul>"
 				+ "<li>از ابزار <b>grepr</b> در نوار کناری استفاده کنید.</li>"
 				+ "<li>هیچ پوشه‌ای را <b>انتخاب نکنید</b>.</li>"
 				+ "<li>گزینه <b>search in archives</b> را فعال کنید.</li>"
-				+ "<li>در متن جستجو، <b>namespace</b> را وارد کنید، یعنی بخش قبل از دو نقطه: "
-				+ "<b>" + namespaceHtml + "</b>.</li>"
-				+ "</ul>"
+				+ "<li>در متن جستجو، <b>namespace</b> را وارد کنید، یعنی بخش قبل از دو نقطه: " + "<b>" + namespaceHtml
+				+ "</b>.</li>" + "</ul>"
 				+ "<p>این کار معمولاً به یافتن فایل، mod یا datapackی که ارجاع نامعتبر را ایجاد کرده، کمک می‌کند.</p>";
 	}
 
@@ -8383,7 +8377,7 @@ public class Persa implements Idioma {
 	public String nombreItemNoExiste() {
 		return "ارجاع به آیتم غیرموجود";
 	}
-	
+
 	@Override
 	public String mensajeCobblemonPinkanIslandsRhyhornModelo() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
@@ -8391,13 +8385,11 @@ public class Persa implements Idioma {
 				+ "<p>گزارش خطا حاوی خط <b>Unable to load model cobblemon:rhyhorn_male.geo for cobblemon:rhyhorn</b> است.</p>"
 				+ "<p>اگرچه مدل از namespace مربوط به <b>Cobblemon</b> استفاده می‌کند، اما این خط معمولاً توسط mod "
 				+ "<b>Cobblemon: Pinkan Islands</b> ایجاد می‌شود، که منبع این <b>Rhyhorn</b> است.</p>"
-				+ "<p><b>کارهایی که باید امتحان کنید:</b></p>"
-				+ "<ul>"
+				+ "<p><b>کارهایی که باید امتحان کنید:</b></p>" + "<ul>"
 				+ "<li>mod <b>Cobblemon: Pinkan Islands</b> را حذف یا غیرفعال کرده و دوباره آزمایش کنید.</li>"
 				+ "<li><b>Cobblemon</b> و <b>Cobblemon: Pinkan Islands</b> را به نسخه‌های سازگار با یکدیگر به‌روزرسانی کنید.</li>"
 				+ "<li>اگر مشکل پس از به‌روزرسانی یکی از این مودها شروع شد، ترکیب نسخه‌های متفاوتی را امتحان کنید.</li>"
-				+ "</ul>"
-				+ "<p>این خطا معمولاً نشان‌دهنده یک مدل گمشده، ثبت‌شده به‌درستی یا ناسازگار در داخل "
+				+ "</ul>" + "<p>این خطا معمولاً نشان‌دهنده یک مدل گمشده، ثبت‌شده به‌درستی یا ناسازگار در داخل "
 				+ "<b>Cobblemon: Pinkan Islands</b> است.</p>";
 	}
 
@@ -8405,6 +8397,7 @@ public class Persa implements Idioma {
 	public String nombreCobblemonPinkanIslandsRhyhornModelo() {
 		return "خطای مدل Rhyhorn در Cobblemon: Pinkan Islands";
 	}
+
 	@Override
 	public String mensajeColdSweatInitDynamicTags() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
@@ -8415,13 +8408,11 @@ public class Persa implements Idioma {
 				+ "<p>این معمولاً نشان‌دهنده مشکلی در <b>Cold Sweat</b> هنگام ساخت یا پر کردن "
 				+ "<b>تگ‌های پویا (dynamic tags)</b> است، که معمولاً به دلیل ناسازگاری، خطای داخلی مود "
 				+ "یا ترکیب متضاد با مود یا datapack دیگری رخ می‌دهد.</p>"
-				+ "<p><b>کارهایی که باید امتحان کنید:</b></p>"
-				+ "<ul>"
+				+ "<p><b>کارهایی که باید امتحان کنید:</b></p>" + "<ul>"
 				+ "<li>مود <b>Cold Sweat</b> را حذف یا غیرفعال کرده و دوباره آزمایش کنید.</li>"
 				+ "<li><b>Cold Sweat</b> را به نسخه‌ای سازگار با نسخه Minecraft و loader خود به‌روزرسانی کنید.</li>"
 				+ "<li>اگر از datapackها یا مودهایی استفاده می‌کنید که <b>تگ‌ها</b>، <b>بیوم‌ها</b>، <b>دماها</b> یا ثبت‌های مرتبط را تغییر می‌دهند، آن‌ها را نیز بررسی کنید.</li>"
-				+ "<li>اگر خطا پس از به‌روزرسانی مودها شروع شد، ترکیب نسخه‌های متفاوتی را امتحان کنید.</li>"
-				+ "</ul>"
+				+ "<li>اگر خطا پس از به‌روزرسانی مودها شروع شد، ترکیب نسخه‌های متفاوتی را امتحان کنید.</li>" + "</ul>"
 				+ "<p>در این مورد، <b>Cold Sweat</b> مستقیماً در خطا دخیل است.</p>";
 	}
 
@@ -8429,34 +8420,5 @@ public class Persa implements Idioma {
 	public String nombreColdSweatInitDynamicTags() {
 		return "خطای Cold Sweat در تگ‌های پویا";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

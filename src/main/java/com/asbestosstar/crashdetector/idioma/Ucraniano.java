@@ -7690,58 +7690,48 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 
 		return mensajeBase + solucion;
 	}
-	
-	
-	
+
 	@Override
 	public String mensajeOculusIrisUnknownShaderVariable() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "Виявлено можливу помилку шейдерів з Oculus або Iris.</b>"
-	            + "<p>Журнал містить як <b>kroppeb.stareval.resolver.ExpressionResolver.resolveExpressionInternal</b>, "
-	            + "так і <b>java.lang.RuntimeException: Unknown variable:</b>.</p>"
-	            + "<p>Ця комбінація зазвичай вказує на проблему під час обчислення змінної всередині шейдера, "
-	            + "що часто пов'язано з <b>Oculus</b>, <b>Iris</b> або використовуваним <b>паком шейдерів</b>.</p>"
-	            + "<p><b>Рекомендований порядок дій:</b></p>"
-	            + "<ul>"
-	            + "<li>Спочатку запустіть гру <b>без увімкнених шейдерів</b>.</li>"
-	            + "<li>Якщо проблема не зникне, спробуйте запустити гру <b>без Oculus або Iris</b>.</li>"
-	            + "<li>Оновіть <b>Oculus/Iris</b>, <b>пак шейдерів</b> та пов'язані графічні моди.</li>"
-	            + "<li>Якщо ви використовуєте інші моди для рендерингу чи графіки, перевірте їх на сумісність.</li>"
-	            + "</ul>"
-	            + "<p>На практиці ця помилка зазвичай виникає через <b>пак шейдерів</b> або його взаємодію з <b>Oculus/Iris</b>.</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Виявлено можливу помилку шейдерів з Oculus або Iris.</b>"
+				+ "<p>Журнал містить як <b>kroppeb.stareval.resolver.ExpressionResolver.resolveExpressionInternal</b>, "
+				+ "так і <b>java.lang.RuntimeException: Unknown variable:</b>.</p>"
+				+ "<p>Ця комбінація зазвичай вказує на проблему під час обчислення змінної всередині шейдера, "
+				+ "що часто пов'язано з <b>Oculus</b>, <b>Iris</b> або використовуваним <b>паком шейдерів</b>.</p>"
+				+ "<p><b>Рекомендований порядок дій:</b></p>" + "<ul>"
+				+ "<li>Спочатку запустіть гру <b>без увімкнених шейдерів</b>.</li>"
+				+ "<li>Якщо проблема не зникне, спробуйте запустити гру <b>без Oculus або Iris</b>.</li>"
+				+ "<li>Оновіть <b>Oculus/Iris</b>, <b>пак шейдерів</b> та пов'язані графічні моди.</li>"
+				+ "<li>Якщо ви використовуєте інші моди для рендерингу чи графіки, перевірте їх на сумісність.</li>"
+				+ "</ul>"
+				+ "<p>На практиці ця помилка зазвичай виникає через <b>пак шейдерів</b> або його взаємодію з <b>Oculus/Iris</b>.</p>";
 	}
 
 	@Override
 	public String nombreOculusIrisUnknownShaderVariable() {
-	    return "Можлива помилка шейдерів з Oculus/Iris";
+		return "Можлива помилка шейдерів з Oculus/Iris";
 	}
-	
-	
+
 	@Override
 	public String mensajeItemNoExiste(String itemFaltante, String namespace) {
 		String itemHtml = itemFaltante == null || itemFaltante.isEmpty() ? "(невідомо)" : itemFaltante;
 		String namespaceHtml = namespace == null || namespace.isEmpty() ? "(невідомо)" : namespace;
 
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-				+ "Спроба використати предмет, якого не існує.</b>"
-				+ "<p>Журнал містить рядок <b>Item: " + itemHtml + " does not exist</b>.</p>"
+				+ "Спроба використати предмет, якого не існує.</b>" + "<p>Журнал містить рядок <b>Item: " + itemHtml
+				+ " does not exist</b>.</p>"
 				+ "<p>Це зазвичай означає, що якийсь <b>датапак</b>, <b>мод</b> або <b>конфігурація</b> "
-				+ "посилається на предмет, якого немає в грі.</p>"
-				+ "<p><b>Що перевірити:</b></p>"
-				+ "<ul>"
+				+ "посилається на предмет, якого немає в грі.</p>" + "<p><b>Що перевірити:</b></p>" + "<ul>"
 				+ "<li>Перевірте, чи встановлено мод, який має додавати предмет <b>" + itemHtml + "</b>.</li>"
 				+ "<li>Якщо він встановлений, можливо, це <b>неправильна версія</b>, предмет було змінено або видалено, "
 				+ "або в моді є помилка, і його краще видалити.</li>"
-				+ "<li>Якщо цього мода немає, спробуйте <b>встановити його</b>.</li>"
-				+ "</ul>"
-				+ "<p><b>Щоб дізнатися, який мод або датапак запитує цей предмет:</b></p>"
-				+ "<ul>"
+				+ "<li>Якщо цього мода немає, спробуйте <b>встановити його</b>.</li>" + "</ul>"
+				+ "<p><b>Щоб дізнатися, який мод або датапак запитує цей предмет:</b></p>" + "<ul>"
 				+ "<li>Використовуйте утиліту <b>grepr</b> на бічній панелі.</li>"
-				+ "<li><b>Не</b> вибирайте папку.</li>"
-				+ "<li>Увімкніть опцію <b>search in archives</b>.</li>"
-				+ "<li>У полі пошуку введіть <b>namespace</b>, тобто частину перед двокрапкою: "
-				+ "<b>" + namespaceHtml + "</b>.</li>"
-				+ "</ul>"
+				+ "<li><b>Не</b> вибирайте папку.</li>" + "<li>Увімкніть опцію <b>search in archives</b>.</li>"
+				+ "<li>У полі пошуку введіть <b>namespace</b>, тобто частину перед двокрапкою: " + "<b>" + namespaceHtml
+				+ "</b>.</li>" + "</ul>"
 				+ "<p>Це зазвичай допомагає знайти файл, мод або датапак, що містить недійсне посилання.</p>";
 	}
 
@@ -7749,7 +7739,7 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 	public String nombreItemNoExiste() {
 		return "Посилання на неіснуючий предмет";
 	}
-	
+
 	@Override
 	public String mensajeCobblemonPinkanIslandsRhyhornModelo() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
@@ -7757,8 +7747,7 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 				+ "<p>Журнал містить рядок <b>Unable to load model cobblemon:rhyhorn_male.geo for cobblemon:rhyhorn</b>.</p>"
 				+ "<p>Хоча модель використовує простір імен (namespace) <b>Cobblemon</b>, цей рядок зазвичай викликаний модом "
 				+ "<b>Cobblemon: Pinkan Islands</b>, звідки походить цей <b>Rhyhorn</b>.</p>"
-				+ "<p><b>Що спробувати:</b></p>"
-				+ "<ul>"
+				+ "<p><b>Що спробувати:</b></p>" + "<ul>"
 				+ "<li>Видаліть або вимкніть <b>Cobblemon: Pinkan Islands</b> і спробуйте знову.</li>"
 				+ "<li>Оновіть <b>Cobblemon</b> та <b>Cobblemon: Pinkan Islands</b> до сумісних версій.</li>"
 				+ "<li>Якщо проблема почалася після оновлення одного з цих модів, спробуйте іншу комбінацію версій.</li>"
@@ -7771,7 +7760,7 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 	public String nombreCobblemonPinkanIslandsRhyhornModelo() {
 		return "Помилка моделі Rhyhorn у Cobblemon: Pinkan Islands";
 	}
-	
+
 	@Override
 	public String mensajeColdSweatInitDynamicTags() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
@@ -7781,14 +7770,11 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 				+ "реєстр відображається як null.</p>"
 				+ "<p>Це зазвичай вказує на проблему <b>Cold Sweat</b> під час побудови або заповнення "
 				+ "<b>динамічних тегів</b>, часто через несумісність, внутрішню помилку мода "
-				+ "або конфліктну комбінацію з іншим модом або датапаком.</p>"
-				+ "<p><b>Що спробувати:</b></p>"
-				+ "<ul>"
+				+ "або конфліктну комбінацію з іншим модом або датапаком.</p>" + "<p><b>Що спробувати:</b></p>" + "<ul>"
 				+ "<li>Видаліть або вимкніть <b>Cold Sweat</b> і спробуйте знову.</li>"
 				+ "<li>Оновіть <b>Cold Sweat</b> до версії, сумісної з вашою версією Minecraft та завантажувачем.</li>"
 				+ "<li>Якщо ви використовуєте датапаки або моди, що змінюють <b>теги</b>, <b>біоми</b>, <b>температури</b> або пов'язані реєстри, перевірте їх також.</li>"
-				+ "<li>Якщо помилка почалася після оновлення модів, спробуйте іншу комбінацію версій.</li>"
-				+ "</ul>"
+				+ "<li>Якщо помилка почалася після оновлення модів, спробуйте іншу комбінацію версій.</li>" + "</ul>"
 				+ "<p>У цьому випадку <b>Cold Sweat</b> безпосередньо залучений до збою.</p>";
 	}
 
@@ -7796,27 +7782,5 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 	public String nombreColdSweatInitDynamicTags() {
 		return "Помилка Cold Sweat у динамічних тегах";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

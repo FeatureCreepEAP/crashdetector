@@ -8,15 +8,17 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
- * Detecta un error específico de carga de modelo relacionado con Rhyhorn
- * de Cobblemon: Pinkan Islands.
+ * Detecta un error específico de carga de modelo relacionado con Rhyhorn de
+ * Cobblemon: Pinkan Islands.
  *
- * <p>Ejemplo típico:
- * <br>Unable to load model cobblemon:rhyhorn_male.geo for cobblemon:rhyhorn
+ * <p>
+ * Ejemplo típico: <br>
+ * Unable to load model cobblemon:rhyhorn_male.geo for cobblemon:rhyhorn
  *
- * <p>Aunque el mensaje menciona el namespace de Cobblemon, en este caso
- * concreto el origen más probable es el addon/mod <b>Cobblemon: Pinkan Islands</b>,
- * que es de donde proviene ese Rhyhorn.
+ * <p>
+ * Aunque el mensaje menciona el namespace de Cobblemon, en este caso concreto
+ * el origen más probable es el addon/mod <b>Cobblemon: Pinkan Islands</b>, que
+ * es de donde proviene ese Rhyhorn.
  */
 public class CobblemonPinkanIslandsRhyhornModelo implements Verificaciones {
 
@@ -32,7 +34,8 @@ public class CobblemonPinkanIslandsRhyhornModelo implements Verificaciones {
 	@Override
 	public void verificar(Consola consola) {
 		// Detección global ligera para evitar trabajo innecesario por línea
-		if (consola.contenido_verificar.contains("Unable to load model cobblemon:rhyhorn_male.geo for cobblemon:rhyhorn")) {
+		if (consola.contenido_verificar
+				.contains("Unable to load model cobblemon:rhyhorn_male.geo for cobblemon:rhyhorn")) {
 			posibleError = true;
 		}
 	}

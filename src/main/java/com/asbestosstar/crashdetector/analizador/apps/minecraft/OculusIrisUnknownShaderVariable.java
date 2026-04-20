@@ -8,18 +8,21 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
- * Detecta un patrón frecuente asociado a errores de sombreadores con Oculus/Iris.
+ * Detecta un patrón frecuente asociado a errores de sombreadores con
+ * Oculus/Iris.
  *
- * <p>La detección se apoya en la presencia conjunta de estas dos cadenas:
+ * <p>
+ * La detección se apoya en la presencia conjunta de estas dos cadenas:
  * <ul>
  * <li>kroppeb.stareval.resolver.ExpressionResolver.resolveExpressionInternal</li>
  * <li>java.lang.RuntimeException: Unknown variable:</li>
  * </ul>
  *
- * <p>Cuando ambas aparecen en el log, normalmente indica un problema al evaluar
- * expresiones dentro de shaders, muy a menudo relacionado con Oculus o Iris,
- * un pack de shaders incompatible, o una combinación conflictiva entre shaders
- * y otros mods gráficos.
+ * <p>
+ * Cuando ambas aparecen en el log, normalmente indica un problema al evaluar
+ * expresiones dentro de shaders, muy a menudo relacionado con Oculus o Iris, un
+ * pack de shaders incompatible, o una combinación conflictiva entre shaders y
+ * otros mods gráficos.
  */
 public class OculusIrisUnknownShaderVariable implements Verificaciones {
 
