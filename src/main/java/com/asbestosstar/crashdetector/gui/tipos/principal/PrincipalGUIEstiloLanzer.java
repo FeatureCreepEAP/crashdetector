@@ -582,12 +582,18 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 
 		setTitle(Config.obtenerInstancia().obtenerNombreCD());
 
-		// Tamaño base correcto
-		int anchoBase = 1050;
+		// Tamaño base:
+		// - Debe caber en una pantalla XGA de 1024x768
+		// - Se deja altura 650 para no acercarse demasiado al límite vertical
+		int anchoBase = 1024;
 		int altoBase = 650;
 
-		// Si la pantalla útil es 1080 o más de alto, escalar a 720 de alto y
-		// aumentar el ancho proporcionalmente.
+		// Tamaño ampliado:
+		// - Debe caber en una pantalla de 1440x1080
+		// - Se usa cuando la altura útil detectada es 1080 o mayor
+		int anchoGrande = 1440;
+		int altoGrande = 720;
+
 		java.awt.Rectangle areaUtil = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment()
 				.getMaximumWindowBounds();
 
@@ -597,14 +603,11 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 		int altoFinal = altoBase;
 
 		if (areaUtil.height >= 1080) {
-			double factorEscala = 720.0 / altoBase;
-			anchoFinal = (int) Math.round(anchoBase * factorEscala);
-			altoFinal = 720;
-
-			CrashDetectorLogger.log("Pantalla >= 1080 de alto detectada. Aplicando escalado de ventana.");
-			CrashDetectorLogger.log("Factor de escala aplicado: " + factorEscala);
+			anchoFinal = anchoGrande;
+			altoFinal = altoGrande;
+			CrashDetectorLogger.log("Pantalla de 1080 de alto o mayor detectada. Usando tamaño grande fijo.");
 		} else {
-			CrashDetectorLogger.log("Pantalla menor de 1080 de alto. Usando tamaño base.");
+			CrashDetectorLogger.log("Pantalla menor de 1080 de alto. Usando tamaño base fijo.");
 		}
 
 		CrashDetectorLogger.log("Tamaño final de ventana: " + anchoFinal + "x" + altoFinal);
