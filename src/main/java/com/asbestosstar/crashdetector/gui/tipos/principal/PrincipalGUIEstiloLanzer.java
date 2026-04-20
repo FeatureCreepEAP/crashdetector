@@ -635,45 +635,71 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 
 	public void añadirBotonBarraLateral(JPanel panel, String texto) {
 		JButton boton = new JButton(texto);
-		boton.setBackground(colorBotonBaraLateral.obtener().darker());
-		boton.setForeground(colorTexto.obtener());
-		boton.setFont(boton.getFont().deriveFont(Font.BOLD, 14f));
+
+		if (!CrashDetectorGUI.esMac()) {
+			boton.setBackground(colorBotonBaraLateral.obtener().darker());
+			boton.setForeground(colorTexto.obtener());
+			boton.setFont(boton.getFont().deriveFont(Font.BOLD, 14f));
+			boton.setContentAreaFilled(true);
+			boton.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+		} else {
+			boton.setContentAreaFilled(false);
+		}
+
 		boton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		boton.setMargin(new Insets(10, 20, 10, 20));
 		boton.setMaximumSize(new Dimension(130, 40));
 		boton.setMinimumSize(new Dimension(130, 40));
 		boton.setPreferredSize(new Dimension(130, 40));
-		boton.setContentAreaFilled(true);
-		boton.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+
 		panel.add(boton);
 	}
 
 	public JButton añadirBotonImagen(JPanel panel, String imagePath, String tooltip) {
 		JButton boton = new JButton();
 		boton.setToolTipText(tooltip);
+
 		ImageIcon originalIcon = new ImageIcon(imagePath);
 		Image image = originalIcon.getImage();
 		int BUTTON_SIZE = 40;
 		Image scaledImage = image.getScaledInstance(BUTTON_SIZE - 10, BUTTON_SIZE - 10, Image.SCALE_SMOOTH);
 		ImageIcon icon = new ImageIcon(scaledImage);
+
 		boton.setIcon(icon);
 		boton.setText("");
 		boton.setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
-		boton.setBackground(colorFondo.obtener());
-		boton.setBorder(BorderFactory.createLineBorder(colorFondo.obtener(), 1));
 		boton.setFocusPainted(false);
-		boton.setMargin(new Insets(0, 0, 0, 0)); // Reduced margin
+		boton.setMargin(new Insets(0, 0, 0, 0));
+
+		if (!CrashDetectorGUI.esMac()) {
+			boton.setBackground(colorFondo.obtener());
+			boton.setBorder(BorderFactory.createLineBorder(colorFondo.obtener(), 1));
+			boton.setOpaque(true);
+			boton.setContentAreaFilled(true);
+		} else {
+			boton.setBorderPainted(false);
+			boton.setContentAreaFilled(false);
+			boton.setOpaque(false);
+			boton.setBackground(javax.swing.UIManager.getColor("Button.background"));
+			boton.setForeground(javax.swing.UIManager.getColor("Button.foreground"));
+		}
+
 		boton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				boton.setBackground(colorBoton.obtener().brighter());
+				if (!CrashDetectorGUI.esMac()) {
+					boton.setBackground(colorBoton.obtener().brighter());
+				}
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				boton.setBackground(colorFondo.obtener());
+				if (!CrashDetectorGUI.esMac()) {
+					boton.setBackground(colorFondo.obtener());
+				}
 			}
 		});
+
 		panel.add(boton);
 		return boton;
 	}
@@ -716,6 +742,8 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 	@Override
 	public void recargarApariencia() {
 
+		boolean esMac = CrashDetectorGUI.esMac();
+
 		// =========================
 		// Colores activos
 		// =========================
@@ -725,9 +753,6 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 		Color cajaTexto = colorCajaTexto.obtener();
 
 		Color botonBarra = modolanzer ? lanzerColorBotonBaraLateral.obtener() : colorBotonBaraLateral.obtener();
-
-		Color fondoBarra = modolanzer ? lanzerColorFondo.obtener() : botonBarra.darker();
-
 		Color fondoInferior = modolanzer ? lanzerColorCajaTexto.obtener() : fondo;
 
 		// =========================
@@ -743,10 +768,17 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 		// =========================
 		// Botón Volver
 		// =========================
-		botonVolver.setOpaque(true);
-		botonVolver.setContentAreaFilled(true);
-		botonVolver.setBackground(botonBarra);
-		botonVolver.setForeground(texto);
+		if (!esMac) {
+			botonVolver.setOpaque(true);
+			botonVolver.setContentAreaFilled(true);
+			botonVolver.setBackground(botonBarra);
+			botonVolver.setForeground(texto);
+		} else {
+			botonVolver.setOpaque(false);
+			botonVolver.setContentAreaFilled(false);
+			botonVolver.setBackground(javax.swing.UIManager.getColor("Button.background"));
+			botonVolver.setForeground(javax.swing.UIManager.getColor("Button.foreground"));
+		}
 
 		// =========================
 		// Barra inferior
@@ -763,11 +795,18 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 		// =========================
 		// Botón central CDLauncher
 		// =========================
-		if (botonCDLauncherRef != null && !CrashDetectorGUI.esMac()) {
-			botonCDLauncherRef.setOpaque(true);
-			botonCDLauncherRef.setContentAreaFilled(true);
-			botonCDLauncherRef.setBackground(boton);
-			botonCDLauncherRef.setForeground(texto);
+		if (botonCDLauncherRef != null) {
+			if (!esMac) {
+				botonCDLauncherRef.setOpaque(true);
+				botonCDLauncherRef.setContentAreaFilled(true);
+				botonCDLauncherRef.setBackground(boton);
+				botonCDLauncherRef.setForeground(texto);
+			} else {
+				botonCDLauncherRef.setOpaque(false);
+				botonCDLauncherRef.setContentAreaFilled(false);
+				botonCDLauncherRef.setBackground(javax.swing.UIManager.getColor("Button.background"));
+				botonCDLauncherRef.setForeground(javax.swing.UIManager.getColor("Button.foreground"));
+			}
 		}
 
 		// =========================
@@ -779,18 +818,27 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 			for (Component c : panelBotonesDerechaRef.getComponents()) {
 				if (c instanceof JButton) {
 					JButton b = (JButton) c;
-					b.setOpaque(true);
-					b.setContentAreaFilled(true);
-					b.setBackground(fondoInferior);
-					b.setForeground(modolanzer ? Color.BLACK : texto);
+
+					if (!esMac) {
+						b.setOpaque(true);
+						b.setContentAreaFilled(true);
+						b.setBackground(fondoInferior);
+						b.setForeground(modolanzer ? Color.BLACK : texto);
+					} else {
+						b.setOpaque(false);
+						b.setContentAreaFilled(false);
+						b.setBackground(javax.swing.UIManager.getColor("Button.background"));
+						b.setForeground(javax.swing.UIManager.getColor("Button.foreground"));
+					}
 				}
 			}
 		}
 
 		// =========================
-		// Barra lateral derecha (panel)
+		// Barra lateral derecha
 		// =========================
 		if (barraLateralDerechaRef != null) {
+			// Restaurar el color correcto que sí se veía bien antes
 			barraLateralDerechaRef.setBackground(botonBarra.darker());
 			barraLateralDerechaRef.setOpaque(true);
 		}
@@ -801,38 +849,57 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 			BotonDeBarraLateralDerecha gui = entry.getKey();
 			JButton btn = entry.getValue();
 
-			btn.setOpaque(true);
-			btn.setContentAreaFilled(true);
+			if (!esMac) {
+				btn.setOpaque(true);
+				btn.setContentAreaFilled(true);
 
-			// QuickFix tiene color propio
-			if (gui.tipo() == TipoGUI.TODOS_QUICKFIXES) {
-				btn.setBackground(lanzerColorBotonQuickFix.obtener());
-				btn.setForeground(texto);
+				if (gui.tipo() == TipoGUI.TODOS_QUICKFIXES) {
+					btn.setBackground(lanzerColorBotonQuickFix.obtener());
+					btn.setForeground(texto);
+				} else {
+					btn.setBackground(botonBarra);
+					btn.setForeground(texto);
+				}
 			} else {
-				btn.setBackground(botonBarra);
-				btn.setForeground(texto);
+				btn.setOpaque(false);
+				btn.setContentAreaFilled(false);
+				btn.setBackground(javax.swing.UIManager.getColor("Button.background"));
+				btn.setForeground(javax.swing.UIManager.getColor("Button.foreground"));
 			}
 		}
 
 		// =========================
-		// Actualizar fondo del logo
+		// Fondo del logo
 		// =========================
-
 		if (logoLabelRef != null) {
-
 			logoLabelRef.setBackground(botonBarra.darker());
-
 			logoLabelRef.repaint();
 		}
 
 		// =========================
-		// Forzar refresco
+		// Paneles hijos
 		// =========================
+		if (panelCDMods != null) {
+			panelCDMods.recargarApariencia();
+		}
+
+		if (panelConfiguracion != null) {
+			panelConfiguracion.recargarApariencia();
+		}
+
 		revalidate();
 		repaint();
 	}
 
 	private void aplicarColorRecursivo(Component c, Color fondo, Color texto) {
+
+		boolean esMac = CrashDetectorGUI.esMac();
+
+		// No recolorear manualmente el botón grande CDLauncher aquí.
+		// Ese botón se maneja aparte en recargarApariencia().
+		if (c == botonCDLauncherRef) {
+			return;
+		}
 
 		if (c instanceof JCheckBox) {
 			JCheckBox chk = (JCheckBox) c;
@@ -844,13 +911,21 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 
 		if (c instanceof JButton) {
 			JButton btn = (JButton) c;
-			btn.setOpaque(true);
-			btn.setContentAreaFilled(true);
-			btn.setBackground(fondo);
-			btn.setForeground(texto);
+
+			if (!esMac) {
+				btn.setOpaque(true);
+				btn.setContentAreaFilled(true);
+				btn.setBackground(fondo);
+				btn.setForeground(texto);
+			} else {
+				btn.setOpaque(false);
+				btn.setContentAreaFilled(false);
+				btn.setBackground(javax.swing.UIManager.getColor("Button.background"));
+				btn.setForeground(javax.swing.UIManager.getColor("Button.foreground"));
+			}
 		}
 
-		if (c instanceof JComponent) {
+		if (c instanceof JComponent && !(c instanceof JButton)) {
 			((JComponent) c).setBackground(fondo);
 			((JComponent) c).setForeground(texto);
 		}
