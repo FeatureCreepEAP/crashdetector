@@ -538,6 +538,7 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 
 		boton_CDMods.addActionListener(e -> {
 			contenidoPrincipal.removeAll();
+			panelCDMods.establecerPrincipalGUI(this);
 			panelCDMods.init();
 			contenidoPrincipal.add(panelCDMods, BorderLayout.CENTER);
 			contenidoPrincipal.revalidate();

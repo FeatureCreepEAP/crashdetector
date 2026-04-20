@@ -36,12 +36,20 @@ public class LanzerNoAnimado implements Verificaciones {
 			return;
 		}
 		this.completa = true;
+
 		String LANZADOR_ACTUAL = Statics.lanzer_del_app;
-		if (LANZADOR_ACTUAL == null || LANZADOR_ACTUAL.trim().isEmpty()) {
+		if (LANZADOR_ACTUAL == null) {
 			return;
 		}
+
+		LANZADOR_ACTUAL = LANZADOR_ACTUAL.trim();
+		if (LANZADOR_ACTUAL.isEmpty()) {
+			return;
+		}
+
 		CrashDetectorLogger.log("Lanzer Actual " + LANZADOR_ACTUAL);
-		// Si el archivo de launchers animados no existe o está vacío, no hacer nada
+
+		// Si el archivo de launchers animados no existe, no hacer nada
 		if (!ARCHIVO_ANIMADOS.toFile().exists()) {
 			return;
 		}
@@ -65,18 +73,23 @@ public class LanzerNoAnimado implements Verificaciones {
 			return;
 		}
 
-		if (!raiz.esArreglo()) {
+		if (raiz == null || !raiz.esArreglo()) {
 			return;
 		}
 
-		Set<String> launchersAnimados = new HashSet<>();
+		// Usar LinkedHashSet para conservar el orden original del JSON
+		Set<String> launchersAnimados = new java.util.LinkedHashSet<>();
 		int tam = raiz.tamano();
+
 		for (int i = 0; i < tam; i++) {
 			Nodo item = raiz.en(i);
 			if (item != null && !item.esObjeto() && !item.esArreglo()) {
 				String id = item.comoCadena();
-				if (id != null && !id.trim().isEmpty()) {
-					launchersAnimados.add(id.trim());
+				if (id != null) {
+					id = id.trim();
+					if (!id.isEmpty()) {
+						launchersAnimados.add(id);
+					}
 				}
 			}
 		}
@@ -85,18 +98,19 @@ public class LanzerNoAnimado implements Verificaciones {
 			return;
 		}
 
-		// Si el launcher actual NO está en la lista de recomendados → advertir
-		if (!launchersAnimados.contains(LANZADOR_ACTUAL.trim())) {
+		// Si el launcher actual NO está en la lista de recomendados, advertir
+		if (!launchersAnimados.contains(LANZADOR_ACTUAL)) {
 			StringBuilder sb = new StringBuilder();
 			sb.append(MonitorDePID.idioma.lanzer_no_animado_titulo(LANZADOR_ACTUAL));
 			sb.append(nl_html).append(MonitorDePID.idioma.lanzer_no_animado_problemas_comunes());
 			sb.append(nl_html).append(MonitorDePID.idioma.lanzer_no_animado_usar_animados());
-
 			sb.append(" ");
+
 			boolean primero = true;
 			for (String id : launchersAnimados) {
-				if (!primero)
+				if (!primero) {
 					sb.append(", ");
+				}
 				sb.append("<code>").append(id).append("</code>");
 				primero = false;
 			}

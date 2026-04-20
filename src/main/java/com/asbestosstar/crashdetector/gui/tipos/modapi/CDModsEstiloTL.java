@@ -122,14 +122,23 @@ public class CDModsEstiloTL extends PanelAPIBase {
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
-		return ID = "cdmodsestilotl";
+		return ID;
 	}
 
 	@Override
 	public void recargarApariencia() {
-		// TODO Auto-generated method stub
+		revalidate();
+		repaint();
+		actualizarEscalado();
+	}
 
+	@Override
+	protected void aplicarEstiloBotonAccion(JButton boton) {
+		if (!CrashDetectorGUI.esMac()) {
+			boton.setBackground(colorBoton.obtener());
+			boton.setForeground(Color.WHITE);
+			boton.setFocusPainted(false);
+		}
 	}
 
 	@Override

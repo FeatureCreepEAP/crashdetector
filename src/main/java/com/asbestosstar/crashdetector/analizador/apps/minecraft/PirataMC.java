@@ -53,25 +53,43 @@ public class PirataMC implements Verificaciones {
 		try {
 			String contenido = new String(Files.readAllBytes(archivo_derechos_piratas),
 					java.nio.charset.StandardCharsets.UTF_8);
+
 			if (contenido == null || contenido.trim().isEmpty()) {
 				return null;
 			}
 
 			Nodo raiz = Json.leer(contenido);
-			if (!raiz.esObjeto()) {
+			if (raiz == null || !raiz.esObjeto()) {
 				return null;
 			}
 
-			String idioma_actual = MonitorDePID.idioma.codigo();
-			String idioma_respaldo = Idioma.idioma_respaldo.obtener();
-			String codigo_espanol = "es";
+			String idiomaActual = MonitorDePID.idioma.codigo();
+			String idiomaRespaldo = Idioma.idioma_respaldo.obtener();
+			String[] orden = { idiomaActual, idiomaRespaldo, "es" };
 
-			// Intentar en orden: actual → respaldo → español → null
-			String[] ordenDeBusqueda = { idioma_actual, idioma_respaldo, codigo_espanol };
-
-			for (String lang : ordenDeBusqueda) {
-				if (lang == null || lang.isEmpty())
+			for (String lang : orden) {
+				if (lang == null) {
 					continue;
+				}
+
+				lang = lang.trim();
+				if (lang.isEmpty()) {
+					continue;
+				}
+
+				// Verificación estricta de existencia real de la clave
+				boolean existe = false;
+				for (String clave : raiz.claves()) {
+					if (lang.equals(clave)) {
+						existe = true;
+						break;
+					}
+				}
+
+				if (!existe) {
+					continue;
+				}
+
 				Nodo nodo = raiz.obtener(lang);
 				if (nodo != null && !nodo.esObjeto() && !nodo.esArreglo()) {
 					String valor = nodo.comoCadena();
@@ -84,10 +102,8 @@ public class PirataMC implements Verificaciones {
 			return null;
 
 		} catch (IOException e) {
-			// Archivo no se pudo leer
 			return null;
 		} catch (Exception e) {
-			// JSON inválido o motor falló
 			return null;
 		}
 	}

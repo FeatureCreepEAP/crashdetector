@@ -19,19 +19,25 @@ import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.json.Json;
 import com.asbestosstar.crashdetector.json.Json.Nodo;
 
 /**
  * Verificador anti-manipulación: compara hashes de archivos y carpetas contra
  * un archivo de control. Soporta archivos individuales y carpetas recursivas.
- * Usa xxHash32 para hashing rápido y ForkJoinPool para paralelismo.
+ * Usa hashing rápido y ForkJoinPool para paralelismo.
+ *
+ * Esta versión está adaptada para funcionar correctamente con el comportamiento
+ * original de Json.obtener(...), donde una clave inexistente puede devolver un
+ * nodo "fantasma". Por eso aquí se valida la existencia real de claves con
+ * claves().contains(...) antes de confiar en obtener(...).
  */
 public class AntiManipulacion implements Verificaciones {
 
 	public static final Path ARCHIVO_ANTIMANIPULACION = Statics.carpeta.resolve("antimanipulacion.json");
+
 	private boolean activado = false;
 	private String mensaje = "";
 	boolean completa = false;
@@ -49,11 +55,12 @@ public class AntiManipulacion implements Verificaciones {
 
 		String contenido;
 		try {
-			contenido = new String(java.nio.file.Files.readAllBytes(ARCHIVO_ANTIMANIPULACION),
+			contenido = new String(Files.readAllBytes(ARCHIVO_ANTIMANIPULACION),
 					java.nio.charset.StandardCharsets.UTF_8);
 		} catch (IOException e) {
 			return;
 		}
+
 		if (contenido == null || contenido.trim().isEmpty()) {
 			return;
 		}
@@ -64,76 +71,100 @@ public class AntiManipulacion implements Verificaciones {
 		} catch (Exception e) {
 			return;
 		}
-		if (!raiz.esArreglo()) {
+
+		if (raiz == null || !raiz.esArreglo()) {
 			return;
 		}
 
 		List<String> errores = new ArrayList<>();
 		int tam = raiz.tamano();
 
-		// Determinar número de hilos: 2x núcleos
-		// int numHilos = Runtime.getRuntime().availableProcessors() * 2;
+		// Determinar el número de hilos a usar.
 		int numHilos = Runtime.getRuntime().availableProcessors();
 		ForkJoinPool pool = new ForkJoinPool(numHilos);
 
 		try {
 			for (int i = 0; i < tam; i++) {
 				Nodo item = raiz.en(i);
-				if (item == null || !item.esObjeto())
+				if (item == null || !item.esObjeto()) {
 					continue;
+				}
+
+				// Validar existencia real de la clave "ruta".
+				if (!item.claves().contains("ruta")) {
+					continue;
+				}
 
 				Nodo nodoRuta = item.obtener("ruta");
-				if (nodoRuta == null || nodoRuta.esObjeto() || nodoRuta.esArreglo())
+				if (nodoRuta == null || nodoRuta.esObjeto() || nodoRuta.esArreglo()) {
 					continue;
+				}
 
 				String rutaRelativa = nodoRuta.comoCadena();
-				if (rutaRelativa == null || rutaRelativa.trim().isEmpty())
+				if (rutaRelativa == null || rutaRelativa.trim().isEmpty()) {
 					continue;
+				}
 
-				// Convertir a ruta absoluta
+				rutaRelativa = rutaRelativa.trim();
+
+				// Convertir a ruta absoluta.
 				Path rutaAbsoluta = Paths.get(rutaRelativa);
-
 				if (!rutaAbsoluta.isAbsolute()) {
 					Path userDir = Paths.get(System.getProperty("user.dir"));
 					rutaAbsoluta = userDir.resolve(rutaRelativa);
 				}
 
-				Nodo nodoCarpetas = item.obtener("es_carpeta");
+				// Leer el indicador de carpeta solo si la clave existe realmente.
 				boolean esCarpeta = false;
-				if (nodoCarpetas != null) {
-					try {
-						esCarpeta = nodoCarpetas.comoBooleano();
-					} catch (Exception ignored) {
-						esCarpeta = false;
+				if (item.claves().contains("es_carpeta")) {
+					Nodo nodoCarpetas = item.obtener("es_carpeta");
+					if (nodoCarpetas != null) {
+						try {
+							esCarpeta = nodoCarpetas.comoBooleano();
+						} catch (Exception ignored) {
+							esCarpeta = false;
+						}
 					}
 				}
 
 				if (esCarpeta) {
-					// Verificar carpeta recursivamente
+					// ----- Verificación de carpeta -----
+
+					// Validar existencia real de la clave "hashes".
+					if (!item.claves().contains("hashes")) {
+						errores.add("Entrada de carpeta inválida: " + rutaRelativa);
+						continue;
+					}
+
 					Nodo nodoHashes = item.obtener("hashes");
 					if (nodoHashes == null || !nodoHashes.esObjeto()) {
 						errores.add("Entrada de carpeta inválida: " + rutaRelativa);
 						continue;
 					}
 
+					// Leer mapa de hashes esperados.
 					Map<String, String> hashesEsperados = new HashMap<>();
-					int numHashes = 0;
-					while (true) {
-						Nodo clave = nodoHashes.obtener(String.valueOf(numHashes));
-						if (clave == null)
-							break;
-						if (clave.esArreglo() && clave.tamano() == 2) {
+
+					// Importante:
+					// No usar un while con obtener("0"), obtener("1"), etc.,
+					// porque con el comportamiento original de Json.obtener(...)
+					// eso puede no devolver null nunca.
+					for (String key : nodoHashes.claves()) {
+						Nodo clave = nodoHashes.obtener(key);
+
+						if (clave != null && clave.esArreglo() && clave.tamano() == 2) {
 							Nodo subRuta = clave.en(0);
 							Nodo hash = clave.en(1);
+
 							if (subRuta != null && hash != null) {
 								String r = subRuta.comoCadena();
 								String h = hash.comoCadena();
+
 								if (r != null && h != null) {
 									hashesEsperados.put(r, h);
 								}
 							}
 						}
-						numHashes++;
 					}
 
 					if (hashesEsperados.isEmpty()) {
@@ -141,26 +172,26 @@ public class AntiManipulacion implements Verificaciones {
 						continue;
 					}
 
-					// Escanear archivos reales
+					// Escanear archivos reales.
 					Map<String, String> hashesReales = new ConcurrentHashMap<>();
 					List<Path> archivosParaHash = new ArrayList<>();
 
 					try {
-						Files.walk(rutaAbsoluta).filter(Files::isRegularFile).forEach(p -> archivosParaHash.add(p));
+						Files.walk(rutaAbsoluta).filter(Files::isRegularFile).forEach(archivosParaHash::add);
 					} catch (IOException e) {
 						errores.add("No se pudo acceder a la carpeta: " + rutaRelativa);
 						continue;
 					}
 
-					// Calcular hashes en paralelo
+					// Calcular hashes en paralelo.
 					pool.submit(new HashTask(archivosParaHash, rutaAbsoluta, hashesReales)).join();
 
-					// Verificar
-					// 1. Archivos faltantes o con hash incorrecto
+					// 1. Verificar archivos faltantes o con hash incorrecto.
 					for (Map.Entry<String, String> entry : hashesEsperados.entrySet()) {
 						String subRuta = entry.getKey();
 						String hashEsperado = entry.getValue();
 						String hashReal = hashesReales.get(subRuta);
+
 						if (hashReal == null) {
 							errores.add("Archivo faltante en carpeta: " + rutaRelativa + "/" + subRuta);
 						} else if (!hashReal.equals(hashEsperado)) {
@@ -168,7 +199,7 @@ public class AntiManipulacion implements Verificaciones {
 						}
 					}
 
-					// 2. Archivos nuevos no esperados
+					// 2. Verificar archivos nuevos no esperados.
 					for (String subRuta : hashesReales.keySet()) {
 						if (!hashesEsperados.containsKey(subRuta)) {
 							errores.add("Archivo no autorizado en carpeta: " + rutaRelativa + "/" + subRuta);
@@ -176,7 +207,14 @@ public class AntiManipulacion implements Verificaciones {
 					}
 
 				} else {
-					// Verificar archivo individual
+					// ----- Verificación de archivo individual -----
+
+					// Validar existencia real de la clave "hash".
+					if (!item.claves().contains("hash")) {
+						errores.add("Entrada de archivo inválida: " + rutaRelativa);
+						continue;
+					}
+
 					Nodo nodoHash = item.obtener("hash");
 					if (nodoHash == null || nodoHash.esObjeto() || nodoHash.esArreglo()) {
 						errores.add("Entrada de archivo inválida: " + rutaRelativa);
@@ -215,18 +253,22 @@ public class AntiManipulacion implements Verificaciones {
 			StringBuilder sb = new StringBuilder();
 			sb.append(MonitorDePID.idioma.antimanipulacion_titulo());
 			sb.append("<ul>");
+
 			for (String error : errores) {
-				// Convertir rutas absolutas a relativas en el mensaje
+				// Convertir rutas absolutas a relativas en el mensaje.
 				String errorRel = error.replace(Paths.get(System.getProperty("user.dir")).toString(), ".");
 				sb.append("<li>").append(errorRel).append("</li>");
 			}
+
 			sb.append("</ul>");
 			this.mensaje = sb.toString();
 			this.activado = true;
 		}
 	}
 
-	// === Tarea recursiva para hashing paralelo ===
+	/**
+	 * Tarea recursiva para calcular hashes en paralelo.
+	 */
 	private static class HashTask extends RecursiveAction {
 		private final List<Path> archivos;
 		private final Path raiz;
@@ -241,18 +283,18 @@ public class AntiManipulacion implements Verificaciones {
 		@Override
 		protected void compute() {
 			if (archivos.size() <= 100) {
-				// Procesar directamente
+				// Procesar directamente cuando el bloque es pequeño.
 				for (Path archivo : archivos) {
 					try {
 						String rel = raiz.relativize(archivo).toString();
 						String hash = calcularHash(archivo);
 						resultado.put(rel, hash);
 					} catch (IOException ignored) {
-						// Ignorar archivos no legibles
+						// Ignorar archivos no legibles.
 					}
 				}
 			} else {
-				// Dividir
+				// Dividir en dos subtareas.
 				int mitad = archivos.size() / 2;
 				List<Path> izq = archivos.subList(0, mitad);
 				List<Path> der = archivos.subList(mitad, archivos.size());
@@ -261,17 +303,21 @@ public class AntiManipulacion implements Verificaciones {
 		}
 	}
 
-	// === xxHash32 simple y rápido ===
+	/**
+	 * Calcula un hash rápido del archivo.
+	 */
 	private static String calcularHash(Path archivo) throws IOException {
 		try (InputStream in = Files.newInputStream(archivo)) {
 			long hash = 0x9E3779B1L;
 			byte[] buffer = new byte[8192];
 			int n;
+
 			while ((n = in.read(buffer)) != -1) {
 				for (int i = 0; i < n; i++) {
 					hash ^= (hash << 5) + (hash >>> 2) + (buffer[i] & 0xFF);
 				}
 			}
+
 			return String.format("%08x", hash & 0xFFFFFFFFL);
 		}
 	}
@@ -320,20 +366,18 @@ public class AntiManipulacion implements Verificaciones {
 
 	@Override
 	public boolean anularNormal() {
-		return activado; // Si hay manipulación, forzar apertura de CrashDetector
+		// Si hay manipulación, forzar apertura de CrashDetector.
+		return activado;
 	}
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 
 	@Override
 	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/general/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
-
 }

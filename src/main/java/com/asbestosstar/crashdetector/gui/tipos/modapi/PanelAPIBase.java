@@ -23,6 +23,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
@@ -33,6 +34,7 @@ import com.asbestosstar.crashdetector.dto.modpack.PaginaMods;
 import com.asbestosstar.crashdetector.dto.modpack.ProveedorMods;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
+import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUI;
 
 /**
  * Clase base abstracta sin inicialización en constructor. Toda la lógica debe
@@ -47,6 +49,12 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 	protected JPanel sidebarPanel;
 	protected List<String> archivosJAR;
 	protected ProveedorMods proveedorActual;
+
+	protected JScrollPane scrollMods;
+	protected JScrollPane sidebarScroll;
+	private final java.util.List<JPanel> tarjetasMods = new java.util.ArrayList<>();
+
+	private PrincipalGUI principalGUI;
 
 	// Métodos abstractos para estilo y proveedor
 	protected abstract void inicializarColores();
@@ -74,23 +82,26 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 
 	protected abstract java.awt.Color obtenerColorCajaTexto();
 
+	protected abstract void aplicarEstiloBotonAccion(JButton boton);
+
 	// Constructor mínimo
 	public PanelAPIBase() {
 		setLayout(new BorderLayout());
 	}
 
-	// Inicialización explícita
+	@Override
 	public void init() {
 
 		inicializarColores();
 		setBackground(obtenerColorFondo());
+		setLayout(new BorderLayout());
 
-		JButton botonVolver = new JButton("← Volver");
+		JButton botonVolver = new JButton("←" + MonitorDePID.idioma.volver());
 		aplicarEstiloVolver(botonVolver);
 		botonVolver.setFocusPainted(false);
 		botonVolver.addActionListener(e -> {
-			if (getParent() instanceof com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUI) {
-				((com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUI) getParent()).volver();
+			if (principalGUI != null) {
+				principalGUI.volver();
 			}
 		});
 
@@ -105,38 +116,88 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 		JPanel mainPanel = new JPanel(new BorderLayout());
 		aplicarEstiloPrincipal(mainPanel);
 
-		// ---- Sidebar (scrollable) ----
 		sidebarPanel = crearSidebar();
 
-		JScrollPane sidebarScroll = new JScrollPane(sidebarPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+		sidebarScroll = new JScrollPane(sidebarPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		sidebarScroll.setBorder(null);
-
-		int sidebarW = 140;
-		sidebarScroll.setPreferredSize(new Dimension(sidebarW, 0));
-		sidebarScroll.setMinimumSize(new Dimension(sidebarW, 0));
 		sidebarScroll.getVerticalScrollBar().setUnitIncrement(14);
-
 		sidebarScroll.getViewport().setOpaque(true);
 		sidebarScroll.getViewport().setBackground(obtenerColorFondo().darker());
 
 		mainPanel.add(sidebarScroll, BorderLayout.WEST);
 
-		// ---- Mod list (scrollable) ----
 		modListPanel = new JPanel();
 		modListPanel.setLayout(new BoxLayout(modListPanel, BoxLayout.Y_AXIS));
+		modListPanel.setOpaque(true);
+		modListPanel.setBackground(obtenerColorFondo());
 
-		JScrollPane scrollPane = new JScrollPane(modListPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+		scrollMods = new JScrollPane(modListPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
+		scrollMods.setBorder(new EmptyBorder(0, 0, 0, 0));
+		scrollMods.getVerticalScrollBar().setUnitIncrement(14);
 
-		mainPanel.add(scrollPane, BorderLayout.CENTER);
+		mainPanel.add(scrollMods, BorderLayout.CENTER);
 
 		add(mainPanel, BorderLayout.CENTER);
+
+		addComponentListener(new java.awt.event.ComponentAdapter() {
+			@Override
+			public void componentResized(java.awt.event.ComponentEvent e) {
+				actualizarEscalado();
+			}
+		});
+
+		scrollMods.getViewport().addComponentListener(new java.awt.event.ComponentAdapter() {
+			@Override
+			public void componentResized(java.awt.event.ComponentEvent e) {
+				actualizarEscalado();
+			}
+		});
 
 		cargarArchivosJAR();
 		proveedorActual = crearProveedorMods();
 		buscarMods("");
+
+		SwingUtilities.invokeLater(this::actualizarEscalado);
+	}
+
+	protected void actualizarEscalado() {
+
+		int anchoTotal = getWidth();
+		if (anchoTotal <= 0) {
+			return;
+		}
+
+		int sidebarW = Math.max(150, Math.min(280, (int) (anchoTotal * 0.22)));
+
+		if (sidebarScroll != null) {
+			sidebarScroll.setPreferredSize(new Dimension(sidebarW, 0));
+			sidebarScroll.setMinimumSize(new Dimension(Math.max(130, sidebarW - 20), 0));
+		}
+
+		if (modListPanel != null) {
+			modListPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+			modListPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
+		}
+
+		for (JPanel tarjeta : tarjetasMods) {
+			tarjeta.setAlignmentX(Component.LEFT_ALIGNMENT);
+			reconfigurarTarjeta(tarjeta);
+		}
+
+		if (modListPanel != null) {
+			modListPanel.revalidate();
+			modListPanel.repaint();
+		}
+
+		if (sidebarPanel != null) {
+			sidebarPanel.revalidate();
+			sidebarPanel.repaint();
+		}
+
+		revalidate();
+		repaint();
 	}
 
 	// === Resto de métodos idénticos a la versión anterior ===
@@ -149,41 +210,31 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
 		panel.setBackground(obtenerColorFondo());
 
-		JLabel label = new JLabel("Buscar mods:");
+		JLabel label = new JLabel(MonitorDePID.idioma.buscar());
 		label.setForeground(obtenerColorTexto());
 		panel.add(label);
 
 		searchBar = new JTextField(20);
 		aplicarEstiloBusqueda(searchBar);
-		searchBar.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
-			@Override
-			public void insertUpdate(javax.swing.event.DocumentEvent e) {
-				buscarMods(searchBar.getText());
-			}
-
-			@Override
-			public void removeUpdate(javax.swing.event.DocumentEvent e) {
-				buscarMods(searchBar.getText());
-			}
-
-			@Override
-			public void changedUpdate(javax.swing.event.DocumentEvent e) {
-				buscarMods(searchBar.getText());
-			}
-		});
 		panel.add(searchBar);
+
+		JButton botonBuscar = new JButton(MonitorDePID.idioma.buscar());
+		aplicarEstiloBotonAccion(botonBuscar);
+		botonBuscar.addActionListener(e -> buscarMods(searchBar.getText()));
+		panel.add(botonBuscar);
+
 		return panel;
 	}
 
 	private void buscarMods(String termino) {
 
 		modListPanel.removeAll();
+		tarjetasMods.clear();
 
 		CompletableFuture.runAsync(() -> {
 			try {
 				PaginaMods pagina = proveedorActual.buscarMods(MonitorDePID.idioma.codigo().toUpperCase(), 0, termino);
 
-				// Evitar duplicados por URL de proyecto
 				java.util.Set<String> urlsVistas = new java.util.HashSet<>();
 
 				SwingUtilities.invokeLater(() -> {
@@ -192,20 +243,22 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 
 						String enlace = mod.obtenerEnlaceProyecto();
 
-						// Validaciones básicas
 						if (enlace == null || enlace.isEmpty())
 							continue;
 
 						if (!enlace.toLowerCase().contains("curseforge.com"))
 							continue;
 
-						// FILTRO ANTI-DUPLICADOS
 						if (!urlsVistas.add(enlace))
 							continue;
 
-						modListPanel.add(crearTarjetaMod(mod));
+						JPanel tarjeta = crearTarjetaMod(mod);
+						tarjeta.setAlignmentX(Component.LEFT_ALIGNMENT);
+						modListPanel.add(tarjeta);
+						modListPanel.add(Box.createRigidArea(new Dimension(0, 4)));
 					}
 
+					actualizarEscalado();
 					modListPanel.revalidate();
 					modListPanel.repaint();
 				});
@@ -214,6 +267,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 				SwingUtilities.invokeLater(() -> {
 					modListPanel.add(new JLabel("Error al cargar mods."));
 					modListPanel.revalidate();
+					modListPanel.repaint();
 				});
 			}
 		});
@@ -221,65 +275,173 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 
 	protected JPanel crearTarjetaMod(InternetMod mod) {
 
-		// Altura mayor, estilo TLMods
-		int anchoMaximo = 650;
-		int altoTarjeta = 96;
-
-		JPanel tarjeta = new JPanel(new BorderLayout(10, 8));
-		tarjeta.setMaximumSize(new Dimension(anchoMaximo, altoTarjeta));
-		tarjeta.setPreferredSize(new Dimension(anchoMaximo, altoTarjeta));
-		tarjeta.setMinimumSize(new Dimension(anchoMaximo, altoTarjeta));
-		tarjeta.setAlignmentX(Component.CENTER_ALIGNMENT);
+		JPanel tarjeta = new JPanel(new BorderLayout(10, 6));
+		tarjeta.setAlignmentX(Component.LEFT_ALIGNMENT);
+		tarjeta.setOpaque(true);
 
 		tarjeta.setBorder(javax.swing.BorderFactory.createCompoundBorder(
 				javax.swing.BorderFactory.createLineBorder(java.awt.Color.DARK_GRAY, 1),
-				javax.swing.BorderFactory.createEmptyBorder(8, 10, 8, 10)));
+				javax.swing.BorderFactory.createEmptyBorder(6, 8, 6, 8)));
 
 		aplicarEstiloTarjetaMod(tarjeta);
 
-		// ================= IZQUIERDA: ICONO + BOTÓN =================
+		tarjeta.putClientProperty("mod", mod);
+
 		JPanel panelIzq = new JPanel();
 		panelIzq.setLayout(new BoxLayout(panelIzq, BoxLayout.Y_AXIS));
 		panelIzq.setOpaque(false);
+		panelIzq.setAlignmentY(Component.TOP_ALIGNMENT);
 
-		JLabel icono = crearIconoMod(mod);
+		JLabel icono = crearIconoMod(mod, 48);
 		icono.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		JButton instalar = new JButton("Instalar");
 		instalar.setAlignmentX(Component.CENTER_ALIGNMENT);
-		instalar.setMaximumSize(new Dimension(72, 22));
-		instalar.setPreferredSize(new Dimension(72, 22));
-		instalar.setBackground(obtenerColorBoton());
-		instalar.setForeground(java.awt.Color.WHITE);
-
+		aplicarEstiloBotonAccion(instalar);
 		instalar.addActionListener(e -> instalarMod(mod));
 
 		panelIzq.add(icono);
 		panelIzq.add(Box.createRigidArea(new Dimension(0, 6)));
 		panelIzq.add(instalar);
 
-		// ================= CENTRO: TEXTO =================
 		JPanel centro = new JPanel();
 		centro.setLayout(new BoxLayout(centro, BoxLayout.Y_AXIS));
 		centro.setOpaque(false);
+		centro.setAlignmentY(Component.TOP_ALIGNMENT);
+		centro.setAlignmentX(Component.LEFT_ALIGNMENT);
 
 		JLabel nombre = new JLabel(mod.obtenerNombre());
 		nombre.setForeground(obtenerColorTexto());
-		nombre.setFont(nombre.getFont().deriveFont(15f));
+		nombre.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-		String desc = limitarTexto(mod.obtenerDescripcionCorta(), 420);
-		JLabel descripcion = new JLabel("<html><div style='width:460px;'>" + desc + "</div></html>");
+		JTextArea descripcion = new JTextArea();
+		descripcion.setEditable(false);
+		descripcion.setLineWrap(true);
+		descripcion.setWrapStyleWord(true);
+		descripcion.setOpaque(false);
+		descripcion.setFocusable(false);
+		descripcion.setBorder(null);
 		descripcion.setForeground(java.awt.Color.LIGHT_GRAY);
+		descripcion.setAlignmentX(Component.LEFT_ALIGNMENT);
 
 		centro.add(nombre);
-		centro.add(Box.createRigidArea(new Dimension(0, 4)));
+		centro.add(Box.createRigidArea(new Dimension(0, 2)));
 		centro.add(descripcion);
 
-		// ================= ENSAMBLADO =================
+		tarjeta.putClientProperty("panelIzq", panelIzq);
+		tarjeta.putClientProperty("icono", icono);
+		tarjeta.putClientProperty("botonInstalar", instalar);
+		tarjeta.putClientProperty("centro", centro);
+		tarjeta.putClientProperty("labelNombre", nombre);
+		tarjeta.putClientProperty("labelDescripcion", descripcion);
+
 		tarjeta.add(panelIzq, BorderLayout.WEST);
 		tarjeta.add(centro, BorderLayout.CENTER);
 
+		tarjetasMods.add(tarjeta);
+
+		reconfigurarTarjeta(tarjeta);
+
 		return tarjeta;
+	}
+
+	private void reconfigurarTarjeta(JPanel tarjeta) {
+
+		InternetMod mod = (InternetMod) tarjeta.getClientProperty("mod");
+		if (mod == null) {
+			return;
+		}
+
+		JPanel panelIzq = (JPanel) tarjeta.getClientProperty("panelIzq");
+		JPanel centro = (JPanel) tarjeta.getClientProperty("centro");
+		JLabel icono = (JLabel) tarjeta.getClientProperty("icono");
+		JButton instalar = (JButton) tarjeta.getClientProperty("botonInstalar");
+		JLabel nombre = (JLabel) tarjeta.getClientProperty("labelNombre");
+		JTextArea descripcion = (JTextArea) tarjeta.getClientProperty("labelDescripcion");
+
+		int viewportW = (scrollMods != null && scrollMods.getViewport() != null) ? scrollMods.getViewport().getWidth()
+				: getWidth();
+
+		if (viewportW <= 0) {
+			viewportW = 700;
+		}
+
+		float escala = Math.max(0.85f, Math.min(1.05f, viewportW / 650f));
+
+		int iconSize = Math.max(40, Math.min(52, Math.round(48 * escala)));
+		int botonW = Math.max(64, Math.min(88, Math.round(72 * escala)));
+		int botonH = Math.max(22, Math.min(26, Math.round(24 * escala)));
+		int altoTarjeta = 92;
+
+		int anchoTarjeta = Math.max(320, viewportW - 2);
+		int anchoPanelIzq = Math.max(iconSize, botonW);
+		int anchoCentro = anchoTarjeta - tarjeta.getInsets().left - tarjeta.getInsets().right - anchoPanelIzq - 10; // hgap
+																													// de
+																													// BorderLayout
+
+		anchoCentro = Math.max(140, anchoCentro);
+		int anchoDescripcion = Math.max(120, anchoCentro);
+
+		if (icono != null) {
+			icono.setPreferredSize(new Dimension(iconSize, iconSize));
+			icono.setMinimumSize(new Dimension(iconSize, iconSize));
+			icono.setMaximumSize(new Dimension(iconSize, iconSize));
+			icono.setIcon(crearIconoModEscalado(mod, iconSize));
+		}
+
+		if (instalar != null) {
+			instalar.setPreferredSize(new Dimension(botonW, botonH));
+			instalar.setMinimumSize(new Dimension(botonW, botonH));
+			instalar.setMaximumSize(new Dimension(botonW, botonH));
+			instalar.setFont(instalar.getFont().deriveFont(Math.max(10.5f, Math.min(12.5f, 11.2f * escala))));
+		}
+
+		if (panelIzq != null) {
+			panelIzq.setPreferredSize(new Dimension(anchoPanelIzq, altoTarjeta - 12));
+			panelIzq.setMinimumSize(new Dimension(anchoPanelIzq, altoTarjeta - 12));
+			panelIzq.setMaximumSize(new Dimension(anchoPanelIzq, Integer.MAX_VALUE));
+		}
+
+		if (centro != null) {
+			centro.setPreferredSize(new Dimension(anchoCentro, altoTarjeta - 12));
+			centro.setMinimumSize(new Dimension(anchoCentro, altoTarjeta - 12));
+			centro.setMaximumSize(new Dimension(anchoCentro, Integer.MAX_VALUE));
+		}
+
+		if (nombre != null) {
+			nombre.setFont(nombre.getFont().deriveFont(Math.max(13f, Math.min(17f, 15f * escala))));
+			nombre.setPreferredSize(new Dimension(anchoCentro, 22));
+			nombre.setMinimumSize(new Dimension(anchoCentro, 22));
+			nombre.setMaximumSize(new Dimension(anchoCentro, 22));
+		}
+
+		if (descripcion != null) {
+			String desc = mod.obtenerDescripcionCorta();
+			if (desc == null) {
+				desc = "";
+			}
+
+			desc = desc.replace("\n", " ").replaceAll("\\s+", " ").trim();
+
+			int maxCaracteres = Math.max(120, Math.min(260, (int) (anchoDescripcion * 0.42)));
+			if (desc.length() > maxCaracteres) {
+				desc = desc.substring(0, maxCaracteres).trim() + "...";
+			}
+
+			descripcion.setText(desc);
+			descripcion.setFont(descripcion.getFont().deriveFont(Math.max(10.5f, Math.min(12.5f, 11.2f * escala))));
+			descripcion.setPreferredSize(new Dimension(anchoDescripcion, altoTarjeta - 34));
+			descripcion.setMinimumSize(new Dimension(anchoDescripcion, altoTarjeta - 34));
+			descripcion.setMaximumSize(new Dimension(anchoDescripcion, altoTarjeta - 34));
+			descripcion.setSize(new Dimension(anchoDescripcion, altoTarjeta - 34));
+		}
+
+		tarjeta.setPreferredSize(new Dimension(anchoTarjeta, altoTarjeta));
+		tarjeta.setMinimumSize(new Dimension(280, altoTarjeta));
+		tarjeta.setMaximumSize(new Dimension(Integer.MAX_VALUE, altoTarjeta));
+
+		tarjeta.revalidate();
+		tarjeta.repaint();
 	}
 
 	private JLabel crearIconoMod(InternetMod mod) {
@@ -450,11 +612,19 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 			nombre.setHorizontalAlignment(JLabel.LEFT);
 			nombre.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-			nombre.setPreferredSize(new Dimension(86, 20));
-			nombre.setMinimumSize(new Dimension(86, 20));
+			int anchoSidebar = (sidebarScroll != null && sidebarScroll.getViewport() != null)
+					? sidebarScroll.getViewport().getWidth()
+					: 160;
+
+			int anchoNombre = Math.max(70, anchoSidebar - 70);
+			nombre.setPreferredSize(new Dimension(anchoNombre, 20));
+			nombre.setMinimumSize(new Dimension(50, 20));
 
 			SwitchVerde sw = new SwitchVerde();
 			sw.setSelected(activo);
+
+			float escalaSwitch = Math.max(0.90f, Math.min(1.20f, getWidth() / 900f));
+			sw.actualizarEscala(escalaSwitch);
 
 			sw.addActionListener(e -> {
 				try {
@@ -577,6 +747,50 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 		return archivo;
 	}
 
+	private JLabel crearIconoMod(InternetMod mod, int size) {
+
+		JLabel label = new JLabel();
+		label.setPreferredSize(new Dimension(size, size));
+		label.setMinimumSize(new Dimension(size, size));
+		label.setMaximumSize(new Dimension(size, size));
+		label.setOpaque(true);
+		label.setBackground(new java.awt.Color(60, 60, 60));
+		label.setHorizontalAlignment(JLabel.CENTER);
+		label.setVerticalAlignment(JLabel.CENTER);
+
+		label.setIcon(crearIconoModEscalado(mod, size));
+
+		return label;
+	}
+
+	private javax.swing.Icon crearIconoModEscalado(InternetMod mod, int size) {
+
+		String url = mod.urlIcon();
+
+		if (url == null || url.isEmpty()) {
+			return iconoPlaceholder(size);
+		}
+
+		try {
+			java.net.URL u = new java.net.URL(url);
+			java.awt.Image img = javax.imageio.ImageIO.read(u);
+
+			if (img != null) {
+				java.awt.Image escalada = img.getScaledInstance(size, size, java.awt.Image.SCALE_SMOOTH);
+				return new javax.swing.ImageIcon(escalada);
+			}
+
+		} catch (Exception e) {
+			// Ignorar y usar placeholder
+		}
+
+		return iconoPlaceholder(size);
+	}
+
+	public void establecerPrincipalGUI(com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUI principalGUI) {
+		this.principalGUI = principalGUI;
+	}
+
 	@Override
 	public TipoGUI<?> tipo() {
 		return TipoGUI.MOD_API_PANEL;
@@ -584,18 +798,26 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 
 	public static class SwitchVerde extends JCheckBox {
 
-		private static final int W = 34;
-		private static final int H = 16;
+		private int w = 34;
+		private int h = 16;
 
 		public SwitchVerde() {
 			setOpaque(false);
 			setFocusPainted(false);
 			setBorderPainted(false);
 			setContentAreaFilled(false);
+			actualizarEscala(1.0f);
+		}
 
-			setPreferredSize(new Dimension(W, H));
-			setMinimumSize(new Dimension(W, H));
-			setMaximumSize(new Dimension(W, H));
+		public void actualizarEscala(float escala) {
+			w = Math.max(28, Math.min(52, Math.round(34 * escala)));
+			h = Math.max(14, Math.min(24, Math.round(16 * escala)));
+
+			setPreferredSize(new Dimension(w, h));
+			setMinimumSize(new Dimension(w, h));
+			setMaximumSize(new Dimension(w, h));
+			revalidate();
+			repaint();
 		}
 
 		@Override
@@ -605,24 +827,24 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 			g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
 
 			int x = 0;
-			int y = (getHeight() - H) / 2;
+			int y = (getHeight() - h) / 2;
 
 			java.awt.Color fondo = isSelected() ? new java.awt.Color(110, 210, 80) : new java.awt.Color(90, 90, 90);
 
 			g2.setColor(fondo);
-			g2.fillRect(x, y, W, H);
+			g2.fillRoundRect(x, y, w, h, h, h);
 
 			g2.setColor(new java.awt.Color(0, 0, 0, 100));
-			g2.drawRect(x, y, W - 1, H - 1);
+			g2.drawRoundRect(x, y, w - 1, h - 1, h, h);
 
-			int knobSize = H - 4;
-			int knobX = isSelected() ? x + W - knobSize - 2 : x + 2;
+			int knobSize = h - 4;
+			int knobX = isSelected() ? x + w - knobSize - 2 : x + 2;
 
 			g2.setColor(java.awt.Color.WHITE);
-			g2.fillRect(knobX, y + 2, knobSize, knobSize);
+			g2.fillOval(knobX, y + 2, knobSize, knobSize);
 
 			g2.setColor(new java.awt.Color(0, 0, 0, 80));
-			g2.drawRect(knobX, y + 2, knobSize - 1, knobSize - 1);
+			g2.drawOval(knobX, y + 2, knobSize - 1, knobSize - 1);
 
 			g2.dispose();
 		}
