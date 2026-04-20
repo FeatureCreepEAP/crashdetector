@@ -131,7 +131,7 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 	private JPanel seccionConfiguracionRef;
 	private JPanel barraLateralDerechaRef;
 	private JLabel logoLabelRef;
-	
+
 	private JScrollPane scrollBarraLateralRef;
 	private JSplitPane splitPrincipalRef;
 
@@ -177,7 +177,8 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 			scrollPane.getVerticalScrollBar().setValue(0);
 		}
 
-		// --- Panel inferior principal (configuración + botón QuickFix + botones de acción)
+		// --- Panel inferior principal (configuración + botón QuickFix + botones de
+		// acción)
 		panelInferiorRef = new JPanel(new BorderLayout(5, 5));
 		JPanel panelInferior = panelInferiorRef;
 		panelInferior.setBackground(colorFondo.obtener());
@@ -498,9 +499,6 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 		JPanel barraLateralDerecha = barraLateralDerechaRef;
 		barraLateralDerecha.setLayout(new BoxLayout(barraLateralDerecha, BoxLayout.Y_AXIS));
 		barraLateralDerecha.setBackground(colorBoton.obtener().darker());
-
-		// El alto preferido es grande para que el JScrollPane detecte correctamente
-		// cuándo hace falta scroll vertical.
 		barraLateralDerecha.setPreferredSize(new Dimension(250, 800));
 
 		logoLabelRef = new JLabel();
@@ -583,7 +581,35 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 		add(panelInferior, BorderLayout.SOUTH);
 
 		setTitle(Config.obtenerInstancia().obtenerNombreCD());
-		setSize(1050, 650);
+
+		// Tamaño base correcto
+		int anchoBase = 1050;
+		int altoBase = 650;
+
+		// Si la pantalla útil es 1080 o más de alto, escalar a 720 de alto y
+		// aumentar el ancho proporcionalmente.
+		java.awt.Rectangle areaUtil = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment()
+				.getMaximumWindowBounds();
+
+		CrashDetectorLogger.log("Área útil detectada: " + areaUtil.width + "x" + areaUtil.height);
+
+		int anchoFinal = anchoBase;
+		int altoFinal = altoBase;
+
+		if (areaUtil.height >= 1080) {
+			double factorEscala = 720.0 / altoBase;
+			anchoFinal = (int) Math.round(anchoBase * factorEscala);
+			altoFinal = 720;
+
+			CrashDetectorLogger.log("Pantalla >= 1080 de alto detectada. Aplicando escalado de ventana.");
+			CrashDetectorLogger.log("Factor de escala aplicado: " + factorEscala);
+		} else {
+			CrashDetectorLogger.log("Pantalla menor de 1080 de alto. Usando tamaño base.");
+		}
+
+		CrashDetectorLogger.log("Tamaño final de ventana: " + anchoFinal + "x" + altoFinal);
+
+		setSize(anchoFinal, altoFinal);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 	}
