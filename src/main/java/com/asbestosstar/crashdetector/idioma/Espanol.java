@@ -9082,5 +9082,122 @@ public class Espanol implements Idioma {
 	public String iaImagenNoDisponible() {
 		return "Imagen no disponible";
 	}
+	
+	
+	@Override
+	public String mensajeOculusIrisUnknownShaderVariable() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Posible error de shaders con Oculus o Iris detectado.</b>"
+				+ "<p>El bitácora contiene tanto <b>kroppeb.stareval.resolver.ExpressionResolver.resolveExpressionInternal</b> "
+				+ "como <b>java.lang.RuntimeException: Unknown variable:</b>.</p>"
+				+ "<p>Esta combinación suele indicar un problema al evaluar una variable dentro de un shader, "
+				+ "frecuentemente relacionado con <b>Oculus</b>, <b>Iris</b>, o con el <b>shader pack</b> que está en uso.</p>"
+				+ "<p><b>Orden recomendado de prueba:</b></p>"
+				+ "<ul>"
+				+ "<li>Primero, inicia el juego <b>sin shaders activados</b>.</li>"
+				+ "<li>Si el problema continúa, prueba iniciar <b>sin Oculus o Iris</b>.</li>"
+				+ "<li>Actualiza <b>Oculus/Iris</b>, el <b>shader pack</b> y los mods gráficos relacionados.</li>"
+				+ "<li>Si usas otros mods de renderizado o gráficos, revisa incompatibilidades entre ellos.</li>"
+				+ "</ul>"
+				+ "<p>En la práctica, este fallo suele venir del <b>shader pack</b> o de su interacción con <b>Oculus/Iris</b>.</p>";
+	}
+
+	@Override
+	public String nombreOculusIrisUnknownShaderVariable() {
+		return "Posible error de shaders con Oculus/Iris";
+	}
+	
+	@Override
+	public String mensajeItemNoExiste(String itemFaltante, String namespace) {
+		String itemHtml = itemFaltante == null || itemFaltante.isEmpty() ? "(desconocido)" : itemFaltante;
+		String namespaceHtml = namespace == null || namespace.isEmpty() ? "(desconocido)" : namespace;
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Se intentó usar un ítem que no existe.</b>"
+				+ "<p>El bitácora contiene la línea <b>Item: " + itemHtml + " does not exist</b>.</p>"
+				+ "<p>Esto normalmente significa que algún <b>datapack</b>, <b>mod</b> o <b>configuración</b> "
+				+ "está haciendo referencia a un ítem que no está presente en el juego.</p>"
+				+ "<p><b>Qué revisar:</b></p>"
+				+ "<ul>"
+				+ "<li>Comprueba si tienes instalado el mod que debería aportar el ítem <b>" + itemHtml + "</b>.</li>"
+				+ "<li>Si sí lo tienes, puede que sea la <b>versión incorrecta</b>, que el ítem haya sido cambiado o eliminado, "
+				+ "o que el mod tenga algún problema y convenga quitarlo.</li>"
+				+ "<li>Si no tienes ese mod, prueba a <b>instalarlo</b>.</li>"
+				+ "</ul>"
+				+ "<p><b>Para averiguar qué mod o datapack está pidiendo ese ítem:</b></p>"
+				+ "<ul>"
+				+ "<li>Usa la utilidad <b>grepr</b> en la barra lateral.</li>"
+				+ "<li><b>No</b> selecciones una carpeta.</li>"
+				+ "<li>Activa la opción <b>search in archives</b>.</li>"
+				+ "<li>En el texto de búsqueda, escribe el <b>namespace</b>, es decir, la parte antes de los dos puntos: "
+				+ "<b>" + namespaceHtml + "</b>.</li>"
+				+ "</ul>"
+				+ "<p>Eso suele ayudar a encontrar qué archivo, mod o datapack está haciendo la referencia inválida.</p>";
+	}
+
+	@Override
+	public String nombreItemNoExiste() {
+		return "Ítem inexistente referenciado";
+	}
+	
+	
+	@Override
+	public String mensajeCobblemonPinkanIslandsRhyhornModelo() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Error de modelo detectado para Rhyhorn.</b>"
+				+ "<p>El bitácora contiene la línea <b>Unable to load model cobblemon:rhyhorn_male.geo for cobblemon:rhyhorn</b>.</p>"
+				+ "<p>Aunque el modelo usa el namespace de <b>Cobblemon</b>, esta línea suele ser causada por el mod "
+				+ "<b>Cobblemon: Pinkan Islands</b>, que es de donde proviene ese <b>Rhyhorn</b>.</p>"
+				+ "<p><b>Qué probar:</b></p>"
+				+ "<ul>"
+				+ "<li>Quita o desactiva <b>Cobblemon: Pinkan Islands</b> y prueba nuevamente.</li>"
+				+ "<li>Actualiza <b>Cobblemon</b> y <b>Cobblemon: Pinkan Islands</b> a versiones compatibles entre sí.</li>"
+				+ "<li>Si el problema empezó tras actualizar uno de esos mods, prueba una combinación de versiones distinta.</li>"
+				+ "</ul>"
+				+ "<p>Este fallo normalmente indica un modelo faltante, mal registrado o incompatible dentro de "
+				+ "<b>Cobblemon: Pinkan Islands</b>.</p>";
+	}
+
+	@Override
+	public String nombreCobblemonPinkanIslandsRhyhornModelo() {
+		return "Error de modelo de Rhyhorn en Cobblemon: Pinkan Islands";
+	}
+	
+	
+	@Override
+	public String mensajeColdSweatInitDynamicTags() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Error detectado en Cold Sweat.</b>"
+				+ "<p>El bitácora contiene indicios como <b>$cold_sweat$onBuildStart</b>, "
+				+ "<b>InitDynamicTagsEvent.fillTag</b> y un <b>NullPointerException</b> donde "
+				+ "el registro aparece como nulo.</p>"
+				+ "<p>Esto suele indicar un problema de <b>Cold Sweat</b> al construir o llenar "
+				+ "<b>tags dinámicos</b>, normalmente por incompatibilidad, error interno del mod "
+				+ "o una combinación conflictiva con otro mod o datapack.</p>"
+				+ "<p><b>Qué probar:</b></p>"
+				+ "<ul>"
+				+ "<li>Quita o desactiva <b>Cold Sweat</b> y prueba nuevamente.</li>"
+				+ "<li>Actualiza <b>Cold Sweat</b> a una versión compatible con tu versión de Minecraft y tu loader.</li>"
+				+ "<li>Si usas datapacks o mods que alteran <b>tags</b>, <b>biomas</b>, <b>temperaturas</b> o registros relacionados, revísalos también.</li>"
+				+ "<li>Si el error empezó tras actualizar mods, prueba una combinación de versiones distinta.</li>"
+				+ "</ul>"
+				+ "<p>En este caso, <b>Cold Sweat</b> está involucrado directamente en el fallo.</p>";
+	}
+
+	@Override
+	public String nombreColdSweatInitDynamicTags() {
+		return "Error de Cold Sweat en tags dinámicos";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

@@ -8586,5 +8586,129 @@ public class Vietnamita implements Idioma {
 		return "Loại lỗi này thường xảy ra do sự không tương thích giữa các mod. "
 				+ "Đặc biệt phổ biến với các mod không hoạt động đúng với ConnectorMod.";
 	}
+	
+	
+	@Override
+	public String mensajeOculusIrisUnknownShaderVariable() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "Phát hiện lỗi shader có thể xảy ra với Oculus hoặc Iris.</b>"
+	            + "<p>Nhật ký lỗi (log) chứa cả <b>kroppeb.stareval.resolver.ExpressionResolver.resolveExpressionInternal</b> "
+	            + "và <b>java.lang.RuntimeException: Unknown variable:</b>.</p>"
+	            + "<p>Sự kết hợp này thường cho thấy vấn đề khi đánh giá một biến trong shader, "
+	            + "thường liên quan đến <b>Oculus</b>, <b>Iris</b> hoặc <b>gói shader (shader pack)</b> đang sử dụng.</p>"
+	            + "<p><b>Thứ tự khắc phục được khuyến nghị:</b></p>"
+	            + "<ul>"
+	            + "<li>Trước tiên, hãy khởi động game <b>mà không bật shader</b>.</li>"
+	            + "<li>Nếu vấn đề vẫn tiếp diễn, hãy thử khởi động <b>mà không có Oculus hoặc Iris</b>.</li>"
+	            + "<li>Cập nhật <b>Oculus/Iris</b>, <b>gói shader</b> và các mod đồ họa liên quan.</li>"
+	            + "<li>Nếu bạn dùng các mod render hoặc đồ họa khác, hãy kiểm tra xung đột giữa chúng.</li>"
+	            + "</ul>"
+	            + "<p>Trong thực tế, lỗi này thường đến từ <b>gói shader</b> hoặc tương tác của nó với <b>Oculus/Iris</b>.</p>";
+	}
+
+	@Override
+	public String nombreOculusIrisUnknownShaderVariable() {
+	    return "Lỗi shader có thể xảy ra với Oculus/Iris";
+	}
+	
+	@Override
+	public String mensajeItemNoExiste(String itemFaltante, String namespace) {
+		String itemHtml = itemFaltante == null || itemFaltante.isEmpty() ? "(không xác định)" : itemFaltante;
+		String namespaceHtml = namespace == null || namespace.isEmpty() ? "(không xác định)" : namespace;
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Đã cố gắng sử dụng một vật phẩm không tồn tại.</b>"
+				+ "<p>Nhật ký chứa dòng <b>Item: " + itemHtml + " does not exist</b>.</p>"
+				+ "<p>Điều này thường có nghĩa là một <b>datapack</b>, <b>mod</b> hoặc <b>cấu hình</b> nào đó "
+				+ "đang tham chiếu đến một vật phẩm không có trong trò chơi.</p>"
+				+ "<p><b>Những điều cần kiểm tra:</b></p>"
+				+ "<ul>"
+				+ "<li>Kiểm tra xem bạn đã cài đặt mod cung cấp vật phẩm <b>" + itemHtml + "</b> chưa.</li>"
+				+ "<li>Nếu đã có, có thể đó là <b>phiên bản sai</b>, vật phẩm đã bị thay đổi hoặc xóa, "
+				+ "hoặc mod bị lỗi và nên gỡ bỏ.</li>"
+				+ "<li>Nếu bạn không có mod đó, hãy thử <b>cài đặt nó</b>.</li>"
+				+ "</ul>"
+				+ "<p><b>Để tìm ra mod hoặc datapack nào đang yêu cầu vật phẩm đó:</b></p>"
+				+ "<ul>"
+				+ "<li>Sử dụng công cụ <b>grepr</b> ở thanh bên.</li>"
+				+ "<li><b>Không</b> chọn thư mục.</li>"
+				+ "<li>Bật tùy chọn <b>search in archives</b>.</li>"
+				+ "<li>Trong ô tìm kiếm, nhập <b>namespace</b>, tức là phần trước dấu hai chấm: "
+				+ "<b>" + namespaceHtml + "</b>.</li>"
+				+ "</ul>"
+				+ "<p>Điều này thường giúp tìm ra tệp, mod hoặc datapack đang tạo tham chiếu không hợp lệ.</p>";
+	}
+
+	@Override
+	public String nombreItemNoExiste() {
+		return "Tham chiếu đến vật phẩm không tồn tại";
+	}
+	
+	@Override
+	public String mensajeCobblemonPinkanIslandsRhyhornModelo() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Phát hiện lỗi mô hình cho Rhyhorn.</b>"
+				+ "<p>Nhật ký chứa dòng <b>Unable to load model cobblemon:rhyhorn_male.geo for cobblemon:rhyhorn</b>.</p>"
+				+ "<p>Mặc dù mô hình sử dụng namespace của <b>Cobblemon</b>, nhưng dòng này thường do mod "
+				+ "<b>Cobblemon: Pinkan Islands</b> gây ra, nơi xuất phát của <b>Rhyhorn</b> này.</p>"
+				+ "<p><b>Những điều nên thử:</b></p>"
+				+ "<ul>"
+				+ "<li>Gỡ bỏ hoặc vô hiệu hóa <b>Cobblemon: Pinkan Islands</b> và thử lại.</li>"
+				+ "<li>Cập nhật <b>Cobblemon</b> và <b>Cobblemon: Pinkan Islands</b> lên các phiên bản tương thích với nhau.</li>"
+				+ "<li>Nếu vấn đề bắt đầu sau khi cập nhật một trong các mod đó, hãy thử một bộ phiên bản khác.</li>"
+				+ "</ul>"
+				+ "<p>Lỗi này thường chỉ ra một mô hình bị thiếu, đăng ký sai hoặc không tương thích trong "
+				+ "<b>Cobblemon: Pinkan Islands</b>.</p>";
+	}
+
+	@Override
+	public String nombreCobblemonPinkanIslandsRhyhornModelo() {
+		return "Lỗi mô hình Rhyhorn trong Cobblemon: Pinkan Islands";
+	}
+	
+	@Override
+	public String mensajeColdSweatInitDynamicTags() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Phát hiện lỗi trong Cold Sweat.</b>"
+				+ "<p>Nhật ký chứa các dấu hiệu như <b>$cold_sweat$onBuildStart</b>, "
+				+ "<b>InitDynamicTagsEvent.fillTag</b> và một <b>NullPointerException</b> nơi "
+				+ "registry xuất hiện là null.</p>"
+				+ "<p>Điều này thường chỉ ra vấn đề của <b>Cold Sweat</b> khi xây dựng hoặc điền "
+				+ "<b>tags động</b>, thường do không tương thích, lỗi nội bộ của mod "
+				+ "hoặc sự kết hợp xung đột với mod hoặc datapack khác.</p>"
+				+ "<p><b>Những điều nên thử:</b></p>"
+				+ "<ul>"
+				+ "<li>Gỡ bỏ hoặc vô hiệu hóa <b>Cold Sweat</b> và thử lại.</li>"
+				+ "<li>Cập nhật <b>Cold Sweat</b> lên phiên bản tương thích với phiên bản Minecraft và loader của bạn.</li>"
+				+ "<li>Nếu bạn dùng datapacks hoặc mod thay đổi <b>tags</b>, <b>quần xã (biomes)</b>, <b>nhiệt độ</b> hoặc các registry liên quan, hãy kiểm tra chúng.</li>"
+				+ "<li>Nếu lỗi bắt đầu sau khi cập nhật mod, hãy thử một bộ phiên bản khác.</li>"
+				+ "</ul>"
+				+ "<p>Trong trường hợp này, <b>Cold Sweat</b> liên quan trực tiếp đến sự cố.</p>";
+	}
+
+	@Override
+	public String nombreColdSweatInitDynamicTags() {
+		return "Lỗi Cold Sweat trong tags động";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

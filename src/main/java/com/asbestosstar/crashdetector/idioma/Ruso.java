@@ -8371,5 +8371,126 @@ public class Ruso implements Idioma {
 	public String iaImagenNoDisponible() {
 		return "Изображение недоступно";
 	}
+	
+	@Override
+	public String mensajeOculusIrisUnknownShaderVariable() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "Обнаружена возможная ошибка шейдеров с Oculus или Iris.</b>"
+	            + "<p>Журнал ошибок содержит как <b>kroppeb.stareval.resolver.ExpressionResolver.resolveExpressionInternal</b>, "
+	            + "так и <b>java.lang.RuntimeException: Unknown variable:</b>.</p>"
+	            + "<p>Эта комбинация обычно указывает на проблему при вычислении переменной внутри шейдера, "
+	            + "часто связанную с <b>Oculus</b>, <b>Iris</b> или используемым <b>набором шейдеров (shader pack)</b>.</p>"
+	            + "<p><b>Рекомендуемый порядок действий:</b></p>"
+	            + "<ul>"
+	            + "<li>Сначала запустите игру <b>без включенных шейдеров</b>.</li>"
+	            + "<li>Если проблема сохранится, попробуйте запустить игру <b>без Oculus или Iris</b>.</li>"
+	            + "<li>Обновите <b>Oculus/Iris</b>, <b>набор шейдеров</b> и связанные графические моды.</li>"
+	            + "<li>Если вы используете другие моды на рендеринг или графику, проверьте их на совместимость.</li>"
+	            + "</ul>"
+	            + "<p>На практике эта ошибка обычно возникает из-за <b>набора шейдеров</b> или его взаимодействия с <b>Oculus/Iris</b>.</p>";
+	}
+
+	@Override
+	public String nombreOculusIrisUnknownShaderVariable() {
+	    return "Возможная ошибка шейдеров с Oculus/Iris";
+	}
+	@Override
+	public String mensajeItemNoExiste(String itemFaltante, String namespace) {
+		String itemHtml = itemFaltante == null || itemFaltante.isEmpty() ? "(неизвестно)" : itemFaltante;
+		String namespaceHtml = namespace == null || namespace.isEmpty() ? "(неизвестно)" : namespace;
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Попытка использовать несуществующий предмет.</b>"
+				+ "<p>Журнал содержит строку <b>Item: " + itemHtml + " does not exist</b>.</p>"
+				+ "<p>Это обычно означает, что какой-то <b>датапак</b>, <b>мод</b> или <b>конфигурация</b> "
+				+ "ссылается на предмет, которого нет в игре.</p>"
+				+ "<p><b>Что проверить:</b></p>"
+				+ "<ul>"
+				+ "<li>Проверьте, установлен ли мод, который должен добавлять предмет <b>" + itemHtml + "</b>.</li>"
+				+ "<li>Если он установлен, возможно, это <b>неправильная версия</b>, предмет был изменён или удалён, "
+				+ "или в моде есть ошибка, и его лучше удалить.</li>"
+				+ "<li>Если этого мода нет, попробуйте <b>установить его</b>.</li>"
+				+ "</ul>"
+				+ "<p><b>Чтобы узнать, какой мод или датапак запрашивает этот предмет:</b></p>"
+				+ "<ul>"
+				+ "<li>Используйте утилиту <b>grepr</b> на боковой панели.</li>"
+				+ "<li><b>Не</b> выбирайте папку.</li>"
+				+ "<li>Включите опцию <b>search in archives</b>.</li>"
+				+ "<li>В поле поиска введите <b>namespace</b>, то есть часть перед двоеточием: "
+				+ "<b>" + namespaceHtml + "</b>.</li>"
+				+ "</ul>"
+				+ "<p>Это обычно помогает найти файл, мод или датапак, содержащий неверную ссылку.</p>";
+	}
+
+	@Override
+	public String nombreItemNoExiste() {
+		return "Ссылка на несуществующий предмет";
+	}
+	
+	@Override
+	public String mensajeCobblemonPinkanIslandsRhyhornModelo() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Обнаружена ошибка модели для Rhyhorn.</b>"
+				+ "<p>Журнал содержит строку <b>Unable to load model cobblemon:rhyhorn_male.geo for cobblemon:rhyhorn</b>.</p>"
+				+ "<p>Хотя модель использует пространство имен (namespace) <b>Cobblemon</b>, эта строка обычно вызвана модом "
+				+ "<b>Cobblemon: Pinkan Islands</b>, откуда и происходит этот <b>Rhyhorn</b>.</p>"
+				+ "<p><b>Что попробовать:</b></p>"
+				+ "<ul>"
+				+ "<li>Удалите или отключите <b>Cobblemon: Pinkan Islands</b> и попробуйте снова.</li>"
+				+ "<li>Обновите <b>Cobblemon</b> и <b>Cobblemon: Pinkan Islands</b> до совместимых версий.</li>"
+				+ "<li>Если проблема началась после обновления одного из этих модов, попробуйте другую комбинацию версий.</li>"
+				+ "</ul>"
+				+ "<p>Эта ошибка обычно указывает на отсутствующую, неправильно зарегистрированную или несовместимую модель внутри "
+				+ "<b>Cobblemon: Pinkan Islands</b>.</p>";
+	}
+
+	@Override
+	public String nombreCobblemonPinkanIslandsRhyhornModelo() {
+		return "Ошибка модели Rhyhorn в Cobblemon: Pinkan Islands";
+	}
+	@Override
+	public String mensajeColdSweatInitDynamicTags() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Обнаружена ошибка в Cold Sweat.</b>"
+				+ "<p>Журнал содержит такие признаки, как <b>$cold_sweat$onBuildStart</b>, "
+				+ "<b>InitDynamicTagsEvent.fillTag</b> и <b>NullPointerException</b>, где "
+				+ "регистр отображается как null.</p>"
+				+ "<p>Это обычно указывает на проблему <b>Cold Sweat</b> при построении или заполнении "
+				+ "<b>динамических тегов</b>, часто из-за несовместимости, внутренней ошибки мода "
+				+ "или конфликтной комбинации с другим модом или датапаком.</p>"
+				+ "<p><b>Что попробовать:</b></p>"
+				+ "<ul>"
+				+ "<li>Удалите или отключите <b>Cold Sweat</b> и попробуйте снова.</li>"
+				+ "<li>Обновите <b>Cold Sweat</b> до версии, совместимой с вашей версией Minecraft и загрузчиком.</li>"
+				+ "<li>Если вы используете датапаки или моды, изменяющие <b>теги</b>, <b>биомы</b>, <b>температуры</b> или связанные регистры, проверьте их также.</li>"
+				+ "<li>Если ошибка началась после обновления модов, попробуйте другую комбинацию версий.</li>"
+				+ "</ul>"
+				+ "<p>В данном случае <b>Cold Sweat</b> напрямую вовлечен в сбой.</p>";
+	}
+
+	@Override
+	public String nombreColdSweatInitDynamicTags() {
+		return "Ошибка Cold Sweat в динамических тегах";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

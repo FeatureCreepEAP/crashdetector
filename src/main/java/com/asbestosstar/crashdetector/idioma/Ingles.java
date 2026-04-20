@@ -8391,5 +8391,125 @@ public class Ingles implements Idioma {
 	public String iaImagenNoDisponible() {
 		return "Image not available";
 	}
+	
+	
+	@Override
+	public String mensajeOculusIrisUnknownShaderVariable() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "Possible shader error with Oculus or Iris detected.</b>"
+	            + "<p>The log contains both <b>kroppeb.stareval.resolver.ExpressionResolver.resolveExpressionInternal</b> "
+	            + "and <b>java.lang.RuntimeException: Unknown variable:</b>.</p>"
+	            + "<p>This combination usually indicates an issue when evaluating a variable within a shader，"
+	            + "often related to <b>Oculus</b>, <b>Iris</b>, or the <b>shader pack</b> in use.</p>"
+	            + "<p><b>Recommended order of testing：</b></p>"
+	            + "<ul>"
+	            + "<li>Firstly，start the game <b>with shaders disabled</b>.</li>"
+	            + "<li>If the problem continues，try starting <b>without Oculus or Iris</b>.</li>"
+	            + "<li>Update <b>Oculus/Iris</b>, the <b>shader pack</b>, and related graphics mods.</li>"
+	            + "<li>If you use other rendering or graphics mods，check for incompatibilities between them.</li>"
+	            + "</ul>"
+	            + "<p>In practice，this fault usually stems from the <b>shader pack</b> or its interaction with <b>Oculus/Iris</b>.</p>";
+	}
+
+	@Override
+	public String nombreOculusIrisUnknownShaderVariable() {
+	    return "Possible shader error with Oculus/Iris";
+	}
+	
+	@Override
+	public String mensajeItemNoExiste(String itemFaltante, String namespace) {
+		String itemHtml = itemFaltante == null || itemFaltante.isEmpty() ? "(unknown)" : itemFaltante;
+		String namespaceHtml = namespace == null || namespace.isEmpty() ? "(unknown)" : namespace;
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Attempted to use an item that does not exist.</b>"
+				+ "<p>The log contains the line <b>Item: " + itemHtml + " does not exist</b>.</p>"
+				+ "<p>This usually means that some <b>datapack</b>, <b>mod</b>, or <b>configuration</b> "
+				+ "is referencing an item that is not present in the game.</p>"
+				+ "<p><b>What to check：</b></p>"
+				+ "<ul>"
+				+ "<li>Check if you have installed the mod that should provide the item <b>" + itemHtml + "</b>.</li>"
+				+ "<li>If you do, it might be the <b>wrong version</b>, the item may have been changed or removed, "
+				+ "or the mod has an issue and should be removed.</li>"
+				+ "<li>If you do not have that mod, try <b>installing it</b>.</li>"
+				+ "</ul>"
+				+ "<p><b>To find out which mod or datapack is requesting that item：</b></p>"
+				+ "<ul>"
+				+ "<li>Use the <b>grepr</b> utility in the sidebar.</li>"
+				+ "<li><b>Do not</b> select a folder.</li>"
+				+ "<li>Enable the <b>search in archives</b> option.</li>"
+				+ "<li>In the search text, type the <b>namespace</b>, i.e., the part before the colon： "
+				+ "<b>" + namespaceHtml + "</b>.</li>"
+				+ "</ul>"
+				+ "<p>This usually helps to find which file, mod, or datapack is making the invalid reference.</p>";
+	}
+
+	@Override
+	public String nombreItemNoExiste() {
+		return "Non-existent item referenced";
+	}
+	@Override
+	public String mensajeCobblemonPinkanIslandsRhyhornModelo() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Model error detected for Rhyhorn.</b>"
+				+ "<p>The log contains the line <b>Unable to load model cobblemon:rhyhorn_male.geo for cobblemon:rhyhorn</b>.</p>"
+				+ "<p>Although the model uses the <b>Cobblemon</b> namespace, this line is usually caused by the mod "
+				+ "<b>Cobblemon: Pinkan Islands</b>, from which that <b>Rhyhorn</b> originates.</p>"
+				+ "<p><b>What to try：</b></p>"
+				+ "<ul>"
+				+ "<li>Remove or disable <b>Cobblemon: Pinkan Islands</b> and try again.</li>"
+				+ "<li>Update <b>Cobblemon</b> and <b>Cobblemon: Pinkan Islands</b> to versions compatible with each other.</li>"
+				+ "<li>If the problem started after updating one of those mods, try a different combination of versions.</li>"
+				+ "</ul>"
+				+ "<p>This fault usually indicates a missing, poorly registered, or incompatible model within "
+				+ "<b>Cobblemon: Pinkan Islands</b>.</p>";
+	}
+
+	@Override
+	public String nombreCobblemonPinkanIslandsRhyhornModelo() {
+		return "Rhyhorn model error in Cobblemon: Pinkan Islands";
+	}
+	
+	
+	@Override
+	public String mensajeColdSweatInitDynamicTags() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Error detected in Cold Sweat.</b>"
+				+ "<p>The log contains indications such as <b>$cold_sweat$onBuildStart</b>, "
+				+ "<b>InitDynamicTagsEvent.fillTag</b> and a <b>NullPointerException</b> where "
+				+ "the registry appears as null.</p>"
+				+ "<p>This usually indicates a problem with <b>Cold Sweat</b> when building or filling "
+				+ "<b>dynamic tags</b>, normally due to incompatibility, an internal mod error, "
+				+ "or a conflicting combination with another mod or datapack.</p>"
+				+ "<p><b>What to try：</b></p>"
+				+ "<ul>"
+				+ "<li>Remove or disable <b>Cold Sweat</b> and try again.</li>"
+				+ "<li>Update <b>Cold Sweat</b> to a version compatible with your Minecraft version and loader.</li>"
+				+ "<li>If you use datapacks or mods that alter <b>tags</b>, <b>biomes</b>, <b>temperatures</b> or related registries, check them as well.</li>"
+				+ "<li>If the error started after updating mods, try a different combination of versions.</li>"
+				+ "</ul>"
+				+ "<p>In this case, <b>Cold Sweat</b> is directly involved in the fault.</p>";
+	}
+
+	@Override
+	public String nombreColdSweatInitDynamicTags() {
+		return "Cold Sweat error in dynamic tags";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

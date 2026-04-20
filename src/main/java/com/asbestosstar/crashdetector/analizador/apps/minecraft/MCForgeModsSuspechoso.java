@@ -44,7 +44,7 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 	private final Pattern patronModSection = Pattern.compile("(?i)--\\s*MOD\\s+([a-z0-9_\\-.]+)\\s*--");
 
 	// Patrón mejorado para detectar mod IDs en la sección "Suspected Mod"
-	private final Pattern patronSuspectedMod = Pattern.compile("(?i)\\b([a-z0-9_\\-.]+)\\s*\\(([a-z0-9_\\-.]+)\\)");
+	private final Pattern patronSuspectedMod = Pattern.compile("^(.*?)\\s*\\(([^()]+)\\)(?:\\s*\\(([^()]+)\\))?.*$");
 
 	// Patrón para detectar líneas con indicadores de error
 	private final Pattern patronIndicadorError = Pattern.compile(
@@ -147,9 +147,16 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 				// Version: 1.4.2")
 				// Extraemos el mod ID del primer grupo entre paréntesis
 				Matcher mSuspected = patronSuspectedMod.matcher(linea);
-				if (mSuspected.find()) {
-					String modID = mSuspected.group(2).trim(); // ID entre paréntesis
-					if (!modID.isEmpty()) {
+				if (mSuspected.matches()) {
+					// Si existen dos grupos entre paréntesis, el modid real suele ser el último:
+					// Fabric Item Group API (v1) (fabric_item_group_api_v1)
+					// ^ usar este
+					String candidato1 = mSuspected.group(2) != null ? mSuspected.group(2).trim() : "";
+					String candidato2 = mSuspected.group(3) != null ? mSuspected.group(3).trim() : "";
+
+					String modID = !candidato2.isEmpty() ? candidato2 : candidato1;
+
+					if (!modID.isEmpty() && !modID.contains(".java")) {
 						String mensaje = MonitorDePID.idioma.mcforge_mod_sospechoso() + modID;
 						if (errores.add(mensaje)) {
 							String enlace = consola.agregarErrorALectador(i, this);
@@ -158,12 +165,13 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 						}
 						activado = true;
 					}
+
 					// Saltar las siguientes líneas del mismo mod (Mixin class, Target, etc.)
 					while (i + 1 < lineas.length) {
 						String next = lineas[i + 1].trim();
 						if (next.startsWith("Mixin class:") || next.startsWith("Target:")
 								|| next.startsWith("at TRANSFORMER/")) {
-							i++; // consumir la línea
+							i++;
 						} else {
 							break;
 						}

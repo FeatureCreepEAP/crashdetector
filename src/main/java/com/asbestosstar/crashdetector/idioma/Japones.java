@@ -8042,4 +8042,126 @@ public class Japones implements Idioma {
 		return "画像は利用できません";
 	}
 
+	@Override
+	public String mensajeOculusIrisUnknownShaderVariable() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "OculusまたはIrisに関するシェーダーのエラーが検出されました。</b>"
+	            + "<p>ログには <b>kroppeb.stareval.resolver.ExpressionResolver.resolveExpressionInternal</b> "
+	            + "および <b>java.lang.RuntimeException: Unknown variable:</b> が含まれています。</p>"
+	            + "<p>この組み合わせは、シェーダー内の変数評価中に問題が発生したことを示しており、"
+	            + "多くの場合 <b>Oculus</b>、<b>Iris</b>、または使用中の<b>シェーダーパック</b>に関連しています。</p>"
+	            + "<p><b>推奨されるテスト順序：</b></p>"
+	            + "<ul>"
+	            + "<li>まず、<b>シェーダーを無効にした状態</b>でゲームを起動してください。</li>"
+	            + "<li>問題が続く場合は、<b>OculusまたはIrisなし</b>で起動してみてください。</li>"
+	            + "<li><b>Oculus/Iris</b>、<b>シェーダーパック</b>、および関連するグラフィックMODを更新してください。</li>"
+	            + "<li>他のレンダリングやグラフィックMODを使用している場合は、それらの間に互換性の問題がないか確認してください。</li>"
+	            + "</ul>"
+	            + "<p>実際には、この障害は通常<b>シェーダーパック</b>、またはそれが<b>Oculus/Iris</b>と相互作用することに起因します。</p>";
+	}
+
+	@Override
+	public String nombreOculusIrisUnknownShaderVariable() {
+	    return "Oculus/Irisに関するシェーダーのエラーの可能性";
+	}
+	
+	@Override
+	public String mensajeItemNoExiste(String itemFaltante, String namespace) {
+		String itemHtml = itemFaltante == null || itemFaltante.isEmpty() ? "(不明)" : itemFaltante;
+		String namespaceHtml = namespace == null || namespace.isEmpty() ? "(不明)" : namespace;
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "存在しないアイテムを使用しようとしました。</b>"
+				+ "<p>ログには <b>Item: " + itemHtml + " does not exist</b> という行が含まれています。</p>"
+				+ "<p>これは通常、一部の <b>データパック</b>、<b>MOD</b>、または <b>設定</b> が "
+				+ "ゲーム内に存在しないアイテムを参照していることを意味します。</p>"
+				+ "<p><b>確認事項：</b></p>"
+				+ "<ul>"
+				+ "<li>アイテム <b>" + itemHtml + "</b> を提供すべき MOD がインストールされているか確認してください。</li>"
+				+ "<li>インストールされている場合、<b>バージョンが間違っている</b>か、アイテムが変更または削除されたか、"
+				+ "MOD に問題があり、削除した方が良い可能性があります。</li>"
+				+ "<li>その MOD がない場合は、<b>インストール</b>してみてください。</li>"
+				+ "</ul>"
+				+ "<p><b>どの MOD やデータパックがそのアイテムを要求しているかを確認するには：</b></p>"
+				+ "<ul>"
+				+ "<li>サイドバーの <b>grepr</b> ユーティリティを使用します。</li>"
+				+ "<li>フォルダを <b>選択しないで</b>ください。</li>"
+				+ "<li><b>search in archives</b> オプションを有効にします。</li>"
+				+ "<li>検索テキストに <b>namespace</b>、つまりコロン前の部分を入力します： "
+				+ "<b>" + namespaceHtml + "</b>。</li>"
+				+ "</ul>"
+				+ "<p>これにより、無効な参照を行っているファイル、MOD、またはデータパックを見つけるのに役立ちます。</p>";
+	}
+
+	@Override
+	public String nombreItemNoExiste() {
+		return "存在しないアイテムが参照されました";
+	}
+	
+	@Override
+	public String mensajeCobblemonPinkanIslandsRhyhornModelo() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Rhyhorn のモデルエラーが検出されました。</b>"
+				+ "<p>ログには <b>Unable to load model cobblemon:rhyhorn_male.geo for cobblemon:rhyhorn</b> という行が含まれています。</p>"
+				+ "<p>モデルは <b>Cobblemon</b> の名前空間を使用していますが、この行は通常、"
+				+ "その <b>Rhyhorn</b> の由来である <b>Cobblemon: Pinkan Islands</b> モッドによって引き起こされます。</p>"
+				+ "<p><b>試すべきこと：</b></p>"
+				+ "<ul>"
+				+ "<li><b>Cobblemon: Pinkan Islands</b> を削除または無効にして、再試行してください。</li>"
+				+ "<li><b>Cobblemon</b> と <b>Cobblemon: Pinkan Islands</b> を、互いに互換性のあるバージョンに更新してください。</li>"
+				+ "<li>問題がこれらのモッドのいずれかを更新した後に始まった場合は、異なるバージョンの組み合わせを試してください。</li>"
+				+ "</ul>"
+				+ "<p>この障害は通常、<b>Cobblemon: Pinkan Islands</b> 内の欠落、登録不良、または互換性のないモデルを示しています。</p>";
+	}
+
+	@Override
+	public String nombreCobblemonPinkanIslandsRhyhornModelo() {
+		return "Cobblemon: Pinkan Islands における Rhyhorn のモデルエラー";
+	}
+	@Override
+	public String mensajeColdSweatInitDynamicTags() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Cold Sweat でエラーが検出されました。</b>"
+				+ "<p>ログには <b>$cold_sweat$onBuildStart</b>、"
+				+ "<b>InitDynamicTagsEvent.fillTag</b>、およびレジストリが null として表示される <b>NullPointerException</b> などの兆候が含まれています。</p>"
+				+ "<p>これは通常、<b>Cold Sweat</b> が "
+				+ "<b>動的タグ（dynamic tags）</b>を構築または充填する際の問題を示しており、"
+				+ "通常は非互換性、モッドの内部エラー、"
+				+ "または他のモッドやデータパックとの競合する組み合わせが原因です。</p>"
+				+ "<p><b>試すべきこと：</b></p>"
+				+ "<ul>"
+				+ "<li><b>Cold Sweat</b> を削除または無効にして、再試行してください。</li>"
+				+ "<li><b>Cold Sweat</b> を、あなたの Minecraft バージョンおよびローダー（loader）と互換性のあるバージョンに更新してください。</li>"
+				+ "<li><b>タグ（tags）</b>、<b>バイオーム（biomes）</b>、<b>温度</b>、または関連するレジストリを変更するデータパックやモッドを使用している場合は、それらも確認してください。</li>"
+				+ "<li>エラーがモッドの更新後に始まった場合は、異なるバージョンの組み合わせを試してください。</li>"
+				+ "</ul>"
+				+ "<p>この場合、<b>Cold Sweat</b> が障害に直接関与しています。</p>";
+	}
+
+	@Override
+	public String nombreColdSweatInitDynamicTags() {
+		return "Cold Sweat の動的タグにおけるエラー";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

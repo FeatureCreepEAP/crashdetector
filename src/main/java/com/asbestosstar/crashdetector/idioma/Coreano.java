@@ -8028,5 +8028,124 @@ public class Coreano implements Idioma {
 	public String iaImagenNoDisponible() {
 		return "이미지를 사용할 수 없음";
 	}
+	
+	
+	@Override
+	public String mensajeOculusIrisUnknownShaderVariable() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "Oculus 또는 Iris와 관련된 쉐이더 오류가 발견되였습니다.</b>"
+	            + "<p>로그파일에는 <b>kroppeb.stareval.resolver.ExpressionResolver.resolveExpressionInternal</b> "
+	            + "및 <b>java.lang.RuntimeException: Unknown variable:</b>이 포함되여있습니다.</p>"
+	            + "<p>이러한 조합은 일반적으로 쉐이더 내부의 변수를 평가하는 과정에서 문제가 발생했음을 나타내며，"
+	            + "이는 주로 <b>Oculus</b>, <b>Iris</b> 또는 사용 중인 <b>쉐이더 팩</b>과 관련이 있습니다.</p>"
+	            + "<p><b>권장되는 시험 순서：</b></p>"
+	            + "<ul>"
+	            + "<li>먼저，<b>쉐이더를 활성화하지 않고</b> 게임을 시작하십시오.</li>"
+	            + "<li>문제가 계속되면 <b>Oculus 또는 Iris 없이</b> 시작해 보십시오.</li>"
+	            + "<li><b>Oculus/Iris</b>, <b>쉐이더 팩</b> 및 관련 그래픽 모드를 최신 버전으로 갱신하십시오.</li>"
+	            + "<li>다른 렌더링 또는 그래픽 모드를 사용하는 경우 상호 간 호환성 문제를 검토하십시오.</li>"
+	            + "</ul>"
+	            + "<p>실제로 이 장애는 주로 <b>쉐이더 팩</b> 또는 그것이 <b>Oculus/Iris</b>와 상호 작용하는 과정에서 발생합니다.</p>";
+	}
+
+	@Override
+	public String nombreOculusIrisUnknownShaderVariable() {
+	    return "Oculus/Iris 관련 쉐이더 오류 가능성";
+	}
+	
+	@Override
+	public String mensajeItemNoExiste(String itemFaltante, String namespace) {
+		String itemHtml = itemFaltante == null || itemFaltante.isEmpty() ? "(알 수 없음)" : itemFaltante;
+		String namespaceHtml = namespace == null || namespace.isEmpty() ? "(알 수 없음)" : namespace;
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "존재하지 않는 항목을 사용하려고 했습니다.</b>"
+				+ "<p>기록에는 <b>Item: " + itemHtml + " does not exist</b> 줄이 포함되어 있습니다.</p>"
+				+ "<p>이는 일반적으로 일부 <b>데이터팩</b>, <b>모드</b> 또는 <b>설정</b>이 "
+				+ "게임에 없는 항목을 참조하고 있음을 의미합니다.</p>"
+				+ "<p><b>확인할 사항：</b></p>"
+				+ "<ul>"
+				+ "<li>항목 <b>" + itemHtml + "</b>을 제공해야 하는 모드가 설치되어 있는지 확인하십시오.</li>"
+				+ "<li>설치되어 있다면 <b>잘못된 버전</b>이거나 항목이 변경되거나 삭제되었을 수 있으며，"
+				+ "모드에 문제가 있어 제거하는 것이 좋을 수 있습니다.</li>"
+				+ "<li>해당 모드가 없다면 <b>설치</b>해 보십시오.</li>"
+				+ "</ul>"
+				+ "<p><b>어떤 모드나 데이터팩이 해당 항목을 요청하는지 알아내는 방법：</b></p>"
+				+ "<ul>"
+				+ "<li>측면 바에서 <b>grepr</b> 유틸리티를 사용하십시오.</li>"
+				+ "<li>폴더를 선택하지 <b>마십시오</b>.</li>"
+				+ "<li><b>search in archives</b> 옵션을 활성화하십시오.</li>"
+				+ "<li>검색 텍스트에 <b>namespace</b>，즉 콜론 앞의 부분을 입력하십시오： "
+				+ "<b>" + namespaceHtml + "</b>.</li>"
+				+ "</ul>"
+				+ "<p>이는 일반적으로 잘못된 참조를 수행하는 파일，모드 또는 데이터팩을 찾는 데 도움이 됩니다.</p>";
+	}
+
+	@Override
+	public String nombreItemNoExiste() {
+		return "존재하지 않는 항목 참조됨";
+	}
+	
+	@Override
+	public String mensajeCobblemonPinkanIslandsRhyhornModelo() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Rhyhorn의 모형 오류가 발견되였습니다.</b>"
+				+ "<p>기록에는 <b>Unable to load model cobblemon:rhyhorn_male.geo for cobblemon:rhyhorn</b> 줄이 포함되어 있습니다.</p>"
+				+ "<p>모형이 <b>Cobblemon</b>의 이름공간(namespace)을 사용하지만，이 줄은 일반적으로 "
+				+ "<b>Cobblemon: Pinkan Islands</b> 모드에 의해 발생하며，이 <b>Rhyhorn</b>은 거기에서 비롯됩니다.</p>"
+				+ "<p><b>시험해 볼 사항：</b></p>"
+				+ "<ul>"
+				+ "<li><b>Cobblemon: Pinkan Islands</b>를 제거하거나 비활성화한 후 다시 시험하십시오.</li>"
+				+ "<li><b>Cobblemon</b>과 <b>Cobblemon: Pinkan Islands</b>를 서로 호환되는 버전으로 갱신하십시오.</li>"
+				+ "<li>문제 중 하나의 모드를 갱신한 후에 시작되었다면，다른 버전 조합을 시험해 보십시오.</li>"
+				+ "</ul>"
+				+ "<p>이 장애는 일반적으로 <b>Cobblemon: Pinkan Islands</b> 내부의 누락되거나 잘못 등록되었거나 호환되지 않는 모형을 나타냅니다.</p>";
+	}
+
+	@Override
+	public String nombreCobblemonPinkanIslandsRhyhornModelo() {
+		return "Cobblemon: Pinkan Islands의 Rhyhorn 모형 오류";
+	}
+	
+	@Override
+	public String mensajeColdSweatInitDynamicTags() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Cold Sweat에서 오류가 발견되였습니다.</b>"
+				+ "<p>기록에는 <b>$cold_sweat$onBuildStart</b>, "
+				+ "<b>InitDynamicTagsEvent.fillTag</b> 및 <b>NullPointerException</b>과 같은 징후가 포함되어 있으며, "
+				+ "등록부가 null로 나타납니다.</p>"
+				+ "<p>이는 일반적으로 <b>Cold Sweat</b>가 "
+				+ "<b>동적 태그(dynamic tags)</b>를 구축하거나 채우는 과정에서 문제가 발생했음을 나타내며, "
+				+ "보통 호환성 문제, 모드 내부 오류, "
+				+ "또는 다른 모드나 데이터팩과의 충돌 조합 때문입니다.</p>"
+				+ "<p><b>시험해 볼 사항：</b></p>"
+				+ "<ul>"
+				+ "<li><b>Cold Sweat</b>를 제거하거나 비활성화한 후 다시 시험하십시오.</li>"
+				+ "<li><b>Cold Sweat</b>를 Minecraft 버전 및 로더(loader)와 호환되는 버전으로 갱신하십시오.</li>"
+				+ "<li><b>태그(tags)</b>, <b>생물 군계(biomes)</b>, <b>온도</b> 또는 관련 등록부를 변경하는 데이터팩이나 모드를 사용하는 경우, 그것들도 검토하십시오.</li>"
+				+ "<li>오류가 모드를 갱신한 후에 시작되었다면, 다른 버전 조합을 시험해 보십시오.</li>"
+				+ "</ul>"
+				+ "<p>이 경우, <b>Cold Sweat</b>가 장애에 직접적으로 관여하고 있습니다.</p>";
+	}
+
+	@Override
+	public String nombreColdSweatInitDynamicTags() {
+		return "Cold Sweat의 동적 태그 오류";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

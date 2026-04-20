@@ -974,28 +974,41 @@ public class FaltasDependenciasModLaunche implements Verificaciones {
 	@Override
 	public String mensaje() {
 
-		if (errores.isEmpty())
+		if (errores.isEmpty()) {
 			return "";
+		}
 
 		CDStringBuilder html = new CDStringBuilder();
 
-		// Título del mensaje
+		// Título principal del bloque
 		html.append(MonitorDePID.idioma.no_tienes_las_dependencias_necesarias());
 
-		// Iniciar lista HTML
+		// Abrir la lista
 		html.append("<ul>");
 
 		for (String error : errores) {
 
-			if (error == null || error.isEmpty())
+			if (error == null || error.isEmpty()) {
 				continue;
+			}
 
-			String enlace = enlacesPorError.getOrDefault(error, "");
+			String enlace = enlacesPorError.get(error);
 
-			html.append("<li>").append(error).append(" ").append(enlace).append("</li>");
+			// Asegurar que nunca sea null
+			if (enlace == null) {
+				enlace = "";
+			}
+
+			// Construir cada elemento completo de una sola vez para evitar
+			// que el HTML quede partido o mal anidado.
+			String itemHtml = "<li>" + error
+					+ (enlace.isEmpty() ? "" : " " + enlace)
+					+ "</li>";
+
+			html.append(itemHtml);
 		}
 
-		// Cerrar lista
+		// Cerrar la lista
 		html.append("</ul>");
 
 		return html.toString();

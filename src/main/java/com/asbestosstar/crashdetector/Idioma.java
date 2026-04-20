@@ -3213,4 +3213,20 @@ public interface Idioma {
 
 	public String iaImagenNoDisponible();
 
+	public String mensajeOculusIrisUnknownShaderVariable();
+
+	public String nombreOculusIrisUnknownShaderVariable();
+
+	public String mensajeItemNoExiste(String itemFaltante, String namespace);
+
+	public String nombreItemNoExiste();
+
+	public String mensajeCobblemonPinkanIslandsRhyhornModelo();
+
+	public String nombreCobblemonPinkanIslandsRhyhornModelo();
+
+	public String mensajeColdSweatInitDynamicTags();
+
+	public String nombreColdSweatInitDynamicTags();
+
 }

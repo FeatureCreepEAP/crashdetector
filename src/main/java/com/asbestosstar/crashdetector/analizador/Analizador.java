@@ -319,7 +319,16 @@ public class Analizador {
 		verificaciones.add(new TetraDeserializadorModeloEstatico());
 		verificaciones.add(new SimpleEmotesSetupAnimTail());
 		verificaciones.add(new SKLauncherAdvertencia());
+		verificaciones.add(new OculusIrisUnknownShaderVariable());
+		verificaciones.add(new ItemNoExiste());
+		verificaciones.add(new CobblemonPinkanIslandsRhyhornModelo());
+		verificaciones.add(new ColdSweatInitDynamicTags());
 
+		
+		
+		
+		
+		
 		verificaciones.add(new PirataMC());
 		verificaciones.add(new LanzerNoAnimado());
 		verificaciones.add(new LanzerDesAnimado());

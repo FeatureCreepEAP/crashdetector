@@ -8815,4 +8815,128 @@ public class Suajili implements Idioma {
 	public String iaImagenNoDisponible() {
 		return "Picha haipatikani";
 	}
+	
+	
+	@Override
+	public String mensajeOculusIrisUnknownShaderVariable() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "Hitilafu inayowezekana ya shaders na Oculus au Iris imegunduliwa.</b>"
+	            + "<p>Kumbukumbu (log) ina <b>kroppeb.stareval.resolver.ExpressionResolver.resolveExpressionInternal</b> "
+	            + "na pia <b>java.lang.RuntimeException: Unknown variable:</b>.</p>"
+	            + "<p>Mchanganyiko huu mara nyingi huonyesha tatizo katika kutathmini kibadilishaji (variable) ndani ya shader, "
+	            + "mara nyingi kinachohusiana na <b>Oculus</b>, <b>Iris</b>, au <b>shader pack</b> inayotumika.</p>"
+	            + "<p><b>Mpango uliopendekezwa wa kujaribu:</b></p>"
+	            + "<ul>"
+	            + "<li>Kwanza, anza mchezo <b>bila shaders zikiwashwa</b>.</li>"
+	            + "<li>Ikiwa tatizo litaendelea, jaribu kuanza <b>bila Oculus au Iris</b>.</li>"
+	            + "<li>Sasisha <b>Oculus/Iris</b>, <b>shader pack</b> na mods za grafiki zinazohusiana.</li>"
+	            + "<li>Ikiwa unatumia mods nyingine za uchoraji (rendering) au grafiki, angalia kutokubaliana kati yake.</li>"
+	            + "</ul>"
+	            + "<p>Kwa vitendo, hitilafu hii mara nyingi hutoka kwenye <b>shader pack</b> au mwingiliano wake na <b>Oculus/Iris</b>.</p>";
+	}
+
+	@Override
+	public String nombreOculusIrisUnknownShaderVariable() {
+	    return "Hitilafu inayowezekana ya shaders na Oculus/Iris";
+	}
+	@Override
+	public String mensajeItemNoExiste(String itemFaltante, String namespace) {
+		String itemHtml = itemFaltante == null || itemFaltante.isEmpty() ? "(haijulikani)" : itemFaltante;
+		String namespaceHtml = namespace == null || namespace.isEmpty() ? "(haijulikani)" : namespace;
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Iljaribu kutumia kipengee (item) ambacho hakipo.</b>"
+				+ "<p>Kumbukumbu ina mstari <b>Item: " + itemHtml + " does not exist</b>.</p>"
+				+ "<p>Hii kwa kawaida inamaanisha kuwa <b>datapack</b>, <b>mod</b> au <b>mipangilio</b> fulani "
+				+ "inarejelea kipengee ambacho hakipo kwenye mchezo.</p>"
+				+ "<p><b>Vitu vya kuangalia:</b></p>"
+				+ "<ul>"
+				+ "<li>Angalia kama una mod iliyosakinishwa ambayo inapaswa kutoa kipengee <b>" + itemHtml + "</b>.</li>"
+				+ "<li>Ikiwa nayo, inaweza kuwa <b>toleo lisilo sahihi</b>, kipengee kimebadilishwa au kufutwa, "
+				+ "au mod ina tatizo na ni vyema kuiondoa.</li>"
+				+ "<li>Ikiwa huna mod hiyo, jaribu kui<sakinisha</b>.</li>"
+				+ "</ul>"
+				+ "<p><b>Ili kujua ni mod au datapack ipi inayoomba kipengee hicho:</b></p>"
+				+ "<ul>"
+				+ "<li>Tumia zana ya <b>grepr</b> kwenye upau wa pembeni.</li>"
+				+ "<li><b>Usi</b> chague folda.</li>"
+				+ "<li>Washa chaguo la <b>search in archives</b>.</li>"
+				+ "<li>Kwenye maandishi ya utafutaji, andika <b>namespace</b>, yaani sehemu iliyo kabla ya koloni: "
+				+ "<b>" + namespaceHtml + "</b>.</li>"
+				+ "</ul>"
+				+ "<p>Hii kwa kawaida husaidia kupata faili, mod au datapack inayofanya rejea isiyo sahihi.</p>";
+	}
+
+	@Override
+	public String nombreItemNoExiste() {
+		return "Kipengee kisichopo kimerejelewa";
+	}
+	
+	
+	@Override
+	public String mensajeCobblemonPinkanIslandsRhyhornModelo() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Hitilafu ya modeli imetambuliwa kwa Rhyhorn.</b>"
+				+ "<p>Kumbukumbu ina mstari <b>Unable to load model cobblemon:rhyhorn_male.geo for cobblemon:rhyhorn</b>.</p>"
+				+ "<p>Ijapokuwa modeli inatumia namespace ya <b>Cobblemon</b>, mstari huu mara nyingi husababishwa na mod "
+				+ "<b>Cobblemon: Pinkan Islands</b>, ambayo ndipo <b>Rhyhorn</b> huyo anatokana nayo.</p>"
+				+ "<p><b>Vitu vya kujaribu:</b></p>"
+				+ "<ul>"
+				+ "<li>Ondoa au zima <b>Cobblemon: Pinkan Islands</b> na jaribu tena.</li>"
+				+ "<li>Sasisha <b>Cobblemon</b> na <b>Cobblemon: Pinkan Islands</b> kwa matoleo yanayolingana.</li>"
+				+ "<li>Ikiwa tatizo lilianza baada ya kusasisha moja ya modi hizo, jaribu mchanganyiko wa matoleo tofauti.</li>"
+				+ "</ul>"
+				+ "<p>Hitilafu hii kwa kawaida huonyesha modeli inayokosekana, isiyoandikishwa vizuri, au isiyolingana ndani ya "
+				+ "<b>Cobblemon: Pinkan Islands</b>.</p>";
+	}
+
+	@Override
+	public String nombreCobblemonPinkanIslandsRhyhornModelo() {
+		return "Hitilafu ya modeli ya Rhyhorn katika Cobblemon: Pinkan Islands";
+	}
+	@Override
+	public String mensajeColdSweatInitDynamicTags() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Hitilafu imetambuliwa katika Cold Sweat.</b>"
+				+ "<p>Kumbukumbu ina dalili kama <b>$cold_sweat$onBuildStart</b>, "
+				+ "<b>InitDynamicTagsEvent.fillTag</b> na <b>NullPointerException</b> ambapo "
+				+ "rejista inaonekana kuwa null.</p>"
+				+ "<p>Hii kwa kawaida huonyesha tatizo la <b>Cold Sweat</b> wakati wa kujenga au kujaza "
+				+ "<b>tags zinazobadilika (dynamic tags)</b>, mara nyingi kutokana na kutokubaliana, hitilafu ya ndani ya mod "
+				+ "au mchanganyiko mgongano na mod nyingine au datapack.</p>"
+				+ "<p><b>Vitu vya kujaribu:</b></p>"
+				+ "<ul>"
+				+ "<li>Ondoa au zima <b>Cold Sweat</b> na jaribu tena.</li>"
+				+ "<li>Sasisha <b>Cold Sweat</b> kwa toleo linalolingana na toleo lako la Minecraft na loader yako.</li>"
+				+ "<li>Ikiwa unatumia datapacks au modi zinazobadilisha <b>tags</b>, <b>biomes</b>, <b>joto</b> au rejista zinazohusiana, ziangalie pia.</li>"
+				+ "<li>Ikiwa hitilafu ilianza baada ya kusasisha modi, jaribu mchanganyiko wa matoleo tofauti.</li>"
+				+ "</ul>"
+				+ "<p>Katika hali hii, <b>Cold Sweat</b> inahusika moja kwa moja katika hitilafu hiyo.</p>";
+	}
+
+	@Override
+	public String nombreColdSweatInitDynamicTags() {
+		return "Hitilafu ya Cold Sweat katika tags zinazobadilika";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

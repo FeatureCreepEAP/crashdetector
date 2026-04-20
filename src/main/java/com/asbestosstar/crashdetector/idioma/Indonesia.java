@@ -8916,5 +8916,126 @@ public class Indonesia implements Idioma {
 	public String mensajeProblemaFeatherClientSodium() {
 		return "Feather Client berfungsi seperti modpack bawaan dengan modifikasi internal. Ini sering menimbulkan konflik dengan Sodium dan mod performa lainnya. Disarankan menggunakan instalasi Fabric standar.";
 	}
+	
+	@Override
+	public String mensajeOculusIrisUnknownShaderVariable() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "Kemungkinan kesalahan shader dengan Oculus atau Iris terdeteksi.</b>"
+	            + "<p>Log berisi <b>kroppeb.stareval.resolver.ExpressionResolver.resolveExpressionInternal</b> "
+	            + "dan <b>java.lang.RuntimeException: Unknown variable:</b>.</p>"
+	            + "<p>Kombinasi ini biasanya menunjukkan masalah saat mengevaluasi variabel di dalam shader，"
+	            + "yang sering berkaitan dengan <b>Oculus</b>, <b>Iris</b>, atau <b>paket shader</b> yang digunakan.</p>"
+	            + "<p><b>Urutan pengujian yang disarankan：</b></p>"
+	            + "<ul>"
+	            + "<li>Pertama，mulai game <b>tapa mengaktifkan shader</b>.</li>"
+	            + "<li>Jika masalah berlanjut，coba mulai <b>tapa Oculus atau Iris</b>.</li>"
+	            + "<li>Perbarui <b>Oculus/Iris</b>, <b>paket shader</b>, dan mod grafis terkait.</li>"
+	            + "<li>Jika Anda menggunakan mod rendering atau grafis lain，periksa ketidakcocokan di antaranya.</li>"
+	            + "</ul>"
+	            + "<p>Dalam praktiknya，kerusakan ini biasanya berasal dari <b>paket shader</b> atau interaksinya dengan <b>Oculus/Iris</b>.</p>";
+	}
+
+	@Override
+	public String nombreOculusIrisUnknownShaderVariable() {
+	    return "Kemungkinan kesalahan shader dengan Oculus/Iris";
+	}
+	
+	@Override
+	public String mensajeItemNoExiste(String itemFaltante, String namespace) {
+		String itemHtml = itemFaltante == null || itemFaltante.isEmpty() ? "(tidak diketahui)" : itemFaltante;
+		String namespaceHtml = namespace == null || namespace.isEmpty() ? "(tidak diketahui)" : namespace;
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Mencoba menggunakan item yang tidak ada.</b>"
+				+ "<p>Log berisi baris <b>Item: " + itemHtml + " does not exist</b>.</p>"
+				+ "<p>Ini biasanya berarti bahwa beberapa <b>datapack</b>, <b>mod</b>, atau <b>konfigurasi</b> "
+				+ "merujuk ke item yang tidak ada dalam game.</p>"
+				+ "<p><b>Yang perlu diperiksa：</b></p>"
+				+ "<ul>"
+				+ "<li>Periksa apakah Anda telah menginstal mod yang seharusnya menyediakan item <b>" + itemHtml + "</b>.</li>"
+				+ "<li>Jika ya, mungkin itu adalah <b>versi yang salah</b>, item telah diubah atau dihapus, "
+				+ "atau mod tersebut memiliki masalah dan sebaiknya dihapus.</li>"
+				+ "<li>Jika Anda tidak memiliki mod tersebut, coba <b>installs</b>.</li>"
+				+ "</ul>"
+				+ "<p><b>Untuk mengetahui mod atau datapack mana yang meminta item tersebut：</b></p>"
+				+ "<ul>"
+				+ "<li>Gunakan utilitas <b>grepr</b> di bilah sisi.</li>"
+				+ "<li><b>Jangan</b> pilih folder.</li>"
+				+ "<li>Aktifkan opsi <b>search in archives</b>.</li>"
+				+ "<li>Dalam teks pencarian, ketik <b>namespace</b>, yaitu bagian sebelum titik dua： "
+				+ "<b>" + namespaceHtml + "</b>.</li>"
+				+ "</ul>"
+				+ "<p>Ini biasanya membantu menemukan file, mod, atau datapack mana yang membuat referensi yang tidak valid.</p>";
+	}
+
+	@Override
+	public String nombreItemNoExiste() {
+		return "Item tidak ada yang direferensikan";
+	}
+	
+	@Override
+	public String mensajeCobblemonPinkanIslandsRhyhornModelo() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Kesalahan model terdeteksi untuk Rhyhorn.</b>"
+				+ "<p>Log berisi baris <b>Unable to load model cobblemon:rhyhorn_male.geo for cobblemon:rhyhorn</b>.</p>"
+				+ "<p>Meskipun model menggunakan namespace <b>Cobblemon</b>, baris ini biasanya disebabkan oleh mod "
+				+ "<b>Cobblemon: Pinkan Islands</b>, yang merupakan asal dari <b>Rhyhorn</b> tersebut.</p>"
+				+ "<p><b>Yang harus dicoba：</b></p>"
+				+ "<ul>"
+				+ "<li>Hapus atau nonaktifkan <b>Cobblemon: Pinkan Islands</b> dan coba lagi.</li>"
+				+ "<li>Perbarui <b>Cobblemon</b> dan <b>Cobblemon: Pinkan Islands</b> ke versi yang kompatibel satu sama lain.</li>"
+				+ "<li>Jika masalah dimulai setelah memperbarui salah satu mod tersebut, coba kombinasi versi yang berbeda.</li>"
+				+ "</ul>"
+				+ "<p>Kegagalan ini biasanya menunjukkan model yang hilang, terdaftar dengan salah, atau tidak kompatibel di dalam "
+				+ "<b>Cobblemon: Pinkan Islands</b>.</p>";
+	}
+
+	@Override
+	public String nombreCobblemonPinkanIslandsRhyhornModelo() {
+		return "Kesalahan model Rhyhorn di Cobblemon: Pinkan Islands";
+	}
+	
+	@Override
+	public String mensajeColdSweatInitDynamicTags() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Kesalahan terdeteksi di Cold Sweat.</b>"
+				+ "<p>Log berisi indikasi seperti <b>$cold_sweat$onBuildStart</b>, "
+				+ "<b>InitDynamicTagsEvent.fillTag</b> dan <b>NullPointerException</b> di mana "
+				+ "registri muncul sebagai null.</p>"
+				+ "<p>Ini biasanya menunjukkan masalah pada <b>Cold Sweat</b> saat membangun atau mengisi "
+				+ "<b>tag dinamis</b>, biasanya karena ketidakcocokan, kesalahan internal mod, "
+				+ "atau kombinasi yang konflik dengan mod atau datapack lain.</p>"
+				+ "<p><b>Yang harus dicoba：</b></p>"
+				+ "<ul>"
+				+ "<li>Hapus atau nonaktifkan <b>Cold Sweat</b> dan coba lagi.</li>"
+				+ "<li>Perbarui <b>Cold Sweat</b> ke versi yang kompatibel dengan versi Minecraft dan loader Anda.</li>"
+				+ "<li>Jika Anda menggunakan datapack atau mod yang mengubah <b>tag</b>, <b>bioma</b>, <b>suhu</b>, atau registri terkait, periksa juga.</li>"
+				+ "<li>Jika kesalahan dimulai setelah memperbarui mod, coba kombinasi versi yang berbeda.</li>"
+				+ "</ul>"
+				+ "<p>Dalam kasus ini, <b>Cold Sweat</b> terlibat langsung dalam kegagalan tersebut.</p>";
+	}
+
+	@Override
+	public String nombreColdSweatInitDynamicTags() {
+		return "Kesalahan Cold Sweat pada tag dinamis";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

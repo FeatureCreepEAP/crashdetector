@@ -8573,4 +8573,131 @@ public class Tailandes implements Idioma {
 	public String iaImagenNoDisponible() {
 		return "ไม่สามารถแสดงภาพได้";
 	}
+	
+	
+	@Override
+	public String mensajeOculusIrisUnknownShaderVariable() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "ตรวจพบข้อผิดพลาดที่เป็นไปได้ของชเดอร์กับ Oculus หรือ Iris</b>"
+	            + "<p>บันทึกข้อผิดพลาด (Log) มีทั้ง <b>kroppeb.stareval.resolver.ExpressionResolver.resolveExpressionInternal</b> "
+	            + "และ <b>java.lang.RuntimeException: Unknown variable:</b>.</p>"
+	            + "<p>การผสมผสานนี้มักบ่งชี้ถึงปัญหาในการประเมินค่าตัวแปรภายในชเดอร์ "
+	            + "ซึ่งมักเกี่ยวข้องกับ <b>Oculus</b>, <b>Iris</b> หรือ <b>ชุดชเดอร์ (shader pack)</b> ที่กำลังใช้งาน</p>"
+	            + "<p><b>ลำดับการทดสอบที่แนะนำ:</b></p>"
+	            + "<ul>"
+	            + "<li>ก่อนอื่น เริ่มเกมโดย <b>ไม่ได้เปิดใช้งานชเดอร์</b></li>"
+	            + "<li>หากปัญหายังคงอยู่ ลองเริ่มเกมโดย <b>ไม่มี Oculus หรือ Iris</b></li>"
+	            + "<li>อัปเดต <b>Oculus/Iris</b>, <b>ชุดชเดอร์</b> และมอดกราฟิกที่เกี่ยวข้อง</li>"
+	            + "<li>หากคุณใช้มอดเรนเดอร์หรือกราฟิกอื่นๆ ตรวจสอบความไม่เข้ากันระหว่างมอดเหล่านั้น</li>"
+	            + "</ul>"
+	            + "<p>ในทางปฏิบัติ ข้อผิดพลาดนี้มักมาจาก <b>ชุดชเดอร์</b> หรือการทำงานร่วมกันกับ <b>Oculus/Iris</b></p>";
+	}
+
+	@Override
+	public String nombreOculusIrisUnknownShaderVariable() {
+	    return "ข้อผิดพลาดชเดอร์ที่เป็นไปได้กับ Oculus/Iris";
+	}
+	@Override
+	public String mensajeItemNoExiste(String itemFaltante, String namespace) {
+		String itemHtml = itemFaltante == null || itemFaltante.isEmpty() ? "(ไม่ทราบ)" : itemFaltante;
+		String namespaceHtml = namespace == null || namespace.isEmpty() ? "(ไม่ทราบ)" : namespace;
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "พยายามใช้ไอเทมที่ไม่มีอยู่</b>"
+				+ "<p>บันทึกมีบรรทัด <b>Item: " + itemHtml + " does not exist</b>.</p>"
+				+ "<p>สิ่งนี้มักหมายความว่า <b>datapack</b>, <b>mod</b> หรือ <b>การตั้งค่า</b> บางอย่าง "
+				+ "กำลังอ้างอิงถึงไอเทมที่ไม่มีในเกม</p>"
+				+ "<p><b>สิ่งที่ควรตรวจสอบ:</b></p>"
+				+ "<ul>"
+				+ "<li>ตรวจสอบว่าคุณได้ติดตั้ง mod ที่ควรมีไอเทม <b>" + itemHtml + "</b> หรือไม่</li>"
+				+ "<li>หากมีแล้ว อาจเป็น <b>เวอร์ชันที่ไม่ถูกต้อง</b>, ไอเทมถูกเปลี่ยนหรือลบออก, "
+				+ "หรือ mod มีปัญหาและควรลบออก</li>"
+				+ "<li>หากคุณไม่มี mod นั้น ลอง <b>ติดตั้งมัน</b></li>"
+				+ "</ul>"
+				+ "<p><b>เพื่อค้นหาว่า mod หรือ datapack ใดกำลังขอไอเทมนั้น:</b></p>"
+				+ "<ul>"
+				+ "<li>ใช้เครื่องมือ <b>grepr</b> ที่แถบด้านข้าง</li>"
+				+ "<li><b>อย่า</b> เลือกโฟลเดอร์</li>"
+				+ "<li>เปิดใช้งานตัวเลือก <b>search in archives</b></li>"
+				+ "<li>ในช่องค้นหา ให้พิมพ์ <b>namespace</b> นั่นคือส่วนก่อนเครื่องหมายโคลอน: "
+				+ "<b>" + namespaceHtml + "</b></li>"
+				+ "</ul>"
+				+ "<p>สิ่งนี้มักช่วยหาไฟล์, mod หรือ datapack ที่ทำการอ้างอิงไม่ถูกต้อง</p>";
+	}
+
+	@Override
+	public String nombreItemNoExiste() {
+		return "อ้างอิงถึงไอเทมที่ไม่มีอยู่";
+	}
+	
+	@Override
+	public String mensajeCobblemonPinkanIslandsRhyhornModelo() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "ตรวจพบข้อผิดพลาดของโมเดลสำหรับ Rhyhorn</b>"
+				+ "<p>บันทึกมีบรรทัด <b>Unable to load model cobblemon:rhyhorn_male.geo for cobblemon:rhyhorn</b></p>"
+				+ "<p>แม้ว่าโมเดลจะใช้ namespace ของ <b>Cobblemon</b> แต่บรรทัดนี้มักเกิดจากมอด "
+				+ "<b>Cobblemon: Pinkan Islands</b> ซึ่งเป็นแหล่งที่มาของ <b>Rhyhorn</b> นี้</p>"
+				+ "<p><b>สิ่งที่ควรลอง:</b></p>"
+				+ "<ul>"
+				+ "<li>ลบหรือปิดใช้งาน <b>Cobblemon: Pinkan Islands</b> แล้วลองใหม่อีกครั้ง</li>"
+				+ "<li>อัปเดต <b>Cobblemon</b> และ <b>Cobblemon: Pinkan Islands</b> ให้เป็นเวอร์ชันที่เข้ากันได้</li>"
+				+ "<li>หากปัญหาเริ่มเกิดขึ้นหลังจากอัปเดตมอดใดมอดหนึ่ง ลองใช้ชุดเวอร์ชันอื่น</li>"
+				+ "</ul>"
+				+ "<p>ข้อผิดพลาดนี้มักบ่งชี้ว่าโมเดลหายไป ลงทะเบียนไม่ถูกต้อง หรือไม่เข้ากันภายใน "
+				+ "<b>Cobblemon: Pinkan Islands</b></p>";
+	}
+
+	@Override
+	public String nombreCobblemonPinkanIslandsRhyhornModelo() {
+		return "ข้อผิดพลาดโมเดล Rhyhorn ใน Cobblemon: Pinkan Islands";
+	}
+	
+	@Override
+	public String mensajeColdSweatInitDynamicTags() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "ตรวจพบข้อผิดพลาดใน Cold Sweat</b>"
+				+ "<p>บันทึกมีสัญญาณเช่น <b>$cold_sweat$onBuildStart</b>, "
+				+ "<b>InitDynamicTagsEvent.fillTag</b> และ <b>NullPointerException</b> ซึ่ง "
+				+ "registry ปรากฏเป็น null</p>"
+				+ "<p>สิ่งนี้มักบ่งชี้ถึงปัญหาของ <b>Cold Sweat</b> ในการสร้างหรือเติม "
+				+ "<b>tags แบบไดนามิก</b> มักเกิดจากความไม่เข้ากัน ข้อผิดพลาดภายในมอด "
+				+ "หรือความขัดแย้งกับมอดหรือ datapack อื่น</p>"
+				+ "<p><b>สิ่งที่ควรลอง:</b></p>"
+				+ "<ul>"
+				+ "<li>ลบหรือปิดใช้งาน <b>Cold Sweat</b> แล้วลองใหม่อีกครั้ง</li>"
+				+ "<li>อัปเดต <b>Cold Sweat</b> เป็นเวอร์ชันที่เข้ากันได้กับเวอร์ชัน Minecraft และ loader ของคุณ</li>"
+				+ "<li>หากคุณใช้ datapacks หรือมอดที่เปลี่ยน <b>tags</b>, <b>biomes</b>, <b>อุณหภูมิ</b> หรือ registry ที่เกี่ยวข้อง ให้ตรวจสอบด้วย</li>"
+				+ "<li>หากข้อผิดพลาดเริ่มเกิดขึ้นหลังอัปเดตมอด ลองใช้ชุดเวอร์ชันอื่น</li>"
+				+ "</ul>"
+				+ "<p>ในกรณีนี้ <b>Cold Sweat</b> มีส่วนเกี่ยวข้องโดยตรงกับความล้มเหลว</p>";
+	}
+
+	@Override
+	public String nombreColdSweatInitDynamicTags() {
+		return "ข้อผิดพลาด Cold Sweat ใน tags แบบไดนามิก";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

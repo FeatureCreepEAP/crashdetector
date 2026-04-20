@@ -7857,5 +7857,117 @@ public class Chino implements Idioma {
 	public String iaImagenNoDisponible() {
 		return "图片不可用";
 	}
+	
+	@Override
+	public String mensajeOculusIrisUnknownShaderVariable() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "检测到 Oculus 或 Iris 可能存在着色器（Shader）错误。</b>"
+	            + "<p>日志中同时包含 <b>kroppeb.stareval.resolver.ExpressionResolver.resolveExpressionInternal</b> "
+	            + "和 <b>java.lang.RuntimeException: Unknown variable:</b>。</p>"
+	            + "<p>这种组合通常表明在评估着色器内的变量时出现问题，"
+	            + "通常与 <b>Oculus</b>、<b>Iris</b> 或正在使用的<b>着色器包（shader pack）</b>有关。</p>"
+	            + "<p><b>建议的测试顺序：</b></p>"
+	            + "<ul>"
+	            + "<li>首先，在<b>未启用着色器</b>的情况下启动游戏。</li>"
+	            + "<li>如果问题仍然存在，尝试在<b>未安装 Oculus 或 Iris</b>的情况下启动。</li>"
+	            + "<li>更新 <b>Oculus/Iris</b>、<b>着色器包</b> 以及相关的图形模组（mods）。</li>"
+	            + "<li>如果您使用了其他渲染或图形模组，请检查它们之间是否存在兼容性冲突。</li>"
+	            + "</ul>"
+	            + "<p>实际上，此故障通常源于<b>着色器包</b>或其与 <b>Oculus/Iris</b> 的交互。</p>";
+	}
+
+	@Override
+	public String nombreOculusIrisUnknownShaderVariable() {
+	    return "Oculus/Iris 可能的着色器错误";
+	}
+	
+	
+	@Override
+	public String mensajeItemNoExiste(String itemFaltante, String namespace) {
+		String itemHtml = itemFaltante == null || itemFaltante.isEmpty() ? "(未知)" : itemFaltante;
+		String namespaceHtml = namespace == null || namespace.isEmpty() ? "(未知)" : namespace;
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "尝试使用一个不存在的物品。</b>"
+				+ "<p>日志中包含行 <b>Item: " + itemHtml + " does not exist</b>。</p>"
+				+ "<p>这通常意味着某个 <b>数据包 (datapack)</b>、<b>模组 (mod)</b> 或 <b>配置</b> "
+				+ "引用了游戏中不存在的物品。</p>"
+				+ "<p><b>需要检查的内容：</b></p>"
+				+ "<ul>"
+				+ "<li>检查是否已安装应该提供物品 <b>" + itemHtml + "</b> 的模组。</li>"
+				+ "<li>如果已安装，可能是 <b>版本错误</b>，物品已被更改或删除，"
+				+ "或者模组存在问题，建议移除。</li>"
+				+ "<li>如果没有该模组，请尝试 <b>安装它</b>。</li>"
+				+ "</ul>"
+				+ "<p><b>要找出哪个模组或数据包正在请求该物品：</b></p>"
+				+ "<ul>"
+				+ "<li>使用侧边栏中的 <b>grepr</b> 工具。</li>"
+				+ "<li><b>不要</b> 选择文件夹。</li>"
+				+ "<li>启用 <b>search in archives</b> 选项。</li>"
+				+ "<li>在搜索文本中，输入 <b>namespace</b>，即冒号前的部分： "
+				+ "<b>" + namespaceHtml + "</b>。</li>"
+				+ "</ul>"
+				+ "<p>这通常有助于找到进行无效引用的文件、模组或数据包。</p>";
+	}
+
+	@Override
+	public String nombreItemNoExiste() {
+		return "引用了不存在的物品";
+	}
+	
+	
+	@Override
+	public String mensajeCobblemonPinkanIslandsRhyhornModelo() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "检测到 Rhyhorn 的模型错误。</b>"
+				+ "<p>日志中包含行 <b>Unable to load model cobblemon:rhyhorn_male.geo for cobblemon:rhyhorn</b>。</p>"
+				+ "<p>尽管该模型使用 <b>Cobblemon</b> 的命名空间，但此行通常由模组 "
+				+ "<b>Cobblemon: Pinkan Islands</b> 引起，该 <b>Rhyhorn</b> 即来源于此模组。</p>"
+				+ "<p><b>建议尝试：</b></p>"
+				+ "<ul>"
+				+ "<li>移除或禁用 <b>Cobblemon: Pinkan Islands</b> 并再次尝试。</li>"
+				+ "<li>将 <b>Cobblemon</b> 和 <b>Cobblemon: Pinkan Islands</b> 更新为相互兼容的版本。</li>"
+				+ "<li>如果问题是在更新其中一个模组后开始的，请尝试不同的版本组合。</li>"
+				+ "</ul>"
+				+ "<p>此故障通常表明 <b>Cobblemon: Pinkan Islands</b> 内部存在缺失、注册错误或不相容的模型。</p>";
+	}
+
+	@Override
+	public String nombreCobblemonPinkanIslandsRhyhornModelo() {
+		return "Cobblemon: Pinkan Islands 中的 Rhyhorn 模型错误";
+	}
+	
+	@Override
+	public String mensajeColdSweatInitDynamicTags() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "检测到 Cold Sweat 错误。</b>"
+				+ "<p>日志中包含诸如 <b>$cold_sweat$onBuildStart</b>、"
+				+ "<b>InitDynamicTagsEvent.fillTag</b> 以及 <b>NullPointerException</b> 等迹象，其中 "
+				+ "注册表显示为 null。</p>"
+				+ "<p>这通常表明 <b>Cold Sweat</b> 在构建或填充 "
+				+ "<b>动态标签（dynamic tags）</b>时出现问题，通常是由于不兼容、模组内部错误 "
+				+ "或与其他模组或数据包存在冲突组合所致。</p>"
+				+ "<p><b>建议尝试：</b></p>"
+				+ "<ul>"
+				+ "<li>移除或禁用 <b>Cold Sweat</b> 并再次尝试。</li>"
+				+ "<li>将 <b>Cold Sweat</b> 更新为与您的 Minecraft 版本和加载器（loader）兼容的版本。</li>"
+				+ "<li>如果您使用了修改 <b>标签（tags）</b>、<b>生物群系（biomes）</b>、<b>温度</b> 或相关注册表的数据包或模组，也请检查它们。</li>"
+				+ "<li>如果错误是在更新模组后开始的，请尝试不同的版本组合。</li>"
+				+ "</ul>"
+				+ "<p>在这种情况下，<b>Cold Sweat</b> 直接导致了故障。</p>";
+	}
+
+	@Override
+	public String nombreColdSweatInitDynamicTags() {
+		return "Cold Sweat 动态标签错误";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
