@@ -238,9 +238,15 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		} else {
 			boton.setContentAreaFilled(false);
 		}
-		boton.setMaximumSize(new Dimension(250, 40));
-		boton.setMinimumSize(new Dimension(250, 40));
-		boton.setPreferredSize(new Dimension(250, 40));
+
+		// Ancho flexible para que la barra lateral pueda redimensionarse sin forzar
+		// todos los botones a un ancho fijo exacto.
+		boton.setMinimumSize(new Dimension(160, 40));
+		boton.setPreferredSize(new Dimension(220, 40));
+		boton.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
+
+		// Con BoxLayout esto ayuda a que el botón pueda ocupar el ancho disponible.
+		boton.setAlignmentX(Component.CENTER_ALIGNMENT);
 	}
 
 	public void recargar() {

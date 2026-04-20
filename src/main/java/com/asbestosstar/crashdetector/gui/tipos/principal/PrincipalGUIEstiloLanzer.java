@@ -30,6 +30,10 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
@@ -127,6 +131,9 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 	private JPanel seccionConfiguracionRef;
 	private JPanel barraLateralDerechaRef;
 	private JLabel logoLabelRef;
+	
+	private JScrollPane scrollBarraLateralRef;
+	private JSplitPane splitPrincipalRef;
 
 	@Override
 	public void init() {
@@ -163,49 +170,44 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 			this.enlanceEvento(e);
 		});
 
-		// Borde y color de fondo del scroll
+		// Borde y color de fondo del scroll principal
 		scrollPane.setBorder(BorderFactory.createEmptyBorder());
 		scrollPane.getViewport().setBackground(colorCajaTexto.obtener());
 		if (scrollPane.getVerticalScrollBar() != null) {
 			scrollPane.getVerticalScrollBar().setValue(0);
 		}
 
-		// --- Panel inferior principal (configuración + botón QuickFix + botones de
-		// acción) --------
+		// --- Panel inferior principal (configuración + botón QuickFix + botones de acción)
 		panelInferiorRef = new JPanel(new BorderLayout(5, 5));
 		JPanel panelInferior = panelInferiorRef;
 		panelInferior.setBackground(colorFondo.obtener());
 		panelInferior.setBorder(new EmptyBorder(10, 20, 10, 20));
 
-		// Sección de configuración (dos columnas: izquierda = idioma, derecha =
-		// aplicación)
+		// Sección de configuración
 		seccionConfiguracionRef = new JPanel();
 		JPanel seccionConfiguracion = seccionConfiguracionRef;
 		seccionConfiguracion.setLayout(new BoxLayout(seccionConfiguracion, BoxLayout.Y_AXIS));
 		seccionConfiguracion.setBackground(colorFondo.obtener());
 
-		// Contenedor horizontal para tener ambos controles (izquierda/derecha) uno al
-		// lado del otro
+		// Contenedor horizontal para ambos grupos de controles
 		JPanel panelHorizontal = new JPanel();
 		panelHorizontal.setLayout(new BoxLayout(panelHorizontal, BoxLayout.X_AXIS));
 		panelHorizontal.setBackground(colorFondo.obtener());
 
-		// Columna izquierda (idioma): dropdown arriba, checkbox debajo
+		// Columna izquierda (idioma)
 		JPanel columnaIzquierda = new JPanel();
 		columnaIzquierda.setLayout(new BoxLayout(columnaIzquierda, BoxLayout.Y_AXIS));
 		columnaIzquierda.setBackground(colorFondo.obtener());
 
-		// Columna derecha (aplicación): dropdown arriba, checkbox debajo
+		// Columna derecha (aplicación)
 		JPanel columnaDerecha = new JPanel();
 		columnaDerecha.setLayout(new BoxLayout(columnaDerecha, BoxLayout.Y_AXIS));
 		columnaDerecha.setBackground(colorFondo.obtener());
 
 		// --- Datos de idiomas con iconos
-		// ----------------------------------------------------------
 		LinkedHashMap<String, String> idiomas = Idioma.mapaParaComboBoxIdiomas();
 
 		// --- Selector de idioma
-		// -------------------------------------------------------------------
 		JComboBox<String> comboIdioma = new ComboIdiomasConIcono(idiomas);
 		comboIdioma.setMaximumSize(new Dimension(200, 30));
 		comboIdioma.setPreferredSize(new Dimension(200, 30));
@@ -214,12 +216,10 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 			comboIdioma.setForeground(colorTexto.obtener());
 		}
 
-		// Seleccionar por defecto según el código actual de idioma detectado
 		String codigoActual = MonitorDePID.idioma.codigo();
 		String nombreIdiomaActual = Idioma.nombreDeIdiomaDesdeCodigo(codigoActual);
 		comboIdioma.setSelectedItem(nombreIdiomaActual);
 
-		// Checkbox "usar idioma del sistema"
 		JCheckBox chkIdiomaSistema = new JCheckBox(MonitorDePID.idioma.usarIdiomaDelSistema());
 		chkIdiomaSistema.setForeground(colorTexto.obtener());
 		chkIdiomaSistema.setBackground(colorFondo.obtener());
@@ -228,83 +228,61 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 		chkIdiomaSistema.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		chkIdiomaSistema.setMaximumSize(new Dimension(200, 30));
 
-		// Estado inicial del checkbox: si NO existe archivo de preferencia => usar
-		// sistema
 		boolean existePreferencia = Files.exists(Idioma.archivo.toPath());
 		boolean usarSistemaInicial = !existePreferencia;
 		chkIdiomaSistema.setSelected(usarSistemaInicial);
 		comboIdioma.setEnabled(!usarSistemaInicial);
 
-		// Acción al cambiar idioma manualmente desde el combo
 		comboIdioma.addActionListener(e -> {
-			// Si el usuario elige manualmente, desmarcamos "usar sistema" y persistimos
-			// preferencia
 			chkIdiomaSistema.setSelected(false);
 			comboIdioma.setEnabled(true);
 			String seleccion = (String) comboIdioma.getSelectedItem();
 			String codigo = Idioma.codigoDesdeNombreVisible(seleccion);
 			if (codigo != null) {
 				try {
-					// Guardar el idioma en la configuración munidial
 					ConfigMundial.obtenerInstancia().guardarIdioma(codigo);
 				} catch (Exception ex) {
 					CrashDetectorLogger.logException(ex);
 				}
-				// Re-detectar idioma y recargar la UI
 				MonitorDePID.idioma = Idioma.detectar();
 				recargar();
 			}
 		});
 
-		// Acción al marcar/desmarcar "usar idioma del sistema"
 		chkIdiomaSistema.addActionListener(e -> {
 			boolean usarSistema = chkIdiomaSistema.isSelected();
 			comboIdioma.setEnabled(!usarSistema);
 			if (usarSistema) {
-				// Borrar preferencia guardada para forzar el uso del idioma del sistema
 				try {
-					// Borrar archivo legacy
 					Files.deleteIfExists(Idioma.archivo.toPath());
-
-					// Borrar idioma de la configuración munidial
 					ConfigMundial.obtenerInstancia().borrarIdioma();
-
 				} catch (IOException ex) {
 					CrashDetectorLogger.logException(ex);
 				}
 				MonitorDePID.idioma = Idioma.detectar();
 				recargar();
 			} else {
-				// Vuelve a habilitar selección manual y persistir lo que esté seleccionado
 				String seleccion = (String) comboIdioma.getSelectedItem();
 				String codigo = Idioma.codigoDesdeNombreVisible(seleccion);
 				if (codigo != null) {
 					try {
-						// Guardar el idioma en la configuración munidial
 						ConfigMundial.obtenerInstancia().guardarIdioma(codigo);
 					} catch (Exception ex) {
 						CrashDetectorLogger.logException(ex);
 					}
-
 					MonitorDePID.idioma = Idioma.detectar();
 					recargar();
 				}
 			}
 		});
 
-		// Añadir controles de idioma a la columna izquierda (dropdown arriba, checkbox
-		// debajo)
 		columnaIzquierda.add(comboIdioma);
 		columnaIzquierda.add(chkIdiomaSistema);
 
 		// --- Columna derecha: selector de aplicación + detectar automáticamente
-		// --------------------
-		// Construir el mapa de etiquetas -> App y etiquetas -> icono (solo algunos con
-		// icono)
 		LinkedHashMap<String, App> etiquetasAApp = new LinkedHashMap<>();
 		LinkedHashMap<String, String> etiquetasAIcono = new LinkedHashMap<>();
 
-		// Utilidades locales
 		java.util.function.Function<App, String> etiquetaParaApp = (a) -> {
 			if (a == null || a.id() == null || a.id().trim().isEmpty())
 				return "Minecraft";
@@ -321,7 +299,6 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 				return "NX Open";
 			if ("teamcenter".equalsIgnoreCase(id))
 				return "Teamcenter";
-			// Capitalización básica para otros
 			return Character.toUpperCase(id.charAt(0)) + id.substring(1);
 		};
 
@@ -342,14 +319,11 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 			return a;
 		};
 
-		// Poblar desde App.APPS manteniendo orden de inserción
 		for (App a : App.APPS) {
 			App norm = normalizarApp.apply(a);
 			String etiqueta = etiquetaParaApp.apply(norm);
-			// Evitar sobrescribir si hubiera duplicados de id/etiqueta
 			if (!etiquetasAApp.containsKey(etiqueta)) {
 				etiquetasAApp.put(etiqueta, norm);
-				// Solo algunos tienen icono CD
 				if (appConIconoCD.apply(norm)) {
 					etiquetasAIcono.put(etiqueta, "imagenes/cd_chars.png");
 				} else {
@@ -358,14 +332,11 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 			}
 		}
 
-		// Fallback: asegurar que al menos Minecraft exista
 		if (etiquetasAApp.isEmpty()) {
 			etiquetasAApp.put("Minecraft", App.MINECRAFT);
 			etiquetasAIcono.put("Minecraft", "imagenes/cd_chars.png");
 		}
 
-		// Combo con renderer de iconos (reutiliza ComboIdiomasConIcono que acepta mapa
-		// etiqueta->icono)
 		JComboBox<String> comboAplicacion = new ComboIdiomasConIcono(etiquetasAIcono);
 		comboAplicacion.setMaximumSize(new Dimension(200, 30));
 		comboAplicacion.setPreferredSize(new Dimension(200, 30));
@@ -374,7 +345,6 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 			comboAplicacion.setForeground(colorTexto.obtener());
 		}
 
-		// Checkbox detectar automáticamente (por defecto activado)
 		JCheckBox chkDetectarAuto = new JCheckBox("Detectar automáticamente");
 		chkDetectarAuto.setForeground(colorTexto.obtener());
 		chkDetectarAuto.setBackground(colorFondo.obtener());
@@ -384,45 +354,33 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 		chkDetectarAuto.setMaximumSize(new Dimension(200, 30));
 		chkDetectarAuto.setSelected(true);
 
-		// Estado inicial: cuando está marcado, el combo debe estar deshabilitado
 		comboAplicacion.setEnabled(false);
 
-		// Determinar app detectada y reflejar en Statics/combobox
 		App detectada = normalizarApp.apply(App.obtenerApp());
-		// Si por alguna razón detectada fuese inválida, normalizarApp ya devuelve
-		// MINECRAFT
 		Statics.APP = detectada;
 		String etiquetaDetectada = etiquetaParaApp.apply(detectada);
 		comboAplicacion.setSelectedItem(etiquetaDetectada);
 
-		// Listener del combo: solo aplica cuando NO está marcado "detectar
-		// automáticamente"
 		comboAplicacion.addActionListener(e -> {
 			if (chkDetectarAuto.isSelected())
-				return; // ignorar si está en modo automático
+				return;
 			String etiquetaSel = (String) comboAplicacion.getSelectedItem();
 			App seleccionada = etiquetasAApp.get(etiquetaSel);
 			seleccionada = normalizarApp.apply(seleccionada);
-			// Cambiar app y refrescar
 			Statics.APP = seleccionada;
-			// Sincronizar selección por si normalización cambió algo
 			comboAplicacion.setSelectedItem(etiquetaParaApp.apply(seleccionada));
 			recargar();
 		});
 
-		// Listener del checkbox: al marcar, obtener app detectada; al desmarcar, usar
-		// la del combo
 		chkDetectarAuto.addActionListener(e -> {
 			boolean auto = chkDetectarAuto.isSelected();
 			comboAplicacion.setEnabled(!auto);
 			if (auto) {
-				// Obtener app detectada y fijarla
 				App autodetect = normalizarApp.apply(Entregar.app_detecta);
 				Statics.APP = autodetect;
 				comboAplicacion.setSelectedItem(etiquetaParaApp.apply(autodetect));
 				recargar();
 			} else {
-				// Modo manual: aplicar inmediatamente lo que esté seleccionado en el combo
 				String etiquetaSel = (String) comboAplicacion.getSelectedItem();
 				App seleccionada = etiquetasAApp.get(etiquetaSel);
 				seleccionada = normalizarApp.apply(seleccionada);
@@ -432,56 +390,44 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 			}
 		});
 
-		// Añadir controles a la columna derecha
 		columnaDerecha.add(comboAplicacion);
 		columnaDerecha.add(chkDetectarAuto);
 
-		// Añadir las dos columnas al contenedor horizontal
 		panelHorizontal.add(columnaIzquierda);
-		panelHorizontal.add(Box.createHorizontalStrut(20)); // pequeño espacio entre columnas
+		panelHorizontal.add(Box.createHorizontalStrut(20));
 		panelHorizontal.add(columnaDerecha);
-
-		// Añadir el contenedor horizontal a la sección de configuración
 		seccionConfiguracion.add(panelHorizontal);
 
-		final int ANCHO_CONTROLES = 220; // un "poquito" más ancho (ajusta a 230 si lo ves mejor)
+		final int ANCHO_CONTROLES = 220;
 		final int ALTO_CONTROLES = 30;
 
-		// columna izquierda (idioma)
 		comboIdioma.setPreferredSize(new Dimension(ANCHO_CONTROLES, ALTO_CONTROLES));
 		comboIdioma.setMaximumSize(new Dimension(ANCHO_CONTROLES, ALTO_CONTROLES));
-		comboIdioma.setAlignmentX(Component.LEFT_ALIGNMENT); // alinear al borde izquierdo
+		comboIdioma.setAlignmentX(Component.LEFT_ALIGNMENT);
+
 		chkIdiomaSistema.setPreferredSize(new Dimension(ANCHO_CONTROLES, ALTO_CONTROLES));
 		chkIdiomaSistema.setMaximumSize(new Dimension(ANCHO_CONTROLES, ALTO_CONTROLES));
-		chkIdiomaSistema.setAlignmentX(Component.LEFT_ALIGNMENT); // alinear con el combo
-		// (opcional) pequeño margen superior para separar del combo
+		chkIdiomaSistema.setAlignmentX(Component.LEFT_ALIGNMENT);
 		chkIdiomaSistema.setBorder(new EmptyBorder(6, 0, 0, 0));
 
-		// columna derecha (aplicación)
 		comboAplicacion.setPreferredSize(new Dimension(ANCHO_CONTROLES, ALTO_CONTROLES));
 		comboAplicacion.setMaximumSize(new Dimension(ANCHO_CONTROLES, ALTO_CONTROLES));
 		comboAplicacion.setAlignmentX(Component.LEFT_ALIGNMENT);
+
 		chkDetectarAuto.setPreferredSize(new Dimension(ANCHO_CONTROLES, ALTO_CONTROLES));
 		chkDetectarAuto.setMaximumSize(new Dimension(ANCHO_CONTROLES, ALTO_CONTROLES));
 		chkDetectarAuto.setAlignmentX(Component.LEFT_ALIGNMENT);
 		chkDetectarAuto.setBorder(new EmptyBorder(6, 0, 0, 0));
 
-		// asegurar que las columnas también alineen al borde izquierdo del BoxLayout
 		columnaIzquierda.setAlignmentX(Component.LEFT_ALIGNMENT);
 		columnaDerecha.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-		// chkDetectarAuto.setEnabled(false);
 		chkDetectarAuto.setSelected(true);
-		// comboAplicacion.setEnabled(false);
 
-		// --- Botón QuickFix (centrado)
-		// ------------------------------------------------------------
-
+		// --- Botón central CDLauncher
 		botonCDLauncherRef = new JButton("CDLauncher");
 		JButton botonCDLauncher = botonCDLauncherRef;
 
-		// botonCDLauncher.setEnabled(MonitorDePID.analizador.obtenerSoluciones().size()
-		// > 0); //TODO hablicar solo si la aplicacion y lanzer suporte
 		botonCDLauncher.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		botonCDLauncher.setMinimumSize(new Dimension(120, 30));
 		botonCDLauncher.setMaximumSize(new Dimension(180, 40));
@@ -498,17 +444,12 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 		botonCDLauncher.addActionListener(e -> botonCDLauncher(botonCDLauncher));
 
 		// --- Botones de acción (derecha)
-		// ----------------------------------------------------------
-
 		panelBotonesDerechaRef = new JPanel(new GridLayout(1, 5, 10, 10));
 		JPanel panelBotonesDerecha = panelBotonesDerechaRef;
-
 		panelBotonesDerecha.setBackground(colorFondo.obtener());
 
-		// luego el botón de ícono CDMods (deshabilitado), a la derecha
 		JButton boton_CDMods = añadirBotonImagen(panelBotonesDerecha,
 				Statics.carpeta.resolve("imagenes/boton_cdmods.png").toString(), "CD Mods");
-		// boton_CDMods.setEnabled(false);
 		JButton btnAgregar = añadirBotonImagen(panelBotonesDerecha,
 				Statics.carpeta.resolve("imagenes/boton_agregar.png").toString(), MonitorDePID.idioma.anadirRegistro());
 		JButton btnCompartir = añadirBotonImagen(panelBotonesDerecha,
@@ -523,10 +464,12 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 
 		DialogoCompartir comp = TipoGUI.DIALOGO_COMPARTIR.obtenerGUIPredeterminado(DialogoCompartirLegacy.ID,
 				() -> new DialogoCompartirLegacy());
+
 		btnCompartir.addActionListener(e -> comp.preperar(tiempoFallo));
 		btnActualizar.addActionListener(e -> recargar());
 		btnAgregar.addActionListener(e -> anadirRegistro());
 		btnArchivos.addActionListener(e -> abrirDirectorioEnExplorador());
+
 		botonConfiguracion.addActionListener(e -> {
 			contenidoPrincipal.removeAll();
 			panelConfiguracion.constructir(this);
@@ -546,25 +489,24 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 			botonVolver.setEnabled(true);
 		});
 
-		// Colocar secciones en el panel inferior
 		panelInferior.add(seccionConfiguracion, BorderLayout.WEST);
 		panelInferior.add(botonCDLauncher, BorderLayout.CENTER);
 		panelInferior.add(panelBotonesDerecha, BorderLayout.EAST);
 
-		// --- Barra lateral derecha
-		// ---------------------------------------------------------------
+		// --- Barra lateral derecha con scroll
 		barraLateralDerechaRef = new JPanel();
 		JPanel barraLateralDerecha = barraLateralDerechaRef;
 		barraLateralDerecha.setLayout(new BoxLayout(barraLateralDerecha, BoxLayout.Y_AXIS));
 		barraLateralDerecha.setBackground(colorBoton.obtener().darker());
-		barraLateralDerecha.setPreferredSize(new Dimension(230, 0)); // más ancho para evitar cortes
-		logoLabelRef = new JLabel();
 
+		// El alto preferido es grande para que el JScrollPane detecte correctamente
+		// cuándo hace falta scroll vertical.
+		barraLateralDerecha.setPreferredSize(new Dimension(250, 800));
+
+		logoLabelRef = new JLabel();
 		logoLabelRef.setOpaque(true);
 
-		// color inicial correcto
 		Color botonBarra = modolanzer ? lanzerColorBotonBaraLateral.obtener() : colorBotonBaraLateral.obtener();
-
 		logoLabelRef.setBackground(botonBarra.darker());
 
 		ImageIcon logoIcon = new ImageIcon(Statics.carpeta.resolve("imagenes/cd_logo.png").toString());
@@ -573,15 +515,16 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 		logoLabelRef.setIcon(new ImageIcon(logoEscalado));
 		logoLabelRef.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		logoLabelRef.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
 		estilizarBoton(botonVolver);
 		botonVolver.setEnabled(false);
 		botonVolver.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		botonVolver.addActionListener(e -> volver());
+
 		barraLateralDerecha.add(logoLabelRef);
 		barraLateralDerecha.add(botonVolver);
 		barraLateralDerecha.add(Box.createVerticalStrut(10));
 
-		// Botones dinámicos registrados
 		for (Entry<BiMap.DoubleKey<TipoGUI<? extends BotonDeBarraLateralDerecha>, String>, Supplier<BotonDeBarraLateralDerecha>> entrada : botons_de_barra_lateral_derecha
 				.entrySet()) {
 
@@ -594,41 +537,53 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 
 			JButton boton = new JButton(tipo.etiquetaDelBoton());
 			estilizarBoton(boton);
-			boton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+			boton.setAlignmentX(Component.CENTER_ALIGNMENT);
+			boton.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
 
-			// -------------------------------------------------
-			// CASO ESPECIAL: QUICKFIX
-			// -------------------------------------------------
 			if (tipo == TipoGUI.TODOS_QUICKFIXES) {
-
-				// Color especial configurable (válido en ambos modos)
 				if (!CrashDetectorGUI.esMac()) {
 					boton.setBackground(lanzerColorBotonQuickFix.obtener());
 					boton.setForeground(colorTexto.obtener());
 				}
 				boton.addActionListener(e -> mostrarVentanaQuickFix());
-
 			} else {
-				// Comportamiento normal
 				boton.addActionListener(e -> gui.init());
 			}
 
 			botons_de_barra_lateral_derecha_initalizado.put(gui, boton);
 			barraLateralDerecha.add(boton);
+			barraLateralDerecha.add(Box.createVerticalStrut(6));
 		}
+
+		barraLateralDerecha.add(Box.createVerticalGlue());
+
+		scrollBarraLateralRef = new JScrollPane(barraLateralDerecha);
+		scrollBarraLateralRef.setBorder(BorderFactory.createEmptyBorder());
+		scrollBarraLateralRef.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollBarraLateralRef.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrollBarraLateralRef.getViewport().setBackground(botonBarra.darker());
+		scrollBarraLateralRef.setPreferredSize(new Dimension(250, 0));
+		scrollBarraLateralRef.setMinimumSize(new Dimension(180, 0));
 
 		CrashDetectorLogger.log("Completa con botones");
 
-		// --- Layout principal de la ventana
-		// -------------------------------------------------------
+		// --- Layout principal con divisor ajustable
 		setLayout(new BorderLayout(5, 5));
 		contenidoPrincipal.add(scrollPane, BorderLayout.CENTER);
-		add(contenidoPrincipal, BorderLayout.CENTER);
+
+		splitPrincipalRef = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, contenidoPrincipal, scrollBarraLateralRef);
+		splitPrincipalRef.setResizeWeight(1.0);
+		splitPrincipalRef.setContinuousLayout(true);
+		splitPrincipalRef.setOneTouchExpandable(false);
+		splitPrincipalRef.setDividerSize(8);
+		splitPrincipalRef.setBorder(BorderFactory.createEmptyBorder());
+		splitPrincipalRef.setDividerLocation(780);
+
+		add(splitPrincipalRef, BorderLayout.CENTER);
 		add(panelInferior, BorderLayout.SOUTH);
-		add(barraLateralDerecha, BorderLayout.EAST);
 
 		setTitle(Config.obtenerInstancia().obtenerNombreCD());
-		setSize(1050, 650); // ancho ajustado
+		setSize(1050, 650);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 	}
@@ -838,9 +793,18 @@ public class PrincipalGUIEstiloLanzer extends PrincipalGUI {
 		// Barra lateral derecha
 		// =========================
 		if (barraLateralDerechaRef != null) {
-			// Restaurar el color correcto que sí se veía bien antes
 			barraLateralDerechaRef.setBackground(botonBarra.darker());
 			barraLateralDerechaRef.setOpaque(true);
+		}
+
+		if (scrollBarraLateralRef != null) {
+			scrollBarraLateralRef.getViewport().setBackground(botonBarra.darker());
+			scrollBarraLateralRef.setBackground(botonBarra.darker());
+
+			JScrollBar barraVertical = scrollBarraLateralRef.getVerticalScrollBar();
+			if (barraVertical != null) {
+				barraVertical.setBackground(botonBarra.darker());
+			}
 		}
 
 		for (Entry<BotonDeBarraLateralDerecha, JButton> entry : botons_de_barra_lateral_derecha_initalizado
