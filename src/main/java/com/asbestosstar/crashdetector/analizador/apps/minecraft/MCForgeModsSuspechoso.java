@@ -52,7 +52,7 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 
 	// Función para extraer el mod ID de cada línea usando expresiones regulares
 	private String extraerModidDeLinea(String linea, boolean esSeccionSuspectedMod) {
-		if (linea == null || linea.isEmpty())
+		if (linea == null || linea.contains("Object with ID ") || linea.isEmpty())
 			return null;
 
 		// Nueva lógica para la sección "Suspected Mod"
