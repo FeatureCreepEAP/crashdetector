@@ -7932,4 +7932,63 @@ public class Chino implements Idioma {
 		return "Cold Sweat 动态标签错误";
 	}
 
+	@Override
+	public String mensajeClassCastExceptionGeneral(String lineaClassCast) {
+		String detalle = lineaClassCast == null || lineaClassCast.isEmpty() ? ""
+				: "<p><b>检测到的行：</b></p><p><code>" + lineaClassCast + "</code></p>";
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "检测到 ClassCastException。</b>" + "<p>这意味着一个类被当作另一个不兼容的类或接口来处理。</p>" + detalle
+				+ "<p>此类错误通常由以下情况之一引起：</p>" + "<ul>" + "<li><b>两个相互不兼容的模组</b>。</li>"
+				+ "<li>修改了某个类的 <b>Mixins</b>、<b>transformers</b> 或补丁，导致游戏其他部分期望不同的类型。</li>"
+				+ "<li><b>stacktrace</b> 中出现的其他模组导致了错误的类型转换（miscast）。</li>" + "</ul>" + "<p><b>需要检查的内容：</b></p>"
+				+ "<ul>" + "<li>查看与此错误相关的 <b>stacktrace</b> 行。</li>"
+				+ "<li>特别注意格式为 <b>$modid$algo</b> 的模组或类名，因为它们通常指示涉及到的模组。</li>" + "<li>尝试更新、移除或隔离似乎与无效转换相关的模组。</li>"
+				+ "</ul>" + "<p>虽然 <b>ClassCastException</b> 并不总是致命的，但很多时候确实是。</p>";
+	}
+
+	@Override
+	public String nombreClassCastExceptionGeneral() {
+		return "检测到 ClassCastException";
+	}
+
+	@Override
+	public String mensajeValkyrienSkiesTournamentLithiumPoiInjection() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "检测到 Valkyrien Skies Tournament 与 Lithium/Radium 之间可能存在不兼容。</b>"
+				+ "<p>日志中包含 <b>InvalidInjectionException</b>，其中出现了 "
+				+ "<b>Lithium</b> 针对 <b>POI</b> 的 mixin 以及 <b>valkyrienskies-common.mixins.json:feature.poi.MixinPOIManager</b>。</p>"
+				+ "<p>此问题通常在使用 <b>旧版 Lithium</b> 或基于旧版 Lithium 的 " + "<b>分支（fork）</b>（如 <b>Radium Reforged</b>）与 "
+				+ "<b>VS Tournament</b> 一起使用时发生。</p>" + "<p><b>建议尝试：</b></p>" + "<ul>"
+				+ "<li>将 <b>Lithium</b> 更新为更新且兼容的版本。</li>"
+				+ "<li>如果您在 <b>Forge/NeoForge</b> 上并使用 <b>Radium Reforged</b> 或其他旧版分支，请将其移除。</li>"
+				+ "<li>请改用 <b>Harium</b>，它是 Radium 的现代分支，已与 Lithium 的最新改进同步。</li>"
+				+ "<li>如果问题是在更新模组后开始的，请仔细检查 <b>VS Tournament</b> 与您的 AI/POI 优化模组之间的具体版本组合。</li>" + "</ul>"
+				+ "<p>实际上，此故障通常源于 <b>Lithium/Radium</b> 的旧版实现，无法与 <b>VS Tournament</b> 良好配合。</p>";
+	}
+
+	@Override
+	public String nombreValkyrienSkiesTournamentLithiumPoiInjection() {
+		return "VS Tournament 与 Lithium/Radium 不兼容";
+	}
+
+	@Override
+	public String mensajeVSTournamentVSConfigClassNoExiste() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "VS Tournament 的版本对于您当前的 Valkyrien Skies 版本来说过于陈旧。</b>" + "<p>日志中包含 <b>NoClassDefFoundError</b>，涉及 "
+				+ "<b>org/valkyrienskies/core/impl/config/VSConfigClass</b> 以及来自 "
+				+ "<b>org.valkyrienskies.tournament.TournamentMod.init(...)</b> 的相关行。</p>"
+				+ "<p>这通常意味着您正在使用一个 <b>旧版的 VS Tournament</b>，它试图 " + "调用 <b>Valkyrien Skies</b> 中已不存在的旧内部类。</p>"
+				+ "<p><b>建议操作：</b></p>" + "<ul>" + "<li>移除旧版的 <b>VS Tournament</b>。</li>"
+				+ "<li>改用 <b>VS Tournament Reforged</b>。</li>"
+				+ "<li>同时请确保 <b>Valkyrien Skies</b> 的版本与该附加组件支持的版本相匹配。</li>" + "</ul>"
+				+ "<p>建议更换为 <b>VS Tournament Reforged</b> 符合该项目的当前状态：" + "原始 Tournament 版本仍被列为适用于 1.18.2 的旧版模组，而 "
+				+ "<b>VS Tournament Reforged</b> 则作为独立项目发布，目前宣布支持 Valkyrien " + "2.4.9+（基于 Forge 1.20.1）。</p>";
+	}
+
+	@Override
+	public String nombreVSTournamentVSConfigClassNoExiste() {
+		return "旧版 VS Tournament 与 Valkyrien Skies 不兼容";
+	}
+
 }

@@ -325,37 +325,18 @@ public class StackTracesDenegadosDeMinecraftPorDefecto {
 																											// (ej.
 																											// agregar
 																											// --add-opens)
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		VerificacionDeStackTrace.denegados
-		.add(contentido -> contentido.contains("com.seibel.distanthorizons.core.level.DhClientServerLevel.isRendering"));
-		
-		
-		
-		VerificacionDeStackTrace.denegados
-		.add(contentido -> contentido.contains("foundry.veil.impl.client.render.dynamicbuffer.VanillaShaderCompiler"));
-		
-		VerificacionDeStackTrace.denegados
-		.add(contentido -> contentido.contains("team.creative.creativecore")
+
+		VerificacionDeStackTrace.denegados.add(contentido -> contentido
+				.contains("com.seibel.distanthorizons.core.level.DhClientServerLevel.isRendering"));
+
+		VerificacionDeStackTrace.denegados.add(contentido -> contentido
+				.contains("foundry.veil.impl.client.render.dynamicbuffer.VanillaShaderCompiler"));
+
+		VerificacionDeStackTrace.denegados.add(contentido -> contentido.contains("team.creative.creativecore")
 				&& contentido.contains("registerReloadListener called on wrong thread"));
-		
-		
-		
+
 		VerificacionDeStackTrace.denegados
-		.add(contentido -> contentido.contains("foundry.veil.impl.resource.VeilResourceManagerImpl"));
-
-
+				.add(contentido -> contentido.contains("foundry.veil.impl.resource.VeilResourceManagerImpl"));
 
 	}
 }

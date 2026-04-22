@@ -8660,4 +8660,74 @@ public class Tailandes implements Idioma {
 		return "ข้อผิดพลาด Cold Sweat ใน tags แบบไดนามิก";
 	}
 
+	@Override
+	public String mensajeClassCastExceptionGeneral(String lineaClassCast) {
+		String detalle = lineaClassCast == null || lineaClassCast.isEmpty() ? ""
+				: "<p><b>พบบรรทัด:</b></p><p><code>" + lineaClassCast + "</code></p>";
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "ตรวจพบ ClassCastException</b>"
+				+ "<p>ซึ่งหมายความว่าคลาสถูกจัดการเสมือนว่าเป็นคลาสหรืออินเทอร์เฟซอื่นที่ไม่เข้ากัน</p>" + detalle
+				+ "<p>ข้อผิดพลาดประเภทนี้มักเกิดจากสถานการณ์ใดสถานการณ์หนึ่งดังนี้:</p>" + "<ul>"
+				+ "<li><b>มอดสองตัวที่ไม่เข้ากัน</b> ระหว่างกัน</li>"
+				+ "<li><b>Mixins</b>, <b>transformers</b> หรือแพตช์ที่แก้ไขคลาสและทำให้ส่วนอื่นของเกมคาดหวังประเภทข้อมูลที่แตกต่างกัน</li>"
+				+ "<li>มอดอื่นๆ ที่ปรากฏใน <b>stacktrace</b> ที่กำลังทำให้เกิดการแปลงประเภทผิดพลาด</li>" + "</ul>"
+				+ "<p><b>สิ่งที่ควรตรวจสอบ:</b></p>" + "<ul>"
+				+ "<li>ดูบรรทัดใน <b>stacktrace</b> ที่เกี่ยวข้องกับข้อผิดพลาดนี้</li>"
+				+ "<li>ให้ความสนใจเป็นพิเศษกับชื่อมอดหรือคลาสที่มีรูปแบบ <b>$modid$algo</b> เพราะมักจะชี้ไปยังมอดที่เกี่ยวข้อง</li>"
+				+ "<li>ลองอัปเดต ลบ หรือแยกมอดที่ดูเหมือนจะเกี่ยวข้องกับการแปลงประเภทที่ไม่ถูกต้อง</li>" + "</ul>"
+				+ "<p>แม้ว่า <b>ClassCastException</b> จะไม่ร้ายแรงเสมอไป แต่บ่อยครั้งก็มักจะทำให้เกมขัดข้อง</p>";
+	}
+
+	@Override
+	public String nombreClassCastExceptionGeneral() {
+		return "ตรวจพบ ClassCastException";
+	}
+
+	@Override
+	public String mensajeValkyrienSkiesTournamentLithiumPoiInjection() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "ตรวจพบความไม่เข้ากันที่อาจเกิดขึ้นระหว่าง Valkyrien Skies Tournament และ Lithium/Radium</b>"
+				+ "<p>บันทึกมี <b>InvalidInjectionException</b> ซึ่งแสดง mixin ของ "
+				+ "<b>Lithium</b> เกี่ยวกับ <b>POI</b> ร่วมกับ <b>valkyrienskies-common.mixins.json:feature.poi.MixinPOIManager</b></p>"
+				+ "<p>ปัญหานี้มักเกิดขึ้นเมื่อใช้ <b>Lithium เวอร์ชันเก่า</b> หรือ "
+				+ "<b>fork ที่อิงจาก Lithium เวอร์ชันเก่า</b> เช่น <b>Radium Reforged</b> ร่วมกับ "
+				+ "<b>VS Tournament</b></p>" + "<p><b>สิ่งที่ควรลอง:</b></p>" + "<ul>"
+				+ "<li>อัปเดต <b>Lithium</b> เป็นเวอร์ชันที่ใหม่กว่าและเข้ากันได้</li>"
+				+ "<li>หากคุณใช้ <b>Forge/NeoForge</b> และใช้ <b>Radium Reforged</b> หรือ fork เก่าอื่น ให้ลบออก</li>"
+				+ "<li>แทนที่ด้วยการลองใช้ <b>Harium</b> ซึ่งเป็น fork สมัยใหม่ของ Radium ที่ซิงค์กับการปรับปรุงล่าสุดของ Lithium</li>"
+				+ "<li>หากปัญหาเริ่มเกิดขึ้นหลังอัปเดตมอด ให้ตรวจสอบชุดเวอร์ชันที่แน่ชัดระหว่าง <b>VS Tournament</b> และมอดเพิ่มประสิทธิภาพ AI/POI ของคุณ</li>"
+				+ "</ul>"
+				+ "<p>โดยทั่วไปแล้ว ความล้มเหลวนี้มักมาจากการใช้งาน <b>Lithium/Radium</b> เวอร์ชันเก่าที่เข้ากันไม่ดีกับ <b>VS Tournament</b></p>";
+	}
+
+	@Override
+	public String nombreValkyrienSkiesTournamentLithiumPoiInjection() {
+		return "ความไม่เข้ากันของ VS Tournament กับ Lithium/Radium";
+	}
+
+	@Override
+	public String mensajeVSTournamentVSConfigClassNoExiste() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "ดูเหมือนว่า VS Tournament จะเก่าเกินไปสำหรับเวอร์ชัน Valkyrien Skies ของคุณ</b>"
+				+ "<p>บันทึกมี <b>NoClassDefFoundError</b> สำหรับ "
+				+ "<b>org/valkyrienskies/core/impl/config/VSConfigClass</b> และบรรทัดจาก "
+				+ "<b>org.valkyrienskies.tournament.TournamentMod.init(...)</b></p>"
+				+ "<p>สิ่งนี้มักหมายความว่า คุณมี <b>VS Tournament เวอร์ชันเก่า</b> ที่พยายาม "
+				+ "ใช้คลาสภายในเก่าของ <b>Valkyrien Skies</b> ที่ไม่มีอยู่แล้ว</p>" + "<p><b>สิ่งที่ควรทำ:</b></p>"
+				+ "<ul>" + "<li>ลบ <b>VS Tournament</b> เวอร์ชันเก่าออก</li>"
+				+ "<li>ใช้ <b>VS Tournament Reforged</b> แทน</li>"
+				+ "<li>ตรวจสอบเพิ่มเติมว่าเวอร์ชันของ <b>Valkyrien Skies</b> ตรงกับเวอร์ชันที่ addon รองรับ</li>"
+				+ "</ul>"
+				+ "<p>คำแนะนำในการเปลี่ยนไปใช้ <b>VS Tournament Reforged</b> สอดคล้องกับสถานะปัจจุบันของโปรเจกต์: "
+				+ "เวอร์ชันดั้งเดิมของ Tournament ยังคงถูกระบุว่าเป็นมอดเก่าสำหรับ 1.18.2 ในขณะที่ "
+				+ "<b>VS Tournament Reforged</b> เผยแพร่แยกต่างหาก และปัจจุบันประกาศรองรับ Valkyrien "
+				+ "2.4.9+ บน Forge 1.20.1</p>";
+	}
+
+	@Override
+	public String nombreVSTournamentVSConfigClassNoExiste() {
+		return "VS Tournament เวอร์ชันเก่าไม่เข้ากันกับ Valkyrien Skies";
+	}
+
 }

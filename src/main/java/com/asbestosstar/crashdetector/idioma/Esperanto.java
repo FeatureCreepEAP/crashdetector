@@ -8431,4 +8431,74 @@ public class Esperanto implements Idioma {
 		return "Eraro de Cold Sweat en dinamikaj etikedoj";
 	}
 
+	@Override
+	public String mensajeClassCastExceptionGeneral(String lineaClassCast) {
+		String detalle = lineaClassCast == null || lineaClassCast.isEmpty() ? ""
+				: "<p><b>Linio detektita:</b></p><p><code>" + lineaClassCast + "</code></p>";
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "ClassCastException detektita.</b>"
+				+ "<p>Ĉi tio signifas, ke klaso estis traktita kvazaŭ ĝi estus alia ne kongrua klaso aŭ interfaco.</p>"
+				+ detalle + "<p>Ĉi tiu speco de eraro kutime estas kaŭzita de unu el ĉi tiuj situacioj:</p>" + "<ul>"
+				+ "<li><b>Du ne kongruaj mod-oj</b> inter si.</li>"
+				+ "<li><b>Mixins</b>, <b>transformers</b> aŭ patch-oj kiuj modifas klason kaj igas alian parton de la ludo atendi malsaman tipon.</li>"
+				+ "<li>Aliaj mod-oj ĉeestantaj en la <b>stacktrace</b> kiuj kaŭzas la miscast.</li>" + "</ul>"
+				+ "<p><b>Kion kontroli:</b></p>" + "<ul>"
+				+ "<li>Rigardu la liniojn de la <b>stacktrace</b> rilatajn al ĉi tiu eraro.</li>"
+				+ "<li>Prestu specialan atenton al nomoj de mod-oj aŭ klasoj kun la formato <b>$modid$algo</b>, ĉar ili kutime indikas implikitajn mod-ojn.</li>"
+				+ "<li>Provu ĝisdatigi, forigi aŭ apartigi mod-ojn kiuj ŝajnas esti rilataj al la nevalida konverto.</li>"
+				+ "</ul>" + "<p>Kvankam <b>ClassCastException</b> ne ĉiam estas mortiga, tre ofte ĝi ja estas.</p>";
+	}
+
+	@Override
+	public String nombreClassCastExceptionGeneral() {
+		return "ClassCastException detektita";
+	}
+
+	@Override
+	public String mensajeValkyrienSkiesTournamentLithiumPoiInjection() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Ebla nekongrueco inter Valkyrien Skies Tournament kaj Lithium/Radium detektita.</b>"
+				+ "<p>La protokolo enhavas <b>InvalidInjectionException</b> kie aperas mixin de "
+				+ "<b>Lithium</b> pri <b>POI</b> kune kun <b>valkyrienskies-common.mixins.json:feature.poi.MixinPOIManager</b>.</p>"
+				+ "<p>Ĉi tiu problemo kutime okazas kiam oni uzas <b>malnovan version de Lithium</b> aŭ "
+				+ "<b>fork-on bazitan sur malnova Lithium</b>, kiel <b>Radium Reforged</b>, kune kun "
+				+ "<b>VS Tournament</b>.</p>" + "<p><b>Kion provi：</b></p>" + "<ul>"
+				+ "<li>Ĝisdatigu <b>Lithium</b> al pli nova kaj kongrua versio.</li>"
+				+ "<li>Se vi estas en <b>Forge/NeoForge</b> kaj uzas <b>Radium Reforged</b> aŭ alian malnovan fork-on, forigu ĝin.</li>"
+				+ "<li>Anstataŭe, provu <b>Harium</b>, kiu estas moderna fork-o de Radium sinkronigita kun lastatempaj plibonigoj de Lithium.</li>"
+				+ "<li>Se la problemo komenciĝis post ĝisdatigo de mod-oj, kontrolu la precizan kombinaĵon inter <b>VS Tournament</b> kaj via mod-o por optimumigo de AI/POI.</li>"
+				+ "</ul>"
+				+ "<p>En praktiko, ĉi tiu paneo kutime venas de malnova realigo de <b>Lithium/Radium</b> kiu ne bone kongruas kun <b>VS Tournament</b>.</p>";
+	}
+
+	@Override
+	public String nombreValkyrienSkiesTournamentLithiumPoiInjection() {
+		return "Nekongrueco de VS Tournament kun Lithium/Radium";
+	}
+
+	@Override
+	public String mensajeVSTournamentVSConfigClassNoExiste() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Ŝajnas, ke VS Tournament estas tro malnova por via versio de Valkyrien Skies.</b>"
+				+ "<p>La protokolo enhavas <b>NoClassDefFoundError</b> por "
+				+ "<b>org/valkyrienskies/core/impl/config/VSConfigClass</b> kaj ankaŭ linion de "
+				+ "<b>org.valkyrienskies.tournament.TournamentMod.init(...)</b>.</p>"
+				+ "<p>Tio kutime signifas, ke vi havas <b>malnovan version de VS Tournament</b>, kiu provas "
+				+ "uzi malnovajn internajn klasojn de <b>Valkyrien Skies</b>, kiuj ne plu ekzistas.</p>"
+				+ "<p><b>Kion fari：</b></p>" + "<ul>" + "<li>Forigu la malnovan <b>VS Tournament</b>.</li>"
+				+ "<li>Anstataŭe, uzu <b>VS Tournament Reforged</b>.</li>"
+				+ "<li>Kontrolu ankaŭ, ĉu la versio de <b>Valkyrien Skies</b> kongruas kun la versio subtenata de la aldonaĵo.</li>"
+				+ "</ul>"
+				+ "<p>La rekomendo ŝanĝi al <b>VS Tournament Reforged</b> kongruas kun la aktuala stato de la projekto： "
+				+ "la origina versio de Tournament daŭre estas listigita kiel malnova mod-o por 1.18.2, dum "
+				+ "<b>VS Tournament Reforged</b> estas publikigita aparte kaj nuntempe anoncas subtenon por Valkyrien "
+				+ "2.4.9+ en Forge 1.20.1.</p>";
+	}
+
+	@Override
+	public String nombreVSTournamentVSConfigClassNoExiste() {
+		return "Malnova VS Tournament nekongrua kun Valkyrien Skies";
+	}
+
 }

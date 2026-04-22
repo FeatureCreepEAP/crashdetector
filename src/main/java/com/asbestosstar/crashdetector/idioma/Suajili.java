@@ -8909,4 +8909,75 @@ public class Suajili implements Idioma {
 		return "Hitilafu ya Cold Sweat katika tags zinazobadilika";
 	}
 
+	@Override
+	public String mensajeClassCastExceptionGeneral(String lineaClassCast) {
+		String detalle = lineaClassCast == null || lineaClassCast.isEmpty() ? ""
+				: "<p><b>Mstari uliotambuliwa:</b></p><p><code>" + lineaClassCast + "</code></p>";
+
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "ClassCastException imetambuliwa.</b>"
+				+ "<p>Hii inamaanisha kuwa darasa limetibiwa kana kwamba ni darasa lingine au interface isiyolingana.</p>"
+				+ detalle + "<p>Aina hii ya hitilafu mara nyingi husababishwa na moja ya hali zifuatazo:</p>" + "<ul>"
+				+ "<li><b>Modi mbili zisizolingana</b> kati yao.</li>"
+				+ "<li><b>Mixins</b>, <b>transformers</b> au patches zinazobadilisha darasa na kusababisha sehemu nyingine ya mchezo itarajie aina tofauti.</li>"
+				+ "<li>Modi nyingine zilizopo kwenye <b>stacktrace</b> ambazo zinasababisha ubadilishaji aina usio sahihi.</li>"
+				+ "</ul>" + "<p><b>Vitu vya kuangalia:</b></p>" + "<ul>"
+				+ "<li>Angalia mistari ya <b>stacktrace</b> inayohusiana na hitilafu hii.</li>"
+				+ "<li>Weka umakini wa pekee kwa majina ya modi au madarasa yenye muundo <b>$modid$algo</b>, kwani mara nyingi huonyesha modi zinazohusika.</li>"
+				+ "<li>Jaribu kusasisha, kuondoa, au kutenganisha modi zinazoonekana kuhusiana na ubadilishaji aina usio sahihi.</li>"
+				+ "</ul>"
+				+ "<p>Ingawa <b>ClassCastException</b> sio ya hatari kila wakati, mara nyingi huwa hivyo.</p>";
+	}
+
+	@Override
+	public String nombreClassCastExceptionGeneral() {
+		return "ClassCastException imetambuliwa";
+	}
+
+	@Override
+	public String mensajeValkyrienSkiesTournamentLithiumPoiInjection() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Обнаружена возможная несовместимость между Valkyrien Skies Tournament и Lithium/Radium.</b>"
+				+ "<p>Журнал содержит <b>InvalidInjectionException</b>, где миксин "
+				+ "<b>Lithium</b> для <b>POI</b> указан вместе с <b>valkyrienskies-common.mixins.json:feature.poi.MixinPOIManager</b>.</p>"
+				+ "<p>Эта проблема обычно возникает при использовании <b>старой версии Lithium</b> или "
+				+ "<b>форка на базе старой версии Lithium</b>, такого как <b>Radium Reforged</b>, совместно с "
+				+ "<b>VS Tournament</b>.</p>" + "<p><b>Что попробовать:</b></p>" + "<ul>"
+				+ "<li>Обновите <b>Lithium</b> до более новой и совместимой версии.</li>"
+				+ "<li>Если вы на <b>Forge/NeoForge</b> и используете <b>Radium Reforged</b> или другой старый форк, удалите его.</li>"
+				+ "<li>Вместо него попробуйте <b>Harium</b> — современный форк Radium, синхронизированный с недавними улучшениями Lithium.</li>"
+				+ "<li>Если ошибка началась после обновления модов, проверьте точное сочетание версий между <b>VS Tournament</b> и вашим модом оптимизации AI/POI.</li>"
+				+ "</ul>"
+				+ "<p>На практике эта ошибка обычно вызвана старой реализацией <b>Lithium/Radium</b>, которая плохо совместима с <b>VS Tournament</b>.</p>";
+	}
+
+	@Override
+	public String nombreValkyrienSkiesTournamentLithiumPoiInjection() {
+		return "Несовместимость VS Tournament с Lithium/Radium";
+	}
+
+	@Override
+	public String mensajeVSTournamentVSConfigClassNoExiste() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Inaonekana VS Tournament ni ya zamani sana kwa toleo lako la Valkyrien Skies.</b>"
+				+ "<p>Kumbukumbu ina <b>NoClassDefFoundError</b> kwa "
+				+ "<b>org/valkyrienskies/core/impl/config/VSConfigClass</b> na pia mstari wa "
+				+ "<b>org.valkyrienskies.tournament.TournamentMod.init(...)</b>.</p>"
+				+ "<p>Hii kwa kawaida inamaanisha kuwa una <b>toleo la zamani la VS Tournament</b> linalojaribu "
+				+ "kutumia madarasa ya ndani ya zamani ya <b>Valkyrien Skies</b> ambayo hayapatikani tena.</p>"
+				+ "<p><b>Nini cha kufanya:</b></p>" + "<ul>" + "<li>Ondoa <b>VS Tournament</b> ya zamani.</li>"
+				+ "<li>Tumia <b>VS Tournament Reforged</b> badala yake.</li>"
+				+ "<li>Pia angalia kwamba toleo la <b>Valkyrien Skies</b> linalingana na toleo linalosaidiwa na nyongeza.</li>"
+				+ "</ul>"
+				+ "<p>Ushauri wa kubadilika kwenda <b>VS Tournament Reforged</b> unalingana na hali ya sasa ya mradi: "
+				+ "toleo la awali la Tournament bado limetajwa kama mod ya zamani ya 1.18.2, wakati "
+				+ "<b>VS Tournament Reforged</b> inachapishwa peke yake na kwa sasa inatangaza msaada wa Valkyrien "
+				+ "2.4.9+ kwenye Forge 1.20.1.</p>";
+	}
+
+	@Override
+	public String nombreVSTournamentVSConfigClassNoExiste() {
+		return "VS Tournament ya zamani haiendi na Valkyrien Skies";
+	}
+
 }

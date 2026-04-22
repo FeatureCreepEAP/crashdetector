@@ -3229,4 +3229,16 @@ public interface Idioma {
 
 	public String nombreColdSweatInitDynamicTags();
 
+	public String mensajeClassCastExceptionGeneral(String lineaClassCast);
+
+	public String nombreClassCastExceptionGeneral();
+
+	public String mensajeValkyrienSkiesTournamentLithiumPoiInjection();
+
+	public String nombreValkyrienSkiesTournamentLithiumPoiInjection();
+
+	public String mensajeVSTournamentVSConfigClassNoExiste();
+
+	public String nombreVSTournamentVSConfigClassNoExiste();
+
 }

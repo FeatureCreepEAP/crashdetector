@@ -22,6 +22,7 @@ import com.asbestosstar.crashdetector.analizador.general.AccesoDenegadoBackupCon
 import com.asbestosstar.crashdetector.analizador.general.AccesoIlegalMod;
 import com.asbestosstar.crashdetector.analizador.general.AdvertenciaFaltasClases;
 import com.asbestosstar.crashdetector.analizador.general.AntiManipulacion;
+import com.asbestosstar.crashdetector.analizador.general.ClassCastExceptionGeneral;
 import com.asbestosstar.crashdetector.analizador.general.ContenidoDeTrazos;
 import com.asbestosstar.crashdetector.analizador.general.DifDeMods;
 import com.asbestosstar.crashdetector.analizador.general.Drivers;
@@ -323,6 +324,9 @@ public class Analizador {
 		verificaciones.add(new ItemNoExiste());
 		verificaciones.add(new CobblemonPinkanIslandsRhyhornModelo());
 		verificaciones.add(new ColdSweatInitDynamicTags());
+		verificaciones.add(new ClassCastExceptionGeneral());
+		verificaciones.add(new ValkyrienSkiesTournamentLithiumPoiInjection());
+		verificaciones.add(new VSTournamentVSConfigClassNoExiste());
 
 		verificaciones.add(new PirataMC());
 		verificaciones.add(new LanzerNoAnimado());
