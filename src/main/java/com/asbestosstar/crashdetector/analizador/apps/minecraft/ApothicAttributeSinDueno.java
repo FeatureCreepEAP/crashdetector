@@ -17,7 +17,7 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
  * Causado generalmente por conflictos de mods al registrar atributos de
  * entidades. Especialmente común con el mod Chest Cavity.
  */
-public class ApothicAttributeSinDueño implements Verificaciones {
+public class ApothicAttributeSinDueno implements Verificaciones {
 
 	private boolean activado = false;
 	private boolean analizarLineas = false;
@@ -62,7 +62,7 @@ public class ApothicAttributeSinDueño implements Verificaciones {
 
 	@Override
 	public Verificaciones nueva() {
-		return new ApothicAttributeSinDueño();
+		return new ApothicAttributeSinDueno();
 	}
 
 	@Override

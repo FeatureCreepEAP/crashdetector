@@ -308,7 +308,7 @@ public class Analizador {
 		verificaciones.add(new FalloFabricRenderingAPI());
 		verificaciones.add(new RestriccionesDependenciaNoCumplidas());
 		verificaciones.add(new NeruinaOcultaAdvertencia());
-		verificaciones.add(new ApothicAttributeSinDueño());
+		verificaciones.add(new ApothicAttributeSinDueno());
 		verificaciones.add(new ErrorPotBlockEntity());
 		verificaciones.add(new ErrorPreloadingTricks());
 		verificaciones.add(new ErrorSimpleRadioLexiconfig());
