@@ -86,7 +86,7 @@ public class OculusIrisUnknownShaderVariable implements Verificaciones {
 
 	@Override
 	public float prioridad() {
-		return 1400;
+		return 700;
 	}
 
 	@Override

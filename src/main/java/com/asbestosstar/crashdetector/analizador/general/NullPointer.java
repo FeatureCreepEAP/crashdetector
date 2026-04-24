@@ -89,6 +89,16 @@ public class NullPointer implements Verificaciones {
 																																// esta
 																																// bien
 
+		// Mixin/EMI/JEI: ClassInfo.forType devuelve null durante análisis de
+		// superclases
+		lineas_ignorar.add(
+				"Cannot invoke \"org.spongepowered.asm.mixin.transformer.ClassInfo.hasSuperClass(org.spongepowered.asm.mixin.transformer.ClassInfo)\" because the return value of \"org.spongepowered.asm.mixin.transformer.ClassInfo.forType(org.objectweb.asm.Type, org.spongepowered.asm.mixin.transformer.ClassInfo$TypeLookup)\" is null");
+
+		// PFM/cliente: TextureManager todavía es null durante generación/carga de
+		// recursos
+		lineas_ignorar.add(
+				"Cannot invoke \"net.minecraft.client.renderer.texture.TextureManager.m_118495_(net.minecraft.resources.ResourceLocation, net.minecraft.client.renderer.texture.AbstractTexture)\" because the return value of \"net.minecraft.client.Minecraft.m_91097_()\" is null");
+
 	}
 
 	@Override

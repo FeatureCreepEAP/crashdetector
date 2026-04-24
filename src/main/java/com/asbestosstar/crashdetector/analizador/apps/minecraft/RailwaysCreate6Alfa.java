@@ -74,7 +74,7 @@ public class RailwaysCreate6Alfa implements Verificaciones {
 
 	@Override
 	public float prioridad() {
-		return 950.0f;
+		return 1500.0f;
 	}
 
 	@Override

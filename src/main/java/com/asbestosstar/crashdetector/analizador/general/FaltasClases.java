@@ -96,6 +96,10 @@ public class FaltasClases implements Verificaciones {
 		ignorar.add("TeamProperty");
 		ignorar.add("WaterMediaBinaries");
 
+		// HauntedHarvest: integración opcional con JEI busca Supplementaries.
+		// En este caso específico no debe contarse como clase fatal faltante.
+		ignorar.add("net/mehvahdjukaar/supplementaries/Supplementaries");
+
 	}
 
 	@Override
@@ -334,7 +338,7 @@ public class FaltasClases implements Verificaciones {
 	 */
 	public static boolean ignorarClaseOLinea(String str) {
 		for (String ign : ignorar) {
-			if (str.contains(ign)) {
+			if (str.replace(".", "/").contains(ign.replace(".", "/"))) {
 				return true;
 			}
 		}
