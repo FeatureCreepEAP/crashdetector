@@ -13,7 +13,7 @@ import java.util.List;
 
 public class SolicitudBusquedaModsCurseForge {
 
-	private static final String URL_BASE = "https://api.curseforge.com/v1/mods/search";
+	private static final String URL_BASE = ProveedorModsCurseForge.ENDPOINT + "v1/mods/search";
 	private static final int ID_JUEGO_MINECRAFT = 432;
 
 	public static PaginaMods buscarMods(String claveApi, String idioma, int pagina, String termino) throws IOException {

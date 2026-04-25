@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetector.dto.modpack.tlmods;
+package com.asbestosstar.crashdetector.dto.modpack.minecraftstorage;
 
 import java.io.IOException;
 
@@ -7,13 +7,19 @@ import com.asbestosstar.crashdetector.dto.modpack.InternetMod;
 import com.asbestosstar.crashdetector.dto.modpack.PaginaMods;
 import com.asbestosstar.crashdetector.dto.modpack.ProveedorMods;
 
-public class ProveedorModsTlmods implements ProveedorMods {
+public class ProveedorModsMinecraftStorage implements ProveedorMods {
 
-	public static ConfigString ENDPOINT = ConfigString.de("tlmods.endpoint", "https://tlmods.org/");
+	public static ConfigString ENDPOINT = ConfigString.de("minecraftstorage.endpoint",
+			"https://api.minecraftstorage.com/");
+
+	@Override
+	public boolean soportaBusqueda() {
+		return true;
+	}
 
 	@Override
 	public PaginaMods buscarMods(String idioma, int pagina, String termino) throws IOException {
-		return SolicitudBusquedaModsTlmods.buscarMods(idioma, pagina, termino);
+		return SolicitudBusquedaModsMinecraftStorage.buscarMods(idioma, pagina, termino);
 	}
 
 	@Override
@@ -23,13 +29,6 @@ public class ProveedorModsTlmods implements ProveedorMods {
 
 	@Override
 	public String obtenerNombreProveedor() {
-		return "TLauncher MPS (tlmods)";
+		return "MinecraftStorage";
 	}
-
-	@Override
-	public boolean soportaBusqueda() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
 }

@@ -472,12 +472,9 @@ public class StackTracesDenegadosDeMinecraftPorDefecto {
 		// HauntedHarvest JEICompat: clase opcional faltante de Supplementaries
 		VerificacionDeStackTrace.denegados.add(c -> c.contains("net.mehvahdjukaar.hauntedharvest.integration.JEICompat")
 				&& c.contains("net/mehvahdjukaar/supplementaries/Supplementaries"));
-		
-		
+
 		VerificacionDeStackTrace.denegados.add(c -> c.contains("observable.Observable.clientInit")
 				&& c.contains("dev.architectury.registry.client.keymappings.forge.KeyMappingRegistryImpl.register"));
-		
-		
 
 	}
 }

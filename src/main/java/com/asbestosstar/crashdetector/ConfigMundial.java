@@ -17,6 +17,7 @@ public class ConfigMundial {
 	private static final boolean VALOR_POR_DEFECTO_ANONIMIZAR_REGISTROS = true;
 	private static final boolean VALOR_POR_DEFECTO_CONSENTIMIENTO_LFPDPPP = false;
 	private static final boolean VALOR_POR_DEFECTO_CONSOLA_DESARROLLO = false;
+	private static final String VALOR_POR_DEFECTO_CURSEFORGE_CLAVE_API = "";
 
 	private static final File ARCHIVO_CONFIG_MUNIDIAL = new File(System.getProperty("user.home"),
 			"crash_detector/config_munidial.properties");
@@ -43,7 +44,7 @@ public class ConfigMundial {
 			propiedades.setProperty("consentimiento_lfpdppp", String.valueOf(VALOR_POR_DEFECTO_CONSENTIMIENTO_LFPDPPP));
 
 			propiedades.setProperty("consola_desarrollo", String.valueOf(VALOR_POR_DEFECTO_CONSOLA_DESARROLLO));
-
+			propiedades.setProperty("curseforge_clave_api", VALOR_POR_DEFECTO_CURSEFORGE_CLAVE_API);
 			guardar();
 		}
 	}
@@ -158,6 +159,34 @@ public class ConfigMundial {
 	 */
 	public void guardarConsolaDesarrollo(boolean valor) {
 		propiedades.setProperty("consola_desarrollo", String.valueOf(valor));
+		guardar();
+	}
+
+	/**
+	 * Devuelve la clave API de CurseForge configurada. Puede devolver una cadena
+	 * vacía si no está definida.
+	 */
+	public String obtenerCurseForgeClaveApi() {
+		return propiedades.getProperty("curseforge_clave_api", VALOR_POR_DEFECTO_CURSEFORGE_CLAVE_API).trim();
+	}
+
+	/**
+	 * Guarda la clave API de CurseForge.
+	 */
+	public void guardarCurseForgeClaveApi(String claveApi) {
+		if (claveApi == null || claveApi.trim().isEmpty()) {
+			propiedades.remove("curseforge_clave_api");
+		} else {
+			propiedades.setProperty("curseforge_clave_api", claveApi.trim());
+		}
+		guardar();
+	}
+
+	/**
+	 * Elimina la clave API de CurseForge.
+	 */
+	public void borrarCurseForgeClaveApi() {
+		propiedades.remove("curseforge_clave_api");
 		guardar();
 	}
 

@@ -55,7 +55,7 @@ public class CDModsEstiloTL extends PanelAPIBase {
 
 	@Override
 	protected ProveedorMods crearProveedorMods() {
-		return new ProveedorModsTlmods();
+		return crearProveedorSeleccionado();
 	}
 
 	// Getters de color

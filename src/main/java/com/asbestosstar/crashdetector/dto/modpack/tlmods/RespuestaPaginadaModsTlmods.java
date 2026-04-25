@@ -22,14 +22,27 @@ public class RespuestaPaginadaModsTlmods extends PaginaMods {
 		this.totalElementos = nodo.obtener("allElements").comoLargo();
 		this.vacia = nodo.obtener("empty").comoBooleano();
 
+		this.listaMods = new ArrayList<>();
+
 		Json.Nodo contenido = nodo.obtener("content");
 		if (contenido.esArreglo()) {
-			this.listaMods = new ArrayList<>();
 			for (int i = 0; i < contenido.tamano(); i++) {
-				this.listaMods.add(new ModTlmods(contenido.en(i)));
+				ModTlmods mod = new ModTlmods(contenido.en(i));
+
+				// TLMods puede devolver enlaces de varias fuentes.
+				// Este proveedor solo publica resultados que apuntan a CurseForge.
+				String enlace = mod.obtenerEnlaceProyecto();
+
+				if (enlace == null || enlace.trim().isEmpty()) {
+					continue;
+				}
+
+				if (!enlace.toLowerCase().contains("curseforge.com")) {
+					continue;
+				}
+
+				this.listaMods.add(mod);
 			}
-		} else {
-			this.listaMods = new ArrayList<>();
 		}
 	}
 

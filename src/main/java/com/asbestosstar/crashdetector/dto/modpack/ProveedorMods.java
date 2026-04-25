@@ -9,6 +9,8 @@ import java.util.List;
  */
 public interface ProveedorMods {
 
+	public boolean soportaBusqueda();
+
 	/**
 	 * Busca mods por nombre o descripción.
 	 * 
@@ -18,7 +20,7 @@ public interface ProveedorMods {
 	 * @return Página de resultados
 	 * @throws IOException si falla la comunicación
 	 */
-	PaginaMods buscarMods(String idioma, int pagina, String termino) throws IOException;
+	public PaginaMods buscarMods(String idioma, int pagina, String termino) throws IOException;
 
 	/**
 	 * Obtiene detalles completos de un mod por su identificador único.
@@ -28,10 +30,10 @@ public interface ProveedorMods {
 	 * @return Información completa del mod
 	 * @throws IOException si no se encuentra o falla la red
 	 */
-	InternetMod obtenerModPorId(long identificador, String idioma) throws IOException;
+	public InternetMod obtenerModPorId(long identificador, String idioma) throws IOException;
 
 	/**
 	 * Nombre del proveedor (para logs y UI).
 	 */
-	String obtenerNombreProveedor();
+	public String obtenerNombreProveedor();
 }

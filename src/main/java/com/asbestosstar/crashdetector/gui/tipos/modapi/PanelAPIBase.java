@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -18,9 +19,12 @@ import java.util.stream.Collectors;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -29,11 +33,17 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 import com.asbestosstar.crashdetector.MonitorDePID;
+import com.asbestosstar.crashdetector.Statics;
+import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.dto.modpack.InternetMod;
 import com.asbestosstar.crashdetector.dto.modpack.PaginaMods;
 import com.asbestosstar.crashdetector.dto.modpack.ProveedorMods;
+import com.asbestosstar.crashdetector.dto.modpack.curseforge.ProveedorModsCurseForge;
+import com.asbestosstar.crashdetector.dto.modpack.minecraftstorage.ProveedorModsMinecraftStorage;
+import com.asbestosstar.crashdetector.dto.modpack.tlmods.ProveedorModsTlmods;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
+import com.asbestosstar.crashdetector.gui.tipos.compartir_instancia.CompartirInstanciaLegacy;
 import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUI;
 
 /**
@@ -47,8 +57,44 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 	protected JTextField searchBar;
 	protected JPanel modListPanel;
 	protected JPanel sidebarPanel;
+	protected JLabel etiquetaCarga;
 	protected List<String> archivosJAR;
 	protected ProveedorMods proveedorActual;
+
+	protected static final Map<String, Supplier<ProveedorMods>> PROVEEDORES_MODS = new LinkedHashMap<>();
+	protected static final ConfigString proveedorConfig = ConfigString.de("cdmods.proveedor", "tlmods");
+
+	protected JComboBox<ProveedorRegistrado> comboProveedores;
+
+	static {
+		registrarProveedorMods("tlmods", "TLMods", ProveedorModsTlmods::new);
+		registrarProveedorMods("cursedforge", "CursedForge", ProveedorModsCurseForge::new);
+		registrarProveedorMods("minecraftstorage", "MinecraftStorage", ProveedorModsMinecraftStorage::new);
+	}
+
+	public static void registrarProveedorMods(String id, String nombre, Supplier<ProveedorMods> proveedor) {
+		PROVEEDORES_MODS.put(id, proveedor);
+	}
+
+	protected static class ProveedorRegistrado {
+
+		private final String id;
+		private final String nombre;
+
+		public ProveedorRegistrado(String id, String nombre) {
+			this.id = id;
+			this.nombre = nombre;
+		}
+
+		public String obtenerId() {
+			return id;
+		}
+
+		@Override
+		public String toString() {
+			return nombre;
+		}
+	}
 
 	protected JScrollPane scrollMods;
 	protected JScrollPane sidebarScroll;
@@ -96,7 +142,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 		setBackground(obtenerColorFondo());
 		setLayout(new BorderLayout());
 
-		JButton botonVolver = new JButton("←" + MonitorDePID.idioma.volver());
+		JButton botonVolver = new JButton("←");
 		aplicarEstiloVolver(botonVolver);
 		botonVolver.setFocusPainted(false);
 		botonVolver.addActionListener(e -> {
@@ -156,7 +202,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 		});
 
 		cargarArchivosJAR();
-		proveedorActual = crearProveedorMods();
+		proveedorActual = crearProveedorSeleccionado();
 		buscarMods("");
 
 		SwingUtilities.invokeLater(this::actualizarEscalado);
@@ -205,10 +251,65 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 	// cargarArchivosJAR, etc.)
 	// Pero ahora usan el método `obtenerExtensionDesactivacion()` para decidir la
 	// extensión
-
 	private JPanel crearPanelBusqueda() {
 		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
 		panel.setBackground(obtenerColorFondo());
+
+		Dimension tamBotonChico = new Dimension(38, 24);
+
+		JButton botonImportar = new JButton("↑");
+		botonImportar.setToolTipText("Importar instancia");
+		botonImportar.setPreferredSize(tamBotonChico);
+		botonImportar.setMinimumSize(tamBotonChico);
+		botonImportar.setMaximumSize(tamBotonChico);
+		aplicarEstiloBotonAccion(botonImportar);
+		botonImportar.addActionListener(e -> JOptionPane.showMessageDialog(this, "Próximamente"));
+		panel.add(botonImportar);
+
+		JButton botonExportar = new JButton("↓");
+		botonExportar.setToolTipText("Compartir instancia");
+		botonExportar.setPreferredSize(tamBotonChico);
+		botonExportar.setMinimumSize(tamBotonChico);
+		botonExportar.setMaximumSize(tamBotonChico);
+		aplicarEstiloBotonAccion(botonExportar);
+		botonExportar.addActionListener(e -> {
+			TipoGUI.COMPARTIR_INSTANCIA
+					.obtenerGUIPredeterminado(CompartirInstanciaLegacy.ID, CompartirInstanciaLegacy::new).init();
+		});
+		panel.add(botonExportar);
+
+		comboProveedores = new JComboBox<>();
+		comboProveedores.setPrototypeDisplayValue(new ProveedorRegistrado("tlmods", "tlmods"));
+		comboProveedores.setPreferredSize(new Dimension(155, 24));
+		comboProveedores.setMinimumSize(new Dimension(125, 24));
+		comboProveedores.setMaximumSize(new Dimension(180, 24));
+
+		for (Map.Entry<String, Supplier<ProveedorMods>> entrada : PROVEEDORES_MODS.entrySet()) {
+			ProveedorMods proveedorTemporal = entrada.getValue().get();
+
+			// Solo los proveedores que soportan búsqueda aparecen en el combo.
+			if (!proveedorTemporal.soportaBusqueda()) {
+				continue;
+			}
+
+			comboProveedores.addItem(new ProveedorRegistrado(entrada.getKey(), entrada.getKey()));
+		}
+
+		seleccionarProveedorEnCombo(proveedorConfig.obtener());
+
+		comboProveedores.addActionListener(e -> {
+			ProveedorRegistrado seleccionado = (ProveedorRegistrado) comboProveedores.getSelectedItem();
+
+			if (seleccionado == null) {
+				return;
+			}
+
+			proveedorConfig.escribir(seleccionado.obtenerId());
+			proveedorActual = crearProveedorSeleccionado();
+			buscarMods(searchBar != null ? searchBar.getText() : "");
+		});
+
+		panel.add(comboProveedores);
 
 		JLabel label = new JLabel(MonitorDePID.idioma.buscar());
 		label.setForeground(obtenerColorTexto());
@@ -218,7 +319,11 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 		aplicarEstiloBusqueda(searchBar);
 		panel.add(searchBar);
 
-		JButton botonBuscar = new JButton(MonitorDePID.idioma.buscar());
+		JButton botonBuscar = new JButton("🔍");
+		botonBuscar.setToolTipText(MonitorDePID.idioma.buscar());
+		botonBuscar.setPreferredSize(tamBotonChico);
+		botonBuscar.setMinimumSize(tamBotonChico);
+		botonBuscar.setMaximumSize(tamBotonChico);
 		aplicarEstiloBotonAccion(botonBuscar);
 		botonBuscar.addActionListener(e -> buscarMods(searchBar.getText()));
 		panel.add(botonBuscar);
@@ -228,29 +333,33 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 
 	private void buscarMods(String termino) {
 
-		modListPanel.removeAll();
-		tarjetasMods.clear();
+		if (proveedorActual == null || !proveedorActual.soportaBusqueda()) {
+			return;
+		}
+
+		mostrarCarga(true);
 
 		CompletableFuture.runAsync(() -> {
 			try {
 				PaginaMods pagina = proveedorActual.buscarMods(MonitorDePID.idioma.codigo().toUpperCase(), 0, termino);
 
-				java.util.Set<String> urlsVistas = new java.util.HashSet<>();
+				java.util.Set<Long> idsVistos = new java.util.HashSet<>();
 
 				SwingUtilities.invokeLater(() -> {
 
+					// Quitar el gif antes de agregar las tarjetas.
+					modListPanel.removeAll();
+					tarjetasMods.clear();
+
 					for (InternetMod mod : pagina.obtenerListaMods()) {
 
-						String enlace = mod.obtenerEnlaceProyecto();
-
-						if (enlace == null || enlace.isEmpty())
+						if (mod == null) {
 							continue;
+						}
 
-						if (!enlace.toLowerCase().contains("curseforge.com"))
+						if (!idsVistos.add(mod.obtenerIdentificador())) {
 							continue;
-
-						if (!urlsVistas.add(enlace))
-							continue;
+						}
 
 						JPanel tarjeta = crearTarjetaMod(mod);
 						tarjeta.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -265,12 +374,49 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 
 			} catch (IOException ex) {
 				SwingUtilities.invokeLater(() -> {
-					modListPanel.add(new JLabel("Error al cargar mods."));
+					modListPanel.removeAll();
+					tarjetasMods.clear();
+
+					JLabel error = new JLabel("Error al cargar mods.");
+					error.setForeground(obtenerColorTexto());
+					modListPanel.add(error);
+
 					modListPanel.revalidate();
 					modListPanel.repaint();
 				});
 			}
 		});
+	}
+
+	private void mostrarCarga(boolean cargando) {
+
+		if (modListPanel == null) {
+			return;
+		}
+
+		if (!cargando) {
+			return;
+		}
+
+		modListPanel.removeAll();
+		tarjetasMods.clear();
+
+		etiquetaCarga = new JLabel(new ImageIcon(Statics.carpeta.resolve("imagenes/padoru.gif").toString()));
+		etiquetaCarga.setAlignmentX(Component.CENTER_ALIGNMENT);
+		etiquetaCarga.setHorizontalAlignment(JLabel.CENTER);
+
+		JPanel panelCarga = new JPanel(new BorderLayout());
+		panelCarga.setOpaque(true);
+		panelCarga.setBackground(obtenerColorFondo());
+		panelCarga.add(etiquetaCarga, BorderLayout.CENTER);
+		panelCarga.setPreferredSize(new Dimension(300, 220));
+		panelCarga.setMaximumSize(new Dimension(Integer.MAX_VALUE, 220));
+
+		modListPanel.add(Box.createVerticalStrut(40));
+		modListPanel.add(panelCarga);
+
+		modListPanel.revalidate();
+		modListPanel.repaint();
 	}
 
 	protected JPanel crearTarjetaMod(InternetMod mod) {
@@ -794,6 +940,42 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 	@Override
 	public TipoGUI<?> tipo() {
 		return TipoGUI.MOD_API_PANEL;
+	}
+
+	protected ProveedorMods crearProveedorSeleccionado() {
+		String id = proveedorConfig.obtener();
+
+		Supplier<ProveedorMods> proveedor = PROVEEDORES_MODS.get(id);
+
+		if (proveedor == null || !proveedor.get().soportaBusqueda()) {
+			for (Map.Entry<String, Supplier<ProveedorMods>> entrada : PROVEEDORES_MODS.entrySet()) {
+				ProveedorMods candidato = entrada.getValue().get();
+
+				if (candidato.soportaBusqueda()) {
+					proveedorConfig.escribir(entrada.getKey());
+					return candidato;
+				}
+			}
+
+			throw new IllegalStateException("No hay proveedores de mods que soporten búsqueda.");
+		}
+
+		return proveedor.get();
+	}
+
+	private void seleccionarProveedorEnCombo(String idProveedor) {
+		if (comboProveedores == null) {
+			return;
+		}
+
+		for (int i = 0; i < comboProveedores.getItemCount(); i++) {
+			ProveedorRegistrado item = comboProveedores.getItemAt(i);
+
+			if (item.obtenerId().equals(idProveedor)) {
+				comboProveedores.setSelectedIndex(i);
+				return;
+			}
+		}
 	}
 
 	public static class SwitchVerde extends JCheckBox {
