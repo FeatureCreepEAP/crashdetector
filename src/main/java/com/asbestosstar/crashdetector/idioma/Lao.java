@@ -8968,4 +8968,36 @@ public class Lao implements Idioma {
 		return "VS Tournament ເກົ່າບໍ່ເຂົ້າກັນກັບ Valkyrien Skies";
 	}
 
+	public String curseForgeClaveApiMundial() {
+		return "ຄີ໌ API ສາກົນຂອງ CurseForge";
+	}
+
+	public String curseForgeEndpoint() {
+		return "Endpoint ຂອງ CurseForge";
+	}
+
+	public String tlmodsEndpoint() {
+		return "Endpoint ຂອງ TLMods";
+	}
+
+	public String minecraftStorageEndpoint() {
+		return "Endpoint ຂອງ MinecraftStorage";
+	}
+
+	public String autoBackupActivado() {
+		return "ເປີດໃຊ້ການສຳຮອງອັດຕະໂນມັດ";
+	}
+
+	public String autoBackupFrecuencia() {
+		return "ຄວາມຖີ່ການສຳຮອງອັດຕະໂນມັດ";
+	}
+
+	public String autoBackupDiasConservar() {
+		return "ຈຳນວນວັນທີ່ເກັບຮັກສາການສຳຮອງ";
+	}
+
+	public String autoBackupTamanoMaximoMB() {
+		return "ຂະໜາດສູງສຸດຂອງການສຳຮອງ (MB)";
+	}
+
 }

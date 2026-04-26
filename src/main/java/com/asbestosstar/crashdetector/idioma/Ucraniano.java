@@ -7854,4 +7854,36 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 		return "Старий VS Tournament несумісний з Valkyrien Skies";
 	}
 
+	public String curseForgeClaveApiMundial() {
+		return "Глобальний ключ API CurseForge";
+	}
+
+	public String curseForgeEndpoint() {
+		return "Endpoint CurseForge";
+	}
+
+	public String tlmodsEndpoint() {
+		return "Endpoint TLMods";
+	}
+
+	public String minecraftStorageEndpoint() {
+		return "Endpoint MinecraftStorage";
+	}
+
+	public String autoBackupActivado() {
+		return "Автоматичне резервне копіювання увімкнено";
+	}
+
+	public String autoBackupFrecuencia() {
+		return "Частота автоматичного резервного копіювання";
+	}
+
+	public String autoBackupDiasConservar() {
+		return "Днів зберігання автоматичних резервних копій";
+	}
+
+	public String autoBackupTamanoMaximoMB() {
+		return "Максимальний розмір автоматичних резервних копій (МБ)";
+	}
+
 }

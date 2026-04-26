@@ -8492,4 +8492,36 @@ public class Persa implements Idioma {
 		return "ناسازگاری VS Tournament قدیمی با Valkyrien Skies";
 	}
 
+	public String curseForgeClaveApiMundial() {
+		return "کلید API جهانی CurseForge";
+	}
+
+	public String curseForgeEndpoint() {
+		return "Endpoint مربوط به CurseForge";
+	}
+
+	public String tlmodsEndpoint() {
+		return "Endpoint مربوط به TLMods";
+	}
+
+	public String minecraftStorageEndpoint() {
+		return "Endpoint مربوط به MinecraftStorage";
+	}
+
+	public String autoBackupActivado() {
+		return "پشتیبان‌گیری خودکار فعال است";
+	}
+
+	public String autoBackupFrecuencia() {
+		return "فرکانس پشتیبان‌گیری خودکار";
+	}
+
+	public String autoBackupDiasConservar() {
+		return "روزهای نگهداری پشتیبان‌های خودکار";
+	}
+
+	public String autoBackupTamanoMaximoMB() {
+		return "حداکثر حجم پشتیبان‌های خودکار (مگابایت)";
+	}
+
 }

@@ -8748,4 +8748,36 @@ public class Vietnamita implements Idioma {
 		return "VS Tournament cũ không tương thích với Valkyrien Skies";
 	}
 
+	public String curseForgeClaveApiMundial() {
+		return "Khóa API Toàn cầu của CurseForge";
+	}
+
+	public String curseForgeEndpoint() {
+		return "Endpoint của CurseForge";
+	}
+
+	public String tlmodsEndpoint() {
+		return "Endpoint của TLMods";
+	}
+
+	public String minecraftStorageEndpoint() {
+		return "Endpoint của MinecraftStorage";
+	}
+
+	public String autoBackupActivado() {
+		return "Đã bật sao lưu tự động";
+	}
+
+	public String autoBackupFrecuencia() {
+		return "Tần suất sao lưu tự động";
+	}
+
+	public String autoBackupDiasConservar() {
+		return "Số ngày lưu giữ bản sao lưu tự động";
+	}
+
+	public String autoBackupTamanoMaximoMB() {
+		return "Kích thước tối đa của bản sao lưu tự động (MB)";
+	}
+
 }

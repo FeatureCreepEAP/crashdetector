@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetector.dto.modpack.minecraftstorage;
+package com.asbestosstar.crashdetector.dto.modpack.modrinth;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -7,54 +7,45 @@ import java.util.List;
 import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.dto.modpack.InternetMod;
 import com.asbestosstar.crashdetector.dto.modpack.PaginaMods;
-import com.asbestosstar.crashdetector.dto.modpack.ProveedorMods;
+import com.asbestosstar.crashdetector.dto.modpack.bbsmc.ProveedorModsBBSMC;
 
-public class ProveedorModsMinecraftStorage implements ProveedorMods {
+public class ProveedorModsModrinth extends ProveedorModsBBSMC {
 
-	public static ConfigString ENDPOINT = ConfigString.de("minecraftstorage.endpoint",
-			"https://api.minecraftstorage.com/");
-
-	@Override
-	public boolean soportaBusqueda() {
-		return true;
-	}
+	public static final String ENDPOINT = ConfigString.de("modrinth.endpoint", "https://api.modrinth.com/v2/search")
+			.obtener();
 
 	@Override
 	public PaginaMods buscarMods(String idioma, int pagina, String termino) throws IOException {
-		return SolicitudBusquedaModsMinecraftStorage.buscarMods(idioma, pagina, termino);
+		return SolicitudBusquedaModsModrinth.buscarMods(ENDPOINT, idioma, pagina, termino);
 	}
 
 	@Override
 	public InternetMod obtenerModPorId(long identificador, String idioma) throws IOException {
-		throw new UnsupportedOperationException("No implementado aún");
+		throw new UnsupportedOperationException("No implementado aún para Modrinth");
 	}
 
 	@Override
 	public String obtenerNombreProveedor() {
-		return "MinecraftStorage";
+		return "Modrinth";
 	}
 
 	@Override
 	public boolean soportaImportarModpack() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public void importarModpack(Path ubicacionArchivoModpack, List<Path> rutasEntrada) throws IOException {
-		// TODO Auto-generated method stub
-
+		throw new UnsupportedOperationException("Modrinth no soporta importar modpacks aún");
 	}
 
 	@Override
 	public boolean soportaExportarModpack() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public void exportarModpack(Path ubicacionArchivoModpack, List<Path> rutasEntrada) throws IOException {
-		// TODO Auto-generated method stub
-
+		throw new UnsupportedOperationException("Modrinth no soporta exportar modpacks aún");
 	}
 }

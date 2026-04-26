@@ -8175,4 +8175,36 @@ public class Coreano implements Idioma {
 		return "오래된 VS Tournament는 Valkyrien Skies와 호환되지 않음";
 	}
 
+	public String curseForgeClaveApiMundial() {
+		return "CurseForge 전역 API 키";
+	}
+
+	public String curseForgeEndpoint() {
+		return "CurseForge 끝점";
+	}
+
+	public String tlmodsEndpoint() {
+		return "TLMods 끝점";
+	}
+
+	public String minecraftStorageEndpoint() {
+		return "MinecraftStorage 끝점";
+	}
+
+	public String autoBackupActivado() {
+		return "자동 백업 활성화됨";
+	}
+
+	public String autoBackupFrecuencia() {
+		return "자동 백업 주기";
+	}
+
+	public String autoBackupDiasConservar() {
+		return "자동 백업 보관 일수";
+	}
+
+	public String autoBackupTamanoMaximoMB() {
+		return "자동 백업 최대 크기 (MB)";
+	}
+
 }

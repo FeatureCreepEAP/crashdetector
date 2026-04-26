@@ -8187,4 +8187,36 @@ public class Japones implements Idioma {
 		return "旧版 VS Tournament は Valkyrien Skies と非互換";
 	}
 
+	public String curseForgeClaveApiMundial() {
+		return "CurseForge グローバル API キー";
+	}
+
+	public String curseForgeEndpoint() {
+		return "CurseForge エンドポイント";
+	}
+
+	public String tlmodsEndpoint() {
+		return "TLMods エンドポイント";
+	}
+
+	public String minecraftStorageEndpoint() {
+		return "MinecraftStorage エンドポイント";
+	}
+
+	public String autoBackupActivado() {
+		return "自動バックアップ有効";
+	}
+
+	public String autoBackupFrecuencia() {
+		return "自動バックアップ頻度";
+	}
+
+	public String autoBackupDiasConservar() {
+		return "自動バックアップ保持日数";
+	}
+
+	public String autoBackupTamanoMaximoMB() {
+		return "自動バックアップ最大サイズ (MB)";
+	}
+
 }

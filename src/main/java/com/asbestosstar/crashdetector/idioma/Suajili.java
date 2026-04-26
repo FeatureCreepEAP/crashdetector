@@ -8980,4 +8980,36 @@ public class Suajili implements Idioma {
 		return "VS Tournament ya zamani haiendi na Valkyrien Skies";
 	}
 
+	public String curseForgeClaveApiMundial() {
+		return "Mfunguo wa API wa Kimataifa wa CurseForge";
+	}
+
+	public String curseForgeEndpoint() {
+		return "Endpoint ya CurseForge";
+	}
+
+	public String tlmodsEndpoint() {
+		return "Endpoint ya TLMods";
+	}
+
+	public String minecraftStorageEndpoint() {
+		return "Endpoint ya MinecraftStorage";
+	}
+
+	public String autoBackupActivado() {
+		return "Backup ya kiotomatiki imewashwa";
+	}
+
+	public String autoBackupFrecuencia() {
+		return "Mara kwa mara ya backup ya kiotomatiki";
+	}
+
+	public String autoBackupDiasConservar() {
+		return "Siku za kuhifadhi backup ya kiotomatiki";
+	}
+
+	public String autoBackupTamanoMaximoMB() {
+		return "Ukubwa wa juu wa backup ya kiotomatiki (MB)";
+	}
+
 }

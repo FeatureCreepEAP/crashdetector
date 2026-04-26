@@ -9068,4 +9068,36 @@ public class Frances implements Idioma {
 		return "VS Tournament ancien incompatible avec Valkyrien Skies";
 	}
 
+	public String curseForgeClaveApiMundial() {
+		return "Clé API globale de CurseForge";
+	}
+
+	public String curseForgeEndpoint() {
+		return "Point de terminaison CurseForge";
+	}
+
+	public String tlmodsEndpoint() {
+		return "Point de terminaison TLMods";
+	}
+
+	public String minecraftStorageEndpoint() {
+		return "Point de terminaison MinecraftStorage";
+	}
+
+	public String autoBackupActivado() {
+		return "Sauvegarde automatique activée";
+	}
+
+	public String autoBackupFrecuencia() {
+		return "Fréquence de sauvegarde automatique";
+	}
+
+	public String autoBackupDiasConservar() {
+		return "Jours de conservation des sauvegardes automatiques";
+	}
+
+	public String autoBackupTamanoMaximoMB() {
+		return "Taille maximale des sauvegardes automatiques (MB)";
+	}
+
 }

@@ -1,6 +1,7 @@
 package com.asbestosstar.crashdetector.dto.modpack;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 
 /**
@@ -36,4 +37,36 @@ public interface ProveedorMods {
 	 * Nombre del proveedor (para logs y UI).
 	 */
 	public String obtenerNombreProveedor();
+
+	/**
+	 * Indica si este proveedor permite importar modpacks.
+	 */
+	public boolean soportaImportarModpack();
+
+	/**
+	 * Importa un modpack desde uno o más archivos de entrada.
+	 * 
+	 * @param ubicacionArchivoModpack ubicación del archivo principal del modpack
+	 * @param rutasEntrada            rutas de archivos o carpetas necesarias para
+	 *                                importar
+	 * @throws IOException si falla la importación
+	 */
+	public void importarModpack(Path ubicacionArchivoModpack, List<Path> rutasEntrada) throws IOException;
+
+	/**
+	 * Indica si este proveedor permite exportar modpacks.
+	 */
+	public boolean soportaExportarModpack();
+
+	/**
+	 * Exporta un modpack usando uno o más archivos/carpetas de entrada.
+	 * 
+	 * @param ubicacionArchivoModpack ubicación donde se guardará el archivo
+	 *                                exportado
+	 * @param rutasEntrada            rutas de archivos o carpetas que se incluirán
+	 *                                en la exportación
+	 * @throws IOException si falla la exportación
+	 */
+	public void exportarModpack(Path ubicacionArchivoModpack, List<Path> rutasEntrada) throws IOException;
+
 }

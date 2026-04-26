@@ -31,6 +31,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -50,8 +51,11 @@ import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.api_sitio_archivo.SitioDeArchivoAPI;
 import com.asbestosstar.crashdetector.api_sitio_archivo.SitioDeArchivoAPI.ObservadorDeTransferencia;
 import com.asbestosstar.crashdetector.api_sitio_archivo.WormholeApp;
+import com.asbestosstar.crashdetector.dto.modpack.CopiaDeSeguridadDeArchivos;
+import com.asbestosstar.crashdetector.dto.modpack.ProveedorMods;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
+import com.asbestosstar.crashdetector.gui.tipos.modapi.PanelAPIBase;
 
 /**
  * GUI abstracta para compartir la instancia completa o una selección de
@@ -82,6 +86,7 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 	public JButton botonCompartir;
 	public JButton botonRefrescar;
 	public JLabel etiquetaEstado;
+	public JButton botonExportar;
 
 	public SwingWorker<Void, Void> workerCompartir;
 
@@ -165,7 +170,7 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 		comboFormato = new JComboBox<>();
 		comboServicio = new JComboBox<>();
 
-		comboFormato.setModel(new DefaultComboBoxModel<>(new String[] { "basico" }));
+		recargarFormatosExportables();
 		recargarServicios();
 
 		filaCombos.add(new JLabel(MonitorDePID.idioma.compartirInstanciaFormato() + ":"));
@@ -177,8 +182,11 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 		botonCompartir = new JButton(MonitorDePID.idioma.compartirInstanciaBotonCompartir());
 		botonRefrescar = new JButton(MonitorDePID.idioma.compartirInstanciaBotonRefrescar());
 		etiquetaEstado = new JLabel(MonitorDePID.idioma.compartirInstanciaEstadoListo());
+		botonExportar = new JButton("Guardar como archivo");
+		botonExportar.addActionListener(e -> exportarSeleccionAUbicacion());
 
 		filaBotones.add(botonCompartir);
+		filaBotones.add(botonExportar);
 		filaBotones.add(botonRefrescar);
 		filaBotones.add(etiquetaEstado);
 
@@ -198,6 +206,72 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 		setVisible(true);
 	}
 
+	protected void exportarSeleccionAUbicacion() {
+		List<Path> rutas = obtenerSeleccionFinal();
+
+		if (rutas.isEmpty()) {
+			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.compartirInstanciaSinSeleccion(),
+					MonitorDePID.idioma.error(), JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+
+		ProveedorMods proveedor = obtenerProveedorFormatoSeleccionado();
+
+		if (proveedor == null) {
+			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.compartirInstanciaFormatoNoSoportado(),
+					MonitorDePID.idioma.error(), JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+
+		String extension = CopiaDeSeguridadDeArchivos.obtenerExtensionProveedor(proveedor);
+		String nombreSugerido = CopiaDeSeguridadDeArchivos.crearNombreArchivoBackup(carpetaBase, extension);
+
+		JFileChooser chooser = new JFileChooser();
+		chooser.setDialogTitle("Exportar modpack");
+		chooser.setSelectedFile(new java.io.File(nombreSugerido));
+
+		int resultado = chooser.showSaveDialog(this);
+
+		if (resultado != JFileChooser.APPROVE_OPTION) {
+			return;
+		}
+
+		Path destino = chooser.getSelectedFile().toPath();
+
+		setTextoCarga("Exportando modpack...");
+		setCargando(true);
+
+		new SwingWorker<Void, Void>() {
+			@Override
+			protected Void doInBackground() throws Exception {
+				proveedor.exportarModpack(destino, rutas);
+				return null;
+			}
+
+			@Override
+			protected void done() {
+				try {
+					get();
+
+					JOptionPane.showMessageDialog(CompartirInstanciaGUI.this, "Modpack exportado:\n" + destino,
+							MonitorDePID.idioma.informacion(), JOptionPane.INFORMATION_MESSAGE);
+
+					etiquetaEstado.setText(MonitorDePID.idioma.compartirInstanciaEstadoListo());
+				} catch (Throwable t) {
+					CrashDetectorLogger.logException(t);
+
+					JOptionPane.showMessageDialog(CompartirInstanciaGUI.this,
+							"Error exportando modpack:\n" + t.getMessage(), MonitorDePID.idioma.error(),
+							JOptionPane.ERROR_MESSAGE);
+
+					etiquetaEstado.setText(MonitorDePID.idioma.compartirInstanciaEstadoError());
+				} finally {
+					setCargando(false);
+				}
+			}
+		}.execute();
+	}
+
 	protected void recargarServicios() {
 		DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
 
@@ -212,6 +286,46 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 		DefaultMutableTreeNode raiz = construirArbolSeleccion();
 		modeloArbol.setRoot(raiz);
 		modeloArbol.reload();
+	}
+
+	protected void recargarFormatosExportables() {
+		DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<String>();
+
+		for (Map.Entry<String, Supplier<ProveedorMods>> entrada : PanelAPIBase.PROVEEDORES_MODS.entrySet()) {
+			try {
+				ProveedorMods proveedor = entrada.getValue().get();
+
+				if (proveedor != null && proveedor.soportaExportarModpack()) {
+					modelo.addElement(entrada.getKey());
+				}
+			} catch (Throwable t) {
+				CrashDetectorLogger.logException(t);
+			}
+		}
+
+		comboFormato.setModel(modelo);
+	}
+
+	protected ProveedorMods obtenerProveedorFormatoSeleccionado() {
+		String formato = (String) comboFormato.getSelectedItem();
+
+		if (formato == null) {
+			return null;
+		}
+
+		Supplier<ProveedorMods> supplier = PanelAPIBase.PROVEEDORES_MODS.get(formato);
+
+		if (supplier == null) {
+			return null;
+		}
+
+		ProveedorMods proveedor = supplier.get();
+
+		if (proveedor == null || !proveedor.soportaExportarModpack()) {
+			return null;
+		}
+
+		return proveedor;
 	}
 
 	protected String construirTextoPolitica() {
@@ -422,10 +536,10 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 			return;
 		}
 
-		String formato = (String) comboFormato.getSelectedItem();
+		ProveedorMods proveedor = obtenerProveedorFormatoSeleccionado();
 		String servicio = (String) comboServicio.getSelectedItem();
 
-		if (!"basico".equalsIgnoreCase(formato)) {
+		if (proveedor == null) {
 			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.compartirInstanciaFormatoNoSoportado(),
 					MonitorDePID.idioma.error(), JOptionPane.WARNING_MESSAGE);
 			return;
@@ -448,7 +562,10 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 			@Override
 			protected Void doInBackground() throws Exception {
 				etiquetaEstado.setText(MonitorDePID.idioma.compartirInstanciaEstadoEmpaquetando());
-				zipCreado = crearZipBasico(rutas);
+
+				String extension = CopiaDeSeguridadDeArchivos.obtenerExtensionProveedor(proveedor);
+				zipCreado = CopiaDeSeguridadDeArchivos.crearRutaBackup(carpetaBase, extension);
+				proveedor.exportarModpack(zipCreado, rutas);
 
 				etiquetaEstado.setText(MonitorDePID.idioma.compartirInstanciaEstadoSubiendo());
 				setTextoCarga(MonitorDePID.idioma.compartirInstanciaEstadoSubiendo());
@@ -544,58 +661,6 @@ public abstract class CompartirInstanciaGUI extends JFrame implements CrashDetec
 		};
 
 		workerCompartir.execute();
-	}
-
-	protected Path crearZipBasico(List<Path> rutas) throws Exception {
-		Path temporal = Files.createTempFile("crashdetector-instancia-", ".zip");
-
-		try (ZipOutputStream zos = new ZipOutputStream(Files.newOutputStream(temporal))) {
-			Set<String> yaAgregadas = new LinkedHashSet<>();
-
-			for (Path ruta : rutas) {
-				if (!Files.exists(ruta)) {
-					continue;
-				}
-
-				if (Files.isRegularFile(ruta)) {
-					agregarArchivoAlZip(zos, ruta, yaAgregadas);
-				} else if (Files.isDirectory(ruta)) {
-					try (java.util.stream.Stream<Path> stream = Files.walk(ruta)) {
-						stream.filter(Files::isRegularFile).forEach(p -> {
-							try {
-								agregarArchivoAlZip(zos, p, yaAgregadas);
-							} catch (Throwable t) {
-								CrashDetectorLogger.logException(t);
-							}
-						});
-					}
-				}
-			}
-		}
-
-		return temporal;
-	}
-
-	protected void agregarArchivoAlZip(ZipOutputStream zos, Path archivo, Set<String> yaAgregadas) throws Exception {
-		Path normal = archivo.toAbsolutePath().normalize();
-		String nombreRelativo;
-
-		Path statics = Statics.carpeta.toAbsolutePath().normalize();
-		if (normal.startsWith(carpetaBase)) {
-			nombreRelativo = carpetaBase.relativize(normal).toString().replace('\\', '/');
-		} else if (normal.startsWith(statics)) {
-			nombreRelativo = "_crashdetector/" + statics.relativize(normal).toString().replace('\\', '/');
-		} else {
-			return;
-		}
-
-		if (!yaAgregadas.add(nombreRelativo)) {
-			return;
-		}
-
-		zos.putNextEntry(new ZipEntry(nombreRelativo));
-		Files.copy(archivo, zos);
-		zos.closeEntry();
 	}
 
 	public enum EstadoSeleccion {

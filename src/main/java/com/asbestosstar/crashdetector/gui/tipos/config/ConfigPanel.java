@@ -33,6 +33,10 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ConfigString;
+import com.asbestosstar.crashdetector.dto.modpack.CopiaDeSeguridadDeArchivos;
+import com.asbestosstar.crashdetector.dto.modpack.curseforge.ProveedorModsCurseForge;
+import com.asbestosstar.crashdetector.dto.modpack.minecraftstorage.ProveedorModsMinecraftStorage;
+import com.asbestosstar.crashdetector.dto.modpack.tlmods.ProveedorModsTlmods;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.editor_plantilla.EditorPlantilla;
@@ -270,6 +274,69 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 		}
 		panel.add(sitioDeInformesField);
 
+		// Campo: Clave API mundial de CurseForge
+		JLabel labelCurseForgeClaveApiMundial = new JLabel(MonitorDePID.idioma.curseForgeClaveApiMundial());
+		labelCurseForgeClaveApiMundial.setForeground(colorDeTextoDeGui);
+		panel.add(labelCurseForgeClaveApiMundial);
+
+		JTextField curseForgeClaveApiMundialField = crearCampoTextoConfig(munidial.obtenerCurseForgeClaveApi(),
+				munidial::guardarCurseForgeClaveApi);
+
+		if (!esMac) {
+			curseForgeClaveApiMundialField.setBackground(colorCajaTexto.obtener());
+			curseForgeClaveApiMundialField.setForeground(colorDeTextoDeGui);
+		}
+
+		panel.add(curseForgeClaveApiMundialField);
+
+		// Campo: Endpoint de CurseForge
+		JLabel labelCurseForgeEndpoint = new JLabel(MonitorDePID.idioma.curseForgeEndpoint());
+		labelCurseForgeEndpoint.setForeground(colorDeTextoDeGui);
+		panel.add(labelCurseForgeEndpoint);
+
+		ConfigString curseForgeEndpoint = ConfigString.de("curseforge.endpoint",
+				ProveedorModsCurseForge.obtenerEndpointPredeterminada());
+
+		JTextField curseForgeEndpointField = crearCampoTextoConfig(curseForgeEndpoint.obtener(),
+				curseForgeEndpoint::escribir);
+
+		if (!esMac) {
+			curseForgeEndpointField.setBackground(colorCajaTexto.obtener());
+			curseForgeEndpointField.setForeground(colorDeTextoDeGui);
+		}
+
+		panel.add(curseForgeEndpointField);
+
+		// Campo: Endpoint de TLMods
+		JLabel labelTlmodsEndpoint = new JLabel(MonitorDePID.idioma.tlmodsEndpoint());
+		labelTlmodsEndpoint.setForeground(colorDeTextoDeGui);
+		panel.add(labelTlmodsEndpoint);
+
+		JTextField tlmodsEndpointField = crearCampoTextoConfig(ProveedorModsTlmods.ENDPOINT.obtener(),
+				ProveedorModsTlmods.ENDPOINT::escribir);
+
+		if (!esMac) {
+			tlmodsEndpointField.setBackground(colorCajaTexto.obtener());
+			tlmodsEndpointField.setForeground(colorDeTextoDeGui);
+		}
+
+		panel.add(tlmodsEndpointField);
+
+		// Campo: Endpoint de MinecraftStorage
+		JLabel labelMinecraftStorageEndpoint = new JLabel(MonitorDePID.idioma.minecraftStorageEndpoint());
+		labelMinecraftStorageEndpoint.setForeground(colorDeTextoDeGui);
+		panel.add(labelMinecraftStorageEndpoint);
+
+		JTextField minecraftStorageEndpointField = crearCampoTextoConfig(
+				ProveedorModsMinecraftStorage.ENDPOINT.obtener(), ProveedorModsMinecraftStorage.ENDPOINT::escribir);
+
+		if (!esMac) {
+			minecraftStorageEndpointField.setBackground(colorCajaTexto.obtener());
+			minecraftStorageEndpointField.setForeground(colorDeTextoDeGui);
+		}
+
+		panel.add(minecraftStorageEndpointField);
+
 		// Campo: Carpeta HMCL
 		JLabel labelHMCL = new JLabel(MonitorDePID.idioma.carpetaHMCL());
 		labelHMCL.setForeground(colorDeTextoDeGui);
@@ -367,6 +434,84 @@ public abstract class ConfigPanel<PrincipalGUI> extends JPanel implements CrashD
 		proxySysOutSysErrCheckBox
 				.addItemListener(e -> config.guardarProxySysOutSysErr(proxySysOutSysErrCheckBox.isSelected()));
 		panel.add(proxySysOutSysErrCheckBox);
+
+		// Auto-backup: activado
+		JLabel labelAutoBackupActivado = new JLabel(MonitorDePID.idioma.autoBackupActivado());
+		labelAutoBackupActivado.setForeground(colorDeTextoDeGui);
+		panel.add(labelAutoBackupActivado);
+
+		JCheckBox checkAutoBackupActivado = new JCheckBox();
+		checkAutoBackupActivado.setBackground(colorFondo.obtener());
+		checkAutoBackupActivado.setSelected(CopiaDeSeguridadDeArchivos.autoBackupActivado.obtener());
+		checkAutoBackupActivado.addActionListener(e -> {
+			CopiaDeSeguridadDeArchivos.autoBackupActivado.escribir(checkAutoBackupActivado.isSelected());
+		});
+		panel.add(checkAutoBackupActivado);
+
+		// Auto-backup: frecuencia
+		JLabel labelAutoBackupFrecuencia = new JLabel(MonitorDePID.idioma.autoBackupFrecuencia());
+		labelAutoBackupFrecuencia.setForeground(colorDeTextoDeGui);
+		panel.add(labelAutoBackupFrecuencia);
+
+		JComboBox<String> comboAutoBackupFrecuencia = new JComboBox<>(
+				new String[] { CopiaDeSeguridadDeArchivos.FRECUENCIA_UNA_VEZ_POR_DIA,
+						CopiaDeSeguridadDeArchivos.FRECUENCIA_TODAS_LAS_VECES });
+
+		comboAutoBackupFrecuencia.setSelectedItem(CopiaDeSeguridadDeArchivos.autoBackupFrecuencia.obtener());
+
+		comboAutoBackupFrecuencia.addActionListener(e -> {
+			String seleccionado = (String) comboAutoBackupFrecuencia.getSelectedItem();
+			CopiaDeSeguridadDeArchivos.autoBackupFrecuencia.escribir(seleccionado);
+		});
+
+		if (!esMac) {
+			comboAutoBackupFrecuencia.setBackground(colorCajaTexto.obtener());
+			comboAutoBackupFrecuencia.setForeground(colorDeTextoDeGui);
+		}
+
+		panel.add(comboAutoBackupFrecuencia);
+
+		// Auto-backup: días conservar
+		JLabel labelAutoBackupDiasConservar = new JLabel(MonitorDePID.idioma.autoBackupDiasConservar());
+		labelAutoBackupDiasConservar.setForeground(colorDeTextoDeGui);
+		panel.add(labelAutoBackupDiasConservar);
+
+		JTextField autoBackupDiasConservarField = crearCampoTextoConfig(
+				String.valueOf(CopiaDeSeguridadDeArchivos.autoBackupDiasConservar.obtener()), valor -> {
+					try {
+						CopiaDeSeguridadDeArchivos.autoBackupDiasConservar.escribir(Double.parseDouble(valor.trim()));
+					} catch (Exception ex) {
+						// Ignorar mientras el usuario escribe un valor incompleto o inválido.
+					}
+				});
+
+		if (!esMac) {
+			autoBackupDiasConservarField.setBackground(colorCajaTexto.obtener());
+			autoBackupDiasConservarField.setForeground(colorDeTextoDeGui);
+		}
+
+		panel.add(autoBackupDiasConservarField);
+
+		// Auto-backup: tamaño máximo MB
+		JLabel labelAutoBackupTamanoMaximoMB = new JLabel(MonitorDePID.idioma.autoBackupTamanoMaximoMB());
+		labelAutoBackupTamanoMaximoMB.setForeground(colorDeTextoDeGui);
+		panel.add(labelAutoBackupTamanoMaximoMB);
+
+		JTextField autoBackupTamanoMaximoMBField = crearCampoTextoConfig(
+				String.valueOf(CopiaDeSeguridadDeArchivos.autoBackupTamanoMaximoMB.obtener()), valor -> {
+					try {
+						CopiaDeSeguridadDeArchivos.autoBackupTamanoMaximoMB.escribir(Double.parseDouble(valor.trim()));
+					} catch (Exception ex) {
+						// Ignorar mientras el usuario escribe un valor incompleto o inválido.
+					}
+				});
+
+		if (!esMac) {
+			autoBackupTamanoMaximoMBField.setBackground(colorCajaTexto.obtener());
+			autoBackupTamanoMaximoMBField.setForeground(colorDeTextoDeGui);
+		}
+
+		panel.add(autoBackupTamanoMaximoMBField);
 
 		panel.setPreferredSize(new Dimension(600, 400));
 		return panel;

@@ -1,6 +1,8 @@
 package com.asbestosstar.crashdetector.dto.modpack.curseforge;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.util.List;
 
 import com.asbestosstar.crashdetector.ConfigMundial;
 import com.asbestosstar.crashdetector.config.ConfigString;
@@ -62,6 +64,30 @@ public class ProveedorModsCurseForge implements ProveedorMods {
 	public boolean soportaBusqueda() {
 		// TODO Auto-generated method stub
 		return true;
+	}
+
+	@Override
+	public boolean soportaImportarModpack() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void importarModpack(Path ubicacionArchivoModpack, List<Path> rutasEntrada) throws IOException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public boolean soportaExportarModpack() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void exportarModpack(Path ubicacionArchivoModpack, List<Path> rutasEntrada) throws IOException {
+		// TODO Auto-generated method stub
+
 	}
 
 }

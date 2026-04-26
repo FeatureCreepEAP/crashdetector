@@ -9081,4 +9081,36 @@ public class Indonesia implements Idioma {
 		return "VS Tournament lama tidak kompatibel dengan Valkyrien Skies";
 	}
 
+	public String curseForgeClaveApiMundial() {
+		return "Kunci API Global CurseForge";
+	}
+
+	public String curseForgeEndpoint() {
+		return "Endpoint CurseForge";
+	}
+
+	public String tlmodsEndpoint() {
+		return "Endpoint TLMods";
+	}
+
+	public String minecraftStorageEndpoint() {
+		return "Endpoint MinecraftStorage";
+	}
+
+	public String autoBackupActivado() {
+		return "Cadangan otomatis diaktifkan";
+	}
+
+	public String autoBackupFrecuencia() {
+		return "Frekuensi cadangan otomatis";
+	}
+
+	public String autoBackupDiasConservar() {
+		return "Hari penyimpanan cadangan otomatis";
+	}
+
+	public String autoBackupTamanoMaximoMB() {
+		return "Ukuran maksimum cadangan otomatis (MB)";
+	}
+
 }

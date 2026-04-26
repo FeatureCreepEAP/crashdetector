@@ -8555,4 +8555,36 @@ public class Ingles implements Idioma {
 		return "Outdated VS Tournament incompatible with Valkyrien Skies";
 	}
 
+	public String curseForgeClaveApiMundial() {
+		return "Global CurseForge API Key";
+	}
+
+	public String curseForgeEndpoint() {
+		return "CurseForge Endpoint";
+	}
+
+	public String tlmodsEndpoint() {
+		return "TLMods Endpoint";
+	}
+
+	public String minecraftStorageEndpoint() {
+		return "MinecraftStorage Endpoint";
+	}
+
+	public String autoBackupActivado() {
+		return "Auto-backup enabled";
+	}
+
+	public String autoBackupFrecuencia() {
+		return "Auto-backup frequency";
+	}
+
+	public String autoBackupDiasConservar() {
+		return "Days to keep auto-backups";
+	}
+
+	public String autoBackupTamanoMaximoMB() {
+		return "Maximum auto-backup size (MB)";
+	}
+
 }

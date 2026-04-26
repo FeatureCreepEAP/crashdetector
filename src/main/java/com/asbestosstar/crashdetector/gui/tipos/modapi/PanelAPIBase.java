@@ -38,8 +38,11 @@ import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.dto.modpack.InternetMod;
 import com.asbestosstar.crashdetector.dto.modpack.PaginaMods;
 import com.asbestosstar.crashdetector.dto.modpack.ProveedorMods;
+import com.asbestosstar.crashdetector.dto.modpack.basico.ProveedorModsBasico;
+import com.asbestosstar.crashdetector.dto.modpack.bbsmc.ProveedorModsBBSMC;
 import com.asbestosstar.crashdetector.dto.modpack.curseforge.ProveedorModsCurseForge;
 import com.asbestosstar.crashdetector.dto.modpack.minecraftstorage.ProveedorModsMinecraftStorage;
+import com.asbestosstar.crashdetector.dto.modpack.modrinth.ProveedorModsModrinth;
 import com.asbestosstar.crashdetector.dto.modpack.tlmods.ProveedorModsTlmods;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
@@ -61,7 +64,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 	protected List<String> archivosJAR;
 	protected ProveedorMods proveedorActual;
 
-	protected static final Map<String, Supplier<ProveedorMods>> PROVEEDORES_MODS = new LinkedHashMap<>();
+	public static final Map<String, Supplier<ProveedorMods>> PROVEEDORES_MODS = new LinkedHashMap<>();
 	protected static final ConfigString proveedorConfig = ConfigString.de("cdmods.proveedor", "tlmods");
 
 	protected JComboBox<ProveedorRegistrado> comboProveedores;
@@ -70,6 +73,10 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 		registrarProveedorMods("tlmods", "TLMods", ProveedorModsTlmods::new);
 		registrarProveedorMods("cursedforge", "CursedForge", ProveedorModsCurseForge::new);
 		registrarProveedorMods("minecraftstorage", "MinecraftStorage", ProveedorModsMinecraftStorage::new);
+		registrarProveedorMods("basico", "Basico", ProveedorModsBasico::new);
+		registrarProveedorMods("bbsmc", "BBSMC", ProveedorModsBBSMC::new);
+		registrarProveedorMods("modrinth", "Modrinth", ProveedorModsModrinth::new);
+
 	}
 
 	public static void registrarProveedorMods(String id, String nombre, Supplier<ProveedorMods> proveedor) {

@@ -8420,4 +8420,36 @@ public class Arabe implements Idioma {
 		return "VS Tournament القديم غير متوافق مع Valkyrien Skies";
 	}
 
+	public String curseForgeClaveApiMundial() {
+		return "مفتاح API العالمي لـ CurseForge";
+	}
+
+	public String curseForgeEndpoint() {
+		return "نقطة نهاية CurseForge";
+	}
+
+	public String tlmodsEndpoint() {
+		return "نقطة نهاية TLMods";
+	}
+
+	public String minecraftStorageEndpoint() {
+		return "نقطة نهاية MinecraftStorage";
+	}
+
+	public String autoBackupActivado() {
+		return "تم تفعيل النسخ الاحتياطي التلقائي";
+	}
+
+	public String autoBackupFrecuencia() {
+		return "تكرار النسخ الاحتياطي التلقائي";
+	}
+
+	public String autoBackupDiasConservar() {
+		return "أيام الاحتفاظ بالنسخ الاحتياطية التلقائية";
+	}
+
+	public String autoBackupTamanoMaximoMB() {
+		return "الحد الأقصى لحجم النسخ الاحتياطية التلقائية (MB)";
+	}
+
 }

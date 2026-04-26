@@ -31,6 +31,7 @@ import com.asbestosstar.crashdetector.canario.CanarioDeOrdenJudicial;
 import com.asbestosstar.crashdetector.canario.pordefecto.CDInformesAsbestosstarEgoismJPCanario;
 import com.asbestosstar.crashdetector.canario.pordefecto.CDPasteAsbestosstarEgoismJPCanario;
 import com.asbestosstar.crashdetector.detectorlanzer.DetectorLanzer;
+import com.asbestosstar.crashdetector.dto.modpack.CopiaDeSeguridadDeArchivos;
 import com.asbestosstar.crashdetector.grepr.BusquedaArchivos;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.antimanipulacion.AntiManipulacionGUIPanko;
@@ -595,6 +596,8 @@ public class MonitorDePID {
 //		}
 
 		CountDownLatch latch = new CountDownLatch(1); // Necesito por que sin esta preceso esta muerte
+
+		CopiaDeSeguridadDeArchivos.hacerAutoBackupSiCorresponde();
 
 		while (true) {
 

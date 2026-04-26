@@ -8540,4 +8540,36 @@ public class Portuges implements Idioma {
 		return "VS Tournament antigo incompatível com Valkyrien Skies";
 	}
 
+	public String curseForgeClaveApiMundial() {
+		return "Chave de API Global do CurseForge";
+	}
+
+	public String curseForgeEndpoint() {
+		return "Endpoint do CurseForge";
+	}
+
+	public String tlmodsEndpoint() {
+		return "Endpoint do TLMods";
+	}
+
+	public String minecraftStorageEndpoint() {
+		return "Endpoint do MinecraftStorage";
+	}
+
+	public String autoBackupActivado() {
+		return "Backup automático ativado";
+	}
+
+	public String autoBackupFrecuencia() {
+		return "Frequência do backup automático";
+	}
+
+	public String autoBackupDiasConservar() {
+		return "Dias para manter backups automáticos";
+	}
+
+	public String autoBackupTamanoMaximoMB() {
+		return "Tamanho máximo dos backups automáticos (MB)";
+	}
+
 }

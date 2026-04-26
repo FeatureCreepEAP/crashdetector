@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetector.dto.modpack.minecraftstorage;
+package com.asbestosstar.crashdetector.dto.modpack.bbsmc;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -9,10 +9,10 @@ import com.asbestosstar.crashdetector.dto.modpack.InternetMod;
 import com.asbestosstar.crashdetector.dto.modpack.PaginaMods;
 import com.asbestosstar.crashdetector.dto.modpack.ProveedorMods;
 
-public class ProveedorModsMinecraftStorage implements ProveedorMods {
+public class ProveedorModsBBSMC implements ProveedorMods {
 
-	public static ConfigString ENDPOINT = ConfigString.de("minecraftstorage.endpoint",
-			"https://api.minecraftstorage.com/");
+	public static final String ENDPOINT = ConfigString.de("bbsmc.endpoint", "https://api.bbsmc.net/v2/search")
+			.obtener();
 
 	@Override
 	public boolean soportaBusqueda() {
@@ -21,40 +21,36 @@ public class ProveedorModsMinecraftStorage implements ProveedorMods {
 
 	@Override
 	public PaginaMods buscarMods(String idioma, int pagina, String termino) throws IOException {
-		return SolicitudBusquedaModsMinecraftStorage.buscarMods(idioma, pagina, termino);
+		return SolicitudBusquedaModsBBSMC.buscarMods(ENDPOINT, idioma, pagina, termino);
 	}
 
 	@Override
 	public InternetMod obtenerModPorId(long identificador, String idioma) throws IOException {
-		throw new UnsupportedOperationException("No implementado aún");
+		throw new UnsupportedOperationException("No implementado aún para BBSMC");
 	}
 
 	@Override
 	public String obtenerNombreProveedor() {
-		return "MinecraftStorage";
+		return "BBSMC";
 	}
 
 	@Override
 	public boolean soportaImportarModpack() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public void importarModpack(Path ubicacionArchivoModpack, List<Path> rutasEntrada) throws IOException {
-		// TODO Auto-generated method stub
-
+		throw new UnsupportedOperationException("BBSMC no soporta importar modpacks aún");
 	}
 
 	@Override
 	public boolean soportaExportarModpack() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public void exportarModpack(Path ubicacionArchivoModpack, List<Path> rutasEntrada) throws IOException {
-		// TODO Auto-generated method stub
-
+		throw new UnsupportedOperationException("BBSMC no soporta exportar modpacks aún");
 	}
 }

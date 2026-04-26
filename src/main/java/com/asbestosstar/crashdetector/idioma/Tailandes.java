@@ -8730,4 +8730,36 @@ public class Tailandes implements Idioma {
 		return "VS Tournament เวอร์ชันเก่าไม่เข้ากันกับ Valkyrien Skies";
 	}
 
+	public String curseForgeClaveApiMundial() {
+		return "คีย์ API สากลของ CurseForge";
+	}
+
+	public String curseForgeEndpoint() {
+		return "Endpoint ของ CurseForge";
+	}
+
+	public String tlmodsEndpoint() {
+		return "Endpoint ของ TLMods";
+	}
+
+	public String minecraftStorageEndpoint() {
+		return "Endpoint ของ MinecraftStorage";
+	}
+
+	public String autoBackupActivado() {
+		return "เปิดใช้งานการสำรองข้อมูลอัตโนมัติ";
+	}
+
+	public String autoBackupFrecuencia() {
+		return "ความถี่ในการสำรองข้อมูลอัตโนมัติ";
+	}
+
+	public String autoBackupDiasConservar() {
+		return "จำนวนวันที่เก็บรักษาการสำรองข้อมูลอัตโนมัติ";
+	}
+
+	public String autoBackupTamanoMaximoMB() {
+		return "ขนาดสูงสุดของการสำรองข้อมูลอัตโนมัติ (MB)";
+	}
+
 }

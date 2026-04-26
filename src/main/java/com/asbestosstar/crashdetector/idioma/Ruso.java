@@ -8534,4 +8534,36 @@ public class Ruso implements Idioma {
 		return "Старый VS Tournament несовместим с Valkyrien Skies";
 	}
 
+	public String curseForgeClaveApiMundial() {
+		return "Глобальный ключ API CurseForge";
+	}
+
+	public String curseForgeEndpoint() {
+		return "Endpoint CurseForge";
+	}
+
+	public String tlmodsEndpoint() {
+		return "Endpoint TLMods";
+	}
+
+	public String minecraftStorageEndpoint() {
+		return "Endpoint MinecraftStorage";
+	}
+
+	public String autoBackupActivado() {
+		return "Авто-резервное копирование включено";
+	}
+
+	public String autoBackupFrecuencia() {
+		return "Частота авто-резервного копирования";
+	}
+
+	public String autoBackupDiasConservar() {
+		return "Дней хранения авто-резервных копий";
+	}
+
+	public String autoBackupTamanoMaximoMB() {
+		return "Максимальный размер авто-резервных копий (МБ)";
+	}
+
 }

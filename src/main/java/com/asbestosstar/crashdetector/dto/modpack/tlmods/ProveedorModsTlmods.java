@@ -1,6 +1,8 @@
 package com.asbestosstar.crashdetector.dto.modpack.tlmods;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.util.List;
 
 import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.dto.modpack.InternetMod;
@@ -30,6 +32,33 @@ public class ProveedorModsTlmods implements ProveedorMods {
 	public boolean soportaBusqueda() {
 		// TODO Auto-generated method stub
 		return true;
+	}
+
+	@Override
+	public boolean soportaImportarModpack() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void importarModpack(Path ubicacionArchivoModpack, List<Path> rutasEntrada) throws IOException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public boolean soportaExportarModpack() {
+		return true;
+	}
+
+//	@Override
+//	public String obtenerExtensionModpack() {
+//		return "zip";
+//	}
+
+	@Override
+	public void exportarModpack(Path ubicacionArchivoModpack, List<Path> rutasEntrada) throws IOException {
+		ExportadorModpackTlmods.exportar(ubicacionArchivoModpack, rutasEntrada);
 	}
 
 }

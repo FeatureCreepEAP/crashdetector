@@ -8703,4 +8703,36 @@ public class Khmer implements Idioma {
 		return "VS Tournament ចាស់មិនឆបគ្នាជាមួយ Valkyrien Skies";
 	}
 
+	public String curseForgeClaveApiMundial() {
+		return "គន្លឹះ API សកលរបស់ CurseForge";
+	}
+
+	public String curseForgeEndpoint() {
+		return "ចំណុចចុង CurseForge";
+	}
+
+	public String tlmodsEndpoint() {
+		return "ចំណុចចុង TLMods";
+	}
+
+	public String minecraftStorageEndpoint() {
+		return "ចំណុចចុង MinecraftStorage";
+	}
+
+	public String autoBackupActivado() {
+		return "បានបើកការបម្រុងទុកស្វ័យប្រវត្តិ";
+	}
+
+	public String autoBackupFrecuencia() {
+		return "ប្រេកង់នៃការបម្រុងទុកស្វ័យប្រវត្តិ";
+	}
+
+	public String autoBackupDiasConservar() {
+		return "ថ្ងៃរក្សាទុកការបម្រុងទុកស្វ័យប្រវត្តិ";
+	}
+
+	public String autoBackupTamanoMaximoMB() {
+		return "ទំហំអតិបរមានៃការបម្រុងទុកស្វ័យប្រវត្តិ (MB)";
+	}
+
 }

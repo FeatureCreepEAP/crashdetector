@@ -3241,4 +3241,20 @@ public interface Idioma {
 
 	public String nombreVSTournamentVSConfigClassNoExiste();
 
+	public String curseForgeClaveApiMundial();
+
+	public String curseForgeEndpoint();
+
+	public String tlmodsEndpoint();
+
+	public String minecraftStorageEndpoint();
+
+	public String autoBackupActivado();
+
+	public String autoBackupFrecuencia();
+
+	public String autoBackupDiasConservar();
+
+	public String autoBackupTamanoMaximoMB();
+
 }

@@ -8501,4 +8501,36 @@ public class Esperanto implements Idioma {
 		return "Malnova VS Tournament nekongrua kun Valkyrien Skies";
 	}
 
+	public String curseForgeClaveApiMundial() {
+		return "Tutmonda API-ŝlosilo de CurseForge";
+	}
+
+	public String curseForgeEndpoint() {
+		return "Finpunkto de CurseForge";
+	}
+
+	public String tlmodsEndpoint() {
+		return "Finpunkto de TLMods";
+	}
+
+	public String minecraftStorageEndpoint() {
+		return "Finpunkto de MinecraftStorage";
+	}
+
+	public String autoBackupActivado() {
+		return "Aŭtomata rezervo aktivigita";
+	}
+
+	public String autoBackupFrecuencia() {
+		return "Frekvenco de aŭtomata rezervo";
+	}
+
+	public String autoBackupDiasConservar() {
+		return "Tagoj por konservi aŭtomatajn rezervojn";
+	}
+
+	public String autoBackupTamanoMaximoMB() {
+		return "Maksimuma grandeco de aŭtomataj rezervoj (MB)";
+	}
+
 }

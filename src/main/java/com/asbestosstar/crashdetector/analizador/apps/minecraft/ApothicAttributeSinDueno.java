@@ -52,7 +52,7 @@ public class ApothicAttributeSinDueno implements Verificaciones {
 			return;
 
 		// Buscamos cualquiera de las dos líneas indicadoras
-		if (linea.contains("apoth_attrModifiedEvent")
+		if (linea.contains("apoth_attrModifiedEvent") && !linea.contains("@Inject")
 				|| linea.contains("AttributeMap object was modified without a set owner")) {
 
 			this.enlace = consola.agregarErrorALectador(numero_de_linea, this);

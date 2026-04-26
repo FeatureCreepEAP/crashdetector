@@ -7991,4 +7991,36 @@ public class Chino implements Idioma {
 		return "旧版 VS Tournament 与 Valkyrien Skies 不兼容";
 	}
 
+	public String curseForgeClaveApiMundial() {
+		return "CurseForge 全局 API 密钥";
+	}
+
+	public String curseForgeEndpoint() {
+		return "CurseForge 端点";
+	}
+
+	public String tlmodsEndpoint() {
+		return "TLMods 端点";
+	}
+
+	public String minecraftStorageEndpoint() {
+		return "MinecraftStorage 端点";
+	}
+
+	public String autoBackupActivado() {
+		return "已启用自动备份";
+	}
+
+	public String autoBackupFrecuencia() {
+		return "自动备份频率";
+	}
+
+	public String autoBackupDiasConservar() {
+		return "自动备份保留天数";
+	}
+
+	public String autoBackupTamanoMaximoMB() {
+		return "自动备份最大大小 (MB)";
+	}
+
 }
