@@ -15,7 +15,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
-import com.asbestosstar.crashdetector.cargador.AnalizadorModsTomlForge;
 import com.asbestosstar.crashdetector.cargador.Cargador;
 import com.asbestosstar.crashdetector.cargador.CargadorBukkit;
 import com.asbestosstar.crashdetector.cargador.CargadorFabric;
@@ -25,6 +24,7 @@ import com.asbestosstar.crashdetector.cargador.CargadorMCForge;
 import com.asbestosstar.crashdetector.cargador.CargadorMeddle;
 import com.asbestosstar.crashdetector.cargador.CargadorNilLoader;
 import com.asbestosstar.crashdetector.cargador.CargadorRift;
+import com.asbestosstar.crashdetector.cargador.ml.AnalizadorModsTomlForge;
 
 /**
  * Clase que procesa archivos ZIP/JAR para buscar mods y clases dentro de ellos.

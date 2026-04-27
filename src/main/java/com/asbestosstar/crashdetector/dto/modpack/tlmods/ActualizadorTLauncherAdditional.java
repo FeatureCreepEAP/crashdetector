@@ -19,20 +19,24 @@ import java.util.concurrent.Future;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.dto.modpack.curseforge.CFModDesdeJar;
+import com.asbestosstar.crashdetector.dto.modpack.modrinth.MRModDesdeJar;
 import com.asbestosstar.crashdetector.json.Json;
 
 /**
- * Actualiza el archivo TLauncherAdditional.json de la carpeta actual.
+ * Actualiza TLauncherAdditional.json en la carpeta actual.
  *
- * Reglas: - Si el archivo no existe, lo crea. - Si existe, conserva los datos
- * existentes. - Si ya existe una entrada para el mismo nombre de jar/zip, no la
- * reemplaza. - Si una entrada apunta a un jar/zip que ya no existe, la elimina.
- * - Si hay un jar/zip nuevo, lo consulta con CurseForge y lo agrega. - No toca
+ * Este archivo se trata como el manifiesto principal del modpack. Otros
+ * exportadores deben basarse en este archivo, no reconstruir la metadata desde
+ * cero.
+ *
+ * Reglas: - Si no existe, lo crea. - Si existe, conserva los datos existentes
+ * cuando sea posible. - Agrega metadata principal: loader, loaderVersion,
+ * gameVersion, libraries y additionalFiles. - Fuerza que el sistema de skins no
+ * se active. - Si ya existe una entrada para el mismo jar/zip, no la reemplaza.
+ * - Si una entrada apunta a un jar/zip que ya no existe, la elimina. - Si hay
+ * un jar/zip nuevo, lo consulta con CurseForge y lo agrega. - No toca
  * TLauncherAdditional.json si estamos dentro de:
  * minecraft/versions/<instancia>/ o .minecraft/versions/<instancia>/
- *
- * Este actualizador trabaja con: - mods/*.jar - resourcepacks/*.zip -
- * shaderpacks/*.zip - datapacks/*.zip
  */
 public class ActualizadorTLauncherAdditional {
 
@@ -57,6 +61,10 @@ public class ActualizadorTLauncherAdditional {
 		Json.Nodo raiz = Files.exists(archivoJson) ? leerJsonSeguro(archivoJson)
 				: crearJsonBase(
 						carpetaInstancia.getFileName() != null ? carpetaInstancia.getFileName().toString() : "Modpack");
+
+		// Completa metadata principal: loader, loaderVersion, gameVersion,
+		// libraries, additionalFiles y desactiva skin system.
+		GeneradorManifiestoTLauncherAdditional.completarManifiestoPrincipal(raiz, carpetaInstancia);
 
 		List<CFModDesdeJar.ArchivoLocalCF> archivosLocales = CFModDesdeJar.obtenerArchivosAnalizables(carpetaInstancia);
 
@@ -88,6 +96,12 @@ public class ActualizadorTLauncherAdditional {
 		agregados += agregarEntradasNuevas(raiz, "shaderPacks", resultadoCF.shaderPacks);
 		agregados += agregarEntradasNuevas(raiz, "dataPacks", resultadoCF.dataPacks);
 
+		// Opcional: si Modrinth reconoce el SHA-1 del archivo, agrega:
+		// entrada.modrinthProjectId
+		// entrada.version.modrinthVersionId
+		// Si no hay coincidencia, no agrega campos vacíos.
+		enriquecerConIdsModrinthSiExisten(raiz);
+
 		Files.write(archivoJson, Json.escribir(raiz).getBytes(StandardCharsets.UTF_8));
 
 		return new ResultadoActualizacion(false, agregados, removidos, resultadoCF.sinCoincidencia.size(), archivoJson);
@@ -107,6 +121,7 @@ public class ActualizadorTLauncherAdditional {
 		Json.Nodo raiz = Json.crearObjeto();
 
 		raiz.obtener("activateSkinCapeForUserVersion").poner(false);
+		raiz.obtener("skinVersion").poner(false);
 		raiz.obtener("skipHashsumValidation").poner(false);
 		raiz.obtener("additionalFiles").poner(Json.leer("[]"));
 		raiz.obtener("tlauncherVersion").poner(0);
@@ -119,6 +134,13 @@ public class ActualizadorTLauncherAdditional {
 		modpack.obtener("favorite").poner(false);
 
 		Json.Nodo version = modpack.obtener("version");
+		version.obtener("loader").poner("");
+		version.obtener("loaderId").poner("");
+		version.obtener("loaderVersion").poner("");
+		version.obtener("gameVersion").poner("");
+		version.obtener("minecraftVersion").poner("");
+		version.obtener("libraries").poner(Json.leer("[]"));
+
 		version.obtener("mods").poner(Json.leer("[]"));
 		version.obtener("resourcePacks").poner(Json.leer("[]"));
 		version.obtener("shaderPacks").poner(Json.leer("[]"));
@@ -368,6 +390,77 @@ public class ActualizadorTLauncherAdditional {
 	private static long obtenerLargoSeguro(Json.Nodo nodo, long def) {
 		try {
 			return nodo.comoLargo();
+		} catch (Throwable t) {
+			return def;
+		}
+	}
+
+	private static void enriquecerConIdsModrinthSiExisten(Json.Nodo raiz) {
+		Json.Nodo version = raiz.obtener("modpack").obtener("version");
+
+		enriquecerArregloConIdsModrinth(version.obtener("mods"));
+		enriquecerArregloConIdsModrinth(version.obtener("resourcePacks"));
+		enriquecerArregloConIdsModrinth(version.obtener("shaderPacks"));
+		enriquecerArregloConIdsModrinth(version.obtener("dataPacks"));
+	}
+
+	private static void enriquecerArregloConIdsModrinth(Json.Nodo arreglo) {
+		if (arreglo == null || !arreglo.esArreglo()) {
+			return;
+		}
+
+		for (int i = 0; i < arreglo.tamano(); i++) {
+			Json.Nodo entrada = arreglo.en(i);
+			enriquecerEntradaConIdsModrinth(entrada);
+		}
+	}
+
+	private static void enriquecerEntradaConIdsModrinth(Json.Nodo entrada) {
+		try {
+			String sha1 = obtenerCadenaSeguro(entrada.obtener("version").obtener("metadata").obtener("sha1"), "");
+
+			if (sha1 == null || sha1.trim().isEmpty()) {
+				return;
+			}
+
+			// Si ya tiene ambos IDs, no hacemos llamada de red.
+			String projectIdExistente = obtenerCadenaSeguro(entrada.obtener("modrinthProjectId"), "");
+			String versionIdExistente = obtenerCadenaSeguro(entrada.obtener("version").obtener("modrinthVersionId"),
+					"");
+
+			if (!projectIdExistente.isEmpty() && !versionIdExistente.isEmpty()) {
+				return;
+			}
+
+			Json.Nodo versionMR = MRModDesdeJar.solicitarVersionPorSha1Modrinth(sha1);
+
+			String projectId = obtenerCadenaSeguro(versionMR.obtener("project_id"), "");
+			String versionId = obtenerCadenaSeguro(versionMR.obtener("id"), "");
+
+			if (projectId == null || projectId.trim().isEmpty()) {
+				return;
+			}
+
+			if (versionId == null || versionId.trim().isEmpty()) {
+				return;
+			}
+
+			// Nivel proyecto/mod.
+			entrada.obtener("modrinthProjectId").poner(projectId);
+
+			// Nivel versión.
+			entrada.obtener("version").obtener("modrinthVersionId").poner(versionId);
+
+		} catch (Throwable t) {
+			// No se agrega nada si Modrinth no tiene coincidencia.
+			// Esto mantiene TLauncherAdditional limpio y compatible con TLMods.
+		}
+	}
+
+	private static String obtenerCadenaSeguro(Json.Nodo nodo, String def) {
+		try {
+			String v = nodo.comoCadena();
+			return v != null ? v : def;
 		} catch (Throwable t) {
 			return def;
 		}

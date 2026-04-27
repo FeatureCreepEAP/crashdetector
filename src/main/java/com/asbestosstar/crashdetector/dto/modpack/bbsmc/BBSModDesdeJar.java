@@ -89,6 +89,10 @@ public class BBSModDesdeJar {
 
 			Json.Nodo entrada = crearEntradaTLauncherDesdeCoincidencia(archivo, version, proyecto);
 
+			if (esEndpointModrinth(endpoint)) {
+				agregarIdsModrinthOpcionales(entrada, version);
+			}
+
 			if (archivo.tipo == TipoArchivoBBS.MOD) {
 				resultado.mods.add(entrada);
 			} else if (archivo.tipo == TipoArchivoBBS.RESOURCE_PACK) {
@@ -178,74 +182,98 @@ public class BBSModDesdeJar {
 		}
 	}
 
-	public static Json.Nodo crearEntradaTLauncherDesdeCoincidencia(ArchivoLocalBBS archivo, Json.Nodo version,
-			Json.Nodo proyecto) {
+public static Json.Nodo crearEntradaTLauncherDesdeCoincidencia(ArchivoLocalBBS archivo, Json.Nodo version,
+		Json.Nodo proyecto) {
 
-		Json.Nodo entrada = Json.crearObjeto();
+	Json.Nodo entrada = Json.crearObjeto();
 
-		String projectIdTexto = obtenerCadenaSeguro(version.obtener("project_id"), "");
-		String versionIdTexto = obtenerCadenaSeguro(version.obtener("id"), "");
+	String projectIdTexto = obtenerCadenaSeguro(version.obtener("project_id"), "");
+	String versionIdTexto = obtenerCadenaSeguro(version.obtener("id"), "");
 
-		long projectId = idTextoALargoEstable(projectIdTexto);
-		long versionId = idTextoALargoEstable(versionIdTexto);
+	long projectId = idTextoALargoEstable(projectIdTexto);
+	long versionId = idTextoALargoEstable(versionIdTexto);
 
-		String slug = obtenerCadenaSeguro(proyecto.obtener("slug"),
-				limpiarSlug(archivo.archivo.getFileName().toString()));
-		String tituloProyecto = obtenerCadenaPrimera(proyecto.obtener("title"), proyecto.obtener("name"),
-				archivo.archivo.getFileName().toString());
+	String slug = obtenerCadenaSeguro(proyecto.obtener("slug"),
+			limpiarSlug(archivo.archivo.getFileName().toString()));
+	String tituloProyecto = obtenerCadenaPrimera(proyecto.obtener("title"), proyecto.obtener("name"),
+			archivo.archivo.getFileName().toString());
 
-		String nombreVersion = obtenerCadenaPrimera(version.obtener("name"), version.obtener("version_number"),
-				archivo.archivo.getFileName().toString());
+	String nombreVersion = obtenerCadenaPrimera(version.obtener("name"), version.obtener("version_number"),
+			archivo.archivo.getFileName().toString());
 
-		entrada.obtener("stateGameElement").poner("active");
-		entrada.obtener("id").poner(projectId);
-		entrada.obtener("name").poner(tituloProyecto);
-		entrada.obtener("author").poner("");
-		entrada.obtener("linkProject").poner(crearLinkProyecto(projectIdTexto, slug));
-		entrada.obtener("favorite").poner(false);
-		entrada.obtener("categories").poner(crearCategorias(proyecto.obtener("categories")));
-		entrada.obtener("picture").poner(0L);
-		entrada.obtener("pictures").poner(Json.crearObjeto().obtener("arr"));
-		entrada.obtener("lanName").poner(slug);
+	entrada.obtener("stateGameElement").poner("active");
+	entrada.obtener("id").poner(projectId);
+	entrada.obtener("name").poner(tituloProyecto);
+	entrada.obtener("author").poner("");
+	entrada.obtener("linkProject").poner(crearLinkProyecto(projectIdTexto, slug));
+	entrada.obtener("favorite").poner(false);
 
-		Json.Nodo versionOut = entrada.obtener("version");
-		versionOut.obtener("id").poner(versionId);
-		versionOut.obtener("name").poner(nombreVersion);
-		versionOut.obtener("updateDate")
-				.poner(parsearFecha(obtenerCadenaSeguro(version.obtener("date_published"), null)));
-		versionOut.obtener("type").poner(obtenerCadenaSeguro(version.obtener("version_type"), "release"));
-		versionOut.obtener("gameVersionsDTO").poner(crearVersionesJuego(version.obtener("game_versions")));
+	// Campos opcionales para exportadores que necesitan IDs de Modrinth.
+	// No afectan la importación TLMods.
+	entrada.obtener("modrinthProjectId").poner("");
+	entrada.obtener("modrinthVersionId").poner("");
 
-		Json.Nodo archivoPrimario = obtenerArchivoPrimario(version);
+	entrada.obtener("categories").poner(crearCategorias(proyecto.obtener("categories")));
+	entrada.obtener("picture").poner(0L);
+	entrada.obtener("pictures").poner(Json.crearObjeto().obtener("arr"));
+	entrada.obtener("lanName").poner(slug);
 
-		Json.Nodo metadata = versionOut.obtener("metadata");
-		metadata.obtener("sha1").poner(obtenerSha1DesdeArchivo(archivoPrimario, archivo.sha1));
-		metadata.obtener("size").poner(obtenerLargoSeguro(archivoPrimario.obtener("size"), archivo.tamano));
-		metadata.obtener("path").poner(archivo.rutaRelativa.toString().replace('\\', '/'));
-		metadata.obtener("url").poner(
-				obtenerCadenaSeguro(archivoPrimario.obtener("url"), crearUrlMetadata(archivo, projectId, versionId)));
+	Json.Nodo versionOut = entrada.obtener("version");
+	versionOut.obtener("id").poner(versionId);
+	versionOut.obtener("name").poner(nombreVersion);
+	versionOut.obtener("updateDate")
+			.poner(parsearFecha(obtenerCadenaSeguro(version.obtener("date_published"), null)));
+	versionOut.obtener("type").poner(obtenerCadenaSeguro(version.obtener("version_type"), "release"));
+	versionOut.obtener("gameVersionsDTO").poner(crearVersionesJuego(version.obtener("game_versions")));
 
-		versionOut.obtener("installed").poner(0L);
-		versionOut.obtener("available").poner(false);
-		versionOut.obtener("remove").poner(false);
-		versionOut.obtener("minecraftVersionTypes").poner(crearTiposMinecraft(version.obtener("loaders")));
+	Json.Nodo archivoPrimario = obtenerArchivoPrimario(version);
 
-		entrada.obtener("popularity").poner(5);
-		entrada.obtener("downloadMonth").poner(0L);
-		entrada.obtener("userInstall").poner(false);
-		entrada.obtener("populateStatus").poner(false);
-		entrada.obtener("dependencies").poner(crearDependencias(version.obtener("dependencies")));
-		entrada.obtener("lastGameVersion").poner(crearUltimaVersionJuego(version.obtener("game_versions")));
-		entrada.obtener("updated").poner(parsearFecha(obtenerCadenaSeguro(proyecto.obtener("updated"), null)));
-		entrada.obtener("update").poner(parsearFecha(obtenerCadenaSeguro(proyecto.obtener("updated"), null)));
-		entrada.obtener("downloadALL").poner(obtenerLargoSeguro(proyecto.obtener("downloads"), 0L));
-		entrada.obtener("available").poner(true);
-		entrada.obtener("parser").poner(true);
-		entrada.obtener("totalComments").poner(0);
-		entrada.obtener("adult").poner(false);
+	Json.Nodo metadata = versionOut.obtener("metadata");
+	metadata.obtener("sha1").poner(obtenerSha1DesdeArchivo(archivoPrimario, archivo.sha1));
+	metadata.obtener("size").poner(obtenerLargoSeguro(archivoPrimario.obtener("size"), archivo.tamano));
+	metadata.obtener("path").poner(archivo.rutaRelativa.toString().replace('\\', '/'));
+	metadata.obtener("url").poner(
+			obtenerCadenaSeguro(archivoPrimario.obtener("url"), crearUrlMetadata(archivo, projectId, versionId)));
 
-		return entrada;
-	}
+	versionOut.obtener("installed").poner(0L);
+	versionOut.obtener("available").poner(false);
+	versionOut.obtener("remove").poner(false);
+	versionOut.obtener("minecraftVersionTypes").poner(crearTiposMinecraft(version.obtener("loaders")));
+
+	entrada.obtener("popularity").poner(5);
+	entrada.obtener("downloadMonth").poner(0L);
+	entrada.obtener("userInstall").poner(false);
+	entrada.obtener("populateStatus").poner(false);
+	entrada.obtener("dependencies").poner(crearDependencias(version.obtener("dependencies")));
+	entrada.obtener("lastGameVersion").poner(crearUltimaVersionJuego(version.obtener("game_versions")));
+	entrada.obtener("updated").poner(parsearFecha(obtenerCadenaSeguro(proyecto.obtener("updated"), null)));
+	entrada.obtener("update").poner(parsearFecha(obtenerCadenaSeguro(proyecto.obtener("updated"), null)));
+	entrada.obtener("downloadALL").poner(obtenerLargoSeguro(proyecto.obtener("downloads"), 0L));
+	entrada.obtener("available").poner(true);
+	entrada.obtener("parser").poner(true);
+	entrada.obtener("totalComments").poner(0);
+	entrada.obtener("adult").poner(false);
+
+	return entrada;
+}
+
+
+protected static void agregarIdsModrinthOpcionales(Json.Nodo entrada, Json.Nodo version) {
+	String projectIdTexto = obtenerCadenaSeguro(version.obtener("project_id"), "");
+	String versionIdTexto = obtenerCadenaSeguro(version.obtener("id"), "");
+
+	// Campos opcionales. TLMods los puede ignorar.
+	// Sirven para exportar mrpack, packwiz u otros formatos que requieren IDs MR.
+	entrada.obtener("modrinthProjectId").poner(projectIdTexto);
+	entrada.obtener("modrinthVersionId").poner(versionIdTexto);
+}
+
+
+
+protected static boolean esEndpointModrinth(String endpoint) {
+	return endpoint != null && endpoint.toLowerCase().contains("modrinth.com");
+}
+
 
 	private static Json.Nodo obtenerArchivoPrimario(Json.Nodo version) {
 		Json.Nodo archivos = version.obtener("files");
