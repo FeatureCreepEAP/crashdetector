@@ -8323,4 +8323,178 @@ public class Coreano implements Idioma {
 		return "갱신기: 선택";
 	}
 
+	public String importadorYumeiriTeExtraniamos() {
+		return "그리워합니다, 유메이리 레유.";
+	}
+
+	public String importadorColorFondo() {
+		return "가져오기: 배경";
+	}
+
+	public String importadorColorPanel() {
+		return "가져오기: 판";
+	}
+
+	public String importadorColorTexto() {
+		return "가져오기: 글자";
+	}
+
+	public String importadorColorTextoSuave() {
+		return "가져오기: 흐린 글자";
+	}
+
+	public String importadorColorBoton() {
+		return "가져오기: 단추";
+	}
+
+	public String importadorColorBotonTexto() {
+		return "가져오기: 단추 글자";
+	}
+
+	public String importadorColorBorde() {
+		return "가져오기: 테두리";
+	}
+
+	public String importadorConflictoTitulo() {
+		return "가져오기 충돌";
+	}
+
+	public String importadorConflictoMensaje() {
+		return "대상 위치에 이미 파일이 존재합니다.";
+	}
+
+	public String importadorRuta() {
+		return "경로";
+	}
+
+	public String importadorArchivoExistente() {
+		return "기존 파일";
+	}
+
+	public String importadorArchivoNuevo() {
+		return "가져온 파일";
+	}
+
+	public String importadorTamano() {
+		return "크기";
+	}
+
+	public String importadorFecha() {
+		return "마지막 수정";
+	}
+
+	public String importadorInfoMod() {
+		return "모드 정보";
+	}
+
+	public String importadorModImportadoMasNuevo() {
+		return "가져온 모드가 더 최신인 것 같습니다.";
+	}
+
+	public String importadorModImportadoMasViejo() {
+		return "가져온 모드가 더 구버전인 것 같습니다.";
+	}
+
+	public String importadorBotonReemplazar() {
+		return "대체";
+	}
+
+	public String importadorBotonSaltar() {
+		return "건너뛰기";
+	}
+
+	public String importadorBotonRenombrar() {
+		return "새 파일 이름 바꾸기";
+	}
+
+	public String importadorModpackTitulo() {
+		return "모드 팩 가져오기";
+	}
+
+	public String importadorModpackBotonSidebar() {
+		return "가져오기";
+	}
+
+	public String importadorModpackDescripcion() {
+		return "모드 팩을 현재 인스턴스로 가져옵니다. .zip, .mrpack 또는 다른 지원되는 형식의 파일을 끌어다 놓거나 수동으로 선택할 수 있습니다.";
+	}
+
+	public String importadorModpackFormato() {
+		return "형식";
+	}
+
+	public String importadorModpackArrastraArchivo() {
+		return "모드 팩을 여기에 끌어다 놓거나 파일을 선택하십시오";
+	}
+
+	public String importadorModpackBotonSeleccionar() {
+		return "파일 선택";
+	}
+
+	public String importadorModpackBotonImportar() {
+		return "가져오기";
+	}
+
+	public String importadorModpackSeleccionarArchivo() {
+		return "모드 팩 선택";
+	}
+
+	public String importadorModpackEstadoListo() {
+		return "준비 완료";
+	}
+
+	public String importadorModpackEstadoImportando() {
+		return "가져오는 중...";
+	}
+
+	public String importadorModpackEstadoError() {
+		return "가져오기 중 오류 발생.";
+	}
+
+	public String importadorModpackSinArchivo() {
+		return "먼저 모드 팩 파일을 선택하십시오.";
+	}
+
+	public String importadorModpackFormatoNoSoportado() {
+		return "이 형식은 가져오기를 지원하지 않습니다.";
+	}
+
+	public String importadorModpackResultado(int copiados, int reemplazados, int saltados, int renombrados,
+			int errores) {
+		return "가져오기 완료.\n복사됨: " + copiados + "\n대체됨: " + reemplazados + "\n건너뜀: " + saltados + "\n이름 변경됨: "
+				+ renombrados + "\n오류: " + errores;
+	}
+
+	public String importadorModpackColorFondo() {
+		return "모드 팩 가져오기: 배경";
+	}
+
+	public String importadorModpackColorPanel() {
+		return "모드 팩 가져오기: 판";
+	}
+
+	public String importadorModpackColorTexto() {
+		return "모드 팩 가져오기: 글자";
+	}
+
+	public String importadorModpackColorTextoSuave() {
+		return "모드 팩 가져오기: 흐린 글자";
+	}
+
+	public String importadorModpackColorBoton() {
+		return "모드 팩 가져오기: 단추";
+	}
+
+	public String importadorModpackColorBotonTexto() {
+		return "모드 팩 가져오기: 단추 글자";
+	}
+
+	public String importadorModpackColorDrop() {
+		return "모드 팩 가져오기: 끌어다 놓기 영역";
+	}
+
+	public String importadorModpackColorBorde() {
+		return "모드 팩 가져오기: 테두리";
+	}
+
 }

@@ -60,6 +60,8 @@ import com.asbestosstar.crashdetector.gui.tipos.guard.GuardiaSketchyVT;
 import com.asbestosstar.crashdetector.gui.tipos.historia.ClioOfficeGUI;
 import com.asbestosstar.crashdetector.gui.tipos.historia.HistoriaModsGUILegacy;
 import com.asbestosstar.crashdetector.gui.tipos.ia.IAGUILuotianyi;
+import com.asbestosstar.crashdetector.gui.tipos.importador.DialogoConflictoImportacionYumeiriReyu;
+import com.asbestosstar.crashdetector.gui.tipos.importador.ImportadorModpackMausleepsVT;
 import com.asbestosstar.crashdetector.gui.tipos.lanzeresbuenos.LanzerBuenoGUIMaidMint;
 import com.asbestosstar.crashdetector.gui.tipos.lanzeresmalos.LanzerMaloGUISylentBell;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasHoloTalk;
@@ -304,6 +306,12 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/studyjuche.png", Statics.carpeta.resolve("imagenes/studyjuche.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/luotianyi.png", Statics.carpeta.resolve("imagenes/luotianyi.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/miwa.png", Statics.carpeta.resolve("imagenes/miwa.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/yumeiri_reyu.png",
+				Statics.carpeta.resolve("imagenes/yumeiri_reyu.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/mausleepsvt.png",
+				Statics.carpeta.resolve("imagenes/mausleepsvt.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/illythedizzy.png",
+				Statics.carpeta.resolve("imagenes/illythedizzy.png").toFile());
 
 //docs		
 
@@ -518,6 +526,9 @@ public class MonitorDePID {
 		TipoGUI.DOCS.registrarGUI(LectadorDeDocumentosStudyJuche.ID, LectadorDeDocumentosStudyJuche::new);
 		TipoGUI.IA.registrarGUI(IAGUILuotianyi.ID, IAGUILuotianyi::new);
 		TipoGUI.ACTUALIZADOR_MODS.registrarGUI(ActualizadorModsMiwa.ID, ActualizadorModsMiwa::new);
+		TipoGUI.IMPORTADOR_CONFLICTO.registrarGUI(DialogoConflictoImportacionYumeiriReyu.ID,
+				DialogoConflictoImportacionYumeiriReyu::new);
+		TipoGUI.IMPORTADOR_MODPACK.registrarGUI(ImportadorModpackMausleepsVT.ID, ImportadorModpackMausleepsVT::new);
 
 	}
 

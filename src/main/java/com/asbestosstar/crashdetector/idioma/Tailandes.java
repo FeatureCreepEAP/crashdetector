@@ -8878,4 +8878,178 @@ public class Tailandes implements Idioma {
 		return "ตัวอัปเดต: การเลือก";
 	}
 
+	public String importadorYumeiriTeExtraniamos() {
+		return "เราคิดถึงคุณนะ Yumeiri Reyu";
+	}
+
+	public String importadorColorFondo() {
+		return "นำเข้า: พื้นหลัง";
+	}
+
+	public String importadorColorPanel() {
+		return "นำเข้า: แผง";
+	}
+
+	public String importadorColorTexto() {
+		return "นำเข้า: ข้อความ";
+	}
+
+	public String importadorColorTextoSuave() {
+		return "นำเข้า: ข้อความจาง";
+	}
+
+	public String importadorColorBoton() {
+		return "นำเข้า: ปุ่ม";
+	}
+
+	public String importadorColorBotonTexto() {
+		return "นำเข้า: ข้อความปุ่ม";
+	}
+
+	public String importadorColorBorde() {
+		return "นำเข้า: ขอบ";
+	}
+
+	public String importadorConflictoTitulo() {
+		return "ความขัดแย้งในการนำเข้า";
+	}
+
+	public String importadorConflictoMensaje() {
+		return "มีไฟล์อยู่แล้วในปลายทาง";
+	}
+
+	public String importadorRuta() {
+		return "เส้นทาง";
+	}
+
+	public String importadorArchivoExistente() {
+		return "ไฟล์ที่มีอยู่";
+	}
+
+	public String importadorArchivoNuevo() {
+		return "ไฟล์ที่นำเข้า";
+	}
+
+	public String importadorTamano() {
+		return "ขนาด";
+	}
+
+	public String importadorFecha() {
+		return "แก้ไขล่าสุด";
+	}
+
+	public String importadorInfoMod() {
+		return "ข้อมูลของมอด";
+	}
+
+	public String importadorModImportadoMasNuevo() {
+		return "มอดที่นำเข้าดูเหมือนจะใหม่กว่า";
+	}
+
+	public String importadorModImportadoMasViejo() {
+		return "มอดที่นำเข้าดูเหมือนจะเก่ากว่า";
+	}
+
+	public String importadorBotonReemplazar() {
+		return "แทนที่";
+	}
+
+	public String importadorBotonSaltar() {
+		return "ข้าม";
+	}
+
+	public String importadorBotonRenombrar() {
+		return "เปลี่ยนชื่อไฟล์ใหม่";
+	}
+
+	public String importadorModpackTitulo() {
+		return "นำเข้ามอดแพ็ก";
+	}
+
+	public String importadorModpackBotonSidebar() {
+		return "นำเข้า";
+	}
+
+	public String importadorModpackDescripcion() {
+		return "นำเข้ามอดแพ็กไปยังอินสแตนซ์ปัจจุบัน คุณสามารถลากไฟล์ .zip, .mrpack หรือรูปแบบอื่นที่รองรับ หรือเลือกด้วยตนเอง";
+	}
+
+	public String importadorModpackFormato() {
+		return "รูปแบบ";
+	}
+
+	public String importadorModpackArrastraArchivo() {
+		return "ลากมอดแพ็กของคุณมาวางที่นี่ หรือเลือกไฟล์";
+	}
+
+	public String importadorModpackBotonSeleccionar() {
+		return "เลือกไฟล์";
+	}
+
+	public String importadorModpackBotonImportar() {
+		return "นำเข้า";
+	}
+
+	public String importadorModpackSeleccionarArchivo() {
+		return "เลือกมอดแพ็ก";
+	}
+
+	public String importadorModpackEstadoListo() {
+		return "พร้อมแล้ว";
+	}
+
+	public String importadorModpackEstadoImportando() {
+		return "กำลังนำเข้า...";
+	}
+
+	public String importadorModpackEstadoError() {
+		return "เกิดข้อผิดพลาดในการนำเข้า";
+	}
+
+	public String importadorModpackSinArchivo() {
+		return "โปรดเลือกไฟล์มอดแพ็กก่อน";
+	}
+
+	public String importadorModpackFormatoNoSoportado() {
+		return "รูปแบบนี้ไม่รองรับการนำเข้า";
+	}
+
+	public String importadorModpackResultado(int copiados, int reemplazados, int saltados, int renombrados,
+			int errores) {
+		return "การนำเข้าเสร็จสิ้น\nคัดลอกแล้ว: " + copiados + "\nแทนที่แล้ว: " + reemplazados + "\nข้ามแล้ว: "
+				+ saltados + "\nเปลี่ยนชื่อแล้ว: " + renombrados + "\nข้อผิดพลาด: " + errores;
+	}
+
+	public String importadorModpackColorFondo() {
+		return "นำเข้ามอดแพ็ก: พื้นหลัง";
+	}
+
+	public String importadorModpackColorPanel() {
+		return "นำเข้ามอดแพ็ก: แผง";
+	}
+
+	public String importadorModpackColorTexto() {
+		return "นำเข้ามอดแพ็ก: ข้อความ";
+	}
+
+	public String importadorModpackColorTextoSuave() {
+		return "นำเข้ามอดแพ็ก: ข้อความจาง";
+	}
+
+	public String importadorModpackColorBoton() {
+		return "นำเข้ามอดแพ็ก: ปุ่ม";
+	}
+
+	public String importadorModpackColorBotonTexto() {
+		return "นำเข้ามอดแพ็ก: ข้อความปุ่ม";
+	}
+
+	public String importadorModpackColorDrop() {
+		return "นำเข้ามอดแพ็ก: พื้นที่ลากวาง";
+	}
+
+	public String importadorModpackColorBorde() {
+		return "นำเข้ามอดแพ็ก: ขอบ";
+	}
+
 }

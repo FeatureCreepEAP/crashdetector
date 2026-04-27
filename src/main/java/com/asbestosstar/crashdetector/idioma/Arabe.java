@@ -8568,4 +8568,178 @@ public class Arabe implements Idioma {
 		return "المحدّث: التحديد";
 	}
 
+	public String importadorYumeiriTeExtraniamos() {
+		return "نشتاق إليك، يوميري ريو.";
+	}
+
+	public String importadorColorFondo() {
+		return "المستورد: الخلفية";
+	}
+
+	public String importadorColorPanel() {
+		return "المستورد: اللوحة";
+	}
+
+	public String importadorColorTexto() {
+		return "المستورد: النص";
+	}
+
+	public String importadorColorTextoSuave() {
+		return "المستورد: النص الخافت";
+	}
+
+	public String importadorColorBoton() {
+		return "المستورد: الزر";
+	}
+
+	public String importadorColorBotonTexto() {
+		return "المستورد: نص الزر";
+	}
+
+	public String importadorColorBorde() {
+		return "المستورد: الإطار";
+	}
+
+	public String importadorConflictoTitulo() {
+		return "تعارض أثناء الاستيراد";
+	}
+
+	public String importadorConflictoMensaje() {
+		return "يوجد ملف بالفعل في الوجهة.";
+	}
+
+	public String importadorRuta() {
+		return "المسار";
+	}
+
+	public String importadorArchivoExistente() {
+		return "الملف الموجود";
+	}
+
+	public String importadorArchivoNuevo() {
+		return "الملف المستورد";
+	}
+
+	public String importadorTamano() {
+		return "الحجم";
+	}
+
+	public String importadorFecha() {
+		return "آخر تعديل";
+	}
+
+	public String importadorInfoMod() {
+		return "معلومات الإضافة";
+	}
+
+	public String importadorModImportadoMasNuevo() {
+		return "يبدو أن الإضافة المستوردة أحدث.";
+	}
+
+	public String importadorModImportadoMasViejo() {
+		return "يبدو أن الإضافة المستوردة أقدم.";
+	}
+
+	public String importadorBotonReemplazar() {
+		return "استبدال";
+	}
+
+	public String importadorBotonSaltar() {
+		return "تخطي";
+	}
+
+	public String importadorBotonRenombrar() {
+		return "إعادة تسمية الجديد";
+	}
+
+	public String importadorModpackTitulo() {
+		return "استيراد حزمة التعديل";
+	}
+
+	public String importadorModpackBotonSidebar() {
+		return "استيراد";
+	}
+
+	public String importadorModpackDescripcion() {
+		return "استورد حزمة تعديل إلى المثيل الحالي. يمكنك سحب ملف .zip أو .mrpack أو أي تنسيق مدعوم آخر، أو تحديده يدويًا.";
+	}
+
+	public String importadorModpackFormato() {
+		return "التنسيق";
+	}
+
+	public String importadorModpackArrastraArchivo() {
+		return "اسحب حزمة التعديل هنا أو اختر ملفًا";
+	}
+
+	public String importadorModpackBotonSeleccionar() {
+		return "اختيار ملف";
+	}
+
+	public String importadorModpackBotonImportar() {
+		return "استيراد";
+	}
+
+	public String importadorModpackSeleccionarArchivo() {
+		return "اختيار حزمة التعديل";
+	}
+
+	public String importadorModpackEstadoListo() {
+		return "جاهز";
+	}
+
+	public String importadorModpackEstadoImportando() {
+		return "جاري الاستيراد...";
+	}
+
+	public String importadorModpackEstadoError() {
+		return "خطأ أثناء الاستيراد.";
+	}
+
+	public String importadorModpackSinArchivo() {
+		return "حدد ملف حزمة التعديل أولاً.";
+	}
+
+	public String importadorModpackFormatoNoSoportado() {
+		return "هذا التنسيق لا يدعم الاستيراد.";
+	}
+
+	public String importadorModpackResultado(int copiados, int reemplazados, int saltados, int renombrados,
+			int errores) {
+		return "انتهى الاستيراد.\nتم النسخ: " + copiados + "\nتم الاستبدال: " + reemplazados + "\nتم التخطي: "
+				+ saltados + "\nتمت إعادة التسمية: " + renombrados + "\nأخطاء: " + errores;
+	}
+
+	public String importadorModpackColorFondo() {
+		return "مستورد حزم التعديل: الخلفية";
+	}
+
+	public String importadorModpackColorPanel() {
+		return "مستورد حزم التعديل: اللوحة";
+	}
+
+	public String importadorModpackColorTexto() {
+		return "مستورد حزم التعديل: النص";
+	}
+
+	public String importadorModpackColorTextoSuave() {
+		return "مستورد حزم التعديل: النص الخافت";
+	}
+
+	public String importadorModpackColorBoton() {
+		return "مستورد حزم التعديل: الزر";
+	}
+
+	public String importadorModpackColorBotonTexto() {
+		return "مستورد حزم التعديل: نص الزر";
+	}
+
+	public String importadorModpackColorDrop() {
+		return "مستورد حزم التعديل: منطقة السحب";
+	}
+
+	public String importadorModpackColorBorde() {
+		return "مستورد حزم التعديل: الإطار";
+	}
+
 }

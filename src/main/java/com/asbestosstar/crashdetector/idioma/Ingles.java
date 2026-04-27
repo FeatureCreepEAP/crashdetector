@@ -8703,4 +8703,178 @@ public class Ingles implements Idioma {
 		return "Updater: selection";
 	}
 
+	public String importadorYumeiriTeExtraniamos() {
+		return "We miss you, Yumeiri Reyu.";
+	}
+
+	public String importadorColorFondo() {
+		return "Importer: background";
+	}
+
+	public String importadorColorPanel() {
+		return "Importer: panel";
+	}
+
+	public String importadorColorTexto() {
+		return "Importer: text";
+	}
+
+	public String importadorColorTextoSuave() {
+		return "Importer: muted text";
+	}
+
+	public String importadorColorBoton() {
+		return "Importer: button";
+	}
+
+	public String importadorColorBotonTexto() {
+		return "Importer: button text";
+	}
+
+	public String importadorColorBorde() {
+		return "Importer: border";
+	}
+
+	public String importadorConflictoTitulo() {
+		return "Import conflict";
+	}
+
+	public String importadorConflictoMensaje() {
+		return "A file already exists at the destination.";
+	}
+
+	public String importadorRuta() {
+		return "Path";
+	}
+
+	public String importadorArchivoExistente() {
+		return "Existing file";
+	}
+
+	public String importadorArchivoNuevo() {
+		return "Imported file";
+	}
+
+	public String importadorTamano() {
+		return "Size";
+	}
+
+	public String importadorFecha() {
+		return "Last modified";
+	}
+
+	public String importadorInfoMod() {
+		return "Mod information";
+	}
+
+	public String importadorModImportadoMasNuevo() {
+		return "The imported mod appears to be newer.";
+	}
+
+	public String importadorModImportadoMasViejo() {
+		return "The imported mod appears to be older.";
+	}
+
+	public String importadorBotonReemplazar() {
+		return "Replace";
+	}
+
+	public String importadorBotonSaltar() {
+		return "Skip";
+	}
+
+	public String importadorBotonRenombrar() {
+		return "Rename new";
+	}
+
+	public String importadorModpackTitulo() {
+		return "Import Modpack";
+	}
+
+	public String importadorModpackBotonSidebar() {
+		return "Import";
+	}
+
+	public String importadorModpackDescripcion() {
+		return "Import a modpack into the current instance. You can drag and drop a .zip, .mrpack, or other supported file, or select it manually.";
+	}
+
+	public String importadorModpackFormato() {
+		return "Format";
+	}
+
+	public String importadorModpackArrastraArchivo() {
+		return "Drag your modpack here or select a file";
+	}
+
+	public String importadorModpackBotonSeleccionar() {
+		return "Select File";
+	}
+
+	public String importadorModpackBotonImportar() {
+		return "Import";
+	}
+
+	public String importadorModpackSeleccionarArchivo() {
+		return "Select Modpack";
+	}
+
+	public String importadorModpackEstadoListo() {
+		return "Ready";
+	}
+
+	public String importadorModpackEstadoImportando() {
+		return "Importing...";
+	}
+
+	public String importadorModpackEstadoError() {
+		return "Error importing.";
+	}
+
+	public String importadorModpackSinArchivo() {
+		return "Please select a modpack file first.";
+	}
+
+	public String importadorModpackFormatoNoSoportado() {
+		return "This format does not support import.";
+	}
+
+	public String importadorModpackResultado(int copiados, int reemplazados, int saltados, int renombrados,
+			int errores) {
+		return "Import finished.\nCopied: " + copiados + "\nReplaced: " + reemplazados + "\nSkipped: " + saltados
+				+ "\nRenamed: " + renombrados + "\nErrors: " + errores;
+	}
+
+	public String importadorModpackColorFondo() {
+		return "Modpack Importer: background";
+	}
+
+	public String importadorModpackColorPanel() {
+		return "Modpack Importer: panel";
+	}
+
+	public String importadorModpackColorTexto() {
+		return "Modpack Importer: text";
+	}
+
+	public String importadorModpackColorTextoSuave() {
+		return "Modpack Importer: muted text";
+	}
+
+	public String importadorModpackColorBoton() {
+		return "Modpack Importer: button";
+	}
+
+	public String importadorModpackColorBotonTexto() {
+		return "Modpack Importer: button text";
+	}
+
+	public String importadorModpackColorDrop() {
+		return "Modpack Importer: drop zone";
+	}
+
+	public String importadorModpackColorBorde() {
+		return "Modpack Importer: border";
+	}
+
 }

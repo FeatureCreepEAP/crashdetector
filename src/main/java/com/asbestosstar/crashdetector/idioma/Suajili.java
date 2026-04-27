@@ -9128,4 +9128,178 @@ public class Suajili implements Idioma {
 		return "Kisasishi: uchaguzi";
 	}
 
+	public String importadorYumeiriTeExtraniamos() {
+		return "Tunakukumbuka, Yumeiri Reyu.";
+	}
+
+	public String importadorColorFondo() {
+		return "Mingiliano: mandharinyuma";
+	}
+
+	public String importadorColorPanel() {
+		return "Mingiliano: paneli";
+	}
+
+	public String importadorColorTexto() {
+		return "Mingiliano: maandishi";
+	}
+
+	public String importadorColorTextoSuave() {
+		return "Mingiliano: maandishi laini";
+	}
+
+	public String importadorColorBoton() {
+		return "Mingiliano: kitufe";
+	}
+
+	public String importadorColorBotonTexto() {
+		return "Mingiliano: maandishi ya kitufe";
+	}
+
+	public String importadorColorBorde() {
+		return "Mingiliano: mpaka";
+	}
+
+	public String importadorConflictoTitulo() {
+		return "Mgongano wakati wa kuingiza";
+	}
+
+	public String importadorConflictoMensaje() {
+		return "Tayari kuna faili katika sehemu ya lengo.";
+	}
+
+	public String importadorRuta() {
+		return "Njia";
+	}
+
+	public String importadorArchivoExistente() {
+		return "Faili iliyopo";
+	}
+
+	public String importadorArchivoNuevo() {
+		return "Faili iliyoingizwa";
+	}
+
+	public String importadorTamano() {
+		return "Ukubwa";
+	}
+
+	public String importadorFecha() {
+		return "Marekebisho ya mwisho";
+	}
+
+	public String importadorInfoMod() {
+		return "Taarifa za mod";
+	}
+
+	public String importadorModImportadoMasNuevo() {
+		return "Mod iliyoingizwa inaonekana kuwa mpya zaidi.";
+	}
+
+	public String importadorModImportadoMasViejo() {
+		return "Mod iliyoingizwa inaonekana kuwa ya zamani zaidi.";
+	}
+
+	public String importadorBotonReemplazar() {
+		return "Badilisha";
+	}
+
+	public String importadorBotonSaltar() {
+		return "Ruka";
+	}
+
+	public String importadorBotonRenombrar() {
+		return "Badilisha jina la mpya";
+	}
+
+	public String importadorModpackTitulo() {
+		return "Ingiza Modpack";
+	}
+
+	public String importadorModpackBotonSidebar() {
+		return "Ingiza";
+	}
+
+	public String importadorModpackDescripcion() {
+		return "Inaingiza modpack kwenye mfano wa sasa. Unaweza kuvuta faili ya .zip, .mrpack au umbizo lingine linalosaidiwa, au kuichagua kwa mkono.";
+	}
+
+	public String importadorModpackFormato() {
+		return "Umbizo";
+	}
+
+	public String importadorModpackArrastraArchivo() {
+		return "Vuta modpack yako hapa au chagua faili";
+	}
+
+	public String importadorModpackBotonSeleccionar() {
+		return "Chagua faili";
+	}
+
+	public String importadorModpackBotonImportar() {
+		return "Ingiza";
+	}
+
+	public String importadorModpackSeleccionarArchivo() {
+		return "Chagua modpack";
+	}
+
+	public String importadorModpackEstadoListo() {
+		return "Tayari";
+	}
+
+	public String importadorModpackEstadoImportando() {
+		return "Inaingiza...";
+	}
+
+	public String importadorModpackEstadoError() {
+		return "Hitilafu katika kuingiza.";
+	}
+
+	public String importadorModpackSinArchivo() {
+		return "Chagua faili ya modpack kwanza.";
+	}
+
+	public String importadorModpackFormatoNoSoportado() {
+		return "Umbizo hili halisaidii uingizaji.";
+	}
+
+	public String importadorModpackResultado(int copiados, int reemplazados, int saltados, int renombrados,
+			int errores) {
+		return "Uingizaji umekamilika.\nZilizokopiwa: " + copiados + "\nZilizobadilishwa: " + reemplazados
+				+ "\nZilirukwa: " + saltados + "\nZilibadilishwa jina: " + renombrados + "\nHitilafu: " + errores;
+	}
+
+	public String importadorModpackColorFondo() {
+		return "Kiingiza modpack: mandharinyuma";
+	}
+
+	public String importadorModpackColorPanel() {
+		return "Kiingiza modpack: paneli";
+	}
+
+	public String importadorModpackColorTexto() {
+		return "Kiingiza modpack: maandishi";
+	}
+
+	public String importadorModpackColorTextoSuave() {
+		return "Kiingiza modpack: maandishi laini";
+	}
+
+	public String importadorModpackColorBoton() {
+		return "Kiingiza modpack: kitufe";
+	}
+
+	public String importadorModpackColorBotonTexto() {
+		return "Kiingiza modpack: maandishi ya kitufe";
+	}
+
+	public String importadorModpackColorDrop() {
+		return "Kiingiza modpack: eneo la kuvuta";
+	}
+
+	public String importadorModpackColorBorde() {
+		return "Kiingiza modpack: mpaka";
+	}
+
 }

@@ -8139,4 +8139,178 @@ public class Chino implements Idioma {
 		return "更新器: 选中项";
 	}
 
+	public String importadorYumeiriTeExtraniamos() {
+		return "我们想念你，梦璃雷尤。";
+	}
+
+	public String importadorColorFondo() {
+		return "导入器: 背景";
+	}
+
+	public String importadorColorPanel() {
+		return "导入器: 面板";
+	}
+
+	public String importadorColorTexto() {
+		return "导入器: 文本";
+	}
+
+	public String importadorColorTextoSuave() {
+		return "导入器: 次要文本";
+	}
+
+	public String importadorColorBoton() {
+		return "导入器: 按钮";
+	}
+
+	public String importadorColorBotonTexto() {
+		return "导入器: 按钮文本";
+	}
+
+	public String importadorColorBorde() {
+		return "导入器: 边框";
+	}
+
+	public String importadorConflictoTitulo() {
+		return "导入冲突";
+	}
+
+	public String importadorConflictoMensaje() {
+		return "目标位置已存在文件。";
+	}
+
+	public String importadorRuta() {
+		return "路径";
+	}
+
+	public String importadorArchivoExistente() {
+		return "现有文件";
+	}
+
+	public String importadorArchivoNuevo() {
+		return "导入的文件";
+	}
+
+	public String importadorTamano() {
+		return "大小";
+	}
+
+	public String importadorFecha() {
+		return "最后修改时间";
+	}
+
+	public String importadorInfoMod() {
+		return "模组信息";
+	}
+
+	public String importadorModImportadoMasNuevo() {
+		return "导入的模组似乎更新。";
+	}
+
+	public String importadorModImportadoMasViejo() {
+		return "导入的模组似乎更旧。";
+	}
+
+	public String importadorBotonReemplazar() {
+		return "替换";
+	}
+
+	public String importadorBotonSaltar() {
+		return "跳过";
+	}
+
+	public String importadorBotonRenombrar() {
+		return "重命名新文件";
+	}
+
+	public String importadorModpackTitulo() {
+		return "导入模组包";
+	}
+
+	public String importadorModpackBotonSidebar() {
+		return "导入";
+	}
+
+	public String importadorModpackDescripcion() {
+		return "将模组包导入当前实例。您可以拖放 .zip、.mrpack 或其他支持的文件格式，或手动选择。";
+	}
+
+	public String importadorModpackFormato() {
+		return "格式";
+	}
+
+	public String importadorModpackArrastraArchivo() {
+		return "将模组包拖放到此处或选择文件";
+	}
+
+	public String importadorModpackBotonSeleccionar() {
+		return "选择文件";
+	}
+
+	public String importadorModpackBotonImportar() {
+		return "导入";
+	}
+
+	public String importadorModpackSeleccionarArchivo() {
+		return "选择模组包";
+	}
+
+	public String importadorModpackEstadoListo() {
+		return "就绪";
+	}
+
+	public String importadorModpackEstadoImportando() {
+		return "正在导入...";
+	}
+
+	public String importadorModpackEstadoError() {
+		return "导入时出错。";
+	}
+
+	public String importadorModpackSinArchivo() {
+		return "请先选择一个模组包文件。";
+	}
+
+	public String importadorModpackFormatoNoSoportado() {
+		return "此格式不支持导入。";
+	}
+
+	public String importadorModpackResultado(int copiados, int reemplazados, int saltados, int renombrados,
+			int errores) {
+		return "导入完成。\n已复制: " + copiados + "\n已替换: " + reemplazados + "\n已跳过: " + saltados + "\n已重命名: " + renombrados
+				+ "\n错误: " + errores;
+	}
+
+	public String importadorModpackColorFondo() {
+		return "模组包导入器: 背景";
+	}
+
+	public String importadorModpackColorPanel() {
+		return "模组包导入器: 面板";
+	}
+
+	public String importadorModpackColorTexto() {
+		return "模组包导入器: 文本";
+	}
+
+	public String importadorModpackColorTextoSuave() {
+		return "模组包导入器: 次要文本";
+	}
+
+	public String importadorModpackColorBoton() {
+		return "模组包导入器: 按钮";
+	}
+
+	public String importadorModpackColorBotonTexto() {
+		return "模组包导入器: 按钮文本";
+	}
+
+	public String importadorModpackColorDrop() {
+		return "模组包导入器: 拖放区";
+	}
+
+	public String importadorModpackColorBorde() {
+		return "模组包导入器: 边框";
+	}
+
 }

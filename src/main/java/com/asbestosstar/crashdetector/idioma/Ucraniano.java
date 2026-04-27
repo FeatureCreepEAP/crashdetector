@@ -8002,4 +8002,178 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 		return "Оновлення: виділення";
 	}
 
+	public String importadorYumeiriTeExtraniamos() {
+		return "Ми сумуємо за тобою, Юмейрі Рею.";
+	}
+
+	public String importadorColorFondo() {
+		return "Імпорт: фон";
+	}
+
+	public String importadorColorPanel() {
+		return "Імпорт: панель";
+	}
+
+	public String importadorColorTexto() {
+		return "Імпорт: текст";
+	}
+
+	public String importadorColorTextoSuave() {
+		return "Імпорт: приглушений текст";
+	}
+
+	public String importadorColorBoton() {
+		return "Імпорт: кнопка";
+	}
+
+	public String importadorColorBotonTexto() {
+		return "Імпорт: текст кнопки";
+	}
+
+	public String importadorColorBorde() {
+		return "Імпорт: рамка";
+	}
+
+	public String importadorConflictoTitulo() {
+		return "Конфлікт під час імпорту";
+	}
+
+	public String importadorConflictoMensaje() {
+		return "Файл вже існує в цільовій теці.";
+	}
+
+	public String importadorRuta() {
+		return "Шлях";
+	}
+
+	public String importadorArchivoExistente() {
+		return "Наявний файл";
+	}
+
+	public String importadorArchivoNuevo() {
+		return "Імпортований файл";
+	}
+
+	public String importadorTamano() {
+		return "Розмір";
+	}
+
+	public String importadorFecha() {
+		return "Остання зміна";
+	}
+
+	public String importadorInfoMod() {
+		return "Інформація про мод";
+	}
+
+	public String importadorModImportadoMasNuevo() {
+		return "Імпортований мод здається новішим.";
+	}
+
+	public String importadorModImportadoMasViejo() {
+		return "Імпортований мод здається старішим.";
+	}
+
+	public String importadorBotonReemplazar() {
+		return "Замінити";
+	}
+
+	public String importadorBotonSaltar() {
+		return "Пропустити";
+	}
+
+	public String importadorBotonRenombrar() {
+		return "Перейменувати новий";
+	}
+
+	public String importadorModpackTitulo() {
+		return "Імпорт модпаку";
+	}
+
+	public String importadorModpackBotonSidebar() {
+		return "Імпорт";
+	}
+
+	public String importadorModpackDescripcion() {
+		return "Імпортує модпак у поточний інстанс. Ви можете перетягнути файл .zip, .mrpack або інший підтримуваний формат, або вибрати його вручну.";
+	}
+
+	public String importadorModpackFormato() {
+		return "Формат";
+	}
+
+	public String importadorModpackArrastraArchivo() {
+		return "Перетягніть сюди ваш модпак або виберіть файл";
+	}
+
+	public String importadorModpackBotonSeleccionar() {
+		return "Вибрати файл";
+	}
+
+	public String importadorModpackBotonImportar() {
+		return "Імпортувати";
+	}
+
+	public String importadorModpackSeleccionarArchivo() {
+		return "Вибрати модпак";
+	}
+
+	public String importadorModpackEstadoListo() {
+		return "Готово";
+	}
+
+	public String importadorModpackEstadoImportando() {
+		return "Імпорт...";
+	}
+
+	public String importadorModpackEstadoError() {
+		return "Помилка імпорту.";
+	}
+
+	public String importadorModpackSinArchivo() {
+		return "Спочатку виберіть файл модпаку.";
+	}
+
+	public String importadorModpackFormatoNoSoportado() {
+		return "Цей формат не підтримує імпорт.";
+	}
+
+	public String importadorModpackResultado(int copiados, int reemplazados, int saltados, int renombrados,
+			int errores) {
+		return "Імпорт завершено.\nСкопійовано: " + copiados + "\nЗамінено: " + reemplazados + "\nПропущено: "
+				+ saltados + "\nПерейменовано: " + renombrados + "\nПомилки: " + errores;
+	}
+
+	public String importadorModpackColorFondo() {
+		return "Імпорт модпаків: фон";
+	}
+
+	public String importadorModpackColorPanel() {
+		return "Імпорт модпаків: панель";
+	}
+
+	public String importadorModpackColorTexto() {
+		return "Імпорт модпаків: текст";
+	}
+
+	public String importadorModpackColorTextoSuave() {
+		return "Імпорт модпаків: приглушений текст";
+	}
+
+	public String importadorModpackColorBoton() {
+		return "Імпорт модпаків: кнопка";
+	}
+
+	public String importadorModpackColorBotonTexto() {
+		return "Імпорт модпаків: текст кнопки";
+	}
+
+	public String importadorModpackColorDrop() {
+		return "Імпорт модпаків: зона перетягування";
+	}
+
+	public String importadorModpackColorBorde() {
+		return "Імпорт модпаків: рамка";
+	}
+
 }

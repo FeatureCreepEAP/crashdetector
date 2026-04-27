@@ -24,7 +24,6 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -48,6 +47,7 @@ import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.actualizador.ActualizadorModsMiwa;
 import com.asbestosstar.crashdetector.gui.tipos.compartir_instancia.CompartirInstanciaLegacy;
+import com.asbestosstar.crashdetector.gui.tipos.importador.ImportadorModpackMausleepsVT;
 import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUI;
 
 /**
@@ -271,7 +271,11 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 		botonImportar.setMinimumSize(tamBotonChico);
 		botonImportar.setMaximumSize(tamBotonChico);
 		aplicarEstiloBotonAccion(botonImportar);
-		botonImportar.addActionListener(e -> JOptionPane.showMessageDialog(this, "Próximamente"));
+		botonImportar.addActionListener(e -> {
+			TipoGUI.IMPORTADOR_MODPACK
+					.obtenerGUIPredeterminado(ImportadorModpackMausleepsVT.ID, ImportadorModpackMausleepsVT::new)
+					.init();
+		});
 		panel.add(botonImportar);
 
 		JButton botonExportar = new JButton("↓");

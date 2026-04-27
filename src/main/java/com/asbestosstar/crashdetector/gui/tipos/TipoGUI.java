@@ -33,6 +33,8 @@ import com.asbestosstar.crashdetector.gui.tipos.grepr.GrepRGUI;
 import com.asbestosstar.crashdetector.gui.tipos.guard.GuardiaGUI;
 import com.asbestosstar.crashdetector.gui.tipos.historia.HistoriaDeModsGUI;
 import com.asbestosstar.crashdetector.gui.tipos.ia.IAGUI;
+import com.asbestosstar.crashdetector.gui.tipos.importador.DialogoConflictoImportacionGUI;
+import com.asbestosstar.crashdetector.gui.tipos.importador.ImportadorModpackGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lanzeresbuenos.LanzerBuenoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lanzeresmalos.LanzerMaloGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasGUI;
@@ -986,6 +988,50 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		}
 	};
 
+	public static TipoGUI<DialogoConflictoImportacionGUI> IMPORTADOR_CONFLICTO = new TipoGUI<DialogoConflictoImportacionGUI>() {
+		@Override
+		public String id() {
+			return "importador_conflicto";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.importadorConflictoTitulo();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<DialogoConflictoImportacionGUI> gui) {
+			DialogoConflictoImportacionGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<DialogoConflictoImportacionGUI>> obtenerGUIs() {
+			return DialogoConflictoImportacionGUI.GUIS;
+		}
+	};
+
+	public static TipoGUI<ImportadorModpackGUI> IMPORTADOR_MODPACK = new TipoGUI<ImportadorModpackGUI>() {
+		@Override
+		public String id() {
+			return "importador_modpack";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.importadorModpackBotonSidebar();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<ImportadorModpackGUI> gui) {
+			ImportadorModpackGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<ImportadorModpackGUI>> obtenerGUIs() {
+			return ImportadorModpackGUI.GUIS;
+		}
+	};
+
 	/**
 	 * Registro estático de todos los tipos de GUI en la lista global.
 	 */
@@ -1028,6 +1074,8 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		TIPOS_DE_GUI.add(DOCS);
 		TIPOS_DE_GUI.add(IA);
 		TIPOS_DE_GUI.add(ACTUALIZADOR_MODS);
+		TIPOS_DE_GUI.add(IMPORTADOR_CONFLICTO);
+		TIPOS_DE_GUI.add(IMPORTADOR_MODPACK);
 
 	}
 }

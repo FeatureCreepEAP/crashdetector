@@ -8,6 +8,9 @@ import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.dto.modpack.InternetMod;
 import com.asbestosstar.crashdetector.dto.modpack.PaginaMods;
 import com.asbestosstar.crashdetector.dto.modpack.bbsmc.ProveedorModsBBSMC;
+import com.asbestosstar.crashdetector.dto.modpack.importar.PoliticaImportacion;
+import com.asbestosstar.crashdetector.dto.modpack.importar.ResolutorConflictosImportacion;
+import com.asbestosstar.crashdetector.dto.modpack.importar.ResultadoImportacion;
 
 public class ProveedorModsModrinth extends ProveedorModsBBSMC {
 
@@ -35,8 +38,9 @@ public class ProveedorModsModrinth extends ProveedorModsBBSMC {
 	}
 
 	@Override
-	public void importarModpack(Path ubicacionArchivoModpack, List<Path> rutasEntrada) throws IOException {
-		throw new UnsupportedOperationException("Modrinth no soporta importar modpacks aún");
+	public ResultadoImportacion importarModpack(Path ubicacionArchivoModpack, Path carpetaDestino,
+			PoliticaImportacion politica, ResolutorConflictosImportacion resolutor) throws IOException {
+		throw new UnsupportedOperationException("BBSMC no soporta importar modpacks aún");
 	}
 
 	@Override

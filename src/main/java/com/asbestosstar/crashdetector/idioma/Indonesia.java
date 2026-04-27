@@ -9229,4 +9229,178 @@ public class Indonesia implements Idioma {
 		return "Pembaru: pilihan";
 	}
 
+	public String importadorYumeiriTeExtraniamos() {
+		return "Kami merindukanmu, Yumeiri Reyu.";
+	}
+
+	public String importadorColorFondo() {
+		return "Pengimpor: latar belakang";
+	}
+
+	public String importadorColorPanel() {
+		return "Pengimpor: panel";
+	}
+
+	public String importadorColorTexto() {
+		return "Pengimpor: teks";
+	}
+
+	public String importadorColorTextoSuave() {
+		return "Pengimpor: teks lembut";
+	}
+
+	public String importadorColorBoton() {
+		return "Pengimpor: tombol";
+	}
+
+	public String importadorColorBotonTexto() {
+		return "Pengimpor: teks tombol";
+	}
+
+	public String importadorColorBorde() {
+		return "Pengimpor: batas";
+	}
+
+	public String importadorConflictoTitulo() {
+		return "Konflik saat mengimpor";
+	}
+
+	public String importadorConflictoMensaje() {
+		return "File sudah ada di tujuan.";
+	}
+
+	public String importadorRuta() {
+		return "Jalur";
+	}
+
+	public String importadorArchivoExistente() {
+		return "File yang ada";
+	}
+
+	public String importadorArchivoNuevo() {
+		return "File yang diimpor";
+	}
+
+	public String importadorTamano() {
+		return "Ukuran";
+	}
+
+	public String importadorFecha() {
+		return "Terakhir diubah";
+	}
+
+	public String importadorInfoMod() {
+		return "Informasi mod";
+	}
+
+	public String importadorModImportadoMasNuevo() {
+		return "Mod yang diimpor tampaknya lebih baru.";
+	}
+
+	public String importadorModImportadoMasViejo() {
+		return "Mod yang diimpor tampaknya lebih lama.";
+	}
+
+	public String importadorBotonReemplazar() {
+		return "Ganti";
+	}
+
+	public String importadorBotonSaltar() {
+		return "Lewati";
+	}
+
+	public String importadorBotonRenombrar() {
+		return "Ubah nama baru";
+	}
+
+	public String importadorModpackTitulo() {
+		return "Impor Modpack";
+	}
+
+	public String importadorModpackBotonSidebar() {
+		return "Impor";
+	}
+
+	public String importadorModpackDescripcion() {
+		return "Impor modpack ke instance saat ini. Anda dapat menyeret file .zip, .mrpack, atau format lain yang didukung, atau memilihnya secara manual.";
+	}
+
+	public String importadorModpackFormato() {
+		return "Format";
+	}
+
+	public String importadorModpackArrastraArchivo() {
+		return "Seret modpack ke sini atau pilih file";
+	}
+
+	public String importadorModpackBotonSeleccionar() {
+		return "Pilih File";
+	}
+
+	public String importadorModpackBotonImportar() {
+		return "Impor";
+	}
+
+	public String importadorModpackSeleccionarArchivo() {
+		return "Pilih Modpack";
+	}
+
+	public String importadorModpackEstadoListo() {
+		return "Siap";
+	}
+
+	public String importadorModpackEstadoImportando() {
+		return "Mengimpor...";
+	}
+
+	public String importadorModpackEstadoError() {
+		return "Kesalahan saat mengimpor.";
+	}
+
+	public String importadorModpackSinArchivo() {
+		return "Pilih file modpack terlebih dahulu.";
+	}
+
+	public String importadorModpackFormatoNoSoportado() {
+		return "Format ini tidak mendukung impor.";
+	}
+
+	public String importadorModpackResultado(int copiados, int reemplazados, int saltados, int renombrados,
+			int errores) {
+		return "Impor selesai.\nDisalin: " + copiados + "\nDiganti: " + reemplazados + "\nDilewati: " + saltados
+				+ "\nDinamai Ulang: " + renombrados + "\nKesalahan: " + errores;
+	}
+
+	public String importadorModpackColorFondo() {
+		return "Pengimpor Modpack: latar belakang";
+	}
+
+	public String importadorModpackColorPanel() {
+		return "Pengimpor Modpack: panel";
+	}
+
+	public String importadorModpackColorTexto() {
+		return "Pengimpor Modpack: teks";
+	}
+
+	public String importadorModpackColorTextoSuave() {
+		return "Pengimpor Modpack: teks lembut";
+	}
+
+	public String importadorModpackColorBoton() {
+		return "Pengimpor Modpack: tombol";
+	}
+
+	public String importadorModpackColorBotonTexto() {
+		return "Pengimpor Modpack: teks tombol";
+	}
+
+	public String importadorModpackColorDrop() {
+		return "Pengimpor Modpack: area seret";
+	}
+
+	public String importadorModpackColorBorde() {
+		return "Pengimpor Modpack: batas";
+	}
+
 }

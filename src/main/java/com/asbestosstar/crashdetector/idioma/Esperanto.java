@@ -8649,4 +8649,178 @@ public class Esperanto implements Idioma {
 		return "Ĝisdatigilo: elekto";
 	}
 
+	public String importadorYumeiriTeExtraniamos() {
+		return "Ni sopiras vin, Yumeiri Reyu.";
+	}
+
+	public String importadorColorFondo() {
+		return "Importilo: fono";
+	}
+
+	public String importadorColorPanel() {
+		return "Importilo: panelo";
+	}
+
+	public String importadorColorTexto() {
+		return "Importilo: teksto";
+	}
+
+	public String importadorColorTextoSuave() {
+		return "Importilo: milda teksto";
+	}
+
+	public String importadorColorBoton() {
+		return "Importilo: butono";
+	}
+
+	public String importadorColorBotonTexto() {
+		return "Importilo: butonteksto";
+	}
+
+	public String importadorColorBorde() {
+		return "Importilo: bordero";
+	}
+
+	public String importadorConflictoTitulo() {
+		return "Konflikto dum importo";
+	}
+
+	public String importadorConflictoMensaje() {
+		return "Dosiero jam ekzistas en la celo.";
+	}
+
+	public String importadorRuta() {
+		return "Vojo";
+	}
+
+	public String importadorArchivoExistente() {
+		return "Ekzistanta dosiero";
+	}
+
+	public String importadorArchivoNuevo() {
+		return "Importita dosiero";
+	}
+
+	public String importadorTamano() {
+		return "Grandeco";
+	}
+
+	public String importadorFecha() {
+		return "Lasta modifo";
+	}
+
+	public String importadorInfoMod() {
+		return "Informoj pri la mod-o";
+	}
+
+	public String importadorModImportadoMasNuevo() {
+		return "La importita mod-o ŝajnas esti pli nova.";
+	}
+
+	public String importadorModImportadoMasViejo() {
+		return "La importita mod-o ŝajnas esti pli malnova.";
+	}
+
+	public String importadorBotonReemplazar() {
+		return "Anstataŭigi";
+	}
+
+	public String importadorBotonSaltar() {
+		return "Preterpasi";
+	}
+
+	public String importadorBotonRenombrar() {
+		return "Alinomi novan";
+	}
+
+	public String importadorModpackTitulo() {
+		return "Importi mod-pakon";
+	}
+
+	public String importadorModpackBotonSidebar() {
+		return "Importi";
+	}
+
+	public String importadorModpackDescripcion() {
+		return "Importu mod-pakon al la nuna instanco. Vi povas treni dosieron .zip, .mrpack aŭ alian subtenatan formaton, aŭ elekti ĝin mane.";
+	}
+
+	public String importadorModpackFormato() {
+		return "Formato";
+	}
+
+	public String importadorModpackArrastraArchivo() {
+		return "Trenu vian mod-pakon ĉi tien aŭ elektu dosieron";
+	}
+
+	public String importadorModpackBotonSeleccionar() {
+		return "Elekti dosieron";
+	}
+
+	public String importadorModpackBotonImportar() {
+		return "Importi";
+	}
+
+	public String importadorModpackSeleccionarArchivo() {
+		return "Elekti mod-pakon";
+	}
+
+	public String importadorModpackEstadoListo() {
+		return "Preta";
+	}
+
+	public String importadorModpackEstadoImportando() {
+		return "Importante...";
+	}
+
+	public String importadorModpackEstadoError() {
+		return "Eraro dum importo.";
+	}
+
+	public String importadorModpackSinArchivo() {
+		return "Unue elektu dosieron de mod-pako.";
+	}
+
+	public String importadorModpackFormatoNoSoportado() {
+		return "Ĉi tiu formato ne subtenas importon.";
+	}
+
+	public String importadorModpackResultado(int copiados, int reemplazados, int saltados, int renombrados,
+			int errores) {
+		return "Importo finita.\nKopiitaj: " + copiados + "\nAnstataŭigitaj: " + reemplazados + "\nPreterpasitaj: "
+				+ saltados + "\nAlinomitaj: " + renombrados + "\nEraroj: " + errores;
+	}
+
+	public String importadorModpackColorFondo() {
+		return "Importilo de mod-pakoj: fono";
+	}
+
+	public String importadorModpackColorPanel() {
+		return "Importilo de mod-pakoj: panelo";
+	}
+
+	public String importadorModpackColorTexto() {
+		return "Importilo de mod-pakoj: teksto";
+	}
+
+	public String importadorModpackColorTextoSuave() {
+		return "Importilo de mod-pakoj: milda teksto";
+	}
+
+	public String importadorModpackColorBoton() {
+		return "Importilo de mod-pakoj: butono";
+	}
+
+	public String importadorModpackColorBotonTexto() {
+		return "Importilo de mod-pakoj: butonteksto";
+	}
+
+	public String importadorModpackColorDrop() {
+		return "Importilo de mod-pakoj: zono por trenado";
+	}
+
+	public String importadorModpackColorBorde() {
+		return "Importilo de mod-pakoj: bordero";
+	}
+
 }

@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
+import com.asbestosstar.crashdetector.dto.modpack.importar.PoliticaImportacion;
+import com.asbestosstar.crashdetector.dto.modpack.importar.ResolutorConflictosImportacion;
+import com.asbestosstar.crashdetector.dto.modpack.importar.ResultadoImportacion;
+
 /**
  * Contrato para cualquier fuente de mods (TLMods, CurseForge, etc.). Permite
  * abstraer la lógica de obtención de información de mods.
@@ -51,7 +55,8 @@ public interface ProveedorMods {
 	 *                                importar
 	 * @throws IOException si falla la importación
 	 */
-	public void importarModpack(Path ubicacionArchivoModpack, List<Path> rutasEntrada) throws IOException;
+	public ResultadoImportacion importarModpack(Path ubicacionArchivoModpack, Path carpetaDestino,
+			PoliticaImportacion politica, ResolutorConflictosImportacion resolutor) throws IOException;
 
 	/**
 	 * Indica si este proveedor permite exportar modpacks.

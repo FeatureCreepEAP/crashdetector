@@ -8688,4 +8688,178 @@ public class Portuges implements Idioma {
 		return "Atualizador: seleção";
 	}
 
+	public String importadorYumeiriTeExtraniamos() {
+		return "Sentimos sua falta, Yumeiri Reyu.";
+	}
+
+	public String importadorColorFondo() {
+		return "Importador: fundo";
+	}
+
+	public String importadorColorPanel() {
+		return "Importador: painel";
+	}
+
+	public String importadorColorTexto() {
+		return "Importador: texto";
+	}
+
+	public String importadorColorTextoSuave() {
+		return "Importador: texto suave";
+	}
+
+	public String importadorColorBoton() {
+		return "Importador: botão";
+	}
+
+	public String importadorColorBotonTexto() {
+		return "Importador: texto do botão";
+	}
+
+	public String importadorColorBorde() {
+		return "Importador: borda";
+	}
+
+	public String importadorConflictoTitulo() {
+		return "Conflito ao importar";
+	}
+
+	public String importadorConflictoMensaje() {
+		return "Já existe um arquivo no destino.";
+	}
+
+	public String importadorRuta() {
+		return "Caminho";
+	}
+
+	public String importadorArchivoExistente() {
+		return "Arquivo existente";
+	}
+
+	public String importadorArchivoNuevo() {
+		return "Arquivo importado";
+	}
+
+	public String importadorTamano() {
+		return "Tamanho";
+	}
+
+	public String importadorFecha() {
+		return "Última modificação";
+	}
+
+	public String importadorInfoMod() {
+		return "Informações do mod";
+	}
+
+	public String importadorModImportadoMasNuevo() {
+		return "O mod importado parece ser mais novo.";
+	}
+
+	public String importadorModImportadoMasViejo() {
+		return "O mod importado parece ser mais antigo.";
+	}
+
+	public String importadorBotonReemplazar() {
+		return "Substituir";
+	}
+
+	public String importadorBotonSaltar() {
+		return "Ignorar";
+	}
+
+	public String importadorBotonRenombrar() {
+		return "Renomear novo";
+	}
+
+	public String importadorModpackTitulo() {
+		return "Importar modpack";
+	}
+
+	public String importadorModpackBotonSidebar() {
+		return "Importar";
+	}
+
+	public String importadorModpackDescripcion() {
+		return "Importa um modpack para a instância atual. Você pode arrastar um arquivo .zip, .mrpack ou outro formato suportado, ou selecioná-lo manualmente.";
+	}
+
+	public String importadorModpackFormato() {
+		return "Formato";
+	}
+
+	public String importadorModpackArrastraArchivo() {
+		return "Arraste seu modpack aqui ou selecione um arquivo";
+	}
+
+	public String importadorModpackBotonSeleccionar() {
+		return "Selecionar arquivo";
+	}
+
+	public String importadorModpackBotonImportar() {
+		return "Importar";
+	}
+
+	public String importadorModpackSeleccionarArchivo() {
+		return "Selecionar modpack";
+	}
+
+	public String importadorModpackEstadoListo() {
+		return "Pronto";
+	}
+
+	public String importadorModpackEstadoImportando() {
+		return "Importando...";
+	}
+
+	public String importadorModpackEstadoError() {
+		return "Erro ao importar.";
+	}
+
+	public String importadorModpackSinArchivo() {
+		return "Selecione um arquivo de modpack primeiro.";
+	}
+
+	public String importadorModpackFormatoNoSoportado() {
+		return "Este formato não suporta importação.";
+	}
+
+	public String importadorModpackResultado(int copiados, int reemplazados, int saltados, int renombrados,
+			int errores) {
+		return "Importação concluída.\nCopiados: " + copiados + "\nSubstituídos: " + reemplazados + "\nIgnorados: "
+				+ saltados + "\nRenomeados: " + renombrados + "\nErros: " + errores;
+	}
+
+	public String importadorModpackColorFondo() {
+		return "Importador de modpacks: fundo";
+	}
+
+	public String importadorModpackColorPanel() {
+		return "Importador de modpacks: painel";
+	}
+
+	public String importadorModpackColorTexto() {
+		return "Importador de modpacks: texto";
+	}
+
+	public String importadorModpackColorTextoSuave() {
+		return "Importador de modpacks: texto suave";
+	}
+
+	public String importadorModpackColorBoton() {
+		return "Importador de modpacks: botão";
+	}
+
+	public String importadorModpackColorBotonTexto() {
+		return "Importador de modpacks: texto do botão";
+	}
+
+	public String importadorModpackColorDrop() {
+		return "Importador de modpacks: área de arrastar";
+	}
+
+	public String importadorModpackColorBorde() {
+		return "Importador de modpacks: borda";
+	}
+
 }

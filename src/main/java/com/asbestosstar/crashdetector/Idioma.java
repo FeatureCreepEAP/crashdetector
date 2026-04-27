@@ -3315,4 +3315,91 @@ public interface Idioma {
 
 	public String actualizadorModsColorSeleccion();
 
+	public String importadorYumeiriTeExtraniamos();
+
+	public String importadorColorFondo();
+
+	public String importadorColorPanel();
+
+	public String importadorColorTexto();
+
+	public String importadorColorTextoSuave();
+
+	public String importadorColorBoton();
+
+	public String importadorColorBotonTexto();
+
+	public String importadorColorBorde();
+
+	public String importadorConflictoTitulo();
+
+	public String importadorConflictoMensaje();
+
+	public String importadorRuta();
+
+	public String importadorArchivoExistente();
+
+	public String importadorArchivoNuevo();
+
+	public String importadorTamano();
+
+	public String importadorFecha();
+
+	public String importadorInfoMod();
+
+	public String importadorModImportadoMasNuevo();
+
+	public String importadorModImportadoMasViejo();
+
+	public String importadorBotonReemplazar();
+
+	public String importadorBotonSaltar();
+
+	public String importadorBotonRenombrar();
+
+	public String importadorModpackTitulo();
+
+	public String importadorModpackBotonSidebar();
+
+	public String importadorModpackDescripcion();
+
+	public String importadorModpackFormato();
+
+	public String importadorModpackArrastraArchivo();
+
+	public String importadorModpackBotonSeleccionar();
+
+	public String importadorModpackBotonImportar();
+
+	public String importadorModpackSeleccionarArchivo();
+
+	public String importadorModpackEstadoListo();
+
+	public String importadorModpackEstadoImportando();
+
+	public String importadorModpackEstadoError();
+
+	public String importadorModpackSinArchivo();
+
+	public String importadorModpackFormatoNoSoportado();
+
+	public String importadorModpackResultado(int copiados, int reemplazados, int saltados, int renombrados,
+			int errores);
+
+	public String importadorModpackColorFondo();
+
+	public String importadorModpackColorPanel();
+
+	public String importadorModpackColorTexto();
+
+	public String importadorModpackColorTextoSuave();
+
+	public String importadorModpackColorBoton();
+
+	public String importadorModpackColorBotonTexto();
+
+	public String importadorModpackColorDrop();
+
+	public String importadorModpackColorBorde();
+
 }

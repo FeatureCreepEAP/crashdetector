@@ -8851,4 +8851,178 @@ public class Khmer implements Idioma {
 		return "ឧបករណ៍ធ្វើបច្ចុប្បន្នភាព៖ ការជ្រើសរើស";
 	}
 
+	public String importadorYumeiriTeExtraniamos() {
+		return "យើងនឹករលឹកអ្នក, Yumeiri Reyu។";
+	}
+
+	public String importadorColorFondo() {
+		return "ឧបករណ៍នាំចូល: ផ្ទៃ";
+	}
+
+	public String importadorColorPanel() {
+		return "ឧបករណ៍នាំចូល: ផ្ទាំង";
+	}
+
+	public String importadorColorTexto() {
+		return "ឧបករណ៍នាំចូល: អត្ថបទ";
+	}
+
+	public String importadorColorTextoSuave() {
+		return "ឧបករណ៍នាំចូល: អត្ថបទស្រាល";
+	}
+
+	public String importadorColorBoton() {
+		return "ឧបករណ៍នាំចូល: ប៊ូតុង";
+	}
+
+	public String importadorColorBotonTexto() {
+		return "ឧបករណ៍នាំចូល: អត្ថបទប៊ូតុង";
+	}
+
+	public String importadorColorBorde() {
+		return "ឧបករណ៍នាំចូល: គែម";
+	}
+
+	public String importadorConflictoTitulo() {
+		return "ជម្លោះក្នុងការនាំចូល";
+	}
+
+	public String importadorConflictoMensaje() {
+		return "មានឯកសាររួចហើយនៅកន្លែងដំណាក់។";
+	}
+
+	public String importadorRuta() {
+		return "ផ្លូវ";
+	}
+
+	public String importadorArchivoExistente() {
+		return "ឯកសារដែលមានស្រាប់";
+	}
+
+	public String importadorArchivoNuevo() {
+		return "ឯកសារដែលបាននាំចូល";
+	}
+
+	public String importadorTamano() {
+		return "ទំហំ";
+	}
+
+	public String importadorFecha() {
+		return "ការកែប្រែចុងក្រោយ";
+	}
+
+	public String importadorInfoMod() {
+		return "ព័ត៌មាន Mod";
+	}
+
+	public String importadorModImportadoMasNuevo() {
+		return "Mod ដែលបាននាំចូលហាក់ដូចជាថ្មីជាង។";
+	}
+
+	public String importadorModImportadoMasViejo() {
+		return "Mod ដែលបាននាំចូលហាក់ដូចជាចាស់ជាង។";
+	}
+
+	public String importadorBotonReemplazar() {
+		return "ជំនួស";
+	}
+
+	public String importadorBotonSaltar() {
+		return "រំលង";
+	}
+
+	public String importadorBotonRenombrar() {
+		return "ប្តូរឈ្មោះថ្មី";
+	}
+
+	public String importadorModpackTitulo() {
+		return "នាំចូល Modpack";
+	}
+
+	public String importadorModpackBotonSidebar() {
+		return "នាំចូល";
+	}
+
+	public String importadorModpackDescripcion() {
+		return "នាំចូល modpack ទៅកាន់ instance បច្ចុប្បន្ន។ អ្នកអាចអូសឯកសារ .zip, .mrpack ឬទម្រង់ផ្សេងទៀតដែលគាំទ្រ ឬជ្រើសរើសវាដោយដៃ។";
+	}
+
+	public String importadorModpackFormato() {
+		return "ទម្រង់";
+	}
+
+	public String importadorModpackArrastraArchivo() {
+		return "អូស modpack របស់អ្នកមកទីនេះ ឬជ្រើសរើសឯកសារ";
+	}
+
+	public String importadorModpackBotonSeleccionar() {
+		return "ជ្រើសរើសឯកសារ";
+	}
+
+	public String importadorModpackBotonImportar() {
+		return "នាំចូល";
+	}
+
+	public String importadorModpackSeleccionarArchivo() {
+		return "ជ្រើសរើស Modpack";
+	}
+
+	public String importadorModpackEstadoListo() {
+		return "រួចរាល់";
+	}
+
+	public String importadorModpackEstadoImportando() {
+		return "កំពុងនាំចូល...";
+	}
+
+	public String importadorModpackEstadoError() {
+		return "មានកំហុសក្នុងការនាំចូល។";
+	}
+
+	public String importadorModpackSinArchivo() {
+		return "សូមជ្រើសរើសឯកសារ modpack ជាមុនសិន។";
+	}
+
+	public String importadorModpackFormatoNoSoportado() {
+		return "ទម្រង់នេះមិនគាំទ្រការនាំចូលទេ។";
+	}
+
+	public String importadorModpackResultado(int copiados, int reemplazados, int saltados, int renombrados,
+			int errores) {
+		return "ការនាំចូលបានបញ្ចប់។\nបានចម្លង: " + copiados + "\nបានជំនួស: " + reemplazados + "\nបានរំលង: " + saltados
+				+ "\nបានប្តូរឈ្មោះ: " + renombrados + "\nកំហុស: " + errores;
+	}
+
+	public String importadorModpackColorFondo() {
+		return "ឧបករណ៍នាំចូល Modpack: ផ្ទៃ";
+	}
+
+	public String importadorModpackColorPanel() {
+		return "ឧបករណ៍នាំចូល Modpack: ផ្ទាំង";
+	}
+
+	public String importadorModpackColorTexto() {
+		return "ឧបករណ៍នាំចូល Modpack: អត្ថបទ";
+	}
+
+	public String importadorModpackColorTextoSuave() {
+		return "ឧបករណ៍នាំចូល Modpack: អត្ថបទស្រាល";
+	}
+
+	public String importadorModpackColorBoton() {
+		return "ឧបករណ៍នាំចូល Modpack: ប៊ូតុង";
+	}
+
+	public String importadorModpackColorBotonTexto() {
+		return "ឧបករណ៍នាំចូល Modpack: អត្ថបទប៊ូតុង";
+	}
+
+	public String importadorModpackColorDrop() {
+		return "ឧបករណ៍នាំចូល Modpack: តំបន់អូស";
+	}
+
+	public String importadorModpackColorBorde() {
+		return "ឧបករណ៍នាំចូល Modpack: គែម";
+	}
+
 }

@@ -9,6 +9,9 @@ import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.dto.modpack.InternetMod;
 import com.asbestosstar.crashdetector.dto.modpack.PaginaMods;
 import com.asbestosstar.crashdetector.dto.modpack.ProveedorMods;
+import com.asbestosstar.crashdetector.dto.modpack.importar.PoliticaImportacion;
+import com.asbestosstar.crashdetector.dto.modpack.importar.ResolutorConflictosImportacion;
+import com.asbestosstar.crashdetector.dto.modpack.importar.ResultadoImportacion;
 
 public class ProveedorModsCurseForge implements ProveedorMods {
 
@@ -73,7 +76,9 @@ public class ProveedorModsCurseForge implements ProveedorMods {
 	}
 
 	@Override
-	public void importarModpack(Path ubicacionArchivoModpack, List<Path> rutasEntrada) throws IOException {
+	public ResultadoImportacion importarModpack(Path ubicacionArchivoModpack, Path carpetaDestino,
+			PoliticaImportacion politica, ResolutorConflictosImportacion resolutor) throws IOException {
+		return null;
 		// TODO Auto-generated method stub
 
 	}

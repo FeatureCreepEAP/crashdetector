@@ -8682,4 +8682,178 @@ public class Ruso implements Idioma {
 		return "Обновление: выделение";
 	}
 
+	public String importadorYumeiriTeExtraniamos() {
+		return "Мы скучаем по тебе, Юмейри Рею.";
+	}
+
+	public String importadorColorFondo() {
+		return "Импорт: фон";
+	}
+
+	public String importadorColorPanel() {
+		return "Импорт: панель";
+	}
+
+	public String importadorColorTexto() {
+		return "Импорт: текст";
+	}
+
+	public String importadorColorTextoSuave() {
+		return "Импорт: приглушённый текст";
+	}
+
+	public String importadorColorBoton() {
+		return "Импорт: кнопка";
+	}
+
+	public String importadorColorBotonTexto() {
+		return "Импорт: текст кнопки";
+	}
+
+	public String importadorColorBorde() {
+		return "Импорт: рамка";
+	}
+
+	public String importadorConflictoTitulo() {
+		return "Конфликт при импорте";
+	}
+
+	public String importadorConflictoMensaje() {
+		return "Файл уже существует в целевой папке.";
+	}
+
+	public String importadorRuta() {
+		return "Путь";
+	}
+
+	public String importadorArchivoExistente() {
+		return "Существующий файл";
+	}
+
+	public String importadorArchivoNuevo() {
+		return "Импортируемый файл";
+	}
+
+	public String importadorTamano() {
+		return "Размер";
+	}
+
+	public String importadorFecha() {
+		return "Дата изменения";
+	}
+
+	public String importadorInfoMod() {
+		return "Информация о моде";
+	}
+
+	public String importadorModImportadoMasNuevo() {
+		return "Импортируемый мод кажется новее.";
+	}
+
+	public String importadorModImportadoMasViejo() {
+		return "Импортируемый мод кажется старее.";
+	}
+
+	public String importadorBotonReemplazar() {
+		return "Заменить";
+	}
+
+	public String importadorBotonSaltar() {
+		return "Пропустить";
+	}
+
+	public String importadorBotonRenombrar() {
+		return "Переименовать новый";
+	}
+
+	public String importadorModpackTitulo() {
+		return "Импорт модпака";
+	}
+
+	public String importadorModpackBotonSidebar() {
+		return "Импорт";
+	}
+
+	public String importadorModpackDescripcion() {
+		return "Импортирует модпак в текущий инстанс. Вы можете перетащить файл .zip, .mrpack или другой поддерживаемый формат, либо выбрать его вручную.";
+	}
+
+	public String importadorModpackFormato() {
+		return "Формат";
+	}
+
+	public String importadorModpackArrastraArchivo() {
+		return "Перетащите сюда ваш модпак или выберите файл";
+	}
+
+	public String importadorModpackBotonSeleccionar() {
+		return "Выбрать файл";
+	}
+
+	public String importadorModpackBotonImportar() {
+		return "Импортировать";
+	}
+
+	public String importadorModpackSeleccionarArchivo() {
+		return "Выбрать модпак";
+	}
+
+	public String importadorModpackEstadoListo() {
+		return "Готово";
+	}
+
+	public String importadorModpackEstadoImportando() {
+		return "Импорт...";
+	}
+
+	public String importadorModpackEstadoError() {
+		return "Ошибка импорта.";
+	}
+
+	public String importadorModpackSinArchivo() {
+		return "Сначала выберите файл модпака.";
+	}
+
+	public String importadorModpackFormatoNoSoportado() {
+		return "Этот формат не поддерживает импорт.";
+	}
+
+	public String importadorModpackResultado(int copiados, int reemplazados, int saltados, int renombrados,
+			int errores) {
+		return "Импорт завершен.\nСкопировано: " + copiados + "\nЗаменено: " + reemplazados + "\nПропущено: " + saltados
+				+ "\nПереименовано: " + renombrados + "\nОшибки: " + errores;
+	}
+
+	public String importadorModpackColorFondo() {
+		return "Импорт модпаков: фон";
+	}
+
+	public String importadorModpackColorPanel() {
+		return "Импорт модпаков: панель";
+	}
+
+	public String importadorModpackColorTexto() {
+		return "Импорт модпаков: текст";
+	}
+
+	public String importadorModpackColorTextoSuave() {
+		return "Импорт модпаков: приглушённый текст";
+	}
+
+	public String importadorModpackColorBoton() {
+		return "Импорт модпаков: кнопка";
+	}
+
+	public String importadorModpackColorBotonTexto() {
+		return "Импорт модпаков: текст кнопки";
+	}
+
+	public String importadorModpackColorDrop() {
+		return "Импорт модпаков: зона перетаскивания";
+	}
+
+	public String importadorModpackColorBorde() {
+		return "Импорт модпаков: рамка";
+	}
+
 }

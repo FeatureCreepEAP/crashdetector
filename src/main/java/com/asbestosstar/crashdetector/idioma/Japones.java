@@ -8335,4 +8335,178 @@ public class Japones implements Idioma {
 		return "更新ツール: 選択";
 	}
 
+	public String importadorYumeiriTeExtraniamos() {
+		return "夢璃レユ、あなたを懐かしく思います。";
+	}
+
+	public String importadorColorFondo() {
+		return "インポーター: 背景";
+	}
+
+	public String importadorColorPanel() {
+		return "インポーター: パネル";
+	}
+
+	public String importadorColorTexto() {
+		return "インポーター: テキスト";
+	}
+
+	public String importadorColorTextoSuave() {
+		return "インポーター: 控えめなテキスト";
+	}
+
+	public String importadorColorBoton() {
+		return "インポーター: ボタン";
+	}
+
+	public String importadorColorBotonTexto() {
+		return "インポーター: ボタンテキスト";
+	}
+
+	public String importadorColorBorde() {
+		return "インポーター: 境界線";
+	}
+
+	public String importadorConflictoTitulo() {
+		return "インポートの競合";
+	}
+
+	public String importadorConflictoMensaje() {
+		return "宛先にファイルが既に存在します。";
+	}
+
+	public String importadorRuta() {
+		return "パス";
+	}
+
+	public String importadorArchivoExistente() {
+		return "既存のファイル";
+	}
+
+	public String importadorArchivoNuevo() {
+		return "インポートされたファイル";
+	}
+
+	public String importadorTamano() {
+		return "サイズ";
+	}
+
+	public String importadorFecha() {
+		return "最終更新日";
+	}
+
+	public String importadorInfoMod() {
+		return "MOD 情報";
+	}
+
+	public String importadorModImportadoMasNuevo() {
+		return "インポートされた MOD はより新しいようです。";
+	}
+
+	public String importadorModImportadoMasViejo() {
+		return "インポートされた MOD はより古いようです。";
+	}
+
+	public String importadorBotonReemplazar() {
+		return "置換";
+	}
+
+	public String importadorBotonSaltar() {
+		return "スキップ";
+	}
+
+	public String importadorBotonRenombrar() {
+		return "新規ファイルの名前変更";
+	}
+
+	public String importadorModpackTitulo() {
+		return "MODパックのインポート";
+	}
+
+	public String importadorModpackBotonSidebar() {
+		return "インポート";
+	}
+
+	public String importadorModpackDescripcion() {
+		return "MODパックを現在のインスタンスにインポートします。.zip、.mrpack、または他のサポートされている形式のファイルをドラッグ＆ドロップするか、手動で選択できます。";
+	}
+
+	public String importadorModpackFormato() {
+		return "形式";
+	}
+
+	public String importadorModpackArrastraArchivo() {
+		return "ここにMODパックをドラッグするか、ファイルを選択してください";
+	}
+
+	public String importadorModpackBotonSeleccionar() {
+		return "ファイルを選択";
+	}
+
+	public String importadorModpackBotonImportar() {
+		return "インポート";
+	}
+
+	public String importadorModpackSeleccionarArchivo() {
+		return "MODパックを選択";
+	}
+
+	public String importadorModpackEstadoListo() {
+		return "準備完了";
+	}
+
+	public String importadorModpackEstadoImportando() {
+		return "インポート中...";
+	}
+
+	public String importadorModpackEstadoError() {
+		return "インポート中にエラーが発生しました。";
+	}
+
+	public String importadorModpackSinArchivo() {
+		return "まずMODパックファイルを選択してください。";
+	}
+
+	public String importadorModpackFormatoNoSoportado() {
+		return "この形式はインポートをサポートしていません。";
+	}
+
+	public String importadorModpackResultado(int copiados, int reemplazados, int saltados, int renombrados,
+			int errores) {
+		return "インポート完了。\nコピー済み: " + copiados + "\n置換済み: " + reemplazados + "\nスキップ済み: " + saltados + "\n名前変更済み: "
+				+ renombrados + "\nエラー: " + errores;
+	}
+
+	public String importadorModpackColorFondo() {
+		return "MODパックインポーター: 背景";
+	}
+
+	public String importadorModpackColorPanel() {
+		return "MODパックインポーター: パネル";
+	}
+
+	public String importadorModpackColorTexto() {
+		return "MODパックインポーター: テキスト";
+	}
+
+	public String importadorModpackColorTextoSuave() {
+		return "MODパックインポーター: 控えめなテキスト";
+	}
+
+	public String importadorModpackColorBoton() {
+		return "MODパックインポーター: ボタン";
+	}
+
+	public String importadorModpackColorBotonTexto() {
+		return "MODパックインポーター: ボタンテキスト";
+	}
+
+	public String importadorModpackColorDrop() {
+		return "MODパックインポーター: ドロップゾーン";
+	}
+
+	public String importadorModpackColorBorde() {
+		return "MODパックインポーター: 境界線";
+	}
+
 }

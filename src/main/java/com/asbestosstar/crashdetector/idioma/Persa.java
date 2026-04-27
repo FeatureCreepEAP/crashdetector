@@ -8640,4 +8640,178 @@ public class Persa implements Idioma {
 		return "به‌روزرسان: انتخاب";
 	}
 
+	public String importadorYumeiriTeExtraniamos() {
+		return "دلتنگت هستیم، یومیری ریو.";
+	}
+
+	public String importadorColorFondo() {
+		return "واردکننده: پس‌زمینه";
+	}
+
+	public String importadorColorPanel() {
+		return "واردکننده: پنل";
+	}
+
+	public String importadorColorTexto() {
+		return "واردکننده: متن";
+	}
+
+	public String importadorColorTextoSuave() {
+		return "واردکننده: متن کم‌رنگ";
+	}
+
+	public String importadorColorBoton() {
+		return "واردکننده: دکمه";
+	}
+
+	public String importadorColorBotonTexto() {
+		return "واردکننده: متن دکمه";
+	}
+
+	public String importadorColorBorde() {
+		return "واردکننده: حاشیه";
+	}
+
+	public String importadorConflictoTitulo() {
+		return "تضاد در هنگام وارد کردن";
+	}
+
+	public String importadorConflictoMensaje() {
+		return "یک فایل از قبل در مقصد وجود دارد.";
+	}
+
+	public String importadorRuta() {
+		return "مسیر";
+	}
+
+	public String importadorArchivoExistente() {
+		return "فایل موجود";
+	}
+
+	public String importadorArchivoNuevo() {
+		return "فایل وارد شده";
+	}
+
+	public String importadorTamano() {
+		return "اندازه";
+	}
+
+	public String importadorFecha() {
+		return "آخرین اصلاح";
+	}
+
+	public String importadorInfoMod() {
+		return "اطلاعات مود";
+	}
+
+	public String importadorModImportadoMasNuevo() {
+		return "مود وارد شده جدیدتر به نظر می‌رسد.";
+	}
+
+	public String importadorModImportadoMasViejo() {
+		return "مود وارد شده قدیمی‌تر به نظر می‌رسد.";
+	}
+
+	public String importadorBotonReemplazar() {
+		return "جایگزینی";
+	}
+
+	public String importadorBotonSaltar() {
+		return "رد شدن";
+	}
+
+	public String importadorBotonRenombrar() {
+		return "تغییر نام فایل جدید";
+	}
+
+	public String importadorModpackTitulo() {
+		return "وارد کردن مودپک";
+	}
+
+	public String importadorModpackBotonSidebar() {
+		return "وارد کردن";
+	}
+
+	public String importadorModpackDescripcion() {
+		return "یک مودپک را به نمونه فعلی وارد کنید. می‌توانید یک فایل .zip، .mrpack یا فرمت پشتیبانی‌شده دیگر را بکشید و رها کنید، یا آن را به صورت دستی انتخاب کنید.";
+	}
+
+	public String importadorModpackFormato() {
+		return "فرمت";
+	}
+
+	public String importadorModpackArrastraArchivo() {
+		return "مودپک خود را اینجا بکشید یا یک فایل انتخاب کنید";
+	}
+
+	public String importadorModpackBotonSeleccionar() {
+		return "انتخاب فایل";
+	}
+
+	public String importadorModpackBotonImportar() {
+		return "وارد کردن";
+	}
+
+	public String importadorModpackSeleccionarArchivo() {
+		return "انتخاب مودپک";
+	}
+
+	public String importadorModpackEstadoListo() {
+		return "آماده";
+	}
+
+	public String importadorModpackEstadoImportando() {
+		return "در حال وارد کردن...";
+	}
+
+	public String importadorModpackEstadoError() {
+		return "خطا در وارد کردن.";
+	}
+
+	public String importadorModpackSinArchivo() {
+		return "ابتدا یک فایل مودپک انتخاب کنید.";
+	}
+
+	public String importadorModpackFormatoNoSoportado() {
+		return "این فرمت از وارد کردن پشتیبانی نمی‌کند.";
+	}
+
+	public String importadorModpackResultado(int copiados, int reemplazados, int saltados, int renombrados,
+			int errores) {
+		return "وارد کردن تمام شد.\nکپی‌شده: " + copiados + "\nجایگزین‌شده: " + reemplazados + "\nرد شده: " + saltados
+				+ "\nتغییر نام یافته: " + renombrados + "\nخطاها: " + errores;
+	}
+
+	public String importadorModpackColorFondo() {
+		return "واردکننده مودپک: پس‌زمینه";
+	}
+
+	public String importadorModpackColorPanel() {
+		return "واردکننده مودپک: پنل";
+	}
+
+	public String importadorModpackColorTexto() {
+		return "واردکننده مودپک: متن";
+	}
+
+	public String importadorModpackColorTextoSuave() {
+		return "واردکننده مودپک: متن کم‌رنگ";
+	}
+
+	public String importadorModpackColorBoton() {
+		return "واردکننده مودپک: دکمه";
+	}
+
+	public String importadorModpackColorBotonTexto() {
+		return "واردکننده مودپک: متن دکمه";
+	}
+
+	public String importadorModpackColorDrop() {
+		return "واردکننده مودپک: ناحیه کشیدن و رها کردن";
+	}
+
+	public String importadorModpackColorBorde() {
+		return "واردکننده مودپک: حاشیه";
+	}
+
 }

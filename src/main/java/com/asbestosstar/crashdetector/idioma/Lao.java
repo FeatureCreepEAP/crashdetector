@@ -9116,4 +9116,178 @@ public class Lao implements Idioma {
 		return "ຕົວອັບເດດ: ການເລືອກ";
 	}
 
+	public String importadorYumeiriTeExtraniamos() {
+		return "ເຮົາຄິດຮອດເຈົ້າ, Yumeiri Reyu.";
+	}
+
+	public String importadorColorFondo() {
+		return "ນຳເຂົ້າ: ພື້ນຫຼັງ";
+	}
+
+	public String importadorColorPanel() {
+		return "ນຳເຂົ້າ: ແຜງ";
+	}
+
+	public String importadorColorTexto() {
+		return "ນຳເຂົ້າ: ຂໍ້ຄວາມ";
+	}
+
+	public String importadorColorTextoSuave() {
+		return "ນຳເຂົ້າ: ຂໍ້ຄວາມຈາງ";
+	}
+
+	public String importadorColorBoton() {
+		return "ນຳເຂົ້າ: ປຸ່ມ";
+	}
+
+	public String importadorColorBotonTexto() {
+		return "ນຳເຂົ້າ: ຂໍ້ຄວາມປຸ່ມ";
+	}
+
+	public String importadorColorBorde() {
+		return "ນຳເຂົ້າ: ຂອບ";
+	}
+
+	public String importadorConflictoTitulo() {
+		return "ຂັດແຍ່ງໃນການນຳເຂົ້າ";
+	}
+
+	public String importadorConflictoMensaje() {
+		return "ມີໄຟລ໌ຢູ່ໃນຈຸດໝາຍປາຍທາງແລ້ວ.";
+	}
+
+	public String importadorRuta() {
+		return "ເສັ້ນທາງ";
+	}
+
+	public String importadorArchivoExistente() {
+		return "ໄຟລ໌ທີ່ມີຢູ່";
+	}
+
+	public String importadorArchivoNuevo() {
+		return "ໄຟລ໌ທີ່ນຳເຂົ້າ";
+	}
+
+	public String importadorTamano() {
+		return "ຂະໜາດ";
+	}
+
+	public String importadorFecha() {
+		return "ກາຍແກ້ໄຂຄັ້ງລ່າສຸດ";
+	}
+
+	public String importadorInfoMod() {
+		return "ຂໍ້ມູນຂອງ mod";
+	}
+
+	public String importadorModImportadoMasNuevo() {
+		return "mod ທີ່ນຳເຂົ້າເບິ່ງຄືວ່າໃໝ່ກວ່າ.";
+	}
+
+	public String importadorModImportadoMasViejo() {
+		return "mod ທີ່ນຳເຂົ້າເບິ່ງຄືວ່າເກົ່າກວ່າ.";
+	}
+
+	public String importadorBotonReemplazar() {
+		return "ແທນທີ່";
+	}
+
+	public String importadorBotonSaltar() {
+		return "ຂ້າມ";
+	}
+
+	public String importadorBotonRenombrar() {
+		return "ປ່ຽນຊື່ໄຟລ໌ໃໝ່";
+	}
+
+	public String importadorModpackTitulo() {
+		return "ນຳເຂົ້າ Modpack";
+	}
+
+	public String importadorModpackBotonSidebar() {
+		return "ນຳເຂົ້າ";
+	}
+
+	public String importadorModpackDescripcion() {
+		return "ນຳເຂົ້າ modpack ເຂົ້າໃນ instance ປັດຈຸບັນ. ທ່ານສາມາດລາກໄຟລ໌ .zip, .mrpack ຫຼື ຮູບແບບອື່ນໆທີ່ຮອງຮັບ, ຫຼື ເລືອກມັນດ້ວຍຕົນເອງ.";
+	}
+
+	public String importadorModpackFormato() {
+		return "ຮູບແບບ";
+	}
+
+	public String importadorModpackArrastraArchivo() {
+		return "ລາກ modpack ຂອງທ່ານມາວາງທີ່ນີ້ ຫຼື ເລືອກໄຟລ໌";
+	}
+
+	public String importadorModpackBotonSeleccionar() {
+		return "ເລືອກໄຟລ໌";
+	}
+
+	public String importadorModpackBotonImportar() {
+		return "ນຳເຂົ້າ";
+	}
+
+	public String importadorModpackSeleccionarArchivo() {
+		return "ເລືອກ modpack";
+	}
+
+	public String importadorModpackEstadoListo() {
+		return "ພ້ອມແລ້ວ";
+	}
+
+	public String importadorModpackEstadoImportando() {
+		return "ກຳລັງນຳເຂົ້າ...";
+	}
+
+	public String importadorModpackEstadoError() {
+		return "ເກີດຂໍ້ຜິດພາດໃນການນຳເຂົ້າ.";
+	}
+
+	public String importadorModpackSinArchivo() {
+		return "ກະລຸນາເລືອກໄຟລ໌ modpack ກ່ອນ.";
+	}
+
+	public String importadorModpackFormatoNoSoportado() {
+		return "ຮູບແບບນີ້ບໍ່ຮອງຮັບການນຳເຂົ້າ.";
+	}
+
+	public String importadorModpackResultado(int copiados, int reemplazados, int saltados, int renombrados,
+			int errores) {
+		return "ການນຳເຂົ້າສຳເລັດ.\nຄັດລອກແລ້ວ: " + copiados + "\nແທນທີ່ແລ້ວ: " + reemplazados + "\nຂ້າມແລ້ວ: "
+				+ saltados + "\nປ່ຽນຊື່ແລ້ວ: " + renombrados + "\nຂໍ້ຜິດພາດ: " + errores;
+	}
+
+	public String importadorModpackColorFondo() {
+		return "ນຳເຂົ້າ Modpack: ພື້ນຫຼັງ";
+	}
+
+	public String importadorModpackColorPanel() {
+		return "ນຳເຂົ້າ Modpack: ແຜງ";
+	}
+
+	public String importadorModpackColorTexto() {
+		return "ນຳເຂົ້າ Modpack: ຂໍ້ຄວາມ";
+	}
+
+	public String importadorModpackColorTextoSuave() {
+		return "ນຳເຂົ້າ Modpack: ຂໍ້ຄວາມຈາງ";
+	}
+
+	public String importadorModpackColorBoton() {
+		return "ນຳເຂົ້າ Modpack: ປຸ່ມ";
+	}
+
+	public String importadorModpackColorBotonTexto() {
+		return "ນຳເຂົ້າ Modpack: ຂໍ້ຄວາມປຸ່ມ";
+	}
+
+	public String importadorModpackColorDrop() {
+		return "ນຳເຂົ້າ Modpack: ພື້ນທີ່ລາກວາງ";
+	}
+
+	public String importadorModpackColorBorde() {
+		return "ນຳເຂົ້າ Modpack: ຂອບ";
+	}
+
 }

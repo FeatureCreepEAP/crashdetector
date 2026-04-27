@@ -8896,4 +8896,178 @@ public class Vietnamita implements Idioma {
 		return "Trình cập nhật: lựa chọn";
 	}
 
+	public String importadorYumeiriTeExtraniamos() {
+		return "Chúng mình nhớ cậu, Yumeiri Reyu.";
+	}
+
+	public String importadorColorFondo() {
+		return "Nhập liệu: nền";
+	}
+
+	public String importadorColorPanel() {
+		return "Nhập liệu: bảng";
+	}
+
+	public String importadorColorTexto() {
+		return "Nhập liệu: văn bản";
+	}
+
+	public String importadorColorTextoSuave() {
+		return "Nhập liệu: văn bản nhạt";
+	}
+
+	public String importadorColorBoton() {
+		return "Nhập liệu: nút";
+	}
+
+	public String importadorColorBotonTexto() {
+		return "Nhập liệu: văn bản nút";
+	}
+
+	public String importadorColorBorde() {
+		return "Nhập liệu: viền";
+	}
+
+	public String importadorConflictoTitulo() {
+		return "Xung đột khi nhập";
+	}
+
+	public String importadorConflictoMensaje() {
+		return "Đã tồn tại một tệp trong thư mục đích.";
+	}
+
+	public String importadorRuta() {
+		return "Đường dẫn";
+	}
+
+	public String importadorArchivoExistente() {
+		return "Tệp hiện có";
+	}
+
+	public String importadorArchivoNuevo() {
+		return "Tệp đã nhập";
+	}
+
+	public String importadorTamano() {
+		return "Kích thước";
+	}
+
+	public String importadorFecha() {
+		return "Sửa đổi lần cuối";
+	}
+
+	public String importadorInfoMod() {
+		return "Thông tin mod";
+	}
+
+	public String importadorModImportadoMasNuevo() {
+		return "Mod được nhập có vẻ mới hơn.";
+	}
+
+	public String importadorModImportadoMasViejo() {
+		return "Mod được nhập có vẻ cũ hơn.";
+	}
+
+	public String importadorBotonReemplazar() {
+		return "Thay thế";
+	}
+
+	public String importadorBotonSaltar() {
+		return "Bỏ qua";
+	}
+
+	public String importadorBotonRenombrar() {
+		return "Đổi tên tệp mới";
+	}
+
+	public String importadorModpackTitulo() {
+		return "Nhập modpack";
+	}
+
+	public String importadorModpackBotonSidebar() {
+		return "Nhập";
+	}
+
+	public String importadorModpackDescripcion() {
+		return "Nhập một modpack vào instance hiện tại. Bạn có thể kéo thả file .zip, .mrpack hoặc định dạng hỗ trợ khác, hoặc chọn thủ công.";
+	}
+
+	public String importadorModpackFormato() {
+		return "Định dạng";
+	}
+
+	public String importadorModpackArrastraArchivo() {
+		return "Kéo modpack của bạn vào đây hoặc chọn một file";
+	}
+
+	public String importadorModpackBotonSeleccionar() {
+		return "Chọn file";
+	}
+
+	public String importadorModpackBotonImportar() {
+		return "Nhập";
+	}
+
+	public String importadorModpackSeleccionarArchivo() {
+		return "Chọn modpack";
+	}
+
+	public String importadorModpackEstadoListo() {
+		return "Sẵn sàng";
+	}
+
+	public String importadorModpackEstadoImportando() {
+		return "Đang nhập...";
+	}
+
+	public String importadorModpackEstadoError() {
+		return "Lỗi khi nhập.";
+	}
+
+	public String importadorModpackSinArchivo() {
+		return "Vui lòng chọn file modpack trước.";
+	}
+
+	public String importadorModpackFormatoNoSoportado() {
+		return "Định dạng này không hỗ trợ nhập.";
+	}
+
+	public String importadorModpackResultado(int copiados, int reemplazados, int saltados, int renombrados,
+			int errores) {
+		return "Nhập xong.\nĐã sao chép: " + copiados + "\nĐã thay thế: " + reemplazados + "\nĐã bỏ qua: " + saltados
+				+ "\nĐã đổi tên: " + renombrados + "\nLỗi: " + errores;
+	}
+
+	public String importadorModpackColorFondo() {
+		return "Nhập modpack: nền";
+	}
+
+	public String importadorModpackColorPanel() {
+		return "Nhập modpack: bảng";
+	}
+
+	public String importadorModpackColorTexto() {
+		return "Nhập modpack: văn bản";
+	}
+
+	public String importadorModpackColorTextoSuave() {
+		return "Nhập modpack: văn bản nhạt";
+	}
+
+	public String importadorModpackColorBoton() {
+		return "Nhập modpack: nút";
+	}
+
+	public String importadorModpackColorBotonTexto() {
+		return "Nhập modpack: văn bản nút";
+	}
+
+	public String importadorModpackColorDrop() {
+		return "Nhập modpack: vùng kéo thả";
+	}
+
+	public String importadorModpackColorBorde() {
+		return "Nhập modpack: viền";
+	}
+
 }
