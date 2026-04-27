@@ -9100,4 +9100,120 @@ public class Frances implements Idioma {
 		return "Taille maximale des sauvegardes automatiques (MB)";
 	}
 
+	public String actualizadorModsTitulo() {
+		return "Gestionnaire de mises à jour des mods";
+	}
+
+	public String actualizadorModsBotonSidebar() {
+		return "Mises à jour";
+	}
+
+	public String actualizadorModsDescripcion() {
+		return "Recherche les mises à jour disponibles pour les mods du modpack. Vous pouvez tout mettre à jour ou appliquer des mises à jour individuelles.";
+	}
+
+	public String actualizadorModsBotonEscanear() {
+		return "Vérifier les mises à jour";
+	}
+
+	public String actualizadorModsBotonActualizarTodo() {
+		return "Mettre tout à jour";
+	}
+
+	public String actualizadorModsBotonActualizarUno() {
+		return "Mettre à jour";
+	}
+
+	public String actualizadorModsEstadoListo() {
+		return "Prêt";
+	}
+
+	public String actualizadorModsEstadoEscaneando() {
+		return "Recherche de mises à jour...";
+	}
+
+	public String actualizadorModsEstadoActualizando() {
+		return "Mise à jour...";
+	}
+
+	public String actualizadorModsEstadoSinActualizaciones() {
+		return "Aucune mise à jour disponible.";
+	}
+
+	public String actualizadorModsEstadoEncontradas(int n) {
+		return "Mises à jour trouvées : " + n;
+	}
+
+	public String actualizadorModsEstadoActualizadas(int n) {
+		return "Mises à jour appliquées : " + n;
+	}
+
+	public String actualizadorModsEstadoError() {
+		return "Erreur lors de la mise à jour.";
+	}
+
+	public String actualizadorModsSinSeleccion() {
+		return "Aucune mise à jour sélectionnée.";
+	}
+
+	public String actualizadorModsColumnaMod() {
+		return "Mod";
+	}
+
+	public String actualizadorModsColumnaActual() {
+		return "Actuel";
+	}
+
+	public String actualizadorModsColumnaNueva() {
+		return "Nouveau";
+	}
+
+	public String actualizadorModsColumnaFuente() {
+		return "Source";
+	}
+
+	public String actualizadorModsColumnaLoader() {
+		return "Chargeur";
+	}
+
+	public String actualizadorModsColumnaRuta() {
+		return "Chemin";
+	}
+
+	public String actualizadorModsColumnaAccion() {
+		return "Action";
+	}
+
+	public String actualizadorModsColorFondo() {
+		return "Updater : fond";
+	}
+
+	public String actualizadorModsColorPanel() {
+		return "Updater : panneau";
+	}
+
+	public String actualizadorModsColorTexto() {
+		return "Updater : texte";
+	}
+
+	public String actualizadorModsColorTextoSuave() {
+		return "Updater : texte discret";
+	}
+
+	public String actualizadorModsColorBoton() {
+		return "Updater : bouton";
+	}
+
+	public String actualizadorModsColorBotonTexto() {
+		return "Updater : texte du bouton";
+	}
+
+	public String actualizadorModsColorTabla() {
+		return "Updater : tableau";
+	}
+
+	public String actualizadorModsColorSeleccion() {
+		return "Updater : sélection";
+	}
+
 }

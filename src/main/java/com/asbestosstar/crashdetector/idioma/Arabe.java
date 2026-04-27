@@ -8452,4 +8452,120 @@ public class Arabe implements Idioma {
 		return "الحد الأقصى لحجم النسخ الاحتياطية التلقائية (MB)";
 	}
 
+	public String actualizadorModsTitulo() {
+		return "أداة تحديث الإضافات";
+	}
+
+	public String actualizadorModsBotonSidebar() {
+		return "المحدّث";
+	}
+
+	public String actualizadorModsDescripcion() {
+		return "يبحث عن تحديثات متاحة لإضافات حزمة التعديل. يمكنك تحديث الكل أو تطبيق تحديثات فردية.";
+	}
+
+	public String actualizadorModsBotonEscanear() {
+		return "البحث عن تحديثات";
+	}
+
+	public String actualizadorModsBotonActualizarTodo() {
+		return "تحديث الكل";
+	}
+
+	public String actualizadorModsBotonActualizarUno() {
+		return "تحديث";
+	}
+
+	public String actualizadorModsEstadoListo() {
+		return "جاهز";
+	}
+
+	public String actualizadorModsEstadoEscaneando() {
+		return "جاري البحث عن تحديثات...";
+	}
+
+	public String actualizadorModsEstadoActualizando() {
+		return "جاري التحديث...";
+	}
+
+	public String actualizadorModsEstadoSinActualizaciones() {
+		return "لا توجد تحديثات متاحة.";
+	}
+
+	public String actualizadorModsEstadoEncontradas(int n) {
+		return "التحديثات المكتشفة: " + n;
+	}
+
+	public String actualizadorModsEstadoActualizadas(int n) {
+		return "التحديثات المطبقة: " + n;
+	}
+
+	public String actualizadorModsEstadoError() {
+		return "خطأ أثناء التحديث.";
+	}
+
+	public String actualizadorModsSinSeleccion() {
+		return "لم يتم تحديد أي تحديثات.";
+	}
+
+	public String actualizadorModsColumnaMod() {
+		return "الإضافة";
+	}
+
+	public String actualizadorModsColumnaActual() {
+		return "الحالي";
+	}
+
+	public String actualizadorModsColumnaNueva() {
+		return "الجديد";
+	}
+
+	public String actualizadorModsColumnaFuente() {
+		return "المصدر";
+	}
+
+	public String actualizadorModsColumnaLoader() {
+		return "أداة التحميل";
+	}
+
+	public String actualizadorModsColumnaRuta() {
+		return "المسار";
+	}
+
+	public String actualizadorModsColumnaAccion() {
+		return "الإجراء";
+	}
+
+	public String actualizadorModsColorFondo() {
+		return "المحدّث: الخلفية";
+	}
+
+	public String actualizadorModsColorPanel() {
+		return "المحدّث: اللوحة";
+	}
+
+	public String actualizadorModsColorTexto() {
+		return "المحدّث: النص";
+	}
+
+	public String actualizadorModsColorTextoSuave() {
+		return "المحدّث: النص الخافت";
+	}
+
+	public String actualizadorModsColorBoton() {
+		return "المحدّث: الزر";
+	}
+
+	public String actualizadorModsColorBotonTexto() {
+		return "المحدّث: نص الزر";
+	}
+
+	public String actualizadorModsColorTabla() {
+		return "المحدّث: الجدول";
+	}
+
+	public String actualizadorModsColorSeleccion() {
+		return "المحدّث: التحديد";
+	}
+
 }

@@ -8566,4 +8566,120 @@ public class Ruso implements Idioma {
 		return "Максимальный размер авто-резервных копий (МБ)";
 	}
 
+	public String actualizadorModsTitulo() {
+		return "Обновление модов";
+	}
+
+	public String actualizadorModsBotonSidebar() {
+		return "Обновления";
+	}
+
+	public String actualizadorModsDescripcion() {
+		return "Проверяет наличие обновлений для модов из сборки. Вы можете обновить все или выбрать отдельные.";
+	}
+
+	public String actualizadorModsBotonEscanear() {
+		return "Проверить обновления";
+	}
+
+	public String actualizadorModsBotonActualizarTodo() {
+		return "Обновить всё";
+	}
+
+	public String actualizadorModsBotonActualizarUno() {
+		return "Обновить";
+	}
+
+	public String actualizadorModsEstadoListo() {
+		return "Готово";
+	}
+
+	public String actualizadorModsEstadoEscaneando() {
+		return "Поиск обновлений...";
+	}
+
+	public String actualizadorModsEstadoActualizando() {
+		return "Обновление...";
+	}
+
+	public String actualizadorModsEstadoSinActualizaciones() {
+		return "Доступных обновлений нет.";
+	}
+
+	public String actualizadorModsEstadoEncontradas(int n) {
+		return "Найдено обновлений: " + n;
+	}
+
+	public String actualizadorModsEstadoActualizadas(int n) {
+		return "Применено обновлений: " + n;
+	}
+
+	public String actualizadorModsEstadoError() {
+		return "Ошибка обновления.";
+	}
+
+	public String actualizadorModsSinSeleccion() {
+		return "Не выбрано обновлений.";
+	}
+
+	public String actualizadorModsColumnaMod() {
+		return "Мод";
+	}
+
+	public String actualizadorModsColumnaActual() {
+		return "Текущая";
+	}
+
+	public String actualizadorModsColumnaNueva() {
+		return "Новая";
+	}
+
+	public String actualizadorModsColumnaFuente() {
+		return "Источник";
+	}
+
+	public String actualizadorModsColumnaLoader() {
+		return "Loader";
+	}
+
+	public String actualizadorModsColumnaRuta() {
+		return "Путь";
+	}
+
+	public String actualizadorModsColumnaAccion() {
+		return "Действие";
+	}
+
+	public String actualizadorModsColorFondo() {
+		return "Обновление: фон";
+	}
+
+	public String actualizadorModsColorPanel() {
+		return "Обновление: панель";
+	}
+
+	public String actualizadorModsColorTexto() {
+		return "Обновление: текст";
+	}
+
+	public String actualizadorModsColorTextoSuave() {
+		return "Обновление: приглушённый текст";
+	}
+
+	public String actualizadorModsColorBoton() {
+		return "Обновление: кнопка";
+	}
+
+	public String actualizadorModsColorBotonTexto() {
+		return "Обновление: текст кнопки";
+	}
+
+	public String actualizadorModsColorTabla() {
+		return "Обновление: таблица";
+	}
+
+	public String actualizadorModsColorSeleccion() {
+		return "Обновление: выделение";
+	}
+
 }

@@ -16,31 +16,25 @@ import com.asbestosstar.crashdetector.cargador.Cargador;
 public class ObtenerVersionFeatureCreep {
 
 	/*
-	 * Loader id:
-	 * featurecreep
+	 * Loader id: featurecreep
 	 */
 	public static final String ID_CARGADOR = "featurecreep";
 
 	/*
 	 * Ejemplos soportados:
 	 *
-	 * featurecreepmc-26.1-6.jar                         -> 6
-	 * featurecreepdz-2.8-6.jar                          -> 6
-	 * featurecreeptc-2412-6.jar                         -> 6
-	 * featurecreepnxopen-2412-6.jar                     -> 6
-	 * featurecreepl2dcubism-3-6.jar                     -> 6
-	 * featurecreepmc-1.21.10-5am0.jar                   -> 5am0
+	 * featurecreepmc-26.1-6.jar -> 6 featurecreepdz-2.8-6.jar -> 6
+	 * featurecreeptc-2412-6.jar -> 6 featurecreepnxopen-2412-6.jar -> 6
+	 * featurecreepl2dcubism-3-6.jar -> 6 featurecreepmc-1.21.10-5am0.jar -> 5am0
 	 * featurecreep-4.0AM18-1.20.5.el9fc4.noarch.fpm.jar -> 4.0AM18
 	 * featurecreep-4.0AM18-1.20.5FabricMC.el9fc4.noarch.fpm.jar -> 4.0AM18
-	 * featurecreep-loader-5.0.jar                       -> 5.0
+	 * featurecreep-loader-5.0.jar -> 5.0
 	 */
-	private static final Pattern PATRON_FEATURECREEP_LOADER = Pattern.compile(
-			"(?:^|[/\\\\])featurecreep-loader-([a-zA-Z0-9_.+-]+)\\.jar(?:$|[;:])?",
-			Pattern.CASE_INSENSITIVE);
+	private static final Pattern PATRON_FEATURECREEP_LOADER = Pattern
+			.compile("(?:^|[/\\\\])featurecreep-loader-([a-zA-Z0-9_.+-]+)\\.jar(?:$|[;:])?", Pattern.CASE_INSENSITIVE);
 
 	private static final Pattern PATRON_FEATURECREEP_FPM = Pattern.compile(
-			"(?:^|[/\\\\])featurecreep-([a-zA-Z0-9_.+-]+)-[^/\\\\]*\\.fpm\\.jar(?:$|[;:])?",
-			Pattern.CASE_INSENSITIVE);
+			"(?:^|[/\\\\])featurecreep-([a-zA-Z0-9_.+-]+)-[^/\\\\]*\\.fpm\\.jar(?:$|[;:])?", Pattern.CASE_INSENSITIVE);
 
 	private static final Pattern PATRON_FEATURECREEP_MODULO = Pattern.compile(
 			"(?:^|[/\\\\])featurecreep(?:mc|dz|tc|nxopen|l2dcubism)-[^/\\\\]+-([a-zA-Z0-9_.+-]+)\\.jar(?:$|[;:])?",
@@ -65,11 +59,8 @@ public class ObtenerVersionFeatureCreep {
 
 		@Override
 		public String toString() {
-			return "ResultadoFeatureCreep{" +
-					"versionFeatureCreep='" + versionFeatureCreep + '\'' +
-					", archivo='" + archivo + '\'' +
-					", fuente='" + fuente + '\'' +
-					'}';
+			return "ResultadoFeatureCreep{" + "versionFeatureCreep='" + versionFeatureCreep + '\'' + ", archivo='"
+					+ archivo + '\'' + ", fuente='" + fuente + '\'' + '}';
 		}
 	}
 
@@ -169,8 +160,7 @@ public class ObtenerVersionFeatureCreep {
 		ResultadoFeatureCreep r;
 
 		/*
-		 * Primero loader explícito:
-		 * featurecreep-loader-5.0.jar -> 5.0
+		 * Primero loader explícito: featurecreep-loader-5.0.jar -> 5.0
 		 */
 		r = detectarConPatron(texto, PATRON_FEATURECREEP_LOADER, fuente);
 		if (r.encontrado()) {
@@ -178,8 +168,8 @@ public class ObtenerVersionFeatureCreep {
 		}
 
 		/*
-		 * Luego formato FPM:
-		 * featurecreep-4.0AM18-1.20.5.el9fc4.noarch.fpm.jar -> 4.0AM18
+		 * Luego formato FPM: featurecreep-4.0AM18-1.20.5.el9fc4.noarch.fpm.jar ->
+		 * 4.0AM18
 		 */
 		r = detectarConPatron(texto, PATRON_FEATURECREEP_FPM, fuente);
 		if (r.encontrado()) {
@@ -187,9 +177,8 @@ public class ObtenerVersionFeatureCreep {
 		}
 
 		/*
-		 * Luego módulos:
-		 * featurecreepmc-26.1-6.jar -> 6
-		 * featurecreepmc-1.21.10-5am0.jar -> 5am0
+		 * Luego módulos: featurecreepmc-26.1-6.jar -> 6 featurecreepmc-1.21.10-5am0.jar
+		 * -> 5am0
 		 */
 		r = detectarConPatron(texto, PATRON_FEATURECREEP_MODULO, fuente);
 		if (r.encontrado()) {

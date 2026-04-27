@@ -8023,4 +8023,120 @@ public class Chino implements Idioma {
 		return "自动备份最大大小 (MB)";
 	}
 
+	public String actualizadorModsTitulo() {
+		return "模组更新器";
+	}
+
+	public String actualizadorModsBotonSidebar() {
+		return "更新器";
+	}
+
+	public String actualizadorModsDescripcion() {
+		return "搜索模组包中可用的模组更新。您可以全部更新或单独应用更新。";
+	}
+
+	public String actualizadorModsBotonEscanear() {
+		return "检查更新";
+	}
+
+	public String actualizadorModsBotonActualizarTodo() {
+		return "全部更新";
+	}
+
+	public String actualizadorModsBotonActualizarUno() {
+		return "更新";
+	}
+
+	public String actualizadorModsEstadoListo() {
+		return "就绪";
+	}
+
+	public String actualizadorModsEstadoEscaneando() {
+		return "正在搜索更新...";
+	}
+
+	public String actualizadorModsEstadoActualizando() {
+		return "正在更新...";
+	}
+
+	public String actualizadorModsEstadoSinActualizaciones() {
+		return "没有可用的更新。";
+	}
+
+	public String actualizadorModsEstadoEncontradas(int n) {
+		return "找到更新: " + n;
+	}
+
+	public String actualizadorModsEstadoActualizadas(int n) {
+		return "已应用更新: " + n;
+	}
+
+	public String actualizadorModsEstadoError() {
+		return "更新时出错。";
+	}
+
+	public String actualizadorModsSinSeleccion() {
+		return "未选择任何更新。";
+	}
+
+	public String actualizadorModsColumnaMod() {
+		return "模组";
+	}
+
+	public String actualizadorModsColumnaActual() {
+		return "当前";
+	}
+
+	public String actualizadorModsColumnaNueva() {
+		return "新版";
+	}
+
+	public String actualizadorModsColumnaFuente() {
+		return "来源";
+	}
+
+	public String actualizadorModsColumnaLoader() {
+		return "加载器";
+	}
+
+	public String actualizadorModsColumnaRuta() {
+		return "路径";
+	}
+
+	public String actualizadorModsColumnaAccion() {
+		return "操作";
+	}
+
+	public String actualizadorModsColorFondo() {
+		return "更新器: 背景";
+	}
+
+	public String actualizadorModsColorPanel() {
+		return "更新器: 面板";
+	}
+
+	public String actualizadorModsColorTexto() {
+		return "更新器: 文本";
+	}
+
+	public String actualizadorModsColorTextoSuave() {
+		return "更新器: 次要文本";
+	}
+
+	public String actualizadorModsColorBoton() {
+		return "更新器: 按钮";
+	}
+
+	public String actualizadorModsColorBotonTexto() {
+		return "更新器: 按钮文本";
+	}
+
+	public String actualizadorModsColorTabla() {
+		return "更新器: 表格";
+	}
+
+	public String actualizadorModsColorSeleccion() {
+		return "更新器: 选中项";
+	}
+
 }

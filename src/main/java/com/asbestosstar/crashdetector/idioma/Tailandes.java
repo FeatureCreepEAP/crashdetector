@@ -8762,4 +8762,120 @@ public class Tailandes implements Idioma {
 		return "ขนาดสูงสุดของการสำรองข้อมูลอัตโนมัติ (MB)";
 	}
 
+	public String actualizadorModsTitulo() {
+		return "ตัวอัปเดตมอด";
+	}
+
+	public String actualizadorModsBotonSidebar() {
+		return "อัปเดต";
+	}
+
+	public String actualizadorModsDescripcion() {
+		return "ค้นหาอัปเดตที่มีสำหรับมอดในมอดแพ็ก คุณสามารถอัปเดตทั้งหมดหรือเลือกอัปเดตทีละตัวได้";
+	}
+
+	public String actualizadorModsBotonEscanear() {
+		return "ค้นหาอัปเดต";
+	}
+
+	public String actualizadorModsBotonActualizarTodo() {
+		return "อัปเดตทั้งหมด";
+	}
+
+	public String actualizadorModsBotonActualizarUno() {
+		return "อัปเดต";
+	}
+
+	public String actualizadorModsEstadoListo() {
+		return "พร้อมแล้ว";
+	}
+
+	public String actualizadorModsEstadoEscaneando() {
+		return "กำลังค้นหาอัปเดต...";
+	}
+
+	public String actualizadorModsEstadoActualizando() {
+		return "กำลังอัปเดต...";
+	}
+
+	public String actualizadorModsEstadoSinActualizaciones() {
+		return "ไม่มีอัปเดตใหม่";
+	}
+
+	public String actualizadorModsEstadoEncontradas(int n) {
+		return "พบอัปเดต: " + n;
+	}
+
+	public String actualizadorModsEstadoActualizadas(int n) {
+		return "อัปเดตสำเร็จ: " + n;
+	}
+
+	public String actualizadorModsEstadoError() {
+		return "เกิดข้อผิดพลาดในการอัปเดต";
+	}
+
+	public String actualizadorModsSinSeleccion() {
+		return "ไม่ได้เลือกอัปเดตใดๆ";
+	}
+
+	public String actualizadorModsColumnaMod() {
+		return "มอด";
+	}
+
+	public String actualizadorModsColumnaActual() {
+		return "ปัจจุบัน";
+	}
+
+	public String actualizadorModsColumnaNueva() {
+		return "ใหม่";
+	}
+
+	public String actualizadorModsColumnaFuente() {
+		return "แหล่งที่มา";
+	}
+
+	public String actualizadorModsColumnaLoader() {
+		return "Loader";
+	}
+
+	public String actualizadorModsColumnaRuta() {
+		return "เส้นทาง";
+	}
+
+	public String actualizadorModsColumnaAccion() {
+		return "การดำเนินการ";
+	}
+
+	public String actualizadorModsColorFondo() {
+		return "ตัวอัปเดต: พื้นหลัง";
+	}
+
+	public String actualizadorModsColorPanel() {
+		return "ตัวอัปเดต: แผง";
+	}
+
+	public String actualizadorModsColorTexto() {
+		return "ตัวอัปเดต: ข้อความ";
+	}
+
+	public String actualizadorModsColorTextoSuave() {
+		return "ตัวอัปเดต: ข้อความจาง";
+	}
+
+	public String actualizadorModsColorBoton() {
+		return "ตัวอัปเดต: ปุ่ม";
+	}
+
+	public String actualizadorModsColorBotonTexto() {
+		return "ตัวอัปเดต: ข้อความปุ่ม";
+	}
+
+	public String actualizadorModsColorTabla() {
+		return "ตัวอัปเดต: ตาราง";
+	}
+
+	public String actualizadorModsColorSeleccion() {
+		return "ตัวอัปเดต: การเลือก";
+	}
+
 }

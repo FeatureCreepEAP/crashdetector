@@ -16,23 +16,18 @@ import com.asbestosstar.crashdetector.cargador.Cargador;
 public class ObtenerVersionFabric {
 
 	/*
-	 * Fabric loader no depende directamente de la versión de Minecraft.
-	 * Ejemplo:
+	 * Fabric loader no depende directamente de la versión de Minecraft. Ejemplo:
 	 * net.fabricmc:fabric-loader:0.18.4
 	 *
-	 * Quilt puede aparecer como:
-	 * org.quiltmc:quilt-loader:...
-	 * quilt-loader-...
+	 * Quilt puede aparecer como: org.quiltmc:quilt-loader:... quilt-loader-...
 	 */
 	private static final String REGEX_VERSION_LOADER = "[0-9]+(?:\\.[0-9]+){1,5}(?:[-+][a-zA-Z0-9_.+-]+)?";
 
-	private static final Pattern PATRON_FABRIC_LOADER_MAVEN = Pattern.compile(
-			"net\\.fabricmc:fabric-loader:(" + REGEX_VERSION_LOADER + ")",
-			Pattern.CASE_INSENSITIVE);
+	private static final Pattern PATRON_FABRIC_LOADER_MAVEN = Pattern
+			.compile("net\\.fabricmc:fabric-loader:(" + REGEX_VERSION_LOADER + ")", Pattern.CASE_INSENSITIVE);
 
-	private static final Pattern PATRON_QUILT_LOADER_MAVEN = Pattern.compile(
-			"org\\.quiltmc:quilt-loader:(" + REGEX_VERSION_LOADER + ")",
-			Pattern.CASE_INSENSITIVE);
+	private static final Pattern PATRON_QUILT_LOADER_MAVEN = Pattern
+			.compile("org\\.quiltmc:quilt-loader:(" + REGEX_VERSION_LOADER + ")", Pattern.CASE_INSENSITIVE);
 
 	private static final Pattern PATRON_FABRIC_LOADER_RUTA = Pattern.compile(
 			"(?:^|[/\\\\])net[/\\\\]fabricmc[/\\\\]fabric-loader[/\\\\](" + REGEX_VERSION_LOADER + ")[/\\\\]",
@@ -42,21 +37,17 @@ public class ObtenerVersionFabric {
 			"(?:^|[/\\\\])org[/\\\\]quiltmc[/\\\\]quilt-loader[/\\\\](" + REGEX_VERSION_LOADER + ")[/\\\\]",
 			Pattern.CASE_INSENSITIVE);
 
-	private static final Pattern PATRON_FABRIC_LOADER_JAR = Pattern.compile(
-			"fabric-loader-(" + REGEX_VERSION_LOADER + ")\\.jar",
-			Pattern.CASE_INSENSITIVE);
+	private static final Pattern PATRON_FABRIC_LOADER_JAR = Pattern
+			.compile("fabric-loader-(" + REGEX_VERSION_LOADER + ")\\.jar", Pattern.CASE_INSENSITIVE);
 
-	private static final Pattern PATRON_QUILT_LOADER_JAR = Pattern.compile(
-			"quilt-loader-(" + REGEX_VERSION_LOADER + ")\\.jar",
-			Pattern.CASE_INSENSITIVE);
+	private static final Pattern PATRON_QUILT_LOADER_JAR = Pattern
+			.compile("quilt-loader-(" + REGEX_VERSION_LOADER + ")\\.jar", Pattern.CASE_INSENSITIVE);
 
 	private static final Pattern PATRON_MAIN_CLASS_FABRIC = Pattern.compile(
-			"net\\.fabricmc\\.loader\\.impl\\.launch\\.knot\\.Knot(?:Client|Server)",
-			Pattern.CASE_INSENSITIVE);
+			"net\\.fabricmc\\.loader\\.impl\\.launch\\.knot\\.Knot(?:Client|Server)", Pattern.CASE_INSENSITIVE);
 
-	private static final Pattern PATRON_MAIN_CLASS_QUILT = Pattern.compile(
-			"org\\.quiltmc\\.loader\\.impl\\.launch\\.knot\\.Knot(?:Client|Server)",
-			Pattern.CASE_INSENSITIVE);
+	private static final Pattern PATRON_MAIN_CLASS_QUILT = Pattern
+			.compile("org\\.quiltmc\\.loader\\.impl\\.launch\\.knot\\.Knot(?:Client|Server)", Pattern.CASE_INSENSITIVE);
 
 	static {
 		for (Cargador carg : Cargador.cargadores_activados) {
@@ -76,8 +67,8 @@ public class ObtenerVersionFabric {
 		}
 
 		/*
-		 * QCC = Quilt Compatible / Quilt loader.
-		 * Devuelve true cuando realmente detectamos quilt-loader.
+		 * QCC = Quilt Compatible / Quilt loader. Devuelve true cuando realmente
+		 * detectamos quilt-loader.
 		 */
 		public boolean esQCC() {
 			return qcc;
@@ -85,11 +76,8 @@ public class ObtenerVersionFabric {
 
 		@Override
 		public String toString() {
-			return "ResultadoFabric{" +
-					"versionLoader='" + versionLoader + '\'' +
-					", qcc=" + qcc +
-					", fuente='" + fuente + '\'' +
-					'}';
+			return "ResultadoFabric{" + "versionLoader='" + versionLoader + '\'' + ", qcc=" + qcc + ", fuente='"
+					+ fuente + '\'' + '}';
 		}
 	}
 
@@ -233,18 +221,14 @@ public class ObtenerVersionFabric {
 
 		ResultadoFabric r;
 
-		r = detectarConPatrones(texto, fuente, true,
-				PATRON_QUILT_LOADER_MAVEN,
-				PATRON_QUILT_LOADER_RUTA,
+		r = detectarConPatrones(texto, fuente, true, PATRON_QUILT_LOADER_MAVEN, PATRON_QUILT_LOADER_RUTA,
 				PATRON_QUILT_LOADER_JAR);
 
 		if (r.encontrado()) {
 			return r;
 		}
 
-		r = detectarConPatrones(texto, fuente, false,
-				PATRON_FABRIC_LOADER_MAVEN,
-				PATRON_FABRIC_LOADER_RUTA,
+		r = detectarConPatrones(texto, fuente, false, PATRON_FABRIC_LOADER_MAVEN, PATRON_FABRIC_LOADER_RUTA,
 				PATRON_FABRIC_LOADER_JAR);
 
 		if (r.encontrado()) {
@@ -252,8 +236,8 @@ public class ObtenerVersionFabric {
 		}
 
 		/*
-		 * Si solo aparece el mainClass, sabemos el tipo de loader,
-		 * pero no la versión exacta.
+		 * Si solo aparece el mainClass, sabemos el tipo de loader, pero no la versión
+		 * exacta.
 		 */
 		if (PATRON_MAIN_CLASS_QUILT.matcher(texto).find()) {
 			r = nuevoVacio(fuente + " / mainClass Quilt sin versión");

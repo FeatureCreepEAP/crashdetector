@@ -9113,4 +9113,120 @@ public class Indonesia implements Idioma {
 		return "Ukuran maksimum cadangan otomatis (MB)";
 	}
 
+	public String actualizadorModsTitulo() {
+		return "Pembaruan Mod";
+	}
+
+	public String actualizadorModsBotonSidebar() {
+		return "Pembaruan";
+	}
+
+	public String actualizadorModsDescripcion() {
+		return "Mencari pembaruan yang tersedia untuk mod dalam modpack. Anda dapat memperbarui semua atau menerapkan pembaruan satu per satu.";
+	}
+
+	public String actualizadorModsBotonEscanear() {
+		return "Periksa Pembaruan";
+	}
+
+	public String actualizadorModsBotonActualizarTodo() {
+		return "Perbarui Semua";
+	}
+
+	public String actualizadorModsBotonActualizarUno() {
+		return "Perbarui";
+	}
+
+	public String actualizadorModsEstadoListo() {
+		return "Siap";
+	}
+
+	public String actualizadorModsEstadoEscaneando() {
+		return "Memeriksa pembaruan...";
+	}
+
+	public String actualizadorModsEstadoActualizando() {
+		return "Memperbarui...";
+	}
+
+	public String actualizadorModsEstadoSinActualizaciones() {
+		return "Tidak ada pembaruan yang tersedia.";
+	}
+
+	public String actualizadorModsEstadoEncontradas(int n) {
+		return "Pembaruan ditemukan: " + n;
+	}
+
+	public String actualizadorModsEstadoActualizadas(int n) {
+		return "Pembaruan diterapkan: " + n;
+	}
+
+	public String actualizadorModsEstadoError() {
+		return "Kesalahan saat memperbarui.";
+	}
+
+	public String actualizadorModsSinSeleccion() {
+		return "Tidak ada pembaruan yang dipilih.";
+	}
+
+	public String actualizadorModsColumnaMod() {
+		return "Mod";
+	}
+
+	public String actualizadorModsColumnaActual() {
+		return "Saat Ini";
+	}
+
+	public String actualizadorModsColumnaNueva() {
+		return "Baru";
+	}
+
+	public String actualizadorModsColumnaFuente() {
+		return "Sumber";
+	}
+
+	public String actualizadorModsColumnaLoader() {
+		return "Pemuat";
+	}
+
+	public String actualizadorModsColumnaRuta() {
+		return "Jalur";
+	}
+
+	public String actualizadorModsColumnaAccion() {
+		return "Tindakan";
+	}
+
+	public String actualizadorModsColorFondo() {
+		return "Pembaru: latar belakang";
+	}
+
+	public String actualizadorModsColorPanel() {
+		return "Pembaru: panel";
+	}
+
+	public String actualizadorModsColorTexto() {
+		return "Pembaru: teks";
+	}
+
+	public String actualizadorModsColorTextoSuave() {
+		return "Pembaru: teks lembut";
+	}
+
+	public String actualizadorModsColorBoton() {
+		return "Pembaru: tombol";
+	}
+
+	public String actualizadorModsColorBotonTexto() {
+		return "Pembaru: teks tombol";
+	}
+
+	public String actualizadorModsColorTabla() {
+		return "Pembaru: tabel";
+	}
+
+	public String actualizadorModsColorSeleccion() {
+		return "Pembaru: pilihan";
+	}
+
 }

@@ -8524,4 +8524,120 @@ public class Persa implements Idioma {
 		return "حداکثر حجم پشتیبان‌های خودکار (مگابایت)";
 	}
 
+	public String actualizadorModsTitulo() {
+		return "به‌روزرسان مودها";
+	}
+
+	public String actualizadorModsBotonSidebar() {
+		return "به‌روزرسان";
+	}
+
+	public String actualizadorModsDescripcion() {
+		return "جستجوی به‌روزرسانی‌های موجود برای مودهای مودپک. می‌توانید همه را به‌روز کنید یا به‌روزرسانی‌های تکی اعمال کنید.";
+	}
+
+	public String actualizadorModsBotonEscanear() {
+		return "جستجوی به‌روزرسانی‌ها";
+	}
+
+	public String actualizadorModsBotonActualizarTodo() {
+		return "به‌روزرسانی همه";
+	}
+
+	public String actualizadorModsBotonActualizarUno() {
+		return "به‌روزرسانی";
+	}
+
+	public String actualizadorModsEstadoListo() {
+		return "آماده";
+	}
+
+	public String actualizadorModsEstadoEscaneando() {
+		return "در حال جستجوی به‌روزرسانی‌ها...";
+	}
+
+	public String actualizadorModsEstadoActualizando() {
+		return "در حال به‌روزرسانی...";
+	}
+
+	public String actualizadorModsEstadoSinActualizaciones() {
+		return "به‌روزرسانی جدیدی موجود نیست.";
+	}
+
+	public String actualizadorModsEstadoEncontradas(int n) {
+		return "به‌روزرسانی‌های یافت‌شده: " + n;
+	}
+
+	public String actualizadorModsEstadoActualizadas(int n) {
+		return "به‌روزرسانی‌های اعمال‌شده: " + n;
+	}
+
+	public String actualizadorModsEstadoError() {
+		return "خطا در به‌روزرسانی.";
+	}
+
+	public String actualizadorModsSinSeleccion() {
+		return "هیچ به‌روزرسانی‌ای انتخاب نشده است.";
+	}
+
+	public String actualizadorModsColumnaMod() {
+		return "مود";
+	}
+
+	public String actualizadorModsColumnaActual() {
+		return "فعلی";
+	}
+
+	public String actualizadorModsColumnaNueva() {
+		return "جدید";
+	}
+
+	public String actualizadorModsColumnaFuente() {
+		return "منبع";
+	}
+
+	public String actualizadorModsColumnaLoader() {
+		return "Loader";
+	}
+
+	public String actualizadorModsColumnaRuta() {
+		return "مسیر";
+	}
+
+	public String actualizadorModsColumnaAccion() {
+		return "عملیات";
+	}
+
+	public String actualizadorModsColorFondo() {
+		return "به‌روزرسان: پس‌زمینه";
+	}
+
+	public String actualizadorModsColorPanel() {
+		return "به‌روزرسان: پنل";
+	}
+
+	public String actualizadorModsColorTexto() {
+		return "به‌روزرسان: متن";
+	}
+
+	public String actualizadorModsColorTextoSuave() {
+		return "به‌روزرسان: متن کم‌رنگ";
+	}
+
+	public String actualizadorModsColorBoton() {
+		return "به‌روزرسان: دکمه";
+	}
+
+	public String actualizadorModsColorBotonTexto() {
+		return "به‌روزرسان: متن دکمه";
+	}
+
+	public String actualizadorModsColorTabla() {
+		return "به‌روزرسان: جدول";
+	}
+
+	public String actualizadorModsColorSeleccion() {
+		return "به‌روزرسان: انتخاب";
+	}
+
 }

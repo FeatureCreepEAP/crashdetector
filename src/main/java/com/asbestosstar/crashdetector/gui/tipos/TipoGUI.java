@@ -11,6 +11,7 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
+import com.asbestosstar.crashdetector.gui.tipos.actualizador.ActualizadorModsGUI;
 import com.asbestosstar.crashdetector.gui.tipos.antimanipulacion.AntiManipulacionGUI;
 import com.asbestosstar.crashdetector.gui.tipos.aplic.ActaDeProteccionDelIdiomaCulturalDePyongyangGUI;
 import com.asbestosstar.crashdetector.gui.tipos.arbol.ArbolDeModsGUI;
@@ -963,6 +964,28 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		}
 	};
 
+	public static TipoGUI<ActualizadorModsGUI> ACTUALIZADOR_MODS = new TipoGUI<ActualizadorModsGUI>() {
+		@Override
+		public String id() {
+			return "actualizador_mods";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return MonitorDePID.idioma.actualizadorModsBotonSidebar();
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<ActualizadorModsGUI> gui) {
+			ActualizadorModsGUI.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<ActualizadorModsGUI>> obtenerGUIs() {
+			return ActualizadorModsGUI.GUIS;
+		}
+	};
+
 	/**
 	 * Registro estático de todos los tipos de GUI en la lista global.
 	 */
@@ -1004,6 +1027,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		TIPOS_DE_GUI.add(COMPARTIR_INSTANCIA);
 		TIPOS_DE_GUI.add(DOCS);
 		TIPOS_DE_GUI.add(IA);
+		TIPOS_DE_GUI.add(ACTUALIZADOR_MODS);
 
 	}
 }

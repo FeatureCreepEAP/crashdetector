@@ -8533,4 +8533,120 @@ public class Esperanto implements Idioma {
 		return "Maksimuma grandeco de aŭtomataj rezervoj (MB)";
 	}
 
+	public String actualizadorModsTitulo() {
+		return "Ĝisdatigilo de mod-oj";
+	}
+
+	public String actualizadorModsBotonSidebar() {
+		return "Ĝisdatigilo";
+	}
+
+	public String actualizadorModsDescripcion() {
+		return "Serĉas haveblajn ĝisdatigojn por la mod-oj de la mod-pako. Vi povas ĝisdatigi ĉiujn aŭ aplikigi individuajn ĝisdatigojn.";
+	}
+
+	public String actualizadorModsBotonEscanear() {
+		return "Serĉi ĝisdatigojn";
+	}
+
+	public String actualizadorModsBotonActualizarTodo() {
+		return "Ĝisdatigi ĉiujn";
+	}
+
+	public String actualizadorModsBotonActualizarUno() {
+		return "Ĝisdatigi";
+	}
+
+	public String actualizadorModsEstadoListo() {
+		return "Preta";
+	}
+
+	public String actualizadorModsEstadoEscaneando() {
+		return "Serĉante ĝisdatigojn...";
+	}
+
+	public String actualizadorModsEstadoActualizando() {
+		return "Ĝisdatigante...";
+	}
+
+	public String actualizadorModsEstadoSinActualizaciones() {
+		return "Neniu ĝisdatigo havebla.";
+	}
+
+	public String actualizadorModsEstadoEncontradas(int n) {
+		return "Trovitaj ĝisdatigoj: " + n;
+	}
+
+	public String actualizadorModsEstadoActualizadas(int n) {
+		return "Aplikigitaj ĝisdatigoj: " + n;
+	}
+
+	public String actualizadorModsEstadoError() {
+		return "Eraro dum ĝisdatigo.";
+	}
+
+	public String actualizadorModsSinSeleccion() {
+		return "Neniu ĝisdatigo elektita.";
+	}
+
+	public String actualizadorModsColumnaMod() {
+		return "Mod-o";
+	}
+
+	public String actualizadorModsColumnaActual() {
+		return "Nuna";
+	}
+
+	public String actualizadorModsColumnaNueva() {
+		return "Nova";
+	}
+
+	public String actualizadorModsColumnaFuente() {
+		return "Fonto";
+	}
+
+	public String actualizadorModsColumnaLoader() {
+		return "Ŝargilo";
+	}
+
+	public String actualizadorModsColumnaRuta() {
+		return "Vojo";
+	}
+
+	public String actualizadorModsColumnaAccion() {
+		return "Ago";
+	}
+
+	public String actualizadorModsColorFondo() {
+		return "Ĝisdatigilo: fono";
+	}
+
+	public String actualizadorModsColorPanel() {
+		return "Ĝisdatigilo: panelo";
+	}
+
+	public String actualizadorModsColorTexto() {
+		return "Ĝisdatigilo: teksto";
+	}
+
+	public String actualizadorModsColorTextoSuave() {
+		return "Ĝisdatigilo: milda teksto";
+	}
+
+	public String actualizadorModsColorBoton() {
+		return "Ĝisdatigilo: butono";
+	}
+
+	public String actualizadorModsColorBotonTexto() {
+		return "Ĝisdatigilo: butonteksto";
+	}
+
+	public String actualizadorModsColorTabla() {
+		return "Ĝisdatigilo: tabelo";
+	}
+
+	public String actualizadorModsColorSeleccion() {
+		return "Ĝisdatigilo: elekto";
+	}
+
 }

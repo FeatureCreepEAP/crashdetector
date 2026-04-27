@@ -8219,4 +8219,120 @@ public class Japones implements Idioma {
 		return "自動バックアップ最大サイズ (MB)";
 	}
 
+	public String actualizadorModsTitulo() {
+		return "MOD アップデーター";
+	}
+
+	public String actualizadorModsBotonSidebar() {
+		return "更新";
+	}
+
+	public String actualizadorModsDescripcion() {
+		return "モッドパック内の MOD の利用可能な更新を検索します。すべて更新するか、個別に更新を適用できます。";
+	}
+
+	public String actualizadorModsBotonEscanear() {
+		return "更新を確認";
+	}
+
+	public String actualizadorModsBotonActualizarTodo() {
+		return "すべて更新";
+	}
+
+	public String actualizadorModsBotonActualizarUno() {
+		return "更新";
+	}
+
+	public String actualizadorModsEstadoListo() {
+		return "準備完了";
+	}
+
+	public String actualizadorModsEstadoEscaneando() {
+		return "更新を検索中...";
+	}
+
+	public String actualizadorModsEstadoActualizando() {
+		return "更新中...";
+	}
+
+	public String actualizadorModsEstadoSinActualizaciones() {
+		return "利用可能な更新はありません。";
+	}
+
+	public String actualizadorModsEstadoEncontradas(int n) {
+		return "見つかった更新: " + n;
+	}
+
+	public String actualizadorModsEstadoActualizadas(int n) {
+		return "適用された更新: " + n;
+	}
+
+	public String actualizadorModsEstadoError() {
+		return "更新中にエラーが発生しました。";
+	}
+
+	public String actualizadorModsSinSeleccion() {
+		return "更新が選択されていません。";
+	}
+
+	public String actualizadorModsColumnaMod() {
+		return "MOD";
+	}
+
+	public String actualizadorModsColumnaActual() {
+		return "現在";
+	}
+
+	public String actualizadorModsColumnaNueva() {
+		return "最新";
+	}
+
+	public String actualizadorModsColumnaFuente() {
+		return "ソース";
+	}
+
+	public String actualizadorModsColumnaLoader() {
+		return "ローダー";
+	}
+
+	public String actualizadorModsColumnaRuta() {
+		return "パス";
+	}
+
+	public String actualizadorModsColumnaAccion() {
+		return "アクション";
+	}
+
+	public String actualizadorModsColorFondo() {
+		return "更新ツール: 背景";
+	}
+
+	public String actualizadorModsColorPanel() {
+		return "更新ツール: パネル";
+	}
+
+	public String actualizadorModsColorTexto() {
+		return "更新ツール: テキスト";
+	}
+
+	public String actualizadorModsColorTextoSuave() {
+		return "更新ツール: 控えめなテキスト";
+	}
+
+	public String actualizadorModsColorBoton() {
+		return "更新ツール: ボタン";
+	}
+
+	public String actualizadorModsColorBotonTexto() {
+		return "更新ツール: ボタンテキスト";
+	}
+
+	public String actualizadorModsColorTabla() {
+		return "更新ツール: テーブル";
+	}
+
+	public String actualizadorModsColorSeleccion() {
+		return "更新ツール: 選択";
+	}
+
 }

@@ -8572,4 +8572,120 @@ public class Portuges implements Idioma {
 		return "Tamanho máximo dos backups automáticos (MB)";
 	}
 
+	public String actualizadorModsTitulo() {
+		return "Atualizador de mods";
+	}
+
+	public String actualizadorModsBotonSidebar() {
+		return "Atualizador";
+	}
+
+	public String actualizadorModsDescripcion() {
+		return "Verifica atualizações disponíveis para os mods do modpack. Você pode atualizar todos ou aplicar atualizações individuais.";
+	}
+
+	public String actualizadorModsBotonEscanear() {
+		return "Buscar atualizações";
+	}
+
+	public String actualizadorModsBotonActualizarTodo() {
+		return "Atualizar tudo";
+	}
+
+	public String actualizadorModsBotonActualizarUno() {
+		return "Atualizar";
+	}
+
+	public String actualizadorModsEstadoListo() {
+		return "Pronto";
+	}
+
+	public String actualizadorModsEstadoEscaneando() {
+		return "Buscando atualizações...";
+	}
+
+	public String actualizadorModsEstadoActualizando() {
+		return "Atualizando...";
+	}
+
+	public String actualizadorModsEstadoSinActualizaciones() {
+		return "Não há atualizações disponíveis.";
+	}
+
+	public String actualizadorModsEstadoEncontradas(int n) {
+		return "Atualizações encontradas: " + n;
+	}
+
+	public String actualizadorModsEstadoActualizadas(int n) {
+		return "Atualizações aplicadas: " + n;
+	}
+
+	public String actualizadorModsEstadoError() {
+		return "Erro ao atualizar.";
+	}
+
+	public String actualizadorModsSinSeleccion() {
+		return "Nenhuma atualização selecionada.";
+	}
+
+	public String actualizadorModsColumnaMod() {
+		return "Mod";
+	}
+
+	public String actualizadorModsColumnaActual() {
+		return "Atual";
+	}
+
+	public String actualizadorModsColumnaNueva() {
+		return "Nova";
+	}
+
+	public String actualizadorModsColumnaFuente() {
+		return "Fonte";
+	}
+
+	public String actualizadorModsColumnaLoader() {
+		return "Loader";
+	}
+
+	public String actualizadorModsColumnaRuta() {
+		return "Caminho";
+	}
+
+	public String actualizadorModsColumnaAccion() {
+		return "Ação";
+	}
+
+	public String actualizadorModsColorFondo() {
+		return "Atualizador: fundo";
+	}
+
+	public String actualizadorModsColorPanel() {
+		return "Atualizador: painel";
+	}
+
+	public String actualizadorModsColorTexto() {
+		return "Atualizador: texto";
+	}
+
+	public String actualizadorModsColorTextoSuave() {
+		return "Atualizador: texto suave";
+	}
+
+	public String actualizadorModsColorBoton() {
+		return "Atualizador: botão";
+	}
+
+	public String actualizadorModsColorBotonTexto() {
+		return "Atualizador: texto do botão";
+	}
+
+	public String actualizadorModsColorTabla() {
+		return "Atualizador: tabela";
+	}
+
+	public String actualizadorModsColorSeleccion() {
+		return "Atualizador: seleção";
+	}
+
 }

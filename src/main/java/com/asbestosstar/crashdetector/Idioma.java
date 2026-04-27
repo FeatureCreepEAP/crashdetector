@@ -3257,4 +3257,62 @@ public interface Idioma {
 
 	public String autoBackupTamanoMaximoMB();
 
+	public String actualizadorModsTitulo();
+
+	public String actualizadorModsBotonSidebar();
+
+	public String actualizadorModsDescripcion();
+
+	public String actualizadorModsBotonEscanear();
+
+	public String actualizadorModsBotonActualizarTodo();
+
+	public String actualizadorModsBotonActualizarUno();
+
+	public String actualizadorModsEstadoListo();
+
+	public String actualizadorModsEstadoEscaneando();
+
+	public String actualizadorModsEstadoActualizando();
+
+	public String actualizadorModsEstadoSinActualizaciones();
+
+	public String actualizadorModsEstadoEncontradas(int n);
+
+	public String actualizadorModsEstadoActualizadas(int n);
+
+	public String actualizadorModsEstadoError();
+
+	public String actualizadorModsSinSeleccion();
+
+	public String actualizadorModsColumnaMod();
+
+	public String actualizadorModsColumnaActual();
+
+	public String actualizadorModsColumnaNueva();
+
+	public String actualizadorModsColumnaFuente();
+
+	public String actualizadorModsColumnaLoader();
+
+	public String actualizadorModsColumnaRuta();
+
+	public String actualizadorModsColumnaAccion();
+
+	public String actualizadorModsColorFondo();
+
+	public String actualizadorModsColorPanel();
+
+	public String actualizadorModsColorTexto();
+
+	public String actualizadorModsColorTextoSuave();
+
+	public String actualizadorModsColorBoton();
+
+	public String actualizadorModsColorBotonTexto();
+
+	public String actualizadorModsColorTabla();
+
+	public String actualizadorModsColorSeleccion();
+
 }

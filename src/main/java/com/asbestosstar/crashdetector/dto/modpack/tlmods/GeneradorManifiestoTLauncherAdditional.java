@@ -92,7 +92,7 @@ public class GeneradorManifiestoTLauncherAdditional {
 
 			if (r != null && r.encontrado()) {
 				LoaderPrincipal l = new LoaderPrincipal();
-				l.id = "minecraftforge";
+				l.id = "forge"; // FIX
 				l.version = r.buildForge;
 				l.versionMinecraft = r.versionMinecraft;
 				return l;
@@ -105,7 +105,8 @@ public class GeneradorManifiestoTLauncherAdditional {
 
 	private static LoaderPrincipal detectarNeoForge(Path carpetaInstancia) {
 		try {
-			ObtenerVersionNeoForge.ResultadoNeoForge r = ObtenerVersionNeoForge.detectarDesdeInstancia(carpetaInstancia);
+			ObtenerVersionNeoForge.ResultadoNeoForge r = ObtenerVersionNeoForge
+					.detectarDesdeInstancia(carpetaInstancia);
 
 			if (r != null && r.encontrado()) {
 				LoaderPrincipal l = new LoaderPrincipal();
@@ -147,8 +148,8 @@ public class GeneradorManifiestoTLauncherAdditional {
 
 	private static LoaderPrincipal detectarFeatureCreep(Path carpetaInstancia) {
 		try {
-			ObtenerVersionFeatureCreep.ResultadoFeatureCreep r =
-					ObtenerVersionFeatureCreep.detectarDesdeInstancia(carpetaInstancia);
+			ObtenerVersionFeatureCreep.ResultadoFeatureCreep r = ObtenerVersionFeatureCreep
+					.detectarDesdeInstancia(carpetaInstancia);
 
 			if (r != null && r.encontrado()) {
 				LoaderPrincipal l = new LoaderPrincipal();

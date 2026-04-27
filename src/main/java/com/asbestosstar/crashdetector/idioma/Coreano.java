@@ -8207,4 +8207,120 @@ public class Coreano implements Idioma {
 		return "자동 백업 최대 크기 (MB)";
 	}
 
+	public String actualizadorModsTitulo() {
+		return "모드 갱신기";
+	}
+
+	public String actualizadorModsBotonSidebar() {
+		return "갱신기";
+	}
+
+	public String actualizadorModsDescripcion() {
+		return "모드 팩의 모드에 대한 사용 가능한 갱신 정보를 검색합니다. 모두 갱신하거나 개별적으로 적용할 수 있습니다.";
+	}
+
+	public String actualizadorModsBotonEscanear() {
+		return "갱신 정보 검색";
+	}
+
+	public String actualizadorModsBotonActualizarTodo() {
+		return "모두 갱신";
+	}
+
+	public String actualizadorModsBotonActualizarUno() {
+		return "갱신";
+	}
+
+	public String actualizadorModsEstadoListo() {
+		return "준비 완료";
+	}
+
+	public String actualizadorModsEstadoEscaneando() {
+		return "갱신 정보 검색 중...";
+	}
+
+	public String actualizadorModsEstadoActualizando() {
+		return "갱신 중...";
+	}
+
+	public String actualizadorModsEstadoSinActualizaciones() {
+		return "사용 가능한 갱신 정보가 없습니다.";
+	}
+
+	public String actualizadorModsEstadoEncontradas(int n) {
+		return "검색된 갱신 정보: " + n;
+	}
+
+	public String actualizadorModsEstadoActualizadas(int n) {
+		return "적용된 갱신 정보: " + n;
+	}
+
+	public String actualizadorModsEstadoError() {
+		return "갱신 중 오류 발생.";
+	}
+
+	public String actualizadorModsSinSeleccion() {
+		return "선택된 갱신 정보가 없습니다.";
+	}
+
+	public String actualizadorModsColumnaMod() {
+		return "모드";
+	}
+
+	public String actualizadorModsColumnaActual() {
+		return "현재";
+	}
+
+	public String actualizadorModsColumnaNueva() {
+		return "최신";
+	}
+
+	public String actualizadorModsColumnaFuente() {
+		return "출처";
+	}
+
+	public String actualizadorModsColumnaLoader() {
+		return "적재기";
+	}
+
+	public String actualizadorModsColumnaRuta() {
+		return "경로";
+	}
+
+	public String actualizadorModsColumnaAccion() {
+		return "조치";
+	}
+
+	public String actualizadorModsColorFondo() {
+		return "갱신기: 배경";
+	}
+
+	public String actualizadorModsColorPanel() {
+		return "갱신기: 판";
+	}
+
+	public String actualizadorModsColorTexto() {
+		return "갱신기: 글자";
+	}
+
+	public String actualizadorModsColorTextoSuave() {
+		return "갱신기: 흐린 글자";
+	}
+
+	public String actualizadorModsColorBoton() {
+		return "갱신기: 단추";
+	}
+
+	public String actualizadorModsColorBotonTexto() {
+		return "갱신기: 단추 글자";
+	}
+
+	public String actualizadorModsColorTabla() {
+		return "갱신기: 표";
+	}
+
+	public String actualizadorModsColorSeleccion() {
+		return "갱신기: 선택";
+	}
+
 }

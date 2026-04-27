@@ -16,45 +16,37 @@ import com.asbestosstar.crashdetector.cargador.Cargador;
 public class ObtenerVersionNeoForge {
 
 	/*
-	 * Acepta versiones de Minecraft normales y raras:
-	 * 1.20.1, 1.0, 26.1, 1.7.3b, 26.1-pre-3
+	 * Acepta versiones de Minecraft normales y raras: 1.20.1, 1.0, 26.1, 1.7.3b,
+	 * 26.1-pre-3
 	 */
 	private static final String REGEX_VERSION_MC = "[0-9]+\\.[0-9]+(?:\\.[0-9]+)?[a-zA-Z]?(?:-[a-zA-Z0-9_.+]+)?";
 
 	/*
-	 * Acepta versiones de NeoForge como:
-	 * 21.11.38-beta
-	 * 26.1.0.0-alpha.15+pre-3
+	 * Acepta versiones de NeoForge como: 21.11.38-beta 26.1.0.0-alpha.15+pre-3
 	 */
 	private static final String REGEX_VERSION_NEOFORGE = "[0-9]+(?:\\.[0-9]+){1,5}(?:[-+][a-zA-Z0-9_.+-]+)?";
 
-	private static final Pattern PATRON_ID_VERSION_JSON = Pattern.compile(
-			"\"id\"\\s*:\\s*\"neoforge-(" + REGEX_VERSION_NEOFORGE + ")\"",
-			Pattern.CASE_INSENSITIVE);
+	private static final Pattern PATRON_ID_VERSION_JSON = Pattern
+			.compile("\"id\"\\s*:\\s*\"neoforge-(" + REGEX_VERSION_NEOFORGE + ")\"", Pattern.CASE_INSENSITIVE);
 
 	private static final Pattern PATRON_ARGUMENTO_NEOFORGE = Pattern.compile(
-			"\"--fml\\.neoForgeVersion\"[\\s\\S]*?\"(" + REGEX_VERSION_NEOFORGE + ")\"",
-			Pattern.CASE_INSENSITIVE);
+			"\"--fml\\.neoForgeVersion\"[\\s\\S]*?\"(" + REGEX_VERSION_NEOFORGE + ")\"", Pattern.CASE_INSENSITIVE);
 
-	private static final Pattern PATRON_ARGUMENTO_MC = Pattern.compile(
-			"\"--fml\\.mcVersion\"[\\s\\S]*?\"(" + REGEX_VERSION_MC + ")\"",
-			Pattern.CASE_INSENSITIVE);
+	private static final Pattern PATRON_ARGUMENTO_MC = Pattern
+			.compile("\"--fml\\.mcVersion\"[\\s\\S]*?\"(" + REGEX_VERSION_MC + ")\"", Pattern.CASE_INSENSITIVE);
 
-	private static final Pattern PATRON_MAIN_CLASS_NEOFORGE = Pattern.compile(
-			"net\\.neoforged\\.fml\\.startup\\.(?:Client|Server)",
-			Pattern.CASE_INSENSITIVE);
+	private static final Pattern PATRON_MAIN_CLASS_NEOFORGE = Pattern
+			.compile("net\\.neoforged\\.fml\\.startup\\.(?:Client|Server)", Pattern.CASE_INSENSITIVE);
 
 	private static final Pattern PATRON_RUTA_NEOFORGE = Pattern.compile(
 			"(?:^|[/\\\\])net[/\\\\]neoforged[/\\\\]neoforge[/\\\\](" + REGEX_VERSION_NEOFORGE + ")[/\\\\]",
 			Pattern.CASE_INSENSITIVE);
 
-	private static final Pattern PATRON_NOMBRE_NEOFORGE = Pattern.compile(
-			"net\\.neoforged:neoforge:(" + REGEX_VERSION_NEOFORGE + ")",
-			Pattern.CASE_INSENSITIVE);
+	private static final Pattern PATRON_NOMBRE_NEOFORGE = Pattern
+			.compile("net\\.neoforged:neoforge:(" + REGEX_VERSION_NEOFORGE + ")", Pattern.CASE_INSENSITIVE);
 
-	private static final Pattern PATRON_JAR_NEOFORGE = Pattern.compile(
-			"neoforge-(" + REGEX_VERSION_NEOFORGE + ")\\.jar",
-			Pattern.CASE_INSENSITIVE);
+	private static final Pattern PATRON_JAR_NEOFORGE = Pattern
+			.compile("neoforge-(" + REGEX_VERSION_NEOFORGE + ")\\.jar", Pattern.CASE_INSENSITIVE);
 
 	static {
 		for (Cargador carg : Cargador.cargadores_activados) {
@@ -75,11 +67,8 @@ public class ObtenerVersionNeoForge {
 
 		@Override
 		public String toString() {
-			return "ResultadoNeoForge{" +
-					"versionMinecraft='" + versionMinecraft + '\'' +
-					", versionNeoForge='" + versionNeoForge + '\'' +
-					", fuente='" + fuente + '\'' +
-					'}';
+			return "ResultadoNeoForge{" + "versionMinecraft='" + versionMinecraft + '\'' + ", versionNeoForge='"
+					+ versionNeoForge + '\'' + ", fuente='" + fuente + '\'' + '}';
 		}
 	}
 
@@ -210,13 +199,8 @@ public class ObtenerVersionNeoForge {
 	}
 
 	public static ResultadoNeoForge detectarDesdeTLauncherAdditional(Path carpetaInstancia) throws IOException {
-		String[] nombres = {
-				"TLauncherAdditional.json",
-				"TLauncherAdditional(2).json",
-				"TLauncherAdditional(3).json",
-				"tlauncheradditional.json",
-				"additional.json"
-		};
+		String[] nombres = { "TLauncherAdditional.json", "TLauncherAdditional(2).json", "TLauncherAdditional(3).json",
+				"tlauncheradditional.json", "additional.json" };
 
 		for (String nombre : nombres) {
 			Path p = carpetaInstancia.resolve(nombre);
@@ -244,12 +228,8 @@ public class ObtenerVersionNeoForge {
 
 		ResultadoNeoForge r = nuevoVacio(fuente);
 
-		String versionNeoForge = buscarPrimero(texto,
-				PATRON_ID_VERSION_JSON,
-				PATRON_ARGUMENTO_NEOFORGE,
-				PATRON_NOMBRE_NEOFORGE,
-				PATRON_RUTA_NEOFORGE,
-				PATRON_JAR_NEOFORGE);
+		String versionNeoForge = buscarPrimero(texto, PATRON_ID_VERSION_JSON, PATRON_ARGUMENTO_NEOFORGE,
+				PATRON_NOMBRE_NEOFORGE, PATRON_RUTA_NEOFORGE, PATRON_JAR_NEOFORGE);
 
 		String versionMinecraft = buscarPrimero(texto, PATRON_ARGUMENTO_MC);
 
@@ -261,8 +241,8 @@ public class ObtenerVersionNeoForge {
 		}
 
 		/*
-		 * Algunos JSON de launcher solo tienen mainClass neoforged y mcVersion.
-		 * En ese caso sabemos que es NeoForge, pero no sabemos el build exacto.
+		 * Algunos JSON de launcher solo tienen mainClass neoforged y mcVersion. En ese
+		 * caso sabemos que es NeoForge, pero no sabemos el build exacto.
 		 */
 		if (PATRON_MAIN_CLASS_NEOFORGE.matcher(texto).find()) {
 			r.versionNeoForge = "";

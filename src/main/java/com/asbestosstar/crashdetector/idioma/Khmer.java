@@ -8735,4 +8735,120 @@ public class Khmer implements Idioma {
 		return "ទំហំអតិបរមានៃការបម្រុងទុកស្វ័យប្រវត្តិ (MB)";
 	}
 
+	public String actualizadorModsTitulo() {
+		return "ឧបករណ៍ធ្វើបច្ចុប្បន្នភាព Mod";
+	}
+
+	public String actualizadorModsBotonSidebar() {
+		return "ធ្វើបច្ចុប្បន្នភាព";
+	}
+
+	public String actualizadorModsDescripcion() {
+		return "ស្វែងរកការធ្វើបច្ចុប្បន្នភាពដែលមានសម្រាប់ mod ក្នុង modpack។ អ្នកអាចធ្វើបច្ចុប្បន្នភាពទាំងអស់ ឬអនុវត្តការធ្វើបច្ចុប្បន្នភាពម្តងៗ។";
+	}
+
+	public String actualizadorModsBotonEscanear() {
+		return "ពិនិត្យការធ្វើបច្ចុប្បន្នភាព";
+	}
+
+	public String actualizadorModsBotonActualizarTodo() {
+		return "ធ្វើបច្ចុប្បន្នភាពទាំងអស់";
+	}
+
+	public String actualizadorModsBotonActualizarUno() {
+		return "ធ្វើបច្ចុប្បន្នភាព";
+	}
+
+	public String actualizadorModsEstadoListo() {
+		return "រួចរាល់";
+	}
+
+	public String actualizadorModsEstadoEscaneando() {
+		return "កំពុងស្វែងរកការធ្វើបច្ចុប្បន្នភាព...";
+	}
+
+	public String actualizadorModsEstadoActualizando() {
+		return "កំពុងធ្វើបច្ចុប្បន្នភាព...";
+	}
+
+	public String actualizadorModsEstadoSinActualizaciones() {
+		return "គ្មានការធ្វើបច្ចុប្បន្នភាពដែលអាចប្រើបានទេ។";
+	}
+
+	public String actualizadorModsEstadoEncontradas(int n) {
+		return "រកឃើញការធ្វើបច្ចុប្បន្នភាព៖ " + n;
+	}
+
+	public String actualizadorModsEstadoActualizadas(int n) {
+		return "បានអនុវត្តការធ្វើបច្ចុប្បន្នភាព៖ " + n;
+	}
+
+	public String actualizadorModsEstadoError() {
+		return "មានកំហុសក្នុងការធ្វើបច្ចុប្បន្នភាព។";
+	}
+
+	public String actualizadorModsSinSeleccion() {
+		return "មិនមានការធ្វើបច្ចុប្បន្នភាពត្រូវបានជ្រើសរើសទេ។";
+	}
+
+	public String actualizadorModsColumnaMod() {
+		return "Mod";
+	}
+
+	public String actualizadorModsColumnaActual() {
+		return "បច្ចុប្បន្ន";
+	}
+
+	public String actualizadorModsColumnaNueva() {
+		return "ថ្មី";
+	}
+
+	public String actualizadorModsColumnaFuente() {
+		return "ប្រភព";
+	}
+
+	public String actualizadorModsColumnaLoader() {
+		return "កម្មវិធីផ្ទុក";
+	}
+
+	public String actualizadorModsColumnaRuta() {
+		return "ផ្លូវ";
+	}
+
+	public String actualizadorModsColumnaAccion() {
+		return "សកម្មភាព";
+	}
+
+	public String actualizadorModsColorFondo() {
+		return "ឧបករណ៍ធ្វើបច្ចុប្បន្នភាព៖ ផ្ទៃ";
+	}
+
+	public String actualizadorModsColorPanel() {
+		return "ឧបករណ៍ធ្វើបច្ចុប្បន្នភាព៖ ផ្ទាំង";
+	}
+
+	public String actualizadorModsColorTexto() {
+		return "ឧបករណ៍ធ្វើបច្ចុប្បន្នភាព៖ អត្ថបទ";
+	}
+
+	public String actualizadorModsColorTextoSuave() {
+		return "ឧបករណ៍ធ្វើបច្ចុប្បន្នភាព៖ អត្ថបទស្រាល";
+	}
+
+	public String actualizadorModsColorBoton() {
+		return "ឧបករណ៍ធ្វើបច្ចុប្បន្នភាព៖ ប៊ូតុង";
+	}
+
+	public String actualizadorModsColorBotonTexto() {
+		return "ឧបករណ៍ធ្វើបច្ចុប្បន្នភាព៖ អត្ថបទប៊ូតុង";
+	}
+
+	public String actualizadorModsColorTabla() {
+		return "ឧបករណ៍ធ្វើបច្ចុប្បន្នភាព៖ តារាង";
+	}
+
+	public String actualizadorModsColorSeleccion() {
+		return "ឧបករណ៍ធ្វើបច្ចុប្បន្នភាព៖ ការជ្រើសរើស";
+	}
+
 }

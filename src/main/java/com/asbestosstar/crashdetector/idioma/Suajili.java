@@ -9012,4 +9012,120 @@ public class Suajili implements Idioma {
 		return "Ukubwa wa juu wa backup ya kiotomatiki (MB)";
 	}
 
+	public String actualizadorModsTitulo() {
+		return "Kisasishi cha Modi";
+	}
+
+	public String actualizadorModsBotonSidebar() {
+		return "Kisasishi";
+	}
+
+	public String actualizadorModsDescripcion() {
+		return "Hutafuta visasisho vilivyopo kwa modi za modpack. Unaweza kusasisha zote au kutumia visasisho moja kwa moja.";
+	}
+
+	public String actualizadorModsBotonEscanear() {
+		return "Tafuta visasisho";
+	}
+
+	public String actualizadorModsBotonActualizarTodo() {
+		return "Sasisha zote";
+	}
+
+	public String actualizadorModsBotonActualizarUno() {
+		return "Sasisha";
+	}
+
+	public String actualizadorModsEstadoListo() {
+		return "Tayari";
+	}
+
+	public String actualizadorModsEstadoEscaneando() {
+		return "Inatafuta visasisho...";
+	}
+
+	public String actualizadorModsEstadoActualizando() {
+		return "Inasasisha...";
+	}
+
+	public String actualizadorModsEstadoSinActualizaciones() {
+		return "Hakuna visasisho vilivyopo.";
+	}
+
+	public String actualizadorModsEstadoEncontradas(int n) {
+		return "Visasisho vilivyopatikana: " + n;
+	}
+
+	public String actualizadorModsEstadoActualizadas(int n) {
+		return "Visasisho vilivyotumika: " + n;
+	}
+
+	public String actualizadorModsEstadoError() {
+		return "Hitilafu katika kusasisha.";
+	}
+
+	public String actualizadorModsSinSeleccion() {
+		return "Hakuna visasisho vilivyochaguliwa.";
+	}
+
+	public String actualizadorModsColumnaMod() {
+		return "Modi";
+	}
+
+	public String actualizadorModsColumnaActual() {
+		return "Ya sasa";
+	}
+
+	public String actualizadorModsColumnaNueva() {
+		return "Mpya";
+	}
+
+	public String actualizadorModsColumnaFuente() {
+		return "Chanzo";
+	}
+
+	public String actualizadorModsColumnaLoader() {
+		return "Loader";
+	}
+
+	public String actualizadorModsColumnaRuta() {
+		return "Njia";
+	}
+
+	public String actualizadorModsColumnaAccion() {
+		return "Kitendo";
+	}
+
+	public String actualizadorModsColorFondo() {
+		return "Kisasishi: mandharinyuma";
+	}
+
+	public String actualizadorModsColorPanel() {
+		return "Kisasishi: paneli";
+	}
+
+	public String actualizadorModsColorTexto() {
+		return "Kisasishi: maandishi";
+	}
+
+	public String actualizadorModsColorTextoSuave() {
+		return "Kisasishi: maandishi laini";
+	}
+
+	public String actualizadorModsColorBoton() {
+		return "Kisasishi: kitufe";
+	}
+
+	public String actualizadorModsColorBotonTexto() {
+		return "Kisasishi: maandishi ya kitufe";
+	}
+
+	public String actualizadorModsColorTabla() {
+		return "Kisasishi: jedwali";
+	}
+
+	public String actualizadorModsColorSeleccion() {
+		return "Kisasishi: uchaguzi";
+	}
+
 }

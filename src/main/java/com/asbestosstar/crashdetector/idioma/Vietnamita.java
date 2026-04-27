@@ -8780,4 +8780,120 @@ public class Vietnamita implements Idioma {
 		return "Kích thước tối đa của bản sao lưu tự động (MB)";
 	}
 
+	public String actualizadorModsTitulo() {
+		return "Trình cập nhật mod";
+	}
+
+	public String actualizadorModsBotonSidebar() {
+		return "Cập nhật";
+	}
+
+	public String actualizadorModsDescripcion() {
+		return "Tìm kiếm bản cập nhật có sẵn cho các mod trong modpack. Bạn có thể cập nhật tất cả hoặc áp dụng từng bản riêng lẻ.";
+	}
+
+	public String actualizadorModsBotonEscanear() {
+		return "Tìm bản cập nhật";
+	}
+
+	public String actualizadorModsBotonActualizarTodo() {
+		return "Cập nhật tất cả";
+	}
+
+	public String actualizadorModsBotonActualizarUno() {
+		return "Cập nhật";
+	}
+
+	public String actualizadorModsEstadoListo() {
+		return "Sẵn sàng";
+	}
+
+	public String actualizadorModsEstadoEscaneando() {
+		return "Đang tìm bản cập nhật...";
+	}
+
+	public String actualizadorModsEstadoActualizando() {
+		return "Đang cập nhật...";
+	}
+
+	public String actualizadorModsEstadoSinActualizaciones() {
+		return "Không có bản cập nhật mới.";
+	}
+
+	public String actualizadorModsEstadoEncontradas(int n) {
+		return "Tìm thấy bản cập nhật: " + n;
+	}
+
+	public String actualizadorModsEstadoActualizadas(int n) {
+		return "Đã áp dụng bản cập nhật: " + n;
+	}
+
+	public String actualizadorModsEstadoError() {
+		return "Lỗi khi cập nhật.";
+	}
+
+	public String actualizadorModsSinSeleccion() {
+		return "Chưa chọn bản cập nhật nào.";
+	}
+
+	public String actualizadorModsColumnaMod() {
+		return "Mod";
+	}
+
+	public String actualizadorModsColumnaActual() {
+		return "Hiện tại";
+	}
+
+	public String actualizadorModsColumnaNueva() {
+		return "Mới";
+	}
+
+	public String actualizadorModsColumnaFuente() {
+		return "Nguồn";
+	}
+
+	public String actualizadorModsColumnaLoader() {
+		return "Loader";
+	}
+
+	public String actualizadorModsColumnaRuta() {
+		return "Đường dẫn";
+	}
+
+	public String actualizadorModsColumnaAccion() {
+		return "Hành động";
+	}
+
+	public String actualizadorModsColorFondo() {
+		return "Trình cập nhật: nền";
+	}
+
+	public String actualizadorModsColorPanel() {
+		return "Trình cập nhật: bảng";
+	}
+
+	public String actualizadorModsColorTexto() {
+		return "Trình cập nhật: văn bản";
+	}
+
+	public String actualizadorModsColorTextoSuave() {
+		return "Trình cập nhật: văn bản nhạt";
+	}
+
+	public String actualizadorModsColorBoton() {
+		return "Trình cập nhật: nút";
+	}
+
+	public String actualizadorModsColorBotonTexto() {
+		return "Trình cập nhật: văn bản nút";
+	}
+
+	public String actualizadorModsColorTabla() {
+		return "Trình cập nhật: bảng";
+	}
+
+	public String actualizadorModsColorSeleccion() {
+		return "Trình cập nhật: lựa chọn";
+	}
+
 }

@@ -8587,4 +8587,120 @@ public class Ingles implements Idioma {
 		return "Maximum auto-backup size (MB)";
 	}
 
+	public String actualizadorModsTitulo() {
+		return "Mod Updater";
+	}
+
+	public String actualizadorModsBotonSidebar() {
+		return "Updater";
+	}
+
+	public String actualizadorModsDescripcion() {
+		return "Scans for available updates for mods in the modpack. You can update all or apply individual updates.";
+	}
+
+	public String actualizadorModsBotonEscanear() {
+		return "Check for Updates";
+	}
+
+	public String actualizadorModsBotonActualizarTodo() {
+		return "Update All";
+	}
+
+	public String actualizadorModsBotonActualizarUno() {
+		return "Update";
+	}
+
+	public String actualizadorModsEstadoListo() {
+		return "Ready";
+	}
+
+	public String actualizadorModsEstadoEscaneando() {
+		return "Scanning for updates...";
+	}
+
+	public String actualizadorModsEstadoActualizando() {
+		return "Updating...";
+	}
+
+	public String actualizadorModsEstadoSinActualizaciones() {
+		return "No updates available.";
+	}
+
+	public String actualizadorModsEstadoEncontradas(int n) {
+		return "Updates found: " + n;
+	}
+
+	public String actualizadorModsEstadoActualizadas(int n) {
+		return "Updates applied: " + n;
+	}
+
+	public String actualizadorModsEstadoError() {
+		return "Error updating.";
+	}
+
+	public String actualizadorModsSinSeleccion() {
+		return "No updates selected.";
+	}
+
+	public String actualizadorModsColumnaMod() {
+		return "Mod";
+	}
+
+	public String actualizadorModsColumnaActual() {
+		return "Current";
+	}
+
+	public String actualizadorModsColumnaNueva() {
+		return "New";
+	}
+
+	public String actualizadorModsColumnaFuente() {
+		return "Source";
+	}
+
+	public String actualizadorModsColumnaLoader() {
+		return "Loader";
+	}
+
+	public String actualizadorModsColumnaRuta() {
+		return "Path";
+	}
+
+	public String actualizadorModsColumnaAccion() {
+		return "Action";
+	}
+
+	public String actualizadorModsColorFondo() {
+		return "Updater: background";
+	}
+
+	public String actualizadorModsColorPanel() {
+		return "Updater: panel";
+	}
+
+	public String actualizadorModsColorTexto() {
+		return "Updater: text";
+	}
+
+	public String actualizadorModsColorTextoSuave() {
+		return "Updater: muted text";
+	}
+
+	public String actualizadorModsColorBoton() {
+		return "Updater: button";
+	}
+
+	public String actualizadorModsColorBotonTexto() {
+		return "Updater: button text";
+	}
+
+	public String actualizadorModsColorTabla() {
+		return "Updater: table";
+	}
+
+	public String actualizadorModsColorSeleccion() {
+		return "Updater: selection";
+	}
+
 }

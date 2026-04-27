@@ -9000,4 +9000,120 @@ public class Lao implements Idioma {
 		return "ຂະໜາດສູງສຸດຂອງການສຳຮອງ (MB)";
 	}
 
+	public String actualizadorModsTitulo() {
+		return "ຕົວອັບເດດມອດ";
+	}
+
+	public String actualizadorModsBotonSidebar() {
+		return "ອັບເດດ";
+	}
+
+	public String actualizadorModsDescripcion() {
+		return "ຊອກຫາການອັບເດດທີ່ມີໃຫ້ສຳລັບມອດໃນແພັກມອດ. ທ່ານສາມາດອັບເດດທັງໝົດ ຫຼື ເລືອກອັບເດດແຕ່ລະອັນໄດ້.";
+	}
+
+	public String actualizadorModsBotonEscanear() {
+		return "ຊອກຫາການອັບເດດ";
+	}
+
+	public String actualizadorModsBotonActualizarTodo() {
+		return "ອັບເດດທັງໝົດ";
+	}
+
+	public String actualizadorModsBotonActualizarUno() {
+		return "ອັບເດດ";
+	}
+
+	public String actualizadorModsEstadoListo() {
+		return "ພ້ອມແລ້ວ";
+	}
+
+	public String actualizadorModsEstadoEscaneando() {
+		return "ກຳລັງຊອກຫາການອັບເດດ...";
+	}
+
+	public String actualizadorModsEstadoActualizando() {
+		return "ກຳລັງອັບເດດ...";
+	}
+
+	public String actualizadorModsEstadoSinActualizaciones() {
+		return "ບໍ່ມີການອັບເດດໃໝ່.";
+	}
+
+	public String actualizadorModsEstadoEncontradas(int n) {
+		return "ພົບການອັບເດດ: " + n;
+	}
+
+	public String actualizadorModsEstadoActualizadas(int n) {
+		return "ອັບເດດສຳເລັດແລ້ວ: " + n;
+	}
+
+	public String actualizadorModsEstadoError() {
+		return "ເກີດຂໍ້ຜິດພາດໃນການອັບເດດ.";
+	}
+
+	public String actualizadorModsSinSeleccion() {
+		return "ບໍ່ມີການອັບເດດທີ່ຖືກເລືອກ.";
+	}
+
+	public String actualizadorModsColumnaMod() {
+		return "ມອດ";
+	}
+
+	public String actualizadorModsColumnaActual() {
+		return "ປັດຈຸບັນ";
+	}
+
+	public String actualizadorModsColumnaNueva() {
+		return "ໃໝ່";
+	}
+
+	public String actualizadorModsColumnaFuente() {
+		return "ແຫຼ່ງ";
+	}
+
+	public String actualizadorModsColumnaLoader() {
+		return "Loader";
+	}
+
+	public String actualizadorModsColumnaRuta() {
+		return "ເສັ້ນທາງ";
+	}
+
+	public String actualizadorModsColumnaAccion() {
+		return "ການກະທຳ";
+	}
+
+	public String actualizadorModsColorFondo() {
+		return "ຕົວອັບເດດ: ພື້ນຫຼັງ";
+	}
+
+	public String actualizadorModsColorPanel() {
+		return "ຕົວອັບເດດ: ແຜງ";
+	}
+
+	public String actualizadorModsColorTexto() {
+		return "ຕົວອັບເດດ: ຂໍ້ຄວາມ";
+	}
+
+	public String actualizadorModsColorTextoSuave() {
+		return "ຕົວອັບເດດ: ຂໍ້ຄວາມຈາງ";
+	}
+
+	public String actualizadorModsColorBoton() {
+		return "ຕົວອັບເດດ: ປຸ່ມ";
+	}
+
+	public String actualizadorModsColorBotonTexto() {
+		return "ຕົວອັບເດດ: ຂໍ້ຄວາມປຸ່ມ";
+	}
+
+	public String actualizadorModsColorTabla() {
+		return "ຕົວອັບເດດ: ຕາຕະລາງ";
+	}
+
+	public String actualizadorModsColorSeleccion() {
+		return "ຕົວອັບເດດ: ການເລືອກ";
+	}
+
 }

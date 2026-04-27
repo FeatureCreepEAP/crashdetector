@@ -46,6 +46,7 @@ import com.asbestosstar.crashdetector.dto.modpack.modrinth.ProveedorModsModrinth
 import com.asbestosstar.crashdetector.dto.modpack.tlmods.ProveedorModsTlmods;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
+import com.asbestosstar.crashdetector.gui.tipos.actualizador.ActualizadorModsMiwa;
 import com.asbestosstar.crashdetector.gui.tipos.compartir_instancia.CompartirInstanciaLegacy;
 import com.asbestosstar.crashdetector.gui.tipos.principal.PrincipalGUI;
 
@@ -753,7 +754,6 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 			boolean activo = !archivo.endsWith(".disabled") && !archivo.endsWith(".nil")
 					&& !archivo.endsWith(".nil.jar") && !archivo.endsWith(".deactivation");
 
-			// Row
 			JPanel fila = new JPanel(new BorderLayout(6, 0));
 			fila.setOpaque(false);
 			fila.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -785,7 +785,6 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 					Path destino;
 
 					if (sw.isSelected()) {
-						// REACTIVAR: quitar extensiones de desactivación, no duplicar .jar
 						String nombreReactivado = archivo.replace(".jar.disabled", ".jar")
 								.replace(".jar.deactivation", ".jar").replace(".disabled", "")
 								.replace(".deactivation", "").replace(".nil.jar", ".jar").replace(".nil", "");
@@ -793,7 +792,6 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 						destino = modsDir.resolve(nombreReactivado);
 
 					} else {
-						// DESACTIVAR
 						String ext = usaCurseForge ? ".jar.disabled" : ".deactivation";
 
 						if (archivo.endsWith(".jar")) {
@@ -821,8 +819,30 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 			sidebarPanel.add(Box.createRigidArea(new Dimension(0, 6)));
 		}
 
+		agregarBotonActualizadorMods();
+
 		sidebarPanel.revalidate();
 		sidebarPanel.repaint();
+	}
+
+	private void agregarBotonActualizadorMods() {
+
+		JButton boton = new JButton(TipoGUI.ACTUALIZADOR_MODS.etiquetaDelBoton());
+		boton.setAlignmentX(Component.LEFT_ALIGNMENT);
+		boton.setMaximumSize(new Dimension(Integer.MAX_VALUE, 28));
+		boton.setPreferredSize(new Dimension(10, 28));
+		boton.setFocusPainted(false);
+
+		aplicarEstiloBotonAccion(boton);
+
+		boton.addActionListener(e -> {
+			TipoGUI.ACTUALIZADOR_MODS.obtenerGUIPredeterminado(ActualizadorModsMiwa.ID, ActualizadorModsMiwa::new)
+					.init();
+		});
+
+		sidebarPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+		sidebarPanel.add(boton);
+		sidebarPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 	}
 
 	private JLabel crearEtiquetaDeslizante(String texto) {

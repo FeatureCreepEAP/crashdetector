@@ -100,7 +100,7 @@ public class ActualizadorTLauncherAdditional {
 		// entrada.modrinthProjectId
 		// entrada.version.modrinthVersionId
 		// Si no hay coincidencia, no agrega campos vacíos.
-		enriquecerConIdsModrinthSiExisten(raiz);
+		// enriquecerConIdsModrinthSiExisten(raiz);
 
 		Files.write(archivoJson, Json.escribir(raiz).getBytes(StandardCharsets.UTF_8));
 
@@ -202,6 +202,104 @@ public class ActualizadorTLauncherAdditional {
 
 		version.obtener(nombreArreglo).poner(nuevoArreglo);
 		return removidos;
+	}
+
+	public static int completarIdsModrinthFaltantesCarpetaActual() throws IOException {
+		return completarIdsModrinthFaltantes(Paths.get(".").toAbsolutePath().normalize());
+	}
+
+	public static int completarIdsModrinthFaltantes(Path carpetaInstancia) throws IOException {
+		carpetaInstancia = carpetaInstancia.toAbsolutePath().normalize();
+
+		Path archivoJson = carpetaInstancia.resolve(NOMBRE_ARCHIVO);
+
+		if (!Files.isRegularFile(archivoJson)) {
+			throw new IOException("No existe " + NOMBRE_ARCHIVO + " en " + carpetaInstancia);
+		}
+
+		Json.Nodo raiz = leerJsonSeguro(archivoJson);
+
+		int agregados = completarIdsModrinthFaltantes(raiz);
+
+		if (agregados > 0) {
+			Files.write(archivoJson, Json.escribir(raiz).getBytes(StandardCharsets.UTF_8));
+		}
+
+		return agregados;
+	}
+
+	public static int completarIdsModrinthFaltantes(Json.Nodo raiz) {
+		int agregados = 0;
+
+		Json.Nodo version = raiz.obtener("modpack").obtener("version");
+
+		agregados += completarIdsModrinthFaltantesEnArreglo(version.obtener("mods"));
+		agregados += completarIdsModrinthFaltantesEnArreglo(version.obtener("resourcePacks"));
+		agregados += completarIdsModrinthFaltantesEnArreglo(version.obtener("shaderPacks"));
+		agregados += completarIdsModrinthFaltantesEnArreglo(version.obtener("dataPacks"));
+
+		return agregados;
+	}
+
+	private static int completarIdsModrinthFaltantesEnArreglo(Json.Nodo arreglo) {
+		if (arreglo == null || !arreglo.esArreglo()) {
+			return 0;
+		}
+
+		int agregados = 0;
+
+		for (int i = 0; i < arreglo.tamano(); i++) {
+			agregados += completarIdsModrinthFaltantesEnEntrada(arreglo.en(i));
+		}
+
+		return agregados;
+	}
+
+	private static int completarIdsModrinthFaltantesEnEntrada(Json.Nodo entrada) {
+		try {
+			String projectIdExistente = obtenerCadenaSeguro(entrada.obtener("modrinthProjectId"), "");
+			String versionIdExistente = obtenerCadenaSeguro(entrada.obtener("version").obtener("modrinthVersionId"),
+					"");
+
+			if (!projectIdExistente.trim().isEmpty() && !versionIdExistente.trim().isEmpty()) {
+				return 0;
+			}
+
+			String sha1 = obtenerCadenaSeguro(entrada.obtener("version").obtener("metadata").obtener("sha1"), "");
+
+			if (sha1 == null || sha1.trim().isEmpty()) {
+				return 0;
+			}
+
+			Json.Nodo versionMR = MRModDesdeJar.solicitarVersionPorSha1Modrinth(sha1);
+
+			String projectId = obtenerCadenaSeguro(versionMR.obtener("project_id"), "");
+			String versionId = obtenerCadenaSeguro(versionMR.obtener("id"), "");
+
+			if (projectId == null || projectId.trim().isEmpty()) {
+				return 0;
+			}
+
+			if (versionId == null || versionId.trim().isEmpty()) {
+				return 0;
+			}
+
+			int agregados = 0;
+
+			if (projectIdExistente.trim().isEmpty()) {
+				entrada.obtener("modrinthProjectId").poner(projectId);
+				agregados++;
+			}
+
+			if (versionIdExistente.trim().isEmpty()) {
+				entrada.obtener("version").obtener("modrinthVersionId").poner(versionId);
+				agregados++;
+			}
+
+			return agregados;
+		} catch (Throwable t) {
+			return 0;
+		}
 	}
 
 	private static List<CFModDesdeJar.ArchivoLocalCF> obtenerArchivosNuevos(

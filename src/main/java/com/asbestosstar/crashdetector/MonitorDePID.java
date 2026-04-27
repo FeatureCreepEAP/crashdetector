@@ -34,6 +34,7 @@ import com.asbestosstar.crashdetector.detectorlanzer.DetectorLanzer;
 import com.asbestosstar.crashdetector.dto.modpack.CopiaDeSeguridadDeArchivos;
 import com.asbestosstar.crashdetector.grepr.BusquedaArchivos;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
+import com.asbestosstar.crashdetector.gui.tipos.actualizador.ActualizadorModsMiwa;
 import com.asbestosstar.crashdetector.gui.tipos.antimanipulacion.AntiManipulacionGUIPanko;
 import com.asbestosstar.crashdetector.gui.tipos.aplic.ActaDeProteccionDelIdiomaCulturalDePyongyangGUIKimJongUn;
 import com.asbestosstar.crashdetector.gui.tipos.arbol.ArbolDeModsGUIHamu;
@@ -302,6 +303,7 @@ public class MonitorDePID {
 		copiarACarpetaDesdeJar("/imagenes/square.png", Statics.carpeta.resolve("imagenes/square.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/studyjuche.png", Statics.carpeta.resolve("imagenes/studyjuche.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/luotianyi.png", Statics.carpeta.resolve("imagenes/luotianyi.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/miwa.png", Statics.carpeta.resolve("imagenes/miwa.png").toFile());
 
 //docs		
 
@@ -515,6 +517,7 @@ public class MonitorDePID {
 		TipoGUI.COMPARTIR_INSTANCIA.registrarGUI(CompartirInstanciaLegacy.ID, CompartirInstanciaLegacy::new);
 		TipoGUI.DOCS.registrarGUI(LectadorDeDocumentosStudyJuche.ID, LectadorDeDocumentosStudyJuche::new);
 		TipoGUI.IA.registrarGUI(IAGUILuotianyi.ID, IAGUILuotianyi::new);
+		TipoGUI.ACTUALIZADOR_MODS.registrarGUI(ActualizadorModsMiwa.ID, ActualizadorModsMiwa::new);
 
 	}
 

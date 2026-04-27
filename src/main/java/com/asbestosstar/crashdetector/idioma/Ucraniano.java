@@ -7886,4 +7886,120 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 		return "Максимальний розмір автоматичних резервних копій (МБ)";
 	}
 
+	public String actualizadorModsTitulo() {
+		return "Оновлення модів";
+	}
+
+	public String actualizadorModsBotonSidebar() {
+		return "Оновлення";
+	}
+
+	public String actualizadorModsDescripcion() {
+		return "Перевіряє наявність оновлень для модів зі збірки. Ви можете оновити всі або застосувати окремі оновлення.";
+	}
+
+	public String actualizadorModsBotonEscanear() {
+		return "Перевірити оновлення";
+	}
+
+	public String actualizadorModsBotonActualizarTodo() {
+		return "Оновити все";
+	}
+
+	public String actualizadorModsBotonActualizarUno() {
+		return "Оновити";
+	}
+
+	public String actualizadorModsEstadoListo() {
+		return "Готово";
+	}
+
+	public String actualizadorModsEstadoEscaneando() {
+		return "Пошук оновлень...";
+	}
+
+	public String actualizadorModsEstadoActualizando() {
+		return "Оновлення...";
+	}
+
+	public String actualizadorModsEstadoSinActualizaciones() {
+		return "Доступних оновлень немає.";
+	}
+
+	public String actualizadorModsEstadoEncontradas(int n) {
+		return "Знайдено оновлень: " + n;
+	}
+
+	public String actualizadorModsEstadoActualizadas(int n) {
+		return "Застосовано оновлень: " + n;
+	}
+
+	public String actualizadorModsEstadoError() {
+		return "Помилка оновлення.";
+	}
+
+	public String actualizadorModsSinSeleccion() {
+		return "Не вибрано жодного оновлення.";
+	}
+
+	public String actualizadorModsColumnaMod() {
+		return "Мод";
+	}
+
+	public String actualizadorModsColumnaActual() {
+		return "Поточна";
+	}
+
+	public String actualizadorModsColumnaNueva() {
+		return "Нова";
+	}
+
+	public String actualizadorModsColumnaFuente() {
+		return "Джерело";
+	}
+
+	public String actualizadorModsColumnaLoader() {
+		return "Loader";
+	}
+
+	public String actualizadorModsColumnaRuta() {
+		return "Шлях";
+	}
+
+	public String actualizadorModsColumnaAccion() {
+		return "Дія";
+	}
+
+	public String actualizadorModsColorFondo() {
+		return "Оновлення: фон";
+	}
+
+	public String actualizadorModsColorPanel() {
+		return "Оновлення: панель";
+	}
+
+	public String actualizadorModsColorTexto() {
+		return "Оновлення: текст";
+	}
+
+	public String actualizadorModsColorTextoSuave() {
+		return "Оновлення: приглушений текст";
+	}
+
+	public String actualizadorModsColorBoton() {
+		return "Оновлення: кнопка";
+	}
+
+	public String actualizadorModsColorBotonTexto() {
+		return "Оновлення: текст кнопки";
+	}
+
+	public String actualizadorModsColorTabla() {
+		return "Оновлення: таблиця";
+	}
+
+	public String actualizadorModsColorSeleccion() {
+		return "Оновлення: виділення";
+	}
+
 }

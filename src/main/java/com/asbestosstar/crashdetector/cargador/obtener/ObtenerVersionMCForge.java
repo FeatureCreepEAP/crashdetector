@@ -16,12 +16,9 @@ import java.util.regex.Pattern;
 /**
  * Detecta la versión de Minecraft Forge / MCForge usada por una instancia.
  *
- * Orden recomendado:
- * 1. Classpath actual.
- * 2. Carpeta libraries.
- * 3. run.sh / run.bat de servidor.
- * 4. JSON adicional de TLauncher o respuesta tipo CurseForge.
- * 5. Formato viejo Maven de Forge.
+ * Orden recomendado: 1. Classpath actual. 2. Carpeta libraries. 3. run.sh /
+ * run.bat de servidor. 4. JSON adicional de TLauncher o respuesta tipo
+ * CurseForge. 5. Formato viejo Maven de Forge.
  */
 public class ObtenerVersionMCForge {
 
@@ -37,63 +34,46 @@ public class ObtenerVersionMCForge {
 
 		@Override
 		public String toString() {
-			return "ResultadoMCForge{" +
-					"versionMinecraft='" + versionMinecraft + '\'' +
-					", buildForge='" + buildForge + '\'' +
-					", versionForgeCompleta='" + versionForgeCompleta + '\'' +
-					", fuente='" + fuente + '\'' +
-					'}';
+			return "ResultadoMCForge{" + "versionMinecraft='" + versionMinecraft + '\'' + ", buildForge='" + buildForge
+					+ '\'' + ", versionForgeCompleta='" + versionForgeCompleta + '\'' + ", fuente='" + fuente + '\''
+					+ '}';
 		}
 	}
-	
-	
+
 	private static final String REGEX_VERSION_MC = "[0-9]+\\.[0-9]+(?:\\.[0-9]+)?[a-zA-Z]?";
-	
-	
-	
-	private static final Pattern PATRON_FORGE_MODERNO = Pattern.compile(
-			"(?:fmlcore|fmlloader|forge|javafmllanguage|mclanguage|lowcodelanguage)-" +
-			"(" + REGEX_VERSION_MC + ")-" +
-			"([0-9]+(?:\\.[0-9]+){1,3})" +
-			"(?:-[a-zA-Z0-9_\\-.]+)?\\.jar",
-			Pattern.CASE_INSENSITIVE);
+
+	private static final Pattern PATRON_FORGE_MODERNO = Pattern
+			.compile(
+					"(?:fmlcore|fmlloader|forge|javafmllanguage|mclanguage|lowcodelanguage)-" + "(" + REGEX_VERSION_MC
+							+ ")-" + "([0-9]+(?:\\.[0-9]+){1,3})" + "(?:-[a-zA-Z0-9_\\-.]+)?\\.jar",
+					Pattern.CASE_INSENSITIVE);
 
 	private static final Pattern PATRON_RUTA_FORGE_MODERNO = Pattern.compile(
-			"libraries[/\\\\]net[/\\\\]minecraftforge[/\\\\](?:fmlcore|fmlloader|forge|javafmllanguage|mclanguage|lowcodelanguage)[/\\\\]" +
-			"(" + REGEX_VERSION_MC + ")-" +
-			"([0-9]+(?:\\.[0-9]+){1,3})[/\\\\]",
+			"libraries[/\\\\]net[/\\\\]minecraftforge[/\\\\](?:fmlcore|fmlloader|forge|javafmllanguage|mclanguage|lowcodelanguage)[/\\\\]"
+					+ "(" + REGEX_VERSION_MC + ")-" + "([0-9]+(?:\\.[0-9]+){1,3})[/\\\\]",
 			Pattern.CASE_INSENSITIVE);
 
-	private static final Pattern PATRON_ARGS_SERVIDOR = Pattern.compile(
-			"libraries[/\\\\]net[/\\\\]minecraftforge[/\\\\]forge[/\\\\]" +
-			"(" + REGEX_VERSION_MC + ")-" +
-			"([0-9]+(?:\\.[0-9]+){1,3})[/\\\\](?:unix_args|win_args)\\.txt",
+	private static final Pattern PATRON_ARGS_SERVIDOR = Pattern
+			.compile(
+					"libraries[/\\\\]net[/\\\\]minecraftforge[/\\\\]forge[/\\\\]" + "(" + REGEX_VERSION_MC + ")-"
+							+ "([0-9]+(?:\\.[0-9]+){1,3})[/\\\\](?:unix_args|win_args)\\.txt",
+					Pattern.CASE_INSENSITIVE);
+
+	private static final Pattern PATRON_FORGE_VIEJO_MAVEN = Pattern.compile("net\\.minecraftforge:forge:" + "("
+			+ REGEX_VERSION_MC + ")-" + "([0-9]+(?:\\.[0-9]+){2,4})" + "(?:-" + REGEX_VERSION_MC + ")?",
 			Pattern.CASE_INSENSITIVE);
 
-	private static final Pattern PATRON_FORGE_VIEJO_MAVEN = Pattern.compile(
-			"net\\.minecraftforge:forge:" +
-			"(" + REGEX_VERSION_MC + ")-" +
-			"([0-9]+(?:\\.[0-9]+){2,4})" +
-			"(?:-" + REGEX_VERSION_MC + ")?",
-			Pattern.CASE_INSENSITIVE);
+	private static final Pattern PATRON_NOMBRE_VERSION_MC = Pattern
+			.compile("\"name\"\\s*:\\s*\"(" + REGEX_VERSION_MC + ")\"");
 
-	private static final Pattern PATRON_NOMBRE_VERSION_MC = Pattern.compile(
-			"\"name\"\\s*:\\s*\"(" + REGEX_VERSION_MC + ")\"");
+	private static final Pattern PATRON_VERSION_MC_EN_CADENA = Pattern
+			.compile("(?<![0-9A-Za-z])(" + REGEX_VERSION_MC + ")(?![0-9A-Za-z])");
 
-	private static final Pattern PATRON_VERSION_MC_EN_CADENA = Pattern.compile(
-			"(?<![0-9A-Za-z])(" + REGEX_VERSION_MC + ")(?![0-9A-Za-z])");
-
-	
-
-	private static final Pattern PATRON_GAME_VERSION_DTO = Pattern.compile(
-			"\"gameVersionsDTO\"\\s*:\\s*\\[(.*?)\\]",
+	private static final Pattern PATRON_GAME_VERSION_DTO = Pattern.compile("\"gameVersionsDTO\"\\s*:\\s*\\[(.*?)\\]",
 			Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 
-	private static final Pattern PATRON_GAME_VERSIONS_CF = Pattern.compile(
-			"\"gameVersions\"\\s*:\\s*\\[(.*?)\\]",
+	private static final Pattern PATRON_GAME_VERSIONS_CF = Pattern.compile("\"gameVersions\"\\s*:\\s*\\[(.*?)\\]",
 			Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
-
-
 
 	public static ResultadoMCForge detectarDesdeDirectorioActual() throws IOException {
 		return detectarDesdeInstancia(java.nio.file.Paths.get("."));
@@ -188,12 +168,8 @@ public class ObtenerVersionMCForge {
 	}
 
 	public static ResultadoMCForge detectarDesdeJsonTLauncherSiExiste(Path carpetaInstancia) throws IOException {
-		String[] nombres = {
-				"TLauncherAdditional.json",
-				"TLauncherAdditional(2).json",
-				"tlauncheradditional.json",
-				"additional.json"
-		};
+		String[] nombres = { "TLauncherAdditional.json", "TLauncherAdditional(2).json", "tlauncheradditional.json",
+				"additional.json" };
 
 		for (String nombre : nombres) {
 			Path p = carpetaInstancia.resolve(nombre);
