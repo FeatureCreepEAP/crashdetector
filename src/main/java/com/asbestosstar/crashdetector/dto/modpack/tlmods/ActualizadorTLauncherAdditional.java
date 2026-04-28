@@ -49,12 +49,7 @@ public class ActualizadorTLauncherAdditional {
 	public static ResultadoActualizacion actualizar(Path carpetaInstancia) throws IOException {
 		carpetaInstancia = carpetaInstancia.toAbsolutePath().normalize();
 
-		if (estaDentroDeCarpetaVersionesTLauncher(carpetaInstancia)) {
-			CrashDetectorLogger.log(
-					"No se modifica TLauncherAdditional.json porque esta carpeta parece ser una instancia de TLauncher: "
-							+ carpetaInstancia);
-			return ResultadoActualizacion.omitido();
-		}
+		boolean dentroDeInstanciaTLauncher = estaDentroDeCarpetaVersionesTLauncher(carpetaInstancia);
 
 		Path archivoJson = carpetaInstancia.resolve(NOMBRE_ARCHIVO);
 
@@ -62,9 +57,25 @@ public class ActualizadorTLauncherAdditional {
 				: crearJsonBase(
 						carpetaInstancia.getFileName() != null ? carpetaInstancia.getFileName().toString() : "Modpack");
 
-		// Completa metadata principal: loader, loaderVersion, gameVersion,
-		// libraries, additionalFiles y desactiva skin system.
-		GeneradorManifiestoTLauncherAdditional.completarManifiestoPrincipal(raiz, carpetaInstancia);
+		/*
+		 * Si estamos dentro de una instancia real de TLauncher, NO tocamos la metadata
+		 * principal del launcher, loader, libraries, additionalFiles, skins, etc.
+		 *
+		 * Pero SÍ seguimos actualizando la lista de mods/recurso/shaders/datapacks: -
+		 * eliminar entradas cuyo archivo ya no existe; - agregar archivos nuevos; -
+		 * completar IDs de Modrinth por SHA-1.
+		 *
+		 * Esto permite que CrashDetector mantenga TLauncherAdditional.json útil como
+		 * formato base sin romper una instancia creada por TLauncher.
+		 */
+		if (!dentroDeInstanciaTLauncher) {
+			GeneradorManifiestoTLauncherAdditional.completarManifiestoPrincipal(raiz, carpetaInstancia);
+		} else {
+			CrashDetectorLogger.log(
+					"Instancia TLauncher detectada. Se conserva metadata principal, pero se actualizan entradas de mods: "
+							+ carpetaInstancia);
+			asegurarEstructuraBasicaModpack(raiz);
+		}
 
 		List<CFModDesdeJar.ArchivoLocalCF> archivosLocales = CFModDesdeJar.obtenerArchivosAnalizables(carpetaInstancia);
 
@@ -96,15 +107,342 @@ public class ActualizadorTLauncherAdditional {
 		agregados += agregarEntradasNuevas(raiz, "shaderPacks", resultadoCF.shaderPacks);
 		agregados += agregarEntradasNuevas(raiz, "dataPacks", resultadoCF.dataPacks);
 
-		// Opcional: si Modrinth reconoce el SHA-1 del archivo, agrega:
-		// entrada.modrinthProjectId
-		// entrada.version.modrinthVersionId
-		// Si no hay coincidencia, no agrega campos vacíos.
-		// enriquecerConIdsModrinthSiExisten(raiz);
+		/*
+		 * Esto debe ejecutarse SIEMPRE, incluso dentro de una instancia TLauncher. Los
+		 * exportadores de Modrinth, Packwiz y mrpack necesitan IDs reales de
+		 * proyecto/versión, no solo los IDs CRC/CF.
+		 */
+		int idsNormalesAgregados = completarIdsCurseForgeFaltantes(raiz, archivosLocales);
+		int idsModrinthAgregados = completarIdsModrinthFaltantes(raiz);
+		int gitignoreAgregados = actualizarGitignoreConArchivosDescargables(raiz, carpetaInstancia);
 
 		Files.write(archivoJson, Json.escribir(raiz).getBytes(StandardCharsets.UTF_8));
 
-		return new ResultadoActualizacion(false, agregados, removidos, resultadoCF.sinCoincidencia.size(), archivoJson);
+		return new ResultadoActualizacion(false,
+				agregados + idsNormalesAgregados + idsModrinthAgregados + gitignoreAgregados, removidos,
+				resultadoCF.sinCoincidencia.size(), archivoJson);
+	}
+
+	private static int actualizarGitignoreConArchivosDescargables(Json.Nodo raiz, Path carpetaInstancia) {
+		try {
+			Set<String> rutas = obtenerRutasDescargablesParaGitignore(raiz);
+
+			if (rutas.isEmpty()) {
+				return 0;
+			}
+
+			Path gitignore = carpetaInstancia.resolve(".gitignore").toAbsolutePath().normalize();
+
+			List<String> lineas = Files.isRegularFile(gitignore) ? Files.readAllLines(gitignore, StandardCharsets.UTF_8)
+					: new ArrayList<String>();
+
+			Set<String> yaActivas = new HashSet<String>();
+
+			for (String linea : lineas) {
+				String limpia = linea == null ? "" : linea.trim();
+
+				if (limpia.isEmpty()) {
+					continue;
+				}
+
+				// Si está comentada, NO cuenta como activa.
+				if (limpia.startsWith("#")) {
+					continue;
+				}
+
+				yaActivas.add(normalizarLineaGitignore(limpia));
+			}
+
+			int agregados = 0;
+
+			for (String ruta : rutas) {
+				String regla = "/" + ruta.replace('\\', '/');
+
+				if (yaActivas.contains(normalizarLineaGitignore(regla))) {
+					continue;
+				}
+
+				lineas.add(regla);
+				yaActivas.add(normalizarLineaGitignore(regla));
+				agregados++;
+			}
+
+			if (agregados > 0) {
+				Files.write(gitignore, lineas, StandardCharsets.UTF_8);
+			}
+
+			return agregados;
+		} catch (Throwable t) {
+			CrashDetectorLogger.logException(t);
+			return 0;
+		}
+	}
+
+	private static Set<String> obtenerRutasDescargablesParaGitignore(Json.Nodo raiz) {
+		Set<String> ret = new HashSet<String>();
+
+		Json.Nodo version = raiz.obtener("modpack").obtener("version");
+
+		agregarRutasDescargablesParaGitignore(ret, version.obtener("mods"));
+		agregarRutasDescargablesParaGitignore(ret, version.obtener("resourcePacks"));
+		agregarRutasDescargablesParaGitignore(ret, version.obtener("shaderPacks"));
+		agregarRutasDescargablesParaGitignore(ret, version.obtener("dataPacks"));
+
+		return ret;
+	}
+
+	private static void agregarRutasDescargablesParaGitignore(Set<String> ret, Json.Nodo arreglo) {
+		if (arreglo == null || !arreglo.esArreglo()) {
+			return;
+		}
+
+		for (int i = 0; i < arreglo.tamano(); i++) {
+			Json.Nodo entrada = arreglo.en(i);
+
+			if (!entradaDebeIrEnGitignore(entrada)) {
+				continue;
+			}
+
+			String path = obtenerCadenaSeguro(entrada.obtener("version").obtener("metadata").obtener("path"), "");
+
+			if (path == null || path.trim().isEmpty()) {
+				continue;
+			}
+
+			path = path.replace('\\', '/');
+
+			if (!rutaSeguraGitignore(path)) {
+				continue;
+			}
+
+			ret.add(path);
+		}
+	}
+
+	private static boolean entradaDebeIrEnGitignore(Json.Nodo entrada) {
+		long projectId = obtenerLargoSeguro(entrada.obtener("id"), 0L);
+		long versionId = obtenerLargoSeguro(entrada.obtener("version").obtener("id"), 0L);
+
+		/*
+		 * Solo cuentan IDs normales numéricos. Los IDs Modrinth NO cuentan aquí porque
+		 * van en: entrada.modrinthProjectId entrada.version.modrinthVersionId
+		 */
+		if (projectId > 0L && versionId > 0L) {
+			return true;
+		}
+
+		String url = obtenerCadenaSeguro(entrada.obtener("version").obtener("metadata").obtener("url"), "");
+
+		return url != null && esUrlValidaDescargable(url);
+	}
+
+	private static boolean esUrlValidaDescargable(String url) {
+		if (url == null) {
+			return false;
+		}
+
+		String u = url.trim().toLowerCase();
+
+		if (u.isEmpty()) {
+			return false;
+		}
+
+		return u.startsWith("http://") || u.startsWith("https://");
+	}
+
+	private static boolean rutaSeguraGitignore(String ruta) {
+		if (ruta == null) {
+			return false;
+		}
+
+		String r = ruta.replace('\\', '/');
+
+		if (r.trim().isEmpty()) {
+			return false;
+		}
+
+		if (r.startsWith("/") || r.contains("../") || r.equals("..") || r.contains(":/")) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private static String normalizarLineaGitignore(String linea) {
+		if (linea == null) {
+			return "";
+		}
+
+		String l = linea.trim().replace('\\', '/');
+
+		while (l.startsWith("./")) {
+			l = l.substring(2);
+		}
+
+		while (l.startsWith("/")) {
+			l = l.substring(1);
+		}
+
+		return l;
+	}
+
+	private static int completarIdsCurseForgeFaltantes(Json.Nodo raiz,
+			List<CFModDesdeJar.ArchivoLocalCF> archivosLocales) {
+		if (archivosLocales == null || archivosLocales.isEmpty()) {
+			return 0;
+		}
+
+		Map<String, CFModDesdeJar.ArchivoLocalCF> archivosPorNombre = new HashMap<String, CFModDesdeJar.ArchivoLocalCF>();
+
+		for (CFModDesdeJar.ArchivoLocalCF archivo : archivosLocales) {
+			archivosPorNombre.put(nombreArchivo(archivo.rutaRelativa.toString()), archivo);
+		}
+
+		int agregados = 0;
+
+		Json.Nodo version = raiz.obtener("modpack").obtener("version");
+
+		agregados += completarIdsCurseForgeFaltantesEnArreglo(version.obtener("mods"), archivosPorNombre);
+		agregados += completarIdsCurseForgeFaltantesEnArreglo(version.obtener("resourcePacks"), archivosPorNombre);
+		agregados += completarIdsCurseForgeFaltantesEnArreglo(version.obtener("shaderPacks"), archivosPorNombre);
+		agregados += completarIdsCurseForgeFaltantesEnArreglo(version.obtener("dataPacks"), archivosPorNombre);
+
+		return agregados;
+	}
+
+	private static int completarIdsCurseForgeFaltantesEnArreglo(Json.Nodo arreglo,
+			Map<String, CFModDesdeJar.ArchivoLocalCF> archivosPorNombre) {
+
+		if (arreglo == null || !arreglo.esArreglo()) {
+			return 0;
+		}
+
+		int agregados = 0;
+
+		for (int i = 0; i < arreglo.tamano(); i++) {
+			agregados += completarIdsCurseForgeFaltantesEnEntrada(arreglo.en(i), archivosPorNombre);
+		}
+
+		return agregados;
+	}
+
+	private static int completarIdsCurseForgeFaltantesEnEntrada(Json.Nodo entrada,
+			Map<String, CFModDesdeJar.ArchivoLocalCF> archivosPorNombre) {
+
+		try {
+			long projectIdExistente = obtenerLargoSeguro(entrada.obtener("id"), 0L);
+			long fileIdExistente = obtenerLargoSeguro(entrada.obtener("version").obtener("id"), 0L);
+
+			boolean projectIdValido = projectIdExistente > 0L;
+			boolean fileIdValido = fileIdExistente > 0L;
+
+			// Solo se reconsulta CurseForge cuando falta o es inválido alguno de los IDs.
+			// IDs negativos, cero o ausentes NO son válidos.
+			if (projectIdValido && fileIdValido) {
+				return 0;
+			}
+
+			String nombre = obtenerNombreArchivoEntrada(entrada);
+
+			if (nombre == null || nombre.trim().isEmpty()) {
+				return 0;
+			}
+
+			CFModDesdeJar.ArchivoLocalCF archivo = archivosPorNombre.get(nombre);
+
+			if (archivo == null || archivo.archivo == null || !Files.isRegularFile(archivo.archivo)) {
+				return 0;
+			}
+
+			if (archivo.fingerprint <= 0L) {
+				archivo.fingerprint = CFModDesdeJar.calcularFingerprintCurseForge(archivo.archivo);
+			}
+
+			if (archivo.sha1 == null || archivo.sha1.trim().isEmpty()) {
+				archivo.sha1 = CFModDesdeJar.calcularSha1(archivo.archivo);
+			}
+
+			if (archivo.tamano <= 0L) {
+				archivo.tamano = Files.size(archivo.archivo);
+			}
+
+			List<CFModDesdeJar.ArchivoLocalCF> lista = new ArrayList<CFModDesdeJar.ArchivoLocalCF>();
+			lista.add(archivo);
+
+			Json.Nodo respuesta = CFModDesdeJar.solicitarCoincidenciasPorFingerprints(lista);
+			Map<Long, Json.Nodo> coincidencias = indexarCoincidenciasPorFingerprint(respuesta);
+
+			Json.Nodo match = coincidencias.get(Long.valueOf(archivo.fingerprint));
+
+			if (match == null) {
+				return 0;
+			}
+
+			Json.Nodo file = match.obtener("file");
+			Json.Nodo mod = match.obtener("mod");
+
+			long projectId = obtenerLargoSeguro(file.obtener("modId"), obtenerLargoSeguro(mod.obtener("id"), 0L));
+			long fileId = obtenerLargoSeguro(file.obtener("id"), 0L);
+
+			if (projectId <= 0L || fileId <= 0L) {
+				return 0;
+			}
+
+			int agregados = 0;
+
+			if (!projectIdValido) {
+				entrada.obtener("id").poner(projectId);
+				agregados++;
+			}
+
+			if (!fileIdValido) {
+				entrada.obtener("version").obtener("id").poner(fileId);
+				agregados++;
+			}
+
+			Json.Nodo metadata = entrada.obtener("version").obtener("metadata");
+
+			if (obtenerCadenaSeguro(metadata.obtener("sha1"), "").trim().isEmpty()) {
+				metadata.obtener("sha1").poner(archivo.sha1);
+				agregados++;
+			}
+
+			if (obtenerLargoSeguro(metadata.obtener("size"), 0L) <= 0L) {
+				metadata.obtener("size").poner(archivo.tamano);
+				agregados++;
+			}
+
+			return agregados;
+		} catch (Throwable t) {
+			CrashDetectorLogger.logException(t);
+			return 0;
+		}
+	}
+
+	private static void asegurarEstructuraBasicaModpack(Json.Nodo raiz) {
+		Json.Nodo modpack = raiz.obtener("modpack");
+
+		if (obtenerCadenaSeguro(modpack.obtener("name"), "").trim().isEmpty()) {
+			modpack.obtener("name").poner("Modpack");
+		}
+
+		Json.Nodo version = modpack.obtener("version");
+
+		if (version.obtener("mods") == null || !version.obtener("mods").esArreglo()) {
+			version.obtener("mods").poner(Json.leer("[]"));
+		}
+
+		if (version.obtener("resourcePacks") == null || !version.obtener("resourcePacks").esArreglo()) {
+			version.obtener("resourcePacks").poner(Json.leer("[]"));
+		}
+
+		if (version.obtener("shaderPacks") == null || !version.obtener("shaderPacks").esArreglo()) {
+			version.obtener("shaderPacks").poner(Json.leer("[]"));
+		}
+
+		if (version.obtener("dataPacks") == null || !version.obtener("dataPacks").esArreglo()) {
+			version.obtener("dataPacks").poner(Json.leer("[]"));
+		}
 	}
 
 	private static Json.Nodo leerJsonSeguro(Path archivoJson) throws IOException {

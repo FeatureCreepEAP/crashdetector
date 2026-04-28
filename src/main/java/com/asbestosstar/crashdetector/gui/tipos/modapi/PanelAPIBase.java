@@ -42,6 +42,7 @@ import com.asbestosstar.crashdetector.dto.modpack.bbsmc.ProveedorModsBBSMC;
 import com.asbestosstar.crashdetector.dto.modpack.curseforge.ProveedorModsCurseForge;
 import com.asbestosstar.crashdetector.dto.modpack.minecraftstorage.ProveedorModsMinecraftStorage;
 import com.asbestosstar.crashdetector.dto.modpack.modrinth.ProveedorModsModrinth;
+import com.asbestosstar.crashdetector.dto.modpack.packwiz.ProveedorModsPackwiz;
 import com.asbestosstar.crashdetector.dto.modpack.tlmods.ProveedorModsTlmods;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
@@ -77,6 +78,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 		registrarProveedorMods("basico", "Basico", ProveedorModsBasico::new);
 		registrarProveedorMods("bbsmc", "BBSMC", ProveedorModsBBSMC::new);
 		registrarProveedorMods("modrinth", "Modrinth", ProveedorModsModrinth::new);
+		registrarProveedorMods("packwiz", "Packwiz", ProveedorModsPackwiz::new);
 
 	}
 
