@@ -34,22 +34,25 @@ public class ProveedorModsModrinth extends ProveedorModsBBSMC {
 
 	@Override
 	public boolean soportaImportarModpack() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public ResultadoImportacion importarModpack(Path ubicacionArchivoModpack, Path carpetaDestino,
 			PoliticaImportacion politica, ResolutorConflictosImportacion resolutor) throws IOException {
-		throw new UnsupportedOperationException("BBSMC no soporta importar modpacks aún");
+
+		ImportadorModpackModrinth importador = new ImportadorModpackModrinth();
+		return importador.importar(ubicacionArchivoModpack, carpetaDestino, politica, resolutor);
 	}
 
 	@Override
 	public boolean soportaExportarModpack() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public void exportarModpack(Path ubicacionArchivoModpack, List<Path> rutasEntrada) throws IOException {
-		throw new UnsupportedOperationException("Modrinth no soporta exportar modpacks aún");
+		ExportadorModpackModrinth.exportar(ubicacionArchivoModpack, rutasEntrada);
 	}
+
 }

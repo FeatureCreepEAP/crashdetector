@@ -71,28 +71,25 @@ public class ProveedorModsCurseForge implements ProveedorMods {
 
 	@Override
 	public boolean soportaImportarModpack() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public ResultadoImportacion importarModpack(Path ubicacionArchivoModpack, Path carpetaDestino,
 			PoliticaImportacion politica, ResolutorConflictosImportacion resolutor) throws IOException {
-		return null;
-		// TODO Auto-generated method stub
 
+		ImportadorModpackCurseForge importador = new ImportadorModpackCurseForge();
+		return importador.importar(ubicacionArchivoModpack, carpetaDestino, politica, resolutor);
 	}
 
 	@Override
 	public boolean soportaExportarModpack() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public void exportarModpack(Path ubicacionArchivoModpack, List<Path> rutasEntrada) throws IOException {
-		// TODO Auto-generated method stub
-
+		ExportadorModpackCurseForge.exportar(ubicacionArchivoModpack, rutasEntrada);
 	}
 
 }

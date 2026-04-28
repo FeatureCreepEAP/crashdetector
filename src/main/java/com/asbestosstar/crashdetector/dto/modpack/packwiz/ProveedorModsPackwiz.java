@@ -1,10 +1,9 @@
-package com.asbestosstar.crashdetector.dto.modpack.tlmods;
+package com.asbestosstar.crashdetector.dto.modpack.packwiz;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
-import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.dto.modpack.InternetMod;
 import com.asbestosstar.crashdetector.dto.modpack.PaginaMods;
 import com.asbestosstar.crashdetector.dto.modpack.ProveedorMods;
@@ -12,34 +11,30 @@ import com.asbestosstar.crashdetector.dto.modpack.importar.PoliticaImportacion;
 import com.asbestosstar.crashdetector.dto.modpack.importar.ResolutorConflictosImportacion;
 import com.asbestosstar.crashdetector.dto.modpack.importar.ResultadoImportacion;
 
-public class ProveedorModsTlmods implements ProveedorMods {
+public class ProveedorModsPackwiz implements ProveedorMods {
 
-	public static ConfigString ENDPOINT = ConfigString.de("tlmods.endpoint", "https://tlmods.org/");
+	@Override
+	public boolean soportaBusqueda() {
+		return false;
+	}
 
 	@Override
 	public PaginaMods buscarMods(String idioma, int pagina, String termino) throws IOException {
-		return SolicitudBusquedaModsTlmods.buscarMods(idioma, pagina, termino);
+		throw new UnsupportedOperationException("Packwiz no es una fuente de búsqueda.");
 	}
 
 	@Override
 	public InternetMod obtenerModPorId(long identificador, String idioma) throws IOException {
-		throw new UnsupportedOperationException("No implementado aún");
+		throw new UnsupportedOperationException("Packwiz no obtiene mods por ID.");
 	}
 
 	@Override
 	public String obtenerNombreProveedor() {
-		return "TLauncher MPS (tlmods)";
-	}
-
-	@Override
-	public boolean soportaBusqueda() {
-		// TODO Auto-generated method stub
-		return true;
+		return "Packwiz";
 	}
 
 	@Override
 	public boolean soportaImportarModpack() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
@@ -47,8 +42,7 @@ public class ProveedorModsTlmods implements ProveedorMods {
 	public ResultadoImportacion importarModpack(Path ubicacionArchivoModpack, Path carpetaDestino,
 			PoliticaImportacion politica, ResolutorConflictosImportacion resolutor) throws IOException {
 
-		ImportadorModpackTlmods importador = new ImportadorModpackTlmods();
-
+		ImportadorModpackPackwiz importador = new ImportadorModpackPackwiz();
 		return importador.importar(ubicacionArchivoModpack, carpetaDestino, politica, resolutor);
 	}
 
@@ -57,14 +51,8 @@ public class ProveedorModsTlmods implements ProveedorMods {
 		return true;
 	}
 
-//	@Override
-//	public String obtenerExtensionModpack() {
-//		return "zip";
-//	}
-
 	@Override
 	public void exportarModpack(Path ubicacionArchivoModpack, List<Path> rutasEntrada) throws IOException {
-		ExportadorModpackTlmods.exportar(ubicacionArchivoModpack, rutasEntrada);
+		ExportadorModpackPackwiz.exportar(ubicacionArchivoModpack, rutasEntrada);
 	}
-
 }

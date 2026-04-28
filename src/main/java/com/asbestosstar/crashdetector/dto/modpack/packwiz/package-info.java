@@ -1,0 +1,1 @@
+package com.asbestosstar.crashdetector.dto.modpack.packwiz;
