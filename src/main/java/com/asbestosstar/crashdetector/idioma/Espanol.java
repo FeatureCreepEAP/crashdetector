@@ -9570,4 +9570,240 @@ public class Espanol implements Idioma {
 		return "Importador de modpacks: borde";
 	}
 
+	public String jgitTituloIzzy() {
+		return "Centro Git de Izzy";
+	}
+
+	public String jgitRetratoIzzy() {
+		return "Izzy";
+	}
+
+	public String jgitNoHayRetratoIzzy() {
+		return "No hay retrato de Izzy";
+	}
+
+	public String jgitSeccionInstalacion() {
+		return "Instalación de JGit";
+	}
+
+	public String jgitAbrirCarpetaInstalacion() {
+		return "Abrir carpeta de instalación";
+	}
+
+	public String jgitAbrirPaginaDescarga() {
+		return "Abrir página de JGit";
+	}
+
+	public String jgitSeccionRepositorio() {
+		return "Repositorio local";
+	}
+
+	public String jgitCrearRepositorioLocal() {
+		return "Crear repositorio Git aquí";
+	}
+
+	public String jgitCommitManual() {
+		return "Commit manual";
+	}
+
+	public String jgitSeccionRemote() {
+		return "Remote";
+	}
+
+	public String jgitForgeManual() {
+		return "Manual";
+	}
+
+	public String jgitForgePersonalizado() {
+		return "Forge personalizado";
+	}
+
+	public String jgitEstablecerRemoteManual() {
+		return "Establecer remote manual";
+	}
+
+	public String jgitCrearRemoteConAPI() {
+		return "Crear remote con API";
+	}
+
+	public String jgitPushManual() {
+		return "Push manual";
+	}
+
+	public String jgitSeccionAutomaticos() {
+		return "Automatización";
+	}
+
+	public String jgitAutoCommitDespuesBackup() {
+		return "Commit automático después del backup";
+	}
+
+	public String jgitAutoPushDespuesCommit() {
+		return "Push automático después del commit";
+	}
+
+	public String jgitSeccionHerramientas() {
+		return "Herramientas";
+	}
+
+	public String jgitAbrirGuiSwing() {
+		return "Abrir visor Swing de JGit";
+	}
+
+	public String jgitEstado() {
+		return "Estado";
+	}
+
+	public String jgitClasspath() {
+		return "JGit en classpath";
+	}
+
+	public String jgitTodosLosArtefactos() {
+		return "Todos los artefactos JGit";
+	}
+
+	public String jgitRepositorio() {
+		return "Repositorio";
+	}
+
+	public String jgitRemote() {
+		return "Remote";
+	}
+
+	public String jgitCarpetaActual() {
+		return "Carpeta actual";
+	}
+
+	public String jgitNoSePudoCrearRepo() {
+		return "No se pudo crear el repositorio.";
+	}
+
+	public String jgitEscribaRemote() {
+		return "Escriba la URL del remote:";
+	}
+
+	public String jgitNoSePudoGuardarRemote() {
+		return "No se pudo guardar el remote.";
+	}
+
+	public String jgitApiForgeAunNoImplementada() {
+		return "La API de forge todavía no está implementada.";
+	}
+
+	public String jgitNoHayCambiosOError() {
+		return "No hay cambios para commit o ocurrió un error.";
+	}
+
+	public String jgitNoSePudoPush() {
+		return "No se pudo hacer push.";
+	}
+
+	public String jgitTituloVentanaSwing() {
+		return "Visor Git";
+	}
+
+	public String jgitNoHayRepositorio() {
+		return "No hay repositorio Git en esta carpeta.";
+	}
+
+	public String jgitArchivosModificados() {
+		return "Archivos modificados";
+	}
+
+	public String jgitArchivosNuevos() {
+		return "Archivos nuevos";
+	}
+
+	public String jgitUltimosCommits() {
+		return "Últimos commits";
+	}
+
+	public String jgitError() {
+		return "Error de JGit";
+	}
+
+	public String si() {
+		return "Sí";
+	}
+
+	public String no() {
+		return "No";
+	}
+
+	public String jgitDescargarDependenciasFaltantes() {
+		return "Descargar dependencias faltantes";
+	}
+
+	public String jgitNoFaltanDependencias() {
+		return "No faltan dependencias de JGit.";
+	}
+
+	public String jgitConfirmarDescargaDependencias(int cantidad) {
+		return "Faltan " + cantidad + " dependencias de JGit. ¿Quieres descargarlas desde Maven Central?";
+	}
+
+	public String jgitDependenciasDescargadas(int cantidad) {
+		return "Dependencias descargadas: " + cantidad;
+	}
+
+	public String jgitErroresDescarga() {
+		return "Errores de descarga";
+	}
+
+	public String jgitReiniciarParaCargarClasspath() {
+		return "Reinicia CrashDetector para que los nuevos JARs entren al classpath.";
+	}
+
+	public String jgitArtefactosFaltantes() {
+		return "Artefactos faltantes";
+	}
+
+	public String jgitArtefactosFaltantesClasspath() {
+		return "Artefactos faltantes en classpath";
+	}
+
+	public String jgitArtefactosFaltantesCarpeta() {
+		return "Artefactos faltantes en la carpeta de instalación";
+	}
+
+	public String jgitDependenciasEnCarpeta() {
+		return "Dependencias instaladas en carpeta";
+	}
+	
+	public String jgitForgeNoSeleccionada() {
+		return "No hay forge seleccionada.";
+	}
+
+	public String jgitForgeNoRegistrada(String id) {
+		return "La forge no está registrada: " + id;
+	}
+
+	public String jgitEscribaUrlForge() {
+		return "URL de la forge:";
+	}
+
+	public String jgitEscribaNombreRepositorio() {
+		return "Nombre del repositorio:";
+	}
+
+	public String jgitEscribaDescripcionRepositorio() {
+		return "Descripción del repositorio:";
+	}
+
+	public String jgitEscribaNamespaceOpcional() {
+		return "Namespace opcional:";
+	}
+
+	public String jgitEscribaTokenForge() {
+		return "Token API de la forge:";
+	}
+
+	public String jgitErrorCrearRemote() {
+		return "Error al crear remote";
+	}
+	
+	
+	
+	
+
 }

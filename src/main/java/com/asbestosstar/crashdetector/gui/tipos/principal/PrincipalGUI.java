@@ -47,6 +47,7 @@ import com.asbestosstar.crashdetector.gui.tipos.grepr.BusquedaGUISaliorMoon;
 import com.asbestosstar.crashdetector.gui.tipos.guard.GuardiaSketchyVT;
 import com.asbestosstar.crashdetector.gui.tipos.historia.ClioOfficeGUI;
 import com.asbestosstar.crashdetector.gui.tipos.ia.IAGUILuotianyi;
+import com.asbestosstar.crashdetector.gui.tipos.jgit.JGitHubIzzy;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasHoloTalk;
 import com.asbestosstar.crashdetector.gui.tipos.mcreator.EscanerMCreatorGUIRosemiLoveLock;
 import com.asbestosstar.crashdetector.gui.tipos.mixins.MixinsGUIChiarru;
@@ -132,6 +133,7 @@ public abstract class PrincipalGUI extends JFrame implements CrashDetectorGUI {
 		registrarBotonDeBarraLateralDerecha(TipoGUI.DOCS, LectadorDeDocumentosStudyJuche.ID,
 				() -> new LectadorDeDocumentosStudyJuche());
 		registrarBotonDeBarraLateralDerecha(TipoGUI.IA, IAGUILuotianyi.ID, () -> new IAGUILuotianyi());
+		registrarBotonDeBarraLateralDerecha(TipoGUI.JGIT_HUB, JGitHubIzzy.ID, () -> new JGitHubIzzy());
 
 	}
 

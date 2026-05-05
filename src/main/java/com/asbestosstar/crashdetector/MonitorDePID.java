@@ -62,6 +62,9 @@ import com.asbestosstar.crashdetector.gui.tipos.historia.HistoriaModsGUILegacy;
 import com.asbestosstar.crashdetector.gui.tipos.ia.IAGUILuotianyi;
 import com.asbestosstar.crashdetector.gui.tipos.importador.DialogoConflictoImportacionYumeiriReyu;
 import com.asbestosstar.crashdetector.gui.tipos.importador.ImportadorModpackMausleepsVT;
+import com.asbestosstar.crashdetector.gui.tipos.jgit.BuscarParaJGit;
+import com.asbestosstar.crashdetector.gui.tipos.jgit.JGitAutoCommit;
+import com.asbestosstar.crashdetector.gui.tipos.jgit.JGitHubIzzy;
 import com.asbestosstar.crashdetector.gui.tipos.lanzeresbuenos.LanzerBuenoGUIMaidMint;
 import com.asbestosstar.crashdetector.gui.tipos.lanzeresmalos.LanzerMaloGUISylentBell;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasHoloTalk;
@@ -472,6 +475,21 @@ public class MonitorDePID {
 			// En caso de error con la búsqueda del JAR de CFR, se ignora
 		}
 
+		// Intentar añadir JGit si está instalado en ~/crash_detector/jgit/
+		try {
+			for (File jgitJar : BuscarParaJGit.encontrarJarsInstalados()) {
+				if (jgitJar != null && jgitJar.exists()) {
+					String rutaJGit = jgitJar.getAbsolutePath();
+
+					if (!classPath.toString().contains(rutaJGit)) {
+						classPath.append(File.pathSeparator).append(rutaJGit);
+					}
+				}
+			}
+		} catch (Throwable t) {
+			// Si falla la búsqueda de JGit, se ignora.
+		}
+
 		return classPath.toString();
 	}
 
@@ -529,7 +547,7 @@ public class MonitorDePID {
 		TipoGUI.IMPORTADOR_CONFLICTO.registrarGUI(DialogoConflictoImportacionYumeiriReyu.ID,
 				DialogoConflictoImportacionYumeiriReyu::new);
 		TipoGUI.IMPORTADOR_MODPACK.registrarGUI(ImportadorModpackMausleepsVT.ID, ImportadorModpackMausleepsVT::new);
-
+		TipoGUI.JGIT_HUB.registrarGUI(JGitHubIzzy.ID, JGitHubIzzy::new);
 	}
 
 	/**
@@ -612,6 +630,7 @@ public class MonitorDePID {
 		CountDownLatch latch = new CountDownLatch(1); // Necesito por que sin esta preceso esta muerte
 
 		CopiaDeSeguridadDeArchivos.hacerAutoBackupSiCorresponde();
+		JGitAutoCommit.hacerAutoCommitSiCorresponde();
 
 		while (true) {
 

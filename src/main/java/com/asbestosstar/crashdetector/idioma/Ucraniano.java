@@ -8176,4 +8176,240 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 		return "Імпорт модпаків: рамка";
 	}
 
+	public String jgitTituloIzzy() {
+		return "Git-центр Izzy";
+	}
+
+	public String jgitRetratoIzzy() {
+		return "Izzy";
+	}
+
+	public String jgitNoHayRetratoIzzy() {
+		return "Портрет Izzy відсутній";
+	}
+
+	public String jgitSeccionInstalacion() {
+		return "Встановлення JGit";
+	}
+
+	public String jgitAbrirCarpetaInstalacion() {
+		return "Відкрити теку встановлення";
+	}
+
+	public String jgitAbrirPaginaDescarga() {
+		return "Відкрити сторінку завантаження JGit";
+	}
+
+	public String jgitSeccionRepositorio() {
+		return "Локальний репозиторій";
+	}
+
+	public String jgitCrearRepositorioLocal() {
+		return "Створити Git-репозиторій тут";
+	}
+
+	public String jgitCommitManual() {
+		return "Ручний коміт";
+	}
+
+	public String jgitSeccionRemote() {
+		return "Віддалений репозиторій";
+	}
+
+	public String jgitForgeManual() {
+		return "Посібник Forge";
+	}
+
+	public String jgitForgePersonalizado() {
+		return "Користувацький Forge";
+	}
+
+	public String jgitEstablecerRemoteManual() {
+		return "Налаштувати віддалений репозиторій вручну";
+	}
+
+	public String jgitCrearRemoteConAPI() {
+		return "Створити віддалений репозиторій через API";
+	}
+
+	public String jgitPushManual() {
+		return "Ручний push";
+	}
+
+	public String jgitSeccionAutomaticos() {
+		return "Автоматизація";
+	}
+
+	public String jgitAutoCommitDespuesBackup() {
+		return "Авто-коміт після бекапу";
+	}
+
+	public String jgitAutoPushDespuesCommit() {
+		return "Авто-push після коміту";
+	}
+
+	public String jgitSeccionHerramientas() {
+		return "Інструменти";
+	}
+
+	public String jgitAbrirGuiSwing() {
+		return "Відкрити Swing-переглядач JGit";
+	}
+
+	public String jgitEstado() {
+		return "Статус";
+	}
+
+	public String jgitClasspath() {
+		return "JGit у classpath";
+	}
+
+	public String jgitTodosLosArtefactos() {
+		return "Усі артефакти JGit";
+	}
+
+	public String jgitRepositorio() {
+		return "Репозиторій";
+	}
+
+	public String jgitRemote() {
+		return "Віддалений репозиторій";
+	}
+
+	public String jgitCarpetaActual() {
+		return "Поточна тека";
+	}
+
+	public String jgitNoSePudoCrearRepo() {
+		return "Не вдалося створити репозиторій.";
+	}
+
+	public String jgitEscribaRemote() {
+		return "Введіть URL віддаленого репозиторію:";
+	}
+
+	public String jgitNoSePudoGuardarRemote() {
+		return "Не вдалося зберегти віддалений репозиторій.";
+	}
+
+	public String jgitApiForgeAunNoImplementada() {
+		return "API Forge ще не реалізовано.";
+	}
+
+	public String jgitNoHayCambiosOError() {
+		return "Немає змін для коміту або сталася помилка.";
+	}
+
+	public String jgitNoSePudoPush() {
+		return "Не вдалося виконати push.";
+	}
+
+	public String jgitTituloVentanaSwing() {
+		return "Переглядач Git";
+	}
+
+	public String jgitNoHayRepositorio() {
+		return "У цій теці немає Git-репозиторію.";
+	}
+
+	public String jgitArchivosModificados() {
+		return "Змінені файли";
+	}
+
+	public String jgitArchivosNuevos() {
+		return "Нові файли";
+	}
+
+	public String jgitUltimosCommits() {
+		return "Останні коміти";
+	}
+
+	public String jgitError() {
+		return "Помилка JGit";
+	}
+
+	public String si() {
+		return "Так";
+	}
+
+	public String no() {
+		return "Ні";
+	}
+
+	public String jgitDescargarDependenciasFaltantes() {
+		return "Завантажити відсутні залежності";
+	}
+
+	public String jgitNoFaltanDependencias() {
+		return "Відсутні залежності JGit не виявлено.";
+	}
+
+	public String jgitConfirmarDescargaDependencias(int cantidad) {
+		return "Відсутня кількість залежностей JGit: " + cantidad + ". Бажаєте завантажити їх з Maven Central?";
+	}
+
+	public String jgitDependenciasDescargadas(int cantidad) {
+		return "Залежностей завантажено: " + cantidad;
+	}
+
+	public String jgitErroresDescarga() {
+		return "Помилки завантаження";
+	}
+
+	public String jgitReiniciarParaCargarClasspath() {
+		return "Перезапустіть CrashDetector, щоб нові JAR-файли потрапили до classpath.";
+	}
+
+	public String jgitArtefactosFaltantes() {
+		return "Відсутні артефакти";
+	}
+
+	public String jgitArtefactosFaltantesClasspath() {
+		return "Відсутні артефакти у classpath";
+	}
+
+	public String jgitArtefactosFaltantesCarpeta() {
+		return "Відсутні артефакти у теці встановлення";
+	}
+
+	public String jgitDependenciasEnCarpeta() {
+		return "Залежності, встановлені в теку";
+	}
+	
+	public String jgitForgeNoSeleccionada() {
+		return "Forge не вибрано.";
+	}
+
+	public String jgitForgeNoRegistrada(String id) {
+		return "Forge не зареєстровано: " + id;
+	}
+
+	public String jgitEscribaUrlForge() {
+		return "URL Forge:";
+	}
+
+	public String jgitEscribaNombreRepositorio() {
+		return "Назва репозиторію:";
+	}
+
+	public String jgitEscribaDescripcionRepositorio() {
+		return "Опис репозиторію:";
+	}
+
+	public String jgitEscribaNamespaceOpcional() {
+		return "Необов'язковий namespace:";
+	}
+
+	public String jgitEscribaTokenForge() {
+		return "API-токен Forge:";
+	}
+
+	public String jgitErrorCrearRemote() {
+		return "Помилка створення remote";
+	}
+	
+	
+	
+	
+
 }

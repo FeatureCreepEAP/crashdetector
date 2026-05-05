@@ -8742,4 +8742,238 @@ public class Arabe implements Idioma {
 		return "مستورد حزم التعديل: الإطار";
 	}
 
+	public String jgitTituloIzzy() {
+		return "مركز Git الخاص بـ Izzy";
+	}
+
+	public String jgitRetratoIzzy() {
+		return "إيزي";
+	}
+
+	public String jgitNoHayRetratoIzzy() {
+		return "لا توجد صورة لإيزي";
+	}
+
+	public String jgitSeccionInstalacion() {
+		return "تثبيت JGit";
+	}
+
+	public String jgitAbrirCarpetaInstalacion() {
+		return "فتح مجلد التثبيت";
+	}
+
+	public String jgitAbrirPaginaDescarga() {
+		return "فتح صفحة JGit";
+	}
+
+	public String jgitSeccionRepositorio() {
+		return "المستودع المحلي";
+	}
+
+	public String jgitCrearRepositorioLocal() {
+		return "إنشاء مستودع Git هنا";
+	}
+
+	public String jgitCommitManual() {
+		return "Commit يدوي";
+	}
+
+	public String jgitSeccionRemote() {
+		return "Remote";
+	}
+
+	public String jgitForgeManual() {
+		return "يدوي";
+	}
+
+	public String jgitForgePersonalizado() {
+		return "Forge مخصص";
+	}
+
+	public String jgitEstablecerRemoteManual() {
+		return "تعيين Remote يدويًا";
+	}
+
+	public String jgitCrearRemoteConAPI() {
+		return "إنشاء Remote عبر API";
+	}
+
+	public String jgitPushManual() {
+		return "Push يدوي";
+	}
+
+	public String jgitSeccionAutomaticos() {
+		return "الأتمتة";
+	}
+
+	public String jgitAutoCommitDespuesBackup() {
+		return "Commit تلقائي بعد النسخ الاحتياطي";
+	}
+
+	public String jgitAutoPushDespuesCommit() {
+		return "Push تلقائي بعد الـ Commit";
+	}
+
+	public String jgitSeccionHerramientas() {
+		return "الأدوات";
+	}
+
+	public String jgitAbrirGuiSwing() {
+		return "فتح عارض Swing لـ JGit";
+	}
+
+	public String jgitEstado() {
+		return "الحالة";
+	}
+
+	public String jgitClasspath() {
+		return "JGit في Classpath";
+	}
+
+	public String jgitTodosLosArtefactos() {
+		return "جميع عناصر JGit";
+	}
+
+	public String jgitRepositorio() {
+		return "المستودع";
+	}
+
+	public String jgitRemote() {
+		return "Remote";
+	}
+
+	public String jgitCarpetaActual() {
+		return "المجلد الحالي";
+	}
+
+	public String jgitNoSePudoCrearRepo() {
+		return "تعذر إنشاء المستودع.";
+	}
+
+	public String jgitEscribaRemote() {
+		return "اكتب عنوان URL للـ Remote:";
+	}
+
+	public String jgitNoSePudoGuardarRemote() {
+		return "تعذر حفظ الـ Remote.";
+	}
+
+	public String jgitApiForgeAunNoImplementada() {
+		return "لم يتم تنفيذ API الخاصة بـ Forge بعد.";
+	}
+
+	public String jgitNoHayCambiosOError() {
+		return "لا توجد تغييرات للـ Commit أو حدث خطأ.";
+	}
+
+	public String jgitNoSePudoPush() {
+		return "تعذر إجراء Push.";
+	}
+
+	public String jgitTituloVentanaSwing() {
+		return "عارض Git";
+	}
+
+	public String jgitNoHayRepositorio() {
+		return "لا يوجد مستودع Git في هذا المجلد.";
+	}
+
+	public String jgitArchivosModificados() {
+		return "الملفات المعدلة";
+	}
+
+	public String jgitArchivosNuevos() {
+		return "ملفات جديدة";
+	}
+
+	public String jgitUltimosCommits() {
+		return "آخر Commits";
+	}
+
+	public String jgitError() {
+		return "خطأ في JGit";
+	}
+
+	public String si() {
+		return "نعم";
+	}
+
+	public String no() {
+		return "لا";
+	}
+
+	public String jgitDescargarDependenciasFaltantes() {
+		return "تنزيل الاعتماديات المفقودة";
+	}
+
+	public String jgitNoFaltanDependencias() {
+		return "لا توجد اعتماديات مفقودة لـ JGit.";
+	}
+
+	public String jgitConfirmarDescargaDependencias(int cantidad) {
+		return "توجد " + cantidad + " اعتماديات مفقودة لـ JGit. هل تريد تنزيلها من Maven Central؟";
+	}
+
+	public String jgitDependenciasDescargadas(int cantidad) {
+		return "تم تنزيل الاعتماديات: " + cantidad;
+	}
+
+	public String jgitErroresDescarga() {
+		return "أخطاء في التنزيل";
+	}
+
+	public String jgitReiniciarParaCargarClasspath() {
+		return "أعد تشغيل CrashDetector لكي يتم تحميل ملفات JAR الجديدة إلى classpath.";
+	}
+
+	public String jgitArtefactosFaltantes() {
+		return "الحزم (Artifacts) المفقودة";
+	}
+
+	public String jgitArtefactosFaltantesClasspath() {
+		return "الحزم (Artifacts) المفقودة في classpath";
+	}
+
+	public String jgitArtefactosFaltantesCarpeta() {
+		return "الحزم (Artifacts) المفقودة في مجلد التثبيت";
+	}
+
+	public String jgitDependenciasEnCarpeta() {
+		return "الاعتماديات المثبتة في المجلد";
+	}
+	
+	public String jgitForgeNoSeleccionada() {
+	    return "لم يتم اختيار forge.";
+	}
+
+	public String jgitForgeNoRegistrada(String id) {
+	    return "الـ forge غير مسجلة: " + id;
+	}
+
+	public String jgitEscribaUrlForge() {
+	    return "عنوان URL للـ forge:";
+	}
+
+	public String jgitEscribaNombreRepositorio() {
+	    return "اسم المستودع:";
+	}
+
+	public String jgitEscribaDescripcionRepositorio() {
+	    return "وصف المستودع:";
+	}
+
+	public String jgitEscribaNamespaceOpcional() {
+	    return "Namespace اختياري:";
+	}
+
+	public String jgitEscribaTokenForge() {
+	    return "رمز API للـ forge:";
+	}
+
+	public String jgitErrorCrearRemote() {
+	    return "خطأ في إنشاء الـ remote";
+	}
+	
+	
+
 }

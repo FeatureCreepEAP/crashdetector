@@ -9070,4 +9070,240 @@ public class Vietnamita implements Idioma {
 		return "Nhập modpack: viền";
 	}
 
+	public String jgitTituloIzzy() {
+		return "Trung tâm Git của Izzy";
+	}
+
+	public String jgitRetratoIzzy() {
+		return "Izzy";
+	}
+
+	public String jgitNoHayRetratoIzzy() {
+		return "Không có chân dung Izzy";
+	}
+
+	public String jgitSeccionInstalacion() {
+		return "Cài đặt JGit";
+	}
+
+	public String jgitAbrirCarpetaInstalacion() {
+		return "Mở thư mục cài đặt";
+	}
+
+	public String jgitAbrirPaginaDescarga() {
+		return "Mở trang tải xuống JGit";
+	}
+
+	public String jgitSeccionRepositorio() {
+		return "Kho lưu trữ cục bộ";
+	}
+
+	public String jgitCrearRepositorioLocal() {
+		return "Tạo kho lưu trữ Git tại đây";
+	}
+
+	public String jgitCommitManual() {
+		return "Commit thủ công";
+	}
+
+	public String jgitSeccionRemote() {
+		return "Remote";
+	}
+
+	public String jgitForgeManual() {
+		return "Hướng dẫn Forge";
+	}
+
+	public String jgitForgePersonalizado() {
+		return "Forge tùy chỉnh";
+	}
+
+	public String jgitEstablecerRemoteManual() {
+		return "Thiết lập remote thủ công";
+	}
+
+	public String jgitCrearRemoteConAPI() {
+		return "Tạo remote bằng API";
+	}
+
+	public String jgitPushManual() {
+		return "Push thủ công";
+	}
+
+	public String jgitSeccionAutomaticos() {
+		return "Tự động hóa";
+	}
+
+	public String jgitAutoCommitDespuesBackup() {
+		return "Tự động commit sau khi sao lưu";
+	}
+
+	public String jgitAutoPushDespuesCommit() {
+		return "Tự động push sau khi commit";
+	}
+
+	public String jgitSeccionHerramientas() {
+		return "Công cụ";
+	}
+
+	public String jgitAbrirGuiSwing() {
+		return "Mở trình xem Swing của JGit";
+	}
+
+	public String jgitEstado() {
+		return "Trạng thái";
+	}
+
+	public String jgitClasspath() {
+		return "JGit trong classpath";
+	}
+
+	public String jgitTodosLosArtefactos() {
+		return "Tất cả artifact của JGit";
+	}
+
+	public String jgitRepositorio() {
+		return "Kho lưu trữ";
+	}
+
+	public String jgitRemote() {
+		return "Remote";
+	}
+
+	public String jgitCarpetaActual() {
+		return "Thư mục hiện tại";
+	}
+
+	public String jgitNoSePudoCrearRepo() {
+		return "Không thể tạo kho lưu trữ.";
+	}
+
+	public String jgitEscribaRemote() {
+		return "Nhập URL của remote:";
+	}
+
+	public String jgitNoSePudoGuardarRemote() {
+		return "Không thể lưu remote.";
+	}
+
+	public String jgitApiForgeAunNoImplementada() {
+		return "API của Forge chưa được triển khai.";
+	}
+
+	public String jgitNoHayCambiosOError() {
+		return "Không có thay đổi để commit hoặc đã xảy ra lỗi.";
+	}
+
+	public String jgitNoSePudoPush() {
+		return "Không thể thực hiện push.";
+	}
+
+	public String jgitTituloVentanaSwing() {
+		return "Trình xem Git";
+	}
+
+	public String jgitNoHayRepositorio() {
+		return "Không có kho lưu trữ Git trong thư mục này.";
+	}
+
+	public String jgitArchivosModificados() {
+		return "Tệp đã sửa đổi";
+	}
+
+	public String jgitArchivosNuevos() {
+		return "Tệp mới";
+	}
+
+	public String jgitUltimosCommits() {
+		return "Các commit gần nhất";
+	}
+
+	public String jgitError() {
+		return "Lỗi JGit";
+	}
+
+	public String si() {
+		return "Có";
+	}
+
+	public String no() {
+		return "Không";
+	}
+
+	public String jgitDescargarDependenciasFaltantes() {
+		return "Tải xuống các phụ thuộc thiếu";
+	}
+
+	public String jgitNoFaltanDependencias() {
+		return "Không có phụ thuộc JGit nào bị thiếu.";
+	}
+
+	public String jgitConfirmarDescargaDependencias(int cantidad) {
+		return "Thiếu " + cantidad + " phụ thuộc JGit. Bạn có muốn tải chúng từ Maven Central không?";
+	}
+
+	public String jgitDependenciasDescargadas(int cantidad) {
+		return "Số phụ thuộc đã tải: " + cantidad;
+	}
+
+	public String jgitErroresDescarga() {
+		return "Lỗi tải xuống";
+	}
+
+	public String jgitReiniciarParaCargarClasspath() {
+		return "Khởi động lại CrashDetector để các JAR mới được nạp vào classpath.";
+	}
+
+	public String jgitArtefactosFaltantes() {
+		return "Các artifact thiếu";
+	}
+
+	public String jgitArtefactosFaltantesClasspath() {
+		return "Các artifact thiếu trong classpath";
+	}
+
+	public String jgitArtefactosFaltantesCarpeta() {
+		return "Các artifact thiếu trong thư mục cài đặt";
+	}
+
+	public String jgitDependenciasEnCarpeta() {
+		return "Các phụ thuộc đã cài đặt trong thư mục";
+	}
+	
+	public String jgitForgeNoSeleccionada() {
+		return "Chưa chọn forge.";
+	}
+
+	public String jgitForgeNoRegistrada(String id) {
+		return "Forge chưa được đăng ký: " + id;
+	}
+
+	public String jgitEscribaUrlForge() {
+		return "URL của forge:";
+	}
+
+	public String jgitEscribaNombreRepositorio() {
+		return "Tên kho lưu trữ:";
+	}
+
+	public String jgitEscribaDescripcionRepositorio() {
+		return "Mô tả kho lưu trữ:";
+	}
+
+	public String jgitEscribaNamespaceOpcional() {
+		return "Namespace tùy chọn:";
+	}
+
+	public String jgitEscribaTokenForge() {
+		return "Token API của forge:";
+	}
+
+	public String jgitErrorCrearRemote() {
+		return "Lỗi khi tạo remote";
+	}
+	
+	
+	
+	
+
 }

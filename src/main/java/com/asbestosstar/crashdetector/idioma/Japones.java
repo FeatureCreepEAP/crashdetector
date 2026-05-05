@@ -8509,4 +8509,240 @@ public class Japones implements Idioma {
 		return "MODパックインポーター: 境界線";
 	}
 
+	public String jgitTituloIzzy() {
+		return "IzzyのGitセンター";
+	}
+
+	public String jgitRetratoIzzy() {
+		return "Izzy";
+	}
+
+	public String jgitNoHayRetratoIzzy() {
+		return "Izzyの肖像はありません";
+	}
+
+	public String jgitSeccionInstalacion() {
+		return "JGit インストール";
+	}
+
+	public String jgitAbrirCarpetaInstalacion() {
+		return "インストールフォルダを開く";
+	}
+
+	public String jgitAbrirPaginaDescarga() {
+		return "JGit ページを開く";
+	}
+
+	public String jgitSeccionRepositorio() {
+		return "ローカルリポジトリ";
+	}
+
+	public String jgitCrearRepositorioLocal() {
+		return "ここにGitリポジトリを作成";
+	}
+
+	public String jgitCommitManual() {
+		return "手動Commit";
+	}
+
+	public String jgitSeccionRemote() {
+		return "リモート";
+	}
+
+	public String jgitForgeManual() {
+		return "手動";
+	}
+
+	public String jgitForgePersonalizado() {
+		return "カスタムForge";
+	}
+
+	public String jgitEstablecerRemoteManual() {
+		return "手動でリモートを設定";
+	}
+
+	public String jgitCrearRemoteConAPI() {
+		return "APIでリモートを作成";
+	}
+
+	public String jgitPushManual() {
+		return "手動Push";
+	}
+
+	public String jgitSeccionAutomaticos() {
+		return "自動化";
+	}
+
+	public String jgitAutoCommitDespuesBackup() {
+		return "バックアップ後に自動Commit";
+	}
+
+	public String jgitAutoPushDespuesCommit() {
+		return "Commit後に自動Push";
+	}
+
+	public String jgitSeccionHerramientas() {
+		return "ツール";
+	}
+
+	public String jgitAbrirGuiSwing() {
+		return "JGit Swingビューアを開く";
+	}
+
+	public String jgitEstado() {
+		return "状態";
+	}
+
+	public String jgitClasspath() {
+		return "クラスパス上のJGit";
+	}
+
+	public String jgitTodosLosArtefactos() {
+		return "すべてのJGitアーティファクト";
+	}
+
+	public String jgitRepositorio() {
+		return "リポジトリ";
+	}
+
+	public String jgitRemote() {
+		return "リモート";
+	}
+
+	public String jgitCarpetaActual() {
+		return "現在のフォルダ";
+	}
+
+	public String jgitNoSePudoCrearRepo() {
+		return "リポジトリを作成できませんでした。";
+	}
+
+	public String jgitEscribaRemote() {
+		return "リモートURLを入力してください:";
+	}
+
+	public String jgitNoSePudoGuardarRemote() {
+		return "リモートを保存できませんでした。";
+	}
+
+	public String jgitApiForgeAunNoImplementada() {
+		return "Forge APIはまだ実装されていません。";
+	}
+
+	public String jgitNoHayCambiosOError() {
+		return "Commitする変更がないか、エラーが発生しました。";
+	}
+
+	public String jgitNoSePudoPush() {
+		return "Pushできませんでした。";
+	}
+
+	public String jgitTituloVentanaSwing() {
+		return "Gitビューア";
+	}
+
+	public String jgitNoHayRepositorio() {
+		return "このフォルダにGitリポジトリがありません。";
+	}
+
+	public String jgitArchivosModificados() {
+		return "変更されたファイル";
+	}
+
+	public String jgitArchivosNuevos() {
+		return "新しいファイル";
+	}
+
+	public String jgitUltimosCommits() {
+		return "最新のCommits";
+	}
+
+	public String jgitError() {
+		return "JGitエラー";
+	}
+
+	public String si() {
+		return "はい";
+	}
+
+	public String no() {
+		return "いいえ";
+	}
+
+	public String jgitDescargarDependenciasFaltantes() {
+		return "欠落している依存関係のダウンロード";
+	}
+
+	public String jgitNoFaltanDependencias() {
+		return "欠落している JGit の依存関係はありません。";
+	}
+
+	public String jgitConfirmarDescargaDependencias(int cantidad) {
+		return "JGit の依存関係が " + cantidad + " 個欠落しています。Maven Central からダウンロードしますか？";
+	}
+
+	public String jgitDependenciasDescargadas(int cantidad) {
+		return "ダウンロードされた依存関係: " + cantidad;
+	}
+
+	public String jgitErroresDescarga() {
+		return "ダウンロードエラー";
+	}
+
+	public String jgitReiniciarParaCargarClasspath() {
+		return "新しい JAR ファイルをクラスパスに反映させるため、CrashDetector を再起動してください。";
+	}
+
+	public String jgitArtefactosFaltantes() {
+		return "欠落しているアーティファクト";
+	}
+
+	public String jgitArtefactosFaltantesClasspath() {
+		return "クラスパス上の欠落アーティファクト";
+	}
+
+	public String jgitArtefactosFaltantesCarpeta() {
+		return "インストールフォルダ内の欠落アーティファクト";
+	}
+
+	public String jgitDependenciasEnCarpeta() {
+		return "フォルダにインストールされた依存関係";
+	}
+	public String jgitForgeNoSeleccionada() {
+	    return "Forge が選択されていません。";
+	}
+
+	public String jgitForgeNoRegistrada(String id) {
+	    return "Forge が登録されていません: " + id;
+	}
+
+	public String jgitEscribaUrlForge() {
+	    return "Forge URL:";
+	}
+
+	public String jgitEscribaNombreRepositorio() {
+	    return "リポジトリ名:";
+	}
+
+	public String jgitEscribaDescripcionRepositorio() {
+	    return "リポジトリの説明:";
+	}
+
+	public String jgitEscribaNamespaceOpcional() {
+	    return "オプションの Namespace:";
+	}
+
+	public String jgitEscribaTokenForge() {
+	    return "Forge API トークン:";
+	}
+
+	public String jgitErrorCrearRemote() {
+	    return "Remote の作成エラー";
+	}
+	
+	
+	
+	
+	
+	
 }

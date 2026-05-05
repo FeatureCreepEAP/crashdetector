@@ -8814,4 +8814,238 @@ public class Persa implements Idioma {
 		return "واردکننده مودپک: حاشیه";
 	}
 
+	public String jgitTituloIzzy() {
+		return "مرکز گیت ایزی";
+	}
+
+	public String jgitRetratoIzzy() {
+		return "ایزی";
+	}
+
+	public String jgitNoHayRetratoIzzy() {
+		return "پرتره‌ای از ایزی موجود نیست";
+	}
+
+	public String jgitSeccionInstalacion() {
+		return "نصب JGit";
+	}
+
+	public String jgitAbrirCarpetaInstalacion() {
+		return "باز کردن پوشه نصب";
+	}
+
+	public String jgitAbrirPaginaDescarga() {
+		return "باز کردن صفحه دانلود JGit";
+	}
+
+	public String jgitSeccionRepositorio() {
+		return "مخزن محلی";
+	}
+
+	public String jgitCrearRepositorioLocal() {
+		return "ایجاد مخزن گیت در اینجا";
+	}
+
+	public String jgitCommitManual() {
+		return "کامیت دستی";
+	}
+
+	public String jgitSeccionRemote() {
+		return "ریموت";
+	}
+
+	public String jgitForgeManual() {
+		return "راهنمای فورج";
+	}
+
+	public String jgitForgePersonalizado() {
+		return "فورج سفارشی";
+	}
+
+	public String jgitEstablecerRemoteManual() {
+		return "تنظیم ریموت دستی";
+	}
+
+	public String jgitCrearRemoteConAPI() {
+		return "ایجاد ریموت با API";
+	}
+
+	public String jgitPushManual() {
+		return "پوش دستی";
+	}
+
+	public String jgitSeccionAutomaticos() {
+		return "خودکارسازی";
+	}
+
+	public String jgitAutoCommitDespuesBackup() {
+		return "کامیت خودکار پس از پشتیبان‌گیری";
+	}
+
+	public String jgitAutoPushDespuesCommit() {
+		return "پوش خودکار پس از کامیت";
+	}
+
+	public String jgitSeccionHerramientas() {
+		return "ابزارها";
+	}
+
+	public String jgitAbrirGuiSwing() {
+		return "باز کردن نمایشگر Swing جی‌گیت";
+	}
+
+	public String jgitEstado() {
+		return "وضعیت";
+	}
+
+	public String jgitClasspath() {
+		return "JGit در کلاس‌پث";
+	}
+
+	public String jgitTodosLosArtefactos() {
+		return "تمام آرتیفکت‌های JGit";
+	}
+
+	public String jgitRepositorio() {
+		return "مخزن";
+	}
+
+	public String jgitRemote() {
+		return "ریموت";
+	}
+
+	public String jgitCarpetaActual() {
+		return "پوشه فعلی";
+	}
+
+	public String jgitNoSePudoCrearRepo() {
+		return "ایجاد مخزن امکان‌پذیر نبود.";
+	}
+
+	public String jgitEscribaRemote() {
+		return "آدرس URL ریموت را وارد کنید:";
+	}
+
+	public String jgitNoSePudoGuardarRemote() {
+		return "ذخیره ریموت امکان‌پذیر نبود.";
+	}
+
+	public String jgitApiForgeAunNoImplementada() {
+		return "API فورج هنوز پیاده‌سازی نشده است.";
+	}
+
+	public String jgitNoHayCambiosOError() {
+		return "تغییری برای کامیت وجود ندارد یا خطایی رخ داده است.";
+	}
+
+	public String jgitNoSePudoPush() {
+		return "انجام پوش امکان‌پذیر نبود.";
+	}
+
+	public String jgitTituloVentanaSwing() {
+		return "نمایشگر گیت";
+	}
+
+	public String jgitNoHayRepositorio() {
+		return "مخزن گیتی در این پوشه وجود ندارد.";
+	}
+
+	public String jgitArchivosModificados() {
+		return "فایل‌های تغییر یافته";
+	}
+
+	public String jgitArchivosNuevos() {
+		return "فایل‌های جدید";
+	}
+
+	public String jgitUltimosCommits() {
+		return "آخرین کامیت‌ها";
+	}
+
+	public String jgitError() {
+		return "خطای JGit";
+	}
+
+	public String si() {
+		return "بله";
+	}
+
+	public String no() {
+		return "خیر";
+	}
+
+	public String jgitDescargarDependenciasFaltantes() {
+		return "دانلود وابستگی‌های缺失";
+	}
+
+	public String jgitNoFaltanDependencias() {
+		return "هیچ وابستگی JGit ای缺失 نیست.";
+	}
+
+	public String jgitConfirmarDescargaDependencias(int cantidad) {
+		return cantidad + " وابستگی JGit缺失 است. آیا می‌خواهید آن‌ها را از Maven Central دانلود کنید؟";
+	}
+
+	public String jgitDependenciasDescargadas(int cantidad) {
+		return "وابستگی‌های دانلود شده: " + cantidad;
+	}
+
+	public String jgitErroresDescarga() {
+		return "خطاهای دانلود";
+	}
+
+	public String jgitReiniciarParaCargarClasspath() {
+		return "برای اعمال JARهای جدید در classpath، برنامه CrashDetector را مجدداً راه‌اندازی کنید.";
+	}
+
+	public String jgitArtefactosFaltantes() {
+		return "آرتیفکت‌های缺失";
+	}
+
+	public String jgitArtefactosFaltantesClasspath() {
+		return "آرتیفکت‌های ناموجود در classpath";
+	}
+
+	public String jgitArtefactosFaltantesCarpeta() {
+		return "آرتیفکت‌های ناموجود در پوشه نصب";
+	}
+
+	public String jgitDependenciasEnCarpeta() {
+		return "وابستگی‌های نصب‌شده در پوشه";
+	}
+	
+	public String jgitForgeNoSeleccionada() {
+		return "هیچ Forge ای انتخاب نشده است.";
+	}
+
+	public String jgitForgeNoRegistrada(String id) {
+		return "Forge ثبت نشده است: " + id;
+	}
+
+	public String jgitEscribaUrlForge() {
+		return "آدرس URL Forge:";
+	}
+
+	public String jgitEscribaNombreRepositorio() {
+		return "نام مخزن:";
+	}
+
+	public String jgitEscribaDescripcionRepositorio() {
+		return "توضیحات مخزن:";
+	}
+
+	public String jgitEscribaNamespaceOpcional() {
+		return "Namespace اختیاری:";
+	}
+
+	public String jgitEscribaTokenForge() {
+		return "توکن API Forge:";
+	}
+
+	public String jgitErrorCrearRemote() {
+		return "خطا در ایجاد remote";
+	}
+	
+	
+
 }

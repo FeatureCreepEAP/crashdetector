@@ -8313,4 +8313,239 @@ public class Chino implements Idioma {
 		return "模组包导入器: 边框";
 	}
 
+	public String jgitTituloIzzy() {
+		return "Izzy 的 Git 中心";
+	}
+
+	public String jgitRetratoIzzy() {
+		return "Izzy";
+	}
+
+	public String jgitNoHayRetratoIzzy() {
+		return "没有 Izzy 的肖像";
+	}
+
+	public String jgitSeccionInstalacion() {
+		return "JGit 安装";
+	}
+
+	public String jgitAbrirCarpetaInstalacion() {
+		return "打开安装文件夹";
+	}
+
+	public String jgitAbrirPaginaDescarga() {
+		return "打开 JGit 页面";
+	}
+
+	public String jgitSeccionRepositorio() {
+		return "本地仓库";
+	}
+
+	public String jgitCrearRepositorioLocal() {
+		return "在此处创建 Git 仓库";
+	}
+
+	public String jgitCommitManual() {
+		return "手动 Commit";
+	}
+
+	public String jgitSeccionRemote() {
+		return "远程仓库";
+	}
+
+	public String jgitForgeManual() {
+		return "手动";
+	}
+
+	public String jgitForgePersonalizado() {
+		return "自定义 Forge";
+	}
+
+	public String jgitEstablecerRemoteManual() {
+		return "手动设置远程仓库";
+	}
+
+	public String jgitCrearRemoteConAPI() {
+		return "通过 API 创建远程仓库";
+	}
+
+	public String jgitPushManual() {
+		return "手动 Push";
+	}
+
+	public String jgitSeccionAutomaticos() {
+		return "自动化";
+	}
+
+	public String jgitAutoCommitDespuesBackup() {
+		return "备份后自动 Commit";
+	}
+
+	public String jgitAutoPushDespuesCommit() {
+		return "Commit 后自动 Push";
+	}
+
+	public String jgitSeccionHerramientas() {
+		return "工具";
+	}
+
+	public String jgitAbrirGuiSwing() {
+		return "打开 JGit Swing 查看器";
+	}
+
+	public String jgitEstado() {
+		return "状态";
+	}
+
+	public String jgitClasspath() {
+		return "Classpath 中的 JGit";
+	}
+
+	public String jgitTodosLosArtefactos() {
+		return "所有 JGit 构件";
+	}
+
+	public String jgitRepositorio() {
+		return "仓库";
+	}
+
+	public String jgitRemote() {
+		return "远程";
+	}
+
+	public String jgitCarpetaActual() {
+		return "当前文件夹";
+	}
+
+	public String jgitNoSePudoCrearRepo() {
+		return "无法创建仓库。";
+	}
+
+	public String jgitEscribaRemote() {
+		return "输入远程仓库 URL：";
+	}
+
+	public String jgitNoSePudoGuardarRemote() {
+		return "无法保存远程仓库。";
+	}
+
+	public String jgitApiForgeAunNoImplementada() {
+		return "Forge API 尚未实现。";
+	}
+
+	public String jgitNoHayCambiosOError() {
+		return "没有可 Commit 的更改或发生错误。";
+	}
+
+	public String jgitNoSePudoPush() {
+		return "无法 Push。";
+	}
+
+	public String jgitTituloVentanaSwing() {
+		return "Git 查看器";
+	}
+
+	public String jgitNoHayRepositorio() {
+		return "此文件夹中没有 Git 仓库。";
+	}
+
+	public String jgitArchivosModificados() {
+		return "已修改的文件";
+	}
+
+	public String jgitArchivosNuevos() {
+		return "新文件";
+	}
+
+	public String jgitUltimosCommits() {
+		return "最近的 Commits";
+	}
+
+	public String jgitError() {
+		return "JGit 错误";
+	}
+
+	public String si() {
+		return "是";
+	}
+
+	public String no() {
+		return "否";
+	}
+
+	public String jgitDescargarDependenciasFaltantes() {
+		return "下载缺失的依赖项";
+	}
+
+	public String jgitNoFaltanDependencias() {
+		return "没有缺失的 JGit 依赖项。";
+	}
+
+	public String jgitConfirmarDescargaDependencias(int cantidad) {
+		return "缺少 " + cantidad + " 个 JGit 依赖项。您想从 Maven Central 下载它们吗？";
+	}
+
+	public String jgitDependenciasDescargadas(int cantidad) {
+		return "已下载依赖项: " + cantidad;
+	}
+
+	public String jgitErroresDescarga() {
+		return "下载错误";
+	}
+
+	public String jgitReiniciarParaCargarClasspath() {
+		return "请重启 CrashDetector，以便将新的 JAR 文件加载到 classpath 中。";
+	}
+
+	public String jgitArtefactosFaltantes() {
+		return "缺失的构件";
+	}
+
+	public String jgitArtefactosFaltantesClasspath() {
+		return "Classpath 中缺失的构件";
+	}
+
+	public String jgitArtefactosFaltantesCarpeta() {
+		return "安装文件夹中缺失的构件";
+	}
+
+	public String jgitDependenciasEnCarpeta() {
+		return "文件夹中已安装的依赖项";
+	}
+	public String jgitForgeNoSeleccionada() {
+	    return "未选择 Forge。";
+	}
+
+	public String jgitForgeNoRegistrada(String id) {
+	    return "Forge 未注册: " + id;
+	}
+
+	public String jgitEscribaUrlForge() {
+	    return "Forge URL：";
+	}
+
+	public String jgitEscribaNombreRepositorio() {
+	    return "仓库名称：";
+	}
+
+	public String jgitEscribaDescripcionRepositorio() {
+	    return "仓库描述：";
+	}
+
+	public String jgitEscribaNamespaceOpcional() {
+	    return "可选 Namespace：";
+	}
+
+	public String jgitEscribaTokenForge() {
+	    return "Forge API Token：";
+	}
+
+	public String jgitErrorCrearRemote() {
+	    return "创建 Remote 时出错";
+	}
+	
+	
+	
+	
+
 }

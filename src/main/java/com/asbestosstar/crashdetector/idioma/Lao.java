@@ -9290,4 +9290,237 @@ public class Lao implements Idioma {
 		return "ນຳເຂົ້າ Modpack: ຂອບ";
 	}
 
+	public String jgitTituloIzzy() {
+		return "ສູນ Git ຂອງ Izzy";
+	}
+
+	public String jgitRetratoIzzy() {
+		return "Izzy";
+	}
+
+	public String jgitNoHayRetratoIzzy() {
+		return "ບໍ່ມີຮູບຂອງ Izzy";
+	}
+
+	public String jgitSeccionInstalacion() {
+		return "ການຕິດຕັ້ງ JGit";
+	}
+
+	public String jgitAbrirCarpetaInstalacion() {
+		return "ເປີດໂຟลเดอร์ຕິດຕັ້ງ";
+	}
+
+	public String jgitAbrirPaginaDescarga() {
+		return "ເປີດໜ້າດາວໂຫຼດ JGit";
+	}
+
+	public String jgitSeccionRepositorio() {
+		return "ທີ່ເກັບຂໍ້ມູນທ້ອງຖິ່ນ";
+	}
+
+	public String jgitCrearRepositorioLocal() {
+		return "ສ້າງທີ່ເກັບຂໍ້ມູນ Git ທີ່ນີ້";
+	}
+
+	public String jgitCommitManual() {
+		return "Commit ດ້ວຍຕົນເອງ";
+	}
+
+	public String jgitSeccionRemote() {
+		return "Remote";
+	}
+
+	public String jgitForgeManual() {
+		return "ຄູ່ມື Forge";
+	}
+
+	public String jgitForgePersonalizado() {
+		return "Forge ແບບກຳນົດເອງ";
+	}
+
+	public String jgitEstablecerRemoteManual() {
+		return "ຕັ້ງຄ່າ Remote ດ້ວຍຕົນເອງ";
+	}
+
+	public String jgitCrearRemoteConAPI() {
+		return "ສ້າງ Remote ດ້ວຍ API";
+	}
+
+	public String jgitPushManual() {
+		return "Push ດ້ວຍຕົນເອງ";
+	}
+
+	public String jgitSeccionAutomaticos() {
+		return "ອັດຕະໂນມັດ";
+	}
+
+	public String jgitAutoCommitDespuesBackup() {
+		return "Commit ອັດຕະໂນມັດຫຼັງ Backup";
+	}
+
+	public String jgitAutoPushDespuesCommit() {
+		return "Push ອັດຕະໂນມັດຫຼັງ Commit";
+	}
+
+	public String jgitSeccionHerramientas() {
+		return "ເຄື່ອງມື";
+	}
+
+	public String jgitAbrirGuiSwing() {
+		return "ເປີດຕົວເບິ່ງ Swing ຂອງ JGit";
+	}
+
+	public String jgitEstado() {
+		return "ສະຖານະ";
+	}
+
+	public String jgitClasspath() {
+		return "JGit ໃນ classpath";
+	}
+
+	public String jgitTodosLosArtefactos() {
+		return "ອາຕິແຟັກ JGit ທັງໝົດ";
+	}
+
+	public String jgitRepositorio() {
+		return "ທີ່ເກັບຂໍ້ມູນ";
+	}
+
+	public String jgitRemote() {
+		return "Remote";
+	}
+
+	public String jgitCarpetaActual() {
+		return "ໂຟลเดอร์ປັດຈຸບັນ";
+	}
+
+	public String jgitNoSePudoCrearRepo() {
+		return "ບໍ່ສາມາດສ້າງທີ່ເກັບຂໍ້ມູນໄດ້.";
+	}
+
+	public String jgitEscribaRemote() {
+		return "ໃສ່ URL ຂອງ Remote:";
+	}
+
+	public String jgitNoSePudoGuardarRemote() {
+		return "ບໍ່ສາມາດບັນທຶກ Remote ໄດ້.";
+	}
+
+	public String jgitApiForgeAunNoImplementada() {
+		return "API ຂອງ Forge ຍັງບໍ່ທັນມີ.";
+	}
+
+	public String jgitNoHayCambiosOError() {
+		return "ບໍ່ມີການປ່ຽນແປງສຳລັບ Commit ຫຼື ເກີດຂໍ້ຜິດພາດ.";
+	}
+
+	public String jgitNoSePudoPush() {
+		return "ບໍ່ສາມາດ Push ໄດ້.";
+	}
+
+	public String jgitTituloVentanaSwing() {
+		return "ຕົວເບິ່ງ Git";
+	}
+
+	public String jgitNoHayRepositorio() {
+		return "ບໍ່ມີທີ່ເກັບຂໍ້ມູນ Git ໃນໂຟลเดอร์ນີ້.";
+	}
+
+	public String jgitArchivosModificados() {
+		return "ໄຟລ໌ທີ່ຖືກແກ້ໄຂ";
+	}
+
+	public String jgitArchivosNuevos() {
+		return "ໄຟລ໌ໃໝ່";
+	}
+
+	public String jgitUltimosCommits() {
+		return "Commits ລ່າສຸດ";
+	}
+
+	public String jgitError() {
+		return "ຂໍ້ຜິດພາດ JGit";
+	}
+
+	public String si() {
+		return "ແມ່ນ";
+	}
+
+	public String no() {
+		return "ບໍ່";
+	}
+
+	public String jgitDescargarDependenciasFaltantes() {
+		return "ດາວໂຫຼດການຂຶ້ນກັບທີ່ຂາດຫາຍ";
+	}
+
+	public String jgitNoFaltanDependencias() {
+		return "ບໍ່ມີການຂຶ້ນກັບຂອງ JGit ທີ່ຂາດຫາຍ.";
+	}
+
+	public String jgitConfirmarDescargaDependencias(int cantidad) {
+		return "ຂາດການຂຶ້ນກັບຂອງ JGit ຈຳນວນ " + cantidad + " ລາຍການ. ທ່ານຕ້ອງການດາວໂຫຼດຈາກ Maven Central ບໍ່?";
+	}
+
+	public String jgitDependenciasDescargadas(int cantidad) {
+		return "ດາວໂຫຼດການຂຶ້ນກັບແລ້ວ: " + cantidad;
+	}
+
+	public String jgitErroresDescarga() {
+		return "ຂໍ້ຜິດພາດໃນການດາວໂຫຼດ";
+	}
+
+	public String jgitReiniciarParaCargarClasspath() {
+		return "ກະລຸນາເປີດ CrashDetector ໃໝ່ ເພື່ອໃຫ້ JARs ໃໝ່ເຂົ້າສູ່ classpath.";
+	}
+
+	public String jgitArtefactosFaltantes() {
+		return "ອາຕິແຟັກທີ່ຂາດຫາຍ";
+	}
+
+	public String jgitArtefactosFaltantesClasspath() {
+		return "ອາຕິແຟັກທີ່ຂາດຫາຍໃນ classpath";
+	}
+
+	public String jgitArtefactosFaltantesCarpeta() {
+		return "ອາຕິແຟັກທີ່ຂາດຫາຍໃນໂຟลเดอร์ຕິດຕັ້ງ";
+	}
+
+	public String jgitDependenciasEnCarpeta() {
+		return "ການຂຶ້ນກັບທີ່ຕິດຕັ້ງໃນໂຟลเดอร์";
+	}
+	public String jgitForgeNoSeleccionada() {
+		return "ບໍ່ມີ forge ທີ່ຖືກເລືອກ.";
+	}
+
+	public String jgitForgeNoRegistrada(String id) {
+		return "Forge ບໍ່ໄດ້ລົງທະບຽນ: " + id;
+	}
+
+	public String jgitEscribaUrlForge() {
+		return "URL ຂອງ Forge:";
+	}
+
+	public String jgitEscribaNombreRepositorio() {
+		return "ຊື່ຂອງທີ່ເກັບຂໍ້ມູນ:";
+	}
+
+	public String jgitEscribaDescripcionRepositorio() {
+		return "ຄຳອະທິບາຍຂອງທີ່ເກັບຂໍ້ມູນ:";
+	}
+
+	public String jgitEscribaNamespaceOpcional() {
+		return "Namespace (ບໍ່ບັງຄັບ):";
+	}
+
+	public String jgitEscribaTokenForge() {
+		return "Token API ຂອງ Forge:";
+	}
+
+	public String jgitErrorCrearRemote() {
+		return "ຂໍ້ຜິດພາດໃນການສ້າງ remote";
+	}
+	
+	
+
 }

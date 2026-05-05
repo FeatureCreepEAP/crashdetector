@@ -356,6 +356,62 @@
 		</dependency>
 
 
+
+
+<dependency>
+    <groupId>org.eclipse.jgit</groupId>
+    <artifactId>org.eclipse.jgit</artifactId>
+    <version>5.13.3.202401111512-r</version>
+    <scope>provided</scope>
+</dependency>
+
+<dependency>
+    <groupId>org.eclipse.jgit</groupId>
+    <artifactId>org.eclipse.jgit.ssh.apache</artifactId>
+    <version>5.13.3.202401111512-r</version>
+    <scope>provided</scope>
+</dependency>
+
+
+
+<dependency>
+    <groupId>org.eclipse.jgit</groupId>
+    <artifactId>org.eclipse.jgit.http.apache</artifactId>
+    <version>5.13.3.202401111512-r</version>
+    <scope>provided</scope>
+</dependency>
+
+<dependency>
+    <groupId>org.eclipse.jgit</groupId>
+    <artifactId>org.eclipse.jgit.ui</artifactId>
+    <version>5.13.3.202401111512-r</version>
+    <scope>provided</scope>
+</dependency>
+
+<dependency>
+    <groupId>org.eclipse.jgit</groupId>
+    <artifactId>org.eclipse.jgit.archive</artifactId>
+    <version>5.13.3.202401111512-r</version>
+    <scope>provided</scope>
+</dependency>
+
+<dependency>
+    <groupId>org.eclipse.jgit</groupId>
+    <artifactId>org.eclipse.jgit.lfs</artifactId>
+    <version>5.13.3.202401111512-r</version>
+    <scope>provided</scope>
+</dependency>
+
+<dependency>
+    <groupId>org.eclipse.jgit</groupId>
+    <artifactId>org.eclipse.jgit.gpg.bc</artifactId>
+    <version>5.13.3.202401111512-r</version>
+    <scope>provided</scope>
+</dependency>
+
+
+
+
 	</dependencies>
 
 

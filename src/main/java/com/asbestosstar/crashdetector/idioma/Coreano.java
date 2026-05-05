@@ -8497,4 +8497,237 @@ public class Coreano implements Idioma {
 		return "모드 팩 가져오기: 테두리";
 	}
 
+	public String jgitTituloIzzy() {
+		return "Izzy의 Git 중심";
+	}
+
+	public String jgitRetratoIzzy() {
+		return "Izzy";
+	}
+
+	public String jgitNoHayRetratoIzzy() {
+		return "Izzy의 초상이 없습니다";
+	}
+
+	public String jgitSeccionInstalacion() {
+		return "JGit 설치";
+	}
+
+	public String jgitAbrirCarpetaInstalacion() {
+		return "설치 폴더 열기";
+	}
+
+	public String jgitAbrirPaginaDescarga() {
+		return "JGit 페이지 열기";
+	}
+
+	public String jgitSeccionRepositorio() {
+		return "로컬 저장소";
+	}
+
+	public String jgitCrearRepositorioLocal() {
+		return "여기에 Git 저장소 생성";
+	}
+
+	public String jgitCommitManual() {
+		return "수동 Commit";
+	}
+
+	public String jgitSeccionRemote() {
+		return "원격 저장소";
+	}
+
+	public String jgitForgeManual() {
+		return "수동";
+	}
+
+	public String jgitForgePersonalizado() {
+		return "사용자 정의 Forge";
+	}
+
+	public String jgitEstablecerRemoteManual() {
+		return "수동 원격 저장소 설정";
+	}
+
+	public String jgitCrearRemoteConAPI() {
+		return "API로 원격 저장소 생성";
+	}
+
+	public String jgitPushManual() {
+		return "수동 Push";
+	}
+
+	public String jgitSeccionAutomaticos() {
+		return "자동화";
+	}
+
+	public String jgitAutoCommitDespuesBackup() {
+		return "백업 후 자동 Commit";
+	}
+
+	public String jgitAutoPushDespuesCommit() {
+		return "Commit 후 자동 Push";
+	}
+
+	public String jgitSeccionHerramientas() {
+		return "도구";
+	}
+
+	public String jgitAbrirGuiSwing() {
+		return "JGit Swing 뷰어 열기";
+	}
+
+	public String jgitEstado() {
+		return "상태";
+	}
+
+	public String jgitClasspath() {
+		return "Classpath의 JGit";
+	}
+
+	public String jgitTodosLosArtefactos() {
+		return "모든 JGit 아티팩트";
+	}
+
+	public String jgitRepositorio() {
+		return "저장소";
+	}
+
+	public String jgitRemote() {
+		return "원격";
+	}
+
+	public String jgitCarpetaActual() {
+		return "현재 폴더";
+	}
+
+	public String jgitNoSePudoCrearRepo() {
+		return "저장소를 생성할 수 없습니다.";
+	}
+
+	public String jgitEscribaRemote() {
+		return "원격 저장소 URL을 입력하십시오:";
+	}
+
+	public String jgitNoSePudoGuardarRemote() {
+		return "원격 저장소를 저장할 수 없습니다.";
+	}
+
+	public String jgitApiForgeAunNoImplementada() {
+		return "Forge API는 아직 구현되지 않았습니다.";
+	}
+
+	public String jgitNoHayCambiosOError() {
+		return "Commit할 변경 사항이 없거나 오류가 발생했습니다.";
+	}
+
+	public String jgitNoSePudoPush() {
+		return "Push할 수 없습니다.";
+	}
+
+	public String jgitTituloVentanaSwing() {
+		return "Git 뷰어";
+	}
+
+	public String jgitNoHayRepositorio() {
+		return "이 폴더에 Git 저장소가 없습니다.";
+	}
+
+	public String jgitArchivosModificados() {
+		return "수정된 파일";
+	}
+
+	public String jgitArchivosNuevos() {
+		return "새 파일";
+	}
+
+	public String jgitUltimosCommits() {
+		return "최근 Commits";
+	}
+
+	public String jgitError() {
+		return "JGit 오류";
+	}
+
+	public String si() {
+		return "예";
+	}
+
+	public String no() {
+		return "아니오";
+	}
+
+	public String jgitDescargarDependenciasFaltantes() {
+		return "누락된 의존성 내려받기";
+	}
+
+	public String jgitNoFaltanDependencias() {
+		return "누락된 JGit 의존성이 없습니다.";
+	}
+
+	public String jgitConfirmarDescargaDependencias(int cantidad) {
+		return "JGit 의존성 " + cantidad + "개가 누락되였습니다. Maven Central에서 내려받으시겠습니까?";
+	}
+
+	public String jgitDependenciasDescargadas(int cantidad) {
+		return "내려받은 의존성: " + cantidad;
+	}
+
+	public String jgitErroresDescarga() {
+		return "내려받기 오류";
+	}
+
+	public String jgitReiniciarParaCargarClasspath() {
+		return "새로운 JAR 파일들이 classpath에 포함되도록 CrashDetector를 다시 시작하십시오.";
+	}
+
+	public String jgitArtefactosFaltantes() {
+		return "누락된 아티팩트";
+	}
+
+	public String jgitArtefactosFaltantesClasspath() {
+		return "Classpath에서 누락된 아티팩트";
+	}
+
+	public String jgitArtefactosFaltantesCarpeta() {
+		return "설치 폴더에서 누락된 아티팩트";
+	}
+
+	public String jgitDependenciasEnCarpeta() {
+		return "폴더에 설치된 의존성";
+	}
+	
+	public String jgitForgeNoSeleccionada() {
+	    return "선택된 Forge가 없습니다.";
+	}
+
+	public String jgitForgeNoRegistrada(String id) {
+	    return "Forge가 등록되지 않았습니다: " + id;
+	}
+
+	public String jgitEscribaUrlForge() {
+	    return "Forge URL:";
+	}
+
+	public String jgitEscribaNombreRepositorio() {
+	    return "저장소 이름:";
+	}
+
+	public String jgitEscribaDescripcionRepositorio() {
+	    return "저장소 설명:";
+	}
+
+	public String jgitEscribaNamespaceOpcional() {
+	    return "선택적 Namespace:";
+	}
+
+	public String jgitEscribaTokenForge() {
+	    return "Forge API 토큰:";
+	}
+
+	public String jgitErrorCrearRemote() {
+	    return "Remote 생성 오류";
+	}
+	
+
 }

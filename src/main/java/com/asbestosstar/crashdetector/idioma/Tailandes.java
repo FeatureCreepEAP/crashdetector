@@ -9052,4 +9052,240 @@ public class Tailandes implements Idioma {
 		return "นำเข้ามอดแพ็ก: ขอบ";
 	}
 
+	public String jgitTituloIzzy() {
+		return "ศูนย์ Git ของ Izzy";
+	}
+
+	public String jgitRetratoIzzy() {
+		return "Izzy";
+	}
+
+	public String jgitNoHayRetratoIzzy() {
+		return "ไม่มีรูปของ Izzy";
+	}
+
+	public String jgitSeccionInstalacion() {
+		return "การติดตั้ง JGit";
+	}
+
+	public String jgitAbrirCarpetaInstalacion() {
+		return "เปิดโฟลเดอร์การติดตั้ง";
+	}
+
+	public String jgitAbrirPaginaDescarga() {
+		return "เปิดหน้าดาวน์โหลด JGit";
+	}
+
+	public String jgitSeccionRepositorio() {
+		return "ที่เก็บข้อมูลท้องถิ่น";
+	}
+
+	public String jgitCrearRepositorioLocal() {
+		return "สร้างที่เก็บข้อมูล Git ที่นี่";
+	}
+
+	public String jgitCommitManual() {
+		return "Commit ด้วยตนเอง";
+	}
+
+	public String jgitSeccionRemote() {
+		return "Remote";
+	}
+
+	public String jgitForgeManual() {
+		return "คู่มือ Forge";
+	}
+
+	public String jgitForgePersonalizado() {
+		return "Forge แบบกำหนดเอง";
+	}
+
+	public String jgitEstablecerRemoteManual() {
+		return "ตั้งค่า Remote ด้วยตนเอง";
+	}
+
+	public String jgitCrearRemoteConAPI() {
+		return "สร้าง Remote ด้วย API";
+	}
+
+	public String jgitPushManual() {
+		return "Push ด้วยตนเอง";
+	}
+
+	public String jgitSeccionAutomaticos() {
+		return "การทำงานอัตโนมัติ";
+	}
+
+	public String jgitAutoCommitDespuesBackup() {
+		return "Commit อัตโนมัติหลังสำรองข้อมูล";
+	}
+
+	public String jgitAutoPushDespuesCommit() {
+		return "Push อัตโนมัติหลัง Commit";
+	}
+
+	public String jgitSeccionHerramientas() {
+		return "เครื่องมือ";
+	}
+
+	public String jgitAbrirGuiSwing() {
+		return "เปิดตัวดู Swing ของ JGit";
+	}
+
+	public String jgitEstado() {
+		return "สถานะ";
+	}
+
+	public String jgitClasspath() {
+		return "JGit ใน classpath";
+	}
+
+	public String jgitTodosLosArtefactos() {
+		return "อาร์ติแฟกต์ JGit ทั้งหมด";
+	}
+
+	public String jgitRepositorio() {
+		return "ที่เก็บข้อมูล";
+	}
+
+	public String jgitRemote() {
+		return "Remote";
+	}
+
+	public String jgitCarpetaActual() {
+		return "โฟลเดอร์ปัจจุบัน";
+	}
+
+	public String jgitNoSePudoCrearRepo() {
+		return "ไม่สามารถสร้างที่เก็บข้อมูลได้";
+	}
+
+	public String jgitEscribaRemote() {
+		return "ป้อน URL ของ Remote:";
+	}
+
+	public String jgitNoSePudoGuardarRemote() {
+		return "ไม่สามารถบันทึก Remote ได้";
+	}
+
+	public String jgitApiForgeAunNoImplementada() {
+		return "API ของ Forge ยังไม่ได้ใช้งาน";
+	}
+
+	public String jgitNoHayCambiosOError() {
+		return "ไม่มีการเปลี่ยนแปลงสำหรับ Commit หรือเกิดข้อผิดพลาด";
+	}
+
+	public String jgitNoSePudoPush() {
+		return "ไม่สามารถทำ Push ได้";
+	}
+
+	public String jgitTituloVentanaSwing() {
+		return "ตัวดู Git";
+	}
+
+	public String jgitNoHayRepositorio() {
+		return "ไม่มีที่เก็บข้อมูล Git ในโฟลเดอร์นี้";
+	}
+
+	public String jgitArchivosModificados() {
+		return "ไฟล์ที่แก้ไขแล้ว";
+	}
+
+	public String jgitArchivosNuevos() {
+		return "ไฟล์ใหม่";
+	}
+
+	public String jgitUltimosCommits() {
+		return "Commits ล่าสุด";
+	}
+
+	public String jgitError() {
+		return "ข้อผิดพลาดของ JGit";
+	}
+
+	public String si() {
+		return "ใช่";
+	}
+
+	public String no() {
+		return "ไม่";
+	}
+
+	public String jgitDescargarDependenciasFaltantes() {
+		return "ดาวน์โหลด dependencies ที่ขาดหาย";
+	}
+
+	public String jgitNoFaltanDependencias() {
+		return "ไม่มี dependencies ของ JGit ที่ขาดหาย";
+	}
+
+	public String jgitConfirmarDescargaDependencias(int cantidad) {
+		return "ขาดหาย dependencies ของ JGit จำนวน " + cantidad + " รายการ ต้องการดาวน์โหลดจาก Maven Central หรือไม่?";
+	}
+
+	public String jgitDependenciasDescargadas(int cantidad) {
+		return "ดาวน์โหลด dependencies แล้ว: " + cantidad;
+	}
+
+	public String jgitErroresDescarga() {
+		return "ข้อผิดพลาดในการดาวน์โหลด";
+	}
+
+	public String jgitReiniciarParaCargarClasspath() {
+		return "โปรดรีสตาร์ท CrashDetector เพื่อให้ JARs ใหม่เข้าสู่ classpath";
+	}
+
+	public String jgitArtefactosFaltantes() {
+		return "Artifacts ที่ขาดหาย";
+	}
+
+	public String jgitArtefactosFaltantesClasspath() {
+		return "Artifacts ที่ขาดหายใน classpath";
+	}
+
+	public String jgitArtefactosFaltantesCarpeta() {
+		return "Artifacts ที่ขาดหายในโฟลเดอร์การติดตั้ง";
+	}
+
+	public String jgitDependenciasEnCarpeta() {
+		return "Dependencies ที่ติดตั้งในโฟลเดอร์";
+	}
+	
+	public String jgitForgeNoSeleccionada() {
+		return "ไม่ได้เลือก Forge";
+	}
+
+	public String jgitForgeNoRegistrada(String id) {
+		return "Forge ไม่ได้ลงทะเบียน: " + id;
+	}
+
+	public String jgitEscribaUrlForge() {
+		return "URL ของ Forge:";
+	}
+
+	public String jgitEscribaNombreRepositorio() {
+		return "ชื่อที่เก็บข้อมูล:";
+	}
+
+	public String jgitEscribaDescripcionRepositorio() {
+		return "คำอธิบายที่เก็บข้อมูล:";
+	}
+
+	public String jgitEscribaNamespaceOpcional() {
+		return "Namespace (ไม่บังคับ):";
+	}
+
+	public String jgitEscribaTokenForge() {
+		return "Token API ของ Forge:";
+	}
+
+	public String jgitErrorCrearRemote() {
+		return "ข้อผิดพลาดในการสร้าง remote";
+	}
+	
+	
+	
+	
+
 }

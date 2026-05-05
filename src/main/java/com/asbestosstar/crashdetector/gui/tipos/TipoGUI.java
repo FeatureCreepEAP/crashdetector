@@ -35,6 +35,7 @@ import com.asbestosstar.crashdetector.gui.tipos.historia.HistoriaDeModsGUI;
 import com.asbestosstar.crashdetector.gui.tipos.ia.IAGUI;
 import com.asbestosstar.crashdetector.gui.tipos.importador.DialogoConflictoImportacionGUI;
 import com.asbestosstar.crashdetector.gui.tipos.importador.ImportadorModpackGUI;
+import com.asbestosstar.crashdetector.gui.tipos.jgit.JGitHubBase;
 import com.asbestosstar.crashdetector.gui.tipos.lanzeresbuenos.LanzerBuenoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lanzeresmalos.LanzerMaloGUI;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasGUI;
@@ -1033,6 +1034,31 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 	};
 
 	/**
+	 * Hub de JGit.
+	 */
+	public static TipoGUI<JGitHubBase> JGIT_HUB = new TipoGUI<JGitHubBase>() {
+		@Override
+		public String id() {
+			return "jgit_hub";
+		}
+
+		@Override
+		public String etiquetaDelBoton() {
+			return "Git";
+		}
+
+		@Override
+		public void registrarGUI(String id, Supplier<JGitHubBase> gui) {
+			JGitHubBase.GUIS.put(id, gui);
+		}
+
+		@Override
+		public Map<String, Supplier<JGitHubBase>> obtenerGUIs() {
+			return JGitHubBase.GUIS;
+		}
+	};
+
+	/**
 	 * Registro estático de todos los tipos de GUI en la lista global.
 	 */
 	static {
@@ -1076,6 +1102,7 @@ public abstract class TipoGUI<T extends CrashDetectorGUI> {
 		TIPOS_DE_GUI.add(ACTUALIZADOR_MODS);
 		TIPOS_DE_GUI.add(IMPORTADOR_CONFLICTO);
 		TIPOS_DE_GUI.add(IMPORTADOR_MODPACK);
+		TIPOS_DE_GUI.add(JGIT_HUB);
 
 	}
 }

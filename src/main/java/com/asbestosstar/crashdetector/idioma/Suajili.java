@@ -9302,4 +9302,238 @@ public class Suajili implements Idioma {
 		return "Kiingiza modpack: mpaka";
 	}
 
+	public String jgitTituloIzzy() {
+		return "Kituo cha Git cha Izzy";
+	}
+
+	public String jgitRetratoIzzy() {
+		return "Izzy";
+	}
+
+	public String jgitNoHayRetratoIzzy() {
+		return "Hakuna picha ya Izzy";
+	}
+
+	public String jgitSeccionInstalacion() {
+		return "Usakinishaji wa JGit";
+	}
+
+	public String jgitAbrirCarpetaInstalacion() {
+		return "Fungua folda ya usakinishaji";
+	}
+
+	public String jgitAbrirPaginaDescarga() {
+		return "Fungua ukurasa wa kupakua JGit";
+	}
+
+	public String jgitSeccionRepositorio() {
+		return "Hazina ya ndani";
+	}
+
+	public String jgitCrearRepositorioLocal() {
+		return "Unda hazina ya Git hapa";
+	}
+
+	public String jgitCommitManual() {
+		return "Commit ya mkono";
+	}
+
+	public String jgitSeccionRemote() {
+		return "Remote";
+	}
+
+	public String jgitForgeManual() {
+		return "Mwongozo wa Forge";
+	}
+
+	public String jgitForgePersonalizado() {
+		return "Forge maalum";
+	}
+
+	public String jgitEstablecerRemoteManual() {
+		return "Weka remote kwa mkono";
+	}
+
+	public String jgitCrearRemoteConAPI() {
+		return "Unda remote kwa kutumia API";
+	}
+
+	public String jgitPushManual() {
+		return "Push ya mkono";
+	}
+
+	public String jgitSeccionAutomaticos() {
+		return "Otomatiki";
+	}
+
+	public String jgitAutoCommitDespuesBackup() {
+		return "Commit otomatiki baada ya backup";
+	}
+
+	public String jgitAutoPushDespuesCommit() {
+		return "Push otomatiki baada ya commit";
+	}
+
+	public String jgitSeccionHerramientas() {
+		return "Zana";
+	}
+
+	public String jgitAbrirGuiSwing() {
+		return "Fungua kioo cha Swing cha JGit";
+	}
+
+	public String jgitEstado() {
+		return "Hali";
+	}
+
+	public String jgitClasspath() {
+		return "JGit katika classpath";
+	}
+
+	public String jgitTodosLosArtefactos() {
+		return "Vitufe vyote vya JGit";
+	}
+
+	public String jgitRepositorio() {
+		return "Hazina";
+	}
+
+	public String jgitRemote() {
+		return "Remote";
+	}
+
+	public String jgitCarpetaActual() {
+		return "Folda ya sasa";
+	}
+
+	public String jgitNoSePudoCrearRepo() {
+		return "Haikuweza kuunda hazina.";
+	}
+
+	public String jgitEscribaRemote() {
+		return "Andika URL ya remote:";
+	}
+
+	public String jgitNoSePudoGuardarRemote() {
+		return "Haikuweza kuhifadhi remote.";
+	}
+
+	public String jgitApiForgeAunNoImplementada() {
+		return "API ya Forge bado haijatekelezwa.";
+	}
+
+	public String jgitNoHayCambiosOError() {
+		return "Hakuna mabadiliko ya commit au kulikuwa na hitilafu.";
+	}
+
+	public String jgitNoSePudoPush() {
+		return "Haikuweza kufanya push.";
+	}
+
+	public String jgitTituloVentanaSwing() {
+		return "Kioo cha Git";
+	}
+
+	public String jgitNoHayRepositorio() {
+		return "Hakuna hazina ya Git katika folda hii.";
+	}
+
+	public String jgitArchivosModificados() {
+		return "Faili zilizobadilishwa";
+	}
+
+	public String jgitArchivosNuevos() {
+		return "Faili mpya";
+	}
+
+	public String jgitUltimosCommits() {
+		return "Commits za hivi karibuni";
+	}
+
+	public String jgitError() {
+		return "Hitilafu ya JGit";
+	}
+
+	public String si() {
+		return "Ndiyo";
+	}
+
+	public String no() {
+		return "Hapana";
+	}
+
+	public String jgitDescargarDependenciasFaltantes() {
+		return "Pakua tegemezi zinazokosekana";
+	}
+
+	public String jgitNoFaltanDependencias() {
+		return "Hakuna tegemezi za JGit zinazokosekana.";
+	}
+
+	public String jgitConfirmarDescargaDependencias(int cantidad) {
+		return "Tegemezi " + cantidad + " za JGit zinakosekana. Je, unataka kuzipakua kutoka Maven Central?";
+	}
+
+	public String jgitDependenciasDescargadas(int cantidad) {
+		return "Tegemezi zilizopakuliwa: " + cantidad;
+	}
+
+	public String jgitErroresDescarga() {
+		return "Hitilafu za upakuaji";
+	}
+
+	public String jgitReiniciarParaCargarClasspath() {
+		return "Anzisha tena CrashDetector ili JARs mpya ziingie kwenye classpath.";
+	}
+
+	public String jgitArtefactosFaltantes() {
+		return "Vitufe vinavyokosekana";
+	}
+
+	public String jgitArtefactosFaltantesClasspath() {
+		return "Vitufe vinavyokosekana katika classpath";
+	}
+
+	public String jgitArtefactosFaltantesCarpeta() {
+		return "Vitufe vinavyokosekana katika folda ya usakinishaji";
+	}
+
+	public String jgitDependenciasEnCarpeta() {
+		return "Tegemezi zilizosakinishwa kwenye folda";
+	}
+	
+	public String jgitForgeNoSeleccionada() {
+		return "Hakuna forge iliyochaguliwa.";
+	}
+
+	public String jgitForgeNoRegistrada(String id) {
+		return "Forge haijasajiliwa: " + id;
+	}
+
+	public String jgitEscribaUrlForge() {
+		return "URL ya forge:";
+	}
+
+	public String jgitEscribaNombreRepositorio() {
+		return "Jina la hazina:";
+	}
+
+	public String jgitEscribaDescripcionRepositorio() {
+		return "Maelezo ya hazina:";
+	}
+
+	public String jgitEscribaNamespaceOpcional() {
+		return "Namespace ya hiari:";
+	}
+
+	public String jgitEscribaTokenForge() {
+		return "Token ya API ya forge:";
+	}
+
+	public String jgitErrorCrearRemote() {
+		return "Hitilafu katika kuunda remote";
+	}
+	
+	
+
 }

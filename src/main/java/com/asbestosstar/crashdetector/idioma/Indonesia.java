@@ -9403,4 +9403,239 @@ public class Indonesia implements Idioma {
 		return "Pengimpor Modpack: batas";
 	}
 
+	public String jgitTituloIzzy() {
+		return "Pusat Git Izzy";
+	}
+
+	public String jgitRetratoIzzy() {
+		return "Izzy";
+	}
+
+	public String jgitNoHayRetratoIzzy() {
+		return "Tidak ada potret Izzy";
+	}
+
+	public String jgitSeccionInstalacion() {
+		return "Instalasi JGit";
+	}
+
+	public String jgitAbrirCarpetaInstalacion() {
+		return "Buka folder instalasi";
+	}
+
+	public String jgitAbrirPaginaDescarga() {
+		return "Buka halaman JGit";
+	}
+
+	public String jgitSeccionRepositorio() {
+		return "Repositori Lokal";
+	}
+
+	public String jgitCrearRepositorioLocal() {
+		return "Buat repositori Git di sini";
+	}
+
+	public String jgitCommitManual() {
+		return "Commit Manual";
+	}
+
+	public String jgitSeccionRemote() {
+		return "Remote";
+	}
+
+	public String jgitForgeManual() {
+		return "Manual";
+	}
+
+	public String jgitForgePersonalizado() {
+		return "Forge Kustom";
+	}
+
+	public String jgitEstablecerRemoteManual() {
+		return "Atur remote manual";
+	}
+
+	public String jgitCrearRemoteConAPI() {
+		return "Buat remote dengan API";
+	}
+
+	public String jgitPushManual() {
+		return "Push Manual";
+	}
+
+	public String jgitSeccionAutomaticos() {
+		return "Otomatisasi";
+	}
+
+	public String jgitAutoCommitDespuesBackup() {
+		return "Commit otomatis setelah backup";
+	}
+
+	public String jgitAutoPushDespuesCommit() {
+		return "Push otomatis setelah commit";
+	}
+
+	public String jgitSeccionHerramientas() {
+		return "Alat";
+	}
+
+	public String jgitAbrirGuiSwing() {
+		return "Buka penampil Swing JGit";
+	}
+
+	public String jgitEstado() {
+		return "Status";
+	}
+
+	public String jgitClasspath() {
+		return "JGit di classpath";
+	}
+
+	public String jgitTodosLosArtefactos() {
+		return "Semua artefak JGit";
+	}
+
+	public String jgitRepositorio() {
+		return "Repositori";
+	}
+
+	public String jgitRemote() {
+		return "Remote";
+	}
+
+	public String jgitCarpetaActual() {
+		return "Folder saat ini";
+	}
+
+	public String jgitNoSePudoCrearRepo() {
+		return "Gagal membuat repositori.";
+	}
+
+	public String jgitEscribaRemote() {
+		return "Masukkan URL remote:";
+	}
+
+	public String jgitNoSePudoGuardarRemote() {
+		return "Gagal menyimpan remote.";
+	}
+
+	public String jgitApiForgeAunNoImplementada() {
+		return "API forge belum diimplementasikan.";
+	}
+
+	public String jgitNoHayCambiosOError() {
+		return "Tidak ada perubahan untuk commit atau terjadi kesalahan.";
+	}
+
+	public String jgitNoSePudoPush() {
+		return "Gagal melakukan push.";
+	}
+
+	public String jgitTituloVentanaSwing() {
+		return "Penampil Git";
+	}
+
+	public String jgitNoHayRepositorio() {
+		return "Tidak ada repositori Git di folder ini.";
+	}
+
+	public String jgitArchivosModificados() {
+		return "File yang dimodifikasi";
+	}
+
+	public String jgitArchivosNuevos() {
+		return "File baru";
+	}
+
+	public String jgitUltimosCommits() {
+		return "Commit terbaru";
+	}
+
+	public String jgitError() {
+		return "Kesalahan JGit";
+	}
+
+	public String si() {
+		return "Ya";
+	}
+
+	public String no() {
+		return "Tidak";
+	}
+
+	public String jgitDescargarDependenciasFaltantes() {
+		return "Unduh dependensi yang hilang";
+	}
+
+	public String jgitNoFaltanDependencias() {
+		return "Tidak ada dependensi JGit yang hilang.";
+	}
+
+	public String jgitConfirmarDescargaDependencias(int cantidad) {
+		return "Ada " + cantidad + " dependensi JGit yang hilang. Apakah Anda ingin mengunduhnya dari Maven Central?";
+	}
+
+	public String jgitDependenciasDescargadas(int cantidad) {
+		return "Dependensi diunduh: " + cantidad;
+	}
+
+	public String jgitErroresDescarga() {
+		return "Kesalahan pengunduhan";
+	}
+
+	public String jgitReiniciarParaCargarClasspath() {
+		return "Mulai ulang CrashDetector agar JAR baru masuk ke classpath.";
+	}
+
+	public String jgitArtefactosFaltantes() {
+		return "Artefak yang hilang";
+	}
+
+	public String jgitArtefactosFaltantesClasspath() {
+		return "Artefak yang hilang di classpath";
+	}
+
+	public String jgitArtefactosFaltantesCarpeta() {
+		return "Artefak yang hilang di folder instalasi";
+	}
+
+	public String jgitDependenciasEnCarpeta() {
+		return "Dependensi yang terinstal di folder";
+	}
+	
+	public String jgitForgeNoSeleccionada() {
+	    return "Tidak ada forge yang dipilih.";
+	}
+
+	public String jgitForgeNoRegistrada(String id) {
+	    return "Forge tidak terdaftar: " + id;
+	}
+
+	public String jgitEscribaUrlForge() {
+	    return "URL Forge:";
+	}
+
+	public String jgitEscribaNombreRepositorio() {
+	    return "Nama repositori:";
+	}
+
+	public String jgitEscribaDescripcionRepositorio() {
+	    return "Deskripsi repositori:";
+	}
+
+	public String jgitEscribaNamespaceOpcional() {
+	    return "Namespace opsional:";
+	}
+
+	public String jgitEscribaTokenForge() {
+	    return "Token API Forge:";
+	}
+
+	public String jgitErrorCrearRemote() {
+	    return "Kesalahan saat membuat remote";
+	}
+	
+	
+	
+
 }

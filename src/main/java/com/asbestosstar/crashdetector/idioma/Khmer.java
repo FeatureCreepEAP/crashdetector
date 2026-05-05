@@ -9025,4 +9025,240 @@ public class Khmer implements Idioma {
 		return "ឧបករណ៍នាំចូល Modpack: គែម";
 	}
 
+	public String jgitTituloIzzy() {
+		return "មជ្ឈមណ្ឌល Git របស់ Izzy";
+	}
+
+	public String jgitRetratoIzzy() {
+		return "Izzy";
+	}
+
+	public String jgitNoHayRetratoIzzy() {
+		return "គ្មានរូបភាព Izzy";
+	}
+
+	public String jgitSeccionInstalacion() {
+		return "ការដំឡើង JGit";
+	}
+
+	public String jgitAbrirCarpetaInstalacion() {
+		return "បើកថតដំឡើង";
+	}
+
+	public String jgitAbrirPaginaDescarga() {
+		return "បើកទំព័រ JGit";
+	}
+
+	public String jgitSeccionRepositorio() {
+		return "ឃ្លាំងមូលដ្ឋាន";
+	}
+
+	public String jgitCrearRepositorioLocal() {
+		return "បង្កើតឃ្លាំង Git នៅទីនេះ";
+	}
+
+	public String jgitCommitManual() {
+		return "Commit ដោយដៃ";
+	}
+
+	public String jgitSeccionRemote() {
+		return "Remote";
+	}
+
+	public String jgitForgeManual() {
+		return "ដោយដៃ";
+	}
+
+	public String jgitForgePersonalizado() {
+		return "Forge ផ្ទាល់ខ្លួន";
+	}
+
+	public String jgitEstablecerRemoteManual() {
+		return "កំណត់ remote ដោយដៃ";
+	}
+
+	public String jgitCrearRemoteConAPI() {
+		return "បង្កើត remote ជាមួយ API";
+	}
+
+	public String jgitPushManual() {
+		return "Push ដោយដៃ";
+	}
+
+	public String jgitSeccionAutomaticos() {
+		return "ស្វ័យប្រវត្តិកម្ម";
+	}
+
+	public String jgitAutoCommitDespuesBackup() {
+		return "Commit ស្វ័យប្រវត្តិបន្ទាប់ពីបម្រុងទុក";
+	}
+
+	public String jgitAutoPushDespuesCommit() {
+		return "Push ស្វ័យប្រវត្តិបន្ទាប់ពី commit";
+	}
+
+	public String jgitSeccionHerramientas() {
+		return "ឧបករណ៍";
+	}
+
+	public String jgitAbrirGuiSwing() {
+		return "បើកកម្មវិធីមើល Swing JGit";
+	}
+
+	public String jgitEstado() {
+		return "ស្ថានភាព";
+	}
+
+	public String jgitClasspath() {
+		return "JGit នៅក្នុង classpath";
+	}
+
+	public String jgitTodosLosArtefactos() {
+		return "អាតិផាក់ JGit ទាំងអស់";
+	}
+
+	public String jgitRepositorio() {
+		return "ឃ្លាំង";
+	}
+
+	public String jgitRemote() {
+		return "Remote";
+	}
+
+	public String jgitCarpetaActual() {
+		return "ថតបច្ចុប្បន្ន";
+	}
+
+	public String jgitNoSePudoCrearRepo() {
+		return "មិនអាចបង្កើតឃ្លាំងបានទេ។";
+	}
+
+	public String jgitEscribaRemote() {
+		return "សូមបញ្ចូល URL remote:";
+	}
+
+	public String jgitNoSePudoGuardarRemote() {
+		return "មិនអាចរក្សាទុក remote បានទេ។";
+	}
+
+	public String jgitApiForgeAunNoImplementada() {
+		return "API របស់ forge មិនទាន់ត្រូវបានអនុវត្តនៅឡើយទេ។";
+	}
+
+	public String jgitNoHayCambiosOError() {
+		return "គ្មានការផ្លាស់ប្តូរសម្រាប់ commit ឬមានកំហុសកើតឡើង។";
+	}
+
+	public String jgitNoSePudoPush() {
+		return "មិនអាច push បានទេ។";
+	}
+
+	public String jgitTituloVentanaSwing() {
+		return "កម្មវិធីមើល Git";
+	}
+
+	public String jgitNoHayRepositorio() {
+		return "គ្មានឃ្លាំង Git នៅក្នុងថតនេះទេ។";
+	}
+
+	public String jgitArchivosModificados() {
+		return "ឯកសារដែលបានកែប្រែ";
+	}
+
+	public String jgitArchivosNuevos() {
+		return "ឯកសារថ្មី";
+	}
+
+	public String jgitUltimosCommits() {
+		return "Commits ចុងក្រោយ";
+	}
+
+	public String jgitError() {
+		return "កំហុស JGit";
+	}
+
+	public String si() {
+		return "បាទ/ចាស";
+	}
+
+	public String no() {
+		return "ទេ";
+	}
+
+	public String jgitDescargarDependenciasFaltantes() {
+		return "ទាញយកភាពអាស្រ័យដែលបាត់";
+	}
+
+	public String jgitNoFaltanDependencias() {
+		return "គ្មានភាពអាស្រ័យ JGit ដែលបាត់ទេ។";
+	}
+
+	public String jgitConfirmarDescargaDependencias(int cantidad) {
+		return "ខ្វះភាពអាស្រ័យ JGitចំនួន " + cantidad + "។ តើអ្នកចង់ទាញយកវាពី Maven Central ទេ?";
+	}
+
+	public String jgitDependenciasDescargadas(int cantidad) {
+		return "ភាពអាស្រ័យបានទាញយក: " + cantidad;
+	}
+
+	public String jgitErroresDescarga() {
+		return "កំហុសក្នុងការទាញយក";
+	}
+
+	public String jgitReiniciarParaCargarClasspath() {
+		return "សូមចាប់ផ្តើម CrashDetector ឡើងវិញ ដើម្បីឱ្យឯកសារ JAR ថ្មីៗត្រូវបានបញ្ចូលទៅក្នុង classpath។";
+	}
+
+	public String jgitArtefactosFaltantes() {
+		return "អាតិផាក់ដែលបាត់";
+	}
+
+	public String jgitArtefactosFaltantesClasspath() {
+		return "អាតិផាក់ដែលបាត់នៅក្នុង classpath";
+	}
+
+	public String jgitArtefactosFaltantesCarpeta() {
+		return "អាតិផាក់ដែលបាត់នៅក្នុងថតដំឡើង";
+	}
+
+	public String jgitDependenciasEnCarpeta() {
+		return "ភាពអាស្រ័យដែលបានដំឡើងនៅក្នុងថត";
+	}
+	public String jgitForgeNoSeleccionada() {
+	    return "មិនមាន Forge ដែលបានជ្រើសរើសទេ។";
+	}
+
+	public String jgitForgeNoRegistrada(String id) {
+	    return "Forge មិនបានចុះបញ្ជីទេ: " + id;
+	}
+
+	public String jgitEscribaUrlForge() {
+	    return "URL Forge:";
+	}
+
+	public String jgitEscribaNombreRepositorio() {
+	    return "ឈ្មោះឃ្លាំង:";
+	}
+
+	public String jgitEscribaDescripcionRepositorio() {
+	    return "ការពិពណ៌នាឃ្លាំង:";
+	}
+
+	public String jgitEscribaNamespaceOpcional() {
+	    return "Namespace ជាជម្រើស:";
+	}
+
+	public String jgitEscribaTokenForge() {
+	    return "Token API Forge:";
+	}
+
+	public String jgitErrorCrearRemote() {
+	    return "កំហុសក្នុងការបង្កើត remote";
+	}
+	
+	
+	
+	
+	
+
 }

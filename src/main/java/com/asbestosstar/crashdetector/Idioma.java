@@ -3402,4 +3402,117 @@ public interface Idioma {
 
 	public String importadorModpackColorBorde();
 
+	public String jgitTituloIzzy();
+
+	public String jgitRetratoIzzy();
+
+	public String jgitNoHayRetratoIzzy();
+
+	public String jgitSeccionInstalacion();
+
+	public String jgitAbrirCarpetaInstalacion();
+
+	public String jgitAbrirPaginaDescarga();
+
+	public String jgitSeccionRepositorio();
+
+	public String jgitCrearRepositorioLocal();
+
+	public String jgitCommitManual();
+
+	public String jgitSeccionRemote();
+
+	public String jgitForgeManual();
+
+	public String jgitForgePersonalizado();
+
+	public String jgitEstablecerRemoteManual();
+
+	public String jgitCrearRemoteConAPI();
+
+	public String jgitPushManual();
+
+	public String jgitSeccionAutomaticos();
+
+	public String jgitAutoCommitDespuesBackup();
+
+	public String jgitAutoPushDespuesCommit();
+
+	public String jgitSeccionHerramientas();
+
+	public String jgitAbrirGuiSwing();
+
+	public String jgitEstado();
+
+	public String jgitClasspath();
+
+	public String jgitTodosLosArtefactos();
+
+	public String jgitRepositorio();
+
+	public String jgitRemote();
+
+	public String jgitCarpetaActual();
+
+	public String jgitNoSePudoCrearRepo();
+
+	public String jgitEscribaRemote();
+
+	public String jgitNoSePudoGuardarRemote();
+
+	public String jgitApiForgeAunNoImplementada();
+
+	public String jgitNoHayCambiosOError();
+
+	public String jgitNoSePudoPush();
+
+	public String jgitTituloVentanaSwing();
+
+	public String jgitNoHayRepositorio();
+
+	public String jgitArchivosModificados();
+
+	public String jgitArchivosNuevos();
+
+	public String jgitUltimosCommits();
+
+	public String jgitError();
+
+	public String si();
+
+	public String no();
+
+	public String jgitDescargarDependenciasFaltantes();
+
+	public String jgitNoFaltanDependencias();
+
+	public String jgitConfirmarDescargaDependencias(int size);
+
+	public String jgitDependenciasDescargadas(int totalDescargadas);
+
+	public String jgitErroresDescarga();
+
+	public String jgitReiniciarParaCargarClasspath();
+
+	public String jgitArtefactosFaltantes();
+
+	public String jgitArtefactosFaltantesClasspath();
+
+	public String jgitDependenciasEnCarpeta();
+
+	public String jgitArtefactosFaltantesCarpeta();
+
+	public String jgitForgeNoSeleccionada();
+	public String jgitForgeNoRegistrada(String id);
+	public String jgitEscribaUrlForge();
+	public String jgitEscribaNombreRepositorio();
+	public String jgitEscribaDescripcionRepositorio();
+	public String jgitEscribaNamespaceOpcional();
+	public String jgitEscribaTokenForge();
+	public String jgitErrorCrearRemote();
+	
+	
+	
+	
+	
 }
