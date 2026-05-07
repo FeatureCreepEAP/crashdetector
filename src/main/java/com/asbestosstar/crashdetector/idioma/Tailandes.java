@@ -9283,6 +9283,98 @@ public class Tailandes implements Idioma {
 	public String jgitErrorCrearRemote() {
 		return "ข้อผิดพลาดในการสร้าง remote";
 	}
+	@Override
+	public String mensajeControlifyRemoveReloadingScreen() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "ตรวจพบความไม่เข้ากันระหว่าง Controlify และ Remove Reloading Screen</b>"
+				+ "<p>ล็อกมีบรรทัด <b>Attempted to fetch default config before DefaultConfigManager was ready!</b> "
+				+ "และ <b>$rrls$init</b> ซึ่งมักบ่งชี้ถึงความขัดแย้งระหว่าง <b>Controlify</b> และ "
+				+ "<b>Remove Reloading Screen</b></p>"
+				+ "<p><b>สาเหตุที่เป็นไปได้:</b> Remove Reloading Screen แก้ไขส่วนต่างๆ ของหน้าจอโหลดหรือกระบวนการโหลด, "
+				+ "ในขณะที่ Controlify พยายามเริ่มต้นการตั้งค่าก่อนที่ระบบจะพร้อมสมบูรณ์</p>"
+				+ "<p><b>ตัวเลือกที่แนะนำ:</b></p>"
+				+ "<ul>"
+				+ "<li>ลบ <b>Remove Reloading Screen</b></li>"
+				+ "<li>หรืออัปเดต <b>Controlify</b> และ <b>Remove Reloading Screen</b> หากมีเวอร์ชันใหม่</li>"
+				+ "<li>หากปัญหายังคงอยู่ ให้เก็บ <b>Controlify</b> ไว้และลบมอดใดๆ ที่เปลี่ยนหน้าจอโหลด</li>"
+				+ "</ul>"
+				+ "<p>มอดที่แก้ไขหน้าจอโหลดมักทำให้เกิดความไม่เข้ากันกับมอดอื่น, "
+				+ "และมักให้ประโยชน์น้อยเมื่อเทียบกับปัญหาที่อาจเกิดขึ้น</p>";
+	}
+
+	@Override
+	public String nombreControlifyRemoveReloadingScreen() {
+		return "ความไม่เข้ากัน: Controlify กับ Remove Reloading Screen";
+	}
+	@Override
+	public String mensajeBiomesOPlentyFogDataLiquidosPersonalizados() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "ปัญหาที่เป็นไปได้กับ Biomes O' Plenty และของเหลวที่กำหนดเอง</b>"
+				+ "<p>ล็อกมีข้อผิดพลาด <b>class org.joml.Vector4f cannot be cast to class "
+				+ "net.minecraft.client.renderer.fog.FogData</b> พร้อมกับการอ้างอิงถึง <b>Biomes O' Plenty</b></p>"
+				+ "<p>สิ่งนี้อาจเกี่ยวข้องกับ <b>Biomes O' Plenty</b> โดยเฉพาะกับไบโอม หมอก "
+				+ "หรือของเหลวที่กำหนดเอง อย่างไรก็ตาม ไม่แน่ชัดว่า Biomes O' Plenty เป็นสาเหตุเดียว</p>"
+				+ "<p><b>ตัวเลือกที่แนะนำ:</b></p>"
+				+ "<ul>"
+				+ "<li>ลองแก้ไขข้อมูลผู้เล่นเพื่อย้ายไปยังตำแหน่งอื่นในโลก</li>"
+				+ "<li>ลองโหลดโลกโดยไม่มี <b>Biomes O' Plenty</b></li>"
+				+ "<li>หากโลกโหลดได้หลังจากย้ายผู้เล่น ปัญหาอาจเกิดขึ้นในพื้นที่เฉพาะ "
+				+ "ไบโอมเฉพาะ หรือของเหลวที่กำหนดเองที่อยู่ใกล้เคียง</li>"
+				+ "<li>คุณยังสามารถลองอัปเดต <b>Biomes O' Plenty</b> และมอดที่เกี่ยวข้องกับการเรนเดอร์ หมอก "
+				+ "เชเดอร์ หรือมิติ</li>"
+				+ "</ul>"
+				+ "<p>หากการลบ Biomes O' Plenty ทำให้เริ่มเกมได้ ตรวจสอบว่าผู้เล่นอยู่ในหรือใกล้กับไบโอม "
+				+ "หรือของไหลที่เพิ่มโดยมอดนั้นหรือไม่</p>";
+	}
+
+	@Override
+	public String nombreBiomesOPlentyFogDataLiquidosPersonalizados() {
+		return "ปัญหาที่เป็นไปได้: Biomes O' Plenty และ FogData";
+	}
+	@Override
+	public String mensajeKotlinReflectionInternalErrorVersion() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "ตรวจพบข้อผิดพลาดภายในของการสะท้อน Kotlin</b>"
+				+ "<p>ล็อกมี <b>kotlin.reflect.jvm.internal.KotlinReflectionInternalError</b> พร้อมข้อความที่คล้ายกับ "
+				+ "<b>Property 'none' not resolved</b></p>"
+				+ "<p>ข้อผิดพลาดประเภทนี้พบบ่อยกับบางเวอร์ชันของ <b>Fabric Language Kotlin</b> / <b>Kotlin</b> "
+				+ "ในกรณีนี้ปรากฏคลาสจาก <b>Inventory Profiles Next</b> แต่ปัญหาเดียวกันนี้อาจเกิดขึ้น "
+				+ "กับมอดอื่น ๆ ที่ใช้ Kotlin</p>"
+				+ "<p><b>ตัวเลือกที่แนะนำ:</b></p>"
+				+ "<ul>"
+				+ "<li>อัปเดต <b>Fabric Language Kotlin</b> เป็นเวอร์ชัน <b>2.3.40</b> หากมีสำหรับเวอร์ชัน Minecraft ของคุณ</li>"
+				+ "<li>หากการอัปเดตไม่ได้ผล ลองลดเวอร์ชัน <b>Fabric Language Kotlin</b> ลงเป็น <b>2.3.10</b></li>"
+				+ "<li>อัปเดต <b>Inventory Profiles Next</b> ด้วยหากล็อกกล่าวถึงคลาสของมอดนั้น</li>"
+				+ "<li>หากข้อผิดพลาดปรากฏกับมอดอื่น ตรวจสอบว่ามอดนั้นขึ้นอยู่กับ Kotlin และลองเปลี่ยนเวอร์ชันของ "
+				+ "<b>Fabric Language Kotlin</b></li>"
+				+ "</ul>"
+				+ "<p>ข้อมูลอ้างอิงทางเทคนิคที่เกี่ยวข้อง: "
+				+ "<a href='https://github.com/FabricMC/fabric-language-kotlin/issues/183'>ปัญหา #183 ของ Fabric Language Kotlin</a></p>";
+	}
+
+	@Override
+	public String nombreKotlinReflectionInternalErrorVersion() {
+		return "ข้อผิดพลาด Kotlin: การสะท้อนภายใน";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

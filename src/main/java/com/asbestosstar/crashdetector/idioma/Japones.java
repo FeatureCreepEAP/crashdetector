@@ -8739,6 +8739,91 @@ public class Japones implements Idioma {
 	public String jgitErrorCrearRemote() {
 	    return "Remote の作成エラー";
 	}
+	@Override
+	public String mensajeControlifyRemoveReloadingScreen() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Controlify と Remove Reloading Screen の間に非互換性が検出されました。</b>"
+				+ "<p>ログには <b>Attempted to fetch default config before DefaultConfigManager was ready!</b> "
+				+ "および <b>$rrls$init</b> という行が含まれており、これは通常 <b>Controlify</b> と "
+				+ "<b>Remove Reloading Screen</b> の間の競合を示しています。</p>"
+				+ "<p><b>考えられる原因：</b>Remove Reloading Screen は読み込み画面または読み込みプロセスの一部を変更しますが、 "
+				+ "Controlify はシステムが完全に準備できる前に構成を初期化しようとします。</p>"
+				+ "<p><b>推奨されるオプション：</b></p>"
+				+ "<ul>"
+				+ "<li><b>Remove Reloading Screen</b> を削除してください。</li>"
+				+ "<li>新しいバージョンが利用可能な場合は、<b>Controlify</b> と <b>Remove Reloading Screen</b> を更新してください。</li>"
+				+ "<li>問題が続く場合は、<b>Controlify</b> を維持し、読み込み画面を変更するすべての MOD を削除してください。</li>"
+				+ "</ul>"
+				+ "<p>読み込み画面を変更する MOD は、他の MOD との非互換性を引き起こすことが多く、 "
+				+ "引き起こす可能性のある問題と比較して、実用的な利点はほとんどありません。</p>";
+	}
+
+	@Override
+	public String nombreControlifyRemoveReloadingScreen() {
+		return "非互換性: Controlify 対 Remove Reloading Screen";
+	}
+	
+	
+	
+	@Override
+	public String mensajeBiomesOPlentyFogDataLiquidosPersonalizados() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Biomes O' Plenty とカスタム液体の間に問題が発生している可能性があります。</b>"
+				+ "<p>ログにはエラー <b>class org.joml.Vector4f cannot be cast to class "
+				+ "net.minecraft.client.renderer.fog.FogData</b> および <b>Biomes O' Plenty</b> への参照が含まれています。</p>"
+				+ "<p>これはおそらく <b>Biomes O' Plenty</b>、特にバイオーム、霧 "
+				+ "またはカスタム液体に関連しています。ただし、Biomes O' Plenty が唯一の原因であるとは限りません。</p>"
+				+ "<p><b>推奨されるオプション：</b></p>"
+				+ "<ul>"
+				+ "<li>プレイヤーデータを編集して、ワールド内の別の場所に移動させてみてください。</li>"
+				+ "<li><b>Biomes O' Plenty</b> なしでワールドを読み込んでみてください。</li>"
+				+ "<li>プレイヤーを移動させた後にワールドが読み込まれる場合、問題は特定のエリア、 "
+				+ "特定のバイオーム、または近くのカスタム液体で発生している可能性があります。</li>"
+				+ "<li><b>Biomes O' Plenty</b> およびレンダリング、霧、 "
+				+ "シェーダー、またはディメンションに関連する MOD を更新してみてください。</li>"
+				+ "</ul>"
+				+ "<p>Biomes O' Plenty を削除するとゲームが起動する場合、プレイヤーがその MOD で追加されたバイオーム "
+				+ "または流体の内部または近くにいたかどうかを確認してください。</p>";
+	}
+
+	@Override
+	public String nombreBiomesOPlentyFogDataLiquidosPersonalizados() {
+		return "潜在的な問題: Biomes O' Plenty と FogData";
+	}
+	@Override
+	public String mensajeKotlinReflectionInternalErrorVersion() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Kotlin の内部リフレクションエラーが検出されました。</b>"
+				+ "<p>ログには <b>kotlin.reflect.jvm.internal.KotlinReflectionInternalError</b> が含まれており、メッセージは "
+				+ "<b>Property 'none' not resolved</b> に似ています。</p>"
+				+ "<p>この種のエラーは、特定のバージョンの <b>Fabric Language Kotlin</b> / <b>Kotlin</b> で一般的です。 "
+				+ "この場合、<b>Inventory Profiles Next</b> のクラスが表示されていますが、同じ問題は Kotlin を使用する "
+				+ "他の MOD でも発生する可能性があります。</p>"
+				+ "<p><b>推奨されるオプション：</b></p>"
+				+ "<ul>"
+				+ "<li>Minecraft のバージョンで利用可能な場合、<b>Fabric Language Kotlin</b> をバージョン <b>2.3.40</b> に更新してください。</li>"
+				+ "<li>更新しても解決しない場合は、<b>Fabric Language Kotlin</b> をバージョン <b>2.3.10</b> にダウングレードしてみてください。</li>"
+				+ "<li>ログにその MOD のクラス言及がある場合は、<b>Inventory Profiles Next</b> も更新してください。</li>"
+				+ "<li>エラーが他の MOD で発生する場合は、その MOD が Kotlin に依存しているか確認し、 "
+				+ "<b>Fabric Language Kotlin</b> のバージョンを変更してみてください。</li>"
+				+ "</ul>"
+				+ "<p>関連する技術参照： "
+				+ "<a href='https://github.com/FabricMC/fabric-language-kotlin/issues/183'>Fabric Language Kotlin の問題 #183</a>。</p>";
+	}
+
+	@Override
+	public String nombreKotlinReflectionInternalErrorVersion() {
+		return "Kotlin エラー：内部リフレクション";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

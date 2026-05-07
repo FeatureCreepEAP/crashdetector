@@ -8544,6 +8544,96 @@ public class Chino implements Idioma {
 	    return "创建 Remote 时出错";
 	}
 	
+	@Override
+	public String mensajeControlifyRemoveReloadingScreen() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "检测到 Controlify 与 Remove Reloading Screen 之间存在不兼容。</b>"
+				+ "<p>日志中包含行 <b>Attempted to fetch default config before DefaultConfigManager was ready!</b> "
+				+ "和 <b>$rrls$init</b>，这通常表明 <b>Controlify</b> 与 "
+				+ "<b>Remove Reloading Screen</b> 之间存在冲突。</p>"
+				+ "<p><b>可能原因：</b>Remove Reloading Screen 修改了加载屏幕或加载过程的部分内容， "
+				+ "而 Controlify 尝试在系统完全就绪之前初始化其配置。</p>"
+				+ "<p><b>建议选项：</b></p>"
+				+ "<ul>"
+				+ "<li>移除 <b>Remove Reloading Screen</b>。</li>"
+				+ "<li>如果有新版本可用，请更新 <b>Controlify</b> 和 <b>Remove Reloading Screen</b>。</li>"
+				+ "<li>如果问题仍然存在，请保留 <b>Controlify</b> 并移除任何修改加载屏幕的模组。</li>"
+				+ "</ul>"
+				+ "<p>修改加载屏幕的模组通常会导致与其他模组的不兼容， "
+				+ "与其可能引起的问题相比，它们提供的实际好处通常很少。</p>";
+	}
+
+	@Override
+	public String nombreControlifyRemoveReloadingScreen() {
+		return "不兼容：Controlify 与 Remove Reloading Screen";
+	}
+	
+	@Override
+	public String mensajeBiomesOPlentyFogDataLiquidosPersonalizados() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Biomes O' Plenty 与自定义液体可能存在冲突。</b>"
+				+ "<p>日志中包含错误 <b>class org.joml.Vector4f cannot be cast to class "
+				+ "net.minecraft.client.renderer.fog.FogData</b> 以及对 <b>Biomes O' Plenty</b> 的引用。</p>"
+				+ "<p>这可能与 <b>Biomes O' Plenty</b> 有关，特别是其生物群系、雾气 "
+				+ "或自定义液体。然而，不能完全确定 Biomes O' Plenty 是唯一的原因。</p>"
+				+ "<p><b>建议选项：</b></p>"
+				+ "<ul>"
+				+ "<li>尝试编辑玩家数据以将其移动到世界的其他位置。</li>"
+				+ "<li>尝试在没有 <b>Biomes O' Plenty</b> 的情况下加载世界。</li>"
+				+ "<li>如果移动玩家后世界能够加载，问题可能发生在特定区域、 "
+				+ "特定生物群系或附近的自定义液体处。</li>"
+				+ "<li>您还可以尝试更新 <b>Biomes O' Plenty</b> 以及与渲染、雾气、 "
+				+ "着色器（shaders）或维度相关的模组。</li>"
+				+ "</ul>"
+				+ "<p>如果移除 Biomes O' Plenty 后游戏可以启动，请检查玩家是否位于该模组添加的生物群系 "
+				+ "或流体内部或附近。</p>";
+	}
+
+	@Override
+	public String nombreBiomesOPlentyFogDataLiquidosPersonalizados() {
+		return "潜在问题：Biomes O' Plenty 与 FogData";
+	}
+	@Override
+	public String mensajeKotlinReflectionInternalErrorVersion() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "检测到 Kotlin 内部反射错误。</b>"
+				+ "<p>日志中包含 <b>kotlin.reflect.jvm.internal.KotlinReflectionInternalError</b>，消息类似于 "
+				+ "<b>Property 'none' not resolved</b>。</p>"
+				+ "<p>此类错误在某些版本的 <b>Fabric Language Kotlin</b> / <b>Kotlin</b> 中很常见。 "
+				+ "在这种情况下，出现了 <b>Inventory Profiles Next</b> 的类，但同样的问题也可能发生 "
+				+ "在使用 Kotlin 的其他模组上。</p>"
+				+ "<p><b>建议选项：</b></p>"
+				+ "<ul>"
+				+ "<li>将 <b>Fabric Language Kotlin</b> 更新到版本 <b>2.3.40</b>（如果您的 Minecraft 版本支持）。</li>"
+				+ "<li>如果更新无效，请尝试将 <b>Fabric Language Kotlin</b> 降级到版本 <b>2.3.10</b>。</li>"
+				+ "<li>如果日志提到了该模组的类，也请更新 <b>Inventory Profiles Next</b>。</li>"
+				+ "<li>如果错误出现在其他模组上，请检查该模组是否依赖 Kotlin，并尝试更改 "
+				+ "<b>Fabric Language Kotlin</b> 的版本。</li>"
+				+ "</ul>"
+				+ "<p>相关技术参考： "
+				+ "<a href='https://github.com/FabricMC/fabric-language-kotlin/issues/183'>Fabric Language Kotlin 问题 #183</a>。</p>";
+	}
+
+	@Override
+	public String nombreKotlinReflectionInternalErrorVersion() {
+		return "Kotlin 错误：内部反射";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

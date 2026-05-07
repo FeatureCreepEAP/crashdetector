@@ -3510,6 +3510,18 @@ public interface Idioma {
 	public String jgitEscribaNamespaceOpcional();
 	public String jgitEscribaTokenForge();
 	public String jgitErrorCrearRemote();
+
+	public String mensajeControlifyRemoveReloadingScreen();
+
+	public String nombreControlifyRemoveReloadingScreen();
+
+	public String mensajeBiomesOPlentyFogDataLiquidosPersonalizados();
+
+	public String nombreBiomesOPlentyFogDataLiquidosPersonalizados();
+
+	public String mensajeKotlinReflectionInternalErrorVersion();
+
+	public String nombreKotlinReflectionInternalErrorVersion();
 	
 	
 	

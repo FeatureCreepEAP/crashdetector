@@ -327,7 +327,11 @@ public class Analizador {
 		verificaciones.add(new ClassCastExceptionGeneral());
 		verificaciones.add(new ValkyrienSkiesTournamentLithiumPoiInjection());
 		verificaciones.add(new VSTournamentVSConfigClassNoExiste());
-
+		verificaciones.add(new ControlifyRemoveReloadingScreen());
+		verificaciones.add(new BiomesOPlentyFogDataCustomLiquids());
+		verificaciones.add(new KotlinReflectionInternalErrorVersion());
+		
+		
 		verificaciones.add(new PirataMC());
 		verificaciones.add(new LanzerNoAnimado());
 		verificaciones.add(new LanzerDesAnimado());

@@ -9088,6 +9088,97 @@ public class Ruso implements Idioma {
 		return "Ошибка при создании remote";
 	}
 	
+	@Override
+	public String mensajeControlifyRemoveReloadingScreen() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Обнаружена несовместимость между Controlify и Remove Reloading Screen.</b>"
+				+ "<p>Журнал содержит строки <b>Attempted to fetch default config before DefaultConfigManager was ready!</b> "
+				+ "и <b>$rrls$init</b>, что обычно указывает на конфликт между <b>Controlify</b> и "
+				+ "<b>Remove Reloading Screen</b>.</p>"
+				+ "<p><b>Вероятная причина:</b> Remove Reloading Screen изменяет части экрана загрузки или процесса загрузки, "
+				+ "в то время как Controlify пытается инициализировать свою конфигурацию до полной готовности системы.</p>"
+				+ "<p><b>Рекомендуемые действия:</b></p>"
+				+ "<ul>"
+				+ "<li>Удалите <b>Remove Reloading Screen</b>.</li>"
+				+ "<li>Или обновите <b>Controlify</b> и <b>Remove Reloading Screen</b>, если доступны новые версии.</li>"
+				+ "<li>Если проблема сохраняется, оставьте <b>Controlify</b> и удалите любые моды, изменяющие экран загрузки.</li>"
+				+ "</ul>"
+				+ "<p>Моды, изменяющие экран загрузки, часто вызывают несовместимость с другими модами, "
+				+ "и обычно приносят мало практической пользы по сравнению с проблемами, которые они могут вызвать.</p>";
+	}
+
+	@Override
+	public String nombreControlifyRemoveReloadingScreen() {
+		return "Несовместимость: Controlify против Remove Reloading Screen";
+	}
+	
+	@Override
+	public String mensajeBiomesOPlentyFogDataLiquidosPersonalizados() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Возможная проблема с Biomes O' Plenty и пользовательскими жидкостями.</b>"
+				+ "<p>Журнал содержит ошибку <b>class org.joml.Vector4f cannot be cast to class "
+				+ "net.minecraft.client.renderer.fog.FogData</b> вместе со ссылкой на <b>Biomes O' Plenty</b>.</p>"
+				+ "<p>Это, возможно, связано с <b>Biomes O' Plenty</b>, особенно с биомами, туманом "
+				+ "или пользовательскими жидкостями. Однако не совсем уверенно, что Biomes O' Plenty является единственной причиной.</p>"
+				+ "<p><b>Рекомендуемые действия:</b></p>"
+				+ "<ul>"
+				+ "<li>Попробуйте отредактировать данные игрока, чтобы переместить его в другое место мира.</li>"
+				+ "<li>Попробуйте загрузить мир без <b>Biomes O' Plenty</b>.</li>"
+				+ "<li>Если мир загружается после перемещения игрока, проблема, вероятно, возникает в определенной зоне, "
+				+ "определенном биоме или nearby пользовательской жидкости.</li>"
+				+ "<li>Вы также можете попробовать обновить <b>Biomes O' Plenty</b> и моды, связанные с рендерингом, туманом, "
+				+ "шейдерами или измерениями.</li>"
+				+ "</ul>"
+				+ "<p>Если удаление Biomes O' Plenty позволяет запустить игру, проверьте, находился ли игрок внутри или рядом с биомом "
+				+ "или жидкостью, добавленной этим модом.</p>";
+	}
+
+	@Override
+	public String nombreBiomesOPlentyFogDataLiquidosPersonalizados() {
+		return "Возможная проблема: Biomes O' Plenty и FogData";
+	}
+	@Override
+	public String mensajeKotlinReflectionInternalErrorVersion() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Обнаружена внутренняя ошибка рефлексии Kotlin.</b>"
+				+ "<p>Журнал содержит <b>kotlin.reflect.jvm.internal.KotlinReflectionInternalError</b> с сообщением, похожим на "
+				+ "<b>Property 'none' not resolved</b>.</p>"
+				+ "<p>Этот тип ошибки распространен с определенными версиями <b>Fabric Language Kotlin</b> / <b>Kotlin</b>. "
+				+ "В данном случае появляется класс из <b>Inventory Profiles Next</b>, но та же проблема может возникать "
+				+ "и с другими модами, использующими Kotlin.</p>"
+				+ "<p><b>Рекомендуемые действия:</b></p>"
+				+ "<ul>"
+				+ "<li>Обновите <b>Fabric Language Kotlin</b> до версии <b>2.3.40</b>, если она доступна для вашей версии Minecraft.</li>"
+				+ "<li>Если обновление не помогает, попробуйте понизить версию <b>Fabric Language Kotlin</b> до <b>2.3.10</b>.</li>"
+				+ "<li>Также обновите <b>Inventory Profiles Next</b>, если в журнале упоминаются классы этого мода.</li>"
+				+ "<li>Если ошибка появляется с другим модом, проверьте, зависит ли этот мод от Kotlin, и попробуйте изменить версию "
+				+ "<b>Fabric Language Kotlin</b>.</li>"
+				+ "</ul>"
+				+ "<p>Связанная техническая справка: "
+				+ "<a href='https://github.com/FabricMC/fabric-language-kotlin/issues/183'>Проблема #183 Fabric Language Kotlin</a>.</p>";
+	}
+
+	@Override
+	public String nombreKotlinReflectionInternalErrorVersion() {
+		return "Ошибка Kotlin: внутренняя рефлексия";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 

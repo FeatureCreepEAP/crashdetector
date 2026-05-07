@@ -9520,6 +9520,100 @@ public class Lao implements Idioma {
 	public String jgitErrorCrearRemote() {
 		return "ຂໍ້ຜິດພາດໃນການສ້າງ remote";
 	}
+	@Override
+	public String mensajeControlifyRemoveReloadingScreen() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "ກວດພົບຄວາມບໍ່ເຂົ້າກັນລະຫວ່າງ Controlify ແລະ Remove Reloading Screen.</b>"
+				+ "<p>Log ມີແຖວ <b>Attempted to fetch default config before DefaultConfigManager was ready!</b> "
+				+ "ແລະ <b>$rrls$init</b>, ເຊິ່ງມັກຈະບົ່ງບອກເຖິງຄວາມຂັດແຍ່ງລະຫວ່າງ <b>Controlify</b> ແລະ "
+				+ "<b>Remove Reloading Screen</b>.</p>"
+				+ "<p><b>ສາເຫດທີ່ເປັນໄປໄດ້:</b> Remove Reloading Screen ປ່ຽນແປງສ່ວນຕ່າງໆຂອງໜ້າຈໍໂຫຼດ ຫຼື ຂະບວນການໂຫຼດ, "
+				+ "ໃນຂະນະທີ່ Controlify ພະຍາຍາມເລີ່ມຕົ້ນການຕັ້ງຄ່າຂອງມັນກ່ອນທີ່ລະບົບຈະພ້ອມຢ່າງສົມບູນ.</p>"
+				+ "<p><b>ທາງເລືອກທີ່ແນະນຳ:</b></p>"
+				+ "<ul>"
+				+ "<li>ຖອດ <b>Remove Reloading Screen</b> ອອກ.</li>"
+				+ "<li>ຫຼື ອັບເດດ <b>Controlify</b> ແລະ <b>Remove Reloading Screen</b> ຖ້າມີເວີຊັນໃໝ່.</li>"
+				+ "<li>ຖ້າບັນຫາຍັງຄົງຢູ່, ໃຫ້ຮັກສາ <b>Controlify</b> ໄວ້ ແລະ ຖອດ mod ໃດໆທີ່ປ່ຽນແປງໜ້າຈໍໂຫຼດ.</li>"
+				+ "</ul>"
+				+ "<p>Mods ທີ່ປ່ຽນແປງໜ້າຈໍໂຫຼດມັກຈະກໍ່ໃຫ້ເກີດຄວາມບໍ່ເຂົ້າກັນກັບ mods ອື່ນໆ, "
+				+ "ແລະ ມັກຈະໃຫ້ປະໂຫຍດໜ້ອຍເມື່ອທຽບກັບບັນຫາທີ່ມັນສາມາດກໍ່ໃຫ້ເກີດ.</p>";
+	}
+
+	@Override
+	public String nombreControlifyRemoveReloadingScreen() {
+		return "ຄວາມບໍ່ເຂົ້າກັນ: Controlify vs Remove Reloading Screen";
+	}
+	
+	@Override
+	public String mensajeBiomesOPlentyFogDataLiquidosPersonalizados() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "ບັນຫາທີ່ເປັນໄປໄດ້ກັບ Biomes O' Plenty ແລະ ທາດແຫຼວທີ່ກຳນົດເອງ.</b>"
+				+ "<p>Log ມີຂໍ້ຜິດພາດ <b>class org.joml.Vector4f cannot be cast to class "
+				+ "net.minecraft.client.renderer.fog.FogData</b> ພ້ອມກັບການອ້າງອີງເຖິງ <b>Biomes O' Plenty</b>.</p>"
+				+ "<p>ສິ່ງນີ້ອາດກ່ຽວຂ້ອງກັບ <b>Biomes O' Plenty</b>, ໂດຍສະເພາະກັບ biomes, ໝອກ, "
+				+ "ຫຼື ທາດແຫຼວທີ່ກຳນົດເອງ. ເຖິງຢ່າງໃດກໍຕາມ, ບໍ່ແນ່ໃຈ 100% ວ່າ Biomes O' Plenty ເປັນສາເຫດດຽວ.</p>"
+				+ "<p><b>ທາງເລືອກທີ່ແນະນຳ:</b></p>"
+				+ "<ul>"
+				+ "<li>ລອງແກ້ໄຂຂໍ້ມູນຂອງຜູ້ຫຼິ້ນເພື່ອຍ້າຍໄປຍັງຕຳແໜ່ງອື່ນໃນໂລກ.</li>"
+				+ "<li>ລອງໂຫຼດໂລກໂດຍບໍ່ມີ <b>Biomes O' Plenty</b>.</li>"
+				+ "<li>ຖ້າໂລກໂຫຼດໄດ້ຫຼັງຈາກຍ້າຍຜູ້ຫຼິ້ນ, ບັນຫານັ້ນອາດເກີດຂຶ້ນໃນພື້ນທີ່ສະເພາະ, "
+				+ "biome ສະເພາະ ຫຼື ທາດແຫຼວທີ່ກຳນົດເອງທີ່ຢູ່ໃກ້ຄຽງ.</li>"
+				+ "<li>ທ່ານຍັງສາມາດລອງອັບເດດ <b>Biomes O' Plenty</b> ແລະ mods ທີ່ກ່ຽວຂ້ອງກັບການ render, ໝອກ, "
+				+ "shaders ຫຼື dimensions.</li>"
+				+ "</ul>"
+				+ "<p>ຖ້າການຖອດ Biomes O' Plenty ຊ່ວຍໃຫ້ເກມເລີ່ມຕົ້ນໄດ້, ກວດສອບວ່າຜູ້ຫຼິ້ນຢູ່ໃນ ຫຼື ໃກ້ກັບ biome "
+				+ "ຫຼື ທາດແຫຼວທີ່ເພີ່ມໂດຍ mod ນັ້ນຫຼືບໍ່.</p>";
+	}
+
+	@Override
+	public String nombreBiomesOPlentyFogDataLiquidosPersonalizados() {
+		return "ບັນຫາທີ່ເປັນໄປໄດ້: Biomes O' Plenty ແລະ FogData";
+	}
+	@Override
+	public String mensajeKotlinReflectionInternalErrorVersion() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "ກວດພົບຂໍ້ຜິດພາດພາຍໃນການສະທ້ອນຂອງ Kotlin.</b>"
+				+ "<p>Log ມີ <b>kotlin.reflect.jvm.internal.KotlinReflectionInternalError</b> ພ້ອມຂໍ້ຄວາມທີ່ຄ້າຍຄື "
+				+ "<b>Property 'none' not resolved</b>.</p>"
+				+ "<p>ຂໍ້ຜິດພາດປະເພດນີ້ພົບເລື້ອຍກັບບາງເວີຊັນຂອງ <b>Fabric Language Kotlin</b> / <b>Kotlin</b>. "
+				+ "ໃນກໍລະນີນີ້, ມັນປາກົດຄລາສຈາກ <b>Inventory Profiles Next</b>, ແຕ່ບັນຫາດຽວກັນນີ້ກໍ່ສາມາດເກີດຂຶ້ນໄດ້ "
+				+ "ກັບ mods ອື່ນໆທີ່ໃຊ້ Kotlin.</p>"
+				+ "<p><b>ທາງເລືອກທີ່ແນະນຳ:</b></p>"
+				+ "<ul>"
+				+ "<li>ອັບເດດ <b>Fabric Language Kotlin</b> ເປັນເວີຊັນ <b>2.3.40</b>, ຖ້າມີໃຫ້ສຳລັບເວີຊັນ Minecraft ຂອງທ່ານ.</li>"
+				+ "<li>ຖ້າການອັບເດດບໍ່ໄດ້ຜົນ, ລອງຫຼຸດ <b>Fabric Language Kotlin</b> ລົງເປັນເວີຊັນ <b>2.3.10</b>.</li>"
+				+ "<li>ອັບເດດ <b>Inventory Profiles Next</b> ດ້ວຍ ຖ້າ log ກ່າວເຖິງຄລາສຂອງ mod ນີ້.</li>"
+				+ "<li>ຖ້າຂໍ້ຜິດພາດປາກົດກັບ mod ອື່ນ, ກວດສອບວ່າ mod ນັ້ນຂຶ້ນກັບ Kotlin ຫຼືບໍ່ ແລະ ລອງປ່ຽນເວີຊັນຂອງ "
+				+ "<b>Fabric Language Kotlin</b>.</li>"
+				+ "</ul>"
+				+ "<p>ຂໍ້ມູນອ້າງອີງທາງເທັກນິກທີ່ກ່ຽວຂ້ອງ: "
+				+ "<a href='https://github.com/FabricMC/fabric-language-kotlin/issues/183'>Fabric Language Kotlin issue #183</a>.</p>";
+	}
+
+	@Override
+	public String nombreKotlinReflectionInternalErrorVersion() {
+		return "ຂໍ້ຜິດພາດ Kotlin: ການສະທ້ອນພາຍໃນ";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 

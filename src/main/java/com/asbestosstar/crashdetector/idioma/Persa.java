@@ -9045,6 +9045,96 @@ public class Persa implements Idioma {
 	public String jgitErrorCrearRemote() {
 		return "خطا در ایجاد remote";
 	}
+	@Override
+	public String mensajeControlifyRemoveReloadingScreen() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "ناسازگاری بین Controlify و Remove Reloading Screen شناسایی شد.</b>"
+				+ "<p>لاگ حاوی خطوط <b>Attempted to fetch default config before DefaultConfigManager was ready!</b> "
+				+ "و <b>$rrls$init</b> است که معمولاً نشان‌دهنده تضاد بین <b>Controlify</b> و "
+				+ "<b>Remove Reloading Screen</b> است.</p>"
+				+ "<p><b>علت احتمالی:</b> Remove Reloading Screen بخش‌هایی از صفحه بارگذاری یا فرآیند بارگذاری را تغییر می‌دهد، "
+				+ "در حالی که Controlify سعی می‌کند پیکربندی خود را قبل از آماده شدن کامل سیستم مقداردهی اولیه کند.</p>"
+				+ "<p><b>گزینه‌های توصیه‌شده:</b></p>"
+				+ "<ul>"
+				+ "<li><b>Remove Reloading Screen</b> را حذف کنید.</li>"
+				+ "<li>یا اگر نسخه‌های جدیدی موجود است، <b>Controlify</b> و <b>Remove Reloading Screen</b> را به‌روزرسانی کنید.</li>"
+				+ "<li>اگر مشکل ادامه داشت، <b>Controlify</b> را نگه دارید و هر مودی که صفحه بارگذاری را تغییر می‌دهد حذف کنید.</li>"
+				+ "</ul>"
+				+ "<p>مودهایی که صفحه بارگذاری را تغییر می‌دهند معمولاً باعث ناسازگاری با سایر مودها می‌شوند، "
+				+ "و در مقایسه با مشکلاتی که ایجاد می‌کنند، مزیت عملی کمی دارند.</p>";
+	}
+
+	@Override
+	public String nombreControlifyRemoveReloadingScreen() {
+		return "ناسازگاری: Controlify در برابر Remove Reloading Screen";
+	}
+	
+	@Override
+	public String mensajeBiomesOPlentyFogDataLiquidosPersonalizados() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "مشکل احتمالی با Biomes O' Plenty و مایعات سفارشی.</b>"
+				+ "<p>لاگ حاوی خطای <b>class org.joml.Vector4f cannot be cast to class "
+				+ "net.minecraft.client.renderer.fog.FogData</b> همراه با ارجاع به <b>Biomes O' Plenty</b> است.</p>"
+				+ "<p>این احتمالاً با <b>Biomes O' Plenty</b> مرتبط است، به ویژه با بیوم‌ها، مه "
+				+ "یا مایعات سفارشی. با این حال، کاملاً مطمئن نیست که Biomes O' Plenty تنها علت باشد.</p>"
+				+ "<p><b>گزینه‌های توصیه‌شده:</b></p>"
+				+ "<ul>"
+				+ "<li>سعی کنید داده‌های بازیکن را ویرایش کنید تا او را به مکان دیگری در جهان منتقل کنید.</li>"
+				+ "<li>جهان را بدون <b>Biomes O' Plenty</b> بارگذاری کنید.</li>"
+				+ "<li>اگر جهان پس از جابجایی بازیکن بارگذاری شد، مشکل احتمالاً در یک منطقه خاص، "
+				+ "بیوم خاص یا مایع سفارشی نزدیک رخ می‌دهد.</li>"
+				+ "<li>همچنین می‌توانید <b>Biomes O' Plenty</b> و مودهای مرتبط با رندرینگ، مه، "
+				+ "شیدرها یا ابعاد را به‌روزرسانی کنید.</li>"
+				+ "</ul>"
+				+ "<p>اگر حذف Biomes O' Plenty اجازه شروع بازی را می‌دهد، بررسی کنید که آیا بازیکن درون یا نزدیک به یک بیوم "
+				+ "یا سیال افزوده‌شده توسط آن مود بوده است یا خیر.</p>";
+	}
+
+	@Override
+	public String nombreBiomesOPlentyFogDataLiquidosPersonalizados() {
+		return "مشکل احتمالی: Biomes O' Plenty و FogData";
+	}
+	@Override
+	public String mensajeKotlinReflectionInternalErrorVersion() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "خطای داخلی بازتاب Kotlin شناسایی شد.</b>"
+				+ "<p>لاگ حاوی <b>kotlin.reflect.jvm.internal.KotlinReflectionInternalError</b> با پیامی مشابه "
+				+ "<b>Property 'none' not resolved</b> است.</p>"
+				+ "<p>این نوع خطا با نسخه‌های خاصی از <b>Fabric Language Kotlin</b> / <b>Kotlin</b> رایج است. "
+				+ "در این مورد، کلاسی از <b>Inventory Profiles Next</b> ظاهر می‌شود، اما همین مشکل می‌تواند با "
+				+ "سایر مودهایی که از Kotlin استفاده می‌کنند نیز رخ دهد.</p>"
+				+ "<p><b>گزینه‌های توصیه‌شده:</b></p>"
+				+ "<ul>"
+				+ "<li><b>Fabric Language Kotlin</b> را به نسخه <b>2.3.40</b> به‌روزرسانی کنید، اگر برای نسخه Minecraft شما موجود باشد.</li>"
+				+ "<li>اگر به‌روزرسانی کار نکرد، سعی کنید <b>Fabric Language Kotlin</b> را به نسخه <b>2.3.10</b> کاهش دهید.</li>"
+				+ "<li>اگر لاگ به کلاس‌های آن مود اشاره می‌کند، <b>Inventory Profiles Next</b> را نیز به‌روزرسانی کنید.</li>"
+				+ "<li>اگر خطا با مود دیگری ظاهر شد، بررسی کنید که آیا آن مود به Kotlin وابسته است و نسخه "
+				+ "<b>Fabric Language Kotlin</b> را تغییر دهید.</li>"
+				+ "</ul>"
+				+ "<p>ارجاع فنی مرتبط: "
+				+ "<a href='https://github.com/FabricMC/fabric-language-kotlin/issues/183'>مشکل شماره 183 Fabric Language Kotlin</a>.</p>";
+	}
+
+	@Override
+	public String nombreKotlinReflectionInternalErrorVersion() {
+		return "خطای Kotlin: بازتاب داخلی";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 

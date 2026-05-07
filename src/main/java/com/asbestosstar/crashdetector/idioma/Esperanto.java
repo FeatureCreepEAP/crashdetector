@@ -9056,5 +9056,94 @@ public class Esperanto implements Idioma {
 	    return "Eraro kreante remote";
 	}
 	
+	@Override
+	public String mensajeControlifyRemoveReloadingScreen() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Nekongrueco detektita inter Controlify kaj Remove Reloading Screen.</b>"
+				+ "<p>La protokolo enhavas la liniojn <b>Attempted to fetch default config before DefaultConfigManager was ready!</b> "
+				+ "kaj <b>$rrls$init</b>, kio kutime indikas konfliktion inter <b>Controlify</b> kaj "
+				+ "<b>Remove Reloading Screen</b>.</p>"
+				+ "<p><b>Probabla kaŭzo:</b> Remove Reloading Screen modifas partojn de la ŝarga ekrano aŭ la ŝarga procezo, "
+				+ "dum Controlify provas inicialigi sian agordon antaŭ ol la sistemo estas plene preta.</p>"
+				+ "<p><b>Rekomenditaj ebloj:</b></p>"
+				+ "<ul>"
+				+ "<li>Forigu <b>Remove Reloading Screen</b>.</li>"
+				+ "<li>Aŭ ĝisdatigu <b>Controlify</b> kaj <b>Remove Reloading Screen</b> se novaj versioj haveblas.</li>"
+				+ "<li>Se la problemo daŭras, tenu <b>Controlify</b> kaj forigu ajnan mod-on, kiu modifas la ŝargan ekranon.</li>"
+				+ "</ul>"
+				+ "<p>Mod-oj, kiuj modifas la ŝargan ekranon, ofte kaŭzas nekongruecojn kun aliaj mod-oj, "
+				+ "kaj kutime ofertas malmultan praktikan utilon kompare kun la problemoj, kiujn ili povas kaŭzi.</p>";
+	}
+
+	@Override
+	public String nombreControlifyRemoveReloadingScreen() {
+		return "Nekongrueco: Controlify vs Remove Reloading Screen";
+	}
+	
+	@Override
+	public String mensajeBiomesOPlentyFogDataLiquidosPersonalizados() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Ebla problemo kun Biomes O' Plenty kaj personaj likvaĵoj.</b>"
+				+ "<p>La protokolo enhavas la eraron <b>class org.joml.Vector4f cannot be cast to class "
+				+ "net.minecraft.client.renderer.fog.FogData</b> kune kun referenco al <b>Biomes O' Plenty</b>.</p>"
+				+ "<p>Ĉi tio eble rilatas al <b>Biomes O' Plenty</b>, precipe pri biomoj, nebulo "
+				+ "aŭ personaj likvaĵoj. Tamen, ne estas tute certe, ke Biomes O' Plenty estas la sola kaŭzo.</p>"
+				+ "<p><b>Rekomenditaj ebloj:</b></p>"
+				+ "<ul>"
+				+ "<li>Provu redakti la datumojn de la ludanto por movi lin al alia loko en la mondo.</li>"
+				+ "<li>Provu ŝargi la mondon sen <b>Biomes O' Plenty</b>.</li>"
+				+ "<li>Se la mondo ŝargas post movi la ludanton, la problemo verŝajne okazas en specifa zono, "
+				+ "specifa biomo aŭ proksima persona likvaĵo.</li>"
+				+ "<li>Vi ankaŭ povas provi ĝisdatigi <b>Biomes O' Plenty</b> kaj la mod-ojn rilatajn al rendorado, nebulo, "
+				+ "ombroprogrametoj (shaders) aŭ dimensioj.</li>"
+				+ "</ul>"
+				+ "<li>Se forigi Biomes O' Plenty permesas startigi la ludon, kontrolu ĉu la ludanto estis ene aŭ proksime de biomo "
+				+ "aŭ fluido aldonita de tiu mod-o.</p>";
+	}
+
+	@Override
+	public String nombreBiomesOPlentyFogDataLiquidosPersonalizados() {
+		return "Ebla problemo: Biomes O' Plenty kaj FogData";
+	}
+	
+	@Override
+	public String mensajeKotlinReflectionInternalErrorVersion() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Interna eraro de reflekto de Kotlin detektita.</b>"
+				+ "<p>La protokolo enhavas <b>kotlin.reflect.jvm.internal.KotlinReflectionInternalError</b> kun mesaĝo simila al "
+				+ "<b>Property 'none' not resolved</b>.</p>"
+				+ "<p>Ĉi tiu speco de eraro estas ofta kun certaj versioj de <b>Fabric Language Kotlin</b> / <b>Kotlin</b>. "
+				+ "En ĉi tiu okazo aperas klaso de <b>Inventory Profiles Next</b>, sed la sama problemo ankaŭ povas okazi "
+				+ "kun aliaj mod-oj, kiuj uzas Kotlin.</p>"
+				+ "<p><b>Rekomenditaj ebloj:</b></p>"
+				+ "<ul>"
+				+ "<li>Ĝisdatigu <b>Fabric Language Kotlin</b> al versio <b>2.3.40</b>, se disponebla por via versio de Minecraft.</li>"
+				+ "<li>Se ĝisdatigo ne funkcias, provu malaltigi <b>Fabric Language Kotlin</b> al versio <b>2.3.10</b>.</li>"
+				+ "<li>Ĝisdatigu ankaŭ <b>Inventory Profiles Next</b> se la protokolo mencias klasojn de tiu mod-o.</li>"
+				+ "<li>Se la eraro aperas kun alia mod-o, kontrolu ĉu tiu mod-o dependas de Kotlin kaj provu ŝanĝi la version de "
+				+ "<b>Fabric Language Kotlin</b>.</li>"
+				+ "</ul>"
+				+ "<p>Rilata teknika referenco: "
+				+ "<a href='https://github.com/FabricMC/fabric-language-kotlin/issues/183'>Problemo #183 de Fabric Language Kotlin</a>.</p>";
+	}
+
+	@Override
+	public String nombreKotlinReflectionInternalErrorVersion() {
+		return "Eraro de Kotlin: interna reflekto";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

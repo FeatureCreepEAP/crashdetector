@@ -9109,6 +9109,94 @@ public class Ingles implements Idioma {
 	    return "Error creating remote";
 	}
 	
+	@Override
+	public String mensajeControlifyRemoveReloadingScreen() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Incompatibility detected between Controlify and Remove Reloading Screen.</b>"
+				+ "<p>The log contains the lines <b>Attempted to fetch default config before DefaultConfigManager was ready!</b> "
+				+ "and <b>$rrls$init</b>, which usually indicates a conflict between <b>Controlify</b> and "
+				+ "<b>Remove Reloading Screen</b>.</p>"
+				+ "<p><b>Likely cause:</b> Remove Reloading Screen modifies parts of the loading screen or the loading process, "
+				+ "while Controlify attempts to initialise its configuration before the system is fully ready.</p>"
+				+ "<p><b>Recommended options:</b></p>"
+				+ "<ul>"
+				+ "<li>Remove <b>Remove Reloading Screen</b>.</li>"
+				+ "<li>Or update <b>Controlify</b> and <b>Remove Reloading Screen</b> if newer versions are available.</li>"
+				+ "<li>If the problem persists, keep <b>Controlify</b> and remove any mod that alters the loading screen.</li>"
+				+ "</ul>"
+				+ "<p>Mods that modify the loading screen often cause incompatibilities with other mods, "
+				+ "and usually offer little practical benefit compared to the problems they can cause.</p>";
+	}
+
+	@Override
+	public String nombreControlifyRemoveReloadingScreen() {
+		return "Incompatibility: Controlify vs Remove Reloading Screen";
+	}
+	
+	@Override
+	public String mensajeBiomesOPlentyFogDataLiquidosPersonalizados() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Possible issue with Biomes O' Plenty and custom liquids.</b>"
+				+ "<p>The log contains the error <b>class org.joml.Vector4f cannot be cast to class "
+				+ "net.minecraft.client.renderer.fog.FogData</b> along with a reference to <b>Biomes O' Plenty</b>.</p>"
+				+ "<p>This is possibly related to <b>Biomes O' Plenty</b>, especially regarding biomes, fog "
+				+ "or custom liquids. However, it is not entirely certain that Biomes O' Plenty is the sole cause.</p>"
+				+ "<p><b>Recommended options:</b></p>"
+				+ "<ul>"
+				+ "<li>Try editing player data to move them to another location in the world.</li>"
+				+ "<li>Try loading the world without <b>Biomes O' Plenty</b>.</li>"
+				+ "<li>If the world loads after moving the player, the problem likely occurs in a specific area, "
+				+ "specific biome, or nearby custom liquid.</li>"
+				+ "<li>You can also try updating <b>Biomes O' Plenty</b> and mods related to rendering, fog, "
+				+ "shaders, or dimensions.</li>"
+				+ "</ul>"
+				+ "<p>If removing Biomes O' Plenty allows the game to start, check if the player was inside or near a biome "
+				+ "or fluid added by that mod.</p>";
+	}
+
+	@Override
+	public String nombreBiomesOPlentyFogDataLiquidosPersonalizados() {
+		return "Possible issue: Biomes O' Plenty and FogData";
+	}
+	
+	@Override
+	public String mensajeKotlinReflectionInternalErrorVersion() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Kotlin internal reflection error detected.</b>"
+				+ "<p>The log contains <b>kotlin.reflect.jvm.internal.KotlinReflectionInternalError</b> with a message similar to "
+				+ "<b>Property 'none' not resolved</b>.</p>"
+				+ "<p>This type of error is common with certain versions of <b>Fabric Language Kotlin</b> / <b>Kotlin</b>. "
+				+ "In this case, a class from <b>Inventory Profiles Next</b> appears, but the same issue can also occur "
+				+ "with other mods that use Kotlin.</p>"
+				+ "<p><b>Recommended options:</b></p>"
+				+ "<ul>"
+				+ "<li>Update <b>Fabric Language Kotlin</b> to version <b>2.3.40</b>, if available for your Minecraft version.</li>"
+				+ "<li>If updating does not work, try downgrading <b>Fabric Language Kotlin</b> to version <b>2.3.10</b>.</li>"
+				+ "<li>Also update <b>Inventory Profiles Next</b> if the log mentions classes from that mod.</li>"
+				+ "<li>If the error appears with another mod, check if that mod depends on Kotlin and try changing the version of "
+				+ "<b>Fabric Language Kotlin</b>.</li>"
+				+ "</ul>"
+				+ "<p>Related technical reference: "
+				+ "<a href='https://github.com/FabricMC/fabric-language-kotlin/issues/183'>Fabric Language Kotlin issue #183</a>.</p>";
+	}
+
+	@Override
+	public String nombreKotlinReflectionInternalErrorVersion() {
+		return "Kotlin error: internal reflection";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
