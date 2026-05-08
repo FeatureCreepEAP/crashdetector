@@ -9269,7 +9269,7 @@ public class Vietnamita implements Idioma {
 	public String jgitDependenciasEnCarpeta() {
 		return "Các phụ thuộc đã cài đặt trong thư mục";
 	}
-	
+
 	public String jgitForgeNoSeleccionada() {
 		return "Chưa chọn forge.";
 	}
@@ -9301,6 +9301,7 @@ public class Vietnamita implements Idioma {
 	public String jgitErrorCrearRemote() {
 		return "Lỗi khi tạo remote";
 	}
+
 	@Override
 	public String mensajeControlifyRemoveReloadingScreen() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
@@ -9310,13 +9311,10 @@ public class Vietnamita implements Idioma {
 				+ "<b>Remove Reloading Screen</b>.</p>"
 				+ "<p><b>Nguyên nhân có thể:</b> Remove Reloading Screen thay đổi các phần của màn hình tải hoặc quá trình tải, "
 				+ "trong khi Controlify cố gắng khởi tạo cấu hình trước khi hệ thống sẵn sàng hoàn toàn.</p>"
-				+ "<p><b>Các tùy chọn khuyến nghị:</b></p>"
-				+ "<ul>"
-				+ "<li>Xóa <b>Remove Reloading Screen</b>.</li>"
+				+ "<p><b>Các tùy chọn khuyến nghị:</b></p>" + "<ul>" + "<li>Xóa <b>Remove Reloading Screen</b>.</li>"
 				+ "<li>Hoặc cập nhật <b>Controlify</b> và <b>Remove Reloading Screen</b> nếu có phiên bản mới.</li>"
 				+ "<li>Nếu vấn đề vẫn tiếp diễn, hãy giữ <b>Controlify</b> và xóa bất kỳ mod nào thay đổi màn hình tải.</li>"
-				+ "</ul>"
-				+ "<p>Các mod thay đổi màn hình tải thường gây xung đột với các mod khác, "
+				+ "</ul>" + "<p>Các mod thay đổi màn hình tải thường gây xung đột với các mod khác, "
 				+ "và thường mang lại ít lợi ích thực tế so với các vấn đề chúng có thể gây ra.</p>";
 	}
 
@@ -9324,6 +9322,7 @@ public class Vietnamita implements Idioma {
 	public String nombreControlifyRemoveReloadingScreen() {
 		return "Xung đột: Controlify vs Remove Reloading Screen";
 	}
+
 	@Override
 	public String mensajeBiomesOPlentyFogDataLiquidosPersonalizados() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
@@ -9332,15 +9331,13 @@ public class Vietnamita implements Idioma {
 				+ "net.minecraft.client.renderer.fog.FogData</b> cùng với tham chiếu đến <b>Biomes O' Plenty</b>.</p>"
 				+ "<p>Điều này có thể liên quan đến <b>Biomes O' Plenty</b>, đặc biệt là với quần xã, sương mù "
 				+ "hoặc chất lỏng tùy chỉnh. Tuy nhiên, không hoàn toàn chắc chắn rằng Biomes O' Plenty là nguyên nhân duy nhất.</p>"
-				+ "<p><b>Các tùy chọn khuyến nghị:</b></p>"
-				+ "<ul>"
+				+ "<p><b>Các tùy chọn khuyến nghị:</b></p>" + "<ul>"
 				+ "<li>Hãy thử chỉnh sửa dữ liệu người chơi để di chuyển họ đến vị trí khác trong thế giới.</li>"
 				+ "<li>Thử tải thế giới mà không có <b>Biomes O' Plenty</b>.</li>"
 				+ "<li>Nếu thế giới tải được sau khi di chuyển người chơi, vấn đề có thể xảy ra ở một khu vực cụ thể, "
 				+ "quần xã cụ thể hoặc chất lỏng tùy chỉnh gần đó.</li>"
 				+ "<li>Bạn cũng có thể thử cập nhật <b>Biomes O' Plenty</b> và các mod liên quan đến kết xuất, sương mù, "
-				+ "shader hoặc chiều không gian.</li>"
-				+ "</ul>"
+				+ "shader hoặc chiều không gian.</li>" + "</ul>"
 				+ "<p>Nếu việc xóa Biomes O' Plenty cho phép bắt đầu trò chơi, hãy kiểm tra xem người chơi có ở trong hoặc gần một quần xã "
 				+ "hoặc chất lỏng được thêm bởi mod đó hay không.</p>";
 	}
@@ -9349,7 +9346,7 @@ public class Vietnamita implements Idioma {
 	public String nombreBiomesOPlentyFogDataLiquidosPersonalizados() {
 		return "Vấn đề có thể xảy ra: Biomes O' Plenty và FogData";
 	}
-	
+
 	@Override
 	public String mensajeKotlinReflectionInternalErrorVersion() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
@@ -9358,16 +9355,12 @@ public class Vietnamita implements Idioma {
 				+ "<b>Property 'none' not resolved</b>.</p>"
 				+ "<p>Loại lỗi này phổ biến với một số phiên bản của <b>Fabric Language Kotlin</b> / <b>Kotlin</b>. "
 				+ "Trong trường hợp này, xuất hiện một lớp từ <b>Inventory Profiles Next</b>, nhưng vấn đề tương tự cũng có thể xảy ra "
-				+ "với các mod khác sử dụng Kotlin.</p>"
-				+ "<p><b>Các tùy chọn khuyến nghị:</b></p>"
-				+ "<ul>"
+				+ "với các mod khác sử dụng Kotlin.</p>" + "<p><b>Các tùy chọn khuyến nghị:</b></p>" + "<ul>"
 				+ "<li>Cập nhật <b>Fabric Language Kotlin</b> lên phiên bản <b>2.3.40</b>, nếu có sẵn cho phiên bản Minecraft của bạn.</li>"
 				+ "<li>Nếu cập nhật không hiệu quả, hãy thử hạ <b>Fabric Language Kotlin</b> xuống phiên bản <b>2.3.10</b>.</li>"
 				+ "<li>Cũng cập nhật <b>Inventory Profiles Next</b> nếu nhật ký đề cập đến các lớp của mod đó.</li>"
 				+ "<li>Nếu lỗi xuất hiện với mod khác, hãy kiểm tra xem mod đó có phụ thuộc vào Kotlin không và thử thay đổi phiên bản của "
-				+ "<b>Fabric Language Kotlin</b>.</li>"
-				+ "</ul>"
-				+ "<p>Tham khảo kỹ thuật liên quan: "
+				+ "<b>Fabric Language Kotlin</b>.</li>" + "</ul>" + "<p>Tham khảo kỹ thuật liên quan: "
 				+ "<a href='https://github.com/FabricMC/fabric-language-kotlin/issues/183'>Vấn đề #183 của Fabric Language Kotlin</a>.</p>";
 	}
 
@@ -9375,36 +9368,5 @@ public class Vietnamita implements Idioma {
 	public String nombreKotlinReflectionInternalErrorVersion() {
 		return "Lỗi Kotlin: phản chiếu nội bộ";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

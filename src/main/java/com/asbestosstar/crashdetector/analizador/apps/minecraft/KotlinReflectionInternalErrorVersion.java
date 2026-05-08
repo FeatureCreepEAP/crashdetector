@@ -22,7 +22,8 @@ public class KotlinReflectionInternalErrorVersion implements Verificaciones {
 	@Override
 	public void verificar(Consola consola) {
 		// Detección global ligera: esta combinación identifica un error común de
-		// reflexión interna de Kotlin, frecuentemente visto con Inventory Profiles Next.
+		// reflexión interna de Kotlin, frecuentemente visto con Inventory Profiles
+		// Next.
 		if (consola.contenido_verificar.contains("kotlin.reflect.jvm.internal.KotlinReflectionInternalError")
 				&& consola.contenido_verificar.contains("Property 'none'")
 				&& consola.contenido_verificar.contains("not resolved in file class")) {
@@ -39,8 +40,7 @@ public class KotlinReflectionInternalErrorVersion implements Verificaciones {
 
 		// Verificación precisa en la línea principal del error.
 		if (linea.contains("kotlin.reflect.jvm.internal.KotlinReflectionInternalError")
-				&& linea.contains("Property 'none'")
-				&& linea.contains("not resolved in file class")) {
+				&& linea.contains("Property 'none'") && linea.contains("not resolved in file class")) {
 
 			this.enlace = consola.agregarErrorALectador(num, this);
 			this.activado = true;

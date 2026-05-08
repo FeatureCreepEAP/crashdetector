@@ -3503,12 +3503,19 @@ public interface Idioma {
 	public String jgitArtefactosFaltantesCarpeta();
 
 	public String jgitForgeNoSeleccionada();
+
 	public String jgitForgeNoRegistrada(String id);
+
 	public String jgitEscribaUrlForge();
+
 	public String jgitEscribaNombreRepositorio();
+
 	public String jgitEscribaDescripcionRepositorio();
+
 	public String jgitEscribaNamespaceOpcional();
+
 	public String jgitEscribaTokenForge();
+
 	public String jgitErrorCrearRemote();
 
 	public String mensajeControlifyRemoveReloadingScreen();
@@ -3522,9 +3529,5 @@ public interface Idioma {
 	public String mensajeKotlinReflectionInternalErrorVersion();
 
 	public String nombreKotlinReflectionInternalErrorVersion();
-	
-	
-	
-	
-	
+
 }

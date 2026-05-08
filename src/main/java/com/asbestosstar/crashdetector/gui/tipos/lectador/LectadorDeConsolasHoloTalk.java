@@ -37,7 +37,7 @@ public class LectadorDeConsolasHoloTalk extends LectadorDeConsolasGUI {
 		colorFondo = ConfigColor.de("tema.holotalk.lectador.color.fondo", java.awt.Color.BLACK);
 		colorTexto = ConfigColor.de("tema.holotalk.lectador.color.texto", java.awt.Color.WHITE);
 		colorError = ConfigColor.de("tema.holotalk.lectador.color.error", new java.awt.Color(255, 165, 0));
-		colorPila = ConfigColor.de("tema.holotalk.lectador.color.pila", java.awt.Color.BLUE);
+		colorPila = ConfigColor.de("tema.holotalk.lectador.color.pila", new java.awt.Color(80, 170, 255));
 		colorFondoPanel = ConfigColor.de("tema.holotalk.lectador.color.fondo.panel", new java.awt.Color(30, 30, 30));
 		colorTextoPanel = ConfigColor.de("tema.holotalk.lectador.color.texto.panel", new java.awt.Color(200, 200, 200));
 		colorTextoNegro = ConfigColor.de("tema.holotalk.lectador.color.texto.negro", java.awt.Color.BLACK);

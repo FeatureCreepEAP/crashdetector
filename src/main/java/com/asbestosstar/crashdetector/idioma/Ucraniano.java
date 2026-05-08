@@ -8375,7 +8375,7 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 	public String jgitDependenciasEnCarpeta() {
 		return "Залежності, встановлені в теку";
 	}
-	
+
 	public String jgitForgeNoSeleccionada() {
 		return "Forge не вибрано.";
 	}
@@ -8407,8 +8407,7 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 	public String jgitErrorCrearRemote() {
 		return "Помилка створення remote";
 	}
-	
-	
+
 	@Override
 	public String mensajeControlifyRemoveReloadingScreen() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
@@ -8418,13 +8417,10 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 				+ "<b>Remove Reloading Screen</b>.</p>"
 				+ "<p><b>Ймовірна причина:</b> Remove Reloading Screen змінює частини екрана завантаження або процесу завантаження, "
 				+ "тоді як Controlify намагається ініціалізувати свою конфігурацію до повної готовності системи.</p>"
-				+ "<p><b>Рекомендовані дії:</b></p>"
-				+ "<ul>"
-				+ "<li>Видаліть <b>Remove Reloading Screen</b>.</li>"
+				+ "<p><b>Рекомендовані дії:</b></p>" + "<ul>" + "<li>Видаліть <b>Remove Reloading Screen</b>.</li>"
 				+ "<li>Або оновіть <b>Controlify</b> та <b>Remove Reloading Screen</b>, якщо доступні нові версії.</li>"
 				+ "<li>Якщо проблема persists, залиште <b>Controlify</b> і видаліть будь-які моди, що змінюють екран завантаження.</li>"
-				+ "</ul>"
-				+ "<p>Моди, що змінюють екран завантаження, часто викликають несумісність з іншими модами, "
+				+ "</ul>" + "<p>Моди, що змінюють екран завантаження, часто викликають несумісність з іншими модами, "
 				+ "і зазвичай приносять мало практичної користі порівняно з проблемами, які вони можуть спричинити.</p>";
 	}
 
@@ -8432,6 +8428,7 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 	public String nombreControlifyRemoveReloadingScreen() {
 		return "Несумісність: Controlify проти Remove Reloading Screen";
 	}
+
 	@Override
 	public String mensajeBiomesOPlentyFogDataLiquidosPersonalizados() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
@@ -8440,15 +8437,13 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 				+ "net.minecraft.client.renderer.fog.FogData</b> разом із посиланням на <b>Biomes O' Plenty</b>.</p>"
 				+ "<p>Це, ймовірно, пов'язано з <b>Biomes O' Plenty</b>, особливо з біомами, туманом "
 				+ "або користувацькими рідинами. Однак не зовсім впевнено, що Biomes O' Plenty є єдиною причиною.</p>"
-				+ "<p><b>Рекомендовані дії:</b></p>"
-				+ "<ul>"
+				+ "<p><b>Рекомендовані дії:</b></p>" + "<ul>"
 				+ "<li>Спробуйте відредагувати дані гравця, щоб перемістити його в інше місце світу.</li>"
 				+ "<li>Спробуйте завантажити світ без <b>Biomes O' Plenty</b>.</li>"
 				+ "<li>Якщо світ завантажується після переміщення гравця, проблема, ймовірно, виникає в певній зоні, "
 				+ "певному біомі або nearby користувацькій рідині.</li>"
 				+ "<li>Ви також можете спробувати оновити <b>Biomes O' Plenty</b> та моди, пов'язані з рендерингом, туманом, "
-				+ "шейдерами або вимірами.</li>"
-				+ "</ul>"
+				+ "шейдерами або вимірами.</li>" + "</ul>"
 				+ "<p>Якщо видалення Biomes O' Plenty дозволяє запустити гру, перевірте, чи перебував гравець всередині або поруч з біомом "
 				+ "або рідиною, доданою цим модом.</p>";
 	}
@@ -8457,6 +8452,7 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 	public String nombreBiomesOPlentyFogDataLiquidosPersonalizados() {
 		return "Можлива проблема: Biomes O' Plenty та FogData";
 	}
+
 	@Override
 	public String mensajeKotlinReflectionInternalErrorVersion() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
@@ -8465,16 +8461,12 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 				+ "<b>Property 'none' not resolved</b>.</p>"
 				+ "<p>Цей тип помилки поширений з певними версіями <b>Fabric Language Kotlin</b> / <b>Kotlin</b>. "
 				+ "У цьому випадку з'являється клас з <b>Inventory Profiles Next</b>, але така ж проблема може виникати "
-				+ "і з іншими модами, що використовують Kotlin.</p>"
-				+ "<p><b>Рекомендовані дії:</b></p>"
-				+ "<ul>"
+				+ "і з іншими модами, що використовують Kotlin.</p>" + "<p><b>Рекомендовані дії:</b></p>" + "<ul>"
 				+ "<li>Оновіть <b>Fabric Language Kotlin</b> до версії <b>2.3.40</b>, якщо вона доступна для вашої версії Minecraft.</li>"
 				+ "<li>Якщо оновлення не допомагає, спробуйте понизити версію <b>Fabric Language Kotlin</b> до <b>2.3.10</b>.</li>"
 				+ "<li>Також оновіть <b>Inventory Profiles Next</b>, якщо в журналі згадуються класи цього моду.</li>"
 				+ "<li>Якщо помилка з'являється з іншим модом, перевірте, чи залежить цей мод від Kotlin, і спробуйте змінити версію "
-				+ "<b>Fabric Language Kotlin</b>.</li>"
-				+ "</ul>"
-				+ "<p>Пов'язана технічна довідка: "
+				+ "<b>Fabric Language Kotlin</b>.</li>" + "</ul>" + "<p>Пов'язана технічна довідка: "
 				+ "<a href='https://github.com/FabricMC/fabric-language-kotlin/issues/183'>Проблема #183 Fabric Language Kotlin</a>.</p>";
 	}
 
@@ -8482,25 +8474,5 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 	public String nombreKotlinReflectionInternalErrorVersion() {
 		return "Помилка Kotlin: внутрішня рефлексія";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

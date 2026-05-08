@@ -9769,7 +9769,7 @@ public class Espanol implements Idioma {
 	public String jgitDependenciasEnCarpeta() {
 		return "Dependencias instaladas en carpeta";
 	}
-	
+
 	public String jgitForgeNoSeleccionada() {
 		return "No hay forge seleccionada.";
 	}
@@ -9801,7 +9801,7 @@ public class Espanol implements Idioma {
 	public String jgitErrorCrearRemote() {
 		return "Error al crear remote";
 	}
-	
+
 	@Override
 	public String mensajeControlifyRemoveReloadingScreen() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
@@ -9811,9 +9811,7 @@ public class Espanol implements Idioma {
 				+ "<b>Remove Reloading Screen</b>.</p>"
 				+ "<p><b>Causa probable:</b> Remove Reloading Screen modifica partes de la pantalla de carga o del proceso de carga, "
 				+ "mientras Controlify intenta inicializar su configuración antes de que el sistema esté completamente listo.</p>"
-				+ "<p><b>Opciones recomendadas:</b></p>"
-				+ "<ul>"
-				+ "<li>Elimina <b>Remove Reloading Screen</b>.</li>"
+				+ "<p><b>Opciones recomendadas:</b></p>" + "<ul>" + "<li>Elimina <b>Remove Reloading Screen</b>.</li>"
 				+ "<li>O actualiza <b>Controlify</b> y <b>Remove Reloading Screen</b> si hay versiones nuevas disponibles.</li>"
 				+ "<li>Si el problema continúa, mantén <b>Controlify</b> y quita cualquier mod que altere la pantalla de carga.</li>"
 				+ "</ul>"
@@ -9825,9 +9823,7 @@ public class Espanol implements Idioma {
 	public String nombreControlifyRemoveReloadingScreen() {
 		return "Incompatibilidad: Controlify vs Remove Reloading Screen";
 	}
-	
-	
-	
+
 	@Override
 	public String mensajeBiomesOPlentyFogDataLiquidosPersonalizados() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
@@ -9836,15 +9832,13 @@ public class Espanol implements Idioma {
 				+ "net.minecraft.client.renderer.fog.FogData</b> junto con una referencia a <b>Biomes O' Plenty</b>.</p>"
 				+ "<p>Esto posiblemente está relacionado con <b>Biomes O' Plenty</b>, especialmente con biomas, niebla "
 				+ "o líquidos personalizados. Sin embargo, no es completamente seguro que Biomes O' Plenty sea la única causa.</p>"
-				+ "<p><b>Opciones recomendadas:</b></p>"
-				+ "<ul>"
+				+ "<p><b>Opciones recomendadas:</b></p>" + "<ul>"
 				+ "<li>Intenta editar los datos del jugador para moverlo a otra ubicación del mundo.</li>"
 				+ "<li>Prueba cargar el mundo sin <b>Biomes O' Plenty</b>.</li>"
 				+ "<li>Si el mundo carga después de mover al jugador, el problema probablemente ocurre en una zona específica, "
 				+ "bioma específico o líquido personalizado cercano.</li>"
 				+ "<li>También puedes probar actualizando <b>Biomes O' Plenty</b> y los mods relacionados con renderizado, niebla, "
-				+ "shaders o dimensiones.</li>"
-				+ "</ul>"
+				+ "shaders o dimensiones.</li>" + "</ul>"
 				+ "<p>Si quitar Biomes O' Plenty permite iniciar el juego, revisa si el jugador estaba dentro o cerca de un bioma "
 				+ "o fluido agregado por ese mod.</p>";
 	}
@@ -9853,6 +9847,7 @@ public class Espanol implements Idioma {
 	public String nombreBiomesOPlentyFogDataLiquidosPersonalizados() {
 		return "Posible problema: Biomes O' Plenty y FogData";
 	}
+
 	@Override
 	public String mensajeKotlinReflectionInternalErrorVersion() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
@@ -9861,16 +9856,12 @@ public class Espanol implements Idioma {
 				+ "<b>Property 'none' not resolved</b>.</p>"
 				+ "<p>Este tipo de error es común con ciertas versiones de <b>Fabric Language Kotlin</b> / <b>Kotlin</b>. "
 				+ "En este caso aparece una clase de <b>Inventory Profiles Next</b>, pero el mismo problema también puede ocurrir "
-				+ "con otros mods que usan Kotlin.</p>"
-				+ "<p><b>Opciones recomendadas:</b></p>"
-				+ "<ul>"
+				+ "con otros mods que usan Kotlin.</p>" + "<p><b>Opciones recomendadas:</b></p>" + "<ul>"
 				+ "<li>Actualiza <b>Fabric Language Kotlin</b> a la versión <b>2.3.40</b>, si está disponible para tu versión de Minecraft.</li>"
 				+ "<li>Si actualizar no funciona, intenta bajar <b>Fabric Language Kotlin</b> a la versión <b>2.3.10</b>.</li>"
 				+ "<li>Actualiza también <b>Inventory Profiles Next</b> si el log menciona clases de ese mod.</li>"
 				+ "<li>Si el error aparece con otro mod, revisa si ese mod depende de Kotlin y prueba cambiar la versión de "
-				+ "<b>Fabric Language Kotlin</b>.</li>"
-				+ "</ul>"
-				+ "<p>Referencia técnica relacionada: "
+				+ "<b>Fabric Language Kotlin</b>.</li>" + "</ul>" + "<p>Referencia técnica relacionada: "
 				+ "<a href='https://github.com/FabricMC/fabric-language-kotlin/issues/183'>Fabric Language Kotlin issue #183</a>.</p>";
 	}
 
@@ -9878,19 +9869,5 @@ public class Espanol implements Idioma {
 	public String nombreKotlinReflectionInternalErrorVersion() {
 		return "Error de Kotlin: reflexión interna";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

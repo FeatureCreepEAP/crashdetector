@@ -5,12 +5,19 @@ import java.awt.Dimension;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.swing.AbstractAction;
 import javax.swing.JComponent;
+import javax.swing.KeyStroke;
 import javax.swing.Scrollable;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
@@ -42,6 +49,10 @@ public class VisorLogVirtual extends JComponent implements Scrollable {
 	public int anchoNumeros = 56;
 	public int lineaSeleccionada = -1;
 
+	public int lineaSeleccionInicio = -1;
+	public int lineaSeleccionFin = -1;
+	public boolean arrastrandoSeleccion = false;
+
 	public Color colorFondo = Color.BLACK;
 	public Color colorTexto = Color.WHITE;
 	public Color colorError = new Color(255, 165, 0);
@@ -50,6 +61,8 @@ public class VisorLogVirtual extends JComponent implements Scrollable {
 	public Color colorFondoNumeros = new Color(25, 25, 25);
 	public Color colorTextoNumeros = Color.LIGHT_GRAY;
 	public Color colorSeleccion = new Color(70, 70, 70);
+	public Color colorAdvertencia = new Color(255, 220, 80);
+	public boolean usarTextoAutomaticoSobreColores = true;
 
 	public Map<Integer, ErrorDeLectador> erroresPorLinea = new ConcurrentHashMap<Integer, ErrorDeLectador>();
 
@@ -70,18 +83,151 @@ public class VisorLogVirtual extends JComponent implements Scrollable {
 	public VisorLogVirtual() {
 		setOpaque(true);
 		setAutoscrolls(true);
+		setFocusable(true);
 
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				seleccionarLineaPorY(e.getY());
+				requestFocusInWindow();
+
+				int linea = lineaDesdeY(e.getY());
+
+				if (linea < 0) {
+					return;
+				}
+
+				if ((e.getModifiersEx() & InputEvent.SHIFT_DOWN_MASK) != 0 && lineaSeleccionInicio >= 0) {
+					lineaSeleccionFin = linea;
+				} else {
+					lineaSeleccionInicio = linea;
+					lineaSeleccionFin = linea;
+				}
+
+				arrastrandoSeleccion = true;
+				seleccionarLinea(linea, false);
+
+				if (oyenteDeLinea != null) {
+					oyenteDeLinea.lineaSeleccionada(linea);
+				}
+
+				repaint();
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				arrastrandoSeleccion = false;
 			}
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				seleccionarLineaPorY(e.getY());
+				requestFocusInWindow();
+
+				int linea = lineaDesdeY(e.getY());
+
+				if (linea < 0) {
+					return;
+				}
+
+				seleccionarLinea(linea, false);
+
+				if (oyenteDeLinea != null) {
+					oyenteDeLinea.lineaSeleccionada(linea);
+				}
 			}
 		});
+
+		addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				int linea = lineaDesdeY(e.getY());
+
+				if (linea < 0) {
+					return;
+				}
+
+				lineaSeleccionFin = linea;
+				lineaSeleccionada = linea;
+
+				Rectangle r = new Rectangle(0, linea * alturaLinea, Math.max(1, getWidth()), alturaLinea);
+				scrollRectToVisible(r);
+
+				repaint();
+			}
+		});
+
+		instalarAtajosDeCopia();
+	}
+
+	public void instalarAtajosDeCopia() {
+		getInputMap(WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_DOWN_MASK), "copiar");
+		getInputMap(WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.META_DOWN_MASK), "copiar");
+
+		getActionMap().put("copiar", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				copiarSeleccionAlPortapapeles();
+			}
+		});
+	}
+
+	public void copiarSeleccionAlPortapapeles() {
+		if (fuente == null) {
+			return;
+		}
+
+		int total = totalLineas();
+
+		if (total <= 0) {
+			return;
+		}
+
+		int inicio;
+		int fin;
+
+		if (lineaSeleccionInicio >= 0 && lineaSeleccionFin >= 0) {
+			inicio = Math.min(lineaSeleccionInicio, lineaSeleccionFin);
+			fin = Math.max(lineaSeleccionInicio, lineaSeleccionFin);
+		} else if (lineaSeleccionada >= 0) {
+			inicio = lineaSeleccionada;
+			fin = lineaSeleccionada;
+		} else {
+			return;
+		}
+
+		inicio = Math.max(0, Math.min(inicio, total - 1));
+		fin = Math.max(0, Math.min(fin, total - 1));
+
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = inicio; i <= fin; i++) {
+			String linea = fuente.obtenerLineaSincrona(i);
+
+			if (linea == null) {
+				linea = "";
+			}
+
+			sb.append(linea);
+
+			if (i < fin) {
+				sb.append(System.lineSeparator());
+			}
+		}
+
+		StringSelection seleccion = new StringSelection(sb.toString());
+		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(seleccion, seleccion);
+	}
+
+	public boolean lineaEstaSeleccionada(int linea) {
+		if (lineaSeleccionInicio < 0 || lineaSeleccionFin < 0) {
+			return linea == lineaSeleccionada;
+		}
+
+		int inicio = Math.min(lineaSeleccionInicio, lineaSeleccionFin);
+		int fin = Math.max(lineaSeleccionInicio, lineaSeleccionFin);
+
+		return linea >= inicio && linea <= fin;
 	}
 
 	public void establecerFuente(FuenteDeLineas nuevaFuente) {
@@ -288,18 +434,20 @@ public class VisorLogVirtual extends JComponent implements Scrollable {
 			ErrorDeLectador error = erroresPorLinea.get(Integer.valueOf(i));
 
 			if (error != null) {
-				fondoLinea = error.obtenerColor();
-				textoLinea = colorTextoSobreColor;
-			} else if (linea != null && (linea.contains("ERROR") || linea.contains("EXCEPTION"))) {
-				fondoLinea = colorError;
-				textoLinea = colorTextoSobreColor;
-			} else if (linea != null && (linea.contains("STACKTRACE") || linea.contains("at "))) {
-				fondoLinea = colorPila;
-				textoLinea = colorTextoSobreColor;
+				// Errores reales del objeto Consola: ahora cambian el texto, no el fondo.
+				textoLinea = error.obtenerColor();
+			} else if (lineaTienePilaTexto(linea)) {
+				// Stacktrace antes que ERROR/EXCEPTION porque muchas líneas de pila contienen
+				// excepciones.
+				textoLinea = colorPila;
+			} else if (lineaTieneErrorTexto(linea)) {
+				textoLinea = colorError;
+			} else if (lineaTieneAdvertenciaTexto(linea)) {
+				textoLinea = colorAdvertencia;
 			}
 
-			if (i == lineaSeleccionada) {
-				fondoLinea = fondoLinea.darker();
+			if (lineaEstaSeleccionada(i)) {
+				fondoLinea = colorSeleccionPara(colorFondo);
 			}
 
 			g.setColor(fondoLinea);
@@ -318,6 +466,46 @@ public class VisorLogVirtual extends JComponent implements Scrollable {
 
 			g.drawString(linea, anchoNumeros + margenIzquierdo, y + baseTextoExtra);
 		}
+	}
+
+	public Color colorTextoParaFondoEspecial(Color fondo) {
+		if (usarTextoAutomaticoSobreColores) {
+			return colorTextoLegiblePara(fondo);
+		}
+
+		return colorTextoSobreColor;
+	}
+
+	public Color colorSeleccionPara(Color colorBase) {
+		if (colorBase == null) {
+			return colorSeleccion;
+		}
+
+		int brillo = (colorBase.getRed() + colorBase.getGreen() + colorBase.getBlue()) / 3;
+
+		// Si el fondo es oscuro, aclarar la selección.
+		// Si el fondo ya es claro, oscurecerla para que siga viéndose.
+		if (brillo < 90) {
+			return aclararColor(colorBase, 70);
+		}
+
+		return oscurecerColor(colorBase, 45);
+	}
+
+	public Color aclararColor(Color color, int cantidad) {
+		int r = Math.min(255, color.getRed() + cantidad);
+		int g = Math.min(255, color.getGreen() + cantidad);
+		int b = Math.min(255, color.getBlue() + cantidad);
+
+		return new Color(r, g, b);
+	}
+
+	public Color oscurecerColor(Color color, int cantidad) {
+		int r = Math.max(0, color.getRed() - cantidad);
+		int g = Math.max(0, color.getGreen() - cantidad);
+		int b = Math.max(0, color.getBlue() - cantidad);
+
+		return new Color(r, g, b);
 	}
 
 	@Override
@@ -360,4 +548,56 @@ public class VisorLogVirtual extends JComponent implements Scrollable {
 			SwingUtilities.invokeLater(r);
 		}
 	}
+
+	public boolean lineaTieneErrorTexto(String linea) {
+		if (linea == null) {
+			return false;
+		}
+
+		String s = linea.toUpperCase();
+
+		return s.contains("ERROR") || s.contains("EXCEPTION") || s.contains("SEVERE") || s.contains("FATAL");
+	}
+
+	public boolean lineaTieneAdvertenciaTexto(String linea) {
+		if (linea == null) {
+			return false;
+		}
+
+		String s = linea.toUpperCase();
+
+		return s.contains("WARN") || s.contains("WARNING") || s.contains("ADVERTENCIA");
+	}
+
+	public boolean lineaTienePilaTexto(String linea) {
+		if (linea == null) {
+			return false;
+		}
+
+		String s = linea.trim();
+
+		return s.equals("STACKTRACE") || s.contains("STACKTRACE") || s.startsWith("at ") || s.startsWith("at\t")
+				|| s.startsWith("Caused by:") || s.startsWith("Suppressed:") || s.startsWith("... ")
+				|| s.contains(" at ") || s.contains("\tat ");
+	}
+
+	public Color colorTextoLegiblePara(Color fondo) {
+		if (fondo == null) {
+			return colorTexto;
+		}
+
+		int r = fondo.getRed();
+		int g = fondo.getGreen();
+		int b = fondo.getBlue();
+
+		// Fórmula simple de luminancia perceptual.
+		int luminancia = (int) ((r * 0.299) + (g * 0.587) + (b * 0.114));
+
+		if (luminancia < 140) {
+			return Color.WHITE;
+		}
+
+		return Color.BLACK;
+	}
+
 }

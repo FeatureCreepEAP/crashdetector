@@ -24,7 +24,8 @@ public class ControlifyRemoveReloadingScreen implements Verificaciones {
 	public void verificar(Consola consola) {
 		// Detección global ligera: ambas cadenas suelen aparecer cuando existe el
 		// conflicto entre Controlify y Remove Reloading Screen.
-		if (consola.contenido_verificar.contains("Attempted to fetch default config before DefaultConfigManager was ready!")
+		if (consola.contenido_verificar
+				.contains("Attempted to fetch default config before DefaultConfigManager was ready!")
 				&& consola.contenido_verificar.contains("$rrls$init")) {
 			posibleIncompatibilidad = true;
 		}
