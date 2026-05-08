@@ -3530,4 +3530,30 @@ public interface Idioma {
 
 	public String nombreKotlinReflectionInternalErrorVersion();
 
+	public String tituloEscanerMCreator();
+
+	public String escanerMCreatorEscaneandoMods();
+
+	public String escanerMCreatorPorFavorEspera();
+
+	public String escanerMCreatorResultadosAnalisis();
+
+	public String escanerMCreatorNoSeEncontraronMods();
+
+	public String escanerMCreatorEscaneoCompletado();
+
+	public String escanerMCreatorErrorDuranteEscaneo();
+
+	public String escanerMCreatorCargando();
+
+	public String escanerMCreatorCompletado();
+
+	public String escanerMCreatorError();
+
+	public String textoNormal();
+
+	public String noSeEncontroConsolaParaArchivo();
+
+	public String lineaSeleccionadaEnLectador();
+
 }

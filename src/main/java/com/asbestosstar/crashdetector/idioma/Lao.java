@@ -9589,4 +9589,59 @@ public class Lao implements Idioma {
 		return "ຂໍ້ຜິດພາດ Kotlin: ການສະທ້ອນພາຍໃນ";
 	}
 
+	public String tituloEscanerMCreator() {
+		return "ຕົວສະແກນ MCreator";
+	}
+
+	public String escanerMCreatorEscaneandoMods() {
+		return "ກຳລັງສະແກນ mods...";
+	}
+
+	public String escanerMCreatorPorFavorEspera() {
+		return "ກະລຸນາລໍຖ້າ.";
+	}
+
+	public String escanerMCreatorResultadosAnalisis() {
+		return "ຜົນການວິເຄາະ MCreator:";
+	}
+
+	public String escanerMCreatorNoSeEncontraronMods() {
+		return "ບໍ່ພົບ mods ຂອງ MCreator.";
+	}
+
+	public String escanerMCreatorEscaneoCompletado() {
+		return "ການສະແກນສຳເລັດແລ້ວ.";
+	}
+
+	public String escanerMCreatorErrorDuranteEscaneo() {
+		return "ເກີດຂໍ້ຜິດພາດໃນລະຫວ່າງການສະແກນ:";
+	}
+
+	public String escanerMCreatorCargando() {
+		return "ກຳລັງໂຫຼດ...";
+	}
+
+	public String escanerMCreatorCompletado() {
+		return "ສຳເລັດແລ້ວ";
+	}
+
+	public String escanerMCreatorError() {
+		return "ຂໍ້ຜິດພາດ";
+	}
+
+	@Override
+	public String textoNormal() {
+		return "ຂໍ້ຄວາມປົກກະຕິ";
+	}
+
+	@Override
+	public String noSeEncontroConsolaParaArchivo() {
+		return "ບໍ່ພົບຄອນໂຊລສຳລັບໄຟລ໌: ";
+	}
+
+	@Override
+	public String lineaSeleccionadaEnLectador() {
+		return "ແຖວທີ່ເລືອກໃນໂປຣແກຣມອ່ານ: ";
+	}
+
 }

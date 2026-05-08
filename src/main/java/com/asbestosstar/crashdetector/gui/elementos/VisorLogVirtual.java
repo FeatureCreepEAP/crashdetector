@@ -22,6 +22,7 @@ import javax.swing.Scrollable;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
+import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.gui.tipos.lectador.LectadorDeConsolasGUI.ErrorDeLectador;
 
 /**
@@ -233,6 +234,8 @@ public class VisorLogVirtual extends JComponent implements Scrollable {
 	public void establecerFuente(FuenteDeLineas nuevaFuente) {
 		fuente = nuevaFuente;
 		lineaSeleccionada = -1;
+		lineaSeleccionInicio = -1;
+		lineaSeleccionFin = -1;
 		recalcularMedidas();
 		revalidate();
 		repaint();
@@ -342,6 +345,11 @@ public class VisorLogVirtual extends JComponent implements Scrollable {
 		int anterior = lineaSeleccionada;
 		lineaSeleccionada = linea;
 
+		if (lineaSeleccionInicio < 0 || lineaSeleccionFin < 0) {
+			lineaSeleccionInicio = linea;
+			lineaSeleccionFin = linea;
+		}
+
 		if (anterior >= 0) {
 			repaint(0, anterior * alturaLinea, getWidth(), alturaLinea);
 		}
@@ -434,11 +442,8 @@ public class VisorLogVirtual extends JComponent implements Scrollable {
 			ErrorDeLectador error = erroresPorLinea.get(Integer.valueOf(i));
 
 			if (error != null) {
-				// Errores reales del objeto Consola: ahora cambian el texto, no el fondo.
 				textoLinea = error.obtenerColor();
 			} else if (lineaTienePilaTexto(linea)) {
-				// Stacktrace antes que ERROR/EXCEPTION porque muchas líneas de pila contienen
-				// excepciones.
 				textoLinea = colorPila;
 			} else if (lineaTieneErrorTexto(linea)) {
 				textoLinea = colorError;
@@ -590,7 +595,6 @@ public class VisorLogVirtual extends JComponent implements Scrollable {
 		int g = fondo.getGreen();
 		int b = fondo.getBlue();
 
-		// Fórmula simple de luminancia perceptual.
 		int luminancia = (int) ((r * 0.299) + (g * 0.587) + (b * 0.114));
 
 		if (luminancia < 140) {
@@ -599,5 +603,4 @@ public class VisorLogVirtual extends JComponent implements Scrollable {
 
 		return Color.BLACK;
 	}
-
 }

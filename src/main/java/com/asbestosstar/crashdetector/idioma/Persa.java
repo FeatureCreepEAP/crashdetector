@@ -9115,4 +9115,59 @@ public class Persa implements Idioma {
 		return "خطای Kotlin: بازتاب داخلی";
 	}
 
+	public String tituloEscanerMCreator() {
+		return "اسکنر MCreator";
+	}
+
+	public String escanerMCreatorEscaneandoMods() {
+		return "در حال اسکن مودها...";
+	}
+
+	public String escanerMCreatorPorFavorEspera() {
+		return "لطفاً صبر کنید.";
+	}
+
+	public String escanerMCreatorResultadosAnalisis() {
+		return "نتایج تحلیل MCreator:";
+	}
+
+	public String escanerMCreatorNoSeEncontraronMods() {
+		return "هیچ مودی از MCreator یافت نشد.";
+	}
+
+	public String escanerMCreatorEscaneoCompletado() {
+		return "اسکن تکمیل شد.";
+	}
+
+	public String escanerMCreatorErrorDuranteEscaneo() {
+		return "خطا در حین اسکن:";
+	}
+
+	public String escanerMCreatorCargando() {
+		return "در حال بارگذاری...";
+	}
+
+	public String escanerMCreatorCompletado() {
+		return "تکمیل شد";
+	}
+
+	public String escanerMCreatorError() {
+		return "خطا";
+	}
+
+	@Override
+	public String textoNormal() {
+		return "متن عادی";
+	}
+
+	@Override
+	public String noSeEncontroConsolaParaArchivo() {
+		return "کنسول برای فایل پیدا نشد: ";
+	}
+
+	@Override
+	public String lineaSeleccionadaEnLectador() {
+		return "خط انتخاب شده در خواننده: ";
+	}
+
 }

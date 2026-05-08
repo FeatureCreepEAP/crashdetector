@@ -9041,4 +9041,60 @@ public class Arabe implements Idioma {
 		return "خطأ Kotlin: انعكاس داخلي";
 	}
 
+	public String tituloEscanerMCreator() {
+		return "ماسح MCreator";
+	}
+
+	public String escanerMCreatorEscaneandoMods() {
+		return "جاري فحص الإضافات...";
+	}
+
+	public String escanerMCreatorPorFavorEspera() {
+		return "يرجى الانتظار.";
+	}
+
+	public String escanerMCreatorResultadosAnalisis() {
+		return "نتائج تحليل MCreator:";
+	}
+
+	public String escanerMCreatorNoSeEncontraronMods() {
+		return "لم يتم العثور على إضافات MCreator.";
+	}
+
+	public String escanerMCreatorEscaneoCompletado() {
+		return "اكتمل الفحص.";
+	}
+
+	public String escanerMCreatorErrorDuranteEscaneo() {
+		return "خطأ أثناء الفحص:";
+	}
+
+	public String escanerMCreatorCargando() {
+		return "جاري التحميل...";
+	}
+
+	public String escanerMCreatorCompletado() {
+		return "مكتمل";
+	}
+
+	public String escanerMCreatorError() {
+		return "خطأ";
+	}
+
+	// Arabic (العربية)
+	@Override
+	public String textoNormal() {
+		return "نص عادي";
+	}
+
+	@Override
+	public String noSeEncontroConsolaParaArchivo() {
+		return "لم يتم العثور على وحدة التحكم للملف: ";
+	}
+
+	@Override
+	public String lineaSeleccionadaEnLectador() {
+		return "السطر المحدد في القارئ: ";
+	}
+
 }

@@ -9351,4 +9351,59 @@ public class Tailandes implements Idioma {
 		return "ข้อผิดพลาด Kotlin: การสะท้อนภายใน";
 	}
 
+	public String tituloEscanerMCreator() {
+		return "ตัวสแกน MCreator";
+	}
+
+	public String escanerMCreatorEscaneandoMods() {
+		return "กำลังสแกนมอด...";
+	}
+
+	public String escanerMCreatorPorFavorEspera() {
+		return "กรุณารอสักครู่";
+	}
+
+	public String escanerMCreatorResultadosAnalisis() {
+		return "ผลการวิเคราะห์ MCreator:";
+	}
+
+	public String escanerMCreatorNoSeEncontraronMods() {
+		return "ไม่พบมอดของ MCreator";
+	}
+
+	public String escanerMCreatorEscaneoCompletado() {
+		return "การสแกนเสร็จสิ้น";
+	}
+
+	public String escanerMCreatorErrorDuranteEscaneo() {
+		return "เกิดข้อผิดพลาดระหว่างการสแกน:";
+	}
+
+	public String escanerMCreatorCargando() {
+		return "กำลังโหลด...";
+	}
+
+	public String escanerMCreatorCompletado() {
+		return "เสร็จสิ้น";
+	}
+
+	public String escanerMCreatorError() {
+		return "ข้อผิดพลาด";
+	}
+
+	@Override
+	public String textoNormal() {
+		return "ข้อความปกติ";
+	}
+
+	@Override
+	public String noSeEncontroConsolaParaArchivo() {
+		return "ไม่พบคอนโซลสำหรับไฟล์: ";
+	}
+
+	@Override
+	public String lineaSeleccionadaEnLectador() {
+		return "บรรทัดที่เลือกในตัวอ่าน: ";
+	}
+
 }

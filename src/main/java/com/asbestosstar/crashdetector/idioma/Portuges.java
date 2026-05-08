@@ -9162,4 +9162,59 @@ public class Portuges implements Idioma {
 		return "Erro do Kotlin: reflexão interna";
 	}
 
+	public String tituloEscanerMCreator() {
+		return "Scanner MCreator";
+	}
+
+	public String escanerMCreatorEscaneandoMods() {
+		return "Escaneando mods...";
+	}
+
+	public String escanerMCreatorPorFavorEspera() {
+		return "Por favor, aguarde.";
+	}
+
+	public String escanerMCreatorResultadosAnalisis() {
+		return "Resultados da análise MCreator:";
+	}
+
+	public String escanerMCreatorNoSeEncontraronMods() {
+		return "Nenhum mod do MCreator encontrado.";
+	}
+
+	public String escanerMCreatorEscaneoCompletado() {
+		return "Escaneamento concluído.";
+	}
+
+	public String escanerMCreatorErrorDuranteEscaneo() {
+		return "Erro durante o escaneamento:";
+	}
+
+	public String escanerMCreatorCargando() {
+		return "Carregando...";
+	}
+
+	public String escanerMCreatorCompletado() {
+		return "Concluído";
+	}
+
+	public String escanerMCreatorError() {
+		return "Erro";
+	}
+
+	@Override
+	public String textoNormal() {
+		return "Texto normal";
+	}
+
+	@Override
+	public String noSeEncontroConsolaParaArchivo() {
+		return "Não foi encontrado o console para o arquivo: ";
+	}
+
+	@Override
+	public String lineaSeleccionadaEnLectador() {
+		return "linha selecionada no leitor: ";
+	}
+
 }

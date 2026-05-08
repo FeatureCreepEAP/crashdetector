@@ -8475,4 +8475,59 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 		return "Помилка Kotlin: внутрішня рефлексія";
 	}
 
+	public String tituloEscanerMCreator() {
+		return "Сканер MCreator";
+	}
+
+	public String escanerMCreatorEscaneandoMods() {
+		return "Сканування модів...";
+	}
+
+	public String escanerMCreatorPorFavorEspera() {
+		return "Будь ласка, зачекайте.";
+	}
+
+	public String escanerMCreatorResultadosAnalisis() {
+		return "Результати аналізу MCreator:";
+	}
+
+	public String escanerMCreatorNoSeEncontraronMods() {
+		return "Моди MCreator не знайдено.";
+	}
+
+	public String escanerMCreatorEscaneoCompletado() {
+		return "Сканування завершено.";
+	}
+
+	public String escanerMCreatorErrorDuranteEscaneo() {
+		return "Помилка під час сканування:";
+	}
+
+	public String escanerMCreatorCargando() {
+		return "Завантаження...";
+	}
+
+	public String escanerMCreatorCompletado() {
+		return "Завершено";
+	}
+
+	public String escanerMCreatorError() {
+		return "Помилка";
+	}
+
+	@Override
+	public String textoNormal() {
+		return "Звичайний текст";
+	}
+
+	@Override
+	public String noSeEncontroConsolaParaArchivo() {
+		return "Консоль для файлу не знайдено: ";
+	}
+
+	@Override
+	public String lineaSeleccionadaEnLectador() {
+		return "вибраний рядок у зчитувачі: ";
+	}
+
 }

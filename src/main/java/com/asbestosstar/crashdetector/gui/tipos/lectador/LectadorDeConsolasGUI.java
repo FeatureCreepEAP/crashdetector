@@ -462,7 +462,7 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 		pnlBuscador.setVisible(false);
 		pnlBuscador.setOpaque(true);
 		pnlBuscador.setBackground(colorFondo.obtener());
-		pnlBuscador.setBorder(BorderFactory.createTitledBorder("Buscar"));
+		pnlBuscador.setBorder(BorderFactory.createTitledBorder(MonitorDePID.idioma.buscar()));
 
 		txtBuscar.setBackground(colorFondo.obtener());
 		txtBuscar.setForeground(colorTexto.obtener());
@@ -776,7 +776,7 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 	protected void resaltarCoincidenciaActual() {
 		if (indiceBusquedaActual < 0 || indiceBusquedaActual >= posicionesCoincidencias.size()) {
 			if (pnlBuscador != null) {
-				pnlBuscador.setBorder(BorderFactory.createTitledBorder("Buscar"));
+				pnlBuscador.setBorder(BorderFactory.createTitledBorder(MonitorDePID.idioma.buscar()));
 				pnlBuscador.repaint();
 			}
 
@@ -795,7 +795,9 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 		visorRegistros.seleccionarLinea(pos, true);
 
 		if (pnlBuscador != null) {
-			String titulo = "Buscar (" + (indiceBusquedaActual + 1) + "/" + posicionesCoincidencias.size() + ")";
+			String titulo = MonitorDePID.idioma.buscar() + " (" + (indiceBusquedaActual + 1) + "/"
+					+ posicionesCoincidencias.size() + ")";
+
 			pnlBuscador.setBorder(BorderFactory.createTitledBorder(titulo));
 			pnlBuscador.repaint();
 		}
@@ -1066,7 +1068,7 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 
 			if (lineasChunk == null) {
 				cargarChunkAsincrono(chunk, true);
-				return "Cargando...";
+				return MonitorDePID.idioma.cargando();
 			}
 
 			int indiceLocal = indiceLinea % tamanoChunk;

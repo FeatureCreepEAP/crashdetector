@@ -9704,4 +9704,60 @@ public class Indonesia implements Idioma {
 		return "Kesalahan Kotlin: refleksi internal";
 	}
 
+	public String tituloEscanerMCreator() {
+		return "Pemindai MCreator";
+	}
+
+	public String escanerMCreatorEscaneandoMods() {
+		return "Memindai mod...";
+	}
+
+	public String escanerMCreatorPorFavorEspera() {
+		return "Mohon tunggu.";
+	}
+
+	public String escanerMCreatorResultadosAnalisis() {
+		return "Hasil analisis MCreator:";
+	}
+
+	public String escanerMCreatorNoSeEncontraronMods() {
+		return "Tidak ditemukan mod MCreator.";
+	}
+
+	public String escanerMCreatorEscaneoCompletado() {
+		return "Pemindaian selesai.";
+	}
+
+	public String escanerMCreatorErrorDuranteEscaneo() {
+		return "Kesalahan saat memindai:";
+	}
+
+	public String escanerMCreatorCargando() {
+		return "Memuat...";
+	}
+
+	public String escanerMCreatorCompletado() {
+		return "Selesai";
+	}
+
+	public String escanerMCreatorError() {
+		return "Kesalahan";
+	}
+
+	// Indonesian (Bahasa Indonesia)
+	@Override
+	public String textoNormal() {
+		return "Teks normal";
+	}
+
+	@Override
+	public String noSeEncontroConsolaParaArchivo() {
+		return "Konsol tidak ditemukan untuk file: ";
+	}
+
+	@Override
+	public String lineaSeleccionadaEnLectador() {
+		return "baris yang dipilih dalam pembaca: ";
+	}
+
 }

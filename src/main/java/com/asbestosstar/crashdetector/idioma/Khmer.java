@@ -9324,4 +9324,60 @@ public class Khmer implements Idioma {
 		return "កំហុស Kotlin: ការឆ្លុះបញ្ចាំងផ្ទៃក្នុង";
 	}
 
+	public String tituloEscanerMCreator() {
+		return "ឧបករណ៍ស្កេន MCreator";
+	}
+
+	public String escanerMCreatorEscaneandoMods() {
+		return "កំពុងស្កេន mod...";
+	}
+
+	public String escanerMCreatorPorFavorEspera() {
+		return "សូមរង់ចាំ។";
+	}
+
+	public String escanerMCreatorResultadosAnalisis() {
+		return "លទ្ធផលវិភាគ MCreator:";
+	}
+
+	public String escanerMCreatorNoSeEncontraronMods() {
+		return "រកមិនឃើញ mod MCreator ទេ។";
+	}
+
+	public String escanerMCreatorEscaneoCompletado() {
+		return "ការស្កេនបានបញ្ចប់។";
+	}
+
+	public String escanerMCreatorErrorDuranteEscaneo() {
+		return "មានកំហុសក្នុងអំឡុងពេលស្កេន:";
+	}
+
+	public String escanerMCreatorCargando() {
+		return "កំពុងផ្ទុក...";
+	}
+
+	public String escanerMCreatorCompletado() {
+		return "បានបញ្ចប់";
+	}
+
+	public String escanerMCreatorError() {
+		return "កំហុស";
+	}
+
+	// Khmer (ភាសាខ្មែរ)
+	@Override
+	public String textoNormal() {
+		return "អត្ថបទធម្មតា";
+	}
+
+	@Override
+	public String noSeEncontroConsolaParaArchivo() {
+		return "មិនបានរកឃើញកុងសូលសម្រាប់ឯកសារ៖ ";
+	}
+
+	@Override
+	public String lineaSeleccionadaEnLectador() {
+		return "ជួរដែលបានជ្រើសរើសនៅក្នុងឧបករណ៍អាន៖ ";
+	}
+
 }

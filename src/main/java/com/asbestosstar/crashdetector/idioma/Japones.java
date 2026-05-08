@@ -8804,4 +8804,60 @@ public class Japones implements Idioma {
 		return "Kotlin エラー：内部リフレクション";
 	}
 
+	public String tituloEscanerMCreator() {
+		return "MCreator スキャナー";
+	}
+
+	public String escanerMCreatorEscaneandoMods() {
+		return "MOD をスキャン中...";
+	}
+
+	public String escanerMCreatorPorFavorEspera() {
+		return "お待ちください。";
+	}
+
+	public String escanerMCreatorResultadosAnalisis() {
+		return "MCreator 分析結果:";
+	}
+
+	public String escanerMCreatorNoSeEncontraronMods() {
+		return "MCreator MOD が見つかりません。";
+	}
+
+	public String escanerMCreatorEscaneoCompletado() {
+		return "スキャン完了。";
+	}
+
+	public String escanerMCreatorErrorDuranteEscaneo() {
+		return "スキャン中のエラー:";
+	}
+
+	public String escanerMCreatorCargando() {
+		return "読み込み中...";
+	}
+
+	public String escanerMCreatorCompletado() {
+		return "完了";
+	}
+
+	public String escanerMCreatorError() {
+		return "エラー";
+	}
+
+	// Japanese (日本語)
+	@Override
+	public String textoNormal() {
+		return "通常のテキスト";
+	}
+
+	@Override
+	public String noSeEncontroConsolaParaArchivo() {
+		return "ファイルのコンソールが見つかりません：";
+	}
+
+	@Override
+	public String lineaSeleccionadaEnLectador() {
+		return "リーダーで選択された行：";
+	}
+
 }

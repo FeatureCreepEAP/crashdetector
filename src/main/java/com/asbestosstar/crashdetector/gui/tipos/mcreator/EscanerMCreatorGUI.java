@@ -17,6 +17,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
 
 import com.asbestosstar.crashdetector.EscanerMCreator;
+import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
@@ -31,7 +32,15 @@ public abstract class EscanerMCreatorGUI extends JFrame implements CrashDetector
 
 	// ====== Componentes técnicos ======
 	protected JTextArea areaResultados;
+
+	/**
+	 * Se conserva por compatibilidad con temas viejos.
+	 *
+	 * Los temas nuevos pueden no usar barra de estado y escribir el estado dentro
+	 * del área principal de resultados.
+	 */
 	protected JLabel etiquetaEstado;
+
 	protected JButton botonEscanear;
 
 	// Contenedores
@@ -46,18 +55,33 @@ public abstract class EscanerMCreatorGUI extends JFrame implements CrashDetector
 
 	// ====== Métodos auxiliares para aplicación de colores ======
 	protected void aplicarColor(JLabel label, ConfigColor color) {
+		if (label == null || color == null) {
+			return;
+		}
+
 		label.setForeground(color.obtener());
 	}
 
 	protected void aplicarFondo(JComponent component, ConfigColor color) {
+		if (component == null || color == null) {
+			return;
+		}
+
 		component.setBackground(color.obtener());
 		component.setOpaque(true);
 	}
 
 	// ====== Lógica técnica del escaneo ======
 	protected void iniciarEscaneo() {
-		areaResultados.setText("");
-		etiquetaEstado.setText(textoEstadoCargando());
+		areaResultados.setText(MonitorDePID.idioma.escanerMCreatorEscaneandoMods() + "\n\n"
+				+ MonitorDePID.idioma.escanerMCreatorPorFavorEspera());
+
+		areaResultados.setCaretPosition(0);
+
+		if (etiquetaEstado != null) {
+			etiquetaEstado.setText(textoEstadoCargando());
+		}
+
 		botonEscanear.setEnabled(false);
 
 		new SwingWorker<String, Void>() {
@@ -70,21 +94,55 @@ public abstract class EscanerMCreatorGUI extends JFrame implements CrashDetector
 			protected void done() {
 				try {
 					String resultado = get();
-					areaResultados.setText(resultado);
-					etiquetaEstado.setText(textoEstadoCompletado());
+
+					resultado = limpiarResultadoEscaner(resultado);
+
+					if (resultado == null || resultado.trim().isEmpty()) {
+						resultado = MonitorDePID.idioma.escanerMCreatorNoSeEncontraronMods();
+					}
+
+					areaResultados.setText(MonitorDePID.idioma.escanerMCreatorResultadosAnalisis() + "\n\n" + resultado
+							+ "\n\n" + MonitorDePID.idioma.escanerMCreatorEscaneoCompletado());
+
+					areaResultados.setCaretPosition(0);
+
+					if (etiquetaEstado != null) {
+						etiquetaEstado.setText(textoEstadoCompletado());
+					}
 				} catch (Exception ex) {
-					areaResultados.setText("Error: " + ex.getMessage());
-					etiquetaEstado.setText(textoEstadoError());
+					areaResultados.setText(
+							MonitorDePID.idioma.escanerMCreatorErrorDuranteEscaneo() + "\n\n" + ex.getMessage());
+
+					areaResultados.setCaretPosition(0);
+
+					if (etiquetaEstado != null) {
+						etiquetaEstado.setText(textoEstadoError());
+					}
 				} finally {
 					botonEscanear.setEnabled(true);
+					botonEscanear.setText(MonitorDePID.idioma.escanear());
 				}
 			}
 		}.execute();
 	}
 
-	// ====== Hooks de apariencia / textos NO localizados ======
+	protected String limpiarResultadoEscaner(String resultado) {
+		if (resultado == null) {
+			return "";
+		}
 
-	// === Fuentes (la impl decide si cambia) ===
+		String limpio = resultado.trim();
+		String encabezado = MonitorDePID.idioma.escanerMCreatorResultadosAnalisis();
+
+		if (limpio.startsWith(encabezado)) {
+			limpio = limpio.substring(encabezado.length()).trim();
+		}
+
+		return limpio;
+	}
+
+	// ====== Hooks de apariencia / textos localizados ======
+
 	protected Font fuenteDescripcion() {
 		return new Font("Segoe UI", Font.PLAIN, 14);
 	}
@@ -97,22 +155,20 @@ public abstract class EscanerMCreatorGUI extends JFrame implements CrashDetector
 		return new Font("Segoe UI", Font.BOLD, 14);
 	}
 
-	// === Imagen decorativa opcional ===
 	protected ImageIcon iconoDecorativo() {
 		return null;
 	}
 
-	// === Textos NO localizados (la impl decide) ===
 	protected String textoEstadoCargando() {
-		return "cargando";
+		return MonitorDePID.idioma.escanerMCreatorCargando();
 	}
 
 	protected String textoEstadoCompletado() {
-		return "completado";
+		return MonitorDePID.idioma.escanerMCreatorCompletado();
 	}
 
 	protected String textoEstadoError() {
-		return "error";
+		return MonitorDePID.idioma.escanerMCreatorError();
 	}
 
 	protected String tituloVentanaNoLocalizado() {
@@ -120,6 +176,7 @@ public abstract class EscanerMCreatorGUI extends JFrame implements CrashDetector
 	}
 
 	// ====== CrashDetectorGUI ======
+
 	@Override
 	public void recargarApariencia() {
 		aplicarApariencia();
@@ -127,7 +184,13 @@ public abstract class EscanerMCreatorGUI extends JFrame implements CrashDetector
 
 	@Override
 	public void init() {
-		setTitle("Escaner MCreator");
+		String titulo = tituloVentanaNoLocalizado();
+
+		if (titulo == null || titulo.isEmpty()) {
+			titulo = MonitorDePID.idioma.tituloEscanerMCreator();
+		}
+
+		setTitle(titulo);
 		setSize(800, 600);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);

@@ -9602,4 +9602,59 @@ public class Suajili implements Idioma {
 		return "Hitilafu ya Kotlin: reflection ya ndani";
 	}
 
+	public String tituloEscanerMCreator() {
+		return "Kichunguzi cha MCreator";
+	}
+
+	public String escanerMCreatorEscaneandoMods() {
+		return "Inachunguza modi...";
+	}
+
+	public String escanerMCreatorPorFavorEspera() {
+		return "Tafadhali subiri.";
+	}
+
+	public String escanerMCreatorResultadosAnalisis() {
+		return "Matokeo ya uchambuzi wa MCreator:";
+	}
+
+	public String escanerMCreatorNoSeEncontraronMods() {
+		return "Hakuna modi za MCreator zilizopatikana.";
+	}
+
+	public String escanerMCreatorEscaneoCompletado() {
+		return "Uchunguzi umekamilika.";
+	}
+
+	public String escanerMCreatorErrorDuranteEscaneo() {
+		return "Hitilafu wakati wa uchunguzi:";
+	}
+
+	public String escanerMCreatorCargando() {
+		return "Inapakia...";
+	}
+
+	public String escanerMCreatorCompletado() {
+		return "Imekamilika";
+	}
+
+	public String escanerMCreatorError() {
+		return "Hitilafu";
+	}
+
+	@Override
+	public String textoNormal() {
+		return "Maandishi ya kawaida";
+	}
+
+	@Override
+	public String noSeEncontroConsolaParaArchivo() {
+		return "Haikupata konsoli ya faili: ";
+	}
+
+	@Override
+	public String lineaSeleccionadaEnLectador() {
+		return "mstari uliochaguliwa katika kisomaji: ";
+	}
+
 }

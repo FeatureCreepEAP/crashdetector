@@ -9122,4 +9122,60 @@ public class Esperanto implements Idioma {
 		return "Eraro de Kotlin: interna reflekto";
 	}
 
+	public String tituloEscanerMCreator() {
+		return "Skaniilo MCreator";
+	}
+
+	public String escanerMCreatorEscaneandoMods() {
+		return "Scanante mod-ojn...";
+	}
+
+	public String escanerMCreatorPorFavorEspera() {
+		return "Bonvolu atendi.";
+	}
+
+	public String escanerMCreatorResultadosAnalisis() {
+		return "Rezultoj de analizo MCreator:";
+	}
+
+	public String escanerMCreatorNoSeEncontraronMods() {
+		return "Neniuj mod-oj de MCreator trovitaj.";
+	}
+
+	public String escanerMCreatorEscaneoCompletado() {
+		return "Scanado kompletigita.";
+	}
+
+	public String escanerMCreatorErrorDuranteEscaneo() {
+		return "Eraro dum scanado:";
+	}
+
+	public String escanerMCreatorCargando() {
+		return "Ŝargante...";
+	}
+
+	public String escanerMCreatorCompletado() {
+		return "Kompletigita";
+	}
+
+	public String escanerMCreatorError() {
+		return "Eraro";
+	}
+
+	// Esperanto (Esperanto)
+	@Override
+	public String textoNormal() {
+		return "Normala teksto";
+	}
+
+	@Override
+	public String noSeEncontroConsolaParaArchivo() {
+		return "Ne troviĝis konzolo por la dosiero: ";
+	}
+
+	@Override
+	public String lineaSeleccionadaEnLectador() {
+		return "elektita linio en legilo: ";
+	}
+
 }

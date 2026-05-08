@@ -9176,4 +9176,60 @@ public class Ingles implements Idioma {
 		return "Kotlin error: internal reflection";
 	}
 
+	public String tituloEscanerMCreator() {
+		return "MCreator Scanner";
+	}
+
+	public String escanerMCreatorEscaneandoMods() {
+		return "Scanning mods...";
+	}
+
+	public String escanerMCreatorPorFavorEspera() {
+		return "Please wait.";
+	}
+
+	public String escanerMCreatorResultadosAnalisis() {
+		return "MCreator Analysis Results:";
+	}
+
+	public String escanerMCreatorNoSeEncontraronMods() {
+		return "No MCreator mods found.";
+	}
+
+	public String escanerMCreatorEscaneoCompletado() {
+		return "Scan completed.";
+	}
+
+	public String escanerMCreatorErrorDuranteEscaneo() {
+		return "Error during scan:";
+	}
+
+	public String escanerMCreatorCargando() {
+		return "Loading...";
+	}
+
+	public String escanerMCreatorCompletado() {
+		return "Completed";
+	}
+
+	public String escanerMCreatorError() {
+		return "Error";
+	}
+
+	// English (UK)
+	@Override
+	public String textoNormal() {
+		return "Normal text";
+	}
+
+	@Override
+	public String noSeEncontroConsolaParaArchivo() {
+		return "Console not found for file: ";
+	}
+
+	@Override
+	public String lineaSeleccionadaEnLectador() {
+		return "selected line in reader: ";
+	}
+
 }

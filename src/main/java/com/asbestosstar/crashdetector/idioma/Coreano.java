@@ -8791,4 +8791,60 @@ public class Coreano implements Idioma {
 		return "Kotlin 오류: 내부 반사";
 	}
 
+	public String tituloEscanerMCreator() {
+		return "MCreator 스캐너";
+	}
+
+	public String escanerMCreatorEscaneandoMods() {
+		return "모드 검색 중...";
+	}
+
+	public String escanerMCreatorPorFavorEspera() {
+		return "잠시 기다려 주십시오.";
+	}
+
+	public String escanerMCreatorResultadosAnalisis() {
+		return "MCreator 분석 결과:";
+	}
+
+	public String escanerMCreatorNoSeEncontraronMods() {
+		return "MCreator 모드를 찾지 못했습니다.";
+	}
+
+	public String escanerMCreatorEscaneoCompletado() {
+		return "검색 완료.";
+	}
+
+	public String escanerMCreatorErrorDuranteEscaneo() {
+		return "검색 중 오류 발생:";
+	}
+
+	public String escanerMCreatorCargando() {
+		return "불러오는 중...";
+	}
+
+	public String escanerMCreatorCompletado() {
+		return "완료됨";
+	}
+
+	public String escanerMCreatorError() {
+		return "오류";
+	}
+
+	// Korean (Munhwaŏ / Standard Korean) (한국어)
+	@Override
+	public String textoNormal() {
+		return "일반 텍스트";
+	}
+
+	@Override
+	public String noSeEncontroConsolaParaArchivo() {
+		return "파일에 대한 콘솔을 찾을 수 없습니다: ";
+	}
+
+	@Override
+	public String lineaSeleccionadaEnLectador() {
+		return "읽기 도구에서 선택된 줄: ";
+	}
+
 }

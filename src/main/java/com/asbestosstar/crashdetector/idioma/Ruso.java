@@ -9155,4 +9155,59 @@ public class Ruso implements Idioma {
 		return "Ошибка Kotlin: внутренняя рефлексия";
 	}
 
+	public String tituloEscanerMCreator() {
+		return "Сканер MCreator";
+	}
+
+	public String escanerMCreatorEscaneandoMods() {
+		return "Сканирование модов...";
+	}
+
+	public String escanerMCreatorPorFavorEspera() {
+		return "Пожалуйста, подождите.";
+	}
+
+	public String escanerMCreatorResultadosAnalisis() {
+		return "Результаты анализа MCreator:";
+	}
+
+	public String escanerMCreatorNoSeEncontraronMods() {
+		return "Моды MCreator не найдены.";
+	}
+
+	public String escanerMCreatorEscaneoCompletado() {
+		return "Сканирование завершено.";
+	}
+
+	public String escanerMCreatorErrorDuranteEscaneo() {
+		return "Ошибка во время сканирования:";
+	}
+
+	public String escanerMCreatorCargando() {
+		return "Загрузка...";
+	}
+
+	public String escanerMCreatorCompletado() {
+		return "Завершено";
+	}
+
+	public String escanerMCreatorError() {
+		return "Ошибка";
+	}
+
+	@Override
+	public String textoNormal() {
+		return "Обычный текст";
+	}
+
+	@Override
+	public String noSeEncontroConsolaParaArchivo() {
+		return "Консоль для файла не найдена: ";
+	}
+
+	@Override
+	public String lineaSeleccionadaEnLectador() {
+		return "выбранная строка в считывателе: ";
+	}
+
 }

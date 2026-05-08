@@ -9690,4 +9690,60 @@ public class Frances implements Idioma {
 		return "Erreur Kotlin : réflexion interne";
 	}
 
+	public String tituloEscanerMCreator() {
+		return "Scanner MCreator";
+	}
+
+	public String escanerMCreatorEscaneandoMods() {
+		return "Analyse des mods en cours...";
+	}
+
+	public String escanerMCreatorPorFavorEspera() {
+		return "Veuillez patienter.";
+	}
+
+	public String escanerMCreatorResultadosAnalisis() {
+		return "Résultats de l'analyse MCreator :";
+	}
+
+	public String escanerMCreatorNoSeEncontraronMods() {
+		return "Aucun mod MCreator trouvé.";
+	}
+
+	public String escanerMCreatorEscaneoCompletado() {
+		return "Analyse terminée.";
+	}
+
+	public String escanerMCreatorErrorDuranteEscaneo() {
+		return "Erreur lors de l'analyse :";
+	}
+
+	public String escanerMCreatorCargando() {
+		return "Chargement...";
+	}
+
+	public String escanerMCreatorCompletado() {
+		return "Terminé";
+	}
+
+	public String escanerMCreatorError() {
+		return "Erreur";
+	}
+
+	// French (Burkina Faso variant) (Français)
+	@Override
+	public String textoNormal() {
+		return "Texte normal";
+	}
+
+	@Override
+	public String noSeEncontroConsolaParaArchivo() {
+		return "Console non trouvée pour le fichier : ";
+	}
+
+	@Override
+	public String lineaSeleccionadaEnLectador() {
+		return "ligne sélectionnée dans le lecteur : ";
+	}
+
 }

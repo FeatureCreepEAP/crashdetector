@@ -8603,4 +8603,60 @@ public class Chino implements Idioma {
 		return "Kotlin 错误：内部反射";
 	}
 
+	public String tituloEscanerMCreator() {
+		return "MCreator 扫描器";
+	}
+
+	public String escanerMCreatorEscaneandoMods() {
+		return "正在扫描模组...";
+	}
+
+	public String escanerMCreatorPorFavorEspera() {
+		return "请稍候。";
+	}
+
+	public String escanerMCreatorResultadosAnalisis() {
+		return "MCreator 分析结果：";
+	}
+
+	public String escanerMCreatorNoSeEncontraronMods() {
+		return "未找到 MCreator 模组。";
+	}
+
+	public String escanerMCreatorEscaneoCompletado() {
+		return "扫描完成。";
+	}
+
+	public String escanerMCreatorErrorDuranteEscaneo() {
+		return "扫描期间出错：";
+	}
+
+	public String escanerMCreatorCargando() {
+		return "加载中...";
+	}
+
+	public String escanerMCreatorCompletado() {
+		return "已完成";
+	}
+
+	public String escanerMCreatorError() {
+		return "错误";
+	}
+
+	// Chinese (Simplified) (中文)
+	@Override
+	public String textoNormal() {
+		return "普通文本";
+	}
+
+	@Override
+	public String noSeEncontroConsolaParaArchivo() {
+		return "未找到文件的控制台：";
+	}
+
+	@Override
+	public String lineaSeleccionadaEnLectador() {
+		return "读取器中选定的行：";
+	}
+
 }

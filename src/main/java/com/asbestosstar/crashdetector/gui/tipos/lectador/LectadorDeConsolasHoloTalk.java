@@ -56,7 +56,7 @@ public class LectadorDeConsolasHoloTalk extends LectadorDeConsolasGUI {
 
 	@Override
 	protected String textoNormalLeyenda() {
-		return "Texto normal";
+		return MonitorDePID.idioma.textoNormal();
 	}
 
 	@Override
@@ -177,7 +177,7 @@ public class LectadorDeConsolasHoloTalk extends LectadorDeConsolasGUI {
 
 			if (consolaSeleccionada == null) {
 				javax.swing.JOptionPane.showMessageDialog(null,
-						"No se encontró la consola para el archivo: " + rutaArchivo, "Error",
+						MonitorDePID.idioma.noSeEncontroConsolaParaArchivo() + rutaArchivo, MonitorDePID.idioma.error(),
 						javax.swing.JOptionPane.ERROR_MESSAGE);
 				return;
 			}

@@ -9369,4 +9369,59 @@ public class Vietnamita implements Idioma {
 		return "Lỗi Kotlin: phản chiếu nội bộ";
 	}
 
+	public String tituloEscanerMCreator() {
+		return "Trình quét MCreator";
+	}
+
+	public String escanerMCreatorEscaneandoMods() {
+		return "Đang quét mod...";
+	}
+
+	public String escanerMCreatorPorFavorEspera() {
+		return "Vui lòng đợi.";
+	}
+
+	public String escanerMCreatorResultadosAnalisis() {
+		return "Kết quả phân tích MCreator:";
+	}
+
+	public String escanerMCreatorNoSeEncontraronMods() {
+		return "Không tìm thấy mod nào của MCreator.";
+	}
+
+	public String escanerMCreatorEscaneoCompletado() {
+		return "Quét hoàn tất.";
+	}
+
+	public String escanerMCreatorErrorDuranteEscaneo() {
+		return "Lỗi trong quá trình quét:";
+	}
+
+	public String escanerMCreatorCargando() {
+		return "Đang tải...";
+	}
+
+	public String escanerMCreatorCompletado() {
+		return "Hoàn tất";
+	}
+
+	public String escanerMCreatorError() {
+		return "Lỗi";
+	}
+
+	@Override
+	public String textoNormal() {
+		return "Văn bản bình thường";
+	}
+
+	@Override
+	public String noSeEncontroConsolaParaArchivo() {
+		return "Không tìm thấy bảng điều khiển cho tệp: ";
+	}
+
+	@Override
+	public String lineaSeleccionadaEnLectador() {
+		return "dòng đã chọn trong trình đọc: ";
+	}
+
 }

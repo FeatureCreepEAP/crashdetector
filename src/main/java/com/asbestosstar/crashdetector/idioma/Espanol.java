@@ -9870,4 +9870,59 @@ public class Espanol implements Idioma {
 		return "Error de Kotlin: reflexión interna";
 	}
 
+	public String tituloEscanerMCreator() {
+		return "Escáner MCreator";
+	}
+
+	public String escanerMCreatorEscaneandoMods() {
+		return "Escaneando mods...";
+	}
+
+	public String escanerMCreatorPorFavorEspera() {
+		return "Por favor espera.";
+	}
+
+	public String escanerMCreatorResultadosAnalisis() {
+		return "Resultados del análisis MCreator:";
+	}
+
+	public String escanerMCreatorNoSeEncontraronMods() {
+		return "No se encontraron mods de MCreator.";
+	}
+
+	public String escanerMCreatorEscaneoCompletado() {
+		return "Escaneo completado.";
+	}
+
+	public String escanerMCreatorErrorDuranteEscaneo() {
+		return "Error durante el escaneo:";
+	}
+
+	public String escanerMCreatorCargando() {
+		return "Cargando...";
+	}
+
+	public String escanerMCreatorCompletado() {
+		return "Completado";
+	}
+
+	public String escanerMCreatorError() {
+		return "Error";
+	}
+
+	@Override
+	public String textoNormal() {
+		return "Texto normal";
+	}
+
+	@Override
+	public String noSeEncontroConsolaParaArchivo() {
+		return "No se encontró la consola para el archivo: ";
+	}
+
+	@Override
+	public String lineaSeleccionadaEnLectador() {
+		return "línea seleccionada en lectador: ";
+	}
+
 }
