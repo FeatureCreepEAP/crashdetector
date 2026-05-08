@@ -9602,39 +9602,39 @@ public class Indonesia implements Idioma {
 	public String jgitDependenciasEnCarpeta() {
 		return "Dependensi yang terinstal di folder";
 	}
-	
+
 	public String jgitForgeNoSeleccionada() {
-	    return "Tidak ada forge yang dipilih.";
+		return "Tidak ada forge yang dipilih.";
 	}
 
 	public String jgitForgeNoRegistrada(String id) {
-	    return "Forge tidak terdaftar: " + id;
+		return "Forge tidak terdaftar: " + id;
 	}
 
 	public String jgitEscribaUrlForge() {
-	    return "URL Forge:";
+		return "URL Forge:";
 	}
 
 	public String jgitEscribaNombreRepositorio() {
-	    return "Nama repositori:";
+		return "Nama repositori:";
 	}
 
 	public String jgitEscribaDescripcionRepositorio() {
-	    return "Deskripsi repositori:";
+		return "Deskripsi repositori:";
 	}
 
 	public String jgitEscribaNamespaceOpcional() {
-	    return "Namespace opsional:";
+		return "Namespace opsional:";
 	}
 
 	public String jgitEscribaTokenForge() {
-	    return "Token API Forge:";
+		return "Token API Forge:";
 	}
 
 	public String jgitErrorCrearRemote() {
-	    return "Kesalahan saat membuat remote";
+		return "Kesalahan saat membuat remote";
 	}
-	
+
 	@Override
 	public String mensajeControlifyRemoveReloadingScreen() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
@@ -9644,8 +9644,7 @@ public class Indonesia implements Idioma {
 				+ "<b>Remove Reloading Screen</b>.</p>"
 				+ "<p><b>Penyebab kemungkinan:</b> Remove Reloading Screen memodifikasi bagian dari layar pemuatan atau proses pemuatan, "
 				+ "sedangkan Controlify mencoba menginisialisasi konfigurasinya sebelum sistem sepenuhnya siap.</p>"
-				+ "<p><b>Opsi yang direkomendasikan:</b></p>"
-				+ "<ul>"
+				+ "<p><b>Opsi yang direkomendasikan:</b></p>" + "<ul>"
 				+ "<li>Hapus <b>Remove Reloading Screen</b>.</li>"
 				+ "<li>Atau perbarui <b>Controlify</b> dan <b>Remove Reloading Screen</b> jika versi baru tersedia.</li>"
 				+ "<li>Jika masalah berlanjut, pertahankan <b>Controlify</b> dan hapus mod apa pun yang mengubah layar pemuatan.</li>"
@@ -9658,8 +9657,7 @@ public class Indonesia implements Idioma {
 	public String nombreControlifyRemoveReloadingScreen() {
 		return "Ketidakcocokan: Controlify vs Remove Reloading Screen";
 	}
-	
-	
+
 	@Override
 	public String mensajeBiomesOPlentyFogDataLiquidosPersonalizados() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
@@ -9668,15 +9666,13 @@ public class Indonesia implements Idioma {
 				+ "net.minecraft.client.renderer.fog.FogData</b> bersama dengan referensi ke <b>Biomes O' Plenty</b>.</p>"
 				+ "<p>Ini mungkin terkait dengan <b>Biomes O' Plenty</b>, terutama dengan bioma, kabut "
 				+ "atau cairan kustom. Namun, tidak sepenuhnya pasti bahwa Biomes O' Plenty adalah satu-satunya penyebab.</p>"
-				+ "<p><b>Opsi yang direkomendasikan:</b></p>"
-				+ "<ul>"
+				+ "<p><b>Opsi yang direkomendasikan:</b></p>" + "<ul>"
 				+ "<li>Coba edit data pemain untuk memindahkannya ke lokasi lain di dunia.</li>"
 				+ "<li>Coba muat dunia tanpa <b>Biomes O' Plenty</b>.</li>"
 				+ "<li>Jika dunia berhasil dimuat setelah memindahkan pemain, masalah kemungkinan terjadi di area tertentu, "
 				+ "bioma tertentu, atau cairan kustom di dekatnya.</li>"
 				+ "<li>Anda juga dapat mencoba memperbarui <b>Biomes O' Plenty</b> dan mod yang terkait dengan rendering, kabut, "
-				+ "shader, atau dimensi.</li>"
-				+ "</ul>"
+				+ "shader, atau dimensi.</li>" + "</ul>"
 				+ "<p>Jika menghapus Biomes O' Plenty memungkinkan game dimulai, periksa apakah pemain berada di dalam atau dekat bioma "
 				+ "atau fluida yang ditambahkan oleh mod tersebut.</p>";
 	}
@@ -9685,7 +9681,7 @@ public class Indonesia implements Idioma {
 	public String nombreBiomesOPlentyFogDataLiquidosPersonalizados() {
 		return "Masalah potensial: Biomes O' Plenty dan FogData";
 	}
-	
+
 	@Override
 	public String mensajeKotlinReflectionInternalErrorVersion() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
@@ -9694,16 +9690,12 @@ public class Indonesia implements Idioma {
 				+ "<b>Property 'none' not resolved</b>.</p>"
 				+ "<p>Jenis kesalahan ini umum terjadi pada versi tertentu dari <b>Fabric Language Kotlin</b> / <b>Kotlin</b>. "
 				+ "Dalam kasus ini, muncul kelas dari <b>Inventory Profiles Next</b>, tetapi masalah yang sama juga dapat terjadi "
-				+ "pada mod lain yang menggunakan Kotlin.</p>"
-				+ "<p><b>Opsi yang direkomendasikan:</b></p>"
-				+ "<ul>"
+				+ "pada mod lain yang menggunakan Kotlin.</p>" + "<p><b>Opsi yang direkomendasikan:</b></p>" + "<ul>"
 				+ "<li>Perbarui <b>Fabric Language Kotlin</b> ke versi <b>2.3.40</b>, jika tersedia untuk versi Minecraft Anda.</li>"
 				+ "<li>Jika memperbarui tidak berhasil, coba turunkan <b>Fabric Language Kotlin</b> ke versi <b>2.3.10</b>.</li>"
 				+ "<li>Perbarui juga <b>Inventory Profiles Next</b> jika log menyebutkan kelas dari mod tersebut.</li>"
 				+ "<li>Jika kesalahan muncul dengan mod lain, periksa apakah mod tersebut bergantung pada Kotlin dan coba ubah versi "
-				+ "<b>Fabric Language Kotlin</b>.</li>"
-				+ "</ul>"
-				+ "<p>Referensi teknis terkait: "
+				+ "<b>Fabric Language Kotlin</b>.</li>" + "</ul>" + "<p>Referensi teknis terkait: "
 				+ "<a href='https://github.com/FabricMC/fabric-language-kotlin/issues/183'>Masalah Fabric Language Kotlin #183</a>.</p>";
 	}
 
@@ -9711,18 +9703,5 @@ public class Indonesia implements Idioma {
 	public String nombreKotlinReflectionInternalErrorVersion() {
 		return "Kesalahan Kotlin: refleksi internal";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

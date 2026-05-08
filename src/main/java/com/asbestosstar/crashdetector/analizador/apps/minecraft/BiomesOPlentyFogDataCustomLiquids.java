@@ -23,7 +23,8 @@ public class BiomesOPlentyFogDataCustomLiquids implements Verificaciones {
 	public void verificar(Consola consola) {
 		// Detección global ligera: el ClassCastException junto con Biomes O' Plenty
 		// puede indicar un problema relacionado con líquidos personalizados o niebla.
-		if (consola.contenido_verificar.contains("class org.joml.Vector4f cannot be cast to class net.minecraft.client.renderer.fog.FogData")
+		if (consola.contenido_verificar
+				.contains("class org.joml.Vector4f cannot be cast to class net.minecraft.client.renderer.fog.FogData")
 				&& consola.contenido_verificar.toLowerCase().contains("biomesoplenty")) {
 			posibleProblemaBOP = true;
 		}
@@ -37,7 +38,8 @@ public class BiomesOPlentyFogDataCustomLiquids implements Verificaciones {
 		}
 
 		// Verificación precisa en la línea del error principal.
-		if (linea.contains("class org.joml.Vector4f cannot be cast to class net.minecraft.client.renderer.fog.FogData")) {
+		if (linea.contains(
+				"class org.joml.Vector4f cannot be cast to class net.minecraft.client.renderer.fog.FogData")) {
 			this.enlace = consola.agregarErrorALectador(num, this);
 			this.activado = true;
 			return;

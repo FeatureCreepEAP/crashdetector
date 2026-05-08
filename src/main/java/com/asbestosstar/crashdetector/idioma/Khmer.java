@@ -9224,37 +9224,39 @@ public class Khmer implements Idioma {
 	public String jgitDependenciasEnCarpeta() {
 		return "ភាពអាស្រ័យដែលបានដំឡើងនៅក្នុងថត";
 	}
+
 	public String jgitForgeNoSeleccionada() {
-	    return "មិនមាន Forge ដែលបានជ្រើសរើសទេ។";
+		return "មិនមាន Forge ដែលបានជ្រើសរើសទេ។";
 	}
 
 	public String jgitForgeNoRegistrada(String id) {
-	    return "Forge មិនបានចុះបញ្ជីទេ: " + id;
+		return "Forge មិនបានចុះបញ្ជីទេ: " + id;
 	}
 
 	public String jgitEscribaUrlForge() {
-	    return "URL Forge:";
+		return "URL Forge:";
 	}
 
 	public String jgitEscribaNombreRepositorio() {
-	    return "ឈ្មោះឃ្លាំង:";
+		return "ឈ្មោះឃ្លាំង:";
 	}
 
 	public String jgitEscribaDescripcionRepositorio() {
-	    return "ការពិពណ៌នាឃ្លាំង:";
+		return "ការពិពណ៌នាឃ្លាំង:";
 	}
 
 	public String jgitEscribaNamespaceOpcional() {
-	    return "Namespace ជាជម្រើស:";
+		return "Namespace ជាជម្រើស:";
 	}
 
 	public String jgitEscribaTokenForge() {
-	    return "Token API Forge:";
+		return "Token API Forge:";
 	}
 
 	public String jgitErrorCrearRemote() {
-	    return "កំហុសក្នុងការបង្កើត remote";
+		return "កំហុសក្នុងការបង្កើត remote";
 	}
+
 	@Override
 	public String mensajeControlifyRemoveReloadingScreen() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
@@ -9264,13 +9266,10 @@ public class Khmer implements Idioma {
 				+ "<b>Remove Reloading Screen</b>។</p>"
 				+ "<p><b>មូលហេតុដែលអាចកើតមាន៖</b> Remove Reloading Screen កែប្រែផ្នែកខ្លះនៃអេក្រង់ផ្ទុក ឬដំណើរការផ្ទុក, "
 				+ "ខណៈដែល Controlify ព្យាយាមចាប់ផ្តើមការកំណត់របស់វាមុនពេលប្រព័ន្ធបានរួចរាល់ជាស្ថាពរ។</p>"
-				+ "<p><b>ជម្រើសដែលណែនាំ៖</b></p>"
-				+ "<ul>"
-				+ "<li>ដកចេញ <b>Remove Reloading Screen</b>។</li>"
+				+ "<p><b>ជម្រើសដែលណែនាំ៖</b></p>" + "<ul>" + "<li>ដកចេញ <b>Remove Reloading Screen</b>។</li>"
 				+ "<li>ឬធ្វើបច្ចុប្បន្នភាព <b>Controlify</b> និង <b>Remove Reloading Screen</b> ប្រសិនបើមានកំណែថ្មី។</li>"
 				+ "<li>ប្រសិនបើបញ្ហានៅតែបន្ត សូមរក្សាទុក <b>Controlify</b> ហើយដកចេញ mod ណាដែលកែប្រែអេក្រង់ផ្ទុក។</li>"
-				+ "</ul>"
-				+ "<p>Mod ដែលកែប្រែអេក្រង់ផ្ទុកជាញឹកញាប់បណ្តាលឱ្យមានភាពមិនឆបគ្នាជាមួយ mod ផ្សេងទៀត, "
+				+ "</ul>" + "<p>Mod ដែលកែប្រែអេក្រង់ផ្ទុកជាញឹកញាប់បណ្តាលឱ្យមានភាពមិនឆបគ្នាជាមួយ mod ផ្សេងទៀត, "
 				+ "ហើយជាធម្មតាផ្តល់នូវអត្ថប្រយោជន៍ជាក់ស្តែងតិចតួចបើធៀបនឹងបញ្ហាដែលវាអាចបណ្តាលឱ្យកើតឡើង។</p>";
 	}
 
@@ -9278,7 +9277,7 @@ public class Khmer implements Idioma {
 	public String nombreControlifyRemoveReloadingScreen() {
 		return "ភាពមិនឆបគ្នា: Controlify ប្រឆាំងនឹង Remove Reloading Screen";
 	}
-	
+
 	@Override
 	public String mensajeBiomesOPlentyFogDataLiquidosPersonalizados() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
@@ -9287,15 +9286,13 @@ public class Khmer implements Idioma {
 				+ "net.minecraft.client.renderer.fog.FogData</b> ព្រមទាំងការយោងទៅលើ <b>Biomes O' Plenty</b>។</p>"
 				+ "<p>នេះប្រហែលជាទាក់ទងនឹង <b>Biomes O' Plenty</b> ជាពិសេសជាមួយជីវចម្រុះ (biomes), អ័ព្ទ "
 				+ "ឬអង្គធាតុរាវផ្ទាល់ខ្លួន។ ទោះយ៉ាងណាក៏ដោយ វាមិនច្បាស់លាស់ទេថា Biomes O' Plenty គឺជាមូលហេតុតែមួយគត់។</p>"
-				+ "<p><b>ជម្រើសដែលណែនាំ៖</b></p>"
-				+ "<ul>"
+				+ "<p><b>ជម្រើសដែលណែនាំ៖</b></p>" + "<ul>"
 				+ "<li>ព្យាយាមកែសម្រួលទិន្នន័យរបស់អ្នកលេង ដើម្បីផ្លាស់ទីពួកគេទៅកាន់ទីតាំងផ្សេងទៀតនៅក្នុងពិភពលោក។</li>"
 				+ "<li>ព្យាយាមផ្ទុកពិភពលោកដោយគ្មាន <b>Biomes O' Plenty</b>។</li>"
 				+ "<li>ប្រសិនបើពិភពលោកអាចផ្ទុកបានបន្ទាប់ពីផ្លាស់ទីអ្នកលេង នោះបញ្ហាប្រហែលជាកើតឡើងនៅក្នុងតំបន់ជាក់លាក់, "
 				+ "ជីវចម្រុះជាក់លាក់ ឬអង្គធាតុរាវផ្ទាល់ខ្លួននៅជិតនោះ។</li>"
 				+ "<li>អ្នកក៏អាចព្យាយាមធ្វើបច្ចុប្បន្នភាព <b>Biomes O' Plenty</b> និង mods ដែលទាក់ទងនឹងការបង្ហាញ, អ័ព្ទ, "
-				+ "shaders ឬវិមាត្រ។</li>"
-				+ "</ul>"
+				+ "shaders ឬវិមាត្រ។</li>" + "</ul>"
 				+ "<p>ប្រសិនបើការដកចេញ Biomes O' Plenty អនុញ្ញាតឱ្យហ្គេមចាប់ផ្តើម សូមពិនិត្យមើលថាតើអ្នកលេងស្ថិតនៅក្នុង ឬនៅជិតជីវចម្រុះ "
 				+ "ឬអង្គធាតុរាវដែលបានបន្ថែមដោយ mod នោះដែរឬទេ។</p>";
 	}
@@ -9304,6 +9301,7 @@ public class Khmer implements Idioma {
 	public String nombreBiomesOPlentyFogDataLiquidosPersonalizados() {
 		return "បញ្ហាដែលអាចកើតមាន: Biomes O' Plenty និង FogData";
 	}
+
 	@Override
 	public String mensajeKotlinReflectionInternalErrorVersion() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
@@ -9312,16 +9310,12 @@ public class Khmer implements Idioma {
 				+ "<b>Property 'none' not resolved</b>។</p>"
 				+ "<p>ប្រភេទកំហុសនេះជាទូទៅកើតឡើងជាមួយកំណែជាក់លាក់នៃ <b>Fabric Language Kotlin</b> / <b>Kotlin</b>។ "
 				+ "ក្នុងករណីនេះ ថ្នាក់ពី <b>Inventory Profiles Next</b> បានលេចឡើង ប៉ុន្តែបញ្ហាដូចគ្នាក៏អាចកើតឡើងផងដែរ "
-				+ "ជាមួយ mods ផ្សេងទៀតដែលប្រើ Kotlin។</p>"
-				+ "<p><b>ជម្រើសដែលណែនាំ៖</b></p>"
-				+ "<ul>"
+				+ "ជាមួយ mods ផ្សេងទៀតដែលប្រើ Kotlin។</p>" + "<p><b>ជម្រើសដែលណែនាំ៖</b></p>" + "<ul>"
 				+ "<li>ធ្វើបច្ចុប្បន្នភាព <b>Fabric Language Kotlin</b> ទៅកាន់កំណែ <b>2.3.40</b> ប្រសិនបើវាមានសម្រាប់កំណែ Minecraft របស់អ្នក។</li>"
 				+ "<li>ប្រសិនបើការធ្វើបច្ចុប្បន្នភាពមិនដំណើរការ សូមព្យាយាមបន្ថយ <b>Fabric Language Kotlin</b> ទៅកាន់កំណែ <b>2.3.10</b>។</li>"
 				+ "<li>ធ្វើបច្ចុប្បន្នភាព <b>Inventory Profiles Next</b> ផងដែរ ប្រសិនបើ log បានលើកឡើងពីថ្នាក់របស់ mod នោះ។</li>"
 				+ "<li>ប្រសិនបើកំហុសលេចឡើងជាមួយ mod ផ្សេងទៀត សូមពិនិត្យមើលថាតើ mod នោះពឹងផ្អែកលើ Kotlin ឬអត់ ហើយព្យាយាមផ្លាស់ប្តូរកំណែនៃ "
-				+ "<b>Fabric Language Kotlin</b>។</li>"
-				+ "</ul>"
-				+ "<p>ឯកសារយោងបច្ចេកទេសដែលពាក់ព័ន្ធ៖ "
+				+ "<b>Fabric Language Kotlin</b>។</li>" + "</ul>" + "<p>ឯកសារយោងបច្ចេកទេសដែលពាក់ព័ន្ធ៖ "
 				+ "<a href='https://github.com/FabricMC/fabric-language-kotlin/issues/183'>បញ្ហា Fabric Language Kotlin #183</a>។</p>";
 	}
 
@@ -9329,24 +9323,5 @@ public class Khmer implements Idioma {
 	public String nombreKotlinReflectionInternalErrorVersion() {
 		return "កំហុស Kotlin: ការឆ្លុះបញ្ចាំងផ្ទៃក្នុង";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

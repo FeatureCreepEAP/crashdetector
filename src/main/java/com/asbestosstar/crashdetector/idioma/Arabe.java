@@ -8941,39 +8941,39 @@ public class Arabe implements Idioma {
 	public String jgitDependenciasEnCarpeta() {
 		return "الاعتماديات المثبتة في المجلد";
 	}
-	
+
 	public String jgitForgeNoSeleccionada() {
-	    return "لم يتم اختيار forge.";
+		return "لم يتم اختيار forge.";
 	}
 
 	public String jgitForgeNoRegistrada(String id) {
-	    return "الـ forge غير مسجلة: " + id;
+		return "الـ forge غير مسجلة: " + id;
 	}
 
 	public String jgitEscribaUrlForge() {
-	    return "عنوان URL للـ forge:";
+		return "عنوان URL للـ forge:";
 	}
 
 	public String jgitEscribaNombreRepositorio() {
-	    return "اسم المستودع:";
+		return "اسم المستودع:";
 	}
 
 	public String jgitEscribaDescripcionRepositorio() {
-	    return "وصف المستودع:";
+		return "وصف المستودع:";
 	}
 
 	public String jgitEscribaNamespaceOpcional() {
-	    return "Namespace اختياري:";
+		return "Namespace اختياري:";
 	}
 
 	public String jgitEscribaTokenForge() {
-	    return "رمز API للـ forge:";
+		return "رمز API للـ forge:";
 	}
 
 	public String jgitErrorCrearRemote() {
-	    return "خطأ في إنشاء الـ remote";
+		return "خطأ في إنشاء الـ remote";
 	}
-	
+
 	@Override
 	public String mensajeControlifyRemoveReloadingScreen() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
@@ -8983,12 +8983,9 @@ public class Arabe implements Idioma {
 				+ "<b>Remove Reloading Screen</b>.</p>"
 				+ "<p><b>السبب المحتمل:</b> يقوم Remove Reloading Screen بتعديل أجزاء من شاشة التحميل أو عملية التحميل، "
 				+ "بينما يحاول Controlify تهيئة إعداداته قبل أن يكون النظام جاهزًا تمامًا.</p>"
-				+ "<p><b>الخيارات الموصى بها:</b></p>"
-				+ "<ul>"
-				+ "<li>أزل <b>Remove Reloading Screen</b>.</li>"
+				+ "<p><b>الخيارات الموصى بها:</b></p>" + "<ul>" + "<li>أزل <b>Remove Reloading Screen</b>.</li>"
 				+ "<li>أو قم بتحديث <b>Controlify</b> و <b>Remove Reloading Screen</b> إذا كانت هناك إصدارات جديدة متاحة.</li>"
-				+ "<li>إذا استمرت المشكلة، احتفظ بـ <b>Controlify</b> وأزل أي إضافة تعدل شاشة التحميل.</li>"
-				+ "</ul>"
+				+ "<li>إذا استمرت المشكلة، احتفظ بـ <b>Controlify</b> وأزل أي إضافة تعدل شاشة التحميل.</li>" + "</ul>"
 				+ "<p>غالبًا ما تسبب الإضافات التي تعدل شاشة التحميل عدم توافق مع إضافات أخرى، "
 				+ "وعادةً ما تقدم فائدة عملية قليلة مقارنة بالمشاكل التي قد تسببها.</p>";
 	}
@@ -8997,8 +8994,7 @@ public class Arabe implements Idioma {
 	public String nombreControlifyRemoveReloadingScreen() {
 		return "عدم توافق: Controlify مقابل Remove Reloading Screen";
 	}
-	
-	
+
 	@Override
 	public String mensajeBiomesOPlentyFogDataLiquidosPersonalizados() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
@@ -9007,15 +9003,13 @@ public class Arabe implements Idioma {
 				+ "net.minecraft.client.renderer.fog.FogData</b> بالإضافة إلى مرجع لـ <b>Biomes O' Plenty</b>.</p>"
 				+ "<p>هذا ربما مرتبط بـ <b>Biomes O' Plenty</b>، خاصةً بالمناطق الحيوية (biomes)، الضباب، "
 				+ "أو السوائل المخصصة. ومع ذلك، ليس من المؤكد تمامًا أن Biomes O' Plenty هو السبب الوحيد.</p>"
-				+ "<p><b>الخيارات الموصى بها:</b></p>"
-				+ "<ul>"
+				+ "<p><b>الخيارات الموصى بها:</b></p>" + "<ul>"
 				+ "<li>حاول تعديل بيانات اللاعب لنقله إلى موقع آخر في العالم.</li>"
 				+ "<li>جرب تحميل العالم بدون <b>Biomes O' Plenty</b>.</li>"
 				+ "<li>إذا تم تحميل العالم بعد نقل اللاعب، فمن المرجح أن المشكلة تحدث في منطقة محددة، "
 				+ "أو منطقة حيوية محددة، أو سائل مخصص قريب.</li>"
 				+ "<li>يمكنك أيضًا تجربة تحديث <b>Biomes O' Plenty</b> والإضافات المتعلقة بالعرض، الضباب، "
-				+ "الظلال (shaders)، أو الأبعاد.</li>"
-				+ "</ul>"
+				+ "الظلال (shaders)، أو الأبعاد.</li>" + "</ul>"
 				+ "<p>إذا سمح إزالة Biomes O' Plenty بتشغيل اللعبة، تحقق مما إذا كان اللاعب داخل أو بالقرب من منطقة حيوية "
 				+ "أو سائل أضيف بواسطة هذه الإضافة.</p>";
 	}
@@ -9024,6 +9018,7 @@ public class Arabe implements Idioma {
 	public String nombreBiomesOPlentyFogDataLiquidosPersonalizados() {
 		return "مشكلة محتملة: Biomes O' Plenty و FogData";
 	}
+
 	@Override
 	public String mensajeKotlinReflectionInternalErrorVersion() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
@@ -9032,16 +9027,12 @@ public class Arabe implements Idioma {
 				+ "<b>Property 'none' not resolved</b>.</p>"
 				+ "<p>هذا النوع من الأخطاء شائع مع إصدارات معينة من <b>Fabric Language Kotlin</b> / <b>Kotlin</b>. "
 				+ "في هذه الحالة، تظهر فئة من <b>Inventory Profiles Next</b>، ولكن نفس المشكلة يمكن أن تحدث أيضًا "
-				+ "مع إضافات أخرى تستخدم Kotlin.</p>"
-				+ "<p><b>الخيارات الموصى بها:</b></p>"
-				+ "<ul>"
+				+ "مع إضافات أخرى تستخدم Kotlin.</p>" + "<p><b>الخيارات الموصى بها:</b></p>" + "<ul>"
 				+ "<li>قم بتحديث <b>Fabric Language Kotlin</b> إلى الإصدار <b>2.3.40</b>، إذا كان متاحًا لإصدار Minecraft الخاص بك.</li>"
 				+ "<li>إذا لم ينجح التحديث، حاول خفض <b>Fabric Language Kotlin</b> إلى الإصدار <b>2.3.10</b>.</li>"
 				+ "<li>قم أيضًا بتحديث <b>Inventory Profiles Next</b> إذا ذكر السجل فئات من هذه الإضافة.</li>"
 				+ "<li>إذا ظهر الخطأ مع إضافة أخرى، تحقق مما إذا كانت تلك الإضافة تعتمد على Kotlin وحاول تغيير إصدار "
-				+ "<b>Fabric Language Kotlin</b>.</li>"
-				+ "</ul>"
-				+ "<p>مرجع تقني ذو صلة: "
+				+ "<b>Fabric Language Kotlin</b>.</li>" + "</ul>" + "<p>مرجع تقني ذو صلة: "
 				+ "<a href='https://github.com/FabricMC/fabric-language-kotlin/issues/183'>مشكلة Fabric Language Kotlin #183</a>.</p>";
 	}
 
@@ -9049,21 +9040,5 @@ public class Arabe implements Idioma {
 	public String nombreKotlinReflectionInternalErrorVersion() {
 		return "خطأ Kotlin: انعكاس داخلي";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

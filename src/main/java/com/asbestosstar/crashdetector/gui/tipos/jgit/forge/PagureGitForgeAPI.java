@@ -20,14 +20,11 @@ import com.asbestosstar.crashdetector.CrashDetectorLogger;
  * Pagure también existe en otras instalaciones, así que config.forgeUrl puede
  * apuntar a cualquier instancia compatible con Pagure.
  *
- * Usa:
- * POST /api/0/new
+ * Usa: POST /api/0/new
  *
- * Autenticación:
- * Authorization: token <token>
+ * Autenticación: Authorization: token <token>
  *
- * Formato:
- * application/x-www-form-urlencoded
+ * Formato: application/x-www-form-urlencoded
  */
 public class PagureGitForgeAPI implements GitForgeAPI {
 
@@ -55,8 +52,7 @@ public class PagureGitForgeAPI implements GitForgeAPI {
 
 		String forge = normalizarForge(config.forgeUrl);
 		String nombreRepo = limpiarNombreRepo(config.nombreRepositorio);
-		String descripcion = config.descripcion == null || config.descripcion.trim().isEmpty()
-				? nombreRepo
+		String descripcion = config.descripcion == null || config.descripcion.trim().isEmpty() ? nombreRepo
 				: config.descripcion.trim();
 
 		String namespace = limpiarOpcional(config.namespace);
@@ -160,9 +156,7 @@ public class PagureGitForgeAPI implements GitForgeAPI {
 	}
 
 	private static String normalizarForge(String forgeUrl) {
-		String f = forgeUrl == null || forgeUrl.trim().isEmpty()
-				? FORGE_PREDETERMINADO
-				: forgeUrl.trim();
+		String f = forgeUrl == null || forgeUrl.trim().isEmpty() ? FORGE_PREDETERMINADO : forgeUrl.trim();
 
 		while (f.endsWith("/")) {
 			f = f.substring(0, f.length() - 1);
@@ -363,9 +357,7 @@ public class PagureGitForgeAPI implements GitForgeAPI {
 			return null;
 		}
 
-		return json.substring(primeraComilla + 1, segundaComilla)
-				.replace("\\/", "/")
-				.replace("\\u0040", "@");
+		return json.substring(primeraComilla + 1, segundaComilla).replace("\\/", "/").replace("\\u0040", "@");
 	}
 
 	private static class RespuestaHttp {

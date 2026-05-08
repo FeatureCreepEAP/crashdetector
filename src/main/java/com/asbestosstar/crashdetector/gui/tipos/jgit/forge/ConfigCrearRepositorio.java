@@ -9,8 +9,7 @@ public class ConfigCrearRepositorio {
 	 * En Pagure esto puede dejarse vacío para un repo normal:
 	 * https://pagure.io/mi-repo
 	 *
-	 * Si la instancia usa namespaces, se puede usar:
-	 * rpms, modules, forks, etc.
+	 * Si la instancia usa namespaces, se puede usar: rpms, modules, forks, etc.
 	 */
 	public String namespace;
 

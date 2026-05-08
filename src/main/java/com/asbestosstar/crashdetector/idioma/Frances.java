@@ -9589,40 +9589,39 @@ public class Frances implements Idioma {
 	public String jgitDependenciasEnCarpeta() {
 		return "Dépendances installées dans le dossier";
 	}
-	
-	
+
 	public String jgitForgeNoSeleccionada() {
-	    return "Aucune forge sélectionnée.";
+		return "Aucune forge sélectionnée.";
 	}
 
 	public String jgitForgeNoRegistrada(String id) {
-	    return "La forge n'est pas enregistrée : " + id;
+		return "La forge n'est pas enregistrée : " + id;
 	}
 
 	public String jgitEscribaUrlForge() {
-	    return "URL de la forge :";
+		return "URL de la forge :";
 	}
 
 	public String jgitEscribaNombreRepositorio() {
-	    return "Nom du dépôt :";
+		return "Nom du dépôt :";
 	}
 
 	public String jgitEscribaDescripcionRepositorio() {
-	    return "Description du dépôt :";
+		return "Description du dépôt :";
 	}
 
 	public String jgitEscribaNamespaceOpcional() {
-	    return "Namespace facultatif :";
+		return "Namespace facultatif :";
 	}
 
 	public String jgitEscribaTokenForge() {
-	    return "Jeton API de la forge :";
+		return "Jeton API de la forge :";
 	}
 
 	public String jgitErrorCrearRemote() {
-	    return "Erreur lors de la création du remote";
+		return "Erreur lors de la création du remote";
 	}
-	
+
 	@Override
 	public String mensajeControlifyRemoveReloadingScreen() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
@@ -9632,9 +9631,7 @@ public class Frances implements Idioma {
 				+ "<b>Remove Reloading Screen</b>.</p>"
 				+ "<p><b>Cause probable :</b> Remove Reloading Screen modifie des parties de l'écran de chargement ou du processus de chargement, "
 				+ "tandis que Controlify tente d'initialiser sa configuration avant que le système ne soit entièrement prêt.</p>"
-				+ "<p><b>Options recommandées :</b></p>"
-				+ "<ul>"
-				+ "<li>Supprimez <b>Remove Reloading Screen</b>.</li>"
+				+ "<p><b>Options recommandées :</b></p>" + "<ul>" + "<li>Supprimez <b>Remove Reloading Screen</b>.</li>"
 				+ "<li>Ou mettez à jour <b>Controlify</b> et <b>Remove Reloading Screen</b> si de nouvelles versions sont disponibles.</li>"
 				+ "<li>Si le problème persiste, conservez <b>Controlify</b> et supprimez tout mod qui modifie l'écran de chargement.</li>"
 				+ "</ul>"
@@ -9646,7 +9643,7 @@ public class Frances implements Idioma {
 	public String nombreControlifyRemoveReloadingScreen() {
 		return "Incompatibilité : Controlify vs Remove Reloading Screen";
 	}
-	
+
 	@Override
 	public String mensajeBiomesOPlentyFogDataLiquidosPersonalizados() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
@@ -9655,15 +9652,13 @@ public class Frances implements Idioma {
 				+ "net.minecraft.client.renderer.fog.FogData</b> ainsi qu'une référence à <b>Biomes O' Plenty</b>.</p>"
 				+ "<p>Cela est probablement lié à <b>Biomes O' Plenty</b>, en particulier aux biomes, au brouillard "
 				+ "ou aux liquides personnalisés. Cependant, il n'est pas certain que Biomes O' Plenty soit la seule cause.</p>"
-				+ "<p><b>Options recommandées :</b></p>"
-				+ "<ul>"
+				+ "<p><b>Options recommandées :</b></p>" + "<ul>"
 				+ "<li>Essayez de modifier les données du joueur pour le déplacer à un autre endroit du monde.</li>"
 				+ "<li>Essayez de charger le monde sans <b>Biomes O' Plenty</b>.</li>"
 				+ "<li>Si le monde se charge après avoir déplacé le joueur, le problème survient probablement dans une zone spécifique, "
 				+ "un biome spécifique ou près d'un liquide personnalisé.</li>"
 				+ "<li>Vous pouvez également essayer de mettre à jour <b>Biomes O' Plenty</b> et les mods liés au rendu, au brouillard, "
-				+ "aux shaders ou aux dimensions.</li>"
-				+ "</ul>"
+				+ "aux shaders ou aux dimensions.</li>" + "</ul>"
 				+ "<p>Si retirer Biomes O' Plenty permet de lancer le jeu, vérifiez si le joueur se trouvait dans ou près d'un biome "
 				+ "ou d'un fluide ajouté par ce mod.</p>";
 	}
@@ -9672,6 +9667,7 @@ public class Frances implements Idioma {
 	public String nombreBiomesOPlentyFogDataLiquidosPersonalizados() {
 		return "Problème possible : Biomes O' Plenty et FogData";
 	}
+
 	@Override
 	public String mensajeKotlinReflectionInternalErrorVersion() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
@@ -9680,16 +9676,12 @@ public class Frances implements Idioma {
 				+ "<b>Property 'none' not resolved</b>.</p>"
 				+ "<p>Ce type d'erreur est courant avec certaines versions de <b>Fabric Language Kotlin</b> / <b>Kotlin</b>. "
 				+ "Dans ce cas, une classe de <b>Inventory Profiles Next</b> apparaît, mais le même problème peut aussi survenir "
-				+ "avec d'autres mods utilisant Kotlin.</p>"
-				+ "<p><b>Options recommandées :</b></p>"
-				+ "<ul>"
+				+ "avec d'autres mods utilisant Kotlin.</p>" + "<p><b>Options recommandées :</b></p>" + "<ul>"
 				+ "<li>Mettez à jour <b>Fabric Language Kotlin</b> vers la version <b>2.3.40</b>, si disponible pour votre version de Minecraft.</li>"
 				+ "<li>Si la mise à jour ne fonctionne pas, essayez de rétrograder <b>Fabric Language Kotlin</b> vers la version <b>2.3.10</b>.</li>"
 				+ "<li>Mettez également à jour <b>Inventory Profiles Next</b> si le journal mentionne des classes de ce mod.</li>"
 				+ "<li>Si l'erreur apparaît avec un autre mod, vérifiez si ce mod dépend de Kotlin et essayez de changer la version de "
-				+ "<b>Fabric Language Kotlin</b>.</li>"
-				+ "</ul>"
-				+ "<p>Référence technique connexe : "
+				+ "<b>Fabric Language Kotlin</b>.</li>" + "</ul>" + "<p>Référence technique connexe : "
 				+ "<a href='https://github.com/FabricMC/fabric-language-kotlin/issues/183'>Problème #183 de Fabric Language Kotlin</a>.</p>";
 	}
 
@@ -9697,26 +9689,5 @@ public class Frances implements Idioma {
 	public String nombreKotlinReflectionInternalErrorVersion() {
 		return "Erreur Kotlin : réflexion interne";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

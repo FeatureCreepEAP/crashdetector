@@ -9501,7 +9501,7 @@ public class Suajili implements Idioma {
 	public String jgitDependenciasEnCarpeta() {
 		return "Tegemezi zilizosakinishwa kwenye folda";
 	}
-	
+
 	public String jgitForgeNoSeleccionada() {
 		return "Hakuna forge iliyochaguliwa.";
 	}
@@ -9533,8 +9533,7 @@ public class Suajili implements Idioma {
 	public String jgitErrorCrearRemote() {
 		return "Hitilafu katika kuunda remote";
 	}
-	
-	
+
 	@Override
 	public String mensajeControlifyRemoveReloadingScreen() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
@@ -9544,9 +9543,7 @@ public class Suajili implements Idioma {
 				+ "<b>Remove Reloading Screen</b>.</p>"
 				+ "<p><b>Sababu inayowezekana:</b> Remove Reloading Screen hubadilisha sehemu za skrini ya upakiaji au mchakato wa upakiaji, "
 				+ "wakati Controlify inajaribu kuanzisha usanidi wake kabla mfumo uwe tayari kabisa.</p>"
-				+ "<p><b>Chaguzi zinazopendekezwa:</b></p>"
-				+ "<ul>"
-				+ "<li>Ondoa <b>Remove Reloading Screen</b>.</li>"
+				+ "<p><b>Chaguzi zinazopendekezwa:</b></p>" + "<ul>" + "<li>Ondoa <b>Remove Reloading Screen</b>.</li>"
 				+ "<li>Au sasisha <b>Controlify</b> na <b>Remove Reloading Screen</b> ikiwa kuna matoleo mapya yanayopatikana.</li>"
 				+ "<li>Ikiwa tatizo litaendelea, weka <b>Controlify</b> na uondoe modi yoyote inayobadilisha skrini ya upakiaji.</li>"
 				+ "</ul>"
@@ -9558,7 +9555,7 @@ public class Suajili implements Idioma {
 	public String nombreControlifyRemoveReloadingScreen() {
 		return "Kutokubaliana: Controlify dhidi ya Remove Reloading Screen";
 	}
-	
+
 	@Override
 	public String mensajeBiomesOPlentyFogDataLiquidosPersonalizados() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
@@ -9567,15 +9564,13 @@ public class Suajili implements Idioma {
 				+ "net.minecraft.client.renderer.fog.FogData</b> pamoja na rejea kwa <b>Biomes O' Plenty</b>.</p>"
 				+ "<p>Hii inawezekana kuhusiana na <b>Biomes O' Plenty</b>, hasa na biomes, ukungu "
 				+ "au maji yaliyobinafsishwa. Hata hivyo, si hakika kabisa kwamba Biomes O' Plenty ndio chanzo pekee.</p>"
-				+ "<p><b>Chaguzi zinazopendekezwa:</b></p>"
-				+ "<ul>"
+				+ "<p><b>Chaguzi zinazopendekezwa:</b></p>" + "<ul>"
 				+ "<li>Jaribu kuhariri data ya mchezaji kumhamisha hadi mahali pengine ulimwenguni.</li>"
 				+ "<li>Jaribu kupakia ulimwengu bila <b>Biomes O' Plenty</b>.</li>"
 				+ "<li>Ikiwa ulimwengu utapakia baada ya kumhamisha mchezaji, tatizo linawezekana kutokea katika eneo maalum, "
 				+ "biome maalum au maji yaliyobinafsishwa yaliyo karibu.</li>"
 				+ "<li>Pia unaweza jaribu kusasisha <b>Biomes O' Plenty</b> na modi zinazohusiana na uchoraji, ukungu, "
-				+ "shaders au vipimo.</li>"
-				+ "</ul>"
+				+ "shaders au vipimo.</li>" + "</ul>"
 				+ "<p>Ikiwa kuondoa Biomes O' Plenty kunaruhusu kuanza mchezo, angalia ikiwa mchezaji alikuwa ndani au karibu na biome "
 				+ "au kiowevu kilichoongezwa na modi hiyo.</p>";
 	}
@@ -9584,7 +9579,7 @@ public class Suajili implements Idioma {
 	public String nombreBiomesOPlentyFogDataLiquidosPersonalizados() {
 		return "Tatizo linalowezekana: Biomes O' Plenty na FogData";
 	}
-	
+
 	@Override
 	public String mensajeKotlinReflectionInternalErrorVersion() {
 		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
@@ -9593,16 +9588,12 @@ public class Suajili implements Idioma {
 				+ "<b>Property 'none' not resolved</b>.</p>"
 				+ "<p>Aina hii ya hitilafu ni ya kawaida na matoleo fulani ya <b>Fabric Language Kotlin</b> / <b>Kotlin</b>. "
 				+ "Katika hali hii, darasa la <b>Inventory Profiles Next</b> linaonekana, lakini tatizo hilo hilo linaweza kutokea "
-				+ "na modi nyingine zinazotumia Kotlin.</p>"
-				+ "<p><b>Chaguzi zinazopendekezwa:</b></p>"
-				+ "<ul>"
+				+ "na modi nyingine zinazotumia Kotlin.</p>" + "<p><b>Chaguzi zinazopendekezwa:</b></p>" + "<ul>"
 				+ "<li>Sasisha <b>Fabric Language Kotlin</b> hadi toleo <b>2.3.40</b>, ikiwa linapatikana kwa toleo lako la Minecraft.</li>"
 				+ "<li>Ikiwa kusasisha hakufanyi kazi, jaribu kupunguza <b>Fabric Language Kotlin</b> hadi toleo <b>2.3.10</b>.</li>"
 				+ "<li>Pia sasisha <b>Inventory Profiles Next</b> ikiwa kumbukumbu inataja madarasa ya modi hiyo.</li>"
 				+ "<li>Ikiwa hitilafu inaonekana na modi nyingine, angalia ikiwa modi hiyo inategemea Kotlin na jaribu kubadilisha toleo la "
-				+ "<b>Fabric Language Kotlin</b>.</li>"
-				+ "</ul>"
-				+ "<p>Marejeo ya kiufundi yanayohusiana: "
+				+ "<b>Fabric Language Kotlin</b>.</li>" + "</ul>" + "<p>Marejeo ya kiufundi yanayohusiana: "
 				+ "<a href='https://github.com/FabricMC/fabric-language-kotlin/issues/183'>Suala #183 la Fabric Language Kotlin</a>.</p>";
 	}
 
@@ -9610,21 +9601,5 @@ public class Suajili implements Idioma {
 	public String nombreKotlinReflectionInternalErrorVersion() {
 		return "Hitilafu ya Kotlin: reflection ya ndani";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }
