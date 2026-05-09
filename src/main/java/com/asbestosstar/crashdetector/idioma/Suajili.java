@@ -9657,4 +9657,70 @@ public class Suajili implements Idioma {
 		return "mstari uliochaguliwa katika kisomaji: ";
 	}
 
+	@Override
+	public String mensajeMotionBlurBufferCerrado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Tatizo linalowezekana na Motion Blur.</b>"
+				+ "<p>Logi ina rejea ya <b>net.natural.motionblur.shader.FrameBlendingManager.writeBlendParamsUBO</b> "
+				+ "na pia kosa <b>java.lang.IllegalStateException: Buffer already closed</b>.</p>"
+				+ "<p>Mistari hii inaweza kuonekana ikiwa imetenganishwa katika logi, lakini pamoja mara nyingi huonyesha kwamba tatizo linahusiana "
+				+ "na mod <b>Motion Blur</b> au usimamizi wake wa shaders/buffers za grafiki.</p>"
+				+ "<p><b>Chaguzi zinazopendekezwa:</b></p>" + "<ul>"
+				+ "<li>Jaribu kuanza mchezo bila <b>Motion Blur</b>.</li>"
+				+ "<li>Ikiwa mchezo utaanza vizuri bila mod hiyo, iacha imeondolewa au tafuta toleo la hivi karibuni.</li>"
+				+ "<li>Pia unaweza kujaribu bila shaders au mod zingine za uchoraji ikiwa tatizo litaendelea.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreMotionBlurBufferCerrado() {
+		return "Tatizo linalowezekana: Motion Blur";
+	}
+
+	@Override
+	public String mensajeGeneratorAcceleratorOwoVersion() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Mgongano unaowezekana na Generator Accelerator.</b>"
+				+ "<p>Logi ina tofauti kati ya saini za <b>Found</b> na <b>Available</b>, pamoja na darasa kutoka "
+				+ "<b>Generator Accelerator</b>, kwa mfano <b>dev/sixik/generator_accelerator/common/features/FastTarget</b>.</p>"
+				+ "<p>Kosa hili linaweza kusababishwa na <b>Generator Accelerator</b>. Linaweza pia kuhusiana "
+				+ "na kutolingana kati ya mod hiyo na matoleo fulani ya <b>owo-lib</b>.</p>"
+				+ "<p><b>Chaguzi zinazopendekezwa:</b></p>" + "<ul>"
+				+ "<li>Jaribu kuanza mchezo bila <b>Generator Accelerator</b>.</li>"
+				+ "<li>Ikiwa mchezo utaanza vizuri, ondoa mod hiyo au tafuta toleo lingine.</li>"
+				+ "<li>Jaribu kusasisha au kubadilisha toleo la <b>owo-lib</b>, hasa ikiwa mod zingine pia zinategemea owo.</li>"
+				+ "<li>Hakikisha kwamba <b>Generator Accelerator</b>, <b>owo-lib</b>, loader na toleo la Minecraft zinalingana.</li>"
+				+ "</ul>"
+				+ "<p>Sababu inayowezekana zaidi ni kwamba Generator Accelerator inajaribu kutumia marekebisho yenye saini "
+				+ "ambayo hailingi na toleo la sasa la darasa au utegemezi.</p>";
+	}
+
+	@Override
+	public String nombreGeneratorAcceleratorOwoVersion() {
+		return "Mgongano unaowezekana: Generator Accelerator na owo-lib";
+	}
+
+	@Override
+	public String mensajeFabricRenderingApiFaltaIndium() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Kukosa renderer inayolingana na Fabric Rendering API.</b>"
+				+ "<p>Logi ina kosa ambapo <b>RendererAccess.getRenderer()</b> inarudisha <b>null</b>, "
+				+ "na kusababisha kushindwa wakati wa kujaribu kutumia <b>Renderer.materialFinder()</b>.</p>"
+				+ "<p>Tatizo hili mara nyingi hutokea wakati <b>Fabric Rendering API</b> haipatikani vizuri. "
+				+ "Sababu ya kawaida ni kutumia <b>Sodium</b>, hasa matoleo ya zamani ambayo hubadilisha au kuzima sehemu "
+				+ "za mfumo wa uchoraji unatarajiwa na mod zingine.</p>" + "<p><b>Suluhisho linalopendekezwa:</b></p>"
+				+ "<ul>" + "<li>Sakinisha mod <b>Indium</b>.</li>"
+				+ "<li>Hakikisha kwamba <b>Indium</b> inalingana na toleo lako la <b>Sodium</b>, Fabric Loader na Minecraft.</li>"
+				+ "<li>Ikiwa tayari umesakinisha Indium, sasisha <b>Sodium</b>, <b>Indium</b> na <b>Fabric API</b>.</li>"
+				+ "<li>Ikiwa tatizo litaendelea, jaribu kwa muda bila Sodium ili kuthibitisha kwamba kushindwa kunahusiana na renderer.</li>"
+				+ "</ul>"
+				+ "<p>Indium kawaida hurudisha ulinganifu na Fabric Rendering API kwa mod zinazotegemea mfumo huo "
+				+ "wakati Sodium imesakinishwa.</p>";
+	}
+
+	@Override
+	public String nombreFabricRenderingApiFaltaIndium() {
+		return "Kukosa Indium / Fabric Rendering API";
+	}
+
 }

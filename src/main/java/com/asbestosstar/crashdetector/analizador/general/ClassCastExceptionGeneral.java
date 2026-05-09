@@ -40,6 +40,12 @@ public class ClassCastExceptionGeneral implements Verificaciones {
 
 	@Override
 	public void verificar(Consola consola) {
+		// Limpiar estado porque la misma instancia puede analizar más de un log
+		posibleError = false;
+		activado = false;
+		lineaClassCast = "";
+		enlace = "";
+
 		// Detección global ligera para evitar trabajo innecesario por línea
 		if (consola.contenido_verificar.contains("java.lang.ClassCastException:")
 				&& consola.contenido_verificar.contains(" cannot be cast to ")) {
@@ -56,6 +62,21 @@ public class ClassCastExceptionGeneral implements Verificaciones {
 
 		// Confirmación precisa por línea
 		if (linea.contains("java.lang.ClassCastException:") && linea.contains(" cannot be cast to ")) {
+
+			// Ignorar caso conocido:
+			// java.lang.ClassCastException: class java.lang.Integer cannot be cast to class
+			// java.util.List
+			// at ...oneauras-cart-optimizer...
+			if (linea.contains("class java.lang.Integer cannot be cast to class java.util.List")) {
+				String[] lineas = consola.contenido_verificar.split("\\R", -1);
+
+				// num debe ser el número de línea actual. Si num empieza en 1, la siguiente
+				// línea está en lineas[num]. Si num empieza en 0, ajusta esto a num + 1.
+				if (num >= 0 && num < lineas.length && lineas[num].contains("oneauras-cart-optimizer")) {
+					return;
+				}
+			}
+
 			this.lineaClassCast = linea.trim();
 			this.enlace = consola.agregarErrorALectador(num, this);
 			this.activado = true;

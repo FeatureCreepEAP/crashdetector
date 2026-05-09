@@ -9925,4 +9925,70 @@ public class Espanol implements Idioma {
 		return "línea seleccionada en lectador: ";
 	}
 
+	@Override
+	public String mensajeMotionBlurBufferCerrado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Posible problema con Motion Blur.</b>"
+				+ "<p>El log contiene una referencia a <b>net.natural.motionblur.shader.FrameBlendingManager.writeBlendParamsUBO</b> "
+				+ "y también el error <b>java.lang.IllegalStateException: Buffer already closed</b>.</p>"
+				+ "<p>Estas líneas pueden aparecer separadas en el log, pero juntas suelen indicar que el problema está relacionado "
+				+ "con el mod <b>Motion Blur</b> o con su manejo de shaders/buffers gráficos.</p>"
+				+ "<p><b>Opciones recomendadas:</b></p>" + "<ul>"
+				+ "<li>Prueba iniciar el juego sin <b>Motion Blur</b>.</li>"
+				+ "<li>Si el juego inicia correctamente sin ese mod, mantenlo desinstalado o busca una versión más reciente.</li>"
+				+ "<li>También puedes probar sin shaders u otros mods de renderizado si el problema continúa.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreMotionBlurBufferCerrado() {
+		return "Posible problema: Motion Blur";
+	}
+
+	@Override
+	public String mensajeGeneratorAcceleratorOwoVersion() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Posible conflicto con Generator Accelerator.</b>"
+				+ "<p>El log contiene una diferencia entre firmas <b>Found</b> y <b>Available</b>, junto con clases de "
+				+ "<b>Generator Accelerator</b>, por ejemplo <b>dev/sixik/generator_accelerator/common/features/FastTarget</b>.</p>"
+				+ "<p>Este error probablemente está causado por <b>Generator Accelerator</b>. También puede estar relacionado "
+				+ "con una incompatibilidad entre ese mod y ciertas versiones de <b>owo-lib</b>.</p>"
+				+ "<p><b>Opciones recomendadas:</b></p>" + "<ul>"
+				+ "<li>Prueba iniciar el juego sin <b>Generator Accelerator</b>.</li>"
+				+ "<li>Si el juego inicia correctamente, mantén ese mod desinstalado o busca una versión diferente.</li>"
+				+ "<li>Prueba actualizar o cambiar la versión de <b>owo-lib</b>, especialmente si otros mods también dependen de owo.</li>"
+				+ "<li>Verifica que <b>Generator Accelerator</b>, <b>owo-lib</b>, el loader y la versión de Minecraft sean compatibles entre sí.</li>"
+				+ "</ul>"
+				+ "<p>La causa más probable es que Generator Accelerator esté intentando aplicar una modificación con una firma "
+				+ "que no coincide con la versión actual de una clase o dependencia.</p>";
+	}
+
+	@Override
+	public String nombreGeneratorAcceleratorOwoVersion() {
+		return "Posible conflicto: Generator Accelerator y owo-lib";
+	}
+
+	@Override
+	public String mensajeFabricRenderingApiFaltaIndium() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Falta un renderer compatible con Fabric Rendering API.</b>"
+				+ "<p>El log contiene un error donde <b>RendererAccess.getRenderer()</b> devuelve <b>null</b>, "
+				+ "causando un fallo al intentar usar <b>Renderer.materialFinder()</b>.</p>"
+				+ "<p>Este problema suele ocurrir cuando <b>Fabric Rendering API</b> no está disponible correctamente. "
+				+ "Una causa común es usar <b>Sodium</b>, especialmente versiones antiguas que reemplazan o desactivan partes "
+				+ "del sistema de renderizado esperado por otros mods.</p>" + "<p><b>Solución recomendada:</b></p>"
+				+ "<ul>" + "<li>Instala el mod <b>Indium</b>.</li>"
+				+ "<li>Asegúrate de que <b>Indium</b> sea compatible con tu versión de <b>Sodium</b>, Fabric Loader y Minecraft.</li>"
+				+ "<li>Si ya tienes Indium instalado, actualiza <b>Sodium</b>, <b>Indium</b> y <b>Fabric API</b>.</li>"
+				+ "<li>Si el problema continúa, prueba temporalmente sin Sodium para confirmar que el fallo está relacionado con el renderer.</li>"
+				+ "</ul>"
+				+ "<p>Indium normalmente restaura la compatibilidad con Fabric Rendering API para mods que dependen de ese sistema "
+				+ "mientras Sodium está instalado.</p>";
+	}
+
+	@Override
+	public String nombreFabricRenderingApiFaltaIndium() {
+		return "Falta Indium / Fabric Rendering API";
+	}
+
 }

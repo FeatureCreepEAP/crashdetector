@@ -9380,4 +9380,72 @@ public class Khmer implements Idioma {
 		return "ជួរដែលបានជ្រើសរើសនៅក្នុងឧបករណ៍អាន៖ ";
 	}
 
+	// Khmer (ភាសាខ្មែរ)
+	@Override
+	public String mensajeMotionBlurBufferCerrado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "បញ្ហាដែលអាចកើតមានជាមួយ Motion Blur។</b>"
+				+ "<p>កំណត់ហេតុមានការយោងទៅ <b>net.natural.motionblur.shader.FrameBlendingManager.writeBlendParamsUBO</b> "
+				+ "និងកំហុស <b>java.lang.IllegalStateException: Buffer already closed</b>។</p>"
+				+ "<p>បន្ទាត់ទាំងនេះអាចលេចឡើងដាច់ដោយឡែកនៅក្នុងកំណត់ហេតុ ប៉ុន្តែជាមួយគ្នាវាជាធម្មតាបង្ហាញថាបញ្ហាទាក់ទង "
+				+ "នឹង mod <b>Motion Blur</b> ឬការគ្រប់គ្រងរបស់វាលើ graphical shaders/buffers។</p>"
+				+ "<p><b>ជម្រើសដែលបានណែនាំ៖</b></p>" + "<ul>"
+				+ "<li>សាកល្បងចាប់ផ្តើមហ្គេមដោយគ្មាន <b>Motion Blur</b>។</li>"
+				+ "<li>ប្រសិនបើហ្គេមចាប់ផ្តើមបានត្រឹមត្រូវដោយគ្មាន mod នោះ សូមរក្សាវាឱ្យនៅដោះឬស្វែងរកកំណែថ្មីជាងនេះ។</li>"
+				+ "<li>អ្នកក៏អាចសាកល្បងដោយគ្មាន shaders ឬ mods rendering ផ្សេងទៀតប្រសិនបើបញ្ហានៅតែបន្ត។</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreMotionBlurBufferCerrado() {
+		return "បញ្ហាដែលអាចកើតមាន: Motion Blur";
+	}
+
+	// Khmer (ភាសាខ្មែរ)
+	@Override
+	public String mensajeGeneratorAcceleratorOwoVersion() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "ជំលោះដែលអាចកើតមានជាមួយ Generator Accelerator។</b>"
+				+ "<p>កំណត់ហេតុមានភាពខុសគ្នារវាងហត្ថលេខា <b>Found</b> និង <b>Available</b> ព្រមទាំងថ្នាក់ពី "
+				+ "<b>Generator Accelerator</b> ឧទាហរណ៍ <b>dev/sixik/generator_accelerator/common/features/FastTarget</b>។</p>"
+				+ "<p>កំហុសនេះប្រហែលជាបណ្តាលមកពី <b>Generator Accelerator</b>។ វាក៏អាចទាក់ទង "
+				+ "នឹងភាពមិនស៊ីសង្វាក់គ្នារវាង mod នោះ និងកំណែជាក់លាក់នៃ <b>owo-lib</b>។</p>"
+				+ "<p><b>ជម្រើសដែលបានណែនាំ៖</b></p>" + "<ul>"
+				+ "<li>សាកល្បងចាប់ផ្តើមហ្គេមដោយគ្មាន <b>Generator Accelerator</b>។</li>"
+				+ "<li>ប្រសិនបើហ្គេមចាប់ផ្តើមបានត្រឹមត្រូវ សូមរក្សា mod នោះឱ្យនៅដោះ ឬស្វែងរកកំណែផ្សេង។</li>"
+				+ "<li>សាកល្បងធ្វើបច្ចុប្បន្នភាព ឬផ្លាស់ប្តូរកំណែនៃ <b>owo-lib</b> ជាពិសេសប្រសិនបើ mods ផ្សេងទៀតក៏ពឹងផ្អែកលើ owo ដែរ។</li>"
+				+ "<li>ផ្ទៀងផ្ទាត់ថា <b>Generator Accelerator</b>, <b>owo-lib</b>, loader និងកំណែ Minecraft ស៊ីសង្វាក់គ្នា។</li>"
+				+ "</ul>"
+				+ "<p>មូលហេតុដែលទំនងបំផុតគឺ Generator Accelerator កំពុងព្យាយាមអនុវត្តការកែប្រែដោយប្រើហត្ថលេខា "
+				+ "ដែលមិនត្រូវគ្នានឹងកំណែបច្ចុប្បន្ននៃថ្នាក់ ឬភាពអាស្រ័យ។</p>";
+	}
+
+	@Override
+	public String nombreGeneratorAcceleratorOwoVersion() {
+		return "ជំលោះដែលអាចកើតមាន: Generator Accelerator និង owo-lib";
+	}
+
+	// Khmer (ភាសាខ្មែរ)
+	@Override
+	public String mensajeFabricRenderingApiFaltaIndium() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "ខ្វះ renderer ដែលស៊ីសង្វាក់គ្នាជាមួយ Fabric Rendering API។</b>"
+				+ "<p>កំណត់ហេតុមានកំហុសដែល <b>RendererAccess.getRenderer()</b> ត្រឡប់ <b>null</b> វិញ, "
+				+ "បណ្តាលឱ្យមានការបរាជ័យនៅពេលព្យាយាមប្រើ <b>Renderer.materialFinder()</b>។</p>"
+				+ "<p>បញ្ហានេះជាធម្មតាកើតឡើងនៅពេលដែល <b>Fabric Rendering API</b> មិនអាចប្រើបានត្រឹមត្រូវ។ "
+				+ "មូលហេតុទូទៅគឺការប្រើប្រាស់ <b>Sodium</b> ជាពិសេសកំណែចាស់ៗដែលជំនួស ឬបិទដំណើរការផ្នែកខ្លះ "
+				+ "នៃប្រព័ន្ធបង្ហាញដែល mods ផ្សេងទៀតរំពឹងថានឹងមាន។</p>" + "<p><b>ដំណោះស្រាយដែលបានណែនាំ៖</b></p>"
+				+ "<ul>" + "<li>ដំឡើង mod <b>Indium</b>។</li>"
+				+ "<li>ធានាថា <b>Indium</b> ស៊ីសង្វាក់គ្នាជាមួយកំណែ <b>Sodium</b>, Fabric Loader និង Minecraft របស់អ្នក។</li>"
+				+ "<li>ប្រសិនបើអ្នកបានដំឡើង Indium រួចហើយ សូមធ្វើបច្ចុប្បន្នភាព <b>Sodium</b>, <b>Indium</b> និង <b>Fabric API</b>។</li>"
+				+ "<li>ប្រសិនបើបញ្ហានៅតែបន្ត សូមសាកល្បងបណ្តោះអាសន្នដោយគ្មាន Sodium ដើម្បីបញ្ជាក់ថាកំហុសទាក់ទងនឹង renderer។</li>"
+				+ "</ul>"
+				+ "<p>Indium ជាធម្មតាស្តារភាពស៊ីសង្វាក់គ្នាជាមួយ Fabric Rendering API សម្រាប់ mods ដែលពឹងផ្អែកលើប្រព័ន្ធនោះ "
+				+ "ខណៈពេលដែល Sodium ត្រូវបានដំឡើង។</p>";
+	}
+
+	@Override
+	public String nombreFabricRenderingApiFaltaIndium() {
+		return "ខ្វះ Indium / Fabric Rendering API";
+	}
+
 }

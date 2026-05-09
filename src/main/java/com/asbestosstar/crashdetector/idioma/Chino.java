@@ -8659,4 +8659,60 @@ public class Chino implements Idioma {
 		return "读取器中选定的行：";
 	}
 
+	// Chinese (Simplified) (中文)
+	@Override
+	public String mensajeMotionBlurBufferCerrado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>" + "Motion Blur 可能存在问题。</b>"
+				+ "<p>日志中包含对 <b>net.natural.motionblur.shader.FrameBlendingManager.writeBlendParamsUBO</b> 的引用，"
+				+ "以及错误 <b>java.lang.IllegalStateException: Buffer already closed</b>。</p>"
+				+ "<p>这些行在日志中可能分开出现，但一起出现通常表明问题与 <b>Motion Blur</b> mod " + "或其对图形 shader/buffer 的处理有关。</p>"
+				+ "<p><b>建议选项：</b></p>" + "<ul>" + "<li>尝试在不安装 <b>Motion Blur</b> 的情况下启动游戏。</li>"
+				+ "<li>如果游戏在没有该 mod 的情况下正常启动，请保持卸载状态或寻找最新版本。</li>" + "<li>如果问题仍然存在，您也可以尝试禁用 shaders 或其他渲染 mods。</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreMotionBlurBufferCerrado() {
+		return "潜在问题：Motion Blur";
+	}
+
+	// Chinese (Simplified) (中文)
+	@Override
+	public String mensajeGeneratorAcceleratorOwoVersion() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "可能与 Generator Accelerator 存在冲突。</b>" + "<p>日志包含 <b>Found</b> 和 <b>Available</b> 签名之间的差异，以及来自 "
+				+ "<b>Generator Accelerator</b> 的类，例如 <b>dev/sixik/generator_accelerator/common/features/FastTarget</b>。</p>"
+				+ "<p>此错误很可能由 <b>Generator Accelerator</b> 引起。也可能与该 mod 和某些版本的 <b>owo-lib</b> 之间的不兼容有关。</p>"
+				+ "<p><b>建议选项：</b></p>" + "<ul>" + "<li>尝试在不安装 <b>Generator Accelerator</b> 的情况下启动游戏。</li>"
+				+ "<li>如果游戏正常启动，请保持该 mod 卸载或寻找其他版本。</li>" + "<li>尝试更新或更改 <b>owo-lib</b> 的版本，特别是如果有其他 mod 也依赖 owo。</li>"
+				+ "<li>验证 <b>Generator Accelerator</b>、<b>owo-lib</b>、loader 和 Minecraft 版本之间是否兼容。</li>" + "</ul>"
+				+ "<p>最可能的原因是 Generator Accelerator 试图应用一个签名与当前类或依赖项版本不匹配的修改。</p>";
+	}
+
+	@Override
+	public String nombreGeneratorAcceleratorOwoVersion() {
+		return "潜在冲突：Generator Accelerator 和 owo-lib";
+	}
+
+	// Chinese (Simplified) (中文)
+	@Override
+	public String mensajeFabricRenderingApiFaltaIndium() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "缺少与 Fabric Rendering API 兼容的渲染器。</b>"
+				+ "<p>日志包含一个错误，其中 <b>RendererAccess.getRenderer()</b> 返回 <b>null</b>， "
+				+ "导致在尝试使用 <b>Renderer.materialFinder()</b> 时失败。</p>"
+				+ "<p>当 <b>Fabric Rendering API</b> 未正确可用时，通常会发生此问题。 "
+				+ "常见原因是使用了 <b>Sodium</b>，尤其是旧版本，它们会替换或禁用其他 mods 预期的渲染系统部分。</p>" + "<p><b>推荐解决方案：</b></p>" + "<ul>"
+				+ "<li>安装 mod <b>Indium</b>。</li>"
+				+ "<li>确保 <b>Indium</b> 与您的 <b>Sodium</b>、Fabric Loader 和 Minecraft 版本兼容。</li>"
+				+ "<li>如果已安装 Indium，请更新 <b>Sodium</b>、<b>Indium</b> 和 <b>Fabric API</b>。</li>"
+				+ "<li>如果问题仍然存在，请暂时在不使用 Sodium 的情况下进行测试，以确认故障与渲染器有关。</li>" + "</ul>"
+				+ "<p>Indium 通常会在安装 Sodium 的同时，为依赖该系统的 mods 恢复与 Fabric Rendering API 的兼容性。</p>";
+	}
+
+	@Override
+	public String nombreFabricRenderingApiFaltaIndium() {
+		return "缺少 Indium / Fabric Rendering API";
+	}
+
 }

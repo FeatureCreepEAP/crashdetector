@@ -8860,4 +8860,63 @@ public class Japones implements Idioma {
 		return "リーダーで選択された行：";
 	}
 
+	// Japanese (日本語)
+	@Override
+	public String mensajeMotionBlurBufferCerrado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Motion Blur に問題がある可能性があります。</b>"
+				+ "<p>ログには <b>net.natural.motionblur.shader.FrameBlendingManager.writeBlendParamsUBO</b> への参照と、"
+				+ "エラー <b>java.lang.IllegalStateException: Buffer already closed</b> が含まれています。</p>"
+				+ "<p>これらの行はログで別々に表示される場合がありますが、一緒に表示される場合は通常、問題が "
+				+ "<b>Motion Blur</b> mod またはそのグラフィック shader/buffer の処理に関連していることを示しています。</p>" + "<p><b>推奨オプション：</b></p>"
+				+ "<ul>" + "<li><b>Motion Blur</b> なしでゲームを開始してみてください。</li>"
+				+ "<li>その mod なしでゲームが正常に開始する場合は、アンインストールしたままにするか、最新バージョンを探してください。</li>"
+				+ "<li>問題が続く場合は、shaders や他のレンダリング mod なしで試すこともできます。</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreMotionBlurBufferCerrado() {
+		return "潜在的な問題: Motion Blur";
+	}
+
+	// Japanese (日本語)
+	@Override
+	public String mensajeGeneratorAcceleratorOwoVersion() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Generator Accelerator との潜在的な衝突。</b>" + "<p>ログには <b>Found</b> と <b>Available</b> の署名間の不一致と、"
+				+ "<b>Generator Accelerator</b> のクラス（例：<b>dev/sixik/generator_accelerator/common/features/FastTarget</b>）が含まれています。</p>"
+				+ "<p>このエラーはおそらく <b>Generator Accelerator</b> が原因です。また、その mod と特定のバージョンの <b>owo-lib</b> の間の非互換性に関連している可能性もあります。</p>"
+				+ "<p><b>推奨オプション：</b></p>" + "<ul>" + "<li><b>Generator Accelerator</b> なしでゲームを開始してみてください。</li>"
+				+ "<li>ゲームが正常に開始する場合は、その mod をアンインストールしたままにするか、別のバージョンを探してください。</li>"
+				+ "<li>他の mod も owo に依存している場合は、<b>owo-lib</b> のバージョンを更新または変更してみてください。</li>"
+				+ "<li><b>Generator Accelerator</b>、<b>owo-lib</b>、loader、および Minecraft のバージョンが互いにcompatibleであることを確認してください。</li>"
+				+ "</ul>" + "<p>最も可能性の高い原因は、Generator Accelerator が現在のクラスまたは依存関係のバージョンと一致しない署名で修正を適用しようとしていることです。</p>";
+	}
+
+	@Override
+	public String nombreGeneratorAcceleratorOwoVersion() {
+		return "潜在的な衝突: Generator Accelerator と owo-lib";
+	}
+
+	// Japanese (日本語)
+	@Override
+	public String mensajeFabricRenderingApiFaltaIndium() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Fabric Rendering API と互換性のあるレンダラーがありません。</b>"
+				+ "<p>ログには、<b>RendererAccess.getRenderer()</b> が <b>null</b> を返し、 "
+				+ "<b>Renderer.materialFinder()</b> の使用を試みた際に失敗するエラーが含まれています。</p>"
+				+ "<p>この問題は通常、<b>Fabric Rendering API</b> が正しく利用できない場合に発生します。 "
+				+ "一般的な原因は <b>Sodium</b> の使用であり、特に他の mods が期待するレンダリングシステムの一部を置き換えたり無効にしたりする旧バージョンです。</p>"
+				+ "<p><b>推奨される解決策：</b></p>" + "<ul>" + "<li>mod <b>Indium</b> をインストールしてください。</li>"
+				+ "<li><b>Indium</b> が使用中の <b>Sodium</b>、Fabric Loader、および Minecraft のバージョンと互換性があることを確認してください。</li>"
+				+ "<li>すでに Indium がインストールされている場合は、<b>Sodium</b>、<b>Indium</b>、および <b>Fabric API</b> を更新してください。</li>"
+				+ "<li>問題が続く場合は、一時的に Sodium なしで試して、障害がレンダラーに関連していることを確認してください。</li>" + "</ul>"
+				+ "<p>Indium は通常、Sodium がインストールされている間、そのシステムに依存する mods のために Fabric Rendering API との互換性を復元します。</p>";
+	}
+
+	@Override
+	public String nombreFabricRenderingApiFaltaIndium() {
+		return "Indium 不足 / Fabric Rendering API";
+	}
+
 }

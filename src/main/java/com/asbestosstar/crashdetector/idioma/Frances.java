@@ -9746,4 +9746,73 @@ public class Frances implements Idioma {
 		return "ligne sélectionnée dans le lecteur : ";
 	}
 
+	// French (Burkina Faso variant) (Français)
+	@Override
+	public String mensajeMotionBlurBufferCerrado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Problème possible avec Motion Blur.</b>"
+				+ "<p>Le journal contient une référence à <b>net.natural.motionblur.shader.FrameBlendingManager.writeBlendParamsUBO</b> "
+				+ "ainsi que l'erreur <b>java.lang.IllegalStateException: Buffer already closed</b>.</p>"
+				+ "<p>Ces lignes peuvent apparaître séparément dans le journal, mais ensemble, elles indiquent généralement que le problème est lié "
+				+ "au mod <b>Motion Blur</b> ou à sa gestion des shaders/buffers graphiques.</p>"
+				+ "<p><b>Options recommandées :</b></p>" + "<ul>"
+				+ "<li>Essayez de lancer le jeu sans <b>Motion Blur</b>.</li>"
+				+ "<li>Si le jeu démarre correctement sans ce mod, gardez-le désinstallé ou cherchez une version plus récente.</li>"
+				+ "<li>Vous pouvez également essayer sans shaders ni autres mods de rendu si le problème persiste.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreMotionBlurBufferCerrado() {
+		return "Problème possible : Motion Blur";
+	}
+
+	// French (Burkina Faso variant) (Français)
+	@Override
+	public String mensajeGeneratorAcceleratorOwoVersion() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Conflit possible avec Generator Accelerator.</b>"
+				+ "<p>Le journal contient une différence entre les signatures <b>Found</b> et <b>Available</b>, ainsi que des classes de "
+				+ "<b>Generator Accelerator</b>, par exemple <b>dev/sixik/generator_accelerator/common/features/FastTarget</b>.</p>"
+				+ "<p>Cette erreur est probablement causée par <b>Generator Accelerator</b>. Elle peut également être liée "
+				+ "à une incompatibilité entre ce mod et certaines versions de <b>owo-lib</b>.</p>"
+				+ "<p><b>Options recommandées :</b></p>" + "<ul>"
+				+ "<li>Essayez de lancer le jeu sans <b>Generator Accelerator</b>.</li>"
+				+ "<li>Si le jeu démarre correctement, gardez ce mod désinstallé ou cherchez une version différente.</li>"
+				+ "<li>Essayez de mettre à jour ou de changer la version de <b>owo-lib</b>, surtout si d'autres mods dépendent aussi de owo.</li>"
+				+ "<li>Vérifiez que <b>Generator Accelerator</b>, <b>owo-lib</b>, le chargeur et la version de Minecraft sont compatibles entre eux.</li>"
+				+ "</ul>"
+				+ "<p>La cause la plus probable est que Generator Accelerator essaie d'appliquer une modification avec une signature "
+				+ "qui ne correspond pas à la version actuelle d'une classe ou d'une dépendance.</p>";
+	}
+
+	@Override
+	public String nombreGeneratorAcceleratorOwoVersion() {
+		return "Conflit possible : Generator Accelerator et owo-lib";
+	}
+
+	// French (Burkina Faso variant) (Français)
+	@Override
+	public String mensajeFabricRenderingApiFaltaIndium() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Un renderer compatible avec Fabric Rendering API est manquant.</b>"
+				+ "<p>Le journal contient une erreur où <b>RendererAccess.getRenderer()</b> renvoie <b>null</b>, "
+				+ "provoquant un échec lors de la tentative d'utilisation de <b>Renderer.materialFinder()</b>.</p>"
+				+ "<p>Ce problème survient généralement lorsque <b>Fabric Rendering API</b> n'est pas disponible correctement. "
+				+ "Une cause courante est l'utilisation de <b>Sodium</b>, en particulier les anciennes versions qui remplacent ou désactivent des parties "
+				+ "du système de rendu attendu par d'autres mods.</p>" + "<p><b>Solution recommandée :</b></p>" + "<ul>"
+				+ "<li>Installez le mod <b>Indium</b>.</li>"
+				+ "<li>Assurez-vous que <b>Indium</b> est compatible avec votre version de <b>Sodium</b>, Fabric Loader et Minecraft.</li>"
+				+ "<li>Si Indium est déjà installé, mettez à jour <b>Sodium</b>, <b>Indium</b> et <b>Fabric API</b>.</li>"
+				+ "<li>Si le problème persiste, essayez temporairement sans Sodium pour confirmer que l'erreur est liée au renderer.</li>"
+				+ "</ul>"
+				+ "<p>Indium restaure normalement la compatibilité avec Fabric Rendering API pour les mods qui dépendent de ce système "
+				+ "lorsque Sodium est installé.</p>";
+	}
+
+	@Override
+	public String nombreFabricRenderingApiFaltaIndium() {
+		return "Indium manquant / Fabric Rendering API";
+	}
+
 }

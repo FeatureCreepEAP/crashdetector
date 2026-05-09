@@ -9760,4 +9760,73 @@ public class Indonesia implements Idioma {
 		return "baris yang dipilih dalam pembaca: ";
 	}
 
+	// Indonesian (Bahasa Indonesia)
+	@Override
+	public String mensajeMotionBlurBufferCerrado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Kemungkinan masalah dengan Motion Blur.</b>"
+				+ "<p>Log berisi referensi ke <b>net.natural.motionblur.shader.FrameBlendingManager.writeBlendParamsUBO</b> "
+				+ "dan juga kesalahan <b>java.lang.IllegalStateException: Buffer already closed</b>.</p>"
+				+ "<p>Baris-baris ini mungkin muncul terpisah dalam log, tetapi bersama-sama biasanya menunjukkan bahwa masalahnya terkait "
+				+ "dengan mod <b>Motion Blur</b> atau penanganannya terhadap shader/buffer grafis.</p>"
+				+ "<p><b>Opsi yang direkomendasikan:</b></p>" + "<ul>"
+				+ "<li>Coba mulai game tanpa <b>Motion Blur</b>.</li>"
+				+ "<li>Jika game dimulai dengan benar tanpa mod tersebut, biarkan tetap terhapus atau cari versi yang lebih baru.</li>"
+				+ "<li>Anda juga dapat mencoba tanpa shaders atau mod rendering lainnya jika masalah berlanjut.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreMotionBlurBufferCerrado() {
+		return "Kemungkinan masalah: Motion Blur";
+	}
+
+	// Indonesian (Bahasa Indonesia)
+	@Override
+	public String mensajeGeneratorAcceleratorOwoVersion() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Kemungkinan konflik dengan Generator Accelerator.</b>"
+				+ "<p>Log berisi perbedaan antara tanda tangan <b>Found</b> dan <b>Available</b>, bersama dengan kelas dari "
+				+ "<b>Generator Accelerator</b>, misalnya <b>dev/sixik/generator_accelerator/common/features/FastTarget</b>.</p>"
+				+ "<p>Kesalahan ini kemungkinan disebabkan oleh <b>Generator Accelerator</b>. Ini juga bisa terkait "
+				+ "dengan ketidakcocokan antara mod tersebut dan versi tertentu dari <b>owo-lib</b>.</p>"
+				+ "<p><b>Opsi yang direkomendasikan:</b></p>" + "<ul>"
+				+ "<li>Coba mulai game tanpa <b>Generator Accelerator</b>.</li>"
+				+ "<li>Jika game dimulai dengan benar, biarkan mod tersebut terhapus atau cari versi lain.</li>"
+				+ "<li>Coba perbarui atau ubah versi <b>owo-lib</b>, terutama jika mod lain juga bergantung pada owo.</li>"
+				+ "<li>Pastikan bahwa <b>Generator Accelerator</b>, <b>owo-lib</b>, loader, dan versi Minecraft saling kompatibel.</li>"
+				+ "</ul>"
+				+ "<p>Penyebab paling mungkin adalah Generator Accelerator mencoba menerapkan modifikasi dengan tanda tangan "
+				+ "yang tidak cocok dengan versi saat ini dari sebuah kelas atau dependensi.</p>";
+	}
+
+	@Override
+	public String nombreGeneratorAcceleratorOwoVersion() {
+		return "Kemungkinan konflik: Generator Accelerator dan owo-lib";
+	}
+
+	// Indonesian (Bahasa Indonesia)
+	@Override
+	public String mensajeFabricRenderingApiFaltaIndium() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Renderer yang kompatibel dengan Fabric Rendering API tidak ditemukan.</b>"
+				+ "<p>Log berisi kesalahan di mana <b>RendererAccess.getRenderer()</b> mengembalikan <b>null</b>, "
+				+ "menyebabkan kegagalan saat mencoba menggunakan <b>Renderer.materialFinder()</b>.</p>"
+				+ "<p>Masalah ini biasanya terjadi ketika <b>Fabric Rendering API</b> tidak tersedia dengan benar. "
+				+ "Penyebab umum adalah penggunaan <b>Sodium</b>, terutama versi lama yang menggantikan atau menonaktifkan bagian "
+				+ "dari sistem rendering yang diharapkan oleh mod lain.</p>"
+				+ "<p><b>Solusi yang direkomendasikan:</b></p>" + "<ul>" + "<li>Instal mod <b>Indium</b>.</li>"
+				+ "<li>Pastikan bahwa <b>Indium</b> kompatibel dengan versi <b>Sodium</b>, Fabric Loader, dan Minecraft Anda.</li>"
+				+ "<li>Jika Indium sudah terinstal, perbarui <b>Sodium</b>, <b>Indium</b>, dan <b>Fabric API</b>.</li>"
+				+ "<li>Jika masalah berlanjut, coba sementara tanpa Sodium untuk memastikan bahwa kesalahan terkait dengan renderer.</li>"
+				+ "</ul>"
+				+ "<p>Indium biasanya memulihkan kompatibilitas dengan Fabric Rendering API untuk mod yang bergantung pada sistem tersebut "
+				+ "saat Sodium terinstal.</p>";
+	}
+
+	@Override
+	public String nombreFabricRenderingApiFaltaIndium() {
+		return "Indium Hilang / Fabric Rendering API";
+	}
+
 }

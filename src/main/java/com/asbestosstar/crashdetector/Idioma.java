@@ -3556,4 +3556,16 @@ public interface Idioma {
 
 	public String lineaSeleccionadaEnLectador();
 
+	public String mensajeMotionBlurBufferCerrado();
+
+	public String nombreMotionBlurBufferCerrado();
+
+	public String mensajeGeneratorAcceleratorOwoVersion();
+
+	public String nombreGeneratorAcceleratorOwoVersion();
+
+	public String mensajeFabricRenderingApiFaltaIndium();
+
+	public String nombreFabricRenderingApiFaltaIndium();
+
 }

@@ -9170,4 +9170,67 @@ public class Persa implements Idioma {
 		return "خط انتخاب شده در خواننده: ";
 	}
 
+	@Override
+	public String mensajeMotionBlurBufferCerrado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "مشکل احتمالی با Motion Blur.</b>"
+				+ "<p>لاگ حاوی ارجاعی به <b>net.natural.motionblur.shader.FrameBlendingManager.writeBlendParamsUBO</b> "
+				+ "و همچنین خطای <b>java.lang.IllegalStateException: Buffer already closed</b> است.</p>"
+				+ "<p>این خطوط ممکن است در لاگ جدا از هم ظاهر شوند، اما در کنار هم معمولاً نشان‌دهنده این هستند که مشکل مربوط "
+				+ "به ماد <b>Motion Blur</b> یا مدیریت shader/buffer گرافیکی آن است.</p>"
+				+ "<p><b>گزینه‌های توصیه شده:</b></p>" + "<ul>" + "<li>بازی را بدون <b>Motion Blur</b> اجرا کنید.</li>"
+				+ "<li>اگر بازی بدون آن ماد به درستی اجرا شد، آن را حذف نصب کنید یا نسخه جدیدتری پیدا کنید.</li>"
+				+ "<li>همچنین می‌توانید بدون shaders یا سایر مادهای رندرینگ امتحان کنید اگر مشکل ادامه داشت.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreMotionBlurBufferCerrado() {
+		return "مشکل احتمالی: Motion Blur";
+	}
+
+	@Override
+	public String mensajeGeneratorAcceleratorOwoVersion() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تضاد احتمالی با Generator Accelerator.</b>"
+				+ "<p>لاگ حاوی تفاوتی بین امضاهای <b>Found</b> و <b>Available</b>، همراه با کلاس‌هایی از "
+				+ "<b>Generator Accelerator</b>، مثلاً <b>dev/sixik/generator_accelerator/common/features/FastTarget</b> است.</p>"
+				+ "<p>این خطا احتمالاً توسط <b>Generator Accelerator</b> ایجاد شده است. همچنین ممکن است مربوط "
+				+ "به ناسازگاری بین آن ماد و نسخه‌های خاصی از <b>owo-lib</b> باشد.</p>"
+				+ "<p><b>گزینه‌های توصیه شده:</b></p>" + "<ul>"
+				+ "<li>بازی را بدون <b>Generator Accelerator</b> اجرا کنید.</li>"
+				+ "<li>اگر بازی به درستی اجرا شد، آن ماد را حذف نصب کنید یا نسخه متفاوتی پیدا کنید.</li>"
+				+ "<li>نسخه <b>owo-lib</b> را به‌روزرسانی یا تغییر دهید، به ویژه اگر مادهای دیگر نیز به owo وابسته هستند.</li>"
+				+ "<li>بررسی کنید که <b>Generator Accelerator</b>، <b>owo-lib</b>، لودر و نسخه Minecraft با هم سازگار باشند.</li>"
+				+ "</ul>" + "<p>محتمل‌ترین علت این است که Generator Accelerator سعی دارد اصلاحیه‌ای با امضایی "
+				+ "که با نسخه فعلی یک کلاس یا وابستگی مطابقت ندارد، اعمال کند.</p>";
+	}
+
+	@Override
+	public String nombreGeneratorAcceleratorOwoVersion() {
+		return "تضاد احتمالی: Generator Accelerator و owo-lib";
+	}
+
+	@Override
+	public String mensajeFabricRenderingApiFaltaIndium() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "یک رندرر سازگار با Fabric Rendering API وجود ندارد.</b>"
+				+ "<p>لاگ حاوی خطایی است که در آن <b>RendererAccess.getRenderer()</b> مقدار <b>null</b> برمی‌گرداند، "
+				+ "که باعث شکست هنگام تلاش برای استفاده از <b>Renderer.materialFinder()</b> می‌شود.</p>"
+				+ "<p>این مشکل معمولاً زمانی رخ می‌دهد که <b>Fabric Rendering API</b> به درستی در دسترس نباشد. "
+				+ "یک علت رایج استفاده از <b>Sodium</b> است، به ویژه نسخه‌های قدیمی که بخش‌هایی از سیستم رندرینگ مورد انتظار توسط سایر مادها را جایگزین یا غیرفعال می‌کنند.</p>"
+				+ "<p><b>راه حل توصیه شده:</b></p>" + "<ul>" + "<li>ماد <b>Indium</b> را نصب کنید.</li>"
+				+ "<li>اطمینان حاصل کنید که <b>Indium</b> با نسخه <b>Sodium</b>، Fabric Loader و Minecraft شما سازگار باشد.</li>"
+				+ "<li>اگر قبلاً Indium را نصب کرده‌اید، <b>Sodium</b>، <b>Indium</b> و <b>Fabric API</b> را به‌روزرسانی کنید.</li>"
+				+ "<li>اگر مشکل ادامه داشت، موقتاً بدون Sodium امتحان کنید تا تأیید شود که خطا مربوط به رندرر است.</li>"
+				+ "</ul>"
+				+ "<p>Indium معمولاً سازگاری با Fabric Rendering API را برای مادهایی که به آن سیستم وابسته هستند "
+				+ "در حالی که Sodium نصب است، بازیابی می‌کند.</p>";
+	}
+
+	@Override
+	public String nombreFabricRenderingApiFaltaIndium() {
+		return "کمبود Indium / Fabric Rendering API";
+	}
+
 }

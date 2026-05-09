@@ -8530,4 +8530,70 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 		return "вибраний рядок у зчитувачі: ";
 	}
 
+	@Override
+	public String mensajeMotionBlurBufferCerrado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Можлива проблема з Motion Blur.</b>"
+				+ "<p>Лог містить посилання на <b>net.natural.motionblur.shader.FrameBlendingManager.writeBlendParamsUBO</b> "
+				+ "а також помилку <b>java.lang.IllegalStateException: Buffer already closed</b>.</p>"
+				+ "<p>Ці рядки можуть з'являтися в лозі окремо, але разом вони зазвичай вказують на те, що проблема пов'язана "
+				+ "з модом <b>Motion Blur</b> або з його обробкою шейдерів/графічних буферів.</p>"
+				+ "<p><b>Рекомендовані дії:</b></p>" + "<ul>"
+				+ "<li>Спробуйте запустити гру без <b>Motion Blur</b>.</li>"
+				+ "<li>Якщо гра запускається нормально без цього моду, залиште його видаленим або знайдіть новішу версію.</li>"
+				+ "<li>Ви також можете спробувати вимкнути шейдери або інші моди рендерингу, якщо проблема persists.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreMotionBlurBufferCerrado() {
+		return "Можлива проблема: Motion Blur";
+	}
+
+	@Override
+	public String mensajeGeneratorAcceleratorOwoVersion() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Можливий конфлікт з Generator Accelerator.</b>"
+				+ "<p>Лог містить різницю між підписами <b>Found</b> та <b>Available</b>, разом із класами з "
+				+ "<b>Generator Accelerator</b>, наприклад <b>dev/sixik/generator_accelerator/common/features/FastTarget</b>.</p>"
+				+ "<p>Ця помилка, ймовірно, викликана <b>Generator Accelerator</b>. Вона також може бути пов'язана "
+				+ "з несумісністю цього моду з певними версіями <b>owo-lib</b>.</p>"
+				+ "<p><b>Рекомендовані дії:</b></p>" + "<ul>"
+				+ "<li>Спробуйте запустити гру без <b>Generator Accelerator</b>.</li>"
+				+ "<li>Якщо гра запускається нормально, залиште цей мод видаленим або знайдіть іншу версію.</li>"
+				+ "<li>Спробуйте оновити або змінити версію <b>owo-lib</b>, особливо якщо інші моди також залежать від owo.</li>"
+				+ "<li>Переконайтеся, що <b>Generator Accelerator</b>, <b>owo-lib</b>, завантажувач та версія Minecraft сумісні між собою.</li>"
+				+ "</ul>"
+				+ "<p>Найімовірніша причина полягає в тому, що Generator Accelerator намагається застосувати модифікацію з підписом, "
+				+ "який не відповідає поточній версії класу або залежності.</p>";
+	}
+
+	@Override
+	public String nombreGeneratorAcceleratorOwoVersion() {
+		return "Можливий конфлікт: Generator Accelerator та owo-lib";
+	}
+
+	@Override
+	public String mensajeFabricRenderingApiFaltaIndium() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Відсутній рендерер, сумісний із Fabric Rendering API.</b>"
+				+ "<p>Лог містить помилку, де <b>RendererAccess.getRenderer()</b> повертає <b>null</b>, "
+				+ "що призводить до збою при спробі використати <b>Renderer.materialFinder()</b>.</p>"
+				+ "<p>Ця проблема зазвичай виникає, коли <b>Fabric Rendering API</b> недоступний належним чином. "
+				+ "Поширеною причиною є використання <b>Sodium</b>, особливо старих версій, які замінюють або вимикають частини "
+				+ "системи рендерингу, очікуваної іншими модами.</p>" + "<p><b>Рекомендоване рішення:</b></p>" + "<ul>"
+				+ "<li>Встановіть мод <b>Indium</b>.</li>"
+				+ "<li>Переконайтеся, що <b>Indium</b> сумісний з вашою версією <b>Sodium</b>, Fabric Loader та Minecraft.</li>"
+				+ "<li>Якщо Indium вже встановлено, оновіть <b>Sodium</b>, <b>Indium</b> та <b>Fabric API</b>.</li>"
+				+ "<li>Якщо проблема persists, тимчасово спробуйте запустити гру без Sodium, щоб підтвердити, що збой пов'язаний з рендерером.</li>"
+				+ "</ul>"
+				+ "<p>Indium зазвичай відновлює сумісність із Fabric Rendering API для модів, які залежать від цієї системи, "
+				+ "поки встановлено Sodium.</p>";
+	}
+
+	@Override
+	public String nombreFabricRenderingApiFaltaIndium() {
+		return "Відсутній Indium / Fabric Rendering API";
+	}
+
 }

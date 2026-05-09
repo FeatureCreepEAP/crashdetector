@@ -9178,4 +9178,73 @@ public class Esperanto implements Idioma {
 		return "elektita linio en legilo: ";
 	}
 
+	// Esperanto (Esperanto)
+	@Override
+	public String mensajeMotionBlurBufferCerrado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Ebla problemo kun Motion Blur.</b>"
+				+ "<p>La protokolo enhavas referencon al <b>net.natural.motionblur.shader.FrameBlendingManager.writeBlendParamsUBO</b> "
+				+ "kaj ankaŭ la eraron <b>java.lang.IllegalStateException: Buffer already closed</b>.</p>"
+				+ "<p>Ĉi tiuj linioj povas aperi apartigitaj en la protokolo, sed kune ili kutime indikas, ke la problemo rilatas "
+				+ "al la mod <b>Motion Blur</b> aŭ al ĝia traktado de grafikaj shader/buffer.</p>"
+				+ "<p><b>Rekomenditaj opcioj:</b></p>" + "<ul>"
+				+ "<li>Provu startigi la ludon sen <b>Motion Blur</b>.</li>"
+				+ "<li>Se la ludo startas ĝuste sen tiu mod, tenu ĝin malinstalita aŭ serĉu pli novan version.</li>"
+				+ "<li>Vi ankaŭ povas provi sen shaders aŭ aliaj renderigaj modoj se la problemo daŭras.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreMotionBlurBufferCerrado() {
+		return "Ebla problemo: Motion Blur";
+	}
+
+	// Esperanto (Esperanto)
+	@Override
+	public String mensajeGeneratorAcceleratorOwoVersion() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Ebla konflikto kun Generator Accelerator.</b>"
+				+ "<p>La protokolo enhavas diferencon inter subskriboj <b>Found</b> kaj <b>Available</b>, kune kun klasoj de "
+				+ "<b>Generator Accelerator</b>, ekzemple <b>dev/sixik/generator_accelerator/common/features/FastTarget</b>.</p>"
+				+ "<p>Ĉi tiu eraro verŝajne estas kaŭzata de <b>Generator Accelerator</b>. Ĝi ankaŭ povas esti rilata "
+				+ "al nekompatibleco inter tiu mod kaj certaj versioj de <b>owo-lib</b>.</p>"
+				+ "<p><b>Rekomenditaj opcioj:</b></p>" + "<ul>"
+				+ "<li>Provu startigi la ludon sen <b>Generator Accelerator</b>.</li>"
+				+ "<li>Se la ludo startas ĝuste, tenu tiun mod malinstalita aŭ serĉu alian version.</li>"
+				+ "<li>Provu ĝisdatigi aŭ ŝanĝi la version de <b>owo-lib</b>, precipe se aliaj modoj ankaŭ dependas de owo.</li>"
+				+ "<li>Kontrolu, ke <b>Generator Accelerator</b>, <b>owo-lib</b>, la ŝargilo kaj la versio de Minecraft estas interkompatibleblaj.</li>"
+				+ "</ul>"
+				+ "<p>La plej probabla kaŭzo estas, ke Generator Accelerator provas apliki modifon kun subskribo "
+				+ "kiu ne kongruas kun la nuna versio de klaso aŭ dependeco.</p>";
+	}
+
+	@Override
+	public String nombreGeneratorAcceleratorOwoVersion() {
+		return "Ebla konflikto: Generator Accelerator kaj owo-lib";
+	}
+
+	// Esperanto (Esperanto)
+	@Override
+	public String mensajeFabricRenderingApiFaltaIndium() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Mankas renderer kongrua kun Fabric Rendering API.</b>"
+				+ "<p>La protokolo enhavas eraron kie <b>RendererAccess.getRenderer()</b> redonas <b>null</b>, "
+				+ "kaŭzante malsukceson kiam oni provas uzi <b>Renderer.materialFinder()</b>.</p>"
+				+ "<p>Ĉi tiu problemo kutime okazas kiam <b>Fabric Rendering API</b> ne estas disponebla ĝuste. "
+				+ "Komuna kaŭzo estas uzi <b>Sodium</b>, precipe malnovajn versiojn kiuj anstataŭigas aŭ malaktivigas partojn "
+				+ "de la renderiga sistemo atendata de aliaj modoj.</p>" + "<p><b>Rekomendita solvo:</b></p>" + "<ul>"
+				+ "<li>Instalu la modon <b>Indium</b>.</li>"
+				+ "<li>Certigu, ke <b>Indium</b> estu kongrua kun via versio de <b>Sodium</b>, Fabric Loader kaj Minecraft.</li>"
+				+ "<li>Se vi jam havas Indium instalita, ĝisdatigu <b>Sodium</b>, <b>Indium</b> kaj <b>Fabric API</b>.</li>"
+				+ "<li>Se la problemo daŭras, provu provizore sen Sodium por konfirmi, ke la eraro rilatas al la renderer.</li>"
+				+ "</ul>"
+				+ "<p>Indium kutime restarigas la kongruecon kun Fabric Rendering API por modoj, kiuj dependas de tiu sistemo "
+				+ "dum Sodium estas instalita.</p>";
+	}
+
+	@Override
+	public String nombreFabricRenderingApiFaltaIndium() {
+		return "Mankas Indium / Fabric Rendering API";
+	}
+
 }

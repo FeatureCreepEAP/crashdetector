@@ -9097,4 +9097,69 @@ public class Arabe implements Idioma {
 		return "السطر المحدد في القارئ: ";
 	}
 
+	// Arabic (العربية)
+	@Override
+	public String mensajeMotionBlurBufferCerrado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "مشكلة محتملة مع Motion Blur.</b>"
+				+ "<p>يحتوي السجل على إشارة إلى <b>net.natural.motionblur.shader.FrameBlendingManager.writeBlendParamsUBO</b> "
+				+ "وأيضاً الخطأ <b>java.lang.IllegalStateException: Buffer already closed</b>.</p>"
+				+ "<p>قد تظهر هذه الأسطر منفصلة في السجل، ولكن وجودها معاً يشير عادةً إلى أن المشكلة مرتبطة "
+				+ "بـ mod <b>Motion Blur</b> أو بإدارته للـ shaders/buffers الرسومية.</p>"
+				+ "<p><b>الخيارات الموصى بها:</b></p>" + "<ul>" + "<li>جرب بدء اللعبة بدون <b>Motion Blur</b>.</li>"
+				+ "<li>إذا بدأت اللعبة بشكل صحيح بدون هذا الـ mod، احتفظ به غير مثبت أو ابحث عن إصدار أحدث.</li>"
+				+ "<li>يمكنك أيضاً التجربة بدون shaders أو mods أخرى متعلقة بالتصيير إذا استمرت المشكلة.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreMotionBlurBufferCerrado() {
+		return "مشكلة محتملة: Motion Blur";
+	}
+
+	// Arabic (العربية)
+	@Override
+	public String mensajeGeneratorAcceleratorOwoVersion() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "تضارب محتمل مع Generator Accelerator.</b>"
+				+ "<p>يحتوي السجل على اختلاف بين التوقيعات <b>Found</b> و <b>Available</b>، جنباً إلى جنب مع فئات من "
+				+ "<b>Generator Accelerator</b>، على سبيل المثال <b>dev/sixik/generator_accelerator/common/features/FastTarget</b>.</p>"
+				+ "<p>هذا الخطأ ناتج على الأرجح عن <b>Generator Accelerator</b>. قد يكون أيضاً مرتبطاً "
+				+ "بتعارض بين هذا الـ mod وإصدارات معينة من <b>owo-lib</b>.</p>" + "<p><b>الخيارات الموصى بها:</b></p>"
+				+ "<ul>" + "<li>جرب بدء اللعبة بدون <b>Generator Accelerator</b>.</li>"
+				+ "<li>إذا بدأت اللعبة بشكل صحيح، احتفظ بهذا الـ mod غير مثبت أو ابحث عن إصدار مختلف.</li>"
+				+ "<li>جرب تحديث أو تغيير إصدار <b>owo-lib</b>، خاصة إذا كانت هناك mods أخرى تعتمد على owo.</li>"
+				+ "<li>تحقق من توافق <b>Generator Accelerator</b> و <b>owo-lib</b> والـ loader وإصدار Minecraft مع بعضها البعض.</li>"
+				+ "</ul>" + "<p>السبب الأكثر احتمالاً هو أن Generator Accelerator يحاول تطبيق تعديل بتوقيع "
+				+ "لا يتطابق مع الإصدار الحالي لفئة أو تبعية.</p>";
+	}
+
+	@Override
+	public String nombreGeneratorAcceleratorOwoVersion() {
+		return "تضارب محتمل: Generator Accelerator و owo-lib";
+	}
+
+	// Arabic (العربية)
+	@Override
+	public String mensajeFabricRenderingApiFaltaIndium() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "يافتقد إلى مصير متوافق مع Fabric Rendering API.</b>"
+				+ "<p>يحتوي السجل على خطأ حيث يُرجع <b>RendererAccess.getRenderer()</b> قيمة <b>null</b>، "
+				+ "مما يسبب فشلًا عند محاولة استخدام <b>Renderer.materialFinder()</b>.</p>"
+				+ "<p>تحدث هذه المشكلة عادةً عندما لا يكون <b>Fabric Rendering API</b> متاحًا بشكل صحيح. "
+				+ "سبب شائع هو استخدام <b>Sodium</b>، خاصة الإصدارات القديمة التي تستبدل أو تعطل أجزاء "
+				+ "من نظام التصيير المتوقع من قبل mods الأخرى.</p>" + "<p><b>الحل الموصى به:</b></p>" + "<ul>"
+				+ "<li>قم بتثبيت mod <b>Indium</b>.</li>"
+				+ "<li>تأكد من أن <b>Indium</b> متوافق مع إصدار <b>Sodium</b> و Fabric Loader و Minecraft الخاص بك.</li>"
+				+ "<li>إذا كان Indium مثبتًا بالفعل، قم بتحديث <b>Sodium</b> و <b>Indium</b> و <b>Fabric API</b>.</li>"
+				+ "<li>إذا استمرت المشكلة، جرب اللعب مؤقتًا بدون Sodium لتأكيد أن الخطأ مرتبط بالمصير.</li>" + "</ul>"
+				+ "<p>عادةً ما يعيد Indium التوافق مع Fabric Rendering API للـ mods التي تعتمد على هذا النظام "
+				+ "أثناء تثبيت Sodium.</p>";
+	}
+
+	@Override
+	public String nombreFabricRenderingApiFaltaIndium() {
+		return "يافتقد إلى Indium / Fabric Rendering API";
+	}
+
 }

@@ -9424,4 +9424,70 @@ public class Vietnamita implements Idioma {
 		return "dòng đã chọn trong trình đọc: ";
 	}
 
+	@Override
+	public String mensajeMotionBlurBufferCerrado() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Vấn đề có thể xảy ra với Motion Blur.</b>"
+				+ "<p>Log chứa tham chiếu đến <b>net.natural.motionblur.shader.FrameBlendingManager.writeBlendParamsUBO</b> "
+				+ "và cũng là lỗi <b>java.lang.IllegalStateException: Buffer already closed</b>.</p>"
+				+ "<p>Các dòng này có thể xuất hiện riêng biệt trong log, nhưng khi cùng nhau thường chỉ ra rằng vấn đề liên quan "
+				+ "đến mod <b>Motion Blur</b> hoặc cách nó xử lý shaders/buffers đồ họa.</p>"
+				+ "<p><b>Các tùy chọn được khuyến nghị:</b></p>" + "<ul>"
+				+ "<li>Thử khởi động game mà không có <b>Motion Blur</b>.</li>"
+				+ "<li>Nếu game khởi động đúng cách mà không có mod đó, hãy giữ nó đã gỡ cài đặt hoặc tìm phiên bản mới hơn.</li>"
+				+ "<li>Bạn cũng có thể thử tắt shaders hoặc các mod kết xuất khác nếu vấn đề vẫn tiếp diễn.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreMotionBlurBufferCerrado() {
+		return "Vấn đề có thể xảy ra: Motion Blur";
+	}
+
+	@Override
+	public String mensajeGeneratorAcceleratorOwoVersion() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Xung đột có thể xảy ra với Generator Accelerator.</b>"
+				+ "<p>Log chứa sự khác biệt giữa các chữ ký <b>Found</b> và <b>Available</b>, cùng với các lớp từ "
+				+ "<b>Generator Accelerator</b>, ví dụ <b>dev/sixik/generator_accelerator/common/features/FastTarget</b>.</p>"
+				+ "<p>Lỗi này có thể do <b>Generator Accelerator</b> gây ra. Nó cũng có thể liên quan "
+				+ "đến sự không tương thích giữa mod đó và một số phiên bản của <b>owo-lib</b>.</p>"
+				+ "<p><b>Các tùy chọn được khuyến nghị:</b></p>" + "<ul>"
+				+ "<li>Thử khởi động game mà không có <b>Generator Accelerator</b>.</li>"
+				+ "<li>Nếu game khởi động đúng cách, hãy giữ mod đó đã gỡ cài đặt hoặc tìm phiên bản khác.</li>"
+				+ "<li>Thử cập nhật hoặc thay đổi phiên bản của <b>owo-lib</b>, đặc biệt nếu các mod khác cũng phụ thuộc vào owo.</li>"
+				+ "<li>Kiểm tra xem <b>Generator Accelerator</b>, <b>owo-lib</b>, loader và phiên bản Minecraft có tương thích với nhau không.</li>"
+				+ "</ul>"
+				+ "<p>Nguyên nhân có khả năng nhất là Generator Accelerator đang cố gắng áp dụng một sửa đổi với chữ ký "
+				+ "không khớp với phiên bản hiện tại của một lớp hoặc phụ thuộc.</p>";
+	}
+
+	@Override
+	public String nombreGeneratorAcceleratorOwoVersion() {
+		return "Xung đột có thể xảy ra: Generator Accelerator và owo-lib";
+	}
+
+	@Override
+	public String mensajeFabricRenderingApiFaltaIndium() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Thiếu trình kết xuất tương thích với Fabric Rendering API.</b>"
+				+ "<p>Log chứa lỗi nơi <b>RendererAccess.getRenderer()</b> trả về <b>null</b>, "
+				+ "gây ra lỗi khi cố gắng sử dụng <b>Renderer.materialFinder()</b>.</p>"
+				+ "<p>Vấn đề này thường xảy ra khi <b>Fabric Rendering API</b> không khả dụng đúng cách. "
+				+ "Một nguyên nhân phổ biến là sử dụng <b>Sodium</b>, đặc biệt là các phiên bản cũ thay thế hoặc vô hiệu hóa các phần "
+				+ "của hệ thống kết xuất được các mod khác mong đợi.</p>" + "<p><b>Giải pháp được khuyến nghị:</b></p>"
+				+ "<ul>" + "<li>Cài đặt mod <b>Indium</b>.</li>"
+				+ "<li>Đảm bảo rằng <b>Indium</b> tương thích với phiên bản <b>Sodium</b>, Fabric Loader và Minecraft của bạn.</li>"
+				+ "<li>Nếu bạn đã cài đặt Indium, hãy cập nhật <b>Sodium</b>, <b>Indium</b> và <b>Fabric API</b>.</li>"
+				+ "<li>Nếu vấn đề vẫn tiếp diễn, hãy thử tạm thời không có Sodium để xác nhận rằng lỗi liên quan đến trình kết xuất.</li>"
+				+ "</ul>"
+				+ "<p>Indium thường khôi phục khả năng tương thích với Fabric Rendering API cho các mod phụ thuộc vào hệ thống đó "
+				+ "trong khi Sodium được cài đặt.</p>";
+	}
+
+	@Override
+	public String nombreFabricRenderingApiFaltaIndium() {
+		return "Thiếu Indium / Fabric Rendering API";
+	}
+
 }
