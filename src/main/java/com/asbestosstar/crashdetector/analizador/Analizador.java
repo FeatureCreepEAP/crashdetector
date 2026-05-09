@@ -333,7 +333,12 @@ public class Analizador {
 		verificaciones.add(new MotionBlurBufferCerrado());
 		verificaciones.add(new GeneratorAcceleratorOwoVersion());
 		verificaciones.add(new FabricRenderingApiFaltaIndium());
+		verificaciones.add(new EntradaDuplicadaIdModerno());
 
+		
+		
+		
+		
 		verificaciones.add(new PirataMC());
 		verificaciones.add(new LanzerNoAnimado());
 		verificaciones.add(new LanzerDesAnimado());

@@ -9991,4 +9991,39 @@ public class Espanol implements Idioma {
 		return "Falta Indium / Fabric Rendering API";
 	}
 
+	@Override
+	public String mensajeEntradaDuplicadaIdModerno() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Entrada duplicada detectada en un registro de Minecraft.</b>"
+				+ "<p>El log contiene un error parecido a <b>Duplicate entry on id</b>, por ejemplo "
+				+ "<b>current=maroon, previous=mint</b>.</p>"
+				+ "<p>En versiones modernas de Minecraft, este tipo de error suele ocurrir cuando dos mods intentan registrar "
+				+ "entradas distintas usando el mismo ID interno.</p>"
+				+ "<p><b>Opciones recomendadas:</b></p>"
+				+ "<ul>"
+				+ "<li>Elimina uno de los mods que está registrando la entrada duplicada.</li>"
+				+ "<li>Si reconoces los nombres mencionados en el error, revisa qué mod agrega esas entradas y prueba sin ese mod.</li>"
+				+ "<li>Si no reconoces los nombres, usa la utilidad <b>grepr</b> en la barra lateral.</li>"
+				+ "<li>En <b>grepr</b>, activa la búsqueda dentro de archivos comprimidos <b>.jar</b>, <b>.zip</b> y <b>.fpm</b>.</li>"
+				+ "<li>También activa la búsqueda en <b>archivos binarios</b>, porque algunos nombres o IDs pueden estar dentro de clases compiladas.</li>"
+				+ "</ul>"
+				+ "<p>Busca los valores mencionados en el error, como <b>maroon</b> o <b>mint</b>, para encontrar qué mod los contiene.</p>";
+	}
+
+	@Override
+	public String nombreEntradaDuplicadaIdModerno() {
+		return "Entrada duplicada en ID de mod";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

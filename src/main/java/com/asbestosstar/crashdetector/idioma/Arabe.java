@@ -9162,4 +9162,38 @@ public class Arabe implements Idioma {
 		return "يافتقد إلى Indium / Fabric Rendering API";
 	}
 
+	// Arabic (العربية)
+	@Override
+	public String mensajeEntradaDuplicadaIdModerno() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "تم اكتشاف إدخال مكرر في سجل Minecraft.</b>"
+	            + "<p>يحتوي السجل على خطأ مشابه لـ <b>Duplicate entry on id</b>، على سبيل المثال "
+	            + "<b>current=maroon, previous=mint</b>.</p>"
+	            + "<p>في الإصدارات الحديثة من Minecraft، يحدث هذا النوع من الأخطاء عادةً عندما يحاول اثنان من الـ mods تسجيل "
+	            + "إدخالات مختلفة باستخدام نفس المعرف الداخلي.</p>"
+	            + "<p><b>الخيارات الموصى بها:</b></p>"
+	            + "<ul>"
+	            + "<li>احذف أحد الـ mods الذي يسجل الإدخال المكرر.</li>"
+	            + "<li>إذا تعرفت على الأسماء المذكورة في الخطأ، راجع أي mod يضيف هذه الإدخالات وجرب اللعب بدون ذلك الـ mod.</li>"
+	            + "<li>إذا لم تتعرف على الأسماء، استخدم أداة <b>grepr</b> في الشريط الجانبي.</li>"
+	            + "<li>في <b>grepr</b>، فعّل البحث داخل الملفات المضغوطة <b>.jar</b> و <b>.zip</b> و <b>.fpm</b>.</li>"
+	            + "<li>فعّل أيضاً البحث في <b>الملفات الثنائية</b>، لأن بعض الأسماء أو المعرفات قد تكون داخل فئات مترجمة.</li>"
+	            + "</ul>"
+	            + "<p>ابحث عن القيم المذكورة في الخطأ، مثل <b>maroon</b> أو <b>mint</b>، للعثور على الـ mod الذي يحتوي عليها.</p>";
+	}
+
+	@Override
+	public String nombreEntradaDuplicadaIdModerno() {
+	    return "إدخال مكرر في معرف الـ mod";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

@@ -9489,5 +9489,35 @@ public class Vietnamita implements Idioma {
 	public String nombreFabricRenderingApiFaltaIndium() {
 		return "Thiếu Indium / Fabric Rendering API";
 	}
+	
+    @Override
+    public String mensajeEntradaDuplicadaIdModerno() {
+        return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+                + "Phát hiện mục trùng lặp trong đăng ký của Minecraft.</b>"
+                + "<p>Log chứa lỗi tương tự như <b>Duplicate entry on id</b>, ví dụ "
+                + "<b>current=maroon, previous=mint</b>.</p>"
+                + "<p>Trong các phiên bản hiện đại của Minecraft, loại lỗi này thường xảy ra khi hai mod cố gắng đăng ký "
+                + "các mục khác nhau bằng cách sử dụng cùng một ID nội bộ.</p>"
+                + "<p><b>Các tùy chọn được khuyến nghị:</b></p>"
+                + "<ul>"
+                + "<li>Xóa một trong các mod đang đăng ký mục trùng lặp.</li>"
+                + "<li>Nếu bạn nhận ra các tên được đề cập trong lỗi, hãy kiểm tra xem mod nào thêm các mục đó và thử chạy mà không có mod đó.</li>"
+                + "<li>Nếu bạn không nhận ra các tên, hãy sử dụng tiện ích <b>grepr</b> trong thanh bên.</li>"
+                + "<li>Trong <b>grepr</b>, bật tìm kiếm bên trong các tệp nén <b>.jar</b>, <b>.zip</b> và <b>.fpm</b>.</li>"
+                + "<li>Cũng bật tìm kiếm trong <b>tệp nhị phân</b>, vì một số tên hoặc ID có thể nằm trong các lớp đã biên dịch.</li>"
+                + "</ul>"
+                + "<p>Tìm kiếm các giá trị được đề cập trong lỗi, chẳng hạn như <b>maroon</b> hoặc <b>mint</b>, để tìm xem mod nào chứa chúng.</p>";
+    }
+
+    @Override
+    public String nombreEntradaDuplicadaIdModerno() {
+        return "Mục trùng lặp trong ID của mod";
+    }
+	
+	
+	
+	
+	
+	
 
 }

@@ -9706,5 +9706,33 @@ public class Lao implements Idioma {
 	public String nombreFabricRenderingApiFaltaIndium() {
 		return "ຂາດ Indium / Fabric Rendering API";
 	}
+	
+    @Override
+    public String mensajeEntradaDuplicadaIdModerno() {
+        return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+                + "ກວດພົບຂໍ້ມູນຊ້ຳກັນໃນລະບຽບ Minecraft.</b>"
+                + "<p>Log ມີຂໍ້ຜິດພາດຄ້າຍຄື <b>Duplicate entry on id</b>, ຕົວຢ່າງ "
+                + "<b>current=maroon, previous=mint</b>.</p>"
+                + "<p>ໃນເວີຊັນທັນສະໄໝຂອງ Minecraft, ຂໍ້ຜິດພາດປະເພດນີ້ມັກເກີດຂຶ້ນເມື່ອສອງ mods ພະຍາຍາມລົງທະບຽນ "
+                + "ຂໍ້ມູນທີ່ແຕກຕ່າງກັນໂດຍໃຊ້ ID ພາຍໃນດຽວກັນ.</p>"
+                + "<p><b>ທາງເລືອກທີ່ແນະນຳ:</b></p>"
+                + "<ul>"
+                + "<li>ລຶບ mod ໜຶ່ງທີ່ກຳລັງລົງທະບຽນຂໍ້ມູນຊ້ຳກັນ.</li>"
+                + "<li>ຖ້າທ່ານຮູ້ຈັກຊື່ທີ່ກ່າວເຖິງໃນຂໍ້ຜິດພາດ, ກວດສອບວ່າ mod ໃດເພີ່ມຂໍ້ມູນເຫຼົ່ານັ້ນ ແລະ ລອງໃຊ້ໂດຍບໍ່ມີ mod ນັ້ນ.</li>"
+                + "<li>ຖ້າທ່ານບໍ່ຮູ້ຈັກຊື່, ໃຊ້ເຄື່ອງມື <b>grepr</b> ໃນແຖບດ້ານຂ້າງ.</li>"
+                + "<li>ໃນ <b>grepr</b>, ເປີດໃຊ້ການຊອກຫາໃນໄຟລ໌ທີ່ຖືກບີບອັດ <b>.jar</b>, <b>.zip</b> ແລະ <b>.fpm</b>.</li>"
+                + "<li>ເປີດໃຊ້ການຊອກຫາໃນ <b>ໄຟລ໌ binary</b> ເຊັ່ນກັນ, ເພາະວ່າຊື່ ຫຼື ID ບາງຢ່າງອາດຢູ່ໃນຄລາສທີ່ຖືກ compile ແລ້ວ.</li>"
+                + "</ul>"
+                + "<p>ຊອກຫາຄ່າທີ່ກ່າວເຖິງໃນຂໍ້ຜິດພາດ, ເຊັ່ນ <b>maroon</b> ຫຼື <b>mint</b>, ເພື່ອຊອກຫາວ່າ mod ໃດມີມັນ.</p>";
+    }
+
+    @Override
+    public String nombreEntradaDuplicadaIdModerno() {
+        return "ຂໍ້ມູນຊ້ຳກັນໃນ ID ຂອງ mod";
+    }
+	
+	
+	
+	
 
 }

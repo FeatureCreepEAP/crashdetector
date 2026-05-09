@@ -8906,5 +8906,37 @@ public class Coreano implements Idioma {
 	public String nombreFabricRenderingApiFaltaIndium() {
 		return "Indium 부족 / Fabric Rendering API";
 	}
+	
+	// Korean (Munhwaŏ / Standard Korean) (한국어)
+	@Override
+	public String mensajeEntradaDuplicadaIdModerno() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "Minecraft 레지스트리에서 중복된 항목이 감지되었습니다.</b>"
+	            + "<p>로그에는 <b>Duplicate entry on id</b>와 유사한 오류가 포함되어 있습니다. 예를 들어 "
+	            + "<b>current=maroon, previous=mint</b>입니다.</p>"
+	            + "<p>최신 버전의 Minecraft에서는 두 개의 mod가 동일한 내부 ID를 사용하여 "
+	            + "서로 다른 항목을 등록하려고 할 때 이러한 유형의 오류가 자주 발생합니다.</p>"
+	            + "<p><b>권장 옵션:</b></p>"
+	            + "<ul>"
+	            + "<li>중복된 항목을 등록하는 mod 중 하나를 제거하세요.</li>"
+	            + "<li>오류에 언급된 이름을 인식한다면, 해당 항목을 추가하는 mod를 확인하고 그 mod 없이 테스트해 보세요.</li>"
+	            + "<li>이름을 인식하지 못한다면 사이드바의 <b>grepr</b> 유틸리티를 사용하세요.</li>"
+	            + "<li><b>grepr</b>에서 압축 파일 <b>.jar</b>, <b>.zip</b> 및 <b>.fpm</b> 내 검색을 활성화하세요.</li>"
+	            + "<li>일부 이름이나 ID는 컴파일된 클래스 내에 있을 수 있으므로 <b>바이너리 파일</b> 검색도 활성화하세요.</li>"
+	            + "</ul>"
+	            + "<li>오류에 언급된 <b>maroon</b> 또는 <b>mint</b>와 같은 값을 검색하여 이를 포함하는 mod를 찾으세요.</li>";
+	}
+
+	@Override
+	public String nombreEntradaDuplicadaIdModerno() {
+	    return "Mod ID의 중복 항목";
+	}
+	
+	
+	
+	
+	
+	
+	
 
 }

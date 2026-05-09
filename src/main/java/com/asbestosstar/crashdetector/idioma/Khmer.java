@@ -9447,5 +9447,36 @@ public class Khmer implements Idioma {
 	public String nombreFabricRenderingApiFaltaIndium() {
 		return "ខ្វះ Indium / Fabric Rendering API";
 	}
+	
+	// Khmer (ភាសាខ្មែរ)
+	@Override
+	public String mensajeEntradaDuplicadaIdModerno() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "បានរកឃើញការបញ្ចូលទ្វេដងនៅក្នុងបញ្ជីឈ្មោះរបស់ Minecraft។</b>"
+	            + "<p>កំណត់ហេតុមានកំហុសស្រដៀងនឹង <b>Duplicate entry on id</b> ឧទាហរណ៍ "
+	            + "<b>current=maroon, previous=mint</b>។</p>"
+	            + "<p>នៅក្នុងកំណែថ្មីៗនៃ Minecraft ប្រភេទកំហុសនេះជាធម្មតាកើតឡើងនៅពេលដែល mods ពីរព្យាយាមចុះបញ្ជី "
+	            + "ការបញ្ចូលផ្សេងគ្នាដោយប្រើ ID ខាងក្នុងតែមួយ។</p>"
+	            + "<p><b>ជម្រើសដែលបានណែនាំ៖</b></p>"
+	            + "<ul>"
+	            + "<li>លុប mod មួយក្នុងចំណោម mods ដែលកំពុងចុះបញ្ជីការបញ្ចូលទ្វេដង។</li>"
+	            + "<li>ប្រសិនបើអ្នកស្គាល់ឈ្មោះដែលបានលើកឡើងនៅក្នុងកំហុស សូមពិនិត្យមើលថា mod ណាដែលបន្ថែមការបញ្ចូលទាំងនោះ ហើយសាកល្បងដោយគ្មាន mod នោះ។</li>"
+	            + "<li>ប្រសិនបើអ្នកមិនស្គាល់ឈ្មោះទេ សូមប្រើឧបករណ៍ <b>grepr</b> នៅក្នុងរបារចំហៀង។</li>"
+	            + "<li>នៅក្នុង <b>grepr</b> សូមបើកការស្វែងរកនៅក្នុងឯកសារដែលបានបង្ហាប់ <b>.jar</b>, <b>.zip</b> និង <b>.fpm</b>។</li>"
+	            + "<li>បើកការស្វែងរកនៅក្នុង <b>ឯកសារ binary</b> ផងដែរ ព្រោះឈ្មោះ ឬ ID មួយចំនួនអាចស្ថិតនៅក្នុងថ្នាក់ដែលបានបង្កើតរួច។</li>"
+	            + "</ul>"
+	            + "<li>ស្វែងរកតម្លៃដែលបានលើកឡើងនៅក្នុងកំហុស ដូចជា <b>maroon</b> ឬ <b>mint</b> ដើម្បីរក mod ដែលមានវា។</li>";
+	}
+
+	@Override
+	public String nombreEntradaDuplicadaIdModerno() {
+	    return "ការបញ្ចូលទ្វេដងនៅក្នុង ID mod";
+	}
+	
+	
+	
+	
+	
+	
 
 }

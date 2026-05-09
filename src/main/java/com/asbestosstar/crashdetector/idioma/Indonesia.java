@@ -9828,5 +9828,34 @@ public class Indonesia implements Idioma {
 	public String nombreFabricRenderingApiFaltaIndium() {
 		return "Indium Hilang / Fabric Rendering API";
 	}
+	
+	// Indonesian (Bahasa Indonesia)
+	@Override
+	public String mensajeEntradaDuplicadaIdModerno() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "Entri duplikat terdeteksi dalam registri Minecraft.</b>"
+	            + "<p>Log berisi kesalahan yang mirip dengan <b>Duplicate entry on id</b>, misalnya "
+	            + "<b>current=maroon, previous=mint</b>.</p>"
+	            + "<p>Dalam versi Minecraft modern, jenis kesalahan ini biasanya terjadi ketika dua mod mencoba mendaftar "
+	            + "entri berbeda menggunakan ID internal yang sama.</p>"
+	            + "<p><b>Opsi yang direkomendasikan:</b></p>"
+	            + "<ul>"
+	            + "<li>Hapus salah satu mod yang mendaftarkan entri duplikat.</li>"
+	            + "<li>Jika Anda mengenali nama-nama yang disebutkan dalam kesalahan, periksa mod mana yang menambahkan entri tersebut dan coba tanpa mod itu.</li>"
+	            + "<li>Jika Anda tidak mengenali nama-namanya, gunakan utilitas <b>grepr</b> di bilah sisi.</li>"
+	            + "<li>Di <b>grepr</b>, aktifkan pencarian di dalam file terkompresi <b>.jar</b>, <b>.zip</b>, dan <b>.fpm</b>.</li>"
+	            + "<li>Aktifkan juga pencarian di <b>file biner</b>, karena beberapa nama atau ID mungkin berada di dalam kelas yang dikompilasi.</li>"
+	            + "</ul>"
+	            + "<li>Cari nilai-nilai yang disebutkan dalam kesalahan, seperti <b>maroon</b> atau <b>mint</b>, untuk menemukan mod yang memuatnya.</li>";
+	}
+
+	@Override
+	public String nombreEntradaDuplicadaIdModerno() {
+	    return "Entri duplikat pada ID mod";
+	}
+	
+	
+	
+	
 
 }

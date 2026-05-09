@@ -9468,5 +9468,34 @@ public class Tailandes implements Idioma {
 	public String nombreFabricRenderingApiFaltaIndium() {
 		return "ขาด Indium / Fabric Rendering API";
 	}
+    @Override
+    public String mensajeEntradaDuplicadaIdModerno() {
+        return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+                + "ตรวจพบรายการซ้ำในทะเบียนของ Minecraft.</b>"
+                + "<p>บันทึกมีข้อผิดพลาดคล้ายกับ <b>Duplicate entry on id</b> เช่น "
+                + "<b>current=maroon, previous=mint</b>.</p>"
+                + "<p>ในเวอร์ชันสมัยใหม่ของ Minecraft ข้อผิดพลาดประเภทนี้มักเกิดขึ้นเมื่อมอดสองตัวพยายามลงทะเบียน "
+                + "รายการที่แตกต่างกันโดยใช้ ID ภายในเดียวกัน</p>"
+                + "<p><b>ตัวเลือกที่แนะนำ:</b></p>"
+                + "<ul>"
+                + "<li>ลบมอดตัวหนึ่งที่กำลังลงทะเบียนรายการซ้ำออก.</li>"
+                + "<li>หากคุณรู้จักชื่อที่กล่าวถึงในข้อผิดพลาด ให้ตรวจสอบว่ามอดใดเพิ่มรายการเหล่านั้นและลองใช้โดยไม่มีมอดนั้น.</li>"
+                + "<li>หากคุณไม่รู้จักชื่อ ให้ใช้เครื่องมือ <b>grepr</b> ในแถบด้านข้าง.</li>"
+                + "<li>ใน <b>grepr</b> เปิดใช้งานการค้นหาภายในไฟล์บีบอัด <b>.jar</b>, <b>.zip</b> และ <b>.fpm</b>.</li>"
+                + "<li>เปิดใช้งานการค้นหาใน <b>ไฟล์ไบนารี</b> ด้วย เนื่องจากชื่อหรือ ID บางอย่างอาจอยู่ในคลาสที่คอมไพล์แล้ว.</li>"
+                + "</ul>"
+                + "<p>ค้นหาค่าที่กล่าวถึงในข้อผิดพลาด เช่น <b>maroon</b> หรือ <b>mint</b> เพื่อค้นหามอดที่มีมัน.</p>";
+    }
+
+    @Override
+    public String nombreEntradaDuplicadaIdModerno() {
+        return "รายการซ้ำใน ID ของมอด";
+    }
+	
+	
+	
+	
+	
+	
 
 }

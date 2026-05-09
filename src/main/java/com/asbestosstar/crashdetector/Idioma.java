@@ -3568,4 +3568,8 @@ public interface Idioma {
 
 	public String nombreFabricRenderingApiFaltaIndium();
 
+	public String mensajeEntradaDuplicadaIdModerno();
+
+	public String nombreEntradaDuplicadaIdModerno();
+
 }

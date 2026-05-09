@@ -8918,5 +8918,35 @@ public class Japones implements Idioma {
 	public String nombreFabricRenderingApiFaltaIndium() {
 		return "Indium 不足 / Fabric Rendering API";
 	}
+	
+	// Japanese (日本語)
+	@Override
+	public String mensajeEntradaDuplicadaIdModerno() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "Minecraft のレジストリで重複エントリが検出されました。</b>"
+	            + "<p>ログには <b>Duplicate entry on id</b> に似たエラーが含まれています。例えば "
+	            + "<b>current=maroon, previous=mint</b> です。</p>"
+	            + "<p>最新の Minecraft バージョンでは、この種のエラーは通常、2つの mod が同じ内部 ID を使用して "
+	            + "異なるエントリを登録しようとした場合に発生します。</p>"
+	            + "<p><b>推奨オプション：</b></p>"
+	            + "<ul>"
+	            + "<li>重複エントリを登録している mod のいずれかを削除してください。</li>"
+	            + "<li>エラーで言及されている名前を認識している場合は、どの mod がそれらのエントリを追加しているかを確認し、その mod なしで試してください。</li>"
+	            + "<li>名前を認識していない場合は、サイドバーの <b>grepr</b> ユーティリティを使用してください。</li>"
+	            + "<li><b>grepr</b> で、圧縮ファイル <b>.jar</b>、<b>.zip</b>、および <b>.fpm</b> 内の検索を有効にしてください。</li>"
+	            + "<li>一部の名前や ID はコンパイル済みクラス内にある可能性があるため、<b>バイナリファイル</b> の検索も有効にしてください。</li>"
+	            + "</ul>"
+	            + "<li>エラーで言及されている <b>maroon</b> や <b>mint</b> などの値を検索して、それらを含む mod を見つけてください。</li>";
+	}
+
+	@Override
+	public String nombreEntradaDuplicadaIdModerno() {
+	    return "Mod ID の重複エントリ";
+	}
+	
+	
+	
+	
+	
 
 }

@@ -9246,5 +9246,35 @@ public class Esperanto implements Idioma {
 	public String nombreFabricRenderingApiFaltaIndium() {
 		return "Mankas Indium / Fabric Rendering API";
 	}
+	// Esperanto (Esperanto)
+	@Override
+	public String mensajeEntradaDuplicadaIdModerno() {
+	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+	            + "Duobla enigo detektita en registro de Minecraft.</b>"
+	            + "<p>La protokolo enhavas eraron similan al <b>Duplicate entry on id</b>, ekzemple "
+	            + "<b>current=maroon, previous=mint</b>.</p>"
+	            + "<p>En modernaj versioj de Minecraft, ĉi tiu tipo de eraro kutime okazas kiam du modoj provas registri "
+	            + "malsamajn enigojn uzante la saman internan ID.</p>"
+	            + "<p><b>Rekomenditaj opcioj:</b></p>"
+	            + "<ul>"
+	            + "<li>Forigu unu el la modoj, kiuj registras la duoblan enigon.</li>"
+	            + "<li>Se vi rekonas la nomojn menciitajn en la eraro, kontrolu, kiu mod aldonas tiujn enigojn kaj provu sen tiu mod.</li>"
+	            + "<li>Se vi ne rekonas la nomojn, uzu la utilaĵon <b>grepr</b> en la flankobreto.</li>"
+	            + "<li>En <b>grepr</b>, aktivigu serĉon ene de kunpremitaj dosieroj <b>.jar</b>, <b>.zip</b> kaj <b>.fpm</b>.</li>"
+	            + "<li>Aktivigu ankaŭ serĉon en <b>dumaj dosieroj</b>, ĉar kelkaj nomoj aŭ ID povas esti ene de kompilitaj klasoj.</li>"
+	            + "</ul>"
+	            + "<li>Serĉu la valorojn menciitajn en la eraro, kiel <b>maroon</b> aŭ <b>mint</b>, por trovi, kiu mod enhavas ilin.</li>";
+	}
 
+	@Override
+	public String nombreEntradaDuplicadaIdModerno() {
+	    return "Duobla enigo en mod-ID";
+	}
+	
+	
+	
+	
+	
+	
+	
 }

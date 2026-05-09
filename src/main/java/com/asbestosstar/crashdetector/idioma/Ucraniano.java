@@ -8595,5 +8595,38 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 	public String nombreFabricRenderingApiFaltaIndium() {
 		return "Відсутній Indium / Fabric Rendering API";
 	}
+	
+    @Override
+    public String mensajeEntradaDuplicadaIdModerno() {
+        return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+                + "Виявлено дубльований запис у реєстрі Minecraft.</b>"
+                + "<p>Лог містить помилку, схожу на <b>Duplicate entry on id</b>, наприклад "
+                + "<b>current=maroon, previous=mint</b>.</p>"
+                + "<p>У сучасних версіях Minecraft така помилка зазвичай виникає, коли два моди намагаються зареєструвати "
+                + "різні записи, використовуючи той самий внутрішній ID.</p>"
+                + "<p><b>Рекомендовані дії:</b></p>"
+                + "<ul>"
+                + "<li>Видаліть один із модів, який реєструє дубльований запис.</li>"
+                + "<li>Якщо ви впізнаєте імена, згадані в помилці, перевірте, який мод додає ці записи, і спробуйте запустити гру без нього.</li>"
+                + "<li>Якщо ви не впізнаєте імена, скористайтеся утилітою <b>grepr</b> на бічній панелі.</li>"
+                + "<li>У <b>grepr</b> увімкніть пошук всередині стиснених файлів <b>.jar</b>, <b>.zip</b> та <b>.fpm</b>.</li>"
+                + "<li>Також увімкніть пошук у <b>бінарних файлах</b>, оскільки деякі імена або ID можуть знаходитися всередині скомпільованих класів.</li>"
+                + "</ul>"
+                + "<p>Шукайте значення, згадані в помилці, такі як <b>maroon</b> або <b>mint</b>, щоб знайти, який мод їх містить.</p>";
+    }
+
+    @Override
+    public String nombreEntradaDuplicadaIdModerno() {
+        return "Дубльований запис в ID моду";
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
