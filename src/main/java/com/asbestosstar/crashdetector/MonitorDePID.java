@@ -1088,72 +1088,42 @@ public class MonitorDePID {
 
 	}
 
-	/**
-	 * Obtiene la ruta completa del ejecutable del proceso actual
-	 * 
-	 * @return Ruta completa del ejecutable o null si no se encuentra
-	 */
-	private static String obtenerRutaEjecutable8() {
-		try {
-			String sistemaOperativo = System.getProperty("os.name").toLowerCase();
 
-			if (sistemaOperativo.contains("win")) {
-				// Usar PowerShell primero (más confiable que wmic)
-				ProcessBuilder pb = new ProcessBuilder("powershell",
-						"Get-WmiObject -Class Win32_Process -Filter \"ProcessId = " + obtenerPID()
-								+ "\" | Select-Object -ExpandProperty ExecutablePath");
+/**
+ * Obtiene la ruta completa del ejecutable del proceso actual
+ * 
+ * @return Ruta completa del ejecutable o null si no se encuentra
+ */
+private static String obtenerRutaEjecutable8() {
+	try {
+		String sistemaOperativo = System.getProperty("os.name").toLowerCase();
 
-				Process proceso = pb.start();
-				try (BufferedReader lector = new BufferedReader(new InputStreamReader(proceso.getInputStream()))) {
-
-					String linea;
-					while ((linea = lector.readLine()) != null) {
-						String limpiado = linea.trim();
-						if (!limpiado.isEmpty()) {
-							// Devolver la ruta completa del ejecutable
-							return limpiado;
-						}
-					}
-				}
-
-				// Si PowerShell falla, usar tasklist como último recurso
-				pb = new ProcessBuilder("tasklist", "/FI", "PID eq " + obtenerPID(), "/FO", "CSV", "/NH");
-				proceso = pb.start();
-				try (BufferedReader lector = new BufferedReader(new InputStreamReader(proceso.getInputStream()))) {
-					String linea;
-					while ((linea = lector.readLine()) != null) {
-						if (!linea.trim().isEmpty()) {
-							String[] valores = new CSVParser().parsear(linea);
-							if (valores.length > 0 && !valores[0].trim().isEmpty()) {
-								return valores[0].trim(); // Nombre del ejecutable
-							}
-						}
-					}
-				}
-			} else {
-				// Unix/Linux/macOS: Usar ps para obtener el comando
-				ProcessBuilder pb = new ProcessBuilder("ps", "-p", String.valueOf(obtenerPID()), "-o", "comm=");
-				Process proceso = pb.start();
-				try (BufferedReader lector = new BufferedReader(new InputStreamReader(proceso.getInputStream()))) {
-					String linea;
-					while ((linea = lector.readLine()) != null) {
-						String limpiado = linea.trim();
-						if (!limpiado.isEmpty()) {
-							return limpiado;
-						}
+		if (sistemaOperativo.contains("win")) {
+			return BuscarParaJava8Windows.encontrarJava8WindowsConFallback(obtenerPID());
+		} else {
+			// Unix/Linux/macOS: Usar ps para obtener el comando
+			ProcessBuilder pb = new ProcessBuilder("ps", "-p", String.valueOf(obtenerPID()), "-o", "comm=");
+			Process proceso = pb.start();
+			try (BufferedReader lector = new BufferedReader(new InputStreamReader(proceso.getInputStream()))) {
+				String linea;
+				while ((linea = lector.readLine()) != null) {
+					String limpiado = linea.trim();
+					if (!limpiado.isEmpty()) {
+						return limpiado;
 					}
 				}
 			}
-
-			// No se encontró información del proceso
-			return null;
-
-		} catch (Exception e) {
-			// Registrar errores para diagnóstico
-			System.err.println("Error al obtener ruta ejecutable: " + e.getMessage());
-			return null;
 		}
+
+		// No se encontró información del proceso
+		return null;
+
+	} catch (Exception e) {
+		// Registrar errores para diagnóstico
+		System.err.println("Error al obtener ruta ejecutable: " + e.getMessage());
+		return null;
 	}
+}
 
 	public static boolean viva(long pid) {
 		try {

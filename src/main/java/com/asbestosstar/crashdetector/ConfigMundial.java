@@ -18,7 +18,9 @@ public class ConfigMundial {
 	private static final boolean VALOR_POR_DEFECTO_CONSENTIMIENTO_LFPDPPP = false;
 	private static final boolean VALOR_POR_DEFECTO_CONSOLA_DESARROLLO = false;
 	private static final String VALOR_POR_DEFECTO_CURSEFORGE_CLAVE_API = "";
-
+	private static final String CLAVE_RUTA_EJECUTABLE_JAVA_8 = "ruta_ejecutable_java_8";
+	private static final String VALOR_POR_DEFECTO_RUTA_EJECUTABLE_JAVA_8 = "";
+	
 	private static final File ARCHIVO_CONFIG_MUNIDIAL = new File(System.getProperty("user.home"),
 			"crash_detector/config_munidial.properties");
 
@@ -45,6 +47,7 @@ public class ConfigMundial {
 
 			propiedades.setProperty("consola_desarrollo", String.valueOf(VALOR_POR_DEFECTO_CONSOLA_DESARROLLO));
 			propiedades.setProperty("curseforge_clave_api", VALOR_POR_DEFECTO_CURSEFORGE_CLAVE_API);
+			propiedades.setProperty(CLAVE_RUTA_EJECUTABLE_JAVA_8, VALOR_POR_DEFECTO_RUTA_EJECUTABLE_JAVA_8);
 			guardar();
 		}
 	}
@@ -190,4 +193,32 @@ public class ConfigMundial {
 		guardar();
 	}
 
+	
+	
+	
+	/**
+	 * Devuelve la ruta guardada del ejecutable java.exe de Java 8.
+	 *
+	 * Puede devolver cadena vacía si todavía no se ha encontrado.
+	 */
+	public String obtenerRutaEjecutableJava8() {
+		return propiedades.getProperty(CLAVE_RUTA_EJECUTABLE_JAVA_8, VALOR_POR_DEFECTO_RUTA_EJECUTABLE_JAVA_8).trim();
+	}
+
+	/**
+	 * Guarda la ruta del ejecutable java.exe de Java 8.
+	 *
+	 * Si recibe null, guarda blanco. Esto mantiene la entrada en la config mundial.
+	 */
+	public void guardarRutaEjecutableJava8(String ruta) {
+		if (ruta == null) {
+			propiedades.setProperty(CLAVE_RUTA_EJECUTABLE_JAVA_8, VALOR_POR_DEFECTO_RUTA_EJECUTABLE_JAVA_8);
+		} else {
+			propiedades.setProperty(CLAVE_RUTA_EJECUTABLE_JAVA_8, ruta.trim());
+		}
+
+		guardar();
+	}
+	
+	
 }
