@@ -1991,76 +1991,76 @@ public class Portuges implements Idioma {
 
 	@Override
 	public String forgeArchivosFaltantes(String archivo) {
-		return "<b style='color:#" + config.obtenerColorError() + "'>Faltan archivos esenciales de Forge. El archivo '"
+		return "<b style='color:#" + config.obtenerColorError() + "'>Faltam arquivos essenciais do Forge. O arquivo '"
 				+ archivo
-				+ "' no se encuentra en tu instalación. Esto suele ocurrir cuando la instalación de Forge se interrumpió o se eliminaron archivos importantes. QuickFix no puede recuperar estos archivos automáticamente. Necesitas reinstalar Forge correctamente desde el instalador oficial.</b>";
+				+ "' não foi encontrado na sua instalação. Isso geralmente acontece quando a instalação do Forge foi interrompida ou arquivos importantes foram removidos. O QuickFix não pode recuperar esses arquivos automaticamente. Você precisa reinstalar o Forge corretamente usando o instalador oficial.</b>";
 	}
 
 	@Override
 	public String forgeVersionNoEncontrada(String version, String archivo) {
 		return "<b style='color:#" + config.obtenerColorError()
-				+ "'>Forge no puede encontrar la versión de Minecraft requerida. Se necesita la versión " + version
-				+ " pero no se encuentra en el archivo '" + archivo
-				+ "'. Esto ocurre cuando hay una incompatibilidad entre la versión de Minecraft y la versión de Forge que estás utilizando. Asegúrate de descargar la versión correcta de Forge que coincida con tu versión de Minecraft.</b>";
+				+ "'>O Forge não conseguiu encontrar a versão necessária do Minecraft. A versão " + version
+				+ " é necessária, mas não foi encontrada no arquivo '" + archivo
+				+ "'. Isso acontece quando há incompatibilidade entre a versão do Minecraft e a versão do Forge que você está usando. Certifique-se de baixar a versão correta do Forge que corresponda à sua versão do Minecraft.</b>";
 	}
 
 	@Override
 	public String forgeTargetFmlclientNoEncontrado() {
 		return "<b style='color:#" + config.obtenerColorError()
-				+ "'>No se puede encontrar el target 'fmlclient' necesario para iniciar Forge. Esto indica que la instalación de Forge está incompleta o dañada. Es probable que los archivos esenciales de Forge no se hayan instalado correctamente. Necesitas reinstalar Forge usando el instalador oficial.</b>";
+				+ "'>Não foi possível encontrar o target 'fmlclient' necessário para iniciar o Forge. Isso indica que a instalação do Forge está incompleta ou corrompida. É provável que os arquivos essenciais do Forge não tenham sido instalados corretamente. Você precisa reinstalar o Forge usando o instalador oficial.</b>";
 	}
 
 	@Override
 	public String forgeClaseMinecraftFaltante() {
 		return "<b style='color:#" + config.obtenerColorError()
-				+ "'>No se puede encontrar la clase principal de Minecraft en el cargador de clases. Esto suele indicar que la instalación de Forge está incompleta o que hay un conflicto con otros mods. Es posible que los archivos de Minecraft se hayan dañado durante la instalación de Forge. Necesitas reinstalar Forge correctamente.</b>";
+				+ "'>Não foi possível encontrar a classe principal do Minecraft no classloader. Isso geralmente indica que a instalação do Forge está incompleta ou há conflito com outros mods. É possível que os arquivos do Minecraft tenham sido corrompidos durante a instalação do Forge. Você precisa reinstalar o Forge corretamente.</b>";
 	}
 
 	@Override
 	public String forgeInstallacionNoCompleta() {
 		return "<b style='color:#" + config.obtenerColorError()
-				+ "'>La instalación de Forge no está completa. Esto puede deberse a una instalación interrumpida, archivos eliminados o una incompatibilidad con tu versión de Minecraft. Forge necesita archivos específicos para funcionar correctamente, y algunos de ellos están faltando en tu instalación actual.</b>";
+				+ "'>A instalação do Forge não está completa. Isso pode ocorrer devido a uma instalação interrompida, arquivos removidos ou incompatibilidade com sua versão do Minecraft. O Forge precisa de arquivos específicos para funcionar corretamente, e alguns deles estão ausentes na sua instalação atual.</b>";
 	}
 
 	@Override
 	public String nombre_de_forge_instalacion_no_completa() {
-		return "Instalación incompleta de Forge";
+		return "Instalação incompleta do Forge";
 	}
 
 	@Override
 	public String solucion_para_forge_instalacion_no_completa() {
 		return "<b style='color:#" + config.obtenerColorInfo()
-				+ "'>Para resolver este problema, necesitas reinstalar Forge correctamente. Asegúrate de descargar la versión adecuada para tu versión de Minecraft y seguir el proceso de instalación completo sin interrumpirlo.</b>";
+				+ "'>Para resolver esse problema, você precisa reinstalar o Forge corretamente. Certifique-se de baixar a versão adequada para sua versão do Minecraft e seguir todo o processo de instalação sem interrupções.</b>";
 	}
 
 	@Override
 	public String descargar_forge_oficial() {
-		return "Descargar Forge oficialmente";
+		return "Baixar Forge oficialmente";
 	}
 
 	@Override
 	public String reinstalar_forge_correctamente() {
-		return "Cómo reinstalar Forge correctamente";
+		return "Como reinstalar o Forge corretamente";
 	}
 
 	@Override
 	public String instrucciones_reinstalar_forge() {
 		return "<html><body style='width: 500px;'>" + "<h3 style='color:#" + config.obtenerColorTitulo()
-				+ "'>Instrucciones para reinstalar Forge:</h3>" + "<ol>"
-				+ "<li>Descarga el instalador correcto de Forge desde el sitio oficial (versión recomendada para tu versión de Minecraft)</li>"
-				+ "<li>Cierra completamente tu launcher de Minecraft</li>"
-				+ "<li>Ejecuta el instalador de Forge como administrador</li>"
-				+ "<li>Selecciona la opción 'Installer' (no 'Installer (run client)')</li>"
-				+ "<li>Elige la carpeta de tu perfil de Minecraft en el launcher</li>"
-				+ "<li>Presiona 'OK' y espera a que termine la instalación</li>"
-				+ "<li>Reinicia tu launcher y verifica que Forge aparezca en la lista de perfiles</li>" + "</ol>"
-				+ "<p><b>Nota importante:</b> Si usas un launcher personalizado, asegúrate de seleccionar la carpeta correcta del perfil.</p>"
+				+ "'>Instruções para reinstalar o Forge:</h3>" + "<ol>"
+				+ "<li>Baixe o instalador correto do Forge no site oficial (versão recomendada para sua versão do Minecraft)</li>"
+				+ "<li>Feche completamente o seu launcher do Minecraft</li>"
+				+ "<li>Execute o instalador do Forge como administrador</li>"
+				+ "<li>Selecione a opção 'Installer' (não 'Installer (run client)')</li>"
+				+ "<li>Escolha a pasta do seu perfil de Minecraft no launcher</li>"
+				+ "<li>Clique em 'OK' e aguarde a conclusão da instalação</li>"
+				+ "<li>Reinicie o launcher e verifique se o Forge aparece na lista de perfis</li>" + "</ol>"
+				+ "<p><b>Nota importante:</b> Se você usa um launcher personalizado, certifique-se de selecionar a pasta correta do perfil.</p>"
 				+ "</body></html>";
 	}
 
 	@Override
 	public String titulo_instrucciones_reinstaler_mcforge() {
-		return "Instrucciones para reinstalar Forge";
+		return "Instruções para reinstalar o Forge";
 	}
 
 	@Override
