@@ -84,7 +84,7 @@ public class ErrorJEIPluginFallido implements Verificaciones {
 
 	@Override
 	public float prioridad() {
-		return 950.0f; // Máxima prioridad - error crítico que causa crashes
+		return 700.0f; // Máxima prioridad - error crítico que causa crashes
 	}
 
 	@Override

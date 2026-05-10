@@ -315,7 +315,7 @@ public class ProblemaTickingEntidadBloque implements Verificaciones {
 
 	@Override
 	public float prioridad() {
-		return 1050.0f;
+		return 750.0f;
 	}
 
 	@Override
