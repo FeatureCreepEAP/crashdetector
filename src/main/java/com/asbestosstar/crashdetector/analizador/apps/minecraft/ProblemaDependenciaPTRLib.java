@@ -9,126 +9,99 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
- * Clase que detecta que el mod PTRLib no está instalado. Gracias a Aternos
- * porque esta es una implementacion de su codex:
- * https://github.com/aternosorg/codex-minecraft
+ * Detecta que el mod PTRLib no está instalado. Modernizado: global barato +
+ * verificación por línea, sin recorrer todo el log.
  */
 public class ProblemaDependenciaPTRLib implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
+	private String enlaceHtml = "";
+
 	private final String nombreMod = "PTRLib";
 
-	private static final String TEXTO_EXCEPCION = "Encountered an unexpected exception";
+	private boolean posiblePTRLib = false;
 
+	private static final String TEXTO_EXCEPCION = "Encountered an unexpected exception";
 	private static final String TEXTO_CLASE_FALTANTE = "java.lang.NoClassDefFoundError: com/mia/craftstudio/IPackReaderCallback";
 
 	/**
-	 * Verifica si el log contiene el error de dependencia faltante de PTRLib.
+	 * Verificación global barata: activa flag si hay indicios de error en el log
 	 */
 	@Override
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty())
+			return;
+
 		String contenido = consola.contenido_verificar;
 
-		if (contenido == null || contenido.isEmpty()) {
-			return;
+		// Simplemente mirar si el log contiene alguna de las cadenas clave
+		if (contenido.contains(TEXTO_EXCEPCION) || contenido.contains(TEXTO_CLASE_FALTANTE)) {
+			posiblePTRLib = true;
 		}
+	}
 
-		if (contieneErrorPTRLib(contenido)) {
-			this.mensaje = MonitorDePID.idioma.mensajeDependenciaModFaltante(nombreMod);
+	/**
+	 * Verificación por línea: activa detector y agrega enlace exacto a la línea
+	 */
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		if (!posiblePTRLib || linea == null || linea.isEmpty() || activado)
+			return;
+
+		int idxExcepcion = linea.indexOf(TEXTO_EXCEPCION);
+		if (idxExcepcion < 0)
+			return;
+
+		int despuesExcepcion = idxExcepcion + TEXTO_EXCEPCION.length();
+		int idxClase = linea.indexOf(TEXTO_CLASE_FALTANTE, despuesExcepcion);
+
+		if (idxClase >= 0 && soloEspaciosEntre(linea, despuesExcepcion, idxClase)) {
+			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+			mensaje = MonitorDePID.idioma.mensajeDependenciaModFaltante(nombreMod) + " " + enlaceHtml;
 			activado = true;
 		}
 	}
 
 	/**
-	 * Detecta el error sin usar Pattern/Matcher.
-	 *
-	 * El patron original permitia espacios o saltos de linea entre: "Encountered an
-	 * unexpected exception" y "java.lang.NoClassDefFoundError:
-	 * com/mia/craftstudio/IPackReaderCallback"
-	 */
-	private boolean contieneErrorPTRLib(String contenido) {
-		int inicio = contenido.indexOf(TEXTO_EXCEPCION);
-
-		while (inicio >= 0) {
-			int despuesInicio = inicio + TEXTO_EXCEPCION.length();
-
-			int indiceClase = contenido.indexOf(TEXTO_CLASE_FALTANTE, despuesInicio);
-
-			if (indiceClase >= 0) {
-				// Confirmar que entre los dos textos solo haya espacios, tabs o saltos de
-				// linea.
-				if (soloEspaciosEntre(contenido, despuesInicio, indiceClase)) {
-					return true;
-				}
-			}
-
-			inicio = contenido.indexOf(TEXTO_EXCEPCION, despuesInicio);
-		}
-
-		return false;
-	}
-
-	/**
-	 * Verifica que entre dos posiciones solo existan caracteres de espacio.
+	 * Verifica que entre dos posiciones solo existan espacios, tabs o saltos de
+	 * línea
 	 */
 	private boolean soloEspaciosEntre(String texto, int inicio, int fin) {
-		if (inicio < 0 || fin < inicio || fin > texto.length()) {
+		if (inicio < 0 || fin < inicio || fin > texto.length())
 			return false;
-		}
-
 		for (int i = inicio; i < fin; i++) {
-			if (!Character.isWhitespace(texto.charAt(i))) {
+			if (!Character.isWhitespace(texto.charAt(i)))
 				return false;
-			}
 		}
-
 		return true;
 	}
 
-	/**
-	 * Crea una nueva instancia del verificador.
-	 */
 	@Override
 	public Verificaciones nueva() {
 		return new ProblemaDependenciaPTRLib();
 	}
 
-	/**
-	 * Indica si el problema fue detectado.
-	 */
 	@Override
 	public boolean activado() {
 		return activado;
 	}
 
-	/**
-	 * Prioridad del problema.
-	 */
 	@Override
 	public float prioridad() {
 		return 1000.0f;
 	}
 
-	/**
-	 * Devuelve el mensaje de error almacenado.
-	 */
 	@Override
 	public String mensaje() {
 		return mensaje;
 	}
 
-	/**
-	 * Devuelve el nombre del problema para mostrar en la interfaz.
-	 */
 	@Override
 	public String nombre() {
 		return MonitorDePID.idioma.nombreProblemaDependenciaModFaltante();
 	}
 
-	/**
-	 * Devuelve las soluciones posibles para este problema.
-	 */
 	@Override
 	public QuickFix solucion() {
 		return new Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.solucionInstalarMod(nombreMod)).construir();

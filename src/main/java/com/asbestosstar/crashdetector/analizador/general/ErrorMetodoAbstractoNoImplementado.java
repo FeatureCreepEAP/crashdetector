@@ -3,7 +3,6 @@ package com.asbestosstar.crashdetector.analizador.general;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
@@ -11,16 +10,14 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 /**
  * Detecta errores AbstractMethodError específicos donde una clase no implementa
  * un método de una interfaz. Extrae los nombres concretos y el origen desde el
- * trace, sin usar regex.
+ * trace, sin usar regex ni mantener todas las líneas en memoria.
  */
 public class ErrorMetodoAbstractoNoImplementado implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
-
 	private boolean posibleError = false;
-	private String[] lineasConsola = null;
 
 	private static final String TEXTO_ABSTRACT = "java.lang.AbstractMethodError";
 	private static final String TEXTO_NO_IMPLEMENTA = "does not define or inherit an implementation";
@@ -32,15 +29,10 @@ public class ErrorMetodoAbstractoNoImplementado implements Verificaciones {
 			return;
 		}
 
-		lineasConsola = consola.contenido_verificar.split(Verificaciones.nl);
-
-		if (consola.contenido_verificar.contains(TEXTO_ABSTRACT)
+		// Marcar posible error si los textos clave están presentes
+		posibleError = consola.contenido_verificar.contains(TEXTO_ABSTRACT)
 				&& consola.contenido_verificar.contains(TEXTO_NO_IMPLEMENTA)
-				&& consola.contenido_verificar.contains(TEXTO_INTERFACE)) {
-			posibleError = true;
-		} else {
-			posibleError = false;
-		}
+				&& consola.contenido_verificar.contains(TEXTO_INTERFACE);
 	}
 
 	@Override
@@ -54,7 +46,7 @@ public class ErrorMetodoAbstractoNoImplementado implements Verificaciones {
 			return;
 		}
 
-		// Extraer clase, método e interfaz manualmente
+		// Extraer clase, método e interfaz
 		int idxClaseStart = recorte.indexOf(":") + 1;
 		int idxMetodoStart = recorte.indexOf("'", idxClaseStart);
 		int idxMetodoEnd = recorte.indexOf("'", idxMetodoStart + 1);
@@ -67,11 +59,12 @@ public class ErrorMetodoAbstractoNoImplementado implements Verificaciones {
 		String firmaMetodo = recorte.substring(idxMetodoStart + 1, idxMetodoEnd).trim();
 		String interfaz = recorte.substring(idxInterfaz + "of interface".length()).trim();
 
-		// Buscar origen en las siguientes 10 líneas
+		// Buscar origen dinámicamente en las siguientes 10 líneas
 		String origen = "";
-		if (lineasConsola != null && numero_de_linea >= 0 && numero_de_linea < lineasConsola.length) {
-			for (int j = numero_de_linea + 1; j < Math.min(numero_de_linea + 11, lineasConsola.length); j++) {
-				String l = lineasConsola[j].trim();
+		if (consola != null && consola.contenido_verificar != null) {
+			String[] lineas = consola.contenido_verificar.split(Verificaciones.nl);
+			for (int j = numero_de_linea + 1; j < Math.min(numero_de_linea + 11, lineas.length); j++) {
+				String l = lineas[j].trim();
 				if (l.startsWith("at ")) {
 					String posibleOrigen = com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace
 							.extraerModidDeLinea(l);

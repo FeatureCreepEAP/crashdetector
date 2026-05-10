@@ -95,6 +95,7 @@ public class FaltasClases implements Verificaciones {
 
 		ignorar.add("TeamProperty");
 		ignorar.add("WaterMediaBinaries");
+		ignorar.add("yesman/epicfight/epicskins/user/AuthenticationHelperImpl");
 
 		// HauntedHarvest: integración opcional con JEI busca Supplementaries.
 		// En este caso específico no debe contarse como clase fatal faltante.

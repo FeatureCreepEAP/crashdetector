@@ -3,55 +3,63 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
+/**
+ * Detecta funciones de densidad no vinculadas en mods de Minecraft. Patrón
+ * moderno: verificación global barata (contains) + per-línea.
+ */
 public class FuncionesDeDensidadNoVinculadas implements Verificaciones {
 
 	private boolean activado = false;
+	private boolean posibleError = false;
+
 	private String mensaje = "";
 	private String enlaceHtml = "";
+
 	private final List<String> clavesFaltantes = new ArrayList<>();
 	private final List<String> modsUbicacion = new ArrayList<>();
 
+	private static final String TEXTO_GLOBAL_1 = "unbound values in registry";
+	private static final String TEXTO_GLOBAL_2 = "Trying to access unbound value";
+
 	@Override
 	public void verificar(Consola consola) {
-		String contenido = consola.contenido_verificar;
-
-		// Buscar la frase clave para el formato de lista
-		int posLista = indexOfIgnoreCase(contenido, "unbound values in registry");
-		boolean foundList = posLista >= 0;
-
-		// Buscar la frase clave para el formato individual (ej. Tectonic)
-		// Se usa "Trying to access unbound value" que es único y rápido de encontrar
-		int posIndividual = indexOfIgnoreCase(contenido, "Trying to access unbound value");
-		boolean foundIndividual = posIndividual >= 0;
-
-		if (!foundList && !foundIndividual)
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty())
 			return;
 
-		clavesFaltantes.clear();
-		Set<String> namespaces = new HashSet<>();
+		// Global barato: solo contains, sin recorrer todas las líneas
+		String contenido = consola.contenido_verificar;
+		if (contenido.contains(TEXTO_GLOBAL_1) || contenido.contains(TEXTO_GLOBAL_2)) {
+			posibleError = true;
+		}
+	}
 
-		// Procesar formato lista: "unbound values in registry ...: [namespace:key,
-		// ...]"
-		if (foundList) {
-			int marker = contenido.indexOf("]: [", posLista);
-			if (marker >= 0) {
-				int start = marker + 4;
-				int end = contenido.indexOf(']', start);
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		if (!posibleError || linea == null || linea.isEmpty() || activado)
+			return;
+
+		// Formato lista: "unbound values in registry ...: [namespace:key,...]"
+		if (linea.contains("unbound values in registry")) {
+			int start = linea.indexOf("]: [");
+			if (start >= 0) {
+				start += 4;
+				int end = linea.indexOf(']', start);
 				if (end >= 0) {
-					String lista = contenido.substring(start, end);
+					String lista = linea.substring(start, end);
 					String[] partes = lista.split(",");
+					Set<String> namespaces = new HashSet<>();
 
 					for (String p : partes) {
 						String k = p.trim();
@@ -60,98 +68,70 @@ public class FuncionesDeDensidadNoVinculadas implements Verificaciones {
 						int c = k.indexOf(':');
 						if (c <= 0)
 							continue;
-						String ns = k.substring(0, c).trim();
+						String ns = k.substring(0, c);
 						if (!"minecraft".equals(ns)) {
 							clavesFaltantes.add(k);
 							namespaces.add(ns);
 						}
 					}
-				}
-			}
-		}
 
-		// Procesar formato individual: "Trying to access unbound value 'ResourceKey[...
-		// / namespace:key]'"
-		// Implementación SIN Regex para mejor rendimiento
-		if (foundIndividual) {
-			int searchFrom = posIndividual;
-			String target = "ResourceKey[";
-			String endMarker = "]'";
-
-			// Buscar hacia adelante desde el mensaje de error
-			int keyStart = contenido.indexOf(target, searchFrom);
-
-			// Buscar un poco hacia adelante también por si acaso (hasta 100 chars)
-			if (keyStart == -1 && searchFrom > 100) {
-				keyStart = contenido.indexOf(target, searchFrom - 100);
-			}
-
-			if (keyStart != -1) {
-				// Encontrar el cierre del ResourceKey
-				int keyEnd = contenido.indexOf(endMarker, keyStart);
-				if (keyEnd != -1) {
-					// Extraer el contenido: "minecraft:worldgen/density_function /
-					// tectonic:overworld/depth"
-					String inner = contenido.substring(keyStart + target.length(), keyEnd);
-
-					// Buscar el último separador " / " que divide el tipo de la clave real
-					int lastSeparator = inner.lastIndexOf(" / ");
-					if (lastSeparator != -1) {
-						String valorClave = inner.substring(lastSeparator + 3).trim(); // "tectonic:overworld/depth"
-
-						int colonIdx = valorClave.indexOf(':');
-						if (colonIdx > 0) {
-							String ns = valorClave.substring(0, colonIdx);
-							if (!"minecraft".equals(ns)) {
-								clavesFaltantes.add(valorClave);
-								namespaces.add(ns);
-							}
+					if (!namespaces.isEmpty()) {
+						modsUbicacion.clear();
+						Buscardor.cargar();
+						for (String ns : namespaces) {
+							List<ArchivoDeMod> mods = Buscardor.buscarModsConTermino("data/" + ns + "/");
+							if (mods.isEmpty())
+								mods = Buscardor.buscarModsConTermino(ns);
+							modsUbicacion.addAll(Buscardor.obtenerUbicaciones(mods));
 						}
 					}
 				}
 			}
 		}
 
-		if (clavesFaltantes.isEmpty())
-			return;
-
-		// Intentar localizar posibles proveedores por namespace
-		modsUbicacion.clear();
-		Buscardor.cargar();
-		for (String ns : namespaces) {
-			List<ArchivoDeMod> mods = Buscardor.buscarModsConTermino("data/" + ns + "/");
-			if (mods.isEmpty()) {
-				mods = Buscardor.buscarModsConTermino(ns);
-			}
-			modsUbicacion.addAll(Buscardor.obtenerUbicaciones(mods));
-		}
-
-		// Mensaje base desde idioma
-		mensaje = MonitorDePID.idioma.errorFuncionesDeDensidadNoVinculadas(clavesFaltantes);
-
-		// Añadir proveedores aquí (fuera de idioma)
-		if (!modsUbicacion.isEmpty()) {
-			StringBuilder sb = new StringBuilder();
-			sb.append(Verificaciones.nl_html).append("Posibles proveedores: <b>");
-			for (int i = 0; i < modsUbicacion.size(); i++) {
-				if (i > 0)
-					sb.append(", ");
-				sb.append(modsUbicacion.get(i));
-				if (i >= 4 && i + 1 < modsUbicacion.size()) {
-					sb.append(", y otros");
-					break;
+		// Formato individual: "Trying to access unbound value 'ResourceKey[...] /
+		// namespace:key]'"
+		if (linea.contains("Trying to access unbound value")) {
+			int keyStart = linea.indexOf("ResourceKey[");
+			if (keyStart >= 0) {
+				int keyEnd = linea.indexOf("]'", keyStart);
+				if (keyEnd > keyStart) {
+					String inner = linea.substring(keyStart + "ResourceKey[".length(), keyEnd);
+					int lastSeparator = inner.lastIndexOf(" / ");
+					if (lastSeparator >= 0) {
+						String valorClave = inner.substring(lastSeparator + 3).trim();
+						int colonIdx = valorClave.indexOf(':');
+						if (colonIdx > 0 && !"minecraft".equals(valorClave.substring(0, colonIdx))) {
+							clavesFaltantes.add(valorClave);
+							Buscardor.cargar();
+							List<ArchivoDeMod> mods = Buscardor.buscarModsConTermino(valorClave.substring(0, colonIdx));
+							modsUbicacion.addAll(Buscardor.obtenerUbicaciones(mods));
+						}
+					}
 				}
 			}
-			sb.append("</b>.");
-			mensaje += sb.toString();
 		}
 
-		// Calcular número de línea para el enlace (usar la primera ocurrencia
-		// encontrada)
-		int linea = contarSaltosDeLinea(contenido, foundList ? posLista : posIndividual);
-		enlaceHtml = consola.agregarErrorALectador(linea, this);
-
-		activado = true;
+		if (!clavesFaltantes.isEmpty()) {
+			mensaje = MonitorDePID.idioma.errorFuncionesDeDensidadNoVinculadas(clavesFaltantes);
+			if (!modsUbicacion.isEmpty()) {
+				StringBuilder sb = new StringBuilder();
+				sb.append(Verificaciones.nl_html).append("Posibles proveedores: <b>");
+				for (int i = 0; i < modsUbicacion.size(); i++) {
+					if (i > 0)
+						sb.append(", ");
+					sb.append(modsUbicacion.get(i));
+					if (i >= 4 && i + 1 < modsUbicacion.size()) {
+						sb.append(", y otros");
+						break;
+					}
+				}
+				sb.append("</b>.");
+				mensaje += sb.toString();
+			}
+			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+			activado = true;
+		}
 	}
 
 	@Override
@@ -181,26 +161,8 @@ public class FuncionesDeDensidadNoVinculadas implements Verificaciones {
 
 	@Override
 	public QuickFix solucion() {
-		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.pasoFuncionesDeDensidadNoVinculadas())
+		return new Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.pasoFuncionesDeDensidadNoVinculadas())
 				.construir();
-	}
-
-	// Utilidades
-
-	private static int indexOfIgnoreCase(String haystack, String needle) {
-		String h = haystack.toLowerCase(Locale.ROOT);
-		String n = needle.toLowerCase(Locale.ROOT);
-		return h.indexOf(n);
-	}
-
-	private static int contarSaltosDeLinea(String s, int hasta) {
-		int lineas = 0;
-		for (int i = 0; i < hasta && i < s.length(); i++) {
-			char ch = s.charAt(i);
-			if (ch == '\n')
-				lineas++;
-		}
-		return lineas;
 	}
 
 	@Override
@@ -223,5 +185,4 @@ public class FuncionesDeDensidadNoVinculadas implements Verificaciones {
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
-
 }

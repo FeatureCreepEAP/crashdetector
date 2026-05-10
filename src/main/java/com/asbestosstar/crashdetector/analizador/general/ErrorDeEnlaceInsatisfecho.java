@@ -47,6 +47,11 @@ public class ErrorDeEnlaceInsatisfecho implements Verificaciones {
 			return;
 		}
 
+		// 🔹 Excluir explícitamente las líneas de Vulkan Probe
+		if (linea.contains("Vulkan") && linea.contains("Probe")) {
+			return; // ignorar esta línea
+		}
+
 		String biblioteca = extraerNombreBiblioteca(linea);
 
 		if (biblioteca == null || biblioteca.isEmpty()) {

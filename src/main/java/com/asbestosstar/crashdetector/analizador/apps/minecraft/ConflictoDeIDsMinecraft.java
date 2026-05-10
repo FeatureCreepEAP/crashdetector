@@ -10,47 +10,63 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta conflictos de IDs de Minecraft (colisión de ID o rango máximo) sin
- * regex.
+ * regex. Modernized with global flag and per-line detection for speed.
  */
 public class ConflictoDeIDsMinecraft implements Verificaciones {
 
 	private boolean activado = false;
+	private boolean posibleConflicto = false;
+
 	private String tipoConflicto = "";
 	private String idConflictivo = "";
 	private String modOrigen = "";
 	private String modDestino = "";
+	private String enlace = "";
 
 	private static final String MAX_RANGO = "maximum id range exceeded";
 	private static final String SLOT_OCCUPIED = "java.lang.IllegalArgumentException: Slot ";
+	private static final String ID_OCCUPIED_MID = " is already occupied by ";
+	private static final String ID_OCCUPIED_END = " when adding ";
 
 	@Override
 	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null)
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
 			return;
+		}
 
 		String contenido = consola.contenido_verificar;
 
-		// Detectar conflicto de rango máximo
-		if (contenido.contains(MAX_RANGO)) {
-			tipoConflicto = "maximo_rango";
-			activado = true;
+		if (contenido.contains(MAX_RANGO) || contenido.contains(SLOT_OCCUPIED)) {
+			posibleConflicto = true;
+		}
+	}
+
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		if (!posibleConflicto || activado || linea == null || linea.isEmpty()) {
+			return;
 		}
 
-		// Detectar colisión de ID
-		int idxSlot = contenido.indexOf(SLOT_OCCUPIED);
+		// Conflicto de rango máximo
+		if (linea.contains(MAX_RANGO)) {
+			tipoConflicto = "maximo_rango";
+			enlace = consola.agregarErrorALectador(numero_de_linea, this);
+			activado = true;
+			return;
+		}
+
+		// Colisión de ID
+		int idxSlot = linea.indexOf(SLOT_OCCUPIED);
 		if (idxSlot >= 0) {
-			int idxIsAlready = contenido.indexOf(" is already occupied by ", idxSlot);
-			int idxWhenAdding = contenido.indexOf(" when adding ", idxIsAlready);
-			if (idxSlot >= 0 && idxIsAlready > idxSlot && idxWhenAdding > idxIsAlready) {
-				idConflictivo = contenido.substring(idxSlot + SLOT_OCCUPIED.length(), idxIsAlready).trim();
-				modOrigen = contenido.substring(idxIsAlready + " is already occupied by ".length(), idxWhenAdding)
-						.trim();
-				modDestino = contenido.substring(idxWhenAdding + " when adding ".length(),
-						contenido.indexOf("\n", idxWhenAdding) > 0 ? contenido.indexOf("\n", idxWhenAdding)
-								: contenido.length())
-						.trim();
+			int idxIsAlready = linea.indexOf(ID_OCCUPIED_MID, idxSlot);
+			int idxWhenAdding = linea.indexOf(ID_OCCUPIED_END, idxIsAlready);
+			if (idxIsAlready > idxSlot && idxWhenAdding > idxIsAlready) {
+				idConflictivo = linea.substring(idxSlot + SLOT_OCCUPIED.length(), idxIsAlready).trim();
+				modOrigen = linea.substring(idxIsAlready + ID_OCCUPIED_MID.length(), idxWhenAdding).trim();
+				modDestino = linea.substring(idxWhenAdding + ID_OCCUPIED_END.length()).trim();
 				if (!idConflictivo.isEmpty() && !modOrigen.isEmpty() && !modDestino.isEmpty()) {
 					tipoConflicto = "colision_id";
+					enlace = consola.agregarErrorALectador(numero_de_linea, this);
 					activado = true;
 				}
 			}
@@ -75,9 +91,10 @@ public class ConflictoDeIDsMinecraft implements Verificaciones {
 	@Override
 	public String mensaje() {
 		if ("colision_id".equals(tipoConflicto)) {
-			return MonitorDePID.idioma.conflicto_id_colision_especifico(idConflictivo, modOrigen, modDestino);
+			return MonitorDePID.idioma.conflicto_id_colision_especifico(idConflictivo, modOrigen, modDestino) + " "
+					+ enlace;
 		} else if ("maximo_rango".equals(tipoConflicto)) {
-			return MonitorDePID.idioma.conflicto_id_maximo();
+			return MonitorDePID.idioma.conflicto_id_maximo() + " " + enlace;
 		}
 		return "";
 	}
@@ -121,8 +138,9 @@ public class ConflictoDeIDsMinecraft implements Verificaciones {
 
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null)
+		if (!activado || trazo == null || trazo.trace == null) {
 			return false;
+		}
 
 		String t = trazo.trace;
 
@@ -130,8 +148,8 @@ public class ConflictoDeIDsMinecraft implements Verificaciones {
 			return t.contains(MAX_RANGO);
 		} else if ("colision_id".equals(tipoConflicto)) {
 			if (!idConflictivo.isEmpty() && !modOrigen.isEmpty() && !modDestino.isEmpty()) {
-				String esperado = "java.lang.IllegalArgumentException: Slot " + idConflictivo
-						+ " is already occupied by " + modOrigen + " when adding " + modDestino;
+				String esperado = SLOT_OCCUPIED + idConflictivo + ID_OCCUPIED_MID + modOrigen + ID_OCCUPIED_END
+						+ modDestino;
 				return t.contains(esperado);
 			}
 		}
@@ -148,4 +166,5 @@ public class ConflictoDeIDsMinecraft implements Verificaciones {
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
+
 }

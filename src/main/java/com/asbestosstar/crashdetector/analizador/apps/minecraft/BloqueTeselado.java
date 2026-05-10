@@ -8,8 +8,8 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
- * Detecta errores relacionados con el teselado de bloques en Minecraft sin usar
- * regex. Usa verificación global ligera y verificación por línea.
+ * Detecta errores relacionados con el teselado de bloques en Minecraft.
+ * Modernized: no regex, no regionMatches, exact-case scan.
  */
 public class BloqueTeselado implements Verificaciones {
 
@@ -17,52 +17,33 @@ public class BloqueTeselado implements Verificaciones {
 	private String mensaje = "";
 	private String enlace = "";
 
+	private boolean posibleTesselado = false;
+
 	private static final String TEXTO_TESSELADO = "Tesselating block in world";
 
-	/**
-	 * Verificación global ligera: revisa si el log completo contiene indicios del
-	 * error.
-	 */
 	@Override
 	public void verificar(Consola consola) {
 		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
 			return;
 		}
 
-		if (contieneIgnoreCase(consola.contenido_verificar, TEXTO_TESSELADO)) {
-			activado = true;
-			mensaje = MonitorDePID.idioma.errorDeBloqueTeselado();
+		// Global check: inexpensive exact-case contains
+		if (consola.contenido_verificar.contains(TEXTO_TESSELADO)) {
+			posibleTesselado = true;
 		}
 	}
 
-	/**
-	 * Verificación por línea: agrega enlace a la línea exacta donde ocurre el
-	 * error.
-	 */
 	@Override
 	public void verificar(Consola consola, String linea, int numero_de_linea) {
-		if (!activado || linea == null || linea.isEmpty()) {
+		if (!posibleTesselado || activado || linea == null || linea.isEmpty()) {
 			return;
 		}
 
-		if (contieneIgnoreCase(linea, TEXTO_TESSELADO)) {
+		if (linea.contains(TEXTO_TESSELADO)) {
 			enlace = consola.agregarErrorALectador(numero_de_linea, this);
-			mensaje += " " + enlace;
+			mensaje = MonitorDePID.idioma.errorDeBloqueTeselado() + " " + enlace;
+			activado = true;
 		}
-	}
-
-	private boolean contieneIgnoreCase(String texto, String buscar) {
-		if (texto == null || buscar == null || buscar.length() > texto.length()) {
-			return false;
-		}
-
-		int limite = texto.length() - buscar.length();
-		for (int i = 0; i <= limite; i++) {
-			if (texto.regionMatches(true, i, buscar, 0, buscar.length())) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	@Override
@@ -105,7 +86,7 @@ public class BloqueTeselado implements Verificaciones {
 		if (!activado || trazo == null || trazo.trace == null) {
 			return false;
 		}
-		return contieneIgnoreCase(trazo.trace, TEXTO_TESSELADO);
+		return trazo.trace.contains(TEXTO_TESSELADO);
 	}
 
 	@Override

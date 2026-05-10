@@ -3,24 +3,52 @@ package com.asbestosstar.crashdetector.analizador.general;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
+/**
+ * Detecta la opción de GC inválida "Conflicting collector combinations in
+ * option list" en Java. Esto genera errores de arranque en la JVM.
+ */
 public class OpcionesJavaGCInvalidas implements Verificaciones {
 
 	private boolean activado = false;
-	private String mensaje = "";
+	private boolean posibleGCInvalido = false;
 
+	private String mensaje = "";
+	private String enlace = "";
+
+	private static final String TEXTO_GC_INVALIDO = "Conflicting collector combinations in option list";
+
+	/**
+	 * Verificación global ligera. Marca si el log contiene la cadena GC inválida.
+	 */
 	@Override
 	public void verificar(Consola consola) {
-		String contenidoConsola = consola.contenido_verificar;
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+			return;
+		}
 
-		String patron = "Conflicting collector combinations in option list";
-		if (contenidoConsola.matches("(?sm).*" + patron + ".*")) { // Usa regex multilinea [[8]]
-			this.mensaje = MonitorDePID.idioma.errorOpcionesGCJava() + Verificaciones.nl_html;
-			activado = true;
+		if (consola.contenido_verificar.contains(TEXTO_GC_INVALIDO)) {
+			posibleGCInvalido = true;
+		}
+	}
+
+	/**
+	 * Verificación por línea. Detecta la línea exacta y agrega enlace al lector.
+	 */
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		if (!posibleGCInvalido || activado || linea == null || linea.isEmpty()) {
+			return;
+		}
+
+		if (linea.contains(TEXTO_GC_INVALIDO)) {
+			this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
+			this.mensaje = MonitorDePID.idioma.errorOpcionesGCJava() + " " + enlace;
+			this.activado = true;
 		}
 	}
 
@@ -46,36 +74,35 @@ public class OpcionesJavaGCInvalidas implements Verificaciones {
 
 	@Override
 	public String nombre() {
-		// TODO Auto-generated method stub
 		return MonitorDePID.idioma.nombre_de_opciones_java_gc_invalidas();
 	}
 
 	@Override
 	public QuickFix solucion() {
-		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.opcionesGCInvalidas()).construir();
+		return new Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.opcionesGCInvalidas()).construir();
 	}
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
 		return "opciones_java_gc_invalidas";
 	}
 
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+		if (!activado || trazo == null || trazo.trace == null) {
+			return false;
+		}
+
+		return trazo.trace.contains(TEXTO_GC_INVALIDO);
 	}
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 
 	@Override
 	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/general/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
@@ -84,5 +111,4 @@ public class OpcionesJavaGCInvalidas implements Verificaciones {
 	public boolean recomendadoParaCorperata() {
 		return true;
 	}
-
 }

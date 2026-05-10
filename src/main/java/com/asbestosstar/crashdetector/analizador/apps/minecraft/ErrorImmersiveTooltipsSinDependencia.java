@@ -3,57 +3,53 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta que Immersive Tooltips necesita Immersive Messages como dependencia
- * pero esta no está instalada, causando un NoClassDefFoundError.
+ * pero esta no está instalada, causando un NoClassDefFoundError. Patrón
+ * moderno: global barato + per-línea.
  */
 public class ErrorImmersiveTooltipsSinDependencia implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
-	private boolean encontradoImmersiveTooltips = false;
+	private boolean posibleError = false;
 
-	/**
-	 * Método de compatibilidad — busca si Immersive Tooltips está presente en el
-	 * contenido completo del registro.
-	 */
+	private static final String TEXTO_IMMERSIVE_TOOLTIPS_1 = "immersivetips";
+	private static final String TEXTO_IMMERSIVE_TOOLTIPS_2 = "immersive tooltips";
+	private static final String TEXTO_ERROR_CLASE = "java.lang.NoClassDefFoundError";
+	private static final String TEXTO_CLASE_FALTANTE = "toni/immersivemessages/renderers/ITooltipRenderer";
+
 	@Override
 	public void verificar(Consola consola) {
-		// Verificamos si Immersive Tooltips está presente en el contenido del registro
-		if (consola.contenido_verificar != null) {
-			encontradoImmersiveTooltips = consola.contenido_verificar.toLowerCase().contains("immersivetips")
-					|| consola.contenido_verificar.toLowerCase().contains("immersive tooltips");
-		}
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty())
+			return;
+
+		String contenido = consola.contenido_verificar;
+
+		// Activar flag solo si:
+		// 1) Aparece el error de clase o la clase faltante
+		// 2) Y además aparece Immersive Tooltips
+		boolean contieneClase = contenido.contains(TEXTO_ERROR_CLASE) || contenido.contains(TEXTO_CLASE_FALTANTE);
+		boolean contieneMod = contenido.contains(TEXTO_IMMERSIVE_TOOLTIPS_1)
+				|| contenido.contains(TEXTO_IMMERSIVE_TOOLTIPS_2);
+
+		posibleError = contieneClase && contieneMod;
 	}
 
-	/**
-	 * Análisis por línea del registro.
-	 * <p>
-	 * Se busca el patrón característico del error donde Immersive Tooltips falla
-	 * porque necesita Immersive Messages como dependencia pero no está instalada.
-	 * </p>
-	 */
 	@Override
 	public void verificar(Consola consola, String linea, int numero_de_linea) {
-		if (activado) {
-			// Si ya se activó, no seguimos verificando más líneas.
+		if (!posibleError || linea == null || linea.isEmpty() || activado)
 			return;
-		}
 
-		// Buscamos la línea que contiene el error de clase no encontrada de Immersive
-		// Messages
-		if (linea.contains("java.lang.NoClassDefFoundError")
-				&& linea.contains("toni/immersivemessages/renderers/ITooltipRenderer") && encontradoImmersiveTooltips) {
+		if ((linea.contains(TEXTO_ERROR_CLASE) && linea.contains(TEXTO_CLASE_FALTANTE))) {
 
-			// Enlazar a la línea del error en el lector
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
-
-			// Mensaje de error en HTML con referencia al problema de dependencia
 			mensaje = MonitorDePID.idioma.errorImmersiveTooltipsSinDependencia() + Verificaciones.nl_html;
 			activado = true;
 		}
@@ -71,7 +67,7 @@ public class ErrorImmersiveTooltipsSinDependencia implements Verificaciones {
 
 	@Override
 	public float prioridad() {
-		return 1400.0f; // Alta prioridad: rompe la carga del mod
+		return 1400.0f;
 	}
 
 	@Override
@@ -95,37 +91,24 @@ public class ErrorImmersiveTooltipsSinDependencia implements Verificaciones {
 		return "error_immersive_tooltips_sin_dependencia";
 	}
 
-	/**
-	 * Asocia esta verificación con un trazo específico del stack.
-	 * <p>
-	 * Devuelve true si el trazo contiene las cadenas clave del error de dependencia
-	 * faltante de Immersive Tooltips.
-	 * </p>
-	 */
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
+		if (!activado || trazo == null || trazo.trace == null)
 			return false;
-		}
 
 		String t = trazo.trace;
-
-		return t.contains("java.lang.NoClassDefFoundError")
-				&& t.contains("toni/immersivemessages/renderers/ITooltipRenderer")
-				&& (t.toLowerCase().contains("immersivetips") || t.toLowerCase().contains("immersive tooltips"));
+		return (t.contains(TEXTO_ERROR_CLASE) || t.contains(TEXTO_CLASE_FALTANTE))
+				&& (t.contains(TEXTO_IMMERSIVE_TOOLTIPS_1) || t.contains(TEXTO_IMMERSIVE_TOOLTIPS_2));
 	}
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 
 	@Override
 	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
-
 }

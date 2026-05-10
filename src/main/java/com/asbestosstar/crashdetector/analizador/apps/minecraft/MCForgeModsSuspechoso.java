@@ -16,18 +16,10 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta mods sospechosos y excepciones relacionadas con Forge.
- *
- * Versión optimizada: - Usa verificación global ligera. - Usa verificación por
- * línea para agregar enlace exacto. - No usa Pattern/Matcher. - No hace split
- * local del log completo.
  */
 public class MCForgeModsSuspechoso implements Verificaciones {
 
-	private boolean posibleForgeModSospechoso = false;
 	private boolean activado = false;
-
-	private boolean encontradoModSospechoso = false;
-	private boolean encontradoModSection = false;
 
 	// Conjunto para almacenar los mensajes de error únicos
 	private final Set<String> errores = new HashSet<>();
@@ -36,412 +28,333 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 	private final Map<String, String> enlacesPorError = new HashMap<>();
 	private final Map<String, String> modidPorError = new HashMap<>();
 
-	@Override
-	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
-			return;
-		}
+	// -------------------------------------------------------------------------
+	// Helpers sin regex — equivalentes directos a los patrones del original
+	// -------------------------------------------------------------------------
 
-		String contenido = consola.contenido_verificar;
-
-		// Detección global ligera.
-		// No se limpian estructuras aquí porque esta verificación puede ejecutarse
-		// sobre varios archivos de log con la misma instancia.
-		if (contenido.contains("Suspected Mod:") || contenido.contains("Suspected Mods:")
-				|| contenido.contains("-- MOD ") || contenido.contains("Failed to create mod instance. ModID:")
-				|| contieneIgnoreCase(contenido, "for modid ") || contenido.contains("Mod ID:")
-				|| contenido.contains("modid=")) {
-			posibleForgeModSospechoso = true;
-		}
-	}
-
-	@Override
-	public void verificar(Consola consola, String linea, int numero_de_linea) {
-		if (!posibleForgeModSospechoso || linea == null) {
-			return;
-		}
-
-		String línea = linea.trim();
-
-		if (línea.isEmpty()) {
-			return;
-		}
-
-		// Saltar líneas de nivel DEBUG/TRACE
-		if (esLineaDebugOTrace(línea)) {
-			return;
-		}
-
-		// 1) Detectar secciones -- MOD modid --
-		String modIDSeccion = extraerModidDeSeccionMod(línea);
-		if (esModidValido(modIDSeccion)) {
-			encontradoModSection = true;
-			registrarModSospechoso(consola, numero_de_linea, modIDSeccion);
-			return;
-		}
-
-		// 2) Detectar sección "Suspected Mods:" o "Suspected Mod:"
-		if (línea.equalsIgnoreCase("Suspected Mod:") || línea.equalsIgnoreCase("Suspected Mods:")) {
-			encontradoModSospechoso = true;
-			return;
-		}
-
-		// 3) Terminar la sección al encontrar "Stacktrace:"
-		if (línea.indexOf("Stacktrace:") >= 0) {
-			encontradoModSospechoso = false;
-			return;
-		}
-
-		// 4) Procesar los mods dentro de "Suspected Mods:"
-		if (encontradoModSospechoso) {
-			if (línea.startsWith("--") || línea.indexOf("Details:") >= 0) {
-				return;
-			}
-
-			// En el formato por línea ya no se necesita saltar manualmente las líneas
-			// Mixin class / Target / at TRANSFORMER. Simplemente se ignoran aquí.
-			if (línea.startsWith("Mixin class:") || línea.startsWith("Target:")
-					|| línea.startsWith("at TRANSFORMER/")) {
-				return;
-			}
-
-			String modID = extraerModidDeSuspectedMod(línea);
-
-			if (!esModidValido(modID)) {
-				modID = extraerModidDeLinea(línea, true);
-			}
-
-			if (esModidValido(modID)) {
-				registrarModSospechoso(consola, numero_de_linea, modID);
-			}
-
-			return;
-		}
-
-		// 5) Detectar "Failed to create mod instance"
-		if (línea.indexOf("Failed to create mod instance. ModID:") >= 0) {
-			String modID = extraerDespuesDeTexto(línea, "Failed to create mod instance. ModID:", false);
-
-			if (esModidValido(modID)) {
-				registrarModSospechoso(consola, numero_de_linea, modID);
-			}
-
-			return;
-		}
-
-		// 6) Detectar dispatch para modid
-		String modIDDespacho = extraerModidDeDespacho(línea);
-		if (esModidValido(modIDDespacho)) {
-			registrarModSospechoso(consola, numero_de_linea, modIDDespacho);
-			return;
-		}
-
-		// 7) Otros errores con indicadores, fuera de secciones específicas
-		if (!encontradoModSection && contieneIndicadorError(línea)) {
-			String modID = extraerModidDeLinea(línea, false);
-
-			if (esModidValido(modID)) {
-				registrarModSospechoso(consola, numero_de_linea, modID);
-			}
-		}
-	}
-
-	/**
-	 * Detecta líneas tipo: [main/DEBUG] ... [Render thread/TRACE] ...
-	 */
-	private boolean esLineaDebugOTrace(String linea) {
-		if (!linea.startsWith("[")) {
+	private static boolean esLineaDebugOTrace(String linea) {
+		if (!linea.startsWith("["))
 			return false;
-		}
-
-		int cierre = linea.indexOf(']');
-		if (cierre <= 0) {
+		int corchete = linea.indexOf(']');
+		if (corchete == -1)
 			return false;
-		}
-
-		int barra = linea.lastIndexOf('/', cierre);
-		if (barra < 0 || barra + 1 >= cierre) {
-			return false;
-		}
-
-		String nivel = linea.substring(barra + 1, cierre);
-		return nivel.equalsIgnoreCase("DEBUG") || nivel.equalsIgnoreCase("TRACE");
+		String cabecera = linea.substring(0, corchete);
+		return cabecera.contains("/DEBUG") || cabecera.contains("/TRACE");
 	}
 
 	/**
-	 * Extrae modid de líneas tipo: -- MOD modid --
+	 * Reemplaza: pModidEnLinea = "(?i)for\s+modid\s+([a-z0-9_\-.]+)" Extrae el mod
+	 * ID tras "for modid ".
 	 */
-	private String extraerModidDeSeccionMod(String linea) {
-		if (!empiezaConIgnoreCase(linea, "-- MOD ")) {
+	private static String extraerForModid(String linea) {
+		String lower = linea.toLowerCase();
+		int idx = lower.indexOf("for modid ");
+		if (idx == -1)
 			return null;
-		}
-
-		int inicio = "-- MOD ".length();
-		int fin = linea.indexOf("--", inicio);
-
-		if (fin < 0) {
-			fin = linea.length();
-		}
-
-		return limpiarModid(linea.substring(inicio, fin).trim());
+		return extraerToken(linea.substring(idx + "for modid ".length()).trim());
 	}
 
 	/**
-	 * Extrae el modid de una línea de la sección "Suspected Mods".
-	 *
-	 * Ejemplos: Knight Lib (knightlib), Version: 1.4.2 Fabric Item Group API (v1)
-	 * (fabric_item_group_api_v1)
-	 *
-	 * Si hay dos grupos entre paréntesis, usa el último.
+	 * Reemplaza: pModIdDosPuntos = "(?i)\bMod\s*ID\s*:\s*([a-z0-9_\-.]+)" Extrae el
+	 * mod ID tras "Mod ID:" o "ModID:".
 	 */
-	private String extraerModidDeSuspectedMod(String linea) {
-		if (linea == null || linea.indexOf('(') < 0 || linea.indexOf(')') < 0) {
+	private static String extraerModIdDosPuntos(String linea) {
+		String lower = linea.toLowerCase();
+		// Buscar "mod id:" o "modid:" (con o sin espacio)
+		int idx = lower.indexOf("mod id:");
+		if (idx == -1)
+			idx = lower.indexOf("modid:");
+		if (idx == -1)
 			return null;
-		}
-
-		int cierre = linea.lastIndexOf(')');
-		int apertura = linea.lastIndexOf('(', cierre);
-
-		if (apertura < 0 || cierre <= apertura + 1) {
+		int colon = linea.indexOf(':', idx);
+		if (colon == -1)
 			return null;
-		}
-
-		String modID = linea.substring(apertura + 1, cierre).trim();
-		return limpiarModid(modID);
+		return extraerToken(linea.substring(colon + 1).trim());
 	}
 
 	/**
-	 * Extrae el modid de una línea usando búsquedas manuales.
+	 * Reemplaza: pModidIgual = "(?i)\bmodid=([a-z0-9_\-.]+)" Extrae el mod ID tras
+	 * "modid=".
 	 */
-	private String extraerModidDeLinea(String linea, boolean esSeccionSuspectedMod) {
-		if (linea == null || linea.indexOf("Object with ID ") >= 0 || linea.isEmpty()) {
+	private static String extraerModidIgual(String linea) {
+		String lower = linea.toLowerCase();
+		int idx = lower.indexOf("modid=");
+		if (idx == -1)
 			return null;
-		}
+		return extraerToken(linea.substring(idx + "modid=".length()));
+	}
 
-		if (esSeccionSuspectedMod) {
-			String modIDSospechoso = extraerModidDeSuspectedMod(linea);
-			if (esModidValido(modIDSospechoso)) {
-				return modIDSospechoso;
+	/**
+	 * Reemplaza: patronModSection = "(?i)--\s*MOD\s+([a-z0-9_\-.]+)\s*--" Extrae el
+	 * mod ID de una línea "-- MOD modid --".
+	 */
+	private static String extraerSeccionMod(String linea) {
+		String limpia = linea.trim();
+		if (!limpia.startsWith("--") || !limpia.endsWith("--"))
+			return null;
+		String interior = limpia.substring(2, limpia.length() - 2).trim().toLowerCase();
+		if (!interior.startsWith("mod "))
+			return null;
+		return extraerToken(limpia.substring(limpia.toLowerCase().indexOf("mod ") + 4).trim());
+	}
+
+	/**
+	 * Reemplaza: patronSuspectedMod =
+	 * "^(.*?)\s*\(([^()]+)\)(?:\s*\(([^()]+)\))?.*$" Extrae el mod ID de una línea
+	 * de "Suspected Mods" con paréntesis. Si hay dos grupos entre paréntesis
+	 * devuelve el último (el real); si hay uno, ese. Devuelve null si no hay
+	 * paréntesis o si el candidato contiene ".java".
+	 */
+	private static String extraerSuspectedMod(String linea) {
+		int primerAbre = linea.indexOf('(');
+		if (primerAbre == -1)
+			return null;
+		int primerCierra = linea.indexOf(')', primerAbre);
+		if (primerCierra == -1)
+			return null;
+		String candidato1 = linea.substring(primerAbre + 1, primerCierra).trim();
+
+		// Buscar un segundo grupo entre paréntesis
+		String candidato2 = "";
+		int segundoAbre = linea.indexOf('(', primerCierra + 1);
+		if (segundoAbre != -1) {
+			int segundoCierra = linea.indexOf(')', segundoAbre);
+			if (segundoCierra != -1) {
+				candidato2 = linea.substring(segundoAbre + 1, segundoCierra).trim();
 			}
 		}
 
-		String modID = extraerModidDeSeccionMod(linea);
-		if (esModidValido(modID)) {
-			return modID;
+		String modID = !candidato2.isEmpty() ? candidato2 : candidato1;
+		if (modID.contains(".java"))
+			return null;
+		return modID.isEmpty() ? null : modID;
+	}
+
+	/**
+	 * Reemplaza: patronDespachoModid =
+	 * "(?i)(?:encountered\s+an\s+(?:error|exception)|caught\s+exception)\s+during\s+.*?dispatch\s+for\s+modid\s+([a-z0-9_\-.]+)"
+	 * Detecta el patrón de despacho y extrae el mod ID.
+	 */
+	private static String extraerDespachoModid(String linea) {
+		String lower = linea.toLowerCase();
+		boolean tieneDespacho = lower.contains("encountered an error") || lower.contains("encountered an exception")
+				|| lower.contains("caught exception");
+		if (!tieneDespacho)
+			return null;
+		if (!lower.contains("dispatch"))
+			return null;
+		return extraerForModid(linea);
+	}
+
+	/**
+	 * Reemplaza: patronIndicadorError =
+	 * "(?i)(error|exception|fail|crash|problem|unable|cannot|didn't|couldn't|missing|corrupt|invalid|unsupported)"
+	 */
+	private static boolean tieneIndicadorError(String linea) {
+		String lower = linea.toLowerCase();
+		return lower.contains("error") || lower.contains("exception") || lower.contains("fail")
+				|| lower.contains("crash") || lower.contains("problem") || lower.contains("unable")
+				|| lower.contains("cannot") || lower.contains("didn't") || lower.contains("couldn't")
+				|| lower.contains("missing") || lower.contains("corrupt") || lower.contains("invalid")
+				|| lower.contains("unsupported");
+	}
+
+	/**
+	 * Equivalente a extraerModidDeLinea(linea, esSeccionSuspectedMod). Prueba cada
+	 * sub-patrón en el mismo orden que el original.
+	 */
+	private static String extraerModidDeLinea(String linea, boolean esSeccionSuspectedMod) {
+		if (linea == null || linea.contains("Object with ID ") || linea.isEmpty())
+			return null;
+
+		if (esSeccionSuspectedMod && linea.contains("(") && linea.contains(")")) {
+			String m = extraerSuspectedMod(linea);
+			if (m != null)
+				return m;
 		}
 
-		modID = extraerDespuesDeTexto(linea, "for modid ", true);
-		if (esModidValido(modID)) {
-			return modID;
-		}
+		String m;
 
-		modID = extraerDespuesDeTexto(linea, "Mod ID:", true);
-		if (esModidValido(modID)) {
-			return modID;
-		}
+		m = extraerSeccionMod(linea);
+		if (m != null)
+			return m;
 
-		modID = extraerDespuesDeTexto(linea, "modid=", true);
-		if (esModidValido(modID)) {
-			return modID;
-		}
+		m = extraerForModid(linea);
+		if (m != null)
+			return m;
+
+		m = extraerModIdDosPuntos(linea);
+		if (m != null)
+			return m;
+
+		m = extraerModidIgual(linea);
+		if (m != null)
+			return m;
 
 		return null;
 	}
 
 	/**
-	 * Detecta líneas tipo: encountered an error during ... dispatch for modid
-	 * examplemod encountered an exception during ... dispatch for modid examplemod
-	 * caught exception during ... dispatch for modid examplemod
+	 * Extrae un token de mod ID válido desde el inicio del texto. Caracteres
+	 * aceptados: letras, dígitos, '_', '-', '.', '+'.
 	 */
-	private String extraerModidDeDespacho(String linea) {
-		if (linea == null || linea.isEmpty()) {
+	private static String extraerToken(String texto) {
+		if (texto == null || texto.isEmpty())
 			return null;
-		}
-
-		if (!contieneIgnoreCase(linea, "dispatch")) {
-			return null;
-		}
-
-		if (!contieneIgnoreCase(linea, "for modid ")) {
-			return null;
-		}
-
-		boolean inicioValido = contieneIgnoreCase(linea, "encountered an error")
-				|| contieneIgnoreCase(linea, "encountered an exception")
-				|| contieneIgnoreCase(linea, "caught exception");
-
-		if (!inicioValido) {
-			return null;
-		}
-
-		return extraerDespuesDeTexto(linea, "for modid ", true);
-	}
-
-	/**
-	 * Extrae el primer token válido de modid después de cierto texto.
-	 */
-	private String extraerDespuesDeTexto(String linea, String texto, boolean ignorarMayusculas) {
-		if (linea == null || texto == null) {
-			return null;
-		}
-
-		int indice = ignorarMayusculas ? indexOfIgnoreCase(linea, texto) : linea.indexOf(texto);
-
-		if (indice < 0) {
-			return null;
-		}
-
-		int inicio = indice + texto.length();
-
-		while (inicio < linea.length() && Character.isWhitespace(linea.charAt(inicio))) {
-			inicio++;
-		}
-
-		if (inicio >= linea.length()) {
-			return null;
-		}
-
-		int fin = inicio;
-
-		while (fin < linea.length() && esCaracterDeModid(linea.charAt(fin))) {
-			fin++;
-		}
-
-		if (fin <= inicio) {
-			return null;
-		}
-
-		return limpiarModid(linea.substring(inicio, fin));
-	}
-
-	/**
-	 * Detecta si la línea contiene palabras típicas de error.
-	 */
-	private boolean contieneIndicadorError(String linea) {
-		return contieneIgnoreCase(linea, "error") || contieneIgnoreCase(linea, "exception")
-				|| contieneIgnoreCase(linea, "fail") || contieneIgnoreCase(linea, "crash")
-				|| contieneIgnoreCase(linea, "problem") || contieneIgnoreCase(linea, "unable")
-				|| contieneIgnoreCase(linea, "cannot") || contieneIgnoreCase(linea, "didn't")
-				|| contieneIgnoreCase(linea, "couldn't") || contieneIgnoreCase(linea, "missing")
-				|| contieneIgnoreCase(linea, "corrupt") || contieneIgnoreCase(linea, "invalid")
-				|| contieneIgnoreCase(linea, "unsupported");
-	}
-
-	/**
-	 * Registra el error y evita duplicados.
-	 */
-	private void registrarModSospechoso(Consola consola, int indiceLinea, String modID) {
-		if (!esModidValido(modID)) {
-			return;
-		}
-
-		String mensaje = MonitorDePID.idioma.mcforge_mod_sospechoso() + modID;
-
-		if (errores.add(mensaje)) {
-			String enlace = consola.agregarErrorALectador(indiceLinea, this);
-			enlacesPorError.put(mensaje, enlace);
-			modidPorError.put(mensaje, modID);
-		}
-
-		activado = true;
-	}
-
-	/**
-	 * Limpia símbolos que a veces quedan pegados al modid.
-	 */
-	private String limpiarModid(String modID) {
-		if (modID == null) {
-			return null;
-		}
-
-		modID = modID.trim();
-
-		while (!modID.isEmpty()) {
-			char ultimo = modID.charAt(modID.length() - 1);
-
-			if (ultimo == ',' || ultimo == ';' || ultimo == ':' || ultimo == ')' || ultimo == ']') {
-				modID = modID.substring(0, modID.length() - 1).trim();
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < texto.length(); i++) {
+			char c = texto.charAt(i);
+			if (Character.isLetterOrDigit(c) || c == '_' || c == '-' || c == '.' || c == '+') {
+				sb.append(c);
 			} else {
 				break;
 			}
 		}
+		String resultado = sb.toString();
+		return resultado.isEmpty() ? null : resultado;
+	}
 
-		while (!modID.isEmpty()) {
-			char primero = modID.charAt(0);
+	// -------------------------------------------------------------------------
+	// Lógica principal — idéntica al original
+	// -------------------------------------------------------------------------
 
-			if (primero == '(' || primero == '[') {
-				modID = modID.substring(1).trim();
-			} else {
-				break;
+	@Override
+	public void verificar(Consola consola) {
+		String contenidoConsola = consola.contenido_verificar;
+		String[] lineas = contenidoConsola.split(Verificaciones.nl);
+
+		boolean encontradoModSospechoso = false;
+		boolean encontradoStacktrace = false;
+		boolean encontradoModSection = false;
+
+		for (int i = 0; i < lineas.length; i++) {
+			String linea = lineas[i].trim();
+
+			// Saltar líneas de nivel DEBUG/TRACE
+			if (esLineaDebugOTrace(linea))
+				continue;
+
+			// 1) Detectar secciones -- MOD modid --
+			String modDeSeccion = extraerSeccionMod(linea);
+			if (modDeSeccion != null) {
+				encontradoModSection = true;
+				if (!modDeSeccion.isEmpty()) {
+					String mensaje = MonitorDePID.idioma.mcforge_mod_sospechoso() + modDeSeccion;
+					if (errores.add(mensaje)) {
+						String enlace = consola.agregarErrorALectador(i, this);
+						enlacesPorError.put(mensaje, enlace);
+						modidPorError.put(mensaje, modDeSeccion);
+					}
+					activado = true;
+				}
+				continue;
+			}
+
+			// 2) Detectar sección "Suspected Mods:" (soporta singular y plural)
+			if (linea.equalsIgnoreCase("Suspected Mod:") || linea.equalsIgnoreCase("Suspected Mods:")) {
+				encontradoModSospechoso = true;
+				encontradoStacktrace = false;
+				continue;
+			}
+
+			// 3) Terminar la sección al encontrar "Stacktrace:"
+			if (linea.contains("Stacktrace:")) {
+				encontradoModSospechoso = false;
+				encontradoStacktrace = true;
+				continue;
+			}
+
+			// 4) Procesar los mods dentro de "Suspected Mods:"
+			if (encontradoModSospechoso) {
+				if (linea.isEmpty() || linea.startsWith("--") || linea.contains("Details:"))
+					continue;
+
+				String modID = extraerSuspectedMod(linea);
+				if (modID != null) {
+					if (!modID.isEmpty() && !modID.contains(".java")) {
+						String mensaje = MonitorDePID.idioma.mcforge_mod_sospechoso() + modID;
+						if (errores.add(mensaje)) {
+							String enlace = consola.agregarErrorALectador(i, this);
+							enlacesPorError.put(mensaje, enlace);
+							modidPorError.put(mensaje, modID);
+						}
+						activado = true;
+					}
+					// Saltar las siguientes líneas del mismo mod (Mixin class, Target, etc.)
+					while (i + 1 < lineas.length) {
+						String next = lineas[i + 1].trim();
+						if (next.startsWith("Mixin class:") || next.startsWith("Target:")
+								|| next.startsWith("at TRANSFORMER/") || next.startsWith("Version:")
+								|| next.startsWith("Issue tracker")) {
+							i++;
+						} else {
+							break;
+						}
+					}
+					continue;
+				}
+
+				// Fallback: intentar extraer mod ID con los otros sub-patrones
+				modID = extraerModidDeLinea(linea, true);
+				if (modID != null && !modID.isEmpty() && !modID.contains(".java")) {
+					String mensaje = MonitorDePID.idioma.mcforge_mod_sospechoso() + modID;
+					if (errores.add(mensaje)) {
+						String enlace = consola.agregarErrorALectador(i, this);
+						enlacesPorError.put(mensaje, enlace);
+						modidPorError.put(mensaje, modID);
+					}
+					activado = true;
+				}
+				continue;
+			}
+
+			// 5) Detectar "Failed to create mod instance"
+			if (linea.contains("Failed to create mod instance. ModID:")) {
+				String prefijo = "Failed to create mod instance. ModID: ";
+				int indiceInicio = linea.indexOf(prefijo);
+				if (indiceInicio != -1) {
+					String modID = extraerToken(linea.substring(indiceInicio + prefijo.length()).trim());
+					if (modID != null && !modID.isEmpty()) {
+						String mensaje = MonitorDePID.idioma.mcforge_mod_sospechoso() + modID;
+						if (errores.add(mensaje)) {
+							String enlace = consola.agregarErrorALectador(i, this);
+							enlacesPorError.put(mensaje, enlace);
+							modidPorError.put(mensaje, modID);
+						}
+						activado = true;
+					}
+				}
+				continue;
+			}
+
+			// 6) Patrón de despacho de modid
+			String modDespacho = extraerDespachoModid(linea);
+			if (modDespacho != null) {
+				String mensaje = MonitorDePID.idioma.mcforge_mod_sospechoso() + modDespacho;
+				if (errores.add(mensaje)) {
+					String enlace = consola.agregarErrorALectador(i, this);
+					enlacesPorError.put(mensaje, enlace);
+					modidPorError.put(mensaje, modDespacho);
+				}
+				activado = true;
+			}
+
+			// 7) Otros errores con indicadores, fuera de secciones específicas
+			if (!encontradoModSection) {
+				if (tieneIndicadorError(linea)) {
+					String modID = extraerModidDeLinea(linea, false);
+					if (modID != null && !modID.isEmpty()) {
+						String mensaje = MonitorDePID.idioma.mcforge_mod_sospechoso() + modID;
+						if (errores.add(mensaje)) {
+							String enlace = consola.agregarErrorALectador(i, this);
+							enlacesPorError.put(mensaje, enlace);
+							modidPorError.put(mensaje, modID);
+						}
+						activado = true;
+					}
+				}
 			}
 		}
-
-		return modID;
-	}
-
-	private boolean esModidValido(String modID) {
-		if (modID == null || modID.isEmpty()) {
-			return false;
-		}
-
-		if (modID.indexOf(".java") >= 0) {
-			return false;
-		}
-
-		for (int i = 0; i < modID.length(); i++) {
-			if (!esCaracterDeModid(modID.charAt(i))) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	private boolean esCaracterDeModid(char c) {
-		return Character.isLetterOrDigit(c) || c == '_' || c == '-' || c == '.' || c == '+';
-	}
-
-	private boolean empiezaConIgnoreCase(String texto, String prefijo) {
-		if (texto == null || prefijo == null || prefijo.length() > texto.length()) {
-			return false;
-		}
-
-		return texto.regionMatches(true, 0, prefijo, 0, prefijo.length());
-	}
-
-	private boolean contieneIgnoreCase(String texto, String buscar) {
-		return indexOfIgnoreCase(texto, buscar) >= 0;
-	}
-
-	/**
-	 * Busca texto ignorando mayúsculas/minúsculas sin crear copias con
-	 * toLowerCase().
-	 */
-	private int indexOfIgnoreCase(String texto, String buscar) {
-		if (texto == null || buscar == null) {
-			return -1;
-		}
-
-		int largoTexto = texto.length();
-		int largoBuscar = buscar.length();
-
-		if (largoBuscar == 0) {
-			return 0;
-		}
-
-		if (largoBuscar > largoTexto) {
-			return -1;
-		}
-
-		int limite = largoTexto - largoBuscar;
-
-		for (int i = 0; i <= limite; i++) {
-			if (texto.regionMatches(true, i, buscar, 0, largoBuscar)) {
-				return i;
-			}
-		}
-
-		return -1;
 	}
 
 	@Override
@@ -461,45 +374,34 @@ public class MCForgeModsSuspechoso implements Verificaciones {
 
 	@Override
 	public String mensaje() {
-		if (errores.isEmpty()) {
+		if (errores.isEmpty())
 			return "";
-		}
 
 		StringBuilder html = new StringBuilder("<ul>");
-
 		for (String error : errores) {
 			String enlace = enlacesPorError.getOrDefault(error, "");
 			String extraUbicaciones = "";
 
 			String modid = modidPorError.get(error);
-
 			if (modid != null && !modid.isEmpty()) {
 				List<String> ubicaciones = Buscardor.obtenerModsConNombre(modid);
-
 				if (!ubicaciones.isEmpty()) {
 					StringBuilder sb = new StringBuilder();
-
 					for (int i = 0; i < ubicaciones.size(); i++) {
-						if (i > 0) {
+						if (i > 0)
 							sb.append(", ");
-						}
-
 						sb.append(ubicaciones.get(i));
 					}
-
 					extraUbicaciones = " (" + sb + ")";
 				}
 			}
 
 			html.append("<li>").append(error).append(extraUbicaciones);
-
 			if (!enlace.isEmpty()) {
 				html.append(" ").append(enlace);
 			}
-
 			html.append("</li>");
 		}
-
 		html.append("</ul>");
 		return html.toString();
 	}

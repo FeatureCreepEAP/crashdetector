@@ -17,7 +17,9 @@ public class ErrorOptiFineServidor implements Verificaciones {
 	private boolean activado = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
-	private boolean encontradoOptiFine = false;
+
+	// Indica si el log completo tiene señales de OptiFine.
+	private boolean posibleOptiFineServidor = false;
 
 	private static final String TEXTO_OPTIFINE_PATCHER = "optifine.Patcher.applyPatch";
 	private static final String TEXTO_BASE_RESOURCE_NOT_FOUND = "Base resource not found";
@@ -28,8 +30,12 @@ public class ErrorOptiFineServidor implements Verificaciones {
 	/**
 	 * Método global ligero.
 	 *
-	 * Busca si OptiFine está presente en el contenido completo del registro sin
-	 * usar toLowerCase(), para evitar crear una copia grande del log.
+	 * No usa regex, no usa toLowerCase() y no usa regionMatches().
+	 *
+	 * En los logs reales de Forge/OptiFine, el nombre del paquete y clase suele
+	 * aparecer con esta forma exacta:
+	 *
+	 * optifine.Patcher.applyPatch
 	 */
 	@Override
 	public void verificar(Consola consola) {
@@ -37,68 +43,29 @@ public class ErrorOptiFineServidor implements Verificaciones {
 			return;
 		}
 
-		encontradoOptiFine = contieneIgnoreCase(consola.contenido_verificar, TEXTO_OPTIFINE_PATCHER);
+		String contenido = consola.contenido_verificar;
+
+		if (contenido.contains(TEXTO_OPTIFINE_PATCHER)) {
+			this.posibleOptiFineServidor = true;
+		}
 	}
 
 	/**
 	 * Análisis por línea del registro.
 	 *
-	 * Se busca el patrón característico del error donde OptiFine falla en un
-	 * servidor dedicado porque intenta cargar clases del cliente.
+	 * Solo se ejecuta si el método global encontró OptiFine en el log.
 	 */
 	@Override
 	public void verificar(Consola consola, String linea, int numero_de_linea) {
-		if (activado || !encontradoOptiFine || linea == null || linea.isEmpty()) {
+		if (activado || !posibleOptiFineServidor || linea == null || linea.isEmpty()) {
 			return;
 		}
 
-		// En esta línea normalmente aparece el error principal.
 		if (linea.contains(TEXTO_BASE_RESOURCE_NOT_FOUND)) {
-			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
-			mensaje = MonitorDePID.idioma.errorOptiFineServidor() + Verificaciones.nl_html;
-			activado = true;
+			this.enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+			this.mensaje = MonitorDePID.idioma.errorOptiFineServidor() + Verificaciones.nl_html;
+			this.activado = true;
 		}
-	}
-
-	/**
-	 * Busca un texto ignorando mayúsculas/minúsculas sin crear copias con
-	 * toLowerCase().
-	 */
-	private boolean contieneIgnoreCase(String texto, String buscar) {
-		return indexOfIgnoreCase(texto, buscar) >= 0;
-	}
-
-	/**
-	 * Implementación rápida de búsqueda case-insensitive.
-	 *
-	 * Usa regionMatches(true, ...) para evitar: - texto.toLowerCase() -
-	 * buscar.toLowerCase() - nuevas copias grandes del log
-	 */
-	private int indexOfIgnoreCase(String texto, String buscar) {
-		if (texto == null || buscar == null) {
-			return -1;
-		}
-
-		int largoTexto = texto.length();
-		int largoBuscar = buscar.length();
-
-		if (largoBuscar == 0) {
-			return 0;
-		}
-
-		if (largoBuscar > largoTexto) {
-			return -1;
-		}
-
-		int limite = largoTexto - largoBuscar;
-
-		for (int i = 0; i <= limite; i++) {
-			if (texto.regionMatches(true, i, buscar, 0, largoBuscar)) {
-				return i;
-			}
-		}
-
-		return -1;
 	}
 
 	@Override
@@ -113,12 +80,12 @@ public class ErrorOptiFineServidor implements Verificaciones {
 
 	@Override
 	public float prioridad() {
-		return 1500.0f; // Prioridad máxima: rompe la carga del servidor
+		return 1500.0f;
 	}
 
 	@Override
 	public String mensaje() {
-		return activado ? (mensaje + enlaceHtml) : "";
+		return activado ? mensaje + enlaceHtml : "";
 	}
 
 	@Override
@@ -140,8 +107,8 @@ public class ErrorOptiFineServidor implements Verificaciones {
 	/**
 	 * Asocia esta verificación con un trazo específico del stack.
 	 *
-	 * Devuelve true si el trazo contiene las cadenas clave del error de
-	 * compatibilidad entre OptiFine y servidor dedicado.
+	 * También evita búsqueda case-insensitive. Para este error, las cadenas reales
+	 * del stack trace son suficientemente estables.
 	 */
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
@@ -152,7 +119,7 @@ public class ErrorOptiFineServidor implements Verificaciones {
 		String t = trazo.trace;
 
 		return t.contains(TEXTO_BASE_RESOURCE_NOT_FOUND_COMPLETO) && t.contains(TEXTO_LAYER_OPTIFINE)
-				&& contieneIgnoreCase(t, TEXTO_OPTIFINE);
+				&& t.contains(TEXTO_OPTIFINE);
 	}
 
 	@Override

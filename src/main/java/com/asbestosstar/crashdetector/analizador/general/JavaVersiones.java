@@ -1,7 +1,5 @@
 package com.asbestosstar.crashdetector.analizador.general;
 
-import java.awt.Desktop;
-import java.net.URI;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,56 +12,75 @@ import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceI
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
+/**
+ * Detecta errores de versión de clase Java: UnsupportedClassVersionError,
+ * clases compiladas con versiones más recientes que la JVM utilizada.
+ * Optimizado: global barato + verificación por línea.
+ */
 public class JavaVersiones implements Verificaciones {
 
 	private boolean activado = false;
+	private boolean posibleErrorJava = false;
+
 	private final Set<String> mensajes = new HashSet<>();
 	private String claseConProblema = null;
+	private String enlace = null;
 
 	private static final String TEXTO_UNSUPPORTED_CLASS = "UnsupportedClassVersionError:";
 	private static final String TEXTO_JAVA22 = "Unsupported class file major version";
 	private static final String TEXTO_JAVA8 = "Unsupported major.minor version 52.0";
 
+	// =========================
+	// Verificación global barata
+	// =========================
 	@Override
 	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty())
 			return;
-		}
 
 		String contenido = consola.contenido_verificar;
 
-		// Buscar UnsupportedClassVersionError sin regex
-		int idx = contenido.indexOf(TEXTO_UNSUPPORTED_CLASS);
-		while (idx >= 0) {
-			int finLinea = contenido.indexOf('\n', idx);
-			if (finLinea < 0)
-				finLinea = contenido.length();
-			String linea = contenido.substring(idx, finLinea);
+		if (contenido.contains(TEXTO_UNSUPPORTED_CLASS) || contenido.contains(TEXTO_JAVA22)
+				|| contenido.contains(TEXTO_JAVA8)) {
+			posibleErrorJava = true;
+		}
+	}
 
+	// =========================
+	// Verificación por línea
+	// =========================
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		if (!posibleErrorJava || linea == null || linea.isEmpty() || activado)
+			return;
+
+		if (linea.contains(TEXTO_UNSUPPORTED_CLASS)) {
 			// Extraer nombre de clase
 			String clase = extraerClase(linea);
 			if (clase != null) {
 				claseConProblema = clase;
 				mensajes.add(MonitorDePID.idioma.javaObsoleta() + " JVM: " + determinarVersionJava(linea));
+				enlace = consola.agregarErrorALectador(numero_de_linea, this);
 				activado = true;
 			}
-
-			idx = contenido.indexOf(TEXTO_UNSUPPORTED_CLASS, finLinea);
 		}
 
-		// Java 22 no soportada
-		if (contenido.contains(TEXTO_JAVA22)) {
+		if (linea.contains(TEXTO_JAVA22)) {
 			mensajes.add(MonitorDePID.idioma.java22());
+			enlace = consola.agregarErrorALectador(numero_de_linea, this);
 			activado = true;
 		}
 
-		// Verificación de Java 8 requerida
-		if (contenido.contains(TEXTO_JAVA8)) {
+		if (linea.contains(TEXTO_JAVA8)) {
 			mensajes.add(MonitorDePID.idioma.errorJava8Requerido());
+			enlace = consola.agregarErrorALectador(numero_de_linea, this);
 			activado = true;
 		}
 	}
 
+	// =========================
+	// Helpers
+	// =========================
 	private String extraerClase(String linea) {
 		if (linea == null)
 			return null;
@@ -75,7 +92,6 @@ public class JavaVersiones implements Verificaciones {
 			start++;
 		if (start >= linea.length())
 			return null;
-
 		int fin = linea.indexOf(" has been compiled", start);
 		if (fin < 0)
 			fin = linea.length();
@@ -83,22 +99,18 @@ public class JavaVersiones implements Verificaciones {
 	}
 
 	private String determinarVersionJava(String linea) {
-		// Buscar número de class file version
 		int idx = linea.indexOf("class file version");
 		if (idx < 0)
 			return "desconocida";
-
 		int start = idx + "class file version".length();
 		while (start < linea.length() && !Character.isDigit(linea.charAt(start)))
 			start++;
 		if (start >= linea.length())
 			return "desconocida";
-
 		int end = start;
 		while (end < linea.length() && Character.isDigit(linea.charAt(end)))
 			end++;
 		String versionClase = linea.substring(start, end);
-
 		switch (Integer.parseInt(versionClase)) {
 		case 61:
 			return "17";
@@ -123,6 +135,9 @@ public class JavaVersiones implements Verificaciones {
 		}
 	}
 
+	// =========================
+	// Métodos estándar de Verificaciones
+	// =========================
 	@Override
 	public Verificaciones nueva() {
 		return new JavaVersiones();
@@ -142,7 +157,6 @@ public class JavaVersiones implements Verificaciones {
 	public String mensaje() {
 		if (mensajes.isEmpty())
 			return "";
-
 		StringBuilder html = new StringBuilder("<ul>");
 		for (String msg : mensajes)
 			html.append("<li>").append(msg).append("</li>");
@@ -161,27 +175,7 @@ public class JavaVersiones implements Verificaciones {
 	public QuickFix solucion() {
 		Builder builder = new QuickFix.Builder(nombre());
 		builder.agregarEtiqueta(MonitorDePID.idioma.solucionParaJavaInstallar());
-		builder.agregarBoton("Java Windows-x86_x64+Linux-x86_x64+SRC",
-				(bool) -> abrirEnNavegador("https://developers.redhat.com/products/openjdk/download"));
-		builder.agregarBoton("Java Mac Intel",
-				(bool) -> abrirEnNavegador("https://www.openlogic.com/openjdk-downloads"));
-		builder.agregarBoton("Java Mac PPC",
-				(bool) -> abrirEnNavegador("https://github.com/nilsvanvelzen/mac_ppc_openjdk8u60"));
-		builder.agregarBoton("Java Sun Microsystems",
-				(bool) -> abrirEnNavegador("https://www.oracle.com/java/technologies/downloads/"));
-		builder.agregarBoton("Java 15+ Solaris/Iluminos",
-				(bool) -> abrirEnNavegador("https://pkgs.tribblix.org/openjdk/"));
 		return builder.construir();
-	}
-
-	private void abrirEnNavegador(String url) {
-		try {
-			if (java.awt.Desktop.isDesktopSupported()) {
-				java.awt.Desktop.getDesktop().browse(new URI(url));
-			}
-		} catch (Exception e) {
-			com.asbestosstar.crashdetector.CrashDetectorLogger.logException(e);
-		}
 	}
 
 	@Override

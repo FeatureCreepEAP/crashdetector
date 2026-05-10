@@ -173,8 +173,4 @@ public class ProblemaEjecucionPlugin implements Verificaciones {
 				+ this.getClass().getSimpleName() + ".java";
 	}
 
-	@Override
-	public boolean recomendadoParaCorperata() {
-		return true;
-	}
 }

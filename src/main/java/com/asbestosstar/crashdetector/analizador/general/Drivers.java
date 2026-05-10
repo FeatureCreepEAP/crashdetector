@@ -16,14 +16,32 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 public class Drivers implements Verificaciones {
 
 	private boolean activado = false;
+
 	private final CDStringBuilder mensajes = new CDStringBuilder();
+
+	private String enlaceUnico = "";
+
+	// Señales globales baratas
+	private boolean hayAccessViolation = false;
+	private boolean posibleSodium = false;
+	private boolean posibleOpenAL = false;
+
+	// Evita agregar el mismo mensaje varias veces si se analizan varios logs
+	private boolean mensajeGraficosAgregado = false;
+	private boolean mensajeSodiumAgregado = false;
+	private boolean mensajeNouveauAgregado = false;
+	private boolean mensajeOpenALAgregado = false;
+	private boolean mensajeAMDAgregado = false;
+	private boolean mensajeIntelAgregado = false;
+	private boolean mensajeMatroxAgregado = false;
+	private boolean mensajeGpuNoCompatibleAgregado = false;
 
 	private static final String[] DRIVER_PATTERNS = { "Pixel format not accelerated",
 			"The driver does not appear to support OpenGL", "GLFW error 65542", "GLFW error 65543", "GLFW error 1282",
 			"No context is current or a function that is not available in the current context",
 			"The driver does not appear to support framebuffer objects", "org.lwjgl.LWJGLException" };
 
-	private static final String[] PATERNS_LINEA_ULTIMA = {
+	private static final String[] PATRONES_LINEA_ULTIMA = {
 			"If this message is the only thing at the bottom of your log before a crash, you probably have a driver issue.",
 			"You can safely ignore this message if the game starts up successfully.", "Trying GL version" };
 
@@ -33,7 +51,7 @@ public class Drivers implements Verificaciones {
 			"The game failed to start because the currently installed" };
 
 	// ==========================
-	// NVIDIA (Windows + Linux)
+	// NVIDIA
 	// ==========================
 
 	private static final String[] DLLS_NVIDIA_WINDOWS = { "[nvapi64.dll", "[nvapi.dll", "[nvoglv64.dll",
@@ -45,170 +63,156 @@ public class Drivers implements Verificaciones {
 
 	private static final String[] PATRONES_NOUVEAU_LITERAL = { "libnouveau.so", "libdrm_nouveau.so", "nouveau" };
 
-	private static final boolean ES_WINDOWS = System.getProperty("os.name", "").toLowerCase().contains("windows");
-	private static Boolean TIENE_NVIDIA_CACHE = null;
-
 	// ==========================
-	// Matrox (Windows + Unix)
+	// Matrox
 	// ==========================
 
 	private static final String[] DLLS_MATROX_WINDOWS = { "[mgag200.dll", "[mgag400.dll", "[matrox.dll" };
 
 	private static final String[] SOS_MATROX_UNIX = { "[mga_dri.so", "[mga_drv.so", "[libdrm_mga.so", "[libmga.so" };
 
+	// ==========================
+	// Intel
+	// ==========================
+
+	private static final String[] DLLS_INTEL = { "[ig7icd32.dll", "[ig7icd64.dll", "[ig75icd32.dll", "[ig75icd64.dll",
+			"[ig8icd64.dll", "[ig9icd32.dll", "[ig9icd64.dll", "[igxelpicd64" };
+
+	private static final boolean ES_WINDOWS = System.getProperty("os.name", "").toLowerCase().contains("windows");
+
+	private static Boolean TIENE_NVIDIA_CACHE = null;
+
+	/**
+	 * Verificación global ligera.
+	 *
+	 * No usa regex. No convierte todo el log a minúsculas. Solo marca señales muy
+	 * baratas que ayudan a la verificación por línea.
+	 */
 	@Override
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+			return;
+		}
+
 		String log = consola.contenido_verificar;
 
-		if (log == null || log.isEmpty()) {
-			return;
-		}
+		hayAccessViolation = log.contains("EXCEPTION_ACCESS_VIOLATION");
+		posibleSodium = log.contains("Sodium") || log.contains("sodium") || log.contains("caffeinemc.net")
+				|| log.contains("link.caffeinemc.net");
+		posibleOpenAL = log.contains("[libopenal.so+");
 
-		// 1) Sodium: mensaje propio de controlador incompatible
-		if (esProblemaSodiumDrivers(log)) {
-			procesarProblemaSodiumDrivers();
-			activado = true;
-			CrashDetectorLogger.log("Sodium Driver Error");
-			return;
-		}
-
-		// 2) Nouveau
-		if (contienePatronNouveau(log)) {
-			procesarProblemaNouveau();
-			CrashDetectorLogger.log("Nouveau Driver Error");
-
-			if (contienePatronOpenAL(log)) {
-				CrashDetectorLogger.log("OpenAL Driver Error");
-				procesarProblemaOpenAL();
-			}
-
-			return;
-		}
-
-		// 3) AMD
-		if (log.contains("EXCEPTION_ACCESS_VIOLATION") && log.contains("[atio6axx.dll")) {
-			procesarProblemaAMD();
-			CrashDetectorLogger.log("Driver atio6axx error");
-			return;
-		}
-
-		if (log.contains("EXCEPTION_ACCESS_VIOLATION") && log.contains("[atioglxx.dll")) {
-			procesarProblemaAMD();
-			CrashDetectorLogger.log("Sodium Driver Error");
-			return;
-		}
-
-		if (contieneLineaNativaAmd(log)) {
-			procesarProblemaAMD();
-			CrashDetectorLogger.log("Nativa AMD Driver Error");
-			return;
-		}
-
-		// 4) NVIDIA
-		if (log.contains("EXCEPTION_ACCESS_VIOLATION") && contienePatronNvidia(log)) {
-			procesarProblemaGraficos();
-			CrashDetectorLogger.log("NVIDIA Driver Error");
-			return;
-		}
-
-		// 5) Matrox
-		if (log.contains("EXCEPTION_ACCESS_VIOLATION") && contienePatronMatrox(log)) {
-			mensajes.append(MonitorDePID.idioma.problema_con_graficas_matrox());
-			activado = true;
-			CrashDetectorLogger.log("Matrox Driver Error");
-			return;
-		}
-
-		// 6) Otras DLLs
-		if (contienePatron(log, new String[] { "[PhysX_64.dll", "[glfw.dll" })
-				&& log.contains("EXCEPTION_ACCESS_VIOLATION")) {
-			procesarProblemaGraficos();
-			CrashDetectorLogger.log("PhysX o glfw error Drivers");
-			return;
-		}
-
-		// 7) Intel
-		verificarProblemasIntel(log);
-		if (activado) {
-			return;
-		}
-
-		// 8) GPU no compatible
-		if (contienePatron(log, UNSUPPORTED_GPU_PATTERNS)) {
-			procesarGpuNoCompatible();
-			CrashDetectorLogger.log("Driver GPU No Compat");
-			return;
-		}
-
-		// 9) Patrones genéricos
-		if (contienePatron(log, DRIVER_PATTERNS)) {
-			CrashDetectorLogger.log("DRIVER PATTERNS Driver Error");
-			procesarProblemaGraficos();
-			return;
-		}
-
-		// 10) Última línea con pistas
-		String ultimaLinea = obtenerUltimaLinea(log);
-
-		if (ultimaLinea != null) {
-			CrashDetectorLogger.log(ultimaLinea);
-
-			if (contienePatron(ultimaLinea, PATERNS_LINEA_ULTIMA)) {
-				procesarProblemaGraficos();
-			} else if (contienePatron(ultimaLinea, UNSUPPORTED_GPU_PATTERNS)) {
-				procesarGpuNoCompatible();
-			}
-		}
+		verificarUltimaLinea(consola, log);
 	}
 
 	@Override
 	public void verificar(Consola consola, String linea, int numero_de_linea) {
-		// No se usa en este verificador: requiere el log completo para decidir.
-	}
+		if (linea == null || linea.isEmpty())
+			return;
 
-	private boolean esProblemaSodiumDrivers(String log) {
-		String low = log.toLowerCase();
-
-		boolean frase = low.contains("the game failed to start because the currently installed");
-		boolean marca = low.contains("sodium") || low.contains("caffeinemc.net") || low.contains("link.caffeinemc.net");
-
-		return frase && marca;
-	}
-
-	private boolean contieneLineaNativaAmd(String log) {
-		String low = log.toLowerCase();
-
-		return low.contains("c  [atio6axx.dll+") || low.contains("c  [atioglxx.dll+")
-				|| low.contains("# c  [atio6axx.dll+") || low.contains("# c  [atioglxx.dll+");
-	}
-
-	private boolean contienePatronNouveau(String log) {
-		String low = log.toLowerCase();
-
-		boolean encontradoLiteral = false;
-
-		for (String patronLiteral : PATRONES_NOUVEAU_LITERAL) {
-			if (low.contains(patronLiteral)) {
-				encontradoLiteral = true;
-				break;
-			}
+		// Sodium
+		if (posibleSodium && linea.contains("The game failed to start because the currently installed")) {
+			procesarProblemaSodiumDrivers(consola, numero_de_linea);
+			return;
 		}
 
-		if (!encontradoLiteral) {
-			return contienePatronOpenAL(log);
+		// Nouveau / OpenAL
+		if (esLineaNouveau(linea)) {
+			procesarProblemaNouveau(consola, numero_de_linea);
+			if (posibleOpenAL)
+				procesarProblemaOpenAL(consola, numero_de_linea);
+			return;
 		}
 
-		// Confirmar libnouveau.so o libdrm_nouveau.so sin regex.
-		if (contieneBibliotecaSoConVersionOpcional(low, "libnouveau.so")
-				|| contieneBibliotecaSoConVersionOpcional(low, "libdrm_nouveau.so")) {
-			return true;
+		if (posibleOpenAL && linea.contains("[libopenal.so+")) {
+			procesarProblemaOpenAL(consola, numero_de_linea);
+			return;
 		}
 
-		return contienePatronOpenAL(log);
+		// AMD
+		if (hayAccessViolation && esLineaAMD(linea)) {
+			procesarProblemaAMD(consola, numero_de_linea);
+			return;
+		}
+
+		// NVIDIA
+		if (hayAccessViolation
+				&& (contienePatron(linea, DLLS_NVIDIA_WINDOWS) || contienePatron(linea, SOS_NVIDIA_UNIX))) {
+			procesarProblemaGraficos(consola, numero_de_linea);
+			return;
+		}
+
+		// Matrox
+		if (hayAccessViolation
+				&& (contienePatron(linea, DLLS_MATROX_WINDOWS) || contienePatron(linea, SOS_MATROX_UNIX))) {
+			procesarProblemaMatrox(consola, numero_de_linea);
+			return;
+		}
+
+		// PhysX / GLFW
+		if (hayAccessViolation && (linea.contains("[PhysX_64.dll") || linea.contains("[glfw.dll"))) {
+			procesarProblemaGraficos(consola, numero_de_linea);
+			return;
+		}
+
+		// Intel
+		if (hayAccessViolation && contienePatron(linea, DLLS_INTEL)) {
+			procesarProblemaIntel(consola, numero_de_linea);
+			return;
+		}
+
+		// GPU no compatible
+		if (contienePatron(linea, UNSUPPORTED_GPU_PATTERNS)) {
+			procesarGpuNoCompatible(consola, numero_de_linea);
+			return;
+		}
+
+		// Patrones genéricos
+		if (contienePatron(linea, DRIVER_PATTERNS)) {
+			procesarProblemaGraficos(consola, numero_de_linea);
+		}
+	}
+
+	// ---------------------------
+	// Agrega un solo enlace válido
+	private void agregarEnlace(Consola consola, int numero_de_linea) {
+		if (consola == null || numero_de_linea < 0)
+			return;
+
+		String enlace = consola.agregarErrorALectador(numero_de_linea, this);
+		if (enlace != null && !enlace.isEmpty()) {
+			enlaceUnico = enlace; // reemplaza el anterior
+		}
+	}
+
+	@Override
+	public String mensaje() {
+		return mensajes.toString().replace("\n", Verificaciones.nl_html) + enlaceUnico;
+	}
+
+	private boolean esLineaAMD(String linea) {
+		return linea.contains("[atio6axx.dll") || linea.contains("[atioglxx.dll") || linea.contains("C  [atio6axx.dll+")
+				|| linea.contains("C  [atioglxx.dll+") || linea.contains("# C  [atio6axx.dll+")
+				|| linea.contains("# C  [atioglxx.dll+");
+	}
+
+	private boolean esLineaNouveau(String linea) {
+		// Primero, verificar que contenga un patrón de Nouveau
+		if (!contienePatron(linea, PATRONES_NOUVEAU_LITERAL))
+			return false;
+
+		// Excluir específicamente cualquier línea que mencione "ars_nouveau"
+		if (linea.contains("ars_nouveau"))
+			return false;
+
+		// Solo coincidencias con librerías reales
+		return contieneBibliotecaSoConVersionOpcional(linea, "libnouveau.so")
+				|| contieneBibliotecaSoConVersionOpcional(linea, "libdrm_nouveau.so");
 	}
 
 	/**
-	 * Detecta nombres tipo: libnouveau.so libnouveau.so.0 libnouveau.so.0.0.0
+	 * Detecta nombres tipo:
+	 *
+	 * libnouveau.so libnouveau.so.0 libnouveau.so.0.0.0
 	 *
 	 * Sin usar regex.
 	 */
@@ -228,10 +232,8 @@ public class Drivers implements Verificaciones {
 				return true;
 			}
 
-			if (c == '.') {
-				if (esVersionDespuesDePunto(texto, despues)) {
-					return true;
-				}
+			if (c == '.' && esVersionDespuesDePunto(texto, despues)) {
+				return true;
 			}
 
 			indice = texto.indexOf(nombreBase, indice + nombreBase.length());
@@ -271,32 +273,61 @@ public class Drivers implements Verificaciones {
 		return Character.isWhitespace(fin) || fin == ']' || fin == ')' || fin == ',' || fin == ';' || fin == ':';
 	}
 
-	private boolean contienePatronNvidia(String log) {
-		for (String dll : DLLS_NVIDIA_WINDOWS) {
-			if (log.contains(dll)) {
-				return true;
-			}
+	private void verificarUltimaLinea(Consola consola, String log) {
+		String ultimaLinea = obtenerUltimaLineaSinSplit(log);
+
+		if (ultimaLinea == null || ultimaLinea.isEmpty()) {
+			return;
 		}
 
-		for (String so : SOS_NVIDIA_UNIX) {
-			if (log.contains(so)) {
-				return true;
-			}
-		}
+		CrashDetectorLogger.log(ultimaLinea);
 
-		return false;
+		if (contienePatron(ultimaLinea, PATRONES_LINEA_ULTIMA)) {
+			procesarProblemaGraficos(consola, -1);
+		} else if (contienePatron(ultimaLinea, UNSUPPORTED_GPU_PATTERNS)) {
+			procesarGpuNoCompatible(consola, -1);
+		}
 	}
 
-	private boolean contienePatronOpenAL(String log) {
-		if (log.contains("[libopenal.so+")) {
-			CrashDetectorLogger.log("Patrón Nouveau encontrado: libopenal");
-			return true;
+	/**
+	 * Obtiene la última línea sin usar split(), porque split() crea muchas cadenas.
+	 */
+	private String obtenerUltimaLineaSinSplit(String log) {
+		if (log == null || log.isEmpty()) {
+			return null;
 		}
 
-		return false;
+		int fin = log.length() - 1;
+
+		while (fin >= 0 && (log.charAt(fin) == '\n' || log.charAt(fin) == '\r')) {
+			fin--;
+		}
+
+		if (fin < 0) {
+			return "";
+		}
+
+		int inicio = fin;
+
+		while (inicio >= 0) {
+			char c = log.charAt(inicio);
+
+			if (c == '\n' || c == '\r') {
+				break;
+			}
+
+			inicio--;
+		}
+
+		return log.substring(inicio + 1, fin + 1);
 	}
 
-	private void procesarProblemaGraficos() {
+	private void procesarProblemaGraficos(Consola consola, int numero_de_linea) {
+		if (mensajeGraficosAgregado) {
+			agregarEnlace(consola, numero_de_linea);
+			return;
+		}
+
 		boolean esWindows = esWindows();
 		boolean tieneNvidia = esWindows && tieneNvidiaGPU();
 		boolean esWindowsNuevo = esWindows && esWindows11OServer2025();
@@ -308,40 +339,57 @@ public class Drivers implements Verificaciones {
 			mensajes.append(MonitorDePID.idioma.problema_con_graficas_general());
 		}
 
+		mensajeGraficosAgregado = true;
 		activado = true;
+		agregarEnlace(consola, numero_de_linea);
 	}
 
-	private void procesarProblemaSodiumDrivers() {
-		mensajes.append(MonitorDePID.idioma.problema_con_graficas_sodium());
-	}
-
-	private void procesarGpuNoCompatible() {
-		mensajes.append(MonitorDePID.idioma.gpu_no_compatible());
-		activado = true;
-	}
-
-	private void procesarProblemaAMD() {
-		mensajes.append(MonitorDePID.idioma.problema_con_graficas_ati());
-		activado = true;
-	}
-
-	private boolean contienePatronMatrox(String log) {
-		for (String dll : DLLS_MATROX_WINDOWS) {
-			if (log.contains(dll)) {
-				return true;
-			}
+	private void procesarProblemaSodiumDrivers(Consola consola, int numero_de_linea) {
+		if (!mensajeSodiumAgregado) {
+			mensajes.append(MonitorDePID.idioma.problema_con_graficas_sodium());
+			mensajeSodiumAgregado = true;
+			activado = true;
 		}
 
-		for (String so : SOS_MATROX_UNIX) {
-			if (log.contains(so)) {
-				return true;
-			}
-		}
-
-		return false;
+		agregarEnlace(consola, numero_de_linea);
 	}
 
-	private void procesarProblemaNouveau() {
+	private void procesarGpuNoCompatible(Consola consola, int numero_de_linea) {
+		if (!mensajeGpuNoCompatibleAgregado) {
+			mensajes.append(MonitorDePID.idioma.gpu_no_compatible());
+			mensajeGpuNoCompatibleAgregado = true;
+			activado = true;
+		}
+
+		agregarEnlace(consola, numero_de_linea);
+	}
+
+	private void procesarProblemaAMD(Consola consola, int numero_de_linea) {
+		if (!mensajeAMDAgregado) {
+			mensajes.append(MonitorDePID.idioma.problema_con_graficas_ati());
+			mensajeAMDAgregado = true;
+			activado = true;
+		}
+
+		agregarEnlace(consola, numero_de_linea);
+	}
+
+	private void procesarProblemaMatrox(Consola consola, int numero_de_linea) {
+		if (!mensajeMatroxAgregado) {
+			mensajes.append(MonitorDePID.idioma.problema_con_graficas_matrox());
+			mensajeMatroxAgregado = true;
+			activado = true;
+		}
+
+		agregarEnlace(consola, numero_de_linea);
+	}
+
+	private void procesarProblemaNouveau(Consola consola, int numero_de_linea) {
+		if (mensajeNouveauAgregado) {
+			agregarEnlace(consola, numero_de_linea);
+			return;
+		}
+
 		boolean tieneNvidia = false;
 
 		try {
@@ -373,17 +421,38 @@ public class Drivers implements Verificaciones {
 
 		if (tieneNvidia) {
 			mensajes.append(MonitorDePID.idioma.problema_con_graficas_nouveau());
+			mensajeNouveauAgregado = true;
 			activado = true;
+			agregarEnlace(consola, numero_de_linea);
 		}
 	}
 
-	private void procesarProblemaOpenAL() {
-		mensajes.append(nl);
-		mensajes.append(MonitorDePID.idioma.problema_con_openAL());
-		activado = true;
+	private void procesarProblemaOpenAL(Consola consola, int numero_de_linea) {
+		if (!mensajeOpenALAgregado) {
+			mensajes.append(nl);
+			mensajes.append(MonitorDePID.idioma.problema_con_openAL());
+			mensajeOpenALAgregado = true;
+			activado = true;
+		}
+
+		agregarEnlace(consola, numero_de_linea);
+	}
+
+	private void procesarProblemaIntel(Consola consola, int numero_de_linea) {
+		if (!mensajeIntelAgregado) {
+			mensajes.append(MonitorDePID.idioma.problema_con_graficas_intel());
+			mensajeIntelAgregado = true;
+			activado = true;
+		}
+
+		agregarEnlace(consola, numero_de_linea);
 	}
 
 	private boolean contienePatron(String texto, String[] patrones) {
+		if (texto == null || texto.isEmpty()) {
+			return false;
+		}
+
 		for (String p : patrones) {
 			if (texto.contains(p)) {
 				CrashDetectorLogger.log("Hay patron de Drivers " + p);
@@ -392,15 +461,6 @@ public class Drivers implements Verificaciones {
 		}
 
 		return false;
-	}
-
-	private String obtenerUltimaLinea(String log) {
-		if (log == null || log.isEmpty()) {
-			return null;
-		}
-
-		String[] lineas = log.split(Verificaciones.nl);
-		return lineas.length > 0 ? lineas[lineas.length - 1] : null;
 	}
 
 	private boolean esWindows() {
@@ -425,7 +485,7 @@ public class Drivers implements Verificaciones {
 				String l;
 
 				while ((l = br.readLine()) != null) {
-					if (l.toLowerCase().contains("nvidia")) {
+					if (l.contains("NVIDIA") || l.contains("nvidia")) {
 						tiene = true;
 						break;
 					}
@@ -501,24 +561,6 @@ public class Drivers implements Verificaciones {
 		return resultado;
 	}
 
-	private void verificarProblemasIntel(String log) {
-		String[] dllsIntel = { "[ig7icd32.dll", "[ig7icd64.dll", "[ig75icd32.dll", "[ig75icd64.dll", "[ig8icd64.dll",
-				"[ig9icd32.dll", "[ig9icd64.dll", "[igxelpicd64" };
-
-		for (String dll : dllsIntel) {
-			if (log.contains(dll) && log.contains("EXCEPTION_ACCESS_VIOLATION")) {
-				procesarProblemaIntel();
-				CrashDetectorLogger.log(dll + " Driver Error");
-				return;
-			}
-		}
-	}
-
-	private void procesarProblemaIntel() {
-		mensajes.append(MonitorDePID.idioma.problema_con_graficas_intel());
-		activado = true;
-	}
-
 	@Override
 	public Verificaciones nueva() {
 		return new Drivers();
@@ -532,11 +574,6 @@ public class Drivers implements Verificaciones {
 	@Override
 	public float prioridad() {
 		return 900.0f;
-	}
-
-	@Override
-	public String mensaje() {
-		return mensajes.toString().replace("\n", Verificaciones.nl_html);
 	}
 
 	@Override

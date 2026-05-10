@@ -28,6 +28,9 @@ public class ProblemaSafeFetch32JDK17 implements Verificaciones {
 	 *
 	 * Se ejecuta primero. No se limpian campos porque esta verificacion puede
 	 * ejecutarse sobre varios archivos de log con la misma instancia.
+	 *
+	 * No usa regex, toLowerCase ni regionMatches. El simbolo del JVM aparece con
+	 * capitalizacion estable.
 	 */
 	@Override
 	public void verificar(Consola consola) {
@@ -35,7 +38,7 @@ public class ProblemaSafeFetch32JDK17 implements Verificaciones {
 			return;
 		}
 
-		if (contieneIgnoreCase(consola.contenido_verificar, TEXTO_SAFE_FETCH)) {
+		if (consola.contenido_verificar.contains(TEXTO_SAFE_FETCH)) {
 			posibleSafeFetch32 = true;
 		}
 	}
@@ -51,51 +54,13 @@ public class ProblemaSafeFetch32JDK17 implements Verificaciones {
 			return;
 		}
 
-		if (!contieneIgnoreCase(linea, TEXTO_SAFE_FETCH)) {
+		if (!linea.contains(TEXTO_SAFE_FETCH)) {
 			return;
 		}
 
 		this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
 		this.mensaje = MonitorDePID.idioma.problema_safe_fetch32_jdk17() + " " + enlace;
 		this.activado = true;
-	}
-
-	/**
-	 * Busca un texto ignorando mayusculas/minusculas sin crear copias con
-	 * toLowerCase().
-	 */
-	private boolean contieneIgnoreCase(String texto, String buscar) {
-		return indexOfIgnoreCase(texto, buscar) >= 0;
-	}
-
-	/**
-	 * Busca un texto ignorando mayusculas/minusculas usando regionMatches.
-	 */
-	private int indexOfIgnoreCase(String texto, String buscar) {
-		if (texto == null || buscar == null) {
-			return -1;
-		}
-
-		int largoTexto = texto.length();
-		int largoBuscar = buscar.length();
-
-		if (largoBuscar == 0) {
-			return 0;
-		}
-
-		if (largoBuscar > largoTexto) {
-			return -1;
-		}
-
-		int limite = largoTexto - largoBuscar;
-
-		for (int i = 0; i <= limite; i++) {
-			if (texto.regionMatches(true, i, buscar, 0, largoBuscar)) {
-				return i;
-			}
-		}
-
-		return -1;
 	}
 
 	@Override
@@ -110,7 +75,7 @@ public class ProblemaSafeFetch32JDK17 implements Verificaciones {
 
 	@Override
 	public float prioridad() {
-		return 850.0f; // Alta prioridad por ser un fallo nativo
+		return 850.0f;
 	}
 
 	@Override
@@ -143,7 +108,7 @@ public class ProblemaSafeFetch32JDK17 implements Verificaciones {
 			return false;
 		}
 
-		return contieneIgnoreCase(trazo.trace, TEXTO_SAFE_FETCH);
+		return trazo.trace.contains(TEXTO_SAFE_FETCH);
 	}
 
 	@Override
