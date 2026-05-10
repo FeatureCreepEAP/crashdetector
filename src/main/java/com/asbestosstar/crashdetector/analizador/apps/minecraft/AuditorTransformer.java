@@ -6,8 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
@@ -20,115 +18,165 @@ import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 public class AuditorTransformer implements Verificaciones {
 
+	private boolean posibleAuditoriaTransformer = false;
 	private boolean activado = false;
+
+	private int auditIndex = 0;
+
 	private final List<EntradaAudit> entradas = new ArrayList<>();
 	private final Map<String, String> enlacesPorEntrada = new HashMap<>();
+	private final Set<String> procesados = new HashSet<>();
+
+	private final Map<String, List<String>> cacheJarsPorMixin = new HashMap<>();
+	private final Map<String, List<String>> cacheJarsPorModid = new HashMap<>();
+
 	private static final String[] LISTA_DE_DENEGADOS = { "PLUGIN: runtimedistcleaner", "PLUGIN: accesstransformer",
 			"PLUGIN: crashdetector", "REASON: classloading", "TRANSFORMER: crashdetector" };
 
 	@Override
 	public void verificar(Consola consola) {
-		if (consola == null || consola.contenido_verificar == null)
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
 			return;
-
-		entradas.clear();
-		enlacesPorEntrada.clear();
-		Set<String> procesados = new HashSet<>();
-
-		String[] lineas = consola.contenido_verificar.split(Verificaciones.nl);
-		if (lineas.length == 0)
-			return;
-
-		int auditIndex = 0;
-
-		for (int i = lineas.length - 1; i >= 0; i--) {
-			String línea = lineas[i].trim();
-			if (línea.isEmpty())
-				continue;
-
-			try {
-				if (línea.startsWith("Transformer Audit:")) {
-					auditIndex++;
-					continue;
-				}
-
-				if (esEntradaValida(línea) && !estaEnDenylist(línea)) {
-					if (procesados.contains(línea))
-						continue;
-					if (esEntradaExcluida(línea))
-						continue;
-
-					procesados.add(línea);
-
-					// Extraer texto base y puntuación
-					String textoBase = línea;
-					String puntuaciónStr = "";
-					float puntuación = auditIndex + (entradas.size() % 100) / 100f;
-
-					if (línea.contains("(") && línea.contains(")")) {
-						int inicio = línea.indexOf('(');
-						int fin = línea.indexOf(')');
-						if (inicio > 0 && fin > inicio) {
-							puntuaciónStr = " (" + línea.substring(inicio + 1, fin) + ")";
-							textoBase = línea.substring(0, inicio).trim();
-						}
-					}
-
-					List<String> jars = new ArrayList<>();
-
-					if (línea.contains("mixin:APP:")) {
-						Matcher jsonMatcher = Pattern.compile("mixin:APP:([^:\\s]+)").matcher(línea);
-						if (jsonMatcher.find()) {
-							String jsonFile = jsonMatcher.group(1);
-							jars = Buscardor.obtenerUbicaciones(Buscardor.buscarModsConTermino(jsonFile));
-						}
-					} else if (línea.startsWith("TRANSFORMER: fml:")) {
-						Matcher modidMatcher = Pattern.compile("TRANSFORMER: fml:([^:\\s]+)").matcher(línea);
-						if (modidMatcher.find()) {
-							String modid = modidMatcher.group(1);
-							CrashDetectorLogger.log(modid);
-							jars = Buscardor.obtenerModsConNombre(modid);
-						}
-					}
-
-					String jarsStr = "";
-					if (!jars.isEmpty()) {
-						jarsStr = " <strong>[" + String.join(", ", jars) + "]</strong>";
-					}
-
-					// Reconstruir texto final con JARs antes de la puntuación
-					String textoParaMostrar = textoBase + jarsStr + puntuaciónStr;
-
-					// Registrar el error en el sistema de lectura
-					String enlace = consola.agregarErrorALectador(i, this);
-					enlacesPorEntrada.put(textoParaMostrar, enlace);
-
-					entradas.add(new EntradaAudit(textoParaMostrar, puntuación));
-				}
-			} catch (Exception e) {
-				CrashDetectorLogger.log("Error procesando línea: " + línea);
-			}
 		}
 
-		activado = !entradas.isEmpty();
+		// Detección global ligera.
+		// No se limpian listas aquí porque esta verificación puede ejecutarse sobre
+		// varios archivos de log con la misma instancia.
+		String contenido = consola.contenido_verificar;
+
+		if (contenido.contains("Transformer Audit:") || contenido.contains("TRANSFORMER:")
+				|| contenido.contains("PLUGIN:") || contenido.contains("REASON:")) {
+			posibleAuditoriaTransformer = true;
+		}
+	}
+
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		if (!posibleAuditoriaTransformer || linea == null) {
+			return;
+		}
+
+		String línea = linea.trim();
+
+		if (línea.isEmpty()) {
+			return;
+		}
+
+		try {
+			if (línea.startsWith("Transformer Audit:")) {
+				auditIndex++;
+				return;
+			}
+
+			if (!esEntradaValida(línea)) {
+				return;
+			}
+
+			if (estaEnDenylist(línea)) {
+				return;
+			}
+
+			if (procesados.contains(línea)) {
+				return;
+			}
+
+			if (esEntradaExcluida(línea)) {
+				return;
+			}
+
+			procesados.add(línea);
+			procesarEntrada(consola, línea, numero_de_linea);
+		} catch (Exception e) {
+			CrashDetectorLogger.log("Error procesando línea: " + línea);
+		}
 	}
 
 	/**
-	 * Verifica si una línea contiene una entrada válida (REASON, TRANSFORMER,
-	 * PLUGIN)
+	 * Procesa una entrada válida del auditor de transformers.
+	 */
+	private void procesarEntrada(Consola consola, String línea, int numero_de_linea) {
+		String textoBase = línea;
+		String puntuaciónStr = "";
+		float puntuación = auditIndex + (entradas.size() % 100) / 100f;
+
+		int inicioParentesis = línea.indexOf('(');
+		int finParentesis = inicioParentesis >= 0 ? línea.indexOf(')', inicioParentesis + 1) : -1;
+
+		if (inicioParentesis > 0 && finParentesis > inicioParentesis) {
+			puntuaciónStr = " (" + línea.substring(inicioParentesis + 1, finParentesis) + ")";
+			textoBase = línea.substring(0, inicioParentesis).trim();
+		}
+
+		List<String> jars = obtenerJarsRelacionados(línea);
+
+		String jarsStr = "";
+
+		if (!jars.isEmpty()) {
+			jarsStr = " <strong>[" + String.join(", ", jars) + "]</strong>";
+		}
+
+		String textoParaMostrar = textoBase + jarsStr + puntuaciónStr;
+
+		String enlace = consola.agregarErrorALectador(numero_de_linea, this);
+		enlacesPorEntrada.put(textoParaMostrar, enlace);
+
+		entradas.add(new EntradaAudit(textoParaMostrar, puntuación));
+		activado = true;
+	}
+
+	/**
+	 * Busca el jar relacionado con una línea del auditor.
 	 *
-	 * @param línea Línea a verificar
-	 * @return true si la línea es una entrada válida
+	 * Reemplaza los Pattern/Matcher anteriores: - mixin:APP:([^:\s]+) -
+	 * TRANSFORMER: fml:([^:\s]+)
+	 */
+	private List<String> obtenerJarsRelacionados(String línea) {
+		if (línea.contains("mixin:APP:")) {
+			String jsonFile = extraerDespuesHastaSeparador(línea, "mixin:APP:");
+
+			if (jsonFile != null && !jsonFile.isEmpty()) {
+				List<String> cacheado = cacheJarsPorMixin.get(jsonFile);
+
+				if (cacheado != null) {
+					return cacheado;
+				}
+
+				List<String> jars = Buscardor.obtenerUbicaciones(Buscardor.buscarModsConTermino(jsonFile));
+				cacheJarsPorMixin.put(jsonFile, jars);
+				return jars;
+			}
+		}
+
+		if (línea.startsWith("TRANSFORMER: fml:")) {
+			String modid = extraerDespuesHastaSeparador(línea, "TRANSFORMER: fml:");
+
+			if (modid != null && !modid.isEmpty()) {
+				List<String> cacheado = cacheJarsPorModid.get(modid);
+
+				if (cacheado != null) {
+					return cacheado;
+				}
+
+				CrashDetectorLogger.log(modid);
+
+				List<String> jars = Buscardor.obtenerModsConNombre(modid);
+				cacheJarsPorModid.put(modid, jars);
+				return jars;
+			}
+		}
+
+		return new ArrayList<>();
+	}
+
+	/**
+	 * Verifica si una línea contiene una entrada válida.
 	 */
 	private boolean esEntradaValida(String línea) {
 		return línea.startsWith("REASON") || línea.startsWith("TRANSFORMER") || línea.startsWith("PLUGIN");
 	}
 
 	/**
-	 * Verifica si la línea está en la lista negada
-	 *
-	 * @param línea Línea a verificar
-	 * @return true si la línea debe denegarse
+	 * Verifica si la línea está en la lista negada.
 	 */
 	private boolean estaEnDenylist(String línea) {
 		for (String bloque : LISTA_DE_DENEGADOS) {
@@ -136,30 +184,80 @@ public class AuditorTransformer implements Verificaciones {
 				return true;
 			}
 		}
+
 		return false;
 	}
 
 	/**
-	 * Devuelve true si la línea contiene una entrada excluida: - "mixin" -
-	 * "mixin:AFTER" - "computing_frames"
+	 * Devuelve true si la línea contiene una entrada excluida: - mixin -
+	 * mixin:AFTER - computing_frames
 	 *
-	 * @param línea Línea a verificar
-	 * @return true si debe excluirse
+	 * Versión sin split().
 	 */
 	private boolean esEntradaExcluida(String línea) {
-		if (!línea.contains(": "))
-			return false;
+		int separador = línea.indexOf(": ");
 
-		String[] partes = línea.split(": ", 2);
-		String valor = partes[1].split(" ")[0];
+		if (separador < 0) {
+			return false;
+		}
+
+		int inicioValor = separador + 2;
+
+		while (inicioValor < línea.length() && Character.isWhitespace(línea.charAt(inicioValor))) {
+			inicioValor++;
+		}
+
+		int finValor = inicioValor;
+
+		while (finValor < línea.length() && !Character.isWhitespace(línea.charAt(finValor))) {
+			finValor++;
+		}
+
+		if (finValor <= inicioValor) {
+			return false;
+		}
+
+		String valor = línea.substring(inicioValor, finValor);
 
 		return valor.equals("mixin") || valor.equals("mixin:AFTER") || valor.equals("computing_frames");
 	}
 
+	/**
+	 * Extrae texto después de un prefijo hasta ':' o whitespace.
+	 */
+	private String extraerDespuesHastaSeparador(String línea, String prefijo) {
+		int inicio = línea.indexOf(prefijo);
+
+		if (inicio < 0) {
+			return null;
+		}
+
+		inicio += prefijo.length();
+
+		int fin = inicio;
+
+		while (fin < línea.length()) {
+			char c = línea.charAt(fin);
+
+			if (c == ':' || Character.isWhitespace(c)) {
+				break;
+			}
+
+			fin++;
+		}
+
+		if (fin <= inicio) {
+			return null;
+		}
+
+		return línea.substring(inicio, fin).trim();
+	}
+
 	@Override
 	public String mensaje() {
-		if (!activado || entradas.isEmpty())
+		if (!activado || entradas.isEmpty()) {
 			return "";
+		}
 
 		StringBuilder html = new StringBuilder();
 		html.append(MonitorDePID.idioma.auditorias_transformer_detectadas());
@@ -206,32 +304,27 @@ public class AuditorTransformer implements Verificaciones {
 
 	@Override
 	public QuickFix solucion() {
-		return QuickFix.NINGUN;// TODO
+		return QuickFix.NINGUN;
 	}
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
 		return "auditortransformer";
 	}
 
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+		return false;
 	}
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 
 	@Override
 	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
-
 }

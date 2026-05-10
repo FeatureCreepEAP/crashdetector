@@ -43,7 +43,23 @@ public class CDTracer implements ServicioCDLauncher {
 				ProtectionDomain dominioProteccion, byte[] bytecodeClase) throws IllegalClassFormatException {
 
 			// Ignorar clases del JDK para evitar recursión infinita
-			if (nombreClase == null || nombreClase.startsWith("java/")) {
+			if (nombreClase == null || nombreClase.startsWith("java/")
+
+					|| nombreClase.startsWith("org/apache/logging/log4j/") || nombreClase.startsWith("org/slf4j/")
+					|| nombreClase.startsWith("ch/qos/logback/") || nombreClase.startsWith("sun/")
+					|| nombreClase.startsWith("com/sun/")
+					|| nombreClase.startsWith("net/minecraftforge/fml/loading/TracingPrintStream")
+					|| nombreClase.startsWith("com/google/") || nombreClase.startsWith("com/electronwill/nightconfig/")
+					|| nombreClase.startsWith("javax/") || nombreClase.startsWith("jdk/")
+
+					|| nombreClase.startsWith("org/lwjgl/") || nombreClase.startsWith("org/antlr/")
+
+					|| nombreClase.startsWith("org/apache/commons/lang3/")
+					|| nombreClase.startsWith("cpw/mods/modlauncher/Transform")
+
+			)
+
+			{
 				return null;
 			}
 

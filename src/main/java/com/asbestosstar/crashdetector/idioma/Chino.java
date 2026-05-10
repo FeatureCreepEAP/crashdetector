@@ -8718,32 +8718,20 @@ public class Chino implements Idioma {
 	// Chinese (Simplified) (中文)
 	@Override
 	public String mensajeEntradaDuplicadaIdModerno() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "在 Minecraft 注册表中检测到重复条目。</b>"
-	            + "<p>日志包含类似于 <b>Duplicate entry on id</b> 的错误，例如 "
-	            + "<b>current=maroon, previous=mint</b>。</p>"
-	            + "<p>在现代版本的 Minecraft 中，此类错误通常发生在两个 mod 尝试使用相同的内部 ID 注册 "
-	            + "不同条目时。</p>"
-	            + "<p><b>建议选项：</b></p>"
-	            + "<ul>"
-	            + "<li>删除其中一个注册了重复条目的 mod。</li>"
-	            + "<li>如果您识别出错误中提到的名称，请检查哪个 mod 添加了这些条目，并尝试在不安装该 mod 的情况下运行。</li>"
-	            + "<li>如果您不认识这些名称，请使用侧边栏中的 <b>grepr</b> 工具。</li>"
-	            + "<li>在 <b>grepr</b> 中，启用在压缩文件 <b>.jar</b>、<b>.zip</b> 和 <b>.fpm</b> 中的搜索。</li>"
-	            + "<li>同时启用在 <b>二进制文件</b> 中的搜索，因为某些名称或 ID 可能位于编译后的类文件中。</li>"
-	            + "</ul>"
-	            + "<p>搜索错误中提到的值，如 <b>maroon</b> 或 <b>mint</b>，以找到包含它们的 mod。</p>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "在 Minecraft 注册表中检测到重复条目。</b>" + "<p>日志包含类似于 <b>Duplicate entry on id</b> 的错误，例如 "
+				+ "<b>current=maroon, previous=mint</b>。</p>" + "<p>在现代版本的 Minecraft 中，此类错误通常发生在两个 mod 尝试使用相同的内部 ID 注册 "
+				+ "不同条目时。</p>" + "<p><b>建议选项：</b></p>" + "<ul>" + "<li>删除其中一个注册了重复条目的 mod。</li>"
+				+ "<li>如果您识别出错误中提到的名称，请检查哪个 mod 添加了这些条目，并尝试在不安装该 mod 的情况下运行。</li>"
+				+ "<li>如果您不认识这些名称，请使用侧边栏中的 <b>grepr</b> 工具。</li>"
+				+ "<li>在 <b>grepr</b> 中，启用在压缩文件 <b>.jar</b>、<b>.zip</b> 和 <b>.fpm</b> 中的搜索。</li>"
+				+ "<li>同时启用在 <b>二进制文件</b> 中的搜索，因为某些名称或 ID 可能位于编译后的类文件中。</li>" + "</ul>"
+				+ "<p>搜索错误中提到的值，如 <b>maroon</b> 或 <b>mint</b>，以找到包含它们的 mod。</p>";
 	}
 
 	@Override
 	public String nombreEntradaDuplicadaIdModerno() {
-	    return "Mod ID 中的重复条目";
+		return "Mod ID 中的重复条目";
 	}
-	
-	
-	
-	
-	
-	
-	
+
 }

@@ -2,156 +2,277 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
- * Clase que detecta plugins con versiones de API no compatibles.Gracias a
- * Aternos por que esta es una implementacion de su codex
+ * Clase que detecta plugins con versiones de API no compatibles. Gracias a
+ * Aternos porque esta es una implementacion de su codex:
  * https://github.com/aternosorg/codex-minecraft
  */
 public class ProblemaVersionAPIIncompatible implements Verificaciones {
 
+	private boolean posibleVersionAPIIncompatible = false;
 	private boolean activado = false;
+
 	private String mensaje = "";
+
 	private final List<String> nombresPlugins = new ArrayList<>();
 	private final List<String> versionesAPI = new ArrayList<>();
+	private final List<String> enlaces = new ArrayList<>();
 
-	// Patrones para versiones antiguas
-	private static final Pattern PATRON_VIEJO = Pattern.compile(
-			"Could not load 'plugins[/\\\\]([^']+)' in folder '?([^']*)'?\\n"
-					+ "org\\.bukkit\\.plugin\\.InvalidPluginException: Unsupported API version ([\\d\\.]+)",
-			Pattern.DOTALL);
-
-	private static final Pattern PATRON_NUEVO = Pattern.compile(
-			"Could not load plugin '((?!\\.jar).*\\.jar)' in folder '?([^']*)'?\\n"
-					+ "org\\.bukkit\\.plugin\\.InvalidPluginException: Unsupported API version ([\\d\\.]+)",
-			Pattern.DOTALL);
-
-	private static final Pattern PATRON_PAPER_NUEVO = Pattern
-			.compile(
-					"Could not load plugin '([^']+)' in folder.*?\\n.*?\\n.*?\\n"
-							+ "Plugin API version ([\\d\\.]+) is lower than the minimum allowed version",
-					Pattern.DOTALL);
-
-	private static final Pattern PATRON_PAPER_MENSAJE = Pattern
-			.compile("Could not load plugin '([^']+)' in folder.*?\\n.*?\\n.*?\\n"
-					+ "Plugin API version ([\\d\\.]+) is not supported by this server", Pattern.DOTALL);
-
-	// Estado para el procesamiento línea a línea del nuevo formato de Paper
-	// (1.20.6+)
+	// Estado para formatos donde el plugin aparece en una linea y la version en
+	// otra.
 	private String pluginPendiente = null;
+	private int lineaPluginPendiente = -1;
 	private boolean esperandoVersionAPI = false;
+	private int lineasEsperandoVersion = 0;
+
+	private static final String TEXTO_COULD_NOT_LOAD_OLD = "Could not load 'plugins";
+	private static final String TEXTO_COULD_NOT_LOAD_PLUGIN = "Could not load plugin '";
+	private static final String TEXTO_INVALID_API = "org.bukkit.plugin.InvalidPluginException: Unsupported API version ";
+	private static final String TEXTO_PLUGIN_API_VERSION = "Plugin API version ";
+	private static final String TEXTO_LOWER_THAN_MINIMUM = " is lower than the minimum allowed version";
+	private static final String TEXTO_NOT_SUPPORTED = " is not supported by this server";
 
 	/**
-	 * Verifica si el log contiene errores de versión de API incompatible.
+	 * Verificacion global ligera.
+	 *
+	 * Se ejecuta primero. No se limpian listas aqui porque esta verificacion puede
+	 * ejecutarse sobre varios archivos de log con la misma instancia.
 	 */
 	@Override
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+			return;
+		}
+
 		String contenido = consola.contenido_verificar;
 
-		// 1. Usar regex para formatos antiguos
-		procesarCoincidenciasRegex(PATRON_VIEJO.matcher(contenido));
-		procesarCoincidenciasRegex(PATRON_NUEVO.matcher(contenido));
-		procesarCoincidenciasRegex(PATRON_PAPER_NUEVO.matcher(contenido));
-		procesarCoincidenciasRegex(PATRON_PAPER_MENSAJE.matcher(contenido));
-
-		// 2. El nuevo formato de Paper 1.20.6+ se procesa ahora línea a línea
-		// en verificar(Consola, String, int). Este método ya no recorre las líneas
-		// para ese caso por motivos de rendimiento.
-
-		// 3. Generar mensaje si se encontraron plugins problemáticos (por regex)
-		reconstruirMensaje();
+		if ((contenido.contains("Could not load") && contenido.contains("Unsupported API version"))
+				|| (contenido.contains("Could not load plugin") && contenido.contains("Plugin API version"))) {
+			posibleVersionAPIIncompatible = true;
+		}
 	}
 
+	/**
+	 * Verificacion por linea.
+	 *
+	 * Detecta el plugin exacto, la version API exacta y agrega enlace a la linea.
+	 */
 	@Override
 	public void verificar(Consola consola, String linea, int numero_de_linea) {
-		if (linea == null) {
+		if (!posibleVersionAPIIncompatible || linea == null || linea.isEmpty()) {
 			return;
 		}
 
 		String l = linea.trim();
 
-		// 1) Detectar la línea principal del nuevo formato Paper 1.20.6+
-		// "Could not load plugin 'X.jar' in folder ..."
-		if (l.contains("Could not load plugin") && l.contains(".jar")) {
-			int inicioNombre = l.indexOf('\'') + 1;
-			int finNombre = l.indexOf('\'', inicioNombre);
-			if (inicioNombre > 0 && finNombre > inicioNombre) {
-				String nombrePlugin = extraerNombrePlugin(l.substring(inicioNombre, finNombre));
-				if (!nombrePlugin.isEmpty()) {
-					pluginPendiente = nombrePlugin;
-					esperandoVersionAPI = true;
-				}
+		// Evitar que un plugin pendiente se quede activo por demasiadas lineas.
+		if (esperandoVersionAPI) {
+			lineasEsperandoVersion++;
+			if (lineasEsperandoVersion > 8) {
+				limpiarPendiente();
 			}
+		}
+
+		// Formato antiguo:
+		// Could not load 'plugins/Plugin.jar' in folder 'plugins'
+		if (l.contains("Could not load 'plugins")) {
+			String plugin = extraerPluginFormatoViejo(l);
+
+			if (!plugin.isEmpty()) {
+				pluginPendiente = plugin;
+				lineaPluginPendiente = numero_de_linea;
+				esperandoVersionAPI = true;
+				lineasEsperandoVersion = 0;
+			}
+
 			return;
 		}
 
-		// 2) Si estamos esperando la línea con "Plugin API version ..."
-		if (esperandoVersionAPI && l.contains("Plugin API version")) {
-			int inicioVersion = l.indexOf("Plugin API version ") + "Plugin API version ".length();
-			if (inicioVersion <= 0 || inicioVersion >= l.length()) {
+		// Formato nuevo:
+		// Could not load plugin 'Plugin.jar' in folder ...
+		if (l.contains(TEXTO_COULD_NOT_LOAD_PLUGIN)) {
+			String plugin = extraerPluginEntreComillas(l, TEXTO_COULD_NOT_LOAD_PLUGIN);
+
+			if (!plugin.isEmpty()) {
+				pluginPendiente = extraerNombrePlugin(plugin);
+				lineaPluginPendiente = numero_de_linea;
+				esperandoVersionAPI = true;
+				lineasEsperandoVersion = 0;
+			}
+
+			return;
+		}
+
+		// Version antigua Bukkit/Spigot:
+		// org.bukkit.plugin.InvalidPluginException: Unsupported API version 1.20
+		if (esperandoVersionAPI && l.contains(TEXTO_INVALID_API)) {
+			String version = extraerVersionDespuesDe(l, TEXTO_INVALID_API);
+
+			if (!version.isEmpty()) {
+				registrarPlugin(consola, pluginPendiente, version, elegirLineaParaEnlace(numero_de_linea));
+				limpiarPendiente();
+			}
+
+			return;
+		}
+
+		// Formato Paper:
+		// Plugin API version 1.20 is lower than the minimum allowed version
+		// Plugin API version 1.20 is not supported by this server
+		if (esperandoVersionAPI && l.contains(TEXTO_PLUGIN_API_VERSION)) {
+			String version = extraerVersionAPIPlugin(l);
+
+			if (!version.isEmpty() && (l.contains(TEXTO_LOWER_THAN_MINIMUM) || l.contains(TEXTO_NOT_SUPPORTED))) {
+				registrarPlugin(consola, pluginPendiente, version, elegirLineaParaEnlace(numero_de_linea));
+				limpiarPendiente();
+			}
+		}
+	}
+
+	/**
+	 * Registra un plugin problemático evitando duplicados simples.
+	 */
+	private void registrarPlugin(Consola consola, String plugin, String version, int numero_de_linea) {
+		if (plugin == null || plugin.isEmpty() || version == null || version.isEmpty()) {
+			return;
+		}
+
+		for (int i = 0; i < nombresPlugins.size(); i++) {
+			if (nombresPlugins.get(i).equalsIgnoreCase(plugin) && versionesAPI.get(i).equalsIgnoreCase(version)) {
 				return;
 			}
-			int finVersion = l.indexOf(" ", inicioVersion);
-			if (finVersion == -1) {
-				finVersion = l.length();
-			}
+		}
 
-			String version = l.substring(inicioVersion, finVersion).trim();
+		nombresPlugins.add(plugin);
+		versionesAPI.add(version);
+		enlaces.add(consola.agregarErrorALectador(numero_de_linea, this));
 
-			if (pluginPendiente != null && !pluginPendiente.isEmpty() && !version.isEmpty()) {
-				nombresPlugins.add(pluginPendiente);
-				versionesAPI.add(version);
-				pluginPendiente = null;
-				esperandoVersionAPI = false;
-				reconstruirMensaje();
+		reconstruirMensaje();
+	}
+
+	/**
+	 * Preferimos enlazar la linea del error de version, pero si existe una linea
+	 * principal del plugin pendiente, puede usarse esa linea.
+	 */
+	private int elegirLineaParaEnlace(int lineaActual) {
+		if (lineaPluginPendiente >= 0) {
+			return lineaPluginPendiente;
+		}
+
+		return lineaActual;
+	}
+
+	private void limpiarPendiente() {
+		pluginPendiente = null;
+		lineaPluginPendiente = -1;
+		esperandoVersionAPI = false;
+		lineasEsperandoVersion = 0;
+	}
+
+	/**
+	 * Extrae plugin de: Could not load 'plugins/Plugin.jar' in folder ...
+	 *
+	 * Tambien acepta plugins\Plugin.jar.
+	 */
+	private String extraerPluginFormatoViejo(String linea) {
+		int inicio = linea.indexOf(TEXTO_COULD_NOT_LOAD_OLD);
+
+		if (inicio < 0) {
+			return "";
+		}
+
+		int primeraComilla = linea.indexOf('\'', inicio);
+		if (primeraComilla < 0) {
+			return "";
+		}
+
+		int segundaComilla = linea.indexOf('\'', primeraComilla + 1);
+		if (segundaComilla <= primeraComilla + 1) {
+			return "";
+		}
+
+		String ruta = linea.substring(primeraComilla + 1, segundaComilla).trim();
+		return extraerNombrePlugin(ruta);
+	}
+
+	/**
+	 * Extrae el texto entre comillas después de cierto prefijo.
+	 */
+	private String extraerPluginEntreComillas(String linea, String prefijo) {
+		int inicio = linea.indexOf(prefijo);
+
+		if (inicio < 0) {
+			return "";
+		}
+
+		int inicioNombre = inicio + prefijo.length();
+		int finNombre = linea.indexOf('\'', inicioNombre);
+
+		if (finNombre <= inicioNombre) {
+			return "";
+		}
+
+		return linea.substring(inicioNombre, finNombre).trim();
+	}
+
+	/**
+	 * Extrae una version después de un texto fijo.
+	 */
+	private String extraerVersionDespuesDe(String linea, String prefijo) {
+		int inicio = linea.indexOf(prefijo);
+
+		if (inicio < 0) {
+			return "";
+		}
+
+		inicio += prefijo.length();
+
+		while (inicio < linea.length() && Character.isWhitespace(linea.charAt(inicio))) {
+			inicio++;
+		}
+
+		int fin = leerFinVersion(linea, inicio);
+
+		if (fin <= inicio) {
+			return "";
+		}
+
+		return linea.substring(inicio, fin).trim();
+	}
+
+	/**
+	 * Extrae version de: Plugin API version 1.20 is ...
+	 */
+	private String extraerVersionAPIPlugin(String linea) {
+		return extraerVersionDespuesDe(linea, TEXTO_PLUGIN_API_VERSION);
+	}
+
+	/**
+	 * Lee versiones tipo: 1 1.20 1.20.6
+	 */
+	private int leerFinVersion(String texto, int inicio) {
+		int i = inicio;
+
+		while (i < texto.length()) {
+			char c = texto.charAt(i);
+
+			if (Character.isDigit(c) || c == '.') {
+				i++;
+			} else {
+				break;
 			}
 		}
-	}
 
-	/**
-	 * Procesa coincidencias usando regex.
-	 */
-	private void procesarCoincidenciasRegex(Matcher coincidencia) {
-		while (coincidencia.find()) {
-			if (coincidencia.groupCount() >= 2) {
-				nombresPlugins.add(extraerNombrePlugin(coincidencia.group(1)));
-				versionesAPI.add(coincidencia.group(2));
-			}
-		}
-	}
-
-	/**
-	 * Procesa el nuevo formato de Paper 1.20.6+ sin usar regex específicos.
-	 *
-	 * En la versión actual, el procesamiento de este formato se realiza línea a
-	 * línea en {@link #verificar(Consola, String, int)}, por lo que este método se
-	 * mantiene únicamente por compatibilidad y ya no realiza trabajo adicional.
-	 */
-	@SuppressWarnings("unused")
-	private void procesarFormatoPaperNuevo(Consola consola) {
-		// Lógica migrada a verificar(Consola, String, int).
-	}
-
-	/**
-	 * Procesa errores específicos del nuevo formato de Paper 1.20.6+
-	 *
-	 * En la versión actual se utiliza un pequeño estado (pluginPendiente /
-	 * esperandoVersionAPI) en el análisis por línea, por lo que este método ya no
-	 * es necesario y se mantiene solo por compatibilidad histórica.
-	 */
-	@SuppressWarnings("unused")
-	private void procesarErrorPaper1206(String[] lineas, int indiceLinea) {
-		// Lógica migrada a verificar(Consola, String, int).
+		return i;
 	}
 
 	/**
@@ -168,8 +289,14 @@ public class ProblemaVersionAPIIncompatible implements Verificaciones {
 
 		for (int i = 0; i < nombresPlugins.size(); i++) {
 			mensajeBuilder.append(
-					MonitorDePID.idioma.mensajeVersionAPIIncompatible(nombresPlugins.get(i), versionesAPI.get(i)))
-					.append("<br><br>");
+					MonitorDePID.idioma.mensajeVersionAPIIncompatible(nombresPlugins.get(i), versionesAPI.get(i)));
+
+			String enlace = enlaces.size() > i ? enlaces.get(i) : "";
+			if (enlace != null && !enlace.isEmpty()) {
+				mensajeBuilder.append(" ").append(enlace);
+			}
+
+			mensajeBuilder.append("<br><br>");
 		}
 
 		this.mensaje = mensajeBuilder.toString();
@@ -180,7 +307,14 @@ public class ProblemaVersionAPIIncompatible implements Verificaciones {
 	 * Extrae solo el nombre del archivo del path completo.
 	 */
 	private String extraerNombrePlugin(String path) {
-		int indiceUltimaBarra = path.lastIndexOf("/");
+		if (path == null || path.isEmpty()) {
+			return "";
+		}
+
+		int indiceUltimaBarraNormal = path.lastIndexOf("/");
+		int indiceUltimaBarraWindows = path.lastIndexOf("\\");
+		int indiceUltimaBarra = Math.max(indiceUltimaBarraNormal, indiceUltimaBarraWindows);
+
 		return (indiceUltimaBarra != -1) ? path.substring(indiceUltimaBarra + 1) : path;
 	}
 
@@ -201,7 +335,7 @@ public class ProblemaVersionAPIIncompatible implements Verificaciones {
 	}
 
 	/**
-	 * Prioridad del problema (alta).
+	 * Prioridad del problema.
 	 */
 	@Override
 	public float prioridad() {
@@ -230,36 +364,33 @@ public class ProblemaVersionAPIIncompatible implements Verificaciones {
 	@Override
 	public QuickFix solucion() {
 		Builder builder = new Builder(nombre());
+
 		for (int i = 0; i < nombresPlugins.size(); i++) {
 			builder.agregarEtiqueta(MonitorDePID.idioma.solucionInstalarVersionServidor(versionesAPI.get(i)));
 			builder.agregarEtiqueta(MonitorDePID.idioma.solucionEliminarPlugin(nombresPlugins.get(i)));
 		}
+
 		return builder.construir();
 	}
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
 		return "problema_version_api_incompatible";
 	}
 
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+		return false;
 	}
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 
 	@Override
 	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
-
 }

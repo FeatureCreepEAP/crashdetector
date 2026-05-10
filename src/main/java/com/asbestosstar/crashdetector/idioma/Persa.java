@@ -9232,35 +9232,28 @@ public class Persa implements Idioma {
 	public String nombreFabricRenderingApiFaltaIndium() {
 		return "کمبود Indium / Fabric Rendering API";
 	}
-    @Override
-    public String mensajeEntradaDuplicadaIdModerno() {
-        return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-                + "ورودی تکراری در ثبت‌نام Minecraft شناسایی شد.</b>"
-                + "<p>لاگ حاوی خطایی شبیه به <b>Duplicate entry on id</b> است، برای مثال "
-                + "<b>current=maroon, previous=mint</b>.</p>"
-                + "<p>در نسخه‌های مدرن Minecraft، این نوع خطا معمولاً زمانی رخ می‌دهد که دو ماد سعی کنند "
-                + "ورودی‌های متفاوتی را با استفاده از یک ID داخلی یکسان ثبت کنند.</p>"
-                + "<p><b>گزینه‌های توصیه شده:</b></p>"
-                + "<ul>"
-                + "<li>یکی از مادهایی که ورودی تکراری را ثبت می‌کند حذف کنید.</li>"
-                + "<li>اگر نام‌های ذکر شده در خطا را می‌شناسید، بررسی کنید کدام ماد آن ورودی‌ها را اضافه می‌کند و بدون آن ماد امتحان کنید.</li>"
-                + "<li>اگر نام‌ها را نمی‌شناسید، از ابزار <b>grepr</b> در نوار کناری استفاده کنید.</li>"
-                + "<li>در <b>grepr</b>، جستجو در فایل‌های فشرده <b>.jar</b>، <b>.zip</b> و <b>.fpm</b> را فعال کنید.</li>"
-                + "<li>جستجو در <b>فایل‌های باینری</b> را نیز فعال کنید، زیرا برخی نام‌ها یا IDها ممکن است در کلاس‌های کامپایل شده باشند.</li>"
-                + "</ul>"
-                + "<p>مقادیر ذکر شده در خطا، مانند <b>maroon</b> یا <b>mint</b> را جستجو کنید تا ببینید کدام ماد آنها را содержит.</p>";
-    }
 
-    @Override
-    public String nombreEntradaDuplicadaIdModerno() {
-        return "ورودی تکراری در ID ماد";
-    }
-	
-	
-	
-	
-	
-	
-	
-	
+	@Override
+	public String mensajeEntradaDuplicadaIdModerno() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "ورودی تکراری در ثبت‌نام Minecraft شناسایی شد.</b>"
+				+ "<p>لاگ حاوی خطایی شبیه به <b>Duplicate entry on id</b> است، برای مثال "
+				+ "<b>current=maroon, previous=mint</b>.</p>"
+				+ "<p>در نسخه‌های مدرن Minecraft، این نوع خطا معمولاً زمانی رخ می‌دهد که دو ماد سعی کنند "
+				+ "ورودی‌های متفاوتی را با استفاده از یک ID داخلی یکسان ثبت کنند.</p>"
+				+ "<p><b>گزینه‌های توصیه شده:</b></p>" + "<ul>"
+				+ "<li>یکی از مادهایی که ورودی تکراری را ثبت می‌کند حذف کنید.</li>"
+				+ "<li>اگر نام‌های ذکر شده در خطا را می‌شناسید، بررسی کنید کدام ماد آن ورودی‌ها را اضافه می‌کند و بدون آن ماد امتحان کنید.</li>"
+				+ "<li>اگر نام‌ها را نمی‌شناسید، از ابزار <b>grepr</b> در نوار کناری استفاده کنید.</li>"
+				+ "<li>در <b>grepr</b>، جستجو در فایل‌های فشرده <b>.jar</b>، <b>.zip</b> و <b>.fpm</b> را فعال کنید.</li>"
+				+ "<li>جستجو در <b>فایل‌های باینری</b> را نیز فعال کنید، زیرا برخی نام‌ها یا IDها ممکن است در کلاس‌های کامپایل شده باشند.</li>"
+				+ "</ul>"
+				+ "<p>مقادیر ذکر شده در خطا، مانند <b>maroon</b> یا <b>mint</b> را جستجو کنید تا ببینید کدام ماد آنها را содержит.</p>";
+	}
+
+	@Override
+	public String nombreEntradaDuplicadaIdModerno() {
+		return "ورودی تکراری در ID ماد";
+	}
+
 }

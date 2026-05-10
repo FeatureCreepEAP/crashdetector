@@ -1,65 +1,248 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import javax.swing.JOptionPane;
 
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
- * Detects incomplete Forge installations and related exceptions.
+ * Detecta instalaciones incompletas de Forge y excepciones relacionadas.
  */
 public class MCForgeInstallacionNoEstaCompleta implements Verificaciones {
 
+	private boolean posibleForgeIncompleto = false;
 	private boolean activado = false;
+
 	private String mensaje = "";
+	private String enlace = "";
 
-	// Pre-compiled regex patterns to optimize performance
-	private static final Pattern PATTERN_INVALID_PATHS = Pattern.compile(
-			"java\\.io\\.UncheckedIOException: java\\.io\\.IOException: Invalid paths argument, contained no existing paths: \\[(.*?)(forge-.*?client\\.jar|fmlcore-.*?\\.jar)\\]");
+	private static final String ERROR_INVALID_PATHS = "java.io.UncheckedIOException: java.io.IOException: Invalid paths argument, contained no existing paths: [";
 
-	private static final Pattern PATTERN_FAILED_TO_FIND_VERSION = Pattern
-			.compile("Failed to find Minecraft resource version (.*?) at (.*?forge-.*?-client\\.jar)");
+	private static final String ERROR_FAILED_TO_FIND_VERSION = "Failed to find Minecraft resource version ";
 
-	private static final Pattern PATTERN_CANNOT_FIND_LAUNCH_TARGET = Pattern
-			.compile("Cannot find launch target fmlclient, unable to launch");
+	private static final String ERROR_CANNOT_FIND_TARGET = "Cannot find launch target fmlclient, unable to launch";
 
-	private static final Pattern PATTERN_MINECRAFT_CLASS_MISSING = Pattern.compile(
-			"java\\.lang\\.IllegalStateException: Could not find net/minecraft/client/Minecraft\\.class in classloader SecureModuleClassLoader");
+	private static final String ERROR_MINECRAFT_CLASS_MISSING = "java.lang.IllegalStateException: Could not find net/minecraft/client/Minecraft.class in classloader SecureModuleClassLoader";
 
+	/**
+	 * Verificacion global ligera.
+	 *
+	 * Se ejecuta primero. No se limpian campos porque esta verificacion puede
+	 * ejecutarse sobre varios archivos de log con la misma instancia.
+	 */
 	@Override
 	public void verificar(Consola consola) {
-		String contenidoConsola = consola.contenido_verificar;
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+			return;
+		}
 
-		// Check for Forge installation problems using compiled regex patterns
-		Matcher matcherInvalidPaths = PATTERN_INVALID_PATHS.matcher(contenidoConsola);
-		Matcher matcherFailedToFindVersion = PATTERN_FAILED_TO_FIND_VERSION.matcher(contenidoConsola);
-		Matcher matcherCannotFindTarget = PATTERN_CANNOT_FIND_LAUNCH_TARGET.matcher(contenidoConsola);
-		Matcher matcherMinecraftClassMissing = PATTERN_MINECRAFT_CLASS_MISSING.matcher(contenidoConsola);
+		String contenido = consola.contenido_verificar;
 
-		// Check for each type of issue
-		if (matcherInvalidPaths.find()) {
-			mensaje = MonitorDePID.idioma.forgeArchivosFaltantes(matcherInvalidPaths.group(2));
+		if (contenido.contains(ERROR_INVALID_PATHS) || contenido.contains(ERROR_FAILED_TO_FIND_VERSION)
+				|| contenido.contains(ERROR_CANNOT_FIND_TARGET) || contenido.contains(ERROR_MINECRAFT_CLASS_MISSING)) {
+			posibleForgeIncompleto = true;
+		}
+	}
+
+	/**
+	 * Verificacion por linea.
+	 *
+	 * Aquí se detecta el problema exacto y se guarda el enlace hacia la línea del
+	 * log.
+	 */
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		if (!posibleForgeIncompleto || activado || linea == null || linea.isEmpty()) {
+			return;
+		}
+
+		// 1) Detectar archivos faltantes en rutas de Forge/FML
+		String archivoFaltante = extraerArchivoForgeFaltante(linea);
+		if (archivoFaltante != null) {
+			mensaje = MonitorDePID.idioma.forgeArchivosFaltantes(archivoFaltante);
+			enlace = consola.agregarErrorALectador(numero_de_linea, this);
 			activado = true;
-		} else if (matcherFailedToFindVersion.find()) {
-			mensaje = MonitorDePID.idioma.forgeVersionNoEncontrada(matcherFailedToFindVersion.group(1),
-					matcherFailedToFindVersion.group(2));
+			return;
+		}
+
+		// 2) Detectar version de recurso Minecraft no encontrada
+		DatosVersionForge datosVersion = extraerVersionForgeNoEncontrada(linea);
+		if (datosVersion != null) {
+			mensaje = MonitorDePID.idioma.forgeVersionNoEncontrada(datosVersion.version, datosVersion.ruta);
+			enlace = consola.agregarErrorALectador(numero_de_linea, this);
 			activado = true;
-		} else if (matcherCannotFindTarget.find()) {
+			return;
+		}
+
+		// 3) Detectar target fmlclient faltante
+		if (linea.indexOf(ERROR_CANNOT_FIND_TARGET) >= 0) {
 			mensaje = MonitorDePID.idioma.forgeTargetFmlclientNoEncontrado();
+			enlace = consola.agregarErrorALectador(numero_de_linea, this);
 			activado = true;
-		} else if (matcherMinecraftClassMissing.find()) {
+			return;
+		}
+
+		// 4) Detectar clase principal de Minecraft faltante
+		if (linea.indexOf(ERROR_MINECRAFT_CLASS_MISSING) >= 0) {
 			mensaje = MonitorDePID.idioma.forgeClaseMinecraftFaltante();
+			enlace = consola.agregarErrorALectador(numero_de_linea, this);
 			activado = true;
-		} else {
-			// mensaje = MonitorDePID.idioma.forgeInstallacionNoCompleta();
-			// activado = true;
+		}
+	}
+
+	/**
+	 * Extrae el archivo faltante de un error como:
+	 *
+	 * java.io.UncheckedIOException: java.io.IOException: Invalid paths argument,
+	 * contained no existing paths: [...forge-...client.jar]
+	 *
+	 * Tambien acepta fmlcore-....jar.
+	 */
+	private String extraerArchivoForgeFaltante(String texto) {
+		int inicio = texto.indexOf(ERROR_INVALID_PATHS);
+
+		if (inicio < 0) {
+			return null;
+		}
+
+		int inicioLista = inicio + ERROR_INVALID_PATHS.length();
+		int finLista = texto.indexOf(']', inicioLista);
+
+		if (finLista < 0) {
+			return null;
+		}
+
+		String dentroDeCorchetes = texto.substring(inicioLista, finLista);
+
+		String archivo = extraerUltimoArchivoForgeO_fmlcore(dentroDeCorchetes);
+
+		if (archivo == null || archivo.isEmpty()) {
+			return null;
+		}
+
+		return archivo;
+	}
+
+	/**
+	 * Extrae datos de un error como:
+	 *
+	 * Failed to find Minecraft resource version 1.20.1 at ...forge-...-client.jar
+	 */
+	private DatosVersionForge extraerVersionForgeNoEncontrada(String texto) {
+		int inicio = texto.indexOf(ERROR_FAILED_TO_FIND_VERSION);
+
+		if (inicio < 0) {
+			return null;
+		}
+
+		int inicioVersion = inicio + ERROR_FAILED_TO_FIND_VERSION.length();
+		int indiceAt = texto.indexOf(" at ", inicioVersion);
+
+		if (indiceAt < 0) {
+			return null;
+		}
+
+		String version = texto.substring(inicioVersion, indiceAt).trim();
+
+		int inicioRuta = indiceAt + " at ".length();
+		int finRuta = buscarFinDeRutaJar(texto, inicioRuta);
+
+		if (finRuta <= inicioRuta) {
+			return null;
+		}
+
+		String ruta = texto.substring(inicioRuta, finRuta).trim();
+
+		if (version.isEmpty() || ruta.isEmpty()) {
+			return null;
+		}
+
+		if (!ruta.contains("forge-") || !ruta.endsWith("-client.jar")) {
+			return null;
+		}
+
+		return new DatosVersionForge(version, ruta);
+	}
+
+	/**
+	 * Busca el final de una ruta .jar dentro del texto.
+	 */
+	private int buscarFinDeRutaJar(String texto, int inicio) {
+		int indiceJar = texto.indexOf(".jar", inicio);
+
+		if (indiceJar < 0) {
+			return -1;
+		}
+
+		return indiceJar + ".jar".length();
+	}
+
+	/**
+	 * Detecta el ultimo archivo forge-...client.jar o fmlcore-....jar dentro del
+	 * texto recibido.
+	 */
+	private String extraerUltimoArchivoForgeO_fmlcore(String texto) {
+		String mejor = null;
+
+		int indiceForge = 0;
+		while (indiceForge >= 0 && indiceForge < texto.length()) {
+			indiceForge = texto.indexOf("forge-", indiceForge);
+
+			if (indiceForge < 0) {
+				break;
+			}
+
+			int fin = texto.indexOf("client.jar", indiceForge);
+
+			if (fin >= 0) {
+				mejor = texto.substring(indiceForge, fin + "client.jar".length());
+				indiceForge = fin + "client.jar".length();
+			} else {
+				indiceForge += "forge-".length();
+			}
+		}
+
+		int indiceFmlcore = 0;
+		while (indiceFmlcore >= 0 && indiceFmlcore < texto.length()) {
+			indiceFmlcore = texto.indexOf("fmlcore-", indiceFmlcore);
+
+			if (indiceFmlcore < 0) {
+				break;
+			}
+
+			int fin = texto.indexOf(".jar", indiceFmlcore);
+
+			if (fin >= 0) {
+				mejor = texto.substring(indiceFmlcore, fin + ".jar".length());
+				indiceFmlcore = fin + ".jar".length();
+			} else {
+				indiceFmlcore += "fmlcore-".length();
+			}
+		}
+
+		return mejor;
+	}
+
+	private boolean contieneProblemaForge(String texto) {
+		if (texto == null || texto.isEmpty()) {
+			return false;
+		}
+
+		return extraerArchivoForgeFaltante(texto) != null || extraerVersionForgeNoEncontrada(texto) != null
+				|| texto.indexOf(ERROR_CANNOT_FIND_TARGET) >= 0 || texto.indexOf(ERROR_MINECRAFT_CLASS_MISSING) >= 0;
+	}
+
+	private static class DatosVersionForge {
+		private final String version;
+		private final String ruta;
+
+		private DatosVersionForge(String version, String ruta) {
+			this.version = version;
+			this.ruta = ruta;
 		}
 	}
 
@@ -75,12 +258,16 @@ public class MCForgeInstallacionNoEstaCompleta implements Verificaciones {
 
 	@Override
 	public float prioridad() {
-		return 750.0f; // High priority for this type of error
+		return 750.0f; // Prioridad alta para este tipo de error
 	}
 
 	@Override
 	public String mensaje() {
-		return mensaje + " " + MonitorDePID.idioma.forgeInstallacionNoCompleta();
+		if (!activado) {
+			return "";
+		}
+
+		return mensaje + " " + MonitorDePID.idioma.forgeInstallacionNoCompleta() + " " + enlace;
 	}
 
 	@Override
@@ -95,7 +282,7 @@ public class MCForgeInstallacionNoEstaCompleta implements Verificaciones {
 				.agregarBoton(MonitorDePID.idioma.descargar_forge_oficial(), (bool) -> {
 					abrirEnNavegador("https://files.minecraftforge.net/");
 				}).agregarBoton(MonitorDePID.idioma.reinstalar_forge_correctamente(), (bool) -> {
-					// Display instructions for reinstalling Forge
+					// Mostrar instrucciones para reinstalar Forge
 					JOptionPane.showMessageDialog(null, MonitorDePID.idioma.instrucciones_reinstalar_forge(),
 							MonitorDePID.idioma.titulo_instrucciones_reinstaler_mcforge(),
 							JOptionPane.INFORMATION_MESSAGE);
@@ -103,9 +290,9 @@ public class MCForgeInstallacionNoEstaCompleta implements Verificaciones {
 	}
 
 	/**
-	 * Opens a URL in the system's default browser.
-	 * 
-	 * @param url The URL to open
+	 * Abre una URL en el navegador predeterminado del sistema.
+	 *
+	 * @param url La URL para abrir
 	 */
 	private void abrirEnNavegador(String url) {
 		try {
@@ -128,23 +315,17 @@ public class MCForgeInstallacionNoEstaCompleta implements Verificaciones {
 			return false;
 		}
 
-		// Check if the trace contains any of the patterns indicating an incomplete
-		// Forge installation
-		String t = trazo.trace;
-		return PATTERN_INVALID_PATHS.matcher(t).find() || PATTERN_FAILED_TO_FIND_VERSION.matcher(t).find()
-				|| PATTERN_CANNOT_FIND_LAUNCH_TARGET.matcher(t).find()
-				|| PATTERN_MINECRAFT_CLASS_MISSING.matcher(t).find();
+		// Verificar si el trazo contiene algun error de instalacion incompleta de Forge
+		return contieneProblemaForge(trazo.trace);
 	}
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 
 	@Override
 	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
@@ -153,5 +334,4 @@ public class MCForgeInstallacionNoEstaCompleta implements Verificaciones {
 	public boolean recomendadoParaCorperata() {
 		return true;
 	}
-
 }

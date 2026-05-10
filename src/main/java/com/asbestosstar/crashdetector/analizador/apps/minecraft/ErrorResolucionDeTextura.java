@@ -4,104 +4,68 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import com.asbestosstar.crashdetector.Consola;
-import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Verificación especializada para detectar errores de resolución de texturas
  * que ocurren cuando las texturas no caben en la hoja de texturas.
- * <p>
- * - Analiza stack traces en busca de la frase clave "Unable to fit:" y "Maybe
- * try a lower resolution resourcepack?" - Extrae información sobre el recurso
- * problemático y su tamaño - No busca un origen específico (JAR/mod) ya que el
- * problema es de resolución de texturas - Proporciona soluciones prácticas
- * específicas para este problema - La salida es un bloque HTML con información
- * detallada para la UI
+ *
+ * - No usa Pattern/Matcher. - Usa verificación global ligera. - Usa
+ * verificación por línea para agregar enlace exacto. - También analiza trazos
+ * completos mediante VerificacionDeStackTrace.
  */
 public class ErrorResolucionDeTextura implements Verificaciones {
 
-	/**
-	 * Patrón para detectar errores de resolución de texturas con las frases clave:
-	 * "Unable to fit:" y "Maybe try a lower resolution resourcepack?"
-	 */
-	private static final Pattern ERRORES_RESOLUCION = Pattern.compile(
-			"net\\.minecraft\\.client\\.renderer\\.texture\\.StitcherException:\\s*Unable to fit:\\s*([^\\s]+)\\s*-\\s*size:\\s*(\\d+x\\d+)(?:\\s*-\\s*Maybe try a lower resolution resourcepack\\?)?",
-			Pattern.CASE_INSENSITIVE);
+	private static final String TEXTO_STITCHER = "net.minecraft.client.renderer.texture.StitcherException:";
+
+	private static final String TEXTO_UNABLE = "Unable to fit:";
+
+	private static final String TEXTO_SIZE = " - size:";
+
+	private static final String TEXTO_RESOURCEPACK = "Maybe try a lower resolution resourcepack?";
 
 	/**
-	 * Separador de líneas, definido en la interfaz base
-	 */
-	private static final String NL = Verificaciones.nl;
-
-	/**
-	 * Almacena los mensajes de error únicos detectados
+	 * Almacena los mensajes de error únicos detectados.
 	 */
 	private final Map<String, String> errores = new HashMap<>();
 
 	/**
-	 * Indica si se encontró al menos un error de resolución de texturas
-	 */
-	private boolean activado = false;
-
-	/**
-	 * Almacena el enlace HTML por mensaje base
+	 * Almacena el enlace HTML por mensaje base.
 	 */
 	private final Map<String, String> enlacesPorLinea = new HashMap<>();
 
+	private boolean posibleErrorResolucion = false;
+	private boolean activado = false;
+
 	/**
-	 * Verificación global: analiza los stack traces completos en busca del patrón
-	 * de StitcherException (errores de texturas que no caben en la hoja).
-	 * <p>
-	 * La detección de líneas sueltas sin traza se hace en el método por línea.
-	 * </p>
+	 * Verificación global ligera.
+	 *
+	 * No se limpian mapas aquí porque esta verificación puede ejecutarse sobre
+	 * varios archivos de log con la misma instancia.
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		// Limpiar resultados anteriores
-		errores.clear();
-		enlacesPorLinea.clear();
-		activado = false;
-
-		// Colección de trazos (fatales y no fatales)
-		List<VerificacionDeStackTrace.TraceInfo> trazosInfo = new ArrayList<>();
-		trazosInfo.addAll(VerificacionDeStackTrace.obtenerTracesConLinea(consola.contenido_verificar));
-		trazosInfo.addAll(VerificacionDeStackTrace.obtenerTracesFatalConLinea(consola.contenido_verificar));
-
-		// Analizar cada trazo
-		for (VerificacionDeStackTrace.TraceInfo traceInfo : trazosInfo) {
-			String trazo = traceInfo.trace;
-
-			// Verificar las frases clave específicas mínimas
-			if (!trazo.contains("Unable to fit:") || !trazo.contains("Maybe try a lower resolution resourcepack?")) {
-				continue;
-			}
-
-			Matcher matcher = ERRORES_RESOLUCION.matcher(trazo);
-			if (!matcher.find()) {
-				continue;
-			}
-
-			String recurso = matcher.group(1);
-			String tamaño = matcher.group(2);
-			String mensajeBase = MonitorDePID.idioma.error_resolucion_textura(recurso, tamaño);
-
-			// Registrar enlace para este error
-			enlacesPorLinea.putIfAbsent(mensajeBase,
-					consola.agregarErrorALectador(traceInfo.consolaLineaComenzar, this));
-
-			// Agregar el error al mapa
-			errores.put(mensajeBase, "");
-			activado = true;
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+			return;
 		}
+
+		String contenido = consola.contenido_verificar;
+
+		if (!contenido.contains(TEXTO_UNABLE) || !contenido.contains(TEXTO_RESOURCEPACK)) {
+			return;
+		}
+
+		posibleErrorResolucion = true;
+
+		// Analizar trazos completos para enlazar el inicio del stacktrace.
+		procesarTrazos(consola);
 	}
 
 	/**
@@ -110,35 +74,199 @@ public class ErrorResolucionDeTextura implements Verificaciones {
 	 */
 	@Override
 	public void verificar(Consola consola, String linea, int numero_de_linea) {
-		// Solo consideramos líneas que parecen mensaje, no frames de stack
-		if (!linea.contains("Unable to fit:") || !linea.contains("Maybe try a lower resolution resourcepack?")
-				|| linea.contains("at ") || !VerificacionDeStackTrace.tracePermite(linea)) {
+		if (!posibleErrorResolucion || linea == null || linea.isEmpty()) {
 			return;
 		}
 
-		procesarLineaSinTraza(linea, numero_de_linea, consola);
+		// Solo consideramos líneas que parecen mensaje, no frames de stack.
+		if (!linea.contains(TEXTO_UNABLE) || !linea.contains(TEXTO_RESOURCEPACK) || linea.contains("at ")
+				|| !VerificacionDeStackTrace.tracePermite(linea)) {
+			return;
+		}
+
+		procesarTextoError(linea, numero_de_linea, consola);
 	}
 
 	/**
-	 * Procesa una línea con error de resolución de texturas que no tiene stack
-	 * trace completo.
+	 * Analiza stack traces completos usando VerificacionDeStackTrace.
 	 */
-	private void procesarLineaSinTraza(String linea, int numeroLinea, Consola consola) {
-		Matcher matcher = ERRORES_RESOLUCION.matcher(linea);
-		if (!matcher.find()) {
+	private void procesarTrazos(Consola consola) {
+		List<VerificacionDeStackTrace.TraceInfo> trazosInfo = new ArrayList<>();
+		trazosInfo.addAll(VerificacionDeStackTrace.obtenerTracesConLinea(consola.contenido_verificar));
+		trazosInfo.addAll(VerificacionDeStackTrace.obtenerTracesFatalConLinea(consola.contenido_verificar));
+
+		for (VerificacionDeStackTrace.TraceInfo traceInfo : trazosInfo) {
+			String trazo = traceInfo.trace;
+
+			if (trazo == null || trazo.isEmpty()) {
+				continue;
+			}
+
+			if (!trazo.contains(TEXTO_UNABLE) || !trazo.contains(TEXTO_RESOURCEPACK)) {
+				continue;
+			}
+
+			procesarTextoError(traceInfo.trace, traceInfo.consolaLineaComenzar, consola);
+		}
+	}
+
+	/**
+	 * Procesa texto que contiene:
+	 *
+	 * net.minecraft.client.renderer.texture.StitcherException: Unable to fit:
+	 * recurso - size: 512x512 Maybe try a lower resolution resourcepack?
+	 *
+	 * Sin Pattern/Matcher.
+	 */
+	private void procesarTextoError(String texto, int numeroLinea, Consola consola) {
+		DatosTextura datos = extraerDatosTextura(texto);
+
+		if (datos == null || datos.recurso.isEmpty() || datos.tamano.isEmpty()) {
 			return;
 		}
 
-		String recurso = matcher.group(1);
-		String tamaño = matcher.group(2);
-		String mensajeBase = MonitorDePID.idioma.error_resolucion_textura(recurso, tamaño);
+		String mensajeBase = MonitorDePID.idioma.error_resolucion_textura(datos.recurso, datos.tamano);
 
-		// Registrar el error en el sistema de lectura
-		enlacesPorLinea.put(mensajeBase, consola.agregarErrorALectador(numeroLinea, this));
+		if (!errores.containsKey(mensajeBase)) {
+			enlacesPorLinea.put(mensajeBase, consola.agregarErrorALectador(numeroLinea, this));
+			errores.put(mensajeBase, "");
+		}
 
-		// Agregar el error al mapa
-		errores.put(mensajeBase, "");
 		activado = true;
+	}
+
+	/**
+	 * Extrae recurso y tamaño sin regex.
+	 */
+	private DatosTextura extraerDatosTextura(String texto) {
+		if (texto == null || texto.isEmpty()) {
+			return null;
+		}
+
+		int inicioUnable = texto.indexOf(TEXTO_UNABLE);
+
+		if (inicioUnable < 0) {
+			return null;
+		}
+
+		int inicioRecurso = inicioUnable + TEXTO_UNABLE.length();
+
+		while (inicioRecurso < texto.length() && Character.isWhitespace(texto.charAt(inicioRecurso))) {
+			inicioRecurso++;
+		}
+
+		if (inicioRecurso >= texto.length()) {
+			return null;
+		}
+
+		int finRecurso = buscarFinRecurso(texto, inicioRecurso);
+
+		if (finRecurso <= inicioRecurso) {
+			return null;
+		}
+
+		String recurso = texto.substring(inicioRecurso, finRecurso).trim();
+
+		int inicioSize = texto.indexOf(TEXTO_SIZE, finRecurso);
+
+		if (inicioSize < 0) {
+			return null;
+		}
+
+		int inicioTamano = inicioSize + TEXTO_SIZE.length();
+
+		while (inicioTamano < texto.length() && Character.isWhitespace(texto.charAt(inicioTamano))) {
+			inicioTamano++;
+		}
+
+		int finTamano = leerFinTamano(texto, inicioTamano);
+
+		if (finTamano <= inicioTamano) {
+			return null;
+		}
+
+		String tamano = texto.substring(inicioTamano, finTamano).trim();
+
+		if (!esTamanoValido(tamano)) {
+			return null;
+		}
+
+		return new DatosTextura(recurso, tamano);
+	}
+
+	/**
+	 * El patrón original usaba ([^\s]+), por eso el recurso termina en espacio.
+	 * También cortamos antes de " - size:" si aparece inmediatamente.
+	 */
+	private int buscarFinRecurso(String texto, int inicio) {
+		int i = inicio;
+
+		while (i < texto.length()) {
+			char c = texto.charAt(i);
+
+			if (Character.isWhitespace(c)) {
+				break;
+			}
+
+			i++;
+		}
+
+		return i;
+	}
+
+	/**
+	 * Lee tamaños tipo: 16x16 512x512 4096x4096
+	 */
+	private int leerFinTamano(String texto, int inicio) {
+		int i = inicio;
+
+		while (i < texto.length()) {
+			char c = texto.charAt(i);
+
+			if (Character.isDigit(c) || c == 'x' || c == 'X') {
+				i++;
+			} else {
+				break;
+			}
+		}
+
+		return i;
+	}
+
+	private boolean esTamanoValido(String tamano) {
+		if (tamano == null || tamano.isEmpty()) {
+			return false;
+		}
+
+		int x = Math.max(tamano.indexOf('x'), tamano.indexOf('X'));
+
+		if (x <= 0 || x >= tamano.length() - 1) {
+			return false;
+		}
+
+		for (int i = 0; i < tamano.length(); i++) {
+			char c = tamano.charAt(i);
+
+			if (i == x) {
+				if (c != 'x' && c != 'X') {
+					return false;
+				}
+			} else if (!Character.isDigit(c)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	private static class DatosTextura {
+		private final String recurso;
+		private final String tamano;
+
+		private DatosTextura(String recurso, String tamano) {
+			this.recurso = recurso;
+			this.tamano = tamano;
+		}
 	}
 
 	@Override
@@ -158,15 +286,15 @@ public class ErrorResolucionDeTextura implements Verificaciones {
 
 	@Override
 	public String mensaje() {
-		if (errores.isEmpty())
+		if (errores.isEmpty()) {
 			return "";
+		}
 
 		StringBuilder sb = new StringBuilder("<ul>");
 
-		// Para cada tipo de error
 		for (String mensajeBase : errores.keySet()) {
-			// Recuperar el enlace
 			String enlace = enlacesPorLinea.getOrDefault(mensajeBase, "");
+
 			if (!enlace.isEmpty()) {
 				sb.append("<li>").append(mensajeBase).append(MonitorDePID.idioma.solucion_resolucion_textura())
 						.append(" ").append(enlace).append("</li>");
@@ -195,44 +323,28 @@ public class ErrorResolucionDeTextura implements Verificaciones {
 		return "error_resolucion_de_textura";
 	}
 
-	/**
-	 * Indica si este verificador "ocupa" un trazo concreto del stack trace.
-	 * <p>
-	 * Para evitar falsos positivos, solo devuelve {@code true} cuando:
-	 * <ul>
-	 * <li>El verificador ya se activó, y</li>
-	 * <li>El trazo coincide con el patrón de {@link #ERRORES_RESOLUCION}, es decir,
-	 * contiene la StitcherException con el formato esperado.</li>
-	 * </ul>
-	 * Es deliberadamente conservador: se prefieren falsos negativos a marcar trazos
-	 * que no correspondan a este problema concreto.
-	 * </p>
-	 */
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
 		if (!activado || trazo == null || trazo.trace == null) {
 			return false;
 		}
 
-		return ERRORES_RESOLUCION.matcher(trazo.trace).find();
+		return extraerDatosTextura(trazo.trace) != null;
 	}
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 
 	@Override
 	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
 
 	@Override
 	public boolean recomendadoParaCorperata() {
-		return true;// Dependente en la tarjeta grafica
+		return true; // Dependente en la tarjeta grafica
 	}
-
 }

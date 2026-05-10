@@ -3,81 +3,64 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
- * Este error es común en Minecraft Forge cuando los registros terminan en
- * "Loading ImmediateWindowProvider fmlearlywindow", especialmente debido a
- * controladores (drivers) defectuosos, aunque también puede deberse a
- * conflictos entre mods. Puedes resolverlo editando el valor de
- * earlyWindowProvider a "none" en el archivo config/fml.toml.
+ * Detecta el error EarlyWindow común en Forge, especialmente en macOS con
+ * AppleMetalOpenGLRenderer.
  */
 public class EarlyWindow implements Verificaciones {
 
 	private static final String APPLE_METAL_OPENGL_RENDERER = "AppleMetalOpenGLRenderer";
 	private static final String EARLY_FRAMEBUFFER_DRAW = "net.minecraftforge.fml.earlydisplay.EarlyFramebuffer.draw";
 
+	private static final String MAIN_LINE = "Loading ImmediateWindowProvider fmlearlywindow";
+	private static final String FALLBACK_1 = "Failed to initialize the mod loading system and display.";
+	private static final String FALLBACK_2 = "Failed to initialize graphics window with current settings.";
+
 	private boolean activado = false;
+	private boolean limitacionOpenGLMacOSDetectada = false;
 	private String mensaje = "";
 	private String enlaceHtml = "";
-	private boolean limitacionOpenGLMacOSDetectada = false;
 
-	// TODO Wayland: The platform does not provide the window position
-
-	/**
-	 * Verificación basada en el contenido completo de la consola.
-	 * <p>
-	 * Se busca la última línea no vacía y se comprueba si contiene "Loading
-	 * ImmediateWindowProvider fmlearlywindow". Si no, se usa un patrón alternativo
-	 * más genérico: "Failed to initialize the mod loading system and display.".
-	 * </p>
-	 */
 	@Override
 	public void verificar(Consola consola) {
-		String contenidoConsola = consola.contenido_verificar;
-		String[] lineas = contenidoConsola.split(Verificaciones.nl);
-		limitacionOpenGLMacOSDetectada = contieneFirmaMacOSOpenGL(contenidoConsola);
-
-		if (lineas.length == 0)
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty())
 			return;
 
-		// Buscar la última línea no vacía
-		String ultimaLinea = null;
-		int indiceUltimaLinea = -1;
+		String[] lineas = consola.contenido_verificar.split(Verificaciones.nl);
 
+		limitacionOpenGLMacOSDetectada = contieneFirmaMacOSOpenGL(consola.contenido_verificar);
+
+		// Buscar última línea no vacía
+		int indiceUltimaLinea = -1;
 		for (int i = lineas.length - 1; i >= 0; i--) {
-			String linea = lineas[i].trim();
-			if (!linea.isEmpty()) {
-				ultimaLinea = linea;
+			if (!lineas[i].trim().isEmpty()) {
 				indiceUltimaLinea = i;
 				break;
 			}
 		}
 
-		// Patrón secundario usado en otros logs similares
-		final String falloInicializacion = "Failed to initialize the mod loading system and display.";
-		final String falloInicializacionActual = "Failed to initialize graphics window with current settings.";
-
-		// Solo activar si la última línea no vacía contiene el mensaje principal
-		if (ultimaLinea != null && ultimaLinea.contains("Loading ImmediateWindowProvider fmlearlywindow")) {
+		if (indiceUltimaLinea >= 0 && lineas[indiceUltimaLinea].contains(MAIN_LINE)) {
 			mensaje = construirMensaje();
-			// En este caso sí tenemos una línea concreta que queremos enlazar.
 			enlaceHtml = consola.agregarErrorALectador(indiceUltimaLinea, this);
 			activado = true;
+			return;
 		}
 
-		else if (contenidoConsola.contains(falloInicializacion) || contenidoConsola.contains(falloInicializacionActual)
+		// Activar fallback por contenido general
+		if (consola.contenido_verificar.contains(FALLBACK_1) || consola.contenido_verificar.contains(FALLBACK_2)
 				|| limitacionOpenGLMacOSDetectada) {
 			mensaje = construirMensaje();
 			activado = true;
 		}
 	}
 
-	private boolean contieneFirmaMacOSOpenGL(String contenidoConsola) {
-		return contenidoConsola != null && contenidoConsola.contains(APPLE_METAL_OPENGL_RENDERER)
-				&& contenidoConsola.contains(EARLY_FRAMEBUFFER_DRAW);
+	private boolean contieneFirmaMacOSOpenGL(String contenido) {
+		return contenido != null && contenido.contains(APPLE_METAL_OPENGL_RENDERER)
+				&& contenido.contains(EARLY_FRAMEBUFFER_DRAW);
 	}
 
 	private String construirMensaje() {
@@ -88,21 +71,9 @@ public class EarlyWindow implements Verificaciones {
 		return base;
 	}
 
-	/**
-	 * Método de verificación por línea.
-	 * <p>
-	 * Este verificador depende de conocer la última línea no vacía del log para
-	 * determinar si se trata realmente del caso de early window, por lo que la
-	 * lógica principal se mantiene en {@link #verificar(Consola)}.
-	 * </p>
-	 * <p>
-	 * Se deja intencionadamente vacío para no duplicar trabajo ni perder la
-	 * semántica de "la última línea del registro".
-	 * </p>
-	 */
 	@Override
 	public void verificar(Consola consola, String linea, int numero_de_linea) {
-		// No se utiliza en este verificador: requiere contexto completo del log.
+		// No se utiliza; depende de contexto completo de log
 	}
 
 	@Override
@@ -117,14 +88,12 @@ public class EarlyWindow implements Verificaciones {
 
 	@Override
 	public float prioridad() {
-		return 1500.0f; // Prioridad media para advertencias de inicialización
+		return 1500.0f;
 	}
 
 	@Override
 	public String mensaje() {
-		if (!activado)
-			return "";
-		return mensaje + enlaceHtml;
+		return activado ? mensaje + (enlaceHtml != null ? enlaceHtml : "") : "";
 	}
 
 	@Override
@@ -134,7 +103,7 @@ public class EarlyWindow implements Verificaciones {
 
 	@Override
 	public QuickFix solucion() {
-		return QuickFix.NINGUN;// TODO
+		return QuickFix.NINGUN;
 	}
 
 	@Override
@@ -147,52 +116,25 @@ public class EarlyWindow implements Verificaciones {
 		return "earlywindow";
 	}
 
-	/**
-	 * Indica si este verificador "ocupa" un trazo concreto del stack trace.
-	 * <p>
-	 * Para evitar falsos positivos, solo se marca como ocupado cuando:
-	 * <ul>
-	 * <li>El verificador ya se activó en el análisis global, y</li>
-	 * <li>El texto del trazo contiene una de las cadenas clave asociadas al
-	 * problema de early window.</li>
-	 * </ul>
-	 * Es intencionadamente conservador: mejor falsos negativos que falsos
-	 * positivos.
-	 */
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
+		if (!activado || trazo == null || trazo.trace == null)
 			return false;
-		}
 
 		String t = trazo.trace;
 
-		if (t.contains("Loading ImmediateWindowProvider fmlearlywindow")) {
-			return true;
-		}
-
-		if (t.contains("Failed to initialize the mod loading system and display.")) {
-			return true;
-		}
-
-		if (t.contains(EARLY_FRAMEBUFFER_DRAW) || t.contains(APPLE_METAL_OPENGL_RENDERER)) {
-			return true;
-		}
-
-		return false;
+		return t.contains(MAIN_LINE) || t.contains(FALLBACK_1) || t.contains(FALLBACK_2)
+				|| t.contains(APPLE_METAL_OPENGL_RENDERER) || t.contains(EARLY_FRAMEBUFFER_DRAW);
 	}
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 
 	@Override
 	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
-
 }

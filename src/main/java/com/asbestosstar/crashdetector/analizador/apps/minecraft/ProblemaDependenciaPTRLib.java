@@ -1,19 +1,16 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
- * Clase que detecta que el mod PTRLib no está instalado.Gracias a Aternos por
- * que esta es una implementacion de su codex
+ * Clase que detecta que el mod PTRLib no está instalado. Gracias a Aternos
+ * porque esta es una implementacion de su codex:
  * https://github.com/aternosorg/codex-minecraft
  */
 public class ProblemaDependenciaPTRLib implements Verificaciones {
@@ -22,6 +19,10 @@ public class ProblemaDependenciaPTRLib implements Verificaciones {
 	private String mensaje = "";
 	private final String nombreMod = "PTRLib";
 
+	private static final String TEXTO_EXCEPCION = "Encountered an unexpected exception";
+
+	private static final String TEXTO_CLASE_FALTANTE = "java.lang.NoClassDefFoundError: com/mia/craftstudio/IPackReaderCallback";
+
 	/**
 	 * Verifica si el log contiene el error de dependencia faltante de PTRLib.
 	 */
@@ -29,16 +30,60 @@ public class ProblemaDependenciaPTRLib implements Verificaciones {
 	public void verificar(Consola consola) {
 		String contenido = consola.contenido_verificar;
 
-		// Patrón para detectar el error de dependencia faltante de PTRLib
-		Pattern patron = Pattern.compile(
-				"Encountered an unexpected exception\\s*java\\.lang\\.NoClassDefFoundError: com/mia/craftstudio/IPackReaderCallback",
-				Pattern.DOTALL);
-		Matcher coincidencia = patron.matcher(contenido);
+		if (contenido == null || contenido.isEmpty()) {
+			return;
+		}
 
-		if (coincidencia.find()) {
+		if (contieneErrorPTRLib(contenido)) {
 			this.mensaje = MonitorDePID.idioma.mensajeDependenciaModFaltante(nombreMod);
 			activado = true;
 		}
+	}
+
+	/**
+	 * Detecta el error sin usar Pattern/Matcher.
+	 *
+	 * El patron original permitia espacios o saltos de linea entre: "Encountered an
+	 * unexpected exception" y "java.lang.NoClassDefFoundError:
+	 * com/mia/craftstudio/IPackReaderCallback"
+	 */
+	private boolean contieneErrorPTRLib(String contenido) {
+		int inicio = contenido.indexOf(TEXTO_EXCEPCION);
+
+		while (inicio >= 0) {
+			int despuesInicio = inicio + TEXTO_EXCEPCION.length();
+
+			int indiceClase = contenido.indexOf(TEXTO_CLASE_FALTANTE, despuesInicio);
+
+			if (indiceClase >= 0) {
+				// Confirmar que entre los dos textos solo haya espacios, tabs o saltos de
+				// linea.
+				if (soloEspaciosEntre(contenido, despuesInicio, indiceClase)) {
+					return true;
+				}
+			}
+
+			inicio = contenido.indexOf(TEXTO_EXCEPCION, despuesInicio);
+		}
+
+		return false;
+	}
+
+	/**
+	 * Verifica que entre dos posiciones solo existan caracteres de espacio.
+	 */
+	private boolean soloEspaciosEntre(String texto, int inicio, int fin) {
+		if (inicio < 0 || fin < inicio || fin > texto.length()) {
+			return false;
+		}
+
+		for (int i = inicio; i < fin; i++) {
+			if (!Character.isWhitespace(texto.charAt(i))) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	/**
@@ -58,7 +103,7 @@ public class ProblemaDependenciaPTRLib implements Verificaciones {
 	}
 
 	/**
-	 * Prioridad del problema (alta).
+	 * Prioridad del problema.
 	 */
 	@Override
 	public float prioridad() {
@@ -91,27 +136,22 @@ public class ProblemaDependenciaPTRLib implements Verificaciones {
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
 		return "problema_dependencia_ptrlib";
 	}
 
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+		return false;
 	}
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 
 	@Override
 	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
-
 }

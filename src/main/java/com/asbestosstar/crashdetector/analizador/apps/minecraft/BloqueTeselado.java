@@ -3,37 +3,66 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
- * Verificador que detecta errores relacionados con el teselado de bloques en
- * Minecraft.
- * <p>
- * Esta clase analiza la salida de la consola en busca de mensajes que indiquen
- * un fallo durante el proceso de "Tesselating block in world", un error común
- * en entornos de Minecraft cuando se intenta renderizar un bloque incompatible
- * o corrupto, generalmente causado por mods mal compatibles, versiones
- * incorrectas o problemas de renderizado.
- * </p>
- * 
- * @author asbestosstar
+ * Detecta errores relacionados con el teselado de bloques en Minecraft sin usar
+ * regex. Usa verificación global ligera y verificación por línea.
  */
 public class BloqueTeselado implements Verificaciones {
 
 	private boolean activado = false;
-	private String mensaje = ""; // Almacena el mensaje HTML
+	private String mensaje = "";
+	private String enlace = "";
 
+	private static final String TEXTO_TESSELADO = "Tesselating block in world";
+
+	/**
+	 * Verificación global ligera: revisa si el log completo contiene indicios del
+	 * error.
+	 */
 	@Override
 	public void verificar(Consola consola) {
-		String contenidoConsola = consola.contenido_verificar;
-
-		String patron = "(?sm).*Tesselating block in world$.*";
-		if (contenidoConsola.matches(patron)) {
-			mensaje = MonitorDePID.idioma.errorDeBloqueTeselado() + Verificaciones.nl_html;
-			activado = true;
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+			return;
 		}
+
+		if (contieneIgnoreCase(consola.contenido_verificar, TEXTO_TESSELADO)) {
+			activado = true;
+			mensaje = MonitorDePID.idioma.errorDeBloqueTeselado();
+		}
+	}
+
+	/**
+	 * Verificación por línea: agrega enlace a la línea exacta donde ocurre el
+	 * error.
+	 */
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		if (!activado || linea == null || linea.isEmpty()) {
+			return;
+		}
+
+		if (contieneIgnoreCase(linea, TEXTO_TESSELADO)) {
+			enlace = consola.agregarErrorALectador(numero_de_linea, this);
+			mensaje += " " + enlace;
+		}
+	}
+
+	private boolean contieneIgnoreCase(String texto, String buscar) {
+		if (texto == null || buscar == null || buscar.length() > texto.length()) {
+			return false;
+		}
+
+		int limite = texto.length() - buscar.length();
+		for (int i = 0; i <= limite; i++) {
+			if (texto.regionMatches(true, i, buscar, 0, buscar.length())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
@@ -63,7 +92,7 @@ public class BloqueTeselado implements Verificaciones {
 
 	@Override
 	public QuickFix solucion() {
-		return QuickFix.NINGUN;// TODO
+		return QuickFix.NINGUN;
 	}
 
 	@Override
@@ -71,37 +100,21 @@ public class BloqueTeselado implements Verificaciones {
 		return "bloqueteselado";
 	}
 
-	/**
-	 * Indica si este verificador "ocupa" un trazo concreto.
-	 * <p>
-	 * Para evitar falsos positivos, solo marcamos el trazo como ocupado si:
-	 * <ul>
-	 * <li>El verificador ya se activó (hay un error de teselado detectado en el log
-	 * completo), y</li>
-	 * <li>El texto del trazo contiene explícitamente la cadena "Tesselating block
-	 * in world".</li>
-	 * </ul>
-	 * Esto puede producir falsos negativos si el trazo no incluye esa línea
-	 * concreta, pero minimiza casi por completo los falsos positivos.
-	 */
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
 		if (!activado || trazo == null || trazo.trace == null) {
 			return false;
 		}
-
-		return trazo.trace.contains("Tesselating block in world");
+		return contieneIgnoreCase(trazo.trace, TEXTO_TESSELADO);
 	}
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 
 	@Override
 	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
@@ -110,5 +123,4 @@ public class BloqueTeselado implements Verificaciones {
 	public boolean recomendadoParaCorperata() {
 		return true;
 	}
-
 }

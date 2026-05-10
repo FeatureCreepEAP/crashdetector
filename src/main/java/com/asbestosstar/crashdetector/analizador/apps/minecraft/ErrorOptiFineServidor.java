@@ -3,8 +3,8 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -19,43 +19,86 @@ public class ErrorOptiFineServidor implements Verificaciones {
 	private String enlaceHtml = "";
 	private boolean encontradoOptiFine = false;
 
+	private static final String TEXTO_OPTIFINE_PATCHER = "optifine.Patcher.applyPatch";
+	private static final String TEXTO_BASE_RESOURCE_NOT_FOUND = "Base resource not found";
+	private static final String TEXTO_BASE_RESOURCE_NOT_FOUND_COMPLETO = "java.io.IOException: Base resource not found:";
+	private static final String TEXTO_LAYER_OPTIFINE = "LAYER SERVICE/optifine/optifine.Patcher.applyPatch";
+	private static final String TEXTO_OPTIFINE = "optifine";
+
 	/**
-	 * Método de compatibilidad — busca si OptiFine está presente en el contenido
-	 * completo del registro.
+	 * Método global ligero.
+	 *
+	 * Busca si OptiFine está presente en el contenido completo del registro sin
+	 * usar toLowerCase(), para evitar crear una copia grande del log.
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		// Verificamos si OptiFine está presente en el contenido del registro
-		if (consola.contenido_verificar != null) {
-			encontradoOptiFine = consola.contenido_verificar.toLowerCase().contains("optifine.patcher.applypatch");
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+			return;
 		}
+
+		encontradoOptiFine = contieneIgnoreCase(consola.contenido_verificar, TEXTO_OPTIFINE_PATCHER);
 	}
 
 	/**
 	 * Análisis por línea del registro.
-	 * <p>
+	 *
 	 * Se busca el patrón característico del error donde OptiFine falla en un
 	 * servidor dedicado porque intenta cargar clases del cliente.
-	 * </p>
 	 */
 	@Override
 	public void verificar(Consola consola, String linea, int numero_de_linea) {
-		if (activado) {
-			// Si ya se activó, no seguimos verificando más líneas.
+		if (activado || !encontradoOptiFine || linea == null || linea.isEmpty()) {
 			return;
 		}
 
-		// Buscamos la línea que contiene el error de carga de clase para servidor
-		// dedicado de OptiFine
-		if (linea.contains("Base resource not found") && encontradoOptiFine) {
-
-			// Enlazar a la línea del error en el lector
+		// En esta línea normalmente aparece el error principal.
+		if (linea.contains(TEXTO_BASE_RESOURCE_NOT_FOUND)) {
 			enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
-
-			// Mensaje de error en HTML con referencia al uso incorrecto de OptiFine
 			mensaje = MonitorDePID.idioma.errorOptiFineServidor() + Verificaciones.nl_html;
 			activado = true;
 		}
+	}
+
+	/**
+	 * Busca un texto ignorando mayúsculas/minúsculas sin crear copias con
+	 * toLowerCase().
+	 */
+	private boolean contieneIgnoreCase(String texto, String buscar) {
+		return indexOfIgnoreCase(texto, buscar) >= 0;
+	}
+
+	/**
+	 * Implementación rápida de búsqueda case-insensitive.
+	 *
+	 * Usa regionMatches(true, ...) para evitar: - texto.toLowerCase() -
+	 * buscar.toLowerCase() - nuevas copias grandes del log
+	 */
+	private int indexOfIgnoreCase(String texto, String buscar) {
+		if (texto == null || buscar == null) {
+			return -1;
+		}
+
+		int largoTexto = texto.length();
+		int largoBuscar = buscar.length();
+
+		if (largoBuscar == 0) {
+			return 0;
+		}
+
+		if (largoBuscar > largoTexto) {
+			return -1;
+		}
+
+		int limite = largoTexto - largoBuscar;
+
+		for (int i = 0; i <= limite; i++) {
+			if (texto.regionMatches(true, i, buscar, 0, largoBuscar)) {
+				return i;
+			}
+		}
+
+		return -1;
 	}
 
 	@Override
@@ -96,10 +139,9 @@ public class ErrorOptiFineServidor implements Verificaciones {
 
 	/**
 	 * Asocia esta verificación con un trazo específico del stack.
-	 * <p>
+	 *
 	 * Devuelve true si el trazo contiene las cadenas clave del error de
 	 * compatibilidad entre OptiFine y servidor dedicado.
-	 * </p>
 	 */
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
@@ -109,22 +151,18 @@ public class ErrorOptiFineServidor implements Verificaciones {
 
 		String t = trazo.trace;
 
-		return t.contains("java.io.IOException: Base resource not found:")
-				&& t.contains("LAYER SERVICE/optifine/optifine.Patcher.applyPatch")
-				&& t.toLowerCase().contains("optifine");
+		return t.contains(TEXTO_BASE_RESOURCE_NOT_FOUND_COMPLETO) && t.contains(TEXTO_LAYER_OPTIFINE)
+				&& contieneIgnoreCase(t, TEXTO_OPTIFINE);
 	}
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 
 	@Override
 	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
-
 }

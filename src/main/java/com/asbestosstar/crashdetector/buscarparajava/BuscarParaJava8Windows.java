@@ -1,4 +1,4 @@
-package com.asbestosstar.crashdetector;
+package com.asbestosstar.crashdetector.buscarparajava;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,22 +9,20 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import com.asbestosstar.crashdetector.CSVParser;
+import com.asbestosstar.crashdetector.ConfigMundial;
+
 /**
  * Busca un ejecutable java.exe de Java 8 en Windows.
  *
- * Orden:
- * 1. Revisar ruta guardada en ConfigMundial.
- * 2. Buscar Java 8 de 64 bits.
- * 3. Buscar Java 8 de 32 bits.
- * 4. Buscar runtimes Java 8 de launchers de Minecraft.
- * 5. Si nada sirve, caer en la lógica vieja de Windows.
+ * Orden: 1. Revisar ruta guardada en ConfigMundial. 2. Buscar Java 8 de 64
+ * bits. 3. Buscar Java 8 de 32 bits. 4. Buscar runtimes Java 8 de launchers de
+ * Minecraft. 5. Si nada sirve, caer en la lógica vieja de Windows.
  *
- * Reglas:
- * - Solo acepta java.exe.
- * - No acepta javaw.exe.
- * - Verifica que realmente sea Java 8 ejecutando: java.exe -version.
- * - Si encuentra una ruta válida, la guarda en ConfigMundial.
- * - Si no encuentra nada, deja la config mundial en blanco.
+ * Reglas: - Solo acepta java.exe. - No acepta javaw.exe. - Verifica que
+ * realmente sea Java 8 ejecutando: java.exe -version. - Si encuentra una ruta
+ * válida, la guarda en ConfigMundial. - Si no encuentra nada, deja la config
+ * mundial en blanco.
  */
 public class BuscarParaJava8Windows {
 
@@ -219,21 +217,10 @@ public class BuscarParaJava8Windows {
 
 		String n = nombre.toLowerCase();
 
-		return n.contains("1.8") 
-				|| n.contains("jdk8") 
-				|| n.contains("jre8") 
-				|| n.contains("jdk-8")
-				|| n.contains("jre-8") 
-				|| n.contains("java-8") 
-				|| n.contains("java8") 
-				|| n.contains("zulu-8")
-				|| n.contains("temurin-8") 
-				|| n.contains("corretto-8") 
-				|| n.contains("liberica")
-				|| n.contains("8u") 
-				|| n.contains("jdk1.8") 
-				|| n.contains("jre1.8")
-				|| n.contains("jre-legacy");
+		return n.contains("1.8") || n.contains("jdk8") || n.contains("jre8") || n.contains("jdk-8")
+				|| n.contains("jre-8") || n.contains("java-8") || n.contains("java8") || n.contains("zulu-8")
+				|| n.contains("temurin-8") || n.contains("corretto-8") || n.contains("liberica") || n.contains("8u")
+				|| n.contains("jdk1.8") || n.contains("jre1.8") || n.contains("jre-legacy");
 	}
 
 	private static void agregarDirecto(List<String> rutas, String ruta) {
@@ -255,11 +242,8 @@ public class BuscarParaJava8Windows {
 	}
 
 	/**
-	 * Verifica de forma estricta:
-	 * - Existe.
-	 * - Es archivo.
-	 * - Se llama exactamente java.exe.
-	 * - Al ejecutar -version, reporta Java 8.
+	 * Verifica de forma estricta: - Existe. - Es archivo. - Se llama exactamente
+	 * java.exe. - Al ejecutar -version, reporta Java 8.
 	 */
 	private static boolean esJava8Valido(String ruta) {
 		if (ruta == null || ruta.trim().isEmpty()) {

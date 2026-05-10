@@ -335,10 +335,6 @@ public class Analizador {
 		verificaciones.add(new FabricRenderingApiFaltaIndium());
 		verificaciones.add(new EntradaDuplicadaIdModerno());
 
-		
-		
-		
-		
 		verificaciones.add(new PirataMC());
 		verificaciones.add(new LanzerNoAnimado());
 		verificaciones.add(new LanzerDesAnimado());

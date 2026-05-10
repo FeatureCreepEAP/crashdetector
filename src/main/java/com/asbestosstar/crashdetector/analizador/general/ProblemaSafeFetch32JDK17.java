@@ -1,16 +1,12 @@
 package com.asbestosstar.crashdetector.analizador.general;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Pattern;
-
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta el error nativo "StubRoutines::SafeFetch32" relacionado con JDK
@@ -19,27 +15,87 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
  */
 public class ProblemaSafeFetch32JDK17 implements Verificaciones {
 
+	private boolean posibleSafeFetch32 = false;
 	private boolean activado = false;
+
 	private String mensaje = "";
-	private final List<String> coincidencias = new ArrayList<>();
+	private String enlace = "";
 
-	private static final Pattern PATRON_SAFE_FETCH = Pattern.compile("StubRoutines::SafeFetch32",
-			Pattern.CASE_INSENSITIVE);
+	private static final String TEXTO_SAFE_FETCH = "StubRoutines::SafeFetch32";
 
+	/**
+	 * Verificacion global ligera.
+	 *
+	 * Se ejecuta primero. No se limpian campos porque esta verificacion puede
+	 * ejecutarse sobre varios archivos de log con la misma instancia.
+	 */
 	@Override
 	public void verificar(Consola consola) {
-		String contenido = consola.contenido_verificar;
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+			return;
+		}
 
-		if (PATRON_SAFE_FETCH.matcher(contenido).find()) {
-			coincidencias.add("StubRoutines::SafeFetch32");
-			activado = true;
-			mensaje = MonitorDePID.idioma.problema_safe_fetch32_jdk17();
+		if (contieneIgnoreCase(consola.contenido_verificar, TEXTO_SAFE_FETCH)) {
+			posibleSafeFetch32 = true;
 		}
 	}
 
+	/**
+	 * Verificacion por linea.
+	 *
+	 * Detecta la linea exacta del error y agrega enlace al lector.
+	 */
 	@Override
 	public void verificar(Consola consola, String linea, int numero_de_linea) {
-		// No se necesita procesamiento por línea; se maneja en verificar(Consola)
+		if (!posibleSafeFetch32 || activado || linea == null || linea.isEmpty()) {
+			return;
+		}
+
+		if (!contieneIgnoreCase(linea, TEXTO_SAFE_FETCH)) {
+			return;
+		}
+
+		this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
+		this.mensaje = MonitorDePID.idioma.problema_safe_fetch32_jdk17() + " " + enlace;
+		this.activado = true;
+	}
+
+	/**
+	 * Busca un texto ignorando mayusculas/minusculas sin crear copias con
+	 * toLowerCase().
+	 */
+	private boolean contieneIgnoreCase(String texto, String buscar) {
+		return indexOfIgnoreCase(texto, buscar) >= 0;
+	}
+
+	/**
+	 * Busca un texto ignorando mayusculas/minusculas usando regionMatches.
+	 */
+	private int indexOfIgnoreCase(String texto, String buscar) {
+		if (texto == null || buscar == null) {
+			return -1;
+		}
+
+		int largoTexto = texto.length();
+		int largoBuscar = buscar.length();
+
+		if (largoBuscar == 0) {
+			return 0;
+		}
+
+		if (largoBuscar > largoTexto) {
+			return -1;
+		}
+
+		int limite = largoTexto - largoBuscar;
+
+		for (int i = 0; i <= limite; i++) {
+			if (texto.regionMatches(true, i, buscar, 0, largoBuscar)) {
+				return i;
+			}
+		}
+
+		return -1;
 	}
 
 	@Override
@@ -83,18 +139,20 @@ public class ProblemaSafeFetch32JDK17 implements Verificaciones {
 
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		return false;
+		if (!activado || trazo == null || trazo.trace == null) {
+			return false;
+		}
+
+		return contieneIgnoreCase(trazo.trace, TEXTO_SAFE_FETCH);
 	}
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 
 	@Override
 	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/general/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
@@ -103,5 +161,4 @@ public class ProblemaSafeFetch32JDK17 implements Verificaciones {
 	public boolean recomendadoParaCorperata() {
 		return true;
 	}
-
 }

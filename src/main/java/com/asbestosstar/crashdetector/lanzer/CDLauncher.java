@@ -277,14 +277,83 @@ public class CDLauncher {
 	 */
 	private static void forzarLog4jPatternLayout(List<String> cmd) {
 
-		for (String s : cmd) {
-			if (s.startsWith("-Dlog4j2.configurationFile=")) {
-				return;
+		// Eliminar configuraciones Log4j existentes para que Forge/launcher XML no
+		// gane.
+		for (int i = cmd.size() - 1; i >= 0; i--) {
+			String s = cmd.get(i);
+
+			if (s == null) {
+				continue;
+			}
+
+			if (s.startsWith("-Dlog4j.configurationFile=") || s.startsWith("-Dlog4j2.configurationFile=")
+					|| s.startsWith("-Dlog4j.configuration=") || s.startsWith("-Dlog4j2.configuration=")) {
+				cmd.remove(i);
 			}
 		}
 
-		cmd.add(1, "-Dlog4j2.formatMsgNoLookups=true");
-		cmd.add(2, "-Dlog4j2.configurationFile=classpath:log4j2-cdlauncher.properties");
+		try {
+			File archivoConfig = extraerRecursoLog4j2AArchivoTemporal();
+
+			if (archivoConfig != null && archivoConfig.exists()) {
+				String uri = archivoConfig.toURI().toString();
+
+				cmd.add(1, "-Dlog4j.formatMsgNoLookups=true");
+				cmd.add(2, "-Dlog4j2.formatMsgNoLookups=true");
+
+				// Nombre correcto/principal para Log4j2
+				cmd.add(3, "-Dlog4j.configurationFile=" + uri);
+
+				// Fallback por compatibilidad con algunas configuraciones viejas/raras
+				cmd.add(4, "-Dlog4j2.configurationFile=" + uri);
+			}
+
+		} catch (Throwable t) {
+			// Nunca impedir el arranque solo por configuración de log.
+			cmd.add(1, "-Dlog4j.formatMsgNoLookups=true");
+			cmd.add(2, "-Dlog4j2.formatMsgNoLookups=true");
+		}
+	}
+
+	private static File extraerRecursoLog4j2AArchivoTemporal() throws Exception {
+
+		String nombreRecurso = "/log4j2-cdlauncher.properties";
+
+		InputStream in = CDLauncher.class.getResourceAsStream(nombreRecurso);
+
+		// Fallback: usar classloader explícito sin slash inicial.
+		if (in == null) {
+			ClassLoader cl = CDLauncher.class.getClassLoader();
+			if (cl != null) {
+				in = cl.getResourceAsStream("log4j2-cdlauncher.properties");
+			}
+		}
+
+		// Fallback extra: context classloader, por si el agent/classloader cambia.
+		if (in == null) {
+			ClassLoader cl = Thread.currentThread().getContextClassLoader();
+			if (cl != null) {
+				in = cl.getResourceAsStream("log4j2-cdlauncher.properties");
+			}
+		}
+
+		if (in == null) {
+			throw new IllegalStateException("No se encontró log4j2-cdlauncher.properties dentro del JAR");
+		}
+
+		File carpeta = new File(System.getProperty("java.io.tmpdir"), "crashdetector");
+		if (!carpeta.exists()) {
+			carpeta.mkdirs();
+		}
+
+		File archivo = new File(carpeta, "log4j2-cdlauncher.properties");
+
+		try (InputStream entrada = in) {
+			java.nio.file.Files.copy(entrada, archivo.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+		}
+
+		archivo.deleteOnExit();
+		return archivo;
 	}
 
 	/* ========================================================= */

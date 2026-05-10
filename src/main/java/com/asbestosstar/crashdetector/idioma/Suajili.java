@@ -9723,33 +9723,26 @@ public class Suajili implements Idioma {
 		return "Kukosa Indium / Fabric Rendering API";
 	}
 
-    @Override
-    public String mensajeEntradaDuplicadaIdModerno() {
-        return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-                + "Ingizo lililorudiwa limegunduliwa katika rejista ya Minecraft.</b>"
-                + "<p>Logi ina kosa linalofanana na <b>Duplicate entry on id</b>, kwa mfano "
-                + "<b>current=maroon, previous=mint</b>.</p>"
-                + "<p>Katika matoleo ya kisasa ya Minecraft, aina hii ya kosa mara nyingi hutokea wakati mod mbili zinajaribu kusajili "
-                + "maingizo tofauti kwa kutumia ID ya ndani ileile.</p>"
-                + "<p><b>Chaguzi zinazopendekezwa:</b></p>"
-                + "<ul>"
-                + "<li>Ondoa moja ya mod inayosajili ingizo lililorudiwa.</li>"
-                + "<li>Ikiwa unatambua majina yaliyotajwa katika kosa, angalia ni mod ipi inayoongeza maingizo hayo na ujaribu bila mod hiyo.</li>"
-                + "<li>Ikiwa hautambui majina, tumia zana ya <b>grepr</b> kwenye upau wa pembeni.</li>"
-                + "<li>Katika <b>grepr</b>, washisha utafutaji ndani ya faili zilizoshindwa <b>.jar</b>, <b>.zip</b> na <b>.fpm</b>.</li>"
-                + "<li>Pia washisha utafutaji katika <b>faili za binary</b>, kwa sababu baadhi ya majina au ID zinaweza kuwa ndani ya darasa zilizokusanywa.</li>"
-                + "</ul>"
-                + "<p>Tafuta thamani zilizotajwa katika kosa, kama <b>maroon</b> au <b>mint</b>, ili kupata ni mod ipi inayozikata.</p>";
-    }
+	@Override
+	public String mensajeEntradaDuplicadaIdModerno() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Ingizo lililorudiwa limegunduliwa katika rejista ya Minecraft.</b>"
+				+ "<p>Logi ina kosa linalofanana na <b>Duplicate entry on id</b>, kwa mfano "
+				+ "<b>current=maroon, previous=mint</b>.</p>"
+				+ "<p>Katika matoleo ya kisasa ya Minecraft, aina hii ya kosa mara nyingi hutokea wakati mod mbili zinajaribu kusajili "
+				+ "maingizo tofauti kwa kutumia ID ya ndani ileile.</p>" + "<p><b>Chaguzi zinazopendekezwa:</b></p>"
+				+ "<ul>" + "<li>Ondoa moja ya mod inayosajili ingizo lililorudiwa.</li>"
+				+ "<li>Ikiwa unatambua majina yaliyotajwa katika kosa, angalia ni mod ipi inayoongeza maingizo hayo na ujaribu bila mod hiyo.</li>"
+				+ "<li>Ikiwa hautambui majina, tumia zana ya <b>grepr</b> kwenye upau wa pembeni.</li>"
+				+ "<li>Katika <b>grepr</b>, washisha utafutaji ndani ya faili zilizoshindwa <b>.jar</b>, <b>.zip</b> na <b>.fpm</b>.</li>"
+				+ "<li>Pia washisha utafutaji katika <b>faili za binary</b>, kwa sababu baadhi ya majina au ID zinaweza kuwa ndani ya darasa zilizokusanywa.</li>"
+				+ "</ul>"
+				+ "<p>Tafuta thamani zilizotajwa katika kosa, kama <b>maroon</b> au <b>mint</b>, ili kupata ni mod ipi inayozikata.</p>";
+	}
 
-    @Override
-    public String nombreEntradaDuplicadaIdModerno() {
-        return "Ingizo lililorudiwa katika ID ya mod";
-    }
-	
-	
-	
-	
-	
-	
+	@Override
+	public String nombreEntradaDuplicadaIdModerno() {
+		return "Ingizo lililorudiwa katika ID ya mod";
+	}
+
 }

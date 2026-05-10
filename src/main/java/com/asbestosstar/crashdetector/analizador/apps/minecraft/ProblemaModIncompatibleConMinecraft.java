@@ -2,61 +2,207 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
- * Clase que detecta mods incompatibles con la versión de Minecraft en
- * Forge.Gracias a Aternos por que esta es una implementacion de su codex
+ * Clase que detecta mods incompatibles con la versión de Minecraft en Forge.
+ * Gracias a Aternos porque esta es una implementacion de su codex:
  * https://github.com/aternosorg/codex-minecraft
  */
 public class ProblemaModIncompatibleConMinecraft implements Verificaciones {
 
+	private boolean posibleModIncompatibleConMinecraft = false;
 	private boolean activado = false;
+
 	private String mensaje = "";
+
 	private final List<String> nombresMods = new ArrayList<>();
 	private final List<String> versionesMinecraft = new ArrayList<>();
+	private final List<String> enlaces = new ArrayList<>();
+
+	private static final String TEXTO_INICIO = "The mod ";
+	private static final String TEXTO_MEDIO = " does not wish to run in Minecraft version Minecraft ";
+	private static final String TEXTO_FINAL = ". You will have to remove it to play.";
 
 	/**
-	 * Verifica si el log contiene mods incompatibles con la versión de Minecraft.
+	 * Verificacion global ligera.
+	 *
+	 * Se ejecuta primero. No se limpian listas aquí porque esta verificación puede
+	 * ejecutarse sobre varios archivos de log con la misma instancia.
 	 */
 	@Override
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+			return;
+		}
+
 		String contenido = consola.contenido_verificar;
 
-		// Patrón para detectar mods que no son compatibles con la versión actual de
-		// Minecraft
-		Pattern patron = Pattern.compile(
-				"The mod (\\S+) does not wish to run in Minecraft version Minecraft ([0-9\\.]+)\\. You will have to remove it to play\\.",
-				Pattern.DOTALL);
-		Matcher coincidencia = patron.matcher(contenido);
+		if (contenido.contains(TEXTO_INICIO) && contenido.contains(TEXTO_MEDIO) && contenido.contains(TEXTO_FINAL)) {
+			posibleModIncompatibleConMinecraft = true;
+		}
+	}
 
-		while (coincidencia.find()) {
-			String nombreMod = coincidencia.group(1).trim();
-			String versionMC = coincidencia.group(2).trim();
-			if (!nombreMod.isEmpty() && !versionMC.isEmpty()) {
-				nombresMods.add(nombreMod);
-				versionesMinecraft.add(versionMC);
+	/**
+	 * Verificacion por linea.
+	 *
+	 * Detecta el mod exacto, la version de Minecraft exacta y agrega enlace a la
+	 * linea del log.
+	 */
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		if (!posibleModIncompatibleConMinecraft || linea == null || linea.isEmpty()) {
+			return;
+		}
+
+		DatosModIncompatible datos = extraerDatos(linea);
+
+		if (datos == null) {
+			return;
+		}
+
+		if (contieneEntrada(datos.nombreMod, datos.versionMinecraft)) {
+			return;
+		}
+
+		nombresMods.add(datos.nombreMod);
+		versionesMinecraft.add(datos.versionMinecraft);
+		enlaces.add(consola.agregarErrorALectador(numero_de_linea, this));
+
+		activado = true;
+		reconstruirMensaje();
+	}
+
+	/**
+	 * Extrae datos de una linea como:
+	 *
+	 * The mod examplemod does not wish to run in Minecraft version Minecraft
+	 * 1.20.1. You will have to remove it to play.
+	 *
+	 * Sin Pattern/Matcher.
+	 */
+	private DatosModIncompatible extraerDatos(String linea) {
+		int inicio = linea.indexOf(TEXTO_INICIO);
+
+		if (inicio < 0) {
+			return null;
+		}
+
+		int inicioMod = inicio + TEXTO_INICIO.length();
+		int finMod = linea.indexOf(TEXTO_MEDIO, inicioMod);
+
+		if (finMod <= inicioMod) {
+			return null;
+		}
+
+		String nombreMod = linea.substring(inicioMod, finMod).trim();
+
+		int inicioVersion = finMod + TEXTO_MEDIO.length();
+		int finVersion = linea.indexOf(TEXTO_FINAL, inicioVersion);
+
+		if (finVersion <= inicioVersion) {
+			return null;
+		}
+
+		String versionMinecraft = linea.substring(inicioVersion, finVersion).trim();
+
+		if (!esNombreModValido(nombreMod) || !esVersionMinecraftValida(versionMinecraft)) {
+			return null;
+		}
+
+		return new DatosModIncompatible(nombreMod, versionMinecraft);
+	}
+
+	/**
+	 * El patron original usaba \S+ para el mod, entonces aceptamos cualquier token
+	 * sin espacios.
+	 */
+	private boolean esNombreModValido(String nombreMod) {
+		if (nombreMod == null || nombreMod.isEmpty()) {
+			return false;
+		}
+
+		for (int i = 0; i < nombreMod.length(); i++) {
+			if (Character.isWhitespace(nombreMod.charAt(i))) {
+				return false;
 			}
 		}
 
-		if (!nombresMods.isEmpty()) {
-			if (nombresMods.size() > 1) {
-				this.mensaje = MonitorDePID.idioma.mensajeModIncompatibleConMinecraftPlural(nombresMods,
-						versionesMinecraft);
-			} else {
-				this.mensaje = MonitorDePID.idioma.mensajeModIncompatibleConMinecraftSingular(nombresMods.get(0),
-						versionesMinecraft.get(0));
+		return true;
+	}
+
+	/**
+	 * El patron original aceptaba [0-9\.]+.
+	 */
+	private boolean esVersionMinecraftValida(String version) {
+		if (version == null || version.isEmpty()) {
+			return false;
+		}
+
+		for (int i = 0; i < version.length(); i++) {
+			char c = version.charAt(i);
+
+			if (!Character.isDigit(c) && c != '.') {
+				return false;
 			}
-			activado = true;
+		}
+
+		return true;
+	}
+
+	private boolean contieneEntrada(String nombreMod, String versionMinecraft) {
+		for (int i = 0; i < nombresMods.size(); i++) {
+			if (nombresMods.get(i).equalsIgnoreCase(nombreMod)
+					&& versionesMinecraft.get(i).equalsIgnoreCase(versionMinecraft)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Reconstruye el mensaje HTML basado en las listas de mods/versiones.
+	 */
+	private void reconstruirMensaje() {
+		if (nombresMods.isEmpty()) {
+			mensaje = "";
+			activado = false;
+			return;
+		}
+
+		if (nombresMods.size() > 1) {
+			mensaje = MonitorDePID.idioma.mensajeModIncompatibleConMinecraftPlural(nombresMods, versionesMinecraft);
+		} else {
+			mensaje = MonitorDePID.idioma.mensajeModIncompatibleConMinecraftSingular(nombresMods.get(0),
+					versionesMinecraft.get(0));
+		}
+
+		StringBuilder sb = new StringBuilder(mensaje);
+
+		for (String enlace : enlaces) {
+			if (enlace != null && !enlace.isEmpty()) {
+				sb.append(" ").append(enlace);
+			}
+		}
+
+		mensaje = sb.toString();
+	}
+
+	private static class DatosModIncompatible {
+		private final String nombreMod;
+		private final String versionMinecraft;
+
+		private DatosModIncompatible(String nombreMod, String versionMinecraft) {
+			this.nombreMod = nombreMod;
+			this.versionMinecraft = versionMinecraft;
 		}
 	}
 
@@ -77,7 +223,7 @@ public class ProblemaModIncompatibleConMinecraft implements Verificaciones {
 	}
 
 	/**
-	 * Prioridad del problema (alta).
+	 * Prioridad del problema.
 	 */
 	@Override
 	public float prioridad() {
@@ -107,10 +253,11 @@ public class ProblemaModIncompatibleConMinecraft implements Verificaciones {
 	public QuickFix solucion() {
 		Builder builder = new Builder(nombre());
 
-		// Agregar solución para cada mod afectado
+		// Agregar solucion para cada mod afectado
 		for (int i = 0; i < nombresMods.size(); i++) {
 			String nombreMod = nombresMods.get(i);
 			String versionMC = versionesMinecraft.get(i);
+
 			builder.agregarEtiqueta(MonitorDePID.idioma.solucionEliminarMod(nombreMod));
 			builder.agregarEtiqueta(MonitorDePID.idioma.solucionInstalarVersionForge(versionMC));
 		}
@@ -120,27 +267,26 @@ public class ProblemaModIncompatibleConMinecraft implements Verificaciones {
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
 		return "mod_incompaible_con_minecraft_version";
 	}
 
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+		if (!activado || trazo == null || trazo.trace == null) {
+			return false;
+		}
+
+		return trazo.trace.contains(TEXTO_MEDIO) && trazo.trace.contains(TEXTO_FINAL);
 	}
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 
 	@Override
 	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
-
 }

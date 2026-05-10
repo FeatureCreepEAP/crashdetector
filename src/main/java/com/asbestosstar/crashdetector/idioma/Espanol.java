@@ -9998,9 +9998,7 @@ public class Espanol implements Idioma {
 				+ "<p>El log contiene un error parecido a <b>Duplicate entry on id</b>, por ejemplo "
 				+ "<b>current=maroon, previous=mint</b>.</p>"
 				+ "<p>En versiones modernas de Minecraft, este tipo de error suele ocurrir cuando dos mods intentan registrar "
-				+ "entradas distintas usando el mismo ID interno.</p>"
-				+ "<p><b>Opciones recomendadas:</b></p>"
-				+ "<ul>"
+				+ "entradas distintas usando el mismo ID interno.</p>" + "<p><b>Opciones recomendadas:</b></p>" + "<ul>"
 				+ "<li>Elimina uno de los mods que está registrando la entrada duplicada.</li>"
 				+ "<li>Si reconoces los nombres mencionados en el error, revisa qué mod agrega esas entradas y prueba sin ese mod.</li>"
 				+ "<li>Si no reconoces los nombres, usa la utilidad <b>grepr</b> en la barra lateral.</li>"
@@ -10014,16 +10012,5 @@ public class Espanol implements Idioma {
 	public String nombreEntradaDuplicadaIdModerno() {
 		return "Entrada duplicada en ID de mod";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

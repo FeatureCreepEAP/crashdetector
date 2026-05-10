@@ -2,143 +2,179 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
- * Clase que detecta errores de ejecución en plugins de PocketMine-MP. Gracias a
- * Aternos por que esta es una implementacion de su codex
- * https://github.com/aternosorg/codex-minecraft
+ * Detecta errores de ejecución en plugins de PocketMine-MP sin usar regex.
  */
 public class ProblemaEjecucionPlugin implements Verificaciones {
 
+	private boolean posibleEjecucion = false;
 	private boolean activado = false;
+
 	private String mensaje = "";
 	private final List<String> nombresPlugins = new ArrayList<>();
 	private final List<String> rutasPlugins = new ArrayList<>();
+	private final List<String> enlaces = new ArrayList<>();
 
-	/**
-	 * Verifica si el log contiene errores de ejecución en plugins de PocketMine-MP.
-	 */
+	private static final String TEXTO_ERROR = "Error: ";
+	private static final String TEXTO_PLUGINS = "plugins/";
+	private static final String TEXTO_EXCEPTION = "$EXCEPTION$ in ";
+
 	@Override
 	public void verificar(Consola consola) {
-		String contenido = consola.contenido_verificar;
-
-		// Patrón para detectar errores de ejecución en plugins de PocketMine
-		Pattern patron = Pattern.compile(
-				"Error: \".*?\" \\$EXCEPTION\\$ in \"(plugins/[^\\.]+\\.phar)(?:/[^/\\\"]+)*\" at line \\d+",
-				Pattern.DOTALL);
-
-		Matcher coincidencia = patron.matcher(contenido);
-
-		while (coincidencia.find()) {
-			String rutaPlugin = coincidencia.group(1); // plugins/NombrePlugin.phar
-			String nombrePlugin = coincidencia.group(2); // NombrePlugin
-
-			if (!nombrePlugin.isEmpty() && !nombresPlugins.contains(nombrePlugin)) {
-				nombresPlugins.add(nombrePlugin);
-				rutasPlugins.add(rutaPlugin);
-			}
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+			return;
 		}
 
-		if (!nombresPlugins.isEmpty()) {
-			if (nombresPlugins.size() > 1) {
-				this.mensaje = MonitorDePID.idioma.mensajePluginEjecucionPlural(nombresPlugins);
-			} else {
-				this.mensaje = MonitorDePID.idioma.mensajePluginEjecucionSingular(nombresPlugins.get(0));
-			}
-			activado = true;
+		String contenido = consola.contenido_verificar;
+
+		if (contenido.contains(TEXTO_ERROR) && contenido.contains(TEXTO_PLUGINS)
+				&& contenido.contains(TEXTO_EXCEPTION)) {
+			posibleEjecucion = true;
 		}
 	}
 
-	/**
-	 * Crea una nueva instancia del verificador.
-	 */
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		if (!posibleEjecucion || linea == null || linea.isEmpty()) {
+			return;
+		}
+
+		int idxPlugins = linea.indexOf(TEXTO_PLUGINS);
+		int idxException = linea.indexOf(TEXTO_EXCEPTION, idxPlugins);
+
+		if (idxPlugins < 0 || idxException <= idxPlugins) {
+			return;
+		}
+
+		String rutaPlugin = extraerRutaPlugin(linea, idxPlugins, idxException);
+		String nombrePlugin = extraerNombrePlugin(rutaPlugin);
+
+		if (rutaPlugin.isEmpty() || nombrePlugin.isEmpty() || contienePlugin(nombrePlugin, rutaPlugin)) {
+			return;
+		}
+
+		rutasPlugins.add(rutaPlugin);
+		nombresPlugins.add(nombrePlugin);
+		enlaces.add(consola.agregarErrorALectador(numero_de_linea, this));
+
+		activado = true;
+		reconstruirMensaje();
+	}
+
+	private String extraerRutaPlugin(String linea, int inicio, int fin) {
+		String ruta = linea.substring(inicio, fin).trim();
+		int finComillas = ruta.indexOf('"');
+		if (finComillas > 0) {
+			ruta = ruta.substring(0, finComillas);
+		}
+		return ruta;
+	}
+
+	private String extraerNombrePlugin(String rutaPlugin) {
+		int idxSlash = rutaPlugin.lastIndexOf('/');
+		return idxSlash >= 0 ? rutaPlugin.substring(idxSlash + 1) : rutaPlugin;
+	}
+
+	private boolean contienePlugin(String nombre, String ruta) {
+		for (int i = 0; i < nombresPlugins.size(); i++) {
+			if (nombresPlugins.get(i).equalsIgnoreCase(nombre) && rutasPlugins.get(i).equalsIgnoreCase(ruta)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private void reconstruirMensaje() {
+		if (nombresPlugins.isEmpty()) {
+			mensaje = "";
+			activado = false;
+			return;
+		}
+
+		if (nombresPlugins.size() > 1) {
+			mensaje = MonitorDePID.idioma.mensajePluginEjecucionPlural(nombresPlugins);
+		} else {
+			mensaje = MonitorDePID.idioma.mensajePluginEjecucionSingular(nombresPlugins.get(0));
+		}
+
+		StringBuilder sb = new StringBuilder(mensaje);
+		for (String enlace : enlaces) {
+			if (enlace != null && !enlace.isEmpty()) {
+				sb.append(" ").append(enlace);
+			}
+		}
+		mensaje = sb.toString();
+	}
+
 	@Override
 	public Verificaciones nueva() {
 		return new ProblemaEjecucionPlugin();
 	}
 
-	/**
-	 * Indica si el problema fue detectado.
-	 */
 	@Override
 	public boolean activado() {
 		return activado;
 	}
 
-	/**
-	 * Prioridad del problema (alta).
-	 */
 	@Override
 	public float prioridad() {
 		return 700.0f;
 	}
 
-	/**
-	 * Devuelve el mensaje de error almacenado.
-	 */
 	@Override
 	public String mensaje() {
 		return mensaje;
 	}
 
-	/**
-	 * Devuelve el nombre del problema para mostrar en la interfaz.
-	 */
 	@Override
 	public String nombre() {
 		return MonitorDePID.idioma.nombreProblemaPluginEjecucion();
 	}
 
-	/**
-	 * Devuelve las soluciones posibles para este problema.
-	 */
 	@Override
 	public QuickFix solucion() {
 		Builder builder = new Builder(nombre());
-
 		for (int i = 0; i < nombresPlugins.size(); i++) {
-			String nombre = nombresPlugins.get(i);
-			String ruta = rutasPlugins.get(i);
-			builder.agregarEtiqueta(MonitorDePID.idioma.solucionEliminarPlugin(ruta));
-			builder.agregarEtiqueta(MonitorDePID.idioma.solucionInstalarVersionDiferentePlugin(nombre));
+			builder.agregarEtiqueta(MonitorDePID.idioma.solucionEliminarPlugin(rutasPlugins.get(i)));
+			builder.agregarEtiqueta(MonitorDePID.idioma.solucionInstalarVersionDiferentePlugin(nombresPlugins.get(i)));
 		}
-
 		return builder.construir();
 	}
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
 		return "ejecucion_plugin";
 	}
 
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+		if (!activado || trazo == null || trazo.trace == null)
+			return false;
+		return trazo.trace.contains(TEXTO_PLUGINS) && trazo.trace.contains(TEXTO_EXCEPTION);
 	}
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 
 	@Override
 	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
 
+	@Override
+	public boolean recomendadoParaCorperata() {
+		return true;
+	}
 }

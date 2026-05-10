@@ -2,54 +2,175 @@ package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
- * Clase que detecta mods faltantes en datapacks.Gracias a Aternos por que esta
- * es una implementacion de su codex
+ * Clase que detecta mods faltantes en datapacks. Gracias a Aternos porque esta
+ * es una implementacion de su codex:
  * https://github.com/aternosorg/codex-minecraft
  */
 public class ProblemaModFaltanteEnDatapack implements Verificaciones {
 
+	private boolean posibleModFaltanteEnDatapack = false;
 	private boolean activado = false;
+
 	private String mensaje = "";
+
 	private final List<String> nombresMods = new ArrayList<>();
+	private final List<String> enlaces = new ArrayList<>();
+
+	private static final String TEXTO_MOD_FALTANTE = "Missing data pack mod:";
 
 	/**
-	 * Verifica si el log contiene mods faltantes en datapacks.
+	 * Verificación global ligera.
+	 *
+	 * Se ejecuta primero. No se limpian listas aquí porque esta verificación puede
+	 * ejecutarse sobre varios archivos de log con la misma instancia.
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		String contenido = consola.contenido_verificar;
-
-		// Patrón para detectar mods faltantes en datapacks
-		Pattern patron = Pattern.compile("Missing data pack mod:([\\w\\d\\-]+)");
-		Matcher coincidencia = patron.matcher(contenido);
-
-		while (coincidencia.find()) {
-			String nombreMod = coincidencia.group(1).trim();
-			if (!nombreMod.isEmpty()) {
-				nombresMods.add(nombreMod);
-			}
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+			return;
 		}
 
-		if (!nombresMods.isEmpty()) {
-			if (nombresMods.size() > 1) {
-				this.mensaje = MonitorDePID.idioma.mensajeModFaltanteEnDatapackPlural(nombresMods);
+		if (consola.contenido_verificar.contains(TEXTO_MOD_FALTANTE)) {
+			posibleModFaltanteEnDatapack = true;
+		}
+	}
+
+	/**
+	 * Verificación por línea.
+	 *
+	 * Aquí se detecta el mod exacto y se agrega el enlace a la línea del log.
+	 */
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		if (!posibleModFaltanteEnDatapack || linea == null || linea.isEmpty()) {
+			return;
+		}
+
+		int indiceBusqueda = 0;
+
+		while (indiceBusqueda < linea.length()) {
+			int indice = linea.indexOf(TEXTO_MOD_FALTANTE, indiceBusqueda);
+
+			if (indice < 0) {
+				break;
+			}
+
+			int inicioMod = indice + TEXTO_MOD_FALTANTE.length();
+
+			while (inicioMod < linea.length() && Character.isWhitespace(linea.charAt(inicioMod))) {
+				inicioMod++;
+			}
+
+			int finMod = leerFinModIdDatapack(linea, inicioMod);
+
+			if (finMod > inicioMod) {
+				String nombreMod = linea.substring(inicioMod, finMod).trim();
+
+				if (esModIdValido(nombreMod) && !contieneMod(nombreMod)) {
+					nombresMods.add(nombreMod);
+					enlaces.add(consola.agregarErrorALectador(numero_de_linea, this));
+					activado = true;
+					actualizarMensaje();
+				}
+
+				indiceBusqueda = finMod;
 			} else {
-				this.mensaje = MonitorDePID.idioma.mensajeModFaltanteEnDatapackSingular(nombresMods.get(0));
+				indiceBusqueda = inicioMod + 1;
 			}
-			activado = true;
 		}
+	}
+
+	/**
+	 * Actualiza el mensaje cada vez que se encuentra un nuevo mod faltante.
+	 */
+	private void actualizarMensaje() {
+		if (nombresMods.isEmpty()) {
+			mensaje = "";
+			return;
+		}
+
+		if (nombresMods.size() > 1) {
+			mensaje = MonitorDePID.idioma.mensajeModFaltanteEnDatapackPlural(nombresMods);
+		} else {
+			mensaje = MonitorDePID.idioma.mensajeModFaltanteEnDatapackSingular(nombresMods.get(0));
+		}
+
+		StringBuilder sb = new StringBuilder(mensaje);
+
+		for (String enlace : enlaces) {
+			if (enlace != null && !enlace.isEmpty()) {
+				sb.append(" ").append(enlace);
+			}
+		}
+
+		mensaje = sb.toString();
+	}
+
+	/**
+	 * Lee el final del modid después de: Missing data pack mod:
+	 *
+	 * El patron original aceptaba: letras, numeros, guion bajo y guion.
+	 */
+	private int leerFinModIdDatapack(String texto, int inicio) {
+		int i = inicio;
+
+		while (i < texto.length()) {
+			char c = texto.charAt(i);
+
+			if (esCaracterModIdDatapack(c)) {
+				i++;
+			} else {
+				break;
+			}
+		}
+
+		return i;
+	}
+
+	private boolean esModIdValido(String modId) {
+		if (modId == null || modId.isEmpty()) {
+			return false;
+		}
+
+		for (int i = 0; i < modId.length(); i++) {
+			if (!esCaracterModIdDatapack(modId.charAt(i))) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Equivalente manual de [\w\d\-].
+	 *
+	 * \w ya incluye letras, numeros y guion bajo. También se acepta guion normal.
+	 */
+	private boolean esCaracterModIdDatapack(char c) {
+		return Character.isLetterOrDigit(c) || c == '_' || c == '-';
+	}
+
+	/**
+	 * Evita duplicados ignorando mayusculas y minusculas.
+	 */
+	private boolean contieneMod(String nombreMod) {
+		for (String modExistente : nombresMods) {
+			if (modExistente.equalsIgnoreCase(nombreMod)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
@@ -69,7 +190,7 @@ public class ProblemaModFaltanteEnDatapack implements Verificaciones {
 	}
 
 	/**
-	 * Prioridad del problema (alta).
+	 * Prioridad del problema.
 	 */
 	@Override
 	public float prioridad() {
@@ -99,7 +220,7 @@ public class ProblemaModFaltanteEnDatapack implements Verificaciones {
 	public QuickFix solucion() {
 		Builder builder = new Builder(nombre());
 
-		// Agregar solución para cada mod faltante
+		// Agregar solucion para cada mod faltante
 		for (String mod : nombresMods) {
 			builder.agregarEtiqueta(MonitorDePID.idioma.solucionInstalarMod(mod));
 		}
@@ -109,27 +230,22 @@ public class ProblemaModFaltanteEnDatapack implements Verificaciones {
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
 		return "mod_faltante_en_datapack";
 	}
 
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+		return false;
 	}
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 
 	@Override
 	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
-
 }

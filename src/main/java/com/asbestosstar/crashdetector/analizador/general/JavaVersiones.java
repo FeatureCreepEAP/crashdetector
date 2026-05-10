@@ -4,133 +4,102 @@ import java.awt.Desktop;
 import java.net.URI;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.swing.JOptionPane;
 
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
+import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 public class JavaVersiones implements Verificaciones {
 
 	private boolean activado = false;
 	private final Set<String> mensajes = new HashSet<>();
-	// Nuevo: para almacenar la clase específica con problema de versión
 	private String claseConProblema = null;
-	// Nuevo: patrón para detectar errores de versión de clase específica
-	private final Pattern patronVersionClase = Pattern.compile(
-			"UnsupportedClassVersionError:\\s*([a-zA-Z0-9_/]+)\\s+has been compiled by a more recent version of the Java Runtime \\(class file version (\\d+)\\.0\\), this version of the Java Runtime only recognizes class file versions up to (\\d+)\\.0");
+
+	private static final String TEXTO_UNSUPPORTED_CLASS = "UnsupportedClassVersionError:";
+	private static final String TEXTO_JAVA22 = "Unsupported class file major version";
+	private static final String TEXTO_JAVA8 = "Unsupported major.minor version 52.0";
 
 	@Override
 	public void verificar(Consola consola) {
-		String contenidoConsola = consola.contenido_verificar;
-
-		// Buscar errores de versión de clase específica
-		Matcher matcher = patronVersionClase.matcher(contenidoConsola);
-		while (matcher.find()) {
-			claseConProblema = matcher.group(1).replace("/", ".");
-			String versionCompilada = matcher.group(2);
-			String versionActual = matcher.group(3);
-
-			// Determinar qué versión de Java se necesita
-			String versionJavaNecesaria = determinarVersionJava(versionCompilada);
-			mensajes.add(MonitorDePID.idioma.javaObsoleta() + " JVM: " + versionJavaNecesaria);
-			activado = true;
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+			return;
 		}
 
-		// Verificación de versión Java 22 no soportada
-		if (contenidoConsola.contains("Unsupported class file major version")) {
-			if (contenidoConsola.contains("--fml.forgeVersion, 4")
-					|| contenidoConsola.contains("--fml.forgeVersion, 3")) {
-				if (contenidoConsola.contains("java version 2") && !contenidoConsola.contains("java version 20")
-						&& !contenidoConsola.contains("java version 21")) {
-					mensajes.add(MonitorDePID.idioma.java22());
-					activado = true;
-				}
+		String contenido = consola.contenido_verificar;
+
+		// Buscar UnsupportedClassVersionError sin regex
+		int idx = contenido.indexOf(TEXTO_UNSUPPORTED_CLASS);
+		while (idx >= 0) {
+			int finLinea = contenido.indexOf('\n', idx);
+			if (finLinea < 0)
+				finLinea = contenido.length();
+			String linea = contenido.substring(idx, finLinea);
+
+			// Extraer nombre de clase
+			String clase = extraerClase(linea);
+			if (clase != null) {
+				claseConProblema = clase;
+				mensajes.add(MonitorDePID.idioma.javaObsoleta() + " JVM: " + determinarVersionJava(linea));
+				activado = true;
 			}
+
+			idx = contenido.indexOf(TEXTO_UNSUPPORTED_CLASS, finLinea);
 		}
 
-		// Verificación de versión Java obsoleta (genérica)
-		if (contenidoConsola.contains("has been compiled by a more recent version of the Java Runtime")
-				&& claseConProblema == null) {
-			mensajes.add(MonitorDePID.idioma.javaObsoleta());
+		// Java 22 no soportada
+		if (contenido.contains(TEXTO_JAVA22)) {
+			mensajes.add(MonitorDePID.idioma.java22());
 			activado = true;
 		}
 
-		// Resto de las verificaciones existentes
-		// Verificación de incompatibilidad con Java 8
-		if (contenidoConsola.contains(
-				"class jdk.internal.loader.ClassLoaders$AppClassLoader cannot be cast to class java.net.URLClassLoader")) {
-			mensajes.add(MonitorDePID.idioma.errorCompatibilidadJava8());
-			activado = true;
-		}
-
-		// Verificación de Java 9+ no soportado
-		if (contenidoConsola.contains(
-				"java.base/jdk.internal.loader.ClassLoaders$AppClassLoader cannot be cast to java.base/java.net.URLClassLoader")) {
-			mensajes.add(MonitorDePID.idioma.errorJava9NoSoportado());
-			activado = true;
-		}
-
-		// Verificación de requerimiento Java 8
-		if (contenidoConsola.contains("net/minecraft/client/main/Main : Unsupported major.minor version 52.0")) {
+		// Verificación de Java 8 requerida
+		if (contenido.contains(TEXTO_JAVA8)) {
 			mensajes.add(MonitorDePID.idioma.errorJava8Requerido());
 			activado = true;
 		}
-
-		// https://github.com/HMCL-dev/HMCL/blob/main/HMCLCore/src/main/java/org/jackhuang/hmcl/game/CrashReportAnalyzer.java
-		if (contenidoConsola.contains("Open J9 is not supported") || contenidoConsola.contains("OpenJ9 is incompatible")
-				|| contenidoConsola.contains(".J9VMInternals")) {
-			mensajes.add(MonitorDePID.idioma.openJ9NoSoportado());
-			activado = true;
-		}
-
-		// Verificación de necesidad de JDK 11
-		if (contenidoConsola.contains(
-				"no such method: sun.misc.Unsafe.defineAnonymousClass(Class,byte[],Object[])Class/invokeVirtual")
-				|| contenidoConsola.contains(
-						"java.lang.IllegalArgumentException: The requested compatibility level JAVA_11 could not be set. Level is not supported by the active JRE or ASM version")) {
-			mensajes.add(MonitorDePID.idioma.necesitasJDK11());
-			activado = true;
-		}
-
-		int idxFrame = contenidoConsola.indexOf("Problematic frame:");
-
-		if (idxFrame != -1) {
-
-			// Buscar la línea inmediatamente después del encabezado
-			int inicioLinea = contenidoConsola.indexOf('\n', idxFrame);
-			if (inicioLinea != -1) {
-
-				int finLinea = contenidoConsola.indexOf('\n', inicioLinea + 1);
-				if (finLinea == -1) {
-					finLinea = contenidoConsola.length();
-				}
-
-				String lineaFrame = contenidoConsola.substring(inicioLinea, finLinea).toLowerCase();
-
-				// Solo activar si el frame realmente pertenece a la JVM
-				if (lineaFrame.contains("[jvm.dll") || lineaFrame.contains("[libjvm.so")
-						|| lineaFrame.contains("[libjvm.dylib")) {
-
-					mensajes.add(MonitorDePID.idioma.javaProblematica());
-					activado = true;
-				}
-			}
-		}
-
 	}
 
-	// Nuevo: método para determinar la versión de Java a partir del número de clase
-	private String determinarVersionJava(String versionClase) {
-		int version = Integer.parseInt(versionClase);
-		switch (version) {
+	private String extraerClase(String linea) {
+		if (linea == null)
+			return null;
+		int start = linea.indexOf(TEXTO_UNSUPPORTED_CLASS);
+		if (start < 0)
+			return null;
+		start += TEXTO_UNSUPPORTED_CLASS.length();
+		while (start < linea.length() && Character.isWhitespace(linea.charAt(start)))
+			start++;
+		if (start >= linea.length())
+			return null;
+
+		int fin = linea.indexOf(" has been compiled", start);
+		if (fin < 0)
+			fin = linea.length();
+		return linea.substring(start, fin).replace("/", ".").trim();
+	}
+
+	private String determinarVersionJava(String linea) {
+		// Buscar número de class file version
+		int idx = linea.indexOf("class file version");
+		if (idx < 0)
+			return "desconocida";
+
+		int start = idx + "class file version".length();
+		while (start < linea.length() && !Character.isDigit(linea.charAt(start)))
+			start++;
+		if (start >= linea.length())
+			return "desconocida";
+
+		int end = start;
+		while (end < linea.length() && Character.isDigit(linea.charAt(end)))
+			end++;
+		String versionClase = linea.substring(start, end);
+
+		switch (Integer.parseInt(versionClase)) {
 		case 61:
 			return "17";
 		case 62:
@@ -143,33 +112,14 @@ public class JavaVersiones implements Verificaciones {
 			return "21";
 		case 66:
 			return "22";
+		case 52:
+			return "1.8";
+		case 51:
+			return "1.7";
+		case 50:
+			return "1.6";
 		default:
-			if (version < 50)
-				return "1.6 o anterior";
-			else if (version == 50)
-				return "1.6";
-			else if (version == 51)
-				return "1.7";
-			else if (version == 52)
-				return "1.8";
-			else if (version == 53)
-				return "9";
-			else if (version == 54)
-				return "10";
-			else if (version == 55)
-				return "11";
-			else if (version == 56)
-				return "12";
-			else if (version == 57)
-				return "13";
-			else if (version == 58)
-				return "14";
-			else if (version == 59)
-				return "15";
-			else if (version == 60)
-				return "16";
-			else
-				return "desconocida (" + version + ")";
+			return "desconocida (" + versionClase + ")";
 		}
 	}
 
@@ -194,15 +144,10 @@ public class JavaVersiones implements Verificaciones {
 			return "";
 
 		StringBuilder html = new StringBuilder("<ul>");
-		for (String msg : mensajes) {
+		for (String msg : mensajes)
 			html.append("<li>").append(msg).append("</li>");
-		}
-
-		// Nuevo: agregar información sobre la clase específica si se detectó
-		if (claseConProblema != null && !claseConProblema.isEmpty()) {
-			html.append("<li><b>").append("Clase").append(":</b> ").append(claseConProblema).append("</li>");
-		}
-
+		if (claseConProblema != null)
+			html.append("<li><b>Clase:</b> ").append(claseConProblema).append("</li>");
 		html.append("</ul>");
 		return html.toString();
 	}
@@ -214,49 +159,28 @@ public class JavaVersiones implements Verificaciones {
 
 	@Override
 	public QuickFix solucion() {
-		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.solucionParaJavaInstallar())
-
-				// Botón para Red Hat OpenJDK (Windows/x86_x64 + Linux/x86_x64 + SRC)
-				.agregarBoton("Java Windows-x86_x64+Linux-x86_x64+SRC", (bool) -> {
-					abrirEnNavegador("https://developers.redhat.com/products/openjdk/download");
-				})
-
-				// Botón para OpenLogic (Mac Intel)
-				.agregarBoton("Java Mac Intel", (bool) -> {
-					abrirEnNavegador("https://www.openlogic.com/openjdk-downloads");
-				})
-
-				// Botón para JDK PPC Mac (GitHub)
-				.agregarBoton("Java Mac PPC", (bool) -> {
-					abrirEnNavegador("https://github.com/nilsvanvelzen/mac_ppc_openjdk8u60");
-				})
-
-				// Botón para Oracle Java Downloads
-				.agregarBoton("Java Sun Microsystems", (bool) -> {
-					abrirEnNavegador("https://www.oracle.com/java/technologies/downloads/");
-				})
-
-				// Botón para Tribblix JDK (Solaris/Illumos)
-				.agregarBoton("Java 15+ Solaris/Iluminos", (bool) -> {
-					abrirEnNavegador("https://pkgs.tribblix.org/openjdk/");
-				}).construir();
+		Builder builder = new QuickFix.Builder(nombre());
+		builder.agregarEtiqueta(MonitorDePID.idioma.solucionParaJavaInstallar());
+		builder.agregarBoton("Java Windows-x86_x64+Linux-x86_x64+SRC",
+				(bool) -> abrirEnNavegador("https://developers.redhat.com/products/openjdk/download"));
+		builder.agregarBoton("Java Mac Intel",
+				(bool) -> abrirEnNavegador("https://www.openlogic.com/openjdk-downloads"));
+		builder.agregarBoton("Java Mac PPC",
+				(bool) -> abrirEnNavegador("https://github.com/nilsvanvelzen/mac_ppc_openjdk8u60"));
+		builder.agregarBoton("Java Sun Microsystems",
+				(bool) -> abrirEnNavegador("https://www.oracle.com/java/technologies/downloads/"));
+		builder.agregarBoton("Java 15+ Solaris/Iluminos",
+				(bool) -> abrirEnNavegador("https://pkgs.tribblix.org/openjdk/"));
+		return builder.construir();
 	}
 
-	/**
-	 * Abre una URL en el navegador predeterminado del sistema
-	 * 
-	 * @param url La dirección web a abrir
-	 */
 	private void abrirEnNavegador(String url) {
 		try {
-			if (Desktop.isDesktopSupported()) {
-				Desktop desktop = Desktop.getDesktop();
-				if (desktop.isSupported(Desktop.Action.BROWSE)) {
-					desktop.browse(new URI(url));
-				}
+			if (java.awt.Desktop.isDesktopSupported()) {
+				java.awt.Desktop.getDesktop().browse(new URI(url));
 			}
 		} catch (Exception e) {
-			CrashDetectorLogger.logException(e);
+			com.asbestosstar.crashdetector.CrashDetectorLogger.logException(e);
 		}
 	}
 
@@ -272,13 +196,11 @@ public class JavaVersiones implements Verificaciones {
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 
 	@Override
 	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/general/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
@@ -287,5 +209,4 @@ public class JavaVersiones implements Verificaciones {
 	public boolean recomendadoParaCorperata() {
 		return true;
 	}
-
 }

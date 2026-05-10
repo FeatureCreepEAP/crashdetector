@@ -37,8 +37,7 @@ public class EntradaDuplicadaIdModerno implements Verificaciones {
 		}
 
 		// Verificación precisa en la línea principal del error
-		if (linea.contains("java.lang.IllegalArgumentException: Duplicate entry on id")
-				&& linea.contains("current=")
+		if (linea.contains("java.lang.IllegalArgumentException: Duplicate entry on id") && linea.contains("current=")
 				&& linea.contains("previous=")) {
 
 			this.enlace = consola.agregarErrorALectador(num, this);

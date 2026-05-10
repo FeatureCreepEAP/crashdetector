@@ -1,89 +1,87 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
- * Clase que detecta errores al cargar un mundo con Multiverse.Gracias a Aternos
- * por que esta es una implementacion de su codex
- * https://github.com/aternosorg/codex-minecraft
+ * Detecta errores al cargar un mundo con Multiverse. Moderniza la detección sin
+ * usar Pattern/Matcher.
  */
 public class ProblemaCargaMultiverso implements Verificaciones {
 
+	private boolean posibleCargaMultiverso = false;
 	private boolean activado = false;
-	private String mensaje = "";
-	private String nombreMundo = "";
 
-	/**
-	 * Verifica si el log contiene el error de carga del mundo por Multiverse.
-	 */
+	private String nombreMundo = "";
+	private String enlace = "";
+	public String mensaje = "";
+
+	private static final String TEXTO_ERROR = "The world '";
+	private static final String TEXTO_FIN = "' could NOT be loaded because it contains errors and is probably corrupt!";
+
 	@Override
 	public void verificar(Consola consola) {
-		String contenido = consola.contenido_verificar;
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+			return;
+		}
 
-		// Patrón de error: "The world 'nombre' could NOT be loaded..."
-		Pattern patron = Pattern
-				.compile("The world '([^']+)' could NOT be loaded because it contains errors and is probably corrupt!");
-		Matcher coincidencia = patron.matcher(contenido);
-
-		if (coincidencia.find()) {
-			this.nombreMundo = coincidencia.group(1);
-			this.mensaje = MonitorDePID.idioma.mensajeProblemaCargaMultiverso(nombreMundo) + Verificaciones.nl_html;
-			activado = true;
+		if (consola.contenido_verificar.contains(TEXTO_ERROR) && consola.contenido_verificar.contains(TEXTO_FIN)) {
+			posibleCargaMultiverso = true;
 		}
 	}
 
-	/**
-	 * Crea una nueva instancia del verificador.
-	 */
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		if (!posibleCargaMultiverso || activado || linea == null || linea.isEmpty()) {
+			return;
+		}
+
+		int inicio = linea.indexOf(TEXTO_ERROR);
+		if (inicio < 0)
+			return;
+
+		int startMundo = inicio + TEXTO_ERROR.length();
+		int finMundo = linea.indexOf(TEXTO_FIN, startMundo);
+
+		if (finMundo <= startMundo)
+			return;
+
+		nombreMundo = linea.substring(startMundo, finMundo).trim();
+		enlace = consola.agregarErrorALectador(numero_de_linea, this);
+		mensaje = MonitorDePID.idioma.mensajeProblemaCargaMultiverso(nombreMundo) + " " + enlace;
+		activado = true;
+	}
+
 	@Override
 	public Verificaciones nueva() {
 		return new ProblemaCargaMultiverso();
 	}
 
-	/**
-	 * Indica si el problema fue detectado.
-	 */
 	@Override
 	public boolean activado() {
 		return activado;
 	}
 
-	/**
-	 * Prioridad del problema (alta).
-	 */
 	@Override
 	public float prioridad() {
 		return 1000.0f;
 	}
 
-	/**
-	 * Devuelve el mensaje de error almacenado.
-	 */
 	@Override
 	public String mensaje() {
 		return mensaje;
 	}
 
-	/**
-	 * Devuelve el nombre del problema para mostrar en la interfaz.
-	 */
 	@Override
 	public String nombre() {
 		return MonitorDePID.idioma.nombreProblemaCargaMultiverso();
 	}
 
-	/**
-	 * Devuelve las soluciones posibles para este problema.
-	 */
 	@Override
 	public QuickFix solucion() {
 		return new Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.solucionRepararMundo(nombreMundo))
@@ -97,25 +95,23 @@ public class ProblemaCargaMultiverso implements Verificaciones {
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
 		return "carga_multiverso";
 	}
 
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+		if (!activado || trazo == null || trazo.trace == null)
+			return false;
+		return trazo.trace.contains(TEXTO_ERROR) && trazo.trace.contains(TEXTO_FIN);
 	}
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 
 	@Override
 	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
@@ -124,5 +120,4 @@ public class ProblemaCargaMultiverso implements Verificaciones {
 	public boolean recomendadoParaCorperata() {
 		return true;
 	}
-
 }

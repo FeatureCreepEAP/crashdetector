@@ -9814,36 +9814,28 @@ public class Frances implements Idioma {
 	public String nombreFabricRenderingApiFaltaIndium() {
 		return "Indium manquant / Fabric Rendering API";
 	}
-	
+
 	// French (Burkina Faso variant) (Français)
 	@Override
 	public String mensajeEntradaDuplicadaIdModerno() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "Entrée dupliquée détectée dans un registre Minecraft.</b>"
-	            + "<p>Le journal contient une erreur similaire à <b>Duplicate entry on id</b>, par exemple "
-	            + "<b>current=maroon, previous=mint</b>.</p>"
-	            + "<p>Dans les versions modernes de Minecraft, ce type d'erreur se produit généralement lorsque deux mods tentent d'enregistrer "
-	            + "des entrées distinctes en utilisant le même ID interne.</p>"
-	            + "<p><b>Options recommandées :</b></p>"
-	            + "<ul>"
-	            + "<li>Supprimez l'un des mods qui enregistre l'entrée dupliquée.</li>"
-	            + "<li>Si vous reconnaissez les noms mentionnés dans l'erreur, vérifiez quel mod ajoute ces entrées et essayez sans ce mod.</li>"
-	            + "<li>Si vous ne reconnaissez pas les noms, utilisez l'utilitaire <b>grepr</b> dans la barre latérale.</li>"
-	            + "<li>Dans <b>grepr</b>, activez la recherche dans les fichiers compressés <b>.jar</b>, <b>.zip</b> et <b>.fpm</b>.</li>"
-	            + "<li>Activez également la recherche dans les <b>fichiers binaires</b>, car certains noms ou ID peuvent se trouver dans des classes compilées.</li>"
-	            + "</ul>"
-	            + "<li>Recherchez les valeurs mentionnées dans l'erreur, comme <b>maroon</b> ou <b>mint</b>, pour trouver quel mod les contient.</li>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Entrée dupliquée détectée dans un registre Minecraft.</b>"
+				+ "<p>Le journal contient une erreur similaire à <b>Duplicate entry on id</b>, par exemple "
+				+ "<b>current=maroon, previous=mint</b>.</p>"
+				+ "<p>Dans les versions modernes de Minecraft, ce type d'erreur se produit généralement lorsque deux mods tentent d'enregistrer "
+				+ "des entrées distinctes en utilisant le même ID interne.</p>" + "<p><b>Options recommandées :</b></p>"
+				+ "<ul>" + "<li>Supprimez l'un des mods qui enregistre l'entrée dupliquée.</li>"
+				+ "<li>Si vous reconnaissez les noms mentionnés dans l'erreur, vérifiez quel mod ajoute ces entrées et essayez sans ce mod.</li>"
+				+ "<li>Si vous ne reconnaissez pas les noms, utilisez l'utilitaire <b>grepr</b> dans la barre latérale.</li>"
+				+ "<li>Dans <b>grepr</b>, activez la recherche dans les fichiers compressés <b>.jar</b>, <b>.zip</b> et <b>.fpm</b>.</li>"
+				+ "<li>Activez également la recherche dans les <b>fichiers binaires</b>, car certains noms ou ID peuvent se trouver dans des classes compilées.</li>"
+				+ "</ul>"
+				+ "<li>Recherchez les valeurs mentionnées dans l'erreur, comme <b>maroon</b> ou <b>mint</b>, pour trouver quel mod les contient.</li>";
 	}
 
 	@Override
 	public String nombreEntradaDuplicadaIdModerno() {
-	    return "Entrée dupliquée dans l'ID du mod";
+		return "Entrée dupliquée dans l'ID du mod";
 	}
-	
-	
-	
-	
-	
-	
 
 }

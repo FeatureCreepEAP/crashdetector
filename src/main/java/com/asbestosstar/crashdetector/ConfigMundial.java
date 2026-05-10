@@ -20,7 +20,7 @@ public class ConfigMundial {
 	private static final String VALOR_POR_DEFECTO_CURSEFORGE_CLAVE_API = "";
 	private static final String CLAVE_RUTA_EJECUTABLE_JAVA_8 = "ruta_ejecutable_java_8";
 	private static final String VALOR_POR_DEFECTO_RUTA_EJECUTABLE_JAVA_8 = "";
-	
+
 	private static final File ARCHIVO_CONFIG_MUNIDIAL = new File(System.getProperty("user.home"),
 			"crash_detector/config_munidial.properties");
 
@@ -193,9 +193,6 @@ public class ConfigMundial {
 		guardar();
 	}
 
-	
-	
-	
 	/**
 	 * Devuelve la ruta guardada del ejecutable java.exe de Java 8.
 	 *
@@ -219,6 +216,5 @@ public class ConfigMundial {
 
 		guardar();
 	}
-	
-	
+
 }

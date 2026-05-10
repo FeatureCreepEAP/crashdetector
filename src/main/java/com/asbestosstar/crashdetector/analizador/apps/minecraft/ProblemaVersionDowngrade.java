@@ -1,44 +1,120 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Clase que detecta intentos de cargar un mundo creado en una versión más
- * reciente de Minecraft.Gracias a Aternos por que esta es una implementacion de
- * su codex https://github.com/aternosorg/codex-minecraft
+ * reciente de Minecraft. Gracias a Aternos porque esta es una implementacion de
+ * su codex: https://github.com/aternosorg/codex-minecraft
  */
 public class ProblemaVersionDowngrade implements Verificaciones {
 
+	private boolean posibleVersionDowngrade = false;
 	private boolean activado = false;
+
 	private String mensaje = "";
+	private String enlace = "";
+
+	private static final String TEXTO_ERROR = "java.lang.RuntimeException: Server attempted to load chunk saved with newer version of minecraft! ";
 
 	/**
-	 * Verifica si el log contiene errores de versión de Minecraft (intentar usar un
-	 * mundo de una versión más reciente).
+	 * Verificacion global ligera.
+	 *
+	 * Se ejecuta primero. No se limpian campos porque esta verificacion puede
+	 * ejecutarse sobre varios archivos de log con la misma instancia.
 	 */
 	@Override
 	public void verificar(Consola consola) {
-		String contenido = consola.contenido_verificar;
-
-		// Patrón para detectar intentos de cargar un mundo de una versión más nueva
-		Pattern patron = Pattern.compile(
-				"java\\.lang\\.RuntimeException: Server attempted to load chunk saved with newer version of minecraft! (\\d+) > (\\d+)",
-				Pattern.DOTALL);
-		Matcher coincidencia = patron.matcher(contenido);
-
-		if (coincidencia.find()) {
-			this.mensaje = MonitorDePID.idioma.mensajeVersionDowngrade();
-			activado = true;
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+			return;
 		}
+
+		if (consola.contenido_verificar.contains(TEXTO_ERROR)) {
+			posibleVersionDowngrade = true;
+		}
+	}
+
+	/**
+	 * Verificacion por linea.
+	 *
+	 * Detecta la linea exacta del error y agrega enlace al lector.
+	 */
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		if (!posibleVersionDowngrade || activado || linea == null || linea.isEmpty()) {
+			return;
+		}
+
+		if (!esLineaVersionDowngrade(linea)) {
+			return;
+		}
+
+		this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
+		this.mensaje = MonitorDePID.idioma.mensajeVersionDowngrade() + " " + enlace;
+		this.activado = true;
+	}
+
+	/**
+	 * Detecta:
+	 *
+	 * java.lang.RuntimeException: Server attempted to load chunk saved with newer
+	 * version of minecraft! 3955 > 3465
+	 *
+	 * Sin Pattern/Matcher.
+	 */
+	private boolean esLineaVersionDowngrade(String linea) {
+		int inicio = linea.indexOf(TEXTO_ERROR);
+
+		if (inicio < 0) {
+			return false;
+		}
+
+		inicio += TEXTO_ERROR.length();
+
+		int finNumeroNuevo = leerFinNumero(linea, inicio);
+
+		if (finNumeroNuevo <= inicio) {
+			return false;
+		}
+
+		int indice = finNumeroNuevo;
+
+		while (indice < linea.length() && Character.isWhitespace(linea.charAt(indice))) {
+			indice++;
+		}
+
+		if (indice >= linea.length() || linea.charAt(indice) != '>') {
+			return false;
+		}
+
+		indice++;
+
+		while (indice < linea.length() && Character.isWhitespace(linea.charAt(indice))) {
+			indice++;
+		}
+
+		int finNumeroServidor = leerFinNumero(linea, indice);
+
+		return finNumeroServidor > indice;
+	}
+
+	/**
+	 * Lee una secuencia de digitos.
+	 */
+	private int leerFinNumero(String texto, int inicio) {
+		int i = inicio;
+
+		while (i < texto.length() && Character.isDigit(texto.charAt(i))) {
+			i++;
+		}
+
+		return i;
 	}
 
 	/**
@@ -58,7 +134,7 @@ public class ProblemaVersionDowngrade implements Verificaciones {
 	}
 
 	/**
-	 * Prioridad del problema (alta).
+	 * Prioridad del problema.
 	 */
 	@Override
 	public float prioridad() {
@@ -97,25 +173,21 @@ public class ProblemaVersionDowngrade implements Verificaciones {
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
 		return "version_downgrade";
 	}
 
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+		return false;
 	}
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 
 	@Override
 	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
@@ -124,5 +196,4 @@ public class ProblemaVersionDowngrade implements Verificaciones {
 	public boolean recomendadoParaCorperata() {
 		return true;
 	}
-
 }

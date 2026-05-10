@@ -9300,38 +9300,28 @@ public class Ingles implements Idioma {
 	public String nombreFabricRenderingApiFaltaIndium() {
 		return "Missing Indium / Fabric Rendering API";
 	}
+
 	// English (UK)
 	@Override
 	public String mensajeEntradaDuplicadaIdModerno() {
-	    return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
-	            + "Duplicate entry detected in a Minecraft registry.</b>"
-	            + "<p>The log contains an error similar to <b>Duplicate entry on id</b>, for example "
-	            + "<b>current=maroon, previous=mint</b>.</p>"
-	            + "<p>In modern versions of Minecraft, this type of error usually occurs when two mods attempt to register "
-	            + "distinct entries using the same internal ID.</p>"
-	            + "<p><b>Recommended options:</b></p>"
-	            + "<ul>"
-	            + "<li>Remove one of the mods that is registering the duplicate entry.</li>"
-	            + "<li>If you recognise the names mentioned in the error, check which mod adds those entries and try without that mod.</li>"
-	            + "<li>If you do not recognise the names, use the <b>grepr</b> utility in the sidebar.</li>"
-	            + "<li>In <b>grepr</b>, enable searching within compressed files <b>.jar</b>, <b>.zip</b>, and <b>.fpm</b>.</li>"
-	            + "<li>Also enable searching in <b>binary files</b>, as some names or IDs may be inside compiled classes.</li>"
-	            + "</ul>"
-	            + "<li>Search for the values mentioned in the error, such as <b>maroon</b> or <b>mint</b>, to find which mod contains them.</li>";
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Duplicate entry detected in a Minecraft registry.</b>"
+				+ "<p>The log contains an error similar to <b>Duplicate entry on id</b>, for example "
+				+ "<b>current=maroon, previous=mint</b>.</p>"
+				+ "<p>In modern versions of Minecraft, this type of error usually occurs when two mods attempt to register "
+				+ "distinct entries using the same internal ID.</p>" + "<p><b>Recommended options:</b></p>" + "<ul>"
+				+ "<li>Remove one of the mods that is registering the duplicate entry.</li>"
+				+ "<li>If you recognise the names mentioned in the error, check which mod adds those entries and try without that mod.</li>"
+				+ "<li>If you do not recognise the names, use the <b>grepr</b> utility in the sidebar.</li>"
+				+ "<li>In <b>grepr</b>, enable searching within compressed files <b>.jar</b>, <b>.zip</b>, and <b>.fpm</b>.</li>"
+				+ "<li>Also enable searching in <b>binary files</b>, as some names or IDs may be inside compiled classes.</li>"
+				+ "</ul>"
+				+ "<li>Search for the values mentioned in the error, such as <b>maroon</b> or <b>mint</b>, to find which mod contains them.</li>";
 	}
 
 	@Override
 	public String nombreEntradaDuplicadaIdModerno() {
-	    return "Duplicate entry in mod ID";
+		return "Duplicate entry in mod ID";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

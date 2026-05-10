@@ -33,7 +33,7 @@ public class ModsDuplicadosModLauncher implements Verificaciones {
 
 		// Añadir la cabecera una sola vez antes de procesar líneas individuales.
 		if (!cabeceraAñadida) {
-			mensaje.append(MonitorDePID.idioma.no_tienes_las_dependencias_necesarias()).append(Verificaciones.nl_html);
+			// mensaje.append(MonitorDePID.idioma.no_tienes_las_dependencias_necesarias()).append(Verificaciones.nl_html);
 			cabeceraAñadida = true;
 		}
 	}

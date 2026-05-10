@@ -3,135 +3,115 @@ package com.asbestosstar.crashdetector.analizador.general;
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
-import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
+import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta errores AbstractMethodError específicos donde una clase no implementa
  * un método de una interfaz. Extrae los nombres concretos y el origen desde el
- * trace.
+ * trace, sin usar regex.
  */
 public class ErrorMetodoAbstractoNoImplementado implements Verificaciones {
 
 	private boolean activado = false;
 	private String mensaje = "";
-
-	/**
-	 * Enlace HTML hacia la línea del log donde se detectó el error.
-	 */
 	private String enlaceHtml = "";
 
-	/**
-	 * Bandera ligera que indica si el log parece contener este tipo de error. Sirve
-	 * para evitar trabajo innecesario en el verificador por línea.
-	 */
-	private boolean posibleErrorMetodoAbstracto = false;
-
-	/**
-	 * Caché de las líneas de la consola, calculado una sola vez en la verificación
-	 * global para reutilizar en el análisis por línea (cuando se necesita contexto
-	 * hacia abajo).
-	 */
+	private boolean posibleError = false;
 	private String[] lineasConsola = null;
 
-	private static final Pattern PATRON_ABSTRACT_METHOD = Pattern.compile(
-			"java\\.lang\\.AbstractMethodError: Receiver class ([^ ]+) does not define or inherit an implementation of the resolved method '([^']+)' of interface ([^\\.]+\\.[^\\s]+)");
+	private static final String TEXTO_ABSTRACT = "java.lang.AbstractMethodError";
+	private static final String TEXTO_NO_IMPLEMENTA = "does not define or inherit an implementation";
+	private static final String TEXTO_INTERFACE = "of interface";
 
 	@Override
 	public void verificar(Consola consola) {
-		String contenido = consola.contenido_verificar;
-		this.lineasConsola = contenido != null ? contenido.split(Verificaciones.nl) : null;
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+			return;
+		}
 
-		// Trabajo global mínimo: solo comprobamos si aparecen los fragmentos clave.
-		// Si no aparecen, el verificador por línea se saltará directamente.
-		if (contenido != null && contenido.contains("java.lang.AbstractMethodError")
-				&& contenido.contains("does not define or inherit an implementation")
-				&& contenido.contains("of interface")) {
-			posibleErrorMetodoAbstracto = true;
+		lineasConsola = consola.contenido_verificar.split(Verificaciones.nl);
+
+		if (consola.contenido_verificar.contains(TEXTO_ABSTRACT)
+				&& consola.contenido_verificar.contains(TEXTO_NO_IMPLEMENTA)
+				&& consola.contenido_verificar.contains(TEXTO_INTERFACE)) {
+			posibleError = true;
 		} else {
-			posibleErrorMetodoAbstracto = false;
+			posibleError = false;
 		}
 	}
 
 	@Override
 	public void verificar(Consola consola, String linea, int numero_de_linea) {
-		// Si ya se activó o el log no tiene pinta de contener este error, no hacemos
-		// nada.
-		if (activado || !posibleErrorMetodoAbstracto || linea == null) {
+		if (!posibleError || activado || linea == null)
 			return;
-		}
 
 		String recorte = linea.trim();
-		if (!(recorte.contains("java.lang.AbstractMethodError")
-				&& recorte.contains("does not define or inherit an implementation")
-				&& recorte.contains("of interface"))) {
+		if (!recorte.contains(TEXTO_ABSTRACT) || !recorte.contains(TEXTO_NO_IMPLEMENTA)
+				|| !recorte.contains(TEXTO_INTERFACE)) {
 			return;
 		}
 
-		Matcher m = PATRON_ABSTRACT_METHOD.matcher(recorte);
-		if (!m.find()) {
+		// Extraer clase, método e interfaz manualmente
+		int idxClaseStart = recorte.indexOf(":") + 1;
+		int idxMetodoStart = recorte.indexOf("'", idxClaseStart);
+		int idxMetodoEnd = recorte.indexOf("'", idxMetodoStart + 1);
+		int idxInterfaz = recorte.lastIndexOf("of interface");
+
+		if (idxClaseStart < 0 || idxMetodoStart < 0 || idxMetodoEnd < 0 || idxInterfaz < 0)
 			return;
-		}
 
-		String claseConcreta = m.group(1); // Ej: Aru.Aru.ashvehicle.entity.vehicle.F117Entity
-		String firmaMetodo = m.group(2); // Ej: boolean canShoot(net.minecraft.world.entity.LivingEntity)
-		String interfaz = m.group(3); // Ej:
-										// com.atsuishio.superbwarfare.entity.vehicle.base.WeaponVehicleEntity
+		String claseConcreta = recorte.substring(idxClaseStart, idxMetodoStart).trim();
+		String firmaMetodo = recorte.substring(idxMetodoStart + 1, idxMetodoEnd).trim();
+		String interfaz = recorte.substring(idxInterfaz + "of interface".length()).trim();
 
-		// Buscar origen en las líneas siguientes del stack trace (máx. 10 líneas).
-		// Se apoya en el array cacheado en la verificación global.
+		// Buscar origen en las siguientes 10 líneas
 		String origen = "";
 		if (lineasConsola != null && numero_de_linea >= 0 && numero_de_linea < lineasConsola.length) {
 			for (int j = numero_de_linea + 1; j < Math.min(numero_de_linea + 11, lineasConsola.length); j++) {
 				String l = lineasConsola[j].trim();
 				if (l.startsWith("at ")) {
-					// Extraer modid, jar o paquete de la línea de stack
-					String posibleOrigen = VerificacionDeStackTrace.extraerModidDeLinea(l);
-					if (posibleOrigen == null || VerificacionDeStackTrace.esModNoPermite(posibleOrigen)) {
-						// Intentar con JAR
-						java.util.List<String> jars = VerificacionDeStackTrace.extraerJarsDeLinea(l);
-						if (!jars.isEmpty()) {
+					String posibleOrigen = com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace
+							.extraerModidDeLinea(l);
+					if (posibleOrigen == null || com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace
+							.esModNoPermite(posibleOrigen)) {
+						java.util.List<String> jars = com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace
+								.extraerJarsDeLinea(l);
+						if (!jars.isEmpty())
 							posibleOrigen = jars.get(0);
-						} else {
-							// Último recurso: paquete
-							posibleOrigen = VerificacionDeStackTrace.extraerPaqueteDeLinea(l);
-						}
+						else
+							posibleOrigen = com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace
+									.extraerPaqueteDeLinea(l);
 					}
 					if (posibleOrigen != null && !posibleOrigen.isEmpty()
-							&& !VerificacionDeStackTrace.esModNoPermite(posibleOrigen)) {
+							&& !com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace
+									.esModNoPermite(posibleOrigen)) {
 						origen = posibleOrigen;
 						break;
 					}
 				} else if (!l.isEmpty() && !l.startsWith("Caused by") && !l.startsWith("...")) {
-					// Ya no es parte del stack trace inmediato
 					break;
 				}
 			}
 		}
 
-		// Registrar el enlace a la línea concreta del error
-		this.enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+		// Registrar el enlace a la línea concreta
+		enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
 
-		// Construir mensaje detallado
-		this.mensaje = MonitorDePID.idioma.errorMetodoAbstractoNoImplementadoDetallado(claseConcreta, firmaMetodo,
-				interfaz, origen) + Verificaciones.nl_html + enlaceHtml;
+		mensaje = MonitorDePID.idioma.errorMetodoAbstractoNoImplementadoDetallado(claseConcreta, firmaMetodo, interfaz,
+				origen) + Verificaciones.nl_html + enlaceHtml;
 
-		this.activado = true;
+		activado = true;
 	}
 
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		if (!activado || trazo == null || trazo.trace == null) {
+		if (!activado || trazo == null || trazo.trace == null)
 			return false;
-		}
-		String t = trazo.trace;
-		return t.contains("java.lang.AbstractMethodError") && t.contains("does not define or inherit an implementation")
-				&& t.contains("of interface");
+		return trazo.trace.contains(TEXTO_ABSTRACT) && trazo.trace.contains(TEXTO_NO_IMPLEMENTA)
+				&& trazo.trace.contains(TEXTO_INTERFACE);
 	}
 
 	@Override
@@ -141,12 +121,12 @@ public class ErrorMetodoAbstractoNoImplementado implements Verificaciones {
 
 	@Override
 	public boolean activado() {
-		return this.activado;
+		return activado;
 	}
 
 	@Override
 	public String mensaje() {
-		return this.mensaje;
+		return mensaje;
 	}
 
 	@Override
@@ -172,15 +152,12 @@ public class ErrorMetodoAbstractoNoImplementado implements Verificaciones {
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 
 	@Override
 	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/general/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
-
 }

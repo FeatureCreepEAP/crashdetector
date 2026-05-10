@@ -1,13 +1,11 @@
 package com.asbestosstar.crashdetector;
 
 import java.awt.GraphicsEnvironment;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.lang.management.ManagementFactory;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
@@ -27,6 +25,8 @@ import com.asbestosstar.crashdetector.analizador.Analizador;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.buscarparajava.BuscarParaJava8Unix;
+import com.asbestosstar.crashdetector.buscarparajava.BuscarParaJava8Windows;
 import com.asbestosstar.crashdetector.canario.CanarioDeOrdenJudicial;
 import com.asbestosstar.crashdetector.canario.pordefecto.CDInformesAsbestosstarEgoismJPCanario;
 import com.asbestosstar.crashdetector.canario.pordefecto.CDPasteAsbestosstarEgoismJPCanario;
@@ -1088,42 +1088,31 @@ public class MonitorDePID {
 
 	}
 
+	/**
+	 * Obtiene la ruta completa del ejecutable Java 8.
+	 *
+	 * Windows usa BuscarParaJava8Windows. Unix/macOS/Linux/BSD/SysV usa
+	 * BuscarParaJava8Unix.
+	 *
+	 * Si no se encuentra Java 8, cada clase cae en la lógica vieja del sistema.
+	 *
+	 * @return Ruta completa del ejecutable o null si no se encuentra.
+	 */
+	private static String obtenerRutaEjecutable8() {
+		try {
+			String sistemaOperativo = System.getProperty("os.name").toLowerCase();
 
-/**
- * Obtiene la ruta completa del ejecutable del proceso actual
- * 
- * @return Ruta completa del ejecutable o null si no se encuentra
- */
-private static String obtenerRutaEjecutable8() {
-	try {
-		String sistemaOperativo = System.getProperty("os.name").toLowerCase();
-
-		if (sistemaOperativo.contains("win")) {
-			return BuscarParaJava8Windows.encontrarJava8WindowsConFallback(obtenerPID());
-		} else {
-			// Unix/Linux/macOS: Usar ps para obtener el comando
-			ProcessBuilder pb = new ProcessBuilder("ps", "-p", String.valueOf(obtenerPID()), "-o", "comm=");
-			Process proceso = pb.start();
-			try (BufferedReader lector = new BufferedReader(new InputStreamReader(proceso.getInputStream()))) {
-				String linea;
-				while ((linea = lector.readLine()) != null) {
-					String limpiado = linea.trim();
-					if (!limpiado.isEmpty()) {
-						return limpiado;
-					}
-				}
+			if (sistemaOperativo.contains("win")) {
+				return BuscarParaJava8Windows.encontrarJava8WindowsConFallback(obtenerPID());
 			}
+
+			return BuscarParaJava8Unix.encontrarJava8UnixConFallback(obtenerPID());
+
+		} catch (Exception e) {
+			System.err.println("Error al obtener ruta ejecutable: " + e.getMessage());
+			return null;
 		}
-
-		// No se encontró información del proceso
-		return null;
-
-	} catch (Exception e) {
-		// Registrar errores para diagnóstico
-		System.err.println("Error al obtener ruta ejecutable: " + e.getMessage());
-		return null;
 	}
-}
 
 	public static boolean viva(long pid) {
 		try {

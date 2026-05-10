@@ -1,14 +1,12 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
-import java.util.regex.Pattern;
-
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta cuando el mod MCEF se inicializa al final del log, lo que indica
@@ -17,34 +15,153 @@ import com.asbestosstar.crashdetector.analizador.Verificaciones;
 public class ProblemaMCEFInicializacion implements Verificaciones {
 
 	private boolean activado = false;
+
 	private String enlace = "";
-	private String[] lineasTotales = null;
+	private int totalLineasDelLog = -1;
 
-	private static final Pattern PATRON_MCEF = Pattern
-			.compile("(?i)Initializing CEF on |\\[org\\.cef\\.CefApp:initialize:");
+	private static final String TEXTO_MCEF_1 = "Initializing CEF on ";
+	private static final String TEXTO_MCEF_2 = "[org.cef.CefApp:initialize:";
 
+	/**
+	 * Verificacion global ligera.
+	 *
+	 * No usa split(). No usa regex. No usa regionMatches(). No busca MCEF en todo
+	 * el log porque este verificador solo importa si MCEF está en las ultimas 5
+	 * lineas.
+	 */
 	@Override
 	public void verificar(Consola consola) {
-		this.lineasTotales = consola.contenido_verificar.split(Verificaciones.nl);
-		this.activado = false;
-		this.enlace = "";
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+			return;
+		}
+
+		totalLineasDelLog = contarLineas(consola.contenido_verificar);
 	}
 
+	/**
+	 * Verificacion por linea.
+	 *
+	 * Solo revisa las ultimas 5 lineas del log y agrega enlace a la linea exacta.
+	 */
 	@Override
 	public void verificar(Consola consola, String linea, int numero_de_linea) {
-		if (linea == null || lineasTotales == null) {
+		if (activado || linea == null || linea.isEmpty()) {
 			return;
 		}
 
-		// Solo considerar si está entre las últimas 5 líneas
-		if (numero_de_linea < Math.max(0, lineasTotales.length - 5)) {
+		if (totalLineasDelLog <= 0) {
 			return;
 		}
 
-		if (PATRON_MCEF.matcher(linea).find()) {
+		int primeraLineaPermitida = Math.max(0, totalLineasDelLog - 5);
+
+		if (numero_de_linea < primeraLineaPermitida) {
+			return;
+		}
+
+		if (contienePatronMCEF(linea)) {
 			this.activado = true;
 			this.enlace = consola.agregarErrorALectador(numero_de_linea, this);
 		}
+	}
+
+	/**
+	 * Cuenta lineas sin crear arreglo con split().
+	 */
+	private int contarLineas(String texto) {
+		int lineas = 1;
+
+		for (int i = 0; i < texto.length(); i++) {
+			if (texto.charAt(i) == '\n') {
+				lineas++;
+			}
+		}
+
+		return lineas;
+	}
+
+	/**
+	 * Primero usa contains() exacto, que es muy rápido.
+	 *
+	 * Solo si falla, usa comparación ASCII case-insensitive manual.
+	 */
+	private boolean contienePatronMCEF(String texto) {
+		return texto.contains(TEXTO_MCEF_1) || texto.contains(TEXTO_MCEF_2)
+				|| contieneAsciiIgnoreCase(texto, TEXTO_MCEF_1) || contieneAsciiIgnoreCase(texto, TEXTO_MCEF_2);
+	}
+
+	/**
+	 * Búsqueda case-insensitive ASCII sin regionMatches(), sin toLowerCase() y con
+	 * filtro rápido por primer carácter.
+	 *
+	 * Esto es suficiente para estos patrones porque son texto ASCII.
+	 */
+	private boolean contieneAsciiIgnoreCase(String texto, String buscar) {
+		if (texto == null || buscar == null) {
+			return false;
+		}
+
+		int largoTexto = texto.length();
+		int largoBuscar = buscar.length();
+
+		if (largoBuscar == 0) {
+			return true;
+		}
+
+		if (largoBuscar > largoTexto) {
+			return false;
+		}
+
+		char primero = buscar.charAt(0);
+		char primeroAlt = cambiarCasoAscii(primero);
+
+		int limite = largoTexto - largoBuscar;
+
+		for (int i = 0; i <= limite; i++) {
+			char actual = texto.charAt(i);
+
+			if (actual != primero && actual != primeroAlt) {
+				continue;
+			}
+
+			if (coincideAsciiIgnoreCase(texto, i, buscar)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean coincideAsciiIgnoreCase(String texto, int inicio, String buscar) {
+		for (int i = 0; i < buscar.length(); i++) {
+			char a = texto.charAt(inicio + i);
+			char b = buscar.charAt(i);
+
+			if (a == b) {
+				continue;
+			}
+
+			if (a != cambiarCasoAscii(b)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Cambia mayúscula/minúscula solo para ASCII A-Z / a-z.
+	 */
+	private char cambiarCasoAscii(char c) {
+		if (c >= 'A' && c <= 'Z') {
+			return (char) (c + 32);
+		}
+
+		if (c >= 'a' && c <= 'z') {
+			return (char) (c - 32);
+		}
+
+		return c;
 	}
 
 	@Override
@@ -67,10 +184,13 @@ public class ProblemaMCEFInicializacion implements Verificaciones {
 		if (!activado) {
 			return "";
 		}
+
 		String html = MonitorDePID.idioma.problema_mcef_inicializacion_html();
+
 		if (enlace.isEmpty()) {
 			return html;
 		}
+
 		return html + " " + enlace;
 	}
 
@@ -94,20 +214,21 @@ public class ProblemaMCEFInicializacion implements Verificaciones {
 
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		return false;
+		if (!activado || trazo == null || trazo.trace == null) {
+			return false;
+		}
+
+		return contienePatronMCEF(trazo.trace);
 	}
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 
 	@Override
 	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
-
 }

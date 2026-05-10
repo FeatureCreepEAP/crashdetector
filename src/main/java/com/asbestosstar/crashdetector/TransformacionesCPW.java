@@ -16,24 +16,28 @@ import cpw.mods.modlauncher.api.TransformerVoteResult;
 
 public class TransformacionesCPW implements ITransformer<ClassNode> {
 
-	private static final boolean PROFILER_ACTIVO = Boolean.getBoolean("crashdetector.cdprofiler_wip");
+	private static final boolean JAVA_8 = esJava8();
 
-	private static final boolean SAMPLER_ACTIVO = Boolean.getBoolean("crashdetector.cdsampler_wip");
+	private static final boolean PROFILER_ACTIVO = !JAVA_8 && Boolean.getBoolean("crashdetector.cdprofiler_wip");
+
+	private static final boolean SAMPLER_ACTIVO = !JAVA_8 && Boolean.getBoolean("crashdetector.cdsampler_wip");
 
 	static {
 
 		Transformaciones.init();
 
-		// Inicializar GUI profiler
-		if (PROFILER_ACTIVO) {
+		// En Java 8, profiler/sampler se manejan por el agente, no por CPW.
+		if (!JAVA_8) {
 
-			CDProfiler.activarGUI();
-		}
+			// Inicializar GUI profiler
+			if (PROFILER_ACTIVO) {
+				CDProfiler.activarGUI();
+			}
 
-		// Inicializar GUI sampler
-		if (SAMPLER_ACTIVO) {
-
-			CDSampler.iniciarGUI();
+			// Inicializar GUI sampler
+			if (SAMPLER_ACTIVO) {
+				CDSampler.iniciarGUI();
+			}
 		}
 	}
 
@@ -45,13 +49,11 @@ public class TransformacionesCPW implements ITransformer<ClassNode> {
 
 		// profiler
 		if (PROFILER_ACTIVO) {
-
 			CDProfiler.instrumentarClassNode(input);
 		}
 
 		// sampler
 		if (SAMPLER_ACTIVO) {
-
 			CDSampler.instrumentarClassNode(input);
 		}
 
@@ -60,31 +62,30 @@ public class TransformacionesCPW implements ITransformer<ClassNode> {
 
 	@Override
 	public TransformerVoteResult castVote(ITransformerVotingContext context) {
-
 		return TransformerVoteResult.YES;
 	}
 
 	@Override
 	public Set<Target<ClassNode>> targets() {
 
-		if (!Statics.app_en_cdlauncher) {
+		Set<Target<ClassNode>> resultado = obtenerTargetsDeParches();
 
-			Set<Target<ClassNode>> resultado = new HashSet<>();
-
-			for (Parche<?> parche : Parche.parches) {
-
-				for (String clase : parche.clases()) {
-
-					resultado.add(Target.targetClass(clase));
-				}
-			}
-
+		/*
+		 * Java 8: No buscar todo el classpath. Solo usar los targets declarados por los
+		 * parches.
+		 *
+		 * Esto evita que buscarJar agregue clases internas de Forge/ModLauncher/Log4j
+		 * en Java 8, donde eso puede causar IncompatibleClassChangeError.
+		 */
+		if (JAVA_8) {
 			return resultado;
 		}
 
-		// CDLauncher todo el classpath
-		Set<Target<ClassNode>> resultado = new HashSet<>();
+		if (!Statics.app_en_cdlauncher) {
+			return resultado;
+		}
 
+		// CDLauncher todo el classpath, solo para Java 9+
 		try {
 
 			String classpath = System.getProperty("java.class.path");
@@ -111,6 +112,21 @@ public class TransformacionesCPW implements ITransformer<ClassNode> {
 		} catch (Exception e) {
 
 			e.printStackTrace();
+		}
+
+		return resultado;
+	}
+
+	private static Set<Target<ClassNode>> obtenerTargetsDeParches() {
+
+		Set<Target<ClassNode>> resultado = new HashSet<>();
+
+		for (Parche<?> parche : Parche.parches) {
+
+			for (String clase : parche.clases()) {
+
+				resultado.add(Target.targetClass(clase));
+			}
 		}
 
 		return resultado;
@@ -167,7 +183,17 @@ public class TransformacionesCPW implements ITransformer<ClassNode> {
 
 	@Override
 	public TargetType<ClassNode> getTargetType() {
-
 		return TargetType.CLASS;
+	}
+
+	private static boolean esJava8() {
+
+		String version = System.getProperty("java.specification.version");
+
+		if (version == null) {
+			return false;
+		}
+
+		return version.equals("1.8") || version.startsWith("1.8");
 	}
 }

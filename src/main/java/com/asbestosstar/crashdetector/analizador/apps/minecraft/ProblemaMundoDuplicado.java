@@ -1,90 +1,94 @@
 package com.asbestosstar.crashdetector.analizador.apps.minecraft;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
- * Clase que detecta mundos duplicados que no pueden cargarse.Gracias a Aternos
- * por que esta es una implementacion de su codex
- * https://github.com/aternosorg/codex-minecraft
+ * Detecta mundos duplicados que no pueden cargarse en Minecraft. Moderniza la
+ * detección sin usar Pattern/Matcher.
  */
 public class ProblemaMundoDuplicado implements Verificaciones {
 
+	private boolean posibleMundoDuplicado = false;
 	private boolean activado = false;
-	private String mensaje = "";
-	private String nombreMundo = "";
 
-	/**
-	 * Verifica si el log contiene un problema de mundo duplicado.
-	 */
+	private String nombreMundo = "";
+	private String enlace = "";
+
+	private static final String TEXTO_INICIO = "World ";
+	private static final String TEXTO_MEDIO = " is a duplicate of another world and has been prevented from loading";
+	private static final String TEXTO_FINAL = "uid.dat";
+
 	@Override
 	public void verificar(Consola consola) {
+		if (consola == null || consola.contenido_verificar == null || consola.contenido_verificar.isEmpty()) {
+			return;
+		}
+
 		String contenido = consola.contenido_verificar;
 
-		// Patrón de error: "World nombre_mundo is a duplicate..."
-		Pattern patron = Pattern.compile(
-				"World ([\\w_\\-]+) is a duplicate of another world and has been prevented from loading.*?uid\\.dat",
-				Pattern.DOTALL);
-		Matcher coincidencia = patron.matcher(contenido);
-
-		if (coincidencia.find()) {
-			this.nombreMundo = coincidencia.group(1);
-			this.mensaje = MonitorDePID.idioma.mensajeMundoDuplicado(nombreMundo) + Verificaciones.nl_html;
-			activado = true;
+		if (contenido.contains(TEXTO_INICIO) && contenido.contains(TEXTO_MEDIO) && contenido.contains(TEXTO_FINAL)) {
+			posibleMundoDuplicado = true;
 		}
 	}
 
-	/**
-	 * Crea una nueva instancia del verificador.
-	 */
+	@Override
+	public void verificar(Consola consola, String linea, int numero_de_linea) {
+		if (!posibleMundoDuplicado || linea == null || linea.isEmpty()) {
+			return;
+		}
+
+		int inicio = linea.indexOf(TEXTO_INICIO);
+		if (inicio < 0)
+			return;
+
+		int inicioMundo = inicio + TEXTO_INICIO.length();
+		int finMundo = linea.indexOf(TEXTO_MEDIO, inicioMundo);
+		if (finMundo <= inicioMundo)
+			return;
+
+		String mundo = linea.substring(inicioMundo, finMundo).trim();
+		if (mundo.isEmpty())
+			return;
+
+		nombreMundo = mundo;
+		enlace = consola.agregarErrorALectador(numero_de_linea, this);
+
+		activado = true;
+	}
+
 	@Override
 	public Verificaciones nueva() {
 		return new ProblemaMundoDuplicado();
 	}
 
-	/**
-	 * Indica si el problema fue detectado.
-	 */
 	@Override
 	public boolean activado() {
 		return activado;
 	}
 
-	/**
-	 * Prioridad del problema (alta).
-	 */
 	@Override
 	public float prioridad() {
 		return 700.0f;
 	}
 
-	/**
-	 * Devuelve el mensaje de error almacenado.
-	 */
 	@Override
 	public String mensaje() {
-		return mensaje;
+		if (!activado)
+			return "";
+		return MonitorDePID.idioma.mensajeMundoDuplicado(nombreMundo) + " " + enlace;
 	}
 
-	/**
-	 * Devuelve el nombre del problema para mostrar en la interfaz.
-	 */
 	@Override
 	public String nombre() {
 		return MonitorDePID.idioma.nombreProblemaMundoDuplicado();
 	}
 
-	/**
-	 * Devuelve las soluciones posibles para este problema.
-	 */
 	@Override
 	public QuickFix solucion() {
 		return new Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.solucionEliminarUID(nombreMundo))
@@ -93,25 +97,23 @@ public class ProblemaMundoDuplicado implements Verificaciones {
 
 	@Override
 	public String id() {
-		// TODO Auto-generated method stub
 		return "mundo_duplicado";
 	}
 
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// TODO Auto-generated method stub
-		return false;// TODO
+		if (!activado || trazo == null || trazo.trace == null)
+			return false;
+		return trazo.trace.contains(TEXTO_MEDIO) && trazo.trace.contains(TEXTO_FINAL);
 	}
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 
 	@Override
 	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/apps/minecraft/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
@@ -120,5 +122,4 @@ public class ProblemaMundoDuplicado implements Verificaciones {
 	public boolean recomendadoParaCorperata() {
 		return true;
 	}
-
 }
