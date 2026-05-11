@@ -185,7 +185,7 @@ public class CDSampler implements ServicioCDLauncher {
 					for (Map.Entry<String, AtomicLong> e : tiempos.entrySet()) {
 						long ns = e.getValue().getAndSet(0);
 						if (ns > 0) {
-							gui.agregarMuestra(e.getKey(), new StackTraceElement[0]);
+							gui.agregarMuestra(e.getKey(), new StackTraceElement[0], ns);
 						}
 					}
 				} catch (InterruptedException ignored) {
@@ -229,7 +229,12 @@ public class CDSampler implements ServicioCDLauncher {
 				"jdk/", "org/objectweb/asm/", "com/asbestosstar/crashdetector/", "com/google/", "org/apache/logging/",
 				"org/lwjgl/", "org/antlr/", "org/apache/log4j/", "org/apache/commons/logging/", "org/slf4j/",
 				"ch/qos/logback/", "cpw/mods/", "joptsimple/", "net/neoforged/", "net/minecraftforge/",
-				"net/fabricmc/loader/", "org/spongepowered/asm/");
+				"net/fabricmc/loader/", "org/spongepowered/asm/"
+
+				, "org/dimdev/rift/", "featurecreep/", "asbestosstar/", "ModLoader", "org/dimdev/rift/",
+				"net/fybertech/meddle/"
+
+		);
 
 		@Override
 		public byte[] transform(ClassLoader loader, String nombreClase, Class<?> claseRedefinida,
