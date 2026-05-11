@@ -38,7 +38,12 @@ public class CDProfiler implements ServicioCDLauncher {
 			"org/objectweb/asm/", "com/asbestosstar/crashdetector/", "com/google/", "org/apache/logging/", "org/lwjgl/",
 			"org/antlr/", "org/apache/log4j/", "org/apache/commons/logging/", "org/slf4j/", "ch/qos/logback/",
 			"cpw/mods/", "joptsimple/", "net/neoforged/", "net/minecraftforge/", "net/fabricmc/loader/",
-			"org/spongepowered/asm/");
+			"org/spongepowered/asm/"
+
+			, "org/dimdev/rift/", "featurecreep/", "asbestosstar/", "ModLoader", "org/dimdev/rift/",
+			"net/fybertech/meddle/", "org/bukkit/", "com/mumfrey/", "org/mangorage/loader/", "nilloader/", "javassist/"
+
+	);
 
 	@Override
 	public void activar(Instrumentation inst) {

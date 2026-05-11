@@ -232,7 +232,8 @@ public class CDSampler implements ServicioCDLauncher {
 				"net/fabricmc/loader/", "org/spongepowered/asm/"
 
 				, "org/dimdev/rift/", "featurecreep/", "asbestosstar/", "ModLoader", "org/dimdev/rift/",
-				"net/fybertech/meddle/"
+				"net/fybertech/meddle/", "org/bukkit/", "com/mumfrey/", "org/mangorage/loader/", "nilloader/",
+				"javassist/"
 
 		);
 
