@@ -1,11 +1,14 @@
 package com.asbestosstar.crashdetector;
 
+import java.io.File;
 import java.lang.instrument.Instrumentation;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.jar.JarFile;
 
 import com.asbestosstar.crashdetector.lanzer.servicio.CDProfiler;
 import com.asbestosstar.crashdetector.lanzer.servicio.CDSampler;
@@ -49,6 +52,13 @@ public class CrashDetectorFCMC {
 			CargadorExtensiones.cargarExtensionesProcesoApp(MonitorDePID.ultimo_mods.toFile());
 
 			boolean hayJPMS = contieneArgumentosJPMS();
+
+			// ================= Bootstrap ClassLoader (solo Java 8) =================
+//	        String javaVersion = System.getProperty("java.version");
+//	        if (javaVersion.startsWith("1.8.")) {
+//	            BootstrapHelper.appendDepsToBootstrap(instrument);
+//	        }
+//			
 
 			// Siempre permitido
 			servicios_cdlauncher.add(new CDTracer());

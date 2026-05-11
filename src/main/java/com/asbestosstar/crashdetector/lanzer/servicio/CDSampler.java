@@ -4,6 +4,8 @@ import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.lang.instrument.Instrumentation;
 import java.security.ProtectionDomain;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
@@ -222,30 +224,48 @@ public class CDSampler implements ServicioCDLauncher {
 
 	static final class TransformadorSampler implements ClassFileTransformer {
 
+		// Lista centralizada de prefijos de clases a ignorar
+		private static final List<String> DENYLIST_PREFIXES = Arrays.asList("java/", "javax/", "sun/", "com/sun/",
+				"jdk/", "org/objectweb/asm/", "com/asbestosstar/crashdetector/", "com/google/", "org/apache/logging/",
+				"org/lwjgl/", "org/antlr/", "org/apache/log4j/", "org/apache/commons/logging/", "org/slf4j/",
+				"ch/qos/logback/", "cpw/mods/", "joptsimple/", "net/neoforged/", "net/minecraftforge/",
+				"net/fabricmc/loader/", "org/spongepowered/asm/");
+
 		@Override
 		public byte[] transform(ClassLoader loader, String nombreClase, Class<?> claseRedefinida,
 				ProtectionDomain dominio, byte[] bytecode) throws IllegalClassFormatException {
 
-			if (nombreClase == null || nombreClase.startsWith("java/") || nombreClase.startsWith("javax/")
-					|| nombreClase.startsWith("sun/") || nombreClase.startsWith("jdk/")
-					|| nombreClase.startsWith("org/objectweb/asm/")
-					|| nombreClase.startsWith("com/asbestosstar/crashdetector/gui/")) {
-				return null;
+			if (nombreClase == null || estaEnDenylist(nombreClase)) {
+				return null; // ignorar clases de sistema, libs, profiler/sampler
 			}
 
 			try {
-				int asm = AnalizadorBytecodeASM.obtenerVersionMaximaASM();
+				int asmVer = AnalizadorBytecodeASM.obtenerVersionMaximaASM();
 
 				ClassReader cr = new ClassReader(bytecode);
-				ClassWriter cw = new ClassWriter(cr, ClassWriter.COMPUTE_FRAMES);
+				ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS); // seguro en Java 8
 
-				ClassVisitor cv = new VisitadorClaseSampler(asm, cw, nombreClase);
-				cr.accept(cv, ClassReader.EXPAND_FRAMES);
+				ClassVisitor cv = new VisitadorClaseSampler(asmVer, cw, nombreClase);
+
+				// SKIP_DEBUG evita errores de frames complejos
+				cr.accept(cv, ClassReader.SKIP_DEBUG);
 
 				return cw.toByteArray();
+
 			} catch (Throwable t) {
+				// ⚠ Solo aviso
+				System.out.println("[CDSampler] ⚠ No se pudo instrumentar: " + nombreClase);
 				return null;
 			}
+		}
+
+		/** Verifica si la clase coincide con algún prefijo de la denylist */
+		private static boolean estaEnDenylist(String nombreClase) {
+			for (String prefix : DENYLIST_PREFIXES) {
+				if (nombreClase.startsWith(prefix))
+					return true;
+			}
+			return false;
 		}
 	}
 
@@ -266,36 +286,46 @@ public class CDSampler implements ServicioCDLauncher {
 				return mv;
 			}
 
-			return new VisitadorMetodoSampler(api, mv, access, clase + "." + name + desc);
+			return new VisitadorMetodoSampler(api, mv, access, name, desc, clase + "." + name + desc);
+
 		}
 	}
 
 	static final class VisitadorMetodoSampler extends AdviceAdapter {
 
 		private final String idMetodo;
-		private int inicioNs;
+		private int inicioNs = -1;
 
-		protected VisitadorMetodoSampler(int api, MethodVisitor mv, int access, String idMetodo) {
-			super(api, mv, access, "<init>", "()V");
+		protected VisitadorMetodoSampler(int api, MethodVisitor mv, int access, String name, String desc,
+				String idMetodo) {
+
+			super(api, mv, access, name, desc);
 			this.idMetodo = idMetodo;
 		}
 
 		@Override
 		protected void onMethodEnter() {
 			inicioNs = newLocal(Type.LONG_TYPE);
+
 			invokeStatic(Type.getType(System.class), new Method("nanoTime", "()J"));
-			storeLocal(inicioNs);
+			storeLocal(inicioNs, Type.LONG_TYPE);
 		}
 
 		@Override
 		protected void onMethodExit(int opcode) {
+
 			invokeStatic(Type.getType(System.class), new Method("nanoTime", "()J"));
-			loadLocal(inicioNs);
+			loadLocal(inicioNs, Type.LONG_TYPE);
 			math(SUB, Type.LONG_TYPE);
 
+			int localDuracion = newLocal(Type.LONG_TYPE);
+			storeLocal(localDuracion, Type.LONG_TYPE);
+
 			visitLdcInsn(idMetodo);
-			swap();
+			loadLocal(localDuracion, Type.LONG_TYPE);
+
 			invokeStatic(Type.getType(Hooks.class), new Method("acumularTiempo", "(Ljava/lang/String;J)V"));
 		}
 	}
+
 }

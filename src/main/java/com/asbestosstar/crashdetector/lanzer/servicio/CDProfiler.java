@@ -4,15 +4,13 @@ import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.lang.instrument.Instrumentation;
 import java.security.ProtectionDomain;
+import java.util.Arrays;
+import java.util.List;
 
-import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.ClassVisitor;
-import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.Opcodes;
-import org.objectweb.asm.Type;
+import org.objectweb.asm.*;
 import org.objectweb.asm.commons.AdviceAdapter;
 import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.MethodNode;
 
 import com.asbestosstar.crashdetector.buscar.AnalizadorBytecodeASM;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
@@ -20,140 +18,118 @@ import com.asbestosstar.crashdetector.gui.tipos.profiler.ProfilerGUI;
 import com.asbestosstar.crashdetector.gui.tipos.profiler.ProfilerGUIMinaly;
 
 /**
- * Servicio de profiler WIP.
+ * CDProfiler compatible con Java 8.
  *
- * - Abre la GUI del profiler - Registra transformers: - Uno basado en visitors
- * (AdviceAdapter) que instrumenta métodos (no abstractos / no nativos) - Uno
- * basado en ClassNode (ASM Tree) que "solo acepta" el ClassNode (para
- * modificaciones externas) - Mide duración con System.nanoTime() - Alimenta la
- * GUI con (clase, método, descriptor, duración)
+ * Características: - Hooks de nivel superior para evitar NoClassDefFoundError.
+ * - Transformer basado en AdviceAdapter (visitor) y ASM Tree (ClassNode). -
+ * Denylist centralizada para evitar instrumentar clases críticas o del sistema.
+ * - No se hardcodean nombres de clases externas. - Usa COMPUTE_MAXS para evitar
+ * errores de clases no cargadas.
  */
 public class CDProfiler implements ServicioCDLauncher {
 
-	public static String ID = "cdprofiler_wip";
+	public static final String ID = "cdprofiler_wip";
 
 	/**
-	 * Referencia global a la GUI activa para alimentar eventos desde bytecode
-	 * instrumentado
+	 * Lista centralizada de prefijos de clases a ignorar en la instrumentación. Se
+	 * puede extender dinámicamente si se requiere.
 	 */
-	private static volatile ProfilerGUI guiActiva;
+	private static final List<String> DENYLIST_PREFIXES = Arrays.asList("java/", "javax/", "sun/", "com/sun/", "jdk/",
+			"org/objectweb/asm/", "com/asbestosstar/crashdetector/", "com/google/", "org/apache/logging/", "org/lwjgl/",
+			"org/antlr/", "org/apache/log4j/", "org/apache/commons/logging/", "org/slf4j/", "ch/qos/logback/",
+			"cpw/mods/", "joptsimple/", "net/neoforged/", "net/minecraftforge/", "net/fabricmc/loader/",
+			"org/spongepowered/asm/");
 
 	@Override
 	public void activar(Instrumentation inst) {
 		System.out.println("No JPMS");
 		activarGUI();
 
-		// Registrar transformer con versión ASM dinámica (visitor-based)
+		// Registrar transformer basado en visitor (AdviceAdapter)
 		inst.addTransformer(new TransformadorProfiler(), true);
 
-		// Registrar transformer "Tree API" (ClassNode) que solo expone el ClassNode a
-		// un callback
-		// (Útil para WIP, pruebas, o instrumentaciones que prefieren ASM Tree)
+		// Registrar transformer basado en ASM Tree (ClassNode)
 		inst.addTransformer(new TransformadorClassNode(new AceptadorClassNodeNulo()), true);
 	}
 
+	/**
+	 * Inicializa la GUI del profiler y la asigna en CDProfilerHooks para que el
+	 * bytecode instrumentado pueda reportar tiempos.
+	 */
 	public static void activarGUI() {
-		// TODO Auto-generated method stub
-		// Crear/obtener GUI
 		ProfilerGUI gui = TipoGUI.PROFILER.obtenerGUIPredeterminado(ProfilerGUIMinaly.ID,
 				() -> new ProfilerGUIMinaly());
 
-		guiActiva = gui;
-
-		// Mostrar/construir la GUI (según tu arquitectura, init() debe construir la
-		// ventana)
+		CDProfilerHooks.guiActiva = gui;
 		gui.init();
 	}
 
 	/**
-	 * Instrumenta un ClassNode usando ASM Tree API. Este método puede ser llamado
-	 * desde ModLauncher transformer.
+	 * Comprueba si una clase debe ser ignorada según la denylist.
+	 */
+	private static boolean estaEnListaIgnorar(String nombreClase) {
+		if (nombreClase == null)
+			return true;
+		return DENYLIST_PREFIXES.stream().anyMatch(nombreClase::startsWith);
+	}
+
+	/**
+	 * Instrumenta un ClassNode usando ASM Tree API.
 	 */
 	public static void instrumentarClassNode(ClassNode cn) {
-
-		if (guiActiva == null) {
+		if (CDProfilerHooks.guiActiva == null || cn.name == null)
 			return;
-		}
-
-		// Evitar instrumentar el propio profiler o infra
-		String nombreClase = cn.name;
-
-		System.out.println("Nombre Clase " + nombreClase);
-
-		if (nombreClase == null)
+		if (estaEnListaIgnorar(cn.name))
 			return;
 
-		if (nombreClase.startsWith("java/") || nombreClase.startsWith("javax/") || nombreClase.startsWith("sun/")
-				|| nombreClase.startsWith("jdk/") || nombreClase.startsWith("org/objectweb/asm/")
-				|| nombreClase.startsWith("com/asbestosstar/crashdetector/lanzer/servicio/CDProfiler")
-				|| nombreClase.startsWith("com/asbestosstar/crashdetector/gui/")) {
-			return;
-		}
-
-		for (org.objectweb.asm.tree.MethodNode mn : cn.methods) {
-
-			// Ignorar abstractos y nativos
-			if ((mn.access & Opcodes.ACC_ABSTRACT) != 0 || (mn.access & Opcodes.ACC_NATIVE) != 0) {
+		for (MethodNode mn : cn.methods) {
+			if ((mn.access & Opcodes.ACC_ABSTRACT) != 0 || (mn.access & Opcodes.ACC_NATIVE) != 0)
 				continue;
-			}
-
-			// Ignorar clinit
-			if ("<clinit>".equals(mn.name)) {
+			if ("<clinit>".equals(mn.name))
 				continue;
-			}
-
 			instrumentarMetodo(cn.name, mn);
 		}
 	}
 
-	private static void instrumentarMetodo(String claseInterna, org.objectweb.asm.tree.MethodNode mn) {
-
-		org.objectweb.asm.tree.InsnList inicio = new org.objectweb.asm.tree.InsnList();
-		org.objectweb.asm.tree.InsnList fin = new org.objectweb.asm.tree.InsnList();
+	/**
+	 * Instrumenta un método inyectando medición de tiempo al inicio y justo antes
+	 * de cada retorno.
+	 */
+	private static void instrumentarMetodo(String claseInterna, MethodNode mn) {
+		final String hooksInterno = Type.getInternalName(CDProfilerHooks.class);
+		final String registrarDesc = "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;J)V";
 
 		int localInicio = mn.maxLocals;
 		mn.maxLocals += 2;
-
 		int localDur = mn.maxLocals;
 		mn.maxLocals += 2;
 
-		// inicio = System.nanoTime()
+		// Bloque de inicio: timestamp al entrar al método
+		org.objectweb.asm.tree.InsnList start = new org.objectweb.asm.tree.InsnList();
+		start.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, "java/lang/System", "nanoTime", "()J",
+				false));
+		start.add(new org.objectweb.asm.tree.VarInsnNode(Opcodes.LSTORE, localInicio));
+		mn.instructions.insert(start);
 
-		inicio.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, "java/lang/System", "nanoTime",
-				"()J", false));
-
-		inicio.add(new org.objectweb.asm.tree.VarInsnNode(Opcodes.LSTORE, localInicio));
-
-		mn.instructions.insert(inicio);
-
-		// antes de cada return
-
+		// Bloque de salida: medir duración antes de cada return
 		for (org.objectweb.asm.tree.AbstractInsnNode insn : mn.instructions.toArray()) {
-
 			int opcode = insn.getOpcode();
-
 			if (opcode >= Opcodes.IRETURN && opcode <= Opcodes.RETURN) {
-
 				org.objectweb.asm.tree.InsnList hook = new org.objectweb.asm.tree.InsnList();
 
 				hook.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, "java/lang/System", "nanoTime",
 						"()J", false));
-
 				hook.add(new org.objectweb.asm.tree.VarInsnNode(Opcodes.LLOAD, localInicio));
-
 				hook.add(new org.objectweb.asm.tree.InsnNode(Opcodes.LSUB));
-
 				hook.add(new org.objectweb.asm.tree.VarInsnNode(Opcodes.LSTORE, localDur));
 
 				hook.add(new org.objectweb.asm.tree.LdcInsnNode(claseInterna));
 				hook.add(new org.objectweb.asm.tree.LdcInsnNode(mn.name));
 				hook.add(new org.objectweb.asm.tree.LdcInsnNode(mn.desc));
-
 				hook.add(new org.objectweb.asm.tree.VarInsnNode(Opcodes.LLOAD, localDur));
 
-				hook.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC,
-						Type.getInternalName(CDProfiler.Hooks.class), "registrarLlamada",
-						"(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;J)V", false));
+				hook.add(new org.objectweb.asm.tree.MethodInsnNode(Opcodes.INVOKESTATIC, hooksInterno,
+						"registrarLlamada", registrarDesc, false));
 
 				mn.instructions.insertBefore(insn, hook);
 			}
@@ -165,130 +141,65 @@ public class CDProfiler implements ServicioCDLauncher {
 		return ID;
 	}
 
-	/**
-	 * Punto de entrada estático para el bytecode instrumentado.
-	 *
-	 * IMPORTANTE: - No debe depender de clases que puedan re-entrar en
-	 * instrumentación (evitar bucles). - Debe ser lo más liviano posible.
-	 */
-	public static final class Hooks {
-
-		private Hooks() {
-		}
-
-		/**
-		 * Registra una medición de método ya calculada.
-		 *
-		 * @param claseInterna nombre interno "a/b/C"
-		 * @param metodo       nombre del método
-		 * @param descriptor   descriptor JVM
-		 * @param duracionNs   duración en nanosegundos
-		 */
-		public static void registrarLlamada(String claseInterna, String metodo, String descriptor, long duracionNs) {
-			ProfilerGUI gui = guiActiva;
-			if (gui == null)
-				return;
-
-			// Convertimos a nombre con puntos para presentación
-			String clase = (claseInterna == null) ? "?" : claseInterna.replace('/', '.');
-
-			gui.agregarLlamadaMetodo(clase, metodo, descriptor, duracionNs);
-		}
-	}
-
-	/**
-	 * Transformer que instrumenta cada método no abstracto y no nativo, midiendo
-	 * tiempo y llamando a Hooks.registrarLlamada(...).
-	 */
+	// =========================
+	// Transformer basado en visitor (AdviceAdapter)
+	// =========================
 	static final class TransformadorProfiler implements ClassFileTransformer {
-
 		@Override
-		public byte[] transform(ClassLoader loader, String nombreClase, Class<?> claseRedefinida,
-				ProtectionDomain dominioProteccion, byte[] bytecodeClase) throws IllegalClassFormatException {
-
-			// Filtrado básico para evitar recursión/instrumentar el propio profiler
-			if (nombreClase == null)
+		public byte[] transform(ClassLoader loader, String nombreClase, Class<?> redef, ProtectionDomain domain,
+				byte[] bytecode) throws IllegalClassFormatException {
+			if (estaEnListaIgnorar(nombreClase))
 				return null;
-
-			// Evitar JDK y nuestra infraestructura (ajusta prefijos si lo necesitas)
-			if (nombreClase.startsWith("java/") || nombreClase.startsWith("javax/") || nombreClase.startsWith("sun/")
-					|| nombreClase.startsWith("jdk/") || nombreClase.startsWith("org/objectweb/asm/")
-					|| nombreClase.startsWith("com/asbestosstar/crashdetector/lanzer/servicio/CDProfiler")
-					|| nombreClase.startsWith("com/asbestosstar/crashdetector/gui/")) {
-				return null;
-			}
 
 			try {
-				final int versionASM = AnalizadorBytecodeASM.obtenerVersionMaximaASM();
-
-				ClassReader lector = new ClassReader(bytecodeClase);
-				ClassWriter escritor = new ClassWriter(lector, ClassWriter.COMPUTE_FRAMES);
-
-				ClassVisitor visitante = new VisitadorClaseProfiler(versionASM, escritor, nombreClase);
-				lector.accept(visitante, ClassReader.EXPAND_FRAMES);
-
-				return escritor.toByteArray();
+				final int asmVer = AnalizadorBytecodeASM.obtenerVersionMaximaASM();
+				ClassReader reader = new ClassReader(bytecode);
+				// Usar COMPUTE_MAXS para evitar errores de clases no cargadas
+				ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+				ClassVisitor visitor = new VisitadorClaseProfiler(asmVer, writer, nombreClase);
+				reader.accept(visitor, ClassReader.SKIP_DEBUG);
+				return writer.toByteArray();
 			} catch (Throwable t) {
-				// Si algo falla, no rompemos la carga de clases
-				t.printStackTrace();
+				// Solo imprimir advertencia sin stacktrace completo
+				System.out.println("[CDProfiler] ⚠ No se pudo instrumentar la clase: " + nombreClase);
 				return null;
 			}
 		}
 	}
 
-	/**
-	 * Visitador de clase que envuelve los métodos para inyectar medición.
-	 */
 	static final class VisitadorClaseProfiler extends ClassVisitor {
-
 		private final String nombreClaseInterno;
 
-		VisitadorClaseProfiler(int api, ClassVisitor cv, String nombreClaseInterno) {
+		VisitadorClaseProfiler(int api, ClassVisitor cv, String clase) {
 			super(api, cv);
-			this.nombreClaseInterno = nombreClaseInterno;
+			this.nombreClaseInterno = clase;
 		}
 
 		@Override
-		public MethodVisitor visitMethod(int access, String name, String descriptor, String signature,
-				String[] exceptions) {
-			MethodVisitor mv = super.visitMethod(access, name, descriptor, signature, exceptions);
-
-			// Ignorar métodos abstractos o nativos
-			if ((access & Opcodes.ACC_ABSTRACT) != 0 || (access & Opcodes.ACC_NATIVE) != 0) {
+		public MethodVisitor visitMethod(int access, String name, String desc, String sig, String[] ex) {
+			MethodVisitor mv = super.visitMethod(access, name, desc, sig, ex);
+			if ((access & Opcodes.ACC_ABSTRACT) != 0 || (access & Opcodes.ACC_NATIVE) != 0)
 				return mv;
-			}
-
-			// Evitar <clinit> para reducir riesgos (puede ejecutarse muy temprano)
-			if ("<clinit>".equals(name)) {
+			if ("<clinit>".equals(name))
 				return mv;
-			}
-
-			return new VisitadorMetodoProfiler(api, mv, access, name, descriptor, nombreClaseInterno);
+			return new VisitadorMetodoProfiler(api, mv, access, name, desc, nombreClaseInterno);
 		}
 	}
 
-	/**
-	 * Visitador de método que mide tiempo en entrada/salida y reporta al hook.
-	 */
 	static final class VisitadorMetodoProfiler extends AdviceAdapter {
-
-		private final String nombreClaseInterno;
-		private final String nombreMetodo;
-		private final String descriptorMetodo;
-
+		private final String claseInterna, metodo, desc;
 		private int localInicioNs = -1;
 
-		protected VisitadorMetodoProfiler(int api, MethodVisitor mv, int access, String name, String descriptor,
-				String nombreClaseInterno) {
-			super(api, mv, access, name, descriptor);
-			this.nombreClaseInterno = nombreClaseInterno;
-			this.nombreMetodo = name;
-			this.descriptorMetodo = descriptor;
+		protected VisitadorMetodoProfiler(int api, MethodVisitor mv, int access, String name, String desc,
+				String clase) {
+			super(api, mv, access, name, desc);
+			this.claseInterna = clase;
+			this.metodo = name;
+			this.desc = desc;
 		}
 
 		@Override
 		protected void onMethodEnter() {
-			// long inicio = System.nanoTime();
 			localInicioNs = newLocal(Type.LONG_TYPE);
 			invokeStatic(Type.getType(System.class), new org.objectweb.asm.commons.Method("nanoTime", "()J"));
 			storeLocal(localInicioNs, Type.LONG_TYPE);
@@ -296,107 +207,66 @@ public class CDProfiler implements ServicioCDLauncher {
 
 		@Override
 		protected void onMethodExit(int opcode) {
-			// long dur = System.nanoTime() - inicio;
-			invokeStatic(Type.getType(System.class), new org.objectweb.asm.commons.Method("nanoTime", "()J"));
-			loadLocal(localInicioNs, Type.LONG_TYPE);
-			math(SUB, Type.LONG_TYPE);
+			try {
+				// código normal del profiler
+				invokeStatic(Type.getType(System.class), new org.objectweb.asm.commons.Method("nanoTime", "()J"));
+				loadLocal(localInicioNs, Type.LONG_TYPE);
+				math(SUB, Type.LONG_TYPE);
 
-			// Llamar: CDProfiler.Hooks.registrarLlamada(clase, metodo, desc, dur)
-			// Stack actual: [dur]
-			// Necesitamos reordenar para pasar (String, String, String, long)
-			int localDur = newLocal(Type.LONG_TYPE);
-			storeLocal(localDur, Type.LONG_TYPE);
+				int localDur = newLocal(Type.LONG_TYPE);
+				storeLocal(localDur, Type.LONG_TYPE);
 
-			visitLdcInsn(nombreClaseInterno);
-			visitLdcInsn(nombreMetodo);
-			visitLdcInsn(descriptorMetodo);
-			loadLocal(localDur, Type.LONG_TYPE);
+				visitLdcInsn(claseInterna);
+				visitLdcInsn(metodo);
+				visitLdcInsn(desc);
+				loadLocal(localDur, Type.LONG_TYPE);
 
-			invokeStatic(Type.getType(CDProfiler.Hooks.class), new org.objectweb.asm.commons.Method("registrarLlamada",
-					"(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;J)V"));
+				invokeStatic(Type.getObjectType(Type.getInternalName(CDProfilerHooks.class)),
+						new org.objectweb.asm.commons.Method("registrarLlamada",
+								"(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;J)V"));
+
+			} catch (IllegalArgumentException | TypeNotPresentException e) {
+				// Aviso simple, sin llenar log con stacktrace
+				System.out.println("[CDProfiler] No se pudo adjuntar profiler a " + claseInterna + "." + metodo);
+			}
 		}
+
 	}
 
-	// =====================================================================
-	// TRANSFORMER ADICIONAL: ASM TREE (ClassNode) "solo acepta el ClassNode"
-	// =====================================================================
-
-	/**
-	 * Interfaz mínima para "aceptar" un ClassNode. La idea es que puedas enchufar
-	 * aquí cualquier lógica basada en ASM Tree.
-	 */
+	// =========================
+	// Transformer basado en ASM Tree (ClassNode)
+	// =========================
 	public interface AceptadorClassNode {
-		/**
-		 * Recibe el ClassNode ya parseado. Puedes mutarlo (añadir
-		 * métodos/campos/anotaciones, etc.).
-		 *
-		 * IMPORTANTE: - Mantenerlo liviano para no impactar carga de clases. - Evitar
-		 * tocar clases que disparen instrumentación recursiva.
-		 */
 		void aceptar(ClassNode cn);
 	}
 
-	/**
-	 * Aceptador por defecto que no hace nada. Útil para tener el transformer
-	 * registrado sin modificar comportamiento.
-	 */
 	public static final class AceptadorClassNodeNulo implements AceptadorClassNode {
-		@Override
 		public void aceptar(ClassNode cn) {
-			// No-op intencional
 		}
 	}
 
-	/**
-	 * Transformer basado en ASM Tree:
-	 *
-	 * - Lee bytecode -> ClassNode - Llama a un "aceptador" que puede modificar el
-	 * ClassNode - Escribe ClassNode -> bytecode
-	 *
-	 * Si el aceptador no cambia nada, el resultado será equivalente (salvo
-	 * frames/re-escritura).
-	 */
 	static final class TransformadorClassNode implements ClassFileTransformer {
-
 		private final AceptadorClassNode aceptador;
 
-		TransformadorClassNode(AceptadorClassNode aceptador) {
-			this.aceptador = (aceptador == null) ? new AceptadorClassNodeNulo() : aceptador;
+		TransformadorClassNode(AceptadorClassNode ace) {
+			this.aceptador = (ace == null) ? new AceptadorClassNodeNulo() : ace;
 		}
 
 		@Override
-		public byte[] transform(ClassLoader loader, String nombreClase, Class<?> claseRedefinida,
-				ProtectionDomain dominioProteccion, byte[] bytecodeClase) throws IllegalClassFormatException {
-
-			if (nombreClase == null)
+		public byte[] transform(ClassLoader loader, String nombreClase, Class<?> redef, ProtectionDomain domain,
+				byte[] bytecode) throws IllegalClassFormatException {
+			if (estaEnListaIgnorar(nombreClase))
 				return null;
-
-			// Reutilizamos el mismo filtrado básico para evitar recursión
-			if (nombreClase.startsWith("java/") || nombreClase.startsWith("javax/") || nombreClase.startsWith("sun/")
-					|| nombreClase.startsWith("jdk/") || nombreClase.startsWith("org/objectweb/asm/")
-					|| nombreClase.startsWith("com/asbestosstar/crashdetector/lanzer/servicio/CDProfiler")
-					|| nombreClase.startsWith("com/asbestosstar/crashdetector/gui/")) {
-				return null;
-			}
-
 			try {
-				final int versionASM = AnalizadorBytecodeASM.obtenerVersionMaximaASM();
-
-				// 1) Parsear a ClassNode
-				ClassReader cr = new ClassReader(bytecodeClase);
-				ClassNode cn = new ClassNode(versionASM);
-				cr.accept(cn, ClassReader.EXPAND_FRAMES);
-
-				// 2) "Aceptar" el ClassNode (mutación opcional)
+				final int asmVer = AnalizadorBytecodeASM.obtenerVersionMaximaASM();
+				ClassReader cr = new ClassReader(bytecode);
+				ClassNode cn = new ClassNode(asmVer);
+				cr.accept(cn, ClassReader.SKIP_DEBUG);
 				aceptador.aceptar(cn);
-
-				// 3) Volver a escribir a bytecode
-				ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
+				ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
 				cn.accept(cw);
-
 				return cw.toByteArray();
 			} catch (Throwable t) {
-				// Si algo falla, no rompemos la carga de clases
 				t.printStackTrace();
 				return null;
 			}
