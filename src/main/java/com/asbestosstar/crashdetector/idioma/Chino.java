@@ -8734,4 +8734,22 @@ public class Chino implements Idioma {
 		return "Mod ID 中的重复条目";
 	}
 
+	// Chinese (Simplified) (中文)
+	@Override
+	public String nombreOpenGLMemoriaInsuficiente() {
+		return "OpenGL – 显存不足";
+	}
+
+	@Override
+	public String mensajeOpenGLMemoriaInsuficiente() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft 因显存不足产生了 OpenGL 错误。</b>" + "<p>游戏抛出：</p>" + "<code>GL_OUT_OF_MEMORY</code>"
+				+ "<p>这通常意味着显卡或系统无法为纹理、着色器、模型、缓冲区或视觉效果预留足够的内存。</p>" + "<p><b>常见原因：</b></p>" + "<ul>"
+				+ "<li>着色器（Shaders）过于繁重。</li>" + "<li>高分辨率资源包。</li>" + "<li>过多的视觉或渲染类 mod。</li>" + "<li>渲染距离过高。</li>"
+				+ "<li>可用显存（VRAM）不足。</li>" + "<li>显卡驱动程序过时或不稳定。</li>" + "</ul>" + "<p><b>推荐解决方案：</b></p>" + "<ul>"
+				+ "<li>暂时禁用着色器。</li>" + "<li>使用较低分辨率的资源包。</li>" + "<li>降低渲染和模拟距离。</li>"
+				+ "<li>降低图形质量、阴影、粒子和 Mipmap。</li>" + "<li>更新显卡驱动程序。</li>" + "<li>关闭其他占用 GPU 或大量内存的程序。</li>" + "</ul>"
+				+ "<p>如果错误是在安装着色器、纹理包或视觉 mod 后开始的，那么它很可能是罪魁祸首。</p>";
+	}
+
 }

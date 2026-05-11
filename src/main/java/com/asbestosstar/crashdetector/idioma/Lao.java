@@ -9729,4 +9729,26 @@ public class Lao implements Idioma {
 		return "ຂໍ້ມູນຊ້ຳກັນໃນ ID ຂອງ mod";
 	}
 
+	@Override
+	public String nombreOpenGLMemoriaInsuficiente() {
+		return "OpenGL – ຫນ່ວຍຄວາມຈຳວິດີໂອບໍ່ພຽງພໍ";
+	}
+
+	@Override
+	public String mensajeOpenGLMemoriaInsuficiente() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft ເກີດຂໍ້ຜິດພາດ OpenGL ເນື່ອງຈາກຂາດຫນ່ວຍຄວາມຈຳກຣາຟິກ.</b>" + "<p>ເກມໄດ້ສົ່ງຂໍ້ຜິດພາດ:</p>"
+				+ "<code>GL_OUT_OF_MEMORY</code>"
+				+ "<p>ສິ່ງນີ້ໝາຍຄວາມວ່າ ກາດຈໍ ຫຼື ລະບົບ ບໍ່ສາມາດຈອງຫນ່ວຍຄວາມຈຳພຽງພໍສຳລັບ textures, shaders, ໂມເດລ, buffers ຫຼື ຜົນກະທົບທາງສາຍຕາ.</p>"
+				+ "<p><b>ສາເຫດທົ່ວໄປ:</b></p>" + "<ul>" + "<li>Shaders ທີ່ໃຊ້ຊັບພະຍາກອນຫຼາຍເກີນໄປ.</li>"
+				+ "<li>Resource packs ຄວາມລະອຽດສູງ.</li>" + "<li>Mods ທາງສາຍຕາ ຫຼື ການ render ຫຼາຍເກີນໄປ.</li>"
+				+ "<li>ໄລຍະການ render (Render distance) ສູງເກີນໄປ.</li>" + "<li>VRAM ທີ່ມີຢູ່ໜ້ອຍເກີນໄປ.</li>"
+				+ "<li>Drivers ກາດຈໍເກົ່າ ຫຼື ບໍ່ໝັ້ນຄົງ.</li>" + "</ul>" + "<p><b>ວິທີແກ້ໄຂທີ່ແນະນຳ:</b></p>" + "<ul>"
+				+ "<li>ປິດ Shaders ຊົ່ວຄາວ.</li>" + "<li>ໃຊ້ Resource packs ຄວາມລະອຽດຕ່ຳລົງ.</li>"
+				+ "<li>ຫຼຸດໄລຍະການ render ແລະ simulation.</li>"
+				+ "<li>ຫຼຸດຄຸນນະພາບກຣາຟິກ, ເງົາ, ອະນຸພາກ ແລະ mipmaps.</li>" + "<li>ອັບເດດ Drivers ກາດຈໍ.</li>"
+				+ "<li>ປິດໂປຣແກຣມອື່ນໆທີ່ໃຊ້ GPU ຫຼື ຫນ່ວຍຄວາມຈຳຫຼາຍ.</li>" + "</ul>"
+				+ "<p>ຖ້າຂໍ້ຜິດພາດເລີ່ມເກີດຂຶ້ນຫຼັງຈາກຕິດຕັ້ງ shader, texture pack ຫຼື mod ທາງສາຍຕາ, ມັນມີແນວໂນ້ມວ່າສິ່ງນັ້ນຈະເປັນສາເຫດ.</p>";
+	}
+
 }

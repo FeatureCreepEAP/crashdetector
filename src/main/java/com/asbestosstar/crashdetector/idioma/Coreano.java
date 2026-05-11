@@ -8926,6 +8926,28 @@ public class Coreano implements Idioma {
 	@Override
 	public String nombreEntradaDuplicadaIdModerno() {
 		return "Mod ID의 중복 항목";
+
+	}
+
+	// Korean (Munhwaŏ / Standard Korean) (한국어)
+	@Override
+	public String nombreOpenGLMemoriaInsuficiente() {
+		return "OpenGL – 비디오 메모리 부족";
+	}
+
+	@Override
+	public String mensajeOpenGLMemoriaInsuficiente() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft가 그래픽 메모리 부족으로 OpenGL 오류를 발생시켰습니다.</b>" + "<p>게임에서 다음 오류가 발생했습니다:</p>"
+				+ "<code>GL_OUT_OF_MEMORY</code>"
+				+ "<p>이는 일반적으로 그래픽 카드나 시스템이 텍스처, 셰이더, 모델, 버퍼 또는 시각 효과에 충분한 메모리를 할당하지 못했음을 의미합니다.</p>"
+				+ "<p><b>일반적인 원인:</b></p>" + "<ul>" + "<li>너무 무거운 셰이더(Shaders).</li>" + "<li>고해상도 리소스 팩.</li>"
+				+ "<li>너무 많은 시각적 또는 렌더링 관련 mod.</li>" + "<li>너무 높은 렌더링 거리.</li>" + "<li>사용 가능한 VRAM 부족.</li>"
+				+ "<li>구식이거나 불안정한 그래픽 드라이버.</li>" + "</ul>" + "<p><b>권장 해결 방법:</b></p>" + "<ul>"
+				+ "<li>셰이더를 일시적으로 비활성화합니다.</li>" + "<li>해상도가 낮은 리소스 팩을 사용합니다.</li>" + "<li>렌더링 및 시뮬레이션 거리를 낮춥니다.</li>"
+				+ "<li>그래픽 품질, 그림자, 입자 및 Mipmap을 줄입니다.</li>" + "<li>그래픽 카드 드라이버를 업데이트합니다.</li>"
+				+ "<li>GPU나 메모리를 많이 사용하는 다른 프로그램을 닫습니다.</li>" + "</ul>"
+				+ "<p>셰이더, 텍스처 팩 또는 시각적 mod를 설치한 후 오류가 시작되었다면 그것이 원인일 가능성이 높습니다.</p>";
 	}
 
 }

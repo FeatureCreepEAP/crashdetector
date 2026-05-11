@@ -9852,4 +9852,29 @@ public class Indonesia implements Idioma {
 		return "Entri duplikat pada ID mod";
 	}
 
+	// Indonesian (Bahasa Indonesia)
+	@Override
+	public String nombreOpenGLMemoriaInsuficiente() {
+		return "OpenGL – memori video tidak cukup";
+	}
+
+	@Override
+	public String mensajeOpenGLMemoriaInsuficiente() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft menghasilkan kesalahan OpenGL karena kekurangan memori grafis.</b>"
+				+ "<p>Game meluncurkan:</p>" + "<code>GL_OUT_OF_MEMORY</code>"
+				+ "<p>Ini biasanya berarti kartu grafis atau sistem tidak dapat mengalokasikan memori yang cukup untuk tekstur, shader, model, buffer, atau efek visual.</p>"
+				+ "<p><b>Penyebab umum:</b></p>" + "<ul>" + "<li>Shader yang terlalu berat.</li>"
+				+ "<li>Paket sumber daya (resource packs) beresolusi tinggi.</li>"
+				+ "<li>Terlalu banyak mod visual atau rendering.</li>" + "<li>Jarak render terlalu tinggi.</li>"
+				+ "<li>VRAM tersedia sedikit.</li>" + "<li>Driver video usang atau tidak stabil.</li>" + "</ul>"
+				+ "<p><b>Solusi yang direkomendasikan:</b></p>" + "<ul>" + "<li>Nonaktifkan shader sementara.</li>"
+				+ "<li>Gunakan paket sumber daya dengan resolusi lebih rendah.</li>"
+				+ "<li>Turunkan jarak render dan simulasi.</li>"
+				+ "<li>Kurangi kualitas grafis, bayangan, partikel, dan mipmap.</li>"
+				+ "<li>Perbarui driver kartu grafis.</li>"
+				+ "<li>Tutup program lain yang menggunakan GPU atau banyak memori.</li>" + "</ul>"
+				+ "<p>Jika kesalahan dimulai setelah menginstal shader, paket tekstur, atau mod visual, kemungkinan besar itulah penyebabnya.</p>";
+	}
+
 }

@@ -9838,4 +9838,29 @@ public class Frances implements Idioma {
 		return "Entrée dupliquée dans l'ID du mod";
 	}
 
+	// French (Burkina Faso variant) (Français)
+	@Override
+	public String nombreOpenGLMemoriaInsuficiente() {
+		return "OpenGL – mémoire vidéo insuffisante";
+	}
+
+	@Override
+	public String mensajeOpenGLMemoriaInsuficiente() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft a généré une erreur OpenGL due à un manque de mémoire graphique.</b>"
+				+ "<p>Le jeu a lancé :</p>" + "<code>GL_OUT_OF_MEMORY</code>"
+				+ "<p>Cela signifie généralement que la carte graphique ou le système n'a pas pu allouer suffisamment de mémoire pour les textures, les shaders, les modèles, les tampons ou les effets visuels.</p>"
+				+ "<p><b>Causes courantes :</b></p>" + "<ul>" + "<li>Shaders trop lourds.</li>"
+				+ "<li>Packs de ressources haute résolution.</li>" + "<li>Trop de mods visuels ou de rendu.</li>"
+				+ "<li>Distance d'affichage trop élevée.</li>" + "<li>Peu de VRAM disponible.</li>"
+				+ "<li>Pilotes graphiques obsolètes ou instables.</li>" + "</ul>"
+				+ "<p><b>Solution recommandée :</b></p>" + "<ul>" + "<li>Désactiver temporairement les shaders.</li>"
+				+ "<li>Utiliser des packs de ressources de moindre résolution.</li>"
+				+ "<li>Réduire la distance d'affichage et de simulation.</li>"
+				+ "<li>Réduire la qualité graphique, les ombres, les particules et les mipmaps.</li>"
+				+ "<li>Mettre à jour les pilotes de la carte graphique.</li>"
+				+ "<li>Fermer les autres programmes utilisant le GPU ou beaucoup de mémoire.</li>" + "</ul>"
+				+ "<p>Si l'erreur a commencé après l'installation d'un shader, d'un pack de textures ou d'un mod visuel, c'est probablement la cause.</p>";
+	}
+
 }

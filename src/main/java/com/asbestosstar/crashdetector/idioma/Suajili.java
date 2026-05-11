@@ -9745,4 +9745,29 @@ public class Suajili implements Idioma {
 		return "Ingizo lililorudiwa katika ID ya mod";
 	}
 
+	@Override
+	public String nombreOpenGLMemoriaInsuficiente() {
+		return "OpenGL – kumbukumbu ya video haitoshi";
+	}
+
+	@Override
+	public String mensajeOpenGLMemoriaInsuficiente() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft ilizalisha hitilafu ya OpenGL kwa sababu ya ukosefu wa kumbukumbu ya grafiki.</b>"
+				+ "<p>Mchezo ulirusha:</p>" + "<code>GL_OUT_OF_MEMORY</code>"
+				+ "<p>Hii kwa kawaida inamaanisha kuwa kadi ya grafiki au mfumo haikuweza kuhifadhi kumbukumbu ya kutosha kwa textures, shaders, modeli, buffers au athari za kuona.</p>"
+				+ "<p><b>Sababu za kawaida:</b></p>" + "<ul>" + "<li>Shaders nzito sana.</li>"
+				+ "<li>Vifurushi vya rasilimali (Resource packs) vya azimio la juu.</li>"
+				+ "<li>Mod nyingi sana za kuona au za uchoraji.</li>"
+				+ "<li>Umbali wa uchoraji (Render distance) mkubwa sana.</li>" + "<li>VRAM kidogo inayopatikana.</li>"
+				+ "<li>Dereva za kadi ya video zilizopitwa na wakati au zisizo thabiti.</li>" + "</ul>"
+				+ "<p><b>Suluhisho linalopendekezwa:</b></p>" + "<ul>" + "<li>Zima shaders kwa muda.</li>"
+				+ "<li>Tumia vifurushi vya rasilimali vya azimio la chini.</li>"
+				+ "<li>Punguza umbali wa uchoraji na usimbaji.</li>"
+				+ "<li>Punguza ubora wa grafiki, vivuli, chembechembe na mipmaps.</li>"
+				+ "<li>Sasisha dereva za kadi ya grafiki.</li>"
+				+ "<li>Funga programu zingine zinazotumia GPU au kumbukumbu nyingi.</li>" + "</ul>"
+				+ "<p>Ikiwa hitilafu ilianza baada ya kusakinisha shader, kifurushi cha texture au mod ya kuona, kuna uwezekano mkubwa kwamba hiyo ndiyo chanzo.</p>";
+	}
+
 }

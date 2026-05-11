@@ -48,6 +48,14 @@ public class JPMSIllegalAccess implements Verificaciones {
 				return;
 			}
 
+			// FILTRO FALSO POSITIVO JEI + ExpandedAE
+			if (linea.contains("mezz.jei.forge.startup.ForgePluginFinder")
+					&& linea.contains("lu.kolja.expandedae.xmod.recipemanager.JEI") && linea.contains("module jei")
+					&& linea.contains("module expandedae")) {
+
+				return;
+			}
+
 			// Ejemplo:
 			// class A (in module X) cannot access a member of class B (in module Y)
 

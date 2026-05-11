@@ -9270,4 +9270,29 @@ public class Esperanto implements Idioma {
 		return "Duobla enigo en mod-ID";
 	}
 
+	// Esperanto (Esperanto)
+	@Override
+	public String nombreOpenGLMemoriaInsuficiente() {
+		return "OpenGL – nesufiĉa videomemoro";
+	}
+
+	@Override
+	public String mensajeOpenGLMemoriaInsuficiente() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft generis OpenGL-eraron pro manko de grafika memoro.</b>" + "<p>La ludo ĵetis:</p>"
+				+ "<code>GL_OUT_OF_MEMORY</code>"
+				+ "<p>Ĉi tio kutime signifas, ke la grafika karto aŭ la sistemo ne povis rezervi sufiĉe da memoro por teksturoj, ŝadiloj, modeloj, bufroj aŭ vidaj efikoj.</p>"
+				+ "<p><b>Komunaj kaŭzoj:</b></p>" + "<ul>" + "<li>Tro pezaj ŝadiloj (Shaders).</li>"
+				+ "<li>Altrezoluciaj resursaj pakoj.</li>" + "<li>Tro multaj vidaj aŭ renderigaj modoj.</li>"
+				+ "<li>Tro alta renderiga distanco.</li>" + "<li>Malmulte disponebla VRAM.</li>"
+				+ "<li>Malaktualaj aŭ nestabilaj grafikaj peliloj.</li>" + "</ul>" + "<p><b>Rekomendita solvo:</b></p>"
+				+ "<ul>" + "<li>Provizore malaktivigu ŝadilojn.</li>"
+				+ "<li>Uzu resursajn pakojn kun pli malalta rezolucio.</li>"
+				+ "<li>Malaltigu la renderigan kaj simuladan distancon.</li>"
+				+ "<li>Malaltigu grafikan kvaliton, ombrojn, partiklojn kaj mipmapojn.</li>"
+				+ "<li>Ĝisdatigu la pelilojn de la grafika karto.</li>"
+				+ "<li>Fermu aliajn programojn, kiuj uzas GPU aŭ multan memoron.</li>" + "</ul>"
+				+ "<li>Se la eraro komenciĝis post instali ŝadilon, teksturpakon aŭ vidan modon, plej verŝajne tio estas la kaŭzanto.</li>";
+	}
+
 }

@@ -8939,4 +8939,25 @@ public class Japones implements Idioma {
 		return "Mod ID の重複エントリ";
 	}
 
+	// Japanese (日本語)
+	@Override
+	public String nombreOpenGLMemoriaInsuficiente() {
+		return "OpenGL – ビデオメモリ不足";
+	}
+
+	@Override
+	public String mensajeOpenGLMemoriaInsuficiente() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft がグラフィックメモリ不足により OpenGL エラーを生成しました。</b>" + "<p>ゲームがスローしたエラー:</p>"
+				+ "<code>GL_OUT_OF_MEMORY</code>"
+				+ "<p>これは通常、グラフィックカードまたはシステムがテクスチャ、シェーダー、モデル、バッファ、または視覚効果のために十分なメモリを割り当てられなかったことを意味します。</p>"
+				+ "<p><b>一般的な原因:</b></p>" + "<ul>" + "<li>重すぎるシェーダー。</li>" + "<li>高解像度のリソースパック。</li>"
+				+ "<li>多すぎる視覚的またはレンダリング関連の mod。</li>" + "<li>レンダリング距離が高すぎる。</li>" + "<li>利用可能な VRAM が少ない。</li>"
+				+ "<li>古いか不安定なビデオドライバ。</li>" + "</ul>" + "<p><b>推奨される解決策:</b></p>" + "<ul>"
+				+ "<li>シェーダーを一時的に無効にする。</li>" + "<li>低解像度のリソースパックを使用する。</li>" + "<li>レンダリング距離とシミュレーション距離を下げる。</li>"
+				+ "<li>グラフィック品質、影、パーティクル、ミップマップを減らす。</li>" + "<li>グラフィックカードのドライバを更新する。</li>"
+				+ "<li>GPU や大量のメモリを使用している他のプログラムを閉じる。</li>" + "</ul>"
+				+ "<p>シェーダー、テクスチャパック、または視覚的な mod をインストールした後にエラーが始まった場合、それが原因である可能性が高いです。</p>";
+	}
+
 }

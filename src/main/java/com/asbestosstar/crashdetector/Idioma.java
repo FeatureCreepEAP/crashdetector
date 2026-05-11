@@ -3572,4 +3572,8 @@ public interface Idioma {
 
 	public String nombreEntradaDuplicadaIdModerno();
 
+	public String mensajeOpenGLMemoriaInsuficiente();
+
+	public String nombreOpenGLMemoriaInsuficiente();
+
 }

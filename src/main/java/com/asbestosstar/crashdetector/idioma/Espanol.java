@@ -10013,4 +10013,28 @@ public class Espanol implements Idioma {
 		return "Entrada duplicada en ID de mod";
 	}
 
+	@Override
+	public String nombreOpenGLMemoriaInsuficiente() {
+		return "OpenGL – memoria de video insuficiente";
+	}
+
+	@Override
+	public String mensajeOpenGLMemoriaInsuficiente() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft generó un error OpenGL por falta de memoria gráfica.</b>" + "<p>El juego lanzó:</p>"
+				+ "<code>GL_OUT_OF_MEMORY</code>"
+				+ "<p>Esto normalmente significa que la tarjeta gráfica o el sistema no pudieron reservar suficiente memoria para texturas, shaders, modelos, buffers o efectos visuales.</p>"
+				+ "<p><b>Causas comunes:</b></p>" + "<ul>" + "<li>Shaders demasiado pesados.</li>"
+				+ "<li>Resource packs de alta resolución.</li>" + "<li>Demasiados mods visuales o de renderizado.</li>"
+				+ "<li>Distancia de renderizado demasiado alta.</li>" + "<li>Poca VRAM disponible.</li>"
+				+ "<li>Drivers de video desactualizados o inestables.</li>" + "</ul>"
+				+ "<p><b>Solución recomendada:</b></p>" + "<ul>" + "<li>Desactivar shaders temporalmente.</li>"
+				+ "<li>Usar resource packs de menor resolución.</li>"
+				+ "<li>Bajar la distancia de renderizado y simulación.</li>"
+				+ "<li>Reducir calidad gráfica, sombras, partículas y mipmaps.</li>"
+				+ "<li>Actualizar los drivers de la tarjeta gráfica.</li>"
+				+ "<li>Cerrar otros programas que usen GPU o mucha memoria.</li>" + "</ul>"
+				+ "<p>Si el error empezó después de instalar un shader, texture pack o mod visual, lo más probable es que ese sea el causante.</p>";
+	}
+
 }

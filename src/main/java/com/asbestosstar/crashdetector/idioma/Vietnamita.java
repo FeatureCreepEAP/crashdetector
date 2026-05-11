@@ -9513,4 +9513,29 @@ public class Vietnamita implements Idioma {
 		return "Mục trùng lặp trong ID của mod";
 	}
 
+	@Override
+	public String nombreOpenGLMemoriaInsuficiente() {
+		return "OpenGL – bộ nhớ video không đủ";
+	}
+
+	@Override
+	public String mensajeOpenGLMemoriaInsuficiente() {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft đã tạo ra lỗi OpenGL do thiếu bộ nhớ đồ họa.</b>" + "<p>Trò chơi đã báo lỗi:</p>"
+				+ "<code>GL_OUT_OF_MEMORY</code>"
+				+ "<p>Điều này thường có nghĩa là card đồ họa hoặc hệ thống không thể cấp phát đủ bộ nhớ cho kết cấu (textures), shader, mô hình, bộ đệm hoặc hiệu ứng hình ảnh.</p>"
+				+ "<p><b>Nguyên nhân phổ biến:</b></p>" + "<ul>" + "<li>Shader quá nặng.</li>"
+				+ "<li>Gói tài nguyên (Resource packs) độ phân giải cao.</li>"
+				+ "<li>Quá nhiều mod hình ảnh hoặc kết xuất.</li>"
+				+ "<li>Khoảng cách kết xuất (Render distance) quá cao.</li>" + "<li>Ít VRAM khả dụng.</li>"
+				+ "<li>Trình điều khiển card đồ họa cũ hoặc không ổn định.</li>" + "</ul>"
+				+ "<p><b>Giải pháp được khuyến nghị:</b></p>" + "<ul>" + "<li>Tạm thời tắt shader.</li>"
+				+ "<li>Sử dụng gói tài nguyên có độ phân giải thấp hơn.</li>"
+				+ "<li>Giảm khoảng cách kết xuất và mô phỏng.</li>"
+				+ "<li>Giảm chất lượng đồ họa, bóng đổ, hạt và mipmaps.</li>"
+				+ "<li>Cập nhật trình điều khiển card đồ họa.</li>"
+				+ "<li>Đóng các chương trình khác sử dụng GPU hoặc nhiều bộ nhớ.</li>" + "</ul>"
+				+ "<p>Nếu lỗi bắt đầu sau khi cài đặt shader, gói kết cấu hoặc mod hình ảnh, rất có thể đó là nguyên nhân.</p>";
+	}
+
 }
