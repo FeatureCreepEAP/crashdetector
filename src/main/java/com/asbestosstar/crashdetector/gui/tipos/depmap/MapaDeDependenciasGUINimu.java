@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JTextArea;
 
@@ -13,6 +14,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
+import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 
 /**
  * Implementación temática de MapaDeDependenciasGUI basada en Nimu.
@@ -73,30 +75,22 @@ public class MapaDeDependenciasGUINimu extends MapaDeDependenciasGUI {
 
 		if (botonRecargar != null) {
 			botonRecargar.setText(MonitorDePID.idioma.depmapRecargar());
-			botonRecargar.setBackground(panel);
-			botonRecargar.setForeground(texto);
-			botonRecargar.setFocusPainted(false);
+			estilizarBotonSeguroMac(botonRecargar, panel, texto);
 		}
 
 		if (botonDescompilar != null) {
 			botonDescompilar.setText(MonitorDePID.idioma.depmapDescompilarSeleccion());
-			botonDescompilar.setBackground(panel);
-			botonDescompilar.setForeground(texto);
-			botonDescompilar.setFocusPainted(false);
+			estilizarBotonSeguroMac(botonDescompilar, panel, texto);
 		}
 
 		if (botonVerReferencias != null) {
 			botonVerReferencias.setText(MonitorDePID.idioma.depmapVerReferencias());
-			botonVerReferencias.setBackground(panel);
-			botonVerReferencias.setForeground(texto);
-			botonVerReferencias.setFocusPainted(false);
+			estilizarBotonSeguroMac(botonVerReferencias, panel, texto);
 		}
 
 		if (botonComprobarNoAlineadas != null) {
 			botonComprobarNoAlineadas.setText(MonitorDePID.idioma.depmapComprobarNoAlineadas());
-			botonComprobarNoAlineadas.setBackground(panel);
-			botonComprobarNoAlineadas.setForeground(texto);
-			botonComprobarNoAlineadas.setFocusPainted(false);
+			estilizarBotonSeguroMac(botonComprobarNoAlineadas, panel, texto);
 		}
 
 		if (comboModsMapa != null) {
@@ -244,6 +238,27 @@ public class MapaDeDependenciasGUINimu extends MapaDeDependenciasGUI {
 			}
 		}
 		return new ImageIcon();
+	}
+
+	private void estilizarBotonSeguroMac(JButton boton, Color panel, Color texto) {
+		if (boton == null) {
+			return;
+		}
+
+		boton.setFocusPainted(false);
+
+		if (CrashDetectorGUI.esMac()) {
+			boton.setOpaque(false);
+			boton.setContentAreaFilled(true);
+			boton.setBorderPainted(true);
+			return;
+		}
+
+		boton.setOpaque(true);
+		boton.setContentAreaFilled(true);
+		boton.setBorderPainted(true);
+		boton.setBackground(panel);
+		boton.setForeground(texto);
 	}
 
 	public class RenderizadorCeldasDependenciasNimu extends RenderizadorCeldasDependencias {

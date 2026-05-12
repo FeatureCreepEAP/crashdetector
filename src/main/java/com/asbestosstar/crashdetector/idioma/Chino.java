@@ -8752,4 +8752,26 @@ public class Chino implements Idioma {
 				+ "<p>如果错误是在安装着色器、纹理包或视觉 mod 后开始的，那么它很可能是罪魁祸首。</p>";
 	}
 
+	// Chinese (Simplified) (中文)
+	@Override
+	public String nombreErrorVerificacionBytecode() {
+		return "VerifyError – 无效的 bytecode 或 mixin";
+	}
+
+	@Override
+	public String mensajeErrorVerificacionBytecode(String ubicacion, String razon, String claseSospechosa) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft 发现了 bytecode 验证错误。</b>" + "<p>此问题通常发生在 bytecode 操作、转换器 (transformer) 或 mixin 失败时。</p>"
+				+ "<p>游戏抛出：</p>" + "<code>java.lang.VerifyError</code>"
+				+ (ubicacion.length() > 0 ? "<p><b>位置：</b></p><code>" + ubicacion + "</code>" : "")
+				+ (razon.length() > 0 ? "<p><b>原因：</b></p><code>" + razon + "</code>" : "") + "<p><b>需要查找的内容：</b></p>"
+				+ "<ul>" + "<li>检查错误位置。</li>" + "<li>查找 <code>Reason</code> 中提到的类型。</li>"
+				+ "<li>检查堆栈跟踪以寻找可疑的 mod 类。</li>" + "<li>搜索错误附近的 mod 类名以获取线索。</li>" + "</ul>"
+				+ "<p><b>Grepr 的推荐用法：</b></p>" + "<ul>" + "<li>在侧边栏打开 <b>Grepr</b>。</li>"
+				+ "<li>启用在 <code>.jar</code>、<code>.zip</code> 或 <code>.fpm</code> 文件中搜索的选项。</li>"
+				+ "<li>搜索类的基本名称，而不一定是完整包名。</li>" + "</ul>" + "<p>例如：如果出现 <code>paquete.Clase</code>，仅搜索：</p>" + "<code>"
+				+ (claseSospechosa.length() > 0 ? claseSospechosa : "Clase") + "</code>" + "<p>这有助于找到包含或修改该类的 mod。</p>"
+				+ "<p>常见解决方案：更新受影响的 mod，移除不兼容的 mod，检查主 mod 的附加组件，或尝试禁用对同一类使用 mixins/transformers 的 mod。</p>";
+	}
+
 }

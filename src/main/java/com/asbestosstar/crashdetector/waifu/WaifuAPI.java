@@ -21,7 +21,7 @@ import com.asbestosstar.crashdetector.json.Json;
  */
 public class WaifuAPI {
 	// URL del endpoint GraphQL
-	private static final String GRAPHQL_URL = "https://api.waifu.neoforged.net/graphql  ";
+	private static final String GRAPHQL_URL = "https://waifu.neoforged.net/graphql  ";
 
 	public static List<VersionWaifu> versiones = new ArrayList<VersionWaifu>();
 

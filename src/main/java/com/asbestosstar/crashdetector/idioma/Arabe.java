@@ -9208,4 +9208,32 @@ public class Arabe implements Idioma {
 				+ "<p>إذا بدأ الخطأ بعد تثبيت shader أو حزمة ملمسات أو mod بصري، فمن المرجح أن يكون هو السبب.</p>";
 	}
 
+	// Arabic (العربية)
+	@Override
+	public String nombreErrorVerificacionBytecode() {
+		return "VerifyError – bytecode أو mixin غير صالح";
+	}
+
+	@Override
+	public String mensajeErrorVerificacionBytecode(String ubicacion, String razon, String claseSospechosa) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "وجد Minecraft خطأ في التحقق من bytecode.</b>"
+				+ "<p>تحدث هذه المشكلة عادةً عندما يفشل التلاعب بـ bytecode، أو المحول (transformer)، أو الـ mixin.</p>"
+				+ "<p>أطلق اللعبة:</p>" + "<code>java.lang.VerifyError</code>"
+				+ (ubicacion.length() > 0 ? "<p><b>الموقع:</b></p><code>" + ubicacion + "</code>" : "")
+				+ (razon.length() > 0 ? "<p><b>السبب:</b></p><code>" + razon + "</code>" : "")
+				+ "<p><b>ما يجب البحث عنه:</b></p>" + "<ul>" + "<li>البحث في موقع الخطأ.</li>"
+				+ "<li>البحث عن النوع المذكور في <code>Reason</code>.</li>"
+				+ "<li>مراجعة تتبع المكدس (stack trace) للبحث عن فئات mods مشبوهة.</li>"
+				+ "<li>البحث عن أسماء فئات mods حول الخطأ للحصول على أفكار.</li>" + "</ul>"
+				+ "<p><b>الاستخدام الموصى به لـ Grepr:</b></p>" + "<ul>"
+				+ "<li>افتح <b>Grepr</b> في الشريط الجانبي.</li>"
+				+ "<li>فعّل الخيار للبحث داخل ملفات <code>.jar</code>، <code>.zip</code>، أو <code>.fpm</code>.</li>"
+				+ "<li>ابحث عن الاسم الأساسي للفئة، وليس بالضرورة الحزمة الكاملة.</li>" + "</ul>"
+				+ "<p>مثال: إذا ظهر <code>paquete.Clase</code>، ابحث فقط عن:</p>" + "<code>"
+				+ (claseSospechosa.length() > 0 ? claseSospechosa : "Clase") + "</code>"
+				+ "<p>يمكن أن يساعد ذلك في العثور على mod الذي يحتوي على هذه الفئة أو يعدلها.</p>"
+				+ "<p>الحلول الشائعة: تحديث mod المتأثر، إزالة mods غير المتوافقة، مراجعة إضافات mod الرئيسي، أو التجربة بدون mods التي تستخدم mixins/transformers على نفس الفئة.</p>";
+	}
+
 }

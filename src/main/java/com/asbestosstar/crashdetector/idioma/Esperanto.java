@@ -9295,4 +9295,32 @@ public class Esperanto implements Idioma {
 				+ "<li>Se la eraro komenciĝis post instali ŝadilon, teksturpakon aŭ vidan modon, plej verŝajne tio estas la kaŭzanto.</li>";
 	}
 
+	// Esperanto (Esperanto)
+	@Override
+	public String nombreErrorVerificacionBytecode() {
+		return "VerifyError – nevalida bytecode aŭ mixin";
+	}
+
+	@Override
+	public String mensajeErrorVerificacionBytecode(String ubicacion, String razon, String claseSospechosa) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft trovis eraron de kontrolo de bytecode.</b>"
+				+ "<p>Ĉi tiu problemo kutime okazas kiam manipulado de bytecode, transformilo aŭ mixin malsukcesis.</p>"
+				+ "<p>La ludo ĵetis:</p>" + "<code>java.lang.VerifyError</code>"
+				+ (ubicacion.length() > 0 ? "<p><b>Loko:</b></p><code>" + ubicacion + "</code>" : "")
+				+ (razon.length() > 0 ? "<p><b>Kialo:</b></p><code>" + razon + "</code>" : "")
+				+ "<p><b>Kion serĉi:</b></p>" + "<ul>" + "<li>Serĉu en la loko de la eraro.</li>"
+				+ "<li>Serĉu la tipon menciitan en <code>Reason</code>.</li>"
+				+ "<li>Kontrolu la stakan spuron por suspektindaj klasoj de modoj.</li>"
+				+ "<li>Serĉu nomojn de klasoj de modoj ĉirkaŭ la eraro por akiri ideojn.</li>" + "</ul>"
+				+ "<p><b>Rekomendita uzo de Grepr:</b></p>" + "<ul>"
+				+ "<li>Malfermu <b>Grepr</b> en la flankobreto.</li>"
+				+ "<li>Aktivigu la opcion por serĉi ene de dosieroj <code>.jar</code>, <code>.zip</code> aŭ <code>.fpm</code>.</li>"
+				+ "<li>Serĉu la bazan nomon de la klaso, ne nepre la plenan paketon.</li>" + "</ul>"
+				+ "<p>Ekzemple: se aperas <code>paquete.Clase</code>, serĉu nur:</p>" + "<code>"
+				+ (claseSospechosa.length() > 0 ? claseSospechosa : "Clase") + "</code>"
+				+ "<p>Ĉi tio povas helpi trovi, kiu mod enhavas aŭ modifas tiun klason.</p>"
+				+ "<p>Komunaj solvoj: ĝisdatigi la afektitan modon, forigi nekongruajn modojn, kontroli aldonaĵojn de la ĉefa mod, aŭ provi sen modoj, kiuj uzas mixins/transformilojn sur la sama klaso.</p>";
+	}
+
 }

@@ -9538,4 +9538,31 @@ public class Vietnamita implements Idioma {
 				+ "<p>Nếu lỗi bắt đầu sau khi cài đặt shader, gói kết cấu hoặc mod hình ảnh, rất có thể đó là nguyên nhân.</p>";
 	}
 
+	@Override
+	public String nombreErrorVerificacionBytecode() {
+		return "VerifyError – bytecode hoặc mixin không hợp lệ";
+	}
+
+	@Override
+	public String mensajeErrorVerificacionBytecode(String ubicacion, String razon, String claseSospechosa) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft đã gặp lỗi xác minh bytecode.</b>"
+				+ "<p>Vấn đề này thường xảy ra khi thao tác bytecode, transformer hoặc mixin thất bại.</p>"
+				+ "<p>Trò chơi đã báo lỗi:</p>" + "<code>java.lang.VerifyError</code>"
+				+ (ubicacion.length() > 0 ? "<p><b>Vị trí:</b></p><code>" + ubicacion + "</code>" : "")
+				+ (razon.length() > 0 ? "<p><b>Lý do:</b></p><code>" + razon + "</code>" : "")
+				+ "<p><b>Những điều cần tìm kiếm:</b></p>" + "<ul>" + "<li>Tìm kiếm tại vị trí lỗi.</li>"
+				+ "<li>Tìm kiếm loại được đề cập trong <code>Reason</code>.</li>"
+				+ "<li>Kiểm tra stack trace để tìm các lớp mod đáng ngờ.</li>"
+				+ "<li>Tìm kiếm tên các lớp mod xung quanh lỗi để có ý tưởng.</li>" + "</ul>"
+				+ "<p><b>Cách sử dụng Grepr được khuyến nghị:</b></p>" + "<ul>"
+				+ "<li>Mở <b>Grepr</b> trong thanh bên.</li>"
+				+ "<li>Bật tùy chọn tìm kiếm bên trong các tệp <code>.jar</code>, <code>.zip</code> hoặc <code>.fpm</code>.</li>"
+				+ "<li>Tìm kiếm tên cơ bản của lớp, không nhất thiết phải là gói đầy đủ.</li>" + "</ul>"
+				+ "<p>Ví dụ: nếu xuất hiện <code>paquete.Clase</code>, chỉ tìm kiếm:</p>" + "<code>"
+				+ (claseSospechosa.length() > 0 ? claseSospechosa : "Clase") + "</code>"
+				+ "<p>Điều này có thể giúp tìm ra mod nào chứa hoặc sửa đổi lớp đó.</p>"
+				+ "<p>Các giải pháp phổ biến: cập nhật mod bị ảnh hưởng, xóa các mod không tương thích, kiểm tra các addon của mod chính, hoặc thử chạy mà không có các mod sử dụng mixins/transformers trên cùng một lớp.</p>";
+	}
+
 }

@@ -13,7 +13,6 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -25,12 +24,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
 
-import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
@@ -44,7 +41,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTree;
 import javax.swing.SwingWorker;
 import javax.swing.border.EmptyBorder;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
@@ -58,6 +54,7 @@ import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrBase;
+import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrSakuraRiddle;
 
 /**
  * GUI abstracta para visualizar el mapa de dependencias entre mods.
@@ -1208,13 +1205,32 @@ public abstract class MapaDeDependenciasGUI extends JFrame implements BotonDeBar
 	}
 
 	public void mostrarCodigoDescompilado(ArchivoDeMod mod, String nombreClaseInterna) {
-		try {
-			String codigo = CfrBase.descompilarClase(nombreClaseInterna);
-			areaDetalles.setText(codigo);
-			pestanas.setSelectedIndex(0);
-		} catch (Exception e) {
-			areaDetalles.setText(MonitorDePID.idioma.depmapErrorDescompilar() + ": " + e.getMessage());
+		abrirClaseEnCfr(nombreClaseInterna);
+	}
+
+	public void abrirClaseEnCfr(String nombreClase) {
+		if (nombreClase == null || nombreClase.trim().isEmpty()) {
+			return;
 		}
+
+		String claseNormalizada = nombreClase.trim();
+
+		if (claseNormalizada.startsWith("L") && claseNormalizada.endsWith(";")) {
+			claseNormalizada = claseNormalizada.substring(1, claseNormalizada.length() - 1);
+		}
+
+		if (claseNormalizada.endsWith(".class")) {
+			claseNormalizada = claseNormalizada.substring(0, claseNormalizada.length() - ".class".length());
+		}
+
+		claseNormalizada = claseNormalizada.replace('/', '.');
+
+		String url = "cfr://" + claseNormalizada;
+
+		CrashDetectorLogger.log(url + " (cfr url)");
+
+		CfrBase gui = TipoGUI.CFR.obtenerGUIPredeterminado(CfrSakuraRiddle.ID, CfrSakuraRiddle::new);
+		gui.procesarHipervinculo(url);
 	}
 
 	public void initOverlayCarga() {

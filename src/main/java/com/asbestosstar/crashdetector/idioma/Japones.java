@@ -8960,4 +8960,29 @@ public class Japones implements Idioma {
 				+ "<p>シェーダー、テクスチャパック、または視覚的な mod をインストールした後にエラーが始まった場合、それが原因である可能性が高いです。</p>";
 	}
 
+	// Japanese (日本語)
+	@Override
+	public String nombreErrorVerificacionBytecode() {
+		return "VerifyError – 無効な bytecode または mixin";
+	}
+
+	@Override
+	public String mensajeErrorVerificacionBytecode(String ubicacion, String razon, String claseSospechosa) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft が bytecode 検証エラーを検出しました。</b>"
+				+ "<p>この問題は通常、bytecode の操作、変換器 (transformer)、または mixin が失敗したときに発生します。</p>" + "<p>ゲームがスローしました:</p>"
+				+ "<code>java.lang.VerifyError</code>"
+				+ (ubicacion.length() > 0 ? "<p><b>場所:</b></p><code>" + ubicacion + "</code>" : "")
+				+ (razon.length() > 0 ? "<p><b>理由:</b></p><code>" + razon + "</code>" : "") + "<p><b>確認すべき事項:</b></p>"
+				+ "<ul>" + "<li>エラーの場所を確認してください。</li>" + "<li><code>Reason</code> で言及されている型を探してください。</li>"
+				+ "<li>スタックトレースを確認し、疑わしい mod クラスを探してください。</li>" + "<li>ヒントを得るために、エラー周辺の mod クラス名を検索してください。</li>"
+				+ "</ul>" + "<p><b>Grepr の推奨使用方法:</b></p>" + "<ul>" + "<li>サイドバーで <b>Grepr</b> を開きます。</li>"
+				+ "<li><code>.jar</code>、<code>.zip</code>、または <code>.fpm</code> ファイル内を検索するオプションを有効にします。</li>"
+				+ "<li>完全なパッケージ名ではなく、クラスの基本名を検索してください。</li>" + "</ul>"
+				+ "<p>例: <code>paquete.Clase</code> が表示される場合は、次のみ検索してください:</p>" + "<code>"
+				+ (claseSospechosa.length() > 0 ? claseSospechosa : "Clase") + "</code>"
+				+ "<p>これにより、そのクラスを含むか変更する mod を見つけるのに役立ちます。</p>"
+				+ "<p>一般的な解決策: 影響を受けた mod を更新する、互換性のない mod を削除する、主要な mod のアドオンを確認する、または同じクラスに mixins/transformers を使用する mod なしで試す。</p>";
+	}
+
 }

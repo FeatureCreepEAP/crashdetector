@@ -8950,4 +8950,30 @@ public class Coreano implements Idioma {
 				+ "<p>셰이더, 텍스처 팩 또는 시각적 mod를 설치한 후 오류가 시작되었다면 그것이 원인일 가능성이 높습니다.</p>";
 	}
 
+	// Korean (Munhwaŏ / Standard Korean) (한국어)
+	@Override
+	public String nombreErrorVerificacionBytecode() {
+		return "VerifyError – 잘못된 bytecode 또는 mixin";
+	}
+
+	@Override
+	public String mensajeErrorVerificacionBytecode(String ubicacion, String razon, String claseSospechosa) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft에서 bytecode 검증 오류가 발생했습니다.</b>"
+				+ "<p>이 문제는 일반적으로 bytecode 조작, 변환기(transformer) 또는 mixin이 실패했을 때 발생합니다.</p>" + "<p>게임이 다음을 발생시켰습니다:</p>"
+				+ "<code>java.lang.VerifyError</code>"
+				+ (ubicacion.length() > 0 ? "<p><b>위치:</b></p><code>" + ubicacion + "</code>" : "")
+				+ (razon.length() > 0 ? "<p><b>이유:</b></p><code>" + razon + "</code>" : "") + "<p><b>확인할 사항:</b></p>"
+				+ "<ul>" + "<li>오류 위치를 확인하세요.</li>" + "<li><code>Reason</code>에 언급된 유형을 찾으세요.</li>"
+				+ "<li>스택 추적(stack trace)을 검토하여 의심스러운 mod 클래스를 찾으세요.</li>"
+				+ "<li>힌트를 얻기 위해 오류 주변의 mod 클래스 이름을 검색하세요.</li>" + "</ul>" + "<p><b>Grepr 권장 사용법:</b></p>" + "<ul>"
+				+ "<li>사이드바에서 <b>Grepr</b>을 엽니다.</li>"
+				+ "<li><code>.jar</code>, <code>.zip</code> 또는 <code>.fpm</code> 파일 내 검색 옵션을 활성화합니다.</li>"
+				+ "<li>전체 패키지 이름이 아닌 클래스의 기본 이름을 검색하세요.</li>" + "</ul>"
+				+ "<p>예: <code>paquete.Clase</code>가 나타나는 경우, 다음만 검색하세요:</p>" + "<code>"
+				+ (claseSospechosa.length() > 0 ? claseSospechosa : "Clase") + "</code>"
+				+ "<p>이는 해당 클래스를 포함하거나 수정하는 mod를 찾는 데 도움이 될 수 있습니다.</p>"
+				+ "<p>일반적인 해결책: 영향을 받은 mod 업데이트, 호환되지 않는 mod 제거, 주요 mod의 애드온 확인, 또는 동일한 클래스에 mixins/transformers를 사용하는 mod 없이 테스트하기.</p>";
+	}
+
 }

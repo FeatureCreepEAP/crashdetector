@@ -44,6 +44,7 @@ import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
+import com.asbestosstar.crashdetector.gui.elementos.LectadorDeCodigo;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrBase;
 
@@ -59,7 +60,7 @@ public abstract class MixinsGUI extends JFrame implements BotonDeBarraLateralDer
 
 	public JTree arbolMixins;
 	public DefaultTreeModel modeloArbol;
-	public JTextArea areaContenido;
+	public LectadorDeCodigo areaContenido;
 
 	public JComboBox<String> comboMods;
 	public JButton botonRecargar;
@@ -122,10 +123,9 @@ public abstract class MixinsGUI extends JFrame implements BotonDeBarraLateralDer
 		arbolMixins.setShowsRootHandles(true);
 		arbolMixins.setCellRenderer(new RenderizadorCeldasMixins());
 
-		areaContenido = new JTextArea();
-		areaContenido.setEditable(false);
-		areaContenido.setLineWrap(true);
-		areaContenido.setWrapStyleWord(true);
+		areaContenido = new LectadorDeCodigo(new Color(252, 244, 250), new Color(70, 42, 66), new Color(185, 74, 128),
+				new Color(86, 137, 86), new Color(145, 118, 150), new Color(190, 125, 55), new Color(90, 118, 170),
+				new Color(155, 88, 175));
 		areaContenido.setFont(new Font("Monospaced", Font.PLAIN, 12));
 
 		imagenChiarru = new JLabel();
@@ -478,7 +478,7 @@ public abstract class MixinsGUI extends JFrame implements BotonDeBarraLateralDer
 	 */
 	public void mostrarDetalles(Object objetoReal) {
 		if (objetoReal == null) {
-			areaContenido.setText("");
+			areaContenido.establecerCodigo("");
 			return;
 		}
 
@@ -489,7 +489,7 @@ public abstract class MixinsGUI extends JFrame implements BotonDeBarraLateralDer
 			sb.append(MonitorDePID.idioma.detalleMod()).append("\n");
 			sb.append(MonitorDePID.idioma.ubicacion()).append(": ").append(mod.ubicacion_para_publicar()).append("\n");
 			sb.append(MonitorDePID.idioma.mixinsCantidad()).append(": ").append(contarMixinsEnMod(mod)).append("\n");
-			areaContenido.setText(sb.toString());
+			areaContenido.establecerCodigo(sb.toString());
 			return;
 		}
 
@@ -532,7 +532,7 @@ public abstract class MixinsGUI extends JFrame implements BotonDeBarraLateralDer
 						}
 					}
 
-					areaContenido.setText(sb.toString());
+					areaContenido.establecerCodigo(sb.toString());
 					return;
 				}
 
@@ -544,7 +544,7 @@ public abstract class MixinsGUI extends JFrame implements BotonDeBarraLateralDer
 					sb.append("\n");
 					sb.append(MonitorDePID.idioma.mixinsConflictosPosibles()).append(": ")
 							.append(buscarConflictosPorTarget(target).size()).append("\n");
-					areaContenido.setText(sb.toString());
+					areaContenido.establecerCodigo(sb.toString());
 					return;
 				}
 
@@ -559,7 +559,7 @@ public abstract class MixinsGUI extends JFrame implements BotonDeBarraLateralDer
 					for (String t : metodo.obtenerTargets()) {
 						sb.append("- ").append(t).append("\n");
 					}
-					areaContenido.setText(sb.toString());
+					areaContenido.establecerCodigo(sb.toString());
 					return;
 				}
 
@@ -569,20 +569,20 @@ public abstract class MixinsGUI extends JFrame implements BotonDeBarraLateralDer
 					sb.append(MonitorDePID.idioma.clase()).append(": ").append(clase).append("\n");
 					sb.append(MonitorDePID.idioma.nombres()).append(": ").append(campo.obtenerNombre()).append("\n");
 					sb.append("Descriptor: ").append(campo.obtenerDescriptor()).append("\n");
-					areaContenido.setText(sb.toString());
+					areaContenido.establecerCodigo(sb.toString());
 					return;
 				}
 
 				if ("CONFLICTO".equals(tipo) && datos.length >= 4) {
 					sb.append(MonitorDePID.idioma.mixinsDetalleConflicto()).append("\n\n");
 					sb.append(String.valueOf(datos[3]));
-					areaContenido.setText(sb.toString());
+					areaContenido.establecerCodigo(sb.toString());
 					return;
 				}
 			}
 		}
 
-		areaContenido.setText(String.valueOf(objetoReal));
+		areaContenido.establecerCodigo(String.valueOf(objetoReal));
 	}
 
 	/**
@@ -831,9 +831,9 @@ public abstract class MixinsGUI extends JFrame implements BotonDeBarraLateralDer
 	public void mostrarCodigoDescompilado(ArchivoDeMod mod, String nombreClase) {
 		try {
 			String codigo = CfrBase.descompilarClase(nombreClase);
-			areaContenido.setText(codigo);
+			areaContenido.establecerCodigo(codigo);
 		} catch (Exception e) {
-			areaContenido.setText(MonitorDePID.idioma.mixinsErrorDescompilar() + ": " + e.getMessage());
+			areaContenido.establecerCodigo(MonitorDePID.idioma.mixinsErrorDescompilar() + ": " + e.getMessage());
 		}
 	}
 

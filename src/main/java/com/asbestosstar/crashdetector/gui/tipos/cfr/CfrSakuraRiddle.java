@@ -10,7 +10,6 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -30,6 +29,7 @@ import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.ConfigBoolean;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
+import com.asbestosstar.crashdetector.gui.elementos.LectadorDeCodigo;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 
 /**
@@ -48,8 +48,17 @@ public class CfrSakuraRiddle extends CfrBase {
 	public ConfigColor colorFondoRetrato = ConfigColor.de("tema.sakura.cfr.fondo.retrato", new Color(30, 20, 40));
 	public ConfigBoolean usarSakuraOriginal = ConfigBoolean.de("tema.sakura.cfr.usaroriginal", false);
 
+	public ConfigColor colorCodigoPalabraClave = ConfigColor.de("tema.sakura.cfr.codigo.palabra.clave",
+			new Color(255, 120, 180));
+	public ConfigColor colorCodigoCadena = ConfigColor.de("tema.sakura.cfr.codigo.cadena", new Color(180, 240, 180));
+	public ConfigColor colorCodigoComentario = ConfigColor.de("tema.sakura.cfr.codigo.comentario",
+			new Color(140, 140, 150));
+	public ConfigColor colorCodigoNumero = ConfigColor.de("tema.sakura.cfr.codigo.numero", new Color(255, 210, 120));
+	public ConfigColor colorCodigoTipo = ConfigColor.de("tema.sakura.cfr.codigo.tipo", new Color(120, 200, 255));
+	public ConfigColor colorCodigoMetodo = ConfigColor.de("tema.sakura.cfr.codigo.metodo", new Color(220, 180, 255));
+
 	// Componentes UI
-	private JEditorPane editorCodigo;
+	private LectadorDeCodigo editorCodigo;
 	private JPanel panelRetrato;
 	private JLabel etiquetaRetrato;
 	private JTextField campoClase;
@@ -70,9 +79,9 @@ public class CfrSakuraRiddle extends CfrBase {
 			String codigo = CfrBase.descompilarClase(nombreClase);
 			SwingUtilities.invokeLater(() -> {
 				if (codigo != null) {
-					editorCodigo.setText(codigo);
+					editorCodigo.establecerCodigo(codigo);
 				} else {
-					editorCodigo.setText(MonitorDePID.idioma.cfrClaseNoEncontrada(nombreClase));
+					editorCodigo.establecerCodigo(MonitorDePID.idioma.cfrClaseNoEncontrada(nombreClase));
 				}
 				editorCodigo.setCaretPosition(0);
 			});
@@ -91,11 +100,9 @@ public class CfrSakuraRiddle extends CfrBase {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLayout(new BorderLayout());
 
-		editorCodigo = new JEditorPane();
-		editorCodigo.setEditable(false);
-		editorCodigo.setContentType("text/plain");
-		editorCodigo.setBackground(colorFondo.obtener());
-		editorCodigo.setForeground(colorTexto.obtener());
+		editorCodigo = new LectadorDeCodigo(colorFondo.obtener(), colorTexto.obtener(),
+				colorCodigoPalabraClave.obtener(), colorCodigoCadena.obtener(), colorCodigoComentario.obtener(),
+				colorCodigoNumero.obtener(), colorCodigoTipo.obtener(), colorCodigoMetodo.obtener());
 
 		JScrollPane scrollCodigo = new JScrollPane(editorCodigo);
 
@@ -192,11 +199,20 @@ public class CfrSakuraRiddle extends CfrBase {
 
 	@Override
 	public void recargarApariencia() {
-		editorCodigo.setBackground(colorFondo.obtener());
-		editorCodigo.setForeground(colorTexto.obtener());
-		campoClase.setBackground(colorFondo.obtener().darker());
-		campoClase.setForeground(colorTexto.obtener());
-		panelRetrato.repaint();
+		if (editorCodigo != null) {
+			editorCodigo.establecerColores(colorFondo.obtener(), colorTexto.obtener(),
+					colorCodigoPalabraClave.obtener(), colorCodigoCadena.obtener(), colorCodigoComentario.obtener(),
+					colorCodigoNumero.obtener(), colorCodigoTipo.obtener(), colorCodigoMetodo.obtener());
+		}
+
+		if (campoClase != null) {
+			campoClase.setBackground(colorFondo.obtener().darker());
+			campoClase.setForeground(colorTexto.obtener());
+		}
+
+		if (panelRetrato != null) {
+			panelRetrato.repaint();
+		}
 	}
 
 	@Override
@@ -207,6 +223,20 @@ public class CfrSakuraRiddle extends CfrBase {
 		colorBorde.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBorde());
 		colorFondoRetrato.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorFondoRetrato());
 		usarSakuraOriginal.establecerNombreParaMostrar(() -> MonitorDePID.idioma.usarSakuraOriginal());
+
+		colorCodigoPalabraClave.establecerNombreParaMostrar(() -> "Código - palabra clave");
+		colorCodigoCadena.establecerNombreParaMostrar(() -> "Código - cadena");
+		colorCodigoComentario.establecerNombreParaMostrar(() -> "Código - comentario");
+		colorCodigoNumero.establecerNombreParaMostrar(() -> "Código - número");
+		colorCodigoTipo.establecerNombreParaMostrar(() -> "Código - tipo");
+		colorCodigoMetodo.establecerNombreParaMostrar(() -> "Código - método");
+
+		ret.add(colorCodigoPalabraClave);
+		ret.add(colorCodigoCadena);
+		ret.add(colorCodigoComentario);
+		ret.add(colorCodigoNumero);
+		ret.add(colorCodigoTipo);
+		ret.add(colorCodigoMetodo);
 
 		ret.add(colorFondo);
 		ret.add(colorTexto);

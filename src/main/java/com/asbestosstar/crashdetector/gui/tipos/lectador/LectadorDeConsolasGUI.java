@@ -248,12 +248,12 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 	}
 
 	protected CargadorDeLogDiferido obtenerCargadorDeConsolaActual() {
-		if (consolaActual == null) {
+		if (consolaActual == null || consolaActual.archivo == null) {
 			return null;
 		}
 
-		String nombreArchivo = new File(consolaActual.archivo.toString()).getName();
-		return cacheCargadoresPorConsola.get(nombreArchivo);
+		String claveArchivo = consolaActual.archivo.toString();
+		return cacheCargadoresPorConsola.get(claveArchivo);
 	}
 
 	// ====== Colocación ======
@@ -547,13 +547,13 @@ public abstract class LectadorDeConsolasGUI extends JFrame implements CrashDetec
 		consolaActual = consola;
 		reconstruirIndiceDeErrores(consola);
 
-		final String nombreArchivo = new File(consola.archivo.toString()).getName();
+		final String claveArchivo = consola.archivo.toString();
 
-		CargadorDeLogDiferido cargador = cacheCargadoresPorConsola.get(nombreArchivo);
+		CargadorDeLogDiferido cargador = cacheCargadoresPorConsola.get(claveArchivo);
 
 		if (cargador == null) {
 			cargador = new CargadorDeLogDiferido(consola.contenido_verificar, 500);
-			cacheCargadoresPorConsola.put(nombreArchivo, cargador);
+			cacheCargadoresPorConsola.put(claveArchivo, cargador);
 		}
 
 		refrescarModeloCon(cargador);

@@ -30,7 +30,7 @@ public class ProblemaFeatherClient implements Verificaciones {
 			return;
 
 		// Pre-check global: deben existir ambas cadenas
-		if (log.contains("feather/lib/sentry/Sentry") && log.contains("net.digitalingot.feather")) {
+		if (log.contains("feather/lib/sentry/Sentry") || log.contains("net.digitalingot.feather")) {
 
 			analizarLineas = true;
 		}
@@ -51,7 +51,7 @@ public class ProblemaFeatherClient implements Verificaciones {
 			vioPaqueteFeather = true;
 		}
 
-		if (vioNoClassDef && vioPaqueteFeather) {
+		if (vioNoClassDef || vioPaqueteFeather) {
 			activado = true;
 		}
 	}
@@ -99,7 +99,7 @@ public class ProblemaFeatherClient implements Verificaciones {
 
 	@Override
 	public Documento docs() {
-		return Documento.NINGUN;
+		return Documento.builder().doc("en", "minecraft/Launchers.md").build();
 	}
 
 	@Override

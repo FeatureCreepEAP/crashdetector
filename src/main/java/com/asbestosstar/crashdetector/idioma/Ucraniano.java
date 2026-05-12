@@ -8643,4 +8643,31 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 				+ "<p>Якщо помилка почалася після встановлення шейдера, пакету текстур або візуального моду, швидше за все, причина в них.</p>";
 	}
 
+	@Override
+	public String nombreErrorVerificacionBytecode() {
+		return "VerifyError – недійсний байткод або міксин";
+	}
+
+	@Override
+	public String mensajeErrorVerificacionBytecode(String ubicacion, String razon, String claseSospechosa) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft виявив помилку перевірки байткоду.</b>"
+				+ "<p>Ця проблема зазвичай виникає, коли маніпуляція з байткодом, трансформер або міксин завершуються з помилкою.</p>"
+				+ "<p>Гра повідомила:</p>" + "<code>java.lang.VerifyError</code>"
+				+ (ubicacion.length() > 0 ? "<p><b>Місцезнаходження:</b></p><code>" + ubicacion + "</code>" : "")
+				+ (razon.length() > 0 ? "<p><b>Причина:</b></p><code>" + razon + "</code>" : "")
+				+ "<p><b>Що шукати:</b></p>" + "<ul>" + "<li>Шукати в місцезнаходженні помилки.</li>"
+				+ "<li>Шукати тип, згаданий у <code>Reason</code>.</li>"
+				+ "<li>Перевірити трасування стека на наявність підозрілих класів модів.</li>"
+				+ "<li>Шукати імена класів модів навколо помилки для отримання ідей.</li>" + "</ul>"
+				+ "<p><b>Рекомендоване використання Grepr:</b></p>" + "<ul>"
+				+ "<li>Відкрити <b>Grepr</b> на бічній панелі.</li>"
+				+ "<li>Увімкнути опцію пошуку всередині файлів <code>.jar</code>, <code>.zip</code> або <code>.fpm</code>.</li>"
+				+ "<li>Шукати базове ім'я класу, а не обов'язково повний пакет.</li>" + "</ul>"
+				+ "<p>Приклад: якщо з'являється <code>paquete.Clase</code>, шукати лише:</p>" + "<code>"
+				+ (claseSospechosa.length() > 0 ? claseSospechosa : "Clase") + "</code>"
+				+ "<p>Це може допомогти знайти, який мод містить або змінює цей клас.</p>"
+				+ "<p>Поширені рішення: оновити пошкоджений мод, видалити несумісні моди, перевірити аддони основного моду або спробувати запустити гру без модів, які використовують міксини/трансформери для того ж класу.</p>";
+	}
+
 }

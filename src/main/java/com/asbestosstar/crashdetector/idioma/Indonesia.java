@@ -9877,4 +9877,32 @@ public class Indonesia implements Idioma {
 				+ "<p>Jika kesalahan dimulai setelah menginstal shader, paket tekstur, atau mod visual, kemungkinan besar itulah penyebabnya.</p>";
 	}
 
+	// Indonesian (Bahasa Indonesia)
+	@Override
+	public String nombreErrorVerificacionBytecode() {
+		return "VerifyError – bytecode atau mixin tidak valid";
+	}
+
+	@Override
+	public String mensajeErrorVerificacionBytecode(String ubicacion, String razon, String claseSospechosa) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft menemukan kesalahan verifikasi bytecode.</b>"
+				+ "<p>Masalah ini biasanya terjadi ketika manipulasi bytecode, transformer, atau mixin gagal.</p>"
+				+ "<p>Game meluncurkan:</p>" + "<code>java.lang.VerifyError</code>"
+				+ (ubicacion.length() > 0 ? "<p><b>Lokasi:</b></p><code>" + ubicacion + "</code>" : "")
+				+ (razon.length() > 0 ? "<p><b>Alasan:</b></p><code>" + razon + "</code>" : "")
+				+ "<p><b>Apa yang harus dicari:</b></p>" + "<ul>" + "<li>Periksa lokasi kesalahan.</li>"
+				+ "<li>Cari tipe yang disebutkan di <code>Reason</code>.</li>"
+				+ "<li>Tinjau stack trace untuk kelas mod yang mencurigakan.</li>"
+				+ "<li>Cari nama kelas mod di sekitar kesalahan untuk mendapatkan ide.</li>" + "</ul>"
+				+ "<p><b>Penggunaan Grepr yang direkomendasikan:</b></p>" + "<ul>"
+				+ "<li>Buka <b>Grepr</b> di bilah sisi.</li>"
+				+ "<li>Aktifkan opsi untuk mencari di dalam file <code>.jar</code>, <code>.zip</code>, atau <code>.fpm</code>.</li>"
+				+ "<li>Cari nama dasar kelas, bukan necessarily paket lengkapnya.</li>" + "</ul>"
+				+ "<p>Contoh: jika muncul <code>paquete.Clase</code>, cari hanya:</p>" + "<code>"
+				+ (claseSospechosa.length() > 0 ? claseSospechosa : "Clase") + "</code>"
+				+ "<p>Ini dapat membantu menemukan mod mana yang berisi atau memodifikasi kelas tersebut.</p>"
+				+ "<p>Solusi umum: perbarui mod yang terpengaruh, hapus mod yang tidak kompatibel, periksa addon dari mod utama, atau coba tanpa mod yang menggunakan mixins/transformer pada kelas yang sama.</p>";
+	}
+
 }

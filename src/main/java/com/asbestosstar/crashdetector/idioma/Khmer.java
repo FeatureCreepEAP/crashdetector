@@ -9495,4 +9495,32 @@ public class Khmer implements Idioma {
 				+ "<p>ប្រសិនបើកំហុសបានចាប់ផ្តើមបន្ទាប់ពីដំឡើង shader, កញ្ចប់ texture ឬ mod វិស័យ នោះវាទំនងជាមូលហេតុ។</p>";
 	}
 
+	// Khmer (ភាសាខ្មែរ)
+	@Override
+	public String nombreErrorVerificacionBytecode() {
+		return "VerifyError – bytecode ឬ mixin មិនត្រឹមត្រូវ";
+	}
+
+	@Override
+	public String mensajeErrorVerificacionBytecode(String ubicacion, String razon, String claseSospechosa) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft បានជួបប្រទះកំហុសផ្ទៀងផ្ទាត់ bytecode។</b>"
+				+ "<p>បញ្ហានេះជាធម្មតាកើតឡើងនៅពេលដែលការបង្កប់ bytecode, transformer ឬ mixin បរាជ័យ។</p>"
+				+ "<p>ហ្គេមបានបញ្ចេញ:</p>" + "<code>java.lang.VerifyError</code>"
+				+ (ubicacion.length() > 0 ? "<p><b>ទីតាំង:</b></p><code>" + ubicacion + "</code>" : "")
+				+ (razon.length() > 0 ? "<p><b>មូលហេតុ:</b></p><code>" + razon + "</code>" : "")
+				+ "<p><b>អ្វីដែលត្រូវស្វែងរក:</b></p>" + "<ul>" + "<li>ពិនិត្យមើលទីតាំងនៃកំហុស។</li>"
+				+ "<li>ស្វែងរកប្រភេទដែលបានលើកឡើងនៅក្នុង <code>Reason</code>។</li>"
+				+ "<li>ពិនិត្យមើល stack trace សម្រាប់ថ្នាក់ mod ដែលសង្ស័យ។</li>"
+				+ "<li>ស្វែងរកឈ្មោះថ្នាក់ mod នៅជុំវិញកំហុសដើម្បីទទួលបានគំនិត។</li>" + "</ul>"
+				+ "<p><b>ការប្រើប្រាស់ Grepr ដែលបានណែនាំ:</b></p>" + "<ul>"
+				+ "<li>បើក <b>Grepr</b> នៅក្នុងរបារចំហៀង។</li>"
+				+ "<li>បើកជម្រើសស្វែងរកនៅក្នុងឯកសារ <code>.jar</code>, <code>.zip</code> ឬ <code>.fpm</code>។</li>"
+				+ "<li>ស្វែងរកឈ្មោះមូលដ្ឋាននៃថ្នាក់ មិនចាំបាច់ជាឈ្មោះកញ្ចប់ពេញលេញ។</li>" + "</ul>"
+				+ "<p>ឧទាហរណ៍: ប្រសិនបើ <code>paquete.Clase</code> លេចឡើង សូមស្វែងរកតែ:</p>" + "<code>"
+				+ (claseSospechosa.length() > 0 ? claseSospechosa : "Clase") + "</code>"
+				+ "<p>វាអាចជួយស្វែងរក mod ណាដែលមាន ឬកែប្រែថ្នាក់នោះ។</p>"
+				+ "<p>ដំណោះស្រាយទូទៅ: ធ្វើបច្ចុប្បន្នភាព mod ដែលរងផលប៉ះពាល់, ដក mod ដែលមិនស៊ីសង្វាក់គ្នា, ពិនិត្យមើល addons នៃ mod ចម្បង, ឬសាកល្បងដោយគ្មាន mod ដែលប្រើ mixins/transformers លើថ្នាក់ដូចគ្នា។</p>";
+	}
+
 }

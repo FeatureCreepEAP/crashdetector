@@ -169,91 +169,138 @@ public abstract class GrepRGUI extends JFrame implements CrashDetectorGUI, Boton
 		setLayout(new BorderLayout(10, 10));
 		getContentPane().setBackground(colorFondoVentana.obtener());
 
-		java.awt.GridBagLayout gbl = new java.awt.GridBagLayout();
-		JPanel panelEntrada = new JPanel(gbl);
+		JPanel panelEntrada = new JPanel(new java.awt.GridBagLayout());
 		panelEntrada.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		panelEntrada.setBackground(colorPanel.obtener());
 
-		java.awt.GridBagConstraints L = new java.awt.GridBagConstraints();
-		L.insets = new java.awt.Insets(0, 0, 0, 8);
-		L.fill = java.awt.GridBagConstraints.HORIZONTAL;
-		L.weightx = 0.4;
-		L.anchor = java.awt.GridBagConstraints.WEST;
+		java.awt.GridBagConstraints gbc = new java.awt.GridBagConstraints();
+		gbc.insets = new java.awt.Insets(5, 5, 5, 5);
+		gbc.fill = java.awt.GridBagConstraints.HORIZONTAL;
+		gbc.weightx = 1.0;
+		gbc.anchor = java.awt.GridBagConstraints.WEST;
 
-		java.awt.GridBagConstraints R = new java.awt.GridBagConstraints();
-		R.insets = new java.awt.Insets(5, 8, 5, 0);
-		R.fill = java.awt.GridBagConstraints.HORIZONTAL;
-		R.weightx = 0.6;
-		R.anchor = java.awt.GridBagConstraints.WEST;
+		// ===== Fila 0: carpeta + botón carpeta dentro de borde =====
 
-		// fila 0: directorio y botón examinar
+		JPanel panelCarpeta = new JPanel(new java.awt.GridBagLayout());
+		panelCarpeta.setBackground(colorPanel.obtener());
+		panelCarpeta.setBorder(
+				BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(colorBordeDestacado.obtener(), 1),
+						BorderFactory.createEmptyBorder(8, 8, 8, 8)));
+
+		java.awt.GridBagConstraints gbcCarpeta = new java.awt.GridBagConstraints();
+		gbcCarpeta.insets = new java.awt.Insets(0, 0, 0, 8);
+		gbcCarpeta.fill = java.awt.GridBagConstraints.HORIZONTAL;
+		gbcCarpeta.weightx = 1.0;
+
 		campoDirectorio = new JTextField();
 		estilizarCampo(campoDirectorio);
-		L.gridx = 0;
-		L.gridy = 0;
-		panelEntrada.add(campoDirectorio, L);
+
+		gbcCarpeta.gridx = 0;
+		gbcCarpeta.gridy = 0;
+		panelCarpeta.add(campoDirectorio, gbcCarpeta);
 
 		JButton btnExaminar = new JButton(MonitorDePID.idioma.seleccionarCarpeta());
 		estilizarBoton(btnExaminar);
 		btnExaminar.addActionListener(e -> seleccionarCarpeta());
-		R.gridx = 1;
-		R.gridy = 0;
-		panelEntrada.add(btnExaminar, R);
 
-		// fila 1: etiqueta y campo de cadena
+		gbcCarpeta.gridx = 1;
+		gbcCarpeta.gridy = 0;
+		gbcCarpeta.weightx = 0.0;
+		gbcCarpeta.insets = new java.awt.Insets(0, 8, 0, 0);
+		panelCarpeta.add(btnExaminar, gbcCarpeta);
+
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.gridwidth = 2;
+		panelEntrada.add(panelCarpeta, gbc);
+
+		// ===== Fila 1: etiqueta + caja de búsqueda dentro de borde =====
+
+		JPanel panelCadena = new JPanel(new java.awt.GridBagLayout());
+		panelCadena.setBackground(colorPanel.obtener());
+		panelCadena.setBorder(
+				BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(colorBordeDestacado.obtener(), 1),
+						BorderFactory.createEmptyBorder(8, 8, 8, 8)));
+
+		java.awt.GridBagConstraints gbcCadena = new java.awt.GridBagConstraints();
+		gbcCadena.insets = new java.awt.Insets(0, 0, 0, 8);
+		gbcCadena.fill = java.awt.GridBagConstraints.HORIZONTAL;
+		gbcCadena.anchor = java.awt.GridBagConstraints.WEST;
+
 		JLabel lblCadena = new JLabel(MonitorDePID.idioma.cadenaBusqueda());
 		lblCadena.setForeground(colorTexto.obtener());
-		L.gridx = 0;
-		L.gridy = 1;
-		panelEntrada.add(lblCadena, L);
+
+		gbcCadena.gridx = 0;
+		gbcCadena.gridy = 0;
+		gbcCadena.weightx = 0.0;
+		panelCadena.add(lblCadena, gbcCadena);
 
 		campoCadena = new JTextField();
 		estilizarCampo(campoCadena);
-		R.gridx = 1;
-		R.gridy = 1;
-		panelEntrada.add(campoCadena, R);
 
-		// fila 2: checkbox regex y ignorar mayúsculas
+		gbcCadena.gridx = 1;
+		gbcCadena.gridy = 0;
+		gbcCadena.weightx = 1.0;
+		gbcCadena.insets = new java.awt.Insets(0, 8, 0, 0);
+		panelCadena.add(campoCadena, gbcCadena);
+
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.gridwidth = 2;
+		panelEntrada.add(panelCadena, gbc);
+
+		// ===== Fila 2: checkbox regex y ignorar mayúsculas =====
+
 		chkRegex = new JCheckBox(MonitorDePID.idioma.usarRegex());
 		estilizarCheck(chkRegex);
-		L.gridx = 0;
-		L.gridy = 2;
-		panelEntrada.add(chkRegex, L);
+
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		gbc.gridwidth = 1;
+		panelEntrada.add(chkRegex, gbc);
 
 		chkIgnorarMayus = new JCheckBox(MonitorDePID.idioma.ignorarMayusculas());
 		estilizarCheck(chkIgnorarMayus);
-		R.gridx = 1;
-		R.gridy = 2;
-		panelEntrada.add(chkIgnorarMayus, R);
 
-		// fila 3: checkbox comprimidos y imagen
+		gbc.gridx = 1;
+		gbc.gridy = 2;
+		panelEntrada.add(chkIgnorarMayus, gbc);
+
+		// ===== Fila 3: checkbox comprimidos e imagen =====
+
 		chkBuscarEnComprimidos = new JCheckBox(MonitorDePID.idioma.buscarDentroDeComprimidos());
 		estilizarCheck(chkBuscarEnComprimidos);
-		L.gridx = 0;
-		L.gridy = 3;
-		panelEntrada.add(chkBuscarEnComprimidos, L);
+
+		gbc.gridx = 0;
+		gbc.gridy = 3;
+		panelEntrada.add(chkBuscarEnComprimidos, gbc);
 
 		JLabel lblImagen = crearImagenEscalada(Statics.carpeta.resolve("imagenes/saliormoongrep.png").toString(), 150,
 				100);
 		lblImagen.setOpaque(true);
 		lblImagen.setBackground(colorPanel.obtener());
 		lblImagen.setPreferredSize(new java.awt.Dimension(150, 100));
-		R.gridx = 1;
-		R.gridy = 3;
-		panelEntrada.add(lblImagen, R);
 
-		// fila 4: botón buscar
+		gbc.gridx = 1;
+		gbc.gridy = 3;
+		panelEntrada.add(lblImagen, gbc);
+
+		// ===== Fila 4: botón buscar =====
+
 		JButton btnBuscar = new JButton(MonitorDePID.idioma.buscar());
 		estilizarBoton(btnBuscar);
 		btnBuscar.addActionListener(e -> iniciarBusqueda());
-		L.gridx = 0;
-		L.gridy = 4;
-		panelEntrada.add(btnBuscar, L);
 
-		R.gridx = 1;
-		R.gridy = 4;
-		R.weightx = 0.6;
-		panelEntrada.add(new JLabel(), R);
+		gbc.gridx = 0;
+		gbc.gridy = 4;
+		gbc.gridwidth = 1;
+		panelEntrada.add(btnBuscar, gbc);
+
+		gbc.gridx = 1;
+		gbc.gridy = 4;
+		panelEntrada.add(new JLabel(), gbc);
+
+		// ===== Resultados =====
 
 		areaResultados = new JTextArea();
 		areaResultados.setEditable(false);
@@ -274,4 +321,5 @@ public abstract class GrepRGUI extends JFrame implements CrashDetectorGUI, Boton
 		revalidate();
 		repaint();
 	}
+
 }

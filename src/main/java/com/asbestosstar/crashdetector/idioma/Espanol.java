@@ -10037,4 +10037,31 @@ public class Espanol implements Idioma {
 				+ "<p>Si el error empezó después de instalar un shader, texture pack o mod visual, lo más probable es que ese sea el causante.</p>";
 	}
 
+	@Override
+	public String nombreErrorVerificacionBytecode() {
+		return "VerifyError – bytecode o mixin inválido";
+	}
+
+	@Override
+	public String mensajeErrorVerificacionBytecode(String ubicacion, String razon, String claseSospechosa) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft encontró un error de verificación de bytecode.</b>"
+				+ "<p>Este problema normalmente ocurre cuando una manipulación de bytecode, transformer o mixin falló.</p>"
+				+ "<p>El juego lanzó:</p>" + "<code>java.lang.VerifyError</code>"
+				+ (ubicacion.length() > 0 ? "<p><b>Ubicación:</b></p><code>" + ubicacion + "</code>" : "")
+				+ (razon.length() > 0 ? "<p><b>Razón:</b></p><code>" + razon + "</code>" : "")
+				+ "<p><b>Qué buscar:</b></p>" + "<ul>" + "<li>Buscar en la ubicación del error.</li>"
+				+ "<li>Buscar el tipo mencionado en <code>Reason</code>.</li>"
+				+ "<li>Revisar el stack trace para clases de mods sospechosas.</li>"
+				+ "<li>Buscar nombres de clases de mods alrededor del error para obtener ideas.</li>" + "</ul>"
+				+ "<p><b>Uso recomendado de Grepr:</b></p>" + "<ul>"
+				+ "<li>Abrir <b>Grepr</b> en la barra lateral.</li>"
+				+ "<li>Activar la opción para buscar dentro de archivos <code>.jar</code>, <code>.zip</code> o <code>.fpm</code>.</li>"
+				+ "<li>Buscar el nombre básico de la clase, no necesariamente el paquete completo.</li>" + "</ul>"
+				+ "<p>Ejemplo: si aparece <code>paquete.Clase</code>, buscar solamente:</p>" + "<code>"
+				+ (claseSospechosa.length() > 0 ? claseSospechosa : "Clase") + "</code>"
+				+ "<p>Esto puede ayudar a encontrar qué mod contiene o modifica esa clase.</p>"
+				+ "<p>Soluciones comunes: actualizar el mod afectado, quitar mods incompatibles, revisar addons del mod principal, o probar sin mods que usan mixins/transformers sobre la misma clase.</p>";
+	}
+
 }

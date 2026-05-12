@@ -9751,4 +9751,30 @@ public class Lao implements Idioma {
 				+ "<p>ຖ້າຂໍ້ຜິດພາດເລີ່ມເກີດຂຶ້ນຫຼັງຈາກຕິດຕັ້ງ shader, texture pack ຫຼື mod ທາງສາຍຕາ, ມັນມີແນວໂນ້ມວ່າສິ່ງນັ້ນຈະເປັນສາເຫດ.</p>";
 	}
 
+	@Override
+	public String nombreErrorVerificacionBytecode() {
+		return "VerifyError – bytecode ຫຼື mixin ບໍ່ຖືກຕ້ອງ";
+	}
+
+	@Override
+	public String mensajeErrorVerificacionBytecode(String ubicacion, String razon, String claseSospechosa) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft ພົບຂໍ້ຜິດພາດການກວດສອບ bytecode.</b>"
+				+ "<p>ບັນຫານີ້ມັກເກີດຂຶ້ນເມື່ອການຈັດການ bytecode, transformer ຫຼື mixin ລົ້ມເຫຼວ.</p>"
+				+ "<p>ເກມໄດ້ສົ່ງຂໍ້ຜິດພາດ:</p>" + "<code>java.lang.VerifyError</code>"
+				+ (ubicacion.length() > 0 ? "<p><b>ຕຳແໜ່ງ:</b></p><code>" + ubicacion + "</code>" : "")
+				+ (razon.length() > 0 ? "<p><b>ເຫດຜົນ:</b></p><code>" + razon + "</code>" : "")
+				+ "<p><b>ສິ່ງທີ່ຄວນຊອກຫາ:</b></p>" + "<ul>" + "<li>ຊອກຫາໃນຕຳແໜ່ງຂອງຂໍ້ຜິດພາດ.</li>"
+				+ "<li>ຊອກຫາປະເພດທີ່ກ່າວເຖິງໃນ <code>Reason</code>.</li>"
+				+ "<li>ກວດສອບ stack trace ສຳລັບຄລາສຂອງ mod ທີ່ນ่าสงสัย.</li>"
+				+ "<li>ຊອກຫາຊື່ຄລາສຂອງ mod ອ້ອມຮອບຂໍ້ຜິດພາດເພື່ອຊອກຫາແນວທາງ.</li>" + "</ul>"
+				+ "<p><b>ການໃຊ້ Grepr ທີ່ແນະນຳ:</b></p>" + "<ul>" + "<li>ເປີດ <b>Grepr</b> ໃນແຖບດ້ານຂ້າງ.</li>"
+				+ "<li>ເປີດໃຊ້ຕົວເລືອກເພື່ອຊອກຫາພາຍໃນໄຟລ໌ <code>.jar</code>, <code>.zip</code> ຫຼື <code>.fpm</code>.</li>"
+				+ "<li>ຊອກຫາຊື່ພື້ນຖານຂອງຄລາສ, ບໍ່ຈຳເປັນຕ້ອງເປັນຊື່ package ເຕັມ.</li>" + "</ul>"
+				+ "<p>ຕົວຢ່າງ: ຖ້າປາກົດ <code>paquete.Clase</code>, ໃຫ້ຊອກຫາພຽງແຕ່:</p>" + "<code>"
+				+ (claseSospechosa.length() > 0 ? claseSospechosa : "Clase") + "</code>"
+				+ "<p>ສິ່ງນີ້ສາມາດຊ່ວຍຊອກຫາວ່າ mod ໃດມີ ຫຼື ດັດແປງຄລາສນັ້ນ.</p>"
+				+ "<p>ວິທີແກ້ໄຂທົ່ວໄປ: ອັບເດດ mod ທີ່ໄດ້ຮັບຜົນກະທົບ, ລຶບ mod ທີ່ບໍ່ເຂົ້າກັນ, ກວດສອບ addons ຂອງ mod ຫຼັກ, ຫຼື ລອງໃຊ້ໂດຍບໍ່ມີ mod ທີ່ໃຊ້ mixins/transformers ກັບຄລາສດຽວກັນ.</p>";
+	}
+
 }

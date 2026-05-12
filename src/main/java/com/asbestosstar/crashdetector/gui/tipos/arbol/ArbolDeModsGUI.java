@@ -68,6 +68,7 @@ import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrBase;
+import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrSakuraRiddle;
 
 public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLateralDerecha {
 
@@ -813,35 +814,70 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 
 	private void mostrarCodigoClaseSeleccionada() {
 		TreePath rutaSeleccionada = arbolModulos.getSelectionPath();
+
 		if (rutaSeleccionada == null) {
 			return;
 		}
 
 		DefaultMutableTreeNode nodo = (DefaultMutableTreeNode) rutaSeleccionada.getLastPathComponent();
+
+		if (nodo == null) {
+			return;
+		}
+
 		Object objetoUsuario = nodo.getUserObject();
 
-		if (objetoUsuario instanceof NodoConTexto) {
-			Object objetoReal = ((NodoConTexto) objetoUsuario).objeto();
-
-			if (objetoReal instanceof Object[]) {
-				Object[] datos = (Object[]) objetoReal;
-				if (datos[0] instanceof ArchivoDeMod && datos[1] instanceof String) {
-					ArchivoDeMod mod = (ArchivoDeMod) datos[0];
-					String nombreClase = (String) datos[1];
-					mostrarCodigoDescompilado(mod, nombreClase);
-				}
-			}
+		if (!(objetoUsuario instanceof NodoConTexto)) {
+			return;
 		}
+
+		Object objetoReal = ((NodoConTexto) objetoUsuario).objeto();
+
+		if (!(objetoReal instanceof Object[])) {
+			return;
+		}
+
+		Object[] datos = (Object[]) objetoReal;
+
+		if (datos.length < 2) {
+			return;
+		}
+
+		if (!(datos[0] instanceof ArchivoDeMod)) {
+			return;
+		}
+
+		if (!(datos[1] instanceof String)) {
+			return;
+		}
+
+		String nombreClase = (String) datos[1];
+		abrirClaseEnCfr(nombreClase);
 	}
 
 	private void mostrarCodigoDescompilado(ArchivoDeMod mod, String nombreClase) {
-		try {
-			// Assuming CfrBase provides the decompiling functionality
-			String codigoDescompilado = CfrBase.descompilarClase(nombreClase);
-			areaContenido.setText(codigoDescompilado);
-		} catch (Exception e) {
-			areaContenido.setText("Error al obtener el código: " + e.getMessage());
+		abrirClaseEnCfr(nombreClase);
+	}
+
+	private void abrirClaseEnCfr(String nombreClase) {
+		if (nombreClase == null || nombreClase.trim().isEmpty()) {
+			return;
 		}
+
+		String claseNormalizada = nombreClase.trim();
+
+		if (claseNormalizada.endsWith(".class")) {
+			claseNormalizada = claseNormalizada.substring(0, claseNormalizada.length() - ".class".length());
+		}
+
+		claseNormalizada = claseNormalizada.replace('/', '.');
+
+		String url = "cfr://" + claseNormalizada;
+
+		CrashDetectorLogger.log(url + " (cfr url)");
+
+		CfrBase gui = TipoGUI.CFR.obtenerGUIPredeterminado(CfrSakuraRiddle.ID, CfrSakuraRiddle::new);
+		gui.procesarHipervinculo(url);
 	}
 
 	/**

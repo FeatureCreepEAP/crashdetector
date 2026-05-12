@@ -3576,4 +3576,8 @@ public interface Idioma {
 
 	public String nombreOpenGLMemoriaInsuficiente();
 
+	public String mensajeErrorVerificacionBytecode(String ubicacion, String razon, String claseSospechosa);
+
+	public String nombreErrorVerificacionBytecode();
+
 }

@@ -9863,4 +9863,32 @@ public class Frances implements Idioma {
 				+ "<p>Si l'erreur a commencé après l'installation d'un shader, d'un pack de textures ou d'un mod visuel, c'est probablement la cause.</p>";
 	}
 
+	// French (Burkina Faso variant) (Français)
+	@Override
+	public String nombreErrorVerificacionBytecode() {
+		return "VerifyError – bytecode ou mixin invalide";
+	}
+
+	@Override
+	public String mensajeErrorVerificacionBytecode(String ubicacion, String razon, String claseSospechosa) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft a rencontré une erreur de vérification de bytecode.</b>"
+				+ "<p>Ce problème survient généralement lorsqu'une manipulation de bytecode, un transformateur ou un mixin échoue.</p>"
+				+ "<p>Le jeu a lancé :</p>" + "<code>java.lang.VerifyError</code>"
+				+ (ubicacion.length() > 0 ? "<p><b>Emplacement :</b></p><code>" + ubicacion + "</code>" : "")
+				+ (razon.length() > 0 ? "<p><b>Raison :</b></p><code>" + razon + "</code>" : "")
+				+ "<p><b>Ce qu'il faut chercher :</b></p>" + "<ul>" + "<li>Vérifier l'emplacement de l'erreur.</li>"
+				+ "<li>Chercher le type mentionné dans <code>Reason</code>.</li>"
+				+ "<li>Examiner la trace de la pile pour des classes de mods suspectes.</li>"
+				+ "<li>Rechercher des noms de classes de mods autour de l'erreur pour obtenir des indices.</li>"
+				+ "</ul>" + "<p><b>Utilisation recommandée de Grepr :</b></p>" + "<ul>"
+				+ "<li>Ouvrir <b>Grepr</b> dans la barre latérale.</li>"
+				+ "<li>Activer l'option pour chercher dans les fichiers <code>.jar</code>, <code>.zip</code> ou <code>.fpm</code>.</li>"
+				+ "<li>Chercher le nom de base de la classe, pas nécessairement le paquet complet.</li>" + "</ul>"
+				+ "<p>Exemple : si <code>paquete.Clase</code> apparaît, cherchez seulement :</p>" + "<code>"
+				+ (claseSospechosa.length() > 0 ? claseSospechosa : "Clase") + "</code>"
+				+ "<p>Cela peut aider à trouver quel mod contient ou modifie cette classe.</p>"
+				+ "<p>Solutions courantes : mettre à jour le mod affecté, supprimer les mods incompatibles, vérifier les addons du mod principal, ou essayer sans les mods qui utilisent des mixins/transformateurs sur la même classe.</p>";
+	}
+
 }

@@ -39,6 +39,7 @@ import com.asbestosstar.crashdetector.analizador.general.ErrorMetodoAbstractoNoI
 import com.asbestosstar.crashdetector.analizador.general.ErrorMetodoInexistente;
 import com.asbestosstar.crashdetector.analizador.general.ErrorOpenGLMemoriaInsuficiente;
 import com.asbestosstar.crashdetector.analizador.general.ErrorStackSmashingDetected;
+import com.asbestosstar.crashdetector.analizador.general.ErrorVerificacionBytecode;
 import com.asbestosstar.crashdetector.analizador.general.ErrorVersionInvalidaModMaven;
 import com.asbestosstar.crashdetector.analizador.general.FallosEjecucionTareas;
 import com.asbestosstar.crashdetector.analizador.general.FaltaModAnimado;
@@ -336,6 +337,7 @@ public class Analizador {
 		verificaciones.add(new FabricRenderingApiFaltaIndium());
 		verificaciones.add(new EntradaDuplicadaIdModerno());
 		verificaciones.add(new ErrorOpenGLMemoriaInsuficiente());
+		verificaciones.add(new ErrorVerificacionBytecode());
 
 		verificaciones.add(new PirataMC());
 		verificaciones.add(new LanzerNoAnimado());

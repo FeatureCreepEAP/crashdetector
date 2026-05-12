@@ -9278,4 +9278,30 @@ public class Persa implements Idioma {
 				+ "<p>اگر خطا پس از نصب یک شیدر، بسته بافت یا ماد بصری شروع شد، به احتمال زیاد همان عامل مسبب است.</p>";
 	}
 
+	@Override
+	public String nombreErrorVerificacionBytecode() {
+		return "VerifyError – بایت‌کد یا میکسین نامعتبر";
+	}
+
+	@Override
+	public String mensajeErrorVerificacionBytecode(String ubicacion, String razon, String claseSospechosa) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "ماینکرفت خطای تأیید بایت‌کد را یافت.</b>"
+				+ "<p>این مشکل معمولاً زمانی رخ می‌دهد که دستکاری بایت‌کد، ترنسفورمر یا میکسین شکست بخورد.</p>"
+				+ "<p>بازی خطای زیر را صادر کرد:</p>" + "<code>java.lang.VerifyError</code>"
+				+ (ubicacion.length() > 0 ? "<p><b>موقعیت:</b></p><code>" + ubicacion + "</code>" : "")
+				+ (razon.length() > 0 ? "<p><b>دلیل:</b></p><code>" + razon + "</code>" : "")
+				+ "<p><b>چه چیزی را جستجو کنید:</b></p>" + "<ul>" + "<li>جستجو در موقعیت خطا.</li>"
+				+ "<li>جستجوی نوع ذکر شده در <code>Reason</code>.</li>"
+				+ "<li>بررسی ردپای پشته (stack trace) برای کلاس‌های مشکوک ماد.</li>"
+				+ "<li>جستجوی نام کلاس‌های ماد در اطراف خطا برای ایده گرفتن.</li>" + "</ul>"
+				+ "<p><b>استفاده توصیه شده از Grepr:</b></p>" + "<ul>" + "<li>باز کردن <b>Grepr</b> در نوار کناری.</li>"
+				+ "<li>فعال کردن گزینه جستجو در فایل‌های <code>.jar</code>، <code>.zip</code> یا <code>.fpm</code>.</li>"
+				+ "<li>جستجوی نام پایه کلاس، نه لزوماً بسته کامل.</li>" + "</ul>"
+				+ "<p>مثال: اگر <code>paquete.Clase</code> ظاهر شد، فقط جستجو کنید:</p>" + "<code>"
+				+ (claseSospechosa.length() > 0 ? claseSospechosa : "Clase") + "</code>"
+				+ "<p>این می‌تواند به یافتن مادی که آن کلاس را содержит یا تغییر می‌دهد کمک کند.</p>"
+				+ "<p>راه حل‌های رایج: به‌روزرسانی ماد受影响，حذف مادهای ناسازگار، بررسی افزونه‌های ماد اصلی، یا آزمایش بدون مادهایی که از میکسین‌ها/ترنسفورمرها روی همان کلاس استفاده می‌کنند.</p>";
+	}
+
 }

@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
+import com.asbestosstar.crashdetector.config.ConfigBoolean;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
 
@@ -55,6 +56,23 @@ public class MixinsGUIChiarru extends MixinsGUI {
 	private ConfigColor colorRendererBordeSeleccion = ConfigColor
 			.de("tema.mixins.chiarru.color.renderer.seleccion.borde", new Color(196, 155, 206));
 
+	private ConfigColor colorCodigoPalabraClave = ConfigColor.de("tema.mixins.chiarru.codigo.palabra.clave",
+			new Color(185, 74, 128));
+
+	private ConfigColor colorCodigoCadena = ConfigColor.de("tema.mixins.chiarru.codigo.cadena", new Color(86, 137, 86));
+
+	private ConfigColor colorCodigoComentario = ConfigColor.de("tema.mixins.chiarru.codigo.comentario",
+			new Color(145, 118, 150));
+
+	private ConfigColor colorCodigoNumero = ConfigColor.de("tema.mixins.chiarru.codigo.numero",
+			new Color(190, 125, 55));
+
+	private ConfigColor colorCodigoTipo = ConfigColor.de("tema.mixins.chiarru.codigo.tipo", new Color(90, 118, 170));
+
+	private ConfigColor colorCodigoMetodo = ConfigColor.de("tema.mixins.chiarru.codigo.metodo",
+			new Color(155, 88, 175));
+	private ConfigBoolean usarChiarruV2 = ConfigBoolean.de("tema.mixins.chiarru.usar.v2", false);
+
 	@Override
 	public String id() {
 		return ID;
@@ -98,9 +116,10 @@ public class MixinsGUIChiarru extends MixinsGUI {
 		}
 
 		if (areaContenido != null) {
-			areaContenido.setBackground(areaContenidoFondo);
-			areaContenido.setForeground(texto);
-			areaContenido.setCaretColor(texto);
+			areaContenido.establecerColores(areaContenidoFondo, texto, colorCodigoPalabraClave.obtener(),
+					colorCodigoCadena.obtener(), colorCodigoComentario.obtener(), colorCodigoNumero.obtener(),
+					colorCodigoTipo.obtener(), colorCodigoMetodo.obtener());
+
 			areaContenido.setSelectionColor(colorSeleccion);
 			areaContenido.setSelectedTextColor(colorSeleccionTextoReal);
 		}
@@ -111,8 +130,15 @@ public class MixinsGUIChiarru extends MixinsGUI {
 		}
 
 		if (imagenChiarru != null) {
-			ImageIcon chiarru = cargarImagenConFallback(Statics.carpeta.resolve("imagenes/chiarru.png").toString(),
-					Statics.carpeta.resolve("imagenes/chiiaru.png").toString(), "/mnt/data/chiiaru.png");
+			ImageIcon chiarru;
+
+			if (usarChiarruV2.obtener()) {
+				chiarru = cargarImagenConFallback(Statics.carpeta.resolve("imagenes/chiiaru_v2.png").toString(),
+						"/mnt/data/chiiaru_v2.png");
+			} else {
+				chiarru = cargarImagenConFallback(Statics.carpeta.resolve("imagenes/chiarru.png").toString(),
+						Statics.carpeta.resolve("imagenes/chiiaru.png").toString(), "/mnt/data/chiiaru.png");
+			}
 
 			imagenChiarru.setIcon(chiarru);
 			imagenChiarru.setText(chiarru.getIconWidth() > 0 ? "" : "Chiarru");
@@ -237,12 +263,29 @@ public class MixinsGUIChiarru extends MixinsGUI {
 				.establecerNombreParaMostrar(() -> MonitorDePID.idioma.mixinsColorRendererSeleccionFondo());
 		colorRendererBordeSeleccion
 				.establecerNombreParaMostrar(() -> MonitorDePID.idioma.mixinsColorRendererBordeSeleccion());
+		usarChiarruV2.establecerNombreParaMostrar(() -> "Usar modelo Chiarru V2");
 
 		elementos.add(colorFondoPrincipal);
 		elementos.add(colorPanel);
 		elementos.add(colorTexto);
 		elementos.add(colorTextoSuave);
 		elementos.add(colorCarga);
+
+		elementos.add(usarChiarruV2);
+
+		colorCodigoPalabraClave.establecerNombreParaMostrar(() -> "Código - palabra clave");
+		colorCodigoCadena.establecerNombreParaMostrar(() -> "Código - cadena");
+		colorCodigoComentario.establecerNombreParaMostrar(() -> "Código - comentario");
+		colorCodigoNumero.establecerNombreParaMostrar(() -> "Código - número");
+		colorCodigoTipo.establecerNombreParaMostrar(() -> "Código - tipo");
+		colorCodigoMetodo.establecerNombreParaMostrar(() -> "Código - método");
+
+		elementos.add(colorCodigoPalabraClave);
+		elementos.add(colorCodigoCadena);
+		elementos.add(colorCodigoComentario);
+		elementos.add(colorCodigoNumero);
+		elementos.add(colorCodigoTipo);
+		elementos.add(colorCodigoMetodo);
 
 		elementos.add(colorComboFondo);
 		elementos.add(colorAreaContenidoFondo);

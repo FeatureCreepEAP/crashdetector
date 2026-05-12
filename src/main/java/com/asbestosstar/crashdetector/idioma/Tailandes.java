@@ -9513,4 +9513,30 @@ public class Tailandes implements Idioma {
 				+ "<p>หากข้อผิดพลาดเริ่มเกิดขึ้นหลังจากติดตั้งเชดเดอร์ แพ็กพื้นผิว หรือมอดภาพ เป็นไปได้สูงว่าสิ่งนั้นเป็นสาเหตุ</p>";
 	}
 
+	@Override
+	public String nombreErrorVerificacionBytecode() {
+		return "VerifyError – bytecode หรือ mixin ไม่ถูกต้อง";
+	}
+
+	@Override
+	public String mensajeErrorVerificacionBytecode(String ubicacion, String razon, String claseSospechosa) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft พบข้อผิดพลาดในการตรวจสอบ bytecode</b>"
+				+ "<p>ปัญหานี้มักเกิดขึ้นเมื่อการจัดการ bytecode, transformer หรือ mixin ล้มเหลว</p>"
+				+ "<p>เกมได้รายงาน:</p>" + "<code>java.lang.VerifyError</code>"
+				+ (ubicacion.length() > 0 ? "<p><b>ตำแหน่ง:</b></p><code>" + ubicacion + "</code>" : "")
+				+ (razon.length() > 0 ? "<p><b>เหตุผล:</b></p><code>" + razon + "</code>" : "")
+				+ "<p><b>สิ่งที่ควรค้นหา:</b></p>" + "<ul>" + "<li>ค้นหาในตำแหน่งของข้อผิดพลาด</li>"
+				+ "<li>ค้นหาประเภทที่กล่าวถึงใน <code>Reason</code></li>"
+				+ "<li>ตรวจสอบ stack trace สำหรับคลาสของมอดที่น่าสงสัย</li>"
+				+ "<li>ค้นหาชื่อคลาสของมอดรอบๆ ข้อผิดพลาดเพื่อหาแนวทาง</li>" + "</ul>"
+				+ "<p><b>การใช้งาน Grepr ที่แนะนำ:</b></p>" + "<ul>" + "<li>เปิด <b>Grepr</b> ในแถบด้านข้าง</li>"
+				+ "<li>เปิดใช้งานตัวเลือกเพื่อค้นหาภายในไฟล์ <code>.jar</code>, <code>.zip</code> หรือ <code>.fpm</code></li>"
+				+ "<li>ค้นหาชื่อพื้นฐานของคลาส ไม่จำเป็นต้องเป็นแพ็กเกจเต็ม</li>" + "</ul>"
+				+ "<p>ตัวอย่าง: หากปรากฏ <code>paquete.Clase</code> ให้ค้นหาเพียง:</p>" + "<code>"
+				+ (claseSospechosa.length() > 0 ? claseSospechosa : "Clase") + "</code>"
+				+ "<p>สิ่งนี้อาจช่วยค้นหามอดที่มีหรือแก้ไขคลาสนั้น</p>"
+				+ "<p>วิธีแก้ทั่วไป: อัปเดตมอดที่ได้รับผลกระทบ ลบมอดที่ไม่เข้ากัน ตรวจสอบ addons ของมอดหลัก หรือลองใช้โดยไม่มีมอดที่ใช้ mixins/transformers กับคลาสเดียวกัน</p>";
+	}
+
 }

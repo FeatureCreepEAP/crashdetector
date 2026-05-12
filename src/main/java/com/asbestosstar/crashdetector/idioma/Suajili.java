@@ -9770,4 +9770,31 @@ public class Suajili implements Idioma {
 				+ "<p>Ikiwa hitilafu ilianza baada ya kusakinisha shader, kifurushi cha texture au mod ya kuona, kuna uwezekano mkubwa kwamba hiyo ndiyo chanzo.</p>";
 	}
 
+	@Override
+	public String nombreErrorVerificacionBytecode() {
+		return "VerifyError – bytecode au mixin batili";
+	}
+
+	@Override
+	public String mensajeErrorVerificacionBytecode(String ubicacion, String razon, String claseSospechosa) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft imepata hitilafu ya uthibitishaji wa bytecode.</b>"
+				+ "<p>Tatizo hili mara nyingi hutokea wakati udhibiti wa bytecode, transformer au mixin inaposhindwa.</p>"
+				+ "<p>Mchezo ulirusha:</p>" + "<code>java.lang.VerifyError</code>"
+				+ (ubicacion.length() > 0 ? "<p><b>Mahali:</b></p><code>" + ubicacion + "</code>" : "")
+				+ (razon.length() > 0 ? "<p><b>Sababu:</b></p><code>" + razon + "</code>" : "")
+				+ "<p><b>Nini cha kutafuta:</b></p>" + "<ul>" + "<li>Tafuta katika mahali pa hitilafu.</li>"
+				+ "<li>Tafuta aina iliyotajwa katika <code>Reason</code>.</li>"
+				+ "<li>Kagua stack trace kwa darasa za mod zinazoshtakiwa.</li>"
+				+ "<li>Tafuta majina ya darasa za mod karibu na hitilafu ili kupata mawazo.</li>" + "</ul>"
+				+ "<p><b>Matumizi yanayopendekezwa ya Grepr:</b></p>" + "<ul>"
+				+ "<li>Fungua <b>Grepr</b> kwenye upau wa pembeni.</li>"
+				+ "<li>Washa chaguo la kutafuta ndani ya faili <code>.jar</code>, <code>.zip</code> au <code>.fpm</code>.</li>"
+				+ "<li>Tafuta jina la msingi la darasa, si lazima paketi nzima.</li>" + "</ul>"
+				+ "<p>Mfano: ikiwa <code>paquete.Clase</code> inaonekana, tafuta tu:</p>" + "<code>"
+				+ (claseSospechosa.length() > 0 ? claseSospechosa : "Clase") + "</code>"
+				+ "<p>Hii inaweza kusaidia kupata ni mod ipi inayokata au kubadilisha darasa hilo.</p>"
+				+ "<p>Suluhisho za kawaida: sasisha mod ilioathirika, ondoa mod zisizolingana, angalia addons za mod kuu, au jaribu bila mod zinazotumia mixins/transformers kwenye darasa ileile.</p>";
+	}
+
 }

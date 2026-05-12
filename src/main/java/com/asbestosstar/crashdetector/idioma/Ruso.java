@@ -9323,4 +9323,31 @@ public class Ruso implements Idioma {
 				+ "<p>Если ошибка появилась после установки шейдера, набора текстур или визуального мода, скорее всего, причина в них.</p>";
 	}
 
+	@Override
+	public String nombreErrorVerificacionBytecode() {
+		return "VerifyError – неверный байткод или миксин";
+	}
+
+	@Override
+	public String mensajeErrorVerificacionBytecode(String ubicacion, String razon, String claseSospechosa) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft обнаружил ошибку проверки байткода.</b>"
+				+ "<p>Эта проблема обычно возникает, когда манипуляция с байткодом, трансформер или миксин завершаются с ошибкой.</p>"
+				+ "<p>Игра сообщила:</p>" + "<code>java.lang.VerifyError</code>"
+				+ (ubicacion.length() > 0 ? "<p><b>Местоположение:</b></p><code>" + ubicacion + "</code>" : "")
+				+ (razon.length() > 0 ? "<p><b>Причина:</b></p><code>" + razon + "</code>" : "")
+				+ "<p><b>Что искать:</b></p>" + "<ul>" + "<li>Искать в местоположении ошибки.</li>"
+				+ "<li>Искать тип, упомянутый в <code>Reason</code>.</li>"
+				+ "<li>Проверить трассировку стека на наличие подозрительных классов модов.</li>"
+				+ "<li>Искать имена классов модов вокруг ошибки для получения идей.</li>" + "</ul>"
+				+ "<p><b>Рекомендуемое использование Grepr:</b></p>" + "<ul>"
+				+ "<li>Открыть <b>Grepr</b> на боковой панели.</li>"
+				+ "<li>Включить опцию поиска внутри файлов <code>.jar</code>, <code>.zip</code> или <code>.fpm</code>.</li>"
+				+ "<li>Искать базовое имя класса, а не обязательно полный пакет.</li>" + "</ul>"
+				+ "<p>Пример: если появляется <code>paquete.Clase</code>, искать только:</p>" + "<code>"
+				+ (claseSospechosa.length() > 0 ? claseSospechosa : "Clase") + "</code>"
+				+ "<p>Это может помочь найти, какой мод содержит или изменяет этот класс.</p>"
+				+ "<p>Общие решения: обновить затронутый мод, удалить несовместимые моды, проверить аддоны основного мода или попробовать запустить игру без модов, использующих миксины/трансформеры для того же класса.</p>";
+	}
+
 }

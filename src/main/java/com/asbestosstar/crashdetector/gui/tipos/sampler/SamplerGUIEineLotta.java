@@ -25,6 +25,7 @@ import javax.swing.table.AbstractTableModel;
 
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
+import com.asbestosstar.crashdetector.config.ConfigBoolean;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
 import com.asbestosstar.crashdetector.gui.elementos.RenderizadorBarraSampler;
@@ -44,6 +45,8 @@ public class SamplerGUIEineLotta extends SamplerGUI {
 	public ConfigColor colorBoton = ConfigColor.de("gui.sampler.einelotta.color.boton", new Color(170, 190, 225));
 
 	public ConfigColor colorBarra = ConfigColor.de("gui.sampler.einelotta.color.barra", new Color(95, 135, 195));
+
+	public ConfigBoolean usarModeloOriginal = ConfigBoolean.de("gui.sampler.einelotta.usar.modelo.original", false);
 
 	private JButton botonIniciar;
 	private JButton botonDetener;
@@ -146,7 +149,16 @@ public class SamplerGUIEineLotta extends SamplerGUI {
 
 		JLabel imagen = new JLabel();
 
-		ImageIcon icon = new ImageIcon(Statics.carpeta.resolve("imagenes/einelotta.png").toString());
+		ImageIcon icon;
+
+		if (usarModeloOriginal.obtener()) {
+			icon = cargarImagenConFallback(Statics.carpeta.resolve("imagenes/einelotta_original.png").toString(),
+					"/mnt/data/einelotta_original.png");
+		} else {
+			icon = cargarImagenConFallback(Statics.carpeta.resolve("imagenes/einelotta.png").toString(),
+					"/mnt/data/einelotta.png");
+		}
+
 		Image esc = icon.getImage().getScaledInstance(155, 255, Image.SCALE_SMOOTH);
 		imagen.setIcon(new ImageIcon(esc));
 
@@ -160,6 +172,23 @@ public class SamplerGUIEineLotta extends SamplerGUI {
 		panel.add(ayuda);
 
 		return panel;
+	}
+
+	private ImageIcon cargarImagenConFallback(String... rutas) {
+		for (String ruta : rutas) {
+
+			if (ruta == null || ruta.trim().isEmpty()) {
+				continue;
+			}
+
+			ImageIcon icon = new ImageIcon(ruta);
+
+			if (icon.getIconWidth() > 0) {
+				return icon;
+			}
+		}
+
+		return new ImageIcon();
 	}
 
 	private JPanel crearBotones() {
@@ -274,13 +303,14 @@ public class SamplerGUIEineLotta extends SamplerGUI {
 		colorTexto.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorTexto());
 		colorBoton.establecerNombreParaMostrar(() -> MonitorDePID.idioma.colorBoton());
 		colorBarra.establecerNombreParaMostrar(() -> "Color barra");
+		usarModeloOriginal.establecerNombreParaMostrar(() -> "Usar modelo original");
 
 		lista.add(colorFondo);
 		lista.add(colorPanel);
 		lista.add(colorTexto);
 		lista.add(colorBoton);
 		lista.add(colorBarra);
-
+		lista.add(usarModeloOriginal);
 		return lista;
 	}
 

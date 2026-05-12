@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JTable;
@@ -14,6 +13,7 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
+import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
 
 /**
  * Implementación visual por defecto del Guard.
@@ -56,23 +56,17 @@ public class GuardiaSketchyVT extends GuardiaGUI {
 
 		if (botonEscanearTodo != null) {
 			botonEscanearTodo.setText(MonitorDePID.idioma.guardEscanearTodo());
-			botonEscanearTodo.setBackground(panel);
-			botonEscanearTodo.setForeground(texto);
-			botonEscanearTodo.setFocusPainted(false);
+			estilizarBotonSeguroMac(botonEscanearTodo, panel, texto);
 		}
 
 		if (botonEscanearServidores != null) {
 			botonEscanearServidores.setText(MonitorDePID.idioma.guardEscanearServidores());
-			botonEscanearServidores.setBackground(panel);
-			botonEscanearServidores.setForeground(texto);
-			botonEscanearServidores.setFocusPainted(false);
+			estilizarBotonSeguroMac(botonEscanearServidores, panel, texto);
 		}
 
 		if (botonEscanearMalware != null) {
 			botonEscanearMalware.setText(MonitorDePID.idioma.guardEscanearMalware());
-			botonEscanearMalware.setBackground(panel);
-			botonEscanearMalware.setForeground(texto);
-			botonEscanearMalware.setFocusPainted(false);
+			estilizarBotonSeguroMac(botonEscanearMalware, panel, texto);
 		}
 
 		if (etiquetaEstado != null) {
@@ -123,6 +117,27 @@ public class GuardiaSketchyVT extends GuardiaGUI {
 
 		revalidate();
 		repaint();
+	}
+
+	private void estilizarBotonSeguroMac(javax.swing.JButton boton, Color panel, Color texto) {
+		if (boton == null) {
+			return;
+		}
+
+		boton.setFocusPainted(false);
+
+		if (CrashDetectorGUI.esMac()) {
+			boton.setOpaque(false);
+			boton.setContentAreaFilled(true);
+			boton.setBorderPainted(true);
+			return;
+		}
+
+		boton.setOpaque(true);
+		boton.setContentAreaFilled(true);
+		boton.setBorderPainted(true);
+		boton.setBackground(panel);
+		boton.setForeground(texto);
 	}
 
 	private void estilizarTabla(JTable tabla, Color fondo, Color texto, Color seleccion, Color textoSeleccion) {

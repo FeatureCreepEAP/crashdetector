@@ -9329,4 +9329,30 @@ public class Portuges implements Idioma {
 				+ "<p>Se o erro começou após instalar um shader, pacote de texturas ou mod visual, é mais provável que esse seja o causador.</p>";
 	}
 
+	@Override
+	public String nombreErrorVerificacionBytecode() {
+		return "VerifyError – bytecode ou mixin inválido";
+	}
+
+	@Override
+	public String mensajeErrorVerificacionBytecode(String ubicacion, String razon, String claseSospechosa) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "O Minecraft encontrou um erro de verificação de bytecode.</b>"
+				+ "<p>Este problema normalmente ocorre quando uma manipulação de bytecode, transformer ou mixin falha.</p>"
+				+ "<p>O jogo lançou:</p>" + "<code>java.lang.VerifyError</code>"
+				+ (ubicacion.length() > 0 ? "<p><b>Localização:</b></p><code>" + ubicacion + "</code>" : "")
+				+ (razon.length() > 0 ? "<p><b>Razão:</b></p><code>" + razon + "</code>" : "")
+				+ "<p><b>O que procurar:</b></p>" + "<ul>" + "<li>Procurar na localização do erro.</li>"
+				+ "<li>Procurar o tipo mencionado em <code>Reason</code>.</li>"
+				+ "<li>Revisar o stack trace para classes de mods suspeitas.</li>"
+				+ "<li>Procurar nomes de classes de mods ao redor do erro para obter ideias.</li>" + "</ul>"
+				+ "<p><b>Uso recomendado do Grepr:</b></p>" + "<ul>" + "<li>Abrir <b>Grepr</b> na barra lateral.</li>"
+				+ "<li>Ativar a opção para buscar dentro de arquivos <code>.jar</code>, <code>.zip</code> ou <code>.fpm</code>.</li>"
+				+ "<li>Buscar o nome básico da classe, não necessariamente o pacote completo.</li>" + "</ul>"
+				+ "<p>Exemplo: se aparecer <code>paquete.Clase</code>, buscar somente:</p>" + "<code>"
+				+ (claseSospechosa.length() > 0 ? claseSospechosa : "Clase") + "</code>"
+				+ "<p>Isso pode ajudar a encontrar qual mod contém ou modifica essa classe.</p>"
+				+ "<p>Soluções comuns: atualizar o mod afetado, remover mods incompatíveis, revisar addons do mod principal ou testar sem mods que usam mixins/transformers na mesma classe.</p>";
+	}
+
 }

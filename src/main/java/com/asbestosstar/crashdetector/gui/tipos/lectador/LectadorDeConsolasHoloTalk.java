@@ -158,6 +158,7 @@ public class LectadorDeConsolasHoloTalk extends LectadorDeConsolasGUI {
 			CrashDetectorLogger.log("sin prefijo " + sinPrefijo);
 
 			int idx = sinPrefijo.lastIndexOf(":");
+
 			if (idx == -1) {
 				CrashDetectorLogger.logException(new IllegalArgumentException("URL de lectador inválida: " + url));
 				return;
@@ -165,10 +166,16 @@ public class LectadorDeConsolasHoloTalk extends LectadorDeConsolasGUI {
 
 			String rutaArchivo = sinPrefijo.substring(0, idx);
 			int numeroLinea = Integer.parseInt(sinPrefijo.substring(idx + 1));
+
 			CrashDetectorLogger.log("ruta " + rutaArchivo);
 
 			Consola consolaSeleccionada = null;
+
 			for (Consola c : MonitorDePID.consolas) {
+				if (c == null || c.archivo == null) {
+					continue;
+				}
+
 				if (c.archivo.toString().equals(rutaArchivo)) {
 					consolaSeleccionada = c;
 					break;
@@ -198,9 +205,6 @@ public class LectadorDeConsolasHoloTalk extends LectadorDeConsolasGUI {
 			final String nombreArchivo = new File(consolaSeleccionada.archivo.toString()).getName();
 			final int destino = numeroLinea;
 
-			// Registrar el destino antes de cualquier carga de consola.
-			lector.lineaDestinoPendiente = Integer.valueOf(destino);
-
 			if (nuevaInstancia) {
 				lector.init();
 				lector.setVisible(true);
@@ -216,17 +220,36 @@ public class LectadorDeConsolasHoloTalk extends LectadorDeConsolasGUI {
 						lector.requestFocus();
 
 						Object seleccionActual = lector.cmbConsolas.getSelectedItem();
+						String nombreActual = seleccionActual == null ? null : seleccionActual.toString();
 
-						// Si la consola es distinta, cambiarla y dejar que actualizarConsola()
-						// use lineaDestinoPendiente para abrir directamente en la zona correcta.
-						if (seleccionActual == null || !nombreArchivo.equals(seleccionActual.toString())) {
-							lector.cmbConsolas.setSelectedItem(nombreArchivo);
-							lector.actualizarConsola();
+						lector.lineaDestinoPendiente = Integer.valueOf(destino);
+
+						if (nombreActual == null || !nombreArchivo.equals(nombreActual)) {
+							boolean encontrado = false;
+
+							for (int i = 0; i < lector.cmbConsolas.getItemCount(); i++) {
+								String item = lector.cmbConsolas.getItemAt(i);
+
+								if (nombreArchivo.equals(item)) {
+									lector.cmbConsolas.setSelectedIndex(i);
+									encontrado = true;
+									break;
+								}
+							}
+
+							if (!encontrado) {
+								lector.lineaDestinoPendiente = null;
+								CrashDetectorLogger.log("No se encontró la consola en cmbConsolas: " + nombreArchivo);
+								return;
+							}
+
+							// NO llamar actualizarConsola() aquí.
+							// setSelectedIndex() ya disparó el ActionListener del combo.
 							return;
 						}
 
-						// Si ya estamos en esa consola, saltar directamente.
 						lector.saltarDirectamenteALinea(destino);
+						lector.lineaDestinoPendiente = null;
 
 						CrashDetectorLogger.log("línea seleccionada en JList: " + destino);
 					} catch (Exception ex) {

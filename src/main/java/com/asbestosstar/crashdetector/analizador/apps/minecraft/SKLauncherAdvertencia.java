@@ -87,7 +87,7 @@ public class SKLauncherAdvertencia implements Verificaciones {
 
 	@Override
 	public Documento docs() {
-		return Documento.NINGUN;
+		return Documento.builder().doc("en", "minecraft/Launchers.md").build();
 	}
 
 	@Override

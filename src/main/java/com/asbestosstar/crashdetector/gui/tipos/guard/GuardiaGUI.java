@@ -6,14 +6,13 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 import java.util.function.Supplier;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultCellEditor;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -27,19 +26,18 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingWorker;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
-import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.guard.ArticuloMalware;
 import com.asbestosstar.crashdetector.guard.ModsMalware;
 import com.asbestosstar.crashdetector.guard.ServidoresProblematicos;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrBase;
+import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrSakuraRiddle;
 
 /**
  * GUI abstracta del sistema Guard.
@@ -426,18 +424,21 @@ public abstract class GuardiaGUI extends JFrame implements BotonDeBarraLateralDe
 		}
 
 		try {
-			String codigo = CfrBase.descompilarClase(claseInterna);
+			String claseNormalizada = claseInterna.trim();
 
-			JTextArea area = new JTextArea(codigo);
-			area.setEditable(false);
-			area.setCaretPosition(0);
-			area.setFont(new Font("Monospaced", Font.PLAIN, 12));
+			if (claseNormalizada.endsWith(".class")) {
+				claseNormalizada = claseNormalizada.substring(0, claseNormalizada.length() - ".class".length());
+			}
 
-			JScrollPane scroll = new JScrollPane(area);
-			scroll.setPreferredSize(new Dimension(980, 700));
+			claseNormalizada = claseNormalizada.replace('/', '.');
 
-			JOptionPane.showMessageDialog(this, scroll, MonitorDePID.idioma.guardCfrTitulo(),
-					JOptionPane.PLAIN_MESSAGE);
+			String url = "cfr://" + claseNormalizada;
+
+			CrashDetectorLogger.log(url + " (cfr url)");
+
+			CfrBase gui = TipoGUI.CFR.obtenerGUIPredeterminado(CfrSakuraRiddle.ID, CfrSakuraRiddle::new);
+			gui.procesarHipervinculo(url);
+
 		} catch (Throwable t) {
 			CrashDetectorLogger.logException(t);
 			JOptionPane.showMessageDialog(this, MonitorDePID.idioma.guardErrorDescompilar() + ": " + t.getMessage(),

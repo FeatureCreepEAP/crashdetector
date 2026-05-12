@@ -9348,4 +9348,31 @@ public class Ingles implements Idioma {
 				+ "<p>If the error started after installing a shader, texture pack, or visual mod, that is likely the cause.</p>";
 	}
 
+	// English (UK)
+	@Override
+	public String nombreErrorVerificacionBytecode() {
+		return "VerifyError – invalid bytecode or mixin";
+	}
+
+	@Override
+	public String mensajeErrorVerificacionBytecode(String ubicacion, String razon, String claseSospechosa) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Minecraft encountered a bytecode verification error.</b>"
+				+ "<p>This issue usually occurs when a bytecode manipulation, transformer, or mixin fails.</p>"
+				+ "<p>The game threw:</p>" + "<code>java.lang.VerifyError</code>"
+				+ (ubicacion.length() > 0 ? "<p><b>Location:</b></p><code>" + ubicacion + "</code>" : "")
+				+ (razon.length() > 0 ? "<p><b>Reason:</b></p><code>" + razon + "</code>" : "")
+				+ "<p><b>What to look for:</b></p>" + "<ul>" + "<li>Check the location of the error.</li>"
+				+ "<li>Look for the type mentioned in <code>Reason</code>.</li>"
+				+ "<li>Review the stack trace for suspicious mod classes.</li>"
+				+ "<li>Search for mod class names around the error to get ideas.</li>" + "</ul>"
+				+ "<p><b>Recommended use of Grepr:</b></p>" + "<ul>" + "<li>Open <b>Grepr</b> in the sidebar.</li>"
+				+ "<li>Enable the option to search within <code>.jar</code>, <code>.zip</code>, or <code>.fpm</code> files.</li>"
+				+ "<li>Search for the base name of the class, not necessarily the full package.</li>" + "</ul>"
+				+ "<p>Example: if <code>paquete.Clase</code> appears, search only for:</p>" + "<code>"
+				+ (claseSospechosa.length() > 0 ? claseSospechosa : "Clase") + "</code>"
+				+ "<p>This can help find which mod contains or modifies that class.</p>"
+				+ "<p>Common solutions: update the affected mod, remove incompatible mods, check addons of the main mod, or try without mods that use mixins/transformers on the same class.</p>";
+	}
+
 }
