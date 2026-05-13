@@ -76,9 +76,13 @@ public class Entregar {
 		/* 3) DETECCIÓN DE LAUNCHER (STRING SOLO PARA DETECTAR) */
 		/* ===================================================== */
 
-		String appCmdDetectar = construirStringDetectar(appArgs);
+		String cmdDetectar = construirStringDetectar(jvmArgs) + " " + construirStringDetectar(appArgs);
 
-		String lanzer = DetectorLanzer.detectarLanzer(app_detecta, appCmdDetectar);
+		CrashDetectorLogger.log("[DetectorLanzer] cmdDetectar=" + cmdDetectar);
+
+		String lanzer = DetectorLanzer.detectarLanzer(app_detecta, cmdDetectar);
+
+		CrashDetectorLogger.log("[DetectorLanzer] resultado=" + lanzer);
 
 		Statics.lanzer_del_app = lanzer;
 

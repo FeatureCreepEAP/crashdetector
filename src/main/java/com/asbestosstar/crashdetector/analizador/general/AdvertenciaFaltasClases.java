@@ -115,57 +115,30 @@ public class AdvertenciaFaltasClases implements Verificaciones {
 
 	@Override
 	public QuickFix solucion() {
-		// Crear selectores
-		JComboBox<String> cargadorCombo = new JComboBox<>();
-		JComboBox<String> versionCombo = new JComboBox<>();
+
+		// Crear selector de clases
 		JComboBox<String> claseCombo = new JComboBox<>();
-
-		// Obtener lista de versiones soportadas
-		Map<String, List<String>> versionesPorCargador = new HashMap<>();
-		for (VersionWaifu version : WaifuAPI.versiones) {
-			versionesPorCargador.computeIfAbsent(version.cargador, k -> new ArrayList<>())
-					.add(version.version_del_juego);
-		}
-
-		// Configurar combo de cargadores
-		cargadorCombo.setModel(new DefaultComboBoxModel<>(versionesPorCargador.keySet().toArray(new String[0])));
-
-		// Configurar combo de versiones
-		cargadorCombo.addActionListener(e -> {
-			String cargador = (String) cargadorCombo.getSelectedItem();
-			if (cargador != null) {
-				versionCombo.setModel(
-						new DefaultComboBoxModel<>(versionesPorCargador.get(cargador).toArray(new String[0])));
-			}
-		});
 
 		// Configurar combo de clases
 		claseCombo.setModel(new DefaultComboBoxModel<>(clases.toArray(new String[0])));
 
-		// Seleccionar primeros elementos
-		if (cargadorCombo.getItemCount() > 0) {
-			cargadorCombo.setSelectedIndex(0);
-			versionCombo.setModel(new DefaultComboBoxModel<>(
-					versionesPorCargador.get(cargadorCombo.getSelectedItem()).toArray(new String[0])));
-		}
 		if (claseCombo.getItemCount() > 0) {
 			claseCombo.setSelectedIndex(0);
 		}
 
-		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.solucionParaAdvertenciaFaltasClases())
-				.agregarComponente(new QuickFix.SelectorGUI(cargadorCombo))
-				.agregarComponente(new QuickFix.SelectorGUI(versionCombo))
+		return new QuickFix.Builder(nombre())
+				.agregarEtiqueta(MonitorDePID.idioma.solucionParaAdvertenciaFaltasClases())
 				.agregarComponente(new QuickFix.SelectorGUI(claseCombo))
 				.agregarBoton(MonitorDePID.idioma.buscar(), (retener) -> {
+
 					List<RespuestaWaifu.Mod> modsEncontrados = new ArrayList<>();
 
-					String cargador = (String) cargadorCombo.getSelectedItem();
-					String version = (String) versionCombo.getSelectedItem();
 					String clase = (String) claseCombo.getSelectedItem();
 
-					if (cargador != null && version != null && clase != null) {
-						VersionWaifu versionSeleccionada = WaifuAPI.obtainerVersion(cargador, version);
-						modsEncontrados.addAll(WaifuAPI.obtanerModDesdeClase(clase, versionSeleccionada));
+					if (clase != null) {
+
+						// La nueva API busca en todos los cargadores/versiones disponibles.
+						modsEncontrados.addAll(WaifuAPI.obtanerModDesdeClase(clase));
 
 						// Crear popup con resultados
 						JTextArea textoResultados = new JTextArea(15, 40);
@@ -174,27 +147,53 @@ public class AdvertenciaFaltasClases implements Verificaciones {
 						if (modsEncontrados.isEmpty()) {
 							textoResultados.setText(MonitorDePID.idioma.noResultados() + " " + clase);
 						} else {
-							StringBuilder sb = new StringBuilder("Mods encontrados para ").append(clase).append(":\n");
+
+							StringBuilder sb = new StringBuilder();
+							sb.append("Mods encontrados para ").append(clase).append(":\n");
 
 							for (RespuestaWaifu.Mod mod : modsEncontrados) {
+
 								sb.append("\nMod: ").append(mod.name);
+
+								try {
+									if (mod.cargador != null || mod.version_del_juego != null) {
+										sb.append("\nVersión: ")
+												.append(mod.cargador != null ? mod.cargador : "desconocido")
+												.append(" ")
+												.append(mod.version_del_juego != null ? mod.version_del_juego : "desconocida");
+									}
+
+									if (mod.claseEncontrada != null && !mod.claseEncontrada.isEmpty()) {
+										sb.append("\nClase encontrada: ").append(mod.claseEncontrada);
+									}
+								} catch (Throwable ignorado) {
+									// Compatibilidad si RespuestaWaifu.Mod no tiene esos campos.
+								}
+
 								if (mod.curseforgeProjectId != null) {
-									sb.append("\nCurseForge URL: https://api.waifu.neoforged.net/mod_url/")
+									sb.append("\nCurseForge URL: https://cflookup.com/")
 											.append(mod.curseforgeProjectId);
 								}
+
 								if (mod.modrinthProjectId != null) {
-									sb.append("\nModrinth URL: https://api.waifu.neoforged.net/mod_url/")
+									sb.append("\nModrinth URL: https://modrinth.com/mod/")
 											.append(mod.modrinthProjectId);
 								}
+
 								sb.append("\n-------------------");
 							}
+
 							textoResultados.setText(sb.toString());
 						}
 
-						JOptionPane.showMessageDialog(null, new JScrollPane(textoResultados), "Resultados de búsqueda",
+						JOptionPane.showMessageDialog(
+								null,
+								new JScrollPane(textoResultados),
+								"Resultados de búsqueda",
 								JOptionPane.INFORMATION_MESSAGE);
 					}
-				}, true).construir();
+				}, true)
+				.construir();
 	}
 
 	@Override

@@ -3,59 +3,94 @@ package com.asbestosstar.crashdetector.waifu;
 import java.util.List;
 
 /**
- * Clase principal para mapear toda la respuesta de la API
+ * Clase principal para mapear toda la respuesta nueva de la API Waifu.
+ *
+ * Estructura nueva:
+ *
+ * data
+ *   gameVersions[]
+ *     version
+ *     loader
+ *     mods
+ *       count
+ *       edges[]
+ *         node
+ *           curseforgeProjectId
+ *           modrinthProjectId
+ *           modIds[]
+ *           classes[]
+ *             name
  */
 public class RespuestaWaifu {
+
 	public Datos data;
 
 	/**
-	 * Estructura interna para los datos de la versión del juego
+	 * Contenedor principal de datos.
 	 */
 	public static class Datos {
-		public VersionDelJuego gameVersion;
+
+		public List<VersionDelJuego> gameVersions;
 	}
 
 	/**
-	 * Estructura para las clases relacionadas con mods
+	 * Una versión/cargador del juego.
 	 */
 	public static class VersionDelJuego {
-		public ClasesDeMods classes;
+
+		public String version;
+		public String loader;
+		public Mods mods;
 	}
 
 	/**
-	 * Lista de resultados (edges) de las clases de mods
+	 * Resultado de mods para una versión/cargador.
 	 */
-	public static class ClasesDeMods {
+	public static class Mods {
+
+		public Integer count;
 		public List<Arista> edges;
 	}
 
 	/**
-	 * Nodo que contiene definiciones de mods
+	 * Arista GraphQL.
 	 */
 	public static class Arista {
+
 		public Nodo node;
 	}
 
 	/**
-	 * Definición de un mod con sus datos
+	 * Nodo de mod encontrado.
 	 */
 	public static class Nodo {
-		public List<Definicion> definitions;
+
+		public Integer curseforgeProjectId;
+		public String modrinthProjectId;
+		public List<String> modIds;
+		public List<ClaseEncontrada> classes;
 	}
 
 	/**
-	 * Datos específicos de un mod
+	 * Clase encontrada dentro del mod.
 	 */
-	public static class Definicion {
-		public Mod mod;
+	public static class ClaseEncontrada {
+
+		public String name;
 	}
 
 	/**
-	 * Información del mod (nombre, IDs)
+	 * Información simplificada del mod para usar en la GUI.
 	 */
 	public static class Mod {
-		public String name; // Nombre del mod
-		public Integer curseforgeProjectId; // ID de CurseForge
-		public String modrinthProjectId; // ID de Modrinth
+
+		public String name;
+		public Integer curseforgeProjectId;
+		public String modrinthProjectId;
+
+		public String cargador;
+		public String version_del_juego;
+		public String claseEncontrada;
+		public Integer cantidadClasesEncontradas;
 	}
 }
