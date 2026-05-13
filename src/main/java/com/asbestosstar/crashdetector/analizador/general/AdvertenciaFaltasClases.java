@@ -126,8 +126,7 @@ public class AdvertenciaFaltasClases implements Verificaciones {
 			claseCombo.setSelectedIndex(0);
 		}
 
-		return new QuickFix.Builder(nombre())
-				.agregarEtiqueta(MonitorDePID.idioma.solucionParaAdvertenciaFaltasClases())
+		return new QuickFix.Builder(nombre()).agregarEtiqueta(MonitorDePID.idioma.solucionParaAdvertenciaFaltasClases())
 				.agregarComponente(new QuickFix.SelectorGUI(claseCombo))
 				.agregarBoton(MonitorDePID.idioma.buscar(), (retener) -> {
 
@@ -158,9 +157,9 @@ public class AdvertenciaFaltasClases implements Verificaciones {
 								try {
 									if (mod.cargador != null || mod.version_del_juego != null) {
 										sb.append("\nVersión: ")
-												.append(mod.cargador != null ? mod.cargador : "desconocido")
-												.append(" ")
-												.append(mod.version_del_juego != null ? mod.version_del_juego : "desconocida");
+												.append(mod.cargador != null ? mod.cargador : "desconocido").append(" ")
+												.append(mod.version_del_juego != null ? mod.version_del_juego
+														: "desconocida");
 									}
 
 									if (mod.claseEncontrada != null && !mod.claseEncontrada.isEmpty()) {
@@ -186,14 +185,10 @@ public class AdvertenciaFaltasClases implements Verificaciones {
 							textoResultados.setText(sb.toString());
 						}
 
-						JOptionPane.showMessageDialog(
-								null,
-								new JScrollPane(textoResultados),
-								"Resultados de búsqueda",
+						JOptionPane.showMessageDialog(null, new JScrollPane(textoResultados), "Resultados de búsqueda",
 								JOptionPane.INFORMATION_MESSAGE);
 					}
-				}, true)
-				.construir();
+				}, true).construir();
 	}
 
 	@Override

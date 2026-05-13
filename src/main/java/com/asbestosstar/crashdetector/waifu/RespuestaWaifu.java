@@ -7,19 +7,8 @@ import java.util.List;
  *
  * Estructura nueva:
  *
- * data
- *   gameVersions[]
- *     version
- *     loader
- *     mods
- *       count
- *       edges[]
- *         node
- *           curseforgeProjectId
- *           modrinthProjectId
- *           modIds[]
- *           classes[]
- *             name
+ * data gameVersions[] version loader mods count edges[] node
+ * curseforgeProjectId modrinthProjectId modIds[] classes[] name
  */
 public class RespuestaWaifu {
 

@@ -293,7 +293,8 @@ public class MonitorDePID {
 
 		copiarACarpetaDesdeJar("/imagenes/minaly_xo.png", Statics.carpeta.resolve("imagenes/minaly_xo.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/einelotta.png", Statics.carpeta.resolve("imagenes/einelotta.png").toFile());
-		copiarACarpetaDesdeJar("/imagenes/einelotta_original.png", Statics.carpeta.resolve("imagenes/einelotta_original.png").toFile());
+		copiarACarpetaDesdeJar("/imagenes/einelotta_original.png",
+				Statics.carpeta.resolve("imagenes/einelotta_original.png").toFile());
 
 		copiarACarpetaDesdeJar("/imagenes/gomix.png", Statics.carpeta.resolve("imagenes/gomix.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/chiiaru.png", Statics.carpeta.resolve("imagenes/chiiaru.png").toFile());

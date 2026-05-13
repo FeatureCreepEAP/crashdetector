@@ -471,6 +471,16 @@ public class CDLauncher {
 		String jarCrashDetector = MonitorDePID.obtenerRutaJarCrashDetector();
 
 		String sep = System.getProperty("path.separator");
+		String home = System.getProperty("user.home");
+
+		File carpetaCrashDetector = new File(home, "crash_detector");
+
+		String rutaCarpetaCrashDetector = null;
+		try {
+			rutaCarpetaCrashDetector = carpetaCrashDetector.getCanonicalPath().toLowerCase();
+		} catch (Throwable ignored) {
+			rutaCarpetaCrashDetector = carpetaCrashDetector.getAbsolutePath().toLowerCase();
+		}
 
 		String[] partes = original.split(java.util.regex.Pattern.quote(sep));
 
@@ -481,13 +491,27 @@ public class CDLauncher {
 			if (p == null || p.isEmpty())
 				continue;
 
+			String rutaNormalizada;
+			try {
+				rutaNormalizada = new File(p).getCanonicalPath().toLowerCase();
+			} catch (Throwable ignored) {
+				rutaNormalizada = new File(p).getAbsolutePath().toLowerCase();
+			}
+
 			String pl = p.toLowerCase();
 
-			/* excluir crashdetector por ruta exacta */
-			if (jarCrashDetector != null && pl.equals(jarCrashDetector.toLowerCase()))
+			// Excluir ruta exacta del jar de CrashDetector
+			if (jarCrashDetector != null
+					&& rutaNormalizada.equals(new File(jarCrashDetector).getAbsolutePath().toLowerCase()))
 				continue;
 
-			/* excluir cualquier jar crashdetector */
+			// Excluir cualquier cosa dentro de ~/crash_detector/
+			if (rutaNormalizada.equals(rutaCarpetaCrashDetector)
+					|| rutaNormalizada.startsWith(rutaCarpetaCrashDetector + File.separator)) {
+				continue;
+			}
+
+			// Excluir cualquier jar crashdetector por nombre
 			if (pl.contains("crashdetector") && pl.endsWith(".jar"))
 				continue;
 

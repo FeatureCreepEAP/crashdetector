@@ -16,7 +16,8 @@ import com.asbestosstar.crashdetector.json.Json;
 /**
  * API de Waifu/NeoForged para buscar mods por clase.
  *
- * Version con logs detallados para diagnosticar por que no encuentra resultados.
+ * Version con logs detallados para diagnosticar por que no encuentra
+ * resultados.
  */
 public class WaifuAPI {
 
@@ -100,8 +101,8 @@ public class WaifuAPI {
 				String versionDelJuego = texto(gameVersion.obtener("version"));
 				String cargador = texto(gameVersion.obtener("loader"));
 
-				CrashDetectorLogger.log("WaifuAPI: revisando gameVersion[" + i + "] loader=" + cargador
-						+ " version=" + versionDelJuego);
+				CrashDetectorLogger.log("WaifuAPI: revisando gameVersion[" + i + "] loader=" + cargador + " version="
+						+ versionDelJuego);
 
 				Json.Nodo mods = gameVersion.obtener("mods");
 				if (esNulo(mods)) {
@@ -110,8 +111,8 @@ public class WaifuAPI {
 				}
 
 				Json.Nodo countNodo = mods.obtener("count");
-				CrashDetectorLogger.log("WaifuAPI: mods.count para " + cargador + " " + versionDelJuego
-						+ " = " + texto(countNodo));
+				CrashDetectorLogger.log(
+						"WaifuAPI: mods.count para " + cargador + " " + versionDelJuego + " = " + texto(countNodo));
 
 				Json.Nodo edges = mods.obtener("edges");
 				if (esNulo(edges)) {
@@ -120,13 +121,14 @@ public class WaifuAPI {
 				}
 
 				if (!edges.esArreglo()) {
-					CrashDetectorLogger.log("WaifuAPI: mods.edges no es arreglo para " + cargador + " " + versionDelJuego);
+					CrashDetectorLogger
+							.log("WaifuAPI: mods.edges no es arreglo para " + cargador + " " + versionDelJuego);
 					CrashDetectorLogger.log("WaifuAPI: edges = " + limitar(edges.comoCadena(), 3000));
 					continue;
 				}
 
-				CrashDetectorLogger.log("WaifuAPI: edges.tamano para " + cargador + " " + versionDelJuego
-						+ " = " + edges.tamano());
+				CrashDetectorLogger.log(
+						"WaifuAPI: edges.tamano para " + cargador + " " + versionDelJuego + " = " + edges.tamano());
 
 				for (int j = 0; j < edges.tamano(); j++) {
 
@@ -152,14 +154,10 @@ public class WaifuAPI {
 					mod.claseEncontrada = obtenerPrimeraClase(node);
 					mod.cantidadClasesEncontradas = contarClases(node);
 
-					CrashDetectorLogger.log("WaifuAPI: mod encontrado:"
-							+ " name=" + mod.name
-							+ " loader=" + mod.cargador
-							+ " version=" + mod.version_del_juego
-							+ " cf=" + mod.curseforgeProjectId
-							+ " mr=" + mod.modrinthProjectId
-							+ " clase=" + mod.claseEncontrada
-							+ " coincidencias=" + mod.cantidadClasesEncontradas);
+					CrashDetectorLogger.log("WaifuAPI: mod encontrado:" + " name=" + mod.name + " loader="
+							+ mod.cargador + " version=" + mod.version_del_juego + " cf=" + mod.curseforgeProjectId
+							+ " mr=" + mod.modrinthProjectId + " clase=" + mod.claseEncontrada + " coincidencias="
+							+ mod.cantidadClasesEncontradas);
 
 					modsEncontrados.add(mod);
 				}
@@ -177,25 +175,11 @@ public class WaifuAPI {
 
 	private static String generarConsultaGraphQL() {
 
-		return "query JIJ($predicate: StringPredicate) {\n"
-				+ "  gameVersions {\n"
-				+ "    version\n"
-				+ "    loader\n"
-				+ "    mods(where: {anyClass: {name: $predicate}} first: 10) {\n"
-				+ "      count\n"
-				+ "      edges {\n"
-				+ "        node {\n"
-				+ "          curseforgeProjectId\n"
-				+ "          modrinthProjectId\n"
-				+ "          modIds\n"
-				+ "          classes(where: {name: $predicate}) {\n"
-				+ "            name\n"
-				+ "          }\n"
-				+ "        }\n"
-				+ "      }\n"
-				+ "    }\n"
-				+ "  }\n"
-				+ "}";
+		return "query JIJ($predicate: StringPredicate) {\n" + "  gameVersions {\n" + "    version\n" + "    loader\n"
+				+ "    mods(where: {anyClass: {name: $predicate}} first: 10) {\n" + "      count\n" + "      edges {\n"
+				+ "        node {\n" + "          curseforgeProjectId\n" + "          modrinthProjectId\n"
+				+ "          modIds\n" + "          classes(where: {name: $predicate}) {\n" + "            name\n"
+				+ "          }\n" + "        }\n" + "      }\n" + "    }\n" + "  }\n" + "}";
 	}
 
 	private static String enviarSolicitudGraphQL(String consulta, String patron) throws IOException {
@@ -211,13 +195,8 @@ public class WaifuAPI {
 		conn.setRequestProperty("User-Agent", "CrashDetector/WaifuAPI");
 		conn.setDoOutput(true);
 
-		String cuerpo = "{"
-				+ "\"query\":\"" + escaparJson(consulta) + "\","
-				+ "\"operationName\":\"JIJ\","
-				+ "\"variables\":{"
-				+ "\"predicate\":{\"matches\":\"" + escaparJson(patron) + "\"}"
-				+ "}"
-				+ "}";
+		String cuerpo = "{" + "\"query\":\"" + escaparJson(consulta) + "\"," + "\"operationName\":\"JIJ\","
+				+ "\"variables\":{" + "\"predicate\":{\"matches\":\"" + escaparJson(patron) + "\"}" + "}" + "}";
 
 		CrashDetectorLogger.log("WaifuAPI: cuerpo JSON enviado = " + cuerpo);
 
