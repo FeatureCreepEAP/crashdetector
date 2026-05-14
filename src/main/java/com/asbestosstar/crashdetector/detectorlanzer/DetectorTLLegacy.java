@@ -23,6 +23,7 @@ public class DetectorTLLegacy implements DetectorLanzer {
 		if (!app.equals(App.MINECRAFT))
 			return false;
 		String n = cmd.replace('\\', '/');
-		return n.contains("tlauncher/legacy/Minecraft/game/");
+		return n.contains("tlauncher/legacy/Minecraft/game/") || n.contains("ch.tlaun.TL");
+		
 	}
 }

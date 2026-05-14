@@ -1,6 +1,9 @@
 package com.asbestosstar.crashdetector.detectorlanzer;
 
+import java.io.File;
+
 import com.asbestosstar.crashdetector.App;
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
 
 public class DetectorTLLegacyFlatpak implements DetectorLanzer {
 
@@ -23,20 +26,41 @@ public class DetectorTLLegacyFlatpak implements DetectorLanzer {
 
 	@Override
 	public boolean detectar(App app, String cmd) {
-		if (!app.equals(App.MINECRAFT)) {
+		if (!App.MINECRAFT.equals(app)) {
 			return false;
 		}
 
-		// Verificar que se ejecuta dentro de un entorno Flatpak
-		String userDir = System.getProperty("user.dir", "");
-		boolean enFlatpak = userDir.contains(".var/app/");
+		String userDir = normalizar(System.getProperty("user.dir", ""));
+		String cmdNorm = normalizar(cmd);
+		String flatpakId = System.getenv("FLATPAK_ID");
 
-		if (!enFlatpak) {
-			return false;
-		}
+		boolean enFlatpak =
+				flatpakId != null
+				|| new File("/.flatpak-info").exists()
+				|| userDir.startsWith("/var/data/")
+				|| userDir.contains(".var/app/");
 
-		// Verificar que es TLauncher Legacy (por classpath en cmd)
-		String normalizedCmd = cmd.replace('\\', '/');
-		return normalizedCmd.contains(".tlauncher/legacy/Minecraft/game/");
+		boolean esTLFlatpak =
+				"ch.tlaun.TL".equals(flatpakId)
+				|| cmdNorm.contains("ch.tlaun.TL")
+				|| userDir.contains("ch.tlaun.TL");
+
+		boolean esTLLegacy =
+				cmdNorm.contains(".tlauncher/legacy/Minecraft/game/")
+				|| userDir.contains(".tlauncher/legacy/Minecraft/game/");
+
+		CrashDetectorLogger.log("[DetectorTLLegacyFlatpak] userDir=" + userDir);
+		CrashDetectorLogger.log("[DetectorTLLegacyFlatpak] FLATPAK_ID=" + flatpakId);
+		CrashDetectorLogger.log("[DetectorTLLegacyFlatpak] enFlatpak=" + enFlatpak);
+		CrashDetectorLogger.log("[DetectorTLLegacyFlatpak] esTLFlatpak=" + esTLFlatpak);
+		CrashDetectorLogger.log("[DetectorTLLegacyFlatpak] esTLLegacy=" + esTLLegacy);
+
+		return enFlatpak && (esTLFlatpak || esTLLegacy);
 	}
+
+	private static String normalizar(String s) {
+		return s == null ? "" : s.replace('\\', '/');
+	}
+	
+	
 }
