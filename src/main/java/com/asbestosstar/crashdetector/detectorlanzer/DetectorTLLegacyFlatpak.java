@@ -34,19 +34,13 @@ public class DetectorTLLegacyFlatpak implements DetectorLanzer {
 		String cmdNorm = normalizar(cmd);
 		String flatpakId = System.getenv("FLATPAK_ID");
 
-		boolean enFlatpak =
-				flatpakId != null
-				|| new File("/.flatpak-info").exists()
-				|| userDir.startsWith("/var/data/")
+		boolean enFlatpak = flatpakId != null || new File("/.flatpak-info").exists() || userDir.startsWith("/var/data/")
 				|| userDir.contains(".var/app/");
 
-		boolean esTLFlatpak =
-				"ch.tlaun.TL".equals(flatpakId)
-				|| cmdNorm.contains("ch.tlaun.TL")
+		boolean esTLFlatpak = "ch.tlaun.TL".equals(flatpakId) || cmdNorm.contains("ch.tlaun.TL")
 				|| userDir.contains("ch.tlaun.TL");
 
-		boolean esTLLegacy =
-				cmdNorm.contains(".tlauncher/legacy/Minecraft/game/")
+		boolean esTLLegacy = cmdNorm.contains(".tlauncher/legacy/Minecraft/game/")
 				|| userDir.contains(".tlauncher/legacy/Minecraft/game/");
 
 		CrashDetectorLogger.log("[DetectorTLLegacyFlatpak] userDir=" + userDir);
@@ -61,6 +55,5 @@ public class DetectorTLLegacyFlatpak implements DetectorLanzer {
 	private static String normalizar(String s) {
 		return s == null ? "" : s.replace('\\', '/');
 	}
-	
-	
+
 }
