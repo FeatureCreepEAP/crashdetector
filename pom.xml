@@ -410,6 +410,42 @@
 </dependency>
 
 
+		<!-- Source: https://mvnrepository.com/artifact/net.canarymod/CanaryLib -->
+<dependency>
+    <groupId>net.canarymod</groupId>
+    <artifactId>CanaryLib</artifactId>
+    <version>1.2.0</version>
+    <scope>provided</scope>
+</dependency>
+
+
+		<!-- Source: https://mvnrepository.com/artifact/net.canarymod/CanaryLib -->
+<dependency>
+    <groupId>curse.maven</groupId>
+    <artifactId>litlaunch-api-358829</artifactId>
+    <version>3406077</version>
+</dependency>
+
+<dependency>
+    <groupId>com.asbestosstar</groupId>
+    <artifactId>risugamis-modloader-abstract-basemod</artifactId>
+    <version>0.0.1</version>
+</dependency>
+
+
+<dependency>
+    <groupId>com.asbestosstar</groupId>
+    <artifactId>hmod-plugin-base</artifactId>
+    <version>0.0.1</version>
+</dependency>
+
+
+    <dependency>
+        <groupId>cuchaz</groupId>
+        <artifactId>m3l</artifactId>
+        <version>1.8.3-0.4b</version>
+    </dependency>
+
 
 
 	</dependencies>
@@ -482,6 +518,20 @@
 			<url>https://repo.sleeping.town</url>
 		</repository>
 
+
+		<repository>
+			<id>Neptune</id>
+			<name>Neptune</name>
+			<url>https://repo.neptunepowered.org/maven/</url>
+		</repository>
+
+    <repository>
+    			<id>cuchazinteractive</id>
+        <name>cuchazinteractive</name>
+        <url>https://maven.cuchazinteractive.com/</url>
+    </repository>
+
+ 
 
 	</repositories>
 	<properties>
