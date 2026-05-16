@@ -180,11 +180,9 @@ public class MonitorDePID {
 
 		File html = Statics.carpeta.resolve("pantilla.htm").toFile();
 		copiarACarpetaDesdeJar("/pantilla.htm", html);
-		
+
 		File corredoruma = Statics.carpeta.resolve("corredoruma.htm").toFile();
 		copiarACarpetaDesdeJar("/corredoruma.htm", corredoruma);
-		
-		
 
 		copiarACarpetaDesdeJar("/imagenes/gura.png", Statics.carpeta.resolve("imagenes/gura.png").toFile());
 		copiarACarpetaDesdeJar("/imagenes/clio.png", Statics.carpeta.resolve("imagenes/clio.png").toFile());

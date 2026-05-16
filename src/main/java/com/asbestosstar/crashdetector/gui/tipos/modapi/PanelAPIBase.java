@@ -393,7 +393,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 					mostrarCarga(false);
 					modListPanel.removeAll();
 					tarjetasMods.clear();
-CrashDetectorLogger.log(ex.getMessage());
+					CrashDetectorLogger.log(ex.getMessage());
 					JLabel error = new JLabel("Error al cargar mods.");
 					error.setForeground(obtenerColorTexto());
 					modListPanel.add(error);
