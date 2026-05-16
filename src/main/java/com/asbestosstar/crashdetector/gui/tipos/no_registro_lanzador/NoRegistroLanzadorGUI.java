@@ -1,6 +1,5 @@
 package com.asbestosstar.crashdetector.gui.tipos.no_registro_lanzador;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -14,11 +13,9 @@ import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -29,7 +26,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.SwingWorker;
@@ -42,6 +38,7 @@ import com.asbestosstar.crashdetector.EnlanceMD;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
+import com.asbestosstar.crashdetector.gui.elementos.ElementoOverlayCarga;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 
 @Deprecated
@@ -335,32 +332,12 @@ public abstract class NoRegistroLanzadorGUI extends JDialog implements CrashDete
 	}
 
 	/** Overlay modal con GIF o barra indeterminada; cierra diálogo al terminar. */
+	/** Overlay modal con GIF; cierra diálogo al terminar. */
 	public void ejecutarConOverlayDescarga(final Runnable tarea, String mensaje) {
-		final JDialog overlay = new JDialog(this, true);
-		overlay.setUndecorated(true);
+		final ElementoOverlayCarga overlayCarga = new ElementoOverlayCarga();
 
-		JPanel box = new JPanel(new BorderLayout(10, 10));
-		box.setBorder(BorderFactory.createEmptyBorder(16, 20, 16, 20));
-
-		ImageIcon gif = cargarGif(gifDescargaPath());
-		if (gif != null) {
-			JLabel gifLbl = new JLabel(gif);
-			gifLbl.setOpaque(false);
-			box.add(gifLbl, BorderLayout.WEST);
-		} else {
-			CrashDetectorLogger.log("GIF de descarga no encontrado, usando barra indeterminada");
-			JProgressBar bar = new JProgressBar();
-			bar.setIndeterminate(true);
-			box.add(bar, BorderLayout.WEST);
-		}
-
-		JLabel msg = new JLabel(mensaje);
-		msg.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		box.add(msg, BorderLayout.CENTER);
-
-		overlay.getContentPane().add(box);
-		overlay.pack();
-		overlay.setLocationRelativeTo(this);
+		setGlassPane(overlayCarga);
+		overlayCarga.setVisible(true);
 
 		SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
 			@Override
@@ -377,13 +354,12 @@ public abstract class NoRegistroLanzadorGUI extends JDialog implements CrashDete
 
 			@Override
 			protected void done() {
-				overlay.dispose();
+				overlayCarga.setVisible(false);
 				NoRegistroLanzadorGUI.this.dispose();
 			}
 		};
 
 		worker.execute();
-		overlay.setVisible(true);
 	}
 
 	// ====== Hooks de apariencia ======
@@ -392,10 +368,6 @@ public abstract class NoRegistroLanzadorGUI extends JDialog implements CrashDete
 
 	public String overlayMensaje() {
 		return "Descargando y preparando enlaces...";
-	}
-
-	public String gifDescargaPath() {
-		return "/imagenes/descargando.gif";
 	}
 
 	public Font negrita(Font base, float size) {
@@ -407,15 +379,6 @@ public abstract class NoRegistroLanzadorGUI extends JDialog implements CrashDete
 	}
 
 	// Utilidades de imágenes
-
-	public ImageIcon cargarGif(String ruta) {
-		try {
-			URL url = getClass().getResource(ruta);
-			return (url != null) ? new ImageIcon(url) : null;
-		} catch (Throwable t) {
-			return null;
-		}
-	}
 
 	public ImageIcon cargarIconoAyudaFlexible(String ruta) {
 		URL url = getClass().getResource(ruta);

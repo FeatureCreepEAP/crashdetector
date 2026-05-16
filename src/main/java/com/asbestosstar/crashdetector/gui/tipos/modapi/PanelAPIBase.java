@@ -19,20 +19,20 @@ import java.util.stream.Collectors;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
+import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
-import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.config.ConfigString;
 import com.asbestosstar.crashdetector.dto.modpack.InternetMod;
 import com.asbestosstar.crashdetector.dto.modpack.PaginaMods;
@@ -45,6 +45,7 @@ import com.asbestosstar.crashdetector.dto.modpack.modrinth.ProveedorModsModrinth
 import com.asbestosstar.crashdetector.dto.modpack.packwiz.ProveedorModsPackwiz;
 import com.asbestosstar.crashdetector.dto.modpack.tlmods.ProveedorModsTlmods;
 import com.asbestosstar.crashdetector.gui.CrashDetectorGUI;
+import com.asbestosstar.crashdetector.gui.elementos.ElementoOverlayCarga;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.actualizador.ActualizadorModsMiwa;
 import com.asbestosstar.crashdetector.gui.tipos.compartir_instancia.CompartirInstanciaLegacy;
@@ -62,9 +63,9 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 	protected JTextField searchBar;
 	protected JPanel modListPanel;
 	protected JPanel sidebarPanel;
-	protected JLabel etiquetaCarga;
 	protected List<String> archivosJAR;
 	protected ProveedorMods proveedorActual;
+	protected ElementoOverlayCarga overlayCarga;
 
 	public static final Map<String, Supplier<ProveedorMods>> PROVEEDORES_MODS = new LinkedHashMap<>();
 	protected static final ConfigString proveedorConfig = ConfigString.de("cdmods.proveedor", "tlmods");
@@ -381,6 +382,7 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 						modListPanel.add(Box.createRigidArea(new Dimension(0, 4)));
 					}
 
+					mostrarCarga(false);
 					actualizarEscalado();
 					modListPanel.revalidate();
 					modListPanel.repaint();
@@ -388,9 +390,10 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 
 			} catch (IOException ex) {
 				SwingUtilities.invokeLater(() -> {
+					mostrarCarga(false);
 					modListPanel.removeAll();
 					tarjetasMods.clear();
-
+CrashDetectorLogger.log(ex.getMessage());
 					JLabel error = new JLabel("Error al cargar mods.");
 					error.setForeground(obtenerColorTexto());
 					modListPanel.add(error);
@@ -404,33 +407,21 @@ public abstract class PanelAPIBase extends JPanel implements CrashDetectorGUI {
 
 	private void mostrarCarga(boolean cargando) {
 
-		if (modListPanel == null) {
+		JRootPane rootPane = SwingUtilities.getRootPane(this);
+
+		if (rootPane == null) {
 			return;
 		}
 
-		if (!cargando) {
-			return;
+		if (overlayCarga == null) {
+			overlayCarga = new ElementoOverlayCarga();
+			overlayCarga.setVisible(false);
+			rootPane.setGlassPane(overlayCarga);
 		}
 
-		modListPanel.removeAll();
-		tarjetasMods.clear();
-
-		etiquetaCarga = new JLabel(new ImageIcon(Statics.carpeta.resolve("imagenes/padoru.gif").toString()));
-		etiquetaCarga.setAlignmentX(Component.CENTER_ALIGNMENT);
-		etiquetaCarga.setHorizontalAlignment(JLabel.CENTER);
-
-		JPanel panelCarga = new JPanel(new BorderLayout());
-		panelCarga.setOpaque(true);
-		panelCarga.setBackground(obtenerColorFondo());
-		panelCarga.add(etiquetaCarga, BorderLayout.CENTER);
-		panelCarga.setPreferredSize(new Dimension(300, 220));
-		panelCarga.setMaximumSize(new Dimension(Integer.MAX_VALUE, 220));
-
-		modListPanel.add(Box.createVerticalStrut(40));
-		modListPanel.add(panelCarga);
-
-		modListPanel.revalidate();
-		modListPanel.repaint();
+		overlayCarga.setVisible(cargando);
+		overlayCarga.revalidate();
+		overlayCarga.repaint();
 	}
 
 	protected JPanel crearTarjetaMod(InternetMod mod) {

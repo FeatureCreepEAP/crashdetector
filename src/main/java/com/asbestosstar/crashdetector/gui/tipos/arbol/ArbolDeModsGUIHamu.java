@@ -5,13 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeNode;
 
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.Statics;
-import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.config.ConfigColor;
 import com.asbestosstar.crashdetector.config.ElementoConfig;
 
@@ -102,13 +98,9 @@ public class ArbolDeModsGUIHamu extends ArbolDeModsGUI {
 		}
 
 		// 7) Overlay de carga (gif + texto)
-		if (gifCarga != null) {
-			ImageIcon icon = new ImageIcon(Statics.carpeta.resolve("imagenes/padoru.gif").toString());
-			if (icon.getIconWidth() <= 0) {
-				icon = crearIcono("", "…");
-			}
-			gifCarga.setIcon(icon);
-			gifCarga.setText(MonitorDePID.idioma.cargando());
+		// 7) Overlay de carga
+		if (overlayCarga != null) {
+			overlayCarga.recargarContenido();
 		}
 
 		// 8) Renderer (refresca textos de contenedores según idioma y aplica nuevos

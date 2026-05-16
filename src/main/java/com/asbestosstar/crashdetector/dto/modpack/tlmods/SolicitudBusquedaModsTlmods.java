@@ -13,12 +13,12 @@ import com.asbestosstar.crashdetector.json.Json;
 public class SolicitudBusquedaModsTlmods {
 
 	private static final String URL_BASE = ProveedorModsTlmods.ENDPOINT.obtener() + "api/client/gameentities";
-	private static final String AGENTE_USUARIO = "TLauncher/2.88";
+	private static final String AGENTE_USUARIO = "TLauncher/2.9365";
 
 	public static PaginaMods buscarMods(String idioma, int pagina, String termino) throws IOException {
 		StringBuilder constructorUrl = new StringBuilder(URL_BASE);
 		constructorUrl.append("?type=MOD").append("&lang=").append(idioma).append("&page=").append(pagina)
-				.append("&sort=POPULAR").append("&lv=2.88");
+				.append("&sort=POPULAR").append("&lv=2.9365");
 
 		if (termino != null && !termino.trim().isEmpty()) {
 			// String codificado = java.net.URLEncoder.encode(termino.trim(),

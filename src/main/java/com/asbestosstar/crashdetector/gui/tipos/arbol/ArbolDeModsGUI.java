@@ -66,6 +66,7 @@ import com.asbestosstar.crashdetector.Statics;
 import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
 import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.gui.elementos.BotonDeBarraLateralDerecha;
+import com.asbestosstar.crashdetector.gui.elementos.ElementoOverlayCarga;
 import com.asbestosstar.crashdetector.gui.tipos.TipoGUI;
 import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrBase;
 import com.asbestosstar.crashdetector.gui.tipos.cfr.CfrSakuraRiddle;
@@ -93,8 +94,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 	public ImageIcon iconoConstante;
 	public ImageIcon iconoMixin;
 
-	public JPanel overlayCarga;
-	public JLabel gifCarga;
+	public ElementoOverlayCarga overlayCarga;
 	public volatile boolean cargando = false;
 
 	// Trabajadores en curso (para cancelar si el usuario vuelve a buscar)
@@ -2032,7 +2032,7 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 
 	public void iniciarCargaPesada() {
 		setCargando(true);
-		getRootPane().getGlassPane().setVisible(true);
+		//getRootPane().getGlassPane().setVisible(true);
 
 		new SwingWorker<Void, Void>() {
 			@Override
@@ -2344,36 +2344,18 @@ public abstract class ArbolDeModsGUI extends JFrame implements BotonDeBarraLater
 	// y constantes) ===
 
 	public void initOverlayCarga() {
-		overlayCarga = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		overlayCarga.setOpaque(false);
-
-		JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		panel.setBackground(new Color(0, 0, 0, 120));
-		panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-
-		ImageIcon icon = new ImageIcon(Statics.carpeta.resolve("imagenes/padoru.gif").toString());
-		if (icon.getIconWidth() <= 0) {
-			icon = crearIcono("", "…");
-		}
-		gifCarga = new JLabel(icon);
-		gifCarga.setText(MonitorDePID.idioma.cargando());
-		gifCarga.setHorizontalTextPosition(JLabel.CENTER);
-		gifCarga.setVerticalTextPosition(JLabel.BOTTOM);
-		gifCarga.setForeground(Color.WHITE);
-		gifCarga.setFont(gifCarga.getFont().deriveFont(Font.BOLD, 14f));
-
-		panel.add(gifCarga);
-		overlayCarga.add(panel);
-
+		overlayCarga = new ElementoOverlayCarga();
 		getRootPane().setGlassPane(overlayCarga);
 	}
 
-	public void setCargando(boolean on) {
-		cargando = on;
-		overlayCarga.setVisible(on);
-		overlayCarga.setOpaque(false);
-		overlayCarga.revalidate();
-		overlayCarga.repaint();
+	public void setCargando(boolean cargando) {
+		this.cargando = cargando;
+
+		if (overlayCarga != null) {
+			overlayCarga.setVisible(cargando);
+			overlayCarga.revalidate();
+			overlayCarga.repaint();
+		}
 	}
 
 	public void construirArbolInicialAsync() {
