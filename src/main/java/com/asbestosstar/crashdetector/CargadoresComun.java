@@ -88,6 +88,14 @@ public class CargadoresComun {
 		public static CDOrigin MEDDLE = new CDOrigin();
 		public static CDOrigin MCFORGE_PREMODLAUNCHER = new CDOrigin();
 		public static CDOrigin BUKKIT = new CDOrigin();
+		public static CDOrigin SPONGE = new CDOrigin();
+		public static CDOrigin FLINTLOADER = new CDOrigin();
+		public static CDOrigin LITLAUNCH = new CDOrigin();
+		// public static CDOrigin M3L = new CDOrigin();usa fml
+		public static CDOrigin HMOD = new CDOrigin();
+		public static CDOrigin CANARY = new CDOrigin();
+		public static CDOrigin LOADERCOMPLEX = new CDOrigin();
+		public static CDOrigin RISUGAMI = new CDOrigin();
 
 	}
 

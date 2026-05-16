@@ -22,16 +22,23 @@ import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.anon.AnonimizadorDeRuta;
 import com.asbestosstar.crashdetector.cargador.Cargador;
 import com.asbestosstar.crashdetector.cargador.CargadorBukkit;
+import com.asbestosstar.crashdetector.cargador.CargadorCanary;
 import com.asbestosstar.crashdetector.cargador.CargadorDangerZone;
 import com.asbestosstar.crashdetector.cargador.CargadorFabric;
 import com.asbestosstar.crashdetector.cargador.CargadorFeatureCreep;
+import com.asbestosstar.crashdetector.cargador.CargadorHMod;
+import com.asbestosstar.crashdetector.cargador.CargadorLitLaunch;
 import com.asbestosstar.crashdetector.cargador.CargadorLiteLoader;
+import com.asbestosstar.crashdetector.cargador.CargadorLoaderComplex;
+import com.asbestosstar.crashdetector.cargador.CargadorM3L;
 import com.asbestosstar.crashdetector.cargador.CargadorMCForge;
 import com.asbestosstar.crashdetector.cargador.CargadorMeddle;
 import com.asbestosstar.crashdetector.cargador.CargadorNXOpen;
 import com.asbestosstar.crashdetector.cargador.CargadorNeoForge;
 import com.asbestosstar.crashdetector.cargador.CargadorNilLoader;
 import com.asbestosstar.crashdetector.cargador.CargadorRift;
+import com.asbestosstar.crashdetector.cargador.CargadorRisugami;
+import com.asbestosstar.crashdetector.cargador.CargadorSponge;
 import com.asbestosstar.crashdetector.config.ConfigBoolean;
 
 public class Buscardor {
@@ -705,6 +712,13 @@ public class Buscardor {
 		Cargador.cargadores.add(new CargadorBukkit());
 		Cargador.cargadores.add(new CargadorMeddle());
 		Cargador.cargadores.add(new CargadorNilLoader());
+		Cargador.cargadores.add(new CargadorSponge());
+		Cargador.cargadores.add(new CargadorHMod());
+		Cargador.cargadores.add(new CargadorCanary());
+		Cargador.cargadores.add(new CargadorRisugami());
+		Cargador.cargadores.add(new CargadorM3L());
+		Cargador.cargadores.add(new CargadorLitLaunch());
+		Cargador.cargadores.add(new CargadorLoaderComplex());
 
 		Cargador.cargadores.add(new CargadorDangerZone());
 		Cargador.cargadores.add(new CargadorNXOpen());

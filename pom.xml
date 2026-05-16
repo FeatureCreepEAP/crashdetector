@@ -447,6 +447,27 @@
     </dependency>
 
 
+<dependency>
+        <groupId>org.spongepowered</groupId>
+        <artifactId>spongeapi</artifactId>
+        <version>8.0.0</version>
+        <scope>provided</scope>
+    </dependency>
+
+
+<dependency>
+        <groupId>maven.modrinth</groupId>
+        <artifactId>loadercomplex</artifactId>
+        <version>0.1.1</version>
+        <scope>provided</scope>
+    </dependency>
+
+<!-- 
+<dependency>
+	    <groupId>com.github.FlintLoader</groupId>
+	    <artifactId>flint-punch</artifactId>
+	    <version>45d4978a26</version>
+	</dependency>-->
 
 	</dependencies>
 
@@ -532,6 +553,27 @@
     </repository>
 
  
+<repository>
+        <id>spongepowered-repo</id>
+                <name>spongepowered</name>
+        <url>https://repo.spongepowered.org/repository/maven-public/</url>
+    </repository> 
+ 
+ <repository>
+        <id>modrinth</id>
+                <name>modrinth</name>
+        <url>https://api.modrinth.com/maven/</url>
+    </repository> 
+ 
+ <!-- 
+  <repository>
+        <id>flint</id>
+                <name>flint</name>
+        <url>https://www.flintloader.net/mirror</url>
+    </repository> 
+
+ -->
+  
 
 	</repositories>
 	<properties>

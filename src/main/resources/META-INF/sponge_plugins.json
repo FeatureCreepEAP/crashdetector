@@ -1,0 +1,29 @@
+{
+    "loader": {
+        "type": "java_component",
+        "version": "1.0"
+    },
+    "plugins": [
+        {
+            "id": "crashdetector",
+            "entrypoint": "com.asbestosstar.crashdetector.CrashDetectorSponge",
+            "name": "CrashDetectorMC",
+            "version": "0",
+            "description": "CrashDetector",
+            "authors": [
+                "Me!"
+            ],
+            "links": {
+                "homepage": "https://pagure.io/CrashDetectorMC/",
+                "source": "https://pagure.io/CrashDetectorMC/"
+            },
+            "dependency": {
+                "spongeapi": {
+                    "version": "8.0.0",
+                    "load-order": "undefined",
+                    "optional": false
+                }
+            }
+        }
+    ]
+}

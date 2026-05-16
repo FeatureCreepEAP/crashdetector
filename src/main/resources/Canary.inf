@@ -1,0 +1,3 @@
+name=crashdetector
+main-class=com.asbestosstar.crashdetector.CrashDetectorCanary
+version=0.0.1
