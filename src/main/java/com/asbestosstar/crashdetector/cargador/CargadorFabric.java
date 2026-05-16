@@ -9,19 +9,41 @@ public class CargadorFabric implements Cargador {
 
 	@Override
 	public boolean modEsDeCargador(ArchivoDeMod mod) {
-		// TODO Auto-generated method stub
-		// se recorre la lista de rutas internas del mod
+
+		boolean tieneFabric = false;
+		boolean tieneQuilt = false;
+
+		// Se recorre la lista de rutas internas del mod
 		for (String archivo : mod.archivos()) {
 			String norm = archivo.replace('\\', '/');
 			String lower = norm.toLowerCase(Locale.ROOT);
 
-			// deteccion de mods.toml en meta inf
 			if (lower.equals("fabric.mod.json")) {
-				return true;
+				tieneFabric = true;
+			}
+
+			if (lower.equals("quilt.mod.json")) {
+				tieneQuilt = true;
 			}
 		}
-		return false;
 
+		// Si tiene fabric.mod.json, se considera Fabric aunque tambien tenga Quilt.
+		if (tieneFabric) {
+			return true;
+		}
+
+		// Si solo tiene quilt.mod.json, se considera compatible con este cargador solo
+		// cuando Quilt esta activo.
+		return tieneQuilt && esQCC();
+	}
+
+	/**
+	 * Devuelve true si Quilt Loader esta presente.
+	 *
+	 * QCC = Quilt Compatibility Check.o Quilt Community Collab
+	 */
+	public static boolean esQCC() {
+		return Cargador.claseExiste("org.quiltmc.loader.api.QuiltLoader");
 	}
 
 	@Override
@@ -130,6 +152,103 @@ public class CargadorFabric implements Cargador {
 
 		if (mver.find()) {
 			String version = mver.group(1).trim();
+			if (!version.isEmpty()) {
+				return version;
+			}
+		}
+
+		return "";
+	}
+
+	/**
+	 * Extrae el id desde quilt.mod.json.
+	 *
+	 * El id esta en:
+	 *
+	 * quilt_loader.id
+	 */
+	public static java.util.List<String> parsearIdModQuilt(String texto) throws java.io.IOException {
+		java.util.List<String> salida = new java.util.ArrayList<>();
+
+		try {
+			Json.Nodo raiz = Json.leer(texto);
+			Json.Nodo quiltLoader = raiz.obtener("quilt_loader");
+
+			if (quiltLoader != null) {
+				Json.Nodo idNodo = quiltLoader.obtener("id");
+
+				if (idNodo != null) {
+					String id = idNodo.comoCadena();
+
+					if (id != null) {
+						id = id.trim();
+
+						if (!id.isEmpty() && !salida.contains(id)) {
+							salida.add(id);
+						}
+					}
+				}
+			}
+
+			return salida;
+		} catch (Throwable t) {
+			java.util.regex.Pattern p = java.util.regex.Pattern.compile(
+					"\"quilt_loader\"\\s*:\\s*\\{.*?\"id\"\\s*:\\s*\"([^\"]+)\"", java.util.regex.Pattern.DOTALL);
+
+			java.util.regex.Matcher m = p.matcher(texto);
+
+			if (m.find()) {
+				String id = m.group(1).trim();
+
+				if (!id.isEmpty() && !salida.contains(id)) {
+					salida.add(id);
+				}
+			}
+
+			return salida;
+		}
+	}
+
+	/**
+	 * Extrae la version desde quilt.mod.json.
+	 *
+	 * La version esta en:
+	 *
+	 * quilt_loader.version
+	 */
+	public static String parsearVersionModQuilt(String texto) {
+
+		try {
+			Json.Nodo raiz = Json.leer(texto);
+			Json.Nodo quiltLoader = raiz.obtener("quilt_loader");
+
+			if (quiltLoader != null) {
+				Json.Nodo versionNodo = quiltLoader.obtener("version");
+
+				if (versionNodo != null) {
+					String version = versionNodo.comoCadena();
+
+					if (version != null) {
+						version = version.trim();
+
+						if (!version.isEmpty()) {
+							return version;
+						}
+					}
+				}
+			}
+		} catch (Throwable t) {
+			// Si falla Json, continuar con regex.
+		}
+
+		java.util.regex.Pattern p = java.util.regex.Pattern.compile(
+				"\"quilt_loader\"\\s*:\\s*\\{.*?\"version\"\\s*:\\s*\"([^\"]+)\"", java.util.regex.Pattern.DOTALL);
+
+		java.util.regex.Matcher m = p.matcher(texto);
+
+		if (m.find()) {
+			String version = m.group(1).trim();
+
 			if (!version.isEmpty()) {
 				return version;
 			}

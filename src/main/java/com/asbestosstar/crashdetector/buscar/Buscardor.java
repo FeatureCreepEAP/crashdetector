@@ -26,6 +26,7 @@ import com.asbestosstar.crashdetector.cargador.CargadorCanary;
 import com.asbestosstar.crashdetector.cargador.CargadorDangerZone;
 import com.asbestosstar.crashdetector.cargador.CargadorFabric;
 import com.asbestosstar.crashdetector.cargador.CargadorFeatureCreep;
+import com.asbestosstar.crashdetector.cargador.CargadorFlint;
 import com.asbestosstar.crashdetector.cargador.CargadorHMod;
 import com.asbestosstar.crashdetector.cargador.CargadorLitLaunch;
 import com.asbestosstar.crashdetector.cargador.CargadorLiteLoader;
@@ -719,6 +720,7 @@ public class Buscardor {
 		Cargador.cargadores.add(new CargadorM3L());
 		Cargador.cargadores.add(new CargadorLitLaunch());
 		Cargador.cargadores.add(new CargadorLoaderComplex());
+		Cargador.cargadores.add(new CargadorFlint());
 
 		Cargador.cargadores.add(new CargadorDangerZone());
 		Cargador.cargadores.add(new CargadorNXOpen());

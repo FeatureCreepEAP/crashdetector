@@ -1,0 +1,21 @@
+{
+	"id": "crashdetector",
+	"version": "${version}",
+	"name": "CrashDetectorMC",
+	"description": "CrashDetector",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://pagure.io/CrashDetectorMC/",
+		"sources": "https://pagure.io/CrashDetectorMC/"
+	},
+	"license": "JSharp4Life Licence 1",
+	"icon": "assets/modid/icon.png",
+	"mixins": [
+		"crashdetectorfabricmctrancformaciones.mixins.json"
+	],
+	"entryPoints": {
+		"main": "com.asbestosstar.crashdetector.CrashDetectorFlint"
+	}
+}

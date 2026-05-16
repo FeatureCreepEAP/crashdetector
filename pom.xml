@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.asbestosstar</groupId>
 	<artifactId>crashdetector</artifactId>
-	<version>0.6.7</version>
+	<version>0.6.8</version>
 
 
 	<!-- Add necessary metadata for Maven Central -->
@@ -144,6 +144,8 @@
 
 							<TransformerClass>
 								com.asbestosstar.crashdetector.CrashDetectorMeddle</TransformerClass>
+							<MixinConfigs>
+								crashdetectorfabricmctrancformaciones.mixins.json</MixinConfigs>
 
 
 						</manifestEntries>
@@ -462,12 +464,29 @@
         <scope>provided</scope>
     </dependency>
 
-<!-- 
+
+
+
+
 <dependency>
-	    <groupId>com.github.FlintLoader</groupId>
-	    <artifactId>flint-punch</artifactId>
-	    <version>45d4978a26</version>
-	</dependency>-->
+    <groupId>com.asbestosstar</groupId>
+    <artifactId>flintloader-flintmodule-stub</artifactId>
+    <version>0.0.1</version>
+</dependency>
+
+
+
+
+
+<dependency>
+    <groupId>com.asbestosstar</groupId>
+    <artifactId>ifmlloadingplugin-172</artifactId>
+    <version>0.0.1</version>
+</dependency>
+
+
+
+
 
 	</dependencies>
 
@@ -564,15 +583,6 @@
                 <name>modrinth</name>
         <url>https://api.modrinth.com/maven/</url>
     </repository> 
- 
- <!-- 
-  <repository>
-        <id>flint</id>
-                <name>flint</name>
-        <url>https://www.flintloader.net/mirror</url>
-    </repository> 
-
- -->
   
 
 	</repositories>

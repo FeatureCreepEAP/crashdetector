@@ -748,6 +748,27 @@ public interface ArchivoDeMod {
 	}
 
 	/**
+	 * Agrega nombres evitando duplicados y vacios.
+	 */
+	public default void agregarNombresSinDuplicados(List<String> nuevos) {
+		if (nuevos == null) {
+			return;
+		}
+
+		for (String nombre : nuevos) {
+			if (nombre == null) {
+				continue;
+			}
+
+			String limpio = nombre.trim();
+
+			if (!limpio.isEmpty() && !this.nombre().contains(limpio)) {
+				this.nombre().add(limpio);
+			}
+		}
+	}
+
+	/**
 	 * Verifica si el cache de MixerLogger ha sido cargado.
 	 * 
 	 * @return true si el cache está poblado

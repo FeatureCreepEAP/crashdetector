@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,6 +17,7 @@ import java.util.jar.Manifest;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.cargador.Cargador;
 import com.asbestosstar.crashdetector.cargador.CargadorFeatureCreep;
+import com.asbestosstar.crashdetector.cargador.CargadorMCForge;
 
 /**
  * Clase que procesa carpetas para buscar mods y clases dentro de ellas. Soporta
@@ -25,6 +27,10 @@ import com.asbestosstar.crashdetector.cargador.CargadorFeatureCreep;
  *
  * NOTA: Las subcarpetas normalmente NO son mods independientes, sino parte del
  * mismo mod.
+ * 
+ * En Versiones Viajas de Minecraft Forge (circa 1.6.4) es posible tiene mods en
+ * carpetas (millienaire 1.6.4 desde TLMods) pero el formato de es comun y
+ * siempre diferente, no necesita mcmod.info
  */
 public class ModCarpeta implements ArchivoDeMod {
 
@@ -116,7 +122,23 @@ public class ModCarpeta implements ArchivoDeMod {
 					} else if (nombre.endsWith("MANIFEST.MF")) {
 						nombres.addAll(ProcesadorManifiesto.obtenerNombresDeModulo(
 								new Manifest(new FileInputStream(entrada.toAbsolutePath().toString()))));
-					} else if (esArchivoAnidado(nombre)) {
+					}
+
+					else if (nombre.equals("mcmod.info") || nombre.equals("META-INF/mcmod.info")) {
+						byte[] content = Files.readAllBytes(entrada);
+						if (content != null) {
+							String texto = new String(content, StandardCharsets.UTF_8);
+
+							agregarNombresSinDuplicados(CargadorMCForge.parsearIdModMcmodInfo(texto));
+
+							if (this.version.isEmpty()) {
+								this.version = CargadorMCForge.parsearVersionModMcmodInfo(texto);
+							}
+
+						}
+					}
+
+					else if (esArchivoAnidado(nombre)) {
 						procesarArchivoAnidado(entrada, nombre);
 					} else {
 						// No cargamos bytes por adelantado para mejorar rendimiento.

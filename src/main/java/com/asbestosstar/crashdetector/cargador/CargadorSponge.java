@@ -88,4 +88,42 @@ public class CargadorSponge implements Cargador {
 		}
 		return salida;
 	}
+
+	/**
+	 * Extrae la version principal desde sponge_plugins.json.
+	 */
+	public static String parsearVersionPluginSponge(String jsonTexto) {
+		try {
+			Json.Nodo raiz = Json.leer(jsonTexto);
+			Json.Nodo pluginsNodo = raiz.obtener("plugins");
+
+			if (pluginsNodo != null && pluginsNodo.esArreglo()) {
+				for (int i = 0; i < pluginsNodo.tamano(); i++) {
+					Json.Nodo entrada = pluginsNodo.en(i);
+
+					if (entrada == null) {
+						continue;
+					}
+
+					Json.Nodo versionNodo = entrada.obtener("version");
+
+					if (versionNodo != null) {
+						String version = versionNodo.comoCadena();
+
+						if (version != null) {
+							version = version.trim();
+
+							if (!version.isEmpty()) {
+								return version;
+							}
+						}
+					}
+				}
+			}
+		} catch (Throwable ignorado) {
+		}
+
+		return "";
+	}
+
 }

@@ -17,13 +17,16 @@ import java.util.zip.ZipInputStream;
 import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.cargador.Cargador;
 import com.asbestosstar.crashdetector.cargador.CargadorBukkit;
+import com.asbestosstar.crashdetector.cargador.CargadorCanary;
 import com.asbestosstar.crashdetector.cargador.CargadorFabric;
 import com.asbestosstar.crashdetector.cargador.CargadorFeatureCreep;
+import com.asbestosstar.crashdetector.cargador.CargadorFlint;
 import com.asbestosstar.crashdetector.cargador.CargadorLiteLoader;
 import com.asbestosstar.crashdetector.cargador.CargadorMCForge;
 import com.asbestosstar.crashdetector.cargador.CargadorMeddle;
 import com.asbestosstar.crashdetector.cargador.CargadorNilLoader;
 import com.asbestosstar.crashdetector.cargador.CargadorRift;
+import com.asbestosstar.crashdetector.cargador.CargadorSponge;
 import com.asbestosstar.crashdetector.cargador.ml.AnalizadorModsTomlForge;
 
 /**
@@ -162,7 +165,26 @@ public class ModPKZip implements ArchivoDeMod {
 							meta_tiene_referencia_de_mcreator = true;
 						}
 					}
-				} else if (nombreArchivo.equals("riftmod.json")) {
+				}
+
+				else if (nombreArchivo.equals("quilt.mod.json")) {
+					byte[] content = leerEntrada(nombreArchivo);
+					if (content != null) {
+						String texto = new String(content, StandardCharsets.UTF_8);
+
+						agregarNombresSinDuplicados(CargadorFabric.parsearIdModQuilt(texto));
+
+						if (this.version.isEmpty()) {
+							this.version = CargadorFabric.parsearVersionModQuilt(texto);
+						}
+
+						if (texto.toLowerCase().contains("mcreator")) {
+							meta_tiene_referencia_de_mcreator = true;
+						}
+					}
+				}
+
+				else if (nombreArchivo.equals("riftmod.json")) {
 					byte[] content = leerEntrada(nombreArchivo);
 					if (content != null) {
 						String texto = new String(content, StandardCharsets.UTF_8);
@@ -268,6 +290,55 @@ public class ModPKZip implements ArchivoDeMod {
 							meta_tiene_referencia_de_mcreator = true;
 						}
 					}
+				} else if (nombreArchivo.toLowerCase(java.util.Locale.ROOT).endsWith(".inf")) {
+					byte[] content = leerEntrada(nombreArchivo);
+
+					if (content != null) {
+						String texto = new String(content, StandardCharsets.UTF_8);
+
+						agregarNombresSinDuplicados(CargadorCanary.parsearIdModCanary(texto));
+
+						if (this.version.isEmpty()) {
+							this.version = CargadorCanary.parsearVersionModCanary(texto);
+						}
+					}
+				}
+
+				else if (nombreArchivo.equals("flintmodule.json")) {
+					byte[] content = leerEntrada(nombreArchivo);
+
+					if (content != null) {
+						String texto = new String(content, StandardCharsets.UTF_8);
+
+						agregarNombresSinDuplicados(CargadorFlint.parsearIdModFlint(texto));
+
+						if (this.version.isEmpty()) {
+							this.version = CargadorFlint.parsearVersionModFlint(texto);
+						}
+
+						if (texto.toLowerCase().contains("mcreator")) {
+							meta_tiene_referencia_de_mcreator = true;
+						}
+					}
+				}
+
+				else if (nombreArchivo.equals("META-INF/sponge_plugins.json")
+						|| nombreArchivo.equals("meta-inf/sponge_plugins.json")) {
+					byte[] content = leerEntrada(nombreArchivo);
+
+					if (content != null) {
+						String texto = new String(content, StandardCharsets.UTF_8);
+
+						agregarNombresSinDuplicados(CargadorSponge.parsearIdPluginSponge(texto));
+
+						if (this.version.isEmpty()) {
+							this.version = CargadorSponge.parsearVersionPluginSponge(texto);
+						}
+
+						if (texto.toLowerCase().contains("mcreator")) {
+							meta_tiene_referencia_de_mcreator = true;
+						}
+					}
 				}
 
 				zip.closeEntry();
@@ -336,27 +407,6 @@ public class ModPKZip implements ArchivoDeMod {
 			}
 		} catch (Throwable t) {
 			CrashDetectorLogger.logException(t);
-		}
-	}
-
-	/**
-	 * Agrega nombres evitando duplicados y vacios.
-	 */
-	private void agregarNombresSinDuplicados(List<String> nuevos) {
-		if (nuevos == null) {
-			return;
-		}
-
-		for (String nombre : nuevos) {
-			if (nombre == null) {
-				continue;
-			}
-
-			String limpio = nombre.trim();
-
-			if (!limpio.isEmpty() && !this.nombres.contains(limpio)) {
-				this.nombres.add(limpio);
-			}
 		}
 	}
 
@@ -668,6 +718,6 @@ public class ModPKZip implements ArchivoDeMod {
 	@Override
 	public String version() {
 		// TODO Auto-generated method stub
-		return "version";
+		return version;
 	}
 }
