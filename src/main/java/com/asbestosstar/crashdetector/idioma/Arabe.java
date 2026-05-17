@@ -9236,4 +9236,25 @@ public class Arabe implements Idioma {
 				+ "<p>الحلول الشائعة: تحديث mod المتأثر، إزالة mods غير المتوافقة، مراجعة إضافات mod الرئيسي، أو التجربة بدون mods التي تستخدم mixins/transformers على نفس الفئة.</p>";
 	}
 
+	// Arabic (العربية)
+	@Override
+	public String errorMetodoFinalSobrescrito(String claseQueSobrescribe, String metodoFinal) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "خطأ في التوافق: يحاول أحد الـ mods تجاوز أسلوب نهائي.</b>"
+				+ "<p>يحتوي السجل على خطأ <b>IncompatibleClassChangeError</b> مع النص "
+				+ "<b>overrides final method</b>.</p>" + "<p>الفئة المتأثرة: <code>" + claseQueSobrescribe
+				+ "</code></p>" + "<p>الأسلوب النهائي المتأثر: <code>" + metodoFinal + "</code></p>"
+				+ "<p>يحدث هذا الخطأ عادةً عندما يتم تجميع الـ mod لإصدار مختلف من Minecraft، "
+				+ "Forge، NeoForge، Fabric، Quilt، أو مكتبة أساسية.</p>" + "<p><b>ما يجب تجربته:</b></p>" + "<ul>"
+				+ "<li>قم بتحديث الـ mod الذي يحتوي على الفئة المحددة.</li>"
+				+ "<li>إذا بدأت المشكلة بعد تحديث Minecraft أو المحمل (loader)، فجرب إصدارًا متوافقًا من الـ mod.</li>"
+				+ "<li>إذا كانت الفئة تنتمي إلى <b>Immersive Portals</b>، فتأكد من أن <b>Immersive Portals</b> يتطابق تمامًا مع إصدار Minecraft والمحمل الخاص بك.</li>"
+				+ "<li>تجنب خلط الـ mods المصممة لإصدارات مختلفة من المحمل أو Minecraft.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreErrorMetodoFinalSobrescrito() {
+		return "يحاول أحد الـ mods تجاوز أسلوب نهائي";
+	}
+
 }

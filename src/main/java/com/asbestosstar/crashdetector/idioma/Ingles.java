@@ -9375,4 +9375,25 @@ public class Ingles implements Idioma {
 				+ "<p>Common solutions: update the affected mod, remove incompatible mods, check addons of the main mod, or try without mods that use mixins/transformers on the same class.</p>";
 	}
 
+	// English (UK)
+	@Override
+	public String errorMetodoFinalSobrescrito(String claseQueSobrescribe, String metodoFinal) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Compatibility error: a mod attempts to override a final method.</b>"
+				+ "<p>The log contains an <b>IncompatibleClassChangeError</b> with the text "
+				+ "<b>overrides final method</b>.</p>" + "<p>Affected class: <code>" + claseQueSobrescribe
+				+ "</code></p>" + "<p>Affected final method: <code>" + metodoFinal + "</code></p>"
+				+ "<p>This error usually occurs when a mod was compiled for a different version of Minecraft, "
+				+ "Forge, NeoForge, Fabric, Quilt, or a base library.</p>" + "<p><b>What to try:</b></p>" + "<ul>"
+				+ "<li>Update the mod containing the specified class.</li>"
+				+ "<li>If the problem started after updating Minecraft or the loader, try a compatible version of the mod.</li>"
+				+ "<li>If the class belongs to <b>Immersive Portals</b>, check that <b>Immersive Portals</b> exactly matches your Minecraft and loader version.</li>"
+				+ "<li>Avoid mixing mods made for different versions of the loader or Minecraft.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreErrorMetodoFinalSobrescrito() {
+		return "A mod attempts to override a final method";
+	}
+
 }

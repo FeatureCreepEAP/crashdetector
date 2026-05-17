@@ -1,85 +1,210 @@
 package com.asbestosstar.crashdetector.analizador.general;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
-import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
+import com.asbestosstar.crashdetector.buscar.Buscardor;
+import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta errores IncompatibleClassChangeError causados por intentar heredar de
- * una clase marcada como 'final' en versiones recientes de Minecraft o mods.
- * 
+ * una clase marcada como final.
+ *
  * Ejemplo: java.lang.IncompatibleClassChangeError: class A cannot inherit from
  * final class B
  */
 public class ErrorClaseFinalExtendida implements Verificaciones {
 
 	private boolean activado = false;
-	private String mensaje = "";
-
-	// Patrón reutilizable para extraer la clase hija y la clase padre final.
-	private static final Pattern PATRON_CLASE_FINAL = Pattern.compile(
-			"java\\.lang\\.IncompatibleClassChangeError: class ([^ ]+) cannot inherit from final class ([^\\s]+)");
-
-	/**
-	 * Bandera ligera para saber si el log contiene indicios de este error. Se usa
-	 * como filtro rápido antes del análisis línea a línea.
-	 */
 	private boolean posibleErrorClaseFinal = false;
+
+	private String mensaje = "";
+	private String claseHija = "";
+	private String clasePadreFinal = "";
+
+	private final List<ArchivoDeMod> modsClaseHija = new ArrayList<>();
+	private final List<ArchivoDeMod> modsClasePadreFinal = new ArrayList<>();
 
 	@Override
 	public void verificar(Consola consola) {
-		// Trabajo global mínimo: solo comprobamos si el texto base del error aparece
-		// en algún punto del log. Si no, la verificación por línea se saltará.
 		String contenido = consola.contenido_verificar;
+
 		if (contenido == null) {
-			posibleErrorClaseFinal = false;
 			return;
 		}
 
 		posibleErrorClaseFinal = contenido.contains("IncompatibleClassChangeError: class")
-				&& contenido.contains("cannot inherit from final class");
+				&& contenido.contains(" cannot inherit from final class ");
 	}
 
 	@Override
 	public void verificar(Consola consola, String linea, int numero_de_linea) {
-		// Si ya se activó o sabemos que el log no contiene este tipo de error,
-		// no hacemos trabajo adicional.
 		if (this.activado || !posibleErrorClaseFinal || linea == null) {
 			return;
 		}
 
-		Matcher m = PATRON_CLASE_FINAL.matcher(linea);
-		if (m.find()) {
-			String claseHija = m.group(1);
-			String clasePadreFinal = m.group(2);
-
-			String enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
-			this.mensaje = MonitorDePID.idioma.errorClaseFinalExtendida(claseHija, clasePadreFinal) + enlaceHtml;
-			this.activado = true;
+		if (!linea.contains("IncompatibleClassChangeError: class")
+				|| !linea.contains(" cannot inherit from final class ")) {
+			return;
 		}
+
+		if (!extraerClases(linea)) {
+			return;
+		}
+
+		buscarModsRelacionados();
+
+		String enlaceHtml = consola.agregarErrorALectador(numero_de_linea, this);
+
+		StringBuilder sb = new StringBuilder();
+		sb.append(MonitorDePID.idioma.errorClaseFinalExtendida(claseHija, clasePadreFinal));
+
+		String modsHija = formatearMods(modsClaseHija);
+		String modsPadre = formatearMods(modsClasePadreFinal);
+
+		List<String> valores = new ArrayList<>();
+
+		if (!modsHija.isEmpty()) {
+			valores.add(modsHija);
+		}
+
+		if (!modsPadre.isEmpty()) {
+			valores.add(modsPadre);
+		}
+
+		if (!valores.isEmpty()) {
+			sb.append("<p>(").append(String.join(", ", valores)).append(")</p>");
+		}
+
+		sb.append(enlaceHtml);
+
+		this.mensaje = sb.toString();
+		this.activado = true;
+	}
+
+	private boolean extraerClases(String linea) {
+		String inicioTexto = "IncompatibleClassChangeError: class ";
+		String separador = " cannot inherit from final class ";
+
+		int inicio = linea.indexOf(inicioTexto);
+		if (inicio == -1) {
+			return false;
+		}
+
+		inicio += inicioTexto.length();
+
+		int medio = linea.indexOf(separador, inicio);
+		if (medio == -1) {
+			return false;
+		}
+
+		String hija = linea.substring(inicio, medio).trim();
+		String padre = linea.substring(medio + separador.length()).trim();
+
+		if (hija.isEmpty() || padre.isEmpty()) {
+			return false;
+		}
+
+		this.claseHija = limpiarClase(hija);
+		this.clasePadreFinal = limpiarClase(padre);
+
+		return !this.claseHija.isEmpty() && !this.clasePadreFinal.isEmpty();
+	}
+
+	private void buscarModsRelacionados() {
+		try {
+			Buscardor.cargar();
+
+			modsClaseHija.clear();
+			modsClasePadreFinal.clear();
+
+			if (claseHija != null && !claseHija.isEmpty()) {
+				modsClaseHija.addAll(buscarModsConClase(claseHija));
+			}
+
+			if (clasePadreFinal != null && !clasePadreFinal.isEmpty() && !clasePadreFinal.equals(claseHija)) {
+				modsClasePadreFinal.addAll(buscarModsConClase(clasePadreFinal));
+			}
+		} catch (Throwable ignorado) {
+		}
+	}
+
+	private List<ArchivoDeMod> buscarModsConClase(String clase) {
+		List<ArchivoDeMod> encontrados = new ArrayList<>();
+
+		try {
+			String clasePunto = limpiarClase(clase);
+			String claseInterna = clasePunto.replace('.', '/');
+
+			List<ArchivoDeMod> resultadoInterno = Buscardor.buscarModsConTermino(claseInterna);
+			if (resultadoInterno != null) {
+				encontrados.addAll(resultadoInterno);
+			}
+
+			if (!claseInterna.equals(clasePunto)) {
+				List<ArchivoDeMod> resultadoPunto = Buscardor.buscarModsConTermino(clasePunto);
+				if (resultadoPunto != null) {
+					encontrados.addAll(resultadoPunto);
+				}
+			}
+		} catch (Throwable ignorado) {
+		}
+
+		return encontrados.stream().distinct().collect(Collectors.toList());
+	}
+
+	private String limpiarClase(String clase) {
+		if (clase == null) {
+			return "";
+		}
+
+		String limpia = clase.trim();
+
+		if (limpia.startsWith("class ")) {
+			limpia = limpia.substring("class ".length()).trim();
+		}
+
+		if (limpia.startsWith("interface ")) {
+			limpia = limpia.substring("interface ".length()).trim();
+		}
+
+		int modulo = limpia.indexOf(" in ");
+		if (modulo > -1) {
+			limpia = limpia.substring(0, modulo).trim();
+		}
+
+		int espacio = limpia.indexOf(' ');
+		if (espacio > -1) {
+			limpia = limpia.substring(0, espacio).trim();
+		}
+
+		return limpia.replace('/', '.').replace("'", "").replace("\"", "").trim();
+	}
+
+	private String formatearMods(List<ArchivoDeMod> mods) {
+		if (mods == null || mods.isEmpty()) {
+			return "";
+		}
+
+		return mods.stream().map(mod -> "<b>" + Buscardor.rutaParaPublicar(mod.ubicacion_para_publicar()) + "</b>")
+				.distinct().collect(Collectors.joining(", "));
 	}
 
 	@Override
 	public boolean ocupaTrazo(TraceInfo trazo) {
-		// Para evitar falsos positivos, solo marcamos el trazo si:
-		// - El verificador ya se activó
-		// - El trazo no es nulo
-		// - El texto del trazo contiene la forma básica del error
 		if (!activado || trazo == null || trazo.trace == null) {
 			return false;
 		}
-		String t = trazo.trace;
-		if (!(t.contains("IncompatibleClassChangeError: class") && t.contains("cannot inherit from final class"))) {
-			return false;
-		}
-		// Comprobación más precisa usando el mismo patrón que en la verificación.
-		return PATRON_CLASE_FINAL.matcher(t).find();
+
+		return trazo.trace.contains("IncompatibleClassChangeError: class")
+				&& trazo.trace.contains(" cannot inherit from final class ");
 	}
 
 	@Override
@@ -99,7 +224,7 @@ public class ErrorClaseFinalExtendida implements Verificaciones {
 
 	@Override
 	public float prioridad() {
-		return 820.0f; // Alta: impide la carga del mod
+		return 820.0f;
 	}
 
 	@Override
@@ -120,15 +245,12 @@ public class ErrorClaseFinalExtendida implements Verificaciones {
 
 	@Override
 	public Documento docs() {
-		// TODO Auto-generated method stub
 		return Documento.NINGUN;
 	}
 
 	@Override
 	public String enlaceACodigo() {
-		// TODO Auto-generated method stub
 		return "https://pagure.io/CrashDetectorMC/blob/main/f/src/main/java/com/asbestosstar/crashdetector/analizador/general/"
 				+ this.getClass().getSimpleName() + ".java";
 	}
-
 }

@@ -36,6 +36,7 @@ import com.asbestosstar.crashdetector.analizador.general.ErrorDeMonitorLWJGL;
 import com.asbestosstar.crashdetector.analizador.general.ErrorEntrypointFabric;
 import com.asbestosstar.crashdetector.analizador.general.ErrorJarCorruptoConNombre;
 import com.asbestosstar.crashdetector.analizador.general.ErrorMetodoAbstractoNoImplementado;
+import com.asbestosstar.crashdetector.analizador.general.ErrorMetodoFinalSobrescrito;
 import com.asbestosstar.crashdetector.analizador.general.ErrorMetodoInexistente;
 import com.asbestosstar.crashdetector.analizador.general.ErrorOpenGLMemoriaInsuficiente;
 import com.asbestosstar.crashdetector.analizador.general.ErrorStackSmashingDetected;
@@ -338,6 +339,7 @@ public class Analizador {
 		verificaciones.add(new EntradaDuplicadaIdModerno());
 		verificaciones.add(new ErrorOpenGLMemoriaInsuficiente());
 		verificaciones.add(new ErrorVerificacionBytecode());
+		verificaciones.add(new ErrorMetodoFinalSobrescrito());
 
 		verificaciones.add(new PirataMC());
 		verificaciones.add(new LanzerNoAnimado());

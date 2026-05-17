@@ -1,15 +1,19 @@
 package com.asbestosstar.crashdetector.analizador.general;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.asbestosstar.crashdetector.Consola;
-import com.asbestosstar.crashdetector.CrashDetectorLogger;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.QuickFix.Builder;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
+import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
@@ -29,6 +33,8 @@ public class JavaVersiones implements Verificaciones {
 	private static final String TEXTO_UNSUPPORTED_CLASS = "UnsupportedClassVersionError:";
 	private static final String TEXTO_JAVA22 = "Unsupported class file major version";
 	private static final String TEXTO_JAVA8 = "Unsupported major.minor version 52.0";
+
+	private final List<ArchivoDeMod> modsRelacionados = new ArrayList<>();
 
 	// =========================
 	// Verificación global barata
@@ -59,7 +65,11 @@ public class JavaVersiones implements Verificaciones {
 			String clase = extraerClase(linea);
 			if (clase != null) {
 				claseConProblema = clase;
+
+				buscarModsRelacionados();
+
 				mensajes.add(MonitorDePID.idioma.javaObsoleta() + " JVM: " + determinarVersionJava(linea));
+
 				enlace = consola.agregarErrorALectador(numero_de_linea, this);
 				activado = true;
 			}
@@ -76,6 +86,42 @@ public class JavaVersiones implements Verificaciones {
 			enlace = consola.agregarErrorALectador(numero_de_linea, this);
 			activado = true;
 		}
+	}
+
+	private void buscarModsRelacionados() {
+		try {
+			Buscardor.cargar();
+
+			modsRelacionados.clear();
+
+			agregarResultados(claseConProblema);
+			agregarResultados(claseConProblema.replace('.', '/'));
+		} catch (Throwable ignorado) {
+		}
+	}
+
+	private void agregarResultados(String termino) {
+		if (termino == null || termino.trim().isEmpty()) {
+			return;
+		}
+
+		try {
+			List<ArchivoDeMod> encontrados = Buscardor.buscarModsConTermino(termino.trim());
+
+			if (encontrados != null) {
+				modsRelacionados.addAll(encontrados);
+			}
+		} catch (Throwable ignorado) {
+		}
+	}
+
+	private String formatearMods(List<ArchivoDeMod> mods) {
+		if (mods == null || mods.isEmpty()) {
+			return "";
+		}
+
+		return mods.stream().map(mod -> "<b>" + Buscardor.rutaParaPublicar(mod.ubicacion_para_publicar()) + "</b>")
+				.distinct().collect(Collectors.joining(", "));
 	}
 
 	// =========================
@@ -157,12 +203,31 @@ public class JavaVersiones implements Verificaciones {
 	public String mensaje() {
 		if (mensajes.isEmpty())
 			return "";
+
 		StringBuilder html = new StringBuilder("<ul>");
-		for (String msg : mensajes)
+
+		for (String msg : mensajes) {
 			html.append("<li>").append(msg).append("</li>");
-		if (claseConProblema != null)
-			html.append("<li><b>Clase:</b> ").append(claseConProblema).append("</li>");
+		}
+
+		if (claseConProblema != null) {
+			html.append("<li><b>Clase:</b> ").append(claseConProblema);
+
+			String mods = formatearMods(modsRelacionados);
+
+			if (!mods.isEmpty()) {
+				html.append(" (").append(mods).append(")");
+			}
+
+			html.append("</li>");
+		}
+
 		html.append("</ul>");
+
+		if (enlace != null) {
+			html.append(enlace);
+		}
+
 		return html.toString();
 	}
 

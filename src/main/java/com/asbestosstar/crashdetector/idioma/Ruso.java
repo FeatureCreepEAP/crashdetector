@@ -9350,4 +9350,25 @@ public class Ruso implements Idioma {
 				+ "<p>Общие решения: обновить затронутый мод, удалить несовместимые моды, проверить аддоны основного мода или попробовать запустить игру без модов, использующих миксины/трансформеры для того же класса.</p>";
 	}
 
+	@Override
+	public String errorMetodoFinalSobrescrito(String claseQueSobrescribe, String metodoFinal) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Ошибка совместимости: мод пытается переопределить финальный метод.</b>"
+				+ "<p>Лог содержит ошибку <b>IncompatibleClassChangeError</b> с текстом "
+				+ "<b>overrides final method</b>.</p>" + "<p>Затронутый класс: <code>" + claseQueSobrescribe
+				+ "</code></p>" + "<p>Затронутый финальный метод: <code>" + metodoFinal + "</code></p>"
+				+ "<p>Эта ошибка обычно возникает, когда мод был скомпилирован для другой версии Minecraft, "
+				+ "Forge, NeoForge, Fabric, Quilt или базовой библиотеки.</p>" + "<p><b>Что попробовать:</b></p>"
+				+ "<ul>" + "<li>Обновите мод, содержащий указанный класс.</li>"
+				+ "<li>Если проблема началась после обновления Minecraft или загрузчика, попробуйте совместимую версию мода.</li>"
+				+ "<li>Если класс принадлежит <b>Immersive Portals</b>, убедитесь, что <b>Immersive Portals</b> точно соответствует вашей версии Minecraft и загрузчика.</li>"
+				+ "<li>Избегайте смешивания модов, созданных для разных версий загрузчика или Minecraft.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreErrorMetodoFinalSobrescrito() {
+		return "Мод пытается переопределить final-метод";
+	}
+
 }

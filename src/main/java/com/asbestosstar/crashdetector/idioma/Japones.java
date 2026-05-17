@@ -8985,4 +8985,24 @@ public class Japones implements Idioma {
 				+ "<p>一般的な解決策: 影響を受けた mod を更新する、互換性のない mod を削除する、主要な mod のアドオンを確認する、または同じクラスに mixins/transformers を使用する mod なしで試す。</p>";
 	}
 
+	// Japanese (日本語)
+	@Override
+	public String errorMetodoFinalSobrescrito(String claseQueSobrescribe, String metodoFinal) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "互換性エラー: mod が final メソッドをオーバーライドしようとしています。</b>"
+				+ "<p>ログにはテキスト <b>overrides final method</b> を伴う <b>IncompatibleClassChangeError</b> が含まれています。</p>"
+				+ "<p>影響を受けたクラス: <code>" + claseQueSobrescribe + "</code></p>" + "<p>影響を受けた final メソッド: <code>"
+				+ metodoFinal + "</code></p>"
+				+ "<p>このエラーは通常、mod が異なるバージョンの Minecraft、Forge、NeoForge、Fabric、Quilt、または基本ライブラリ用にコンパイルされた場合に発生します。</p>"
+				+ "<p><b>試すべきこと:</b></p>" + "<ul>" + "<li>指定されたクラスを含む mod を更新してください。</li>"
+				+ "<li>Minecraft またはローダーの更新後に問題が発生した場合は、mod の互換バージョンを試してください。</li>"
+				+ "<li>クラスが <b>Immersive Portals</b> に属している場合は、<b>Immersive Portals</b> が使用している Minecraft およびローダーのバージョンと正確に一致しているか確認してください。</li>"
+				+ "<li>ローダーまたは Minecraft の異なるバージョン用に作成された mod を混在させないでください。</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreErrorMetodoFinalSobrescrito() {
+		return "mod が final メソッドをオーバーライドしようとしています";
+	}
+
 }

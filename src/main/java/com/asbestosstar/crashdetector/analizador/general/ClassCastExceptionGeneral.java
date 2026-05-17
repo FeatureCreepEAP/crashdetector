@@ -1,52 +1,38 @@
 package com.asbestosstar.crashdetector.analizador.general;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.asbestosstar.crashdetector.Consola;
 import com.asbestosstar.crashdetector.MonitorDePID;
 import com.asbestosstar.crashdetector.analizador.QuickFix;
 import com.asbestosstar.crashdetector.analizador.VerificacionDeStackTrace.TraceInfo;
 import com.asbestosstar.crashdetector.analizador.Verificaciones;
+import com.asbestosstar.crashdetector.buscar.ArchivoDeMod;
+import com.asbestosstar.crashdetector.buscar.Buscardor;
 import com.asbestosstar.crashdetector.gui.tipos.docs.Documento;
 
 /**
  * Detecta errores generales de ClassCastException en logs de Minecraft.
- *
- * <p>
- * Estos errores indican que una clase fue tratada como si fuera otra clase o
- * interfaz incompatible. Eso puede pasar por:
- *
- * <ul>
- * <li>Mods incompatibles entre sí.</li>
- * <li>Mixins o transformers que alteran clases de forma no compatible.</li>
- * <li>Otro mod presente en el stacktrace que provoca el "miscast".</li>
- * </ul>
- *
- * <p>
- * Importante: un ClassCastException no siempre es fatal, pero con bastante
- * frecuencia sí termina causando el fallo principal.
  */
 public class ClassCastExceptionGeneral implements Verificaciones {
 
-	// Indica si el log contiene indicios globales de un ClassCastException
 	private boolean posibleError = false;
-
-	// Indica si esta verificación ya quedó activada
 	private boolean activado = false;
 
-	// Guarda la línea principal del ClassCastException
 	private String lineaClassCast = "";
-
-	// Enlace a la línea más representativa del error
 	private String enlace = "";
+
+	private String claseOrigen = "";
+	private String claseDestino = "";
+
+	private final List<ArchivoDeMod> modsClaseOrigen = new ArrayList<>();
+	private final List<ArchivoDeMod> modsClaseDestino = new ArrayList<>();
 
 	@Override
 	public void verificar(Consola consola) {
-		// Limpiar estado porque la misma instancia puede analizar más de un log
-		posibleError = false;
-		activado = false;
-		lineaClassCast = "";
-		enlace = "";
 
-		// Detección global ligera para evitar trabajo innecesario por línea
 		if (consola.contenido_verificar.contains("java.lang.ClassCastException:")
 				&& consola.contenido_verificar.contains(" cannot be cast to ")) {
 			posibleError = true;
@@ -55,23 +41,15 @@ public class ClassCastExceptionGeneral implements Verificaciones {
 
 	@Override
 	public void verificar(Consola consola, String linea, int num) {
-		// Salir temprano si no hay indicios globales o si ya fue activado
-		if (!posibleError || activado) {
+		if (!posibleError || activado || linea == null) {
 			return;
 		}
 
-		// Confirmación precisa por línea
 		if (linea.contains("java.lang.ClassCastException:") && linea.contains(" cannot be cast to ")) {
 
-			// Ignorar caso conocido:
-			// java.lang.ClassCastException: class java.lang.Integer cannot be cast to class
-			// java.util.List
-			// at ...oneauras-cart-optimizer...
 			if (linea.contains("class java.lang.Integer cannot be cast to class java.util.List")) {
 				String[] lineas = consola.contenido_verificar.split("\\R", -1);
 
-				// num debe ser el número de línea actual. Si num empieza en 1, la siguiente
-				// línea está en lineas[num]. Si num empieza en 0, ajusta esto a num + 1.
 				if (num >= 0 && num < lineas.length && lineas[num].contains("oneauras-cart-optimizer")) {
 					return;
 				}
@@ -79,8 +57,105 @@ public class ClassCastExceptionGeneral implements Verificaciones {
 
 			this.lineaClassCast = linea.trim();
 			this.enlace = consola.agregarErrorALectador(num, this);
+
+			extraerClases(lineaClassCast);
+			buscarModsRelacionados();
+
 			this.activado = true;
 		}
+	}
+
+	private void extraerClases(String linea) {
+		try {
+			String texto = linea;
+
+			int inicio = texto.indexOf("java.lang.ClassCastException:");
+			if (inicio > -1) {
+				texto = texto.substring(inicio + "java.lang.ClassCastException:".length()).trim();
+			}
+
+			String separador = " cannot be cast to ";
+			int idx = texto.indexOf(separador);
+
+			if (idx == -1) {
+				return;
+			}
+
+			claseOrigen = limpiarClase(texto.substring(0, idx));
+			claseDestino = limpiarClase(texto.substring(idx + separador.length()));
+		} catch (Throwable ignorado) {
+		}
+	}
+
+	private void buscarModsRelacionados() {
+		try {
+			Buscardor.cargar();
+
+			if (claseOrigen != null && !claseOrigen.isEmpty()) {
+				modsClaseOrigen.addAll(buscarModsConClase(claseOrigen));
+			}
+
+			if (claseDestino != null && !claseDestino.isEmpty() && !claseDestino.equals(claseOrigen)) {
+				modsClaseDestino.addAll(buscarModsConClase(claseDestino));
+			}
+		} catch (Throwable ignorado) {
+		}
+	}
+
+	private List<ArchivoDeMod> buscarModsConClase(String clase) {
+		List<ArchivoDeMod> encontrados = new ArrayList<>();
+
+		try {
+			String clasePunto = limpiarClase(clase);
+			String claseInterna = clasePunto.replace('.', '/');
+
+			List<ArchivoDeMod> resultadoInterno = Buscardor.buscarModsConTermino(claseInterna);
+			if (resultadoInterno != null) {
+				encontrados.addAll(resultadoInterno);
+			}
+
+			if (!claseInterna.equals(clasePunto)) {
+				List<ArchivoDeMod> resultadoPunto = Buscardor.buscarModsConTermino(clasePunto);
+				if (resultadoPunto != null) {
+					encontrados.addAll(resultadoPunto);
+				}
+			}
+		} catch (Throwable ignorado) {
+		}
+
+		return encontrados.stream().distinct().collect(Collectors.toList());
+	}
+
+	private String limpiarClase(String clase) {
+		if (clase == null) {
+			return "";
+		}
+
+		String limpia = clase.trim();
+
+		if (limpia.startsWith("class ")) {
+			limpia = limpia.substring("class ".length()).trim();
+		}
+
+		if (limpia.startsWith("interface ")) {
+			limpia = limpia.substring("interface ".length()).trim();
+		}
+
+		int modulo = limpia.indexOf(" in ");
+		if (modulo > -1) {
+			limpia = limpia.substring(0, modulo).trim();
+		}
+
+		return limpia.replace('/', '.').replace("'", "").replace("\"", "").trim();
+	}
+
+	private String formatearMods(List<ArchivoDeMod> mods) {
+		if (mods == null || mods.isEmpty()) {
+			return "";
+		}
+
+		return mods.stream().map(mod -> "<b>" + Buscardor.rutaParaPublicar(mod.ubicacion_para_publicar()) + "</b>")
+				.distinct().collect(Collectors.joining(", "));
 	}
 
 	@Override
@@ -100,7 +175,29 @@ public class ClassCastExceptionGeneral implements Verificaciones {
 
 	@Override
 	public String mensaje() {
-		return MonitorDePID.idioma.mensajeClassCastExceptionGeneral(lineaClassCast) + this.enlace;
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(MonitorDePID.idioma.mensajeClassCastExceptionGeneral(lineaClassCast));
+
+		String modsOrigen = formatearMods(modsClaseOrigen);
+		String modsDestino = formatearMods(modsClaseDestino);
+
+		List<String> valores = new ArrayList<>();
+
+		if (!modsOrigen.isEmpty()) {
+			valores.add(modsOrigen);
+		}
+
+		if (!modsDestino.isEmpty()) {
+			valores.add(modsDestino);
+		}
+
+		if (!valores.isEmpty()) {
+			sb.append("<p>(").append(String.join(", ", valores)).append(")</p>");
+		}
+
+		sb.append(this.enlace);
+		return sb.toString();
 	}
 
 	@Override

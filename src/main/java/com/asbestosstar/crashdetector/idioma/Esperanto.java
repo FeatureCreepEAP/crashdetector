@@ -9323,4 +9323,25 @@ public class Esperanto implements Idioma {
 				+ "<p>Komunaj solvoj: ĝisdatigi la afektitan modon, forigi nekongruajn modojn, kontroli aldonaĵojn de la ĉefa mod, aŭ provi sen modoj, kiuj uzas mixins/transformilojn sur la sama klaso.</p>";
 	}
 
+	// Esperanto (Esperanto)
+	@Override
+	public String errorMetodoFinalSobrescrito(String claseQueSobrescribe, String metodoFinal) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Eraro de kongrueco: modo provas superskribi finan metodon.</b>"
+				+ "<p>La protokolo enhavas eraron <b>IncompatibleClassChangeError</b> kun la teksto "
+				+ "<b>overrides final method</b>.</p>" + "<p>Afektita klaso: <code>" + claseQueSobrescribe
+				+ "</code></p>" + "<p>Afektita fina metodo: <code>" + metodoFinal + "</code></p>"
+				+ "<p>Ĉi tiu eraro kutime okazas kiam mod estis kompilita por malsama versio de Minecraft, "
+				+ "Forge, NeoForge, Fabric, Quilt, aŭ baza biblioteko.</p>" + "<p><b>Kion provi:</b></p>" + "<ul>"
+				+ "<li>Ĝisdatigu la modon, kiu enhavas la indikitan klason.</li>"
+				+ "<li>Se la problemo komenciĝis post ĝisdatigo de Minecraft aŭ la ŝargilo, provu kongruan version de la modo.</li>"
+				+ "<li>Se la klaso apartenas al <b>Immersive Portals</b>, certigu, ke <b>Immersive Portals</b> ekzakte kongruas kun via versio de Minecraft kaj la ŝargilo.</li>"
+				+ "<li>Evitu miksadi modojn faritajn por malsamaj versioj de la ŝargilo aŭ Minecraft.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreErrorMetodoFinalSobrescrito() {
+		return "Modo provas superskribi finan metodon";
+	}
+
 }

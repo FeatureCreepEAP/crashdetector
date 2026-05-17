@@ -9539,4 +9539,24 @@ public class Tailandes implements Idioma {
 				+ "<p>วิธีแก้ทั่วไป: อัปเดตมอดที่ได้รับผลกระทบ ลบมอดที่ไม่เข้ากัน ตรวจสอบ addons ของมอดหลัก หรือลองใช้โดยไม่มีมอดที่ใช้ mixins/transformers กับคลาสเดียวกัน</p>";
 	}
 
+	@Override
+	public String errorMetodoFinalSobrescrito(String claseQueSobrescribe, String metodoFinal) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "ข้อผิดพลาดความเข้ากันได้: มอดพยายามเขียนทับเมธอด final</b>"
+				+ "<p>บันทึกมีข้อผิดพลาด <b>IncompatibleClassChangeError</b> พร้อมข้อความ "
+				+ "<b>overrides final method</b></p>" + "<p>คลาสที่ได้รับผลกระทบ: <code>" + claseQueSobrescribe
+				+ "</code></p>" + "<p>เมธอด final ที่ได้รับผลกระทบ: <code>" + metodoFinal + "</code></p>"
+				+ "<p>ข้อผิดพลาดนี้มักเกิดขึ้นเมื่อมอดถูกคอมไพล์สำหรับเวอร์ชันอื่นของ Minecraft, "
+				+ "Forge, NeoForge, Fabric, Quilt หรือไลบรารีพื้นฐาน</p>" + "<p><b>สิ่งที่ควรลอง:</b></p>" + "<ul>"
+				+ "<li>อัปเดตมอดที่มีคลาสที่ระบุ</li>"
+				+ "<li>หากปัญหาเริ่มขึ้นหลังจากอัปเดต Minecraft หรือตัวโหลด ให้ลองใช้เวอร์ชันของมอดที่เข้ากันได้</li>"
+				+ "<li>หากคลาสเป็นของ <b>Immersive Portals</b> ให้ตรวจสอบว่า <b>Immersive Portals</b> ตรงกับเวอร์ชัน Minecraft และตัวโหลดของคุณอย่างแม่นยำ</li>"
+				+ "<li>หลีกเลี่ยงการผสมมอดที่สร้างมาสำหรับเวอร์ชันต่างกันของตัวโหลดหรือ Minecraft</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreErrorMetodoFinalSobrescrito() {
+		return "มอดพยายามเขียนทับเมธอด final";
+	}
+
 }

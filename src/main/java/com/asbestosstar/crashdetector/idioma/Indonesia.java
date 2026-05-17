@@ -9905,4 +9905,27 @@ public class Indonesia implements Idioma {
 				+ "<p>Solusi umum: perbarui mod yang terpengaruh, hapus mod yang tidak kompatibel, periksa addon dari mod utama, atau coba tanpa mod yang menggunakan mixins/transformer pada kelas yang sama.</p>";
 	}
 
+	// Indonesian (Bahasa Indonesia)
+	@Override
+	public String errorMetodoFinalSobrescrito(String claseQueSobrescribe, String metodoFinal) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Kesalahan kompatibilitas: sebuah mod mencoba menimpa metode final.</b>"
+				+ "<p>Log berisi kesalahan <b>IncompatibleClassChangeError</b> dengan teks "
+				+ "<b>overrides final method</b>.</p>" + "<p>Kelas yang terpengaruh: <code>" + claseQueSobrescribe
+				+ "</code></p>" + "<p>Metode final yang terpengaruh: <code>" + metodoFinal + "</code></p>"
+				+ "<p>Kesalahan ini biasanya terjadi ketika sebuah mod dikompilasi untuk versi Minecraft, "
+				+ "Forge, NeoForge, Fabric, Quilt, atau pustaka dasar yang berbeda.</p>"
+				+ "<p><b>Yang perlu dicoba:</b></p>" + "<ul>"
+				+ "<li>Perbarui mod yang berisi kelas yang disebutkan.</li>"
+				+ "<li>Jika masalah dimulai setelah memperbarui Minecraft atau loader, coba versi mod yang kompatibel.</li>"
+				+ "<li>Jika kelas tersebut milik <b>Immersive Portals</b>, pastikan <b>Immersive Portals</b> cocok persis dengan versi Minecraft dan loader Anda.</li>"
+				+ "<li>Hindari mencampur mod yang dibuat untuk versi loader atau Minecraft yang berbeda.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreErrorMetodoFinalSobrescrito() {
+		return "Sebuah mod mencoba menimpa metode final";
+	}
+
 }

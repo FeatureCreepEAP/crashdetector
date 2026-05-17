@@ -9777,4 +9777,24 @@ public class Lao implements Idioma {
 				+ "<p>ວິທີແກ້ໄຂທົ່ວໄປ: ອັບເດດ mod ທີ່ໄດ້ຮັບຜົນກະທົບ, ລຶບ mod ທີ່ບໍ່ເຂົ້າກັນ, ກວດສອບ addons ຂອງ mod ຫຼັກ, ຫຼື ລອງໃຊ້ໂດຍບໍ່ມີ mod ທີ່ໃຊ້ mixins/transformers ກັບຄລາສດຽວກັນ.</p>";
 	}
 
+	@Override
+	public String errorMetodoFinalSobrescrito(String claseQueSobrescribe, String metodoFinal) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "ຂໍ້ຜິດພາດຄວາມເຂົ້າກັນໄດ້: ມອດພະຍາຍາມຂຽນທັບເມທອດ final.</b>"
+				+ "<p>ບັນທຶກມີຂໍ້ຜິດພາດ <b>IncompatibleClassChangeError</b> ພ້ອມຂໍ້ຄວາມ "
+				+ "<b>overrides final method</b>.</p>" + "<p>ຄລາສທີ່ໄດ້ຮັບຜົນກະທົບ: <code>" + claseQueSobrescribe
+				+ "</code></p>" + "<p>ເມທອດ final ທີ່ໄດ້ຮັບຜົນກະທົບ: <code>" + metodoFinal + "</code></p>"
+				+ "<p>ຂໍ້ຜິດພາດນີ້ມັກເກີດຂຶ້ນເມື່ອມອດຖືກ compile ສຳລັບເວີຊັນຕ່າງຂອງ Minecraft, "
+				+ "Forge, NeoForge, Fabric, Quilt, ຫຼື ຫໍສະໝຸດພື້ນຖານ.</p>" + "<p><b>ສິ່ງທີ່ຄວນລອງ:</b></p>" + "<ul>"
+				+ "<li>ອັບເດດມອດທີ່ມີຄລາສທີ່ລະບຸ.</li>"
+				+ "<li>ຖ້າບັນຫາເລີ່ມຕົ້ນຫຼັງຈາກອັບເດດ Minecraft ຫຼື loader, ລອງໃຊ້ເວີຊັນຂອງມອດທີ່ເຂົ້າກັນໄດ້.</li>"
+				+ "<li>ຖ້າຄລາສເປັນຂອງ <b>Immersive Portals</b>, ກວດສອບໃຫ້ແນ່ໃຈວ່າ <b>Immersive Portals</b> ກົງກັບເວີຊັນ Minecraft ແລະ loader ຂອງທ່ານຢ່າງແນ່ນອນ.</li>"
+				+ "<li>ຢ່ານຳມອດທີ່ສ້າງມາສຳລັບເວີຊັນຕ່າງຂອງ loader ຫຼື Minecraft ມາປະສົມກັນ.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreErrorMetodoFinalSobrescrito() {
+		return "ມອດພະຍາຍາມຂຽນທັບເມທອດ final";
+	}
+
 }

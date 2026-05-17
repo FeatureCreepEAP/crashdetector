@@ -9565,4 +9565,25 @@ public class Vietnamita implements Idioma {
 				+ "<p>Các giải pháp phổ biến: cập nhật mod bị ảnh hưởng, xóa các mod không tương thích, kiểm tra các addon của mod chính, hoặc thử chạy mà không có các mod sử dụng mixins/transformers trên cùng một lớp.</p>";
 	}
 
+	@Override
+	public String errorMetodoFinalSobrescrito(String claseQueSobrescribe, String metodoFinal) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Lỗi tương thích: một mod đang cố ghi đè một phương thức final.</b>"
+				+ "<p>Log chứa lỗi <b>IncompatibleClassChangeError</b> với dòng chữ "
+				+ "<b>overrides final method</b>.</p>" + "<p>Lớp bị ảnh hưởng: <code>" + claseQueSobrescribe
+				+ "</code></p>" + "<p>Phương thức final bị ảnh hưởng: <code>" + metodoFinal + "</code></p>"
+				+ "<p>Lỗi này thường xảy ra khi một mod được biên dịch cho phiên bản khác của Minecraft, "
+				+ "Forge, NeoForge, Fabric, Quilt hoặc một thư viện nền tảng.</p>" + "<p><b>Những điều nên thử:</b></p>"
+				+ "<ul>" + "<li>Cập nhật mod chứa lớp được chỉ định.</li>"
+				+ "<li>Nếu sự cố bắt đầu sau khi cập nhật Minecraft hoặc trình tải, hãy thử phiên bản tương thích của mod.</li>"
+				+ "<li>Nếu lớp thuộc về <b>Immersive Portals</b>, hãy kiểm tra xem <b>Immersive Portals</b> có khớp chính xác với phiên bản Minecraft và trình tải của bạn không.</li>"
+				+ "<li>Tránh trộn các mod được làm cho các phiên bản khác nhau của trình tải hoặc Minecraft.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreErrorMetodoFinalSobrescrito() {
+		return "Một mod cố ghi đè một phương thức final";
+	}
+
 }

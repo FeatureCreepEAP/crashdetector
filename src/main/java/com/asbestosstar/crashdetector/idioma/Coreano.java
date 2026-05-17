@@ -8976,4 +8976,24 @@ public class Coreano implements Idioma {
 				+ "<p>일반적인 해결책: 영향을 받은 mod 업데이트, 호환되지 않는 mod 제거, 주요 mod의 애드온 확인, 또는 동일한 클래스에 mixins/transformers를 사용하는 mod 없이 테스트하기.</p>";
 	}
 
+	// Korean (Munhwaŏ / Standard Korean) (한국어)
+	@Override
+	public String errorMetodoFinalSobrescrito(String claseQueSobrescribe, String metodoFinal) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "호환성 오류: 한 mod가 final 메서드를 재정의하려고 시도합니다.</b>"
+				+ "<p>로그에 텍스트 <b>overrides final method</b>가 포함된 <b>IncompatibleClassChangeError</b> 오류가 있습니다.</p>"
+				+ "<p>영향을 받은 클래스: <code>" + claseQueSobrescribe + "</code></p>" + "<p>영향을 받은 final 메서드: <code>"
+				+ metodoFinal + "</code></p>"
+				+ "<p>이 오류는 일반적으로 mod가 다른 버전의 Minecraft, Forge, NeoForge, Fabric, Quilt 또는 기본 라이브러리를 위해 컴파일되었을 때 발생합니다.</p>"
+				+ "<p><b>시도해 볼 사항:</b></p>" + "<ul>" + "<li>지정된 클래스를 포함하는 mod를 업데이트하십시오.</li>"
+				+ "<li>문제가 Minecraft 또는 로더 업데이트 후에 시작되었다면 mod의 호환 버전을 사용해 보십시오.</li>"
+				+ "<li>클래스가 <b>Immersive Portals</b>에 속한다면 <b>Immersive Portals</b>가 사용 중인 Minecraft 및 로더 버전과 정확히 일치하는지 확인하십시오.</li>"
+				+ "<li>로더 또는 Minecraft의 다른 버전을 위해 제작된 mod를 섞지 마십시오.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreErrorMetodoFinalSobrescrito() {
+		return "한 mod가 final 메서드를 재정의하려고 시도함";
+	}
+
 }

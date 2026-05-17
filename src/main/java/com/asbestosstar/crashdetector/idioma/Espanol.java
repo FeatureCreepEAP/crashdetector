@@ -10064,4 +10064,24 @@ public class Espanol implements Idioma {
 				+ "<p>Soluciones comunes: actualizar el mod afectado, quitar mods incompatibles, revisar addons del mod principal, o probar sin mods que usan mixins/transformers sobre la misma clase.</p>";
 	}
 
+	@Override
+	public String errorMetodoFinalSobrescrito(String claseQueSobrescribe, String metodoFinal) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Error de compatibilidad: un mod intenta sobrescribir un método final.</b>"
+				+ "<p>La bitácora contiene un error <b>IncompatibleClassChangeError</b> con el texto "
+				+ "<b>overrides final method</b>.</p>" + "<p>Clase afectada: <code>" + claseQueSobrescribe
+				+ "</code></p>" + "<p>Método final afectado: <code>" + metodoFinal + "</code></p>"
+				+ "<p>Este error normalmente ocurre cuando un mod fue compilado para una versión diferente de Minecraft, "
+				+ "Forge, NeoForge, Fabric, Quilt, o una librería base.</p>" + "<p><b>Qué probar:</b></p>" + "<ul>"
+				+ "<li>Actualiza el mod que contiene la clase indicada.</li>"
+				+ "<li>Si el problema empezó después de actualizar Minecraft o el cargador, prueba una versión compatible del mod.</li>"
+				+ "<li>Si la clase pertenece a <b>Immersive Portals</b>, revisa que <b>Immersive Portals</b> coincida exactamente con tu versión de Minecraft y cargador.</li>"
+				+ "<li>Evita mezclar mods hechos para versiones distintas del cargador o de Minecraft.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreErrorMetodoFinalSobrescrito() {
+		return "Un mod intenta sobrescribir un método final";
+	}
+
 }

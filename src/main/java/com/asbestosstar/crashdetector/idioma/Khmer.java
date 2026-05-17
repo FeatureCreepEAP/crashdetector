@@ -9523,4 +9523,25 @@ public class Khmer implements Idioma {
 				+ "<p>ដំណោះស្រាយទូទៅ: ធ្វើបច្ចុប្បន្នភាព mod ដែលរងផលប៉ះពាល់, ដក mod ដែលមិនស៊ីសង្វាក់គ្នា, ពិនិត្យមើល addons នៃ mod ចម្បង, ឬសាកល្បងដោយគ្មាន mod ដែលប្រើ mixins/transformers លើថ្នាក់ដូចគ្នា។</p>";
 	}
 
+	// Khmer (ភាសាខ្មែរ)
+	@Override
+	public String errorMetodoFinalSobrescrito(String claseQueSobrescribe, String metodoFinal) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "កំហុសភាពស៊ីសង្វាក់គ្នា៖ mod មួយកំពុងព្យាយាមលុបចោល (override) វិធីសាស្ត្រ final។</b>"
+				+ "<p>កំណត់ហេតុមានកំហុស <b>IncompatibleClassChangeError</b> ជាមួយអត្ថបទ "
+				+ "<b>overrides final method</b>។</p>" + "<p>ថ្នាក់ដែលរងផលប៉ះពាល់៖ <code>" + claseQueSobrescribe
+				+ "</code></p>" + "<p>វិធីសាស្ត្រ final ដែលរងផលប៉ះពាល់៖ <code>" + metodoFinal + "</code></p>"
+				+ "<p>កំហុសនេះជាធម្មតាកើតឡើងនៅពេលដែល mod ត្រូវបានបង្កើត (compiled) សម្រាប់កំណែផ្សេងនៃ Minecraft, "
+				+ "Forge, NeoForge, Fabric, Quilt ឬបណ្ណាល័យមូលដ្ឋាន។</p>" + "<p><b>អ្វីដែលគួរសាកល្បង៖</b></p>" + "<ul>"
+				+ "<li>ធ្វើបច្ចុប្បន្នភាព mod ដែលមានថ្នាក់ដែលបានបញ្ជាក់។</li>"
+				+ "<li>ប្រសិនបើបញ្ហាបានចាប់ផ្តើមបន្ទាប់ពីធ្វើបច្ចុប្បន្នភាព Minecraft ឬ loader សូមសាកល្បងកំណែ mod ដែលស៊ីសង្វាក់គ្នា។</li>"
+				+ "<li>ប្រសិនបើថ្នាក់នេះស្ថិតនៅក្នុង <b>Immersive Portals</b> សូមពិនិត្យមើលថា <b>Immersive Portals</b> ត្រូវគ្នាយ៉ាងជាក់លាក់ជាមួយកំណែ Minecraft និង loader របស់អ្នក។</li>"
+				+ "<li>ជៀសវាងលាយ mod ដែលបង្កើតឡើងសម្រាប់កំណែផ្សេងៗនៃ loader ឬ Minecraft។</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreErrorMetodoFinalSobrescrito() {
+		return "mod មួយកំពុងព្យាយាមលុបចោល (override) វិធីសាស្ត្រ final";
+	}
+
 }

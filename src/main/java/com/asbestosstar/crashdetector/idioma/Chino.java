@@ -8774,4 +8774,22 @@ public class Chino implements Idioma {
 				+ "<p>常见解决方案：更新受影响的 mod，移除不兼容的 mod，检查主 mod 的附加组件，或尝试禁用对同一类使用 mixins/transformers 的 mod。</p>";
 	}
 
+	// Chinese (Simplified) (中文)
+	@Override
+	public String errorMetodoFinalSobrescrito(String claseQueSobrescribe, String metodoFinal) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "兼容性错误：某个 mod 试图覆盖 final 方法。</b>" + "<p>日志包含 <b>IncompatibleClassChangeError</b> 错误，文本为 "
+				+ "<b>overrides final method</b>。</p>" + "<p>受影响的类：<code>" + claseQueSobrescribe + "</code></p>"
+				+ "<p>受影响的 final 方法：<code>" + metodoFinal + "</code></p>"
+				+ "<p>此错误通常发生在 mod 为不同版本的 Minecraft、Forge、NeoForge、Fabric、Quilt 或基础库编译时。</p>" + "<p><b>建议尝试：</b></p>"
+				+ "<ul>" + "<li>更新包含指定类的 mod。</li>" + "<li>如果问题是在更新 Minecraft 或加载器后开始的，请尝试该 mod 的兼容版本。</li>"
+				+ "<li>如果该类属于 <b>Immersive Portals</b>，请确保 <b>Immersive Portals</b> 与您的 Minecraft 版本和加载器完全匹配。</li>"
+				+ "<li>避免混用为不同加载器或 Minecraft 版本制作的 mod。</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreErrorMetodoFinalSobrescrito() {
+		return "某个 mod 试图覆盖 final 方法";
+	}
+
 }

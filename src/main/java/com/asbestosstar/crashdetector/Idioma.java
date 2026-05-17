@@ -3580,4 +3580,8 @@ public interface Idioma {
 
 	public String nombreErrorVerificacionBytecode();
 
+	public String errorMetodoFinalSobrescrito(String claseQueSobrescribe, String metodoFinal);
+
+	public String nombreErrorMetodoFinalSobrescrito();
+
 }

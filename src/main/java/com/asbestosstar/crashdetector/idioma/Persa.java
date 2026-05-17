@@ -9304,4 +9304,25 @@ public class Persa implements Idioma {
 				+ "<p>راه حل‌های رایج: به‌روزرسانی ماد受影响，حذف مادهای ناسازگار، بررسی افزونه‌های ماد اصلی، یا آزمایش بدون مادهایی که از میکسین‌ها/ترنسفورمرها روی همان کلاس استفاده می‌کنند.</p>";
 	}
 
+	@Override
+	public String errorMetodoFinalSobrescrito(String claseQueSobrescribe, String metodoFinal) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "خطای سازگاری: یک ماد سعی دارد یک متد final را بازنویسی کند.</b>"
+				+ "<p>گزارش حاوی خطای <b>IncompatibleClassChangeError</b> با متن "
+				+ "<b>overrides final method</b> است.</p>" + "<p>کلاس آسیب‌دیده: <code>" + claseQueSobrescribe
+				+ "</code></p>" + "<p>متد final آسیب‌دیده: <code>" + metodoFinal + "</code></p>"
+				+ "<p>این خطا معمولاً زمانی رخ می‌دهد که یک ماد برای نسخه متفاوتی از Minecraft، "
+				+ "Forge، NeoForge، Fabric، Quilt یا یک کتابخانه پایه کامپایل شده باشد.</p>"
+				+ "<p><b>چه چیزی را امتحان کنید:</b></p>" + "<ul>"
+				+ "<li>مادی که حاوی کلاس ذکر شده است را به‌روز کنید.</li>"
+				+ "<li>اگر مشکل پس از به‌روزرسانی Minecraft یا لودر شروع شد، نسخه سازگار ماد را امتحان کنید.</li>"
+				+ "<li>اگر کلاس متعلق به <b>Immersive Portals</b> است، بررسی کنید که <b>Immersive Portals</b> دقیقاً با نسخه Minecraft و لودر شما مطابقت داشته باشد.</li>"
+				+ "<li>از ترکیب مادهای ساخته شده برای نسخه‌های مختلف لودر یا Minecraft خودداری کنید.</li>" + "</ul>";
+	}
+
+	@Override
+	public String nombreErrorMetodoFinalSobrescrito() {
+		return "یک ماد سعی در بازنویسی یک متد final دارد";
+	}
+
 }

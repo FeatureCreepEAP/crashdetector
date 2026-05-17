@@ -9891,4 +9891,26 @@ public class Frances implements Idioma {
 				+ "<p>Solutions courantes : mettre à jour le mod affecté, supprimer les mods incompatibles, vérifier les addons du mod principal, ou essayer sans les mods qui utilisent des mixins/transformateurs sur la même classe.</p>";
 	}
 
+	// French (Burkina Faso variant) (Français)
+	@Override
+	public String errorMetodoFinalSobrescrito(String claseQueSobrescribe, String metodoFinal) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Erreur de compatibilité : un mod tente de surcharger une méthode final.</b>"
+				+ "<p>Le journal contient une erreur <b>IncompatibleClassChangeError</b> avec le texte "
+				+ "<b>overrides final method</b>.</p>" + "<p>Classe affectée : <code>" + claseQueSobrescribe
+				+ "</code></p>" + "<p>Méthode final affectée : <code>" + metodoFinal + "</code></p>"
+				+ "<p>Cette erreur se produit généralement lorsqu'un mod a été compilé pour une version différente de Minecraft, "
+				+ "Forge, NeoForge, Fabric, Quilt, ou d'une bibliothèque de base.</p>" + "<p><b>Que tester :</b></p>"
+				+ "<ul>" + "<li>Mettez à jour le mod contenant la classe indiquée.</li>"
+				+ "<li>Si le problème a commencé après avoir mis à jour Minecraft ou le chargeur, essayez une version compatible du mod.</li>"
+				+ "<li>Si la classe appartient à <b>Immersive Portals</b>, vérifiez que <b>Immersive Portals</b> correspond exactement à votre version de Minecraft et du chargeur.</li>"
+				+ "<li>Évitez de mélanger des mods conçus pour des versions différentes du chargeur ou de Minecraft.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreErrorMetodoFinalSobrescrito() {
+		return "Un mod tente de surcharger une méthode final";
+	}
+
 }

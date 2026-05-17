@@ -23,7 +23,7 @@ public class SolicitudBusquedaModsTlmods {
 		if (termino != null && !termino.trim().isEmpty()) {
 			// String codificado = java.net.URLEncoder.encode(termino.trim(),
 			// StandardCharsets.UTF_8);
-			String codificado = java.net.URLEncoder.encode(termino.trim());
+			String codificado = java.net.URLEncoder.encode(termino.trim(), "UTF-8");
 			constructorUrl.append("&search=").append(codificado);
 		}
 

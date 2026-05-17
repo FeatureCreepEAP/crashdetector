@@ -9797,4 +9797,25 @@ public class Suajili implements Idioma {
 				+ "<p>Suluhisho za kawaida: sasisha mod ilioathirika, ondoa mod zisizolingana, angalia addons za mod kuu, au jaribu bila mod zinazotumia mixins/transformers kwenye darasa ileile.</p>";
 	}
 
+	@Override
+	public String errorMetodoFinalSobrescrito(String claseQueSobrescribe, String metodoFinal) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Hitilafu ya ulinganisho: mod inajarikuandika upya njia ya final.</b>"
+				+ "<p>Logi ina hitilafu ya <b>IncompatibleClassChangeError</b> yenye maandishi "
+				+ "<b>overrides final method</b>.</p>" + "<p>Darasa ilioathiriwa: <code>" + claseQueSobrescribe
+				+ "</code></p>" + "<p>Njia ya final ilioathiriwa: <code>" + metodoFinal + "</code></p>"
+				+ "<p>Hitilafu hii mara nyingi hutokea wakati mod ilikompiliwa kwa toleo tofauti la Minecraft, "
+				+ "Forge, NeoForge, Fabric, Quilt, au maktaba ya msingi.</p>" + "<p><b>Nini cha kujaribu:</b></p>"
+				+ "<ul>" + "<li>Sasisha mod inayokata darasa iliyotajwa.</li>"
+				+ "<li>Ikiwa tatizo lilianza baada ya kusasisha Minecraft au loader, jaribu toleo linalolingana la mod.</li>"
+				+ "<li>Ikiwa darasa ni ya <b>Immersive Portals</b>, hakikisha <b>Immersive Portals</b> inalingana kabisa na toleo lako la Minecraft na loader.</li>"
+				+ "<li>Epuka kuchanganya mod zilizotengenezwa kwa matoleo tofauti ya loader au Minecraft.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreErrorMetodoFinalSobrescrito() {
+		return "Mod inajarikuandika upya njia ya final";
+	}
+
 }

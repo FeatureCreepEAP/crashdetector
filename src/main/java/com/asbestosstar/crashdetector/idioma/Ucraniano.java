@@ -8670,4 +8670,25 @@ public class Ucraniano implements Idioma // ucraniano de Majnovschina. ¡NO SOMO
 				+ "<p>Поширені рішення: оновити пошкоджений мод, видалити несумісні моди, перевірити аддони основного моду або спробувати запустити гру без модів, які використовують міксини/трансформери для того ж класу.</p>";
 	}
 
+	@Override
+	public String errorMetodoFinalSobrescrito(String claseQueSobrescribe, String metodoFinal) {
+		return "<b style='color:#" + Config.obtenerInstancia().obtenerColorError() + "'>"
+				+ "Помилка сумісності: мод намагається перевизначити фінальний метод.</b>"
+				+ "<p>Лог містить помилку <b>IncompatibleClassChangeError</b> з текстом "
+				+ "<b>overrides final method</b>.</p>" + "<p>Вражений клас: <code>" + claseQueSobrescribe
+				+ "</code></p>" + "<p>Вражений фінальний метод: <code>" + metodoFinal + "</code></p>"
+				+ "<p>Ця помилка зазвичай виникає, коли мод було скомпільовано для іншої версії Minecraft, "
+				+ "Forge, NeoForge, Fabric, Quilt або базової бібліотеки.</p>" + "<p><b>Що спробувати:</b></p>" + "<ul>"
+				+ "<li>Оновіть мод, що містить вказаний клас.</li>"
+				+ "<li>Якщо проблема почалася після оновлення Minecraft або завантажувача, спробуйте сумісну версію моду.</li>"
+				+ "<li>Якщо клас належить до <b>Immersive Portals</b>, переконайтеся, що <b>Immersive Portals</b> точно відповідає вашій версії Minecraft та завантажувача.</li>"
+				+ "<li>Уникайте змішування модів, створених для різних версій завантажувача або Minecraft.</li>"
+				+ "</ul>";
+	}
+
+	@Override
+	public String nombreErrorMetodoFinalSobrescrito() {
+		return "Мод намагається перевизначити фінальний метод";
+	}
+
 }
